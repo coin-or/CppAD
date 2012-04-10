@@ -13,6 +13,7 @@ Please visit http://www.coin-or.org/CppAD/ for information on other licenses.
 $begin whats_new_12$$
 $dollar @$$
 $spell
+	dir
 	-lteuchos
 	trilinos
 	inorder
@@ -169,7 +170,7 @@ Calling $code taylor_capacity$$, with to with capacity equal to zero,
 	   and $cref simple_ad_pthread.cpp$$.
 	   $lnext
 	   Fix bug in finding boost multi-threading library
-	   (due to fact that $cref/BOOST_DIR/InstallUnix/BoostDir/$$ 
+	   (due to fact that $cref/boost_dir/InstallUnix/boost_dir/$$ 
 	    is not the prefix during the boost installation).
 	   $lend
 
@@ -227,7 +228,7 @@ Calling $code taylor_capacity$$, with to with capacity equal to zero,
 	   $head 01-30$$
 	   Make another attempt to fix linking with boost threads where the wrong
 	   version of the library is in the system include directory; i.e.,
-	   to have $cref/BOOST_DIR/InstallUnix/BoostDir/$$ override the default
+	   to have $cref/boost_dir/InstallUnix/boost_dir/$$ override the default
 	   library.
 
 	   $head 01-27$$
@@ -284,7 +285,7 @@ Calling $code taylor_capacity$$, with to with capacity equal to zero,
 
 	   $head 01-16$$
 	   The test program $code multi_thread/test.sh$$ failed if the 
-	   $cref/OpenmpFlags/InstallUnix/OpenmpFlags/$$ not present in the
+	   $cref/openmp_flags/InstallUnix/openmp_flags/$$ not present in the
 	   $code configure$$ command.
 	   This has been fixed.
 	   In addition, this $code test.sh$$ has been made faster by cycling through

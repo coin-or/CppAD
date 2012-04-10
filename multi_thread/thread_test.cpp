@@ -55,7 +55,7 @@ $subhead threading$$
 $index openmp, run tests$$
 $index pthread, run tests$$
 $index bthread, run tests$$
-If $cref/OpenmpFlags/InstallUnix/OpenmpFlags/$$ 
+If $cref/openmp_flags/InstallUnix/openmp_flags/$$ 
 are specified during configuration,
 you can execute the syntax above with
 $icode threading$$ equal to $code openmp$$.

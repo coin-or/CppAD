@@ -3,7 +3,7 @@
 # define CPPAD_TEST_VECTOR_INCLUDED
 
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-08 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-12 Bradley M. Bell
 
 CppAD is distributed under multiple licenses. This distribution is under
 the terms of the 
@@ -94,7 +94,7 @@ Specifying $code --with-stdvector$$ will increase the amount of
 $code std::vector$$ testing. 
 
 $head boost::numeric::ublas::vector$$
-If you specify a value for $italic BoostDir$$ on the configure
+If you specify a value for $icode boost_dir$$ on the configure
 command line during CppAD installation,
 $code CPPAD_BOOSTVECTOR$$ is true 
 and $code CPPAD_TEST_VECTOR$$ is defined by the following source code
@@ -108,7 +108,7 @@ $codep */
 In this case CppAD will use Ublas vectors for its examples and tests.
 Use of $code CppAD::vector$$, $code std::vector$$,
 and $code std::valarray$$ with CppAD is always tested to some degree.
-Specifying $italic BoostDir$$ will increase the amount of
+Specifying $icode boost_dir$$ will increase the amount of
 Ublas vector testing. 
 
 $head Deprecated$$

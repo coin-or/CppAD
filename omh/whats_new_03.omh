@@ -12,6 +12,7 @@ Please visit http://www.coin-or.org/CppAD/ for information on other licenses.
 
 $begin whats_new_03$$
 $spell
+	dir
 	Eq.cpp
 	cppad.hpp
 	Hess

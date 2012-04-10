@@ -1,6 +1,6 @@
 $Id$
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-06 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-12 Bradley M. Bell
 
 CppAD is distributed under multiple licenses. This distribution is under
 the terms of the 
@@ -52,9 +52,9 @@ If you are running gcc 3.4.4, try using the
 $xref/installUnix/Configure/configure/$$ options
 $syntax%
 	./configure \
-		ADOLC_DIR=%AdolcDir% \
+		ADOLC_DIR=%adolc_dir% \
 		CPP_ERROR_WARN="-Wall" \
-		BOOST_DIR=%BoostDir%
+		BOOST_DIR=%boost_dir%
 %$$
 the following warning occurs during the $code make$$ command: 
 $codep

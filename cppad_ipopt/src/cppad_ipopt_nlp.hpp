@@ -2,7 +2,7 @@
 # ifndef CPPAD_CPPAD_IPOPT_NLP_INCLUDED
 # define CPPAD_CPPAD_IPOPT_NLP_INCLUDED
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-11 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-12 Bradley M. Bell
 
 CppAD is distributed under multiple licenses. This distribution is under
 the terms of the 
@@ -91,9 +91,9 @@ you may have to add some paths the $code LD_LIBRARY_PATH$$
 shell variable using the $code export$$ command in the syntax above.
 For example, perhaps 
 $codei%
-	%ipopt_library_paths%=%IpoptDir%/lib/coin:%IpoptDir%/lib/coin/ThirdParty
+	%ipopt_library_paths%=%ipopt_dir%/lib/coin:%ipopt_dir%/lib/coin/ThirdParty
 %$$
-see $cref/IpoptDir/InstallUnix/IpoptDir/$$.
+see $cref/ipopt_dir/InstallUnix/ipopt_dir/$$.
 
 $head fg(x)$$
 The function $latex fg : \R^n \rightarrow \R^{m+1}$$ is defined by

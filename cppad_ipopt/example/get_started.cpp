@@ -1,6 +1,6 @@
 /* $Id$ */
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-11 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-12 Bradley M. Bell
 
 CppAD is distributed under multiple licenses. This distribution is under
 the terms of the 
@@ -42,7 +42,7 @@ $latex \[
 
 $head Configuration Requirement$$
 This example will be compiled and tested provided that
-the value $cref/IpoptDir/InstallUnix/IpoptDir/$$ is specified on the 
+the value $cref/ipopt_dir/InstallUnix/ipopt_dir/$$ is specified on the 
 $cref/configure/InstallUnix/Configure/$$ command line.
 
 $code

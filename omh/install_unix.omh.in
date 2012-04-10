@@ -1,6 +1,6 @@
 $Id$
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-11 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-12 Bradley M. Bell
 
 CppAD is distributed under multiple licenses. This distribution is under
 the terms of the 
@@ -14,6 +14,7 @@ $begin InstallUnix$$
 $escape $$
 $dollar ^$$
 $spell
+	cxx
 	boostvector
 	inv
 	fopenmp
@@ -158,20 +159,20 @@ $head Configure$$
 Execute the following command in the work directory:
 $index configure$$
 $codei%
-	./configure                            \
-	--prefix=%PrefixDir%                     \
-	--with-Documentation                   \
-	--with-stdvector                       \  
-	--with-boostvector                     \  
-	CXX_FLAGS=%CompilerFlags%                \
-	OPENMP_FLAGS=%OpenmpFlags%               \
-	POSTFIX_DIR=%PostfixDir%                 \
-	ADOLC_DIR=%AdolcDir%                     \
-	FADBAD_DIR=%FadbadDir%                   \
-	SADADO_DIR=%SacadoDir%                   \
-	BOOST_DIR=%BoostDir%                     \
-	IPOPT_DIR=%IpoptDir%                     \
-	TAPE_ADDR_TYPE=%TapeAddrType%
+	./configure                             \
+	--prefix=%prefix_dir%                     \
+	--with-Documentation                    \
+	--with-stdvector                        \  
+	--with-boostvector                      \  
+	CXX_FLAGS=%cxx_flags%                     \
+	OPENMP_FLAGS=%openmp_flags%               \
+	POSTFIX_DIR=%postfix_dir%                 \
+	ADOLC_DIR=%adolc_dir%                     \
+	FADBAD_DIR=%fadbad_dir%                   \
+	SADADO_DIR=%sacado_dir%                   \
+	BOOST_DIR=%boost_dir%                     \
+	IPOPT_DIR=%ipopt_dir%                     \
+	TAPE_ADDR_TYPE=%tape_addr_type%
 %$$
 where only the $code configure$$ line need appear; i.e.,
 the entries one each of the other lines are optional.
@@ -286,7 +287,7 @@ $codep
 	gprof -b profile.exe | sed -f gprof.sed
 $$
 
-$head PrefixDir$$
+$head prefix_dir$$
 $index configure, prefix directory$$
 $index prefix, configure directory$$
 $index directory, configure prefix$$
@@ -294,7 +295,7 @@ The default value for prefix directory is $code ^HOME$$
 i.e., by default the CppAD include files 
 will $cref/install/InstallUnix/make install/$$ below $code ^HOME$$.
 If you want to install elsewhere, you will have to use this option.
-As an example of using the $codei%--prefix=%PrefixDir%$$ option,
+As an example of using the $codei%--prefix=%prefix_dir%$$ option,
 if you specify
 $codep
 	./configure --prefix=/usr/local
@@ -315,18 +316,18 @@ $index install, documentation$$
 If the command line argument $code --with-Documentation$$ is specified,
 the CppAD documentation HTML and XML files are copied to the directory
 $codei%
-	%PrefixDir%/share/doc/%PostfixDir%/cppad-@VERSION@
+	%prefix_dir%/share/doc/%postfix_dir%/cppad-@VERSION@
 %$$
-(see $cref/PostfixDir/InstallUnix/PostfixDir/$$).
+(see $cref/postfix_dir/InstallUnix/postfix_dir/$$).
 The top of the CppAD HTML documentation tree 
 (with mathematics displayed as LaTex command) will be located at
 $codei%
-	%PrefixDir%/share/doc/%PostfixDir%/cppad-@VERSION@/cppad.htm
+	%prefix_dir%/share/doc/%postfix_dir%/cppad-@VERSION@/cppad.htm
 %$$
 and the top of the XML documentation tree
 (with mathematics displayed as MathML) will be located at
 $codei%
-	%PrefixDir%/share/doc/%PostfixDir%/cppad-@VERSION@/cppad.xml
+	%prefix_dir%/share/doc/%postfix_dir%/cppad-@VERSION@/cppad.xml
 %$$
 
 $head --with-stdvector$$
@@ -354,9 +355,9 @@ $codep
 	boost::numeric::ublas::vector
 $$
 In this case $code --with-stdvector$$ must not also be specified.
-See also, $cref/BoostDir/InstallUnix/BoostDir/$$
+See also, $cref/boost_dir/InstallUnix/boost_dir/$$
 
-$head CompilerFlags$$
+$head cxx_flags$$
 $index compile, unix flags$$
 $index flags, unix compile$$
 If the command line argument $icode CompilerFlags$$ is present,
@@ -373,7 +374,7 @@ for the C++ compiler.
 The default value for $icode CompilerFlags$$ is the
 empty string.
 
-$head OpenmpFlags$$
+$head openmp_flags$$
 $index OpenMP, compile flags$$
 $index compile, OpenMP flags$$
 $index flags, OpenMP compile$$
@@ -390,13 +391,13 @@ the CppAD OpenMP correctness and speed tests will be built; see
 $cref/threading/thread_test.cpp/Running Tests/threading/$$ 
 multi-threading tests.
 
-$head PostfixDir$$
+$head postfix_dir$$
 $index configure, postfix directory$$
 $index postfix, configure directory$$
 $index directory, configure postfix$$
 By default, the postfix directory is empty; i.e., there
 is no postfix directory.
-As an example of using the $codei%POSTFIX_DIR=%PostfixDir%$$ option,
+As an example of using the $codei%POSTFIX_DIR=%postfix_dir%$$ option,
 if you specify
 $codep
 	./configure --prefix=/usr/local POSTFIX_DIR=coin
@@ -412,7 +413,7 @@ $codei%
 	/usr/local/share/doc/coin/cppad-@VERSION@
 %$$
 
-$head AdolcDir$$
+$head adolc_dir$$
 $index Adolc, unix$$
 If you have 
 $href%
@@ -420,11 +421,11 @@ $href%
 	Adolc 1.10.2
 %$$
 installed on your system, you can 
-specify a value for $icode AdolcDir$$ in the 
+specify a value for $icode adolc_dir$$ in the 
 $cref/configure/InstallUnix/Configure/$$ command line.
-The value of $icode AdolcDir$$ must be such that
+The value of $icode adolc_dir$$ must be such that
 $codei%
-	%AdolcDir%/include/adolc/adouble.h
+	%adolc_dir%/include/adolc/adouble.h
 %$$
 is a valid way to reference $code adouble.h$$.
 In this case, you can run the Adolc speed correctness tests 
@@ -443,7 +444,7 @@ If you are using Linux,
 you will have to add to following lines to the file
 $code .bash_profile$$ in your home directory:
 $codei%
-	LD_LIBRARY_PATH=%AdolcDir%/lib:^{LD_LIBRARY_PATH}
+	LD_LIBRARY_PATH=%adolc_dir%/lib:^{LD_LIBRARY_PATH}
 	export LD_LIBRARY_PATH
 %$$
 in order for Adolc to run properly.
@@ -453,17 +454,17 @@ If you are using Cygwin,
 you will have to add to following lines to the file
 $code .bash_profile$$ in your home directory:
 $codei%
-	PATH=%AdolcDir%/bin:^{PATH}
+	PATH=%adolc_dir%/bin:^{PATH}
 	export PATH
 %$$
 in order for Adolc to run properly.
-If $icode AdolcDir$$ begins with a disk specification,
+If $icode adolc_dir$$ begins with a disk specification,
 you must use the Cygwin format for the disk specification.
 For example, 
 if $code d:/adolc_base$$ is the proper directory,
-$code /cygdrive/d/adolc_base$$ should be used for $icode AdolcDir$$.
+$code /cygdrive/d/adolc_base$$ should be used for $icode adolc_dir$$.
 
-$head FadbadDir$$
+$head fadbad_dir$$
 $index Fadbad, unix$$
 If you have
 $href%
@@ -471,10 +472,10 @@ $href%
 	Fadbad 2.1
 %$$
 installed on your system, you can 
-specify a value for $icode FadbadDir$$.
+specify a value for $icode fadbad_dir$$.
 It must be such that
 $codei%
-	%FadbadDir%/FADBAD++/badiff.h
+	%fadbad_dir%/FADBAD++/badiff.h
 %$$
 is a valid reference to $code badiff.h$$.
 In this case, you can run the Fadbad speed correctness tests
@@ -489,7 +490,7 @@ see $cref speed_main$$ for the meaning of the command line
 options to this program.
 
 
-$head SacadoDir$$
+$head sacado_dir$$
 $index Sacado, unix$$
 If you have
 $href%
@@ -497,10 +498,10 @@ $href%
 	Sacado
 %$$
 installed on your system, you can 
-specify a value for $icode SacadoDir$$.
+specify a value for $icode sacado_dir$$.
 It must be such that
 $codei%
-	%SacadoDir%/include/Sacado.hpp
+	%sacado_dir%/include/Sacado.hpp
 %$$
 is a valid reference to $code Sacado.hpp$$.
 In this case, you can run the Sacado speed correctness tests
@@ -515,22 +516,22 @@ see $cref speed_main$$ for the meaning of the command line
 options to this program.
 
 
-$head BoostDir$$
+$head boost_dir$$
 $index boost, unix$$
 If the command line argument
 $codei%
-	BOOST_DIR=%BoostDir%
+	BOOST_DIR=%boost_dir%
 %$$
 is present, it must be such that files
 $codei%
-	%BoostDir%/boost/numeric/ublas/vector.hpp
-	%BoostDir%/boost/thread.hpp
+	%boost_dir%/boost/numeric/ublas/vector.hpp
+	%boost_dir%/boost/thread.hpp
 %$$
 are present.
 In this case, these files will be used by CppAD.
 See also, $cref/--with-boostvector/InstallUnix/--with-boostvector/$$
 
-$head IpoptDir$$
+$head ipopt_dir$$
 $index Ipopt, unix$$
 If you have
 $href%
@@ -538,10 +539,10 @@ $href%
 	Ipopt
 %$$
 installed on your system, you can 
-specify a value for $icode IpoptDir$$.
+specify a value for $icode ipopt_dir$$.
 It must be such that
 $codei%
-	%IpoptDir%/include/coin/IpIpoptApplication.hpp
+	%ipopt_dir%/include/coin/IpIpoptApplication.hpp
 %$$
 is a valid reference to $code IpIpoptApplication.hpp$$.
 In this case, the CppAD interface to Ipopt
@@ -563,21 +564,21 @@ Once this has been done, you can execute the program
 $code ./speed$$ in the $code work/cppad_ipopt/speed$$ directory;
 see $cref ipopt_ode_speed.cpp$$.
 
-$head TapeAddrType$$
+$head tape_addr_type$$
 $index memory, usage$$
 $index memory, tape$$
 $index tape, memory$$
-If the command line argument $icode TapeAddrType$$ is present,
+If the command line argument $icode tape_addr_type$$ is present,
 it specifies the type used for address in the AD recordings (tapes).
 The valid values for this argument are
 $code unsigned short int$$,
 $code unsigned int$$,
 $code size_t$$.
-The smaller the value of $icode%sizeof(%TapeAddrType%)%$$,
+The smaller the value of $icode%sizeof(%tape_addr_type%)%$$,
 the less memory is used.
 On the other hand, the value
 $codei%
-	std::numeric_limits<%TapeAddrType%>::max()
+	std::numeric_limits<%tape_addr_type%>::max()
 %$$
 must be larger than any of the following:
 $cref/size_op/seq_property/size_op/$$,
@@ -594,8 +595,8 @@ $codep
 	make install
 $$
 This will install CppAD in the location specified by 
-$cref/PrefixDir/InstallUnix/PrefixDir/$$.
-You must have permission to write in the $icode PrefixDir$$
+$cref/prefix_dir/InstallUnix/prefix_dir/$$.
+You must have permission to write in the $icode prefix_dir$$
 directory to execute this command. 
 You may optionally specify a destination directory for the install; i.e.,
 $codei%

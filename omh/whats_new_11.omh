@@ -12,6 +12,7 @@ Please visit http://www.coin-or.org/CppAD/ for information on other licenses.
 
 $begin whats_new_11$$
 $spell
+	cxx
 	namespace
 	boostvector
 	mega
@@ -140,8 +141,8 @@ preprocessor symbols that are in the CppAD API.
 
 $head 11-21$$
 Separate $cref/--with-boostvector/InstallUnix/--with-boostvector/$$
-for $cref/BoostDir/InstallUnix/BoostDir/$$.
-This enables one to specify $icode BoostDir$$ for 
+for $cref/boost_dir/InstallUnix/boost_dir/$$.
+This enables one to specify $icode boost_dir$$ for 
 $cref team_bthread.cpp$$ with out using boost vectors.
 
 $head 11-20$$
@@ -352,7 +353,7 @@ Move the $code sum_i_inv_time.cpp$$ test from
 $code openmp/run.sh$$ to $code openmp/run.cpp$$.
 $lnext
 Change $code --with-openmp$$ to
-$cref/OPENMP_FLAGS=OpenmpFlags/InstallUnix/OpenmpFlags/$$ configure
+$cref/OPENMP_FLAGS=openmp_flags/InstallUnix/openmp_flags/$$ configure
 command line argument.
 $lend
 
@@ -704,7 +705,7 @@ $lend
 
 $head 06-18$$
 $list number$$
-The $cref/TapeAddrType/InstallUnix/TapeAddrType/$$ option was added
+The $cref/tape_addr_type/InstallUnix/tape_addr_type/$$ option was added
 to the $cref/configure/InstallUnix/Configure/$$ command line.
 $lnext
 The function $cref/size_op_seq/seq_property/size_op_seq/$$ results uses
@@ -716,7 +717,7 @@ Remove $code cppad/config.h$$ from CppAD distribution,
 This removes the need to undefine symbols that were
 defined by $code cppad/config.h$$ and that did not begin with $code CPPAD_$$.
 $lnext
-Change $cref/adolc/InstallUnix/AdolcDir/$$ library linkage so it
+Change $cref/adolc/InstallUnix/adolc_dir/$$ library linkage so it
 works with version $code ADOL-C-2.2.0$$.
 $lend
 
@@ -955,7 +956,7 @@ Fadbad was generating warnings due to the $code -Wshadow$$ flag
 with the $code g++$$ compiler.
 The Fadbad $cref/speed/speed_fadbad/$$ tests have a special
 flag with this warning removed from the
-$cref/compiler flags/InstallUnix/CompilerFlags/$$.
+$cref/cxx_flags/InstallUnix/cxx_flags/$$.
 $lend
 
 $head 01-09$$
@@ -969,7 +970,7 @@ The version of automake used to build the corresponding
 $code makefile.in$$ files did not define $code abs_top_builddir$$.
 $lnext
 The include file $code cppad_ipopt_nlp.hpp$$ was always installed, even if 
-$cref/IpoptDir/InstallUnix/IpoptDir/$$ was not defined on the 
+$cref/ipopt_dir/InstallUnix/ipopt_dir/$$ was not defined on the 
 $code configure$$ command line.
 $lnext
 The speed test library $code libspeed.a$$ was being installed

@@ -454,8 +454,8 @@ has been removed from the documentation.
 
 $head 09-27$$
 Add the 
-$cref/PrefixDir/InstallUnix/PrefixDir/$$ and 
-$italic PostfixDir$$ ($italic PostfixDir$$ has since been removed) 
+$cref/prefix_dir/InstallUnix/prefix_dir/$$ and 
+$icode postfix_dir$$ ($icode postfix_dir$$ has since been removed) 
 options to the $code configure$$ command line.
 This gives the user more control over the location where CppAD is installed.
 
@@ -901,7 +901,7 @@ An new multiple level of AD example $xref/mul_level/$$ was added.
 
 $head 03-01$$
 An option that specifies error and warning 
-$cref/flags/InstallUnix/CompilerFlags/$$
+$cref/flags/InstallUnix/cxx_flags/$$
 for all the C++ compile commands,
 was added to the
 $xref/InstallUnix//Unix installation instructions/$$.

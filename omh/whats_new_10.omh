@@ -1,6 +1,6 @@
 $Id$
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-11 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-12 Bradley M. Bell
 
 CppAD is distributed under multiple licenses. This distribution is under
 the terms of the 
@@ -84,7 +84,7 @@ This has been fixed.
 $head 09-22$$
 Promote $cref/cppad_ipopt_nlp/$$ from an example to a library
 that gets installed 
-(provided that the $cref/ipopt prefix/InstallUnix/IpoptDir/$$
+(provided that the $cref/ipopt_dir/InstallUnix/ipopt_dir/$$
 is specified on the $code configure$$ command line).
 
 $head 08-21$$
@@ -100,11 +100,11 @@ $code pkg-config$$ and ones that don't.
 
 $head 07-11$$
 Old versions of the ipopt library were located in 
-$icode%IpoptDir%/lib/libipopt.%*%$$
-(see $cref/IpoptDir/InstallUnix/IpoptDir/$$),
+$icode%ipopt_dir%/lib/libipopt.%*%$$
+(see $cref/ipopt_dir/InstallUnix/ipopt_dir/$$),
 but newer versions will be located in 
-$icode%IpoptDir%/lib/coin/libipopt.%*%$$.
-The directory $icode%IpoptDir%/lib/coin%$$ has been added to the library
+$icode%ipopt_dir%/lib/coin/libipopt.%*%$$.
+The directory $icode%ipopt_dir%/lib/coin%$$ has been added to the library
 search path so that the 
 $cref/cppad_ipopt_nlp examples/cppad_ipopt_nlp/Example/$$
 work with both old and new versions of ipopt.

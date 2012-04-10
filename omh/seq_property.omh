@@ -1,6 +1,6 @@
 $Id$
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-11 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-12 Bradley M. Bell
 
 CppAD is distributed under multiple licenses. This distribution is under
 the terms of the 
@@ -216,12 +216,12 @@ and is the amount of memory required to store the operation sequence
 For the current version of CppAD, this is given by
 $codei%
 	%s% = %f%.size_op()     * sizeof(CppAD::OpCode)
-	    + %f%.size_op_arg() * sizeof(%TapeAddrType%)
+	    + %f%.size_op_arg() * sizeof(%tape_addr_type%)
 	    + %f%.size_par()    * sizeof(%Base%)
 	    + %f%.size_text()   * sizeof(char)
-	    + %f%.size_VecAD()  * sizeof(%TapeAddrType%)
+	    + %f%.size_VecAD()  * sizeof(%tape_addr_type%)
 %$$
-see $cref/TapeAddrType/InstallUnix/TapeAddrType/$$.
+see $cref/tape_addr_type/InstallUnix/tape_addr_type/$$.
 Note that this is the minimal amount of memory that can hold
 the information corresponding to an operation sequence.
 The actual amount of memory allocated ($cref/inuse/ta_inuse/$$)

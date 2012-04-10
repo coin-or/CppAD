@@ -455,7 +455,7 @@ In stead, a message is printed explaining that timing tests need
 to be run without a lot of other demands on the system.
 
 $head 06-21$$
-The configure instructions for $cref/IpoptDir/InstallUnix/IpoptDir/$$
+The configure instructions for $cref/ipopt_dir/InstallUnix/ipopt_dir/$$
 had the wrong path for $code IpIpoptApplication.hpp$$.
 This has been fixed.
 
