@@ -109,7 +109,7 @@ The user may define CPPAD_MAX_NUM_THREADS before including any of the CppAD
 header files.  If it is not yet defined,
 */
 # ifndef CPPAD_MAX_NUM_THREADS
-# define CPPAD_MAX_NUM_THREADS 4
+# define CPPAD_MAX_NUM_THREADS 48
 # endif
 
 # endif

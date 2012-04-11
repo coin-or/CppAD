@@ -284,8 +284,8 @@ if test "$MAX_NUM_THREADS" != "" ; then
 	fi
 	max_num_threads="$MAX_NUM_THREADS"
 else
-	AC_MSG_RESULT([no, using default value 4])
-	max_num_threads="4"
+	max_num_threads="48"
+	AC_MSG_RESULT([no, using default value $max_num_threads])
 fi 
 AC_SUBST(CPPAD_MAX_NUM_THREADS, [$max_num_threads])
 

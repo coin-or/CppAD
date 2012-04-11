@@ -2971,9 +2971,9 @@ $as_echo "$MAX_NUM_THREADS" >&6; }
 	fi
 	max_num_threads="$MAX_NUM_THREADS"
 else
-	{ $as_echo "$as_me:${as_lineno-$LINENO}: result: no, using default value 4" >&5
-$as_echo "no, using default value 4" >&6; }
-	max_num_threads="4"
+	max_num_threads="48"
+	{ $as_echo "$as_me:${as_lineno-$LINENO}: result: no, using default value $max_num_threads" >&5
+$as_echo "no, using default value $max_num_threads" >&6; }
 fi
 CPPAD_MAX_NUM_THREADS=$max_num_threads
 
