@@ -22,10 +22,14 @@ case "$version" in
 	subversion_revision='2279'
 	;;
 
+	2012.2 )
+	subversion_revision='2347'
+	;;
+
 	*)
 cat << EOF
 	usage: bin/special_version.sh version
-	where version is one of the following: 2011, 2012.0 2012.1
+	where version is one of the following: 2011, 2012.0 2012.1 2012.2
 EOF
 	exit 1
 	;;
@@ -77,7 +81,7 @@ case "$1" in
 		-i $file
 	;;
 
-	2012.1)
+	2012.1 | 2012.2 )
 	;;
 
 	*)
