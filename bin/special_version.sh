@@ -18,18 +18,18 @@ fi
 # ----------------------------------------------------------------------------
 version="$1"
 case "$version" in
-	2011 | 2012.0 | 2012.1 )
+	2011 | 2012_0 | 2012_1 )
 	subversion_revision='2279'
 	;;
 
-	2012.2 )
+	2012_2 )
 	subversion_revision='2347'
 	;;
 
 	*)
 cat << EOF
 	usage: bin/special_version.sh version
-	where version is one of the following: 2011, 2012.0 2012.1 2012.2
+	where version is one of the following: 2011, 2012_0 2012_1 2012_2
 EOF
 	exit 1
 	;;
@@ -64,7 +64,7 @@ case "$1" in
 	done
 	;;
 
-	2012.0)
+	2012_0)
 	file='cppad/thread_alloc.hpp'
 	thread_alloc_revision='2249'
 	echo "svn cat $url/$file@$thread_alloc_revision > $file"
@@ -81,7 +81,7 @@ case "$1" in
 		-i $file
 	;;
 
-	2012.1 | 2012.2 )
+	2012_1 | 2012_2 )
 	;;
 
 	*)
