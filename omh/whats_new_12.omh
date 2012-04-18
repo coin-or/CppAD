@@ -44,6 +44,10 @@ This section contains a list of the changes to CppAD during 2012
 The purpose of this section is to
 assist you in learning about changes between various versions of CppAD.
 
+$head 04-17$$
+Fix bug when using $cref user_atomic$$ functions with 
+$cref/multi_threading/multi_thread/$$.
+
 $head 04-10$$
 Add control of the 
 $cref/max_num_threads/InstallUnix/max_num_threads/$$ argument

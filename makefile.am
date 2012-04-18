@@ -285,6 +285,7 @@ SUBDIRS =  \
 	introduction/exp_apx \
 	print_for \
 	multi_thread \
+	multi_thread/test_multi \
 	test_more 
 #
 # note that bin/gpl_license.sh is deleted by dist-hook
@@ -304,6 +305,7 @@ test_directory_list = \
 	introduction/get_started \
 	introduction/exp_apx \
 	multi_thread \
+	multi_thread/test_multi \
 	print_for \
 	test_more 
 

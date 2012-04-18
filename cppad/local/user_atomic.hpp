@@ -832,10 +832,10 @@ private:
 
 	/// temporary work space used to avoid memory allocation/deallocation
 	/// extra information to be passed to the functions
-	vector<bool>            vx_;
-	vector<bool>            vy_;
-	vector<Base>             x_;
-	vector<Base>             y_;
+	vector<bool>            vx_[CPPAD_MAX_NUM_THREADS];
+	vector<bool>            vy_[CPPAD_MAX_NUM_THREADS];
+	vector<Base>             x_[CPPAD_MAX_NUM_THREADS];
+	vector<Base>             y_[CPPAD_MAX_NUM_THREADS];
 
 	/// List of all objects in this class.
 	static std::vector<user_atomic *>& List(void)
@@ -914,27 +914,32 @@ public:
 	{	size_t i, j, k;
 		size_t n = ax.size();
 		size_t m = ay.size();
+		size_t thread = thread_alloc::thread_num();
 # ifndef NDEBUG
 		bool ok;
 		std::string msg = "user_atomoc: ";
 # endif
+		vector <Base>& x  = x_[thread];
+		vector <Base>& y  = y_[thread];
+		vector <bool>& vx = vx_[thread];
+		vector <bool>& vy = vy_[thread];
 		//
-		if( x_.size() < n )
-		{	x_.resize(n);
-			vx_.resize(n);
+		if( x.size() < n )
+		{	x.resize(n);
+			vx.resize(n);
 		}
-		if( y_.size() < m )
-		{	y_.resize(m);
-			vy_.resize(m);
+		if( y.size() < m )
+		{	y.resize(m);
+			vy.resize(m);
 		}
 		// 
 		// Determine if we are going to have to tape this operation
 		size_t tape_id     = 0;
 		ADTape<Base>* tape = CPPAD_NULL;
 		for(j = 0; j < n; j++)
-		{	x_[j]   = ax[j].value_;
-			vx_[j]  = Variable( ax[j] );
-			if ( (tape == CPPAD_NULL) & vx_[j] )
+		{	x[j]   = ax[j].value_;
+			vx[j]  = Variable( ax[j] );
+			if ( (tape == CPPAD_NULL) & vx[j] )
 			{	tape    = ax[j].tape_this();
 				tape_id = ax[j].tape_id_;
 			}
@@ -951,9 +956,9 @@ public:
 		// Use zero order forward mode to compute values
 		k  = 0;
 # if NDEBUG
-		f_(id, k, n, m, vx_, vy_, x_, y_);  
+		f_(id, k, n, m, vx, vy, x, y);  
 # else
-		ok = f_(id, k, n, m, vx_, vy_, x_, y_);  
+		ok = f_(id, k, n, m, vx, vy, x, y);  
 		if( ! ok )
 		{	msg = msg + name_ + ": ok returned false from "
 				"zero order forward mode calculation.";
@@ -962,7 +967,7 @@ public:
 # endif
 		// pass back values
 		for(i = 0; i < m; i++)
-		{	ay[i].value_ = y_[i];
+		{	ay[i].value_ = y[i];
 
 			// initialize entire vector as a constant (not on tape)
 			ay[i].tape_id_ = CPPAD_MAX_NUM_THREADS;
@@ -987,7 +992,7 @@ public:
 			CPPAD_ASSERT_UNKNOWN( NumArg(UsravOp) == 1 );
 			CPPAD_ASSERT_UNKNOWN( NumArg(UsrapOp) == 1 );
 			for(j = 0; j < n; j++)
-			{	if( vx_[j] )
+			{	if( vx[j] )
 				{	// information for an argument that is a variable
 					tape->Rec_.PutArg(ax[j].taddr_);
 					tape->Rec_.PutOp(UsravOp);
@@ -1006,7 +1011,7 @@ public:
 			CPPAD_ASSERT_UNKNOWN( NumArg(UsrrvOp) == 0 );
 			CPPAD_ASSERT_UNKNOWN( NumRes(UsrrvOp) == 1 );
 			for(i = 0; i < m; i++)
-			{	if( vy_[i] )
+			{	if( vy[i] )
 				{	ay[i].taddr_    = tape->Rec_.PutOp(UsrrvOp);
 					ay[i].tape_id_  = tape_id;
 				}
@@ -1317,11 +1322,15 @@ public:
 	static void clear(void)
 	{	size_t i = List().size();
 		while(i--)
-		{	user_atomic* op = List()[i];
-			op->vx_.resize(0);
-			op->vy_.resize(0);
-			op->x_.resize(0);
-			op->y_.resize(0);
+		{	size_t thread = CPPAD_MAX_NUM_THREADS;
+			while(thread--)
+			{
+				user_atomic* op = List()[i];
+				op->vx_[thread].resize(0);
+				op->vy_[thread].resize(0);
+				op->x_[thread].resize(0);
+				op->y_[thread].resize(0);
+			}
 		}
 		return;
 	}

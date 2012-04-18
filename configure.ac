@@ -12,7 +12,7 @@ dnl ---------------------------------------------------------------------------
 dnl
 dnl Process this file with autoconf to produce a configure script.
 dnl   package   version              bug-report
-AC_INIT(CppAD, 20120410, cppad@list.coin-or.org)
+AC_INIT(CppAD, 20120417, cppad@list.coin-or.org)
 AC_SUBST(PACKAGE_URL, "http://www.coin-or.org/CppAD")
 AC_SUBST(PACKAGE_DESCRIPTION, "Differentiation of C++ Algorithms")
 
@@ -584,6 +584,7 @@ AC_CONFIG_FILES([
 	introduction/get_started/makefile 
 	introduction/exp_apx/makefile
 	multi_thread/makefile
+	multi_thread/test_multi/makefile
 	print_for/makefile
 	speed/adolc/makefile
 	speed/cppad/makefile 
