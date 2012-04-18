@@ -1524,6 +1524,9 @@ $codei%
 %$$
 Otherwise, the return value will be false.
 
+$head Restrictions$$
+This function cannot be called while in parallel mode.
+
 $head Example$$
 $cref/thread_alloc.cpp/$$
 $end 
@@ -1537,7 +1540,11 @@ $end
 	Otherwise the return value is false.
 	*/
 	static bool free_all(void)
-	{	bool ok = true;
+	{	CPPAD_ASSERT_KNOWN(
+			! in_parallel(),
+			"free_all cannot be used while in parallel execution"
+		);
+		bool ok = true;
 		size_t thread = CPPAD_MAX_NUM_THREADS;
 		while(thread--)
 		{	ok &= inuse(thread) == 0;

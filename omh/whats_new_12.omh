@@ -44,6 +44,11 @@ This section contains a list of the changes to CppAD during 2012
 The purpose of this section is to
 assist you in learning about changes between various versions of CppAD.
 
+$head 04-18$$
+Add documentation and testing for not using $cref/free_all/ta_free_all/$$ and 
+$cref/user_atomic clear/user_atomic/clear/$$ while in
+$cref/parallel/ta_in_parallel/$$ mode.
+
 $head 04-17$$
 Fix bug when using $cref user_atomic$$ functions with 
 $cref/multi_threading/multi_thread/$$.

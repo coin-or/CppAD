@@ -275,6 +275,9 @@ $codei%
 	%afun%(%id%, %ax%, %ay%)
 %$$
 must not be in $cref/parallel/ta_in_parallel/$$ mode.
+In addition, the
+$cref/user_atomic clear/user_atomic/clear/$$
+routine cannot be called while in parallel mode.
 
 $head forward$$
 The macro argument $icode forward$$ is a
@@ -654,6 +657,10 @@ makes to work space $cref/available/ta_available/$$ to
 for other uses by the same thread.
 This should be called when you are done using the 
 user atomic functions for a specific value of $icode Base$$.
+
+$subhead Restriction$$
+The user atomic $code clear$$ routine cannot be called
+while in $cref/parallel/ta_in_parallel/$$ execution mode.
 
 $children%
 	example/user_tan.cpp%
@@ -1320,7 +1327,11 @@ public:
 
 	/// Free static CppAD::vector memory used by this class (work space)
 	static void clear(void)
-	{	size_t i = List().size();
+	{	CPPAD_ASSERT_KNOWN(
+			! thread_alloc::in_parallel() ,
+			"cannot use user_atomic clear during parallel execution"
+		);
+		size_t i = List().size();
 		while(i--)
 		{	size_t thread = CPPAD_MAX_NUM_THREADS;
 			while(thread--)
