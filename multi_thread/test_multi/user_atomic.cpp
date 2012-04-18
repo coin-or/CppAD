@@ -11,7 +11,6 @@ Please visit http://www.coin-or.org/CppAD/ for information on other licenses.
 -------------------------------------------------------------------------- */
 
 # include <cppad/cppad.hpp>
-# include <omp.h>
 
 # define NUMBER_THREADS     4
 # define NUMBER_CALLS       40
@@ -19,6 +18,7 @@ Please visit http://www.coin-or.org/CppAD/ for information on other licenses.
 // y[0] = x[0] + x[1]
 // y[1] = x[1] + x[2]
 namespace {
+# ifdef CPPAD_TEST_OPENMP
 	// ------------------------------------------------------------------
 	// used to inform CppAD when we are in parallel execution mode
 	bool in_parallel(void)
@@ -27,6 +27,7 @@ namespace {
 	// used to inform CppAD of the current thread number
 	size_t thread_number(void)
 	{	return static_cast<size_t>( omp_get_thread_num() ); }
+# endif
 	
 	// y[0] = x[0] + x[1]
 	bool user_atomic_forward(
@@ -139,7 +140,10 @@ namespace {
 }
 
 
-# if CPPAD_TEST_OPENMP
+# ifdef CPPAD_TEST_OPENMP
+
+# include <omp.h>
+
 bool user_atomic_openmp(void)
 {	using CppAD::thread_alloc;
 
