@@ -31,7 +31,7 @@ ADOLC_FLAGS       =
 endif
 #
 if CppAD_BOOST_DIR
-BOOST_INCLUDE = -I$(BOOST_DIR)
+BOOST_INCLUDE = -I$(BOOST_DIR)/include
 else
 BOOST_INCLUDE =
 endif

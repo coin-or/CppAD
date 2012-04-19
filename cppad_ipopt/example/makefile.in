@@ -209,7 +209,7 @@ top_builddir = @top_builddir@
 top_srcdir = @top_srcdir@
 @CppAD_BOOST_DIR_FALSE@BOOST_INCLUDE = 
 #
-@CppAD_BOOST_DIR_TRUE@BOOST_INCLUDE = -I$(BOOST_DIR)
+@CppAD_BOOST_DIR_TRUE@BOOST_INCLUDE = -I$(BOOST_DIR)/include
 # 
 # Microsoft project files (and ipopt install utility for Visual Studio)
 EXTRA_DIST = test.sh \

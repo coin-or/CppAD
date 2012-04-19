@@ -532,8 +532,8 @@ $codei%
 %$$
 is present, it must be such that files
 $codei%
-	%boost_dir%/boost/numeric/ublas/vector.hpp
-	%boost_dir%/boost/thread.hpp
+	%boost_dir%/include/boost/numeric/ublas/vector.hpp
+	%boost_dir%/include/boost/thread.hpp
 %$$
 are present.
 In this case, these files will be used by CppAD.

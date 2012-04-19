@@ -1,7 +1,7 @@
 #! /bin/bash -e
 # $Id$
 # -----------------------------------------------------------------------------
-# CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-11 Bradley M. Bell
+# CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-12 Bradley M. Bell
 #
 # CppAD is distributed under multiple licenses. This distribution is under
 # the terms of the
@@ -43,7 +43,8 @@ then
 fi 
 echo "cd doc"
       cd doc
-cmd="omhelp ../doc.omh -noframe -debug -l http://www.coin-or.org/CppAD/"
+cmd="../doc.omh -noframe -debug -l http://www.coin-or.org/CppAD/"
+cmd="$HOME/prefix/omhelp/bin/omhelp $cmd"
 if [ "$ext" == "xml" ]
 then
 	cmd="$cmd -xml"

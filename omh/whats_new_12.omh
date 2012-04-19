@@ -44,6 +44,19 @@ This section contains a list of the changes to CppAD during 2012
 The purpose of this section is to
 assist you in learning about changes between various versions of CppAD.
 
+$head 04-19$$
+The $cref/BOOST_DIR/InstallUnix/boost_dir/$$ 
+configure command line value has been changed to be the corresponding
+prefix during the installation of boost.
+To be specific, it used to be that
+$codei%boost_dir%/boost%$$ was the boost include directory,
+now $codei%boost_dir%/include%$$ is the boost include directory.
+This make it the same as the other directory arguments on the configure
+command line.
+In addition, it fixes some bugs in the detection of the boost
+multi-threading library.
+
+
 $head 04-18$$
 Add documentation and testing for not using $cref/free_all/ta_free_all/$$ and 
 $cref/user_atomic clear/user_atomic/clear/$$ while in
