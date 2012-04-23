@@ -43,8 +43,7 @@ then
 fi 
 echo "cd doc"
       cd doc
-cmd="../doc.omh -noframe -debug -l http://www.coin-or.org/CppAD/"
-cmd="$HOME/prefix/omhelp/bin/omhelp $cmd"
+cmd="omhelp ../doc.omh -noframe -debug -l http://www.coin-or.org/CppAD/"
 if [ "$ext" == "xml" ]
 then
 	cmd="$cmd -xml"
