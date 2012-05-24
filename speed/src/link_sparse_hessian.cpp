@@ -50,7 +50,7 @@ $latex \[
 	\; , \;
 	\DD{f}{x[j[k]]}{x[j[k]]}
 \] $$
-for some \( k \) between zero and \( \ell-1 \).
+for some $latex k $$ between zero and $latex \ell-1 $$.
 All the other terms of the Hessian are zero.
 
 $head repeat$$

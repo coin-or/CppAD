@@ -1,6 +1,6 @@
 /* $Id$ */
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-09 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-12 Bradley M. Bell
 
 CppAD is distributed under multiple licenses. This distribution is under
 the terms of the 
@@ -36,83 +36,139 @@ bool sparse_hessian(void)
 {	bool ok = true;
 	using CppAD::AD;
 	using CppAD::NearEqual;
-	size_t i, j, k;
+	size_t i, j, k, ell;
+	typedef CPPAD_TEST_VECTOR< AD<double> >               a_vector;
+	typedef CPPAD_TEST_VECTOR<double>                     d_vector;
+	typedef CPPAD_TEST_VECTOR<size_t>                     i_vector;
+	typedef CPPAD_TEST_VECTOR<bool>                       b_vector;
+	typedef CPPAD_TEST_VECTOR< std::set<size_t> >         s_vector;
+	double eps = 10. * CppAD::epsilon<double>();
 
 	// domain space vector
-	size_t n = 3;
-	CPPAD_TEST_VECTOR< AD<double> >  X(n);
-	for(i = 0; i < n; i++)
-		X[i] = AD<double> (0);
+	size_t n = 12;  // must be greater than or equal 3; see n_sweep below
+	a_vector a_x(n);
+	for(j = 0; j < n; j++)
+		a_x[j] = AD<double> (0);
 
 	// declare independent variables and starting recording
-	CppAD::Independent(X);
+	CppAD::Independent(a_x);
 
+	// range space vector
 	size_t m = 1;
-	CPPAD_TEST_VECTOR< AD<double> >  Y(m);
-	Y[0] = X[0] * X[0] + X[0] * X[1] + X[1] * X[1] + X[2] * X[2];
+	a_vector a_y(m);
+	a_y[0] = a_x[0]*a_x[1];
+	for(j = 0; j < n; j++)
+		a_y[0] += a_x[j] * a_x[j] * a_x[j];
 
-	// create f: X -> Y and stop tape recording
-	CppAD::ADFun<double> f(X, Y);
+	// create f: x -> y and stop tape recording
+	// (without executing zero order forward calculation)
+	CppAD::ADFun<double> f;
+	f.Dependent(a_x, a_y);
 
-	// new value for the independent variable vector
-	CPPAD_TEST_VECTOR<double> x(n);
+	// new value for the independent variable vector, and weighting vector
+	d_vector w(m), x(n);
+	for(j = 0; j < n; j++)
+		x[j] = double(j);
+	w[0] = 1.0;
+
+	// vector used to check the value of the hessian
+	d_vector check(n * n);
+	for(ell = 0; ell < n * n; ell++)
+		check[ell] = 0.0;
+	ell        = 0 * n + 1;
+	check[ell] = 1.0;
+	ell        = 1 * n + 0;
+	check[ell] = 1.0 ;
+	for(j = 0; j < n; j++)
+	{	ell = j * n + j;
+		check[ell] = 6.0 * x[j];
+	}
+
+	// -------------------------------------------------------------------
+	// second derivative of y[0] w.r.t x
+	d_vector hes(n * n);
+	hes = f.SparseHessian(x, w);
+	for(ell = 0; ell < n * n; ell++)
+		ok &=  NearEqual(w[0] * check[ell], hes[ell], eps, eps );
+
+	// --------------------------------------------------------------------
+	// example using vectors of bools to compute sparsity pattern for Hessian
+	b_vector r_bool(n * n);
 	for(i = 0; i < n; i++)
-		x[i] = double(i);
+	{	for(j = 0; j < n; j++)
+			r_bool[i * n + j] = false;
+		r_bool[i * n + i] = true;
+	}
+	f.ForSparseJac(n, r_bool);
+	//
+	b_vector s_bool(m);
+	for(i = 0; i < m; i++)
+		s_bool[i] = w[i] != 0;
+	b_vector p_bool = f.RevSparseHes(n, s_bool);
 
-	// second derivative of y[1] 
-	CPPAD_TEST_VECTOR<double> w(m);
-	w[0] = 1.;
-	CPPAD_TEST_VECTOR<double> h( n * n );
-	h = f.SparseHessian(x, w);
-	/*
-	    [ 2 1 0 ]
-	h = [ 1 2 0 ]
-            [ 0 0 2 ]
-	*/
-	CPPAD_TEST_VECTOR<double> check(n * n);
-	check[0] = 2.; check[1] = 1.; check[2] = 0.;
-	check[3] = 1.; check[4] = 2.; check[5] = 0.;
-	check[6] = 0.; check[7] = 0.; check[8] = 2.;
-	for(k = 0; k < n * n; k++)
-		ok &=  NearEqual(check[k], h[k], 1e-10, 1e-10 );
+	hes = f.SparseHessian(x, w, p_bool);
+	for(ell = 0; ell < n * n; ell++)
+		ok &=  NearEqual(w[0] * check[ell], hes[ell], eps, eps );
 
-	// use vectors of bools to compute sparse hessian -------------------
-	// determine the sparsity pattern p for Hessian of w^T F
-        CPPAD_TEST_VECTOR<bool> r_bool(n * n);
-        for(j = 0; j < n; j++)
-        {       for(k = 0; k < n; k++)
-                        r_bool[j * n + k] = false;
-                r_bool[j * n + j] = true;
-        }
-        f.ForSparseJac(n, r_bool);
-        //
-        CPPAD_TEST_VECTOR<bool> s_bool(m);
-        for(i = 0; i < m; i++)
-                s_bool[i] = w[i] != 0;
-        CPPAD_TEST_VECTOR<bool> p_bool = f.RevSparseHes(n, s_bool);
-
-	// test passing sparsity pattern
-	h = f.SparseHessian(x, w, p_bool);
-	for(k = 0; k < n * n; k++)
-		ok &=  NearEqual(check[k], h[k], 1e-10, 1e-10 );
-
-	// use vectors of sets to compute sparse hessian ------------------
-	// determine the sparsity pattern p for Hessian of w^T F
-        CPPAD_TEST_VECTOR< std::set<size_t> > r_set(n);
-        for(j = 0; j < n; j++)
-                r_set[j].insert(j);
-        f.ForSparseJac(n, r_set);
-        //
-        CPPAD_TEST_VECTOR< std::set<size_t> > s_set(1);
-        for(i = 0; i < m; i++)
+	// --------------------------------------------------------------------
+	// example using vectors of sets to compute sparsity pattern for Hessian
+	s_vector r_set(n);
+	for(i = 0; i < n; i++)
+		r_set[i].insert(i);
+	f.ForSparseJac(n, r_set);
+	//
+	s_vector s_set(m);
+	for(i = 0; i < m; i++)
 		if( w[i] != 0. )
 			s_set[0].insert(i);
-        CPPAD_TEST_VECTOR< std::set<size_t> > p_set = f.RevSparseHes(n, s_set);
+	s_vector p_set = f.RevSparseHes(n, s_set);
 
-	// test passing sparsity pattern
-	h = f.SparseHessian(x, w, p_set);
-	for(k = 0; k < n * n; k++)
-		ok &=  NearEqual(check[k], h[k], 1e-10, 1e-10 );
+	// example passing sparsity pattern to SparseHessian
+	hes = f.SparseHessian(x, w, p_set);
+	for(ell = 0; ell < n * n; ell++)
+		ok &=  NearEqual(w[0] * check[ell], hes[ell], eps, eps );
+
+	// --------------------------------------------------------------------
+	// use row and column indices to specify upper triangle of
+	// non-zero elements of Hessian
+	size_t K = n + 1;
+	i_vector row(K), col(K);
+	hes.resize(K);
+	k = 0;
+	for(j = 0; j < n; j++)
+	{	// diagonal of Hessian
+		row[k] = j;
+		col[k] = j;
+		k++;
+	}
+	// only off diagonal non-zero elemenet in upper triangle
+	row[k] = 0;
+	col[k] = 1;
+	k++;
+	ok &= k == K;
+	CppAD::sparse_hessian_work work;
+
+	// can use p_set or p_bool.
+	size_t n_sweep = f.SparseHessian(x, w, p_set, row, col, hes, work);
+	for(k = 0; k < K; k++)
+	{	ell = row[k] * n + col[k];
+		ok &=  NearEqual(w[0] * check[ell], hes[k], eps, eps );
+	}
+	ok &= n_sweep == 2;
+
+	// now recompute at a different x and w (using work from previous call
+	w[0]       = 2.0;
+	x[1]       = 0.5;
+	ell        = 1 * n + 1;
+	check[ell] = 6.0 * x[1];
+	n_sweep    = f.SparseHessian(x, w, p_set, row, col, hes, work);
+	for(k = 0; k < K; k++)
+	{	ell = row[k] * n + col[k];
+		ok &=  NearEqual(w[0] * check[ell], hes[k], eps, eps );
+	}
+	ok &= n_sweep == 2;
+	
+
 
 	return ok;
 }

@@ -3,7 +3,7 @@
 # define CPPAD_DECLARE_AD_INCLUDED
 
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-11 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-12 Bradley M. Bell
 
 CppAD is distributed under multiple licenses. This distribution is under
 the terms of the 
@@ -18,6 +18,8 @@ namespace CppAD {
 	typedef CPPAD_TAPE_ADDR_TYPE addr_t;
 
 	// classes
+	class sparse_jacobian_work;
+	class sparse_hessian_work;
 	template <class Base> class AD;
 	template <class Base> class ADFun;
 	template <class Base> class ADTape;

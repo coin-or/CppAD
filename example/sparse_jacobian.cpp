@@ -1,6 +1,6 @@
 /* $Id$ */
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-09 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-12 Bradley M. Bell
 
 CppAD is distributed under multiple licenses. This distribution is under
 the terms of the 
@@ -38,57 +38,61 @@ bool reverse()
 {	bool ok = true;
 	using CppAD::AD;
 	using CppAD::NearEqual;
-	size_t i, j, k;
+	typedef CPPAD_TEST_VECTOR< AD<double> > a_vector;
+	typedef CPPAD_TEST_VECTOR<double>       d_vector;
+	typedef CPPAD_TEST_VECTOR<size_t>       i_vector;
+	size_t i, j, k, ell;
+	double eps = 10. * CppAD::epsilon<double>();
 
 	// domain space vector
 	size_t n = 4;
-	CPPAD_TEST_VECTOR< AD<double> >  X(n);
+	a_vector  a_x(n);
 	for(j = 0; j < n; j++)
-		X[j] = AD<double> (0);
+		a_x[j] = AD<double> (0);
 
 	// declare independent variables and starting recording
-	CppAD::Independent(X);
+	CppAD::Independent(a_x);
 
 	size_t m = 3;
-	CPPAD_TEST_VECTOR< AD<double> >  Y(m);
-	Y[0] = X[0] + X[1];
-	Y[1] = X[2] + X[3];
-	Y[2] = X[0] + X[1] + X[2] + X[3] * X[3] / 2.;
+	a_vector  a_y(m);
+	a_y[0] = a_x[0] + a_x[1];
+	a_y[1] = a_x[2] + a_x[3];
+	a_y[2] = a_x[0] + a_x[1] + a_x[2] + a_x[3] * a_x[3] / 2.;
 
-	// create f: X -> Y and stop tape recording
-	CppAD::ADFun<double> f(X, Y);
+	// create f: x -> y and stop tape recording
+	CppAD::ADFun<double> f(a_x, a_y);
 
 	// new value for the independent variable vector
-	CPPAD_TEST_VECTOR<double> x(n);
+	d_vector x(n);
 	for(j = 0; j < n; j++)
 		x[j] = double(j);
 
 	// Jacobian of y without sparsity pattern
-	CPPAD_TEST_VECTOR<double> jac(m * n);
+	d_vector jac(m * n);
 	jac = f.SparseJacobian(x);
 	/*
 	      [ 1 1 0 0  ]
 	jac = [ 0 0 1 1  ]
 	      [ 1 1 1 x_3]
 	*/
-	CPPAD_TEST_VECTOR<double> check(m * n);
+	d_vector check(m * n);
 	check[0] = 1.; check[1] = 1.; check[2]  = 0.; check[3]  = 0.;
 	check[4] = 0.; check[5] = 0.; check[6]  = 1.; check[7]  = 1.;
 	check[8] = 1.; check[9] = 1.; check[10] = 1.; check[11] = x[3];
-	for(k = 0; k < 12; k++)
-		ok &=  NearEqual(check[k], jac[k], 1e-10, 1e-10 );
+	for(ell = 0; ell < check.size(); ell++)
+		ok &=  NearEqual(check[ell], jac[ell], eps, eps );
 
 	// using packed boolean sparsity patterns
 	CppAD::vectorBool s_b(m * m), p_b(m * n);
 	for(i = 0; i < m; i++)
-	{	for(k = 0; k < m; k++)
-			s_b[i * m + k] = false;
+	{	for(ell = 0; ell < m; ell++)
+			s_b[i * m + ell] = false;
 		s_b[i * m + i] = true;
 	}
 	p_b   = f.RevSparseJac(m, s_b);
 	jac   = f.SparseJacobian(x, p_b);
-	for(k = 0; k < 12; k++)
-		ok &=  NearEqual(check[k], jac[k], 1e-10, 1e-10 );
+	for(ell = 0; ell < check.size(); ell++)
+		ok &=  NearEqual(check[ell], jac[ell], eps, eps );
 
 	// using vector of sets sparsity patterns
 	std::vector< std::set<size_t> > s_s(m),  p_s(m);
@@ -96,8 +100,47 @@ bool reverse()
 		s_s[i].insert(i);
 	p_s   = f.RevSparseJac(m, s_s);
 	jac   = f.SparseJacobian(x, p_s);
-	for(k = 0; k < 12; k++)
-		ok &=  NearEqual(check[k], jac[k], 1e-10, 1e-10 );
+	for(ell = 0; ell < check.size(); ell++)
+		ok &=  NearEqual(check[ell], jac[ell], eps, eps );
+
+	// using row and column indices to compute non-zero in rows 1 and 2
+	// (skip row 0). 
+	size_t K = 6;
+	i_vector row(K), col(K);
+	jac.resize(K);
+	k = 0;
+	for(j = 0; j < n; j++)
+	{	for(i = 1; i < m; i++)
+		{	ell = i * n + j;
+			if( p_b[ell] )
+			{	ok &= check[ell] != 0.;
+				row[k] = i;
+				col[k] = j;
+				k++;
+			}
+		}
+	} 
+	ok &= k == K;
+
+	// empty work structure
+	CppAD::sparse_jacobian_work work;
+
+	// could use p_b 
+	size_t n_sweep = f.SparseJacobianReverse(x, p_s, row, col, jac, work);
+	for(k = 0; k < K; k++)
+	{    ell = row[k] * n + col[k];
+		ok &= NearEqual(check[ell], jac[k], eps, eps);
+	}
+	ok &= n_sweep == 2;
+
+	// now recompute at a different x value (using work from previous call)
+	check[11] = x[3] = 10.;
+	n_sweep = f.SparseJacobianReverse(x, p_s, row, col, jac, work);
+	for(k = 0; k < K; k++)
+	{    ell = row[k] * n + col[k];
+		ok &= NearEqual(check[ell], jac[k], eps, eps);
+	}
+	ok &= n_sweep == 2;
 
 	return ok;
 }
@@ -106,34 +149,38 @@ bool forward()
 {	bool ok = true;
 	using CppAD::AD;
 	using CppAD::NearEqual;
-	size_t j, k;
+	typedef CPPAD_TEST_VECTOR< AD<double> > a_vector;
+	typedef CPPAD_TEST_VECTOR<double>       d_vector;
+	typedef CPPAD_TEST_VECTOR<size_t>       i_vector;
+	size_t i, j, k, ell;
+	double eps = 10. * CppAD::epsilon<double>();
 
 	// domain space vector
 	size_t n = 3;
-	CPPAD_TEST_VECTOR< AD<double> >  X(n);
+	a_vector  a_x(n);
 	for(j = 0; j < n; j++)
-		X[j] = AD<double> (0);
+		a_x[j] = AD<double> (0);
 
 	// declare independent variables and starting recording
-	CppAD::Independent(X);
+	CppAD::Independent(a_x);
 
 	size_t m = 4;
-	CPPAD_TEST_VECTOR< AD<double> >  Y(m);
-	Y[0] = X[0] + X[2];
-	Y[1] = X[0] + X[2];
-	Y[2] = X[1] + X[2];
-	Y[3] = X[1] + X[2] * X[2] / 2.;
+	a_vector  a_y(m);
+	a_y[0] = a_x[0] + a_x[2];
+	a_y[1] = a_x[0] + a_x[2];
+	a_y[2] = a_x[1] + a_x[2];
+	a_y[3] = a_x[1] + a_x[2] * a_x[2] / 2.;
 
-	// create f: X -> Y and stop tape recording
-	CppAD::ADFun<double> f(X, Y);
+	// create f: x -> y and stop tape recording
+	CppAD::ADFun<double> f(a_x, a_y);
 
 	// new value for the independent variable vector
-	CPPAD_TEST_VECTOR<double> x(n);
+	d_vector x(n);
 	for(j = 0; j < n; j++)
 		x[j] = double(j);
 
 	// Jacobian of y without sparsity pattern
-	CPPAD_TEST_VECTOR<double> jac(m * n);
+	d_vector jac(m * n);
 	jac = f.SparseJacobian(x);
 	/*
 	      [ 1 0 1   ]
@@ -141,25 +188,25 @@ bool forward()
 	      [ 0 1 1   ]
 	      [ 0 1 x_2 ]
 	*/
-	CPPAD_TEST_VECTOR<double> check(m * n);
+	d_vector check(m * n);
 	check[0] = 1.; check[1]  = 0.; check[2]  = 1.; 
 	check[3] = 1.; check[4]  = 0.; check[5]  = 1.;
 	check[6] = 0.; check[7]  = 1.; check[8]  = 1.; 
 	check[9] = 0.; check[10] = 1.; check[11] = x[2];
-	for(k = 0; k < 12; k++)
-		ok &=  NearEqual(check[k], jac[k], 1e-10, 1e-10 );
+	for(ell = 0; ell < check.size(); ell++)
+		ok &=  NearEqual(check[ell], jac[ell], eps, eps );
 
 	// test using packed boolean vectors for sparsity pattern
 	CppAD::vectorBool r_b(n * n), p_b(m * n);
 	for(j = 0; j < n; j++)
-	{	for(k = 0; k < n; k++)
-			r_b[j * n + k] = false;
+	{	for(ell = 0; ell < n; ell++)
+			r_b[j * n + ell] = false;
 		r_b[j * n + j] = true;
 	}
 	p_b = f.ForSparseJac(n, r_b);
 	jac = f.SparseJacobian(x, p_b);
-	for(k = 0; k < 12; k++)
-		ok &=  NearEqual(check[k], jac[k], 1e-10, 1e-10 );
+	for(ell = 0; ell < check.size(); ell++)
+		ok &=  NearEqual(check[ell], jac[ell], eps, eps );
 
 	// test using vector of sets for sparsity pattern
 	std::vector< std::set<size_t> > r_s(n), p_s(m);
@@ -167,8 +214,47 @@ bool forward()
 		r_s[j].insert(j);
 	p_s = f.ForSparseJac(n, r_s);
 	jac = f.SparseJacobian(x, p_s);
-	for(k = 0; k < 12; k++)
-		ok &=  NearEqual(check[k], jac[k], 1e-10, 1e-10 );
+	for(ell = 0; ell < check.size(); ell++)
+		ok &=  NearEqual(check[ell], jac[ell], eps, eps );
+
+	// using row and column indices to compute non-zero elements excluding
+	// row 0 and column 0. 
+	size_t K = 5;
+	i_vector row(K), col(K);
+	jac.resize(K);
+	k = 0;
+	for(i = 1; i < m; i++)
+	{	for(j = 1; j < n; j++)
+		{	ell = i * n + j;
+			if( p_b[ell] )
+			{	ok &= check[ell] != 0.;
+				row[k] = i;
+				col[k] = j;
+				k++;
+			}
+		}
+	} 
+	ok &= k == K;
+
+	// empty work structure
+	CppAD::sparse_jacobian_work work;
+
+	// could use p_s 
+	size_t n_sweep = f.SparseJacobianForward(x, p_b, row, col, jac, work);
+	for(k = 0; k < K; k++)
+	{    ell = row[k] * n + col[k];
+		ok &= NearEqual(check[ell], jac[k], eps, eps);
+	}
+	ok &= n_sweep == 2;
+
+	// now recompute at a different x value (using work from previous call)
+	check[11] = x[2] = 10.;
+	n_sweep = f.SparseJacobianForward(x, p_s, row, col, jac, work);
+	for(k = 0; k < K; k++)
+	{    ell = row[k] * n + col[k];
+		ok &= NearEqual(check[ell], jac[k], eps, eps);
+	}
+	ok &= n_sweep == 2;
 
 	return ok;
 }

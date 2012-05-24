@@ -1,7 +1,7 @@
 #! /bin/bash -e
-# $Id: search.sh 2082 2011-08-31 17:50:58Z bradbell $
+# $Id$
 # -----------------------------------------------------------------------------
-# CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-11 Bradley M. Bell
+# CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-12 Bradley M. Bell
 #
 # CppAD is distributed under multiple licenses. This distribution is under
 # the terms of the
@@ -26,6 +26,7 @@ extensions='.ac .am .cpp .hpp .in .omh .sh'
 directories='
 	cppad 
 	cppad/local 
+	cppad/speed 
 	cppad_ipopt/example
 	cppad_ipopt/speed
 	cppad_ipopt/src
@@ -52,4 +53,5 @@ directories='
 	test_more 
 '
 #
-find_files.sh "$pattern" "$extensions" "$directories"
+find_files.sh "$pattern" "$extensions" "$directories" | \
+	 sed -e '/\/makefile.in/d'

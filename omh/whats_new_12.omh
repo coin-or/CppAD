@@ -44,6 +44,26 @@ This section contains a list of the changes to CppAD during 2012
 The purpose of this section is to
 assist you in learning about changes between various versions of CppAD.
 
+$head 05-24$$
+Merged in changes from $code branches/sparse$$:
+$list number$$
+A new interface was added to
+$cref sparse_jacobian$$ and $cref sparse_hessian$$.
+This interface
+returns a sparse representation of the corresponding matrices
+using row and column index vectors.
+$lnext
+The examples
+$cref sparse_jacobian.cpp$$ and
+$cref sparse_hessian.cpp$$  were improved 
+and extended to include the new interface.
+$lnext
+The definition of an 
+$cref/AD function/glossary/AD Function/$$ was improved
+to include definition of the corresponding $icode n$$ and $icode m$$.
+$lend
+
+
 $head 04-19$$
 The $cref/BOOST_DIR/InstallUnix/boost_dir/$$ 
 configure command line value has been changed to be the corresponding

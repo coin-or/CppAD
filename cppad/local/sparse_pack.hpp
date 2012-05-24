@@ -3,7 +3,7 @@
 # define CPPAD_SPARSE_PACK_INCLUDED
 
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-11 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-12 Bradley M. Bell
 
 CppAD is distributed under multiple licenses. This distribution is under
 the terms of the 
@@ -24,7 +24,6 @@ Vector of sets of positive integers.
 /*!
 Vector of sets of postivie integers, each set stored as a packed boolean array.
 */
-
 
 class sparse_pack {
 private:
@@ -130,6 +129,29 @@ public:
 		size_t k  = element - j * n_bit_;
 		Pack mask = one << k;
 		data_[ index * n_pack_ + j] |= mask;
+	}
+	// -----------------------------------------------------------------
+	/*! Is an element of a set.
+
+	\param index
+	is the index for this set in the vector of sets.
+
+	\param element
+	is the element we are checking to see if it is in the set.
+
+	\par Checked Assertions
+	\li index    < n_set_
+	\li element  < end_
+	*/
+	bool is_element(size_t index, size_t element)
+	{	static Pack one(1);
+		static Pack zero(0);
+		CPPAD_ASSERT_UNKNOWN( index   < n_set_ );
+		CPPAD_ASSERT_UNKNOWN( element < end_ );
+		size_t j  = element / n_bit_;
+		size_t k  = element - j * n_bit_;
+		Pack mask = one << k;
+		return (data_[ index * n_pack_ + j] & mask) != zero;
 	}
 	// -----------------------------------------------------------------
 	/*! Begin retrieving elements from one of the sets.
@@ -318,6 +340,64 @@ public:
 	size_t end(void) const
 	{	return end_; }
 };
+
+/*! 
+Copy a sparsity pattern from a vector of bools into a sparse_pack object.
+
+\tparam VectorBool
+is a simple vector with elements of type bool.
+
+\param sparsity
+The input value of sparisty does not matter.
+Upon return it contains the same sparsity pattern as \c vec_bool
+(or the transposed sparsity pattern).
+
+\param vec_bool
+sparsity pattern that we are placing \c sparsity.
+
+\param n_row
+number of rows in the sparsity pattern in \c vec_bool.
+
+\param n_col
+number of columns in the sparsity pattern in \c vec_bool.
+
+\param transpose
+if true, the sparsity pattern in \c sparsity is the transpose
+of the one in \c vec_bool. 
+Otherwise it is the same sparsity pattern.
+*/
+template<class VectorBool>
+void vec_bool_to_sparse_pack(
+	sparse_pack&       sparsity  , 
+	const VectorBool&  vec_bool  ,
+	size_t             n_row     ,
+	size_t             n_col     ,
+	bool               transpose )
+{	CPPAD_ASSERT_UNKNOWN( n_row * n_col == vec_bool.size() );
+	size_t i, j;
+
+	// transposed pattern case
+	if( transpose )
+	{	sparsity.resize(n_col, n_row);
+		for(j = 0; j < n_col; j++)
+		{	for(i = 0; i < n_row; i++)
+			{	if( vec_bool[ i * n_col + j ] )
+					sparsity.add_element(j, i);
+			}
+		}
+		return;
+	}
+
+	// same pattern case
+	sparsity.resize(n_row, n_col);
+	for(i = 0; i < n_row; i++)
+	{	for(j = 0; j < n_col; j++)
+		{	if( vec_bool[ i * n_col + j ] )
+				sparsity.add_element(i, j);
+		}
+	}
+	return;
+}
 
 CPPAD_END_NAMESPACE
 # endif

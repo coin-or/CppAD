@@ -110,7 +110,7 @@ void parallel_ad(void)
 	sp.begin(0);           // so can call next_element
 	sp.next_element();     // has static data
 	sp.clear(0);           // has static data
-
+	sp.is_element(0, 0);   // has static data
 
 	// statics that depend on the value of Base
 	AD<Base>::tape_id_handle(0);

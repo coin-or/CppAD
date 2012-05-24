@@ -3,7 +3,7 @@
 # define CPPAD_SPARSE_SET_INCLUDED
 
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-11 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-12 Bradley M. Bell
 
 CppAD is distributed under multiple licenses. This distribution is under
 the terms of the 
@@ -116,6 +116,29 @@ public:
 		CPPAD_ASSERT_UNKNOWN( index   < n_set_ );
 		CPPAD_ASSERT_UNKNOWN( element < end_ );
 		data_[ index ].insert( element );
+	}
+	// -----------------------------------------------------------------
+	/*! Is an element of a set.
+
+	\param index
+	is the index for this set in the vector of sets.
+
+	\param element
+	is the element we are adding to the set.
+
+	\par Checked Assertions
+	\li index    < n_set_
+	\li element  < end_
+	*/
+	bool is_element(size_t index, size_t element)
+	{	// This routine should use the std::insert operator
+		// that cashes the iterator of previous insertion for when
+		// insertions occur in order. We should speed test that this
+		// actually makes things faster.
+		CPPAD_ASSERT_UNKNOWN( index   < n_set_ );
+		CPPAD_ASSERT_UNKNOWN( element < end_ );
+		std::set<size_t>::iterator itr = data_[ index ].find( element );
+		return itr != data_[index].end();
 	}
 	// -----------------------------------------------------------------
 	/*! Begin retrieving elements from one of the sets.
@@ -270,6 +293,69 @@ public:
 	size_t end(void) const
 	{	return end_; }
 };
+
+/*! 
+Copy a sparsity pattern from a vector of sets into a sparse_set object.
+
+\tparam VectorSet
+is a simple vector with elements of type \c std::set<size_t>.
+
+\param sparsity
+The input value of sparisty does not matter.
+Upon return it contains the same sparsity pattern as \c vec_set
+(or the transposed sparsity pattern).
+
+\param vec_set
+sparsity pattern that we are placing \c sparsity.
+
+\param n_row
+number of rows in the sparsity pattern in \c vec_set.
+
+\param n_col
+number of columns in the sparsity pattern in \c vec_set.
+
+\param transpose
+if true, the sparsity pattern in \c sparsity is the transpose
+of the one in \c vec_bool. 
+Otherwise it is the same sparsity pattern.
+*/
+template<class VectorSet>
+void vec_set_to_sparse_set(
+	sparse_set&        sparsity  , 
+	const VectorSet&   vec_set   ,
+	size_t             n_row     ,
+	size_t             n_col     ,
+	bool               transpose )
+{	CPPAD_ASSERT_UNKNOWN( n_row == vec_set.size() );
+	size_t i, j;
+	std::set<size_t>::const_iterator itr;
+
+	// transposed pattern case
+	if( transpose )
+	{	sparsity.resize(n_col, n_row);
+		for(i = 0; i < n_row; i++)
+		{	itr = vec_set[i].begin();
+			while(itr != vec_set[i].end())
+			{	j = *itr++;
+				CPPAD_ASSERT_UNKNOWN( j < n_col );
+				sparsity.add_element(j, i);
+			}
+		}
+		return;
+	}
+
+	// same pattern case
+	sparsity.resize(n_row, n_col);
+	for(i = 0; i < n_row; i++)
+	{	itr = vec_set[i].begin();
+		while(itr != vec_set[i].end())
+		{	j = *itr++;
+			CPPAD_ASSERT_UNKNOWN( j < n_col );
+			sparsity.add_element(i, j);
+		}
+	}
+	return;
+}
 
 CPPAD_END_NAMESPACE
 # endif
