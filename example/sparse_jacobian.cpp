@@ -128,7 +128,7 @@ bool reverse()
 	// could use p_b 
 	size_t n_sweep = f.SparseJacobianReverse(x, p_s, row, col, jac, work);
 	for(k = 0; k < K; k++)
-	{    ell = row[k] * n + col[k];
+	{	ell = row[k] * n + col[k];
 		ok &= NearEqual(check[ell], jac[k], eps, eps);
 	}
 	ok &= n_sweep == 2;
@@ -137,7 +137,7 @@ bool reverse()
 	check[11] = x[3] = 10.;
 	n_sweep = f.SparseJacobianReverse(x, p_s, row, col, jac, work);
 	for(k = 0; k < K; k++)
-	{    ell = row[k] * n + col[k];
+	{	ell = row[k] * n + col[k];
 		ok &= NearEqual(check[ell], jac[k], eps, eps);
 	}
 	ok &= n_sweep == 2;
