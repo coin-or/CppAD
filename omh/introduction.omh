@@ -76,46 +76,46 @@ the derivative of the determinant
 $head Outline$$
 $list Alpha$$
 Demonstrate the use of CppAD to calculate derivatives of a 
-polynomial: $cref/get_started.cpp/$$.
+polynomial: $cref get_started.cpp$$.
 
 $lnext
 Present two algorithms that approximate the exponential function.
-The first algorithm $cref/exp_2.hpp/$$ is simpler and does not 
+The first algorithm $cref exp_2.hpp$$ is simpler and does not 
 include any logical variables or loops.
-The second algorithm $cref/exp_eps.hpp/$$ includes
+The second algorithm $cref exp_eps.hpp$$ includes
 logical operations and a $code while$$ loop.
 For each of these algorithms, do the following:
 
 $list number$$
 Define the mathematical function corresponding to the algorithm
-($cref/exp_2/$$ and $cref/exp_eps/$$).
+($cref exp_2$$ and $cref exp_eps$$).
 $lnext
 Write out the floating point operation sequence,
 and corresponding values,
 that correspond to executing the algorithm for a specific input
-($cref/exp_2_for0/$$ and $cref/exp_eps_for0/$$).
+($cref exp_2_for0$$ and $cref exp_eps_for0$$).
 $lnext
 Compute a forward sweep derivative of the operation sequence
-($cref/exp_2_for1/$$ and $cref/exp_eps_for1/$$).
+($cref exp_2_for1$$ and $cref exp_eps_for1$$).
 $lnext
 Compute a reverse sweep derivative of the operation sequence
-($cref/exp_2_rev1/$$ and $cref/exp_eps_rev1/$$).
+($cref exp_2_rev1$$ and $cref exp_eps_rev1$$).
 $lnext
 Use CppAD to compute both a forward and reverse sweep 
 of the operation sequence
-($cref/exp_2_cppad/$$ and $cref/exp_eps_cppad/$$).
+($cref exp_2_cppad$$ and $cref exp_eps_cppad$$).
 $lend
 
 $lnext
-The program $cref/exp_apx_main.cpp/$$ runs all of the test
-routines that validate the calculations in the $cref/exp_2/$$
-and $cref/exp_eps/$$ presentation.
+The program $cref exp_apx_main.cpp$$ runs all of the test
+routines that validate the calculations in the $cref exp_2$$
+and $cref exp_eps$$ presentation.
 $lend
 
 $head Reference$$
 An in-depth review of AD theory and methods can be found in 
 the book
-$italic 
+$icode 
 Evaluating Derivatives:
 Principles and Techniques of Algorithmic Differentiation
 $$,

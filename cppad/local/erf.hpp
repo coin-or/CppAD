@@ -55,14 +55,14 @@ $codei%
 $head Operation Sequence$$
 The AD of $icode Base$$
 operation sequence used to calculate $icode y$$ is
-$xref/glossary/Operation/Independent/independent/1/$$
+$cref/independent/glossary/Operation/Independent/$$
 of $icode x$$.
 
 $head Method$$
 This is a fast approximation (few numerical operations) 
 with relative error bound $latex 4 \times 10^{-4}$$; see
 Vedder, J.D.,
-$italic Simple approximations for the error function and its inverse$$,
+$icode Simple approximations for the error function and its inverse$$,
 American Journal of Physics, 
 v 55, 
 n 8, 
@@ -74,7 +74,7 @@ $children%
 	example/erf.cpp
 %$$
 The file
-$xref/Erf.cpp/$$
+$cref Erf.cpp$$
 contains an example and test of this function.   
 It returns true if it succeeds and false otherwise.
 

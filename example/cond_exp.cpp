@@ -32,7 +32,7 @@ $latex \[
 and its derivative at various argument values
 ( where $latex x_j \geq 0$$ )
 with out having to re-tape; i.e.,
-using only one $xref/ADFun/$$ object.
+using only one $cref ADFun$$ object.
 Note that $latex x_j \log ( x_j ) \rightarrow 0 $$
 as $latex x_j \downarrow 0$$ and
 we need to handle the case $latex x_j = 0$$

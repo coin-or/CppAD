@@ -42,13 +42,13 @@ $index assign, conditional$$
 $section AD Conditional Expressions$$
 
 $head Syntax$$
-$codei%%result% = CondExp%Rel%(%left%, %right%, %if_true%, %if_false%)%$$
+$icode%result% = CondExp%Rel%(%left%, %right%, %if_true%, %if_false%)%$$
 
 
 $head Purpose$$
 Record, 
 as part of an AD of $icode Base$$
-$xref/glossary/Operation/Sequence/operation sequence/1/$$,
+$cref/operation sequence/glossary/Operation/Sequence/$$,
 the conditional result 
 $codei%
 	if( %left% %Cop% %right% )
@@ -132,10 +132,10 @@ Use of $code CondExp$$ is deprecated, but continues to be supported.
 
 $head Operation Sequence$$
 This is an AD of $icode Base$$
-$xref/glossary/Operation/Atomic/atomic operation/1/$$
+$cref/atomic operation/glossary/Operation/Atomic/$$
 and hence is part of the current
 AD of $icode Base$$
-$xref/glossary/Operation/Sequence/operation sequence/1/$$.
+$cref/operation sequence/glossary/Operation/Sequence/$$.
 
 
 $head Example$$

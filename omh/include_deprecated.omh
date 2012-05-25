@@ -46,12 +46,12 @@ $$
 
 $head Linking New Files to Deprecated Commands$$
 On Unix systems, references in your source code of the from
-$syntax%
+$codei%
 	# include <CppAD/%name%.h>
 %$$
 will refer to the older versions of CppAD unless you preform the 
 following steps (this only needs to be done once, not for every install):
-$syntax%
+$codei%
 	cp %prefix_dir%/include
 	sudo mv CppAD CppAD.old
 	sudo ln -s cppad CppAD
@@ -69,79 +69,79 @@ $bold Deprecated$$         $pre  $$ $cnext $bold Should Use$$
 $rnext
 
 CppAD/CheckNumericType.h   $pre  $$ $cnext cppad/check_numeric_type.hpp
-	$pre  $$ $cnext $cref/CheckNumericType/$$
+	$pre  $$ $cnext $cref CheckNumericType$$
 $rnext
 
 CppAD/CheckSimpleVector.h  $pre  $$ $cnext cppad/check_simple_vector.hpp
-	$pre  $$ $cnext $cref/CheckSimpleVector/$$
+	$pre  $$ $cnext $cref CheckSimpleVector$$
 $rnext
 
 CppAD/CppAD.h              $pre  $$ $cnext cppad/cppad.hpp
-	$pre  $$ $cnext $cref/CppAD/$$
+	$pre  $$ $cnext $cref CppAD$$
 $rnext
 
 CppAD/CppAD_vector.h       $pre  $$ $cnext cppad/vector.hpp
-	$pre  $$ $cnext $cref/CppAD_vector/$$
+	$pre  $$ $cnext $cref CppAD_vector$$
 $rnext
 
 CppAD/ErrorHandler.h       $pre  $$ $cnext cppad/error_handler.hpp
-	$pre  $$ $cnext $cref/ErrorHandler/$$
+	$pre  $$ $cnext $cref ErrorHandler$$
 $rnext
 
 CppAD/LuFactor.h           $pre  $$ $cnext cppad/lu_factor.hpp
-	$pre  $$ $cnext $cref/LuFactor/$$
+	$pre  $$ $cnext $cref LuFactor$$
 $rnext
 
 CppAD/LuInvert.h           $pre  $$ $cnext cppad/lu_invert.hpp
-	$pre  $$ $cnext $cref/LuInvert/$$
+	$pre  $$ $cnext $cref LuInvert$$
 $rnext
 
 CppAD/LuSolve.h            $pre  $$ $cnext cppad/lu_solve.hpp
-	$pre  $$ $cnext $cref/LuSolve/$$
+	$pre  $$ $cnext $cref LuSolve$$
 $rnext
 
 CppAD/NearEqual.h          $pre  $$ $cnext cppad/near_equal.hpp
-	$pre  $$ $cnext $cref/NearEqual/$$
+	$pre  $$ $cnext $cref NearEqual$$
 $rnext
 
 CppAD/OdeErrControl.h      $pre  $$ $cnext cppad/ode_err_control.hpp
-	$pre  $$ $cnext $cref/OdeErrControl/$$
+	$pre  $$ $cnext $cref OdeErrControl$$
 $rnext
 
 CppAD/OdeGear.h            $pre  $$ $cnext cppad/ode_gear.hpp
-	$pre  $$ $cnext $cref/OdeGear/$$
+	$pre  $$ $cnext $cref OdeGear$$
 $rnext
 
 CppAD/OdeGearControl.h     $pre  $$ $cnext cppad/ode_gear_control.hpp
-	$pre  $$ $cnext $cref/OdeGearControl/$$
+	$pre  $$ $cnext $cref OdeGearControl$$
 $rnext
 
 CppAD/Poly.h               $pre  $$ $cnext cppad/poly.hpp
-	$pre  $$ $cnext $cref/Poly/$$
+	$pre  $$ $cnext $cref Poly$$
 $rnext
 
 CppAD/RombergMul.h         $pre  $$ $cnext cppad/romberg_mul.hpp
-	$pre  $$ $cnext $cref/RombergMul/$$
+	$pre  $$ $cnext $cref RombergMul$$
 $rnext
 
 CppAD/RombergOne.h         $pre  $$ $cnext cppad/romberg_one.hpp
-	$pre  $$ $cnext $cref/RombergOne/$$
+	$pre  $$ $cnext $cref RombergOne$$
 $rnext
 
 CppAD/Rosen34.h            $pre  $$ $cnext cppad/rosen_34.hpp
-	$pre  $$ $cnext $cref/Rosen34/$$
+	$pre  $$ $cnext $cref Rosen34$$
 $rnext
 
 CppAD/Runge45.h            $pre  $$ $cnext cppad/runge_45.hpp
-	$pre  $$ $cnext $cref/Runge45/$$
+	$pre  $$ $cnext $cref Runge45$$
 $rnext
 
 CppAD/SpeedTest.h          $pre  $$ $cnext cppad/speed_test.hpp
-	$pre  $$ $cnext $cref/SpeedTest/$$
+	$pre  $$ $cnext $cref SpeedTest$$
 $rnext
 
 CppAD/TrackNewDel.h        $pre  $$ $cnext cppad/track_new_del.hpp
-	$pre  $$ $cnext $cref/TrackNewDel/$$
+	$pre  $$ $cnext $cref TrackNewDel$$
 $tend
 
 $end

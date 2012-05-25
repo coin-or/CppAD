@@ -27,48 +27,48 @@ $index Variable$$
 $section Is an AD Object a Parameter or Variable$$
 
 $head Syntax$$
-$syntax%%b% = Parameter(%x%)%$$
+$icode%b% = Parameter(%x%)%$$
 $pre
 $$
-$syntax%%b% = Variable(%x%)%$$
+$icode%b% = Variable(%x%)%$$
 
 
 $head Purpose$$
-Determine if $italic x$$ is a 
-$xref/glossary/Parameter/parameter/$$ or 
-$xref/glossary/Variable/variable/$$. 
+Determine if $icode x$$ is a 
+$cref/parameter/glossary/Parameter/$$ or 
+$cref/variable/glossary/Variable/$$. 
 
 $head x$$
-The argument $italic x$$ has prototype
-$syntax%
+The argument $icode x$$ has prototype
+$codei%
 	const AD<%Base%>    &%x%
 	const VecAD<%Base%> &%x%
 %$$
 
 $head b$$
-The return value $italic b$$ has prototype
-$syntax%
+The return value $icode b$$ has prototype
+$codei%
 	bool %b%
 %$$
 The return value for $code Parameter$$ ($code Variable$$)
-is true if and only if $italic x$$ is a parameter (variable).
+is true if and only if $icode x$$ is a parameter (variable).
 Note that a $cref/VecAD<Base>/VecAD/$$ object
 is a variable if any element of the vector depends on the independent
 variables.
 
 $head Operation Sequence$$
 The result of this operation is not an
-$xref/glossary/AD of Base/AD of Base/$$ object.
+$cref/AD of Base/glossary/AD of Base/$$ object.
 Thus it will not be recorded as part of an
-AD of $italic Base$$
-$xref/glossary/Operation/Sequence/operation sequence/1/$$.
+AD of $icode Base$$
+$cref/operation sequence/glossary/Operation/Sequence/$$.
 
 $head Example$$
 $children%
 	example/par_var.cpp
 %$$
 The file
-$xref/ParVar.cpp/$$
+$cref ParVar.cpp$$
 contains an example and test of these functions.
 It returns true if it succeeds and false otherwise.
 

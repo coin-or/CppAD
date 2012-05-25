@@ -50,7 +50,7 @@ $children%
 	example/epsilon.cpp
 %$$
 The file
-$cref/epsilon.cpp/$$
+$cref epsilon.cpp$$
 contains an example and test of this operation.
 
 $end 

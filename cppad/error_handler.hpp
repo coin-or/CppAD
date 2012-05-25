@@ -75,21 +75,21 @@ This routine should not return; i.e., upon detection of the error,
 the routine calling $icode handler$$ does not know how to proceed.
 
 $head known$$
-The $icode handler$$ argument $italic known$$ has prototype
+The $icode handler$$ argument $icode known$$ has prototype
 $codei%
 	bool %known%
 %$$
 If it is true, the error being reported is from a know problem.
 
 $head line$$
-The $icode handler$$ argument $italic line$$ has prototype
+The $icode handler$$ argument $icode line$$ has prototype
 $codei%
 	int %line%
 %$$
 It reports the source code line number where the error is detected. 
 
 $head file$$
-The $icode handler$$ argument $italic file$$ has prototype
+The $icode handler$$ argument $icode file$$ has prototype
 $codei%
 	const char *%file%
 %$$
@@ -97,7 +97,7 @@ and is a $code '\0'$$ terminated character vector.
 It reports the source code file where the error is detected. 
 
 $head exp$$
-The $icode handler$$ argument $italic exp$$ has prototype
+The $icode handler$$ argument $icode exp$$ has prototype
 $codei%
 	const char *%exp%
 %$$
@@ -107,7 +107,7 @@ but is false,
 and thereby causes this call to $icode handler$$.
 
 $head msg$$
-The $icode handler$$ argument $italic msg$$ has prototype
+The $icode handler$$ argument $icode msg$$ has prototype
 $codei%
 	const char *%msg%
 %$$
@@ -120,7 +120,7 @@ $children%
 %$$
 $head Example$$
 The file
-$cref/ErrorHandler.cpp/$$
+$cref ErrorHandler.cpp$$
 contains an example and test a test of using this routine.
 It returns true if it succeeds and false otherwise.
 

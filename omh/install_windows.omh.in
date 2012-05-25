@@ -61,7 +61,7 @@ $index windows, download$$
 
 $subhead Subversion$$
 If you are familiar with subversion, you may want to follow
-the more complicated $cref/subversion/$$ download instructions 
+the more complicated $cref subversion$$ download instructions 
 instead of the ones below.
 
 $subhead Web Link$$
@@ -112,7 +112,7 @@ $lend
 
 $head Getting Started$$
 $index GetStarted, windows$$
-The following steps will build the $xref/get_started.cpp/$$ example.
+The following steps will build the $cref get_started.cpp$$ example.
 Using Microsoft Visual C++, open the workspace 
 $codep
 	cppad-@VERSION@\introduction\get_started\get_started.sln
@@ -127,7 +127,7 @@ $$
 $head Introduction$$
 $index introduction, windows$$
 The following steps will build the routines that verify the calculations
-in the exp_apx calculations in the $cref/Introduction/$$ section.
+in the exp_apx calculations in the $cref Introduction$$ section.
 Using Microsoft Visual C++, open the workspace 
 $codep
 	cppad-@VERSION@\introduction\exp_apx\exp_apx.sln

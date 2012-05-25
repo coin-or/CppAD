@@ -60,7 +60,7 @@ $index forward, zero order$$
 
 $head Mathematical Form$$
 The operation sequence (see below) corresponding to
-the algorithm $xref/exp_2.hpp/$$ is the same for all values of $italic x$$.
+the algorithm $cref exp_2.hpp$$ is the same for all values of $icode x$$.
 The mathematical form for the corresponding function is
 $latex \[
 	f(x) = 1 + x + x^2 / 2
@@ -68,7 +68,7 @@ $latex \[
 An algorithmic differentiation package
 does not operate on the mathematical function $latex f(x)$$
 but rather on the particular algorithm used to compute the function 
-(in this case $cref/exp_2.hpp/$$).
+(in this case $cref exp_2.hpp$$).
 
 $head Zero Order Expansion$$
 $index expansion, zero order$$
@@ -88,19 +88,19 @@ both $latex n$$ and $latex m$$ are equal to one.
 
 
 $head Operation Sequence$$
-An atomic $italic Type$$ operation is an operation
-that has a $italic Type$$ result and is not made up of 
+An atomic $icode Type$$ operation is an operation
+that has a $icode Type$$ result and is not made up of 
 other more basic operations.
-A sequence of atomic $italic Type$$ operations is called a
-$italic Type$$ operation sequence.
+A sequence of atomic $icode Type$$ operations is called a
+$icode Type$$ operation sequence.
 Given an C++ algorithm and its inputs,
-there is a corresponding $italic Type$$ operation sequence for each type. 
-If $italic Type$$ is clear from the context, 
+there is a corresponding $icode Type$$ operation sequence for each type. 
+If $icode Type$$ is clear from the context, 
 we drop it and just refer to the operation sequence.
 $pre
 
 $$
-We consider the case where $cref/exp_2.hpp/$$ is executed with
+We consider the case where $cref exp_2.hpp$$ is executed with
 $latex x^{(0)} = .5$$.
 The table below contains the corresponding operation sequence
 and the results of a zero order sweep.
@@ -174,7 +174,7 @@ $children%
 %$$
 
 $head Verification$$
-The file $xref/exp_2_for0.cpp/$$ contains a routine 
+The file $cref exp_2_for0.cpp$$ contains a routine 
 that verifies the values computed above.
 It returns true for success and false for failure.
 
@@ -189,12 +189,12 @@ $latex \[
 \]$$
 $lnext
 Create a modified version of 
-$cref/exp_2_for0.cpp/$$ that verifies the values you obtained
+$cref exp_2_for0.cpp$$ that verifies the values you obtained
 for the previous exercise.
 $lnext
 Create and run a main program that reports the result of calling 
 the modified version 
-of $cref/exp_2_for0.cpp/$$ in the previous exercise.
+of $cref exp_2_for0.cpp$$ in the previous exercise.
 $lend
 
 
@@ -237,7 +237,7 @@ and thereby obtain the first order expansion,
 for all the other variables in the operation sequence.
 
 $head Mathematical Form$$
-Suppose that we use the algorithm $xref/exp_2.hpp/$$ to compute 
+Suppose that we use the algorithm $cref exp_2.hpp$$ to compute 
 $latex \[
 	f(x) = 1 + x + x^2 / 2
 \] $$
@@ -253,7 +253,7 @@ $cref/operation sequence/exp_2_for0/Operation Sequence/$$
 for the for the algorithm that is used to evaluate the function.
 
 $head Operation Sequence$$
-We consider the case where $cref/exp_2.hpp/$$ is executed with
+We consider the case where $cref exp_2.hpp$$ is executed with
 $latex x = .5$$.
 The corresponding operation sequence and 
 zero order forward mode values
@@ -361,15 +361,15 @@ $children%
 	introduction/exp_apx/exp_2_for1.cpp
 %$$
 $head Verification$$
-The file $xref/exp_2_for1.cpp/$$ contains a routine 
+The file $cref exp_2_for1.cpp$$ contains a routine 
 which verifies the values computed above.
 It returns true for success and false for failure.
 
 $head Exercises$$
 $list number$$
-Which statement in the routine defined by $cref/exp_2_for1.cpp/$$ uses 
+Which statement in the routine defined by $cref exp_2_for1.cpp$$ uses 
 the values that are calculated by the routine 
-defined by $cref/exp_2_for0.cpp/$$ ?
+defined by $cref exp_2_for0.cpp$$ ?
 $lnext
 Suppose that $latex x = .1$$,
 what are the results of a zero and first order forward sweep for 
@@ -378,11 +378,11 @@ i.e., what are the corresponding values for
 $latex v_1^{(0)}, v_2^{(0)}, \cdots , v_5^{(0)}$$ and
 $latex v_1^{(1)}, v_2^{(1)}, \cdots , v_5^{(1)}$$ ?
 $lnext
-Create a modified version of $cref/exp_2_for1.cpp/$$ that verifies 
+Create a modified version of $cref exp_2_for1.cpp$$ that verifies 
 the derivative values from the previous exercise.
 Also create and run a main program that reports the result
 of calling the modified version of
-$cref/exp_2_for1.cpp/$$.
+$cref exp_2_for1.cpp$$.
 $lend
 
 $end
@@ -414,7 +414,7 @@ The computations are done in reverse
 of the order of the computations in the original algorithm.
 
 $head Mathematical Form$$
-Suppose that we use the algorithm $xref/exp_2.hpp/$$ to compute 
+Suppose that we use the algorithm $cref exp_2.hpp$$ to compute 
 $latex \[
 	f(x) = 1 + x + x^2 / 2
 \] $$
@@ -425,7 +425,7 @@ $latex \[
 
 $head f_5$$
 For our example, we chose to compute the derivative
-of the value returned by $cref/exp_2.hpp/$$
+of the value returned by $cref exp_2.hpp$$
 which is equal to the symbol $latex v_5$$ in the
 $cref/exp_2 operation sequence/exp_2_for0/Operation Sequence/$$.
 We begin with the function $latex f_5 $$ where $latex v_5$$ 
@@ -554,13 +554,13 @@ $latex \[
 \] $$
 Note that $latex v_1$$ is equal to $latex x$$,
 so the derivative of this is the derivative of
-the function defined by $cref/exp_2.hpp/$$ at $latex x = .5$$.
+the function defined by $cref exp_2.hpp$$ at $latex x = .5$$.
 
 $children%
 	introduction/exp_apx/exp_2_rev1.cpp
 %$$
 $head Verification$$
-The file $xref/exp_2_rev1.cpp/$$ contains a routine 
+The file $cref exp_2_rev1.cpp$$ contains a routine 
 which verifies the values computed above.
 It returns true for success and false for failure.
 It only tests the partial derivatives of
@@ -571,9 +571,9 @@ partials of $latex f_{j+1}$$.
 
 $head Exercises$$
 $list number$$
-Which statement in the routine defined by $cref/exp_2_rev1.cpp/$$ uses 
+Which statement in the routine defined by $cref exp_2_rev1.cpp$$ uses 
 the values that are calculated by the routine 
-defined by $cref/exp_2_for0.cpp/$$ ?
+defined by $cref exp_2_for0.cpp$$ ?
 $lnext
 Consider the case where $latex x = .1$$
 and we first preform a zero order forward sweep
@@ -584,11 +584,11 @@ what are the corresponding derivatives of
 $latex f_5 , f_4 , \ldots , f_1$$.
 $lnext
 Create a modified version of 
-$cref/exp_2_rev1.cpp/$$ 
+$cref exp_2_rev1.cpp$$ 
 that verifies the values you obtained for the previous exercise.
 Also create and run a main program that reports the result
 of calling the modified version of
-$cref/exp_2_rev1.cpp/$$.
+$cref exp_2_rev1.cpp$$.
 $lend
 
 $end
@@ -630,7 +630,7 @@ and thereby obtain the second order expansion,
 for all the variables in the operation sequence.
 
 $head Mathematical Form$$
-Suppose that we use the algorithm $xref/exp_2.hpp/$$ to compute 
+Suppose that we use the algorithm $cref exp_2.hpp$$ to compute 
 $latex \[
 	f(x) = 1 + x + x^2 / 2
 \] $$
@@ -640,7 +640,7 @@ $latex \[
 \] $$
 
 $head Operation Sequence$$
-We consider the case where $cref/exp_2.hpp/$$ is executed with
+We consider the case where $cref exp_2.hpp$$ is executed with
 $latex x = .5$$.
 The corresponding operation sequence,
 zero order forward sweep values,
@@ -762,15 +762,15 @@ $children%
 	introduction/exp_apx/exp_2_for2.cpp
 %$$
 $head Verification$$
-The file $xref/exp_2_for2.cpp/$$ contains a routine 
+The file $cref exp_2_for2.cpp$$ contains a routine 
 which verifies the values computed above.
 It returns true for success and false for failure.
 
 $head Exercises$$
 $list number$$
-Which statement in the routine defined by $cref/exp_2_for2.cpp/$$ uses 
+Which statement in the routine defined by $cref exp_2_for2.cpp$$ uses 
 the values that are calculated by the routine 
-defined by $cref/exp_2_for1.cpp/$$ ?
+defined by $cref exp_2_for1.cpp$$ ?
 $lnext
 Suppose that $latex x = .1$$,
 what are the results of a zero, first, and second order forward sweep for 
@@ -778,11 +778,11 @@ the operation sequence above;
 i.e., what are the corresponding values for
 $latex v_i^{(k)}$$ for $latex i = 1, \ldots , 5$$ and $latex k = 0, 1, 2$$.
 $lnext
-Create a modified version of $cref/exp_2_for2.cpp/$$ that verifies 
+Create a modified version of $cref exp_2_for2.cpp$$ that verifies 
 the derivative values from the previous exercise.
 Also create and run a main program that reports the result
 of calling the modified version of
-$cref/exp_2_for2.cpp/$$.
+$cref exp_2_for2.cpp$$.
 $lend
 
 $end
@@ -814,7 +814,7 @@ of that variables first order expansion coefficient,
 with respect to all of the independent variables.
 
 $head Mathematical Form$$
-Suppose that we use the algorithm $xref/exp_2.hpp/$$ to compute 
+Suppose that we use the algorithm $cref exp_2.hpp$$ to compute 
 $latex \[
 	f(x) = 1 + x + x^2 / 2
 \] $$
@@ -829,9 +829,9 @@ with respect to all the independent variable.
 For the case computed for the
 $cref/first order sweep/exp_2_for1/Operation Sequence/Sweep/$$,
 $latex v_5^{(1)}$$ is the derivative 
-of the value returned by $cref/exp_2.hpp/$$.
+of the value returned by $cref exp_2.hpp$$.
 This the value computed will be the second derivative of 
-the value returned by  $cref/exp_2.hpp/$$.
+the value returned by  $cref exp_2.hpp$$.
 We begin with the function $latex f_5 $$ where $latex v_5^{(1)}$$ 
 is both an argument and the value of the function; i.e.,
 $latex \[
@@ -1009,7 +1009,7 @@ $latex \[
 \] $$
 Note that $latex v_1$$ is equal to $latex x$$,
 so the second derivative of 
-the function defined by $cref/exp_2.hpp/$$ at $latex x = .5$$
+the function defined by $cref exp_2.hpp$$ at $latex x = .5$$
 is given by
 $latex \[
 \Dpow{2}{x} v_5^{(0)} 
@@ -1023,14 +1023,14 @@ $latex \[
 There is a theorem about Algorithmic Differentiation that explains why
 the other partial of $latex f_1$$ is equal to the
 first derivative of 
-the function defined by $cref/exp_2.hpp/$$ at $latex x = .5$$.
+the function defined by $cref exp_2.hpp$$ at $latex x = .5$$.
 
 
 $children%
 	introduction/exp_apx/exp_2_rev2.cpp
 %$$
 $head Verification$$
-The file $xref/exp_2_rev2.cpp/$$ contains a routine 
+The file $cref exp_2_rev2.cpp$$ contains a routine 
 which verifies the values computed above.
 It returns true for success and false for failure.
 It only tests the partial derivatives of
@@ -1041,11 +1041,11 @@ partials of $latex f_{j+1}$$.
 
 $head Exercises$$
 $list number$$
-Which statement in the routine defined by $cref/exp_2_rev2.cpp/$$ uses 
+Which statement in the routine defined by $cref exp_2_rev2.cpp$$ uses 
 the values that are calculated by the routine 
-defined by $cref/exp_2_for0.cpp/$$ ?
+defined by $cref exp_2_for0.cpp$$ ?
 Which statements use values that are calculate by the routine
-defined in $cref/exp_2_for1.cpp/$$ ?
+defined in $cref exp_2_for1.cpp$$ ?
 $lnext
 Consider the case where $latex x = .1$$
 and we first preform a zero order forward sweep,
@@ -1057,11 +1057,11 @@ what are the corresponding derivatives of
 $latex f_5 , f_4 , \ldots , f_1$$.
 $lnext
 Create a modified version of 
-$cref/exp_2_rev2.cpp/$$ 
+$cref exp_2_rev2.cpp$$ 
 that verifies the values you obtained for the previous exercise.
 Also create and run a main program that reports the result
 of calling the modified version of
-$cref/exp_2_rev2.cpp/$$.
+$cref exp_2_rev2.cpp$$.
 $lend
 
 $end

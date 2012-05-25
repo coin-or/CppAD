@@ -22,7 +22,7 @@ $$
 $section An Important Reverse Mode Identity$$
 The theorem and the proof below is a restatement
 of the results on page 236 of
-$xref/Bib/Evaluating Derivatives/Evaluating Derivatives/$$.
+$cref/Evaluating Derivatives/Bib/Evaluating Derivatives/$$.
 
 $head Notation$$
 Given a function $latex f(u, v)$$ where $latex u \in B^n$$

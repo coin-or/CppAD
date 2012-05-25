@@ -27,18 +27,18 @@ $index example, not complex differentiable$$
 $index test, not complex differentiable$$
 
 $head Not Complex Differentiable$$
-If $italic x$$ is complex, the functions 
-$syntax%real(%x%)%$$,
-$syntax%imag(%x%)%$$,
-$syntax%conj(%x%)%$$, and
-$syntax%abs(%x%)%$$
+If $icode x$$ is complex, the functions 
+$codei%real(%x%)%$$,
+$codei%imag(%x%)%$$,
+$codei%conj(%x%)%$$, and
+$codei%abs(%x%)%$$
 are examples of functions that are not complex differentiable.
 
 $head See Also$$
-$cref/ComplexPoly.cpp/$$
+$cref ComplexPoly.cpp$$
 
 $head Poly$$
-Select this link to view specifications for $xref/Poly/$$:
+Select this link to view specifications for $cref Poly$$:
 
 $code
 $verbatim%example/not_complex_ad.cpp%0%// BEGIN PROGRAM%// END PROGRAM%1%$$

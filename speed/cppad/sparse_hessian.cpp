@@ -35,15 +35,15 @@ $index sparse, Hessian speed cppad$$
 $head Operation Sequence$$
 Note that the 
 $cref/operation sequence/glossary/Operation/Sequence/$$
-depends on the vectors $italic i$$ and $italic j$$.
-Hence we use a different $cref/ADFun/$$ object for 
-each choice of $italic i$$ and $italic j$$.
+depends on the vectors $icode i$$ and $icode j$$.
+Hence we use a different $cref ADFun$$ object for 
+each choice of $icode i$$ and $icode j$$.
 
 $head Sparse Hessian$$
 If the preprocessor symbol $code CPPAD_USE_SPARSE_HESSIAN$$ is 
 true, the routine $cref/SparseHessian/sparse_hessian/$$ 
 is used for the calculation.
-Otherwise, the routine $cref/Hessian/$$ is used.
+Otherwise, the routine $cref Hessian$$ is used.
 
 $head link_sparse_hessian$$
 $index link_sparse_hessian$$

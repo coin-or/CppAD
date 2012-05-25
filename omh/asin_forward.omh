@@ -62,7 +62,7 @@ q^{(j)} = \left\{ \begin{array}{ll}
 It follows that 
 $latex B[ X(t) ] = \sqrt{ Q[ X(t) ] }$$ and
 from the equations for the
-$xref/SqrtForward//square root/$$
+$cref/square root/SqrtForward/$$
 that for $latex j = 0 , 1, \ldots$$,
 $latex \[
 \begin{array}{rcl}

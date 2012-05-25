@@ -84,7 +84,7 @@ and then include the file $code cppad/cppad.hpp$$.
 
 $head Numeric Type$$
 The type $icode Base$$ must support all the operations for a 
-$cref/NumericType/$$.
+$cref NumericType$$.
 
 $head Output Operator$$
 $index output, base operator$$

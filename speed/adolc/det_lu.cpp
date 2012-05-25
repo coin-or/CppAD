@@ -35,7 +35,7 @@ $index speed, adolc lu$$
 $index lu, speed adolc$$
 
 $head Specifications$$
-See $cref/link_det_lu/$$.
+See $cref link_det_lu$$.
 
 $head Implementation$$
 $index adolc, link_det_lu$$

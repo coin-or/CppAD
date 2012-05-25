@@ -50,15 +50,15 @@ assigns the
 $cref/independent variable/glossary/Tape/Independent Variable/$$ vector
 equal to $icode x$$.
 It then computes a value for all of the dependent variables in the 
-$xref/glossary/Operation/Sequence/operation sequence/1/$$ corresponding
+$cref/operation sequence/glossary/Operation/Sequence/$$ corresponding
 to $icode f$$.
 Putting a $code PrintFor$$ in the operation sequence will
 cause the value of $icode var$$, corresponding to $icode x$$,
 to be printed during zero order forward operations.
 
 $head f.Forward(0, x)$$
-The objects $icode f$$, $italic x$$, and the purpose
-for this operation, are documented in $cref/Forward/$$.
+The objects $icode f$$, $icode x$$, and the purpose
+for this operation, are documented in $cref Forward$$.
 
 $head pos$$
 If present, the argument $icode pos$$ has one of the following prototypes
@@ -83,7 +83,7 @@ $codei%
 	const AD<%Base%>&               %var%
 	const VecAD<%Base%>::reference& %var%
 %$$
-The value of $icode var$$, that corresponds to $italic x$$,
+The value of $icode var$$, that corresponds to $icode x$$,
 is written to $code std::cout$$ during the execution of 
 $codei%
 	%f%.Forward(0, %x%)
@@ -109,7 +109,7 @@ $codei%log(%var%)%$$ and $icode%var% <= 0%$$,
 the corresponding result will be $cref nan$$.
 
 $head Alternative$$
-The $cref/Output/$$ section describes the normal 
+The $cref Output$$ section describes the normal 
 printing of values; i.e., printing when the corresponding
 code is executed.
 
@@ -119,12 +119,12 @@ $children%
 	example/print_for.cpp
 %$$
 The program
-$cref/print_for_cout.cpp/$$
+$cref print_for_cout.cpp$$
 is an example and test that prints to standard output.
 The output of this program
 states the conditions for passing and failing the test.
 The function
-$cref/print_for_string.cpp/$$
+$cref print_for_string.cpp$$
 is an example and test that prints to an standard string stream.
 This function automatically check for correct output.
 

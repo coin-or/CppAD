@@ -48,7 +48,7 @@ $codei%
 	./double speed %seed%
 %$$
 where $icode seed$$ is a positive integer.
-See $cref/speed_main/$$ for more options.
+See $cref speed_main$$ for more options.
 
 $head C++ Compiler Flags$$
 The C++ compiler flags used to build the $code double$$ program are

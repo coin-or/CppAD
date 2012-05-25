@@ -46,12 +46,12 @@ The object $icode f$$ has prototype
 $codei%
 	ADFun<%Base%> %f%
 %$$
-Note that the $cref/ADFun/$$ object $icode f$$ is not $code const$$.
+Note that the $cref ADFun$$ object $icode f$$ is not $code const$$.
 After this call to $code Forward$$, the value returned by
 $codei%
 	%f%.size_taylor()
 %$$
-will be equal to one (see $cref/size_taylor/$$).
+will be equal to one (see $cref size_taylor$$).
 
 $head x$$
 The argument $icode x$$ has prototype
@@ -85,15 +85,15 @@ is equal to $icode m$$, the dimension of the
 $cref/range/seq_property/Range/$$ space for $icode f$$.
 
 $head Vector$$
-The type $icode Vector$$ must be a $cref/SimpleVector/$$ class with
+The type $icode Vector$$ must be a $cref SimpleVector$$ class with
 $cref/elements of type/SimpleVector/Elements of Specified Type/$$
 $icode Base$$.
-The routine $cref/CheckSimpleVector/$$ will generate an error message
+The routine $cref CheckSimpleVector$$ will generate an error message
 if this is not the case.
 
 $head Example$$
 The file
-$cref/Forward.cpp/$$
+$cref Forward.cpp$$
 contains an example and test of this operation.
 It returns true if it succeeds and false otherwise.
 
@@ -136,17 +136,17 @@ The object $icode f$$ has prototype
 $codei%
 	ADFun<%Base%> %f%
 %$$
-Note that the $cref/ADFun/$$ object $icode f$$ is not $code const$$.
+Note that the $cref ADFun$$ object $icode f$$ is not $code const$$.
 Before this call to $code Forward$$, the value returned by
 $codei%
 	%f%.size_taylor()
 %$$
 must be greater than or equal one.
-After this call it will be will be two (see $cref/size_taylor/$$).
+After this call it will be will be two (see $cref size_taylor$$).
 
 $head x$$
 The vector $icode x$$ in expression for $icode dy$$ above
-corresponds to the previous call to $cref/ForwardZero/$$
+corresponds to the previous call to $cref ForwardZero$$
 using this ADFun object $icode f$$; i.e.,
 $codei%
 	%f%.Forward(0, %x%)
@@ -181,15 +181,15 @@ is equal to $icode m$$, the dimension of the
 $cref/range/seq_property/Range/$$ space for $icode f$$.
 
 $head Vector$$
-The type $icode Vector$$ must be a $cref/SimpleVector/$$ class with
+The type $icode Vector$$ must be a $cref SimpleVector$$ class with
 $cref/elements of type/SimpleVector/Elements of Specified Type/$$
 $icode Base$$.
-The routine $cref/CheckSimpleVector/$$ will generate an error message
+The routine $cref CheckSimpleVector$$ will generate an error message
 if this is not the case.
 
 $head Example$$
 The file
-$cref/Forward.cpp/$$
+$cref Forward.cpp$$
 contains an example and test of this operation.
 It returns true if it succeeds and false otherwise.
 
@@ -237,12 +237,12 @@ $latex \[
 
 $subhead Function Values$$
 If you are using forward mode to compute values for $latex F(x)$$,
-$cref/ForwardZero/$$ is simpler to understand
+$cref ForwardZero$$ is simpler to understand
 than this explanation of the general case.
 
 $subhead Derivative Values$$
 If you are using forward mode to compute values for $latex F^{(1)} (x) * dx$$,
-$cref/ForwardOne/$$ is simpler to understand
+$cref ForwardOne$$ is simpler to understand
 than this explanation of the general case.
 
 $head X(t)$$
@@ -262,7 +262,7 @@ If there is no previous call with $latex k = 0$$,
 $latex x^{(0)}$$ is the value of the independent variables when the 
 corresponding 
 AD of $icode Base$$
-$xref/glossary/Operation/Sequence/operation sequence/1/$$ was recorded.
+$cref/operation sequence/glossary/Operation/Sequence/$$ was recorded.
 Note that 
 $latex x^{(k)}$$ is related to the $th k$$ derivative of $latex X(t)$$ by
 $latex \[
@@ -288,17 +288,17 @@ $latex \[
 
 
 $head f$$
-The $cref/ADFun/$$ object $icode f$$ has prototype
+The $cref ADFun$$ object $icode f$$ has prototype
 $codei%
 	ADFun<%Base%> %f%
 %$$
-Note that the $cref/ADFun/$$ object $icode f$$ is not $code const$$.
+Note that the $cref ADFun$$ object $icode f$$ is not $code const$$.
 Before this call to $code Forward$$, the value returned by
 $codei%
 	%f%.size_taylor()
 %$$
 must be greater than or equal $latex p$$.
-After this call it will be will be $latex p+1$$ (see $cref/size_taylor/$$).
+After this call it will be will be $latex p+1$$ (see $cref size_taylor$$).
 
 $head p$$
 The argument $icode p$$ has prototype
@@ -347,10 +347,10 @@ is equal to $icode m$$, the dimension of the
 $cref/range/seq_property/Range/$$ space for $icode f$$.
 
 $head Vector$$
-The type $icode Vector$$ must be a $cref/SimpleVector/$$ class with
+The type $icode Vector$$ must be a $cref SimpleVector$$ class with
 $cref/elements of type/SimpleVector/Elements of Specified Type/$$
 $icode Base$$.
-The routine $cref/CheckSimpleVector/$$ will generate an error message
+The routine $cref CheckSimpleVector$$ will generate an error message
 if this is not the case.
 
 $head Zero Order$$
@@ -369,7 +369,7 @@ $latex y^{(0)}$$ above are replaced by
 $code 0$$, 
 $icode x$$, and 
 $icode y$$ 
-in $cref/ForwardZero/$$.
+in $cref ForwardZero$$.
 
 $head First Order$$
 In the case where $latex p = 1$$,
@@ -390,7 +390,7 @@ $code 1$$,
 $icode x$$, 
 $icode dx$$, and 
 $icode dy$$ 
-in $cref/ForwardOne/$$.
+in $cref ForwardOne$$.
 $pre
 
 $$
@@ -455,7 +455,7 @@ $latex \[
 
 $head Example$$
 The file
-$cref/Forward.cpp/$$
+$cref Forward.cpp$$
 contains an example and test of this operation.
 It returns true if it succeeds and false otherwise.
 
@@ -474,7 +474,7 @@ $head Syntax$$
 $icode%s% = %f%.size_taylor()%$$
 
 $subhead See Also$$
-$cref/seq_property/$$
+$cref seq_property$$
 
 $head Purpose$$
 Determine the number of Taylor coefficients, per variable,
@@ -502,7 +502,7 @@ per variable in the AD operation sequence,
 currently calculated and stored in the ADFun object $icode f$$.
 
 $head Constructor$$
-Directly after the $cref/FunConstruct/$$ syntax
+Directly after the $cref FunConstruct$$ syntax
 $codei%
 	ADFun<%Base%> %f%(%x%, %y%)
 %$$
@@ -530,7 +530,7 @@ using the $cref/size_var/seq_property/size_var/$$ function.)
 $head capacity_taylor$$
 If the number of Taylor coefficients
 currently stored in $icode f$$ is less than or equal $icode c$$, 
-a call to $cref/capacity_taylor/$$ with the syntax
+a call to $cref capacity_taylor$$ with the syntax
 $codei%
 	%f%.capacity_taylor(%c%)
 %$$
@@ -543,7 +543,7 @@ have been retained).
 
 $head Example$$
 The file
-$cref/Forward.cpp/$$
+$cref Forward.cpp$$
 contains an example and test of this operation.
 It returns true if it succeeds and false otherwise.
 
@@ -566,7 +566,7 @@ $icode%c% = %f%.CompareChange()%$$
 $pre
 $$
 $bold See Also$$
-$cref/FunCheck/$$
+$cref FunCheck$$
 
 
 $head Purpose$$
@@ -575,7 +575,7 @@ $cref/AD function/glossary/AD Function/$$ corresponding to $icode f$$.
 This function may be not agree with the algorithm that was used
 to create the corresponding
 AD of $icode Base$$
-$xref/glossary/Operation/Sequence/operation sequence/1/$$
+$cref/operation sequence/glossary/Operation/Sequence/$$
 because of changes in AD
 $cref/comparison/Compare/$$ results.
 The $code CompareChange$$ function can be used to detect these changes.
@@ -594,7 +594,7 @@ $codei%
 It is the number of 
 $codei%AD<%Base%>%$$ $cref/comparison/Compare/$$ 
 operations,
-corresponding to the previous call to $cref/Forward/$$ 
+corresponding to the previous call to $cref Forward$$ 
 $codei%
 	%f%.Forward(0, %x%)
 %$$
@@ -607,15 +607,15 @@ the boolean values resulting from some of the
 $cref/comparison operations/Compare/$$ corresponding to $icode x$$
 are different from when the 
 AD of $icode Base$$
-$xref/glossary/Operation/Sequence/operation sequence/1/$$ was created.
+$cref/operation sequence/glossary/Operation/Sequence/$$ was created.
 In this case, you may want to re-tape the algorithm with the
 $cref/independent variables/glossary/Tape/Independent Variable/$$ 
 equal to the values in $icode x$$ 
 (so AD operation sequence properly represents the algorithm
 for this value of independent variables).
 On the other hand, re-taping the AD operation sequence usually takes 
-significantly more time than evaluation using $cref/ForwardZero/$$.
-If the functions values have not changed (see $cref/FunCheck/$$)
+significantly more time than evaluation using $cref ForwardZero$$.
+If the functions values have not changed (see $cref FunCheck$$)
 it may not be worth re-taping a new AD operation sequence. 
 
 $head Restrictions$$
@@ -632,7 +632,7 @@ $children%
 	example/compare_change.cpp
 %$$
 The file
-$cref/CompareChange.cpp/$$
+$cref CompareChange.cpp$$
 contains an example and test of this operation.
 They return true if they succeed and false otherwise.
 

@@ -70,7 +70,7 @@ $latex \[
 \] $$ 
 in the definition for $latex G$$ and $latex H$$.
 The forward mode formulas for the
-$xref/SinCosForward//sine and cosine/$$ functions are
+$cref/sine and cosine/SinCosForward/$$ functions are
 $latex \[
 \begin{array}{rcl}
 s^{(j)}  & = & \frac{1 + \ell}{2} \sin ( x^{(0)} ) 

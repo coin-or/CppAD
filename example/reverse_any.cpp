@@ -44,7 +44,7 @@ $latex \[
 \] $$
 Another difference is that in actual applications,
 the memory corresponding to function objects not currently being used
-is sometimes returned to the system (see $cref/checkpoint.cpp/$$).
+is sometimes returned to the system (see $cref checkpoint.cpp$$).
 
 $head Processing Steps$$
 We apply reverse mode to compute the derivative of

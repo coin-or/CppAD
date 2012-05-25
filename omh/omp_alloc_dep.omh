@@ -41,7 +41,7 @@ $codei%
 	const void* %v_ptr%
 %$$.
 It must be a pointer to memory that is currently in use; i.e.
-obtained by a previous call to $cref/get_memory/$$ and not yet returned.
+obtained by a previous call to $cref get_memory$$ and not yet returned.
 
 $head num_bytes$$
 This argument has prototype
@@ -67,7 +67,7 @@ bytes of information.
 
 $head Thread$$
 Either the $cref/current thread/get_thread_num/$$ must be the same as during
-the corresponding call to $cref/get_memory/$$,
+the corresponding call to $cref get_memory$$,
 or the current execution mode must be sequential 
 (not $cref/parallel/in_parallel/$$).
 

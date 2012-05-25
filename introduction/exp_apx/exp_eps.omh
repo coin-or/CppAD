@@ -58,17 +58,17 @@ $index order, zero forward$$
 $index forward, zero order$$
 
 $head Mathematical Form$$
-Suppose that we use the algorithm $xref/exp_eps.hpp/$$
-to compute $syntax%exp_eps(%x%, %epsilon%)%$$
-with $italic x$$ is equal to .5
-and $italic epsilon$$ is equal to .2. 
+Suppose that we use the algorithm $cref exp_eps.hpp$$
+to compute $codei%exp_eps(%x%, %epsilon%)%$$
+with $icode x$$ is equal to .5
+and $icode epsilon$$ is equal to .2. 
 For this case, 
 the mathematical form for the operation sequence 
 corresponding to the $code exp_eps$$ is
 $latex \[
 	f( x , \varepsilon ) = 1 + x + x^2 / 2  
 \] $$
-Note that, for these particular values of $italic x$$ and $italic epsilon$$,
+Note that, for these particular values of $icode x$$ and $icode epsilon$$,
 this is the same as the mathematical form for
 $cref/exp_2/exp_2_for0/Mathematical Form/$$.
 
@@ -76,17 +76,17 @@ $cref/exp_2/exp_2_for0/Mathematical Form/$$.
 $head Operation Sequence$$
 We consider the 
 $cref/operation sequence/glossary/Operation/Sequence/$$
-corresponding to the algorithm $xref/exp_eps.hpp/$$
-with the argument $italic x$$ is equal to .5
-and $italic epsilon$$ is equal to .2. 
+corresponding to the algorithm $cref exp_eps.hpp$$
+with the argument $icode x$$ is equal to .5
+and $icode epsilon$$ is equal to .2. 
 
 $subhead Variable$$
 We refer to values that depend on the input variables
-$italic x$$ and $italic epsilon$$ as variables.
+$icode x$$ and $icode epsilon$$ as variables.
 
 $subhead Parameter$$
 We refer to values that do not depend on the input variables
-$italic x$$ or $italic epsilon$$ as parameters.
+$icode x$$ or $icode epsilon$$ as parameters.
 Operations where the result is a parameter are not included
 in the zero order sweep below.
 
@@ -168,8 +168,8 @@ $latex \[
 \] $$
 
 $head Comparisons$$
-If $italic x$$ were negative,
-or if $italic epsilon$$ were a much smaller or much larger value,
+If $icode x$$ were negative,
+or if $icode epsilon$$ were a much smaller or much larger value,
 the results of the following comparisons could be different:
 $codep
 	if( Type(0) > x ) 
@@ -177,8 +177,8 @@ $codep
 $$
 This in turn would result in a different operation sequence.
 Thus the operation sequence above only corresponds to 
-$cref/exp_eps.hpp/$$
-for values of $italic x$$ and $italic epsilon$$ within a certain range.
+$cref exp_eps.hpp$$
+for values of $icode x$$ and $icode epsilon$$ within a certain range.
 Note that there is a neighborhood
 of $latex x = 0.5$$ for which the comparisons would have the 
 same result and hence the operation sequence would be the same.
@@ -188,7 +188,7 @@ $children%
 %$$
 
 $head Verification$$
-The file $xref/exp_eps_for0.cpp/$$ contains a routine 
+The file $cref exp_eps_for0.cpp$$ contains a routine 
 that verifies the values computed above.
 It returns true for success and false for failure.
 
@@ -201,12 +201,12 @@ i.e., what are the corresponding values for
 $latex v_1^{(0)} , v_2^{(0)} , \ldots , v_7^{(0)}$$.
 $lnext
 Create a modified version of 
-$cref/exp_eps_for0.cpp/$$ that verifies the values you obtained
+$cref exp_eps_for0.cpp$$ that verifies the values you obtained
 for the previous exercise.
 $lnext
 Create and run a main program that reports the result of calling 
 the modified version 
-of $cref/exp_eps_for0.cpp/$$ in the previous exercise.
+of $cref exp_eps_for0.cpp$$ in the previous exercise.
 $lend
 
 $end
@@ -243,10 +243,10 @@ at $latex t = 0$$ ($latex \varepsilon (t)$$)
 at $latex t = 0$$.
 
 $head Mathematical Form$$
-Suppose that we use the algorithm $xref/exp_eps.hpp/$$
-to compute $syntax%exp_eps(%x%, %epsilon%)%$$
-with $italic x$$ is equal to .5
-and $italic epsilon$$ is equal to .2. 
+Suppose that we use the algorithm $cref exp_eps.hpp$$
+to compute $codei%exp_eps(%x%, %epsilon%)%$$
+with $icode x$$ is equal to .5
+and $icode epsilon$$ is equal to .2. 
 For this case, the mathematical function for the operation sequence
 corresponding to $code exp_eps$$ is
 $latex \[
@@ -378,7 +378,7 @@ $children%
 %$$
 
 $head Verification$$
-The file $xref/exp_eps_for1.cpp/$$ contains a routine 
+The file $cref exp_eps_for1.cpp$$ contains a routine 
 that verifies the values computed above.
 It returns true for success and false for failure.
 
@@ -391,15 +391,15 @@ i.e., what are the corresponding values for
 $latex v_1^{(0)}, v_2^{(0)}, \cdots , v_7^{(0)}$$ and
 $latex v_1^{(1)}, v_2^{(1)}, \cdots , v_7^{(1)}$$ ?
 $lnext
-Create a modified version of $cref/exp_eps_for1.cpp/$$ that verifies 
+Create a modified version of $cref exp_eps_for1.cpp$$ that verifies 
 the derivative values from the previous exercise.
 Also create and run a main program that reports the result
 of calling the modified version of
-$cref/exp_eps_for1.cpp/$$.
+$cref exp_eps_for1.cpp$$.
 $lnext
 Suppose that $latex x = .1$$ and $latex \epsilon = .2$$,
 what is the operation sequence corresponding to 
-$syntax%
+$codei%
 	exp_eps(%x%, %epsilon%)
 %$$
 $lend
@@ -432,10 +432,10 @@ The computations are done in reverse
 of the order of the computations in the original algorithm.
 
 $head Mathematical Form$$
-Suppose that we use the algorithm $xref/exp_eps.hpp/$$
-to compute $syntax%exp_eps(%x%, %epsilon%)%$$
-with $italic x$$ is equal to .5
-and $italic epsilon$$ is equal to .2. 
+Suppose that we use the algorithm $cref exp_eps.hpp$$
+to compute $codei%exp_eps(%x%, %epsilon%)%$$
+with $icode x$$ is equal to .5
+and $icode epsilon$$ is equal to .2. 
 For this case, the mathematical function for the operation sequence
 corresponding to $code exp_eps$$ is
 $latex \[
@@ -462,7 +462,7 @@ the presentation.
 $head f_7$$
 In reverse mode we choose one dependent variable and
 compute its derivative with respect to all the independent variables.
-For our example, we chose the value returned by $cref/exp_eps.hpp/$$
+For our example, we chose the value returned by $cref exp_eps.hpp$$
 which is $latex v_7$$.
 We begin with the function $latex f_7$$ where $latex v_7$$ 
 is both an argument and the value of the function; i.e.,
@@ -648,12 +648,12 @@ $latex \[
 \] $$
 
 Note that $latex v_1$$ is equal to $latex x$$,
-so the derivative of $syntax%exp_eps(%x%, %epsilon%)%$$ 
-at $italic x$$ equal to .5 and $italic epsilon$$ equal .2 is
-1.5 in the $italic x$$ direction and zero in the $italic epsilon$$ direction.
+so the derivative of $codei%exp_eps(%x%, %epsilon%)%$$ 
+at $icode x$$ equal to .5 and $icode epsilon$$ equal .2 is
+1.5 in the $icode x$$ direction and zero in the $icode epsilon$$ direction.
 We also note that 
 $cref/forward/exp_eps_for1/$$ forward mode gave the 
-same result for the partial in the $italic x$$ direction.
+same result for the partial in the $icode x$$ direction.
 
 
 $children%
@@ -661,7 +661,7 @@ $children%
 %$$
 
 $head Verification$$
-The file $xref/exp_eps_rev1.cpp/$$ contains a routine 
+The file $cref exp_eps_rev1.cpp$$ contains a routine 
 that verifies the values computed above.
 It returns true for success and false for failure.
 It only tests the partial derivatives of
@@ -682,11 +682,11 @@ $latex \D{f_j}{v_k}$$ for all $latex j, k$$ such that
 $latex \D{f_j}{v_k} \neq 0$$.
 $lnext
 Create a modified version of 
-$cref/exp_eps_rev1.cpp/$$ 
+$cref exp_eps_rev1.cpp$$ 
 that verifies the values you obtained for the previous exercise.
 Also create and run a main program that reports the result
 of calling the modified version of
-$cref/exp_eps_rev1.cpp/$$.
+$cref exp_eps_rev1.cpp$$.
 $lend
 
 $end
@@ -739,10 +739,10 @@ and thereby obtain the second order expansion,
 for all the variables in the operation sequence.
 
 $head Mathematical Form$$
-Suppose that we use the algorithm $xref/exp_eps.hpp/$$
-to compute $syntax%exp_eps(%x%, %epsilon%)%$$
-with $italic x$$ is equal to .5
-and $italic epsilon$$ is equal to .2. 
+Suppose that we use the algorithm $cref exp_eps.hpp$$
+to compute $codei%exp_eps(%x%, %epsilon%)%$$
+with $icode x$$ is equal to .5
+and $icode epsilon$$ is equal to .2. 
 For this case, the mathematical function for the operation sequence
 corresponding to $code exp_eps$$ is
 $latex \[
@@ -897,15 +897,15 @@ $children%
 	introduction/exp_apx/exp_eps_for2.cpp
 %$$
 $head Verification$$
-The file $xref/exp_eps_for2.cpp/$$ contains a routine 
+The file $cref exp_eps_for2.cpp$$ contains a routine 
 which verifies the values computed above.
 It returns true for success and false for failure.
 
 $head Exercises$$
 $list number$$
-Which statement in the routine defined by $cref/exp_eps_for2.cpp/$$ uses 
+Which statement in the routine defined by $cref exp_eps_for2.cpp$$ uses 
 the values that are calculated by the routine 
-defined by $cref/exp_eps_for1.cpp/$$ ?
+defined by $cref exp_eps_for1.cpp$$ ?
 $lnext
 Suppose that $latex x = .1$$,
 what are the results of a zero, first, and second order forward sweep for 
@@ -913,11 +913,11 @@ the operation sequence above;
 i.e., what are the corresponding values for
 $latex v_i^{(k)}$$ for $latex i = 1, \ldots , 7$$ and $latex k = 0, 1, 2$$.
 $lnext
-Create a modified version of $cref/exp_eps_for2.cpp/$$ that verifies 
+Create a modified version of $cref exp_eps_for2.cpp$$ that verifies 
 the derivative values from the previous exercise.
 Also create and run a main program that reports the result
 of calling the modified version of
-$cref/exp_eps_for2.cpp/$$.
+$cref exp_eps_for2.cpp$$.
 $lend
 
 $end
@@ -948,10 +948,10 @@ of that variables first order expansion coefficient,
 with respect to all of the independent variables.
 
 $head Mathematical Form$$
-Suppose that we use the algorithm $xref/exp_eps.hpp/$$
-to compute $syntax%exp_eps(%x%, %epsilon%)%$$
-with $italic x$$ is equal to .5
-and $italic epsilon$$ is equal to .2. 
+Suppose that we use the algorithm $cref exp_eps.hpp$$
+to compute $codei%exp_eps(%x%, %epsilon%)%$$
+with $icode x$$ is equal to .5
+and $icode epsilon$$ is equal to .2. 
 For this case, the mathematical function for the operation sequence
 corresponding to $code exp_eps$$ is
 $latex \[
@@ -978,7 +978,7 @@ the presentation.
 $head f_7$$
 In reverse mode we choose one dependent variable and
 compute its derivative with respect to all the independent variables.
-For our example, we chose the value returned by $cref/exp_eps.hpp/$$
+For our example, we chose the value returned by $cref exp_eps.hpp$$
 which is $latex v_7$$.
 We begin with the function $latex f_7$$ where $latex v_7$$ 
 is both an argument and the value of the function; i.e.,
@@ -1258,8 +1258,8 @@ $latex \[
 \] $$
 Note that $latex v_1$$ is equal to $latex x$$,
 so the second partial derivative of 
-$syntax%exp_eps(%x%, %epsilon%)%$$ 
-at $italic x$$ equal to .5 and $italic epsilon$$ equal .2 is 
+$codei%exp_eps(%x%, %epsilon%)%$$ 
+at $icode x$$ equal to .5 and $icode epsilon$$ equal .2 is 
 $latex \[
 \Dpow{2}{x} v_7^{(0)}
 = \D{v_7^{(1)}}{x} 
@@ -1268,7 +1268,7 @@ $latex \[
 \] $$
 There is a theorem about algorithmic differentiation that explains why
 the other partial of $latex f_1$$ is equal to the first partial of
-$syntax%exp_eps(%x%, %epsilon%)%$$ 
+$codei%exp_eps(%x%, %epsilon%)%$$ 
 with respect to $latex x$$.
 
 
@@ -1277,7 +1277,7 @@ $children%
 %$$
 
 $head Verification$$
-The file $xref/exp_eps_rev2.cpp/$$ contains a routine 
+The file $cref exp_eps_rev2.cpp$$ contains a routine 
 that verifies the values computed above.
 It returns true for success and false for failure.
 It only tests the partial derivatives of
@@ -1298,11 +1298,11 @@ $latex \D{f_j}{v_k}$$ for all $latex j, k$$ such that
 $latex \D{f_j}{v_k} \neq 0$$.
 $lnext
 Create a modified version of 
-$cref/exp_eps_rev2.cpp/$$ 
+$cref exp_eps_rev2.cpp$$ 
 that verifies the values you obtained for the previous exercise.
 Also create and run a main program that reports the result
 of calling the modified version of
-$cref/exp_eps_rev2.cpp/$$.
+$cref exp_eps_rev2.cpp$$.
 $lend
 
 $end

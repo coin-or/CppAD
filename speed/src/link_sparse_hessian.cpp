@@ -37,7 +37,7 @@ $codei%extern bool link_sparse_hessian(
 $head f$$
 Given a first index vector $latex i$$ and a second index vector $latex j$$,
 the corresponding function 
-$latex f : \R^n \rightarrow \R $$ is defined by $cref/sparse_evaluate/$$
+$latex f : \R^n \rightarrow \R $$ is defined by $cref sparse_evaluate$$
 and the index vectors $icode i$$ and $icode j$$.
 The non-zero entries in the Hessian of this function have 
 one of the following forms:

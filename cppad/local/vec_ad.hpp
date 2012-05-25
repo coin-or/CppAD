@@ -41,116 +41,116 @@ $section AD Vectors that Record Index Operations$$
 
 
 $head Syntax$$
-$syntax%VecAD<%Base%> %v%(%n%)%$$
+$codei%VecAD<%Base%> %v%(%n%)%$$
 $pre
 $$
-$syntax%%v%.size()%$$
+$icode%v%.size()%$$
 $pre
 $$
-$syntax%%b% = %v%[%i%]%$$
+$icode%b% = %v%[%i%]%$$
 $pre
 $$
-$syntax%%r% = %v%[%x%]%$$
+$icode%r% = %v%[%x%]%$$
 
 
 $head Purpose$$
-If either $italic v$$ or $italic x$$ is a 
+If either $icode v$$ or $icode x$$ is a 
 $cref/variable/glossary/Variable/$$,
 the indexing operation
-$syntax%
+$codei%
 	%y% = %v%[%x%]
 %$$
 is recorded in the corresponding
-AD of $italic Base$$
-$xref/glossary/Operation/Sequence/operation sequence/1/$$ and 
-transferred to the corresponding $xref/ADFun/$$ object $italic f$$.
+AD of $icode Base$$
+$cref/operation sequence/glossary/Operation/Sequence/$$ and 
+transferred to the corresponding $cref ADFun$$ object $icode f$$.
 Such an index can change each time
-zero order $xref/Forward//f.Forward/$$ is used; i.e.,
-$italic f$$ is evaluated with new value for the 
+zero order $cref/f.Forward/Forward/$$ is used; i.e.,
+$icode f$$ is evaluated with new value for the 
 $cref/independent variables/glossary/Tape/Independent Variable/$$. 
-Note that the value of $italic y$$ depends on the value of $italic x$$
+Note that the value of $icode y$$ depends on the value of $icode x$$
 in a discrete fashion and CppAD computes its partial derivative with 
-respect to $italic x$$ as zero.
+respect to $icode x$$ as zero.
 
 $head Alternatives$$
 If only the values in the vector, 
 and not the indices, 
 depend on the independent variables,
-the class $syntax%%Vector%< AD<%Base%> >%$$ is much more efficient for
-storing AD values where $italic Vector$$ is any
-$xref/SimpleVector/$$ template class, 
+the class $icode%Vector%< AD<%Base%> >%$$ is much more efficient for
+storing AD values where $icode Vector$$ is any
+$cref SimpleVector$$ template class, 
 If only the indices, 
 and not the values in the vector,
 depend on the independent variables,
-The $xref/Discrete/$$ functions are a much more efficient
+The $cref Discrete$$ functions are a much more efficient
 way to represent these vectors.
 
 $head VecAD<Base>::reference$$
 $index VecAD<Base>::reference$$
 $index reference, VecAD<Base>$$
-The result $italic y$$ has type
-$syntax%
+The result $icode y$$ has type
+$codei%
 	VecAD<%Base%>::reference
 %$$ 
-which is very much like the $syntax%AD<%Base%>%$$ type 
+which is very much like the $codei%AD<%Base%>%$$ type 
 with some notable exceptions:
 
 $subhead Exceptions$$
 $list number$$
-The object $italic y$$ cannot be used with the
-$xref/Value/$$ function to compute the corresponding $italic Base$$ value.
-If $italic v$$ is not a $cref/variable/glossary/Variable/$$
-$syntax%
+The object $icode y$$ cannot be used with the
+$cref Value$$ function to compute the corresponding $icode Base$$ value.
+If $icode v$$ is not a $cref/variable/glossary/Variable/$$
+$codei%
 	v[%i%]
 %$$
-can be used to compute the corresponding $italic Base$$ value.
+can be used to compute the corresponding $icode Base$$ value.
 
 $lnext
-The object $italic y$$ cannot be used
-with the $xref/Arithmetic//computed assignments operators/$$ 
+The object $icode y$$ cannot be used
+with the $cref/computed assignments operators/Arithmetic/$$ 
 $code +=$$, 
 $code -=$$, 
 $code *=$$, or
 $code /=$$.
 For example, the following syntax is not valid:
-$syntax%
+$codei%
 	%v%[%x%] += %z%;
 %$$
-no matter what the types of $italic z$$.
+no matter what the types of $icode z$$.
 
 $lnext
-Assignment to $italic y$$ returns a $code void$$.
+Assignment to $icode y$$ returns a $code void$$.
 For example, the following syntax is not valid:
-$syntax%
+$codei%
 	%z% = %v%[%x%] = %u%;
 %$$
-no matter what the types of $italic z$$, and $italic u$$.
+no matter what the types of $icode z$$, and $icode u$$.
 
 $lnext
-The $xref/CondExp/$$ functions do not accept 
-$syntax%VecAD<%Base%>::reference%$$ arguments.
+The $cref CondExp$$ functions do not accept 
+$codei%VecAD<%Base%>::reference%$$ arguments.
 For example, the following syntax is not valid:
-$syntax%
+$codei%
 	CondExpGt(%y%, %z%, %u%, %v%)
 %$$
-no matter what the types of $italic z$$, $italic u$$, and $italic v$$.
+no matter what the types of $icode z$$, $icode u$$, and $icode v$$.
 
 $lnext
-The $xref/ParVar//Parameter and Variable/$$ functions cannot be used with
-$syntax%VecAD<%Base%>::reference%$$ arguments
-(use the entire $syntax%VecAD<%Base%>%$$ vector instead).
+The $cref/Parameter and Variable/ParVar/$$ functions cannot be used with
+$codei%VecAD<%Base%>::reference%$$ arguments
+(use the entire $codei%VecAD<%Base%>%$$ vector instead).
 
 $lnext
-The vectors passed to $xref/Independent/$$ must have elements
-of type $syntax%AD<%Base%>%$$; i.e., $xref/VecAD/$$ vectors
+The vectors passed to $cref Independent$$ must have elements
+of type $codei%AD<%Base%>%$$; i.e., $cref VecAD$$ vectors
 cannot be passed to $code Independent$$.
 
 $lnext
 If one uses this type in a 
-AD of $italic Base$$
-$xref/glossary/Operation/Sequence/operation sequence/1/$$,
-$xref/glossary/Sparsity Pattern/sparsity pattern/$$ calculations
-($xref/Sparse/$$)
+AD of $icode Base$$
+$cref/operation sequence/glossary/Operation/Sequence/$$,
+$cref/sparsity pattern/glossary/Sparsity Pattern/$$ calculations
+($cref Sparse$$)
 are less efficient because the dependence of different
 elements of the vector cannot be separated.
 
@@ -160,120 +160,120 @@ $head Constructor$$
 
 $subhead v$$
 The syntax 
-$syntax%
+$codei%
 	VecAD<%Base%> %v%(%n%)
 %$$
-creates an $code VecAD$$ object $italic v$$ with 
-$italic n$$ elements.
-The initial value of the elements of $italic v$$ is unspecified.
+creates an $code VecAD$$ object $icode v$$ with 
+$icode n$$ elements.
+The initial value of the elements of $icode v$$ is unspecified.
 
 $head n$$
-The argument $italic n$$ has prototype
-$syntax%
+The argument $icode n$$ has prototype
+$codei%
 	size_t %n%
 %$$
 
 $head size$$
 The syntax
-$syntax%
+$codei%
 	%v%.size()
 %$$
-returns the number of elements in the vector $italic v$$;
-i.e., the value of $italic n$$ when it was constructed.
+returns the number of elements in the vector $icode v$$;
+i.e., the value of $icode n$$ when it was constructed.
 
 $head size_t Indexing$$
 We refer to the syntax
-$syntax%
+$codei%
 	%b% = %v%[%i%]
 %$$
 as $code size_t$$ indexing of a $code VecAD$$ object.
-This indexing is only valid if the vector $italic v$$ is a 
+This indexing is only valid if the vector $icode v$$ is a 
 $cref/parameter/ParVar/$$; i.e.,
 it does not depend on the independent variables.
 
 $subhead i$$
-The operand $italic i$$ has prototype
-$syntax%
+The operand $icode i$$ has prototype
+$codei%
 	size_t %i%
 %$$
 It must be greater than or equal zero
-and less than $italic n$$; i.e., less than
-the number of elements in $italic v$$. 
+and less than $icode n$$; i.e., less than
+the number of elements in $icode v$$. 
 
 $subhead b$$
-The result $italic b$$ has prototype
-$syntax%
+The result $icode b$$ has prototype
+$codei%
 	%Base% %b%
 %$$
-and is a reference to the $th i$$ element in the vector $italic v$$.
+and is a reference to the $th i$$ element in the vector $icode v$$.
 It can be used to change the element value;
 for example,
-$syntax%
+$codei%
 	%v%[%i%] = %c%
 %$$
-is valid where $italic c$$ is a $italic Base$$ object.
-The reference $italic b$$ is no longer valid once the
-destructor for $italic v$$ is called; for example,
-when $italic v$$ falls out of scope.
+is valid where $icode c$$ is a $icode Base$$ object.
+The reference $icode b$$ is no longer valid once the
+destructor for $icode v$$ is called; for example,
+when $icode v$$ falls out of scope.
 
 $head AD Indexing$$
 We refer to the syntax
-$syntax%
+$codei%
 	%r% = %v%[%x%]
 %$$
 as AD indexing of a $code VecAD$$ object.
 
 $subhead x$$
-The argument $italic x$$ has prototype
-$syntax%
+The argument $icode x$$ has prototype
+$codei%
 	const AD<%Base%> &%x%
 %$$
-The value of $italic x$$ must be greater than or equal zero
-and less than $italic n$$; i.e., less than
-the number of elements in $italic v$$. 
+The value of $icode x$$ must be greater than or equal zero
+and less than $icode n$$; i.e., less than
+the number of elements in $icode v$$. 
 
 $subhead r$$
-The result $italic y$$ has prototype
-$syntax%
+The result $icode y$$ has prototype
+$codei%
 	VecAD<%Base%>::reference %r%
 %$$
-The object $italic r$$ has an AD type and its 
+The object $icode r$$ has an AD type and its 
 operations are recorded as part of the same
-AD of $italic Base$$
-$xref/glossary/Operation/Sequence/operation sequence/1/$$ as
-for $syntax%AD<%Base%>%$$ objects.
+AD of $icode Base$$
+$cref/operation sequence/glossary/Operation/Sequence/$$ as
+for $codei%AD<%Base%>%$$ objects.
 It acts as a reference to the 
-element with index $latex {\rm floor} (x)$$ in the vector $italic v$$
+element with index $latex {\rm floor} (x)$$ in the vector $icode v$$
 ($latex {\rm floor} (x)$$ is 
-the greatest integer less than or equal $italic x$$).
+the greatest integer less than or equal $icode x$$).
 Because it is a reference, it can be used to change the element value;
 for example,
-$syntax%
+$codei%
 	%v%[%x%] = %z%
 %$$
-is valid where $italic z$$ is an
-$syntax%VecAD<%Base%>::reference%$$ object.
-As a reference, $italic r$$ is no longer valid once the
-destructor for $italic v$$ is called; for example,
-when $italic v$$ falls out of scope.
+is valid where $icode z$$ is an
+$codei%VecAD<%Base%>::reference%$$ object.
+As a reference, $icode r$$ is no longer valid once the
+destructor for $icode v$$ is called; for example,
+when $icode v$$ falls out of scope.
 
 $head Example$$
 $children%
 	example/vec_ad.cpp
 %$$
 The file
-$xref/vec_ad.cpp/$$
+$cref vec_ad.cpp$$
 contains an example and test using $code VecAD$$ vectors.
 It returns true if it succeeds and false otherwise.
 
 
 $head Speed and Memory$$
-The $xref/VecAD/$$ vector type is inefficient because every
+The $cref VecAD$$ vector type is inefficient because every
 time an element of a vector is accessed, a new CppAD 
-$xref/glossary/Variable/variable/$$ is created on the tape
+$cref/variable/glossary/Variable/$$ is created on the tape
 using either the $code Ldp$$ or $code Ldv$$ operation
 (unless all of the elements of the vector are
-$xref/glossary/Parameter/parameters/$$).
+$cref/parameters/glossary/Parameter/$$).
 The effect of this can be seen by executing the following steps:
 
 $list number$$
@@ -288,7 +288,7 @@ $codep
 	./OneTest LuVecADOk "lu_vec_ad.cpp -DNDEBUG" > LuVecADOk.log
 $$
 This will write a trace of all the forward tape operations,
-for the test case $xref/LuVecADOk.cpp/$$,
+for the test case $cref LuVecADOk.cpp$$,
 to the file $code LuVecADOk.log$$.
 $lnext
 In the $code Example$$ directory execute the commands

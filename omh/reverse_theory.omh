@@ -20,11 +20,11 @@ $section The Theory of Reverse Mode$$
 
 $head Taylor Notation$$
 In Taylor notation, each variable corresponds to 
-a function of a single argument which we denote by $italic t$$
+a function of a single argument which we denote by $icode t$$
 (see Section 10.2 of
-$xref/Bib/Evaluating Derivatives/Evaluating Derivatives/$$).
+$cref/Evaluating Derivatives/Bib/Evaluating Derivatives/$$).
 Here and below
-$latex X(t)$$, $latex Y(t)$$, and $italic Z(t)$$ are scalar valued functions 
+$latex X(t)$$, $latex Y(t)$$, and $icode Z(t)$$ are scalar valued functions 
 and the corresponding $th p$$ order Taylor coefficients row vectors are
 $latex x$$, $latex y$$ and $latex z$$; i.e.,
 $latex \[
@@ -61,7 +61,7 @@ $head Binary Operators$$
 
 $subhead Addition$$
 The forward mode formula for
-$xref/ForwardTheory/Binary Operators/Addition/addition/1/$$ is
+$cref/addition/ForwardTheory/Binary Operators/Addition/$$ is
 $latex \[
 	z^{(j)} =  x^{(j)} + y^{(j)}
 \] $$
@@ -81,7 +81,7 @@ $latex \[
 
 $subhead Subtraction$$
 The forward mode formula for
-$xref/ForwardTheory/Binary Operators/Subtraction/subtraction/1/$$ is
+$cref/subtraction/ForwardTheory/Binary Operators/Subtraction/$$ is
 $latex \[
 	z^{(j)} =  x^{(j)} - y^{(j)}
 \] $$
@@ -98,7 +98,7 @@ $latex \[
 
 $subhead Multiplication$$
 The forward mode formula for
-$xref/ForwardTheory/Binary Operators/Multiplication/multiplication/1/$$ is
+$cref/multiplication/ForwardTheory/Binary Operators/Multiplication/$$ is
 $latex \[
 	z^{(j)} = \sum_{k=0}^j x^{(j-k)} * y^{(k)}
 \] $$
@@ -118,7 +118,7 @@ $latex \[
 
 $subhead Division$$
 The forward mode formula for
-$xref/ForwardTheory/Binary Operators/Division/division/1/$$ is
+$cref/division/ForwardTheory/Binary Operators/Division/$$ is
 $latex \[
 z^{(j)} = 
 \frac{1}{y^{(0)}} 

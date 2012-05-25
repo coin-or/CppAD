@@ -59,7 +59,7 @@ $head Syntax$$
 This file is located in the $code example$$ directory. 
 It can be copied into the current working directory and
 included with the command:
-$syntax%
+$codei%
 	# include "base_adolc.hpp"
 %$$
 
@@ -68,10 +68,10 @@ $children%
 %$$
 
 $head Example$$
-The file $cref/mul_level_adolc.cpp/$$ contains an example use of
-Adolc's $code adouble$$ type for a CppAD $italic Base$$ type.
+The file $cref mul_level_adolc.cpp$$ contains an example use of
+Adolc's $code adouble$$ type for a CppAD $icode Base$$ type.
 It returns true if it succeeds and false otherwise.
-The file $cref/ode_taylor_adolc.cpp/$$ contains a more realistic
+The file $cref ode_taylor_adolc.cpp$$ contains a more realistic
 (and complex) example.
 
 
@@ -89,17 +89,17 @@ $codep */
 $head CondExpOp$$
 The type $code adouble$$ supports a conditional assignment function
 with the syntax
-$syntax%
+$codei%
 	condassign(%a%, %b%, %c%, %d%)
 %$$
 which evaluates to
-$syntax%
+$codei%
 	%a% = (%b% > 0) ? %c% : %d%;
 %$$
 This enables one to include conditionals in the recording of
 $code adouble$$ operations and later evaluation for different
 values of the independent variables 
-(in the same spirit as the CppAD $cref/CondExp/$$ function).
+(in the same spirit as the CppAD $cref CondExp$$ function).
 $codep */
 namespace CppAD {
 	inline adouble CondExpOp(

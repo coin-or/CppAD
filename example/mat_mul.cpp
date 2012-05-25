@@ -28,7 +28,7 @@ $children%
 	example/mat_mul.hpp
 %$$
 $head Include File$$
-This routine uses the include file $cref/mat_mul.hpp/$$.
+This routine uses the include file $cref mat_mul.hpp$$.
 
 $code
 $verbatim%example/mat_mul.cpp%0%// BEGIN PROGRAM%// END PROGRAM%1%$$

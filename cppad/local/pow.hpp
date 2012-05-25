@@ -29,7 +29,7 @@ $index exponent, AD function$$
 $section The AD Power Function$$
 
 $head Syntax$$
-$syntax%%z% = pow(%x%, %y%)%$$
+$icode%z% = pow(%x%, %y%)%$$
 
 
 $head Purpose$$
@@ -39,56 +39,56 @@ $latex \[
 \] $$
 This version of the $code pow$$ function may use
 logarithms and exponentiation to compute derivatives.
-This will not work if $italic x$$ is less than or equal zero.
-If the value of $italic y$$ is an integer, 
-the $cref/pow_int/$$ function is used to compute this value 
-using only multiplication (and division if $italic y$$ is negative). 
-(This will work even if $italic x$$ is less than or equal zero.)
+This will not work if $icode x$$ is less than or equal zero.
+If the value of $icode y$$ is an integer, 
+the $cref pow_int$$ function is used to compute this value 
+using only multiplication (and division if $icode y$$ is negative). 
+(This will work even if $icode x$$ is less than or equal zero.)
 
 $head x$$
-The argument $italic x$$ has the following prototype
-$syntax%
+The argument $icode x$$ has the following prototype
+$codei%
 	const %Type% &%x%
 %$$
-where $italic Type$$ is
-$syntax%VecAD<%Base%>::reference%$$,
-$syntax%AD<%Base%>%$$,
-$syntax%%Base%$$,
-$syntax%double%$$,
+where $icode Type$$ is
+$codei%VecAD<%Base%>::reference%$$,
+$codei%AD<%Base%>%$$,
+$icode%Base%$$,
+$codei%double%$$,
 or
-$syntax%int%$$.
+$codei%int%$$.
 
 $head y$$
-The argument $italic y$$ has the following prototype
-$syntax%
+The argument $icode y$$ has the following prototype
+$codei%
 	const %Type% &%y%
 %$$
-where $italic Type$$ is
-$syntax%VecAD<%Base%>::reference%$$,
-$syntax%AD<%Base%>%$$,
-$syntax%%Base%$$,
-$syntax%double%$$,
+where $icode Type$$ is
+$codei%VecAD<%Base%>::reference%$$,
+$codei%AD<%Base%>%$$,
+$icode%Base%$$,
+$codei%double%$$,
 or
-$syntax%int%$$.
+$codei%int%$$.
 
 $head z$$
-The result $italic z$$ has prototype
-$syntax%
+The result $icode z$$ has prototype
+$codei%
 	AD<%Base%> %z%
 %$$
 
 $head Standard Types$$
 A definition for the $code pow$$ function is included
-in the CppAD namespace for the case where both $italic x$$
-and $italic y$$ have the same type and that type is
+in the CppAD namespace for the case where both $icode x$$
+and $icode y$$ have the same type and that type is
 $code float$$ or $code double$$.
  
 $head Operation Sequence$$
-This is an AD of $italic Base$$
-$xref/glossary/Operation/Atomic/atomic operation/1/$$
+This is an AD of $icode Base$$
+$cref/atomic operation/glossary/Operation/Atomic/$$
 and hence is part of the current
-AD of $italic Base$$
-$xref/glossary/Operation/Sequence/operation sequence/1/$$.
+AD of $icode Base$$
+$cref/operation sequence/glossary/Operation/Sequence/$$.
 
 $head Example$$
 $children%
@@ -96,7 +96,7 @@ $children%
 	example/pow_int.cpp
 %$$
 The files
-$xref/Pow.cpp/$$, $cref/pow_int.cpp/$$
+$cref Pow.cpp$$, $cref pow_int.cpp$$
 contain an examples and tests of this function.   
 They returns true if they succeed and false otherwise.
 

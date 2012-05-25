@@ -63,7 +63,7 @@ $codei%
 %$$
 
 $head Example$$
-The file $cref/mat_mul.cpp/$$ contains an example use of 
+The file $cref mat_mul.cpp$$ contains an example use of 
 $code mat_mul.hpp$$.
 It returns true if it succeeds and false otherwise.
 

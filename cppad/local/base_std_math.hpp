@@ -124,7 +124,7 @@ $codei%
 	%z% = CppAD::pow(%x%, %y%)
 %$$
 which computes $latex z = x^y$$.
-The arguments $icode x$$ and $italic y$$ have prototypes
+The arguments $icode x$$ and $icode y$$ have prototypes
 $codei%
 	const %Base%& %x%
 	const %Base%& %y%

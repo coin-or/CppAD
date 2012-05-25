@@ -31,7 +31,7 @@ This section links to the source code the Adolc speed tests
 
 $head adolc_dir$$
 To run these tests, you must include the $code configure$$ command line option
-$syntax%
+$codei%
 	ADOLC_DIR=%adolc_dir%
 %$$
 during $cref/installation/InstallUnix/adolc_dir/$$.
@@ -50,7 +50,7 @@ $codei%
 	./adolc speed %seed%
 %$$
 where $icode seed$$ is a positive integer.
-See $cref/speed_main/$$ for more options.
+See $cref speed_main$$ for more options.
 
 $head C++ Compiler Flags$$
 The C++ compiler flags used to build the Adolc speed tests are

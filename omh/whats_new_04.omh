@@ -68,28 +68,28 @@ assist you in learning about changes between various versions.
 
 $head 12-11$$
 The documentation for the CppAD error macros was improved.
-The package title in $xref/cppad/$$ was changed.
-The documentation for $xref/CppAD_vector//CppAD::vector/$$ 
+The package title in $cref cppad$$ was changed.
+The documentation for $cref/CppAD::vector/CppAD_vector/$$ 
 was improved and the corresponding source code 
 $code cppad/vector.hpp$$ was included.
 
 $head 12-09$$
-The $xref/LuSolve/$$ and $code OdeRunge$$ source code
+The $cref LuSolve$$ and $code OdeRunge$$ source code
 was modified to make the more in line with the introduction
 to C++ AD book
-($code OdeRunge$$ has been replaced by $xref/Runge45/$$).
+($code OdeRunge$$ has been replaced by $cref Runge45$$).
 In addition, the examples $code OdeRunge.cpp$$ and
-$xref/LuSolve.cpp/$$ were modified to make the simpler.
+$cref LuSolve.cpp$$ were modified to make the simpler.
 (The more complex version of $code OdeRunge.cpp$$
 was moved to the $code TestMore$$ directory.)
 
 $head 12-03$$
-The $xref/Poly/$$ documentation and source code were modified to
+The $cref Poly$$ documentation and source code were modified to
 make them more in line with the introduction to C++ AD book.
 
 $head 11-17$$
 Changing to Autoconf and Automake on
-$xref/whats_new_04/08-24/08-24/$$ mistakenly forgot 
+$cref/08-24/whats_new_04/08-24/$$ mistakenly forgot 
 the $code -Wall$$ compiler switch (all warnings).
 This has been added and the corresponding warnings
 have been fixed.
@@ -100,44 +100,44 @@ because a declaration of $code LessThanOrZero$$ was missing.
 This has been fixed.
 
 $head 11-15$$
-The $xref/ForOne/$$ and $xref/RevOne/$$
-easy to use  $xref/Drivers//drivers/$$ were added.
+The $cref ForOne$$ and $cref RevOne$$
+easy to use  $cref/drivers/Drivers/$$ were added.
 
 $head 11-14$$
-The notation in the $xref/ADFun/$$ sections was changed
-to make the $xref/Forward/$$ and $xref/Reverse/$$ routines
+The notation in the $cref ADFun$$ sections was changed
+to make the $cref Forward$$ and $cref Reverse$$ routines
 easier to use.
 
 
 $head 11-13$$
 The Taylor coefficient vector and matrix notation was folded into
-just $xref/glossary/Taylor Coefficient/Taylor coefficients/$$.
+just $cref/Taylor coefficients/glossary/Taylor Coefficient/$$.
 
 $head 11-12$$
 If $code NDEBUG$$ is not defined during compile time,
-all $syntax%AD<%Base%>%$$ 
-$xref/Compare//comparison/$$ operations are checked during
-$xref/ForwardZero//zero order/$$ forward mode calculations.
+all $codei%AD<%Base%>%$$ 
+$cref/comparison/Compare/$$ operations are checked during
+$cref/zero order/ForwardZero/$$ forward mode calculations.
 The 
-$xref/CompareChange/$$ function
+$cref CompareChange$$ function
 returns the number of comparison operations that have changed.
 
 $head 11-10$$
-The $xref/get_started.cpp/$$ example was changed to use the 
-$xref/Jacobian/$$ driver.
-In addition, more $xref/_index//index/$$ entries,
-that point to the $xref/Drivers//easy to use drivers/$$, 
+The $cref get_started.cpp$$ example was changed to use the 
+$cref Jacobian$$ driver.
+In addition, more $cref/index/_index/$$ entries,
+that point to the $cref/easy to use drivers/Drivers/$$, 
 were added.
 
 $head 11-04$$
 The Microsoft Visual Studio
 project file $code example/Example.dsp/$$ was missing some
 new examples that needed to be linked in
-(see $xref/InstallWindows/$$).
+(see $cref InstallWindows$$).
 This has been fixed.
 
 $head 11-02$$
-The $xref/InstallUnix//unix installation/$$ required the user
+The $cref/unix installation/InstallUnix/$$ required the user
 to touch the files to get the dates in proper order.
 This is no longer necessary.
 
@@ -150,8 +150,8 @@ This seems to have been fixed by using a newer version of the autoconf
 and automake tools.
 
 $head 10-29$$
-Add the example and test $xref/SimpleVector.cpp/$$ 
-to the $xref/SimpleVector/$$ documentation.
+Add the example and test $cref SimpleVector.cpp$$ 
+to the $cref SimpleVector$$ documentation.
 $pre
 
 $$
@@ -166,27 +166,27 @@ This has been fixed.
 
 $head 10-28$$
 The examples 
-$xref/HesLuDet.cpp/$$,
-$xref/HesMinorDet.cpp/$$,
-$xref/JacLuDet.cpp/$$,
+$cref HesLuDet.cpp$$,
+$cref HesMinorDet.cpp$$,
+$cref JacLuDet.cpp$$,
 and
-$xref/JacMinorDet.cpp/$$ used the negative of a $code size_t$$ value.
+$cref JacMinorDet.cpp$$ used the negative of a $code size_t$$ value.
 The value has been changed to an $code int$$.
 $pre
 
 $$
-The $xref/CppAD_vector//CppAD::vector/$$ template class
+The $cref/CppAD::vector/CppAD_vector/$$ template class
 was converted into a library routine so it can be used
 separately from the rest of CppAD.
 
 $head 10-27$$
-The $xref/PrintFor/$$ example was moved to its own directory
+The $cref PrintFor$$ example was moved to its own directory
 because the conversion from VC 6.0 to VC 7.0 projects
 did not work when there were multiple executables in one project file.
-The $xref/install/$$ instructions were modified to reflect this change.
+The $cref install$$ instructions were modified to reflect this change.
 
 $head 10-21$$
-One declaration (for the $xref/Value/$$ function) was missing
+One declaration (for the $cref Value$$ function) was missing
 from the file $code cppad/local/Declare.h$$.
 This has been added and CppAD should now compile and run
 under both Microsoft VC 6.0 and 7.0. 
@@ -200,13 +200,13 @@ Some friend declarations were removed and others were made more specific
 in order to migrate the a version that will compile and run using VC 7.0.
 
 $head 10-16$$
-The example $xref/Compare.cpp/$$ displayed the text from
-$xref/BoolFun.cpp/$$ by mistake.
+The example $cref Compare.cpp$$ displayed the text from
+$cref BoolFun.cpp$$ by mistake.
 This has been fixed.
 $pre
 
 $$
-The $xref/Compare/$$ operators have been extended to work with
+The $cref Compare$$ operators have been extended to work with
 $code int$$ operands.
 
 $head 10-06$$
@@ -221,7 +221,7 @@ $pre
 
 $$
 The 
-$xref/InstallWindows//windows installation/$$ steps
+$cref/windows installation/InstallWindows/$$ steps
 do not build a $code config.h$$ file.
 Hence a default $code config.h$$ file was added to the 
 distribution for use with Microsoft Visual Studio.
@@ -234,10 +234,10 @@ $pre
 
 $$
 Links to the ADOLC and FADBAD download pages were added
-to the $xref/InstallUnix//unix installation/$$ instructions.
+to the $cref/unix installation/InstallUnix/$$ instructions.
 
 $head 09-29$$
-The include files for the $xref/library/$$ are now included
+The include files for the $cref library$$ are now included
 by the root file $code cppad/cppad.hpp$$. 
 They can still be included individually with out the rest of
 the CppAD package.
@@ -247,25 +247,25 @@ The routine $code OdeRunge$$ was modified
 so that it will now integrate functions of a complex arguments.
 This was done by removing
 all uses of greater than and less than comparisons were removed.
-($code OdeRunge$$ has been replaced by $xref/Runge45/$$).
+($code OdeRunge$$ has been replaced by $cref Runge45$$).
 $pre
 
 $$
-The changes on $xref/whats_new_04/09-21/09-21/$$ did not fix all
+The changes on $cref/09-21/whats_new_04/09-21/$$ did not fix all
 the file date and time problems; i.e., automake was still running
-in response to the $xref/InstallUnix//unix installation/$$ 
+in response to the $cref/unix installation/InstallUnix/$$ 
 $code make$$ command.
 
 
 $head 09-23$$
-There was a reference to $italic B$$ that should have been $italic X$$
+There was a reference to $icode B$$ that should have been $icode X$$
 in the description of the 
-$xref/LuSolve/X/X/$$ argument of $code LuSolve$$.
+$cref/X/LuSolve/X/$$ argument of $code LuSolve$$.
 This has been fixed.
 
 $head 09-21$$
-The $xref/CondExp/$$ function has been modified so that it works properly
-for $syntax%AD< AD<%Base%> >%$$ types; i.e.,
+The $cref CondExp$$ function has been modified so that it works properly
+for $codei%AD< AD<%Base%> >%$$ types; i.e.,
 it now works for multiple levels of taping.
 $pre
 
@@ -273,7 +273,7 @@ $$
 The date of the files $code aclocal.m4$$ and $code config.h.in$$
 were later than the date of top level $code Makefile.am$$.
 This caused the $code make$$ command during the 
-$xref/InstallUnix//unix installation/$$
+$cref/unix installation/InstallUnix/$$
 to try to run $code autoconf$$
 and this did not work on systems with very old versions of $code autoconf$$.
 This has been fixed.
@@ -283,7 +283,7 @@ $head 09-13$$
 The examples that are specific to an operation were moved
 to be below that operation in the documentation tree.
 For example
-$xref/Add.cpp/$$ is below $cref/ad_binary/$$ 
+$cref Add.cpp$$ is below $cref ad_binary$$ 
 in the documentation tree.
 
 $head 09-10$$
@@ -293,22 +293,22 @@ This has been fixed.
 $pre
 
 $$
-The $italic Base$$ type requirements were simplified.
+The $icode Base$$ type requirements were simplified.
 $pre
 
 $$
-The $xref/InstallUnix//Unix installation/$$ instructions
+The $cref/Unix installation/InstallUnix/$$ instructions
 were modified so just one make command was executed at the top level.
 This was necessary because the order of the makes is now important
 (as previously suggested, the makes did not work properly).
 
 $head 09-09$$
-The $xref/PrintFor/$$ function was added so that
+The $cref PrintFor$$ function was added so that
 users can debug the computation of function values
 at arguments that are different from those used when taping.
 
 $head 09-07$$
-In the $xref/InstallUnix//Unix installation/$$ instructions
+In the $cref/Unix installation/InstallUnix/$$ instructions
 place $code ./$$ in front of current directory program names; for example,
 $code ./GetStarted$$ instead of $code GetStarted$$
 (because some unix systems do not have the current directory
@@ -317,23 +317,23 @@ in the default executable path).
 
 $head 09-04$$
 A library containing the 
-$xref/SpeedTest/$$ and $xref/NearEqual/$$ object files
+$cref SpeedTest$$ and $cref NearEqual$$ object files
 was added to the distribution.
 $pre
 
 $$
 All of the include files of the form 
-$syntax%<cppad/library/%name%.h>%$$ were moved to
-$syntax%<cppad/%name%.h>%$$. 
+$codei%<cppad/library/%name%.h>%$$ were moved to
+$codei%<cppad/%name%.h>%$$. 
 
 $head 09-02$$
 Some more messages were added to the output of $code configure$$
-during the $xref/InstallUnix//Unix installation/$$.
+during the $cref/Unix installation/InstallUnix/$$.
 $pre
 
 $$
 The suggested compression program during 
-$xref/InstallWindows//Windows installation/$$
+$cref/Windows installation/InstallWindows/$$
 was changed from
 $href%
 	http://www.7-zip.org%
@@ -360,12 +360,12 @@ command line option
 $pre
 
 $$
-The $xref/Install//installation instructions/$$ for 
+The $cref/installation instructions/Install/$$ for 
 Unix and Windows were split into separate pages.
 
 $head 08-25$$
-The $xref/Install//installation/$$ now automates the replacement
-of $xref/CppAD_vector//CppAD::vector/$$ by 
+The $cref/installation/Install/$$ now automates the replacement
+of $cref/CppAD::vector/CppAD_vector/$$ by 
 either the $code std::vector$$
 or $code boost::numeric::ublas::vector$$.
 
@@ -373,16 +373,16 @@ $head 08-24$$
 This date marks the first release that uses
 the Gnu tools Autoconf and Automake.
 This automates the building of the make files for the
-$xref/Install//installation/$$ and is the standard
+$cref/installation/Install/$$ and is the standard
 way to distribute open source software.
 This caused some organizational changes,
-for example, the $xref/get_started.cpp//GetStarted/$$ example now 
+for example, the $cref/GetStarted/get_started.cpp/$$ example now 
 has its own directory and
 the distribution directory is named
-$syntax%
+$codei%
 	cppad-%yy%-%mm%-%dd%
 %$$
-where $syntax%%yy%-%mm%-%dd%$$ is the year, month and date
+where $icode%yy%-%mm%-%dd%$$ is the year, month and date
 of the distribution.
 (Note the distribution directory is different from the directory
 where CppAD is finally installed.)
@@ -394,7 +394,7 @@ In addition, change it so that the vector type was a template argument; i.e.,
 works for any type of vector (not just $code CppADvector$$).
 
 $head 07-31$$
-Move $xref/LuSolve/$$ into the $code cppad/library/$$ directory.
+Move $cref LuSolve$$ into the $code cppad/library/$$ directory.
 In addition, change it so that the vector type was a template argument; i.e.,
 works for any type of vector (not just $code CppADvector$$).
 
@@ -402,23 +402,23 @@ works for any type of vector (not just $code CppADvector$$).
 $head 07-08$$
 The file $code cppad/example/NearEqual.h$$ has been moved
 to $code cppad/example/NearEqualExt.h$$ because it contains
-extensions of the $xref/NearEqual/$$ routine to $code AD$$ types. 
+extensions of the $cref NearEqual$$ routine to $code AD$$ types. 
 
 $head 07-07$$
 The $code double$$ and $code std::complex<double>$$
-cases for the $xref/NearEqual/$$ routine arguments
-has been moved to the general purpose $xref/library/$$.
+cases for the $cref NearEqual$$ routine arguments
+has been moved to the general purpose $cref library$$.
 
 $head 07-03$$
 The CppAD error macros names
 $code CppADExternalAssert$$ and $code CppADInternalAssert$$
 were changed to
 $code CppADUsageError$$ and $code CppADUnknownError$$.
-The $xref/SpeedTest/$$ routine was changed to use $code CppADUsageError$$
+The $cref SpeedTest$$ routine was changed to use $code CppADUsageError$$
 instead of a C assert.
 
 $head 07-02$$
-The $xref/SpeedTest/$$ output was improved so that the columns of
+The $cref SpeedTest$$ output was improved so that the columns of
 values line up. Previously, this was not the case when
 the number of digits in the size changed.
 
@@ -430,28 +430,28 @@ $head 06-25$$
 A discussion of the order dependence of the
 $cref/assignment/ad_assign/$$ operator
 and the 
-$xref/Independent//independent function/$$
+$cref/independent function/Independent/$$
 was added to the
-$xref/Faq/Assignment and Independent/Faq/$$. 
+$cref/Faq/Faq/Assignment and Independent/$$. 
 In addition,
 a similar discussion
 was added to the documentation for the
-$xref/Independent/$$ function.
+$cref Independent$$ function.
 $pre
 
 $$
 The definition of a 
-$xref/glossary/Parameter/parameter/$$
+$cref/parameter/glossary/Parameter/$$
 and 
-$xref/glossary/Variable/variable/$$
+$cref/variable/glossary/Variable/$$
 were changed to reflect that fact that 
 these are time dependent (current) properties
-of an $syntax%AD<%Base%>%$$ object.
+of an $codei%AD<%Base%>%$$ object.
 
 
 $head 06-12$$
 All of the 
-$xref/Arithmetic//arithmetic operators/$$ 
+$cref/arithmetic operators/Arithmetic/$$ 
 (except for the unary operators)
 can now accept $code int$$ arguments.
 The documentation for these arguments has been changed to reflect this.
@@ -463,37 +463,37 @@ $code cppad/Test$$ directory.
 
 
 $head 06-04$$
-The $xref/atan2//atan2/$$ function was added.
+The $cref/atan2/atan2/$$ function was added.
 
 $head 06-03$$
 The $code asin$$ and $code acos$$ 
-$xref/std_math_ad//AD standard math unary functions/$$ were added.
+$cref/AD standard math unary functions/std_math_ad/$$ were added.
 $pre
 
 $$
 There was a bug the reverse mode theory and calculation of 
-derivatives of $xref/std_math_ad//sqrt/$$ for fourth and higher orders. 
+derivatives of $cref/sqrt/std_math_ad/$$ for fourth and higher orders. 
 This has been fixed.
 In addition,
 the following examples have been changed
 so that they test derivative up to fifth order:
-$xref/Asin.cpp//asin/$$,
-$xref/Atan.cpp//atan/$$,
-$xref/Cos.cpp//cos/$$,
-$xref/Exp.cpp//exp/$$,
-$xref/Log.cpp//log/$$,
-$xref/Sin.cpp//sin/$$,
-$xref/Sqrt.cpp//sqrt/$$.
+$cref/asin/Asin.cpp/$$,
+$cref/atan/Atan.cpp/$$,
+$cref/cos/Cos.cpp/$$,
+$cref/exp/Exp.cpp/$$,
+$cref/log/Log.cpp/$$,
+$cref/sin/Sin.cpp/$$,
+$cref/sqrt/Sqrt.cpp/$$.
 
 
 $head 06-01$$
-There was a bug in the $xref/std_math_ad//atan/$$ function 
-$xref/Forward//forward mode/$$ calculations for Taylor coefficient
+There was a bug in the $cref/atan/std_math_ad/$$ function 
+$cref/forward mode/Forward/$$ calculations for Taylor coefficient
 orders greater than two.
 This has been fixed.
 
 $head 05-30$$
-The $xref/Sin.cpp//sin/$$ and $xref/Cos.cpp//cos/$$ examples were
+The $cref/sin/Sin.cpp/$$ and $cref/cos/Cos.cpp/$$ examples were
 changed so that they tested higher order derivatives.
 
 
@@ -518,35 +518,35 @@ For example, $latex \sin(x)$$ instead of $latex sin(x)$$.
 
 
 $head 05-26$$
-In the documentation for $xref/Poly/$$,
+In the documentation for $cref Poly$$,
 the reference to $code example/Poly.h$$ 
 was corrected to $code cppad/library/Poly.h$$.
 $pre
 
 $$
-In the documentation for $xref/SpeedTest/$$,
+In the documentation for $cref SpeedTest$$,
 the reference to $code Lib/SpeedTest.h$$ 
 was corrected to $code cppad/library/SpeedTest.h$$.
 In addition, the example case was corrected.
 $pre
 
 $$
-In $xref/Reverse/$$, the definition for $latex U(t, u)$$ had
+In $cref Reverse$$, the definition for $latex U(t, u)$$ had
 $latex t^p-1$$ where it should have had $latex t^{p-1}$$.
 This has been fixed.
 
 
 $head 05-25$$
-The special case where the second argument to the $xref/pow/$$ function is an
+The special case where the second argument to the $cref pow$$ function is an
 $code int$$ has been added.
 
 $head 05-14$$
 Change all of the include syntax
-$syntax%
+$codei%
 	# include "%filename%"
 %$$
 to the syntax
-$syntax%
+$codei%
 	# include <%filename%>
 %$$
 so that examples and other use better reflect how one would use CppAD after
@@ -575,12 +575,12 @@ $pre
 
 $$
 All of the include commands of the form
-$syntax%
+$codei%
 	# include "include/%name%.h"
 	# include "lib/%name%.h"
 %$$
 have been changed to the form
-$syntax%
+$codei%
 	# include "cppad/include/%name%.h"
 	# include "cppad/lib/%name%.h"
 %$$
@@ -607,17 +607,17 @@ The window $code nmake$$ file $code Speed/Speed.mak$$ was out of date.
 This has been fixed.
 
 $head 05-09$$
-Move $xref/Poly/$$ and $xref/SpeedTest/$$ into the
+Move $cref Poly$$ and $cref SpeedTest$$ into the
 $code cppad/Lib$$ directory and the $code CppAD$$ namespace.
 
 
 $head 05-07$$
-The $xref/Div.cpp//divide operator tests/$$ were extended to
+The $cref/divide operator tests/Div.cpp/$$ were extended to
 include a second order derivative calculation using reverse mode.
 $pre
 
 $$
-The $xref/Poly/$$ routine was modified to be more efficient in the
+The $cref Poly$$ routine was modified to be more efficient in the
 derivative case. In addition, it was changed to use an arbitrary
 vector for the coefficients (not just a $code CppADvector$$).
 
@@ -630,19 +630,19 @@ These have been moved to $code include/Atan.h$$ and $code include/Cos.h$$
 respectively.
 
 $head 05-03$$
-The $xref/Reverse/$$ mode calculations for 
-$xref/CondExp//conditional expressions/$$ were mistakenly left out.
+The $cref Reverse$$ mode calculations for 
+$cref/conditional expressions/CondExp/$$ were mistakenly left out.
 This has been fixed.
 
 $head 04-29$$
-The unary functions, such as $xref/std_math_ad//sin/$$ and $xref/std_math_ad//cos/$$,
-were not defined for elements of an $xref/VecAD/$$ vector.
+The unary functions, such as $cref/sin/std_math_ad/$$ and $cref/cos/std_math_ad/$$,
+were not defined for elements of an $cref VecAD$$ vector.
 This has been fixed.
 
 
 $head 04-28$$
-The operator $xref/CppAD_vector/Output/<</$$ was added to the
-default $cref/test_vector/$$ template class.
+The operator $cref/<</CppAD_vector/Output/$$ was added to the
+default $cref test_vector$$ template class.
 $pre
 
 $$
@@ -651,7 +651,7 @@ was added.
 
 $head 04-25$$
 Factor out common sub-expressions in order to make
-$xref/LuVecAD/$$ faster.
+$cref LuVecAD$$ faster.
 $pre
 
 $$
@@ -659,30 +659,30 @@ Convert description
 from C++ Automatic Differentiation to C++ Algorithmic Differentiation.
 
 $head 04-24$$
-The $xref/VecAD/$$ element class is no longer
-a derived class of the $xref/AD/$$ class.
+The $cref VecAD$$ element class is no longer
+a derived class of the $cref AD$$ class.
 This enabled a decrease in tape memory
-and an increase in the speed for $xref/VecAD/$$ operations.
+and an increase in the speed for $cref VecAD$$ operations.
 $pre
 
 $$
-The $xref/std_math_ad//log10/$$ function was added.
+The $cref/log10/std_math_ad/$$ function was added.
 
 
 $head 04-22$$
-Add $xref/CondExp/$$ and use it to speed up $xref/LuVecAD/$$.
+Add $cref CondExp$$ and use it to speed up $cref LuVecAD$$.
 
 $head 04-21$$
-Use $xref/abs//abs/$$ to speed up $xref/LuVecAD/$$.
+Use $cref/abs/abs/$$ to speed up $cref LuVecAD$$.
 
 $head 04-20$$
-The $xref/abs//absolute value/$$ function was added.
+The $cref/absolute value/abs/$$ function was added.
 $pre
 
 $$
-The value $italic n$$ for 
+The value $icode n$$ for 
 $code OdeExplicit$$ and $code OdeImplicit$$ 
-is deduced from the argument $italic x0$$ and is not passed
+is deduced from the argument $icode x0$$ and is not passed
 as a separate argument.
 This documentation has been fixed to this effect.
 
@@ -691,7 +691,7 @@ This documentation has been fixed to this effect.
 $head 04-19$$
 The $cref/+=/compute_assign/$$ operator did not function correctly
 when the left hand operand was a 
-$xref/glossary/Parameter/parameter/$$
+$cref/parameter/glossary/Parameter/$$
 and the right hand operand was a variable
 (found by $href%mailto:magister@u.washington.edu%Mike Dodds%$$).
 This has been fixed.
@@ -700,58 +700,58 @@ This has been fixed.
 $head 04-09$$
 Adding special operators for using parameters to index $code VecAD$$ objects
 increased the speed and reduced the memory requirements (by about 20%) for 
-the $xref/VecAD/$$ case in the $code speed_cppad/LuSolveSpeed.cpp/$$ test.
+the $cref VecAD$$ case in the $code speed_cppad/LuSolveSpeed.cpp/$$ test.
 $pre
 
 $$
-The $xref/VecAD/$$ objects are not being handled correctly by the 
-$xref/Reverse/$$ function.
+The $cref VecAD$$ objects are not being handled correctly by the 
+$cref Reverse$$ function.
 The $code VecAD$$ test was extended to demonstrate the problem
 and the problem was fixed
 (it is now part of $code TestMore/VecAD$$).
 
 $head 04-08$$
-The example $xref/LuVecADOk.cpp/$$ 
-uses $xref/VecAD/$$ to executes different pivoting operations 
+The example $cref LuVecADOk.cpp$$ 
+uses $cref VecAD$$ to executes different pivoting operations 
 during the solution of linear equations with out having to retape.
 $pre
 
 $$
 The speed test $code speed_cppad/LuSolveSpeed.cpp/$$ has been added.
-It shows that the initial implementation of $xref/VecAD/$$ is slow
+It shows that the initial implementation of $cref VecAD$$ is slow
 (and uses a lot of memory.) 
 In fact, 
-it is faster to use $xref/LuSolve/$$ and retape for each set of equations
-than it is to use $xref/LuVecAD/$$ and not have to retape.
-This test will help us improve the speed of $xref/LuVecAD/$$.
+it is faster to use $cref LuSolve$$ and retape for each set of equations
+than it is to use $cref LuVecAD$$ and not have to retape.
+This test will help us improve the speed of $cref LuVecAD$$.
 
 
 $head 04-07$$
-There were bugs in the assignment to $xref/VecAD/$$ elements
+There were bugs in the assignment to $cref VecAD$$ elements
 during taping that have been fixed.
 In addition, an example of tapping the pivoting operations in
-an $xref/LuVecAD//Lu factorization/$$ has been added.
+an $cref/Lu factorization/LuVecAD/$$ has been added.
 
 $head 04-03$$
-Added $code size_t$$ indexing to the $xref/VecAD/$$ class.
+Added $code size_t$$ indexing to the $cref VecAD$$ class.
 $pre
 
 $$
-Fixed a bug connected to the $xref/VecAD/$$ class and erasing the tape.
+Fixed a bug connected to the $cref VecAD$$ class and erasing the tape.
 
 $head 04-02$$
 Some memory savings is done with regard to equal parameter values
 being stored in the tape. There was a bug in this logic when parameter
-in an $syntax%AD< AD<%Base%> >%$$ class had values that were variables in the 
-$syntax%AD<%Base%>%$$ class.
+in an $codei%AD< AD<%Base%> >%$$ class had values that were variables in the 
+$codei%AD<%Base%>%$$ class.
 This has been fixed.
 
 $head 04-01$$
 The name of the class that tapes indexing operations 
-was changed from $code ADVec$$ to $xref/VecAD/$$.
+was changed from $code ADVec$$ to $cref VecAD$$.
 This class was extended so that
 the value of elements in these vectors can be variables
-(need not be $xref/glossary/Parameter/parameters/$$).
+(need not be $cref/parameters/glossary/Parameter/$$).
 
 $head 03-30$$
 Do some simple searching of the parameter table during taping
@@ -759,12 +759,12 @@ avoid multiple copies of parameters on tape (use less tape memory).
 
 
 $head 03-28$$
-The version $xref/VecAD//ADVec/$$, 
+The version $cref/ADVec/VecAD/$$, 
 a vector class that tapes indexing operations,
 is now available.
 It is currently restricted by the fact that all the
 values in the vector must be 
-$xref/Glossary/Parameter/parameters/$$.
+$cref/parameters/Glossary/Parameter/$$.
 
 
 
@@ -775,7 +775,7 @@ This is to save memory on the tape.
 In addition, it may help in the implementation of the
 vector class that tracks indexing.
 (A now functioning version of this class is described in
-$xref/VecAD/$$.)
+$cref VecAD$$.)
 
 
 $head 03-18$$
@@ -784,10 +784,10 @@ This resulted in a significant savings in the amount of memory required.
 
 
 $head 03-17$$
-Change the return type for $xref/SpeedTest/$$ from $code const char *$$
+Change the return type for $cref SpeedTest$$ from $code const char *$$
 to $code std::string$$.
 The memory required for the largest test cases was added to the
-$xref/speed_cppad/$$ tests output.
+$cref speed_cppad$$ tests output.
 
 $head 03-15$$
 The comparison between ADOLC and CppAD for
@@ -798,56 +798,56 @@ This has been fixed.
 
 $head 03-12$$
 The user defined unary functions were removed and 
-the user defined $xref/Discrete//discrete functions/$$ were
+the user defined $cref/discrete functions/Discrete/$$ were
 added. 
 These discrete functions add the capability of conditional expressions 
 (alternate calculations)
-being included in an $xref/ADFun/$$ object.
+being included in an $cref ADFun$$ object.
 
 $head 03-11$$
-The classes $xref/det_by_minor/$$ and $xref/det_by_lu/$$ were added
+The classes $cref det_by_minor$$ and $cref det_by_lu$$ were added
 and used these to simplify the 
 examples that compute determinants.
 
 $head 03-09$$
 The routines $code Grad$$ and $code Hess$$ have been removed.
-You should use $xref/Jacobian/$$ and $xref/Hessian/$$ instead.
+You should use $cref Jacobian$$ and $cref Hessian$$ instead.
 
 
 $head 03-07$$
-The driver routines $xref/Hessian/$$ and $xref/RevTwo/$$ has been added.
+The driver routines $cref Hessian$$ and $cref RevTwo$$ has been added.
 These to compute specialized subsets of the second order partials.
 $pre
 
 $$
-Documentation errors in $xref/ForTwo/$$ and $xref/Reverse/$$ were fixed.
-The $xref/example/$$ documentation was reorganized.
+Documentation errors in $cref ForTwo$$ and $cref Reverse$$ were fixed.
+The $cref example$$ documentation was reorganized.
 
 
 $head 03-06$$
-The driver $xref/ForTwo/$$ has been added.
+The driver $cref ForTwo$$ has been added.
 It uses forward mode to compute a subset of the second order partials.
 $pre
 
 $$
 Split all of the "example" and "test" index entries that come from
-$syntax%cppad/example/%*%.cpp%$$
+$codei%cppad/example/%*%.cpp%$$
 into sorted subheadings.
 
 $head 03-05$$
 The $code Grad$$ routine,
 which only computed first derivatives of scalar valued functions,
-has been replaced by the $xref/Jacobian/$$ routine which 
+has been replaced by the $cref Jacobian$$ routine which 
 computes the derivative of vector valued functions.
 
 $head 03-04$$
-The bug reported on $xref/whats_new_04/02-17/02-17/$$ was present in all
+The bug reported on $cref/02-17/whats_new_04/02-17/$$ was present in all
 the operators. These have all been fixed and tests for all the operators
 have been added to the $code cppad/Test$$ directory.
 $pre
 
 $$
-The $xref/seq_property/Parameter/f.Parameter()/$$ function was added so that
+The $cref/f.Parameter()/seq_property/Parameter/$$ function was added so that
 one can count how many components of the range space depend
 on the value of the domain space components. 
 This helps when deciding whether to use forward or reverse mode.
@@ -855,14 +855,14 @@ This helps when deciding whether to use forward or reverse mode.
 $head 03-03$$
 Special operators were added to distinguish the cases where 
 one of the operands is a
-$xref/glossary/Parameter/parameter/$$.
+$cref/parameter/glossary/Parameter/$$.
 This reduced the amount of branching that is necessary
-when executing $xref/Forward/$$ and $xref/Reverse/$$ calculations.
+when executing $cref Forward$$ and $cref Reverse$$ calculations.
 $pre
 
 $$
-The $xref/Independent/$$ and $xref/seq_property/Parameter/Parameter/$$ functions
-were moved below $xref/ADFun/$$ in the documentation.
+The $cref Independent$$ and $cref/Parameter/seq_property/Parameter/$$ functions
+were moved below $cref ADFun$$ in the documentation.
 
 
 $head 03-01$$
@@ -882,40 +882,40 @@ $head 02-28$$
 A set of routines for comparing CppAD with 
 ADOLC has been added to the distribution.
 In addition, documentation for compiling and linking the
-$xref/example//Examples/$$ and $xref/speed_cppad//Speed Tests/$$
+$cref/Examples/example/$$ and $cref/Speed Tests/speed_cppad/$$
 has been added.
 
 $head 02-21$$
 If you use the user defined unary atomic functions
 there is a restriction on the order of the derivatives that can be calculated.
 This restriction was documented in the user defined unary function
-$xref/Forward/$$
-and $xref/Reverse/$$.
-(These unary functions were removed on $xref/whats_new_04/03-12/03-12/$$.)
+$cref Forward$$
+and $cref Reverse$$.
+(These unary functions were removed on $cref/03-12/whats_new_04/03-12/$$.)
 
 $head 02-20$$
 A user interface to arbitrary order 
-$xref/Reverse//reverse mode/$$ calculations was implemented.
-In addition, the $xref/ADFun/$$ member functions
+$cref/reverse mode/Reverse/$$ calculations was implemented.
+In addition, the $cref ADFun$$ member functions
 $code Rev$$ and $code RevTwo$$ were removed
 because it is easier to use the uniform syntax below:
 $table
 $bold Old Syntax$$ $cnext $bold Uniform Syntax$$ 
 $rnext
-$syntax%%r1% = %f%.Rev(%v%)%$$ $cnext $syntax%%r1% = %f%.Reverse(1, %v%)%$$
+$icode%r1% = %f%.Rev(%v%)%$$ $cnext $icode%r1% = %f%.Reverse(1, %v%)%$$
 $rnext
-$syntax%%q1% = %f%.RevTwo(%v%)%$$ $cnext $syntax%%r2% = %f%.Reverse(2, %v%)%$$
+$icode%q1% = %f%.RevTwo(%v%)%$$ $cnext $icode%r2% = %f%.Reverse(2, %v%)%$$
 $rnext
-	$cnext $syntax%%q1%[%i%] == %r2%[2 * %i% + 1]%$$
+	$cnext $icode%q1%[%i%] == %r2%[2 * %i% + 1]%$$
 $tend
 $pre
 
 $$
-The $xref/Theory/$$ section has been completely changed so that 
+The $cref Theory$$ section has been completely changed so that 
 it corresponds to the arbitrary order calculations.
 (Some of this change was made when the arbitrary forward mode
 interface was added on 
-$xref/whats_new_04/02-15/04-02-15/$$.
+$cref/04-02-15/whats_new_04/02-15/$$.
 $pre
 
 $$
@@ -925,9 +925,9 @@ It contains tests cases that are not intended as examples.
 $head 02-17$$
 There was a bug in the way CppAD handled the parameters zero and one
 when they were variables on a lower level tape; i.e. x might be a 
-parameter on an $syntax%AD< AD<%Base%> >%$$ tape and a its value
+parameter on an $codei%AD< AD<%Base%> >%$$ tape and a its value
 might be a variable on the
-$syntax%AD<%Base%>%$$ tape.
+$codei%AD<%Base%>%$$ tape.
 This bug in the multiply and divide routines has been fixed.
 $pre
 
@@ -937,7 +937,7 @@ when the numerator was zero. This has been fixed.
 
 
 $head 02-16$$
-A bug in $xref/Forward/$$ prevented the calculation of derivatives
+A bug in $cref Forward$$ prevented the calculation of derivatives
 with higher order than two.
 In addition, this checking for user errors in the use of $code Forward$$
 was also faulty. 
@@ -950,38 +950,38 @@ was out of date. This has been fixed.
 $pre
 
 $$
-The example that $xref/mul_level//tapes derivative calculations/$$
+The example that $cref/tapes derivative calculations/mul_level/$$
 has been changed to an application of 
-$xref/ode_taylor.cpp//Taylor's method/$$ for solving ordinary differential
+$cref/Taylor's method/ode_taylor.cpp/$$ for solving ordinary differential
 equations.
 
 $head 02-15$$
 A user interface to arbitrary order 
-$xref/Forward// forward mode/$$ calculations was implemented.
-In addition, the $xref/ADFun/$$ member functions
+$cref/ forward mode/Forward/$$ calculations was implemented.
+In addition, the $cref ADFun$$ member functions
 $code Arg$$, $code For$$ and $code ForTwo$$ were removed
 because it is easier to use the uniform syntax below:
 $table
 $bold Old Syntax$$ $cnext $bold Uniform Syntax$$ 
 $rnext
-$syntax%%v0% = %f%.Arg(%u0%)%$$ $cnext $syntax%%v0% = %f%.Forward(0, %u0%)%$$
+$icode%v0% = %f%.Arg(%u0%)%$$ $cnext $icode%v0% = %f%.Forward(0, %u0%)%$$
 $rnext
-$syntax%%v1% = %f%.For(%u1%)%$$ $cnext $syntax%%v1% = %f%.Forward(1, %u1%)%$$
+$icode%v1% = %f%.For(%u1%)%$$ $cnext $icode%v1% = %f%.Forward(1, %u1%)%$$
 $rnext
-$syntax%%v2% = %f%.For(%u2%)%$$ $cnext $syntax%%v2% = %f%.Forward(1, %u2%)%$$
+$icode%v2% = %f%.For(%u2%)%$$ $cnext $icode%v2% = %f%.Forward(1, %u2%)%$$
 $tend
 
 
 $head 02-12$$
 All of the derivative calculations are now done using arbitrary
 order Taylor arithmetic routines.
-The $xref/Theory/$$ section was changed to document this method
+The $cref Theory$$ section was changed to document this method
 of calculation.
 
 
 $head 02-01$$
 The definition of a 
-$xref/glossary/Taylor Coefficient/Taylor coefficient/$$
+$cref/Taylor coefficient/glossary/Taylor Coefficient/$$
 was changed to include the factorial factor.
 This change was also made to the output specifications for the 
 $code FunForTwo$$ routine.
@@ -991,7 +991,7 @@ There were some bugs in the $code FunArg$$ function
 that were fixed.
 $list number$$
 If one of the dependent variables was a
-$xref/glossary/Parameter/parameter/$$ 
+$cref/parameter/glossary/Parameter/$$ 
 $code FunArg$$ did not set it's value properly.
 (All its derivatives are zero and this was handled properly.)
 $lnext
@@ -1011,7 +1011,7 @@ $code OdeImplicit$$.
 $head 01-22$$
 The specifications for the routine $code FunForTwo$$ 
 was changed to use 
-$xref/glossary/Taylor Coefficient/Taylor coefficients/$$.
+$cref/Taylor coefficients/glossary/Taylor Coefficient/$$.
 This makes the interface to CppAD closer to the interface for
 $href%https://projects.coin-or.org/ADOL-C%ADOLC%$$.
 

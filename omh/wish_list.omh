@@ -46,7 +46,7 @@ $index features, new$$
 
 $head Atan2$$
 $index atan2$$
-The $xref/Atan2//atan2/$$ function could be made faster by adding
+The $cref/atan2/Atan2/$$ function could be made faster by adding
 a special operator for it.
 
 $head BenderQuad$$
@@ -55,9 +55,9 @@ current $code BenderQuad$$ specifications.
 
 $head CondExp$$
 $index CondExp$$
-Extend the conditional expressions $xref/CondExp/$$ so that they are 
+Extend the conditional expressions $cref CondExp$$ so that they are 
 valid for complex types by comparing real parts.
-In addition, use this change to extend $xref/LuRatio/$$ so 
+In addition, use this change to extend $cref LuRatio$$ so 
 that it works with complex AD types.
 
 
@@ -98,14 +98,14 @@ $index speed, compile AD<double>$$
 $index AD<double>, compile speed$$
 One could build a CppAD library for use with the type $code AD<double>$$.
 This would speed up compilation for the most common usage where
-the $italic Base$$ type is $code double$$.
+the $icode Base$$ type is $code double$$.
 
 $head Memory$$
 The $cref thread_alloc$$ memory manager might be able to improve performance
 of the $cref/multi_newton/thread_test.cpp/multi_newton/$$ timing using the
 idea of allocating memory using a minimal chunk size. 
 See end of page 118 and beginning of 119 in the article 
-$italic {Hoard: a scalable memory allocator for multi-threaded applications$$,
+$icode {Hoard: a scalable memory allocator for multi-threaded applications$$,
 by E.D. Berger et. al.
 
 
@@ -122,18 +122,18 @@ $index testing, machine epsilon$$
 $index machine epsilon, testing$$
 Use a multiple of $code std::numeric_limits<double>::epsilon()$$ instead
 $code 1e-10$$ for a small number in correctness checks; e.g.,
-see $cref/tan.cpp/$$.
+see $cref tan.cpp$$.
 
 $head Operation Sequence$$
 $index sequence, operation$$
 $index operation, sequence$$
 It is possible to detect if the 
-AD of $italic Base$$ 
-$xref/glossary/Operation/Sequence/operation sequence/1/$$ 
+AD of $icode Base$$ 
+$cref/operation sequence/glossary/Operation/Sequence/$$ 
 does not depend on any of the
 $cref/independent variable/glossary/Tape/Independent Variable/$$ values.
 This could be returned as an extra
-$xref/seq_property/$$.
+$cref seq_property$$.
 
 $head Optimization$$
 $index optimize, tape$$
@@ -207,10 +207,10 @@ previous element. See the $code add_element$$ routine in the file
 $code sparse_set.hpp$$. 
 $lnext
 The memory allocation by standard set during sparsity calculations
-should be changed over to use $cref/omp_alloc/$$
+should be changed over to use $cref omp_alloc$$
 (requires making a standard allocator interface to $code omp_alloc$$).
 $lnext
-The $cref/user_atomic/$$ operations should allow the user to chose vectors
+The $cref user_atomic$$ operations should allow the user to chose vectors
 of bits, instead of standard sets, for representing sets. This would
 be more efficient for most cases.
 $lend
@@ -221,7 +221,7 @@ $index speed, extend tests$$
 $index MS Windows, extend speed tests$$
 Extend the speed tests for Adolc, Fadbad, and Sacado
 to run under MS Windows.
-Run the CppAD $cref/speed/$$ tests on a set of different machines
+Run the CppAD $cref speed$$ tests on a set of different machines
 and operating systems.
 
 $head Tracing$$
@@ -232,7 +232,7 @@ Add operation sequence tracing to the user API and documentation.
 
 $head VecAD$$
 $index VecAD, improve assignment$$
-Make assignment operation in $cref/VecAD/$$ like
+Make assignment operation in $cref VecAD$$ like
 assignment in $cref ad_ctor$$ and $cref ad_assign$$.
 This will fix slicing to $code int$$ when assigning
 from $code double$$ to 
@@ -240,8 +240,8 @@ $code VecAD< AD<double> >::reference$$ object.
 
 $head Vector Element Type$$
 Change cross references from 
-$xref/SimpleVector/Elements of Specified Type/elements of a specified type/$$
+$cref/elements of a specified type/SimpleVector/Elements of Specified Type/$$
 to
-$xref/SimpleVector/Value Type/value_type/$$.
+$cref/value_type/SimpleVector/Value Type/$$.
 
 $end

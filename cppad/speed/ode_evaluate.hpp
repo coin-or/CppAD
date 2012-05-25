@@ -69,7 +69,7 @@ so it is not automatically included by
 $cref/cppad.hpp/cppad/$$.
 
 $head Float$$
-The type $icode Float$$ must be a $cref/NumericType/$$.
+The type $icode Float$$ must be a $cref NumericType$$.
 The $icode Float$$ operation sequence for this routine
 will depend on the value of the argument $icode x$$
 and hence it must be retaped for each new value of $latex x$$. 
@@ -84,7 +84,7 @@ or its derivative, is being evaluated.
 The value $latex n$$ is determined by the size of the vector $icode x$$.
 
 $head m$$
-The argument $italic m$$ has prototype
+The argument $icode m$$ has prototype
 $icode%
 	size_t %m%
 %$$
@@ -113,18 +113,18 @@ partial_t y_x (x,  t)  & = & \partial_x g[ x , y(x,t) , t ]
 \] $$
 
 $head fm$$
-The argument $italic fm$$ has prototype
+The argument $icode fm$$ has prototype
 $icode%
 	CppAD::vector<%Float%> &%fm%
 %$$
 The input value of the elements of $icode fm$$ does not matter.
 
 $subhead Function$$
-If $icode m$$ is zero, $italic fm$$ has size equal to $latex n$$
+If $icode m$$ is zero, $icode fm$$ has size equal to $latex n$$
 and contains the value of $latex y(x, 1)$$.
 
 $subhead Gradient$$
-If $icode m$$ is one, $italic fm$$ has size equal to $italic n^2$$ 
+If $icode m$$ is one, $icode fm$$ has size equal to $icode n^2$$ 
 and for $latex i = 0 , \ldots and n-1$$, $latex j = 0 , \ldots , n-1$$
 $latex \[
 	\D{y[i]}{x[j]} (x, 1) = fm [ i \cdot n + j ]
@@ -137,14 +137,14 @@ $children%
 
 $head Example$$
 The file
-$cref/ode_evaluate.cpp/$$
+$cref ode_evaluate.cpp$$
 contains an example and test  of $code ode_evaluate.hpp$$.
 It returns true if it succeeds and false otherwise.
 
 
 $head Source Code$$
 The file 
-$cref/ode_evaluate.hpp/$$
+$cref ode_evaluate.hpp$$
 contains the source code for this template function.
 
 

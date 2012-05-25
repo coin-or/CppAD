@@ -32,7 +32,7 @@ $xref%
 definition for the functions $latex H$$ and $latex G$$.
 
 The forward mode formulas for the
-$xref/SqrtForward//square root/$$
+$cref/square root/SqrtForward/$$
 function are
 $latex \[
 	z^{(j)}  =  \sqrt { x^{(0)} } 

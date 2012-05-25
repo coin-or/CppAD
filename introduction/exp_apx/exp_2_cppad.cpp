@@ -40,10 +40,10 @@ Use CppAD forward and reverse modes to compute the
 partial derivative with respect to $latex x$$,
 at the point $latex x = .5$$,
 of the function 
-$syntax%
+$codei%
 	exp_2(%x%)
 %$$
-as defined by the $cref/exp_2.hpp/$$ include file.
+as defined by the $cref exp_2.hpp$$ include file.
 
 $head Exercises$$
 $list number$$
@@ -51,12 +51,12 @@ Create and test a modified version of the routine below that computes
 the same order derivatives with respect to $latex x$$,
 at the point $latex x = .1$$ 
 of the function 
-$syntax%
+$codei%
 	exp_2(%x%)
 %$$
 $lnext
 Create a routine called
-$syntax%
+$codei%
 	exp_3(%x%)
 %$$ 
 that evaluates the function

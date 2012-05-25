@@ -662,7 +662,7 @@ $head Syntax$$
 $icode%flag% = thread_alloc::in_parallel()%$$
 
 $head Purpose$$
-Some of the $cref/thread_alloc/$$ allocation routines have different
+Some of the $cref thread_alloc$$ allocation routines have different
 specifications for parallel (not sequential) execution mode.
 This routine enables you to determine if the current execution mode
 is sequential or parallel.
@@ -676,7 +676,7 @@ It is true if the current execution is in parallel mode
 (possibly multi-threaded) and false otherwise (sequential mode).
 
 $head Example$$
-$cref/thread_alloc.cpp/$$
+$cref thread_alloc.cpp$$
 
 $end
 */
@@ -704,7 +704,7 @@ $head Syntax$$
 $icode%thread% = thread_alloc::thread_num()%$$
 
 $head Purpose$$
-Some of the $cref/thread_alloc/$$ allocation routines have a thread number.
+Some of the $cref thread_alloc$$ allocation routines have a thread number.
 This routine enables you to determine the current thread.
 
 $head thread$$
@@ -716,7 +716,7 @@ and is the currently executing thread number.
 If $code _OPENMP$$ is not defined, $icode thread$$ is zero.
 
 $head Example$$
-$cref/thread_alloc.cpp/$$
+$cref thread_alloc.cpp$$
 
 $end
 */
@@ -742,7 +742,7 @@ $head Syntax$$
 $icode%v_ptr% = thread_alloc::get_memory(%min_bytes%, %cap_bytes%)%$$
 
 $head Purpose$$
-Use $cref/thread_alloc/$$ to obtain a minimum number of bytes of memory
+Use $cref thread_alloc$$ to obtain a minimum number of bytes of memory
 (for use by the $cref/current thread/ta_thread_num/$$).
 
 $head min_bytes$$
@@ -783,7 +783,7 @@ the previous $icode min_bytes$$ and previous $icode cap_bytes$$.
 $lend
 
 $head Example$$
-$cref/thread_alloc.cpp/$$
+$cref thread_alloc.cpp$$
 
 $end
 */
@@ -946,7 +946,7 @@ Otherwise, a list of in use pointers is searched to make sure
 that $icode v_ptr$$ is in the list. 
 
 $head Example$$
-$cref/thread_alloc.cpp/$$
+$cref thread_alloc.cpp$$
 
 $end
 */
@@ -1073,7 +1073,7 @@ or the current execution mode must be sequential
 (not $cref/parallel/ta_in_parallel/$$).
 
 $head Example$$
-$cref/thread_alloc.cpp/$$
+$cref thread_alloc.cpp$$
 
 $end
 */
@@ -1189,7 +1189,7 @@ $head Syntax$$
 $icode%num_bytes% = thread_alloc::inuse(%thread%)%$$
 
 $head Purpose$$
-Memory being managed by $cref/thread_alloc/$$ has two states,
+Memory being managed by $cref thread_alloc$$ has two states,
 currently in use by the specified thread,
 and quickly available for future use by the specified thread.
 This function informs the program how much memory is in use.
@@ -1211,7 +1211,7 @@ $codei%
 It is the number of bytes currently in use by the specified thread.
 
 $head Example$$
-$cref/thread_alloc.cpp/$$
+$cref thread_alloc.cpp$$
 
 $end
 */
@@ -1254,7 +1254,7 @@ $head Syntax$$
 $icode%num_bytes% = thread_alloc::available(%thread%)%$$
 
 $head Purpose$$
-Memory being managed by $cref/thread_alloc/$$ has two states,
+Memory being managed by $cref thread_alloc$$ has two states,
 currently in use by the specified thread,
 and quickly available for future use by the specified thread.
 This function informs the program how much memory is available.
@@ -1276,7 +1276,7 @@ $codei%
 It is the number of bytes currently available for use by the specified thread.
 
 $head Example$$
-$cref/thread_alloc.cpp/$$
+$cref thread_alloc.cpp$$
 
 $end
 */
@@ -1313,7 +1313,7 @@ $head Syntax$$
 $icode%array% = thread_alloc::create_array<%Type%>(%size_min%, %size_out%)%$$.
 
 $head Purpose$$
-Create a new raw array using $cref/thread_alloc/$$ memory allocator 
+Create a new raw array using $cref thread_alloc$$ memory allocator 
 (works well in a multi-threading environment)
 and call default constructor for each element.
 
@@ -1361,7 +1361,7 @@ if a previous allocation with $icode size_min$$ between its current value
 and $icode size_out$$ is available. 
 
 $head Example$$
-$cref/thread_alloc.cpp/$$
+$cref thread_alloc.cpp$$
 
 $end 
 */
@@ -1458,7 +1458,7 @@ where $cref/delta/ta_create_array/Delta/$$
 is the same as for the corresponding call to $code create_array$$.
 
 $head Example$$
-$cref/thread_alloc.cpp/$$
+$cref thread_alloc.cpp$$
 
 $end 
 */
@@ -1528,7 +1528,7 @@ $head Restrictions$$
 This function cannot be called while in parallel mode.
 
 $head Example$$
-$cref/thread_alloc.cpp/$$
+$cref thread_alloc.cpp$$
 $end 
 */
 	/*!

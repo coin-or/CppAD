@@ -37,15 +37,15 @@ $index sparse, Jacobian speed cppad$$
 $head Operation Sequence$$
 Note that the 
 $cref/operation sequence/glossary/Operation/Sequence/$$
-depends on the vectors $italic i$$ and $italic j$$.
-Hence we use a different $cref/ADFun/$$ object for 
-each choice of $italic i$$ and $italic j$$.
+depends on the vectors $icode i$$ and $icode j$$.
+Hence we use a different $cref ADFun$$ object for 
+each choice of $icode i$$ and $icode j$$.
 
 $head Sparse Jacobian$$
 If the preprocessor symbol $code CPPAD_USE_SPARSE_JACOBIAN$$ is 
 true, the routine $cref/SparseJacobian/sparse_jacobian/$$ 
 is used for the calculation.
-Otherwise, the routine $cref/Jacobian/$$ is used.
+Otherwise, the routine $cref Jacobian$$ is used.
 
 $head link_sparse_jacobian$$
 $index link_sparse_jacobian$$

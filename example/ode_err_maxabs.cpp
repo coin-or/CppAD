@@ -42,7 +42,7 @@ $latex \[
 \] $$
 Note that $latex X_1 (0)$$ is zero an if $latex w_0 t$$ is large,
 $latex X_0 (t)$$ is near zero.
-This example tests OdeErrControl using the $italic maxabs$$ argument.
+This example tests OdeErrControl using the $icode maxabs$$ argument.
 
 $code
 $verbatim%example/ode_err_maxabs.cpp%0%// BEGIN PROGRAM%// END PROGRAM%1%$$

@@ -109,7 +109,7 @@ $head Syntax$$
 $icode%flag% = omp_alloc::in_parallel()%$$
 
 $head Purpose$$
-Some of the $cref/omp_alloc/$$ allocation routines have different
+Some of the $cref omp_alloc$$ allocation routines have different
 specifications for parallel (not sequential) execution mode.
 This routine enables you to determine if the current execution mode
 is sequential or parallel.
@@ -123,7 +123,7 @@ It is true if the current execution is in parallel mode
 (possibly multi-threaded) and false otherwise (sequential mode).
 
 $head Example$$
-$cref/omp_alloc.cpp/$$
+$cref omp_alloc.cpp$$
 
 $end
 */
@@ -158,7 +158,7 @@ $head Syntax$$
 $icode%thread% = omp_alloc::get_thread_num()%$$
 
 $head Purpose$$
-Some of the $cref/omp_alloc/$$ allocation routines have a thread number.
+Some of the $cref omp_alloc$$ allocation routines have a thread number.
 This routine enables you to determine the current thread.
 
 $head thread$$
@@ -170,7 +170,7 @@ and is the currently executing thread number.
 If $code _OPENMP$$ is not defined, $icode thread$$ is zero.
 
 $head Example$$
-$cref/omp_alloc.cpp/$$
+$cref omp_alloc.cpp$$
 
 $end
 */
@@ -203,7 +203,7 @@ $head Syntax$$
 $icode%v_ptr% = omp_alloc::get_memory(%min_bytes%, %cap_bytes%)%$$
 
 $head Purpose$$
-Use $cref/omp_alloc/$$ to obtain a minimum number of bytes of memory
+Use $cref omp_alloc$$ to obtain a minimum number of bytes of memory
 (for use by the $cref/current thread/omp_get_thread_num/$$).
 
 $head min_bytes$$
@@ -244,7 +244,7 @@ the previous $icode min_bytes$$ and previous $icode cap_bytes$$.
 $lend
 
 $head Example$$
-$cref/omp_alloc.cpp/$$
+$cref omp_alloc.cpp$$
 
 $end
 */
@@ -312,7 +312,7 @@ Otherwise, a list of in use pointers is searched to make sure
 that $icode v_ptr$$ is in the list. 
 
 $head Example$$
-$cref/omp_alloc.cpp/$$
+$cref omp_alloc.cpp$$
 
 $end
 */
@@ -365,7 +365,7 @@ or the current execution mode must be sequential
 (not $cref/parallel/omp_in_parallel/$$).
 
 $head Example$$
-$cref/omp_alloc.cpp/$$
+$cref omp_alloc.cpp$$
 
 $end
 */
@@ -398,7 +398,7 @@ $icode%num_bytes% = omp_alloc::inuse(%thread%)%$$
 Use the function $cref/thread_alloc::inuse/ta_inuse/$$ instead.
 
 $head Purpose$$
-Memory being managed by $cref/omp_alloc/$$ has two states,
+Memory being managed by $cref omp_alloc$$ has two states,
 currently in use by the specified thread,
 and quickly available for future use by the specified thread.
 This function informs the program how much memory is in use.
@@ -420,7 +420,7 @@ $codei%
 It is the number of bytes currently in use by the specified thread.
 
 $head Example$$
-$cref/omp_alloc.cpp/$$
+$cref omp_alloc.cpp$$
 
 $end
 */
@@ -456,7 +456,7 @@ $head Syntax$$
 $icode%num_bytes% = omp_alloc::available(%thread%)%$$
 
 $head Purpose$$
-Memory being managed by $cref/omp_alloc/$$ has two states,
+Memory being managed by $cref omp_alloc$$ has two states,
 currently in use by the specified thread,
 and quickly available for future use by the specified thread.
 This function informs the program how much memory is available.
@@ -478,7 +478,7 @@ $codei%
 It is the number of bytes currently available for use by the specified thread.
 
 $head Example$$
-$cref/omp_alloc.cpp/$$
+$cref omp_alloc.cpp$$
 
 $end
 */
@@ -507,7 +507,7 @@ $head Syntax$$
 $icode%array% = omp_alloc::create_array<%Type%>(%size_min%, %size_out%)%$$.
 
 $head Purpose$$
-Create a new raw array using $cref/omp_alloc/$$ a fast memory allocator 
+Create a new raw array using $cref omp_alloc$$ a fast memory allocator 
 that works well in a multi-threading OpenMP environment.
 
 $head Type$$
@@ -554,7 +554,7 @@ if a previous allocation with $icode size_min$$ between its current value
 and $icode size_out$$ is available. 
 
 $head Example$$
-$cref/omp_alloc.cpp/$$
+$cref omp_alloc.cpp$$
 
 $end 
 */
@@ -629,7 +629,7 @@ where $cref/delta/omp_create_array/Delta/$$
 is the same as for the corresponding call to $code create_array$$.
 
 $head Example$$
-$cref/omp_alloc.cpp/$$
+$cref omp_alloc.cpp$$
 
 $end 
 */

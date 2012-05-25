@@ -102,7 +102,7 @@ It is true if the value $icode s$$ is $code nan$$.
 
 $head hasnan$$
 This routine determines if a 
-$cref/SimpleVector/$$ has an element that is $code nan$$.
+$cref SimpleVector$$ has an element that is $code nan$$.
 
 $subhead v$$
 The argument $icode v$$ has prototype
@@ -131,12 +131,12 @@ $rnext
 $icode%a% != %b%$$ $cnext
 	not equality operator (returns a $code bool$$ object)
 $tend
-Note that the division operator will be used with $icode a$$ and $italic b$$
+Note that the division operator will be used with $icode a$$ and $icode b$$
 equal to zero. For some types (e.g. $code int$$) this may generate
 an exception. No attempt is made to catch any such exception.
 
 $head Vector$$
-The type $icode Vector$$ must be a $cref/SimpleVector/$$ class with
+The type $icode Vector$$ must be a $cref SimpleVector$$ class with
 elements of type $icode Scalar$$.
 
 $head Parallel Mode$$
@@ -161,7 +161,7 @@ $children%
 	example/nan.cpp
 %$$
 $head Example$$
-The file $cref/nan.cpp/$$
+The file $cref nan.cpp$$
 contains an example and test of this routine.
 It returns true if it succeeds and false otherwise.
 

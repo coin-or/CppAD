@@ -26,7 +26,7 @@ $index user_atomic, example$$
 $index example, user_atomic$$
 
 $head Theory$$
-The code below uses the $cref/tan_forward/$$ and $cref/tan_reverse/$$
+The code below uses the $cref tan_forward$$ and $cref tan_reverse$$
 to implement the tangent ($icode%id% == 0%$$) and hyperbolic tangent
 ($icode%id% == 1%$$) functions as user atomic operations.
 

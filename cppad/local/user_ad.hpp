@@ -29,24 +29,24 @@ $index AD, object$$
 
 $head Purpose$$
 The sections listed below describe the operations 
-that are available to $xref/glossary/AD of Base/AD of Base/$$ objects.
+that are available to $cref/AD of Base/glossary/AD of Base/$$ objects.
 These objects are used to $cref/tape/glossary/Tape/$$
-an AD of $italic Base$$
-$xref/glossary/Operation/Sequence/operation sequence/1/$$.
+an AD of $icode Base$$
+$cref/operation sequence/glossary/Operation/Sequence/$$.
 This operation sequence can
-be transferred to an $xref/ADFun/$$ object where it
+be transferred to an $cref ADFun$$ object where it
 can be used to evaluate the corresponding 
 function and derivative values.
 
 $head Base Type Requirements$$
 $index Base, require$$
-The $italic Base$$ requirements are provided by the CppAD package 
+The $icode Base$$ requirements are provided by the CppAD package 
 for the following base types:
 $code float$$, 
 $code double$$,
 $code std::complex<float>$$, 
 $code std::complex<double>$$.
-Otherwise, see $cref/base_require/$$.
+Otherwise, see $cref base_require$$.
 
 
 $childtable%

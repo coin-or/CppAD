@@ -35,7 +35,7 @@ $pre
 $$
 
 $head Syntax$$
-$syntax%int LuVecAD(
+$codei%int LuVecAD(
 	size_t %n%,
 	size_t %m%,
 	VecAD<%double%> &%Matrix%,
@@ -49,14 +49,14 @@ Solves the linear equation
 $latex \[
 	Matrix * Result = Rhs
 \] $$
-where $italic Matrix$$ is an $latex n \times n$$ matrix,
-$italic Rhs$$ is an $latex n x m$$ matrix, and
-$italic Result$$ is an $latex n x m$$ matrix.
+where $icode Matrix$$ is an $latex n \times n$$ matrix,
+$icode Rhs$$ is an $latex n x m$$ matrix, and
+$icode Result$$ is an $latex n x m$$ matrix.
 $pre
 
 $$
-The routine $xref/LuSolve/$$ uses an arbitrary vector type,
-instead of $xref/VecAD/$$,
+The routine $cref LuSolve$$ uses an arbitrary vector type,
+instead of $cref VecAD$$,
 to hold its elements.
 The pivoting operations for a $code ADFun$$ object
 corresponding to an $code LuVecAD$$ solution
@@ -67,8 +67,8 @@ $$
 It is often the case that
 $code LuSolve$$ is faster than $code LuVecAD$$ when $code LuSolve$$
 uses a simple vector class with 
-$xref/SimpleVector/Elements of Specified Type/elements of type double/$$,
-but the corresponding $xref/ADFun/$$ objects have a fixed
+$cref/elements of type double/SimpleVector/Elements of Specified Type/$$,
+but the corresponding $cref ADFun$$ objects have a fixed
 set of pivoting operations.
 
 $head Storage Convention$$
@@ -85,48 +85,48 @@ $latex \[
 
 $head n$$
 is the number of rows in 
-$italic Matrix$$,
-$italic Rhs$$,
-and $italic Result$$.
+$icode Matrix$$,
+$icode Rhs$$,
+and $icode Result$$.
 
 $head m$$
 is the number of columns in 
-$italic Rhs$$
-and $italic Result$$.
-It is ok for $italic m$$ to be zero which is reasonable when
-you are only interested in the determinant of $italic Matrix$$.
+$icode Rhs$$
+and $icode Result$$.
+It is ok for $icode m$$ to be zero which is reasonable when
+you are only interested in the determinant of $icode Matrix$$.
 
 
 $head Matrix$$
 On input, this is an
 $latex n \times n$$ matrix containing the variable coefficients for 
 the equation we wish to solve.
-On output, the elements of $italic Matrix$$ have been overwritten
+On output, the elements of $icode Matrix$$ have been overwritten
 and are not specified.
 
 $head Rhs$$
 On input, this is an
 $latex n \times m$$ matrix containing the right hand side
 for the equation we wish to solve.
-On output, the elements of $italic Rhs$$ have been overwritten
+On output, the elements of $icode Rhs$$ have been overwritten
 and are not specified.
-If $italic m$$ is zero, $italic Rhs$$ is not used.
+If $icode m$$ is zero, $icode Rhs$$ is not used.
 
 $head Result$$
 On input, this is an
 $latex n \times m$$ matrix and the value of its elements do not matter.
-On output, the elements of $italic Rhs$$ contain the solution
+On output, the elements of $icode Rhs$$ contain the solution
 of the equation we wish to solve
 (unless the value returned by $code LuVecAD$$ is equal to zero).
-If $italic m$$ is zero, $italic Result$$ is not used.
+If $icode m$$ is zero, $icode Result$$ is not used.
 
 $head logdet$$
-On input, the value of $italic logdet$$ does not matter.
+On input, the value of $icode logdet$$ does not matter.
 On output, it has been set to the 
-log of the determinant of $italic Matrix$$ (but not quite).
+log of the determinant of $icode Matrix$$ (but not quite).
 To be more specific,
-if $italic signdet$$ is the value returned by $code LuVecAD$$,
-the determinant of $italic Matrix$$ is given by the formula
+if $icode signdet$$ is the value returned by $code LuVecAD$$,
+the determinant of $icode Matrix$$ is given by the formula
 $latex \[
 	det = signdet \exp( logdet )
 \] $$
@@ -138,7 +138,7 @@ $children%
 	example/lu_vec_ad_ok.cpp
 %$$
 The file
-$xref/LuVecADOk.cpp/$$
+$cref LuVecADOk.cpp$$
 contains an example and test of $code LuVecAD$$.
 It returns true if it succeeds and false otherwise.
 

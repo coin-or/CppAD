@@ -37,7 +37,7 @@ $codei%extern bool link_det_minor(
 $head Purpose$$
 Each $cref/package/speed_main/package/$$
 must define a version of this routine as specified below.
-This is used by the $cref/speed_main/$$ program 
+This is used by the $cref speed_main$$ program 
 to run the corresponding speed and correctness tests.
 
 $head Return Value$$
@@ -56,14 +56,14 @@ that the gradient (or determinant) is computed for.
 
 $head matrix$$
 The argument $icode matrix$$ is a vector with 
-$syntax%%size%*%size%$$ elements.
+$icode%size%*%size%$$ elements.
 The input value of its elements does not matter. 
 The output value of its elements is the last matrix that the
 gradient (or determinant) is computed for.
 
 $head gradient$$
 The argument $icode gradient$$ is a vector with 
-$syntax%%size%*%size%$$ elements.
+$icode%size%*%size%$$ elements.
 The input value of its elements does not matter. 
 The output value of its elements is the gradient of the
 determinant of $icode matrix$$ with respect to its elements.

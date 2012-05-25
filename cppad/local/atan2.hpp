@@ -32,7 +32,7 @@ $index atan2, AD$$
 $section AD Two Argument Inverse Tangent Function$$
 
 $head Syntax$$
-$syntax%%theta% = atan2(%y%, %x%)%$$
+$icode%theta% = atan2(%y%, %x%)%$$
 
 
 $head Purpose$$
@@ -46,37 +46,37 @@ $latex \[
 \] $$
 
 $head y$$
-The argument $italic y$$ has one of the following prototypes
-$syntax%
+The argument $icode y$$ has one of the following prototypes
+$codei%
 	const AD<%Base%>               &%y%
 	const VecAD<%Base%>::reference &%y%
 %$$ 
 
 $head x$$
-The argument $italic x$$ has one of the following prototypes
-$syntax%
+The argument $icode x$$ has one of the following prototypes
+$codei%
 	const AD<%Base%>               &%x%
 	const VecAD<%Base%>::reference &%x%
 %$$ 
 
 $head theta$$
-The result $italic theta$$ has prototype
-$syntax%
+The result $icode theta$$ has prototype
+$codei%
 	AD<%Base%> %theta%
 %$$
 
 $head Operation Sequence$$
-The AD of $italic Base$$
-operation sequence used to calculate $italic theta$$ is
-$xref/glossary/Operation/Independent/independent/1/$$
-of $italic x$$ and $italic y$$.
+The AD of $icode Base$$
+operation sequence used to calculate $icode theta$$ is
+$cref/independent/glossary/Operation/Independent/$$
+of $icode x$$ and $icode y$$.
 
 $head Example$$
 $children%
 	example/atan_2.cpp
 %$$
 The file
-$xref/Atan2.cpp/$$
+$cref Atan2.cpp$$
 contains an example and test of this function.   
 It returns true if it succeeds and false otherwise.
 

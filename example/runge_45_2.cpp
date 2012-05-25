@@ -40,7 +40,7 @@ X_j  (b, 0)   & = & b                                                     \\
 \end{array}
 \] $$
 For a fixed $latex t_f$$,
-we can use $cref/Runge45/$$ to define 
+we can use $cref Runge45$$ to define 
 $latex f : \R \rightarrow \R^n$$ as an approximation for
 $latex f(b) = X(b, t_f )$$.
 We can then compute $latex f^{(1)} (b)$$ which is an approximation for

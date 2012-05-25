@@ -35,7 +35,7 @@ $index speed, cppad lu$$
 $index lu, speed cppad$$
 
 $head Specifications$$
-See $cref/link_det_lu/$$.
+See $cref link_det_lu$$.
 
 $head Implementation$$
 $index cppad, link_det_lu$$

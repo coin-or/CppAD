@@ -37,7 +37,7 @@ $codei%extern bool link_det_lu(
 $head Purpose$$
 Each $cref/package/speed_main/package/$$
 must define a version of this routine as specified below.
-This is used by the $cref/speed_main/$$ program 
+This is used by the $cref speed_main$$ program 
 to run the corresponding speed and correctness tests.
 
 $head Return Value$$

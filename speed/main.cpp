@@ -122,7 +122,7 @@ all of the speed tests are run.
 $head seed$$
 $index uniform_01$$
 The command line argument $icode seed$$ is a positive integer.
-The random number simulator $cref/uniform_01/$$ is initialized with
+The random number simulator $cref uniform_01$$ is initialized with
 the call
 $codei%
 	uniform_01(%seed%)

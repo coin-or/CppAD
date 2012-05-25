@@ -33,7 +33,7 @@ $xref%
 definition for the functions $latex H$$ and $latex G$$.
 
 The forward mode formulas for the
-$xref/ExpForward//exponential/$$
+$cref/exponential/ExpForward/$$
 function are
 $latex \[
 	z^{(j)}  =  \exp ( x^{(0)} ) 

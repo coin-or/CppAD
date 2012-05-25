@@ -36,9 +36,9 @@ $index sparse, Hessian speed adolc$$
 $head Operation Sequence$$
 Note that the 
 $cref/operation sequence/glossary/Operation/Sequence/$$
-depends on the vectors $italic i$$ and $italic j$$.
-Hence we use a different $cref/ADFun/$$ object for 
-each choice of $italic i$$ and $italic j$$.
+depends on the vectors $icode i$$ and $icode j$$.
+Hence we use a different $cref ADFun$$ object for 
+each choice of $icode i$$ and $icode j$$.
 
 $head link_sparse_hessian$$
 $index link_sparse_hessian$$

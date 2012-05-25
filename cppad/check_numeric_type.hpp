@@ -30,17 +30,17 @@ $head Syntax$$
 $code # include <cppad/check_numeric_type.hpp>$$
 $pre
 $$
-$syntax%CheckNumericType<%NumericType%>()%$$
+$codei%CheckNumericType<%NumericType%>()%$$
 
 
 $head Purpose$$
 The syntax 
-$syntax%
+$codei%
 	CheckNumericType<%NumericType%>()
 %$$
 preforms compile and run time checks that the type specified
-by $italic NumericType$$ satisfies all the requirements for 
-a $xref/NumericType/$$ class. 
+by $icode NumericType$$ satisfies all the requirements for 
+a $cref NumericType$$ class. 
 If a requirement is not satisfied,
 a an error message makes it clear what condition is not satisfied.
 
@@ -60,7 +60,7 @@ $head Example$$
 $children%
 	example/check_numeric_type.cpp
 %$$
-The file $xref/CheckNumericType.cpp/$$
+The file $cref CheckNumericType.cpp$$
 contains an example and test of this function. 
 It returns true, if it succeeds an false otherwise.
 The comments in this example suggest a way to change the example

@@ -39,7 +39,7 @@ $head Syntax$$
 $icode%signdet% = opt_val_hes(%x%, %y%, %fun%, %jac%, %hes%)%$$  
 
 $head See Also$$
-$cref/BenderQuad/$$
+$cref BenderQuad$$
 
 $head Reference$$
 Algorithmic differentiation of implicit functions and optimal values,
@@ -65,7 +65,7 @@ and possibly also the Hessian, of $latex V (x)$$.
 
 $head BaseVector$$
 The type $icode BaseVector$$ must be a 
-$xref/SimpleVector/$$ class. 
+$cref SimpleVector$$ class. 
 We use $icode Base$$ to refer to the type of the elements of 
 $icode BaseVector$$; i.e.,
 $codei%
@@ -105,7 +105,7 @@ they must not call $cref/AD<Base>::abort_recording/abort_recording/$$.
 
 $subhead Fun::ad_vector$$
 The type $icode%Fun%::ad_vector%$$ must be a 
-$cref/SimpleVector/$$ class with elements of type $codei%AD<%Base%>%$$; i.e.
+$cref SimpleVector$$ class with elements of type $codei%AD<%Base%>%$$; i.e.
 $codei%
 	%Fun%::ad_vector::value_type
 %$$
@@ -230,7 +230,7 @@ $children%
 	example/opt_val_hes.cpp
 %$$
 The file
-$xref/opt_val_hes.cpp/$$
+$cref opt_val_hes.cpp$$
 contains an example and test of this operation.   
 It returns true if it succeeds and false otherwise.
 

@@ -30,38 +30,38 @@ $section AD Unary Plus Operator$$
 
 $head Syntax$$
 
-$syntax%%y% = + %x%$$
+$icode%y% = + %x%$$
 
 
 $head Purpose$$
 Performs the unary plus operation
-(the result $italic y$$ is equal to the operand $italic x$$).
+(the result $icode y$$ is equal to the operand $icode x$$).
 
 
 $head x$$
-The operand $italic x$$ has one of the following prototypes
-$syntax%
+The operand $icode x$$ has one of the following prototypes
+$codei%
 	const AD<%Base%>               &%x%
 	const VecAD<%Base%>::reference &%x%
 %$$
 
 $head y$$
-The result $italic y$$ has type
-$syntax%
+The result $icode y$$ has type
+$codei%
 	AD<%Base%> %y%
 %$$
-It is equal to the operand $italic x$$.
+It is equal to the operand $icode x$$.
 
 $head Operation Sequence$$
-This is an AD of $italic Base$$
-$xref/glossary/Operation/Atomic/atomic operation/1/$$
+This is an AD of $icode Base$$
+$cref/atomic operation/glossary/Operation/Atomic/$$
 and hence is part of the current
-AD of $italic Base$$
-$xref/glossary/Operation/Sequence/operation sequence/1/$$.
+AD of $icode Base$$
+$cref/operation sequence/glossary/Operation/Sequence/$$.
 
 $head Derivative$$
 If $latex f$$ is a 
-$xref/glossary/Base Function/Base function/$$,
+$cref/Base function/glossary/Base Function/$$,
 $latex \[
 	\D{[ + f(x) ]}{x} = \D{f(x)}{x}
 \] $$
@@ -73,7 +73,7 @@ $children%
 	example/unary_plus.cpp
 %$$
 The file
-$xref/UnaryPlus.cpp/$$
+$cref UnaryPlus.cpp$$
 contains an example and test of this operation.
 
 $end

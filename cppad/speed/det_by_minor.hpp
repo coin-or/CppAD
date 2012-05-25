@@ -32,11 +32,11 @@ $index expansion, minor determinant$$
 
 
 $head Syntax$$
-$syntax%# include <cppad/speed/det_by_minor.hpp>
+$codei%# include <cppad/speed/det_by_minor.hpp>
 %$$
-$syntax%det_by_minor<%Scalar%> %det%(%n%)
+$codei%det_by_minor<%Scalar%> %det%(%n%)
 %$$
-$syntax%%d% = %det%(%a%)
+$icode%d% = %det%(%a%)
 %$$
 
 $head Inclusion$$
@@ -50,37 +50,37 @@ $cref/cppad.hpp/cppad/$$.
 
 $head Constructor$$
 The syntax
-$syntax%
+$codei%
 	det_by_minor<%Scalar%> %det%(%n%)
 %$$
-constructs the object $italic det$$ which can be used for 
-evaluating the determinant of $italic n$$ by $italic n$$ matrices
+constructs the object $icode det$$ which can be used for 
+evaluating the determinant of $icode n$$ by $icode n$$ matrices
 using expansion by minors.
 
 $head Scalar$$
-The type $italic Scalar$$ must satisfy the same conditions
+The type $icode Scalar$$ must satisfy the same conditions
 as in the function $cref/det_of_minor/det_of_minor/Scalar/$$.
 
 $head n$$
-The argument $italic n$$ has prototype
-$syntax%
+The argument $icode n$$ has prototype
+$codei%
 	size_t %n%
 %$$
 
 $head det$$
 The syntax
-$syntax%
+$codei%
 	%d% = %det%(%a%)
 %$$
-returns the determinant of the matrix $italic A$$ using expansion by minors.
+returns the determinant of the matrix $icode A$$ using expansion by minors.
 
 $subhead a$$
-The argument $italic a$$ has prototype
-$syntax%
+The argument $icode a$$ has prototype
+$codei%
 	const %Vector% &%a%
 %$$
-It must be a $italic Vector$$ with length $latex n * n$$ and with
-elements of type $italic Scalar$$.
+It must be a $icode Vector$$ with length $latex n * n$$ and with
+elements of type $icode Scalar$$.
 The elements of the $latex n \times n$$ matrix $latex A$$ are defined,
 for $latex i = 0 , \ldots , n-1$$ and $latex j = 0 , \ldots , n-1$$, by
 $latex \[
@@ -88,22 +88,22 @@ $latex \[
 \] $$
 
 $subhead d$$
-The return value $italic d$$ has prototype
-$syntax%
+The return value $icode d$$ has prototype
+$codei%
 	%Scalar% %d%
 %$$
 It is equal to the determinant of $latex A$$.
 
 $head Vector$$
-If $italic y$$ is a $italic Vector$$ object, 
+If $icode y$$ is a $icode Vector$$ object, 
 it must support the syntax
-$syntax%
+$codei%
 	%y%[%i%]
 %$$
-where $italic i$$ has type $code size_t$$ with value less than $latex n * n$$.
-This must return a $italic Scalar$$ value corresponding to the $th i$$
-element of the vector $italic y$$.
-This is the only requirement of the type $italic Vector$$.
+where $icode i$$ has type $code size_t$$ with value less than $latex n * n$$.
+This must return a $icode Scalar$$ value corresponding to the $th i$$
+element of the vector $icode y$$.
+This is the only requirement of the type $icode Vector$$.
 
 $children%
 	speed/example/det_by_minor.cpp%
@@ -113,13 +113,13 @@ $children%
 
 $head Example$$
 The file
-$xref/det_by_minor.cpp/$$ 
+$cref det_by_minor.cpp$$ 
 contains an example and test of $code det_by_minor.hpp$$.
 It returns true if it succeeds and false otherwise.
 
 $head Source Code$$
 The file
-$xref/det_by_minor.hpp/$$ 
+$cref det_by_minor.hpp$$ 
 contains the source for this template function.
 
 

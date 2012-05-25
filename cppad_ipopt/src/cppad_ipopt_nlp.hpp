@@ -107,7 +107,7 @@ $latex \[
 \] $$
 
 $subhead Index Vector$$
-We define an $italic index vector$$ as a vector of non-negative integers
+We define an $icode index vector$$ as a vector of non-negative integers
 for which none of the values are equal; i.e.,
 it is both a vector and a set.
 If $latex I$$ is an index vector $latex |I|$$ is used to denote the
@@ -176,13 +176,13 @@ and $latex J_{0,0} = (0 , \ldots , n-1)$$.
 $head SizeVector$$
 The type $codei SizeVector$$ is defined by the 
 $codei cppad_ipopt_nlp.hpp$$ include file to be a 
-$cref/SimpleVector/$$ class with elements of type
+$cref SimpleVector$$ class with elements of type
 $code size_t$$.
 
 $head NumberVector$$
 The type $codei NumberVector$$ is defined by the 
 $codei cppad_ipopt_nlp.hpp$$ include file to be a 
-$cref/SimpleVector/$$ class with elements of type
+$cref SimpleVector$$ class with elements of type
 $code Ipopt::Number$$.
 
 $head ADNumber$$
@@ -193,7 +193,7 @@ an AD type that can be used to compute derivatives.
 $head ADVector$$
 The type $codei ADVector$$ is defined by the 
 $codei cppad_ipopt_nlp.hpp$$ include file to be a 
-$cref/SimpleVector/$$ class with elements of type
+$cref SimpleVector$$ class with elements of type
 $code ADNumber$$. 
 
 $head n$$
@@ -419,7 +419,7 @@ and is a value between zero and $latex L(k)-1$$ inclusive.
 The argument 
 $icode%
 	I
-%$$ is a $cref/SimpleVector/$$ with elements
+%$$ is a $cref SimpleVector$$ with elements
 of type $code size_t$$ and size greater than or equal to $latex p(k)$$.
 The input value of the elements of $icode I$$ does not matter.
 The output value of
@@ -429,7 +429,7 @@ in the $cref/representation/cppad_ipopt_nlp/fg(x)/Representation/$$ above.
 The argument 
 $icode%
 	J
-%$$ is a $cref/SimpleVector/$$ with elements
+%$$ is a $cref SimpleVector$$ with elements
 of type $code size_t$$ and size greater than or equal to $latex q(k)$$.
 The input value of the elements of $icode J$$ does not matter.
 The output value of 
@@ -572,15 +572,15 @@ $children%
 
 $head Visual Studio$$
 If you are using Visual Studio, see the special
-$cref/cppad_ipopt_windows/$$ instructions.
+$cref cppad_ipopt_windows$$ instructions.
 
 $head Example$$
 The file 
-$cref/ipopt_get_started.cpp/$$ is an example and test of 
+$cref ipopt_get_started.cpp$$ is an example and test of 
 $code cppad_ipopt_nlp$$  that uses the 
 $cref/simple representation/cppad_ipopt_nlp/Simple Representation/$$.
 It returns true if it succeeds and false otherwise.
-The section $cref/cppad_ipopt_ode/$$ discusses an example that
+The section $cref cppad_ipopt_ode$$ discusses an example that
 uses a more complex representation.
 
 $head Wish List$$
@@ -594,7 +594,7 @@ $codei%fg_info.retape(%k%)%$$ is true and $latex L(k) > 1$$).
 It could be an option for the user to provide this as well as
 the necessary $code ADVector$$ definition.
 $lnext
-There should a $cref/Discrete/$$ routine that the user can call
+There should a $cref Discrete$$ routine that the user can call
 to determine the value of $latex \ell$$ during the evaluation of
 $codei%fg_info.eval_r(%k%, %u%)%$$.
 This way data, which does not affect the derivative values,

@@ -52,14 +52,14 @@ The purpose of this section is to
 assist you in learning about changes between various versions of CppAD.
 
 $head 12-19$$
-In the documentation for $cref/pow_int/$$ change the integer exponent
+In the documentation for $cref pow_int$$ change the integer exponent
 from $codei%int %y%$$ to $codei%const int &%y%$$.
-In the implementation for $cref/pow/$$ make the integer base case 
+In the implementation for $cref pow$$ make the integer base case 
 agree with the documentation; i.e., change
 from $codei%int %x%$$ to $codei%const int &%x%$$.
 
 $head 12-14$$
-Added another test of $cref/mul_level/$$ calculations (in the 
+Added another test of $cref mul_level$$ calculations (in the 
 $code test_more$$ directory).
 
 $head 12-04$$
@@ -68,7 +68,7 @@ provided in the section $cref/ipopt_cppad_ode/cppad_ipopt_ode/$$.
 
 $head 11-22$$
 The CppAD interface to the Ipopt nonlinear programming solver
-$cref/cppad_ipopt_nlp/$$
+$cref cppad_ipopt_nlp$$
 has been moved from $code example/ipopt_cppad_nlp$$ to 
 $code ipopt_cppad/ipopt_cppad_nlp$$.
 
@@ -87,16 +87,16 @@ wish list item).
 $head 11-20$$
 $index erf$$
 The function $codei%tanh(%x%)%$$ was added to the 
-$cref/std_math_ad/$$ functions.
+$cref std_math_ad$$ functions.
 The $code abs$$ and $code erf$$ functions were removed from the
 $cref/Base requirements/base_require/$$.
 The restrictions about the Base class were removed from
-$cref/abs/$$, $cref/atan2/$$, $cref/LuRatio/$$, $cref/erf/$$.
+$cref abs$$, $cref atan2$$, $cref LuRatio$$, $cref erf$$.
 $pre
 
 $$
 Visual Studio Version 9.0 could not handle the large number of static
-constants in the CppAD $cref/erf/$$ function.
+constants in the CppAD $cref erf$$ function.
 This function was changed to a simpler representation
 that is much faster and that 
 is differentiable at all points (not defined differently on subregions).
@@ -263,7 +263,7 @@ This is only an example class it may change with future
 versions of CppAD.
 
 $head 06-15$$
-The nonlinear programming example $cref/ipopt_get_started.cpp/$$ was added.
+The nonlinear programming example $cref ipopt_get_started.cpp$$ was added.
 This is a preliminary version of this example.
 
 $head 06-11$$
@@ -283,28 +283,28 @@ An optional sparsity pattern argument was added to $code SparseJacobian$$
 so that it need not be recalculated each time.
 
 $head 05-08$$
-The $cref/sparse_jacobian/$$ routine has been added.
+The $cref sparse_jacobian$$ routine has been added.
 $pre
 
 $$
-The example in $cref/sparse_hessian/$$ pointed to $cref/Hessian.cpp/$$
-instead of $cref/sparse_hessian.cpp/$$.
+The example in $cref sparse_hessian$$ pointed to $cref Hessian.cpp$$
+instead of $cref sparse_hessian.cpp$$.
 This has been fixed.
 
 $head 05-03$$
-The $code retape$$ flag has been added to $cref/speed_main/$$.
+The $code retape$$ flag has been added to $cref speed_main$$.
 In addition the routines
-$cref/link_det_minor/$$, $cref/link_poly/$$, and $cref/link_ode/$$
+$cref link_det_minor$$, $cref link_poly$$, and $cref link_ode$$
 pass this flag along to the speed test implementations
 (because the corresponding tests have a fixed operation sequence).
 If this flag is false, a test implementation is allowed to just tape
 the operation sequence once and reuse it. 
 The following tests use this flag:
-$cref/adolc_det_minor.cpp/$$,
-$cref/cppad_det_minor.cpp/$$,
-$cref/cppad_ode.cpp/$$,
-$cref/adolc_poly.cpp/$$,
-$cref/cppad_poly.cpp/$$.
+$cref adolc_det_minor.cpp$$,
+$cref cppad_det_minor.cpp$$,
+$cref cppad_ode.cpp$$,
+$cref adolc_poly.cpp$$,
+$cref cppad_poly.cpp$$.
 $pre
 
 $$
@@ -315,16 +315,16 @@ but does not test out as faster under cygwin g++ (GCC) 3.4.4.
 
 
 $head 04-20$$
-Added the $cref/ode_evaluate/$$ speed test utility in 
+Added the $cref ode_evaluate$$ speed test utility in 
 preparation for having ode speed tests.
 Created ode speed test for the $code cppad$$ and $code double$$ 
-cases; see $cref/speed_main/$$.
+cases; see $cref speed_main$$.
 In addition, 
-added the examples $cref/ode_evaluate.cpp/$$ and $cref/sparse_hessian.cpp/$$.
+added the examples $cref ode_evaluate.cpp$$ and $cref sparse_hessian.cpp$$.
 $pre
 
 $$
-Changed the $cref/speed_main/$$ routines defined for each package
+Changed the $cref speed_main$$ routines defined for each package
 from $codei%compute_%name%$$ to $codei%link_%name%$$.
 For example, in $code speed/cppad/det_minor.cpp$$,
 the function name 
@@ -332,23 +332,23 @@ $code compute_det_minor$$ was changed to $code link_det_minor$$.
 
 
 $head 04-18$$
-Fix a problem in the $cref/link_poly/$$ correctness test.
-Also add $cref/double_sparse_hessian.cpp/$$ to the set 
+Fix a problem in the $cref link_poly$$ correctness test.
+Also add $cref double_sparse_hessian.cpp$$ to the set 
 speed and correctness tests (now available).
 
 
 $head 04-10$$
 Change all the 
 $cref/Adolc speed/speed_adolc/$$ examples to use
-$cref/TrackNewDel/$$ instead of using $code new$$ and $code delete$$
+$cref TrackNewDel$$ instead of using $code new$$ and $code delete$$
 directly.
 This makes it easy to check for memory allocation errors and leaks
 (when $code NDEBUG$$ is not defined).
 Also include in documentation sub functions that indicate 
 the $code sparse_hessian$$ speed test is not available for
-$cref/double_sparse_hessian.cpp/$$,
-$cref/fadbad_sparse_hessian.cpp/$$, and
-$cref/sacado_sparse_hessian.cpp/$$.
+$cref double_sparse_hessian.cpp$$,
+$cref fadbad_sparse_hessian.cpp$$, and
+$cref sacado_sparse_hessian.cpp$$.
 
 $head 04-06$$
 The following $cref/wish list/WishList/$$ 
@@ -362,7 +362,7 @@ Fix a problem compiling the speed test
 $cref/main/speed_main/$$ program with gcc 4.3.
 
 $head 03-27$$
-Corrected $cref/cppad_sparse_hessian.cpp/$$
+Corrected $cref cppad_sparse_hessian.cpp$$
 so that it uses the sparse case when 
 $code USE_CPPAD_SPARSE_HESSIAN$$ is $code 1$$.
 Also added a wish list sparsity pattern entry
@@ -371,7 +371,7 @@ has been fulfilled).
 $pre
 
 $$
-Change the name of $code speedtest.cpp$$ to $cref/speed_program.cpp/$$.
+Change the name of $code speedtest.cpp$$ to $cref speed_program.cpp$$.
 
 
 $head 02-05$$
@@ -385,11 +385,11 @@ were missing. This has also been fixed.
 $head 02-03$$
 There was an ambiguity problem 
 (detected by g++ 4.3) with the following operations
-$syntax%
+$codei%
 	%x% %op% %y%
 %$$
-where $italic x$$ and $italic y$$ were $code AD<double>$$ and
-$italic op$$ was a member operator of that class.
+where $icode x$$ and $icode y$$ were $code AD<double>$$ and
+$icode op$$ was a member operator of that class.
 This has been fixed by making all such member functions friends
 instead of members of $code AD<double>$$. 
 $pre
@@ -401,10 +401,10 @@ Add
 $cref/expression hashing/WishList/Optimization/Expression Hashing/$$
 to the wish list.
 Add Library and Scripting Languages to the wish list
-(this has since been fulfilled by the example $cref/ad_in_c.cpp/$$).
+(this has since been fulfilled by the example $cref ad_in_c.cpp$$).
 
 $head 01-26$$
-The $cref/LuFactor/$$ routine gave a misleading error message 
+The $cref LuFactor$$ routine gave a misleading error message 
 when the input matrix had not a number or infinity in it.
 This has been fixed.
 
@@ -413,7 +413,7 @@ The $cref/postfix_dir/InstallUnix/postfix_dir/$$
 has been added to the $code configure$$ command line options.
 
 $head 01-21$$
-A sparse Hessian case was added to the $cref/speed/$$ tests; see
+A sparse Hessian case was added to the $cref speed$$ tests; see
 $cref/sparse_hessian/link_sparse_hessian/$$.
 
 $head 01-20$$
@@ -427,8 +427,8 @@ than $code 1e-13$$. A test for this has been added to the
 $code test_more/test_more$$ program.
 
 $head 01-08$$
-Added a $cref/sparse_hessian/$$ routine and
-extended $cref/Hessian/$$ to allow for a weight vector $italic w$$
-instead of just one component $italic l$$.
+Added a $cref sparse_hessian$$ routine and
+extended $cref Hessian$$ to allow for a weight vector $icode w$$
+instead of just one component $icode l$$.
 
 $end

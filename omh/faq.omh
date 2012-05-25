@@ -34,19 +34,19 @@ $index assignment, operator$$
 $index operator, assignment$$
 $index independent$$
 Why does the code sequence
-$syntax%
+$codei%
 	Independent(%u%);
 	%v% = %u%[0];
 %$$
 behave differently from the code sequence
-$syntax%
+$codei%
 	%v% = %u%[0];
 	Independent(%u%);
 %$$
-Before the call to $cref/Independent/$$,
-$syntax%%u[%0%]%$$ is a $cref/parameter/glossary/Parameter/$$
+Before the call to $cref Independent$$,
+$icode%u[%0%]%$$ is a $cref/parameter/glossary/Parameter/$$
 and after the call it is a variable.
-Thus in the first case, $italic v$$ is a variable
+Thus in the first case, $icode v$$ is a variable
 and in the second case it is a parameter.
 
 $head Bugs$$
@@ -63,10 +63,10 @@ If this does not solve your problem, continue
 to the next step.
 $lnext
 The second step is to check the 
-$cref/whats_new/$$ messages from the date 
+$cref whats_new$$ messages from the date 
 of the release that you are using to the current date.
 If the bug has been mentioned and fixed,
-then $xref/install/$$ the current version of CppAD.
+then $cref install$$ the current version of CppAD.
 If this does not solve your problem, continue
 to the next step.
 $lnext
@@ -85,28 +85,28 @@ $head CompareChange$$
 $index CompareChange$$
 $index NDEBUG$$
 If you attempt to use the 
-$xref/CompareChange/$$
+$cref CompareChange$$
 function when $code NDEBUG$$ is true,
 you will get an error message stating that
 $code CompareChange$$ is not a member of the
-$xref/ADFun/$$ template class.
+$cref ADFun$$ template class.
 
 $head Complex Types$$
 $index complex, faq$$
 Which of the following complex types is better:
-$syntax%
+$codei%
 	AD< std::complex<%Base%> >
 	std::complex< AD<%Base%> >
 %$$
 Some functions are real differentiable than are not complex differentiable
-(for example, the $xref/abs/Complex Types/complex abs function/$$).
+(for example, the $cref/complex abs function/abs/Complex Types/$$).
 If you have to differentiate such functions, you should use
-$syntax%
+$codei%
 	std::complex< AD<%Base%> >
 %$$
 If you are sure that you will not need to take any real partials
 of complex valued function, it is more efficient to use
-$syntax%
+$codei%
 	AD< std::complex<%Base%> >
 %$$
 
@@ -124,7 +124,7 @@ The examples are also used to test the correctness of CppAD
 and to check your installation.
 For these two uses, it is helpful to run all the tests
 and to know which ones failed.
-The actual code in CppAD uses the $xref/ErrorHandler/$$ utility
+The actual code in CppAD uses the $cref ErrorHandler$$ utility
 to signal exceptions.
 Specifications for redefining this action are provided.
 
@@ -138,7 +138,7 @@ for the independent variables ?
 $pre
 
 $$
-Yes (see $xref/ForwardZero/$$). 
+Yes (see $cref ForwardZero$$). 
 
 $head Math Functions$$
 $index math, functions$$
@@ -147,7 +147,7 @@ Are there plans to add more math functions to CppAD ?
 $pre
 
 $$
-Yes. The $xref/std_math_ad/$$ and $xref/MathOther/$$ section contains
+Yes. The $cref std_math_ad$$ and $cref MathOther$$ section contains
 a list of the math functions included so far.
 Contact the mailing list 
 $href%
@@ -167,10 +167,10 @@ where the computation of the inverse uses pivoting ?
 $pre
 
 $$
-The example routine $xref/LuSolve/$$ can be used to do this
+The example routine $cref LuSolve$$ can be used to do this
 because the inverse is a special case of the solution of linear equations.
 The examples 
-$xref/JacLuDet.cpp/$$ and $xref/HesLuDet.cpp/$$
+$cref JacLuDet.cpp$$ and $cref HesLuDet.cpp$$
 use LuSolve to compute derivatives of the 
 determinant with respect to the components of the matrix.
 
@@ -187,13 +187,13 @@ $pre
 $$
 In general, the best mode depends on the number of domain and range
 components in the function that your are differentiating.
-Each call to $xref/Forward/$$ computes the derivative of all 
+Each call to $cref Forward$$ computes the derivative of all 
 the range directions with respect to one domain direction.
-Each call to $xref/Reverse/$$ computes the derivative of one 
+Each call to $cref Reverse$$ computes the derivative of one 
 range direction with respect to all the domain directions.
 The times required for (speed of) 
 calls $code Forward$$ and $code Reverse$$ are about equal.  
-The $xref/seq_property/Parameter/Parameter/$$ 
+The $cref/Parameter/seq_property/Parameter/$$ 
 function can be used to quickly determine that 
 some range directions have derivative zero.
 
@@ -208,16 +208,16 @@ $index CPPAD_TEST_VECTOR$$
 $index preprocessor, symbols$$
 $index symbols, preprocessor$$
 Why do you use $code CPPAD_TEST_VECTOR$$ instead of a namespace for
-the CppAD $cref/test_vector/$$ class ?
+the CppAD $cref test_vector$$ class ?
 $pre
 
 $$
 The preprocessor symbol 
 $small $cref/CPPAD_TEST_VECTOR/test_vector/$$ $$
 determines which
-$xref/SimpleVector/$$ template class is used for extensive testing.
+$cref SimpleVector$$ template class is used for extensive testing.
 The default definition for $code CPPAD_TEST_VECTOR$$ is the
-$xref/CppAD_vector//CppAD::vector/$$ template class, but it can be changed.
+$cref/CppAD::vector/CppAD_vector/$$ template class, but it can be changed.
 Note that all the preprocessor symbols that are defined or used
 by CppAD begin with either $code CPPAD$$
 (some old deprecated symbols begin with $code CppAD$$).
@@ -237,7 +237,7 @@ $pre
 $$
 Some versions of $code # include <cmath>$$ for
 gcc and Visual C++ define the standard math functions,
-(for example $syntax%double sqrt(double %x%)%$$)
+(for example $codei%double sqrt(double %x%)%$$)
 at the global level.
 It is necessary to put your $code using$$ commands within the scope
 of a function,
@@ -252,10 +252,10 @@ How do I get the best speed performance out of CppAD ?
 $subhead NDEBUG$$
 You should compile your code with optimization, without debugging,
 and with the preprocessor symbol $code NDEBUG$$ defined.
-(The $xref/speed_cppad/$$ tests do this.)
+(The $cref speed_cppad$$ tests do this.)
 Note that defining $code NDEBUG$$
 will turn off all of the error checking and reporting that
-is done using $xref/ErrorHandler/$$. 
+is done using $cref ErrorHandler$$. 
 
 $subhead Optimize$$
 It is also possible that preforming a tape 
@@ -277,7 +277,7 @@ $pre
 
 $$
 CppAD uses memory to store a different tape for recording operations
-for each $syntax%AD<%Base%>%$$ type that is used.
+for each $codei%AD<%Base%>%$$ type that is used.
 If you have a very large number calculations that are recorded
 on a tape, the tape will keep growing to hold the necessary information.
 Eventually, virtual memory may be used to store the tape 

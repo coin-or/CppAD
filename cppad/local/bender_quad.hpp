@@ -36,21 +36,21 @@ $index BenderQuad$$
 $section Computing Jacobian and Hessian of Bender's Reduced Objective$$
 
 $head Syntax$$
-$syntax%%
+$icode%
 %# include <cppad/cppad.hpp>
 BenderQuad(%x%, %y%, %fun%, %g%, %gx%, %gxx%)%$$  
 
 $head See Also$$
-$cref/opt_val_hes/$$
+$cref opt_val_hes$$
 
 $head Problem$$
 The type $cref/ADvector/BenderQuad/ADvector/$$ cannot be determined
 form the arguments above 
-(currently the type $italic ADvector$$ must be 
-$syntax%CPPAD_TEST_VECTOR<%Base%>%$$.)
-This will be corrected in the future by requiring $italic Fun$$
-to define $syntax%%Fun%::vector_type%$$ which will specify the
-type $italic ADvector$$.
+(currently the type $icode ADvector$$ must be 
+$codei%CPPAD_TEST_VECTOR<%Base%>%$$.)
+This will be corrected in the future by requiring $icode Fun$$
+to define $icode%Fun%::vector_type%$$ which will specify the
+type $icode ADvector$$.
 
 $head Purpose$$
 We are given the optimization problem
@@ -82,22 +82,22 @@ $latex \[
 \] $$ 
 
 $head x$$
-The $code BenderQuad$$ argument $italic x$$ has prototype
-$syntax%
+The $code BenderQuad$$ argument $icode x$$ has prototype
+$codei%
 	const %BAvector% &%x%
 %$$
-(see $xref/BenderQuad/BAvector/BAvector/$$ below)
-and its size must be equal to $italic n$$.
+(see $cref/BAvector/BenderQuad/BAvector/$$ below)
+and its size must be equal to $icode n$$.
 It specifies the point at which we evaluating 
 the reduced objective function and its derivatives.
 
 
 $head y$$
-The $code BenderQuad$$ argument $italic y$$ has prototype
-$syntax%
+The $code BenderQuad$$ argument $icode y$$ has prototype
+$codei%
 	const %BAvector% &%y%
 %$$
-and its size must be equal to $italic m$$.
+and its size must be equal to $icode m$$.
 It must be equal to $latex Y(x)$$; i.e., 
 it must solve the problem in $latex y$$ for this given value of $latex x$$
 $latex \[
@@ -107,114 +107,114 @@ $latex \[
 \] $$
 
 $head fun$$
-The $code BenderQuad$$ object $italic fun$$ 
+The $code BenderQuad$$ object $icode fun$$ 
 must support the member functions listed below.
-The $syntax%AD<%Base%>%$$ arguments will be variables for
-a tape created by a call to $cref%Independent%$$ from $code BenderQuad$$
+The $codei%AD<%Base%>%$$ arguments will be variables for
+a tape created by a call to $cref Independent$$ from $code BenderQuad$$
 (hence they can not be combined with variables corresponding to a 
 different tape). 
 
 $subhead fun.f$$
-The $code BenderQuad$$ argument $italic fun$$ supports the syntax
-$syntax%
+The $code BenderQuad$$ argument $icode fun$$ supports the syntax
+$codei%
 	%f% = %fun%.f(%x%, %y%)
 %$$
-The $syntax%%fun%.f%$$ argument $italic x$$ has prototype
-$syntax%
+The $icode%fun%.f%$$ argument $icode x$$ has prototype
+$codei%
 	const %ADvector% &%x%
 %$$
-(see $xref/BenderQuad/ADvector/ADvector/$$ below)
-and its size must be equal to $italic n$$.
-The $syntax%%fun%.f%$$ argument $italic y$$ has prototype
-$syntax%
+(see $cref/ADvector/BenderQuad/ADvector/$$ below)
+and its size must be equal to $icode n$$.
+The $icode%fun%.f%$$ argument $icode y$$ has prototype
+$codei%
 	const %ADvector% &%y%
 %$$
-and its size must be equal to $italic m$$.
-The $syntax%%fun%.f%$$ result $italic f$$ has prototype
-$syntax%
+and its size must be equal to $icode m$$.
+The $icode%fun%.f%$$ result $icode f$$ has prototype
+$codei%
 	%ADvector% %f%
 %$$
 and its size must be equal to one.
-The value of $italic f$$ is
+The value of $icode f$$ is
 $latex \[
 	f = F(x, y)
 \] $$.
 
 $subhead fun.h$$
-The $code BenderQuad$$ argument $italic fun$$ supports the syntax
-$syntax%
+The $code BenderQuad$$ argument $icode fun$$ supports the syntax
+$codei%
 	%h% = %fun%.h(%x%, %y%)
 %$$
-The $syntax%%fun%.h%$$ argument $italic x$$ has prototype
-$syntax%
+The $icode%fun%.h%$$ argument $icode x$$ has prototype
+$codei%
 	const %ADvector% &%x%
 %$$
-and its size must be equal to $italic n$$.
-The $syntax%%fun%.h%$$ argument $italic y$$ has prototype
-$syntax%
+and its size must be equal to $icode n$$.
+The $icode%fun%.h%$$ argument $icode y$$ has prototype
+$codei%
 	const %BAvector% &%y%
 %$$
-and its size must be equal to $italic m$$.
-The $syntax%%fun%.h%$$ result $italic h$$ has prototype
-$syntax%
+and its size must be equal to $icode m$$.
+The $icode%fun%.h%$$ result $icode h$$ has prototype
+$codei%
 	%ADvector% %h%
 %$$
-and its size must be equal to $italic m$$.
-The value of $italic h$$ is
+and its size must be equal to $icode m$$.
+The value of $icode h$$ is
 $latex \[
 	h = H(x, y)
 \] $$.
 
 $subhead fun.dy$$
-The $code BenderQuad$$ argument $italic fun$$ supports the syntax
-$syntax%
+The $code BenderQuad$$ argument $icode fun$$ supports the syntax
+$codei%
 	%dy% = %fun%.dy(%x%, %y%, %h%)
 
 %x%
 %$$
-The $syntax%%fun%.dy%$$ argument $italic x$$ has prototype
-$syntax%
+The $icode%fun%.dy%$$ argument $icode x$$ has prototype
+$codei%
 	const %BAvector% &%x%
 %$$
-and its size must be equal to $italic n$$.
+and its size must be equal to $icode n$$.
 Its value will be exactly equal to the $code BenderQuad$$ argument 
-$italic x$$ and values depending on it can be stored as private objects
-in $italic f$$ and need not be recalculated.
-$syntax%
+$icode x$$ and values depending on it can be stored as private objects
+in $icode f$$ and need not be recalculated.
+$codei%
 
 %y%
 %$$
-The $syntax%%fun%.dy%$$ argument $italic y$$ has prototype
-$syntax%
+The $icode%fun%.dy%$$ argument $icode y$$ has prototype
+$codei%
 	const %BAvector% &%y%
 %$$
-and its size must be equal to $italic m$$.
+and its size must be equal to $icode m$$.
 Its value will be exactly equal to the $code BenderQuad$$ argument 
-$italic y$$ and values depending on it can be stored as private objects
-in $italic f$$ and need not be recalculated.
-$syntax%
+$icode y$$ and values depending on it can be stored as private objects
+in $icode f$$ and need not be recalculated.
+$codei%
 
 %h%
 %$$
-The $syntax%%fun%.dy%$$ argument $italic h$$ has prototype
-$syntax%
+The $icode%fun%.dy%$$ argument $icode h$$ has prototype
+$codei%
 	const %ADvector% &%h%
 %$$
-and its size must be equal to $italic m$$.
-$syntax%
+and its size must be equal to $icode m$$.
+$codei%
 
 %dy%
 %$$
-The $syntax%%fun%.dy%$$ result $italic dy$$ has prototype
-$syntax%
+The $icode%fun%.dy%$$ result $icode dy$$ has prototype
+$codei%
 	%ADvector% %dy%
 %$$
-and its size must be equal to $italic m$$.
-The return value $italic dy$$ is given by
+and its size must be equal to $icode m$$.
+The return value $icode dy$$ is given by
 $latex \[
 	dy = - [ \partial_y H (x , y) ]^{-1} h
 \] $$
-Note that if $italic h$$ is equal to $latex H(x, y)$$,
+Note that if $icode h$$ is equal to $latex H(x, y)$$,
 $latex dy$$ is the Newton step for finding a zero
 of $latex H(x, y)$$ with respect to $latex y$$;
 i.e., 
@@ -222,8 +222,8 @@ $latex y + dy$$ is an approximate solution for the equation
 $latex H (x, y + dy) = 0$$. 
 
 $head g$$
-The argument $italic g$$ has prototype
-$syntax%
+The argument $icode g$$ has prototype
+$codei%
 	%BAvector% &%g%
 %$$
 and has size one.
@@ -235,8 +235,8 @@ $latex \[
 \] $$
 
 $head gx$$
-The argument $italic gx$$ has prototype
-$syntax%
+The argument $icode gx$$ has prototype
+$codei%
 	%BAvector% &%gx%
 %$$
 and has size $latex n $$.
@@ -249,8 +249,8 @@ $latex \[
 \] $$
 
 $head gxx$$
-The argument $italic gx$$ has prototype
-$syntax%
+The argument $icode gx$$ has prototype
+$codei%
 	%BAvector% &%gxx%
 %$$
 and has size $latex n \times n$$.
@@ -264,23 +264,23 @@ $latex \[
 \] $$
 
 $head BAvector$$
-The type $italic BAvector$$ must be a 
-$xref/SimpleVector/$$ class. 
-We use $italic Base$$ to refer to the type of the elements of 
-$italic BAvector$$; i.e.,
-$syntax%
+The type $icode BAvector$$ must be a 
+$cref SimpleVector$$ class. 
+We use $icode Base$$ to refer to the type of the elements of 
+$icode BAvector$$; i.e.,
+$codei%
 	%BAvector%::value_type
 %$$
 
 $head ADvector$$
-The type $italic ADvector$$ must be a 
-$xref/SimpleVector/$$ class with elements of type 
-$syntax%AD<%Base%>%$$; i.e.,
-$syntax%
+The type $icode ADvector$$ must be a 
+$cref SimpleVector$$ class with elements of type 
+$codei%AD<%Base%>%$$; i.e.,
+$codei%
 	%ADvector%::value_type
 %$$
 must be the same type as
-$syntax%
+$codei%
 	AD< %BAvector%::value_type >
 %$$.
 
@@ -290,7 +290,7 @@ $children%
 	example/bender_quad.cpp
 %$$
 The file
-$xref/BenderQuad.cpp/$$
+$cref BenderQuad.cpp$$
 contains an example and test of this operation.   
 It returns true if it succeeds and false otherwise.
 

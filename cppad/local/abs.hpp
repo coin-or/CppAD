@@ -111,7 +111,7 @@ $latex \[
 Note that $latex x^{(0)} = X(0)$$ is the value of $icode x$$ and
 $latex y^{(0)} = Y(0)$$ is the value of $icode y$$.
 In the equations above, the order $latex p$$ is specified
-by a call to $cref Forward$$ or $xref/Reverse/$$ as follows:
+by a call to $cref Forward$$ or $cref Reverse$$ as follows:
 $codei%
 	%f%.Forward(%p%, %dx%)
 	%f%.Reverse(%p%+1, %w%)

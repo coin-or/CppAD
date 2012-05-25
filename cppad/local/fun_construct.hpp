@@ -48,9 +48,9 @@ $icode%g% = %f%
 $head Purpose$$
 The $codei%AD<%Base%>%$$ object $icode f$$ can 
 store an AD of $icode Base$$
-$xref/glossary/Operation/Sequence/operation sequence/1/$$.
+$cref/operation sequence/glossary/Operation/Sequence/$$.
 It can then be used to calculate derivatives of the corresponding
-$xref/glossary/AD Function/AD function/$$
+$cref/AD function/glossary/AD Function/$$
 $latex \[
 	F : B^n \rightarrow B^m
 \] $$
@@ -62,7 +62,7 @@ $codei%
 	const %VectorAD% &%x%
 %$$
 It must be the vector argument in the previous call to
-$cref/Independent/$$.
+$cref Independent$$.
 Neither its size, or any of its values, are allowed to change
 between calling
 $codei%
@@ -82,10 +82,10 @@ The sequence of operations that map $icode x$$
 to $icode y$$ are stored in the ADFun object $icode f$$.
 
 $head VectorAD$$
-The type $icode VectorAD$$ must be a $cref/SimpleVector/$$ class with
+The type $icode VectorAD$$ must be a $cref SimpleVector$$ class with
 $cref/elements of type/SimpleVector/Elements of Specified Type/$$ 
 $codei%AD<%Base%>%$$.
-The routine $cref/CheckSimpleVector/$$ will generate an error message
+The routine $cref CheckSimpleVector$$ will generate an error message
 if this is not the case.
 
 $head Default Constructor$$
@@ -101,7 +101,7 @@ $codei%AD<%Base%>%$$ object with no corresponding operation sequence; i.e.,
 $codei%
 	%f%.size_var()
 %$$
-returns the value zero (see $xref/seq_property/size_var/size_var/$$).
+returns the value zero (see $cref/size_var/seq_property/size_var/$$).
 
 $head Sequence Constructor$$
 $index sequence, ADFun constructor$$
@@ -133,7 +133,7 @@ Stop the tape and storing the operation sequence using
 $codei%
 	%f%.Dependent(%x%, %y%);
 %$$
-(see $xref/Dependent/$$).
+(see $cref Dependent$$).
 $lnext
 Calculating the first order taylor_ coefficients for all 
 the variables in the operation sequence using
@@ -142,7 +142,7 @@ $codei%
 %$$
 with $icode p$$ equal to zero and the elements of $icode x_p$$
 equal to the corresponding elements of $icode x$$
-(see $xref/Forward/$$).
+(see $cref Forward$$).
 $lend
 
 $head Copy Constructor$$
@@ -211,15 +211,15 @@ $head Example$$
 
 $subhead Sequence Constructor$$
 The file
-$xref/Independent.cpp/$$ 
+$cref Independent.cpp$$ 
 contains an example and test of the sequence constructor.
 It returns true if it succeeds and false otherwise.
 
 $subhead Default Constructor$$
 The files
-$xref/FunCheck.cpp/$$ 
+$cref FunCheck.cpp$$ 
 and
-$xref/HesLagrangian.cpp/$$
+$cref HesLagrangian.cpp$$
 contain an examples and tests using the default constructor.
 They return true if they succeed and false otherwise.
 
@@ -228,7 +228,7 @@ $children%
 %$$
 $subhead Assignment Operator$$
 The file 
-$cref/fun_assign.cpp/$$
+$cref fun_assign.cpp$$
 contains an example and test of the $codei%ADFun<%Base%>%$$
 assignment operator.
 It returns true if it succeeds and false otherwise.

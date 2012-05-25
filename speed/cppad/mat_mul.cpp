@@ -37,7 +37,7 @@ $index matrix, multiply speed cppad$$
 $index multiply, matrix speed cppad$$
 
 $head Specifications$$
-See $cref/link_mat_mul/$$.
+See $cref link_mat_mul$$.
 
 $head Implementation$$
 $index cppad, link_mat_mul$$

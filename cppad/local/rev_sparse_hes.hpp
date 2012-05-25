@@ -42,7 +42,7 @@ $icode%h% = %f%.RevSparseHes(%q%, %s%)%$$
 
 $head Purpose$$
 We use $latex F : \R^n \rightarrow \R^m$$ to denote the
-$xref/glossary/AD Function/AD function/$$ corresponding to $icode f$$.
+$cref/AD function/glossary/AD Function/$$ corresponding to $icode f$$.
 We define the matrix $latex H(x) \in \R^{q \times n}$$
 as the partial with respect to $latex x$$,
 of the partial with respect to $latex u$$ (at $latex u = 0$$),
@@ -52,7 +52,7 @@ $latex \[
 	H(x)  =  R^\T (S * F)^{(2)} ( x )
 \] $$
 Given a
-$xref/glossary/Sparsity Pattern/sparsity pattern/$$ 
+$cref/sparsity pattern/glossary/Sparsity Pattern/$$ 
 for the matrix $latex R$$ and the vector $latex S$$,
 $code RevSparseHes$$ returns a sparsity pattern for the $latex H(x)$$.
 
@@ -65,7 +65,7 @@ $codei%
 $head x$$
 the sparsity pattern is valid for all values of the independent
 variables in $latex x \in \R^n$$
-(even if it has $cref/CondExp/$$ or $cref/VecAD/$$ operations).
+(even if it has $cref CondExp$$ or $cref VecAD$$ operations).
 
 $head q$$
 The argument $icode q$$ has prototype
@@ -75,7 +75,7 @@ $codei%
 It specifies the number of columns in $latex R \in \R^{n \times q}$$
 and the number of rows in 
 $latex H(x) \in \R^{q \times n}$$.
-It must be the same value as in the previous $xref/ForSparseJac/$$ call 
+It must be the same value as in the previous $cref ForSparseJac$$ call 
 $codei%
 	%f%.ForSparseJac(%q%, %r%)
 %$$
@@ -85,7 +85,7 @@ The argument $icode r$$ in the previous call
 $codei%
 	%f%.ForSparseJac(%q%, %r%)
 %$$
-is a $xref/glossary/Sparsity Pattern/sparsity pattern/$$
+is a $cref/sparsity pattern/glossary/Sparsity Pattern/$$
 for the matrix $latex R$$ above.
 The type of the elements of
 $cref/VectorSet/RevSparseHes/VectorSet/$$ must be the 
@@ -96,14 +96,14 @@ The argument $icode s$$ has prototype
 $codei%
 	const %VectorSet%& %s%
 %$$
-(see $xref/RevSparseHes/VectorSet/VectorSet/$$ below)
+(see $cref/VectorSet/RevSparseHes/VectorSet/$$ below)
 If it has elements of type $code bool$$,
 its size is $latex m$$.
 If it has elements of type $code std::set<size_t>$$,
 its size is one and all the elements of $icode%s%[0]%$$
 are between zero and $latex m - 1$$.
 It specifies a 
-$xref/glossary/Sparsity Pattern/sparsity pattern/$$ 
+$cref/sparsity pattern/glossary/Sparsity Pattern/$$ 
 for the vector $icode S$$.
 
 $head h$$
@@ -111,18 +111,18 @@ The result $icode h$$ has prototype
 $codei%
 	%VectorSet%& %h%
 %$$
-(see $xref/RevSparseHes/VectorSet/VectorSet/$$ below).
+(see $cref/VectorSet/RevSparseHes/VectorSet/$$ below).
 If it has elements of type $code bool$$,
 its size is $latex q * n$$.
 If it has elements of type $code std::set<size_t>$$,
 its size is $latex q$$.
 It specifies a 
-$xref/glossary/Sparsity Pattern/sparsity pattern/$$ 
+$cref/sparsity pattern/glossary/Sparsity Pattern/$$ 
 for the matrix $latex H(x)$$.
 
 $head VectorSet$$
-The type $icode VectorSet$$ must be a $cref/SimpleVector/$$ class with
-$xref/SimpleVector/Elements of Specified Type/elements of type/$$
+The type $icode VectorSet$$ must be a $cref SimpleVector$$ class with
+$cref/elements of type/SimpleVector/Elements of Specified Type/$$
 $code bool$$ or $code std::set<size_t>$$;
 see $cref/sparsity pattern/glossary/Sparsity Pattern/$$ for a discussion
 of the difference.
@@ -134,7 +134,7 @@ $head Entire Sparsity Pattern$$
 Suppose that $latex q = n$$ and
 $latex R \in \R^{n \times n}$$ is the $latex n \times n$$ identity matrix.
 Further suppose that the $latex S$$ is the $th k$$
-$xref/glossary/Elementary Vector/elementary vector/$$; i.e.
+$cref/elementary vector/glossary/Elementary Vector/$$; i.e.
 $latex \[
 S_j = \left\{ \begin{array}{ll}
 	1  & {\rm if} \; j = k 
@@ -152,7 +152,7 @@ $children%
 	example/rev_sparse_hes.cpp
 %$$
 The file
-$xref/RevSparseHes.cpp/$$
+$cref RevSparseHes.cpp$$
 contains an example and test of this operation.
 It returns true if it succeeds and false otherwise.
 

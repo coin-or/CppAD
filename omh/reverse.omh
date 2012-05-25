@@ -52,11 +52,11 @@ Before this call to $code Reverse$$, the value returned by
 $codei%
 	%f%.size_taylor()
 %$$
-must be greater than or equal one (see $cref/size_taylor/$$).
+must be greater than or equal one (see $cref size_taylor$$).
 
 $head x$$
-The vector $icode x$$ in expression for $italic dw$$ above
-corresponds to the previous call to $cref/ForwardZero/$$
+The vector $icode x$$ in expression for $icode dw$$ above
+corresponds to the previous call to $cref ForwardZero$$
 using this ADFun object $icode f$$; i.e.,
 $codei%
 	%f%.Forward(0, %x%)
@@ -88,10 +88,10 @@ is equal to $icode n$$, the dimension of the
 $cref/domain/seq_property/Domain/$$ space for $icode f$$.
 
 $head Vector$$
-The type $icode Vector$$ must be a $cref/SimpleVector/$$ class with
+The type $icode Vector$$ must be a $cref SimpleVector$$ class with
 $cref/elements of type/SimpleVector/Elements of Specified Type/$$
 $icode Base$$.
-The routine $cref/CheckSimpleVector/$$ will generate an error message
+The routine $cref CheckSimpleVector$$ will generate an error message
 if this is not the case.
 
 $head Example$$
@@ -99,7 +99,7 @@ $children%
 	example/reverse_one.cpp
 %$$
 The file
-$cref/reverse_one.cpp/$$
+$cref reverse_one.cpp$$
 contains an example and test of this operation.
 It returns true if it succeeds and false otherwise.
 
@@ -125,7 +125,7 @@ $icode%dw% = %f%.Reverse(2, %w%)%$$
 $head Purpose$$
 We use $latex F : B^n \rightarrow B^m$$ to denote the
 $cref/AD function/glossary/AD Function/$$ corresponding to $icode f$$.
-Reverse mode computes the derivative of the $cref/Forward/$$ mode
+Reverse mode computes the derivative of the $cref Forward$$ mode
 $cref/Taylor coefficients/glossary/Taylor Coefficient/$$
 with respect to the domain variable $latex x$$.
 
@@ -140,7 +140,7 @@ If there is no previous call with $latex k = 0$$,
 $latex x^{(0)}$$ is the value of the independent variables when the 
 corresponding 
 AD of $icode Base$$
-$xref/glossary/Operation/Sequence/operation sequence/1/$$ was recorded.
+$cref/operation sequence/glossary/Operation/Sequence/$$ was recorded.
 
 
 $head W$$
@@ -180,7 +180,7 @@ Before this call to $code Reverse$$, the value returned by
 $codei%
 	%f%.size_taylor()
 %$$
-must be greater than or equal two (see $cref/size_taylor/$$).
+must be greater than or equal two (see $cref size_taylor$$).
 
 $head w$$
 The argument $icode w$$ has prototype
@@ -217,7 +217,7 @@ w_0 * \D{ F_0 }{ u_j } \left( x^{(0)} \right)
 w_{m-1} * \D{ F_{m-1} }{ u_j } \left( x^{(0)} \right)
 \] $$
 This part of $icode dw$$ contains the same values as are returned
-by $cref/reverse_one/$$.
+by $cref reverse_one$$.
 
 $subhead Second Order Partials$$
 For $latex j = 0 , \ldots , n - 1$$,
@@ -235,10 +235,10 @@ w_{m-1} * \DD{ F_{m-1} }{ u_\ell }{ u_j } \left( x^{(0)} \right)
 
 
 $head Vector$$
-The type $icode Vector$$ must be a $cref/SimpleVector/$$ class with
+The type $icode Vector$$ must be a $cref SimpleVector$$ class with
 $cref/elements of type/SimpleVector/Elements of Specified Type/$$
 $icode Base$$.
-The routine $cref/CheckSimpleVector/$$ will generate an error message
+The routine $cref CheckSimpleVector$$ will generate an error message
 if this is not the case.
 
 
@@ -272,9 +272,9 @@ $children%
 	example/hes_times_dir.cpp
 %$$
 The files
-$cref/reverse_two.cpp/$$
+$cref reverse_two.cpp$$
 and
-$cref/HesTimesDir.cpp/$$
+$cref HesTimesDir.cpp$$
 contain a examples and tests of reverse mode calculations.
 They return true if they succeed and false otherwise.
 
@@ -310,7 +310,7 @@ $icode%dw% = %f%.Reverse(%p%, %w%)%$$
 $head Purpose$$
 We use $latex F : B^n \rightarrow B^m$$ to denote the
 $cref/AD function/glossary/AD Function/$$ corresponding to $icode f$$.
-Reverse mode computes the derivative of the $cref/Forward/$$ mode
+Reverse mode computes the derivative of the $cref Forward$$ mode
 $cref/Taylor coefficients/glossary/Taylor Coefficient/$$
 with respect to the domain variable $latex x$$.
 To be specific, it computes the derivative 
@@ -330,7 +330,7 @@ If there is no previous call with $latex k = 0$$,
 $latex x^{(0)}$$ is the value of the independent variables when the 
 corresponding 
 AD of $icode Base$$
-$xref/glossary/Operation/Sequence/operation sequence/1/$$ was recorded.
+$cref/operation sequence/glossary/Operation/Sequence/$$ was recorded.
 
 
 $subhead X(t, u)$$
@@ -387,7 +387,7 @@ $codei%
 	%f%.size_taylor()
 %$$
 must be greater than or equal $icode p$$
-(see $cref/size_taylor/$$).
+(see $cref size_taylor$$).
 
 $head p$$
 The argument $icode p$$ has prototype
@@ -452,7 +452,7 @@ W^{(1)} (x) & = &
 	w_0 F_0^{(1)} ( x^{(0)} ) + \cdots + w_m F_m^{(1)} ( x^{(0)} )
 \end{array}
 \] $$
-This is the same as the result documented in $cref/reverse_one/$$.
+This is the same as the result documented in $cref reverse_one$$.
 
 
 $head Second Order$$
@@ -486,14 +486,14 @@ W(u) & = &
 \] $$
 where $latex \partial{u(0)} $$ 
 denotes partial with respect to $latex u^{(0)}$$.
-These are the same as the result documented in $cref/reverse_two/$$.
+These are the same as the result documented in $cref reverse_two$$.
 
 
 $head Vector$$
-The type $icode Vector$$ must be a $cref/SimpleVector/$$ class with
+The type $icode Vector$$ must be a $cref SimpleVector$$ class with
 $cref/elements of type/SimpleVector/Elements of Specified Type/$$
 $icode Base$$.
-The routine $cref/CheckSimpleVector/$$ will generate an error message
+The routine $cref CheckSimpleVector$$ will generate an error message
 if this is not the case.
 
 
@@ -505,14 +505,14 @@ $children%
 %$$
 
 $list number$$
-The file $cref/reverse_three.cpp/$$
+The file $cref reverse_three.cpp$$
 contains an example and test of using reverse mode
 to compute third order derivatives.
 $lnext
-The file $cref/reverse_any.cpp/$$
+The file $cref reverse_any.cpp$$
 contains an example and test of the general reverse mode case.
 $lnext
-The file $cref/checkpoint.cpp/$$
+The file $cref checkpoint.cpp$$
 contains an example and test of checkpointing; i.e.
 splitting a reverse mode calculation at a function composition point.
 $lend

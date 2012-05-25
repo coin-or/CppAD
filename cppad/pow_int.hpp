@@ -33,18 +33,18 @@ $head Syntax$$
 $code # include <cppad/pow_int.h>$$
 $pre
 $$
-$syntax%%z% = pow(%x%, %y%)%$$
+$icode%z% = pow(%x%, %y%)%$$
 
 $head Purpose$$
 Determines the value of the power function 
 $latex \[
 	{\rm pow} (x, y) = x^y
 \] $$
-for integer exponents $italic n$$ 
+for integer exponents $icode n$$ 
 using multiplication and possibly division to compute the value.
-The other CppAD $cref/pow/$$ function may use logarithms and exponentiation 
+The other CppAD $cref pow$$ function may use logarithms and exponentiation 
 to compute derivatives of the same value
-(which will not work if $italic x$$ is less than or equal zero).
+(which will not work if $icode x$$ is less than or equal zero).
 
 $head Include$$
 The file $code cppad/pow_int.h$$ is included by $code cppad/cppad.hpp$$
@@ -54,49 +54,49 @@ Including this file defines
 this version of the $code pow$$ within the $code CppAD$$ namespace.
 
 $head x$$
-The argument $italic x$$ has prototype
-$syntax%
+The argument $icode x$$ has prototype
+$codei%
 	const %Type% &%x%
 %$$ 
 
 $head y$$
-The argument $italic y$$ has prototype
-$syntax%
+The argument $icode y$$ has prototype
+$codei%
 	const int &%y%
 %$$ 
 
 $head z$$
-The result $italic z$$ has prototype
-$syntax%
+The result $icode z$$ has prototype
+$codei%
 	%Type% %z%
 %$$
 
 $head Type$$
-The type $italic Type$$ must support the following operations
-where $italic a$$ and $italic b$$ are $italic Type$$ objects
-and $italic i$$ is an $code int$$:
+The type $icode Type$$ must support the following operations
+where $icode a$$ and $icode b$$ are $icode Type$$ objects
+and $icode i$$ is an $code int$$:
 $table
 $bold Operation$$  $pre  $$
 	$cnext $bold Description$$ 
 	$cnext $bold Result Type$$ 
 $rnext
-$syntax%%Type% %a%(%i%)%$$ 
-	$cnext construction of a $italic Type$$ object from an $code int$$
-	$cnext $italic Type$$
+$icode%Type% %a%(%i%)%$$ 
+	$cnext construction of a $icode Type$$ object from an $code int$$
+	$cnext $icode Type$$
 $rnext
-$syntax%%a% * %b%$$ 
-	$cnext binary multiplication of $italic Type$$ objects
-	$cnext $italic Type$$
+$icode%a% * %b%$$ 
+	$cnext binary multiplication of $icode Type$$ objects
+	$cnext $icode Type$$
 $rnext
-$syntax%%a% / %b%$$ 
-	$cnext binary division of $italic Type$$ objects
-	$cnext $italic Type$$
+$icode%a% / %b%$$ 
+	$cnext binary division of $icode Type$$ objects
+	$cnext $icode Type$$
 $tend
 
 $head Operation Sequence$$
-The $italic Type$$ operation sequence used to calculate $italic z$$ is 
-$xref/glossary/Operation/Independent/independent/1/$$
-of $italic x$$.
+The $icode Type$$ operation sequence used to calculate $icode z$$ is 
+$cref/independent/glossary/Operation/Independent/$$
+of $icode x$$.
 
 
 $end

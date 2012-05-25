@@ -42,7 +42,7 @@ $code # include <cppad/vector.hpp>$$
 $head Description$$
 The include file $code cppad/vector.hpp$$ defines the
 vector template class $code CppAD::vector$$.
-This is a $xref/SimpleVector/$$ template class and in addition
+This is a $cref SimpleVector$$ template class and in addition
 it has the features listed below:
 
 $head Include$$
@@ -71,7 +71,7 @@ $codei%
 	%y% = %x%
 %$$
 has all the properties listed for a
-$xref/SimpleVector/Assignment/simple vector assignment/$$
+$cref/simple vector assignment/SimpleVector/Assignment/$$
 plus the following:
 $pre
 
@@ -80,7 +80,7 @@ The $code CppAD::vector$$ template class will check that
 the size of $icode x$$ is equal to the size of $icode y$$
 before doing the assignment.
 If the sizes are not equal, $code CppAD::vector$$ will use
-$xref/ErrorHandler/$$
+$cref ErrorHandler$$
 to generate an appropriate error report.
 $pre
 
@@ -100,19 +100,19 @@ $codei%
 	%x%[%i%]
 %$$
 has all the properties listed for a
-$xref/SimpleVector/Element Access/simple vector element access/$$
+$cref/simple vector element access/SimpleVector/Element Access/$$
 plus the following:
 $pre
 
 $$
-The object $codei%%x%[%i%]%$$ has type $icode Scalar$$
+The object $icode%x%[%i%]%$$ has type $icode Scalar$$
 (is not possibly a different type that can be converted to $icode Scalar$$).
 $pre
 
 $$
 If $icode i$$ is not less than the size of the $icode x$$,
 $code CppAD::vector$$ will use
-$xref/ErrorHandler/$$
+$cref ErrorHandler$$
 to generate an appropriate error report.
 
 $head push_back$$
@@ -125,7 +125,7 @@ $codei%
 	%x%.push_back(%s%)
 %$$
 extends the vector $icode x$$ so that its new size is $icode n$$ plus one
-and $codei%%x%[%n%]%$$ is equal to $icode s$$
+and $icode%x%[%n%]%$$ is equal to $icode s$$
 (equal in the sense of the $icode Scalar$$ assignment operator).
 
 
@@ -196,7 +196,7 @@ surrounding $code {$$, $code }$$ and with no separating commas or spaces.
 $lnext
 If $icode x$$ has type $code vectorBool$$
 and $icode i$$ has type $code size_t$$,
-the element access value $codei%%x%[%i%]%$$ has an unspecified type
+the element access value $icode%x%[%i%]%$$ has an unspecified type
 (referred to here as $icode elementType$$)
 that can be implicitly converted to $code bool$$.
 The return value of the assignment operator
@@ -215,7 +215,7 @@ $head Memory and Parallel Mode$$
 $index thread_alloc, vector$$
 $index vector, thread_alloc$$
 These vectors use the multi-threaded fast memory allocator 
-$cref/thread_alloc/$$:
+$cref thread_alloc$$:
 
 $list number$$
 The routine $cref/parallel_setup/ta_parallel_setup/$$ must
@@ -239,8 +239,8 @@ $children%
 	example/vector_bool.cpp
 %$$
 The files
-$xref/CppAD_vector.cpp/$$ and
-$xref/vectorBool.cpp/$$ each
+$cref CppAD_vector.cpp$$ and
+$cref vectorBool.cpp$$ each
 contain an example and test of this template class.
 They return true if they succeed and false otherwise.
 

@@ -50,7 +50,7 @@ assist you in learning about changes between various versions of CppAD.
 
 $head 12-31$$
 $list number$$
-Add specifications for the CppAD $cref/pkgconfig/$$ files.
+Add specifications for the CppAD $cref pkgconfig$$ files.
 $lnext
 Update the CppAD README file.
 $lnext
@@ -77,18 +77,18 @@ There was a bug
 in $code make test$$
 when the $code configure$$ command was executed from a directory
 other than the distribution directory
-(the $cref/cppad_ipopt_nlp/$$ did not build).
+(the $cref cppad_ipopt_nlp$$ did not build).
 This has been fixed.
 
 
 $head 09-22$$
-Promote $cref/cppad_ipopt_nlp/$$ from an example to a library
+Promote $cref cppad_ipopt_nlp$$ from an example to a library
 that gets installed 
 (provided that the $cref/ipopt_dir/InstallUnix/ipopt_dir/$$
 is specified on the $code configure$$ command line).
 
 $head 08-21$$
-Fix problems with linking of $cref/cppad_ipopt_nlp/$$ test with
+Fix problems with linking of $cref cppad_ipopt_nlp$$ test with
 both older and newer versions of $code ipopt$$. 
 
 $head 07-14$$
@@ -152,24 +152,24 @@ $href%http://www.coin-or.org/download/source/CppAD/%download directory%$$.
 
 
 $head 04-01$$
-Some of the $cref/speed_utility/$$ library
+Some of the $cref speed_utility$$ library
 (in $code speed/src$$) was being compiled for debugging.
 This has been changed and they are now compiled with debugging off
 and optimization on.
 
 $head 03-11$$
-The old $cref/reverse_any/$$ example was moved to $cref/reverse_three.cpp/$$,
+The old $cref reverse_any$$ example was moved to $cref reverse_three.cpp$$,
 the old checkpoint example is now the general case reverse example,
 and a better $cref/checkpointing/checkpoint.cpp/$$ example was created.
 
 $head 03-10$$
-The $cref/optimize/$$ routine would mistakenly remove some
+The $cref optimize$$ routine would mistakenly remove some
 expressions that depended on the independent variables and that 
-affected the result of certain $cref/CondExp/$$ operations.
+affected the result of certain $cref CondExp$$ operations.
 This has been fixed. 
 
 $head 03-09$$
-Extend $cref/reverse_any/$$ so that it can be used for 
+Extend $cref reverse_any$$ so that it can be used for 
 $cref/checkpointing/checkpoint.cpp/$$; i.e.,
 splitting reverse mode calculations at function composition points.
 
@@ -184,7 +184,7 @@ $code sizeof(size_t))$$.
 $head 02-11$$
 The $code speed$$ directory has been reorganized and the
 common part of the $cref/link functions/speed_main/Link Functions/$$,
-as well as the $cref/microsoft_timer/$$,
+as well as the $cref microsoft_timer$$,
 have been moved to the subdirectory $code speed/src$$
 where a library is built.
 
@@ -207,9 +207,9 @@ format.)
 $pre
 
 $$
-Add an automated check for $cref/optimize/$$ bug 
+Add an automated check for $cref optimize$$ bug 
 fixed on $code 02-05$$. 
-(Automatic checking for $cref/PrintFor/$$ bug was added on $code 02-05$$.)
+(Automatic checking for $cref PrintFor$$ bug was added on $code 02-05$$.)
 
 $head 02-05$$
 $list number$$
@@ -225,29 +225,29 @@ $code --with-TestMore$$,
 and $code --with-PrintFor$$.
 $lnext
 Add files that were missing in the Microsoft Visual Studio
-projects; see $cref/InstallWindows/$$.
+projects; see $cref InstallWindows$$.
 $lnext
-Fix two significant bugs. One in the $cref/optimize/$$ command
-and the other in the $cref/PrintFor/$$ command.
+Fix two significant bugs. One in the $cref optimize$$ command
+and the other in the $cref PrintFor$$ command.
 $lend
 
 $head 02-03$$
-Fix a mistakes in the test $cref/BenderQuad.cpp/$$.
-In addition, the $cref/optimize/$$ routine was used to reduce the 
+Fix a mistakes in the test $cref BenderQuad.cpp$$.
+In addition, the $cref optimize$$ routine was used to reduce the 
 tape before doing the calculations.
 $pre
 
 $$
-The routine $cref/opt_val_hes/$$ was added as an alternative to
-$cref/BenderQuad/$$.
+The routine $cref opt_val_hes$$ was added as an alternative to
+$cref BenderQuad$$.
 
 $head 01-26$$
-Another speed improvement was made to $cref/cppad_ipopt_nlp/$$.
+Another speed improvement was made to $cref cppad_ipopt_nlp$$.
 To be specific, the Lagragian multipliers where checked and components
 that were zero were excluded form the Hessian evaluation.
 
 $head 01-24$$
-It appears that in $cref/cppad_ipopt_nlp/$$, when $code retape[k]$$ was true,
+It appears that in $cref cppad_ipopt_nlp$$, when $code retape[k]$$ was true,
 and $code L[k] > 1$$, it was possible to use the wrong operation sequence
 in the calculations (though a test case that demonstrated this could not be 
 produced). This is because the argument value to $latex r_k (u)$$ depends
@@ -259,14 +259,14 @@ $latex \[
 $pre
 
 $$
-There was a bug in the $cref/ipopt_ode_check.cpp/$$ program,
+There was a bug in the $cref ipopt_ode_check.cpp$$ program,
 for a long time,  that did not show up until now. Basically,
 the check had code of the was using an undefined value.
 This has been fixed.
 
 $head 01-23$$
 Improve the sparsity patterns and reduce the amount of memory
-required for large sparse problems using $cref/cppad_ipopt_nlp/$$.
+required for large sparse problems using $cref cppad_ipopt_nlp$$.
 The speed test $code cppad_ipopt/speed$$ showed significant improvement.
 
 
@@ -290,26 +290,26 @@ subdirectory is where one builds the $cref/ipopt_cppad_nlp/cppad_ipopt_nlp/$$ ex
 
 $head 01-04$$
 The following items have been fulfilled and
-hence were removed for the $cref/WishList/$$:
+hence were removed for the $cref WishList$$:
 $list number$$
 If an exception occurs before the call to the corresponding
-$xref/ADFun/$$ constructor or $cref/Dependent/$$, 
-the tape recording can be stopped using $cref/abort_recording/$$.
+$cref ADFun$$ constructor or $cref Dependent$$, 
+the tape recording can be stopped using $cref abort_recording$$.
 
 $lnext
 A speed test for $cref/ipopt_cppad_nlp/cppad_ipopt_nlp/$$ was added; see
-$cref/ipopt_ode_speed.cpp/$$.
+$cref ipopt_ode_speed.cpp$$.
 
 $lnext
-The $cref/optimize/$$ command uses hash coding to check
+The $cref optimize$$ command uses hash coding to check
 when an expression is already in the tape and can be reused.
 
 $lnext
-The $cref/optimize/$$ command removes operations that
+The $cref optimize$$ command removes operations that
 are not used by any of the dependent variables.
 
 $lnext
-The $cref/ad_in_c.cpp/$$ example demonstrates how to connect
+The $cref ad_in_c.cpp$$ example demonstrates how to connect
 CppAD to an arbitrary scripting language.
 
 $lnext

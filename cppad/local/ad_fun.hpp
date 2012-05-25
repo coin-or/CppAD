@@ -35,9 +35,9 @@ $index ADFun, object$$
 $index object, ADFun$$
 
 $head Purpose$$
-An AD of $italic Base$$
-$xref/glossary/Operation/Sequence/operation sequence/1/$$
-is stored in an $code ADFun$$ object by its $xref/FunConstruct/$$.
+An AD of $icode Base$$
+$cref/operation sequence/glossary/Operation/Sequence/$$
+is stored in an $code ADFun$$ object by its $cref FunConstruct$$.
 The $code ADFun$$ object can then be used to calculate function values,
 derivative values, and other values related to the corresponding function.
 

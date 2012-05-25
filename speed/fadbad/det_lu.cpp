@@ -33,7 +33,7 @@ $index speed, fadbad lu$$
 $index lu, speed fadbad$$
 
 $head Specifications$$
-See $cref/link_det_lu/$$.
+See $cref link_det_lu$$.
 
 $head Implementation$$
 $index fadbad, link_det_lu$$

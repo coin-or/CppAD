@@ -25,7 +25,7 @@ $section General Examples$$
 
 $head Description$$
 Most of the examples in CppAD are part of the documentation
-for a specific feature; for example, $xref/Add.cpp/$$ is an 
+for a specific feature; for example, $cref Add.cpp$$ is an 
 example using the $cref/addition operator/ad_binary/$$.
 The examples list in this section are of a more general nature.
 

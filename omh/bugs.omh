@@ -37,7 +37,7 @@ under Cygwin using the compiler option $code -O2$$.
 
 $subhead Example$$
 If you are running gcc 3.4.4, try using the 
-$xref/installUnix/Configure/configure/$$ option
+$cref/configure/installUnix/Configure/$$ option
 $codep
 	CPP_ERROR_WARN="-O2 -Wall -ansi -pedantic-errors -std=c++98"
 $$
@@ -49,8 +49,8 @@ segmentation fault.
 
 $subhead Adolc$$
 If you are running gcc 3.4.4, try using the
-$xref/installUnix/Configure/configure/$$ options
-$syntax%
+$cref/configure/installUnix/Configure/$$ options
+$codei%
 	./configure \
 		ADOLC_DIR=%adolc_dir% \
 		CPP_ERROR_WARN="-Wall" \

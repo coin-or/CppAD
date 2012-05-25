@@ -35,7 +35,7 @@ $index speed, sacado lu$$
 $index lu, speed sacado$$
 
 $head Specifications$$
-See $cref/link_det_lu/$$.
+See $cref link_det_lu$$.
 
 $head Implementation$$
 $index sacado, link_det_lu$$

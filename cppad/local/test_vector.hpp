@@ -36,14 +36,14 @@ $index test, vector$$
 $section Choosing The Vector Testing Template Class$$
 
 $head Syntax$$
-$syntax%CPPAD_TEST_VECTOR<%Scalar%>
+$codei%CPPAD_TEST_VECTOR<%Scalar%>
 %$$
 
 $head Introduction$$
-Many of the CppAD $xref/example//examples/$$ and tests use 
+Many of the CppAD $cref/examples/example/$$ and tests use 
 the $code CPPAD_TEST_VECTOR$$ template class to pass information.
 The default definition for this template class is
-$xref/CppAD_vector//CppAD::vector/$$.
+$cref/CppAD::vector/CppAD_vector/$$.
 
 $head MS Windows$$
 The include path for boost is not defined in the Windows project files.
@@ -71,7 +71,7 @@ $codep */
 # endif
 /* $$
 You can replace this definition of the preprocessor symbol
-$code CPPAD_TEST_VECTOR$$ by any other $xref/SimpleVector/$$ template class.
+$code CPPAD_TEST_VECTOR$$ by any other $cref SimpleVector$$ template class.
 This will test using your replacement template vector class with CppAD.
 
 $head std::vector$$

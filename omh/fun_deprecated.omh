@@ -46,7 +46,7 @@ $head Dependent$$
 $index ADFun, Dependent$$
 $index Dependent, ADFun$$
 A recording of and AD of $icode Base$$
-$xref/glossary/Operation/Sequence/operation sequence/1/$$
+$cref/operation sequence/glossary/Operation/Sequence/$$
 is started by a call of the form
 $codei%
 	Independent(%x%)
@@ -56,7 +56,7 @@ you can use $icode%f%.Dependent(%y%)%$$ in place of
 $codei%
 	%f%.Dependent(%x%, %y%)
 %$$
-See $cref/Dependent/$$ for a description of this operation.
+See $cref Dependent$$ for a description of this operation.
 
 $subhead Deprecated$$
 This syntax was deprecated when CppAD was extended to allow
@@ -74,7 +74,7 @@ $codei%
 and is the order of the previous forward operation
 using the function $icode f$$.
 This is the highest order of the 
-$xref/glossary/Taylor Coefficient/Taylor coefficients/$$
+$cref/Taylor coefficients/glossary/Taylor Coefficient/$$
 that are currently stored in $icode f$$.
 
 $subhead Deprecated$$
@@ -82,7 +82,7 @@ Zero order corresponds to function values being stored in $icode f$$.
 In the future, we would like to be able to erase the function
 values so that $icode f$$ uses less memory. 
 In this case, the return value of $code Order$$ would not make sense.
-Use $xref/size_taylor/$$ to obtain 
+Use $cref size_taylor$$ to obtain 
 the number of Taylor coefficients currently stored
 in the ADFun object $icode f$$ 
 (which is equal to the order plus one).
@@ -120,13 +120,13 @@ and is the number of variables in the operation sequence plus the following:
 one for a phantom variable with tape address zero,
 one for each component of the domain that is a parameter.
 The amount of work and memory necessary for computing function values
-and derivatives using $icode f$$ is roughly proportional to $italic s$$.
+and derivatives using $icode f$$ is roughly proportional to $icode s$$.
 
 $subhead Deprecated$$
 There are other sizes attached to an ADFun object, for example,
 the number of operations in the sequence.
 In order to avoid confusion with these other sizes,
-use $xref/seq_property/size_var/size_var/$$ to obtain 
+use $cref/size_var/seq_property/size_var/$$ to obtain 
 the number of variables in the operation sequence.
 
 $head taylor_size$$
@@ -142,7 +142,7 @@ currently calculated and stored in the ADFun object $icode f$$.
 
 $subhead Deprecated$$
 For the purpose of uniform naming,
-this function has been replaced by $xref/size_taylor/$$.
+this function has been replaced by $cref size_taylor$$.
 
 $head use_VecAD$$
 $index ADFun, use_VecAD$$
@@ -153,9 +153,9 @@ $codei%
 %$$
 If it is true, the
 AD of $icode Base$$
-$xref/glossary/Operation/Sequence/operation sequence/1/$$
+$cref/operation sequence/glossary/Operation/Sequence/$$
 stored in $icode f$$ contains 
-$xref/VecAD/VecAD<Base>::reference/$$ operands.
+$cref/VecAD/VecAD/VecAD<Base>::reference/$$ operands.
 Otherwise $icode u$$ is false.
 
 $subhead Deprecated$$

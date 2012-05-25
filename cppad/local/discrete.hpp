@@ -114,8 +114,8 @@ AD of $icode Base$$
 $cref/operation sequence/glossary/Operation/Sequence/$$.
 
 $head Derivatives$$
-During a zero order $cref/Forward/$$ operation,
-an $cref/ADFun/$$ object will compute the value of $icode name$$
+During a zero order $cref Forward$$ operation,
+an $cref ADFun$$ object will compute the value of $icode name$$
 using the user provided $icode Base$$ version of this routine.
 All the derivatives of $icode name$$ will be evaluated as zero.
 
@@ -136,15 +136,15 @@ $children%
 	example/interp_retape.cpp
 %$$
 The file
-$cref/TapeIndex.cpp/$$
+$cref TapeIndex.cpp$$
 contains an example and test that uses a discrete function 
-to vary an array index during $cref/Forward/$$ mode calculations.
+to vary an array index during $cref Forward$$ mode calculations.
 The file
-$cref/interp_onetape.cpp/$$
+$cref interp_onetape.cpp$$
 contains an example and test that uses discrete
 functions to avoid retaping a calculation that requires interpolation.
 (The file
-$cref/interp_retape.cpp/$$
+$cref interp_retape.cpp$$
 shows how interpolation can be done with retaping.)
 
 $head Deprecated$$

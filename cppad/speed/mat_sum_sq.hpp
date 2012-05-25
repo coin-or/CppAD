@@ -45,7 +45,7 @@ $latex \[
 	z_0     & = & \sum_{i=0}^{n-1} \sum_{j=0}^{n-1} y_{i,j}
 \end{array}
 \] $$
-see $cref/link_mat_mul/$$.
+see $cref link_mat_mul$$.
 
 $head Inclusion$$
 The template function $code mat_sum_sq$$ is defined in the $code CppAD$$
@@ -108,7 +108,7 @@ $latex \[
 
 $head Vector$$
 The type $icode Vector$$ is any
-$cref/SimpleVector/$$ calls with a fixed element type.
+$cref SimpleVector$$ calls with a fixed element type.
 The element type must support
 addition, multiplication, and assignment to both its own type 
 and to a double value.
@@ -121,13 +121,13 @@ $children%
 
 $head Example$$
 The file
-$cref/mat_sum_sq.cpp/$$ 
+$cref mat_sum_sq.cpp$$ 
 contains an example and test of $code mat_sum_sq.hpp$$.
 It returns true if it succeeds and false otherwise.
 
 $head Source Code$$
 The file
-$xref/mat_sum_sq.hpp/$$ 
+$cref mat_sum_sq.hpp$$ 
 contains the source for this template function.
 
 $end

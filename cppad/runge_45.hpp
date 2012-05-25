@@ -40,22 +40,22 @@ $index equation, differential$$
 $section An Embedded 4th and 5th Order Runge-Kutta ODE Solver$$
 
 $head Syntax$$
-$syntax%# include <cppad/runge_45.hpp>
+$codei%# include <cppad/runge_45.hpp>
 %$$
-$syntax%%xf% = Runge45(%F%, %M%, %ti%, %tf%, %xi%)
+$icode%xf% = Runge45(%F%, %M%, %ti%, %tf%, %xi%)
 %$$
-$syntax%%xf% = Runge45(%F%, %M%, %ti%, %tf%, %xi%, %e%)
+$icode%xf% = Runge45(%F%, %M%, %ti%, %tf%, %xi%, %e%)
 %$$
 
 
 $head Purpose$$
 This is an implementation of the
 Cash-Karp embedded 4th and 5th order Runge-Kutta ODE solver 
-described in Section 16.2 of $xref/Bib/Numerical Recipes/Numerical Recipes/$$.
-We use $latex n$$ for the size of the vector $italic xi$$.
+described in Section 16.2 of $cref/Numerical Recipes/Bib/Numerical Recipes/$$.
+We use $latex n$$ for the size of the vector $icode xi$$.
 Let $latex \R$$ denote the real numbers
 and let $latex F : \R \times \R^n \rightarrow \R^n$$ be a smooth function.
-The return value $italic xf$$ contains a 5th order
+The return value $icode xf$$ contains a 5th order
 approximation for the value $latex X(tf)$$ where 
 $latex X : [ti , tf] \rightarrow \R^n$$ is defined by 
 the following initial value problem:
@@ -67,7 +67,7 @@ $latex \[
 \] $$
 If your set of ordinary differential equations
 are stiff, an implicit method may be better
-(perhaps $xref/Rosen34/$$.)
+(perhaps $cref Rosen34$$.)
 
 $head Include$$
 The file $code cppad/runge_45.hpp$$ is included by $code cppad/cppad.hpp$$
@@ -75,141 +75,141 @@ but it can also be included separately with out the rest of
 the $code CppAD$$ routines.
 
 $head xf$$
-The return value $italic xf$$ has the prototype
-$syntax%
+The return value $icode xf$$ has the prototype
+$codei%
 	%Vector% %xf%
 %$$
-and the size of $italic xf$$ is equal to $italic n$$ 
-(see description of $xref/Runge45/Vector/Vector/$$ below).
+and the size of $icode xf$$ is equal to $icode n$$ 
+(see description of $cref/Vector/Runge45/Vector/$$ below).
 $latex \[
 	X(tf) = xf + O( h^6 )
 \] $$
 where $latex h = (tf - ti) / M$$ is the step size.
-If $italic xf$$ contains not a number $cref/nan/$$,
+If $icode xf$$ contains not a number $cref nan$$,
 see the discussion for $cref/f/Runge45/Fun/f/$$.
 
 $head Fun$$
-The class $italic Fun$$ 
-and the object $italic F$$ satisfy the prototype
-$syntax%
+The class $icode Fun$$ 
+and the object $icode F$$ satisfy the prototype
+$codei%
 	%Fun% &%F%
 %$$
-The object $italic F$$ (and the class $italic Fun$$)
+The object $icode F$$ (and the class $icode Fun$$)
 must have a member function named $code Ode$$ 
 that supports the syntax
-$syntax%
+$codei%
 	%F%.Ode(%t%, %x%, %f%)
 %$$
 
 $subhead t$$
-The argument $italic t$$ to $syntax%%F%.Ode%$$ has prototype
-$syntax%
+The argument $icode t$$ to $icode%F%.Ode%$$ has prototype
+$codei%
 	const %Scalar% &%t%
 %$$
-(see description of $xref/Runge45/Scalar/Scalar/$$ below). 
+(see description of $cref/Scalar/Runge45/Scalar/$$ below). 
 
 $subhead x$$
-The argument $italic x$$ to $syntax%%F%.Ode%$$ has prototype
-$syntax%
+The argument $icode x$$ to $icode%F%.Ode%$$ has prototype
+$codei%
 	const %Vector% &%x%
 %$$
-and has size $italic n$$
-(see description of $xref/Runge45/Vector/Vector/$$ below). 
+and has size $icode n$$
+(see description of $cref/Vector/Runge45/Vector/$$ below). 
 
 $subhead f$$
-The argument $italic f$$ to $syntax%%F%.Ode%$$ has prototype
-$syntax%
+The argument $icode f$$ to $icode%F%.Ode%$$ has prototype
+$codei%
 	%Vector% &%f%
 %$$
-On input and output, $italic f$$ is a vector of size $italic n$$
-and the input values of the elements of $italic f$$ do not matter.
+On input and output, $icode f$$ is a vector of size $icode n$$
+and the input values of the elements of $icode f$$ do not matter.
 On output,
-$italic f$$ is set equal to $latex F(t, x)$$ in the differential equation.
-If any of the elements of $italic f$$ have the value not a number $code nan$$
+$icode f$$ is set equal to $latex F(t, x)$$ in the differential equation.
+If any of the elements of $icode f$$ have the value not a number $code nan$$
 the routine $code Runge45$$ returns with all the
-elements of $italic xf$$ and $italic e$$ equal to $code nan$$.
+elements of $icode xf$$ and $icode e$$ equal to $code nan$$.
 
 $subhead Warning$$
-The argument $italic f$$ to $syntax%%F%.Ode%$$
+The argument $icode f$$ to $icode%F%.Ode%$$
 must have a call by reference in its prototype; i.e.,
-do not forget the $code &$$ in the prototype for $italic f$$.
+do not forget the $code &$$ in the prototype for $icode f$$.
 
 $head M$$
-The argument $italic M$$ has prototype
-$syntax%
+The argument $icode M$$ has prototype
+$codei%
 	size_t %M%
 %$$
 It specifies the number of steps
 to use when solving the differential equation.
 This must be greater than or equal one.
 The step size is given by $latex h = (tf - ti) / M$$, thus
-the larger $italic M$$, the more accurate the
-return value $italic xf$$ is as an approximation
+the larger $icode M$$, the more accurate the
+return value $icode xf$$ is as an approximation
 for $latex X(tf)$$.
 
 $head ti$$
-The argument $italic ti$$ has prototype
-$syntax%
+The argument $icode ti$$ has prototype
+$codei%
 	const %Scalar% &%ti%
 %$$
-(see description of $xref/Runge45/Scalar/Scalar/$$ below). 
-It specifies the initial time for $italic t$$ in the 
+(see description of $cref/Scalar/Runge45/Scalar/$$ below). 
+It specifies the initial time for $icode t$$ in the 
 differential equation; i.e., 
-the time corresponding to the value $italic xi$$.
+the time corresponding to the value $icode xi$$.
 
 $head tf$$
-The argument $italic tf$$ has prototype
-$syntax%
+The argument $icode tf$$ has prototype
+$codei%
 	const %Scalar% &%tf%
 %$$
-It specifies the final time for $italic t$$ in the 
+It specifies the final time for $icode t$$ in the 
 differential equation; i.e., 
-the time corresponding to the value $italic xf$$.
+the time corresponding to the value $icode xf$$.
 
 $head xi$$
-The argument $italic xi$$ has the prototype
-$syntax%
+The argument $icode xi$$ has the prototype
+$codei%
 	const %Vector% &%xi%
 %$$
-and the size of $italic xi$$ is equal to $italic n$$.
+and the size of $icode xi$$ is equal to $icode n$$.
 It specifies the value of $latex X(ti)$$
 
 $head e$$
-The argument $italic e$$ is optional and has the prototype
-$syntax%
+The argument $icode e$$ is optional and has the prototype
+$codei%
 	%Vector% &%e%
 %$$
-If $italic e$$ is present,
-the size of $italic e$$ must be equal to $italic n$$.
-The input value of the elements of $italic e$$ does not matter.
+If $icode e$$ is present,
+the size of $icode e$$ must be equal to $icode n$$.
+The input value of the elements of $icode e$$ does not matter.
 On output
 it contains an element by element
-estimated bound for the absolute value of the error in $italic xf$$
+estimated bound for the absolute value of the error in $icode xf$$
 $latex \[
 	e = O( h^5 )
 \] $$
 where $latex h = (tf - ti) / M$$ is the step size.
-If on output, $italic e$$ contains not a number $code nan$$,
+If on output, $icode e$$ contains not a number $code nan$$,
 see the discussion for $cref/f/Runge45/Fun/f/$$.
 
 $head Scalar$$
-The type $italic Scalar$$ must satisfy the conditions
-for a $xref/NumericType/$$ type.
-The routine $xref/CheckNumericType/$$ will generate an error message
+The type $icode Scalar$$ must satisfy the conditions
+for a $cref NumericType$$ type.
+The routine $cref CheckNumericType$$ will generate an error message
 if this is not the case.
 In addition, the following operations must be defined for 
-$italic Scalar$$ objects $italic a$$ and $italic b$$:
+$icode Scalar$$ objects $icode a$$ and $icode b$$:
 
 $table
 $bold Operation$$ $cnext $bold Description$$  $rnext
-$syntax%%a% < %b%$$ $cnext
+$icode%a% < %b%$$ $cnext
 	less than operator (returns a $code bool$$ object)
 $tend
 
 $head Vector$$
-The type $italic Vector$$ must be a $xref/SimpleVector/$$ class with
-$xref/SimpleVector/Elements of Specified Type/elements of type Scalar/$$.
-The routine $xref/CheckSimpleVector/$$ will generate an error message
+The type $icode Vector$$ must be a $cref SimpleVector$$ class with
+$cref/elements of type Scalar/SimpleVector/Elements of Specified Type/$$.
+The routine $cref CheckSimpleVector$$ will generate an error message
 if this is not the case.
 
 $head Parallel Mode$$
@@ -229,14 +229,14 @@ $children%
 	example/runge_45_2.cpp
 %$$
 The file
-$cref/runge_45_1.cpp/$$
+$cref runge_45_1.cpp$$
 contains a simple example and test of $code Runge45$$.
 It returns true if it succeeds and false otherwise.
 $pre
 
 $$
 The file
-$cref/runge_45_2.cpp/$$ contains an example using $code Runge45$$
+$cref runge_45_2.cpp$$ contains an example using $code Runge45$$
 in the context of algorithmic differentiation.
 It also returns true if it succeeds and false otherwise.
 

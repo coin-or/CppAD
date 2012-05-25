@@ -66,7 +66,7 @@ so it is not automatically included by
 $cref/cppad.hpp/cppad/$$.
 
 $head Float$$
-The type $icode Float$$ must be a $cref/NumericType/$$.
+The type $icode Float$$ must be a $cref NumericType$$.
 In addition, if $icode y$$ and $icode z$$ are $icode Float$$ objects,
 $codei%
 	%y% = exp(%z%)
@@ -105,7 +105,7 @@ index of $latex x$$ for each non-zero Hessian term.
 All the elements of $icode j$$ must be between zero and $icode%n%-1%$$.
 
 $head m$$
-The argument $italic m$$ has prototype
+The argument $icode m$$ has prototype
 $icode%
 	size_t %m%
 %$$
@@ -114,25 +114,25 @@ specifies the order of the derivative of $latex f$$
 that is being evaluated, i.e., $latex f^{(m)} (x)$$ is evaluated.
 
 $head fm$$
-The argument $italic fm$$ has prototype
+The argument $icode fm$$ has prototype
 $icode%
 	CppAD::vector<%Float%> &%fm%
 %$$
 The input value of the elements of $icode fm$$ does not matter.
 
 $subhead Function$$
-If $icode m$$ is zero, $italic fm$$ has size one and
-$syntax%%fm%[0]%$$ is the value of $latex f(x)$$.
+If $icode m$$ is zero, $icode fm$$ has size one and
+$icode%fm%[0]%$$ is the value of $latex f(x)$$.
 
 $subhead Gradient$$
-If $icode m$$ is one, $italic fm$$ has size $italic n$$ and 
+If $icode m$$ is one, $icode fm$$ has size $icode n$$ and 
 for $latex j = 0 , \ldots , n-1$$
 $latex \[
 	\D{f}{x[j]} = fm [ j ]
 \] $$
 
 $subhead Hessian$$
-If $icode m$$ is two, $italic fm$$ has size $syntax%%n% * %n%$$ and
+If $icode m$$ is two, $icode fm$$ has size $icode%n% * %n%$$ and
 for $latex k = 0 , \ldots , n-1$$,
 $latex m = 0 , \ldots , n-1$$
 $latex \[
@@ -146,13 +146,13 @@ $children%
 
 $head Example$$
 The file
-$cref/sparse_evaluate.cpp/$$
+$cref sparse_evaluate.cpp$$
 contains an example and test  of $code sparse_evaluate.hpp$$.
 It returns true if it succeeds and false otherwise.
 
 $head Source Code$$
 The file 
-$cref/sparse_evaluate.hpp/$$
+$cref sparse_evaluate.hpp$$
 contains the source code for this template function.
 
 $end

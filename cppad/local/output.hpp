@@ -31,52 +31,52 @@ $index write, AD$$
 $section AD Output Stream Operator$$ 
 
 $head Syntax$$
-$syntax%%os% << %x%$$
+$icode%os% << %x%$$
 
 
 $head Purpose$$
-Writes the $italic Base$$ value_, corresponding to $italic x$$,
-to the output stream $italic os$$.
+Writes the $icode Base$$ value_, corresponding to $icode x$$,
+to the output stream $icode os$$.
 
 $head os$$
-The operand $italic os$$ has prototype
-$syntax%
+The operand $icode os$$ has prototype
+$codei%
 	std::ostream &%os%
 %$$
 
 $head x$$
-The operand $italic x$$ has one of the following prototypes
-$syntax%
+The operand $icode x$$ has one of the following prototypes
+$codei%
 	const AD<%Base%>               &%x%
 	const VecAD<%Base%>::reference &%x%
 %$$
 
 $head Result$$
-The result of this operation can be used as a reference to $italic os$$.
-For example, if the operand $italic y$$ has prototype
-$syntax%
+The result of this operation can be used as a reference to $icode os$$.
+For example, if the operand $icode y$$ has prototype
+$codei%
 	AD<%Base%> %y%
 %$$
 then the syntax
-$syntax%
+$codei%
 	%os% << %x% << %y%
 %$$
-will output the value corresponding to $italic x$$
-followed by the value corresponding to $italic y$$. 
+will output the value corresponding to $icode x$$
+followed by the value corresponding to $icode y$$. 
 
 $head Operation Sequence$$
 The result of this operation is not an
-$xref/glossary/AD of Base/AD of Base/$$ object.
+$cref/AD of Base/glossary/AD of Base/$$ object.
 Thus it will not be recorded as part of an
-AD of $italic Base$$
-$xref/glossary/Operation/Sequence/operation sequence/1/$$.
+AD of $icode Base$$
+$cref/operation sequence/glossary/Operation/Sequence/$$.
 
 $head Example$$
 $children%
 	example/output.cpp
 %$$
 The file
-$xref/Output.cpp/$$
+$cref Output.cpp$$
 contains an example and test of this operation.
 It returns true if it succeeds and false otherwise.
 

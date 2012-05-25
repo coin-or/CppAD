@@ -25,7 +25,7 @@ $index tape, interpolate$$
 $index retape, interpolate$$
 
 $head See Also$$
-$cref/interp_retape.cpp/$$
+$cref interp_retape.cpp$$
 $pre
 
 $$

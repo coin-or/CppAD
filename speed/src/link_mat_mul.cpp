@@ -40,7 +40,7 @@ $codei%extern bool link_mat_mul(
 $head Purpose$$
 Each $cref/package/speed_main/package/$$
 must define a version of this routine as specified below.
-This is used by the $cref/speed_main/$$ program 
+This is used by the $cref speed_main$$ program 
 to run the corresponding speed and correctness tests.
 
 $head Return Value$$
@@ -73,7 +73,7 @@ $head z$$
 The argument $icode z$$ is a vector with one element.
 The input value of the element does not matter.
 The output of its element the sum of the elements of 
-$icode%%y% = x% * %x%$$; i.e.,
+$codei%y% = x% * %x%$$; i.e.,
 $latex \[
 \begin{array}{rcl}
 	y_{i,j} & = & \sum_{k=0}^{s-1} x_{i,k} x{k, j} 

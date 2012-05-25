@@ -27,7 +27,7 @@ $index speed, double lu$$
 $index lu, speed double$$
 
 $head Specifications$$
-See $cref/link_det_lu/$$.
+See $cref link_det_lu$$.
 
 $head Implementation$$
 $index double, link_det_lu$$

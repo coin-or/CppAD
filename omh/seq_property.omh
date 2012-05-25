@@ -51,12 +51,12 @@ $icode%s% = %f%.size_op_seq()
 %$$
 
 $subhead See Also$$
-$cref/size_taylor/$$, $cref/capacity_taylor/$$.
+$cref size_taylor$$, $cref capacity_taylor$$.
 
 $head Purpose$$
 The operations above return properties of the
 AD of $icode Base$$
-$xref/glossary/Operation/Sequence/operation sequence/1/$$
+$cref/operation sequence/glossary/Operation/Sequence/$$
 stored in the ADFun object $icode f$$. 
 (If there is no operation sequence stored in $icode f$$,
 $code size_var$$ returns zero.)
@@ -66,7 +66,7 @@ The object $icode f$$ has prototype
 $codei%
 	const ADFun<%Base%> %f%
 %$$
-(see $codei%ADFun<%Base%>%$$ $xref/FunConstruct//constructor/$$).
+(see $codei%ADFun<%Base%>%$$ $cref/constructor/FunConstruct/$$).
 
 $head Domain$$
 $index ADFun, Domain$$
@@ -82,7 +82,7 @@ $codei%
 %$$
 that starting recording the operation sequence 
 currently stored in $icode f$$
-(see $xref/FunConstruct/$$ and $xref/Dependent/$$). 
+(see $cref FunConstruct$$ and $cref Dependent$$). 
 
 $head Range$$
 $index ADFun, Range$$
@@ -101,7 +101,7 @@ $codei%
 	%f%.Dependent(%y%)
 %$$
 depending on which stored the operation sequence currently in $icode f$$
-(see $xref/FunConstruct/$$ and $xref/Dependent/$$). 
+(see $cref FunConstruct$$ and $cref Dependent$$). 
 
 $head Parameter$$
 $index ADFun, Parameter$$
@@ -117,7 +117,7 @@ $codei%
 %$$
 It is true if the $th i$$ component of range space for $latex F$$
 corresponds to a
-$xref/glossary/Parameter/parameter/$$ in the operation sequence.
+$cref/parameter/glossary/Parameter/$$ in the operation sequence.
 In this case,
 the $th i$$ component of $latex F$$ is constant and
 $latex \[
@@ -145,7 +145,7 @@ $pre
 $$
 If there is no operation sequence stored in $icode f$$,
 $code size_var$$ returns zero
-(see $xref/FunConstruct/Default Constructor/default constructor/$$).
+(see $cref/default constructor/FunConstruct/Default Constructor/$$).
 
 $head size_par$$
 $index ADFun, size_par$$
@@ -191,7 +191,7 @@ The result $icode s$$ has prototype
 $codei%
 	size_t %s%
 %$$
-and is the total characters used in the $cref/PrintFor/$$ commands
+and is the total characters used in the $cref PrintFor$$ commands
 in this operation sequence.
 
 $head size_VecAD$$
@@ -201,7 +201,7 @@ The result $icode s$$ has prototype
 $codei%
 	size_t %s%
 %$$
-and is the number of $cref/VecAD/$$ vectors,
+and is the number of $cref VecAD$$ vectors,
 plus the number of elements in the vectors.
 Only $code VecAD$$ vectors that depend on the 
 independent variables are stored in the operation sequence.
@@ -232,7 +232,7 @@ $children%
 	example/seq_property.cpp
 %$$
 The file
-$xref/seq_property.cpp/$$ 
+$cref seq_property.cpp$$ 
 contains an example and test of these operations.
 It returns true if it succeeds and false otherwise.
 

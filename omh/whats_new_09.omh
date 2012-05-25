@@ -67,7 +67,7 @@ $code ADFun$$ $cref/assignment operator/FunConstruct/Assignment Operator/$$
 was changed so that it now copies forward mode
 Taylor coefficients and sparsity pattern information.
 (This assignment operator was added on $cref/10-24/whats_new_09/10-24/$$.)
-You can use $cref/capacity_taylor/$$ to delete the Taylor coefficients
+You can use $cref capacity_taylor$$ to delete the Taylor coefficients
 before copying them.
 Two new functions were added so that you can query and delete the
 forward mode sparsity information;
@@ -89,12 +89,12 @@ More work is planned to make this optimization faster.
 
 $head 12-12$$
 Detection of a sequence of additions that can be converted to one variable
-during the $cref/optimize/$$ process.
+during the $cref optimize$$ process.
 This leads to a significant improvement in the tape size and speed.
 
 $head 12-04$$
 Change hash coding of parameter values as part of operators
-during the $cref/optimize/$$ process.
+during the $cref optimize$$ process.
 This should leads to more detection and removal of duplicate operations.
 
 $head 12-02$$
@@ -109,23 +109,23 @@ $cref/size_op_arg/seq_property/size_op_arg/$$,
 and
 $cref/size_op_seq/seq_property/size_op_seq/$$.
 In addition, improve and extend the 
-$cref/seq_property.cpp/$$ example. 
+$cref seq_property.cpp$$ example. 
 
 $head 11-28$$
-Fix bug in tape optimization with $cref/VecAD/$$ objects.
+Fix bug in tape optimization with $cref VecAD$$ objects.
 
 $head 11-27$$
 Remove duplicate expressions for the commutative binary operators; i.e.,
 addition and multiplication.
 
 $head 11-26$$
-Improve $cref/optimize/$$ command so that it removes some duplicate
+Improve $cref optimize$$ command so that it removes some duplicate
 expressions from the tape (more of this is planned).
 
 $head 10-30$$
 Make program that check Ipopt ODE example correctness
 a separate file $cref ipopt_ode_check.cpp$$
-Split out Ipopt driver for ODE example $cref/ipopt_ode_run.hpp/$$.
+Split out Ipopt driver for ODE example $cref ipopt_ode_run.hpp$$.
 Add the speed testing problem $code ipopt_cppad/ipopt_ode_speed.cpp$$.
 
 $head 10-29$$
@@ -146,10 +146,10 @@ Improve the documentation for $cref ipopt_ode_simple$$ and
 $cref ipopt_ode_fast$$.
 
 $head 10-27$$
-Moved old $code ipopt_cppad_simple.cpp$$ to $cref/ipopt_get_started.cpp/$$,
-created the example $cref/ipopt_ode_simple.hpp/$$,
+Moved old $code ipopt_cppad_simple.cpp$$ to $cref ipopt_get_started.cpp$$,
+created the example $cref ipopt_ode_simple.hpp$$,
 and split and $code ipopt_cppad_ode.cpp$$ 
-into $cref/ipopt_ode_fast.hpp/$$ and $cref/ipopt_ode_check.cpp/$$.
+into $cref ipopt_ode_fast.hpp$$ and $cref ipopt_ode_check.cpp$$.
 
 $head 10-24$$
 Added the $cref/assignment operator/FunConstruct/Assignment Operator/$$
@@ -164,25 +164,25 @@ $cref/copy constructor/FunConstruct/Copy Constructor/$$
 and generates an error message if it is used.
 
 $head 10-23$$
-The $cref/sparse_hessian/$$ routine was extended so the user can now choose
+The $cref sparse_hessian$$ routine was extended so the user can now choose
 between vectors of sets and boolean vectors for representing
 $cref/sparsity patterns/glossary/Sparsity Pattern/$$.
 
 $head 10-21$$
-The $cref/CheckSimpleVector/$$ function was extended so that
+The $cref CheckSimpleVector$$ function was extended so that
 it can check simple vectors where the elements of the vector
 can not be assigned to integer values.
 This was done by adding the $cref/x, y/CheckSimpleVector/x, y/$$
 arguments to $code CheckSimpleVector$$.
 
 $head 10-16$$
-The $cref/sparse_jacobian/$$ routine was extended so the user can now choose
+The $cref sparse_jacobian$$ routine was extended so the user can now choose
 between vectors of sets and boolean vectors for representing
 $cref/sparsity patterns/glossary/Sparsity Pattern/$$.
 
 $head 10-14$$
 The $icode packed$$ parameter for the sparsity routines
-$cref/ForSparseJac/$$, $cref/RevSparseJac/$$, and $cref/RevSparseHes/$$
+$cref ForSparseJac$$, $cref RevSparseJac$$, and $cref RevSparseHes$$
 (introduced on $cref/09-26/whats_new_09/09-26/$$) has been removed.
 It has been replaced by changing the argument and return values
 to be more versatile.
@@ -200,20 +200,20 @@ were not including some new tests in their builds.
 This has been fixed.
 
 $head 09-30$$
-Added the $cref/cppad_sparse_jacobian.cpp/$$ speed test
-and increased the sizes used by $cref/link_sparse_hessian/$$.
+Added the $cref cppad_sparse_jacobian.cpp$$ speed test
+and increased the sizes used by $cref link_sparse_hessian$$.
 Some mistakes were fixed in the documentation for speed tests
-$cref/link_sparse_hessian/$$ and $cref/sparse_evaluate/$$.
+$cref link_sparse_hessian$$ and $cref sparse_evaluate$$.
 
 $head 09-29$$
 The documentation definition of the function $latex H(x)$$ in
-$cref/RevSparseHes/$$ was missing a factor of $latex R$$.
+$cref RevSparseHes$$ was missing a factor of $latex R$$.
 This has been fixed.
 
 $head 09-28$$
-Changed $cref/RevSparseHes/$$ so that it uses a sparse
+Changed $cref RevSparseHes$$ so that it uses a sparse
 representation when the corresponding call to 
-$cref/ForSparseJac/$$ used a sparse representation.
+$cref ForSparseJac$$ used a sparse representation.
 This should have been included with the change on 09-26 
 because Hessian sparsity patters after $code ForSparseJac$$
 with $icode packed$$ did not work.
@@ -221,7 +221,7 @@ Thus, this could be considered a bug fix.
 
 $head 09-26$$
 Added the $code packed$$ parameter to
-$cref/ForSparseJac/$$ and $cref/RevSparseJac/$$.
+$cref ForSparseJac$$ and $cref RevSparseJac$$.
 If $icode packed$$ is false,
 a sparse instead of packed representation is used 
 during the calculations of sparsity patterns.
@@ -234,7 +234,7 @@ sparse representations.
 
 $head 09-20$$
 Fixed a bug in the $cref/Hessian Sparsity/RevSparseHes/$$ calculations
-that included use of $cref/VecAD/$$ objects.
+that included use of $cref VecAD$$ objects.
 
 $head 09-19$$
 Some more memory allocation improvements (related to those 
@@ -247,15 +247,15 @@ during these calculations.  This has been fixed.
 
 
 $head 08-25$$
-Add $cref/ad_fun.cpp/$$
-an example of how to create your own interface to an $cref/ADFun/$$ object.
+Add $cref ad_fun.cpp$$
+an example of how to create your own interface to an $cref ADFun$$ object.
 
 $head 08-14$$
-Add $cref/ad_in_c.cpp/$$
+Add $cref ad_in_c.cpp$$
 an example of how to link CppAD to other languages.
 
 $head 08_13$$
-Add an option to $cref/optimize/$$ an operation sequence.
+Add an option to $cref optimize$$ an operation sequence.
 $pre
 
 $$ 
@@ -268,7 +268,7 @@ The subheading dates below represent when the correspond change was made in
 $code branches/optimize$$.
 
 $subhead 08-13$$
-An automatic check of the $cref/ForwardZero/$$ results was added
+An automatic check of the $cref ForwardZero$$ results was added
 after each call to $cref/f.optimize()/optimize/$$
 (this $cref/check/optimize/Checking Optimization/$$ 
 is skipped when $code NDEBUG$$ is defined).
@@ -316,8 +316,8 @@ so that the user could see the number of parameters
 corresponding to an operation sequence.
 
 $head 08-02$$
-Fix bug in new version of how $cref/ForSparseJac/$$ handles
-$cref/VecAD/$$ objects.
+Fix bug in new version of how $cref ForSparseJac$$ handles
+$cref VecAD$$ objects.
 $pre
 
 $$
@@ -332,35 +332,35 @@ heading for simple vector documentation.
 
 $head 08-01$$
 Fix bug in reverse mode Jacobian $cref/sparsity/RevSparseJac/$$
-for $cref/VecAD/$$ objects. 
+for $cref VecAD$$ objects. 
 
 $head 07-31$$
 The $cref/forward/ForSparseJac/$$ and $cref/reverse/RevSparseJac/$$
 sparse Jacobian routines have been improved so the resulting sparsity
 patterns are valid for all values of the independent variables
-(even if you use $cref/CondExp/$$ or $cref/VecAD/$$).
+(even if you use $cref CondExp$$ or $cref VecAD$$).
 
 $head 07-26$$
 Convert developer documentation from
 forward and reverse mode sweep routines from OMhelp to doxygen.
 
 $head 07-25$$
-Add developer documentation for $cref/PrintFor/$$ operations.
+Add developer documentation for $cref PrintFor$$ operations.
 
 $head 07-24$$
-Add developer documentation for $cref/Discrete/$$ operations.
+Add developer documentation for $cref Discrete$$ operations.
 
 $head 07-23$$
-Add developer documentation for tape evaluation of $cref/VecAD/$$ store
+Add developer documentation for tape evaluation of $cref VecAD$$ store
 operations. (a store operation changes the value of a VecAD element).
 $pre
 
 $$
-Improve the $cref/vec_ad.cpp/$$ user example. 
+Improve the $cref vec_ad.cpp$$ user example. 
 
 $subhead 07-06$$
 Fixed a bug in second or higher order reverse mode calculations
-that used $cref/VecAD/$$.
+that used $cref VecAD$$.
 This bug was demonstrated by the test case $code SecondOrderReverse$$
 in the file $code test_more/vec_ad.cpp$$.
 $pre
@@ -378,7 +378,7 @@ introduced on 07-04 change.
 
 $head 07-04$$
 Add developer documentation for the
-$cref/CompareChange/$$ operations during tape evaluation.
+$cref CompareChange$$ operations during tape evaluation.
 $pre
 
 $$ 
@@ -400,12 +400,12 @@ $pre
 $$
 A simpler and useful example was provided for
 $cref/conditional expressions/CondExp/$$; 
-see $cref/CondExp.cpp/$$.
+see $cref CondExp.cpp$$.
 
 
 $subhead 07-03$$
 Some minor improvements were made to the documentation for 
-$cref/CondExp/$$.
+$cref CondExp$$.
 To be specific, a newer OMhelp option was used to change the formatting
 of the syntax, some of the argument names were changed to be more descriptive.
 
@@ -470,7 +470,7 @@ and other packages use of the same symbol names.
 
 $head 06-06$$
 Using complex of an AD type (instead of AD of complex) was not working
-correctly in $cref/not_complex_ad.cpp/$$ because the 
+correctly in $cref not_complex_ad.cpp$$ because the 
 $cref/default constructor/ad_ctor/$$ for an AD object has an unspecified value.
 This has been fixed for the complex type by changing the default constructor
 to use value zero. 
@@ -494,14 +494,14 @@ This was has been fixed (revision 1362).
 $head 03-24$$
 Added cross references in 
 the $cref/examples/ListAllExamples/$$ to occurrence of the following tokens:
-$cref/AD/$$,
+$cref AD$$,
 $cref/ADFun/FunConstruct/$$,
 $cref/CPPAD_TEST_VECTOR/test_vector/$$,
-$cref/Forward/$$,
-$cref/Independent/$$,
-$cref/Jacobian/$$
-$cref/NearEqual/$$,
-$cref/Reverse/$$.
+$cref Forward$$,
+$cref Independent$$,
+$cref Jacobian$$
+$cref NearEqual$$,
+$cref Reverse$$.
 
 $head 02-20$$
 Demonstrate using AD to compute the derivative
@@ -527,7 +527,7 @@ g++ version 4.3.2 when building $code pycppad$$ (a python interface to CppAD).
 
 $head 01-18$$
 Sometimes an error occurs while taping AD operations.
-The $cref/abort_recording/$$ function has been added 
+The $cref abort_recording$$ function has been added 
 to make it easier to recover in such cases.
 $pre
 
@@ -541,7 +541,7 @@ $href%
 $pre
 
 $$
-A discussion has been added to the documentation for $cref/Jacobian/$$ 
+A discussion has been added to the documentation for $cref Jacobian$$ 
 about its use of
 $cref/forward or reverse/Jacobian/Forward or Reverse/$$
 mode depending on which it estimates is more efficient.
@@ -549,7 +549,7 @@ $pre
 
 $$
 A minor typo has been fixed in the description of
-$code W(t, u)$$ in $cref/reverse_any/$$.
+$code W(t, u)$$ in $cref reverse_any$$.
 To be specific, 
 $latex o ( t^{p-1} ) * t^{1-p} \rightarrow 0$$
 has been replaced by
@@ -557,6 +557,6 @@ $latex o ( t^{p-1} ) / t^{1-p} \rightarrow 0$$.
 
 $head 01-06$$
 Made some minor improvements to the documentation in
-$cref/FunConstruct/$$.
+$cref FunConstruct$$.
 
 $end

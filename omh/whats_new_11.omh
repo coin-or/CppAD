@@ -414,8 +414,8 @@ $lend
 
 $subhead 08-21$$
 Create the OpenMP and pthread examples
-$cref/a11c_openmp.cpp/$$,
-$cref/a11c_pthread.cpp/$$, and
+$cref a11c_openmp.cpp$$,
+$cref a11c_pthread.cpp$$, and
 $code openmp_simple_ad.cpp$$.
 These OpenMP examples were originally in the $code openmp$$ directory,
 and have been moved, and modified to conform, to the normal example directory.
@@ -438,7 +438,7 @@ $codei%
 %$$
 See $cref/zero order forward mode/ForwardZero/$$ and $cref PrintFor$$.
 $lnext
-Improve $cref/omp_alloc.cpp/$$ example.
+Improve $cref omp_alloc.cpp$$ example.
 $lend
 
 
@@ -448,12 +448,12 @@ $cref/Warning:/base_require/Warning/$$
 Add $cref/epsilon/base_std_math/epsilon/$$ to the
 $icode Base$$ type requirements.
 $lnext
-Extend $cref/epsilon/$$ to AD types.
+Extend $cref epsilon$$ to AD types.
 $lend
 
 $subhead 08-08$$
 $list number$$
-Improve the $cref/base_require/$$ documentation for
+Improve the $cref base_require$$ documentation for
 $cref/standard math functions/base_std_math/$$.
 $lnext 
 $cref/Warning:/base_require/Warning/$$
@@ -469,7 +469,7 @@ and hence the zero order forward mode results may not be exactly the same.)
 $lend
 
 $subhead 08-07$$
-Improve the $cref/base_require/$$ documentation for 
+Improve the $cref base_require$$ documentation for 
 $cref/EqualOpSeq/base_identical/EqualOpSeq/$$,
 $cref/Identical/base_identical/Identical/$$ 
 $cref/Integer/base_require/Integer/$$, and 
@@ -480,7 +480,7 @@ $subhead 08-06$$
 Add the $cref/CondExpRel/base_cond_exp/CondExpRel/$$ paragraph to the 
 base requirements documentation. 
 This was missing and are required for
-$cref/CondExp/$$ to work with $codei%AD<%Base%>%$$ arguments
+$cref CondExp$$ to work with $codei%AD<%Base%>%$$ arguments
 and a non-standard $icode Base$$ type.
 
 $subhead 08-04$$
@@ -494,13 +494,13 @@ in the $code/CondExp/base_require/CondExp/$$ $icode Base$$ requirements.
 $lend
 
 $head 08-03$$
-Change $cref/PrintFor/$$ condition from less than or equal zero 
+Change $cref PrintFor$$ condition from less than or equal zero 
 to not greater than zero;i.e., not positive.
 This makes $code nan$$ print because it results in false for all comparisons.
 
 $head 08-02$$
 $list number$$
-Change $cref/PrintFor/$$ so it no longer aborts execution when
+Change $cref PrintFor$$ so it no longer aborts execution when
 there is no operation sequence being recording; see
 $cref/start recording/Independent/Start Recording/$$.
 $lnext
@@ -508,7 +508,7 @@ Improve the $cref print_for_cout.cpp$$ example.
 $lend
 
 $head 07-31$$
-Add a conditional version of the $cref/PrintFor/$$ command
+Add a conditional version of the $cref PrintFor$$ command
 $codei%
 	PrintFor(%text%, %y%, %z%)
 %$$
@@ -547,7 +547,7 @@ Make $code tan$$ and $code tanh$$ $cref/atomic/glossary/Operation/Atomic/$$
 operations; see $cref tan_forward$$ and $cref tan_reverse$$.
 
 $head 07-25$$
-Finish the $cref/user_atomic/$$ example $cref user_tan.cpp$$.
+Finish the $cref user_atomic$$ example $cref user_tan.cpp$$.
 This is also a design and implementation of the routines necessary
 to make $code tan$$ and $code tanh$$ CppAD atomic operations.
 
@@ -558,24 +558,24 @@ This has been fixed in $cref tan_reverse$$.
 
 $head 07-17$$
 $list number$$
-Fix bug in $cref/user_atomic/$$ functions.
+Fix bug in $cref user_atomic$$ functions.
 To be specific, the Taylor coefficients for $latex y$$,
 of order less than $icode k$$,
 were not passed into the $code user_atomic$$ 
 $cref/forward/user_atomic/forward/$$ callback function.
 $lnext
 Derive the theory for including the tangent and hyperbolic tangent
-as CppAD atomic operations $cref/tan_forward/$$ and $cref/tan_reverse/$$; 
+as CppAD atomic operations $cref tan_forward$$ and $cref tan_reverse$$; 
 see the wish list item $code Tan and Tanh$$.
 $lnext
 Implement and test forward mode calculation of derivative for
 the tangent and hyperbolic tangent functions; 
-see the new $cref/user_atomic/$$ example $cref/user_tan.cpp/$$.
+see the new $cref user_atomic$$ example $cref user_tan.cpp$$.
 $lend
 
 $head 07-14$$
 $list number$$
-The $cref/InstallUnix/$$ instructions for running the individual
+The $cref InstallUnix$$ instructions for running the individual
 correctness and speed tests were out of date. 
 This has been fixed; see 
 $cref/example and tests/InstallUnix/make/Examples and Tests/$$.
@@ -646,11 +646,11 @@ $head 07-10$$
 $list number$$
 Add link to $tref Discrete$$ in $cref multi_thread$$.
 $lnext
-Make use of the $cref/TrackNewDel/$$ routines
+Make use of the $cref TrackNewDel$$ routines
 $cref omp_in_parallel$$ execution mode an error (it never worked properly); 
 see $cref/TrackNewDel multi-threading/TrackNewDel/Multi-Threading/$$.
 $lnext
-Change $cref/memory_leak/$$ so that it checks for a leak in all threads.
+Change $cref memory_leak$$ so that it checks for a leak in all threads.
 This is what $code openmp_newton_example.cpp$$ and 
 $code sum_i_inv_time.cpp$$
 assumed was being done.
@@ -661,7 +661,7 @@ All the OpenMP parallel execution requirements
 have been grouped in the section $cref multi_thread$$.
 
 $head 07-07$$
-Add the routine $cref/parallel_ad/$$ to fix bug when using
+Add the routine $cref parallel_ad$$ to fix bug when using
 $codei%AD<%Base%>%$$ in $cref/parallel/omp_in_parallel/$$ execution mode.
 
 $head 06-23$$
@@ -675,11 +675,11 @@ $codei%
 %$$
 sometimes occurred.
 $lnext
-The routine $cref/omp_max_thread/$$ was deprecated, 
+The routine $cref omp_max_thread$$ was deprecated, 
 use the routine $cref omp_max_num_threads$$ instead.
 $lnext
 The deprecated routines have been grouped together in the
-$cref/deprecated/$$ section of the CppAD manual.
+$cref deprecated$$ section of the CppAD manual.
 $lend
 
 $head 06-21$$
@@ -728,7 +728,7 @@ $cref/base type/base_require/$$ is not plain old data.
 
 $head 05-28$$
 $list number$$
-Add the $cref omp_efficient$$ routine to the $cref/omp_alloc/$$ system.
+Add the $cref omp_efficient$$ routine to the $cref omp_alloc$$ system.
 $lnext
 Improve the $code omp_alloc$$ tracing so it prints the same pointer
 as returned to the user (not an offset version of that pointer).
@@ -746,15 +746,15 @@ $$
 
 $head 05-22$$
 $list number$$
-The old memory tracking routines $cref/TrackNewDel/$$ have been deprecated.
-Their use should be replaced using the $cref/omp_alloc/$$
+The old memory tracking routines $cref TrackNewDel$$ have been deprecated.
+Their use should be replaced using the $cref omp_alloc$$
 a memory allocator which is designed to work well in a multi-threading OpenMP 
 environment; see $cref/purpose/omp_alloc/Purpose/$$.
 $lnext
 The replacement of $code TrackNewDel$$ by $code omp_alloc$$
 has been throughout the CppAD source code, including the examples
 that used $code TrackNewDel$$; namely,
-$cref/mul_level_adolc.cpp/$$, $cref/ode_taylor_adolc.cpp/$$.
+$cref mul_level_adolc.cpp$$, $cref ode_taylor_adolc.cpp$$.
 $lnext
 The CppAD vector template class
 and the $cref/vectorBool/CppAD_vector/vectorBool/$$ class
@@ -763,7 +763,7 @@ $cref/memory/CppAD_vector/Memory and Parallel Mode/$$ manager.
 This should improves its speed of memory allocation
 $cref omp_in_parallel$$ sections of a program.
 $lnext
-The $cref/speed_test/$$ argument
+The $cref speed_test$$ argument
 $cref/size_vec/speed_test/size_vec/$$ call was by value,
 instead of by reference (as documented).
 This has been fixed and the call is now by reference.
@@ -798,10 +798,10 @@ $head 05-03$$
 $list number$$
 If $code NDEBUG$$ is not defined,
 the $cref/hasnan/nan/$$ function is used to make sure that the 
-results of any $cref/Forward/$$ operation does not contain a 
+results of any $cref Forward$$ operation does not contain a 
 nan (not a number).
 If so, an error message is generated and the program terminates.
-This error message and termination can be caught; see $cref/ErrorHandler/$$.
+This error message and termination can be caught; see $cref ErrorHandler$$.
 
 $lnext
 In the event that the 
@@ -815,7 +815,7 @@ $lend
 $head 04-29$$
 $list number$$
 The Microsoft Visual Studio 2003 project files 
-for the $cref/InstallWindows/$$ examples and tests no longer worked because
+for the $cref InstallWindows$$ examples and tests no longer worked because
 the current version of CppAD uses local types in template instantiation; see
 $href%
 	http://msdn.microsoft.com/en-us/library/bh44f2cb(v=vs.71).aspx%
@@ -862,12 +862,12 @@ Add the $cref/conjugate gradient/conj_grad.cpp/$$ example.
 $head 02-22$$
 Add the $cref/atomic/speed_main/option_list/atomic/$$ option to the 
 speed test program and use 
-$cref/mat_mul.hpp/$$ during the
+$cref mat_mul.hpp$$ during the
 $cref cppad_mat_mul.cpp$$ speed test when the atomic option is specified.
 
 
 $head 02-19$$
-There was a bug when $cref/omp_max_thread/$$ was set to one,
+There was a bug when $cref omp_max_thread$$ was set to one,
 and $code NDEBUG$$ was not defined,
 the thread corresponding to parameters was one, but the only valid thread
 number was zero (only one thread) 
@@ -891,29 +891,29 @@ speed comparison cases.)
 $head 02-09$$
 A variable in $code user_atomic.hpp$$ was declare of type $icode Base$$
 when it should have been declared of type $code size_t$$.
-It caused the $cref/user_atomic/$$ feature to fail with some base types.
+It caused the $cref user_atomic$$ feature to fail with some base types.
 This has been fixed.
 $pre
 
 $$
-The $cref/mat_mul.hpp/$$ example has been improved by 
+The $cref mat_mul.hpp$$ example has been improved by 
 caching the $latex x$$ variable information and using it during
 $cref/reverse Hessian sparsity/user_atomic/rev_hes_sparse/$$ calculations. 
 $pre
 
 $$
-Some of the $cref/user_atomic/$$ documentation was extended to
+Some of the $cref user_atomic$$ documentation was extended to
 include more explanation.
 
 $head 02-06$$
 The use can now define complex $cref/atomic/user_atomic/$$ operations
-and store them in a CppAD $cref/ADFun/$$ object.
+and store them in a CppAD $cref ADFun$$ object.
 This item has been remove from the
 $cref/wish list/WishList/$$.
 $pre
 
 $$
-The documentation for $cref/RevSparseHes/$$ had a dimension error.
+The documentation for $cref RevSparseHes$$ had a dimension error.
 This has been fixed.
 $pre
 
@@ -923,11 +923,11 @@ A $cref/faster set operations/
 item has been added to the wish list.
 
 $head 02-02$$
-The documentation for $cref/ForSparseJac/$$ had some formatting errors.
+The documentation for $cref ForSparseJac$$ had some formatting errors.
 The errors have been fix and the documentation has been improved.
 
 $head 02-01$$
-The $cref/subversion/$$ install instructions were brought up to date.
+The $cref subversion$$ install instructions were brought up to date.
 
 $head 01-19$$
 The directory where the $cref pkgconfig$$ file $code cppad.pc$$ 

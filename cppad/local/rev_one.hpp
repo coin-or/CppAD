@@ -33,13 +33,13 @@ $index derivative, easy$$
 $section First Order Derivative: Driver Routine$$
 
 $head Syntax$$
-$syntax%%dw% = %f%.RevOne(%x%, %i%)%$$
+$icode%dw% = %f%.RevOne(%x%, %i%)%$$
 
 
 $head Purpose$$
 We use $latex F : B^n \rightarrow B^m$$ to denote the
-$xref/glossary/AD Function/AD function/$$ corresponding to $italic f$$.
-The syntax above sets $italic dw$$ to the
+$cref/AD function/glossary/AD Function/$$ corresponding to $icode f$$.
+The syntax above sets $icode dw$$ to the
 derivative of $latex F_i$$ with respect to $latex x$$; i.e.,
 $latex \[
 dw =
@@ -50,70 +50,70 @@ F_i^{(1)} (x)
 \] $$
 
 $head f$$
-The object $italic f$$ has prototype
-$syntax%
+The object $icode f$$ has prototype
+$codei%
 	ADFun<%Base%> %f%
 %$$
-Note that the $xref/ADFun/$$ object $italic f$$ is not $code const$$
-(see $xref/RevOne/RevOne Uses Forward/RevOne Uses Forward/$$ below).
+Note that the $cref ADFun$$ object $icode f$$ is not $code const$$
+(see $cref/RevOne Uses Forward/RevOne/RevOne Uses Forward/$$ below).
 
 $head x$$
-The argument $italic x$$ has prototype
-$syntax%
+The argument $icode x$$ has prototype
+$codei%
 	const %Vector% &%x%
 %$$
-(see $xref/RevOne/Vector/Vector/$$ below)
+(see $cref/Vector/RevOne/Vector/$$ below)
 and its size 
-must be equal to $italic n$$, the dimension of the
-$xref/seq_property/Domain/domain/$$ space for $italic f$$.
+must be equal to $icode n$$, the dimension of the
+$cref/domain/seq_property/Domain/$$ space for $icode f$$.
 It specifies
 that point at which to evaluate the derivative.
 
 $head i$$
-The index $italic i$$ has prototype
-$syntax%
+The index $icode i$$ has prototype
+$codei%
 	size_t %i%
 %$$
 and is less than $latex m$$, the dimension of the
-$xref/seq_property/Range/range/$$ space for $italic f$$.
+$cref/range/seq_property/Range/$$ space for $icode f$$.
 It specifies the
 component of $latex F$$ that we are computing the derivative of.
 
 $head dw$$
-The result $italic dw$$ has prototype
-$syntax%
+The result $icode dw$$ has prototype
+$codei%
 	%Vector% %dw%
 %$$
-(see $xref/RevOne/Vector/Vector/$$ below)
-and its size is $italic n$$, the dimension of the
-$xref/seq_property/Domain/domain/$$ space for $italic f$$.
-The value of $italic dw$$ is the derivative of $latex F_i$$ 
-evaluated at $italic x$$; i.e.,
+(see $cref/Vector/RevOne/Vector/$$ below)
+and its size is $icode n$$, the dimension of the
+$cref/domain/seq_property/Domain/$$ space for $icode f$$.
+The value of $icode dw$$ is the derivative of $latex F_i$$ 
+evaluated at $icode x$$; i.e.,
 for $latex j = 0 , \ldots , n - 1 $$ 
 $latex \[.
 	dw[ j ] = \D{ F_i }{ x_j } ( x )
 \] $$
 
 $head Vector$$
-The type $italic Vector$$ must be a $xref/SimpleVector/$$ class with
-$xref/SimpleVector/Elements of Specified Type/elements of type/$$
-$italic Base$$.
-The routine $xref/CheckSimpleVector/$$ will generate an error message
+The type $icode Vector$$ must be a $cref SimpleVector$$ class with
+$cref/elements of type/SimpleVector/Elements of Specified Type/$$
+$icode Base$$.
+The routine $cref CheckSimpleVector$$ will generate an error message
 if this is not the case.
 
 $head RevOne Uses Forward$$
-After each call to $xref/Forward/$$,
-the object $italic f$$ contains the corresponding 
-$xref/glossary/Taylor Coefficient/Taylor coefficients/$$.
+After each call to $cref Forward$$,
+the object $icode f$$ contains the corresponding 
+$cref/Taylor coefficients/glossary/Taylor Coefficient/$$.
 After $code RevOne$$,
-the previous calls to $xref/Forward/$$ are undefined.
+the previous calls to $cref Forward$$ are undefined.
 
 $head Example$$
 $children%
 	example/rev_one.cpp
 %$$
 The routine 
-$xref/RevOne.cpp//RevOne/$$ is both an example and test.
+$cref/RevOne/RevOne.cpp/$$ is both an example and test.
 It returns $code true$$, if it succeeds and $code false$$ otherwise.
 
 $end

@@ -19,11 +19,11 @@ $section The Theory of Forward Mode$$
 
 $head Taylor Notation$$
 In Taylor notation, each variable corresponds to 
-a function of a single argument which we denote by $italic t$$
+a function of a single argument which we denote by $icode t$$
 (see Section 10.2 of 
-$xref/Bib/Evaluating Derivatives/Evaluating Derivatives/$$).
+$cref/Evaluating Derivatives/Bib/Evaluating Derivatives/$$).
 Here and below
-$latex X(t)$$, $latex Y(t)$$, and $italic Z(t)$$ are scalar valued functions 
+$latex X(t)$$, $latex Y(t)$$, and $icode Z(t)$$ are scalar valued functions 
 and the corresponding $th p$$ order Taylor coefficients row vectors are
 $latex x$$, $latex y$$ and $latex z$$; i.e.,
 $latex \[
@@ -158,7 +158,7 @@ $latex \[
 \] $$
 We need to complete the induction by finding formulas for $latex z^{(j+1)}$$. 
 It follows for the formula for the 
-$xref/ForwardTheory/Binary Operators/Multiplication/multiplication/1/$$ 
+$cref/multiplication/ForwardTheory/Binary Operators/Multiplication/$$ 
 operator that
 $latex  \[
 \begin{array}{rcl}

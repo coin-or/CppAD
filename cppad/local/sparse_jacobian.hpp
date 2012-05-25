@@ -95,7 +95,7 @@ $pre
 $$
 If this sparsity pattern does not change between calls to 
 $codei SparseJacobian$$, it should be faster to calculate $icode p$$ once 
-(using $cref ForSparseJac$$ or $cref/RevSparseJac/$$)
+(using $cref ForSparseJac$$ or $cref RevSparseJac$$)
 and then pass $icode p$$ to $codei SparseJacobian$$.
 In addition,
 if you specify $icode p$$, CppAD will use the same

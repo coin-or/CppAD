@@ -455,7 +455,7 @@ Given a $cref/sparsity pattern/glossary/Sparsity Pattern/$$ for $latex R$$,
 $icode for_jac_sparse$$ computes a sparsity pattern for $latex S(x)$$.
 
 $subhead Usage$$
-This routine is used by calls to $cref/ForSparseJac/$$.
+This routine is used by calls to $cref ForSparseJac$$.
 
 $subhead q$$
 The $icode for_jac_sparse$$ argument $icode q$$ has prototype
@@ -505,8 +505,8 @@ Given a $cref/sparsity pattern/glossary/Sparsity Pattern/$$ for $latex S$$,
 $icode rev_jac_sparse$$ computes a sparsity pattern for $latex R(x)$$.
 
 $subhead Usage$$
-This routine is used by calls to $cref/RevSparseJac/$$
-and to $cref/optimize/$$.
+This routine is used by calls to $cref RevSparseJac$$
+and to $cref optimize$$.
 
 
 $subhead q$$
@@ -557,7 +557,7 @@ $latex \[
 \] $$
 
 $subhead Usage$$
-This routine is used by calls to $cref/RevSparseHes/$$.
+This routine is used by calls to $cref RevSparseHes$$.
 
 $subhead q$$
 The $icode rev_hes_sparse$$ argument $icode q$$ has prototype
@@ -669,11 +669,11 @@ $children%
 $head Example$$
 
 $subhead Tangent Function$$
-The file $cref/user_tan.cpp/$$ contains an example and test
+The file $cref user_tan.cpp$$ contains an example and test
 implementation of the tangent function as a user atomic operation.
 
 $subhead Matrix Multiplication$$
-The file  $cref/mat_mul.cpp/$$ contains an example and test
+The file  $cref mat_mul.cpp$$ contains an example and test
 implementation of matrix multiplication a a user atomic operation.
 
 $end

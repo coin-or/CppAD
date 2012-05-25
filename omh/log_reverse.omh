@@ -33,7 +33,7 @@ $xref%
 definition for the functions $latex H$$ and $latex G$$.
 
 The forward mode formulas for the
-$xref/LogForward//logarithm/$$
+$cref/logarithm/LogForward/$$
 function are
 $latex \[
 	z^{(j)}  =  \log ( x^{(0)} ) 

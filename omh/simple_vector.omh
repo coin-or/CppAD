@@ -49,7 +49,7 @@ is any class that satisfies the requirements for a class of the form
 $codei%
 	%SimpleVector%<%Scalar%>
 %$$
-The routine $cref/CheckSimpleVector/$$ can be used to check
+The routine $cref CheckSimpleVector$$ can be used to check
 that a class is a simple vector class with a specified element type.
 
 $head Default Constructor$$
@@ -70,7 +70,7 @@ If $icode n$$ has type $code size_t$$,
 $codei%
 	%SimpleVector%<%Scalar%> %x%(%n%)
 %$$
-creates a vector $icode x$$ with $italic n$$ elements
+creates a vector $icode x$$ with $icode n$$ elements
 each of the specified type.
 
 $head Copy Constructor$$
@@ -86,7 +86,7 @@ The $icode Scalar$$ assignment operator ( $code =$$ )
 is used to set each element of $icode y$$
 equal to the corresponding element of $icode x$$.
 This is a `deep copy' in that the values of the elements
-of $icode x$$ and $italic y$$ can be set independently after the copy.
+of $icode x$$ and $icode y$$ can be set independently after the copy.
 The argument $icode x$$ is passed by reference
 and may be $code const$$.
 
@@ -100,7 +100,7 @@ from the vector (this includes when the vector is destroyed).
 
 $head Assignment$$
 $index assignment, vector$$
-If $icode x$$ and $italic y$$ are 
+If $icode x$$ and $icode y$$ are 
 $icode%SimpleVector%<%Scalar%>%$$ objects,
 $codei%
 	%y% = %x%
@@ -109,8 +109,8 @@ uses the $icode Scalar$$ assignment operator ( $code =$$ )
 to set each element of $icode y$$ equal to 
 the corresponding element of $icode x$$.
 This is a `deep assignment' in that the values of the elements
-of $icode x$$ and $italic y$$ can be set independently after the assignment.
-The vectors $icode x$$ and $italic y$$ must have
+of $icode x$$ and $icode y$$ can be set independently after the assignment.
+The vectors $icode x$$ and $icode y$$ must have
 the same number of elements.
 The argument $icode x$$ is passed by reference
 and may be $code const$$.
@@ -131,7 +131,7 @@ and $code n$$ has type $code size_t$$,
 $codei%
 	%n% = %x%.size()
 %$$
-sets $icode n$$ to the number of elements in the vector $italic x$$.
+sets $icode n$$ to the number of elements in the vector $icode x$$.
 The object $icode x$$ may be $code const$$.
 
 $head Resize$$
@@ -172,7 +172,7 @@ returns an object of an unspecified type,
 referred to here as $icode elementType$$.
 
 $subhead Using Value$$
-If $icode elementType$$ is not the same as $italic Scalar$$,
+If $icode elementType$$ is not the same as $icode Scalar$$,
 the conversion operator
 $codei%
 	static_cast<%Scalar%>(%x%[%i%])
@@ -182,11 +182,11 @@ with values of type $icode Scalar$$.
 For this type of usage, the object $icode x$$ may be $code const$$.
 
 $subhead Assignment$$
-If $icode y$$ is an object of type $italic Scalar$$,
+If $icode y$$ is an object of type $icode Scalar$$,
 $codei%
 	%x%[%i%] = %y%
 %$$
-assigns the $th i$$ element of $icode x$$ to have value $italic y$$.
+assigns the $th i$$ element of $icode x$$ to have value $icode y$$.
 For this type of usage, the object $icode x$$ can not be $code const$$.
 The type returned by this assignment is unspecified; for example,
 it might be void in which case the syntax
@@ -200,7 +200,7 @@ $children%
 	example/simple_vector.cpp
 %$$
 The file
-$cref/SimpleVector.cpp/$$
+$cref SimpleVector.cpp$$
 contains an example and test of a Simple template class.
 It returns true if it succeeds and false otherwise.
 (It is easy to modify to test additional simple vector template classes.)

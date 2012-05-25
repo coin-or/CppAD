@@ -41,7 +41,7 @@ $head Purpose$$
 This is a an example algorithm that is used to demonstrate 
 how Algorithmic Differentiation works with loops and  
 boolean decision variables
-(see $cref/exp_2/$$ for a simpler example). 
+(see $cref exp_2$$ for a simpler example). 
 
 $head Mathematical Function$$
 The exponential function can be defined by
@@ -108,7 +108,7 @@ It is the value of the exponential function
 approximation defined above.
 
 $head Type$$
-If $icode u$$ and $italic v$$ are $italic Type$$ objects and $italic i$$
+If $icode u$$ and $icode v$$ are $icode Type$$ objects and $icode i$$
 is an $code int$$: 
 
 $table
@@ -125,11 +125,11 @@ $rnext
 $icode%u% > %v%$$
 	$cnext $code bool$$
 	$cnext true,
-	if $icode u$$ greater than $italic v$$, an false otherwise
+	if $icode u$$ greater than $icode v$$, an false otherwise
 $rnext
 $icode%u% = %v%$$
 	$cnext $icode Type$$ 
-	$cnext new $icode u$$ (and result) is value of $italic v$$
+	$cnext new $icode u$$ (and result) is value of $icode v$$
 $rnext
 $icode%u% * %v%$$
 	$cnext $icode Type$$
@@ -154,11 +154,11 @@ $children%
 %$$
 
 $head Implementation$$
-The file $cref/exp_eps.hpp/$$
+The file $cref exp_eps.hpp$$
 contains a C++ implementation of this function.
 
 $head Test$$
-The file $cref/exp_eps.cpp/$$ 
+The file $cref exp_eps.cpp$$ 
 contains a test of this implementation.
 It returns true for success and false for failure.
 
@@ -176,12 +176,12 @@ $codep
 $$
 What is the value assigned to 
 $code k$$, $code temp$$, $code term$$, and $code sum$$
-the first time through the $code while$$ loop in $cref/exp_eps.hpp/$$ ?
+the first time through the $code while$$ loop in $cref exp_eps.hpp$$ ?
 $lnext
 Continuing the previous exercise, 
 what is the value assigned to 
 $code k$$, $code temp$$, $code term$$, and $code sum$$
-the second time through the $code while$$ loop in $cref/exp_eps.hpp/$$ ?
+the second time through the $code while$$ loop in $cref exp_eps.hpp$$ ?
 $lend
 
 

@@ -31,7 +31,7 @@ $index example$$
 $head Introduction$$
 This section organizes the information related to the CppAD examples.
 Each CppAD operation has its own specific example,
-for example $xref/Add.cpp/$$ is an example for 
+for example $cref Add.cpp$$ is an example for 
 $cref/addition/ad_binary/$$.
 Some of the examples are of a more general nature
 (not connected of a specific feature of CppAD).
@@ -40,14 +40,14 @@ by the examples.
 
 $head Running Examples$$
 The 
-$xref/Install//installation instructions/$$
+$cref/installation instructions/Install/$$
 show how the examples can be run on your system.
 
 
 $head The CppAD Test Vector Template Class$$
 Many of the examples use the 
 $small $cref/CPPAD_TEST_VECTOR/test_vector/$$ $$ preprocessor symbol 
-to determine which $xref/SimpleVector/$$ template class is used with
+to determine which $cref SimpleVector$$ template class is used with
 the examples. 
 
 

@@ -29,7 +29,7 @@ $head EqualOpSeq$$
 $index EqualOpSeq, base require$$
 $index base, EqualOpSeq require$$
 $index require, base EqualOpSeq$$
-If function $cref/EqualOpSeq/$$ is used with 
+If function $cref EqualOpSeq$$ is used with 
 arguments of type $codei%AD<%Base%>%$$,
 the type $icode Base$$ must support the syntax
 $codei%
@@ -66,10 +66,10 @@ $icode u$$ and $icode v$$ are not identically equal in the following case
 (which CppAD automatically defines $code EqualOpSeq$$ for):
 The type $icode Base$$ is $codei%AD<double>%$$,
 $icode x[0] = x[1] = 1.$$,
-then $cref/independent/$$ is used to make $icode x$$ the independent
+then $cref independent$$ is used to make $icode x$$ the independent
 variable vector,
 and then $icode u = x[0]$$, $icode v = x[1]$$, 
-Note that during a future $cref/Forward/$$ calculation,
+Note that during a future $cref Forward$$ calculation,
 $icode u$$ and $icode v$$ could correspond to different values.
 For example, see
 $cref/adolc EqualOpSeq/base_adolc.hpp/EqualOpSeq/$$.
@@ -89,10 +89,10 @@ equal in the following case
 (which CppAD automatically defines $code IdenticalPar$$ for):
 The type $icode Base$$ is $codei%AD<double>%$$,
 $icode x[0] = 1.$$,
-then $cref/independent/$$ is used to make $icode x$$ the independent
+then $cref independent$$ is used to make $icode x$$ the independent
 variable vector,
 and then $icode u = x[0]$$,
-Note that during a future $cref/Forward/$$ calculation,
+Note that during a future $cref Forward$$ calculation,
 $icode u$$ could correspond to different values.
 
 $subhead Prototypes$$

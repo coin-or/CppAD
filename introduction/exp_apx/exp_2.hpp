@@ -81,7 +81,7 @@ It is the value of the exponential function
 approximation defined above.
 
 $head Type$$
-If $icode u$$ and $italic v$$ are $italic Type$$ objects and $italic i$$
+If $icode u$$ and $icode v$$ are $icode Type$$ objects and $icode i$$
 is an $code int$$: 
 
 $table
@@ -115,11 +115,11 @@ $childtable%
 
 
 $head Implementation$$
-The file $cref/exp_2.hpp/$$
+The file $cref exp_2.hpp$$
 contains a C++ implementation of this function.
 
 $head Test$$
-The file $cref/exp_2.cpp/$$ 
+The file $cref exp_2.cpp$$ 
 contains a test of this implementation.
 It returns true for success and false for failure.
 
@@ -132,7 +132,7 @@ $codep
 	double y = exp_2(x);
 $$
 What is the value assigned to 
-$code v1$$, $code v2$$, ... ,$code v5$$ in $cref/exp_2.hpp/$$ ?
+$code v1$$, $code v2$$, ... ,$code v5$$ in $cref exp_2.hpp$$ ?
 $lnext
 Extend the routine $code exp_2.hpp$$ to
 a routine $code exp_3.hpp$$ that computes

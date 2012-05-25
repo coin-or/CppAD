@@ -35,12 +35,12 @@ $index partial, easy$$
 $section Forward Mode Second Partial Derivative Driver$$
 
 $head Syntax$$
-$syntax%%ddy% = %f%.ForTwo(%x%, %j%, %k%)%$$
+$icode%ddy% = %f%.ForTwo(%x%, %j%, %k%)%$$
 
 
 $head Purpose$$
 We use $latex F : B^n \rightarrow B^m$$ to denote the
-$xref/glossary/AD Function/AD function/$$ corresponding to $italic f$$.
+$cref/AD function/glossary/AD Function/$$ corresponding to $icode f$$.
 The syntax above sets 
 $latex \[
 	ddy [ i * p + \ell ]
@@ -49,57 +49,57 @@ $latex \[
 \] $$
 for $latex i = 0 , \ldots , m-1$$
 and $latex \ell = 0 , \ldots , p$$,
-where $latex p$$ is the size of the vectors $italic j$$ and $italic k$$.
+where $latex p$$ is the size of the vectors $icode j$$ and $icode k$$.
 
 $head f$$
-The object $italic f$$ has prototype
-$syntax%
+The object $icode f$$ has prototype
+$codei%
 	ADFun<%Base%> %f%
 %$$
-Note that the $xref/ADFun/$$ object $italic f$$ is not $code const$$
-(see $xref/ForTwo/ForTwo Uses Forward/ForTwo Uses Forward/$$ below).
+Note that the $cref ADFun$$ object $icode f$$ is not $code const$$
+(see $cref/ForTwo Uses Forward/ForTwo/ForTwo Uses Forward/$$ below).
 
 $head x$$
-The argument $italic x$$ has prototype
-$syntax%
+The argument $icode x$$ has prototype
+$codei%
 	const %VectorBase% &%x%
 %$$
-(see $xref/ForTwo/VectorBase/VectorBase/$$ below)
+(see $cref/VectorBase/ForTwo/VectorBase/$$ below)
 and its size 
-must be equal to $italic n$$, the dimension of the
-$xref/seq_property/Domain/domain/$$ space for $italic f$$.
+must be equal to $icode n$$, the dimension of the
+$cref/domain/seq_property/Domain/$$ space for $icode f$$.
 It specifies
 that point at which to evaluate the partial derivatives listed above.
 
 $head j$$
-The argument $italic j$$ has prototype
-$syntax%
+The argument $icode j$$ has prototype
+$codei%
 	const %VectorSize_t% &%j%
 %$$
-(see $xref/ForTwo/VectorSize_t/VectorSize_t/$$ below)
-We use $italic p$$ to denote the size of the vector $italic j$$.
-All of the indices in $italic j$$ 
-must be less than $italic n$$; i.e.,
+(see $cref/VectorSize_t/ForTwo/VectorSize_t/$$ below)
+We use $icode p$$ to denote the size of the vector $icode j$$.
+All of the indices in $icode j$$ 
+must be less than $icode n$$; i.e.,
 for $latex \ell = 0 , \ldots , p-1$$, $latex j[ \ell ]  < n$$.
 
 $head k$$
-The argument $italic k$$ has prototype
-$syntax%
+The argument $icode k$$ has prototype
+$codei%
 	const %VectorSize_t% &%k%
 %$$
-(see $xref/ForTwo/VectorSize_t/VectorSize_t/$$ below)
-and its size must be equal to $italic p$$,
-the size of the vector $italic j$$.
-All of the indices in $italic k$$ 
-must be less than $italic n$$; i.e.,
+(see $cref/VectorSize_t/ForTwo/VectorSize_t/$$ below)
+and its size must be equal to $icode p$$,
+the size of the vector $icode j$$.
+All of the indices in $icode k$$ 
+must be less than $icode n$$; i.e.,
 for $latex \ell = 0 , \ldots , p-1$$, $latex k[ \ell ]  < n$$.
 
 $head ddy$$
-The result $italic ddy$$ has prototype
-$syntax%
+The result $icode ddy$$ has prototype
+$codei%
 	%VectorBase% %ddy%
 %$$
-(see $xref/ForTwo/VectorBase/VectorBase/$$ below)
+(see $cref/VectorBase/ForTwo/VectorBase/$$ below)
 and its size is $latex m * p$$.
 It contains the requested partial derivatives; to be specific,
 for $latex i = 0 , \ldots , m - 1 $$ 
@@ -111,23 +111,23 @@ $latex \[
 \] $$
 
 $head VectorBase$$
-The type $italic VectorBase$$ must be a $xref/SimpleVector/$$ class with
-$xref/SimpleVector/Elements of Specified Type/elements of type Base/$$.
-The routine $xref/CheckSimpleVector/$$ will generate an error message
+The type $icode VectorBase$$ must be a $cref SimpleVector$$ class with
+$cref/elements of type Base/SimpleVector/Elements of Specified Type/$$.
+The routine $cref CheckSimpleVector$$ will generate an error message
 if this is not the case.
 
 $head VectorSize_t$$
-The type $italic VectorSize_t$$ must be a $xref/SimpleVector/$$ class with
-$xref/SimpleVector/Elements of Specified Type/elements of type size_t/$$.
-The routine $xref/CheckSimpleVector/$$ will generate an error message
+The type $icode VectorSize_t$$ must be a $cref SimpleVector$$ class with
+$cref/elements of type size_t/SimpleVector/Elements of Specified Type/$$.
+The routine $cref CheckSimpleVector$$ will generate an error message
 if this is not the case.
 
 $head ForTwo Uses Forward$$
-After each call to $xref/Forward/$$,
-the object $italic f$$ contains the corresponding 
-$xref/glossary/Taylor Coefficient/Taylor coefficients/$$.
+After each call to $cref Forward$$,
+the object $icode f$$ contains the corresponding 
+$cref/Taylor coefficients/glossary/Taylor Coefficient/$$.
 After $code ForTwo$$,
-the previous calls to $xref/Forward/$$ are undefined.
+the previous calls to $cref Forward$$ are undefined.
 
 
 $head Examples$$
@@ -135,7 +135,7 @@ $children%
 	example/for_two.cpp
 %$$
 The routine 
-$xref/ForTwo.cpp//ForTwo/$$ is both an example and test.
+$cref/ForTwo/ForTwo.cpp/$$ is both an example and test.
 It returns $code true$$, if it succeeds and $code false$$ otherwise.
 
 $end

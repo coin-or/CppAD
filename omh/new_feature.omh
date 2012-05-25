@@ -28,32 +28,32 @@ $section Adding a New Feature to the CppAD Distribution$$
 
 $head Overview$$
 Suppose that you add a new feature to CppAD and the 
-corresponding include file is $syntax%%Name%.h%$$.
+corresponding include file is $icode%Name%.h%$$.
 You should check each of the following steps: 
 
 $list number$$
-Add the new file $syntax%%Name%.h%$$ to the cvs repository.
+Add the new file $icode%Name%.h%$$ to the cvs repository.
 
 $lnext
-Add a test file called $syntax%example/%Name%.cpp%$$ that check 
+Add a test file called $codei%example/%Name%.cpp%$$ that check 
 for correct results (and run the test to make sure it works).
 
 $lnext
-Add the new file $syntax%example/%Name%.cpp%$$ to the cvs repository.
+Add the new file $codei%example/%Name%.cpp%$$ to the cvs repository.
 
 $lnext
 Add a call to the new test in the file $code example/example.cpp$$.
 
 $lnext
-Add the file $syntax%%Name%.cpp%$$ to the list of 
+Add the file $icode%Name%.cpp%$$ to the list of 
 $code Example_SOURCES$$ in the file $code example/Makefile.am$$.
 
 $lnext
-Add the file $syntax%%Name%.cpp%$$ to the list of source files
+Add the file $icode%Name%.cpp%$$ to the list of source files
 corresponding to the Microsoft C++ project file $code example/Example.dsp$$.
 
 $lnext
-Add the file $syntax%%Name%.h%$$ to the list of 
+Add the file $icode%Name%.h%$$ to the list of 
 $code nobase_include_HEADERS$$ in the file $code Makefile.am$$.
 
 $lnext

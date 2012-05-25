@@ -50,7 +50,7 @@ has been completed:
 $cref/CppAD::vector/CppAD_vector/Memory and Parallel Mode/$$,
 $cref/CheckSimpleVector/CheckSimpleVector/Parallel Mode/$$,
 $cref/CheckNumericType/CheckNumericType/Parallel Mode/$$,
-$cref/parallel_ad/$$.
+$cref parallel_ad$$.
 
 $head hold_memory$$
 Memory allocation should be much faster after calling
@@ -61,7 +61,7 @@ This may even be true if there is only one thread.
 $head Parallel AD$$
 One must first call
 $cref/thread_alloc::parallel_setup/ta_parallel_setup/$$ 
-and then call $cref/parallel_ad/$$ before using $code AD$$ types
+and then call $cref parallel_ad$$ before using $code AD$$ types
 in $cref/parallel/ta_in_parallel/$$ execution mode.
 
 $head Initialization$$

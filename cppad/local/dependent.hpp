@@ -35,82 +35,82 @@ $index tape, stop recording$$
 $index Dependent$$
 
 $head Syntax$$
-$syntax%%f%.Dependent(%x%, %y%)%$$
+$icode%f%.Dependent(%x%, %y%)%$$
 
 $head Purpose$$
-Stop recording and the AD of $italic Base$$
-$xref/glossary/Operation/Sequence/operation sequence/1/$$
+Stop recording and the AD of $icode Base$$
+$cref/operation sequence/glossary/Operation/Sequence/$$
 that started with the call
-$syntax%
+$codei%
 	Independent(%x%)
 %$$
-and store the operation sequence in $italic f$$.
+and store the operation sequence in $icode f$$.
 The operation sequence defines an 
-$xref/glossary/AD Function/AD function/$$
+$cref/AD function/glossary/AD Function/$$
 $latex \[
 	F : B^n \rightarrow B^m
 \] $$
-where $latex B$$ is the space corresponding to objects of type $italic Base$$.
+where $latex B$$ is the space corresponding to objects of type $icode Base$$.
 The value $latex n$$ is the dimension of the 
-$xref/seq_property/Domain/domain/$$ space for the operation sequence.
+$cref/domain/seq_property/Domain/$$ space for the operation sequence.
 The value $latex m$$ is the dimension of the 
-$xref/seq_property/Range/range/$$ space for the operation sequence
-(which is determined by the size of $italic y$$).
+$cref/range/seq_property/Range/$$ space for the operation sequence
+(which is determined by the size of $icode y$$).
 
 $head f$$
-The object $italic f$$ has prototype
-$syntax%
+The object $icode f$$ has prototype
+$codei%
 	ADFun<%Base%> %f%
 %$$
-The AD of $italic Base$$ operation sequence is stored in $italic f$$; i.e.,
-it becomes the operation sequence corresponding to $italic f$$.
-If a previous operation sequence was stored in $italic f$$,
+The AD of $icode Base$$ operation sequence is stored in $icode f$$; i.e.,
+it becomes the operation sequence corresponding to $icode f$$.
+If a previous operation sequence was stored in $icode f$$,
 it is deleted. 
 
 $head x$$
-The argument $italic x$$ 
+The argument $icode x$$ 
 must be the vector argument in a previous call to
-$cref/Independent/$$.
+$cref Independent$$.
 Neither its size, or any of its values, are allowed to change
 between calling
-$syntax%
+$codei%
 	Independent(%x%)
 %$$
 and 
-$syntax%
+$codei%
 	%f%.Dependent(%x%, %y%)
 %$$.
 
 $head y$$
-The vector $italic y$$ has prototype
-$syntax%
+The vector $icode y$$ has prototype
+$codei%
 	const %ADvector% &%y%
 %$$
-(see $xref/FunConstruct//ADvector/$$ below).
-The length of $italic y$$ must be greater than zero
-and is the dimension of the range space for $italic f$$.
+(see $cref/ADvector/FunConstruct/$$ below).
+The length of $icode y$$ must be greater than zero
+and is the dimension of the range space for $icode f$$.
 
 $head ADvector$$
-The type $italic ADvector$$ must be a $xref/SimpleVector/$$ class with
-$xref/SimpleVector/Elements of Specified Type/elements of type/$$
-$syntax%AD<%Base%>%$$.
-The routine $xref/CheckSimpleVector/$$ will generate an error message
+The type $icode ADvector$$ must be a $cref SimpleVector$$ class with
+$cref/elements of type/SimpleVector/Elements of Specified Type/$$
+$codei%AD<%Base%>%$$.
+The routine $cref CheckSimpleVector$$ will generate an error message
 if this is not the case.
 
 $head Taping$$
 The tape,
-that was created when $syntax%Independent(%x%)%$$ was called, 
+that was created when $codei%Independent(%x%)%$$ was called, 
 will stop recording.
 The AD operation sequence will be transferred from
-the tape to the object $italic f$$ and the tape will then be deleted.
+the tape to the object $icode f$$ and the tape will then be deleted.
 
 $head Forward$$
-No $xref/Forward/$$ calculation is preformed during this operation.
+No $cref Forward$$ calculation is preformed during this operation.
 Thus, directly after this operation,
-$syntax%
+$codei%
 	%f%.size_taylor()
 %$$ 
-is zero (see $xref/size_taylor/$$).
+is zero (see $cref size_taylor$$).
 
 $head Parallel Mode$$
 $index parallel, Dependent$$
@@ -130,7 +130,7 @@ $cref/thread_alloc::thread_num/ta_thread_num/$$ must be the same.
 
 $head Example$$
 The file
-$xref/FunCheck.cpp/$$ 
+$cref FunCheck.cpp$$ 
 contains an example and test of this operation.
 It returns true if it succeeds and false otherwise.
 

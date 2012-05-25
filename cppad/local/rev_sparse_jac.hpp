@@ -39,7 +39,7 @@ $icode%r% = %F%.RevSparseJac(%p%, %s%)%$$
 
 $head Purpose$$
 We use $latex F : \R^n \rightarrow R^m$$ to denote the
-$xref/glossary/AD Function/AD function/$$ corresponding to $icode f$$.
+$cref/AD function/glossary/AD Function/$$ corresponding to $icode f$$.
 For a fixed $latex p \times m$$ matrix $latex S$$,
 the Jacobian of $latex S * F( x )$$
 with respect to $latex x$$ is
@@ -47,7 +47,7 @@ $latex \[
 	J(x) = S * F^{(1)} ( x )
 \] $$
 Given a
-$xref/glossary/Sparsity Pattern/sparsity pattern/$$ 
+$cref/sparsity pattern/glossary/Sparsity Pattern/$$ 
 for $latex S$$,
 $code RevSparseJac$$ returns a sparsity pattern for the $latex J(x)$$.
 
@@ -60,7 +60,7 @@ $codei%
 $head x$$
 the sparsity pattern is valid for all values of the independent 
 variables in $latex x \in \R^n$$
-(even if it has $cref/CondExp/$$ or $cref/VecAD/$$ operations).
+(even if it has $cref CondExp$$ or $cref VecAD$$ operations).
 
 $head p$$
 The argument $icode p$$ has prototype
@@ -76,14 +76,14 @@ The argument $icode s$$ has prototype
 $codei%
 	const %VectorSet%& %s%
 %$$
-(see $xref/RevSparseJac/VectorSet/VectorSet/$$ below).
+(see $cref/VectorSet/RevSparseJac/VectorSet/$$ below).
 If it has elements of type $code bool$$,
 its size is $latex p * m$$.
 If it has elements of type $code std::set<size_t>$$,
 its size is $icode p$$ and all its set elements are between
 zero and $latex m - 1$$.
 It specifies a 
-$xref/glossary/Sparsity Pattern/sparsity pattern/$$ 
+$cref/sparsity pattern/glossary/Sparsity Pattern/$$ 
 for the matrix $icode S$$.
 
 $head r$$
@@ -91,18 +91,18 @@ The return value $icode r$$ has prototype
 $codei%
 	%VectorSet% %r%
 %$$
-(see $xref/RevSparseJac/VectorSet/VectorSet/$$ below).
+(see $cref/VectorSet/RevSparseJac/VectorSet/$$ below).
 If it has elements of type $code bool$$,
 its size is $latex p * n$$.
 If it has elements of type $code std::set<size_t>$$,
 its size is $icode p$$.
 It specifies a 
-$xref/glossary/Sparsity Pattern/sparsity pattern/$$ 
+$cref/sparsity pattern/glossary/Sparsity Pattern/$$ 
 for the matrix $latex J(x)$$.
 
 $head VectorSet$$
-The type $icode VectorSet$$ must be a $xref/SimpleVector/$$ class with
-$xref/SimpleVector/Elements of Specified Type/elements of type/$$
+The type $icode VectorSet$$ must be a $cref SimpleVector$$ class with
+$cref/elements of type/SimpleVector/Elements of Specified Type/$$
 $code bool$$ or $code std::set<size_t>$$;
 see $cref/sparsity pattern/glossary/Sparsity Pattern/$$ for a discussion
 of the difference.
@@ -119,7 +119,7 @@ $children%
 	example/rev_sparse_jac.cpp
 %$$
 The file
-$xref/RevSparseJac.cpp/$$
+$cref RevSparseJac.cpp$$
 contains an example and test of this operation.
 It returns true if it succeeds and false otherwise.
 

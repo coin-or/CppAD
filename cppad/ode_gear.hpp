@@ -34,14 +34,14 @@ $index equation, differential$$
 $section An Arbitrary Order Gear Method$$
 
 $head Syntax$$
-$syntax%# include <cppad/ode_gear.hpp>
+$codei%# include <cppad/ode_gear.hpp>
 %$$
-$syntax%OdeGear(%F%, %m%, %n%, %T%, %X%, %e%)%$$
+$codei%OdeGear(%F%, %m%, %n%, %T%, %X%, %e%)%$$
 
 
 $head Purpose$$
 This routine applies
-$xref/OdeGear/Gear's Method/Gear's Method/$$
+$cref/Gear's Method/OdeGear/Gear's Method/$$
 to solve an explicit set of ordinary differential equations.
 We are given 
 $latex f : \R \times \R^n \rightarrow \R^n$$ be a smooth function.
@@ -54,7 +54,7 @@ $latex \[
 \] $$
 for the value of $latex x( t_m )$$.
 If your set of  ordinary differential equations are not stiff
-an explicit method may be better (perhaps $xref/Runge45/$$.)
+an explicit method may be better (perhaps $cref Runge45$$.)
 
 $head Include$$
 The file $code cppad/ode_gear.hpp$$ is included by $code cppad/cppad.hpp$$
@@ -62,64 +62,64 @@ but it can also be included separately with out the rest of
 the $code CppAD$$ routines.
 
 $head Fun$$
-The class $italic Fun$$ 
-and the object $italic F$$ satisfy the prototype
-$syntax%
+The class $icode Fun$$ 
+and the object $icode F$$ satisfy the prototype
+$codei%
 	%Fun% &%F%
 %$$
 This must support the following set of calls
-$syntax%
+$codei%
 	%F%.Ode(%t%, %x%, %f%)
 	%F%.Ode_dep(%t%, %x%, %f_x%)
 %$$
 
 $subhead t$$
-The argument $italic t$$ has prototype
-$syntax%
+The argument $icode t$$ has prototype
+$codei%
 	const %Scalar% &%t%
 %$$
-(see description of $xref/OdeGear/Scalar/Scalar/$$ below). 
+(see description of $cref/Scalar/OdeGear/Scalar/$$ below). 
 
 $subhead x$$
-The argument $italic x$$ has prototype
-$syntax%
+The argument $icode x$$ has prototype
+$codei%
 	const %Vector% &%x%
 %$$
-and has size $italic n$$
-(see description of $xref/OdeGear/Vector/Vector/$$ below). 
+and has size $icode n$$
+(see description of $cref/Vector/OdeGear/Vector/$$ below). 
 
 $subhead f$$
-The argument $italic f$$ to $syntax%%F%.Ode%$$ has prototype
-$syntax%
+The argument $icode f$$ to $icode%F%.Ode%$$ has prototype
+$codei%
 	%Vector% &%f%
 %$$
-On input and output, $italic f$$ is a vector of size $italic n$$
-and the input values of the elements of $italic f$$ do not matter.
+On input and output, $icode f$$ is a vector of size $icode n$$
+and the input values of the elements of $icode f$$ do not matter.
 On output,
-$italic f$$ is set equal to $latex f(t, x)$$
-(see $italic f(t, x)$$ in $xref/OdeGear/Purpose/Purpose/$$). 
+$icode f$$ is set equal to $latex f(t, x)$$
+(see $icode f(t, x)$$ in $cref/Purpose/OdeGear/Purpose/$$). 
 
 $subhead f_x$$
-The argument $italic f_x$$ has prototype
-$syntax%
+The argument $icode f_x$$ has prototype
+$codei%
 	%Vector% &%f_x%
 %$$
-On input and output, $italic f_x$$ is a vector of size $latex n * n$$
-and the input values of the elements of $italic f_x$$ do not matter.
+On input and output, $icode f_x$$ is a vector of size $latex n * n$$
+and the input values of the elements of $icode f_x$$ do not matter.
 On output, 
 $latex \[
 	f\_x [i * n + j] = \partial_{x(j)} f_i ( t , x )
 \] $$ 
 
 $subhead Warning$$
-The arguments $italic f$$, and $italic f_x$$
+The arguments $icode f$$, and $icode f_x$$
 must have a call by reference in their prototypes; i.e.,
 do not forget the $code &$$ in the prototype for 
-$italic f$$ and $italic f_x$$.
+$icode f$$ and $icode f_x$$.
 
 $head m$$
-The argument $italic m$$ has prototype
-$syntax%
+The argument $icode m$$ has prototype
+$codei%
 	size_t %m%
 %$$
 It specifies the order (highest power of $latex t$$) 
@@ -133,16 +133,16 @@ for $latex j = 0 , \ldots , m$$ (where $latex 0 \leq i < n$$).
 The value of $latex m$$ must be greater than or equal one.
 
 $head n$$
-The argument $italic n$$ has prototype
-$syntax%
+The argument $icode n$$ has prototype
+$codei%
 	size_t %n%
 %$$
 It specifies the range space dimension of the 
 vector valued function $latex x(t)$$.
 
 $head T$$
-The argument $italic T$$ has prototype
-$syntax%
+The argument $icode T$$ has prototype
+$codei%
 	const %Vector% &%T%
 %$$
 and size greater than or equal to $latex m+1$$.
@@ -157,8 +157,8 @@ Above and below we often use the shorthand $latex t_j$$ for $latex T[j]$$.
 
 
 $head X$$
-The argument $italic X$$ has the prototype
-$syntax%
+The argument $icode X$$ has the prototype
+$codei%
 	%Vector% &%X%
 %$$
 and size greater than or equal to $latex (m+1) * n$$.
@@ -175,7 +175,7 @@ $latex \[
 \] $$
 
 $head e$$
-The vector $italic e$$ is an approximate error bound for the result; i.e.,
+The vector $icode e$$ is an approximate error bound for the result; i.e.,
 $latex \[
 	e[i] \geq | X[ m * n + i ] - x_i ( t_m ) |
 \] $$
@@ -187,23 +187,23 @@ $latex \[
 where $latex h$$ is the maximum of $latex t_{j+1} - t_j$$.
 
 $head Scalar$$
-The type $italic Scalar$$ must satisfy the conditions
-for a $xref/NumericType/$$ type.
-The routine $xref/CheckNumericType/$$ will generate an error message
+The type $icode Scalar$$ must satisfy the conditions
+for a $cref NumericType$$ type.
+The routine $cref CheckNumericType$$ will generate an error message
 if this is not the case.
 In addition, the following operations must be defined for 
-$italic Scalar$$ objects $italic a$$ and $italic b$$:
+$icode Scalar$$ objects $icode a$$ and $icode b$$:
 
 $table
 $bold Operation$$ $cnext $bold Description$$  $rnext
-$syntax%%a% < %b%$$ $cnext
+$icode%a% < %b%$$ $cnext
 	less than operator (returns a $code bool$$ object)
 $tend
 
 $head Vector$$
-The type $italic Vector$$ must be a $xref/SimpleVector/$$ class with
-$xref/SimpleVector/Elements of Specified Type/elements of type Scalar/$$.
-The routine $xref/CheckSimpleVector/$$ will generate an error message
+The type $icode Vector$$ must be a $cref SimpleVector$$ class with
+$cref/elements of type Scalar/SimpleVector/Elements of Specified Type/$$.
+The routine $cref CheckSimpleVector$$ will generate an error message
 if this is not the case.
 
 $head Example$$
@@ -211,7 +211,7 @@ $children%
 	example/ode_gear.cpp
 %$$
 The file
-$xref/OdeGear.cpp/$$
+$cref OdeGear.cpp$$
 contains an example and test a test of using this routine.
 It returns true if it succeeds and false otherwise.
 

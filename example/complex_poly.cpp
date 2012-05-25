@@ -24,10 +24,10 @@ $index example, complex polynomial$$
 $index test, complex polynomial$$
 
 $head See Also$$
-$cref/not_complex_ad.cpp/$$
+$cref not_complex_ad.cpp$$
 
 $head Poly$$
-Select this link to view specifications for $xref/Poly/$$:
+Select this link to view specifications for $cref Poly$$:
 
 $code
 $verbatim%example/complex_poly.cpp%0%// BEGIN PROGRAM%// END PROGRAM%1%$$

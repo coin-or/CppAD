@@ -29,7 +29,7 @@ $index test, ODE$$
 
 $head Purpose$$
 This is a realistic example using 
-two levels of taping (see $cref/mul_level/$$).
+two levels of taping (see $cref mul_level$$).
 The first level of taping uses $code AD<double>$$ to tape the solution of an 
 ordinary differential equation.
 This solution is then differentiated with respect to a parameter vector.
@@ -37,7 +37,7 @@ The second level of taping uses $code AD< AD<double> >$$
 to take derivatives during the solution of the differential equation.
 These derivatives are used in the application
 of Taylor's method to the solution of the ODE.
-The example $cref/ode_taylor_adolc.cpp/$$ computes the same values using
+The example $cref ode_taylor_adolc.cpp$$ computes the same values using
 Adolc's type $code adouble$$ and CppAD's type $code AD<adouble>$$.
 
 $head ODE$$

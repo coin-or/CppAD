@@ -32,9 +32,9 @@ $index correct, determinant check$$
 $index check, determinant correct$$
 
 $head Syntax$$
-$syntax%# include <cppad/speed/det_33.hpp>
+$codei%# include <cppad/speed/det_33.hpp>
 %$$
-$syntax%%ok% = det_33(%x%, %d%)%$$
+$icode%ok% = det_33(%x%, %d%)%$$
 
 $head Purpose$$
 This routine can be used to check a method for computing
@@ -50,8 +50,8 @@ so it is not automatically included by
 $cref/cppad.hpp/cppad/$$.
 
 $head x$$
-The argument $italic x$$ has prototype
-$syntax%
+The argument $icode x$$ has prototype
+$codei%
 	const %Vector% &%x%
 %$$.
 It contains the elements of the matrix $latex X$$ in row major order; i.e.,
@@ -60,30 +60,30 @@ $latex \[
 \] $$
 
 $head d$$
-The argument $italic d$$ has prototype
-$syntax%
+The argument $icode d$$ has prototype
+$codei%
 	const %Vector% &%d%
 %$$.
-It is tested to see if $syntax%%d%[0]%$$ it is equal to $latex \det ( X )$$.
+It is tested to see if $icode%d%[0]%$$ it is equal to $latex \det ( X )$$.
 
 $head Vector$$
-If $italic y$$ is a $italic Vector$$ object, 
+If $icode y$$ is a $icode Vector$$ object, 
 it must support the syntax
-$syntax%
+$codei%
 	%y%[%i%]
 %$$
-where $italic i$$ has type $code size_t$$ with value less than 9.
+where $icode i$$ has type $code size_t$$ with value less than 9.
 This must return a $code double$$ value corresponding to the $th i$$
-element of the vector $italic y$$.
-This is the only requirement of the type $italic Vector$$.
-(Note that only the first element of the vector $italic d$$ is used.)
+element of the vector $icode y$$.
+This is the only requirement of the type $icode Vector$$.
+(Note that only the first element of the vector $icode d$$ is used.)
 
 $head ok$$
-The return value $italic ok$$ has prototype
-$syntax%
+The return value $icode ok$$ has prototype
+$codei%
 	bool %ok%
 %$$
-It is true, if the determinant $syntax%%d%[0]%$$ 
+It is true, if the determinant $icode%d%[0]%$$ 
 passes the test and false otherwise.
 
 $children%
@@ -92,7 +92,7 @@ $children%
 
 $head Source Code$$
 The file 
-$cref/det_33.hpp/$$
+$cref det_33.hpp$$
 contains the source code for this template function.
 
 $end

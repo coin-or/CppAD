@@ -45,7 +45,7 @@ $latex \[
 \] $$ 
 in the definition for $latex G$$ and $latex H$$.
 The forward mode formulas for the
-$xref/AtanForward//arctangent/$$ 
+$cref/arctangent/AtanForward/$$ 
 function are
 $latex \[
 \begin{array}{rcl}

@@ -32,7 +32,7 @@ $icode%s% = elapsed_seconds()%$$
 
 $head Purpose$$
 This routine is accurate to within .02 seconds
-(see $cref/elapsed_seconds.cpp/$$).
+(see $cref elapsed_seconds.cpp$$).
 It does not necessary work for time intervals that are greater than a day.
 $list number$$
 If running under the Microsoft compiler, it uses 
@@ -50,13 +50,13 @@ number of seconds since the first call to $code elapsed_seconds$$.
 $head Microsoft Systems$$
 It you are using the Microsoft C++ compiler,
 you will need to link in the external routine 
-called $cref/microsoft_timer/$$.
+called $cref microsoft_timer$$.
 
 $children%
 	speed/example/elapsed_seconds.cpp
 %$$
 $head Example$$
-The routine $cref/elapsed_seconds.cpp/$$ is
+The routine $cref elapsed_seconds.cpp$$ is
 an example and test of this routine.
 
 

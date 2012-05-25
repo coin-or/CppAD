@@ -38,14 +38,14 @@ $codei%extern bool link_ode(
 $head Purpose$$
 Each $cref/package/speed_main/package/$$
 must define a version of this routine as specified below.
-This is used by the $cref/speed_main/$$ program
+This is used by the $cref speed_main$$ program
 to run the corresponding speed and correctness tests.
 
 
 $head f$$
 The function 
 $latex f : \R^n \rightarrow \R^n$$ that is defined and computed by
-evaluating $cref/ode_evaluate/$$ with a call of the form
+evaluating $cref ode_evaluate$$ with a call of the form
 $codei%
 	ode_evaluate(%x%, %m%, %fm%)
 %$$

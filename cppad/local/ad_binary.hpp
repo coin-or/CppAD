@@ -44,64 +44,64 @@ $index divide, binary operator$$
 
 
 $head Syntax$$
-$syntax%%z% = %x% %Op% %y%$$
+$icode%z% = %x% %Op% %y%$$
 
 $head Purpose$$
-Performs arithmetic operations where either $italic x$$ or $italic y$$
+Performs arithmetic operations where either $icode x$$ or $icode y$$
 has type 
-$syntax%AD<%Base%>%$$ or
+$codei%AD<%Base%>%$$ or
 $cref%VecAD<Base>::reference%VecAD%VecAD<Base>::reference%$$. 
 
 $head Op$$
-The operator $italic Op$$ is one of the following
+The operator $icode Op$$ is one of the following
 $table
 $bold Op$$  $cnext $bold Meaning$$ $rnext
-$code +$$   $cnext $italic z$$ is $italic x$$ plus $italic y$$ $rnext
-$code -$$   $cnext $italic z$$ is $italic x$$ minus $italic y$$ $rnext
-$code *$$   $cnext $italic z$$ is $italic x$$ times $italic y$$ $rnext
-$code /$$   $cnext $italic z$$ is $italic x$$ divided by $italic y$$ 
+$code +$$   $cnext $icode z$$ is $icode x$$ plus $icode y$$ $rnext
+$code -$$   $cnext $icode z$$ is $icode x$$ minus $icode y$$ $rnext
+$code *$$   $cnext $icode z$$ is $icode x$$ times $icode y$$ $rnext
+$code /$$   $cnext $icode z$$ is $icode x$$ divided by $icode y$$ 
 $tend
 
 $head Base$$
-The type $italic Base$$ is determined by the operand that
-has type $syntax%AD<%Base%>%$$ or $syntax%VecAD<%Base%>::reference%$$.
+The type $icode Base$$ is determined by the operand that
+has type $codei%AD<%Base%>%$$ or $codei%VecAD<%Base%>::reference%$$.
 
 $head x$$
-The operand $italic x$$ has the following prototype
-$syntax%
+The operand $icode x$$ has the following prototype
+$codei%
 	const %Type% &%x%
 %$$
-where $italic Type$$ is
-$syntax%VecAD<%Base%>::reference%$$,
-$syntax%AD<%Base%>%$$,
-$italic Base$$, or
+where $icode Type$$ is
+$codei%VecAD<%Base%>::reference%$$,
+$codei%AD<%Base%>%$$,
+$icode Base$$, or
 $code double$$.
 
 $head y$$
-The operand $italic y$$ has the following prototype
-$syntax%
+The operand $icode y$$ has the following prototype
+$codei%
 	const %Type% &%y%
 %$$
-where $italic Type$$ is
-$syntax%VecAD<%Base%>::reference%$$,
-$syntax%AD<%Base%>%$$,
-$italic Base$$, or
+where $icode Type$$ is
+$codei%VecAD<%Base%>::reference%$$,
+$codei%AD<%Base%>%$$,
+$icode Base$$, or
 $code double$$.
 
 
 $head z$$
-The result $italic z$$ has the following prototype
-$syntax%
+The result $icode z$$ has the following prototype
+$codei%
 	%Type% %z%
 %$$
-where $italic Type$$ is
-$syntax%AD<%Base%>%$$.
+where $icode Type$$ is
+$codei%AD<%Base%>%$$.
 
 $head Operation Sequence$$
 This is an $cref/atomic/glossary/Operation/Atomic/$$
 $cref/AD of Base/glossary/AD of Base/$$ operation
 and hence it is part of the current
-AD of $italic Base$$ 
+AD of $icode Base$$ 
 $cref/operation sequence/glossary/Operation/Sequence/$$.
 
 $children%
@@ -123,7 +123,7 @@ $tend
 
 $head Derivative$$
 If $latex f$$ and $latex g$$ are 
-$xref/glossary/Base Function/Base functions/$$
+$cref/Base functions/glossary/Base Function/$$
 
 $subhead Addition$$
 $latex \[

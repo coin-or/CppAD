@@ -41,8 +41,8 @@ $codei%CheckSimpleVector<%Scalar%, %Vector%>(%x%, %y%)%$$
 $head Purpose$$
 Preforms compile and run time checks that the type specified
 by $icode Vector$$ satisfies all the requirements for 
-a $xref/SimpleVector/$$ class with 
-$xref/SimpleVector/Elements of Specified Type/elements of type/$$ 
+a $cref SimpleVector$$ class with 
+$cref/elements of type/SimpleVector/Elements of Specified Type/$$ 
 $icode Scalar$$.
 If a requirement is not satisfied,
 a an error message makes it clear what condition is not satisfied.
@@ -93,7 +93,7 @@ $head Example$$
 $children%
 	example/check_simple_vector.cpp
 %$$
-The file $xref/CheckSimpleVector.cpp/$$
+The file $cref CheckSimpleVector.cpp$$
 contains an example and test of this function where $icode S$$
 is the same as $icode T$$.
 It returns true, if it succeeds an false otherwise.

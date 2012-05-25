@@ -276,7 +276,7 @@ in the sense of $code cppad_ipopt_nlp$$.
 
 $head Argument Vector$$
 The argument vector that we are optimizing with respect to
-( $latex x$$ in $cref/cppad_ipopt_nlp/$$ )
+( $latex x$$ in $cref cppad_ipopt_nlp$$ )
 has the following structure
 $latex \[
 x = ( y^0 , \cdots , y^{S(Nz)} , a )
@@ -292,7 +292,7 @@ $latex \[
 
 $head Objective Function$$
 The objective function
-( $latex fg_0 (x)$$ in $cref/cppad_ipopt_nlp/$$ )
+( $latex fg_0 (x)$$ in $cref cppad_ipopt_nlp$$ )
 has the following representation,
 $latex \[
 	fg_0 (x) = \sum_{i=1}^{Nz} H_i ( y^{S(i)} , a ) 
@@ -495,7 +495,7 @@ and $latex \ell = 0 , \ldots , N(k)-1$$,
 define $latex i = Ny * S(k-1) + \ell + 1$$.
 The components of the vector $latex x$$
 corresponding to the vector $latex u^{k,\ell}$$ are
-(and the function $latex fg (x) $$ in $cref/cppad_ipopt_nlp/$$ )
+(and the function $latex fg (x) $$ in $cref cppad_ipopt_nlp$$ )
 $latex \[
 \begin{array}{rcl}
 u^{k, \ell} & = & ( y^{i-1} , y^i , a )

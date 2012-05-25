@@ -30,29 +30,29 @@ $index value_, obtain during taping$$
 $section Convert an AD Variable to a Parameter$$
 
 $head Syntax$$
-$syntax%%y% = Var2Par(%x%)%$$
+$icode%y% = Var2Par(%x%)%$$
 
 
 $head Purpose$$
 Returns a 
-$cref/parameter/glossary/Parameter/$$ $italic y$$
+$cref/parameter/glossary/Parameter/$$ $icode y$$
 with the same value as the 
-$cref/variable/glossary/Variable/$$ $italic x$$.
+$cref/variable/glossary/Variable/$$ $icode x$$.
 
 $head x$$
-The argument $italic x$$ has prototype
-$syntax%
+The argument $icode x$$ has prototype
+$codei%
 	const AD<%Base%> &x
 %$$ 
-The argument $italic x$$ may be a variable or parameter.
+The argument $icode x$$ may be a variable or parameter.
 
 
 $head y$$
-The result $italic y$$ has prototype
-$syntax%
+The result $icode y$$ has prototype
+$codei%
 	AD<%Base%> &y
 %$$ 
-The return value $italic y$$ will be a parameter. 
+The return value $icode y$$ will be a parameter. 
 
 
 $head Example$$
@@ -60,7 +60,7 @@ $children%
 	example/var_2par.cpp
 %$$
 The file
-$xref/Var2Par.cpp/$$
+$cref Var2Par.cpp$$
 contains an example and test of this operation.
 It returns true if it succeeds and false otherwise.
 

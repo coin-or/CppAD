@@ -30,7 +30,7 @@ $index Adolc, ODE$$
 
 $head Purpose$$
 This is a realistic example using 
-two levels of taping (see $cref/mul_level/$$).
+two levels of taping (see $cref mul_level$$).
 The first level of taping uses Adolc's $code adouble$$ type
 to tape the solution of an ordinary differential equation.
 This solution is then differentiated with respect to a parameter vector.
@@ -38,7 +38,7 @@ The second level of taping uses CppAD's type $code AD<adouble>$$
 to take derivatives during the solution of the differential equation.
 These derivatives are used in the application
 of Taylor's method to the solution of the ODE.
-The example $cref/ode_taylor.cpp/$$ computes the same values using
+The example $cref ode_taylor.cpp$$ computes the same values using
 $code AD<double>$$ and $code AD< AD<double> >$$.
 
 $head ODE$$
@@ -145,14 +145,14 @@ are used to calculate the Taylor coefficient $latex z^{(k)} ( t , x )$$
 which in turn gives the value for $latex  y^{(k+1)} y ( t , x)$$.
 
 $head base_adolc.hpp$$
-The file $cref/base_adolc.hpp/$$ is implements the
-$cref/Base type requirements/base_require/$$ where $italic Base$$
+The file $cref base_adolc.hpp$$ is implements the
+$cref/Base type requirements/base_require/$$ where $icode Base$$
 is $code adolc$$.
 
 $head Memory Management$$
 Adolc uses raw memory arrays that depend on the number of 
 dependent and independent variables.
-The memory management utility $cref/omp_alloc/$$ 
+The memory management utility $cref omp_alloc$$ 
 is used to manage this memory allocation.
 
 $head Configuration Requirement$$
