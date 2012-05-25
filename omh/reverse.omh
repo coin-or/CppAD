@@ -164,9 +164,9 @@ W_0^{(1)} (u) & = &
 	w_0 * F_0^{(1)} ( u ) + \cdots + w_{m-1} * F_{m-1}^{(1)} (u)
 \\
 W_1^{(1)} (u) & = & 
-	w_0 * \left( x^{(1)} \right)^\T * F_0^{(2)} ( u ) 
+	w_0 * \left( x^{(1)} \right)^\R{T} * F_0^{(2)} ( u ) 
 	+ \cdots + 
-	w_{m-1} * \left( x^{(1)} \right)^\T F_{m-1}^{(2)} (u)
+	w_{m-1} * \left( x^{(1)} \right)^\R{T} F_{m-1}^{(2)} (u)
 \end{array}
 \] $$
 at $latex u = x^{(0)}$$.
@@ -373,7 +373,7 @@ w_i^{(k)} = \left\{ \begin{array}{ll}
 $subhead W(u)$$
 The function $latex W : B^{n \times p} \rightarrow B$$ is defined by
 $latex \[
-W(u) = \sum_{k=0}^{p-1} ( w^{(k)} )^\T \frac{1}{k !} \Dpow{k}{t} Y(0, u)
+W(u) = \sum_{k=0}^{p-1} ( w^{(k)} )^\R{T} \frac{1}{k !} \Dpow{k}{t} Y(0, u)
 \] $$
 
 
@@ -474,9 +474,9 @@ W(u) & = &
 	w_0 F_m^{(1)} ( u^{(0)} ) u^{(1)} 
 \\
 \partial_{u(0)} W(x) & = &
-	w_0 (  x^{(1)} )^\T F_0^{(2)} ( x^{(0)} ) 
+	w_0 (  x^{(1)} )^\R{T} F_0^{(2)} ( x^{(0)} ) 
 	+ \cdots + 
-	w_m (  x^{(1)} )^\T F_m^{(2)} ( x^{(0)} ) 
+	w_m (  x^{(1)} )^\R{T} F_m^{(2)} ( x^{(0)} ) 
 \\
 \partial_{u(1)} W(x) & = &
 	w_0 F_0^{(1)} ( x^{(0)} ) 

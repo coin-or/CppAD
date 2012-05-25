@@ -55,25 +55,25 @@ $latex \[
 y_0 (0 , a) = F(a) = \left( \begin{array}{c} a_0 \\ 0 \end{array} \right) 
 \] $$
 where $latex Na$$ is the number of parameters,
-$latex a \in \R^{Na} $$ is an unknown parameter vector.
-The function and $latex F : \R^{Na} \rightarrow \R^{Ny} $$ 
+$latex a \in \B{R}^{Na} $$ is an unknown parameter vector.
+The function and $latex F : \B{R}^{Na} \rightarrow \B{R}^{Ny} $$ 
 is defined by the equation above
 where $latex Ny$$ is the number of components in $latex y(t, a)$$.
-Our forward problem is stated as follows: Given $latex a \in \R^{Na}$$
+Our forward problem is stated as follows: Given $latex a \in \B{R}^{Na}$$
 determine the value of $latex y ( t , a ) $$, for $latex t \in R$$, that 
 solves the initial value problem above. 
 
 $head Measurements$$
 We use $latex Nz$$ to denote the number of measurements.
-Suppose we are also given a measurement vector $latex z \in \R^{Nz}$$
+Suppose we are also given a measurement vector $latex z \in \B{R}^{Nz}$$
 and for $latex i = 1, \ldots, Nz$$, 
 we model $latex z_i$$ by
 $latex \[
 	z_i = y_1 ( s_i , a) + e_i
 \] $$
-where $latex s_i \in \R$$ is the time for the $th i$$ measurement,
+where $latex s_i \in \B{R}$$ is the time for the $th i$$ measurement,
 $latex e_i \sim {\bf N} (0 , \sigma^2 ) $$ is the corresponding noise,
-and $latex \sigma \in \R_+$$ is the corresponding standard deviation.
+and $latex \sigma \in \B{R}_+$$ is the corresponding standard deviation.
 
 $subhead Simulation Analytic Solution$$
 The following analytic solution to the forward problem is used
@@ -132,11 +132,11 @@ $latex \[
 \begin{array}{rcl}
 {\rm minimize} \; 
 	& \sum_{i=1}^{Nz} H_i [ y( s_i , a ) , a ] 
-	& \;{\rm w.r.t} \; a \in \R^{Na}
+	& \;{\rm w.r.t} \; a \in \B{R}^{Na}
 \end{array}
 \] $$
 where the functions
-$latex H_i : \R^{Ny} \times \R^{Na} \rightarrow \R$$ is
+$latex H_i : \B{R}^{Ny} \times \B{R}^{Na} \rightarrow \B{R}$$ is
 defined by
 $latex \[
 	H_i (y, a) = ( z_i - y_1 )^2 
@@ -156,7 +156,7 @@ $latex \[
 y^i  =  y^{i-1} + 
 \left[ G( y^i , a ) + G( y^{i-1} , a ) \right] * \frac{t_i - t_{i-1} }{ 2 }
 \] $$
-where $latex G : \R^{Ny} \times \R^{Na} \rightarrow \R^{Ny}$$ is the
+where $latex G : \B{R}^{Ny} \times \B{R}^{Na} \rightarrow \B{R}^{Ny}$$ is the
 function representing this ODE; i.e.
 $latex \[
 	G(y, a) = \left(  \begin{array}{c}
@@ -228,8 +228,8 @@ $latex \[
 \begin{array}{rcl}
 {\rm minimize} 
 & \sum_{i=1}^{Nz} H_i ( y^{N(i)} , a )
-& \; {\rm w.r.t} \; y^1 \in \R^{Ny} , \ldots , y^{S(Nz)} \in \R^{Ny} ,
-  \; a \in \R^{Na} 
+& \; {\rm w.r.t} \; y^1 \in \B{R}^{Ny} , \ldots , y^{S(Nz)} \in \B{R}^{Ny} ,
+  \; a \in \B{R}^{Na} 
 \\
 {\rm subject \; to}
 	& y^j  =  y^{j-1} + 
@@ -281,7 +281,7 @@ has the following structure
 $latex \[
 x = ( y^0 , \cdots , y^{S(Nz)} , a )
 \] $$  
-Note that $latex x \in \R^{S(Nz) + Na}$$ and
+Note that $latex x \in \B{R}^{S(Nz) + Na}$$ and
 $latex \[
 \begin{array}{rcl}
 	y^i & = & ( x_{Ny * i} , \ldots ,  x_{Ny * i + Ny - 1} )
@@ -349,7 +349,7 @@ $head Objective Function$$
 We use the following representation for the
 $cref/objective function/ipopt_ode_simple/Objective Function/$$:
 For $latex k = 0 , \ldots , Nz - 1$$,
-we define the function $latex r^k : \R^{Ny+Na} \rightarrow \R$$
+we define the function $latex r^k : \B{R}^{Ny+Na} \rightarrow \B{R}$$
 by
 $latex \[
 \begin{array}{rcl}
@@ -359,7 +359,7 @@ fg_0 (x) & = & \sum_{k=0}^{Nz-1} r^k ( u^{k,0} )
 \end{array}
 \] $$
 where for $latex k = 0 , \ldots , Nz-1$$,
-$latex u^{k,0} \in \R^{Ny + Na}$$ is defined by
+$latex u^{k,0} \in \B{R}^{Ny + Na}$$ is defined by
 $latex u^{k,0} =   ( y^{S(k+1)} , a )$$
 
 $subhead Range Indices I(k,0)$$
@@ -404,7 +404,7 @@ We use the following representation for the
 $cref/initial condition constraint/
 	ipopt_ode_simple/Initial Condition Constraint/$$:
 For $latex k = Nz$$ we define the function 
-$latex r^k : \R^{Ny} \times \R^{Na + Ny}$$ by
+$latex r^k : \B{R}^{Ny} \times \B{R}^{Na + Ny}$$ by
 $latex \[
 \begin{array}{rcl}
 	0 & = & fg_i ( x ) = y_i^0 - F_i (a)
@@ -413,7 +413,7 @@ $latex \[
 \end{array}
 \] $$
 where $latex i = 1 , \ldots , Ny$$ and
-where $latex u^{k,0} \in \R^{Ny + Na}$$ is defined by
+where $latex u^{k,0} \in \B{R}^{Ny + Na}$$ is defined by
 $latex u^{k,0}  = ( y^0 , a)$$. 
 
 $subhead Range Indices I(k,0)$$
@@ -457,7 +457,7 @@ We use the following representation for the
 $cref/trapezoidal approximation constraint/
 	ipopt_ode_simple/Trapezoidal Approximation Constraint/$$:
 For $latex k = 1 , \ldots , Nz$$,
-we define the function $latex r^{Nz+k} : \R^{2*Ny+Na} \rightarrow \R^{Ny}$$ by
+we define the function $latex r^{Nz+k} : \B{R}^{2*Ny+Na} \rightarrow \B{R}^{Ny}$$ by
 $latex \[
 r^{Nz+k} ( y , w , a ) 
 = 
@@ -478,7 +478,7 @@ y^i  -  y^{i-1} -
 r^{Nz+k} ( u^{Nz+k , \ell} )
 \end{array}
 \] $$
-where $latex u^{Nz+k,\ell} \in \R^{2*Ny + Na}$$ is defined by
+where $latex u^{Nz+k,\ell} \in \B{R}^{2*Ny + Na}$$ is defined by
 $latex u^{Nz+k,\ell}  = ( y^{i-1} , y^i , a)$$. 
 
 $subhead Range Indices I(k,0)$$

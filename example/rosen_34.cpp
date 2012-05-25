@@ -23,7 +23,7 @@ $index example, Rosen34$$
 $index test, Rosen34$$
 
 Define 
-$latex X : \R \rightarrow \R^n$$ by
+$latex X : \B{R} \rightarrow \B{R}^n$$ by
 $latex \[
 	X_i (t) =  t^{i+1}
 \] $$ 

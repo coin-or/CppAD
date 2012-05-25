@@ -23,13 +23,13 @@ $index example, BenderQuad$$
 $index test, BenderQuad$$
 
 Define 
-$latex F : \R \times \R \rightarrow \R$$ by
+$latex F : \B{R} \times \B{R} \rightarrow \B{R}$$ by
 $latex \[
 F(x, y) 
 = 
 \frac{1}{2} \sum_{i=1}^N [ y * \sin ( x * t_i ) - z_i ]^2
 \] $$ 
-where $latex z \in \R^N$$ is a fixed vector.
+where $latex z \in \B{R}^N$$ is a fixed vector.
 It follows that
 $latex \[
 \begin{array}{rcl}

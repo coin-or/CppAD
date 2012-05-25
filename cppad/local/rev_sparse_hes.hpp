@@ -41,15 +41,15 @@ $icode%h% = %f%.RevSparseHes(%q%, %s%)%$$
 
 
 $head Purpose$$
-We use $latex F : \R^n \rightarrow \R^m$$ to denote the
+We use $latex F : \B{R}^n \rightarrow \B{R}^m$$ to denote the
 $cref/AD function/glossary/AD Function/$$ corresponding to $icode f$$.
-We define the matrix $latex H(x) \in \R^{q \times n}$$
+We define the matrix $latex H(x) \in \B{R}^{q \times n}$$
 as the partial with respect to $latex x$$,
 of the partial with respect to $latex u$$ (at $latex u = 0$$),
 of $latex S * F[ x + R * u ]$$ where
-$latex R \in \R^{n \times q}$$ and $latex S \in \R^{1 \times m}$$; i.e.,
+$latex R \in \B{R}^{n \times q}$$ and $latex S \in \B{R}^{1 \times m}$$; i.e.,
 $latex \[
-	H(x)  =  R^\T (S * F)^{(2)} ( x )
+	H(x)  =  R^\R{T} (S * F)^{(2)} ( x )
 \] $$
 Given a
 $cref/sparsity pattern/glossary/Sparsity Pattern/$$ 
@@ -64,7 +64,7 @@ $codei%
 
 $head x$$
 the sparsity pattern is valid for all values of the independent
-variables in $latex x \in \R^n$$
+variables in $latex x \in \B{R}^n$$
 (even if it has $cref CondExp$$ or $cref VecAD$$ operations).
 
 $head q$$
@@ -72,9 +72,9 @@ The argument $icode q$$ has prototype
 $codei%
 	size_t %q%
 %$$
-It specifies the number of columns in $latex R \in \R^{n \times q}$$
+It specifies the number of columns in $latex R \in \B{R}^{n \times q}$$
 and the number of rows in 
-$latex H(x) \in \R^{q \times n}$$.
+$latex H(x) \in \B{R}^{q \times n}$$.
 It must be the same value as in the previous $cref ForSparseJac$$ call 
 $codei%
 	%f%.ForSparseJac(%q%, %r%)
@@ -132,7 +132,7 @@ same as the type of the elements of $icode r$$.
 
 $head Entire Sparsity Pattern$$
 Suppose that $latex q = n$$ and
-$latex R \in \R^{n \times n}$$ is the $latex n \times n$$ identity matrix.
+$latex R \in \B{R}^{n \times n}$$ is the $latex n \times n$$ identity matrix.
 Further suppose that the $latex S$$ is the $th k$$
 $cref/elementary vector/glossary/Elementary Vector/$$; i.e.
 $latex \[
@@ -145,7 +145,7 @@ S_j = \left\{ \begin{array}{ll}
 In this case,
 the corresponding value $icode h$$ is a 
 sparsity pattern for the Hessian matrix
-$latex F_k^{(2)} (x) \in \R^{n \times n}$$.
+$latex F_k^{(2)} (x) \in \B{R}^{n \times n}$$.
 
 $head Example$$
 $children%

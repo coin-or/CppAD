@@ -112,7 +112,7 @@ bool OdeErrControl_one(void)
 /*
 Old example now just a test
 Define 
-$latex X : \R \rightarrow \R^2$$ by
+$latex X : \B{R} \rightarrow \B{R}^2$$ by
 $latex \[
 \begin{array}{rcl}
 X_0 (t) & = &  - \exp ( - w_0 t )  \\
@@ -215,7 +215,7 @@ bool OdeErrControl_two(void)
 }
 /*
 Define 
-$latex X : \R \rightarrow \R^2$$ by
+$latex X : \B{R} \rightarrow \B{R}^2$$ by
 $latex \[
 \begin{array}{rcl}
 	X_0 (0)       & = & 1  \\

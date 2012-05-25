@@ -26,7 +26,7 @@ $index AD, multiple level$$
 
 $head Purpose$$
 In this example, we use $code AD< AD<double> >$$ (level two taping),
-the compute values of the function $latex f : \R^n \rightarrow \R$$ where 
+the compute values of the function $latex f : \B{R}^n \rightarrow \B{R}$$ where 
 $latex \[
 	f(x) = \frac{1}{2} \left( x_0^2 + \cdots + x_{n-1}^2 \right)
 \] $$
@@ -35,7 +35,7 @@ the directional derivative
 $latex \[
 f^{(1)} (x) * v  = x_0 v_0 + \cdots + x_{n-1} v_{n-1}
 \] $$.
-where $latex v \in \R^n$$.
+where $latex v \in \B{R}^n$$.
 We then use $code double$$ (no taping) to compute
 $latex \[
 \frac{d}{dx} \left[ f^{(1)} (x) * v \right] = v

@@ -42,7 +42,7 @@ Adolc's type $code adouble$$ and CppAD's type $code AD<adouble>$$.
 
 $head ODE$$
 For this example the ODE's are defined by the function
-$latex h : \R^n \times \R^n \rightarrow \R^n$$ where
+$latex h : \B{R}^n \times \B{R}^n \rightarrow \B{R}^n$$ where
 $latex \[
 	h[ x, y(t, x) ] = 
 	\left( \begin{array}{c}
@@ -61,7 +61,7 @@ $latex \[
 \] $$
 and the initial condition $latex y(0, x) = 0$$.
 The value of $latex x$$ is fixed during the solution of the ODE
-and the function $latex g : \R^n \rightarrow \R^n$$ is used to
+and the function $latex g : \B{R}^n \rightarrow \B{R}^n$$ is used to
 define the ODE where
 $latex \[
 	g(y) = 

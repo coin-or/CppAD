@@ -23,7 +23,7 @@ $index example, OdeGear$$
 $index test, OdeGear$$
 
 Define 
-$latex x : \R \rightarrow \R^n$$ by
+$latex x : \B{R} \rightarrow \B{R}^n$$ by
 $latex \[
 	x_i (t) =  t^{i+1}
 \] $$ 

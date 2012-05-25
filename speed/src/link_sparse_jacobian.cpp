@@ -38,7 +38,7 @@ $codei%extern bool link_sparse_jacobian(
 $head f$$
 Given a first index vector $latex i$$ and a second index vector $latex j$$,
 the corresponding function 
-$latex g : \R^n \rightarrow \R^\ell $$ is defined by $cref sparse_evaluate$$
+$latex g : \B{R}^n \rightarrow \B{R}^\ell $$ is defined by $cref sparse_evaluate$$
 and the index vectors $icode i$$ and $icode j$$.
 The function $latex g(x)$$ is defined by
 $latex \[

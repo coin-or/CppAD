@@ -57,9 +57,9 @@ $icode%xf% = OdeErrControl(%method%, %ti%, %tf%, %xi%,
 
 
 $head Description$$
-Let $latex \R$$ denote the real numbers
-and let $latex F : \R \times \R^n \rightarrow \R^n$$ be a smooth function.
-We define $latex X : [ti , tf] \rightarrow \R^n$$ by 
+Let $latex \B{R}$$ denote the real numbers
+and let $latex F : \B{R} \times \B{R}^n \rightarrow \B{R}^n$$ be a smooth function.
+We define $latex X : [ti , tf] \rightarrow \B{R}^n$$ by 
 the following initial value problem:
 $latex \[
 \begin{array}{rcl}

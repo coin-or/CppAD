@@ -40,7 +40,7 @@ Demonstrate the use of CppAD by computing the derivative
 of a simple example function.
 
 $head Function$$
-The example function $latex f : \R \rightarrow \R$$ is defined by 
+The example function $latex f : \B{R} \rightarrow \B{R}$$ is defined by 
 $latex \[
       f(x) = a_0 + a_1 * x^1 + \cdots + a_{k-1} * x^{k-1}
 \] $$

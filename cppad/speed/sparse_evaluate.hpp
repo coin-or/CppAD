@@ -40,7 +40,7 @@ $head Purpose$$
 This routine evaluates
 $latex f(x)$$, $latex f^{(1)} (x)$$, or $latex f^{(2)} (x)$$
 where the Hessian $latex f^{(2)} (x)$$ is sparse.
-The function $latex f : \R^n \rightarrow \R$$ depends on the 
+The function $latex f : \B{R}^n \rightarrow \B{R}$$ depends on the 
 index vectors $icode i$$ and $icode j$$. 
 The non-zero entries in the Hessian of this function have 
 one of the following forms:

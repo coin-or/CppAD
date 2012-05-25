@@ -48,9 +48,9 @@ Bradley M. Bell and James V. Burke, Advances in Automatic Differentiation,
 
 $head Purpose$$
 We are given a function 
-$latex S : \R^n \times \R^m \rightarrow \R^\ell$$
-and we define $latex F : \R^n \times \R^m \rightarrow \R$$
-and $latex V : \R^n \rightarrow \R $$ by
+$latex S : \B{R}^n \times \B{R}^m \rightarrow \B{R}^\ell$$
+and we define $latex F : \B{R}^n \times \B{R}^m \rightarrow \B{R}$$
+and $latex V : \B{R}^n \rightarrow \B{R} $$ by
 $latex \[
 \begin{array}{rcl}
 	F(x, y) & = & \sum_{k=0}^{\ell-1} S_k ( x , y) 

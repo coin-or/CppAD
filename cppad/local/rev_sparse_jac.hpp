@@ -38,7 +38,7 @@ $head Syntax$$
 $icode%r% = %F%.RevSparseJac(%p%, %s%)%$$
 
 $head Purpose$$
-We use $latex F : \R^n \rightarrow R^m$$ to denote the
+We use $latex F : \B{R}^n \rightarrow R^m$$ to denote the
 $cref/AD function/glossary/AD Function/$$ corresponding to $icode f$$.
 For a fixed $latex p \times m$$ matrix $latex S$$,
 the Jacobian of $latex S * F( x )$$
@@ -59,7 +59,7 @@ $codei%
 
 $head x$$
 the sparsity pattern is valid for all values of the independent 
-variables in $latex x \in \R^n$$
+variables in $latex x \in \B{R}^n$$
 (even if it has $cref CondExp$$ or $cref VecAD$$ operations).
 
 $head p$$
@@ -68,8 +68,8 @@ $codei%
 	size_t %p%
 %$$
 It specifies the number of rows in
-$latex S \in \R^{p \times m}$$ and the 
-Jacobian $latex J(x) \in \R^{p \times n}$$. 
+$latex S \in \B{R}^{p \times m}$$ and the 
+Jacobian $latex J(x) \in \B{R}^{p \times n}$$. 
 
 $head s$$
 The argument $icode s$$ has prototype

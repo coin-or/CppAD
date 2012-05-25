@@ -27,14 +27,14 @@ $index change, constant$$
 $head Purpose$$
 In this example we use two levels of taping so that a derivative
 can have constant parameters that can be changed. To be specific,
-we consider the function $latex f : \R^2 \rightarrow \R^2$$
+we consider the function $latex f : \B{R}^2 \rightarrow \B{R}^2$$
 $latex \[
 f(x) = p \left( \begin{array}{c} 
 	\sin( x_0 ) \\
 	\sin( x_1 ) 
 \end{array} \right)
 \]$$
-were $latex p \in \R$$ is a parameter.
+were $latex p \in \B{R}$$ is a parameter.
 The Jacobian of this function is
 $latex \[
 g(x,p) = p \left( \begin{array}{cc}

@@ -228,9 +228,8 @@ $childtable%
 $latex
 % --------------------------------------------------------------------
 % Latex macros defined here and used throughout the CppAD documentation
-\newcommand{\T}{ {\rm T} }
-\newcommand{\R}{ {\bf R} }
-\newcommand{\C}{ {\bf C} }
+\newcommand{\R}[1]{ {\rm #1} }
+\newcommand{\B}[1]{ {\bf #1} }
 \newcommand{\D}[2]{ \frac{\partial #1}{\partial #2} }
 \newcommand{\DD}[3]{ \frac{\partial^2 #1}{\partial #2 \partial #3} }
 \newcommand{\Dpow}[2]{ \frac{\partial^{#1}}{\partial  {#2}^{#1}} }

@@ -56,14 +56,14 @@ $head Purpose$$
 We are given the optimization problem
 $latex \[
 \begin{array}{rcl}
-	{\rm minimize} & F(x, y) & {\rm w.r.t.} \; (x, y) \in \R^n \times \R^m
+	{\rm minimize} & F(x, y) & {\rm w.r.t.} \; (x, y) \in \B{R}^n \times \B{R}^m
 \end{array}
 \] $$
 that is convex with respect to $latex y$$.
 In addition, we are given a set of equations $latex H(x, y)$$
 such that 
 $latex \[
-	H[ x , Y(x) ] = 0 \;\; \Rightarrow \;\; F_y [ x , Y(x) ] = 0
+	H[ x , Y(x) ] = 0 \;\; \B{R}ightarrow \;\; F_y [ x , Y(x) ] = 0
 \] $$
 (In fact, it is often the case that $latex H(x, y) = F_y (x, y)$$.)
 Furthermore, it is easy to calculate a Newton step for these equations; i.e.,
@@ -102,7 +102,7 @@ It must be equal to $latex Y(x)$$; i.e.,
 it must solve the problem in $latex y$$ for this given value of $latex x$$
 $latex \[
 \begin{array}{rcl}
-	{\rm minimize} & F(x, y) & {\rm w.r.t.} \; y \in \R^m
+	{\rm minimize} & F(x, y) & {\rm w.r.t.} \; y \in \B{R}^m
 \end{array}
 \] $$
 

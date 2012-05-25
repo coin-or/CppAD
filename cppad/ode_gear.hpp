@@ -44,7 +44,7 @@ This routine applies
 $cref/Gear's Method/OdeGear/Gear's Method/$$
 to solve an explicit set of ordinary differential equations.
 We are given 
-$latex f : \R \times \R^n \rightarrow \R^n$$ be a smooth function.
+$latex f : \B{R} \times \B{R}^n \rightarrow \B{R}^n$$ be a smooth function.
 This routine solves the following initial value problem
 $latex \[
 \begin{array}{rcl}
@@ -221,8 +221,8 @@ $code cppad/ode_gear.hpp$$.
 
 $head Theory$$
 For this discussion we use the shorthand $latex x_j$$ 
-for the value $latex x ( t_j ) \in \R^n$$ which is not to be confused
-with $latex x_i (t) \in \R$$ in the notation above.
+for the value $latex x ( t_j ) \in \B{R}^n$$ which is not to be confused
+with $latex x_i (t) \in \B{R}$$ in the notation above.
 The interpolating polynomial $latex p(t)$$ is given by
 $latex \[
 p(t) = 
@@ -287,7 +287,7 @@ x_j
 \prod_{k \neq \ell ,j} ( t_\ell - t_k ) / ( t_j - t_k )
 \end{array}
 \] $$
-We define the vector $latex \alpha \in \R^{m+1}$$ by
+We define the vector $latex \alpha \in \B{R}^{m+1}$$ by
 $latex \[
 \alpha_j = \left\{ \begin{array}{ll}
 \sum_{k \neq m} ( t_m - t_k )^{-1}
@@ -325,7 +325,7 @@ f( t_m , x_m^{k-1} ) - \partial_x f( t_m , x_m^{k-1} ) x_m^{k-1}
 \end{array}
 \] $$
 In order to initialize Newton's method; i.e. choose $latex x_m^0$$
-we define the vector $latex \beta \in \R^{m+1}$$ by
+we define the vector $latex \beta \in \B{R}^{m+1}$$ by
 $latex \[
 \beta_j = \left\{ \begin{array}{ll}
 \sum_{k \neq m-1} ( t_{m-1} - t_k )^{-1}

@@ -44,7 +44,7 @@ to run the corresponding speed and correctness tests.
 
 $head f$$
 The function 
-$latex f : \R^n \rightarrow \R^n$$ that is defined and computed by
+$latex f : \B{R}^n \rightarrow \B{R}^n$$ that is defined and computed by
 evaluating $cref ode_evaluate$$ with a call of the form
 $codei%
 	ode_evaluate(%x%, %m%, %fm%)

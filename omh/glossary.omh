@@ -175,7 +175,7 @@ is a sparsity pattern for $latex A$$ if
 for $latex i = 0, \ldots , m-1$$ and $latex j = 0 , \ldots n-1$$,
 $latex \[
 A_{i,j} \neq 0  
-\; \Rightarrow \; 
+\; \B{R}ightarrow \; 
 B_{i * n + j} = {\rm true}
 \] $$
 Given two sparsity patterns $latex B$$ and $icode C$$ 
@@ -195,7 +195,7 @@ sparsity pattern for $latex A$$ if
 for $latex i = 0, \ldots , m-1$$ 
 $latex \[
 A_{i,j} \neq 0  
-\; \Rightarrow \; j \in S_i 
+\; \B{R}ightarrow \; j \in S_i 
 \] $$
 Given two sparsity patterns $latex S$$ and $icode T$$ 
 for a matrix $icode A$$, we say that $icode S$$ is more efficient than

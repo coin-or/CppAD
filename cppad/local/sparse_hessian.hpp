@@ -39,7 +39,7 @@ $icode%hes% = %f%.SparseHessian(%x%, %w%)
 $head Purpose$$
 We use $latex n$$ for the $cref/domain/seq_property/Domain/$$ size,
 and $latex m$$ for the $cref/range/seq_property/Range/$$ size of $icode f$$.
-We use $latex F : \R^n \rightarrow \R^m$$ do denote the
+We use $latex F : \B{R}^n \rightarrow \B{R}^m$$ do denote the
 $cref/AD function/glossary/AD Function/$$
 corresponding to $icode f$$. 
 The syntax above sets $icode hes$$ to the Hessian 

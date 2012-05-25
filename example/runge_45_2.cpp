@@ -23,7 +23,7 @@ $index example, Runge45$$
 $index test, Runge45$$
 
 Define 
-$latex X : \R \times \R \rightarrow \R^n$$ by
+$latex X : \B{R} \times \B{R} \rightarrow \B{R}^n$$ by
 $latex \[
 	X_j (b, t) =  b \left( \sum_{k=0}^j t^k / k ! \right)
 \] $$ 
@@ -41,7 +41,7 @@ X_j  (b, 0)   & = & b                                                     \\
 \] $$
 For a fixed $latex t_f$$,
 we can use $cref Runge45$$ to define 
-$latex f : \R \rightarrow \R^n$$ as an approximation for
+$latex f : \B{R} \rightarrow \B{R}^n$$ as an approximation for
 $latex f(b) = X(b, t_f )$$.
 We can then compute $latex f^{(1)} (b)$$ which is an approximation for
 $latex \[

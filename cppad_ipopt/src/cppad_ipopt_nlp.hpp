@@ -96,7 +96,7 @@ $codei%
 see $cref/ipopt_dir/InstallUnix/ipopt_dir/$$.
 
 $head fg(x)$$
-The function $latex fg : \R^n \rightarrow \R^{m+1}$$ is defined by
+The function $latex fg : \B{R}^n \rightarrow \B{R}^{m+1}$$ is defined by
 $latex \[
 \begin{array}{rcl}
 	fg_0 (x)     & = & f(x)         \\
@@ -117,7 +117,7 @@ to denote the value of the maximum element in $latex I$$.
 $subhead Projection$$
 Given an index vector $latex J$$ and a positive integer $latex n$$
 where $latex n > \| J \|$$, we use $latex J \otimes n $$ for
-the mapping $latex ( J \otimes n ) : \R^n \rightarrow \R^{|J|}$$ defined by
+the mapping $latex ( J \otimes n ) : \B{R}^n \rightarrow \B{R}^{|J|}$$ defined by
 $latex \[
 	[ J \otimes n ] (x)_j = x_{J(j)}
 \] $$
@@ -126,7 +126,7 @@ for $latex j = 0 , \ldots |J| - 1$$.
 $subhead Injection$$
 Given an index vector $latex I$$ and a positive integer $latex m$$
 where $latex m > \| I \|$$, we use $latex m \otimes I$$ for
-the mapping $latex ( m \otimes I ): \R^{|I|} \rightarrow \R^m$$ defined by
+the mapping $latex ( m \otimes I ): \B{R}^{|I|} \rightarrow \B{R}^m$$ defined by
 $latex \[
 [ m \otimes I ] (y)_i = \left\{ \begin{array}{ll}
 y_k & {\rm if} \; i = I(k) \; {\rm for \; some} \; 
@@ -146,7 +146,7 @@ $pre
 
 $$
 We use the functions
-$latex r_k : \R^{q(k)} \rightarrow \R^{p(k)}$$ 
+$latex r_k : \B{R}^{q(k)} \rightarrow \B{R}^{p(k)}$$ 
 for $latex k = 0 , \ldots , K$$ to express our
 representation of $latex fg(x)$$ in terms of simpler functions
 as follows
@@ -202,7 +202,7 @@ $codei%
 	size_t %n%
 %$$
 It specifies the dimension of the argument space; 
-i.e., $latex x \in \R^n$$.
+i.e., $latex x \in \B{R}^n$$.
 
 $head m$$
 The argument $icode m$$ has prototype
@@ -210,7 +210,7 @@ $codei%
 	size_t %m%
 %$$
 It specifies the dimension of the range space for $latex g$$; 
-i.e., $latex g : \R^n \rightarrow \R^m$$.
+i.e., $latex g : \B{R}^n \rightarrow \B{R}^m$$.
 
 $head x_i$$
 The argument $icode x_i$$ has prototype

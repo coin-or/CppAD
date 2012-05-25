@@ -53,9 +53,9 @@ $icode%xf% = OdeGearControl(%F%, %M%, %ti%, %tf%, %xi%,
 
 
 $head Purpose$$
-Let $latex \R$$ denote the real numbers
-and let $latex f : \R \times \R^n \rightarrow \R^n$$ be a smooth function.
-We define $latex X : [ti , tf] \rightarrow \R^n$$ by 
+Let $latex \B{R}$$ denote the real numbers
+and let $latex f : \B{R} \times \B{R}^n \rightarrow \B{R}^n$$ be a smooth function.
+We define $latex X : [ti , tf] \rightarrow \B{R}^n$$ by 
 the following initial value problem:
 $latex \[
 \begin{array}{rcl}

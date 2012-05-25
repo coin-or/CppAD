@@ -22,9 +22,9 @@ $index opt_val_hes, example$$
 $index example, opt_val_hes$$
 $index test, opt_val_hes$$
 
-Fix $latex z \in \R^\ell$$ and define the functions
-$latex S_k : \R \times \R \rightarrow \R^\ell$$ by and
-$latex F : \R \times \R \rightarrow \R$$ by
+Fix $latex z \in \B{R}^\ell$$ and define the functions
+$latex S_k : \B{R} \times \B{R} \rightarrow \B{R}^\ell$$ by and
+$latex F : \B{R} \times \B{R} \rightarrow \B{R}$$ by
 $latex \[
 \begin{array}{rcl}
 S_k (x, y) & = & \frac{1}{2} [ y * \sin ( x * t_k ) - z_k ]^2

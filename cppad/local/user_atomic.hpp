@@ -527,7 +527,7 @@ and $icode%s%.size() >= %m%$$.
 For $latex i = 0 , \ldots , m-1$$, 
 all the elements of $icode%s%[%i%}%$$
 are between zero and $icode%q%-1%$$ inclusive.
-This specifies a sparsity pattern for the matrix $latex S^\T$$.
+This specifies a sparsity pattern for the matrix $latex S^\R{T}$$.
 
 $subhead r$$
 The $icode rev_jac_sparse$$ return value $icode r$$ has prototype
@@ -539,7 +539,7 @@ The input values of its sets do not matter.
 Upon return for $latex j = 0 , \ldots , n-1$$,
 all the elements of $icode%r%[%j%]%$$
 are between zero and $icode%q%-1%$$ inclusive.
-This represents a sparsity pattern for the matrix $latex R(x)^\T$$.
+This represents a sparsity pattern for the matrix $latex R(x)^\R{T}$$.
 
 $head rev_hes_sparse$$
 The macro argument $icode rev_hes_sparse$$

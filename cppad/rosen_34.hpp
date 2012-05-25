@@ -63,11 +63,11 @@ $pre
 
 $$
 We use $latex n$$ for the size of the vector $icode xi$$.
-Let $latex \R$$ denote the real numbers
-and let $latex F : \R \times \R^n \rightarrow \R^n$$ be a smooth function.
+Let $latex \B{R}$$ denote the real numbers
+and let $latex F : \B{R} \times \B{R}^n \rightarrow \B{R}^n$$ be a smooth function.
 The return value $icode xf$$ contains a 5th order
 approximation for the value $latex X(tf)$$ where 
-$latex X : [ti , tf] \rightarrow \R^n$$ is defined by 
+$latex X : [ti , tf] \rightarrow \B{R}^n$$ is defined by 
 the following initial value problem:
 $latex \[
 \begin{array}{rcl}

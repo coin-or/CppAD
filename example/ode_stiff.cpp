@@ -24,7 +24,7 @@ $index example, stiff ode$$
 $index test, stiff ode$$
 
 Define 
-$latex x : \R \rightarrow \R^2$$ by
+$latex x : \B{R} \rightarrow \B{R}^2$$ by
 $latex \[
 \begin{array}{rcl}
 	x_0 (0)        & = & 1 \\

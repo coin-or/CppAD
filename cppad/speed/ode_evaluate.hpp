@@ -38,7 +38,7 @@ $codei%# include <cppad/speed/ode_evaluate.hpp>
 $codei%ode_evaluate(%x%, %m%, %fm%)%$$
 
 $head Purpose$$
-This routine evaluates a function $latex f : \R^n \rightarrow \R^n$$
+This routine evaluates a function $latex f : \B{R}^n \rightarrow \B{R}^n$$
 defined by 
 $latex \[
 	f(x) = y(x, 1)
@@ -51,8 +51,8 @@ $latex \[
 	\partial_t y ( x , t ) & = & g[ x , y(x,t) , t ]
 \end{array}
 \] $$
-where $latex b : \R^n \rightarrow \R^n$$ and
-$latex g : \R^n \times \R^n \times \R \rightarrow \R^n$$
+where $latex b : \B{R}^n \rightarrow \B{R}^n$$ and
+$latex g : \B{R}^n \times \B{R}^n \times \B{R} \rightarrow \B{R}^n$$
 are not any further specified. 
 A numerical method is used to solve the ode and obtain an accurate
 approximation for $latex y(x, 1)$$.

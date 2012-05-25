@@ -75,8 +75,8 @@ $index expansion, zero order$$
 $index zero, order expansion$$
 $index order, zero expansion$$
 In general, a zero order forward sweep is given a vector
-$latex x^{(0)} \in \R^n$$ and it returns the corresponding vector
-$latex y^{(0)} \in \R^m$$ given by
+$latex x^{(0)} \in \B{R}^n$$ and it returns the corresponding vector
+$latex y^{(0)} \in \B{R}^m$$ given by
 $latex \[
 	y^{(0)} = f( x^{(0)} )
 \]$$

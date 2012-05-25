@@ -33,9 +33,9 @@ interface of the pieces.
 In actual applications, there may be many functions, but 
 for this example there are only two.
 The functions 
-$latex F : \R^2 \rightarrow \R^2$$ 
+$latex F : \B{R}^2 \rightarrow \B{R}^2$$ 
 and
-$latex G : \R^2 \rightarrow \R^2$$ 
+$latex G : \B{R}^2 \rightarrow \B{R}^2$$ 
 defined by
 $latex \[
 	F(x) = \left( \begin{array}{c} x_0 x_1   \\ x_1 - x_0 \end{array} \right) 
@@ -48,7 +48,7 @@ is sometimes returned to the system (see $cref checkpoint.cpp$$).
 
 $head Processing Steps$$
 We apply reverse mode to compute the derivative of
-$latex H : \R^2 \rightarrow \R$$
+$latex H : \B{R}^2 \rightarrow \B{R}$$
 is defined by
 $latex \[
 \begin{array}{rcl}
