@@ -12,35 +12,15 @@
 # -----------------------------------------------------------------------------
 # replacement text for this commit
 cat << EOF > bin/commit.user.$$
-Merge in changes from branches/sparse.
-1. Update version number to today.
-2. Add sparse return user API interfaces to SparseJacobian and SparseHessian. 
-3. Include new interface and imporve sparse Hessian and Jacobian examples.
-4. More testing of sparse Hessian and Jacobians.
-5. Add is_element to sparse_set and sparse_pack.
+This is a template file for making commits to the CppAD repository.
+Lines with no 'at' characters, are general comments not connected to 
+a specific file. Lines containing an 'at' character are "file name" 
+followed by comment. Lines before the first 'at' character are preserved
+during
+	bin/commit.sh edit 
+for example this entire paragraph is preserved.
 
-.@ merge information.
-AUTHORS@
-bin/search.sh@ search cppad/speed directory, drop makefile.in from results.
-bin/svn_merge.sh@ parameters for this merge.
-configure@
-configure.ac@
-cppad/configure.hpp@
-cppad/local/ad_fun.hpp@
-cppad/local/declare_ad.hpp@
-cppad/local/parallel_ad.hpp@ initilize is_element statics.
-cppad/local/sparse_hessian.hpp@
-cppad/local/sparse_jacobian.hpp@
-cppad/local/sparse_pack.hpp@
-cppad/local/sparse_set.hpp@
-cppad/speed/sparse_evaluate.hpp@ fix typo in documentation.
-example/sparse_hessian.cpp@
-example/sparse_jacobian.cpp@
-omh/glossary.omh@ convert to modern omhelp, improve AD Function entry.
-omh/whats_new_12.omh@
-speed/src/link_sparse_hessian.cpp@ fix typo in documentation.
-test_more/sparse_hessian.cpp@
-test_more/sparse_jacobian.cpp@
+dir/file.ext@ optional comment about this file.
 EOF
 # -----------------------------------------------------------------------------
 if [ ! -e "bin/commit.sh" ]
