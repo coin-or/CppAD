@@ -51,7 +51,7 @@ $end
 // memory utility
 # include <cppad/thread_alloc.hpp>
 
-// external complied tests
+// prototype external compiled tests (this line expected by bin/new_test.sh)
 extern bool abort_recording(void);
 extern bool ad_assign(void);
 extern bool ad_ctor(void);
@@ -206,7 +206,7 @@ int main(void)
 
 	// This line is used by test_one.sh
 
-	// external compiled tests
+	// run external compiled tests (this line expected by bin/new_test.sh)
 	ok &= Run( abort_recording,   "abort_recording"  );
 	ok &= Run( ad_assign,         "ad_assign"        );
 	ok &= Run( ad_ctor,           "ad_ctor"          );
