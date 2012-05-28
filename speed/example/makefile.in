@@ -44,8 +44,9 @@ CONFIG_CLEAN_VPATH_FILES =
 am_example_OBJECTS = example.$(OBJEXT) det_by_lu.$(OBJEXT) \
 	det_by_minor.$(OBJEXT) det_of_minor.$(OBJEXT) \
 	elapsed_seconds.$(OBJEXT) mat_sum_sq.$(OBJEXT) \
-	ode_evaluate.$(OBJEXT) sparse_evaluate.$(OBJEXT) \
-	speed_test.$(OBJEXT) time_test.$(OBJEXT)
+	ode_evaluate.$(OBJEXT) sparse_hes_fun.$(OBJEXT) \
+	sparse_jac_fun.$(OBJEXT) speed_test.$(OBJEXT) \
+	time_test.$(OBJEXT)
 example_OBJECTS = $(am_example_OBJECTS)
 example_LDADD = $(LDADD)
 example_DEPENDENCIES =
@@ -226,7 +227,8 @@ example_SOURCES = \
 	elapsed_seconds.cpp \
 	mat_sum_sq.cpp \
 	ode_evaluate.cpp \
-	sparse_evaluate.cpp \
+	sparse_hes_fun.cpp \
+	sparse_jac_fun.cpp \
 	speed_test.cpp \
 	time_test.cpp
 
@@ -284,7 +286,8 @@ distclean-compile:
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/example.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/mat_sum_sq.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/ode_evaluate.Po@am__quote@
-@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/sparse_evaluate.Po@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/sparse_hes_fun.Po@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/sparse_jac_fun.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/speed_test.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/time_test.Po@am__quote@
 

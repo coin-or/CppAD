@@ -203,7 +203,7 @@ $head 09-30$$
 Added the $cref cppad_sparse_jacobian.cpp$$ speed test
 and increased the sizes used by $cref link_sparse_hessian$$.
 Some mistakes were fixed in the documentation for speed tests
-$cref link_sparse_hessian$$ and $cref sparse_evaluate$$.
+$cref link_sparse_hessian$$ and $cref sparse_hes_fun$$.
 
 $head 09-29$$
 The documentation definition of the function $latex H(x)$$ in

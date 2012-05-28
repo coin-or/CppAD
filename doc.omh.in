@@ -1,6 +1,6 @@
 $Id$
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-11 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-12 Bradley M. Bell
 
 CppAD is distributed under multiple licenses. This distribution is under
 the terms of the 
@@ -228,6 +228,7 @@ $childtable%
 $latex
 % --------------------------------------------------------------------
 % Latex macros defined here and used throughout the CppAD documentation
+\newcommand{\W}[1]{ \; #1 \; }
 \newcommand{\R}[1]{ {\rm #1} }
 \newcommand{\B}[1]{ {\bf #1} }
 \newcommand{\D}[2]{ \frac{\partial #1}{\partial #2} }

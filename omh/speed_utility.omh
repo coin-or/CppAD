@@ -1,6 +1,6 @@
 $Id$
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-11 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-12 Bradley M. Bell
 
 CppAD is distributed under multiple licenses. This distribution is under
 the terms of the 
@@ -18,15 +18,16 @@ $index speed, utility$$
 $index utility, speed$$
 
 $children%
-	cppad/speed/uniform_01.hpp%
+	cppad/speed/det_by_lu.hpp%
 	cppad/speed/det_of_minor.hpp%
 	cppad/speed/det_by_minor.hpp%
-	cppad/speed/det_by_lu.hpp%
 	cppad/speed/det_33.hpp%
 	cppad/speed/det_grad_33.hpp%
 	cppad/speed/mat_sum_sq.hpp%
 	cppad/speed/ode_evaluate.hpp%
-	cppad/speed/sparse_evaluate.hpp
+	cppad/speed/sparse_jac_fun.hpp%
+	cppad/speed/sparse_hes_fun.hpp%
+	cppad/speed/uniform_01.hpp
 %$$
 
 $head Speed Main Program$$
@@ -42,7 +43,8 @@ $rref det_of_minor$$
 $rref det_33$$
 $rref det_grad_33$$
 $rref mat_sum_sq$$
-$rref sparse_evaluate$$
+$rref sparse_jac_fun$$
+$rref sparse_hes_fun$$
 $rref uniform_01$$
 $tend 
 
@@ -65,7 +67,8 @@ $rref lu_invert.hpp$$
 $rref lu_solve.hpp$$
 $rref mat_sum_sq.hpp$$
 $rref poly.hpp$$
-$rref sparse_evaluate.hpp$$
+$rref sparse_jac_fun.hpp$$
+$rref sparse_hes_fun.hpp$$
 $rref uniform_01.hpp$$
 $tend
 

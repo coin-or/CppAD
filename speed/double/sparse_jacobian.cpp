@@ -1,6 +1,6 @@
 /* $Id$ */
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-09 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-12 Bradley M. Bell
 
 CppAD is distributed under multiple licenses. This distribution is under
 the terms of the 
@@ -12,6 +12,8 @@ Please visit http://www.coin-or.org/CppAD/ for information on other licenses.
 /*
 $begin double_sparse_jacobian.cpp$$
 $spell
+	yp
+	jac
 	Jacobian
 	fp
 	bool
@@ -35,30 +37,27 @@ $index link_sparse_jacobian$$
 $codep */
 # include <cppad/vector.hpp>
 # include <cppad/speed/uniform_01.hpp>
-
-// must include cmath before sparse_evaluate so that exp is defined for double
-# include <cmath>
-# include <cppad/speed/sparse_evaluate.hpp>
+# include <cppad/speed/sparse_jac_fun.hpp>
 
 bool link_sparse_jacobian(
 	size_t                     repeat   , 
+	size_t                     m        ,
 	CppAD::vector<double>     &x        ,
-	CppAD::vector<size_t>     &i        ,
-	CppAD::vector<size_t>     &j        ,
+	CppAD::vector<size_t>     &row      ,
+	CppAD::vector<size_t>     &col      ,
 	CppAD::vector<double>     &jacobian )
 {
 	// -----------------------------------------------------
 	// setup
 	using CppAD::vector;
-	size_t order = 1;        // derivative order for f'(x)
-	size_t n     = x.size(); // argument space dimension
-	size_t ell   = i.size(); // size of index vectors
-	vector<double> fp(n);    // f'(x)
-	vector<double> y(ell);   // function value y = g(x)
+	size_t i, k;
+	size_t order = 0;          // order for computing function value
+	size_t n     = x.size();   // argument space dimension
+	size_t K     = row.size(); // size of index vectors
+	vector<double> yp(m);      // function value yp = f(x)
 
 	// temporaries
-	size_t k;
-	vector<double> tmp(2 * ell);
+	vector<double> tmp(2 * K);
 
 	// choose a value for x
 	CppAD::uniform_01(n, x);
@@ -68,22 +67,20 @@ bool link_sparse_jacobian(
 	while(repeat--)
 	{
 		// get the next set of indices
-		CppAD::uniform_01(2 * ell, tmp);
-		for(k = 0; k < ell; k++)
-		{	i[k] = size_t( n * tmp[k] );
-			i[k] = std::min(n-1, i[k]);
+		CppAD::uniform_01(2 * K, tmp);
+		for(k = 0; k < K; k++)
+		{	row[k] = size_t( n * tmp[k] );
+			row[k] = std::min(n-1, row[k]);
 			//
-			j[k] = size_t( n * tmp[k + ell] );
-			j[k] = std::min(n-1, j[k]);
+			col[k] = size_t( n * tmp[k + K] );
+			col[k] = std::min(n-1, col[k]);
 		}
 
 		// computation of the function
-		CppAD::sparse_evaluate(x, i, j, order, fp);
-		for(k = 0; k < ell; k++)
-			y[k] = fp[ i[k] ];
+		CppAD::sparse_jac_fun(m, x, row, col, order, yp);
 	}
-	for(k = 0; k < ell; k++)
-		jacobian[k] = y[k];
+	for(i = 0; i < m; i++)
+		jacobian[i] = yp[i];
 
 	return true;
 }

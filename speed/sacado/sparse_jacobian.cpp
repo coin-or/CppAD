@@ -1,6 +1,6 @@
 /* $Id$ */
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-11 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-12 Bradley M. Bell
 
 CppAD is distributed under multiple licenses. This distribution is under
 the terms of the 
@@ -27,6 +27,7 @@ $codep */
 // The sacado version of this test is not yet available
 bool link_sparse_jacobian(
 	size_t                     repeat   , 
+	size_t                     m        ,
 	CppAD::vector<double>     &x        ,
 	CppAD::vector<size_t>     &i        ,
 	CppAD::vector<size_t>     &j        ,

@@ -516,7 +516,8 @@ nobase_myinclude_HEADERS = \
 	cppad/speed/det_of_minor.hpp \
 	cppad/speed/mat_sum_sq.hpp \
 	cppad/speed/ode_evaluate.hpp \
-	cppad/speed/sparse_evaluate.hpp \
+	cppad/speed/sparse_hes_fun.hpp \
+	cppad/speed/sparse_jac_fun.hpp \
 	cppad/speed_test.hpp \
 	cppad/speed/uniform_01.hpp \
 	cppad/thread_alloc.hpp \

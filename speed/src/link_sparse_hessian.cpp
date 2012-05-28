@@ -28,29 +28,30 @@ $head Prototype$$
 $codei%extern bool link_sparse_hessian(
 	size_t                 %repeat%    ,
 	CppAD::vector<double> &%x%         ,
-	CppAD::vector<size_t> &%i%         ,
-	CppAD::vector<size_t> &%j%         , 
+	CppAD::vector<size_t> &%row%       ,
+	CppAD::vector<size_t> &%col%       , 
 	CppAD::vector<double> &%hessian%
 );
 %$$
 
 $head f$$
-Given a first index vector $latex i$$ and a second index vector $latex j$$,
+Given a row index vector $latex row$$
+and a second column vector $latex col$$,
 the corresponding function 
-$latex f : \B{R}^n \rightarrow \B{R} $$ is defined by $cref sparse_evaluate$$
-and the index vectors $icode i$$ and $icode j$$.
+$latex f : \B{R}^n \rightarrow \B{R} $$ 
+is defined by $cref sparse_hes_fun$$.
 The non-zero entries in the Hessian of this function have 
 one of the following forms:
 $latex \[
-	\DD{f}{x[i[k]]}{x[i[k]]}
+	\DD{f}{x[row[k]]}{x[row[k]]}
 	\; , \;
-	\DD{f}{x[i[k]]}{x[j[k]]}
+	\DD{f}{x[row[k]]}{x[col[k]]}
 	\; , \;
-	\DD{f}{x[j[k]]}{x[i[k]]}
+	\DD{f}{x[col[k]]}{x[row[k]]}
 	\; , \;
-	\DD{f}{x[j[k]]}{x[j[k]]}
+	\DD{f}{x[col[k]]}{x[col[k]]}
 \] $$
-for some $latex k $$ between zero and $latex \ell-1 $$.
+for some $latex k $$ between zero and $latex K-1 $$.
 All the other terms of the Hessian are zero.
 
 $head repeat$$
@@ -58,7 +59,7 @@ The argument $icode repeat$$ is the number of different functions
 $latex f(x)$$ that the Hessian is computed for.
 Each function corresponds to a randomly chosen index vectors, i.e.,
 for each repetition a random choice is made for
-$latex i[k]$$ and $latex j[k]$$ for $latex k = 0 , \ldots , \ell-1$$.
+$latex row[k]$$ and $latex col[k]$$ for $latex k = 0 , \ldots , K-1$$.
 
 $head x$$
 The argument $icode x$$ has prototype
@@ -73,44 +74,44 @@ argument value for which the function,
 or its derivative, is being evaluated.
 The value of this vector need not change with each repetition.
 
-$head i$$
-The size of the vector $icode i$$ determines and is equal to
-the value of $latex \ell$$.
-The input value of the elements of $icode i$$ does not matter.
-On output, it has been set the first index vector
+$head row$$
+The size of the vector $icode row$$ defines the value $latex K$$.
+The input value of the elements of $icode row$$ does not matter.
+On output, it has been set to the row index vector
 for the last repetition.
-All the elements of $icode i$$ must are between zero and $latex n-1$$.
+All the elements of $icode row$$ must are between zero and $latex n-1$$.
 
-$head j$$
-The argument $icode j$$ is a vector with size $latex \ell$$.
+$head col$$
+The argument $icode col$$ is a vector with size $latex K$$.
 The input value of its elements does not matter.
-On output, it has been set the second index vector
+On output, it has been set to the column index vector
 for the last repetition.
-All the elements of $icode i$$ must are between zero and $latex n-1$$.
+All the elements of $icode col$$ must are between zero and $latex n-1$$.
 
 $head hessian$$
 The argument $icode hessian$$ is a vector with $latex n \times n$$ elements.
 The input value of its elements does not matter. 
 The output value of its elements is the Hessian of the function $latex f(x)$$
-that corresponds to output values of $icode i$$, $icode j$$, and $icode x$$.
+that corresponds to output values of 
+$icode row$$, $icode col$$, and $icode x$$.
 To be more specific, for
-$latex k = 0 , \ldots , n-1$$,
-$latex m = 0 , \ldots , n-1$$,
+$latex i = 0 , \ldots , n-1$$,
+$latex j = 0 , \ldots , n-1$$,
 $latex \[
-	\DD{f}{x[k]}{x[m]} (x) = hessian [ k * n + m ]
+	\DD{f}{x[i]}{x[j]} (x) = hessian [ i * n + j ]
 \] $$
 
 $subhead double$$
 In the case where $icode package$$ is $code double$$,
 only the first element of $icode hessian$$ is used and it is actually 
-the value of $latex f(x)$$ ($latex f^{(2)} (x)$$ is not computed).
+the value of $latex f(x)$$ (derivatives are not computed).
 
 $end 
 -----------------------------------------------------------------------------
 */
 # include <cppad/vector.hpp>
-# include <cppad/speed/sparse_evaluate.hpp>
 # include <cppad/near_equal.hpp>
+# include <cppad/speed/sparse_hes_fun.hpp>
 
 // Link std::exp to spare_hessian_evaluate.hpp for doubles.
 # include <math.h>
@@ -118,41 +119,41 @@ $end
 extern bool link_sparse_hessian(
 	size_t                     repeat     ,
 	CppAD::vector<double>      &x         ,
-	CppAD::vector<size_t>      &i         ,
-	CppAD::vector<size_t>      &j         , 
+	CppAD::vector<size_t>      &row       ,
+	CppAD::vector<size_t>      &col       , 
 	CppAD::vector<double>      &hessian
 );
 bool available_sparse_hessian(void)
 {	size_t n      = 10;
 	size_t repeat = 1;
-	size_t ell    = 3 * n;
+	size_t K      = 3 * n;
 	CppAD::vector<double> x(n);
-	CppAD::vector<size_t> i(ell), j(ell); 
+	CppAD::vector<size_t> row(K), col(K); 
 	CppAD::vector<double> hessian(n * n);
 
-	return link_sparse_hessian(repeat, x, i, j, hessian);
+	return link_sparse_hessian(repeat, x, row, col, hessian);
 }
 bool correct_sparse_hessian(bool is_package_double)
 {	size_t n      = 10;
 	size_t repeat = 1;
-	size_t ell    = 3 * n;
+	size_t K      = 3 * n;
 	CppAD::vector<double> x(n);
-	CppAD::vector<size_t> i(ell), j(ell);
+	CppAD::vector<size_t> row(K), col(K);
 	CppAD::vector<double> hessian(n * n);
 
-	link_sparse_hessian(repeat, x, i, j, hessian);
+	link_sparse_hessian(repeat, x, row, col, hessian);
 
-	size_t m, size;
+	size_t order, size;
 	if( is_package_double)
-	{	m    = 0;  // check function value
-		size = 1;
+	{	order = 0;  // check function value
+		size  = 1;
 	}
 	else
-	{	m = 2;     // check hessian value
-		size = n * n;
+	{	order = 2;     // check hessian value
+		size  = n * n;
 	}
 	CppAD::vector<double> check(size);
-	CppAD::sparse_evaluate(x, i, j, m, check);
+	CppAD::sparse_hes_fun(x, row, col, order, check);
 	bool ok = true;
 	size_t k;
 	for( k = 0; k < size; k++)
@@ -162,12 +163,12 @@ bool correct_sparse_hessian(bool is_package_double)
 }
 void speed_sparse_hessian(size_t n, size_t repeat)
 {
-	size_t ell = 3 * n;
+	size_t K   = 3 * n;
 	CppAD::vector<double> x(n);
-	CppAD::vector<size_t> i(ell), j(ell);
+	CppAD::vector<size_t> row(K), col(K);
 	CppAD::vector<double> hessian(n * n);
 
 	// note that cppad/sparse_hessian.cpp assumes that x.size() == size
-	link_sparse_hessian(repeat, x, i, j, hessian);
+	link_sparse_hessian(repeat, x, row, col, hessian);
 	return;
 }

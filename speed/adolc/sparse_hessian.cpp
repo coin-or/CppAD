@@ -1,6 +1,6 @@
 /* $Id$ */
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-11 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-12 Bradley M. Bell
 
 CppAD is distributed under multiple licenses. This distribution is under
 the terms of the 
@@ -12,6 +12,7 @@ Please visit http://www.coin-or.org/CppAD/ for information on other licenses.
 /*
 $begin adolc_sparse_hessian.cpp$$
 $spell
+	hes
 	thread_alloc
 	arg
 	cppad
@@ -46,7 +47,7 @@ $codep */
 # include <cppad/vector.hpp>
 # include <cppad/speed/uniform_01.hpp>
 # include <cppad/thread_alloc.hpp>
-# include <cppad/speed/sparse_evaluate.hpp>
+# include <cppad/speed/sparse_hes_fun.hpp>
 
 # include <adolc/adouble.h>
 # include <adolc/taping.h>
@@ -55,18 +56,19 @@ $codep */
 bool link_sparse_hessian(
 	size_t                     repeat   , 
 	CppAD::vector<double>     &x_arg    ,
-	CppAD::vector<size_t>     &i        ,
-	CppAD::vector<size_t>     &j        ,
-	CppAD::vector<double>     &h        )
+	CppAD::vector<size_t>     &row      ,
+	CppAD::vector<size_t>     &col      ,
+	CppAD::vector<double>     &hes      )
 {
 	// -----------------------------------------------------
 	// setup
-	size_t k, m;
+	size_t i, j, k;
 	size_t order = 0;         // derivative order corresponding to function
 	size_t tag  = 0;          // tape identifier
 	size_t keep = 1;          // keep forward mode results in buffer
 	size_t n = x_arg.size();  // number of independent variables
-	size_t ell = i.size();    // number of indices in i and j
+	size_t m = 1;             // number of dependent variables
+	size_t K = row.size();    // number of indices in row and col
 	double f;                 // function value
 
 	// use thread_alloc memory allocator (fast and checks for leaks)
@@ -77,56 +79,56 @@ bool link_sparse_hessian(
 	typedef CppAD::vector<adouble> ADVector;
 	typedef CppAD::vector<size_t>  SizeVector;
 
-	ADVector   X(n);    // AD domain space vector
-	ADVector   Y(1);    // AD range space value
-	DblVector tmp(2 * ell);       // double temporary vector
+	ADVector   a_x(n);      // AD domain space vector
+	ADVector   a_y(m);      // AD range space value
+	DblVector tmp(2 * K);   // double temporary vector
 
 	// double version of domain space vector
 	double* x  = thread_alloc::create_array<double>(n, capacity);
 	// Hessian as computed by adolc
 	double** H = thread_alloc::create_array<double*>(n, capacity);
-	for(k = 0; k < n; k++)
-		H[k] = thread_alloc::create_array<double>(n, capacity);
+	for(i = 0; i < n; i++)
+		H[i] = thread_alloc::create_array<double>(n, capacity);
 
 	// choose a value for x 
 	CppAD::uniform_01(n, x);
-	for(k = 0; k < n; k++)
-		x_arg[k] = x[k];
+	for(j = 0; j < n; j++)
+		x_arg[j] = x[j];
 
 	// ------------------------------------------------------
 	while(repeat--)
 	{
 		// get the next set of indices
-		CppAD::uniform_01(2 * ell, tmp);
-		for(k = 0; k < ell; k++)
-		{	i[k] = size_t( n * tmp[k] );
-			i[k] = std::min(n-1, i[k]);
+		CppAD::uniform_01(2 * K, tmp);
+		for(k = 0; k < K; k++)
+		{	row[k] = size_t( n * tmp[k] );
+			row[k] = std::min(n-1, row[k]);
 			//
-			j[k] = size_t( n * tmp[k + ell] );
-			j[k] = std::min(n-1, j[k]);
+			col[k] = size_t( n * tmp[k + K] );
+			col[k] = std::min(n-1, col[k]);
 		}
 
 		// declare independent variables
 		trace_on(tag, keep);
-		for(k = 0; k < n; k++)
-			X[k] <<= x[k];
+		for(j = 0; j < n; j++)
+			a_x[j] <<= x[j];
 
 		// AD computation of f(x)
-		CppAD::sparse_evaluate(X, i, j, order, Y);
+		CppAD::sparse_hes_fun(a_x, row, col, order, a_y);
 
 		// create function object f : X -> Y
-		Y[0] >>= f;
+		a_y[0] >>= f;
 		trace_off();
 
 		// evaluate and return the hessian of f
 		hessian(int(tag), int(n), x, H);
 	}
-	for(k = 0; k < n; k++)
-	{	for(m = 0; m <= k; m++)
-		{	h[ k * n + m] = H[k][m];
-			h[ m * n + k] = H[k][m];
+	for(i = 0; i < n; i++)
+	{	for(j = 0; j <= i; j++)
+		{	hes[ i * n + j] = H[i][j];
+			hes[ j * n + i] = H[i][j];
 		}
-		thread_alloc::delete_array(H[k]);
+		thread_alloc::delete_array(H[i]);
 	}
 	thread_alloc::delete_array(H);
 	thread_alloc::delete_array(x);

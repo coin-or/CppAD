@@ -41,7 +41,8 @@ example_SOURCES   = \
 	elapsed_seconds.cpp \
 	mat_sum_sq.cpp \
 	ode_evaluate.cpp \
-	sparse_evaluate.cpp \
+	sparse_hes_fun.cpp \
+	sparse_jac_fun.cpp \
 	speed_test.cpp \
 	time_test.cpp
 

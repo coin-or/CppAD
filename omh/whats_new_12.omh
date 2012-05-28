@@ -13,6 +13,7 @@ Please visit http://www.coin-or.org/CppAD/ for information on other licenses.
 $begin whats_new_12$$
 $dollar @$$
 $spell
+	Jacobian
 	dir
 	-lteuchos
 	trilinos
@@ -43,6 +44,13 @@ This section contains a list of the changes to CppAD during 2012
 (in reverse order by date).
 The purpose of this section is to
 assist you in learning about changes between various versions of CppAD.
+
+$head 05-27$$
+Split the sparse Jacobian and Hessian test function the separate function
+$cref sparse_jac_fun$$ and $cref sparse_hes_fun$$
+(do not use sparse Hessian for both).
+In addition, change row and column indices from $icode i$$
+and $icode j$$ to $icode row$$ and $icode col$$.
 
 $head 05-24$$
 Merged in changes from $code branches/sparse$$:

@@ -1,4 +1,4 @@
-/* $Id$ */
+$Id$
 /* --------------------------------------------------------------------------
 CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-12 Bradley M. Bell
 
@@ -9,32 +9,28 @@ the terms of the
 A copy of this license is included in the COPYING file of this distribution.
 Please visit http://www.coin-or.org/CppAD/ for information on other licenses.
 -------------------------------------------------------------------------- */
-# include <cstring>
-# include <cppad/vector.hpp>
 
-/*
-$begin adolc_sparse_jacobian.cpp$$
+$begin sparse_hes_fun.hpp$$
 $spell
-        bool
-        CppAD
-        adolc
-	sparse_jacobian
+	hes
+	ifndef
+	endif
 $$
 
-$section adolc Speed: sparse_jacobian$$
+$section Source: sparse_hes_fun$$
 
-$codep */
-// The adolc version of this test is not yet available
-bool link_sparse_jacobian(
-	size_t                     repeat   , 
-	size_t                     m        ,
-	CppAD::vector<double>     &x        ,
-	CppAD::vector<size_t>     &i        ,
-	CppAD::vector<size_t>     &j        ,
-	CppAD::vector<double>     &jacobian )
-{
-	return false;
-}
-/* $$
+$index sparse_hes_fun, source$$
+$index source, sparse_hes_fun$$
+
+$code
+# ifndef CPPAD_SPARSE_HES_FUN_INCLUDED 
+$pre
+$$
+# define CPPAD_SPARSE_HES_FUN_INCLUDED 
+
+$verbatim%cppad/speed/sparse_hes_fun.hpp%0%// BEGIN C++%// END C++%$$
+
+# endif
+$$
+
 $end
-*/

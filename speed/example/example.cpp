@@ -49,7 +49,8 @@ extern bool det_by_minor(void);
 extern bool elapsed_seconds(void);
 extern bool mat_sum_sq(void);
 extern bool ode_evaluate(void);
-extern bool sparse_evaluate(void);
+extern bool sparse_hes_fun(void);
+extern bool sparse_jac_fun(void);
 extern bool speed_test(void);
 extern bool time_test(void);
 
@@ -105,7 +106,8 @@ int main(void)
 	ok &= Run(elapsed_seconds,   "elapsed_seconds"    );
 	ok &= Run(mat_sum_sq,             "mat_sum_sq"    );
 	ok &= Run(ode_evaluate,         "ode_evaluate"    );
-	ok &= Run(sparse_evaluate,   "sparse_evaluate"    );
+	ok &= Run(sparse_hes_fun,    "sparse_hes_fun"     );
+	ok &= Run(sparse_jac_fun,    "sparse_jac_fun"     );
 	ok &= Run(speed_test,             "speed_test"    );
 	ok &= Run(time_test,               "time_test"    );
 	assert( ok || (Run_error_count > 0) );

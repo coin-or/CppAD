@@ -210,8 +210,9 @@ $rref simple_ad_pthread.cpp$$
 $rref SimpleVector.cpp$$
 $rref Sin.cpp$$
 $rref Sinh.cpp$$
-$rref sparse_evaluate.cpp$$
+$rref sparse_hes_fun.cpp$$
 $rref sparse_hessian.cpp$$
+$rref sparse_jac_fun.cpp$$
 $rref sparse_jacobian.cpp$$
 $rref speed_program.cpp$$
 $rref speed_test.cpp$$
