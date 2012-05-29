@@ -99,6 +99,7 @@ extern bool HesMinorDet(void);
 extern bool Hessian(void);
 extern bool HesTimesDir(void);
 extern bool Independent(void);
+extern bool index_sort(void);
 extern bool Integer(void);
 extern bool Interface2C(void);
 extern bool interp_onetape(void);
@@ -253,6 +254,7 @@ int main(void)
 	ok &= Run( Hessian,           "Hessian"          );
 	ok &= Run( HesTimesDir,       "HesTimesDir"      );
 	ok &= Run( Independent,       "Independent"      );
+	ok &= Run( index_sort,        "index_sort"       );
 	ok &= Run( Integer,           "Integer"          );
 	ok &= Run( Interface2C,       "Interface2C"      );
 	ok &= Run( interp_onetape,    "interp_onetape"   );

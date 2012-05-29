@@ -372,6 +372,10 @@
 				>
 			</File>
 			<File
+				RelativePath=".\index_sort.cpp"
+				>
+			</File>
+			<File
 				RelativePath=".\integer.cpp"
 				>
 			</File>

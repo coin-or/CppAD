@@ -363,6 +363,7 @@ nobase_myinclude_HEADERS = \
 	cppad/cppad.hpp \
 	cppad/elapsed_seconds.hpp \
 	cppad/error_handler.hpp \
+	cppad/index_sort.hpp \
 	cppad/local/abort_recording.hpp \
 	cppad/local/abs.hpp \
 	cppad/local/abs_op.hpp \

@@ -55,7 +55,7 @@ am__example_SOURCES_DIST = mul_level_adolc.cpp ode_taylor_adolc.cpp \
 	for_one.cpp for_two.cpp forward.cpp for_sparse_jac.cpp \
 	fun_assign.cpp fun_check.cpp hes_lagrangian.cpp hes_lu_det.cpp \
 	hes_minor_det.cpp hessian.cpp hes_times_dir.cpp \
-	independent.cpp integer.cpp interface_2c.cpp \
+	independent.cpp index_sort.cpp integer.cpp interface_2c.cpp \
 	interp_onetape.cpp interp_retape.cpp jac_lu_det.cpp \
 	jac_minor_det.cpp jacobian.cpp log.cpp log_10.cpp \
 	lu_factor.cpp lu_invert.cpp lu_ratio.cpp lu_solve.cpp \
@@ -97,7 +97,7 @@ am_example_OBJECTS = $(am__objects_1) example.$(OBJEXT) \
 	hes_lagrangian.$(OBJEXT) hes_lu_det.$(OBJEXT) \
 	hes_minor_det.$(OBJEXT) hessian.$(OBJEXT) \
 	hes_times_dir.$(OBJEXT) independent.$(OBJEXT) \
-	integer.$(OBJEXT) interface_2c.$(OBJEXT) \
+	index_sort.$(OBJEXT) integer.$(OBJEXT) interface_2c.$(OBJEXT) \
 	interp_onetape.$(OBJEXT) interp_retape.$(OBJEXT) \
 	jac_lu_det.$(OBJEXT) jac_minor_det.$(OBJEXT) \
 	jacobian.$(OBJEXT) log.$(OBJEXT) log_10.$(OBJEXT) \
@@ -378,6 +378,7 @@ example_SOURCES = \
 	hessian.cpp \
 	hes_times_dir.cpp \
 	independent.cpp \
+	index_sort.cpp \
 	integer.cpp \
 	interface_2c.cpp\
 	interp_onetape.cpp\
@@ -552,6 +553,7 @@ distclean-compile:
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/hes_times_dir.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/hessian.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/independent.Po@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/index_sort.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/integer.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/interface_2c.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/interp_onetape.Po@am__quote@

@@ -137,6 +137,7 @@ $rref HesMinorDet.cpp$$
 $rref Hessian.cpp$$
 $rref HesTimesDir.cpp$$
 $rref Independent.cpp$$
+$rref index_sort.cpp$$
 $rref Integer.cpp$$
 $rref Interface2C.cpp$$
 $rref interp_onetape.cpp$$

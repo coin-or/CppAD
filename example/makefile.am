@@ -112,6 +112,7 @@ example_SOURCES   = \
 	hessian.cpp \
 	hes_times_dir.cpp \
 	independent.cpp \
+	index_sort.cpp \
 	integer.cpp \
 	interface_2c.cpp\
 	interp_onetape.cpp\

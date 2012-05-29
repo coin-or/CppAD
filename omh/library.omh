@@ -47,12 +47,13 @@ $children%
 	cppad/ode_gear.hpp%
 	cppad/ode_gear_control.hpp%
 
+	cppad/vector.hpp%
+	omh/thread_alloc.omh%
+	cppad/index_sort.hpp%
+
 	cppad/local/bender_quad.hpp%
 	cppad/local/opt_val_hes.hpp%
-	cppad/local/lu_ratio.hpp%
-
-	cppad/vector.hpp%
-	omh/thread_alloc.omh
+	cppad/local/lu_ratio.hpp
 %$$
 
 $head Error Handler$$
@@ -62,8 +63,8 @@ $table
 $rref ErrorHandler$$
 $tend
 
-$head Some Testing Utilities$$
-The routines listed below are general purpose numerical testing routines:
+$head Testing Utilities$$
+The routines listed below support numerical correctness and speed testing:
 $table
 $rref NearEqual$$
 $rref time_test$$
@@ -86,7 +87,7 @@ $tend
 
 $head CppAD Numerical Template Library$$
 The routines listed below are general purpose numerical routines
-written with the floating point type A C++ template parameter.
+written with the floating point type a C++ template parameter.
 This enables them to be used with algorithmic differentiation types,
 as well as for other purposes. 
 $table
@@ -103,6 +104,15 @@ $rref OdeGear$$
 $rref OdeGearControl$$
 $tend
 
+$head General Purpose Utilities$$
+The classes and routines below are of general use 
+(not necessarily AD related).
+$table
+$rref CppAD_vector$$
+$rref thread_alloc$$
+$rref index_sort$$
+$tend
+
 $head Numerical AD Library$$
 The routines listed below are numerical routines that are specially
 designed to work with CppAD in particular.
@@ -110,14 +120,6 @@ $table
 $rref BenderQuad$$
 $rref opt_val_hes$$
 $rref LuRatio$$
-$tend
-
-$head CppAD Support Template Library$$
-The classes listed are used to support CppAD calculations:
-$table
-$rref CppAD_vector$$
-$rref thread_alloc$$
-$rref memory_leak$$
 $tend
 
 $end
