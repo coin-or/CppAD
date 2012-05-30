@@ -431,7 +431,7 @@ int main(int argc, char *argv[])
 		speed_det_minor,       size_det_minor,       "det_minor"
 		);
 		if( available_mat_mul() ) run_speed(
-		speed_mat_mul,           size_mat_mul,       "det_minor"
+		speed_mat_mul,           size_mat_mul,       "mat_mul"
 		);
 		if( available_ode() ) run_speed(
 		speed_ode,             size_ode,             "ode"
