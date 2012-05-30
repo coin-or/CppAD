@@ -13,6 +13,7 @@ Please visit http://www.coin-or.org/CppAD/ for information on other licenses.
 $begin whats_new_12$$
 $dollar @$$
 $spell
+	retape
 	Jacobian
 	dir
 	-lteuchos
@@ -44,6 +45,19 @@ This section contains a list of the changes to CppAD during 2012
 (in reverse order by date).
 The purpose of this section is to
 assist you in learning about changes between various versions of CppAD.
+
+$head 02-30$$
+Change specifications for 
+$cref link_sparse_hessian$$ so that the row and column indices are 
+inputs (instead of being chosen randomly by the test for each repetition).
+This enables use of the 
+$cref/retape/speed_main/option_list/retape/$$ option
+during sparse Hessian speed tests.
+
+$head 05-29$$
+Add $cref index_sort$$ to the general purpose template $cref library$$
+so that it can be used by the implementations of
+$cref link_sparse_jacobian$$ and $cref link_sparse_hessian$$.
 
 $head 05-27$$
 Split the sparse Jacobian and Hessian test function the separate function

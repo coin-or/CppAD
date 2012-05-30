@@ -1,6 +1,6 @@
 /* $Id$ */
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-10 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-12 Bradley M. Bell
 
 CppAD is distributed under multiple licenses. This distribution is under
 the terms of the 
@@ -44,7 +44,7 @@ $end
 */
 
 /*!
-\file microsoft_timer.hpp
+\file microsoft_timer.cpp
 \brief Microsoft version of elapsed_seconds.
 */
 /*

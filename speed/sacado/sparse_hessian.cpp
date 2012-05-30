@@ -1,6 +1,6 @@
 /* $Id$ */
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-08 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-12 Bradley M. Bell
 
 CppAD is distributed under multiple licenses. This distribution is under
 the terms of the 
@@ -15,6 +15,7 @@ Please visit http://www.coin-or.org/CppAD/ for information on other licenses.
 /*
 $begin sacado_sparse_hessian.cpp$$
 $spell
+	const
 	Sacado
 	bool
 	CppAD
@@ -27,11 +28,11 @@ $codep */
 
 // The sacado version of this test is not yet available 
 extern bool link_sparse_hessian(
-        size_t                     repeat     ,
-        CppAD::vector<double>      &x         ,
-        CppAD::vector<size_t>      &i         ,
-        CppAD::vector<size_t>      &j         ,
-        CppAD::vector<double>      &hessian
+        size_t                           repeat     ,
+        CppAD::vector<double>            &x         ,
+        const CppAD::vector<size_t>      &row       ,
+        const CppAD::vector<size_t>      &col       ,
+        CppAD::vector<double>            &hessian
 )
 {
 	return false;

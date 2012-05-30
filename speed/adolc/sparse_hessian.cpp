@@ -12,6 +12,7 @@ Please visit http://www.coin-or.org/CppAD/ for information on other licenses.
 /*
 $begin adolc_sparse_hessian.cpp$$
 $spell
+	const
 	hes
 	thread_alloc
 	arg
@@ -54,21 +55,20 @@ $codep */
 # include <adolc/drivers/drivers.h>
 
 bool link_sparse_hessian(
-	size_t                     repeat   , 
-	CppAD::vector<double>     &x_arg    ,
-	CppAD::vector<size_t>     &row      ,
-	CppAD::vector<size_t>     &col      ,
-	CppAD::vector<double>     &hes      )
+	size_t                           repeat   , 
+	CppAD::vector<double>           &x_arg    ,
+	const CppAD::vector<size_t>     &row      ,
+	const CppAD::vector<size_t>     &col      ,
+	CppAD::vector<double>           &hes      )
 {
 	// -----------------------------------------------------
 	// setup
-	size_t i, j, k;
+	size_t i, j;
 	size_t order = 0;         // derivative order corresponding to function
 	size_t tag  = 0;          // tape identifier
 	size_t keep = 1;          // keep forward mode results in buffer
 	size_t n = x_arg.size();  // number of independent variables
 	size_t m = 1;             // number of dependent variables
-	size_t K = row.size();    // number of indices in row and col
 	double f;                 // function value
 
 	// use thread_alloc memory allocator (fast and checks for leaks)
@@ -81,7 +81,6 @@ bool link_sparse_hessian(
 
 	ADVector   a_x(n);      // AD domain space vector
 	ADVector   a_y(m);      // AD range space value
-	DblVector tmp(2 * K);   // double temporary vector
 
 	// double version of domain space vector
 	double* x  = thread_alloc::create_array<double>(n, capacity);
@@ -98,16 +97,6 @@ bool link_sparse_hessian(
 	// ------------------------------------------------------
 	while(repeat--)
 	{
-		// get the next set of indices
-		CppAD::uniform_01(2 * K, tmp);
-		for(k = 0; k < K; k++)
-		{	row[k] = size_t( n * tmp[k] );
-			row[k] = std::min(n-1, row[k]);
-			//
-			col[k] = size_t( n * tmp[k + K] );
-			col[k] = std::min(n-1, col[k]);
-		}
-
 		// declare independent variables
 		trace_on(tag, keep);
 		for(j = 0; j < n; j++)

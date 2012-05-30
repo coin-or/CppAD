@@ -12,15 +12,12 @@ Please visit http://www.coin-or.org/CppAD/ for information on other licenses.
 /*
 $begin double_sparse_hessian.cpp$$
 $spell
+	const
 	hes
 	bool
 	cppad
 	hpp
 	CppAD
-	cmath
-	exp
-	tmp
-	std
 $$
 
 $section Double Speed: Sparse Hessian$$
@@ -37,24 +34,19 @@ $codep */
 # include <cppad/speed/sparse_hes_fun.hpp>
 
 bool link_sparse_hessian(
-	size_t                     repeat   , 
-	CppAD::vector<double>     &x        ,
-	CppAD::vector<size_t>     &row      ,
-	CppAD::vector<size_t>     &col      ,
-	CppAD::vector<double>     &hessian  )
+	size_t                           repeat   , 
+	CppAD::vector<double>           &x        ,
+	const CppAD::vector<size_t>     &row      ,
+	const CppAD::vector<size_t>     &col      ,
+	CppAD::vector<double>           &hessian  )
 {
 	// -----------------------------------------------------
 	// setup
 	using CppAD::vector;
-	size_t k;
 	size_t order = 0;          // derivative order corresponding to function
 	size_t n     = x.size();   // argument space dimension
 	size_t m     = 1;          // range space dimension 
-	size_t K     = row.size(); // size of index vectors
 	vector<double> y(m);       // function value
-
-	// temporaries
-	vector<double> tmp(2 * K);
 
 	// choose a value for x
 	CppAD::uniform_01(n, x);
@@ -63,16 +55,6 @@ bool link_sparse_hessian(
 
 	while(repeat--)
 	{
-		// get the next set of indices
-		CppAD::uniform_01(2 * K, tmp);
-		for(k = 0; k < K; k++)
-		{	row[k] = size_t( n * tmp[k] );
-			row[k] = std::min(n-1, row[k]);
-			//
-			col[k] = size_t( n * tmp[k + K] );
-			col[k] = std::min(n-1, col[k]);
-		}
-
 		// computation of the function
 		CppAD::sparse_hes_fun(x, row, col, order, y);
 	}

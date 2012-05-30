@@ -12,6 +12,7 @@ Please visit http://www.coin-or.org/CppAD/ for information on other licenses.
 /*
 $begin cppad_sparse_hessian.cpp$$
 $spell
+	const
 	hes
 	CppAD
 	cppad
@@ -33,19 +34,6 @@ $index speed, cppad sparse Hessian$$
 $index Hessian, sparse speed cppad$$
 $index sparse, Hessian speed cppad$$
 
-$head Operation Sequence$$
-Note that the 
-$cref/operation sequence/glossary/Operation/Sequence/$$
-depends on the vectors $icode i$$ and $icode j$$.
-Hence we use a different $cref ADFun$$ object for 
-each choice of $icode i$$ and $icode j$$.
-
-$head Sparse Hessian$$
-If the preprocessor symbol $code CPPAD_USE_SPARSE_HESSIAN$$ is 
-true, the routine $cref/SparseHessian/sparse_hessian/$$ 
-is used for the calculation.
-Otherwise, the routine $cref Hessian$$ is used.
-
 $head link_sparse_hessian$$
 $index link_sparse_hessian$$
 $codep */
@@ -53,15 +41,12 @@ $codep */
 # include <cppad/speed/uniform_01.hpp>
 # include <cppad/speed/sparse_hes_fun.hpp>
 
-// value can be true or false
-# define CPPAD_USE_SPARSE_HESSIAN  1
-
 bool link_sparse_hessian(
-	size_t                     repeat   , 
-	CppAD::vector<double>     &x        ,
-	CppAD::vector<size_t>     &row      ,
-	CppAD::vector<size_t>     &col      ,
-	CppAD::vector<double>     &hessian  )
+	size_t                           repeat   , 
+	CppAD::vector<double>&           x        ,
+	const CppAD::vector<size_t>&     row      ,
+	const CppAD::vector<size_t>&     col      ,
+	CppAD::vector<double>&           hessian  )
 {
 	// -----------------------------------------------------
 	// setup
@@ -70,15 +55,13 @@ bool link_sparse_hessian(
 	typedef CppAD::vector< AD<double> > ADVector;
 	typedef CppAD::vector<size_t>       SizeVector;
 
-	size_t j, k;
+	size_t j;
 	size_t order = 0;         // derivative order corresponding to function
 	size_t m = 1;             // number of dependent variables
 	size_t n = x.size();      // number of independent variables
-	size_t K = row.size();    // number of row and column indices 
 	ADVector   a_x(n);        // AD domain space vector
 	ADVector   a_y(m);        // AD range space vector
 	DblVector  w(m);          // double range space vector
-	DblVector tmp(2 * K);     // double temporary vector
 	CppAD::ADFun<double> f;   // AD function object
 
 	// choose a value for x 
@@ -96,16 +79,6 @@ bool link_sparse_hessian(
 	// ------------------------------------------------------
 	while(repeat--)
 	{
-		// get the next set of indices
-		CppAD::uniform_01(2 * K, tmp);
-		for(k = 0; k < K; k++)
-		{	row[k] = size_t( n * tmp[k] );
-			row[k] = std::min(n-1, row[k]);
-			//
-			col[k] = size_t( n * tmp[k + K] );
-			col[k] = std::min(n-1, col[k]);
-		}
-
 		// declare independent variables
 		Independent(a_x);	
 
@@ -131,11 +104,7 @@ bool link_sparse_hessian(
 		}
 
 		// evaluate and return the hessian of f
-# if CPPAD_USE_SPARSE_HESSIAN
 		hessian = f.SparseHessian(x, w);
-# else
-		hessian = f.Hessian(x, w);
-# endif
 	}
 	return true;
 }
