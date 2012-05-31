@@ -1,6 +1,6 @@
 /* $Id$ */
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-11 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-12 Bradley M. Bell
 
 CppAD is distributed under multiple licenses. This distribution is under
 the terms of the 
@@ -47,6 +47,7 @@ $codep */
 # include <cppad/speed/mat_sum_sq.hpp>
 # include <cppad/speed/uniform_01.hpp>
 # include "../../example/mat_mul.hpp"
+# include "print_optimize.hpp"
 
 bool link_mat_mul(
 	size_t                           size     , 
@@ -65,17 +66,13 @@ bool link_mat_mul(
 	size_t m = 1;           // number of dependent variables
 	size_t n = size * size; // number of independent variables
 	ADVector   X(n);        // AD domain space vector
+	ADVector   Y(n);        // Store product matrix
 	ADVector   Z(m);        // AD range space vector
 	CppAD::ADFun<double> f; // AD function object
 	
 	// vectors of reverse mode weights 
 	CppAD::vector<double> w(1);
 	w[0] = 1.;
-
-	// ------------------------------------------------------
-	ADVector Y(n);          // Store product matrix
-	static bool printed = false;
-	bool print_this_time = (! printed) & (repeat > 1) & (size >= 10);
 
 	// user atomic information
 	extern bool global_atomic;
@@ -86,7 +83,12 @@ bool link_mat_mul(
 	info.nc_result = size;
 	size_t   info_id = info_.size();  
 	
+	// use the unspecified fact that size is non-decreasing between calls
+	static size_t previous_size = 0;
+	bool print    = (repeat > 1) & (previous_size != size);
+	previous_size = size;
 
+	// ------------------------------------------------------
 	extern bool global_retape;
 	if( global_retape ) while(repeat--)
 	{	// get the next matrix
@@ -117,17 +119,8 @@ bool link_mat_mul(
 
 		extern bool global_optimize;
 		if( global_optimize )
-		{	size_t before, after;
-			before = f.size_var();
-			f.optimize();
-			if( print_this_time ) 
-			{	after = f.size_var();
-				std::cout << "cppad_mat_mul_optimize_size_" 
-				          << int(size) << " = [ " << int(before) 
-				          << ", " << int(after) << "]" << std::endl;
-				printed         = true;
-				print_this_time = false;
-			}
+		{	print_optimize(f, print, "cppad_mat_mul_optimize", size);
+			print = false;
 		}
 
 		// evaluate and return gradient using reverse mode
@@ -164,17 +157,8 @@ bool link_mat_mul(
 
 		extern bool global_optimize;
 		if( global_optimize )
-		{	size_t before, after;
-			before = f.size_var();
-			f.optimize();
-			if( print_this_time ) 
-			{	after = f.size_var();
-				std::cout << "cppad_mat_mul_optimize_size_" 
-				          << int(size) << " = [ " << int(before) 
-				          << ", " << int(after) << "]" << std::endl;
-				printed         = true;
-				print_this_time = false;
-			}
+		{	print_optimize(f, print, "cppad_mat_mul_optimize", size);
+			print = false;
 		}
 		while(repeat--)
 		{	// get a next matrix

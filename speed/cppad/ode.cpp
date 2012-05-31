@@ -1,6 +1,6 @@
 /* $Id$ */
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-10 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-12 Bradley M. Bell
 
 CppAD is distributed under multiple licenses. This distribution is under
 the terms of the 
@@ -43,6 +43,7 @@ $codep */
 # include <cppad/speed/ode_evaluate.hpp>
 # include <cppad/speed/uniform_01.hpp>
 # include <cassert>
+# include "print_optimize.hpp"
 
 bool link_ode(
 	size_t                     size       ,
@@ -65,10 +66,14 @@ bool link_ode(
 	ADVector  X(n);
 	ADVector  Y(n);
 
-	CppAD::ADFun<double>   F;
+	CppAD::ADFun<double>   f;
 
-	static bool printed = false;
-	bool print_this_time = (! printed) & (repeat > 1) & (size >= 3);
+	// use the unspecified fact that size is non-decreasing between calls
+	static size_t previous_size = 0;
+	bool print    = (repeat > 1) & (previous_size != size);
+	previous_size = size;
+
+	// -------------------------------------------------------------
 	while(repeat--)
 	{ 	// choose next x value
 		uniform_01(n, x);
@@ -82,23 +87,14 @@ bool link_ode(
 		CppAD::ode_evaluate(X, m, Y);
 
 		// create function object f : X -> Y
-		F.Dependent(X, Y);
+		f.Dependent(X, Y);
 
 		extern bool global_optimize;
 		if( global_optimize )
-		{	size_t before, after;
-			before = F.size_var();
-			F.optimize();
-			if( print_this_time ) 
-			{	after = F.size_var();
-				std::cout << "cppad_ode_optimize_size_" 
-				          << int(size) << " = [ " << int(before) 
-				          << ", " << int(after) << "]" << std::endl;
-				printed         = true;
-				print_this_time = false;
-			}
+		{	print_optimize(f, print, "cppad_ode_optimize", size);
+			print = false;
 		}
-		jacobian = F.Jacobian(x);
+		jacobian = f.Jacobian(x);
 	}
 	return true;
 }

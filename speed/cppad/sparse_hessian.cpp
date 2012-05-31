@@ -40,6 +40,7 @@ $codep */
 # include <cppad/cppad.hpp>
 # include <cppad/speed/uniform_01.hpp>
 # include <cppad/speed/sparse_hes_fun.hpp>
+# include "print_optimize.hpp"
 
 bool link_sparse_hessian(
 	size_t                           repeat   , 
@@ -56,6 +57,7 @@ bool link_sparse_hessian(
 	typedef CppAD::vector<size_t>       SizeVector;
 
 	size_t j;
+	size_t size  = x.size();  // size corresponding to this speed test
 	size_t order = 0;         // derivative order corresponding to function
 	size_t m = 1;             // number of dependent variables
 	size_t n = x.size();      // number of independent variables
@@ -72,9 +74,11 @@ bool link_sparse_hessian(
 	// weights for hessian calculation (only one component of f)
 	w[0] = 1.;
 
-	// used to display results of optimizing the operation sequence
-	static bool printed = false;
-	bool print_this_time = (! printed) & (repeat > 1) & (n >= 30);
+
+	// use the unspecified fact that size is non-decreasing between calls
+	static size_t previous_size = 0;
+	bool print    = (repeat > 1) & (previous_size != size);
+	previous_size = size;
 
 	// ------------------------------------------------------
 	while(repeat--)
@@ -90,17 +94,8 @@ bool link_sparse_hessian(
 
 		extern bool global_optimize;
 		if( global_optimize )
-		{	size_t before, after;
-			before = f.size_var();
-			f.optimize();
-			if( print_this_time ) 
-			{	after = f.size_var();
-				std::cout << "cppad_sparse_hessian_optimize_size_"
-				          << int(n) << " = [ " << int(before) 
-				          << ", " << int(after) << "]" << std::endl;
-				printed         = true;
-				print_this_time = false;
-			}
+		{	print_optimize(f, print, "cppad_sparse_hessian_optimize", size);
+			print = false;
 		}
 
 		// evaluate and return the hessian of f

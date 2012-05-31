@@ -1,6 +1,6 @@
 /* $Id$ */
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-11 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-12 Bradley M. Bell
 
 CppAD is distributed under multiple licenses. This distribution is under
 the terms of the 
@@ -42,6 +42,7 @@ $codep */
 # include <cppad/vector.hpp>
 # include <cppad/speed/det_by_minor.hpp>
 # include <cppad/speed/uniform_01.hpp>
+# include "print_optimize.hpp"
 
 bool link_det_minor(
 	size_t                     size     , 
@@ -70,8 +71,10 @@ bool link_det_minor(
 	// the AD function object
 	CppAD::ADFun<double> f;
 
-	static bool printed = false;
-	bool print_this_time = (! printed) & (repeat > 1) & (size >= 3);
+	// use the unspecified fact that size is non-decreasing between calls
+	static size_t previous_size = 0;
+	bool print    = (repeat > 1) & (previous_size != size);
+	previous_size = size;
 
 	extern bool global_retape;
 	if( global_retape ) while(repeat--)
@@ -92,17 +95,8 @@ bool link_det_minor(
 
 		extern bool global_optimize;
 		if( global_optimize )
-		{	size_t before, after;
-			before = f.size_var();
-			f.optimize();
-			if( print_this_time ) 
-			{	after = f.size_var();
-				std::cout << "cppad_det_minor_optimize_size_" 
-				          << int(size) << " = [ " << int(before) 
-				          << ", " << int(after) << "]" << std::endl;
-				printed         = true;
-				print_this_time = false;
-			}
+		{	print_optimize(f, print, "cppad_det_minor_optimize", size);
+			print = false;
 		}
 	
 		// get the next matrix
@@ -132,19 +126,8 @@ bool link_det_minor(
 
 		extern bool global_optimize;
 		if( global_optimize )
-		{	size_t before, after;
-			before = f.size_var();
-			f.optimize();
-			if( print_this_time ) 
-			{	after = f.size_var();
-				std::cout << "optimize: size = " << size
-				          << ": size_var() = "
-				          << before << "(before) " 
-				          << after << "(after) " 
-				          << std::endl;
-				printed         = true;
-				print_this_time = false;
-			}
+		{	print_optimize(f, print, "cppad_det_minor_optimize", size);
+			print = false;
 		}
 	
 		// ------------------------------------------------------

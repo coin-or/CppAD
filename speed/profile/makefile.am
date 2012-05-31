@@ -40,6 +40,8 @@ LDADD         = -lspeed
 AM_LDFLAGS    = -L../src -pg
 #
 profile_SOURCES = \
+	../cppad/print_optimize.hpp \
+	../cppad/print_optimize.cpp \
 	../main.cpp \
 	../cppad/ode.cpp \
 	../cppad/det_lu.cpp  \

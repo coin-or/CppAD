@@ -1,6 +1,6 @@
 /* $Id$ */
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-10 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-12 Bradley M. Bell
 
 CppAD is distributed under multiple licenses. This distribution is under
 the terms of the 
@@ -44,6 +44,7 @@ $codep */
 # include <cppad/vector.hpp>
 # include <cppad/speed/det_by_lu.hpp>
 # include <cppad/speed/uniform_01.hpp>
+# include "print_optimize.hpp"
 
 bool link_det_lu(
 	size_t                           size     , 
@@ -68,9 +69,12 @@ bool link_det_lu(
 	CppAD::vector<double> w(1);
 	w[0] = 1.;
 
+	// use the unspecified fact that size is non-decreasing between calls
+	static size_t previous_size = 0;
+	bool print    = (repeat > 1) & (previous_size != size);
+	previous_size = size;
+
 	// ------------------------------------------------------
-	static bool printed = false;
-	bool print_this_time = (! printed) & (repeat > 1) & (size >= 10);
 	while(repeat--)
 	{	// get the next matrix
 		CppAD::uniform_01(n, matrix);
@@ -88,17 +92,8 @@ bool link_det_lu(
 
 		extern bool global_optimize;
 		if( global_optimize )
-		{	size_t before, after;
-			before = f.size_var();
-			f.optimize();
-			if( print_this_time ) 
-			{	after = f.size_var();
-				std::cout << "cppad_det_lu_optimize_size_" 
-				          << int(size) << " = [ " << int(before) 
-				          << ", " << int(after) << "]" << std::endl;
-				printed         = true;
-				print_this_time = false;
-			}
+		{	print_optimize(f, print, "cppad_det_lu_optimize", size);
+			print = false;
 		}
 
 		// evaluate and return gradient using reverse mode

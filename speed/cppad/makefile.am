@@ -41,6 +41,8 @@ LDADD           = -lspeed
 AM_LDFLAGS      = -L../src
 #
 cppad_SOURCES = \
+	print_optimize.hpp \
+	print_optimize.cpp \
 	../main.cpp \
 	det_lu.cpp  \
 	det_minor.cpp \

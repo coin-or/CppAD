@@ -41,9 +41,10 @@ am__configure_deps = $(am__aclocal_m4_deps) $(CONFIGURE_DEPENDENCIES) \
 mkinstalldirs = $(install_sh) -d
 CONFIG_CLEAN_FILES =
 CONFIG_CLEAN_VPATH_FILES =
-am_cppad_OBJECTS = main.$(OBJEXT) det_lu.$(OBJEXT) det_minor.$(OBJEXT) \
-	mat_mul.$(OBJEXT) ode.$(OBJEXT) poly.$(OBJEXT) \
-	sparse_hessian.$(OBJEXT) sparse_jacobian.$(OBJEXT)
+am_cppad_OBJECTS = print_optimize.$(OBJEXT) main.$(OBJEXT) \
+	det_lu.$(OBJEXT) det_minor.$(OBJEXT) mat_mul.$(OBJEXT) \
+	ode.$(OBJEXT) poly.$(OBJEXT) sparse_hessian.$(OBJEXT) \
+	sparse_jacobian.$(OBJEXT)
 cppad_OBJECTS = $(am_cppad_OBJECTS)
 cppad_LDADD = $(LDADD)
 cppad_DEPENDENCIES =
@@ -56,6 +57,10 @@ CXXCOMPILE = $(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) \
 CXXLD = $(CXX)
 CXXLINK = $(CXXLD) $(AM_CXXFLAGS) $(CXXFLAGS) $(AM_LDFLAGS) $(LDFLAGS) \
 	-o $@
+COMPILE = $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) \
+	$(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS)
+CCLD = $(CC)
+LINK = $(CCLD) $(AM_CFLAGS) $(CFLAGS) $(AM_LDFLAGS) $(LDFLAGS) -o $@
 SOURCES = $(cppad_SOURCES)
 DIST_SOURCES = $(cppad_SOURCES)
 ETAGS = etags
@@ -224,6 +229,8 @@ LDADD = -lspeed
 AM_LDFLAGS = -L../src
 #
 cppad_SOURCES = \
+	print_optimize.hpp \
+	print_optimize.cpp \
 	../main.cpp \
 	det_lu.cpp  \
 	det_minor.cpp \
@@ -286,6 +293,7 @@ distclean-compile:
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/mat_mul.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/ode.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/poly.Po@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/print_optimize.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/sparse_hessian.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/sparse_jacobian.Po@am__quote@
 

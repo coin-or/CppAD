@@ -46,7 +46,14 @@ This section contains a list of the changes to CppAD during 2012
 The purpose of this section is to
 assist you in learning about changes between various versions of CppAD.
 
-$head 02-30$$
+$head 05-31$$
+Add the $cref cppad_print_optimize$$ routine to so that the corresponding
+code does not need to be reproduced for all the 
+$cref speed_cppad$$ tests.
+In addition, during CppAD speed tests, 
+print out the optimization results for each test size.
+
+$head 05-30$$
 Change specifications for 
 $cref link_sparse_hessian$$ so that the row and column indices are 
 inputs (instead of being chosen randomly by the test for each repetition).

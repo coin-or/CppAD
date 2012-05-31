@@ -66,8 +66,8 @@ The argument $icode x$$ has prototype
 $codei%
         CppAD::vector<double> &%x%
 %$$
-The size of the vector $icode x$$ determines 
-and is equal to the value of $latex n$$.
+The size of $icode x$$ is the size used to identify this speed test
+and it is dimension of the domain space for $latex f(x)$$; i.e., $latex n$$.
 The input value of the elements of $icode x$$ does not matter.
 On output, it has been set to the
 argument value for which the function,
