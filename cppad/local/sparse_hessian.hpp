@@ -924,28 +924,19 @@ size_t ADFun<Base>::SparseHessian(
 	size_t n = Domain();
 	size_t k, K = hes.size();
 	if( work.r_sort.size() == 0 )
-	{	// create version of (row, col,k) sorted by rows
-		size_t min_bytes = 3 * K * sizeof(size_t);
-		size_t cap_bytes;
-		void*  v_ptr  = thread_alloc::get_memory(min_bytes, cap_bytes);
-		size_t* rck  = reinterpret_cast<size_t*>(v_ptr);
-		for(k = 0; k < K; k++)
-		{	// must put column first so it is used for sorting
-			rck[3 * k + 0] = row[k];
-			rck[3 * k + 1] = col[k];
-			rck[3 * k + 2] = k;
-		}
-		std::qsort(rck, K, 3 * sizeof(size_t), std_qsort_compare<size_t>);
+	{	// create version of (row, col, k) sorted by row value
 		work.c_sort.resize(K);
 		work.r_sort.resize(K+1);
 		work.k_sort.resize(K);
+
+		// put sorting indices in k_sort
+		index_sort(row, work.k_sort);
+
 		for(k = 0; k < K; k++)
-		{	work.r_sort[k] = rck[3 * k + 0];  
-			work.c_sort[k] = rck[3 * k + 1];  
-			work.k_sort[k] = rck[3 * k + 2];  
+		{	work.r_sort[k] = row[ work.k_sort[k] ];
+			work.c_sort[k] = col[ work.k_sort[k] ];
 		}
 		work.r_sort[K] = n;
-		thread_alloc::return_memory(v_ptr);
 	}
 # ifndef NDEBUG
 	CPPAD_ASSERT_KNOWN(

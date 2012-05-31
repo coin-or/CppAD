@@ -261,35 +261,6 @@ class sparse_jacobian_work {
 };
 // ===========================================================================
 /*!
-std::qsort comparision function
-
-\tparam Key
-Is the type used for the key for the comparision operation.
-There must be a conversion operation from the type 
-\c Key to the type \c int. 
-
-\param a_vptr
-is a pointer to first \c Key value to be compared
-(this must be the beginning of the corresponding record being sorted).
-
-\param b_vptr
-is a pointer to the second \c Key value to be compared
-(this must be the beginning of the corresponding record being sorted).
-
-\return
-is negative, zero, position if the first value is less than,
-equal, or greater than the second (respectively). 
-*/
-template <class Key>
-int std_qsort_compare(const void* a_vptr, const void* b_vptr)
-{	const Key* a_ptr = reinterpret_cast<const Key*>(a_vptr);
-	const Key* b_ptr = reinterpret_cast<const Key*>(b_vptr);
-	int a = static_cast<int>(*a_ptr);
-	int b = static_cast<int>(*b_ptr);
-	return a - b;
-}
-// ===========================================================================
-/*!
 Private helper function forward mode cases
 
 \tparam Base
@@ -1252,28 +1223,20 @@ size_t ADFun<Base>::SparseJacobianForward(
 	size_t n = Domain();
 	size_t k, K = jac.size();
 	if( work.r_sort.size() == 0 )
-	{	// create version of (row, col,k) sorted by columns
-		size_t min_bytes = 3 * K * sizeof(size_t);
-		size_t cap_bytes;
-		void*  v_ptr  = thread_alloc::get_memory(min_bytes, cap_bytes);
-		size_t* crk  = reinterpret_cast<size_t*>(v_ptr);
-		for(k = 0; k < K; k++)
-		{	// must put column first so it is used for sorting
-			crk[3 * k + 0] = col[k];
-			crk[3 * k + 1] = row[k];
-			crk[3 * k + 2] = k;
-		}
-		std::qsort(crk, K, 3 * sizeof(size_t), std_qsort_compare<size_t>);
+	{	// create version of (row, col, k) sorted by column value
 		work.c_sort.resize(K+1);
 		work.r_sort.resize(K);
 		work.k_sort.resize(K);
+
+		// put sorting indices in k_sort
+		index_sort(col, work.k_sort);
+
+		// put sorted indices in r_sort and c_sort
 		for(k = 0; k < K; k++)
-		{	work.c_sort[k] = crk[3 * k + 0];  
-			work.r_sort[k] = crk[3 * k + 1];  
-			work.k_sort[k] = crk[3 * k + 2];  
+		{	work.r_sort[k] = row[ work.k_sort[k] ];
+			work.c_sort[k] = col[ work.k_sort[k] ];
 		}
 		work.c_sort[K] = n;
-		thread_alloc::return_memory(v_ptr);
 	}
 # ifndef NDEBUG
 	size_t m = Range();
@@ -1380,28 +1343,20 @@ size_t ADFun<Base>::SparseJacobianReverse(
 	size_t m = Range();
 	size_t k, K = jac.size();
 	if( work.r_sort.size() == 0 )
-	{	// create version of (row, col,k) sorted by rows
-		size_t min_bytes = 3 * K * sizeof(size_t);
-		size_t cap_bytes;
-		void*  v_ptr  = thread_alloc::get_memory(min_bytes, cap_bytes);
-		size_t* rck  = reinterpret_cast<size_t*>(v_ptr);
-		for(k = 0; k < K; k++)
-		{	// must put column first so it is used for sorting
-			rck[3 * k + 0] = row[k];
-			rck[3 * k + 1] = col[k];
-			rck[3 * k + 2] = k;
-		}
-		std::qsort(rck, K, 3 * sizeof(size_t), std_qsort_compare<size_t>);
+	{	// create version of (row, col, k) sorted by row row value
 		work.c_sort.resize(K);
 		work.r_sort.resize(K+1);
 		work.k_sort.resize(K);
+
+		// put sorting indices in k_sort
+		index_sort(row, work.k_sort);
+
+		// put sorted indices in r_sort and c_sort
 		for(k = 0; k < K; k++)
-		{	work.r_sort[k] = rck[3 * k + 0];  
-			work.c_sort[k] = rck[3 * k + 1];  
-			work.k_sort[k] = rck[3 * k + 2];  
+		{	work.r_sort[k] = row[ work.k_sort[k] ];
+			work.c_sort[k] = col[ work.k_sort[k] ];
 		}
 		work.r_sort[K] = m;
-		thread_alloc::return_memory(v_ptr);
 	}
 # ifndef NDEBUG
 	size_t n = Domain();
