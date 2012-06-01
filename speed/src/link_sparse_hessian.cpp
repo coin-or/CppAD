@@ -137,9 +137,6 @@ $end
 # include <cppad/speed/uniform_01.hpp>
 # include <cppad/index_sort.hpp>
 
-// Link std::exp to spare_hessian_evaluate.hpp for doubles.
-# include <math.h>
-
 /*!
 \file link_sparse_hessian.cpp
 Defines and implement sparse Hessian speed link to package specific code.
@@ -194,7 +191,7 @@ namespace {
 	the input size and elements of \c row do not matter.
 	Upon return it is the chosen row indices.
 
-	\param row [out]
+	\param col [out]
 	the input size and elements of \c col do not matter.
 	Upon return it is the chosen column indices.
 	*/
@@ -257,7 +254,7 @@ number of times tha the test is repeated.
 
 \param x [out]
 is a vector of size \c n containing
-the argument at which the hessian was evaluated during the last repetition.
+the argument at which the Hessian was evaluated during the last repetition.
 
 \param row [in]
 is the row indices correpsonding to non-zero Hessian entries.
@@ -289,8 +286,7 @@ Is sparse Hessian test avaialable.
 true, if spare Hessian available for this package, and false otherwise.
 */
 bool available_sparse_hessian(void)
-{	using CppAD::vector;
-
+{	
 	size_t n      = 10;
 	size_t repeat = 1;
 	vector<double> x(n);
@@ -300,7 +296,6 @@ bool available_sparse_hessian(void)
 
 	return link_sparse_hessian(repeat, x, row, col, hessian);
 }
-
 /*!
 Does final sparse Hessian value pass correctness test.
 
@@ -308,8 +303,7 @@ Does final sparse Hessian value pass correctness test.
 true, if correctness test passes, and false otherwise.
 */
 bool correct_sparse_hessian(bool is_package_double)
-{	using CppAD::vector;
-
+{	
 	size_t n      = 10;
 	size_t repeat = 1;
 	vector<double> x(n);
@@ -349,8 +343,7 @@ This is also scales the size of the test.
 is the number of times to repeate the speed test.
 */
 void speed_sparse_hessian(size_t n, size_t repeat)
-{	using CppAD::vector;
-
+{	
 	vector<double> x(n);
 	vector<double> hessian(n * n);
 	vector<size_t> row, col;

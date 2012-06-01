@@ -105,7 +105,7 @@ bool link_sparse_hessian(
 	typedef vector< std::set<size_t> >  SetVector;
 	typedef vector<bool>                BoolVector;
 
-	size_t j, k;
+	size_t i, j, k;
 	size_t size  = x.size();  // size corresponding to this speed test
 	size_t order = 0;         // derivative order corresponding to function
 	size_t m = 1;             // number of dependent variables
@@ -131,6 +131,11 @@ bool link_sparse_hessian(
 # else
 	BoolVector sparsity(n * n);
 # endif
+	// initialize all entries as zero
+	for(i = 0; i < n; i++)
+	{	for(j = 0; j < n; j++)
+			hessian[ i * n + j] = 0.;
+	}
 	// ------------------------------------------------------
 	extern bool global_retape;
 	if( global_retape) while(repeat--)
@@ -158,13 +163,13 @@ bool link_sparse_hessian(
 		// calculate the Hessian sparsity pattern for this function
 		calc_sparsity(sparsity, f);
 
-		// declare structure that holds some of work done by SparseHessian
+		// structure that holds some of work done by SparseHessian
 		CppAD::sparse_hessian_work work;
 
 		// choose a value for x
 		CppAD::uniform_01(n, x);
 
-		// calculate sparsity at this x
+		// calculate this Hessian at this x
 		f.SparseHessian(x, w, sparsity, row, col, hes, work);
 		for(k = 0; k < K; k++)
 		{	hessian[ row[k] * n + col[k] ] = hes[k];

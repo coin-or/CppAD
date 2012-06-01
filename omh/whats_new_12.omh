@@ -46,6 +46,15 @@ This section contains a list of the changes to CppAD during 2012
 The purpose of this section is to
 assist you in learning about changes between various versions of CppAD.
 
+$head 06-01$$
+Change 
+$cref cppad_sparse_hessian.cpp$$ and
+$cref cppad_sparse_jacobian.cpp$$ 
+to use
+the $icode row$$, $icode col$$ interface to $cref sparse_hessian$$.
+In addition, implement the speed test 
+$cref/retape/speed_main/option_list/retape/$$ option for these tests.
+
 $head 05-31$$
 Add the $cref cppad_print_optimize$$ routine to so that the corresponding
 code does not need to be reproduced for all the 
