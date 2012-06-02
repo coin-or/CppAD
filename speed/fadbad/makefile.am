@@ -48,4 +48,4 @@ fadbad_SOURCES = \
 	sparse_jacobian.cpp
 
 test: check
-	./fadbad correct 123
+	./fadbad correct 123 retape

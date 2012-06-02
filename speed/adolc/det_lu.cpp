@@ -1,6 +1,6 @@
 /* $Id$ */
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-11 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-12 Bradley M. Bell
 
 CppAD is distributed under multiple licenses. This distribution is under
 the terms of the 
@@ -12,7 +12,8 @@ Please visit http://www.coin-or.org/CppAD/ for information on other licenses.
 /*
 $begin adolc_det_lu.cpp$$
 $spell
-	omp_alloc
+	retape
+	thread_alloc
 	cppad
 	fos
 	adouble
@@ -55,6 +56,9 @@ bool link_det_lu(
 	CppAD::vector<double>     &matrix   ,
 	CppAD::vector<double>     &gradient )
 {
+	// speed test global option values
+	extern bool global_retape, global_atomic, global_optimize;
+
 	// -----------------------------------------------------
 	// setup
 	int tag  = 0;         // tape identifier
@@ -64,31 +68,39 @@ bool link_det_lu(
 	double f;             // function value
 	int j;                // temporary index
 
-	// set up for omp_alloc memory allocator (fast and checks for leaks)
-	using CppAD::omp_alloc; // the allocator
-	size_t capacity;        // capacity of an allocation
+	// set up for thread_alloc memory allocator (fast and checks for leaks)
+	using CppAD::thread_alloc; // the allocator
+	size_t size_min;           // requested number of elements
+	size_t size_out;           // capacity of an allocation
 
 	// object for computing determinant
-	typedef adouble    ADScalar;
-	typedef ADScalar*  ADVector;
+	typedef adouble            ADScalar;
+	typedef ADScalar*          ADVector;
 	CppAD::det_by_lu<ADScalar> Det(size);
 
 	// AD value of determinant
 	ADScalar   detA;
 
 	// AD version of matrix
-	ADVector A  = omp_alloc::create_array<ADScalar>(n, capacity);
+	size_min = n;
+	ADVector A  = thread_alloc::create_array<ADScalar>(size_min, size_out);
 	
 	// vectors of reverse mode weights 
-	double* u   = omp_alloc::create_array<double>(m, capacity);
+	size_min = m;
+	double* u   = thread_alloc::create_array<double>(size_min, size_out);
 	u[0] = 1.;
 
 	// vector with matrix value
-	double* mat  = omp_alloc::create_array<double>(n, capacity);
+	size_min = n;
+	double* mat  = thread_alloc::create_array<double>(size_min, size_out);
 
 	// vector to receive gradient result
-	double* grad = omp_alloc::create_array<double>(n, capacity);
+	size_min = n;
+	double* grad = thread_alloc::create_array<double>(size_min, size_out);
 	// ------------------------------------------------------
+	extern bool global_retape;
+	if( ! global_retape || global_optimize || global_atomic )
+		return false;
 	while(repeat--)
 	{	// get the next matrix
 		CppAD::uniform_01(n, mat);
@@ -116,10 +128,10 @@ bool link_det_lu(
 		gradient[j] = grad[j];
 	}
 	// tear down
-	omp_alloc::delete_array(grad);
-	omp_alloc::delete_array(mat);
-	omp_alloc::delete_array(u);
-	omp_alloc::delete_array(A);
+	thread_alloc::delete_array(grad);
+	thread_alloc::delete_array(mat);
+	thread_alloc::delete_array(u);
+	thread_alloc::delete_array(A);
 
 	return true;
 }

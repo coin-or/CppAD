@@ -56,3 +56,4 @@ test: check
 	./cppad correct 123
 	./cppad correct 123 retape
 	./cppad correct 123 optimize
+	./cppad correct 123 atomic

@@ -53,6 +53,9 @@ bool link_det_lu(
 	CppAD::vector<double>           &matrix   ,
 	CppAD::vector<double>           &gradient )
 {
+	// speed test global option values
+	extern bool global_retape, global_atomic, global_optimize;
+
 	// -----------------------------------------------------
 	// setup
 	typedef CppAD::AD<double>           ADScalar; 
@@ -75,9 +78,9 @@ bool link_det_lu(
 	bool print    = (repeat > 1) & (previous_size != size);
 	previous_size = size;
 
+
 	// ------------------------------------------------------
-	extern bool global_retape;
-	if( ! global_retape )
+	if( ! global_retape || global_atomic )
 		return false;
 	while(repeat--)
 	{	// get the next matrix
@@ -94,7 +97,6 @@ bool link_det_lu(
 		// create function object f : A -> detA
 		f.Dependent(A, detA);
 
-		extern bool global_optimize;
 		if( global_optimize )
 		{	print_optimize(f, print, "cppad_det_lu_optimize", size);
 			print = false;

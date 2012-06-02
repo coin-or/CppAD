@@ -249,6 +249,16 @@ bool   global_atomic;
 namespace {
 	using std::cout;
 	using std::endl;
+	// ----------------------------------------------------------------
+	// not available test message
+	void not_available_message(const char* test_name)
+	{	cout << AD_PACKAGE << ": " << test_name;
+		cout << " is not availabe with " << endl;
+		cout << "global_retape = " << global_retape;
+		cout << ", global_optimize = " << global_optimize;
+		cout << ", global_atomic = " << global_atomic;
+		cout << endl;
+	}
 
 	// ------------------------------------------------------
 	// output vector in form readable by octave or matlab
@@ -464,8 +474,7 @@ int main(int argc, char *argv[])
 
 		case test_det_lu:
 		if( ! available_det_lu() )
-		{	cout << AD_PACKAGE << ": test " << argv[1] 
-			     << " not available" << endl; 
+		{	not_available_message( argv[1] ); 
 			exit(1);
 		}
 		ok &= run_correct(correct_det_lu,           "det_lu");
@@ -475,8 +484,7 @@ int main(int argc, char *argv[])
 
 		case test_det_minor:
 		if( ! available_det_minor() )
-		{	cout << AD_PACKAGE << ": test " << argv[1] 
-			     << " not available" << endl; 
+		{	not_available_message( argv[1] ); 
 			exit(1);
 		}
 		ok &= run_correct(correct_det_minor,       "det_minor");
@@ -486,8 +494,7 @@ int main(int argc, char *argv[])
 
 		case test_mat_mul:
 		if( ! available_mat_mul() )
-		{	cout << AD_PACKAGE << ": test " << argv[1] 
-			     << " not available" << endl; 
+		{	not_available_message( argv[1] ); 
 			exit(1);
 		}
 		ok &= run_correct(correct_mat_mul,     "mat_mul");
@@ -497,8 +504,7 @@ int main(int argc, char *argv[])
 
 		case test_ode:
 		if( ! available_ode() )
-		{	cout << AD_PACKAGE << ": test " << argv[1] 
-			     << " not available" << endl; 
+		{	not_available_message( argv[1] ); 
 			exit(1);
 		}
 		ok &= run_correct(correct_ode,           "ode");
@@ -508,8 +514,7 @@ int main(int argc, char *argv[])
 
 		case test_poly:
 		if( ! available_poly() )
-		{	cout << AD_PACKAGE << ": test " << argv[1] 
-			     << " not available" << endl; 
+		{	not_available_message( argv[1] ); 
 			exit(1);
 		}
 		ok &= run_correct(correct_poly,            "poly");
@@ -519,8 +524,7 @@ int main(int argc, char *argv[])
 
 		case test_sparse_hessian:
 		if( ! available_sparse_hessian() )
-		{	cout << AD_PACKAGE << ": test " << argv[1] 
-			     << " not available" << endl; 
+		{	not_available_message( argv[1] ); 
 			exit(1);
 		}
 		ok &= run_correct(correct_sparse_hessian, "sparse_hessian");
@@ -531,8 +535,7 @@ int main(int argc, char *argv[])
 
 		case test_sparse_jacobian:
 		if( ! available_sparse_jacobian() )
-		{	cout << AD_PACKAGE << ": test " << argv[1] 
-			     << " not available" << endl; 
+		{	not_available_message( argv[1] ); 
 			exit(1);
 		}
 		ok &= run_correct(correct_sparse_jacobian, "sparse_jacobian");
