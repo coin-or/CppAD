@@ -17,7 +17,7 @@ $$
 
 $section CppAD Deprecated API Features$$
 
-$children%
+$childtable%
 	omh/include_deprecated.omh%
 	omh/fun_deprecated.omh%
 	cppad/local/omp_max_thread.hpp%
@@ -33,11 +33,6 @@ $cref/CppADCreateDiscrete/Discrete/Deprecated/$$  $cnext
 	$title Discrete$$ $rnext
 $cref/CppADvector/test_vector/Deprecated/$$  $cnext 
 	$title test_vector$$ $rnext
-$rref include_deprecated$$
-$rref FunDeprecated$$
-$rref omp_max_thread$$
-$rref TrackNewDel$$
-$rref omp_alloc$$
 $tend
 
 

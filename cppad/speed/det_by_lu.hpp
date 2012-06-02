@@ -3,7 +3,7 @@
 # define CPPAD_DET_BY_LU_INCLUDED
 
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-09 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-12 Bradley M. Bell
 
 CppAD is distributed under multiple licenses. This distribution is under
 the terms of the 
@@ -15,6 +15,7 @@ Please visit http://www.coin-or.org/CppAD/ for information on other licenses.
 /*
 $begin det_by_lu$$
 $spell
+	CppAD
 	cppad
 	lu
 	hpp
@@ -22,7 +23,7 @@ $spell
 	const
 	hpp
 	Det
-	CppADvector
+	CPPAD_TEST_VECTOR
 	namespace
 $$
 
@@ -145,13 +146,13 @@ CPPAD_BOOL_BINARY(Complex, AbsGeq )
 template <class Scalar>
 class det_by_lu {
 private:
-	const size_t m;
-	const size_t n;
-	CppADvector<Scalar> A;
-	CppADvector<Scalar> B;
-	CppADvector<Scalar> X;
+	const size_t m_;
+	const size_t n_;
+	CPPAD_TEST_VECTOR<Scalar> A_;
+	CPPAD_TEST_VECTOR<Scalar> B_;
+	CPPAD_TEST_VECTOR<Scalar> X_;
 public:
-	det_by_lu(size_t n_) : m(0), n(n_), A(n_ * n_)
+	det_by_lu(size_t n) : m_(0), n_(n), A_(n * n)
 	{	}
 
 	template <class Vector>
@@ -159,18 +160,18 @@ public:
 	{
 		using CppAD::exp;
 
-		Scalar         logdet;
-		Scalar         det;
+		Scalar       logdet;
+		Scalar       det;
 		int          signdet;
 		size_t       i;
 
 		// copy matrix so it is not overwritten
-		for(i = 0; i < n * n; i++)
-			A[i] = x[i];
+		for(i = 0; i < n_ * n_; i++)
+			A_[i] = x[i];
  
 		// comput log determinant
 		signdet = CppAD::LuSolve(
-			n, m, A, B, X, logdet);
+			n_, m_, A_, B_, X_, logdet);
 
 /*
 		// Do not do this for speed test because it makes floating 
@@ -185,8 +186,8 @@ public:
 
 # ifdef FADBAD
 		// Fadbad requires tempories to be set to constants
-		for(i = 0; i < n * n; i++)
-			A[i] = 0;
+		for(i = 0; i < n_ * n_; i++)
+			A_[i] = 0;
 # endif
 
 		return det;

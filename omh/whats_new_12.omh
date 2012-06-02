@@ -13,6 +13,7 @@ Please visit http://www.coin-or.org/CppAD/ for information on other licenses.
 $begin whats_new_12$$
 $dollar @$$
 $spell
+	CppADvector
 	retape
 	Jacobian
 	dir
@@ -45,6 +46,16 @@ This section contains a list of the changes to CppAD during 2012
 (in reverse order by date).
 The purpose of this section is to
 assist you in learning about changes between various versions of CppAD.
+
+$head 06-02$$
+$list number$$
+Remove the deprecated symbol
+$cref/CppADvector/test_vector/Deprecated/$$ from the
+$cref det_by_lu$$ speed test source code $cref det_by_lu.hpp$$.
+$lnext
+Include $cref memory_leak$$ in the list of 
+$cref deprecated$$ features.
+$lend
 
 $head 06-01$$
 Change 
