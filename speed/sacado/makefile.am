@@ -48,4 +48,4 @@ sacado_SOURCES = \
 	sparse_jacobian.cpp
 
 test: check
-	./sacado correct 123
+	./sacado correct 123 retape

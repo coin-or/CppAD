@@ -70,7 +70,6 @@ bool link_det_lu(
 	ADVector   A(n);         // AD version of matrix 
 	
 	// ------------------------------------------------------
-	extern bool global_retape;
 	if( ! global_retape || global_optimize || global_atomic )
 		return false;
 	while(repeat--)

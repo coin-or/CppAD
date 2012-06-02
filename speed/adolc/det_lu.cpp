@@ -82,23 +82,22 @@ bool link_det_lu(
 	ADScalar   detA;
 
 	// AD version of matrix
-	size_min = n;
+	size_min    = n;
 	ADVector A  = thread_alloc::create_array<ADScalar>(size_min, size_out);
 	
 	// vectors of reverse mode weights 
-	size_min = m;
+	size_min    = m;
 	double* u   = thread_alloc::create_array<double>(size_min, size_out);
 	u[0] = 1.;
 
 	// vector with matrix value
-	size_min = n;
+	size_min     = n;
 	double* mat  = thread_alloc::create_array<double>(size_min, size_out);
 
 	// vector to receive gradient result
-	size_min = n;
+	size_min     = n;
 	double* grad = thread_alloc::create_array<double>(size_min, size_out);
 	// ------------------------------------------------------
-	extern bool global_retape;
 	if( ! global_retape || global_optimize || global_atomic )
 		return false;
 	while(repeat--)

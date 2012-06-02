@@ -13,6 +13,10 @@ Please visit http://www.coin-or.org/CppAD/ for information on other licenses.
 $begin whats_new_12$$
 $dollar @$$
 $spell
+	det_lu
+	adolc
+	fadbad
+	sacado
 	CppADvector
 	retape
 	Jacobian
@@ -67,8 +71,14 @@ $lnext
 Implement the $icode%retape% == false%$$ option
 in $cref cppad_ode.cpp$$.
 $lnext
-Have $cref cppad_det_lu.cpp$$ return false,
-for test not available, when $icode global_retape$$ is false.
+Have 
+$cref cppad_det_lu.cpp$$, and
+$cref cppad_det_minor.cpp$$,
+return false when one of the specified options is not supported.
+Do the same for
+$icode%package%_%test%.cpp%$$ for $icode package$$ equal to 
+$code adolc$$, $code fadbad$$, and $code sacado$$ and 
+for $icode test$$ equal to $code det_lu$$, $code det_minor$$.
 $lend
 
 $head 06-01$$

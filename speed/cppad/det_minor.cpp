@@ -50,6 +50,9 @@ bool link_det_minor(
 	CppAD::vector<double>     &matrix   ,
 	CppAD::vector<double>     &gradient )
 {
+	// speed test global option values
+	extern bool global_retape, global_atomic, global_optimize;
+
 	// -----------------------------------------------------
 	// setup
 
@@ -76,7 +79,9 @@ bool link_det_minor(
 	bool print    = (repeat > 1) & (previous_size != size);
 	previous_size = size;
 
-	extern bool global_retape;
+	// ---------------------------------------------------------------------
+	if( global_atomic )
+		return false;
 	if( global_retape ) while(repeat--)
 	{
 		// choose a matrix
@@ -93,7 +98,6 @@ bool link_det_minor(
 		// create function object f : A -> detA
 		f.Dependent(A, detA);
 
-		extern bool global_optimize;
 		if( global_optimize )
 		{	print_optimize(f, print, "cppad_det_minor_optimize", size);
 			print = false;
@@ -121,7 +125,6 @@ bool link_det_minor(
 		// create function object f : A -> detA
 		f.Dependent(A, detA);
 
-		extern bool global_optimize;
 		if( global_optimize )
 		{	print_optimize(f, print, "cppad_det_minor_optimize", size);
 			print = false;

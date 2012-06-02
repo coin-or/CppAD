@@ -1,6 +1,6 @@
 /* $Id$ */
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-09 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-12 Bradley M. Bell
 
 CppAD is distributed under multiple licenses. This distribution is under
 the terms of the 
@@ -46,6 +46,9 @@ bool link_det_minor(
 	CppAD::vector<double>     &matrix   ,
 	CppAD::vector<double>     &gradient )
 {
+	// speed test global option values
+	extern bool global_retape, global_atomic, global_optimize;
+
 	// -----------------------------------------------------
 	// setup
 
@@ -61,6 +64,8 @@ bool link_det_minor(
 	ADVector   A(n);         // AD version of matrix 
 	
 	// ------------------------------------------------------
+	if( ! global_retape || global_atomic || global_optimize )
+		return false;
 	while(repeat--)
        {	// get the next matrix
 		CppAD::uniform_01(n, matrix);
