@@ -99,9 +99,6 @@ bool link_det_minor(
 			print = false;
 		}
 	
-		// get the next matrix
-		CppAD::uniform_01(n, matrix);
-	
 		// evaluate the determinant at the new matrix value
 		f.Forward(0, matrix);
 	

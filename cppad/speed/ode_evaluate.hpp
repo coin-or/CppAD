@@ -3,7 +3,7 @@
 # define CPPAD_ODE_EVALUATE_INCLUDED
 
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-11 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-12 Bradley M. Bell
 
 CppAD is distributed under multiple licenses. This distribution is under
 the terms of the 
@@ -46,18 +46,13 @@ $latex \[
 where $latex y(x, t)$$ solves the ordinary differential equation
 $latex \[
 \begin{array}{rcl}
-	y(x, 0)                & = & b(x)
+	y(x, 0)              & = & x
 	\\
-	\partial_t y ( x , t ) & = & g[ x , y(x,t) , t ]
+	\partial_t y (x, t ) & = & g[ y(x,t) , t ]
 \end{array}
 \] $$
-where $latex b : \B{R}^n \rightarrow \B{R}^n$$ and
-$latex g : \B{R}^n \times \B{R}^n \times \B{R} \rightarrow \B{R}^n$$
-are not any further specified. 
-A numerical method is used to solve the ode and obtain an accurate
-approximation for $latex y(x, 1)$$.
-This in turn is used to compute values and Jacobian of the
-function $latex f(x)$$.
+where $latex g : \B{R}^n \times \B{R} \rightarrow \B{R}^n$$
+is an unspecified function.
 
 $head Inclusion$$
 The template function $code ode_evaluate$$ 
@@ -77,7 +72,7 @@ and hence it must be retaped for each new value of $latex x$$.
 $head x$$
 The argument $icode x$$ has prototype
 $codei%
-	const CppAD::vector<%Float%> &%x%
+	const CppAD::vector<%Float%>& %x%
 %$$
 It contains he argument value for which the function,
 or its derivative, is being evaluated.
@@ -88,34 +83,22 @@ The argument $icode m$$ has prototype
 $icode%
 	size_t %m%
 %$$
-It is either zero or one and
-specifies the order of the derivative of $latex f(x)$$,
-with respect to $latex x$$, 
-that is being evaluated.
 
-$head m = 0$$
-In this case the function $latex f(x)$$ is evaluated as described above.
+$subhead m == 0$$
+In this case a numerical method is used to solve the ode 
+and obtain an accurate approximation for $latex y(x, 1)$$.
+This numerical method has a fixed
+$cref/operation sequence/glossary/Operation/Sequence/$$
+that does not depend on $icode x$$.
 
-$head m = 1$$
-In this case 
-the following extended system is solved:
-$latex \[
-\begin{array}{rcl}
-y(x, 0)                & = & b(x)
-\\
-\partial_t y ( x , t ) & = & g[ x , y(x,t) , t ]
-\\
-y_x (x, 0)             & = & b^{(1)} (x)
-\\
-partial_t y_x (x,  t)  & = & \partial_x g[ x , y(x,t) , t ] 
-                         +   \partial_y g[ x , y(x,t) , t ] y_x
-\end{array}
-\] $$
+$subhead m = 1$$
+In this case an analytic solution for the partial derivative
+$latex \partial_x y(x, 1)$$ is returned.
 
 $head fm$$
 The argument $icode fm$$ has prototype
 $icode%
-	CppAD::vector<%Float%> &%fm%
+	CppAD::vector<%Float%>& %fm%
 %$$
 The input value of the elements of $icode fm$$ does not matter.
 
@@ -147,7 +130,6 @@ The file
 $cref ode_evaluate.hpp$$
 contains the source code for this template function.
 
-
 $end
 */
 // BEGIN PROGRAM
@@ -155,158 +137,93 @@ $end
 # include <cppad/ode_err_control.hpp>
 # include <cppad/runge_45.hpp>
 
-namespace CppAD {  // BEGIN CppAD namespace
+namespace CppAD { 
 
-template <class Float>
-class ode_evaluate_fun {
-private:
-	const size_t m_;
-	const CppAD::vector<Float> x_;
-public:
-	ode_evaluate_fun(size_t m, const CppAD::vector<Float> &x) 
-	: m_(m), x_(x)
-	{ }
-	void Ode(
-		const Float                  &t, 
-		const CppAD::vector<Float>   &z, 
-		CppAD::vector<Float>         &h) 
-	{
-		if( m_ == 0 )
-			ode_y(t, z, h);
-		if( m_ == 1 )
-			ode_z(t, z, h);
-	}
-	void ode_y(
-		const Float                  &t, 
-		const CppAD::vector<Float>   &y, 
-		CppAD::vector<Float>         &g) 
-	{	// y_t = g(t, x, y)
-		CPPAD_ASSERT_UNKNOWN( y.size() == x_.size() );
-
-		size_t i;
-		size_t n = x_.size();
-		for(i = 0; i < n; i++)
-			g[i]  = x_[i] * y[i];
-		// because y_i(0) = 1, solution for this equation is
-		// y_0 (t) = t
-		// y_1 (t) = exp(x_1 * t)
-		// y_2 (t) = exp(2 * x_2 * t)
+	template <class Float>
+	class ode_evaluate_fun {
+	public:
+		// Given that y_i (0) = x_i, 
+		// the following y_i (t) satisfy the ODE below:
+		// y_0 (t) = x[0]
+		// y_1 (t) = x[1] + x[0] * t 
+		// y_2 (t) = x[2] + x[1] * t + x[0] * t^2/2
+		// y_3 (t) = x[3] + x[2] * t + x[1] * t^2/2 + x[0] * t^3 / 3!
 		// ...
-	}
-	void ode_z(
-		const Float                  &t , 
-		const CppAD::vector<Float>   &z , 
-		CppAD::vector<Float>         &h ) 
-	{	// z    = [ y ; y_x ]
-		// z_t  = h(t, x, z) = [ y_t , y_x_t ]
-		size_t i, j;
-		size_t n = x_.size();
-		CPPAD_ASSERT_UNKNOWN( z.size() == n + n * n );
-
-		// y_t
-		for(i = 0; i < n; i++)
-		{	h[i] = x_[i] * z[i];
-
-			// initialize y_x_t as zero
-			for(j = 0; j < n; j++)
-				h[n + i * n + j] = 0.;
+		void Ode(
+			const Float&                    t, 
+			const CppAD::vector<Float>&     y, 
+			CppAD::vector<Float>&           f)
+		{	size_t n  = y.size();	
+			f[0]      = 0.;
+			for(size_t k = 1; k < n; k++)
+				f[k] = y[k-1];
 		}
+	};
+	//
+	template <class Float>
+	void ode_evaluate(
+		const CppAD::vector<Float>& x  , 
+		size_t                      m  , 
+		CppAD::vector<Float>&       fm )
+	{	using CppAD::vector;
+		typedef vector<Float> VectorFloat;
+
+		size_t n = x.size();
+		CPPAD_ASSERT_KNOWN( m == 0 || m == 1,
+			"ode_evaluate: m is not zero or one"
+		);
+		CPPAD_ASSERT_KNOWN( 
+			((m==0) & (fm.size()==n)) || ((m==1) & (fm.size()==n*n)),
+			"ode_evaluate: the size of fm is not correct"
+		);
+		if( m == 0 )
+		{	// function that defines the ode
+			ode_evaluate_fun<Float> F;
+
+			// number of Runge45 steps to use
+			size_t M = 10;
+
+			// initial and final time
+			Float ti = 0.0;
+			Float tf = 1.0;
+
+			// initial value for y(x, t); i.e. y(x, 0)
+			// (is a reference to x)
+			const VectorFloat& yi = x;
+
+			// final value for y(x, t); i.e., y(x, 1)
+			// (is a reference to fm)
+			VectorFloat& yf = fm;
+			
+			// Use fourth order Runge-Kutta to solve ODE
+			yf = CppAD::Runge45(F, M, ti, tf, yi);
+
+			return;
+		}
+		/* Compute derivaitve of y(x, 1) w.r.t x
+		y_0 (x, t) = x[0]
+		y_1 (x, t) = x[1] + x[0] * t 
+		y_2 (x, t) = x[2] + x[1] * t + x[0] * t^2/2
+		y_3 (x, t) = x[3] + x[2] * t + x[1] * t^2/2 + x[0] * t^3 / 3!
+		...
+		*/
+		size_t i, j, k;
 		for(i = 0; i < n; i++)
-		{	// partial of g_i w.r.t y_i
-			Float gi_yi = x_[i]; 
-			// partial of g_i w.r.t x_i
-			Float gi_xi = z[i];
-			// partial of y_i w.r.t x_i
-			Float yi_xi = z[n + i * n + i];
-			// derivative of yi_xi with respect to t 
-			h[n + i * n + i] = gi_xi + gi_yi * yi_xi;
+		{	for(j = 0; j < n; j++)
+				fm[ i * n + j ] = 0.0;
+		}
+		size_t factorial = 1;
+		for(k = 0; k < n; k++)
+		{	if( k > 1 )
+				factorial *= k; 
+			for(i = k; i < n; i++)
+			{	// partial w.r.t x[i-k] of x[i-k] * t^k / k!
+				j = i - k;
+				fm[ i * n + j ] += 1.0 / Float(factorial);
+			}
 		}
 	}
-};
-
-template <class Float>
-class ode_evaluate_method {
-private:
-	ode_evaluate_fun<Float> F;
-public:
-	// constructor
-	ode_evaluate_method(size_t m, const CppAD::vector<Float> &x) 
-	: F(m, x)
-	{ }
-	void step(
-		Float                 ta ,
-		Float                 tb ,
-		CppAD::vector<Float> &xa ,
-		CppAD::vector<Float> &xb ,
-		CppAD::vector<Float> &eb )
-	{	xb = CppAD::Runge45(F, 1, ta, tb, xa, eb);
-	}
-	size_t order(void)
-	{	return 4; }
-};
-
-
-template <class Float>
-void ode_evaluate(
-	CppAD::vector<Float> &x  , 
-	size_t m                 , 
-	CppAD::vector<Float> &fm )
-{
-	typedef CppAD::vector<Float> Vector;
-
-	size_t n = x.size();
-	size_t ell;
-	CPPAD_ASSERT_KNOWN( m == 0 || m == 1,
-		"ode_evaluate: m is not zero or one"
-	);
-	CPPAD_ASSERT_KNOWN( 
-		((m==0) & (fm.size()==n)) || ((m==1) & (fm.size()==n*n)),
-		"ode_evaluate: the size of fm is not correct"
-	);
-	if( m == 0 )
-		ell = n;
-	else	ell = n + n * n;
-
-	// set up the case we are integrating
-	Float ti    = 0.;
-	Float tf    = 1.;
-	Float smin  = 1e-3;
-	Float smax  = 1.;
-	Float scur  = 1.;
-	Float erel  = 0.;
-	vector<Float> yi(ell), eabs(ell);
-	size_t i, j;
-	for(i = 0; i < ell; i++)
-	{	eabs[i] = 1e-7;
-		if( i < n )
-			yi[i] = 1.;
-		else	yi[i]  = 0.;
-	}
-
-	// return values
-	Vector yf(ell), ef(ell), maxabs(ell);
-	size_t nstep;
-
-	// construct ode method for taking one step
-	ode_evaluate_method<Float> method(m, x);
-
-	// solve differential equation
-	yf = OdeErrControl(method, 
-		ti, tf, yi, smin, smax, scur, eabs, erel, ef, maxabs, nstep);
-
-	if( m == 0 )
-	{	for(i = 0; i < n; i++)
-			fm[i] = yf[i];
-	}
-	else
-	{	for(i = 0; i < n; i++)
-			for(j = 0; j < n; j++)
-				fm[i * n + j] = yf[n + i * n + j];
-	}
-	return;
 }
-
-} // END CppAD namespace
 // END PROGRAM
 
 # endif

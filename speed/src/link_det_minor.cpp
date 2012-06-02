@@ -1,6 +1,6 @@
 /* $Id$ */
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-10 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-12 Bradley M. Bell
 
 CppAD is distributed under multiple licenses. This distribution is under
 the terms of the 
@@ -39,6 +39,10 @@ Each $cref/package/speed_main/package/$$
 must define a version of this routine as specified below.
 This is used by the $cref speed_main$$ program 
 to run the corresponding speed and correctness tests.
+
+$head Method$$
+The same template class $cref det_by_minor$$
+is used by the different AD packages.
 
 $head Return Value$$
 If this speed test is not yet

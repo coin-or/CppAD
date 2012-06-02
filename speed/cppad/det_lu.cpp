@@ -12,6 +12,7 @@ Please visit http://www.coin-or.org/CppAD/ for information on other licenses.
 /*
 $begin cppad_det_lu.cpp$$
 $spell
+	retape
 	bool
 	CppAD
 	vector Vector
@@ -75,6 +76,9 @@ bool link_det_lu(
 	previous_size = size;
 
 	// ------------------------------------------------------
+	extern bool global_retape;
+	if( ! global_retape )
+		return false;
 	while(repeat--)
 	{	// get the next matrix
 		CppAD::uniform_01(n, matrix);

@@ -1,6 +1,6 @@
-/* $Id: link_mat_mul.cpp 1655 2010-02-11 19:59:43Z bradbell $ */
+/* $Id$ */
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-10 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-12 Bradley M. Bell
 
 CppAD is distributed under multiple licenses. This distribution is under
 the terms of the 
@@ -65,7 +65,7 @@ The input value of its elements does not matter.
 The output value of its elements is the last random matrix
 that is multiplied and then summed to form $icode z$$;
 $latex \[
-	x_{i,j} = x[ i * %s% + j ]
+	x_{i,j} = x[ i * s + j ]
 \] $$
 where $icode%s% = %size%$$.
 
@@ -73,10 +73,10 @@ $head z$$
 The argument $icode z$$ is a vector with one element.
 The input value of the element does not matter.
 The output of its element the sum of the elements of 
-$codei%y% = x% * %x%$$; i.e.,
+$icode%y% = %x% * %x%$$; i.e.,
 $latex \[
 \begin{array}{rcl}
-	y_{i,j} & = & \sum_{k=0}^{s-1} x_{i,k} x{k, j} 
+	y_{i,j} & = & \sum_{k=0}^{s-1} x_{i,k} x_{k, j} 
 	\\
 	z       & = & \sum_{i=0}^{s-1} \sum_{j=0}^{s-1} y_{i,j}
 \end{array}

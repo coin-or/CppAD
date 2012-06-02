@@ -161,9 +161,6 @@ bool link_sparse_jacobian(
 		// structure that holds some of the work done by SparseJacobian
 		CppAD::sparse_jacobian_work work;
 
-		// choose a value for x 
-		CppAD::uniform_01(n, x);
-
 		// calculate the Jacobian at this x
 		// (use forward mode because m > n ?)
 		f.SparseJacobianForward(x, sparsity, row, col, jac, work);

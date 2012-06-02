@@ -35,7 +35,7 @@ $codei%extern bool link_sparse_hessian(
 );
 %$$
 
-$head f$$
+$head Method$$
 Given a row index vector $latex row$$
 and a second column vector $latex col$$,
 the corresponding function 

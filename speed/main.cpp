@@ -106,6 +106,7 @@ $cref/correct/speed_main/test/correct/$$,
 $cref/speed/speed_main/test/speed/$$,
 $cref/det_minor/link_det_minor/$$,
 $cref/det_lu/link_det_lu/$$,
+$cref/mat_mul/link_mat_mul/$$,
 $cref/ode/link_ode/$$,
 $cref/poly/link_poly/$$,
 $cref/sparse_hessian/link_sparse_hessian/$$,
@@ -142,13 +143,24 @@ $codep
 $$
 is true and otherwise it is false.
 If this external symbol is true,
-every test must retape the AD operation sequence for each test repetition.
+every test must retape the 
+$cref/operation sequence/glossary/Operation/Sequence/$$
+for each test repetition.
 If it is false,
-and the particular test has a fixed operation sequence,
 the AD package is allowed to use one taping of the operation
 sequence for all the repetitions of that speed test.
-The following tests have a fixed operation sequence:
-$code det_minor$$, $code mat_mul$$, $code ode$$, $code poly$$.
+$pre
+
+$$
+All of the tests, except $cref/det_lu/link_det_lu/$$,
+have a fixed operations sequence.
+The operation sequence for $code det_lu$$ 
+may be different for each repetition of the test because it
+depends on the matrix for which the determinant is being calculated. 
+For this reason,
+$cref cppad_det_lu.cpp$$ returns false 
+(for test not implemented)
+when $code global_retape$$ is false.
 
 $subhead optimize$$
 If the option $code optimize$$ is present, the symbol
@@ -205,6 +217,7 @@ functions that link the speed test to the main program described above:
 $table
 $rref link_det_lu$$
 $rref link_det_minor$$
+$rref link_mat_mul$$
 $rref link_ode$$
 $rref link_poly$$
 $rref link_sparse_hessian$$

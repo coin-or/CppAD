@@ -74,7 +74,8 @@ bool link_ode(
 	previous_size = size;
 
 	// -------------------------------------------------------------
-	while(repeat--)
+	extern bool global_retape;
+	if( global_retape) while(repeat--)
 	{ 	// choose next x value
 		uniform_01(n, x);
 		for(j = 0; j < n; j++)
@@ -95,6 +96,29 @@ bool link_ode(
 			print = false;
 		}
 		jacobian = f.Jacobian(x);
+	}
+	else
+	{ 	// an x value
+		uniform_01(n, x);
+		for(j = 0; j < n; j++)
+			X[j] = x[j];
+
+		// declare the independent variable vector
+		Independent(X);
+
+		// evaluate function
+		CppAD::ode_evaluate(X, m, Y);
+
+		// create function object f : X -> Y
+		f.Dependent(X, Y);
+
+		extern bool global_optimize;
+		if( global_optimize )
+		{	print_optimize(f, print, "cppad_ode_optimize", size);
+			print = false;
+		}
+		while(repeat--)
+			jacobian = f.Jacobian(x);
 	}
 	return true;
 }

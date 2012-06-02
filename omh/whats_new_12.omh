@@ -55,6 +55,20 @@ $cref det_by_lu$$ speed test source code $cref det_by_lu.hpp$$.
 $lnext
 Include $cref memory_leak$$ in the list of 
 $cref deprecated$$ features.
+$lnext
+Change the $cref ode_evaluate$$ speed test utility so that its 
+$cref/operation sequence/glossary/Operation/Sequence/$$
+does not depend on the repetition; see
+$cref/m == 0/ode_evaluate/m/m == 0/$$ in its documentation.
+$lnext
+Use same argument for taping and derivative evaluation when
+$cref/retape/speed_main/option_list/retape/$$ is true.
+$lnext
+Implement the $icode%retape% == false%$$ option
+in $cref cppad_ode.cpp$$.
+$lnext
+Have $cref cppad_det_lu.cpp$$ return false,
+for test not available, when $icode global_retape$$ is false.
 $lend
 
 $head 06-01$$

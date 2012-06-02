@@ -166,9 +166,6 @@ bool link_sparse_hessian(
 		// structure that holds some of work done by SparseHessian
 		CppAD::sparse_hessian_work work;
 
-		// choose a value for x
-		CppAD::uniform_01(n, x);
-
 		// calculate this Hessian at this x
 		f.SparseHessian(x, w, sparsity, row, col, hes, work);
 		for(k = 0; k < K; k++)

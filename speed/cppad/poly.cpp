@@ -113,10 +113,7 @@ bool link_poly(
 		// pre-allocate memory for three forward mode calculations
 		f.capacity_taylor(3);
 
-		// get the next argument value
-		CppAD::uniform_01(1, z);
-
-		// evaluate the polynomial at the new argument value
+		// evaluate the polynomial 
 		p = f.Forward(0, z);
 
 		// evaluate first order Taylor coefficient

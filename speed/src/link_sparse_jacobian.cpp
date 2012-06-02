@@ -36,7 +36,7 @@ $codei%extern bool link_sparse_jacobian(
 );
 %$$
 
-$head f$$
+$head Method$$
 Given a range space dimension $icode m$$
 the row index vector $latex row$$, and column index vector $latex col$$,
 a corresponding function $latex f : \B{R}^n \rightarrow \B{R}^m $$ 
