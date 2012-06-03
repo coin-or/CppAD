@@ -13,6 +13,7 @@ Please visit http://www.coin-or.org/CppAD/ for information on other licenses.
 $begin whats_new_12$$
 $dollar @$$
 $spell
+	mul
 	det_lu
 	adolc
 	fadbad
@@ -50,6 +51,16 @@ This section contains a list of the changes to CppAD during 2012
 (in reverse order by date).
 The purpose of this section is to
 assist you in learning about changes between various versions of CppAD.
+
+$head 06-03$$
+$list number$$
+The $code CppAD::vector$$ class was extended to allow assignment
+with the target of size zero and the source of non-zero size;
+see $cref/check size/CppAD_vector/Assignment/Check Size/$$.
+$lnext
+A memory leak and a bug in $code cppad_mat_mul.cpp$$ were fixed
+(the bug was related to the change to $code CppAD::vector$$ above).
+$lend
 
 $head 06-02$$
 $list number$$

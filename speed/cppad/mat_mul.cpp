@@ -12,6 +12,7 @@ Please visit http://www.coin-or.org/CppAD/ for information on other licenses.
 /*
 $begin cppad_mat_mul.cpp$$
 $spell
+	resize
 	info info
 	nr
 	nc
@@ -57,6 +58,9 @@ bool link_mat_mul(
 	CppAD::vector<double>&           dz
 )
 {
+	// speed test global option values
+	extern bool global_retape, global_atomic, global_optimize;
+
 	// -----------------------------------------------------
 	// setup
 	typedef CppAD::AD<double>           ADScalar; 
@@ -75,13 +79,15 @@ bool link_mat_mul(
 	w[0] = 1.;
 
 	// user atomic information
-	extern bool global_atomic;
+	size_t   info_id = info_.size();  
 	CPPAD_TEST_VECTOR<ADScalar> ax(2 * n), ay(n);
 	call_info info;
-	info.nr_result = size;
-	info.n_middle  = size;
-	info.nc_result = size;
-	size_t   info_id = info_.size();  
+	if( global_atomic )
+	{	info.nr_result = size;
+		info.n_middle  = size;
+		info.nc_result = size;
+		info_.push_back(info);
+	}
 	
 	// use the unspecified fact that size is non-decreasing between calls
 	static size_t previous_size = 0;
@@ -89,7 +95,6 @@ bool link_mat_mul(
 	previous_size = size;
 
 	// ------------------------------------------------------
-	extern bool global_retape;
 	if( global_retape ) while(repeat--)
 	{	// get the next matrix
 		CppAD::uniform_01(n, x);
@@ -103,8 +108,7 @@ bool link_mat_mul(
 		if( ! global_atomic )
 			mat_sum_sq(size, X, Y, Z);
 		else
-		{	info_.push_back(info);
-			for(j = 0; j < n; j++)
+		{	for(j = 0; j < n; j++)
 			{	ax[j]   = X[j];
 				ax[j+n] = X[j];
 			}
@@ -117,7 +121,6 @@ bool link_mat_mul(
 		// create function object f : X -> Z
 		f.Dependent(X, Z);
 
-		extern bool global_optimize;
 		if( global_optimize )
 		{	print_optimize(f, print, "cppad_mat_mul_optimize", size);
 			print = false;
@@ -140,8 +143,7 @@ bool link_mat_mul(
 		if( ! global_atomic )
 			mat_sum_sq(size, X, Y, Z);
 		else
-		{	info_.push_back(info);
-			for(j = 0; j < n; j++)
+		{	for(j = 0; j < n; j++)
 			{	ax[j]   = X[j];
 				ax[j+n] = X[j];
 			}
@@ -155,7 +157,6 @@ bool link_mat_mul(
 		// create function object f : X -> Z
 		f.Dependent(X, Z);
 
-		extern bool global_optimize;
 		if( global_optimize )
 		{	print_optimize(f, print, "cppad_mat_mul_optimize", size);
 			print = false;
@@ -169,6 +170,12 @@ bool link_mat_mul(
 			dz = f.Reverse(1, w);
 		}
 	}
+	// --------------------------------------------------------------------
+	// Free temporary work space. (If there are future calls to 
+	// mat_mul they would create new temporary work space.)
+	CppAD::user_atomic<double>::clear();
+	info_.resize(0);
+
 	return true;
 }
 /* $$

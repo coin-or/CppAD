@@ -73,18 +73,22 @@ $codei%
 has all the properties listed for a
 $cref/simple vector assignment/SimpleVector/Assignment/$$
 plus the following:
-$pre
 
-$$
+$subhead Check Size$$
 The $code CppAD::vector$$ template class will check that
-the size of $icode x$$ is equal to the size of $icode y$$
+the size of $icode x$$ is either zero or the size of $icode y$$
 before doing the assignment.
-If the sizes are not equal, $code CppAD::vector$$ will use
+If this is not the case, $code CppAD::vector$$ will use
 $cref ErrorHandler$$
 to generate an appropriate error report.
-$pre
+Allowing for assignment to a vector with size zero makes the following
+code work:
+$codei%
+	CppAD::vector<%Scalar%> %y%;
+	%y% = %x%;
+%$$
 
-$$
+$subhead Return Reference$$
 A reference to the vector $icode y$$ is returned.
 An example use of this reference is in multiple assignments of the form
 $codei%
@@ -364,6 +368,10 @@ public:
 		const vector& x
 	)
 	{	size_t i;
+		// If original lenght is zero, then resize
+		// otherwise a length mismatch is an error.
+		if( length_ == 0 )
+			resize( x.length_ );
 		CPPAD_ASSERT_KNOWN(
 			length_ == x.length_ ,
 			"vector: size miss match in assignment operation"
