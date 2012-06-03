@@ -1,6 +1,6 @@
 /* $Id$ */
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-09 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-12 Bradley M. Bell
 
 CppAD is distributed under multiple licenses. This distribution is under
 the terms of the 
@@ -55,6 +55,11 @@ bool link_poly(
 	CppAD::vector<double>     &z        ,  // polynomial argument value
 	CppAD::vector<double>     &ddp      )  // second derivative w.r.t z  
 {
+	// speed test global option values
+	extern bool global_retape, global_atomic, global_optimize;
+	if( ! global_retape || global_atomic || global_optimize )
+		return false;
+
 	// -----------------------------------------------------
 	// setup
 	size_t i;             // temporary index     

@@ -1,6 +1,6 @@
 /* $Id$ */
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-11 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-12 Bradley M. Bell
 
 CppAD is distributed under multiple licenses. This distribution is under
 the terms of the 
@@ -61,47 +61,55 @@ bool link_poly(
 	CppAD::vector<double>     &z        ,  // polynomial argument value
 	CppAD::vector<double>     &ddp      )  // second derivative w.r.t z  
 {
+	// speed test global option values
+	extern bool global_retape, global_atomic, global_optimize;
+	if( global_atomic || global_optimize )
+		return false;
+
 	// -----------------------------------------------------
 	// setup
+	size_t i;
 	int tag  = 0;  // tape identifier
-	int keep = 1;  // keep forward mode results in buffer
+	int keep = 0;  // do not keep forward mode results in buffer
 	int m    = 1;  // number of dependent variables
 	int n    = 1;  // number of independent variables
-	int d    = 2;  // order of the derivative
+	int d    = 2;  // highest derivative degree 
 	double f;      // function value
-	int i;         // temporary index
 
-	// Use thread_alloc memory allocator (fast and checks for leaks)
+	// set up for thread_alloc memory allocator (fast and checks for leaks)
 	using CppAD::thread_alloc; // the allocator
-	size_t capacity;           // capacity of an allocation
+	size_t size_min;           // requested number of elements
+	size_t size_out;           // capacity of an allocation
 
 	// choose a vector of polynomial coefficients
 	CppAD::uniform_01(size, a);
 
 	// AD copy of the polynomial coefficients
 	std::vector<adouble> A(size);
-	for(i = 0; i < int(size); i++)
+	for(i = 0; i < size; i++)
 		A[i] = a[i];
 
 	// domain and range space AD values
 	adouble Z, P;
 
 	// allocate arguments to hos_forward
-	double* x0 = thread_alloc::create_array<double>(n, capacity);
-	double* y0 = thread_alloc::create_array<double>(m, capacity);
-	double** x = thread_alloc::create_array<double*>(n, capacity);
-	double** y = thread_alloc::create_array<double*>(m, capacity);
-	for(i = 0; i < n; i++)
-		x[i] = thread_alloc::create_array<double>(d, capacity);
-	for(i = 0; i < m; i++)
-		y[i] = thread_alloc::create_array<double>(d, capacity);
+	size_min = n;
+	double* x0 = thread_alloc::create_array<double>(size_min, size_out);
+	double** x = thread_alloc::create_array<double*>(size_min, size_out);
+	size_min = m;
+	double* y0 = thread_alloc::create_array<double>(size_min, size_out);
+	double** y = thread_alloc::create_array<double*>(size_min, size_out);
+	size_min = d;
+	for(i = 0; i < size_t(n); i++)
+		x[i] = thread_alloc::create_array<double>(size_min, size_out);
+	for(i = 0; i < size_t(m); i++)
+		y[i] = thread_alloc::create_array<double>(size_min, size_out);
 
 	// Taylor coefficient for argument
 	x[0][0] = 1.;  // first order
 	x[0][1] = 0.;  // second order
-	
 
-	extern bool global_retape;
+	// ----------------------------------------------------------------------
 	if( global_retape ) while(repeat--)
 	{	// choose an argument value
 		CppAD::uniform_01(1, z);
@@ -117,8 +125,7 @@ bool link_poly(
 		P >>= f;
 		trace_off();
 
-		// get the next argument value
-		CppAD::uniform_01(1, z);
+		// set the argument value
 		x0[0] = z[0];
 
 		// evaluate the polynomial at the new argument value
@@ -142,6 +149,7 @@ bool link_poly(
 		// create function object f : Z -> P
 		P >>= f;
 		trace_off();
+
 		while(repeat--)
 		{	// get the next argument value
 			CppAD::uniform_01(1, z);
@@ -158,9 +166,9 @@ bool link_poly(
 	// tear down
 	thread_alloc::delete_array(x0);
 	thread_alloc::delete_array(y0);
-	for(i = 0; i < n; i++)
+	for(i = 0; i < size_t(n); i++)
 		thread_alloc::delete_array(x[i]);
-	for(i = 0; i < m; i++)
+	for(i = 0; i < size_t(m); i++)
 		thread_alloc::delete_array(y[i]);
 	thread_alloc::delete_array(x);
 	thread_alloc::delete_array(y);

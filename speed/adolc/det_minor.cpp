@@ -56,11 +56,12 @@ bool link_det_minor(
 {
 	// speed test global option values
 	extern bool global_retape, global_atomic, global_optimize;
+	if( global_atomic || global_optimize )
+		return false; 
 
 	// -----------------------------------------------------
 	// setup
 	int tag  = 0;         // tape identifier
-	int keep = 1;         // keep forward mode results in buffer
 	int m    = 1;         // number of dependent variables
 	int n    = size*size; // number of independent variables
 	double f;             // function value
@@ -98,14 +99,13 @@ bool link_det_minor(
 	double* grad = thread_alloc::create_array<double>(size_min, size_out);
 
 	// ----------------------------------------------------------------------
-	if( global_atomic || global_optimize )
-		return false; 
 	if( global_retape ) while(repeat--)
 	{
 		// choose a matrix
 		CppAD::uniform_01(n, mat);
 
 		// declare independent variables
+		int keep = 1; // keep forward mode results in buffer
 		trace_on(tag, keep);
 		for(j = 0; j < n; j++)
 			A[j] <<= mat[j];
@@ -117,12 +117,6 @@ bool link_det_minor(
 		detA >>= f;
 		trace_off();
 
-		// get the next matrix
-		CppAD::uniform_01(n, mat);
-
-		// evaluate the determinant at the new matrix value
-		zos_forward(tag, m, n, keep, mat, &f); 
-
 		// evaluate and return gradient using reverse mode
 		fos_reverse(tag, m, n, u, grad);
 	}
@@ -132,6 +126,7 @@ bool link_det_minor(
 		CppAD::uniform_01(n, mat);
 
 		// declare independent variables
+		int keep = 0; // do not keep forward mode results in buffer
 		trace_on(tag, keep);
 		for(j = 0; j < n; j++)
 			A[j] <<= mat[j];
@@ -148,6 +143,7 @@ bool link_det_minor(
 			CppAD::uniform_01(n, mat);
 
 			// evaluate the determinant at the new matrix value
+			keep = 1; // keep this forward mode result
 			zos_forward(tag, m, n, keep, mat, &f); 
 
 			// evaluate and return gradient using reverse mode

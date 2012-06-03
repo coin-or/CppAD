@@ -55,6 +55,11 @@ bool link_poly(
 	CppAD::vector<double>     &z        ,  // polynomial argument value
 	CppAD::vector<double>     &ddp      )  // second derivative w.r.t z  
 {
+	// speed test global option values
+	extern bool global_retape, global_atomic, global_optimize;
+	if( global_atomic )
+		return false;
+
 	// -----------------------------------------------------
 	// setup
 	typedef CppAD::AD<double>     ADScalar; 
@@ -88,7 +93,6 @@ bool link_poly(
 	previous_size = size;
 
 	// --------------------------------------------------------------------
-	extern bool global_retape;
 	if( global_retape ) while(repeat--)
 	{
 		// choose an argument value
@@ -104,7 +108,6 @@ bool link_poly(
 		// create function object f : A -> detA
 		f.Dependent(Z, P);
 
-		extern bool global_optimize;
 		if( global_optimize )
 		{	print_optimize(f, print, "cppad_poly_optimize", size);
 			print = false;

@@ -58,6 +58,8 @@ bool link_det_lu(
 {
 	// speed test global option values
 	extern bool global_retape, global_atomic, global_optimize;
+	if( ! global_retape || global_optimize || global_atomic )
+		return false;
 
 	// -----------------------------------------------------
 	// setup
@@ -98,8 +100,6 @@ bool link_det_lu(
 	size_min     = n;
 	double* grad = thread_alloc::create_array<double>(size_min, size_out);
 	// ------------------------------------------------------
-	if( ! global_retape || global_optimize || global_atomic )
-		return false;
 	while(repeat--)
 	{	// get the next matrix
 		CppAD::uniform_01(n, mat);

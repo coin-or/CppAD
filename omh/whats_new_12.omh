@@ -72,13 +72,15 @@ Implement the $icode%retape% == false%$$ option
 in $cref cppad_ode.cpp$$.
 $lnext
 Have 
-$cref cppad_det_lu.cpp$$, and
+$cref cppad_det_lu.cpp$$, 
 $cref cppad_det_minor.cpp$$,
+and $cref cppad_poly.cpp$$,
 return false when one of the specified options is not supported.
 Do the same for
 $icode%package%_%test%.cpp%$$ for $icode package$$ equal to 
 $code adolc$$, $code fadbad$$, and $code sacado$$ and 
-for $icode test$$ equal to $code det_lu$$, $code det_minor$$.
+for $icode test$$ equal to 
+$code det_lu$$, $code det_minor$$, $code poly$$.
 $lend
 
 $head 06-01$$

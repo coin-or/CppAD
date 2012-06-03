@@ -52,6 +52,8 @@ bool link_det_minor(
 {
 	// speed test global option values
 	extern bool global_retape, global_atomic, global_optimize;
+	if( global_atomic )
+		return false;
 
 	// -----------------------------------------------------
 	// setup
@@ -80,8 +82,6 @@ bool link_det_minor(
 	previous_size = size;
 
 	// ---------------------------------------------------------------------
-	if( global_atomic )
-		return false;
 	if( global_retape ) while(repeat--)
 	{
 		// choose a matrix
