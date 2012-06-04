@@ -16,6 +16,8 @@ Please visit http://www.coin-or.org/CppAD/ for information on other licenses.
 /*
 $begin ode_evaluate$$
 $spell
+	Runge
+	fabs
 	retaped
 	Jacobian
 	const
@@ -64,10 +66,23 @@ so it is not automatically included by
 $cref/cppad.hpp/cppad/$$.
 
 $head Float$$
+
+$subhead Operation Sequence$$
 The type $icode Float$$ must be a $cref NumericType$$.
-The $icode Float$$ operation sequence for this routine
-will depend on the value of the argument $icode x$$
-and hence it must be retaped for each new value of $latex x$$. 
+The $icode Float$$ 
+$cref/operation sequence/glossary/Operation/Sequence/$$
+for this routine does not depend on the value of the argument $icode x$$,
+hence it does not need to be retaped for each value of $latex x$$. 
+
+$subhead fabs$$
+If $icode y$$ and $icode z$$ are $icode Float$$ objects, the syntax
+$codei%
+	%y% = fabs(%z%)
+%$$
+must be supported. Note that it does not matter if the operation
+sequence for $code fabs$$ depends on $icode z$$ because the 
+corresponding results are not actually used by $code ode_evaluate$$;
+see $code fabs$$ in $cref/Runge45/Runge45/Scalar/fabs/$$.
 
 $head x$$
 The argument $icode x$$ has prototype
@@ -88,7 +103,6 @@ $subhead p == 0$$
 In this case a numerical method is used to solve the ode 
 and obtain an accurate approximation for $latex y(x, 1)$$.
 This numerical method has a fixed
-$cref/operation sequence/glossary/Operation/Sequence/$$
 that does not depend on $icode x$$.
 
 $subhead p = 1$$

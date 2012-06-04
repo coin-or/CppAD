@@ -16,6 +16,7 @@ Please visit http://www.coin-or.org/CppAD/ for information on other licenses.
 /*
 $begin Runge45$$
 $spell
+	std
 	fabs
 	cppad.hpp
 	bool
@@ -208,11 +209,19 @@ The type $icode Scalar$$ must satisfy the conditions
 for a $cref NumericType$$ type.
 The routine $cref CheckNumericType$$ will generate an error message
 if this is not the case.
+
+$subhead fabs$$
 In addition, the following function must be defined for 
 $icode Scalar$$ objects $icode a$$ and $icode b$$
 $codei%
 	%a% = fabs(%b%)
 %$$
+Note that this operation is only used for computing $icode e$$; hence
+the operation sequence for $icode xf$$ can still be independent of
+the arguments to $code Runge45$$ even if 
+$codei%
+	fabs(%b%) = std::max(-%b%, %b%)
+%$$. 
 
 $head Vector$$
 The type $icode Vector$$ must be a $cref SimpleVector$$ class with

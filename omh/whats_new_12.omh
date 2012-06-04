@@ -53,15 +53,8 @@ This section contains a list of the changes to CppAD during 2012
 The purpose of this section is to
 assist you in learning about changes between various versions of CppAD.
 
-$head 06-03$$
+$head 06-04$$
 $list number$$
-The $code CppAD::vector$$ class was extended to allow assignment
-with the target of size zero and the source of non-zero size;
-see $cref/check size/CppAD_vector/Assignment/Check Size/$$.
-$lnext
-A memory leak and a bug in $code cppad_mat_mul.cpp$$ were fixed
-(the bug was related to the change to $code CppAD::vector$$ above).
-$lnext
 The specifications for $cref Runge45$$ where changes so that
 it uses the $code fabs$$ function instead of the $code <$$ operation.
 This enabled the a more precise statement about its
@@ -74,6 +67,19 @@ This enables one to write code that works with $code AD<double>$$ as
 well as $code double$$ without having to define $code abs$$ for
 $code double$$ arguments
 (and similarly for $code float$$).
+$lnext
+Add the $cref adolc_ode.cpp$$ and $cref fadbad_ode.cpp$$ speed tests
+(and edit the $cref cppad_ode.cpp$$ test). 
+$lend
+
+$head 06-03$$
+$list number$$
+The $code CppAD::vector$$ class was extended to allow assignment
+with the target of size zero and the source of non-zero size;
+see $cref/check size/CppAD_vector/Assignment/Check Size/$$.
+$lnext
+A memory leak and a bug in $code cppad_mat_mul.cpp$$ were fixed
+(the bug was related to the change to $code CppAD::vector$$ above).
 $lend
 
 $head 06-02$$

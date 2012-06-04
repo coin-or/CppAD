@@ -27,9 +27,10 @@ $$
 
 $section Adolc Speed: Ode$$
 
-$index adolc, speed ode$$
-$index speed, adolc ode$$
-$index ode, speed adolc$$
+$index adolc, speed ode jacobian$$
+$index speed, adolc ode jacobian$$
+$index jacobian, ode speed adolc$$
+$index ode, jacobian speed adolc$$
 
 $codep */
 # include <adolc/adolc.h>
@@ -46,6 +47,9 @@ bool link_ode(
 	CppAD::vector<double>      &jac
 )
 {
+	assert( x.size() == size );
+	assert( jac.size() == size * size );
+
 	// speed test global option values
 	extern bool global_retape, global_atomic, global_optimize;
 	if( global_atomic || global_optimize )
@@ -80,8 +84,6 @@ bool link_ode(
 	for(i = 0; i < m; i++)
 		jac_ptr[i] = jac_raw + i * n;
 
-	assert( x.size() == n );
-	assert( jac.size() == n * n );
 	// -------------------------------------------------------------
 	if( global_retape) while(repeat--)
 	{ 	// choose next x value

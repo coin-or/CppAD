@@ -1,6 +1,6 @@
 /* $Id$ */
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-09 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-12 Bradley M. Bell
 
 CppAD is distributed under multiple licenses. This distribution is under
 the terms of the 
@@ -43,11 +43,13 @@ bool link_ode(
 	CppAD::vector<double>      &x         ,
 	CppAD::vector<double>      &jacobian
 )
-{	// -------------------------------------------------------------
+{
+	assert( x.size() == size );
+
+	// -------------------------------------------------------------
 	// setup
 
 	size_t n = size;
-	assert( x.size() == n );
 
 	size_t m = 0;
 	CppAD::vector<double> f(n);

@@ -51,6 +51,9 @@ bool link_ode(
 	CppAD::vector<double>      &jacobian
 )
 {
+	assert( x.size() == size );
+	assert( jacobian.size() == size * size );
+
 	// speed test global option values
 	extern bool global_retape, global_atomic, global_optimize;
 	if( global_atomic )
@@ -68,9 +71,6 @@ bool link_ode(
 	size_t m = n;              // number of dependent variables
 	ADVector  X(n), Y(m);      // independent and dependent variables
 	CppAD::ADFun<double>  f;   // AD function
-
-	assert( x.size() == n );
-	assert( jacobian.size() == n * n );
 
 	// use the unspecified fact that size is non-decreasing between calls
 	static size_t previous_size = 0;
