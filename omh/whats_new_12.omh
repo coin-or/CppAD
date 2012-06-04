@@ -13,6 +13,7 @@ Please visit http://www.coin-or.org/CppAD/ for information on other licenses.
 $begin whats_new_12$$
 $dollar @$$
 $spell
+	fabs
 	mul
 	det_lu
 	adolc
@@ -60,6 +61,19 @@ see $cref/check size/CppAD_vector/Assignment/Check Size/$$.
 $lnext
 A memory leak and a bug in $code cppad_mat_mul.cpp$$ were fixed
 (the bug was related to the change to $code CppAD::vector$$ above).
+$lnext
+The specifications for $cref Runge45$$ where changes so that
+it uses the $code fabs$$ function instead of the $code <$$ operation.
+This enabled the a more precise statement about its
+$cref/operation sequence/Runge45/Operation Sequence/$$.
+$lnext
+The $code fabs$$ function as added to the CppAD standard math library
+(see $cref abs$$)
+and the $cref/base type requirements/base_std_math/$$.
+This enables one to write code that works with $code AD<double>$$ as
+well as $code double$$ without having to define $code abs$$ for
+$code double$$ arguments
+(and similarly for $code float$$).
 $lend
 
 $head 06-02$$
@@ -74,7 +88,7 @@ $lnext
 Change the $cref ode_evaluate$$ speed test utility so that its 
 $cref/operation sequence/glossary/Operation/Sequence/$$
 does not depend on the repetition; see
-$cref/m == 0/ode_evaluate/m/m == 0/$$ in its documentation.
+$cref/p == 0/ode_evaluate/p/p == 0/$$ in its documentation.
 $lnext
 Use same argument for taping and derivative evaluation when
 $cref/retape/speed_main/option_list/retape/$$ is true.

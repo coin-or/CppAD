@@ -25,6 +25,7 @@ $spell
 	atan
 	cos
 	exp
+	fabs
 	sqrt
 	CppAD
 	namespace
@@ -41,6 +42,7 @@ $index atan, AD$$
 $index cos, AD$$
 $index cosh, AD$$
 $index exp, AD$$
+$index fabs, AD$$
 $index log, AD$$
 $index log10, AD$$
 $index sin, AD$$
@@ -92,6 +94,7 @@ $code atan$$,
 $code cos$$,
 $code cosh$$,
 $code exp$$,
+$code fabs$$,
 $code log$$,
 $code log10$$,
 $code sin$$,
@@ -127,6 +130,7 @@ $rref Atan.cpp$$
 $rref Cos.cpp$$
 $rref Cosh.cpp$$
 $rref Exp.cpp$$
+$rref abs.cpp$$
 $rref Log.cpp$$
 $rref Log10.cpp$$
 $rref Sin.cpp$$
@@ -281,6 +285,7 @@ namespace CppAD {
      CPPAD_STANDARD_MATH_UNARY_AD(cos, CosOp)
      CPPAD_STANDARD_MATH_UNARY_AD(cosh, CoshOp)
      CPPAD_STANDARD_MATH_UNARY_AD(exp, ExpOp)
+     CPPAD_STANDARD_MATH_UNARY_AD(fabs, AbsOp)
      CPPAD_STANDARD_MATH_UNARY_AD(log, LogOp)
      CPPAD_STANDARD_MATH_UNARY_AD(sin, SinOp)
      CPPAD_STANDARD_MATH_UNARY_AD(sinh, SinhOp)

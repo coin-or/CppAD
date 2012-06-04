@@ -186,6 +186,7 @@ public:
 	inline AD cos(void) const;
 	inline AD cosh(void) const;
 	inline AD exp(void) const;
+	inline AD fabs(void) const;
 	inline AD log(void) const;
 	inline AD sin(void) const;
 	inline AD Sign(void) const;

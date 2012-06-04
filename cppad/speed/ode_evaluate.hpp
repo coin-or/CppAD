@@ -22,7 +22,7 @@ $spell
 	Cpp
 	cppad
 	hpp	
-	fm
+	fp
 	namespace
 	exp
 $$
@@ -35,7 +35,7 @@ $index function, ode_evaluate$$
 $head Syntax$$
 $codei%# include <cppad/speed/ode_evaluate.hpp>
 %$$
-$codei%ode_evaluate(%x%, %m%, %fm%)%$$
+$codei%ode_evaluate(%x%, %p%, %fp%)%$$
 
 $head Purpose$$
 This routine evaluates a function $latex f : \B{R}^n \rightarrow \B{R}^n$$
@@ -78,39 +78,39 @@ It contains he argument value for which the function,
 or its derivative, is being evaluated.
 The value $latex n$$ is determined by the size of the vector $icode x$$.
 
-$head m$$
-The argument $icode m$$ has prototype
+$head p$$
+The argument $icode p$$ has prototype
 $icode%
-	size_t %m%
+	size_t %p%
 %$$
 
-$subhead m == 0$$
+$subhead p == 0$$
 In this case a numerical method is used to solve the ode 
 and obtain an accurate approximation for $latex y(x, 1)$$.
 This numerical method has a fixed
 $cref/operation sequence/glossary/Operation/Sequence/$$
 that does not depend on $icode x$$.
 
-$subhead m = 1$$
+$subhead p = 1$$
 In this case an analytic solution for the partial derivative
 $latex \partial_x y(x, 1)$$ is returned.
 
-$head fm$$
-The argument $icode fm$$ has prototype
+$head fp$$
+The argument $icode fp$$ has prototype
 $icode%
-	CppAD::vector<%Float%>& %fm%
+	CppAD::vector<%Float%>& %fp%
 %$$
-The input value of the elements of $icode fm$$ does not matter.
+The input value of the elements of $icode fp$$ does not matter.
 
 $subhead Function$$
-If $icode m$$ is zero, $icode fm$$ has size equal to $latex n$$
+If $icode p$$ is zero, $icode fp$$ has size equal to $latex n$$
 and contains the value of $latex y(x, 1)$$.
 
 $subhead Gradient$$
-If $icode m$$ is one, $icode fm$$ has size equal to $icode n^2$$ 
+If $icode p$$ is one, $icode fp$$ has size equal to $icode n^2$$ 
 and for $latex i = 0 , \ldots and n-1$$, $latex j = 0 , \ldots , n-1$$
 $latex \[
-	\D{y[i]}{x[j]} (x, 1) = fm [ i \cdot n + j ]
+	\D{y[i]}{x[j]} (x, 1) = fp [ i \cdot n + j ]
 \] $$
 
 $children%
@@ -163,20 +163,20 @@ namespace CppAD {
 	template <class Float>
 	void ode_evaluate(
 		const CppAD::vector<Float>& x  , 
-		size_t                      m  , 
-		CppAD::vector<Float>&       fm )
+		size_t                      p  , 
+		CppAD::vector<Float>&       fp )
 	{	using CppAD::vector;
 		typedef vector<Float> VectorFloat;
 
 		size_t n = x.size();
-		CPPAD_ASSERT_KNOWN( m == 0 || m == 1,
-			"ode_evaluate: m is not zero or one"
+		CPPAD_ASSERT_KNOWN( p == 0 || p == 1,
+			"ode_evaluate: p is not zero or one"
 		);
 		CPPAD_ASSERT_KNOWN( 
-			((m==0) & (fm.size()==n)) || ((m==1) & (fm.size()==n*n)),
-			"ode_evaluate: the size of fm is not correct"
+			((p==0) & (fp.size()==n)) || ((p==1) & (fp.size()==n*n)),
+			"ode_evaluate: the size of fp is not correct"
 		);
-		if( m == 0 )
+		if( p == 0 )
 		{	// function that defines the ode
 			ode_evaluate_fun<Float> F;
 
@@ -192,8 +192,8 @@ namespace CppAD {
 			const VectorFloat& yi = x;
 
 			// final value for y(x, t); i.e., y(x, 1)
-			// (is a reference to fm)
-			VectorFloat& yf = fm;
+			// (is a reference to fp)
+			VectorFloat& yf = fp;
 			
 			// Use fourth order Runge-Kutta to solve ODE
 			yf = CppAD::Runge45(F, M, ti, tf, yi);
@@ -210,7 +210,7 @@ namespace CppAD {
 		size_t i, j, k;
 		for(i = 0; i < n; i++)
 		{	for(j = 0; j < n; j++)
-				fm[ i * n + j ] = 0.0;
+				fp[ i * n + j ] = 0.0;
 		}
 		size_t factorial = 1;
 		for(k = 0; k < n; k++)
@@ -219,7 +219,7 @@ namespace CppAD {
 			for(i = k; i < n; i++)
 			{	// partial w.r.t x[i-k] of x[i-k] * t^k / k!
 				j = i - k;
-				fm[ i * n + j ] += 1.0 / Float(factorial);
+				fp[ i * n + j ] += 1.0 / Float(factorial);
 			}
 		}
 	}

@@ -12,6 +12,7 @@ Please visit http://www.coin-or.org/CppAD/ for information on other licenses.
 /*
 $begin cppad_ode.cpp$$
 $spell
+	jacobian jacobian
 	endif
 	var
 	Jacobian
@@ -22,7 +23,6 @@ $spell
 	cppad
 	hpp
 	bool
-	cstring
 	retape
 	typedef
 	cassert
@@ -38,7 +38,6 @@ $index ode, jacobian speed cppad$$
 $head link_ode$$
 $index link_ode$$
 $codep */
-# include <cstring>
 # include <cppad/cppad.hpp>
 # include <cppad/speed/ode_evaluate.hpp>
 # include <cppad/speed/uniform_01.hpp>
@@ -51,22 +50,27 @@ bool link_ode(
 	CppAD::vector<double>      &x         ,
 	CppAD::vector<double>      &jacobian
 )
-{	// -------------------------------------------------------------
+{
+	// speed test global option values
+	extern bool global_retape, global_atomic, global_optimize;
+	if( global_atomic )
+		return false;
+
+	// -------------------------------------------------------------
 	// setup
 	typedef CppAD::AD<double>       ADScalar;
 	typedef CppAD::vector<ADScalar> ADVector;
 	typedef CppAD::vector<double>   DblVector;
 
 	size_t j;
-	size_t m = 0;
-	size_t n = size;
+	size_t p = 0;              // use ode to calculate function values
+	size_t n = size;           // number of independent variables
+	size_t m = n;              // number of dependent variables
+	ADVector  X(n), Y(m);      // independent and dependent variables
+	CppAD::ADFun<double>  f;   // AD function
+
 	assert( x.size() == n );
 	assert( jacobian.size() == n * n );
-
-	ADVector  X(n);
-	ADVector  Y(n);
-
-	CppAD::ADFun<double>   f;
 
 	// use the unspecified fact that size is non-decreasing between calls
 	static size_t previous_size = 0;
@@ -74,7 +78,6 @@ bool link_ode(
 	previous_size = size;
 
 	// -------------------------------------------------------------
-	extern bool global_retape;
 	if( global_retape) while(repeat--)
 	{ 	// choose next x value
 		uniform_01(n, x);
@@ -85,12 +88,11 @@ bool link_ode(
 		Independent(X);
 
 		// evaluate function
-		CppAD::ode_evaluate(X, m, Y);
+		CppAD::ode_evaluate(X, p, Y);
 
 		// create function object f : X -> Y
 		f.Dependent(X, Y);
 
-		extern bool global_optimize;
 		if( global_optimize )
 		{	print_optimize(f, print, "cppad_ode_optimize", size);
 			print = false;
@@ -107,18 +109,22 @@ bool link_ode(
 		Independent(X);
 
 		// evaluate function
-		CppAD::ode_evaluate(X, m, Y);
+		CppAD::ode_evaluate(X, p, Y);
 
 		// create function object f : X -> Y
 		f.Dependent(X, Y);
 
-		extern bool global_optimize;
 		if( global_optimize )
 		{	print_optimize(f, print, "cppad_ode_optimize", size);
 			print = false;
 		}
 		while(repeat--)
+		{	// get next argument value
+			uniform_01(n, x);
+
+			// evaluate jacobian
 			jacobian = f.Jacobian(x);
+		}
 	}
 	return true;
 }

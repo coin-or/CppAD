@@ -39,14 +39,12 @@ $index minor, speed adolc$$
 $head link_det_minor$$
 $index link_det_minor$$
 $codep */
+# include <adolc/adolc.h>
+
 # include <cppad/vector.hpp>
 # include <cppad/speed/det_by_minor.hpp>
 # include <cppad/speed/uniform_01.hpp>
-# include <cppad/track_new_del.hpp>
 
-# include <adolc/adouble.h>
-# include <adolc/taping.h>
-# include <adolc/interfaces.h>
 
 bool link_det_minor(
 	size_t                     size     , 
@@ -105,7 +103,7 @@ bool link_det_minor(
 		CppAD::uniform_01(n, mat);
 
 		// declare independent variables
-		int keep = 1; // keep forward mode results in buffer
+		int keep = 1; // keep forward mode results 
 		trace_on(tag, keep);
 		for(j = 0; j < n; j++)
 			A[j] <<= mat[j];

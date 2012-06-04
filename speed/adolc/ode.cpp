@@ -1,6 +1,6 @@
 /* $Id$ */
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-09 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-12 Bradley M. Bell
 
 CppAD is distributed under multiple licenses. This distribution is under
 the terms of the 
@@ -9,31 +9,141 @@ the terms of the
 A copy of this license is included in the COPYING file of this distribution.
 Please visit http://www.coin-or.org/CppAD/ for information on other licenses.
 -------------------------------------------------------------------------- */
-# include <cstring>
-# include <cppad/vector.hpp>
-
 /*
 $begin adolc_ode.cpp$$
 $spell
+	typedef
+	adouble
+	jacobian jacobian
+	jac_ptr
+	alloc
+	cppad.hpp
 	Jacobian
-        Adolc
-        bool
-        CppAD
+	Adolc
+	bool
+	CppAD
 	retape
 $$
 
 $section Adolc Speed: Ode$$
 
+$index adolc, speed ode$$
+$index speed, adolc ode$$
+$index ode, speed adolc$$
+
 $codep */
-// The adolc version of this test is not yet available
+# include <adolc/adolc.h>
+
+# include <cppad/vector.hpp>
+# include <cppad/speed/ode_evaluate.hpp>
+# include <cppad/speed/uniform_01.hpp>
+
+
 bool link_ode(
 	size_t                     size       ,
 	size_t                     repeat     ,
 	CppAD::vector<double>      &x         ,
-	CppAD::vector<double>      &jacobian
+	CppAD::vector<double>      &jac
 )
 {
-	return false;
+	// speed test global option values
+	extern bool global_retape, global_atomic, global_optimize;
+	if( global_atomic || global_optimize )
+		return false;
+
+	// -------------------------------------------------------------
+	// setup
+	typedef CppAD::vector<adouble> ADVector;
+	typedef CppAD::vector<double>  DblVector;
+
+	size_t i, j;
+	int tag    = 0;       // tape identifier
+	int keep   = 0;       // do not keep forward mode results
+	size_t p   = 0;       // use ode to calculate function values
+	size_t n   = size;    // number of independent variables
+	size_t m   = n;       // number of dependent variables
+	ADVector  X(n), Y(m); // independent and dependent variables
+	DblVector f(m);       // function value
+
+	// set up for thread_alloc memory allocator (fast and checks for leaks)
+	using CppAD::thread_alloc; // the allocator
+	size_t size_min;           // requested number of elements
+	size_t size_out;           // capacity of an allocation
+
+	// raw memory for use with adolc
+	size_min = n;
+	double *x_raw   = thread_alloc::create_array<double>(size_min, size_out);
+	size_min = m * n;
+	double *jac_raw = thread_alloc::create_array<double>(size_min, size_out);
+	size_min = m;
+	double **jac_ptr = thread_alloc::create_array<double*>(size_min, size_out);
+	for(i = 0; i < m; i++)
+		jac_ptr[i] = jac_raw + i * n;
+
+	assert( x.size() == n );
+	assert( jac.size() == n * n );
+	// -------------------------------------------------------------
+	if( global_retape) while(repeat--)
+	{ 	// choose next x value
+		uniform_01(n, x);
+
+		// declare independent variables
+		trace_on(tag, keep);
+		for(j = 0; j < n; j++)
+			X[j] <<= x[j];
+
+		// evaluate function
+		CppAD::ode_evaluate(X, p, Y);
+
+		// create function object f : X -> Y
+		for(i = 0; i < m; i++)
+			Y[i] >>= f[i];
+		trace_off();
+
+		// evaluate the Jacobian
+		for(j = 0; j < n; j++)
+			x_raw[j] = x[j];
+		jacobian(tag, m, n, x_raw, jac_ptr);
+	}
+	else
+	{ 	// choose next x value
+		uniform_01(n, x);
+
+		// declare independent variables
+		trace_on(tag, keep);
+		for(j = 0; j < n; j++)
+			X[j] <<= x[j];
+
+		// evaluate function
+		CppAD::ode_evaluate(X, p, Y);
+
+		// create function object f : X -> Y
+		for(i = 0; i < m; i++)
+			Y[i] >>= f[i];
+		trace_off();
+
+		while(repeat--)
+		{	// get next argument value
+			uniform_01(n, x);
+			for(j = 0; j < n; j++)
+				x_raw[j] = x[j];
+
+			// evaluate jacobian
+			jacobian(tag, m, n, x_raw, jac_ptr);
+		}
+	}
+	// convert return value to a simple vector
+	for(i = 0; i < m; i++)
+	{	for(j = 0; j < n; j++)
+			jac[i * n + j] = jac_ptr[i][j];
+	}
+	// ----------------------------------------------------------------------
+	// tear down
+	thread_alloc::delete_array(x_raw);
+	thread_alloc::delete_array(jac_raw);
+	thread_alloc::delete_array(jac_ptr);
+
+	return true;
 }
 /* $$
 $end

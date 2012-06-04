@@ -44,15 +44,12 @@ $head link_poly$$
 $index link_poly$$
 $codep */
 # include <vector>
+# include <adolc/adolc.h>
 
 # include <cppad/speed/uniform_01.hpp>
 # include <cppad/poly.hpp>
 # include <cppad/vector.hpp>
 # include <cppad/thread_alloc.hpp>
-
-# include <adolc/adouble.h>
-# include <adolc/taping.h>
-# include <adolc/interfaces.h>
 
 bool link_poly(
 	size_t                     size     , 

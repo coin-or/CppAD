@@ -16,6 +16,7 @@ Please visit http://www.coin-or.org/CppAD/ for information on other licenses.
 /* 
 $begin base_std_math$$
 $spell
+	fabs
 	isnan
 	alloc
 	std
@@ -55,6 +56,7 @@ $icode%y% = atan(%x%)%$$ $cnext inverse tangent    $rnext
 $icode%y% = cos(%x%)%$$  $cnext cosine             $rnext
 $icode%y% = cosh(%x%)%$$ $cnext hyperbolic cosine  $rnext
 $icode%y% = exp(%x%)%$$  $cnext exponential        $rnext
+$icode%y% = fabs(%x%)%$$ $cnext absolute value     $rnext
 $icode%y% = log(%x%)%$$  $cnext natural logarithm  $rnext
 $icode%y% = sin(%x%)%$$  $cnext sine               $rnext
 $icode%y% = sinh(%x%)%$$ $cnext hyperbolic sine    $rnext

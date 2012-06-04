@@ -3,7 +3,7 @@
 # define CPPAD_RUNGE_45_INCLUDED
 
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-11 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-12 Bradley M. Bell
 
 CppAD is distributed under multiple licenses. This distribution is under
 the terms of the 
@@ -16,6 +16,7 @@ Please visit http://www.coin-or.org/CppAD/ for information on other licenses.
 /*
 $begin Runge45$$
 $spell
+	fabs
 	cppad.hpp
 	bool
 	xf
@@ -54,7 +55,8 @@ Cash-Karp embedded 4th and 5th order Runge-Kutta ODE solver
 described in Section 16.2 of $cref/Numerical Recipes/Bib/Numerical Recipes/$$.
 We use $latex n$$ for the size of the vector $icode xi$$.
 Let $latex \B{R}$$ denote the real numbers
-and let $latex F : \B{R} \times \B{R}^n \rightarrow \B{R}^n$$ be a smooth function.
+and let $latex F : \B{R} \times \B{R}^n \rightarrow \B{R}^n$$ 
+be a smooth function.
 The return value $icode xf$$ contains a 5th order
 approximation for the value $latex X(tf)$$ where 
 $latex X : [ti , tf] \rightarrow \B{R}^n$$ is defined by 
@@ -68,6 +70,15 @@ $latex \[
 If your set of ordinary differential equations
 are stiff, an implicit method may be better
 (perhaps $cref Rosen34$$.)
+
+$head Operation Sequence$$
+The $cref/operation sequence/glossary/Operation/Sequence/$$ for $icode Runge$$
+does not depend on any of its $icode Scalar$$ input values provided that
+the operation sequence for
+$codei%
+	%F%.Ode(%t%, %x%, %f%)
+%$$
+does not on any of its $icode Scalar$$ inputs (see below).
 
 $head Include$$
 The file $code cppad/runge_45.hpp$$ is included by $code cppad/cppad.hpp$$
@@ -197,14 +208,11 @@ The type $icode Scalar$$ must satisfy the conditions
 for a $cref NumericType$$ type.
 The routine $cref CheckNumericType$$ will generate an error message
 if this is not the case.
-In addition, the following operations must be defined for 
-$icode Scalar$$ objects $icode a$$ and $icode b$$:
-
-$table
-$bold Operation$$ $cnext $bold Description$$  $rnext
-$icode%a% < %b%$$ $cnext
-	less than operator (returns a $code bool$$ object)
-$tend
+In addition, the following function must be defined for 
+$icode Scalar$$ objects $icode a$$ and $icode b$$
+$codei%
+	%a% = fabs(%b%)
+%$$
 
 $head Vector$$
 The type $icode Vector$$ must be a $cref SimpleVector$$ class with
@@ -355,19 +363,15 @@ Vector Runge45(
 	);
 	size_t i, j, k, m;              // indices
 
-	size_t  n = xi.size();          // number of components in X(t)
-	Scalar  ns = Scalar(int(M));    // number of steps as Scalar object
-	Scalar  h = (tf - ti) / ns;     // step size 
-	Scalar  z = Scalar(0);          // zero
-	for(i = 0; i < n; i++)          // initialize e = 0
-		e[i] = z;
+	size_t  n = xi.size();           // number of components in X(t)
+	Scalar  ns = Scalar(int(M));     // number of steps as Scalar object
+	Scalar  h = (tf - ti) / ns;      // step size 
+	Scalar  zero_or_nan = Scalar(0); // zero (nan if Ode returns has a nan)
+	for(i = 0; i < n; i++)           // initialize e = 0
+		e[i] = zero_or_nan;
 
 	// vectors used to store values returned by F
-	Vector fh(6 * n), xtmp(n), ftmp(n), x4(n), x5(n), xf(n), nan_vec(n);
-
-	// vector of nans
-	for(i = 0; i < n; i++)
-		nan_vec[i] = nan(z);
+	Vector fh(6 * n), xtmp(n), ftmp(n), x4(n), x5(n), xf(n);
 
 	xf = xi;           // initialize solution
 	for(m = 0; m < M; m++)
@@ -391,10 +395,10 @@ Vector Runge45(
 			}
 			// ftmp = F(t + a[j] * h, xtmp)
 			F.Ode(t + a[j] * h, xtmp, ftmp); 
-			if( hasnan(ftmp) )
-			{	e = nan_vec;
-				return nan_vec;
-			}
+
+			// if ftmp has a nan, set zero_or_nan to nan
+			for(i = 0; i < n; i++)
+				zero_or_nan *= ftmp[i];
 
 			for(i = 0; i < n; i++)
 			{	// loop over elements of x
@@ -402,15 +406,15 @@ Vector Runge45(
 				fh[i * 6 + j] = fhi;
 				x4[i]        += c4[j] * fhi;
 				x5[i]        += c5[j] * fhi;
+				x5[i]        += zero_or_nan;
 			}
 		}
 		// accumulate error bound
 		for(i = 0; i < n; i++)
 		{	// cant use abs because cppad.hpp may not be included
 			Scalar diff = x5[i] - x4[i];
-			if( diff < z )
-				e[i] -= diff;
-			else	e[i] += diff;
+			e[i] += fabs(diff);
+			e[i] += zero_or_nan;
 		}
 
 		// advance xf for this step using x5

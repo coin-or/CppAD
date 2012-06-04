@@ -42,13 +42,11 @@ $head Implementation$$
 $index adolc, link_det_lu$$
 $index link_det_lu, adolc$$
 $codep */
+# include <adolc/adolc.h>
+
 # include <cppad/speed/det_by_lu.hpp>
 # include <cppad/speed/uniform_01.hpp>
 # include <cppad/track_new_del.hpp>
-
-# include <adolc/adouble.h>
-# include <adolc/taping.h>
-# include <adolc/interfaces.h>
 
 bool link_det_lu(
 	size_t                     size     , 

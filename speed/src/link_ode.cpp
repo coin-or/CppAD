@@ -14,7 +14,7 @@ Please visit http://www.coin-or.org/CppAD/ for information on other licenses.
 $begin link_ode$$
 $spell
 	Jacobian
-	fm
+	fp
 	bool
 	CppAD
 $$
@@ -50,10 +50,10 @@ The function
 $latex f : \B{R}^n \rightarrow \B{R}^n$$ that is defined and computed by
 evaluating $cref ode_evaluate$$ with a call of the form
 $codei%
-	ode_evaluate(%x%, %m%, %fm%)
+	ode_evaluate(%x%, %p%, %fp%)
 %$$
-with $icode m$$ equal to zero.
-Calls with the value $icode m$$ equal to one are used to check
+with $icode p$$ equal to zero.
+Calls with the value $icode p$$ equal to one are used to check
 the derivative values.
 
 $head Return Value$$
@@ -128,13 +128,13 @@ bool correct_ode(bool is_package_double)
 	link_ode(n, repeat, x, jacobian);
 
 	size_t size = n * n;
-	size_t m = 1;
+	size_t p = 1;
 	if( is_package_double )
-	{	m    = 0;  // check function value
+	{	p    = 0;  // check function value
 		size = n;
 	}
 	CppAD::vector<double> check(size);
-	CppAD::ode_evaluate(x, m, check);
+	CppAD::ode_evaluate(x, p, check);
 	size_t k;
 	for(k = 0; k < size; k++)
 		ok &= CppAD::NearEqual(check[k], jacobian[k], 1e-6, 1e-6);

@@ -17,6 +17,7 @@ Please visit http://www.coin-or.org/CppAD/ for information on other licenses.
 -------------------------------------------------------------------------------
 $begin abs$$
 $spell
+	fabs
 	Vec
 	std
 	faq
@@ -28,13 +29,16 @@ $spell
 $$
 
 $index abs, AD$$
+$index fabs, AD$$
 $index absolute, AD value$$
 $index value, AD absolute$$
 
 $section AD Absolute Value Function$$
 
 $head Syntax$$
-$icode%y% = abs(%x%)%$$
+$icode%y% = abs(%x%)
+%$$
+$icode%y% = fabs(%x%)%$$
 
 
 $head Purpose$$

@@ -2,7 +2,7 @@
 # ifndef CPPAD_BASE_FLOAT_INCLUDED
 # define CPPAD_BASE_FLOAT_INCLUDED
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-11 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-12 Bradley M. Bell
 
 CppAD is distributed under multiple licenses. This distribution is under
 the terms of the
@@ -144,6 +144,7 @@ namespace CppAD {
 	CPPAD_STANDARD_MATH_UNARY(float, cos)
 	CPPAD_STANDARD_MATH_UNARY(float, cosh)
 	CPPAD_STANDARD_MATH_UNARY(float, exp)
+	CPPAD_STANDARD_MATH_UNARY(float, fabs)
 	CPPAD_STANDARD_MATH_UNARY(float, log)
 	CPPAD_STANDARD_MATH_UNARY(float, log10)
 	CPPAD_STANDARD_MATH_UNARY(float, sin)
