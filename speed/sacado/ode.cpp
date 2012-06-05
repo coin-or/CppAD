@@ -1,6 +1,6 @@
 /* $Id$ */
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-09 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-12 Bradley M. Bell
 
 CppAD is distributed under multiple licenses. This distribution is under
 the terms of the 
@@ -12,36 +12,36 @@ Please visit http://www.coin-or.org/CppAD/ for information on other licenses.
 /*
 $begin sacado_ode.cpp$$
 $spell
-	Jacobian
+	jacobian
 	Sacado
-	cstring
 	cppad
 	hpp
 	bool
 	retape
 	CppAD
 	typedef
-	ADvar
-	Gradcomp
 	endif
 	cassert
 $$
 
 $section Sacado Speed: Gradient of Ode Solution$$
 
-$index sacado, speed ode gradient$$
-$index speed, sacado ode gradient$$
-$index gradient, ode speed sacado$$
-$index ode, gradient speed sacado$$
+$index sacado, speed ode jacobian$$
+$index speed, sacado ode jacobian$$
+$index jacobian, ode speed sacado$$
+$index ode, jacobian speed sacado$$
+
 
 $head link_ode$$
 $index link_ode$$
 $codep */
-
-# include <cstring>
+# include <Sacado.hpp>
+// # include <algorithm>
+# include <cassert>
 # include <cppad/vector.hpp>
+# include <cppad/speed/uniform_01.hpp>
+# include <cppad/speed/ode_evaluate.hpp>
 
-// The sacado version of this test is not yet available
 bool link_ode(
 	size_t                     size       ,
 	size_t                     repeat     ,
@@ -49,9 +49,46 @@ bool link_ode(
 	CppAD::vector<double>      &jacobian
 )
 {
-	return false;
-}
+	assert( x.size() == size );
+	assert( jacobian.size() == size * size );
 
+	// speed test global option values
+	extern bool global_retape, global_atomic, global_optimize;
+	if( ! global_retape || global_atomic || global_optimize )
+		return false;
+
+	// -------------------------------------------------------------
+	// setup
+	typedef Sacado::Fad::DFad<double>  ADScalar;
+	typedef CppAD::vector<ADScalar>    ADVector;
+	typedef CppAD::vector<double>     DblVector;
+
+	size_t i, j;
+	size_t p = 0;          // use ode to calculate function values
+	size_t n = size;       // number of independent variables
+	size_t m = n;          // number of dependent variables
+	ADVector X(n), Y(m);   // independent and dependent variables
+
+	// -------------------------------------------------------------
+	while(repeat--)
+	{ 	// choose next x value
+		CppAD::uniform_01(n, x);
+		for(j = 0; j < n; j++)
+		{	// set up for X as the independent variable vector
+			X[j] = ADScalar(int(n), int(j), x[j]);
+		}
+
+		// evaluate function
+		CppAD::ode_evaluate(X, p, Y);
+
+		// return values with Y as the dependent variable vector
+		for(i = 0; i < m; i++)
+		{	for(j = 0; j < n; j++)
+				jacobian[ i * n + j ] = Y[i].dx(j);
+		}
+	}
+	return true;
+}
 /* $$
 $end
 */

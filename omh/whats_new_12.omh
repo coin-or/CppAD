@@ -53,6 +53,9 @@ This section contains a list of the changes to CppAD during 2012
 The purpose of this section is to
 assist you in learning about changes between various versions of CppAD.
 
+$head 06-05$$
+Add the $cref sacado_ode.cpp$$ speed test.
+
 $head 06-04$$
 $list number$$
 The specifications for $cref Runge45$$ where changes so that

@@ -402,7 +402,7 @@ int main(int argc, char *argv[])
 	{	size_det_lu[i]      = 3 * i + 1;
 		size_det_minor[i]   = i + 1;
 		size_mat_mul[i]     = 10 * (i + 1);
-		size_ode[i]         = i + 1;
+		size_ode[i]         = 3 * i + 1;
 		size_poly[i]        = 8 * i + 1;
 		size_sparse_hessian[i]  = 30 * (i + 1);
 		size_sparse_jacobian[i] = 30 * (i + 1);
