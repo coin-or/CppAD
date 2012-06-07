@@ -36,12 +36,17 @@ $$
 
 $section Fadbad Speed: Second Derivative of a Polynomial$$
 
-$index fadbad, speed polynomial$$
-$index speed, fadbad polynomial$$
+$index link_poly, fadbad$$
+$index fadbad, link_poly$$
+$index speed, fadbad$$
+$index fadbad, speed$$
 $index polynomial, speed fadbad$$
 
-$head link_poly$$
-$index link_poly$$
+$head Specifications$$
+See $cref link_poly$$.
+
+$head Implementation$$
+
 $codep */
 # include <cppad/vector.hpp>
 # include <cppad/poly.hpp>

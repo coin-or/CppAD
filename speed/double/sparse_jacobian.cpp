@@ -28,12 +28,18 @@ $$
 
 $section Double Speed: Sparse Jacobian$$
 
-$index double, speed sparse jacobian$$
-$index speed, double sparse jacobian$$
-$index sparse, jacobian speed double$$
+$index link_sparse_jacobian, double$$
+$index double, link_sparse_jacobian$$
+$index speed, double$$
+$index double, speed$$
+$index sparse, speed double$$
+$index jacobian, speed double$$
 
-$head link_sparse_jacobian$$
-$index link_sparse_jacobian$$
+$head Specifications$$
+See $cref link_sparse_jacobian$$.
+
+$head Implementation$$
+
 $codep */
 # include <cppad/vector.hpp>
 # include <cppad/speed/uniform_01.hpp>

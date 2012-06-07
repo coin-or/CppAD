@@ -23,9 +23,7 @@ $$
 
 $section Sacado Speed: Sparse Hessian$$
 
-Indicate that this test is not available:
 $codep */
-
 // The sacado version of this test is not yet available 
 extern bool link_sparse_hessian(
         size_t                           repeat     ,

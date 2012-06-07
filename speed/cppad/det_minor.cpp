@@ -32,12 +32,17 @@ $$
 
 $section CppAD Speed: Gradient of Determinant by Minor Expansion$$
 
-$index cppad, speed minor$$
-$index speed, cppad minor$$
+$index link_det_minor, cppad$$
+$index cppad, link_det_minor$$
+$index speed, cppad$$
+$index cppad, speed$$
 $index minor, speed cppad$$
+$index determinant, speed cppad$$
 
-$head link_det_minor$$
-$index link_det_minor$$
+$head Specifications$$
+See $cref link_det_minor$$.
+
+$head Implementation$$
 $codep */
 # include <cppad/vector.hpp>
 # include <cppad/speed/det_by_minor.hpp>

@@ -37,12 +37,18 @@ $$
 
 $section Sacado Speed: Second Derivative of a Polynomial$$
 
-$index sacado, speed polynomial$$
-$index speed, sacado polynomial$$
+$index link_poly, sacado$$
+$index sacado, link_poly$$
+$index speed, sacado$$
+$index sacado, speed$$
 $index polynomial, speed sacado$$
 
-$head link_poly$$
-$index link_poly$$
+$head Specifications$$
+See $cref link_poly$$.
+
+$head Implementation$$
+
+
 $codep */
 # include <cppad/vector.hpp>
 # include <cppad/poly.hpp>

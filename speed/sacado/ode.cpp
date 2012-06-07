@@ -26,14 +26,17 @@ $$
 
 $section Sacado Speed: Gradient of Ode Solution$$
 
-$index sacado, speed ode jacobian$$
-$index speed, sacado ode jacobian$$
-$index jacobian, ode speed sacado$$
-$index ode, jacobian speed sacado$$
+$index link_ode, sacado$$
+$index sacado, link_ode$$
+$index speed, sacado$$
+$index sacado, speed$$
+$index ode, speed sacado$$
 
+$head Specifications$$
+See $cref link_ode$$.
 
-$head link_ode$$
-$index link_ode$$
+$head Implementation$$
+
 $codep */
 # include <Sacado.hpp>
 // # include <algorithm>

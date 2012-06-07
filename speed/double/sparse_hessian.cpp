@@ -22,12 +22,18 @@ $$
 
 $section Double Speed: Sparse Hessian$$
 
-$index double, speed sparse hessian$$
-$index speed, double sparse hessian$$
-$index sparse, hessian speed double$$
+$index link_sparse_hessian, double$$
+$index double, link_sparse_hessian$$
+$index speed, double$$
+$index double, speed$$
+$index sparse, speed double$$
+$index hessian, speed double$$
 
-$head link_sparse_hessian$$
-$index link_sparse_hessian$$
+$head Specifications$$
+See $cref link_sparse_hessian$$.
+
+$head Implementation$$
+
 $codep */
 # include <cppad/vector.hpp>
 # include <cppad/speed/uniform_01.hpp>

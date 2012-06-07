@@ -30,13 +30,17 @@ $$
 
 $section CppAD Speed: Gradient of Ode Solution$$
 
-$index cppad, speed ode jacobian$$
-$index speed, cppad ode jacobian$$
-$index jacobian, ode speed cppad$$
-$index ode, jacobian speed cppad$$
+$index link_ode, cppad$$
+$index cppad, link_ode$$
+$index speed, cppad$$
+$index cppad, speed$$
+$index ode, speed cppad$$
 
-$head link_ode$$
-$index link_ode$$
+$head Specifications$$
+See $cref link_ode$$.
+
+$head Implementation$$
+
 $codep */
 # include <cppad/cppad.hpp>
 # include <cppad/speed/ode_evaluate.hpp>

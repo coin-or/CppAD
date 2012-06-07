@@ -28,12 +28,18 @@ $$
 
 $section Sacado Speed: Gradient of Determinant by Minor Expansion$$
 
-$index sacado, speed minor$$
-$index speed, sacado minor$$
+$index link_det_minor, sacado$$
+$index sacado, link_det_minor$$
+$index speed, sacado$$
+$index sacado, speed$$
 $index minor, speed sacado$$
+$index determinant, speed sacado$$
 
-$head link_det_minor$$
-$index link_det_minor$$
+$head Specifications$$
+See $cref link_det_minor$$.
+
+$head Implementation$$
+
 $codep */
 # include <vector>
 # include <Sacado.hpp>

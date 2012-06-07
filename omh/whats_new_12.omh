@@ -53,6 +53,16 @@ This section contains a list of the changes to CppAD during 2012
 The purpose of this section is to
 assist you in learning about changes between various versions of CppAD.
 
+$head 06-07$$
+Make all the speed tests implementations (for the specific packages)
+uniform by having a Specification and Implementation heading and similar
+indexing. For example, see
+$cref adolc_det_minor.cpp$$,
+$cref cppad_det_minor.cpp$$,
+$cref double_det_minor.cpp$$,
+$cref fadbad_det_minor.cpp$$, and
+$cref sacado_det_minor.cpp$$.
+
 $head 06-05$$
 Add the $cref sacado_ode.cpp$$ speed test.
 

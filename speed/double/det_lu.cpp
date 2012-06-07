@@ -1,6 +1,6 @@
 /* $Id$ */
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-11 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-12 Bradley M. Bell
 
 CppAD is distributed under multiple licenses. This distribution is under
 the terms of the 
@@ -22,16 +22,18 @@ $$
 
 $section Double Speed: Determinant Using Lu Factorization$$
 
-$index double, speed lu$$
-$index speed, double lu$$
+$index link_det_lu, double$$
+$index double, link_det_lu$$
+$index speed, double$$
+$index double, speed$$
 $index lu, speed double$$
+$index matrix, factor speed double$$
+$index factor, matrix speed double$$
 
 $head Specifications$$
 See $cref link_det_lu$$.
 
 $head Implementation$$
-$index double, link_det_lu$$
-$index link_det_lu, double$$
 $codep */
 # include <cppad/vector.hpp>
 # include <cppad/speed/det_by_lu.hpp>

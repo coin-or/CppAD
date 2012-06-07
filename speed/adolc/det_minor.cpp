@@ -32,12 +32,17 @@ $$
 
 $section Adolc Speed: Gradient of Determinant by Minor Expansion$$
 
-$index adolc, speed minor$$
-$index speed, adolc minor$$
+$index link_det_minor, adolc$$
+$index adolc, link_det_minor$$
+$index speed, adolc$$
+$index adolc, speed$$
 $index minor, speed adolc$$
+$index determinant, speed adolc$$
 
-$head link_det_minor$$
-$index link_det_minor$$
+$head Specifications$$
+See $cref link_det_minor$$.
+
+$head Implementation$$
 $codep */
 # include <adolc/adolc.h>
 

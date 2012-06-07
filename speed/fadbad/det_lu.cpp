@@ -29,16 +29,18 @@ $$
 
 $section Fadbad Speed: Gradient of Determinant Using Lu Factorization$$
 
-$index fadbad, speed lu$$
-$index speed, fadbad lu$$
+$index link_det_lu, fadbad$$
+$index fadbad, link_det_lu$$
+$index speed, fadbad$$
+$index fadbad, speed$$
 $index lu, speed fadbad$$
+$index matrix, factor speed fadbad$$
+$index factor, matrix speed fadbad$$
 
 $head Specifications$$
 See $cref link_det_lu$$.
 
 $head Implementation$$
-$index fadbad, link_det_lu$$
-$index link_det_lu, fadbad$$
 $codep */
 # include <FADBAD++/badiff.h>
 # include <cppad/speed/det_by_lu.hpp>

@@ -37,12 +37,17 @@ $$
 
 $section CppAD Speed: Second Derivative of a Polynomial$$
 
-$index cppad, speed polynomial$$
-$index speed, cppad polynomial$$
+$index link_poly, cppad$$
+$index cppad, link_poly$$
+$index speed, cppad$$
+$index cppad, speed$$
 $index polynomial, speed cppad$$
 
-$head link_poly$$
-$index link_poly$$
+$head Specifications$$
+See $cref link_poly$$.
+
+$head Implementation$$
+
 $codep */
 # include <cppad/cppad.hpp>
 # include <cppad/speed/uniform_01.hpp>

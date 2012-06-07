@@ -33,26 +33,18 @@ $$
 
 $section CppAD Speed: Sparse Jacobian$$
 
-$index cppad, speed sparse Jacobian$$
-$index speed, cppad sparse Jacobian$$
-$index Jacobian, sparse speed cppad$$
-$index sparse, Jacobian speed cppad$$
+$index link_sparse_jacobian, cppad$$
+$index cppad, link_sparse_jacobian$$
+$index speed, cppad$$
+$index cppad, speed$$
+$index sparse, speed cppad$$
+$index jacobian, speed cppad$$
 
-$head Operation Sequence$$
-Note that the 
-$cref/operation sequence/glossary/Operation/Sequence/$$
-depends on the vectors $icode i$$ and $icode j$$.
-Hence we use a different $cref ADFun$$ object for 
-each choice of $icode i$$ and $icode j$$.
+$head Specifications$$
+See $cref link_sparse_jacobian$$.
 
-$head Sparse Jacobian$$
-If the preprocessor symbol $code CPPAD_USE_SPARSE_JACOBIAN$$ is 
-true, the routine $cref/SparseJacobian/sparse_jacobian/$$ 
-is used for the calculation.
-Otherwise, the routine $cref Jacobian$$ is used.
+$head Implementation$$
 
-$head link_sparse_jacobian$$
-$index link_sparse_jacobian$$
 $codep */
 # include <cppad/cppad.hpp>
 # include <cppad/speed/uniform_01.hpp>

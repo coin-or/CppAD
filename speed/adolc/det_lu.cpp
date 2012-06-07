@@ -31,16 +31,18 @@ $$
 
 $section Adolc Speed: Gradient of Determinant Using Lu Factorization$$
 
-$index adolc, speed lu$$
-$index speed, adolc lu$$
+$index link_det_lu, adolc$$
+$index adolc, link_det_lu$$
+$index speed, adolc$$
+$index adolc, speed$$
 $index lu, speed adolc$$
+$index matrix, factor speed adolc$$
+$index factor, matrix speed adolc$$
 
 $head Specifications$$
 See $cref link_det_lu$$.
 
 $head Implementation$$
-$index adolc, link_det_lu$$
-$index link_det_lu, adolc$$
 $codep */
 # include <adolc/adolc.h>
 

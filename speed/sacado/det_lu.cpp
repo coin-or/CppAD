@@ -31,16 +31,18 @@ $$
 
 $section Sacado Speed: Gradient of Determinant Using Lu Factorization$$
 
-$index sacado, speed lu$$
-$index speed, sacado lu$$
+$index link_det_lu, sacado$$
+$index sacado, link_det_lu$$
+$index speed, sacado$$
+$index sacado, speed$$
 $index lu, speed sacado$$
+$index matrix, factor speed sacado$$
+$index factor, matrix speed sacado$$
 
 $head Specifications$$
 See $cref link_det_lu$$.
 
 $head Implementation$$
-$index sacado, link_det_lu$$
-$index link_det_lu, sacado$$
 $codep */
 # include <Sacado.hpp>
 # include <cppad/speed/det_by_lu.hpp>

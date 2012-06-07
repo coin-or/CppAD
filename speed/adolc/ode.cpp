@@ -27,10 +27,16 @@ $$
 
 $section Adolc Speed: Ode$$
 
-$index adolc, speed ode jacobian$$
-$index speed, adolc ode jacobian$$
-$index jacobian, ode speed adolc$$
-$index ode, jacobian speed adolc$$
+$index link_ode, adolc$$
+$index adolc, link_ode$$
+$index speed, adolc$$
+$index adolc, speed$$
+$index ode, speed adolc$$
+
+$head Specifications$$
+See $cref link_ode$$.
+
+$head Implementation$$
 
 $codep */
 # include <adolc/adolc.h>

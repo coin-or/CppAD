@@ -1,6 +1,6 @@
 /* $Id$ */
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-09 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-12 Bradley M. Bell
 
 CppAD is distributed under multiple licenses. This distribution is under
 the terms of the 
@@ -21,12 +21,18 @@ $$
 
 $section Double Speed: Evaluate a Polynomial$$
 
-$index cppad, speed polynomial$$
-$index speed, cppad polynomial$$
-$index polynomial, speed cppad$$
 
-$head link_poly$$
-$index link_poly$$
+$index link_poly, double$$
+$index double, link_poly$$
+$index speed, double$$
+$index double, speed$$
+$index polynomial, speed double$$
+
+$head Specifications$$
+See $cref link_poly$$.
+
+$head Implementation$$
+
 $codep */
 # include <cppad/cppad.hpp>
 # include <cppad/speed/uniform_01.hpp>

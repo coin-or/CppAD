@@ -1,6 +1,6 @@
 /* $Id$ */
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-09 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-12 Bradley M. Bell
 
 CppAD is distributed under multiple licenses. This distribution is under
 the terms of the 
@@ -22,12 +22,18 @@ $$
 
 $section Double Speed: Determinant by Minor Expansion$$
 
-$index cppad, speed minor$$
-$index speed, cppad minor$$
-$index minor, speed cppad$$
+$index link_det_minor, double$$
+$index double, link_det_minor$$
+$index speed, double$$
+$index double, speed$$
+$index minor, speed double$$
+$index determinant, speed double$$
 
-$head link_det_minor$$
-$index link_det_minor$$
+$head Specifications$$
+See $cref link_det_minor$$.
+
+$head Implementation$$
+
 $codep */
 # include <cppad/vector.hpp>
 # include <cppad/speed/det_by_minor.hpp>

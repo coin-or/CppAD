@@ -33,13 +33,18 @@ $$
 
 $section CppAD Speed: Sparse Hessian$$
 
-$index cppad, speed sparse Hessian$$
-$index speed, cppad sparse Hessian$$
-$index Hessian, sparse speed cppad$$
-$index sparse, Hessian speed cppad$$
+$index link_sparse_hessian, cppad$$
+$index cppad, link_sparse_hessian$$
+$index speed, cppad$$
+$index cppad, speed$$
+$index sparse, speed cppad$$
+$index hessian, speed cppad$$
 
-$head link_sparse_hessian$$
-$index link_sparse_hessian$$
+$head Specifications$$
+See $cref link_sparse_hessian$$.
+
+$head Implementation$$
+
 $codep */
 # include <cppad/cppad.hpp>
 # include <cppad/speed/uniform_01.hpp>

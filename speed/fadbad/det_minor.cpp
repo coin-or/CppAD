@@ -28,12 +28,18 @@ $$
 
 $section Fadbad Speed: Gradient of Determinant by Minor Expansion$$
 
-$index fadbad, speed minor$$
-$index speed, fadbad minor$$
+$index link_det_minor, fadbad$$
+$index fadbad, link_det_minor$$
+$index speed, fadbad$$
+$index fadbad, speed$$
 $index minor, speed fadbad$$
+$index determinant, speed fadbad$$
 
-$head link_det_minor$$
-$index link_det_minor$$
+$head Specifications$$
+See $cref link_det_minor$$.
+
+$head Implementation$$
+
 $codep */
 # include <FADBAD++/badiff.h>
 # include <cppad/speed/det_by_minor.hpp>

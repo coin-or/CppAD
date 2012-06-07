@@ -32,10 +32,17 @@ $$
 
 $section Fadbad Speed: Ode$$
 
-$index fadbad, speed ode jacobian$$
-$index speed, fadbad ode jacobian$$
-$index jacobian, ode speed fadbad$$
-$index ode, jacobian speed fadbad$$
+
+$index link_ode, fadbad$$
+$index fadbad, link_ode$$
+$index speed, fadbad$$
+$index fadbad, speed$$
+$index ode, speed fadbad$$
+
+$head Specifications$$
+See $cref link_ode$$.
+
+$head Implementation$$
 
 $codep */
 # include <FADBAD++/fadiff.h>

@@ -32,17 +32,18 @@ $$
 
 $section CppAD Speed: Matrix Multiplication$$
 
-$index cppad, speed matrix multiply$$
-$index speed, cppad matrix multiply$$
-$index matrix, multiply speed cppad$$
-$index multiply, matrix speed cppad$$
+$index link_mat_mul, cppad$$
+$index cppad, link_mat_mul$$
+$index speed, cppad$$
+$index cppad, speed$$
+$index matrix, speed cppad$$
+$index multiply, speed cppad$$
 
 $head Specifications$$
 See $cref link_mat_mul$$.
 
 $head Implementation$$
-$index cppad, link_mat_mul$$
-$index link_mat_mul, cppad$$
+
 $codep */
 # include <cppad/cppad.hpp>
 # include <cppad/speed/mat_sum_sq.hpp>

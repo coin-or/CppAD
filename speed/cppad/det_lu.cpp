@@ -31,16 +31,18 @@ $$
 
 $section CppAD Speed: Gradient of Determinant Using Lu Factorization$$
 
-$index cppad, speed lu$$
-$index speed, cppad lu$$
+$index link_det_lu, cppad$$
+$index cppad, link_det_lu$$
+$index speed, cppad$$
+$index cppad, speed$$
 $index lu, speed cppad$$
+$index matrix, factor speed cppad$$
+$index factor, matrix speed cppad$$
 
 $head Specifications$$
 See $cref link_det_lu$$.
 
 $head Implementation$$
-$index cppad, link_det_lu$$
-$index link_det_lu, cppad$$
 $codep */
 # include <cppad/vector.hpp>
 # include <cppad/speed/det_by_lu.hpp>

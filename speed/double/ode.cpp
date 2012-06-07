@@ -25,12 +25,17 @@ $$
 
 $section Double Speed: Ode Solution$$
 
-$index double, speed ode$$
-$index speed, double ode$$
+$index link_ode, double$$
+$index double, link_ode$$
+$index speed, double$$
+$index double, speed$$
 $index ode, speed double$$
 
-$head link_ode$$
-$index link_ode$$
+$head Specifications$$
+See $cref link_ode$$.
+
+$head Implementation$$
+
 $codep */
 # include <cstring>
 # include <cppad/vector.hpp>

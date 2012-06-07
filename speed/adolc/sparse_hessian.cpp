@@ -30,20 +30,18 @@ $$
 
 $section Adolc Speed: Sparse Hessian$$
 
-$index adolc, speed sparse Hessian$$
-$index speed, adolc sparse Hessian$$
-$index Hessian, sparse speed adolc$$
-$index sparse, Hessian speed adolc$$
+$index link_sparse_hessian, adolc$$
+$index adolc, link_sparse_hessian$$
+$index speed, adolc$$
+$index adolc, speed$$
+$index sparse, speed adolc$$
+$index hessian, speed adolc$$
 
-$head Operation Sequence$$
-Note that the 
-$cref/operation sequence/glossary/Operation/Sequence/$$
-depends on the vectors $icode i$$ and $icode j$$.
-Hence we use a different $cref ADFun$$ object for 
-each choice of $icode i$$ and $icode j$$.
+$head Specifications$$
+See $cref link_sparse_hessian$$.
 
-$head link_sparse_hessian$$
-$index link_sparse_hessian$$
+$head Implementation$$
+
 $codep */
 # include <cppad/vector.hpp>
 # include <cppad/speed/uniform_01.hpp>

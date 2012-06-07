@@ -36,12 +36,17 @@ $$
 
 $section Adolc Speed: Second Derivative of a Polynomial$$
 
-$index adolc, speed polynomial$$
-$index speed, adolc polynomial$$
+$index link_poly, adolc$$
+$index adolc, link_poly$$
+$index speed, adolc$$
+$index adolc, speed$$
 $index polynomial, speed adolc$$
 
-$head link_poly$$
-$index link_poly$$
+$head Specifications$$
+See $cref link_poly$$.
+
+$head Implementation$$
+
 $codep */
 # include <vector>
 # include <adolc/adolc.h>
