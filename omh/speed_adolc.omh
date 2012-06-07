@@ -67,7 +67,8 @@ $contents%
 	speed/adolc/ode.cpp%
 	speed/adolc/poly.cpp%
 	speed/adolc/sparse_hessian.cpp%
-	speed/adolc/sparse_jacobian.cpp
+	speed/adolc/sparse_jacobian.cpp%
+	speed/adolc/alloc_mat.cpp
 %$$
 
 $end

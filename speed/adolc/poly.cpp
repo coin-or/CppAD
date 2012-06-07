@@ -56,6 +56,7 @@ $codep */
 # include <cppad/vector.hpp>
 # include <cppad/thread_alloc.hpp>
 
+# include "alloc_mat.hpp"
 bool link_poly(
 	size_t                     size     , 
 	size_t                     repeat   , 
@@ -80,8 +81,7 @@ bool link_poly(
 
 	// set up for thread_alloc memory allocator (fast and checks for leaks)
 	using CppAD::thread_alloc; // the allocator
-	size_t size_min;           // requested number of elements
-	size_t size_out;           // capacity of an allocation
+	size_t capacity;           // capacity of an allocation
 
 	// choose a vector of polynomial coefficients
 	CppAD::uniform_01(size, a);
@@ -95,17 +95,10 @@ bool link_poly(
 	adouble Z, P;
 
 	// allocate arguments to hos_forward
-	size_min = n;
-	double* x0 = thread_alloc::create_array<double>(size_min, size_out);
-	double** x = thread_alloc::create_array<double*>(size_min, size_out);
-	size_min = m;
-	double* y0 = thread_alloc::create_array<double>(size_min, size_out);
-	double** y = thread_alloc::create_array<double*>(size_min, size_out);
-	size_min = d;
-	for(i = 0; i < size_t(n); i++)
-		x[i] = thread_alloc::create_array<double>(size_min, size_out);
-	for(i = 0; i < size_t(m); i++)
-		y[i] = thread_alloc::create_array<double>(size_min, size_out);
+	double* x0 = thread_alloc::create_array<double>(size_t(n), capacity);
+	double* y0 = thread_alloc::create_array<double>(size_t(m), capacity);
+	double** x = adolc_alloc_mat(size_t(n), size_t(d));
+	double** y = adolc_alloc_mat(size_t(m), size_t(d));
 
 	// Taylor coefficient for argument
 	x[0][0] = 1.;  // first order
@@ -166,14 +159,10 @@ bool link_poly(
 	}
 	// ------------------------------------------------------
 	// tear down
+	adolc_free_mat(x);
+	adolc_free_mat(y);
 	thread_alloc::delete_array(x0);
 	thread_alloc::delete_array(y0);
-	for(i = 0; i < size_t(n); i++)
-		thread_alloc::delete_array(x[i]);
-	for(i = 0; i < size_t(m); i++)
-		thread_alloc::delete_array(y[i]);
-	thread_alloc::delete_array(x);
-	thread_alloc::delete_array(y);
 
 	return true;
 }

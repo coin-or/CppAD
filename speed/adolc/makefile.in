@@ -41,9 +41,10 @@ am__configure_deps = $(am__aclocal_m4_deps) $(CONFIGURE_DEPENDENCIES) \
 mkinstalldirs = $(install_sh) -d
 CONFIG_CLEAN_FILES =
 CONFIG_CLEAN_VPATH_FILES =
-am_adolc_OBJECTS = main.$(OBJEXT) det_lu.$(OBJEXT) det_minor.$(OBJEXT) \
-	mat_mul.$(OBJEXT) ode.$(OBJEXT) poly.$(OBJEXT) \
-	sparse_hessian.$(OBJEXT) sparse_jacobian.$(OBJEXT)
+am_adolc_OBJECTS = alloc_mat.$(OBJEXT) main.$(OBJEXT) det_lu.$(OBJEXT) \
+	det_minor.$(OBJEXT) mat_mul.$(OBJEXT) ode.$(OBJEXT) \
+	poly.$(OBJEXT) sparse_hessian.$(OBJEXT) \
+	sparse_jacobian.$(OBJEXT)
 adolc_OBJECTS = $(am_adolc_OBJECTS)
 adolc_LDADD = $(LDADD)
 adolc_DEPENDENCIES =
@@ -56,6 +57,10 @@ CXXCOMPILE = $(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) \
 CXXLD = $(CXX)
 CXXLINK = $(CXXLD) $(AM_CXXFLAGS) $(CXXFLAGS) $(AM_LDFLAGS) $(LDFLAGS) \
 	-o $@
+COMPILE = $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) \
+	$(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS)
+CCLD = $(CC)
+LINK = $(CCLD) $(AM_CFLAGS) $(CFLAGS) $(AM_LDFLAGS) $(LDFLAGS) -o $@
 SOURCES = $(adolc_SOURCES)
 DIST_SOURCES = $(adolc_SOURCES)
 ETAGS = etags
@@ -219,6 +224,8 @@ LDADD = -lspeed -ladolc
 AM_LDFLAGS = -L../src -L$(ADOLC_DIR)/lib -L$(ADOLC_DIR)/lib64
 #
 adolc_SOURCES = \
+	alloc_mat.hpp \
+	alloc_mat.cpp \
 	../main.cpp \
 	det_lu.cpp \
 	det_minor.cpp \
@@ -275,6 +282,7 @@ mostlyclean-compile:
 distclean-compile:
 	-rm -f *.tab.c
 
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/alloc_mat.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/det_lu.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/det_minor.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/main.Po@am__quote@

@@ -52,6 +52,7 @@ $codep */
 # include <adolc/taping.h>
 # include <adolc/drivers/drivers.h>
 
+# include "alloc_mat.hpp"
 bool link_sparse_hessian(
 	size_t                           repeat   , 
 	CppAD::vector<double>           &x_arg    ,
@@ -69,7 +70,6 @@ bool link_sparse_hessian(
 	size_t m = 1;             // number of dependent variables
 	double f;                 // function value
 
-	// use thread_alloc memory allocator (fast and checks for leaks)
 	using CppAD::thread_alloc; // the allocator
 	size_t capacity;           // capacity of an allocation
 
@@ -83,9 +83,7 @@ bool link_sparse_hessian(
 	// double version of domain space vector
 	double* x  = thread_alloc::create_array<double>(n, capacity);
 	// Hessian as computed by adolc
-	double** H = thread_alloc::create_array<double*>(n, capacity);
-	for(i = 0; i < n; i++)
-		H[i] = thread_alloc::create_array<double>(n, capacity);
+	double** H = adolc_alloc_mat(n, n);
 
 	// choose a value for x 
 	CppAD::uniform_01(n, x);
@@ -115,9 +113,8 @@ bool link_sparse_hessian(
 		{	hes[ i * n + j] = H[i][j];
 			hes[ j * n + i] = H[i][j];
 		}
-		thread_alloc::delete_array(H[i]);
 	}
-	thread_alloc::delete_array(H);
+	adolc_free_mat(H);
 	thread_alloc::delete_array(x);
 	return true;
 }
