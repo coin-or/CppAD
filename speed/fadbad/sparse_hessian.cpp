@@ -26,6 +26,7 @@ $section Fadbad Speed: Sparse Hessian$$
 $codep */
 // The fadbad version of this test is not yet available 
 bool link_sparse_hessian(
+        size_t                           size       ,
         size_t                           repeat     ,
         CppAD::vector<double>            &x         ,
         const CppAD::vector<size_t>      &row       ,

@@ -27,6 +27,7 @@ $section Speed Testing Sparse Jacobian$$
 
 $head Prototype$$
 $codei%extern bool link_sparse_jacobian(
+	size_t                 %size%      ,
 	size_t                 %repeat%    ,
 	size_t                 %m%         ,
 	CppAD::vector<double> &%x%         ,
@@ -48,6 +49,11 @@ $latex \[
 for some $latex k$$ between zero and $icode%K% = %row%.size()-1%$$.
 All the other terms of the Jacobian are zero.
 
+
+$head size$$
+The argument $icode size$$, referred to as $latex n$$ below,
+is the dimension of the domain space for $latex f(x)$$.
+
 $head repeat$$
 The argument $icode repeat$$ is the number of different functions
 $latex f(x)$$ for which the Jacobian is computed for.
@@ -63,8 +69,7 @@ The argument $icode x$$ has prototype
 $codei%
         CppAD::vector<double> &%x%
 %$$
-The size of $icode x$$ is the size used to identify this speed test
-and it is dimension of the domain space for $latex f(x)$$; i.e., $latex n$$.
+and its size is $latex n$$; i.e., $icode%x%.size() == %size%$$.
 The input value of the elements of $icode x$$ does not matter.
 On output, it has been set to the
 argument value for which the function,
@@ -229,6 +234,9 @@ namespace {
 /*!
 Package specific implementation of a sparse Jacobian claculation.
 
+\param size [in]
+is the size of the domain space; i.e. specifies \c n.
+
 \param repeat [in]
 number of times tha the test is repeated.
 
@@ -255,6 +263,7 @@ is true, if the sparse Jacobian speed test is implemented for this package,
 and false otherwise.
 */
 extern bool link_sparse_jacobian(
+	size_t                     size       ,
 	size_t                     repeat     ,
 	size_t                     m          ,
 	CppAD::vector<double>      &x         ,
@@ -278,7 +287,7 @@ bool available_sparse_jacobian(void)
 	vector<size_t> row, col; 
 	choose_row_col(n, m, row, col);
 
-	return link_sparse_jacobian(repeat, m, x, row, col, jacobian);
+	return link_sparse_jacobian(n, repeat, m, x, row, col, jacobian);
 }
 /*!
 Does final sparse Jacobian value pass correctness test.
@@ -298,7 +307,7 @@ bool correct_sparse_jacobian(bool is_package_double)
 	vector<size_t> row, col;
 	choose_row_col(n, m, row, col);
 
-	link_sparse_jacobian(repeat, m, x, row, col, jacobian);
+	link_sparse_jacobian(n, repeat, m, x, row, col, jacobian);
 
 	if( is_package_double)
 	{	// check f(x)
@@ -329,15 +338,15 @@ bool correct_sparse_jacobian(bool is_package_double)
 /*!
 Sparse Jacobian speed test.
 
-\param n
+\param size
 is the dimension of the argument space for this speed test.
-This is also scales the size of the test.
 
 \param repeat
 is the number of times to repeate the speed test.
 */
-void speed_sparse_jacobian(size_t n, size_t repeat)
-{	size_t m   = 3 * n;
+void speed_sparse_jacobian(size_t size, size_t repeat)
+{	size_t n   = size;	
+	size_t m   = 3 * n;
 	vector<double> x(n);
 	vector<double> jacobian(m * n);
 	vector<size_t> row, col;
@@ -345,6 +354,6 @@ void speed_sparse_jacobian(size_t n, size_t repeat)
 
 	// note that cppad/sparse_jacobian.cpp assumes that x.size()
 	// is the size corresponding to this test
-	link_sparse_jacobian(repeat, m, x, row, col, jacobian);
+	link_sparse_jacobian(n, repeat, m, x, row, col, jacobian);
 	return;
 }

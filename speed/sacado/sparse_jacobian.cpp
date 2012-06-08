@@ -26,6 +26,7 @@ $section sacado Speed: sparse_jacobian$$
 $codep */
 // The sacado version of this test is not yet available
 bool link_sparse_jacobian(
+	size_t                     size     , 
 	size_t                     repeat   , 
 	size_t                     m        ,
 	CppAD::vector<double>     &x        ,

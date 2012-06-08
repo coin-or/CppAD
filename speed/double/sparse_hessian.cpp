@@ -40,6 +40,7 @@ $codep */
 # include <cppad/speed/sparse_hes_fun.hpp>
 
 bool link_sparse_hessian(
+	size_t                           size     , 
 	size_t                           repeat   , 
 	CppAD::vector<double>           &x        ,
 	const CppAD::vector<size_t>     &row      ,
@@ -50,7 +51,7 @@ bool link_sparse_hessian(
 	// setup
 	using CppAD::vector;
 	size_t order = 0;          // derivative order corresponding to function
-	size_t n     = x.size();   // argument space dimension
+	size_t n     = size;       // argument space dimension
 	size_t m     = 1;          // range space dimension 
 	vector<double> y(m);       // function value
 

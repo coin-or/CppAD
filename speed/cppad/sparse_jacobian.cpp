@@ -82,6 +82,7 @@ namespace {
 }
 
 bool link_sparse_jacobian(
+	size_t                     size     , 
 	size_t                     repeat   , 
 	size_t                     m        ,
 	CppAD::vector<double>     &x        ,
@@ -98,10 +99,9 @@ bool link_sparse_jacobian(
 	typedef vector<bool>                BoolVector;
 
 	size_t i, j, k;
-	size_t size  = x.size();  // size corresponding to this test
 	size_t order = 0;         // derivative order corresponding to function 
 	size_t K     = row.size();// number of row and column indices 
-	size_t n     = x.size();  // number of independent variables
+	size_t n     = size;      // number of independent variables
 	ADVector   a_x(n);        // AD domain space vector
 	ADVector   a_y(m);        // AD range space vector y = g(x)
 	DblVector  jac(K);        // non-zeros in Jacobian

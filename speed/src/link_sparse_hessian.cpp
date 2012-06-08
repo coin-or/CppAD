@@ -27,6 +27,7 @@ $section Speed Testing Sparse Hessian$$
 
 $head Prototype$$
 $codei%extern bool link_sparse_hessian(
+	size_t                        %size%      ,
 	size_t                        %repeat%    ,
 	CppAD::vector<double>&        %x%         ,
 	const CppAD::vector<size_t>&  %row%       ,
@@ -55,6 +56,10 @@ $latex \[
 for some $latex k $$ between zero and $latex K-1 $$.
 All the other terms of the Hessian are zero.
 
+$head size$$
+The argument $icode size$$, referred to as $latex n$$ below,
+is the dimension of the domain space for $latex f(x)$$.
+
 $head repeat$$
 The argument $icode repeat$$ is the number of times
 to repeat the test
@@ -66,8 +71,7 @@ The argument $icode x$$ has prototype
 $codei%
         CppAD::vector<double> &%x%
 %$$
-The size of $icode x$$ is the size used to identify this speed test
-and it is dimension of the domain space for $latex f(x)$$; i.e., $latex n$$.
+and its size is $latex n$$; i.e., $icode%x%.size() == %size%$$.
 The input value of the elements of $icode x$$ does not matter.
 On output, it has been set to the
 argument value for which the function,
@@ -249,6 +253,9 @@ namespace {
 /*!
 Package specific implementation of a sparse Hessian claculation.
 
+\param size [in]
+is the size of the domain space; i.e. specifies \c n.
+
 \param repeat [in]
 number of times tha the test is repeated.
 
@@ -272,6 +279,7 @@ is true, if the sparse Hessian speed test is implemented for this package,
 and false otherwise.
 */
 extern bool link_sparse_hessian(
+	size_t                           size       ,
 	size_t                           repeat     ,
 	CppAD::vector<double>            &x         ,
 	const CppAD::vector<size_t>      &row       ,
@@ -294,7 +302,7 @@ bool available_sparse_hessian(void)
 	vector<size_t> row, col; 
 	choose_row_col(n, row, col);
 
-	return link_sparse_hessian(repeat, x, row, col, hessian);
+	return link_sparse_hessian(n, repeat, x, row, col, hessian);
 }
 /*!
 Does final sparse Hessian value pass correctness test.
@@ -311,7 +319,7 @@ bool correct_sparse_hessian(bool is_package_double)
 	vector<size_t> row, col;
 	choose_row_col(n, row, col);
 
-	link_sparse_hessian(repeat, x, row, col, hessian);
+	link_sparse_hessian(n, repeat, x, row, col, hessian);
 
 	size_t order, size;
 	if( is_package_double)
@@ -335,21 +343,20 @@ bool correct_sparse_hessian(bool is_package_double)
 /*!
 Sparse Hessian speed test.
 
-\param n
+\param size
 is the dimension of the argument space for this speed test.
-This is also scales the size of the test.
 
 \param repeat
 is the number of times to repeate the speed test.
 */
-void speed_sparse_hessian(size_t n, size_t repeat)
-{	
+void speed_sparse_hessian(size_t size, size_t repeat)
+{	size_t n = size;	
 	vector<double> x(n);
 	vector<double> hessian(n * n);
 	vector<size_t> row, col;
 	choose_row_col(n, row, col);
 
 	// note that cppad/sparse_hessian.cpp assumes that x.size() == size
-	link_sparse_hessian(repeat, x, row, col, hessian);
+	link_sparse_hessian(n, repeat, x, row, col, hessian);
 	return;
 }

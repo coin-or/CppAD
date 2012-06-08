@@ -46,6 +46,7 @@ $codep */
 # include <cppad/speed/sparse_jac_fun.hpp>
 
 bool link_sparse_jacobian(
+	size_t                     size     , 
 	size_t                     repeat   , 
 	size_t                     m        ,
 	CppAD::vector<double>     &x        ,
@@ -58,7 +59,7 @@ bool link_sparse_jacobian(
 	using CppAD::vector;
 	size_t i, k;
 	size_t order = 0;          // order for computing function value
-	size_t n     = x.size();   // argument space dimension
+	size_t n     = size;       // argument space dimension
 	size_t K     = row.size(); // size of index vectors
 	vector<double> yp(m);      // function value yp = f(x)
 

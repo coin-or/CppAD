@@ -96,6 +96,7 @@ namespace {
 }
 
 bool link_sparse_hessian(
+	size_t                           size     , 
 	size_t                           repeat   , 
 	CppAD::vector<double>&           x        ,
 	const CppAD::vector<size_t>&     row      ,
@@ -111,10 +112,9 @@ bool link_sparse_hessian(
 	typedef vector<bool>                BoolVector;
 
 	size_t i, j, k;
-	size_t size  = x.size();  // size corresponding to this speed test
 	size_t order = 0;         // derivative order corresponding to function
 	size_t m = 1;             // number of dependent variables
-	size_t n = x.size();      // number of independent variables
+	size_t n = size;          // number of independent variables
 	size_t K = row.size();    // number of non-zeros in lower triangle
 	ADVector   a_x(n);        // AD domain space vector
 	ADVector   a_y(m);        // AD range space vector

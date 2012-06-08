@@ -95,6 +95,7 @@ bool link_mat_mul(
 	}
 	// return function value
 	z[0] = Z[0].x();
+
 	// ---------------------------------------------------------
 	return true;
 }

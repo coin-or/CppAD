@@ -54,6 +54,7 @@ $codep */
 
 # include "alloc_mat.hpp"
 bool link_sparse_hessian(
+	size_t                           size     , 
 	size_t                           repeat   , 
 	CppAD::vector<double>           &x_arg    ,
 	const CppAD::vector<size_t>     &row      ,

@@ -41,11 +41,10 @@ See $cref link_det_minor$$.
 $head Implementation$$
 
 $codep */
-# include <vector>
 # include <Sacado.hpp>
 # include <cppad/speed/det_by_minor.hpp>
 # include <cppad/speed/uniform_01.hpp>
-
+# include <cppad/vector.hpp>
 bool link_det_minor(
 	size_t                     size     , 
 	size_t                     repeat   , 
@@ -62,7 +61,7 @@ bool link_det_minor(
 
 	// object for computing determinant
 	typedef Sacado::Rad::ADvar<double>    ADScalar; 
-	typedef CppAD::vector<ADScalar>        ADVector; 
+	typedef CppAD::vector<ADScalar>       ADVector; 
 	CppAD::det_by_minor<ADScalar>         Det(size);
 
 	size_t i;                // temporary index
@@ -72,7 +71,7 @@ bool link_det_minor(
 	
 	// ------------------------------------------------------
 	while(repeat--)
-       {	// get the next matrix
+	{	// get the next matrix
 		CppAD::uniform_01(n, matrix);
 
 		// set independent variable values
@@ -82,10 +81,10 @@ bool link_det_minor(
 		// compute the determinant
 		detA = Det(A);
 
-		// Compute the gradient of detA
+		// reverse mode compute gradient of last computed value; i.e., detA
 		ADScalar::Gradcomp();
 
-		// return gradient using reverse mode
+		// return gradient 
 		for(i =0; i < n; i++)
 			gradient[i] = A[i].adj(); // partial detA w.r.t A[i]
 	}
