@@ -45,7 +45,6 @@ $codep */
 # include <cppad/speed/det_by_minor.hpp>
 # include <cppad/speed/uniform_01.hpp>
 # include <cppad/vector.hpp>
-
 bool link_det_minor(
 	size_t                     size     , 
 	size_t                     repeat   , 

@@ -3,7 +3,7 @@
 # define CPPAD_MAT_SUM_SQ_INCLUDED
 
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-11 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-12 Bradley M. Bell
 
 CppAD is distributed under multiple licenses. This distribution is under
 the terms of the 
@@ -108,7 +108,7 @@ $latex \[
 
 $head Vector$$
 The type $icode Vector$$ is any
-$cref SimpleVector$$ calls with a fixed element type.
+$cref SimpleVector$$, or it can be a raw pointer to the vector elements.
 The element type must support
 addition, multiplication, and assignment to both its own type 
 and to a double value.
@@ -134,6 +134,8 @@ $end
 ------------------------------------------------------------------------------
 */
 // BEGIN PROGRAM
+# include <cstddef>
+//
 namespace CppAD {
 	template <class Vector>
 	void mat_sum_sq(size_t n, Vector& x , Vector& y , Vector& z)

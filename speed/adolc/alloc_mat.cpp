@@ -12,7 +12,8 @@ Please visit http://www.coin-or.org/CppAD/ for information on other licenses.
 /*
 $begin adolc_alloc_mat$$
 $spell
-	adolc_alloc
+	adolc
+	alloc
 $$
 
 $section Adolc Test Utility: Allocate and Free Memory For a Matrix$$

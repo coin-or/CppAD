@@ -45,11 +45,9 @@ See $cref link_det_minor$$.
 $head Implementation$$
 $codep */
 # include <adolc/adolc.h>
-
 # include <cppad/vector.hpp>
 # include <cppad/speed/det_by_minor.hpp>
 # include <cppad/speed/uniform_01.hpp>
-
 
 bool link_det_minor(
 	size_t                     size     , 
@@ -64,47 +62,41 @@ bool link_det_minor(
 
 	// -----------------------------------------------------
 	// setup
+	typedef adouble    ADScalar;
+	typedef ADScalar*  ADVector;
+
 	int tag  = 0;         // tape identifier
 	int m    = 1;         // number of dependent variables
 	int n    = size*size; // number of independent variables
 	double f;             // function value
 	int j;                // temporary index
 
-
 	// set up for thread_alloc memory allocator (fast and checks for leaks)
 	using CppAD::thread_alloc; // the allocator
-	size_t size_min;           // requested number of elements
-	size_t size_out;           // capacity of an allocation
+	size_t capacity;           // capacity of an allocation
 
 	// object for computing determinant
-	typedef adouble    ADScalar;
-	typedef ADScalar*  ADVector;
 	CppAD::det_by_minor<ADScalar> Det(size);
 
 	// AD value of determinant
 	ADScalar   detA;
 
 	// AD version of matrix
-	size_min     = n;
-	ADVector A   = thread_alloc::create_array<ADScalar>(size_min, size_out);
+	ADVector A   = thread_alloc::create_array<ADScalar>(size_t(n), capacity);
 	
 	// vectors of reverse mode weights 
-	size_min     = m;
-	double* u    = thread_alloc::create_array<double>(size_min, size_out);
+	double* u    = thread_alloc::create_array<double>(size_t(m), capacity);
 	u[0] = 1.;
 
 	// vector with matrix value
-	size_min     = n;
-	double* mat  = thread_alloc::create_array<double>(size_min, size_out);
+	double* mat  = thread_alloc::create_array<double>(size_t(n), capacity);
 
 	// vector to receive gradient result
-	size_min     = n;
-	double* grad = thread_alloc::create_array<double>(size_min, size_out);
+	double* grad = thread_alloc::create_array<double>(size_t(n), capacity);
 
 	// ----------------------------------------------------------------------
 	if( global_retape ) while(repeat--)
-	{
-		// choose a matrix
+	{	// choose a matrix
 		CppAD::uniform_01(n, mat);
 
 		// declare independent variables
