@@ -52,10 +52,9 @@ $codep */
 # include "print_optimize.hpp"
 
 // determines if we are using bool or set sparsity patterns
-# define USE_SET_SPARSITY 0
+# define USE_BOOL_SPARSITY 1
 
 namespace {
-	using CppAD::AD;
 	using CppAD::vector;
 	typedef vector< std::set<size_t> >  SetVector;
 	typedef vector<bool>                BoolVector;
@@ -92,11 +91,12 @@ bool link_sparse_jacobian(
 {
 	// -----------------------------------------------------
 	// setup
-	typedef CppAD::vector<double>       DblVector;
-	typedef CppAD::vector< AD<double> > ADVector;
 	typedef CppAD::vector<size_t>       SizeVector;
 	typedef vector< std::set<size_t> >  SetVector;
 	typedef vector<bool>                BoolVector;
+	typedef CppAD::vector<double>       DblVector;
+	typedef CppAD::AD<double>           ADScalar;
+	typedef CppAD::vector<ADScalar>     ADVector;
 
 	size_t i, j, k;
 	size_t order = 0;         // derivative order corresponding to function 
@@ -113,10 +113,10 @@ bool link_sparse_jacobian(
 	previous_size = size;
 
 	// declare sparsity pattern
-# if USE_SET_SPARSITY
-	SetVector sparsity(m);
-# else
+# if USE_BOOL_SPARSITY
 	BoolVector sparsity(m * n);
+# else
+	SetVector sparsity(m);
 # endif
 	// initialize all entries as zero
 	for(i = 0; i < m; i++)
@@ -126,8 +126,7 @@ bool link_sparse_jacobian(
 	// ------------------------------------------------------
 	extern bool global_retape;
 	if( global_retape ) while(repeat--)
-	{
-		// choose a value for x 
+	{	// choose a value for x 
 		CppAD::uniform_01(n, x);
 		for(k = 0; k < n; k++)
 			a_x[k] = x[k];
@@ -136,7 +135,7 @@ bool link_sparse_jacobian(
 		Independent(a_x);	
 
 		// AD computation of f (x) 
-		CppAD::sparse_jac_fun(m, a_x, row, col, order, a_y);
+		CppAD::sparse_jac_fun<ADScalar>(m, n, a_x, row, col, order, a_y);
 
 		// create function object f : X -> Y
 		f.Dependent(a_x, a_y);
@@ -160,8 +159,7 @@ bool link_sparse_jacobian(
 			jacobian[ row[k] * n + col[k] ] = jac[k];
 	}
 	else
-	{
-		// choose a value for x 
+	{	// choose a value for x 
 		CppAD::uniform_01(n, x);
 		for(k = 0; k < n; k++)
 			a_x[k] = x[k];
@@ -170,7 +168,7 @@ bool link_sparse_jacobian(
 		Independent(a_x);	
 
 		// AD computation of f (x) 
-		CppAD::sparse_jac_fun(m, a_x, row, col, order, a_y);
+		CppAD::sparse_jac_fun<ADScalar>(m, n, a_x, row, col, order, a_y);
 
 		// create function object f : X -> Y
 		f.Dependent(a_x, a_y);

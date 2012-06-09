@@ -84,7 +84,7 @@ bool link_sparse_jacobian(
 		}
 
 		// computation of the function
-		CppAD::sparse_jac_fun(m, x, row, col, order, yp);
+		CppAD::sparse_jac_fun<double>(m, n, x, row, col, order, yp);
 	}
 	for(i = 0; i < m; i++)
 		jacobian[i] = yp[i];

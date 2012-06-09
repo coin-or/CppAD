@@ -313,7 +313,7 @@ bool correct_sparse_jacobian(bool is_package_double)
 	{	// check f(x)
 		size_t order = 0;
 		vector<double> check(m);
-		CppAD::sparse_jac_fun(m, x, row, col, order, check);
+		CppAD::sparse_jac_fun<double>(m, n, x, row, col, order, check);
 		for(i = 0; i < m; i++)
 		{	double u = check[i];
 			double v = jacobian[i];
@@ -325,7 +325,7 @@ bool correct_sparse_jacobian(bool is_package_double)
 	size_t order = 1;
 	size_t size  = m * n;
 	vector<double> check(size);
-	CppAD::sparse_jac_fun(m, x, row, col, order, check);
+	CppAD::sparse_jac_fun<double>(m, n, x, row, col, order, check);
 	for(i = 0; i < m; i++)
 	{	for(j = 0; j < n; j++)
 		{	double u = check[ i * n + j ];

@@ -36,7 +36,7 @@ $index function, sparse_jac_fun$$
 $head Syntax$$
 $codei%# include <cppad/speed/sparse_jac_fun.hpp>
 %$$
-$codei%sparse_jac_fun(%m%, %x%, %row%, %col%, %p%, %fp%)%$$
+$codei%sparse_jac_fun(%m%, %n%, %x%, %row%, %col%, %p%, %fp%)%$$
 
 $head Purpose$$
 This routine evaluates
@@ -70,17 +70,29 @@ $codei%
 must set the $icode y$$ equal the exponential of $icode z$$, i.e.,
 the derivative of $icode y$$ with respect to $icode z$$ is equal to $icode y$$.
 
+$head FloatVector$$
+The type $icode FloatVector$$ is any
+$cref SimpleVector$$, or it can be a raw pointer, 
+with elements of type $icode Float$$.
+
+$head n$$
+The argument $icode n$$ has prototype
+$icode%
+	size_t %n%
+%$$
+It specifies the dimension for the domain space for $latex f(x)$$.
+
 $head m$$
 The argument $icode m$$ has prototype
 $icode%
 	size_t %m%
 %$$
-It specifies the dimension for the range space of $latex f(x)$$.
+It specifies the dimension for the range space for $latex f(x)$$.
 
 $head x$$
 The argument $icode x$$ has prototype
 $codei%
-	const CppAD::vector<%Float%> &%x%
+	const %FloatVector%& %x%
 %$$
 It contains the argument value for which the function,
 or its derivative, is being evaluated.
@@ -89,7 +101,7 @@ We use $latex n$$ to denote the size of the vector $icode x$$.
 $head row$$
 The argument $icode row$$ has prototype
 $codei%
-	 const CppAD::vector<size_t> &%row%
+	 const CppAD::vector<size_t>& %row%
 %$$
 It specifies indices in the range of $latex f(x)$$ for non-zero components
 of the Jacobian
@@ -100,7 +112,7 @@ All the elements of $icode row$$ must be between zero and $icode%m%-1%$$.
 $head col$$
 The argument $icode row$$ has prototype
 $codei%
-	 const CppAD::vector<size_t> &%col%
+	 const CppAD::vector<size_t>& %col%
 %$$
 and its size must be $latex K$$; i.e., the same as for $icode col$$.
 It specifies the component of $latex x$$ for 
@@ -119,7 +131,7 @@ that is being evaluated, i.e., $latex f^{(p)} (x)$$ is evaluated.
 $head fp$$
 The argument $icode fp$$ has prototype
 $icode%
-	CppAD::vector<%Float%> &%fp%
+	%FloatVector%& %fp%
 %$$
 The input value of the elements of $icode fp$$ does not matter.
 
@@ -163,31 +175,27 @@ $end
 # include <cppad/base_require.hpp> 
 
 namespace CppAD {
-	template <class Float>
+	template <class Float, class FloatVector>
 	void sparse_jac_fun(
 		size_t                       m    ,
-		const CppAD::vector<Float>  &x    ,
-		const CppAD::vector<size_t> &row  , 
-		const CppAD::vector<size_t> &col  , 
+		size_t                       n    ,
+		const FloatVector&           x    ,
+		const CppAD::vector<size_t>& row  , 
+		const CppAD::vector<size_t>& col  , 
 		size_t                       p    ,
-		CppAD::vector<Float>       &fp    )
+		FloatVector&                 fp   )
 	{
 		// check numeric type specifications
 		CheckNumericType<Float>();
-
+		// check value of p
 		CPPAD_ASSERT_KNOWN(
 			p < 2,
 			"sparse_jac_fun: p > 1"
 		);
 		size_t i, j, k;
-		size_t n    = x.size();
 		size_t size = m;
 		if( p > 0 )
 			size *= n;
-		CPPAD_ASSERT_KNOWN(
-			fp.size() == size,
-			"sparse_hes_fun: size of fp not equal m * n^p"
-		);
 		for(k = 0; k < size; k++)
 			fp[k] = Float(0);
 

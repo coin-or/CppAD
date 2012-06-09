@@ -62,11 +62,11 @@ bool sparse_jac_fun(void)
 
 	// evaluate function
 	size_t order = 0;
-	CppAD::sparse_jac_fun(m, a_x, row, col, order, a_y);
+	CppAD::sparse_jac_fun< AD<double> >(m, n, a_x, row, col, order, a_y);
 
 	// evaluate derivative
 	order = 1;
-	CppAD::sparse_jac_fun(m, x, row, col, order, yp);
+	CppAD::sparse_jac_fun<double>(m, n, x, row, col, order, yp);
 
 	// use AD to evaluate derivative
 	CppAD::ADFun<double>   f(a_x, a_y);

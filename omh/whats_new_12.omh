@@ -53,6 +53,10 @@ This section contains a list of the changes to CppAD during 2012
 The purpose of this section is to
 assist you in learning about changes between various versions of CppAD.
 
+$head 06-09$$
+Change $cref adolc_sparse_jacobian.cpp$$ to use the sparse adolc
+Jacobian (instead of the full Jacobian) driver.
+
 $head 06-08$$
 Implement the matrix multiply speed test $cref link_mat_mul$$ for all packages
 (there is a problem with the $cref fadbad_mat_mul.cpp$$
