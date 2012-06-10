@@ -34,9 +34,9 @@ $end
 
 bool sparse_hes_fun(void)
 {	using CppAD::NearEqual;
-	using CppAD::AD;
-
 	bool ok = true;
+
+	typedef CppAD::AD<double> ADScalar;
 
 	size_t i, j, k;
 	double eps = 10. * CppAD::epsilon<double>();
@@ -45,7 +45,7 @@ bool sparse_hes_fun(void)
 	size_t K   = 5;
 	CppAD::vector<size_t>       row(K),  col(K);
 	CppAD::vector<double>       x(n),    yp(n * n);
-	CppAD::vector< AD<double> > a_x(n),  a_y(m);
+	CppAD::vector<ADScalar>     a_x(n),  a_y(m);
 
 	// choose x
 	for(j = 0; j < n; j++)
@@ -62,11 +62,11 @@ bool sparse_hes_fun(void)
 
 	// evaluate function
 	size_t order = 0;
-	CppAD::sparse_hes_fun(a_x, row, col, order, a_y);
+	CppAD::sparse_hes_fun<ADScalar>(n, a_x, row, col, order, a_y);
 
 	// evaluate Hessian
 	order = 2;
-	CppAD::sparse_hes_fun(x, row, col, order, yp);
+	CppAD::sparse_hes_fun<double>(n, x, row, col, order, yp);
 
 	// use AD to evaluate Hessian
 	CppAD::ADFun<double>   f(a_x, a_y);

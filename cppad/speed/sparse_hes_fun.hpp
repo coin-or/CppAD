@@ -35,7 +35,7 @@ $index function, sparse_hes_fun$$
 $head Syntax$$
 $codei%# include <cppad/speed/sparse_hes_fun.hpp>
 %$$
-$codei%sparse_hes_fun(%x%, %row%, %col%, %p%, %fp%)%$$
+$codei%sparse_hes_fun(%n%, %x%, %row%, %col%, %p%, %fp%)%$$
 
 $head Purpose$$
 This routine evaluates
@@ -75,10 +75,22 @@ $codei%
 must set the $icode y$$ equal the exponential of $icode z$$, i.e.,
 the derivative of $icode y$$ with respect to $icode z$$ is equal to $icode y$$.
 
+$head FloatVector$$
+The type $icode FloatVector$$ is any
+$cref SimpleVector$$, or it can be a raw pointer, 
+with elements of type $icode Float$$.
+
+$head n$$
+The argument $icode n$$ has prototype
+$icode%
+	size_t %n%
+%$$
+It specifies the dimension for the domain space for $latex f(x)$$.
+
 $head x$$
 The argument $icode x$$ has prototype
 $codei%
-	const CppAD::vector<%Float%> &%x%
+	const %FloatVector%& %x%
 %$$
 It contains the argument value for which the function,
 or its derivative, is being evaluated.
@@ -87,7 +99,7 @@ We use $latex n$$ to denote the size of the vector $icode x$$.
 $head row$$
 The argument $icode row$$ has prototype
 $codei%
-	 const CppAD::vector<size_t> &%row%
+	 const CppAD::vector<size_t>& %row%
 %$$
 It specifies one of the first 
 index of $latex x$$ for each non-zero Hessian term
@@ -98,7 +110,7 @@ The value $latex K$$ is defined by $icode%K% = %row%.size()%$$.
 $head col$$
 The argument $icode col$$ has prototype
 $codei%
-	 const CppAD::vector<size_t> &%col%
+	 const CppAD::vector<size_t>& %col%
 %$$
 and its size must be $latex K$$; i.e., the same as for $icode col$$.
 It specifies the second 
@@ -117,7 +129,7 @@ that is being evaluated, i.e., $latex f^{(p)} (x)$$ is evaluated.
 $head fp$$
 The argument $icode fp$$ has prototype
 $icode%
-	CppAD::vector<%Float%> &%fp%
+	%FloatVector%& %fp%
 %$$
 The input value of the elements of $icode fp$$ does not matter.
 
@@ -168,31 +180,28 @@ $end
 # include <cppad/base_require.hpp> 
 
 namespace CppAD {
-	template <class Float>
+	template <class Float, class FloatVector>
 	void sparse_hes_fun(
-		const CppAD::vector<Float>  &x    ,
-		const CppAD::vector<size_t> &row  , 
-		const CppAD::vector<size_t> &col  , 
+		size_t                       n    ,
+		const FloatVector&           x    ,
+		const CppAD::vector<size_t>& row  , 
+		const CppAD::vector<size_t>& col  , 
 		size_t                       p    ,
-		CppAD::vector<Float>       &fp    )
+		FloatVector&                fp    )
 	{
 		// check numeric type specifications
 		CheckNumericType<Float>();
 
+		// check value of p
 		CPPAD_ASSERT_KNOWN(
 			p < 3,
 			"sparse_hes_fun: p > 2"
 		);
 
 		size_t i, j, k;
-		size_t n    = x.size();
 		size_t size = 1;
 		for(k = 0; k < p; k++)
 			size *= n;
-		CPPAD_ASSERT_KNOWN(
-			fp.size() == size,
-			"sparse_hes_fun: size of fp not equal n^p"
-		);
 		for(k = 0; k < size; k++)
 			fp[k] = Float(0);
 

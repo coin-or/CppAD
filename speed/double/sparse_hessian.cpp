@@ -63,7 +63,7 @@ bool link_sparse_hessian(
 	while(repeat--)
 	{
 		// computation of the function
-		CppAD::sparse_hes_fun(x, row, col, order, y);
+		CppAD::sparse_hes_fun<double>(n, x, row, col, order, y);
 	}
 	hessian[0] = y[0];
 

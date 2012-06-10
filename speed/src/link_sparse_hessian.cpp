@@ -295,7 +295,7 @@ true, if spare Hessian available for this package, and false otherwise.
 */
 bool available_sparse_hessian(void)
 {	
-	size_t n      = 10;
+	size_t n      = 2;
 	size_t repeat = 1;
 	vector<double> x(n);
 	vector<double> hessian(n * n);
@@ -303,6 +303,7 @@ bool available_sparse_hessian(void)
 	choose_row_col(n, row, col);
 
 	return link_sparse_hessian(n, repeat, x, row, col, hessian);
+	exit(0);
 }
 /*!
 Does final sparse Hessian value pass correctness test.
@@ -331,7 +332,7 @@ bool correct_sparse_hessian(bool is_package_double)
 		size  = n * n;
 	}
 	CppAD::vector<double> check(size);
-	CppAD::sparse_hes_fun(x, row, col, order, check);
+	CppAD::sparse_hes_fun<double>(n, x, row, col, order, check);
 	bool ok = true;
 	size_t k;
 	for( k = 0; k < size; k++)

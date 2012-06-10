@@ -55,7 +55,6 @@ $codep */
 # define USE_SET_SPARSITY 0
 
 namespace {
-	using CppAD::AD;
 	using CppAD::vector;
 	typedef vector< std::set<size_t> >  SetVector;
 	typedef vector<bool>                BoolVector;
@@ -107,9 +106,10 @@ bool link_sparse_hessian(
 	// setup
 	typedef vector<size_t>              SizeVector;
 	typedef vector<double>              DblVector;
-	typedef vector< AD<double> >        ADVector;
 	typedef vector< std::set<size_t> >  SetVector;
 	typedef vector<bool>                BoolVector;
+	typedef CppAD::AD<double>           ADScalar;
+	typedef vector<ADScalar>            ADVector;
 
 	size_t i, j, k;
 	size_t order = 0;         // derivative order corresponding to function
@@ -144,8 +144,7 @@ bool link_sparse_hessian(
 	// ------------------------------------------------------
 	extern bool global_retape;
 	if( global_retape) while(repeat--)
-	{
-		// choose a value for x 
+	{	// choose a value for x 
 		CppAD::uniform_01(n, x);
 		for(j = 0; j < n; j++)
 			a_x[j] = x[j];
@@ -154,7 +153,7 @@ bool link_sparse_hessian(
 		Independent(a_x);	
 
 		// AD computation of f(x)
-		CppAD::sparse_hes_fun(a_x, row, col, order, a_y);
+		CppAD::sparse_hes_fun<ADScalar>(n, a_x, row, col, order, a_y);
 
 		// create function object f : X -> Y
 		f.Dependent(a_x, a_y);
@@ -179,8 +178,7 @@ bool link_sparse_hessian(
 		}
 	}
 	else
-	{
-		// choose a value for x 
+	{	// choose a value for x 
 		CppAD::uniform_01(n, x);
 		for(j = 0; j < n; j++)
 			a_x[j] = x[j];
@@ -189,7 +187,7 @@ bool link_sparse_hessian(
 		Independent(a_x);	
 
 		// AD computation of f(x)
-		CppAD::sparse_hes_fun(a_x, row, col, order, a_y);
+		CppAD::sparse_hes_fun<ADScalar>(n, a_x, row, col, order, a_y);
 
 		// create function object f : X -> Y
 		f.Dependent(a_x, a_y);

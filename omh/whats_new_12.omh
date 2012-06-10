@@ -56,6 +56,8 @@ assist you in learning about changes between various versions of CppAD.
 $head 06-09$$
 Change $cref adolc_sparse_jacobian.cpp$$ to use the sparse adolc
 Jacobian (instead of the full Jacobian) driver.
+This was also done for $cref adolc_sparse_hessian.cpp$$,
+but there is a problem with the test that is being investigated.
 
 $head 06-08$$
 Implement the matrix multiply speed test $cref link_mat_mul$$ for all packages

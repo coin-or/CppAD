@@ -30,7 +30,7 @@ $spell
 	sparse_jacobian
 $$
 
-$section adolc Speed: sparse_jacobian$$
+$section adolc Speed: Sparse Jacobian$$
 
 $index link_sparse_jacobian, adolc$$
 $index adolc, link_sparse_jacobian$$
@@ -50,9 +50,6 @@ $codep */
 # include <cppad/vector.hpp>
 # include <cppad/speed/uniform_01.hpp>
 # include <cppad/speed/sparse_jac_fun.hpp>
-
-// determines if we are using boolean sparsity patterns
-# define USE_BOOL_SPARSITY 1
 
 bool link_sparse_jacobian(
 	size_t                     size     , 
@@ -94,6 +91,19 @@ bool link_sparse_jacobian(
 	// function value in double
 	DblVector y = thread_alloc::create_array<double>(m, capacity);
 
+	// options that control sparse_jac
+	int        options[4];
+	options[0] = 0; // sparsity pattern by index domains
+	options[1] = 0; // safe mode
+	options[2] = 0; // not used if options[0] == 0
+	options[3] = 0; // forward mode (column compression)
+
+	// structure that holds some of the work done by sparse_jac
+	int        nnz;                   // number of non-zero values
+	SizeVector rind   = CPPAD_NULL;   // row indices
+	SizeVector cind   = CPPAD_NULL;   // column indices
+	DblVector  values = CPPAD_NULL;   // Jacobian values
+
 	// initialize all entries as zero
 	for(i = 0; i < m; i++)
 	{	for(j = 0; j < n; j++)
@@ -118,23 +128,13 @@ bool link_sparse_jacobian(
 			a_y[i] >>= y[i];
 		trace_off();
 
-		// structure that holds some of the work done by sparse_jac
-		int        nnz;                 // number of non-zero values
-		SizeVector rind   = CPPAD_NULL; // row indices
-		SizeVector cind   = CPPAD_NULL; // column indices
-		DblVector  values = CPPAD_NULL; // Jacobian values
-
-		// options that control sparse_jac
-		int        options[4];
-		options[0] = 0; // sparsity pattern by index domains
-		options[1] = 0; // safe mode
-		options[2] = 0; // not used if options[0] == 0
-		options[3] = 0; // forward mode (column compression)
-
 		// is this a repeat call with the same sparsity pattern
 		int same_pattern = 0;
 
 		// calculate the jacobian at this x
+		rind   = CPPAD_NULL;
+		cind   = CPPAD_NULL;
+		values = CPPAD_NULL;
 		sparse_jac(tag, int(m), int(n), 
 			same_pattern, x, &nnz, &rind, &cind, &values, options
 		);
@@ -164,19 +164,6 @@ bool link_sparse_jacobian(
 		for(i = 0; i < m; i++)
 			a_y[i] >>= y[i];
 		trace_off();
-
-		// structure that holds some of the work done by sparse_jac
-		int        nnz;                 // number of non-zero values
-		SizeVector rind   = CPPAD_NULL; // row indices
-		SizeVector cind   = CPPAD_NULL; // column indices
-		DblVector  values = CPPAD_NULL; // Jacobian values
-
-		// options that control sparse_jac
-		int        options[4];
-		options[0] = 0; // sparsity pattern by index domains
-		options[1] = 0; // safe mode
-		options[2] = 0; // not used if options[0] == 0
-		options[3] = 0; // forward mode (column compression)
 
 		// is this a repeat call at the same argument
 		int same_pattern = 0;
