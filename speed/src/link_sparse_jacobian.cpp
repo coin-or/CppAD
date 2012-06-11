@@ -346,7 +346,7 @@ is the number of times to repeate the speed test.
 */
 void speed_sparse_jacobian(size_t size, size_t repeat)
 {	size_t n   = size;	
-	size_t m   = 3 * n;
+	size_t m   = 10 * n;
 	vector<double> x(n);
 	vector<double> jacobian(m * n);
 	vector<size_t> row, col;

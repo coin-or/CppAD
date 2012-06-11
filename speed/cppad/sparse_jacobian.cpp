@@ -52,7 +52,7 @@ $codep */
 # include "print_optimize.hpp"
 
 // determines if we are using bool or set sparsity patterns
-# define USE_BOOL_SPARSITY 1
+# define USE_BOOL_SPARSITY 0
 
 namespace {
 	using CppAD::vector;

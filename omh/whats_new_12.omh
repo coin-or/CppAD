@@ -53,6 +53,17 @@ This section contains a list of the changes to CppAD during 2012
 The purpose of this section is to
 assist you in learning about changes between various versions of CppAD.
 
+$head 06-10$$
+$list number$$
+Add the $cref/hold_memory/speed_main/option_list/hold_memory/$$ option
+to the speed test main program.
+$lnext
+In $cref cppad_sparse_jacobian.cpp$$,
+change $code USE_BOOL_SPARSITY$$ from true to false.
+In addition, change the number of non-zeros per row from about approximately 
+three to approximately ten.
+$lend
+
 $head 06-09$$
 Change $cref adolc_sparse_jacobian.cpp$$ to use the sparse adolc
 Jacobian (instead of the full Jacobian) driver.

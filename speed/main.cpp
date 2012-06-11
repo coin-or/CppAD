@@ -46,6 +46,7 @@ Please visit http://www.coin-or.org/CppAD/ for information on other licenses.
 /*
 $begin speed_main$$
 $spell
+	alloc
 	mat_mul
 	retaped
 	retape
@@ -187,6 +188,13 @@ by adding $cref user_atomic$$ operations,
 this should be included in computations.
 If it is false, user defined atomic operations should not be done.
 
+$subhead hold_memory$$
+If the option $code hold_memory$$ is present, the 
+$cref/hold_memory/ta_hold_memory/$$ routine will be called.
+This should make the CppAD $code thread_alloc$$ allocator faster.
+This is done by the main program and there is no global variable
+corresponding to this option.
+
 $head Correctness Results$$
 An output line is generated for each correctness test
 stating of the test passed or failed.
@@ -319,6 +327,7 @@ namespace {
 // main program that runs all the tests
 int main(int argc, char *argv[])
 {	bool ok = true;
+	bool hold_memory;
 	enum test_enum {
 		test_correct,
 		test_speed,
@@ -362,6 +371,7 @@ int main(int argc, char *argv[])
 		global_retape   = false;
 		global_optimize = false;
 		global_atomic   = false;
+		hold_memory     = false;
 		for(i = 3; i < size_t(argc); i++)
 		{	if( strcmp(argv[i], "retape") == 0 )
 				global_retape = true;
@@ -369,6 +379,8 @@ int main(int argc, char *argv[])
 				global_optimize = true;
 			else if( strcmp(argv[i], "atomic") == 0 )
 				global_atomic = true;
+			else if( strcmp(argv[i], "hold_memory") == 0 )
+				hold_memory = true;
 			else
 				error = true;
 		}
@@ -382,9 +394,14 @@ int main(int argc, char *argv[])
 		cout << "seed choices: ";
 		cout << "a positive integer used as a random seed." << endl;
 		cout << "option choices: ";
-		cout << " \"retape\", \"optimize\"." << endl << endl;
+		cout << " \"retape\",";
+		cout << " \"optimize\",";
+		cout << " \"atomic\",";
+		cout << " \"hold_memory\"." << endl << endl;
 		return 1;
 	}
+	if( hold_memory )
+		CppAD::thread_alloc::hold_memory(true);
 
 	// initialize the random number simulator
 	CppAD::uniform_01(size_t(iseed));
@@ -404,8 +421,8 @@ int main(int argc, char *argv[])
 		size_mat_mul[i]     = 10 * (i + 1);
 		size_ode[i]         = 3 * i + 1;
 		size_poly[i]        = 8 * i + 1;
-		size_sparse_hessian[i]  = 30 * (i + 1);
-		size_sparse_jacobian[i] = 30 * (i + 1);
+		size_sparse_hessian[i]  = 40 * (i + 1) * (i + 1);
+		size_sparse_jacobian[i] = 40 * (i + 1) * (i + 1);
 	}
 
 	switch(match)
