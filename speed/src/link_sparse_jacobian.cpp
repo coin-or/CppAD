@@ -189,7 +189,7 @@ namespace {
 		size_t          m   ,
 		vector<size_t>& row , 
 		vector<size_t>& col )
-	{	size_t r, c, k, K = 5 * n;
+	{	size_t r, c, k, K = 5 * std::max(m, n);
 
 		// get the random indices
 		vector<double>  random(2 * K);
@@ -280,7 +280,7 @@ true, if spare Jacobian available for this package, and false otherwise.
 */
 bool available_sparse_jacobian(void)
 {	size_t n      = 10;
-	size_t m      =  n;
+	size_t m      = 3 * n;
 	size_t repeat = 1;
 	vector<double> x(n);
 	vector<double> jacobian(m * n);
@@ -300,7 +300,7 @@ bool correct_sparse_jacobian(bool is_package_double)
 	bool ok       = true;
 	double eps    = 10. * CppAD::epsilon<double>();
 	size_t n      = 5;
-	size_t m      = 2 * n;
+	size_t m      = 3 * n;
 	size_t repeat = 1;
 	vector<double> x(n);
 	vector<double> jacobian(m * n);
@@ -346,7 +346,7 @@ is the number of times to repeate the speed test.
 */
 void speed_sparse_jacobian(size_t size, size_t repeat)
 {	size_t n   = size;	
-	size_t m   = 10 * n;
+	size_t m   = 3 * n;
 	vector<double> x(n);
 	vector<double> jacobian(m * n);
 	vector<size_t> row, col;

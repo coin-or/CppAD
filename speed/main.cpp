@@ -421,8 +421,8 @@ int main(int argc, char *argv[])
 		size_mat_mul[i]     = 10 * (i + 1);
 		size_ode[i]         = 3 * i + 1;
 		size_poly[i]        = 8 * i + 1;
-		size_sparse_hessian[i]  = 40 * (i + 1) * (i + 1);
-		size_sparse_jacobian[i] = 40 * (i + 1) * (i + 1);
+		size_sparse_hessian[i]  = 100 * (i + 1) * (i + 1);
+		size_sparse_jacobian[i] = 100 * (i + 1) * (i + 1);
 	}
 
 	switch(match)

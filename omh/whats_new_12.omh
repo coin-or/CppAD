@@ -53,6 +53,10 @@ This section contains a list of the changes to CppAD during 2012
 The purpose of this section is to
 assist you in learning about changes between various versions of CppAD.
 
+$head 06-12$$
+Increase the size and of the 
+$cref/sparse Jacobian speed tests/link_sparse_jacobian/$$.
+
 $head 06-10$$
 $list number$$
 Add the $cref/hold_memory/speed_main/option_list/hold_memory/$$ option
