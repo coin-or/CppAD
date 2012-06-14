@@ -14,6 +14,7 @@ $begin InstallUnix$$
 $escape $$
 $dollar ^$$
 $spell
+	colpack
 	num
 	cxx
 	boostvector
@@ -446,6 +447,11 @@ After executing $code make test$$, you can run an Adolc speed tests
 by executing the command $code ./adolc$$;
 see $cref speed_main$$ for the meaning of the command line
 options to this program.
+Note that these speed tests assume Adolc has been configure with
+its sparse matrix computations enabled using
+$codei
+	--with-colpack=%colpack_dir%
+%$$
 
 $subhead Linux$$
 If you are using Linux, 
