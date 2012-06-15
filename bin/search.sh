@@ -25,6 +25,7 @@ pattern="$1"
 extensions='.ac .am .cpp .hpp .in .omh .sh'
 directories='
 	cppad 
+	cppad/example 
 	cppad/local 
 	cppad/speed 
 	cppad_ipopt/example

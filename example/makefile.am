@@ -75,7 +75,6 @@ example_SOURCES   = \
 	asin.cpp \
 	atan.cpp \
 	atan_2.cpp \
-	base_adolc.hpp \
 	base_alloc.hpp \
 	base_require.cpp \
 	bender_quad.cpp \

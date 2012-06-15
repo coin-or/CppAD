@@ -111,6 +111,7 @@ nobase_myinclude_HEADERS =  \
 	cppad/configure.hpp \
 	cppad/cppad.hpp \
 	cppad/elapsed_seconds.hpp \
+	cppad/example/base_adolc.hpp \
 	cppad/error_handler.hpp \
 	cppad/index_sort.hpp \
 	cppad/local/abort_recording.hpp \

@@ -2,7 +2,7 @@
 # ifndef CPPAD_BASE_ADOLC_INCLUDED
 # define CPPAD_BASE_ADOLC_INCLUDED
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-11 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-12 Bradley M. Bell
 
 CppAD is distributed under multiple licenses. This distribution is under
 the terms of the 
@@ -14,6 +14,9 @@ Please visit http://www.coin-or.org/CppAD/ for information on other licenses.
 /*
 $begin base_adolc.hpp$$
 $spell
+	ifndef
+	define
+	endif
 	Rel
 	codassign
 	eps
@@ -56,13 +59,8 @@ $index adouble, as Base$$
 $section Enable use of AD<Base> where Base is Adolc's adouble Type$$
 
 $head Syntax$$
-This file is located in the $code example$$ directory. 
-It can be copied into the current working directory and
-included with the command:
-$codei%
-	# include "base_adolc.hpp"
+$codei%# include <cppad/example/base_adolc.hpp>
 %$$
-
 $children%
 	example/mul_level_adolc.cpp
 %$$
@@ -74,16 +72,14 @@ It returns true if it succeeds and false otherwise.
 The file $cref ode_taylor_adolc.cpp$$ contains a more realistic
 (and complex) example.
 
-
-$head Include File$$
+$head Begin This File$$
 This file $code base_adolc.hpp$$ requires $code adouble$$ to be defined.
 In addition it is included before $code <cppad/cppad.hpp>$$,
-but it is to include parts of CppAD that are used by this file.
-This is done with the following include command:
+but it needs to include parts of CppAD that are used by this file.
+This is done with the following include commands:
 $codep */
 # include <adolc/adouble.h>
 # include <cppad/base_require.hpp>
-
 /* $$
 
 $head CondExpOp$$

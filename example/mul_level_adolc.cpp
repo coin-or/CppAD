@@ -72,7 +72,7 @@ $end
 
 // adouble definitions not in Adolc distribution and 
 // required in order to use CppAD::AD<adouble>
-# include "base_adolc.hpp"
+# include <cppad/example/base_adolc.hpp>
 
 # include <cppad/cppad.hpp>
 

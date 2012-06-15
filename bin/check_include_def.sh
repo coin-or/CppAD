@@ -1,7 +1,7 @@
 #! /bin/bash -e
 # $Id$
 # -----------------------------------------------------------------------------
-# CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-11 Bradley M. Bell
+# CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-12 Bradley M. Bell
 #
 # CppAD is distributed under multiple licenses. This distribution is under
 # the terms of the
@@ -22,6 +22,7 @@ echo "-------------------------------------------------------------------"
 grep '^# *ifndef *CPPAD_[0-9a-zA-Z_]*_INCLUDED$' \
 	cppad_ipopt/*/*.hpp \
 	cppad/*.hpp \
+	cppad/example/*.hpp \
 	cppad/local/*.hpp \
 	cppad/speed/*.hpp \
 	example/*.hpp \
@@ -35,6 +36,7 @@ grep '^# *ifndef *CPPAD_[0-9a-zA-Z_]*_INCLUDED$' \
 ls \
 	cppad_ipopt/*/*.hpp \
 	cppad/*.hpp \
+	cppad/example/*.hpp \
 	cppad/local/*.hpp \
 	cppad/speed/*.hpp \
 	example/*.hpp \
