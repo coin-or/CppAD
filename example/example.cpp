@@ -82,6 +82,7 @@ extern bool Cosh(void);
 extern bool CppAD_vector(void);
 extern bool Div(void);
 extern bool DivEq(void);
+extern bool eigen_det(void);
 extern bool epsilon(void);
 extern bool EqualOpSeq(void);
 extern bool Erf(void);
@@ -237,6 +238,7 @@ int main(void)
 	ok &= Run( CppAD_vector,      "CppAD_vector"     );
 	ok &= Run( Div,               "Div"              );
 	ok &= Run( DivEq,             "DivEq"            );
+	ok &= Run( eigen_det,         "eigen_det"        );
 	ok &= Run( epsilon,           "epsilon"          );
 	ok &= Run( EqualOpSeq,        "EqualOpSeq"       );
 	ok &= Run( Erf,               "Erf"              );

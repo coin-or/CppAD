@@ -33,6 +33,7 @@ $childtable%
 	example/ad_fun.cpp%
 	example/ad_in_c.cpp%
 	example/conj_grad.cpp%
+	cppad/example/cppad_eigen.hpp %
 	example/hes_minor_det.cpp%
 	example/hes_lu_det.cpp%
 	example/interface_2c.cpp%
@@ -115,6 +116,7 @@ $rref det_by_minor.cpp$$
 $rref det_of_minor.cpp$$
 $rref Div.cpp$$
 $rref DivEq.cpp$$
+$rref eigen_det.cpp$$
 $rref epsilon.cpp$$
 $rref EqualOpSeq.cpp$$
 $rref Erf.cpp$$

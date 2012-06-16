@@ -72,13 +72,13 @@ It returns true if it succeeds and false otherwise.
 The file $cref ode_taylor_adolc.cpp$$ contains a more realistic
 (and complex) example.
 
-$head Begin This File$$
+$head Include Files$$
 This file $code base_adolc.hpp$$ requires $code adouble$$ to be defined.
-In addition it is included before $code <cppad/cppad.hpp>$$,
+In addition, it is included before $code <cppad/cppad.hpp>$$,
 but it needs to include parts of CppAD that are used by this file.
 This is done with the following include commands:
 $codep */
-# include <adolc/adouble.h>
+# include <adolc/adolc.h>
 # include <cppad/base_require.hpp>
 /* $$
 

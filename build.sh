@@ -11,12 +11,13 @@
 # Please visit http://www.coin-or.org/CppAD/ for information on other licenses.
 # -----------------------------------------------------------------------------
 # prefix directories for the corresponding packages
+ADOLC_DIR=$HOME/prefix/adolc
 BOOST_DIR=$HOME/prefix/boost
 CPPAD_DIR=$HOME/prefix/cppad  
-ADOLC_DIR=$HOME/prefix/adolc
+EIGEN_DIR=$HOME/prefix/eigen
 FADBAD_DIR=$HOME/prefix/fadbad
-SACADO_DIR=$HOME/prefix/sacado
 IPOPT_DIR=$HOME/prefix/ipopt
+SACADO_DIR=$HOME/prefix/sacado
 # version type is one of "trunk" or "stable"
 version_type="trunk"
 # -----------------------------------------------------------------------------
@@ -223,6 +224,11 @@ then
 	dir_list="
 		--prefix=$CPPAD_DIR
 	"
+	if [ -e $ADOLC_DIR/include/adolc ]
+	then
+		dir_list="$dir_list 
+			ADOLC_DIR=$ADOLC_DIR"
+	fi
 	if [ -e $BOOST_DIR/include/boost ]
 	then
 		dir_list="$dir_list
@@ -230,25 +236,25 @@ then
 #_build_test_only:		dir_list="$dir_list 
 #_build_test_only:			--with-boostvector"
 	fi
-	if [ -e $ADOLC_DIR/include/adolc ]
+	if [ -e $EIGEN_DIR/include/Eigen ]
 	then
 		dir_list="$dir_list 
-			ADOLC_DIR=$ADOLC_DIR"
+			EIGEN_DIR=$EIGEN_DIR"
 	fi
 	if [ -e $FADBAD_DIR/FADBAD++ ]
 	then
 		dir_list="$dir_list 
 			FADBAD_DIR=$FADBAD_DIR"
 	fi
-	if [ -e $SACADO_DIR/include/Sacado.hpp ]
-	then
-		dir_list="$dir_list 
-			SACADO_DIR=$SACADO_DIR"
-	fi
 	if [ -e $IPOPT_DIR/include/coin/IpIpoptApplication.hpp ]
 	then
 		dir_list="$dir_list 
 		IPOPT_DIR=$IPOPT_DIR"
+	fi
+	if [ -e $SACADO_DIR/include/Sacado.hpp ]
+	then
+		dir_list="$dir_list 
+			SACADO_DIR=$SACADO_DIR"
 	fi
 	# Use TAPE_ADDR_TYPE=int (a signed type) to do more checking for 
 	# slicing from size_t to addr_t.

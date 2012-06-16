@@ -14,6 +14,7 @@ $begin InstallUnix$$
 $escape $$
 $dollar ^$$
 $spell
+	Eigen
 	colpack
 	num
 	cxx
@@ -171,9 +172,10 @@ $codei%
 	OPENMP_FLAGS=%openmp_flags%               \
 	POSTFIX_DIR=%postfix_dir%                 \
 	ADOLC_DIR=%adolc_dir%                     \
+	BOOST_DIR=%boost_dir%                     \
+	EIGEN_DIR=%eigen_dir%                     \
 	FADBAD_DIR=%fadbad_dir%                   \
 	SADADO_DIR=%sacado_dir%                   \
-	BOOST_DIR=%boost_dir%                     \
 	IPOPT_DIR=%ipopt_dir%                     \
 	TAPE_ADDR_TYPE=%tape_addr_type%
 %$$
@@ -478,6 +480,35 @@ For example,
 if $code d:/adolc_base$$ is the proper directory,
 $code /cygdrive/d/adolc_base$$ should be used for $icode adolc_dir$$.
 
+$head boost_dir$$
+$index boost, unix$$
+If the command line argument
+$codei%
+	BOOST_DIR=%boost_dir%
+%$$
+is present, it must be such that files
+$codei%
+	%boost_dir%/include/boost/numeric/ublas/vector.hpp
+	%boost_dir%/include/boost/thread.hpp
+%$$
+are present.
+In this case, these files will be used by CppAD.
+See also, $cref/--with-boostvector/InstallUnix/--with-boostvector/$$
+
+$head eigen_dir$$
+$index Eigen, unix$$
+If you have
+$href%http://eigen.tuxfamily.org%Eigen%$$
+installed on your system, you can 
+specify a value for $icode eigen_dir$$.
+It must be such that
+$codei%
+	%eigen_dir%/Eigen/Core
+%$$
+is a valid include file.
+In this case CppAD will compile and test the Eigen examples; e.g.,
+$cref eigen_det.cpp$$.
+
 $head fadbad_dir$$
 $index Fadbad, unix$$
 If you have
@@ -502,48 +533,6 @@ After executing $code make test$$, you can run a Fadbad speed tests
 by executing the command $code ./fadbad$$;
 see $cref speed_main$$ for the meaning of the command line
 options to this program.
-
-
-$head sacado_dir$$
-$index Sacado, unix$$
-If you have
-$href%
-	http://trilinos.sandia.gov/packages/sacado/%
-	Sacado
-%$$
-installed on your system, you can 
-specify a value for $icode sacado_dir$$.
-It must be such that
-$codei%
-	%sacado_dir%/include/Sacado.hpp
-%$$
-is a valid reference to $code Sacado.hpp$$.
-In this case, you can run the Sacado speed correctness tests
-by executing the following commands starting in the work directory:
-$codei%
-	cd speed/sacado
-	make test
-%$$
-After executing $code make test$$, you can run a Sacado speed tests 
-by executing the command $code ./sacado$$;
-see $cref speed_main$$ for the meaning of the command line
-options to this program.
-
-
-$head boost_dir$$
-$index boost, unix$$
-If the command line argument
-$codei%
-	BOOST_DIR=%boost_dir%
-%$$
-is present, it must be such that files
-$codei%
-	%boost_dir%/include/boost/numeric/ublas/vector.hpp
-	%boost_dir%/include/boost/thread.hpp
-%$$
-are present.
-In this case, these files will be used by CppAD.
-See also, $cref/--with-boostvector/InstallUnix/--with-boostvector/$$
 
 $head ipopt_dir$$
 $index Ipopt, unix$$
@@ -577,6 +566,32 @@ $codei%
 Once this has been done, you can execute the program
 $code ./speed$$ in the $code work/cppad_ipopt/speed$$ directory;
 see $cref ipopt_ode_speed.cpp$$.
+
+$head sacado_dir$$
+$index Sacado, unix$$
+If you have
+$href%
+	http://trilinos.sandia.gov/packages/sacado/%
+	Sacado
+%$$
+installed on your system, you can 
+specify a value for $icode sacado_dir$$.
+It must be such that
+$codei%
+	%sacado_dir%/include/Sacado.hpp
+%$$
+is a valid reference to $code Sacado.hpp$$.
+In this case, you can run the Sacado speed correctness tests
+by executing the following commands starting in the work directory:
+$codei%
+	cd speed/sacado
+	make test
+%$$
+After executing $code make test$$, you can run a Sacado speed tests 
+by executing the command $code ./sacado$$;
+see $cref speed_main$$ for the meaning of the command line
+options to this program.
+
 
 $head tape_addr_type$$
 $index memory, usage$$

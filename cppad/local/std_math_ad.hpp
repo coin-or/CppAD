@@ -124,13 +124,13 @@ $children%
 	example/tanh.cpp
 %$$
 $table
+$rref abs.cpp$$
 $rref Acos.cpp$$
 $rref Asin.cpp$$
 $rref Atan.cpp$$
 $rref Cos.cpp$$
 $rref Cosh.cpp$$
 $rref Exp.cpp$$
-$rref abs.cpp$$
 $rref Log.cpp$$
 $rref Log10.cpp$$
 $rref Sin.cpp$$

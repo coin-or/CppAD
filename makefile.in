@@ -168,6 +168,7 @@ CXX = @CXX@
 CXXDEPMODE = @CXXDEPMODE@
 CXXFLAGS = @CXXFLAGS@
 CXX_FLAGS = @CXX_FLAGS@
+CXX_FLAGS_EIGEN = @CXX_FLAGS_EIGEN@
 CXX_FLAGS_FADBAD = @CXX_FLAGS_FADBAD@
 CYGPATH_W = @CYGPATH_W@
 DEFS = @DEFS@
@@ -177,6 +178,7 @@ ECHO_C = @ECHO_C@
 ECHO_N = @ECHO_N@
 ECHO_T = @ECHO_T@
 EGREP = @EGREP@
+EIGEN_DIR = @EIGEN_DIR@
 EXEEXT = @EXEEXT@
 FADBAD_DIR = @FADBAD_DIR@
 FC = @FC@
@@ -363,6 +365,7 @@ nobase_myinclude_HEADERS = \
 	cppad/cppad.hpp \
 	cppad/elapsed_seconds.hpp \
 	cppad/example/base_adolc.hpp \
+	cppad/example/cppad_eigen.hpp \
 	cppad/error_handler.hpp \
 	cppad/index_sort.hpp \
 	cppad/local/abort_recording.hpp \

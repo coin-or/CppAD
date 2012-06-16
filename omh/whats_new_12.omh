@@ -53,6 +53,11 @@ This section contains a list of the changes to CppAD during 2012
 The purpose of this section is to
 assist you in learning about changes between various versions of CppAD.
 
+$head 06-16$$
+Add the example $cref eigen_det.cpp$$ that uses the 
+$href%http://eigen.tuxfamily.org%Eigen%$$
+linear algebra package.
+
 $head 06-15$$
 Include the $cref base_adolc.hpp$$ as
 $code <cppad/example/base_adolc.hpp>$$ under the 

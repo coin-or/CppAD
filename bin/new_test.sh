@@ -39,7 +39,7 @@ name=`grep '^bool *[a-zA-Z0-9_]*( *void *)' $file | tail -1 | \
 	sed -e 's|^bool *\([a-zA-Z0-9_]*\)( *void *)|\1|'`
 # ---------------------------------------------------------------------------
 echo "add $file to $program.cpp"
-change_list="program.cpp"
+change_list="$program.cpp"
 svn revert $program.cpp
 comment="// prototype external compiled tests"
 if ! grep "$comment" $program.cpp > /dev/null

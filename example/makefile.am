@@ -13,7 +13,7 @@
 #
 # CppAD puts all it's preprocessor definitions in the cppad/configure.hpp
 DEFS          =
-#
+# -------------------------------------------------------------------------
 if CppAD_ADOLC
 ADOLC_SRC_FILES    =  mul_level_adolc.cpp ode_taylor_adolc.cpp
 ADOLC_EXTRA_FILES  =
@@ -29,38 +29,55 @@ ADOLC_LIB         =
 ADOLC_LIB_DIRS    =
 ADOLC_FLAGS       =
 endif
-#
+# -------------------------------------------------------------------------
 if CppAD_BOOST_DIR
 BOOST_INCLUDE = -I$(BOOST_DIR)/include
 else
 BOOST_INCLUDE =
 endif
-# 
+# -------------------------------------------------------------------------
+if CppAD_EIGEN
+# make a special library so can have it's own compile flags (see configure.ac)
+noinst_LIBRARIES    = libeigen.a
+libeigen_a_SOURCES  =  eigen_det.cpp
+libeigen_a_CXXFLAGS = -g $(CXX_FLAGS_EIGEN) 
+EIGEN_LIB           = -L. -leigen
+EIGEN_FLAGS         = -DCPPAD_EIGEN_EXAMPLES
+EIGEN_INCLUDE       = -I$(EIGEN_DIR)/include 
+else
+EIGEN_LIB           =
+EIGEN_FLAGS         =
+EIGEN_INCLUDE       = 
+endif
+# -------------------------------------------------------------------------
 # Microsoft project files an script to run a single test
 EXTRA_DIST        =  \
 	example.sln \
 	example.vcproj \
 	test_one.sh.in \
-	$(ADOLC_EXTRA_FILES)
+	$(ADOLC_EXTRA_FILES) \
+	$(EIGEN_EXTRA_FILES)
 #
 check_PROGRAMS    = example 
 #
 if CppAD_MS_COMPILER
-AM_CXXFLAGS       = -EHsc -g $(ADOLC_FLAGS)
+AM_CXXFLAGS       = -EHsc -g $(ADOLC_FLAGS) $(EIGEN_FLAGS)
 else
-AM_CXXFLAGS       = -g $(ADOLC_FLAGS)
+AM_CXXFLAGS       = -g $(ADOLC_FLAGS) $(EIGEN_FLAGS)
 endif
 #
 AM_CPPFLAGS       = -I. \
                    -I$(top_srcdir) \
                     $(BOOST_INCLUDE) \
-                    $(ADOLC_INCLUDE)
+                    $(ADOLC_INCLUDE) \
+                    $(EIGEN_INCLUDE)
 #
-LDADD             =  $(ADOLC_LIB)  $(BTHREAD_LIB) $(PTHREAD_LIB)
+LDADD             =  $(ADOLC_LIB)  $(BTHREAD_LIB) $(EIGEN_LIB) $(PTHREAD_LIB)
 AM_LDFLAGS        = $(ADOLC_LIB_DIRS) 
 #
 example_SOURCES   = \
 	$(ADOLC_SRC_FILES) \
+	$(EIGEN_SRC_FILES) \
 	\
 	example.cpp \
 	abort_recording.cpp \

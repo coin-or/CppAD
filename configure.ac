@@ -12,7 +12,7 @@ dnl ---------------------------------------------------------------------------
 dnl
 dnl Process this file with autoconf to produce a configure script.
 dnl   package   version              bug-report
-AC_INIT(CppAD, 20120615, cppad@list.coin-or.org)
+AC_INIT(CppAD, 20120616, cppad@list.coin-or.org)
 AC_SUBST(PACKAGE_URL, "http://www.coin-or.org/CppAD")
 AC_SUBST(PACKAGE_DESCRIPTION, "Differentiation of C++ Algorithms")
 
@@ -185,6 +185,18 @@ else
 	AC_MSG_RESULT([no])
 fi
 
+dnl The prefix corresponding to the installation of Eigen ---------------
+AC_MSG_CHECKING([EIGEN_DIR])
+AC_ARG_VAR(EIGEN_DIR, 
+	[value of configure prefix directory during Eigen install]
+)
+AM_CONDITIONAL(CppAD_EIGEN, test "$EIGEN_DIR" != "")
+if test "$EIGEN_DIR" != "" ; then
+	AC_MSG_RESULT([$EIGEN_DIR])
+else
+	AC_MSG_RESULT([no])
+fi
+
 dnl The directory corresponding to the installation of FADBAD -----------
 AC_MSG_CHECKING([FADBAD_DIR])
 AC_ARG_VAR(FADBAD_DIR,
@@ -249,14 +261,18 @@ AC_MSG_CHECKING([CXX_FLAGS])
 AC_ARG_VAR(CXX_FLAGS,
 	[ CXXFLAGS is ignored, use CXX_FLAGS for compiler flags]
 )
+# cxx_flags for fadbad and eigen
 if test "$CXX_FLAGS" != "" ; then
 	AC_MSG_RESULT([$CXX_FLAGS]) 
 	cxx_flags_fadbad=`echo "$CXX_FLAGS" | sed -e 's|-Wshadow||'`
+	cxx_flags_eigen="$cxx_flags_fadbda -Wno-long-long" 
 else
 	AC_MSG_RESULT([no])
 	cxx_flags_fadbad=""
+	cxx_flags_eigen=""
 fi 
 AC_SUBST(CXX_FLAGS_FADBAD, "$cxx_flags_fadbad")
+AC_SUBST(CXX_FLAGS_EIGEN,  "$cxx_flags_eigen")
 
 dnl The compiler OpenMP flags OPENMP_FLAGS ----------------------------------
 AC_MSG_CHECKING([OPENMP_FLAGS])
