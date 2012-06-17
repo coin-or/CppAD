@@ -104,15 +104,6 @@ namespace CppAD {
 	inline int Integer(const double& x)
 	{	return static_cast<int>(x); }
 }
-/*$$
-
-$head epsilon$$
-$codep */
-namespace CppAD {
-	template <>
-	inline double epsilon<double>(void)
-	{	return std::numeric_limits<double>::epsilon(); }
-}
 /* $$
 
 $head Ordered$$
@@ -184,6 +175,33 @@ $codep */
 namespace CppAD {
 	inline double pow(const double& x, const double& y)
 	{ return std::pow(x, y); }
+}
+/*$$
+
+$head limits$$
+The following defines the numeric limits functions
+$code epsilon$$, $code min$$, and $code max$$ for the type
+$code double$$.
+It also defines the deprecated $code epsilon$$ function:
+$codep */
+namespace CppAD {
+	template <>
+	class numeric_limits<double> {
+	public:
+		// machine epsilon
+		static double epsilon(void)
+		{	return std::numeric_limits<double>::epsilon(); }
+		// minimum positive normalized value
+		static double min(void)
+		{	return std::numeric_limits<double>::min(); }
+		// maximum finite value
+		static double max(void)
+		{	return std::numeric_limits<double>::max(); }
+	};
+	// deprecated machine epsilon
+	template <> 
+	inline double epsilon<double>(void)
+	{	return numeric_limits<double>::epsilon(); }
 }
 /* $$
 $end

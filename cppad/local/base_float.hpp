@@ -104,15 +104,6 @@ namespace CppAD {
 	inline int Integer(const float& x)
 	{	return static_cast<int>(x); }
 }
-/*$$
-
-$head epsilon$$
-$codep */
-namespace CppAD {
-	template <>
-	inline float epsilon<float>(void)
-	{	return std::numeric_limits<float>::epsilon(); }
-}
 /* $$
 
 $head Ordered$$
@@ -185,6 +176,32 @@ $codep */
 namespace CppAD {
 	inline float pow(const float& x, const float& y)
 	{ return std::pow(x, y); }
+}
+/*$$
+
+$head limits$$
+The following defines the numeric limits functions
+$code epsilon$$, $code min$$, and $code max$$ for the type
+$code float$$:
+$codep */
+namespace CppAD {
+	template <>
+	class numeric_limits<float> {
+	public:
+		// machine epsilon
+		static float epsilon(void)
+		{	return std::numeric_limits<float>::epsilon(); }
+		// minimum positive normalized value
+		static float min(void)
+		{	return std::numeric_limits<float>::min(); }
+		// maximum finite value
+		static float max(void)
+		{	return std::numeric_limits<float>::max(); }
+	};
+	// deprecated machine epsilon
+	template <> 
+	inline float epsilon<float>(void)
+	{	return numeric_limits<float>::epsilon(); }
 }
 /* $$
 $end

@@ -16,6 +16,7 @@ Please visit http://www.coin-or.org/CppAD/ for information on other licenses.
 /* 
 $begin base_std_math$$
 $spell
+	inline
 	fabs
 	isnan
 	alloc
@@ -139,18 +140,6 @@ For example, see
 $cref/base_alloc/base_alloc.hpp/pow/$$.
 
 
-$head epsilon$$
-$index epsilon, machine base$$
-$index machine, epsilon base$$
-$index base, machine epsilon$$
-The template specialization
-$codei%
-	%Base% CppAD::epsilon<%Base%>()
-%$$
-must return machine epsilon for the type $icode Base$$.
-For example, see
-$cref/base_alloc/base_alloc.hpp/epsilon/$$.
-
 $head isnan$$
 $index isnan, base type$$
 $index base, isnan$$ 
@@ -160,6 +149,30 @@ you may also have to provide a definition in the CppAD namespace
 For example, see
 $cref/base_complex/base_complex.hpp/isnan/$$.
 
+
+$head limits$$
+$index numeric, limits Base$$
+$index limits, numeric Base$$
+$index Base, numeric_limits$$
+The $cref/numeric_limits/limits/$$ functions
+$codei%
+	%Base% CppAD::numeric_limits<%Base%>::epsilon()
+	%Base% CppAD::numeric_limits<%Base%>::min()
+	%Base% CppAD::numeric_limits<%Base%>::max()
+%$$
+must return machine epsilon,
+minimum positive normalize value,
+and maximum finite value for the type $icode Base$$.
+
+$subhead epsilon$$
+The deprecated function $cref epsilon$$ function
+must also be included. It can be implemented using
+$codei%
+namespace CppAD {
+	template <> inline %Base% epsilon<%Base%>(void)
+	{	return numeric_limits<%Base%>::epsilon(); }
+}
+%$$
 
 $end
 -------------------------------------------------------------------------------

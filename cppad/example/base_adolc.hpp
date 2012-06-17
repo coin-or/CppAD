@@ -178,17 +178,6 @@ $head Integer$$
 $codep */
 	inline int Integer(const adouble &x)
 	{    return static_cast<int>( x.getValue() ); }
-/*$$
-
-$head epsilon$$
-$codep */
-namespace CppAD {
-	template <>
-	inline adouble epsilon<adouble>(void)
-	{	double eps = std::numeric_limits<double>::epsilon(); 
-		return adouble( eps );
-	}
-}
 /* $$
 
 $head Ordered$$
@@ -218,6 +207,7 @@ $code atan$$,
 $code cos$$,
 $code cosh$$,
 $code exp$$,
+$code fabs$$,
 $code log$$,
 $code sin$$,
 $code sinh$$,
@@ -256,6 +246,31 @@ $head pow$$
 This $cref/required/base_require/$$ function 
 is defined by the Adolc package for the $code adouble$$ base case.
 
+$head limits$$
+The following defines the numeric limits functions
+$code epsilon$$, $code min$$, and $code max$$ for the type
+$code adouble$$.
+It also defines the deprecated $code epsilon$$ function:
+$codep */
+namespace CppAD {
+	template <>
+	class numeric_limits<adouble> {
+	public:
+		// machine epsilon
+		static adouble epsilon(void)
+		{	return adouble( std::numeric_limits<double>::epsilon() ); }
+		// minimum positive normalized value
+		static adouble min(void)
+		{	return adouble( std::numeric_limits<float>::min() ); }
+		// maximum finite value
+		static adouble max(void)
+		{	return adouble( std::numeric_limits<float>::max() ); }
+	};
+	// deprecated machine epsilon
+	template <> inline adouble epsilon<adouble>(void)
+	{	return numeric_limits<adouble>::epsilon(); }
+}
+/* $$
 $end
 */
 # endif

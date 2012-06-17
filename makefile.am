@@ -181,6 +181,7 @@ nobase_myinclude_HEADERS =  \
 	cppad/local/independent.hpp \
 	cppad/local/integer.hpp \
 	cppad/local/jacobian.hpp \
+	cppad/local/limits.hpp \
 	cppad/local/load_op.hpp \
 	cppad/local/log_op.hpp \
 	cppad/local/lu_ratio.hpp \

@@ -47,9 +47,8 @@ $codei%AD<%Base%>%$$ type for $cref CondExp$$ operations:
 
 $head CompareOp$$
 The following $code enum$$ type is used in the specifications below:
-$codep */
+$codep
 namespace CppAD {
-
 	// The conditional expression operator enum type
 	enum CompareOp 
 	{	CompareLt, // less than
@@ -60,7 +59,7 @@ namespace CppAD {
 		CompareNe  // not equal
 	};
 }
-/* $$
+$$
 
 $head CondExpTemplate$$
 The type $icode Base$$ must support the syntax

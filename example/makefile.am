@@ -111,7 +111,6 @@ example_SOURCES   = \
 	cppad_vector.cpp \
 	div.cpp \
 	div_eq.cpp \
-	epsilon.cpp \
 	equal_op_seq.cpp \
 	erf.cpp \
 	error_handler.cpp \
@@ -136,6 +135,7 @@ example_SOURCES   = \
 	jac_lu_det.cpp \
 	jac_minor_det.cpp \
 	jacobian.cpp \
+	limits.cpp \
 	log.cpp \
 	log_10.cpp \
 	lu_factor.cpp \

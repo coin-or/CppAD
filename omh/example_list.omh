@@ -117,7 +117,6 @@ $rref det_of_minor.cpp$$
 $rref Div.cpp$$
 $rref DivEq.cpp$$
 $rref eigen_det.cpp$$
-$rref epsilon.cpp$$
 $rref EqualOpSeq.cpp$$
 $rref Erf.cpp$$
 $rref ErrorHandler.cpp$$
@@ -154,6 +153,7 @@ $rref ipopt_ode_speed.cpp$$
 $rref JacLuDet.cpp$$
 $rref JacMinorDet.cpp$$
 $rref Jacobian.cpp$$
+$rref limits.cpp$$
 $rref Log10.cpp$$
 $rref Log.cpp$$
 $rref LuFactor.cpp$$

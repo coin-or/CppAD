@@ -27,6 +27,11 @@ $index epsilon, AD$$
 
 $section Machine Epsilon For AD Types$$
 
+$head Deprecated$$
+$index deprecated, epsilon$$
+This routine has bee deprecated.
+You should use the $cref/numeric_limits/limits/$$ $code epsilon$$ instead.
+
 $head Syntax$$
 $icode%eps% = epsilon<%Float%>()%$$
 
@@ -36,22 +41,13 @@ to the type $icode%Float%$$.
 
 $head Float$$
 this type can either be $codei%AD<%Base%>%$$,
-or it can be $icode Base$$ for any $codei%AD<%Base%>%$$ type;
-see $cref/base_std_math/base_std_math/epsilon/$$.
+or it can be $icode Base$$ for any $codei%AD<%Base%>%$$ type.
 
 $head eps$$
 The result $icode eps$$ has prototype
 $codei%
 	%Float% eps
 %$$
-
-$head Example$$
-$children%
-	example/epsilon.cpp
-%$$
-The file
-$cref epsilon.cpp$$
-contains an example and test of this operation.
 
 $end 
 ------------------------------------------------------------------------------

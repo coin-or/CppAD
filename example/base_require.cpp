@@ -46,7 +46,6 @@ bool base_require(void)
 	// check the amount of memory inuse by this thread (thread zero)
 	size_t thread = thread_alloc::thread_num();
 	ok &= thread == 0;
-	size_t inuse_before = thread_alloc::inuse(thread);
 
 	// y = x^2
 	size_t n = 1, m = 2;

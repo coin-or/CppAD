@@ -271,6 +271,10 @@
 				>
 			</File>
 			<File
+				RelativePath=".\epsilon.cpp"
+				>
+			</File>
+			<File
 				RelativePath=".\exp.cpp"
 				>
 			</File>

@@ -14,6 +14,16 @@ Please visit http://www.coin-or.org/CppAD/ for information on other licenses.
 -------------------------------------------------------------------------- */
 
 namespace CppAD {
+	// The conditional expression operator enum type
+	enum CompareOp 
+	{	CompareLt, // less than
+		CompareLe, // less than or equal
+		CompareEq, // equal
+		CompareGe, // greater than or equal
+		CompareGt, // greater than
+		CompareNe  // not equal
+	};
+
 	// simple typedefs
 	typedef CPPAD_TAPE_ADDR_TYPE addr_t;
 

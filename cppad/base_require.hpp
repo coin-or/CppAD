@@ -146,13 +146,15 @@ $end
 # include <cppad/error_handler.hpp>
 # include <cppad/local/define.hpp>
 # include <cppad/local/cppad_assert.hpp>
+# include <cppad/local/declare_ad.hpp>
 
 // grouping documentation by feature
 # include <cppad/local/base_cond_exp.hpp>
 # include <cppad/local/base_std_math.hpp>
 
-// must define template AD version of epsilon before the base cases
-# include <cppad/local/epsilon.hpp>
+// must define template class numeric_limits before the base cases
+# include <cppad/local/limits.hpp>
+# include <cppad/local/epsilon.hpp> // deprecated
 
 // base cases that come with CppAD
 # include <cppad/local/base_float.hpp>

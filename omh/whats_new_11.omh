@@ -445,10 +445,10 @@ $lend
 $subhead 08-09$$
 $list number$$
 $cref/Warning:/base_require/Warning/$$
-Add $cref/epsilon/base_std_math/epsilon/$$ to the
+Add $cref/epsilon/base_std_math/limits/$$ to the
 $icode Base$$ type requirements.
 $lnext
-Extend $cref epsilon$$ to AD types.
+Extend $code epsilon$$ to AD types.
 $lend
 
 $subhead 08-08$$

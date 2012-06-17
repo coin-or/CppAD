@@ -42,6 +42,7 @@ extern bool Div(void);
 extern bool DivEq(void);
 extern bool DivZeroOne(void);
 extern bool Erf(void);
+extern bool epsilon(void);
 extern bool Exp(void);
 extern bool ForHess(void);
 extern bool for_sparse_jac(void);
@@ -145,6 +146,7 @@ int main(void)
 	ok &= Run( DivEq,           "DivEq"          );
 	ok &= Run( DivZeroOne,      "DivZeroOne"     );
 	ok &= Run( Erf,             "Erf"            );
+	ok &= Run( epsilon,         "epsilon"        );
 	ok &= Run( Exp,             "Exp"            );
 	ok &= Run( ForHess,         "ForHess"        );
 	ok &= Run( for_sparse_jac,  "for_sparse_jac" );

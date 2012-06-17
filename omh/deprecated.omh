@@ -23,7 +23,8 @@ $childtable%
 	cppad/local/omp_max_thread.hpp%
 	cppad/track_new_del.hpp%
 	omh/omp_alloc.omh%
-	cppad/memory_leak.hpp
+	cppad/memory_leak.hpp%
+	cppad/local/epsilon.hpp
 %$$
 
 $table
