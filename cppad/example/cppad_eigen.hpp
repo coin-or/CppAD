@@ -123,7 +123,8 @@ namespace CppAD {
 		template <class Base> AD<Base> epsilon(const AD<Base>& x)
 		{	return CppAD::epsilon<Base>(); }
 
-		// Relaxed version of machine epsilon for comparison of different 			// operations that should result in the same value
+		// Relaxed version of machine epsilon for comparison of different
+		// operations that should result in the same value
 		template <class Base> AD<Base> dummy_precision(const AD<Base>& x)
 		{	return 100. * CppAD::epsilon<Base>(); }
 
