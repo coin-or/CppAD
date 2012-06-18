@@ -120,27 +120,23 @@ namespace CppAD {
 		{	return x * x; }
 
 		// machine epsilon with type of real part of x
+		// (use assumption that Base is not complex)
 		template <class Base> AD<Base> epsilon(const AD<Base>& x)
-		{	return CppAD::epsilon<Base>(); }
+		{	return CppAD::numeric_limits<Base>::epsilon(); }
 
-		// Relaxed version of machine epsilon for comparison of different
+		// relaxed version of machine epsilon for comparison of different
 		// operations that should result in the same value
 		template <class Base> AD<Base> dummy_precision(const AD<Base>& x)
-		{	return 100. * CppAD::epsilon<Base>(); }
+		{	return 100. * CppAD::numeric_limits<Base>::epsilon(); }
 
-		// lowest value not yet part of CppAD API,
-		// so just handle AD<double> case > for now.
+		// minimum normalized positive value
 		template <class Base> AD<Base> lowest(void)
-		{	return CppAD::nan( AD<Base>(0.0) ); }
-		template <> AD<double> lowest(void)
-		{	return std::numeric_limits<double>::min(); }
+		{	return CppAD::numeric_limits< AD<Base> >::min(); }
 
-		// highest value not yet part of CppAD API,
-		// so just handle AD<double> case > for now.
+		// maximum finite value
 		template <class Base> AD<Base> highest(void)
-		{	return CppAD::nan( AD<Base>(0.0) ); }
-		template <> AD<double> highest(void)
-		{	return std::numeric_limits<double>::max(); }
+		{	return CppAD::numeric_limits< AD<Base> >::max(); }
+
 	}
 }
 /* $$

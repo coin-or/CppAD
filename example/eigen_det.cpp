@@ -76,7 +76,7 @@ bool eigen_det(void)
 		}
 	}
 
-	// Comute the log of determinant of X
+	// Compute the log of determinant of X
 	a_y[0] = log( a_X.determinant() );
 
 	// create f: x -> y and stop tape recording

@@ -61,6 +61,10 @@ in $icode%CppAD::numeric_limits<%Type%>%$$.
 $lnext
 Convert use of the deprecated $cref epsilon$$ in examples
 to use of $cref/numeric_limits/limits/$$ $code epsilon$$.
+$lnext
+Complete $cref cppad_eigen.hpp$$ interface to 
+$code lowest$$ and $code highest$$ functions for
+all non-complex AD types.
 $lend
 
 
