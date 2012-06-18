@@ -42,7 +42,7 @@ bool sparse_hessian(void)
 	typedef CPPAD_TEST_VECTOR<size_t>                     i_vector;
 	typedef CPPAD_TEST_VECTOR<bool>                       b_vector;
 	typedef CPPAD_TEST_VECTOR< std::set<size_t> >         s_vector;
-	double eps = 10. * CppAD::epsilon<double>();
+	double eps = 10. * CppAD::numeric_limits<double>::epsilon();
 
 	// domain space vector
 	size_t n = 12;  // must be greater than or equal 3; see n_sweep below

@@ -1,6 +1,6 @@
 /* $Id$ */
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-11 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-12 Bradley M. Bell
 
 CppAD is distributed under multiple licenses. This distribution is under
 the terms of the 
@@ -50,7 +50,7 @@ namespace { // ----------------------------------------------------------
 template <typename Vector> 
 bool cases(void)
 {	bool ok    = true;
-	double eps = 10. * CppAD::epsilon<double>();
+	double eps = 10. * CppAD::numeric_limits<double>::epsilon();
 	using CppAD::AD;
 	using CppAD::NearEqual;
 

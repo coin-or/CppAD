@@ -42,7 +42,7 @@ bool reverse()
 	typedef CPPAD_TEST_VECTOR<double>       d_vector;
 	typedef CPPAD_TEST_VECTOR<size_t>       i_vector;
 	size_t i, j, k, ell;
-	double eps = 10. * CppAD::epsilon<double>();
+	double eps = 10. * CppAD::numeric_limits<double>::epsilon();
 
 	// domain space vector
 	size_t n = 4;
@@ -153,7 +153,7 @@ bool forward()
 	typedef CPPAD_TEST_VECTOR<double>       d_vector;
 	typedef CPPAD_TEST_VECTOR<size_t>       i_vector;
 	size_t i, j, k, ell;
-	double eps = 10. * CppAD::epsilon<double>();
+	double eps = 10. * CppAD::numeric_limits<double>::epsilon();
 
 	// domain space vector
 	size_t n = 3;

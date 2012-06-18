@@ -298,7 +298,7 @@ true, if correctness test passes, and false otherwise.
 bool correct_sparse_jacobian(bool is_package_double)
 {	size_t i, j;
 	bool ok       = true;
-	double eps    = 10. * CppAD::epsilon<double>();
+	double eps    = 10. * CppAD::numeric_limits<double>::epsilon();
 	size_t n      = 5;
 	size_t m      = 3 * n;
 	size_t repeat = 1;

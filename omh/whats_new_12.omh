@@ -54,9 +54,15 @@ The purpose of this section is to
 assist you in learning about changes between various versions of CppAD.
 
 $head 06-17$$
+$list number$$
 Move $cref epsilon$$ to $cref/numeric_limits/limits/$$ 
 and add the functions $code min$$ and $code max$$
 in $icode%CppAD::numeric_limits<%Type%>%$$.
+$lnext
+Convert use of the deprecated $cref epsilon$$ in examples
+to use of $cref/numeric_limits/limits/$$ $code epsilon$$.
+$lend
+
 
 $head 06-16$$
 Add the example $cref eigen_det.cpp$$ that uses the 

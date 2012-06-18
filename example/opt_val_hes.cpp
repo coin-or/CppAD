@@ -1,6 +1,6 @@
 /* $Id$ */
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-11 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-12 Bradley M. Bell
 
 CppAD is distributed under multiple licenses. This distribution is under
 the terms of the 
@@ -178,7 +178,7 @@ bool opt_val_hes(void)
 	CppAD::ADFun<double> g(a_x, a_v);
 
 	// accuracy for checks
-	double eps = 10. * CppAD::epsilon<double>();
+	double eps = 10. * CppAD::numeric_limits<double>::epsilon();
 
 	// check Jacobian
 	BaseVector check_jac = g.Jacobian(x);

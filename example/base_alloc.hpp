@@ -322,12 +322,26 @@ namespace CppAD {
 }
 /* $$
 
-$head epsilon$$
+$head limits$$
 $codep */
 namespace CppAD {
 	template <>
+	class numeric_limits<base_alloc> {
+	public:
+		// machine epsilon
+		static base_alloc epsilon(void)
+		{	return std::numeric_limits<base_alloc>::epsilon(); }
+		// minimum positive normalized value
+		static base_alloc min(void)
+		{	return std::numeric_limits<base_alloc>::min(); }
+		// maximum finite value
+		static base_alloc max(void)
+		{	return std::numeric_limits<base_alloc>::max(); }
+	};
+	// deprecated machine epsilon
+	template <> 
 	inline base_alloc epsilon<base_alloc>(void)
-	{	return std::numeric_limits<double>::epsilon(); }
+	{	return numeric_limits<base_alloc>::epsilon(); }
 }
 /* $$
 

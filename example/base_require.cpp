@@ -57,7 +57,8 @@ bool base_require(void)
 
 	// check function value f(x) = x^2
 	CPPAD_TEST_VECTOR<base_alloc> x(n), y(m);
-	base_alloc eps = base_alloc(100.) * CppAD::epsilon<base_alloc>();
+	base_alloc eps = 
+		base_alloc(100.) * CppAD::numeric_limits<base_alloc>::epsilon();
 	x[0] = base_alloc(3.);
 	y    = f.Forward(0, x);
 	ok  &= CppAD::NearEqual(y[0], x[0] * x[0], eps, eps);

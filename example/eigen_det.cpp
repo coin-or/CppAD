@@ -83,7 +83,7 @@ bool eigen_det(void)
 	CppAD::ADFun<double> f(a_x, a_y); 
 
 	// check function value 
-	double eps = 100. * CppAD::epsilon<double>();
+	double eps = 100. * CppAD::numeric_limits<double>::epsilon();
 	CppAD::det_by_minor<double> det(size); 
 	ok &= NearEqual(Value(a_y[0]) , log(det(x)), eps, eps);
 

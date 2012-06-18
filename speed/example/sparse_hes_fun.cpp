@@ -39,7 +39,7 @@ bool sparse_hes_fun(void)
 	typedef CppAD::AD<double> ADScalar;
 
 	size_t i, j, k;
-	double eps = 10. * CppAD::epsilon<double>();
+	double eps = 10. * CppAD::numeric_limits<double>::epsilon();
 	size_t n   = 3;
 	size_t m   = 1;
 	size_t K   = 5;

@@ -72,7 +72,7 @@ namespace {
 		CPPAD_TEST_VECTOR<double> x(n), y(m);
 		x[0] = 0.5;
 		y    = f.Forward(0, x);
-		double eps = 10. * CppAD::epsilon<double>();
+		double eps = 10. * CppAD::numeric_limits<double>::epsilon();
 		ok  &= NearEqual(y[0], x[0] * x[0] * x[0], eps, eps);
 	
 		// forward computation of partials w.r.t. x

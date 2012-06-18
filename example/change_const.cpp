@@ -114,7 +114,7 @@ bool change_const(void)
 	J = g.Forward(0, u);
 
 	// accuracy for tests
-	double eps = 100. * CppAD::epsilon<double>();
+	double eps = 100. * CppAD::numeric_limits<double>::epsilon();
 
 	// y[0] = sin( x[0] ) * p
 	// y[1] = sin( x[1] ) * p

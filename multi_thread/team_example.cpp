@@ -76,7 +76,7 @@ namespace {
 		CppAD::ADFun<double> f(ax, ay); 
 
 		// Check function value corresponds to the identity 
-		double eps = 10. * CppAD::epsilon<double>();
+		double eps = 10. * CppAD::numeric_limits<double>::epsilon();
 		ok        &= NearEqual(ay[0], ax[0], eps, eps);
 
 		// Check derivative value corresponds to the identity.

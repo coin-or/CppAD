@@ -39,7 +39,7 @@ bool sparse_jac_fun(void)
 	bool ok = true;
 
 	size_t i, j, k;
-	double eps = CppAD::epsilon<double>();
+	double eps = CppAD::numeric_limits<double>::epsilon();
 	size_t n   = 3;
 	size_t m   = 4;
 	size_t K   = 5;
