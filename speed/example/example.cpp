@@ -33,12 +33,12 @@ $codei%
 
 
 $code
-$verbatim%speed/example/example.cpp%0%// BEGIN PROGRAM%// END PROGRAM%1%$$
+$verbatim%speed/example/example.cpp%0%// BEGIN C++%// END C++%1%$$
 $$
 
 $end
 */
-// BEGIN PROGRAM
+// BEGIN C++
 
 # include <cppad/cppad.hpp>
 
@@ -129,4 +129,4 @@ int main(void)
 	return static_cast<int>( ! ok );
 }
 
-// END PROGRAM
+// END C++

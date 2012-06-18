@@ -3,7 +3,7 @@
 # define CPPAD_EXP_2_INCLUDED
 
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-07 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-12 Bradley M. Bell
 
 CppAD is distributed under multiple licenses. This distribution is under
 the terms of the 
@@ -155,7 +155,7 @@ $lend
 $end
 ------------------------------------------------------------------------------
 */
-// BEGIN PROGRAM
+// BEGIN C++
 template <class Type>
 Type exp_2(const Type &x) 
 {       Type v1  = x;                // v1 = x
@@ -165,6 +165,6 @@ Type exp_2(const Type &x)
         Type v5  = v2 + v4;          // v5 = 1 + x + x^2 / 2
         return v5;                   // exp_2(x) = 1 + x + x^2 / 2
 }
-// END PROGRAM
+// END C++
 
 # endif

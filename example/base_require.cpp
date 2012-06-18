@@ -23,7 +23,7 @@ $index example, base type$$
 $index test, base type$$
 
 $code
-$verbatim%example/base_require.cpp%0%// BEGIN PROGRAM%// END PROGRAM%1%$$
+$verbatim%example/base_require.cpp%0%// BEGIN C++%// END C++%1%$$
 $$
 
 $head Purpose$$
@@ -34,7 +34,7 @@ The program below is an example use of $codei%AD<base_alloc>%$$.
 
 $end
 */
-// BEGIN PROGRAM
+// BEGIN C++
 # include "base_alloc.hpp"
 # include <cppad/cppad.hpp>
 
@@ -70,4 +70,4 @@ bool base_require(void)
 
 	return ok;
 }
-// END PROGRAM
+// END C++

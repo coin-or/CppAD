@@ -46,12 +46,12 @@ the value $cref/ipopt_dir/InstallUnix/ipopt_dir/$$ is specified on the
 $cref/configure/InstallUnix/Configure/$$ command line.
 
 $code
-$verbatim%cppad_ipopt/example/get_started.cpp%0%// BEGIN PROGRAM%// END PROGRAM%1%$$
+$verbatim%cppad_ipopt/example/get_started.cpp%0%// BEGIN C++%// END C++%1%$$
 $$
 
 $end
 */
-// BEGIN PROGRAM
+// BEGIN C++
 
 # include <cppad_ipopt_nlp.hpp>
 
@@ -190,4 +190,4 @@ bool ipopt_get_started(void)
 	return ok;
 }
 
-// END PROGRAM
+// END C++

@@ -133,7 +133,7 @@ contains the source for this template function.
 $end
 ------------------------------------------------------------------------------
 */
-// BEGIN PROGRAM
+// BEGIN C++
 # include <cstddef>
 //
 namespace CppAD {
@@ -157,5 +157,5 @@ namespace CppAD {
 	}
 
 }
-// END PROGRAM
+// END C++
 # endif

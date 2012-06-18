@@ -1,6 +1,6 @@
 /* $Id$ */
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-08 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-12 Bradley M. Bell
 
 CppAD is distributed under multiple licenses. This distribution is under
 the terms of the 
@@ -32,12 +32,12 @@ $index test, speed$$
 $section speed_test: Example and test$$
 
 $code
-$verbatim%speed/example/speed_test.cpp%0%// BEGIN PROGRAM%// END PROGRAM%1%$$
+$verbatim%speed/example/speed_test.cpp%0%// BEGIN C++%// END C++%1%$$
 $$
 
 $end
 */
-// BEGIN PROGRAM
+// BEGIN C++
 # include <cppad/speed_test.hpp>
 # include <vector>
 
@@ -94,4 +94,4 @@ bool speed_test(void)
  
 	return ok;
 }
-// END PROGRAM
+// END C++

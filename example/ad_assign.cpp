@@ -23,11 +23,11 @@ $index example, assign AD object$$
 $index test, assign AD object$$
 
 $code
-$verbatim%example/ad_assign.cpp%0%// BEGIN PROGRAM%// END PROGRAM%1%$$
+$verbatim%example/ad_assign.cpp%0%// BEGIN C++%// END C++%1%$$
 $$
 $end
 */
-// BEGIN PROGRAM
+// BEGIN C++
 
 # include <cppad/cppad.hpp>
 
@@ -57,4 +57,4 @@ bool ad_assign(void)
 
 	return ok;
 }
-// END PROGRAM
+// END C++

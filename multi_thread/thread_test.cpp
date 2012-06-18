@@ -184,12 +184,12 @@ $tend
 
 $head Source$$
 $code
-$verbatim%multi_thread/thread_test.cpp%0%// BEGIN PROGRAM%// END PROGRAM%1%$$
+$verbatim%multi_thread/thread_test.cpp%0%// BEGIN C++%// END C++%1%$$
 $$
 
 $end
 */
-// BEGIN PROGRAM
+// BEGIN C++
 
 # include <cppad/cppad.hpp>
 # include <cmath>
@@ -417,4 +417,4 @@ int main(int argc, char *argv[])
 	return  ! ok;
 }
 
-// END PROGRAM
+// END C++

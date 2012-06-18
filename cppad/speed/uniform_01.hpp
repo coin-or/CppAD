@@ -3,7 +3,7 @@
 # define CPPAD_UNIFORM_01_INCLUDED 
 
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-07 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-12 Bradley M. Bell
 
 CppAD is distributed under multiple licenses. This distribution is under
 the terms of the 
@@ -92,7 +92,7 @@ constraints the source code for this template function.
 $end
 ------------------------------------------------------------------------------
 */
-// BEGIN PROGRAM
+// BEGIN C++
 # include <cstdlib>
 
 namespace CppAD {
@@ -106,5 +106,5 @@ namespace CppAD {
 			x[n] = std::rand() * factor;
 	}
 }
-// END PROGRAM
+// END C++
 # endif

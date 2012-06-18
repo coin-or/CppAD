@@ -31,12 +31,12 @@ to implement the tangent ($icode%id% == 0%$$) and hyperbolic tangent
 ($icode%id% == 1%$$) functions as user atomic operations.
 
 $code
-$verbatim%example/user_tan.cpp%0%// BEGIN PROGRAM%// END PROGRAM%1%$$
+$verbatim%example/user_tan.cpp%0%// BEGIN C++%// END C++%1%$$
 $$
 
 $end
 */
-// BEGIN PROGRAM
+// BEGIN C++
 # include <cppad/cppad.hpp>
 
 namespace { // Begin empty namespace 
@@ -415,4 +415,4 @@ bool user_tan(void)
 
 	return ok;
 }
-// END PROGRAM
+// END C++

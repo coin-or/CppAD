@@ -148,13 +148,13 @@ $codei%
 
 $head Source$$
 $code
-$verbatim%multi_thread/multi_newton_work.cpp%0%// BEGIN PROGRAM%// END PROGRAM%1%$$
+$verbatim%multi_thread/multi_newton_work.cpp%0%// BEGIN C++%// END C++%1%$$
 $$
 
 
 $end
 */
-// BEGIN PROGRAM
+// BEGIN C++
 # include <cppad/cppad.hpp>
 # include "multi_newton_work.hpp"
 
@@ -425,4 +425,4 @@ bool multi_newton_combine(CppAD::vector<double>& xout)
 
 	return ok;
 }
-// END PROGRAM
+// END C++

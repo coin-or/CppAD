@@ -3,7 +3,7 @@
 # define CPPAD_POLY_INCLUDED
 
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-07 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-12 Bradley M. Bell
 
 CppAD is distributed under multiple licenses. This distribution is under
 the terms of the 
@@ -145,7 +145,7 @@ current source code that implements these specifications.
 $end
 ------------------------------------------------------------------------------
 */
-// BEGIN PROGRAM
+// BEGIN C++
 # include <cstddef>  // used to defined size_t
 # include <cppad/check_simple_vector.hpp>
 
@@ -194,5 +194,5 @@ Type Poly(size_t k, const Vector &a, const Type &z)
 	return sum;
 }
 } // END CppAD namespace
-// END PROGRAM
+// END C++
 # endif

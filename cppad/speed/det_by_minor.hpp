@@ -126,7 +126,7 @@ contains the source for this template function.
 $end
 ---------------------------------------------------------------------------
 */
-// BEGIN PROGRAM
+// BEGIN C++
 # include <cppad/cppad.hpp>
 # include <cppad/speed/det_of_minor.hpp>
 
@@ -169,5 +169,5 @@ public:
 };
 
 } // END CppAD namespace
-// END PROGRAM
+// END C++
 # endif

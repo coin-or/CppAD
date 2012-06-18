@@ -21,12 +21,12 @@ $index example, limits$$
 $index test, limits$$
 
 $code
-$verbatim%example/limits.cpp%0%// BEGIN PROGRAM%// END PROGRAM%1%$$
+$verbatim%example/limits.cpp%0%// BEGIN C++%// END C++%1%$$
 $$
 
 $end
 */
-// BEGIN PROGRAM
+// BEGIN C++
 
 # ifdef _MSC_VER
 // Supress Microsoft compiler warning about possible loss of precision,
@@ -166,4 +166,4 @@ bool limits(void)
 
 	return ok;
 }
-// END PROGRAM
+// END C++

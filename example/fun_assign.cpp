@@ -20,12 +20,12 @@ $index example, ADFun assignment$$
 $index assignment, ADFun example$$
 
 $code
-$verbatim%example/fun_assign.cpp%0%// BEGIN PROGRAM%// END PROGRAM%1%$$
+$verbatim%example/fun_assign.cpp%0%// BEGIN C++%// END C++%1%$$
 $$
 
 $end
 */
-// BEGIN PROGRAM
+// BEGIN C++
 # include <cppad/cppad.hpp>
 # include <limits>
 
@@ -107,4 +107,4 @@ bool fun_assign(void)
 	return ok;
 }
 
-// END PROGRAM
+// END C++

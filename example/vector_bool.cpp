@@ -1,6 +1,6 @@
 /* $Id$ */
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-08 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-12 Bradley M. Bell
 
 CppAD is distributed under multiple licenses. This distribution is under
 the terms of the 
@@ -26,12 +26,12 @@ $index example, CppAD::vectorBool$$
 $index test, CppAD::vectorBool$$
 
 $code
-$verbatim%example/vector_bool.cpp%0%// BEGIN PROGRAM%// END PROGRAM%1%$$
+$verbatim%example/vector_bool.cpp%0%// BEGIN C++%// END C++%1%$$
 $$
 
 $end
 */
-// BEGIN PROGRAM
+// BEGIN C++
 
 # include <cppad/vector.hpp>
 # include <cppad/check_simple_vector.hpp>
@@ -99,4 +99,4 @@ bool vectorBool(void)
 	return ok;
 }
 
-// END PROGRAM
+// END C++

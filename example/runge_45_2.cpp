@@ -49,12 +49,12 @@ $latex \[
 \] $$
 
 $code
-$verbatim%example/runge_45_2.cpp%0%// BEGIN PROGRAM%// END PROGRAM%1%$$
+$verbatim%example/runge_45_2.cpp%0%// BEGIN C++%// END C++%1%$$
 $$
 
 $end
 */
-// BEGIN PROGRAM
+// BEGIN C++
 
 # include <cstddef>              // for size_t
 # include <limits>               // for machine epsilon
@@ -151,4 +151,4 @@ bool runge_45_2(void)
 	return ok;
 }
 
-// END PROGRAM
+// END C++

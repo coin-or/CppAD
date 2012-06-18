@@ -22,12 +22,12 @@ $index test, sparse_jac_fun$$
 $section sparse_jac_fun: Example and test$$
 
 $code
-$verbatim%speed/example/sparse_jac_fun.cpp%0%// BEGIN PROGRAM%// END PROGRAM%1%$$
+$verbatim%speed/example/sparse_jac_fun.cpp%0%// BEGIN C++%// END C++%1%$$
 $$
 
 $end
 */
-// BEGIN PROGRAM
+// BEGIN C++
 # include <cppad/speed/sparse_jac_fun.hpp>
 # include <cppad/speed/uniform_01.hpp>
 # include <cppad/cppad.hpp>
@@ -80,4 +80,4 @@ bool sparse_jac_fun(void)
  
 	return ok;
 }
-// END PROGRAM
+// END C++

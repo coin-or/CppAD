@@ -1,6 +1,6 @@
 /* $Id$ */
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-11 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-12 Bradley M. Bell
 
 CppAD is distributed under multiple licenses. This distribution is under
 the terms of the 
@@ -44,12 +44,12 @@ x_1 (t)    & = & a_0 [ \exp( - a_1 t ) - \exp( - a_0 t ) ] / ( a_0 - a_1 )
 The example tests Rosen34 using the relations above:
 
 $code
-$verbatim%example/ode_stiff.cpp%0%// BEGIN PROGRAM%// END PROGRAM%1%$$
+$verbatim%example/ode_stiff.cpp%0%// BEGIN C++%// END C++%1%$$
 $$
 
 $end
 */
-// BEGIN PROGRAM
+// BEGIN C++
 
 # include <cppad/cppad.hpp> 
 
@@ -205,4 +205,4 @@ bool OdeStiff(void)
 	return ok;
 }
 
-// END PROGRAM
+// END C++

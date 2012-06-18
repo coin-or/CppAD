@@ -1,6 +1,6 @@
 /* $Id$ */
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-07 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-12 Bradley M. Bell
 
 CppAD is distributed under multiple licenses. This distribution is under
 the terms of the 
@@ -24,12 +24,12 @@ $index example, unary plus$$
 $index test, unary plus$$
 
 $code
-$verbatim%example/unary_plus.cpp%0%// BEGIN PROGRAM%// END PROGRAM%1%$$
+$verbatim%example/unary_plus.cpp%0%// BEGIN C++%// END C++%1%$$
 $$
 
 $end
 */
-// BEGIN PROGRAM
+// BEGIN C++
 
 # include <cppad/cppad.hpp>
 
@@ -81,4 +81,4 @@ bool UnaryPlus(void)
 	 
 	return ok;
 }
-// END PROGRAM
+// END C++

@@ -3,7 +3,7 @@
 # define CPPAD_DET_GRAD_33_INCLUDED
 
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-07 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-12 Bradley M. Bell
 
 CppAD is distributed under multiple licenses. This distribution is under
 the terms of the 
@@ -101,7 +101,7 @@ contains the source code for this template function.
 $end
 ------------------------------------------------------------------------------
 */
-// BEGIN PROGRAM
+// BEGIN C++
 # include <cppad/near_equal.hpp>
 namespace CppAD {
 template <class Vector>
@@ -129,5 +129,5 @@ template <class Vector>
 		return ok;
 	}
 }
-// END PROGRAM
+// END C++
 # endif

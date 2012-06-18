@@ -1,6 +1,6 @@
 /* $Id$ */
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-07 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-12 Bradley M. Bell
 
 CppAD is distributed under multiple licenses. This distribution is under
 the terms of the 
@@ -31,12 +31,12 @@ $pre
 
 $$
 $code
-$verbatim%example/interp_retape.cpp%0%// BEGIN PROGRAM%// END PROGRAM%1%$$
+$verbatim%example/interp_retape.cpp%0%// BEGIN C++%// END C++%1%$$
 $$
 
 $end
 */
-// BEGIN PROGRAM
+// BEGIN C++
 # include <cppad/cppad.hpp>
 # include <cassert>
 # include <cmath>
@@ -147,4 +147,4 @@ bool interp_retape(void)
 	return ok;
 }
 
-// END PROGRAM
+// END C++

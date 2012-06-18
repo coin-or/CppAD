@@ -23,12 +23,12 @@ $index example, tanh$$
 $index test, tanh$$
 
 $code
-$verbatim%example/tanh.cpp%0%// BEGIN PROGRAM%// END PROGRAM%1%$$
+$verbatim%example/tanh.cpp%0%// BEGIN C++%// END C++%1%$$
 $$
 
 $end
 */
-// BEGIN PROGRAM
+// BEGIN C++
 
 # include <cppad/cppad.hpp>
 # include <cmath>
@@ -88,4 +88,4 @@ bool Tanh(void)
 	return ok;
 }
 
-// END PROGRAM
+// END C++

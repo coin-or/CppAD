@@ -22,12 +22,12 @@ $index example, Forward$$
 $index test, Forward$$
 
 $code
-$verbatim%example/forward.cpp%0%// BEGIN PROGRAM%// END PROGRAM%1%$$
+$verbatim%example/forward.cpp%0%// BEGIN C++%// END C++%1%$$
 $$
 
 $end
 */
-// BEGIN PROGRAM
+// BEGIN C++
 # include <cppad/cppad.hpp>
 namespace { // --------------------------------------------------------
 // define the template function ForwardCases<Vector> in empty namespace
@@ -104,4 +104,4 @@ bool Forward(void)
 	ok &= ForwardCases< std::valarray  <double> >();
 	return ok;
 }
-// END PROGRAM
+// END C++

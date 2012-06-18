@@ -1,6 +1,6 @@
 /* $Id$ */
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-08 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-12 Bradley M. Bell
 
 CppAD is distributed under multiple licenses. This distribution is under
 the terms of the 
@@ -22,12 +22,12 @@ $index example, determinant by minors$$
 $index test, determinant by minors$$
 
 $code
-$verbatim%speed/example/det_by_minor.cpp%0%// BEGIN PROGRAM%// END PROGRAM%1%$$
+$verbatim%speed/example/det_by_minor.cpp%0%// BEGIN C++%// END C++%1%$$
 $$
 
 $end
 */
-// BEGIN PROGRAM
+// BEGIN C++
 
 # include <cppad/cppad.hpp>
 # include <cppad/speed/det_by_minor.hpp>
@@ -65,4 +65,4 @@ bool det_by_minor()
 	return ok;
 }
 
-// END PROGRAM
+// END C++

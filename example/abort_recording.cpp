@@ -24,12 +24,12 @@ $index recording, abort$$
 $index abort, recording$$
 
 $code
-$verbatim%example/abort_recording.cpp%0%// BEGIN PROGRAM%// END PROGRAM%1%$$
+$verbatim%example/abort_recording.cpp%0%// BEGIN C++%// END C++%1%$$
 $$
 
 $end
 */
-// BEGIN PROGRAM
+// BEGIN C++
 
 # include <cppad/cppad.hpp>
 # include <limits>
@@ -88,4 +88,4 @@ bool abort_recording(void)
 
 	return ok;
 }
-// END PROGRAM
+// END C++

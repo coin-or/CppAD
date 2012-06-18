@@ -22,12 +22,12 @@ $index capacity_taylor, example$$
 $index example, capacity_taylor$$
 
 $code
-$verbatim%example/capacity_taylor.cpp%0%// BEGIN PROGRAM%// END PROGRAM%1%$$
+$verbatim%example/capacity_taylor.cpp%0%// BEGIN C++%// END C++%1%$$
 $$
 
 $end
 */
-// BEGIN PROGRAM
+// BEGIN C++
 # include <cppad/cppad.hpp>
 	
 namespace {
@@ -119,4 +119,4 @@ bool capacity_taylor(void)
 	return ok;
 }
 
-// END PROGRAM
+// END C++

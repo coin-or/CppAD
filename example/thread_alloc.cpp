@@ -27,12 +27,12 @@ $index example, memory allocation$$
 $index test, memory allocation$$
 
 $code
-$verbatim%example/thread_alloc.cpp%0%// BEGIN PROGRAM%// END PROGRAM%1%$$
+$verbatim%example/thread_alloc.cpp%0%// BEGIN C++%// END C++%1%$$
 $$
 
 $end
 */
-// BEGIN PROGRAM
+// BEGIN C++
 # include <cppad/thread_alloc.hpp>
 # include <cppad/memory_leak.hpp>
 # include <vector>
@@ -192,4 +192,4 @@ bool thread_alloc(void)
 }
 
 
-// END PROGRAM
+// END C++

@@ -29,13 +29,13 @@ OpenMP multi-threading environment.
 
 $head Source Code$$
 $code
-$verbatim%multi_thread/openmp/simple_ad_openmp.cpp%0%// BEGIN PROGRAM%// END PROGRAM%1%$$
+$verbatim%multi_thread/openmp/simple_ad_openmp.cpp%0%// BEGIN C++%// END C++%1%$$
 $$
 
 $end
 ------------------------------------------------------------------------------
 */
-// BEGIN PROGRAM
+// BEGIN C++
 # include <cppad/cppad.hpp>
 # include <omp.h>
 # define NUMBER_THREADS  4
@@ -182,4 +182,4 @@ bool simple_ad(void)
 
 	return ok;
 }
-// END PROGRAM
+// END C++

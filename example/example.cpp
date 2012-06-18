@@ -32,12 +32,12 @@ There are a lot of tests, so this may take a while to compile.
 
 
 $code
-$verbatim%example/example.cpp%0%// BEGIN PROGRAM%// END PROGRAM%1%$$
+$verbatim%example/example.cpp%0%// BEGIN C++%// END C++%1%$$
 $$
 
 $end
 */
-// BEGIN PROGRAM
+// BEGIN C++
 
 // system include files used for I/O
 # include <iostream>
@@ -357,4 +357,4 @@ int main(void)
 
 	return static_cast<int>( ! ok );
 }
-// END PROGRAM
+// END C++

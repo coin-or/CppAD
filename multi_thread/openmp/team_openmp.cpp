@@ -23,12 +23,12 @@ $section OpenMP Implementation of a Team of AD Threads$$
 See $cref team_thread.hpp$$ for this routines specifications.
 
 $code
-$verbatim%multi_thread/openmp/team_openmp.cpp%0%// BEGIN PROGRAM%// END PROGRAM%1%$$
+$verbatim%multi_thread/openmp/team_openmp.cpp%0%// BEGIN C++%// END C++%1%$$
 $$
 
 $end
 */
-// BEGIN PROGRAM
+// BEGIN C++
 # include <omp.h>
 # include <cppad/cppad.hpp>
 # include "../team_thread.hpp"
@@ -107,4 +107,4 @@ bool team_destroy(void)
 
 const char* team_name(void)
 {	return "openmp"; }
-// END PROGRAM
+// END C++

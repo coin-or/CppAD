@@ -1,6 +1,6 @@
 /* $Id$ */
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-09 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-12 Bradley M. Bell
 
 CppAD is distributed under multiple licenses. This distribution is under
 the terms of the 
@@ -144,13 +144,13 @@ are used to calculate the Taylor coefficient $latex z^{(k)} ( t , x )$$
 which in turn gives the value for $latex  y^{(k+1)} y ( t , x)$$.
 
 $code
-$verbatim%example/ode_taylor.cpp%0%// BEGIN PROGRAM%// END PROGRAM%1%$$
+$verbatim%example/ode_taylor.cpp%0%// BEGIN C++%// END C++%1%$$
 $$
 
 $end
 --------------------------------------------------------------------------
 */
-// BEGIN PROGRAM
+// BEGIN C++
 
 # include <cppad/cppad.hpp>
 
@@ -315,4 +315,4 @@ bool ode_taylor(void)
 	return ok;
 }
 
-// END PROGRAM
+// END C++

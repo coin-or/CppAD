@@ -39,12 +39,12 @@ we need to handle the case $latex x_j = 0$$
 in a special way to avoid multiplying zero by infinity.
 
 $code
-$verbatim%example/cond_exp.cpp%0%// BEGIN PROGRAM%// END PROGRAM%1%$$
+$verbatim%example/cond_exp.cpp%0%// BEGIN C++%// END C++%1%$$
 $$
 
 $end
 */
-// BEGIN PROGRAM
+// BEGIN C++
 
 # include <cppad/cppad.hpp>
 # include <limits>
@@ -132,4 +132,4 @@ bool CondExp(void)
 	
 	return ok;
 }
-// END PROGRAM
+// END C++

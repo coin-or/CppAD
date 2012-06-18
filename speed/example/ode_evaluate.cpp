@@ -1,6 +1,6 @@
 /* $Id$ */
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-11 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-12 Bradley M. Bell
 
 CppAD is distributed under multiple licenses. This distribution is under
 the terms of the 
@@ -21,12 +21,12 @@ $index test, ode_evaluate$$
 $section ode_evaluate: Example and test$$
 
 $code
-$verbatim%speed/example/ode_evaluate.cpp%0%// BEGIN PROGRAM%// END PROGRAM%1%$$
+$verbatim%speed/example/ode_evaluate.cpp%0%// BEGIN C++%// END C++%1%$$
 $$
 
 $end
 */
-// BEGIN PROGRAM
+// BEGIN C++
 # include <cppad/speed/ode_evaluate.hpp>
 # include <cppad/speed/uniform_01.hpp>
 # include <cppad/cppad.hpp>
@@ -72,4 +72,4 @@ bool ode_evaluate(void)
  
 	return ok;
 }
-// END PROGRAM
+// END C++

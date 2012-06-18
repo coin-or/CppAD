@@ -1,6 +1,6 @@
 /* $Id$ */
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-10 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-12 Bradley M. Bell
 
 CppAD is distributed under multiple licenses. This distribution is under
 the terms of the 
@@ -15,13 +15,13 @@ $begin ipopt_ode_speed.cpp$$
 $section Speed Test for Both Simple and Fast Representations$$
 
 $code
-$verbatim%cppad_ipopt/speed/ode_speed.cpp%0%// BEGIN PROGRAM%// END PROGRAM%1%$$
+$verbatim%cppad_ipopt/speed/ode_speed.cpp%0%// BEGIN C++%// END C++%1%$$
 $$
 
 $end
 */
 
-// BEGIN PROGRAM
+// BEGIN C++
 # include "../example/ode_run.hpp"
 # include "../example/ode_simple.hpp"
 # include "../example/ode_fast.hpp"
@@ -87,4 +87,4 @@ double ode_speed(const char* name, size_t& count)
 	count           = c1 - c0 - 1;
 	return s1 - s0;
 }
-// END PROGRAM
+// END C++

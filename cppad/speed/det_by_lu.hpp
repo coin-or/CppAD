@@ -129,7 +129,7 @@ contains the source for this template function.
 $end
 ---------------------------------------------------------------------------
 */
-// BEGIN PROGRAM
+// BEGIN C++
 # include <cppad/cppad.hpp>
 # include <complex>
 
@@ -194,5 +194,5 @@ public:
 	}
 };
 } // END CppAD namespace
-// END PROGRAM
+// END C++
 # endif

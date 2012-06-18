@@ -3,7 +3,7 @@
 # define CPPAD_LU_INVERT_INCLUDED
 
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-06 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-12 Bradley M. Bell
 
 CppAD is distributed under multiple licenses. This distribution is under
 the terms of the 
@@ -161,7 +161,7 @@ current source code that implements these specifications.
 $end
 --------------------------------------------------------------------------
 */
-// BEGIN PROGRAM
+// BEGIN C++
 # include <cppad/local/cppad_assert.hpp>
 # include <cppad/check_simple_vector.hpp>
 # include <cppad/check_numeric_type.hpp>
@@ -239,5 +239,5 @@ void LuInvert(
 	return;
 }
 } // END CppAD namespace 
-// END PROGRAM
+// END C++
 # endif

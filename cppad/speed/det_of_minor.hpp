@@ -217,7 +217,7 @@ contains the source for this template function.
 $end
 ---------------------------------------------------------------------------
 */
-// BEGIN PROGRAM
+// BEGIN C++
 namespace CppAD { // BEGIN CppAD namespace
 template <class Scalar> 
 Scalar det_of_minor( 
@@ -276,5 +276,5 @@ Scalar det_of_minor(
 	return detM;
 }
 } // END CppAD namespace
-// END PROGRAM
+// END C++
 # endif

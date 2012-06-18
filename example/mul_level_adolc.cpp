@@ -60,12 +60,12 @@ the value $cref/adolc_dir/InstallUnix/adolc_dir/$$ is specified on the
 $cref/configure/InstallUnix/Configure/$$ command line.
 
 $code
-$verbatim%example/mul_level_adolc.cpp%0%// BEGIN PROGRAM%// END PROGRAM%1%$$
+$verbatim%example/mul_level_adolc.cpp%0%// BEGIN C++%// END C++%1%$$
 $$
 
 $end
 */
-// BEGIN PROGRAM
+// BEGIN C++
 # include <adolc/adouble.h>
 # include <adolc/taping.h>
 # include <adolc/interfaces.h>
@@ -163,4 +163,4 @@ bool mul_level_adolc(void)
 	omp_alloc::delete_array(dw);
 	return ok;
 }
-// END PROGRAM
+// END C++

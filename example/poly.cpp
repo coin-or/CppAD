@@ -1,6 +1,6 @@
 /* $Id$ */
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-07 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-12 Bradley M. Bell
 
 CppAD is distributed under multiple licenses. This distribution is under
 the terms of the 
@@ -20,12 +20,12 @@ $index example, polynomial$$
 $index test, polynomial$$
 
 $code
-$verbatim%example/poly.cpp%0%// BEGIN PROGRAM%// END PROGRAM%1%$$
+$verbatim%example/poly.cpp%0%// BEGIN C++%// END C++%1%$$
 $$
 
 $end
 */
-// BEGIN PROGRAM
+// BEGIN C++
 
 # include <cppad/cppad.hpp>
 # include <cmath>
@@ -56,4 +56,4 @@ bool Poly(void)
 	return ok;
 }
 
-// END PROGRAM
+// END C++

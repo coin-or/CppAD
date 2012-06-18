@@ -61,12 +61,12 @@ y - [ \partial_y \partial_y F(x, y) ]^{-1} \partial_y F[x,  y]
 
 
 $code
-$verbatim%example/bender_quad.cpp%0%// BEGIN PROGRAM%// END PROGRAM%1%$$
+$verbatim%example/bender_quad.cpp%0%// BEGIN C++%// END C++%1%$$
 $$
 
 $end
 */
-// BEGIN PROGRAM
+// BEGIN C++
 
 # include <cppad/cppad.hpp>
 
@@ -216,4 +216,4 @@ bool BenderQuad(void)
 	return ok;
 }
 
-// END PROGRAM
+// END C++

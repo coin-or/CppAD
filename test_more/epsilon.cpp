@@ -22,7 +22,7 @@ $index test, epsilon$$
 
 $end
 */
-// BEGIN PROGRAM
+// BEGIN C++
 
 # ifdef _MSC_VER
 // Supress Microsoft compiler warning about possible loss of precision,
@@ -77,4 +77,4 @@ bool epsilon(void)
 
 	return ok;
 }
-// END PROGRAM
+// END C++

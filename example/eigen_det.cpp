@@ -24,12 +24,12 @@ $index example, eigen determinant$$
 $index test, eigen determinant$$
 
 $code
-$verbatim%example/eigen_det.cpp%0%// BEGIN PROGRAM%// END PROGRAM%1%$$
+$verbatim%example/eigen_det.cpp%0%// BEGIN C++%// END C++%1%$$
 $$
 
 $end
 */
-// BEGIN PROGRAM
+// BEGIN C++
 # include <cppad/example/cppad_eigen.hpp>
 # include <cppad/speed/det_by_minor.hpp>
 # include <Eigen/Dense>
@@ -101,4 +101,4 @@ bool eigen_det(void)
 	return ok;
 }
 
-// END PROGRAM
+// END C++

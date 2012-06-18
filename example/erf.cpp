@@ -24,12 +24,12 @@ $index example, erf$$
 $index test, erf$$
 
 $code
-$verbatim%example/erf.cpp%0%// BEGIN PROGRAM%// END PROGRAM%1%$$
+$verbatim%example/erf.cpp%0%// BEGIN C++%// END C++%1%$$
 $$
 
 $end
 */
-// BEGIN PROGRAM
+// BEGIN C++
 
 # include <cppad/cppad.hpp>
 # include <cmath>
@@ -97,4 +97,4 @@ bool Erf(void)
 	return ok;
 }
 
-// END PROGRAM
+// END C++

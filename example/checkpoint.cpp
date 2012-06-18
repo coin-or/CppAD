@@ -116,13 +116,13 @@ where $latex \partial_{x(0)}$$ denotes the partial with respect
 to $latex x^{(0)}$$.
 
 $code
-$verbatim%example/checkpoint.cpp%0%// BEGIN PROGRAM%// END PROGRAM%1%$$
+$verbatim%example/checkpoint.cpp%0%// BEGIN C++%// END C++%1%$$
 $$
 
 
 $end
 */
-// BEGIN PROGRAM
+// BEGIN C++
 
 # include <cppad/cppad.hpp>
 
@@ -265,4 +265,4 @@ bool checkpoint(void)
 	return ok;
 }
 
-// END PROGRAM
+// END C++

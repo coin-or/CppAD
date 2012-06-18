@@ -1,6 +1,6 @@
 /* $Id$ */
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-09 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-12 Bradley M. Bell
 
 CppAD is distributed under multiple licenses. This distribution is under
 the terms of the 
@@ -27,12 +27,12 @@ $index test, sparsity forward$$
 $index sparsity, forward example$$
 
 $code
-$verbatim%example/for_sparse_jac.cpp%0%// BEGIN PROGRAM%// END PROGRAM%1%$$
+$verbatim%example/for_sparse_jac.cpp%0%// BEGIN C++%// END C++%1%$$
 $$
 
 $end
 */
-// BEGIN PROGRAM
+// BEGIN C++
 
 # include <set>
 # include <cppad/cppad.hpp>
@@ -178,4 +178,4 @@ bool ForSparseJac(void)
 	return ok;
 }
 
-// END PROGRAM
+// END C++

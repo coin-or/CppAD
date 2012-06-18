@@ -2,7 +2,7 @@
 # ifndef CPPAD_ODE_PROBLEM_INCLUDED
 # define CPPAD_ODE_PROBLEM_INCLUDED
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-10 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-12 Bradley M. Bell
 
 CppAD is distributed under multiple licenses. This distribution is under
 the terms of the 
@@ -27,13 +27,13 @@ $index inverse, ode example$$
 $index example, ode inverse$$ 
 
 $code
-$verbatim%cppad_ipopt/example/ode_problem.hpp%0%// BEGIN PROGRAM%// END PROGRAM%1%$$
+$verbatim%cppad_ipopt/example/ode_problem.hpp%0%// BEGIN C++%// END C++%1%$$
 $$
 
 $end
 ------------------------------------------------------------------------------
 */
-// BEGIN PROGRAM
+// BEGIN C++
 # include "../src/cppad_ipopt_nlp.hpp"
 
 namespace {
@@ -99,5 +99,5 @@ namespace {
 		return count;
 	}
 }
-// END PROGRAM
+// END C++
 # endif

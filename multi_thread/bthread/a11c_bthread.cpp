@@ -1,6 +1,6 @@
 /* $Id$ */
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-11 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-12 Bradley M. Bell
 
 CppAD is distributed under multiple licenses. This distribution is under
 the terms of the 
@@ -30,12 +30,12 @@ This example just demonstrates Boost threads and does not use CppAD at all.
 
 $head Source Code$$
 $code
-$verbatim%multi_thread/bthread/a11c_bthread.cpp%0%// BEGIN PROGRAM%// END PROGRAM%1%$$
+$verbatim%multi_thread/bthread/a11c_bthread.cpp%0%// BEGIN C++%// END C++%1%$$
 $$
 $end
 ----------------------------------------------------------------------------
 */
-// BEGIN PROGRAM
+// BEGIN C++
 # include <boost/thread.hpp>
 # include <limits>
 # include <cmath>
@@ -126,4 +126,4 @@ bool a11c(void)
 
 	return ok;
 }
-// END PROGRAM
+// END C++

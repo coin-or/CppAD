@@ -1,7 +1,6 @@
 /* $Id$ */
-// BEGIN SHORT COPYRIGHT
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-06 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-12 Bradley M. Bell
 
 CppAD is distributed under multiple licenses. This distribution is under
 the terms of the 
@@ -10,7 +9,6 @@ the terms of the
 A copy of this license is included in the COPYING file of this distribution.
 Please visit http://www.coin-or.org/CppAD/ for information on other licenses.
 -------------------------------------------------------------------------- */
-// END SHORT COPYRIGHT
 
 /*
 $begin LuSolve.cpp$$
@@ -28,15 +26,14 @@ $index test, LuSolve$$
 $index example, complex$$
 $index test, complex$$
 
-$comment This file is in the Example subdirectory$$ 
 $code
-$verbatim%example/lu_solve.cpp%0%// BEGIN PROGRAM%// END PROGRAM%1%$$
+$verbatim%example/lu_solve.cpp%0%// BEGIN C++%// END C++%1%$$
 $$
 
 $end
 */
 
-// BEGIN PROGRAM
+// BEGIN C++
 
 # include <cppad/lu_solve.hpp>       // for CppAD::LuSolve
 # include <cppad/near_equal.hpp>     // for CppAD::NearEqual
@@ -98,4 +95,4 @@ bool LuSolve(void)
 
 	return ok;
 }
-// END PROGRAM
+// END C++

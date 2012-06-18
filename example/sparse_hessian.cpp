@@ -25,12 +25,12 @@ $index test, sparse Hessian$$
 $index spare, Hessian example$$
 
 $code
-$verbatim%example/sparse_hessian.cpp%0%// BEGIN PROGRAM%// END PROGRAM%1%$$
+$verbatim%example/sparse_hessian.cpp%0%// BEGIN C++%// END C++%1%$$
 $$
 
 $end
 */
-// BEGIN PROGRAM
+// BEGIN C++
 # include <cppad/cppad.hpp>
 bool sparse_hessian(void)
 {	bool ok = true;
@@ -172,4 +172,4 @@ bool sparse_hessian(void)
 
 	return ok;
 }
-// END PROGRAM
+// END C++

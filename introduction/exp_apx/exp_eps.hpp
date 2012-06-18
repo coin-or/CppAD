@@ -2,7 +2,7 @@
 # ifndef CPPAD_EXP_EPS_INCLUDED
 # define CPPAD_EXP_EPS_INCLUDED
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-07 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-12 Bradley M. Bell
 
 CppAD is distributed under multiple licenses. This distribution is under
 the terms of the 
@@ -188,7 +188,7 @@ $lend
 $end
 -----------------------------------------------------------------------------
 */
-// BEGIN PROGRAM
+// BEGIN C++
 template <class Type>
 Type exp_eps(const Type &x, const Type &epsilon)
 {	// abs_x = |x|
@@ -210,6 +210,6 @@ Type exp_eps(const Type &x, const Type &epsilon)
 		sum = Type(1) / sum;
 	return sum;
 }
-// END PROGRAM
+// END C++
 
 # endif

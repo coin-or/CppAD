@@ -161,13 +161,13 @@ the value $cref/adolc_dir/InstallUnix/adolc_dir/$$ is specified on the
 $cref/configure/InstallUnix/Configure/$$ command line.
 
 $code
-$verbatim%example/ode_taylor_adolc.cpp%0%// BEGIN PROGRAM%// END PROGRAM%1%$$
+$verbatim%example/ode_taylor_adolc.cpp%0%// BEGIN C++%// END C++%1%$$
 $$
 
 $end
 --------------------------------------------------------------------------
 */
-// BEGIN PROGRAM
+// BEGIN C++
 # include <adolc/adouble.h>
 # include <adolc/taping.h>
 # include <adolc/drivers/drivers.h>
@@ -358,4 +358,4 @@ bool ode_taylor_adolc(void)
 	return ok;
 }
 
-// END PROGRAM
+// END C++

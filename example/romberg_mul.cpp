@@ -1,7 +1,6 @@
 /* $Id$ */
-// BEGIN SHORT COPYRIGHT
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-06 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-12 Bradley M. Bell
 
 CppAD is distributed under multiple licenses. This distribution is under
 the terms of the 
@@ -10,7 +9,6 @@ the terms of the
 A copy of this license is included in the COPYING file of this distribution.
 Please visit http://www.coin-or.org/CppAD/ for information on other licenses.
 -------------------------------------------------------------------------- */
-// END SHORT COPYRIGHT
 
 /*
 $begin RombergMul.cpp$$
@@ -25,12 +23,12 @@ $index example, Romberg$$
 $index test, Romberg$$
 
 $code
-$verbatim%example/romberg_mul.cpp%0%// BEGIN PROGRAM%// END PROGRAM%1%$$
+$verbatim%example/romberg_mul.cpp%0%// BEGIN C++%// END C++%1%$$
 $$
 
 $end
 */
-// BEGIN PROGRAM
+// BEGIN C++
 
 # include <cppad/romberg_mul.hpp>
 # include <cppad/vector.hpp>
@@ -127,4 +125,4 @@ bool RombergMul(void)
 	return ok;
 }
 
-// END PROGRAM
+// END C++

@@ -1,6 +1,6 @@
 /* $Id$ */
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-11 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-12 Bradley M. Bell
 
 CppAD is distributed under multiple licenses. This distribution is under
 the terms of the 
@@ -22,12 +22,12 @@ $index difference, central$$
 $index central difference$$
 
 $code
-$verbatim%example/interface_2c.cpp%0%// BEGIN PROGRAM%// END PROGRAM%1%$$
+$verbatim%example/interface_2c.cpp%0%// BEGIN C++%// END C++%1%$$
 $$
 
 $end
 */
-// BEGIN PROGRAM
+// BEGIN C++
 # include <cppad/cppad.hpp>  // CppAD utilities
 # include <cassert>        // assert macro
 
@@ -182,4 +182,4 @@ bool Interface2C(void)
 	}
 	return ok;
 }
-// END PROGRAM
+// END C++

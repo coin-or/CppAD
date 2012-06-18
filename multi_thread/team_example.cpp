@@ -36,13 +36,13 @@ $tend
 
 $head Source Code$$
 $code
-$verbatim%multi_thread/team_example.cpp%0%// BEGIN PROGRAM%// END PROGRAM%1%$$
+$verbatim%multi_thread/team_example.cpp%0%// BEGIN C++%// END C++%1%$$
 $$
 
 $end
 ------------------------------------------------------------------------------
 */
-// BEGIN PROGRAM
+// BEGIN C++
 # include <cppad/cppad.hpp>
 # include "team_thread.hpp"
 # define NUMBER_THREADS  4
@@ -136,4 +136,4 @@ bool team_example(void)
 	}
 	return ok;
 }
-// END PROGRAM
+// END C++

@@ -1,6 +1,6 @@
 /* $Id$ */
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-07 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-12 Bradley M. Bell
 
 CppAD is distributed under multiple licenses. This distribution is under
 the terms of the 
@@ -13,7 +13,7 @@ Please visit http://www.coin-or.org/CppAD/ for information on other licenses.
 /*
 // Old GetStarted example now used just for validation testing
 */
-// BEGIN PROGRAM
+// BEGIN C++
 
 // directory where cppad/cppad.hpp is stored must be searched by compiler
 # include <cppad/cppad.hpp>
@@ -61,4 +61,4 @@ bool Poly(void)
 	return ok;
 }
 
-// END PROGRAM
+// END C++

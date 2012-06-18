@@ -28,12 +28,12 @@ This example is only intended to help convert calls to $cref omp_alloc$$
 to calls to $cref thread_alloc$$.
 
 $code
-$verbatim%example/omp_alloc.cpp%0%// BEGIN PROGRAM%// END PROGRAM%1%$$
+$verbatim%example/omp_alloc.cpp%0%// BEGIN C++%// END C++%1%$$
 $$
 
 $end
 */
-// BEGIN PROGRAM
+// BEGIN C++
 # include <cppad/omp_alloc.hpp>
 # include <cppad/memory_leak.hpp>
 # include <vector>
@@ -192,4 +192,4 @@ bool omp_alloc(void)
 }
 
 
-// END PROGRAM
+// END C++

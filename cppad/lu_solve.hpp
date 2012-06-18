@@ -3,7 +3,7 @@
 # define CPPAD_LU_SOLVE_INCLUDED
 
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-11 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-12 Bradley M. Bell
 
 CppAD is distributed under multiple licenses. This distribution is under
 the terms of the 
@@ -243,7 +243,7 @@ current source code that implements these specifications.
 $end
 --------------------------------------------------------------------------
 */
-// BEGIN PROGRAM
+// BEGIN C++
 # include <complex>
 # include <vector>
 
@@ -347,5 +347,5 @@ int LuSolve(
 	return signdet;
 }
 } // END CppAD namespace 
-// END PROGRAM
+// END C++
 # endif

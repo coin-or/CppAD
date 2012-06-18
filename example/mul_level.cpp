@@ -50,12 +50,12 @@ The example $cref mul_level_adolc.cpp$$ computes the same values using
 Adolc's type $code adouble$$ and CppAD's type $code AD<adouble>$$.
 
 $code
-$verbatim%example/mul_level.cpp%0%// BEGIN PROGRAM%// END PROGRAM%1%$$
+$verbatim%example/mul_level.cpp%0%// BEGIN C++%// END C++%1%$$
 $$
 
 $end
 */
-// BEGIN PROGRAM
+// BEGIN C++
 
 # include <cppad/cppad.hpp>
 
@@ -131,4 +131,4 @@ bool mul_level(void)
 
 	return ok;
 }
-// END PROGRAM
+// END C++

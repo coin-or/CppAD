@@ -1,6 +1,6 @@
 $Id$
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-08 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-12 Bradley M. Bell
 
 CppAD is distributed under multiple licenses. This distribution is under
 the terms of the 
@@ -27,7 +27,7 @@ $pre
 $$
 # define CPPAD_ODE_EVALUATE_INCLUDED 
 
-$verbatim%cppad/speed/ode_evaluate.hpp%0%// BEGIN PROGRAM%// END PROGRAM%$$
+$verbatim%cppad/speed/ode_evaluate.hpp%0%// BEGIN C++%// END C++%$$
 
 # endif
 $$

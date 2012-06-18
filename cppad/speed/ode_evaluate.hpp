@@ -146,7 +146,7 @@ contains the source code for this template function.
 
 $end
 */
-// BEGIN PROGRAM
+// BEGIN C++
 # include <cppad/vector.hpp>
 # include <cppad/ode_err_control.hpp>
 # include <cppad/runge_45.hpp>
@@ -238,6 +238,6 @@ namespace CppAD {
 		}
 	}
 }
-// END PROGRAM
+// END C++
 
 # endif

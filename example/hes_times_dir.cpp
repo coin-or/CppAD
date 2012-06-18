@@ -1,6 +1,6 @@
 /* $Id$ */
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-11 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-12 Bradley M. Bell
 
 CppAD is distributed under multiple licenses. This distribution is under
 the terms of the 
@@ -20,12 +20,12 @@ $index Hessian, times direction$$
 $index direction, times Hessian$$
 
 $code
-$verbatim%example/hes_times_dir.cpp%0%// BEGIN PROGRAM%// END PROGRAM%1%$$
+$verbatim%example/hes_times_dir.cpp%0%// BEGIN C++%// END C++%1%$$
 $$
 
 $end
 */
-// BEGIN PROGRAM
+// BEGIN C++
 // Example and test of computing the Hessian times a direction; i.e.,
 // given F : R^n -> R and a direction dx in R^n, we compute F''(x) * dx
 
@@ -88,4 +88,4 @@ bool HesTimesDir(void)
 
 	return ok;
 }
-// END PROGRAM
+// END C++

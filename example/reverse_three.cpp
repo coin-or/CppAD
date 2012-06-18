@@ -38,12 +38,12 @@ $latex X^{(2)} (0) = 2 x^{(2)}$$
 (and similarly $latex Y^{(2)} (0) = 2 y^{(2)}$$).
 
 $code
-$verbatim%example/reverse_three.cpp%0%// BEGIN PROGRAM%// END PROGRAM%1%$$
+$verbatim%example/reverse_three.cpp%0%// BEGIN C++%// END C++%1%$$
 $$
 
 $end
 */
-// BEGIN PROGRAM
+// BEGIN C++
 # include <cppad/cppad.hpp>
 namespace { // ----------------------------------------------------------
 // define the template function cases<Vector> in empty namespace
@@ -148,4 +148,4 @@ bool reverse_three(void)
 	ok &= cases< std::valarray  <double> >();
 	return ok;
 }
-// END PROGRAM
+// END C++

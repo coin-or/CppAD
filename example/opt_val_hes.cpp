@@ -63,12 +63,12 @@ Y(x) & = & \frac{
 \] $$
 
 $code
-$verbatim%example/opt_val_hes.cpp%0%// BEGIN PROGRAM%// END PROGRAM%1%$$
+$verbatim%example/opt_val_hes.cpp%0%// BEGIN C++%// END C++%1%$$
 $$
 
 $end
 */
-// BEGIN PROGRAM
+// BEGIN C++
 
 # include <limits>
 # include <cppad/cppad.hpp>
@@ -193,4 +193,4 @@ bool opt_val_hes(void)
 	return ok;
 }
 
-// END PROGRAM
+// END C++

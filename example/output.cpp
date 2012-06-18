@@ -1,6 +1,6 @@
 /* $Id$ */
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-06 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-12 Bradley M. Bell
 
 CppAD is distributed under multiple licenses. This distribution is under
 the terms of the 
@@ -25,12 +25,12 @@ $index example, AD output$$
 $index test, AD output$$
 
 $code
-$verbatim%example/output.cpp%0%// BEGIN PROGRAM%// END PROGRAM%1%$$
+$verbatim%example/output.cpp%0%// BEGIN C++%// END C++%1%$$
 $$
 
 $end
 */
-// BEGIN PROGRAM
+// BEGIN C++
 
 # include <cppad/cppad.hpp>
 
@@ -76,4 +76,4 @@ bool Output(void)
 
 	return ok;
 }
-// END PROGRAM
+// END C++

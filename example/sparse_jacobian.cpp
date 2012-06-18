@@ -25,12 +25,12 @@ $index test, sparse Jacobian$$
 $index spare, Jacobian example$$
 
 $code
-$verbatim%example/sparse_jacobian.cpp%0%// BEGIN PROGRAM%// END PROGRAM%1%$$
+$verbatim%example/sparse_jacobian.cpp%0%// BEGIN C++%// END C++%1%$$
 $$
 
 $end
 */
-// BEGIN PROGRAM
+// BEGIN C++
 
 # include <cppad/cppad.hpp>
 namespace { // ---------------------------------------------------------
@@ -267,4 +267,4 @@ bool sparse_jacobian(void)
 
 	return ok;
 }
-// END PROGRAM
+// END C++
