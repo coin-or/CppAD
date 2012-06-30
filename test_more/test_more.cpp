@@ -16,7 +16,7 @@ Please visit http://www.coin-or.org/CppAD/ for information on other licenses.
 // memory leak checker
 # include <cppad/thread_alloc.hpp>
 
-// various examples / tests
+// prototype external compiled tests (this line expected by bin/new_test.sh)
 extern bool abs(void);
 extern bool Acos(void);
 extern bool Add(void);
