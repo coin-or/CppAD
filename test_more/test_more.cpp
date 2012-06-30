@@ -17,6 +17,7 @@ Please visit http://www.coin-or.org/CppAD/ for information on other licenses.
 # include <cppad/thread_alloc.hpp>
 
 // prototype external compiled tests (this line expected by bin/new_test.sh)
+extern bool cppad_eigen(void);
 extern bool abs(void);
 extern bool Acos(void);
 extern bool Add(void);
@@ -124,6 +125,7 @@ int main(void)
 
 	// This line is used by test_one.sh 
 
+	// run external compiled tests (this line expected by bin/new_test.sh)
 	ok &= Run( abs,             "abs"            );
 	ok &= Run( Acos,            "Acos"           );
 	ok &= Run( Add,             "Add"            );
