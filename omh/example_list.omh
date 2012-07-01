@@ -116,6 +116,7 @@ $rref det_by_minor.cpp$$
 $rref det_of_minor.cpp$$
 $rref Div.cpp$$
 $rref DivEq.cpp$$
+$rref eigen_array.cpp$$
 $rref eigen_det.cpp$$
 $rref EqualOpSeq.cpp$$
 $rref Erf.cpp$$

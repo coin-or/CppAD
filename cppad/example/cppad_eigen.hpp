@@ -38,6 +38,7 @@ $section Enable Use of Eigen Linear Algebra Package with CppAD$$
 $head Syntax$$
 $codei%# include <cppad/example/cppad_eigen.hpp>%$$
 $children%
+	example/eigen_array.cpp%
 	example/eigen_det.cpp
 %$$
 
@@ -47,8 +48,8 @@ $href%http://eigen.tuxfamily.org%eigen%$$
 linear algebra package with the type $icode%AD<%Base%>%$$.
 
 $head Example$$
-THe file $cref eigen_det.cpp$$ contains an example and test of this
-include file.
+THe files $cref eigen_array.cpp$$ and $cref eigen_det.cpp$$ 
+contain an example and test of this include file.
 It returns true if it succeeds and false otherwise.
 
 $head Include Files$$

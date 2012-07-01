@@ -48,9 +48,10 @@ AR = ar
 ARFLAGS = cru
 libeigen_a_AR = $(AR) $(ARFLAGS)
 libeigen_a_LIBADD =
-am__libeigen_a_SOURCES_DIST = eigen_det.cpp
+am__libeigen_a_SOURCES_DIST = eigen_det.cpp eigen_array.cpp
 @CppAD_EIGEN_TRUE@am_libeigen_a_OBJECTS =  \
-@CppAD_EIGEN_TRUE@	libeigen_a-eigen_det.$(OBJEXT)
+@CppAD_EIGEN_TRUE@	libeigen_a-eigen_det.$(OBJEXT) \
+@CppAD_EIGEN_TRUE@	libeigen_a-eigen_array.$(OBJEXT)
 libeigen_a_OBJECTS = $(am_libeigen_a_OBJECTS)
 am__example_SOURCES_DIST = mul_level_adolc.cpp ode_taylor_adolc.cpp \
 	example.cpp abort_recording.cpp abs.cpp acos.cpp add.cpp \
@@ -309,12 +310,12 @@ top_srcdir = @top_srcdir@
 @CppAD_BOOST_DIR_FALSE@BOOST_INCLUDE = 
 # -------------------------------------------------------------------------
 @CppAD_BOOST_DIR_TRUE@BOOST_INCLUDE = -I$(BOOST_DIR)/include
-@CppAD_EIGEN_FALSE@EIGEN_EXTRA_FILES = eigen_det.cpp
+@CppAD_EIGEN_FALSE@EIGEN_EXTRA_FILES = eigen_det.cpp eigen_array.cpp
 # -------------------------------------------------------------------------
 # make a special library so can have it's own compile flags (see configure.ac)
 @CppAD_EIGEN_TRUE@EIGEN_EXTRA_FILES = 
 @CppAD_EIGEN_TRUE@noinst_LIBRARIES = libeigen.a
-@CppAD_EIGEN_TRUE@libeigen_a_SOURCES = eigen_det.cpp
+@CppAD_EIGEN_TRUE@libeigen_a_SOURCES = eigen_det.cpp eigen_array.cpp
 @CppAD_EIGEN_FALSE@EIGEN_LIB = 
 @CppAD_EIGEN_TRUE@EIGEN_LIB = -L. -leigen
 @CppAD_EIGEN_TRUE@libeigen_a_CXXFLAGS = \
@@ -584,6 +585,7 @@ distclean-compile:
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/jac_lu_det.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/jac_minor_det.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/jacobian.Po@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/libeigen_a-eigen_array.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/libeigen_a-eigen_det.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/limits.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/log.Po@am__quote@
@@ -683,6 +685,20 @@ libeigen_a-eigen_det.obj: eigen_det.cpp
 @AMDEP_TRUE@@am__fastdepCXX_FALSE@	source='eigen_det.cpp' object='libeigen_a-eigen_det.obj' libtool=no @AMDEPBACKSLASH@
 @AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
 @am__fastdepCXX_FALSE@	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(libeigen_a_CXXFLAGS) $(CXXFLAGS) -c -o libeigen_a-eigen_det.obj `if test -f 'eigen_det.cpp'; then $(CYGPATH_W) 'eigen_det.cpp'; else $(CYGPATH_W) '$(srcdir)/eigen_det.cpp'; fi`
+
+libeigen_a-eigen_array.o: eigen_array.cpp
+@am__fastdepCXX_TRUE@	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(libeigen_a_CXXFLAGS) $(CXXFLAGS) -MT libeigen_a-eigen_array.o -MD -MP -MF $(DEPDIR)/libeigen_a-eigen_array.Tpo -c -o libeigen_a-eigen_array.o `test -f 'eigen_array.cpp' || echo '$(srcdir)/'`eigen_array.cpp
+@am__fastdepCXX_TRUE@	$(am__mv) $(DEPDIR)/libeigen_a-eigen_array.Tpo $(DEPDIR)/libeigen_a-eigen_array.Po
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	source='eigen_array.cpp' object='libeigen_a-eigen_array.o' libtool=no @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
+@am__fastdepCXX_FALSE@	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(libeigen_a_CXXFLAGS) $(CXXFLAGS) -c -o libeigen_a-eigen_array.o `test -f 'eigen_array.cpp' || echo '$(srcdir)/'`eigen_array.cpp
+
+libeigen_a-eigen_array.obj: eigen_array.cpp
+@am__fastdepCXX_TRUE@	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(libeigen_a_CXXFLAGS) $(CXXFLAGS) -MT libeigen_a-eigen_array.obj -MD -MP -MF $(DEPDIR)/libeigen_a-eigen_array.Tpo -c -o libeigen_a-eigen_array.obj `if test -f 'eigen_array.cpp'; then $(CYGPATH_W) 'eigen_array.cpp'; else $(CYGPATH_W) '$(srcdir)/eigen_array.cpp'; fi`
+@am__fastdepCXX_TRUE@	$(am__mv) $(DEPDIR)/libeigen_a-eigen_array.Tpo $(DEPDIR)/libeigen_a-eigen_array.Po
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	source='eigen_array.cpp' object='libeigen_a-eigen_array.obj' libtool=no @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
+@am__fastdepCXX_FALSE@	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(libeigen_a_CXXFLAGS) $(CXXFLAGS) -c -o libeigen_a-eigen_array.obj `if test -f 'eigen_array.cpp'; then $(CYGPATH_W) 'eigen_array.cpp'; else $(CYGPATH_W) '$(srcdir)/eigen_array.cpp'; fi`
 
 ID: $(HEADERS) $(SOURCES) $(LISP) $(TAGS_FILES)
 	list='$(SOURCES) $(HEADERS) $(LISP) $(TAGS_FILES)'; \

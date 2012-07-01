@@ -44,8 +44,8 @@ bool eigen_det(void)
 	typedef Matrix< double     , Dynamic, Dynamic > matrix;
 	typedef Matrix< AD<double> , Dynamic, Dynamic > a_matrix;
 	//
-	typedef CppAD::vector< double >       vector;
-	typedef CppAD::vector< AD<double> >   a_vector;
+	typedef CPPAD_TEST_VECTOR< double >       vector;
+	typedef CPPAD_TEST_VECTOR< AD<double> >   a_vector;
 	// some temporary indices
 	size_t i, j;
 
@@ -88,7 +88,7 @@ bool eigen_det(void)
 	ok &= NearEqual(Value(a_y[0]) , log(det(x)), eps, eps);
 
 	// compute the derivative of y w.r.t x using CppAD
-	CppAD::vector<double> jac = f.Jacobian(x);
+	CPPAD_TEST_VECTOR<double> jac = f.Jacobian(x);
 
 	// check the derivative using the formula
 	// d/dX log(det(X)) = transpose( inv(X) )

@@ -82,6 +82,7 @@ extern bool Cosh(void);
 extern bool CppAD_vector(void);
 extern bool Div(void);
 extern bool DivEq(void);
+extern bool eigen_array(void);
 extern bool eigen_det(void);
 extern bool EqualOpSeq(void);
 extern bool Erf(void);
@@ -333,6 +334,7 @@ int main(void)
 	ok &= Run( ode_taylor_adolc,  "ode_taylor_adolc" );
 # endif
 # ifdef CPPAD_EIGEN_EXAMPLES
+	ok &= Run( eigen_array,       "eigen_array"      );
 	ok &= Run( eigen_det,         "eigen_det"        );
 # endif
 
