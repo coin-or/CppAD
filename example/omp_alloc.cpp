@@ -166,7 +166,6 @@ bool omp_alloc_array(void)
 bool omp_alloc(void)
 {	bool ok  = true;
 	using CppAD::omp_alloc;
-	size_t thread;
 
 	// check initial state of allocator
 	ok  &= omp_alloc::get_max_num_threads() == 1;

@@ -38,7 +38,7 @@ bool ad_ctor(void)
 	// default constructor
 	AD<double> a;
 	a = 0.;
-	ok != a == 0.;
+	ok &= a == 0.;
 
 	// constructor from base type
 	AD<double> b(1.);   

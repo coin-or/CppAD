@@ -21,12 +21,14 @@ OPENMP_SRC_FILES   =
 endif
 if CppAD_ADOLC
 ADOLC_SRC_FILES   = base_adolc.cpp 
-ADOLC_INCLUDE     = -I$(ADOLC_DIR)/include 
+ADOLC_EXTRA_FILES =
 ADOLC_LIB         = -ladolc -L$(ADOLC_DIR)/lib -L$(ADOLC_DIR)/lib64
+ADOLC_FLAGS       = -DCPPAD_ADOLC_TEST -I$(ADOLC_DIR)/include 
 else
+ADOLC_EXTRA_FILES = base_adolc.cpp
 ADOLC_SRC_FILES   =
-ADOLC_INCLUDE     =
 ADOLC_LIB         =
+ADOLC_FLAGS       =
 endif
 if CppAD_BOOST_DIR
 BOOST_INCLUDE = -I$(BOOST_DIR)/include
@@ -36,34 +38,39 @@ endif
 # -------------------------------------------------------------------------
 if CppAD_EIGEN
 # make a special library so can have it's own compile flags (see configure.ac)
+EIGEN_EXTRA_FILES   =
 noinst_LIBRARIES    = libeigen.a
 libeigen_a_SOURCES  =  cppad_eigen.cpp
-libeigen_a_CXXFLAGS = -g $(CXX_FLAGS_EIGEN) -DCPPAD_EIGEN_TEST
 EIGEN_LIB           = -L. -leigen
-EIGEN_INCLUDE       = -I$(EIGEN_DIR)/include 
+libeigen_a_CXXFLAGS = \
+	-g \
+	$(CXX_FLAGS_EIGEN) \
+	-DCPPAD_EIGEN_TEST \
+	 -I$(EIGEN_DIR)/include 
 else
+EIGEN_EXTRA_FILES   = cppad_eigen.cpp
 EIGEN_LIB           =
-EIGEN_INCLUDE       = 
 endif
 # -------------------------------------------------------------------------
 # Microsoft project files and script to run a single test
 EXTRA_DIST        =  \
 	test_more.sln \
 	test_more.vcproj \
-	test_one.sh.in 
+	test_one.sh.in  \
+	$(ADOLC_EXTRA_FILES) \
+	$(EIGEN_EXTRA_FILES)
 #
 check_PROGRAMS    = test_more
 #
 AM_CPPFLAGS       = -I. \
 	-I$(top_srcdir) \
 	$(BOOST_INCLUDE) \
-	$(ADOLC_INCLUDE) \
-	$(OPENMP_FLAGS) \
-	$(EIGEN_INCLUDE)
+	$(ADOLC_FLAGS) \
+	$(OPENMP_FLAGS) 
 #
 AM_CXXFLAGS       = -g $(ADOLC_FLAGS) $(CXX_FLAGS)
 #
-AM_LDFLAGS        = $(ADOLC_LIB) $(EIGEN_LIB) $(OPENMP_FLAGS) $(CXX_FLAGS)
+AM_LDFLAGS        = $(ADOLC_LIB) $(EIGEN_LIB) $(OPENMP_FLAGS) 
 #
 test_more_SOURCES  = \
 	$(ADOLC_SRC_FILES) \

@@ -262,40 +262,48 @@ top_srcdir = @top_srcdir@
 @CppAD_OPENMP_TRUE@OPENMP_SRC_FILES = alloc_openmp.cpp 
 @CppAD_ADOLC_FALSE@ADOLC_SRC_FILES = 
 @CppAD_ADOLC_TRUE@ADOLC_SRC_FILES = base_adolc.cpp 
-@CppAD_ADOLC_FALSE@ADOLC_INCLUDE = 
-@CppAD_ADOLC_TRUE@ADOLC_INCLUDE = -I$(ADOLC_DIR)/include 
+@CppAD_ADOLC_FALSE@ADOLC_EXTRA_FILES = base_adolc.cpp
+@CppAD_ADOLC_TRUE@ADOLC_EXTRA_FILES = 
 @CppAD_ADOLC_FALSE@ADOLC_LIB = 
 @CppAD_ADOLC_TRUE@ADOLC_LIB = -ladolc -L$(ADOLC_DIR)/lib -L$(ADOLC_DIR)/lib64
+@CppAD_ADOLC_FALSE@ADOLC_FLAGS = 
+@CppAD_ADOLC_TRUE@ADOLC_FLAGS = -DCPPAD_ADOLC_TEST -I$(ADOLC_DIR)/include 
 @CppAD_BOOST_DIR_FALSE@BOOST_INCLUDE = 
 @CppAD_BOOST_DIR_TRUE@BOOST_INCLUDE = -I$(BOOST_DIR)/include
+@CppAD_EIGEN_FALSE@EIGEN_EXTRA_FILES = cppad_eigen.cpp
 # -------------------------------------------------------------------------
 # make a special library so can have it's own compile flags (see configure.ac)
+@CppAD_EIGEN_TRUE@EIGEN_EXTRA_FILES = 
 @CppAD_EIGEN_TRUE@noinst_LIBRARIES = libeigen.a
 @CppAD_EIGEN_TRUE@libeigen_a_SOURCES = cppad_eigen.cpp
-@CppAD_EIGEN_TRUE@libeigen_a_CXXFLAGS = -g $(CXX_FLAGS_EIGEN) -DCPPAD_EIGEN_TEST
 @CppAD_EIGEN_FALSE@EIGEN_LIB = 
 @CppAD_EIGEN_TRUE@EIGEN_LIB = -L. -leigen
-@CppAD_EIGEN_FALSE@EIGEN_INCLUDE = 
-@CppAD_EIGEN_TRUE@EIGEN_INCLUDE = -I$(EIGEN_DIR)/include 
+@CppAD_EIGEN_TRUE@libeigen_a_CXXFLAGS = \
+@CppAD_EIGEN_TRUE@	-g \
+@CppAD_EIGEN_TRUE@	$(CXX_FLAGS_EIGEN) \
+@CppAD_EIGEN_TRUE@	-DCPPAD_EIGEN_TEST \
+@CppAD_EIGEN_TRUE@	 -I$(EIGEN_DIR)/include 
+
 # -------------------------------------------------------------------------
 # Microsoft project files and script to run a single test
 EXTRA_DIST = \
 	test_more.sln \
 	test_more.vcproj \
-	test_one.sh.in 
+	test_one.sh.in  \
+	$(ADOLC_EXTRA_FILES) \
+	$(EIGEN_EXTRA_FILES)
 
 #
 AM_CPPFLAGS = -I. \
 	-I$(top_srcdir) \
 	$(BOOST_INCLUDE) \
-	$(ADOLC_INCLUDE) \
-	$(OPENMP_FLAGS) \
-	$(EIGEN_INCLUDE)
+	$(ADOLC_FLAGS) \
+	$(OPENMP_FLAGS) 
 
 #
 AM_CXXFLAGS = -g $(ADOLC_FLAGS) $(CXX_FLAGS)
 #
-AM_LDFLAGS = $(ADOLC_LIB) $(EIGEN_LIB) $(OPENMP_FLAGS) $(CXX_FLAGS)
+AM_LDFLAGS = $(ADOLC_LIB) $(EIGEN_LIB) $(OPENMP_FLAGS) 
 #
 test_more_SOURCES = \
 	$(ADOLC_SRC_FILES) \

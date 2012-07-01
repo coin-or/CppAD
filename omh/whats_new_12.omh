@@ -55,12 +55,21 @@ The purpose of this section is to
 assist you in learning about changes between various versions of CppAD.
 
 $head 07-01$$
+$list number$$
 Change $cref cppad_eigen.hpp$$ 
 to match new specifications and example in eigen help files on 
 $href%
 	http://eigen.tuxfamily.org/dox/TopicCustomizingEigen.html%
 	customizing and extending eigen.
 %$$
+$lnext
+Fix bug whereby a newly constructed $cref VecAD$$ object was a
+$cref/variable/ParVar/$$ (instead of a parameter) directly after construction
+(when no previous $cref/ADFun/FunConstruct/$$ object had been created).
+$lnext
+Change a $code ok != a == 0.$$ to $code ok &= a == 0.$$ in
+the example $cref ad_ctor.cpp$$.
+$lend
 
 $head 06-17$$
 $list number$$

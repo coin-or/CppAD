@@ -137,9 +137,6 @@ am_example_OBJECTS = $(am__objects_1) example.$(OBJEXT) \
 	var_2par.$(OBJEXT) vec_ad.$(OBJEXT) vector_bool.$(OBJEXT)
 example_OBJECTS = $(am_example_OBJECTS)
 example_LDADD = $(LDADD)
-am__DEPENDENCIES_1 =
-example_DEPENDENCIES = $(am__DEPENDENCIES_1) $(am__DEPENDENCIES_1) \
-	$(am__DEPENDENCIES_1) $(am__DEPENDENCIES_1)
 DEFAULT_INCLUDES = 
 depcomp = $(SHELL) $(top_srcdir)/depcomp
 am__depfiles_maybe = depfiles
@@ -305,26 +302,26 @@ top_srcdir = @top_srcdir@
 @CppAD_ADOLC_TRUE@ADOLC_SRC_FILES = mul_level_adolc.cpp ode_taylor_adolc.cpp
 @CppAD_ADOLC_FALSE@ADOLC_EXTRA_FILES = mul_level_adolc.cpp ode_taylor_adolc.cpp
 @CppAD_ADOLC_TRUE@ADOLC_EXTRA_FILES = 
-@CppAD_ADOLC_FALSE@ADOLC_INCLUDE = 
-@CppAD_ADOLC_TRUE@ADOLC_INCLUDE = -I$(ADOLC_DIR)/include 
 @CppAD_ADOLC_FALSE@ADOLC_LIB = 
-@CppAD_ADOLC_TRUE@ADOLC_LIB = -ladolc
-@CppAD_ADOLC_FALSE@ADOLC_LIB_DIRS = 
-@CppAD_ADOLC_TRUE@ADOLC_LIB_DIRS = -L$(ADOLC_DIR)/lib -L$(ADOLC_DIR)/lib64
+@CppAD_ADOLC_TRUE@ADOLC_LIB = -ladolc -L$(ADOLC_DIR)/lib -L$(ADOLC_DIR)/lib64
 @CppAD_ADOLC_FALSE@ADOLC_FLAGS = 
-@CppAD_ADOLC_TRUE@ADOLC_FLAGS = -DCPPAD_ADOLC_EXAMPLES
+@CppAD_ADOLC_TRUE@ADOLC_FLAGS = -DCPPAD_ADOLC_EXAMPLES -I$(ADOLC_DIR)/include 
 @CppAD_BOOST_DIR_FALSE@BOOST_INCLUDE = 
 # -------------------------------------------------------------------------
 @CppAD_BOOST_DIR_TRUE@BOOST_INCLUDE = -I$(BOOST_DIR)/include
+@CppAD_EIGEN_FALSE@EIGEN_EXTRA_FILES = eigen_det.cpp
 # -------------------------------------------------------------------------
 # make a special library so can have it's own compile flags (see configure.ac)
+@CppAD_EIGEN_TRUE@EIGEN_EXTRA_FILES = 
 @CppAD_EIGEN_TRUE@noinst_LIBRARIES = libeigen.a
 @CppAD_EIGEN_TRUE@libeigen_a_SOURCES = eigen_det.cpp
-@CppAD_EIGEN_TRUE@libeigen_a_CXXFLAGS = -g $(CXX_FLAGS_EIGEN) -DCPPAD_EIGEN_EXAMPLES
 @CppAD_EIGEN_FALSE@EIGEN_LIB = 
 @CppAD_EIGEN_TRUE@EIGEN_LIB = -L. -leigen
-@CppAD_EIGEN_FALSE@EIGEN_INCLUDE = 
-@CppAD_EIGEN_TRUE@EIGEN_INCLUDE = -I$(EIGEN_DIR)/include 
+@CppAD_EIGEN_TRUE@libeigen_a_CXXFLAGS = \
+@CppAD_EIGEN_TRUE@	-g $(CXX_FLAGS_EIGEN) \
+@CppAD_EIGEN_TRUE@	-DCPPAD_EIGEN_EXAMPLES \
+@CppAD_EIGEN_TRUE@	-I$(EIGEN_DIR)/include 
+
 # -------------------------------------------------------------------------
 # Microsoft project files an script to run a single test
 EXTRA_DIST = \
@@ -334,23 +331,20 @@ EXTRA_DIST = \
 	$(ADOLC_EXTRA_FILES) \
 	$(EIGEN_EXTRA_FILES)
 
-@CppAD_MS_COMPILER_FALSE@AM_CXXFLAGS = -g $(ADOLC_FLAGS)
+@CppAD_MS_COMPILER_FALSE@AM_CXXFLAGS = -g $(ADOLC_FLAGS) $(CXX_FLAGS)
 #
-@CppAD_MS_COMPILER_TRUE@AM_CXXFLAGS = -EHsc -g $(ADOLC_FLAGS)
+@CppAD_MS_COMPILER_TRUE@AM_CXXFLAGS = -EHsc -g $(ADOLC_FLAGS) $(CXX_FLAGS)
 #
 AM_CPPFLAGS = -I. \
                    -I$(top_srcdir) \
                     $(BOOST_INCLUDE) \
-                    $(ADOLC_INCLUDE) \
-                    $(EIGEN_INCLUDE)
+                    $(ADOLC_FLAGS)
 
 #
-LDADD = $(ADOLC_LIB)  $(BTHREAD_LIB) $(EIGEN_LIB) $(PTHREAD_LIB)
-AM_LDFLAGS = $(ADOLC_LIB_DIRS) 
+AM_LDFLAGS = $(ADOLC_LIB)  $(BTHREAD_LIB) $(EIGEN_LIB) $(PTHREAD_LIB)
 #
 example_SOURCES = \
 	$(ADOLC_SRC_FILES) \
-	$(EIGEN_SRC_FILES) \
 	\
 	example.cpp \
 	abort_recording.cpp \

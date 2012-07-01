@@ -469,7 +469,7 @@ public:
 	VecAD(void) 
 	: length_(0) 
 	, offset_(0)
-	, tape_id_(CPPAD_MAX_NUM_THREADS)
+	, tape_id_(0)
 	{	CPPAD_ASSERT_UNKNOWN( Parameter(*this) ); }
 
 	// constructor 
@@ -477,7 +477,7 @@ public:
 	VecAD(size_t n) 
 	: length_(n)
 	, offset_(0)
-	, tape_id_(CPPAD_MAX_NUM_THREADS)
+	, tape_id_(0)
 	{	if( length_ > 0 )
 		{	size_t i;
 			Base zero(0);
