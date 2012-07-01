@@ -65,48 +65,49 @@ $head Traits$$
 $codep */
 namespace Eigen {
 	template <class Base> struct NumTraits< CppAD::AD<Base> >
-	{	typedef CppAD::AD<Base>   Real;
+	{	// type that corresponds to the real part of an AD<Base> value
+		typedef CppAD::AD<Base>   Real;
+		// type for AD<Base> operations that result in non-integer values
 		typedef CppAD::AD<Base>   NonInteger;
+		// type for nested value inside an AD<Base> expression tree
 		typedef CppAD::AD<Base>   Nested;
 
 		enum {
+			// does not support complex Base types
 			IsComplex             = 0 ,
+			// does not support integer Base types
 			IsInteger             = 0 ,
+			// only support signed Base types
 			IsSigned              = 1 ,
+			// must initialize an AD<Base> object
 			RequireInitialization = 1 ,
+			// computational cost of the corresponding operations
 			ReadCost              = 1 ,
 			AddCost               = 2 ,
 			MulCost               = 2
 		};
+
+		// machine epsilon with type of real part of x
+		// (use assumption that Base is not complex)
+		static CppAD::AD<Base> epsilon(void)
+		{	return CppAD::numeric_limits<Base>::epsilon(); }
+
+		// relaxed version of machine epsilon for comparison of different
+		// operations that should result in the same value
+		static CppAD::AD<Base> dummy_epsilon(void)
+		{	return 100. * CppAD::numeric_limits<Base>::epsilon(); }
+
+		// minimum normalized positive value
+		static CppAD::AD<Base> lowest(void)
+		{	return CppAD::numeric_limits< CppAD::AD<Base> >::min(); }
+
+		// maximum finite value
+		static CppAD::AD<Base> highest(void)
+		{	return CppAD::numeric_limits< CppAD::AD<Base> >::max(); }
+
 	};
 }
-/* $$
-
-$head Internal$$
-Eigen using the $code internal$$ sub-namespace to access the following:
-$codep */
 namespace CppAD {
-	namespace internal {
-		// standard math functions that get used as is and have prototype
-		// 	template <class Base> AD<Base> fun(const AD<Base>& x)
-		using CppAD::abs;
-		using CppAD::acos;
-		using CppAD::asin;
-		using CppAD::atan;
-		using CppAD::cos;
-		using CppAD::cosh;
-		using CppAD::exp;
-		using CppAD::log;
-		using CppAD::log10;
-		using CppAD::sin;
-		using CppAD::sinh;
-		using CppAD::sqrt;
-		using CppAD::tan;
-		// standard math functions that get used as is and have prototype
-		//	template <class Base>
-		//	AD<Base> fun(const AD<Base>& x, const AD<Base>& y)
-		using CppAD::pow;
-		
 		// functions that return references
 		template <class Base> const AD<Base>& conj(const AD<Base>& x)
 		{	return x; }
@@ -118,26 +119,6 @@ namespace CppAD {
 		{	return CppAD::AD<Base>(0.); }
 		template <class Base> AD<Base> abs2(const AD<Base>& x)
 		{	return x * x; }
-
-		// machine epsilon with type of real part of x
-		// (use assumption that Base is not complex)
-		template <class Base> AD<Base> epsilon(const AD<Base>& x)
-		{	return CppAD::numeric_limits<Base>::epsilon(); }
-
-		// relaxed version of machine epsilon for comparison of different
-		// operations that should result in the same value
-		template <class Base> AD<Base> dummy_precision(const AD<Base>& x)
-		{	return 100. * CppAD::numeric_limits<Base>::epsilon(); }
-
-		// minimum normalized positive value
-		template <class Base> AD<Base> lowest(void)
-		{	return CppAD::numeric_limits< AD<Base> >::min(); }
-
-		// maximum finite value
-		template <class Base> AD<Base> highest(void)
-		{	return CppAD::numeric_limits< AD<Base> >::max(); }
-
-	}
 }
 /* $$
 $end

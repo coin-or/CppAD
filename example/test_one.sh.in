@@ -38,9 +38,15 @@ sed < example.cpp > test_one.cpp \
 -e '/ok *\&= *Run( /d' \
 -e "s/.*This line is used by test_one.sh.*/	ok \&= Run( $fun, \"$fun\");/"  
 #
+if echo "$fun" | grep 'eigen' > /dev/null
+then
+	cxxflags='-g -Wall -ansi -pedantic-errors -Wno-long-long'
+else
+	cxxflags='-g -Wall -ansi -pedantic-errors -Wshadow'
+fi
 cmd="g++ test_one.cpp $*
 	-o test_one.exe
-	-Wall -ansi -pedantic-errors -Wshadow
+	$cxxflags
 	-g
 	-fopenmp
 	-lboost_thread-mt

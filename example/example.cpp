@@ -238,7 +238,6 @@ int main(void)
 	ok &= Run( CppAD_vector,      "CppAD_vector"     );
 	ok &= Run( Div,               "Div"              );
 	ok &= Run( DivEq,             "DivEq"            );
-	ok &= Run( eigen_det,         "eigen_det"        );
 	ok &= Run( EqualOpSeq,        "EqualOpSeq"       );
 	ok &= Run( Erf,               "Erf"              );
 	ok &= Run( ErrorHandler,      "ErrorHandler"     );
@@ -332,6 +331,9 @@ int main(void)
 # ifdef CPPAD_ADOLC_EXAMPLES
 	ok &= Run( mul_level_adolc,   "mul_level_adolc"  );
 	ok &= Run( ode_taylor_adolc,  "ode_taylor_adolc" );
+# endif
+# ifdef CPPAD_EIGEN_EXAMPLES
+	ok &= Run( eigen_det,         "eigen_det"        );
 # endif
 
 	// check for errors

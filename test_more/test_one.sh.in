@@ -33,9 +33,16 @@ sed < test_more.cpp > test_one.cpp \
 -e '/ok *\&= *Run( /d' \
 -e "s/.*This line is used by test_one.sh.*/	ok \&= Run( $fun, \"$fun\");/"  
 #
+#
+if echo "$fun" | grep 'eigen' > /dev/null
+then
+	cxxflags='-g -Wall -ansi -pedantic-errors -Wno-long-long'
+else
+	cxxflags='-g -Wall -ansi -pedantic-errors -Wshadow'
+fi
 cmd="g++ test_one.cpp $*
 	-o test_one.exe
-	-g -Wall -ansi -pedantic-errors -Wshadow
+	$cxxflags
 	-std=c++98
 	-DCPPAD_ADOLC_TEST
 	-DCPPAD_OPENMP_TEST
@@ -45,6 +52,10 @@ cmd="g++ test_one.cpp $*
 if [ -e @ADOLC_DIR@/include ]
 then
 	cmd="$cmd -I@ADOLC_DIR@/include"
+fi
+if [ -e @EIGEN_DIR@/include ]
+then
+	cmd="$cmd -I@EIGEN_DIR@/include"
 fi
 if [ -e @IPOPT_DIR@/include ]
 then

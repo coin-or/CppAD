@@ -33,7 +33,19 @@ BOOST_INCLUDE = -I$(BOOST_DIR)/include
 else
 BOOST_INCLUDE =
 endif
-#
+# -------------------------------------------------------------------------
+if CppAD_EIGEN
+# make a special library so can have it's own compile flags (see configure.ac)
+noinst_LIBRARIES    = libeigen.a
+libeigen_a_SOURCES  =  cppad_eigen.cpp
+libeigen_a_CXXFLAGS = -g $(CXX_FLAGS_EIGEN) -DCPPAD_EIGEN_TEST
+EIGEN_LIB           = -L. -leigen
+EIGEN_INCLUDE       = -I$(EIGEN_DIR)/include 
+else
+EIGEN_LIB           =
+EIGEN_INCLUDE       = 
+endif
+# -------------------------------------------------------------------------
 # Microsoft project files and script to run a single test
 EXTRA_DIST        =  \
 	test_more.sln \
@@ -46,11 +58,12 @@ AM_CPPFLAGS       = -I. \
 	-I$(top_srcdir) \
 	$(BOOST_INCLUDE) \
 	$(ADOLC_INCLUDE) \
-	$(OPENMP_FLAGS)
+	$(OPENMP_FLAGS) \
+	$(EIGEN_INCLUDE)
 #
 AM_CXXFLAGS       = -g $(ADOLC_FLAGS) $(CXX_FLAGS)
 #
-AM_LDFLAGS        = $(ADOLC_LIB) $(OPENMP_FLAGS)
+AM_LDFLAGS        = $(ADOLC_LIB) $(EIGEN_LIB) $(OPENMP_FLAGS) $(CXX_FLAGS)
 #
 test_more_SOURCES  = \
 	$(ADOLC_SRC_FILES) \

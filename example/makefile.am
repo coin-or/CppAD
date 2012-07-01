@@ -40,13 +40,11 @@ if CppAD_EIGEN
 # make a special library so can have it's own compile flags (see configure.ac)
 noinst_LIBRARIES    = libeigen.a
 libeigen_a_SOURCES  =  eigen_det.cpp
-libeigen_a_CXXFLAGS = -g $(CXX_FLAGS_EIGEN) 
+libeigen_a_CXXFLAGS = -g $(CXX_FLAGS_EIGEN) -DCPPAD_EIGEN_EXAMPLES
 EIGEN_LIB           = -L. -leigen
-EIGEN_FLAGS         = -DCPPAD_EIGEN_EXAMPLES
 EIGEN_INCLUDE       = -I$(EIGEN_DIR)/include 
 else
 EIGEN_LIB           =
-EIGEN_FLAGS         =
 EIGEN_INCLUDE       = 
 endif
 # -------------------------------------------------------------------------
@@ -61,9 +59,9 @@ EXTRA_DIST        =  \
 check_PROGRAMS    = example 
 #
 if CppAD_MS_COMPILER
-AM_CXXFLAGS       = -EHsc -g $(ADOLC_FLAGS) $(EIGEN_FLAGS)
+AM_CXXFLAGS       = -EHsc -g $(ADOLC_FLAGS)
 else
-AM_CXXFLAGS       = -g $(ADOLC_FLAGS) $(EIGEN_FLAGS)
+AM_CXXFLAGS       = -g $(ADOLC_FLAGS)
 endif
 #
 AM_CPPFLAGS       = -I. \

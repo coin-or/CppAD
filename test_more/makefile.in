@@ -14,6 +14,7 @@
 # PARTICULAR PURPOSE.
 
 @SET_MAKE@
+
 VPATH = @srcdir@
 pkgdatadir = $(datadir)/@PACKAGE@
 pkgincludedir = $(includedir)/@PACKAGE@
@@ -42,6 +43,15 @@ am__configure_deps = $(am__aclocal_m4_deps) $(CONFIGURE_DEPENDENCIES) \
 mkinstalldirs = $(install_sh) -d
 CONFIG_CLEAN_FILES = test_one.sh
 CONFIG_CLEAN_VPATH_FILES =
+LIBRARIES = $(noinst_LIBRARIES)
+AR = ar
+ARFLAGS = cru
+libeigen_a_AR = $(AR) $(ARFLAGS)
+libeigen_a_LIBADD =
+am__libeigen_a_SOURCES_DIST = cppad_eigen.cpp
+@CppAD_EIGEN_TRUE@am_libeigen_a_OBJECTS =  \
+@CppAD_EIGEN_TRUE@	libeigen_a-cppad_eigen.$(OBJEXT)
+libeigen_a_OBJECTS = $(am_libeigen_a_OBJECTS)
 am__test_more_SOURCES_DIST = base_adolc.cpp alloc_openmp.cpp \
 	test_more.cpp abs.cpp acos.cpp asin.cpp assign.cpp add.cpp \
 	add_eq.cpp add_zero.cpp atan.cpp atan_2.cpp base_alloc.cpp \
@@ -100,8 +110,9 @@ CXXCOMPILE = $(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) \
 CXXLD = $(CXX)
 CXXLINK = $(CXXLD) $(AM_CXXFLAGS) $(CXXFLAGS) $(AM_LDFLAGS) $(LDFLAGS) \
 	-o $@
-SOURCES = $(test_more_SOURCES)
-DIST_SOURCES = $(am__test_more_SOURCES_DIST)
+SOURCES = $(libeigen_a_SOURCES) $(test_more_SOURCES)
+DIST_SOURCES = $(am__libeigen_a_SOURCES_DIST) \
+	$(am__test_more_SOURCES_DIST)
 ETAGS = etags
 CTAGS = ctags
 DISTFILES = $(DIST_COMMON) $(DIST_SOURCES) $(TEXINFOS) $(EXTRA_DIST)
@@ -257,7 +268,16 @@ top_srcdir = @top_srcdir@
 @CppAD_ADOLC_TRUE@ADOLC_LIB = -ladolc -L$(ADOLC_DIR)/lib -L$(ADOLC_DIR)/lib64
 @CppAD_BOOST_DIR_FALSE@BOOST_INCLUDE = 
 @CppAD_BOOST_DIR_TRUE@BOOST_INCLUDE = -I$(BOOST_DIR)/include
-#
+# -------------------------------------------------------------------------
+# make a special library so can have it's own compile flags (see configure.ac)
+@CppAD_EIGEN_TRUE@noinst_LIBRARIES = libeigen.a
+@CppAD_EIGEN_TRUE@libeigen_a_SOURCES = cppad_eigen.cpp
+@CppAD_EIGEN_TRUE@libeigen_a_CXXFLAGS = -g $(CXX_FLAGS_EIGEN) -DCPPAD_EIGEN_TEST
+@CppAD_EIGEN_FALSE@EIGEN_LIB = 
+@CppAD_EIGEN_TRUE@EIGEN_LIB = -L. -leigen
+@CppAD_EIGEN_FALSE@EIGEN_INCLUDE = 
+@CppAD_EIGEN_TRUE@EIGEN_INCLUDE = -I$(EIGEN_DIR)/include 
+# -------------------------------------------------------------------------
 # Microsoft project files and script to run a single test
 EXTRA_DIST = \
 	test_more.sln \
@@ -269,12 +289,13 @@ AM_CPPFLAGS = -I. \
 	-I$(top_srcdir) \
 	$(BOOST_INCLUDE) \
 	$(ADOLC_INCLUDE) \
-	$(OPENMP_FLAGS)
+	$(OPENMP_FLAGS) \
+	$(EIGEN_INCLUDE)
 
 #
 AM_CXXFLAGS = -g $(ADOLC_FLAGS) $(CXX_FLAGS)
 #
-AM_LDFLAGS = $(ADOLC_LIB) $(OPENMP_FLAGS)
+AM_LDFLAGS = $(ADOLC_LIB) $(EIGEN_LIB) $(OPENMP_FLAGS) $(CXX_FLAGS)
 #
 test_more_SOURCES = \
 	$(ADOLC_SRC_FILES) \
@@ -390,6 +411,13 @@ $(am__aclocal_m4_deps):
 test_one.sh: $(top_builddir)/config.status $(srcdir)/test_one.sh.in
 	cd $(top_builddir) && $(SHELL) ./config.status $(subdir)/$@
 
+clean-noinstLIBRARIES:
+	-test -z "$(noinst_LIBRARIES)" || rm -f $(noinst_LIBRARIES)
+libeigen.a: $(libeigen_a_OBJECTS) $(libeigen_a_DEPENDENCIES) 
+	-rm -f libeigen.a
+	$(libeigen_a_AR) libeigen.a $(libeigen_a_OBJECTS) $(libeigen_a_LIBADD)
+	$(RANLIB) libeigen.a
+
 clean-checkPROGRAMS:
 	-test -z "$(check_PROGRAMS)" || rm -f $(check_PROGRAMS)
 test_more$(EXEEXT): $(test_more_OBJECTS) $(test_more_DEPENDENCIES) 
@@ -435,6 +463,7 @@ distclean-compile:
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/from_base.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/fun_check.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/jacobian.Po@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/libeigen_a-cppad_eigen.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/log.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/log_10.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/mul.Po@am__quote@
@@ -491,6 +520,20 @@ distclean-compile:
 @AMDEP_TRUE@@am__fastdepCXX_FALSE@	source='$<' object='$@' libtool=no @AMDEPBACKSLASH@
 @AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
 @am__fastdepCXX_FALSE@	$(CXXCOMPILE) -c -o $@ `$(CYGPATH_W) '$<'`
+
+libeigen_a-cppad_eigen.o: cppad_eigen.cpp
+@am__fastdepCXX_TRUE@	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(libeigen_a_CXXFLAGS) $(CXXFLAGS) -MT libeigen_a-cppad_eigen.o -MD -MP -MF $(DEPDIR)/libeigen_a-cppad_eigen.Tpo -c -o libeigen_a-cppad_eigen.o `test -f 'cppad_eigen.cpp' || echo '$(srcdir)/'`cppad_eigen.cpp
+@am__fastdepCXX_TRUE@	$(am__mv) $(DEPDIR)/libeigen_a-cppad_eigen.Tpo $(DEPDIR)/libeigen_a-cppad_eigen.Po
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	source='cppad_eigen.cpp' object='libeigen_a-cppad_eigen.o' libtool=no @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
+@am__fastdepCXX_FALSE@	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(libeigen_a_CXXFLAGS) $(CXXFLAGS) -c -o libeigen_a-cppad_eigen.o `test -f 'cppad_eigen.cpp' || echo '$(srcdir)/'`cppad_eigen.cpp
+
+libeigen_a-cppad_eigen.obj: cppad_eigen.cpp
+@am__fastdepCXX_TRUE@	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(libeigen_a_CXXFLAGS) $(CXXFLAGS) -MT libeigen_a-cppad_eigen.obj -MD -MP -MF $(DEPDIR)/libeigen_a-cppad_eigen.Tpo -c -o libeigen_a-cppad_eigen.obj `if test -f 'cppad_eigen.cpp'; then $(CYGPATH_W) 'cppad_eigen.cpp'; else $(CYGPATH_W) '$(srcdir)/cppad_eigen.cpp'; fi`
+@am__fastdepCXX_TRUE@	$(am__mv) $(DEPDIR)/libeigen_a-cppad_eigen.Tpo $(DEPDIR)/libeigen_a-cppad_eigen.Po
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	source='cppad_eigen.cpp' object='libeigen_a-cppad_eigen.obj' libtool=no @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
+@am__fastdepCXX_FALSE@	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(libeigen_a_CXXFLAGS) $(CXXFLAGS) -c -o libeigen_a-cppad_eigen.obj `if test -f 'cppad_eigen.cpp'; then $(CYGPATH_W) 'cppad_eigen.cpp'; else $(CYGPATH_W) '$(srcdir)/cppad_eigen.cpp'; fi`
 
 ID: $(HEADERS) $(SOURCES) $(LISP) $(TAGS_FILES)
 	list='$(SOURCES) $(HEADERS) $(LISP) $(TAGS_FILES)'; \
@@ -577,7 +620,7 @@ distdir: $(DISTFILES)
 check-am: all-am
 	$(MAKE) $(AM_MAKEFLAGS) $(check_PROGRAMS)
 check: check-am
-all-am: makefile
+all-am: makefile $(LIBRARIES)
 installdirs:
 install: install-am
 install-exec: install-exec-am
@@ -606,7 +649,8 @@ maintainer-clean-generic:
 	@echo "it deletes files that may require special tools to rebuild."
 clean: clean-am
 
-clean-am: clean-checkPROGRAMS clean-generic mostlyclean-am
+clean-am: clean-checkPROGRAMS clean-generic clean-noinstLIBRARIES \
+	mostlyclean-am
 
 distclean: distclean-am
 	-rm -rf ./$(DEPDIR)
@@ -676,17 +720,17 @@ uninstall-am:
 .MAKE: check-am install-am install-strip
 
 .PHONY: CTAGS GTAGS all all-am check check-am clean \
-	clean-checkPROGRAMS clean-generic ctags distclean \
-	distclean-compile distclean-generic distclean-tags distdir dvi \
-	dvi-am html html-am info info-am install install-am \
-	install-data install-data-am install-dvi install-dvi-am \
-	install-exec install-exec-am install-html install-html-am \
-	install-info install-info-am install-man install-pdf \
-	install-pdf-am install-ps install-ps-am install-strip \
-	installcheck installcheck-am installdirs maintainer-clean \
-	maintainer-clean-generic mostlyclean mostlyclean-compile \
-	mostlyclean-generic pdf pdf-am ps ps-am tags uninstall \
-	uninstall-am
+	clean-checkPROGRAMS clean-generic clean-noinstLIBRARIES ctags \
+	distclean distclean-compile distclean-generic distclean-tags \
+	distdir dvi dvi-am html html-am info info-am install \
+	install-am install-data install-data-am install-dvi \
+	install-dvi-am install-exec install-exec-am install-html \
+	install-html-am install-info install-info-am install-man \
+	install-pdf install-pdf-am install-ps install-ps-am \
+	install-strip installcheck installcheck-am installdirs \
+	maintainer-clean maintainer-clean-generic mostlyclean \
+	mostlyclean-compile mostlyclean-generic pdf pdf-am ps ps-am \
+	tags uninstall uninstall-am
 
 
 ndebug.$(OBJEXT): ndebug.cpp

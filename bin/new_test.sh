@@ -34,7 +34,8 @@ echo "cd $dir"
 cd $dir 
 #
 # extract the program that runs all tests and name of this new test
-program=`sed -n -e '/_SOURCES/p' makefile.am | sed -e 's|^\t*\([^_]*\).*|\1|'`
+program=`sed -n -e '/_SOURCES/p' makefile.am | 
+	sed -e 's|^\t*\(.*\)_SOURCE.*|\1|'`
 name=`grep '^bool *[a-zA-Z0-9_]*( *void *)' $file | tail -1 | \
 	sed -e 's|^bool *\([a-zA-Z0-9_]*\)( *void *)|\1|'`
 # ---------------------------------------------------------------------------

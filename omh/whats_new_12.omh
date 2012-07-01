@@ -13,6 +13,7 @@ Please visit http://www.coin-or.org/CppAD/ for information on other licenses.
 $begin whats_new_12$$
 $dollar @$$
 $spell
+	eigen
 	fabs
 	mul
 	det_lu
@@ -52,6 +53,14 @@ This section contains a list of the changes to CppAD during 2012
 (in reverse order by date).
 The purpose of this section is to
 assist you in learning about changes between various versions of CppAD.
+
+$head 07-01$$
+Change $cref cppad_eigen.hpp$$ 
+to match new specifications and example in eigen help files on 
+$href%
+	http://eigen.tuxfamily.org/dox/TopicCustomizingEigen.html%
+	customizing and extending eigen.
+%$$
 
 $head 06-17$$
 $list number$$

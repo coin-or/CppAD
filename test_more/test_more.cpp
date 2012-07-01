@@ -17,7 +17,6 @@ Please visit http://www.coin-or.org/CppAD/ for information on other licenses.
 # include <cppad/thread_alloc.hpp>
 
 // prototype external compiled tests (this line expected by bin/new_test.sh)
-extern bool cppad_eigen(void);
 extern bool abs(void);
 extern bool Acos(void);
 extern bool Add(void);
@@ -38,6 +37,7 @@ extern bool CondExpAD(void);
 extern bool copy(void);
 extern bool Cos(void);
 extern bool Cosh(void);
+extern bool cppad_eigen(void);
 extern bool dbl_epsilon(void);
 extern bool Div(void);
 extern bool DivEq(void);
@@ -203,6 +203,9 @@ int main(void)
 # endif
 # ifdef CPPAD_OPENMP_TEST
 	ok &= Run( alloc_openmp,    "alloc_openmp"   );
+# endif
+# ifdef CPPAD_EIGEN_TEST
+	ok &= Run( cppad_eigen, "cppad_eigen" );
 # endif
 
 	// check for errors
