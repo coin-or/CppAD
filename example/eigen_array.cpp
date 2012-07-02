@@ -38,14 +38,12 @@ bool eigen_array(void)
 {	bool ok = true;
 	using CppAD::AD;
 	using CppAD::NearEqual;
-	using Eigen::Array;
+	using Eigen::Matrix;
 	using Eigen::Dynamic;
 	//
-	typedef Array< double     , Dynamic, 1 > array;
-	typedef Array< AD<double> , Dynamic, 1 > a_array;
+	typedef Matrix< double     , Dynamic, 1 > vector;
+	typedef Matrix< AD<double> , Dynamic, 1 > a_vector;
 	//
-	typedef CPPAD_TEST_VECTOR< double >       vector;
-	typedef CPPAD_TEST_VECTOR< AD<double> >   a_vector;
 	// some temporary indices
 	size_t i, j;
 
@@ -58,19 +56,9 @@ bool eigen_array(void)
 		a_x[j] = double(1 + j);
 	CppAD::Independent(a_x);
 
-	// copy independent variable vector to a array
-	a_array a_X(n);
-	array X(n);
-	for(j = 0; j < n; j++)
-		a_X(j) = a_x[j];
-
 	// evaluate a component wise function
-	a_array a_Y = a_X + sin(a_X); 
+	a_y = a_x.array() + sin(a_x.array()); 
 	
-	// copy independent variable to a simple vector
-	for(i = 0; i < m; i++)
-		a_y[i] = a_Y(i); 
-
 	// create f: x -> y and stop tape recording
 	CppAD::ADFun<double> f(a_x, a_y); 
 

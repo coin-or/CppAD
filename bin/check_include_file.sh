@@ -48,8 +48,9 @@ cat bin/check_include_file.1.$$ | \
 ls	cppad/*.hpp \
 	cppad/example/*.hpp \
 	cppad/local/*.hpp \
-	cppad/speed/*.hpp | \
-		sed -e '/cppad\/local\/prototype_op.hpp/d' | \
+	cppad/speed/*.hpp | sed \
+		-e '/cppad\/local\/prototype_op.hpp/d' \
+		-e '/cppad\/example\/eigen_plugin.hpp/d' | \
 		sort > bin/check_include_file.3.$$ 
 if diff bin/check_include_file.2.$$ bin/check_include_file.3.$$
 then

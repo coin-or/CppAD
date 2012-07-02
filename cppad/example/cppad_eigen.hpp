@@ -14,6 +14,7 @@ Please visit http://www.coin-or.org/CppAD/ for information on other licenses.
 /*
 $begin cppad_eigen.hpp$$
 $spell
+	plugin
 	atan
 	Num
 	acos
@@ -38,6 +39,7 @@ $section Enable Use of Eigen Linear Algebra Package with CppAD$$
 $head Syntax$$
 $codei%# include <cppad/example/cppad_eigen.hpp>%$$
 $children%
+	cppad/example/eigen_plugin.hpp%
 	example/eigen_array.cpp%
 	example/eigen_det.cpp
 %$$
@@ -52,17 +54,22 @@ THe files $cref eigen_array.cpp$$ and $cref eigen_det.cpp$$
 contain an example and test of this include file.
 It returns true if it succeeds and false otherwise.
 
+$head eigen_plugin.hpp$$
+Here is the source code for $cref eigen_plugin.hpp$$:
+
 $head Include Files$$
 This file $code cppad_eigen.hpp$$ requires the CppAD types to be defined.
-In addition, it needs some Eigen definitions to work properly.
-It assumes that the corresponding $icode Base$$ type is real; e.g.,
-is not $code std::complex<double>$$.
+The file $code eigen_plugin$$ defines $code value_type$$
+in the Eigen matrix class definition so its vectors are 
+$cref/simple vectors/SimpleVector/$$.
 $codep */
 # include <cppad/cppad.hpp>
+# define EIGEN_MATRIXBASE_PLUGIN <cppad/example/eigen_plugin.hpp>
 # include <Eigen/Core>
 /* $$
-
-$head Traits$$
+$head Eigen NumTraits$$
+Eigen needs the following definitions to work properly
+with $codei%AD<%Base%>%$$ scalars:
 $codep */
 namespace Eigen {
 	template <class Base> struct NumTraits< CppAD::AD<Base> >
@@ -91,12 +98,14 @@ namespace Eigen {
 		// machine epsilon with type of real part of x
 		// (use assumption that Base is not complex)
 		static CppAD::AD<Base> epsilon(void)
-		{	return CppAD::numeric_limits<Base>::epsilon(); }
+		{	return CppAD::numeric_limits< CppAD::AD<Base> >::epsilon(); }
 
 		// relaxed version of machine epsilon for comparison of different
 		// operations that should result in the same value
 		static CppAD::AD<Base> dummy_epsilon(void)
-		{	return 100. * CppAD::numeric_limits<Base>::epsilon(); }
+		{	return 100. * 
+				CppAD::numeric_limits< CppAD::AD<Base> >::epsilon(); 
+		}
 
 		// minimum normalized positive value
 		static CppAD::AD<Base> lowest(void)
@@ -108,6 +117,11 @@ namespace Eigen {
 
 	};
 }
+/* $$
+$head CppAD Namespace$$
+Eigen also needs the following definitions to work properly
+with $codei%AD<%Base%>%$$ scalars:
+$codep */
 namespace CppAD {
 		// functions that return references
 		template <class Base> const AD<Base>& conj(const AD<Base>& x)

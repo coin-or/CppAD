@@ -18,8 +18,12 @@ $end
 
 bool cppad_eigen(void)
 {	bool ok = true;
+	using CppAD::AD;
+	using Eigen::Dynamic;
 
-	typedef Eigen::NumTraits< CppAD::AD<double> >  traits;
+	typedef Eigen::NumTraits<AD<double> >         traits;
+	typedef Eigen::Matrix<AD<double>, Dynamic, 1> a_vector;
+	typedef typename a_vector::value_type         a_scalar;
 
 	ok &= traits::IsComplex              == 0;
 	ok &= traits::IsInteger              == 0;
