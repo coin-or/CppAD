@@ -3,7 +3,7 @@
 # define CPPAD_FORWARD_INCLUDED
 
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-11 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-12 Bradley M. Bell
 
 CppAD is distributed under multiple licenses. This distribution is under
 the terms of the 
@@ -77,7 +77,7 @@ Vector ADFun<Base>::Forward(
 	CheckSimpleVector<Base, Vector>();
 
 	CPPAD_ASSERT_KNOWN(
-		x_p.size() == n,
+		size_t(x_p.size()) == n,
 		"Second argument to Forward does not have length equal to\n"
 		"the dimension of the domain for the corresponding ADFun."
 	);

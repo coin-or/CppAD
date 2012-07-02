@@ -54,6 +54,11 @@ This section contains a list of the changes to CppAD during 2012
 The purpose of this section is to
 assist you in learning about changes between various versions of CppAD.
 
+$head 07-02$$
+Add  $cref eigen_plugin.hpp$$ so that 
+an Eigen vector can be used as a
+$cref/SimpleVector/$$.
+
 $head 07-01$$
 $list number$$
 Change $cref cppad_eigen.hpp$$ 

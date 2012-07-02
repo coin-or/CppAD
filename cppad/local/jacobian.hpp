@@ -3,7 +3,7 @@
 # define CPPAD_JACOBIAN_INCLUDED
 
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-09 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-12 Bradley M. Bell
 
 CppAD is distributed under multiple licenses. This distribution is under
 the terms of the 
@@ -124,8 +124,8 @@ void JacobianFor(ADFun<Base> &f, const Vector &x, Vector &jac)
 	// check Vector is Simple Vector class with Base type elements
 	CheckSimpleVector<Base, Vector>();
 
-	CPPAD_ASSERT_UNKNOWN( x.size()   == f.Domain() );
-	CPPAD_ASSERT_UNKNOWN( jac.size() == f.Range() * f.Domain() );
+	CPPAD_ASSERT_UNKNOWN( size_t(x.size())   == f.Domain() );
+	CPPAD_ASSERT_UNKNOWN( size_t(jac.size()) == f.Range() * f.Domain() );
 
 	// argument and result for forward mode calculations
 	Vector u(m);
@@ -159,8 +159,8 @@ void JacobianRev(ADFun<Base> &f, const Vector &x, Vector &jac)
 	size_t m = f.Domain();
 	size_t n = f.Range();
 
-	CPPAD_ASSERT_UNKNOWN( x.size()   == f.Domain() );
-	CPPAD_ASSERT_UNKNOWN( jac.size() == f.Range() * f.Domain() );
+	CPPAD_ASSERT_UNKNOWN( size_t(x.size())   == f.Domain() );
+	CPPAD_ASSERT_UNKNOWN( size_t(jac.size()) == f.Range() * f.Domain() );
 
 	// argument and result for reverse mode calculations
 	Vector u(m);
@@ -203,7 +203,7 @@ Vector ADFun<Base>::Jacobian(const Vector &x)
 	size_t n = Range();
 
 	CPPAD_ASSERT_KNOWN(
-		x.size() == m,
+		size_t(x.size()) == m,
 		"Jacobian: length of x not equal domain dimension for F"
 	); 
 

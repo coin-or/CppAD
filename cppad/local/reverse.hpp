@@ -3,7 +3,7 @@
 # define CPPAD_REVERSE_INCLUDED
 
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-11 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-12 Bradley M. Bell
 
 CppAD is distributed under multiple licenses. This distribution is under
 the terms of the 
@@ -138,7 +138,7 @@ VectorBase ADFun<Base>::Reverse(size_t p, const VectorBase &w)
 	CheckSimpleVector<Base, VectorBase>();
 
 	CPPAD_ASSERT_KNOWN(
-		w.size() == m || w.size() == (m * p),
+		size_t(w.size()) == m || size_t(w.size()) == (m * p),
 		"Argument w to Reverse does not have length equal to\n"
 		"the dimension of the range for the corresponding ADFun."
 	);
@@ -161,7 +161,7 @@ VectorBase ADFun<Base>::Reverse(size_t p, const VectorBase &w)
 	// (use += because two dependent variables can point to same location)
 	for(i = 0; i < m; i++)
 	{	CPPAD_ASSERT_UNKNOWN( dep_taddr_[i] < total_num_var_ );
-		if( w.size() == m )
+		if( size_t(w.size()) == m )
 			Partial[dep_taddr_[i] * p + p - 1] += w[i];
 		else
 		{	for(k = 0; k < p; k++)
@@ -193,7 +193,7 @@ VectorBase ADFun<Base>::Reverse(size_t p, const VectorBase &w)
 		// by the Reverse Identity Theorem 
 		// partial of y^{(k)} w.r.t. u^{(0)} is equal to
 		// partial of y^{(p-1)} w.r.t. u^{(p - 1 - k)}
-		if( w.size() == m )
+		if( size_t(w.size()) == m )
 		{	for(k = 0; k < p; k++)
 				value[j * p + k ] = 
 					Partial[ind_taddr_[j] * p + p - 1 - k];
