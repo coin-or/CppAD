@@ -175,8 +175,7 @@ $head 11-04$$
 The $code cppad/config.h$$ file was not compatible with the 
 $cref/Windows install procedure/InstallWindows/$$ and 
 the Windows project's could not find a certain include file.
-This has been fixed in the definition of; see
-$cref/Windows test vector/test_vector/MS Windows/$$.
+This has been fixed.
 $pre
 
 $$

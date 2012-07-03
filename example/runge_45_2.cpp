@@ -72,8 +72,8 @@ namespace {
 		// set return value to X'(t)
 		void Ode(
 			const Scalar                    &t, 
-			const CPPAD_TEST_VECTOR<Scalar> &x, 
-			CPPAD_TEST_VECTOR<Scalar>       &f)
+			const CPPAD_TEST_VECTOR(Scalar) &x, 
+			CPPAD_TEST_VECTOR(Scalar)       &f)
 		{	size_t n  = x.size();	
 			f[0]      = 0.;
 			for(size_t k = 1; k < n; k++)
@@ -95,7 +95,7 @@ bool runge_45_2(void)
 	Scalar ad_tf = 2.;  // final time 
 
 	// value of independent variable at which to record operations
-	CPPAD_TEST_VECTOR<Scalar> ad_b(1);
+	CPPAD_TEST_VECTOR(Scalar) ad_b(1);
 	ad_b[0] = 1.;
 
 	// declare b to be the independent variable
@@ -105,20 +105,20 @@ bool runge_45_2(void)
 	Fun<Scalar> ad_F; 
 
 	// xi = X(0)
-	CPPAD_TEST_VECTOR<Scalar> ad_xi(n); 
+	CPPAD_TEST_VECTOR(Scalar) ad_xi(n); 
 	for(j = 0; j < n; j++)
 		ad_xi[j] = ad_b[0];
 
 	// compute Runge45 approximation for X(tf)
-	CPPAD_TEST_VECTOR<Scalar> ad_xf(n), ad_e(n); 
+	CPPAD_TEST_VECTOR(Scalar) ad_xf(n), ad_e(n); 
 	ad_xf = CppAD::Runge45(ad_F, M, ad_ti, ad_tf, ad_xi, ad_e);
 
 	// stop recording and use it to create f : b -> xf
 	CppAD::ADFun<double> f(ad_b, ad_xf);
 
 	// evaluate f(b)
-	CPPAD_TEST_VECTOR<double>  b(1);
-	CPPAD_TEST_VECTOR<double> xf(n);
+	CPPAD_TEST_VECTOR(double)  b(1);
+	CPPAD_TEST_VECTOR(double) xf(n);
 	b[0] = 1.;
 	xf   = f.Forward(0, b);
 
@@ -135,7 +135,7 @@ bool runge_45_2(void)
 	}
 
 	// evalute f'(b)
-	CPPAD_TEST_VECTOR<double> d_xf(n);
+	CPPAD_TEST_VECTOR(double) d_xf(n);
 	d_xf = f.Jacobian(b);
 
 	// check that f'(b) = partial of X(b, tf) w.r.t b

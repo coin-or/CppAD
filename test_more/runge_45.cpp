@@ -1,6 +1,6 @@
 /* $Id$ */
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-07 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-12 Bradley M. Bell
 
 CppAD is distributed under multiple licenses. This distribution is under
 the terms of the 
@@ -21,14 +21,14 @@ Old OdeRunge example now used just for valiadation testing of Runge45
 namespace { // BEGIN Empty namespace
 	class TestFun {
 	public:
-		TestFun(const CPPAD_TEST_VECTOR< CppAD::AD<double> > &w_)
+		TestFun(const CPPAD_TEST_VECTOR(CppAD::AD<double>) &w_)
 		{	w.resize( w_.size() );
 			w = w_;
 		}
 		void Ode(
 			const CppAD::AD<double>                      &t, 
-			const CPPAD_TEST_VECTOR< CppAD::AD<double> > &x, 
-			CPPAD_TEST_VECTOR< CppAD::AD<double> >       &f) 
+			const CPPAD_TEST_VECTOR(CppAD::AD<double>) &x, 
+			CPPAD_TEST_VECTOR(CppAD::AD<double>)       &f) 
 		{
 			using CppAD::exp;
 	
@@ -42,7 +42,7 @@ namespace { // BEGIN Empty namespace
 			f[n-1] = x[0] * x[1];
 		}
 	private:
-		CPPAD_TEST_VECTOR< CppAD::AD<double> > w;
+		CPPAD_TEST_VECTOR(CppAD::AD<double>) w;
 	};
 } // END Empty namespace
 
@@ -58,13 +58,13 @@ bool Runge45(void)
 	size_t n = 6;
 	size_t m = n - 1;
 
-	CPPAD_TEST_VECTOR< AD<double> > x(n);
+	CPPAD_TEST_VECTOR(AD<double>) x(n);
 	AD<double>                t0    = 0.;
 	AD<double>                t1    = 2.;
 	size_t                    nstep = 2;
 
 	// vector of independent variables
-	CPPAD_TEST_VECTOR< AD<double> > w(m);
+	CPPAD_TEST_VECTOR(AD<double>) w(m);
 	for(i = 0; i < m; i++)
 		w[i] = double(i);
 	Independent(w);
@@ -73,7 +73,7 @@ bool Runge45(void)
 	TestFun fun(w);
 
 	// initial value of x
-	CPPAD_TEST_VECTOR< AD<double> > x0(n);
+	CPPAD_TEST_VECTOR(AD<double>) x0(n);
 	for(i = 0; i < n; i++)
 		x0[i] = 0.;
 	x0[0] = exp( w[0] );
@@ -83,8 +83,8 @@ bool Runge45(void)
 
 	// create f : w -> x and vectors for evaluating derivatives
 	ADFun<double> f(w, x);
-	CPPAD_TEST_VECTOR<double> q( f.Domain() );
-	CPPAD_TEST_VECTOR<double> r( f.Range() );
+	CPPAD_TEST_VECTOR(double) q( f.Domain() );
+	CPPAD_TEST_VECTOR(double) r( f.Range() );
 
 	// for i < n-1,
 	// x[i](2) = exp( w[0] ) * (w[1] / 1) * ... * (w[i] / i) * 2^i

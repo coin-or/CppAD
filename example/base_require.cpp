@@ -49,14 +49,14 @@ bool base_require(void)
 
 	// y = x^2
 	size_t n = 1, m = 2;
-	CPPAD_TEST_VECTOR<ad_base_alloc> a_x(n), a_y(m);
+	CPPAD_TEST_VECTOR(ad_base_alloc) a_x(n), a_y(m);
 	a_x[0] = ad_base_alloc(1.);
 	CppAD::Independent(a_x);
 	a_y[0] = a_x[0] * a_x[0];
 	CppAD::ADFun<base_alloc> f(a_x, a_y);
 
 	// check function value f(x) = x^2
-	CPPAD_TEST_VECTOR<base_alloc> x(n), y(m);
+	CPPAD_TEST_VECTOR(base_alloc) x(n), y(m);
 	base_alloc eps = 
 		base_alloc(100.) * CppAD::numeric_limits<base_alloc>::epsilon();
 	x[0] = base_alloc(3.);
@@ -64,7 +64,7 @@ bool base_require(void)
 	ok  &= CppAD::NearEqual(y[0], x[0] * x[0], eps, eps);
 
 	// check derivative value f'(x) = 2 * x
-	CPPAD_TEST_VECTOR<base_alloc> dy(m * n);
+	CPPAD_TEST_VECTOR(base_alloc) dy(m * n);
 	dy   = f.Jacobian(x);
 	ok  &= CppAD::NearEqual(dy[0], base_alloc(2.) * x[0], eps, eps);
 

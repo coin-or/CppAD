@@ -26,8 +26,8 @@ bool rc_tridiagonal(void)
 
 	size_t n = 12; // must be greater than or equal 3; see n_sweep.
 	size_t m = n - 1;
-	CPPAD_TEST_VECTOR< AD<double> > a_x(n), a_y(m);
-	CPPAD_TEST_VECTOR<double> x(n), check(n * n), w(m);
+	CPPAD_TEST_VECTOR(AD<double>) a_x(n), a_y(m);
+	CPPAD_TEST_VECTOR(double) x(n), check(n * n), w(m);
 	for(j = 0; j < n; j++)
 		a_x[j] = x[j] = double(j+1);
 
@@ -69,8 +69,8 @@ bool rc_tridiagonal(void)
 
 	// requres the upper triangle of the Hessian
 	size_t K = 2 * n - 1;
-	CPPAD_TEST_VECTOR<size_t> r(K), c(K);
-	CPPAD_TEST_VECTOR<double> hes(K);
+	CPPAD_TEST_VECTOR(size_t) r(K), c(K);
+	CPPAD_TEST_VECTOR(double) hes(K);
 	k = 0;
 	for(i = 0; i < n; i++)
 	{	r[k] = i;
@@ -108,7 +108,7 @@ bool bool_case()
 
 	// domain space vector
 	size_t n = 3;
-	CPPAD_TEST_VECTOR< AD<double> >  X(n);
+	CPPAD_TEST_VECTOR(AD<double>)  X(n);
 	for(i = 0; i < n; i++)
 		X[i] = AD<double> (0);
 
@@ -116,7 +116,7 @@ bool bool_case()
 	CppAD::Independent(X);
 
 	size_t m = 1;
-	CPPAD_TEST_VECTOR< AD<double> >  Y(m);
+	CPPAD_TEST_VECTOR(AD<double>)  Y(m);
 	Y[0] = X[0] * X[0] + X[0] * X[1] + X[1] * X[1] + X[2] * X[2];
 
 	// create f: X -> Y and stop tape recording
@@ -174,7 +174,7 @@ bool set_case()
 
 	// domain space vector
 	size_t n = 3;
-	CPPAD_TEST_VECTOR< AD<double> >  X(n);
+	CPPAD_TEST_VECTOR(AD<double>)  X(n);
 	for(i = 0; i < n; i++)
 		X[i] = AD<double> (0);
 
@@ -182,7 +182,7 @@ bool set_case()
 	CppAD::Independent(X);
 
 	size_t m = 1;
-	CPPAD_TEST_VECTOR< AD<double> >  Y(m);
+	CPPAD_TEST_VECTOR(AD<double>)  Y(m);
 	Y[0] = X[0] * X[0] + X[0] * X[1] + X[1] * X[1] + X[2] * X[2];
 
 	// create f: X -> Y and stop tape recording

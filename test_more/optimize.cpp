@@ -1,6 +1,6 @@
 /* $Id$ */
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-11 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-12 Bradley M. Bell
 
 CppAD is distributed under multiple licenses. This distribution is under
 the terms of the 
@@ -90,7 +90,7 @@ namespace {
 	
 		// domain space vector
 		size_t n  = 6;
-		CPPAD_TEST_VECTOR< AD<double> > X(n);
+		CppAD::vector< AD<double> > X(n);
 		for(j = 0; j < n; j++)
 			X[j] = 1. / double(j + 1); 
 	
@@ -99,14 +99,14 @@ namespace {
 	
 		// range space vector 
 		size_t m = n;
-		CPPAD_TEST_VECTOR< AD<double> > Y(m);
+		CppAD::vector< AD<double> > Y(m);
 		depend_fun(X, Y, original, opt);
 	
 		// create f: X -> Y and stop tape recording
 		CppAD::ADFun<double> F;
 		F.Dependent(X, Y); 
 	
-		CPPAD_TEST_VECTOR<double> x(n), y(m), check(m);
+		CppAD::vector<double> x(n), y(m), check(m);
 		for(j = 0; j < n; j++)
 			x[j] = Value(X[j]);
 		y = F.Forward(0, x);
@@ -140,13 +140,13 @@ namespace {
 
 		// domain space vector
 		size_t n  = 2;
-		CPPAD_TEST_VECTOR< AD<double> > X(n);
+		CppAD::vector< AD<double> > X(n);
 		for(j = 0; j < n; j++)
 			X[j] = double(j); 
 
 		// range space vector
 		size_t m = 3;
-		CPPAD_TEST_VECTOR< AD<double> > Y(m);
+		CppAD::vector< AD<double> > Y(m);
 
 		CppAD::VecAD<double> U(m);
 		CppAD::VecAD<double> V(n);
@@ -182,7 +182,7 @@ namespace {
 		// Check number of VecAD vectors plus number of VecAD elements
 		ok &= (F.size_VecAD() == 2 + n + m); 
 	
-		CPPAD_TEST_VECTOR<double> x(n), y(m);
+		CppAD::vector<double> x(n), y(m);
 		for(j = 0; j < n; j++)
 			x[j] = double(j);
 
@@ -339,7 +339,7 @@ namespace {
 	
 		// domain space vector
 		size_t n  = 7;
-		CPPAD_TEST_VECTOR< AD<double> > X(n);
+		CppAD::vector< AD<double> > X(n);
 		for(j = 0; j < n; j++)
 			X[j] = 1. / double(j + 1); 
 	
@@ -348,14 +348,14 @@ namespace {
 	
 		// range space vector 
 		size_t m = n;
-		CPPAD_TEST_VECTOR< AD<double> > Y(m);
+		CppAD::vector< AD<double> > Y(m);
 		duplicate_fun(X, Y, original, opt);
 	
 		// create f: X -> Y and stop tape recording
 		CppAD::ADFun<double> F;
 		F.Dependent(X, Y); 
 	
-		CPPAD_TEST_VECTOR<double> x(n), y(m), check(m);
+		CppAD::vector<double> x(n), y(m), check(m);
 		for(j = 0; j < n; j++)
 			x[j] = Value(X[j]);
 		y = F.Forward(0, x);
@@ -390,13 +390,13 @@ namespace {
 
 		// domain space vector
 		size_t n  = 1;
-		CPPAD_TEST_VECTOR< AD<double> > X(n);
+		CppAD::vector< AD<double> > X(n);
 		for(j = 0; j < n; j++)
 			X[j] = double(j + 2); 
 
 		// range space vector
 		size_t m = 1;
-		CPPAD_TEST_VECTOR< AD<double> > Y(m);
+		CppAD::vector< AD<double> > Y(m);
 
 		// declare independent variables and start tape recording
 		CppAD::Independent(X);
@@ -425,7 +425,7 @@ namespace {
 		// check number of variables in original function
 		ok &= (F.size_var() ==  1 + n + m + 4 ); 
 	
-		CPPAD_TEST_VECTOR<double> x(n), y(m);
+		CppAD::vector<double> x(n), y(m);
 		for(j = 0; j < n; j++)
 			x[j] = double(j + 2);
 
@@ -454,13 +454,13 @@ namespace {
 
 		// domain space vector
 		size_t n  = 1;
-		CPPAD_TEST_VECTOR< AD<double> > X(n);
+		CppAD::vector< AD<double> > X(n);
 		for(j = 0; j < n; j++)
 			X[j] = double(j + 2); 
 
 		// range space vector
 		size_t m = 1;
-		CPPAD_TEST_VECTOR< AD<double> > Y(m);
+		CppAD::vector< AD<double> > Y(m);
 
 		// declare independent variables and start tape recording
 		CppAD::Independent(X);
@@ -489,7 +489,7 @@ namespace {
 		// check number of variables in original function
 		ok &= (F.size_var() ==  1 + n + m + 4 ); 
 	
-		CPPAD_TEST_VECTOR<double> x(n), y(m);
+		CppAD::vector<double> x(n), y(m);
 		for(j = 0; j < n; j++)
 			x[j] = double(j + 2);
 
@@ -518,12 +518,12 @@ namespace {
 
 		// domain space vector
 		size_t n  = 1;
-		CPPAD_TEST_VECTOR< AD<double> > X(n);
+		CppAD::vector< AD<double> > X(n);
 		X[0] = 1.;
 
 		// range space vector
 		size_t m = 1;
-		CPPAD_TEST_VECTOR< AD<double> > Y(m);
+		CppAD::vector< AD<double> > Y(m);
 
 		// declare independent variables and start tape recording
 		CppAD::Independent(X);
@@ -544,7 +544,7 @@ namespace {
 		// check number of variables in original function
 		ok &= (F.size_var() ==  1 + n + n_operations ); 
 	
-		CPPAD_TEST_VECTOR<double> x(n), y(m);
+		CppAD::vector<double> x(n), y(m);
 		x[0] = 1.;
 
 		y   = F.Forward(0, x);
@@ -570,7 +570,7 @@ namespace {
 
 		// domain space vector
 		size_t n  = 7;
-		CPPAD_TEST_VECTOR< AD<double> > X(n);
+		CppAD::vector< AD<double> > X(n);
 		for(j = 0; j < n; j++)
 			X[j] = double(j + 2); 
 
@@ -579,7 +579,7 @@ namespace {
 
 		// range space vector
 		size_t m = 2;
-		CPPAD_TEST_VECTOR< AD<double> > Y(m);
+		CppAD::vector< AD<double> > Y(m);
 
 		// declare independent variables and start tape recording
 		CppAD::Independent(X);
@@ -605,7 +605,7 @@ namespace {
 		// check number of variables in original function
 		ok &= (F.size_var() ==  n_original ); 
 	
-		CPPAD_TEST_VECTOR<double> x(n), y(m);
+		CppAD::vector<double> x(n), y(m);
 		for(j = 0; j < n; j++)
 			x[j] = double(j + 2);
 
@@ -631,13 +631,13 @@ namespace {
 		using namespace CppAD;
 	
 		// independent variable vector 
-		CPPAD_TEST_VECTOR< AD<double> > X(2);
+		CppAD::vector< AD<double> > X(2);
 		X[0] = 0.; 
 		X[1] = 1.;
 		Independent(X);
 	
 		// compute sum of elements in X
-		CPPAD_TEST_VECTOR< AD<double> > Y(1);
+		CppAD::vector< AD<double> > Y(1);
 		Y[0] = X[0] + X[0] + X[1];
 	
 		// create function object F : X -> Y
@@ -647,24 +647,24 @@ namespace {
 		F.optimize();
 	
 		// use zero order to evaluate F[ (3, 4) ] 
-		CPPAD_TEST_VECTOR<double>  x0( F.Domain() );
-		CPPAD_TEST_VECTOR<double>  y0( F.Range() );
+		CppAD::vector<double>  x0( F.Domain() );
+		CppAD::vector<double>  y0( F.Range() );
 		x0[0]    = 3.;
 		x0[1]    = 4.;
 		y0       = F.Forward(0, x0);
 		ok      &= NearEqual(y0[0] , x0[0]+x0[0]+x0[1], 1e-10, 1e-10);
 	
 		// evaluate derivative of F in X[0] direction
-		CPPAD_TEST_VECTOR<double> x1( F.Domain() );
-		CPPAD_TEST_VECTOR<double> y1( F.Range() );
+		CppAD::vector<double> x1( F.Domain() );
+		CppAD::vector<double> y1( F.Range() );
 		x1[0]    = 1.;
 		x1[1]    = 0.;
 		y1       = F.Forward(1, x1);
 		ok      &= NearEqual(y1[0] , x1[0]+x1[0]+x1[1], 1e-10, 1e-10);
 	
 		// evaluate second derivative of F in X[0] direction
-		CPPAD_TEST_VECTOR<double> x2( F.Domain() );
-		CPPAD_TEST_VECTOR<double> y2( F.Range() );
+		CppAD::vector<double> x2( F.Domain() );
+		CppAD::vector<double> y2( F.Range() );
 		x2[0]       = 0.;
 		x2[1]       = 0.;
 		y2          = F.Forward(2, x2);
@@ -680,13 +680,13 @@ namespace {
 		using namespace CppAD;
 	
 		// independent variable vector 
-		CPPAD_TEST_VECTOR< AD<double> > X(2);
+		CppAD::vector< AD<double> > X(2);
 		X[0] = 0.; 
 		X[1] = 1.;
 		Independent(X);
 	
 		// compute sum of elements in X
-		CPPAD_TEST_VECTOR< AD<double> > Y(1);
+		CppAD::vector< AD<double> > Y(1);
 		Y[0] = X[0] - (X[0] - X[1]);
 	
 		// create function object F : X -> Y
@@ -696,16 +696,16 @@ namespace {
 		F.optimize();
 	
 		// use zero order to evaluate F[ (3, 4) ] 
-		CPPAD_TEST_VECTOR<double>  x0( F.Domain() );
-		CPPAD_TEST_VECTOR<double>  y0( F.Range() );
+		CppAD::vector<double>  x0( F.Domain() );
+		CppAD::vector<double>  y0( F.Range() );
 		x0[0]    = 3.;
 		x0[1]    = 4.;
 		y0       = F.Forward(0, x0);
 		ok      &= NearEqual(y0[0] , x0[0]-x0[0]+x0[1], 1e-10, 1e-10);
 	
 		// evaluate derivative of F 
-		CPPAD_TEST_VECTOR<double> dF( F.Domain() );
-		CPPAD_TEST_VECTOR<double> w( F.Range() );
+		CppAD::vector<double> dF( F.Domain() );
+		CppAD::vector<double> w( F.Range() );
 		w[0]    = 1.;
 		dF      = F.Reverse(1, w);
 		ok     &= NearEqual(dF[0] , 0., 1e-10, 1e-10);
@@ -724,16 +724,16 @@ namespace {
 		size_t m = 2;
 	
 		// independent variable vector 
-		CPPAD_TEST_VECTOR< AD<double> > X(n);
+		CppAD::vector< AD<double> > X(n);
 		X[0] = 2.; 
 		X[1] = 3.;
 		Independent(X);
 	
 		// dependent variable vector
-		CPPAD_TEST_VECTOR< AD<double> > Y(m);
+		CppAD::vector< AD<double> > Y(m);
 	
 		// check results vector
-		CPPAD_TEST_VECTOR< bool >       Check(m * n);
+		CppAD::vector< bool >       Check(m * n);
 	
 		// initialize index into Y
 		size_t index = 0;
@@ -761,7 +761,7 @@ namespace {
 	
 		// ---------------------------------------------------------
 		// dependency matrix for the identity function 
-		CPPAD_TEST_VECTOR< std::set<size_t> > Sx(n);
+		CppAD::vector< std::set<size_t> > Sx(n);
 		size_t i, j;
 		for(i = 0; i < n; i++)
 		{	assert( Sx[i].empty() );
@@ -769,7 +769,7 @@ namespace {
 		}
 	
 		// evaluate the dependency matrix for F(x)
-		CPPAD_TEST_VECTOR< std::set<size_t> > Sy(m);
+		CppAD::vector< std::set<size_t> > Sy(m);
 		Sy = F.ForSparseJac(n, Sx);
 	
 		// check values
@@ -794,16 +794,16 @@ namespace {
 		size_t m = 2;
 	
 		// independent variable vector 
-		CPPAD_TEST_VECTOR< AD<double> > X(n);
+		CppAD::vector< AD<double> > X(n);
 		X[0] = 2.; 
 		X[1] = 3.;
 		Independent(X);
 	
 		// dependent variable vector
-		CPPAD_TEST_VECTOR< AD<double> > Y(m);
+		CppAD::vector< AD<double> > Y(m);
 	
 		// check results vector
-		CPPAD_TEST_VECTOR< bool >       Check(m * n);
+		CppAD::vector< bool >       Check(m * n);
 	
 		// initialize index into Y
 		size_t index = 0;
@@ -831,7 +831,7 @@ namespace {
 	
 		// ----------------------------------------------------------
 		// dependency matrix for the identity function
-		CPPAD_TEST_VECTOR< bool > Py(m * m);
+		CppAD::vector< bool > Py(m * m);
 		size_t i, j;
 		for(i = 0; i < m; i++)
 		{	for(j = 0; j < m; j++)
@@ -839,7 +839,7 @@ namespace {
 		}
 	
 		// evaluate the dependency matrix for F(x)
-		CPPAD_TEST_VECTOR< bool > Px(m * n);
+		CppAD::vector< bool > Px(m * n);
 		Px = F.RevSparseJac(m, Py);
 	
 		// check values
@@ -856,16 +856,16 @@ namespace {
 		size_t i, j;
 	
 		size_t n = 2;
-		CPPAD_TEST_VECTOR< AD<double> > X(n); 
+		CppAD::vector< AD<double> > X(n); 
 		X[0] = 1.;
 		X[1] = 2.;
 		CppAD::Independent(X);
 	
 		size_t m = 1;
-		CPPAD_TEST_VECTOR< AD<double> > Y(m);
+		CppAD::vector< AD<double> > Y(m);
 		Y[0] = (2. + X[0] + X[1] + 3.) * X[0];
 	
-		CPPAD_TEST_VECTOR<bool> check(n * n);
+		CppAD::vector<bool> check(n * n);
 		check[0 * n + 0] = true;  // partial w.r.t. x[0], x[0]
 		check[0 * n + 1] = true;  //                x[0], x[1]
 		check[1 * n + 0] = true;  //                x[1], x[0]
@@ -876,18 +876,18 @@ namespace {
 		F.optimize();
 	
 		// sparsity pattern for the identity function U(x) = x
-		CPPAD_TEST_VECTOR<bool> Px(n * n);
+		CppAD::vector<bool> Px(n * n);
 		for(i = 0; i < n; i++)
 			for(j = 0; j < n; j++)
 				Px[ i * n + j ] = (i == j);
 	
 		// compute sparsity pattern for Jacobian of F(U(x))
-		CPPAD_TEST_VECTOR<bool> P_jac(m * n);
+		CppAD::vector<bool> P_jac(m * n);
 		P_jac = F.ForSparseJac(n, Px);
 	
 		// compute sparsity pattern for Hessian of F_k ( U(x) ) 
-		CPPAD_TEST_VECTOR<bool> Py(m);
-		CPPAD_TEST_VECTOR<bool> Pxx(n * n);
+		CppAD::vector<bool> Py(m);
+		CppAD::vector<bool> Pxx(n * n);
 		Py[0] = true;
 		Pxx = F.RevSparseHes(n, Py);
 		// check values
@@ -904,7 +904,7 @@ namespace {
 		AD<double> zero(0.), one(1.), two(2.), three(3.);
 	
 		size_t n = 4;
-		CPPAD_TEST_VECTOR< AD<double> > X(n); 
+		CppAD::vector< AD<double> > X(n); 
 		X[0] = zero;
 		X[1] = one;
 		X[2] = two;
@@ -912,7 +912,7 @@ namespace {
 		CppAD::Independent(X);
 	
 		size_t m = 4;
-		CPPAD_TEST_VECTOR< AD<double> > Y(m);
+		CppAD::vector< AD<double> > Y(m);
 		Y[0] = CondExpLt(X[0] + .5,  one,  two, three);
 		Y[1] = CondExpLt(zero, X[1] + .5,  two, three);
 		Y[2] = CondExpLt(zero,  one, X[2] + .5, three);
@@ -921,7 +921,7 @@ namespace {
 		CppAD::ADFun<double> f(X, Y);
 		f.optimize();
 
-		CPPAD_TEST_VECTOR<double> x(n), y(m);
+		CppAD::vector<double> x(n), y(m);
 		size_t i;
 		for(i = 0; i < n; i++)
 			x[i] = double(n - i);
@@ -1035,7 +1035,7 @@ namespace {
 
 	CPPAD_USER_ATOMIC(
 		my_user_atomic             ,
-		CPPAD_TEST_VECTOR          ,
+		CppAD::vector              ,
 		double                     ,
 		user_atomic_forward        ,
 		user_atomic_reverse        ,
@@ -1051,7 +1051,7 @@ namespace {
 		size_t j;
 		size_t n = 3;
 		size_t m = 2;
-		CPPAD_TEST_VECTOR< AD<double> > ax(n), ay(m), az(m);
+		CppAD::vector< AD<double> > ax(n), ay(m), az(m);
 		for(j = 0; j < n; j++)
 			ax[j] = AD<double>(j + 1);
 		CppAD::Independent(ax);
@@ -1070,7 +1070,7 @@ namespace {
 		ok &= g.size_var() == (1 + n + m);
 
 		// now test that the optimized function gives same results
-		CPPAD_TEST_VECTOR<double> x(n), y(m);
+		CppAD::vector<double> x(n), y(m);
 		for(j = 0; j < n; j++)
 			x[j] = (j + 1) * (j + 1);
 		y = g.Forward(0, x);
@@ -1087,7 +1087,7 @@ namespace {
 
 		// independent variable vector
 		size_t n = 5;
-		CPPAD_TEST_VECTOR< AD<double> > ax(n);
+		CppAD::vector< AD<double> > ax(n);
 		size_t j;
 		for(j = 0; j < n; j++)
 			ax[j] = 1. / 3.;
@@ -1095,7 +1095,7 @@ namespace {
 	
 		// dependent variable vector
 		size_t m = 1;
-		CPPAD_TEST_VECTOR< AD<double> > ay(m);
+		CppAD::vector< AD<double> > ay(m);
 		ay[0]       = 0.;
 		for(j = 0; j < n; j++)
 		{	if( j % 2 == 0 )

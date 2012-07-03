@@ -37,7 +37,7 @@ bool Poly(void)
 	size_t deg = 3;
 
 	// set the polynomial coefficients 
-	CPPAD_TEST_VECTOR<double>   a(deg + 1);
+	CPPAD_TEST_VECTOR(double)   a(deg + 1);
 	size_t i;
 	for(i = 0; i <= deg; i++)
 		a[i] = 1.;

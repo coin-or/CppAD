@@ -39,7 +39,7 @@ bool ForwardCases(void)
 
 	// domain space vector
 	size_t n = 2;
-	CPPAD_TEST_VECTOR< AD<double> > X(n);
+	CPPAD_TEST_VECTOR(AD<double>) X(n);
 	X[0] = 0.; 
 	X[1] = 1.;
 
@@ -48,7 +48,7 @@ bool ForwardCases(void)
 
 	// range space vector
 	size_t m = 1;
-	CPPAD_TEST_VECTOR< AD<double> > Y(m);
+	CPPAD_TEST_VECTOR(AD<double>) Y(m);
 	Y[0] = X[0] * X[0] * X[1];
 
 	// create f: X -> Y and stop tape recording

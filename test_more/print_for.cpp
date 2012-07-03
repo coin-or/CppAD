@@ -1,6 +1,6 @@
 /* $Id$ */
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-11 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-12 Bradley M. Bell
 
 CppAD is distributed under multiple licenses. This distribution is under
 the terms of the 
@@ -38,7 +38,7 @@ bool print_for(void)
 
 	// independent variable vector
 	size_t n = 1;
-	CPPAD_TEST_VECTOR< AD<double> > ax(n);
+	CPPAD_TEST_VECTOR(AD<double>) ax(n);
 	ax[0] = 1.;
 	Independent(ax);
 
@@ -68,14 +68,14 @@ bool print_for(void)
 
 	// dependent variable vector 
 	size_t m = 2;
-	CPPAD_TEST_VECTOR< AD<double> > ay(m);
+	CPPAD_TEST_VECTOR(AD<double>) ay(m);
 	ay[0] = av[Zero] + ax[0];
 
 	// define f: x -> y and stop tape recording
 	CppAD::ADFun<double> f(ax, ay); 
 
 	// zero order forward with x[0] = 2 
-	CPPAD_TEST_VECTOR<double> x(n);
+	CPPAD_TEST_VECTOR(double) x(n);
 	x[0] = 2.;
 	f.Forward(0, x, stream_out);	
 

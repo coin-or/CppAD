@@ -26,8 +26,8 @@ bool rc_tridiagonal(void)
 
 	// domain space vector
 	size_t n = 13; // must be greater than or equal 3 (see n_sweep below)
-	CPPAD_TEST_VECTOR< AD<double> >  X(n);
-	CPPAD_TEST_VECTOR<double>        x(n);
+	CPPAD_TEST_VECTOR(AD<double>)  X(n);
+	CPPAD_TEST_VECTOR(double)        x(n);
 	for(j = 0; j < n; j++)
 		X[j] = x[j] = double(j+1);
 
@@ -35,8 +35,8 @@ bool rc_tridiagonal(void)
 	CppAD::Independent(X);
 
 	size_t m = n;
-	CPPAD_TEST_VECTOR< AD<double> >  Y(m);
-	CPPAD_TEST_VECTOR<double> check(m * n );
+	CPPAD_TEST_VECTOR(AD<double>)  Y(m);
+	CPPAD_TEST_VECTOR(double) check(m * n );
 	for(ell = 0; ell < m * n; ell++)
 		check[ell] = 0.0;
 
@@ -71,8 +71,8 @@ bool rc_tridiagonal(void)
 	p   = f.RevSparseJac(m, s);
 
 	// Request the upper triangle of the array
-	CPPAD_TEST_VECTOR<size_t> r(K), c(K);
-	CPPAD_TEST_VECTOR<double> jac(K);
+	CPPAD_TEST_VECTOR(size_t) r(K), c(K);
+	CPPAD_TEST_VECTOR(double) jac(K);
 	k = 0;
 	for(i = 0; i < n; i++)
 	{	r[k] = i;
@@ -114,7 +114,7 @@ bool rc_set(void)
 
 	// domain space vector
 	size_t n = 4;
-	CPPAD_TEST_VECTOR< AD<double> >  X(n);
+	CPPAD_TEST_VECTOR(AD<double>)  X(n);
 	for(j = 0; j < n; j++)
 		X[j] = AD<double> (0);
 
@@ -122,7 +122,7 @@ bool rc_set(void)
 	CppAD::Independent(X);
 
 	size_t m = 3;
-	CPPAD_TEST_VECTOR< AD<double> >  Y(m);
+	CPPAD_TEST_VECTOR(AD<double>)  Y(m);
 	Y[0] = 1.0*X[0] + 2.0*X[1];
 	Y[1] = 3.0*X[2] + 4.0*X[3];
 	Y[2] = 5.0*X[0] + 6.0*X[1] + 7.0*X[3]*X[3]/2.;
@@ -154,7 +154,7 @@ bool rc_set(void)
 
 	// Use forward mode to compute columns 0 and 2 
 	// (make sure order of rows and columns does not matter)
-	CPPAD_TEST_VECTOR<size_t> r(3), c(3);
+	CPPAD_TEST_VECTOR(size_t) r(3), c(3);
 	VectorBase jac(3);
 	r[0] = 2; c[0] = 0;
 	r[1] = 1; c[1] = 2;
@@ -194,7 +194,7 @@ bool rc_bool(void)
 
 	// domain space vector
 	size_t n = 4;
-	CPPAD_TEST_VECTOR< AD<double> >  X(n);
+	CPPAD_TEST_VECTOR(AD<double>)  X(n);
 	for(j = 0; j < n; j++)
 		X[j] = AD<double> (0);
 
@@ -202,7 +202,7 @@ bool rc_bool(void)
 	CppAD::Independent(X);
 
 	size_t m = 3;
-	CPPAD_TEST_VECTOR< AD<double> >  Y(m);
+	CPPAD_TEST_VECTOR(AD<double>)  Y(m);
 	Y[0] = 1.0*X[0] + 2.0*X[1];
 	Y[1] = 3.0*X[2] + 4.0*X[3];
 	Y[2] = 5.0*X[0] + 6.0*X[1] + 7.0*X[3]*X[3]/2.;
@@ -232,7 +232,7 @@ bool rc_bool(void)
 
 	// Use forward mode to compute columns 0 and 2 
 	// (make sure order of rows and columns does not matter)
-	CPPAD_TEST_VECTOR<size_t> r(3), c(3);
+	CPPAD_TEST_VECTOR(size_t) r(3), c(3);
 	VectorBase jac(3);
 	r[0] = 2; c[0] = 0;
 	r[1] = 1; c[1] = 2;
@@ -273,7 +273,7 @@ bool reverse_bool(void)
 
 	// domain space vector
 	size_t n = 4;
-	CPPAD_TEST_VECTOR< AD<double> >  X(n);
+	CPPAD_TEST_VECTOR(AD<double>)  X(n);
 	for(j = 0; j < n; j++)
 		X[j] = AD<double> (0);
 
@@ -281,7 +281,7 @@ bool reverse_bool(void)
 	CppAD::Independent(X);
 
 	size_t m = 3;
-	CPPAD_TEST_VECTOR< AD<double> >  Y(m);
+	CPPAD_TEST_VECTOR(AD<double>)  Y(m);
 	Y[0] = 1.0*X[0] + 2.0*X[1];
 	Y[1] = 3.0*X[2] + 4.0*X[3];
 	Y[2] = 5.0*X[0] + 6.0*X[1] + 7.0*X[2] + 8.0*X[3]*X[3]/2.;
@@ -334,7 +334,7 @@ bool reverse_set(void)
 
 	// domain space vector
 	size_t n = 4;
-	CPPAD_TEST_VECTOR< AD<double> >  X(n);
+	CPPAD_TEST_VECTOR(AD<double>)  X(n);
 	for(j = 0; j < n; j++)
 		X[j] = AD<double> (0);
 
@@ -342,7 +342,7 @@ bool reverse_set(void)
 	CppAD::Independent(X);
 
 	size_t m = 3;
-	CPPAD_TEST_VECTOR< AD<double> >  Y(m);
+	CPPAD_TEST_VECTOR(AD<double>)  Y(m);
 	Y[0] = X[0] + X[1];
 	Y[1] = X[2] + X[3];
 	Y[2] = X[0] + X[1] + X[2] + X[3] * X[3] / 2.;
@@ -391,7 +391,7 @@ bool forward_bool(void)
 
 	// domain space vector
 	size_t n = 3;
-	CPPAD_TEST_VECTOR< AD<double> >  X(n);
+	CPPAD_TEST_VECTOR(AD<double>)  X(n);
 	for(j = 0; j < n; j++)
 		X[j] = AD<double> (0);
 
@@ -399,7 +399,7 @@ bool forward_bool(void)
 	CppAD::Independent(X);
 
 	size_t m = 4;
-	CPPAD_TEST_VECTOR< AD<double> >  Y(m);
+	CPPAD_TEST_VECTOR(AD<double>)  Y(m);
 	Y[0] = X[0] + X[2];
 	Y[1] = X[0] + X[2];
 	Y[2] = X[1] + X[2];
@@ -455,7 +455,7 @@ bool forward_set(void)
 
 	// domain space vector
 	size_t n = 3;
-	CPPAD_TEST_VECTOR< AD<double> >  X(n);
+	CPPAD_TEST_VECTOR(AD<double>)  X(n);
 	for(j = 0; j < n; j++)
 		X[j] = AD<double> (0);
 
@@ -463,7 +463,7 @@ bool forward_set(void)
 	CppAD::Independent(X);
 
 	size_t m = 4;
-	CPPAD_TEST_VECTOR< AD<double> >  Y(m);
+	CPPAD_TEST_VECTOR(AD<double>)  Y(m);
 	Y[0] = X[0] + X[2];
 	Y[1] = X[0] + X[2];
 	Y[2] = X[1] + X[2];

@@ -1,6 +1,6 @@
 /* $Id$ */
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-11 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-12 Bradley M. Bell
 
 CppAD is distributed under multiple licenses. This distribution is under
 the terms of the 
@@ -27,21 +27,21 @@ bool abs(void)
 	typedef CppAD::AD< ADdouble > ADDdouble;
 
 	// af(x) = |x|
-	CPPAD_TEST_VECTOR< ADDdouble > aax(1), aay(1);
+	CPPAD_TEST_VECTOR( ADDdouble ) aax(1), aay(1);
 	aax[0] = ADDdouble(0.);
 	CppAD::Independent(aax);
 	aay[0] = CppAD::abs(aax[0]);
 	CppAD::ADFun< ADdouble > af(aax, aay);
 
 	// f(x) = |x|
-	CPPAD_TEST_VECTOR< ADdouble > ax(1), ay(1);
+	CPPAD_TEST_VECTOR( ADdouble ) ax(1), ay(1);
 	ax[0] = ADdouble(0.);
 	CppAD::Independent(ax);
 	ay    = af.Forward(0, ax);
 	CppAD::ADFun<double> f(ax, ay);
 
 	// compute derivative of af at a positive argument
-	CPPAD_TEST_VECTOR< ADdouble > adx(1), ady(1);
+	CPPAD_TEST_VECTOR( ADdouble ) adx(1), ady(1);
 	ax[0]  = 1.;
 	ay     = af.Forward(0, ax);
 	adx[0] = 1;
@@ -56,7 +56,7 @@ bool abs(void)
 	ok    &= (ady[0] == 0.);
 
 	// compute derivative of f at zero argument
-	CPPAD_TEST_VECTOR<double> x(1), y(1), dx(1), dy(1);
+	CPPAD_TEST_VECTOR(double) x(1), y(1), dx(1), dy(1);
 	x[0]  = 0.;
 	y     = f.Forward(0, x);
 	dx[0] = 1;

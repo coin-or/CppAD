@@ -66,8 +66,8 @@ bool Test(void)
 	ok &= NearEqual(Y[1] , 0.,  1e-10 , 1e-10);
 
 	// compute f(1, 2)
-	CPPAD_TEST_VECTOR<double> x(n);
-	CPPAD_TEST_VECTOR<double> y(m);
+	CPPAD_TEST_VECTOR(double) x(n);
+	CPPAD_TEST_VECTOR(double) y(m);
 	x[0] = 1.;
 	x[1] = 2.;
 	y    = f.Forward(0, x);
@@ -75,8 +75,8 @@ bool Test(void)
 	ok &= NearEqual(y[1] , 2.,  1e-10 , 1e-10);
 
 	// compute partial of f w.r.t x[0] at (1, 2)
-	CPPAD_TEST_VECTOR<double> dx(n);
-	CPPAD_TEST_VECTOR<double> dy(m);
+	CPPAD_TEST_VECTOR(double) dx(n);
+	CPPAD_TEST_VECTOR(double) dy(m);
 	dx[0] = 1.;
 	dx[1] = 0.;
 	dy    = f.Forward(1, dx);

@@ -66,7 +66,7 @@ bool change_const(void)
 	size_t j;
 
 	// declare first level of independent variables
-	CPPAD_TEST_VECTOR<A1_double> a1_u(nu); 
+	CPPAD_TEST_VECTOR(A1_double) a1_u(nu); 
 	for(j = 0; j < nu; j++)
 		a1_u[j] = 0.;
 	CppAD::Independent(a1_u); 
@@ -75,13 +75,13 @@ bool change_const(void)
 	A1_double a1_p = a1_u[2];
 
 	// declare second level of independent variables
-	CPPAD_TEST_VECTOR<A2_double> a2_x(nx); 
+	CPPAD_TEST_VECTOR(A2_double) a2_x(nx); 
 	for(j = 0; j < nx; j++)
 		a2_x[j] = 0.;
 	CppAD::Independent(a2_x); 
 
 	// compute dependent variables at second level
-	CPPAD_TEST_VECTOR<A2_double> a2_y(ny);
+	CPPAD_TEST_VECTOR(A2_double) a2_y(ny);
 	a2_y[0] = sin( a2_x[0] ) * a1_p;
 	a2_y[1] = sin( a2_x[1] ) * a1_p;
 
@@ -91,10 +91,10 @@ bool change_const(void)
 	a1_f.Dependent(a2_x, a2_y); 
 
 	// compute the Jacobian of a1_f at a1_u[0], a1_u[1]
-	CPPAD_TEST_VECTOR<A1_double> a1_x(nx);
+	CPPAD_TEST_VECTOR(A1_double) a1_x(nx);
 	a1_x[0] = a1_u[0];
 	a1_x[1] = a1_u[1];
-	CPPAD_TEST_VECTOR<A1_double> a1_J(nJ);
+	CPPAD_TEST_VECTOR(A1_double) a1_J(nJ);
 	a1_J = a1_f.Jacobian( a1_x );
 	
 	// declare function object that maps u = (x, p) to Jacobian of f
@@ -108,7 +108,7 @@ bool change_const(void)
 
 	// compute the Jacobian of f using zero order forward
 	// sweep with double values
-	CPPAD_TEST_VECTOR<double> J(nJ), u(nu);
+	CPPAD_TEST_VECTOR(double) J(nJ), u(nu);
 	for(j = 0; j < nu; j++)
 		u[j] = double(j+1);
 	J = g.Forward(0, u);
@@ -118,7 +118,7 @@ bool change_const(void)
 
 	// y[0] = sin( x[0] ) * p
 	// y[1] = sin( x[1] ) * p
-	CPPAD_TEST_VECTOR<double> x(nx);
+	CPPAD_TEST_VECTOR(double) x(nx);
 	x[0]     = u[0];
 	x[1]     = u[1];
 	double p = u[2];

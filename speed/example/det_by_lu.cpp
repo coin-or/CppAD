@@ -47,7 +47,7 @@ bool det_by_lu()
 		3., 2., 1.,  // a[3] a[4] a[5]
 		2., 1., 2.   // a[6] a[7] a[8]
 	};
-	CPPAD_TEST_VECTOR<double> A(9);
+	CPPAD_TEST_VECTOR(double) A(9);
 	size_t i;
 	for(i = 0; i < 9; i++)
 		A[i] = a[i];

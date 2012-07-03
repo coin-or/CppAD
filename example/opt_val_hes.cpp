@@ -75,8 +75,8 @@ $end
 
 namespace {
 	using CppAD::AD;
-	typedef CPPAD_TEST_VECTOR<double>       BaseVector;
-	typedef CPPAD_TEST_VECTOR< AD<double> > ADVector;
+	typedef CPPAD_TEST_VECTOR(double)       BaseVector;
+	typedef CPPAD_TEST_VECTOR(AD<double>) ADVector;
 
 	class Fun {
 	private:

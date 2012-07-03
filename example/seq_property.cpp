@@ -91,7 +91,7 @@ bool seq_property(void)
 
 	// domain space vector
 	size_t n = 2;
-	CPPAD_TEST_VECTOR< AD<double> > x(n);
+	CPPAD_TEST_VECTOR(AD<double>) x(n);
 	x[0]     = 0.;
 	x[1]     = 1.;
 
@@ -120,7 +120,7 @@ bool seq_property(void)
 
 	// range space vector
 	size_t m = 3;
-	CPPAD_TEST_VECTOR< AD<double> > y(m);
+	CPPAD_TEST_VECTOR(AD<double>) y(m);
 
 	// operations that do not add to the operation sequence
 	y[0]   = 1.;  // re-use the parameter 1   

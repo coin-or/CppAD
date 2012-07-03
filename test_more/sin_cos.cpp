@@ -1,6 +1,6 @@
 /* $Id$ */
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-07 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-12 Bradley M. Bell
 
 CppAD is distributed under multiple licenses. This distribution is under
 the terms of the 
@@ -29,21 +29,21 @@ bool Sin(void)
 	// independent variable vector
 	double x = .5;
 	double y = .8;
-	CPPAD_TEST_VECTOR< AD<double> > X(2);
+	CPPAD_TEST_VECTOR(AD<double>) X(2);
 	X[0]     = x;
 	X[1]     = y;
 	Independent(X);
 
 	// dependent variable vector 
-	CPPAD_TEST_VECTOR< AD<double> > Z(1);
+	CPPAD_TEST_VECTOR(AD<double>) Z(1);
 	AD<double> U = X[0] * X[1];
 	Z[0] = sin( U ); 
 
 	// create f: X -> Z and vectors used for derivative calculations
 	// f(x, y) = sin(x, y)
 	ADFun<double> f(X, Z); 
-	CPPAD_TEST_VECTOR<double> v( 2 );
-	CPPAD_TEST_VECTOR<double> w( 1 );
+	CPPAD_TEST_VECTOR(double) v( 2 );
+	CPPAD_TEST_VECTOR(double) w( 1 );
 
 	// check value 
 	double sin_u = sin( Value(U) );
@@ -83,7 +83,7 @@ bool Sin(void)
 	}
 
 	// reverse computation of partials of Taylor coefficients
-	CPPAD_TEST_VECTOR<double> r( 2 * p); 
+	CPPAD_TEST_VECTOR(double) r( 2 * p); 
 	w[0]  = 1.;
 	r     = f.Reverse(p, w);
 	jfac  = 1.;
@@ -126,21 +126,21 @@ bool Cos(void)
 	// independent variable vector
 	double x = .5;
 	double y = .8;
-	CPPAD_TEST_VECTOR< AD<double> > X(2);
+	CPPAD_TEST_VECTOR(AD<double>) X(2);
 	X[0]     = x;
 	X[1]     = y;
 	Independent(X);
 
 	// dependent variable vector 
-	CPPAD_TEST_VECTOR< AD<double> > Z(1);
+	CPPAD_TEST_VECTOR(AD<double>) Z(1);
 	AD<double> U = X[0] * X[1];
 	Z[0] = cos( U ); 
 
 	// create f: X -> Z and vectors used for derivative calculations
 	// f(x, y) = cos(x, y)
 	ADFun<double> f(X, Z); 
-	CPPAD_TEST_VECTOR<double> v( 2 );
-	CPPAD_TEST_VECTOR<double> w( 1 );
+	CPPAD_TEST_VECTOR(double) v( 2 );
+	CPPAD_TEST_VECTOR(double) w( 1 );
 
 	// check value 
 	double sin_u = sin( Value(U) );
@@ -180,7 +180,7 @@ bool Cos(void)
 	}
 
 	// reverse computation of partials of Taylor coefficients
-	CPPAD_TEST_VECTOR<double> r( 2 * p); 
+	CPPAD_TEST_VECTOR(double) r( 2 * p); 
 	w[0]  = 1.;
 	r     = f.Reverse(p, w);
 	jfac  = 1.;
@@ -223,21 +223,21 @@ bool Cosh(void)
 	// independent variable vector
 	double x = .5;
 	double y = .8;
-	CPPAD_TEST_VECTOR< AD<double> > X(2);
+	CPPAD_TEST_VECTOR(AD<double>) X(2);
 	X[0]     = x;
 	X[1]     = y;
 	Independent(X);
 
 	// dependent variable vector 
-	CPPAD_TEST_VECTOR< AD<double> > Z(1);
+	CPPAD_TEST_VECTOR(AD<double>) Z(1);
 	AD<double> U = X[0] * X[1];
 	Z[0] = cosh( U ); 
 
 	// create f: X -> Z and vectors used for derivative calculations
 	// f(x, y) = cosh(x, y)
 	ADFun<double> f(X, Z); 
-	CPPAD_TEST_VECTOR<double> v( 2 );
-	CPPAD_TEST_VECTOR<double> w( 1 );
+	CPPAD_TEST_VECTOR(double) v( 2 );
+	CPPAD_TEST_VECTOR(double) w( 1 );
 
 	// check value 
 	double sinh_u = sinh( Value(U) );
@@ -273,7 +273,7 @@ bool Cosh(void)
 	}
 
 	// reverse computation of partials of Taylor coefficients
-	CPPAD_TEST_VECTOR<double> r( 2 * p); 
+	CPPAD_TEST_VECTOR(double) r( 2 * p); 
 	w[0]  = 1.;
 	r     = f.Reverse(p, w);
 	jfac  = 1.;
@@ -312,21 +312,21 @@ bool Sinh(void)
 	// independent variable vector
 	double x = .5;
 	double y = .8;
-	CPPAD_TEST_VECTOR< AD<double> > X(2);
+	CPPAD_TEST_VECTOR(AD<double>) X(2);
 	X[0]     = x;
 	X[1]     = y;
 	Independent(X);
 
 	// dependent variable vector 
-	CPPAD_TEST_VECTOR< AD<double> > Z(1);
+	CPPAD_TEST_VECTOR(AD<double>) Z(1);
 	AD<double> U = X[0] * X[1];
 	Z[0] = sinh( U ); 
 
 	// create f: X -> Z and vectors used for derivative calculations
 	// f(x, y) = sinh(x, y)
 	ADFun<double> f(X, Z); 
-	CPPAD_TEST_VECTOR<double> v( 2 );
-	CPPAD_TEST_VECTOR<double> w( 1 );
+	CPPAD_TEST_VECTOR(double) v( 2 );
+	CPPAD_TEST_VECTOR(double) w( 1 );
 
 	// check value 
 	double sinh_u = sinh( Value(U) );
@@ -362,7 +362,7 @@ bool Sinh(void)
 	}
 
 	// reverse computation of partials of Taylor coefficients
-	CPPAD_TEST_VECTOR<double> r( 2 * p); 
+	CPPAD_TEST_VECTOR(double) r( 2 * p); 
 	w[0]  = 1.;
 	r     = f.Reverse(p, w);
 	jfac  = 1.;

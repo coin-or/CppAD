@@ -39,19 +39,19 @@ namespace { // Begin empty namespace
 
 CppAD::ADFun<double> *NewFactor(
 	size_t                           n ,
-	const CPPAD_TEST_VECTOR<double> &x , 
+	const CPPAD_TEST_VECTOR(double) &x , 
 	bool                           &ok ,
-	CPPAD_TEST_VECTOR<size_t>      &ip , 
-	CPPAD_TEST_VECTOR<size_t>      &jp )
+	CPPAD_TEST_VECTOR(size_t)      &ip , 
+	CPPAD_TEST_VECTOR(size_t)      &jp )
 {	using CppAD::AD;
 	using CppAD::ADFun;
 	size_t i, j, k;
 
 	// values for independent and dependent variables
-	CPPAD_TEST_VECTOR< AD<double> > Y(n*n+1), X(n*n);
+	CPPAD_TEST_VECTOR(AD<double>) Y(n*n+1), X(n*n);
 
 	// values for the LU factor
-	CPPAD_TEST_VECTOR< AD<double> > LU(n*n);
+	CPPAD_TEST_VECTOR(AD<double>) LU(n*n);
 
 	// record the LU factorization corresponding to this value of x
 	AD<double> Ratio;
@@ -86,10 +86,10 @@ CppAD::ADFun<double> *NewFactor(
 }
 bool CheckLuFactor(
 	size_t                           n  ,
-	const CPPAD_TEST_VECTOR<double> &x  ,
-	const CPPAD_TEST_VECTOR<double> &y  ,
-	const CPPAD_TEST_VECTOR<size_t> &ip ,
-	const CPPAD_TEST_VECTOR<size_t> &jp )
+	const CPPAD_TEST_VECTOR(double) &x  ,
+	const CPPAD_TEST_VECTOR(double) &y  ,
+	const CPPAD_TEST_VECTOR(size_t) &ip ,
+	const CPPAD_TEST_VECTOR(size_t) &jp )
 {	bool     ok = true;	
 
 	double  sum;                          // element of L * U
@@ -97,7 +97,7 @@ bool CheckLuFactor(
 	size_t  i, j, k;                      // temporary indices
 
 	// L and U factors
-	CPPAD_TEST_VECTOR<double>  L(n*n), U(n*n);
+	CPPAD_TEST_VECTOR(double)  L(n*n), U(n*n);
 
 	// Extract L from LU factorization
 	for(i = 0; i < n; i++)
@@ -146,10 +146,10 @@ bool LuRatio(void)
 	double  ratio;
 
 	// values for independent and dependent variables
-	CPPAD_TEST_VECTOR<double>  x(n*n), y(n*n+1);
+	CPPAD_TEST_VECTOR(double)  x(n*n), y(n*n+1);
 
 	// pivot vectors
-	CPPAD_TEST_VECTOR<size_t> ip(n), jp(n);
+	CPPAD_TEST_VECTOR(size_t) ip(n), jp(n);
 
 	// set x equal to the identity matrix
 	x[0] = 1.; x[1] = 0;

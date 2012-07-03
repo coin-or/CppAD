@@ -1,6 +1,6 @@
 /* $Id$ */
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-11 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-12 Bradley M. Bell
 
 CppAD is distributed under multiple licenses. This distribution is under
 the terms of the 
@@ -23,7 +23,7 @@ bool Reverse(void)
 	using namespace CppAD;
 
 	// independent variable vector 
-	CPPAD_TEST_VECTOR< AD<double> > U(3);
+	CPPAD_TEST_VECTOR(AD<double>) U(3);
 	U[0] = 0.; U[1] = 1.; U[2] = 2.;
 	Independent(U);
 
@@ -37,7 +37,7 @@ bool Reverse(void)
 	}
 
 	// dependent variable vector 
-	CPPAD_TEST_VECTOR< AD<double> > V(2);
+	CPPAD_TEST_VECTOR(AD<double>) V(2);
 	V[0] = Sum;
 	V[1] = Prod;
 
@@ -46,15 +46,15 @@ bool Reverse(void)
 
 	// Evaluate ( v[0] * f_0 + v[1] * f_1 )^(1) [ u0 ] ---------------
 	size_t p  = 1;
-	CPPAD_TEST_VECTOR<double> v( f.Range() );
-	CPPAD_TEST_VECTOR<double> u0( f.Domain() );
-	CPPAD_TEST_VECTOR<double> r1( f.Domain() * p );
+	CPPAD_TEST_VECTOR(double) v( f.Range() );
+	CPPAD_TEST_VECTOR(double) u0( f.Domain() );
+	CPPAD_TEST_VECTOR(double) r1( f.Domain() * p );
 
 	v[0]  = 1.; v[1] = -1.;
 	r1    = f.Reverse(p, v);
 
 	// direct evaluation of gradients of components of f
-	CPPAD_TEST_VECTOR<double> g0(3), g1(3);
+	CPPAD_TEST_VECTOR(double) g0(3), g1(3);
 	u0[0] = Value(U[0]); u0[1] = Value(U[1]); u0[2] = Value(U[2]);
 	g0[0] =          1.; g0[1] =          1.; g0[2] =          1.;
 	g1[0] = u0[1]*u0[2]; g1[1] = u0[0]*u0[2]; g1[2] = u0[0]*u0[1];
@@ -70,7 +70,7 @@ bool Reverse(void)
 	// Define the function z(t, u0, u1) = f( u0 + u1 * t ) and evaluate
 	// the first order Taylor coefficient column vector z(*, u0, u1)
 	p = 1;
-	CPPAD_TEST_VECTOR<double> u1( f.Domain() );
+	CPPAD_TEST_VECTOR(double) u1( f.Domain() );
 
 	u1[0] = 2.; u1[1] = -1.; u1[2] = 3.;
 	f.Forward(p, u1);
@@ -79,7 +79,7 @@ bool Reverse(void)
 	// order 0: v[0] *      z_0 (0, u0, u1) + v[1] *      z_1 (0, u0, u1)
 	// order 1: v[0] * d/dt z_0 (0, u0, u1) + v[1] * d/dt z_1 (0, u0, u1)
 	p    = 2;
-	CPPAD_TEST_VECTOR<double> r2( f.Domain() * p );
+	CPPAD_TEST_VECTOR(double) r2( f.Domain() * p );
 	v[0] = -.5; v[1] = .5;
 	r2   = f.Reverse(p, v);
 
@@ -101,7 +101,7 @@ bool Reverse(void)
 
 	// direct evaluation of the Hessian f_1^{(2)} (u0)
 	// (the Hessian f_0^{(2)} is identically zero)
-	CPPAD_TEST_VECTOR<double> H1(9);
+	CPPAD_TEST_VECTOR(double) H1(9);
 	H1[0] =    0.; H1[1] = u0[2]; H1[2] = u0[1];
 	H1[3] = u0[2]; H1[4] =    0.; H1[5] = u0[0];
 	H1[6] = u0[1]; H1[7] = u0[0]; H1[8] =    0.;
@@ -129,7 +129,7 @@ bool reverse_any_cases(void)
 
 	// domain space vector
 	size_t n = 3;
-	CPPAD_TEST_VECTOR< AD<double> > X(n);
+	CPPAD_TEST_VECTOR(AD<double>) X(n);
 	X[0] = 0.; 
 	X[1] = 1.;
 	X[2] = 2.;
@@ -139,7 +139,7 @@ bool reverse_any_cases(void)
 
 	// range space vector
 	size_t m = 1;
-	CPPAD_TEST_VECTOR< AD<double> > Y(m);
+	CPPAD_TEST_VECTOR(AD<double>) Y(m);
 	Y[0] = X[0] * X[1] * X[2];
 
 	// create f : X -> Y and stop recording

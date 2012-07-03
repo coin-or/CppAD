@@ -39,7 +39,7 @@ namespace {
 	
 		// domain space vector
 		size_t n(1), m(1);
-		CPPAD_TEST_VECTOR< AD<double> > ax(n), ay(n);
+		CPPAD_TEST_VECTOR(AD<double>) ax(n), ay(n);
 	
 		// declare independent variables and start tape recording
 		ax[0]  = 1.0;
@@ -69,14 +69,14 @@ namespace {
 		ok &= thread_alloc::inuse(thread) > inuse;
 
 		// zero order forward mode
-		CPPAD_TEST_VECTOR<double> x(n), y(m);
+		CPPAD_TEST_VECTOR(double) x(n), y(m);
 		x[0] = 0.5;
 		y    = f.Forward(0, x);
 		double eps = 10. * CppAD::numeric_limits<double>::epsilon();
 		ok  &= NearEqual(y[0], x[0] * x[0] * x[0], eps, eps);
 	
 		// forward computation of partials w.r.t. x
-		CPPAD_TEST_VECTOR<double> dx(n), dy(m);
+		CPPAD_TEST_VECTOR(double) dx(n), dy(m);
 		dx[0] = 1.;
 		dy    = f.Forward(1, dx);
 		ok   &= NearEqual(dy[0], 3. * x[0] * x[0], eps, eps);

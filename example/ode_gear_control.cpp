@@ -54,32 +54,32 @@ namespace {
 	// --------------------------------------------------------------
 	class Fun {
 	private:
-		 CPPAD_TEST_VECTOR<double> w;
+		 CPPAD_TEST_VECTOR(double) w;
 	public:
 		// constructor
-		Fun(const CPPAD_TEST_VECTOR<double> &w_) : w(w_)
+		Fun(const CPPAD_TEST_VECTOR(double) &w_) : w(w_)
 		{ } 
 
 		// set f = x'(t)
 		template <typename Scalar>
 		void Ode(
 			const Scalar                    &t, 
-			const CPPAD_TEST_VECTOR<Scalar> &x, 
-			CPPAD_TEST_VECTOR<Scalar>       &f)
+			const CPPAD_TEST_VECTOR(Scalar) &x, 
+			CPPAD_TEST_VECTOR(Scalar)       &f)
 		{	f[0] = - w[0] * x[0];
 			f[1] = + w[0] * x[0] - w[1] * x[1];	
 		}
 
 		void Ode_dep(
 			const double                    &t, 
-			const CPPAD_TEST_VECTOR<double> &x, 
-			CPPAD_TEST_VECTOR<double>       &f_x)
+			const CPPAD_TEST_VECTOR(double) &x, 
+			CPPAD_TEST_VECTOR(double)       &f_x)
 		{	using namespace CppAD;
 
 			size_t n  = x.size();	
-			CPPAD_TEST_VECTOR< AD<double> > T(1);
-			CPPAD_TEST_VECTOR< AD<double> > X(n);
-			CPPAD_TEST_VECTOR< AD<double> > F(n);
+			CPPAD_TEST_VECTOR(AD<double>) T(1);
+			CPPAD_TEST_VECTOR(AD<double>) X(n);
+			CPPAD_TEST_VECTOR(AD<double>) F(n);
 
 			// set argument values
 			T[0] = t;
@@ -97,8 +97,8 @@ namespace {
 			ADFun<double> fun(X, F);
 
 			// compute partial of f w.r.t x
-			CPPAD_TEST_VECTOR<double> dx(n);
-			CPPAD_TEST_VECTOR<double> df(n);
+			CPPAD_TEST_VECTOR(double) dx(n);
+			CPPAD_TEST_VECTOR(double) df(n);
 			for(j = 0; j < n; j++)
 				dx[j] = 0.;
 			for(j = 0; j < n; j++)
@@ -115,23 +115,23 @@ namespace {
 bool OdeGearControl(void)
 {	bool ok = true;     // initial return value
 
-	CPPAD_TEST_VECTOR<double> w(2);
+	CPPAD_TEST_VECTOR(double) w(2);
 	w[0] = 10.;
 	w[1] = 1.;
 	Fun F(w);
 
-	CPPAD_TEST_VECTOR<double> xi(2);
+	CPPAD_TEST_VECTOR(double) xi(2);
 	xi[0] = 1.;
 	xi[1] = 0.;
 
-	CPPAD_TEST_VECTOR<double> eabs(2);
+	CPPAD_TEST_VECTOR(double) eabs(2);
 	eabs[0] = 1e-4;
 	eabs[1] = 1e-4;
 
 	// return values
-	CPPAD_TEST_VECTOR<double> ef(2);
-	CPPAD_TEST_VECTOR<double> maxabs(2);
-	CPPAD_TEST_VECTOR<double> xf(2);
+	CPPAD_TEST_VECTOR(double) ef(2);
+	CPPAD_TEST_VECTOR(double) maxabs(2);
+	CPPAD_TEST_VECTOR(double) xf(2);
 	size_t                nstep;
 
 	// input values

@@ -43,7 +43,7 @@ bool fun_assign(void)
 
 	// domain space vector
 	size_t n  = 3;
-	CPPAD_TEST_VECTOR< AD<double> > x(n);
+	CPPAD_TEST_VECTOR(AD<double>) x(n);
 	for(j = 0; j < n; j++)
 		x[j] = AD<double>(j + 2);
 
@@ -52,7 +52,7 @@ bool fun_assign(void)
 
 	// range space vector 
 	size_t m = 2;
-	CPPAD_TEST_VECTOR< AD<double> > y(m);
+	CPPAD_TEST_VECTOR(AD<double>) y(m);
 	y[0] = x[0] + x[0] * x[1];
 	y[1] = x[1] * x[2] + x[2];
 
@@ -60,7 +60,7 @@ bool fun_assign(void)
 	CppAD::ADFun<double> f(x, y);
 
 	// sparsity pattern for the identity matrix
-	CPPAD_TEST_VECTOR< std::set<size_t> > r(n);
+	CPPAD_TEST_VECTOR(std::set<size_t>) r(n);
 	for(j = 0; j < n; j++)
 		r[j].insert(j);
 
@@ -77,7 +77,7 @@ bool fun_assign(void)
 
 	// Use zero order Taylor coefficient from f for first order
 	// calculation using g.
-	CPPAD_TEST_VECTOR<double> dx(n), dy(m);
+	CPPAD_TEST_VECTOR(double) dx(n), dy(m);
 	for(i = 0; i < n; i++)
 		dx[i] = 0.;
 	dx[1] = 1;
@@ -87,7 +87,7 @@ bool fun_assign(void)
 
 	// Use forward Jacobian sparsity pattern from f to calculate
 	// Hessian sparsity pattern using g.
-	CPPAD_TEST_VECTOR< std::set<size_t> > s(1), h(n);
+	CPPAD_TEST_VECTOR(std::set<size_t>) s(1), h(n);
 	s[0].insert(0); // Compute sparsity pattern for Hessian of y[0]
 	h =  f.RevSparseHes(n, s);
 

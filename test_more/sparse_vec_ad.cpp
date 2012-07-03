@@ -1,6 +1,6 @@
 /* $Id$ */
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-09 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-12 Bradley M. Bell
 
 CppAD is distributed under multiple licenses. This distribution is under
 the terms of the 
@@ -23,17 +23,17 @@ bool sparse_vec_ad(void)
 	size_t i, j;
 
 	// independent variable vector 
-	CPPAD_TEST_VECTOR< AD<double> > X(n);
+	CPPAD_TEST_VECTOR(AD<double>) X(n);
 	for(j = 0; j < n; j++)
 		X[j] = AD<double>(j); 
 	Independent(X);
 
 	// dependent variable vector
 	size_t m = n;
-	CPPAD_TEST_VECTOR< AD<double> > Y(m);
+	CPPAD_TEST_VECTOR(AD<double>) Y(m);
 
 	// check results vector
-	CPPAD_TEST_VECTOR< bool >  Check(m * n);
+	CPPAD_TEST_VECTOR( bool )  Check(m * n);
 
 	// Create a VecAD so that there are two in the tape and the sparsity
 	// pattern depends on the second one (checks addressing VecAD objects)
@@ -66,14 +66,14 @@ bool sparse_vec_ad(void)
 	ADFun<double> F(X, Y);
 
 	// dependency matrix for the identity function W(x) = x
-	CPPAD_TEST_VECTOR< bool > Identity(n * n);
+	CPPAD_TEST_VECTOR( bool ) Identity(n * n);
 	for(i = 0; i < n; i++)
 	{	for(j = 0; j < n; j++)
 			Identity[ i * n + j ] = false;
 		Identity[ i * n + i ] = true;
 	}
 	// evaluate the dependency matrix for Identity(F(x))
-	CPPAD_TEST_VECTOR< bool > Px(m * n);
+	CPPAD_TEST_VECTOR( bool ) Px(m * n);
 	Px = F.RevSparseJac(n, Identity);
 
 	// check values
@@ -83,7 +83,7 @@ bool sparse_vec_ad(void)
 	}	
 
 	// evaluate the dependency matrix for F(Identity(x))
-	CPPAD_TEST_VECTOR< bool > Py(m * n);
+	CPPAD_TEST_VECTOR( bool ) Py(m * n);
 	Py = F.ForSparseJac(n, Identity);
 
 	// check values
@@ -93,11 +93,11 @@ bool sparse_vec_ad(void)
 	}	
 
 	// test sparsity pattern for Hessian of F_2 ( Identity(x) ) 
-	CPPAD_TEST_VECTOR<bool> Hy(m);
+	CPPAD_TEST_VECTOR(bool) Hy(m);
 	for(i = 0; i < m; i++)
 		Hy[i] = false;
 	Hy[2] = true;
-	CPPAD_TEST_VECTOR<bool> Pxx(n * n);
+	CPPAD_TEST_VECTOR(bool) Pxx(n * n);
 	Pxx = F.RevSparseHes(n, Hy);
 	for(i = 0; i < n; i++)
 	{	for(j = 0; j < n; j++)

@@ -57,7 +57,7 @@ bool TapeIndex(void)
 
 	// domain space vector
 	size_t n = 2;
-	CPPAD_TEST_VECTOR< AD<double> > X(n);
+	CPPAD_TEST_VECTOR(AD<double>) X(n);
 	X[0] = 2.;   // array index value
 	X[1] = 3.;   // multiplier of array index value
 
@@ -66,17 +66,17 @@ bool TapeIndex(void)
 
 	// range space vector
 	size_t m = 1;
-	CPPAD_TEST_VECTOR< AD<double> > Y(m);
+	CPPAD_TEST_VECTOR(AD<double>) Y(m);
 	Y[0] = X[1] * Array( X[0] );
 
 	// create f: X -> Y and stop tape recording
 	CppAD::ADFun<double> f(X, Y);
 
 	// vectors for arguments to the function object f
-	CPPAD_TEST_VECTOR<double> x(n);   // argument values
-	CPPAD_TEST_VECTOR<double> y(m);   // function values 
-	CPPAD_TEST_VECTOR<double> w(m);   // function weights 
-	CPPAD_TEST_VECTOR<double> dw(n);  // derivative of weighted function
+	CPPAD_TEST_VECTOR(double) x(n);   // argument values
+	CPPAD_TEST_VECTOR(double) y(m);   // function values 
+	CPPAD_TEST_VECTOR(double) w(m);   // function weights 
+	CPPAD_TEST_VECTOR(double) dw(n);  // derivative of weighted function
 
 	// check function value
 	x[0] = Value(X[0]);

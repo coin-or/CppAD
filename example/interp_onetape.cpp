@@ -99,7 +99,7 @@ bool interp_onetape(void)
 
 	// domain space vector
 	size_t n = 1;
-	CPPAD_TEST_VECTOR< AD<double> > X(n);
+	CPPAD_TEST_VECTOR(AD<double>) X(n);
 	X[0] = .4 * ArgumentValue[1] + .6 * ArgumentValue[2];
 
 	// declare independent variables and start tape recording
@@ -113,17 +113,17 @@ bool interp_onetape(void)
 
 	// range space vector
 	size_t m = 1;
-	CPPAD_TEST_VECTOR< AD<double> > Y(m);
+	CPPAD_TEST_VECTOR(AD<double>) Y(m);
 	Y[0] = I;
 
 	// create f: X -> Y and stop tape recording
 	CppAD::ADFun<double> f(X, Y);
 
 	// vectors for arguments to the function object f
-	CPPAD_TEST_VECTOR<double> x(n);   // argument values
-	CPPAD_TEST_VECTOR<double> y(m);   // function values 
-	CPPAD_TEST_VECTOR<double> dx(n);  // differentials in x space
-	CPPAD_TEST_VECTOR<double> dy(m);  // differentials in y space
+	CPPAD_TEST_VECTOR(double) x(n);   // argument values
+	CPPAD_TEST_VECTOR(double) y(m);   // function values 
+	CPPAD_TEST_VECTOR(double) dx(n);  // differentials in x space
+	CPPAD_TEST_VECTOR(double) dy(m);  // differentials in y space
 
 	// to check function value we use the fact that X[0] is between 
 	// ArgumentValue[1] and ArgumentValue[2]

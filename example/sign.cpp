@@ -40,7 +40,7 @@ bool sign(void)
 	// create f: x -> y where f(x) = sign(x)
 	size_t n = 1;
 	size_t m = 1;
-	CPPAD_TEST_VECTOR< AD<double> > ax(n), ay(m);
+	CPPAD_TEST_VECTOR(AD<double>) ax(n), ay(m);
 	ax[0]     = 0.;
 	CppAD::Independent(ax);
 	ay[0]     = sign(ax[0]);
@@ -50,7 +50,7 @@ bool sign(void)
 	ok &= (ay[0] == 0.);
 
 	// use f(x) to evaluate the sign function and its derivatives
-	CPPAD_TEST_VECTOR<double> x(n), y(m), dx(n), dy(m), w(m), dw(n);
+	CPPAD_TEST_VECTOR(double) x(n), y(m), dx(n), dy(m), w(m), dw(n);
 	dx[0] = 1.;
 	w[0] = 1.; 
 	//

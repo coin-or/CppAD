@@ -62,7 +62,7 @@ $end
 namespace { 
 	// f(x) = |x|^2 / 2 = .5 * ( x[0]^2 + ... + x[n-1]^2 )
 	template <class Type>
-	Type f(CPPAD_TEST_VECTOR<Type> &x)
+	Type f(CPPAD_TEST_VECTOR(Type) &x)
 	{	Type sum;
 
 		sum  = 0.;
@@ -82,9 +82,9 @@ bool mul_level(void)
 	size_t n = 5;                            // dimension for example
 	size_t j;                                // a temporary index variable
 
-	CPPAD_TEST_VECTOR<double>       x(n);
-	CPPAD_TEST_VECTOR<A1_double>  a1_x(n), a1_v(n), a1_dy(1) ;
-	CPPAD_TEST_VECTOR<A2_double>  a2_x(n), a2_y(1);
+	CPPAD_TEST_VECTOR(double)       x(n);
+	CPPAD_TEST_VECTOR(A1_double)  a1_x(n), a1_v(n), a1_dy(1) ;
+	CPPAD_TEST_VECTOR(A2_double)  a2_x(n), a2_y(1);
 
 	// Values for the independent variables while taping the function f(x)
 	for(j = 0; j < n; j++)
@@ -121,8 +121,8 @@ bool mul_level(void)
 	dF.Forward(0, x);
 
 	// compute the d/dx of f'(x) * v = f''(x) * v = v
-	CPPAD_TEST_VECTOR<double> w(1);
-	CPPAD_TEST_VECTOR<double> dw(n);
+	CPPAD_TEST_VECTOR(double) w(1);
+	CPPAD_TEST_VECTOR(double) dw(n);
 	w[0] = 1.;
 	dw   = dF.Reverse(1, w);
 

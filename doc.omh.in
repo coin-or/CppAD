@@ -252,7 +252,7 @@ $hiliteseq%
 %CppAD::%ADFun%<%             FunConstruct
 %       %ADFun%<%             FunConstruct
 
-%       %CPPAD_TEST_VECTOR%<% test_vector
+%       %CPPAD_TEST_VECTOR%(% test_vector
 
       %.%Forward%(%           Forward
 

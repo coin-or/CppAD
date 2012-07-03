@@ -79,7 +79,7 @@ $end
 namespace { 
 	// f(x) = |x|^2 / 2 = .5 * ( x[0]^2 + ... + x[n-1]^2 )
 	template <class Type>
-	Type f(CPPAD_TEST_VECTOR<Type> &x)
+	Type f(CPPAD_TEST_VECTOR(Type) &x)
 	{	Type sum;
 
 		sum  = 0.;
@@ -100,9 +100,9 @@ bool mul_level_adolc(void)
 	size_t n = 5;                          // number independent variables
 	size_t j;
 
-	CPPAD_TEST_VECTOR<double>       x(n);
-	CPPAD_TEST_VECTOR<ADdouble>   a_x(n);
-	CPPAD_TEST_VECTOR<ADDdouble> aa_x(n);
+	CPPAD_TEST_VECTOR(double)       x(n);
+	CPPAD_TEST_VECTOR(ADdouble)   a_x(n);
+	CPPAD_TEST_VECTOR(ADDdouble) aa_x(n);
 
 	// Values for the independent variables while taping the function f(x)
 	for(j = 0; j < n; j++)
@@ -111,7 +111,7 @@ bool mul_level_adolc(void)
 	CppAD::Independent(aa_x); 
 
 	// Use AD<adouble> to tape the evaluation of f(x)
-	CPPAD_TEST_VECTOR<ADDdouble> aa_f(1); 
+	CPPAD_TEST_VECTOR(ADDdouble) aa_f(1); 
 	aa_f[0] = f(aa_x); 
 
 	// Declare a_F as the corresponding ADFun<adouble> function f(x)
@@ -130,8 +130,8 @@ bool mul_level_adolc(void)
 	a_F.Forward(0, a_x);
 
 	// compute f'(x) * v
-	CPPAD_TEST_VECTOR<ADdouble> a_v(n);
-	CPPAD_TEST_VECTOR<ADdouble> a_df(1);
+	CPPAD_TEST_VECTOR(ADdouble) a_v(n);
+	CPPAD_TEST_VECTOR(ADdouble) a_df(1);
 	for(j = 0; j < n; j++)
 		a_v[j] = double(n - j);
 	a_df = a_F.Forward(1, a_v); 

@@ -1,6 +1,6 @@
 /* $Id$ */
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-07 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-12 Bradley M. Bell
 
 CppAD is distributed under multiple licenses. This distribution is under
 the terms of the 
@@ -27,7 +27,7 @@ bool PowTestOne(void)
 	size_t n  = 2;
 	double x = 0.5;
 	double y = 2.;
-	CPPAD_TEST_VECTOR< AD<double> > XY(n);
+	CPPAD_TEST_VECTOR(AD<double>) XY(n);
 	XY[0]      = x;
 	XY[1]      = y;
 
@@ -36,7 +36,7 @@ bool PowTestOne(void)
 
 	// range space vector 
 	size_t m = 3;
-	CPPAD_TEST_VECTOR< AD<double> > Z(m);
+	CPPAD_TEST_VECTOR(AD<double>) Z(m);
 	Z[0] = CppAD::pow(XY[0], XY[1]);  // pow(variable, variable)
 	Z[1] = CppAD::pow(XY[0], y);      // pow(variable, parameter)
 	Z[2] = CppAD::pow(x,     XY[1]);  // pow(parameter, variable)
@@ -51,8 +51,8 @@ bool PowTestOne(void)
 		ok &= NearEqual(Z[i] , check,  1e-10 , 1e-10);
 
 	// forward computation of first partial w.r.t. x
-	CPPAD_TEST_VECTOR<double> dxy(n);
-	CPPAD_TEST_VECTOR<double> dz(m);
+	CPPAD_TEST_VECTOR(double) dxy(n);
+	CPPAD_TEST_VECTOR(double) dz(m);
 	dxy[0] = 1.;
 	dxy[1] = 0.;
 	dz    = f.Forward(1, dxy);
@@ -71,8 +71,8 @@ bool PowTestOne(void)
 	ok   &= NearEqual(dz[2], check, 1e-10, 1e-10);
 
 	// reverse computation of derivative of z[0] + z[1] + z[2]
-	CPPAD_TEST_VECTOR<double>  w(m);
-	CPPAD_TEST_VECTOR<double> dw(n);
+	CPPAD_TEST_VECTOR(double)  w(m);
+	CPPAD_TEST_VECTOR(double) dw(n);
 	w[0]  = 1.;
 	w[1]  = 1.;
 	w[2]  = 1.;
@@ -103,7 +103,7 @@ bool PowTestTwo(void)
 
 
 	// independent variable vector, indices, values, and declaration
-	CPPAD_TEST_VECTOR< AD<double> > U(2);
+	CPPAD_TEST_VECTOR(AD<double>) U(2);
 	size_t s = 0;
 	size_t t = 1;
 	U[s]     = 2.;
@@ -111,7 +111,7 @@ bool PowTestTwo(void)
 	Independent(U);
 
 	// dependent variable vector and indices
-	CPPAD_TEST_VECTOR< AD<double> > Z(2);
+	CPPAD_TEST_VECTOR(AD<double>) Z(2);
 	size_t x = 0;
 	size_t y = 1;
 
@@ -123,8 +123,8 @@ bool PowTestTwo(void)
 
 	// create f: U -> Z and vectors used for derivative calculations
 	ADFun<double> f(U, Z);
-	CPPAD_TEST_VECTOR<double> v( f.Domain() );
-	CPPAD_TEST_VECTOR<double> w( f.Range() );
+	CPPAD_TEST_VECTOR(double) v( f.Domain() );
+	CPPAD_TEST_VECTOR(double) w( f.Range() );
 
 	/*
 	u_s  (s, t) = u
@@ -156,13 +156,13 @@ bool PowTestTwo(void)
 	v[t] = 1.;
 	w    = f.Forward(1, v);
 	v[t] = 0.;
-	CPPAD_TEST_VECTOR<double> f_tt = f.Forward(2, v);
+	CPPAD_TEST_VECTOR(double) f_tt = f.Forward(2, v);
 
 	// forward computation of second Taylor coefficient w.r.t. s 
 	v[s] = 1.;
 	w    = f.Forward(1, v);
 	v[s] = 0.;
-	CPPAD_TEST_VECTOR<double> f_ss = f.Forward(2, v);
+	CPPAD_TEST_VECTOR(double) f_ss = f.Forward(2, v);
 
 	// second Taylor coefficient w.r.t. direction r = (s,t) 
 	v[s] = 1.;
@@ -170,7 +170,7 @@ bool PowTestTwo(void)
 	w    = f.Forward(1, v);
 	v[s] = 0.;
 	v[t] = 0.;
-	CPPAD_TEST_VECTOR<double> f_rr = f.Forward(2, v);
+	CPPAD_TEST_VECTOR(double) f_rr = f.Forward(2, v);
 
 	// check second order partial of y
 	ok &= NearEqual(
@@ -192,7 +192,7 @@ bool PowTestThree(void)
 
 	// domain space vector
 	size_t n  = 1;
-	CPPAD_TEST_VECTOR< AD<double> > x(n);
+	CPPAD_TEST_VECTOR(AD<double>) x(n);
 	x[0]      = 2.;
 
 	// declare independent variables and start tape recording
@@ -200,7 +200,7 @@ bool PowTestThree(void)
 
 	// range space vector 
 	size_t m = 4;
-	CPPAD_TEST_VECTOR< AD<double> > y(m);
+	CPPAD_TEST_VECTOR(AD<double>) y(m);
 
 	// some special cases
 	y[0] = pow(x[0], 0.);
@@ -218,8 +218,8 @@ bool PowTestThree(void)
 	ok  &= (Value(y[3]) == 1.);
 
 	// forward computation of first partial w.r.t. x
-	CPPAD_TEST_VECTOR<double> dx(n);
-	CPPAD_TEST_VECTOR<double> dy(m);
+	CPPAD_TEST_VECTOR(double) dx(n);
+	CPPAD_TEST_VECTOR(double) dy(m);
 	dx[0] = 1.;
 	dy    = f.Forward(1, dx);
 	ok   &= (dy[0] == 0.);
@@ -228,8 +228,8 @@ bool PowTestThree(void)
 	ok   &= (dy[3] == 0.);
 
 	// reverse mode computation of derivative of y[0]+y[1]+y[2]+y[3] 
-	CPPAD_TEST_VECTOR<double>  w(m);
-	CPPAD_TEST_VECTOR<double> dw(n);
+	CPPAD_TEST_VECTOR(double)  w(m);
+	CPPAD_TEST_VECTOR(double) dw(n);
 	w[0] = 1.;
 	w[1] = 1.;
 	w[2] = 1.;
@@ -249,7 +249,7 @@ bool PowTestFour(void)
 	// domain space vector
 	size_t n  = 1;
 	double x0 = -2;
-	CPPAD_TEST_VECTOR< AD<double> > x(n);
+	CPPAD_TEST_VECTOR(AD<double>) x(n);
 	x[0]      = x0;
 
 	// declare independent variables and start tape recording
@@ -257,7 +257,7 @@ bool PowTestFour(void)
 
 	// range space vector 
 	size_t m = 5;
-	CPPAD_TEST_VECTOR< AD<double> > y(m);
+	CPPAD_TEST_VECTOR(AD<double>) y(m);
 
 	// some special cases (skip zero raised to a negative power)
 	y[0] = pow(1., x[0]);
@@ -276,8 +276,8 @@ bool PowTestFour(void)
 	}
 
 	// forward computation of first partial w.r.t. x
-	CPPAD_TEST_VECTOR<double> dx(n);
-	CPPAD_TEST_VECTOR<double> dy(m);
+	CPPAD_TEST_VECTOR(double) dx(n);
+	CPPAD_TEST_VECTOR(double) dy(m);
 	dx[0] = 1.;
 	dy    = f.Forward(1, dx);
 	ok   &= (dy[0] == 0.);
@@ -291,8 +291,8 @@ bool PowTestFour(void)
 	}
 
 	// reverse mode computation of derivative of y[0] + .. y[m-1];
-	CPPAD_TEST_VECTOR<double>  w(m);
-	CPPAD_TEST_VECTOR<double> dw(n);
+	CPPAD_TEST_VECTOR(double)  w(m);
+	CPPAD_TEST_VECTOR(double) dw(n);
 	for(i = 0; i < m; i++)
 		w[i] = 1.;
 	dw   = f.Reverse(1, w);
@@ -309,7 +309,7 @@ bool PowTestFive(void)
 	// domain space vector
 	size_t n  = 1;
 	double x0 = -1.;
-	CPPAD_TEST_VECTOR< AD<double> > x(n);
+	CPPAD_TEST_VECTOR(AD<double>) x(n);
 	x[0]      = x0;
 
 	// declare independent variables and start tape recording
@@ -317,7 +317,7 @@ bool PowTestFive(void)
 
 	// range space vector 
 	size_t m = 1;
-	CPPAD_TEST_VECTOR< AD<double> > y(m);
+	CPPAD_TEST_VECTOR(AD<double>) y(m);
 
 	// case of zero raised to a positive integer power
 	double e = 2.;
@@ -331,8 +331,8 @@ bool PowTestFive(void)
 
 	// forward computation of first partial w.r.t. x[1]
 	double d1 = e * pow(x0, (e-1));
-	CPPAD_TEST_VECTOR<double> dx(n);
-	CPPAD_TEST_VECTOR<double> dy(m);
+	CPPAD_TEST_VECTOR(double) dx(n);
+	CPPAD_TEST_VECTOR(double) dy(m);
 	dx[0] = 1.;
 	dy    = f.Forward(1, dx);
 	ok   &= NearEqual(dy[0], d1, 1e-10, 1e-10);
@@ -340,8 +340,8 @@ bool PowTestFive(void)
 	// reverse mode computation of second partials 
 	// x.r.t. x[1],x[0]  and x[1], x[1]
 	double d2 = e * (e-1) * pow(x0, (e-2));
-	CPPAD_TEST_VECTOR<double>   w(m);
-	CPPAD_TEST_VECTOR<double> ddw(2*n);
+	CPPAD_TEST_VECTOR(double)   w(m);
+	CPPAD_TEST_VECTOR(double) ddw(2*n);
 	w[0] = 1.;
 	ddw  = f.Reverse(2, w);
 	ok  &= NearEqual(ddw[0], d1, 1e-10, 1e-10);
@@ -358,11 +358,11 @@ bool PowTestSix(void)
 	// domain space vector
 	size_t n  = 1;
 	double x0 = 1.5;
-	CPPAD_TEST_VECTOR< AD<double> > x(n);
+	CPPAD_TEST_VECTOR(AD<double>) x(n);
 	x[0]      = x0;
 
 	// domain space vector
-	CPPAD_TEST_VECTOR< AD< AD<double> > > X(n);
+	CPPAD_TEST_VECTOR(AD< AD<double>) > X(n);
 	X[0]      = x[0];
 
 	// declare independent variables and start tape recording
@@ -370,7 +370,7 @@ bool PowTestSix(void)
 
 	// range space vector 
 	size_t m = 1;
-	CPPAD_TEST_VECTOR< AD< AD<double> > > Y(m);
+	CPPAD_TEST_VECTOR(AD< AD<double>) > Y(m);
 
 	// case of AD< AD<double> > raised to a double power
 	double e = 2.5;
@@ -384,8 +384,8 @@ bool PowTestSix(void)
 
 	// forward computation of first partial w.r.t. x[1]
 	double d1 = e * pow(x0, (e-1));
-	CPPAD_TEST_VECTOR< AD<double> > dx(n);
-	CPPAD_TEST_VECTOR< AD<double> > dy(m);
+	CPPAD_TEST_VECTOR(AD<double>) dx(n);
+	CPPAD_TEST_VECTOR(AD<double>) dy(m);
 	dx[0] = 1.;
 	dy    = F.Forward(1, dx);
 	ok   &= NearEqual(dy[0], d1, 1e-10, 1e-10);
@@ -393,8 +393,8 @@ bool PowTestSix(void)
 	// reverse mode computation of second partials 
 	// x.r.t. x[1],x[0]  and x[1], x[1]
 	double d2 = e * (e-1) * pow(x0, (e-2));
-	CPPAD_TEST_VECTOR< AD<double> >   w(m);
-	CPPAD_TEST_VECTOR< AD<double> > ddw(2*n);
+	CPPAD_TEST_VECTOR(AD<double>)   w(m);
+	CPPAD_TEST_VECTOR(AD<double>) ddw(2*n);
 	w[0] = 1.;
 	ddw  = F.Reverse(2, w);
 	ok  &= NearEqual(ddw[0], d1, 1e-10, 1e-10);

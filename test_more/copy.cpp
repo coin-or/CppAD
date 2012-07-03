@@ -24,7 +24,7 @@ bool copy_older(void)
 	using namespace CppAD;
 
 	// independent variable vector, indices, values, and declaration
-	CPPAD_TEST_VECTOR< AD<double> > U(1);
+	CPPAD_TEST_VECTOR(AD<double>) U(1);
 	size_t is = 0;
 	U[is]     = 2.;
 	Independent(U);
@@ -41,7 +41,7 @@ bool copy_older(void)
 	ok &= Parameter(y);
 
 	// dependent variable vector, indices, and values
-	CPPAD_TEST_VECTOR< AD<double> > Z(2);
+	CPPAD_TEST_VECTOR(AD<double>) Z(2);
 	size_t ix = 0;
 	size_t iy = 1;
 	Z[ix]     = x;
@@ -49,8 +49,8 @@ bool copy_older(void)
 
 	// create f: U -> Z and vectors used for derivative calculations
 	ADFun<double> f(U, Z);
-	CPPAD_TEST_VECTOR<double> v( f.Domain() );
-	CPPAD_TEST_VECTOR<double> w( f.Range() );
+	CPPAD_TEST_VECTOR(double) v( f.Domain() );
+	CPPAD_TEST_VECTOR(double) w( f.Range() );
  
  	// check parameters flags
  	ok &= ! f.Parameter(ix);
@@ -75,7 +75,7 @@ bool copy_ad(void)
 
 	// domain space vector
 	size_t n = 1;
-	CPPAD_TEST_VECTOR< AD<double> > x(n);
+	CPPAD_TEST_VECTOR(AD<double>) x(n);
 	x[0]     = 2.;
 
 	// declare independent variables and start tape recording
@@ -94,14 +94,14 @@ bool copy_ad(void)
 
 	// range space vector
 	size_t m = 2;
-	CPPAD_TEST_VECTOR< AD<double> > y(m);
+	CPPAD_TEST_VECTOR(AD<double>) y(m);
 	y[0]  = u;
 	y[1]  = v;
 
 	// create f: x -> y and vectors used for derivative calculations
 	CppAD::ADFun<double> f(x, y);
-	CPPAD_TEST_VECTOR<double> dx(n);
-	CPPAD_TEST_VECTOR<double> dy(m);
+	CPPAD_TEST_VECTOR(double) dx(n);
+	CPPAD_TEST_VECTOR(double) dy(m);
  
  	// check parameters flags
  	ok &= ! f.Parameter(0);

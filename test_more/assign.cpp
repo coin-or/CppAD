@@ -21,7 +21,7 @@ bool assign(void)
 
 	// domain space vector
 	size_t n = 3;
-	CPPAD_TEST_VECTOR< AD<double> > x(n);
+	CPPAD_TEST_VECTOR(AD<double>) x(n);
 	x[0]     = 2;      // AD<double> = int
 	x[1]     = 3.;     // AD<double> = double
 	x[2]     = x[1];   // AD<double> = AD<double>
@@ -31,7 +31,7 @@ bool assign(void)
 	
 	// range space vector 
 	size_t m = 3;
-	CPPAD_TEST_VECTOR< AD<double> > y(m);
+	CPPAD_TEST_VECTOR(AD<double>) y(m);
 
 	// assign an AD<Base> object equal to an independent variable
 	// (choose the first independent variable to check a special case)
@@ -56,8 +56,8 @@ bool assign(void)
 	ok &= ( y[2] == 5.);
 
 	// compute partials w.r.t x[1]
-	CPPAD_TEST_VECTOR<double> dx(n);
-	CPPAD_TEST_VECTOR<double> dy(m);
+	CPPAD_TEST_VECTOR(double) dx(n);
+	CPPAD_TEST_VECTOR(double) dy(m);
 	dx[0] = 0.;
 	dx[1] = 1.;
 	dx[2] = 0.;
@@ -67,8 +67,8 @@ bool assign(void)
 	ok  &= (dy[2] == 0.);  // dy[2] / dx[1]
 
 	// compute the derivative y[2]
-	CPPAD_TEST_VECTOR<double>  w(m);
-	CPPAD_TEST_VECTOR<double> dw(n);
+	CPPAD_TEST_VECTOR(double)  w(m);
+	CPPAD_TEST_VECTOR(double) dw(n);
 	w[0] = 0.;
 	w[1] = 0.;
 	w[2] = 1.;

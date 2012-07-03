@@ -1,6 +1,6 @@
 /* $Id$ */
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-11 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-12 Bradley M. Bell
 
 CppAD is distributed under multiple licenses. This distribution is under
 the terms of the 
@@ -26,13 +26,13 @@ namespace {
 	
 		// independent variable vector, indices, values, and declaration
 		size_t n = 1;
-		CPPAD_TEST_VECTOR< AD<double> > ax(n);
+		CPPAD_TEST_VECTOR(AD<double>) ax(n);
 		ax[0]     = .7;
 		Independent(ax);
 	
 		// dependent variable vector and indices
 		size_t m = 1;
-		CPPAD_TEST_VECTOR< AD<double> > ay(m);
+		CPPAD_TEST_VECTOR(AD<double>) ay(m);
 		if( tan_first )
 			ay[0] = atan( tan( ax[0] ) );
 		else	ay[0] = tan( atan( ax[0] ) );
@@ -42,7 +42,7 @@ namespace {
 	
 		// create f: x -> y and vectors used for derivative calculations
 		CppAD::ADFun<double> f(ax, ay); 
-		CPPAD_TEST_VECTOR<double> dx(n), dy(m);
+		CPPAD_TEST_VECTOR(double) dx(n), dy(m);
 	
 		// forward computation of partials w.r.t. x
 		dx[0] = 1.;
@@ -56,7 +56,7 @@ namespace {
 		}
 	
 		// reverse computation of order partial
-		CPPAD_TEST_VECTOR<double>  w(m), dw(n * order);
+		CPPAD_TEST_VECTOR(double)  w(m), dw(n * order);
 		w[0] = 1.;
 		dw   = f.Reverse(order, w);
 		ok   &= NearEqual(dw[0], 1e0, eps, eps);
@@ -73,13 +73,13 @@ namespace {
 	
 		// independent variable vector, indices, values, and declaration
 		size_t n = 1;
-		CPPAD_TEST_VECTOR< AD<double> > ax(n);
+		CPPAD_TEST_VECTOR(AD<double>) ax(n);
 		ax[0]     = .5;
 		Independent(ax);
 	
 		// dependent variable vector and indices
 		size_t m = 1;
-		CPPAD_TEST_VECTOR< AD<double> > ay(m);
+		CPPAD_TEST_VECTOR(AD<double>) ay(m);
 		AD<double> z;
 		if( tanh_first )
 		{	z     = tanh( ax[0] );
@@ -94,7 +94,7 @@ namespace {
 	
 		// create f: x -> y and vectors used for derivative calculations
 		CppAD::ADFun<double> f(ax, ay); 
-		CPPAD_TEST_VECTOR<double> dx(n), dy(m);
+		CPPAD_TEST_VECTOR(double) dx(n), dy(m);
 	
 		// forward computation of partials w.r.t. x
 		dx[0] = 1.;
@@ -108,7 +108,7 @@ namespace {
 		}
 	
 		// reverse computation of order partial
-		CPPAD_TEST_VECTOR<double>  w(m), dw(n * order);
+		CPPAD_TEST_VECTOR(double)  w(m), dw(n * order);
 		w[0] = 1.;
 		dw   = f.Reverse(order, w);
 		ok   &= NearEqual(dw[0], 1e0, eps, eps);

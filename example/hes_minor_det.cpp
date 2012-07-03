@@ -37,7 +37,7 @@ $end
 
 typedef std::complex<double>     Complex;
 typedef CppAD::AD<Complex>       ADComplex;
-typedef CPPAD_TEST_VECTOR<ADComplex>   ADVector;
+typedef CPPAD_TEST_VECTOR(ADComplex)   ADVector;
 
 // ----------------------------------------------------------------------------
 
@@ -52,8 +52,8 @@ bool HesMinorDet(void)
 	det_by_minor<ADComplex> Det(n);
 
 	// independent and dependent variable vectors
-	CPPAD_TEST_VECTOR<ADComplex>  X(n * n);
-	CPPAD_TEST_VECTOR<ADComplex>  D(1);
+	CPPAD_TEST_VECTOR(ADComplex)  X(n * n);
+	CPPAD_TEST_VECTOR(ADComplex)  D(1);
 
 	// value of the independent variable
 	size_t i;
@@ -70,12 +70,12 @@ bool HesMinorDet(void)
 	ADFun<Complex> f(X, D);
 
 	// argument value
-	CPPAD_TEST_VECTOR<Complex>     x( n * n );
+	CPPAD_TEST_VECTOR(Complex)     x( n * n );
 	for(i = 0; i < n * n; i++)
 		x[i] = Complex(2 * i, i);
 
 	// first derivative of the determinant
-	CPPAD_TEST_VECTOR<Complex> H( n * n * n * n);
+	CPPAD_TEST_VECTOR(Complex) H( n * n * n * n);
 	H = f.Hessian(x, 0);
 
 	/*

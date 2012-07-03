@@ -156,21 +156,21 @@ bool reverse_any(void)
 
 	// Record the function F(x)
 	size_t n    = 2;
-	CPPAD_TEST_VECTOR< AD<double> > X(n), Y(n);
+	CPPAD_TEST_VECTOR(AD<double>) X(n), Y(n);
 	X[0] = X[1] = 0.;
 	CppAD::Independent(X);
 	Y = F(X);
 	f.Dependent(X, Y);
 
 	// Record the function G(x)
-	CPPAD_TEST_VECTOR< AD<double> > Z(n);
+	CPPAD_TEST_VECTOR(AD<double>) Z(n);
 	Y[0] = Y[1] = 0.;
 	CppAD::Independent(Y);
 	Z = G(Y);
 	g.Dependent(Y, Z);
 
 	// argument and function values
-	CPPAD_TEST_VECTOR<double> x0(n), y0(n), z0(n);
+	CPPAD_TEST_VECTOR(double) x0(n), y0(n), z0(n);
 	x0[0] = 1.;
 	x0[1] = 2.;
 	y0    = f.Forward(0, x0);
@@ -182,7 +182,7 @@ bool reverse_any(void)
 	ok          &= NearEqual(h0, check, eps, eps);
 
 	// first order Taylor coefficients
-	CPPAD_TEST_VECTOR<double> x1(n), y1(n), z1(n);
+	CPPAD_TEST_VECTOR(double) x1(n), y1(n), z1(n);
 	x1[0] = 3.;
 	x1[1] = 4.;
 	y1    = f.Forward(1, x1);
@@ -199,7 +199,7 @@ bool reverse_any(void)
 	// dw^0 (y) = \partial_y^0 h^0 (y)
 	// dw^1 (y) = \partial_y^1 h^0 (y)
 	size_t p = 2;
-	CPPAD_TEST_VECTOR<double> w(n*p), dw(n*p);
+	CPPAD_TEST_VECTOR(double) w(n*p), dw(n*p);
 	w[0*p+0] = 1.; // coefficient for z^0_0
 	w[1*p+0] = 1.; // coefficient for z^0_1
 	w[0*p+1] = 0.; // coefficient for z^1_0
@@ -208,7 +208,7 @@ bool reverse_any(void)
 
 	// dv^0 = dw^0 * \partial_x^0 y^0 (x) + dw^1 * \partial_x^0 y^1 (x)  
 	// dv^1 = dw^0 * \partial_x^1 y^0 (x) + dw^1 * \partial_x^1 y^1 (x)  
-	CPPAD_TEST_VECTOR<double> dv(n*p);
+	CPPAD_TEST_VECTOR(double) dv(n*p);
 	dv   = f.Reverse(p, dw); 
 
 	// check partial of h^0 w.r.t x^0_0
