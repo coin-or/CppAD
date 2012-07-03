@@ -12,7 +12,7 @@
 # -----------------------------------------------------------------------------
 # prefix directories for the corresponding packages
 ADOLC_DIR=$HOME/prefix/adolc
-BOOST_DIR=$HOME/prefix/boost
+BOOST_DIR=/usr
 CPPAD_DIR=$HOME/prefix/cppad  
 EIGEN_DIR=$HOME/prefix/eigen
 FADBAD_DIR=$HOME/prefix/fadbad

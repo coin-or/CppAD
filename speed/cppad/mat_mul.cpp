@@ -81,7 +81,7 @@ bool link_mat_mul(
 
 	// user atomic information
 	size_t   info_id = info_.size();  
-	CPPAD_TEST_VECTOR<ADScalar> ax(2 * n), ay(n);
+	CppAD::vector<ADScalar> ax(2 * n), ay(n);
 	call_info info;
 	if( global_atomic )
 	{	info.nr_result = size;

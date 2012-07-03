@@ -3,7 +3,7 @@
 # define CPPAD_MAT_MUL_INCLUDED
 
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-11 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-12 Bradley M. Bell
 
 CppAD is distributed under multiple licenses. This distribution is under
 the terms of the 
@@ -423,11 +423,13 @@ $codep */
 
 $head Declare mat_mul Function$$
 Declare the $code AD<double>$$ routine $codei%mat_mul(%id%, %ax%, %ay%)%$$
-and end empty namespace:
+and end empty namespace
+(we could use any $cref/simple vector template class/SimpleVector/$$
+instead of $code CppAD::vector$$):
 $codep */
 	CPPAD_USER_ATOMIC(
 		mat_mul                 , 
-		CPPAD_TEST_VECTOR       ,
+		CppAD::vector           ,
 		double                  , 
 		mat_mul_forward         , 
 		mat_mul_reverse         ,
