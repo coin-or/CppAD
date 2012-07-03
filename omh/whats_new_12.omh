@@ -13,6 +13,7 @@ Please visit http://www.coin-or.org/CppAD/ for information on other licenses.
 $begin whats_new_12$$
 $dollar @$$
 $spell
+	taddr
 	eigen
 	fabs
 	mul
@@ -53,6 +54,15 @@ This section contains a list of the changes to CppAD during 2012
 (in reverse order by date).
 The purpose of this section is to
 assist you in learning about changes between various versions of CppAD.
+
+$head 07-03$$
+Fix bug in $cref user_atomic$$ functions identification of variables
+that caused $cref user_tan.cpp$$ to fail with error message
+$codep
+Error detected by false result for
+    y_taddr > 0
+at line 262 in the file cppad/local/dependent.hpp
+$$
 
 $head 07-02$$
 Add  $cref eigen_plugin.hpp$$ so that 

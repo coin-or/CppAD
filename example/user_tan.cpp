@@ -261,7 +261,7 @@ namespace { // Begin empty namespace
 	// Declare the AD<float> routine user_tan(id, ax, ay)
 	CPPAD_USER_ATOMIC(
 		user_tan                 , 
-		CPPAD_TEST_VECTOR        ,
+		CppAD::vector            ,
 		float                    , 
 		user_tan_forward         , 
 		user_tan_reverse         ,
@@ -280,7 +280,7 @@ bool user_tan(void)
 	// domain space vector
 	size_t n  = 1;
 	float  x0 = 0.5;
-	CPPAD_TEST_VECTOR< AD<float> > ax(n);
+	CppAD::vector< AD<float> > ax(n);
 	ax[0]     = x0;
 
 	// declare independent variables and start tape recording
@@ -288,11 +288,11 @@ bool user_tan(void)
 
 	// range space vector 
 	size_t m = 3;
-	CPPAD_TEST_VECTOR< AD<float> > af(m);
+	CppAD::vector< AD<float> > af(m);
 
 	// temporary vector for user_tan computations
 	// (user_tan computes tan or tanh and its square)
-	CPPAD_TEST_VECTOR< AD<float> > az(2);
+	CppAD::vector< AD<float> > az(2);
 
 	// call user tan function and store tan(x) in f[0] (ignore tan(x)^2)
 	size_t id = 0;
@@ -305,7 +305,7 @@ bool user_tan(void)
 	af[1] = az[0];
 
 	// put a constant in f[2] = tanh(1.) (for sparsity pattern testing)
-	CPPAD_TEST_VECTOR< AD<float> > one(1);
+	CppAD::vector< AD<float> > one(1);
 	one[0] = 1.;
 	user_tan(id, one, az);
 	af[2] = az[0]; 
@@ -320,12 +320,12 @@ bool user_tan(void)
 	ok &= NearEqual(af[1] , tanh,  eps, eps);
 
 	// compute first partial of f w.r.t. x[0] using forward mode
-	CPPAD_TEST_VECTOR<float> dx(n), df(m);
+	CppAD::vector<float> dx(n), df(m);
 	dx[0] = 1.;
 	df    = F.Forward(1, dx);
 
 	// compute derivative of tan - tanh using reverse mode
-	CPPAD_TEST_VECTOR<float> w(m), dw(n);
+	CppAD::vector<float> w(m), dw(n);
 	w[0]  = 1.;
 	w[1]  = 1.;
 	dw    = F.Reverse(1, w);
@@ -339,12 +339,12 @@ bool user_tan(void)
 	ok   &= NearEqual(dw[0], w[0]*tanp + w[1]*tanhp, eps, eps);
 
 	// compute second partial of f w.r.t. x[0] using forward mode
-	CPPAD_TEST_VECTOR<float> ddx(n), ddf(m);
+	CppAD::vector<float> ddx(n), ddf(m);
 	ddx[0] = 0.;
 	ddf    = F.Forward(2, ddx);
 
 	// compute second derivative of tan - tanh using reverse mode
-	CPPAD_TEST_VECTOR<float> ddw(2);
+	CppAD::vector<float> ddw(2);
 	ddw   = F.Reverse(2, w);
 
 	// tan''(x)   = 2 *  tan(x) * tan'(x) 
@@ -398,7 +398,7 @@ bool user_tan(void)
 	ok  &= (h[0] == false);  // Hessian is zero
 
 	// check tanh results for a large value of x
-	CPPAD_TEST_VECTOR<float> x(n), f(m);
+	CppAD::vector<float> x(n), f(m);
 	x[0]  = std::numeric_limits<float>::max() / two;
 	f     = F.Forward(0, x);
 	tanh  = 1.;

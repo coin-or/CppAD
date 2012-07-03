@@ -977,7 +977,7 @@ public:
 		{	ay[i].value_ = y[i];
 
 			// initialize entire vector as a constant (not on tape)
-			ay[i].tape_id_ = CPPAD_MAX_NUM_THREADS;
+			ay[i].tape_id_ = 0;
 			ay[i].taddr_   = 0;
 		}
 		// if tape is not null, ay is on the tape
