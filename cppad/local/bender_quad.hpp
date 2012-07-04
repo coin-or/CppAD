@@ -319,8 +319,8 @@ void BenderQuad(
 	typedef CPPAD_TEST_VECTOR(AD<Base>) ADvector;
 
 	// size of the x and y spaces
-	size_t n = x.size();
-	size_t m = y.size();
+	size_t n = size_t(x.size());
+	size_t m = size_t(y.size());
 
 	// check the size of gx and gxx
 	CPPAD_ASSERT_KNOWN(
@@ -328,11 +328,11 @@ void BenderQuad(
 		"BenderQuad: size of the vector g is not equal to 1"
 	);
 	CPPAD_ASSERT_KNOWN(
-		gx.size() == n,
+		size_t(gx.size()) == n,
 		"BenderQuad: size of the vector gx is not equal to n"
 	);
 	CPPAD_ASSERT_KNOWN(
-		gxx.size() == n * n,
+		size_t(gxx.size()) == n * n,
 		"BenderQuad: size of the vector gxx is not equal to n * n"
 	);
 

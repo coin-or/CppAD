@@ -15,6 +15,7 @@ Test of Eigen Interface to CppAD Scalar Types
 $end
 */
 # include <cppad/example/cppad_eigen.hpp>
+# include <cppad/cppad.hpp>
 
 bool cppad_eigen(void)
 {	bool ok = true;

@@ -85,6 +85,13 @@ contains an example and test of these functions.
 $end 
 ------------------------------------------------------------------------------
 */
+# include <iostream>
+
+# include <cppad/configure.hpp>
+# include <cppad/local/define.hpp>
+# include <cppad/local/cppad_assert.hpp>
+# include <cppad/local/declare_ad.hpp>
+
 CPPAD_BEGIN_NAMESPACE
 /*!
 \file limits.hpp

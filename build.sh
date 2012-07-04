@@ -231,8 +231,7 @@ then
 	fi
 	if [ -e $BOOST_DIR/include/boost ]
 	then
-		dir_list="$dir_list
-			--with-boostvector BOOST_DIR=$BOOST_DIR"
+		dir_list="$dir_list BOOST_DIR=$BOOST_DIR"
 #_build_test_only:		dir_list="$dir_list 
 #_build_test_only:			--with-boostvector"
 	fi

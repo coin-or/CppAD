@@ -3,7 +3,7 @@
 # define CPPAD_FOR_SPARSE_JAC_INCLUDED
 
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-11 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-12 Bradley M. Bell
 
 CppAD is distributed under multiple licenses. This distribution is under
 the terms of the 
@@ -265,7 +265,7 @@ void ForSparseJacBool(
 	);
 
 	CPPAD_ASSERT_KNOWN(
-		r.size() == n * q,
+		size_t(r.size()) == n * q,
 		"ForSparseJac: r (second argument) length is not equal to\n"
 		"q (first argument) times domain dimension for ADFun object."
 	);
@@ -293,7 +293,7 @@ void ForSparseJacBool(
 	);
 
 	// return values corresponding to dependent variables
-	CPPAD_ASSERT_UNKNOWN( s.size() == m * q );
+	CPPAD_ASSERT_UNKNOWN( size_t(s.size()) == m * q );
 	for(i = 0; i < m; i++)
 	{	CPPAD_ASSERT_UNKNOWN( dep_taddr[i] < total_num_var );
 
@@ -398,7 +398,7 @@ void ForSparseJacSet(
 	);
 
 	CPPAD_ASSERT_KNOWN(
-		r.size() == n,
+		size_t(r.size()) == n,
 		"ForSparseJac: r (second argument) length is not equal to\n"
 		"the domain dimension for ADFun object."
 	);
@@ -434,7 +434,7 @@ void ForSparseJacSet(
 	);
 
 	// return values corresponding to dependent variables
-	CPPAD_ASSERT_UNKNOWN( s.size() == m );
+	CPPAD_ASSERT_UNKNOWN( size_t(s.size()) == m );
 	for(i = 0; i < m; i++)
 	{	CPPAD_ASSERT_UNKNOWN( dep_taddr[i] < total_num_var );
 		CPPAD_ASSERT_UNKNOWN( s[i].empty() );

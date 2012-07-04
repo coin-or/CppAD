@@ -72,6 +72,15 @@ we are not using standard vector for CPPAD_TEST_VECTOR.
 # define CPPAD_STDVECTOR @CPPAD_STDVECTOR@
 
 /*!
+\def CPPAD_EIGENVECTOR
+If this symbol is one, 
+we are using Eigen vector for CPPAD_TEST_VECTOR.
+If this symbol is zero, 
+we are not using Eigen vector for CPPAD_TEST_VECTOR.
+*/
+# define CPPAD_EIGENVECTOR @CPPAD_EIGENVECTOR@
+
+/*!
 \def CPPAD_GETTIMEOFDAY
 If this symbol is one, and _MSC_VER is not defined,
 this system supports the gettimeofday funcgtion.

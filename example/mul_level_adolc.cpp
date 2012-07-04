@@ -83,8 +83,8 @@ namespace {
 	{	Type sum;
 
 		sum  = 0.;
-		size_t i = x.size();
-		for(i = 0; i < x.size(); i++)
+		size_t i = size_t(x.size());
+		for(i = 0; i < size_t(x.size()); i++)
 			sum += x[i] * x[i];
 
 		return .5 * sum;

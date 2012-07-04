@@ -192,16 +192,16 @@ void LuInvert(
 	
 	size_t n = ip.size();
 	CPPAD_ASSERT_KNOWN(
-		jp.size() == n,
+		size_t(jp.size()) == n,
 		"Error in LuInvert: jp must have size equal to n * n"
 	);
 	CPPAD_ASSERT_KNOWN(
-		LU.size() == n * n,
+		size_t(LU.size()) == n * n,
 		"Error in LuInvert: Lu must have size equal to n * m"
 	);
-	size_t m = B.size() / n;
+	size_t m = size_t(B.size()) / n;
 	CPPAD_ASSERT_KNOWN(
-		B.size() == n * m,
+		size_t(B.size()) == n * m,
 		"Error in LuSolve: B must have size equal to a multiple of n"
 	);
 

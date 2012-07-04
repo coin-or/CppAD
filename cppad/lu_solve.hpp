@@ -296,15 +296,15 @@ int LuSolve(
 
 	// -------------------------------------------------------
 	CPPAD_ASSERT_KNOWN(
-		A.size() == n * n,
+		size_t(A.size()) == n * n,
 		"Error in LuSolve: A must have size equal to n * n"
 	);
 	CPPAD_ASSERT_KNOWN(
-		B.size() == n * m,
+		size_t(B.size()) == n * m,
 		"Error in LuSolve: B must have size equal to n * m"
 	);
 	CPPAD_ASSERT_KNOWN(
-		X.size() == n * m,
+		size_t(X.size()) == n * m,
 		"Error in LuSolve: X must have size equal to n * m"
 	);
 	// -------------------------------------------------------

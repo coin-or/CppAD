@@ -326,7 +326,7 @@ void vec_set_to_sparse_set(
 	size_t             n_row     ,
 	size_t             n_col     ,
 	bool               transpose )
-{	CPPAD_ASSERT_UNKNOWN( n_row == vec_set.size() );
+{	CPPAD_ASSERT_UNKNOWN( n_row == size_t(vec_set.size()) );
 	size_t i, j;
 	std::set<size_t>::const_iterator itr;
 

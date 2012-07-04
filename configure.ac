@@ -12,7 +12,7 @@ dnl ---------------------------------------------------------------------------
 dnl
 dnl Process this file with autoconf to produce a configure script.
 dnl   package   version              bug-report
-AC_INIT(CppAD, 20120703, cppad@list.coin-or.org)
+AC_INIT(CppAD, 20120704, cppad@list.coin-or.org)
 AC_SUBST(PACKAGE_URL, "http://www.coin-or.org/CppAD")
 AC_SUBST(PACKAGE_DESCRIPTION, "Differentiation of C++ Algorithms")
 
@@ -149,13 +149,33 @@ AC_ARG_WITH(boostvector,
 	[boostvector="no"]
 )
 AC_MSG_RESULT([$boostvector])
-if test "$boostvector$stdvector" = "yesyes" ; then
-	AC_MSG_ERROR([cannot have both --with-stdvector and --with-boostvector])
-fi
 if test "$boostvector" = "yes" ; then
+	if test "$stdvector" != "no" ; then
+		AC_MSG_ERROR([cannot --with both stdvector and boostvector])
+	fi
 	AC_SUBST(CPPAD_BOOSTVECTOR, 1)
 else
 	AC_SUBST(CPPAD_BOOSTVECTOR, 0)
+fi
+
+dnl Are we using eigen vectors ----------------------------------------
+AC_MSG_CHECKING([--with-eigenvector])
+AC_ARG_WITH(eigenvector, 
+	AC_HELP_STRING([--with-eigenvector], [default is no]),
+	[eigenvector="yes"],
+	[eigenvector="no"]
+)
+AC_MSG_RESULT([$eigenvector])
+if test "$eigenvector" = "yes" ; then
+	if test "$stdvector" != "no" ; then
+		AC_MSG_ERROR([cannot --with both stdvector and eigenvector])
+	fi
+	if test "$boostvector" != "no" ; then
+		AC_MSG_ERROR([cannot --with both boostvector and eigenvector])
+	fi
+	AC_SUBST(CPPAD_EIGENVECTOR, 1)
+else
+	AC_SUBST(CPPAD_EIGENVECTOR, 0)
 fi
 
 dnl The postfix directiory corresponding to CppAD ------------------------
@@ -348,7 +368,7 @@ else
 fi
 
 dnl Determine which definition we are using for CPPAD_TEST_VECTOR
-if test "$stdvector$boostvector" = "nono" ; then
+if test "$stdvector$boostvector$eigenvector" = "nonono" ; then
 	AC_SUBST(CPPAD_CPPADVECTOR, 1)
 else 
 	AC_SUBST(CPPAD_CPPADVECTOR, 0)

@@ -3,7 +3,7 @@
 # define CPPAD_ODE_GEAR_INCLUDED
 
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-07 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-12 Bradley M. Bell
 
 CppAD is distributed under multiple licenses. This distribution is under
 the terms of the 
@@ -398,11 +398,11 @@ void OdeGear(
 		"OdeGear: n is equal to zero"
 	);
 	CPPAD_ASSERT_KNOWN(
-		T.size() >= (m+1),
+		size_t(T.size()) >= (m+1),
 		"OdeGear: size of T is not greater than or equal (m+1)"
 	);
 	CPPAD_ASSERT_KNOWN(
-		X.size() >= (m+1) * n,
+		size_t(X.size()) >= (m+1) * n,
 		"OdeGear: size of X is not greater than or equal (m+1) * n"
 	);
 	for(j = 0; j < m; j++) CPPAD_ASSERT_KNOWN(

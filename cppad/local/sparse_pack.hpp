@@ -373,7 +373,7 @@ void vec_bool_to_sparse_pack(
 	size_t             n_row     ,
 	size_t             n_col     ,
 	bool               transpose )
-{	CPPAD_ASSERT_UNKNOWN( n_row * n_col == vec_bool.size() );
+{	CPPAD_ASSERT_UNKNOWN( n_row * n_col == size_t(vec_bool.size()) );
 	size_t i, j;
 
 	// transposed pattern case

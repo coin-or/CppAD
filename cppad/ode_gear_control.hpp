@@ -3,7 +3,7 @@
 # define CPPAD_ODE_GEAR_CONTROL_INCLUDED
 
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-11 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-12 Bradley M. Bell
 
 CppAD is distributed under multiple licenses. This distribution is under
 the terms of the 
@@ -395,7 +395,7 @@ Vector OdeGearControl(
 	CheckSimpleVector<Scalar, Vector>();
 
 	// dimension of the state space
-	size_t n = xi.size();
+	size_t n = size_t(xi.size());
 
 	CPPAD_ASSERT_KNOWN(
 		M >= 1,
@@ -410,11 +410,11 @@ Vector OdeGearControl(
 		"Error in OdeGearControl: sini is greater than smax"
 	);
 	CPPAD_ASSERT_KNOWN(
-		eabs.size() == n,
+		size_t(eabs.size()) == n,
 		"Error in OdeGearControl: size of eabs is not equal to n"
 	);
 	CPPAD_ASSERT_KNOWN(
-		maxabs.size() == n,
+		size_t(maxabs.size()) == n,
 		"Error in OdeGearControl: size of maxabs is not equal to n"
 	);
 

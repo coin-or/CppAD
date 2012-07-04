@@ -3,7 +3,7 @@
 # define CPPAD_HESSIAN_INCLUDED
 
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-09 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-12 Bradley M. Bell
 
 CppAD is distributed under multiple licenses. This distribution is under
 the terms of the 
@@ -169,11 +169,11 @@ Vector ADFun<Base>::Hessian(const Vector &x, const Vector &w)
 	CheckSimpleVector<Base, Vector>();
 
 	CPPAD_ASSERT_KNOWN(
-		x.size() == n,
+		size_t(x.size()) == n,
 		"Hessian: length of x not equal domain dimension for f"
 	); 
 	CPPAD_ASSERT_KNOWN(
-		w.size() == Range(),
+		size_t(w.size()) == Range(),
 		"Hessian: length of w not equal range dimension for f"
 	);
 

@@ -16,6 +16,7 @@ Please visit http://www.coin-or.org/CppAD/ for information on other licenses.
 /*
 $begin test_vector$$
 $spell
+	cppad
 	Eigen
 	ifdef
 	undef
@@ -100,7 +101,7 @@ and $code CPPAD_TEST_VECTOR$$ is defined by the following source code:
 $codep */
 // The next 4 lines are C++ source code.
 # if CPPAD_EIGENVECTOR
-# include <Eigen/Dense>
+# include <cppad/example/cppad_eigen.hpp>
 # define CPPAD_TEST_VECTOR(Scalar) Eigen::Matrix< Scalar , Eigen::Dynamic, 1>
 # endif
 /* $$

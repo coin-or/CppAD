@@ -42,7 +42,7 @@ Replacement for config.h so that all preprocessor symbols begin with CPPAD_
 \def CPPAD_PACKAGE_STRING
 cppad-yyyymmdd as a C string where yyyy is year, mm is month, and dd is day.
 */
-# define CPPAD_PACKAGE_STRING "cppad-20120703"
+# define CPPAD_PACKAGE_STRING "cppad-20120704"
 
 /*!
 \def CPPAD_BOOSTVECTOR
@@ -70,6 +70,15 @@ It this symbol is zero,
 we are not using standard vector for CPPAD_TEST_VECTOR.
 */
 # define CPPAD_STDVECTOR 0
+
+/*!
+\def CPPAD_EIGENVECTOR
+If this symbol is one, 
+we are using Eigen vector for CPPAD_TEST_VECTOR.
+If this symbol is zero, 
+we are not using Eigen vector for CPPAD_TEST_VECTOR.
+*/
+# define CPPAD_EIGENVECTOR 0
 
 /*!
 \def CPPAD_GETTIMEOFDAY

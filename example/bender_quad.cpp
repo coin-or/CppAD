@@ -87,7 +87,7 @@ namespace {
 		// Fun.f(x, y) = F(x, y)
 		ADvector f(const ADvector &x, const ADvector &y)
 		{	size_t i;
-			size_t N = z_.size();
+			size_t N = size_t(z_.size());
 
 			ADvector F(1);
 			F[0] = 0.;
@@ -102,7 +102,7 @@ namespace {
 		// Fun.h(x, y) = H(x, y) = F_y (x, y)
 		ADvector h(const ADvector &x, const BAvector &y)
 		{	size_t i;
-			size_t N = z_.size();
+			size_t N = size_t(z_.size());
 
 			ADvector fy(1);
 			fy[0] = 0.;
@@ -121,7 +121,7 @@ namespace {
 			const BAvector &y , 
 			const ADvector &H )
 		{	size_t i;
-			size_t N = z_.size();
+			size_t N = size_t(z_.size());
 
 			ADvector Dy(1);
 			AD<double> fyy = 0.;
@@ -141,7 +141,7 @@ namespace {
 		AD<double> numerator = 0.;
 		AD<double> denominator = 0.;
 		size_t k;
-		for(k = 0; k < t.size(); k++)
+		for(k = 0; k < size_t(t.size()); k++)
 		{	numerator   += sin( x[0] * t[k] ) * z[k];
 			denominator += sin( x[0] * t[k] ) * sin( x[0] * t[k] ); 	
 		}
@@ -149,7 +149,7 @@ namespace {
 
 		// V(x) = F[x, Y(x)]
 		AD<double> sum = 0;
-		for(k = 0; k < t.size(); k++)
+		for(k = 0; k < size_t(t.size()); k++)
 		{	AD<double> residual = y * sin( x[0] * t[k] ) - z[k];
 			sum += .5 * residual * residual;
 		}

@@ -63,7 +63,7 @@ The file $code eigen_plugin$$ defines $code value_type$$
 in the Eigen matrix class definition so its vectors are 
 $cref/simple vectors/SimpleVector/$$.
 $codep */
-# include <cppad/cppad.hpp>
+# include <cppad/local/limits.hpp>
 # define EIGEN_MATRIXBASE_PLUGIN <cppad/example/eigen_plugin.hpp>
 # include <Eigen/Core>
 /* $$

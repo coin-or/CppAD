@@ -318,11 +318,11 @@ size_t ADFun<Base>::SparseJacobianFor(
 	// check VectorBase is Simple Vector class with Base type elements
 	CheckSimpleVector<Base, VectorBase>();
 
-	CPPAD_ASSERT_UNKNOWN( x.size() == n );
+	CPPAD_ASSERT_UNKNOWN( size_t(x.size()) == n );
 	CPPAD_ASSERT_UNKNOWN( color.size() == 0 || color.size() == n );
 
 	// number of components of Jacobian that are required
-	size_t K = jac.size();
+	size_t K = size_t(jac.size());
 	CPPAD_ASSERT_UNKNOWN( row.size() == K );
 	CPPAD_ASSERT_UNKNOWN( col.size() == K+1 );
 	CPPAD_ASSERT_UNKNOWN( col[K] == n );
@@ -534,11 +534,11 @@ size_t ADFun<Base>::SparseJacobianRev(
 	// check VectorBase is Simple Vector class with Base type elements
 	CheckSimpleVector<Base, VectorBase>();
 
-	CPPAD_ASSERT_UNKNOWN( x.size() == n );
+	CPPAD_ASSERT_UNKNOWN( size_t(x.size()) == n );
 	CPPAD_ASSERT_UNKNOWN (color.size() == m || color.size() == 0 );
 
 	// number of components of Jacobian that are required
-	size_t K = jac.size();
+	size_t K = size_t(jac.size());
 	CPPAD_ASSERT_UNKNOWN( row.size() == K+1 );
 	CPPAD_ASSERT_UNKNOWN( col.size() == K );
 	CPPAD_ASSERT_UNKNOWN( row[K] == m );
@@ -751,8 +751,8 @@ size_t ADFun<Base>::SparseJacobianCase(
 		"SparseJacobian: using bool values and size of p "
 		" not equal range dimension times domain dimension for f"
 	); 
-	CPPAD_ASSERT_UNKNOWN( x.size() == n );
-	size_t K = jac.size();
+	CPPAD_ASSERT_UNKNOWN( size_t(x.size()) == n );
+	size_t K = size_t(jac.size());
 
 	if( work.c_sort.size() == K+1 )
 	{	// row major, use forward mode ----------------------------------
@@ -844,8 +844,8 @@ size_t ADFun<Base>::SparseJacobianCase(
 		"SparseJacobian: using size_t sets for sparsity pattern and p.size() "
 		"not equal range dimension for f"
 	); 
-	CPPAD_ASSERT_UNKNOWN( x.size() == n );
-	size_t K = jac.size();
+	CPPAD_ASSERT_UNKNOWN( size_t(x.size()) == n );
+	size_t K = size_t(jac.size());
 
 	if( work.c_sort.size() == K+1 )
 	{	// row major, use forward mode ---------------------------------
@@ -931,8 +931,8 @@ void ADFun<Base>::SparseJacobianCase(
 		"SparseJacobian: using bool values and size of p "
 		" not equal range dimension times domain dimension for f"
 	); 
-	CPPAD_ASSERT_UNKNOWN( x.size() == n );
-	CPPAD_ASSERT_UNKNOWN(jac.size() == m * n); 
+	CPPAD_ASSERT_UNKNOWN( size_t(x.size()) == n );
+	CPPAD_ASSERT_UNKNOWN( size_t(jac.size()) == m * n); 
 
 	// row index, column index, value representation
 	// (used to fold problem into user interface case).
@@ -1059,8 +1059,8 @@ void ADFun<Base>::SparseJacobianCase(
 		"SparseJacobian: using size_t sets for sparsity pattern and p.size() "
 		"not equal range dimension for f"
 	); 
-	CPPAD_ASSERT_UNKNOWN( x.size() == n );
-	CPPAD_ASSERT_UNKNOWN(jac.size() == m * n); 
+	CPPAD_ASSERT_UNKNOWN( size_t(x.size()) == n );
+	CPPAD_ASSERT_UNKNOWN( size_t(jac.size()) == m * n); 
 
 	// row index, column index, value representation
 	// (used to fold problem into user interface case).
@@ -1241,11 +1241,11 @@ size_t ADFun<Base>::SparseJacobianForward(
 # ifndef NDEBUG
 	size_t m = Range();
 	CPPAD_ASSERT_KNOWN(
-		x.size() == n ,
+		size_t(x.size()) == n ,
 		"SparseJacobianForward: size of x not equal domain dimension for f."
 	); 
 	CPPAD_ASSERT_KNOWN(
-		row.size() == K && col.size() == K ,
+		size_t(row.size()) == K && size_t(col.size()) == K ,
 		"SparseJacobianForward: either r or c does not have "
 		"the same size as jac."
 	); 
@@ -1361,11 +1361,11 @@ size_t ADFun<Base>::SparseJacobianReverse(
 # ifndef NDEBUG
 	size_t n = Domain();
 	CPPAD_ASSERT_KNOWN(
-		x.size() == n ,
+		size_t(x.size()) == n ,
 		"SparseJacobianReverse: size of x not equal domain dimension for f."
 	); 
 	CPPAD_ASSERT_KNOWN(
-		row.size() == K && col.size() == K ,
+		size_t(row.size()) == K && size_t(col.size()) == K ,
 		"SparseJacobianReverse: either r or c does not have "
 		"the same size as jac."
 	); 
@@ -1451,7 +1451,7 @@ VectorBase ADFun<Base>::SparseJacobian(
 	VectorBase jac(m * n);
 
 	CPPAD_ASSERT_KNOWN(
-		x.size() == n,
+		size_t(x.size()) == n,
 		"SparseJacobian: size of x not equal domain size for f."
 	);
 

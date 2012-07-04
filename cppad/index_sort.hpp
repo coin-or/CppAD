@@ -144,11 +144,11 @@ void index_sort(const VectorKey& keys, VectorSize& ind)
 	typedef index_sort_element<Compare> element;
 
 	CPPAD_ASSERT_KNOWN(
-		keys.size() == ind.size(),
+		size_t(keys.size()) == size_t(ind.size()),
 		"index_sort: vector sizes do not match"
 	);
 
-	size_t size_work = keys.size();
+	size_t size_work = size_t(keys.size());
 	size_t size_out;
 	element* work = 
 		thread_alloc::create_array<element>(size_work, size_out);

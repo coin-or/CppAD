@@ -79,7 +79,7 @@ bool reverse()
 	check[0] = 1.; check[1] = 1.; check[2]  = 0.; check[3]  = 0.;
 	check[4] = 0.; check[5] = 0.; check[6]  = 1.; check[7]  = 1.;
 	check[8] = 1.; check[9] = 1.; check[10] = 1.; check[11] = x[3];
-	for(ell = 0; ell < check.size(); ell++)
+	for(ell = 0; ell < size_t(check.size()); ell++)
 		ok &=  NearEqual(check[ell], jac[ell], eps, eps );
 
 	// using packed boolean sparsity patterns
@@ -91,7 +91,7 @@ bool reverse()
 	}
 	p_b   = f.RevSparseJac(m, s_b);
 	jac   = f.SparseJacobian(x, p_b);
-	for(ell = 0; ell < check.size(); ell++)
+	for(ell = 0; ell < size_t(check.size()); ell++)
 		ok &=  NearEqual(check[ell], jac[ell], eps, eps );
 
 	// using vector of sets sparsity patterns
@@ -100,7 +100,7 @@ bool reverse()
 		s_s[i].insert(i);
 	p_s   = f.RevSparseJac(m, s_s);
 	jac   = f.SparseJacobian(x, p_s);
-	for(ell = 0; ell < check.size(); ell++)
+	for(ell = 0; ell < size_t(check.size()); ell++)
 		ok &=  NearEqual(check[ell], jac[ell], eps, eps );
 
 	// using row and column indices to compute non-zero in rows 1 and 2
@@ -193,7 +193,7 @@ bool forward()
 	check[3] = 1.; check[4]  = 0.; check[5]  = 1.;
 	check[6] = 0.; check[7]  = 1.; check[8]  = 1.; 
 	check[9] = 0.; check[10] = 1.; check[11] = x[2];
-	for(ell = 0; ell < check.size(); ell++)
+	for(ell = 0; ell < size_t(check.size()); ell++)
 		ok &=  NearEqual(check[ell], jac[ell], eps, eps );
 
 	// test using packed boolean vectors for sparsity pattern
@@ -205,7 +205,7 @@ bool forward()
 	}
 	p_b = f.ForSparseJac(n, r_b);
 	jac = f.SparseJacobian(x, p_b);
-	for(ell = 0; ell < check.size(); ell++)
+	for(ell = 0; ell < size_t(check.size()); ell++)
 		ok &=  NearEqual(check[ell], jac[ell], eps, eps );
 
 	// test using vector of sets for sparsity pattern
@@ -214,7 +214,7 @@ bool forward()
 		r_s[j].insert(j);
 	p_s = f.ForSparseJac(n, r_s);
 	jac = f.SparseJacobian(x, p_s);
-	for(ell = 0; ell < check.size(); ell++)
+	for(ell = 0; ell < size_t(check.size()); ell++)
 		ok &=  NearEqual(check[ell], jac[ell], eps, eps );
 
 	// using row and column indices to compute non-zero elements excluding

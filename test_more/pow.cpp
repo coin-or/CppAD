@@ -362,7 +362,7 @@ bool PowTestSix(void)
 	x[0]      = x0;
 
 	// domain space vector
-	CPPAD_TEST_VECTOR(AD< AD<double>) > X(n);
+	CPPAD_TEST_VECTOR(AD< AD<double> >) X(n);
 	X[0]      = x[0];
 
 	// declare independent variables and start tape recording
@@ -370,7 +370,7 @@ bool PowTestSix(void)
 
 	// range space vector 
 	size_t m = 1;
-	CPPAD_TEST_VECTOR(AD< AD<double>) > Y(m);
+	CPPAD_TEST_VECTOR(AD< AD<double> >) Y(m);
 
 	// case of AD< AD<double> > raised to a double power
 	double e = 2.5;

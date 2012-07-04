@@ -305,11 +305,11 @@ int LuFactor(SizeVector &ip, SizeVector &jp, FloatVector &LU)           //
 	// -------------------------------------------------------
 	size_t n = ip.size();
 	CPPAD_ASSERT_KNOWN(
-		jp.size() == n,
+		size_t(jp.size()) == n,
 		"Error in LuFactor: jp must have size equal to n"
 	);
 	CPPAD_ASSERT_KNOWN(
-		LU.size() == n * n,
+		size_t(LU.size()) == n * n,
 		"Error in LuFactor: LU must have size equal to n * m"
 	);
 	// -------------------------------------------------------

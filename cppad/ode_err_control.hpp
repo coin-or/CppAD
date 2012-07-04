@@ -3,7 +3,7 @@
 # define CPPAD_ODE_ERR_CONTROL_INCLUDED
 
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-11 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-12 Bradley M. Bell
 
 CppAD is distributed under multiple licenses. This distribution is under
 the terms of the 
@@ -444,18 +444,18 @@ Vector OdeErrControl(
 	// check simple vector class specifications
 	CheckSimpleVector<Scalar, Vector>();
 
-	size_t n = xi.size();
+	size_t n = size_t(xi.size());
 
 	CPPAD_ASSERT_KNOWN(
 		smin <= smax,
 		"Error in OdeErrControl: smin > smax"
 	);
 	CPPAD_ASSERT_KNOWN(
-		eabs.size() == n,
+		size_t(eabs.size()) == n,
 		"Error in OdeErrControl: size of eabs is not equal to n"
 	);
 	CPPAD_ASSERT_KNOWN(
-		maxabs.size() == n,
+		size_t(maxabs.size()) == n,
 		"Error in OdeErrControl: size of maxabs is not equal to n"
 	);
 	size_t m = method.order();

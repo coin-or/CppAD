@@ -3,7 +3,7 @@
 # define CPPAD_REV_SPARSE_HES_INCLUDED
 
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-11 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-12 Bradley M. Bell
 
 CppAD is distributed under multiple licenses. This distribution is under
 the terms of the 
@@ -258,7 +258,7 @@ void RevSparseHesBool(
 		"in the previous call to ForSparseJac with this ADFun object."
 	);
 	CPPAD_ASSERT_KNOWN(
-		s.size() == m,
+		size_t(s.size()) == m,
 		"RevSparseHes: s (second argument) length is not equal to\n"
 		"range dimension for ADFun object."
 	);
@@ -290,7 +290,7 @@ void RevSparseHesBool(
 	);
 
 	// return values corresponding to independent variables
-	CPPAD_ASSERT_UNKNOWN( h.size() == n * q );
+	CPPAD_ASSERT_UNKNOWN( size_t(h.size()) == n * q );
 
 	// j is index corresponding to reverse mode partial
 	for(j = 0; j < n; j++)
@@ -449,7 +449,7 @@ void RevSparseHesSet(
 
 	// return values corresponding to independent variables
 	// j is index corresponding to reverse mode partial
-	CPPAD_ASSERT_UNKNOWN( h.size() == q );
+	CPPAD_ASSERT_UNKNOWN( size_t(h.size()) == q );
 	for(j = 0; j < n; j++)
 	{	CPPAD_ASSERT_UNKNOWN( ind_taddr[j] < total_num_var );
 		CPPAD_ASSERT_UNKNOWN( ind_taddr[j] == j + 1 );
