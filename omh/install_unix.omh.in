@@ -14,6 +14,7 @@ $begin InstallUnix$$
 $escape $$
 $dollar ^$$
 $spell
+	testvector
 	Eigen
 	colpack
 	num
@@ -162,11 +163,10 @@ $head Configure$$
 Execute the following command in the work directory:
 $index configure$$
 $codei%
-	./configure                             \
+./configure                                  \
 	--prefix=%prefix_dir%                     \
 	--with-Documentation                    \
-	--with-stdvector                        \  
-	--with-boostvector                      \  
+	--with-%test%vector                       \  
 	MAX_NUM_THREADS=%max_num_threads%         \
 	CXX_FLAGS=%cxx_flags%                     \
 	OPENMP_FLAGS=%openmp_flags%               \
@@ -180,7 +180,7 @@ $codei%
 	TAPE_ADDR_TYPE=%tape_addr_type%
 %$$
 where only the $code configure$$ line need appear; i.e.,
-the entries one each of the other lines are optional.
+the entries in all of the other lines are optional.
 The text in italic is replaced values that you choose;
 see discussion below.
 
@@ -335,32 +335,31 @@ $codei%
 	%prefix_dir%/share/doc/%postfix_dir%/cppad-@VERSION@/cppad.xml
 %$$
 
-$head --with-stdvector$$
-$index std::vector, unix$$
-$index vector, std$$
-The 
-$small $cref/CPPAD_TEST_VECTOR/test_vector/$$ $$
-template class is used for extensive examples and testing of CppAD.
-If the command line argument $code --with-stdvector$$ is specified,
-the default definition this template class is replaced by
+$head --with-testvector$$
+$index std, test vector$$
+$index boost, test vector$$
+$index eigen, test vector$$
+$index test, vector$$
+$index vector, test$$
+The $cref/CPPAD_TEST_VECTOR/test_vector/$$
+template class is used for many of the CppAD examples and tests.
+The default for this template class is $codei%CppAD::vector<%Scalar%>%$$.
+If one, and only one, of the following command line arguments is specified:
 $codep
-	std::vector
+	--with-stdvector
+	--with-boostvector
+	--with-eigenvector
 $$
-In this case $code --with-boostvector$$ must not also be specified.
-
-$head --with-boostvector$$
-$index boost, vector$$
-$index vector, boost$$
-The 
-$small $cref/CPPAD_TEST_VECTOR/test_vector/$$ $$
-template class is used for extensive examples and testing of CppAD.
-If the command line argument $code --with-boostvector$$ is specified,
-the default definition this template class is replaced by
-$codep
-	boost::numeric::ublas::vector
-$$
-In this case $code --with-stdvector$$ must not also be specified.
-See also, $cref/boost_dir/InstallUnix/boost_dir/$$
+the corresponding of the following template classes is used 
+$codei%
+	std::vector<%Scalar%>
+	boost::numeric::ublas::vector<%Scalar%>
+	Eigen::matrix<%Scalar%, Eigen::Dynamic, 1>
+%$$
+See also, 
+$cref/boost_dir/InstallUnix/boost_dir/$$
+and
+$cref/eigen_dir/InstallUnix/eigen_dir/$$.
 
 $head max_num_threads$$
 this specifies the value for the default value for the preprocessor symbol
@@ -493,7 +492,7 @@ $codei%
 %$$
 are present.
 In this case, these files will be used by CppAD.
-See also, $cref/--with-boostvector/InstallUnix/--with-boostvector/$$
+See also, $cref/--with-boostvector/InstallUnix/--with-testvector/$$
 
 $head eigen_dir$$
 $index Eigen, unix$$
@@ -507,7 +506,8 @@ $codei%
 %$$
 is a valid include file.
 In this case CppAD will compile and test the Eigen examples; e.g.,
-$cref eigen_det.cpp$$.
+$cref eigen_array.cpp$$.
+See also, $cref/--with-eigenvector/InstallUnix/--with-testvector/$$
 
 $head fadbad_dir$$
 $index Fadbad, unix$$

@@ -140,7 +140,7 @@ Create $cref preprocessor$$ section with pointers to all the
 preprocessor symbols that are in the CppAD API.
 
 $head 11-21$$
-Separate $cref/--with-boostvector/InstallUnix/--with-boostvector/$$
+Separate $cref/--with-boostvector/InstallUnix/--with-testvector/$$
 for $cref/boost_dir/InstallUnix/boost_dir/$$.
 This enables one to specify $icode boost_dir$$ for 
 $cref team_bthread.cpp$$ with out using boost vectors.

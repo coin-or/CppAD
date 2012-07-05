@@ -55,6 +55,16 @@ This section contains a list of the changes to CppAD during 2012
 The purpose of this section is to
 assist you in learning about changes between various versions of CppAD.
 
+$head 07-04$$
+$list number$$
+Replace the requirement that the $cref SimpleVector$$ 
+$cref/size/SimpleVector/Size/$$ function return a $code size_t$$ value to
+the requirement that it can be converted to a $code size_t$$ value.
+$lnext
+The $cref/--with-eigenvector/InstallUnix/Configure/$$ option was
+added to the $code configure$$ command line.
+$lend
+
 $head 07-03$$
 Fix bug in $cref user_atomic$$ functions identification of variables
 that caused $cref user_tan.cpp$$ to fail with error message

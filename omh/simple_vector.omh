@@ -1,6 +1,6 @@
 $Id$
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-11 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-12 Bradley M. Bell
 
 CppAD is distributed under multiple licenses. This distribution is under
 the terms of the 
@@ -129,7 +129,7 @@ $index size, vector$$
 If $icode x$$ is a $icode%SimpleVector%<%Scalar%>%$$ object
 and $code n$$ has type $code size_t$$,
 $codei%
-	%n% = %x%.size()
+	%n% = size_t( %x%.size() )
 %$$
 sets $icode n$$ to the number of elements in the vector $icode x$$.
 The object $icode x$$ may be $code const$$.
