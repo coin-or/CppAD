@@ -14,12 +14,6 @@
 # CppAD pusts all it's preprocessor definitions in the cppad/configure.hpp
 DEFS          =
 #
-if CppAD_BOOST_DIR
-BOOST_INCLUDE = -I$(BOOST_DIR)/include
-else
-BOOST_INCLUDE =
-endif
-# 
 #
 AM_CXXFLAGS               = -g $(CXX_FLAGS) 
 #
@@ -27,6 +21,7 @@ AM_CPPFLAGS               = \
 	-I. \
 	-I$(top_srcdir) \
 	$(BOOST_INCLUDE) \
+	$(EIGEN_INCLUDE) \
 	-I$(IPOPT_DIR)/include
 #
 # make building the library conditional on having IPOPT_DIR specified

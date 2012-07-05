@@ -25,6 +25,8 @@ check_PROGRAMS    = test_multi
 AM_CPPFLAGS       = -I. \
 	-I$(top_srcdir) \
 	$(OPENMP_FLAGS) \
+	$(BOOST_INCLUDE) \
+	$(EIGEN_INCLUDE) \
 	$(TEST_OPENMP_FLAG)
 #
 AM_CXXFLAGS       = -g $(ADOLC_FLAGS) $(CXX_FLAGS)

@@ -26,13 +26,7 @@ ADOLC_LIB         =
 ADOLC_FLAGS       =
 endif
 # -------------------------------------------------------------------------
-if CppAD_BOOST_DIR
-BOOST_INCLUDE = -I$(BOOST_DIR)/include
-else
-BOOST_INCLUDE =
-endif
-# -------------------------------------------------------------------------
-if CppAD_EIGEN
+if CppAD_EIGEN_DIR
 # make a special library so can have it's own compile flags (see configure.ac)
 EIGEN_EXTRA_FILES   =
 noinst_LIBRARIES    = libeigen.a
@@ -63,10 +57,12 @@ else
 AM_CXXFLAGS       = -g $(ADOLC_FLAGS) $(CXX_FLAGS)
 endif
 #
-AM_CPPFLAGS       = -I. \
-                   -I$(top_srcdir) \
-                    $(BOOST_INCLUDE) \
-                    $(ADOLC_FLAGS)
+AM_CPPFLAGS       = \
+	-I. \
+	-I$(top_srcdir) \
+	$(BOOST_INCLUDE) \
+	$(EIGEN_INCLUDE) \
+	$(ADOLC_FLAGS)
 #
 AM_LDFLAGS        =  $(ADOLC_LIB)  $(BTHREAD_LIB) $(EIGEN_LIB) $(PTHREAD_LIB)
 #

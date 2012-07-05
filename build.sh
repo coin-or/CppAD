@@ -232,13 +232,16 @@ then
 	if [ -e $BOOST_DIR/include/boost ]
 	then
 		dir_list="$dir_list BOOST_DIR=$BOOST_DIR"
-#_build_test_only:		dir_list="$dir_list 
-#_build_test_only:			--with-boostvector"
+#_build_test_only:	if [ ! -e $EIGEN_DIR/include/Eigen ]
+#_build_test_only:	then
+#_build_test_only:		dir_list="$dir_list --with-boostvector"
+#_build_test_only:	fi
 	fi
 	if [ -e $EIGEN_DIR/include/Eigen ]
 	then
 		dir_list="$dir_list 
 			EIGEN_DIR=$EIGEN_DIR"
+#_build_test_only:	dir_list="$dir_list --with-eigenvector"
 	fi
 	if [ -e $FADBAD_DIR/FADBAD++ ]
 	then
@@ -262,6 +265,10 @@ then
 	#
 	dir_list=`echo $dir_list | sed -e 's|\t\t*| |g'`
 	cxx_flags="-Wall -ansi -pedantic-errors -std=c++98 -Wshadow"
+#_build_test_only:	if [ -e $EIGEN_DIR/include/Eigen ]
+#_build_test_only:	then
+#_build_test_only:	cxx_flags="-Wall -ansi -pedantic-errors -std=c++98 -Wno-long-long"
+#_build_test_only:	fi
 cat << EOF
 ../configure > $log_file \\
 $dir_list \\

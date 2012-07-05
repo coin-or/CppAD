@@ -15,15 +15,13 @@
 # CppAD pusts all it's preprocessor definitions in the cppad/configure.hpp
 DEFS          =
 #
-if CppAD_BOOST_DIR
-BOOST_INCLUDE = -I$(BOOST_DIR)/include
-else
-BOOST_INCLUDE =
-endif
-#
 check_PROGRAMS   = fadbad 
 #
-AM_CPPFLAGS   = -I$(top_srcdir) -I$(FADBAD_DIR) $(BOOST_INCLUDE)
+AM_CPPFLAGS   = \
+	-I$(top_srcdir) \
+	-I$(FADBAD_DIR) \
+	$(BOOST_INCLUDE) \
+	$(EIGEN_INCLUDE)
 #
 # BEGIN OPTIMIZE
 # Use special version of CXX_FLAGS with -Wshadow removed (if present).

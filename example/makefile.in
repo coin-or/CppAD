@@ -49,9 +49,9 @@ ARFLAGS = cru
 libeigen_a_AR = $(AR) $(ARFLAGS)
 libeigen_a_LIBADD =
 am__libeigen_a_SOURCES_DIST = eigen_det.cpp eigen_array.cpp
-@CppAD_EIGEN_TRUE@am_libeigen_a_OBJECTS =  \
-@CppAD_EIGEN_TRUE@	libeigen_a-eigen_det.$(OBJEXT) \
-@CppAD_EIGEN_TRUE@	libeigen_a-eigen_array.$(OBJEXT)
+@CppAD_EIGEN_DIR_TRUE@am_libeigen_a_OBJECTS =  \
+@CppAD_EIGEN_DIR_TRUE@	libeigen_a-eigen_det.$(OBJEXT) \
+@CppAD_EIGEN_DIR_TRUE@	libeigen_a-eigen_array.$(OBJEXT)
 libeigen_a_OBJECTS = $(am_libeigen_a_OBJECTS)
 am__example_SOURCES_DIST = mul_level_adolc.cpp ode_taylor_adolc.cpp \
 	example.cpp abort_recording.cpp abs.cpp acos.cpp add.cpp \
@@ -167,6 +167,7 @@ AUTOHEADER = @AUTOHEADER@
 AUTOMAKE = @AUTOMAKE@
 AWK = @AWK@
 BOOST_DIR = @BOOST_DIR@
+BOOST_INCLUDE = @BOOST_INCLUDE@
 BTHREAD_LIB = @BTHREAD_LIB@
 CC = @CC@
 CCDEPMODE = @CCDEPMODE@
@@ -213,6 +214,7 @@ ECHO_N = @ECHO_N@
 ECHO_T = @ECHO_T@
 EGREP = @EGREP@
 EIGEN_DIR = @EIGEN_DIR@
+EIGEN_INCLUDE = @EIGEN_INCLUDE@
 EXEEXT = @EXEEXT@
 FADBAD_DIR = @FADBAD_DIR@
 FC = @FC@
@@ -308,21 +310,18 @@ top_srcdir = @top_srcdir@
 @CppAD_ADOLC_TRUE@ADOLC_LIB = -ladolc -L$(ADOLC_DIR)/lib -L$(ADOLC_DIR)/lib64
 @CppAD_ADOLC_FALSE@ADOLC_FLAGS = 
 @CppAD_ADOLC_TRUE@ADOLC_FLAGS = -DCPPAD_ADOLC_EXAMPLES -I$(ADOLC_DIR)/include 
-@CppAD_BOOST_DIR_FALSE@BOOST_INCLUDE = 
-# -------------------------------------------------------------------------
-@CppAD_BOOST_DIR_TRUE@BOOST_INCLUDE = -I$(BOOST_DIR)/include
-@CppAD_EIGEN_FALSE@EIGEN_EXTRA_FILES = eigen_det.cpp eigen_array.cpp
+@CppAD_EIGEN_DIR_FALSE@EIGEN_EXTRA_FILES = eigen_det.cpp eigen_array.cpp
 # -------------------------------------------------------------------------
 # make a special library so can have it's own compile flags (see configure.ac)
-@CppAD_EIGEN_TRUE@EIGEN_EXTRA_FILES = 
-@CppAD_EIGEN_TRUE@noinst_LIBRARIES = libeigen.a
-@CppAD_EIGEN_TRUE@libeigen_a_SOURCES = eigen_det.cpp eigen_array.cpp
-@CppAD_EIGEN_FALSE@EIGEN_LIB = 
-@CppAD_EIGEN_TRUE@EIGEN_LIB = -L. -leigen
-@CppAD_EIGEN_TRUE@libeigen_a_CXXFLAGS = \
-@CppAD_EIGEN_TRUE@	-g $(CXX_FLAGS_EIGEN) \
-@CppAD_EIGEN_TRUE@	-DCPPAD_EIGEN_EXAMPLES \
-@CppAD_EIGEN_TRUE@	-I$(EIGEN_DIR)/include 
+@CppAD_EIGEN_DIR_TRUE@EIGEN_EXTRA_FILES = 
+@CppAD_EIGEN_DIR_TRUE@noinst_LIBRARIES = libeigen.a
+@CppAD_EIGEN_DIR_TRUE@libeigen_a_SOURCES = eigen_det.cpp eigen_array.cpp
+@CppAD_EIGEN_DIR_FALSE@EIGEN_LIB = 
+@CppAD_EIGEN_DIR_TRUE@EIGEN_LIB = -L. -leigen
+@CppAD_EIGEN_DIR_TRUE@libeigen_a_CXXFLAGS = \
+@CppAD_EIGEN_DIR_TRUE@	-g $(CXX_FLAGS_EIGEN) \
+@CppAD_EIGEN_DIR_TRUE@	-DCPPAD_EIGEN_EXAMPLES \
+@CppAD_EIGEN_DIR_TRUE@	-I$(EIGEN_DIR)/include 
 
 # -------------------------------------------------------------------------
 # Microsoft project files an script to run a single test
@@ -337,10 +336,12 @@ EXTRA_DIST = \
 #
 @CppAD_MS_COMPILER_TRUE@AM_CXXFLAGS = -EHsc -g $(ADOLC_FLAGS) $(CXX_FLAGS)
 #
-AM_CPPFLAGS = -I. \
-                   -I$(top_srcdir) \
-                    $(BOOST_INCLUDE) \
-                    $(ADOLC_FLAGS)
+AM_CPPFLAGS = \
+	-I. \
+	-I$(top_srcdir) \
+	$(BOOST_INCLUDE) \
+	$(EIGEN_INCLUDE) \
+	$(ADOLC_FLAGS)
 
 #
 AM_LDFLAGS = $(ADOLC_LIB)  $(BTHREAD_LIB) $(EIGEN_LIB) $(PTHREAD_LIB)

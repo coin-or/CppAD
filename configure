@@ -686,6 +686,7 @@ CXX_FLAGS_EIGEN
 CXX_FLAGS_FADBAD
 CXX_FLAGS
 CXXFLAGS
+BOOST_INCLUDE
 CppAD_BOOST_DIR_FALSE
 CppAD_BOOST_DIR_TRUE
 BOOST_DIR
@@ -698,8 +699,9 @@ SACADO_DIR
 CppAD_FADBAD_FALSE
 CppAD_FADBAD_TRUE
 FADBAD_DIR
-CppAD_EIGEN_FALSE
-CppAD_EIGEN_TRUE
+EIGEN_INCLUDE
+CppAD_EIGEN_DIR_FALSE
+CppAD_EIGEN_DIR_TRUE
 EIGEN_DIR
 CppAD_ADOLC_FALSE
 CppAD_ADOLC_TRUE
@@ -2877,19 +2879,22 @@ fi
 $as_echo_n "checking EIGEN_DIR... " >&6; }
 
  if test "$EIGEN_DIR" != ""; then
-  CppAD_EIGEN_TRUE=
-  CppAD_EIGEN_FALSE='#'
+  CppAD_EIGEN_DIR_TRUE=
+  CppAD_EIGEN_DIR_FALSE='#'
 else
-  CppAD_EIGEN_TRUE='#'
-  CppAD_EIGEN_FALSE=
+  CppAD_EIGEN_DIR_TRUE='#'
+  CppAD_EIGEN_DIR_FALSE=
 fi
 
 if test "$EIGEN_DIR" != "" ; then
 	{ $as_echo "$as_me:${as_lineno-$LINENO}: result: $EIGEN_DIR" >&5
 $as_echo "$EIGEN_DIR" >&6; }
+	EIGEN_INCLUDE=-I$EIGEN_DIR/include
+
 else
 	{ $as_echo "$as_me:${as_lineno-$LINENO}: result: no" >&5
 $as_echo "no" >&6; }
+
 fi
 
 { $as_echo "$as_me:${as_lineno-$LINENO}: checking FADBAD_DIR" >&5
@@ -2972,9 +2977,12 @@ fi
 if test "$BOOST_DIR" != "" ; then
 	{ $as_echo "$as_me:${as_lineno-$LINENO}: result: $BOOST_DIR" >&5
 $as_echo "$BOOST_DIR" >&6; }
+	BOOST_INCLUDE=-I$BOOST_DIR/include
+
 else
 	{ $as_echo "$as_me:${as_lineno-$LINENO}: result: no" >&5
 $as_echo "no" >&6; }
+
 fi
 
 CXXFLAGS=""
@@ -6886,8 +6894,8 @@ if test -z "${CppAD_ADOLC_TRUE}" && test -z "${CppAD_ADOLC_FALSE}"; then
   as_fn_error $? "conditional \"CppAD_ADOLC\" was never defined.
 Usually this means the macro was only invoked conditionally." "$LINENO" 5
 fi
-if test -z "${CppAD_EIGEN_TRUE}" && test -z "${CppAD_EIGEN_FALSE}"; then
-  as_fn_error $? "conditional \"CppAD_EIGEN\" was never defined.
+if test -z "${CppAD_EIGEN_DIR_TRUE}" && test -z "${CppAD_EIGEN_DIR_FALSE}"; then
+  as_fn_error $? "conditional \"CppAD_EIGEN_DIR\" was never defined.
 Usually this means the macro was only invoked conditionally." "$LINENO" 5
 fi
 if test -z "${CppAD_FADBAD_TRUE}" && test -z "${CppAD_FADBAD_FALSE}"; then

@@ -927,7 +927,7 @@ void ADFun<Base>::SparseJacobianCase(
 	CheckSimpleVector<Base, VectorBase>();
 
 	CPPAD_ASSERT_KNOWN(
-		p.size() == m * n,
+		size_t(p.size()) == m * n,
 		"SparseJacobian: using bool values and size of p "
 		" not equal range dimension times domain dimension for f"
 	); 

@@ -3,7 +3,7 @@
 # define CPPAD_REV_SPARSE_JAC_INCLUDED
 
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-11 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-12 Bradley M. Bell
 
 CppAD is distributed under multiple licenses. This distribution is under
 the terms of the 
@@ -209,7 +209,7 @@ void RevSparseJacBool(
 	);
 
 	CPPAD_ASSERT_KNOWN(
-		s.size() == p * m,
+		size_t(s.size()) == p * m,
 		"RevSparseJac: s (second argument) length is not equal to\n"
 		"p (first argument) times range dimension for ADFun object."
 	);
@@ -235,7 +235,7 @@ void RevSparseJacBool(
 	);
 
 	// return values corresponding to dependent variables
-	CPPAD_ASSERT_UNKNOWN( r.size() == p * n );
+	CPPAD_ASSERT_UNKNOWN( size_t(r.size()) == p * n );
 	for(j = 0; j < n; j++)
 	{	CPPAD_ASSERT_UNKNOWN( ind_taddr[j] == (j+1) );
 
@@ -335,7 +335,7 @@ void RevSparseJacSet(
 	);
 
 	CPPAD_ASSERT_KNOWN(
-		s.size() == p,
+		size_t(s.size()) == p,
 		"RevSparseJac: s (second argument) length is not equal to "
 		"p (first argument)."
 	);
@@ -368,7 +368,7 @@ void RevSparseJacSet(
 	);
 
 	// return values corresponding to dependent variables
-	CPPAD_ASSERT_UNKNOWN( r.size() == p );
+	CPPAD_ASSERT_UNKNOWN( size_t(r.size()) == p );
 	for(j = 0; j < n; j++)
 	{	CPPAD_ASSERT_UNKNOWN( ind_taddr[j] == (j+1) );
 

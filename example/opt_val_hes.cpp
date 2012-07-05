@@ -116,7 +116,7 @@ namespace {
 		AD<double> numerator = 0.;
 		AD<double> denominator = 0.;
 		size_t k;
-		for(k = 0; k < t.size(); k++)
+		for(k = 0; k < size_t(t.size()); k++)
 		{	numerator   += sin( x[0] * t[k] ) * z[k];
 			denominator += sin( x[0] * t[k] ) * sin( x[0] * t[k] ); 	
 		}
@@ -124,7 +124,7 @@ namespace {
 
 		// V(x) = F[x, Y(x)]
 		AD<double> sum = 0;
-		for(k = 0; k < t.size(); k++)
+		for(k = 0; k < size_t(t.size()); k++)
 		{	AD<double> residual = y * sin( x[0] * t[k] ) - z[k];
 			sum += .5 * residual * residual;
 		}

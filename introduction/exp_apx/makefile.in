@@ -78,6 +78,7 @@ AUTOHEADER = @AUTOHEADER@
 AUTOMAKE = @AUTOMAKE@
 AWK = @AWK@
 BOOST_DIR = @BOOST_DIR@
+BOOST_INCLUDE = @BOOST_INCLUDE@
 BTHREAD_LIB = @BTHREAD_LIB@
 CC = @CC@
 CCDEPMODE = @CCDEPMODE@
@@ -124,6 +125,7 @@ ECHO_N = @ECHO_N@
 ECHO_T = @ECHO_T@
 EGREP = @EGREP@
 EIGEN_DIR = @EIGEN_DIR@
+EIGEN_INCLUDE = @EIGEN_INCLUDE@
 EXEEXT = @EXEEXT@
 FADBAD_DIR = @FADBAD_DIR@
 FC = @FC@
@@ -210,9 +212,6 @@ target_alias = @target_alias@
 top_build_prefix = @top_build_prefix@
 top_builddir = @top_builddir@
 top_srcdir = @top_srcdir@
-@CppAD_BOOST_DIR_FALSE@BOOST_INCLUDE = 
-#
-@CppAD_BOOST_DIR_TRUE@BOOST_INCLUDE = -I$(BOOST_DIR)/include
 #
 # Microsoft project files
 EXTRA_DIST = \
@@ -222,7 +221,7 @@ EXTRA_DIST = \
 	exp_eps.omh
 
 #
-AM_CPPFLAGS = -I. -I$(top_srcdir) $(BOOST_INCLUDE)
+AM_CPPFLAGS = -I. -I$(top_srcdir) $(BOOST_INCLUDE) $(EIGEN_INCLUDE)
 AM_CXXFLAGS = -g $(CXX_FLAGS)
 #
 exp_apx_SOURCES = \

@@ -123,7 +123,7 @@ bool Rosen34(void)
 	ok &= NearEqual(x[2],  x2, 1e-14, 1e-14);
 
 	// check dx[0] / dw[0]
-	for(i = 0; i < w.size(); i++)
+	for(i = 0; i < size_t(w.size()); i++)
 		q[i] = 0.;
 	q[0] = 1.;
 	r    = f.Forward(1, q);

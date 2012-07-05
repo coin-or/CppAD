@@ -14,12 +14,6 @@
 # CppAD pusts all it's preprocessor definitions in the cppad/configure.hpp
 DEFS          =
 #
-if CppAD_BOOST_DIR
-BOOST_INCLUDE = -I$(BOOST_DIR)/include
-else
-BOOST_INCLUDE =
-endif
-#
 # Make sure that ../cppad-uninstalled.pc works for determining cflags
 if CppAD_PKG_CONFIG
 CPPAD_INCLUDE = `( \
@@ -36,7 +30,7 @@ EXTRA_DIST        =  test.sh \
 #
 check_PROGRAMS    = print_for
 #
-AM_CPPFLAGS       = -I. $(CPPAD_INCLUDE) $(BOOST_INCLUDE)
+AM_CPPFLAGS       = -I. $(CPPAD_INCLUDE) $(BOOST_INCLUDE) $(EIGEN_INCLUDE)
 #
 AM_CXXFLAGS       = -g $(CXX_FLAGS)
 #

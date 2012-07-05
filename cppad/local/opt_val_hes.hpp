@@ -3,7 +3,7 @@
 # define CPPAD_OPT_VAL_HES_INCLUDED
 
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-10 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-12 Bradley M. Bell
 
 CppAD is distributed under multiple licenses. This distribution is under
 the terms of the 
@@ -385,19 +385,19 @@ int opt_val_hes(
 	CheckSimpleVector< AD<Base> , ad_vector >();
 
 	// size of the x and y spaces
-	size_t n = x.size();
-	size_t m = y.size();
+	size_t n = size_t(x.size());
+	size_t m = size_t(y.size());
 
 	// number of terms in the summation
 	size_t ell = fun.ell();
 
 	// check size of return values
 	CPPAD_ASSERT_KNOWN(
-		jac.size() == n || jac.size() == 0,
+		size_t(jac.size()) == n || jac.size() == 0,
 		"opt_val_hes: size of the vector jac is not equal to n or zero"
 	);
 	CPPAD_ASSERT_KNOWN(
-		hes.size() == n * n || hes.size() == 0,
+		size_t(hes.size()) == n * n || hes.size() == 0,
 		"opt_val_hes: size of the vector hes is not equal to n * n or zero"
 	);
 

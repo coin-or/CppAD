@@ -210,11 +210,13 @@ AC_MSG_CHECKING([EIGEN_DIR])
 AC_ARG_VAR(EIGEN_DIR, 
 	[value of configure prefix directory during Eigen install]
 )
-AM_CONDITIONAL(CppAD_EIGEN, test "$EIGEN_DIR" != "")
+AM_CONDITIONAL(CppAD_EIGEN_DIR, test "$EIGEN_DIR" != "")
 if test "$EIGEN_DIR" != "" ; then
 	AC_MSG_RESULT([$EIGEN_DIR])
+	AC_SUBST(EIGEN_INCLUDE, [-I$EIGEN_DIR/include])
 else
 	AC_MSG_RESULT([no])
+	AC_SUBST(EIGEN_INCLUDE, [])
 fi
 
 dnl The directory corresponding to the installation of FADBAD -----------
@@ -270,8 +272,10 @@ AC_ARG_VAR(BOOST_DIR,
 AM_CONDITIONAL(CppAD_BOOST_DIR, test "$BOOST_DIR" != "")
 if test "$BOOST_DIR" != "" ; then
 	AC_MSG_RESULT([$BOOST_DIR])
+	AC_SUBST(BOOST_INCLUDE, [-I$BOOST_DIR/include])
 else
 	AC_MSG_RESULT([no])
+	AC_SUBST(BOOST_INCLUDE,[])
 fi
 
 dnl The C++ compiler flags CXX_FLAGS -------------------------------------

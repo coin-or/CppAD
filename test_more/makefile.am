@@ -30,13 +30,8 @@ ADOLC_SRC_FILES   =
 ADOLC_LIB         =
 ADOLC_FLAGS       =
 endif
-if CppAD_BOOST_DIR
-BOOST_INCLUDE = -I$(BOOST_DIR)/include
-else
-BOOST_INCLUDE =
-endif
 # -------------------------------------------------------------------------
-if CppAD_EIGEN
+if CppAD_EIGEN_DIR
 # make a special library so can have it's own compile flags (see configure.ac)
 EIGEN_EXTRA_FILES   =
 noinst_LIBRARIES    = libeigen.a
@@ -65,6 +60,7 @@ check_PROGRAMS    = test_more
 AM_CPPFLAGS       = -I. \
 	-I$(top_srcdir) \
 	$(BOOST_INCLUDE) \
+	$(EIGEN_INCLUDE) \
 	$(ADOLC_FLAGS) \
 	$(OPENMP_FLAGS) 
 #

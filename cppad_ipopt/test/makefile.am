@@ -16,21 +16,16 @@ DEFS          =
 #
 EXTRA_DIST = test.sh.in
 #
-if CppAD_BOOST_DIR
-BOOST_INCLUDE = -I$(BOOST_DIR)/include
-else
-BOOST_INCLUDE =
-endif
-# 
 check_PROGRAMS    = test_more
 #
 AM_CXXFLAGS       = -g $(CXX_FLAGS) 
 #
 AM_CPPFLAGS       = -I. \
-                   -I$(top_srcdir) \
-                   -I$(top_srcdir)/cppad_ipopt/src \
-                     $(BOOST_INCLUDE) \
-                     -I$(IPOPT_DIR)/include
+	-I$(top_srcdir) \
+	-I$(top_srcdir)/cppad_ipopt/src \
+	$(BOOST_INCLUDE) \
+	$(EIGEN_INCLUDE) \
+	-I$(IPOPT_DIR)/include
 #
 LDADD             = \
                     -lcppad_ipopt \

@@ -74,6 +74,7 @@ AUTOHEADER = @AUTOHEADER@
 AUTOMAKE = @AUTOMAKE@
 AWK = @AWK@
 BOOST_DIR = @BOOST_DIR@
+BOOST_INCLUDE = @BOOST_INCLUDE@
 BTHREAD_LIB = @BTHREAD_LIB@
 CC = @CC@
 CCDEPMODE = @CCDEPMODE@
@@ -120,6 +121,7 @@ ECHO_N = @ECHO_N@
 ECHO_T = @ECHO_T@
 EGREP = @EGREP@
 EIGEN_DIR = @EIGEN_DIR@
+EIGEN_INCLUDE = @EIGEN_INCLUDE@
 EXEEXT = @EXEEXT@
 FADBAD_DIR = @FADBAD_DIR@
 FC = @FC@
@@ -208,17 +210,15 @@ top_builddir = @top_builddir@
 top_srcdir = @top_srcdir@
 #
 EXTRA_DIST = test.sh.in
-@CppAD_BOOST_DIR_FALSE@BOOST_INCLUDE = 
-#
-@CppAD_BOOST_DIR_TRUE@BOOST_INCLUDE = -I$(BOOST_DIR)/include
 #
 AM_CXXFLAGS = -g $(CXX_FLAGS) 
 #
 AM_CPPFLAGS = -I. \
-                   -I$(top_srcdir) \
-                   -I$(top_srcdir)/cppad_ipopt/src \
-                     $(BOOST_INCLUDE) \
-                     -I$(IPOPT_DIR)/include
+	-I$(top_srcdir) \
+	-I$(top_srcdir)/cppad_ipopt/src \
+	$(BOOST_INCLUDE) \
+	$(EIGEN_INCLUDE) \
+	-I$(IPOPT_DIR)/include
 
 #
 LDADD = \

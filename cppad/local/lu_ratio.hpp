@@ -3,7 +3,7 @@
 # define CPPAD_LU_RATIO_INCLUDED
 
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-08 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-12 Bradley M. Bell
 
 CppAD is distributed under multiple licenses. This distribution is under
 the terms of the 
@@ -240,13 +240,13 @@ int LuRatio(SizeVector &ip, SizeVector &jp, ADvector &LU, AD<Base> &ratio) //
 	Float   pivot;         // pivot element
 
 	// -------------------------------------------------------
-	size_t n = ip.size();
+	size_t n = size_t(ip.size());
 	CPPAD_ASSERT_KNOWN(
-		jp.size() == n,
+		size_t(jp.size()) == n,
 		"Error in LuFactor: jp must have size equal to n"
 	);
 	CPPAD_ASSERT_KNOWN(
-		LU.size() == n * n,
+		size_t(LU.size()) == n * n,
 		"Error in LuFactor: LU must have size equal to n * m"
 	);
 	// -------------------------------------------------------
