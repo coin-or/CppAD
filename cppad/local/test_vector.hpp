@@ -75,9 +75,19 @@ $codep */
 # define CPPAD_TEST_VECTOR CppAD::vector
 # endif
 /* $$
-You can replace this definition of the preprocessor symbol
-$code CPPAD_TEST_VECTOR$$ by any other $cref SimpleVector$$ template class.
-This will test using your replacement template vector class with CppAD.
+If you specify $code --with-eigenvector$$ on the 
+$cref/configure/InstallUnix/Configure/$$ command line,
+$code CPPAD_EIGENVECTOR$$ is true.
+This vector type cannot be supported by $code CPPAD_TEST_VECTOR$$
+(use $cref/CPPAD_TESTVECTOR/testvector/$$ for this support)
+so $code CppAD::vector$$ is used in this case
+$codep */
+// The next 3 line are C++ source code.
+# if CPPAD_EIGENVECTOR
+# define CPPAD_TEST_VECTOR CppAD::vector
+# endif
+/* $$
+
 
 $head std::vector$$
 If you specify $code --with-stdvector$$ on the 

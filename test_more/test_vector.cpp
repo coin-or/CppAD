@@ -18,10 +18,6 @@ Test deprecated CPPAD_TEST_VECTOR macro (should use CPPAD_TESTVECTOR instead
 // this test is coppied from example/add.cpp on 2012-06-06
 bool test_vector(void)
 {	bool ok = true;
-# if CPPAD_EIGENVECTOR
-	std::cout << ": --with-eigenvector so cannot test CPPAD_TEST_VECTOR:";
-	std::cout << std::endl;
-# else
 	using CppAD::AD;
 	using CppAD::NearEqual;
 
@@ -71,7 +67,6 @@ bool test_vector(void)
 	v[zero] = a;
 	AD<double> result = v[zero] + 2;
 	ok     &= (result == b);
-# endif
 
 	return ok;
 }
