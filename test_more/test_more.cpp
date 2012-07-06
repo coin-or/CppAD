@@ -87,6 +87,7 @@ extern bool Sub(void);
 extern bool SubEq(void);
 extern bool SubZero(void);
 extern bool tan(void);
+extern bool test_vector(void);
 extern bool track_new_del(void);
 extern bool Value(void);
 extern bool VecAD(void);
@@ -206,6 +207,9 @@ int main(void)
 # endif
 # ifdef CPPAD_EIGEN_TEST
 	ok &= Run( cppad_eigen, "cppad_eigen" );
+# endif
+# if ! CPPAD_EIGENVECTOR
+	ok &= Run( test_vector, "test_vector" );
 # endif
 
 	// check for errors

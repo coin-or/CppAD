@@ -455,6 +455,10 @@
 				>
 			</File>
 			<File
+				RelativePath=".\test_vector.cpp"
+				>
+			</File>
+			<File
 				RelativePath=".\value.cpp"
 				>
 			</File>
