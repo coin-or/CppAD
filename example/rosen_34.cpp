@@ -59,8 +59,8 @@ namespace {
 		template <typename Scalar>
 		void Ode(
 			const Scalar                    &t, 
-			const CPPAD_TEST_VECTOR(Scalar) &x, 
-			CPPAD_TEST_VECTOR(Scalar)       &f)
+			const CPPAD_TESTVECTOR(Scalar) &x, 
+			CPPAD_TESTVECTOR(Scalar)       &f)
 		{	size_t n  = x.size();	
 			Scalar ti(1);
 			f[0]   = Scalar(1);
@@ -78,14 +78,14 @@ namespace {
 		// compute partial of f(t, x) w.r.t. t using AD
 		void Ode_ind(
 			const double                    &t, 
-			const CPPAD_TEST_VECTOR(double) &x, 
-			CPPAD_TEST_VECTOR(double)       &f_t)
+			const CPPAD_TESTVECTOR(double) &x, 
+			CPPAD_TESTVECTOR(double)       &f_t)
 		{	using namespace CppAD;
 
 			size_t n  = x.size();	
-			CPPAD_TEST_VECTOR(AD<double>) T(1);
-			CPPAD_TEST_VECTOR(AD<double>) X(n);
-			CPPAD_TEST_VECTOR(AD<double>) F(n);
+			CPPAD_TESTVECTOR(AD<double>) T(1);
+			CPPAD_TESTVECTOR(AD<double>) X(n);
+			CPPAD_TESTVECTOR(AD<double>) F(n);
 
 			// set argument values
 			T[0] = t;
@@ -103,7 +103,7 @@ namespace {
 			ADFun<double> fun(T, F);
 
 			// compute partial of f w.r.t t
-			CPPAD_TEST_VECTOR(double) dt(1);
+			CPPAD_TESTVECTOR(double) dt(1);
 			dt[0] = 1.;
 			f_t = fun.Forward(1, dt);
 		}
@@ -111,14 +111,14 @@ namespace {
 		// compute partial of f(t, x) w.r.t. x using AD
 		void Ode_dep(
 			const double                    &t, 
-			const CPPAD_TEST_VECTOR(double) &x, 
-			CPPAD_TEST_VECTOR(double)       &f_x)
+			const CPPAD_TESTVECTOR(double) &x, 
+			CPPAD_TESTVECTOR(double)       &f_x)
 		{	using namespace CppAD;
 
 			size_t n  = x.size();	
-			CPPAD_TEST_VECTOR(AD<double>) T(1);
-			CPPAD_TEST_VECTOR(AD<double>) X(n);
-			CPPAD_TEST_VECTOR(AD<double>) F(n);
+			CPPAD_TESTVECTOR(AD<double>) T(1);
+			CPPAD_TESTVECTOR(AD<double>) X(n);
+			CPPAD_TESTVECTOR(AD<double>) F(n);
 
 			// set argument values
 			T[0] = t;
@@ -136,8 +136,8 @@ namespace {
 			ADFun<double> fun(X, F);
 
 			// compute partial of f w.r.t x
-			CPPAD_TEST_VECTOR(double) dx(n);
-			CPPAD_TEST_VECTOR(double) df(n);
+			CPPAD_TESTVECTOR(double) dx(n);
+			CPPAD_TESTVECTOR(double) df(n);
 			for(j = 0; j < n; j++)
 				dx[j] = 0.;
 			for(j = 0; j < n; j++)
@@ -165,7 +165,7 @@ bool Rosen34(void)
 	double tf = 2.;     // final time 
 
 	// xi = X(0)
-	CPPAD_TEST_VECTOR(double) xi(n); 
+	CPPAD_TESTVECTOR(double) xi(n); 
 	for(i = 0; i <n; i++)
 		xi[i] = 0.;
 
@@ -175,7 +175,7 @@ bool Rosen34(void)
 		Fun F(use_x > 0); 
 
 		// compute Rosen34 approximation for X(tf)
-		CPPAD_TEST_VECTOR(double) xf(n), e(n); 
+		CPPAD_TESTVECTOR(double) xf(n), e(n); 
 		xf = CppAD::Rosen34(F, M, ti, tf, xi, e);
 
 		double check = tf;

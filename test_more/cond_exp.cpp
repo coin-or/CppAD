@@ -25,7 +25,7 @@ bool CondExp_pvvv(void)
 	using namespace CppAD;
 
 	// independent variable vector
-	CPPAD_TEST_VECTOR(AD<double>) X(3);
+	CPPAD_TESTVECTOR(AD<double>) X(3);
 	X[0]     = 0.;
 	X[1]     = 1.;
 	X[2]     = 2.;
@@ -35,7 +35,7 @@ bool CondExp_pvvv(void)
 	AD<double> one = 1.; 
 
 	// dependent variable vector 
-	CPPAD_TEST_VECTOR(AD<double>) Y(5);
+	CPPAD_TESTVECTOR(AD<double>) Y(5);
 
 	// CondExp(parameter, variable, variable, variable)
 	Y[0] = CondExpLt(one, X[0], X[1], X[2]);
@@ -48,12 +48,12 @@ bool CondExp_pvvv(void)
 	ADFun<double> f(X, Y);
 
 	// vectors for function values
-	CPPAD_TEST_VECTOR(double) v( f.Domain() );
-	CPPAD_TEST_VECTOR(double) w( f.Range() );
+	CPPAD_TESTVECTOR(double) v( f.Domain() );
+	CPPAD_TESTVECTOR(double) w( f.Range() );
 
 	// vectors for derivative values
-	CPPAD_TEST_VECTOR(double) dv( f.Domain() );
-	CPPAD_TEST_VECTOR(double) dw( f.Range() );
+	CPPAD_TESTVECTOR(double) dv( f.Domain() );
+	CPPAD_TESTVECTOR(double) dw( f.Range() );
 
 	// check original function values
 	ok &= Y[0] == X[2];
@@ -103,7 +103,7 @@ bool CondExp_vpvv(void)
 	using namespace CppAD;
 
 	// independent variable vector
-	CPPAD_TEST_VECTOR(AD<double>) X(3);
+	CPPAD_TESTVECTOR(AD<double>) X(3);
 	X[0]     = 0.;
 	X[1]     = 1.;
 	X[2]     = 2.;
@@ -113,7 +113,7 @@ bool CondExp_vpvv(void)
 	AD<double> one = 1.; 
 
 	// dependent variable vector 
-	CPPAD_TEST_VECTOR(AD<double>) Y(5);
+	CPPAD_TESTVECTOR(AD<double>) Y(5);
 
 	// CondExp(variable, parameter, variable, variable)
 	Y[0] = CondExpLt(X[0], one, X[1], X[2]);
@@ -126,12 +126,12 @@ bool CondExp_vpvv(void)
 	ADFun<double> f(X, Y);
 
 	// vectors for function values
-	CPPAD_TEST_VECTOR(double) v( f.Domain() );
-	CPPAD_TEST_VECTOR(double) w( f.Range() );
+	CPPAD_TESTVECTOR(double) v( f.Domain() );
+	CPPAD_TESTVECTOR(double) w( f.Range() );
 
 	// vectors for derivative values
-	CPPAD_TEST_VECTOR(double) dv( f.Domain() );
-	CPPAD_TEST_VECTOR(double) dw( f.Range() );
+	CPPAD_TESTVECTOR(double) dv( f.Domain() );
+	CPPAD_TESTVECTOR(double) dw( f.Range() );
 
 	// check original function values
 	ok &= Y[0] == X[1];
@@ -181,7 +181,7 @@ bool CondExp_vvpv(void)
 	using namespace CppAD;
 
 	// independent variable vector
-	CPPAD_TEST_VECTOR(AD<double>) X(3);
+	CPPAD_TESTVECTOR(AD<double>) X(3);
 	X[0]     = 0.;
 	X[1]     = 1.;
 	X[2]     = 2.;
@@ -191,7 +191,7 @@ bool CondExp_vvpv(void)
 	AD<double> three = 3.; 
 
 	// dependent variable vector 
-	CPPAD_TEST_VECTOR(AD<double>) Y(5);
+	CPPAD_TESTVECTOR(AD<double>) Y(5);
 
 	// CondExp(variable, variable, parameter, variable)
 	Y[0] = CondExpLt(X[0], X[1], three, X[2]);
@@ -204,12 +204,12 @@ bool CondExp_vvpv(void)
 	ADFun<double> f(X, Y);
 
 	// vectors for function values
-	CPPAD_TEST_VECTOR(double) v( f.Domain() );
-	CPPAD_TEST_VECTOR(double) w( f.Range() );
+	CPPAD_TESTVECTOR(double) v( f.Domain() );
+	CPPAD_TESTVECTOR(double) w( f.Range() );
 
 	// vectors for derivative values
-	CPPAD_TEST_VECTOR(double) dv( f.Domain() );
-	CPPAD_TEST_VECTOR(double) dw( f.Range() );
+	CPPAD_TESTVECTOR(double) dv( f.Domain() );
+	CPPAD_TESTVECTOR(double) dw( f.Range() );
 
 	// check original function values
 	ok &= Y[0] == three;
@@ -259,7 +259,7 @@ bool CondExp_vvvp(void)
 	using namespace CppAD;
 
 	// independent variable vector
-	CPPAD_TEST_VECTOR(AD<double>) X(3);
+	CPPAD_TESTVECTOR(AD<double>) X(3);
 	X[0]     = 0.;
 	X[1]     = 1.;
 	X[2]     = 2.;
@@ -269,7 +269,7 @@ bool CondExp_vvvp(void)
 	AD<double> three = 3.; 
 
 	// dependent variable vector 
-	CPPAD_TEST_VECTOR(AD<double>) Y(5);
+	CPPAD_TESTVECTOR(AD<double>) Y(5);
 
 	// CondExp(variable, variable, variable, parameter)
 	Y[0] = CondExpLt(X[0], X[1], X[2], three);
@@ -282,12 +282,12 @@ bool CondExp_vvvp(void)
 	ADFun<double> f(X, Y);
 
 	// vectors for function values
-	CPPAD_TEST_VECTOR(double) v( f.Domain() );
-	CPPAD_TEST_VECTOR(double) w( f.Range() );
+	CPPAD_TESTVECTOR(double) v( f.Domain() );
+	CPPAD_TESTVECTOR(double) w( f.Range() );
 
 	// vectors for derivative values
-	CPPAD_TEST_VECTOR(double) dv( f.Domain() );
-	CPPAD_TEST_VECTOR(double) dw( f.Range() );
+	CPPAD_TESTVECTOR(double) dv( f.Domain() );
+	CPPAD_TESTVECTOR(double) dw( f.Range() );
 
 	// check original function values
 	ok &= Y[0] == X[2];
@@ -343,12 +343,12 @@ bool SecondOrderReverse(void)
 	double eps = 10. * std::numeric_limits<double>::epsilon();
 
 	size_t n = 1;
-	CPPAD_TEST_VECTOR(AD<double>) X(n);
+	CPPAD_TESTVECTOR(AD<double>) X(n);
 	X[0] = 2.;
 	CppAD::Independent(X);
 
 	size_t m = 2;
-	CPPAD_TEST_VECTOR(AD<double>) Y(m);
+	CPPAD_TESTVECTOR(AD<double>) Y(m);
 
 	AD<double> left = X[0];
 	AD<double> right = X[0] * X[0]; 
@@ -369,13 +369,13 @@ bool SecondOrderReverse(void)
 	CppAD::ADFun<double> f(X, Y);
 
 	// first order forward
-	CPPAD_TEST_VECTOR(double) dx(n);
+	CPPAD_TESTVECTOR(double) dx(n);
 	size_t p = 1;
 	dx[0]    = 1.;
 	f.Forward(p, dx);
 
 	// second order reverse (test exp_if_true case)
-	CPPAD_TEST_VECTOR(double) w(m), dw(2 * n);
+	CPPAD_TESTVECTOR(double) w(m), dw(2 * n);
 	w[0] = 1.;
 	w[1] = 0.;
 	p    = 2;
@@ -420,7 +420,7 @@ bool OldExample(void)
 
 	// domain space vector
 	size_t n = 5;
-	CPPAD_TEST_VECTOR(AD<double>) X(n);
+	CPPAD_TESTVECTOR(AD<double>) X(n);
 	size_t j;
 	for(j = 0; j < n; j++)
 		X[j] = 1.;
@@ -446,17 +446,17 @@ bool OldExample(void)
 
 	// range space vector 
 	size_t m = 1;
-	CPPAD_TEST_VECTOR(AD<double>) Y(m);
+	CPPAD_TESTVECTOR(AD<double>) Y(m);
 	Y[0] = Sum;
 
 	// create f: X -> Y and stop tape recording
 	CppAD::ADFun<double> f(X, Y);
 
 	// vectors for arguments to the function object f
-	CPPAD_TEST_VECTOR(double) x(n);   // argument values
-	CPPAD_TEST_VECTOR(double) y(m);   // function values 
-	CPPAD_TEST_VECTOR(double) w(m);   // function weights 
-	CPPAD_TEST_VECTOR(double) dw(n);  // derivative of weighted function
+	CPPAD_TESTVECTOR(double) x(n);   // argument values
+	CPPAD_TESTVECTOR(double) y(m);   // function values 
+	CPPAD_TESTVECTOR(double) w(m);   // function weights 
+	CPPAD_TESTVECTOR(double) dw(n);  // derivative of weighted function
 
 	// a case where abs( x[j] ) > 0 for all j
 	double check  = 0.;

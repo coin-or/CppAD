@@ -60,32 +60,32 @@ namespace {
 	// --------------------------------------------------------------
 	class Fun {
 	private:
-		CPPAD_TEST_VECTOR(double) a;
+		CPPAD_TESTVECTOR(double) a;
 	public:
 		// constructor
-		Fun(const CPPAD_TEST_VECTOR(double)& a_) : a(a_)
+		Fun(const CPPAD_TESTVECTOR(double)& a_) : a(a_)
 		{ }
 		// compute f(t, x) 
 		void Ode(
 			const double                    &t, 
-			const CPPAD_TEST_VECTOR(double) &x, 
-			CPPAD_TEST_VECTOR(double)       &f)
+			const CPPAD_TESTVECTOR(double) &x, 
+			CPPAD_TESTVECTOR(double)       &f)
 		{	f[0]  = - a[0] * x[0];
 			f[1]  = + a[0] * x[0] - a[1] * x[1]; 
 		}
 		// compute partial of f(t, x) w.r.t. t 
 		void Ode_ind(
 			const double                    &t, 
-			const CPPAD_TEST_VECTOR(double) &x, 
-			CPPAD_TEST_VECTOR(double)       &f_t)
+			const CPPAD_TESTVECTOR(double) &x, 
+			CPPAD_TESTVECTOR(double)       &f_t)
 		{	f_t[0] = 0.;
 			f_t[1] = 0.;
 		}
 		// compute partial of f(t, x) w.r.t. x 
 		void Ode_dep(
 			const double                    &t, 
-			const CPPAD_TEST_VECTOR(double) &x, 
-			CPPAD_TEST_VECTOR(double)       &f_x)
+			const CPPAD_TESTVECTOR(double) &x, 
+			CPPAD_TESTVECTOR(double)       &f_x)
 		{	f_x[0] = -a[0];  
 			f_x[1] = 0.;
 			f_x[2] = +a[0];
@@ -98,14 +98,14 @@ namespace {
 		Fun F;
 	public:
 		// constructor
-		RungeMethod(const CPPAD_TEST_VECTOR(double) &a_) : F(a_)
+		RungeMethod(const CPPAD_TESTVECTOR(double) &a_) : F(a_)
 		{ }
 		void step(
 			double                     ta , 
 			double                     tb , 
-			CPPAD_TEST_VECTOR(double) &xa ,
-			CPPAD_TEST_VECTOR(double) &xb ,
-			CPPAD_TEST_VECTOR(double) &eb )
+			CPPAD_TESTVECTOR(double) &xa ,
+			CPPAD_TESTVECTOR(double) &xb ,
+			CPPAD_TESTVECTOR(double) &eb )
 		{	xb = CppAD::Runge45(F, 1, ta, tb, xa, eb);
 		}
 		size_t order(void)
@@ -116,14 +116,14 @@ namespace {
 		Fun F;
 	public:
 		// constructor
-		RosenMethod(const CPPAD_TEST_VECTOR(double) &a_) : F(a_)
+		RosenMethod(const CPPAD_TESTVECTOR(double) &a_) : F(a_)
 		{ }
 		void step(
 			double                     ta , 
 			double                     tb , 
-			CPPAD_TEST_VECTOR(double) &xa ,
-			CPPAD_TEST_VECTOR(double) &xb ,
-			CPPAD_TEST_VECTOR(double) &eb )
+			CPPAD_TESTVECTOR(double) &xa ,
+			CPPAD_TESTVECTOR(double) &xb ,
+			CPPAD_TESTVECTOR(double) &eb )
 		{	xb = CppAD::Rosen34(F, 1, ta, tb, xa, eb);
 		}
 		size_t order(void)
@@ -134,24 +134,24 @@ namespace {
 bool OdeStiff(void)
 {	bool ok = true;     // initial return value
 
-	CPPAD_TEST_VECTOR(double) a(2);
+	CPPAD_TESTVECTOR(double) a(2);
 	a[0] = 1e3;
 	a[1] = 1.;
 	RosenMethod rosen(a);
 	RungeMethod runge(a);
 	Fun          gear(a);
 
-	CPPAD_TEST_VECTOR(double) xi(2);
+	CPPAD_TESTVECTOR(double) xi(2);
 	xi[0] = 1.;
 	xi[1] = 0.;
 
-	CPPAD_TEST_VECTOR(double) eabs(2);
+	CPPAD_TESTVECTOR(double) eabs(2);
 	eabs[0] = 1e-6;
 	eabs[1] = 1e-6;
 
-	CPPAD_TEST_VECTOR(double) ef(2);
-	CPPAD_TEST_VECTOR(double) xf(2);
-	CPPAD_TEST_VECTOR(double) maxabs(2);
+	CPPAD_TESTVECTOR(double) ef(2);
+	CPPAD_TESTVECTOR(double) xf(2);
+	CPPAD_TESTVECTOR(double) maxabs(2);
 	size_t                nstep;
 
 	size_t k;

@@ -73,7 +73,7 @@ bool optimize(void)
 
 	// domain space vector
 	size_t n  = 1;
-	CPPAD_TEST_VECTOR(AD<double>) X(n);
+	CPPAD_TESTVECTOR(AD<double>) X(n);
 	X[0]      = .5; 
 
 	// declare independent variables and start tape recording
@@ -83,7 +83,7 @@ bool optimize(void)
 
 	// range space vector 
 	size_t m = 1;
-	CPPAD_TEST_VECTOR(AD<double>) Y(m);
+	CPPAD_TESTVECTOR(AD<double>) Y(m);
 	fun(X[0], Y[0], n_var, n_opt);
 
 	// create f: X -> Y and stop tape recording
@@ -91,7 +91,7 @@ bool optimize(void)
 	ok &= (F.size_var() == n_var);
 
 	// Check zero order forward mode on the original operation sequence
-	CPPAD_TEST_VECTOR(double) x(n), y(m);
+	CPPAD_TESTVECTOR(double) x(n), y(m);
 	x[0] = Value(X[0]);
 	size_t i = 0; // temporary variable (we do not use value)
 	double check;

@@ -44,7 +44,7 @@ bool abs(void)
 
 	// domain space vector
 	size_t n = 1;
-	CPPAD_TEST_VECTOR(AD<double>) x(n);
+	CPPAD_TESTVECTOR(AD<double>) x(n);
 	x[0]     = 0.;
 
 	// declare independent variables and start tape recording
@@ -52,7 +52,7 @@ bool abs(void)
 
 	// range space vector
 	size_t m = 6;
-	CPPAD_TEST_VECTOR(AD<double>) y(m);
+	CPPAD_TESTVECTOR(AD<double>) y(m);
 	y[0]     = abs(x[0] - 1.);
 	y[1]     = abs(x[0]);
 	y[2]     = abs(x[0] + 1.);
@@ -75,7 +75,7 @@ bool abs(void)
 
 	// forward computation of partials w.r.t. a positive x[0] direction
 	size_t p = 1;
-	CPPAD_TEST_VECTOR(double) dx(n), dy(m);
+	CPPAD_TESTVECTOR(double) dx(n), dy(m);
 	dx[0] = 1.;
 	dy    = f.Forward(p, dx);
 	ok  &= (dy[0] == - dx[0]);
@@ -99,7 +99,7 @@ bool abs(void)
 
 	// reverse computation of derivative of y[0] 
 	p    = 1;
-	CPPAD_TEST_VECTOR(double)  w(m), dw(n);
+	CPPAD_TESTVECTOR(double)  w(m), dw(n);
 	w[0] = 1.; w[1] = 0.; w[2] = 0.; w[3] = 0.; w[4] = 0.; w[5] = 0.;
 	dw   = f.Reverse(p, w);
 	ok  &= (dw[0] == -1.);

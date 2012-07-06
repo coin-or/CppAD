@@ -64,6 +64,9 @@ Please visit http://www.coin-or.org/CppAD/ for information on other licenses.
 # include <cppad/local/define.hpp>
 
 // vectors used with CppAD
+# include <cppad/local/testvector.hpp>
+
+// deprecated vectors used with CppAD
 # include <cppad/local/test_vector.hpp>
 
 // Declare classes and fucntions that are used before defined

@@ -42,7 +42,7 @@ bool LuVecADOk(void)
 
 	using namespace CppAD;
 	typedef AD<double> ADdouble;
-	typedef CPPAD_TEST_VECTOR(ADdouble) ADVector;
+	typedef CPPAD_TESTVECTOR(ADdouble) ADVector;
 
 	size_t              n = 3;
 	size_t              m = 2;
@@ -72,10 +72,10 @@ bool LuVecADOk(void)
 	det_by_minor<ADdouble> Det(n);
 
 	// matrix we are computing the determinant of
-	CPPAD_TEST_VECTOR(ADdouble) A(n * n);
+	CPPAD_TESTVECTOR(ADdouble) A(n * n);
 
 	// dependent variable values
-	CPPAD_TEST_VECTOR(ADdouble) Y(1 + n * m);
+	CPPAD_TESTVECTOR(ADdouble) Y(1 + n * m);
 
 	size_t  i;
 	size_t  j;
@@ -132,8 +132,8 @@ bool LuVecADOk(void)
 		}
 	}
  
- 	CPPAD_TEST_VECTOR(double) y2(1 + n * m);
- 	CPPAD_TEST_VECTOR(double) A2(n * n);
+ 	CPPAD_TESTVECTOR(double) y2(1 + n * m);
+ 	CPPAD_TESTVECTOR(double) A2(n * n);
  	for(i = 0; i < n * n; i++)
  		A[i] = A2[i] = a2[i];
 

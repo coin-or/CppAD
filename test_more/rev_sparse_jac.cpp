@@ -80,17 +80,17 @@ bool case_one()
 	size_t m = (4 + 11 + 1) * 3 + 4;
 
 	// independent variable vector 
-	CPPAD_TEST_VECTOR(AD<double>) X(n);
+	CPPAD_TESTVECTOR(AD<double>) X(n);
 	X[0] = .1; 
 	X[1] = .2;
 	X[2] = .3;
 	Independent(X);
 
 	// dependent variable vector
-	CPPAD_TEST_VECTOR(AD<double>) Y(m);
+	CPPAD_TESTVECTOR(AD<double>) Y(m);
 
 	// check results vector
-	CPPAD_TEST_VECTOR( bool )       Check(m * n);
+	CPPAD_TESTVECTOR( bool )       Check(m * n);
 
 	// initialize index into Y
 	size_t index = 0;
@@ -150,7 +150,7 @@ bool case_one()
 
 	// --------------------------------------------------------
 	// dependency matrix for the identity function U(y) = y
-	CPPAD_TEST_VECTOR( bool ) Py(m * m);
+	CPPAD_TESTVECTOR( bool ) Py(m * m);
 	size_t i, j;
 	for(i = 0; i < m; i++)
 	{	for(j = 0; j < m; j++)
@@ -159,7 +159,7 @@ bool case_one()
 	}
 
 	// evaluate the dependency matrix for F(x)
-	CPPAD_TEST_VECTOR( bool ) Px(m * n);
+	CPPAD_TESTVECTOR( bool ) Px(m * n);
 	Px = F.RevSparseJac(m, Py);
 
 	// check values
@@ -169,14 +169,14 @@ bool case_one()
 	}	
 	// --------------------------------------------------------
 	// dependency matrix for the identity function U(y) = y
-	CPPAD_TEST_VECTOR(std::set<size_t>) Sy(m);
+	CPPAD_TESTVECTOR(std::set<size_t>) Sy(m);
 	for(i = 0; i < m; i++)
 	{	assert( Sy[i].empty() );
 		Sy[i].insert(i);
 	}
 
 	// evaluate the dependency matrix for U(F(x))
-	CPPAD_TEST_VECTOR(std::set<size_t>) Sx(m);
+	CPPAD_TESTVECTOR(std::set<size_t>) Sx(m);
 	Sx = F.RevSparseJac(m, Sy);
 
 	// check values
@@ -209,7 +209,7 @@ bool case_two()
 		Z[k] = 0.;
 
 	// independent variable vector 
-	CPPAD_TEST_VECTOR(AD<double>) X(n);
+	CPPAD_TESTVECTOR(AD<double>) X(n);
 	X[0] = 0.; 
 	X[1] = 1.;
 	X[2] = 2.;
@@ -220,10 +220,10 @@ bool case_two()
 	Z[ X[1] ] = X[2]; 
 
 	// dependent variable vector
-	CPPAD_TEST_VECTOR(AD<double>) Y(m);
+	CPPAD_TESTVECTOR(AD<double>) Y(m);
 
 	// check results vector
-	CPPAD_TEST_VECTOR( bool )       Check(m * n);
+	CPPAD_TESTVECTOR( bool )       Check(m * n);
 
 	// initialize index into Y
 	size_t index = 0;
@@ -257,7 +257,7 @@ bool case_two()
 	ADFun<double> F(X, Y);
 
 	// dependency matrix for the identity function S(y) = y
-	CPPAD_TEST_VECTOR( bool ) Py(m * m);
+	CPPAD_TESTVECTOR( bool ) Py(m * m);
 	size_t i, j;
 	for(i = 0; i < m; i++)
 	{	for(j = 0; j < m; j++)
@@ -266,7 +266,7 @@ bool case_two()
 	}
 
 	// evaluate the dependency matrix for S [ F(x) ]
-	CPPAD_TEST_VECTOR( bool ) Px(m * n);
+	CPPAD_TESTVECTOR( bool ) Px(m * n);
 	Px = F.RevSparseJac(m, Py);
 
 	// check values
@@ -276,14 +276,14 @@ bool case_two()
 	}	
 	// --------------------------------------------------------
 	// dependency matrix for the identity function U(y) = y
-	CPPAD_TEST_VECTOR(std::set<size_t>) Sy(m);
+	CPPAD_TESTVECTOR(std::set<size_t>) Sy(m);
 	for(i = 0; i < m; i++)
 	{	assert( Sy[i].empty() );
 		Sy[i].insert(i);
 	}
 
 	// evaluate the dependency matrix for U(F(x))
-	CPPAD_TEST_VECTOR(std::set<size_t>) Sx(m);
+	CPPAD_TESTVECTOR(std::set<size_t>) Sx(m);
 	Sx = F.RevSparseJac(m, Sy);
 
 	// check values
@@ -310,16 +310,16 @@ bool case_three()
 	size_t m = 3;
 
 	// independent variable vector 
-	CPPAD_TEST_VECTOR(AD<double>) X(n);
+	CPPAD_TESTVECTOR(AD<double>) X(n);
 	X[0] = 2.; 
 	X[1] = 3.;
 	Independent(X);
 
 	// dependent variable vector
-	CPPAD_TEST_VECTOR(AD<double>) Y(m);
+	CPPAD_TESTVECTOR(AD<double>) Y(m);
 
 	// check results vector
-	CPPAD_TEST_VECTOR( bool )       Check(m * n);
+	CPPAD_TESTVECTOR( bool )       Check(m * n);
 
 	// initialize index into Y
 	size_t index = 0;
@@ -350,7 +350,7 @@ bool case_three()
 
 	// -----------------------------------------------------------------
 	// dependency matrix for the identity function
-	CPPAD_TEST_VECTOR( bool ) Py(m * m);
+	CPPAD_TESTVECTOR( bool ) Py(m * m);
 	size_t i, j;
 	for(i = 0; i < m; i++)
 	{	for(j = 0; j < m; j++)
@@ -358,7 +358,7 @@ bool case_three()
 	}
 
 	// evaluate the dependency matrix for F(x)
-	CPPAD_TEST_VECTOR( bool ) Px(m * n);
+	CPPAD_TESTVECTOR( bool ) Px(m * n);
 	Px = F.RevSparseJac(m, Py);
 
 	// check values
@@ -369,14 +369,14 @@ bool case_three()
 
 	// ---------------------------------------------------------
 	// dependency matrix for the identity function 
-	CPPAD_TEST_VECTOR(std::set<size_t>) Sy(m);
+	CPPAD_TESTVECTOR(std::set<size_t>) Sy(m);
 	for(i = 0; i < m; i++)
 	{	assert( Sy[i].empty() );
 		Sy[i].insert(i);
 	}
 
 	// evaluate the dependency matrix for F(x)
-	CPPAD_TEST_VECTOR(std::set<size_t>) Sx(m);
+	CPPAD_TESTVECTOR(std::set<size_t>) Sx(m);
 	Sx = F.RevSparseJac(m, Sy);
 
 	// check values

@@ -62,7 +62,7 @@ bool CondExp(void)
 
 	// domain space vector
 	size_t n = 5;
-	CPPAD_TEST_VECTOR(AD<double>) X(n);
+	CPPAD_TESTVECTOR(AD<double>) X(n);
 	size_t j;
 	for(j = 0; j < n; j++)
 		X[j] = 1.;
@@ -79,17 +79,17 @@ bool CondExp(void)
 
 	// range space vector 
 	size_t m = 1;
-	CPPAD_TEST_VECTOR(AD<double>) Y(m);
+	CPPAD_TESTVECTOR(AD<double>) Y(m);
 	Y[0] = Sum;
 
 	// create f: X -> Y and stop tape recording
 	CppAD::ADFun<double> f(X, Y);
 
 	// vectors for arguments to the function object f
-	CPPAD_TEST_VECTOR(double) x(n);   // argument values
-	CPPAD_TEST_VECTOR(double) y(m);   // function values 
-	CPPAD_TEST_VECTOR(double) w(m);   // function weights 
-	CPPAD_TEST_VECTOR(double) dw(n);  // derivative of weighted function
+	CPPAD_TESTVECTOR(double) x(n);   // argument values
+	CPPAD_TESTVECTOR(double) y(m);   // function values 
+	CPPAD_TESTVECTOR(double) w(m);   // function weights 
+	CPPAD_TESTVECTOR(double) dw(n);  // derivative of weighted function
 
 	// a case where x[j] > 0 for all j
 	double check  = 0.;

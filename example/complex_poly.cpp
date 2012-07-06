@@ -49,28 +49,28 @@ bool complex_poly(void)
 	typedef std::complex<double> Complex; 
 
 	// polynomial coefficients
-	CPPAD_TEST_VECTOR( Complex )     a   (deg + 1); // coefficients for p(z)
-	CPPAD_TEST_VECTOR(AD<Complex>) A   (deg + 1); 
+	CPPAD_TESTVECTOR( Complex )     a   (deg + 1); // coefficients for p(z)
+	CPPAD_TESTVECTOR(AD<Complex>) A   (deg + 1); 
 	size_t i;
 	for(i = 0; i <= deg; i++)
 		A[i] = a[i] = Complex(i, i);
 
 	// independent variable vector
-	CPPAD_TEST_VECTOR(AD<Complex>) Z(1);
+	CPPAD_TESTVECTOR(AD<Complex>) Z(1);
 	Complex z = Complex(1., 2.);
  	Z[0]      = z;
 	Independent(Z);
 
 	// dependent variable vector and indices
-	CPPAD_TEST_VECTOR(AD<Complex>) P(1);
+	CPPAD_TESTVECTOR(AD<Complex>) P(1);
 
 	// dependent variable values
 	P[0] = Poly(0, A, Z[0]);
 
 	// create f: Z -> P and vectors used for derivative calculations
 	CppAD::ADFun<Complex> f(Z, P);
-	CPPAD_TEST_VECTOR(Complex) v( f.Domain() );
-	CPPAD_TEST_VECTOR(Complex) w( f.Range() );
+	CPPAD_TESTVECTOR(Complex) v( f.Domain() );
+	CPPAD_TESTVECTOR(Complex) w( f.Range() );
 
 	// check first derivative w.r.t z
 	v[0]      = 1.;

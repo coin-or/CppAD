@@ -55,6 +55,12 @@ This section contains a list of the changes to CppAD during 2012
 The purpose of this section is to
 assist you in learning about changes between various versions of CppAD.
 
+$head 07-05$$
+Deprecate $cref/CPPAD_TEST_VECTOR/test_vector/$$ and use
+$cref/CPPAD_TESTVECTOR/testvector/$$ in its place.
+This fixes a problem introduced by changes on 07-03 whereby code that
+used $code CPPAD_TEST_VECTOR$$ would no longer work.
+
 $head 07-04$$
 $list number$$
 Replace the requirement that the $cref SimpleVector$$ 

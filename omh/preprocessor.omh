@@ -55,7 +55,7 @@ $cref/CPPAD_MAX_NUM_THREADS/multi_thread/CPPAD_MAX_NUM_THREADS/$$
 $rnext
 $cref/CPPAD_TAPE_ADDR_TYPE/InstallUnix/tape_addr_type/$$
 $rnext
-$cref/CPPAD_TEST_VECTOR/test_vector/$$
+$cref/CPPAD_TESTVECTOR/testvector/$$
 $rnext
 $cref/CPPAD_USER_ATOMIC/user_atomic/$$
 $tend
@@ -65,6 +65,8 @@ $table
 $cref/CppADCreateDiscrete/Discrete/Deprecated/$$
 $rnext
 $cref/CppADvector/test_vector/Deprecated/$$
+$rnext
+$cref/CPPAD_TEST_VECTOR/test_vector/$$
 $rnext
 $cref/CPPAD_TRACK_NEW_VEC/TrackNewDel/TrackNewVec/Macro/$$
 $rnext

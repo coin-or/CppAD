@@ -63,10 +63,10 @@ bool eigen_array(void)
 	CppAD::ADFun<double> f(a_x, a_y); 
 
 	// compute the derivative of y w.r.t x using CppAD
-	CPPAD_TEST_VECTOR(double) x(n);
+	CPPAD_TESTVECTOR(double) x(n);
 	for(j = 0; j < n; j++)
 		x[j] = double(j) + 1.0 / double(j+1);
-	CPPAD_TEST_VECTOR(double) jac = f.Jacobian(x);
+	CPPAD_TESTVECTOR(double) jac = f.Jacobian(x);
 
 	// check Jacobian
 	double eps = 100. * CppAD::numeric_limits<double>::epsilon();

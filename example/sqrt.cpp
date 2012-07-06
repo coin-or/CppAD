@@ -42,7 +42,7 @@ bool Sqrt(void)
 	// domain space vector
 	size_t n  = 1;
 	double x0 = 0.5;
-	CPPAD_TEST_VECTOR(AD<double>) x(n);
+	CPPAD_TESTVECTOR(AD<double>) x(n);
 	x[0]      = x0;
 
 	// declare independent variables and start tape recording
@@ -50,7 +50,7 @@ bool Sqrt(void)
 
 	// range space vector 
 	size_t m = 1;
-	CPPAD_TEST_VECTOR(AD<double>) y(m);
+	CPPAD_TESTVECTOR(AD<double>) y(m);
 	y[0] = CppAD::sqrt(x[0]);
 
 	// create f: x -> y and stop tape recording
@@ -61,16 +61,16 @@ bool Sqrt(void)
 	ok &= NearEqual(y[0] , check,  1e-10 , 1e-10);
 
 	// forward computation of first partial w.r.t. x[0]
-	CPPAD_TEST_VECTOR(double) dx(n);
-	CPPAD_TEST_VECTOR(double) dy(m);
+	CPPAD_TESTVECTOR(double) dx(n);
+	CPPAD_TESTVECTOR(double) dy(m);
 	dx[0] = 1.;
 	dy    = f.Forward(1, dx);
 	check = 1. / (2. * std::sqrt(x0) );
 	ok   &= NearEqual(dy[0], check, 1e-10, 1e-10);
 
 	// reverse computation of derivative of y[0]
-	CPPAD_TEST_VECTOR(double)  w(m);
-	CPPAD_TEST_VECTOR(double) dw(n);
+	CPPAD_TESTVECTOR(double)  w(m);
+	CPPAD_TESTVECTOR(double) dw(n);
 	w[0]  = 1.;
 	dw    = f.Reverse(1, w);
 	ok   &= NearEqual(dw[0], check, 1e-10, 1e-10);

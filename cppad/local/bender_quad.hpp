@@ -47,7 +47,7 @@ $head Problem$$
 The type $cref/ADvector/BenderQuad/ADvector/$$ cannot be determined
 form the arguments above 
 (currently the type $icode ADvector$$ must be 
-$codei%CPPAD_TEST_VECTOR(%Base%)%$$.)
+$codei%CPPAD_TESTVECTOR(%Base%)%$$.)
 This will be corrected in the future by requiring $icode Fun$$
 to define $icode%Fun%::vector_type%$$ which will specify the
 type $icode ADvector$$.
@@ -316,7 +316,7 @@ void BenderQuad(
 	CheckSimpleVector<Base, BAvector>();
 
 	// declare the ADvector type
-	typedef CPPAD_TEST_VECTOR(AD<Base>) ADvector;
+	typedef CPPAD_TESTVECTOR(AD<Base>) ADvector;
 
 	// size of the x and y spaces
 	size_t n = size_t(x.size());

@@ -48,8 +48,8 @@ bool HesLuDet(void)
 	det_by_lu< AD<Complex> > Det(n);
 
 	// independent and dependent variable vectors
-	CPPAD_TEST_VECTOR(AD<Complex>)  X(n * n);
-	CPPAD_TEST_VECTOR(AD<Complex>)  D(1);
+	CPPAD_TESTVECTOR(AD<Complex>)  X(n * n);
+	CPPAD_TESTVECTOR(AD<Complex>)  D(1);
 
 	// value of the independent variable
 	size_t i;
@@ -65,12 +65,12 @@ bool HesLuDet(void)
 	ADFun<Complex> f(X, D);
 
 	// argument value
-	CPPAD_TEST_VECTOR(Complex)     x( n * n );
+	CPPAD_TESTVECTOR(Complex)     x( n * n );
 	for(i = 0; i < n * n; i++)
 		x[i] = Complex(2 * i, i);
 
 	// first derivative of the determinant
-	CPPAD_TEST_VECTOR(Complex) H( n * n * n * n );
+	CPPAD_TESTVECTOR(Complex) H( n * n * n * n );
 	H = f.Hessian(x, 0);
 
 	/*

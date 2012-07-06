@@ -1,6 +1,6 @@
 $Id$
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-07 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-12 Bradley M. Bell
 
 CppAD is distributed under multiple licenses. This distribution is under
 the terms of the 
@@ -46,14 +46,14 @@ show how the examples can be run on your system.
 
 $head The CppAD Test Vector Template Class$$
 Many of the examples use the 
-$small $cref/CPPAD_TEST_VECTOR/test_vector/$$ $$ preprocessor symbol 
+$small $cref/CPPAD_TESTVECTOR/testvector/$$ $$ preprocessor symbol 
 to determine which $cref SimpleVector$$ template class is used with
 the examples. 
 
 
 $contents%
 	omh/example_list.omh%
-	cppad/local/test_vector.hpp
+	cppad/local/testvector.hpp
 %$$
 
 

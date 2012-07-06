@@ -43,7 +43,7 @@ bool ForOneCases()
 
 	// domain space vector
 	size_t n = 2;
-	CPPAD_TEST_VECTOR(AD<double>)  X(n);
+	CPPAD_TESTVECTOR(AD<double>)  X(n);
 	X[0] = 1.;
 	X[1] = 2.;
 
@@ -52,7 +52,7 @@ bool ForOneCases()
 
 	// range space vector
 	size_t m = 3;
-	CPPAD_TEST_VECTOR(AD<double>)  Y(m);
+	CPPAD_TESTVECTOR(AD<double>)  Y(m);
 	Y[0] = X[0] * exp( X[1] );
 	Y[1] = X[0] * sin( X[1] );
 	Y[2] = X[0] * cos( X[1] );

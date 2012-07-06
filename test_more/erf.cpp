@@ -24,18 +24,18 @@ bool Erf(void)
 	using CppAD::sqrt;
 
 	// Construct function object corresponding to erf
-	CPPAD_TEST_VECTOR(AD<double>) X(1);
-	CPPAD_TEST_VECTOR(AD<double>) Y(1);
+	CPPAD_TESTVECTOR(AD<double>) X(1);
+	CPPAD_TESTVECTOR(AD<double>) Y(1);
 	X[0] = 0.;
 	Independent(X);
 	Y[0] = erf(X[0]);
 	ADFun<double> Erf(X, Y);
 
 	// vectors to use with function object
-	CPPAD_TEST_VECTOR(double) x(1);
-	CPPAD_TEST_VECTOR(double) y(1);
-	CPPAD_TEST_VECTOR(double) dx(1);
-	CPPAD_TEST_VECTOR(double) dy(1);
+	CPPAD_TESTVECTOR(double) x(1);
+	CPPAD_TESTVECTOR(double) y(1);
+	CPPAD_TESTVECTOR(double) dx(1);
+	CPPAD_TESTVECTOR(double) dy(1);
 
 	// check value at zero
 	x[0]  = 0.;

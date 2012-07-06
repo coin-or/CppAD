@@ -21,7 +21,7 @@ $spell
 	det
 	hpp
 	const
-	CPPAD_TEST_VECTOR
+	CPPAD_TESTVECTOR
 	bool
 	srand
 	var

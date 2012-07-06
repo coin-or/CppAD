@@ -341,7 +341,7 @@ $index boost, test vector$$
 $index eigen, test vector$$
 $index test, vector$$
 $index vector, test$$
-The $cref/CPPAD_TEST_VECTOR/test_vector/$$
+The $cref/CPPAD_TESTVECTOR/testvector/$$
 template class is used for many of the CppAD examples and tests.
 The default for this template class is $codei%CppAD::vector<%Scalar%>%$$.
 If one, and only one, of the following command line arguments is specified:

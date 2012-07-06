@@ -3,7 +3,7 @@
 # define CPPAD_UNDEF_INCLUDED
 
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-11 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-12 Bradley M. Bell
 
 CppAD is distributed under multiple licenses. This distribution is under
 the terms of the 
@@ -56,7 +56,7 @@ Please visit http://www.coin-or.org/CppAD/ for information on other licenses.
 # undef CPPAD_STDVECTOR
 //      CPPAD_TAPE_ADDR_TYPE in user api
 # undef CPPAD_TAPE_ID_TYPE 
-//      CPPAD_TEST_VECTOR in user api
+//      CPPAD_TESTVECTOR in user api
 # undef CPPAD_TRACE_CAPACITY
 # undef CPPAD_TRACE_THEAD
 # undef CPPAD_TRACE_THREAD

@@ -101,7 +101,7 @@ $codei%
 %$$
 where $icode X$$ is 
 a $cref SimpleVector$$ with elements of type 
-$codei%CPPAD_TEST_VECTOR(AD< AD<double>) >%$$.
+$codei%CPPAD_TESTVECTOR(AD< AD<double>) >%$$.
 This will start recording a new tape of 
 operations performed using $codei%AD< AD<double> >%$$ class objects.
 

@@ -68,8 +68,8 @@ bool not_complex_ad(void)
 	ok                &= cad_two == ComplexAD(ad_two, ad_zero); 
 
 	// polynomial coefficients
-	CPPAD_TEST_VECTOR( Complex )   a   (deg + 1); // coefficients for p(z)
-	CPPAD_TEST_VECTOR( ComplexAD ) A   (deg + 1); 
+	CPPAD_TESTVECTOR( Complex )   a   (deg + 1); // coefficients for p(z)
+	CPPAD_TESTVECTOR( ComplexAD ) A   (deg + 1); 
 	size_t i;
 	for(i = 0; i <= deg; i++)
 	{	a[i] = Complex(i, i);
@@ -77,7 +77,7 @@ bool not_complex_ad(void)
 	}
 
 	// declare independent variables and start taping
-	CPPAD_TEST_VECTOR(AD<double>) Z_real(1);
+	CPPAD_TESTVECTOR(AD<double>) Z_real(1);
 	double z_real = 1.;
  	Z_real[0]     = z_real;
 	Independent(Z_real);
@@ -88,15 +88,15 @@ bool not_complex_ad(void)
 	ComplexAD P = Poly(0, A, Z);
 
 	// range space vector
-	CPPAD_TEST_VECTOR(AD<double>) P_real(1);
+	CPPAD_TESTVECTOR(AD<double>) P_real(1);
 	P_real[0] = P.real();   // real() is not complex differentiable
 
 	// create f: Z_real -> P_real  and stop taping
 	CppAD::ADFun<double> f(Z_real, P_real);
 
 	// check first derivative w.r.t z
-	CPPAD_TEST_VECTOR(double) v( f.Domain() );
-	CPPAD_TEST_VECTOR(double) w( f.Range() );
+	CPPAD_TESTVECTOR(double) v( f.Domain() );
+	CPPAD_TESTVECTOR(double) w( f.Range() );
 	v[0]      = 1.;
 	w         = f.Forward(1, v);
 	Complex z = Complex(z_real, z_imag);

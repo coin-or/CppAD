@@ -41,7 +41,7 @@ namespace {
 	//	a[0] * x[0] + a[1] * x[1] = b[0]
 	//	a[2] * x[0] + a[3] * x[1] = b[1]
 	// in a way that will record pivot operations on the AD<double> tape
-	typedef CPPAD_TEST_VECTOR(CppAD::AD<double>) Vector;
+	typedef CPPAD_TESTVECTOR(CppAD::AD<double>) Vector;
 	Vector Solve(const Vector &a , const Vector &b)
 	{	using namespace CppAD;
 		assert(a.size() == 4 && b.size() == 2);	
@@ -78,7 +78,7 @@ namespace {
 		// back substitute to compute the solution vector x.
 		// Note that the columns of A correspond to rows of x.
 		// Also note that A[rmax * 2 + 0] is equal to one.
-		CPPAD_TEST_VECTOR(AD<double>) x(2);
+		CPPAD_TESTVECTOR(AD<double>) x(2);
 		x[1] = B[other] / A[other * 2 + 1];
 		x[0] = B[rmax] - A[rmax * 2 + 1] * x[1];
 
@@ -94,8 +94,8 @@ bool vec_ad(void)
 
 	// domain space vector
 	size_t n = 4;
-	CPPAD_TEST_VECTOR(double)       x(n);
-	CPPAD_TEST_VECTOR(AD<double>) X(n);
+	CPPAD_TESTVECTOR(double)       x(n);
+	CPPAD_TESTVECTOR(AD<double>) X(n);
 	// 2 * identity matrix (rmax in Solve will be 0)
 	X[0] = x[0] = 2.; X[1] = x[1] = 0.;  
 	X[2] = x[2] = 0.; X[3] = x[3] = 2.; 
@@ -104,14 +104,14 @@ bool vec_ad(void)
 	CppAD::Independent(X);
 
 	// define the vector b
-	CPPAD_TEST_VECTOR(double)       b(2);
-	CPPAD_TEST_VECTOR(AD<double>) B(2);
+	CPPAD_TESTVECTOR(double)       b(2);
+	CPPAD_TESTVECTOR(AD<double>) B(2);
 	B[0] = b[0] = 0.;
 	B[1] = b[1] = 1.;
 
 	// range space vector solves X * Y = b
 	size_t m = 2;
-	CPPAD_TEST_VECTOR(AD<double>) Y(m);
+	CPPAD_TESTVECTOR(AD<double>) Y(m);
 	Y = Solve(X, B);
 
 	// create f: X -> Y and stop tape recording
@@ -131,8 +131,8 @@ bool vec_ad(void)
 	ok &= NearEqual(Y[1] , num1 / den,  1e-10 , 1e-10);
 
 	// forward computation of partials w.r.t. x[0]
-	CPPAD_TEST_VECTOR(double) dx(n);
-	CPPAD_TEST_VECTOR(double) dy(m);
+	CPPAD_TESTVECTOR(double) dx(n);
+	CPPAD_TESTVECTOR(double) dy(m);
 	dx[0] = 1.; dx[1] = 0.;
 	dx[2] = 0.; dx[3] = 0.;
 	dy    = f.Forward(1, dx);
@@ -141,7 +141,7 @@ bool vec_ad(void)
 
 	// compute the solution for a new x matrix such that pivioting
 	// on the original rmax row would divide by zero
-	CPPAD_TEST_VECTOR(double) y(m);
+	CPPAD_TESTVECTOR(double) y(m);
 	x[0] = 0.; x[1] = 2.;
 	x[2] = 2.; x[3] = 0.;
 
@@ -164,8 +164,8 @@ bool vec_ad(void)
 	ok   &= NearEqual(dy[1], 0.         + num1 * x[2] / dsq, 1e-10, 1e-10);
 
 	// reverse computation of derivative of y[0] w.r.t x
-	CPPAD_TEST_VECTOR(double) w(m);
-	CPPAD_TEST_VECTOR(double) dw(n);
+	CPPAD_TESTVECTOR(double) w(m);
+	CPPAD_TESTVECTOR(double) dw(n);
 	w[0] = 1.; w[1] = 0.;
 	dw   = f.Reverse(1, w);
 	ok  &= NearEqual(dw[0], 0.         - num0 * x[3] / dsq, 1e-10, 1e-10);

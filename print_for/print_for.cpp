@@ -73,7 +73,7 @@ void print_for(void)
 
 	// independent variable vector
 	size_t n = 1;
-	CPPAD_TEST_VECTOR(AD<double>) ax(n);
+	CPPAD_TESTVECTOR(AD<double>) ax(n);
 	ax[0] = 1.;
 	Independent(ax);
 
@@ -99,14 +99,14 @@ void print_for(void)
 
 	// dependent variable vector 
 	size_t m = 2;
-	CPPAD_TEST_VECTOR(AD<double>) ay(m);
+	CPPAD_TESTVECTOR(AD<double>) ay(m);
 	ay[0] = av[Zero] + ax[0];
 
 	// define f: x -> y and stop tape recording
 	CppAD::ADFun<double> f(ax, ay); 
 
 	// zero order forward with x[0] = 2 
-	CPPAD_TEST_VECTOR(double) x(n);
+	CPPAD_TESTVECTOR(double) x(n);
 	x[0] = 2.;
 
 	cout << "v[0] = 0" << endl; 

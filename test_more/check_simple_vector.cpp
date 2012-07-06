@@ -23,8 +23,8 @@ namespace {
 		CheckSimpleVector<Scalar, CppAD::vector<Scalar> > (x, y);
 		CheckSimpleVector<Scalar, std::vector<Scalar>   > (x, y);
 		CheckSimpleVector<Scalar, std::valarray<Scalar> > (x, y);
-		typedef CPPAD_TEST_VECTOR(Scalar) test_vector;
-		CheckSimpleVector<Scalar, test_vector > (x, y);
+		typedef CPPAD_TESTVECTOR(Scalar) testvector;
+		CheckSimpleVector<Scalar, testvector > (x, y);
 	}
 }
 bool check_simple_vector(void)

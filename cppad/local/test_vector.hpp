@@ -16,13 +16,10 @@ Please visit http://www.coin-or.org/CppAD/ for information on other licenses.
 /*
 $begin test_vector$$
 $spell
-	cppad
-	Eigen
 	ifdef
 	undef
 	Microsofts
 	CppADvector
-	boostvector
 	hpp
 	std
 	endif
@@ -38,81 +35,90 @@ $index test, vector$$
 
 $section Choosing The Vector Testing Template Class$$
 
+$head Deprecated$$
+$index deprecated, test vector$$
+The $code CPPAD_TEST_VECTOR$$ macro has been deprecated,
+use $cref/CPPAD_TESTVECTOR/testvector/$$ instead.
+
 $head Syntax$$
-$codei%CPPAD_TEST_VECTOR(%Scalar%)
+$codei%CPPAD_TEST_VECTOR<%Scalar%>
 %$$
 
 $head Introduction$$
 Many of the CppAD $cref/examples/example/$$ and tests use 
-the $code CPPAD_TEST_VECTOR$$ template class to pass information to CppAD.
-This is not a true template class because it's syntax uses
-$codei%(%Scalar%)%$$ instead of $codei%<%Scalar%>%$$.
-This enables us to use
-$codei%
-	Eigen::Matrix<%Scalar%, Eigen::Dynamic, 1>
-%$$
-as one of the possible cases for this 'template class'.
+the $code CPPAD_TEST_VECTOR$$ template class to pass information.
+The default definition for this template class is
+$cref/CppAD::vector/CppAD_vector/$$.
+
+$head MS Windows$$
+The include path for boost is not defined in the Windows project files.
+If we are using Microsofts compiler, the following code overrides the setting
+of $code CPPAD_BOOSTVECTOR$$:
+$codep */
+// The next 7 lines are C++ source code.
+# ifdef _MSC_VER
+# if CPPAD_BOOSTVECTOR
+# undef  CPPAD_BOOSTVECTOR
+# define CPPAD_BOOSTVECTOR 0
+# undef  CPPAD_CPPADVECTOR
+# define CPPAD_CPPADVECTOR 1
+# endif
+# endif
+/* $$
 
 $head CppAD::vector$$
 By default $code CPPAD_CPPADVECTOR$$ is true
-and $code CPPAD_TEST_VECTOR$$ is defined by the following source code:
+and $code CPPAD_TEST_VECTOR$$ is defined by the following source code
 $codep */
 // The next 3 line are C++ source code.
 # if CPPAD_CPPADVECTOR
-# define CPPAD_TEST_VECTOR(Scalar) CppAD::vector< Scalar >
+# define CPPAD_TEST_VECTOR CppAD::vector
 # endif
 /* $$
+You can replace this definition of the preprocessor symbol
+$code CPPAD_TEST_VECTOR$$ by any other $cref SimpleVector$$ template class.
+This will test using your replacement template vector class with CppAD.
 
 $head std::vector$$
 If you specify $code --with-stdvector$$ on the 
 $cref/configure/InstallUnix/Configure/$$
 command line during CppAD installation,
 $code CPPAD_STDVECTOR$$ is true
-and $code CPPAD_TEST_VECTOR$$ is defined by the following source code:
+and $code CPPAD_TEST_VECTOR$$ is defined by the following source code
 $codep */
 // The next 4 lines are C++ source code.
 # if CPPAD_STDVECTOR
 # include <vector>
-# define CPPAD_TEST_VECTOR(Scalar) std::vector< Scalar >
+# define CPPAD_TEST_VECTOR std::vector
 # endif
 /* $$
-In this case CppAD will use $code std::vector$$ for 
-many lot of its examples and tests.
+In this case CppAD will use $code std::vector$$ for its examples and tests.
+Use of $code CppAD::vector$$, $code std::vector$$,
+and $code std::valarray$$ with CppAD is always tested to some degree.
+Specifying $code --with-stdvector$$ will increase the amount of
+$code std::vector$$ testing. 
 
 $head boost::numeric::ublas::vector$$
-If you specify $code --with-boostvector$$ on the configure
+If you specify a value for $icode boost_dir$$ on the configure
 command line during CppAD installation,
 $code CPPAD_BOOSTVECTOR$$ is true 
-and $code CPPAD_TEST_VECTOR$$ is defined by the following source code:
+and $code CPPAD_TEST_VECTOR$$ is defined by the following source code
 $codep */
 // The next 4 lines are C++ source code.
 # if CPPAD_BOOSTVECTOR
 # include <boost/numeric/ublas/vector.hpp>
-# define CPPAD_TEST_VECTOR(Scalar) boost::numeric::ublas::vector< Scalar >
+# define CPPAD_TEST_VECTOR boost::numeric::ublas::vector
 # endif
 /* $$
-In this case CppAD will use Ublas vectors for many of its examples and tests.
+In this case CppAD will use Ublas vectors for its examples and tests.
+Use of $code CppAD::vector$$, $code std::vector$$,
+and $code std::valarray$$ with CppAD is always tested to some degree.
+Specifying $icode boost_dir$$ will increase the amount of
+Ublas vector testing. 
 
-$head Eigen Vectors$$
-If you specify $code --with-eigenvector$$ on the configure
-command line during CppAD installation,
-$code CPPAD_EIGENVECTOR$$ is true 
-and $code CPPAD_TEST_VECTOR$$ is defined by the following source code:
-$codep */
-// The next 4 lines are C++ source code.
-# if CPPAD_EIGENVECTOR
-# include <cppad/example/cppad_eigen.hpp>
-# define CPPAD_TEST_VECTOR(Scalar) Eigen::Matrix< Scalar , Eigen::Dynamic, 1>
-# endif
-/* $$
-In this case CppAD will use Eigen vectors for many of its examples and tests.
-
-
-$head Deprecated$$
-$index CppADvector, deprecated$$
-$index deprecated, CppADvector$$
+$head CppADvector$$
 The preprocessor symbol $code CppADvector$$ is defined to
-have the same value as $code CPPAD_TEST_VECTOR$$ but its use is deprecated
+have the same value as $code CPPAD_TEST_VECTOR$$ but its use is deprecated:
 $codep */
 # define CppADvector CPPAD_TEST_VECTOR
 /* $$

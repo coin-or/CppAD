@@ -42,41 +42,41 @@ Replacement for config.h so that all preprocessor symbols begin with CPPAD_
 \def CPPAD_PACKAGE_STRING
 cppad-yyyymmdd as a C string where yyyy is year, mm is month, and dd is day.
 */
-# define CPPAD_PACKAGE_STRING "cppad-20120705"
+# define CPPAD_PACKAGE_STRING "cppad-20120706"
 
 /*!
 \def CPPAD_BOOSTVECTOR
 If this symbol is one, and _MSC_VER is not defined,
-we are using boost vector for CPPAD_TEST_VECTOR.
+we are using boost vector for CPPAD_TESTVECTOR.
 It this symbol is zero, 
-we are not using boost vector for CPPAD_TEST_VECTOR.
+we are not using boost vector for CPPAD_TESTVECTOR.
 */
 # define CPPAD_BOOSTVECTOR 0
 
 /*!
 \def CPPAD_CPPADVECTOR
 If this symbol is one, 
-we are using CppAD vector for CPPAD_TEST_VECTOR.
+we are using CppAD vector for CPPAD_TESTVECTOR.
 It this symbol is zero, 
-we are not using CppAD vector for CPPAD_TEST_VECTOR.
+we are not using CppAD vector for CPPAD_TESTVECTOR.
 */
 # define CPPAD_CPPADVECTOR 1
 
 /*!
 \def CPPAD_STDVECTOR
 If this symbol is one, 
-we are using standard vector for CPPAD_TEST_VECTOR.
+we are using standard vector for CPPAD_TESTVECTOR.
 It this symbol is zero, 
-we are not using standard vector for CPPAD_TEST_VECTOR.
+we are not using standard vector for CPPAD_TESTVECTOR.
 */
 # define CPPAD_STDVECTOR 0
 
 /*!
 \def CPPAD_EIGENVECTOR
 If this symbol is one, 
-we are using Eigen vector for CPPAD_TEST_VECTOR.
+we are using Eigen vector for CPPAD_TESTVECTOR.
 If this symbol is zero, 
-we are not using Eigen vector for CPPAD_TEST_VECTOR.
+we are not using Eigen vector for CPPAD_TESTVECTOR.
 */
 # define CPPAD_EIGENVECTOR 0
 

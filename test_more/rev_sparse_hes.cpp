@@ -29,12 +29,12 @@ bool case_one()
 	size_t i, j;
 
 	// initialize check values to false
-	CPPAD_TEST_VECTOR(bool) Check(n * n);
+	CPPAD_TESTVECTOR(bool) Check(n * n);
 	for(j = 0; j < n * n; j++)
 		Check[j] = false;
 
 	// independent variable vector 
-	CPPAD_TEST_VECTOR(AD<double>) X(n);
+	CPPAD_TESTVECTOR(AD<double>) X(n);
 	for(j = 0; j < n; j++)
 		X[j] = AD<double>(j);
 	Independent(X);
@@ -61,7 +61,7 @@ bool case_one()
 	Check[9 * n + 8] = Check[9 * n + 9] = true;
 
 	// dependent variable vector
-	CPPAD_TEST_VECTOR(AD<double>) Y(m);
+	CPPAD_TESTVECTOR(AD<double>) Y(m);
 	Y[0] = sum;
 
 	// variable - variable
@@ -72,7 +72,7 @@ bool case_one()
 
 	// ------------------------------------------------------------------
 	// sparsity pattern for the identity function U(x) = x
-	CPPAD_TEST_VECTOR(bool) Px(n * n);
+	CPPAD_TESTVECTOR(bool) Px(n * n);
 	for(i = 0; i < n; i++)
 	{	for(j = 0; j < n; j++)
 			Px[ i * n + j ] = false;
@@ -83,10 +83,10 @@ bool case_one()
 	F.ForSparseJac(n, Px);
 
 	// compute sparsity pattern for Hessian of F_0 ( U(x) ) 
-	CPPAD_TEST_VECTOR(bool) Py(m);
+	CPPAD_TESTVECTOR(bool) Py(m);
 	Py[0] = true;
 	Py[1] = false;
-	CPPAD_TEST_VECTOR(bool) Pxx(n * n);
+	CPPAD_TESTVECTOR(bool) Pxx(n * n);
 	Pxx = F.RevSparseHes(n, Py);
 
 	// check values
@@ -102,7 +102,7 @@ bool case_one()
 
 	// ------------------------------------------------------------------
 	// sparsity pattern for the identity function U(x) = x
-	CPPAD_TEST_VECTOR(std::set<size_t>) Sx(n);
+	CPPAD_TESTVECTOR(std::set<size_t>) Sx(n);
 	for(i = 0; i < n; i++)
 		Sx[i].insert(i);
 
@@ -110,9 +110,9 @@ bool case_one()
 	F.ForSparseJac(n, Sx);
 
 	// compute sparsity pattern for Hessian of F_0 ( U(x) ) 
-	CPPAD_TEST_VECTOR(std::set<size_t>) Sy(1);
+	CPPAD_TESTVECTOR(std::set<size_t>) Sy(1);
 	Sy[0].insert(0);
-	CPPAD_TEST_VECTOR(std::set<size_t>) Sxx(n);
+	CPPAD_TESTVECTOR(std::set<size_t>) Sxx(n);
 	Sxx = F.RevSparseHes(n, Sy);
 
 	// check values
@@ -151,19 +151,19 @@ bool case_two()
 	size_t i, j;
 
 	// initialize check values to false
-	CPPAD_TEST_VECTOR(bool) Check(n * n);
+	CPPAD_TESTVECTOR(bool) Check(n * n);
 	for(j = 0; j < n * n; j++)
 		Check[j] = false;
 
 	// independent variable vector 
-	CPPAD_TEST_VECTOR(AD<double>) X(n);
+	CPPAD_TESTVECTOR(AD<double>) X(n);
 	for(j = 0; j < n; j++)
 		X[j] = AD<double>(j);
 	Independent(X);
 
 	// Test the case where dependent variable is a non-linear function
 	// of the result of a conditional expression. 
-	CPPAD_TEST_VECTOR(AD<double>) Y(m);
+	CPPAD_TESTVECTOR(AD<double>) Y(m);
 	Y[0] = CondExpLt(X[0], X[1], X[2], X[3]);
 	Y[0] = cos(Y[0]) + X[0] + X[1];
 
@@ -179,7 +179,7 @@ bool case_two()
 
 	// -----------------------------------------------------------------
 	// sparsity pattern for the identity function U(x) = x
-	CPPAD_TEST_VECTOR(bool) Px(n * n);
+	CPPAD_TESTVECTOR(bool) Px(n * n);
 	for(i = 0; i < n; i++)
 	{	for(j = 0; j < n; j++)
 			Px[ i * n + j ] = false;
@@ -190,9 +190,9 @@ bool case_two()
 	F.ForSparseJac(n, Px);
 
 	// compute sparsity pattern for Hessian of F_0 ( U(x) ) 
-	CPPAD_TEST_VECTOR(bool) Py(m);
+	CPPAD_TESTVECTOR(bool) Py(m);
 	Py[0] = true;
-	CPPAD_TEST_VECTOR(bool) Pxx(n * n);
+	CPPAD_TESTVECTOR(bool) Pxx(n * n);
 	Pxx = F.RevSparseHes(n, Py);
 
 	// check values
@@ -201,7 +201,7 @@ bool case_two()
 
 	// ------------------------------------------------------------------
 	// sparsity pattern for the identity function U(x) = x
-	CPPAD_TEST_VECTOR(std::set<size_t>) Sx(n);
+	CPPAD_TESTVECTOR(std::set<size_t>) Sx(n);
 	for(i = 0; i < n; i++)
 		Sx[i].insert(i);
 
@@ -209,9 +209,9 @@ bool case_two()
 	F.ForSparseJac(n, Sx);
 
 	// compute sparsity pattern for Hessian of F_0 ( U(x) ) 
-	CPPAD_TEST_VECTOR(std::set<size_t>) Sy(1);
+	CPPAD_TESTVECTOR(std::set<size_t>) Sy(1);
 	Sy[0].insert(0);
-	CPPAD_TEST_VECTOR(std::set<size_t>) Sxx(n);
+	CPPAD_TESTVECTOR(std::set<size_t>) Sxx(n);
 	Sxx = F.RevSparseHes(n, Sy);
 
 	// check values
@@ -231,7 +231,7 @@ bool case_three()
 
 	// domain space vector
 	size_t n = 1; 
-	CPPAD_TEST_VECTOR(AD<double>) X(n);
+	CPPAD_TESTVECTOR(AD<double>) X(n);
 	X[0] = 0.; 
 
 	// declare independent variables and start recording
@@ -239,7 +239,7 @@ bool case_three()
 
 	// range space vector
 	size_t m = 1;
-	CPPAD_TEST_VECTOR(AD<double>) Y(m);
+	CPPAD_TESTVECTOR(AD<double>) Y(m);
 
 	// make sure reverse jacobian is propogating dependency to
 	// intermediate values (not just final ones).
@@ -274,7 +274,7 @@ bool case_three()
 
 	// ------------------------------------------------------------------
 	// sparsity pattern for the identity function U(x) = x
-	CPPAD_TEST_VECTOR(std::set<size_t>) Sx(n);
+	CPPAD_TESTVECTOR(std::set<size_t>) Sx(n);
 	for(i = 0; i < n; i++)
 		Sx[i].insert(i);
 
@@ -282,9 +282,9 @@ bool case_three()
 	f.ForSparseJac(n, Sx);
 
 	// compute sparsity pattern for Hessian of F_0 ( U(x) ) 
-	CPPAD_TEST_VECTOR(std::set<size_t>) Sy(1);
+	CPPAD_TESTVECTOR(std::set<size_t>) Sy(1);
 	Sy[0].insert(0);
-	CPPAD_TEST_VECTOR(std::set<size_t>) Sxx(n);
+	CPPAD_TESTVECTOR(std::set<size_t>) Sxx(n);
 	Sxx = f.RevSparseHes(n, Sy);
 
 	// check value
@@ -311,7 +311,7 @@ bool case_four()
 		Z[k] = 0.;
 
 	// independent variable vector 
-	CPPAD_TEST_VECTOR(AD<double>) X(n);
+	CPPAD_TESTVECTOR(AD<double>) X(n);
 	X[0] = 0.; 
 	X[1] = 1.;
 	X[2] = 2.;
@@ -323,10 +323,10 @@ bool case_four()
 	Z[ X[1] ] = 0.; 
 
 	// dependent variable vector
-	CPPAD_TEST_VECTOR(AD<double>) Y(m);
+	CPPAD_TESTVECTOR(AD<double>) Y(m);
 
 	// check results vector
-	CPPAD_TEST_VECTOR( bool )       Check(n * n);
+	CPPAD_TESTVECTOR( bool )       Check(n * n);
 
 	// y = z[j] where j might be zero or one.
 	Y[0]  =  Z[ X[1] ];
@@ -348,7 +348,7 @@ bool case_four()
 
 	// -----------------------------------------------------
 	// compute the forward Jacobian sparsity pattern for F
-	CPPAD_TEST_VECTOR( bool ) r(n * n);
+	CPPAD_TESTVECTOR( bool ) r(n * n);
 	size_t i, j;
 	for(i = 0; i < n; i++)
 	{	for(j = 0; j < n; j++)
@@ -358,7 +358,7 @@ bool case_four()
 	F.ForSparseJac(n, r);
 
 	// compute the reverse Hessian sparsity pattern for F
-	CPPAD_TEST_VECTOR( bool ) s(m), h(n * n);
+	CPPAD_TESTVECTOR( bool ) s(m), h(n * n);
 	s[0] = 1.;
 	h = F.RevSparseHes(n, s);
 
@@ -370,7 +370,7 @@ bool case_four()
 
 	// ------------------------------------------------------------------
 	// sparsity pattern for the identity function U(x) = x
-	CPPAD_TEST_VECTOR(std::set<size_t>) Sx(n);
+	CPPAD_TESTVECTOR(std::set<size_t>) Sx(n);
 	for(i = 0; i < n; i++)
 		Sx[i].insert(i);
 
@@ -378,9 +378,9 @@ bool case_four()
 	F.ForSparseJac(n, Sx);
 
 	// compute sparsity pattern for Hessian of F_0 ( U(x) ) 
-	CPPAD_TEST_VECTOR(std::set<size_t>) Sy(1);
+	CPPAD_TESTVECTOR(std::set<size_t>) Sy(1);
 	Sy[0].insert(0);
-	CPPAD_TEST_VECTOR(std::set<size_t>) Sxx(n);
+	CPPAD_TESTVECTOR(std::set<size_t>) Sxx(n);
 	Sxx = F.RevSparseHes(n, Sy);
 
 	// check values
@@ -400,13 +400,13 @@ bool case_five(void)
 	size_t i, j, k;
 
 	size_t n = 2;
-	CPPAD_TEST_VECTOR(AD<double>) X(n); 
+	CPPAD_TESTVECTOR(AD<double>) X(n); 
 	X[0] = 1.;
 	X[1] = 2.;
 	CppAD::Independent(X);
 
 	size_t m = 2;
-	CPPAD_TEST_VECTOR(AD<double>) Y(m);
+	CPPAD_TESTVECTOR(AD<double>) Y(m);
 	Y[0] = pow(X[0], 2.);
 	Y[1] = pow(2., X[1]);
 
@@ -414,7 +414,7 @@ bool case_five(void)
 	CppAD::ADFun<double> F(X, Y);
 
 	// sparsity pattern for the identity function U(x) = x
-	CPPAD_TEST_VECTOR(bool) Px(n * n);
+	CPPAD_TESTVECTOR(bool) Px(n * n);
 	for(i = 0; i < n; i++)
 		for(j = 0; j < n; j++)
 			Px[ i * n + j ] = (i == j);
@@ -423,8 +423,8 @@ bool case_five(void)
 	F.ForSparseJac(n, Px);
 
 	// compute sparsity pattern for Hessian of F_k ( U(x) ) 
-	CPPAD_TEST_VECTOR(bool) Py(m);
-	CPPAD_TEST_VECTOR(bool) Pxx(n * n);
+	CPPAD_TESTVECTOR(bool) Py(m);
+	CPPAD_TESTVECTOR(bool) Pxx(n * n);
 	for(k = 0; k < m; k++)
 	{	for(i = 0; i < m; i++)
 			Py[i] = (i == k);

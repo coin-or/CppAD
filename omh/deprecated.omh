@@ -11,8 +11,8 @@ Please visit http://www.coin-or.org/CppAD/ for information on other licenses.
 -------------------------------------------------------------------------- */
 $begin deprecated$$
 $spell
+	CppAD
 	Bool
-	CppADvector
 $$
 
 $section CppAD Deprecated API Features$$
@@ -24,16 +24,15 @@ $childtable%
 	cppad/track_new_del.hpp%
 	omh/omp_alloc.omh%
 	cppad/memory_leak.hpp%
-	cppad/local/epsilon.hpp
+	cppad/local/epsilon.hpp%
+	cppad/local/test_vector.hpp
 %$$
 
 $table
 $cref/CppADCreateUnaryBool/BoolFun/Deprecated/$$  $cnext 
 	$title BoolFun$$ $rnext
 $cref/CppADCreateDiscrete/Discrete/Deprecated/$$  $cnext 
-	$title Discrete$$ $rnext
-$cref/CppADvector/test_vector/Deprecated/$$  $cnext 
-	$title test_vector$$ $rnext
+	$title Discrete$$ 
 $tend
 
 

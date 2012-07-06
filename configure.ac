@@ -12,7 +12,7 @@ dnl ---------------------------------------------------------------------------
 dnl
 dnl Process this file with autoconf to produce a configure script.
 dnl   package   version              bug-report
-AC_INIT(CppAD, 20120705, cppad@list.coin-or.org)
+AC_INIT(CppAD, 20120706, cppad@list.coin-or.org)
 AC_SUBST(PACKAGE_URL, "http://www.coin-or.org/CppAD")
 AC_SUBST(PACKAGE_DESCRIPTION, "Differentiation of C++ Algorithms")
 
@@ -371,7 +371,7 @@ else
 	AC_SUBST(CPPAD_SIZE_T_SAME_UNSIGNED_INT, 0)
 fi
 
-dnl Determine which definition we are using for CPPAD_TEST_VECTOR
+dnl Determine which definition we are using for CPPAD_TESTVECTOR
 if test "$stdvector$boostvector$eigenvector" = "nonono" ; then
 	AC_SUBST(CPPAD_CPPADVECTOR, 1)
 else 

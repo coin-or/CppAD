@@ -23,18 +23,18 @@ bool Cos(void)
 	using namespace CppAD;
 
 	// independent variable vector
-	CPPAD_TEST_VECTOR(AD<double>) U(1);
+	CPPAD_TESTVECTOR(AD<double>) U(1);
 	U[0]     = 1.;
 	Independent(U);
 
 	// dependent variable vector 
-	CPPAD_TEST_VECTOR(AD<double>) Z(1);
+	CPPAD_TESTVECTOR(AD<double>) Z(1);
 	Z[0] = cos(U[0]); 
 
 	// create f: U -> Z and vectors used for derivative calculations
 	ADFun<double> f(U, Z); 
-	CPPAD_TEST_VECTOR(double) v(1);
-	CPPAD_TEST_VECTOR(double) w(1);
+	CPPAD_TESTVECTOR(double) v(1);
+	CPPAD_TESTVECTOR(double) w(1);
 
 	// check value 
 	double sin_u = sin( Value(U[0]) );
@@ -65,7 +65,7 @@ bool Cos(void)
 	}
 
 	// reverse computation of partials of Taylor coefficients
-	CPPAD_TEST_VECTOR(double) r(p); 
+	CPPAD_TESTVECTOR(double) r(p); 
 	w[0]  = 1.;
 	r     = f.Reverse(p, w);
 	jfac  = 1.;

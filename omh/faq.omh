@@ -204,19 +204,19 @@ $index namespace$$
 
 
 $subhead Test Vector Preprocessor Symbol$$
-$index CPPAD_TEST_VECTOR$$
+$index CPPAD_TESTVECTOR$$
 $index preprocessor, symbols$$
 $index symbols, preprocessor$$
-Why do you use $code CPPAD_TEST_VECTOR$$ instead of a namespace for
-the CppAD $cref test_vector$$ class ?
+Why do you use $code CPPAD_TESTVECTOR$$ instead of a namespace for
+the CppAD $cref testvector$$ class ?
 $pre
 
 $$
 The preprocessor symbol 
-$small $cref/CPPAD_TEST_VECTOR/test_vector/$$ $$
+$small $cref/CPPAD_TESTVECTOR/testvector/$$ $$
 determines which
 $cref SimpleVector$$ template class is used for extensive testing.
-The default definition for $code CPPAD_TEST_VECTOR$$ is the
+The default definition for $code CPPAD_TESTVECTOR$$ is the
 $cref/CppAD::vector/CppAD_vector/$$ template class, but it can be changed.
 Note that all the preprocessor symbols that are defined or used
 by CppAD begin with either $code CPPAD$$

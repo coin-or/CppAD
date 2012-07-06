@@ -38,9 +38,9 @@ bool reverse()
 {	bool ok = true;
 	using CppAD::AD;
 	using CppAD::NearEqual;
-	typedef CPPAD_TEST_VECTOR(AD<double>) a_vector;
-	typedef CPPAD_TEST_VECTOR(double)       d_vector;
-	typedef CPPAD_TEST_VECTOR(size_t)       i_vector;
+	typedef CPPAD_TESTVECTOR(AD<double>) a_vector;
+	typedef CPPAD_TESTVECTOR(double)       d_vector;
+	typedef CPPAD_TESTVECTOR(size_t)       i_vector;
 	size_t i, j, k, ell;
 	double eps = 10. * CppAD::numeric_limits<double>::epsilon();
 
@@ -149,9 +149,9 @@ bool forward()
 {	bool ok = true;
 	using CppAD::AD;
 	using CppAD::NearEqual;
-	typedef CPPAD_TEST_VECTOR(AD<double>) a_vector;
-	typedef CPPAD_TEST_VECTOR(double)       d_vector;
-	typedef CPPAD_TEST_VECTOR(size_t)       i_vector;
+	typedef CPPAD_TESTVECTOR(AD<double>) a_vector;
+	typedef CPPAD_TESTVECTOR(double)       d_vector;
+	typedef CPPAD_TESTVECTOR(size_t)       i_vector;
 	size_t i, j, k, ell;
 	double eps = 10. * CppAD::numeric_limits<double>::epsilon();
 

@@ -33,23 +33,23 @@ bool SubZero(void)
 		for(j = 0; j < 2; j++)
 		{	// run through the cases y = 0, 1
 
-			CPPAD_TEST_VECTOR( ADdouble ) x(1);
+			CPPAD_TESTVECTOR( ADdouble ) x(1);
 			x[0] = double(i);
 			Independent(x);
 
-			CPPAD_TEST_VECTOR( ADDdouble ) y(1);
+			CPPAD_TESTVECTOR( ADDdouble ) y(1);
 			y[0] = ADDdouble(j);
 			Independent(y);
 
-			CPPAD_TEST_VECTOR( ADDdouble ) z(2);
+			CPPAD_TESTVECTOR( ADDdouble ) z(2);
 			z[0]  = x[0] - y[0];
 			z[1]  = y[0] - x[0];
 			z[1] -= x[0];
 
 			// f(y) = z = { x - y , y - x - x }
 			ADFun< ADdouble > f(y, z);
-			CPPAD_TEST_VECTOR( ADdouble ) u( f.Domain() );
-			CPPAD_TEST_VECTOR( ADdouble ) v( f.Range() );
+			CPPAD_TESTVECTOR( ADdouble ) u( f.Domain() );
+			CPPAD_TESTVECTOR( ADdouble ) v( f.Range() );
 
 			// v = f(y)
 			u[0] = ADdouble(j);
@@ -61,8 +61,8 @@ bool SubZero(void)
 
 			// g(x) = f(y) = {x - y , y - x - x}
 			ADFun<double> g(x, v);
-			CPPAD_TEST_VECTOR( double ) a( g.Domain() );
-			CPPAD_TEST_VECTOR( double ) b( g.Range() );
+			CPPAD_TESTVECTOR( double ) a( g.Domain() );
+			CPPAD_TESTVECTOR( double ) b( g.Range() );
 
 			// b = g'(x)
 			a[0] = 1.;

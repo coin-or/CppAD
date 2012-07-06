@@ -147,7 +147,7 @@ $lnext
 Includes a C++ $xref/library/$$ that is useful
 for general operator overloaded numerical method.
 Allows for replacement of the
-$cref/test_vector/$$ 
+$cref/testvector/$$ 
 template vector class which is used for extensive testing; 
 for example, you can do your testing with the
 $href%http://www.boost.org/libs/numeric/ublas/doc/index.htm%uBlas%$$ 
@@ -252,7 +252,7 @@ $hiliteseq%
 %CppAD::%ADFun%<%             FunConstruct
 %       %ADFun%<%             FunConstruct
 
-%       %CPPAD_TEST_VECTOR%(% test_vector
+%       %CPPAD_TESTVECTOR%(% testvector
 
       %.%Forward%(%           Forward
 

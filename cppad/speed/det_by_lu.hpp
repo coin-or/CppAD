@@ -23,7 +23,7 @@ $spell
 	const
 	hpp
 	Det
-	CPPAD_TEST_VECTOR
+	CPPAD_TESTVECTOR
 	namespace
 $$
 
@@ -148,9 +148,9 @@ class det_by_lu {
 private:
 	const size_t m_;
 	const size_t n_;
-	CPPAD_TEST_VECTOR(Scalar) A_;
-	CPPAD_TEST_VECTOR(Scalar) B_;
-	CPPAD_TEST_VECTOR(Scalar) X_;
+	CPPAD_TESTVECTOR(Scalar) A_;
+	CPPAD_TESTVECTOR(Scalar) B_;
+	CPPAD_TESTVECTOR(Scalar) X_;
 public:
 	det_by_lu(size_t n) : m_(0), n_(n), A_(n * n)
 	{	}

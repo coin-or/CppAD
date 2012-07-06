@@ -23,13 +23,13 @@ bool Log10(void)
 	using namespace CppAD;
 
 	// independent variable vector, indices, values, and declaration
-	CPPAD_TEST_VECTOR(AD<double>) U(1);
+	CPPAD_TESTVECTOR(AD<double>) U(1);
 	size_t s = 0;
 	U[s]     = 10.;
 	Independent(U);
 
 	// dependent variable vector, indices, and values
-	CPPAD_TEST_VECTOR(AD<double>) Z(2);
+	CPPAD_TESTVECTOR(AD<double>) Z(2);
 	size_t x = 0;
 	size_t y = 1;
 	Z[x]     = log10(U[s]);
@@ -37,8 +37,8 @@ bool Log10(void)
 
 	// define f : U -> Z and vectors for derivative calculations
 	ADFun<double> f(U, Z);
-	CPPAD_TEST_VECTOR(double) v( f.Domain() );
-	CPPAD_TEST_VECTOR(double) w( f.Range() );
+	CPPAD_TESTVECTOR(double) v( f.Domain() );
+	CPPAD_TESTVECTOR(double) w( f.Range() );
 
 	// check values
 	ok &= NearEqual(Z[x] , 1.,  1e-10 , 1e-10);

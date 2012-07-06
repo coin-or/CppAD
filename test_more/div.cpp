@@ -28,7 +28,7 @@ bool DivTestOne(void)
 	AD<double>  one = 1.;
 
 	// independent variable vector, indices, values, and declaration
-	CPPAD_TEST_VECTOR(AD<double>) U(2);
+	CPPAD_TESTVECTOR(AD<double>) U(2);
 	size_t s = 0;
 	size_t t = 1;
 	U[s]     = 2.;
@@ -36,7 +36,7 @@ bool DivTestOne(void)
 	Independent(U);
 
 	// dependent variable vector and indices
-	CPPAD_TEST_VECTOR(AD<double>) Z(6);
+	CPPAD_TESTVECTOR(AD<double>) Z(6);
 	size_t x = 0;
 	size_t y = 1;
 	size_t z = 2;
@@ -58,8 +58,8 @@ bool DivTestOne(void)
 
 	// create f : U -> Z and vectors used for derivative calculations
 	ADFun<double> f(U, Z);
-	CPPAD_TEST_VECTOR(double) q( f.Domain() );
-	CPPAD_TEST_VECTOR(double) r( f.Range() );
+	CPPAD_TESTVECTOR(double) q( f.Domain() );
+	CPPAD_TESTVECTOR(double) r( f.Range() );
  
  	// check parameter flag
  	ok &= f.Parameter(w);
@@ -89,7 +89,7 @@ bool DivTestOne(void)
 	ok  &= NearEqual(r[x], 1./U[t] - U[s]/(U[t] * U[t]), 1e-10, 1e-10);
 
 	// second order reverse mode computation
-	CPPAD_TEST_VECTOR(double) Q( f.Domain() * 2 );
+	CPPAD_TESTVECTOR(double) Q( f.Domain() * 2 );
 	r[x] = 1.;
 	r[y] = r[z] = r[u] = r[v] = r[w] = 0.;
 	Q    = f.Reverse(2, r);
@@ -109,7 +109,7 @@ bool DivTestTwo(void)
 
 	// independent variable vector
 	double u0 = .5;
-	CPPAD_TEST_VECTOR(AD<double>) U(1);
+	CPPAD_TESTVECTOR(AD<double>) U(1);
 	U[0]      = u0;
 	Independent(U);
 
@@ -119,13 +119,13 @@ bool DivTestTwo(void)
 	AD<double> d = 4  / c;    // int        / AD<double> 
 
 	// dependent variable vector 
-	CPPAD_TEST_VECTOR(AD<double>) Z(1);
+	CPPAD_TESTVECTOR(AD<double>) Z(1);
 	Z[0] = U[0] * U[0] / d;   // AD<double> / AD<double>
 
 	// create f: U -> Z and vectors used for derivative calculations
 	ADFun<double> f(U, Z); 
-	CPPAD_TEST_VECTOR(double) v(1);
-	CPPAD_TEST_VECTOR(double) w(1);
+	CPPAD_TESTVECTOR(double) v(1);
+	CPPAD_TESTVECTOR(double) w(1);
 
 	// check value 
 	ok &= NearEqual(Value(Z[0]) , u0*u0/(4/(3/(u0/2))),  1e-10 , 1e-10);
@@ -146,7 +146,7 @@ bool DivTestTwo(void)
 	}
 
 	// reverse computation of partials of Taylor coefficients
-	CPPAD_TEST_VECTOR(double) r(p); 
+	CPPAD_TESTVECTOR(double) r(p); 
 	w[0]  = 1.;
 	r     = f.Reverse(p, w);
 	jfac  = 1.;
@@ -169,16 +169,16 @@ bool DivTestThree(void)
 	double x0 = 2.;
 	double x1 = 3.;
 	size_t n  = 2;
-	CPPAD_TEST_VECTOR(AD<double>) X(n);
+	CPPAD_TESTVECTOR(AD<double>) X(n);
 	X[0]      = x0;
 	X[1]      = x1;
 	Independent(X);
 	size_t m  = 1;
-	CPPAD_TEST_VECTOR(AD<double>) Y(m);
+	CPPAD_TESTVECTOR(AD<double>) Y(m);
 	Y[0]      = X[0] / X[1];
 	ADFun<double> f(X, Y);
 
-	CPPAD_TEST_VECTOR(double) dx(n), dy(m);
+	CPPAD_TESTVECTOR(double) dx(n), dy(m);
 	double check;
 	dx[0] = 1.;
 	dx[1] = 1.;
@@ -186,7 +186,7 @@ bool DivTestThree(void)
 	check = 1. / x1 - x0 / (x1 * x1); 
 	ok   &= NearEqual(dy[0], check, 1e-10 , 1e-10);
 
-	CPPAD_TEST_VECTOR(double) w(m), dw(n);
+	CPPAD_TESTVECTOR(double) w(m), dw(n);
 	w[0]  = 1.;
 	dw    = f.Reverse(1, w);
 	check = 1. / x1;

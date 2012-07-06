@@ -23,7 +23,7 @@ bool SubEqTestOne(void)
 	using namespace CppAD;
 
 	// independent variable vector, indices, values, and declaration
-	CPPAD_TEST_VECTOR(AD<double>) U(2);
+	CPPAD_TESTVECTOR(AD<double>) U(2);
 	size_t s = 0;
 	size_t t = 1;
 	U[s] = 3.;
@@ -31,7 +31,7 @@ bool SubEqTestOne(void)
 	Independent(U);
 
 	// dependent variable vector and indices
-	CPPAD_TEST_VECTOR(AD<double>) Z(2);
+	CPPAD_TESTVECTOR(AD<double>) Z(2);
 	size_t x = 0;
 	size_t y = 1;
 
@@ -43,8 +43,8 @@ bool SubEqTestOne(void)
 
 	// create f: U -> Z and vectors used for derivative calculations
 	ADFun<double> f(U, Z);
-	CPPAD_TEST_VECTOR(double) v( f.Domain() );
-	CPPAD_TEST_VECTOR(double) w( f.Range() );
+	CPPAD_TESTVECTOR(double) v( f.Domain() );
+	CPPAD_TESTVECTOR(double) w( f.Range() );
 
 	// check function values
 	ok &= ( Z[x] == 3. - 2. );
@@ -58,7 +58,7 @@ bool SubEqTestOne(void)
 	ok &= ( w[y] == 1. );   // dy/dt
 
 	// reverse computation of second partials of x
-	CPPAD_TEST_VECTOR(double) r( f.Domain() * 2 );
+	CPPAD_TESTVECTOR(double) r( f.Domain() * 2 );
 	w[x] = 1.;
 	w[y] = 0.;
 	r = f.Reverse(2, w);
@@ -75,12 +75,12 @@ bool SubEqTestTwo(void)
 
 	// independent variable vector
 	double u0 = .5;
-	CPPAD_TEST_VECTOR(AD<double>) U(1);
+	CPPAD_TESTVECTOR(AD<double>) U(1);
 	U[0]      = u0; 
 	Independent(U);
 
 	// dependent variable vector 
-	CPPAD_TEST_VECTOR(AD<double>) Z(1);
+	CPPAD_TESTVECTOR(AD<double>) Z(1);
 	Z[0] = U[0];       // initial value
 	Z[0] -= 2;         // AD<double> -= int
 	Z[0] -= 4.;        // AD<double> -= double
@@ -88,8 +88,8 @@ bool SubEqTestTwo(void)
 
 	// create f: U -> Z and vectors used for derivative calculations
 	ADFun<double> f(U, Z); 
-	CPPAD_TEST_VECTOR(double) v(1);
-	CPPAD_TEST_VECTOR(double) w(1);
+	CPPAD_TESTVECTOR(double) v(1);
+	CPPAD_TESTVECTOR(double) w(1);
 
 	// check value 
 	ok &= NearEqual(Z[0] , u0-2-4-2*u0,  1e-10 , 1e-10);
@@ -109,7 +109,7 @@ bool SubEqTestTwo(void)
 	}
 
 	// reverse computation of partials of Taylor coefficients
-	CPPAD_TEST_VECTOR(double) r(p); 
+	CPPAD_TESTVECTOR(double) r(p); 
 	w[0]  = 1.;
 	r     = f.Reverse(p, w);
 	jfac  = 1.;
