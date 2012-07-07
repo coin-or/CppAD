@@ -28,7 +28,7 @@ AD<Base>& AD<Base>::operator *= (const AD<Base> &right)
 	ADTape<Base>* tape = AD<Base>::tape_ptr();
 	if( tape == CPPAD_NULL )
 		return *this;
-	size_t tape_id = tape->id_;
+	tape_id_t tape_id = tape->id_;
 
 	// tape_id cannot match the default value for tape_id_; i.e., 0
 	CPPAD_ASSERT_UNKNOWN( tape_id > 0 );

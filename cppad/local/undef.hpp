@@ -55,7 +55,7 @@ Please visit http://www.coin-or.org/CppAD/ for information on other licenses.
 # undef CPPAD_STANDARD_MATH_UNARY_AD
 # undef CPPAD_STDVECTOR
 //      CPPAD_TAPE_ADDR_TYPE in user api
-# undef CPPAD_TAPE_ID_TYPE 
+//      CPPAD_TAPE_ID_TYPE in user api
 //      CPPAD_TESTVECTOR in user api
 # undef CPPAD_TRACE_CAPACITY
 # undef CPPAD_TRACE_THEAD

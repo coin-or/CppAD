@@ -12,7 +12,7 @@ dnl ---------------------------------------------------------------------------
 dnl
 dnl Process this file with autoconf to produce a configure script.
 dnl   package   version              bug-report
-AC_INIT(CppAD, 20120706, cppad@list.coin-or.org)
+AC_INIT(CppAD, 20120707, cppad@list.coin-or.org)
 AC_SUBST(PACKAGE_URL, "http://www.coin-or.org/CppAD")
 AC_SUBST(PACKAGE_DESCRIPTION, "Differentiation of C++ Algorithms")
 
@@ -329,7 +329,7 @@ else
 fi 
 AC_SUBST(CPPAD_MAX_NUM_THREADS, [$max_num_threads])
 
-dnl The type used for addresses in AD tapes [ default = unsigned int ] ---
+dnl type used for addresses in AD tapes [ default = unsigned int ] -----------
 AC_MSG_CHECKING([TAPE_ADDR_TYPE])
 AC_ARG_VAR(TAPE_ADDR_TYPE, [type used for addresses in AD tapes])
 if test "$TAPE_ADDR_TYPE" == "" ; then
@@ -358,6 +358,38 @@ fi
 if test "$ok" == "no" ; then
   	AC_MSG_ERROR(
 		[$addr_t is not a valid choice for TAPE_ADDR_TYPE]
+	)
+fi
+
+dnl type used for tape identifier [ default = unsigned int ] -----------
+AC_MSG_CHECKING([TAPE_ID_TYPE])
+AC_ARG_VAR(TAPE_ID_TYPE, [type used for addresses in AD tapes])
+if test "$TAPE_ID_TYPE" == "" ; then
+	tape_id_t="unsigned int"
+else
+	tape_id_t="$TAPE_ID_TYPE"
+fi
+AC_SUBST(CPPAD_TAPE_ID_TYPE, [$tape_id_t])
+AC_MSG_RESULT([$tape_id_t])
+ok="no"
+if test "$tape_id_t" == "size_t" ; then
+	ok="yes"
+fi
+if test "$tape_id_t" == "int" ; then
+	AC_MSG_WARN(
+		[TAPE_ID_TYPE=int is for CppAD developers (not users)]
+	)
+	ok="yes"
+fi
+if test "$tape_id_t" == "unsigned int" ; then
+	ok="yes"
+fi
+if test "$tape_id_t" == "unsigned short int" ; then
+	ok="yes"
+fi
+if test "$ok" == "no" ; then
+  	AC_MSG_ERROR(
+		[$tape_id_t is not a valid choice for TAPE_ID_TYPE]
 	)
 fi
 AC_MSG_NOTICE([********** End Checking Command Line arguments ***************])

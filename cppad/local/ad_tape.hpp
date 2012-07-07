@@ -96,7 +96,7 @@ private:
 	been deleted). In addition, id_ % CPPAD_MAX_NUM_THREADS is the thread 
 	number for this tape. Set by Independent and effectively const
 	*/
-	size_t                       id_;
+	tape_id_t                    id_;
 	/// Number of independent variables in this tapes reconding.
 	/// Set by Independent and effectively const
 	size_t         size_independent_;

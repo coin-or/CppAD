@@ -26,6 +26,7 @@ namespace CppAD {
 
 	// simple typedefs
 	typedef CPPAD_TAPE_ADDR_TYPE addr_t;
+	typedef CPPAD_TAPE_ID_TYPE   tape_id_t;
 
 	// classes
 	class sparse_jacobian_work;

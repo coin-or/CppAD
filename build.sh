@@ -258,10 +258,10 @@ then
 		dir_list="$dir_list 
 			SACADO_DIR=$SACADO_DIR"
 	fi
-	# Use TAPE_ADDR_TYPE=int (a signed type) to do more checking for 
+	# Use =int (a signed type) to do more checking for 
 	# slicing from size_t to addr_t.
-	tape_addr_type=""
-#_build_test_only:	tape_addr_type="TAPE_ADDR_TYPE=int"
+	special_types=""
+#_build_test_only:	special_types="TAPE_ADDR_TYPE=int TAPE_ID_TYPE=int"
 	#
 	dir_list=`echo $dir_list | sed -e 's|\t\t*| |g'`
 	cxx_flags="-Wall -ansi -pedantic-errors -std=c++98 -Wshadow"
@@ -273,13 +273,13 @@ cat << EOF
 ../configure > $log_file \\
 $dir_list \\
 CXX_FLAGS=\"$cxx_flags\" \\
-$tape_addr_type --with-Documentation OPENMP_FLAGS=-fopenmp
+$special_types --with-Documentation OPENMP_FLAGS=-fopenmp
 EOF
 	#
 	../configure > $log_dir/$log_file \
 		$dir_list \
 		CXX_FLAGS="$cxx_flags" \
-		$tape_addr_type --with-Documentation OPENMP_FLAGS=-fopenmp
+		$special_types --with-Documentation OPENMP_FLAGS=-fopenmp
 	#
 	for file in $configure_file_list
 	do

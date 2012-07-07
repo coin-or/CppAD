@@ -941,7 +941,7 @@ public:
 		}
 		// 
 		// Determine if we are going to have to tape this operation
-		size_t tape_id     = 0;
+		tape_id_t tape_id     = 0;
 		ADTape<Base>* tape = CPPAD_NULL;
 		for(j = 0; j < n; j++)
 		{	x[j]   = ax[j].value_;

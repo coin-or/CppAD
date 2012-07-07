@@ -177,7 +177,8 @@ $codei%
 	FADBAD_DIR=%fadbad_dir%                   \
 	SADADO_DIR=%sacado_dir%                   \
 	IPOPT_DIR=%ipopt_dir%                     \
-	TAPE_ADDR_TYPE=%tape_addr_type%
+	TAPE_ADDR_TYPE=%tape_addr_type%           \
+	TAPE_ID_TYPE=%tape_id_type%
 %$$
 where only the $code configure$$ line need appear; i.e.,
 the entries in all of the other lines are optional.
@@ -616,6 +617,25 @@ $cref/size_par/seq_property/size_text/$$,
 $cref/size_par/seq_property/size_par/$$,
 $cref/size_par/seq_property/size_VecAD/$$.
 
+
+$head tape_id_type$$
+$index memory, usage$$
+$index memory, tape$$
+$index tape, memory$$
+If the command line argument $icode tape_id_type$$ is present,
+it specifies the type used for identifying tapes.
+The valid values for this argument are
+$code unsigned short int$$,
+$code unsigned int$$,
+$code size_t$$.
+The smaller the value of $icode%sizeof(%tape_id_type%)%$$,
+the less memory is used.
+On the other hand, the value
+$codei%
+	std::numeric_limits<%tape_id_type%>::max()
+%$$
+must be larger than the maximum number of tapes per thread
+times $cref/max_num_threads/InstallUnix/max_num_threads/$$.
 
 $head make install$$
 Once you are satisfied that the tests are giving correct results,

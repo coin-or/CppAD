@@ -83,7 +83,7 @@ namespace CppAD {
 	bool Parameter(const AD<Base> &x)
 	{	if( x.tape_id_ == 0 )
 			return true;
-		size_t thread = x.tape_id_ % CPPAD_MAX_NUM_THREADS;
+		size_t thread = size_t(x.tape_id_ % CPPAD_MAX_NUM_THREADS);
 		return x.tape_id_ != *AD<Base>::tape_id_ptr(thread); 
 	}
 
@@ -92,7 +92,7 @@ namespace CppAD {
 	bool Parameter(const VecAD<Base> &x)
 	{	if( x.tape_id_ == 0 )
 			return true;
-		size_t thread = x.tape_id_ % CPPAD_MAX_NUM_THREADS;
+		size_t thread = size_t(x.tape_id_ % CPPAD_MAX_NUM_THREADS);
 		return x.tape_id_ != *AD<Base>::tape_id_ptr(thread); 
 	}
 
@@ -102,7 +102,7 @@ namespace CppAD {
 	bool Variable(const AD<Base> &x)
 	{	if( x.tape_id_ == 0 )
 			return false;
-		size_t thread = x.tape_id_ % CPPAD_MAX_NUM_THREADS;
+		size_t thread = size_t(x.tape_id_ % CPPAD_MAX_NUM_THREADS);
 		return x.tape_id_ == *AD<Base>::tape_id_ptr(thread); 
 	}
 
@@ -111,7 +111,7 @@ namespace CppAD {
 	bool Variable(const VecAD<Base> &x)
 	{	if( x.tape_id_ == 0 )
 			return false;
-		size_t thread = x.tape_id_ % CPPAD_MAX_NUM_THREADS;
+		size_t thread = size_t(x.tape_id_ % CPPAD_MAX_NUM_THREADS);
 		return x.tape_id_ == *AD<Base>::tape_id_ptr(thread); 
 	}
 } 

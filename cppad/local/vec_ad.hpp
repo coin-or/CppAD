@@ -459,7 +459,7 @@ private:
 	size_t offset_; 
 
 	// tape id corresponding to the offset
-	size_t tape_id_;
+	tape_id_t tape_id_;
 public:
 	// declare the user's view of this type here
 	typedef VecAD_reference<Base> reference;

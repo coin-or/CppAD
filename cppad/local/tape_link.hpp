@@ -27,7 +27,10 @@ Routines that Link AD<Base> and ADTape<Base> Objects \ref tape_link_hpp.
 
 The routines that connect the AD<Base> class to the corresponding tapes
 (one for each thread).
+*/
 
+
+/*!
 \defgroup tape_link_hpp  tape_link.hpp
 */
 /* \{ */
@@ -50,9 +53,9 @@ is a handle to the tape identifier for this thread
 and AD<Base> class.
 */
 template <class Base>
-inline size_t** AD<Base>::tape_id_handle(size_t thread)
+inline tape_id_t** AD<Base>::tape_id_handle(size_t thread)
 {	CPPAD_ASSERT_FIRST_CALL_NOT_PARALLEL;
-	static size_t* tape_id_table[CPPAD_MAX_NUM_THREADS];
+	static tape_id_t* tape_id_table[CPPAD_MAX_NUM_THREADS];
 	CPPAD_ASSERT_UNKNOWN(
 	(! thread_alloc::in_parallel()) || thread == thread_alloc::thread_num() 
 	);
@@ -83,7 +86,7 @@ This routine should only be called if there was a tape created
 for the specified thread (it may no longer be recording).
 */
 template <class Base>
-inline size_t* AD<Base>::tape_id_ptr(size_t thread)
+inline tape_id_t* AD<Base>::tape_id_ptr(size_t thread)
 {	CPPAD_ASSERT_UNKNOWN( *tape_id_handle(thread) != CPPAD_NULL ) 	
 	return *tape_id_handle(thread); 
 }
@@ -149,7 +152,7 @@ is the identifier for the tape that is currently recording
 AD<Base> operations for the current thread.
 It must hold that the current thread is
 \code
-	thread = tape_id % CPPAD_MAX_NUM_THREADS
+	thread = size_t( tape_id % CPPAD_MAX_NUM_THREADS )
 \endcode
 and that there is a tape recording AD<Base> operations 
 for this thread.
@@ -166,8 +169,8 @@ This routine should only be called if there is a tape recording operaitons
 for the specified thread.
 */
 template <class Base>
-inline ADTape<Base>* AD<Base>::tape_ptr(size_t tape_id)
-{	size_t thread = tape_id % CPPAD_MAX_NUM_THREADS;
+inline ADTape<Base>* AD<Base>::tape_ptr(tape_id_t tape_id)
+{	size_t thread = size_t( tape_id % CPPAD_MAX_NUM_THREADS );
 	CPPAD_ASSERT_KNOWN(
 		thread == thread_alloc::thread_num(),
 		"Attempt to use an AD variable with two different threads."
@@ -216,7 +219,7 @@ ADTape<Base>*  AD<Base>::tape_manage(tape_manage_job job)
 {	CPPAD_ASSERT_FIRST_CALL_NOT_PARALLEL
 	static ADTape<Base>* tape_table[CPPAD_MAX_NUM_THREADS];
 	static ADTape<Base>  tape_zero;
-	static size_t        tape_id_save[CPPAD_MAX_NUM_THREADS];
+	static tape_id_t     tape_id_save[CPPAD_MAX_NUM_THREADS];
 
 	size_t thread        = thread_alloc::thread_num();
 	if( job == tape_manage_clear )
@@ -233,7 +236,7 @@ ADTape<Base>*  AD<Base>::tape_manage(tape_manage_job job)
 		}  
 		return CPPAD_NULL;
 	}
-	size_t** tape_id     = tape_id_handle(thread);
+	tape_id_t** tape_id  = tape_id_handle(thread);
 	ADTape<Base>** tape  = tape_handle(thread);
 
 	if( tape_table[thread] == CPPAD_NULL )
@@ -251,7 +254,9 @@ ADTape<Base>*  AD<Base>::tape_manage(tape_manage_job job)
 	// make sure tape_id_handle(thread) is pointing to the proper place
 	CPPAD_ASSERT_UNKNOWN( *tape_id == &tape_table[thread]->id_ );
 	// make sure tape_id value is valid for this thread
-	CPPAD_ASSERT_UNKNOWN( **tape_id % CPPAD_MAX_NUM_THREADS == thread );
+	CPPAD_ASSERT_UNKNOWN( 
+		size_t( **tape_id % CPPAD_MAX_NUM_THREADS ) == thread 
+	);
 
 	switch(job)
 	{	case tape_manage_new:
@@ -263,7 +268,7 @@ ADTape<Base>*  AD<Base>::tape_manage(tape_manage_job job)
 		case tape_manage_delete:
 		CPPAD_ASSERT_UNKNOWN( *tape  == tape_table[thread] );
 		CPPAD_ASSERT_KNOWN(
-			size_t( std::numeric_limits<CPPAD_TAPE_ID_TYPE>::max() )
+			std::numeric_limits<CPPAD_TAPE_ID_TYPE>::max()
 			- CPPAD_MAX_NUM_THREADS > **tape_id,
 			"To many different tapes given the type used for "
 			"CPPAD_TAPE_ID_TYPE"
@@ -304,7 +309,7 @@ recording AD<Base> operations for this thread.
 template <class Base>
 inline ADTape<Base> *AD<Base>::tape_this(void) const
 {	
-	size_t thread = tape_id_ % CPPAD_MAX_NUM_THREADS;
+	size_t thread = size_t( tape_id_ % CPPAD_MAX_NUM_THREADS );
 	CPPAD_ASSERT_UNKNOWN( tape_id_ == *tape_id_ptr(thread) );
 	CPPAD_ASSERT_UNKNOWN( *tape_handle(thread) != CPPAD_NULL );
 	return *tape_handle(thread);
