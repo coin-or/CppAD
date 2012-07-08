@@ -11,7 +11,7 @@ Please visit http://www.coin-or.org/CppAD/ for information on other licenses.
 -------------------------------------------------------------------------- */
 
 /*
-$begin var_2par.cpp$$
+$begin var2par.cpp$$
 $spell
 	Var
 	Cpp
@@ -26,7 +26,7 @@ $index Value, during taping$$
 $index taping, Value during$$
 
 $code
-$verbatim%example/var_2par.cpp%0%// BEGIN C++%// END C++%1%$$
+$verbatim%example/var2par.cpp%0%// BEGIN C++%// END C++%1%$$
 $$
 
 $end

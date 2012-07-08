@@ -10,7 +10,7 @@ A copy of this license is included in the COPYING file of this distribution.
 Please visit http://www.coin-or.org/CppAD/ for information on other licenses.
 -------------------------------------------------------------------------- */
 /*
-$begin interface_2c.cpp$$
+$begin interface2c.cpp$$
 $spell
 	
 $$
@@ -22,7 +22,7 @@ $index difference, central$$
 $index central difference$$
 
 $code
-$verbatim%example/interface_2c.cpp%0%// BEGIN C++%// END C++%1%$$
+$verbatim%example/interface2c.cpp%0%// BEGIN C++%// END C++%1%$$
 $$
 
 $end

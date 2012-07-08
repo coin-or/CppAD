@@ -11,19 +11,20 @@ Please visit http://www.coin-or.org/CppAD/ for information on other licenses.
 -------------------------------------------------------------------------- */
 
 /*
-$begin log_10.cpp$$
+$begin atan2.cpp$$
 $spell
-	log
+	tan
+	atan
 $$
 
-$section The AD log10 Function: Example and Test$$
+$section The AD atan2 Function: Example and Test$$
 
-$index log10, AD example$$
-$index example, AD log10$$
-$index test, AD log10$$
+$index atan2, AD example$$
+$index example, AD atan2$$
+$index test, AD atan2$$
 
 $code
-$verbatim%example/log_10.cpp%0%// BEGIN C++%// END C++%1%$$
+$verbatim%example/atan2.cpp%0%// BEGIN C++%// END C++%1%$$
 $$
 
 $end
@@ -32,7 +33,7 @@ $end
 
 # include <cppad/cppad.hpp>
 
-bool Log10(void)
+bool Atan2(void)
 {	bool ok = true;
 
 	using CppAD::AD;
@@ -47,14 +48,14 @@ bool Log10(void)
 	// declare independent variables and start tape recording
 	CppAD::Independent(x);
 
-	// ten raised to the x0 power
-	AD<double> ten = 10.;
-	AD<double> pow_10_x0 = CppAD::pow(ten, x[0]); 
+	// a temporary value
+	AD<double> sin_of_x0 = CppAD::sin(x[0]);
+	AD<double> cos_of_x0 = CppAD::cos(x[0]);
 
 	// range space vector 
 	size_t m = 1;
 	CPPAD_TESTVECTOR(AD<double>) y(m);
-	y[0] = CppAD::log10(pow_10_x0);
+	y[0] = CppAD::atan2(sin_of_x0, cos_of_x0);
 
 	// create f: x -> y and stop tape recording
 	CppAD::ADFun<double> f(x, y); 
@@ -76,12 +77,14 @@ bool Log10(void)
 	dw    = f.Reverse(1, w);
 	ok   &= NearEqual(dw[0], 1., 1e-10, 1e-10);
 
-	// use a VecAD<Base>::reference object with log10
-	CppAD::VecAD<double> v(1);
+	// use a VecAD<Base>::reference object with atan2
+	CppAD::VecAD<double> v(2);
 	AD<double> zero(0);
-	v[zero]           = pow_10_x0;
-	AD<double> result = CppAD::log10(v[zero]);
-	ok   &= NearEqual(result, x0, 1e-10, 1e-10);
+	AD<double> one(1);
+	v[zero]           = sin_of_x0;
+	v[one]            = cos_of_x0;
+	AD<double> result = CppAD::atan2(v[zero], v[one]);
+	ok               &= NearEqual(result, x0, 1e-10, 1e-10);
 
 	return ok;
 }

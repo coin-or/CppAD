@@ -116,7 +116,7 @@ $children%
 	example/cosh.cpp%
 	example/exp.cpp%
 	example/log.cpp%
-	example/log_10.cpp%
+	example/log10.cpp%
 	example/sin.cpp%
 	example/sinh.cpp%
 	example/sqrt.cpp%
@@ -132,7 +132,7 @@ $rref cos.cpp$$
 $rref cosh.cpp$$
 $rref exp.cpp$$
 $rref log.cpp$$
-$rref log_10.cpp$$
+$rref log10.cpp$$
 $rref sin.cpp$$
 $rref sinh.cpp$$
 $rref sqrt.cpp$$

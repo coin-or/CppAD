@@ -183,7 +183,7 @@ $pre
 
 $$
 Add an example of a C callable routine that computes
-derivatives using CppAD (see $cref interface_2c.cpp$$).
+derivatives using CppAD (see $cref interface2c.cpp$$).
 
 $head 12-08$$
 Split out $cref LuFactor$$ with the $icode ratio$$ argument

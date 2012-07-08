@@ -11,7 +11,7 @@ Please visit http://www.coin-or.org/CppAD/ for information on other licenses.
 -------------------------------------------------------------------------- */
 
 /*
-$begin runge_45_1.cpp$$
+$begin runge45_1.cpp$$
 $spell
 	Runge
 $$
@@ -39,7 +39,7 @@ X_i '(t)   & = & (i+1) t^i = (i+1) X_{i-1} (t) & {\rm if \;} i > 0
 The example tests Runge45 using the relations above:
 
 $code
-$verbatim%example/runge_45_1.cpp%0%// BEGIN C++%// END C++%1%$$
+$verbatim%example/runge45_1.cpp%0%// BEGIN C++%// END C++%1%$$
 $$
 
 $end

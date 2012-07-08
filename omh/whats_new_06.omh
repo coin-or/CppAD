@@ -1052,7 +1052,7 @@ $cref cos.cpp$$,
 $cref cosh.cpp$$, 
 $cref exp.cpp$$, 
 $cref log.cpp$$, 
-$cref log_10.cpp$$,
+$cref log10.cpp$$,
 $cref sin.cpp$$,
 $cref sinh.cpp$$,
 $cref sqrt.cpp$$

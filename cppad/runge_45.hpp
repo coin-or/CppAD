@@ -242,18 +242,18 @@ must not be $cref/parallel/ta_in_parallel/$$ execution mode.
 
 $head Example$$
 $children%
-	example/runge_45_1.cpp%
-	example/runge_45_2.cpp
+	example/runge45_1.cpp%
+	example/runge45_2.cpp
 %$$
 The file
-$cref runge_45_1.cpp$$
+$cref runge45_1.cpp$$
 contains a simple example and test of $code Runge45$$.
 It returns true if it succeeds and false otherwise.
 $pre
 
 $$
 The file
-$cref runge_45_2.cpp$$ contains an example using $code Runge45$$
+$cref runge45_2.cpp$$ contains an example using $code Runge45$$
 in the context of algorithmic differentiation.
 It also returns true if it succeeds and false otherwise.
 

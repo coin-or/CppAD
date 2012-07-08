@@ -73,10 +73,10 @@ of $icode x$$ and $icode y$$.
 
 $head Example$$
 $children%
-	example/atan_2.cpp
+	example/atan2.cpp
 %$$
 The file
-$cref atan_2.cpp$$
+$cref atan2.cpp$$
 contains an example and test of this function.   
 It returns true if it succeeds and false otherwise.
 

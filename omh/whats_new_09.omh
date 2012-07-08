@@ -506,7 +506,7 @@ $cref Reverse$$.
 $head 02-20$$
 Demonstrate using AD to compute the derivative
 of the solution of an ODE with respect to a parameter
-(in the $cref runge_45_2.cpp$$ example).
+(in the $cref runge45_2.cpp$$ example).
 
 $head 02-15$$
 Change the distribution

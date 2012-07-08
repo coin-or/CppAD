@@ -54,13 +54,13 @@ am__libeigen_a_SOURCES_DIST = cppad_eigen.cpp
 libeigen_a_OBJECTS = $(am_libeigen_a_OBJECTS)
 am__test_more_SOURCES_DIST = base_adolc.cpp alloc_openmp.cpp \
 	test_more.cpp abs.cpp acos.cpp asin.cpp assign.cpp add.cpp \
-	add_eq.cpp add_zero.cpp atan.cpp atan_2.cpp base_alloc.cpp \
+	add_eq.cpp add_zero.cpp atan.cpp atan2.cpp base_alloc.cpp \
 	check_simple_vector.cpp compare.cpp compare_change.cpp \
 	cond_exp.cpp cond_exp_ad.cpp copy.cpp cos.cpp cosh.cpp \
 	dbl_epsilon.cpp div.cpp div_eq.cpp div_zero_one.cpp erf.cpp \
 	epsilon.cpp exp.cpp for_hess.cpp for_sparse_jac.cpp \
 	forward.cpp from_base.cpp fun_check.cpp jacobian.cpp log.cpp \
-	log_10.cpp mul.cpp mul_eq.cpp mul_level.cpp mul_zero_one.cpp \
+	log10.cpp mul.cpp mul_eq.cpp mul_level.cpp mul_zero_one.cpp \
 	ndebug.cpp near_equal_ext.cpp neg.cpp ode_err_control.cpp \
 	optimize.cpp parameter.cpp poly.cpp pow.cpp pow_int.cpp \
 	print_for.cpp romberg_one.cpp rosen_34.cpp runge_45.cpp \
@@ -75,7 +75,7 @@ am__test_more_SOURCES_DIST = base_adolc.cpp alloc_openmp.cpp \
 am_test_more_OBJECTS = $(am__objects_1) $(am__objects_2) \
 	test_more.$(OBJEXT) abs.$(OBJEXT) acos.$(OBJEXT) \
 	asin.$(OBJEXT) assign.$(OBJEXT) add.$(OBJEXT) add_eq.$(OBJEXT) \
-	add_zero.$(OBJEXT) atan.$(OBJEXT) atan_2.$(OBJEXT) \
+	add_zero.$(OBJEXT) atan.$(OBJEXT) atan2.$(OBJEXT) \
 	base_alloc.$(OBJEXT) check_simple_vector.$(OBJEXT) \
 	compare.$(OBJEXT) compare_change.$(OBJEXT) cond_exp.$(OBJEXT) \
 	cond_exp_ad.$(OBJEXT) copy.$(OBJEXT) cos.$(OBJEXT) \
@@ -84,7 +84,7 @@ am_test_more_OBJECTS = $(am__objects_1) $(am__objects_2) \
 	epsilon.$(OBJEXT) exp.$(OBJEXT) for_hess.$(OBJEXT) \
 	for_sparse_jac.$(OBJEXT) forward.$(OBJEXT) from_base.$(OBJEXT) \
 	fun_check.$(OBJEXT) jacobian.$(OBJEXT) log.$(OBJEXT) \
-	log_10.$(OBJEXT) mul.$(OBJEXT) mul_eq.$(OBJEXT) \
+	log10.$(OBJEXT) mul.$(OBJEXT) mul_eq.$(OBJEXT) \
 	mul_level.$(OBJEXT) mul_zero_one.$(OBJEXT) ndebug.$(OBJEXT) \
 	near_equal_ext.$(OBJEXT) neg.$(OBJEXT) \
 	ode_err_control.$(OBJEXT) optimize.$(OBJEXT) \
@@ -321,7 +321,7 @@ test_more_SOURCES = \
 	add_eq.cpp \
 	add_zero.cpp \
 	atan.cpp \
-	atan_2.cpp \
+	atan2.cpp \
 	base_alloc.cpp \
 	check_simple_vector.cpp \
 	compare.cpp \
@@ -345,7 +345,7 @@ test_more_SOURCES = \
 	fun_check.cpp \
 	jacobian.cpp \
 	log.cpp \
-	log_10.cpp \
+	log10.cpp \
 	mul.cpp \
 	mul_eq.cpp \
 	mul_level.cpp \
@@ -452,7 +452,7 @@ distclean-compile:
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/asin.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/assign.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/atan.Po@am__quote@
-@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/atan_2.Po@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/atan2.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/base_adolc.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/base_alloc.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/check_simple_vector.Po@am__quote@
@@ -478,7 +478,7 @@ distclean-compile:
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/jacobian.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/libeigen_a-cppad_eigen.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/log.Po@am__quote@
-@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/log_10.Po@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/log10.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/mul.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/mul_eq.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/mul_level.Po@am__quote@

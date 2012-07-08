@@ -57,10 +57,10 @@ The return value $icode y$$ will be a parameter.
 
 $head Example$$
 $children%
-	example/var_2par.cpp
+	example/var2par.cpp
 %$$
 The file
-$cref var_2par.cpp$$
+$cref var2par.cpp$$
 contains an example and test of this operation.
 It returns true if it succeeds and false otherwise.
 

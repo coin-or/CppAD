@@ -11,7 +11,7 @@ Please visit http://www.coin-or.org/CppAD/ for information on other licenses.
 -------------------------------------------------------------------------- */
 
 /*
-$begin runge_45_2.cpp$$
+$begin runge45_2.cpp$$
 $spell
 	Runge
 $$
@@ -49,7 +49,7 @@ $latex \[
 \] $$
 
 $code
-$verbatim%example/runge_45_2.cpp%0%// BEGIN C++%// END C++%1%$$
+$verbatim%example/runge45_2.cpp%0%// BEGIN C++%// END C++%1%$$
 $$
 
 $end

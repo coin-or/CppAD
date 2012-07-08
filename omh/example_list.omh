@@ -36,7 +36,7 @@ $childtable%
 	cppad/example/cppad_eigen.hpp %
 	example/hes_minor_det.cpp%
 	example/hes_lu_det.cpp%
-	example/interface_2c.cpp%
+	example/interface2c.cpp%
 	example/jac_minor_det.cpp%
 	example/jac_lu_det.cpp%
 	omh/mul_level.omh%
@@ -89,7 +89,7 @@ $rref ad_ctor.cpp$$
 $rref ad_fun.cpp$$
 $rref ad_in_c.cpp$$
 $rref Asin.cpp$$
-$rref atan_2.cpp$$
+$rref atan2.cpp$$
 $rref atan.cpp$$
 $rref base_adolc.hpp$$
 $rref base_alloc.hpp$$
@@ -141,7 +141,7 @@ $rref hes_times_dir.cpp$$
 $rref independent.cpp$$
 $rref index_sort.cpp$$
 $rref integer.cpp$$
-$rref interface_2c.cpp$$
+$rref interface2c.cpp$$
 $rref interp_onetape.cpp$$
 $rref interp_retape.cpp$$
 $rref ipopt_get_started.cpp$$
@@ -155,7 +155,7 @@ $rref jac_lu_det.cpp$$
 $rref jac_minor_det.cpp$$
 $rref jacobian.cpp$$
 $rref limits.cpp$$
-$rref log_10.cpp$$
+$rref log10.cpp$$
 $rref log.cpp$$
 $rref lu_factor.cpp$$
 $rref lu_invert.cpp$$
@@ -205,8 +205,8 @@ $rref rev_two.cpp$$
 $rref Rombergmul.cpp$$
 $rref romberg_one.cpp$$
 $rref rosen_34.cpp$$
-$rref runge_45_1.cpp$$
-$rref runge_45_2.cpp$$
+$rref runge45_1.cpp$$
+$rref runge45_2.cpp$$
 $rref seq_property.cpp$$
 $rref simple_ad_bthread.cpp$$
 $rref simple_ad_openmp.cpp$$
@@ -238,7 +238,7 @@ $rref unary_minus.cpp$$
 $rref unary_plus.cpp$$
 $rref user_tan.cpp$$
 $rref value.cpp$$
-$rref var_2par.cpp$$
+$rref var2par.cpp$$
 $rref vec_ad.cpp$$
 $rref vector_bool.cpp$$
 $tend
