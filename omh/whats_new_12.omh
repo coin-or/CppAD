@@ -55,6 +55,9 @@ This section contains a list of the changes to CppAD during 2012
 The purpose of this section is to
 assist you in learning about changes between various versions of CppAD.
 
+$head 07-08$$
+Improve the documentation for $cref pow$$ and $cref pow_int$$.
+
 $head 07-07$$
 Add the $code CPPAD_TAPE_ID_TYPE$$ argument to the 
 $cref/configure/InstallUnix/Configure/$$ command line.

@@ -31,6 +31,9 @@ $section The AD Power Function$$
 $head Syntax$$
 $icode%z% = pow(%x%, %y%)%$$
 
+$head See Also$$
+$cref pow_int$$
+
 
 $head Purpose$$
 Determines the value of the power function which is defined by
@@ -46,43 +49,29 @@ using only multiplication (and division if $icode y$$ is negative).
 (This will work even if $icode x$$ is less than or equal zero.)
 
 $head x$$
-The argument $icode x$$ has the following prototype
+The argument $icode x$$ has one of the following prototypes
 $codei%
-	const %Type% &%x%
+	const %Base%&                    %x%
+	const AD<%Base%>&                %x%
+	const VecAD<%Base%>::reference&  %x%
 %$$
-where $icode Type$$ is
-$codei%VecAD<%Base%>::reference%$$,
-$codei%AD<%Base%>%$$,
-$icode%Base%$$,
-$codei%double%$$,
-or
-$codei%int%$$.
 
 $head y$$
-The argument $icode y$$ has the following prototype
+The argument $icode y$$ has one of the following prototypes
 $codei%
-	const %Type% &%y%
+	const %Base%&                    %y%
+	const AD<%Base%>&                %y%
+	const VecAD<%Base%>::reference&  %y%
 %$$
-where $icode Type$$ is
-$codei%VecAD<%Base%>::reference%$$,
-$codei%AD<%Base%>%$$,
-$icode%Base%$$,
-$codei%double%$$,
-or
-$codei%int%$$.
 
 $head z$$
-The result $icode z$$ has prototype
+If both $icode x$$ and $icode y$$ are $icode Base$$ objects,
+the result $icode z$$ is also a $icode Base$$ object.
+Otherwise, it has prototype
 $codei%
 	AD<%Base%> %z%
 %$$
 
-$head Standard Types$$
-A definition for the $code pow$$ function is included
-in the CppAD namespace for the case where both $icode x$$
-and $icode y$$ have the same type and that type is
-$code float$$ or $code double$$.
- 
 $head Operation Sequence$$
 This is an AD of $icode Base$$
 $cref/atomic operation/glossary/Operation/Atomic/$$
@@ -92,13 +81,12 @@ $cref/operation sequence/glossary/Operation/Sequence/$$.
 
 $head Example$$
 $children%
-	example/pow.cpp%
-	example/pow_int.cpp
+	example/pow.cpp
 %$$
-The files
-$cref Pow.cpp$$, $cref pow_int.cpp$$
-contain an examples and tests of this function.   
-They returns true if they succeed and false otherwise.
+The file
+$cref Pow.cpp$$
+is an examples and tests of this function.   
+It returns true if it succeeds and false otherwise.
 
 $end
 -------------------------------------------------------------------------------
@@ -109,7 +97,7 @@ namespace CppAD {
  
 // case where x and y are AD<Base> -----------------------------------------
 template <class Base> AD<Base> 
-pow(const AD<Base> &x, const AD<Base> &y)
+pow(const AD<Base>& x, const AD<Base>& y)
 {
 	// compute the Base part
 	AD<Base> result;
@@ -189,69 +177,69 @@ pow(const AD<Base> &x, const AD<Base> &y)
 // Operations with VecAD_reference<Base> and AD<Base> only
 
 template <class Base> AD<Base>
-pow(const AD<Base> &x, const VecAD_reference<Base> &y)
+pow(const AD<Base>& x, const VecAD_reference<Base>& y)
 {	return pow(x, y.ADBase()); }
 
 template <class Base> AD<Base> 
-pow(const VecAD_reference<Base> &x, const VecAD_reference<Base> &y) 
+pow(const VecAD_reference<Base>& x, const VecAD_reference<Base>& y) 
 {	return pow(x.ADBase(), y.ADBase()); }
 
 template <class Base> AD<Base>
-pow(const VecAD_reference<Base> &x, const AD<Base> &y)
+pow(const VecAD_reference<Base>& x, const AD<Base>& y)
 {	return pow(x.ADBase(), y); }
 // -------------------------------------------------------------------------
 // Operations with Base
 
 template <class Base> AD<Base>
-pow(const Base &x, const AD<Base> &y)
+pow(const Base& x, const AD<Base>& y)
 {	return pow(AD<Base>(x), y); }
 
 template <class Base> AD<Base>
-pow(const Base &x, const VecAD_reference<Base> &y)
+pow(const Base& x, const VecAD_reference<Base>& y)
 {	return pow(AD<Base>(x), y.ADBase()); }
 
 template <class Base> AD<Base>
-pow(const AD<Base> &x, const Base &y)
+pow(const AD<Base>& x, const Base& y)
 {	return pow(x, AD<Base>(y)); }
 
 template <class Base> AD<Base>
-pow(const VecAD_reference<Base> &x, const Base &y)
+pow(const VecAD_reference<Base>& x, const Base& y)
 {	return pow(x.ADBase(), AD<Base>(y)); }
 // -------------------------------------------------------------------------
 // Operations with double
 
 template <class Base> AD<Base>
-pow(const double &x, const AD<Base> &y)
+pow(const double& x, const AD<Base>& y)
 {	return pow(AD<Base>(x), y); }
 
 template <class Base> AD<Base>
-pow(const double &x, const VecAD_reference<Base> &y)
+pow(const double& x, const VecAD_reference<Base>& y)
 {	return pow(AD<Base>(x), y.ADBase()); }
 
 template <class Base> AD<Base>
-pow(const AD<Base> &x, const double &y)
+pow(const AD<Base>& x, const double& y)
 {	return pow(x, AD<Base>(y)); }
 
 template <class Base> AD<Base>
-pow(const VecAD_reference<Base> &x, const double &y)
+pow(const VecAD_reference<Base>& x, const double& y)
 {	return pow(x.ADBase(), AD<Base>(y)); }
 // -------------------------------------------------------------------------
 // Special case to avoid ambuigity when Base is double
 
 inline AD<double>
-pow(const double &x, const AD<double> &y)
+pow(const double& x, const AD<double>& y)
 {	return pow(AD<double>(x), y); }
 
 inline AD<double>
-pow(const double &x, const VecAD_reference<double> &y)
+pow(const double& x, const VecAD_reference<double>& y)
 {	return pow(AD<double>(x), y.ADBase()); }
 
 inline AD<double>
-pow(const AD<double> &x, const double &y)
+pow(const AD<double>& x, const double& y)
 {	return pow(x, AD<double>(y)); }
 
 inline AD<double>
-pow(const VecAD_reference<double> &x, const double &y)
+pow(const VecAD_reference<double>& x, const double& y)
 {	return pow(x.ADBase(), AD<double>(y)); }
 
 // =========================================================================
@@ -259,11 +247,11 @@ pow(const VecAD_reference<double> &x, const double &y)
 // but let cppad/pow_int.hpp handle the cases where y is an int.
 // -------------------------------------------------------------------------
 template <class Base> AD<Base> pow
-(const int &x, const VecAD_reference<Base> &y)
+(const int& x, const VecAD_reference<Base>& y)
 {	return pow(AD<Base>(x), y.ADBase()); }
 
 template <class Base> AD<Base> pow
-(const int &x, const AD<Base> &y)
+(const int& x, const AD<Base>& y)
 {	return pow(AD<Base>(x), y); }
 
 } // END CppAD namespace

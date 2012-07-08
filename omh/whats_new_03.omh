@@ -270,9 +270,9 @@ tape only supports partial derivatives.
 $head 10-14$$
 The $code sqrt$$ function was added to the 
 $cref/AD standard math unary functions/std_math_ad/$$.
-In addition, a definition of the power function for the
-$cref/standard types/Pow/Standard Types/$$ was automatically 
-included in the $code CppAD$$ namespace.
+In addition, a definition of the power function for the types
+$code float$$ and $code double$$
+was automatically included in the $code CppAD$$ namespace.
 $pre
 
 $$

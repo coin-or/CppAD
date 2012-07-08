@@ -3,7 +3,7 @@
 # define CPPAD_POW_INT_INCLUDED
 
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-08 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-12 Bradley M. Bell
 
 CppAD is distributed under multiple licenses. This distribution is under
 the terms of the 
@@ -35,6 +35,9 @@ $pre
 $$
 $icode%z% = pow(%x%, %y%)%$$
 
+$head See Also$$
+$cref pow$$
+
 $head Purpose$$
 Determines the value of the power function 
 $latex \[
@@ -56,13 +59,13 @@ this version of the $code pow$$ within the $code CppAD$$ namespace.
 $head x$$
 The argument $icode x$$ has prototype
 $codei%
-	const %Type% &%x%
+	const %Type%& %x%
 %$$ 
 
 $head y$$
 The argument $icode y$$ has prototype
 $codei%
-	const int &%y%
+	const int& %y%
 %$$ 
 
 $head z$$
@@ -98,6 +101,14 @@ The $icode Type$$ operation sequence used to calculate $icode z$$ is
 $cref/independent/glossary/Operation/Independent/$$
 of $icode x$$.
 
+$head Example$$
+$children%
+	example/pow_int.cpp
+%$$
+The file $cref pow_int.cpp$$
+is an example and test of this function.   
+It returns true if it succeeds and false otherwise.
+
 
 $end
 -------------------------------------------------------------------------------
@@ -106,7 +117,7 @@ $end
 namespace CppAD { 
 
 	template <class Type>
-	inline Type pow (const Type &x, const int &n)
+	inline Type pow (const Type& x, const int& n)
 	{
 		Type p(1);
 		int n2 = n / 2;
