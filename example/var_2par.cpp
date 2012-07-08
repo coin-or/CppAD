@@ -11,7 +11,7 @@ Please visit http://www.coin-or.org/CppAD/ for information on other licenses.
 -------------------------------------------------------------------------- */
 
 /*
-$begin Var2Par.cpp$$
+$begin var_2par.cpp$$
 $spell
 	Var
 	Cpp

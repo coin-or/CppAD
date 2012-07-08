@@ -35,7 +35,7 @@ $codei%abs(%x%)%$$
 are examples of functions that are not complex differentiable.
 
 $head See Also$$
-$cref ComplexPoly.cpp$$
+$cref complex_poly.cpp$$
 
 $head Poly$$
 Select this link to view specifications for $cref Poly$$:

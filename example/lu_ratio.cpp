@@ -11,7 +11,7 @@ Please visit http://www.coin-or.org/CppAD/ for information on other licenses.
 -------------------------------------------------------------------------- */
 
 /*
-$begin LuRatio.cpp$$
+$begin lu_ratio.cpp$$
 $spell
 	Geq
 	Cpp

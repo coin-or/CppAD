@@ -211,7 +211,7 @@ $children%
 	example/ode_gear.cpp
 %$$
 The file
-$cref OdeGear.cpp$$
+$cref ode_gear.cpp$$
 contains an example and test a test of using this routine.
 It returns true if it succeeds and false otherwise.
 

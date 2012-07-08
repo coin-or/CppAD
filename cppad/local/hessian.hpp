@@ -126,8 +126,8 @@ $children%
 	example/hes_lagrangian.cpp
 %$$
 The routines 
-$cref Hessian.cpp$$ and
-$cref HesLagrangian.cpp$$
+$cref hessian.cpp$$ and
+$cref hes_lagrangian.cpp$$
 are examples and tests of $code Hessian$$.
 They return $code true$$, if they succeed and $code false$$ otherwise.
 

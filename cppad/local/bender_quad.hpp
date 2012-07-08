@@ -290,7 +290,7 @@ $children%
 	example/bender_quad.cpp
 %$$
 The file
-$cref BenderQuad.cpp$$
+$cref bender_quad.cpp$$
 contains an example and test of this operation.   
 It returns true if it succeeds and false otherwise.
 

@@ -12,7 +12,7 @@ Please visit http://www.coin-or.org/CppAD/ for information on other licenses.
 /*
 WARNING: This file is used an an example by omh/FunConstruct.omh.
 
-$begin Independent.cpp$$
+$begin independent.cpp$$
 
 $comment ! NOTE the title states that this example is used two places !$$
 $section Independent and ADFun Constructor: Example and Test$$

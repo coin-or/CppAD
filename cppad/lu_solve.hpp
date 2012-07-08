@@ -232,7 +232,7 @@ $children%
 %$$
 $head Example$$
 The file 
-$cref LuSolve.cpp$$
+$cref lu_solve.cpp$$
 contains an example and test of using this routine.
 It returns true if it succeeds and false otherwise.
 

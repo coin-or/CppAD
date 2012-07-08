@@ -11,7 +11,7 @@ Please visit http://www.coin-or.org/CppAD/ for information on other licenses.
 -------------------------------------------------------------------------- */
 
 /*
-$begin SubEq.cpp$$
+$begin sub_eq.cpp$$
 
 $section AD Computed Assignment Subtraction: Example and Test$$
 

@@ -150,7 +150,7 @@ $head Example$$
 The file $cref lu_solve.hpp$$ is a good example usage of 
 $code LuFactor$$ with $code LuInvert$$.
 The file 
-$cref LuInvert.cpp$$
+$cref lu_invert.cpp$$
 contains an example and test of using $code LuInvert$$ by itself.
 It returns true if it succeeds and false otherwise.
 

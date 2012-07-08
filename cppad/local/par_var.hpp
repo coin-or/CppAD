@@ -68,7 +68,7 @@ $children%
 	example/par_var.cpp
 %$$
 The file
-$cref ParVar.cpp$$
+$cref par_var.cpp$$
 contains an example and test of these functions.
 It returns true if it succeeds and false otherwise.
 

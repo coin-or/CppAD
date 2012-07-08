@@ -120,7 +120,7 @@ $children%
 %$$
 $head Example$$
 The file
-$cref ErrorHandler.cpp$$
+$cref error_handler.cpp$$
 contains an example and test a test of using this routine.
 It returns true if it succeeds and false otherwise.
 

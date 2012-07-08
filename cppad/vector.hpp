@@ -243,8 +243,8 @@ $children%
 	example/vector_bool.cpp
 %$$
 The files
-$cref CppAD_vector.cpp$$ and
-$cref vectorBool.cpp$$ each
+$cref cppad_vector.cpp$$ and
+$cref vector_bool.cpp$$ each
 contain an example and test of this template class.
 They return true if they succeed and false otherwise.
 

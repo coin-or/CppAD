@@ -11,7 +11,7 @@ Please visit http://www.coin-or.org/CppAD/ for information on other licenses.
 -------------------------------------------------------------------------- */
 
 /*
-$begin BenderQuad.cpp$$
+$begin bender_quad.cpp$$
 $spell
 	argmin
 $$

@@ -59,7 +59,7 @@ $children%
 %$$
 
 $head Example$$
-The file $cref ComplexPoly.cpp$$ contains an example use of
+The file $cref complex_poly.cpp$$ contains an example use of
 $code std::complex<double>$$ type for a CppAD $icode Base$$ type.
 It returns true if it succeeds and false otherwise.
 

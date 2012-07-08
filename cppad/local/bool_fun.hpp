@@ -3,7 +3,7 @@
 # define CPPAD_BOOL_FUN_INCLUDED
 
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-11 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-12 Bradley M. Bell
 
 CppAD is distributed under multiple licenses. This distribution is under
 the terms of the 
@@ -141,7 +141,7 @@ $children%
 	example/bool_fun.cpp
 %$$
 The file
-$cref BoolFun.cpp$$
+$cref bool_fun.cpp$$
 contains an example and test of these operations.
 It returns true if it succeeds and false otherwise.
 

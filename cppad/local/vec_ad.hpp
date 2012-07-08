@@ -285,17 +285,17 @@ $$
 $lnext
 In the $code Example$$ directory, execute the command
 $codep
-	./OneTest LuVecADOk "lu_vec_ad.cpp -DNDEBUG" > LuVecADOk.log
+	./test_one.sh lu_vec_ad_ok.cpp lu_vec_ad.cpp -DNDEBUG > lu_vec_ad_ok.log
 $$
 This will write a trace of all the forward tape operations,
-for the test case $cref LuVecADOk.cpp$$,
-to the file $code LuVecADOk.log$$.
+for the test case $cref lu_vec_ad_ok.cpp$$,
+to the file $code lu_vec_ad_ok.log$$.
 $lnext
 In the $code Example$$ directory execute the commands
 $codep
-	grep "op="           LuVecADOk.log | wc -l
-	grep "op=Ld[vp]"     LuVecADOk.log | wc -l
-	grep "op=St[vp][vp]" LuVecADOk.log | wc -l
+	grep "op="           lu_vec_ad_ok.log | wc -l
+	grep "op=Ld[vp]"     lu_vec_ad_ok.log | wc -l
+	grep "op=St[vp][vp]" lu_vec_ad_ok.log | wc -l
 $$
 The first command counts the number of operators in the tracing,
 the second counts the number of VecAD load operations,

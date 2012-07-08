@@ -384,9 +384,9 @@ $children%
 	example/ode_err_maxabs.cpp
 %$$
 The files
-$cref OdeErrControl.cpp$$
+$cref ode_err_control.cpp$$
 and
-$cref OdeErrMaxabs.cpp$$
+$cref ode_err_maxabs.cpp$$
 contain examples and tests of using this routine.
 They return true if they succeed and false otherwise.
 

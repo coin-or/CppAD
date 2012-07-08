@@ -152,7 +152,7 @@ $children%
 	example/rev_sparse_hes.cpp
 %$$
 The file
-$cref RevSparseHes.cpp$$
+$cref rev_sparse_hes.cpp$$
 contains an example and test of this operation.
 It returns true if it succeeds and false otherwise.
 

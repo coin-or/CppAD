@@ -13,6 +13,7 @@ Please visit http://www.coin-or.org/CppAD/ for information on other licenses.
 $begin whats_new_12$$
 $dollar @$$
 $spell
+	bool
 	taddr
 	eigen
 	fabs
@@ -56,7 +57,13 @@ The purpose of this section is to
 assist you in learning about changes between various versions of CppAD.
 
 $head 07-08$$
+$list number$$
 Improve the documentation for $cref pow$$ and $cref pow_int$$.
+$lnext
+Change all the example section names to be same as corresponding file names;
+e.g. change $code vectorBool.cpp$$ to $cref vector_bool.cpp$$
+for the example $code example/vector_bool.cpp$$.
+$lend
 
 $head 07-07$$
 Add the $code CPPAD_TAPE_ID_TYPE$$ argument to the 

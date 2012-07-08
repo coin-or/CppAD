@@ -11,7 +11,7 @@ Please visit http://www.coin-or.org/CppAD/ for information on other licenses.
 -------------------------------------------------------------------------- */
 
 /*
-$begin CheckNumericType.cpp$$
+$begin check_numeric_type.cpp$$
 
 $section The CheckNumericType Function: Example and Test$$
 $index CheckNumericType$$

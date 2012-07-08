@@ -93,7 +93,7 @@ $head Example$$
 $children%
 	example/check_simple_vector.cpp
 %$$
-The file $cref CheckSimpleVector.cpp$$
+The file $cref check_simple_vector.cpp$$
 contains an example and test of this function where $icode S$$
 is the same as $icode T$$.
 It returns true, if it succeeds an false otherwise.

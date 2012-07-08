@@ -103,7 +103,7 @@ $children%
 	example/jacobian.cpp
 %$$
 The routine 
-$cref/Jacobian/Jacobian.cpp/$$ is both an example and test.
+$cref/Jacobian/jacobian.cpp/$$ is both an example and test.
 It returns $code true$$, if it succeeds and $code false$$ otherwise.
 
 $end

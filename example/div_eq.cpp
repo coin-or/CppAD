@@ -11,7 +11,7 @@ Please visit http://www.coin-or.org/CppAD/ for information on other licenses.
 -------------------------------------------------------------------------- */
 
 /*
-$begin DivEq.cpp$$
+$begin div_eq.cpp$$
 
 $section AD Computed Assignment Division: Example and Test$$
 

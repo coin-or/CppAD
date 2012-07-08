@@ -11,7 +11,7 @@ Please visit http://www.coin-or.org/CppAD/ for information on other licenses.
 -------------------------------------------------------------------------- */
 
 /*
-$begin NumericType.cpp$$
+$begin numeric_type.cpp$$
 
 $section The NumericType: Example and Test$$
 $index NumericType, example$$

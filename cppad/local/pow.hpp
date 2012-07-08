@@ -84,7 +84,7 @@ $children%
 	example/pow.cpp
 %$$
 The file
-$cref Pow.cpp$$
+$cref pow.cpp$$
 is an examples and tests of this function.   
 It returns true if it succeeds and false otherwise.
 

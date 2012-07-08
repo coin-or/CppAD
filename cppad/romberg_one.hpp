@@ -3,7 +3,7 @@
 # define CPPAD_ROMBERG_ONE_INCLUDED
 
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-06 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-12 Bradley M. Bell
 
 CppAD is distributed under multiple licenses. This distribution is under
 the terms of the 
@@ -134,7 +134,7 @@ $comment%
 	example/romberg_one.cpp
 %$$
 The file
-$cref RombergOne.cpp$$
+$cref romberg_one.cpp$$
 contains an example and test a test of using this routine.
 It returns true if it succeeds and false otherwise.
 

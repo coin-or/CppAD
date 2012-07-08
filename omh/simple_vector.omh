@@ -200,7 +200,7 @@ $children%
 	example/simple_vector.cpp
 %$$
 The file
-$cref SimpleVector.cpp$$
+$cref simple_vector.cpp$$
 contains an example and test of a Simple template class.
 It returns true if it succeeds and false otherwise.
 (It is easy to modify to test additional simple vector template classes.)

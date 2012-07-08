@@ -3,7 +3,7 @@
 # define CPPAD_INTEGER_INCLUDED
 
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-11 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-12 Bradley M. Bell
 
 CppAD is distributed under multiple licenses. This distribution is under
 the terms of the 
@@ -92,7 +92,7 @@ $children%
 	example/integer.cpp
 %$$
 The file
-$cref Integer.cpp$$
+$cref integer.cpp$$
 contains an example and test of this operation.
 
 $end 

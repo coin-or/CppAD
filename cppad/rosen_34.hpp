@@ -3,7 +3,7 @@
 # define CPPAD_ROSEN_34_INCLUDED
 
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-11 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-12 Bradley M. Bell
 
 CppAD is distributed under multiple licenses. This distribution is under
 the terms of the 
@@ -276,7 +276,7 @@ $children%
 	example/rosen_34.cpp
 %$$
 The file
-$cref Rosen34.cpp$$
+$cref rosen_34.cpp$$
 contains an example and test a test of using this routine.
 It returns true if it succeeds and false otherwise.
 

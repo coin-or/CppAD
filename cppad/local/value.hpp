@@ -3,7 +3,7 @@
 # define CPPAD_VALUE_INCLUDED
 
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-11 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-12 Bradley M. Bell
 
 CppAD is distributed under multiple licenses. This distribution is under
 the terms of the 
@@ -68,7 +68,7 @@ $children%
 	example/value.cpp
 %$$
 The file
-$cref Value.cpp$$
+$cref value.cpp$$
 contains an example and test of this operation.
 
 $end

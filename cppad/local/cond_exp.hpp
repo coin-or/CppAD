@@ -3,7 +3,7 @@
 # define CPPAD_COND_EXP_INCLUDED
 
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-11 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-12 Bradley M. Bell
 
 CppAD is distributed under multiple licenses. This distribution is under
 the terms of the 
@@ -145,7 +145,7 @@ $children%
 	example/cond_exp.cpp
 %$$
 The file
-$cref CondExp.cpp$$
+$cref cond_exp.cpp$$
 contains an example and test of this function.   
 It returns true if it succeeds and false otherwise.
 

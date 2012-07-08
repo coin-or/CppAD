@@ -11,7 +11,7 @@ Please visit http://www.coin-or.org/CppAD/ for information on other licenses.
 -------------------------------------------------------------------------- */
 
 /*
-$begin CheckSimpleVector.cpp$$
+$begin check_simple_vector.cpp$$
 
 $section The CheckSimpleVector Function: Example and Test$$
 $index CheckSimpleVector$$

@@ -223,7 +223,7 @@ $children%
 %$$
 $head Example$$
 The file 
-$cref LuFactor.cpp$$
+$cref lu_factor.cpp$$
 contains an example and test of using $code LuFactor$$ by itself.
 It returns true if it succeeds and false otherwise.
 $pre

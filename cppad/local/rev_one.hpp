@@ -3,7 +3,7 @@
 # define CPPAD_REV_ONE_INCLUDED
 
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-09 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-12 Bradley M. Bell
 
 CppAD is distributed under multiple licenses. This distribution is under
 the terms of the 
@@ -113,7 +113,7 @@ $children%
 	example/rev_one.cpp
 %$$
 The routine 
-$cref/RevOne/RevOne.cpp/$$ is both an example and test.
+$cref/RevOne/rev_one.cpp/$$ is both an example and test.
 It returns $code true$$, if it succeeds and $code false$$ otherwise.
 
 $end

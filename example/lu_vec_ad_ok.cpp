@@ -11,7 +11,7 @@ Please visit http://www.coin-or.org/CppAD/ for information on other licenses.
 -------------------------------------------------------------------------- */
 
 /*
-$begin LuVecADOk.cpp$$
+$begin lu_vec_ad_ok.cpp$$
 $spell
 	Geq
 	Cpp

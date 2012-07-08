@@ -3,7 +3,7 @@
 # define CPPAD_OUTPUT_INCLUDED
 
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-11 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-12 Bradley M. Bell
 
 CppAD is distributed under multiple licenses. This distribution is under
 the terms of the 
@@ -76,7 +76,7 @@ $children%
 	example/output.cpp
 %$$
 The file
-$cref Output.cpp$$
+$cref output.cpp$$
 contains an example and test of this operation.
 It returns true if it succeeds and false otherwise.
 

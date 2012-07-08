@@ -11,7 +11,7 @@ Please visit http://www.coin-or.org/CppAD/ for information on other licenses.
 -------------------------------------------------------------------------- */
 
 /*
-$begin TapeIndex.cpp$$
+$begin tape_index.cpp$$
 
 $section Taping Array Index Operation: Example and Test$$
 

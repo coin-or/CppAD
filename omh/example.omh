@@ -31,7 +31,7 @@ $index example$$
 $head Introduction$$
 This section organizes the information related to the CppAD examples.
 Each CppAD operation has its own specific example,
-for example $cref Add.cpp$$ is an example for 
+for example $cref add.cpp$$ is an example for 
 $cref/addition/ad_binary/$$.
 Some of the examples are of a more general nature
 (not connected of a specific feature of CppAD).

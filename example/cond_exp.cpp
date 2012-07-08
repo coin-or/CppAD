@@ -11,7 +11,7 @@ Please visit http://www.coin-or.org/CppAD/ for information on other licenses.
 -------------------------------------------------------------------------- */
 
 /*
-$begin CondExp.cpp$$
+$begin cond_exp.cpp$$
 $spell
 	Cpp
 	cstddef

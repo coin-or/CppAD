@@ -3,7 +3,7 @@
 # define CPPAD_CHECK_NUMERIC_TYPE_INCLUDED
 
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-11 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-12 Bradley M. Bell
 
 CppAD is distributed under multiple licenses. This distribution is under
 the terms of the 
@@ -60,7 +60,7 @@ $head Example$$
 $children%
 	example/check_numeric_type.cpp
 %$$
-The file $cref CheckNumericType.cpp$$
+The file $cref check_numeric_type.cpp$$
 contains an example and test of this function. 
 It returns true, if it succeeds an false otherwise.
 The comments in this example suggest a way to change the example

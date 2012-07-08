@@ -3,7 +3,7 @@
 # define CPPAD_UNARY_MINUS_INCLUDED
 
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-06 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-12 Bradley M. Bell
 
 CppAD is distributed under multiple licenses. This distribution is under
 the terms of the 
@@ -73,7 +73,7 @@ $children%
 	example/unary_minus.cpp
 %$$
 The file
-$cref UnaryMinus.cpp$$
+$cref unary_minus.cpp$$
 contains an example and test of this operation.
 
 $end

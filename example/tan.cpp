@@ -11,7 +11,7 @@ Please visit http://www.coin-or.org/CppAD/ for information on other licenses.
 -------------------------------------------------------------------------- */
 
 /*
-$begin Tan.cpp$$
+$begin tan.cpp$$
 $spell
 	tan
 	tan

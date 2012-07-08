@@ -3,7 +3,7 @@
 # define CPPAD_ATAN2_INCLUDED
 
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-08 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-12 Bradley M. Bell
 
 CppAD is distributed under multiple licenses. This distribution is under
 the terms of the 
@@ -76,7 +76,7 @@ $children%
 	example/atan_2.cpp
 %$$
 The file
-$cref Atan2.cpp$$
+$cref atan_2.cpp$$
 contains an example and test of this function.   
 It returns true if it succeeds and false otherwise.
 

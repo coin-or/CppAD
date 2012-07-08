@@ -10,7 +10,7 @@ A copy of this license is included in the COPYING file of this distribution.
 Please visit http://www.coin-or.org/CppAD/ for information on other licenses.
 -------------------------------------------------------------------------- */
 /*
-$begin SimpleVector.cpp$$
+$begin simple_vector.cpp$$
 $spell
 	Cpp
 $$

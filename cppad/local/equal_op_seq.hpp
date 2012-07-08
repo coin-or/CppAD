@@ -3,7 +3,7 @@
 # define CPPAD_EQUAL_OP_SEQ_INCLUDED
 
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-11 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-12 Bradley M. Bell
 
 CppAD is distributed under multiple licenses. This distribution is under
 the terms of the 
@@ -92,7 +92,7 @@ $children%
 	example/equal_op_seq.cpp
 %$$
 The file
-$cref EqualOpSeq.cpp$$
+$cref equal_op_seq.cpp$$
 contains an example and test of $code EqualOpSeq$$.
 It returns true if it succeeds and false otherwise.
 

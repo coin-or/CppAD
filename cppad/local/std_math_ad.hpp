@@ -127,17 +127,17 @@ $table
 $rref abs.cpp$$
 $rref Acos.cpp$$
 $rref Asin.cpp$$
-$rref Atan.cpp$$
-$rref Cos.cpp$$
-$rref Cosh.cpp$$
-$rref Exp.cpp$$
-$rref Log.cpp$$
-$rref Log10.cpp$$
-$rref Sin.cpp$$
-$rref Sinh.cpp$$
-$rref Sqrt.cpp$$
-$rref Tan.cpp$$
-$rref Tanh.cpp$$
+$rref atan.cpp$$
+$rref cos.cpp$$
+$rref cosh.cpp$$
+$rref exp.cpp$$
+$rref log.cpp$$
+$rref log_10.cpp$$
+$rref sin.cpp$$
+$rref sinh.cpp$$
+$rref sqrt.cpp$$
+$rref tan.cpp$$
+$rref tanh.cpp$$
 $tend
 
 

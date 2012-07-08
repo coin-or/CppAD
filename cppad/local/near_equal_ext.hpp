@@ -3,7 +3,7 @@
 # define CPPAD_NEAR_EQUAL_EXT_INCLUDED
 
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-11 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-12 Bradley M. Bell
 
 CppAD is distributed under multiple licenses. This distribution is under
 the terms of the 
@@ -118,7 +118,7 @@ $head Example$$
 $children%
 	example/near_equal_ext.cpp
 %$$
-The file $cref NearEqualExt.cpp$$ contains an example
+The file $cref near_equal_ext.cpp$$ contains an example
 and test of this extension of $cref NearEqual$$.
 It return true if it succeeds and false otherwise.
 

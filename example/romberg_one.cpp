@@ -11,7 +11,7 @@ Please visit http://www.coin-or.org/CppAD/ for information on other licenses.
 -------------------------------------------------------------------------- */
 
 /*
-$begin RombergOne.cpp$$
+$begin romberg_one.cpp$$
 $spell
 	Romberg
 $$

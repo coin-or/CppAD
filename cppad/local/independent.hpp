@@ -106,7 +106,7 @@ $children%
 	example/independent.cpp
 %$$
 The file
-$cref Independent.cpp$$
+$cref independent.cpp$$
 contains an example and test of this operation.
 It returns true if it succeeds and false otherwise.
 

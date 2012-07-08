@@ -79,7 +79,7 @@ was modified to make the more in line with the introduction
 to C++ AD book
 ($code OdeRunge$$ has been replaced by $cref Runge45$$).
 In addition, the examples $code OdeRunge.cpp$$ and
-$cref LuSolve.cpp$$ were modified to make the simpler.
+$cref lu_solve.cpp$$ were modified to make the simpler.
 (The more complex version of $code OdeRunge.cpp$$
 was moved to the $code TestMore$$ directory.)
 
@@ -150,7 +150,7 @@ This seems to have been fixed by using a newer version of the autoconf
 and automake tools.
 
 $head 10-29$$
-Add the example and test $cref SimpleVector.cpp$$ 
+Add the example and test $cref simple_vector.cpp$$ 
 to the $cref SimpleVector$$ documentation.
 $pre
 
@@ -166,11 +166,11 @@ This has been fixed.
 
 $head 10-28$$
 The examples 
-$cref HesLuDet.cpp$$,
-$cref HesMinorDet.cpp$$,
-$cref JacLuDet.cpp$$,
+$cref hes_lu_det.cpp$$,
+$cref hes_minor_det.cpp$$,
+$cref jac_lu_det.cpp$$,
 and
-$cref JacMinorDet.cpp$$ used the negative of a $code size_t$$ value.
+$cref jac_minor_det.cpp$$ used the negative of a $code size_t$$ value.
 The value has been changed to an $code int$$.
 $pre
 
@@ -200,8 +200,8 @@ Some friend declarations were removed and others were made more specific
 in order to migrate the a version that will compile and run using VC 7.0.
 
 $head 10-16$$
-The example $cref Compare.cpp$$ displayed the text from
-$cref BoolFun.cpp$$ by mistake.
+The example $cref compare.cpp$$ displayed the text from
+$cref bool_fun.cpp$$ by mistake.
 This has been fixed.
 $pre
 
@@ -283,7 +283,7 @@ $head 09-13$$
 The examples that are specific to an operation were moved
 to be below that operation in the documentation tree.
 For example
-$cref Add.cpp$$ is below $cref ad_binary$$ 
+$cref add.cpp$$ is below $cref ad_binary$$ 
 in the documentation tree.
 
 $head 09-10$$
@@ -478,12 +478,12 @@ In addition,
 the following examples have been changed
 so that they test derivative up to fifth order:
 $cref/asin/Asin.cpp/$$,
-$cref/atan/Atan.cpp/$$,
-$cref/cos/Cos.cpp/$$,
-$cref/exp/Exp.cpp/$$,
-$cref/log/Log.cpp/$$,
-$cref/sin/Sin.cpp/$$,
-$cref/sqrt/Sqrt.cpp/$$.
+$cref/atan/atan.cpp/$$,
+$cref/cos/cos.cpp/$$,
+$cref/exp/exp.cpp/$$,
+$cref/log/log.cpp/$$,
+$cref/sin/sin.cpp/$$,
+$cref/sqrt/sqrt.cpp/$$.
 
 
 $head 06-01$$
@@ -493,7 +493,7 @@ orders greater than two.
 This has been fixed.
 
 $head 05-30$$
-The $cref/sin/Sin.cpp/$$ and $cref/cos/Cos.cpp/$$ examples were
+The $cref/sin/sin.cpp/$$ and $cref/cos/cos.cpp/$$ examples were
 changed so that they tested higher order derivatives.
 
 
@@ -612,7 +612,7 @@ $code cppad/Lib$$ directory and the $code CppAD$$ namespace.
 
 
 $head 05-07$$
-The $cref/divide operator tests/Div.cpp/$$ were extended to
+The $cref/divide operator tests/div.cpp/$$ were extended to
 include a second order derivative calculation using reverse mode.
 $pre
 
@@ -651,7 +651,7 @@ was added.
 
 $head 04-25$$
 Factor out common sub-expressions in order to make
-$cref LuVecAD$$ faster.
+$cref lu_vec_ad.cpp$$ faster.
 $pre
 
 $$
@@ -670,10 +670,10 @@ The $cref/log10/std_math_ad/$$ function was added.
 
 
 $head 04-22$$
-Add $cref CondExp$$ and use it to speed up $cref LuVecAD$$.
+Add $cref CondExp$$ and use it to speed up $cref lu_vec_ad.cpp$$.
 
 $head 04-21$$
-Use $cref/abs/abs/$$ to speed up $cref LuVecAD$$.
+Use $cref/abs/abs/$$ to speed up $cref lu_vec_ad.cpp$$.
 
 $head 04-20$$
 The $cref/absolute value/abs/$$ function was added.
@@ -711,7 +711,7 @@ and the problem was fixed
 (it is now part of $code TestMore/VecAD$$).
 
 $head 04-08$$
-The example $cref LuVecADOk.cpp$$ 
+The example $cref lu_vec_ad_ok.cpp$$ 
 uses $cref VecAD$$ to executes different pivoting operations 
 during the solution of linear equations with out having to retape.
 $pre
@@ -722,15 +722,15 @@ It shows that the initial implementation of $cref VecAD$$ is slow
 (and uses a lot of memory.) 
 In fact, 
 it is faster to use $cref LuSolve$$ and retape for each set of equations
-than it is to use $cref LuVecAD$$ and not have to retape.
-This test will help us improve the speed of $cref LuVecAD$$.
+than it is to use $cref lu_vec_ad.cpp$$ and not have to retape.
+This test will help us improve the speed of $cref lu_vec_ad.cpp$$.
 
 
 $head 04-07$$
 There were bugs in the assignment to $cref VecAD$$ elements
 during taping that have been fixed.
 In addition, an example of tapping the pivoting operations in
-an $cref/Lu factorization/LuVecAD/$$ has been added.
+an $cref/Lu factorization/lu_vec_ad.cpp/$$ has been added.
 
 $head 04-03$$
 Added $code size_t$$ indexing to the $cref VecAD$$ class.

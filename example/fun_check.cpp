@@ -12,7 +12,7 @@ Please visit http://www.coin-or.org/CppAD/ for information on other licenses.
 /*
 ! WARNING: This file is used as an example by FunConstruct and Dependent
 
-$begin FunCheck.cpp$$
+$begin fun_check.cpp$$
 $spell
 	abs
 $$

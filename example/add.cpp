@@ -11,7 +11,7 @@ Please visit http://www.coin-or.org/CppAD/ for information on other licenses.
 -------------------------------------------------------------------------- */
 
 /*
-$begin Add.cpp$$
+$begin add.cpp$$
 
 $section AD Binary Addition: Example and Test$$
 

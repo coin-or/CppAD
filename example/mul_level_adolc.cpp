@@ -40,7 +40,7 @@ $latex \[
 \frac{d}{dx} \left[ f^{(1)} (x) * v \right] = v
 \] $$
 This is only meant as an example of multiple levels of taping.
-The example $cref HesTimesDir.cpp$$ computes the same value more
+The example $cref hes_times_dir.cpp$$ computes the same value more
 efficiently by using the identity:
 $latex \[
 	\frac{d}{dx} \left[ f^{(1)} (x) * v \right] = f^{(2)} (x) * v

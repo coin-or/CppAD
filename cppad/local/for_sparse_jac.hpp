@@ -165,7 +165,7 @@ $children%
 	example/for_sparse_jac.cpp
 %$$
 The file
-$cref ForSparseJac.cpp$$
+$cref for_sparse_jac.cpp$$
 contains an example and test of this operation.
 It returns true if it succeeds and false otherwise.
 

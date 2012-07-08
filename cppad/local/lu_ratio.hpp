@@ -206,7 +206,7 @@ $head Example$$
 $children%
 	example/lu_ratio.cpp
 %$$
-The file $cref LuRatio.cpp$$
+The file $cref lu_ratio.cpp$$
 contains an example and test of using $code LuRatio$$.
 It returns true if it succeeds and false otherwise.
 

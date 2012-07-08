@@ -211,15 +211,15 @@ $head Example$$
 
 $subhead Sequence Constructor$$
 The file
-$cref Independent.cpp$$ 
+$cref independent.cpp$$ 
 contains an example and test of the sequence constructor.
 It returns true if it succeeds and false otherwise.
 
 $subhead Default Constructor$$
 The files
-$cref FunCheck.cpp$$ 
+$cref fun_check.cpp$$ 
 and
-$cref HesLagrangian.cpp$$
+$cref hes_lagrangian.cpp$$
 contain an examples and tests using the default constructor.
 They return true if they succeed and false otherwise.
 

@@ -400,7 +400,7 @@ $pre
 $$
 A simpler and useful example was provided for
 $cref/conditional expressions/CondExp/$$; 
-see $cref CondExp.cpp$$.
+see $cref cond_exp.cpp$$.
 
 
 $subhead 07-03$$

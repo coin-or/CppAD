@@ -170,7 +170,7 @@ $$
 The example routine $cref LuSolve$$ can be used to do this
 because the inverse is a special case of the solution of linear equations.
 The examples 
-$cref JacLuDet.cpp$$ and $cref HesLuDet.cpp$$
+$cref jac_lu_det.cpp$$ and $cref hes_lu_det.cpp$$
 use LuSolve to compute derivatives of the 
 determinant with respect to the components of the matrix.
 

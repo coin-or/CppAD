@@ -130,7 +130,7 @@ $icode x$$ and $icode y$$ are zero
 The $code std::abs$$ function replaced the 
 direct computation of the complex norms 
 (for the complex case in $code NearEqual$$).
-In addition, more extensive testing was done in $cref Near_Equal.cpp$$.
+In addition, more extensive testing was done in $cref near_equal.cpp$$.
 
 
 
@@ -183,7 +183,7 @@ $pre
 
 $$
 Add an example of a C callable routine that computes
-derivatives using CppAD (see $cref Interface2C.cpp$$).
+derivatives using CppAD (see $cref interface_2c.cpp$$).
 
 $head 12-08$$
 Split out $cref LuFactor$$ with the $icode ratio$$ argument
@@ -193,7 +193,7 @@ and should not be part of the general template $cref library$$.
 
 $head 12-07$$
 Improve $cref CheckSimpleVector$$ so that it tests element assignment.
-Change $cref CheckSimpleVector.cpp$$ so that it provides
+Change $cref check_simple_vector.cpp$$ so that it provides
 and example and test of a case where a simple vector returns a type
 different from the element type and the element assignment returns 
 $code void$$.
@@ -262,7 +262,7 @@ This bug was fixed and the calculations were made more efficient
 
 
 $head 12-01$$
-The speed test of $cref LuVecAD$$ has been reinstated.
+The speed test of $cref lu_vec_ad.cpp$$ has been reinstated.
 It appears that there is some sort of bug in the gcc compiler with
 the -O2 option whereby the following member function 
 $codep
@@ -282,14 +282,14 @@ $pre
 
 $$
 The source code for
-$cref LuVecADOk.cpp$$ was mistakenly used for
+$cref lu_vec_ad_ok.cpp$$ was mistakenly used for
 $code speed_cppad/LuSolveSpeed.cpp$$.
 This has been fixed.
 
 
 
 $head 11-23$$
-The speed test of $cref LuVecAD$$ has been commented out
+The speed test of $cref lu_vec_ad.cpp$$ has been commented out
 because it sometimes generates a segmentation fault.
 Here is an explanation:
 $pre
@@ -378,16 +378,16 @@ $head 11-06$$
 The cases of $code std::vector$$, $code std::valarray$$, and 
 $code CppAD::vector$$ were folded into the standard example and tests
 format for the following cases:
-$cref RevTwo.cpp$$,
-$cref RevOne.cpp$$,
+$cref rev_two.cpp$$,
+$cref rev_one.cpp$$,
 $code Reverse.cpp$$,
-$cref Hessian.cpp$$,
-$cref Jacobian.cpp$$,
-$cref Forward.cpp$$,
-$cref ForTwo.cpp$$,
-$cref ForOne.cpp$$,
+$cref hessian.cpp$$,
+$cref jacobian.cpp$$,
+$cref forward.cpp$$,
+$cref for_two.cpp$$,
+$cref for_one.cpp$$,
 $code Fun.cpp$$
-($code Fun.cpp$$ has since been replaced by $cref Independent.cpp$$,
+($code Fun.cpp$$ has since been replaced by $cref independent.cpp$$,
 $code Reverse.cpp$$ has since been replaced by 
 $cref reverse_one.cpp$$ and $code reverse_any.cpp$$).
 
@@ -438,15 +438,15 @@ $cref/documentation/InstallUnix/Configure/$$.
 $pre
 
 $$
-Some compiler errors in the $cref OdeGearControl.cpp$$ and 
-$cref OdeStiff.cpp$$ examples were fixed.
+Some compiler errors in the $cref ode_gear_control.cpp$$ and 
+$cref ode_stiff.cpp$$ examples were fixed.
 
 
 $head 09-29$$
 Add a specialization to $cref CppAD_vector$$ for the 
 $code CppAD::vector<bool>$$ case.
 A test for the $code push_back$$ member function as well as a
-$cref CheckSimpleVector$$ test has been added to $cref CppAD_vector.cpp$$.
+$cref CheckSimpleVector$$ test has been added to $cref cppad_vector.cpp$$.
 The source code for this template vector class,
 $code cppad/vector.hpp$$,
 has been removed from the documentation.
@@ -464,7 +464,7 @@ The stiff Ode routines,
 $cref OdeGear$$ and $cref OdeGearControl$$,
 were added to the $cref library$$.
 A comparison various Ode solvers on a stiff problem
-$cref OdeStiff.cpp$$ was added.
+$cref ode_stiff.cpp$$ was added.
 In addition, $code OdeGear$$ and $code OdeGearControl$$
 were added to the $cref library$$ and the library was
 reorganized.
@@ -474,7 +474,7 @@ The Microsoft compiler project files
 $code example/Example.vcproj$$ and $code TestMore/TestMore.vcproj$$ 
 were not up to date.
 This has been fixed.
-In addition, the example $cref NumericType.cpp$$ has been added.
+In addition, the example $cref numeric_type.cpp$$ has been added.
 $pre
 
 $$
@@ -554,7 +554,7 @@ An $cref Integer$$ conversion function as been added.
 $pre
 
 $$
-The $cref Value.cpp$$ example has been improved and the old example
+The $cref value.cpp$$ example has been improved and the old example
 has been moved into the $code TestMore$$ directory.
 
 $head 08-13$$
@@ -634,7 +634,7 @@ The documentation for $cref Forward$$ and $cref Reverse$$ has been
 improved.
 
 $head 07-05$$
-The $cref Rosen34.cpp$$ example mixed the 
+The $cref rosen_34.cpp$$ example mixed the 
 $cref/CppAD::vector/CppAD_vector/$$ and 
 $code CppADvector$$ vector types.
 This caused the compilation of the examples to fail when 
@@ -739,7 +739,7 @@ have been replaced by the version 7 project files
 $icode%*%.sln%$$ and $icode%*%.vcproj%$$.
 
 $head 06-14$$
-A new $cref/CondExp example/CondExp.cpp/$$ has been added and
+A new $cref/CondExp example/cond_exp.cpp/$$ has been added and
 the old $cref CondExp$$ example has been moved to the 
 $code TestMore$$ directory (it is now only a test).
 

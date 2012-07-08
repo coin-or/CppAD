@@ -119,7 +119,7 @@ $children%
 	example/rev_sparse_jac.cpp
 %$$
 The file
-$cref RevSparseJac.cpp$$
+$cref rev_sparse_jac.cpp$$
 contains an example and test of this operation.
 It returns true if it succeeds and false otherwise.
 

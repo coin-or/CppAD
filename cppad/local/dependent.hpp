@@ -130,7 +130,7 @@ $cref/thread_alloc::thread_num/ta_thread_num/$$ must be the same.
 
 $head Example$$
 The file
-$cref FunCheck.cpp$$ 
+$cref fun_check.cpp$$ 
 contains an example and test of this operation.
 It returns true if it succeeds and false otherwise.
 

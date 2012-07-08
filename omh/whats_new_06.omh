@@ -242,7 +242,7 @@ $codei%
 This has been fixed so that the function and its derivatives are now
 calculated properly when $icode x$$ is less than zero. 
 The $cref pow$$ documentation was improved
-and the $cref Pow.cpp$$ example was changed to 
+and the $cref pow.cpp$$ example was changed to 
 test more cases and to use the same variable
 names as in the documentation.
 
@@ -457,12 +457,12 @@ the distribution automatically edits the copyright message.
 
 
 $head 10-27$$
-Change $cref HesLagrangian.cpp$$ example so that it computes the 
+Change $cref hes_lagrangian.cpp$$ example so that it computes the 
 Lagrangian two ways. One is simpler and the other can be used
 to avoid re-taping operation sequence.
 
 $head 10-26$$
-Change $cref HesLagrangian.cpp$$ example so that it modifies
+Change $cref hes_lagrangian.cpp$$ example so that it modifies
 the independent variable vector between the call to 
 $cref Independent$$ and the $codei%ADFun<%Base%>%$$
 $cref/constructor/FunConstruct/$$.
@@ -480,7 +480,7 @@ $pre
 
 $$
 Added the example 
-$cref HesLagrangian.cpp$$ which computes the Hessian
+$cref hes_lagrangian.cpp$$ which computes the Hessian
 of a Lagrangian.
 
 $head 10-18$$
@@ -501,11 +501,11 @@ $code AD< AD<double> >$$.
 $head 10-10$$
 Add the $cref Var2Par$$ function so it is possible
 to obtain the $cref Value$$ of a variable.
-Move the $code Discrete.cpp$$ example to $cref TapeIndex.cpp$$.
+Move the $code Discrete.cpp$$ example to $cref tape_index.cpp$$.
 Fix the Microsoft project file so that the Windows install
 $cref/examples and testing/InstallWindows/Examples and Testing/$$
 works properly
-(it was missing the $cref StackMachine.cpp$$ example). 
+(it was missing the $cref stack_machine.cpp$$ example). 
 
 $head 09-30$$ 
 These changes were grouped together because it took a while for Coin-Or
@@ -526,7 +526,7 @@ $lnext
 Change the preprocessor $code # define$$ commands
 in $code cppad/local/*.hpp$$ to use upper case names.
 $lnext
-Add the $cref StackMachine.cpp$$ example.
+Add the $cref stack_machine.cpp$$ example.
 $lend
 
 $head 08-17$$
@@ -855,12 +855,12 @@ $pre
 
 $$
 Remove the old $code Fun.cpp$$ example and extend
-$cref Independent.cpp$$ so that it demonstrates using different
+$cref independent.cpp$$ so that it demonstrates using different
 choices for the $cref SimpleVector$$ type.
 
 $head 04-01$$
 Move the $cref/ADFun Constructor/FunConstruct/$$ to its own separate 
-section, improve its documentation, and use $cref Independent.cpp$$ 
+section, improve its documentation, and use $cref independent.cpp$$ 
 for its example.
 $pre
 
@@ -1048,14 +1048,14 @@ $cref abs$$, $cref atan2$$.
 
 $head 03-09$$
 The examples 
-$cref Cos.cpp$$, 
-$cref Cosh.cpp$$, 
-$cref Exp.cpp$$, 
-$cref Log.cpp$$, 
-$cref Log10.cpp$$,
-$cref Sin.cpp$$,
-$cref Sinh.cpp$$,
-$cref Sqrt.cpp$$
+$cref cos.cpp$$, 
+$cref cosh.cpp$$, 
+$cref exp.cpp$$, 
+$cref log.cpp$$, 
+$cref log_10.cpp$$,
+$cref sin.cpp$$,
+$cref sinh.cpp$$,
+$cref sqrt.cpp$$
 have been improved.
 
 $head 03-07$$
@@ -1064,7 +1064,7 @@ $pre
 
 $$
 The examples $cref Acos.cpp$$, $cref Asin.cpp$$ and 
-$cref Atan.cpp$$ have been improved.
+$cref atan.cpp$$ have been improved.
 
 $head 03-05$$
 The AD standard math unary functions documentation
@@ -1074,7 +1074,7 @@ in $cref std_math_ad$$.
 $head 02-28$$
 The $cref Output$$ and $cref Abs$$
 documentation and example have been improved. 
-Minor improvements were also made to the $cref LuVecAD$$ documentation.
+Minor improvements were also made to the $cref lu_vec_ad.cpp$$ documentation.
 
 $head 02-25$$
 The $cref Compare$$ documentation and example have been improved. 
@@ -1092,12 +1092,12 @@ $pre
 
 $$
 There was a bug $cref RevTwo$$ that was not detected by the
-$cref RevTwo.cpp$$ test. This bug was reported by
+$cref rev_two.cpp$$ test. This bug was reported by
 $href%
 	http://list.coin-or.org/pipermail/cppad/2006-February/000020.html%
 	Kasper Kristensen
 %$$
-A test was added $code TestMore/RevTwo.cpp$$ that detects this problem
+A test was added $code TestMore/rev_two.cpp$$ that detects this problem
 and the problem has been fixed.
 
 

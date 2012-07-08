@@ -414,7 +414,7 @@ $cref LuSolve$$ to better reflect the solution method.
 
 $head 09-06$$
 Changed the 
-$cref get_started.cpp$$ and $cref ComplexPoly.cpp$$ examples
+$cref get_started.cpp$$ and $cref complex_poly.cpp$$ examples
 so they use a template function with both base type and AD type arguments. 
 (The resulting code is simpler and a good use of templates.) 
 
@@ -545,7 +545,7 @@ Because the complex absolute value function is nowhere differentiable,
 this required the allowing for user defined 
 $cref/boolean valued functions with AD arguments/BoolFun/$$.
 The examples
-$cref LuSolve.cpp$$
+$cref lu_solve.cpp$$
 and 
 $code GradLu.cpp$$
 were converted to a complex case.
@@ -580,12 +580,12 @@ $rnext
 	$cnext 540
 $tend
 In addition the corresponding test case
-$cref LuSolve.cpp$$ was changed to a Hilbert matrix case.
+$cref lu_solve.cpp$$ was changed to a Hilbert matrix case.
 
 
 
 $head 08-10$$
-A $cref/complex polynomial/ComplexPoly.cpp/$$
+A $cref/complex polynomial/complex_poly.cpp/$$
 example was added.
 $pre
 
@@ -743,7 +743,7 @@ The facility was added so that the user can define
 unary functions,
 together with their derivatives.
 For example, the standard math functions such as
-$cref/exp/Exp.cpp/$$
+$cref/exp/exp.cpp/$$
 are good candidates for such definitions.
 (This feature has been replaced by and the standard math functions
 are now part of the AD types, see $cref AD$$.) 

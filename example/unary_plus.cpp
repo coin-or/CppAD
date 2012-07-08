@@ -11,7 +11,7 @@ Please visit http://www.coin-or.org/CppAD/ for information on other licenses.
 -------------------------------------------------------------------------- */
 
 /*
-$begin UnaryPlus.cpp$$
+$begin unary_plus.cpp$$
 $spell
 	Cpp
 	cstddef

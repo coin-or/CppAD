@@ -11,7 +11,7 @@ Please visit http://www.coin-or.org/CppAD/ for information on other licenses.
 -------------------------------------------------------------------------- */
 
 /*
-$begin CppAD_vector.cpp$$
+$begin cppad_vector.cpp$$
 $spell
 	Cpp
 $$

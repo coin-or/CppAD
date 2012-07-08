@@ -74,7 +74,7 @@ $children%
 	example/erf.cpp
 %$$
 The file
-$cref Erf.cpp$$
+$cref erf.cpp$$
 contains an example and test of this function.   
 It returns true if it succeeds and false otherwise.
 

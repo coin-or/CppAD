@@ -136,7 +136,7 @@ $children%
 	example/interp_retape.cpp
 %$$
 The file
-$cref TapeIndex.cpp$$
+$cref tape_index.cpp$$
 contains an example and test that uses a discrete function 
 to vary an array index during $cref Forward$$ mode calculations.
 The file

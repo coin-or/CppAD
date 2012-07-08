@@ -3,7 +3,7 @@
 # define CPPAD_COMPUTE_ASSIGN_INCLUDED
 
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-07 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-12 Bradley M. Bell
 
 CppAD is distributed under multiple licenses. This distribution is under
 the terms of the 
@@ -116,9 +116,9 @@ The following files contain examples and tests of these functions.
 Each test returns true if it succeeds and false otherwise.
 $table
 $rref AddEq.cpp$$
-$rref SubEq.cpp$$
-$rref MulEq.cpp$$
-$rref DivEq.cpp$$
+$rref sub_eq.cpp$$
+$rref mul_eq.cpp$$
+$rref div_eq.cpp$$
 $tend
 
 $head Derivative$$

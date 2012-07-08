@@ -134,7 +134,7 @@ $children%
 
 $head Example$$
 The file
-$cref Poly.cpp$$
+$cref poly.cpp$$
 contains an example and test of this routine.
 It returns true if it succeeds and false otherwise.
 

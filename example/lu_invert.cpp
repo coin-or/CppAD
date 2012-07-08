@@ -11,7 +11,7 @@ Please visit http://www.coin-or.org/CppAD/ for information on other licenses.
 -------------------------------------------------------------------------- */
 
 /*
-$begin LuInvert.cpp$$
+$begin lu_invert.cpp$$
 $spell
 	Geq
 	Cpp

@@ -3,7 +3,7 @@
 # define CPPAD_FUN_CHECK_INCLUDED
 
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-09 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-12 Bradley M. Bell
 
 CppAD is distributed under multiple licenses. This distribution is under
 the terms of the 
@@ -182,7 +182,7 @@ $children%
 	example/fun_check.cpp
 %$$
 The file
-$cref FunCheck.cpp$$
+$cref fun_check.cpp$$
 contains an example and test of this function.   
 It returns true if it succeeds and false otherwise.
 

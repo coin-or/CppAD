@@ -1,6 +1,6 @@
 $Id$
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-11 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-12 Bradley M. Bell
 
 CppAD is distributed under multiple licenses. This distribution is under
 the terms of the 
@@ -93,7 +93,7 @@ if this is not the case.
 
 $head Example$$
 The file
-$cref Forward.cpp$$
+$cref forward.cpp$$
 contains an example and test of this operation.
 It returns true if it succeeds and false otherwise.
 
@@ -189,7 +189,7 @@ if this is not the case.
 
 $head Example$$
 The file
-$cref Forward.cpp$$
+$cref forward.cpp$$
 contains an example and test of this operation.
 It returns true if it succeeds and false otherwise.
 
@@ -455,7 +455,7 @@ $latex \[
 
 $head Example$$
 The file
-$cref Forward.cpp$$
+$cref forward.cpp$$
 contains an example and test of this operation.
 It returns true if it succeeds and false otherwise.
 
@@ -543,7 +543,7 @@ have been retained).
 
 $head Example$$
 The file
-$cref Forward.cpp$$
+$cref forward.cpp$$
 contains an example and test of this operation.
 It returns true if it succeeds and false otherwise.
 
@@ -632,7 +632,7 @@ $children%
 	example/compare_change.cpp
 %$$
 The file
-$cref CompareChange.cpp$$
+$cref compare_change.cpp$$
 contains an example and test of this operation.
 They return true if they succeed and false otherwise.
 

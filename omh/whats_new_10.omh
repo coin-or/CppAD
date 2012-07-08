@@ -232,7 +232,7 @@ and the other in the $cref PrintFor$$ command.
 $lend
 
 $head 02-03$$
-Fix a mistakes in the test $cref BenderQuad.cpp$$.
+Fix a mistakes in the test $cref bender_quad.cpp$$.
 In addition, the $cref optimize$$ routine was used to reduce the 
 tape before doing the calculations.
 $pre

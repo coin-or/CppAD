@@ -11,7 +11,7 @@ Please visit http://www.coin-or.org/CppAD/ for information on other licenses.
 -------------------------------------------------------------------------- */
 
 /*
-$begin HesMinorDet.cpp$$
+$begin hes_minor_det.cpp$$
 $spell
 	Cpp
 $$

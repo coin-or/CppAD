@@ -11,7 +11,7 @@ Please visit http://www.coin-or.org/CppAD/ for information on other licenses.
 -------------------------------------------------------------------------- */
 
 /*
-$begin ForSparseJac.cpp$$
+$begin for_sparse_jac.cpp$$
 $spell
 	Jacobian
 	Jac

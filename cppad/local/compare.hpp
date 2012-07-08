@@ -3,7 +3,7 @@
 # define CPPAD_COMPARE_INCLUDED
 
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-11 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-12 Bradley M. Bell
 
 CppAD is distributed under multiple licenses. This distribution is under
 the terms of the 
@@ -122,7 +122,7 @@ $children%
 	example/compare.cpp
 %$$
 The file
-$cref Compare.cpp$$
+$cref compare.cpp$$
 contains an example and test of these operations.
 It returns true if it succeeds and false otherwise.
 

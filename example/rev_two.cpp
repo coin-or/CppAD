@@ -11,7 +11,7 @@ Please visit http://www.coin-or.org/CppAD/ for information on other licenses.
 -------------------------------------------------------------------------- */
 
 /*
-$begin RevTwo.cpp$$
+$begin rev_two.cpp$$
 $spell
 	Cpp
 $$
