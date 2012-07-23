@@ -164,7 +164,7 @@ $latex \[
 
 $head work$$
 If this argument is present, it has prototype
-$icode%
+$codei%
 	sparse_hessian_work& %work%
 %$$
 This object can only be used with the routines $code SparseHessian$$.
