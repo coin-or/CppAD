@@ -342,58 +342,64 @@ public:
 };
 
 /*! 
-Copy a sparsity pattern from a vector of bools into a sparse_pack object.
+Copy a user vector of bools sparsity pattern to an internal sparse_pack object.
 
 \tparam VectorBool
 is a simple vector with elements of type bool.
 
-\param sparsity
+\param set_type
+is a \c bool value.
+This argument is used to dispatch to the proper source
+code depending on the vlaue of \c VectorSet::value_type.
+
+\param internal
 The input value of sparisty does not matter.
-Upon return it contains the same sparsity pattern as \c vec_bool
+Upon return it contains the same sparsity pattern as \c user
 (or the transposed sparsity pattern).
 
-\param vec_bool
-sparsity pattern that we are placing \c sparsity.
+\param user
+sparsity pattern that we are placing \c internal.
 
 \param n_row
-number of rows in the sparsity pattern in \c vec_bool.
+number of rows in the sparsity pattern in \c user.
 
 \param n_col
-number of columns in the sparsity pattern in \c vec_bool.
+number of columns in the sparsity pattern in \c user.
 
 \param transpose
-if true, the sparsity pattern in \c sparsity is the transpose
-of the one in \c vec_bool. 
+if true, the sparsity pattern in \c internal is the transpose
+of the one in \c user. 
 Otherwise it is the same sparsity pattern.
 */
 template<class VectorBool>
-void vec_bool_to_sparse_pack(
-	sparse_pack&       sparsity  , 
-	const VectorBool&  vec_bool  ,
+void sparsity_user2internal(
+	bool               set_type  ,
+	sparse_pack&       internal  , 
+	const VectorBool&  user      ,
 	size_t             n_row     ,
 	size_t             n_col     ,
 	bool               transpose )
-{	CPPAD_ASSERT_UNKNOWN( n_row * n_col == size_t(vec_bool.size()) );
+{	CPPAD_ASSERT_UNKNOWN( n_row * n_col == size_t(user.size()) );
 	size_t i, j;
 
 	// transposed pattern case
 	if( transpose )
-	{	sparsity.resize(n_col, n_row);
+	{	internal.resize(n_col, n_row);
 		for(j = 0; j < n_col; j++)
 		{	for(i = 0; i < n_row; i++)
-			{	if( vec_bool[ i * n_col + j ] )
-					sparsity.add_element(j, i);
+			{	if( user[ i * n_col + j ] )
+					internal.add_element(j, i);
 			}
 		}
 		return;
 	}
 
 	// same pattern case
-	sparsity.resize(n_row, n_col);
+	internal.resize(n_row, n_col);
 	for(i = 0; i < n_row; i++)
 	{	for(j = 0; j < n_col; j++)
-		{	if( vec_bool[ i * n_col + j ] )
-				sparsity.add_element(i, j);
+		{	if( user[ i * n_col + j ] )
+				internal.add_element(i, j);
 		}
 	}
 	return;

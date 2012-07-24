@@ -559,7 +559,8 @@ size_t ADFun<Base>::SparseHessianCase(
 	sparse_pack sparsity;
 	if( work.color.size() == 0 )
 	{	bool transpose = false;
-		vec_bool_to_sparse_pack(sparsity, p, n, n, transpose);
+		typedef typename VectorSet::value_type Set_type;
+		sparsity_user2internal(Set_type(), sparsity, p, n, n, transpose);
 	}
 	
 	// compute the Hessian
@@ -631,7 +632,8 @@ size_t ADFun<Base>::SparseHessianCase(
 	sparse_set sparsity;
 	if( work.color.size() == 0 )
 	{	bool transpose = false;
-		vec_set_to_sparse_set(sparsity, p, n, n, transpose);
+		typedef typename VectorSet::value_type Set_type;
+		sparsity_user2internal(Set_type(), sparsity, p, n, n, transpose);
 	}
 	
 	// compute the Hessian

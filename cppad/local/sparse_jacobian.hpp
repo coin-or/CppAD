@@ -728,7 +728,9 @@ See \c SparseJacobianForward(x, p, row, col, jac, work).
 is a simple vector with elements of type \c bool.
 
 \param set_type
-has same type of an element of \c VectorSet; i.e. \c bool. 
+is a \c bool value.
+This argument is used to dispatch to the proper source
+code depending on the value of <code>VectorSet::value_type</code>.
 
 \param x
 See \c SparseJacobianForward(x, p, row, col, jac, work).
@@ -746,9 +748,9 @@ and \c SparseJacobianReverse(x, p, row, col, jac, work).
 \return
 Is the number of first order forward or reverse sweeps 
 (depending of if \c work.forward or \c work.reverse is non-empty)
-used to compute the reverse Jacobian values. 
+used to compute the Jacobian values. 
 The total work, not counting the zero order
-reverse sweep, or the time to combine computations, is proportional to this
+forward sweep, or the time to combine computations, is proportional to this
 return value.
 */
 template <class Base>
@@ -787,7 +789,10 @@ size_t ADFun<Base>::SparseJacobianCase(
 		sparse_pack s_transpose;
 		if( work.forward.color.size() == 0 )
 		{	bool transpose = true;
-			vec_bool_to_sparse_pack(s_transpose, p, m, n, transpose);
+			typedef typename VectorSet::value_type Set_type;
+			sparsity_user2internal(
+				Set_type(), s_transpose, p, m, n, transpose
+			);
 		}
 	
 		// now we have folded this into the following case
@@ -804,7 +809,8 @@ size_t ADFun<Base>::SparseJacobianCase(
 		sparse_pack s;
 		if( work.reverse.color.size() == 0 )
 		{	bool transpose = false;
-			vec_bool_to_sparse_pack(s, p, m, n, transpose);
+			typedef typename VectorSet::value_type Set_type;
+			sparsity_user2internal(Set_type(), s, p, m, n, transpose);
 		}
 	
 		// now we have folded this into the following case
@@ -825,7 +831,9 @@ See \c SparseJacobianForward(x, p, row, col, jac, work).
 is a simple vector with elements of type <code>std::set<size_t></code>.
 
 \param set_type
-has element type for vector representing the sparsity sets.
+is a <code>std::set<size_t></code> value.
+This argument is used to dispatch to the proper source
+code depending on the value of \c VectorSet::value_type.
 
 \param x
 See \c SparseJacobianForward(x, p, row, col, jac, work).
@@ -845,7 +853,7 @@ Is the number of first order forward or reverse sweeps
 (depending of if \c work.forward or \c work.reverse is non-empty)
 used to compute the reverse Jacobian values. 
 The total work, not counting the zero order
-reverse sweep, or the time to combine computations, is proportional to this
+forward sweep, or the time to combine computations, is proportional to this
 return value.
 */
 template <class Base>
@@ -886,7 +894,10 @@ size_t ADFun<Base>::SparseJacobianCase(
 		sparse_set s_transpose;
 		if( work.forward.color.size() == 0 )
 		{	bool transpose = true;
-			vec_set_to_sparse_set(s_transpose, p, m, n, transpose);
+			typedef typename VectorSet::value_type Set_type;
+			sparsity_user2internal(
+				Set_type(), s_transpose, p, m, n, transpose
+			);
 		}
 	
 		// now we have folded this into the following case
@@ -903,7 +914,8 @@ size_t ADFun<Base>::SparseJacobianCase(
 		sparse_set s;
 		if( work.reverse.color.size() == 0 )
 		{	bool transpose = false;
-			vec_set_to_sparse_set(s, p, m, n, transpose);
+			typedef typename VectorSet::value_type Set_type;
+			sparsity_user2internal(Set_type(), s, p, m, n, transpose);
 		}
 	
 		// now we have folded this into the following case
@@ -915,9 +927,11 @@ size_t ADFun<Base>::SparseJacobianCase(
 /*!
 Private helper function for vector of bool sparsity pattern cases
 
+
 \param set_type
-is a \c bool value. This argument is used to dispatch to the proper source
-code depending on the value of \c VectorSet::value_type.
+is a \c bool value.
+This argument is used to dispatch to the proper source
+code depending on the value of <code>VectorSet::value_type</code>.
 
 \param x
 See \c SparseJacobian(x, p).
@@ -1003,7 +1017,8 @@ void ADFun<Base>::SparseJacobianCase(
 		// so can fold vector of bools and vector of sets into same function
 		sparse_pack s_transpose;
 		bool transpose = true;
-		vec_bool_to_sparse_pack(s_transpose, p, m, n, transpose);
+		typedef typename VectorSet::value_type Set_type;
+		sparsity_user2internal(Set_type(), s_transpose, p, m, n, transpose);
 	
 		// now we have folded this into the following case
 		SparseJacobianFor(x, s_transpose, J, work);
@@ -1036,7 +1051,8 @@ void ADFun<Base>::SparseJacobianCase(
 		// so can fold vector of bools and vector of sets into same function
 		sparse_pack s;
 		bool transpose = false;
-		vec_bool_to_sparse_pack(s, p, m, n, transpose);
+		typedef typename VectorSet::value_type Set_type;
+		sparsity_user2internal(Set_type(), s, p, m, n, transpose);
 	
 		// now we have folded this into the following case
 		SparseJacobianRev(x, s, J, work);
@@ -1051,9 +1067,9 @@ void ADFun<Base>::SparseJacobianCase(
 Private helper function for vector of std::set<size_t> sparsity pattern cases.
 
 \param set_type
-is a \c std::set<size_t> value.
+is a <code>std::set<size_t></code> value.
 This argument is used to dispatch to the proper source
-code depending on the vlaue of \c VectorSet::value_type.
+code depending on the value of <code>VectorSet::value_type</code>.
 
 \param x
 See \c SparseJacobian(x, p).
@@ -1131,7 +1147,8 @@ void ADFun<Base>::SparseJacobianCase(
 		// need a pack_set copies
 		sparse_set s_transpose;
 		bool transpose = true;
-		vec_set_to_sparse_set(s_transpose, p, m, n, transpose);
+		typedef typename VectorSet::value_type Set_type;
+		sparsity_user2internal(Set_type(), s_transpose, p, m, n, transpose);
 
 		k = 0;
 		for(j = 0; j < n; j++)
@@ -1177,7 +1194,8 @@ void ADFun<Base>::SparseJacobianCase(
 		// need a pack_set copy of sparsity pattern
 		sparse_set s;
 		bool transpose = false;
-		vec_set_to_sparse_set(s, p, m, n, transpose);
+		typedef typename VectorSet::value_type Set_type;
+		sparsity_user2internal(Set_type(), s, p, m, n, transpose);
 
 		// now we have folded this into the following case
 		SparseJacobianRev(x, s, J, work);
@@ -1394,7 +1412,7 @@ The \c reverse.color vector is set and used by
 \return
 Is the number of first order reverse sweeps used to compute the
 reverse Jacobian values. The total work, not counting the zero order
-reverse sweep, or the time to combine computations, is proportional to this
+forward sweep, or the time to combine computations, is proportional to this
 return value.
 */
 template<class Base>
