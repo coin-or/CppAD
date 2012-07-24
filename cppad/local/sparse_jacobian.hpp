@@ -1427,6 +1427,7 @@ size_t ADFun<Base>::SparseJacobianReverse(
 	sparse_jacobian_work& work )
 {
 	size_t m = Range();
+	size_t n = Domain();
 	size_t k, K = jac.size();
 	if( work.reverse.r_sort.size() == 0 )
 	{	// create version of (row, col, k) sorted by row row value
@@ -1445,7 +1446,6 @@ size_t ADFun<Base>::SparseJacobianReverse(
 		work.reverse.r_sort[K] = m;
 	}
 # ifndef NDEBUG
-	size_t n = Domain();
 	CPPAD_ASSERT_KNOWN(
 		size_t(x.size()) == n ,
 		"SparseJacobianReverse: size of x not equal domain dimension for f."
@@ -1495,7 +1495,13 @@ size_t ADFun<Base>::SparseJacobianReverse(
 # endif
  
 	typedef typename VectorSet::value_type Set_type;
-	size_t n_sweep = SparseJacobianCase(Set_type(), x, p, jac, work);
+	typedef typename internal_sparsity<Set_type>::pattern_type Pattern_type;
+	Pattern_type s;
+	if( work.reverse.color.size() == 0 )
+	{	bool transpose = false;
+		sparsity_user2internal(s, p, m, n, transpose);
+	}
+	size_t n_sweep = SparseJacobianRev(x, s, jac, work);
 	return n_sweep;
 }
 /*!
