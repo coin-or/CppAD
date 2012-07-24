@@ -484,6 +484,7 @@ nobase_myinclude_HEADERS = \
 	cppad/local/sparse.hpp \
 	cppad/local/sparse_jacobian.hpp \
 	cppad/local/sparse_pack.hpp \
+	cppad/local/sparse_pattern.hpp \
 	cppad/local/sparse_set.hpp \
 	cppad/local/sparse_unary_op.hpp \
 	cppad/local/sqrt_op.hpp \

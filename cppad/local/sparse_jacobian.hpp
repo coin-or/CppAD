@@ -790,9 +790,7 @@ size_t ADFun<Base>::SparseJacobianCase(
 		if( work.forward.color.size() == 0 )
 		{	bool transpose = true;
 			typedef typename VectorSet::value_type Set_type;
-			sparsity_user2internal(
-				Set_type(), s_transpose, p, m, n, transpose
-			);
+			sparsity_user2internal(s_transpose, p, m, n, transpose);
 		}
 	
 		// now we have folded this into the following case
@@ -810,8 +808,7 @@ size_t ADFun<Base>::SparseJacobianCase(
 		if( work.reverse.color.size() == 0 )
 		{	bool transpose = false;
 			typedef typename VectorSet::value_type Set_type;
-			sparsity_user2internal(Set_type(), s, p, m, n, transpose);
-		}
+			sparsity_user2internal(s, p, m, n, transpose); }
 	
 		// now we have folded this into the following case
 		n_sweep = SparseJacobianRev(x, s, jac, work);
@@ -895,9 +892,7 @@ size_t ADFun<Base>::SparseJacobianCase(
 		if( work.forward.color.size() == 0 )
 		{	bool transpose = true;
 			typedef typename VectorSet::value_type Set_type;
-			sparsity_user2internal(
-				Set_type(), s_transpose, p, m, n, transpose
-			);
+			sparsity_user2internal(s_transpose, p, m, n, transpose);
 		}
 	
 		// now we have folded this into the following case
@@ -915,7 +910,7 @@ size_t ADFun<Base>::SparseJacobianCase(
 		if( work.reverse.color.size() == 0 )
 		{	bool transpose = false;
 			typedef typename VectorSet::value_type Set_type;
-			sparsity_user2internal(Set_type(), s, p, m, n, transpose);
+			sparsity_user2internal(s, p, m, n, transpose);
 		}
 	
 		// now we have folded this into the following case
@@ -1018,7 +1013,7 @@ void ADFun<Base>::SparseJacobianCase(
 		sparse_pack s_transpose;
 		bool transpose = true;
 		typedef typename VectorSet::value_type Set_type;
-		sparsity_user2internal(Set_type(), s_transpose, p, m, n, transpose);
+		sparsity_user2internal(s_transpose, p, m, n, transpose);
 	
 		// now we have folded this into the following case
 		SparseJacobianFor(x, s_transpose, J, work);
@@ -1052,7 +1047,7 @@ void ADFun<Base>::SparseJacobianCase(
 		sparse_pack s;
 		bool transpose = false;
 		typedef typename VectorSet::value_type Set_type;
-		sparsity_user2internal(Set_type(), s, p, m, n, transpose);
+		sparsity_user2internal(s, p, m, n, transpose);
 	
 		// now we have folded this into the following case
 		SparseJacobianRev(x, s, J, work);
@@ -1148,7 +1143,7 @@ void ADFun<Base>::SparseJacobianCase(
 		sparse_set s_transpose;
 		bool transpose = true;
 		typedef typename VectorSet::value_type Set_type;
-		sparsity_user2internal(Set_type(), s_transpose, p, m, n, transpose);
+		sparsity_user2internal( s_transpose, p, m, n, transpose);
 
 		k = 0;
 		for(j = 0; j < n; j++)
@@ -1195,7 +1190,7 @@ void ADFun<Base>::SparseJacobianCase(
 		sparse_set s;
 		bool transpose = false;
 		typedef typename VectorSet::value_type Set_type;
-		sparsity_user2internal(Set_type(), s, p, m, n, transpose);
+		sparsity_user2internal(s, p, m, n, transpose);
 
 		// now we have folded this into the following case
 		SparseJacobianRev(x, s, J, work);
@@ -1285,6 +1280,7 @@ size_t ADFun<Base>::SparseJacobianForward(
 	sparse_jacobian_work& work )
 {
 	size_t n = Domain();
+	size_t m = Range();
 	size_t k, K = jac.size();
 	if( work.forward.r_sort.size() == 0 )
 	{	// create version of (row, col, k) sorted by column value
@@ -1303,7 +1299,6 @@ size_t ADFun<Base>::SparseJacobianForward(
 		work.forward.c_sort[K] = n;
 	}
 # ifndef NDEBUG
-	size_t m = Range();
 	CPPAD_ASSERT_KNOWN(
 		size_t(x.size()) == n ,
 		"SparseJacobianForward: size of x not equal domain dimension for f."
@@ -1351,9 +1346,15 @@ size_t ADFun<Base>::SparseJacobianForward(
 			"SparseJacobianForward: invalid value in work."
 	);
 # endif
- 
+
 	typedef typename VectorSet::value_type Set_type;
-	size_t n_sweep = SparseJacobianCase(Set_type(), x, p, jac, work);
+	typedef typename internal_sparsity<Set_type>::pattern_type Pattern_type;
+	Pattern_type s_transpose;
+	if( work.forward.color.size() == 0 )
+	{	bool transpose = true;
+		sparsity_user2internal(s_transpose, p, m, n, transpose);
+	}
+	size_t n_sweep = SparseJacobianFor(x, s_transpose, jac, work);
 	return n_sweep;
 }
 /*!

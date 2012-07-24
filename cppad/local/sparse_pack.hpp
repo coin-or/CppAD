@@ -347,11 +347,6 @@ Copy a user vector of bools sparsity pattern to an internal sparse_pack object.
 \tparam VectorBool
 is a simple vector with elements of type bool.
 
-\param set_type
-is a \c bool value.
-This argument is used to dispatch to the proper source
-code depending on the vlaue of \c VectorSet::value_type.
-
 \param internal
 The input value of sparisty does not matter.
 Upon return it contains the same sparsity pattern as \c user
@@ -361,10 +356,12 @@ Upon return it contains the same sparsity pattern as \c user
 sparsity pattern that we are placing \c internal.
 
 \param n_row
-number of rows in the sparsity pattern in \c user.
+number of rows in the sparsity pattern in \c user
+(rand dimension).
 
 \param n_col
-number of columns in the sparsity pattern in \c user.
+number of columns in the sparsity pattern in \c user
+(domain dimension).
 
 \param transpose
 if true, the sparsity pattern in \c internal is the transpose
@@ -373,7 +370,6 @@ Otherwise it is the same sparsity pattern.
 */
 template<class VectorBool>
 void sparsity_user2internal(
-	bool               set_type  ,
 	sparse_pack&       internal  , 
 	const VectorBool&  user      ,
 	size_t             n_row     ,
@@ -381,6 +377,12 @@ void sparsity_user2internal(
 	bool               transpose )
 {	CPPAD_ASSERT_UNKNOWN( n_row * n_col == size_t(user.size()) );
 	size_t i, j;
+
+	CPPAD_ASSERT_KNOWN(
+		size_t( user.size() ) == n_row * n_col,
+		"Size of this vector of bools sparsity pattern is not equal product "
+		"of the domain and range dimensions for corresponding function."
+	);
 
 	// transposed pattern case
 	if( transpose )
