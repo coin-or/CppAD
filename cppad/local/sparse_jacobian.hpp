@@ -714,492 +714,6 @@ size_t ADFun<Base>::SparseJacobianRev(
 	}
 	return n_sweep;
 }
-// ===========================================================================
-/*!
-Private helper function for vector of bool sparsity pattern cases.
-
-\tparam Base
-See \c SparseJacobianForward(x, p, row, col, jac, work).
-
-\tparam VectorBase
-See \c SparseJacobianForward(x, p, row, col, jac, work).
-
-\tparam VectorSet
-is a simple vector with elements of type \c bool.
-
-\param set_type
-is a \c bool value.
-This argument is used to dispatch to the proper source
-code depending on the value of <code>VectorSet::value_type</code>.
-
-\param x
-See \c SparseJacobianForward(x, p, row, col, jac, work).
-
-\param p
-See \c SparseJacobianForward(x, p, row, col, jac, work).
-
-\param jac
-See \c SparseJacobianForward(x, p, row, col, jac, work).
-
-\param work
-See \c SparseJacobianForward(x, p, row, col, jac, work)
-and \c SparseJacobianReverse(x, p, row, col, jac, work).
-
-\return
-Is the number of first order forward or reverse sweeps 
-(depending of if \c work.forward or \c work.reverse is non-empty)
-used to compute the Jacobian values. 
-The total work, not counting the zero order
-forward sweep, or the time to combine computations, is proportional to this
-return value.
-*/
-template <class Base>
-template <class VectorBase, class VectorSet>
-size_t ADFun<Base>::SparseJacobianCase(
-	bool                  set_type    ,
-	const VectorBase&     x           , 
-	const VectorSet&      p           ,
-	VectorBase&           jac         ,
-	sparse_jacobian_work& work        )
-{	size_t n = Domain();
-	size_t m = Range();
-	size_t n_sweep;
-
-	// check VectorSet is Simple Vector class with bool elements
-	CheckSimpleVector<bool, VectorSet>();
-
-	// check VectorBase is Simple Vector class with Base type elements
-	CheckSimpleVector<Base, VectorBase>();
-
-	CPPAD_ASSERT_KNOWN(
-		p.size() == m * n ,
-		"SparseJacobian: using bool values and size of p "
-		" not equal range dimension times domain dimension for f"
-	); 
-	CPPAD_ASSERT_UNKNOWN( size_t(x.size()) == n );
-	size_t K = size_t(jac.size());
-
-	if( work.forward.c_sort.size() == K+1 )
-	{	// row major, use forward mode ----------------------------------
-		CPPAD_ASSERT_UNKNOWN( work.forward.r_sort.size() == K );
-		CPPAD_ASSERT_UNKNOWN( work.forward.c_sort[K] == n );
-
-		// convert the sparsity pattern to a sparse_pack object
-		// so can fold vector of bools and vector of sets into same function
-		sparse_pack s_transpose;
-		if( work.forward.color.size() == 0 )
-		{	bool transpose = true;
-			typedef typename VectorSet::value_type Set_type;
-			sparsity_user2internal(s_transpose, p, m, n, transpose);
-		}
-	
-		// now we have folded this into the following case
-		n_sweep = SparseJacobianFor(x, s_transpose, jac, work);
-	}
-	else
-	{	// column major, use reverse mode --------------------------------
-		CPPAD_ASSERT_UNKNOWN( work.reverse.r_sort.size() == K+1 );
-		CPPAD_ASSERT_UNKNOWN( work.reverse.c_sort.size() == K   );
-		CPPAD_ASSERT_UNKNOWN( work.reverse.r_sort[K] == m );
-
-		// convert the sparsity pattern to a sparse_pack object
-		// so can fold vector of bools and vector of sets into same function
-		sparse_pack s;
-		if( work.reverse.color.size() == 0 )
-		{	bool transpose = false;
-			typedef typename VectorSet::value_type Set_type;
-			sparsity_user2internal(s, p, m, n, transpose); }
-	
-		// now we have folded this into the following case
-		n_sweep = SparseJacobianRev(x, s, jac, work);
-	}
-	return n_sweep;
-}
-/*!
-Private helper function for vector of std::set<size_t> sparsity pattern cases.
-
-\tparam Base
-See \c SparseJacobianForward(x, p, row, col, jac, work).
-
-\tparam VectorBase
-See \c SparseJacobianForward(x, p, row, col, jac, work).
-
-\tparam VectorSet
-is a simple vector with elements of type <code>std::set<size_t></code>.
-
-\param set_type
-is a <code>std::set<size_t></code> value.
-This argument is used to dispatch to the proper source
-code depending on the value of \c VectorSet::value_type.
-
-\param x
-See \c SparseJacobianForward(x, p, row, col, jac, work).
-
-\param p
-Sparsity pattern for the Jacobian of this ADFun<Base> object.
-
-\param jac
-See \c SparseJacobianForward(x, p, row, col, jac, work).
-
-\param work
-See \c SparseJacobianForward(x, p, row, col, jac, work)
-and \c SparseJacobianReverse(x, p, row, col, jac, work).
-
-\return
-Is the number of first order forward or reverse sweeps 
-(depending of if \c work.forward or \c work.reverse is non-empty)
-used to compute the reverse Jacobian values. 
-The total work, not counting the zero order
-forward sweep, or the time to combine computations, is proportional to this
-return value.
-*/
-template <class Base>
-template <class VectorBase, class VectorSet>
-size_t ADFun<Base>::SparseJacobianCase(
-	const std::set<size_t>&  set_type        ,
-	const VectorBase&        x               , 
-	const VectorSet&         p               ,
-	VectorBase&              jac             ,
-	sparse_jacobian_work&    work            )
-{	size_t n = Domain();
-	size_t m = Range();
-	size_t n_sweep;
-
-	// check VectorSet is Simple Vector class with sets for elements
-	CheckSimpleVector<std::set<size_t>, VectorSet>(
-		one_element_std_set<size_t>(), two_element_std_set<size_t>()
-	);
-
-	// check VectorBase is Simple Vector class with Base type elements
-	CheckSimpleVector<Base, VectorBase>();
-
-	CPPAD_ASSERT_KNOWN(
-		p.size() == Range() ,
-		"SparseJacobian: using size_t sets for sparsity pattern and p.size() "
-		"not equal range dimension for f"
-	); 
-	CPPAD_ASSERT_UNKNOWN( size_t(x.size()) == n );
-	size_t K = size_t(jac.size());
-
-	if( work.forward.c_sort.size() == K+1 )
-	{	// row major, use forward mode ---------------------------------
-		CPPAD_ASSERT_UNKNOWN( work.forward.r_sort.size() == K );
-		CPPAD_ASSERT_UNKNOWN( work.forward.c_sort[K] == n );
-
-		// convert the sparsity pattern to a sparse_pack object
-		// so can fold vector of bools and vector of sets into same function
-		sparse_set s_transpose;
-		if( work.forward.color.size() == 0 )
-		{	bool transpose = true;
-			typedef typename VectorSet::value_type Set_type;
-			sparsity_user2internal(s_transpose, p, m, n, transpose);
-		}
-	
-		// now we have folded this into the following case
-		n_sweep = SparseJacobianFor(x, s_transpose, jac, work);
-	}
-	else
-	{	// column major, use reverse mode -----------------------------------
-		CPPAD_ASSERT_UNKNOWN( work.reverse.c_sort.size() == K );
-		CPPAD_ASSERT_UNKNOWN( work.reverse.r_sort.size() == K+1 );
-		CPPAD_ASSERT_UNKNOWN( work.reverse.r_sort[K] == m );
-
-		// convert the sparsity pattern to a sparse_pack object
-		// so can fold vector of bools and vector of sets into same function
-		sparse_set s;
-		if( work.reverse.color.size() == 0 )
-		{	bool transpose = false;
-			typedef typename VectorSet::value_type Set_type;
-			sparsity_user2internal(s, p, m, n, transpose);
-		}
-	
-		// now we have folded this into the following case
-		n_sweep = SparseJacobianRev(x, s, jac, work);
-	}
-	return n_sweep;
-}
-// ===========================================================================
-/*!
-Private helper function for vector of bool sparsity pattern cases
-
-
-\param set_type
-is a \c bool value.
-This argument is used to dispatch to the proper source
-code depending on the value of <code>VectorSet::value_type</code>.
-
-\param x
-See \c SparseJacobian(x, p).
-
-\param p
-See \c SparseJacobian(x, p).
-
-\param jac
-is the return value for the corresponding call to \c SparseJacobian(x, p).
-On input, it must have size equal to the domain times range dimension
-for this ADFun<Base> object.
-On return, it will contain the Jacobian.
-*/
-template <class Base>
-template <class VectorBase, class VectorSet>
-void ADFun<Base>::SparseJacobianCase(
-	bool               set_type        ,
-	const VectorBase&  x               , 
-	const VectorSet&   p               ,
-	VectorBase&        jac             )
-{
-	typedef CppAD::vector<size_t> SizeVector;
-	typedef CppAD::vectorBool     VectorBool;
-	size_t i, j, k;
-
-	size_t m = Range();
-	size_t n = Domain();
-
-	// the value zero
-	const Base zero(0);
-
-	// check VectorSet is Simple Vector class with bool elements
-	CheckSimpleVector<bool, VectorSet>();
-
-	// check VectorBase is Simple Vector class with Base type elements
-	CheckSimpleVector<Base, VectorBase>();
-
-	CPPAD_ASSERT_KNOWN(
-		size_t(p.size()) == m * n,
-		"SparseJacobian: using bool values and size of p "
-		" not equal range dimension times domain dimension for f"
-	); 
-	CPPAD_ASSERT_UNKNOWN( size_t(x.size()) == n );
-	CPPAD_ASSERT_UNKNOWN( size_t(jac.size()) == m * n); 
-
-	// row index, column index, value representation
-	// (used to fold problem into user interface case).
-	size_t K = 0;
-	for(j = 0; j < n; j++)
-	{	for(i = 0; i < m; i++)
-			if( p[ i * n + j ] )
-				K++;
-	} 
-	VectorBase J(K);
-	sparse_jacobian_work work;
-	// initialize the return value
-
-	for(i = 0; i < m; i++)
-		for(j = 0; j < n; j++)
-			jac[i * n + j] = zero;
-
-	if( n <= m )
-	{	CppAD::vector<size_t>& row(work.forward.r_sort);
-		CppAD::vector<size_t>& col(work.forward.c_sort);
-		CppAD::vector<size_t>& user_k(work.forward.k_sort);
-
-		// forward mode, columns are sorted
-		row.resize(K); col.resize(K+1); user_k.resize(K);
-		k = 0;
-		for(j = 0; j < n; j++)
-		{	for(i = 0; i < m; i++)
-			{	if( p[ i * n + j ] )
-				{	row[k]      = i;
-					col[k]      = j;
-					user_k[k] = k;
-					k++;
-				}
-			}
-		} 
-		col[K] = n;
-
-		// convert transposed sparsity pattern to a sparse_pack object
-		// so can fold vector of bools and vector of sets into same function
-		sparse_pack s_transpose;
-		bool transpose = true;
-		typedef typename VectorSet::value_type Set_type;
-		sparsity_user2internal(s_transpose, p, m, n, transpose);
-	
-		// now we have folded this into the following case
-		SparseJacobianFor(x, s_transpose, J, work);
-
-		// now set the non-zero return values
-		for(k = 0; k < K; k++)
-			jac[row[k] * n + col[k]] = J[k];
-	}
-	else
-	{	CppAD::vector<size_t>& row(work.reverse.r_sort);
-		CppAD::vector<size_t>& col(work.reverse.c_sort);
-		CppAD::vector<size_t>& user_k(work.reverse.k_sort);
-
-		// reverse mode, rows are sorted
-		row.resize(K+1); col.resize(K); user_k.resize(K);
-		k = 0;
-		for(i = 0; i < m; i++)
-		{	for(j = 0; j < n; j++)
-			{	if( p[ i * n + j ] )
-				{	row[k]      = i;
-					col[k]      = j;
-					user_k[k] = k;
-					k++;
-				}
-			}
-		} 
-		row[K] = m;
-
-		// convert the sparsity pattern to a sparse_pack object
-		// so can fold vector of bools and vector of sets into same function
-		sparse_pack s;
-		bool transpose = false;
-		typedef typename VectorSet::value_type Set_type;
-		sparsity_user2internal(s, p, m, n, transpose);
-	
-		// now we have folded this into the following case
-		SparseJacobianRev(x, s, J, work);
-
-		// now set the non-zero return values
-		for(k = 0; k < K; k++)
-			jac[row[k] * n + col[k]] = J[k];
-	}
-}
-
-/*!
-Private helper function for vector of std::set<size_t> sparsity pattern cases.
-
-\param set_type
-is a <code>std::set<size_t></code> value.
-This argument is used to dispatch to the proper source
-code depending on the value of <code>VectorSet::value_type</code>.
-
-\param x
-See \c SparseJacobian(x, p).
-
-\param p
-See \c SparseJacobian(x, p).
-
-\param jac
-is the return value for the corresponding call to \c SparseJacobian(x, p).
-On input it must have size equalt to the domain times range dimension
-for this ADFun<Base> object.
-On return, it will contain the Jacobian.
-*/
-template <class Base>
-template <class VectorBase, class VectorSet>
-void ADFun<Base>::SparseJacobianCase(
-	const std::set<size_t>&  set_type        ,
-	const VectorBase&        x               , 
-	const VectorSet&         p               ,
-	VectorBase&              jac             )
-{
-	typedef CppAD::vector<size_t> SizeVector;
-	typedef CppAD::vectorBool     VectorBool;
-	size_t i, j, k;
-
-	size_t m = Range();
-	size_t n = Domain();
-
-	// the value zero
-	const Base zero(0);
-
-	// check VectorSet is Simple Vector class with sets for elements
-	CheckSimpleVector<std::set<size_t>, VectorSet>(
-		one_element_std_set<size_t>(), two_element_std_set<size_t>()
-	);
-
-	// check VectorBase is Simple Vector class with Base type elements
-	CheckSimpleVector<Base, VectorBase>();
-
-	CPPAD_ASSERT_KNOWN(
-		p.size() == m,
-		"SparseJacobian: using size_t sets for sparsity pattern and p.size() "
-		"not equal range dimension for f"
-	); 
-	CPPAD_ASSERT_UNKNOWN( size_t(x.size()) == n );
-	CPPAD_ASSERT_UNKNOWN( size_t(jac.size()) == m * n); 
-
-	// row index, column index, value representation
-	// (used to fold problem into user interface case).
-	size_t K = 0;
-	std::set<size_t>::const_iterator itr;
-	for(i = 0; i < m; i++)
-	{	itr = p[i].begin();
-		while( itr != p[i].end() )
-		{	itr++;
-			K++;
-		}
-	}	
-	VectorBase J(K);
-	sparse_jacobian_work work;
-
-	// initialize the return value
-	for(i = 0; i < m; i++)
-		for(j = 0; j < n; j++)
-			jac[i * n + j] = zero;
-
-	if( n <= m )
-	{	CppAD::vector<size_t>& row(work.forward.r_sort);
-		CppAD::vector<size_t>& col(work.forward.c_sort);
-		CppAD::vector<size_t>& user_k(work.forward.k_sort);
-
-		// forward mode, columns are sorted
-		row.resize(K); col.resize(K+1); user_k.resize(K);
-
-		// need a pack_set copies
-		sparse_set s_transpose;
-		bool transpose = true;
-		typedef typename VectorSet::value_type Set_type;
-		sparsity_user2internal( s_transpose, p, m, n, transpose);
-
-		k = 0;
-		for(j = 0; j < n; j++)
-		{	s_transpose.begin(j);
-			i = s_transpose.next_element();
-			while( i != s_transpose.end() )
-			{	row[k]      = i;
-				col[k]      = j;
-				user_k[k] = k;
-				k++;
-				i    = s_transpose.next_element();
-			}
-		} 
-		col[K] = n;
-	
-		// now we have folded this into the following case
-		SparseJacobianFor(x, s_transpose, J, work);
-
-		// now set the non-zero return values
-		for(k = 0; k < K; k++)
-			jac[row[k] * n + col[k]] = J[k];
-	}
-	else
-	{	CppAD::vector<size_t>& row(work.reverse.r_sort);
-		CppAD::vector<size_t>& col(work.reverse.c_sort);
-		CppAD::vector<size_t>& user_k(work.reverse.k_sort);
-
-		// reverse mode, rows are sorted
-		row.resize(K+1); col.resize(K); user_k.resize(K);
-		k = 0;
-		for(i = 0; i < m; i++)
-		{	itr = p[i].begin();
-			while( itr != p[i].end() )
-			{	j = *itr++;
-				row[k]      = i;
-				col[k]      = j;
-				user_k[k] = k;
-				k++;
-			}
-		} 
-		row[K] = m;
-
-		// need a pack_set copy of sparsity pattern
-		sparse_set s;
-		bool transpose = false;
-		typedef typename VectorSet::value_type Set_type;
-		sparsity_user2internal(s, p, m, n, transpose);
-
-		// now we have folded this into the following case
-		SparseJacobianRev(x, s, J, work);
-
-		// now set the non-zero return values
-		for(k = 0; k < K; k++)
-			jac[row[k] * n + col[k]] = J[k];
-	}
-}
 // ==========================================================================
 // Public Member functions
 // ==========================================================================
@@ -1538,7 +1052,9 @@ template <class VectorBase, class VectorSet>
 VectorBase ADFun<Base>::SparseJacobian(
 	const VectorBase& x, const VectorSet& p
 )
-{	size_t m = Range();
+{	size_t i, j, k;
+
+	size_t m = Range();
 	size_t n = Domain();
 	VectorBase jac(m * n);
 
@@ -1546,9 +1062,94 @@ VectorBase ADFun<Base>::SparseJacobian(
 		size_t(x.size()) == n,
 		"SparseJacobian: size of x not equal domain size for f."
 	);
+	CheckSimpleVector<Base, VectorBase>();
 
 	typedef typename VectorSet::value_type Set_type;
-	SparseJacobianCase( Set_type(), x, p, jac);
+	typedef typename internal_sparsity<Set_type>::pattern_type Pattern_type;
+
+	// initialize the return value as zero
+	Base zero(0);
+	for(i = 0; i < m; i++)
+		for(j = 0; j < n; j++)
+			jac[i * n + j] = zero;
+
+	sparse_jacobian_work work;
+	if( n <= m )
+	{	CppAD::vector<size_t>& row(work.forward.r_sort);
+		CppAD::vector<size_t>& col(work.forward.c_sort);
+		CppAD::vector<size_t>& user_k(work.forward.k_sort);
+
+		// forward mode, columns are sorted
+		assert( row.size() == 0 );
+		assert( col.size() == 0 );
+		assert( user_k.size() == 0 );
+
+		// need an internal copy of sparsity pattern
+		Pattern_type s_transpose;
+		bool transpose = true;
+		sparsity_user2internal(s_transpose, p, m, n, transpose);
+
+		k = 0;
+		for(j = 0; j < n; j++)
+		{	s_transpose.begin(j);
+			i = s_transpose.next_element();
+			while( i != s_transpose.end() )
+			{	row.push_back(i);
+				col.push_back(j);
+				user_k.push_back(k);
+				k++;
+				i = s_transpose.next_element();
+			}
+		} 
+		col.push_back(n);
+		size_t K = k;
+		VectorBase J(K);
+	
+		// now we have folded this into the following case
+		SparseJacobianFor(x, s_transpose, J, work);
+
+		// now set the non-zero return values
+		for(k = 0; k < K; k++)
+			jac[row[k] * n + col[k]] = J[k];
+	}
+	else
+	{	CppAD::vector<size_t>& row(work.reverse.r_sort);
+		CppAD::vector<size_t>& col(work.reverse.c_sort);
+		CppAD::vector<size_t>& user_k(work.reverse.k_sort);
+
+		// reverse mode, rows are sorted
+		assert( row.size() == 0 );
+		assert( col.size() == 0 );
+		assert( user_k.size() == 0 );
+
+		// need an internal copy of sparsity pattern
+		Pattern_type s;
+		bool transpose = false;
+		sparsity_user2internal(s, p, m, n, transpose);
+
+		k = 0;
+		for(i = 0; i < m; i++)
+		{	s.begin(i);
+			j = s.next_element();
+			while( j != s.end() )
+			{	row.push_back(i);
+				col.push_back(j);
+				user_k.push_back(k);
+				k++;
+				j = s.next_element();
+			}
+		} 
+		row.push_back(m);
+		size_t K = k;
+		VectorBase J(K);
+
+		// now we have folded this into the following case
+		SparseJacobianRev(x, s, J, work);
+
+		// now set the non-zero return values
+		for(k = 0; k < K; k++)
+			jac[row[k] * n + col[k]] = J[k];
+	}
 
 	return jac;
 } 
