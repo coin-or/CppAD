@@ -83,9 +83,15 @@ bool vectorBool(void)
 	str = buf.str();
 	ok &= (str == correct);
 
-	// test of push_back element
-	size_t i;
+	// test resize(0), capacity, and clear
+	size_t i = x.capacity();
+	ok      &= i > 0;
 	x.resize(0);
+	ok      &= i == x.capacity();
+	x.clear();
+	ok      &= 0 == x.capacity();
+
+	// test of push_back element
 	for(i = 0; i < 100; i++)
 		x.push_back( (i % 3) != 0 );
 	ok &= (x.size() == 100);

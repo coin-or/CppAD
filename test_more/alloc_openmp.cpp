@@ -71,7 +71,7 @@ bool alloc_openmp(void)
 
 		// test having master thread (thread number zero) 
 		// free memory that was allocated by thread number thread_num.
-		thread_all_[thread_num].x.resize(0);
+		thread_all_[thread_num].x.clear();
 	}
 
 	return ok;

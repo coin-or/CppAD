@@ -1337,10 +1337,10 @@ public:
 			while(thread--)
 			{
 				user_atomic* op = List()[i];
-				op->vx_[thread].resize(0);
-				op->vy_[thread].resize(0);
-				op->x_[thread].resize(0);
-				op->y_[thread].resize(0);
+				op->vx_[thread].clear();
+				op->vy_[thread].clear();
+				op->x_[thread].clear();
+				op->y_[thread].clear();
 			}
 		}
 		return;

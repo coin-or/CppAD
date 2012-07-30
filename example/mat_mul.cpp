@@ -261,7 +261,7 @@ bool mat_mul(void)
 	// Free temporary work space. (If there are future calls to 
 	// mat_mul they would create new temporary work space.)
 	CppAD::user_atomic<double>::clear();
-	info_.resize(0);
+	info_.clear();
 
 	return ok;
 }

@@ -88,7 +88,7 @@ public:
 	{	n_set_          = n_set_in;
 		end_            = end_in;
 		// free all memory connected with data_
-		data_.resize(0);
+		data_.clear();
 		// now start a new vector with empty sets
 		data_.resize(n_set_);
 

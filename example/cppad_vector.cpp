@@ -44,7 +44,6 @@ bool CppAD_vector(void)
 	// check Simple Vector specifications
 	CppAD::CheckSimpleVector< Type, vector<Type> >();
 
-
 	vector<Type> x;          // default constructor 
 	ok &= (x.size() == 0);
 
@@ -76,10 +75,16 @@ bool CppAD_vector(void)
 	str = buf.str();
 	ok &= (str == correct);
 
-	// test of push_back scalar and capacity
-	size_t i;
-	size_t N = 100;
+	// test resize(0), capacity, and clear
+	size_t i = x.capacity();
+	ok      &= i > 0;
 	x.resize(0);
+	ok      &= i == x.capacity();
+	x.clear();
+	ok      &= 0 == x.capacity();
+
+	// test of push_back scalar and capacity
+	size_t N = 100;
 	for(i = 0; i < N; i++)
 	{	size_t old_capacity = x.capacity();	
 		x.push_back( Type(i) );

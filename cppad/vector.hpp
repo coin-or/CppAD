@@ -170,8 +170,14 @@ will output the value $icode e$$ to the standard
 output stream $icode os$$.
 
 $head resize$$
-If the $code resize$$ member function is called with argument
-value zero, all memory allocated for the vector will be freed.
+The call $icode%x%.resize(%n%)%$$ set the size of $icode x$$ equal to 
+$icode n$$. 
+If $icode%n% <= %x%.capacity()%$$, 
+no memory is freed or allocated and the capacity of $icode x$$ does not change.
+
+$head clear$$
+All memory allocated for the vector is freed
+and both its size and capacity are set to zero.
 The can be useful when using very large vectors
 and when checking for memory leaks (and there are global vectors)
 see the $cref/memory/CppAD_vector/Memory and Parallel Mode/$$ discussion.
@@ -343,25 +349,29 @@ public:
 
 	/// change the number of elements in this vector.
 	inline void resize(
-		/// new number of elements for this vector, if zero
-		/// make sure the memory is returned to thread_alloc.
+		/// new number of elements for this vector
 		size_t n
 	)
 	{	length_ = n;
 		// check if we can use current memory
-		if( (capacity_ >= length_) & (length_ > 0)  )
+		if( capacity_ >= length_ )
 			return;
 		// check if there is old memory to be freed
 		if( capacity_ > 0 )
 			thread_alloc::delete_array(data_);
-		// check if we need new memory 
-		if( length_ == 0 )
-			capacity_ = 0;
-		else
-		{	// get new memory and set capacity
-			data_ = thread_alloc::create_array<Type>(length_, capacity_);
-		}
+		// get new memory and set capacity
+		data_ = thread_alloc::create_array<Type>(length_, capacity_);
 	}
+
+	/// free memory and set number of elements to zero 
+	inline void clear(void)
+	{	length_ = 0;
+		// check if there is old memory to be freed
+		if( capacity_ > 0 )
+			thread_alloc::delete_array(data_);
+		capacity_ = 0;
+	}
+
 	/// vector assignment operator
 	inline vector& operator=(
 		/// right hand size of the assingment operation
@@ -599,29 +609,32 @@ public:
 	inline size_t capacity(void) const
 	{	return n_unit_ * bit_per_unit_; }
 
-
 	/// change number of elements in this vector
 	inline void resize(
-		/// new number of elements for this vector, if zero
-		/// make sure the memory is returned to thread_alloc.
+		/// new number of elements for this vector
 		size_t n
 	)
 	{	length_ = n;
 		// check if we can use the current memory
 		size_t min_unit = unit_min();
-		if( (n_unit_ >= min_unit) & (length_ > 0) )
+		if( n_unit_ >= min_unit )
 			return;
 		// check if there is old memory to be freed
 		if( n_unit_ > 0 )
 			thread_alloc::delete_array(data_);
-		// check if we need new memory
-		if( length_ == 0 )
-			n_unit_ = 0;
-		else
-		{	// get new memory and set n_unit
-			data_ = thread_alloc::create_array<UnitType>(min_unit, n_unit_);
-		}
+		// get new memory and set n_unit
+		data_ = thread_alloc::create_array<UnitType>(min_unit, n_unit_);
 	}
+
+	/// free memory and set number of elements to zero
+	inline void clear(void)
+	{	length_ = 0;
+		// check if there is old memory to be freed
+		if( n_unit_ > 0 )
+			thread_alloc::delete_array(data_);
+		n_unit_ = 0;
+	}
+
 	/// vector assignment operator
 	inline vectorBool& operator=(
 		/// right hand size of the assingment operation

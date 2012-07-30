@@ -567,13 +567,13 @@ int main(int argc, char *argv[])
 	}
 # ifndef NDEBUG
 	// return memory for vectors that are still in scope
-	size_det_lu.resize(0);
-	size_det_minor.resize(0);
-	size_mat_mul.resize(0);
-	size_ode.resize(0);
-	size_poly.resize(0);
-	size_sparse_hessian.resize(0);
-	size_sparse_jacobian.resize(0);
+	size_det_lu.clear();
+	size_det_minor.clear();
+	size_mat_mul.clear();
+	size_ode.clear();
+	size_poly.clear();
+	size_sparse_hessian.clear();
+	size_sparse_jacobian.clear();
 	// check for memory leak
 	if( CppAD::thread_alloc::free_all() )
 	{	Run_ok_count++;

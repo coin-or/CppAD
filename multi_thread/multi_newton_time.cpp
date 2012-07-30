@@ -291,8 +291,8 @@ bool multi_newton_time(
 	for(i = 0; i < num_zero; i++)
 		ok &= std::fabs( xout_[i] - pi * i) <= 2 * eps;
 
-	// xout_ is a static variable, so resize it to free its memory
-	xout_.resize(0);
+	// xout_ is a static variable, so clear it to free its memory
+	xout_.clear();
 
 	// return correctness check result
 	return  ok;

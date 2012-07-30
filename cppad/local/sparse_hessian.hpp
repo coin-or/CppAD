@@ -264,10 +264,10 @@ class sparse_hessian_work {
 		CppAD::vector<size_t> color;
 		/// inform CppAD that this information needs to be recomputed
 		void clear(void)
-		{	r_sort.resize(0);
-			c_sort.resize(0);
-			k_sort.resize(0);
-			color.resize(0);
+		{	r_sort.clear();
+			c_sort.clear();
+			k_sort.clear();
+			color.clear();
 		}
 };
 // ===========================================================================
