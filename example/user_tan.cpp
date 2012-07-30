@@ -328,6 +328,7 @@ bool user_tan(void)
 	CppAD::vector<float> w(m), dw(n);
 	w[0]  = 1.;
 	w[1]  = 1.;
+	w[2]  = 0.;
 	dw    = F.Reverse(1, w);
 
 	// tan'(x)   = 1 + tan(x)  * tan(x) 

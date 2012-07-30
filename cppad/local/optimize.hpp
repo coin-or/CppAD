@@ -1685,8 +1685,9 @@ void ADFun<Base>::optimize(void)
 		{	CPPAD_ASSERT_UNKNOWN( dep_taddr_[i] < total_num_var_ );
 			y[i] = taylor_[ dep_taddr_[i] * taylor_col_dim_ + 0];
 		}
-		// maximum zero order coefficient
-		for(i = 0; i < total_num_var_; i++)
+		// maximum zero order coefficient not counting BeginOp at beginning
+		// (which is correpsonds to uninitialized memory).
+		for(i = 1; i < total_num_var_; i++)
 		{	if(  abs_geq(taylor_[i*taylor_col_dim_+0] , max_taylor) )
 				max_taylor = taylor_[i*taylor_col_dim_+0];
 		}
