@@ -238,16 +238,17 @@ Sparse Jacobian driver routine and helper functions.
 */
 // ===========================================================================
 /*!
-class used by SparseJacobian to hold information for just forward mode or 
-just reverse mode so it does not need to be recomputed.
+class used by SparseJacobian to hold information so it does not need to be 
+recomputed.
 */
-class sparse_jacobian_work_vectors {
+class sparse_jacobian_work {
 	public:
-		/// version of user r array sorted by row or column
+		/// version of user row array with the extra value m at end
 		CppAD::vector<size_t> user_row;
-		/// version of user c array sorted by row or column
+		/// version of user col array with the extra value n at end
 		CppAD::vector<size_t> user_col;
-		/// mapping from sorted array indices to user array indices
+		/// indices that sort the user arrays by row or by column
+		/// with the extra value K at the end
 		CppAD::vector<size_t> user_k;
 		/// results of the coloring algorithm
 		CppAD::vector<size_t> color;
@@ -257,22 +258,6 @@ class sparse_jacobian_work_vectors {
 			user_col.clear();
 			user_k.clear();
 			color.clear();
-		}
-};
-/*!
-class used by SparseJacobian to hold information for both forward and 
-reverse mode so it does not need to be recomputed.
-*/
-class sparse_jacobian_work {
-	public:
-		/// forward mode information
-		sparse_jacobian_work_vectors forward;
-		/// reverse mode information
-		sparse_jacobian_work_vectors reverse;
-		/// inform CppAD that this information needs to be recomputed
-		void clear(void)
-		{	forward.clear();
-			reverse.clear();
 		}
 };
 // ===========================================================================
@@ -292,7 +277,7 @@ is either \c sparse_pack or \c sparse_set.
 See \c SparseJacobianForward(x, p, row, col, jac, work).
 
 \param p_transpose
-If <code>work.forward.color.size() != 0</code>, 
+If <code>work.color.size() != 0</code>, 
 then \c p_transpose is not used.
 Otherwise, it is a
 sparsity pattern for the transpose of the Jacobian of this ADFun<Base> object.
@@ -305,6 +290,11 @@ See \c SparseJacobianForward(x, p, row, col, jac, work).
 
 \param work
 See \c SparseJacobianForward(x, p, row, col, jac, work).
+In addition, \c work.color contains information that is computed by
+\c SparseJacobainFor.
+If the sparsity pattern, \c row vector, and \c col vectors
+are not the same between calls, \c work.clear() must be called
+to reinitialize \c work.color.
 
 \return
 See \c SparseJacobianForward(x, p, row, col, jac, work).
@@ -320,10 +310,10 @@ size_t ADFun<Base>::SparseJacobianFor(
 	using   CppAD::vectorBool;
 	size_t i, j, k, ell;
 
-	CppAD::vector<size_t>& row(work.forward.user_row);
-	CppAD::vector<size_t>& col(work.forward.user_col);
-	CppAD::vector<size_t>& user_k(work.forward.user_k);
-	CppAD::vector<size_t>& color(work.forward.color);
+	CppAD::vector<size_t>& row(work.user_row);
+	CppAD::vector<size_t>& col(work.user_col);
+	CppAD::vector<size_t>& user_k(work.user_k);
+	CppAD::vector<size_t>& color(work.color);
 
 	size_t m = Range();
 	size_t n = Domain();
@@ -511,7 +501,7 @@ is either \c sparse_pack or \c sparse_set.
 See \c SparseJacobianForward(x, p, row, col, jac, work).
 
 \param p
-If <code>work.forward.color.size() != 0</code>, then \c p is not used.
+If <code>work.color.size() != 0</code>, then \c p is not used.
 Otherwise, it is a
 sparsity pattern for the Jacobian of this ADFun<Base> object.
 Note that we do not change the values in \c p_transpose,
@@ -521,10 +511,15 @@ but is not \c const because we use its iterator facility.
 See \c SparseJacobianForward(x, p, row, col, jac, work).
 
 \param work
-See \c SparseJacobianForward(x, p, row, col, jac, work).
+See \c SparseJacobianReverse(x, p, row, col, jac, work).
+In addition, \c work.color contains information that is computed by
+\c SparseJacobainRev.
+If the sparsity pattern, \c row vector, and \c col vectors
+are not the same between calls, \c work.clear() must be called
+to reinitialize \c work.color.
 
 \return
-See \c SparseJacobianForward(x, p, row, col, jac, work).
+See \c SparseJacobianReverse(x, p, row, col, jac, work).
 */
 template<class Base>
 template <class VectorBase, class VectorSet>
@@ -537,10 +532,10 @@ size_t ADFun<Base>::SparseJacobianRev(
 	using   CppAD::vectorBool;
 	size_t i, j, k, ell;
 
-	CppAD::vector<size_t>& row(work.reverse.user_row);
-	CppAD::vector<size_t>& col(work.reverse.user_col);
-	CppAD::vector<size_t>& user_k(work.reverse.user_k);
-	CppAD::vector<size_t>& color(work.reverse.color);
+	CppAD::vector<size_t>& row(work.user_row);
+	CppAD::vector<size_t>& col(work.user_col);
+	CppAD::vector<size_t>& user_k(work.user_k);
+	CppAD::vector<size_t>& color(work.color);
 
 	size_t m = Range();
 	size_t n = Domain();
@@ -762,22 +757,19 @@ The return value <code>jac[k]</code> is the partial of the
 the the <code>col[k]</code> of its argument.
 
 \param work
-\c work.forward contains information that depends on the function object, 
-sparsity pattern,
-\c row, and \c col vector.
-If these values are the same, \c work does not need to be recomputed.
-To be more specific, 
-\c forward.user_row is a copy of \c row ,
-\c forward.user_col is a copy of \c col ,
-<code>forward.user_k[k]</code> is the index vector that sorts
-<code>user_col[k]</code>.
-The order for the sort is by columns.
-Let \c n be the domain dimension,
-and let \c K be the size of \c row , \c col , and \c jac.
-There is one extra entry in the sorted column array and it has value 
-<code>user_col[K]=n</code>.
-The \c forward.color vector is set and used by 
-\c SparseJacobianFor.
+\c work contains information that depends on the function object, 
+sparsity pattern, \c row vector, and \c col vector.
+These \c work values are computed by \c SparseJacobianForward.
+If they are not the same between calls, \c work.clear() must be called
+to reinitialize them.
+To be more specific:
+\c user_row is a copy of \c row with the value \c m at the end
+(\c m is the range dimension),
+\c user_col is a copy of \c col with the value \c n at the end
+(\c n is the domain dimension),
+\c user_k is the index vector that sorts the \c user_col
+vector with the extra value \c K at the end 
+(\c K is the size of \c jac).
 
 \return
 Is the number of first order forward sweeps used to compute the
@@ -798,22 +790,22 @@ size_t ADFun<Base>::SparseJacobianForward(
 	size_t n = Domain();
 	size_t m = Range();
 	size_t k, K = jac.size();
-	if( work.forward.user_row.size() == 0 )
+	if( work.user_row.size() == 0 )
 	{	// create version of (row, col, k) sorted by column value
-		work.forward.user_col.resize(K+1);
-		work.forward.user_row.resize(K+1);
-		work.forward.user_k.resize(K+1);
+		work.user_col.resize(K+1);
+		work.user_row.resize(K+1);
+		work.user_k.resize(K+1);
 
 		// put sorted indices in user_row and user_col
 		for(k = 0; k < K; k++)
-		{	work.forward.user_row[k] = row[k];
-			work.forward.user_col[k] = col[k];
+		{	work.user_row[k] = row[k];
+			work.user_col[k] = col[k];
 		}
-		work.forward.user_row[K] = m;
-		work.forward.user_col[K] = n;
+		work.user_row[K] = m;
+		work.user_col[K] = n;
 
 		// put sorting indices in user_k
-		index_sort(work.forward.user_col, work.forward.user_k);
+		index_sort(work.user_col, work.user_k);
 	}
 # ifndef NDEBUG
 	CPPAD_ASSERT_KNOWN(
@@ -826,13 +818,13 @@ size_t ADFun<Base>::SparseJacobianForward(
 		"the same size as jac."
 	); 
 	CPPAD_ASSERT_KNOWN(
-		work.forward.user_row.size() == K+1 &&
-		work.forward.user_col.size() == K+1 &&
-		work.forward.user_k.size() == K+1 ,
+		work.user_row.size() == K+1 &&
+		work.user_col.size() == K+1 &&
+		work.user_k.size() == K+1 ,
 		"SparseJacobianForward: invalid value in work."
 	);
 	CPPAD_ASSERT_KNOWN(
-		work.forward.color.size() == 0 || work.forward.color.size() == n,
+		work.color.size() == 0 || work.color.size() == n,
 		"SparseJacobianForward: invalid value in work."
 	);
 	for(k = 0; k < K; k++)
@@ -845,21 +837,21 @@ size_t ADFun<Base>::SparseJacobianForward(
 			"SparseJacobianForward: invalid value in c."
 		);
 		CPPAD_ASSERT_KNOWN(
-			work.forward.user_k[k] < K,
+			work.user_k[k] < K,
 			"SparseJacobianForward: invalid value in work."
 		);
 		CPPAD_ASSERT_KNOWN(
-			work.forward.user_row[k] == row[k],
+			work.user_row[k] == row[k],
 			"SparseJacobianForward: invalid value in work."
 		);
 		CPPAD_ASSERT_KNOWN(
-			work.forward.user_col[k] == col[k],
+			work.user_col[k] == col[k],
 			"SparseJacobianForward: invalid value in work."
 		);
 	}
-	if( work.forward.color.size() != 0 )
+	if( work.color.size() != 0 )
 		for(size_t j = 0; j < n; j++) CPPAD_ASSERT_KNOWN(
-			work.forward.color[j] < n,
+			work.color[j] < n,
 			"SparseJacobianForward: invalid value in work."
 	);
 # endif
@@ -867,7 +859,7 @@ size_t ADFun<Base>::SparseJacobianForward(
 	typedef typename VectorSet::value_type Set_type;
 	typedef typename internal_sparsity<Set_type>::pattern_type Pattern_type;
 	Pattern_type s_transpose;
-	if( work.forward.color.size() == 0 )
+	if( work.color.size() == 0 )
 	{	bool transpose = true;
 		sparsity_user2internal(s_transpose, p, m, n, transpose);
 	}
@@ -910,22 +902,19 @@ See \c SparseJacobianForward(x, p, row, col, jac, work).
 See \c SparseJacobianForward(x, p, row, col, jac, work).
 
 \param work
-\c work.reverse contains information that depends on the function object, 
-sparsity pattern,
-\c row, and \c col vector.
-If these values are the same, \c work does not need to be recomputed.
-To be more specific, 
-\c reverse.user_row is a copy of \c row ,
-\c reverse.user_col is a copy of \c col ,
-<code>reverse.user_k[k]</code> is the index vector that sorts
-<code>user_row[k]</code>.
-The order for the sort is by rows.
-Let \c m be the range dimension,
-and let \c K be the size of \c row , \c col , and \c jac.
-There is one extra entry in the sorted row array and it has value 
-<code>user_row[K]=m</code>.
-The \c reverse.color vector is set and used by 
-\c SparseJacobianRev.
+\c work contains information that depends on the function object, 
+sparsity pattern, \c row vector, and \c col vector.
+These \c work values are computed by \c SparseJacobianReverse.
+If they are not the same between calls, \c work.clear() must be called
+to reinitialize them.
+To be more specific:
+\c user_row is a copy of \c row with the value \c m at the end
+(\c m is the range dimension),
+\c user_col is a copy of \c col with the value \c n at the end
+(\c n is the domain dimension),
+\c user_k is the index vector that sorts the \c user_row
+vector with the extra value \c K at the end 
+(\c K is the size of \c jac).
 
 \return
 Is the number of first order reverse sweeps used to compute the
@@ -946,22 +935,22 @@ size_t ADFun<Base>::SparseJacobianReverse(
 	size_t m = Range();
 	size_t n = Domain();
 	size_t k, K = jac.size();
-	if( work.reverse.user_row.size() == 0 )
+	if( work.user_row.size() == 0 )
 	{	// create version of (row, col, k) sorted by row row value
-		work.reverse.user_col.resize(K+1);
-		work.reverse.user_row.resize(K+1);
-		work.reverse.user_k.resize(K+1);
+		work.user_col.resize(K+1);
+		work.user_row.resize(K+1);
+		work.user_k.resize(K+1);
 
 		// put sorted indices in user_row and user_col
 		for(k = 0; k < K; k++)
-		{	work.reverse.user_row[k] = row[k];
-			work.reverse.user_col[k] = col[k];
+		{	work.user_row[k] = row[k];
+			work.user_col[k] = col[k];
 		}
-		work.reverse.user_row[K] = m;
-		work.reverse.user_col[K] = n;
+		work.user_row[K] = m;
+		work.user_col[K] = n;
 
 		// put sorting indices in user_k
-		index_sort(work.reverse.user_row, work.reverse.user_k);
+		index_sort(work.user_row, work.user_k);
 	}
 # ifndef NDEBUG
 	CPPAD_ASSERT_KNOWN(
@@ -974,13 +963,13 @@ size_t ADFun<Base>::SparseJacobianReverse(
 		"the same size as jac."
 	); 
 	CPPAD_ASSERT_KNOWN(
-		work.reverse.user_row.size() == K+1 &&
-		work.reverse.user_col.size() == K+1 &&
-		work.reverse.user_k.size() == K+1 ,
+		work.user_row.size() == K+1 &&
+		work.user_col.size() == K+1 &&
+		work.user_k.size() == K+1 ,
 		"SparseJacobianReverse: invalid value in work."
 	);
 	CPPAD_ASSERT_KNOWN(
-		work.reverse.color.size() == 0 || work.reverse.color.size() == m,
+		work.color.size() == 0 || work.color.size() == m,
 		"SparseJacobianReverse: invalid value in work."
 	);
 	for(k = 0; k < K; k++)
@@ -993,21 +982,21 @@ size_t ADFun<Base>::SparseJacobianReverse(
 			"SparseJacobianReverse: invalid value in c."
 		);
 		CPPAD_ASSERT_KNOWN(
-			work.reverse.user_k[k] < K,
+			work.user_k[k] < K,
 			"SparseJacobianReverse: invalid value in work."
 		);
 		CPPAD_ASSERT_KNOWN(
-			work.reverse.user_row[k] == row[k],
+			work.user_row[k] == row[k],
 			"SparseJacobianReverse: invalid value in work."
 		);
 		CPPAD_ASSERT_KNOWN(
-			work.reverse.user_col[k] == col[k],
+			work.user_col[k] == col[k],
 			"SparseJacobianReverse: invalid value in work."
 		);
 	}
-	if( work.reverse.color.size() != 0 )
+	if( work.color.size() != 0 )
 		for(size_t i = 0; i < m; i++) CPPAD_ASSERT_KNOWN(
-			work.reverse.color[i] < m,
+			work.color[i] < m,
 			"SparseJacobianReverse: invalid value in work."
 	);
 # endif
@@ -1015,7 +1004,7 @@ size_t ADFun<Base>::SparseJacobianReverse(
 	typedef typename VectorSet::value_type Set_type;
 	typedef typename internal_sparsity<Set_type>::pattern_type Pattern_type;
 	Pattern_type s;
-	if( work.reverse.color.size() == 0 )
+	if( work.color.size() == 0 )
 	{	bool transpose = false;
 		sparsity_user2internal(s, p, m, n, transpose);
 	}
@@ -1079,9 +1068,9 @@ VectorBase ADFun<Base>::SparseJacobian(
 
 	sparse_jacobian_work work;
 	if( n <= m )
-	{	CppAD::vector<size_t>& row(work.forward.user_row);
-		CppAD::vector<size_t>& col(work.forward.user_col);
-		CppAD::vector<size_t>& user_k(work.forward.user_k);
+	{	CppAD::vector<size_t>& row(work.user_row);
+		CppAD::vector<size_t>& col(work.user_col);
+		CppAD::vector<size_t>& user_k(work.user_k);
 
 		// forward mode, columns are sorted
 		assert( row.size() == 0 );
@@ -1119,9 +1108,9 @@ VectorBase ADFun<Base>::SparseJacobian(
 			jac[row[user_k[k]] * n + col[user_k[k]]] = J[k];
 	}
 	else
-	{	CppAD::vector<size_t>& row(work.reverse.user_row);
-		CppAD::vector<size_t>& col(work.reverse.user_col);
-		CppAD::vector<size_t>& user_k(work.reverse.user_k);
+	{	CppAD::vector<size_t>& row(work.user_row);
+		CppAD::vector<size_t>& col(work.user_col);
+		CppAD::vector<size_t>& user_k(work.user_k);
 
 		// reverse mode, rows are sorted
 		assert( row.size() == 0 );
