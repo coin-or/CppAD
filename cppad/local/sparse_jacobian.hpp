@@ -340,8 +340,9 @@ size_t ADFun<Base>::SparseJacobianFor(
 
 	// number of components of Jacobian that are required
 	size_t K = size_t(jac.size());
-	CPPAD_ASSERT_UNKNOWN( row.size() == K );
+	CPPAD_ASSERT_UNKNOWN( row.size() == K+1 );
 	CPPAD_ASSERT_UNKNOWN( col.size() == K+1 );
+	CPPAD_ASSERT_UNKNOWN( row[K] == m );
 	CPPAD_ASSERT_UNKNOWN( col[K] == n );
 
 	// Point at which we are evaluating the Jacobian
@@ -463,9 +464,9 @@ size_t ADFun<Base>::SparseJacobianFor(
 		for(j = 0; j < n; j++) if( color[j] == ell )
 		{	// find first k such that col[user_k[k]] has color ell
 			if( ! any )
-			{	while( k < K && col[user_k[k]] < j )
+			{	while( col[user_k[k]] < j )
 					k++;
-				any = k < K && col[user_k[k]] == j;
+				any = col[user_k[k]] == j;
 			}
 		}
 		if( any )
@@ -482,10 +483,10 @@ size_t ADFun<Base>::SparseJacobianFor(
 			// set the corresponding components of the result
 			for(j = 0; j < n; j++) if( color[j] == ell )
 			{	// find first index in c for this column
-				while( k < K && col[user_k[k]] < j )
+				while( col[user_k[k]] < j )
 					k++;
 				// extract the row results for this column
-				while( k < K && col[user_k[k]] == j ) 
+				while( col[user_k[k]] == j ) 
 				{	jac[ user_k[k] ] = dy[row[user_k[k]]];
 					k++;
 				}
@@ -557,8 +558,9 @@ size_t ADFun<Base>::SparseJacobianRev(
 	// number of components of Jacobian that are required
 	size_t K = size_t(jac.size());
 	CPPAD_ASSERT_UNKNOWN( row.size() == K+1 );
-	CPPAD_ASSERT_UNKNOWN( col.size() == K );
+	CPPAD_ASSERT_UNKNOWN( col.size() == K+1 );
 	CPPAD_ASSERT_UNKNOWN( row[K] == m );
+	CPPAD_ASSERT_UNKNOWN( col[K] == n );
 
 	// Point at which we are evaluating the Jacobian
 	Forward(0, x);
@@ -683,9 +685,9 @@ size_t ADFun<Base>::SparseJacobianRev(
 		for(i = 0; i < m; i++) if( color[i] == ell )
 		{	// find first k such that row[user_k[k]] has color ell
 			if( ! any )
-			{	while( k < K && row[user_k[k]] < i )
+			{	while( row[user_k[k]] < i )
 					k++;
-				any = k < K && row[user_k[k]] == i;
+				any = row[user_k[k]] == i;
 			}
 		}
 		if( any )
@@ -702,10 +704,10 @@ size_t ADFun<Base>::SparseJacobianRev(
 			// set the corresponding components of the result
 			for(i = 0; i < m; i++) if( color[i] == ell )
 			{	// find first index in r for this row
-				while( k < K && row[user_k[k]] < i )
+				while( row[user_k[k]] < i )
 					k++;
 				// extract the row results for this row
-				while( k < K && row[user_k[k]] == i ) 
+				while( row[user_k[k]] == i ) 
 				{	jac[ user_k[k] ] = dw[col[user_k[k]]];
 					k++;
 				}
@@ -799,18 +801,19 @@ size_t ADFun<Base>::SparseJacobianForward(
 	if( work.forward.user_row.size() == 0 )
 	{	// create version of (row, col, k) sorted by column value
 		work.forward.user_col.resize(K+1);
-		work.forward.user_row.resize(K);
-		work.forward.user_k.resize(K);
-
-		// put sorting indices in user_k
-		index_sort(col, work.forward.user_k);
+		work.forward.user_row.resize(K+1);
+		work.forward.user_k.resize(K+1);
 
 		// put sorted indices in user_row and user_col
 		for(k = 0; k < K; k++)
 		{	work.forward.user_row[k] = row[k];
 			work.forward.user_col[k] = col[k];
 		}
+		work.forward.user_row[K] = m;
 		work.forward.user_col[K] = n;
+
+		// put sorting indices in user_k
+		index_sort(work.forward.user_col, work.forward.user_k);
 	}
 # ifndef NDEBUG
 	CPPAD_ASSERT_KNOWN(
@@ -823,9 +826,9 @@ size_t ADFun<Base>::SparseJacobianForward(
 		"the same size as jac."
 	); 
 	CPPAD_ASSERT_KNOWN(
-		work.forward.user_row.size() == K   &&
+		work.forward.user_row.size() == K+1 &&
 		work.forward.user_col.size() == K+1 &&
-		work.forward.user_k.size() == K   ,
+		work.forward.user_k.size() == K+1 ,
 		"SparseJacobianForward: invalid value in work."
 	);
 	CPPAD_ASSERT_KNOWN(
@@ -945,12 +948,9 @@ size_t ADFun<Base>::SparseJacobianReverse(
 	size_t k, K = jac.size();
 	if( work.reverse.user_row.size() == 0 )
 	{	// create version of (row, col, k) sorted by row row value
-		work.reverse.user_col.resize(K);
+		work.reverse.user_col.resize(K+1);
 		work.reverse.user_row.resize(K+1);
-		work.reverse.user_k.resize(K);
-
-		// put sorting indices in user_k
-		index_sort(row, work.reverse.user_k);
+		work.reverse.user_k.resize(K+1);
 
 		// put sorted indices in user_row and user_col
 		for(k = 0; k < K; k++)
@@ -958,6 +958,10 @@ size_t ADFun<Base>::SparseJacobianReverse(
 			work.reverse.user_col[k] = col[k];
 		}
 		work.reverse.user_row[K] = m;
+		work.reverse.user_col[K] = n;
+
+		// put sorting indices in user_k
+		index_sort(work.reverse.user_row, work.reverse.user_k);
 	}
 # ifndef NDEBUG
 	CPPAD_ASSERT_KNOWN(
@@ -971,8 +975,8 @@ size_t ADFun<Base>::SparseJacobianReverse(
 	); 
 	CPPAD_ASSERT_KNOWN(
 		work.reverse.user_row.size() == K+1 &&
-		work.reverse.user_col.size() == K   &&
-		work.reverse.user_k.size() == K   ,
+		work.reverse.user_col.size() == K+1 &&
+		work.reverse.user_k.size() == K+1 ,
 		"SparseJacobianReverse: invalid value in work."
 	);
 	CPPAD_ASSERT_KNOWN(
@@ -1101,7 +1105,9 @@ VectorBase ADFun<Base>::SparseJacobian(
 				i = s_transpose.next_element();
 			}
 		} 
+		row.push_back(m);
 		col.push_back(n);
+		user_k.push_back(k);
 		size_t K = k;
 		VectorBase J(K);
 	
@@ -1140,6 +1146,8 @@ VectorBase ADFun<Base>::SparseJacobian(
 			}
 		} 
 		row.push_back(m);
+		col.push_back(n);
+		user_k.push_back(k);
 		size_t K = k;
 		VectorBase J(K);
 
