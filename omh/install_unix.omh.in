@@ -167,6 +167,7 @@ $codei%
 	--prefix=%prefix_dir%                     \
 	--with-Documentation                    \
 	--with-%test%vector                       \  
+	--with-sparse_%option%                    \
 	MAX_NUM_THREADS=%max_num_threads%         \
 	CXX_FLAGS=%cxx_flags%                     \
 	OPENMP_FLAGS=%openmp_flags%               \
@@ -361,6 +362,20 @@ See also,
 $cref/boost_dir/InstallUnix/boost_dir/$$
 and
 $cref/eigen_dir/InstallUnix/eigen_dir/$$.
+
+
+$head --with-sparse_option$$
+$index sparse, internal vector sets$$
+$index internal, sparse vector sets$$
+$index sets, internal sparse vector$$
+There are two options for the preprocessor symbol
+$code CPPAD_INTERNAL_SPARSE_SET$$.
+If $code --with-sparse_set$$ 
+($code --with-sparse_list$$) is specified, 
+this symbol is $code sparse_set$$ ($code sparse_list$$).
+This should affect the speed and memory required by the
+$cref sparse_jacobian$$, $cref sparse_hessian$$, and the
+$cref/sparse drivers/sparse/$$.
 
 $head max_num_threads$$
 this specifies the value for the default value for the preprocessor symbol

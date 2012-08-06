@@ -59,6 +59,17 @@ This section contains a list of the changes to CppAD during 2012
 The purpose of this section is to
 assist you in learning about changes between various versions of CppAD.
 
+$head 08-05$$
+$list number$$
+A new type was added for the internal representation of
+$cref/vector of sets/glossary/Sparsity Pattern/Vector of Sets/$$
+sparsity patterns; see the configure
+$cref/--with-sparse_option/InstallUnix/--with-sparse_option/$$.
+$lnext
+A new speed test, $cref compare_c$$, compares the speed of the same
+source code compiled with C and C++.
+$lend
+
 $head 07-30$$
 $list number$$
 The $cref/clear/CppAD_vector/clear/$$ function was added to 
