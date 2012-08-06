@@ -221,8 +221,9 @@ top_srcdir = @top_srcdir@
 # $section Compare Speed of C and C++$$
 #
 # $head Syntax$$
-# $code compare_c/compare_c$$
-# $code compare_c/compare_cpp$$
+# $codei%compare_c/compare_c
+# %$$
+# $codei compare_c/compare_cpp$$
 #
 # $head Purpose$$
 # Compares the speed of the exact same source code compiled
