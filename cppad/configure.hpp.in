@@ -43,6 +43,13 @@ Replacement for config.h so that all preprocessor symbols begin with CPPAD_
 cppad-yyyymmdd as a C string where yyyy is year, mm is month, and dd is day.
 */
 # define CPPAD_PACKAGE_STRING "cppad-@VERSION@"
+ 
+ /*!
+def CPPAD_INTERNAL_SPARSE_SET
+is the internal representation used for sparse vectors of std::set<size_t>
+either sparse_set or sparse_list).
+*/
+# define CPPAD_INTERNAL_SPARSE_SET @CPPAD_INTERNAL_SPARSE_SET@
 
 /*!
 \def CPPAD_BOOSTVECTOR

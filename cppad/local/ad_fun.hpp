@@ -102,15 +102,14 @@ private:
 	/// results of the forward mode calculations
 	pod_vector<Base> taylor_;
 
-	/// packed results of the forward mode Jacobian sparsity calculations
-	/// (\c for_jac_sparse_pack_.n_set() != 0  implies
-	/// for_jac_sparse_set_.n_set() == 0)
+	/// Packed results of the forward mode Jacobian sparsity calculations.
+	/// for_jac_sparse_pack_.n_set() != 0  implies other sparsity results
+	/// are empty
 	sparse_pack      for_jac_sparse_pack_;
 
-	/// set results of the forward mode Jacobian sparsity calculations
-	/// (\c for_jac_sparse_set_.n_set() != 0  implies
-	/// for_jac_sparse_pack_.n_set() == 0)
-	sparse_set       for_jac_sparse_set_;
+	/// Set results of the forward mode Jacobian sparsity calculations
+	/// for_jac_sparse_set_.n_set() != 0  implies for_sparse_pack_ is empty.
+	CPPAD_INTERNAL_SPARSE_SET  for_jac_sparse_set_;
 
 // ------------------------------------------------------------
 // Private member functions
@@ -235,8 +234,8 @@ private:
 		VectorBase&              jac
 	);
 	// ------------------------------------------------------------
-	// combined sparse_set and sparse_pack version of SparseHessian
-	// (see doxygen in sparse_hessian.hpp)
+	// combined sparse_set, sparse_list and sparse_pack version of 
+	// SparseHessian (see doxygen in sparse_hessian.hpp)
 	template <class VectorBase, class VectorSet>
 	size_t SparseHessianCompute(
 		const VectorBase&        x           ,

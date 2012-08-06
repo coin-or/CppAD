@@ -184,7 +184,7 @@ is the base type for this recording.
 is a simple vector with elements of type \c bool.
 
 \tparam Sparsity
-is either \c sparse_pack or \c sparse_set. 
+is either \c sparse_pack, \c sparse_set, or \c sparse_list. 
 
 \param q
 is the value of \a q in the 
@@ -330,7 +330,7 @@ is the base type for this recording.
 is a simple vector with elements of type \c std::set<size_t>.
 
 \tparam Sparsity
-is either \c sparse_pack or \c sparse_set. 
+is either \c sparse_pack, \c sparse_set, or \c sparse_list. 
 
 \param q
 is the value of \a q in the 

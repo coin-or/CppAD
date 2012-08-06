@@ -169,7 +169,7 @@ bool ForSparseJac(void)
 	// Simple Vectors with elements of type std::set<size_t>
 	typedef std::set<size_t> set;
 	ok &= SetCases< CppAD::vector  <set> >();
-	ok &= SetCases< std::vector    <set> >(); 
+	// ok &= SetCases< std::vector    <set> >(); 
 
 	// Do not use valarray because its element access in the const case
 	// returns a copy instead of a reference

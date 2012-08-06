@@ -181,8 +181,9 @@ CPPAD_BEGIN_NAMESPACE
 Forward mode Jacobian sparsity patterns.
 */
 
+// ---------------------------------------------------------------------------
 /*!
-Calculate Jacobian sparsity patterns using forward mode.
+Calculate Jacobian vector of bools sparsity patterns using forward mode.
 
 The C++ source code corresponding to this operation is
 \verbatim
@@ -194,9 +195,6 @@ is the base type for this recording.
 
 \tparam VectorSet
 is a simple vector class with elements of type \c bool.
-
-\tparam Sparsity
-is either \c sparse_pack or \c sparse_set. 
 
 \param q
 is the number of columns in the matrix \f$ R \f$.
@@ -238,7 +236,7 @@ and \a for_jac_sparsity.end() == \a q.
 It contains the forward sparsity pattern for all of the variables on the
 tape (given the sparsity pattern for the independent variables is \f$ R \f$).
 */
-template <class Base, class VectorSet, class Sparsity> 
+template <class Base, class VectorSet> 
 void ForSparseJacBool(
 	size_t                 q                , 
 	const VectorSet&       r                ,
@@ -247,28 +245,17 @@ void ForSparseJacBool(
 	CppAD::vector<size_t>& dep_taddr        ,
 	CppAD::vector<size_t>& ind_taddr        ,
 	CppAD::player<Base>&   play             ,
-	Sparsity&              for_jac_sparsity )
+	sparse_pack&           for_jac_sparsity )
 {
 	// temporary indices
 	size_t i, j;
-
-	// check VectorSet is Simple Vector class with bool elements
-	CheckSimpleVector<bool, VectorSet>();
 
 	// range and domain dimensions for F
 	size_t m = dep_taddr.size();
 	size_t n = ind_taddr.size();
 
-	CPPAD_ASSERT_KNOWN(
-		q > 0,
-		"ForSparseJac: q (first arugment) is not greater than zero"
-	);
-
-	CPPAD_ASSERT_KNOWN(
-		size_t(r.size()) == n * q,
-		"ForSparseJac: r (second argument) length is not equal to\n"
-		"q (first argument) times domain dimension for ADFun object."
-	);
+	CPPAD_ASSERT_UNKNOWN(q > 0 );
+	CPPAD_ASSERT_UNKNOWN( size_t(r.size()) == n * q );
 
 	// allocate memory for the requested sparsity calculation
 	for_jac_sparsity.resize(total_num_var, q);
@@ -311,7 +298,7 @@ void ForSparseJacBool(
 }
 
 /*!
-Calculate Jacobian sparsity patterns using forward mode.
+Calculate Jacobian vector of sets sparsity patterns using forward mode.
 
 The C++ source code corresponding to this operation is
 \verbatim
@@ -319,89 +306,57 @@ The C++ source code corresponding to this operation is
 \endverbatim
 
 \tparam Base
-is the base type for this recording.
+see \c SparseJacBool.
 
 \tparam VectorSet
-is a simple vector class with elements of the type \c std::set<size_t>.
-
-\tparam Sparsity
-is either \c sparse_pack or \c sparse_set. 
+is a simple vector class with elements of type \c std::set<size_t>.
 
 \param q
-is the number of columns in the matrix \f$ R \f$.
+see \c SparseJacBool.
 
 \param r
-is a sparsity pattern for the matrix \f$ R \f$.
+see \c SparseJacBool.
 
 \param s
-The input value of \a s must be a vector with size \c m
-where \c m is the number of dependent variables
-corresponding to the operation sequence stored in \a play. 
-On input, each element of \a s must be an empty set.
-On output, \a s is the sparsity pattern for the matrix
-\f[
-	S(x) = F^{(1)} (x) * R
-\f]
-where \f$ F \f$ is the function corresponding to the operation sequence
-and \a x is any argument value.
+see \c SparseJacBool.
 
 \param total_num_var
-is the total number of variable in this recording.
+see \c SparseJacBool.
 
 \param dep_taddr
-maps dependendent variable index
-to the corresponding variable in the tape.
+see \c SparseJacBool.
 
 \param ind_taddr
-maps independent variable index
-to the corresponding variable in the tape.
+see \c SparseJacBool.
 
 \param play
-is the recording that defines the function we are computing the sparsity 
-pattern for.
+see \c SparseJacBool.
 
 \param for_jac_sparsity
-the input value of \a for_jac_sparsity does not matter.
-On output, \a for_jac_sparsity.n_set() == \a total_num_var
-and \a for_jac_sparsity.end() == \a q.
-It contains the forward sparsity pattern for all of the variables on the
-tape (given the sparsity pattern for the independent variables is \f$ R \f$).
+see \c SparseJacBool.
 */
 
-template <class Base, class VectorSet, class Sparsity> 
+template <class Base, class VectorSet> 
 void ForSparseJacSet(
-	size_t                  q                , 
-	const VectorSet&        r                ,
-	VectorSet&              s                ,
-	size_t                  total_num_var    ,
-	CppAD::vector<size_t>&  dep_taddr        ,
-	CppAD::vector<size_t>&  ind_taddr        ,
-	CppAD::player<Base>&    play             ,
-	Sparsity&               for_jac_sparsity )
+	size_t                      q                , 
+	const VectorSet&            r                ,
+	VectorSet&                  s                ,
+	size_t                      total_num_var    ,
+	CppAD::vector<size_t>&      dep_taddr        ,
+	CppAD::vector<size_t>&      ind_taddr        ,
+	CppAD::player<Base>&        play             ,
+	CPPAD_INTERNAL_SPARSE_SET&  for_jac_sparsity )
 {
 	// temporary indices
 	size_t i, j;
 	std::set<size_t>::const_iterator itr;
 
-	// check VectorSet is Simple Vector class with sets for elements
-	CheckSimpleVector<std::set<size_t>, VectorSet>(
-		one_element_std_set<size_t>(), two_element_std_set<size_t>()
-	);
-
 	// range and domain dimensions for F
 	size_t m = dep_taddr.size();
 	size_t n = ind_taddr.size();
 
-	CPPAD_ASSERT_KNOWN(
-		q > 0,
-		"ForSparseJac: q (first arugment) is not greater than zero"
-	);
-
-	CPPAD_ASSERT_KNOWN(
-		size_t(r.size()) == n,
-		"ForSparseJac: r (second argument) length is not equal to\n"
-		"the domain dimension for ADFun object."
-	);
+	CPPAD_ASSERT_UNKNOWN(q > 0 );
+	CPPAD_ASSERT_UNKNOWN( size_t(r.size()) == n );
 
 	// allocate memory for the requested sparsity calculation
 	for_jac_sparsity.resize(total_num_var, q);
@@ -450,7 +405,119 @@ void ForSparseJacSet(
 		}
 	}
 }
+// ---------------------------------------------------------------------------
+/*! 
+Private helper function for ForSparseJac(q, r).
 
+All of the description in the public member function ForSparseJac(q, r) 
+applies. 
+
+\param set_type
+is a \c bool value. This argument is used to dispatch to the proper source
+code depending on the value of \c VectorSet::value_type.
+
+\param q
+See \c ForSparseJac(q, r).
+
+\param r
+See \c ForSparseJac(q, r).
+
+\param s
+is the return value for the corresponding call to \c ForSparseJac(q, r).
+*/
+
+template <class Base>
+template <class VectorSet>
+void ADFun<Base>::ForSparseJacCase(
+	bool                set_type      ,
+	size_t              q             ,
+	const VectorSet&    r             ,
+	VectorSet&          s             )
+{	size_t m = Range();
+
+	// check VectorSet is Simple Vector class with bool elements
+	CheckSimpleVector<bool, VectorSet>();
+
+	// dimension size of result vector
+	s.resize( m * q );
+
+	CPPAD_ASSERT_KNOWN(
+		size_t(r.size()) == Domain() * q,
+		"ForSparseJac: using vectors of bools and r (second argument) length"
+		"\nis not equal to q (first argument) times domain dimension."
+	);
+
+	// store results in r and for_jac_sparse_pack_
+	ForSparseJacBool(
+		q                , 
+		r                ,
+		s                ,
+		total_num_var_   ,
+		dep_taddr_       ,
+		ind_taddr_       ,
+		play_            ,
+		for_jac_sparse_pack_ 
+	);
+}
+
+
+/*! 
+Private helper function for \c ForSparseJac(q, r).
+
+All of the description in the public member function \c ForSparseJac(q, r) 
+applies. 
+
+\param set_type
+is a \c std::set<size_t> object. 
+This argument is used to dispatch to the proper source
+code depending on the value of \c VectorSet::value_type.
+
+\param q
+See \c ForSparseJac(q, r).
+
+\param r
+See \c ForSparseJac(q, r).
+
+\param s
+is the return value for the corresponding call to \c ForSparseJac(q, r).
+*/
+template <class Base>
+template <class VectorSet>
+void ADFun<Base>::ForSparseJacCase(
+	const std::set<size_t>&    set_type      ,
+	size_t                     q             ,
+	const VectorSet&           r             ,
+	VectorSet&                 s             )
+{
+
+	// check VectorSet is Simple Vector class with sets for elements
+	CheckSimpleVector<std::set<size_t>, VectorSet>(
+		one_element_std_set<size_t>(), two_element_std_set<size_t>()
+	);
+
+	CPPAD_ASSERT_KNOWN(
+		size_t(r.size()) == Domain() ,
+		"ForSparseJac: using vectors of sets and r (second argument) length"
+		"\nis not equal to the domain dimension for ADFun object."
+	);
+
+	// dimension size of result vector
+	size_t m = Range();
+	s.resize( m );
+
+	// store results in r and for_jac_sparse_pack_
+	CppAD::ForSparseJacSet(
+		q                , 
+		r                ,
+		s                ,
+		total_num_var_   ,
+		dep_taddr_       ,
+		ind_taddr_       ,
+		play_            ,
+		for_jac_sparse_set_
+	);
+}
+// ---------------------------------------------------------------------------
 
 /*!
 User API for Jacobian sparsity patterns using forward mode.
@@ -520,6 +587,15 @@ VectorSet ADFun<Base>::ForSparseJac(
 {	VectorSet s;
 	typedef typename VectorSet::value_type Set_type; 
 
+	CPPAD_ASSERT_KNOWN(
+		q > 0,
+		"ForSparseJac: q (first arugment) is not greater than zero"
+	);
+
+	// free all memory currently in sparsity patterns
+	for_jac_sparse_pack_.resize(0, 0);
+	for_jac_sparse_set_.resize(0, 0);
+
 	ForSparseJacCase(
 		Set_type()  ,
 		q           ,
@@ -528,103 +604,6 @@ VectorSet ADFun<Base>::ForSparseJac(
 	);
 
 	return s;
-}
-
-/*! 
-Private helper function for ForSparseJac(q, r).
-
-All of the description in the public member function ForSparseJac(q, r) 
-applies. 
-
-\param set_type
-is a \c bool value. This argument is used to dispatch to the proper source
-code depending on the value of \c VectorSet::value_type.
-
-\param q
-See \c ForSparseJac(q, r).
-
-\param r
-See \c ForSparseJac(q, r).
-
-\param s
-is the return value for the corresponding call to \c ForSparseJac(q, r).
-*/
-
-template <class Base>
-template <class VectorSet>
-void ADFun<Base>::ForSparseJacCase(
-	bool                set_type      ,
-	size_t              q             ,
-	const VectorSet&    r             ,
-	VectorSet&          s             )
-{	size_t m = Range();
-
-	// dimension size of result vector
-	s.resize( m * q );
-
-	// free any results stored in for_jac_sparse_set_	
-	for_jac_sparse_set_.resize(0, 0);
-
-	// store results in r and for_jac_sparse_pack_
-	ForSparseJacBool(
-		q                , 
-		r                ,
-		s                ,
-		total_num_var_   ,
-		dep_taddr_       ,
-		ind_taddr_       ,
-		play_            ,
-		for_jac_sparse_pack_ 
-	);
-}
-
-
-/*! 
-Private helper function for \c ForSparseJac(q, r).
-
-All of the description in the public member function \c ForSparseJac(q, r) 
-applies. 
-
-\param set_type
-is a \c std::set<size_t> object. 
-This argument is used to dispatch to the proper source
-code depending on the value of \c VectorSet::value_type.
-
-\param q
-See \c ForSparseJac(q, r).
-
-\param r
-See \c ForSparseJac(q, r).
-
-\param s
-is the return value for the corresponding call to \c ForSparseJac(q, r).
-*/
-template <class Base>
-template <class VectorSet>
-void ADFun<Base>::ForSparseJacCase(
-	const std::set<size_t>&    set_type      ,
-	size_t                     q             ,
-	const VectorSet&           r             ,
-	VectorSet&                 s             )
-{	size_t m = Range();
-
-	// dimension size of result vector
-	s.resize( m );
-
-	// free any results stored in for_jac_sparse_set_	
-	for_jac_sparse_pack_.resize(0, 0);
-
-	// store results in r and for_jac_sparse_pack_
-	CppAD::ForSparseJacSet(
-		q                , 
-		r                ,
-		s                ,
-		total_num_var_   ,
-		dep_taddr_       ,
-		ind_taddr_       ,
-		play_            ,
-		for_jac_sparse_set_ 
-	);
 }
 
 

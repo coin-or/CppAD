@@ -200,15 +200,20 @@ $index pattern, sparsity parallel$$
 $index parallel, sparsity pattern$$
 
 $subhead Faster Set Operations$$
+
 $list number$$
 The sparse set $code add_element$$ operation could be made faster
 by cashing the iterator where the $code std::set$$ inserts the 
 previous element. See the $code add_element$$ routine in the file
 $code sparse_set.hpp$$. 
+(This would have no effect when $code CPPAD_INTERNAL_SPARSE_SET$$ is
+defined to be $code sparse_list$$.)
 $lnext
 The memory allocation by standard set during sparsity calculations
-should be changed over to use $cref omp_alloc$$
+should be changed over to use $cref thread_alloc$$
 (requires making a standard allocator interface to $code omp_alloc$$).
+(This is already done when $code CPPAD_INTERNAL_SPARSE_SET$$ is
+defined to be $code sparse_list$$.)
 $lnext
 The $cref user_atomic$$ operations should allow the user to chose vectors
 of bits, instead of standard sets, for representing sets. This would

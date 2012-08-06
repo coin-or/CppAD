@@ -225,6 +225,7 @@ nobase_myinclude_HEADERS =  \
 	cppad/local/sparse_hessian.hpp \
 	cppad/local/sparse.hpp \
 	cppad/local/sparse_jacobian.hpp \
+	cppad/local/sparse_list.hpp \
 	cppad/local/sparse_pack.hpp \
 	cppad/local/sparse_pattern.hpp \
 	cppad/local/sparse_set.hpp \
@@ -289,6 +290,7 @@ SUBDIRS =  \
 	$(IPOPT_DIRS) \
 	$(SPEED_DIRS) \
 	example \
+	compare_c \
 	introduction/get_started \
 	introduction/exp_apx \
 	print_for \
@@ -310,6 +312,7 @@ test_directory_list = \
 	$(IPOPT_TESTS) \
 	$(SPEED_TESTS) \
 	example \
+	compare_c \
 	introduction/get_started \
 	introduction/exp_apx \
 	multi_thread \

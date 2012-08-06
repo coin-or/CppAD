@@ -3,7 +3,7 @@
 # define CPPAD_REV_HES_SWEEP_INCLUDED
 
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-11 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-12 Bradley M. Bell
 
 CppAD is distributed under multiple licenses. This distribution is under
 the terms of the 
@@ -40,7 +40,7 @@ using AD< \a Base > and computations by this routine are done using type
 
 \tparam Vector_set
 is the type used for vectors of sets. It can be either
-\c sparse_pack or \c sparse_set.
+\c sparse_pack, \c sparse_set, or \c sparse_list.
 
 \param n
 is the number of independent variables on the tape.

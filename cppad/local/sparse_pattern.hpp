@@ -17,6 +17,7 @@ Please visit http://www.coin-or.org/CppAD/ for information on other licenses.
 # include <cppad/local/define.hpp>
 # include <cppad/local/sparse_pack.hpp>
 # include <cppad/local/sparse_set.hpp>
+# include <cppad/local/sparse_list.hpp>
 
 CPPAD_BEGIN_NAMESPACE
 /*!
@@ -50,7 +51,7 @@ Specilization for <code>std::set<size_t></code> elements.
 template <> 
 struct internal_sparsity< std::set<size_t> > 
 {
-	typedef sparse_set pattern_type;
+	typedef CPPAD_INTERNAL_SPARSE_SET pattern_type;
 }; 
 
 CPPAD_END_NAMESPACE

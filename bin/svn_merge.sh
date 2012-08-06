@@ -32,10 +32,10 @@ echo "DryRun = $DryRun"
 from_branch=branches/sparse
 #
 # Version of the repository corresponding to from_branch just before changes
-Start=2357
+Start=2474
 # 
 # Version of the repository corresponding to from_branch after the changes
-End=2400
+End=2479
 #
 # the svn merge command
 cmd="svn merge $DryRun -r $Start:$End"

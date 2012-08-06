@@ -275,7 +275,7 @@ See \c SparseJacobianForward(x, p, row, col, jac, work).
 See \c SparseJacobianForward(x, p, row, col, jac, work).
 
 \tparam VectorSet
-is either \c sparse_pack or \c sparse_set.
+is either \c sparse_pack, \c sparse_set or \c sparse_list.
 
 \param x
 See \c SparseJacobianForward(x, p, row, col, jac, work).
@@ -353,8 +353,12 @@ size_t ADFun<Base>::SparseJacobianFor(
 		c_used.resize(m, n);
 		k = 0;
 		while( k < K )
-		{	CPPAD_ASSERT_UNKNOWN( row[sort_col[k]] < m && col[sort_col[k]] < n );
-			CPPAD_ASSERT_UNKNOWN( k == 0 || col[sort_col[k-1]] <= col[sort_col[k]] );
+		{	CPPAD_ASSERT_UNKNOWN( 
+				row[sort_col[k]] < m && col[sort_col[k]] < n 
+			);
+			CPPAD_ASSERT_UNKNOWN( 
+				k == 0 || col[sort_col[k-1]] <= col[sort_col[k]] 
+			);
 			CPPAD_ASSERT_KNOWN(
 				p_transpose.is_element(col[sort_col[k]], row[sort_col[k]]) ,
 				"SparseJacobianForward: "
@@ -499,7 +503,7 @@ See \c SparseJacobianForward(x, p, row, col, jac, work).
 See \c SparseJacobianForward(x, p, row, col, jac, work).
 
 \tparam VectorSet
-is either \c sparse_pack or \c sparse_set.
+is either \c sparse_pack, \c sparse_set or \c sparse_list.
 
 \param x
 See \c SparseJacobianForward(x, p, row, col, jac, work).
@@ -574,8 +578,12 @@ size_t ADFun<Base>::SparseJacobianRev(
 		c_used.resize(m, n);
 		k = 0;
 		while( k < K )
-		{	CPPAD_ASSERT_UNKNOWN( row[sort_row[k]] < m && col[sort_row[k]] < n );
-			CPPAD_ASSERT_UNKNOWN( k == 0 || row[sort_row[k-1]] <= row[sort_row[k]] );
+		{	CPPAD_ASSERT_UNKNOWN( 
+				row[sort_row[k]] < m && col[sort_row[k]] < n 
+			);
+			CPPAD_ASSERT_UNKNOWN( 
+				k == 0 || row[sort_row[k-1]] <= row[sort_row[k]] 
+			);
 			CPPAD_ASSERT_KNOWN(
 				p.is_element(row[sort_row[k]], col[sort_row[k]]) ,
 				"SparseJacobianReverse: "

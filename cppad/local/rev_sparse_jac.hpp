@@ -135,8 +135,9 @@ CPPAD_BEGIN_NAMESPACE
 Reverse mode Jacobian sparsity patterns.
 */
 
+// -------------------------------------------------------------------------
 /*!
-Calculate Jacobian sparsity patterns using reverse mode.
+Calculate Jacobian vector of bools sparsity patterns using reverse mode.
 
 The C++ source code corresponding to this operation is
 \verbatim
@@ -254,14 +255,8 @@ void RevSparseJacBool(
 		}
 	}
 }
-
 /*!
-\file rev_sparse_jac.hpp
-Reverse mode Jacobian sparsity patterns.
-*/
-
-/*!
-Calculate Jacobian sparsity patterns using reverse mode.
+Calculate Jacobian vector of sets sparsity patterns using reverse mode.
 
 The C++ source code corresponding to this operation is
 \verbatim
@@ -269,43 +264,32 @@ The C++ source code corresponding to this operation is
 \endverbatim
 
 \tparam Base
-is the base type for this recording.
+see \c RevSparseJacBool.
 
 \tparam VectorSet
 is a simple vector class with elements of type \c std::set<size_t>.
 
 \param p
-is the number of rows in the matrix \f$ S \f$.
+see \c RevSparseJacBool.
 
 \param s
-is a sparsity pattern for the matrix \f$ S \f$.
+see \c RevSparseJacBool.
 
 \param r
-the input value of \a r must be a vector with size \a p.
-On input, each element of \a r mus be an empty set.
-On output, \a r is the sparsity pattern for the matrix
-\f[
-	J(x) = S * F^{(1)} (x)
-\f]
-where \f$ F \f$ is the function corresponding to the operation sequence
-and \a x is any argument value.
+see \c RevSparseJacBool.
 
 \param total_num_var
-is the total number of variable in this recording.
+see \c RevSparseJacBool.
 
 \param dep_taddr
-maps dependendent variable index
-to the corresponding variable in the tape.
+see \c RevSparseJacBool.
 
 \param ind_taddr
-maps independent variable index
-to the corresponding variable in the tape.
+see \c RevSparseJacBool.
 
 \param play
-is the recording that defines the function we are computing the sparsity 
-pattern for.
+see \c RevSparseJacBool.
 */
-
 template <class Base, class VectorSet> 
 void RevSparseJacSet(
 	size_t                 p                , 
@@ -340,8 +324,8 @@ void RevSparseJacSet(
 		"p (first argument)."
 	);
 
-	// vector of sets that will hold the results
-	sparse_set     var_sparsity;
+	// vector of lists that will hold the results
+	CPPAD_INTERNAL_SPARSE_SET    var_sparsity;
 	var_sparsity.resize(total_num_var, p);
 
 	// The sparsity pattern corresponding to the dependent variables
@@ -386,60 +370,7 @@ void RevSparseJacSet(
 		}
 	}
 }
-
-/*!
-User API for Jacobian sparsity patterns using reverse mode.
-
-The C++ source code corresponding to this operation is
-\verbatim
-	s = f.RevSparseJac(q, r)
-\endverbatim
-
-\tparam Base
-is the base type for this recording.
-
-\tparam VectorSet
-is a simple vector with elements of type \c bool.
-or \c std::set<size_t>.
-
-\param p
-is the number of rows in the matrix \f$ S \f$.
-
-\param s
-is a sparsity pattern for the matrix \f$ S \f$.
-
-\return
-If \c VectorSet::value_type is \c bool,
-the return value \c r is a vector with size \c p*n
-where \c n is the number of independent variables
-corresponding to the operation sequence stored in \c f. 
-If \c VectorSet::value_type is \c std::set<size_t>,
-the return value \c r is a vector of sets with size \c p
-and with all its elements between zero and \c n - 1.
-The value of \a r is the sparsity pattern for the matrix
-\f[
-	J(x) = S * F^{(1)} (x)
-\f]
-where \f$ F \f$ is the function corresponding to the operation sequence
-and \a x is any argument value.
-*/
-template <class Base>
-template <class VectorSet>
-VectorSet ADFun<Base>::RevSparseJac(
-	size_t              p      , 
-	const VectorSet&    s      )
-{
-	VectorSet r;
-	typedef typename VectorSet::value_type Set_type;
-
-	RevSparseJacCase(
-		Set_type()    ,
-		p             ,
-		s             ,
-		r
-	);
-	return r;
-}
+// --------------------------------------------------------------------------
 
 /*!
 Private helper function for \c RevSparseJac(p, s).
@@ -527,6 +458,60 @@ void ADFun<Base>::RevSparseJacCase(
 		ind_taddr_     ,
 		play_
 	);
+}
+// --------------------------------------------------------------------------
+/*!
+User API for Jacobian sparsity patterns using reverse mode.
+
+The C++ source code corresponding to this operation is
+\verbatim
+	s = f.RevSparseJac(q, r)
+\endverbatim
+
+\tparam Base
+is the base type for this recording.
+
+\tparam VectorSet
+is a simple vector with elements of type \c bool.
+or \c std::set<size_t>.
+
+\param p
+is the number of rows in the matrix \f$ S \f$.
+
+\param s
+is a sparsity pattern for the matrix \f$ S \f$.
+
+\return
+If \c VectorSet::value_type is \c bool,
+the return value \c r is a vector with size \c p*n
+where \c n is the number of independent variables
+corresponding to the operation sequence stored in \c f. 
+If \c VectorSet::value_type is \c std::set<size_t>,
+the return value \c r is a vector of sets with size \c p
+and with all its elements between zero and \c n - 1.
+The value of \a r is the sparsity pattern for the matrix
+\f[
+	J(x) = S * F^{(1)} (x)
+\f]
+where \f$ F \f$ is the function corresponding to the operation sequence
+and \a x is any argument value.
+*/
+template <class Base>
+template <class VectorSet>
+VectorSet ADFun<Base>::RevSparseJac(
+	size_t              p      , 
+	const VectorSet&    s      )
+{
+	VectorSet r;
+	typedef typename VectorSet::value_type Set_type;
+
+	RevSparseJacCase(
+		Set_type()    ,
+		p             ,
+		s             ,
+		r
+	);
+	return r;
 }
 
 CPPAD_END_NAMESPACE

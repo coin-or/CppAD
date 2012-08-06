@@ -3,7 +3,7 @@
 # define CPPAD_PROTOTYPE_OP_INCLUDED
 
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-11 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-12 Bradley M. Bell
 
 CppAD is distributed under multiple licenses. This distribution is under
 the terms of the 
@@ -1042,7 +1042,7 @@ where v is a VecAD<Base> vector and x is an AD<Base> index.
 
 \tparam Vector_set
 is the type used for vectors of sets. It can be either
-\c sparse_pack or \c sparse_set.
+\c sparse_pack, \c sparse_set, or \c sparse_list.
 
 \param op
 is the code corresponding to this operator; i.e., LdpOp or LdvOp
@@ -1229,7 +1229,7 @@ where i_vec is defined under the heading \a arg[1] below:
 
 \tparam Vector_set
 is the type used for vectors of sets. It can be either
-\c sparse_pack or \c sparse_set.
+\c sparse_pack, \c sparse_set, or \c sparse_list.
 
 
 \param op
@@ -1310,7 +1310,7 @@ and it uses them to compute the sparsity patterns for
 
 \tparam Vector_set
 is the type used for vectors of sets. It can be either
-\c sparse_pack or \c sparse_set.
+\c sparse_pack, \c sparse_set, or \c sparse_list.
 
 \param i_z
 variable index corresponding to the result for this operation; 
@@ -1376,7 +1376,7 @@ and it uses them to compute the sparsity patterns for the Hessian of
 
 \tparam Vector_set
 is the type used for vectors of sets. It can be either
-\c sparse_pack or \c sparse_set.
+\c sparse_pack, \c sparse_set, or \c sparse_list.
 
 \param i_z
 variable index corresponding to the result for this operation; 
@@ -1554,7 +1554,7 @@ where Rel is one of the following: Lt, Le, Eq, Ge, Gt.
 
 \tparam Vector_set
 is the type used for vectors of sets. It can be either
-\c sparse_pack or \c sparse_set.
+\c sparse_pack, \c sparse_set, or \c sparse_list.
 
 \param i_z
 is the AD variable index corresponding to the variable z.

@@ -12,7 +12,7 @@ dnl ---------------------------------------------------------------------------
 dnl
 dnl Process this file with autoconf to produce a configure script.
 dnl   package   version              bug-report
-AC_INIT(CppAD, 20120707, cppad@list.coin-or.org)
+AC_INIT(CppAD, 20120805, cppad@list.coin-or.org)
 AC_SUBST(PACKAGE_URL, "http://www.coin-or.org/CppAD")
 AC_SUBST(PACKAGE_DESCRIPTION, "Differentiation of C++ Algorithms")
 
@@ -178,6 +178,31 @@ else
 	AC_SUBST(CPPAD_EIGENVECTOR, 0)
 fi
 
+dnl Are we using sparse_set or sparse_list ----------------------------
+AC_MSG_CHECKING([--with-sparse_set])
+AC_ARG_WITH(sparse_set, 
+	AC_HELP_STRING([--with-sparse_set], [default is not specified]),
+	[sparse_set="yes"],
+	[sparse_set="no"]
+)
+AC_MSG_RESULT([$sparse_set])
+dnl
+AC_MSG_CHECKING([--with-sparse_list])
+AC_ARG_WITH(sparse_list, 
+	AC_HELP_STRING([--with-sparse_list], [default is not specified]),
+	[sparse_list="yes"],
+	[sparse_list="no"]
+)
+AC_MSG_RESULT([$sparse_list])
+if test "$sparse_set" = "yes" ; then
+	if test "$sparse_list" == "yes" ; then
+		AC_MSG_ERROR([cannot --with both sparse_set and sparse_list])
+	fi
+	AC_SUBST(CPPAD_INTERNAL_SPARSE_SET, sparse_set)
+else
+	AC_SUBST(CPPAD_INTERNAL_SPARSE_SET, sparse_list)
+fi
+
 dnl The postfix directiory corresponding to CppAD ------------------------
 AC_MSG_CHECKING([POSTFIX_DIR])
 AC_ARG_VAR(POSTFIX_DIR, 
@@ -279,7 +304,7 @@ else
 fi
 
 dnl The C++ compiler flags CXX_FLAGS -------------------------------------
-AC_SUBST(CXXFLAGS, "")
+dnl see AC_SUBST(CXXFLAGS, "") next to AC_PROG_CXX
 #
 AC_MSG_CHECKING([CXX_FLAGS])
 AC_ARG_VAR(CXX_FLAGS,
@@ -441,7 +466,15 @@ if test "$CXX" == "cl" || test "$CXX" == "icl"; then
 else
 	AC_MSG_RESULT([no])
 fi
+dnl erase any setting of CXXFLAGS, see CXX_FLAGS documentation
+AC_SUBST(CXXFLAGS, "")
 
+
+dnl AC_PROG_CC([compiler-search-list]) outputs CC as C++ compiler to use
+AC_PROG_CC
+AC_MSG_CHECKING([whether using Microsoft C++ compiler])
+dnl erase any setting of CFLAGS
+AC_SUBST(CFLAGS, "")
 
 dnl Have configure check source directory to see if cppad/CppAD.h is there
 AC_CONFIG_SRCDIR(cppad/CppAD.h)
@@ -649,6 +682,7 @@ AC_CONFIG_FILES([
 
 	makefile
 	example/makefile 
+	compare_c/makefile 
 	cppad_ipopt/src/makefile
 	cppad_ipopt/example/makefile
 	cppad_ipopt/speed/makefile

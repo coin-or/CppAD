@@ -18,7 +18,7 @@ Please visit http://www.coin-or.org/CppAD/ for information on other licenses.
 CPPAD_BEGIN_NAMESPACE
 /*!
 \file sparse_pack.hpp
-Vector of sets of positive integers.
+Vector of sets of positive integers stored as a packed array of bools.
 */
 
 /*!
@@ -79,9 +79,8 @@ public:
 	// -----------------------------------------------------------------
 	/*! Change number of sets, set end, and initialize all sets as empty
 
-	Any memory currently allocated for this object is freed. If both
-	\a n_set_in and \a end_in are non-zero new memory is allocated, otherwise
-	no new memory is allocated for the object.
+	If \c n_set_in is zero, any memory currently allocated for this object 
+	is freed. Otherwise, new memory may be allocated for the sets (if needed).
 
 	\param n_set_in
 	is the number of sets in this vector of sets.
@@ -90,11 +89,17 @@ public:
 	is the maximum element plus one (the minimum element is 0).
 	*/
 	void resize(size_t n_set_in, size_t end_in) 
-	{	Pack zero(0);
-		data_.erase();
-
+	{
 		n_set_          = n_set_in;
 		end_            = end_in;
+		if( n_set_ == 0 )
+		{	data_.free();
+			return;
+		}
+		// now start a new vector with empty sets
+		Pack zero(0);
+		data_.erase();
+
 		n_pack_         = ( 1 + (end_ - 1) / n_bit_ );
 		size_t i        = n_set_ * n_pack_;
 

@@ -52,7 +52,7 @@ $codep */
 # include "print_optimize.hpp"
 
 // determines if we are using bool or set sparsity patterns
-# define USE_BOOL_SPARSITY 0
+# define USE_SET_SPARSITY 1
 
 namespace {
 	using CppAD::vector;
@@ -113,10 +113,10 @@ bool link_sparse_jacobian(
 	previous_size = size;
 
 	// declare sparsity pattern
-# if USE_BOOL_SPARSITY
-	BoolVector sparsity(m * n);
-# else
+# if USE_SET_SPARSITY
 	SetVector sparsity(m);
+# else
+	BoolVector sparsity(m * n);
 # endif
 	// initialize all entries as zero
 	for(i = 0; i < m; i++)

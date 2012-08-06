@@ -104,14 +104,14 @@ The argument $icode m$$ has prototype
 $codei%
 	size_t %m%
 %$$
-and is the size of the square matrix $latex A$$.
+and is the number of rows (and columns) in the square matrix $latex A$$.
 
 $head n$$
 The argument $icode n$$ has prototype
 $codei%
 	size_t %n%
 %$$
-and is the size of the square minor $latex M$$.
+and is the number of rows (and columns) in the square minor $latex M$$.
 
 $head r$$
 The argument $icode r$$ has prototype
@@ -235,8 +235,7 @@ Scalar det_of_minor(
 	if( n == 1 ) return a[ R0 * m + Cj ];
 
 	// initialize determinant of the minor M
-	Scalar detM;
-	detM = 0;
+	Scalar detM = 0;
 
 	// initialize sign of factor for next sub-minor
 	int s = 1;
@@ -249,7 +248,7 @@ Scalar det_of_minor(
 	{	// element with index (0,j) in the minor M
 		Scalar M0j = a[ R0 * m + Cj ];
 
-		// remove column wht index j in M to form next sub-minor S of M
+		// remove column with index j in M to form next sub-minor S of M
 		c[Cj1] = c[Cj];
 
 		// compute determinant of the current sub-minor S

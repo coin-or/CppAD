@@ -106,6 +106,19 @@ do
 		fi
 		;;
 
+		(compare_c/makefile.am)
+		if ! grep '^[^#]*-DNDEBUG' $file > /dev/null
+		then
+			echo "Optimization flag is not defined in $file"
+			ok="no"
+		fi
+		if ! grep '^#.*-g' $file > /dev/null
+		then
+			echo "Debug flag is not commented out in $file"
+			ok="no"
+		fi
+		;;
+
 		*)
 		if grep '\-DNDEBUG' $file > /dev/null
 		then

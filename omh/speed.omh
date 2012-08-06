@@ -1,6 +1,6 @@
 $Id$
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-11 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-12 Bradley M. Bell
 
 CppAD is distributed under multiple licenses. This distribution is under
 the terms of the 
@@ -26,7 +26,7 @@ $$
 $index speed, test$$
 $index test, speed$$
 
-$section Speed Test Routines$$
+$section AD Speed Test Routines$$
 
 $head Purpose$$
 CppAD has a set of speed tests that are used to determine if 

@@ -100,7 +100,7 @@ CTAGS = ctags
 DIST_SUBDIRS = cppad_ipopt/src cppad_ipopt/example cppad_ipopt/speed \
 	cppad_ipopt/test speed/src speed/adolc speed/cppad \
 	speed/double speed/example speed/fadbad speed/profile \
-	speed/sacado example introduction/get_started \
+	speed/sacado example compare_c introduction/get_started \
 	introduction/exp_apx print_for multi_thread \
 	multi_thread/test_multi test_more
 DISTFILES = $(DIST_COMMON) $(DIST_SOURCES) $(TEXINFOS) $(EXTRA_DIST)
@@ -159,6 +159,7 @@ CPPAD_BOOSTVECTOR = @CPPAD_BOOSTVECTOR@
 CPPAD_CPPADVECTOR = @CPPAD_CPPADVECTOR@
 CPPAD_EIGENVECTOR = @CPPAD_EIGENVECTOR@
 CPPAD_GETTIMEOFDAY = @CPPAD_GETTIMEOFDAY@
+CPPAD_INTERNAL_SPARSE_SET = @CPPAD_INTERNAL_SPARSE_SET@
 CPPAD_IPOPT_LD_PATH = @CPPAD_IPOPT_LD_PATH@
 CPPAD_IPOPT_LIBS = @CPPAD_IPOPT_LIBS@
 CPPAD_MAX_NUM_THREADS = @CPPAD_MAX_NUM_THREADS@
@@ -483,6 +484,7 @@ nobase_myinclude_HEADERS = \
 	cppad/local/sparse_hessian.hpp \
 	cppad/local/sparse.hpp \
 	cppad/local/sparse_jacobian.hpp \
+	cppad/local/sparse_list.hpp \
 	cppad/local/sparse_pack.hpp \
 	cppad/local/sparse_pattern.hpp \
 	cppad/local/sparse_set.hpp \
@@ -548,6 +550,7 @@ SUBDIRS = \
 	$(IPOPT_DIRS) \
 	$(SPEED_DIRS) \
 	example \
+	compare_c \
 	introduction/get_started \
 	introduction/exp_apx \
 	print_for \
@@ -570,6 +573,7 @@ test_directory_list = \
 	$(IPOPT_TESTS) \
 	$(SPEED_TESTS) \
 	example \
+	compare_c \
 	introduction/get_started \
 	introduction/exp_apx \
 	multi_thread \

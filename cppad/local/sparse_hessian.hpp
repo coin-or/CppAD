@@ -281,7 +281,7 @@ See \c SparseHessian(x, w, p, row, col, hes, work).
 See \c SparseHessian(x, w, p, row, col, hes, work).
 
 \tparam VectorSet
-is either \c sparse_pack or \c sparse_set.
+is either \c sparse_pack, \c sparse_set or \c sparse_list.
 
 \param x
 See \c SparseHessian(x, w, p, row, col, hes, work).
@@ -629,7 +629,7 @@ size_t ADFun<Base>::SparseHessianCase(
 		"not equal domain dimension for f"
 	);
  
-	sparse_set sparsity;
+	CPPAD_INTERNAL_SPARSE_SET sparsity;
 	if( work.color.size() == 0 )
 	{	bool transpose = false;
 		typedef typename VectorSet::value_type Set_type;

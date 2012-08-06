@@ -1,0 +1,62 @@
+# $Id$
+# -----------------------------------------------------------------------------
+# CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-12 Bradley M. Bell
+#
+# CppAD is distributed under multiple licenses. This distribution is under
+# the terms of the 
+#                     Common Public License Version 1.0.
+#
+# A copy of this license is included in the COPYING file of this distribution.
+# Please visit http://www.coin-or.org/CppAD/ for information on other licenses.
+# -----------------------------------------------------------------------------
+# automake input file
+# 
+# $begin compare_c$$ $newlinech #$$
+# $spell
+#	cpp
+# $$
+# 
+# $section Compare Speed of C and C++$$
+#
+# $head Syntax$$
+# $code compare_c/compare_c$$
+# $code compare_c/compare_cpp$$
+#
+# $head Purpose$$
+# Compares the speed of the exact same source code compiled
+# using C versus C++.
+#
+# $childtable%
+#	compare_c/det_by_minor.c
+# %$$
+#
+# $end
+#
+BUILT_SOURCES = compare_c.c compare_cpp.cpp
+compare_c.c: det_by_minor.c
+	cp $(srcdir)/det_by_minor.c compare_c.c
+compare_cpp.cpp: det_by_minor.c
+	cp $(srcdir)/det_by_minor.c compare_cpp.cpp
+#
+EXTRA_DIST = \
+	det_by_minor.c
+#
+# erase configures choice of flags
+DEFS =
+#
+# AM_CXXFLAGS = -g 
+# AM_CFLAGS   = -g 
+#
+AM_CXXFLAGS = -O2 -DNDEBUG 
+AM_CFLAGS   = -O2 -DNDEBUG 
+#
+check_PROGRAMS    = compare_c compare_cpp
+#
+compare_c_SOURCES   = compare_c.c
+compare_cpp_SOURCES = compare_cpp.cpp
+#
+test: compare_c compare_cpp
+	echo "Running version compiled using C compiler"
+	./compare_c
+	echo "Running version compiled using C++ compiler"
+	./compare_cpp
