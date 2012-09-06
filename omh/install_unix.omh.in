@@ -466,19 +466,20 @@ see $cref speed_main$$ for the meaning of the command line
 options to this program.
 Note that these speed tests assume Adolc has been configure with
 its sparse matrix computations enabled using
-$codei
+$codei%
 	--with-colpack=%colpack_dir%
 %$$
 
 $subhead Linux$$
 If you are using Linux, 
-you will have to add to following lines to the file
-$code .bash_profile$$ in your home directory:
+you will have to add $icode%adolc_dir%/lib%$$ to $code LD_LIBRARY_PATH$$.
+For example, if you use the $code bash$$ shell to run your programs,
+you could include
 $codei%
 	LD_LIBRARY_PATH=%adolc_dir%/lib:^{LD_LIBRARY_PATH}
 	export LD_LIBRARY_PATH
 %$$
-in order for Adolc to run properly.
+in your $code ^HOME/.bash_profile$$ file.
 
 $subhead Cygwin$$
 If you are using Cygwin, 
