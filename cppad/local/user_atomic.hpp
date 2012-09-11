@@ -300,7 +300,16 @@ y_i^0 & = & Y(0)
 \\
 y_i^1 & = & Y^{(1)} ( 0 ) 
         = f_i^{(1)} ( x^0 ) X^{(1)} ( 0 ) 
-        =  f_i^{(1)} ( x^0 ) x^1 
+        = f_i^{(1)} ( x^0 ) x^1 
+\\
+y_i^2 
+& = & \frac{1}{2 !} Y^{(2)} (0)
+\\
+& = & \frac{1}{2} X^{(1)} (0)^\R{T} f_i^{(2)} ( x^0 ) X^{(1)} ( 0 )
+  +   \frac{1}{2} f_i^{(1)} ( x^0 ) X^{(2)} ( 0 )
+\\
+& = & \frac{1}{2} (x^1)^\R{T} f_i^{(2)} ( x^0 ) x^1 
+  +    f_i^{(1)} ( x^0 ) x^2
 \end{array}
 \] $$
 Then, for $latex i = 0 , \ldots , m-1$$, it sets
@@ -418,24 +427,26 @@ $codei%
 and $icode%px%.size() >= (%k% + 1) * %n%$$.
 The input values of the elements of $icode px$$ do not matter.
 Upon return,
-for $latex j = 0 , \ldots , n-1$$ and $latex \ell = 0 , \ldots , k$$,
+for $latex j = 0 , \ldots , n-1$$ and $latex p = 0 , \ldots , k$$,
 $latex \[
 \begin{array}{rcl}
-px [ j * (k + 1) + \ell ] & = & \partial H / \partial x_j^\ell
+px [ j * (k + 1) + p ] & = & \partial H / \partial x_j^p
 \\
 & = & 
 ( \partial G / \partial \{ y_i^\ell \} ) 
-	( \partial \{ y_i^\ell \} / \partial x_j^\ell )
+	( \partial \{ y_i^\ell \} / \partial x_j^p )
 \\
 & = & 
 \sum_{i=0}^{m-1} \sum_{\ell=0}^k
-( \partial G / \partial y_i^\ell ) ( \partial y_i^\ell / \partial x_j^\ell )
+( \partial G / \partial y_i^\ell ) ( \partial y_i^\ell / \partial x_j^p )
 \\
 & = & 
-\sum_{i=0}^{m-1} \sum_{\ell=0}^k
-py[ i * (k + 1 ) + \ell ] ( \partial F_i^\ell / \partial x_j^\ell )
+\sum_{i=0}^{m-1} \sum_{\ell=p}^k
+py[ i * (k + 1 ) + \ell ] ( \partial F_i^\ell / \partial x_j^p )
 \end{array}
 \] $$
+Note that we have used the fact that for $latex \ell < p$$,
+$latex \partial F_i^\ell / \partial x_j^p = 0$$.
 If $icode%px%.size() > (%k% + 1) * %n%$$,
 the other components of $icode px$$ are not specified and should not be used.
 
@@ -663,10 +674,15 @@ The user atomic $code clear$$ routine cannot be called
 while in $cref/parallel/ta_in_parallel/$$ execution mode.
 
 $children%
+	example/reciprocal.cpp%
 	example/user_tan.cpp%
 	example/mat_mul.cpp
 %$$
 $head Example$$
+
+$subhead Reciprocal$$
+The file $cref reciprocal.cpp$$ contains the simplest example and test
+of a user atomic operation.
 
 $subhead Tangent Function$$
 The file $cref user_tan.cpp$$ contains an example and test

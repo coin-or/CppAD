@@ -194,6 +194,7 @@ $rref pow.cpp$$
 $rref pow_int.cpp$$
 $rref print_for_cout.cpp$$
 $rref print_for_string.cpp$$
+$rref reciprocal.cpp$$
 $rref reverse_any.cpp$$
 $rref reverse_one.cpp$$
 $rref reverse_three.cpp$$

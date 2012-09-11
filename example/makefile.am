@@ -160,6 +160,7 @@ example_SOURCES   = \
 	pow.cpp \
 	pow_int.cpp \
 	print_for.cpp \
+	reciprocal.cpp \
 	reverse_any.cpp \
 	reverse_one.cpp \
 	reverse_three.cpp \

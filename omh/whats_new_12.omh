@@ -59,6 +59,10 @@ This section contains a list of the changes to CppAD during 2012
 The purpose of this section is to
 assist you in learning about changes between various versions of CppAD.
 
+$head 09-11$$
+Add $cref reciprocal.cpp$$,
+a simpler $cref user_atomic$$ example.
+
 $head 08-05$$
 $list number$$
 A new type was added for the internal representation of

@@ -233,7 +233,7 @@ $cref/Taylor coefficients/glossary/Taylor Coefficient/$$,
 forward mode computes the Taylor coefficients for the function 
 $latex \[
 	Y (t) = F [ X(t) ]
-\] $$.
+\]$$
 
 $subhead Function Values$$
 If you are using forward mode to compute values for $latex F(x)$$,

@@ -142,6 +142,7 @@ extern bool Poly(void);
 extern bool Pow(void);
 extern bool pow_int(void);
 extern bool print_for(void);
+extern bool reciprocal(void);
 extern bool reverse_any(void);
 extern bool reverse_one(void);
 extern bool reverse_three(void);
@@ -294,6 +295,7 @@ int main(void)
 	ok &= Run( Pow,               "Poly"             );
 	ok &= Run( Pow,               "Pow"              );
 	ok &= Run( pow_int,           "pow_int"          );
+	ok &= Run( reciprocal,         "reciprocal"      );
 	ok &= Run( reverse_any,       "reverse_any"      );
 	ok &= Run( reverse_one,       "reverse_one"      );
 	ok &= Run( reverse_three,     "reverse_three"    );
