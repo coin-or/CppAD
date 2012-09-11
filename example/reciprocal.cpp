@@ -59,11 +59,13 @@ namespace { // Begin empty namespace
 		assert( m == 1 );
 		assert( k == 0 || vx.size() == 0 );
 		bool ok = false;	
+		double f, fp, fpp;
 		switch(k)
 		{	case 0:
-			// this case must be implemented
+			// this case must  be implemented
 			if( vx.size() > 0 )
 				vy[0] = vx[0];
+			// y^0 = f( x^0 ) = 1 / x^0
 			ty[0] = 1. / tx[0];
 			ok    = true;
 			break;
@@ -71,14 +73,22 @@ namespace { // Begin empty namespace
 			case 1:
 			// needed if first order forward mode is used
 			assert( vx.size() == 0 );
-			ty[1] = - tx[1] / (tx[0] * tx[0]); 
+			// y^1 = f'( x^0 ) x^1
+			f     = ty[0];
+			fp    = - f / tx[0];
+			ty[1] = fp * tx[1]; 
 			ok    = true;
 			break;
 
 			case 2:
 			// needed if second order forward mode is used
 			assert( vx.size() == 0 );
-			ty[2] = tx[1] * ( - ty[1] / tx[0] ) * tx[1] + ty[1] * tx[2];
+			// Y''(t) = X'(t)^\R{T} f''[X(t)] X'(t) + f'[X(t)] X''(t)
+			// 2 y^2  = x^1 * f''( x^0 ) x^1 + 2 f'( x^0 ) x^2
+			f     = ty[0];
+			fp    = - f / tx[0];
+			fpp   = - 2.0 * fp / tx[0];
+			ty[2] = tx[1] * fpp * tx[1] / 2.0 + fp * tx[2];
 			ok    = true;
 			break;
 		}
@@ -101,24 +111,49 @@ namespace { // Begin empty namespace
 		assert( m == 1 );
 		bool ok = false;	
 
-		double square = tx[0] * tx[0];
+		double f, fp, fpp, fppp;
 		switch(k)
 		{	case 0:
 			// needed if first order reverse mode is used
-			// reverse: F^0 ( tx ) = ty[0] = 1. / tx[0];
-			px[0] = - py[0] / square;
+			// reverse: F^0 ( tx ) = y^0 = f( x^0 )
+			f     = ty[0];
+			fp    = - f / tx[0];
+			px[0] = py[0] * fp;;
 			ok    = true;
 			break;
 
 			case 1:
 			// needed if second order reverse mode is used
-			// reverse: F^1 ( tx ) = ty[1] = - tx[1] / (tx[0] * tx[0]); 
-			px[1]  = - py[1] / square;
-			px[0]  =   py[1] * tx[1] / (square * tx[0]);
+			// reverse: F^1 ( tx ) = y^1 = f'( x^0 ) x^1
+			f      = ty[0];
+			fp     = - f / tx[0];
+			fpp    = - 2.0 * fp / tx[0];
+			px[1]  = py[1] * fp;
+			px[0]  = py[1] * fpp * tx[1];
+			// reverse: F^0 ( tx ) = y^0 = f( x^0 );
+			px[0] += py[0] * fp;
 
-			// reverse: F^0 ( tx ) = ty[0] = 1. / tx[0];
-			px[0] -= py[0] / square;
-			ok     = false;
+			ok     = true;
+			break;
+
+			case 2:
+			// needed if third order reverse mode is used
+			// reverse: F^2 ( tx ) = y^2 =
+			//            = x^1 * f''( x^0 ) x^1 / 2 + f'( x^0 ) x^2
+			f      = ty[0];
+			fp     = - f / tx[0];
+			fpp    = - 2.0 * fp / tx[0];
+			fppp   = - 3.0 * fpp / tx[0];
+			px[2]  = py[2] * fp;
+			px[1]  = py[2] * fpp * tx[1];
+			px[0]  = py[2] * tx[1] * fppp * tx[1] / 2.0 + fpp * tx[2]; 
+			// reverse: F^1 ( tx ) = y^1 = f'( x^0 ) x^1
+			px[1] += py[1] * fp;
+			px[0] += py[1] * fpp * tx[1];
+			// reverse: F^0 ( tx ) = y^0 = f( x^0 );
+			px[0] += py[0] * fp;
+
+			ok = true;
 			break;
 		}
 		return ok;
@@ -229,13 +264,16 @@ bool reciprocal(void)
 	// --------------------------------------------------------------------
 	// Check reverse mode results
 	//
-	// first order reverse mode 
-	vector<double> w(m), dw(n);
-	p     = 1;
+	// third order reverse mode 
+	p     = 3;
+	vector<double> w(m), dw(n * p);
 	w[0]  = 1.;
-	dw    = f.Reverse(1, w);
+	dw    = f.Reverse(p, w);
 	check = 1.;
 	ok &= NearEqual(dw[0] , check,  eps, eps);
+	check = 0.;
+	ok &= NearEqual(dw[1] , check,  eps, eps);
+	ok &= NearEqual(dw[2] , check,  eps, eps);
 
 	// -----------------------------------------------------------------
 	// Free all temporary work space associated with user_atomic objects. 
