@@ -16,7 +16,7 @@ $spell
 	Tanh
 $$
 
-$section Tan and Tanh as User Atomic Operations: Example and Test$$
+$section Reciprocal as a User Atomic Operation: Example and Test$$
 
 $index reciprocal, user_atomic$$
 $index user, atomic reciprocal$$
