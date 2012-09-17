@@ -27,9 +27,12 @@ fi
 echo "DryRun = $DryRun"
 #
 # script to help in execution of svn merge command
+# 
+# Location of the repository
+repository='https://projects.coin-or.org/svn/CppAD'
 #
 # Name of the directory where the changes have been committed
-from_branch=branches/sparse
+from_branch='branches/sparse'
 #
 # Version of the repository corresponding to from_branch just before changes
 Start=2474
@@ -38,7 +41,6 @@ Start=2474
 End=2479
 #
 # the svn merge command
-cmd="svn merge $DryRun -r $Start:$End"
-cmd="$cmd https://projects.coin-or.org/svn/CppAD/$from_branch"
+cmd="svn merge $DryRun -r $Start:$End $repository/$from_branch"
 echo "$cmd"
 $cmd
