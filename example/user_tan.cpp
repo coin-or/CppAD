@@ -243,11 +243,11 @@ namespace { // Begin empty namespace
 		assert( u.size() >= m );
 		assert( v.size() >= n );
 
-		// back propogate Jacobian sparsity. If users code only uses z,
+		// back propagate Jacobian sparsity. If users code only uses z,
 		// we could just set t[0] = s[0];
 		t[0] =  s[0] | s[1];
 
-		// back propogate Hessian sparsity, ...
+		// back propagate Hessian sparsity, ...
 		my_union(v[0], u[0], u[1]);
 
 		// convert forward Jacobian sparsity to Hessian sparsity
@@ -364,7 +364,7 @@ bool user_tan(void)
 	size_t q = n;
 	// user vectorBool because m and n are small
 	CppAD::vectorBool r1(q), s1(m * q);
-	r1[0] = true;            // propogate sparsity for x[0]
+	r1[0] = true;            // propagate sparsity for x[0]
 	s1    = F.ForSparseJac(q, r1);
 	ok  &= (s1[0] == true);  // f[0] depends on x[0]
 	ok  &= (s1[1] == true);  // f[1] depends on x[0]

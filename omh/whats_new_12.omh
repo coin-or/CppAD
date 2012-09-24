@@ -13,6 +13,7 @@ Please visit http://www.coin-or.org/CppAD/ for information on other licenses.
 $begin whats_new_12$$
 $dollar @$$
 $spell
+	hes
 	dw
 	uninitialised
 	resize
@@ -58,6 +59,15 @@ This section contains a list of the changes to CppAD during 2012
 (in reverse order by date).
 The purpose of this section is to
 assist you in learning about changes between various versions of CppAD.
+
+$head 09-24$$
+Improve documentation for the 
+$cref user_atomic$$ 
+$cref/rev_hes_sparse/user_atomic/rev_hes_sparse/$$ 
+argument
+$cref/v/user_atomic/rev_hes_sparse/v/$$.
+In addition,
+add sparsity calculations to the $cref reciprocal.cpp$$ example.
 
 $head 09-11$$
 Add $cref reciprocal.cpp$$,

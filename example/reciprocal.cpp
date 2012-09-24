@@ -41,6 +41,22 @@ $end
 
 namespace { // Begin empty namespace 
 	using CppAD::vector;
+	// ----------------------------------------------------------------------
+	// a utility to compute the union of two sets.
+	void my_union(
+		std::set<size_t>&         result  ,
+		const std::set<size_t>&   left    ,
+		const std::set<size_t>&   right   )
+	{	std::set<size_t> temp;
+		std::set_union(
+			left.begin()              ,
+			left.end()                ,
+			right.begin()             ,
+			right.end()               ,
+			std::inserter(temp, temp.begin())
+		);
+		result.swap(temp);
+	}
 
 	// ----------------------------------------------------------------------
 	// forward mode routine called by CppAD
@@ -60,6 +76,9 @@ namespace { // Begin empty namespace
 		assert( k == 0 || vx.size() == 0 );
 		bool ok = false;	
 		double f, fp, fpp;
+
+		// Must always define the case k = 0.
+		// Do not need case k if not using f.Forward(p, xp) for p >= k.
 		switch(k)
 		{	case 0:
 			// this case must  be implemented
@@ -106,7 +125,8 @@ namespace { // Begin empty namespace
 		vector<double>&          px ,
 		const vector<double>&    py
 	)
-	{	assert( id == 0 );
+	{	// Do not need case k if not using f.Reverse(k+1, w).
+		assert( id == 0 );
 		assert( n == 1 );
 		assert( m == 1 );
 		bool ok = false;	
@@ -167,7 +187,16 @@ namespace { // Begin empty namespace
 		size_t                                q ,
 		const vector< std::set<size_t> >&     r ,
 		vector< std::set<size_t> >&           s )
-	{	return false; }
+	{	// Can just return false if not using f.ForSparseJac
+		assert( id == 0 );
+		assert( n == 1 );
+		assert( m == 1 );
+
+		// sparsity for S(x) = f'(x) * R is same as sparsity for R
+		s[0] = r[0];
+
+		return true; 
+	}
 	// ----------------------------------------------------------------------
 	// reverse Jacobian sparsity routine called by CppAD
 	bool reciprocal_rev_jac_sparse(
@@ -177,7 +206,16 @@ namespace { // Begin empty namespace
 		size_t                                q ,
 		vector< std::set<size_t> >&           r ,
 		const vector< std::set<size_t> >&     s )
-	{	return false; }
+	{	// Can just return false if not using RevSparseJac.
+		assert( id == 0 );
+		assert( n == 1 );
+		assert( m == 1 );
+
+		// sparsity for R(x) = S * f'(x) is same as sparsity for S
+		r[0] = s[0];
+
+		return true; 
+	}
 	// ----------------------------------------------------------------------
 	// reverse Hessian sparsity routine called by CppAD
 	bool reciprocal_rev_hes_sparse(
@@ -190,7 +228,30 @@ namespace { // Begin empty namespace
 		vector<bool>&                         t ,
 		const vector< std::set<size_t> >&     u ,
 		vector< std::set<size_t> >&           v )
-	{	return false; }
+	{	// Can just return false if not use RevSparseHes.
+		assert( id == 0 );
+		assert( n == 1 );
+		assert( m == 1 );
+
+		// sparsity for T(x) = S(x) * f'(x) is same as sparsity for S
+		t[0] = s[0];
+	
+		// V(x) = [ f'(x)^T * g''(y) * f'(x) + g'(y) * f''(x) ] * R 
+		// U(x) = g''(y) * f'(x) * R
+		// S(x) = g'(y)
+		
+		// back propagate the sparsity for U because derivative of
+		// reciprocal may be non-zero
+		v[0] = u[0]; 
+
+		// convert forward Jacobian sparsity to Hessian sparsity
+		// because second derivative of reciprocal may be non-zero
+		if( s[0] )
+			my_union(v[0], v[0], r[0] );
+
+
+		return false;
+	}
 	// ---------------------------------------------------------------------
 	// Declare the AD<double> routine reciprocal(id, ax, ay)
 	CPPAD_USER_ATOMIC(
@@ -274,6 +335,29 @@ bool reciprocal(void)
 	check = 0.;
 	ok &= NearEqual(dw[1] , check,  eps, eps);
 	ok &= NearEqual(dw[2] , check,  eps, eps);
+
+	// --------------------------------------------------------------------
+	// forward mode sparstiy pattern
+	size_t q = n;
+	CppAD::vectorBool r1(n * q), s1(m * q);
+	r1[0] = true;          // compute sparsity pattern for x[0]
+	s1    = f.ForSparseJac(q, r1);
+	ok  &= s1[0] == true;  // f[0] depends on x[0]  
+
+	// --------------------------------------------------------------------
+	// reverse mode sparstiy pattern
+	p = m;
+	CppAD::vectorBool s2(p * m), r2(p * n);
+	s2[0] = true;          // compute sparsity pattern for f[0]
+	r2    = f.RevSparseJac(p, s2);
+	ok  &= r2[0] == true;  // f[0] depends on x[0]  
+
+	// --------------------------------------------------------------------
+	// Hessian sparsity (using previous ForSparseJac call) 
+	CppAD::vectorBool s3(m), h(q * n);
+	s3[0] = true;        // compute sparsity pattern for f[0]
+	h     = f.RevSparseJac(q, s3);
+	ok  &= h[0] == true; // second partial of f[0] w.r.t. x[0] may be non-zero
 
 	// -----------------------------------------------------------------
 	// Free all temporary work space associated with user_atomic objects. 

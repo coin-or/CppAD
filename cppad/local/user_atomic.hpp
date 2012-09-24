@@ -536,7 +536,7 @@ $codei%
 %$$
 and $icode%s%.size() >= %m%$$.
 For $latex i = 0 , \ldots , m-1$$, 
-all the elements of $icode%s%[%i%}%$$
+all the elements of $icode%s%[%i%]%$$
 are between zero and $icode%q%-1%$$ inclusive.
 This specifies a sparsity pattern for the matrix $latex S^\R{T}$$.
 
@@ -591,7 +591,7 @@ This specifies a sparsity pattern for the matrix $latex R \in B^{n \times q}$$.
 $subhead s$$
 The $icode rev_hes_sparse$$ argument $icode s$$ has prototype
 $codei%
-     const CppAD::vector<bool> >& %s%
+     const CppAD::vector<bool>& %s%
 %$$
 and $icode%s%.size() >= %m%$$.
 This specifies a sparsity pattern for the matrix 
@@ -600,7 +600,7 @@ $latex S(x) = g^{(1)} (y) \in B^{1 \times m}$$.
 $subhead t$$
 The $icode rev_hes_sparse$$ argument $icode t$$ has prototype
 $codei%
-     CppAD::vector<bool> >& %t%
+     CppAD::vector<bool>& %t%
 %$$
 and $icode%t%.size() >= %n%$$.
 The input values of its elements do not matter.
@@ -655,6 +655,11 @@ V(x)
 \\
 & = &
 (g \circ f)^{(2)}( x ) R
+\\
+& = &
+f^{(1)} (x)^\R{T} g^{(2)} ( y ) f^{(1)} (x)  R
++
+\sum_{i=1}^m [ g^{(1)} (y) ]_i \; f_i^{(2)} (x) R
 \end{array}
 \] $$
 

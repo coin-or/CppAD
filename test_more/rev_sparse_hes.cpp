@@ -241,7 +241,7 @@ bool case_three()
 	size_t m = 1;
 	CPPAD_TESTVECTOR(AD<double>) Y(m);
 
-	// make sure reverse jacobian is propogating dependency to
+	// make sure reverse jacobian is propagating dependency to
 	// intermediate values (not just final ones).
 	Y[0] = X[0] * X[0] + 2;
 
