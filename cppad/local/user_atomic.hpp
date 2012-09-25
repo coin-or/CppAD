@@ -605,7 +605,10 @@ $codei%
 and $icode%t%.size() >= %n%$$.
 The input values of its elements do not matter.
 Upon return it represents a sparsity pattern for the matrix 
-$latex T(x) = (g \circ f)^{(1)} (x) \in B^{1 \times n}$$.
+$latex T(x) \in B^{1 \times n}$$ defined by
+$latex \[
+T(x)  =  (g \circ f)^{(1)} (x) =  S(x) * f^{(1)} (x)
+\] $$
 
 $subhead u$$
 The $icode rev_hes_sparse$$ argument $icode u$$ has prototype
@@ -660,6 +663,11 @@ V(x)
 f^{(1)} (x)^\R{T} g^{(2)} ( y ) f^{(1)} (x)  R
 +
 \sum_{i=1}^m [ g^{(1)} (y) ]_i \; f_i^{(2)} (x) R
+\\
+& = &
+f^{(1)} (x)^\R{T} U(x)
++
+\sum_{i=1}^m S(x)_i \; f_i^{(2)} (x) R
 \end{array}
 \] $$
 
