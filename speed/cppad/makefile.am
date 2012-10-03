@@ -51,4 +51,4 @@ test: check
 	./cppad correct 123 retape
 	./cppad correct 123 optimize
 	./cppad correct 123 atomic
-	./cppad correct 123 hold_memory
+	./cppad correct 123 memory

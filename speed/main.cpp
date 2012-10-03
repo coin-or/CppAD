@@ -46,6 +46,7 @@ Please visit http://www.coin-or.org/CppAD/ for information on other licenses.
 /*
 $begin speed_main$$
 $spell
+	underbar
 	alloc
 	mat_mul
 	retaped
@@ -188,25 +189,45 @@ by adding $cref user_atomic$$ operations,
 this should be included in computations.
 If it is false, user defined atomic operations should not be done.
 
-$subhead hold_memory$$
-If the option $code hold_memory$$ is present, the 
-$cref/hold_memory/ta_hold_memory/$$ routine will be called.
+$subhead memory$$
+If the option $code memory$$ is present, the symbol
+$codep
+	extern bool global_memory
+$$
+is true and otherwise it is false.
+If it is true, the CppAD
+$cref/hold_memory/ta_hold_memory/$$ routine will be called by 
+the main program before any of the tests are executed.
 This should make the CppAD $code thread_alloc$$ allocator faster.
-This is done by the main program and there is no global variable
-corresponding to this option.
+If it is false, standard memory allocation should be done by.
+Otherwise the test can use special memory allocation to try 
+and improve speed.
 
 $head Correctness Results$$
-An output line is generated for each correctness test
-stating of the test passed or failed.
+An output line of the following form:
+$codei%
+	%package%_%test%_%option_list%_ok = %flag%
+%$$
+is generated for each correctness test where
+$icode package$$ and $icode test$$ are as above,
+$icode option_list$$ are the options separated by the 
+underbar $code _$$ character,
+and $icode flag$$ is $code true$$ or $code false$$.
 
 $head Speed Results$$
-For each speed test, corresponds to three lines of output.
-The name of the package and test are printed on the first line,
-the vector of problem sizes are printed on the next line,
-and the rates corresponding to the different problem sizes are
-printed on the third line.
-The rate is the number of times per second that the calculation was repeated.
-
+For each speed test, corresponds to three lines of the
+following form are generated:
+$codei%
+	%package%_%test%_%option_list%_ok   = %flag%
+	%package%_%test%_%option_list%_size = [ %size_1%, %...%, %size_n% ]
+	%package%_%test%_%option_list%_rate = [ %rate_1%, %...%, %rate_n% ]
+%$$
+The values $icode package$$, $icode test$$, $icode option_list$$,
+and $icode flag$$ are as in the correctness results above.
+The values $icode size_1$$, ..., $icode size_n$$ are the
+size arguments used for the corresponding tests.
+The values $icode rate_1$$, ..., $icode rate_n$$ are the number of times
+per second that the corresponding size problem executed.
 
 $children%
 	speed/src/link_det_lu.cpp%
@@ -253,6 +274,7 @@ CPPAD_DECLARE_SPEED(sparse_jacobian);
 bool   global_retape;
 bool   global_optimize;
 bool   global_atomic;
+bool   global_memory;
 
 namespace {
 	using std::cout;
@@ -265,6 +287,7 @@ namespace {
 		cout << "global_retape = " << global_retape;
 		cout << ", global_optimize = " << global_optimize;
 		cout << ", global_atomic = " << global_atomic;
+		cout << ", global_memory = " << global_memory;
 		cout << endl;
 	}
 
@@ -288,7 +311,16 @@ namespace {
 	static size_t Run_error_count = 0;
 	bool run_correct(bool correct_case(bool), const char *case_name)
 	{	bool ok;
-		cout << AD_PACKAGE << "_" << case_name << "_ok = ";
+		cout << AD_PACKAGE << "_" << case_name;
+		if( global_retape )
+			cout << "_retape";
+		if( global_optimize )
+			cout << "_optimize";
+		if( global_atomic )
+			cout << "_atomic";
+		if( global_memory )
+			cout << "_memory";
+		cout << "_ok = ";
 # ifdef SPEED_DOUBLE
 		ok = correct_case(true);
 # else
@@ -317,7 +349,16 @@ namespace {
 
 		CppAD::vector<size_t> rate_vec( size_vec.size() );
 		rate_vec = CppAD::speed_test(speed_case, size_vec, time_min);
-		cout << AD_PACKAGE << "_" << case_name << "_rate = ";
+		cout << AD_PACKAGE << "_" << case_name;
+		if( global_retape )
+			cout << "_retape";
+		if( global_optimize )
+			cout << "_optimize";
+		if( global_atomic )
+			cout << "_atomic";
+		if( global_memory )
+			cout << "_memory";
+		cout << "_rate = ";
 		output(rate_vec);
 		cout << endl;
 		return;
@@ -327,7 +368,6 @@ namespace {
 // main program that runs all the tests
 int main(int argc, char *argv[])
 {	bool ok = true;
-	bool hold_memory;
 	enum test_enum {
 		test_correct,
 		test_speed,
@@ -371,7 +411,7 @@ int main(int argc, char *argv[])
 		global_retape   = false;
 		global_optimize = false;
 		global_atomic   = false;
-		hold_memory     = false;
+		global_memory   = false;
 		for(i = 3; i < size_t(argc); i++)
 		{	if( strcmp(argv[i], "retape") == 0 )
 				global_retape = true;
@@ -379,8 +419,8 @@ int main(int argc, char *argv[])
 				global_optimize = true;
 			else if( strcmp(argv[i], "atomic") == 0 )
 				global_atomic = true;
-			else if( strcmp(argv[i], "hold_memory") == 0 )
-				hold_memory = true;
+			else if( strcmp(argv[i], "memory") == 0 )
+				global_memory = true;
 			else
 				error = true;
 		}
@@ -397,10 +437,10 @@ int main(int argc, char *argv[])
 		cout << " \"retape\",";
 		cout << " \"optimize\",";
 		cout << " \"atomic\",";
-		cout << " \"hold_memory\"." << endl << endl;
+		cout << " \"memory\"." << endl << endl;
 		return 1;
 	}
-	if( hold_memory )
+	if( global_memory )
 		CppAD::thread_alloc::hold_memory(true);
 
 	// initialize the random number simulator

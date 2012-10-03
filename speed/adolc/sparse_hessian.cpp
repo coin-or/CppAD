@@ -66,9 +66,6 @@ bool link_sparse_hessian(
 	if( global_atomic || global_optimize )
 		return false; 
 
-	// this test is generating a segmentation fault, so abort (for now.
-	return false;
-
 	// -----------------------------------------------------
 	// setup
 	typedef unsigned int*    SizeVector;

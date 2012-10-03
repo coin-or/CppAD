@@ -60,6 +60,13 @@ This section contains a list of the changes to CppAD during 2012
 The purpose of this section is to
 assist you in learning about changes between various versions of CppAD.
 
+$head 10-03$$
+Change the $code hold_memory$$ speed to option to just
+$cref/memory/speed_main/option_list/memory/$$.
+In addition, in the speed test output, include all of the options
+that are present in the output variable name;
+see $cref/speed results/speed_main/Speed Results/$$.
+
 $head 10-02$$
 Fix another problem with Debian's $code /bin/sh$$ shell executing
 $code multi_thread/test.sh$$; see $cref/03-17/whats_new_12/03-17/$$
@@ -205,8 +212,10 @@ $cref/sparse Jacobian speed tests/link_sparse_jacobian/$$.
 
 $head 06-10$$
 $list number$$
-Add the $cref/hold_memory/speed_main/option_list/hold_memory/$$ option
+Add the $cref/hold_memory/speed_main/option_list/memory/$$ option
 to the speed test main program.
+This was changed to just $code memory$$; see 
+$cref/10-03/whats_new_12/10-03/$$.
 $lnext
 In $cref cppad_sparse_jacobian.cpp$$,
 change $code USE_BOOL_SPARSITY$$ from true to false.
