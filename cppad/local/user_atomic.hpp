@@ -75,7 +75,7 @@ of a function
 $latex \[
 	y = f(x) \; {\rm where} \; f : B^n \rightarrow B^m 
 \] $$
-more efficiently than by coding it $codei%AD<%Base%>%$$ 
+more efficiently than by coding it using $codei%AD<%Base%>%$$ 
 $cref/atomic/glossary/Operation/Atomic/$$ operations
 and letting CppAD do the rest.
 In this case, $code CPPAD_USER_ATOMIC$$ can be used
@@ -93,7 +93,7 @@ must be defined by the user.
 The $icode forward$$ the routine, 
 for the case $icode%k% = 0%$$, must be implemented.
 Functions with the correct prototype,
-that just return $icode false$$, 
+that just return $code false$$, 
 can be used for the other cases 
 (unless they are required by your calculations). 
 For example, you need not implement

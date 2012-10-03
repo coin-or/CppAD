@@ -60,6 +60,10 @@ This section contains a list of the changes to CppAD during 2012
 The purpose of this section is to
 assist you in learning about changes between various versions of CppAD.
 
+$head 10-02$$
+Fix another problem with Debian's $code /bin/sh$$ shell executing
+$code multi_thread/test.sh$$; see $cref/03-17/whats_new_12/03-17/$$
+
 $head 09-24$$
 Improve documentation for the 
 $cref user_atomic$$ 
@@ -472,7 +476,8 @@ Calling $code taylor_capacity$$, with to with capacity equal to zero,
 	   different thread during parallel execution.
 
 	   $head 03-17$$
-	   Debian recently converted the default shell from $code bash$$ to $code dash$$
+	   Debian recently converted the default shell corresponding to
+	   $code /bin/sh$$ to  $code dash$$
 	   (which caused $code multi_thread/test.sh$$ to fail).
 	   This has been fixed.
 	   In general, Debian's policy is that $code bin/sh$$ will be a 

@@ -14,7 +14,7 @@
 # --------------------------------------------------------------------------
 # setup
 next_program() {
-	(( i_program = i_program + 1 ))
+	i_program=`expr $i_program + 1`
 	if [ $i_program -ge $n_program ]
 	then
 		i_program='0'
@@ -40,10 +40,10 @@ do
 	if [ ! -e "$program" ]
 	then
 		program_list=`echo "$program_list" | sed -e "s| $program||"`
-		(( n_program = n_program - 1 ))
+		n_program=`expr $n_program - 1`
 	fi
 done
-if [ "$n_program" == '0' ]
+if [ "$n_program" = '0' ]
 then
 	echo "multi_thread/test.sh: nothing to test"
 	exit 0
