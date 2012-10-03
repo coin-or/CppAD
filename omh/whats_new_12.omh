@@ -446,253 +446,253 @@ $cref/sequence constructor/FunConstruct/Sequence Constructor/$$.
 
 $head 03-26$$
 Calling $code taylor_capacity$$, with to with capacity equal to zero,
-	   was not
-	   $cref/freeing memory/capacity_taylor/c/Freeing Memory/$$.
-	   This has been fixed.
+was not
+$cref/freeing memory/capacity_taylor/c/Freeing Memory/$$.
+This has been fixed.
 
-	   $head 03-23$$
-	   $list number$$
-	   Improve, the multi-threading examples
-	   $cref simple_ad_openmp.cpp$$,
-	   $cref simple_ad_bthread.cpp$$, and
-	   $cref simple_ad_pthread.cpp$$.
-	   This includes separating generic code that can be used for all applications
-	   from problem specific code.
-	   $lnext
-	   Add initialization of statics in 
-	   $cref/CheckSimpleVector/parallel_ad/CheckSimpleVector/$$ 
-	   during $code parallel_ad$$ call.
-	   These statics are required to use 
-	   $cref/CppAD::vector/CppAD_vector/$$.
-	   $lnext
-	   Add a debugging check to make sure $cref CheckSimpleVector$$
-	   is initialized in sequential mode.
-	   $lend
+$head 03-23$$
+$list number$$
+Improve, the multi-threading examples
+$cref simple_ad_openmp.cpp$$,
+$cref simple_ad_bthread.cpp$$, and
+$cref simple_ad_pthread.cpp$$.
+This includes separating generic code that can be used for all applications
+from problem specific code.
+$lnext
+Add initialization of statics in 
+$cref/CheckSimpleVector/parallel_ad/CheckSimpleVector/$$ 
+during $code parallel_ad$$ call.
+These statics are required to use 
+$cref/CppAD::vector/CppAD_vector/$$.
+$lnext
+Add a debugging check to make sure $cref CheckSimpleVector$$
+is initialized in sequential mode.
+$lend
 
-	   $head 03-21$$
-	   Fix an incorrect error check in $code thread_alloc$$
-	   that did not allow $cref ta_return_memory$$ 
-	   to return memory in sequential execution mode that was allocated by a 
-	   different thread during parallel execution.
+$head 03-21$$
+Fix an incorrect error check in $code thread_alloc$$
+that did not allow $cref ta_return_memory$$ 
+to return memory in sequential execution mode that was allocated by a 
+different thread during parallel execution.
 
-	   $head 03-17$$
-	   Debian recently converted the default shell corresponding to
-	   $code /bin/sh$$ to  $code dash$$
-	   (which caused $code multi_thread/test.sh$$ to fail).
-	   This has been fixed.
-	   In general, Debian's policy is that $code bin/sh$$ will be a 
-	   $href%
-	   http://pubs.opengroup.org/onlinepubs/009695399/utilities/xcu_chap02.html%
-	   Posix Shell
-	   %$$.
+$head 03-17$$
+Debian recently converted the default shell corresponding to
+$code /bin/sh$$ to  $code dash$$
+(which caused $code multi_thread/test.sh$$ to fail).
+This has been fixed.
+In general, Debian's policy is that $code bin/sh$$ will be a 
+$href%
+http://pubs.opengroup.org/onlinepubs/009695399/utilities/xcu_chap02.html%
+Posix Shell
+%$$.
 
-	   $head 03-11$$
-	   There was a bug in $cref thread_alloc$$ where extra memory was held
-	   onto even if $cref/hold_memory/ta_hold_memory/$$ was never called
-	   and only one thread was used by the program.  This caused 
-	   $codei%
-	   valgrind --leak-check=full --show-reachable=yes
-	   %$$
-	   to generate an error message.
-	   If $cref/multiple threads/multi_thread/$$ are used,
-	   one should free this 
-	   $cref/extra memory/ta_free_available/Purpose/Extra Memory/$$
-	   for threads other than thread zero.
-	   If $code hold_memory$$ is used,
-	   one should call $cref/free_available/ta_free_available/$$ for all threads. 
-
-
-	   $head 03-03$$
-	   $list number$$
-	   Add the examples 
-	   $cref simple_ad_openmp.cpp$$,
-	   $cref simple_ad_bthread.cpp$$
-	   and $cref simple_ad_pthread.cpp$$.
-	   $lnext
-	   Fix bug in finding boost multi-threading library
-	   (due to fact that $cref/boost_dir/InstallUnix/boost_dir/$$ 
-	    is not the prefix during the boost installation).
-	   $lend
-
-	   $head 03-02$$
-	   $list number$$
-	   Change the name $code simple_ad.cpp$$ to $cref team_example.cpp$$
-	   $lnext
-	   The multi-threading $code team_example.cpp$$ example was changed to use 
-	   $latex f(x) = \sqrt{ x^2 }$$ instead of the function
-	   $latex {\rm atan2} [ \sin(x) , \cos (x) ]$$
-	   (both functions should behave like the identity function $latex f(x) = x$$).
-	   This enabled the removal of $code multi_thread/arc_tan.cpp$$.
-	   $lnext
-	   In $cref team_example.cpp$$ check that all of the threads
-	   pass their individual test; i.e. $codei%work_all_[%thread_num%]%.ok%$$
-	   is true for all $icode thread_num$$.
-	   $lend
-
-	   $head 02-11$$
-	   $list number$$
-	   The requirements in 
-	   $cref base_member$$ were missing from the $cref base_require$$ documentation.
-	   In addition,
-	   the $cref base_require.cpp$$ example has been added.
-	   $lend
-	   The specifications for $cref memory_leak$$ where changes so that
-	   calling routine specifies the amount of static memory to add.
-	   In addition,
-	   it is now possible to call 
-	   $code memory_leak$$ when $cref/num_threads/ta_num_threads/$$ 
-	   is greater than one
-	   (still can't be in parallel mode).
-
-	   $head 02-10$$
-	   $list number$$
-	   Add the missing Base class requirements in
-	   the entire $cref base_member$$ section
-	   and under the $cref/Output Operator/base_require/Output Operator/$$
-	   in the $cref base_require$$ section.
-	   $lnext
-	   Add the $cref base_alloc.hpp$$ example.
-	   $lend
+$head 03-11$$
+There was a bug in $cref thread_alloc$$ where extra memory was held
+onto even if $cref/hold_memory/ta_hold_memory/$$ was never called
+and only one thread was used by the program.  This caused 
+$codei%
+valgrind --leak-check=full --show-reachable=yes
+%$$
+to generate an error message.
+If $cref/multiple threads/multi_thread/$$ are used,
+one should free this 
+$cref/extra memory/ta_free_available/Purpose/Extra Memory/$$
+for threads other than thread zero.
+If $code hold_memory$$ is used,
+one should call $cref/free_available/ta_free_available/$$ for all threads. 
 
 
-	   $head 02-09$$
-	   $list number$$
-	   Add the $icode set_static$$ to $cref memory_leak$$.
-	   This is necessary for testing base types that allocate memory
-	   for each element.
-	   $lnext
-	   Fix memory allocation bug in $code cppad/local/pod_vector.hpp$$
-	   when each element of the $cref/Base/base_require/$$ type allocated memory.
-	   $lend
+$head 03-03$$
+$list number$$
+Add the examples 
+$cref simple_ad_openmp.cpp$$,
+$cref simple_ad_bthread.cpp$$
+and $cref simple_ad_pthread.cpp$$.
+$lnext
+Fix bug in finding boost multi-threading library
+(due to fact that $cref/boost_dir/InstallUnix/boost_dir/$$ 
+is not the prefix during the boost installation).
+$lend
 
-	   $head 01-30$$
-	   Make another attempt to fix linking with boost threads where the wrong
-	   version of the library is in the system include directory; i.e.,
-	   to have $cref/boost_dir/InstallUnix/boost_dir/$$ override the default
-	   library.
+$head 03-02$$
+$list number$$
+Change the name $code simple_ad.cpp$$ to $cref team_example.cpp$$
+$lnext
+The multi-threading $code team_example.cpp$$ example was changed to use 
+$latex f(x) = \sqrt{ x^2 }$$ instead of the function
+$latex {\rm atan2} [ \sin(x) , \cos (x) ]$$
+(both functions should behave like the identity function $latex f(x) = x$$).
+This enabled the removal of $code multi_thread/arc_tan.cpp$$.
+$lnext
+In $cref team_example.cpp$$ check that all of the threads
+pass their individual test; i.e. $codei%work_all_[%thread_num%]%.ok%$$
+is true for all $icode thread_num$$.
+$lend
 
-	   $head 01-27$$
-	   There were some problems with 
-	   $cref/configure's/InstallUnix/Configure/$$ automatic detection of
-	   the boost multi-threading library. 
-	   These have been fixed.
+$head 02-11$$
+$list number$$
+The requirements in 
+$cref base_member$$ were missing from the $cref base_require$$ documentation.
+In addition,
+the $cref base_require.cpp$$ example has been added.
+$lend
+The specifications for $cref memory_leak$$ where changes so that
+calling routine specifies the amount of static memory to add.
+In addition,
+it is now possible to call 
+$code memory_leak$$ when $cref/num_threads/ta_num_threads/$$ 
+is greater than one
+(still can't be in parallel mode).
 
-	   $head 01-24$$
-	   It used to be that $cref thread_alloc$$ did not hold onto memory
-	   when $icode num_threads$$ was one in the previous call to
-	   $cref/parallel_setup/ta_parallel_setup/$$.
-	   Holding onto memory is now controlled by the separate routine
-	   $cref/hold_memory/ta_hold_memory/$$.
-	   This give the user more control over the memory allocator
-	   and the ability to obtain a speed up even 
-	   when there is only one thread.
-	   To convert old code to the new interface, after each call to
-	   $codei%
-	   thread_alloc::parallel_setup(%num_threads%, %in_parallel%, %thread_num%);
-	   %$$
-	   put the following call
-	   $codei%
-	   thread_alloc::hold_memory(%num_threads% > 1);
-	   %$$
+$head 02-10$$
+$list number$$
+Add the missing Base class requirements in
+the entire $cref base_member$$ section
+and under the $cref/Output Operator/base_require/Output Operator/$$
+in the $cref base_require$$ section.
+$lnext
+Add the $cref base_alloc.hpp$$ example.
+$lend
 
-	   $head 01-23$$
-	   Change variable notation and use $cref optimize$$ in
-	   $cref mul_level.cpp$$.
 
-	   $head 01-20$$
-	   $list number$$
-	   Add the example $cref change_const.cpp$$
-	   which shows how to compute derivatives of functions that have
-	   parameters that can change (but derivatives are not computed 
+$head 02-09$$
+$list number$$
+Add the $icode set_static$$ to $cref memory_leak$$.
+This is necessary for testing base types that allocate memory
+for each element.
+$lnext
+Fix memory allocation bug in $code cppad/local/pod_vector.hpp$$
+when each element of the $cref/Base/base_require/$$ type allocated memory.
+$lend
+
+$head 01-30$$
+Make another attempt to fix linking with boost threads where the wrong
+version of the library is in the system include directory; i.e.,
+to have $cref/boost_dir/InstallUnix/boost_dir/$$ override the default
+library.
+
+$head 01-27$$
+There were some problems with 
+$cref/configure's/InstallUnix/Configure/$$ automatic detection of
+the boost multi-threading library. 
+These have been fixed.
+
+$head 01-24$$
+It used to be that $cref thread_alloc$$ did not hold onto memory
+when $icode num_threads$$ was one in the previous call to
+$cref/parallel_setup/ta_parallel_setup/$$.
+Holding onto memory is now controlled by the separate routine
+$cref/hold_memory/ta_hold_memory/$$.
+This give the user more control over the memory allocator
+and the ability to obtain a speed up even 
+when there is only one thread.
+To convert old code to the new interface, after each call to
+$codei%
+thread_alloc::parallel_setup(%num_threads%, %in_parallel%, %thread_num%);
+%$$
+put the following call
+$codei%
+thread_alloc::hold_memory(%num_threads% > 1);
+%$$
+
+$head 01-23$$
+Change variable notation and use $cref optimize$$ in
+$cref mul_level.cpp$$.
+
+$head 01-20$$
+$list number$$
+Add the example $cref change_const.cpp$$
+which shows how to compute derivatives of functions that have
+parameters that can change (but derivatives are not computed 
 				    with respect to these parameters).
-	   $lnext
-	   The documentation for machine $cref epsilon$$
-	   has been improved.
+$lnext
+The documentation for machine $cref epsilon$$
+has been improved.
 (The fact that it can be used for $icode Base$$ types was missing.)
-	   $lend
+$lend
 
-	   $head 01-19$$
-	   $list number$$
-	   In cases where $code test.sh$$ is trivial,
-	   put its operations in corresponding makefile.
-	   $lnext
-	   Fix problem compiling $code cppad/speed/sparse_evaluate.hpp$$
-	   under gcc on Fedora 17.
-	   $lnext
-	   Run $code multi_thread/test.sh$$ from source directory
-	   (no need to copy to build directory).
-	   $lend
+$head 01-19$$
+$list number$$
+In cases where $code test.sh$$ is trivial,
+put its operations in corresponding makefile.
+$lnext
+Fix problem compiling $code cppad/speed/sparse_evaluate.hpp$$
+under gcc on Fedora 17.
+$lnext
+Run $code multi_thread/test.sh$$ from source directory
+(no need to copy to build directory).
+$lend
 
-	   $head 01-16$$
-	   The test program $code multi_thread/test.sh$$ failed if the 
-	   $cref/openmp_flags/InstallUnix/openmp_flags/$$ not present in the
-	   $code configure$$ command.
-	   This has been fixed.
-	   In addition, this $code test.sh$$ has been made faster by cycling through
-	   the available threading systems instead of doing every system for every
-	   test. 
+$head 01-16$$
+The test program $code multi_thread/test.sh$$ failed if the 
+$cref/openmp_flags/InstallUnix/openmp_flags/$$ not present in the
+$code configure$$ command.
+This has been fixed.
+In addition, this $code test.sh$$ has been made faster by cycling through
+the available threading systems instead of doing every system for every
+test. 
 
-	   $head 01-15$$
-	   Fix $code make test$$ so it works when 
-	   $cref/configure/InstallUnix/Configure/$$ is run in the distribution directory
-	   $codei%cppad-%yyyymmdd%$$
-	   (not just when it is run in a different directory).
+$head 01-15$$
+Fix $code make test$$ so it works when 
+$cref/configure/InstallUnix/Configure/$$ is run in the distribution directory
+$codei%cppad-%yyyymmdd%$$
+(not just when it is run in a different directory).
 
 
-	   $head 01-12$$
-	   The $code -lpthread$$ library was missing from the 
-	   $cref multi_thread$$ test program linker command.
-	   This has been fixed.
+$head 01-12$$
+The $code -lpthread$$ library was missing from the 
+$cref multi_thread$$ test program linker command.
+This has been fixed.
 
-	   $head 01-07$$
-	   $list number$$
-	   A duplicated code block beginning with
-	   $codep
+$head 01-07$$
+$list number$$
+A duplicated code block beginning with
+$codep
 if( fabs( fcur ) <= epsilon_ )
-	   $$
-	   was removed from the routine $code multi_newton_worker$$, in the file
-	   $cref multi_newton_work.cpp$$.
+$$
+was removed from the routine $code multi_newton_worker$$, in the file
+$cref multi_newton_work.cpp$$.
 
-	   $lnext
-	   The distance between solutions that are joined to one solution
-	   has been corrected from $latex (b - a) / (2 n )$$ to
-	   $latex (b - a) / n $$; see
-	   $cref/xout/multi_newton.cpp/xout/$$.
-	   The correction was in the file $cref multi_newton_work.cpp$$ where
-	   $code sub_length_ / 2$$ was change to $code sub_length_$$.
+$lnext
+The distance between solutions that are joined to one solution
+has been corrected from $latex (b - a) / (2 n )$$ to
+$latex (b - a) / n $$; see
+$cref/xout/multi_newton.cpp/xout/$$.
+The correction was in the file $cref multi_newton_work.cpp$$ where
+$code sub_length_ / 2$$ was change to $code sub_length_$$.
 
-	   $lend
+$lend
 
-	   $head 01-02$$
-	   $list number$$
-	   The $cref thread_alloc$$ memory allocator was changed to avoid
-	   certain false sharing situations
-	   (cases where two different thread were changing and using memory
-	    that is on the same page of cache).
-	   On one tests machine, the execution time for the 32 thread case for the test
-	   $codep
-	   ./openmp_test multi_newton 1 32 1000 4800 10 true
-	   $$
-	   improved from  0.0302 seconds to 0.0135 seconds.
+$head 01-02$$
+$list number$$
+The $cref thread_alloc$$ memory allocator was changed to avoid
+certain false sharing situations
+(cases where two different thread were changing and using memory
+that is on the same page of cache).
+On one tests machine, the execution time for the 32 thread case for the test
+$codep
+./openmp_test multi_newton 1 32 1000 4800 10 true
+$$
+improved from  0.0302 seconds to 0.0135 seconds.
 
-	   $lnext
-	   There was a problem with the correctness test section of the
-	   $cref multi_newton_time.cpp$$ test.
-	   The convergence criteria, and correctness criteria,
-	   needed to be scaled by the largest argument values.
-	   This was a problem with over a hundred zeros were included in the test
-	   (and the largest argument value was $latex 100 \pi$$ or more).
+$lnext
+There was a problem with the correctness test section of the
+$cref multi_newton_time.cpp$$ test.
+The convergence criteria, and correctness criteria,
+needed to be scaled by the largest argument values.
+This was a problem with over a hundred zeros were included in the test
+(and the largest argument value was $latex 100 \pi$$ or more).
 
-	   $lnext
-	   There was a problem with the way that
-	   $cref/multi_newton_combine/multi_newton_work.cpp/multi_newton_combine/$$
-	   joined two solutions into one.
-	   It is possible that one of the solutions that needs to be joined is on 
+$lnext
+There was a problem with the way that
+$cref/multi_newton_combine/multi_newton_work.cpp/multi_newton_combine/$$
+joined two solutions into one.
+It is possible that one of the solutions that needs to be joined is on 
 the  boundary and very close to a solution in the next (or previous interval)
-	   that is not on the  boundary. In this case,
-	   the one with the smaller function value is chosen.
+that is not on the  boundary. In this case,
+the one with the smaller function value is chosen.
 
-	   $lend
-	   for the previous 
+$lend
+for the previous 
 
-	   $end
+$end
