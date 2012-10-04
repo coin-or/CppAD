@@ -60,6 +60,17 @@ This section contains a list of the changes to CppAD during 2012
 The purpose of this section is to
 assist you in learning about changes between various versions of CppAD.
 
+$head 10-04$$
+$list number$$
+Change $cref speed_main$$ so that it outputs small rates (less than 1000)
+with two decimal points of precision (instead of as integers).
+In addition, flush result for each size when it finishes to give user
+more feedback about how things are progressing.
+$lnext
+Add the optional $cref/test_size/time_test/test_size/$$ argument
+to the $code time_test$$ routine.
+$lend
+
 $head 10-03$$
 Change the $code hold_memory$$ speed to option to just
 $cref/memory/speed_main/option_list/memory/$$.

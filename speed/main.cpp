@@ -15,10 +15,11 @@ Please visit http://www.coin-or.org/CppAD/ for information on other licenses.
 # include <cassert>
 # include <cstddef>
 # include <iostream>
+# include <iomanip>
 # include <cppad/vector.hpp>
 # include <cppad/speed/det_grad_33.hpp>
 # include <cppad/speed/det_33.hpp>
-# include <cppad/speed_test.hpp>
+# include <cppad/time_test.hpp>
 # include <cppad/speed/uniform_01.hpp>
 # include <cppad/poly.hpp>
 # include <cppad/track_new_del.hpp>
@@ -313,6 +314,11 @@ namespace {
 	static size_t Run_error_count = 0;
 	bool run_correct(bool correct_case(bool), const char *case_name)
 	{	bool ok;
+# ifdef SPEED_DOUBLE
+		ok = correct_case(true);
+# else
+		ok = correct_case(false);
+# endif
 		cout << AD_PACKAGE << "_" << case_name;
 		if( global_retape )
 			cout << "_retape";
@@ -323,11 +329,6 @@ namespace {
 		if( global_memory )
 			cout << "_memory";
 		cout << "_ok = ";
-# ifdef SPEED_DOUBLE
-		ok = correct_case(true);
-# else
-		ok = correct_case(false);
-# endif
 		if( ok )
 		{	cout << " true" << endl;
 			Run_ok_count++;
@@ -348,9 +349,6 @@ namespace {
 		cout << AD_PACKAGE << "_" << case_name << "_size = ";
 		output(size_vec);
 		cout << endl;
-
-		CppAD::vector<size_t> rate_vec( size_vec.size() );
-		rate_vec = CppAD::speed_test(speed_case, size_vec, time_min);
 		cout << AD_PACKAGE << "_" << case_name;
 		if( global_retape )
 			cout << "_retape";
@@ -361,8 +359,21 @@ namespace {
 		if( global_memory )
 			cout << "_memory";
 		cout << "_rate = ";
-		output(rate_vec);
-		cout << endl;
+
+		cout << std::fixed;
+		for(size_t i = 0; i < size_vec.size(); i++)
+		{	if( i == 0 )
+				cout << "[ ";
+			else	cout << ", ";	
+			cout << std::flush;
+			size_t size = size_vec[i];
+			double time = CppAD::time_test(speed_case, time_min, size);
+			double rate = 1. / time;
+			if( rate >= 1000 )
+				cout << std::setprecision(0) << rate;
+			else cout << std::setprecision(2) << rate;
+		}
+		cout << " ]" << endl;
 		return;
 	}
 }
