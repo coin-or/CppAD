@@ -46,6 +46,7 @@ Please visit http://www.coin-or.org/CppAD/ for information on other licenses.
 /*
 $begin speed_main$$
 $spell
+	optionlist
 	underbar
 	alloc
 	mat_mul
@@ -206,23 +207,24 @@ and improve speed.
 $head Correctness Results$$
 An output line of the following form:
 $codei%
-	%package%_%test%_%option_list%_ok = %flag%
+	%package%_%test%_%optionlist%_ok = %flag%
 %$$
 is generated for each correctness test where
 $icode package$$ and $icode test$$ are as above,
-$icode option_list$$ are the options separated by the 
-underbar $code _$$ character,
+$icode optionlist$$ are the options (in $icode option_list$$) 
+separated by the underbar $code _$$ character
+(whereas they are separated by spaces in $icode option_list$$),
 and $icode flag$$ is $code true$$ or $code false$$.
 
 $head Speed Results$$
 For each speed test, corresponds to three lines of the
 following form are generated:
 $codei%
-	%package%_%test%_%option_list%_ok   = %flag%
-	%package%_%test%_%option_list%_size = [ %size_1%, %...%, %size_n% ]
-	%package%_%test%_%option_list%_rate = [ %rate_1%, %...%, %rate_n% ]
+	%package%_%test%_%optionlist%_ok   = %flag%
+	%package%_%test%_%optionlist%_size = [ %size_1%, %...%, %size_n% ]
+	%package%_%test%_%optionlist%_rate = [ %rate_1%, %...%, %rate_n% ]
 %$$
-The values $icode package$$, $icode test$$, $icode option_list$$,
+The values $icode package$$, $icode test$$, $icode optionlist$$,
 and $icode flag$$ are as in the correctness results above.
 The values $icode size_1$$, ..., $icode size_n$$ are the
 size arguments used for the corresponding tests.
