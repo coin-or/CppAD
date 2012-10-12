@@ -70,7 +70,7 @@ am__libeigen_a_SOURCES_DIST = eigen_det.cpp eigen_array.cpp
 @CppAD_EIGEN_DIR_TRUE@	libeigen_a-eigen_det.$(OBJEXT) \
 @CppAD_EIGEN_DIR_TRUE@	libeigen_a-eigen_array.$(OBJEXT)
 libeigen_a_OBJECTS = $(am_libeigen_a_OBJECTS)
-am__example_SOURCES_DIST = mul_level_adolc.cpp ode_taylor_adolc.cpp \
+am__example_SOURCES_DIST = mul_level_adolc.cpp mul_level_adolc_ode.cpp \
 	example.cpp abort_recording.cpp abs.cpp acos.cpp add.cpp \
 	add_eq.cpp ad_assign.cpp ad_ctor.cpp ad_fun.cpp ad_in_c.cpp \
 	asin.cpp atan.cpp atan2.cpp base_alloc.hpp base_require.cpp \
@@ -91,10 +91,10 @@ am__example_SOURCES_DIST = mul_level_adolc.cpp ode_taylor_adolc.cpp \
 	mat_mul.hpp mul.cpp mul_eq.cpp mul_level.cpp nan.cpp \
 	near_equal.cpp near_equal_ext.cpp not_complex_ad.cpp \
 	numeric_type.cpp ode_err_control.cpp ode_err_maxabs.cpp \
-	ode_gear.cpp ode_gear_control.cpp ode_stiff.cpp ode_taylor.cpp \
-	omp_alloc.cpp opt_val_hes.cpp optimize.cpp output.cpp \
-	par_var.cpp poly.cpp pow.cpp pow_int.cpp print_for.cpp \
-	reciprocal.cpp reverse_any.cpp reverse_one.cpp \
+	ode_gear.cpp ode_gear_control.cpp ode_stiff.cpp \
+	mul_level_ode.cpp omp_alloc.cpp opt_val_hes.cpp optimize.cpp \
+	output.cpp par_var.cpp poly.cpp pow.cpp pow_int.cpp \
+	print_for.cpp reciprocal.cpp reverse_any.cpp reverse_one.cpp \
 	reverse_three.cpp reverse_two.cpp rev_one.cpp \
 	rev_sparse_hes.cpp rev_sparse_jac.cpp rev_two.cpp \
 	romberg_mul.cpp romberg_one.cpp rosen_34.cpp runge45_1.cpp \
@@ -104,7 +104,7 @@ am__example_SOURCES_DIST = mul_level_adolc.cpp ode_taylor_adolc.cpp \
 	tape_index.cpp thread_alloc.cpp unary_minus.cpp unary_plus.cpp \
 	user_tan.cpp value.cpp var2par.cpp vec_ad.cpp vector_bool.cpp
 @CppAD_ADOLC_TRUE@am__objects_1 = mul_level_adolc.$(OBJEXT) \
-@CppAD_ADOLC_TRUE@	ode_taylor_adolc.$(OBJEXT)
+@CppAD_ADOLC_TRUE@	mul_level_adolc_ode.$(OBJEXT)
 am_example_OBJECTS = $(am__objects_1) example.$(OBJEXT) \
 	abort_recording.$(OBJEXT) abs.$(OBJEXT) acos.$(OBJEXT) \
 	add.$(OBJEXT) add_eq.$(OBJEXT) ad_assign.$(OBJEXT) \
@@ -136,18 +136,18 @@ am_example_OBJECTS = $(am__objects_1) example.$(OBJEXT) \
 	not_complex_ad.$(OBJEXT) numeric_type.$(OBJEXT) \
 	ode_err_control.$(OBJEXT) ode_err_maxabs.$(OBJEXT) \
 	ode_gear.$(OBJEXT) ode_gear_control.$(OBJEXT) \
-	ode_stiff.$(OBJEXT) ode_taylor.$(OBJEXT) omp_alloc.$(OBJEXT) \
-	opt_val_hes.$(OBJEXT) optimize.$(OBJEXT) output.$(OBJEXT) \
-	par_var.$(OBJEXT) poly.$(OBJEXT) pow.$(OBJEXT) \
-	pow_int.$(OBJEXT) print_for.$(OBJEXT) reciprocal.$(OBJEXT) \
-	reverse_any.$(OBJEXT) reverse_one.$(OBJEXT) \
-	reverse_three.$(OBJEXT) reverse_two.$(OBJEXT) \
-	rev_one.$(OBJEXT) rev_sparse_hes.$(OBJEXT) \
-	rev_sparse_jac.$(OBJEXT) rev_two.$(OBJEXT) \
-	romberg_mul.$(OBJEXT) romberg_one.$(OBJEXT) rosen_34.$(OBJEXT) \
-	runge45_1.$(OBJEXT) runge45_2.$(OBJEXT) seq_property.$(OBJEXT) \
-	simple_vector.$(OBJEXT) sign.$(OBJEXT) sin.$(OBJEXT) \
-	sinh.$(OBJEXT) sparse_hessian.$(OBJEXT) \
+	ode_stiff.$(OBJEXT) mul_level_ode.$(OBJEXT) \
+	omp_alloc.$(OBJEXT) opt_val_hes.$(OBJEXT) optimize.$(OBJEXT) \
+	output.$(OBJEXT) par_var.$(OBJEXT) poly.$(OBJEXT) \
+	pow.$(OBJEXT) pow_int.$(OBJEXT) print_for.$(OBJEXT) \
+	reciprocal.$(OBJEXT) reverse_any.$(OBJEXT) \
+	reverse_one.$(OBJEXT) reverse_three.$(OBJEXT) \
+	reverse_two.$(OBJEXT) rev_one.$(OBJEXT) \
+	rev_sparse_hes.$(OBJEXT) rev_sparse_jac.$(OBJEXT) \
+	rev_two.$(OBJEXT) romberg_mul.$(OBJEXT) romberg_one.$(OBJEXT) \
+	rosen_34.$(OBJEXT) runge45_1.$(OBJEXT) runge45_2.$(OBJEXT) \
+	seq_property.$(OBJEXT) simple_vector.$(OBJEXT) sign.$(OBJEXT) \
+	sin.$(OBJEXT) sinh.$(OBJEXT) sparse_hessian.$(OBJEXT) \
 	sparse_jacobian.$(OBJEXT) sqrt.$(OBJEXT) \
 	stack_machine.$(OBJEXT) sub.$(OBJEXT) sub_eq.$(OBJEXT) \
 	tan.$(OBJEXT) tanh.$(OBJEXT) tape_index.$(OBJEXT) \
@@ -329,8 +329,8 @@ top_builddir = @top_builddir@
 top_srcdir = @top_srcdir@
 @CppAD_ADOLC_FALSE@ADOLC_SRC_FILES = 
 # -------------------------------------------------------------------------
-@CppAD_ADOLC_TRUE@ADOLC_SRC_FILES = mul_level_adolc.cpp ode_taylor_adolc.cpp
-@CppAD_ADOLC_FALSE@ADOLC_EXTRA_FILES = mul_level_adolc.cpp ode_taylor_adolc.cpp
+@CppAD_ADOLC_TRUE@ADOLC_SRC_FILES = mul_level_adolc.cpp mul_level_adolc_ode.cpp
+@CppAD_ADOLC_FALSE@ADOLC_EXTRA_FILES = mul_level_adolc.cpp mul_level_adolc_ode.cpp
 @CppAD_ADOLC_TRUE@ADOLC_EXTRA_FILES = 
 @CppAD_ADOLC_FALSE@ADOLC_LIB = 
 @CppAD_ADOLC_TRUE@ADOLC_LIB = -ladolc -L$(ADOLC_DIR)/lib -L$(ADOLC_DIR)/lib64
@@ -456,7 +456,7 @@ example_SOURCES = \
 	ode_gear.cpp \
 	ode_gear_control.cpp\
 	ode_stiff.cpp \
-	ode_taylor.cpp \
+	mul_level_ode.cpp \
 	omp_alloc.cpp \
 	opt_val_hes.cpp \
 	optimize.cpp \
@@ -630,6 +630,8 @@ distclean-compile:
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/mul_eq.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/mul_level.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/mul_level_adolc.Po@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/mul_level_adolc_ode.Po@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/mul_level_ode.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/nan.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/near_equal.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/near_equal_ext.Po@am__quote@
@@ -640,8 +642,6 @@ distclean-compile:
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/ode_gear.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/ode_gear_control.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/ode_stiff.Po@am__quote@
-@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/ode_taylor.Po@am__quote@
-@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/ode_taylor_adolc.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/omp_alloc.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/opt_val_hes.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/optimize.Po@am__quote@

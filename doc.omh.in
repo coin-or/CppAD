@@ -129,9 +129,9 @@ $lnext
 Derivatives of functions that are defined in terms of other derivatives
 can be computed using multiple levels of AD;
 see $cref/mul_level.cpp/$$ for a simple example
-and $cref/ode_taylor.cpp/$$ for a more realistic example.
+and $cref/mul_level_ode.cpp/$$ for a more realistic example.
 To this end, CppAD can also be used with other AD types; for example see
-$cref/ode_taylor_adolc.cpp/$$.
+$cref/mul_level_adolc_ode.cpp/$$.
 
 $lnext
 A set of programs for doing $cref/speed/$$ comparisons between

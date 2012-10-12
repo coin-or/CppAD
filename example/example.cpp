@@ -131,8 +131,8 @@ extern bool OdeErrMaxabs(void);
 extern bool OdeGear(void);
 extern bool OdeGearControl(void);
 extern bool OdeStiff(void);
-extern bool ode_taylor(void);
-extern bool ode_taylor_adolc(void);
+extern bool mul_level_ode(void);
+extern bool mul_level_adolc_ode(void);
 extern bool omp_alloc(void);
 extern bool opt_val_hes(void);
 extern bool optimize(void);
@@ -286,7 +286,7 @@ int main(void)
 	ok &= Run( OdeGear,           "OdeGear"          );
 	ok &= Run( OdeGearControl,    "OdeGearControl"   );
 	ok &= Run( OdeStiff,          "OdeStiff"         );
-	ok &= Run( ode_taylor,        "ode_taylor"       );
+	ok &= Run( mul_level_ode,        "mul_level_ode"       );
 	ok &= Run( omp_alloc,         "omp_alloc"        );
 	ok &= Run( opt_val_hes,       "opt_val_hes"      );
 	ok &= Run( optimize,          "optimize"         );
@@ -333,7 +333,7 @@ int main(void)
 	ok &= Run( vectorBool,        "vectorBool"       );
 # ifdef CPPAD_ADOLC_EXAMPLES
 	ok &= Run( mul_level_adolc,   "mul_level_adolc"  );
-	ok &= Run( ode_taylor_adolc,  "ode_taylor_adolc" );
+	ok &= Run( mul_level_adolc_ode,  "mul_level_adolc_ode" );
 # endif
 # ifdef CPPAD_EIGEN_EXAMPLES
 	ok &= Run( eigen_array,       "eigen_array"      );

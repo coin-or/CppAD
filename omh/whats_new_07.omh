@@ -12,6 +12,7 @@ Please visit http://www.coin-or.org/CppAD/ for information on other licenses.
 
 $begin whats_new_07$$
 $spell
+	mul
 	cxx
 	omh
 	tgz
@@ -474,7 +475,7 @@ $cref/software guideline/WishList/Software Guidelines/$$
 wish list item has be brought up to date.
 
 $head 07-22$$
-Minor improvements to the $cref ode_taylor_adolc.cpp$$ example.
+Minor improvements to the $cref mul_level_adolc_ode.cpp$$ example.
 
 $head 07-21$$
 The $code openmp/run.sh$$ example programs
@@ -510,18 +511,18 @@ be more obvious in the test log.
 
 $head 07-19$$
 The download for CppAD has been broken since the example 
-$code ode_taylor_adolc.cpp$$ was added because the
+$code mul_level_adolc_ode.cpp$$ was added because the
 $code example/example$$ program was failing.
 This has been fixed.
 
 $head 07-18$$
 A realistic example using Adolc with CppAD
-$cref ode_taylor_adolc.cpp$$ was added.
+$cref mul_level_adolc_ode.cpp$$ was added.
 The documentation for $cref TrackNewDel$$ was improved.
 
 $head 07-14$$
 Add a discussion at the beginning of
-$cref ode_taylor.cpp$$ example
+$cref mul_level_ode.cpp$$ example
 (and improve the notation used in the example).
 
 $head 07-13$$

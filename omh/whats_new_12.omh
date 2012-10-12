@@ -60,6 +60,13 @@ This section contains a list of the changes to CppAD during 2012
 The purpose of this section is to
 assist you in learning about changes between various versions of CppAD.
 
+$head 10-12$$
+Change all the multiple levels of AD examples to 
+start with $cref mul_level$$.
+To be specific, move 
+$code ode_taylor.cpp$$ to $cref mul_level_ode.cpp$$ and
+$code ode_taylor_adolc.cpp$$ to $cref mul_level_adolc_ode.cpp$$.
+
 $head 10-04$$
 $list number$$
 Change $cref speed_main$$ so that it outputs small rates (less than 1000)

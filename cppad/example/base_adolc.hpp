@@ -69,7 +69,7 @@ $head Example$$
 The file $cref mul_level_adolc.cpp$$ contains an example use of
 Adolc's $code adouble$$ type for a CppAD $icode Base$$ type.
 It returns true if it succeeds and false otherwise.
-The file $cref ode_taylor_adolc.cpp$$ contains a more realistic
+The file $cref mul_level_adolc_ode.cpp$$ contains a more realistic
 (and complex) example.
 
 $head Include Files$$

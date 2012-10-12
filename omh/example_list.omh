@@ -41,8 +41,8 @@ $childtable%
 	example/jac_lu_det.cpp%
 	omh/mul_level.omh%
 	example/ode_stiff.cpp%
-	example/ode_taylor.cpp%
-	example/ode_taylor_adolc.cpp%
+	example/mul_level_ode.cpp%
+	example/mul_level_adolc_ode.cpp%
 	example/stack_machine.cpp
 %$$
 
@@ -182,8 +182,8 @@ $rref ode_evaluate.cpp$$
 $rref ode_gear_control.cpp$$
 $rref ode_gear.cpp$$
 $rref ode_stiff.cpp$$
-$rref ode_taylor_adolc.cpp$$
-$rref ode_taylor.cpp$$
+$rref mul_level_adolc_ode.cpp$$
+$rref mul_level_ode.cpp$$
 $rref omp_alloc.cpp$$
 $rref optimize.cpp$$
 $rref opt_val_hes.cpp$$

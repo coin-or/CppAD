@@ -142,7 +142,7 @@ The files
 $cref mul_level.cpp$$ and $cref change_const.cpp$$
 contain an examples and tests of this procedure.   
 They return true if they succeed and false otherwise.
-The file $cref ode_taylor.cpp$$ is a more complex example
+The file $cref mul_level_ode.cpp$$ is a more complex example
 use of multiple tapes.
 
 $end

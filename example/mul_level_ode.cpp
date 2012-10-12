@@ -11,35 +11,34 @@ Please visit http://www.coin-or.org/CppAD/ for information on other licenses.
 -------------------------------------------------------------------------- */
 
 /*
-$begin ode_taylor_adolc.cpp$$
+$begin mul_level_ode.cpp$$
 $spell
-	hpp
 	Taylor
 	Cpp
 	const
 	std
-	AdolcDir
+	Adolc
 	adouble
-	Vec
 $$
 
-$section Using Adolc with Taylor's Ode Solver: An Example and Test$$
-$index ODE, Taylor Adolc$$
-$index Taylor, ODE Adolc$$
-$index Adolc, ODE$$
+$section Taylor's Ode Solver: An Example and Test$$
+$index ODE, Taylor$$
+$index Taylor, ODE$$
+$index example, ODE$$
+$index test, ODE$$
 
 $head Purpose$$
 This is a realistic example using 
 two levels of taping (see $cref mul_level$$).
-The first level of taping uses Adolc's $code adouble$$ type
-to tape the solution of an ordinary differential equation.
+The first level of taping uses $code AD<double>$$ to tape the solution of an 
+ordinary differential equation.
 This solution is then differentiated with respect to a parameter vector.
-The second level of taping uses CppAD's type $code AD<adouble>$$ 
+The second level of taping uses $code AD< AD<double> >$$
 to take derivatives during the solution of the differential equation.
 These derivatives are used in the application
 of Taylor's method to the solution of the ODE.
-The example $cref ode_taylor.cpp$$ computes the same values using
-$code AD<double>$$ and $code AD< AD<double> >$$.
+The example $cref mul_level_adolc_ode.cpp$$ computes the same values using
+Adolc's type $code adouble$$ and CppAD's type $code AD<adouble>$$.
 
 $head ODE$$
 For this example the ODE's are defined by the function
@@ -144,43 +143,22 @@ $latex \[
 are used to calculate the Taylor coefficient $latex z^{(k)} ( t , x )$$
 which in turn gives the value for $latex  y^{(k+1)} y ( t , x)$$.
 
-$head base_adolc.hpp$$
-The file $cref base_adolc.hpp$$ is implements the
-$cref/Base type requirements/base_require/$$ where $icode Base$$
-is $code adolc$$.
-
-$head Memory Management$$
-Adolc uses raw memory arrays that depend on the number of 
-dependent and independent variables.
-The memory management utility $cref omp_alloc$$ 
-is used to manage this memory allocation.
-
-$head Configuration Requirement$$
-This example will be compiled and tested provided that
-the value $cref/adolc_dir/InstallUnix/adolc_dir/$$ is specified on the 
-$cref/configure/InstallUnix/Configure/$$ command line.
-
 $code
-$verbatim%example/ode_taylor_adolc.cpp%0%// BEGIN C++%// END C++%1%$$
+$verbatim%example/mul_level_ode.cpp%0%// BEGIN C++%// END C++%1%$$
 $$
 
 $end
 --------------------------------------------------------------------------
 */
 // BEGIN C++
-# include <adolc/adouble.h>
-# include <adolc/taping.h>
-# include <adolc/drivers/drivers.h>
-
-// definitions not in Adolc distribution and required to use CppAD::AD<adouble>
-# include <cppad/example/base_adolc.hpp>
 
 # include <cppad/cppad.hpp>
-// ==========================================================================
-namespace { // BEGIN empty namespace
+
+// =========================================================================
 // define types for each level
-typedef adouble            ADdouble;
-typedef CppAD::AD<adouble> ADDdouble;
+namespace { // BEGIN empty namespace
+typedef CppAD::AD<double>     ADdouble;
+typedef CppAD::AD< ADdouble > ADDdouble;
 
 // -------------------------------------------------------------------------
 // class definition for C++ function object that defines ODE
@@ -209,7 +187,7 @@ public:
 // -------------------------------------------------------------------------
 // Routine that uses Taylor's method to solve ordinary differential equaitons
 // and allows for algorithmic differentiation of the solution. 
-CPPAD_TESTVECTOR( ADdouble ) taylor_ode_adolc(
+CPPAD_TESTVECTOR( ADdouble ) taylor_ode(
 	Ode                     G       ,  // function that defines the ODE
 	size_t                  order   ,  // order of Taylor's method used
 	size_t                  nstep   ,  // number of steps to take
@@ -271,9 +249,9 @@ CPPAD_TESTVECTOR( ADdouble ) taylor_ode_adolc(
 }
 } // END empty namespace
 // ==========================================================================
-// Routine that tests algorithmic differentiation of solutions computed
+// Routine that tests alogirhtmic differentiation of solutions computed
 // by the routine taylor_ode.
-bool ode_taylor_adolc(void)
+bool mul_level_ode(void)
 {	// initialize the return value as true	
 	bool ok = true;
 
@@ -283,25 +261,16 @@ bool ode_taylor_adolc(void)
 	// some temporary indices
 	size_t i, j;
 
-	// set up for omp_alloc memory allocator
-	using CppAD::omp_alloc; // the allocator
-	size_t capacity;        // capacity of an allocation
-
-	// the vector x with lenght n (or greater) in double 
-	double* x = omp_alloc::create_array<double>(n, capacity);
-	// the vector x with lenght n in ADouble
+	// parameter vector in both double and ADdouble
+	CPPAD_TESTVECTOR(double)   x(n);
 	CPPAD_TESTVECTOR(ADdouble) X(n);
 	for(i = 0; i < n; i++)
 		X[i] = x[i] = double(i + 1);
 
 	// declare the parameters as the independent variable
-	int tag = 0;                     // Adolc setup
-	int keep = 1;
-	trace_on(tag, keep);
-	for(i = 0; i < n; i++)
-		X[i] <<= double(i + 1);  // X is independent for adouble type
+	CppAD::Independent(X);
 
-	// arguments to taylor_ode_adolc 
+	// arguments to taylor_ode 
 	Ode G(X);                // function that defines the ODE
 	size_t   order = n;      // order of Taylor's method used
 	size_t   nstep = 2;      // number of steps to take
@@ -313,48 +282,36 @@ bool ode_taylor_adolc(void)
 
 	// integrate the differential equation
 	CPPAD_TESTVECTOR( ADdouble ) Y_FINAL(n);
- 	Y_FINAL = taylor_ode_adolc(G, order, nstep, DT, Y_INI);
+ 	Y_FINAL = taylor_ode(G, order, nstep, DT, Y_INI);
 
-	// declare the differentiable fucntion f : A -> Y_FINAL
-	// (corresponding to the tape of adouble operations)
-	double* y_final = omp_alloc::create_array<double>(n, capacity);
-	for(i = 0; i < n; i++)
-		Y_FINAL[i] >>= y_final[i];
-	trace_off();
+	// define differentiable fucntion object f : A -> Y_FINAL
+	// that computes its derivatives in double
+	CppAD::ADFun<double> f(X, Y_FINAL);
 
 	// check function values
 	double check = 1.;
-	double t     = nstep * DT.value();
+	double t     = nstep * Value(DT);
 	for(i = 0; i < n; i++)
 	{	check *= x[i] * t / double(i + 1);
-		ok &= CppAD::NearEqual(y_final[i], check, 1e-10, 1e-10);
+		ok &= CppAD::NearEqual(Value(Y_FINAL[i]), check, 1e-10, 1e-10);
 	}
 
-	// memory where Jacobian will be returned
-	double* jac_ = omp_alloc::create_array<double>(n * n, capacity); 
-	double** jac = omp_alloc::create_array<double*>(n, capacity);
-	for(i = 0; i < n; i++)
-		jac[i] = jac_ + i * n;
+	// evaluate the Jacobian of h at a
+	CPPAD_TESTVECTOR(double) jac ( f.Jacobian(x) );
+	// There appears to be a bug in g++ version 4.4.2 becasue it generates
+	// a warning for the equivalent form
+	// CPPAD_TESTVECTOR(double) jac = f.Jacobian(x);
 
-	// evaluate Jacobian of h at a
-	size_t m = n;              // # dependent variables
-	jacobian(tag, int(m), int(n), x, jac); 
-	
 	// check Jacobian 
 	for(i = 0; i < n; i++)
 	{	for(j = 0; j < n; j++)
-		{	if( i < j )
+		{	double jac_ij = jac[i * n + j]; 
+			if( i < j )
 				check = 0.;
-			else	check = y_final[i] / x[j];
-			ok &= CppAD::NearEqual(jac[i][j], check, 1e-10, 1e-10);
+			else	check = Value( Y_FINAL[i] ) / x[j];
+			ok &= CppAD::NearEqual(jac_ij, check, 1e-10, 1e-10);
 		}
 	}
-
-	// make memroy avaiable for other use by this thread
-	omp_alloc::delete_array(x);
-	omp_alloc::delete_array(y_final);
-	omp_alloc::delete_array(jac_);
-	omp_alloc::delete_array(jac);
 	return ok;
 }
 
