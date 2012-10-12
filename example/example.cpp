@@ -121,6 +121,8 @@ extern bool Mul(void);
 extern bool MulEq(void);
 extern bool mul_level(void);
 extern bool mul_level_adolc(void);
+extern bool mul_level_ode(void);
+extern bool mul_level_adolc_ode(void);
 extern bool nan(void);
 extern bool Near_Equal(void);
 extern bool NearEqualExt(void);
@@ -131,8 +133,7 @@ extern bool OdeErrMaxabs(void);
 extern bool OdeGear(void);
 extern bool OdeGearControl(void);
 extern bool OdeStiff(void);
-extern bool mul_level_ode(void);
-extern bool mul_level_adolc_ode(void);
+extern bool ode_taylor(void);
 extern bool omp_alloc(void);
 extern bool opt_val_hes(void);
 extern bool optimize(void);
@@ -276,6 +277,7 @@ int main(void)
 	ok &= Run( Mul,               "Mul"              );
 	ok &= Run( MulEq,             "MulEq"            );
 	ok &= Run( mul_level,         "mul_level"        );
+	ok &= Run( mul_level_ode,     "mul_level_ode"    );
 	ok &= Run( nan,               "nan"              );
 	ok &= Run( Near_Equal,        "Near_Equal"       );
 	ok &= Run( NearEqualExt,      "NearEqualExt"     );
@@ -286,7 +288,7 @@ int main(void)
 	ok &= Run( OdeGear,           "OdeGear"          );
 	ok &= Run( OdeGearControl,    "OdeGearControl"   );
 	ok &= Run( OdeStiff,          "OdeStiff"         );
-	ok &= Run( mul_level_ode,        "mul_level_ode"       );
+	ok &= Run( ode_taylor,        "ode_taylor"       );
 	ok &= Run( omp_alloc,         "omp_alloc"        );
 	ok &= Run( opt_val_hes,       "opt_val_hes"      );
 	ok &= Run( optimize,          "optimize"         );
@@ -332,7 +334,7 @@ int main(void)
 	ok &= Run( vec_ad,            "vec_ad"           );
 	ok &= Run( vectorBool,        "vectorBool"       );
 # ifdef CPPAD_ADOLC_EXAMPLES
-	ok &= Run( mul_level_adolc,   "mul_level_adolc"  );
+	ok &= Run( mul_level_adolc,      "mul_level_adolc"     );
 	ok &= Run( mul_level_adolc_ode,  "mul_level_adolc_ode" );
 # endif
 # ifdef CPPAD_EIGEN_EXAMPLES

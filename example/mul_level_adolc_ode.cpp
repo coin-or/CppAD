@@ -40,6 +40,8 @@ These derivatives are used in the application
 of Taylor's method to the solution of the ODE.
 The example $cref mul_level_ode.cpp$$ computes the same values using
 $code AD<double>$$ and $code AD< AD<double> >$$.
+The example $cref ode_taylor.cpp$$ is a simpler applications
+of Taylor's method for solving an ODE.
 
 $head ODE$$
 For this example the ODE's are defined by the function

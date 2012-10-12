@@ -61,11 +61,17 @@ The purpose of this section is to
 assist you in learning about changes between various versions of CppAD.
 
 $head 10-12$$
+$list number$$
 Change all the multiple levels of AD examples to 
 start with $cref mul_level$$.
 To be specific, move 
 $code ode_taylor.cpp$$ to $cref mul_level_ode.cpp$$ and
 $code ode_taylor_adolc.cpp$$ to $cref mul_level_adolc_ode.cpp$$.
+$lnext
+Add $cref ode_taylor.cpp$$ as a example of Taylor's method for solving ODEs,
+($cref mul_level_ode.cpp$$ is an application of this method
+to multi-level AD.)
+$lend
 
 $head 10-04$$
 $list number$$

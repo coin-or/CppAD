@@ -140,6 +140,7 @@ example_SOURCES   = \
 	mul.cpp \
 	mul_eq.cpp \
 	mul_level.cpp \
+	mul_level_ode.cpp \
 	nan.cpp \
 	near_equal.cpp \
 	near_equal_ext.cpp \
@@ -150,7 +151,7 @@ example_SOURCES   = \
 	ode_gear.cpp \
 	ode_gear_control.cpp\
 	ode_stiff.cpp \
-	mul_level_ode.cpp \
+	ode_taylor.cpp \
 	omp_alloc.cpp \
 	opt_val_hes.cpp \
 	optimize.cpp \

@@ -43,6 +43,7 @@ $childtable%
 	example/ode_stiff.cpp%
 	example/mul_level_ode.cpp%
 	example/mul_level_adolc_ode.cpp%
+	example/ode_taylor.cpp%
 	example/stack_machine.cpp
 %$$
 
@@ -167,7 +168,9 @@ $rref mat_mul.hpp$$
 $rref mul.cpp$$
 $rref mul_eq.cpp$$
 $rref mul_level_adolc.cpp$$
+$rref mul_level_adolc_ode.cpp$$
 $rref mul_level.cpp$$
+$rref mul_level_ode.cpp$$
 $rref multi_newton.cpp$$
 $rref multi_newton_time.cpp$$
 $rref multi_newton_work.cpp$$
@@ -182,8 +185,7 @@ $rref ode_evaluate.cpp$$
 $rref ode_gear_control.cpp$$
 $rref ode_gear.cpp$$
 $rref ode_stiff.cpp$$
-$rref mul_level_adolc_ode.cpp$$
-$rref mul_level_ode.cpp$$
+$rref ode_taylor.cpp$$
 $rref omp_alloc.cpp$$
 $rref optimize.cpp$$
 $rref opt_val_hes.cpp$$
