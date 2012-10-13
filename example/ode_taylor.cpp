@@ -33,7 +33,6 @@ i.e.,
 $latex \[
 	Z(t + \Delta t) 
 	\approx 
-	=
 	Z^{(0)} (t) + 
 	\frac{ Z^{(1)} (t) }{ 1 !} \Delta t + \cdots + 
 	\frac{ Z^{(p)} (t) }{ p !} ( \Delta t )^p )
@@ -41,15 +40,15 @@ $latex \[
 
 $head ODE$$
 The ODE is defined by the function
-$latex h : \B{R}^n rightarrow \B{R}^n$$,
+$latex h : \B{R}^n \rightarrow \B{R}^n$$,
 which for this example is given by 
 $latex \[
-	Z^{(1)} (t) = H(Z) = 
+	Z^{(1)} (t) = H[ Z(t) ] = 
 	\left( \begin{array}{c}
 			1                       \\
-			Z_1                     \\
+			Z_1 (t)                 \\
 			\vdots                  \\
-			Z_{n-1}                  
+			Z_{n-1} (t)                  
 	\end{array} \right)
 \] $$
 and the initial condition is $latex z(0) = 0$$.
@@ -72,8 +71,8 @@ $latex \[
 $head Forward Mode$$
 Given the Taylor coefficients for $latex k = 0 , \ldots , K$$
 $latex \[
-	z^{(k)} = \frac{ Z^{(k)} }{ / k !} (t)
-\]$$.
+	z^{(k)} = \frac{ Z^{(k)} }{ k !} (t)
+\]$$
 we note that
 $latex \[
 \begin{array}{rcl}
