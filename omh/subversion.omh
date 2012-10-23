@@ -118,9 +118,8 @@ $codei%
 $head Build the Documentation$$
 Now build the documentation for this version using the commands
 $codei%
-	mkdir %dir%/doc
-	cd %dir%/doc
-	omhelp ../doc.omh -noframe -debug -l http://www.coin-or.org/CppAD/ -xml
+	cd %dir%
+	./build.sh configure omhelp
 %$$
 
 $head Continue with Installation$$
@@ -132,7 +131,7 @@ $codei%
 	%dir%/doc/index.xml
 %$$ 
 in a web browser and proceeding to the 
-$cref/Unix/InstallUnix/$$ or $cref/Windows/InstallWindows/$$
-install instructions.
+install instructions in that documentation,
+skipping the Download section and starting with the Configure command.
 
 $end
