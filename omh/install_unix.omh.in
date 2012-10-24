@@ -4,7 +4,7 @@ CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-12 Bradley M. Bell
 
 CppAD is distributed under multiple licenses. This distribution is under
 the terms of the 
-                    Common Public License Version 1.0.
+                    Eclipse Public License Version 1.0.
 
 A copy of this license is included in the COPYING file of this distribution.
 Please visit http://www.coin-or.org/CppAD/ for information on other licenses.
@@ -134,7 +134,7 @@ The ascii files for these downloads are in
 Unix format; i.e., each line ends with just a line feed.
 
 $table
-CPL License $pre  $$ $cnext $href%cppad-@VERSION@.cpl.tgz%$$ 
+EPL License $pre  $$ $cnext $href%cppad-@VERSION@.epl.tgz%$$ 
 $rnext
 GPL License $pre  $$ $cnext $href%cppad-@VERSION@.gpl.tgz%$$
 $tend

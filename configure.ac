@@ -4,7 +4,7 @@ dnl CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-12 Bradley M. Bel
 dnl
 dnl CppAD is distributed under multiple licenses. This distribution is under
 dnl the terms of the
-dnl                     Common Public License Version 1.0.
+dnl                     Eclipse Public License Version 1.0.
 dnl 
 dnl A copy of this license is included in the COPYING file of this distribution.
 dnl Please visit http://www.coin-or.org/CppAD/ for information on other licenses.
@@ -12,7 +12,7 @@ dnl ---------------------------------------------------------------------------
 dnl
 dnl Process this file with autoconf to produce a configure script.
 dnl   package   version              bug-report
-AC_INIT(CppAD, 20121002, cppad@list.coin-or.org)
+AC_INIT(CppAD, 20121024, cppad@list.coin-or.org)
 AC_SUBST(PACKAGE_URL, "http://www.coin-or.org/CppAD")
 AC_SUBST(PACKAGE_DESCRIPTION, "Differentiation of C++ Algorithms")
 

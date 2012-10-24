@@ -5,7 +5,7 @@
 #
 # CppAD is distributed under multiple licenses. This distribution is under
 # the terms of the 
-#                     Common Public License Version 1.0.
+#                     Eclipse Public License Version 1.0.
 #
 # A copy of this license is included in the COPYING file of this distribution.
 # Please visit http://www.coin-or.org/CppAD/ for information on other licenses.
@@ -369,9 +369,9 @@ then
 		#
 		exit 1
 	fi
-	# change *.tgz to *.cpl.tgz
-	echo "mv cppad-$version.tar.gz cppad-$version.cpl.tgz"
-	      mv cppad-$version.tar.gz cppad-$version.cpl.tgz
+	# change *.tgz to *.epl.tgz
+	echo "mv cppad-$version.tar.gz cppad-$version.epl.tgz"
+	      mv cppad-$version.tar.gz cppad-$version.epl.tgz
 	#
 	echo "OK: ./build.sh dist"
 	exit 0
@@ -445,7 +445,7 @@ fi
 # -----------------------------------------------------------------------------
 if [ "$1" = "copy2doc" ] 
 then
-	for ext in cpl gpl
+	for ext in epl gpl
 	do
 		echo "cp work/cppad-$version.$ext.tgz doc/cppad-$version.$ext.tgz"
 		cp work/cppad-$version.$ext.tgz doc/cppad-$version.$ext.tgz
@@ -511,9 +511,9 @@ then
 	fi
 	#
 	# create distribution directory
-	echo "tar -xzf cppad-$version.cpl.tgz"
-	echo "tar -xzf cppad-$version.cpl.tgz" >> $log_dir/$log_file
-	      tar -xzf cppad-$version.cpl.tgz
+	echo "tar -xzf cppad-$version.epl.tgz"
+	echo "tar -xzf cppad-$version.epl.tgz" >> $log_dir/$log_file
+	      tar -xzf cppad-$version.epl.tgz
 	#
 	# ----------------------------------------------------------------------
 	# Things to do in the work/disribution directory
@@ -632,10 +632,10 @@ options                                                            requires
 version:  set version in AUTHORS, configure.ac, configure, ...
 automake: run the tools required by autoconf and automake.
 configure:run the configure script in the work directory.          automake
-dist:     create the distribution file work/cppad-version.cpl.tgz. configure
+dist:     create the distribution file work/cppad-version.epl.tgz. configure
 omhelp:   build all formats of user documentation in doc/*.        configure
 doxygen:  build developer documentation in doxydoc/*.              configure
-gpl:      create work/*.gpl.zip and work/*.cpl.zip.                dist
+gpl:      create work/*.gpl.zip and work/*.epl.zip.                dist
 copy2doc: copy logs, tarballs & doxygen output into doc directory. dist,doxygen
 
 all:      $all_cases

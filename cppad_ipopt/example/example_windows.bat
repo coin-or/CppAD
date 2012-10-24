@@ -5,7 +5,7 @@ rem CppAD: Copyright (C) 2003-10 Bradley M. Bell
 rem
 rem CppAD is distributed under multiple licenses. This distribution is under
 rem the terms of the 
-rem                     Common Public License Version 1.0.
+rem                     Eclipse Public License Version 1.0.
 rem
 rem A copy of this license is included in the COPYING file of this distribution.
 rem visit http://www.coin-or.org/CppAD/ for information on other licenses.

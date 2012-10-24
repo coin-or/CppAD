@@ -5,14 +5,14 @@
 #
 # CppAD is distributed under multiple licenses. This distribution is under
 # the terms of the
-#                     Common Public License Version 1.0.
+#                     Eclipse Public License Version 1.0.
 #
 # A copy of this license is included in the COPYING file of this distribution.
 # Please visit http://www.coin-or.org/CppAD/ for information on other licenses.
 # -----------------------------------------------------------------------------
 # Bradley M. Bell has given COIN-OR permission to use this script to generate 
-# a distribution of CppAD that has "GNU General Public License Version 2"
-# in place of "Common Public License Version 1.0." in all occurrences
+# a distribution of CppAD that has "GNU General Public License Version 3"
+# in place of "Eclipse Public License Version 1.0." in all occurrences
 # of the message above.
 # -----------------------------------------------------------------------------
 if [ ! -e "bin/gpl_license.sh" ]
@@ -49,11 +49,11 @@ then
 	exit 1
 fi
 #
-# extract from the *.cpl.tgz file
-echo "tar -xzf $dir.cpl.tgz"
-      tar -xzf $dir.cpl.tgz
+# extract from the *.epl.tgz file
+echo "tar -xzf $dir.epl.tgz"
+      tar -xzf $dir.epl.tgz
 #
-# change into the work/cpl-distribution directory
+# change into the work/epl-distribution directory
 echo "cd $dir"
       cd $dir
 #
@@ -62,19 +62,20 @@ list=`find . \
 	\( -name 'COPYING' \) -or \
 	\( -name '*.am'  \) -or \
 	\( -name '*.ac'  \) -or \
-	\( -name '*.ac'  \) -or \
 	\( -name '*.bat' \) -or \
-	\( -name '*.sh'  \) -or \
+	\( -name '*.c'   \) -or \
 	\( -name '*.cpp' \) -or \
 	\( -name '*.hpp' \) -or \
 	\( -name '*.in'  \) -or \
-	\( -name '*.omh' \)`
+	\( -name '*.omh' \) -or \
+	\( -name '*.py' \)  -or \
+	\( -name '*.sh'  \)`
 #
 # change back up to work directory (to be safe)
 echo "cd .."
       cd ..
 #
-echo "Changing license from CPL to GPL"
+echo "Changing license from EPL to GPL"
 for file in $list
 do
 	file=`echo $file | sed -e 's|^\./||'`
@@ -90,13 +91,13 @@ do
 	fi
 	#
 	sed -i $dir/$file \
--e 's/Common Public License Version 1.0/GNU General Public License Version 2/' 
+-e 's/Eclipse Public License Version 1.0/GNU General Public License Version 3/' 
 	#
-	if ! grep "GNU General Public License Version 2" $dir/$file > /dev/null
+	if ! grep "GNU General Public License Version 3" $dir/$file > /dev/null
 	then
 		if [ "$name" != config.h.in ]
 		then
-			echo "Cannot change CPL to GPL for $dir/$file"
+			echo "Cannot change EPL to GPL for $dir/$file"
 			exit 1
 		fi
 	fi
@@ -110,9 +111,9 @@ echo "change the COPYING file"
 sed -n -i $dir/COPYING -e '/-\{70\}/,/-\{70\}/p'
 cat $root_dir/gpl2.txt >> $dir/COPYING
 #
-echo "change the file cpl1.0.txt to the file gpl2.txt"
-rm $dir/cpl1.0.txt
-cp $root_dir/gpl2.txt $dir/gpl2.txt
+echo "change the file epl-v10.txt to the file gpl-3.0.txt"
+rm $dir/epl-v10.txt
+cp $root_dir/gpl-3.0.txt $dir/gpl-3.0.txt
 #
 list="
 	makefile.am
@@ -121,15 +122,15 @@ list="
 "
 for file in $list
 do
-	if grep "gpl2.txt" $dir/$file > /dev/null
+	if grep "gpl-3.0.txt" $dir/$file > /dev/null
 	then
-		echo bin/"gpl_license.sh: gpl2.txt in initial $dir/$file"
+		echo bin/"gpl_license.sh: gpl-3.0.txt in initial $dir/$file"
 		exit 1
 	fi
-	sed -i $dir/$file -e 's/cpl1.0.txt/gpl2.txt/'
-	if ! grep "gpl2.txt" $dir/$file > /dev/null
+	sed -i $dir/$file -e 's/epl-v10.txt/gpl-3.0.txt/'
+	if ! grep "gpl-3.0.txt" $dir/$file > /dev/null
 	then
-		msg=bin/"gpl_license.sh: cannot change cpl1.0.txt to gpl2.txt"
+		msg=bin/"gpl_license.sh: cannot change epl-v10.txt to gpl-3.0.txt"
 		echo "$msg for $dir/$file"
 		exit 1
 	fi
@@ -152,7 +153,7 @@ echo "./build.sh configure"
 echo "rm -r work"
       rm -r work
 #
-# Now rebuild the documentation (so that it has GPL instead of CPL)
+# Now rebuild the documentation (so that it has GPL instead of EPL)
 echo "bin/run_omhelp.sh xml"
       bin/run_omhelp.sh xml
 #
