@@ -83,7 +83,8 @@ unknown=`svn status | sed -n \
 	-e '/^[?].*\.hpp$/p'  \
 	-e '/^[?].*\.in$/p'  \
 	-e '/^[?].*\.omh$/p'  \
-	-e '/^[?].*\.sh$/p'   | sed -e 's/^[?]//'`
+	-e '/^[?].*\.sh$/p'   \
+	-e '/^[?].*\.txt$/p'  | sed -e 's/^[?]//'`
 msg="aborting because the following files are unknown to svn"
 print_msg="no"
 for file in $unknown
