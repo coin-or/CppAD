@@ -251,6 +251,28 @@ $end
 -------------------------------------------------------------------------------
 */
 
+/*!
+\file std_math_ad.hpp
+Define AD<Base> standard math functions (using their Base versions)
+*/
+
+/*!
+\def CPPAD_STANDARD_MATH_UNARY_AD(Name, Op)
+Defines function Name with argument type AD<Base> and tape operation Op
+
+The macro defines the function x.Name() where x has type AD<Base>.
+It then uses this funciton to define Name(x) where x has type
+AD<Base> or VecAD_reference<Base>. 
+	
+If x is a variable, the tape unary operator Op is used
+to record the operation and the result is identified as correspoding
+to this operation; i.e., Name(x).taddr_ idendifies the operation and 
+Name(x).tape_id_ identifies the tape.
+
+This macro is used to define AD<Base> versions of 
+acos, asin, atan, cos, cosh, exp, fabs, log, sin, sinh, sqrt, tan, tanh.
+*/
+
 # define CPPAD_STANDARD_MATH_UNARY_AD(Name, Op)                   \
     template <class Base>                                         \
     inline AD<Base> Name(const AD<Base> &x)                       \
@@ -293,7 +315,19 @@ namespace CppAD {
      CPPAD_STANDARD_MATH_UNARY_AD(tan, TanOp)
      CPPAD_STANDARD_MATH_UNARY_AD(tanh, TanhOp)
 
-     // log10
+     /*!
+	Compute the log of base 10 of x where  has type AD<Base>
+
+	\tparam Base
+	is the base type (different from base for log) 
+	for this AD type, see base_require.
+
+	\param x
+	is the argument for the log10 function.
+
+	\result
+	if the result is y, then \f$ x = 10^y \f$.
+	*/
      template <class Base>
      inline AD<Base> log10(const AD<Base> &x)
      {    return CppAD::log(x) / CppAD::log( Base(10) ); }

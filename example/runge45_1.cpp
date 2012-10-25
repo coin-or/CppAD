@@ -47,9 +47,13 @@ $end
 // BEGIN C++
 
 # include <cstddef>                 // for size_t
-# include <cppad/runge_45.hpp>      // for CppAD::Runge45
 # include <cppad/near_equal.hpp>    // for CppAD::NearEqual
 # include <cppad/vector.hpp>        // for CppAD::vector
+# include <cppad/runge_45.hpp>      // for CppAD::Runge45
+
+// Runge45 requires fabs to be defined (not std::fabs)
+// <cppad/cppad.hpp> defines this for doubles, but runge_45.hpp does not. 
+# include <math.h>      // for fabs without std in front
 
 namespace {
 	class Fun {

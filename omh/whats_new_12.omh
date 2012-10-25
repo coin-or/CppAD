@@ -13,6 +13,7 @@ Please visit http://www.coin-or.org/CppAD/ for information on other licenses.
 $begin whats_new_12$$
 $dollar @$$
 $spell
+	std
 	hes
 	dw
 	uninitialised
@@ -59,6 +60,11 @@ This section contains a list of the changes to CppAD during 2012
 (in reverse order by date).
 The purpose of this section is to
 assist you in learning about changes between various versions of CppAD.
+
+$head 10-25$$
+The test $cref runge45_1.cpp$$ was failing when using gcc-4.5.2. 
+This has been fixed by properly defining $codei%fabs(%x%)%$$ where
+$icode x$$ is a double (without the $code std$$ in front).
 
 $head 10-12$$
 $list number$$
