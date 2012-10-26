@@ -595,8 +595,6 @@ EOF
 	      cat make_test.log        >> $log_dir/$log_file
 	#
 	# ignore warning in eigen (that has been reported)
-	sed -e '/Eigen.src.Core.DenseBase.h:103/s/warning/WARNING/' \
-		-i make_test.log
 	if grep ': *warning:' make_test.log
 	then 
 		echo "There are warnings in $dir/make_test.log"
