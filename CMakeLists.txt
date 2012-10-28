@@ -1,0 +1,35 @@
+# Set the minimum required version of cmake for this project.
+CMAKE_MINIMUM_REQUIRED(VERSION 2.6)
+
+# Set name of this project and create the variables 
+# cppad_BINARY_DIR and cppad_SOURCE_DIR. 
+# project(projectname [CXX] [C] [Java])
+PROJECT(cppad)
+
+# set(<variable> <value> [[CACHE <type> <docstring> [FORCE]] | PARENT_SCOPE])
+SET(src_version 20121026 "cppad source code version number")
+
+# Force user to choose an install prefix
+# option(<option_variable> "help string describing option" [initial value])
+OPTION(install_prefix "cppad install prefix" "not_set")
+IF ( install_prefix EQUAL "not_set" )
+	MESSAGE(FATAL "'install_prefix' was not set by cmake command")
+ELSE ( install_prefix EQUAL "not_set" )
+	MESSAGE(STATUS "install_prefix = ${install_prefix}")
+ENDIF ( install_prefix EQUAL "not_set" )
+# set(<variable> <value> [[CACHE <type> <docstring> [FORCE]] | PARENT_SCOPE])
+SET(CMAKE_INSTALL_PREFIX "${install_prefix}" 
+	CACHE FILEPATH "default copied from install_prefix" FORCE
+)
+
+# During install copy cppad direcrory to CMAKE_INSTALL_PREFIX/include/cppad  
+# install(DIRECTORY dirs... DESTINATION <dir>
+#	[FILE_PERMISSIONS permissions...]
+#	[DIRECTORY_PERMISSIONS permissions...]
+#	[USE_SOURCE_PERMISSIONS] [OPTIONAL]
+#	[CONFIGURATIONS [Debug|Release|...]]
+#	[COMPONENT <component>] [FILES_MATCHING]
+#	[[PATTERN <pattern> | REGEX <regex>]
+#	[EXCLUDE] [PERMISSIONS permissions...]] [...]
+# )
+INSTALL( DIRECTORY cppad DESTINATION include )
