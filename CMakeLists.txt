@@ -42,6 +42,14 @@ SET(CMAKE_INSTALL_PREFIX "${install_prefix}"
 FIND_PROGRAM(pkg_config pkg-config)
 MESSAGE(STATUS "pkg_config = ${pkg_config}")
 # ----------------------------------------------------------------------------
+# Testing
+# enable_testing: Enable testing for current directory and below.
+ENABLE_TESTING()
+# The CMakeLists.txt file in the specified source directory is processed 
+# before the current input file continues beyond this command.
+# add_subdirectory(source_dir [binary_dir] [EXCLUDE_FROM_ALL])
+ADD_SUBDIRECTORY(example)
+# ----------------------------------------------------------------------------
 # install procedure
 # ----------------------------------------------------------------------------
 # During install copy cppad direcrory to CMAKE_INSTALL_PREFIX/include/cppad  

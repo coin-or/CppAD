@@ -32,7 +32,18 @@ do
 done
 echo_exec mkdir build
 echo_exec cd build
-echo_exec cmake ../$top_srcdir -Dinstall_prefix=$prefix
-echo_exec make install
+#
+echo "cmake ../$top_srcdir -Dinstall_prefix=$prefix > cmake_run.log"
+cmake ../$top_srcdir -Dinstall_prefix=$prefix > ../$top_srcdir/cmake_run.log
+#
+echo "make all > cmake_run.log"
+make all >> ../$top_srcdir/make_run.log
+#
+echo "example/example > cmake_run.log"
+example/example >> ../$top_srcdir/cmake_run.log
+#
+echo "make install > cmake_run.log"
+make install >> ../$top_srcdir/cmake_run.log
+#
 echo 'cmake_run.sh: OK'
 exit 0
