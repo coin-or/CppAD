@@ -9,6 +9,8 @@
 # A copy of this license is included in the COPYING file of this distribution.
 # Please visit http://www.coin-or.org/CppAD/ for information on other licenses.
 # -----------------------------------------------------------------------------
+# Some constants
+# ----------------------------------------------------------------------------
 # Set the minimum required version of cmake for this project.
 CMAKE_MINIMUM_REQUIRED(VERSION 2.6)
 
@@ -19,7 +21,9 @@ PROJECT(cppad)
 
 # set(<variable> <value> [[CACHE <type> <docstring> [FORCE]] | PARENT_SCOPE])
 SET(src_version 20121026 "cppad source code version number")
-
+# ----------------------------------------------------------------------------
+# cmake command line system configuration
+# ----------------------------------------------------------------------------
 # Force user to choose an install prefix
 # option(<option_variable> "help string describing option" [initial value])
 OPTION(install_prefix "cppad install prefix" "not_set")
@@ -32,7 +36,14 @@ ENDIF ( install_prefix EQUAL "not_set" )
 SET(CMAKE_INSTALL_PREFIX "${install_prefix}" 
 	CACHE FILEPATH "default copied from install_prefix" FORCE
 )
-
+# ----------------------------------------------------------------------------
+# automated system configuration
+# ----------------------------------------------------------------------------
+FIND_PROGRAM(pkg_config pkg-config)
+MESSAGE(STATUS "pkg_config = ${pkg_config}")
+# ----------------------------------------------------------------------------
+# install procedure
+# ----------------------------------------------------------------------------
 # During install copy cppad direcrory to CMAKE_INSTALL_PREFIX/include/cppad  
 # install(DIRECTORY dirs... DESTINATION <dir>
 #	[FILE_PERMISSIONS permissions...]
