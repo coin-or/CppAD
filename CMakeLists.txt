@@ -24,18 +24,31 @@ SET(src_version 20121026 "cppad source code version number")
 # ----------------------------------------------------------------------------
 # cmake command line system configuration
 # ----------------------------------------------------------------------------
-# Force user to choose an install prefix
+# install_prefix:
 # option(<option_variable> "help string describing option" [initial value])
-OPTION(install_prefix "cppad install prefix" "not_set")
-IF ( install_prefix EQUAL "not_set" )
-	MESSAGE(FATAL "'install_prefix' was not set by cmake command")
-ELSE ( install_prefix EQUAL "not_set" )
+OPTION(install_prefix "cppad install prefix" OFF)
+IF ( install_prefix )
 	MESSAGE(STATUS "install_prefix = ${install_prefix}")
-ENDIF ( install_prefix EQUAL "not_set" )
+ELSE ( install_prefix )
+	MESSAGE(FATAL_ERROR "install_prefix was not set by cmake command")
+ENDIF ( install_prefix )
 # set(<variable> <value> [[CACHE <type> <docstring> [FORCE]] | PARENT_SCOPE])
 SET(CMAKE_INSTALL_PREFIX "${install_prefix}" 
-	CACHE FILEPATH "default copied from install_prefix" FORCE
+	CACHE PATH "default copied from install_prefix" FORCE
 )
+#
+# install_postfix:
+OPTION(install_postfix "cppad install postfix" OFF)
+IF ( install_postfix )
+	SET(include_dir "include/${install_postfix}"
+		CACHE PATH "include files -> ${install_prefix}/${include_dir}" FORCE
+	)
+ELSE ( install_postfix )
+	SET(include_dir "include"
+		CACHE PATH "include files -> ${install_prefix}/${include_dir}" FORCE
+	)
+ENDIF ( install_postfix )
+MESSAGE(STATUS "install_postfix = ${install_postfix}")
 # ----------------------------------------------------------------------------
 # automated system configuration
 # ----------------------------------------------------------------------------
@@ -62,4 +75,4 @@ ADD_SUBDIRECTORY(example)
 #	[[PATTERN <pattern> | REGEX <regex>]
 #	[EXCLUDE] [PERMISSIONS permissions...]] [...]
 # )
-INSTALL( DIRECTORY cppad DESTINATION include )
+INSTALL( DIRECTORY cppad DESTINATION ${include_dir} )

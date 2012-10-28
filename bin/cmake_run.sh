@@ -36,8 +36,8 @@ echo_exec cd build
 echo "cmake ../$top_srcdir -Dinstall_prefix=$prefix > cmake_run.log"
 cmake ../$top_srcdir -Dinstall_prefix=$prefix > ../$top_srcdir/cmake_run.log
 #
-echo "make all > cmake_run.log"
-make all >> ../$top_srcdir/make_run.log
+echo "make all >> cmake_run.log"
+make all >> ../$top_srcdir/cmake_run.log
 #
 echo "example/example > cmake_run.log"
 example/example >> ../$top_srcdir/cmake_run.log
