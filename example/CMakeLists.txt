@@ -16,20 +16,36 @@
 # empty, Debug, Release, RelWithDebInfo and MinSizeRel
 SET(CMAKE_BUILD_TYPE DEBUG)
 
+# adolc_prefix
 IF ( adolc_prefix )
 	# Extra source files if we are including adolc
-	SET(adolc_sources mul_level_adolc.cpp mul_level_adolc_ode.cpp)
+	SET(adolc_sources 
+		mul_level_adolc.cpp mul_level_adolc_ode.cpp
+	)
 	# Adds -D define flags to the compilation of source files.
 	ADD_DEFINITIONS("-DCPPAD_ADOLC_EXAMPLES")
 ELSE ( adolc_prefix )
 	SET(adolc_sources "")
 ENDIF ( adolc_prefix )
 
+# eigen_prefix
+IF ( eigen_prefix )
+	# Extra source files if we are including eigen
+	SET(eigen_sources 
+		eigen_det.cpp eigen_array.cpp
+	)
+	# Adds -D define flags to the compilation of source files.
+	ADD_DEFINITIONS("-DCPPAD_EIGEN_EXAMPLES")
+ELSE ( eigen_prefix )
+	SET(eigen_sources "")
+ENDIF ( eigen_prefix )
+
 # add_executable(<name> [WIN32] [MACOSX_BUNDLE] [EXCLUDE_FROM_ALL]
 #                 source1 source2 ... sourceN
 # )
 ADD_EXECUTABLE(example example.cpp
 	${adolc_sources}
+	${eigen_sources}
 	abort_recording.cpp
 	abs.cpp
 	acos.cpp

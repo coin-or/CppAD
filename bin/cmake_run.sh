@@ -51,6 +51,7 @@ log_file="../$top_srcdir/cmake_run.log"
 # -----------------------------------------------------------------------------
 args="$args  -Dcppad_prefix=$HOME/prefix/cppad"
 args="$args  -Dadolc_prefix=$HOME/prefix/adolc"
+args="$args  -Deigen_prefix=$HOME/prefix/eigen"
 #
 echo "cmake ../$top_srcdir $args >> cmake_run.log"
 cmake ../$top_srcdir $args >> $log_file

@@ -9,6 +9,25 @@
 # A copy of this license is included in the COPYING file of this distribution.
 # Please visit http://www.coin-or.org/CppAD/ for information on other licenses.
 # -----------------------------------------------------------------------------
+# Some functions
+# ----------------------------------------------------------------------------
+MACRO(optional_package prefix_variable description) 
+	SET(${prefix_variable} NOTFOUND CACHE PATH "${description}")
+	SET(prefix ${${prefix_variable}} )
+	MESSAGE(STATUS "${description} = ${prefix}")
+	IF ( prefix )
+		# List of preprocessor include file search directories
+		INCLUDE_DIRECTORIES( ${prefix}/include )
+		FOREACH( dir "lib" "lib64" )
+			IF ( EXISTS "${prefix}/${dir}" )
+				# Paths in which the linker will search for libraries,
+				# only applies to targets created after it is called
+				LINK_DIRECTORIES( ${prefix}/${dir} )
+			ENDIF ( EXISTS "${prefix}/${dir}" )
+		ENDFOREACH( dir )
+	ENDIF ( prefix )
+ENDMACRO(optional_package)
+# -----------------------------------------------------------------------------
 # Some constants
 # ----------------------------------------------------------------------------
 # Set the minimum required version of cmake for this project.
@@ -31,7 +50,7 @@ INCLUDE_DIRECTORIES( ${cppad_SOURCE_DIR} )
 # cppad_prefix:
 # set(<variable> <value> [[CACHE <type> <docstring> [FORCE]] | PARENT_SCOPE])
 SET(cppad_prefix NOTFOUND CACHE PATH "cppad install prefix" )
-MESSAGE(STATUS "cppad_prefix = ${cppad_prefix}")
+MESSAGE(STATUS "cppad install prefix = ${cppad_prefix}")
 IF ( NOT cppad_prefix )
 	MESSAGE(FATAL_ERROR "cppad_prefix was not set by cmake command")
 ENDIF ( NOT cppad_prefix )
@@ -41,7 +60,7 @@ SET(CMAKE_INSTALL_PREFIX "${cppad_prefix}"
 
 # cppad_postfix:
 SET(cppad_postfix NOTFOUND CACHE PATH "cppad install postfix")
-MESSAGE(STATUS "cppad_postfix = ${cppad_postfix}")
+MESSAGE(STATUS "cppad install postfix = ${cppad_postfix}")
 IF ( cppad_postfix )
 	SET(include_dir "include/${cppad_postfix}"
 		CACHE INTERNAL "cppad install include file directory" FORCE
@@ -53,21 +72,10 @@ ELSE ( cppad_postfix )
 ENDIF ( cppad_postfix )
 
 # adolc_prefix
-SET(adolc_prefix NOTFOUND CACHE PATH "adolc install prefix")
-MESSAGE(STATUS "adolc_prefix = ${adolc_prefix}")
+optional_package(adolc_prefix "adolc install prefix")
 
-# adolc include and link directories
-IF ( adolc_prefix )
-	# List of preprocessor include file search directories
-	INCLUDE_DIRECTORIES( ${adolc_prefix}/include )
-	FOREACH( dir "lib" "lib64" )
-		IF ( EXISTS "${adolc_prefix}/${dir}" )
-			# Paths in which the linker will search for libraries,
-			# only applies to targets created after it is called
-			LINK_DIRECTORIES( ${adolc_prefix}/${dir} )
-		ENDIF ( EXISTS "${adolc_prefix}/${dir}" )
-	ENDFOREACH( dir )
-ENDIF ( adolc_prefix )
+# eigen_prefix
+optional_package(eigen_prefix "eigen install prefix")
 
 # ----------------------------------------------------------------------------
 # automated system configuration
