@@ -21,34 +21,56 @@ PROJECT(cppad)
 
 # set(<variable> <value> [[CACHE <type> <docstring> [FORCE]] | PARENT_SCOPE])
 SET(src_version 20121026 "cppad source code version number")
+
+# include_directories([AFTER|BEFORE] [SYSTEM] dir1 dir2 ...)
+INCLUDE_DIRECTORIES( ${cppad_SOURCE_DIR} )
 # ----------------------------------------------------------------------------
 # cmake command line system configuration
 # ----------------------------------------------------------------------------
-# install_prefix:
+
+# cppad_prefix:
 # option(<option_variable> "help string describing option" [initial value])
-OPTION(install_prefix "cppad install prefix" OFF)
-IF ( install_prefix )
-	MESSAGE(STATUS "install_prefix = ${install_prefix}")
-ELSE ( install_prefix )
-	MESSAGE(FATAL_ERROR "install_prefix was not set by cmake command")
-ENDIF ( install_prefix )
+OPTION(cppad_prefix "cppad install prefix" OFF)
+IF ( cppad_prefix )
+	MESSAGE(STATUS "cppad_prefix = ${cppad_prefix}")
+ELSE ( cppad_prefix )
+	MESSAGE(FATAL_ERROR "cppad_prefix was not set by cmake command")
+ENDIF ( cppad_prefix )
 # set(<variable> <value> [[CACHE <type> <docstring> [FORCE]] | PARENT_SCOPE])
-SET(CMAKE_INSTALL_PREFIX "${install_prefix}" 
-	CACHE PATH "default copied from install_prefix" FORCE
+SET(CMAKE_INSTALL_PREFIX "${cppad_prefix}" 
+	CACHE PATH "default copied from cppad_prefix" FORCE
 )
-#
-# install_postfix:
-OPTION(install_postfix "cppad install postfix" OFF)
-IF ( install_postfix )
-	SET(include_dir "include/${install_postfix}"
-		CACHE PATH "include files -> ${install_prefix}/${include_dir}" FORCE
+
+# cppad_postfix:
+OPTION(cppad_postfix "cppad install postfix" OFF)
+IF ( cppad_postfix )
+	SET(include_dir "include/${cppad_postfix}"
+		CACHE PATH "include files -> ${cppad_prefix}/${include_dir}" FORCE
 	)
-ELSE ( install_postfix )
+ELSE ( cppad_postfix )
 	SET(include_dir "include"
-		CACHE PATH "include files -> ${install_prefix}/${include_dir}" FORCE
+		CACHE PATH "include files -> ${cppad_prefix}/${include_dir}" FORCE
 	)
-ENDIF ( install_postfix )
-MESSAGE(STATUS "install_postfix = ${install_postfix}")
+ENDIF ( cppad_postfix )
+MESSAGE(STATUS "cppad_postfix = ${cppad_postfix}")
+
+# adolc_prefix
+OPTION(adolc_prefix "adolc install prefix" OFF)
+MESSAGE(STATUS "adolc_prefix = ${adolc_prefix}")
+
+# adolc include and link directories
+IF ( adolc_prefix )
+	# List of preprocessor include file search directories
+	INCLUDE_DIRECTORIES( ${adolc_prefix}/include )
+	FOREACH( dir "lib" "lib64" )
+		IF ( EXISTS "${adolc_prefix}/${dir}" )
+			# Paths in which the linker will search for libraries,
+			# only applies to targets created after it is called
+			LINK_DIRECTORIES( ${adolc_prefix}/${dir} )
+		ENDIF ( EXISTS "${adolc_prefix}/${dir}" )
+	ENDFOREACH( dir )
+ENDIF ( adolc_prefix )
+
 # ----------------------------------------------------------------------------
 # automated system configuration
 # ----------------------------------------------------------------------------

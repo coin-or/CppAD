@@ -11,17 +11,24 @@
 # -----------------------------------------------------------------------------
 # Run the example directory tests 
 # Inherit environment from ../CMakeList.txt
-#
-# include_directories([AFTER|BEFORE] [SYSTEM] dir1 dir2 ...)
-INCLUDE_DIRECTORIES( ${cppad_SOURCE_DIR} )
-#
+
 # add_definitions: Adds -D define flags to the compilation of source files.
 ADD_DEFINITIONS("-g")
-#
+
+IF ( adolc_prefix )
+	# Extra source files if we are including adolc
+	SET(adolc_sources mul_level_adolc.cpp mul_level_adolc_ode.cpp)
+	# Adds -D define flags to the compilation of source files.
+	ADD_DEFINITIONS("-DCPPAD_ADOLC_EXAMPLES")
+ELSE ( adolc_prefix )
+	SET(adolc_sources "")
+ENDIF ( adolc_prefix )
+
 # add_executable(<name> [WIN32] [MACOSX_BUNDLE] [EXCLUDE_FROM_ALL]
 #                 source1 source2 ... sourceN
 # )
 ADD_EXECUTABLE(example example.cpp
+	${adolc_sources}
 	abort_recording.cpp
 	abs.cpp
 	acos.cpp
@@ -150,6 +157,11 @@ ADD_EXECUTABLE(example example.cpp
 	vec_ad.cpp
 	vector_bool.cpp 
 )
-#
+
+IF ( adolc_prefix )
+	# List of libraries to be linked into the specified target
+	TARGET_LINK_LIBRARIES(example adolc)
+ENDIF ( adolc_prefix )
+
 # add_test(testname Exename arg1 arg2 ... )
 # ADD_TEST( example example )

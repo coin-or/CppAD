@@ -20,10 +20,9 @@ echo_exec() {
      eval $*
 }
 # -----------------------------------------------------------------------------
-prefix="$HOME/prefix/cppad"
 top_srcdir=`pwd | sed -e 's|.*/||'`
 echo_exec cd ..
-for dir in $prefix build
+for dir in build $HOME/prefix/cppad
 do
 	if [ -e "$dir" ]
 	then
@@ -33,8 +32,13 @@ done
 echo_exec mkdir build
 echo_exec cd build
 #
-echo "cmake ../$top_srcdir -Dinstall_prefix=$prefix > cmake_run.log"
-cmake ../$top_srcdir -Dinstall_prefix=$prefix > ../$top_srcdir/cmake_run.log
+args="../$top_srcdir"
+args="$args  -Dcppad_prefix=$HOME/prefix/cppad"
+args="$args  -Dadolc_prefix=$HOME/prefix/adolc"
+args="$args  -DCMAKE_VERBOSE_MAKEFILE=1"
+#
+echo "cmake $args > cmake_run.log"
+cmake $args > ../$top_srcdir/cmake_run.log
 #
 echo "make all >> cmake_run.log"
 make all >> ../$top_srcdir/cmake_run.log
