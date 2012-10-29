@@ -16,6 +16,7 @@
 # empty, Debug, Release, RelWithDebInfo and MinSizeRel
 SET(CMAKE_BUILD_TYPE DEBUG)
 
+# sources that use adolc
 IF ( adolc_prefix )
 	# Extra source files if we are including adolc
 	SET(adolc_sources base_adolc.cpp)
@@ -25,11 +26,22 @@ ELSE ( adolc_prefix )
 	SET(adolc_sources "")
 ENDIF ( adolc_prefix )
 
+# sources that use eigen
+IF ( eigen_prefix )
+	# Extra source files if we are including eigen
+	SET(eigen_sources cppad_eigen.cpp)
+	# Adds -D define flags to the compilation of source files.
+	ADD_DEFINITIONS("-DCPPAD_EIGEN_TEST")
+ELSE ( eigen_prefix )
+	SET(eigen_sources "")
+ENDIF ( eigen_prefix )
+
 # add_executable(<name> [WIN32] [MACOSX_BUNDLE] [EXCLUDE_FROM_ALL]
 #                 source1 source2 ... sourceN
 # )
 ADD_EXECUTABLE(test_more test_more.cpp
 	${adolc_sources}
+	${eigen_sources}
 	abs.cpp
 	acos.cpp
 	asin.cpp
@@ -104,6 +116,8 @@ ADD_EXECUTABLE(test_more test_more.cpp
 	vec_ad_par.cpp
 	vec_unary.cpp 
 )
+
+# adolc_prefix
 IF ( adolc_prefix )
 	# List of libraries to be linked into the specified target
 	TARGET_LINK_LIBRARIES(test_more adolc)
