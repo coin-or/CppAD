@@ -9,10 +9,10 @@
 # A copy of this license is included in the COPYING file of this distribution.
 # Please visit http://www.coin-or.org/CppAD/ for information on other licenses.
 # -----------------------------------------------------------------------------
-# Run the example directory tests 
+# Run the print_for directory tests 
 # Inherit environment from ../CMakeList.txt
 
-# Specifies build type will be built in this tree. Possible values are 
+# Specifies build type for this directory. Possible values are 
 # empty, Debug, Release, RelWithDebInfo and MinSizeRel
 SET(CMAKE_BUILD_TYPE DEBUG)
 

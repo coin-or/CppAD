@@ -83,6 +83,7 @@ ENABLE_TESTING()
 # add_subdirectory(source_dir [binary_dir] [EXCLUDE_FROM_ALL])
 ADD_SUBDIRECTORY(example)
 ADD_SUBDIRECTORY(print_for)
+ADD_SUBDIRECTORY(test_more)
 # ----------------------------------------------------------------------------
 # install procedure
 # ----------------------------------------------------------------------------

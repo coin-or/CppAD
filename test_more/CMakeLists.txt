@@ -9,7 +9,7 @@
 # A copy of this license is included in the COPYING file of this distribution.
 # Please visit http://www.coin-or.org/CppAD/ for information on other licenses.
 # -----------------------------------------------------------------------------
-# Run the example directory tests 
+# Run the test_more directory tests 
 # Inherit environment from ../CMakeList.txt
 
 # Specifies build type for this directory. Possible values are 
@@ -18,9 +18,9 @@ SET(CMAKE_BUILD_TYPE DEBUG)
 
 IF ( adolc_prefix )
 	# Extra source files if we are including adolc
-	SET(adolc_sources mul_level_adolc.cpp mul_level_adolc_ode.cpp)
+	SET(adolc_sources base_adolc.cpp)
 	# Adds -D define flags to the compilation of source files.
-	ADD_DEFINITIONS("-DCPPAD_ADOLC_EXAMPLES")
+	ADD_DEFINITIONS("-DCPPAD_ADOLC_TEST")
 ELSE ( adolc_prefix )
 	SET(adolc_sources "")
 ENDIF ( adolc_prefix )
@@ -28,141 +28,86 @@ ENDIF ( adolc_prefix )
 # add_executable(<name> [WIN32] [MACOSX_BUNDLE] [EXCLUDE_FROM_ALL]
 #                 source1 source2 ... sourceN
 # )
-ADD_EXECUTABLE(example example.cpp
+ADD_EXECUTABLE(test_more test_more.cpp
 	${adolc_sources}
-	abort_recording.cpp
 	abs.cpp
 	acos.cpp
+	asin.cpp
+	assign.cpp
 	add.cpp
 	add_eq.cpp
-	ad_assign.cpp
-	ad_ctor.cpp
-	ad_fun.cpp
-	ad_in_c.cpp
-	asin.cpp
+	add_zero.cpp
 	atan.cpp
 	atan2.cpp
-	base_alloc.hpp
-	base_require.cpp
-	bender_quad.cpp
-	bool_fun.cpp
-	capacity_taylor.cpp
-	change_const.cpp
-	check_numeric_type.cpp
+	base_alloc.cpp
 	check_simple_vector.cpp
-	checkpoint.cpp
 	compare.cpp
 	compare_change.cpp
-	complex_poly.cpp
 	cond_exp.cpp
-	conj_grad.cpp
+	cond_exp_ad.cpp
+	copy.cpp
 	cos.cpp
 	cosh.cpp
-	cppad_vector.cpp
+	dbl_epsilon.cpp
 	div.cpp
 	div_eq.cpp
-	equal_op_seq.cpp
+	div_zero_one.cpp
 	erf.cpp
-	error_handler.cpp
+	epsilon.cpp
 	exp.cpp
-	for_one.cpp
-	for_two.cpp
-	forward.cpp
+	for_hess.cpp
 	for_sparse_jac.cpp
-	fun_assign.cpp
+	forward.cpp
+	from_base.cpp
 	fun_check.cpp
-	hes_lagrangian.cpp
-	hes_lu_det.cpp
-	hes_minor_det.cpp
-	hessian.cpp
-	hes_times_dir.cpp
-	independent.cpp
-	index_sort.cpp
-	integer.cpp
-	interface2c.cpp
-	interp_onetape.cpp
-	interp_retape.cpp
-	jac_lu_det.cpp
-	jac_minor_det.cpp
 	jacobian.cpp
-	limits.cpp
 	log.cpp
 	log10.cpp
-	lu_factor.cpp
-	lu_invert.cpp
-	lu_ratio.cpp
-	lu_solve.cpp
-	lu_vec_ad.cpp
-	lu_vec_ad.hpp
-	lu_vec_ad_ok.cpp
-	mat_mul.cpp
-	mat_mul.hpp
 	mul.cpp
 	mul_eq.cpp
 	mul_level.cpp
-	mul_level_ode.cpp
-	nan.cpp
-	near_equal.cpp
+	mul_zero_one.cpp
+	ndebug.cpp
 	near_equal_ext.cpp
-	not_complex_ad.cpp
-	numeric_type.cpp
+	neg.cpp
 	ode_err_control.cpp
-	ode_err_maxabs.cpp
-	ode_gear.cpp
-	ode_gear_control.cpp
-	ode_stiff.cpp
-	ode_taylor.cpp
-	omp_alloc.cpp
-	opt_val_hes.cpp
 	optimize.cpp
-	output.cpp
-	par_var.cpp
+	parameter.cpp
 	poly.cpp
 	pow.cpp
 	pow_int.cpp
 	print_for.cpp
-	reciprocal.cpp
-	reverse_any.cpp
-	reverse_one.cpp
-	reverse_three.cpp
-	reverse_two.cpp
-	rev_one.cpp
+	romberg_one.cpp
+	rosen_34.cpp
+	runge_45.cpp
+	reverse.cpp
 	rev_sparse_hes.cpp
 	rev_sparse_jac.cpp
 	rev_two.cpp
-	romberg_mul.cpp
-	romberg_one.cpp
-	rosen_34.cpp
-	runge45_1.cpp
-	runge45_2.cpp
-	seq_property.cpp
 	simple_vector.cpp
-	sign.cpp
 	sin.cpp
+	sin_cos.cpp
 	sinh.cpp
 	sparse_hessian.cpp
 	sparse_jacobian.cpp
+	sparse_vec_ad.cpp
 	sqrt.cpp
-	stack_machine.cpp
+	std_math.cpp
 	sub.cpp
 	sub_eq.cpp
+	sub_zero.cpp
 	tan.cpp
-	tanh.cpp
-	tape_index.cpp
-	thread_alloc.cpp
-	unary_minus.cpp
-	unary_plus.cpp
-	user_tan.cpp
+	test_vector.cpp
+	track_new_del.cpp
 	value.cpp
-	var2par.cpp
 	vec_ad.cpp
-	vector_bool.cpp 
+	vec_ad_par.cpp
+	vec_unary.cpp 
 )
-
 IF ( adolc_prefix )
 	# List of libraries to be linked into the specified target
-	TARGET_LINK_LIBRARIES(example adolc)
+	TARGET_LINK_LIBRARIES(test_more adolc)
 ENDIF ( adolc_prefix )
 
 # add_test(testname Exename arg1 arg2 ... )
-# ADD_TEST( example example )
+# ADD_TEST( test_more test_more )

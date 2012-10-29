@@ -58,6 +58,13 @@ cmake ../$top_srcdir $args >> $log_file
 echo "make all >> cmake_run.log"
 make all >> $log_file
 #
+# other test cases
+for dir in example test_more
+do
+	echo "$dir/$dir >> cmake_run.log"
+	$dir/$dir >> $log_file
+done
+#
 # print_for is a special case 
 echo "print_for/print_for >> cmake_run.log"
 print_for/print_for >> $log_file
@@ -71,13 +78,6 @@ else
 	echo "print_for: Error"  >> $log_file
 	exit 1
 fi
-#
-# other test cases
-for dir in example
-do
-	echo "$dir/$dir >> cmake_run.log"
-	$dir/$dir >> $log_file
-done
 #
 echo "make install > cmake_run.log"
 make install >> $log_file
