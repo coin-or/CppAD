@@ -9,7 +9,7 @@
 # A copy of this license is included in the COPYING file of this distribution.
 # Please visit http://www.coin-or.org/CppAD/ for information on other licenses.
 # -----------------------------------------------------------------------------
-# Some functions
+# Some macros
 # ----------------------------------------------------------------------------
 MACRO(optional_package prefix_variable description) 
 	SET(${prefix_variable} NOTFOUND CACHE PATH "${description}")
@@ -77,6 +77,9 @@ optional_package(adolc_prefix "adolc install prefix")
 # eigen_prefix
 optional_package(eigen_prefix "eigen install prefix")
 
+# ipopt_prefix
+optional_package(ipopt_prefix "ipopt install prefix")
+
 # ----------------------------------------------------------------------------
 # automated system configuration
 # ----------------------------------------------------------------------------
@@ -92,6 +95,12 @@ ENABLE_TESTING()
 ADD_SUBDIRECTORY(example)
 ADD_SUBDIRECTORY(print_for)
 ADD_SUBDIRECTORY(test_more)
+IF ( ipopt_prefix )
+	ADD_SUBDIRECTORY(cppad_ipopt/src)
+	# ADD_SUBDIRECTORY(cppad_ipopt/example)
+	# ADD_SUBDIRECTORY(cppad_ipopt/speed)
+	# ADD_SUBDIRECTORY(cppad_ipopt/test)
+ENDIF( ipopt_prefix )
 # ----------------------------------------------------------------------------
 # install procedure
 # ----------------------------------------------------------------------------

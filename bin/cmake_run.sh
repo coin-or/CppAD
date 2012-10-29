@@ -19,14 +19,18 @@ echo_exec() {
      echo $* 
      eval $*
 }
+args=''
+run_tests='no'
 if [ "$1" != "" ]
 then
-	args=''
 	if [ "$1" == '--verbose' ]
 	then
 		args="$args  -DCMAKE_VERBOSE_MAKEFILE=1"
+	elif [ "$1" == '--run_tests' ]
+	then
+		run_tests='yes'
 	else
-		echo 'usage: bin/cmake_run.sh: [--verbose]'
+		echo 'usage: bin/cmake_run.sh: [--verbose] [--run_tests]'
 		exit 1
 	fi
 fi
@@ -49,9 +53,10 @@ echo_exec mkdir build
 echo_exec cd build
 log_file="../$top_srcdir/cmake_run.log"
 # -----------------------------------------------------------------------------
-args="$args  -Dcppad_prefix=$HOME/prefix/cppad"
-args="$args  -Dadolc_prefix=$HOME/prefix/adolc"
-args="$args  -Deigen_prefix=$HOME/prefix/eigen"
+for package in cppad adolc eigen ipopt
+do
+	args="$args  -D${package}_prefix=$HOME/prefix/$package"
+done
 #
 echo "cmake ../$top_srcdir $args >> cmake_run.log"
 cmake ../$top_srcdir $args >> $log_file
@@ -59,25 +64,29 @@ cmake ../$top_srcdir $args >> $log_file
 echo "make all >> cmake_run.log"
 make all >> $log_file
 #
-# other test cases
-for dir in example test_more
-do
-	echo "$dir/$dir >> cmake_run.log"
-	$dir/$dir >> $log_file
-done
-#
-# print_for is a special case 
-echo "print_for/print_for >> cmake_run.log"
-print_for/print_for >> $log_file
-print_for/print_for | sed -e '/^Test passes/,$d' > junk.1.$$
-print_for/print_for | sed -e '1,/^Test passes/d' > junk.2.$$
-if diff junk.1.$$ junk.2.$$
+if [ "$run_tests" == 'yes' ]
 then
-	rm junk.1.$$ junk.2.$$
-	echo "print_for: OK"  >> $log_file
-else
-	echo "print_for: Error"  >> $log_file
-	exit 1
+	#
+	# standard test case
+	for dir in example test_more
+	do
+		echo "$dir/$dir >> cmake_run.log"
+		$dir/$dir >> $log_file
+	done
+	#
+	# print_for is a special case 
+	echo "print_for/print_for >> cmake_run.log"
+	print_for/print_for >> $log_file
+	print_for/print_for | sed -e '/^Test passes/,$d' > junk.1.$$
+	print_for/print_for | sed -e '1,/^Test passes/d' > junk.2.$$
+	if diff junk.1.$$ junk.2.$$
+	then
+		rm junk.1.$$ junk.2.$$
+		echo "print_for: OK"  >> $log_file
+	else
+		echo "print_for: Error"  >> $log_file
+		exit 1
+	fi
 fi
 #
 echo "make install > cmake_run.log"
