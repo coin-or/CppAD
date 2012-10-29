@@ -82,6 +82,7 @@ ENABLE_TESTING()
 # before the current input file continues beyond this command.
 # add_subdirectory(source_dir [binary_dir] [EXCLUDE_FROM_ALL])
 ADD_SUBDIRECTORY(example)
+ADD_SUBDIRECTORY(print_for)
 # ----------------------------------------------------------------------------
 # install procedure
 # ----------------------------------------------------------------------------

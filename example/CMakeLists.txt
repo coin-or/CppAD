@@ -12,8 +12,9 @@
 # Run the example directory tests 
 # Inherit environment from ../CMakeList.txt
 
-# add_definitions: Adds -D define flags to the compilation of source files.
-ADD_DEFINITIONS("-g")
+# Specifies build type will be built in this tree. Possible values are 
+# empty, Debug, Release, RelWithDebInfo and MinSizeRel
+SET(CMAKE_BUILD_TYPE DEBUG)
 
 IF ( adolc_prefix )
 	# Extra source files if we are including adolc

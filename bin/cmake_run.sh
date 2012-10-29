@@ -19,35 +19,68 @@ echo_exec() {
      echo $* 
      eval $*
 }
+if [ "$1" != "" ]
+then
+	args=''
+	if [ "$1" == '--verbose' ]
+	then
+		args="$args  -DCMAKE_VERBOSE_MAKEFILE=1"
+	else
+		echo 'usage: bin/cmake_run.sh: [--verbose]'
+		exit 1
+	fi
+fi
 # -----------------------------------------------------------------------------
 top_srcdir=`pwd | sed -e 's|.*/||'`
 echo_exec cd ..
-for dir in build $HOME/prefix/cppad
+list="
+	$top_srcdir/cmake_run.log
+	$HOME/prefix/cppad
+	build
+"
+for name in $list
 do
-	if [ -e "$dir" ]
+	if [ -e "$name" ]
 	then
-		echo_exec rm -r $dir
+		echo_exec rm -r $name
 	fi
 done
 echo_exec mkdir build
 echo_exec cd build
-#
-args="../$top_srcdir"
+log_file="../$top_srcdir/cmake_run.log"
+# -----------------------------------------------------------------------------
 args="$args  -Dcppad_prefix=$HOME/prefix/cppad"
 args="$args  -Dadolc_prefix=$HOME/prefix/adolc"
-# args="$args  -DCMAKE_VERBOSE_MAKEFILE=1"
 #
-echo "cmake $args > cmake_run.log"
-cmake $args > ../$top_srcdir/cmake_run.log
+echo "cmake ../$top_srcdir $args >> cmake_run.log"
+cmake ../$top_srcdir $args >> $log_file
 #
 echo "make all >> cmake_run.log"
-make all >> ../$top_srcdir/cmake_run.log
+make all >> $log_file
 #
-echo "example/example > cmake_run.log"
-example/example >> ../$top_srcdir/cmake_run.log
+# print_for is a special case 
+echo "print_for/print_for >> cmake_run.log"
+print_for/print_for >> $log_file
+print_for/print_for | sed -e '/^Test passes/,$d' > junk.1.$$
+print_for/print_for | sed -e '1,/^Test passes/d' > junk.2.$$
+if diff junk.1.$$ junk.2.$$
+then
+	rm junk.1.$$ junk.2.$$
+	echo "print_for: OK"  >> $log_file
+else
+	echo "print_for: Error"  >> $log_file
+	exit 1
+fi
+#
+# other test cases
+for dir in example
+do
+	echo "$dir/$dir >> cmake_run.log"
+	$dir/$dir >> $log_file
+done
 #
 echo "make install > cmake_run.log"
-make install >> ../$top_srcdir/cmake_run.log
+make install >> $log_file
 #
 echo 'cmake_run.sh: OK'
 exit 0
