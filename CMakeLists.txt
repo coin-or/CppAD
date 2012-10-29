@@ -29,33 +29,31 @@ INCLUDE_DIRECTORIES( ${cppad_SOURCE_DIR} )
 # ----------------------------------------------------------------------------
 
 # cppad_prefix:
-# option(<option_variable> "help string describing option" [initial value])
-OPTION(cppad_prefix "cppad install prefix" OFF)
-IF ( cppad_prefix )
-	MESSAGE(STATUS "cppad_prefix = ${cppad_prefix}")
-ELSE ( cppad_prefix )
-	MESSAGE(FATAL_ERROR "cppad_prefix was not set by cmake command")
-ENDIF ( cppad_prefix )
 # set(<variable> <value> [[CACHE <type> <docstring> [FORCE]] | PARENT_SCOPE])
+SET(cppad_prefix NOTFOUND CACHE PATH "cppad install prefix" )
+MESSAGE(STATUS "cppad_prefix = ${cppad_prefix}")
+IF ( NOT cppad_prefix )
+	MESSAGE(FATAL_ERROR "cppad_prefix was not set by cmake command")
+ENDIF ( NOT cppad_prefix )
 SET(CMAKE_INSTALL_PREFIX "${cppad_prefix}" 
-	CACHE PATH "default copied from cppad_prefix" FORCE
+	CACHE PATH "value copied from cppad_prefix" FORCE
 )
 
 # cppad_postfix:
-OPTION(cppad_postfix "cppad install postfix" OFF)
+SET(cppad_postfix NOTFOUND CACHE PATH "cppad install postfix")
+MESSAGE(STATUS "cppad_postfix = ${cppad_postfix}")
 IF ( cppad_postfix )
 	SET(include_dir "include/${cppad_postfix}"
-		CACHE PATH "include files -> ${cppad_prefix}/${include_dir}" FORCE
+		CACHE INTERNAL "cppad install include file directory" FORCE
 	)
 ELSE ( cppad_postfix )
 	SET(include_dir "include"
 		CACHE PATH "include files -> ${cppad_prefix}/${include_dir}" FORCE
 	)
 ENDIF ( cppad_postfix )
-MESSAGE(STATUS "cppad_postfix = ${cppad_postfix}")
 
 # adolc_prefix
-OPTION(adolc_prefix "adolc install prefix" OFF)
+SET(adolc_prefix NOTFOUND CACHE PATH "adolc install prefix")
 MESSAGE(STATUS "adolc_prefix = ${adolc_prefix}")
 
 # adolc include and link directories

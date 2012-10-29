@@ -35,7 +35,7 @@ echo_exec cd build
 args="../$top_srcdir"
 args="$args  -Dcppad_prefix=$HOME/prefix/cppad"
 args="$args  -Dadolc_prefix=$HOME/prefix/adolc"
-args="$args  -DCMAKE_VERBOSE_MAKEFILE=1"
+# args="$args  -DCMAKE_VERBOSE_MAKEFILE=1"
 #
 echo "cmake $args > cmake_run.log"
 cmake $args > ../$top_srcdir/cmake_run.log
