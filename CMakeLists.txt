@@ -11,6 +11,8 @@
 # -----------------------------------------------------------------------------
 # Some macros
 # ----------------------------------------------------------------------------
+# Check for package_prefix and if it is specified, set correspodong
+# include and link directories.
 MACRO(optional_package prefix_variable description) 
 	SET(${prefix_variable} NOTFOUND CACHE PATH "${description}")
 	SET(prefix ${${prefix_variable}} )
@@ -92,6 +94,7 @@ optional_package(ipopt_prefix "ipopt install prefix")
 ADD_SUBDIRECTORY(example)
 ADD_SUBDIRECTORY(print_for)
 ADD_SUBDIRECTORY(test_more)
+ADD_SUBDIRECTORY(speed)
 IF ( ipopt_prefix )
 	ADD_SUBDIRECTORY(cppad_ipopt)
 ENDIF( ipopt_prefix )

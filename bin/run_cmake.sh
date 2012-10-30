@@ -66,26 +66,34 @@ list='
 	cppad_ipopt/example/ipopt_example
 	cppad_ipopt/speed/ipopt_speed
 	cppad_ipopt/test/ipopt_test_more
+	speed/cppad/speed_cppad
+	speed/adolc/speed_adolc
 '
 skip=''
 #
 # standard test cases
 for program in $list
 do
+	dir=`echo $program | sed -e 's|/.*||'`
+	if [ "$dir" == 'speed' ]
+	args=''
+	then
+		args='correct 54321'
+	fi
 	if [ ! -e "$program" ]
 	then
 		skip="$skip $program"
 	else
-		echo "$program >> run_cmake.log"
-		$program >> $log_file
+		echo "$program $args >> run_cmake.log"
+		$program $args >> $log_file
 	fi
 done
+#
+# print_for test
 if [ ! -e 'print_for/print_for' ]
 then
 	skip="$skip print_for/print_for"
 else
-	#
-	# print_for is a special case 
 	echo "print_for/print_for >> run_cmake.log"
 	print_for/print_for >> $log_file
 	print_for/print_for | sed -e '/^Test passes/,$d' > junk.1.$$
