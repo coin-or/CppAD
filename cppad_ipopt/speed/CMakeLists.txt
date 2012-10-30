@@ -10,14 +10,7 @@
 # Please visit http://www.coin-or.org/CppAD/ for information on other licenses.
 # -----------------------------------------------------------------------------
 # Run the cppad_ipopt/speed directory tests 
-# Inherit environment from ../../CMakeList.txt
-
-# assert ipopt_prefix is defined
-IF ( NOT ipopt_prefix )
-	MESSAGE(FATAL_ERROR 
-		"cppad_ipopt/speed/CMakeLists.txt: ipopt_prefix = ${ipopt_prefix}"
-	)
-ENDIF ( NOT ipopt_prefix )
+# Inherit environment from ../CMakeList.txt
 
 # Specifies build type for this directory. Possible values are 
 # empty, Debug, Release, RelWithDebInfo and MinSizeRel
@@ -27,11 +20,13 @@ SET(CMAKE_BUILD_TYPE RELEASE)
 INCLUDE_DIRECTORIES( ${CMAKE_CURRENT_SOURCE_DIR}/../src )
 
 # Local link directories to search (not in external packages)
-LINK_DIRECTORIES( ${CMAKE_CURRENT_BINARY_DIR}/../src ${ipopt_LIBRARY_DIRS} )
+# (cannot use ../src/cppad_ipopt library because it is linke with debugging)
+LINK_DIRECTORIES( ${ipopt_LIBRARY_DIRS} )
 
 # add_executable(<name> [WIN32] [MACOSX_BUNDLE] [EXCLUDE_FROM_ALL]
 #                 source1 source2 ... sourceN
 # )
+# Include source for cppad_ipopt library so we build it without debugging 
 ADD_EXECUTABLE(ipopt_speed speed.cpp
 	../src/cppad_ipopt_nlp.cpp
 	../src/fun_record.hpp

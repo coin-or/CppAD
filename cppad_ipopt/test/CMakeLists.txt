@@ -10,14 +10,7 @@
 # Please visit http://www.coin-or.org/CppAD/ for information on other licenses.
 # -----------------------------------------------------------------------------
 # Run the cppad_ipopt/test directory tests 
-# Inherit environment from ../../CMakeList.txt
-
-# assert ipopt_prefix is defined
-IF ( NOT ipopt_prefix )
-	MESSAGE(FATAL_ERROR 
-		"cppad_ipopt/test/CMakeLists.txt: ipopt_prefix = ${ipopt_prefix}"
-	)
-ENDIF ( NOT ipopt_prefix )
+# Inherit environment from ../CMakeList.txt
 
 # Specifies build type for this directory. Possible values are 
 # empty, Debug, Release, RelWithDebInfo and MinSizeRel

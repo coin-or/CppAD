@@ -83,27 +83,9 @@ optional_package(ipopt_prefix "ipopt install prefix")
 # ----------------------------------------------------------------------------
 # automated system configuration
 # ----------------------------------------------------------------------------
-IF ( ipopt_prefix )
-	FIND_PACKAGE(PkgConfig)
-	IF( NOT PKG_CONFIG_FOUND )
-		MESSAGE(FATAL_ERROR "Using ipopt_prefix but cannot find pkg-config")
-	ENDIF( NOT PKG_CONFIG_FOUND )
-	SET(ipopt_config ${ipopt_prefix}/lib/pkgconfig )
-	SET( ENV{PKG_CONFIG_PATH} ${ipopt_config} )
-	# pkg_check_modules(<PREFIX> [REQUIRED] <MODULE> [<MODULE>]*)
-	# ipopt_LIBRARIES      ... only the libraries (w/o the '-l')
-	# ipopt_LIBRARY_DIRS   ... the paths of the libraries (w/o the '-L')
-	pkg_check_modules(ipopt ipopt)
-	IF( NOT ipopt_FOUND )
-		MESSAGE(FATAL_ERROR 
-			"Missing ipopt pkg-config info in ${ipopt_config}"
-		)
-	ENDIF( NOT ipopt_FOUND )
-ENDIF( ipopt_prefix )
 # ----------------------------------------------------------------------------
-# Testing
-# enable_testing: Enable testing for current directory and below.
-ENABLE_TESTING()
+# Currently building tests as normal executables
+# ----------------------------------------------------------------------------
 # The CMakeLists.txt file in the specified source directory is processed 
 # before the current input file continues beyond this command.
 # add_subdirectory(source_dir [binary_dir] [EXCLUDE_FROM_ALL])
@@ -111,10 +93,7 @@ ADD_SUBDIRECTORY(example)
 ADD_SUBDIRECTORY(print_for)
 ADD_SUBDIRECTORY(test_more)
 IF ( ipopt_prefix )
-	ADD_SUBDIRECTORY(cppad_ipopt/src)
-	ADD_SUBDIRECTORY(cppad_ipopt/example)
-	ADD_SUBDIRECTORY(cppad_ipopt/speed)
-	ADD_SUBDIRECTORY(cppad_ipopt/test)
+	ADD_SUBDIRECTORY(cppad_ipopt)
 ENDIF( ipopt_prefix )
 # ----------------------------------------------------------------------------
 # install procedure

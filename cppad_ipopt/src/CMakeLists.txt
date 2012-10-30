@@ -9,15 +9,8 @@
 # A copy of this license is included in the COPYING file of this distribution.
 # Please visit http://www.coin-or.org/CppAD/ for information on other licenses.
 # -----------------------------------------------------------------------------
-# Build the cppad_ipopt library
-# Inherit environment from ../../CMakeList.txt
-
-# assert ipopt_prefix is defined
-IF ( NOT ipopt_prefix )
-	MESSAGE(FATAL_ERROR 
-		"cppad_ipopt/src/CMakeLists.txt: ipopt_prefix = ${ipopt_prefix}"
-	)
-ENDIF ( NOT ipopt_prefix )
+# Build the cppad_ipopt/src library
+# Inherit environment from ../CMakeList.txt
 
 # Specifies build type for this directory. Possible values are 
 # empty, Debug, Release, RelWithDebInfo and MinSizeRel
