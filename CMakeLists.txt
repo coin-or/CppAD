@@ -113,8 +113,8 @@ ADD_SUBDIRECTORY(test_more)
 IF ( ipopt_prefix )
 	ADD_SUBDIRECTORY(cppad_ipopt/src)
 	ADD_SUBDIRECTORY(cppad_ipopt/example)
-	# ADD_SUBDIRECTORY(cppad_ipopt/speed)
-	# ADD_SUBDIRECTORY(cppad_ipopt/test)
+	ADD_SUBDIRECTORY(cppad_ipopt/speed)
+	ADD_SUBDIRECTORY(cppad_ipopt/test)
 ENDIF( ipopt_prefix )
 # ----------------------------------------------------------------------------
 # install procedure

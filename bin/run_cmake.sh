@@ -20,17 +20,13 @@ echo_exec() {
      eval $*
 }
 args=''
-run_tests='no'
 if [ "$1" != "" ]
 then
 	if [ "$1" == '--verbose' ]
 	then
 		args="$args  -DCMAKE_VERBOSE_MAKEFILE=1"
-	elif [ "$1" == '--run_tests' ]
-	then
-		run_tests='yes'
 	else
-		echo 'usage: bin/run_cmake.sh: [--verbose] [--run_tests]'
+		echo 'usage: bin/run_cmake.sh: [--verbose]'
 		exit 1
 	fi
 fi
@@ -64,18 +60,30 @@ cmake ../$top_srcdir $args >> $log_file
 echo "make all >> run_cmake.log"
 make all >> $log_file
 #
-if [ "$run_tests" == 'yes' ]
+list='
+	example/example
+	test_more/test_more
+	cppad_ipopt/example/ipopt_example
+	cppad_ipopt/speed/ipopt_speed
+	cppad_ipopt/test/ipopt_test_more
+'
+skip=''
+#
+# standard test cases
+for program in $list
+do
+	if [ ! -e "$program" ]
+	then
+		skip="$skip $program"
+	else
+		echo "$program >> run_cmake.log"
+		$program >> $log_file
+	fi
+done
+if [ ! -e 'print_for/print_for' ]
 then
-	#
-	# standard test cases
-	echo "example/example >> run_cmake.log"
-	example/example >> $log_file
-	#
-	echo "test_more/test_more >> run_cmake.log"
-	test_more/test_more >> $log_file
-	# 
-	echo "cppad_ipopt/example/ipopt_example >> run_cmake.log"
-	cppad_ipopt/example/ipopt_example >> $log_file
+	skip="$skip print_for/print_for"
+else
 	#
 	# print_for is a special case 
 	echo "print_for/print_for >> run_cmake.log"
@@ -94,6 +102,12 @@ fi
 #
 echo "make install > run_cmake.log"
 make install >> $log_file
+#
+if [ "$skip" != '' ]
+then
+	echo "run_cmake.sh: skip = $skip"
+	exit 1
+fi
 #
 echo 'run_cmake.sh: OK'
 exit 0
