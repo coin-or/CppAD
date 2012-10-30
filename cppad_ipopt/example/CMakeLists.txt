@@ -9,7 +9,7 @@
 # A copy of this license is included in the COPYING file of this distribution.
 # Please visit http://www.coin-or.org/CppAD/ for information on other licenses.
 # -----------------------------------------------------------------------------
-# Build the cppad_ipopt library
+# Run the cppad_ipopt/example directory tests 
 # Inherit environment from ../../CMakeList.txt
 
 # assert ipopt_prefix is defined
@@ -23,26 +23,30 @@ ENDIF ( NOT ipopt_prefix )
 # empty, Debug, Release, RelWithDebInfo and MinSizeRel
 SET(CMAKE_BUILD_TYPE DEBUG)
 
-#  add_library(<name> [STATIC | SHARED | MODULE] [EXCLUDE_FROM_ALL]
-#	source1 source2 ... sourceN)
+# Local include directories to search (not in external packages)
+INCLUDE_DIRECTORIES( ${CMAKE_CURRENT_SOURCE_DIR}/../src )
+
+# Local link directories to search (not in external packages)
+LINK_DIRECTORIES( ${CMAKE_CURRENT_BINARY_DIR}/../src ${ipopt_LIBRARY_DIRS} )
+
+# add_executable(<name> [WIN32] [MACOSX_BUNDLE] [EXCLUDE_FROM_ALL]
+#                 source1 source2 ... sourceN
 # )
-ADD_LIBRARY(cppad_ipopt 
-	cppad_ipopt_nlp.cpp
-	hes_fg_map.cpp
-	jac_g_map.cpp
-	sparse_map2vec.cpp
-	vec_fun_pattern.cpp 
+ADD_EXECUTABLE(ipopt_example example.cpp
+	example.cpp
+	get_started.cpp
+	ode_check.cpp
+	ode_check.hpp
+	ode_fast_check.cpp
+	ode_fast.hpp
+	ode_problem.hpp
+	ode_run.hpp
+	ode_simple_check.cpp
+	ode_simple.hpp
 )
 
-# install(FILES files... DESTINATION <dir>
-#	[PERMISSIONS permissions...]
-#	[CONFIGURATIONS [Debug|Release|...]]
-#	[COMPONENT <component>]
-#	[RENAME <name>] [OPTIONAL])
-INSTALL(FILES cppad_ipopt_nlp.hpp DESTINATION ${include_dir})
+# List of libraries to be linked into the specified target
+TARGET_LINK_LIBRARIES(ipopt_example cppad_ipopt ${ipopt_LIBRARIES})
 
-# install(TARGETS myExe mySharedLib myStaticLib
-#	RUNTIME DESTINATION bin
-#	LIBRARY DESTINATION lib
-#	ARCHIVE DESTINATION lib/static)
-INSTALL(TARGETS cppad_ipopt DESTINATION lib)
+# add_test(testname Exename arg1 arg2 ... )
+# ADD_TEST( ipopt_example ipopt_example )

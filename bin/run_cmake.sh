@@ -10,9 +10,9 @@
 # A copy of this license is included in the COPYING file of this distribution.
 # Please visit http://www.coin-or.org/CppAD/ for information on other licenses.
 # -----------------------------------------------------------------------------
-if [ ! -e "bin/cmake_run.sh" ]
+if [ ! -e "bin/run_cmake.sh" ]
 then
-	echo "bin/cmake_run.sh: must be executed from its parent directory"
+	echo "bin/run_cmake.sh: must be executed from its parent directory"
 	exit 1
 fi
 echo_exec() {
@@ -30,7 +30,7 @@ then
 	then
 		run_tests='yes'
 	else
-		echo 'usage: bin/cmake_run.sh: [--verbose] [--run_tests]'
+		echo 'usage: bin/run_cmake.sh: [--verbose] [--run_tests]'
 		exit 1
 	fi
 fi
@@ -38,7 +38,7 @@ fi
 top_srcdir=`pwd | sed -e 's|.*/||'`
 echo_exec cd ..
 list="
-	$top_srcdir/cmake_run.log
+	$top_srcdir/run_cmake.log
 	$HOME/prefix/cppad
 	build
 "
@@ -51,31 +51,34 @@ do
 done
 echo_exec mkdir build
 echo_exec cd build
-log_file="../$top_srcdir/cmake_run.log"
+log_file="../$top_srcdir/run_cmake.log"
 # -----------------------------------------------------------------------------
 for package in cppad adolc eigen ipopt
 do
 	args="$args  -D${package}_prefix=$HOME/prefix/$package"
 done
 #
-echo "cmake ../$top_srcdir $args >> cmake_run.log"
+echo "cmake ../$top_srcdir $args >> run_cmake.log"
 cmake ../$top_srcdir $args >> $log_file
 #
-echo "make all >> cmake_run.log"
+echo "make all >> run_cmake.log"
 make all >> $log_file
 #
 if [ "$run_tests" == 'yes' ]
 then
 	#
-	# standard test case
-	for dir in example test_more
-	do
-		echo "$dir/$dir >> cmake_run.log"
-		$dir/$dir >> $log_file
-	done
+	# standard test cases
+	echo "example/example >> run_cmake.log"
+	example/example >> $log_file
+	#
+	echo "test_more/test_more >> run_cmake.log"
+	test_more/test_more >> $log_file
+	# 
+	echo "cppad_ipopt/example/ipopt_example >> run_cmake.log"
+	cppad_ipopt/example/ipopt_example >> $log_file
 	#
 	# print_for is a special case 
-	echo "print_for/print_for >> cmake_run.log"
+	echo "print_for/print_for >> run_cmake.log"
 	print_for/print_for >> $log_file
 	print_for/print_for | sed -e '/^Test passes/,$d' > junk.1.$$
 	print_for/print_for | sed -e '1,/^Test passes/d' > junk.2.$$
@@ -89,8 +92,8 @@ then
 	fi
 fi
 #
-echo "make install > cmake_run.log"
+echo "make install > run_cmake.log"
 make install >> $log_file
 #
-echo 'cmake_run.sh: OK'
+echo 'run_cmake.sh: OK'
 exit 0

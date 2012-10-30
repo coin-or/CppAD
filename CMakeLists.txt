@@ -43,6 +43,7 @@ SET(src_version 20121026 "cppad source code version number")
 
 # include_directories([AFTER|BEFORE] [SYSTEM] dir1 dir2 ...)
 INCLUDE_DIRECTORIES( ${cppad_SOURCE_DIR} )
+
 # ----------------------------------------------------------------------------
 # cmake command line system configuration
 # ----------------------------------------------------------------------------
@@ -79,12 +80,26 @@ optional_package(eigen_prefix "eigen install prefix")
 
 # ipopt_prefix
 optional_package(ipopt_prefix "ipopt install prefix")
-
 # ----------------------------------------------------------------------------
 # automated system configuration
 # ----------------------------------------------------------------------------
-FIND_PROGRAM(pkg_config pkg-config)
-MESSAGE(STATUS "pkg_config = ${pkg_config}")
+IF ( ipopt_prefix )
+	FIND_PACKAGE(PkgConfig)
+	IF( NOT PKG_CONFIG_FOUND )
+		MESSAGE(FATAL_ERROR "Using ipopt_prefix but cannot find pkg-config")
+	ENDIF( NOT PKG_CONFIG_FOUND )
+	SET(ipopt_config ${ipopt_prefix}/lib/pkgconfig )
+	SET( ENV{PKG_CONFIG_PATH} ${ipopt_config} )
+	# pkg_check_modules(<PREFIX> [REQUIRED] <MODULE> [<MODULE>]*)
+	# ipopt_LIBRARIES      ... only the libraries (w/o the '-l')
+	# ipopt_LIBRARY_DIRS   ... the paths of the libraries (w/o the '-L')
+	pkg_check_modules(ipopt ipopt)
+	IF( NOT ipopt_FOUND )
+		MESSAGE(FATAL_ERROR 
+			"Missing ipopt pkg-config info in ${ipopt_config}"
+		)
+	ENDIF( NOT ipopt_FOUND )
+ENDIF( ipopt_prefix )
 # ----------------------------------------------------------------------------
 # Testing
 # enable_testing: Enable testing for current directory and below.
@@ -97,7 +112,7 @@ ADD_SUBDIRECTORY(print_for)
 ADD_SUBDIRECTORY(test_more)
 IF ( ipopt_prefix )
 	ADD_SUBDIRECTORY(cppad_ipopt/src)
-	# ADD_SUBDIRECTORY(cppad_ipopt/example)
+	ADD_SUBDIRECTORY(cppad_ipopt/example)
 	# ADD_SUBDIRECTORY(cppad_ipopt/speed)
 	# ADD_SUBDIRECTORY(cppad_ipopt/test)
 ENDIF( ipopt_prefix )
