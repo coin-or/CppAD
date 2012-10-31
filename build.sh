@@ -243,7 +243,7 @@ then
 			EIGEN_DIR=$EIGEN_DIR"
 #_build_test_only:	dir_list="$dir_list --with-eigenvector"
 	fi
-	if [ -e $FADBAD_DIR/FADBAD++ ]
+	if [ -e $FADBAD_DIR/include/FADBAD++ ]
 	then
 		dir_list="$dir_list 
 			FADBAD_DIR=$FADBAD_DIR"

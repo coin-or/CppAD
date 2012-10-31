@@ -235,7 +235,7 @@ top_srcdir = @top_srcdir@
 #
 AM_CPPFLAGS = \
 	-I$(top_srcdir) \
-	-I$(FADBAD_DIR) \
+	-I$(FADBAD_DIR)/include \
 	$(BOOST_INCLUDE) \
 	$(EIGEN_INCLUDE)
 

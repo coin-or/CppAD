@@ -80,8 +80,14 @@ optional_package(adolc_prefix "adolc install prefix")
 # eigen_prefix
 optional_package(eigen_prefix "eigen install prefix")
 
+# fadbad_prefix
+optional_package(fadbad_prefix "fadbad install prefix")
+
 # ipopt_prefix
 optional_package(ipopt_prefix "ipopt install prefix")
+
+# sacado_prefix
+optional_package(sacado_prefix "sacado install prefix")
 # ----------------------------------------------------------------------------
 # automated system configuration
 # ----------------------------------------------------------------------------

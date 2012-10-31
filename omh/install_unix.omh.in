@@ -537,7 +537,7 @@ installed on your system, you can
 specify a value for $icode fadbad_dir$$.
 It must be such that
 $codei%
-	%fadbad_dir%/FADBAD++/badiff.h
+	%fadbad_dir%/include/FADBAD++/badiff.h
 %$$
 is a valid reference to $code badiff.h$$.
 In this case, you can run the Fadbad speed correctness tests

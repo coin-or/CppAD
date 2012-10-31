@@ -61,6 +61,12 @@ This section contains a list of the changes to CppAD during 2012
 The purpose of this section is to
 assist you in learning about changes between various versions of CppAD.
 
+$head 10-30$$
+The $cref/fadbad_dir/InstallUnix/fadbad_dir/$$ directory install instructions
+were changed.
+To be specific, $code FADBAD++$$ was changed to $code include/FADBAD++$$.
+This makes it more like the other optional packages.
+
 $head 10-25$$
 The test $cref runge45_1.cpp$$ was failing when using gcc-4.5.2. 
 This has been fixed by properly defining $codei%fabs(%x%)%$$ where

@@ -9,15 +9,15 @@
 # A copy of this license is included in the COPYING file of this distribution.
 # Please visit http://www.coin-or.org/CppAD/ for information on other licenses.
 # -----------------------------------------------------------------------------
-# Run the speed/adolc directory tests 
+# Run the speed/sacado directory tests 
 # Inherit environment from ../CMakeList.txt
 
-# assert adolc_prefix is defined
-IF ( NOT adolc_prefix )
+# assert sacado_prefix is defined
+IF ( NOT sacado_prefix )
 	MESSAGE(FATAL_ERROR 
-		"speed/adolc/CMakeLists.txt: adolc_prefix = ${adolc_prefix}"
+		"speed/sacado/CMakeLists.txt: sacado_prefix = ${sacado_prefix}"
 	)
-ENDIF ( NOT adolc_prefix )
+ENDIF ( NOT sacado_prefix )
 
 # Specifies build type for this directory. Possible values are 
 # empty, Debug, Release, RelWithDebInfo and MinSizeRel
@@ -26,7 +26,7 @@ SET(CMAKE_BUILD_TYPE RELEASE)
 # Adds flags to the compiler command line for sources in the current directory 
 # and below. This command can be used to add any flags, but it was originally 
 # intended to add preprocessor definitions. 
-ADD_DEFINITIONS("-DSPEED_ADOLC")
+ADD_DEFINITIONS("-DSPEED_SACADO -DRAD_AUTO_AD_Const")
 
 # Local include directories to search (not in package_prefix/include)
 INCLUDE_DIRECTORIES( ${CMAKE_CURRENT_SOURCE_DIR}/../src )
@@ -34,7 +34,7 @@ INCLUDE_DIRECTORIES( ${CMAKE_CURRENT_SOURCE_DIR}/../src )
 # add_executable(<name> [WIN32] [MACOSX_BUNDLE] [EXCLUDE_FROM_ALL]
 #                 source1 source2 ... sourceN
 # )
-ADD_EXECUTABLE(speed_adolc ../main.cpp alloc_mat.cpp
+ADD_EXECUTABLE(speed_sacado ../main.cpp 
 	det_lu.cpp
 	det_minor.cpp
 	mat_mul.cpp
@@ -45,7 +45,7 @@ ADD_EXECUTABLE(speed_adolc ../main.cpp alloc_mat.cpp
 )
 
 # List of libraries to be linked into the specified target
-TARGET_LINK_LIBRARIES(speed_adolc speed adolc )
+TARGET_LINK_LIBRARIES(speed_sacado speed sacado )
 
 # add_test(testname Exename arg1 arg2 ... )
-# ADD_TEST( speed_adolc speed_adolc )
+# ADD_TEST( speed_fadbad speed_fadbad )

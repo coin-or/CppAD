@@ -49,7 +49,7 @@ echo_exec mkdir build
 echo_exec cd build
 log_file="../$top_srcdir/run_cmake.log"
 # -----------------------------------------------------------------------------
-for package in cppad adolc eigen ipopt
+for package in cppad adolc eigen ipopt fadbad sacado
 do
 	args="$args  -D${package}_prefix=$HOME/prefix/$package"
 done
@@ -66,26 +66,32 @@ list='
 	cppad_ipopt/example/ipopt_example
 	cppad_ipopt/speed/ipopt_speed
 	cppad_ipopt/test/ipopt_test_more
-	speed/cppad/speed_cppad
 	speed/adolc/speed_adolc
+	speed/cppad/speed_cppad
+	speed/fadbad/speed_fadbad
+	speed/sacado/speed_sacado
 '
 skip=''
 #
 # standard test cases
 for program in $list
 do
-	dir=`echo $program | sed -e 's|/.*||'`
-	if [ "$dir" == 'speed' ]
-	args=''
-	then
-		args='correct 54321'
-	fi
 	if [ ! -e "$program" ]
 	then
 		skip="$skip $program"
 	else
-		echo "$program $args >> run_cmake.log"
-		$program $args >> $log_file
+		dir=`echo $program | sed -e 's|/.*||'`
+		if [ "$dir" != 'speed' ]
+		then
+			echo "$program >> run_cmake.log"
+			$program >> $log_file
+		else
+			echo "$program correct 54321 >> run_cmake.log"
+			$program correct 54321 >> $log_file
+			#
+			echo "$program correct 54321 retape >> run_cmake.log"
+			$program correct 54321 retape >> $log_file
+		fi
 	fi
 done
 #
