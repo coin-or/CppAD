@@ -82,7 +82,7 @@ do
 done
 #
 # speed tests
-for dir in adolc cppad double fadbad sacado
+for dir in adolc cppad double fadbad sacado profile
 do
 	program="speed/$dir/speed_${dir}"
 	if [ ! -e "$program" ]

@@ -1,0 +1,62 @@
+# $Id$
+# -----------------------------------------------------------------------------
+# CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-12 Bradley M. Bell
+#
+# CppAD is distributed under multiple licenses. This distribution is under
+# the terms of the 
+#                     Eclipse Public License Version 1.0.
+#
+# A copy of this license is included in the COPYING file of this distribution.
+# Please visit http://www.coin-or.org/CppAD/ for information on other licenses.
+# -----------------------------------------------------------------------------
+# Run the speed/profile directory tests 
+# Inherit environment from ../CMakeList.txt
+
+# Specifies build type for this directory. Possible values are 
+# empty, Debug, Release, RelWithDebInfo and MinSizeRel
+SET(CMAKE_BUILD_TYPE RELEASE)
+
+# Adds flags to the compiler command line for sources in the current directory 
+# and below. This command can be used to add any flags, but it was originally 
+# intended to add preprocessor definitions. 
+ADD_DEFINITIONS("-DSPEED_PROFILE -pg")
+
+# Extra flags used by the linker when creating an executable. 
+SET(CMAKE_EXE_LINKER_FLAGS "-pg")
+
+# Local include directories to search (not in package_prefix/include)
+INCLUDE_DIRECTORIES( ${CMAKE_CURRENT_SOURCE_DIR}/../src )
+
+# add_executable(<name> [WIN32] [MACOSX_BUNDLE] [EXCLUDE_FROM_ALL]
+#                 source1 source2 ... sourceN
+# )
+ADD_EXECUTABLE(speed_profile ../main.cpp 
+	../cppad/print_optimize.hpp
+	../cppad/print_optimize.cpp
+	../cppad/ode.cpp
+	../cppad/det_lu.cpp 
+	../cppad/det_minor.cpp 
+	../cppad/mat_mul.cpp 
+	../cppad/poly.cpp
+	../cppad/sparse_hessian.cpp
+	../cppad/sparse_jacobian.cpp
+	../src/link_det_lu.cpp
+	../src/link_det_minor.cpp
+	../src/link_mat_mul.cpp
+	../src/link_ode.cpp
+	../src/link_poly.cpp
+	../src/link_sparse_hessian.cpp
+	../src/link_sparse_jacobian.cpp
+	../src/microsoft_timer.cpp
+)
+
+# profile builds it own copy of src/speed library (see ADD_EXECUTABLE above)
+# TARGET_LINK_LIBRARIES(speed_profile speed )
+
+# add_test(testname Exename arg1 arg2 ... )
+# ADD_TEST( speed_profile speed_profile )
+
+# Sed script to make gprof output more readable, use:
+#	./speed_profile speed 54321
+#	gprof speed_profile gmon.out | sed -f 'gprof.sed' > gprof.out
+configure_file(gprof.sed.in gprof.sed COPYONLY)

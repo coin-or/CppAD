@@ -30,8 +30,7 @@ AM_CXXFLAGS   = -pg -O2 -DSPEED_PROFILE -DNDEBUG $(CXX_FLAGS)
 # AM_CXXFLAGS = -g $(CXX_FLAGS) -DSPEED_PROFILE
 # END DEBUG
 #
-LDADD         = -lspeed
-AM_LDFLAGS    = -L../src -pg
+AM_LDFLAGS    = -pg
 #
 profile_SOURCES = \
 	../cppad/print_optimize.hpp \
@@ -43,7 +42,15 @@ profile_SOURCES = \
 	../cppad/mat_mul.cpp  \
 	../cppad/poly.cpp \
 	../cppad/sparse_hessian.cpp \
-	../cppad/sparse_jacobian.cpp
+	../cppad/sparse_jacobian.cpp \
+	../src/link_det_lu.cpp \
+	../src/link_det_minor.cpp \
+	../src/link_mat_mul.cpp \
+	../src/link_ode.cpp \
+	../src/link_poly.cpp \
+	../src/link_sparse_hessian.cpp \
+	../src/link_sparse_jacobian.cpp \
+	../src/microsoft_timer.cpp
 
 test: check
 	./profile correct 123

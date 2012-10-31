@@ -18,6 +18,7 @@
 ADD_SUBDIRECTORY(src)
 ADD_SUBDIRECTORY(cppad)
 ADD_SUBDIRECTORY(double)
+ADD_SUBDIRECTORY(profile)
 IF ( adolc_prefix )
 	ADD_SUBDIRECTORY(adolc)
 ENDIF( adolc_prefix )

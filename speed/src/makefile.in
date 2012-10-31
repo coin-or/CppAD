@@ -250,7 +250,6 @@ AM_CPPFLAGS = \
 	$(EIGEN_INCLUDE)
 
 #
-# make building the library conditional on having IPOPT_DIR specified
 noinst_LIBRARIES = libspeed.a
 libspeed_a_SOURCES = \
 	link_det_lu.cpp \

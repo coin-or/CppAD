@@ -13,6 +13,7 @@ Please visit http://www.coin-or.org/CppAD/ for information on other licenses.
 $begin whats_new_12$$
 $dollar @$$
 $spell
+	src
 	std
 	hes
 	dw
@@ -60,6 +61,12 @@ This section contains a list of the changes to CppAD during 2012
 (in reverse order by date).
 The purpose of this section is to
 assist you in learning about changes between various versions of CppAD.
+
+$head 10-31$$
+The CppAD $cref/profiling/InstallUnix/Profiling CppAD/$$ was not compiling
+the $code speed/src/*.cpp$$ files with the profiling flag.
+This has been changes 
+(only for the profiling speed test).
 
 $head 10-30$$
 The $cref/fadbad_dir/InstallUnix/fadbad_dir/$$ directory install instructions
