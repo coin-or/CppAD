@@ -60,42 +60,44 @@ cmake ../$top_srcdir $args >> $log_file
 echo "make all >> run_cmake.log"
 make all >> $log_file
 #
+skip=''
 list='
 	example/example
 	test_more/test_more
 	cppad_ipopt/example/ipopt_example
 	cppad_ipopt/speed/ipopt_speed
 	cppad_ipopt/test/ipopt_test_more
-	speed/adolc/speed_adolc
-	speed/cppad/speed_cppad
-	speed/fadbad/speed_fadbad
-	speed/sacado/speed_sacado
 '
-skip=''
 #
-# standard test cases
+# standard tests
 for program in $list
 do
 	if [ ! -e "$program" ]
 	then
 		skip="$skip $program"
 	else
-		dir=`echo $program | sed -e 's|/.*||'`
-		if [ "$dir" != 'speed' ]
-		then
-			echo "$program >> run_cmake.log"
-			$program >> $log_file
-		else
-			echo "$program correct 54321 >> run_cmake.log"
-			$program correct 54321 >> $log_file
-			#
-			echo "$program correct 54321 retape >> run_cmake.log"
-			$program correct 54321 retape >> $log_file
-		fi
+		echo "$program >> run_cmake.log"
+		$program >> $log_file
 	fi
 done
 #
-# print_for test
+# speed tests
+for dir in adolc cppad double fadbad sacado
+do
+	program="speed/$dir/speed_${dir}"
+	if [ ! -e "$program" ]
+	then
+		skip="$skip $program"
+	else
+		echo "$program correct 54321 >> run_cmake.log"
+		$program correct 54321 >> $log_file
+		#
+		echo "$program correct 54321 retape >> run_cmake.log"
+		$program correct 54321 retape >> $log_file
+	fi
+done
+#
+# print_for test 
 if [ ! -e 'print_for/print_for' ]
 then
 	skip="$skip print_for/print_for"

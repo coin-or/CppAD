@@ -17,6 +17,7 @@
 # add_subdirectory(source_dir [binary_dir] [EXCLUDE_FROM_ALL])
 ADD_SUBDIRECTORY(src)
 ADD_SUBDIRECTORY(cppad)
+ADD_SUBDIRECTORY(double)
 IF ( adolc_prefix )
 	ADD_SUBDIRECTORY(adolc)
 ENDIF( adolc_prefix )
