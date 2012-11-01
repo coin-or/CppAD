@@ -49,6 +49,9 @@ echo_exec mkdir build
 echo_exec cd build
 log_file="../$top_srcdir/run_cmake.log"
 # -----------------------------------------------------------------------------
+args="$args -Dcmake_install_datadir=share"
+args="$args -Dcmake_install_includedir=include"
+args="$args -Dcppad_postfix=coin"
 for package in cppad adolc eigen ipopt fadbad sacado
 do
 	args="$args  -D${package}_prefix=$HOME/prefix/$package"
@@ -117,7 +120,7 @@ else
 	fi
 fi
 #
-echo "make install > run_cmake.log"
+echo "make install >> run_cmake.log"
 make install >> $log_file
 #
 if [ "$skip" != '' ]

@@ -35,6 +35,12 @@ ENDMACRO(optional_package)
 # Set the minimum required version of cmake for this project.
 CMAKE_MINIMUM_REQUIRED(VERSION 2.6)
 
+# set(<variable> <value> [[CACHE <type> <docstring> [FORCE]] | PARENT_SCOPE])
+SET(cppad_version      "20121026" )
+SET(cppad_url          "http://www.coin-or.org/CppAD" )
+SET(cppad_description  "Differentiation of C++ Algorithms" )
+
+
 # Set name of this project and create the variables 
 # cppad_BINARY_DIR and cppad_SOURCE_DIR. 
 # project(projectname [CXX] [C] [Java])
@@ -50,6 +56,18 @@ INCLUDE_DIRECTORIES( ${cppad_SOURCE_DIR} )
 # cmake command line system configuration
 # ----------------------------------------------------------------------------
 
+# cmake_install_datadir:
+SET(cmake_install_datadir NOTFOUND CACHE STRING 
+	"dirctory, below prefix, where cmake installs data files"
+)
+MESSAGE(STATUS "cmake install datadir = ${cmake_install_datadir}")
+
+# cmake_install_includedir:
+SET(cmake_install_includedir NOTFOUND CACHE STRING 
+	"directory, below prefix, where cmake installs include files"
+)
+MESSAGE(STATUS "cmake install includedir = ${cmake_install_includedir}")
+
 # cppad_prefix:
 # set(<variable> <value> [[CACHE <type> <docstring> [FORCE]] | PARENT_SCOPE])
 SET(cppad_prefix NOTFOUND CACHE PATH "cppad install prefix" )
@@ -64,15 +82,6 @@ SET(CMAKE_INSTALL_PREFIX "${cppad_prefix}"
 # cppad_postfix:
 SET(cppad_postfix NOTFOUND CACHE PATH "cppad install postfix")
 MESSAGE(STATUS "cppad install postfix = ${cppad_postfix}")
-IF ( cppad_postfix )
-	SET(include_dir "include/${cppad_postfix}"
-		CACHE INTERNAL "cppad install include file directory" FORCE
-	)
-ELSE ( cppad_postfix )
-	SET(include_dir "include"
-		CACHE PATH "include files -> ${cppad_prefix}/${include_dir}" FORCE
-	)
-ENDIF ( cppad_postfix )
 
 # adolc_prefix
 optional_package(adolc_prefix "adolc install prefix")
@@ -91,6 +100,33 @@ optional_package(sacado_prefix "sacado install prefix")
 # ----------------------------------------------------------------------------
 # automated system configuration
 # ----------------------------------------------------------------------------
+
+# cppad_includedir 
+IF ( cppad_postfix )
+	SET(cppad_includedir 
+		"${cppad_prefix}/${cmake_install_includedir}/${cppad_postfix}" 
+		CACHE INTERNAL "cppad install include file directory" FORCE
+	)
+ELSE ( cppad_postfix )
+	SET(cppad_includedir 
+		"${cppad_prefix}/${cmake_install_includedir}" 
+		CACHE PATH "cppad install include file directory" FORCE
+	)
+ENDIF ( cppad_postfix )
+
+# cppad_datadir 
+IF ( cppad_postfix )
+	SET(cppad_datadir 
+		"${cppad_prefix}/${cmake_install_datadir}/${cppad_postfix}" 
+		CACHE INTERNAL "cppad install data file directory" FORCE
+	)
+ELSE ( cppad_postfix )
+	SET(cppad_datadir 
+		"${cppad_prefix}/${cmake_install_datadir}" 
+		CACHE PATH "cppad install data file directory" FORCE
+	)
+ENDIF ( cppad_postfix )
+
 # ----------------------------------------------------------------------------
 # Currently building tests as normal executables
 # ----------------------------------------------------------------------------
@@ -98,6 +134,7 @@ optional_package(sacado_prefix "sacado install prefix")
 # before the current input file continues beyond this command.
 # add_subdirectory(source_dir [binary_dir] [EXCLUDE_FROM_ALL])
 ADD_SUBDIRECTORY(example)
+ADD_SUBDIRECTORY(pkgconfig)
 ADD_SUBDIRECTORY(print_for)
 ADD_SUBDIRECTORY(test_more)
 ADD_SUBDIRECTORY(speed)
@@ -117,4 +154,4 @@ ENDIF( ipopt_prefix )
 #	[[PATTERN <pattern> | REGEX <regex>]
 #	[EXCLUDE] [PERMISSIONS permissions...]] [...]
 # )
-INSTALL( DIRECTORY cppad DESTINATION ${include_dir} )
+INSTALL( DIRECTORY cppad DESTINATION ${cppad_includedir} )

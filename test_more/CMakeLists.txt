@@ -9,7 +9,7 @@
 # A copy of this license is included in the COPYING file of this distribution.
 # Please visit http://www.coin-or.org/CppAD/ for information on other licenses.
 # -----------------------------------------------------------------------------
-# Run the test_more directory tests 
+# Build the test_more directory tests 
 # Inherit environment from ../CMakeList.txt
 
 # Specifies build type for this directory. Possible values are 

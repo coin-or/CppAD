@@ -9,7 +9,7 @@
 # A copy of this license is included in the COPYING file of this distribution.
 # Please visit http://www.coin-or.org/CppAD/ for information on other licenses.
 # -----------------------------------------------------------------------------
-# Run the speed/profile directory tests 
+# Build the speed/profile directory tests 
 # Inherit environment from ../CMakeList.txt
 
 # Specifies build type for this directory. Possible values are 
@@ -59,4 +59,6 @@ ADD_EXECUTABLE(speed_profile ../main.cpp
 # Sed script to make gprof output more readable, use:
 #	./speed_profile speed 54321
 #	gprof speed_profile gmon.out | sed -f 'gprof.sed' > gprof.out
-configure_file(gprof.sed.in gprof.sed COPYONLY)
+#
+# configure_file(InputFile OutputFile [COPYONLY] [ESCAPE_QUOTES] [@ONLY])
+CONFIGURE_FILE(gprof.sed.in gprof.sed COPYONLY)

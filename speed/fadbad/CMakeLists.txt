@@ -9,7 +9,7 @@
 # A copy of this license is included in the COPYING file of this distribution.
 # Please visit http://www.coin-or.org/CppAD/ for information on other licenses.
 # -----------------------------------------------------------------------------
-# Run the speed/fadbad directory tests 
+# Build the speed/fadbad directory tests 
 # Inherit environment from ../CMakeList.txt
 
 # assert fadbad_prefix is defined

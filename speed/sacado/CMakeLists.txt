@@ -9,7 +9,7 @@
 # A copy of this license is included in the COPYING file of this distribution.
 # Please visit http://www.coin-or.org/CppAD/ for information on other licenses.
 # -----------------------------------------------------------------------------
-# Run the speed/sacado directory tests 
+# Build the speed/sacado directory tests 
 # Inherit environment from ../CMakeList.txt
 
 # assert sacado_prefix is defined
