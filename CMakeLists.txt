@@ -68,6 +68,10 @@ SET(cmake_install_includedir NOTFOUND CACHE STRING
 )
 MESSAGE(STATUS "cmake install includedir = ${cmake_install_includedir}")
 
+# cppad_postfix:
+SET(cppad_postfix NOTFOUND CACHE STRING "cppad install postfix")
+MESSAGE(STATUS "cppad install postfix = ${cppad_postfix}")
+
 # cppad_prefix:
 # set(<variable> <value> [[CACHE <type> <docstring> [FORCE]] | PARENT_SCOPE])
 SET(cppad_prefix NOTFOUND CACHE PATH "cppad install prefix" )
@@ -78,10 +82,6 @@ ENDIF ( NOT cppad_prefix )
 SET(CMAKE_INSTALL_PREFIX "${cppad_prefix}" 
 	CACHE PATH "value copied from cppad_prefix" FORCE
 )
-
-# cppad_postfix:
-SET(cppad_postfix NOTFOUND CACHE PATH "cppad install postfix")
-MESSAGE(STATUS "cppad install postfix = ${cppad_postfix}")
 
 # adolc_prefix
 optional_package(adolc_prefix "adolc install prefix")
