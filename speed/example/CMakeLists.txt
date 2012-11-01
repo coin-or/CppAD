@@ -14,12 +14,7 @@
 
 # Specifies build type for this directory. Possible values are 
 # empty, Debug, Release, RelWithDebInfo and MinSizeRel
-SET(CMAKE_BUILD_TYPE RELEASE)
-
-# Adds flags to the compiler command line for sources in the current directory 
-# and below. This command can be used to add any flags, but it was originally 
-# intended to add preprocessor definitions. 
-ADD_DEFINITIONS("-DSPEED_CPPAD")
+SET(CMAKE_BUILD_TYPE DEBUG)
 
 # Local include directories to search (not in package_prefix/include)
 INCLUDE_DIRECTORIES( ${CMAKE_CURRENT_SOURCE_DIR}/../src )
@@ -27,18 +22,21 @@ INCLUDE_DIRECTORIES( ${CMAKE_CURRENT_SOURCE_DIR}/../src )
 # add_executable(<name> [WIN32] [MACOSX_BUNDLE] [EXCLUDE_FROM_ALL]
 #                 source1 source2 ... sourceN
 # )
-ADD_EXECUTABLE(speed_cppad ../main.cpp print_optimize.cpp
-	det_lu.cpp
-	det_minor.cpp
-	mat_mul.cpp
-	ode.cpp
-	poly.cpp
-	sparse_hessian.cpp
-	sparse_jacobian.cpp
+ADD_EXECUTABLE(speed_example example.cpp
+	det_by_lu.cpp
+	det_by_minor.cpp
+	det_of_minor.cpp
+	elapsed_seconds.cpp
+	mat_sum_sq.cpp
+	ode_evaluate.cpp
+	sparse_hes_fun.cpp
+	sparse_jac_fun.cpp
+	speed_test.cpp
+	time_test.cpp
 )
 
 # List of libraries to be linked into the specified target
-TARGET_LINK_LIBRARIES(speed_cppad speed )
+TARGET_LINK_LIBRARIES(speed_example speed )
 
 # add_test(testname Exename arg1 arg2 ... )
-# ADD_TEST( speed_cppad speed_cppad )
+# ADD_TEST( speed_example speed_example )

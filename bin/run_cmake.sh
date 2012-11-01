@@ -67,6 +67,7 @@ list='
 	cppad_ipopt/example/ipopt_example
 	cppad_ipopt/speed/ipopt_speed
 	cppad_ipopt/test/ipopt_test_more
+	speed/example/speed_example
 '
 #
 # standard tests
