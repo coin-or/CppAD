@@ -56,6 +56,29 @@ INCLUDE_DIRECTORIES( ${cppad_SOURCE_DIR} )
 # cmake command line system configuration
 # ----------------------------------------------------------------------------
 
+#
+# cppad_* settings
+#
+
+# cppad_prefix: This is the only required command line argument.
+# set(<variable> <value> [[CACHE <type> <docstring> [FORCE]] | PARENT_SCOPE])
+SET(cppad_prefix NOTFOUND CACHE PATH "cppad install prefix" )
+MESSAGE(STATUS "cppad install prefix = ${cppad_prefix}")
+IF ( NOT cppad_prefix )
+	MESSAGE(FATAL_ERROR "cppad_prefix was not set by cmake command")
+ENDIF ( NOT cppad_prefix )
+SET(CMAKE_INSTALL_PREFIX "${cppad_prefix}" 
+	CACHE PATH "value copied from cppad_prefix" FORCE
+)
+
+# cppad_postfix:
+SET(cppad_postfix NOTFOUND CACHE STRING "cppad install postfix")
+MESSAGE(STATUS "cppad install postfix = ${cppad_postfix}")
+
+#
+# cmake_install_* settings
+#
+
 # cmake_install_datadir:
 SET(cmake_install_datadir NOTFOUND CACHE STRING 
 	"dirctory, below prefix, where cmake installs data files"
@@ -68,21 +91,9 @@ SET(cmake_install_includedir NOTFOUND CACHE STRING
 )
 MESSAGE(STATUS "cmake install includedir = ${cmake_install_includedir}")
 
-# cppad_postfix:
-SET(cppad_postfix NOTFOUND CACHE STRING "cppad install postfix")
-MESSAGE(STATUS "cppad install postfix = ${cppad_postfix}")
-
-# cppad_prefix:
-# set(<variable> <value> [[CACHE <type> <docstring> [FORCE]] | PARENT_SCOPE])
-SET(cppad_prefix NOTFOUND CACHE PATH "cppad install prefix" )
-MESSAGE(STATUS "cppad install prefix = ${cppad_prefix}")
-IF ( NOT cppad_prefix )
-	MESSAGE(FATAL_ERROR "cppad_prefix was not set by cmake command")
-ENDIF ( NOT cppad_prefix )
-SET(CMAKE_INSTALL_PREFIX "${cppad_prefix}" 
-	CACHE PATH "value copied from cppad_prefix" FORCE
-)
-
+#
+# External package prefixes
+#
 # adolc_prefix
 optional_package(adolc_prefix "adolc install prefix")
 
@@ -97,6 +108,7 @@ optional_package(ipopt_prefix "ipopt install prefix")
 
 # sacado_prefix
 optional_package(sacado_prefix "sacado install prefix")
+
 # ----------------------------------------------------------------------------
 # automated system configuration
 # ----------------------------------------------------------------------------
@@ -133,7 +145,9 @@ ENDIF ( cppad_postfix )
 # The CMakeLists.txt file in the specified source directory is processed 
 # before the current input file continues beyond this command.
 # add_subdirectory(source_dir [binary_dir] [EXCLUDE_FROM_ALL])
+#
 ADD_SUBDIRECTORY(example)
+ADD_SUBDIRECTORY(multi_thread)
 ADD_SUBDIRECTORY(pkgconfig)
 ADD_SUBDIRECTORY(print_for)
 ADD_SUBDIRECTORY(test_more)
@@ -141,6 +155,12 @@ ADD_SUBDIRECTORY(speed)
 IF ( ipopt_prefix )
 	ADD_SUBDIRECTORY(cppad_ipopt)
 ENDIF( ipopt_prefix )
+#
+# You can comment out some of the ADD_SUBDIRECTORY comamnds above 
+# to speed up testing the other sub-directories. In this case, the script
+#	bin/run_cmake.sh
+# runs tests that are present, reports which are not present, and fail.
+#
 # ----------------------------------------------------------------------------
 # install procedure
 # ----------------------------------------------------------------------------

@@ -19,6 +19,17 @@ echo_exec() {
      echo $* 
      eval $*
 }
+echo_exec_log() {
+	echo "$* >> run_cmake.log"
+	echo    >> $log_file
+	eval $* >> $log_file
+}
+# circular shift program list and set program to first entry in list
+next_program() {
+	program_list=`echo "$program_list" | sed -e 's| *\([^ ]*\) *\(.*\)|\2 \1|'`
+	program=`echo "$program_list" | sed -e 's| *\([^ ]*\).*|\1|'`
+}
+# -----------------------------------------------------------------------------
 args=''
 if [ "$1" != "" ]
 then
@@ -57,12 +68,9 @@ do
 	args="$args  -D${package}_prefix=$HOME/prefix/$package"
 done
 #
-echo "cmake ../$top_srcdir $args >> run_cmake.log"
-cmake ../$top_srcdir $args >> $log_file
-#
-echo "make all >> run_cmake.log"
-make all >> $log_file
-#
+echo_exec_log cmake ../$top_srcdir $args
+echo_exec_log make all 
+# -----------------------------------------------------------------------------
 skip=''
 list='
 	example/example
@@ -80,8 +88,7 @@ do
 	then
 		skip="$skip $program"
 	else
-		echo "$program >> run_cmake.log"
-		$program >> $log_file
+		echo_exec_log $program 
 	fi
 done
 #
@@ -93,21 +100,54 @@ do
 	then
 		skip="$skip $program"
 	else
-		echo "$program correct 54321 >> run_cmake.log"
-		$program correct 54321 >> $log_file
-		#
-		echo "$program correct 54321 retape >> run_cmake.log"
-		$program correct 54321 retape >> $log_file
+		echo_exec_log $program correct 54321 
+		echo_exec_log $program correct 54321 retape
 	fi
 done
+#
+# multi_thread tests
+# ----------------------------------------------------------------------------
+program_list=''
+for dir in openmp pthread
+do
+	program="multi_thread/${dir}/${dir}_test"
+	if [ ! -e $program ]
+	then
+		skip="$skip $program"
+	else
+		program_list="$program_list $program"
+		#
+		# fast cases, test for all programs
+		echo_exec_log ./$program a11c
+		echo_exec_log ./$program simple_ad
+		echo_exec_log ./$program team_example
+	fi
+done
+if [ "$program_list" != '' ]
+then
+	# test_time=1,max_thread=4,mega_sum=1
+	next_program
+	echo_exec_log ./$program harmonic 1 4 1
+	# 
+	# test_time=2,max_thread=4,num_zero=20,num_sub=30,num_sum=500,use_ad=true
+	next_program
+	echo_exec_log ./$program multi_newton 2 4 20 30 500 true
+	#
+	# case that failed in the past
+	next_program
+	echo_exec_log ./$program multi_newton 1 1 100 700 1 true
+	#
+	# case that failed in the past
+	next_program
+	echo_exec_log ./$program multi_newton 1 2 3 12 1 true
+fi
 #
 # print_for test 
 if [ ! -e 'print_for/print_for' ]
 then
 	skip="$skip print_for/print_for"
 else
-	echo "print_for/print_for >> run_cmake.log"
-	print_for/print_for >> $log_file
+	echo_exec_log print_for/print_for 
 	print_for/print_for | sed -e '/^Test passes/,$d' > junk.1.$$
 	print_for/print_for | sed -e '1,/^Test passes/d' > junk.2.$$
 	if diff junk.1.$$ junk.2.$$
@@ -120,8 +160,7 @@ else
 	fi
 fi
 #
-echo "make install >> run_cmake.log"
-make install >> $log_file
+echo_exec_log make install >> $log_file
 #
 if [ "$skip" != '' ]
 then

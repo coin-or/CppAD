@@ -9,7 +9,7 @@
 # A copy of this license is included in the COPYING file of this distribution.
 # Please visit http://www.coin-or.org/CppAD/ for information on other licenses.
 # -----------------------------------------------------------------------------
-# Build the cppad_ipopt/speed directory tests 
+# Build the cppad_ipopt/* directory tests 
 # Inherit environment from ../CMakeList.txt
 
 # assert ipopt_prefix is defined
