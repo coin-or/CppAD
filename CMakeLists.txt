@@ -55,17 +55,29 @@ INCLUDE_DIRECTORIES( ${cppad_SOURCE_DIR} )
 # ----------------------------------------------------------------------------
 # cmake command line system configuration
 # ----------------------------------------------------------------------------
-
+#
+# cmake_install_datadir, cmake_install_includedir, cmake_install_libdir:
+#
+FOREACH(type "data" "include" "lib")
+	SET(cmake_install_${type}dir NOTFOUND CACHE STRING 
+		"dirctory, below prefix, where cmake installs ${type} files"
+	)
+	MESSAGE(STATUS "cmake install ${type} dir = ${cmake_install_${type}dir}")
+	IF ( NOT cmake_install_${type}dir )
+		MESSAGE(FATAL_ERROR 
+			"cmake_install_${type}dir not set by cmake command"
+		)
+	ENDIF ( NOT cmake_install_${type}dir )
+ENDFOREACH(type)
 #
 # cppad_* settings
 #
-
 # cppad_prefix: This is the only required command line argument.
 # set(<variable> <value> [[CACHE <type> <docstring> [FORCE]] | PARENT_SCOPE])
 SET(cppad_prefix NOTFOUND CACHE PATH "cppad install prefix" )
 MESSAGE(STATUS "cppad install prefix = ${cppad_prefix}")
 IF ( NOT cppad_prefix )
-	MESSAGE(FATAL_ERROR "cppad_prefix was not set by cmake command")
+	MESSAGE(FATAL_ERROR "cppad_prefix not set by cmake command")
 ENDIF ( NOT cppad_prefix )
 SET(CMAKE_INSTALL_PREFIX "${cppad_prefix}" 
 	CACHE PATH "value copied from cppad_prefix" FORCE
@@ -74,22 +86,6 @@ SET(CMAKE_INSTALL_PREFIX "${cppad_prefix}"
 # cppad_postfix:
 SET(cppad_postfix NOTFOUND CACHE STRING "cppad install postfix")
 MESSAGE(STATUS "cppad install postfix = ${cppad_postfix}")
-
-#
-# cmake_install_* settings
-#
-
-# cmake_install_datadir:
-SET(cmake_install_datadir NOTFOUND CACHE STRING 
-	"dirctory, below prefix, where cmake installs data files"
-)
-MESSAGE(STATUS "cmake install datadir = ${cmake_install_datadir}")
-
-# cmake_install_includedir:
-SET(cmake_install_includedir NOTFOUND CACHE STRING 
-	"directory, below prefix, where cmake installs include files"
-)
-MESSAGE(STATUS "cmake install includedir = ${cmake_install_includedir}")
 
 #
 # External package prefixes

@@ -62,6 +62,7 @@ log_file="../$top_srcdir/run_cmake.log"
 # -----------------------------------------------------------------------------
 args="$args -Dcmake_install_datadir=share"
 args="$args -Dcmake_install_includedir=include"
+args="$args -Dcmake_install_libdir=lib64"
 args="$args -Dcppad_postfix=coin"
 for package in cppad adolc eigen ipopt fadbad sacado
 do
