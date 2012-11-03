@@ -109,7 +109,7 @@ done
 # multi_thread tests
 # ----------------------------------------------------------------------------
 program_list=''
-for dir in openmp pthread
+for dir in bthread openmp pthread
 do
 	program="multi_thread/${dir}/${dir}_test"
 	if [ ! -e $program ]

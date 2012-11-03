@@ -27,15 +27,18 @@ INCLUDE(CheckLibraryExists)
 # accordingly if additional libraries or compiler flags are required. 
 INCLUDE(CheckCXXSourceCompiles)
 
-# check for openmp
+# If openmp found, set OpenMP_CXX_FLAGS and process its subdirectory
+#
 FIND_PACKAGE(OpenMP)
 IF ( OPENMP_FOUND )
 	# OpenMP_CXX_FLAGS - flags to add to the CXX compiler for OpenMP support
 	ADD_SUBDIRECTORY(openmp)
 ENDIF ( OPENMP_FOUND )
 
-# check for pthreads
+# If pthreads found, set pthread_lib and pthread_lib_path and process subdir
+#
 # find_library(<VAR> name1 [path1 path2 ...])
+SET(pthread_lib "pthread")
 FIND_LIBRARY(pthread_lib_path pthread)
 MESSAGE(STATUS "pthread library path = ${pthread_lib_path}")
 IF ( pthread_lib_path )
@@ -47,7 +50,9 @@ IF ( pthread_lib_path )
 	ENDIF ( pthread_ok )
 ENDIF ( pthread_lib_path )
 
-# check for boost threads
+# If boost threads found, set 
+# Boost_INCLUDE_DIRS, bthread_lib, bthread_lib_path and process its subdir
+# 
 FIND_PACKAGE(Boost)
 IF ( Boost_FOUND )
 	# Boost_INCLUDE_DIRS:         boost include directories
@@ -62,12 +67,13 @@ IF ( Boost_FOUND )
 		"(.*)/[^/]*" "\\1" 
 		boost_prefix "${Boost_INCLUDE_DIRS}" 
 	) 
-	#
-	# boost_thread_ok, boost_thread_mt_ok:
-	#
-	SET(CMAKE_REQUIRED_LIBRARIES "boost_thread")
-	SET(CMAKE_REQUIRED_FLAGS "-L${boost_prefix}/${cmake_install_libdir}" )
 	SET(CMAKE_REQUIRED_INCLUDES  "${Boost_INCLUDE_DIRS}")
+	#
+	SET(bthread_lib               "boost_thread" )
+	SET(CMAKE_REQUIRED_LIBRARIES "${bthread_lib}" )
+	#
+	SET(bthread_lib_path "${boost_prefix}/${cmake_install_libdir}" )
+	SET(CMAKE_REQUIRED_FLAGS     "-L${bthread_lib_path}" )
 	#
 	# CHECK_CXX_SOURCE_COMPILES(source variable)
 	SET(source "
@@ -78,7 +84,13 @@ main(void)
 }"	)
 	CHECK_CXX_SOURCE_COMPILES("${source}" bthread_ok)
 	#
-	SET(CMAKE_REQUIRED_LIBRARIES "boost_thread-mt")
-	CHECK_CXX_SOURCE_COMPILES("${source}" bthread_mt_ok)
+	IF ( NOT bthread_ok )
+		SET(bthread_lib               "boost_thread-mt" )
+		SET(CMAKE_REQUIRED_LIBRARIES "${bthread_lib}" )
+		CHECK_CXX_SOURCE_COMPILES("${source}" bthread_mt_ok)
+	ENDIF ( NOT bthread_ok )
+	IF ( bthread_ok OR bthread_mt_ok )
+		ADD_SUBDIRECTORY(bthread)
+	ENDIF ( bthread_ok OR bthread_mt_ok )
 ENDIF ( Boost_FOUND )
 
