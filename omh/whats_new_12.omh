@@ -13,6 +13,7 @@ Please visit http://www.coin-or.org/CppAD/ for information on other licenses.
 $begin whats_new_12$$
 $dollar @$$
 $spell
+	CondExpOp
 	src
 	std
 	hes
@@ -61,6 +62,11 @@ This section contains a list of the changes to CppAD during 2012
 (in reverse order by date).
 The purpose of this section is to
 assist you in learning about changes between various versions of CppAD.
+
+$head 11-04$$
+Add missing return value to the example $code base_alloc$$
+$cref/CondExpOp/base_alloc.hpp/CondExpOp/$$ function.
+This has been fixed and the comments for this example have been improved.
 
 $head 10-31$$
 The CppAD $cref/profiling/InstallUnix/Profiling CppAD/$$ was not compiling

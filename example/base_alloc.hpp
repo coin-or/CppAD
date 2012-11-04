@@ -169,9 +169,7 @@ public:
 /* $$
 
 $head CondExpOp$$
-The type $code base_alloc$$ is a relatively simple type that supports
-$code <$$, $code <=$$, $code ==$$, $code >=$$, and $code >$$ operators; see
-$cref/ordered type/base_cond_exp/CondExpTemplate/Ordered Type/$$.
+The type $code base_alloc$$ does not use $cref CondExp$$ operations.
 Hence its $code CondExpOp$$ function is defined by
 $codep */
 namespace CppAD {
@@ -183,6 +181,9 @@ namespace CppAD {
 		const base_alloc&       exp_if_false )
 	{	// not used
 		assert(false);
+
+		// to void compiler error
+		return base_alloc();
 	}
 }
 /* $$

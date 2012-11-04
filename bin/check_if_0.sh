@@ -1,7 +1,7 @@
 #! /bin/bash -e
 # $Id$
 # -----------------------------------------------------------------------------
-# CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-11 Bradley M. Bell
+# CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-12 Bradley M. Bell
 #
 # CppAD is distributed under multiple licenses. This distribution is under
 # the terms of the
@@ -23,8 +23,8 @@ echo "-------------------------------------------------------"
 ok="yes"
 for ext in .cpp .hpp
 do
-	dir_list=`find . -name "*$ext" | \
-		sed -e 's|^\./||' -e '/^work/d' -e 's|/[^/]*$||' | sort -u`  
+	dir_list=`find . -name "*$ext" | sed -e '/junk\.[^.]*$/d' \
+		-e 's|^\./||' -e '/^work/d' -e 's|/[^/]*$||' | sort -u`  
 	for dir in $dir_list 
 	do
 		list=`ls $dir/*$ext`
