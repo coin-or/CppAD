@@ -30,17 +30,18 @@ next_program() {
 	program=`echo "$program_list" | sed -e 's| *\([^ ]*\).*|\1|'`
 }
 # -----------------------------------------------------------------------------
-args=''
+cmake_args=''
 if [ "$1" != "" ]
 then
 	if [ "$1" == '--verbose' ]
 	then
-		args="$args  -DCMAKE_VERBOSE_MAKEFILE=1"
+		cmake_args="$cmake_args  -DCMAKE_VERBOSE_MAKEFILE=1"
 	else
 		echo 'usage: bin/run_cmake.sh: [--verbose]'
 		exit 1
 	fi
 fi
+cmake_args="$cmake_args  -Dcppad_prefix=$HOME/cppad"
 # -----------------------------------------------------------------------------
 top_srcdir=`pwd | sed -e 's|.*/||'`
 echo_exec cd ..
@@ -60,16 +61,34 @@ echo_exec mkdir build
 echo_exec cd build
 log_file="../$top_srcdir/run_cmake.log"
 # -----------------------------------------------------------------------------
-args="$args -Dcmake_install_datadir=share"
-args="$args -Dcmake_install_includedir=include"
-args="$args -Dcmake_install_libdir=lib64"
-args="$args -Dcppad_postfix=coin"
-for package in cppad adolc eigen ipopt fadbad sacado
+if [ -d '/usr/include' ]
+then
+	cmake_args="$cmake_args -Dcmake_install_includedir=include"
+fi
+#
+if [ -d '/usr/share' ]
+then
+	cmake_args="$cmake_args -Dcmake_install_datadir=share"
+fi
+#
+if [ -d '/usr/lib64' ]
+then
+	cmake_args="$cmake_args -Dcmake_install_libdir=lib64"
+elif [ -d '/usr/lib' ]
+then
+	cmake_args="$cmake_args -Dcmake_install_libdir=lib"
+fi
+#
+for package in adolc eigen ipopt fadbad sacado
 do
-	args="$args  -D${package}_prefix=$HOME/prefix/$package"
+	dir=$HOME/prefix/$package
+	if [ -d "$dir" ]
+	then
+		cmake_args="$cmake_args  -D${package}_prefix=$dir"
+	fi
 done
 #
-echo_exec_log cmake ../$top_srcdir $args
+echo_exec_log cmake ../$top_srcdir $cmake_args
 echo_exec_log make all 
 # -----------------------------------------------------------------------------
 skip=''

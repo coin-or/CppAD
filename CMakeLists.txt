@@ -53,7 +53,7 @@ SET(src_version 20121026 "cppad source code version number")
 INCLUDE_DIRECTORIES( ${cppad_SOURCE_DIR} )
 
 # ----------------------------------------------------------------------------
-# cmake command line system configuration
+# required cmake command line argument
 # ----------------------------------------------------------------------------
 #
 # cmake_install_datadir, cmake_install_includedir, cmake_install_libdir:
@@ -70,9 +70,8 @@ FOREACH(type "data" "include" "lib")
 	ENDIF ( NOT cmake_install_${type}dir )
 ENDFOREACH(type)
 #
-# cppad_* settings
+# cppad_prefix: 
 #
-# cppad_prefix: This is the only required command line argument.
 # set(<variable> <value> [[CACHE <type> <docstring> [FORCE]] | PARENT_SCOPE])
 SET(cppad_prefix NOTFOUND CACHE PATH "cppad install prefix" )
 MESSAGE(STATUS "cppad install prefix = ${cppad_prefix}")
@@ -82,8 +81,12 @@ ENDIF ( NOT cppad_prefix )
 SET(CMAKE_INSTALL_PREFIX "${cppad_prefix}" 
 	CACHE PATH "value copied from cppad_prefix" FORCE
 )
-
+# ----------------------------------------------------------------------------
+# optional cmake command line argument
+# ----------------------------------------------------------------------------
+#
 # cppad_postfix:
+#
 SET(cppad_postfix NOTFOUND CACHE STRING "cppad install postfix")
 MESSAGE(STATUS "cppad install postfix = ${cppad_postfix}")
 
