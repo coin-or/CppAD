@@ -29,7 +29,6 @@ find . \( -name '*.c'   \) -or \
 		> bin/check_include_omh.1.$$
 list="
 	epl-v10.txt
-	cppad_ipopt/example/example_windows.bat
 	gpl-3.0.txt
 "
 for file in $list

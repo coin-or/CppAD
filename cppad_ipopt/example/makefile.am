@@ -17,7 +17,6 @@ DEFS          =
 # Microsoft project files (and ipopt install utility for Visual Studio)
 EXTRA_DIST        =  test.sh \
 	\
-	example_windows.bat \
 	ode1.omh \
 	ode2.omh
 #

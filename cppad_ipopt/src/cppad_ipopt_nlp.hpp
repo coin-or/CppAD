@@ -564,15 +564,10 @@ It is the final value of the objective function $latex f(x)$$.
 
 
 $children%
-	cppad_ipopt/example/example_windows.bat%
 	cppad_ipopt/example/get_started.cpp%
 	cppad_ipopt/example/ode1.omh%
 	cppad_ipopt/speed/ode_speed.cpp
 %$$
-
-$head Visual Studio$$
-If you are using Visual Studio, see the special
-$cref cppad_ipopt_windows$$ instructions.
 
 $head Example$$
 The file 
