@@ -1,7 +1,7 @@
 #! /bin/bash -e
 # $Id$
 # -----------------------------------------------------------------------------
-# CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-11 Bradley M. Bell
+# CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-12 Bradley M. Bell
 #
 # CppAD is distributed under multiple licenses. This distribution is under
 # the terms of the
@@ -109,7 +109,7 @@ done
 #
 echo "change the COPYING file"
 sed -n -i $dir/COPYING -e '/-\{70\}/,/-\{70\}/p'
-cat $root_dir/gpl2.txt >> $dir/COPYING
+cat $root_dir/gpl-3.0.txt >> $dir/COPYING
 #
 echo "change the file epl-v10.txt to the file gpl-3.0.txt"
 rm $dir/epl-v10.txt
