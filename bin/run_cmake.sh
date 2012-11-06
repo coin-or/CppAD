@@ -43,10 +43,8 @@ then
 fi
 cmake_args="$cmake_args  -Dcppad_prefix=$HOME/cppad"
 # -----------------------------------------------------------------------------
-top_srcdir=`pwd | sed -e 's|.*/||'`
-echo_exec cd ..
 list="
-	$top_srcdir/run_cmake.log
+	../run_cmake.log
 	$HOME/prefix/cppad
 	build
 "
@@ -59,7 +57,7 @@ do
 done
 echo_exec mkdir build
 echo_exec cd build
-log_file="../$top_srcdir/run_cmake.log"
+log_file="../run_cmake.log"
 # -----------------------------------------------------------------------------
 if [ -d '/usr/include' ]
 then
@@ -88,7 +86,7 @@ do
 	fi
 done
 #
-echo_exec_log cmake ../$top_srcdir $cmake_args
+echo_exec_log cmake .. $cmake_args
 echo_exec_log make all 
 # -----------------------------------------------------------------------------
 skip=''

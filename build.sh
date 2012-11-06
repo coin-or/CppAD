@@ -90,15 +90,6 @@ then
 	# sed < cppad_ipopt/src/makefile.am > cppad_ipopt/src/makefile.am.$$ \
 	#	-e "s/\(-version-info\) *[0-9]\{8\}[.0-9]*/\1 $version/"
 	#
-	#
-	list="
-		configure
-	"
-	for name in $list
-	do
-		svn revert $name
-	done
-	
 	echo "sed -i.old AUTHORS ..."
 	sed -i.old AUTHORS \
 		-e "s/, [0-9]\{4\}-[0-9]\{2\}-[0-9]\{2\} *,/, $yyyy_mm_dd,/"
