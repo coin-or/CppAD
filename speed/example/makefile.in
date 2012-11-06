@@ -235,8 +235,6 @@ top_builddir = @top_builddir@
 top_srcdir = @top_srcdir@
 #
 EXTRA_DIST = \
-	example.sln \
-	example.vcproj \
 	speed_program.cpp
 
 #

@@ -240,8 +240,6 @@ top_srcdir = @top_srcdir@
 #
 # Microsoft project files
 EXTRA_DIST = \
-	exp_apx.sln \
-	exp_apx.vcproj \
 	exp_2.omh \
 	exp_eps.omh
 

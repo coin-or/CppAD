@@ -15,10 +15,6 @@
 # CppAD pusts all it's preprocessor definitions in the cppad/configure.hpp
 DEFS          =
 #
-EXTRA_DIST       =  \
-	cppad.sln \
-	cppad.vcproj
-#
 check_PROGRAMS   = cppad 
 #
 AM_CPPFLAGS   = -I$(top_srcdir) $(BOOST_INCLUDE) $(EIGEN_INCLUDE)

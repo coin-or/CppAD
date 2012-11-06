@@ -15,8 +15,6 @@
 DEFS          =
 #
 EXTRA_DIST        =  \
-	example.sln \
-	example.vcproj \
 	speed_program.cpp
 #
 check_PROGRAMS    = example 

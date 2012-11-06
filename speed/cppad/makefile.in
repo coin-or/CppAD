@@ -237,11 +237,6 @@ top_build_prefix = @top_build_prefix@
 top_builddir = @top_builddir@
 top_srcdir = @top_srcdir@
 #
-EXTRA_DIST = \
-	cppad.sln \
-	cppad.vcproj
-
-#
 AM_CPPFLAGS = -I$(top_srcdir) $(BOOST_INCLUDE) $(EIGEN_INCLUDE)
 #
 # BEGIN OPTIMIZE

@@ -25,8 +25,7 @@ CPPAD_INCLUDE = -I$(top_srcdir)
 endif
 #
 # Microsoft project files
-EXTRA_DIST        =  test.sh \
-	print_for.sln print_for.vcproj
+EXTRA_DIST        =  test.sh 
 #
 check_PROGRAMS    = print_for
 #

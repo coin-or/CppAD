@@ -13,6 +13,8 @@ Please visit http://www.coin-or.org/CppAD/ for information on other licenses.
 $begin whats_new_12$$
 $dollar @$$
 $spell
+	Microsoft
+	cmake
 	CondExpOp
 	src
 	std
@@ -63,6 +65,20 @@ This section contains a list of the changes to CppAD during 2012
 The purpose of this section is to
 assist you in learning about changes between various versions of CppAD.
 
+$head 11-06$$
+$list number$$
+Remove some remaining references to the old licenses CPL-1.0 and GPL-2.0;
+see $cref/10-24/whats_new_12/10-24/$$.
+$lnext
+Remove out of date Microsoft project files from the distribution.
+The build system is being converted to use
+$href%http://www.cmake.org%cmake%$$ which builds these files automatically
+and thereby keeps them up to date.
+This feature is not yet documented, but one can inspect the file
+$code bin/run_cmake.sh$$ to see how to use $code cmake$$ with CppAD.
+$lend
+
+
 $head 11-04$$
 Add missing return value to the example $code base_alloc$$
 $cref/CondExpOp/base_alloc.hpp/CondExpOp/$$ function.
@@ -84,6 +100,10 @@ $head 10-25$$
 The test $cref runge45_1.cpp$$ was failing when using gcc-4.5.2. 
 This has been fixed by properly defining $codei%fabs(%x%)%$$ where
 $icode x$$ is a double (without the $code std$$ in front).
+
+$head 10-24$$
+Change the CppAD licenses from CPL-1.0 and GPL-2.0 to
+EPL-1.0 and GPL-3.0.
 
 $head 10-12$$
 $list number$$

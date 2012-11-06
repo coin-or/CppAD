@@ -352,8 +352,6 @@ top_srcdir = @top_srcdir@
 # -------------------------------------------------------------------------
 # Microsoft project files an script to run a single test
 EXTRA_DIST = \
-	example.sln \
-	example.vcproj \
 	test_one.sh.in \
 	$(ADOLC_EXTRA_FILES) \
 	$(EIGEN_EXTRA_FILES)

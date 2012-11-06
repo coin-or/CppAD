@@ -237,9 +237,7 @@ top_srcdir = @top_srcdir@
 
 #
 # Microsoft project files
-EXTRA_DIST = test.sh \
-	print_for.sln print_for.vcproj
-
+EXTRA_DIST = test.sh 
 #
 AM_CPPFLAGS = -I. $(CPPAD_INCLUDE) $(BOOST_INCLUDE) $(EIGEN_INCLUDE)
 #

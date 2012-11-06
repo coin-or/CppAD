@@ -49,8 +49,6 @@ endif
 # -------------------------------------------------------------------------
 # Microsoft project files and script to run a single test
 EXTRA_DIST        =  \
-	test_more.sln \
-	test_more.vcproj \
 	test_one.sh.in  \
 	$(ADOLC_EXTRA_FILES) \
 	$(EIGEN_EXTRA_FILES)
