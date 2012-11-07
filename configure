@@ -607,6 +607,8 @@ ac_subst_vars='am__EXEEXT_FALSE
 am__EXEEXT_TRUE
 LTLIBOBJS
 LIBOBJS
+eigen_prefix
+adolc_prefix
 cppad_SOURCE_DIR
 cppad_description
 cppad_url
@@ -7347,6 +7349,10 @@ cppad_url="http://www.coin-or.org/CppAD"
 cppad_description="Differentiation of C++ Algorithms"
 
 cppad_SOURCE_DIR=${ABS_TOP_SRCDIR}
+
+adolc_prefix=${ADOLC_DIR}
+
+eigen_prefix=${EIGEN_DIR}
 
 ac_config_files="$ac_config_files cppad/configure.hpp doc.omh cppad_ipopt/example/test.sh cppad_ipopt/speed/test.sh cppad_ipopt/test/test.sh example/test_one.sh omh/install_unix.omh omh/install_windows.omh pkgconfig/cppad.pc pkgconfig/cppad-uninstalled.pc test_more/test_one.sh makefile example/makefile compare_c/makefile cppad_ipopt/src/makefile cppad_ipopt/example/makefile cppad_ipopt/speed/makefile cppad_ipopt/test/makefile introduction/get_started/makefile introduction/exp_apx/makefile multi_thread/makefile multi_thread/test_multi/makefile print_for/makefile speed/adolc/makefile speed/cppad/makefile speed/double/makefile speed/example/makefile speed/fadbad/makefile speed/profile/makefile speed/profile/gprof.sed speed/sacado/makefile speed/src/makefile test_more/makefile"
 

@@ -669,6 +669,8 @@ AC_SUBST(cppad_version, ${PACKAGE_VERSION} )
 AC_SUBST(cppad_url, "http://www.coin-or.org/CppAD")
 AC_SUBST(cppad_description, "Differentiation of C++ Algorithms")
 AC_SUBST(cppad_SOURCE_DIR,  ${ABS_TOP_SRCDIR} )
+AC_SUBST(adolc_prefix,      ${ADOLC_DIR} )
+AC_SUBST(eigen_prefix,      ${EIGEN_DIR} )
 dnl
 dnl -----------------------------------------------------------------------
 dnl AC_CONFIG_FILES(file-list) for each file in the list, configure will 
