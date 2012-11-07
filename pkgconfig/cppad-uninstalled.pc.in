@@ -1,6 +1,6 @@
 # $Id$
 # -----------------------------------------------------------------------------
-# CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-10 Bradley M. Bell
+# CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-12 Bradley M. Bell
 #
 # CppAD is distributed under multiple licenses. This distribution is under
 # the terms of the 
@@ -11,8 +11,8 @@
 # -----------------------------------------------------------------------------
 # This file is used with pkg-config to include CppAD before it is installed.
 
-Name:         @PACKAGE_NAME@
-Description:  @PACKAGE_DESCRIPTION@
-Version:      @PACKAGE_VERSION@
-URL:          @PACKAGE_URL@
-Cflags:       -I@ABS_TOP_SRCDIR@
+Name:         cppad
+Description:  @cppad_description@
+Version:      @cppad_version@
+URL:          @cppad_url@
+Cflags:       -I@cppad_SOURCE_DIR@

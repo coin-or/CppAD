@@ -607,6 +607,10 @@ ac_subst_vars='am__EXEEXT_FALSE
 am__EXEEXT_TRUE
 LTLIBOBJS
 LIBOBJS
+cppad_SOURCE_DIR
+cppad_description
+cppad_url
+cppad_version
 CPPAD_IPOPT_LIBS
 CPPAD_IPOPT_LD_PATH
 BTHREAD_LIB
@@ -727,7 +731,6 @@ have_pkg_config
 MAINT
 MAINTAINER_MODE_FALSE
 MAINTAINER_MODE_TRUE
-PACKAGE_DESCRIPTION
 target_alias
 host_alias
 build_alias
@@ -2516,10 +2519,6 @@ ac_compile='$CC -c $CFLAGS $CPPFLAGS conftest.$ac_ext >&5'
 ac_link='$CC -o conftest$ac_exeext $CFLAGS $CPPFLAGS $LDFLAGS conftest.$ac_ext $LIBS >&5'
 ac_compiler_gnu=$ac_cv_c_compiler_gnu
 
-
-PACKAGE_URL="http://www.coin-or.org/CppAD"
-
-PACKAGE_DESCRIPTION="Differentiation of C++ Algorithms"
 
 
 
@@ -7341,6 +7340,14 @@ ac_compiler_gnu=$ac_cv_c_compiler_gnu
 fi
 { $as_echo "$as_me:${as_lineno-$LINENO}: result: cppad_ipopt_nlp libraries: $CPPAD_IPOPT_LIBS" >&5
 $as_echo "cppad_ipopt_nlp libraries: $CPPAD_IPOPT_LIBS" >&6; }
+cppad_version=${PACKAGE_VERSION}
+
+cppad_url="http://www.coin-or.org/CppAD"
+
+cppad_description="Differentiation of C++ Algorithms"
+
+cppad_SOURCE_DIR=${ABS_TOP_SRCDIR}
+
 ac_config_files="$ac_config_files cppad/configure.hpp doc.omh cppad_ipopt/example/test.sh cppad_ipopt/speed/test.sh cppad_ipopt/test/test.sh example/test_one.sh omh/install_unix.omh omh/install_windows.omh pkgconfig/cppad.pc pkgconfig/cppad-uninstalled.pc test_more/test_one.sh makefile example/makefile compare_c/makefile cppad_ipopt/src/makefile cppad_ipopt/example/makefile cppad_ipopt/speed/makefile cppad_ipopt/test/makefile introduction/get_started/makefile introduction/exp_apx/makefile multi_thread/makefile multi_thread/test_multi/makefile print_for/makefile speed/adolc/makefile speed/cppad/makefile speed/double/makefile speed/example/makefile speed/fadbad/makefile speed/profile/makefile speed/profile/gprof.sed speed/sacado/makefile speed/src/makefile test_more/makefile"
 
 

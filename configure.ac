@@ -13,8 +13,6 @@ dnl
 dnl Process this file with autoconf to produce a configure script.
 dnl   package   version              bug-report
 AC_INIT(cppad, 20121026, cppad@list.coin-or.org)
-AC_SUBST(PACKAGE_URL, "http://www.coin-or.org/CppAD")
-AC_SUBST(PACKAGE_DESCRIPTION, "Differentiation of C++ Algorithms")
 
 dnl By defalut disable maintainer mode when running configure;
 dnl --enable-maintainer-mode will enable it.
@@ -664,6 +662,14 @@ else
 	AC_LANG_POP([Fortran])
 fi
 AC_MSG_RESULT([cppad_ipopt_nlp libraries: $CPPAD_IPOPT_LIBS])
+dnl --------------------------------------------------------------------------
+dnl names set here so same *.in files work for both cmake and autoconf.
+dnl
+AC_SUBST(cppad_version, ${PACKAGE_VERSION} )
+AC_SUBST(cppad_url, "http://www.coin-or.org/CppAD")
+AC_SUBST(cppad_description, "Differentiation of C++ Algorithms")
+AC_SUBST(cppad_SOURCE_DIR,  ${ABS_TOP_SRCDIR} )
+dnl
 dnl -----------------------------------------------------------------------
 dnl AC_CONFIG_FILES(file-list) for each file in the list, configure will 
 dnl read file.in, do its substitutions, and create file
