@@ -96,11 +96,11 @@ then
 	#
 	echo "sed -i.old configure.ac ..."
 	sed -i.old configure.ac \
-		-e "s/(CppAD, [0-9]\{8\}[.0-9]* *,/(CppAD, $version,/" 
+		-e "s/(cppad, [0-9]\{8\}[.0-9]* *,/(cppad, $version,/" 
 	#
 	echo "sed -i.old configure ..."
 	sed -i.old configure \
-		-e "s/CppAD [0-9]\{8\}[.0-9]*/CppAD $version/g" \
+		-e "s/cppad [0-9]\{8\}[.0-9]*/cppad $version/g" \
 		-e "s/VERSION='[0-9]\{8\}[.0-9]*'/VERSION='$version'/g" \
 		-e "s/configure [0-9]\{8\}[.0-9]*/configure $version/g" \
 		-e "s/config.status [0-9]\{8\}[.0-9]*/config.status $version/g" \

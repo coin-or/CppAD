@@ -22,9 +22,10 @@ then
 	exit 1
 fi
 pattern="$1"
-extensions='.ac .am .cpp .hpp .in .omh .sh'
+extensions='.ac .am .cpp .hpp .in .omh .pc .sh .txt'
 directories='
 	.
+	bin
 	cppad 
 	cppad/example 
 	cppad/local 

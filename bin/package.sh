@@ -20,8 +20,22 @@ echo_exec() {
      eval $*
 }
 # ----------------------------------------------------------------------------
-#
-# build the xml version of documentation for this distribution
+# Run automated checking of file names in original source directory
+list="
+	check_example.sh
+	check_if_0.sh
+	check_include_def.sh
+	check_include_file.sh
+	check_include_omh.sh
+	check_makefile.sh
+	check_op_code.sh
+	check_svn_id.sh
+	check_verbatim.sh
+"
+for check in $list 
+do
+	echo_exec bin/$check
+done
 # -----------------------------------------------------------------------------
 # Get the version number from CMakeLists.txt
 #
@@ -41,11 +55,11 @@ sed -i.old AUTHORS \
 #
 echo "sed -i.old configure.ac ..."
 sed -i.old configure.ac \
-	-e "s/(CppAD, [0-9]\{8\}[.0-9]* *,/(CppAD, $version,/" 
+	-e "s/(cppad, [0-9]\{8\}[.0-9]* *,/(cppad, $version,/" 
 #
 echo "sed -i.old configure ..."
 sed -i.old configure \
-	-e "s/CppAD [0-9]\{8\}[.0-9]*/CppAD $version/g" \
+	-e "s/cppad [0-9]\{8\}[.0-9]*/cppad $version/g" \
 	-e "s/VERSION='[0-9]\{8\}[.0-9]*'/VERSION='$version'/g" \
 	-e "s/configure [0-9]\{8\}[.0-9]*/configure $version/g" \
 	-e "s/config.status [0-9]\{8\}[.0-9]*/config.status $version/g" \
@@ -107,7 +121,7 @@ do
 	echo_exec cp $file $package_dir/$file
 done
 # ----------------------------------------------------------------------------
-# Create the documentation sub-directory
+# build the xml version of documentation for this distribution
 echo_exec mkdir $package_dir/doc
 echo_exec cd $package_dir/doc
 #

@@ -42,7 +42,7 @@ then
 fi
 echo "svn revert configure.ac"
       svn revert configure.ac
-if ! grep "AC_INIT(CppAD.*, $release_version" configure.ac > /dev/null
+if ! grep "AC_INIT(cppad.*, $release_version" configure.ac > /dev/null
 then
 	echo bin/"new_release.sh: Change version number in configure.ac to be"
 	echo "$release_version, then execute"
