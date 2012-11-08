@@ -1,0 +1,19 @@
+#! /bin/bash -e
+set -e
+# Old build file name as link to new build routine.
+# 
+echo "./build.sh all"
+./build.sh all
+#
+# move documentation to old directory for right place on web
+# (do in a way that works on Cygwin)
+if [ -e "Doc" ]
+then
+	echo "rm -rf Doc"
+	rm -rf Doc
+fi
+echo "mv doc doc_"
+mv doc doc_
+#
+echo "mv doc_ Doc"
+mv doc_ Doc
