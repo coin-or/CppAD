@@ -1,7 +1,7 @@
 #! /bin/bash -e
 # $Id$
 # -----------------------------------------------------------------------------
-# CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-11 Bradley M. Bell
+# CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-12 Bradley M. Bell
 #
 # CppAD is distributed under multiple licenses. This distribution is under
 # the terms of the
@@ -19,12 +19,16 @@ fi
 # Make sure that OMhelp verbatim commands referr to same file as command
 echo "Checking that OMhelp verbatim commands include from file they appear in." 
 echo "----------------------------------------------------------------------"
-grep '$verbatim%' * */* */*/* | sed \
+# use 2> to avoid warnings about greping directories, should fix this 
+# some other way
+grep '$verbatim%' * */* */*/* 2> /dev/null | sed \
 	-e '/^bin\//d' \
 	-e 's|:.*$verbatim%| |' \
 	-e 's|%.*||' \
 	-e '/^junk /d' \
 	-e '/^doxydoc\//d' \
+	-e '/^work\//d' \
+	-e '/^build\//d' \
 	-e '/^doc\//d' \
 	-e '/\/test_one\.cpp /d' \
 	-e '/\/speed_[a-z]*\.omh /d' \

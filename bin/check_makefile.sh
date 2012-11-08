@@ -54,7 +54,8 @@ fi
 # -----------------------------------------------------------------------------
 echo "Checking debugging flags in all makefile.am files."
 echo "-------------------------------------------------------" 
-list=`find . -name makefile.am | sed -e 's|\./||'`
+list=`find . -name makefile.am | \
+	sed -e '/\/build\//d' -e'/\/work\//d' -e 's|\./||'`
 ok="yes"
 for file in $list
 do

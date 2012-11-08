@@ -134,29 +134,29 @@ The ascii files for these downloads are in
 Unix format; i.e., each line ends with just a line feed.
 
 $table
-EPL License $pre  $$ $cnext $href%cppad-@VERSION@.epl.tgz%$$ 
+EPL License $pre  $$ $cnext $href%cppad-@cppad_version@.epl.tgz%$$ 
 $rnext
-GPL License $pre  $$ $cnext $href%cppad-@VERSION@.gpl.tgz%$$
+GPL License $pre  $$ $cnext $href%cppad-@cppad_version@.gpl.tgz%$$
 $tend
 
 $subhead Tar File Extraction$$
 Use the unix command
 $codei%
-	tar -xvzf cppad-@VERSION@.%license%.tgz
+	tar -xvzf cppad-@cppad_version@.%license%.tgz
 %$$
 (where $icode license$$ is $code cpl$$ or $code gpl$$)
 to decompress and extract the unix format version
 into the distribution directory
 $codei%
-	cppad-@VERSION@
+	cppad-@cppad_version@
 %$$
 To see if this has been done correctly, check for the following file:
 $codei%
-	cppad-@VERSION@/cppad/cppad.hpp
+	cppad-@cppad_version@/cppad/cppad.hpp
 %$$
 
 $subhead Work Directory$$
-Create the directory $code cppad-@VERSION@/work$$,
+Create the directory $code cppad-@cppad_version@/work$$,
 which will be referred to as the work directory below.
 
 $head Configure$$
@@ -314,7 +314,7 @@ $codei%
 If $cref/--with-Documentation/InstallUnix/--with-Documentation/$$
 is specified, the CppAD documentation files will be installed in the directory
 $codei%
-	/usr/local/share/doc/cppad-@VERSION@
+	/usr/local/share/doc/cppad-@cppad_version@
 %$$
 
 $head --with-Documentation$$
@@ -323,18 +323,18 @@ $index install, documentation$$
 If the command line argument $code --with-Documentation$$ is specified,
 the CppAD documentation HTML and XML files are copied to the directory
 $codei%
-	%prefix_dir%/share/doc/%postfix_dir%/cppad-@VERSION@
+	%prefix_dir%/share/doc/%postfix_dir%/cppad-@cppad_version@
 %$$
 (see $cref/postfix_dir/InstallUnix/postfix_dir/$$).
 The top of the CppAD HTML documentation tree 
 (with mathematics displayed as LaTex command) will be located at
 $codei%
-	%prefix_dir%/share/doc/%postfix_dir%/cppad-@VERSION@/cppad.htm
+	%prefix_dir%/share/doc/%postfix_dir%/cppad-@cppad_version@/cppad.htm
 %$$
 and the top of the XML documentation tree
 (with mathematics displayed as MathML) will be located at
 $codei%
-	%prefix_dir%/share/doc/%postfix_dir%/cppad-@VERSION@/cppad.xml
+	%prefix_dir%/share/doc/%postfix_dir%/cppad-@cppad_version@/cppad.xml
 %$$
 
 $head --with-testvector$$
@@ -436,7 +436,7 @@ $codei%
 If $cref/--with-Documentation/InstallUnix/--with-Documentation/$$
 is specified, the CppAD documentation files will be installed in the directory
 $codei%
-	/usr/local/share/doc/coin/cppad-@VERSION@
+	/usr/local/share/doc/coin/cppad-@cppad_version@
 %$$
 
 $head adolc_dir$$

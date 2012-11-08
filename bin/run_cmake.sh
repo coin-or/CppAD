@@ -41,7 +41,7 @@ then
 		exit 1
 	fi
 fi
-cmake_args="$cmake_args  -Dcppad_prefix=$HOME/cppad"
+cmake_args="$cmake_args  -Dcppad_prefix=$HOME/prefix/cppad"
 # -----------------------------------------------------------------------------
 list="
 	../run_cmake.log

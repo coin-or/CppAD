@@ -1,6 +1,6 @@
 $Id$
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-08 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-12 Bradley M. Bell
 
 CppAD is distributed under multiple licenses. This distribution is under
 the terms of the 
@@ -48,6 +48,12 @@ $index CppAD, install windows$$
 
 $section Windows Download and Test$$
 
+$head Warning$$
+These instructions are out of date because the Microsoft project files
+were deleted on $cref/2012-11-06/whats_new_12/11-06/$$.
+New instructions for automatically creating the Microsoft project
+files will be available soon.
+
 
 $head Cygwin$$
 If you are using Cygwin, or MinGW with MSYS, follow the 
@@ -83,9 +89,9 @@ and editor that has trouble viewing the files in Unix format.
 and then a line feed. 
 
 $table
-EPL License $pre  $$ $cnext $href%cppad-@VERSION@.epl.tgz%$$ 
+EPL License $pre  $$ $cnext $href%cppad-@cppad_version@.epl.tgz%$$ 
 $rnext
-GPL License $pre  $$ $cnext $href%cppad-@VERSION@.gpl.tgz%$$
+GPL License $pre  $$ $cnext $href%cppad-@cppad_version@.gpl.tgz%$$
 $tend
 
 The following steps will decompress and extract the files using
@@ -106,7 +112,7 @@ $lnext
 Place the name of the directory were you want the distribution in the
 $code Extract to$$ field and then select the $code Extract$$ button
 in the pop-up dialog.
-Winzip will create a subdirectory called $code cppad-@VERSION@$$
+Winzip will create a subdirectory called $code cppad-@cppad_version@$$
 where the files are placed.
 $lend
 
@@ -115,10 +121,10 @@ $index GetStarted, windows$$
 The following steps will build the $cref get_started.cpp$$ example.
 Using Microsoft Visual C++, open the workspace 
 $codep
-	cppad-@VERSION@\introduction\get_started\get_started.sln
+	cppad-@cppad_version@\introduction\get_started\get_started.sln
 $$
 in Visual Studio and then select $code Build | Build get_started.exe$$.
-Then in a Dos box, and in the cppad-@VERSION@ directory,
+Then in a Dos box, and in the cppad-@cppad_version@ directory,
 execute the following command
 $codep
 	introduction\get_started\Debug\get_started
@@ -130,10 +136,10 @@ The following steps will build the routines that verify the calculations
 in the exp_apx calculations in the $cref Introduction$$ section.
 Using Microsoft Visual C++, open the workspace 
 $codep
-	cppad-@VERSION@\introduction\exp_apx\exp_apx.sln
+	cppad-@cppad_version@\introduction\exp_apx\exp_apx.sln
 $$ in Visual Studio.
 Then select $code Build | Build exp_apx.exe$$.
-Then in a Dos box, and in the cppad-@VERSION@ directory,
+Then in a Dos box, and in the cppad-@cppad_version@ directory,
 execute the following command
 $codep
 	introduction\exp_apx\Debug\exp_apx
@@ -146,10 +152,10 @@ The following steps will build an extensive set of examples
 and correctness tests.
 Using Microsoft Visual C++, open the workspace 
 $codep
-	cppad-@VERSION@\example\example.sln
+	cppad-@cppad_version@\example\example.sln
 $$ in Visual Studio.
 Then select $code Build | Build Example.exe$$.
-Then in a Dos box, and in the cppad-@VERSION@ directory,
+Then in a Dos box, and in the cppad-@cppad_version@ directory,
 execute the following command
 $codep
 	example\Debug\example
@@ -160,10 +166,10 @@ $index test more, windows$$
 Using Microsoft Visual C++,
 open the workspace 
 $codep
-	cppad-@VERSION@\test_more\test_more.sln
+	cppad-@cppad_version@\test_more\test_more.sln
 $$
 in Visual Studio and then select $code Build | Build test_more.exe$$.
-Then in a Dos box, and in the cppad-@VERSION@ directory,
+Then in a Dos box, and in the cppad-@cppad_version@ directory,
 execute the following command
 $codep
 	test_more\Debug\test_more
@@ -174,10 +180,10 @@ $index print, forward mode$$
 $index forward, print$$
 Using Microsoft Visual C++, open the workspace 
 $codep
-	cppad-@VERSION@\print_for\print_for.sln
+	cppad-@cppad_version@\print_for\print_for.sln
 $$ in Visual Studio.
 Then select $code Build | Build print_for.exe$$.
-Then in a Dos box, and in the cppad-@VERSION@ directory,
+Then in a Dos box, and in the cppad-@cppad_version@ directory,
 execute the following command
 $codep
 	print_for\Debug\print_for
@@ -190,10 +196,10 @@ $index test, cppad speed$$
 Using Microsoft Visual C++,
 open the workspace 
 $codep 
-	cppad-@VERSION@\speed\cppad\cppad.sln
+	cppad-@cppad_version@\speed\cppad\cppad.sln
 $$ in Visual Studio.
 Then select $code Build | Build cppad.exe$$.
-Then in a Dos box, and in the cppad-@VERSION@ directory,
+Then in a Dos box, and in the cppad-@cppad_version@ directory,
 execute the following commands
 $codep
 	speed\cppad\Debug\cppad correct 123
@@ -207,10 +213,10 @@ $index test, double speed$$
 Using Microsoft Visual C++,
 open the workspace 
 $codep
-	cppad-@VERSION@\speed\double\double.sln
+	cppad-@cppad_version@\speed\double\double.sln
 $$ in Visual Studio.
 Then select $code Build | Build double.exe$$.
-Then in a Dos box, and in the cppad-@VERSION@ directory,
+Then in a Dos box, and in the cppad-@cppad_version@ directory,
 execute the following commands
 $codep
 	speed\double\Debug\double correct 123
@@ -224,10 +230,10 @@ $index utility, speed example$$
 Using Microsoft Visual C++,
 open the workspace 
 $code 
-	cppad-@VERSION@\speed\example\example.sln
+	cppad-@cppad_version@\speed\example\example.sln
 $$ in Visual Studio.
 Then select $code Build | Build example.exe$$.
-Then in a Dos box, and in the cppad-@VERSION@ directory,
+Then in a Dos box, and in the cppad-@cppad_version@ directory,
 execute the following command
 $codep
 	speed\example\Debug\example

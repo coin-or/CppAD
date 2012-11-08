@@ -139,6 +139,21 @@ ELSE ( cppad_postfix )
 ENDIF ( cppad_postfix )
 
 # ----------------------------------------------------------------------------
+# Simple configuration files that only use cppad_version.
+# ----------------------------------------------------------------------------
+FOREACH ( file_path 
+	doc.omh
+	omh/install_unix.omh
+	omh/install_windows.omh
+)
+	# Copy a file to another location and modify its contents.
+	# configure_file(InputFile OutputFile [COPYONLY] [ESCAPE_QUOTES] [@ONLY])
+	CONFIGURE_FILE(
+		${CMAKE_CURRENT_SOURCE_DIR}/${file_path}.in             
+		${CMAKE_CURRENT_SOURCE_DIR}/${file_path}
+	)
+ENDFOREACH( file_path )
+# ----------------------------------------------------------------------------
 # Currently building tests as normal executables
 # ----------------------------------------------------------------------------
 # The CMakeLists.txt file in the specified source directory is processed 
