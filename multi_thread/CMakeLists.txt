@@ -20,13 +20,6 @@
 #	VARIABLE - variable to store the result
 INCLUDE(CheckLibraryExists)
 
-# Define the operation
-# CHECK_CXX_SOURCE_COMPILES(source variable)
-# Checks whether the code given in source will compile and link.  You can set 
-# CMAKE_REQUIRED_LIBRARIES, CMAKE_REQUIRED_FLAGS and CMAKE_REQUIRED_INCLUDES 
-# accordingly if additional libraries or compiler flags are required. 
-INCLUDE(CheckCXXSourceCompiles)
-
 # If openmp found, set OpenMP_CXX_FLAGS and process its subdirectory
 #
 FIND_PACKAGE(OpenMP)
@@ -75,19 +68,19 @@ IF ( Boost_FOUND )
 	SET(bthread_lib_path "${boost_prefix}/${cmake_install_libdir}" )
 	SET(CMAKE_REQUIRED_FLAGS     "-L${bthread_lib_path}" )
 	#
-	# CHECK_CXX_SOURCE_COMPILES(source variable)
+	# CHECK_CXX_SOURCE_RUNS(source variable)
 	SET(source "
 # include <boost/thread.hpp>
-main(void) 
+int main(void) 
 {	boost::barrier wait(1);
 	return 0;
 }"	)
-	CHECK_CXX_SOURCE_COMPILES("${source}" bthread_ok)
+	CHECK_CXX_SOURCE_RUNS("${source}" bthread_ok)
 	#
 	IF ( NOT bthread_ok )
 		SET(bthread_lib               "boost_thread-mt" )
 		SET(CMAKE_REQUIRED_LIBRARIES "${bthread_lib}" )
-		CHECK_CXX_SOURCE_COMPILES("${source}" bthread_mt_ok)
+		CHECK_CXX_SOURCE_RUNS("${source}" bthread_mt_ok)
 	ENDIF ( NOT bthread_ok )
 	IF ( bthread_ok OR bthread_mt_ok )
 		ADD_SUBDIRECTORY(bthread)

@@ -44,7 +44,7 @@ fi
 cmake_args="$cmake_args  -Dcppad_prefix=$HOME/prefix/cppad"
 # -----------------------------------------------------------------------------
 list="
-	../run_cmake.log
+	run_cmake.log
 	$HOME/prefix/cppad
 	build
 "
@@ -85,6 +85,7 @@ do
 		cmake_args="$cmake_args  -D${package}_prefix=$dir"
 	fi
 done
+cmake_args="$cmake_args -Dtest_vector_namespace=boost"
 #
 echo_exec_log cmake .. $cmake_args
 echo_exec_log make all 

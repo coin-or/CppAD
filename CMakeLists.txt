@@ -9,6 +9,15 @@
 # A copy of this license is included in the COPYING file of this distribution.
 # Please visit http://www.coin-or.org/CppAD/ for information on other licenses.
 # -----------------------------------------------------------------------------
+# Some cmake language extensions
+# ----------------------------------------------------------------------------
+# CHECK_CXX_SOURCE_COMPILES(source variable)
+# Checks whether the code given in source will compile, link and run and
+# return zero status. You can set 
+# CMAKE_REQUIRED_LIBRARIES, CMAKE_REQUIRED_FLAGS and CMAKE_REQUIRED_INCLUDES 
+# accordingly if additional libraries or compiler flags are required. 
+INCLUDE(CheckCXXSourceRuns)
+# -----------------------------------------------------------------------------
 # Some macros
 # ----------------------------------------------------------------------------
 # Check for package_prefix and if it is specified, set correspodong
@@ -86,28 +95,25 @@ SET(CMAKE_INSTALL_PREFIX "${cppad_prefix}"
 # ----------------------------------------------------------------------------
 #
 # cppad_postfix:
-#
 SET(cppad_postfix NOTFOUND CACHE STRING "cppad install postfix")
 MESSAGE(STATUS "cppad install postfix = ${cppad_postfix}")
-
 #
 # External package prefixes
 #
 # adolc_prefix
 optional_package(adolc_prefix "adolc install prefix")
-
+#
 # eigen_prefix
 optional_package(eigen_prefix "eigen install prefix")
-
+#
 # fadbad_prefix
 optional_package(fadbad_prefix "fadbad install prefix")
-
+#
 # ipopt_prefix
 optional_package(ipopt_prefix "ipopt install prefix")
-
+#
 # sacado_prefix
 optional_package(sacado_prefix "sacado install prefix")
-
 # ----------------------------------------------------------------------------
 # automated system configuration
 # ----------------------------------------------------------------------------
@@ -160,6 +166,7 @@ ENDFOREACH( file_path )
 # before the current input file continues beyond this command.
 # add_subdirectory(source_dir [binary_dir] [EXCLUDE_FROM_ALL])
 #
+ADD_SUBDIRECTORY(cppad)
 ADD_SUBDIRECTORY(example)
 ADD_SUBDIRECTORY(multi_thread)
 ADD_SUBDIRECTORY(pkgconfig)
