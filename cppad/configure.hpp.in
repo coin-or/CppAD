@@ -97,7 +97,7 @@ Otherwise, this smybol should be zero.
 
 /*!
 \def CPPAD_SIZE_T_SAME_UNSIGNED_INT 
-If this symgole is one, sizeof(size_t) == sizeof(unsigned int),
+If this symbol is one, the type size_t is the same as the type unsigned int,
 otherwise this symbol is zero.
 */
 # define CPPAD_SIZE_T_SAME_UNSIGNED_INT @CPPAD_SIZE_T_SAME_UNSIGNED_INT@

@@ -25,7 +25,7 @@ INCLUDE(CheckCXXSourceRuns)
 MACRO(optional_package prefix_variable description) 
 	SET(${prefix_variable} NOTFOUND CACHE PATH "${description}")
 	SET(prefix ${${prefix_variable}} )
-	MESSAGE(STATUS "${description} = ${prefix}")
+	MESSAGE(STATUS "${prefix_variable} = ${prefix}")
 	IF ( prefix )
 		# List of preprocessor include file search directories
 		INCLUDE_DIRECTORIES( ${prefix}/include )
@@ -71,7 +71,7 @@ FOREACH(type "data" "include" "lib")
 	SET(cmake_install_${type}dir NOTFOUND CACHE STRING 
 		"dirctory, below prefix, where cmake installs ${type} files"
 	)
-	MESSAGE(STATUS "cmake install ${type} dir = ${cmake_install_${type}dir}")
+	MESSAGE(STATUS "cmake_install_${type}dir = ${cmake_install_${type}dir}")
 	IF ( NOT cmake_install_${type}dir )
 		MESSAGE(FATAL_ERROR 
 			"cmake_install_${type}dir not set by cmake command"
@@ -83,7 +83,7 @@ ENDFOREACH(type)
 #
 # set(<variable> <value> [[CACHE <type> <docstring> [FORCE]] | PARENT_SCOPE])
 SET(cppad_prefix NOTFOUND CACHE PATH "cppad install prefix" )
-MESSAGE(STATUS "cppad install prefix = ${cppad_prefix}")
+MESSAGE(STATUS "cppad_prefix = ${cppad_prefix}")
 IF ( NOT cppad_prefix )
 	MESSAGE(FATAL_ERROR "cppad_prefix not set by cmake command")
 ENDIF ( NOT cppad_prefix )
@@ -96,7 +96,7 @@ SET(CMAKE_INSTALL_PREFIX "${cppad_prefix}"
 #
 # cppad_postfix:
 SET(cppad_postfix NOTFOUND CACHE STRING "cppad install postfix")
-MESSAGE(STATUS "cppad install postfix = ${cppad_postfix}")
+MESSAGE(STATUS "cppad_postfix = ${cppad_postfix}")
 #
 # External package prefixes
 #

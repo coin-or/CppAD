@@ -71,11 +71,11 @@ echo "-------------------------------------------------------------"
 # ---------------------------------------------------------------------------- 
 # Use cmake to create files that use configuration informaiton
 # (like the version number)
-if [ ! -e build ]
+if [ ! -e work ]
 then
-	echo_exec mkdir build
+	echo_exec mkdir work
 fi
-echo_exec cd build
+echo_exec cd work
 # defines do not matter since we will not install this configuration
 # we are only using it to build configure files.
 echo_exec_log cmake .. \
@@ -105,7 +105,7 @@ do
 done
 # ----------------------------------------------------------------------------
 # Create the package directory
-package_dir="build/cppad-$version"
+package_dir="work/cppad-$version"
 if [ -e "$package_dir" ]
 then
 	echo_exec rm -r $package_dir
@@ -146,7 +146,7 @@ other_files="
 "
 #
 # Copy the files, creating sub-directories when necessary
-echo "copy source files to build/$package_dir >> package.log"
+echo "copy source files to work/$package_dir >> package.log"
 for file in $file_list $other_files
 do
 	sub_dir=`echo $file | sed -e 's|\(.*\)/[^/]*$|\1|'`

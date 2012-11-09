@@ -46,7 +46,7 @@ cmake_args="$cmake_args  -Dcppad_prefix=$HOME/prefix/cppad"
 list="
 	run_cmake.log
 	$HOME/prefix/cppad
-	build
+	work
 "
 for name in $list
 do
@@ -55,8 +55,8 @@ do
 		echo_exec rm -r $name
 	fi
 done
-echo_exec mkdir build
-echo_exec cd build
+echo_exec mkdir work
+echo_exec cd work
 log_file="../run_cmake.log"
 # -----------------------------------------------------------------------------
 if [ -d '/usr/include' ]
@@ -85,7 +85,11 @@ do
 		cmake_args="$cmake_args  -D${package}_prefix=$dir"
 	fi
 done
-cmake_args="$cmake_args -Dtest_vector_namespace=boost"
+cmake_args="$cmake_args -Dcppad_sparse_list=YES"
+cmake_args="$cmake_args -Dcppad_test_vector_namespace=boost"
+cmake_args="$cmake_args -Dcppad_tape_id_type='unsigned int'"
+cmake_args="$cmake_args -Dcppad_tape_addr_type=int"
+cmake_args="$cmake_args -Dcppad_max_num_threads=16"
 #
 echo_exec_log cmake .. $cmake_args
 echo_exec_log make all 
