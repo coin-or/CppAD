@@ -598,7 +598,8 @@ int main(void)
 	for(i = 0; i < 5; i++)
 	{	double time_min = 1.0;
 		size_t size     = 2 + i * 2;
-		printf("time_det_minor for %d x %d matrix = ", size, size);
+		int   i_size    = (int) size;
+		printf("time_det_minor for %d x %d matrix = ", i_size, i_size);
 		printf("%g\n", time_det_by_minor(size, time_min) );
 	}
 
