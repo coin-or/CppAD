@@ -100,7 +100,7 @@ Otherwise, this smybol should be zero.
 If this symbol is one, the type size_t is the same as the type unsigned int,
 otherwise this symbol is zero.
 */
-# define CPPAD_SIZE_T_SAME_UNSIGNED_INT 0
+# define CPPAD_SIZE_T_SAME_UNSIGNED_INT 1
 
 /*!
 \def CPPAD_TAPE_ADDR_TYPE
@@ -114,7 +114,7 @@ Make sure that the type chosen returns true for is_pod<CPPAD_TAPE_ADDR_TYPE>
 in pod_vector.hpp.
 This type is later defined as \c addr_t in the CppAD namespace.
 */
-# define CPPAD_TAPE_ADDR_TYPE int
+# define CPPAD_TAPE_ADDR_TYPE unsigned int
 
 /*!
 \def CPPAD_TAPE_ID_TYPE
@@ -139,7 +139,7 @@ The user may define CPPAD_MAX_NUM_THREADS before including any of the CppAD
 header files.  If it is not yet defined,
 */
 # ifndef CPPAD_MAX_NUM_THREADS
-# define CPPAD_MAX_NUM_THREADS 16
+# define CPPAD_MAX_NUM_THREADS 48
 # endif
 
 # endif
