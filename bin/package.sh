@@ -76,14 +76,8 @@ then
 	echo_exec mkdir work
 fi
 echo_exec cd work
-# defines do not matter since we will not install this configuration
-# we are only using it to build configure files.
-echo_exec_log cmake .. \
-	-Dcppad_prefix=$HOME/prefix/cppad \
-	-Dcmake_install_includedir=include \
-	-Dcmake_install_datadir=share \
-	-Dcmake_install_libdir=lib
-
+# build doc.omh, install_unix.omh, install_windows.omh, configure.hpp
+echo_exec_log cmake ..
 echo_exec cd ..
 # ----------------------------------------------------------------------------
 # Run automated checking of file names in original source directory
@@ -132,6 +126,7 @@ file_list=`find . \
 	\( -name '*.txt' \) | sed \
 		-e '/\.\/work\//d' \
 		-e '/\.\/build\//d' \
+		-e '/\.\/gpl_license.sh\//d' \
 		-e 's|^\./||'`
 other_files="
 	AUTHORS 
@@ -184,3 +179,7 @@ fi
 # change back to the package parent directory and create the tarball
 echo_exec cd ../..
 echo_exec tar -czf cppad-$version.epl.tgz cppad-$version
+# ----------------------------------------------------------------------------
+# create gpl version of package
+echo_exec cd ..
+echo_exec bin/gpl_license.sh

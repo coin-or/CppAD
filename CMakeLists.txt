@@ -20,6 +20,13 @@ INCLUDE(CheckCXXSourceRuns)
 # -----------------------------------------------------------------------------
 # Some macros
 # ----------------------------------------------------------------------------
+# Define a command line argument and set its default value
+# also echo it in the cmake status output.
+MACRO(command_line_arg variable default type description)
+	SET(${variable} "${default}" CACHE $type "${description}")
+	MESSAGE(STATUS "${variable} = ${${variable}}")
+ENDMACRO( command_line_arg )
+#
 # Check for package_prefix and if it is specified, set correspodong
 # include and link directories.
 MACRO(optional_package prefix_variable description) 
@@ -45,7 +52,7 @@ ENDMACRO(optional_package)
 CMAKE_MINIMUM_REQUIRED(VERSION 2.6)
 
 # set(<variable> <value> [[CACHE <type> <docstring> [FORCE]] | PARENT_SCOPE])
-SET(cppad_version      "20121026" )
+SET(cppad_version      "20121109" )
 SET(cppad_url          "http://www.coin-or.org/CppAD" )
 SET(cppad_description  "Differentiation of C++ Algorithms" )
 
@@ -62,41 +69,36 @@ SET(src_version 20121026 "cppad source code version number")
 INCLUDE_DIRECTORIES( ${cppad_SOURCE_DIR} )
 
 # ----------------------------------------------------------------------------
-# required cmake command line argument
+# command line arguments
 # ----------------------------------------------------------------------------
 #
-# cmake_install_datadir, cmake_install_includedir, cmake_install_libdir:
+# cmake_install_datadir
+command_line_arg(cmake_install_datadir share STRING 
+	"directory, below prefix, where cmake installs data files"
+)
 #
-FOREACH(type "data" "include" "lib")
-	SET(cmake_install_${type}dir NOTFOUND CACHE STRING 
-		"dirctory, below prefix, where cmake installs ${type} files"
-	)
-	MESSAGE(STATUS "cmake_install_${type}dir = ${cmake_install_${type}dir}")
-	IF ( NOT cmake_install_${type}dir )
-		MESSAGE(FATAL_ERROR 
-			"cmake_install_${type}dir not set by cmake command"
-		)
-	ENDIF ( NOT cmake_install_${type}dir )
-ENDFOREACH(type)
+# cmake_install_includedir
+command_line_arg(cmake_install_includedir include STRING 
+	"directory, below prefix, where cmake installs include files"
+)
+#
+# cmake_install_libdir
+command_line_arg(cmake_install_libdir lib STRING 
+	"directory, below prefix, where cmake installs library files"
+)
 #
 # cppad_prefix: 
-#
-# set(<variable> <value> [[CACHE <type> <docstring> [FORCE]] | PARENT_SCOPE])
-SET(cppad_prefix NOTFOUND CACHE PATH "cppad install prefix" )
-MESSAGE(STATUS "cppad_prefix = ${cppad_prefix}")
-IF ( NOT cppad_prefix )
-	MESSAGE(FATAL_ERROR "cppad_prefix not set by cmake command")
-ENDIF ( NOT cppad_prefix )
+command_line_arg(cppad_prefix /usr PATH 
+	"cppad install prefix"
+)
 SET(CMAKE_INSTALL_PREFIX "${cppad_prefix}" 
 	CACHE PATH "value copied from cppad_prefix" FORCE
 )
-# ----------------------------------------------------------------------------
-# optional cmake command line argument
-# ----------------------------------------------------------------------------
 #
 # cppad_postfix:
-SET(cppad_postfix NOTFOUND CACHE STRING "cppad install postfix")
-MESSAGE(STATUS "cppad_postfix = ${cppad_postfix}")
+command_line_arg(cppad_postfix NOTFOUND STRING 
+	"cppad install postfix"
+)
 #
 # External package prefixes
 #

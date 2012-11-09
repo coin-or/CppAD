@@ -25,10 +25,35 @@ MACRO(check_match match_variable match_constant output_variable)
 	MESSAGE(STATUS "${output_variable} = ${${output_variable}}" )
 ENDMACRO(check_match)
 # -----------------------------------------------------------------------------
-# cppad_sparse_list, CPPAD_INTERNAL_SPARSE_SET
-SET(cppad_sparse_list YES CACHE BOOL 
+# command line arguments
+#
+# cppad_sparse_list
+command_line_arg(cppad_sparse_list YES BOOL 
 	"use sparse list for internal sparse set representation"
 )
+#
+# cppad_test_vector_namespace 
+command_line_arg(cppad_test_vector_namespace cppad STRING
+"Namespace of vector used for testing, one of: boost, cppad, eigen, std"
+)
+#
+# cppad_tape_addr_type
+command_line_arg(cppad_tape_addr_type "unsigned int" STRING
+"type used to identify variables on one tape, size must be <= sizeof(size_t)"
+)
+#
+# cppad_tape_id_type
+command_line_arg(cppad_tape_id_type "unsigned int" STRING
+	"type used to identify different tapes, size must be <= sizeof(size_t)"
+)
+#
+# cppad_max_num_threads
+command_line_arg(cppad_max_num_threads 48 STRING
+	"maximum number of threads that CppAD can use use"
+)
+# -----------------------------------------------------------------------------
+# CPPAD_INTERNAL_SPARSE_SET
+#
 IF( cppad_sparse_list )
 	SET(CPPAD_INTERNAL_SPARSE_SET  sparse_list )
 ELSE( cppad_sparse_list )
@@ -37,12 +62,8 @@ ENDIF( cppad_sparse_list )
 MESSAGE(STATUS "CPPAD_INTERNAL_SPARSE_SET = ${CPPAD_INTERNAL_SPARSE_SET}" )
 #
 # -----------------------------------------------------------------------------
-# cppad_test_vector_namespace,
 # CPPAD_BOOSTVECTOR, CPPAD_CPPADVECTOR, CPPAD_EIGENVECTOR, CPPAD_STDVECTOR
 #
-SET(cppad_test_vector_namespace cppad CACHE STRING
-	"Namespace of vector used for testing (one of boost, cppad, eigen, std)"
-)
 check_match(cppad_test_vector_namespace boost CPPAD_BOOSTVECTOR)
 check_match(cppad_test_vector_namespace cppad CPPAD_CPPADVECTOR)
 check_match(cppad_test_vector_namespace eigen CPPAD_EIGENVECTOR)
@@ -104,25 +125,16 @@ MESSAGE(STATUS
 	"CPPAD_SIZE_T_SAME_UNSIGNED_INT = ${CPPAD_SIZE_T_SAME_UNSIGNED_INT}" 
 )
 # -----------------------------------------------------------------------------
-# cppad_tape_addr_type, CPPAD_TAPE_ADDR_TYPE
-# cppad_tape_id_type,   CPPAD_TAPE_ID_TYPE
+# CPPAD_TAPE_ADDR_TYPE, CPPAD_TAPE_ID_TYPE
 #
 FOREACH( cmake_var cppad_tape_id_type cppad_tape_addr_type )
 	# ----------------------------------------------------------------------
 	STRING(COMPARE EQUAL ${cmake_var} cppad_tape_id_type is_id)
 	IF( is_id )
 		SET(cppad_var   CPPAD_TAPE_ID_TYPE) 
-		SET(description   
-"type used to identify different tapes, size must be <= sizeof(size_t)"
-		)
 	ELSE( is_id )
 		SET(cppad_var   CPPAD_TAPE_ADDR_TYPE) 
-		SET(description 
-"type used to identify variables on the tape, size must be <= sizeof(size_t)"
-		)
 	ENDIF( is_id )
-	#
-	SET(${cmake_var} "unsigned int" CACHE STRING "${description}")
 	# ----------------------------------------------------------------------
 	SET(source "
 # include <limits>
@@ -142,11 +154,8 @@ int main(void)
 	MESSAGE(STATUS "${cppad_var} = ${${cmake_var}}" )
 ENDFOREACH( cmake_var )
 # -----------------------------------------------------------------------------
-# cppad_max_num_threads, CPPAD_MAX_NUM_THREADS
+# CPPAD_MAX_NUM_THREADS
 #
-SET(cppad_max_num_threads 48 CACHE STRING
-	"maximum number of threads that CppAD can use use"
-)
 SET(source "
 int main(void)
 {	const char* number = \"${cppad_max_num_threads}\";
