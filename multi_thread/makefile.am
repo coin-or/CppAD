@@ -55,7 +55,8 @@ AM_CPPFLAGS       = \
 	$(EIGEN_INCLUDE) \
 	$(OPENMP_FLAGS)
 #
-AM_LDFLAGS        = $(BOOST_LIB) $(BTHREAD_LIB) $(PTHREAD_LIB) $(OPENMP_FLAGS)
+AM_LDFLAGS        = $(OPENMP_FLAGS)
+LDADD             = $(BOOST_LIB) $(BTHREAD_LIB) $(PTHREAD_LIB)
 #
 SHARED_SRC = \
 	thread_test.cpp \

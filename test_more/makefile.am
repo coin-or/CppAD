@@ -64,7 +64,8 @@ AM_CPPFLAGS       = -I. \
 #
 AM_CXXFLAGS       = -g $(ADOLC_FLAGS) $(CXX_FLAGS)
 #
-AM_LDFLAGS        = $(ADOLC_LIB) $(EIGEN_LIB) $(OPENMP_FLAGS) 
+AM_LDFLAGS        = $(OPENMP_FLAGS) 
+LDADD             = $(ADOLC_LIB) $(EIGEN_LIB) $(OPENMP_FLAGS) 
 #
 test_more_SOURCES  = \
 	$(ADOLC_SRC_FILES) \

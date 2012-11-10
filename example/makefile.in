@@ -156,6 +156,9 @@ am_example_OBJECTS = $(am__objects_1) example.$(OBJEXT) \
 	var2par.$(OBJEXT) vec_ad.$(OBJEXT) vector_bool.$(OBJEXT)
 example_OBJECTS = $(am_example_OBJECTS)
 example_LDADD = $(LDADD)
+am__DEPENDENCIES_1 =
+example_DEPENDENCIES = $(am__DEPENDENCIES_1) $(am__DEPENDENCIES_1) \
+	$(am__DEPENDENCIES_1) $(am__DEPENDENCIES_1)
 DEFAULT_INCLUDES = 
 depcomp = $(SHELL) $(top_srcdir)/depcomp
 am__depfiles_maybe = depfiles
@@ -373,7 +376,7 @@ AM_CPPFLAGS = \
 	$(ADOLC_FLAGS)
 
 #
-AM_LDFLAGS = $(ADOLC_LIB)  $(BTHREAD_LIB) $(EIGEN_LIB) $(PTHREAD_LIB)
+LDADD = $(ADOLC_LIB)  $(BTHREAD_LIB) $(EIGEN_LIB) $(PTHREAD_LIB)
 #
 example_SOURCES = \
 	$(ADOLC_SRC_FILES) \

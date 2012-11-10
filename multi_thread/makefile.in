@@ -71,14 +71,21 @@ am_bthread_test_OBJECTS = $(am__objects_1) team_bthread.$(OBJEXT) \
 	a11c_bthread.$(OBJEXT) simple_ad_bthread.$(OBJEXT)
 bthread_test_OBJECTS = $(am_bthread_test_OBJECTS)
 bthread_test_LDADD = $(LDADD)
+am__DEPENDENCIES_1 =
+bthread_test_DEPENDENCIES = $(am__DEPENDENCIES_1) \
+	$(am__DEPENDENCIES_1) $(am__DEPENDENCIES_1)
 am_openmp_test_OBJECTS = $(am__objects_1) team_openmp.$(OBJEXT) \
 	a11c_openmp.$(OBJEXT) simple_ad_openmp.$(OBJEXT)
 openmp_test_OBJECTS = $(am_openmp_test_OBJECTS)
 openmp_test_LDADD = $(LDADD)
+openmp_test_DEPENDENCIES = $(am__DEPENDENCIES_1) $(am__DEPENDENCIES_1) \
+	$(am__DEPENDENCIES_1)
 am_pthread_test_OBJECTS = $(am__objects_1) team_pthread.$(OBJEXT) \
 	a11c_pthread.$(OBJEXT) simple_ad_pthread.$(OBJEXT)
 pthread_test_OBJECTS = $(am_pthread_test_OBJECTS)
 pthread_test_LDADD = $(LDADD)
+pthread_test_DEPENDENCIES = $(am__DEPENDENCIES_1) \
+	$(am__DEPENDENCIES_1) $(am__DEPENDENCIES_1)
 SCRIPTS = $(dist_noinst_SCRIPTS)
 DEFAULT_INCLUDES = 
 depcomp = $(SHELL) $(top_srcdir)/depcomp
@@ -284,7 +291,8 @@ AM_CPPFLAGS = \
 	$(OPENMP_FLAGS)
 
 #
-AM_LDFLAGS = $(BOOST_LIB) $(BTHREAD_LIB) $(PTHREAD_LIB) $(OPENMP_FLAGS)
+AM_LDFLAGS = $(OPENMP_FLAGS)
+LDADD = $(BOOST_LIB) $(BTHREAD_LIB) $(PTHREAD_LIB)
 #
 SHARED_SRC = \
 	thread_test.cpp \
