@@ -100,6 +100,11 @@ command_line_arg(cppad_postfix NOTFOUND STRING
 	"cppad install postfix"
 )
 #
+# cppad_documentation:
+command_line_arg(cppad_documentation NO BOOL 
+	"install cppad documentation"
+)
+#
 # External package prefixes
 #
 # adolc_prefix
@@ -120,31 +125,35 @@ optional_package(sacado_prefix "sacado install prefix")
 # automated system configuration
 # ----------------------------------------------------------------------------
 
-# cppad_includedir 
+# cppad_includedir, cppad_datadir, cppad_docdir 
 IF ( cppad_postfix )
 	SET(cppad_includedir 
 		"${cppad_prefix}/${cmake_install_includedir}/${cppad_postfix}" 
 		CACHE INTERNAL "cppad install include file directory" FORCE
+	)
+	SET(cppad_datadir 
+		"${cppad_prefix}/${cmake_install_datadir}/${cppad_postfix}" 
+		CACHE INTERNAL "cppad install data file directory" FORCE
+	)
+	SET(cppad_datadir 
+		"${cppad_prefix}/${cmake_install_datadir}/doc/${cppad_postfix}" 
+		CACHE INTERNAL "cppad install data file directory" FORCE
 	)
 ELSE ( cppad_postfix )
 	SET(cppad_includedir 
 		"${cppad_prefix}/${cmake_install_includedir}" 
 		CACHE PATH "cppad install include file directory" FORCE
 	)
-ENDIF ( cppad_postfix )
-
-# cppad_datadir 
-IF ( cppad_postfix )
-	SET(cppad_datadir 
-		"${cppad_prefix}/${cmake_install_datadir}/${cppad_postfix}" 
-		CACHE INTERNAL "cppad install data file directory" FORCE
-	)
-ELSE ( cppad_postfix )
 	SET(cppad_datadir 
 		"${cppad_prefix}/${cmake_install_datadir}" 
 		CACHE PATH "cppad install data file directory" FORCE
 	)
+	SET(cppad_docdir 
+		"${cppad_prefix}/${cmake_install_datadir}/doc" 
+		CACHE PATH "cppad install data file directory" FORCE
+	)
 ENDIF ( cppad_postfix )
+
 
 # ----------------------------------------------------------------------------
 # Currently building tests as normal executables
@@ -172,7 +181,6 @@ ENDIF( ipopt_prefix )
 # ----------------------------------------------------------------------------
 # install procedure
 # ----------------------------------------------------------------------------
-# During install copy cppad direcrory to CMAKE_INSTALL_PREFIX/include/cppad  
 # install(DIRECTORY dirs... DESTINATION <dir>
 #	[FILE_PERMISSIONS permissions...]
 #	[DIRECTORY_PERMISSIONS permissions...]
@@ -182,4 +190,15 @@ ENDIF( ipopt_prefix )
 #	[[PATTERN <pattern> | REGEX <regex>]
 #	[EXCLUDE] [PERMISSIONS permissions...]] [...]
 # )
-INSTALL( DIRECTORY cppad DESTINATION ${cppad_includedir} )
+# Note a trailing / in the source directory name drops the source directory
+# name during the copy.
+#
+# During install copy cppad direcrory to ${cppad_includedir}/cppad  
+INSTALL( DIRECTORY "cppad/" DESTINATION ${cppad_includedir}/cppad )
+#
+# During install copy doc direcrory to cppad_docdir/cppad-${cppad_version}  
+IF ( cppad_documentation )
+	INSTALL( DIRECTORY "doc/" DESTINATION 
+		${cppad_docdir}/cppad-${cppad_version} 
+	)
+ENDIF ( cppad_documentation )

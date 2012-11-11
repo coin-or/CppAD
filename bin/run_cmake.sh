@@ -97,6 +97,7 @@ cmake_args="$cmake_args -Dcppad_test_vector_namespace=boost"
 cmake_args="$cmake_args -Dcppad_tape_id_type='unsigned int'"
 cmake_args="$cmake_args -Dcppad_tape_addr_type=int"
 cmake_args="$cmake_args -Dcppad_max_num_threads=48"
+cmake_args="$cmake_args -Dcppad_documentation=YES"
 #
 echo_exec_log cmake .. $cmake_args
 echo_exec_log make all 
