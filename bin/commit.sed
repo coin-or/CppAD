@@ -12,10 +12,13 @@ s/an example and a test/an example and test/
 /^\$comment This file is in the [^$]*directory\$\$ *$/d
 #
 # reset test settings in configure.hpp
-s/^# *define *CPPAD_STDVECTOR *1/# define CPPAD_STDVECTOR 0/
-s/^# *define *CPPAD_CPPADVECTOR *0/# define CPPAD_CPPADVECTOR 1/
-s/^# *define *CPPAD_BOOSTVECTOR *1/# define CPPAD_BOOSTVECTOR 0/
-s/^# *define *CPPAD_EIGENVECTOR *1/# define CPPAD_EIGENVECTOR 0/
+s/^\(# *define *CPPAD_BOOSTVECTOR\).*/\1 0/
+s/^\(# *define *CPPAD_CPPADVECTOR\).*/\1 1/
+s/^\(# *define *CPPAD_EIGNEVECTOR\).*/\1 0/
+s/^\(# *define *CPPAD_STDVECTOR\).*/\1 0/
+s/^\(# *define CPPAD_SIZE_T_SAME_UNSIGNED_INT\).*/\1 1/
+s/^\(# *define CPPAD_TAPE_ID_TYPE\).*/\1 unsigned int/
+s/^\(# *define CPPAD_TAPE_ADDR_TYPE\).*/\1 unsigned int/
 #
 # Change copyright second year to current year
 s/Copyright (C) \([0-9]*\)-[0-9][0-9] Bradley M. Bell/Copyright (C) \1-12 Bradley M. Bell/
