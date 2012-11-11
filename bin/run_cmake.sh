@@ -21,14 +21,22 @@ echo_exec() {
 }
 echo_exec_log() {
 	echo "$* >> run_cmake.log"
-	echo    >> $log_file
-	eval $* >> $log_file
+	echo    >> $top_srcdir/run_cmake.log
+	eval $* >> $top_srcdir/run_cmake.log
 }
 # circular shift program list and set program to first entry in list
 next_program() {
 	program_list=`echo "$program_list" | sed -e 's| *\([^ ]*\) *\(.*\)|\2 \1|'`
 	program=`echo "$program_list" | sed -e 's| *\([^ ]*\).*|\1|'`
 }
+top_srcdir=`pwd`
+# -----------------------------------------------------------------------------
+# Create package to run test in
+echo_exec bin/package.sh
+# -----------------------------------------------------------------------------
+# change into gpl version of package directory
+version=`bin/version.sh get`
+echo_exec cd work/cppad-$version
 # -----------------------------------------------------------------------------
 cmake_args=''
 if [ "$1" != "" ]
@@ -57,7 +65,6 @@ do
 done
 echo_exec mkdir work
 echo_exec cd work
-log_file="../run_cmake.log"
 # -----------------------------------------------------------------------------
 if [ -d '/usr/include' ]
 then
@@ -176,14 +183,14 @@ else
 	if diff junk.1.$$ junk.2.$$
 	then
 		rm junk.1.$$ junk.2.$$
-		echo "print_for: OK"  >> $log_file
+		echo "print_for: OK"  >> $top_srcdir/run_cmake.log
 	else
-		echo "print_for: Error"  >> $log_file
+		echo "print_for: Error"  >> $top_srcdir/run_cmake.log
 		exit 1
 	fi
 fi
 #
-echo_exec_log make install >> $log_file
+echo_exec_log make install 
 #
 if [ "$skip" != '' ]
 then
