@@ -53,11 +53,8 @@ POST_UNINSTALL = :
 subdir = .
 DIST_COMMON = README $(am__configure_deps) \
 	$(am__myinclude_HEADERS_DIST) $(nobase_myinclude_HEADERS) \
-	$(srcdir)/doc.omh.in $(srcdir)/makefile.am \
-	$(srcdir)/makefile.in $(top_srcdir)/configure \
-	$(top_srcdir)/cppad/configure.hpp.in \
-	$(top_srcdir)/omh/install_unix.omh.in \
-	$(top_srcdir)/omh/install_windows.omh.in \
+	$(srcdir)/makefile.am $(srcdir)/makefile.in \
+	$(top_srcdir)/configure $(top_srcdir)/cppad/configure.hpp.in \
 	$(top_srcdir)/pkgconfig/cppad-uninstalled.pc.in \
 	$(top_srcdir)/pkgconfig/cppad.pc.in AUTHORS COPYING ChangeLog \
 	INSTALL NEWS depcomp install-sh missing
@@ -68,8 +65,7 @@ am__configure_deps = $(am__aclocal_m4_deps) $(CONFIGURE_DEPENDENCIES) \
 am__CONFIG_DISTCLEAN_FILES = config.status config.cache config.log \
  configure.lineno config.status.lineno
 mkinstalldirs = $(install_sh) -d
-CONFIG_CLEAN_FILES = cppad/configure.hpp doc.omh omh/install_unix.omh \
-	omh/install_windows.omh pkgconfig/cppad.pc \
+CONFIG_CLEAN_FILES = cppad/configure.hpp pkgconfig/cppad.pc \
 	pkgconfig/cppad-uninstalled.pc
 CONFIG_CLEAN_VPATH_FILES =
 SOURCES =
@@ -602,7 +598,6 @@ EXTRA_DIST = \
 	build.sh \
 	epl-v10.txt \
 	doc \
-	doc.omh.in \
 	omh \
 	uw_copy_040507.html
 
@@ -663,12 +658,6 @@ $(ACLOCAL_M4): @MAINTAINER_MODE_TRUE@ $(am__aclocal_m4_deps)
 	$(am__cd) $(srcdir) && $(ACLOCAL) $(ACLOCAL_AMFLAGS)
 $(am__aclocal_m4_deps):
 cppad/configure.hpp: $(top_builddir)/config.status $(top_srcdir)/cppad/configure.hpp.in
-	cd $(top_builddir) && $(SHELL) ./config.status $@
-doc.omh: $(top_builddir)/config.status $(srcdir)/doc.omh.in
-	cd $(top_builddir) && $(SHELL) ./config.status $@
-omh/install_unix.omh: $(top_builddir)/config.status $(top_srcdir)/omh/install_unix.omh.in
-	cd $(top_builddir) && $(SHELL) ./config.status $@
-omh/install_windows.omh: $(top_builddir)/config.status $(top_srcdir)/omh/install_windows.omh.in
 	cd $(top_builddir) && $(SHELL) ./config.status $@
 pkgconfig/cppad.pc: $(top_builddir)/config.status $(top_srcdir)/pkgconfig/cppad.pc.in
 	cd $(top_builddir) && $(SHELL) ./config.status $@

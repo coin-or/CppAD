@@ -82,8 +82,7 @@ do
 	ext=`echo $name  | sed -e 's|.*\.|\.|'`
 	if grep "GNU General Public License" $dir/$file > /dev/null
 	then
-		if [ "$name" != "doc.omh.in" ] && \
-		   [ "$name" != "doc.omh" ] && \
+		if [ "$name" != "doc.omh" ] && \
 		   [ "$name" != "gpl_license.sh" ] && \
 		   [ "$name" != "gpl-3.0.txt" ]
 		then
@@ -142,27 +141,26 @@ done
 #
 # change into the work/gpl-distribution directory
 echo_exec cd $dir
+echo_exec rm -r doc
+echo_exec mkdir doc
+echo_exec cd doc
 #
-# configure work/gpl-distribution/work so we can build the documentation
-# (This copies the output of configure to work/gpl-distribution.)
-if [ -d work ]
+cmd='omhelp ../doc.omh -noframe -debug -xml -l http://www.coin-or.org/CppAD/'
+echo "$cmd > omhelp.xml.log"
+if ! eval $cmd > $root_dir/omhelp.xml.log
 then
-	echo "gpl_license.sh: There is a work subdirectory of the distribution"
+	grep '^OMhelp Error:' $root_dir/omhelp.xml.log
+	echo 'OMhelp could not build the CppAD xml documnentation.'
+	echo 'See the complete error message in omhelp.xml.log'
 	exit 1
 fi
-echo_exec ./build.sh configure 
-echo_exec rm -r work
-#
-# Now rebuild the documentation (so that it has GPL instead of EPL)
-echo_exec bin/run_omhelp.sh xml
-#
-if [ -e "doc/error.wrd" ]
+if grep '^OMhelp Warning:' $root_dir/omhelp.xml.log
 then
-	echo_exec rm -rf doc/error.wrd
+	echo 'See the complete warning message in omhelp.xml.log'
+	exit 1
 fi
-# 
-# change into the work directory
-echo_exec cd ..
+echo_exec cd ../..
+# ----------------------------------------------------------------------------
 #
 # create *.gpl.tgz file as copy or work/gpl-distribution directory
 echo_exec tar -czf $dir.gpl.tgz $dir

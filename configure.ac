@@ -677,13 +677,10 @@ dnl AC_CONFIG_FILES(file-list) for each file in the list, configure will
 dnl read file.in, do its substitutions, and create file
 AC_CONFIG_FILES([ 
 	cppad/configure.hpp
-	doc.omh
 	cppad_ipopt/example/test.sh
 	cppad_ipopt/speed/test.sh
 	cppad_ipopt/test/test.sh
 	example/test_one.sh
-	omh/install_unix.omh
-	omh/install_windows.omh
 	pkgconfig/cppad.pc
 	pkgconfig/cppad-uninstalled.pc
 	test_more/test_one.sh

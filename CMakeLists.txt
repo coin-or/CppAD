@@ -51,7 +51,7 @@ ENDMACRO(optional_package)
 # Set the minimum required version of cmake for this project.
 CMAKE_MINIMUM_REQUIRED(VERSION 2.6)
 
-# set(<variable> <value> [[CACHE <type> <docstring> [FORCE]] | PARENT_SCOPE])
+# cppad_version is used by set_version.sh to get the version number.
 SET(cppad_version      "20121109" )
 SET(cppad_url          "http://www.coin-or.org/CppAD" )
 SET(cppad_description  "Differentiation of C++ Algorithms" )
@@ -146,21 +146,6 @@ ELSE ( cppad_postfix )
 	)
 ENDIF ( cppad_postfix )
 
-# ----------------------------------------------------------------------------
-# Simple configuration files that only use cppad_version.
-# ----------------------------------------------------------------------------
-FOREACH ( file_path 
-	doc.omh
-	omh/install_unix.omh
-	omh/install_windows.omh
-)
-	# Copy a file to another location and modify its contents.
-	# configure_file(InputFile OutputFile [COPYONLY] [ESCAPE_QUOTES] [@ONLY])
-	CONFIGURE_FILE(
-		${CMAKE_CURRENT_SOURCE_DIR}/${file_path}.in             
-		${CMAKE_CURRENT_SOURCE_DIR}/${file_path}
-	)
-ENDFOREACH( file_path )
 # ----------------------------------------------------------------------------
 # Currently building tests as normal executables
 # ----------------------------------------------------------------------------

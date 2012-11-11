@@ -304,7 +304,6 @@ EXTRA_DIST = \
 	build.sh \
 	epl-v10.txt \
 	doc \
-	doc.omh.in \
 	omh \
 	uw_copy_040507.html
 

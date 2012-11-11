@@ -49,29 +49,10 @@ $index CppAD$$
 $index version, CppAD$$
 
 $section 
-cppad-@cppad_version@: A Package for Differentiation of C++ Algorithms
+cppad-20121109: A Package for Differentiation of C++ Algorithms
 $$ 
 
 
-$comment This comment is used to remove the table below$$
-$table
-$cnext
-	One web page per Section $pre  $$ $cnext
-	All as one web page
-$rnext
-$cnext
-	(fast to load) $pre  $$ $cnext
-	(slow to load)
-$rnext
-Math displayed using Latex $pre  $$ $cnext
-$href%cppad.htm%$$
-$pre  $$ $cnext
-$href%_printable.htm%$$
-$rnext
-Math displayed using MathML $pre  $$ $cnext
-$href%cppad.xml%$$ $pre  $$ $cnext
-$href%_printable.xml%$$
-$tend
 
 $head Syntax$$
 $code # include <cppad/cppad.hpp>$$
