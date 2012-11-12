@@ -44,6 +44,11 @@ ADD_EXECUTABLE(speed_sacado ../main.cpp
 	sparse_jacobian.cpp
 )
 
+# Compiler flags for cppad source
+SET_TARGET_PROPERTIES(
+	speed_sacado PROPERTIES COMPILE_FLAGS "${cppad_cxx_flags}"
+)
+
 # List of libraries to be linked into the specified target
 TARGET_LINK_LIBRARIES(speed_sacado speed sacado )
 

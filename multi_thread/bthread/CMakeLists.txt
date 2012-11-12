@@ -35,6 +35,11 @@ ADD_EXECUTABLE(bthread_test ../thread_test.cpp
 	team_bthread.cpp
 )
 
+# Compiler flags for cppad source
+SET_TARGET_PROPERTIES(
+	bthread_test PROPERTIES COMPILE_FLAGS "${cppad_cxx_flags}"
+)
+
 # Paths in which the linker will search for libraries,
 # only applies to targets created after it is called
 LINK_DIRECTORIES( ${bthread_lib_path} )

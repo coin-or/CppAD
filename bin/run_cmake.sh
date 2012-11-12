@@ -30,14 +30,6 @@ next_program() {
 	program=`echo "$program_list" | sed -e 's| *\([^ ]*\).*|\1|'`
 }
 top_srcdir=`pwd`
-# -----------------------------------------------------------------------------
-# Create package to run test in
-echo_exec bin/package.sh
-# -----------------------------------------------------------------------------
-# change into gpl version of package directory
-version=`bin/version.sh get`
-echo_exec cd work/cppad-$version
-# -----------------------------------------------------------------------------
 cmake_args=''
 if [ "$1" != "" ]
 then
@@ -50,6 +42,13 @@ then
 	fi
 fi
 cmake_args="$cmake_args  -Dcppad_prefix=$HOME/prefix/cppad"
+# -----------------------------------------------------------------------------
+# Create package to run test in
+echo_exec bin/package.sh
+# -----------------------------------------------------------------------------
+# change into gpl version of package directory
+version=`bin/version.sh get`
+echo_exec cd work/cppad-$version
 # -----------------------------------------------------------------------------
 list="
 	run_cmake.log
@@ -83,7 +82,6 @@ elif [ -d '/usr/lib' ]
 then
 	cmake_args="$cmake_args -Dcmake_install_libdir=lib"
 fi
-#
 for package in adolc eigen ipopt fadbad sacado
 do
 	dir=$HOME/prefix/$package
@@ -98,6 +96,9 @@ cmake_args="$cmake_args -Dcppad_tape_id_type='unsigned int'"
 cmake_args="$cmake_args -Dcppad_tape_addr_type=int"
 cmake_args="$cmake_args -Dcppad_max_num_threads=48"
 cmake_args="$cmake_args -Dcppad_documentation=YES"
+cmake_args="$cmake_args -Dcppad_cxx_flags=\
+'-Wall -ansi -pedantic-errors -std=c++98 -Wshadow'"
+#
 #
 echo_exec_log cmake .. $cmake_args
 echo_exec_log make all 

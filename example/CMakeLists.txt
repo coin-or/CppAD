@@ -24,20 +24,30 @@ IF ( adolc_prefix )
 	)
 	# Adds -D define flags to the compilation of source files.
 	ADD_DEFINITIONS("-DCPPAD_ADOLC_EXAMPLES")
+	# add adolc to list of libraries
+	SET(adolc_example adolc)
 ELSE ( adolc_prefix )
 	SET(adolc_sources "")
+	SET(adolc_example "")
 ENDIF ( adolc_prefix )
 
 # eigen_prefix
 IF ( eigen_prefix )
-	# Extra source files if we are including eigen
-	SET(eigen_sources 
-		eigen_det.cpp eigen_array.cpp
+	# compile eigen library separately so can use different compiler flags
+	ADD_LIBRARY(eigen_example 
+		eigen_det.cpp
+		eigen_array.cpp
 	)
 	# Adds -D define flags to the compilation of source files.
 	ADD_DEFINITIONS("-DCPPAD_EIGEN_EXAMPLES")
+	SET_TARGET_PROPERTIES( eigen_example PROPERTIES COMPILE_FLAGS 
+		"${cppad_cxx_flags_skip_Wshadow}"
+	)
+	#
+	# Add eigen to list of libraries
+	SET(eigen_example eigen_example)
 ELSE ( eigen_prefix )
-	SET(eigen_sources "")
+	SET(eigen_example "")
 ENDIF ( eigen_prefix )
 
 # Copy a file to another location and modify its contents.
@@ -53,7 +63,6 @@ CONFIGURE_FILE(
 # )
 ADD_EXECUTABLE(example example.cpp
 	${adolc_sources}
-	${eigen_sources}
 	abort_recording.cpp
 	abs.cpp
 	acos.cpp
@@ -183,10 +192,11 @@ ADD_EXECUTABLE(example example.cpp
 	vector_bool.cpp 
 )
 
-IF ( adolc_prefix )
-	# List of libraries to be linked into the specified target
-	TARGET_LINK_LIBRARIES(example adolc)
-ENDIF ( adolc_prefix )
+# Compiler flags for cppad source
+SET_TARGET_PROPERTIES(example PROPERTIES COMPILE_FLAGS "${cppad_cxx_flags}")
+
+# List of libraries to be linked into the specified target
+TARGET_LINK_LIBRARIES(example ${adolc_example} ${eigen_example})
 
 # add_test(testname Exename arg1 arg2 ... )
 # ADD_TEST( example example )

@@ -29,3 +29,8 @@ ADD_LIBRARY(speed
 	link_sparse_jacobian.cpp
 	microsoft_timer.cpp
 )
+
+# Compiler flags for cppad source
+SET_TARGET_PROPERTIES(
+	speed PROPERTIES COMPILE_FLAGS "${cppad_cxx_flags}"
+)

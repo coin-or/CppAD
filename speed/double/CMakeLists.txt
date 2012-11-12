@@ -37,6 +37,11 @@ ADD_EXECUTABLE(speed_double ../main.cpp
 	sparse_jacobian.cpp
 )
 
+# Compiler flags for cppad source
+SET_TARGET_PROPERTIES(
+	speed_double PROPERTIES COMPILE_FLAGS "${cppad_cxx_flags}"
+)
+
 # double does not use any external library
 TARGET_LINK_LIBRARIES(speed_double speed )
 

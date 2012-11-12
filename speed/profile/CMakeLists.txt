@@ -50,6 +50,11 @@ ADD_EXECUTABLE(speed_profile ../main.cpp
 	../src/microsoft_timer.cpp
 )
 
+# Compiler flags for cppad source
+SET_TARGET_PROPERTIES(
+	speed_profile PROPERTIES COMPILE_FLAGS "${cppad_cxx_flags}"
+)
+
 # profile builds it own copy of src/speed library (see ADD_EXECUTABLE above)
 # TARGET_LINK_LIBRARIES(speed_profile speed )
 

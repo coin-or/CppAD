@@ -44,6 +44,11 @@ ADD_EXECUTABLE(speed_adolc ../main.cpp alloc_mat.cpp
 	sparse_jacobian.cpp
 )
 
+# Compiler flags for cppad source
+SET_TARGET_PROPERTIES(
+	speed_adolc PROPERTIES COMPILE_FLAGS "${cppad_cxx_flags}"
+)
+
 # List of libraries to be linked into the specified target
 TARGET_LINK_LIBRARIES(speed_adolc speed adolc )
 

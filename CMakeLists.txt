@@ -105,6 +105,11 @@ command_line_arg(cppad_documentation NO BOOL
 	"install cppad documentation"
 )
 #
+# cppad_cxx_flags
+command_line_arg(cppad_cxx_flags NOTFOUND STRING 
+	"extra flags used with cppad source (besides debug and release flags)"
+)
+#
 # External package prefixes
 #
 # adolc_prefix
@@ -124,7 +129,12 @@ optional_package(sacado_prefix "sacado install prefix")
 # ----------------------------------------------------------------------------
 # automated system configuration
 # ----------------------------------------------------------------------------
-
+#
+# cppad_cxx_flags_skip_Wshadow
+STRING(REGEX REPLACE 
+	" *-Wshadow *" " " cppad_cxx_flags_skip_Wshadow "${eigen_cxx_flags}"
+)
+#
 # cppad_includedir, cppad_datadir, cppad_docdir 
 IF ( cppad_postfix )
 	SET(cppad_includedir 
@@ -153,8 +163,6 @@ ELSE ( cppad_postfix )
 		CACHE PATH "cppad install data file directory" FORCE
 	)
 ENDIF ( cppad_postfix )
-
-
 # ----------------------------------------------------------------------------
 # Currently building tests as normal executables
 # ----------------------------------------------------------------------------

@@ -44,6 +44,11 @@ ADD_EXECUTABLE(speed_fadbad ../main.cpp
 	sparse_jacobian.cpp
 )
 
+# Compiler flags for cppad source
+SET_TARGET_PROPERTIES(
+	speed_fadbad PROPERTIES COMPILE_FLAGS "${cppad_cxx_flags_skip_Wshadow}"
+)
+
 # fadbad is an include file only library
 TARGET_LINK_LIBRARIES(speed_fadbad speed )
 
