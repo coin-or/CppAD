@@ -132,8 +132,10 @@ optional_package(sacado_prefix "sacado install prefix")
 #
 # cppad_cxx_flags_skip_Wshadow
 STRING(REGEX REPLACE 
-	" *-Wshadow *" " " cppad_cxx_flags_skip_Wshadow "${eigen_cxx_flags}"
+	"(.*)-Wshadow(.*)"         "\\1 \\2" 
+	cppad_cxx_flags_skip_Wshadow "${cppad_cxx_flags}"
 )
+MESSAGE(STATUS "cppad_cxx_flags_skip_Wshadow = ${cppad_cxx_flags_skip_Wshadow}")
 #
 # cppad_includedir, cppad_datadir, cppad_docdir 
 IF ( cppad_postfix )

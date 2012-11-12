@@ -29,6 +29,10 @@ next_program() {
 	program_list=`echo "$program_list" | sed -e 's| *\([^ ]*\) *\(.*\)|\2 \1|'`
 	program=`echo "$program_list" | sed -e 's| *\([^ ]*\).*|\1|'`
 }
+if [ -e 'run_cmake.log' ]
+then
+	echo_exec rm run_cmake.log
+fi 
 top_srcdir=`pwd`
 cmake_args=''
 if [ "$1" != "" ]
@@ -41,7 +45,6 @@ then
 		exit 1
 	fi
 fi
-cmake_args="$cmake_args  -Dcppad_prefix=$HOME/prefix/cppad"
 # -----------------------------------------------------------------------------
 # Create package to run test in
 echo_exec bin/package.sh
@@ -65,6 +68,7 @@ done
 echo_exec mkdir work
 echo_exec cd work
 # -----------------------------------------------------------------------------
+cmake_args="$cmake_args  -Dcppad_prefix=$HOME/prefix/cppad"
 if [ -d '/usr/include' ]
 then
 	cmake_args="$cmake_args -Dcmake_install_includedir=include"
