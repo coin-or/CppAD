@@ -216,7 +216,7 @@ ENDIF ( cppad_postfix )
 # add_subdirectory(source_dir [binary_dir] [EXCLUDE_FROM_ALL])
 #
 # Initialize list of tests as empty
-SET(list_check NO)
+SET(list_check "")
 #
 ADD_SUBDIRECTORY(cppad)
 ADD_SUBDIRECTORY(pkgconfig)

@@ -80,32 +80,6 @@ $index install, unix CppAD$$
 
 $section Unix Download, Test and Installation$$
 
-$head Fedora$$
-$index install, Fedora$$
-$index Fedora, install$$
-CppAD is available through yum on the Fedora operating system starting
-Fedora version 7. You can download and install CppAD with the instruction
-$code
-	yum install cppad-devel
-$$
-(In Fedora, $code devel$$ is used for program development tools.)
-You can download and install the corresponding version of the
-documentation using the command
-$code
-	yum install cppad-doc
-$$ 
-
-$head RPM$$
-$index rpm, cppad.spec$$
-$index cppad.spec$$
-If you want to use the Fedora $code cppad.spec$$ file
-to build an RPM for some other operating system,
-it can be found at
-$pre
-$$
-$href%https://projects.coin-or.org/CppAD/browser/trunk/cppad.spec%$$
-
-
 $head Download$$
 $index download, unix$$
 $index unix, download$$

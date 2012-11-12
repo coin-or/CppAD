@@ -418,7 +418,7 @@ $cref/sparse_hessian/link_sparse_hessian/$$.
 
 $head 01-20$$
 CppAD can now be installed using $code yum$$ on 
-$cref/Fedora/InstallUnix/Fedora/$$ operating systems.
+$code Fedora$$ operating systems.
 
 
 $head 01-11$$
