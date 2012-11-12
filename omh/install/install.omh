@@ -1,6 +1,6 @@
 $Id$
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-10 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-12 Bradley M. Bell
 
 CppAD is distributed under multiple licenses. This distribution is under
 the terms of the 
@@ -23,9 +23,9 @@ $index test$$
 $section CppAD Download, Test, and Installation Instructions$$
 
 $contents%
-	omh/install_unix.omh%
-	omh/pkgconfig.omh%
-	omh/install_windows.omh
+	omh/install/unix.omh%
+	omh/install/pkgconfig.omh%
+	omh/install/windows.omh
 %$$
 
 

@@ -13,7 +13,7 @@
 # Inherit environment from ../CMakeList.txt
 
 # Initialize list of tests as empty
-SET(list_ipopt NO)
+SET(list_ipopt "")
 
 # assert ipopt_prefix is defined
 IF ( NOT ipopt_prefix )

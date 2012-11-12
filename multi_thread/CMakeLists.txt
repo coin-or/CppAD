@@ -13,7 +13,7 @@
 # Inherit environment from ../CMakeList.txt
 
 # initialize list as empty
-SET(list_multi_thread NO)
+SET(list_multi_thread "")
 
 # Define the operation
 # CHECK_LIBRARY_EXISTS (LIBRARY FUNCTION LOCATION VARIABLE)

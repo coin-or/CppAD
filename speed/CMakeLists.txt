@@ -13,7 +13,7 @@
 # Inherit environment from ../CMakeList.txt
 
 # Initialize list of tests as empty
-SET(list_speed NO)
+SET(list_speed "")
 
 # The CMakeLists.txt file in the specified source directory is processed 
 # before the current input file continues beyond this command.
@@ -46,5 +46,4 @@ IF ( sacado_prefix )
 ENDIF( sacado_prefix )
 
 # check_speed
-MESSAGE(STATUS "list_speed = ${list_speed}")
 ADD_CUSTOM_TARGET(check_speed DEPENDS ${list_speed} )

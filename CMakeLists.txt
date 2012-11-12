@@ -21,13 +21,13 @@ INCLUDE(CheckCXXSourceRuns)
 # Some macros
 # ----------------------------------------------------------------------------
 # Set the the list to include the value at the end. An empty original list
-# is denoted by a false variable (the value may not be empty).
+# is denoted by the string value "" (the value may not be empty).
 MACRO(add_to_list variable_list constant_value )
-	IF( ${variable_list} )
-		SET( ${variable_list} ${${variable_list}} ${constant_value} )
-	ELSE( ${variable_list} )
+	IF( "${${variable_list}}" STREQUAL "" )
 		SET( ${variable_list} ${constant_value} )
-	ENDIF( ${variable_list} )
+	ELSE( "${${variable_list}}" STREQUAL "" )
+		SET( ${variable_list} ${${variable_list}} ${constant_value} )
+	ENDIF( "${${variable_list}}" STREQUAL "" )
 ENDMACRO(add_to_list) 
 #
 # Define a command line argument and set its default value

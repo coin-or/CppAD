@@ -194,7 +194,7 @@ this can cause naming conflicts.
 
 
 $childtable%
-	omh/install.omh%
+	omh/install/install.omh%
 	omh/introduction.omh%
 	cppad/local/user_ad.hpp%
 	cppad/local/ad_fun.hpp%

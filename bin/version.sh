@@ -63,8 +63,8 @@ sed \
 	-i.old configure 
 list='
 	doc.omh
-	omh/install_unix.omh
-	omh/install_windows.omh
+	omh/install/unix.omh
+	omh/install/windows.omh
 '
 for file in $list
 do
