@@ -10,9 +10,9 @@
 # A copy of this license is included in the COPYING file of this distribution.
 # Please visit http://www.coin-or.org/CppAD/ for information on other licenses.
 # -----------------------------------------------------------------------------
-if [ ! -e "bin/run_cmake.sh" ]
+if [ ! -e "bin/check_all.sh" ]
 then
-	echo "bin/run_cmake.sh: must be executed from its parent directory"
+	echo "bin/check_all.sh: must be executed from its parent directory"
 	exit 1
 fi
 echo_exec() {
@@ -20,18 +20,18 @@ echo_exec() {
      eval $*
 }
 echo_exec_log() {
-	echo "$* >> run_cmake.log"
-	echo    >> $top_srcdir/run_cmake.log
-	eval $* >> $top_srcdir/run_cmake.log
+	echo "$* >> check_all.log"
+	echo    >> $top_srcdir/check_all.log
+	eval $* >> $top_srcdir/check_all.log
 }
 # circular shift program list and set program to first entry in list
 next_program() {
 	program_list=`echo "$program_list" | sed -e 's| *\([^ ]*\) *\(.*\)|\2 \1|'`
 	program=`echo "$program_list" | sed -e 's| *\([^ ]*\).*|\1|'`
 }
-if [ -e 'run_cmake.log' ]
+if [ -e 'check_all.log' ]
 then
-	echo_exec rm run_cmake.log
+	echo_exec rm check_all.log
 fi 
 top_srcdir=`pwd`
 cmake_args=''
@@ -41,7 +41,7 @@ then
 	then
 		cmake_args="$cmake_args  -DCMAKE_VERBOSE_MAKEFILE=1"
 	else
-		echo 'usage: bin/run_cmake.sh: [--verbose]'
+		echo 'usage: bin/check_all.sh: [--verbose]'
 		exit 1
 	fi
 fi
@@ -54,7 +54,7 @@ version=`bin/version.sh get`
 echo_exec cd work/cppad-$version
 # -----------------------------------------------------------------------------
 list="
-	run_cmake.log
+	check_all.log
 	$HOME/prefix/cppad
 	work
 "
@@ -105,7 +105,8 @@ cmake_args="$cmake_args -Dcppad_cxx_flags=\
 #
 #
 echo_exec_log cmake .. $cmake_args
-echo_exec_log make all 
+# -----------------------------------------------------------------------------
+echo_exec_log make check 
 # -----------------------------------------------------------------------------
 skip=''
 list='
@@ -189,9 +190,9 @@ else
 	if diff junk.1.$$ junk.2.$$
 	then
 		rm junk.1.$$ junk.2.$$
-		echo "print_for: OK"  >> $top_srcdir/run_cmake.log
+		echo "print_for: OK"  >> $top_srcdir/check_all.log
 	else
-		echo "print_for: Error"  >> $top_srcdir/run_cmake.log
+		echo "print_for: Error"  >> $top_srcdir/check_all.log
 		exit 1
 	fi
 fi
@@ -200,9 +201,9 @@ echo_exec_log make install
 #
 if [ "$skip" != '' ]
 then
-	echo "run_cmake.sh: skip = $skip"
+	echo "check_all.sh: skip = $skip"
 	exit 1
 fi
 #
-echo 'run_cmake.sh: OK'
+echo 'check_all.sh: OK'
 exit 0

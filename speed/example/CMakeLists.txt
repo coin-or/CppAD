@@ -22,7 +22,7 @@ INCLUDE_DIRECTORIES( ${CMAKE_CURRENT_SOURCE_DIR}/../src )
 # add_executable(<name> [WIN32] [MACOSX_BUNDLE] [EXCLUDE_FROM_ALL]
 #                 source1 source2 ... sourceN
 # )
-ADD_EXECUTABLE(speed_example example.cpp
+ADD_EXECUTABLE(speed_example EXCLUDE_FROM_ALL example.cpp
 	det_by_lu.cpp
 	det_by_minor.cpp
 	det_of_minor.cpp
@@ -39,7 +39,10 @@ ADD_EXECUTABLE(speed_example example.cpp
 add_cppad_cxx_flags( speed_example )
 
 # List of libraries to be linked into the specified target
-TARGET_LINK_LIBRARIES(speed_example speed )
+TARGET_LINK_LIBRARIES(speed_example speed_src )
 
-# add_test(testname Exename arg1 arg2 ... )
-# ADD_TEST( speed_example speed_example )
+# Add the check_speed_example target
+ADD_CUSTOM_TARGET(check_speed_example 
+	speed_example 
+	DEPENDS speed_example speed_src
+)

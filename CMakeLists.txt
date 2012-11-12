@@ -20,6 +20,16 @@ INCLUDE(CheckCXXSourceRuns)
 # -----------------------------------------------------------------------------
 # Some macros
 # ----------------------------------------------------------------------------
+# Set the the list to include the value at the end. An empty original list
+# is denoted by a false variable (the value may not be empty).
+MACRO(add_to_list variable_list constant_value )
+	IF( ${variable_list} )
+		SET( ${variable_list} ${${variable_list}} ${constant_value} )
+	ELSE( ${variable_list} )
+		SET( ${variable_list} ${constant_value} )
+	ENDIF( ${variable_list} )
+ENDMACRO(add_to_list) 
+#
 # Define a command line argument and set its default value
 # also echo it in the cmake status output.
 MACRO(command_line_arg variable default type description)
@@ -162,32 +172,40 @@ STRING(REGEX REPLACE
 )
 MESSAGE(STATUS "cppad_cxx_flags_skip_Wshadow = ${cppad_cxx_flags_skip_Wshadow}")
 #
-# cppad_includedir, cppad_datadir, cppad_docdir 
+# cppad_includedir, cppad_libdir, cppad_datadir, cppad_docdir
 IF ( cppad_postfix )
 	SET(cppad_includedir 
 		"${cppad_prefix}/${cmake_install_includedir}/${cppad_postfix}" 
 		CACHE INTERNAL "cppad install include file directory" FORCE
 	)
+	SET(cppad_libdir 
+		"${cppad_prefix}/${cmake_install_libdir}/${cppad_postfix}" 
+		CACHE INTERNAL "cppad install library file directory" FORCE
+	)
 	SET(cppad_datadir 
 		"${cppad_prefix}/${cmake_install_datadir}/${cppad_postfix}" 
 		CACHE INTERNAL "cppad install data file directory" FORCE
 	)
-	SET(cppad_datadir 
+	SET(cppad_docdir 
 		"${cppad_prefix}/${cmake_install_datadir}/doc/${cppad_postfix}" 
 		CACHE INTERNAL "cppad install data file directory" FORCE
 	)
 ELSE ( cppad_postfix )
 	SET(cppad_includedir 
 		"${cppad_prefix}/${cmake_install_includedir}" 
-		CACHE PATH "cppad install include file directory" FORCE
+		CACHE INTERNAL "cppad install include file directory" FORCE
+	)
+	SET(cppad_libdir 
+		"${cppad_prefix}/${cmake_install_libdir}" 
+		CACHE INTERNAL "cppad install library file directory" FORCE
 	)
 	SET(cppad_datadir 
 		"${cppad_prefix}/${cmake_install_datadir}" 
-		CACHE PATH "cppad install data file directory" FORCE
+		CACHE INTERNAL "cppad install data file directory" FORCE
 	)
 	SET(cppad_docdir 
 		"${cppad_prefix}/${cmake_install_datadir}/doc" 
-		CACHE PATH "cppad install data file directory" FORCE
+		CACHE INTERNAL "cppad install data file directory" FORCE
 	)
 ENDIF ( cppad_postfix )
 # ----------------------------------------------------------------------------
@@ -197,21 +215,33 @@ ENDIF ( cppad_postfix )
 # before the current input file continues beyond this command.
 # add_subdirectory(source_dir [binary_dir] [EXCLUDE_FROM_ALL])
 #
+# Initialize list of tests as empty
+SET(list_check NO)
+#
 ADD_SUBDIRECTORY(cppad)
-ADD_SUBDIRECTORY(example)
-ADD_SUBDIRECTORY(multi_thread)
 ADD_SUBDIRECTORY(pkgconfig)
+#
+ADD_SUBDIRECTORY(example)
+add_to_list(list_check check_example)
+#
 ADD_SUBDIRECTORY(print_for)
+add_to_list(list_check check_print_for)
+#
 ADD_SUBDIRECTORY(test_more)
+add_to_list(list_check check_test_more)
+#
+ADD_SUBDIRECTORY(multi_thread)
+add_to_list(list_check check_multi_thread)
+#
 ADD_SUBDIRECTORY(speed)
+add_to_list(list_check check_speed)
+#
 IF ( ipopt_prefix )
 	ADD_SUBDIRECTORY(cppad_ipopt)
+	add_to_list(list_check check_ipopt)
 ENDIF( ipopt_prefix )
 #
-# You can comment out some of the ADD_SUBDIRECTORY comamnds above 
-# to speed up testing the other sub-directories. In this case, the script
-#	bin/run_cmake.sh
-# runs tests that are present, reports which are not present, and fail.
+ADD_CUSTOM_TARGET(check DEPENDS ${list_check})
 #
 # ----------------------------------------------------------------------------
 # install procedure

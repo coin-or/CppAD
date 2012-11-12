@@ -41,4 +41,4 @@ INSTALL(FILES cppad_ipopt_nlp.hpp DESTINATION ${cppad_includedir})
 #	RUNTIME DESTINATION bin
 #	LIBRARY DESTINATION lib
 #	ARCHIVE DESTINATION lib/static)
-INSTALL(TARGETS cppad_ipopt DESTINATION lib)
+INSTALL(TARGETS cppad_ipopt DESTINATION ${cppad_libdir})

@@ -32,7 +32,7 @@ ENDIF ( adolc_prefix )
 # sources that use eigen
 IF ( eigen_prefix )
 	# compile eigen library separately so can use different compiler flags
-	ADD_LIBRARY(test_more_eigen cppad_eigen.cpp)
+	ADD_LIBRARY(test_more_eigen EXCLUDE_FROM_ALL cppad_eigen.cpp)
 	# Adds -D define flags to the compilation of source files.
 	ADD_DEFINITIONS("-DCPPAD_EIGEN_TEST")
 	# Add other compiler flags 
@@ -55,7 +55,7 @@ CONFIGURE_FILE(
 # add_executable(<name> [WIN32] [MACOSX_BUNDLE] [EXCLUDE_FROM_ALL]
 #                 source1 source2 ... sourceN
 # )
-ADD_EXECUTABLE(test_more test_more.cpp
+ADD_EXECUTABLE(test_more EXCLUDE_FROM_ALL test_more.cpp
 	${adolc_sources}
 	${eigen_sources}
 	abs.cpp
@@ -139,5 +139,7 @@ add_cppad_cxx_flags(test_more)
 # List of libraries to be linked into the specified target
 TARGET_LINK_LIBRARIES(test_more ${test_more_adolc} ${test_more_eigen})
 
-# add_test(testname Exename arg1 arg2 ... )
-# ADD_TEST( test_more test_more )
+# Add the check_test_more target
+ADD_CUSTOM_TARGET(
+	check_test_more test_more DEPENDS test_more ${test_more_eigen} 
+)

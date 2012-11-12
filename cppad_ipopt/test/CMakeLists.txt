@@ -25,7 +25,7 @@ LINK_DIRECTORIES( ${CMAKE_CURRENT_BINARY_DIR}/../src ${ipopt_LIBRARY_DIRS} )
 # add_executable(<name> [WIN32] [MACOSX_BUNDLE] [EXCLUDE_FROM_ALL]
 #                 source1 source2 ... sourceN
 # )
-ADD_EXECUTABLE(ipopt_test_more test_more.cpp
+ADD_EXECUTABLE(ipopt_test_more EXCLUDE_FROM_ALL test_more.cpp
 	k_gt_one.cpp
 	multiple_solution.cpp
 	retape_k1_l1.cpp
@@ -35,5 +35,8 @@ ADD_EXECUTABLE(ipopt_test_more test_more.cpp
 # List of libraries to be linked into the specified target
 TARGET_LINK_LIBRARIES(ipopt_test_more cppad_ipopt ${ipopt_LIBRARIES})
 
-# add_test(testname Exename arg1 arg2 ... )
-# ADD_TEST( ipopt_test_more ipopt_test_more )
+# Add the check_ipopt_test_more target
+ADD_CUSTOM_TARGET(check_ipopt_test_more
+	ipopt_test_more
+	DEPENDS ipopt_test_more cppad_ipopt
+)

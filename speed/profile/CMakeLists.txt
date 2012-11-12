@@ -30,7 +30,7 @@ INCLUDE_DIRECTORIES( ${CMAKE_CURRENT_SOURCE_DIR}/../src )
 # add_executable(<name> [WIN32] [MACOSX_BUNDLE] [EXCLUDE_FROM_ALL]
 #                 source1 source2 ... sourceN
 # )
-ADD_EXECUTABLE(speed_profile ../main.cpp 
+ADD_EXECUTABLE(speed_profile EXCLUDE_FROM_ALL ../main.cpp 
 	../cppad/print_optimize.hpp
 	../cppad/print_optimize.cpp
 	../cppad/ode.cpp
@@ -54,10 +54,13 @@ ADD_EXECUTABLE(speed_profile ../main.cpp
 add_cppad_cxx_flags( speed_profile )
 
 # profile builds it own copy of src/speed library (see ADD_EXECUTABLE above)
-# TARGET_LINK_LIBRARIES(speed_profile speed )
+# TARGET_LINK_LIBRARIES(speed_profile speed_src )
 
-# add_test(testname Exename arg1 arg2 ... )
-# ADD_TEST( speed_profile speed_profile )
+# Add the check_speed_profile target
+ADD_CUSTOM_TARGET(check_speed_profile 
+	speed_profile correct 54321
+	DEPENDS speed_profile
+)
 
 # Sed script to make gprof output more readable, use:
 #	./speed_profile speed 54321

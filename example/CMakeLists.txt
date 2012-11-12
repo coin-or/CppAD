@@ -59,7 +59,7 @@ CONFIGURE_FILE(
 # add_executable(<name> [WIN32] [MACOSX_BUNDLE] [EXCLUDE_FROM_ALL]
 #                 source1 source2 ... sourceN
 # )
-ADD_EXECUTABLE(example example.cpp
+ADD_EXECUTABLE(example EXCLUDE_FROM_ALL example.cpp
 	${adolc_sources}
 	abort_recording.cpp
 	abs.cpp
@@ -196,5 +196,5 @@ add_cppad_cxx_flags(example)
 # List of libraries to be linked into the specified target
 TARGET_LINK_LIBRARIES(example ${example_adolc} ${example_eigen})
 
-# add_test(testname Exename arg1 arg2 ... )
-# ADD_TEST( example example )
+# Add the check_example target
+ADD_CUSTOM_TARGET(check_example example DEPENDS example)

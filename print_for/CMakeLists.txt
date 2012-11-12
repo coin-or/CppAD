@@ -19,10 +19,10 @@ SET(CMAKE_BUILD_TYPE DEBUG)
 # add_executable(<name> [WIN32] [MACOSX_BUNDLE] [EXCLUDE_FROM_ALL]
 #                 source1 source2 ... sourceN
 # )
-ADD_EXECUTABLE(print_for print_for.cpp)
+ADD_EXECUTABLE(print_for EXCLUDE_FROM_ALL print_for.cpp)
 
 # Add extra compiler flags
 add_cppad_cxx_flags(print_for)
 
-# add_test(testname Exename arg1 arg2 ... )
-# ADD_TEST( print_for print_for )
+# Add the check_print_for target
+ADD_CUSTOM_TARGET(check_print_for print_for DEPENDS print_for)

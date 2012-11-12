@@ -26,7 +26,7 @@ ADD_DEFINITIONS( ${OpenMP_CXX_FLAGS} )
 # add_executable(<name> [WIN32] [MACOSX_BUNDLE] [EXCLUDE_FROM_ALL]
 #                 source1 source2 ... sourceN
 # )
-ADD_EXECUTABLE(openmp_test ../thread_test.cpp 
+ADD_EXECUTABLE(openmp_test EXCLUDE_FROM_ALL ../thread_test.cpp 
 	../multi_newton_time.cpp
 	../multi_newton.cpp
 	../multi_newton_work.cpp
@@ -45,5 +45,8 @@ add_cppad_cxx_flags( openmp_test )
 # Extra flags used by linker for openmp support
 SET(CMAKE_EXE_LINKER_FLAGS ${OpenMP_CXX_FLAGS} )
 
-# add_test(testname Exename arg1 arg2 ... )
-# ADD_TEST( openmp_test openmp_test )
+# Add the check_openmp target
+ADD_CUSTOM_TARGET(check_openmp 
+	openmp_test simple_ad
+	DEPENDS openmp_test
+)

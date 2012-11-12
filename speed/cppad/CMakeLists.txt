@@ -27,7 +27,7 @@ INCLUDE_DIRECTORIES( ${CMAKE_CURRENT_SOURCE_DIR}/../src )
 # add_executable(<name> [WIN32] [MACOSX_BUNDLE] [EXCLUDE_FROM_ALL]
 #                 source1 source2 ... sourceN
 # )
-ADD_EXECUTABLE(speed_cppad ../main.cpp print_optimize.cpp
+ADD_EXECUTABLE(speed_cppad EXCLUDE_FROM_ALL ../main.cpp print_optimize.cpp
 	det_lu.cpp
 	det_minor.cpp
 	mat_mul.cpp
@@ -41,7 +41,10 @@ ADD_EXECUTABLE(speed_cppad ../main.cpp print_optimize.cpp
 add_cppad_cxx_flags( speed_cppad )
 
 # List of libraries to be linked into the specified target
-TARGET_LINK_LIBRARIES(speed_cppad speed )
+TARGET_LINK_LIBRARIES(speed_cppad speed_src )
 
-# add_test(testname Exename arg1 arg2 ... )
-# ADD_TEST( speed_cppad speed_cppad )
+# Add the check_speed_cppad target
+ADD_CUSTOM_TARGET(check_speed_cppad 
+	speed_cppad correct 54321
+	DEPENDS speed_cppad speed_src
+)

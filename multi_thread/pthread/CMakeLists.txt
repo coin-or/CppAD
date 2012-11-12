@@ -22,7 +22,7 @@ INCLUDE_DIRECTORIES( ${CMAKE_CURRENT_SOURCE_DIR}/.. )
 # add_executable(<name> [WIN32] [MACOSX_BUNDLE] [EXCLUDE_FROM_ALL]
 #                 source1 source2 ... sourceN
 # )
-ADD_EXECUTABLE(pthread_test ../thread_test.cpp 
+ADD_EXECUTABLE(pthread_test EXCLUDE_FROM_ALL ../thread_test.cpp 
 	../multi_newton_time.cpp
 	../multi_newton.cpp
 	../multi_newton_work.cpp
@@ -45,5 +45,8 @@ LINK_DIRECTORIES( ${pthread_lib_path} )
 # List of libraries to be linked into the specified target
 TARGET_LINK_LIBRARIES(pthread_test ${pthread_lib})
 
-# add_test(testname Exename arg1 arg2 ... )
-# ADD_TEST( bthread_test bthread_test )
+# Add the check_pthread target
+ADD_CUSTOM_TARGET(check_pthread 
+	pthread_test simple_ad 
+	DEPENDS pthread_test
+)

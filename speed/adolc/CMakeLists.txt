@@ -34,7 +34,7 @@ INCLUDE_DIRECTORIES( ${CMAKE_CURRENT_SOURCE_DIR}/../src )
 # add_executable(<name> [WIN32] [MACOSX_BUNDLE] [EXCLUDE_FROM_ALL]
 #                 source1 source2 ... sourceN
 # )
-ADD_EXECUTABLE(speed_adolc ../main.cpp alloc_mat.cpp
+ADD_EXECUTABLE(speed_adolc EXCLUDE_FROM_ALL ../main.cpp alloc_mat.cpp
 	det_lu.cpp
 	det_minor.cpp
 	mat_mul.cpp
@@ -48,7 +48,10 @@ ADD_EXECUTABLE(speed_adolc ../main.cpp alloc_mat.cpp
 add_cppad_cxx_flags( speed_adolc )
 
 # List of libraries to be linked into the specified target
-TARGET_LINK_LIBRARIES(speed_adolc speed adolc )
+TARGET_LINK_LIBRARIES(speed_adolc speed_src adolc )
 
-# add_test(testname Exename arg1 arg2 ... )
-# ADD_TEST( speed_adolc speed_adolc )
+# Add the check_speed_adolc target
+ADD_CUSTOM_TARGET(check_speed_adolc 
+	speed_adolc correct 54321
+	DEPENDS speed_adolc speed_src
+)

@@ -12,6 +12,9 @@
 # Build the multi_thread/* directory tests 
 # Inherit environment from ../CMakeList.txt
 
+# initialize list as empty
+SET(list_multi_thread NO)
+
 # Define the operation
 # CHECK_LIBRARY_EXISTS (LIBRARY FUNCTION LOCATION VARIABLE)
 #	LIBRARY  - the name of the library you are looking for
@@ -26,6 +29,7 @@ FIND_PACKAGE(OpenMP)
 IF ( OPENMP_FOUND )
 	# OpenMP_CXX_FLAGS - flags to add to the CXX compiler for OpenMP support
 	ADD_SUBDIRECTORY(openmp)
+	add_to_list(list_multi_thread check_openmp)
 ENDIF ( OPENMP_FOUND )
 
 # If pthreads found, set pthread_lib and pthread_lib_path and process subdir
@@ -40,6 +44,7 @@ IF ( pthread_lib_path )
 	)   
 	IF ( pthread_ok )
 		ADD_SUBDIRECTORY(pthread)
+		add_to_list(list_multi_thread check_pthread)
 	ENDIF ( pthread_ok )
 ENDIF ( pthread_lib_path )
 
@@ -84,6 +89,9 @@ int main(void)
 	ENDIF ( NOT bthread_ok )
 	IF ( bthread_ok OR bthread_mt_ok )
 		ADD_SUBDIRECTORY(bthread)
+		add_to_list(list_multi_thread check_bthread)
 	ENDIF ( bthread_ok OR bthread_mt_ok )
 ENDIF ( Boost_FOUND )
 
+# check_multi_thread
+ADD_CUSTOM_TARGET(check_multi_thread DEPENDS ${list_multi_thread})

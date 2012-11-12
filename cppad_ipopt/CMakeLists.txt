@@ -12,6 +12,9 @@
 # Build the cppad_ipopt/* directory tests 
 # Inherit environment from ../CMakeList.txt
 
+# Initialize list of tests as empty
+SET(list_ipopt NO)
+
 # assert ipopt_prefix is defined
 IF ( NOT ipopt_prefix )
 	MESSAGE(FATAL_ERROR 
@@ -43,6 +46,15 @@ ENDIF( NOT ipopt_FOUND )
 # before the current input file continues beyond this command.
 # add_subdirectory(source_dir [binary_dir] [EXCLUDE_FROM_ALL])
 ADD_SUBDIRECTORY(src)
+#
 ADD_SUBDIRECTORY(example)
+add_to_list(list_ipopt check_ipopt_example)
+#
 ADD_SUBDIRECTORY(speed)
+add_to_list(list_ipopt check_ipopt_speed)
+#
 ADD_SUBDIRECTORY(test)
+add_to_list(list_ipopt check_ipopt_test_more)
+
+# Add the check_ipopt target
+ADD_CUSTOM_TARGET(check_ipopt DEPENDS ${list_ipopt} )

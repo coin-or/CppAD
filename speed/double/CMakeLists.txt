@@ -27,7 +27,7 @@ INCLUDE_DIRECTORIES( ${CMAKE_CURRENT_SOURCE_DIR}/../src )
 # add_executable(<name> [WIN32] [MACOSX_BUNDLE] [EXCLUDE_FROM_ALL]
 #                 source1 source2 ... sourceN
 # )
-ADD_EXECUTABLE(speed_double ../main.cpp 
+ADD_EXECUTABLE(speed_double EXCLUDE_FROM_ALL ../main.cpp 
 	det_lu.cpp
 	det_minor.cpp
 	mat_mul.cpp
@@ -41,7 +41,11 @@ ADD_EXECUTABLE(speed_double ../main.cpp
 add_cppad_cxx_flags( speed_double )
 
 # double does not use any external library
-TARGET_LINK_LIBRARIES(speed_double speed )
+TARGET_LINK_LIBRARIES(speed_double speed_src )
 
-# add_test(testname Exename arg1 arg2 ... )
-# ADD_TEST( speed_double speed_double )
+
+# Add the check_speed_double target
+ADD_CUSTOM_TARGET(check_speed_double 
+	speed_double correct 54321
+	DEPENDS speed_double speed_src
+)

@@ -19,7 +19,7 @@ SET(CMAKE_BUILD_TYPE RELEASE)
 #  add_library(<name> [STATIC | SHARED | MODULE] [EXCLUDE_FROM_ALL]
 #	source1 source2 ... sourceN)
 # )
-ADD_LIBRARY(speed
+ADD_LIBRARY(speed_src EXCLUDE_FROM_ALL
 	link_det_lu.cpp
 	link_det_minor.cpp
 	link_mat_mul.cpp
@@ -31,4 +31,4 @@ ADD_LIBRARY(speed
 )
 
 # Compiler flags for cppad source
-add_cppad_cxx_flags( speed )
+add_cppad_cxx_flags( speed_src )

@@ -25,7 +25,7 @@ LINK_DIRECTORIES( ${CMAKE_CURRENT_BINARY_DIR}/../src ${ipopt_LIBRARY_DIRS} )
 # add_executable(<name> [WIN32] [MACOSX_BUNDLE] [EXCLUDE_FROM_ALL]
 #                 source1 source2 ... sourceN
 # )
-ADD_EXECUTABLE(ipopt_example example.cpp
+ADD_EXECUTABLE(ipopt_example EXCLUDE_FROM_ALL example.cpp
 	example.cpp
 	get_started.cpp
 	ode_check.cpp
@@ -44,5 +44,8 @@ add_cppad_cxx_flags( ipopt_example )
 # List of libraries to be linked into the specified target
 TARGET_LINK_LIBRARIES(ipopt_example cppad_ipopt ${ipopt_LIBRARIES})
 
-# add_test(testname Exename arg1 arg2 ... )
-# ADD_TEST( ipopt_example ipopt_example )
+# Add the check_ipopt_example target
+ADD_CUSTOM_TARGET(check_ipopt_example
+	ipopt_example
+	DEPENDS ipopt_example cppad_ipopt
+)
