@@ -45,6 +45,31 @@ MACRO(optional_package prefix_variable description)
 		ENDFOREACH( dir )
 	ENDIF ( prefix )
 ENDMACRO(optional_package)
+#
+# Add C++ compiler flags for a target, checking for special cases where
+# -Wshadow is left out.
+MACRO(add_cppad_cxx_flags target_name) 
+	SET(no_shadow NO)
+	IF( ${target_name} STREQUAL example_eigen )
+		SET(no_shadow YES)
+	ENDIF( ${target_name} STREQUAL example_eigen )
+	IF( ${target_name} STREQUAL test_more_eigen )
+		SET(no_shadow YES)
+	ENDIF( ${target_name} STREQUAL test_more_eigen )
+	IF( ${target_name} STREQUAL speed_fadbad )
+		SET(no_shadow YES)
+	ENDIF( ${target_name} STREQUAL speed_fadbad )
+	IF( no_shadow )
+		SET(cxx_flags "${cppad_cxx_flags_skip_Wshadow}")
+	ELSE( no_shadow )
+		SET(cxx_flags "${cppad_cxx_flags}")
+	ENDIF( no_shadow )
+	IF( cxx_flags )
+		SET_TARGET_PROPERTIES( 
+			${target_name} PROPERTIES COMPILE_FLAGS "${cxx_flags}"
+		)
+	ENDIF( cxx_flags )
+ENDMACRO(add_cppad_cxx_flags) 
 # -----------------------------------------------------------------------------
 # Some constants
 # ----------------------------------------------------------------------------

@@ -25,29 +25,27 @@ IF ( adolc_prefix )
 	# Adds -D define flags to the compilation of source files.
 	ADD_DEFINITIONS("-DCPPAD_ADOLC_EXAMPLES")
 	# add adolc to list of libraries
-	SET(adolc_example adolc)
+	SET(example_adolc adolc)
 ELSE ( adolc_prefix )
 	SET(adolc_sources "")
-	SET(adolc_example "")
+	SET(example_adolc "")
 ENDIF ( adolc_prefix )
 
 # eigen_prefix
 IF ( eigen_prefix )
 	# compile eigen library separately so can use different compiler flags
-	ADD_LIBRARY(eigen_example 
+	ADD_LIBRARY(example_eigen 
 		eigen_det.cpp
 		eigen_array.cpp
 	)
 	# Adds -D define flags to the compilation of source files.
 	ADD_DEFINITIONS("-DCPPAD_EIGEN_EXAMPLES")
-	SET_TARGET_PROPERTIES( eigen_example PROPERTIES COMPILE_FLAGS 
-		"${cppad_cxx_flags_skip_Wshadow}"
-	)
+	add_cppad_cxx_flags(example_eigen)
 	#
 	# Add eigen to list of libraries
-	SET(eigen_example eigen_example)
+	SET(example_eigen example_eigen)
 ELSE ( eigen_prefix )
-	SET(eigen_example "")
+	SET(example_eigen "")
 ENDIF ( eigen_prefix )
 
 # Copy a file to another location and modify its contents.
@@ -193,10 +191,10 @@ ADD_EXECUTABLE(example example.cpp
 )
 
 # Compiler flags for cppad source
-SET_TARGET_PROPERTIES(example PROPERTIES COMPILE_FLAGS "${cppad_cxx_flags}")
+add_cppad_cxx_flags(example) 
 
 # List of libraries to be linked into the specified target
-TARGET_LINK_LIBRARIES(example ${adolc_example} ${eigen_example})
+TARGET_LINK_LIBRARIES(example ${example_adolc} ${example_eigen})
 
 # add_test(testname Exename arg1 arg2 ... )
 # ADD_TEST( example example )

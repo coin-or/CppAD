@@ -31,6 +31,4 @@ ADD_LIBRARY(speed
 )
 
 # Compiler flags for cppad source
-SET_TARGET_PROPERTIES(
-	speed PROPERTIES COMPILE_FLAGS "${cppad_cxx_flags}"
-)
+add_cppad_cxx_flags( speed )

@@ -36,9 +36,7 @@ ADD_EXECUTABLE(pthread_test ../thread_test.cpp
 )
 
 # Compiler flags for cppad source
-SET_TARGET_PROPERTIES(
-	pthread_test PROPERTIES COMPILE_FLAGS "${cppad_cxx_flags}"
-)
+add_cppad_cxx_flags( pthread_test )
 
 # Paths in which the linker will search for libraries,
 # only applies to targets created after it is called

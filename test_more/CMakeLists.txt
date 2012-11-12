@@ -23,10 +23,10 @@ IF ( adolc_prefix )
 	# Adds -D define flags to the compilation of source files.
 	ADD_DEFINITIONS("-DCPPAD_ADOLC_TEST")
 	# add adolc to list of libraries
-	SET(adolc_test_more adolc)
+	SET(test_more_adolc adolc)
 ELSE ( adolc_prefix )
 	SET(adolc_sources "")
-	SET(adolc_test_more "")
+	SET(test_more_adolc "")
 ENDIF ( adolc_prefix )
 
 # sources that use eigen
@@ -35,9 +35,8 @@ IF ( eigen_prefix )
 	ADD_LIBRARY(test_more_eigen cppad_eigen.cpp)
 	# Adds -D define flags to the compilation of source files.
 	ADD_DEFINITIONS("-DCPPAD_EIGEN_TEST")
-	SET_TARGET_PROPERTIES(test_more_eigen PROPERTIES COMPILE_FLAGS 
-		"${cppad_cxx_flags_skip_Wshadow}"
-	)
+	# Add other compiler flags 
+	add_cppad_cxx_flags(test_more_eigen) 
 	#
 	# Add eigen to list of libraries
 	SET(test_more_eigen test_more_eigen)
@@ -135,10 +134,10 @@ ADD_EXECUTABLE(test_more test_more.cpp
 )
 
 # Compiler flags for cppad source
-SET_TARGET_PROPERTIES(test_more PROPERTIES COMPILE_FLAGS "${cppad_cxx_flags}")
+add_cppad_cxx_flags(test_more)
 
 # List of libraries to be linked into the specified target
-TARGET_LINK_LIBRARIES(test_more ${adolc_test_more} ${test_more_eigen})
+TARGET_LINK_LIBRARIES(test_more ${test_more_adolc} ${test_more_eigen})
 
 # add_test(testname Exename arg1 arg2 ... )
 # ADD_TEST( test_more test_more )

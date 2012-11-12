@@ -51,9 +51,7 @@ ADD_EXECUTABLE(speed_profile ../main.cpp
 )
 
 # Compiler flags for cppad source
-SET_TARGET_PROPERTIES(
-	speed_profile PROPERTIES COMPILE_FLAGS "${cppad_cxx_flags}"
-)
+add_cppad_cxx_flags( speed_profile )
 
 # profile builds it own copy of src/speed library (see ADD_EXECUTABLE above)
 # TARGET_LINK_LIBRARIES(speed_profile speed )

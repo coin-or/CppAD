@@ -38,6 +38,9 @@ ADD_EXECUTABLE(ipopt_example example.cpp
 	ode_simple.hpp
 )
 
+# Extra compiler flags
+add_cppad_cxx_flags( ipopt_example )
+
 # List of libraries to be linked into the specified target
 TARGET_LINK_LIBRARIES(ipopt_example cppad_ipopt ${ipopt_LIBRARIES})
 

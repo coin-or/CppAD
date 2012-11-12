@@ -27,6 +27,9 @@ ADD_LIBRARY(cppad_ipopt
 	vec_fun_pattern.cpp 
 )
 
+# Add extra compiler flags
+add_cppad_cxx_flags( cppad_ipopt )
+
 # install(FILES files... DESTINATION <dir>
 #	[PERMISSIONS permissions...]
 #	[CONFIGURATIONS [Debug|Release|...]]

@@ -40,9 +40,7 @@ ADD_EXECUTABLE(openmp_test ../thread_test.cpp
 )
 
 # Compiler flags for cppad source
-SET_TARGET_PROPERTIES(
-	openmp_test PROPERTIES COMPILE_FLAGS "${cppad_cxx_flags}"
-)
+add_cppad_cxx_flags( openmp_test )
 
 # Extra flags used by linker for openmp support
 SET(CMAKE_EXE_LINKER_FLAGS ${OpenMP_CXX_FLAGS} )

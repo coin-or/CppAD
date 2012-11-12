@@ -36,9 +36,7 @@ ADD_EXECUTABLE(speed_example example.cpp
 )
 
 # Compiler flags for cppad source
-SET_TARGET_PROPERTIES(
-	speed_example PROPERTIES COMPILE_FLAGS "${cppad_cxx_flags}"
-)
+add_cppad_cxx_flags( speed_example )
 
 # List of libraries to be linked into the specified target
 TARGET_LINK_LIBRARIES(speed_example speed )

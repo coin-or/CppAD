@@ -37,6 +37,9 @@ ADD_EXECUTABLE(ipopt_speed speed.cpp
 	ode_speed.cpp 
 )
 
+# Add extra compiler flags
+add_cppad_cxx_flags( ipopt_speed )
+
 # List of libraries to be linked into the specified target
 TARGET_LINK_LIBRARIES(ipopt_speed cppad_ipopt ${ipopt_LIBRARIES})
 

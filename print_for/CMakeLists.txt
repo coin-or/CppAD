@@ -21,5 +21,8 @@ SET(CMAKE_BUILD_TYPE DEBUG)
 # )
 ADD_EXECUTABLE(print_for print_for.cpp)
 
+# Add extra compiler flags
+add_cppad_cxx_flags(print_for)
+
 # add_test(testname Exename arg1 arg2 ... )
 # ADD_TEST( print_for print_for )

@@ -38,9 +38,7 @@ ADD_EXECUTABLE(speed_cppad ../main.cpp print_optimize.cpp
 )
 
 # Compiler flags for cppad source
-SET_TARGET_PROPERTIES(
-	speed_cppad PROPERTIES COMPILE_FLAGS "${cppad_cxx_flags}"
-)
+add_cppad_cxx_flags( speed_cppad )
 
 # List of libraries to be linked into the specified target
 TARGET_LINK_LIBRARIES(speed_cppad speed )
