@@ -78,7 +78,7 @@ $pre
 
 $$
 The $cref TrackNewDel.cpp$$ example was missing from the Windows install 
-$cref/examples and testing/InstallWindows/Examples and Testing/$$
+examples and testing
 project file. 
 This has been fixed.
 
@@ -150,7 +150,7 @@ $$
 The change on $cref/12-14/whats_new_05/12-14/$$ broke the 
 Microsoft project files $code example/Example.sln$$
 and $code TestMore/TestMore.sln$$ used during CppAD
-$cref/installation on Windows/InstallWindows/$$.
+installation on Windows.
 This has been fixed.
 $pre
 
@@ -561,10 +561,6 @@ $head 08-13$$
 The $cref/AD standard math unary functions/std_math_ad/$$
 $code sinh$$, and $code cosh$$ have been added. 
 In addition, more correctness testing 
-(
-$code test_more/test_more$$ , 
-$cref/windows/InstallWindows/More Correctness Testing/$$ 
-)
 has been added for the $code sin$$ and $code cos$$ functions.
 $pre
 

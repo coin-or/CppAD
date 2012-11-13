@@ -168,13 +168,13 @@ all the other speed tests.
 
 $head 11-05$$
 MS project files have been added for running the
-$cref/cppad/InstallWindows/CppAD Speed Test/$$ and
-$cref/double/InstallWindows/Double Speed Test/$$ 
+$cref/cppad/speed_cppad/$$ and
+$cref/double/speed_double/$$ 
 speed tests.
 
 $head 11-04$$
 The $code cppad/config.h$$ file was not compatible with the 
-$cref/Windows install procedure/InstallWindows/$$ and 
+Windows install procedure and 
 the Windows project's could not find a certain include file.
 This has been fixed.
 $pre
@@ -197,7 +197,7 @@ This has been fixed.
 
 $head 11-02$$
 The instructions for downloading the current version using 
-$cref subversion$$
+$cref/subversion/download/Subversion/$$
 have changed.
 The user should now directly edit the file
 $codep
@@ -249,7 +249,7 @@ The makefiles in the distribution have been changed so that
 one can run configure from a directory other than the distribution directory.
 
 $head 10-27$$
-A $cref subversion$$ method
+A $cref/subversion/download/Subversion/$$ method
 for downloading CppAD has been added.
 $pre
 
@@ -262,8 +262,9 @@ $code AM_MAINTAINER_MODE$$ to the $code autoconf$$ input file.
 $pre
 
 $$
-Extend the $cref subversion$$ methods to include a full installation
-and old versions.
+Extend the 
+$cref/subversion/download/Subversion/$$
+methods to include a full installation and old versions.
 
 $head 10-23$$
 The $cref/cxx_flags/InstallUnix/cxx_flags/$$ environment variable
@@ -636,7 +637,7 @@ This has been fixed.
 
 $head 05-22$$
 The Microsoft 
-$cref/examples and testing/InstallWindows/Examples and Testing/$$ 
+examples and testing
 project file $code example/example.vcproj$$ 
 was missing a reference to the
 source code file $code example/reverse_two.cpp$$.

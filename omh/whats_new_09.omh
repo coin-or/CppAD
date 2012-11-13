@@ -193,9 +193,9 @@ instead of just as vectors of $code bool$$
 
 $head 10-03$$
 The Microsoft Visual Studio project files for 
-$cref/examples and testing/InstallWindows/Examples and Testing/$$
+examples and testing
 and for
-$cref/more correctness testing/InstallWindows/More Correctness Testing/$$
+more correctness testing
 were not including some new tests in their builds.
 This has been fixed.
 
@@ -510,7 +510,7 @@ of the solution of an ODE with respect to a parameter
 
 $head 02-15$$
 Change the distribution
-$cref/tar files/InstallUnix/Download/Unix Tar Files/$$
+$cref/compressed tar file/download/Compressed Tar File/$$
 to only contain one copy of the documentation.
 Link to the current Internet documentation for the other three copies.
 

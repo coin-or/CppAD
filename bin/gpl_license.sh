@@ -142,9 +142,21 @@ done
 # change into the work/gpl-distribution directory
 echo_exec cd $dir
 echo_exec rm -r doc
-echo_exec mkdir doc
-echo_exec cd doc
 #
+# Only include the *.xml verison of the documentation in distribution
+# So remove the table at the top (but save the original doc.omh file).
+if ! grep < doc.omh > /dev/null \
+	'This comment is used to remove the table below' 
+then
+	echo "Missing comment expected in doc.omh"
+	exit 1
+fi
+echo "sed -i.save doc.omh ..."
+sed -i.save doc.omh \
+	-e '/This comment is used to remove the table below/,/$tend/d'
+#
+echo_exec mkdir doc
+echo_exec cd    doc
 cmd='omhelp ../doc.omh -noframe -debug -xml -l http://www.coin-or.org/CppAD/'
 echo "$cmd > omhelp.xml.log"
 if ! eval $cmd > $root_dir/omhelp.xml.log
@@ -159,7 +171,9 @@ then
 	echo 'See the complete warning message in omhelp.xml.log'
 	exit 1
 fi
-echo_exec cd ../..
+echo_exec cd ..
+echo_exec mv doc.omh.save doc.omh
+echo_exec cd ..
 # ----------------------------------------------------------------------------
 #
 # create *.gpl.tgz file as copy or work/gpl-distribution directory

@@ -40,7 +40,7 @@ during $cref/installation/InstallUnix/sacado_dir/$$.
 $head Running Tests$$
 To build these speed tests, and run their correctness tests,
 execute the following commands starting in the
-$cref/work directory/InstallUnix/Download/Work Directory/$$:
+$cref/work directory/InstallUnix/Work Directory/$$:
 $codei%
 	cd speed/sacado
 	make test

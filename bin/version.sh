@@ -64,7 +64,6 @@ sed \
 list='
 	doc.omh
 	omh/install/unix.omh
-	omh/install/windows.omh
 '
 for file in $list
 do

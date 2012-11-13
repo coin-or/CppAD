@@ -78,58 +78,16 @@ $index unix, CppAD install$$
 $index free, unix install$$
 $index install, unix CppAD$$
 
-$section Unix Download, Test and Installation$$
+$section Unix Test and Installation$$
 
-$head Download$$
-$index download, unix$$
-$index unix, download$$
+$head Distribution Directory$$
+You must first obtain a copy of the CppAD distribution directory
+using the $cref download$$ instructions.
+The install instructions below correspond to the
+$cref/current version/download/Compressed Tar File/Current Version/$$
+which has distribution directory $code cppad-20121109$$. 
 
-$children%
-	omh/subversion.omh
-%$$
-$subhead Subversion$$
-If you are familiar with subversion, you may want to follow
-the more complicated CppAD download instructions;
-see the following $cref/subversion instructions/subversion/$$.
-
-$subhead Web Link$$
-If you are not using the subversion download instructions,
-make sure you are reading the web version of this documentation by
-following the link 
-$href%http://www.coin-or.org/CppAD/Doc/installunix.htm%web version%$$.
-Then proceed with the instruction that appear below this point.
-
-$subhead Unix Tar Files$$
-$index CppAD, tar file$$
-$index tar, CppAD file$$
-The download files below were first archived with $code tar$$
-and then compressed with $code gzip$$:
-The ascii files for these downloads are in 
-Unix format; i.e., each line ends with just a line feed.
-
-$table
-EPL License $pre  $$ $cnext $href%cppad-20121109.epl.tgz%$$ 
-$rnext
-GPL License $pre  $$ $cnext $href%cppad-20121109.gpl.tgz%$$
-$tend
-
-$subhead Tar File Extraction$$
-Use the unix command
-$codei%
-	tar -xvzf cppad-20121109.%license%.tgz
-%$$
-(where $icode license$$ is $code cpl$$ or $code gpl$$)
-to decompress and extract the unix format version
-into the distribution directory
-$codei%
-	cppad-20121109
-%$$
-To see if this has been done correctly, check for the following file:
-$codei%
-	cppad-20121109/cppad/cppad.hpp
-%$$
-
-$subhead Work Directory$$
+$head Work Directory$$
 Create the directory $code cppad-20121109/work$$,
 which will be referred to as the work directory below.
 

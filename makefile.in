@@ -596,10 +596,36 @@ SUBDIRS = \
 EXTRA_DIST = \
 	bin \
 	build.sh \
-	epl-v10.txt \
+	doc.omh \
 	doc \
+	epl-v10.txt \
 	omh \
-	uw_copy_040507.html
+	uw_copy_040507.html \
+	\
+	cppad/CMakeLists.txt \
+	pkgconfig/CMakeLists.txt \
+	example/CMakeLists.txt \
+	test_more/CMakeLists.txt \
+	CMakeLists.txt \
+	cppad_ipopt/src/CMakeLists.txt \
+	cppad_ipopt/example/CMakeLists.txt \
+	cppad_ipopt/test/CMakeLists.txt \
+	cppad_ipopt/CMakeLists.txt \
+	cppad_ipopt/speed/CMakeLists.txt \
+	speed/cppad/CMakeLists.txt \
+	speed/adolc/CMakeLists.txt \
+	speed/fadbad/CMakeLists.txt \
+	speed/src/CMakeLists.txt \
+	speed/example/CMakeLists.txt \
+	speed/CMakeLists.txt \
+	speed/double/CMakeLists.txt \
+	speed/profile/CMakeLists.txt \
+	speed/sacado/CMakeLists.txt \
+	multi_thread/bthread/CMakeLists.txt \
+	multi_thread/CMakeLists.txt \
+	multi_thread/openmp/CMakeLists.txt \
+	multi_thread/pthread/CMakeLists.txt \
+	print_for/CMakeLists.txt 
 
 test_directory_list = \
 	$(IPOPT_TESTS) \

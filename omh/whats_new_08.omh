@@ -375,8 +375,8 @@ Change the name of $code speedtest.cpp$$ to $cref speed_program.cpp$$.
 
 
 $head 02-05$$
-Change $cref/windows install instructions/InstallWindows/$$ 
-instructions to use Unix formatted files (so only two instead of
+Change windows install instructions 
+to use Unix formatted files (so only two instead of
 four tarballs are necessary for each version).
 The Microsoft project files for
 $code speed/cppad$$, $code speed/double$$, and $code speed/example$$

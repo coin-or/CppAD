@@ -372,7 +372,7 @@ $pre
 
 $$
 The windows project files for 
-$cref/examples and testing/InstallWindows/Examples and Testing/$$
+examples and testing
 should have been changes to use lower case file names on
 as part of the 11-08 change below. This has been fixed.
 
@@ -503,8 +503,7 @@ Add the $cref Var2Par$$ function so it is possible
 to obtain the $cref Value$$ of a variable.
 Move the $code Discrete.cpp$$ example to $cref tape_index.cpp$$.
 Fix the Microsoft project file so that the Windows install
-$cref/examples and testing/InstallWindows/Examples and Testing/$$
-works properly
+examples and testing works properly
 (it was missing the $cref stack_machine.cpp$$ example). 
 
 $head 09-30$$ 

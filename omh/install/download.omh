@@ -1,0 +1,203 @@
+$Id$
+/* --------------------------------------------------------------------------
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-12 Bradley M. Bell
+
+CppAD is distributed under multiple licenses. This distribution is under
+the terms of the 
+                    Eclipse Public License Version 1.0.
+
+A copy of this license is included in the COPYING file of this distribution.
+Please visit http://www.coin-or.org/CppAD/ for information on other licenses.
+-------------------------------------------------------------------------- */
+
+$begin download$$
+$spell
+	omhelp
+	svn
+	https
+	org
+	dir
+	exe
+	gpl
+	xvzf
+	CppAD
+	cppad
+	gzip
+	yyyymmdd
+	rel
+	lic
+	epl
+	tgz
+	hpp
+$$
+$dollar @$$
+
+$section Download The CppAD Source Code$$
+$index download, cppad$$
+$index cppad, download$$
+
+$head Purpose$$
+CppAD is an include file library and you therefore need the source
+code to use it.
+This section discusses how to download the different versions of CppAD.
+
+$head Compressed Tar File$$
+These files have been archived with $code tar$$
+and compressed with $code gzip$$:
+
+$subhead Current Version$$
+The download files below are for the current version of CppAD.
+
+$table
+EPL License $pre  $$ $cnext $href%cppad-20121109.epl.tgz%$$ 
+$rnext
+GPL License $pre  $$ $cnext $href%cppad-20121109.gpl.tgz%$$
+$tend
+
+$subhead Release Versions$$
+Release versions of the compressed tar files can be found at the
+$href%http://www.coin-or.org/download/source/CppAD/%CppAD download page/%$$.
+These file have the form
+$codei%
+	cppad-%yyyymmdd%.%rel%.%lic%.tgz
+%$$
+where the license code $icode lic$$ 
+is $code gpl$$, $code epl$$ or $code cpl$$
+($code cpl$$ stands for the Common Public License),
+$icode yyyymmdd$$ is the date at which the features
+of the program were frozen, and each $icode rel$$ number
+corresponds to a bug fix (higher numbers corresponding to more bug fixes).
+
+$subhead Unix File Extraction$$
+On unix, you can use the command
+$codei%
+	tar -xvzf cppad-%version%.%lic%.tgz
+%$$
+where $icode version$$ either refers to the current version,
+or one of the release versions.
+This will decompress and extract the CppAD into
+the distribution directory $codei%cppad-%version%$$.
+To see if this has been done correctly, check for the following file:
+$codei%
+	cppad-%version%/cppad/cppad.hpp
+%$$
+
+$subhead Windows File Extraction$$
+If you know how to extract the distribution directory from 
+the tar file, just do so. Otherwise, here is one way you can do it.
+
+$list number$$
+Download and install the open source program
+$href%http://www.7-zip.org%$$.
+$lnext
+In a command window, use the command
+$codei%
+	%path_to_7-zip%\7z x cppad-%version%.%lic%.tgz
+%$$
+where $icode path_to_7-zip$$ is the location where
+$code 7z.exe$$ was installed.
+$lnext
+Then execute the command
+$codei%
+	%path_to_7-zip%\7z x cppad-%version.%lic%.tar
+%$$
+$lnext
+To see if this has been done correctly, check for the following file:
+$codei%
+	cppad-%version%/cppad/cppad.hpp
+%$$
+$lend
+
+
+$subhead Install Instructions$$
+If you are using an old version of CppAD
+You should follow the install instructions in 
+the $code doc$$ subdirectory of the distribution directory.
+
+
+$head Subversion$$
+
+$subhead Limitations$$
+This download procedure has the following limitations:
+$list number$$
+The $href%http://subversion.tigris.org/%subversion%$$ 
+program must be installed on your system.
+$lnext
+No documentation is included by this download procedure,
+though it can be build from the source code; see
+$cref/install instructions/download/Subversion/Install Instructions/$$ below.
+$lnext
+Only the 
+$href%http://opensource.org/licenses/EPL-1.0%EPL licensed%$$
+version of CppAD can be obtained by this download procedure.
+$lend
+
+$subhead Current Version$$
+To obtain current version of CppAD, execute the following commands
+$codei%
+	svn checkout https://projects.coin-or.org/svn/CppAD/trunk %dir%
+%$$
+To see if this has been done correctly, check for the following file:
+$codei%
+	%dir%/cppad/cppad.hpp
+%$$
+We refer to your directory choice $icode dir$$ above 
+as the distribution directory.
+
+$subhead Stable Versions$$
+Subversion downloads are available for a set of stable versions
+(after the specified date, only bug fixes get applied).
+The following link will list the available $icode dir$$ values
+corresponding to 
+$href%https://projects.coin-or.org/CppAD/browser/stable% stable versions%$$.
+The following command will download a 
+stable version of the CppAD source code:
+$codei%
+	svn co https://projects.coin-or.org/svn/CppAD/stable/%dir% %dir%
+%$$
+To see if this has been done correctly, check for the following file:
+$codei%
+	%dir%/cppad/cppad.hpp
+%$$
+Note that it will correspond to the most recent release for this stable 
+version.
+
+$subhead Release Versions$$
+Subversion downloads are available for a set of release versions
+(no changes are applied).
+The following link will list the available $icode dir$$ values
+corresponding to 
+$href%https://projects.coin-or.org/CppAD/browser/releases%
+	release versions 
+%$$.
+The following command will download a 
+release version of the CppAD source code:
+$codei%
+	svn co https://projects.coin-or.org/svn/CppAD/releases/%dir% %dir%
+%$$
+To see if this has been done correctly, check for the following file:
+$codei%
+	%dir%/cppad/cppad.hpp
+%$$
+
+$subhead Install Instructions$$
+If you are using subversion to download an old version of CppAD,
+you will have to build the documentation to get the corresponding install
+instructions.
+The documentation for CppAD is built from the source code files using
+$href%http://www.seanet.com/~bradbell/omhelp/%OMhelp%$$.
+You will need to install the $code omhelp$$ command so that
+$codep
+	which omhelp
+$$
+shows it is in your path.
+Once you have done this, 
+in the distribution directory execute the following command:
+$codei%
+	./build.sh configure omhelp
+%$$.
+You will then be able to follow the install instructions in 
+the $code doc$$ subdirectory of the distribution directory.
+
+
+$end

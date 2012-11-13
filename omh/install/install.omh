@@ -23,9 +23,9 @@ $index test$$
 $section CppAD Download, Test, and Installation Instructions$$
 
 $contents%
+	omh/install/download.omh%
 	omh/install/unix.omh%
-	omh/install/pkgconfig.omh%
-	omh/install/windows.omh
+	omh/install/pkgconfig.omh
 %$$
 
 

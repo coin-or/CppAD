@@ -27,7 +27,7 @@ $index test, exp_apx main$$
 $head Running Tests$$
 To build this program and run its correctness tests,
 execute the following commands starting in the
-$cref/work directory/InstallUnix/Download/Work Directory/$$:
+$cref/work directory/InstallUnix/Work Directory/$$:
 $codei%
 	cd introduction/exp_apx
 	make test

@@ -14,7 +14,7 @@
 
 # Specifies build type for this directory. Possible values are 
 # empty, Debug, Release, RelWithDebInfo and MinSizeRel
-SET(CMAKE_BUILD_TYPE DEBUG)
+SET(CMAKE_BUILD_TYPE RELEASE)
 
 # Local include directories to search (not in package_prefix/include)
 INCLUDE_DIRECTORIES( ${CMAKE_CURRENT_SOURCE_DIR}/../src )

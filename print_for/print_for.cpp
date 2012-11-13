@@ -40,7 +40,7 @@ $index print, example forward mode$$
 $head Running$$
 To build this program and run its correctness test,
 execute the following commands starting in the
-$cref/work directory/InstallUnix/Download/Work Directory/$$:
+$cref/work directory/InstallUnix/Work Directory/$$:
 $codei%
 	cd print_for
 	make test

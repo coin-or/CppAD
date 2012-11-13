@@ -198,10 +198,7 @@ This has been fixed.
 $head 02-06$$
 The Microsoft project files for the speed tests were extended 
 so that the worked properly for the Release (as well as the Debug)
-configuration, see
-$cref/cppad speed test/InstallWindows/CppAD Speed Test/$$,
-$cref/double speed test/InstallWindows/Double Speed Test/$$, and
-$cref/speed utility example/InstallWindows/Speed Utility Example/$$.
+configuration.
 (This required conversion from Visual Studio Version 7 to Visual Studio 2008
 format.)
 $pre
@@ -225,7 +222,7 @@ $code --with-TestMore$$,
 and $code --with-PrintFor$$.
 $lnext
 Add files that were missing in the Microsoft Visual Studio
-projects; see $cref InstallWindows$$.
+projects.
 $lnext
 Fix two significant bugs. One in the $cref optimize$$ command
 and the other in the $cref PrintFor$$ command.

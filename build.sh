@@ -72,10 +72,7 @@ fi
 # Files are created by the configure command and copied to the source tree
 configure_file_list="
 	cppad/configure.hpp
-	doc.omh
 	example/test_one.sh
-	omh/install_unix.omh
-	omh/install_windows.omh
 	test_more/test_one.sh
 "
 # -----------------------------------------------------------------------------
@@ -259,7 +256,6 @@ then
 		'This comment is used to remove the table below' 
 	then
 		echo "Missing comment expected in doc.omh"
-		echo "Try re-running build.sh configure to generate it."
 		exit 1
 	fi
 	echo "sed -i.save doc.omh ..."

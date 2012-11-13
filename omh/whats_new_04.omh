@@ -133,7 +133,7 @@ $head 11-04$$
 The Microsoft Visual Studio
 project file $code example/Example.dsp/$$ was missing some
 new examples that needed to be linked in
-(see $cref InstallWindows$$).
+the install windows procedure.
 This has been fixed.
 
 $head 11-02$$
@@ -221,7 +221,7 @@ $pre
 
 $$
 The 
-$cref/windows installation/InstallWindows/$$ steps
+windows installation steps
 do not build a $code config.h$$ file.
 Hence a default $code config.h$$ file was added to the 
 distribution for use with Microsoft Visual Studio.
@@ -333,7 +333,7 @@ $pre
 
 $$
 The suggested compression program during 
-$cref/Windows installation/InstallWindows/$$
+Windows installation
 was changed from
 $href%
 	http://www.7-zip.org%
