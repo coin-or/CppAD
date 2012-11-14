@@ -68,7 +68,7 @@ done
 echo_exec mkdir work
 echo_exec cd work
 # -----------------------------------------------------------------------------
-cmake_args="$cmake_args  -Dcppad_prefix=$HOME/prefix/cppad"
+cmake_args="$cmake_args  -Dcmake_install_prefix=$HOME/prefix/cppad"
 if [ -d '/usr/include' ]
 then
 	cmake_args="$cmake_args -Dcmake_install_includedir=include"

@@ -41,6 +41,12 @@ CppAD is an include file library and you therefore need the source
 code to use it.
 This section discusses how to download the different versions of CppAD.
 
+$head Distribution Directory$$
+We refer to the CppAD source directory created by the download instruction 
+below as the distribution directory.
+To be specific, the distribution directory contains the file
+$code cppad/cppad.hpp$$.
+
 $head Compressed Tar File$$
 These files have been archived with $code tar$$
 and compressed with $code gzip$$:

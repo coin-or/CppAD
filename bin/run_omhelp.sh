@@ -52,7 +52,7 @@ if [ "$2" == "printable" ]
 then
 	cmd="$cmd -printable"
 fi
-echo "$cmd > ../omhelp.$ext.log"
+echo "$cmd > omhelp.$ext.log"
 if !  $cmd > ../omhelp.$ext.log
 then
 	grep "^OMhelp Error:" ../omhelp.$ext.log

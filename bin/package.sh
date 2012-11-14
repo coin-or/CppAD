@@ -75,6 +75,7 @@ file_list=`find . \
 	\( -name '*.omh' \) -or \
 	\( -name '*.pc' \) -or \
 	\( -name '*.py' \) -or \
+	\( -name '*.sed' \) -or \
 	\( -name '*.sh' \) -or \
 	\( -name '*.txt' \) | sed \
 		-e '/\.\/work\//d' \
@@ -126,23 +127,17 @@ echo "sed -i.save doc.omh ..."
 sed -i.save doc.omh \
 	-e '/This comment is used to remove the table below/,/$tend/d'
 #
-echo_exec mkdir doc
-echo_exec cd    doc
-cmd='omhelp ../doc.omh -noframe -debug -xml -l http://www.coin-or.org/CppAD/'
-echo "$cmd > omhelp.xml.log"
-if ! eval $cmd > $top_srcdir/omhelp.xml.log
+# This command creates omhelp.xml.log in current directory (and says so)
+echo "bin/run_omhelp.sh xml"
+if ! bin/run_omhelp.sh xml
 then
-	grep '^OMhelp Error:' $top_srcdir/omhelp.xml.log
-	echo 'OMhelp could not build the CppAD xml documnentation.'
-	echo 'See the complete error message in omhelp.xml.log'
+	mv omhelp.xml.log ../..
+	echo_exec mv doc.omh.save doc.omh
 	exit 1
 fi
-if grep '^OMhelp Warning:' $top_srcdir/omhelp.xml.log
-then
-	echo 'See the complete warning message in omhelp.xml.log'
-	exit 1
-fi
-echo_exec cd ..
+# Move the log to the directory where the package.sh command was executed
+mv omhelp.xml.log ../..
+#
 echo_exec mv doc.omh.save doc.omh
 # ----------------------------------------------------------------------------
 # change back to the package parent directory and create the tarball

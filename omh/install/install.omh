@@ -25,7 +25,8 @@ $section CppAD Download, Test, and Installation Instructions$$
 $contents%
 	omh/install/download.omh%
 	omh/install/unix.omh%
-	omh/install/pkgconfig.omh
+	omh/install/pkgconfig.omh%
+	omh/install/cmake.omh
 %$$
 
 

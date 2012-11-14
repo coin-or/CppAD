@@ -66,11 +66,18 @@ This section contains a list of the changes to CppAD during 2012
 The purpose of this section is to
 assist you in learning about changes between various versions of CppAD.
 
+$head 11-14$$
+Started documenting the 
+$cref cmake$$ configuration procedure during installation.
+This included factoring out the 
+$cref download$$ procedure as a separate section
+so that the same download instruction also apply to the 
+$cref/unix/InstallUnix/$$ install procedure.
+
 $head 11-09$$
 The $cref team_pthread.cpp$$ was failing to link on Ubuntu 12.04
 because the libraries were not at the end of the link line.
 This has been  fixed.
-
 
 $head 11-06$$
 $list number$$

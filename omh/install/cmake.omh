@@ -1,0 +1,187 @@
+$Id$
+/* --------------------------------------------------------------------------
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-12 Bradley M. Bell
+
+CppAD is distributed under multiple licenses. This distribution is under
+the terms of the 
+                    Eclipse Public License Version 1.0.
+
+A copy of this license is included in the COPYING file of this distribution.
+Please visit http://www.coin-or.org/CppAD/ for information on other licenses.
+-------------------------------------------------------------------------- */
+
+$begin cmake$$
+$spell
+	makefile
+	usr
+	hpp
+	xml
+	ipopt
+	libcppad
+	CppAD
+	txt
+	Microsoft
+	Makefiles
+	cmake
+	Dcmake
+	Ccppad cppad
+	Dadolc adolc
+	Dboost boost
+	Deigen eigen
+	Dfadbad fadbad
+	Dsacado sacado
+	datadir
+	includedir
+	libdir
+	Dcppad cxx 
+	max num
+	postfix
+	id
+	addr
+$$
+
+$section Using CMake to Configure CppAD$$
+
+$head Warning$$
+These instructions are under construction
+(not yet complete).
+
+$head The CMake Program$$
+The 
+$href%http://www.cmake.org/cmake/help/install.html%cmake%$$  
+program enables one to create a single set of scripts,
+called $code CMakeLists.txt$$, 
+that can be used to test and install a program on Unix, Microsoft, or
+Apple operating systems. 
+For example, one can use it to automatically generate Microsoft project files.
+   
+$head CMake Command$$
+The command below assume that $code cmake$$ is in your execution
+path. If not, you can put the path to $code cmake$$ in font the command. 
+Only the path to the distribution directory
+($code ..$$ in the command below) is necessary; i.e., the first line.
+All of the lines are optional.
+Create a $code work$$ subdirectory of the 
+$cref/distribution directory/download/Distribution Directory/$$,
+change into the $code work$$  directory, 
+and execute the following command:
+$codei%
+	cmake ..                                                \
+	-G %generator%                                          \
+	-Dcmake_install_prefix=%cmake_install_prefix%           \
+	-Dcmake_install_includedir=%cmake_install_includedir%   \
+	-Dcmake_install_datadir=%cmake_install_datadir%         \
+	-Dcmake_install_libdir=%cmake_install_libdir%           \
+	-Dcmake_install_postfix=%cmake_install_postfix%         \
+	\
+	-Dadolc_prefix=%adolc_prefix%             \
+	-Dboost_prefix=%boost_prefix%             \
+	-Deigen_prefix=%eigen_prefix%             \
+	-Dfadbad_prefix=%fadbad_prefix%           \
+	-Dsacado_prefix=%sacado_prefix%           \
+	\
+	-Dcppad_cxx_flags=%cppad_cxx_flags%             \
+	-Dcppad_documentation=%cppad_documentation%     \
+	-Dcppad_max_num_threads=%cppad_max_num_threads% \
+	-Dcppad_sparse_list=%cppad_sparse_list%         \
+	-Dcppad_tape_id_type=%cppad_tape_id_type%       \
+	-Dcppad_tape_addr_type=%cppad_tape_addr_type%   \
+	-Dcppad_test_vector=%cppad_test_vector%
+%$$
+
+$head -G generator$$
+$index makefile, generator$$
+$index generator, makefile$$
+The CMake program is capable of generating different kinds of files.
+Below is a table with a few of the possible files
+$table
+$icode generator$$ $cnext Description $rnext
+$code "Unix Makefiles"$$   $cnext make files for unix operating system $rnext
+$code "NMake Makefiles"$$  $cnext make files for Visual Studio
+$tend
+Other generator choices are available
+(see the documentation for your version of $code cmake$$).
+
+$head cmake_install_prefix$$
+$index install, prefix$$
+$index prefix, install$$
+This is the prefix directory for the CppAD files that get installed by the 
+$codei%
+	make install
+%$$
+All of the installed files will be placed below this directory.
+The default value for this directory is $code /usr$$.
+
+$head cmake_install_includedir$$
+$index install, include directory$$
+$index include directory, install$$
+This is the directory, 
+below the $icode cmake_install_prefix$$,
+where the include files will be installed.
+The default value for this directory is $code include$$.
+For example, if 
+$icode cmake_install_prefix$$,
+$icode cmake_install_includedir$$, and
+$icode cmake_install_postfix$$, are not specified,
+the file $code cppad.hpp$$ will be installed in the location
+$codei%
+	/usr/include/cppad/cppad.hpp
+%$$
+
+$head cmake_install_datadir$$
+$index install, data directory$$
+$index data directory, install$$
+This is the directory, 
+below the $icode cmake_install_prefix$$,
+where the data files will be installed.
+The default value for this directory is $code share$$.
+For example, if 
+$icode cmake_install_prefix$$ and
+$icode cmake_install_postfix$$ are not specified, and
+$icode cppad_documentation$$ is $code YES$$, 
+the file $code doc/cppad.xml$$ will be installed in the location
+$codei%
+	/usr/share/doc/cppad-%version%/cppad.xml
+%$$
+where $icode version$$ is version number for this copy of CppAD.
+
+$head cmake_install_libdir$$
+$index install, library directory$$
+$index library directory, install$$
+This is the directory, 
+below the $icode cmake_install_prefix$$,
+where the library files will be installed.
+The default value for this directory is $code lib$$.
+For example, if 
+$icode cmake_install_prefix$$ and
+$icode cmake_install_postfix$$ are not specified, and
+$icode ipopt_prefix$$ is specified,
+the file $code libcppad_ipopt.a$$ will be installed in the location
+$codei%
+	/usr/lib/libcppad_ipopt.a
+%$$
+The $code cmake$$ command,
+will use this information when searching for other libraries.
+
+$head cmake_install_postfix$$
+$index install, postfix$$
+$index postfix, install$$
+This is the directory, 
+below the include, data, and library directories,
+where files will be installed.
+The default value for this directory is empty 
+(as the example cases above demonstrate).
+For example, 
+if $icode cmake_install_prefix$$ and
+$icode cmake_install_postfix$$ are not specified, and
+$codei%
+	-Dcppad_documentation=YES
+	-Dcmake_install_postfix=coin
+%$$
+the file $code cppad.xml$$ will be installed in the location
+$codei%
+	/usr/share/coin/doc/cppad-%version%/cppad.xml
+%$$
+
+
+$end

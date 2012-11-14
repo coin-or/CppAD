@@ -122,16 +122,16 @@ command_line_arg(cmake_install_libdir lib STRING
 	"directory, below prefix, where cmake installs library files"
 )
 #
-# cppad_prefix: 
-command_line_arg(cppad_prefix /usr PATH 
+# cmake_install_prefix: 
+command_line_arg(cmake_install_prefix /usr PATH 
 	"cppad install prefix"
 )
-SET(CMAKE_INSTALL_PREFIX "${cppad_prefix}" 
-	CACHE PATH "value copied from cppad_prefix" FORCE
+SET(CMAKE_INSTALL_PREFIX "${cmake_install_prefix}" 
+	CACHE PATH "value copied from cmake_install_prefix" FORCE
 )
 #
-# cppad_postfix:
-command_line_arg(cppad_postfix NOTFOUND STRING 
+# cmake_install_postfix:
+command_line_arg(cmake_install_postfix NOTFOUND STRING 
 	"cppad install postfix"
 )
 #
@@ -173,41 +173,41 @@ STRING(REGEX REPLACE
 MESSAGE(STATUS "cppad_cxx_flags_skip_Wshadow = ${cppad_cxx_flags_skip_Wshadow}")
 #
 # cppad_includedir, cppad_libdir, cppad_datadir, cppad_docdir
-IF ( cppad_postfix )
+IF ( cmake_install_postfix )
 	SET(cppad_includedir 
-		"${cppad_prefix}/${cmake_install_includedir}/${cppad_postfix}" 
+"${cmake_install_prefix}/${cmake_install_includedir}/${cmake_install_postfix}" 
 		CACHE INTERNAL "cppad install include file directory" FORCE
 	)
 	SET(cppad_libdir 
-		"${cppad_prefix}/${cmake_install_libdir}/${cppad_postfix}" 
+"${cmake_install_prefix}/${cmake_install_libdir}/${cmake_install_postfix}" 
 		CACHE INTERNAL "cppad install library file directory" FORCE
 	)
 	SET(cppad_datadir 
-		"${cppad_prefix}/${cmake_install_datadir}/${cppad_postfix}" 
+"${cmake_install_prefix}/${cmake_install_datadir}/${cmake_install_postfix}" 
 		CACHE INTERNAL "cppad install data file directory" FORCE
 	)
 	SET(cppad_docdir 
-		"${cppad_prefix}/${cmake_install_datadir}/doc/${cppad_postfix}" 
+"${cmake_install_prefix}/${cmake_install_datadir}/doc/${cmake_install_postfix}" 
 		CACHE INTERNAL "cppad install data file directory" FORCE
 	)
-ELSE ( cppad_postfix )
+ELSE ( cmake_install_postfix )
 	SET(cppad_includedir 
-		"${cppad_prefix}/${cmake_install_includedir}" 
+		"${cmake_install_prefix}/${cmake_install_includedir}" 
 		CACHE INTERNAL "cppad install include file directory" FORCE
 	)
 	SET(cppad_libdir 
-		"${cppad_prefix}/${cmake_install_libdir}" 
+		"${cmake_install_prefix}/${cmake_install_libdir}" 
 		CACHE INTERNAL "cppad install library file directory" FORCE
 	)
 	SET(cppad_datadir 
-		"${cppad_prefix}/${cmake_install_datadir}" 
+		"${cmake_install_prefix}/${cmake_install_datadir}" 
 		CACHE INTERNAL "cppad install data file directory" FORCE
 	)
 	SET(cppad_docdir 
-		"${cppad_prefix}/${cmake_install_datadir}/doc" 
+		"${cmake_install_prefix}/${cmake_install_datadir}/doc" 
 		CACHE INTERNAL "cppad install data file directory" FORCE
 	)
-ENDIF ( cppad_postfix )
+ENDIF ( cmake_install_postfix )
 # ----------------------------------------------------------------------------
 # Currently building tests as normal executables
 # ----------------------------------------------------------------------------
