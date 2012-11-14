@@ -269,7 +269,12 @@ then
 	fi
 	#
 	echo "bin/run_omhelp.sh xml"
-	      bin/run_omhelp.sh xml
+	if ! bin/run_omhelp.sh xml
+	then
+		echo "mv doc.omh.save doc.omh"
+	      	mv doc.omh.save doc.omh
+		exit 1
+	fi
 	#
 	echo "mv doc.omh.save doc.omh"
 	      mv doc.omh.save doc.omh
