@@ -48,6 +48,9 @@ namespace { // put this function in the empty namespace
 
 bool CompareChange(void)
 {	bool ok = true;
+// f.CompareChange not defined when NDEBUG is true
+# ifndef NDEBUG
+
 	using CppAD::AD;
 	using CppAD::ADFun;
 	using CppAD::Independent;
@@ -103,6 +106,7 @@ bool CompareChange(void)
 	ok  &= (y[0] == Minimum(x[0], x[1]));
 	ok  &= (f.CompareChange() == 0); 
 
+# endif
 	return ok;
 }
 

@@ -234,6 +234,9 @@ bool Forward(void)
 	ok &= ForwardCases< std::vector    <double> >();
 	ok &= ForwardCases< std::valarray  <double> >();
 	ok &= ForwardOlder();
+# ifndef NDEBUG
+	// CppAD does not check for nan when NDEBUG is defined
 	ok &= forward_nan();
+# endif
 	return ok;
 }

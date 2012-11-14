@@ -11,6 +11,7 @@ Please visit http://www.coin-or.org/CppAD/ for information on other licenses.
 -------------------------------------------------------------------------- */
 $begin WishList$$
 $spell
+	cmake
 	Berger
 	namespace
 	omp_alloc
@@ -52,6 +53,17 @@ a special operator for it.
 $head BenderQuad$$
 See the $cref/problem/BenderQuad/Problem/$$ with the 
 current $code BenderQuad$$ specifications.
+
+$head CMake$$
+$list number$$
+Finish documenting all the $cref cmake$$ command line arguments.
+$lnext
+Check (during $code cmake$$ command) 
+that $code cppad_test_vector_namespace$$ is a valid choice.
+$lnext
+Include the $cref compare_c$$ test. 
+$lend
+
 
 $head CondExp$$
 $index CondExp$$

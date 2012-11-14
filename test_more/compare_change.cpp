@@ -18,6 +18,7 @@ Old CompareChange example and test, now just used for validation testing
 
 bool CompareChange(void)
 {	bool ok = true;
+# ifndef NDEBUG
 
 	using namespace CppAD;
 
@@ -285,5 +286,6 @@ bool CompareChange(void)
 	// done with this function
 	delete f;
 
+# endif
 	return ok;
 }

@@ -67,12 +67,38 @@ The purpose of this section is to
 assist you in learning about changes between various versions of CppAD.
 
 $head 11-14$$
+Advanced the CppAD version to $code cppad-20121114$$.
+
+$list number$$
 Started documenting the 
 $cref cmake$$ configuration procedure during installation.
 This included factoring out the 
 $cref download$$ procedure as a separate section
 so that the same download instruction also apply to the 
 $cref/unix/InstallUnix/$$ install procedure.
+
+$lnext
+Changed 
+$cref%example/compare_change.cpp%compare_change.cpp%$$ 
+to just return true when $code NDEBUG$$ is defined.
+This enabled all the tests in the
+$code example$$ directory to be compiled
+with $code NDEBUG$$ is defined and to pass.
+
+$lnext
+In the case where $code NDEBUG$$ is defined,
+removed detection of $code nan$$ during forward mode from 
+$code test_more/forward.cpp%$$.
+This enables all the tests in the 
+$code test_more$$ directory to be compiled
+with $code NDEBUG$$ is defined and to pass.
+
+$lnext
+Started a wish list for 
+CppAD's use of $cref/cmake/WishList/CMake/$$. 
+
+$lend
+
 
 $head 11-09$$
 The $cref team_pthread.cpp$$ was failing to link on Ubuntu 12.04

@@ -87,7 +87,7 @@ ENDMACRO(add_cppad_cxx_flags)
 CMAKE_MINIMUM_REQUIRED(VERSION 2.6)
 
 # cppad_version is used by set_version.sh to get the version number.
-SET(cppad_version      "20121109" )
+SET(cppad_version      "20121114" )
 SET(cppad_url          "http://www.coin-or.org/CppAD" )
 SET(cppad_description  "Differentiation of C++ Algorithms" )
 

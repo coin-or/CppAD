@@ -85,10 +85,10 @@ You must first obtain a copy of the CppAD distribution directory
 using the $cref download$$ instructions.
 The install instructions below correspond to the
 $cref/current version/download/Compressed Tar File/Current Version/$$
-which has distribution directory $code cppad-20121109$$. 
+which has distribution directory $code cppad-20121114$$. 
 
 $head Work Directory$$
-Create the directory $code cppad-20121109/work$$,
+Create the directory $code cppad-20121114/work$$,
 which will be referred to as the work directory below.
 
 $head Configure$$
@@ -246,7 +246,7 @@ $codei%
 If $cref/--with-Documentation/InstallUnix/--with-Documentation/$$
 is specified, the CppAD documentation files will be installed in the directory
 $codei%
-	/usr/local/share/doc/cppad-20121109
+	/usr/local/share/doc/cppad-20121114
 %$$
 
 $head --with-Documentation$$
@@ -255,18 +255,18 @@ $index install, documentation$$
 If the command line argument $code --with-Documentation$$ is specified,
 the CppAD documentation HTML and XML files are copied to the directory
 $codei%
-	%prefix_dir%/share/doc/%postfix_dir%/cppad-20121109
+	%prefix_dir%/share/doc/%postfix_dir%/cppad-20121114
 %$$
 (see $cref/postfix_dir/InstallUnix/postfix_dir/$$).
 The top of the CppAD HTML documentation tree 
 (with mathematics displayed as LaTex command) will be located at
 $codei%
-	%prefix_dir%/share/doc/%postfix_dir%/cppad-20121109/cppad.htm
+	%prefix_dir%/share/doc/%postfix_dir%/cppad-20121114/cppad.htm
 %$$
 and the top of the XML documentation tree
 (with mathematics displayed as MathML) will be located at
 $codei%
-	%prefix_dir%/share/doc/%postfix_dir%/cppad-20121109/cppad.xml
+	%prefix_dir%/share/doc/%postfix_dir%/cppad-20121114/cppad.xml
 %$$
 
 $head --with-testvector$$
@@ -368,7 +368,7 @@ $codei%
 If $cref/--with-Documentation/InstallUnix/--with-Documentation/$$
 is specified, the CppAD documentation files will be installed in the directory
 $codei%
-	/usr/local/share/doc/coin/cppad-20121109
+	/usr/local/share/doc/coin/cppad-20121114
 %$$
 
 $head adolc_dir$$
