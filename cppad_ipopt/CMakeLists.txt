@@ -28,8 +28,8 @@ IF( NOT PKG_CONFIG_FOUND )
 ENDIF( NOT PKG_CONFIG_FOUND )
 
 # Set the system environment variable 
-# 	PKG_CONFIG_PATH=${ipopt_prefix}/lib/pkgconfig
-SET(ipopt_config ${ipopt_prefix}/lib/pkgconfig )
+# 	PKG_CONFIG_PATH=${ipopt_prefix}/${cmake_install_libdir}/pkgconfig
+SET(ipopt_config ${ipopt_prefix}/${cmake_install_libdir}/pkgconfig )
 SET( ENV{PKG_CONFIG_PATH} ${ipopt_config} )
 
 # pkg_check_modules(<PREFIX> [REQUIRED] <MODULE> [<MODULE>]*)

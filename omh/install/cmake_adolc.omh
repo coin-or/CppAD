@@ -12,6 +12,9 @@ Please visit http://www.coin-or.org/CppAD/ for information on other licenses.
 $begin cmake_adolc$$
 $dollar @$$
 $spell
+	mul
+	cmake
+	includedir
 	CppAD
 	adolc
 	adouble
@@ -30,8 +33,11 @@ The includes speed comparison with other AD packages; see
 $cref speed_adolc$$.
 It also includes examples that combine ADOL-C with
 CppAD; see 
-$cref mul_level_adolc.cpp$$ and
-$cref mul_level_adolc_ode.cpp$$.
+$table
+$rref base_adolc.hpp$$
+$rref mul_level_adolc.cpp$$ 
+$rref mul_level_adolc_ode.cpp$$
+$tend
 
 
 $head adolc_prefix$$
@@ -42,9 +48,10 @@ specify a value for its install $icode adolc_prefix$$ on the
 $cref cmake$$ command line.
 The value of $icode adolc_prefix$$ must be such that
 $codei%
-	%adolc_prefix%/include/adolc/adouble.h
+	%adolc_prefix%/%cmake_install_includedir%/adolc/adouble.h
 %$$
-is a valid way to reference to the include file $code adouble.h$$.
+is a valid way to reference to the include file $code adouble.h$$; 
+see $cref/cmake_install_includedir/cmake/cmake_install_includedir/$$.
 Note that CppAD assumes ADOL-C has been configured with
 its sparse matrix computations enabled; i.e, using
 $codei%
@@ -53,7 +60,7 @@ $codei%
 
 $head Examples$$
 If you include $icode adolc_prefix$$ on the $cref cmake$$ command line,
-you will be able to run the ADOL-C examples
+you will be able to run the ADOL-C examples listed above
 by executing the following commands starting in the
 $cref/distribution directory/download/Distribution Directory/$$:
 $codei%
@@ -62,7 +69,7 @@ $codei%
 %$$
 If you do this,
 you will see an indication that the examples
-$cref mul_level_adolc.cpp$$ and $cref mul_level_adolc_ode.cpp$$
+$code mul_level_adolc$$ and $code mul_level_adolc_ode$$
 have passed their correctness check.
 
 $head Speed Tests$$

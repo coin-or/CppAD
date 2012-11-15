@@ -19,8 +19,7 @@ $spell
 $$
 
 $section Source Code for eigen_plugin.hpp$$
-$codep
-*/
+$codep */
 // Declaration needed so an Eigen vector is a simple vector
 typedef Scalar value_type;
 /* $$

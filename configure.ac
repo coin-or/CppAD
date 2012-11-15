@@ -626,6 +626,7 @@ AC_SUBST(CPPAD_IPOPT_LIBS, "$IPOPT_LIBS -lipopt")
 if test "$have_pkg_config" == "yes"; then
 	dnl set CPPAD_IPOPT_LIBS
 	PKG_CONFIG_PATH="$IPOPT_DIR/lib/pkgconfig:$IPOPT_DIR/share/pkgconfig"
+	PKG_CONFIG_PATH="$PKG_CONFIG_PATH:$IPOPT_DIR/lib64/pkgconfig"
 	export PKG_CONFIG_PATH
 	if pkg-config --libs ipopt >& /dev/null ; then
 		CPPAD_IPOPT_LIBS=`pkg-config --libs ipopt`

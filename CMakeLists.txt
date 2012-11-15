@@ -45,14 +45,10 @@ MACRO(optional_package prefix_variable description)
 	MESSAGE(STATUS "${prefix_variable} = ${prefix}")
 	IF ( prefix )
 		# List of preprocessor include file search directories
-		INCLUDE_DIRECTORIES( ${prefix}/include )
-		FOREACH( dir "lib" "lib64" )
-			IF ( EXISTS "${prefix}/${dir}" )
-				# Paths in which the linker will search for libraries,
-				# only applies to targets created after it is called
-				LINK_DIRECTORIES( ${prefix}/${dir} )
-			ENDIF ( EXISTS "${prefix}/${dir}" )
-		ENDFOREACH( dir )
+		INCLUDE_DIRECTORIES( ${prefix}/${cmake_install_includedir} )
+		# Paths in which the linker will search for libraries,
+		# only applies to targets created after it is called
+		LINK_DIRECTORIES( ${prefix}/${cmake_install_libdir} )
 	ENDIF ( prefix )
 ENDMACRO(optional_package)
 #

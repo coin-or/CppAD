@@ -13,6 +13,7 @@ Please visit http://www.coin-or.org/CppAD/ for information on other licenses.
 $begin cmake$$
 $escape $$
 $spell
+	namespace
 	adouble
 	colpack
 	dir
@@ -70,7 +71,7 @@ $cref/distribution directory/download/Distribution Directory/$$,
 change into the $code work$$  directory, 
 and execute the following command:
 $codei%
-	cmake ..                                                \
+	cmake .. %%                                             \
 	-G %generator%                                          \
 	-Dcmake_install_prefix=%cmake_install_prefix%           \
 	-Dcmake_install_includedir=%cmake_install_includedir%   \
@@ -89,7 +90,7 @@ $codei%
 	-Dcppad_sparse_list=%cppad_sparse_list%         \
 	-Dcppad_tape_id_type=%cppad_tape_id_type%       \
 	-Dcppad_tape_addr_type=%cppad_tape_addr_type%   \
-	-Dcppad_test_vector=%cppad_test_vector%
+	-Dcppad_test_vector_namespace=%cppad_test_vector_namespace%
 %$$
 
 $head -G generator$$
@@ -192,7 +193,7 @@ Including $icode adolc_prefix$$ on $code cmake$$ command line
 includes these examples and tests.
 The value of $icode adolc_prefix$$ must be such that
 $codei%
-	%adolc_prefix%/include/adolc/adouble.h
+	%adolc_prefix%/%cmake_install_includedir%/adolc/adouble.h
 %$$
 is a valid way to reference to the include file $code adouble.h$$.
 CppAD assumes ADOL-C has been configured with
@@ -202,7 +203,8 @@ $codei%
 %$$
 
 $childtable%
-	omh/install/cmake_adolc.omh
+	omh/install/cmake_adolc.omh%
+	omh/install/cmake_eigen.omh
 %$$
 
 

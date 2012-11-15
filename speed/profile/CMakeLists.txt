@@ -24,7 +24,7 @@ ADD_DEFINITIONS("-DSPEED_PROFILE -pg")
 # Extra flags used by the linker when creating an executable. 
 SET(CMAKE_EXE_LINKER_FLAGS "-pg")
 
-# Local include directories to search (not in package_prefix/include)
+# Local include directories to search (not in package_prefix/includdir)
 INCLUDE_DIRECTORIES( ${CMAKE_CURRENT_SOURCE_DIR}/../src )
 
 # add_executable(<name> [WIN32] [MACOSX_BUNDLE] [EXCLUDE_FROM_ALL]

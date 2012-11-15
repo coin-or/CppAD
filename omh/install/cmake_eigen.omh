@@ -1,0 +1,74 @@
+/* $Id$ */
+/* --------------------------------------------------------------------------
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-12 Bradley M. Bell
+
+CppAD is distributed under multiple licenses. This distribution is under
+the terms of the 
+                    Eclipse Public License Version 1.0.
+
+A copy of this license is included in the COPYING file of this distribution.
+Please visit http://www.coin-or.org/CppAD/ for information on other licenses.
+-------------------------------------------------------------------------- */
+$begin cmake_eigen$$
+$dollar @$$
+$spell
+	namespace
+	Eigen
+	Cpp
+	includedir
+	cmake
+	det
+	Dcppad
+$$
+
+$section Including the Eigen Examples and Tests$$
+
+$head Purpose$$
+CppAD can include the following examples and tests that 
+use the linear algebra package $href%http://eigen.tuxfamily.org%Eigen%$$:
+$table
+$rref cppad_eigen.hpp$$
+$rref eigen_array.cpp$$
+$rref eigen_det.cpp$$
+$tend
+
+
+$head eigen_prefix$$
+$index eigen, prefix$$
+$index prefix, eigen$$
+If Eigen is installed on your system, you can 
+specify a value for its install $icode eigen_prefix$$ on the
+$cref cmake$$ command line.
+The value of $icode eigen_prefix$$ must be such that
+$codei%
+	%eigen_prefix%/%cmake_install_includedir%/Eigen/Core
+%$$
+is a valid way to reference to the include file $code Core$$;
+see $cref/cmake_install_includedir/cmake/cmake_install_includedir/$$.
+
+$head Examples$$
+If you include $icode eigen_prefix$$ on the $cref cmake$$ command line,
+you will be able to run the Eigen examples list above
+by executing the following commands starting in the
+$cref/distribution directory/download/Distribution Directory/$$:
+$codei%
+	cd work/example
+	make check
+%$$
+If you do this,
+you will see an indication that the examples
+$code eigen_array$$ and $code eigen_det$$
+have passed their correctness check.
+
+options to this program.
+
+$head Test Vector$$
+If you have specified $icode eigen_prefix$$ you can choose
+$codei%
+	-Dcppad_test_vector_namespace=eigen
+%$$
+on the $cref/cmake command/cmake/CMake Command/$$ line.
+This we set the CppAD $cref testvector$$ to use Eigen vectors. 
+
+
+$end

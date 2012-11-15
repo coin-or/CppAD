@@ -451,7 +451,7 @@ installed on your system, you can
 specify a value for $icode eigen_dir$$.
 It must be such that
 $codei%
-	%eigen_dir%/Eigen/Core
+	%eigen_dir%/include/Eigen/Core
 %$$
 is a valid include file.
 In this case CppAD will compile and test the Eigen examples; e.g.,

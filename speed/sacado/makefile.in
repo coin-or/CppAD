@@ -256,7 +256,7 @@ AM_CXXFLAGS = -O2 -DNDEBUG -DSPEED_SACADO \
 # END DEBUG
 #
 LDADD = -lspeed -lsacado -lteuchos
-AM_LDFLAGS = -L../src -L$(SACADO_DIR)/lib
+AM_LDFLAGS = -L../src -L$(SACADO_DIR)/lib -L$(SACADO_DIR)/lib64
 #
 sacado_SOURCES = \
 	../main.cpp \
