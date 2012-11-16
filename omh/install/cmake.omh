@@ -13,6 +13,9 @@ Please visit http://www.coin-or.org/CppAD/ for information on other licenses.
 $begin cmake$$
 $escape $$
 $spell
+	testvector
+	std
+	Wshadow
 	namespace
 	adouble
 	colpack
@@ -52,6 +55,7 @@ These instructions are under construction
 (not yet complete).
 
 $head The CMake Program$$
+$index cmake$$
 The 
 $href%http://www.cmake.org/cmake/help/install.html%cmake%$$  
 program enables one to create a single set of scripts,
@@ -61,6 +65,9 @@ Apple operating systems.
 For example, one can use it to automatically generate Microsoft project files.
    
 $head CMake Command$$
+$index cmake, command$$
+$index configure, cppad$$
+$index cppad, configure$$
 The command below assume that $code cmake$$ is in your execution
 path. If not, you can put the path to $code cmake$$ in font the command. 
 Only the path to the distribution directory
@@ -71,26 +78,26 @@ $cref/distribution directory/download/Distribution Directory/$$,
 change into the $code work$$  directory, 
 and execute the following command:
 $codei%
-	cmake .. %%                                             \
-	-G %generator%                                          \
-	-Dcmake_install_prefix=%cmake_install_prefix%           \
-	-Dcmake_install_includedir=%cmake_install_includedir%   \
-	-Dcmake_install_datadir=%cmake_install_datadir%         \
-	-Dcmake_install_libdir=%cmake_install_libdir%           \
-	-Dcmake_install_postfix=%cmake_install_postfix%         \
+	cmake .. %%                                                 \
+	-G %generator%                                              \
+	-Dcmake_install_prefix=%cmake_install_prefix%               \
+	-Dcmake_install_includedir=%cmake_install_includedir%       \
+	-Dcmake_install_datadir=%cmake_install_datadir%             \
+	-Dcmake_install_libdir=%cmake_install_libdir%               \
+	-Dcmake_install_postfix=%cmake_install_postfix%             \
 	\
-	-Dadolc_prefix=%adolc_prefix%             \
-	-Deigen_prefix=%eigen_prefix%             \
-	-Dfadbad_prefix=%fadbad_prefix%           \
-	-Dsacado_prefix=%sacado_prefix%           \
+	-Dadolc_prefix=%adolc_prefix%                               \
+	-Deigen_prefix=%eigen_prefix%                               \
+	-Dfadbad_prefix=%fadbad_prefix%                             \
+	-Dsacado_prefix=%sacado_prefix%                             \
 	\
-	-Dcppad_cxx_flags=%cppad_cxx_flags%             \
+	-Dcppad_cxx_flags=%cppad_cxx_flags%                         \
+	-Dcppad_test_vector_namespace=%cppad_test_vector_namespace% \
 	-Dcppad_documentation=%cppad_documentation%     \
 	-Dcppad_max_num_threads=%cppad_max_num_threads% \
 	-Dcppad_sparse_list=%cppad_sparse_list%         \
 	-Dcppad_tape_id_type=%cppad_tape_id_type%       \
 	-Dcppad_tape_addr_type=%cppad_tape_addr_type%   \
-	-Dcppad_test_vector_namespace=%cppad_test_vector_namespace%
 %$$
 
 $head -G generator$$
@@ -188,6 +195,8 @@ $codei%
 %$$
 
 $head package_prefix$$
+$index package, prefix$$
+$index prefix, package$$
 $table
 $rref adolc_prefix$$
 $rref eigen_prefix$$
@@ -195,11 +204,36 @@ $rref fadbad_prefix$$
 $rref sacado_prefix$$
 $tend
 
+$head cppad_cxx_flags$$
+$index c++, compile flags$$
+$index compile, c++ flags$$
+$index flags, c++ compile$$
+This specifies the addition compiler flags,
+besides the debug and release flags,
+that are used when compiling the CppAD examples and tests.
+The default value for these flags is the empty string $code ""$$.
+These flags must be valid for the C++ compiler
+on your system.
+For example, if you are using $code g++$$ you could specify
+$codep
+	-Dcppad_cxx_flags="-Wall -ansi -pedantic-errors -std=c++98 -Wshadow"
+$$
+The packages
+$cref/eigen/eigen_prefix/$$ and $cref/fadbad/fadbad_prefix/$$
+currently generate a lot of shadowed variable warnings.
+Hence the $code -Wshadow$$ flag is automatically removed when
+compiling examples and test that use these packages.
+
+$head cppad_testvector_namespace$$
+See $tref cppad_testvector_namespace$$.
+
+
 $children%
 	omh/install/adolc_prefix.omh%
 	omh/install/eigen_prefix.omh%
 	omh/install/fadbad_prefix.omh%
-	omh/install/sacado_prefix.omh
+	omh/install/sacado_prefix.omh%
+	omh/install/testvector.omh
 %$$
 
 

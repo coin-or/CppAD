@@ -36,7 +36,7 @@ $index CPPAD_TESTVECTOR$$
 $index vector, test$$
 $index test, vector$$
 
-$section Choosing The Vector Testing Template Class$$
+$section Using The CppAD Test Vector Template Class$$
 
 $head Syntax$$
 $codei%CPPAD_TESTVECTOR(%Scalar%)

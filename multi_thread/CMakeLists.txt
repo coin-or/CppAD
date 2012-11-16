@@ -49,23 +49,12 @@ IF ( pthread_lib_path )
 ENDIF ( pthread_lib_path )
 
 # If boost threads found, set 
-# Boost_INCLUDE_DIRS, bthread_lib, bthread_lib_path and process its subdir
+# bthread_lib, bthread_lib_path and process its subdir
 # 
-FIND_PACKAGE(Boost)
+# FIND_PACKAGE(Boost) was done by ../CMakeLists.txt
 IF ( Boost_FOUND )
-	# Boost_INCLUDE_DIRS:         boost include directories
-	MESSAGE(STATUS "Boost_INCLUDE_DIRS = ${Boost_INCLUDE_DIRS}")
-
-	# boost_prefix:
-	# Extract the Boost prefix (only works on unix systems)
-	# string(REGEX REPLACE 
-	#	<regular_expression> <replace_expression> 
-	#	<output variable> <input> [<input>...])
-	STRING(REGEX REPLACE 
-		"(.*)/[^/]*" "\\1" 
-		boost_prefix "${Boost_INCLUDE_DIRS}" 
-	) 
-	SET(CMAKE_REQUIRED_INCLUDES  "${Boost_INCLUDE_DIRS}")
+	#
+	SET(CMAKE_REQUIRED_INCLUDES  "${boost_prefix}/${cmake_install_includdir}")
 	#
 	SET(bthread_lib               "boost_thread" )
 	SET(CMAKE_REQUIRED_LIBRARIES "${bthread_lib}" )

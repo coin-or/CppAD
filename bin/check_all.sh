@@ -95,7 +95,7 @@ do
 	fi
 done
 cmake_args="$cmake_args -Dcppad_sparse_list=YES"
-cmake_args="$cmake_args -Dcppad_test_vector_namespace=boost"
+cmake_args="$cmake_args -Dcppad_testvector_namespace=boost"
 cmake_args="$cmake_args -Dcppad_tape_id_type='unsigned int'"
 cmake_args="$cmake_args -Dcppad_tape_addr_type=int"
 cmake_args="$cmake_args -Dcppad_max_num_threads=48"

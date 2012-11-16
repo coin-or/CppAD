@@ -1,0 +1,58 @@
+/* $Id$ */
+/* --------------------------------------------------------------------------
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-12 Bradley M. Bell
+
+CppAD is distributed under multiple licenses. This distribution is under
+the terms of the 
+                    Eclipse Public License Version 1.0.
+
+A copy of this license is included in the COPYING file of this distribution.
+Please visit http://www.coin-or.org/CppAD/ for information on other licenses.
+-------------------------------------------------------------------------- */
+$begin cppad_testvector_namespace$$
+$spell
+	CppAD
+	cppad
+	eigen
+	std
+	testvector
+	namespace
+	cmake
+$$
+
+$section Choosing the CppAD Test Vector Template Class$$
+
+$head Purpose$$
+The $cref/CPPAD_TESTVECTOR/testvector/$$ 
+template class is used for many of the CppAD examples and tests.
+If you are going to use 
+$code boost$$, $code cppad$$, $code eigen$$, or $code std$$ vectors
+in your CppAD code, you many want to test CppAD with the
+type of vectors you will be using.
+
+$head cppad_testvector_namespace$$
+The must be one of the following choices:
+$code boost$$, $code cppad$$, $code eigen$$ or $code std$$.
+It specifies which type of vectors are used for the
+$code CPPAD_TESTVECTOR$$ template class.
+
+$head boost$$
+If $icode cppad_testvector_namespace$$ is set to $code boost$$, the 
+$href%
+	http://www.boost.org/doc/libs/1_52_0/libs/numeric/ublas/doc/vector.htm%
+	boost ublas vector
+%$$
+include files must be installed on your system.
+In addition, 
+$href%
+	http://www.cmake.org/cmake/help/cmake2.6docs.html#module:FindBoost%
+	cmake FindBoost
+%$$
+module must be able to automatically figure out where Boost is installed.
+
+$head eigen$$
+If $icode cppad_testvector_namespace$$ is set to $code eigen$$, 
+$cref eigen_prefix$$ must be specified on the $code cmake$$ command line. 
+
+
+$end

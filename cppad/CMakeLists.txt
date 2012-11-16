@@ -32,8 +32,8 @@ command_line_arg(cppad_sparse_list YES BOOL
 	"use sparse list for internal sparse set representation"
 )
 #
-# cppad_test_vector_namespace 
-command_line_arg(cppad_test_vector_namespace cppad STRING
+# cppad_testvector_namespace 
+command_line_arg(cppad_testvector_namespace cppad STRING
 "Namespace of vector used for testing, one of: boost, cppad, eigen, std"
 )
 #
@@ -64,21 +64,39 @@ MESSAGE(STATUS "CPPAD_INTERNAL_SPARSE_SET = ${CPPAD_INTERNAL_SPARSE_SET}" )
 # -----------------------------------------------------------------------------
 # CPPAD_BOOSTVECTOR, CPPAD_CPPADVECTOR, CPPAD_EIGENVECTOR, CPPAD_STDVECTOR
 #
-check_match(cppad_test_vector_namespace boost CPPAD_BOOSTVECTOR)
-check_match(cppad_test_vector_namespace cppad CPPAD_CPPADVECTOR)
-check_match(cppad_test_vector_namespace eigen CPPAD_EIGENVECTOR)
-check_match(cppad_test_vector_namespace std   CPPAD_STDVECTOR)
+check_match(cppad_testvector_namespace boost CPPAD_BOOSTVECTOR)
+check_match(cppad_testvector_namespace cppad CPPAD_CPPADVECTOR)
+check_match(cppad_testvector_namespace eigen CPPAD_EIGENVECTOR)
+check_match(cppad_testvector_namespace std   CPPAD_STDVECTOR)
 IF( NOT CPPAD_BOOSTVECTOR )
 IF( NOT CPPAD_CPPADVECTOR )
 IF( NOT CPPAD_EIGNEVECTOR )
 IF( NOT CPPAD_STDVECTOR )
 MESSAGE(FATAL_ERROR 
-"cppad_test_vector_namespace not one of following: boost, cppad, eigen, std." 
+"cppad_testvector_namespace not one of following: boost, cppad, eigen, std." 
 )
 ENDIF( NOT CPPAD_STDVECTOR )
 ENDIF( NOT CPPAD_EIGNEVECTOR )
 ENDIF( NOT CPPAD_CPPADVECTOR )
 ENDIF( NOT CPPAD_BOOSTVECTOR )
+
+IF( CPPAD_BOOSTVECTOR )
+	# FIND_PACKAGE(Boost) done by ../CMakeLists.txt
+	IF( NOT Boost_FOUND )
+		MESSAGE(FATAL_ERROR 
+"cppad_testvector_namespace == boost but cannot find boost include files"
+		)
+	ENDIF( NOT Boost_FOUND )
+ENDIF( CPPAD_BOOSTVECTOR )
+#
+IF( CPPAD_EIGENVECTOR )
+	IF( NOT eigen_prefix )
+		MESSAGE(FATAL_ERROR 
+"cppad_testvector_namespace == eigen but eigen_prefix is not specified"
+		)
+	ENDIF( NOT eigen_prefix )
+ENDIF( CPPAD_EIGENVECTOR )
+
 # -----------------------------------------------------------------------------
 # CPPAD_GETTIMEOFDAY
 #

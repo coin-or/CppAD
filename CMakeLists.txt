@@ -20,6 +20,11 @@ INCLUDE(CheckCXXSourceRuns)
 # -----------------------------------------------------------------------------
 # Some macros
 # ----------------------------------------------------------------------------
+# Set the unix_variable to the dos_path but with \ replaced by /
+MACRO(dos_path_to_unix dos_constant unix_variable )
+	STRING(REGEX REPLACE "[\\]" "/" ${unix_variable} "${dos_constant}" )
+ENDMACRO(dos_path_to_unix dos_path unix_path)
+#
 # Set the the list to include the value at the end. An empty original list
 # is denoted by the string value "" (the value may not be empty).
 MACRO(add_to_list variable_list constant_value )
@@ -160,6 +165,43 @@ optional_package(sacado_prefix "sacado install prefix")
 # ----------------------------------------------------------------------------
 # automated system configuration
 # ----------------------------------------------------------------------------
+#
+# boost_prefix:
+FIND_PACKAGE(Boost)
+IF ( Boost_FOUND )
+	# Extract the Boost prefix from Boost_INCLUDE_DIRS
+	#
+	# convert to using unix directory separator
+	dos_path_to_unix("${Boost_INCLUDE_DIRS}" boost_include_dirs)
+	#
+	# convert to just one directory
+	STRING(REGEX REPLACE
+		"([^ ]+).*" "\\1"
+		boost_include_dir "${boost_include_dirs}"
+	)
+	#
+	# extract part before last backslash
+	STRING(REGEX REPLACE 
+		"([^ ]*)/[^/ ]*" "\\1" 
+		boost_prefix "${boost_include_dir}" 
+	) 
+	MESSAGE(STATUS "boost_prefix = ${boost_prefix}")
+	#
+	# check that Boost_INCLUDE_DIRS matches cmake_install_includedir 
+	SET(boost_include_dir_check "${boost_prefix}/${cmake_install_includedir}")
+	STRING(COMPARE EQUAL 
+		"${boost_include_dir_check}" "${boost_include_dir}"
+		cmake_install_includedir_ok
+	)
+	IF( NOT cmake_install_includedir_ok )
+		MESSAGE(FATAL_ERROR 
+"boost_prefix/cmake_install_includedir = ${boost_include_dir_check}
+does not match Boost_INCLUDE_DIRS = ${Boost_INCLUDE_DIRS}"
+		)
+	ENDIF( NOT cmake_install_includedir_ok )
+	#
+	INCLUDE_DIRECTORIES( ${boost_prefix}/${cmake_install_includedir} )
+ENDIF ( Boost_FOUND )
 #
 # cppad_cxx_flags_skip_Wshadow
 STRING(REGEX REPLACE 
