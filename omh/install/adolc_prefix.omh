@@ -9,7 +9,7 @@ the terms of the
 A copy of this license is included in the COPYING file of this distribution.
 Please visit http://www.coin-or.org/CppAD/ for information on other licenses.
 -------------------------------------------------------------------------- */
-$begin cmake_adolc$$
+$begin adolc_prefix$$
 $dollar @$$
 $spell
 	mul
@@ -59,6 +59,8 @@ $codei%
 %$$
 
 $head Examples$$
+$index adolc, examples$$
+$index examples, adolc$$
 If you include $icode adolc_prefix$$ on the $cref cmake$$ command line,
 you will be able to run the ADOL-C examples listed above
 by executing the following commands starting in the
@@ -73,6 +75,8 @@ $code mul_level_adolc$$ and $code mul_level_adolc_ode$$
 have passed their correctness check.
 
 $head Speed Tests$$
+$index adolc, speed$$
+$index speed, adolc$$
 If you include $icode adolc_prefix$$ on the $cref cmake$$ command line,
 you will be able to run the ADOL-C speed correctness tests 
 by executing the following commands starting in the
@@ -81,12 +85,14 @@ $codei%
 	cd work/speed/adolc
 	make check
 %$$
-After executing $code make check$$, you can run an Adolc speed tests 
+After executing $code make check$$, you can run a specific ADOL-C speed tests 
 by executing the command $code ./adolc$$;
 see $cref speed_main$$ for the meaning of the command line
 options to this program.
 
 $head Unix$$
+$index adolc, unix$$
+$index unix, adolc$$
 If you are using Unix, 
 you may have to add 
 $icode adolc_prefix$$ to $code LD_LIBRARY_PATH$$.
@@ -99,6 +105,8 @@ $codei%
 in your $code @HOME/.bashrc$$ file.
 
 $head Cygwin$$
+$index adolc, cygwin$$
+$index cygwin, adolc$$
 If you are using Cygwin, 
 you may have to add to following lines to the file
 $code .bashrc$$ in your home directory:

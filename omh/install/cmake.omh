@@ -187,24 +187,19 @@ $codei%
 	/usr/share/coin/doc/cppad-%version%/cppad.xml
 %$$
 
-$head adolc_prefix$$
-CppAD includes examples and tests that can use the AD package ADOL-C. 
-Including $icode adolc_prefix$$ on $code cmake$$ command line 
-includes these examples and tests.
-The value of $icode adolc_prefix$$ must be such that
-$codei%
-	%adolc_prefix%/%cmake_install_includedir%/adolc/adouble.h
-%$$
-is a valid way to reference to the include file $code adouble.h$$.
-CppAD assumes ADOL-C has been configured with
-its sparse matrix computations enabled; i.e, using
-$codei%
-	--with-colpack=%colpack_prefix%
-%$$
+$head package_prefix$$
+$table
+$rref adolc_prefix$$
+$rref eigen_prefix$$
+$rref fadbad_prefix$$
+$rref sacado_prefix$$
+$tend
 
-$childtable%
-	omh/install/cmake_adolc.omh%
-	omh/install/cmake_eigen.omh
+$children%
+	omh/install/adolc_prefix.omh%
+	omh/install/eigen_prefix.omh%
+	omh/install/fadbad_prefix.omh%
+	omh/install/sacado_prefix.omh
 %$$
 
 

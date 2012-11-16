@@ -1,0 +1,59 @@
+/* $Id$ */
+/* --------------------------------------------------------------------------
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-12 Bradley M. Bell
+
+CppAD is distributed under multiple licenses. This distribution is under
+the terms of the 
+                    Eclipse Public License Version 1.0.
+
+A copy of this license is included in the COPYING file of this distribution.
+Please visit http://www.coin-or.org/CppAD/ for information on other licenses.
+-------------------------------------------------------------------------- */
+$begin fadbad_prefix$$
+$dollar @$$
+$spell
+	CppAD
+	fadbad
+	cmake
+	badiff
+	includedir
+$$
+
+$section Including the FADBAD Speed Tests$$
+
+$head Purpose$$
+CppAD includes speed comparisons for the AD package
+$href%http://www.fadbad.com%FADBAD%$$; see
+$cref speed_fadbad$$.
+
+
+$head fadbad_prefix$$
+$index fadbad, prefix$$
+$index prefix, fadbad$$
+If FADBAD is installed on your system, you can 
+specify a value for its install $icode fadbad_prefix$$ on the
+$cref cmake$$ command line.
+The value of $icode fadbad_prefix$$ must be such that
+$codei%
+	%fadbad_prefix%/%cmake_install_includedir%/FADBAD++/badiff.h
+%$$
+is a valid way to reference to the include file $code badiff.h$$; 
+see $cref/cmake_install_includedir/cmake/cmake_install_includedir/$$.
+
+$head Speed Tests$$
+$index speed, fadbad$$
+$index fadbad, speed$$
+If you include $icode fadbad_prefix$$ on the $cref cmake$$ command line,
+you will be able to run the FADBAD speed correctness tests 
+by executing the following commands starting in the
+$cref/distribution directory/download/Distribution Directory/$$:
+$codei%
+	cd work/speed/fadbad
+	make check
+%$$
+After executing $code make check$$, you can run a specific FADBAD speed test 
+by executing the command $code ./fadbad$$;
+see $cref speed_main$$ for the meaning of the command line
+options to this program.
+
+$end
