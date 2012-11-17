@@ -24,16 +24,16 @@ The purpose of these sections is to
 assist you in learning about changes between various versions of CppAD.
 
 $children%
-	omh/whats_new_12.omh%
-	omh/whats_new_11.omh%
-	omh/whats_new_10.omh%
-	omh/whats_new_09.omh%
-	omh/whats_new_08.omh%
-	omh/whats_new_07.omh%
-	omh/whats_new_06.omh%
-	omh/whats_new_05.omh%
-	omh/whats_new_04.omh%
-	omh/whats_new_03.omh
+	omh/whats_new/whats_new_12.omh%
+	omh/whats_new/whats_new_11.omh%
+	omh/whats_new/whats_new_10.omh%
+	omh/whats_new/whats_new_09.omh%
+	omh/whats_new/whats_new_08.omh%
+	omh/whats_new/whats_new_07.omh%
+	omh/whats_new/whats_new_06.omh%
+	omh/whats_new/whats_new_05.omh%
+	omh/whats_new/whats_new_04.omh%
+	omh/whats_new/whats_new_03.omh
 %$$
 
 $head This Year$$

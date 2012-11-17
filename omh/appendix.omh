@@ -23,7 +23,7 @@ $childtable%
 	omh/bib.omh%
 	omh/bugs.omh%
 	omh/wish_list.omh%
-	omh/whats_new.omh%
+	omh/whats_new/whats_new.omh%
 	omh/deprecated.omh%
 	compare_c/makefile.am%
 	omh/license.omh

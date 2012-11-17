@@ -80,8 +80,9 @@ file_list=`find . \
 	\( -name '*.txt' \) | sed \
 		-e '/\.\/work\//d' \
 		-e '/\.\/build\//d' \
-		-e '/\.\/gpl_license.sh\//d' \
-		-e '/\.\/gpl-3.0.txt\//d' \
+		-e '/\/gpl_license.sh$/d' \
+		-e '/\/gpl-3.0.txt$/d' \
+		-e '/\/junk.sh$/d' \
 		-e 's|^\./||'`
 other_files="
 	AUTHORS 

@@ -70,12 +70,12 @@ to run these speed tests.
 
 $contents%
 	speed/main.cpp%
-	omh/speed_utility.omh%
-	omh/speed_double.omh%
-	omh/speed_adolc.omh%
-	omh/speed_cppad.omh%
-	omh/speed_fadbad.omh%
-	omh/speed_sacado.omh
+	omh/speed/speed_utility.omh%
+	omh/speed/speed_double.omh%
+	omh/speed/speed_adolc.omh%
+	omh/speed/speed_cppad.omh%
+	omh/speed/speed_fadbad.omh%
+	omh/speed/speed_sacado.omh
 %$$
 
 $end

@@ -30,9 +30,13 @@ $childtable%
 
 $table
 $cref/CppADCreateUnaryBool/BoolFun/Deprecated/$$  $cnext 
-	$title BoolFun$$ $rnext
+	$title BoolFun$$ 
+$rnext
 $cref/CppADCreateDiscrete/Discrete/Deprecated/$$  $cnext 
-	$title Discrete$$ 
+	$title Discrete$$
+$rnext
+$cref InstallUnix$$                               $cnext
+	$title InstallUnix$$
 $tend
 
 

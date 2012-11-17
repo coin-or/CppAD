@@ -221,7 +221,7 @@ $childtable%
 	omh/library.omh%
 	cppad_ipopt/src/cppad_ipopt_nlp.hpp%
 	omh/example.omh%
-	omh/speed.omh%
+	omh/speed/speed.omh%
 	omh/appendix.omh
 %$$
 

@@ -80,6 +80,10 @@ $index install, unix CppAD$$
 
 $section Unix Test and Installation$$
 
+$head Deprecated$$
+These install instructions have been deprecated.
+You should use the $cref cmake$$ instructions to install CppAD.
+
 $head Distribution Directory$$
 You must first obtain a copy of the CppAD distribution directory
 using the $cref download$$ instructions.
