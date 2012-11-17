@@ -20,6 +20,8 @@ $spell
 $$
 
 $section Including the Sacado Speed Tests$$
+$index sacado, speed$$
+$index speed, sacado$$
 
 $head Purpose$$
 CppAD includes speed comparisons for the AD package

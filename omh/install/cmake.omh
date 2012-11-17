@@ -13,6 +13,9 @@ Please visit http://www.coin-or.org/CppAD/ for information on other licenses.
 $begin cmake$$
 $escape $$
 $spell
+	op
+	arg
+	sizeof
 	testvector
 	std
 	Wshadow
@@ -49,10 +52,10 @@ $spell
 $$
 
 $section Using CMake to Configure CppAD$$
+$index cmake, configure cppad$$
+$index configure, cppad$$
+$index cppad, cmake configure$$
 
-$head Warning$$
-These instructions are under construction
-(not yet complete).
 
 $head The CMake Program$$
 $index cmake$$
@@ -94,11 +97,11 @@ cmake %%                                                          \
 	\
 	-D cppad_cxx_flags=%cppad_cxx_flags%                         \
 	-D cppad_test_vector_namespace=%cppad_test_vector_namespace% \
-	-D cppad_documentation=%cppad_documentation%     \
-	-D cppad_max_num_threads=%cppad_max_num_threads% \
-	-D cppad_sparse_list=%cppad_sparse_list%         \
-	-D cppad_tape_id_type=%cppad_tape_id_type%       \
-	-D cppad_tape_addr_type=%cppad_tape_addr_type%   \
+	-D cppad_documentation=%cppad_documentation%                 \
+	-D cppad_max_num_threads=%cppad_max_num_threads%             \
+	-D cppad_sparse_list=%cppad_sparse_list%                     \
+	-D cppad_tape_id_type=%cppad_tape_id_type%                   \
+	-D cppad_tape_addr_type=%cppad_tape_addr_type%               \
 	\
 	..
 %$$
@@ -229,6 +232,99 @@ compiling examples and test that use these packages.
 
 $head cppad_testvector$$
 See $tref cppad_testvector$$.
+
+$head cppad_documentation$$
+$index install, cppad documentation$$
+$index cppad, install documentation$$
+$index documentation, install$$
+The default value for $icode cppad_documentation$$ is $code NO$$.
+If $icode cppad_documentation$$ is $code YES$$,
+and $cref/cmake_install_postfix/cmake/cmake_install_postfix/$$ is empty,
+the CppAD XML documentation files will be installed in the directory
+$codei%
+	%prefix%/%datadir%/doc/cppad-%version%
+%$$
+where $icode prefix$$ is
+$cref/cmake_install_prefix/cmake/cmake_install_prefix/$$,
+$icode datadir$$ is
+$cref/cmake_install_datadir/cmake/cmake_install_datadir/$$,
+and $icode version$$ is the version number for this copy of CppAD. 
+If $icode cmake_install_postfix$$ is non-empty,
+the CppAD XML documentation files will be installed in the directory
+$codei%
+	%prefix%/%datadir%/doc/%postfix%/cppad-%version%
+%$$
+where $icode postfix$$ is $icode cmake_install_postfix$$.
+
+$head cppad_max_num_threads$$
+$index maximum, number threads$$
+$index threads, maximum number$$
+The value $icode cppad_max_num_threads$$
+must be greater than or equal to four; i.e.,
+$icode%max_num_threads% >= 4%$$.
+The current default value for $icode cppad_max_num_threads$$ is 48,
+but it may change in future versions of CppAD.
+The value $icode cppad_max_num_threads$$ in turn specifies
+the default value for the preprocessor symbol
+$cref/CPPAD_MAX_NUM_THREADS/multi_thread/CPPAD_MAX_NUM_THREADS/$$.
+
+$head cppad_sparse_list$$
+$index sparsity, internal structure$$
+$index sparsity, vector of sets$$
+There are two possible values for this option, $code YES$$ and $code NO$$.
+This affect the internal data structure used to store a 
+$cref/sparsity pattern/glossary/Sparsity Pattern/$$ when the
+users version of the sparsity pattern is a vector of $code std::set<size_t>$$.
+If $icode cppad_sparse_list$$ is $code NO$$
+the vectors of standard sets are also used internally.
+If $icode cppad_sparse_list$$ is $code YES$$,
+a special sparse list structure is used instead.
+This should affect the speed and memory required by the
+$cref sparse_jacobian$$, $cref sparse_hessian$$, and
+$cref/sparse drivers/sparse/$$
+The default value for $icode cppad_sparse_list$$ is $code YES$$
+
+$head cppad_tape_id_type$$
+$index memory, usage$$
+$index memory, tape$$
+$index tape, memory$$
+The type $icode cppad_tape_id_type$$ 
+is used for identifying different tapes.
+The valid values for this type are
+$code unsigned short int$$,
+$code unsigned int$$, and
+$code size_t$$.
+The smaller the value of $icode%sizeof(%cppad_tape_id_type%)%$$,
+the less memory is used.
+On the other hand, the value
+$codei%
+	std::numeric_limits<%cppad_tape_id_type%>::max()
+%$$
+must be larger than the maximum number of tapes used by one thread times
+$cref/CPPAD_MAX_NUM_THREADS/multi_thread/CPPAD_MAX_NUM_THREADS/$$.
+
+$head cppad_tape_addr_type$$
+$index memory, usage$$
+$index memory, tape$$
+$index tape, memory$$
+The type $icode cppad_tape_addr_type$$ 
+is used for address in the AD recordings (tapes).
+The valid values for this argument are
+$code unsigned short int$$,
+$code unsigned int$$,
+$code size_t$$.
+The smaller the value of $icode%sizeof(%cppad_tape_addr_type%)%$$,
+the less memory is used.
+On the other hand, the value
+$codei%
+	std::numeric_limits<%cppad_tape_addr_type%>::max()
+%$$
+must be larger than any of the following:
+$cref/size_op/seq_property/size_op/$$,
+$cref/size_op_arg/seq_property/size_op_arg/$$,
+$cref/size_par/seq_property/size_text/$$,
+$cref/size_par/seq_property/size_par/$$,
+$cref/size_par/seq_property/size_VecAD/$$.
 
 
 $children%

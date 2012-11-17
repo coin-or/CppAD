@@ -20,6 +20,8 @@ $spell
 $$
 
 $section Including the FADBAD Speed Tests$$
+$index fadbad, speed$$
+$index speed, fadbad$$
 
 $head Purpose$$
 CppAD includes speed comparisons for the AD package

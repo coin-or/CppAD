@@ -16,6 +16,10 @@
 # empty, Debug, Release, RelWithDebInfo and MinSizeRel
 SET(CMAKE_BUILD_TYPE DEBUG)
 
+# This directory does not contain any multi-threading tests, so
+# test using CPPAD_MAX_NUM_THREADS equal to one (its smallest value)
+ADD_DEFINITIONS("-DCPPAD_MAX_NUM_THREADS=1")
+
 # sources that use adolc
 IF ( adolc_prefix )
 	# Extra source files if we are including adolc

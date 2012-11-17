@@ -46,6 +46,7 @@ cmd="g++ test_one.cpp $*
 	-std=c++98
 	-DCPPAD_ADOLC_TEST
 	-DCPPAD_OPENMP_TEST
+	-DCPPAD_MAX_NUM_THREADS=1
 	@OPENMP_FLAGS@
 	-I.. 
 "

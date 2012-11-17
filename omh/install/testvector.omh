@@ -21,6 +21,9 @@ $spell
 $$
 
 $section Choosing the CppAD Test Vector Template Class$$
+$index cppad, test vector$$
+$index test, cppad vector$$
+$index vector, cppad test$$
 
 $head Purpose$$
 The $cref/CPPAD_TESTVECTOR/testvector/$$ 
@@ -31,6 +34,7 @@ in your CppAD code, you many want to test CppAD with the
 type of vectors you will be using.
 
 $head cppad_testvector$$
+$index cppad_testvector$$
 The must be one of the following choices:
 $code boost$$, $code cppad$$, $code eigen$$ or $code std$$.
 It specifies which type of vectors are used for the
@@ -38,6 +42,8 @@ $code CPPAD_TESTVECTOR$$ template class.
 The default value for $code cppad_testvector$$ is $code cppad$$.
 
 $head boost$$
+$index boost, vector$$
+$index vector, boost$$
 If $icode cppad_testvector$$ is set to $code boost$$, the 
 $href%
 	http://www.boost.org/doc/libs/1_52_0/libs/numeric/ublas/doc/vector.htm%
@@ -52,6 +58,8 @@ $href%
 module must be able to automatically figure out where Boost is installed.
 
 $head eigen$$
+$index eigen, vector$$
+$index vector, eigen$$
 If $icode cppad_testvector$$ is set to $code eigen$$, 
 $cref eigen_prefix$$ must be specified on the $code cmake$$ command line. 
 

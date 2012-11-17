@@ -22,6 +22,9 @@ $spell
 $$
 
 $section Including the Eigen Examples and Tests$$
+$index eigen, example$$
+$index example, eigen$$
+$index test, eigen$$
 
 $head Purpose$$
 CppAD can include the following examples and tests that 

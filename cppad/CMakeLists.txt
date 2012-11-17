@@ -177,21 +177,26 @@ ENDFOREACH( cmake_var )
 SET(source "
 int main(void)
 {	const char* number = \"${cppad_max_num_threads}\";
+	int value = 0;
 	while( '0' <= *number && *number <= '9' && *number != char(0) )
+	{	value = 10 * value + (int)(*number - '0');
 		number++;
-	if( *number == char(0) )
-		return 0;
-	return 1;
+	}
+	if( *number != char(0) )
+		return 1;
+	if( value < 4 )
+		return 1;
+	return 0;
 }
 " )
-CHECK_CXX_SOURCE_RUNS("${source}" cppad_max_num_threads_is_integer)
-IF( NOT cppad_max_num_threads_is_integer )
+CHECK_CXX_SOURCE_RUNS("${source}" cppad_max_num_threads_is_integer_ge_4)
+IF( NOT cppad_max_num_threads_is_integer_ge_4 )
 	MESSAGE(FATAL_ERROR 
-	"cppad_max_num_threads contains a character that is not a decimal digit"
+	"cppad_max_num_threads is not an integer greater than or equal 4"
 	)
-ENDIF( NOT cppad_max_num_threads_is_integer )
-SET(CPPAD_MAX_NUM_THREADS "${cppad_max_num_threads}")
-MESSAGE(STATUS "CPPAD_MAX_NUM_THREADS = ${CPPAD_MAX_NUM_THREADS}")
+ENDIF( NOT cppad_max_num_threads_is_integer_ge_4 )
+SET(CPPAD_MAX_NUM_THREADS_DEFAULT "${cppad_max_num_threads}")
+MESSAGE(STATUS "cppad_max_num_threads = ${cppad_max_num_threads}")
 # -----------------------------------------------------------------------------
 # Copy a file to another location and modify its contents.
 # configure_file(InputFile OutputFile [COPYONLY] [ESCAPE_QUOTES] [@ONLY])

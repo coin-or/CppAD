@@ -25,6 +25,9 @@ $spell
 $$
 
 $section Including the ADOL-C Examples and Tests$$
+$index adolc, example$$
+$index example, adolc$$
+$index test, adolc$$
 
 $head Purpose$$
 CppAD includes examples and tests that can use the AD package

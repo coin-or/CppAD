@@ -66,6 +66,12 @@ This section contains a list of the changes to CppAD during 2012
 The purpose of this section is to
 assist you in learning about changes between various versions of CppAD.
 
+$head 11-17$$
+Change the specifications for
+$cref/CPPAD_MAX_NUM_THREADS/multi_thread/CPPAD_MAX_NUM_THREADS/$$
+to allow for a value of one.
+This enables one to have more tapes during a program execution.
+
 $head 11-16$$
 Fix a warning that occurred in $cref Rosen34$$
 when it was compiled with the preprocessor symbol $code NDEBUG$$ defined.

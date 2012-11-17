@@ -11,6 +11,7 @@ Please visit http://www.coin-or.org/CppAD/ for information on other licenses.
 -------------------------------------------------------------------------- */
 $begin multi_thread$$
 $spell
+	cppad_max_num_threads
 	alloc
 	CppAD
 	Rosen
@@ -32,16 +33,17 @@ $head CPPAD_MAX_NUM_THREADS$$
 $index maximum, number of threads$$
 $index threads, maximum number of$$
 $index CPPAD_MAX_NUM_THREADS$$
-If the preprocessor symbol $code CPPAD_MAX_NUM_THREADS$$ is defined
-before including any CppAD header files,
-it must be an integer greater than or equal to 4 and it
-specifies an absolute maximum for 
+The value $code CPPAD_MAX_NUM_THREADS$$ is an absolute maximum for 
 the number of threads that CppAD should support.
-Otherwise, CppAD may, or may not, define this preprocessor symbol
-and impose an unspecified absolute maximum of its own.
-Currently, CppAD sets this maximum to 48 and this maximum is only expected
-to increase if it does change.
-In the future, the need for this maximum may be eliminated.
+If this preprocessor symbol is defined
+before including any CppAD header files,
+it must be an integer greater than or equal to one.
+Otherwise, $cref/cppad_max_num_threads/cmake/cppad_max_num_threads/$$
+is used to define this preprocessor symbol.
+Note that the minimum allowable value for
+$icode cppad_max_num_threads$$ is 4; i.e., you can only
+get smaller values for $code CPPAD_MAX_NUM_THREADS$$ by
+defining it before including the CppAD header files.
 
 $head parallel_setup$$
 Using any of the following routines in a multi-threading environment

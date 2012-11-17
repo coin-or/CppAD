@@ -350,7 +350,7 @@ else
 	max_num_threads="48"
 	AC_MSG_RESULT([no, using default value $max_num_threads])
 fi 
-AC_SUBST(CPPAD_MAX_NUM_THREADS, [$max_num_threads])
+AC_SUBST(CPPAD_MAX_NUM_THREADS_DEFAULT, [$max_num_threads])
 
 dnl type used for addresses in AD tapes [ default = unsigned int ] -----------
 AC_MSG_CHECKING([TAPE_ADDR_TYPE])

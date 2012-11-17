@@ -687,7 +687,7 @@ CPPAD_TAPE_ID_TYPE
 TAPE_ID_TYPE
 CPPAD_TAPE_ADDR_TYPE
 TAPE_ADDR_TYPE
-CPPAD_MAX_NUM_THREADS
+CPPAD_MAX_NUM_THREADS_DEFAULT
 MAX_NUM_THREADS
 CppAD_OPENMP_FALSE
 CppAD_OPENMP_TRUE
@@ -3090,7 +3090,7 @@ else
 	{ $as_echo "$as_me:${as_lineno-$LINENO}: result: no, using default value $max_num_threads" >&5
 $as_echo "no, using default value $max_num_threads" >&6; }
 fi
-CPPAD_MAX_NUM_THREADS=$max_num_threads
+CPPAD_MAX_NUM_THREADS_DEFAULT=$max_num_threads
 
 
 { $as_echo "$as_me:${as_lineno-$LINENO}: checking TAPE_ADDR_TYPE" >&5
