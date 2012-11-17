@@ -127,13 +127,13 @@ then
 	list=`cat bin/commit.list.$$`
 	for file in $list
 	do
-		# exclude */makefile.in and *.vcproj files
+		# exclude */makefile.in and cppad/configure.hpp.in files
 		# from edits in bin/commit.sed
 		local_file=`echo $file | sed -e 's|.*/||'`
 		file_ext=`echo $file | sed -e 's|.*\.||'`
 		if [ -f "$file" ] &&  \
 		   [ "$local_file" != "makefile.in" ] && \
-		   [ "$file_ext" != "vcproj" ]
+		   [ "$local_file" != "configure.hpp.in" ]
 		then
 			sed -f bin/commit.sed $file > bin/commit.tmp.$$
 			if ! diff $file bin/commit.tmp.$$ > /dev/null
