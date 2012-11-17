@@ -66,6 +66,10 @@ This section contains a list of the changes to CppAD during 2012
 The purpose of this section is to
 assist you in learning about changes between various versions of CppAD.
 
+$head 11-16$$
+Fix a warning that occurred in $cref Rosen34$$
+when it was compiled with the preprocessor symbol $code NDEBUG$$ defined.
+
 $head 11-14$$
 Advanced the CppAD version to $code cppad-20121114$$.
 

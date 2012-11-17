@@ -426,7 +426,11 @@ Vector Rosen34(
 		}
 
 		// LU factor the matrix E
+# ifndef NDEBUG
 		int sign = LuFactor(ip, jp, E);
+# else
+		LuFactor(ip, jp, E);
+# endif
 		CPPAD_ASSERT_KNOWN(
 			sign != 0,
 			"Error in Rosen34: I - f_x * h / 2 not invertible"
