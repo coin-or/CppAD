@@ -18,7 +18,7 @@ $spell
 	includedir
 	cmake
 	det
-	Dcppad
+	cppad
 $$
 
 $section Including the Eigen Examples and Tests$$
@@ -69,7 +69,7 @@ $index vector, eigen$$
 $index eigen, vector$$
 If you have specified $icode eigen_prefix$$ you can choose
 $codei%
-	-Dcppad_test_vector_namespace=eigen
+	-D cppad_test_vector_namespace=eigen
 %$$
 on the $cref/cmake command/cmake/CMake Command/$$ line.
 This we set the CppAD $cref testvector$$ to use Eigen vectors. 

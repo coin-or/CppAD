@@ -39,7 +39,7 @@ if [ "$1" != "" ]
 then
 	if [ "$1" == '--verbose' ]
 	then
-		cmake_args="$cmake_args  -DCMAKE_VERBOSE_MAKEFILE=1"
+		cmake_args="$cmake_args  -D CMAKE_VERBOSE_MAKEFILE=1"
 	else
 		echo 'usage: bin/check_all.sh: [--verbose]'
 		exit 1
@@ -68,43 +68,43 @@ done
 echo_exec mkdir work
 echo_exec cd work
 # -----------------------------------------------------------------------------
-cmake_args="$cmake_args  -Dcmake_install_prefix=$HOME/prefix/cppad"
+cmake_args="$cmake_args  -D cmake_install_prefix=$HOME/prefix/cppad"
 if [ -d '/usr/include' ]
 then
-	cmake_args="$cmake_args -Dcmake_install_includedir=include"
+	cmake_args="$cmake_args -D cmake_install_includedir=include"
 fi
 #
 if [ -d '/usr/share' ]
 then
-	cmake_args="$cmake_args -Dcmake_install_datadir=share"
+	cmake_args="$cmake_args -D cmake_install_datadir=share"
 fi
 #
 if [ -d '/usr/lib64' ]
 then
-	cmake_args="$cmake_args -Dcmake_install_libdir=lib64"
+	cmake_args="$cmake_args -D cmake_install_libdir=lib64"
 elif [ -d '/usr/lib' ]
 then
-	cmake_args="$cmake_args -Dcmake_install_libdir=lib"
+	cmake_args="$cmake_args -D cmake_install_libdir=lib"
 fi
 for package in adolc eigen ipopt fadbad sacado
 do
 	dir=$HOME/prefix/$package
 	if [ -d "$dir" ]
 	then
-		cmake_args="$cmake_args  -D${package}_prefix=$dir"
+		cmake_args="$cmake_args  -D ${package}_prefix=$dir"
 	fi
 done
-cmake_args="$cmake_args -Dcppad_sparse_list=YES"
-cmake_args="$cmake_args -Dcppad_testvector_namespace=boost"
-cmake_args="$cmake_args -Dcppad_tape_id_type='unsigned int'"
-cmake_args="$cmake_args -Dcppad_tape_addr_type=int"
-cmake_args="$cmake_args -Dcppad_max_num_threads=48"
-cmake_args="$cmake_args -Dcppad_documentation=YES"
-cmake_args="$cmake_args -Dcppad_cxx_flags=\
+cmake_args="$cmake_args -D cppad_sparse_list=YES"
+cmake_args="$cmake_args -D cppad_testvector=boost"
+cmake_args="$cmake_args -D cppad_tape_id_type='unsigned int'"
+cmake_args="$cmake_args -D cppad_tape_addr_type=int"
+cmake_args="$cmake_args -D cppad_max_num_threads=48"
+cmake_args="$cmake_args -D cppad_documentation=YES"
+cmake_args="$cmake_args -D cppad_cxx_flags=\
 '-Wall -ansi -pedantic-errors -std=c++98 -Wshadow'"
 #
 #
-echo_exec_log cmake .. $cmake_args
+echo_exec_log cmake $cmake_args ..
 # -----------------------------------------------------------------------------
 echo_exec_log make check 
 # -----------------------------------------------------------------------------

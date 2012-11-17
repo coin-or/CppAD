@@ -32,16 +32,16 @@ $spell
 	Makefiles
 	cmake
 	Dcmake
-	Ccppad cppad
-	Dadolc adolc
-	Dboost boost
-	Deigen eigen
-	Dfadbad fadbad
-	Dsacado sacado
+	cppad
+	adolc
+	boost
+	eigen
+	fadbad
+	sacado
 	datadir
 	includedir
 	libdir
-	Dcppad cxx 
+	cxx 
 	max num
 	postfix
 	id
@@ -70,34 +70,37 @@ $index configure, cppad$$
 $index cppad, configure$$
 The command below assume that $code cmake$$ is in your execution
 path. If not, you can put the path to $code cmake$$ in font the command. 
-Only the path to the distribution directory
-($code ..$$ in the command below) is necessary; i.e., the first line.
-All of the lines are optional.
+Only the $code cmake$$ command and the path to the distribution directory
+($code ..$$ at the end of the command below) are required.
+In other words, the first and last lines below are required
+and all of the other lines are optional.
 Create a $code work$$ subdirectory of the 
 $cref/distribution directory/download/Distribution Directory/$$,
 change into the $code work$$  directory, 
 and execute the following command:
 $codei%
-	cmake .. %%                                                 \
-	-G %generator%                                              \
-	-Dcmake_install_prefix=%cmake_install_prefix%               \
-	-Dcmake_install_includedir=%cmake_install_includedir%       \
-	-Dcmake_install_datadir=%cmake_install_datadir%             \
-	-Dcmake_install_libdir=%cmake_install_libdir%               \
-	-Dcmake_install_postfix=%cmake_install_postfix%             \
+cmake %%                                                          \
+	-G %generator%                                               \
+	-D cmake_install_prefix=%cmake_install_prefix%               \
+	-D cmake_install_includedir=%cmake_install_includedir%       \
+	-D cmake_install_datadir=%cmake_install_datadir%             \
+	-D cmake_install_libdir=%cmake_install_libdir%               \
+	-D cmake_install_postfix=%cmake_install_postfix%             \
 	\
-	-Dadolc_prefix=%adolc_prefix%                               \
-	-Deigen_prefix=%eigen_prefix%                               \
-	-Dfadbad_prefix=%fadbad_prefix%                             \
-	-Dsacado_prefix=%sacado_prefix%                             \
+	-D adolc_prefix=%adolc_prefix%                               \
+	-D eigen_prefix=%eigen_prefix%                               \
+	-D fadbad_prefix=%fadbad_prefix%                             \
+	-D sacado_prefix=%sacado_prefix%                             \
 	\
-	-Dcppad_cxx_flags=%cppad_cxx_flags%                         \
-	-Dcppad_test_vector_namespace=%cppad_test_vector_namespace% \
-	-Dcppad_documentation=%cppad_documentation%     \
-	-Dcppad_max_num_threads=%cppad_max_num_threads% \
-	-Dcppad_sparse_list=%cppad_sparse_list%         \
-	-Dcppad_tape_id_type=%cppad_tape_id_type%       \
-	-Dcppad_tape_addr_type=%cppad_tape_addr_type%   \
+	-D cppad_cxx_flags=%cppad_cxx_flags%                         \
+	-D cppad_test_vector_namespace=%cppad_test_vector_namespace% \
+	-D cppad_documentation=%cppad_documentation%     \
+	-D cppad_max_num_threads=%cppad_max_num_threads% \
+	-D cppad_sparse_list=%cppad_sparse_list%         \
+	-D cppad_tape_id_type=%cppad_tape_id_type%       \
+	-D cppad_tape_addr_type=%cppad_tape_addr_type%   \
+	\
+	..
 %$$
 
 $head -G generator$$
@@ -186,8 +189,8 @@ For example,
 if $icode cmake_install_prefix$$ and
 $icode cmake_install_postfix$$ are not specified, and
 $codei%
-	-Dcppad_documentation=YES
-	-Dcmake_install_postfix=coin
+	-D cppad_documentation=YES
+	-D cmake_install_postfix=coin
 %$$
 the file $code cppad.xml$$ will be installed in the location
 $codei%
@@ -216,7 +219,7 @@ These flags must be valid for the C++ compiler
 on your system.
 For example, if you are using $code g++$$ you could specify
 $codep
-	-Dcppad_cxx_flags="-Wall -ansi -pedantic-errors -std=c++98 -Wshadow"
+	-D cppad_cxx_flags="-Wall -ansi -pedantic-errors -std=c++98 -Wshadow"
 $$
 The packages
 $cref/eigen/eigen_prefix/$$ and $cref/fadbad/fadbad_prefix/$$
@@ -224,8 +227,8 @@ currently generate a lot of shadowed variable warnings.
 Hence the $code -Wshadow$$ flag is automatically removed when
 compiling examples and test that use these packages.
 
-$head cppad_testvector_namespace$$
-See $tref cppad_testvector_namespace$$.
+$head cppad_testvector$$
+See $tref cppad_testvector$$.
 
 
 $children%
