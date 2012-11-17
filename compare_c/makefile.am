@@ -10,34 +10,13 @@
 # Please visit http://www.coin-or.org/CppAD/ for information on other licenses.
 # -----------------------------------------------------------------------------
 # automake input file
+# See ./CMakeLists.txt for specifications.
 # 
-# $begin compare_c$$ $newlinech #$$
-# $spell
-#	cpp
-# $$
-# 
-# $section Compare Speed of C and C++$$
-#
-# $head Syntax$$
-# $codei%compare_c/compare_c
-# %$$
-# $codei compare_c/compare_cpp$$
-#
-# $head Purpose$$
-# Compares the speed of the exact same source code compiled
-# using C versus C++.
-#
-# $childtable%
-#	compare_c/det_by_minor.c
-# %$$
-#
-# $end
-#
-BUILT_SOURCES = compare_c.c compare_cpp.cpp
-compare_c.c: det_by_minor.c
-	cp $(srcdir)/det_by_minor.c compare_c.c
-compare_cpp.cpp: det_by_minor.c
-	cp $(srcdir)/det_by_minor.c compare_cpp.cpp
+BUILT_SOURCES = det_by_minor_c.c det_by_minor_cpp.cpp
+det_by_minor_c.c: det_by_minor.c
+	cp $(srcdir)/det_by_minor.c det_by_minor_c.c
+det_by_minor_cpp.cpp: det_by_minor.c
+	cp $(srcdir)/det_by_minor.c det_by_minor_cpp.cpp
 #
 EXTRA_DIST = \
 	det_by_minor.c
@@ -51,13 +30,13 @@ DEFS =
 AM_CXXFLAGS = -O2 -DNDEBUG 
 AM_CFLAGS   = -O2 -DNDEBUG 
 #
-check_PROGRAMS    = compare_c compare_cpp
+check_PROGRAMS    = det_by_minor_c det_by_minor_cpp
 #
-compare_c_SOURCES   = compare_c.c
-compare_cpp_SOURCES = compare_cpp.cpp
+det_by_minor_c_SOURCES   = det_by_minor_c.c
+det_by_minor_cpp_SOURCES = det_by_minor_cpp.cpp
 #
-test: compare_c compare_cpp
+test: det_by_minor_c det_by_minor_cpp
 	echo "Running version compiled using C compiler"
-	./compare_c
+	./det_by_minor_c
 	echo "Running version compiled using C++ compiler"
-	./compare_cpp
+	./det_by_minor_cpp

@@ -308,6 +308,7 @@ EXTRA_DIST = \
 	omh \
 	uw_copy_040507.html \
 	\
+	compare_c/CMakeLists.txt \
 	cppad/CMakeLists.txt \
 	pkgconfig/CMakeLists.txt \
 	example/CMakeLists.txt \

@@ -24,8 +24,13 @@ find . \( -name '*.c'   \) -or \
        \( -name '*.cpp' \) -or \
        \( -name '*.hpp' \) -or \
        \( -name '*.omh' \) -or \
-       \( -name '*.am' \) | \
-	sed -e '/.\/work\//d' -e '/.\/new\//d' -e '/.\/doc\//d' -e 's|./||' \
+       \( -name '*.txt' \) -or \
+       \( -name '*.am' \) | sed \
+		-e '/.\/work\//d' \
+		-e '/.\/build\//d' \
+		-e '/.\/new\//d' \
+		-e '/.\/doc\//d' \
+		-e 's|./||' \
 		> bin/check_include_omh.1.$$
 list="
 	epl-v10.txt

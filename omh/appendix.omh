@@ -25,7 +25,7 @@ $childtable%
 	omh/wish_list.omh%
 	omh/whats_new/whats_new.omh%
 	omh/deprecated.omh%
-	compare_c/makefile.am%
+	compare_c/CMakeLists.txt%
 	omh/license.omh
 %$$
 

@@ -67,10 +67,18 @@ The purpose of this section is to
 assist you in learning about changes between various versions of CppAD.
 
 $head 11-17$$
+$list number$$
+Finish documenting the new $cref cmake$$ configuration instructions
+and deprecate the old $cref/unix/InstallUnix/$$ instructions.
+$lnext
 Change the specifications for
 $cref/CPPAD_MAX_NUM_THREADS/multi_thread/CPPAD_MAX_NUM_THREADS/$$
 to allow for a value of one.
 This enables one to have more tapes during a program execution.
+$lnext
+Include the $cref/C versus C++/compare_c/$$ speed comparison
+in the $cref cmake$$ build.
+$lend
 
 $head 11-16$$
 Fix a warning that occurred in $cref Rosen34$$

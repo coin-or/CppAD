@@ -48,7 +48,7 @@ POST_INSTALL = :
 NORMAL_UNINSTALL = :
 PRE_UNINSTALL = :
 POST_UNINSTALL = :
-check_PROGRAMS = compare_c$(EXEEXT) compare_cpp$(EXEEXT)
+check_PROGRAMS = det_by_minor_c$(EXEEXT) det_by_minor_cpp$(EXEEXT)
 subdir = compare_c
 DIST_COMMON = $(srcdir)/makefile.am $(srcdir)/makefile.in
 ACLOCAL_M4 = $(top_srcdir)/aclocal.m4
@@ -58,12 +58,12 @@ am__configure_deps = $(am__aclocal_m4_deps) $(CONFIGURE_DEPENDENCIES) \
 mkinstalldirs = $(install_sh) -d
 CONFIG_CLEAN_FILES =
 CONFIG_CLEAN_VPATH_FILES =
-am_compare_c_OBJECTS = compare_c.$(OBJEXT)
-compare_c_OBJECTS = $(am_compare_c_OBJECTS)
-compare_c_LDADD = $(LDADD)
-am_compare_cpp_OBJECTS = compare_cpp.$(OBJEXT)
-compare_cpp_OBJECTS = $(am_compare_cpp_OBJECTS)
-compare_cpp_LDADD = $(LDADD)
+am_det_by_minor_c_OBJECTS = det_by_minor_c.$(OBJEXT)
+det_by_minor_c_OBJECTS = $(am_det_by_minor_c_OBJECTS)
+det_by_minor_c_LDADD = $(LDADD)
+am_det_by_minor_cpp_OBJECTS = det_by_minor_cpp.$(OBJEXT)
+det_by_minor_cpp_OBJECTS = $(am_det_by_minor_cpp_OBJECTS)
+det_by_minor_cpp_LDADD = $(LDADD)
 DEFAULT_INCLUDES = 
 depcomp = $(SHELL) $(top_srcdir)/depcomp
 am__depfiles_maybe = depfiles
@@ -77,8 +77,8 @@ CXXCOMPILE = $(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) \
 CXXLD = $(CXX)
 CXXLINK = $(CXXLD) $(AM_CXXFLAGS) $(CXXFLAGS) $(AM_LDFLAGS) $(LDFLAGS) \
 	-o $@
-SOURCES = $(compare_c_SOURCES) $(compare_cpp_SOURCES)
-DIST_SOURCES = $(compare_c_SOURCES) $(compare_cpp_SOURCES)
+SOURCES = $(det_by_minor_c_SOURCES) $(det_by_minor_cpp_SOURCES)
+DIST_SOURCES = $(det_by_minor_c_SOURCES) $(det_by_minor_cpp_SOURCES)
 am__can_run_installinfo = \
   case $$AM_UPDATE_INFO_DIR in \
     n|no|NO) false;; \
@@ -239,30 +239,9 @@ top_srcdir = @top_srcdir@
 # Please visit http://www.coin-or.org/CppAD/ for information on other licenses.
 # -----------------------------------------------------------------------------
 # automake input file
+# See ./CMakeLists.txt for specifications.
 # 
-# $begin compare_c$$ $newlinech #$$
-# $spell
-#	cpp
-# $$
-# 
-# $section Compare Speed of C and C++$$
-#
-# $head Syntax$$
-# $codei%compare_c/compare_c
-# %$$
-# $codei compare_c/compare_cpp$$
-#
-# $head Purpose$$
-# Compares the speed of the exact same source code compiled
-# using C versus C++.
-#
-# $childtable%
-#	compare_c/det_by_minor.c
-# %$$
-#
-# $end
-#
-BUILT_SOURCES = compare_c.c compare_cpp.cpp
+BUILT_SOURCES = det_by_minor_c.c det_by_minor_cpp.cpp
 #
 EXTRA_DIST = \
 	det_by_minor.c
@@ -274,8 +253,8 @@ EXTRA_DIST = \
 AM_CXXFLAGS = -O2 -DNDEBUG 
 AM_CFLAGS = -O2 -DNDEBUG 
 #
-compare_c_SOURCES = compare_c.c
-compare_cpp_SOURCES = compare_cpp.cpp
+det_by_minor_c_SOURCES = det_by_minor_c.c
+det_by_minor_cpp_SOURCES = det_by_minor_cpp.cpp
 all: $(BUILT_SOURCES)
 	$(MAKE) $(AM_MAKEFLAGS) all-am
 
@@ -314,12 +293,12 @@ $(am__aclocal_m4_deps):
 
 clean-checkPROGRAMS:
 	-test -z "$(check_PROGRAMS)" || rm -f $(check_PROGRAMS)
-compare_c$(EXEEXT): $(compare_c_OBJECTS) $(compare_c_DEPENDENCIES) $(EXTRA_compare_c_DEPENDENCIES) 
-	@rm -f compare_c$(EXEEXT)
-	$(LINK) $(compare_c_OBJECTS) $(compare_c_LDADD) $(LIBS)
-compare_cpp$(EXEEXT): $(compare_cpp_OBJECTS) $(compare_cpp_DEPENDENCIES) $(EXTRA_compare_cpp_DEPENDENCIES) 
-	@rm -f compare_cpp$(EXEEXT)
-	$(CXXLINK) $(compare_cpp_OBJECTS) $(compare_cpp_LDADD) $(LIBS)
+det_by_minor_c$(EXEEXT): $(det_by_minor_c_OBJECTS) $(det_by_minor_c_DEPENDENCIES) $(EXTRA_det_by_minor_c_DEPENDENCIES) 
+	@rm -f det_by_minor_c$(EXEEXT)
+	$(LINK) $(det_by_minor_c_OBJECTS) $(det_by_minor_c_LDADD) $(LIBS)
+det_by_minor_cpp$(EXEEXT): $(det_by_minor_cpp_OBJECTS) $(det_by_minor_cpp_DEPENDENCIES) $(EXTRA_det_by_minor_cpp_DEPENDENCIES) 
+	@rm -f det_by_minor_cpp$(EXEEXT)
+	$(CXXLINK) $(det_by_minor_cpp_OBJECTS) $(det_by_minor_cpp_LDADD) $(LIBS)
 
 mostlyclean-compile:
 	-rm -f *.$(OBJEXT)
@@ -327,8 +306,8 @@ mostlyclean-compile:
 distclean-compile:
 	-rm -f *.tab.c
 
-@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/compare_c.Po@am__quote@
-@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/compare_cpp.Po@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/det_by_minor_c.Po@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/det_by_minor_cpp.Po@am__quote@
 
 .c.o:
 @am__fastdepCC_TRUE@	$(COMPILE) -MT $@ -MD -MP -MF $(DEPDIR)/$*.Tpo -c -o $@ $<
@@ -562,16 +541,16 @@ uninstall-am:
 	mostlyclean-generic pdf pdf-am ps ps-am tags uninstall \
 	uninstall-am
 
-compare_c.c: det_by_minor.c
-	cp $(srcdir)/det_by_minor.c compare_c.c
-compare_cpp.cpp: det_by_minor.c
-	cp $(srcdir)/det_by_minor.c compare_cpp.cpp
+det_by_minor_c.c: det_by_minor.c
+	cp $(srcdir)/det_by_minor.c det_by_minor_c.c
+det_by_minor_cpp.cpp: det_by_minor.c
+	cp $(srcdir)/det_by_minor.c det_by_minor_cpp.cpp
 #
-test: compare_c compare_cpp
+test: det_by_minor_c det_by_minor_cpp
 	echo "Running version compiled using C compiler"
-	./compare_c
+	./det_by_minor_c
 	echo "Running version compiled using C++ compiler"
-	./compare_cpp
+	./det_by_minor_cpp
 
 # Tell versions [3.59,3.63) of GNU make to not export all variables.
 # Otherwise a system limit (for SysV at least) may be exceeded.
