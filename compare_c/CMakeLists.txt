@@ -53,8 +53,10 @@ FOREACH( com c cpp )
 	)
 	ADD_EXECUTABLE( det_by_minor_${com} EXCLUDE_FROM_ALL ${source})
 	#
-	# Add extra compiler flags
-	add_cppad_cxx_flags(det_by_minor_${com})
+	IF( ${com} STREQUAL cpp )
+		# These are C++ compiler flags (may not be valid for C)
+		add_cppad_cxx_flags(det_by_minor_${com})
+	ENDIF( ${com} STREQUAL cpp )
 	#
 	# Add target the executes this program
 	ADD_CUSTOM_TARGET(check_det_by_minor_${com} 

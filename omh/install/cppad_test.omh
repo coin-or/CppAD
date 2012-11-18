@@ -1,0 +1,74 @@
+/* $Id$ */
+/* --------------------------------------------------------------------------
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-12 Bradley M. Bell
+
+CppAD is distributed under multiple licenses. This distribution is under
+the terms of the 
+                    Eclipse Public License Version 1.0.
+
+A copy of this license is included in the COPYING file of this distribution.
+Please visit http://www.coin-or.org/CppAD/ for information on other licenses.
+-------------------------------------------------------------------------- */
+$begin cppad_test$$
+$spell
+	makefiles
+	ipopt
+	CppAD
+	cmake
+	nmake
+$$
+
+$section Running the CppAD Examples and Tests$$
+
+$head Purpose$$
+After you configure your system with the 
+$cref/cmake command/cmake/CMake Command/$$ you
+can run the CppAD example and tests to make sure that 
+CppAD functions properly on your system.
+
+
+$head Run All$$
+In the $code work$$ subdirectory of the 
+$cref/distribution directory/download/Distribution Directory/$$
+execute the command
+$codep
+	make check
+$$
+This will build and run all of the tests that are support
+by your system and the $cref cmake$$ command options.
+If you created $code nmake$$ makefiles, you will have
+to use $code nmake$$ instead of $code make$$ in the command above; see
+the $cref/generator/cmake/generator/$$ option for the $code cmake$$ command.
+
+$head Subsets$$
+It is possible to build and run the following subsets of the 
+examples and tests:
+$table
+Command $cnext 
+	Description
+$rnext
+$code make check_compare_c$$ $cnext 
+	$tref compare_c$$ 
+$rnext
+$code make check_example$$   $cnext 
+	most of the $cref Example$$
+$rnext
+$code make check_print_for$$ $cnext 
+	the print_for command
+$rnext
+$code make check_test_more$$ $cnext 
+	correctness tests that are not examples 
+$rnext
+$code make check_multi_thread$$ $cnext 
+	$cref multi_thread$$ tests (run correctness only) 
+$rnext
+$code make check_speed$$ $cnext 
+	single threading $cref speed$$ tests (run correctness only)
+$rnext
+$code make check_ipopt$$ $cnext 
+	the $cref cppad_ipopt_nlp$$ speed and correctness tests
+$rnext
+$tend
+ 
+
+$end

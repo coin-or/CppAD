@@ -106,7 +106,7 @@ cmake %%                                                          \
 	..
 %$$
 
-$head -G generator$$
+$head generator$$
 $index makefile, generator$$
 $index generator, makefile$$
 The CMake program is capable of generating different kinds of files.

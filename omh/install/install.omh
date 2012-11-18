@@ -13,6 +13,9 @@ Please visit http://www.coin-or.org/CppAD/ for information on other licenses.
 $begin Install$$
 $dollar @$$
 $spell
+	makefiles
+	nmake
+	cmake
 	tarball
 	CppAD
 $$
@@ -20,11 +23,28 @@ $$
 $index install$$
 $index test$$
 
-$section CppAD Download, Test, and Installation Instructions$$
+$section CppAD Download, Test, and Install Instructions$$
 
-$contents%
+$head Instruction$$
+$list number$$
+Use the $cref download$$ instructions to obtain a copy or CppAD.
+$lnext
+Use the $cref cmake$$ instructions to configure CppAD.
+$lnext
+Use the $cref cppad_test$$ instructions to test CppAD.
+$lnext
+Use the command $code make install$$ to install CppAD
+If you created $code nmake$$ makefiles, you will have
+to use $code nmake install$$; see
+the $cref/generator/cmake/generator/$$ option for the $code cmake$$ command.
+$lend
+The old $cref InstallUnix$$ instructions 
+have been deprecated.
+
+$childtable%
 	omh/install/download.omh%
 	omh/install/cmake.omh%
+	omh/install/cppad_test.omh%
 	omh/install/pkgconfig.omh%
 	omh/install/unix.omh
 %$$
