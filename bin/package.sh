@@ -147,4 +147,4 @@ echo_exec tar -czf cppad-$version.epl.tgz cppad-$version
 # ----------------------------------------------------------------------------
 # create gpl version of package
 echo_exec cd ..
-echo_exec bin/gpl_license.sh
+echo_exec bin/gpl_license.sh cppad-$version work work

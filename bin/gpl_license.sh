@@ -25,37 +25,48 @@ echo_exec() {
      eval $*
 }
 # ----------------------------------------------------------------------------
-#
-version=`grep "^ *AC_INIT(" configure.ac | \
-        sed -e 's/[^,]*, *\([^ ,]*\).*/\1/'`
-root_dir=`pwd`
-dir="cppad-$version"
-#
-# change into work sub-directory
-echo_exec cd work
-#
-# delete old version of *.gpl.tgz 
-if [ -e $dir.gpl.tgz ]
+if [ "$3" == '' ]
 then
-	echo_exec rm -f $dir.gpl.tgz
+	echo 'usage: bin/gpl_license.sh version_dir archive_dir work_dir'
+	exit 1
+fi
+version_dir="$1"
+archive_dir="$2"
+work_dir="$3"
+# ----------------------------------------------------------------------------
+start_dir=`pwd`
+#
+# change into work directory
+echo_exec cd $work_dir
+#
+# delete old version of tarball (if it exists)
+if [ -e $version_dir.gpl.tgz ]
+then
+	echo_exec rm $version_dir.gpl.tgz
 fi
 #
 # delete old version of directory (if it exists)
-if [ -e $dir ]
+if [ -e $version_dir ]
 then
-	echo_exec rm -rf $dir
+	echo_exec rm -r $version_dir
 fi
-if [ -e $dir ]
+if [ -e $version_dir ]
 then
-	echo "bin/gpl_license.sh: cannot remove old $dir directory"
+	echo "bin/gpl_license.sh: cannot remove old $version_dir directory"
 	exit 1
 fi
 #
-# extract from the *.epl.tgz file
-echo_exec tar -xzf $dir.epl.tgz
+# extract from the EPL version
+echo_exec tar -xzf $start_dir/$archive_dir/$version_dir.epl.tgz
 #
-# change into the work/epl-distribution directory
-echo_exec cd $dir
+# remove documentation directory (if it exists)
+if [ -e $version_dir/doc ]
+then
+	echo_exec rm -r $version_dir/doc
+fi
+#
+# change into the directory
+echo_exec cd $version_dir
 #
 # files that need changing
 list=`find . \
@@ -80,43 +91,43 @@ do
 	file=`echo $file | sed -e 's|^\./||'`
 	name=`echo $file | sed -e 's|.*\/||'`
 	ext=`echo $name  | sed -e 's|.*\.|\.|'`
-	if grep "GNU General Public License" $dir/$file > /dev/null
+	if grep "GNU General Public License" $version_dir/$file > /dev/null
 	then
 		if [ "$name" != "doc.omh" ] && \
 		   [ "$name" != "gpl_license.sh" ] && \
 		   [ "$name" != "gpl-3.0.txt" ]
 		then
-			echo "GPL license in initial $dir/$file"
+			echo "GPL license in initial $version_dir/$file"
 			exit 1
 		fi
 	fi
 	#
-	sed -i $dir/$file \
+	sed -i $version_dir/$file \
 -e 's/Eclipse Public License Version 1.0/GNU General Public License Version 3/' 
 	#
-	if ! grep "GNU General Public License Version 3" $dir/$file > /dev/null
+	if ! grep "GNU General Public License Version 3" $version_dir/$file > /dev/null
 	then
-		if [ "$name" != 'config.h.in' ] && \
+		if [ "$name" != "config.h.in" ] && \
 		   [ "$name" != "gpl-3.0.txt" ] && \
 		   [ "$name" != "epl-v10.txt" ]
 		then
-			echo "Cannot change EPL to GPL for $dir/$file"
+			echo "Cannot change EPL to GPL for $version_dir/$file"
 			exit 1
 		fi
 	fi
 	if [ "$ext" = ".sh" ]
 	then
-		chmod +x $dir/$file
+		chmod +x $version_dir/$file
 	fi
 done
 #
 echo "change the COPYING file"
-sed -n -i $dir/COPYING -e '/-\{70\}/,/-\{70\}/p'
-cat $root_dir/gpl-3.0.txt >> $dir/COPYING
+sed -n -i $version_dir/COPYING -e '/-\{70\}/,/-\{70\}/p'
+cat $start_dir/gpl-3.0.txt >> $version_dir/COPYING
 #
 echo "change the file epl-v10.txt to the file gpl-3.0.txt"
-rm $dir/epl-v10.txt
-cp $root_dir/gpl-3.0.txt $dir/gpl-3.0.txt
+rm $version_dir/epl-v10.txt
+cp $start_dir/gpl-3.0.txt $version_dir/gpl-3.0.txt
 #
 list="
 	makefile.am
@@ -125,23 +136,22 @@ list="
 "
 for file in $list
 do
-	if grep "gpl-3.0.txt" $dir/$file > /dev/null
+	if grep "gpl-3.0.txt" $version_dir/$file > /dev/null
 	then
-		echo bin/"gpl_license.sh: gpl-3.0.txt in initial $dir/$file"
+		echo bin/"gpl_license.sh: gpl-3.0.txt in initial $version_dir/$file"
 		exit 1
 	fi
-	sed -i $dir/$file -e 's/epl-v10.txt/gpl-3.0.txt/'
-	if ! grep "gpl-3.0.txt" $dir/$file > /dev/null
+	sed -i $version_dir/$file -e 's/epl-v10.txt/gpl-3.0.txt/'
+	if ! grep "gpl-3.0.txt" $version_dir/$file > /dev/null
 	then
 		msg=bin/"gpl_license.sh: cannot change epl-v10.txt to gpl-3.0.txt"
-		echo "$msg for $dir/$file"
+		echo "$msg for $version_dir/$file"
 		exit 1
 	fi
 done
 #
-# change into the work/gpl-distribution directory
-echo_exec cd $dir
-echo_exec rm -r doc
+# change into the version directory
+echo_exec cd $version_dir
 #
 # Only include the *.xml verison of the documentation in distribution
 # So remove the table at the top (but save the original doc.omh file).
@@ -163,12 +173,12 @@ then
 	echo_exec mv doc.omh.save doc.omh
 	exit 1
 fi
-# Move the log to the directory where the package.sh command was executed
-mv omhelp.xml.log ../..
+# Move the log to the directory where the start directory
+echo_exec mv omhelp.xml.log $start_dir
 #
 echo_exec mv doc.omh.save doc.omh
 echo_exec cd ..
 # ----------------------------------------------------------------------------
 #
-# create *.gpl.tgz file as copy or work/gpl-distribution directory
-echo_exec tar -czf $dir.gpl.tgz $dir
+# create GPL tarball file as copy or the version directory
+echo_exec tar -czf $version_dir.gpl.tgz $version_dir

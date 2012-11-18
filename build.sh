@@ -393,8 +393,8 @@ fi
 if [ "$1" = "gpl" ] 
 then
 	# create GPL licensed version
-	echo "bin/gpl_license.sh"
-	bin/gpl_license.sh
+	echo "bin/gpl_license.sh cppad-$version work work"
+	bin/gpl_license.sh cppad-$version work work
 	#
 	echo "OK: ./build.sh gpl"
 	exit 0
