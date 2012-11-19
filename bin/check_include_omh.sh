@@ -32,14 +32,6 @@ find . \( -name '*.c'   \) -or \
 		-e '/.\/doc\//d' \
 		-e 's|./||' \
 		> bin/check_include_omh.1.$$
-list="
-	epl-v10.txt
-	gpl-3.0.txt
-"
-for file in $list
-do
-	echo $file >> bin/check_include_omh.1.$$
-done
 for file in `cat bin/check_include_omh.1.$$`
 do
 	# assume $childtable, ... , $verbatim use % for delimiter
