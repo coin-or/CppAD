@@ -71,6 +71,7 @@ file_list=`find . \
 	\( -name '*.cpp' \) -or \
 	\( -name '*.h' \) -or \
 	\( -name '*.hpp' \) -or \
+	\( -name '*.html' \) -or \
 	\( -name '*.in' \) -or \
 	\( -name '*.omh' \) -or \
 	\( -name '*.pc' \) -or \
@@ -93,7 +94,6 @@ other_files="
 	INSTALL 
 	NEWS 
 	README 
-	uw_copy_040507.html
 "
 #
 # Copy the files, creating sub-directories when necessary

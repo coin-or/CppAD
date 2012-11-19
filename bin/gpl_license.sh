@@ -41,7 +41,7 @@ then
 	echo "                    archive_name cannot contain a / character"
 	exit 1
 fi
-# change archive_dir to an absolute path
+# change archive_dir to an absolute path so can use after changing directories
 first_character=`echo "$archive_dir" | sed -e 's/\(.\).*/\1/'`
 if [ "$first_character" != '/' ]
 then
@@ -80,6 +80,9 @@ fi
 # change into the directory
 echo_exec cd $archive_name
 #
+# files that need removing
+echo_exec rm epl-v10.html epl-v10.txt
+#
 # files that need changing
 list=`find . \
 	\( -name '*.ac'  \) -or \
@@ -103,11 +106,18 @@ do
 	file=`echo $file | sed -e 's|^\./||'`
 	name=`echo $file | sed -e 's|.*\/||'`
 	ext=`echo $name  | sed -e 's|.*\.|\.|'`
+	#
+	if [ "$name" == 'gpl-3.0.txt' ]
+	then
+		echo "gpl-3.0.txt is in $archive_dir/$archive_name.epl.tgz"
+	fi
+	if [ "$name" == 'gpl_license.sh' ]
+	then
+		echo "gpl_license.sh is in $archive_dir/$archive_name.epl.tgz"
+	fi
 	if grep "GNU General Public License" $archive_name/$file > /dev/null
 	then
-		if [ "$name" != "doc.omh" ] && \
-		   [ "$name" != "gpl_license.sh" ] && \
-		   [ "$name" != "gpl-3.0.txt" ]
+		if [ "$name" != "doc.omh" ]
 		then
 			echo "GPL license in initial $archive_name/$file"
 			exit 1
@@ -119,9 +129,7 @@ do
 	#
 	if ! grep "GNU General Public License Version 3" $archive_name/$file > /dev/null
 	then
-		if [ "$name" != "config.h.in" ] && \
-		   [ "$name" != "gpl-3.0.txt" ] && \
-		   [ "$name" != "epl-v10.txt" ]
+		if [ "$name" != "config.h.in" ]
 		then
 			echo "Cannot change EPL to GPL for $archive_name/$file"
 			exit 1
@@ -138,7 +146,6 @@ sed -n -i $archive_name/COPYING -e '/-\{70\}/,/-\{70\}/p'
 cat $start_dir/gpl-3.0.txt >> $archive_name/COPYING
 #
 echo "change the file epl-v10.txt to the file gpl-3.0.txt"
-rm $archive_name/epl-v10.txt
 cp $start_dir/gpl-3.0.txt $archive_name/gpl-3.0.txt
 #
 list="
