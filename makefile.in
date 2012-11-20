@@ -599,6 +599,7 @@ EXTRA_DIST = \
 	doc.omh \
 	doc \
 	epl-v10.txt \
+	epl-v10.html \
 	omh \
 	uw_copy_040507.html \
 	\

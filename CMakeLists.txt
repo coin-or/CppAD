@@ -9,6 +9,25 @@
 # A copy of this license is included in the COPYING file of this distribution.
 # Please visit http://www.coin-or.org/CppAD/ for information on other licenses.
 # -----------------------------------------------------------------------------
+# Some constants
+# ----------------------------------------------------------------------------
+# Set the minimum required version of cmake for this project.
+CMAKE_MINIMUM_REQUIRED(VERSION 2.6)
+
+# cppad_version is used by set_version.sh to get the version number.
+SET(cppad_version      "20121120" )
+SET(cppad_url          "http://www.coin-or.org/CppAD" )
+SET(cppad_description  "Differentiation of C++ Algorithms" )
+
+
+# Set name of this project and create the variables 
+# cppad_BINARY_DIR and cppad_SOURCE_DIR. 
+# project(projectname [CXX] [C] [Java])
+PROJECT(cppad)
+
+# include_directories([AFTER|BEFORE] [SYSTEM] dir1 dir2 ...)
+INCLUDE_DIRECTORIES( ${cppad_SOURCE_DIR} )
+# -----------------------------------------------------------------------------
 # Some cmake language extensions
 # ----------------------------------------------------------------------------
 # CHECK_CXX_SOURCE_COMPILES(source variable)
@@ -91,29 +110,6 @@ MACRO(add_cppad_cxx_flags target_name)
 		)
 	ENDIF( cxx_flags )
 ENDMACRO(add_cppad_cxx_flags) 
-# -----------------------------------------------------------------------------
-# Some constants
-# ----------------------------------------------------------------------------
-# Set the minimum required version of cmake for this project.
-CMAKE_MINIMUM_REQUIRED(VERSION 2.6)
-
-# cppad_version is used by set_version.sh to get the version number.
-SET(cppad_version      "20121117" )
-SET(cppad_url          "http://www.coin-or.org/CppAD" )
-SET(cppad_description  "Differentiation of C++ Algorithms" )
-
-
-# Set name of this project and create the variables 
-# cppad_BINARY_DIR and cppad_SOURCE_DIR. 
-# project(projectname [CXX] [C] [Java])
-PROJECT(cppad)
-
-# set(<variable> <value> [[CACHE <type> <docstring> [FORCE]] | PARENT_SCOPE])
-SET(src_version 20121026 "cppad source code version number")
-
-# include_directories([AFTER|BEFORE] [SYSTEM] dir1 dir2 ...)
-INCLUDE_DIRECTORIES( ${cppad_SOURCE_DIR} )
-
 # ----------------------------------------------------------------------------
 # command line arguments
 # ----------------------------------------------------------------------------
