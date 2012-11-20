@@ -59,7 +59,7 @@ IF ( Boost_FOUND )
 	SET(bthread_lib               "boost_thread" )
 	SET(CMAKE_REQUIRED_LIBRARIES "${bthread_lib}" )
 	#
-	SET(bthread_lib_path "${boost_prefix}/${cmake_install_libdir}" )
+	SET(bthread_lib_path "${boost_prefix}/${cppad_install_libdir}" )
 	SET(CMAKE_REQUIRED_FLAGS     "-L${bthread_lib_path}" )
 	#
 	# CHECK_CXX_SOURCE_RUNS(source variable)

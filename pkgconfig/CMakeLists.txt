@@ -33,5 +33,5 @@ CONFIGURE_FILE(
 #	[CONFIGURATIONS [Debug|Release|...]]
 #	[COMPONENT <component>]
 #	[RENAME <name>] [OPTIONAL])
-INSTALL(FILES ${CMAKE_CURRENT_BINARY_DIR}/cppad.pc DESTINATION ${cppad_datadir})
+INSTALL(FILES ${CMAKE_CURRENT_BINARY_DIR}/cppad.pc DESTINATION ${cppad_abs_datadir})
 

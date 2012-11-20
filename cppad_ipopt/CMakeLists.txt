@@ -28,7 +28,7 @@ IF( NOT PKG_CONFIG_FOUND )
 ENDIF( NOT PKG_CONFIG_FOUND )
 
 # Set the system environment variable 
-# 	PKG_CONFIG_PATH=${ipopt_prefix}/${cmake_install_libdir}/pkgconfig
+# 	PKG_CONFIG_PATH=${ipopt_prefix}/${cppad_install_libdir}/pkgconfig
 FOREACH(dir ${cmake_install_libdirs})
 	IF(EXISTS "${ipopt_prefix}/${dir}/pkgconfig/ipopt.pc")
 		SET( ENV{PKG_CONFIG_PATH} ${ipopt_prefix}/${dir}/pkgconfig )

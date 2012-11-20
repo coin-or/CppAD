@@ -141,7 +141,7 @@ $lend
 $subhead Current Version$$
 To obtain current version of CppAD, execute the following commands
 $codei%
-	svn checkout https://projects.coin-or.org/svn/CppAD/trunk %dir%
+	svn export https://projects.coin-or.org/svn/CppAD/trunk %dir%
 %$$
 To see if this has been done correctly, check for the following file:
 $codei%

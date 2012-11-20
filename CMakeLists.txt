@@ -233,38 +233,38 @@ STRING(REGEX REPLACE
 )
 MESSAGE(STATUS "cppad_cxx_flags_skip_Wshadow = ${cppad_cxx_flags_skip_Wshadow}")
 #
-# cppad_includedir, cppad_libdir, cppad_datadir, cppad_docdir
+# cppad_abs_includedir, cppad_abs_libdir, cppad_abs_datadir, cppad_abs_docdir
 IF ( cmake_install_postfix )
-	SET(cppad_includedir 
+	SET(cppad_abs_includedir 
 "${cmake_install_prefix}/${cppad_install_includedir}/${cmake_install_postfix}" 
 		CACHE INTERNAL "cppad install include file directory" FORCE
 	)
-	SET(cppad_libdir 
-"${cmake_install_prefix}/${cmake_install_libdir}/${cmake_install_postfix}" 
+	SET(cppad_abs_libdir 
+"${cmake_install_prefix}/${cppad_install_libdir}/${cmake_install_postfix}" 
 		CACHE INTERNAL "cppad install library file directory" FORCE
 	)
-	SET(cppad_datadir 
+	SET(cppad_abs_datadir 
 "${cmake_install_prefix}/${cmake_install_datadir}/${cmake_install_postfix}" 
 		CACHE INTERNAL "cppad install data file directory" FORCE
 	)
-	SET(cppad_docdir 
+	SET(cppad_abs_docdir 
 "${cmake_install_prefix}/${cmake_install_datadir}/doc/${cmake_install_postfix}" 
 		CACHE INTERNAL "cppad install data file directory" FORCE
 	)
 ELSE ( cmake_install_postfix )
-	SET(cppad_includedir 
+	SET(cppad_abs_includedir 
 		"${cmake_install_prefix}/${cppad_install_includedir}" 
 		CACHE INTERNAL "cppad install include file directory" FORCE
 	)
-	SET(cppad_libdir 
-		"${cmake_install_prefix}/${cmake_install_libdir}" 
+	SET(cppad_abs_libdir 
+		"${cmake_install_prefix}/${cppad_install_libdir}" 
 		CACHE INTERNAL "cppad install library file directory" FORCE
 	)
-	SET(cppad_datadir 
+	SET(cppad_abs_datadir 
 		"${cmake_install_prefix}/${cmake_install_datadir}" 
 		CACHE INTERNAL "cppad install data file directory" FORCE
 	)
-	SET(cppad_docdir 
+	SET(cppad_abs_docdir 
 		"${cmake_install_prefix}/${cmake_install_datadir}/doc" 
 		CACHE INTERNAL "cppad install data file directory" FORCE
 	)
@@ -322,12 +322,12 @@ ADD_CUSTOM_TARGET(check DEPENDS ${list_check})
 # Note a trailing / in the source directory name drops the source directory
 # name during the copy.
 #
-# During install copy cppad direcrory to ${cppad_includedir}/cppad  
-INSTALL( DIRECTORY "cppad/" DESTINATION ${cppad_includedir}/cppad )
+# During install copy cppad direcrory to ${cppad_abs_includedir}/cppad  
+INSTALL( DIRECTORY "cppad/" DESTINATION ${cppad_abs_includedir}/cppad )
 #
-# During install copy doc direcrory to cppad_docdir/cppad-${cppad_version}  
+# During install copy doc direcrory to cppad_abs_docdir/cppad-${cppad_version}  
 IF ( cppad_documentation )
 	INSTALL( DIRECTORY "doc/" DESTINATION 
-		${cppad_docdir}/cppad-${cppad_version} 
+		${cppad_abs_docdir}/cppad-${cppad_version} 
 	)
 ENDIF ( cppad_documentation )

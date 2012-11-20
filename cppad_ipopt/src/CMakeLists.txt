@@ -35,10 +35,10 @@ add_cppad_cxx_flags( cppad_ipopt )
 #	[CONFIGURATIONS [Debug|Release|...]]
 #	[COMPONENT <component>]
 #	[RENAME <name>] [OPTIONAL])
-INSTALL(FILES cppad_ipopt_nlp.hpp DESTINATION ${cppad_includedir})
+INSTALL(FILES cppad_ipopt_nlp.hpp DESTINATION ${cppad_abs_includedir})
 
 # install(TARGETS myExe mySharedLib myStaticLib
 #	RUNTIME DESTINATION bin
 #	LIBRARY DESTINATION lib
 #	ARCHIVE DESTINATION lib/static)
-INSTALL(TARGETS cppad_ipopt DESTINATION ${cppad_libdir})
+INSTALL(TARGETS cppad_ipopt DESTINATION ${cppad_abs_libdir})
