@@ -12,9 +12,10 @@ Please visit http://www.coin-or.org/CppAD/ for information on other licenses.
 $begin adolc_prefix$$
 $dollar @$$
 $spell
+	dir
 	mul
 	cmake
-	includedir
+	includedirs
 	CppAD
 	adolc
 	adouble
@@ -49,12 +50,13 @@ $index prefix, adolc$$
 If ADOL-C is installed on your system, you can 
 specify a value for its install $icode adolc_prefix$$ on the
 $cref cmake$$ command line.
-The value of $icode adolc_prefix$$ must be such that
+The value of $icode adolc_prefix$$ must be such that,
+for one of the directories $icode dir$$ in
+$cref/cmake_install_includedirs/cmake/cmake_install_includedirs/$$,
 $codei%
-	%adolc_prefix%/%cmake_install_includedir%/adolc/adouble.h
+	%adolc_prefix%/%dir%/adolc/adouble.h
 %$$
 is a valid way to reference to the include file $code adouble.h$$; 
-see $cref/cmake_install_includedir/cmake/cmake_install_includedir/$$.
 Note that CppAD assumes ADOL-C has been configured with
 its sparse matrix computations enabled; i.e, using
 $codei%

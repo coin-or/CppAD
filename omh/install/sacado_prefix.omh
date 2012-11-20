@@ -12,8 +12,9 @@ Please visit http://www.coin-or.org/CppAD/ for information on other licenses.
 $begin sacado_prefix$$
 $dollar @$$
 $spell
+	dir
 	Sacado
-	includedir
+	includedirs
 	cmake
 	CppAD
 	hpp
@@ -35,12 +36,13 @@ $index prefix, sacado$$
 If Sacado is installed on your system, you can 
 specify a value for its install $icode sacado_prefix$$ on the
 $cref cmake$$ command line.
-The value of $icode sacado_prefix$$ must be such that
+The value of $icode sacado_prefix$$ must be such that,
+for one of the directories $icode dir$$ in
+$cref/cmake_install_includedirs/cmake/cmake_install_includedirs/$$,
 $codei%
-	%sacado_prefix%/%cmake_install_includedir%/Sacado.hpp
+	%sacado_prefix%/%dir%/Sacado.hpp
 %$$
 is a valid way to reference to the include file $code Sacado.hpp$$; 
-see $cref/cmake_install_includedir/cmake/cmake_install_includedir/$$.
 
 $head Speed Tests$$
 $index speed, sacado$$

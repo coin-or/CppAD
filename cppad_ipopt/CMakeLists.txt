@@ -29,8 +29,11 @@ ENDIF( NOT PKG_CONFIG_FOUND )
 
 # Set the system environment variable 
 # 	PKG_CONFIG_PATH=${ipopt_prefix}/${cmake_install_libdir}/pkgconfig
-SET(ipopt_config ${ipopt_prefix}/${cmake_install_libdir}/pkgconfig )
-SET( ENV{PKG_CONFIG_PATH} ${ipopt_config} )
+FOREACH(dir ${cmake_install_libdirs})
+	IF(EXISTS "${ipopt_prefix}/${dir}/pkgconfig/ipopt.pc")
+		SET( ENV{PKG_CONFIG_PATH} ${ipopt_prefix}/${dir}/pkgconfig )
+	ENDIF(EXISTS "${ipopt_prefix}/${dir}/pkgconfig/ipopt.pc")
+ENDFOREACH(dir)
 
 # pkg_check_modules(<PREFIX> [REQUIRED] <MODULE> [<MODULE>]*)
 # ipopt_LIBRARIES      ... only the libraries (w/o the '-l')
@@ -38,7 +41,12 @@ SET( ENV{PKG_CONFIG_PATH} ${ipopt_config} )
 pkg_check_modules(ipopt ipopt)
 IF( NOT ipopt_FOUND )
 	MESSAGE(FATAL_ERROR 
-		"Missing ipopt pkg-config info in ${ipopt_config}"
+"For all directories dir in cmake_install_libdirs, cannot find the file
+	ipopt_prefix/dir/pkgconfig/ipopt.pc 
+where
+	ipopt_prefix = ${ipopt_prefix}
+	cmake_install_libdirs = ${cmake_install_libdirs}
+"
 	)
 ENDIF( NOT ipopt_FOUND )
 

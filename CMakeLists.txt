@@ -50,10 +50,20 @@ MACRO(optional_package prefix_variable description)
 	MESSAGE(STATUS "${prefix_variable} = ${prefix}")
 	IF ( prefix )
 		# List of preprocessor include file search directories
-		INCLUDE_DIRECTORIES( ${prefix}/${cmake_install_includedir} )
+		FOREACH(dir ${cmake_install_includedirs})
+			IF(IS_DIRECTORY ${prefix}/${dir} )
+				INCLUDE_DIRECTORIES( ${prefix}/${dir} )
+				MESSAGE(STATUS "Found ${prefix}/${dir}")
+			ENDIF(IS_DIRECTORY ${prefix}/${dir} )
+		ENDFOREACH(dir)
 		# Paths in which the linker will search for libraries,
 		# only applies to targets created after it is called
-		LINK_DIRECTORIES( ${prefix}/${cmake_install_libdir} )
+		FOREACH(dir ${cmake_install_libdirs})
+			IF(IS_DIRECTORY ${prefix}/${dir} )
+				LINK_DIRECTORIES( ${prefix}/${dir} )
+				MESSAGE(STATUS "Found ${prefix}/${dir}")
+			ENDIF(IS_DIRECTORY ${prefix}/${dir} )
+		ENDFOREACH(dir)
 	ENDIF ( prefix )
 ENDMACRO(optional_package)
 #
@@ -110,17 +120,17 @@ INCLUDE_DIRECTORIES( ${cppad_SOURCE_DIR} )
 #
 # cmake_install_datadir
 command_line_arg(cmake_install_datadir share STRING 
-	"directory, below prefix, where cmake installs data files"
+	"directory, below prefix, where cmake installs cppad data files"
 )
 #
-# cmake_install_includedir
-command_line_arg(cmake_install_includedir include STRING 
-	"directory, below prefix, where cmake installs include files"
+# cmake_install_includedirs
+command_line_arg(cmake_install_includedirs include STRING 
+	"directories, below prefix, where cmake installs include files"
 )
 #
-# cmake_install_libdir
-command_line_arg(cmake_install_libdir lib STRING 
-	"directory, below prefix, where cmake installs library files"
+# cmake_install_libdirs
+command_line_arg(cmake_install_libdirs lib STRING 
+	"directories, below prefix, where cmake installs library files"
 )
 #
 # cmake_install_prefix: 
@@ -166,6 +176,22 @@ optional_package(sacado_prefix "sacado install prefix")
 # automated system configuration
 # ----------------------------------------------------------------------------
 #
+# cppad_install_includedir
+SET(cppad_install_includedir NOTFOUND)
+FOREACH(dir ${cmake_install_includedirs})
+	IF( NOT cppad_install_includedir )
+		SET(cppad_install_includedir ${dir})
+	ENDIF( NOT cppad_install_includedir )
+ENDFOREACH(dir ${cmake_install_includedirs})
+#
+# cppad_install_libdir
+SET(cppad_install_libdir NOTFOUND)
+FOREACH(dir ${cmake_install_libdirs})
+	IF( NOT cppad_install_libdir )
+		SET(cppad_install_libdir ${dir})
+	ENDIF( NOT cppad_install_libdir )
+ENDFOREACH(dir ${cmake_install_libdirs})
+#
 # boost_prefix:
 FIND_PACKAGE(Boost)
 IF ( Boost_FOUND )
@@ -187,20 +213,21 @@ IF ( Boost_FOUND )
 	) 
 	MESSAGE(STATUS "boost_prefix = ${boost_prefix}")
 	#
-	# check that Boost_INCLUDE_DIRS matches cmake_install_includedir 
-	SET(boost_include_dir_check "${boost_prefix}/${cmake_install_includedir}")
-	STRING(COMPARE EQUAL 
-		"${boost_include_dir_check}" "${boost_include_dir}"
-		cmake_install_includedir_ok
-	)
-	IF( NOT cmake_install_includedir_ok )
-		MESSAGE(FATAL_ERROR 
-"boost_prefix/cmake_install_includedir = ${boost_include_dir_check}
-does not match Boost_INCLUDE_DIRS = ${Boost_INCLUDE_DIRS}"
-		)
-	ENDIF( NOT cmake_install_includedir_ok )
+	# add boost include directories
+	FOREACH(dir ${cmake_install_includedirs})
+		IF( IS_DIRECTORY ${boost_prefix}/${dir} )
+			INCLUDE_DIRECTORIES( ${boost_prefix}/${dir} )
+			MESSAGE(STATUS "Found ${boost_prefix}/${dir}")
+		ENDIF( IS_DIRECTORY ${boost_prefix}/${dir} )
+	ENDFOREACH( dir )
 	#
-	INCLUDE_DIRECTORIES( ${boost_prefix}/${cmake_install_includedir} )
+	# add boost link directories
+	FOREACH(dir ${cmake_install_libdirs})
+		IF( IS_DIRECTORY ${boost_prefix}/${dir} )
+			LINK_DIRECTORIES( ${boost_prefix}/${dir} )
+			MESSAGE(STATUS "Found ${boost_prefix}/${dir}")
+		ENDIF( IS_DIRECTORY ${boost_prefix}/${dir} )
+	ENDFOREACH( dir )
 ENDIF ( Boost_FOUND )
 #
 # cppad_cxx_flags_skip_Wshadow
@@ -213,7 +240,7 @@ MESSAGE(STATUS "cppad_cxx_flags_skip_Wshadow = ${cppad_cxx_flags_skip_Wshadow}")
 # cppad_includedir, cppad_libdir, cppad_datadir, cppad_docdir
 IF ( cmake_install_postfix )
 	SET(cppad_includedir 
-"${cmake_install_prefix}/${cmake_install_includedir}/${cmake_install_postfix}" 
+"${cmake_install_prefix}/${cppad_install_includedir}/${cmake_install_postfix}" 
 		CACHE INTERNAL "cppad install include file directory" FORCE
 	)
 	SET(cppad_libdir 
@@ -230,7 +257,7 @@ IF ( cmake_install_postfix )
 	)
 ELSE ( cmake_install_postfix )
 	SET(cppad_includedir 
-		"${cmake_install_prefix}/${cmake_install_includedir}" 
+		"${cmake_install_prefix}/${cppad_install_includedir}" 
 		CACHE INTERNAL "cppad install include file directory" FORCE
 	)
 	SET(cppad_libdir 

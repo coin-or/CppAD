@@ -12,11 +12,12 @@ Please visit http://www.coin-or.org/CppAD/ for information on other licenses.
 $begin fadbad_prefix$$
 $dollar @$$
 $spell
+	dir
 	CppAD
 	fadbad
 	cmake
 	badiff
-	includedir
+	includedirs
 $$
 
 $section Including the FADBAD Speed Tests$$
@@ -35,12 +36,13 @@ $index prefix, fadbad$$
 If FADBAD is installed on your system, you can 
 specify a value for its install $icode fadbad_prefix$$ on the
 $cref cmake$$ command line.
-The value of $icode fadbad_prefix$$ must be such that
+The value of $icode fadbad_prefix$$ must be such that,
+for one of the directories $icode dir$$ in
+$cref/cmake_install_includedirs/cmake/cmake_install_includedirs/$$,
 $codei%
-	%fadbad_prefix%/%cmake_install_includedir%/FADBAD++/badiff.h
+	%fadbad_prefix%/%dir%/FADBAD++/badiff.h
 %$$
 is a valid way to reference to the include file $code badiff.h$$; 
-see $cref/cmake_install_includedir/cmake/cmake_install_includedir/$$.
 
 $head Speed Tests$$
 $index speed, fadbad$$

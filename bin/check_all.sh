@@ -71,7 +71,7 @@ echo_exec cd work
 cmake_args="$cmake_args  -D cmake_install_prefix=$HOME/prefix/cppad"
 if [ -d '/usr/include' ]
 then
-	cmake_args="$cmake_args -D cmake_install_includedir=include"
+	cmake_args="$cmake_args -D cmake_install_includedirs=include"
 fi
 #
 if [ -d '/usr/share' ]
@@ -81,10 +81,10 @@ fi
 #
 if [ -d '/usr/lib64' ]
 then
-	cmake_args="$cmake_args -D cmake_install_libdir=lib64"
+	cmake_args="$cmake_args -D cmake_install_libdirs='lib;lib64'"
 elif [ -d '/usr/lib' ]
 then
-	cmake_args="$cmake_args -D cmake_install_libdir=lib"
+	cmake_args="$cmake_args -D cmake_install_libdirs='lib;lib64'"
 fi
 for package in adolc eigen ipopt fadbad sacado
 do

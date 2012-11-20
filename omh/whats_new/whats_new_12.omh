@@ -13,6 +13,8 @@ Please visit http://www.coin-or.org/CppAD/ for information on other licenses.
 $begin whats_new_12$$
 $dollar @$$
 $spell
+	includedir includedirs
+	libdir libdirs
 	Ubuntu
 	Microsoft
 	cmake
@@ -65,6 +67,15 @@ This section contains a list of the changes to CppAD during 2012
 (in reverse order by date).
 The purpose of this section is to
 assist you in learning about changes between various versions of CppAD.
+
+$head 11-20$$
+The $code cmake$$ variables
+$code cmake_install_includedir$$ and 
+$code cmake_install_libdir$$ 
+were changed to
+$cref/cmake_install_includedirs/cmake/cmake_install_includedirs/$$ and
+$cref/cmake_install_libdirs/cmake/cmake_install_libdirs/$$
+to signify the fact that they can now be a list of directories.
 
 $head 11-17$$
 $list number$$

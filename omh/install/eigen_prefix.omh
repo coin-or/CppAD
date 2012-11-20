@@ -12,10 +12,11 @@ Please visit http://www.coin-or.org/CppAD/ for information on other licenses.
 $begin eigen_prefix$$
 $dollar @$$
 $spell
+	dir
 	namespace
 	Eigen
 	Cpp
-	includedir
+	includedirs
 	cmake
 	det
 	cppad
@@ -42,12 +43,13 @@ $index prefix, eigen$$
 If Eigen is installed on your system, you can 
 specify a value for its install $icode eigen_prefix$$ on the
 $cref cmake$$ command line.
-The value of $icode eigen_prefix$$ must be such that
+The value of $icode eigen_prefix$$ must be such that,
+for one of the directories $icode dir$$ in
+$cref/cmake_install_includedirs/cmake/cmake_install_includedirs/$$,
 $codei%
-	%eigen_prefix%/%cmake_install_includedir%/Eigen/Core
+	%eigen_prefix%/%dir%/Eigen/Core
 %$$
 is a valid way to reference to the include file $code Core$$;
-see $cref/cmake_install_includedir/cmake/cmake_install_includedir/$$.
 
 $head Examples$$
 $index example, eigen$$

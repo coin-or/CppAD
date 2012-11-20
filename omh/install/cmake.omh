@@ -42,8 +42,8 @@ $spell
 	fadbad
 	sacado
 	datadir
-	includedir
-	libdir
+	includedirs
+	libdirs
 	cxx 
 	max num
 	postfix
@@ -85,9 +85,9 @@ $codei%
 cmake %%                                                          \
 	-G %generator%                                               \
 	-D cmake_install_prefix=%cmake_install_prefix%               \
-	-D cmake_install_includedir=%cmake_install_includedir%       \
+	-D cmake_install_includedirs=%cmake_install_includedirs%     \
 	-D cmake_install_datadir=%cmake_install_datadir%             \
-	-D cmake_install_libdir=%cmake_install_libdir%               \
+	-D cmake_install_libdirs=%cmake_install_libdirs%             \
 	-D cmake_install_postfix=%cmake_install_postfix%             \
 	\
 	-D adolc_prefix=%adolc_prefix%                               \
@@ -129,16 +129,20 @@ $codei%
 All of the installed files will be placed below this directory.
 The default value for this directory is $code /usr$$.
 
-$head cmake_install_includedir$$
-$index install, include directory$$
-$index include directory, install$$
-This is the directory, 
+$head cmake_install_includedirs$$
+$index install, include directories$$
+$index include directories, install$$
+This can be one directory, or a list of directories separated
+by spaces or by semi-colons.
+This first entry in the list is the directory, 
 below the $icode cmake_install_prefix$$,
-where the include files will be installed.
-The default value for this directory is $code include$$.
+where the CppAD include files will be installed.
+This directory, and the others in the list, are used for searching
+for include files.
+The default value for this directory list is $code include$$.
 For example, if 
 $icode cmake_install_prefix$$,
-$icode cmake_install_includedir$$, and
+$icode cmake_install_includedirs$$, and
 $icode cmake_install_postfix$$, are not specified,
 the file $code cppad.hpp$$ will be installed in the location
 $codei%
@@ -162,23 +166,26 @@ $codei%
 %$$
 where $icode version$$ is version number for this copy of CppAD.
 
-$head cmake_install_libdir$$
-$index install, library directory$$
-$index library directory, install$$
-This is the directory, 
+$head cmake_install_libdirs$$
+$index install, library directories$$
+$index library directories, install$$
+This can be one directory, or a list of directories separated
+by spaces or semi-colons.
+The first entry in the list is the directory, 
 below the $icode cmake_install_prefix$$,
-where the library files will be installed.
-The default value for this directory is $code lib$$.
+where the CppAD library files will be installed.
+This directory, and the others in the list, are used for searching
+for library files.
+The default value for this directory list is $code lib$$.
 For example, if 
-$icode cmake_install_prefix$$ and
-$icode cmake_install_postfix$$ are not specified, and
+$icode cmake_install_prefix$$,
+$icode cmake_install_postfix$$,
+$icode cmake_install_libdirs$$ are not specified, and
 $icode ipopt_prefix$$ is specified,
 the file $code libcppad_ipopt.a$$ will be installed in the location
 $codei%
 	/usr/lib/libcppad_ipopt.a
 %$$
-The $code cmake$$ command,
-will use this information when searching for other libraries.
 
 $head cmake_install_postfix$$
 $index install, postfix$$
