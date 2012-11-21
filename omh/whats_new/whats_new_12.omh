@@ -68,7 +68,19 @@ This section contains a list of the changes to CppAD during 2012
 The purpose of this section is to
 assist you in learning about changes between various versions of CppAD.
 
+$head 11-21$$
+$list number$$
+Fix the version number in link to the 
+$cref/current download files/download/Compressed Tar File/Current Version/$$.
+$lnext
+Change the
+$cref/subversion/download/Subversion/$$ download instructions to use
+the $code export$$ instead of $code checkout$$ command.
+This avoids downloading the source code control files.
+$lend
+
 $head 11-20$$
+$list number$$
 The $code cmake$$ variables
 $code cmake_install_includedir$$ and 
 $code cmake_install_libdir$$ 
@@ -76,6 +88,9 @@ were changed to
 $cref/cmake_install_includedirs/cmake/cmake_install_includedirs/$$ and
 $cref/cmake_install_libdirs/cmake/cmake_install_libdirs/$$
 to signify the fact that they can now be a list of directories.
+$lnext
+Advance version number to $code cppad-20121120$$.
+$lend
 
 $head 11-17$$
 $list number$$

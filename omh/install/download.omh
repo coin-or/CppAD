@@ -55,9 +55,9 @@ $subhead Current Version$$
 The download files below are for the current version of CppAD.
 
 $table
-EPL License $pre  $$ $cnext $href%cppad-20121109.epl.tgz%$$ 
+EPL License $pre  $$ $cnext $href%cppad-20121120.epl.tgz%$$ 
 $rnext
-GPL License $pre  $$ $cnext $href%cppad-20121109.gpl.tgz%$$
+GPL License $pre  $$ $cnext $href%cppad-20121120.gpl.tgz%$$
 $tend
 
 $subhead Release Versions$$
@@ -159,7 +159,7 @@ $href%https://projects.coin-or.org/CppAD/browser/stable% stable versions%$$.
 The following command will download a 
 stable version of the CppAD source code:
 $codei%
-	svn co https://projects.coin-or.org/svn/CppAD/stable/%dir% %dir%
+	svn export https://projects.coin-or.org/svn/CppAD/stable/%dir% %dir%
 %$$
 To see if this has been done correctly, check for the following file:
 $codei%
@@ -179,7 +179,7 @@ $href%https://projects.coin-or.org/CppAD/browser/releases%
 The following command will download a 
 release version of the CppAD source code:
 $codei%
-	svn co https://projects.coin-or.org/svn/CppAD/releases/%dir% %dir%
+	svn export https://projects.coin-or.org/svn/CppAD/releases/%dir% %dir%
 %$$
 To see if this has been done correctly, check for the following file:
 $codei%
