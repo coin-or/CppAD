@@ -1,44 +1,19 @@
 #! /bin/bash -e
-# -------------------------------------------------------------
-# Old nightly build script name links to new nightbuild script.
-# -------------------------------------------------------------
-# bash function that echos and executes a command
-echo_exec() {
-	echo $*
-	eval $*
-}
-# ---------------------------------------------------------------
-# remove old directories created by this command
-# (only necessary when testing and re-running the command)
-for dir in conf temp_dir
-do
-	if [ -e $dir ]
-	then
-		echo_exec rm -r $dir
-	fi
-done
+set -e
+# Old build file name as link to new build routine.
+# 
+echo "./build.sh all"
+./build.sh all
 #
-# get a current copy of the new nightly build script
-svn_conf='https://projects.coin-or.org/svn/CppAD/conf'
-echo "svn export $svn_conf conf > /dev/null"
-svn export $svn_conf  conf > /dev/null
+# move documentation to old directory for right place on web
+# (do in a way that works on Cygwin)
+if [ -e "Doc" ]
+then
+	echo "rm -rf Doc"
+	rm -rf Doc
+fi
+echo "mv doc doc_"
+mv doc doc_
 #
-# Make a temporary directory below this on
-echo_exec mkdir temp_dir
-#
-# use the new cpppad nightly build routine 
-coin_web='/var/www/html/coin-or'
-# coin_web='/tmp'  # for testing, remove comment at beginning of this line
-temp_dir='temp_dir'
-project='CppAD'
-subproject='cppad'
-version=`bin/version.sh get`
-relative_path='trunk'
-replace_archive='yes'
-replace_doc='yes'
-use_date='no'
-conf/archive-cppad.sh $coin_web $temp_dir $project $subproject $version \
-	$relative_path $replace_archive $replace_doc $use_date
-#
-echo "Build: OK"
-exit 0
+echo "mv doc_ Doc"
+mv doc_ Doc
