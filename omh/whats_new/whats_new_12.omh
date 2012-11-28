@@ -13,6 +13,7 @@ Please visit http://www.coin-or.org/CppAD/ for information on other licenses.
 $begin whats_new_12$$
 $dollar @$$
 $spell
+	cppad_ipopt_nlp
 	includedir includedirs
 	libdir libdirs
 	Ubuntu
@@ -67,6 +68,32 @@ This section contains a list of the changes to CppAD during 2012
 (in reverse order by date).
 The purpose of this section is to
 assist you in learning about changes between various versions of CppAD.
+
+$head 11-28$$
+Update the $cref WishList$$:
+$list number$$
+Remove Microsoft compiler warning item that has been fixed.
+$lnext
+Remove faster sparse set operations item that was completed using
+$cref/cppad_sparse_list/cmake/cppad_sparse_list/$$.
+$lnext
+Remove $cref cmake$$ items that have been completed.
+$lnext
+Remove $cref CondExp$$ items related to using 
+$code AD< std::complex<double> >$$ types because it is better to use
+$code std::complex< AD<double> >$$.
+$lnext
+Remove $cref thread_alloc$$ memory chunk item that has been completed.
+$lnext
+Remove $cref VecAD$$ item about slicing from floating point type to $code int$$
+(not important).
+$lnext 
+Change Ipopt item to $cref/cppad_ipopt_nlp/WishList/cppad_ipopt_nlp/$$
+and add new $cref/cppad_ipopt_sum/WishList/cppad_ipopt_sum/$$ item.
+$lnext
+Add new $cref/user_atomic/WishList/user_atomic/$$ item.
+
+$lend
 
 $head 11-21$$
 $list number$$
@@ -138,8 +165,8 @@ $code test_more$$ directory to be compiled
 with $code NDEBUG$$ is defined and to pass.
 
 $lnext
-Started a wish list for 
-CppAD's use of $cref/cmake/WishList/CMake/$$. 
+Started a wish list for CppAD's use of $cref cmake$$. 
+The wish list items were completed and removed.
 
 $lend
 

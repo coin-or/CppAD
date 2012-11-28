@@ -917,9 +917,10 @@ This has been fixed.
 $pre
 
 $$
-A $cref/faster set operations/
-	WishList/Sparsity Patterns/Faster Set Operations/$$
-item has been added to the wish list.
+A faster set operations item was added to the wish list.
+This has since been satisfied by 
+$cref/cppad_sparse_list/cmake/cppad_sparse_list/$$ choice during
+the install process.
 
 $head 02-02$$
 The documentation for $cref ForSparseJac$$ had some formatting errors.

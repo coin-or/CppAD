@@ -79,9 +79,7 @@ for every template function that is declared as a both a friend and inline
 (it thinks it is only doing this for specializations of template functions).
 The warnings are no longer generated because
 these $code inline$$ directives are converted to
-empty code when a Microsoft Visual C++ is used
-(see $cref/Microsoft Compiler/WishList/Optimization/Microsoft Compiler/$$
-wish list item).
+empty code when a Microsoft Visual C++ is used.
 
 
 $head 11-20$$
@@ -116,7 +114,7 @@ $code ipopt_cppad/ipopt_cppad_ode$$.
 
 $head 09-30$$
 Add or modify some wish list entries; see
-$cref/Ipopt/WishList/Ipopt/$$,
+$cref/cppad_ipopt_nlp/WishList/cppad_ipopt_nlp/$$,
 $cref/multiple arguments/WishList/Multiple Arguments/$$,
 and sparsity patterns
 ($cref/sparsity patterns/glossary/Sparsity Pattern/$$ has been fulfilled). 

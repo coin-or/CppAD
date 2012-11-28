@@ -54,26 +54,7 @@ $head BenderQuad$$
 See the $cref/problem/BenderQuad/Problem/$$ with the 
 current $code BenderQuad$$ specifications.
 
-$head CMake$$
-$list number$$
-Finish documenting all the $cref cmake$$ command line arguments.
-$lnext
-Check (during $code cmake$$ command) 
-that $code cppad_test_vector_namespace$$ is a valid choice.
-$lnext
-Include the $cref compare_c$$ test. 
-$lend
-
-
-$head CondExp$$
-$index CondExp$$
-Extend the conditional expressions $cref CondExp$$ so that they are 
-valid for complex types by comparing real parts.
-In addition, use this change to extend $cref LuRatio$$ so 
-that it works with complex AD types.
-
-
-$head Ipopt$$
+$head cppad_ipopt_nlp$$
 $index cppad_ipopt_nlp$$
 $list number$$
 Create a separate documentation page for using $code cppad_ipopt_nlp$$
@@ -104,6 +85,10 @@ argument values, this would require forward mode at multiple argument values
 
 $lend
 
+$head cppad_ipopt_sum$$
+Create a simpler class an Ipopt AD interface with the objective
+and other functions are sums of functions each of which gets recorded.
+
 $head Library$$
 $index compile, speed AD<double>$$
 $index speed, compile AD<double>$$
@@ -111,15 +96,6 @@ $index AD<double>, compile speed$$
 One could build a CppAD library for use with the type $code AD<double>$$.
 This would speed up compilation for the most common usage where
 the $icode Base$$ type is $code double$$.
-
-$head Memory$$
-The $cref thread_alloc$$ memory manager might be able to improve performance
-of the $cref/multi_newton/thread_test.cpp/multi_newton/$$ timing using the
-idea of allocating memory using a minimal chunk size. 
-See end of page 118 and beginning of 119 in the article 
-$icode {Hoard: a scalable memory allocator for multi-threaded applications$$,
-by E.D. Berger et. al.
-
 
 $head Multiple Arguments$$
 $index speed, improve$$
@@ -157,18 +133,6 @@ hash codes are used to detect expressions that have already
 been computed.
 Perhaps this should be done during the original forward mode recording. 
 
-$subhead Microsoft Compiler$$
-The Microsoft's Visual C++ Version 9.0 generates a warning of the form
-$codei warning C4396:%...%$$ 
-for every template function that is declared as a both a friend and inline
-(it thinks it is only doing this for specializations of template functions).
-The $code CPPAD_INLINE$$ preprocessor symbol is used to convert
-these $code inline$$ directives to
-empty code (if a Microsoft Visual C++ is used).
-If it is shown to be faster and does not slow down CppAD with other compilers,
-non-friend functions should be used to map these operations
-to member functions so that both can be compiled inline.
-
 $head Variable Pairs$$
 Suppose that $icode x$$ is a variable 
 and $codei%sin(%x%)%$$ is used in an expression.
@@ -188,7 +152,7 @@ $head Software Guidelines$$
 
 $subhead Boost$$
 The following is a list of some software guidelines taken from
-$href%http://www.boost.org/more/lib_guide.htm#Guidelines%boost%$$.
+$href%http://www.boost.org/development/requirements.html#Guidelines%boost%$$.
 These guidelines are not followed by the current CppAD source code,
 but perhaps they should be:
 
@@ -203,43 +167,17 @@ Template parameter names should begin with an uppercase letter.
 
 $lnext
 Use spaces rather than tabs.  
+Currently, CppAD uses a tabs stops at column multiples of 5.
+Five columns were chosen to avoid high levels of indenting and to allow for
+$codep
+	if( expression )
+		statement
+	else	statement
+$$
+with a tab after the else.
+Automatic conversion to actual spaces should be easy. 
 
 $lend
-
-$head Sparsity Patterns$$
-$index sparsity, pattern parallel$$
-$index pattern, sparsity parallel$$
-$index parallel, sparsity pattern$$
-
-$subhead Faster Set Operations$$
-
-$list number$$
-The sparse set $code add_element$$ operation could be made faster
-by cashing the iterator where the $code std::set$$ inserts the 
-previous element. See the $code add_element$$ routine in the file
-$code sparse_set.hpp$$. 
-(This would have no effect when $code CPPAD_INTERNAL_SPARSE_SET$$ is
-defined to be $code sparse_list$$.)
-$lnext
-The memory allocation by standard set during sparsity calculations
-should be changed over to use $cref thread_alloc$$
-(requires making a standard allocator interface to $code omp_alloc$$).
-(This is already done when $code CPPAD_INTERNAL_SPARSE_SET$$ is
-defined to be $code sparse_list$$.)
-$lnext
-The $cref user_atomic$$ operations should allow the user to chose vectors
-of bits, instead of standard sets, for representing sets. This would
-be more efficient for most cases.
-$lend
-
-
-$head Speed Testing$$
-$index speed, extend tests$$
-$index MS Windows, extend speed tests$$
-Extend the speed tests for Adolc, Fadbad, and Sacado
-to run under MS Windows.
-Run the CppAD $cref speed$$ tests on a set of different machines
-and operating systems.
 
 $head Tracing$$
 $index operation, sequence tracing$$
@@ -247,18 +185,13 @@ $index sequence, operation tracing$$
 $index tracing, operation sequence$$
 Add operation sequence tracing to the user API and documentation.
 
-$head VecAD$$
-$index VecAD, improve assignment$$
-Make assignment operation in $cref VecAD$$ like
-assignment in $cref ad_ctor$$ and $cref ad_assign$$.
-This will fix slicing to $code int$$ when assigning
-from $code double$$ to 
-$code VecAD< AD<double> >::reference$$ object.
+$head user_atomic$$
+$index user, atomic functions$$
+$index atomic, user functions$$
+$index functions, user_atomic$$
+The $cref user_atomic$$ functions should allow the user to chose vectors
+of bits, instead of standard sets, for representing sparsity. This would
+be more efficient for most cases.
 
-$head Vector Element Type$$
-Change cross references from 
-$cref/elements of a specified type/SimpleVector/Elements of Specified Type/$$
-to
-$cref/value_type/SimpleVector/Value Type/$$.
 
 $end
