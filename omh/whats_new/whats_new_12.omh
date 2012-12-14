@@ -70,6 +70,17 @@ This section contains a list of the changes to CppAD during 2012
 The purpose of this section is to
 assist you in learning about changes between various versions of CppAD.
 
+$head 12-14$$
+$list number$$
+Fix the old $cref InstallUnix$$ so that it works with the
+new $code cppad.pc$$.
+$lnext
+Fix the old installation 
+$cref/--with-Documentation/InstallUnix/--with-Documentation/$$ option
+(it was attempting to copy from the wrong directory).
+$lend
+
+
 $head 12-13$$
 $list number$$
 Include documentation for $cref ipopt_prefix$$

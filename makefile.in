@@ -269,7 +269,10 @@ bindir = @bindir@
 build_alias = @build_alias@
 builddir = @builddir@
 cppad_SOURCE_DIR = @cppad_SOURCE_DIR@
+cppad_cflags = @cppad_cflags@
 cppad_description = @cppad_description@
+cppad_libs = @cppad_libs@
+cppad_requires = @cppad_requires@
 cppad_url = @cppad_url@
 cppad_version = @cppad_version@
 datadir = @datadir@
@@ -1246,7 +1249,7 @@ dist-hook:
 @CppAD_DOCUMENTATION_TRUE@install-data-hook:
 @CppAD_DOCUMENTATION_TRUE@	if [ ! -e $(doc_postfix) ] ; then mkdir -p $(doc_postfix) ; fi
 @CppAD_DOCUMENTATION_TRUE@	if [ -e $(doc_package) ] ; then rm -rf $(doc_package) ; fi
-@CppAD_DOCUMENTATION_TRUE@	cp -a $(top_builddir)/doc $(doc_package)
+@CppAD_DOCUMENTATION_TRUE@	cp -a $(top_srcdir)/doc $(doc_package)
 @CppAD_DOCUMENTATION_TRUE@	chmod -R a-w $(doc_package)
 @CppAD_DOCUMENTATION_TRUE@	chmod -R u+w $(doc_package)
 @CppAD_DOCUMENTATION_TRUE@	chmod -R a+r $(doc_package)

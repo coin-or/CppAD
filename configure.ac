@@ -664,12 +664,37 @@ else
 fi
 AC_MSG_RESULT([cppad_ipopt_nlp libraries: $CPPAD_IPOPT_LIBS])
 dnl --------------------------------------------------------------------------
-dnl names set here so same *.in files work for both cmake and autoconf.
+dnl names set here so same cppad.pc.in works for both with cmake and autoconf.
 dnl
+AC_SUBST(cppad_description, "Differentiation of C++ Algorithms")
 AC_SUBST(cppad_version, ${PACKAGE_VERSION} )
 AC_SUBST(cppad_url, "http://www.coin-or.org/CppAD")
-AC_SUBST(cppad_description, "Differentiation of C++ Algorithms")
+if test "$prefix" == "NONE" ; then
+	cppad_cflags_value="-I$HOME/include"
+	cppad_libs_value="-L$HOME/lib"
+else
+	cppad_cflags_value="-I$prefix/include"
+	cppad_libs_value="-L$prefix/lib"
+fi
+if test "$POSTFIX_DIR" != "" ; then
+	cppad_cflags_value="$cppad_cflags_value/$POSTFIX_DIR"
+	cppad_libs_value="$cppad_libs_value/$POSTFIX_DIR"
+fi
+if test "$IPOPT_DIR" == "" ; then
+	cppad_libs_value=""
+	cppad_requires_value=""
+else
+	cppad_libs_value="$cppad_libs_value -lcppad_ipopt"
+	cppad_requires_value="ipopt"
+fi
+AC_SUBST(cppad_cflags,   "$cppad_cflags_value")
+AC_SUBST(cppad_libs,     "$cppad_libs_value")
+AC_SUBST(cppad_requires, "$cppad_requires_value")
+dnl
+dnl names set here so cppad.pc-uninstalled works both with cmake and autoconf 
 AC_SUBST(cppad_SOURCE_DIR,  ${ABS_TOP_SRCDIR} )
+dnl
+dnl names set here so */test_one.sh.in works both with cmake and autoconf 
 AC_SUBST(adolc_prefix,      ${ADOLC_DIR} )
 AC_SUBST(eigen_prefix,      ${EIGEN_DIR} )
 dnl

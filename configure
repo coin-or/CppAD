@@ -610,9 +610,12 @@ LIBOBJS
 eigen_prefix
 adolc_prefix
 cppad_SOURCE_DIR
-cppad_description
+cppad_requires
+cppad_libs
+cppad_cflags
 cppad_url
 cppad_version
+cppad_description
 CPPAD_IPOPT_LIBS
 CPPAD_IPOPT_LD_PATH
 BTHREAD_LIB
@@ -7343,11 +7346,35 @@ ac_compiler_gnu=$ac_cv_c_compiler_gnu
 fi
 { $as_echo "$as_me:${as_lineno-$LINENO}: result: cppad_ipopt_nlp libraries: $CPPAD_IPOPT_LIBS" >&5
 $as_echo "cppad_ipopt_nlp libraries: $CPPAD_IPOPT_LIBS" >&6; }
+cppad_description="Differentiation of C++ Algorithms"
+
 cppad_version=${PACKAGE_VERSION}
 
 cppad_url="http://www.coin-or.org/CppAD"
 
-cppad_description="Differentiation of C++ Algorithms"
+if test "$prefix" == "NONE" ; then
+	cppad_cflags_value="-I$HOME/include"
+	cppad_libs_value="-L$HOME/lib"
+else
+	cppad_cflags_value="-I$prefix/include"
+	cppad_libs_value="-L$prefix/lib"
+fi
+if test "$POSTFIX_DIR" != "" ; then
+	cppad_cflags_value="$cppad_cflags_value/$POSTFIX_DIR"
+	cppad_libs_value="$cppad_libs_value/$POSTFIX_DIR"
+fi
+if test "$IPOPT_DIR" == "" ; then
+	cppad_libs_value=""
+	cppad_requires_value=""
+else
+	cppad_libs_value="$cppad_libs_value -lcppad_ipopt"
+	cppad_requires_value="ipopt"
+fi
+cppad_cflags="$cppad_cflags_value"
+
+cppad_libs="$cppad_libs_value"
+
+cppad_requires="$cppad_requires_value"
 
 cppad_SOURCE_DIR=${ABS_TOP_SRCDIR}
 

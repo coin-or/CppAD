@@ -16,3 +16,5 @@ Description:  @cppad_description@
 Version:      @cppad_version@
 URL:          @cppad_url@
 Cflags:       -I@cppad_SOURCE_DIR@
+Libs:
+Requires:
