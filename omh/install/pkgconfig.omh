@@ -11,6 +11,7 @@ Please visit http://www.coin-or.org/CppAD/ for information on other licenses.
 -------------------------------------------------------------------------- */
 $begin pkgconfig$$
 $spell
+	ipopt
 	CppAD
 	pkg-config
 	Cflags
@@ -33,6 +34,23 @@ see its
 $href%http://people.freedesktop.org/~dbn/pkg-config-guide.html%guide%$$
 for more information.
 
+$head Usage$$
+The necessary flags for compiling code that includes CppAD can 
+be obtained with the command
+$codep
+	pkg-config --cflags cppad
+$$
+Note that this command assumes $cref/cppad.pc/pkgconfig/$$ is in
+the search path $code PKG_CONFIG_PATH$$.
+If $cref ipopt_prefix$$ is specified,
+the necessary flags for linking $cref/cppad_ipopt/cppad_ipopt_nlp/$$
+can be obtained with the commands
+$codep
+	pkg-config --libs cppad
+$$
+Note that this command assumes $code ipopt.pc$$ is in
+the search path $code PKG_CONFIG_PATH$$.
+
 $head Defined Fields$$
 $table
 $icode Name$$ $cnext
@@ -49,6 +67,16 @@ $icode Version$$ $cnext
 $rnext
 $icode Cflags$$ $cnext
 	The necessary flags for using any of the CppAD include files.
+$rnext
+$icode Libs$$ $cnext
+	If $cref ipopt_prefix$$ is specified,
+	the necessary flags for using the $cref/cppad_ipopt/cppad_ipopt_nlp/$$
+	library
+$rnext
+$icode Requires$$ $cnext
+	If $cref ipopt_prefix$$ is specified,
+	the packages required to use the $cref/cppad_ipopt/cppad_ipopt_nlp/$$
+	library
 $tend
 
 $head CppAD Configuration Files$$

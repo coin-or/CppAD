@@ -88,10 +88,11 @@ by executing the following commands starting in the
 $cref/distribution directory/download/Distribution Directory/$$:
 $codei%
 	cd work/speed/adolc
-	make check
+	make check_speed_adolc
 %$$
-After executing $code make check$$, you can run a specific ADOL-C speed tests 
-by executing the command $code ./adolc$$;
+After executing $code make check_speed_adolc$$, 
+you can run a specific ADOL-C speed tests 
+by executing the command $code ./speed_adolc$$;
 see $cref speed_main$$ for the meaning of the command line
 options to this program.
 

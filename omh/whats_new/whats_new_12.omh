@@ -13,6 +13,7 @@ Please visit http://www.coin-or.org/CppAD/ for information on other licenses.
 $begin whats_new_12$$
 $dollar @$$
 $spell
+	pkgconfig
 	cppad_ipopt_nlp
 	includedir includedirs
 	libdir libdirs
@@ -68,6 +69,17 @@ This section contains a list of the changes to CppAD during 2012
 (in reverse order by date).
 The purpose of this section is to
 assist you in learning about changes between various versions of CppAD.
+
+$head 12-13$$
+$list number$$
+Include documentation for $cref ipopt_prefix$$
+$lnext
+Fix the $code cppad.pc$$ $cref pkgconfig$$ file
+so that it includes the necessary libraries and include commands
+when $cref ipopt_prefix$$ is specified; see
+$cref/pkgconfig usage/pkgconfig/Usage/$$.
+$lend
+
 
 $head 11-28$$
 Update the $cref WishList$$:

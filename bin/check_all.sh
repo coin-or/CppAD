@@ -81,7 +81,7 @@ fi
 #
 if [ -d '/usr/lib64' ]
 then
-	cmake_args="$cmake_args -D cmake_install_libdirs='lib;lib64'"
+	cmake_args="$cmake_args -D cmake_install_libdirs='lib64;lib'"
 elif [ -d '/usr/lib' ]
 then
 	cmake_args="$cmake_args -D cmake_install_libdirs='lib;lib64'"

@@ -11,12 +11,10 @@
 # -----------------------------------------------------------------------------
 # This file is used with pkg-config to include CppAD after it is installed
 
-# Location of include files depends on POSTFIX_DIR, see trunk/makefile.am
-@CppAD_POSTFIX_TRUE@  cppad_includedir=@prefix@/include/@POSTFIX_DIR@
-@CppAD_POSTFIX_FALSE@ cppad_includedir=@prefix@/include
-
 Name:         cppad
 Description:  @cppad_description@
 Version:      @cppad_version@
 URL:          @cppad_url@
-Cflags:       -I${cppad_includedir}
+Cflags:       @cppad_cflags@
+Libs:         @cppad_libs@
+Requires:     @cppad_requires@

@@ -53,10 +53,11 @@ by executing the following commands starting in the
 $cref/distribution directory/download/Distribution Directory/$$:
 $codei%
 	cd work/speed/sacado
-	make check
+	make check_speed_sacado
 %$$
-After executing $code make check$$, you can run a specific Sacado speed test 
-by executing the command $code ./sacado$$;
+After executing $code make check_speed_sacado$$, 
+you can run a specific Sacado speed test 
+by executing the command $code ./speed_sacado$$;
 see $cref speed_main$$ for the meaning of the command line
 options to this program.
 

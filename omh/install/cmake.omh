@@ -93,6 +93,7 @@ cmake %%                                                          \
 	-D adolc_prefix=%adolc_prefix%                               \
 	-D eigen_prefix=%eigen_prefix%                               \
 	-D fadbad_prefix=%fadbad_prefix%                             \
+	-D ipopt_prefix=%ipopt_prefix%                               \
 	-D sacado_prefix=%sacado_prefix%                             \
 	\
 	-D cppad_cxx_flags=%cppad_cxx_flags%                         \
@@ -214,6 +215,7 @@ $table
 $rref adolc_prefix$$
 $rref eigen_prefix$$
 $rref fadbad_prefix$$
+$rref ipopt_prefix$$
 $rref sacado_prefix$$
 $tend
 
@@ -338,6 +340,7 @@ $children%
 	omh/install/adolc_prefix.omh%
 	omh/install/eigen_prefix.omh%
 	omh/install/fadbad_prefix.omh%
+	omh/install/ipopt_prefix.omh%
 	omh/install/sacado_prefix.omh%
 	omh/install/testvector.omh
 %$$

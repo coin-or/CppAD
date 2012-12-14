@@ -1,0 +1,62 @@
+/* $Id$ */
+/* --------------------------------------------------------------------------
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-12 Bradley M. Bell
+
+CppAD is distributed under multiple licenses. This distribution is under
+the terms of the 
+                    Eclipse Public License Version 1.0.
+
+A copy of this license is included in the COPYING file of this distribution.
+Please visit http://www.coin-or.org/CppAD/ for information on other licenses.
+-------------------------------------------------------------------------- */
+$begin ipopt_prefix$$
+$dollar @$$
+$spell
+	IpIpopt
+	dir
+	cppad
+	cmake
+	includedirs
+	hpp
+$$
+
+$section Including the cppad_ipopt Library and Tests$$
+$index ipopt, cppad library$$
+$index library, cppad_ipopt$$
+
+$head Purpose$$
+Includes the $cref cppad_ipopt_nlp$$  
+example and tests as well as installing the $code cppad_ipopt$$ library
+during the $code make install$$ step. 
+
+
+$head ipopt_prefix$$
+$index ipopt, prefix$$
+$index prefix, ipopt$$
+If you have
+$href%http://www.coin-or.org/projects/Ipopt.xml%Ipopt%$$
+installed on your system, you can 
+specify the value for $icode ipopt_prefix$$ on the
+$cref cmake$$ command line.
+The value of $icode ipopt_prefix$$ must be such that,
+for one of the directories $icode dir$$ in
+$cref/cmake_install_includedirs/cmake/cmake_install_includedirs/$$,
+$codei%
+	%ipopt_prefix%/%dir%/coin/IpIpoptApplication.hpp
+%$$
+is a valid way to reference to the include file 
+$code IpIpoptApplication.hpp$$.
+
+$head Examples and Tests$$
+$index example, ipopt$$
+$index ipopt, example$$
+If you include $icode ipopt_prefix$$ on the $cref cmake$$ command line,
+you will be able to run the Ipopt examples and tests 
+by executing the following commands starting in the
+$cref/distribution directory/download/Distribution Directory/$$:
+$codei%
+	cd cppad_ipopt
+	make check_ipopt
+%$$
+
+$end

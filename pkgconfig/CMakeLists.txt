@@ -12,10 +12,21 @@
 # Build the cppad pkg-config information files.
 # Inherit environment from ../CMakeLists.txt
 #
-# Special values needed so same *.in files work for both autoconf and cmake
-# (comment out autoconfs choice)
-SET(CppAD_POSTFIX_TRUE  "#")
-SET(CppAD_POSTFIX_FALSE "#")
+SET(cppad_cflags "-I${cppad_abs_includedir}")
+SET(cppad_libs "")
+SET(cppad_requires "")
+IF( ipopt_prefix )
+	SET(cppad_libs "-L${cppad_abs_libdir} -lcppad_ipopt")
+	SET(cppad_requires "ipopt")
+	FOREACH(dir ${cmake_install_includedirs})
+		IF(IS_DIRECTORY ${ipopt_prefix}/${dir} )
+			SET(cppad_cflags "${cppad_cflags} -I${ipopt_prefix}/${dir}" )
+		ENDIF(IS_DIRECTORY ${ipopt_prefix}/${dir} )
+	ENDFOREACH(dir)
+ENDIF( ipopt_prefix )
+MESSAGE(STATUS "cppad_cflags = ${cppad_cflags}")
+MESSAGE(STATUS "cppad_libs = ${cppad_libs}")
+MESSAGE(STATUS "cppad_requires = ${cppad_requires}")
 #
 # Copy a file to another location and modify its contents.
 # configure_file(InputFile OutputFile [COPYONLY] [ESCAPE_QUOTES] [@ONLY])

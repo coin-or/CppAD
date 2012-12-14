@@ -53,10 +53,10 @@ by executing the following commands starting in the
 $cref/distribution directory/download/Distribution Directory/$$:
 $codei%
 	cd work/speed/fadbad
-	make check
+	make check_speed_fadbad
 %$$
 After executing $code make check$$, you can run a specific FADBAD speed test 
-by executing the command $code ./fadbad$$;
+by executing the command $code ./speed_fadbad$$;
 see $cref speed_main$$ for the meaning of the command line
 options to this program.
 
