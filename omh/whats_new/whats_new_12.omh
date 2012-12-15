@@ -73,6 +73,10 @@ assist you in learning about changes between various versions of CppAD.
 
 $head 12-15$$
 $list number$$
+Advance version number from $code 20121120$$ to $code 20121215$$.
+Note that the CppAD version number no longer automatically advances with the 
+date and is rather chosen to advance to the current date.
+$lnext
 The $cref cmake$$ installation was putting the $code cppad.pc$$
 $cref pkgconfig$$ file in 
 $codei%

@@ -67,4 +67,8 @@ ADD_CUSTOM_TARGET(check_speed_profile
 #	gprof speed_profile gmon.out | sed -f 'gprof.sed' > gprof.out
 #
 # configure_file(InputFile OutputFile [COPYONLY] [ESCAPE_QUOTES] [@ONLY])
-CONFIGURE_FILE(gprof.sed.in gprof.sed COPYONLY)
+CONFIGURE_FILE(
+	${CMAKE_CURRENT_SOURCE_DIR}/gprof.sed.in
+	${CMAKE_CURRENT_BINARY_DIR}/gprof.sed
+	COPYONLY
+)

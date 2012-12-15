@@ -85,8 +85,8 @@ then
 		echo 'convert new_stable.sh and new_release.sh to use bin/package.sh'
 		exit 1
 	fi
-	echo 'bin/version.sh set'
-	bin/version.sh set 
+	echo 'bin/version.sh copy'
+	bin/version.sh copy 
 	#
 	echo "OK: ./build.sh version"
 	exit 0

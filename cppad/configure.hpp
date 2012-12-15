@@ -42,7 +42,7 @@ Replacement for config.h so that all preprocessor symbols begin with CPPAD_
 \def CPPAD_PACKAGE_STRING
 cppad-yyyymmdd as a C string where yyyy is year, mm is month, and dd is day.
 */
-# define CPPAD_PACKAGE_STRING "cppad-20121120"
+# define CPPAD_PACKAGE_STRING "cppad-20121215"
  
  /*!
 def CPPAD_INTERNAL_SPARSE_SET

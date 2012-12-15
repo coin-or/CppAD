@@ -30,8 +30,20 @@ then
 	echo_exec rm package.log
 fi
 # ----------------------------------------------------------------------------
+# Automated updates to source directory
+#
+# Use CMakeLists.txt to update version number in other files
 version=`bin/version.sh get`
 echo_exec bin/version.sh copy
+#
+# Update cppad/configure.hpp, example/test_one.sh, test_more/test_one.sh
+if [ ! -d work ]
+then
+	echo_exec mkdir work
+fi
+echo_exec cd work
+echo_exec cmake ..
+echo_exec cd ..
 # ----------------------------------------------------------------------------
 # Run automated checking of file names in original source directory
 # (check_include_omh.sh uses files built by cmake)
