@@ -10,16 +10,18 @@
 # A copy of this license is included in the COPYING file of this distribution.
 # Please visit http://www.coin-or.org/CppAD/ for information on other licenses.
 # -----------------------------------------------------------------------------
-if [ $0 != "bin/version.sh" ]
+if [ $0 != 'bin/version.sh' ]
 then
-	echo "bin/version.sh: must be executed from its parent directory"
+	echo 'bin/version.sh: must be executed from its parent directory'
 	exit 1
 fi
-if [ "$1" != 'get' ] && [ "$1" != 'set' ]
+if [ "$1" != 'get' ] && [ "$1" != 'set' ] && [ "$1" != 'copy' ]
 then
-	echo 'usage: bin/version.sh (get | set)'
-	echo 'Either gets the version number from CMakeLists.txt or uses that'
-	echo 'version number to set the version number in the other files.' 
+	echo 'usage: bin/version.sh (get | set | copy)'
+	echo 'get:  Gets the current version number from CMakeLists.txt.'
+	echo 'set:  Sets CMakeLists.txt version number to current yyyymmdd.'
+	echo 'copy: Copies version number from CMakeLists.txt to other files.'
+	exit 1
 fi
 echo_exec() {
      echo $* 
@@ -40,19 +42,35 @@ then
 	exit 0
 fi
 # -----------------------------------------------------------------------------
+version=`date +%Y%m%d`
+if [ "$1" == 'set' ]
+then
+	echo 'sed -i.old CMakeLists.txt ...'
+	sed  \
+		-e "s/(\(cppad_version *\)\"[0-9]\{8\}\" *)/(\1\"$version\" )/"  \
+		-i.old CMakeLists.txt
+	if diff CMakeLists.txt CMakeLists.txt.old
+	then
+		echo 'No change in CMakeLists.txt'
+		exit 1
+	fi
+	echo 'bin/version.sh set: OK'
+	exit 0
+fi
+# -----------------------------------------------------------------------------
 # Make the version number in the relevant files is the same
 yyyy_mm_dd=`echo $version | sed -e 's|\(....\)\(..\)\(..\)|\1-\2-\3|'`
-echo "sed -i.old AUTHORS ..."
+echo 'sed -i.old AUTHORS ...'
 sed  \
 	-e "s/, [0-9]\{4\}-[0-9]\{2\}-[0-9]\{2\} *,/, $yyyy_mm_dd,/" \
 	-i.old AUTHORS
 #
-echo "sed -i.old configure.ac ..."
+echo 'sed -i.old configure.ac ...'
 sed  \
 	-e "s/(cppad, [0-9]\{8\}[.0-9]* *,/(cppad, $version,/"  \
 	-i.old configure.ac
 #
-echo "sed -i.old configure ..."
+echo 'sed -i.old configure ...'
 sed \
 	-e "s/cppad [0-9]\{8\}[.0-9]*/cppad $version/g" \
 	-e "s/VERSION='[0-9]\{8\}[.0-9]*'/VERSION='$version'/g" \
@@ -78,12 +96,13 @@ list="
 "
 for name in $list
 do
-	echo "-------------------------------------------------------------"
+	echo '-------------------------------------------------------------'
 	echo "diff $name.old $name"
 	if diff $name.old $name
 	then
-		echo "	no difference was found"
+		echo '	no difference was found'
 	fi
 	#
 	echo_exec rm $name.old
 done
+echo 'bin/version.sh copy: OK'

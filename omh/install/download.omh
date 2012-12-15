@@ -55,9 +55,9 @@ $subhead Current Version$$
 The download files below are for the current version of CppAD.
 
 $table
-EPL License $pre  $$ $cnext $href%cppad-20121120.epl.tgz%$$ 
+EPL License $pre  $$ $cnext $href%cppad-20121215.epl.tgz%$$ 
 $rnext
-GPL License $pre  $$ $cnext $href%cppad-20121120.gpl.tgz%$$
+GPL License $pre  $$ $cnext $href%cppad-20121215.gpl.tgz%$$
 $tend
 
 $subhead Release Versions$$

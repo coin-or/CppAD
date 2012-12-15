@@ -31,7 +31,7 @@ then
 fi
 # ----------------------------------------------------------------------------
 version=`bin/version.sh get`
-echo_exec bin/version.sh set
+echo_exec bin/version.sh copy
 # ----------------------------------------------------------------------------
 # Run automated checking of file names in original source directory
 # (check_include_omh.sh uses files built by cmake)
