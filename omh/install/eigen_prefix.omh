@@ -60,7 +60,7 @@ by executing the following commands starting in the
 $cref/distribution directory/download/Distribution Directory/$$:
 $codei%
 	cd work/example
-	make check
+	make check_example
 %$$
 If you do this,
 you will see an indication that the examples

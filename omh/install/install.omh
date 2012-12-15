@@ -25,21 +25,31 @@ $index test$$
 
 $section CppAD Download, Test, and Install Instructions$$
 
-$head Instruction$$
-$list number$$
+$head Instructions$$
+
+$subhead Download$$
 Use the $cref download$$ instructions to obtain a copy or CppAD.
-$lnext
+
+$subhead Cmake$$
 Use the $cref cmake$$ instructions to configure CppAD.
-$lnext
+
+$subhead Test$$
 Use the $cref cppad_test$$ instructions to test CppAD.
-$lnext
-Use the command $code make install$$ to install CppAD
+
+$subhead Install$$
+Use the command
+$codep
+	make install
+$$
+to install CppAD.
 If you created $code nmake$$ makefiles, you will have
-to use $code nmake install$$; see
-the $cref/generator/cmake/generator/$$ option for the $code cmake$$ command.
-$lend
-The old $cref InstallUnix$$ instructions 
-have been deprecated.
+to use
+$codep
+	nmake install
+$$
+see the 
+$cref/generator/cmake/generator/$$ option for the $code cmake$$ command.
+
 
 $childtable%
 	omh/install/download.omh%

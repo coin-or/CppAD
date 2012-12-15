@@ -13,6 +13,7 @@ Please visit http://www.coin-or.org/CppAD/ for information on other licenses.
 $begin whats_new_12$$
 $dollar @$$
 $spell
+	datadir
 	pkgconfig
 	cppad_ipopt_nlp
 	includedir includedirs
@@ -69,6 +70,28 @@ This section contains a list of the changes to CppAD during 2012
 (in reverse order by date).
 The purpose of this section is to
 assist you in learning about changes between various versions of CppAD.
+
+$head 12-15$$
+$list number$$
+The $cref cmake$$ installation was putting the $code cppad.pc$$
+$cref pkgconfig$$ file in 
+$codei%
+	cmake_install_prefix%/cmake_install_datadir%/cppad.pc
+%$$
+This has been fixed and is now
+$codei%
+	cmake_install_prefix%/cmake_install_datadir%/pkgconfig/cppad.pc
+%$$
+$lnext
+The $cref pkgconfig$$ documentation has been improved.
+$lnext
+The command for running the 
+$cref/adolc examples/adolc_prefix/Examples/$$ and
+$cref/eigen examples/eigen_prefix/Examples/$$
+was fixed
+(changed from $code make check$$ to $code make check_example$$).
+$lend
+
 
 $head 12-14$$
 $list number$$
