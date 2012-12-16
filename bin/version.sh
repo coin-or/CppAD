@@ -28,20 +28,6 @@ echo_exec() {
      eval $*
 }
 # -----------------------------------------------------------------------------
-# get the current version number
-version=`grep '^SET *( *cppad_version ' CMakeLists.txt | \
-	sed -e 's|^SET *( *cppad_version *"\([0-9]*\)" *)|\1|'`
-if ! (echo $version | grep '[0-9]\{8\}$') > /dev/null
-then
-	echo 'package.sh: Cannot find verison number in CMakeLists.txt'
-	exit 1
-fi 
-if [ "$1" == 'get' ]
-then
-	echo "$version"
-	exit 0
-fi
-# -----------------------------------------------------------------------------
 version=`date +%Y%m%d`
 if [ "$1" == 'set' ]
 then
@@ -55,6 +41,20 @@ then
 		exit 1
 	fi
 	echo 'bin/version.sh set: OK'
+	exit 0
+fi
+# -----------------------------------------------------------------------------
+# get the current version number
+version=`grep '^SET *( *cppad_version ' CMakeLists.txt | \
+	sed -e 's|^SET *( *cppad_version *"\([0-9]*\)" *)|\1|'`
+if ! (echo $version | grep '[0-9]\{8\}$') > /dev/null
+then
+	echo 'package.sh: Cannot find verison number in CMakeLists.txt'
+	exit 1
+fi 
+if [ "$1" == 'get' ]
+then
+	echo "$version"
 	exit 0
 fi
 # -----------------------------------------------------------------------------
