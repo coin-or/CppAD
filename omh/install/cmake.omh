@@ -303,7 +303,7 @@ The valid values for this type are
 $code unsigned short int$$,
 $code unsigned int$$, and
 $code size_t$$.
-The smaller the value of $icode%sizeof(%cppad_tape_id_type%)%$$,
+The smaller the value of $codei%sizeof(%cppad_tape_id_type%)%$$,
 the less memory is used.
 On the other hand, the value
 $codei%
@@ -322,7 +322,7 @@ The valid values for this argument are
 $code unsigned short int$$,
 $code unsigned int$$,
 $code size_t$$.
-The smaller the value of $icode%sizeof(%cppad_tape_addr_type%)%$$,
+The smaller the value of $codei%sizeof(%cppad_tape_addr_type%)%$$,
 the less memory is used.
 On the other hand, the value
 $codei%
