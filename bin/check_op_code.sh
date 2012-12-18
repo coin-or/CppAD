@@ -1,7 +1,7 @@
 #! /bin/bash -e
 # $Id$
 # -----------------------------------------------------------------------------
-# CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-11 Bradley M. Bell
+# CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-12 Bradley M. Bell
 #
 # CppAD is distributed under multiple licenses. This distribution is under
 # the terms of the
@@ -18,8 +18,8 @@ fi
 echo "bin/check_op_code.sh: checking that op codes are in alphabetical order:"
 # ---------------------------------------------------------------------------
 # check enum list of codes are in alphabetical order
-sed -n -e '/^enum/,/^};/p' cppad/local/op_code.hpp | \
-	sed -e '/^enum/d' -e '/^};/d' \
+sed -n -e '/^enum/,/^\tNumberOp$/p' cppad/local/op_code.hpp | \
+	sed -e '/^enum/d' -e '/^\tNumberOp$/d' \
 		-e 's/^[ 	]*//' -e 's/Op[, ].*//' -e '/^\/\//d' > bin/op_code.1.$$
 #
 sort --ignore-case bin/op_code.1.$$ > bin/op_code.2.$$

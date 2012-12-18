@@ -3,7 +3,7 @@
 # define CPPAD_HASH_CODE_INCLUDED
 
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-11 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-12 Bradley M. Bell
 
 CppAD is distributed under multiple licenses. This distribution is under
 the terms of the 
@@ -114,7 +114,7 @@ is a hash code that is between zero and CPPAD_HASH_TABLE_SIZE - 1.
 \li \c sizeof(size_t) is even 
 \li \c sizeof(Base) is even 
 \li \c sizeof(unsigned short)  == 2
-\li \c size_t(op) <= size_t(SubvvOp) < CPPAD_HASH_TABLE_SIZE
+\li \c size_t(op) < size_t(NumberOp) <= CPPAD_HASH_TABLE_SIZE
 \li if the j-th argument for this operation is a parameter, arg[j] < npar.
 */
 
@@ -129,12 +129,12 @@ unsigned short hash_code(
 		>=
 		CPPAD_HASH_TABLE_SIZE
 	);
-	CPPAD_ASSERT_UNKNOWN( size_t (op) <= size_t(SubvvOp) );
+	CPPAD_ASSERT_UNKNOWN( size_t (op) < size_t(NumberOp) );
 	CPPAD_ASSERT_UNKNOWN( sizeof(unsigned short) == 2 );
 	CPPAD_ASSERT_UNKNOWN( sizeof(addr_t) % 2  == 0 );
 	CPPAD_ASSERT_UNKNOWN( sizeof(Base) % 2  == 0 );
 	unsigned short op_fac = static_cast<unsigned short> (
-	CPPAD_HASH_TABLE_SIZE / ( 1 + static_cast<unsigned short>(SubvvOp) ) 
+		CPPAD_HASH_TABLE_SIZE / static_cast<unsigned short>(NumberOp)
 	);
 	CPPAD_ASSERT_UNKNOWN( op_fac > 0 );
 

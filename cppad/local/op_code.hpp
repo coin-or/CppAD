@@ -3,7 +3,7 @@
 # define CPPAD_OP_CODE_INCLUDED
 
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-11 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-12 Bradley M. Bell
 
 CppAD is distributed under multiple licenses. This distribution is under
 the terms of the 
@@ -88,13 +88,16 @@ enum OpCode {
 	SubvvOp,  //      variable   - variable
 	TanOp,    //  tan(variable)
 	TanhOp,   //  tan(variable)
-	// user atomic operation codes (note yet implemented)
+	// user atomic operation codes
 	UserOp,   //  start of a user atomic operaiton
 	UsrapOp,  //  this user atomic argument is a parameter
 	UsravOp,  //  this user atomic argument is a variable
 	UsrrpOp,  //  this user atomic result is a parameter
-	UsrrvOp   //  this user atomic result is a variable
+	UsrrvOp,  //  this user atomic result is a variable
+	NumberOp
 };
+// Note that bin/check_op_code.sh assumes the pattern '^\tNumberOp$' occurs
+// at the end of this list and only at the end of this list.
 
 /*!
 Table containing number of arguments for the corresponding operator.
@@ -169,7 +172,7 @@ Number of arguments corresponding to the specified operator.
 \param op 
 Operator for which we are fetching the number of arugments.
 
-- Check that \c UsrrvOp is the last defined operator.
+- Check that argument taple size equal to NumberOp
 - Check that \c CPPAD_OP_CODE_TYPE can support all the operator codes.
 - Check that \c op is a valid operator value.
 */
@@ -179,16 +182,16 @@ inline size_t NumArg( OpCode op)
 	// only do these checks once to save time
 	static bool first = true;
 	if( first )
-	{	CPPAD_ASSERT_UNKNOWN( size_t(UsrrvOp) == 
-			sizeof(NumArgTable) / sizeof(NumArgTable[0]) - 1
+	{	CPPAD_ASSERT_UNKNOWN( size_t(NumberOp) ==
+			sizeof(NumArgTable) / sizeof(NumArgTable[0])
 		);
-		CPPAD_ASSERT_UNKNOWN( size_t(UsrrvOp) <=
+		CPPAD_ASSERT_UNKNOWN( size_t(NumberOp) <=
 			std::numeric_limits<CPPAD_OP_CODE_TYPE>::max()
 		);
 		first = false;
 	}
 	// do this check every time
-	CPPAD_ASSERT_UNKNOWN( size_t(op) <= size_t(UsrrvOp) );
+	CPPAD_ASSERT_UNKNOWN( size_t(op) < size_t(NumberOp) );
 # endif
 
 	return NumArgTable[(size_t) op];
@@ -270,11 +273,11 @@ Operator for which we are fetching the number of result variables.
 */
 inline size_t NumRes(OpCode op)
 {	// check ensuring conversion to size_t is as expected
-	CPPAD_ASSERT_UNKNOWN( size_t(UsrrvOp) == 
-		sizeof(NumResTable) / sizeof(NumResTable[0]) - 2
+	CPPAD_ASSERT_UNKNOWN( size_t(NumberOp) == 
+		sizeof(NumResTable) / sizeof(NumResTable[0]) - 1
 	);
 	// this test ensures that all indices are within the table
-	CPPAD_ASSERT_UNKNOWN( size_t(op) <= size_t(UsrrvOp) );
+	CPPAD_ASSERT_UNKNOWN( size_t(op) < size_t(NumberOp) );
 
 	return NumResTable[(size_t) op];
 }
@@ -459,7 +462,7 @@ void printOp(
 		"Usrrv"
 	};
 	CPPAD_ASSERT_UNKNOWN( 
-		size_t(UsrrvOp) == sizeof(OpName) / sizeof(OpName[0]) - 1
+		size_t(NumberOp) == sizeof(OpName) / sizeof(OpName[0])
 	);
 
 	// print operator

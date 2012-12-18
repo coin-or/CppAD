@@ -71,6 +71,13 @@ This section contains a list of the changes to CppAD during 2012
 The purpose of this section is to
 assist you in learning about changes between various versions of CppAD.
 
+$head 12-17$$
+There was a mistake in a check for a valid op code in the
+file $code hash_code.hpp$$.
+This mistake could generate a C++ assertion with an unknown error source.
+It has been fixed.
+  
+
 $head 12-15$$
 $list number$$
 Advance version number from $code 20121120$$ to $code 20121215$$.
