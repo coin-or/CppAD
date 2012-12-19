@@ -15,9 +15,16 @@ Please visit http://www.coin-or.org/CppAD/ for information on other licenses.
 # include <stdlib.h>
 # include <math.h>
 # include <stdio.h>
-# include <stdbool.h>
 # include <sys/time.h>
 # include <stddef.h>
+
+// In the case of plain C, we defined the type bool together with ture, false
+# ifndef __cplusplus
+# define bool int
+# define true 1
+# define false 0
+# endif 
+
 /*
 -------------------------------------------------------------------------------
 $begin det_of_minor_c$$
@@ -155,7 +162,7 @@ $$
 $head Source Code$$
 $codep */
 double det_of_minor( 
-	const double*              a  , 
+	const double*        a  , 
 	size_t               m  , 
 	size_t               n  , 
 	size_t*              r  , 
