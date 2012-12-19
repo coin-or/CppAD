@@ -13,6 +13,7 @@ Please visit http://www.coin-or.org/CppAD/ for information on other licenses.
 $begin whats_new_12$$
 $dollar @$$
 $spell
+	sys
 	stdbool
 	datadir
 	pkgconfig
@@ -73,7 +74,8 @@ The purpose of this section is to
 assist you in learning about changes between various versions of CppAD.
 
 $head 12-19$$
-The file $code <stdbool.h>$$ does not exist for all C compilers,
+The files $code <stdbool.h>$$ and $code <sys/time.h>$$ 
+do not exist for all C compilers,
 and this caused a problem when using the Windows compiler.
 This has been fixed by defining the type bool inside the
 $code compare_c/det_by_minor.c$$ source code.

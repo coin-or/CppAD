@@ -15,7 +15,6 @@ Please visit http://www.coin-or.org/CppAD/ for information on other licenses.
 # include <stdlib.h>
 # include <math.h>
 # include <stdio.h>
-# include <sys/time.h>
 # include <stddef.h>
 
 // In the case of plain C, we defined the type bool together with ture, false
@@ -473,6 +472,11 @@ is a $code double$$ equal to the
 number of seconds since the first call to $code elapsed_seconds$$.
 
 $spell
+	Microsoft
+	cassert
+	milli
+	sys
+	endif
 	usec
 	diff
 	bool
@@ -481,6 +485,40 @@ $spell
 $$
 $head Source Code$$
 $codep */
+# if _MSC_VER
+// ---------------------------------------------------------------------------
+// Microsoft version of timer
+# include <windows.h>
+# include <cassert>
+double elapsed_seconds(void)
+{	static bool       first_  = true;
+	static SYSTEMTIME st_;
+	double hour, minute, second, milli, diff;
+	SYSTEMTIME st;
+
+	if( first_ )
+	{	GetSystemTime(&st_);
+		first_ = false;
+		return 0.;
+	}
+	GetSystemTime(&st);
+
+	hour   = (double) st.wHour         - (double) st_.wHour;
+	minute = (double) st.wMinute       - (double) st_.wMinute;
+	second = (double) st.wSecond       - (double) st_.wSecond;
+	milli  = (double) st.wMilliseconds - (double) st_.wMilliseconds;
+
+	diff   = 1e-3*milli + second + 60.*minute + 3600.*hour;
+	if( diff < 0. )
+		diff += 3600.*24.;
+	assert( 0 <= diff && diff < 3600.*24. );
+
+	return diff;
+}
+# else
+// ---------------------------------------------------------------------------
+// Unix version of timer
+# include <sys/time.h>
 double elapsed_seconds(void)
 {	double sec, usec, diff;
 
@@ -501,6 +539,7 @@ double elapsed_seconds(void)
 
 	return diff;
 }
+# endif
 /* $$
 $end
 -----------------------------------------------------------------------------
