@@ -75,11 +75,15 @@ The purpose of this section is to
 assist you in learning about changes between various versions of CppAD.
 
 $head 12-20$$
+$list number$$
 The $cref/install instructions/install/Instructions/$$ 
 were installing $code cppad/CMakeLists.txt$$ and $code cppad/configure.hpp.in$$
 in the $code cppad$$ include directory.
 This has been fixed so that only $icode%*%.h%$$ and $icode%*%.hpp%$$ files
 get installed in the $code cppad$$ include directory.
+$lnext
+Advance the version number to $code cppad-20121220$$.
+$lend
 
 $head 12-19$$
 The files $code <stdbool.h>$$ and $code <sys/time.h>$$ 
