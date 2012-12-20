@@ -117,8 +117,9 @@ $icode generator$$ $cnext Description $rnext
 $code "Unix Makefiles"$$   $cnext make files for unix operating system $rnext
 $code "NMake Makefiles"$$  $cnext make files for Visual Studio
 $tend
-Other generator choices are available
-(see the documentation for your version of $code cmake$$).
+Other generator choices are available; see the cmake 
+$href%http://www.cmake.org/cmake/help/cmake2.6docs.html#section_Generators%
+generators%$$ documentation.
 
 $head cmake_install_prefix$$
 $index install, prefix$$

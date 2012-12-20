@@ -13,6 +13,7 @@ Please visit http://www.coin-or.org/CppAD/ for information on other licenses.
 $begin whats_new_12$$
 $dollar @$$
 $spell
+	txt
 	sys
 	stdbool
 	datadir
@@ -72,6 +73,13 @@ This section contains a list of the changes to CppAD during 2012
 (in reverse order by date).
 The purpose of this section is to
 assist you in learning about changes between various versions of CppAD.
+
+$head 12-20$$
+The $cref/install instructions/install/Instructions/$$ 
+were installing $code cppad/CMakeLists.txt$$ and $code cppad/configure.hpp.in$$
+in the $code cppad$$ include directory.
+This has been fixed so that only $icode%*%.h%$$ and $icode%*%.hpp%$$ files
+get installed in the $code cppad$$ include directory.
 
 $head 12-19$$
 The files $code <stdbool.h>$$ and $code <sys/time.h>$$ 
