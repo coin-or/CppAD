@@ -16,13 +16,15 @@ then
 	exit 1
 fi
 # -----------------------------------------------------------------------------
-if [ "$1" == "" ]
+if [ "$3" == "" ]
 then
-	echo "usage: bin/doxyfile.sh version"
+	echo "usage: bin/doxyfile.sh version error_file output_directory"
 	echo "creates the doxygen configuration file ./doxyfile"
 	exit 1
 fi
 version="$1"
+error_file="$2"
+output_directory="$3"
 echo "create bin/doxyfile.$$"
 cat << EOF > bin/doxyfile.$$
 ALWAYS_DETAILED_SEC     = YES
@@ -39,7 +41,7 @@ INHERIT_DOCS            = NO
 INLINE_INHERITED_MEMB   = YES
 INPUT                   = ./cppad  ./cppad/local ./cppad_ipopt/src ./speed/src
 MULTILINE_CPP_IS_BRIEF  = YES
-OUTPUT_DIRECTORY        = doxydoc
+OUTPUT_DIRECTORY        = $output_directory
 PROJECT_NAME            = "CppAD: A C++ Algorithmic Differentiation Package"
 PROJECT_NUMBER          = $version
 QT_AUTOBRIEF            = YES
@@ -54,7 +56,7 @@ STRIP_CODE_COMMENTS     = NO
 SUBGROUPING             = NO
 TAB_SIZE                = 5
 VERBATIM_HEADERS        = NO
-WARN_LOGFILE            = doxygen.err
+WARN_LOGFILE            = $error_file
 WARN_NO_PARAMDOC        = YES
 EOF
 sed \

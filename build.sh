@@ -359,32 +359,8 @@ fi
 # -----------------------------------------------------------------------------
 if [ "$1" = "doxygen" ]
 then
-	if [ -e doxygen.err ]
-	then
-		echo "rm doxygen.err"
-		rm doxygen.err
-	fi
-	#
-	if [ -e doxydoc ]
-	then
-		echo "rm -r doxydoc"
-		rm -r doxydoc
-	fi
-	#
-	echo "mkdir doxydoc"
-	mkdir doxydoc
-	#
-	echo "bin/doxyfile.sh $version"
-	bin/doxyfile.sh $version
-	#
-	echo "doxygen doxyfile"
-	doxygen doxyfile
-	#
-	echo "cat doxygen.err"
-	cat doxygen.err 
-	#
-	echo "bin/check_doxygen.sh"
-	bin/check_doxygen.sh
+	echo "bin/run_doxygen.sh"
+	bin/run_doxygen.sh
 	#
 	echo "OK: ./build.sh doxygen"
 	exit 0

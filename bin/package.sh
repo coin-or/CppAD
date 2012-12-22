@@ -19,11 +19,6 @@ echo_exec() {
      echo $* 
      eval $*
 }
-echo_exec_log() {
-	echo "$* >> package.log"
-	echo    >> $top_srcdir/package.log
-	eval $* >> $top_srcdir/package.log
-}
 top_srcdir=`pwd`
 if [ -e package.log ]
 then
@@ -62,6 +57,9 @@ for check in $list
 do
 	echo_exec bin/$check
 done
+# ----------------------------------------------------------------------------
+# Check for doxygen errors
+echo_exec bin/run_doxygen.sh
 # ----------------------------------------------------------------------------
 # Create the package directory
 package_dir="work/cppad-$version"
