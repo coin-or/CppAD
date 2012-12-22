@@ -165,6 +165,8 @@ $end
 
 CPPAD_BEGIN_NAMESPACE
 /*!
+\defgroup discrete_hpp discrete.hpp
+\{
 \file discrete.hpp
 user define discrete functions
 */
@@ -305,5 +307,6 @@ public:
 	}
 };
 
+/* \} */
 CPPAD_END_NAMESPACE
 # endif

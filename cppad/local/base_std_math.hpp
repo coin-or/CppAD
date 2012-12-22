@@ -183,6 +183,8 @@ $end
 CPPAD_BEGIN_NAMESPACE
 
 /*!
+\defgroup base_std_math_hpp base_std_math.hpp
+\{
 \file base_std_math.hpp
 Defintions that aid meeting Base type requirements for standard math functions.
 */
@@ -200,6 +202,7 @@ using the corresponding function <code>std::Fun</code>.
 	inline Type Fun(const Type& x)           \
 	{	return std::Fun(x); }
 
+/* \} */
 CPPAD_END_NAMESPACE
 
 # endif

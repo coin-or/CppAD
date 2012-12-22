@@ -20,6 +20,8 @@ Please visit http://www.coin-or.org/CppAD/ for information on other licenses.
 
 CPPAD_BEGIN_NAMESPACE
 /*!
+\defgroup pod_vector_hpp pod_vector.hpp
+\{
 \file pod_vector.hpp
 File used to define pod_vector class
 */
@@ -270,5 +272,6 @@ public:
 	}
 };
 
+/* \} */
 CPPAD_END_NAMESPACE
 # endif

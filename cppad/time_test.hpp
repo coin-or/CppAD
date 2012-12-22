@@ -146,6 +146,8 @@ $end
 
 CPPAD_BEGIN_NAMESPACE
 /*!
+\defgroup time_test_hpp time_test.hpp
+\{
 \file time_test.hpp
 \brief Function that preforms one timing test (for speed of execution).
 */
@@ -219,6 +221,7 @@ double time_test(Test test, double time_min, size_t test_size)
 	return time;
 }
 
+/* \} */
 CPPAD_END_NAMESPACE
 
 // END PROGRAM

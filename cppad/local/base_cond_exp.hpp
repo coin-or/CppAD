@@ -156,6 +156,8 @@ $end
 CPPAD_BEGIN_NAMESPACE
 
 /*!
+\defgroup base_cond_exp_hpp base_cond_exp.hpp
+\{
 \file base_cond_exp.hpp
 CondExp operations that aid in meeting Base type requirements.
 */
@@ -280,5 +282,6 @@ ResultType CondExpTemplate(
 	return returnValue;
 }
 
+/* \} */
 CPPAD_END_NAMESPACE
 # endif

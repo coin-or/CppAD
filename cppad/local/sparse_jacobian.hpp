@@ -233,6 +233,8 @@ $end
 
 CPPAD_BEGIN_NAMESPACE
 /*!
+\defgroup sparse_jacobian_hpp sparse_jacobian.hpp
+\{
 \file sparse_jacobian.hpp
 Sparse Jacobian driver routine and helper functions.
 */
@@ -1224,5 +1226,6 @@ VectorBase ADFun<Base>::SparseJacobian( const VectorBase& x )
 }
 
 
+/* \} */
 CPPAD_END_NAMESPACE
 # endif

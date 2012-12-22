@@ -15,6 +15,8 @@ Please visit http://www.coin-or.org/CppAD/ for information on other licenses.
 
 CPPAD_BEGIN_NAMESPACE
 /*!
+\defgroup rev_hes_sweep_hpp rev_hes_sweep.hpp
+\{
 \file rev_hes_sweep.hpp
 Compute Reverse mode Hessian sparsity patterns.
 */
@@ -705,6 +707,7 @@ void RevHesSweep(
 
 	return;
 }
+/* \} */
 CPPAD_END_NAMESPACE
 
 // preprocessor symbols that are local to this file

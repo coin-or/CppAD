@@ -14,6 +14,8 @@ Please visit http://www.coin-or.org/CppAD/ for information on other licenses.
 
 CPPAD_BEGIN_NAMESPACE
 /*!
+\defgroup sparse_unary_op_hpp sparse_unary_op.hpp
+\{
 \file sparse_unary_op.hpp
 Forward and reverse mode sparsity patterns for unary operators.
 */
@@ -205,5 +207,6 @@ inline void reverse_sparse_hessian_nonlinear_unary_op(
 	return;
 }
 
+/* \} */
 CPPAD_END_NAMESPACE
 # endif

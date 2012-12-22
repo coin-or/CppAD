@@ -33,6 +33,8 @@ $end
 
 CPPAD_BEGIN_NAMESPACE
 /*!
+\defgroup forward_hpp forward.hpp
+\{
 \file forward.hpp
 User interface to forward mode computations
 */
@@ -149,5 +151,6 @@ Vector ADFun<Base>::Forward(
 	return y_p;
 }
 
+/* \} */
 CPPAD_END_NAMESPACE
 # endif

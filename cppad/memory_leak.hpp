@@ -119,6 +119,8 @@ $end
 
 CPPAD_BEGIN_NAMESPACE
 /*!
+\defgroup memory_leak_hpp memory_leak.hpp
+\{
 \file memory_leak.hpp
 File that implements a memory check at end of a CppAD program
 */
@@ -212,5 +214,6 @@ inline bool memory_leak(size_t add_static = 0)
 	return leak;
 }
 
+/* \} */
 CPPAD_END_NAMESPACE
 # endif

@@ -716,6 +716,8 @@ $end
 
 CPPAD_BEGIN_NAMESPACE
 /*!
+\defgroup user_atomic_hpp user_atomic.hpp
+\{
 \file user_atomic.hpp
 user defined atomic operations.
 */
@@ -1376,5 +1378,6 @@ public:
 	}
 };
 
+/* \} */
 CPPAD_END_NAMESPACE
 # endif

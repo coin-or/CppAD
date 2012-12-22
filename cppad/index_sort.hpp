@@ -82,6 +82,8 @@ $end
 
 CPPAD_BEGIN_NAMESPACE
 /*!
+\defgroup index_sort_hpp index_sort.hpp
+\{
 \file index_sort.hpp
 File used to implement the CppAD index sort utility
 */
@@ -173,6 +175,7 @@ void index_sort(const VectorKey& keys, VectorSize& ind)
 	return;
 }
 
+/* \} */
 CPPAD_END_NAMESPACE
 
 # endif

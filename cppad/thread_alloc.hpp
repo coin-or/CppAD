@@ -29,6 +29,8 @@ Please visit http://www.coin-or.org/CppAD/ for information on other licenses.
 # include <cppad/local/define.hpp>
 CPPAD_BEGIN_NAMESPACE
 /*!
+\defgroup thread_alloc_hpp thread_alloc.hpp
+\{
 \file thread_alloc.hpp
 File used to define the CppAD multi-threading allocaor class
 */
@@ -1555,6 +1557,7 @@ $end
 };
 
 
+/* \} */
 CPPAD_END_NAMESPACE
 
 // preprocessor symbols local to this file

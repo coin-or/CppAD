@@ -94,6 +94,8 @@ $end
 
 CPPAD_BEGIN_NAMESPACE
 /*!
+\defgroup limits_hpp limits.hpp
+\{
 \file limits.hpp
 File that defines CppAD numeric_limits for AD types
 */
@@ -143,5 +145,6 @@ public:
 	{	return AD<Base>( numeric_limits<Base>::max() ); }
 };
 
+/* \} */
 CPPAD_END_NAMESPACE
 # endif

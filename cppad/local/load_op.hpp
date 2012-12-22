@@ -3,7 +3,7 @@
 # define CPPAD_LOAD_OP_INCLUDED
 
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-11 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-12 Bradley M. Bell
 
 CppAD is distributed under multiple licenses. This distribution is under
 the terms of the 
@@ -16,6 +16,8 @@ Please visit http://www.coin-or.org/CppAD/ for information on other licenses.
 
 CPPAD_BEGIN_NAMESPACE
 /*!
+\defgroup load_op_hpp load_op.hpp
+\{
 \file load_op.hpp
 Setting a variable so that it corresponds to current value of a VecAD element.
 */
@@ -401,5 +403,6 @@ inline void reverse_sparse_hessian_load_op(
 
 
 
+/* \} */
 CPPAD_END_NAMESPACE
 # endif

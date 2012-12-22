@@ -15,6 +15,8 @@ Please visit http://www.coin-or.org/CppAD/ for information on other licenses.
 
 CPPAD_BEGIN_NAMESPACE
 /*!
+\defgroup player_hpp player.hpp
+\{
 \file player.hpp
 File used to define the player class.
 */
@@ -575,5 +577,6 @@ public:
 
 };
 
+/* \} */
 CPPAD_END_NAMESPACE
 # endif

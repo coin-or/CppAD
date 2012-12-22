@@ -20,6 +20,8 @@ Please visit http://www.coin-or.org/CppAD/ for information on other licenses.
 
 CPPAD_BEGIN_NAMESPACE
 /*!
+\defgroup sparse_set_hpp sparse_set.hpp
+\{
 \file sparse_set.hpp
 Vector of sets of positive integers stored as std::set<size_t>.
 */
@@ -369,5 +371,6 @@ void sparsity_user2internal(
 	return;
 }
 
+/* \} */
 CPPAD_END_NAMESPACE
 # endif

@@ -16,6 +16,8 @@ Please visit http://www.coin-or.org/CppAD/ for information on other licenses.
 
 CPPAD_BEGIN_NAMESPACE
 /*!
+\defgroup prototype_op_hpp prototype_op.hpp
+\{
 \file prototype_op.hpp
 Documentation for generic cases (these generic cases are never used).
 */
@@ -1621,5 +1623,6 @@ inline void sparse_conditional_exp_op(
 	CPPAD_ASSERT_UNKNOWN( false );
 }
 
+/* \} */
 CPPAD_END_NAMESPACE
 # endif

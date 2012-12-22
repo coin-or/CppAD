@@ -16,6 +16,8 @@ Please visit http://www.coin-or.org/CppAD/ for information on other licenses.
 
 CPPAD_BEGIN_NAMESPACE
 /*!
+\defgroup recorder_hpp recorder.hpp
+\{
 \file recorder.hpp
 File used to define the recorder class.
 */
@@ -455,5 +457,6 @@ inline size_t recorder<Base>::PutTxt(const char *text)
 // -------------------------------------------------------------------------
 
 
+/* \} */
 CPPAD_END_NAMESPACE
 # endif

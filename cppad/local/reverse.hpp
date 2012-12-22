@@ -42,6 +42,8 @@ $end
 
 CPPAD_BEGIN_NAMESPACE
 /*!
+\defgroup reverse_hpp reverse.hpp
+\{
 \file reverse.hpp
 Compute derivatives using reverse mode.
 */
@@ -209,5 +211,6 @@ VectorBase ADFun<Base>::Reverse(size_t p, const VectorBase &w)
 }
 	
 
+/* \} */
 CPPAD_END_NAMESPACE
 # endif

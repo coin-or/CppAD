@@ -58,6 +58,8 @@ $end
 
 CPPAD_BEGIN_NAMESPACE
 /*!
+\defgroup ad_fun_hpp ad_fun.hpp
+\{
 \file ad_fun.hpp
 File used to define the ADFun<Base> class.
 */
@@ -559,6 +561,7 @@ public:
 };
 // ---------------------------------------------------------------------------
 
+/* \} */
 CPPAD_END_NAMESPACE
 
 // non-user interfaces

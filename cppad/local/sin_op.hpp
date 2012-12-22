@@ -3,7 +3,7 @@
 # define CPPAD_SIN_OP_INCLUDED
 
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-10 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-12 Bradley M. Bell
 
 CppAD is distributed under multiple licenses. This distribution is under
 the terms of the 
@@ -16,6 +16,8 @@ Please visit http://www.coin-or.org/CppAD/ for information on other licenses.
 
 CPPAD_BEGIN_NAMESPACE
 /*!
+\defgroup sin_op_hpp sin_op.hpp
+\{
 \file sin_op.hpp
 Forward and reverse mode calculations for z = sin(x).
 */
@@ -182,5 +184,6 @@ inline void reverse_sin_op(
 	px[0] -= pc[0] * s[0];
 }
 
+/* \} */
 CPPAD_END_NAMESPACE
 # endif

@@ -3,7 +3,7 @@
 # define CPPAD_SUB_OP_INCLUDED
 
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-11 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-12 Bradley M. Bell
 
 CppAD is distributed under multiple licenses. This distribution is under
 the terms of the 
@@ -15,6 +15,8 @@ Please visit http://www.coin-or.org/CppAD/ for information on other licenses.
 
 CPPAD_BEGIN_NAMESPACE
 /*!
+\defgroup sub_op_hpp sub_op.hpp
+\{
 \file sub_op.hpp
 Forward and reverse mode calculations for z = x - y.
 */
@@ -389,5 +391,6 @@ inline void reverse_subvp_op(
 	}
 }
 
+/* \} */
 CPPAD_END_NAMESPACE
 # endif

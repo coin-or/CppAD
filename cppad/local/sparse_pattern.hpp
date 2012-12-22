@@ -21,6 +21,8 @@ Please visit http://www.coin-or.org/CppAD/ for information on other licenses.
 
 CPPAD_BEGIN_NAMESPACE
 /*!
+\defgroup sparse_pattern_hpp sparse_pattern.hpp
+\{
 \file sparse_pattern.hpp
 Determine internal spasity pattern from correpsonding element type.
 */
@@ -54,6 +56,7 @@ struct internal_sparsity< std::set<size_t> >
 	typedef CPPAD_INTERNAL_SPARSE_SET pattern_type;
 }; 
 
+/* \} */
 CPPAD_END_NAMESPACE
 
 # endif

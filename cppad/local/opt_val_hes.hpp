@@ -240,6 +240,8 @@ $end
 
 CPPAD_BEGIN_NAMESPACE
 /*!
+\defgroup opt_val_hes_hpp opt_val_hes.hpp
+\{
 \file opt_val_hes.hpp
 \brief Computing Jabobians and Hessians of Optimal Values
 */
@@ -524,6 +526,7 @@ int opt_val_hes(
 	return signdet;
 }
 
+/* \} */
 CPPAD_END_NAMESPACE
 
 # endif

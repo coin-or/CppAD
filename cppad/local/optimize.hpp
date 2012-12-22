@@ -117,6 +117,8 @@ $end
 
 CPPAD_BEGIN_NAMESPACE
 /*!
+\defgroup optimize_hpp optimize.hpp
+\{
 \file optimize.hpp
 Routines for optimizing a tape
 */
@@ -1733,5 +1735,6 @@ void ADFun<Base>::optimize(void)
 # endif
 }
 
+/* \} */
 CPPAD_END_NAMESPACE
 # endif

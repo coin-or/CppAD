@@ -13,6 +13,7 @@ Please visit http://www.coin-or.org/CppAD/ for information on other licenses.
 $begin whats_new_12$$
 $dollar @$$
 $spell
+	doxygen
 	txt
 	sys
 	stdbool
@@ -73,6 +74,9 @@ This section contains a list of the changes to CppAD during 2012
 (in reverse order by date).
 The purpose of this section is to
 assist you in learning about changes between various versions of CppAD.
+
+$head 12-22$$
+Define a doxygen module (group) for each file that has doxygen documentation.
 
 $head 12-20$$
 $list number$$

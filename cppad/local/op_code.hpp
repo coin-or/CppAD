@@ -24,6 +24,8 @@ Please visit http://www.coin-or.org/CppAD/ for information on other licenses.
 
 CPPAD_BEGIN_NAMESPACE
 /*! 
+\defgroup op_code_hpp op_code.hpp
+\{
 \file op_code.hpp
 Defines the OpCode enum type and functions related to it.
 
@@ -675,5 +677,6 @@ void printOp(
 	std::cout << std::endl;
 }
 
+/* \} */
 CPPAD_END_NAMESPACE
 # endif

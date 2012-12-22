@@ -17,6 +17,8 @@ Please visit http://www.coin-or.org/CppAD/ for information on other licenses.
 
 CPPAD_BEGIN_NAMESPACE
 /*!
+\defgroup sparse_list_hpp sparse_list.hpp
+\{
 \file sparse_list.hpp
 Vector of sets of positive integers stored as singly linked lists.
 */
@@ -422,5 +424,6 @@ void sparsity_user2internal(
 }
 
 
+/* \} */
 CPPAD_END_NAMESPACE
 # endif

@@ -239,6 +239,8 @@ $end
 
 CPPAD_BEGIN_NAMESPACE
 /*!
+\defgroup fun_construct_hpp fun_construct.hpp
+\{
 \file fun_construct.hpp
 ADFun function constructors and assignment operator.
 */
@@ -479,5 +481,6 @@ ADFun<Base>::ADFun(const VectorAD &x, const VectorAD &y)
 # endif
 }
 
+/* \} */
 CPPAD_END_NAMESPACE
 # endif

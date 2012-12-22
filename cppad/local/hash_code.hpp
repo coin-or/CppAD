@@ -15,6 +15,8 @@ Please visit http://www.coin-or.org/CppAD/ for information on other licenses.
 
 CPPAD_BEGIN_NAMESPACE
 /*!
+\defgroup hash_code_hpp hash_code.hpp
+\{
 \file hash_code.hpp
 CppAD hashing utility.
 */
@@ -232,5 +234,6 @@ unsigned short hash_code(
 	return code % CPPAD_HASH_TABLE_SIZE;
 }
 
+/* \} */
 CPPAD_END_NAMESPACE
 # endif

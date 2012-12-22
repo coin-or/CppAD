@@ -16,6 +16,8 @@ Please visit http://www.coin-or.org/CppAD/ for information on other licenses.
 
 CPPAD_BEGIN_NAMESPACE
 /*!
+\defgroup for_jac_sweep_hpp for_jac_sweep.hpp
+\{
 \file for_jac_sweep.hpp
 Compute Forward mode Jacobian sparsity patterns.
 */
@@ -626,6 +628,7 @@ void ForJacSweep(
 	return;
 }
 
+/* \} */
 CPPAD_END_NAMESPACE
 
 // preprocessor symbols that are local to this file

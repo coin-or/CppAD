@@ -3,7 +3,7 @@
 # define CPPAD_PARAMETER_OP_INCLUDED
 
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-11 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-12 Bradley M. Bell
 
 CppAD is distributed under multiple licenses. This distribution is under
 the terms of the 
@@ -16,6 +16,8 @@ Please visit http://www.coin-or.org/CppAD/ for information on other licenses.
 
 CPPAD_BEGIN_NAMESPACE
 /*!
+\defgroup parameter_op_hpp parameter_op.hpp
+\{
 \file parameter_op.hpp
 Zero order forward mode for ParOp
 */
@@ -86,5 +88,6 @@ inline void forward_par_op_0(
 	z[0]  = parameter[ arg[0] ];
 }
 
+/* \} */
 CPPAD_END_NAMESPACE
 # endif

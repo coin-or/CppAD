@@ -3,7 +3,7 @@
 # define CPPAD_REVERSE_SWEEP_INCLUDED
 
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-11 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-12 Bradley M. Bell
 
 CppAD is distributed under multiple licenses. This distribution is under
 the terms of the 
@@ -16,6 +16,8 @@ Please visit http://www.coin-or.org/CppAD/ for information on other licenses.
 
 CPPAD_BEGIN_NAMESPACE
 /*!
+\defgroup reverse_sweep_hpp reverse_sweep.hpp
+\{
 \file reverse_sweep.hpp
 Compute derivatives of arbitrary order Taylor coefficients.
 */
@@ -628,6 +630,7 @@ void ReverseSweep(
 	CPPAD_ASSERT_UNKNOWN( i_var == 0 );
 }
 
+/* \} */
 CPPAD_END_NAMESPACE
 
 // preprocessor symbols that are local to this file

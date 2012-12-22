@@ -17,6 +17,8 @@ Please visit http://www.coin-or.org/CppAD/ for information on other licenses.
 
 CPPAD_BEGIN_NAMESPACE
 /*!
+\defgroup sparse_pack_hpp sparse_pack.hpp
+\{
 \file sparse_pack.hpp
 Vector of sets of positive integers stored as a packed array of bools.
 */
@@ -412,5 +414,6 @@ void sparsity_user2internal(
 	return;
 }
 
+/* \} */
 CPPAD_END_NAMESPACE
 # endif
