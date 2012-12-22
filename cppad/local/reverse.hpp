@@ -209,7 +209,5 @@ VectorBase ADFun<Base>::Reverse(size_t p, const VectorBase &w)
 }
 	
 
-} // END CppAD namespace
-	
-
+CPPAD_END_NAMESPACE
 # endif
