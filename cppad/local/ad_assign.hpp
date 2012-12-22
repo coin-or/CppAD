@@ -69,12 +69,11 @@ $end
 CPPAD_BEGIN_NAMESPACE
 
 /*!
+\defgroup ad_assign_hpp ad_assign.hpp
+\{
 \file ad_assign.hpp
 AD<Base> constructors and and copy operations.
-
-\defgroup ad_assign_hpp ad_assign.hpp
 */
-/* \{ */
 
 /*!
 \page AD_default_assign

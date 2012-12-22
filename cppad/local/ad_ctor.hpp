@@ -74,12 +74,11 @@ $end
 CPPAD_BEGIN_NAMESPACE
 
 /*!
+\defgroup ad_ctor_hpp ad_ctor.hpp
+\{
 \file ad_ctor.hpp
 AD<Base> constructors and and copy operations.
-
-\defgroup ad_ctor_hpp ad_ctor.hpp
 */
-/* \{ */
 
 /*!
 \page AD_default_ctor

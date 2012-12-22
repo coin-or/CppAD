@@ -156,13 +156,12 @@ $end
 
 CPPAD_BEGIN_NAMESPACE
 /*!
+\defgroup bool_fun_hpp bool_fun.hpp
+\{
 \file bool_fun.hpp
 Routines and macros that implement functions from AD<Base> to bool
 \ref bool_fun_hpp.
-
-\defgroup bool_fun_hpp bool_fun.hpp
 */
-/* \{ */
 
 /*!
 Macro that defines a unary function <tt>bool F(AD<Base> x)</tt> 

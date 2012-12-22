@@ -22,19 +22,14 @@ Please visit http://www.coin-or.org/CppAD/ for information on other licenses.
 
 CPPAD_BEGIN_NAMESPACE
 /*!
+\defgroup tape_link_hpp  tape_link.hpp
+\{
 \file tape_link.hpp
 Routines that Link AD<Base> and ADTape<Base> Objects \ref tape_link_hpp.
 
 The routines that connect the AD<Base> class to the corresponding tapes
 (one for each thread).
 */
-
-
-/*!
-\defgroup tape_link_hpp  tape_link.hpp
-*/
-/* \{ */
-
 
 /*!
 Handle to the tape identifier for this AD<Base> class and the specific thread.
