@@ -42,19 +42,25 @@ be defined, or this routine is not compiled.
 $end
 -----------------------------------------------------------------------
 */
+# if _MSC_VER
+# include <windows.h>
+# include <cassert>
 
+// Note that the doxygen for this routine does not get generated because
+// _MSC_VER is not defined during generation. In general, it is a problem
+// that not all preprocessor options get documented.
 /*!
+\defgroup microsoft_timer_cpp microsoft_timer.cpp
+\{
 \file microsoft_timer.cpp
 \brief Microsoft version of elapsed_seconds.
 */
-/*
+
+/*!
 Microsoft version of elapsed number of seconds since frist call.
 
 \copydetails elapsed_seconds
 */
-# if _MSC_VER
-# include <windows.h>
-# include <cassert>
 double microsoft_timer(void)
 {	static bool       first_  = true;
 	static SYSTEMTIME st_;
@@ -79,4 +85,6 @@ double microsoft_timer(void)
 
 	return diff;
 }
+
+/* \} */
 # endif

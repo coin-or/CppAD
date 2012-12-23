@@ -14,6 +14,8 @@ Please visit http://www.coin-or.org/CppAD/ for information on other licenses.
 -------------------------------------------------------------------------- */
 
 /*!
+\defgroup define_hpp define.hpp
+\{
 \file define.hpp
 Define processor symbols and macros that are used by CppAD.
 */
@@ -337,4 +339,5 @@ inline bool operator Op                                                \
 	(const VecAD_reference<double> &left, const double &right)        \
 {	return left.ADBase() Op AD<double>(right); }
 
+/* \} */
 # endif

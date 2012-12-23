@@ -142,6 +142,8 @@ $end
 # include <cppad/index_sort.hpp>
 
 /*!
+\defgroup link_sparse_hessian_cpp link_sparse_hessian.cpp
+\{
 \file link_sparse_hessian.cpp
 Defines and implement sparse Hessian speed link to package specific code.
 */
@@ -361,3 +363,5 @@ void speed_sparse_hessian(size_t size, size_t repeat)
 	link_sparse_hessian(n, repeat, x, row, col, hessian);
 	return;
 }
+
+/* \} */

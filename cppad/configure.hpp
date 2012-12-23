@@ -34,6 +34,8 @@ $end
 */
 
 /*!
+\defgroup configure_hpp configure.hpp
+\{
  \file configure.hpp
 Replacement for config.h so that all preprocessor symbols begin with CPPAD_ 
 */
@@ -142,4 +144,5 @@ header files.  If it is not yet defined,
 # define CPPAD_MAX_NUM_THREADS 48
 # endif
 
+/* \} */
 # endif

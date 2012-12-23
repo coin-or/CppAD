@@ -12,6 +12,8 @@ A copy of this license is included in the COPYING file of this distribution.
 Please visit http://www.coin-or.org/CppAD/ for information on other licenses.
 -------------------------------------------------------------------------- */
 /*!
+\defgroup cppad_hpp cppad.hpp
+\{
 \file cppad.hpp
 \brief includes the entire CppAD package in the necessary order.
 
@@ -94,4 +96,5 @@ Please visit http://www.coin-or.org/CppAD/ for information on other licenses.
 // undo definitions in Define.h
 # include <cppad/local/undef.hpp>   
 
+/* \} */
 # endif

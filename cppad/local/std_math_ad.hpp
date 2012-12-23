@@ -252,6 +252,8 @@ $end
 */
 
 /*!
+\defgroup std_math_ad_hpp std_math_ad.hpp
+\{
 \file std_math_ad.hpp
 Define AD<Base> standard math functions (using their Base versions)
 */
@@ -338,4 +340,5 @@ namespace CppAD {
 
 # undef CPPAD_STANDARD_MATH_UNARY_AD
 
+/* \} */
 # endif 
