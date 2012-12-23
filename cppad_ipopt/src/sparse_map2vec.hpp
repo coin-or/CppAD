@@ -2,7 +2,7 @@
 # ifndef  CPPAD_SPARSE_MAP2VEC_INCLUDED
 # define  CPPAD_SPARSE_MAP2VEC_INCLUDED
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-10 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-12 Bradley M. Bell
 
 CppAD is distributed under multiple licenses. This distribution is under
 the terms of the 
@@ -11,7 +11,9 @@ the terms of the
 A copy of this license is included in the COPYING file of this distribution.
 Please visit http://www.coin-or.org/CppAD/ for information on other licenses.
 -------------------------------------------------------------------------- */
-CPPAD_BEGIN_NAMESPACE
+// ---------------------------------------------------------------------------
+namespace cppad_ipopt {
+// ---------------------------------------------------------------------------
 /*!
 \file sparse_map2vec.hpp
 \brief Create a two vector sparsity representation from a vector of maps.
@@ -24,5 +26,7 @@ extern void sparse_map2vec(
 	CppAD::vector<size_t>&                          j_col
 );
 
-CPPAD_END_NAMESPACE
+// ---------------------------------------------------------------------------
+} // end namespace cppad_ipopt
+// ---------------------------------------------------------------------------
 # endif

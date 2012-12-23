@@ -1,6 +1,6 @@
 /* $Id$ */
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-10 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-12 Bradley M. Bell
 
 CppAD is distributed under multiple licenses. This distribution is under
 the terms of the 
@@ -11,7 +11,9 @@ Please visit http://www.coin-or.org/CppAD/ for information on other licenses.
 -------------------------------------------------------------------------- */
 # include "cppad_ipopt_nlp.hpp"
 # include "vec_fun_pattern.hpp"
-CPPAD_BEGIN_NAMESPACE
+// ---------------------------------------------------------------------------
+namespace cppad_ipopt {
+// ---------------------------------------------------------------------------
 /*!
 \file vec_fun_pattern.cpp
 \brief Determine a sparsity pattern for a vector of AD function objects.
@@ -135,4 +137,6 @@ void vec_fun_pattern(
 		}
 	}
 }
-CPPAD_END_NAMESPACE
+// ---------------------------------------------------------------------------
+} // end namespace cppad_ipopt
+// ---------------------------------------------------------------------------
