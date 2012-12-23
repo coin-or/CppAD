@@ -13,20 +13,17 @@ Please visit http://www.coin-or.org/CppAD/ for information on other licenses.
 -------------------------------------------------------------------------- */
 # include "cppad_ipopt_nlp.hpp"
 
-/*!
-\defgroup fun_record_hpp fun_record.hpp
-
-\file fun_record.hpp
-\brief Records operation sequence for r_k (u) 
-
-*/
-
 // ---------------------------------------------------------------------------
 namespace cppad_ipopt {
 // ---------------------------------------------------------------------------
+/*!
+\defgroup fun_record_hpp fun_record.hpp
+\{
+\file fun_record.hpp
+\brief Records operation sequence for r_k (u) 
+*/
 
 /*!
-\ingroup fun_record_hpp
 Records operation sequence for \f$ r_k (u) \f$ at \f$u = [ J \circ n ] (x)\f$.
 
 \tparam NumVector
@@ -114,6 +111,7 @@ void fun_record(
 	r_fun[k].Dependent(u, r_k);
 }
 // ---------------------------------------------------------------------------
+/* \} */
 } // end namespace cppad_ipopt
 // ---------------------------------------------------------------------------
 # endif
