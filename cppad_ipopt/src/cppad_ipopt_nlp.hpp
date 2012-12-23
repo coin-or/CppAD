@@ -606,6 +606,8 @@ $end
 /*!
 \file cppad_ipopt_nlp.hpp
 \brief CppAD interface to Ipopt
+
+\ingroup cppad_ipopt_nlp_cpp
 */
 
 // ---------------------------------------------------------------------------

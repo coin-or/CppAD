@@ -2,7 +2,7 @@
 # ifndef  CPPAD_HES_FG_MAP_INCLUDED
 # define  CPPAD_HES_FG_MAP_INCLUDED
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-11 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-12 Bradley M. Bell
 
 CppAD is distributed under multiple licenses. This distribution is under
 the terms of the 
@@ -15,6 +15,8 @@ Please visit http://www.coin-or.org/CppAD/ for information on other licenses.
 /*!
 \file hes_fg_map.hpp
 \brief Create a mapping between two representations for Hessian of fg.
+
+\ingroup hes_fg_map_cpp
 */
 // ---------------------------------------------------------------------------
 namespace cppad_ipopt {

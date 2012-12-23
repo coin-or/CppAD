@@ -17,6 +17,8 @@ namespace cppad_ipopt {
 /*!
 \file sparse_map2vec.hpp
 \brief Create a two vector sparsity representation from a vector of maps.
+
+\ingroup sparese_map2vec_cpp
 */
 
 extern void sparse_map2vec(

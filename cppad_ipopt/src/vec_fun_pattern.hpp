@@ -18,6 +18,8 @@ namespace cppad_ipopt {
 /*!
 \file vec_fun_pattern.hpp
 \brief Determine sparsity pattern for a vector of AD fuction objects.
+
+\ingroup vec_fun_pattern_cpp
 */
 
 extern void vec_fun_pattern(
