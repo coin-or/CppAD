@@ -1735,6 +1735,6 @@ void ADFun<Base>::optimize(void)
 # endif
 }
 
-/* \} */
+/*! \} */
 CPPAD_END_NAMESPACE
 # endif

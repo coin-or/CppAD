@@ -606,7 +606,7 @@ size_t forward0sweep(
 	return compareCount;
 }
 
-/* \} */
+/*! \} */
 CPPAD_END_NAMESPACE
 
 // preprocessor symbols that are local to this file

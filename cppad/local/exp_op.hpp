@@ -144,6 +144,6 @@ inline void reverse_exp_op(
 	px[0] += pz[0] * z[0];
 }
 
-/* \} */
+/*! \} */
 CPPAD_END_NAMESPACE
 # endif

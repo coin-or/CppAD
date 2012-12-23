@@ -1623,6 +1623,6 @@ inline void sparse_conditional_exp_op(
 	CPPAD_ASSERT_UNKNOWN( false );
 }
 
-/* \} */
+/*! \} */
 CPPAD_END_NAMESPACE
 # endif

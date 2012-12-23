@@ -99,7 +99,7 @@ CPPAD_INLINE_FRIEND_TEMPLATE_FUNCTION
 bool abs_geq(const AD<Base>& x, const AD<Base>& y)
 {	return abs_geq(x.value_, y.value_); }
 // ============================================================================
-/* \} */
+/*! \} */
 CPPAD_END_NAMESPACE
 # endif
 

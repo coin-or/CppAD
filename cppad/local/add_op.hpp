@@ -267,6 +267,6 @@ inline void reverse_addpv_op(
 }
 
 
-/* \} */
+/*! \} */
 CPPAD_END_NAMESPACE
 # endif

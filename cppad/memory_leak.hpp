@@ -214,6 +214,6 @@ inline bool memory_leak(size_t add_static = 0)
 	return leak;
 }
 
-/* \} */
+/*! \} */
 CPPAD_END_NAMESPACE
 # endif

@@ -124,7 +124,8 @@ inline AD<Base>& AD<Base>::operator=(const VecAD_reference<Base> &x)
 {	return *this = x.ADBase(); }
 
 /*!
-Assignment from any other type acts link assignment from Base type. 
+Assignment from any other type, converts to Base type, and then uses assignment
+from Base type.
 
 \tparam Base
 Base type for this AD object.
@@ -142,6 +143,6 @@ inline AD<Base>& AD<Base>::operator=(const T &t)
 {	return *this = Base(t); }
 
 
-/* \} */
+/*! \} */
 CPPAD_END_NAMESPACE
 # endif

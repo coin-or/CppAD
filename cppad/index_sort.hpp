@@ -175,7 +175,7 @@ void index_sort(const VectorKey& keys, VectorSize& ind)
 	return;
 }
 
-/* \} */
+/*! \} */
 CPPAD_END_NAMESPACE
 
 # endif

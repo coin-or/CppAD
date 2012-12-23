@@ -310,6 +310,6 @@ inline ADTape<Base> *AD<Base>::tape_this(void) const
 	return *tape_handle(thread);
 }
 
-/* \} */
+/*! \} */
 CPPAD_END_NAMESPACE
 # endif

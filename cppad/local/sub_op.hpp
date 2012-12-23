@@ -391,6 +391,6 @@ inline void reverse_subvp_op(
 	}
 }
 
-/* \} */
+/*! \} */
 CPPAD_END_NAMESPACE
 # endif

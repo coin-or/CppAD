@@ -123,6 +123,6 @@ inline void reverse_abs_op(
 		px[j] += sign(x[0]) * pz[j];
 }
 
-/* \} */
+/*! \} */
 CPPAD_END_NAMESPACE
 # endif

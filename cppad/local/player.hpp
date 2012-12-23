@@ -577,6 +577,6 @@ public:
 
 };
 
-/* \} */
+/*! \} */
 CPPAD_END_NAMESPACE
 # endif

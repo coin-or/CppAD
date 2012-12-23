@@ -154,6 +154,6 @@ inline void reverse_log_op(
 	px[0] += pz[0] / x[0];
 }
 
-/* \} */
+/*! \} */
 CPPAD_END_NAMESPACE
 # endif

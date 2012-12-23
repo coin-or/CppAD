@@ -1557,7 +1557,7 @@ $end
 };
 
 
-/* \} */
+/*! \} */
 CPPAD_END_NAMESPACE
 
 // preprocessor symbols local to this file

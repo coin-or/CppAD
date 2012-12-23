@@ -207,6 +207,6 @@ inline void reverse_acos_op(
 	px[0] -= ( pz[0] + pb[0] * x[0]) / b[0];
 }
 
-/* \} */
+/*! \} */
 CPPAD_END_NAMESPACE
 # endif

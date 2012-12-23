@@ -1226,6 +1226,6 @@ VectorBase ADFun<Base>::SparseJacobian( const VectorBase& x )
 }
 
 
-/* \} */
+/*! \} */
 CPPAD_END_NAMESPACE
 # endif

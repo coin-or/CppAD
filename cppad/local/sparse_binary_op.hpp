@@ -326,6 +326,6 @@ inline void reverse_sparse_hessian_pow_op(
 	return;
 }	
 
-/* \} */
+/*! \} */
 CPPAD_END_NAMESPACE
 # endif

@@ -156,6 +156,6 @@ inline void reverse_sqrt_op(
 	px[0] += pz[0] / (Base(2) * z[0]);
 }
 
-/* \} */
+/*! \} */
 CPPAD_END_NAMESPACE
 # endif

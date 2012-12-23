@@ -632,6 +632,6 @@ void ADFun<Base>::RevSparseHesCase(
 	);
 }
 
-/* \} */
+/*! \} */
 CPPAD_END_NAMESPACE
 # endif

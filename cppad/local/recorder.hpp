@@ -457,6 +457,6 @@ inline size_t recorder<Base>::PutTxt(const char *text)
 // -------------------------------------------------------------------------
 
 
-/* \} */
+/*! \} */
 CPPAD_END_NAMESPACE
 # endif

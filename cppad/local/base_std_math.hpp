@@ -202,7 +202,7 @@ using the corresponding function <code>std::Fun</code>.
 	inline Type Fun(const Type& x)           \
 	{	return std::Fun(x); }
 
-/* \} */
+/*! \} */
 CPPAD_END_NAMESPACE
 
 # endif

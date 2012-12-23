@@ -359,4 +359,4 @@ void speed_sparse_jacobian(size_t size, size_t repeat)
 	link_sparse_jacobian(n, repeat, m, x, row, col, jacobian);
 	return;
 }
-/* \} */
+/*! \} */

@@ -340,5 +340,5 @@ namespace CppAD {
 
 # undef CPPAD_STANDARD_MATH_UNARY_AD
 
-/* \} */
+/*! \} */
 # endif 

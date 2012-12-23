@@ -169,6 +169,6 @@ inline void forward_comp_op_0(
 	}
 	return;
 }
-/* \} */
+/*! \} */
 CPPAD_END_NAMESPACE
 # endif

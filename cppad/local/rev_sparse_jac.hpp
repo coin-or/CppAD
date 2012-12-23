@@ -516,6 +516,6 @@ VectorSet ADFun<Base>::RevSparseJac(
 	return r;
 }
 
-/* \} */
+/*! \} */
 CPPAD_END_NAMESPACE
 # endif

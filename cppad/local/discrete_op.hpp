@@ -90,6 +90,6 @@ inline void forward_dis_op_0(
 }
 
 
-/* \} */
+/*! \} */
 CPPAD_END_NAMESPACE
 # endif

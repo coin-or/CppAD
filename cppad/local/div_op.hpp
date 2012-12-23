@@ -440,6 +440,6 @@ inline void reverse_divvp_op(
 	}
 }
 
-/* \} */
+/*! \} */
 CPPAD_END_NAMESPACE
 # endif

@@ -178,6 +178,6 @@ inline void reverse_tan_op(
 	px[0] += pz[0] * (Base(1) + y[0]);
 }
 
-/* \} */
+/*! \} */
 CPPAD_END_NAMESPACE
 # endif

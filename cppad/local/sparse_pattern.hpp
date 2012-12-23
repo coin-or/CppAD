@@ -56,7 +56,7 @@ struct internal_sparsity< std::set<size_t> >
 	typedef CPPAD_INTERNAL_SPARSE_SET pattern_type;
 }; 
 
-/* \} */
+/*! \} */
 CPPAD_END_NAMESPACE
 
 # endif

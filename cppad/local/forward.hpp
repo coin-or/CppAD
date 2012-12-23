@@ -151,6 +151,6 @@ Vector ADFun<Base>::Forward(
 	return y_p;
 }
 
-/* \} */
+/*! \} */
 CPPAD_END_NAMESPACE
 # endif

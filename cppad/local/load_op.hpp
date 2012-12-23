@@ -403,6 +403,6 @@ inline void reverse_sparse_hessian_load_op(
 
 
 
-/* \} */
+/*! \} */
 CPPAD_END_NAMESPACE
 # endif

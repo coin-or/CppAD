@@ -268,6 +268,6 @@ inline void reverse_sparse_hessian_store_op(
 	return;
 }
 
-/* \} */
+/*! \} */
 CPPAD_END_NAMESPACE
 # endif

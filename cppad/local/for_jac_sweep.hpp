@@ -628,7 +628,7 @@ void ForJacSweep(
 	return;
 }
 
-/* \} */
+/*! \} */
 CPPAD_END_NAMESPACE
 
 // preprocessor symbols that are local to this file

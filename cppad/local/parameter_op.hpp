@@ -88,6 +88,6 @@ inline void forward_par_op_0(
 	z[0]  = parameter[ arg[0] ];
 }
 
-/* \} */
+/*! \} */
 CPPAD_END_NAMESPACE
 # endif

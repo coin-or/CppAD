@@ -774,6 +774,6 @@ inline std::ostream& operator << (
 	return os;
 }
 
-/* \} */
+/*! \} */
 CPPAD_END_NAMESPACE
 # endif

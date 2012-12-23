@@ -148,6 +148,6 @@ inline double elapsed_seconds(void)
 }
 # endif
 
-/* \} */
+/*! \} */
 CPPAD_END_NAMESPACE
 # endif

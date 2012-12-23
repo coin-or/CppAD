@@ -182,6 +182,6 @@ inline void reverse_cosh_op(
 	px[0] += pc[0] * s[0];
 }
 
-/* \} */
+/*! \} */
 CPPAD_END_NAMESPACE
 # endif

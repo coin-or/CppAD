@@ -248,6 +248,6 @@ inline bool AD<Base>::BinaryBool(
 	return FunName(x.value_, y.value_);
 }
 
-/* \} */
+/*! \} */
 CPPAD_END_NAMESPACE
 # endif

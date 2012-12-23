@@ -117,6 +117,6 @@ inline void reverse_sign_op(
 	return;
 }
 
-/* \} */
+/*! \} */
 CPPAD_END_NAMESPACE
 # endif

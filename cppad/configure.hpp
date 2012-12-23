@@ -144,5 +144,5 @@ header files.  If it is not yet defined,
 # define CPPAD_MAX_NUM_THREADS 48
 # endif
 
-/* \} */
+/*! \} */
 # endif

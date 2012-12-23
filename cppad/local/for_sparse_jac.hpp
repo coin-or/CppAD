@@ -609,6 +609,6 @@ VectorSet ADFun<Base>::ForSparseJac(
 }
 
 
-/* \} */
+/*! \} */
 CPPAD_END_NAMESPACE
 # endif

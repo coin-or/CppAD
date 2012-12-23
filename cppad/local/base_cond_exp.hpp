@@ -282,6 +282,6 @@ ResultType CondExpTemplate(
 	return returnValue;
 }
 
-/* \} */
+/*! \} */
 CPPAD_END_NAMESPACE
 # endif

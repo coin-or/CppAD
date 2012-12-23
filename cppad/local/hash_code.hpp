@@ -234,6 +234,6 @@ unsigned short hash_code(
 	return code % CPPAD_HASH_TABLE_SIZE;
 }
 
-/* \} */
+/*! \} */
 CPPAD_END_NAMESPACE
 # endif

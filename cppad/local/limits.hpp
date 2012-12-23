@@ -145,6 +145,6 @@ public:
 	{	return AD<Base>( numeric_limits<Base>::max() ); }
 };
 
-/* \} */
+/*! \} */
 CPPAD_END_NAMESPACE
 # endif

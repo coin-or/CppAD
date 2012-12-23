@@ -364,4 +364,4 @@ void speed_sparse_hessian(size_t size, size_t repeat)
 	return;
 }
 
-/* \} */
+/*! \} */

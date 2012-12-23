@@ -142,7 +142,8 @@ inline AD<Base>::AD(const VecAD_reference<Base> &x)
 {	*this = x.ADBase(); }
 
 /*!
-Constructor from any other type acts link constructor from Base type. 
+Constructor from any other type, converts to Base type, and uses constructor
+from Base type.
 
 \tparam Base
 Base type for this AD object.
@@ -162,6 +163,6 @@ inline AD<Base>::AD(const T &t)
 , taddr_(0)
 { }
 
-/* \} */
+/*! \} */
 CPPAD_END_NAMESPACE
 # endif

@@ -221,7 +221,7 @@ double time_test(Test test, double time_min, size_t test_size)
 	return time;
 }
 
-/* \} */
+/*! \} */
 CPPAD_END_NAMESPACE
 
 // END PROGRAM

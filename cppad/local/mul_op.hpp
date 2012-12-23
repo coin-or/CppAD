@@ -275,6 +275,6 @@ inline void reverse_mulpv_op(
 }
 
 
-/* \} */
+/*! \} */
 CPPAD_END_NAMESPACE
 # endif

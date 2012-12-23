@@ -677,6 +677,6 @@ void printOp(
 	std::cout << std::endl;
 }
 
-/* \} */
+/*! \} */
 CPPAD_END_NAMESPACE
 # endif

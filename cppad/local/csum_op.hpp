@@ -493,6 +493,6 @@ inline void reverse_sparse_hessian_csum_op(
 	}	
 }
 
-/* \} */
+/*! \} */
 CPPAD_END_NAMESPACE
 # endif

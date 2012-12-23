@@ -503,6 +503,6 @@ inline void reverse_powvp_op(
 	);
 }
 
-/* \} */
+/*! \} */
 CPPAD_END_NAMESPACE
 # endif

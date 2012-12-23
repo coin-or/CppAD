@@ -481,6 +481,6 @@ ADFun<Base>::ADFun(const VectorAD &x, const VectorAD &y)
 # endif
 }
 
-/* \} */
+/*! \} */
 CPPAD_END_NAMESPACE
 # endif

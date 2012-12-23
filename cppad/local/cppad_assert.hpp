@@ -199,5 +199,5 @@ execution is terminated and the source code line number is reported.
 	}
 # endif
 
-/* \} */
+/*! \} */
 # endif

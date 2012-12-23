@@ -207,6 +207,6 @@ inline void reverse_sparse_hessian_nonlinear_unary_op(
 	return;
 }
 
-/* \} */
+/*! \} */
 CPPAD_END_NAMESPACE
 # endif

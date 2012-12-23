@@ -51,6 +51,6 @@ const std::set<Scalar>& two_element_std_set(void)
 	return two;
 }  
 
-/* \} */
+/*! \} */
 CPPAD_END_NAMESPACE
 # endif

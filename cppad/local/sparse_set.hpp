@@ -371,6 +371,6 @@ void sparsity_user2internal(
 	return;
 }
 
-/* \} */
+/*! \} */
 CPPAD_END_NAMESPACE
 # endif

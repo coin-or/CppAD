@@ -86,5 +86,5 @@ double microsoft_timer(void)
 	return diff;
 }
 
-/* \} */
+/*! \} */
 # endif

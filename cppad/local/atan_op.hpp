@@ -183,6 +183,6 @@ inline void reverse_atan_op(
 	px[0] += pz[0] / b[0] + pb[0] * Base(2) * x[0];
 }
 
-/* \} */
+/*! \} */
 CPPAD_END_NAMESPACE
 # endif

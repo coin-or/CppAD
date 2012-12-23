@@ -526,7 +526,7 @@ int opt_val_hes(
 	return signdet;
 }
 
-/* \} */
+/*! \} */
 CPPAD_END_NAMESPACE
 
 # endif

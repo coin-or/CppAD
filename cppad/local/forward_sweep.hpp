@@ -673,6 +673,6 @@ size_t forward_sweep(
 
 # undef CPPAD_FORWARD_SWEEP_TRACE
 
-/* \} */
+/*! \} */
 CPPAD_END_NAMESPACE
 # endif

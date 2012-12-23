@@ -339,5 +339,5 @@ inline bool operator Op                                                \
 	(const VecAD_reference<double> &left, const double &right)        \
 {	return left.ADBase() Op AD<double>(right); }
 
-/* \} */
+/*! \} */
 # endif
