@@ -11,7 +11,12 @@ Please visit http://www.coin-or.org/CppAD/ for information on other licenses.
 -------------------------------------------------------------------------- */
 
 $begin download$$
+$escape $$
 $spell
+	mkdir
+	cmake
+	nmake
+	Makefiles
 	omhelp
 	svn
 	https
@@ -90,7 +95,9 @@ $codei%
 
 $subhead Windows File Extraction$$
 If you know how to extract the distribution directory from 
-the tar file, just do so. Otherwise, here is one way you can do it.
+the tar file, just do so. Otherwise, below is one way you can do it.
+(Note that if $code 7z.exe$$, $code cmake.exe$$, and $code nmake.exe$$ are you 
+your execution path, you will not need to specify their paths below.)
 
 $list number$$
 Download and install the open source program
@@ -105,12 +112,19 @@ $code 7z.exe$$ was installed.
 $lnext
 Then execute the command
 $codei%
-	%path_to_7-zip%\7z x cppad-%version.%lic%.tar
+	%path_to_7-zip%\7z x cppad-%version%.%lic%.tar
 %$$
 $lnext
 To see if this has been done correctly, check for the following file:
 $codei%
-	cppad-%version%/cppad/cppad.hpp
+	cppad-%version%\cppad\cppad.hpp
+%$$
+In addition, you can try the following commands:
+$codei%
+	mkdir work
+	cd work
+	%path_to_cmake%\cmake -G "NMake Makefiles" ..
+	%path_to_nmake%\nmake check
 %$$
 $lend
 
