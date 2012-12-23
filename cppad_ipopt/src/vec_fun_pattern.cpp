@@ -15,6 +15,8 @@ Please visit http://www.coin-or.org/CppAD/ for information on other licenses.
 namespace cppad_ipopt {
 // ---------------------------------------------------------------------------
 /*!
+\defgroup vec_fun_pattern_cpp vec_fun_pattern.cpp
+\{
 \file vec_fun_pattern.cpp
 \brief Determine a sparsity pattern for a vector of AD function objects.
 */
@@ -138,5 +140,6 @@ void vec_fun_pattern(
 	}
 }
 // ---------------------------------------------------------------------------
+/* \} */
 } // end namespace cppad_ipopt
 // ---------------------------------------------------------------------------

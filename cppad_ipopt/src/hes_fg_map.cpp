@@ -16,6 +16,8 @@ Please visit http://www.coin-or.org/CppAD/ for information on other licenses.
 namespace cppad_ipopt {
 // ---------------------------------------------------------------------------
 /*!
+\defgroup hes_fg_map_cpp hes_fg_map.cpp
+\{
 \file hes_fg_map.cpp
 \brief Creates a mapping between two representations for Hessian of fg. 
 */
@@ -172,5 +174,6 @@ void hes_fg_map(
 }
 
 // ---------------------------------------------------------------------------
+/* \} */
 } // end namespace cppad_ipopt
 // ---------------------------------------------------------------------------

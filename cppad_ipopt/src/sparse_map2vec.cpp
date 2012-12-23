@@ -16,6 +16,8 @@ Please visit http://www.coin-or.org/CppAD/ for information on other licenses.
 namespace cppad_ipopt {
 // ---------------------------------------------------------------------------
 /*!
+\defgroup sparse_map2vec_cpp sparse_map2vec.cpp
+\{
 \file sparse_map2vec.cpp
 \brief Create a two vector sparsity representation from a vector of maps.
 */
@@ -92,5 +94,6 @@ void sparse_map2vec(
 }
 
 // ---------------------------------------------------------------------------
+/* \} */
 } // end namespace cppad_ipopt
 // ---------------------------------------------------------------------------
