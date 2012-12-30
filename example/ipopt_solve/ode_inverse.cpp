@@ -181,7 +181,6 @@ $end
 ------------------------------------------------------------------------------
 */
 // BEGIN C++
-# include <fstream>
 # include <cppad/ipopt/solve.hpp>
 
 namespace {
