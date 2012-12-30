@@ -127,13 +127,10 @@ then
 	list=`cat bin/commit.list.$$`
 	for file in $list
 	do
-		# exclude */makefile.in and cppad/configure.hpp.in files
-		# from edits in bin/commit.sed
+		# exclude */makefile.in from edits in bin/commit.sed
 		local_file=`echo $file | sed -e 's|.*/||'`
 		file_ext=`echo $file | sed -e 's|.*\.||'`
-		if [ -f "$file" ] &&  \
-		   [ "$local_file" != "makefile.in" ] && \
-		   [ "$local_file" != "configure.hpp.in" ]
+		if [ -f "$file" ] &&  [ "$local_file" != "makefile.in" ]
 		then
 			sed -f bin/commit.sed $file > bin/commit.tmp.$$
 			if ! diff $file bin/commit.tmp.$$ > /dev/null
@@ -211,13 +208,6 @@ then
 	exit 1
 fi
 #
-sed -f bin/commit.sed cppad/configure.hpp > bin/commit.tmp.$$
-if ! diff cppad/configure.hpp bin/commit.tmp.$$
-then
-	echo "bin/commit.sh run: unexpected values in cppad/configure.hpp"
-	rm bin/commit.*.$$
-	exit 1
-fi
 rm bin/commit.*.$$
 #
 echo "svn commit -m \""
