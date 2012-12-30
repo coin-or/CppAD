@@ -109,7 +109,7 @@ $codei%log(%var%)%$$ and $icode%var% <= 0%$$,
 the corresponding result will be $cref nan$$.
 
 $head Alternative$$
-The $cref Output$$ section describes the normal 
+The $cref ad_output$$ section describes the normal 
 printing of values; i.e., printing when the corresponding
 code is executed.
 

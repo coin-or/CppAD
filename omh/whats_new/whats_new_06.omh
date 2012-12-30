@@ -971,7 +971,7 @@ $pre
 $$
 Mention the $cref/VecAD<Base>::reference/VecAD/VecAD<Base>::reference/$$ case 
 and generally improve 
-$cref Value$$, $cref Output$$ and $cref/assignment/ad_assign/$$ documentation
+$cref Value$$, $cref ad_output$$ and $cref/assignment/ad_assign/$$ documentation
 and examples.
 $pre
 
@@ -1071,7 +1071,7 @@ has been grouped together with improved documentation
 in $cref std_math_ad$$.
 
 $head 02-28$$
-The $cref Output$$ and $cref Abs$$
+The $cref ad_output$$ and $cref Abs$$
 documentation and example have been improved. 
 Minor improvements were also made to the $cref lu_vec_ad.cpp$$ documentation.
 

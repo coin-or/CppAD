@@ -1,6 +1,6 @@
 /* $Id$ */
-# ifndef CPPAD_OUTPUT_INCLUDED
-# define CPPAD_OUTPUT_INCLUDED
+# ifndef CPPAD_AD_IO_INCLUDED
+# define CPPAD_AD_IO_INCLUDED
 
 /* --------------------------------------------------------------------------
 CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-12 Bradley M. Bell
@@ -14,7 +14,7 @@ Please visit http://www.coin-or.org/CppAD/ for information on other licenses.
 -------------------------------------------------------------------------- */
 
 /*
-$begin Output$$
+$begin ad_output$$
 $spell
 	VecAD
 	std

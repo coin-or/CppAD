@@ -426,6 +426,7 @@ nobase_myinclude_HEADERS = \
 	cppad/local/add_eq.hpp \
 	cppad/local/add.hpp \
 	cppad/local/add_op.hpp \
+	cppad/local/ad_io.hpp \
 	cppad/local/ad_fun.hpp \
 	cppad/local/ad.hpp \
 	cppad/local/ad_tape.hpp \
@@ -497,7 +498,6 @@ nobase_myinclude_HEADERS = \
 	cppad/local/optimize.hpp \
 	cppad/local/opt_val_hes.hpp \
 	cppad/local/ordered.hpp \
-	cppad/local/output.hpp \
 	cppad/local/parallel_ad.hpp \
 	cppad/local/parameter_op.hpp \
 	cppad/local/par_var.hpp \

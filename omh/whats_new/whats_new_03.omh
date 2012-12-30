@@ -662,7 +662,7 @@ mathematical operations for the $code AD<double>$$ case.
 $pre
 
 $$
-The $cref/<</Output/$$ operator was added to the $code AD$$
+The $cref/<</ad_output/$$ operator was added to the $code AD$$
 template class for output to streams.
 
 

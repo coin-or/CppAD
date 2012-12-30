@@ -43,6 +43,8 @@ directories='
 	multi_thread/openmp
 	multi_thread/pthread
 	omh
+	omh/deprecated
+	omh/whats_new
 	pkgconfig
 	print_for
 	speed
