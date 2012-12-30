@@ -76,7 +76,19 @@ This section contains a list of the changes to CppAD during 2012
 The purpose of this section is to
 assist you in learning about changes between various versions of CppAD.
 
+$head 12-30$$
+$list number$$
+Merge changes in $code branches/ipopt_solve$$ to $code trunk$$,
+delete that branch, and 
+advance version number to $code cppad-20121230$$.
+$lnext
+Remove $code cppad/configure.hpp$$ from repository because
+it is built by the configuration process
+(even for MS Visual Studio, now that we are using $cref cmake$$).
+$lend
+
 $head 12-29$$
+In $code branches/ipopt_solve$$:
 $list number$$
 Complete implementation of sparse Jacobian and Hessian calculations
 and add options that allow to user to choose between forward and reverse
@@ -87,7 +99,7 @@ than $cref cppad_ipopt_nlp$$.
 More speed comparisons would be good to have.
 $lnext
 All of the $cref/ADFun Drivers/Drivers/$$ 
-have included specifications for the zero order Taylor coefficients
+have added specifications for the zero order Taylor coefficients
 after the routine is called.
 For example, see
 $cref/Hessian uses forward/Hessian/Hessian Uses Forward/$$.
@@ -95,6 +107,7 @@ $lend
 
 
 $head 12-28$$
+In $code branches/ipopt_solve$$:
 $list number$$
 Add the $cref ipopt_solve_retape.cpp$$ and $cref ipopt_solve_ode_inverse.cpp$$
 examples.
@@ -106,11 +119,13 @@ $cref/retape/ipopt_solve/options/Retape/$$.
 $lend
 
 $head 12-27$$
+In $code branches/ipopt_solve$$:
 Change documentation section names that begin with $code cppad_ipopt$$
 to begin with $cref/ipopt_nlp/cppad_ipopt_nlp/$$
 to distinguish them from $cref/CppAD::ipopt::solve/ipopt_solve/$$.
 
 $head 12-26$$
+In $code branches/ipopt_solve$$:
 $list number$$
 Convert documentation most all documentation references from
 the deprecated $cref InstallUnix$$ instructions to the new $cref cmake$$
@@ -125,6 +140,8 @@ This is a first version of $code ipopt_solve$$ and its speed
 and memory use needs to be improved.
 $lend
 
+$head 12-23$$
+Copy development $code trunk$$ to $code branches/ipopt_solve$$.
 
 $head 12-22$$
 Define a doxygen module (group) for each file that has doxygen documentation.
