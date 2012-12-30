@@ -53,7 +53,9 @@ $cref/CPPAD_DISCRETE_FUNCTION/Discrete/$$
 $rnext
 $cref/CPPAD_MAX_NUM_THREADS/multi_thread/CPPAD_MAX_NUM_THREADS/$$
 $rnext
-$cref/CPPAD_TAPE_ADDR_TYPE/InstallUnix/tape_addr_type/$$
+$cref/CPPAD_TAPE_ADDR_TYPE/cmake/cppad_tape_addr_type/$$
+$rnext
+$cref/CPPAD_TAPE_ID_TYPE/cmake/cppad_tape_id_type/$$
 $rnext
 $cref/CPPAD_TESTVECTOR/testvector/$$
 $rnext

@@ -33,6 +33,19 @@ ELSE ( adolc_prefix )
 	SET(test_more_adolc "")
 ENDIF ( adolc_prefix )
 
+# sources that use ipopt
+IF ( ipopt_prefix )
+	# Extra source files if we are including ipopt
+	SET(ipopt_sources ipopt_solve.cpp)
+	# Adds -D define flags to the compilation of source files.
+	ADD_DEFINITIONS("-DCPPAD_IPOPT_TEST")
+	# add ipopt (and libraries it depends on) to list of libraries
+	SET(test_more_ipopt ${ipopt_LIBRARIES} )
+ELSE ( ipopt_prefix )
+	SET(ipopt_sources "")
+	SET(test_more_ipopt "")
+ENDIF ( ipopt_prefix )
+
 # sources that use eigen
 IF ( eigen_prefix )
 	# compile eigen library separately so can use different compiler flags
@@ -61,6 +74,7 @@ CONFIGURE_FILE(
 # )
 ADD_EXECUTABLE(test_more EXCLUDE_FROM_ALL test_more.cpp
 	${adolc_sources}
+	${ipopt_sources}
 	${eigen_sources}
 	abs.cpp
 	acos.cpp
@@ -92,6 +106,7 @@ ADD_EXECUTABLE(test_more EXCLUDE_FROM_ALL test_more.cpp
 	forward.cpp
 	from_base.cpp
 	fun_check.cpp
+	ipopt_solve.cpp
 	jacobian.cpp
 	log.cpp
 	log10.cpp
@@ -141,7 +156,11 @@ ADD_EXECUTABLE(test_more EXCLUDE_FROM_ALL test_more.cpp
 add_cppad_cxx_flags(test_more)
 
 # List of libraries to be linked into the specified target
-TARGET_LINK_LIBRARIES(test_more ${test_more_adolc} ${test_more_eigen})
+TARGET_LINK_LIBRARIES(test_more 
+	${test_more_adolc} 
+	${test_more_ipopt}
+	${test_more_eigen}
+)
 
 # Add the check_test_more target
 ADD_CUSTOM_TARGET(

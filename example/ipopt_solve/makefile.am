@@ -1,0 +1,40 @@
+# $Id$
+# -----------------------------------------------------------------------------
+# CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-12 Bradley M. Bell
+#
+# CppAD is distributed under multiple licenses. This distribution is under
+# the terms of the 
+#                     Eclipse Public License Version 1.0.
+#
+# A copy of this license is included in the COPYING file of this distribution.
+# Please visit http://www.coin-or.org/CppAD/ for information on other licenses.
+# -----------------------------------------------------------------------------
+# automake input file
+#
+# CppAD pusts all it's preprocessor definitions in the cppad/configure.hpp
+DEFS          =
+#
+check_PROGRAMS    = solve
+#
+AM_CXXFLAGS       = -g $(CXX_FLAGS) 
+#
+AM_CPPFLAGS       = -I. \
+	-I$(top_srcdir) \
+	$(BOOST_INCLUDE) \
+	$(EIGEN_INCLUDE) \
+	-I$(IPOPT_DIR)/include
+#
+LDADD             = \
+                    $(CPPAD_IPOPT_LIBS) \
+                    $(FCLIBS) \
+                    $(PTHREAD_LIB) \
+                    $(DL_LIB)
+#
+solve_SOURCES   = \
+	solve.cpp \
+	get_started.cpp \
+	ode_inverse.cpp \
+	retape.cpp
+
+test: check
+	./test.sh

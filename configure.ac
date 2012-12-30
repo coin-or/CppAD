@@ -277,7 +277,7 @@ AC_MSG_CHECKING([IPOPT_DIR])
 AC_ARG_VAR(IPOPT_DIR,
 	[value of the configure prefix directory during Ipopt install]
 )
-AM_CONDITIONAL(CppAD_IPOPT_CPPAD, test "$IPOPT_DIR" != "")
+AM_CONDITIONAL(CppAD_IPOPT, test "$IPOPT_DIR" != "")
 if test "$IPOPT_DIR" != "" ; then
 	AC_MSG_RESULT([$IPOPT_DIR])
 	if test "$have_ar" = "no"; then
@@ -697,6 +697,7 @@ dnl
 dnl names set here so */test_one.sh.in works both with cmake and autoconf 
 AC_SUBST(adolc_prefix,      ${ADOLC_DIR} )
 AC_SUBST(eigen_prefix,      ${EIGEN_DIR} )
+AC_SUBST(ipopt_prefix,      ${IPOPT_DIR} )
 dnl
 dnl -----------------------------------------------------------------------
 dnl AC_CONFIG_FILES(file-list) for each file in the list, configure will 
@@ -706,18 +707,20 @@ AC_CONFIG_FILES([
 	cppad_ipopt/example/test.sh
 	cppad_ipopt/speed/test.sh
 	cppad_ipopt/test/test.sh
+	example/ipopt_solve/test.sh
 	example/test_one.sh
 	pkgconfig/cppad.pc
 	pkgconfig/cppad-uninstalled.pc
 	test_more/test_one.sh
 
 	makefile
-	example/makefile 
 	compare_c/makefile 
 	cppad_ipopt/src/makefile
 	cppad_ipopt/example/makefile
 	cppad_ipopt/speed/makefile
 	cppad_ipopt/test/makefile
+	example/makefile 
+	example/ipopt_solve/makefile 
 	introduction/get_started/makefile 
 	introduction/exp_apx/makefile
 	multi_thread/makefile
@@ -737,6 +740,10 @@ AC_CONFIG_FILES([
 dnl END AC_CONFIG_FILES 
 dnl the comment line above is used by ./new_stable.sh
 
+AC_CONFIG_COMMANDS(
+	[example_ipopt_solve_test.sh],
+	[chmod +x example/ipopt_solve/test.sh],
+)	[]
 AC_CONFIG_COMMANDS(
 	[cppad_ipopt_example_test.sh],
 	[chmod +x cppad_ipopt/example/test.sh],

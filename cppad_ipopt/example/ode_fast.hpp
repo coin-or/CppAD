@@ -12,7 +12,7 @@ A copy of this license is included in the COPYING file of this distribution.
 Please visit http://www.coin-or.org/CppAD/ for information on other licenses.
 -------------------------------------------------------------------------- */
 /*
-$begin ipopt_ode_fast.hpp$$
+$begin ipopt_nlp_ode_fast.hpp$$
 $spell
 	cppad_ipopt_nlp
 $$

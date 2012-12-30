@@ -95,8 +95,10 @@ order one Forward or order one Reverse to compute the Jacobian
 After each call to $cref Forward$$,
 the object $icode f$$ contains the corresponding 
 $cref/Taylor coefficients/glossary/Taylor Coefficient/$$.
-After each call to $code Jacobian$$,
-the previous calls to $cref Forward$$ are unspecified.
+After a call to $code Jacobian$$,
+the zero order Taylor coefficients correspond to
+$icode%f%.Forward(0, %x%)%$$
+and the other coefficients are unspecified.
 
 $head Example$$
 $children%

@@ -13,6 +13,7 @@ Please visit http://www.coin-or.org/CppAD/ for information on other licenses.
 $begin whats_new_12$$
 $dollar @$$
 $spell
+	Jacobians
 	doxygen
 	txt
 	sys
@@ -74,6 +75,56 @@ This section contains a list of the changes to CppAD during 2012
 (in reverse order by date).
 The purpose of this section is to
 assist you in learning about changes between various versions of CppAD.
+
+$head 12-29$$
+$list number$$
+Complete implementation of sparse Jacobian and Hessian calculations
+and add options that allow to user to choose between forward and reverse
+sparse Jacobians.
+$lnext
+The $cref ipopt_solve$$ routine seems to be faster and simpler
+than $cref cppad_ipopt_nlp$$. 
+More speed comparisons would be good to have.
+$lnext
+All of the $cref/ADFun Drivers/Drivers/$$ 
+have included specifications for the zero order Taylor coefficients
+after the routine is called.
+For example, see
+$cref/Hessian uses forward/Hessian/Hessian Uses Forward/$$.
+$lend
+
+
+$head 12-28$$
+$list number$$
+Add the $cref ipopt_solve_retape.cpp$$ and $cref ipopt_solve_ode_inverse.cpp$$
+examples.
+$lnext
+Use $code ipopt::solve$$ $cref/options/ipopt_solve/options/$$
+argument (and not a file) for all the Ipopt options.
+As well as allowing for adding $code ipopt::solve$$ special options; e.g.,
+$cref/retape/ipopt_solve/options/Retape/$$.
+$lend
+
+$head 12-27$$
+Change documentation section names that begin with $code cppad_ipopt$$
+to begin with $cref/ipopt_nlp/cppad_ipopt_nlp/$$
+to distinguish them from $cref/CppAD::ipopt::solve/ipopt_solve/$$.
+
+$head 12-26$$
+$list number$$
+Convert documentation most all documentation references from
+the deprecated $cref InstallUnix$$ instructions to the new $cref cmake$$
+instructions.
+$lnext
+Include the $cref Introduction$$ programs in the 
+$cref cppad_test$$ built using $cref cmake$$.
+$lnext
+Deprecate $cref cppad_ipopt_nlp$$ and replace it by $cref ipopt_solve$$
+which is easier to use.
+This is a first version of $code ipopt_solve$$ and its speed
+and memory use needs to be improved.
+$lend
+
 
 $head 12-22$$
 Define a doxygen module (group) for each file that has doxygen documentation.

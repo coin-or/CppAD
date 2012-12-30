@@ -25,7 +25,7 @@ AM_CPPFLAGS               = \
 	-I$(IPOPT_DIR)/include
 #
 # make building the library conditional on having IPOPT_DIR specified
-if CppAD_IPOPT_CPPAD
+if CppAD_IPOPT
 lib_LIBRARIES            = libcppad_ipopt.a
 libcppad_ipopt_a_SOURCES = \
 	cppad_ipopt_nlp.cpp \

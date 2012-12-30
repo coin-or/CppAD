@@ -18,8 +18,8 @@ fi
 if [ "$3" == "" ] 
 then
 	echo "usage: bin/dir_copy.sh file_list direction dir"
-	echo "file_list is a file containing a list of file names to copy,"
-	echo "direction is 'to' or 'from', and dir is a directory."
+	echo "	file_list: a file containing a list of file names to copy,"
+	echo "	direction: 'to' or 'from', and dir is a directory."
 	exit 1
 fi
 if [ "$2" != 'from' ] && [ "$2" != 'to' ]
@@ -46,7 +46,7 @@ if [ "$direction" == 'to' ]
 then
 	if [ -e "$directory" ]
 	then
-		echo "bin/media_copy.sh $file_list $direction directory=$directory"
+		echo "bin/dir_copy.sh $file_list $direction directory=$directory"
 		echo "the directory already exists, remove it first."
 		exit 1
 	fi

@@ -23,13 +23,7 @@ $index example, speed program$$
 $section Run the Speed Examples$$
 
 $head Running Tests$$
-To build this program and run its correctness tests,
-execute the following commands starting in the
-$cref/work directory/InstallUnix/Work Directory/$$:
-$codei%
-	cd speed/example
-	make test
-%$$
+To build this program and run its correctness tests see $cref cppad_test$$.
 
 
 $code

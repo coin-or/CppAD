@@ -64,7 +64,7 @@ $code test_more$$ directory).
 
 $head 12-04$$
 Extensive explanation for the $code ipopt_cppad/ipopt_cppad_ode$$ example was
-provided in the section $cref/ipopt_cppad_ode/cppad_ipopt_ode/$$.
+provided in the section $cref/ipopt_cppad_ode/ipopt_nlp_ode/$$.
 
 $head 11-22$$
 The CppAD interface to the Ipopt nonlinear programming solver
@@ -261,7 +261,7 @@ This is only an example class it may change with future
 versions of CppAD.
 
 $head 06-15$$
-The nonlinear programming example $cref ipopt_get_started.cpp$$ was added.
+The nonlinear programming example $cref ipopt_nlp_get_started.cpp$$ was added.
 This is a preliminary version of this example.
 
 $head 06-11$$

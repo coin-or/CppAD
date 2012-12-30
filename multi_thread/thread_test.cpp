@@ -55,14 +55,25 @@ $subhead threading$$
 $index openmp, run tests$$
 $index pthread, run tests$$
 $index bthread, run tests$$
-If $cref/openmp_flags/InstallUnix/openmp_flags/$$ 
-are specified during configuration,
+If the $cref cmake$$ command output indicates that 
+$code openmp$$ is supported by your system,
 you can execute the syntax above with
 $icode threading$$ equal to $code openmp$$.
-If pthreads with barriers are supported by your system,
-you can use $icode threading$$ equal to $code pthread$$.
-If boost threads have been installed,
-you can use $icode threading$$ equal to $code bthread$$.
+$pre
+
+$$
+If the $cref cmake$$ command output indicates that 
+$code pthreads$$ with barriers is supported by your system,
+you can execute the syntax above with
+$icode threading$$ equal to $code pthread$$.
+$pre
+
+$$
+If the $cref cmake$$ command output indicates that 
+$code boost$$ threads is supported is by your system,
+you can execute the syntax above with
+$icode threading$$ equal to $code bthread$$.
+
 
 $head Purpose$$
 Runs the CppAD multi-threading examples and timing tests:

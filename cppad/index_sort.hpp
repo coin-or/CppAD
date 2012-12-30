@@ -39,16 +39,16 @@ where $icode VectorKey$$ is
 a $cref SimpleVector$$ class with elements that support the $code <$$
 operation.
 
-$head index$$
-The argument $icode index$$ has prototype 
+$head ind$$
+The argument $icode ind$$ has prototype 
 $codei%
-	const %VectorSize%& %index%
+	const %VectorSize%& %ind%
 %$$
 where $icode VectorSize$$ is 
 a $cref SimpleVector$$ class with elements of type $code size_t$$.
 The routine $cref CheckSimpleVector$$ will generate an error message
 if this is not the case.
-The size of $icode index$$ must be the same as the size of $icode keys$$
+The size of $icode ind$$ must be the same as the size of $icode keys$$
 and the value of its input elements does not matter.
 $pre
 

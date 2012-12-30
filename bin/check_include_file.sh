@@ -47,6 +47,7 @@ cat bin/check_include_file.1.$$ | \
 # All other files should.
 ls	cppad/*.hpp \
 	cppad/example/*.hpp \
+	cppad/ipopt/*.hpp \
 	cppad/local/*.hpp \
 	cppad/speed/*.hpp | sed \
 		-e '/cppad\/local\/prototype_op.hpp/d' \

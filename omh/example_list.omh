@@ -110,7 +110,6 @@ $rref cond_exp.cpp$$
 $rref conj_grad.cpp$$
 $rref cos.cpp$$
 $rref cosh.cpp$$
-$rref cppad_ipopt_nlp$$
 $rref cppad_vector.cpp$$
 $rref det_by_lu.cpp$$
 $rref det_by_minor.cpp$$
@@ -145,13 +144,9 @@ $rref integer.cpp$$
 $rref interface2c.cpp$$
 $rref interp_onetape.cpp$$
 $rref interp_retape.cpp$$
-$rref ipopt_get_started.cpp$$
-$rref ipopt_ode_check.cpp$$
-$rref ipopt_ode_fast.hpp$$
-$rref ipopt_ode_problem.hpp$$
-$rref ipopt_ode_run.hpp$$
-$rref ipopt_ode_simple.hpp$$
-$rref ipopt_ode_speed.cpp$$
+$rref ipopt_solve_get_started.cpp$$ 
+$rref ipopt_solve_ode_inverse.cpp$$ 
+$rref ipopt_solve_retape.cpp$$ 
 $rref jac_lu_det.cpp$$
 $rref jac_minor_det.cpp$$
 $rref jacobian.cpp$$

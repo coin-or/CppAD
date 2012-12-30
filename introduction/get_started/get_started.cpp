@@ -156,13 +156,7 @@ $codep
 $$
 
 $head Running$$
-To build and run this program,
-execute the following commands starting in the
-$cref/work directory/InstallUnix/Work Directory/$$:
-$codei%
-	cd introduction/get_started
-	make test
-%$$
+To build and run this program see $cref cppad_test$$.
 
 $end
 */

@@ -221,6 +221,7 @@ htmldir = @htmldir@
 includedir = @includedir@
 infodir = @infodir@
 install_sh = @install_sh@
+ipopt_prefix = @ipopt_prefix@
 libdir = @libdir@
 libexecdir = @libexecdir@
 localedir = @localedir@

@@ -105,8 +105,10 @@ $head RevOne Uses Forward$$
 After each call to $cref Forward$$,
 the object $icode f$$ contains the corresponding 
 $cref/Taylor coefficients/glossary/Taylor Coefficient/$$.
-After $code RevOne$$,
-the previous calls to $cref Forward$$ are undefined.
+After a call to $code RevOne$$,
+the zero order Taylor coefficients correspond to
+$icode%f%.Forward(0, %x%)%$$
+and the other coefficients are unspecified.
 
 $head Example$$
 $children%

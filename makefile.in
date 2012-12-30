@@ -121,12 +121,12 @@ AM_RECURSIVE_TARGETS = $(RECURSIVE_TARGETS:-recursive=) \
 	distdir dist dist-all distcheck
 ETAGS = etags
 CTAGS = ctags
-DIST_SUBDIRS = cppad_ipopt/src cppad_ipopt/example cppad_ipopt/speed \
-	cppad_ipopt/test speed/src speed/adolc speed/cppad \
-	speed/double speed/example speed/fadbad speed/profile \
-	speed/sacado example compare_c introduction/get_started \
-	introduction/exp_apx print_for multi_thread \
-	multi_thread/test_multi test_more
+DIST_SUBDIRS = cppad_ipopt/src example/ipopt_solve cppad_ipopt/example \
+	cppad_ipopt/speed cppad_ipopt/test speed/src speed/adolc \
+	speed/cppad speed/double speed/example speed/fadbad \
+	speed/profile speed/sacado example compare_c \
+	introduction/get_started introduction/exp_apx print_for \
+	multi_thread multi_thread/test_multi test_more
 DISTFILES = $(DIST_COMMON) $(DIST_SOURCES) $(TEXINFOS) $(EXTRA_DIST)
 distdir = $(PACKAGE)-$(VERSION)
 top_distdir = $(distdir)
@@ -288,6 +288,7 @@ htmldir = @htmldir@
 includedir = @includedir@
 infodir = @infodir@
 install_sh = @install_sh@
+ipopt_prefix = @ipopt_prefix@
 libdir = @libdir@
 libexecdir = @libexecdir@
 localedir = @localedir@
@@ -336,24 +337,25 @@ BUILT_SOURCES = $(top_srcdir)/cppad/configure.hpp
 #
 # Did user specify a value for SACADO_DIR in configure command line
 @CppAD_SACADO_TRUE@SPEED_SACADO_TESTS = speed/sacado
-@CppAD_IPOPT_CPPAD_FALSE@IPOPT_TESTS = 
+@CppAD_IPOPT_FALSE@IPOPT_TESTS = 
 #
 # Did user specify a value for IPOPT_DIR in configure command line 
-@CppAD_IPOPT_CPPAD_TRUE@IPOPT_TESTS = \
-@CppAD_IPOPT_CPPAD_TRUE@	cppad_ipopt/example \
-@CppAD_IPOPT_CPPAD_TRUE@	cppad_ipopt/speed \
-@CppAD_IPOPT_CPPAD_TRUE@	cppad_ipopt/test
+@CppAD_IPOPT_TRUE@IPOPT_TESTS = \
+@CppAD_IPOPT_TRUE@	example/ipopt_solve \
+@CppAD_IPOPT_TRUE@	cppad_ipopt/example \
+@CppAD_IPOPT_TRUE@	cppad_ipopt/speed \
+@CppAD_IPOPT_TRUE@	cppad_ipopt/test
 
-@CppAD_IPOPT_CPPAD_FALSE@IPOPT_DIRS = 
+@CppAD_IPOPT_FALSE@IPOPT_DIRS = 
 #
-@CppAD_IPOPT_CPPAD_TRUE@IPOPT_DIRS = \
-@CppAD_IPOPT_CPPAD_TRUE@	cppad_ipopt/src \
-@CppAD_IPOPT_CPPAD_TRUE@	$(IPOPT_TESTS) 
+@CppAD_IPOPT_TRUE@IPOPT_DIRS = \
+@CppAD_IPOPT_TRUE@	cppad_ipopt/src \
+@CppAD_IPOPT_TRUE@	$(IPOPT_TESTS) 
 
-@CppAD_IPOPT_CPPAD_FALSE@IPOPT_HEADER = 
+@CppAD_IPOPT_FALSE@IPOPT_HEADER = 
 #
-@CppAD_IPOPT_CPPAD_TRUE@IPOPT_HEADER = \
-@CppAD_IPOPT_CPPAD_TRUE@	cppad_ipopt/src/cppad_ipopt_nlp.hpp
+@CppAD_IPOPT_TRUE@IPOPT_HEADER = \
+@CppAD_IPOPT_TRUE@	cppad_ipopt/src/cppad_ipopt_nlp.hpp
 
 #
 # Is the library archiving program present
@@ -411,6 +413,9 @@ nobase_myinclude_HEADERS = \
 	cppad/example/eigen_plugin.hpp \
 	cppad/error_handler.hpp \
 	cppad/index_sort.hpp \
+	cppad/ipopt/solve.hpp \
+	cppad/ipopt/solve_callback.hpp \
+	cppad/ipopt/solve_result.hpp \
 	cppad/local/abort_recording.hpp \
 	cppad/local/abs.hpp \
 	cppad/local/abs_op.hpp \

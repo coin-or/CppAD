@@ -50,6 +50,7 @@ extern bool for_sparse_jac(void);
 extern bool Forward(void);
 extern bool FromBase(void);
 extern bool FunCheck(void);
+extern bool ipopt_solve(void);
 extern bool jacobian(void);
 extern bool Log(void);
 extern bool Log10(void);
@@ -198,9 +199,11 @@ int main(void)
 	ok &= Run( VecAD,           "VecAD"          );
 	ok &= Run( VecADPar,        "VecADPar"       );
 	ok &= Run( VecUnary,        "VecUnary"       );
-
 # ifdef CPPAD_ADOLC_TEST
 	ok &= Run( base_adolc,      "base_adolc"     );
+# endif
+# ifdef CPPAD_IPOPT_TEST
+	ok &= Run( ipopt_solve,     "ipopt_solve"    );
 # endif
 # ifdef CPPAD_OPENMP_TEST
 	ok &= Run( alloc_openmp,    "alloc_openmp"   );

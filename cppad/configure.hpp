@@ -102,7 +102,7 @@ Otherwise, this smybol should be zero.
 If this symbol is one, the type size_t is the same as the type unsigned int,
 otherwise this symbol is zero.
 */
-# define CPPAD_SIZE_T_SAME_UNSIGNED_INT 1
+# define CPPAD_SIZE_T_SAME_UNSIGNED_INT 0
 
 /*!
 \def CPPAD_TAPE_ADDR_TYPE

@@ -42,8 +42,9 @@ SPEED_SACADO_TESTS  =
 endif
 #
 # Did user specify a value for IPOPT_DIR in configure command line 
-if CppAD_IPOPT_CPPAD
+if CppAD_IPOPT
 IPOPT_TESTS = \
+	example/ipopt_solve \
 	cppad_ipopt/example \
 	cppad_ipopt/speed \
 	cppad_ipopt/test
@@ -116,6 +117,9 @@ nobase_myinclude_HEADERS =  \
 	cppad/example/eigen_plugin.hpp \
 	cppad/error_handler.hpp \
 	cppad/index_sort.hpp \
+	cppad/ipopt/solve.hpp \
+	cppad/ipopt/solve_callback.hpp \
+	cppad/ipopt/solve_result.hpp \
 	cppad/local/abort_recording.hpp \
 	cppad/local/abs.hpp \
 	cppad/local/abs_op.hpp \

@@ -12,7 +12,7 @@ Please visit http://www.coin-or.org/CppAD/ for information on other licenses.
 
 /*
 
-$begin ipopt_get_started.cpp$$
+$begin ipopt_nlp_get_started.cpp$$
 $spell
 	cppad_nlp
 	IpoptDir
@@ -42,8 +42,8 @@ $latex \[
 
 $head Configuration Requirement$$
 This example will be compiled and tested provided that
-the value $cref/ipopt_dir/InstallUnix/ipopt_dir/$$ is specified on the 
-$cref/configure/InstallUnix/Configure/$$ command line.
+a value for $icode ipopt_prefix$$ 
+is specified on the $cref cmake$$ command line. 
 
 $code
 $verbatim%cppad_ipopt/example/get_started.cpp%0%// BEGIN C++%// END C++%1%$$

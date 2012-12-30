@@ -14,9 +14,7 @@
 # CppAD pusts all it's preprocessor definitions in the cppad/configure.hpp
 DEFS          =
 #
-# Microsoft project files (and ipopt install utility for Visual Studio)
-EXTRA_DIST        =  test.sh \
-	\
+EXTRA_DIST        =  \
 	ode1.omh \
 	ode2.omh
 #

@@ -15,6 +15,7 @@ Please visit http://www.coin-or.org/CppAD/ for information on other licenses.
 $begin cppad_ipopt_nlp$$
 $dollar @$$
 $spell
+	libipopt
 	namespace
 	dir
 	cppad
@@ -38,10 +39,14 @@ $$
 $section Nonlinear Programming Using the CppAD Interface to Ipopt$$
 
 $index nonlinear, programming CppAD$$
+$index deprecated, ipopt interface$$
 $index programming, nonlinear$$
 $index CppAD, nonlinear programming$$
 $index Ipopt, AD$$
 $index AD, Ipopt$$
+
+$head Deprecated$$
+This interface to Ipopt is deprecated, use $cref ipopt_solve$$ instead.
 
 $head Syntax$$
 $codei%# include "cppad_ipopt_nlp.hpp"
@@ -89,11 +94,15 @@ $head ipopt_library_paths$$
 If you are linking to a shared version of the Ipopt library,
 you may have to add some paths the $code LD_LIBRARY_PATH$$ 
 shell variable using the $code export$$ command in the syntax above.
-For example, perhaps 
+For example, if the file the ipopt library is
 $codei%
-	%ipopt_library_paths%=%ipopt_dir%/lib/coin:%ipopt_dir%/lib/coin/ThirdParty
+	%ipopt_prefix%/lib64/libipopt.a
 %$$
-see $cref/ipopt_dir/InstallUnix/ipopt_dir/$$.
+you will need to add the corresponding directory; e.g.,
+$code%
+	export LD_LIBRARY_PATH="%ipopt_prefix%/lib64%:@LD_LIBRARY_PATH"
+%$$
+see $cref ipopt_prefix$$.
 
 $head fg(x)$$
 The function $latex fg : \B{R}^n \rightarrow \B{R}^{m+1}$$ is defined by
@@ -571,11 +580,11 @@ $children%
 
 $head Example$$
 The file 
-$cref ipopt_get_started.cpp$$ is an example and test of 
+$cref ipopt_nlp_get_started.cpp$$ is an example and test of 
 $code cppad_ipopt_nlp$$  that uses the 
 $cref/simple representation/cppad_ipopt_nlp/Simple Representation/$$.
 It returns true if it succeeds and false otherwise.
-The section $cref cppad_ipopt_ode$$ discusses an example that
+The section $cref ipopt_nlp_ode$$ discusses an example that
 uses a more complex representation.
 
 $head Wish List$$
@@ -930,7 +939,7 @@ private:
 	cppad_ipopt_nlp& operator=(const cppad_ipopt_nlp&);
 public:
 	// ----------------------------------------------------------------
-	// See cppad_ipopt_nlp.hpp for doxygen documentation of these methods
+	// See cppad_ipopt_nlp.cpp for doxygen documentation of these methods
 	// ----------------------------------------------------------------
 
 	/// only constructor for cppad_ipopot_nlp

@@ -13,7 +13,7 @@
 # Inherit environment from ../CMakeList.txt
 
 # Initialize list of tests as empty
-SET(list_ipopt "")
+SET(list_ipopt_nlp "")
 
 # assert ipopt_prefix is defined
 IF ( NOT ipopt_prefix )
@@ -22,47 +22,19 @@ IF ( NOT ipopt_prefix )
 	)
 ENDIF ( NOT ipopt_prefix )
 
-FIND_PACKAGE(PkgConfig)
-IF( NOT PKG_CONFIG_FOUND )
-	MESSAGE(FATAL_ERROR "Using ipopt_prefix but cannot find pkg-config")
-ENDIF( NOT PKG_CONFIG_FOUND )
-
-# Set the system environment variable 
-# 	PKG_CONFIG_PATH=${ipopt_prefix}/${cppad_install_libdir}/pkgconfig
-FOREACH(dir ${cmake_install_libdirs})
-	IF(EXISTS "${ipopt_prefix}/${dir}/pkgconfig/ipopt.pc")
-		SET( ENV{PKG_CONFIG_PATH} ${ipopt_prefix}/${dir}/pkgconfig )
-	ENDIF(EXISTS "${ipopt_prefix}/${dir}/pkgconfig/ipopt.pc")
-ENDFOREACH(dir)
-
-# pkg_check_modules(<PREFIX> [REQUIRED] <MODULE> [<MODULE>]*)
-# ipopt_LIBRARIES      ... only the libraries (w/o the '-l')
-# ipopt_LIBRARY_DIRS   ... the paths of the libraries (w/o the '-L')
-pkg_check_modules(ipopt ipopt)
-IF( NOT ipopt_FOUND )
-	MESSAGE(FATAL_ERROR 
-"For all directories dir in cmake_install_libdirs, cannot find the file
-	ipopt_prefix/dir/pkgconfig/ipopt.pc 
-where
-	ipopt_prefix = ${ipopt_prefix}
-	cmake_install_libdirs = ${cmake_install_libdirs}
-"
-	)
-ENDIF( NOT ipopt_FOUND )
-
 # The CMakeLists.txt file in the specified source directory is processed 
 # before the current input file continues beyond this command.
 # add_subdirectory(source_dir [binary_dir] [EXCLUDE_FROM_ALL])
 ADD_SUBDIRECTORY(src)
 #
 ADD_SUBDIRECTORY(example)
-add_to_list(list_ipopt check_ipopt_example)
+add_to_list(list_ipopt_nlp check_example_ipopt_nlp)
 #
 ADD_SUBDIRECTORY(speed)
-add_to_list(list_ipopt check_ipopt_speed)
+add_to_list(list_ipopt_nlp check_speed_ipopt_nlp)
 #
 ADD_SUBDIRECTORY(test)
-add_to_list(list_ipopt check_ipopt_test_more)
+add_to_list(list_ipopt_nlp check_test_more_ipopt_nlp)
 
-# Add the check_ipopt target
-ADD_CUSTOM_TARGET(check_ipopt DEPENDS ${list_ipopt} )
+# Add the check_ipopt_nlp target
+ADD_CUSTOM_TARGET(check_ipopt_nlp DEPENDS ${list_ipopt_nlp} )

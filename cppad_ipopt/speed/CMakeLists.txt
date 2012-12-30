@@ -27,7 +27,8 @@ LINK_DIRECTORIES( ${ipopt_LIBRARY_DIRS} )
 #                 source1 source2 ... sourceN
 # )
 # Include source for cppad_ipopt library so we build it without debugging 
-ADD_EXECUTABLE(ipopt_speed EXCLUDE_FROM_ALL speed.cpp
+ADD_EXECUTABLE(speed_ipopt_nlp EXCLUDE_FROM_ALL 
+	speed.cpp
 	../src/cppad_ipopt_nlp.cpp
 	../src/fun_record.hpp
 	../src/hes_fg_map.cpp
@@ -38,13 +39,13 @@ ADD_EXECUTABLE(ipopt_speed EXCLUDE_FROM_ALL speed.cpp
 )
 
 # Add extra compiler flags
-add_cppad_cxx_flags( ipopt_speed )
+add_cppad_cxx_flags( speed_ipopt_nlp )
 
 # List of libraries to be linked into the specified target
-TARGET_LINK_LIBRARIES(ipopt_speed cppad_ipopt ${ipopt_LIBRARIES})
+TARGET_LINK_LIBRARIES(speed_ipopt_nlp cppad_ipopt ${ipopt_LIBRARIES})
 
-# Add the check_ipopt_speed target
-ADD_CUSTOM_TARGET(check_ipopt_speed
-	ipopt_speed
-	DEPENDS ipopt_speed cppad_ipopt
+# Add the check_speed_ipopt_nlp target
+ADD_CUSTOM_TARGET(check_speed_ipopt_nlp
+	speed_ipopt_nlp
+	DEPENDS speed_ipopt_nlp cppad_ipopt
 )

@@ -11,6 +11,7 @@ Please visit http://www.coin-or.org/CppAD/ for information on other licenses.
 -------------------------------------------------------------------------- */
 $begin cppad_test$$
 $spell
+	nlp
 	makefiles
 	ipopt
 	CppAD
@@ -51,7 +52,10 @@ $code make check_compare_c$$ $cnext
 	$tref compare_c$$ 
 $rnext
 $code make check_example$$   $cnext 
-	most of the $cref Example$$
+	most of the $cref Example$$ programs
+$rnext
+$code make check_introduction$$   $cnext 
+	the programs in the $cref Introduction$$
 $rnext
 $code make check_print_for$$ $cnext 
 	the print_for command
@@ -65,7 +69,7 @@ $rnext
 $code make check_speed$$ $cnext 
 	single threading $cref speed$$ tests (run correctness only)
 $rnext
-$code make check_ipopt$$ $cnext 
+$code make check_ipopt_nlp$$ $cnext 
 	the $cref cppad_ipopt_nlp$$ speed and correctness tests
 $rnext
 $tend

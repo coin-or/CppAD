@@ -21,15 +21,7 @@ $index example, CppAD$$
 $index test, CppAD$$
 
 $head Running Tests$$
-To build this program and run its correctness tests,
-execute the following commands starting in the
-$cref/work directory/InstallUnix/Work Directory/$$:
-$codei%
-	cd example
-	make test
-%$$
-There are a lot of tests, so this may take a while to compile.
-
+To build this program and run its correctness tests see $cref cppad_test$$.
 
 $code
 $verbatim%example/example.cpp%0%// BEGIN C++%// END C++%1%$$

@@ -124,32 +124,32 @@ expressions from the tape (more of this is planned).
 
 $head 10-30$$
 Make program that check Ipopt ODE example correctness
-a separate file $cref ipopt_ode_check.cpp$$
-Split out Ipopt driver for ODE example $cref ipopt_ode_run.hpp$$.
+a separate file $cref ipopt_nlp_ode_check.cpp$$
+Split out Ipopt driver for ODE example $cref ipopt_nlp_ode_run.hpp$$.
 Add the speed testing problem $code ipopt_cppad/ipopt_ode_speed.cpp$$.
 
 $head 10-29$$
 Split out the 
-$cref/ode inverse problem/ipopt_ode_problem/$$,
-$cref/its simple representation/ipopt_ode_simple/$$,
+$cref/ode inverse problem/ipopt_nlp_ode_problem/$$,
+$cref/its simple representation/ipopt_nlp_ode_simple/$$,
 and
-$cref/its fast representation/ipopt_ode_fast/$$,
+$cref/its fast representation/ipopt_nlp_ode_fast/$$,
 as a separate files; to be specific,
-$cref ipopt_ode_problem.hpp$$,
-$cref ipopt_ode_simple.hpp$$,
-$cref ipopt_ode_fast.hpp$$,
+$cref ipopt_nlp_ode_problem.hpp$$,
+$cref ipopt_nlp_ode_simple.hpp$$,
+$cref ipopt_nlp_ode_fast.hpp$$,
 and 
-$cref ipopt_ode_check.cpp$$.
+$cref ipopt_nlp_ode_check.cpp$$.
 
 $head 10-28$$
-Improve the documentation for $cref ipopt_ode_simple$$ and 
-$cref ipopt_ode_fast$$.
+Improve the documentation for $cref ipopt_nlp_ode_simple$$ and 
+$cref ipopt_nlp_ode_fast$$.
 
 $head 10-27$$
-Moved old $code ipopt_cppad_simple.cpp$$ to $cref ipopt_get_started.cpp$$,
-created the example $cref ipopt_ode_simple.hpp$$,
+Moved old $code ipopt_cppad_simple.cpp$$ to $cref ipopt_nlp_get_started.cpp$$,
+created the example $cref ipopt_nlp_ode_simple.hpp$$,
 and split and $code ipopt_cppad_ode.cpp$$ 
-into $cref ipopt_ode_fast.hpp$$ and $cref ipopt_ode_check.cpp$$.
+into $cref ipopt_nlp_ode_fast.hpp$$ and $cref ipopt_nlp_ode_check.cpp$$.
 
 $head 10-24$$
 Added the $cref/assignment operator/FunConstruct/Assignment Operator/$$

@@ -1,6 +1,6 @@
 $Id$
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-10 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-12 Bradley M. Bell
 
 CppAD is distributed under multiple licenses. This distribution is under
 the terms of the 
@@ -9,7 +9,7 @@ the terms of the
 A copy of this license is included in the COPYING file of this distribution.
 Please visit http://www.coin-or.org/CppAD/ for information on other licenses.
 -------------------------------------------------------------------------- */
-$begin ipopt_ode_problem$$
+$begin ipopt_nlp_ode_problem$$
 
 $section An ODE Inverse Problem Example$$
 $index ode, inverse example$$
@@ -22,7 +22,7 @@ the name of a variable,
 the meaning of the variable value,
 and the value for this particular example.
 If the value is not specified in the table below,
-the corresponding value in $cref ipopt_ode_problem.hpp$$
+the corresponding value in $cref ipopt_nlp_ode_problem.hpp$$
 can be changed and the example should still run
 (with no other changes).
 $table
@@ -199,7 +199,7 @@ A common approach to an inverse problem is to treat the forward problem
 as a black box (that we do not look inside of or try to understand).
 In this approach, for each value of the parameter vector $latex a$$
 one uses the
-$cref/trapezoidal approximation/ipopt_ode_problem/Trapezoidal Approximation/$$
+$cref/trapezoidal approximation/ipopt_nlp_ode_problem/Trapezoidal Approximation/$$
 (on a finer grid that $latex \{ s_i \}$$)
 to solve for $latex y_1 ( s_i , a )$$ for $latex i = 1 , \ldots , Nz$$.
 
@@ -252,12 +252,12 @@ $children%
 	cppad_ipopt/example/ode_problem.hpp
 %$$
 $head Source$$
-The file $cref ipopt_ode_problem.hpp$$ contains 
+The file $cref ipopt_nlp_ode_problem.hpp$$ contains 
 source code that defines the example values and functions defined above.
 
 $end
 -----------------------------------------------------------------------------
-$begin ipopt_ode_simple$$
+$begin ipopt_nlp_ode_simple$$
 $spell
 	cppad_ipopt_nlp
 $$
@@ -321,13 +321,13 @@ $children%
 	cppad_ipopt/example/ode_simple.hpp
 %$$
 $head Source$$
-The file $cref ipopt_ode_simple.hpp$$
+The file $cref ipopt_nlp_ode_simple.hpp$$
 contains source code for this representation of the
 objective and constraints.
 
 $end 
 -----------------------------------------------------------------------------
-$begin ipopt_ode_fast$$
+$begin ipopt_nlp_ode_fast$$
 $spell
 	cppad_ipopt_nlp
 $$
@@ -347,7 +347,7 @@ simpler functions that are faster to differentiate
 
 $head Objective Function$$
 We use the following representation for the
-$cref/objective function/ipopt_ode_simple/Objective Function/$$:
+$cref/objective function/ipopt_nlp_ode_simple/Objective Function/$$:
 For $latex k = 0 , \ldots , Nz - 1$$,
 we define the function $latex r^k : \B{R}^{Ny+Na} \rightarrow \B{R}$$
 by
@@ -402,7 +402,7 @@ J(k,0) = \{
 $head Initial Condition$$
 We use the following representation for the
 $cref/initial condition constraint/
-	ipopt_ode_simple/Initial Condition Constraint/$$:
+	ipopt_nlp_ode_simple/Initial Condition Constraint/$$:
 For $latex k = Nz$$ we define the function 
 $latex r^k : \B{R}^{Ny} \times \B{R}^{Na + Ny}$$ by
 $latex \[
@@ -455,7 +455,7 @@ J(k,0) = \{
 $head Trapezoidal Approximation$$
 We use the following representation for the
 $cref/trapezoidal approximation constraint/
-	ipopt_ode_simple/Trapezoidal Approximation Constraint/$$:
+	ipopt_nlp_ode_simple/Trapezoidal Approximation Constraint/$$:
 For $latex k = 1 , \ldots , Nz$$,
 we define the function $latex r^{Nz+k} : \B{R}^{2*Ny+Na} \rightarrow \B{R}^{Ny}$$ by
 $latex \[
@@ -526,7 +526,7 @@ $children%
 	cppad_ipopt/example/ode_fast.hpp
 %$$
 $head Source$$
-The file $cref ipopt_ode_fast.hpp$$
+The file $cref ipopt_nlp_ode_fast.hpp$$
 contains source code for this representation of the objective
 and constraints.
 

@@ -221,7 +221,7 @@ $codei%
 	    + %f%.size_text()   * sizeof(char)
 	    + %f%.size_VecAD()  * sizeof(%tape_addr_type%)
 %$$
-see $cref/tape_addr_type/InstallUnix/tape_addr_type/$$.
+see $cref/tape_addr_type/cmake/cppad_tape_addr_type/$$.
 Note that this is the minimal amount of memory that can hold
 the information corresponding to an operation sequence.
 The actual amount of memory allocated ($cref/inuse/ta_inuse/$$)

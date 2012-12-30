@@ -56,8 +56,8 @@ is used to manage this memory allocation.
 
 $head Configuration Requirement$$
 This example will be compiled and tested provided that
-the value $cref/adolc_dir/InstallUnix/adolc_dir/$$ is specified on the 
-$cref/configure/InstallUnix/Configure/$$ command line.
+the value $cref ipopt_prefix$$ is specified on the 
+$cref cmake$$ command line.
 
 $code
 $verbatim%example/mul_level_adolc.cpp%0%// BEGIN C++%// END C++%1%$$

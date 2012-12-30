@@ -219,7 +219,7 @@ $childtable%
 	omh/preprocessor.omh%
 	omh/multi_thread.omh%
 	omh/library.omh%
-	cppad_ipopt/src/cppad_ipopt_nlp.hpp%
+	cppad/ipopt/solve.hpp%
 	omh/example.omh%
 	omh/speed/speed.omh%
 	omh/appendix.omh

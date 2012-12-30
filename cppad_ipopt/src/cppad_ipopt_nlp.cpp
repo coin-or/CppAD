@@ -297,7 +297,7 @@ On output, it is a copy of the upper bound for \f$ x \f$; i.e.,
 \c x_u_.
 
 \param[in] m
-is the dimension of the domain space for f(x) and g(x). i.e.,
+is the dimension of the range space for g(x). i.e.,
 it must be equal to \c m_.
 
 \param[out] g_l
@@ -355,7 +355,7 @@ is not used.
 is not used.
 
 \param[in] m
-must be equal to the domain dimension for f(x) and g(x); i.e.,
+must be equal to the range dimension for g(x); i.e.,
 it must be equal to \c m_.
 
 \param init_lambda
@@ -393,7 +393,7 @@ is a vector of size \c n containing the point at which to evaluate
 the function f(x).
 
 \param[in] new_x
-is true if the previous call to any one of the 
+is false if the previous call to any one of the 
 \ref Evaluation_Methods used the same value for \c x.
 
 \param[out] obj_value
@@ -479,7 +479,7 @@ has a vector of size \c n containing the point at which to evaluate
 the gradient of f(x).
 
 \param[in] new_x
-is true if the previous call to any one of the 
+is false if the previous call to any one of the 
 \ref Evaluation_Methods used the same value for \c x.
 
 \param[out] grad_f
@@ -569,10 +569,10 @@ is the dimension of the argument space for g(x); i.e., must be equal \c n_.
 
 \param[in] x
 has a vector of size \c n containing the point at which to evaluate
-the gradient of g(x).
+the constraint function g(x).
 
 \param[in] new_x
-is true if the previous call to any one of the 
+is false if the previous call to any one of the 
 \ref Evaluation_Methods used the same value for \c x.
 
 \param[in] m
@@ -661,7 +661,7 @@ if \c values is not \c NULL,
 the gradient of g(x).
 
 \param[in] new_x
-is true if the previous call to any one of the 
+is false if the previous call to any one of the 
 \ref Evaluation_Methods used the same value for \c x.
 
 \param[in] m
@@ -800,10 +800,10 @@ is the dimension of the argument space for g(x); i.e., must be equal \c n_.
 \param x
 if \c values is not \c NULL, \c x
 is a vector of size \c n containing the point at which to evaluate
-the gradient of g(x).
+the Hessian of the Lagrangian.
 
 \param[in] new_x
-is true if the previous call to any one of the 
+is false if the previous call to any one of the 
 \ref Evaluation_Methods used the same value for \c x.
 
 \param[in] obj_factor
@@ -835,7 +835,7 @@ The input value of its elements does not matter.
 On output, 
 For <tt>k = 0 , ... , nele_jac-1, iRow[k]</tt> is the 
 base zero row index for the 
-k-th possibly non-zero entry in the Jacobian of g(x).
+k-th possibly non-zero entry in the Hessian of the Lagragian.
 
 \param jCol
 if \c values is not \c NULL, \c jCol is not defined.
@@ -845,7 +845,7 @@ The input value of its elements does not matter.
 On output, 
 For <tt>k = 0 , ... , nele_jac-1, jCol[k]</tt> is the 
 base zero column index for the 
-k-th possibly non-zero entry in the Jacobian of g(x).
+k-th possibly non-zero entry in the Hessian of the Lagragian.
 
 \param values
 if \c values is not \c NULL, it
@@ -854,7 +854,7 @@ The input value of its elements does not matter.
 On output, 
 For <tt>k = 0 , ... , nele_jac-1, values[k]</tt> is the 
 value for the 
-k-th possibly non-zero entry in the Jacobian of g(x).
+k-th possibly non-zero entry in the Hessian of the Lagragian.
 
 \return
 The return value is always true; see \ref Evaluation_Methods.
@@ -987,7 +987,7 @@ constraint \f$ x \leq x^u \f$.
 and to have the same element values.
 
 \param[in] m
-is the dimension of the domain space for f(x) and g(x). i.e.,
+is the dimension of the range space for g(x). i.e.,
 it must be equal to \c m_.
 
 \param[in] g

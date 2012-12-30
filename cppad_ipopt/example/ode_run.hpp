@@ -13,7 +13,7 @@ Please visit http://www.coin-or.org/CppAD/ for information on other licenses.
 -------------------------------------------------------------------------- */
 
 /*
-$begin ipopt_ode_run.hpp$$
+$begin ipopt_nlp_ode_run.hpp$$
 $spell
 	Ipopt
 $$

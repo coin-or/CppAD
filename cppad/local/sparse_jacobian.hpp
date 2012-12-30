@@ -214,6 +214,11 @@ $head Uses Forward$$
 After each call to $cref Forward$$,
 the object $icode f$$ contains the corresponding 
 $cref/Taylor coefficients/glossary/Taylor Coefficient/$$.
+After a call to any of the sparse Jacobian routines,
+the zero order Taylor coefficients correspond to
+$icode%f%.Forward(0, %x%)%$$
+and the other coefficients are unspecified.
+
 After $code SparseJacobian$$,
 the previous calls to $cref Forward$$ are undefined.
 

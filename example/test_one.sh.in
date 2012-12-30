@@ -1,3 +1,4 @@
+#! /bin/bash -e
 # $Id$
 # -----------------------------------------------------------------------------
 # CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-12 Bradley M. Bell

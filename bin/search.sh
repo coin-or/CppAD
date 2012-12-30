@@ -28,6 +28,7 @@ directories='
 	bin
 	cppad 
 	cppad/example 
+	cppad/ipopt
 	cppad/local 
 	cppad/speed 
 	cppad_ipopt/example

@@ -38,13 +38,7 @@ $index example, print forward mode$$
 $index print, example forward mode$$
 
 $head Running$$
-To build this program and run its correctness test,
-execute the following commands starting in the
-$cref/work directory/InstallUnix/Work Directory/$$:
-$codei%
-	cd print_for
-	make test
-%$$
+To build this program and run its correctness test see $cref cppad_test$$.
 
 $head Source Code$$
 $codep */

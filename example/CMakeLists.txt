@@ -48,6 +48,12 @@ ELSE ( eigen_prefix )
 	SET(example_eigen "")
 ENDIF ( eigen_prefix )
 
+# ipopt_prefix
+IF( ipopt_prefix )
+	ADD_SUBDIRECTORY(ipopt_solve)
+ENDIF( ipopt_prefix )
+
+
 # Copy a file to another location and modify its contents.
 # configure_file(InputFile OutputFile [COPYONLY] [ESCAPE_QUOTES] [@ONLY])
 CONFIGURE_FILE(
@@ -197,4 +203,7 @@ add_cppad_cxx_flags(example)
 TARGET_LINK_LIBRARIES(example ${example_adolc} ${example_eigen})
 
 # Add the check_example target
-ADD_CUSTOM_TARGET(check_example example DEPENDS example)
+ADD_CUSTOM_TARGET(check_example example DEPENDS 
+	example 
+	check_example_ipopt_solve
+)

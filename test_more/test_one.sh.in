@@ -1,3 +1,4 @@
+#! /bin/bash -e
 # $Id$
 # -----------------------------------------------------------------------------
 # CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-12 Bradley M. Bell
@@ -64,6 +65,14 @@ do
 	then
 		cmd="$cmd -L@adolc_prefix@/$lib -ladolc"
 		export LD_LIBRARY_PATH="$LD_LIBRARY_PATH:@adolc_prefix@/$lib"
+	fi
+	if [ -e @ipopt_prefix@/$lib/pkgconfig ]
+	then
+		export PKG_CONFIG_PATH="@ipopt_prefix@/$lib/pkgconfig"
+		cflags=`pkg-config --cflags ipopt | 
+			sed -e 's|/coin$|/|' -e 's|/coin | |'`
+		libs=`pkg-config --libs ipopt`
+		cmd="$cmd $cflags $libs"
 	fi
 done
 if [ "$1" == 'ndebug.cpp' ]
