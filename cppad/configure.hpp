@@ -44,7 +44,7 @@ Replacement for config.h so that all preprocessor symbols begin with CPPAD_
 \def CPPAD_PACKAGE_STRING
 cppad-yyyymmdd as a C string where yyyy is year, mm is month, and dd is day.
 */
-# define CPPAD_PACKAGE_STRING "cppad-20121220"
+# define CPPAD_PACKAGE_STRING "cppad-20121230"
  
  /*!
 def CPPAD_INTERNAL_SPARSE_SET
@@ -102,7 +102,7 @@ Otherwise, this smybol should be zero.
 If this symbol is one, the type size_t is the same as the type unsigned int,
 otherwise this symbol is zero.
 */
-# define CPPAD_SIZE_T_SAME_UNSIGNED_INT 0
+# define CPPAD_SIZE_T_SAME_UNSIGNED_INT 1
 
 /*!
 \def CPPAD_TAPE_ADDR_TYPE
