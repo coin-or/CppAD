@@ -40,15 +40,26 @@ $end
 bool ad_input(void)
 {	bool ok = true;
 
+	// create the input string stream is.
 	std::string str ("123 456");
 	std::istringstream is(str);
 
-	CppAD::AD<double> x(1.), y(2.);
+	// start and AD<double> recording
+	CPPAD_TESTVECTOR( CppAD::AD<double> ) x(1), y(1);
+	x[0] = 1.0;
+	CppAD::Independent(x);
+	CppAD::AD<double> z = x[0];
+	ok &= Variable(z);
 
-	is >> x >> y;
-
-	ok &= (x == 123.);
-	ok &= (y == 456.);
+	// read first number into z and second into y[0] 
+	is >> z >> y[0];
+	ok   &= Parameter(z);
+	ok   &= (z == 123.);
+	ok   &= Parameter(y[0]);
+	ok   &= (y[0] == 456.);
+	//
+	// terminate recording starting by call to Independent 
+	CppAD::ADFun<double> f(x, y);
 
 	return ok;
 }
