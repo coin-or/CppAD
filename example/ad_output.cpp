@@ -11,7 +11,7 @@ Please visit http://www.coin-or.org/CppAD/ for information on other licenses.
 -------------------------------------------------------------------------- */
 
 /*
-$begin output.cpp$$
+$begin ad_output.cpp$$
 $spell
 	Cpp
 	cstddef
@@ -25,7 +25,7 @@ $index example, AD output$$
 $index test, AD output$$
 
 $code
-$verbatim%example/output.cpp%0%// BEGIN C++%// END C++%1%$$
+$verbatim%example/ad_output.cpp%0%// BEGIN C++%// END C++%1%$$
 $$
 
 $end
@@ -49,7 +49,7 @@ namespace {
 	}
 }
 
-bool Output(void)
+bool ad_output(void)
 {	bool ok = true;
 
 	// This output stream is an ostringstream for testing purposes.

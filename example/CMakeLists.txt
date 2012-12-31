@@ -79,6 +79,8 @@ ADD_EXECUTABLE(example EXCLUDE_FROM_ALL example.cpp
 	ad_ctor.cpp
 	ad_fun.cpp
 	ad_in_c.cpp
+	ad_input.cpp
+	ad_output.cpp
 	asin.cpp
 	atan.cpp
 	atan2.cpp
@@ -155,7 +157,6 @@ ADD_EXECUTABLE(example EXCLUDE_FROM_ALL example.cpp
 	omp_alloc.cpp
 	opt_val_hes.cpp
 	optimize.cpp
-	output.cpp
 	par_var.cpp
 	poly.cpp
 	pow.cpp

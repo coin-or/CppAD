@@ -142,13 +142,17 @@ namespace CppAD {
 	template <class Base> AD<Base> pow
 		(const AD<Base> &x, const AD<Base> &y);
 
+	// input operator
+	template <class Base> std::istream&
+		operator >> (std::istream &is, AD<Base> &x);
+
 	// output operator
 	template <class Base> std::ostream&
-	operator << (std::ostream &os, const AD<Base> &x);
+		operator << (std::ostream &os, const AD<Base> &x);
 	template <class Base> std::ostream&
-	operator << (std::ostream &os, const VecAD_reference<Base> &e);
+		operator << (std::ostream &os, const VecAD_reference<Base> &e);
 	template <class Base> std::ostream&
-	operator << (std::ostream &os, const VecAD<Base> &vec);
+		operator << (std::ostream &os, const VecAD<Base> &vec);
 }
 
 # endif

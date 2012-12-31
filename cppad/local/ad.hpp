@@ -129,6 +129,10 @@ class AD {
 	friend bool operator != <Base>
 		(const AD<Base> &left, const AD<Base> &right);
 
+	// input operator
+	friend std::istream& operator >> <Base>
+		(std::istream &is, AD<Base> &x);
+
 	// output operations
 	friend std::ostream& operator << <Base>
 		(std::ostream &os, const AD<Base> &x);

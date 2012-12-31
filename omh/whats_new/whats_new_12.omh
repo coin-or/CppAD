@@ -85,6 +85,8 @@ $lnext
 Remove $code cppad/configure.hpp$$ from repository because
 it is built by the configuration process
 (even for MS Visual Studio, now that we are using $cref cmake$$).
+$lnext
+Add the $codei%AD<%Base%>%$$ input stream operator $cref/>>/ad_input/$$.
 $lend
 
 $head 12-29$$

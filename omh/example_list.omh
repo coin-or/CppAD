@@ -89,6 +89,8 @@ $rref ad_assign.cpp$$
 $rref ad_ctor.cpp$$
 $rref ad_fun.cpp$$
 $rref ad_in_c.cpp$$
+$rref ad_input.cpp$$
+$rref ad_output.cpp$$
 $rref Asin.cpp$$
 $rref atan2.cpp$$
 $rref atan.cpp$$
@@ -184,7 +186,6 @@ $rref ode_taylor.cpp$$
 $rref omp_alloc.cpp$$
 $rref optimize.cpp$$
 $rref opt_val_hes.cpp$$
-$rref output.cpp$$
 $rref par_var.cpp$$
 $rref poly.cpp$$
 $rref pow.cpp$$

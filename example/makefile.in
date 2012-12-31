@@ -73,9 +73,9 @@ libeigen_a_OBJECTS = $(am_libeigen_a_OBJECTS)
 am__example_SOURCES_DIST = mul_level_adolc.cpp mul_level_adolc_ode.cpp \
 	example.cpp abort_recording.cpp abs.cpp acos.cpp add.cpp \
 	add_eq.cpp ad_assign.cpp ad_ctor.cpp ad_fun.cpp ad_in_c.cpp \
-	asin.cpp atan.cpp atan2.cpp base_alloc.hpp base_require.cpp \
-	bender_quad.cpp bool_fun.cpp capacity_taylor.cpp \
-	change_const.cpp check_numeric_type.cpp \
+	ad_input.cpp ad_output.cpp asin.cpp atan.cpp atan2.cpp \
+	base_alloc.hpp base_require.cpp bender_quad.cpp bool_fun.cpp \
+	capacity_taylor.cpp change_const.cpp check_numeric_type.cpp \
 	check_simple_vector.cpp checkpoint.cpp compare.cpp \
 	compare_change.cpp complex_poly.cpp cond_exp.cpp conj_grad.cpp \
 	cos.cpp cosh.cpp cppad_vector.cpp div.cpp div_eq.cpp \
@@ -92,37 +92,38 @@ am__example_SOURCES_DIST = mul_level_adolc.cpp mul_level_adolc_ode.cpp \
 	nan.cpp near_equal.cpp near_equal_ext.cpp not_complex_ad.cpp \
 	numeric_type.cpp ode_err_control.cpp ode_err_maxabs.cpp \
 	ode_gear.cpp ode_gear_control.cpp ode_stiff.cpp ode_taylor.cpp \
-	omp_alloc.cpp opt_val_hes.cpp optimize.cpp output.cpp \
-	par_var.cpp poly.cpp pow.cpp pow_int.cpp print_for.cpp \
-	reciprocal.cpp reverse_any.cpp reverse_one.cpp \
-	reverse_three.cpp reverse_two.cpp rev_one.cpp \
-	rev_sparse_hes.cpp rev_sparse_jac.cpp rev_two.cpp \
-	romberg_mul.cpp romberg_one.cpp rosen_34.cpp runge45_1.cpp \
-	runge45_2.cpp seq_property.cpp simple_vector.cpp sign.cpp \
-	sin.cpp sinh.cpp sparse_hessian.cpp sparse_jacobian.cpp \
-	sqrt.cpp stack_machine.cpp sub.cpp sub_eq.cpp tan.cpp tanh.cpp \
-	tape_index.cpp thread_alloc.cpp unary_minus.cpp unary_plus.cpp \
-	user_tan.cpp value.cpp var2par.cpp vec_ad.cpp vector_bool.cpp
+	omp_alloc.cpp opt_val_hes.cpp optimize.cpp par_var.cpp \
+	poly.cpp pow.cpp pow_int.cpp print_for.cpp reciprocal.cpp \
+	reverse_any.cpp reverse_one.cpp reverse_three.cpp \
+	reverse_two.cpp rev_one.cpp rev_sparse_hes.cpp \
+	rev_sparse_jac.cpp rev_two.cpp romberg_mul.cpp romberg_one.cpp \
+	rosen_34.cpp runge45_1.cpp runge45_2.cpp seq_property.cpp \
+	simple_vector.cpp sign.cpp sin.cpp sinh.cpp sparse_hessian.cpp \
+	sparse_jacobian.cpp sqrt.cpp stack_machine.cpp sub.cpp \
+	sub_eq.cpp tan.cpp tanh.cpp tape_index.cpp thread_alloc.cpp \
+	unary_minus.cpp unary_plus.cpp user_tan.cpp value.cpp \
+	var2par.cpp vec_ad.cpp vector_bool.cpp
 @CppAD_ADOLC_TRUE@am__objects_1 = mul_level_adolc.$(OBJEXT) \
 @CppAD_ADOLC_TRUE@	mul_level_adolc_ode.$(OBJEXT)
 am_example_OBJECTS = $(am__objects_1) example.$(OBJEXT) \
 	abort_recording.$(OBJEXT) abs.$(OBJEXT) acos.$(OBJEXT) \
 	add.$(OBJEXT) add_eq.$(OBJEXT) ad_assign.$(OBJEXT) \
 	ad_ctor.$(OBJEXT) ad_fun.$(OBJEXT) ad_in_c.$(OBJEXT) \
-	asin.$(OBJEXT) atan.$(OBJEXT) atan2.$(OBJEXT) \
-	base_require.$(OBJEXT) bender_quad.$(OBJEXT) \
-	bool_fun.$(OBJEXT) capacity_taylor.$(OBJEXT) \
-	change_const.$(OBJEXT) check_numeric_type.$(OBJEXT) \
-	check_simple_vector.$(OBJEXT) checkpoint.$(OBJEXT) \
-	compare.$(OBJEXT) compare_change.$(OBJEXT) \
-	complex_poly.$(OBJEXT) cond_exp.$(OBJEXT) conj_grad.$(OBJEXT) \
-	cos.$(OBJEXT) cosh.$(OBJEXT) cppad_vector.$(OBJEXT) \
-	div.$(OBJEXT) div_eq.$(OBJEXT) equal_op_seq.$(OBJEXT) \
-	erf.$(OBJEXT) error_handler.$(OBJEXT) exp.$(OBJEXT) \
-	for_one.$(OBJEXT) for_two.$(OBJEXT) forward.$(OBJEXT) \
-	for_sparse_jac.$(OBJEXT) fun_assign.$(OBJEXT) \
-	fun_check.$(OBJEXT) hes_lagrangian.$(OBJEXT) \
-	hes_lu_det.$(OBJEXT) hes_minor_det.$(OBJEXT) hessian.$(OBJEXT) \
+	ad_input.$(OBJEXT) ad_output.$(OBJEXT) asin.$(OBJEXT) \
+	atan.$(OBJEXT) atan2.$(OBJEXT) base_require.$(OBJEXT) \
+	bender_quad.$(OBJEXT) bool_fun.$(OBJEXT) \
+	capacity_taylor.$(OBJEXT) change_const.$(OBJEXT) \
+	check_numeric_type.$(OBJEXT) check_simple_vector.$(OBJEXT) \
+	checkpoint.$(OBJEXT) compare.$(OBJEXT) \
+	compare_change.$(OBJEXT) complex_poly.$(OBJEXT) \
+	cond_exp.$(OBJEXT) conj_grad.$(OBJEXT) cos.$(OBJEXT) \
+	cosh.$(OBJEXT) cppad_vector.$(OBJEXT) div.$(OBJEXT) \
+	div_eq.$(OBJEXT) equal_op_seq.$(OBJEXT) erf.$(OBJEXT) \
+	error_handler.$(OBJEXT) exp.$(OBJEXT) for_one.$(OBJEXT) \
+	for_two.$(OBJEXT) forward.$(OBJEXT) for_sparse_jac.$(OBJEXT) \
+	fun_assign.$(OBJEXT) fun_check.$(OBJEXT) \
+	hes_lagrangian.$(OBJEXT) hes_lu_det.$(OBJEXT) \
+	hes_minor_det.$(OBJEXT) hessian.$(OBJEXT) \
 	hes_times_dir.$(OBJEXT) independent.$(OBJEXT) \
 	index_sort.$(OBJEXT) integer.$(OBJEXT) interface2c.$(OBJEXT) \
 	interp_onetape.$(OBJEXT) interp_retape.$(OBJEXT) \
@@ -137,17 +138,16 @@ am_example_OBJECTS = $(am__objects_1) example.$(OBJEXT) \
 	ode_err_control.$(OBJEXT) ode_err_maxabs.$(OBJEXT) \
 	ode_gear.$(OBJEXT) ode_gear_control.$(OBJEXT) \
 	ode_stiff.$(OBJEXT) ode_taylor.$(OBJEXT) omp_alloc.$(OBJEXT) \
-	opt_val_hes.$(OBJEXT) optimize.$(OBJEXT) output.$(OBJEXT) \
-	par_var.$(OBJEXT) poly.$(OBJEXT) pow.$(OBJEXT) \
-	pow_int.$(OBJEXT) print_for.$(OBJEXT) reciprocal.$(OBJEXT) \
-	reverse_any.$(OBJEXT) reverse_one.$(OBJEXT) \
-	reverse_three.$(OBJEXT) reverse_two.$(OBJEXT) \
-	rev_one.$(OBJEXT) rev_sparse_hes.$(OBJEXT) \
-	rev_sparse_jac.$(OBJEXT) rev_two.$(OBJEXT) \
-	romberg_mul.$(OBJEXT) romberg_one.$(OBJEXT) rosen_34.$(OBJEXT) \
-	runge45_1.$(OBJEXT) runge45_2.$(OBJEXT) seq_property.$(OBJEXT) \
-	simple_vector.$(OBJEXT) sign.$(OBJEXT) sin.$(OBJEXT) \
-	sinh.$(OBJEXT) sparse_hessian.$(OBJEXT) \
+	opt_val_hes.$(OBJEXT) optimize.$(OBJEXT) par_var.$(OBJEXT) \
+	poly.$(OBJEXT) pow.$(OBJEXT) pow_int.$(OBJEXT) \
+	print_for.$(OBJEXT) reciprocal.$(OBJEXT) reverse_any.$(OBJEXT) \
+	reverse_one.$(OBJEXT) reverse_three.$(OBJEXT) \
+	reverse_two.$(OBJEXT) rev_one.$(OBJEXT) \
+	rev_sparse_hes.$(OBJEXT) rev_sparse_jac.$(OBJEXT) \
+	rev_two.$(OBJEXT) romberg_mul.$(OBJEXT) romberg_one.$(OBJEXT) \
+	rosen_34.$(OBJEXT) runge45_1.$(OBJEXT) runge45_2.$(OBJEXT) \
+	seq_property.$(OBJEXT) simple_vector.$(OBJEXT) sign.$(OBJEXT) \
+	sin.$(OBJEXT) sinh.$(OBJEXT) sparse_hessian.$(OBJEXT) \
 	sparse_jacobian.$(OBJEXT) sqrt.$(OBJEXT) \
 	stack_machine.$(OBJEXT) sub.$(OBJEXT) sub_eq.$(OBJEXT) \
 	tan.$(OBJEXT) tanh.$(OBJEXT) tape_index.$(OBJEXT) \
@@ -395,6 +395,8 @@ example_SOURCES = \
 	ad_ctor.cpp \
 	ad_fun.cpp \
 	ad_in_c.cpp \
+	ad_input.cpp \
+	ad_output.cpp \
 	asin.cpp \
 	atan.cpp \
 	atan2.cpp \
@@ -471,7 +473,6 @@ example_SOURCES = \
 	omp_alloc.cpp \
 	opt_val_hes.cpp \
 	optimize.cpp \
-	output.cpp \
 	par_var.cpp \
 	poly.cpp \
 	pow.cpp \
@@ -577,6 +578,8 @@ distclean-compile:
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/ad_ctor.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/ad_fun.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/ad_in_c.Po@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/ad_input.Po@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/ad_output.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/add.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/add_eq.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/asin.Po@am__quote@
@@ -657,7 +660,6 @@ distclean-compile:
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/omp_alloc.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/opt_val_hes.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/optimize.Po@am__quote@
-@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/output.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/par_var.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/poly.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/pow.Po@am__quote@
