@@ -16,9 +16,9 @@ then
 	exit 1
 fi
 # -----------------------------------------------------------------------------
-copy_from_trunk="keep"     # do (frist time), keep (use current), redo
-trunk_revision="2241"      # trunk revision number that stable corresponds to
-yyyy_mm_dd="2012-01-01"    # Date corresponding to this trunk revision
+copy_from_trunk='do'       # do (frist time), keep (use current), redo
+trunk_revision='2694'      # trunk revision number that stable corresponds to
+yyyy_mm_dd='2013-00-00'    # Date corresponding to this trunk revision
 # -----------------------------------------------------------------------------
 echo "copy_from_trunk=$copy_from_trunk"
 echo "trunk_revision=$trunk_revision"
@@ -94,17 +94,20 @@ echo "svn checkout -q -r $stable_revision $rep_stable stable/$stable_version"
       svn checkout -q -r $stable_revision $rep_stable stable/$stable_version
 #
 # make sure that bin/new_stable.sh corresponds to this version 
-# (may not be same as verion in repository that was copied).
+# (may not be same as version in repository that was copied).
 echo "cp trunk/bin/new_stable.sh stable/$stable_version/bin/new_stable.sh"
       cp trunk/bin/new_stable.sh stable/$stable_version/bin/new_stable.sh
 #
 echo "cd stable/$stable_version"
       cd stable/$stable_version
 #
-# set the version number in configure.ac
-echo "automatic editing: $stable_version/configure.ac"
-sed -i configure.ac \
-	-e "s/AC_INIT(cppad, [0-9]*,/AC_INIT(cppad, $stable_version.0,/"
+# set the version number in root CMakeLists.txt to $stable_version
+echo "bin/version.sh set $release_version"
+      bin/version.sh set $release_version
+#
+# copy version number to other files
+echo "bin/version.sh copy"
+      bin/version.sh copy 
 #
 # set the value of stable version in corresponding new_release.sh
 echo "automatic editing: $stable_version/bin/new_release.sh"
@@ -115,16 +118,11 @@ sed -i bin/new_release.sh \
 echo "automatic editing: $stable_version/build.sh"
 sed -i build.sh -e 's/^version_type=.*/version_type="stable"/'
 #
-# Set web for download of corresponding release version
-echo "automatic editing: $stable_version/omh/install_windows.omh.in"
+# Set download documentation to use web version of corresponding release 
+echo "automatic editing of omh/install/download.omh"
 dir="http://www.coin-or.org/download/source/CppAD"
-sed -i omh/install_windows.omh.in \
-	-e "s|cppad-@VERSION@.[cg]pl.tgz|\n$dir/&%\n&|" 
-#
-# Set web for download of corresponding release version
-echo "automatic editing: $stable_version/omh/install_unix.omh.in"
-sed -i omh/install_unix.omh.in \
-	-e "s|cppad-@VERSION@.[cg]pl.tgz|\n$dir/&%\n&|" 
+sed -i omh/install/download.omh \
+	-e "s|cppad-$release_version.[eg]pl.tgz|\n$dir/&%\n&|" 
 #
 # Instructions --------------------------------------------------------------
 cat << EOF
@@ -132,7 +130,8 @@ cat << EOF
        bin/commit.sh list
    All changed files should be present. Review the differences.
 2: If you find problems, fix trunk/bin/new_stable.sh, re-run it, and goto 1.
-3: In stable/$stable_version run the following command:
+3: In stable/$stable_version run the following commands:
+	bin/check_all.sh
       ./build.sh all test
 4: If errors occur, fix trunk/bin/new_stable.sh, re-run it, and goto 1.
 5: Commit changes to trunk/bin/new_stable.sh 

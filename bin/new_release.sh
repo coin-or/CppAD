@@ -17,7 +17,7 @@ then
 fi
 # -----------------------------------------------------------------------------
 repository="https://projects.coin-or.org/svn/CppAD"
-stable_version="20110101"
+stable_version="20130000"
 release="0"
 release_version="$stable_version.$release"
 msg="Creating releases/$release_version"
@@ -48,16 +48,6 @@ then
 	echo "$release_version, then execute"
 	echo "	./build.sh version automake configure"
 	echo "then commit the changes."
-	exit 1
-fi
-echo "svn revert cppad/configure.hpp"
-      svn revert cppad/configure.hpp
-if ! grep "PACKAGE_STRING *\"cppad-$release_version\"" \
-	cppad/configure.hpp > /dev/null
-then
-	echo "bin/new_release.sh: cppad/configure.hpp version not $release_version."
-	echo "	./build.sh version automake configure"
-	echo "should fix this."
 	exit 1
 fi
 # -----------------------------------------------------------------------------
