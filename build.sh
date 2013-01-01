@@ -1,7 +1,7 @@
 #! /bin/bash -e
 # $Id$
 # -----------------------------------------------------------------------------
-# CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-12 Bradley M. Bell
+# CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-13 Bradley M. Bell
 #
 # CppAD is distributed under multiple licenses. This distribution is under
 # the terms of the 
@@ -79,12 +79,6 @@ configure_file_list="
 # change version to current date
 if [ "$1" = "version" ]
 then
-	if [ "$version_type" != "trunk" ]
-	then
-		echo 'attempt to use new build.sh for a stable or release version'
-		echo 'convert new_stable.sh and new_release.sh to use bin/package.sh'
-		exit 1
-	fi
 	echo 'bin/version.sh copy'
 	bin/version.sh copy 
 	#

@@ -1,7 +1,7 @@
 #! /bin/bash -e
 # $Id$
 # -----------------------------------------------------------------------------
-# CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-12 Bradley M. Bell
+# CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-13 Bradley M. Bell
 #
 # CppAD is distributed under multiple licenses. This distribution is under
 # the terms of the
@@ -16,15 +16,14 @@ then
 	exit 1
 fi
 # -----------------------------------------------------------------------------
-copy_from_trunk='do'       # do (frist time), keep (use current), redo
-trunk_revision='2699'      # trunk revision number that stable corresponds to
+copy_from_trunk='keep'     # do (frist time), keep (use current), redo
+trunk_revision='2700'      # trunk revision number that stable corresponds to
 yyyy_mm_dd='2013-00-00'    # Date corresponding to this trunk revision
 # -----------------------------------------------------------------------------
 echo "copy_from_trunk=$copy_from_trunk"
 echo "trunk_revision=$trunk_revision"
 echo "yyyy_mm_dd=$yyyy_mm_dd"
 echo '------------------------------------------------------------------------'
-stable_revision=`expr $trunk_revision + 1`
 stable_version=`echo $yyyy_mm_dd | sed -e 's/-//g'`
 release_version="$stable_version.0"
 repository="https://projects.coin-or.org/svn/CppAD"
@@ -41,7 +40,7 @@ fi
 # -----------------------------------------------------------------------------
 # check copyright date in bin/commit.sh is current
 cat << EOF > bin/new_stable.1.$$
-# CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-12 Bradley M. Bell
+# CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-13 Bradley M. Bell
 EOF
 yy=`echo $yyyy_mm_dd | sed -e 's|..\(..\).*|\1|'`
 cat << EOF > bin/new_stable.2.$$
@@ -90,8 +89,8 @@ fi
 #
 # retrieve stable version from repository ------------------------------------
 #
-echo "svn checkout -q -r $stable_revision $rep_stable stable/$stable_version"
-      svn checkout -q -r $stable_revision $rep_stable stable/$stable_version
+echo "svn checkout -q $rep_stable stable/$stable_version"
+      svn checkout -q $rep_stable stable/$stable_version
 #
 # make sure that bin/new_stable.sh corresponds to this version 
 # (may not be same as version in repository that was copied).
