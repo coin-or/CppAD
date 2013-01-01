@@ -1,7 +1,7 @@
 #! /bin/bash -e
 # $Id$
 # -----------------------------------------------------------------------------
-# CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-12 Bradley M. Bell
+# CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-13 Bradley M. Bell
 #
 # CppAD is distributed under multiple licenses. This distribution is under
 # the terms of the 
@@ -41,7 +41,7 @@ then
 	sed  \
 	-e "s/(\(cppad_version *\)\"[0-9.]\{8\}[0-9.]*\" *)/(\1\"$version\" )/"  \
 		-i.old CMakeLists.txt
-	if diff CMakeLists.txt CMakeLists.txt.old
+	if diff CMakeLists.txt.old CMakeLists.txt
 	then
 		echo 'No change in CMakeLists.txt'
 		exit 1
@@ -94,7 +94,9 @@ list='
 '
 for file in $list
 do
-	sed -e "s/cppad-[0-9]\{8\}[0-9.]*/cppad-$version/" -i.old $file
+	sed -e "s/cppad-[0-9]\{8\}\(\.[eg]pl\)/cppad-$version\1/" \
+		-e "s/cppad-[0-9]\{8\}\.[0-9]*\(\.[eg]pl\)/cppad-$version\1/" \
+		-i.old $file
 done 
 list="
 	$list

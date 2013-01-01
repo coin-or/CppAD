@@ -17,7 +17,7 @@ then
 fi
 # -----------------------------------------------------------------------------
 copy_from_trunk='do'       # do (frist time), keep (use current), redo
-trunk_revision='2694'      # trunk revision number that stable corresponds to
+trunk_revision='2699'      # trunk revision number that stable corresponds to
 yyyy_mm_dd='2013-00-00'    # Date corresponding to this trunk revision
 # -----------------------------------------------------------------------------
 echo "copy_from_trunk=$copy_from_trunk"
