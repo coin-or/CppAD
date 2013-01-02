@@ -1,6 +1,6 @@
 $Id$
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-12 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-13 Bradley M. Bell
 
 CppAD is distributed under multiple licenses. This distribution is under
 the terms of the 
@@ -60,9 +60,9 @@ $subhead Current Version$$
 The download files below are for the current version of CppAD.
 
 $table
-EPL License $pre  $$ $cnext $href%cppad-20121230.epl.tgz%$$ 
+EPL License $pre  $$ $cnext $href%cppad-20130102.epl.tgz%$$ 
 $rnext
-GPL License $pre  $$ $cnext $href%cppad-20121230.gpl.tgz%$$
+GPL License $pre  $$ $cnext $href%cppad-20130102.gpl.tgz%$$
 $tend
 
 $subhead Release Versions$$

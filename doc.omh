@@ -1,6 +1,6 @@
 $Id$
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-12 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-13 Bradley M. Bell
 
 CppAD is distributed under multiple licenses. This distribution is under
 the terms of the 
@@ -48,8 +48,9 @@ $index C++, algorithm derivative$$
 $index CppAD$$
 $index version, CppAD$$
 
+$comment bin/version assumes that : follows cppad version number here$$
 $section 
-cppad-20121230: A Package for Differentiation of C++ Algorithms
+cppad-20130102: A Package for Differentiation of C++ Algorithms
 $$ 
 
 $comment This comment is used to remove the table below$$

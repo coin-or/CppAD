@@ -1,7 +1,7 @@
 #! /bin/bash -e
 # $Id$
 # -----------------------------------------------------------------------------
-# CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-12 Bradley M. Bell
+# CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-13 Bradley M. Bell
 #
 # CppAD is distributed under multiple licenses. This distribution is under
 # the terms of the
@@ -16,6 +16,12 @@ then
 	exit 1
 fi
 # -----------------------------------------------------------------------------
+# bash function that echos and executes a command
+echo_exec() {
+	echo $*
+	eval $*
+}
+# -----------------------------------------------------------------------------
 #
 if [ "$1" != "htm" ] && [ "$1" != "xml" ] && [ "$1" != "clean" ]
 then
@@ -29,8 +35,7 @@ then
 fi
 if [ "$1" == "clean" ]
 then
-	echo "rm -rf doc"
-           rm -rf doc
+	echo_exec rm -rf doc
 	exit 0
 fi
 ext="$1"
@@ -38,11 +43,9 @@ ext="$1"
 echo "Building doc/*.$ext $2"
 if [ ! -e doc ]
 then
-	echo "mkdir doc"
-	      mkdir doc
+	echo_exec mkdir doc
 fi 
-echo "cd doc"
-      cd doc
+echo_exec cd doc
 cmd="omhelp ../doc.omh -noframe -debug -l http://www.coin-or.org/CppAD/"
 if [ "$ext" == "xml" ]
 then
@@ -65,5 +68,25 @@ then
 	echo "See the complete warning messages in omhelp.$ext.log."
 	exit 1
 fi
+if [ "$2" == 'printable' ]
+then
+	echo "OK: omhelp $*"
+	exit 0
+fi
+if [ ! -e 'cppad.xml' ]
+then
+	echo "run_omhelp.sh: Can't make cppad.xml the default documentation page."
+	exit 1
+fi
+if [ -e 'index.htm' ]
+then
+	echo_exec rm index.htm
+fi
+cat << EOF > index.html
+<html><head><script>
+window.location.href="cppad.xml";
+</script></head></html>
+EOF
+#
 echo "OK: omhelp $*"
 exit 0

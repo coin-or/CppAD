@@ -339,6 +339,8 @@ then
 	fi
 	for flag in "printable" ""
 	do
+		# Run xml after htm so that index.htm points to cppad.xml
+		# (see run_omhelp.sh).
 		for ext in htm xml
 		do
 			echo "begin: bin/run_omhelp.sh $ext $flag"

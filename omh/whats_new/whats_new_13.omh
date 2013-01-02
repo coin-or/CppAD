@@ -1,0 +1,51 @@
+$Id$
+/* --------------------------------------------------------------------------
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-13 Bradley M. Bell
+
+CppAD is distributed under multiple licenses. This distribution is under
+the terms of the 
+                    Eclipse Public License Version 1.0.
+
+A copy of this license is included in the COPYING file of this distribution.
+Please visit http://www.coin-or.org/CppAD/ for information on other licenses.
+-------------------------------------------------------------------------- */
+
+$begin whats_new_13$$
+$dollar @$$
+$spell
+	jac
+	hpp
+	Wunused
+	Cpp
+	cppad
+$$
+
+$section CppAD Changes and Additions During 2013$$
+
+$head Introduction$$
+This section contains a list of the changes to CppAD during 2013
+(in reverse order by date).
+The purpose of this section is to
+assist you in learning about changes between various versions of CppAD.
+
+$head 01-02$$
+$list number$$
+A new stable version of CppAD, for 2013, was created
+and its first release $code cppad-20130000.0$$ is available 
+for download at
+$pre
+	$$
+$href%http://www.coin-or.org/download/source/CppAD/%$$
+$lnext
+Advance version number for trunk to $code 20130102$$.
+$lend
+
+$head 01-01$$
+When compiling with $cref/NDEBUG/Faq/Speed/NDEBUG/$$ defined,
+the following warning could be generated:
+$codei%
+%...%rev_sparse_jac.hpp:315:9: warning: unused variable 'm' [-Wunused-variable]
+%$$ 
+This has been fixed.
+
+$end

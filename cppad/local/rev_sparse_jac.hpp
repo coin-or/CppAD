@@ -3,7 +3,7 @@
 # define CPPAD_REV_SPARSE_JAC_INCLUDED
 
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-12 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-13 Bradley M. Bell
 
 CppAD is distributed under multiple licenses. This distribution is under
 the terms of the 
@@ -311,8 +311,7 @@ void RevSparseJacSet(
 		one_element_std_set<size_t>(), two_element_std_set<size_t>()
 	);
 
-	// range and domain dimensions for F
-	size_t m = dep_taddr.size();
+	// domain dimensions for F
 	size_t n = ind_taddr.size();
 
 	CPPAD_ASSERT_KNOWN(
@@ -336,9 +335,9 @@ void RevSparseJacSet(
 		while(itr != s[i].end())
 		{	j = *itr++; 
 			CPPAD_ASSERT_KNOWN(
-				j < m,
+				j < dep_taddr.size(),
 				"RevSparseJac: an element of the set s[i] "
-				"has value greater than or equal m."
+				"has value greater than or equal Range dimension."
 			);
 			CPPAD_ASSERT_UNKNOWN( dep_taddr[j] < total_num_var );
 			var_sparsity.add_element( dep_taddr[j], i );

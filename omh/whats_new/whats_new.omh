@@ -1,6 +1,6 @@
 $Id$
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-12 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-13 Bradley M. Bell
 
 CppAD is distributed under multiple licenses. This distribution is under
 the terms of the 
@@ -24,6 +24,7 @@ The purpose of these sections is to
 assist you in learning about changes between various versions of CppAD.
 
 $children%
+	omh/whats_new/whats_new_13.omh%
 	omh/whats_new/whats_new_12.omh%
 	omh/whats_new/whats_new_11.omh%
 	omh/whats_new/whats_new_10.omh%
@@ -37,9 +38,10 @@ $children%
 %$$
 
 $head This Year$$
-$cref whats_new_12$$
+$cref whats_new_13$$
 
 $head Previous Years$$
+$cref whats_new_12$$
 $cref whats_new_11$$,
 $cref whats_new_10$$,
 $cref whats_new_09$$,
