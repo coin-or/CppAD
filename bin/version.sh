@@ -96,7 +96,7 @@ for file in $list
 do
 	sed -e "s/cppad-[0-9]\{8\}\(\.[eg]pl\)/cppad-$version\1/" \
 		-e "s/cppad-[0-9]\{8\}\.[0-9]*\(\.[eg]pl\)/cppad-$version\1/" \
-		-e "s/cppad-[0-9]\{8\}\:/cppad-$version:/" \
+		-e "s/cppad-[0-9]\{8\}[0-9.]*\:/cppad-$version:/" \
 		-i.old $file
 done 
 list="
