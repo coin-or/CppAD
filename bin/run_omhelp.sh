@@ -39,8 +39,14 @@ then
 	exit 0
 fi
 ext="$1"
+if [ "$2" == 'printable' ]
+then
+	printable="yes"
+else
+	printable='no'
+fi
 #
-echo "Building doc/*.$ext $2"
+echo "Building doc/*.$ext printable=$printable"
 if [ ! -e doc ]
 then
 	echo_exec mkdir doc
@@ -51,7 +57,7 @@ if [ "$ext" == "xml" ]
 then
 	cmd="$cmd -xml"
 fi
-if [ "$2" == "printable" ]
+if [ $printable == 'yes' ]
 then
 	cmd="$cmd -printable"
 fi
@@ -68,14 +74,15 @@ then
 	echo "See the complete warning messages in omhelp.$ext.log."
 	exit 1
 fi
-if [ "$2" == 'printable' ]
+if [ "$printable" == 'yes' ]
 then
-	echo "OK: omhelp $*"
-	exit 0
+	root_name='_printable'
+else
+	root_name='cppad'
 fi
-if [ ! -e 'cppad.xml' ]
+if [ ! -e "$root_name.$ext" ]
 then
-	echo "run_omhelp.sh: Can't make cppad.xml the default documentation page."
+	echo "run_omhelp.sh: Can't make $root_name.$ext the default page."
 	exit 1
 fi
 if [ -e 'index.htm' ]
@@ -84,7 +91,7 @@ then
 fi
 cat << EOF > index.html
 <html><head><script>
-window.location.href="cppad.xml";
+window.location.href="$root_name.$ext";
 </script></head></html>
 EOF
 #

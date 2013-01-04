@@ -343,9 +343,8 @@ then
 		# (see run_omhelp.sh).
 		for ext in htm xml
 		do
-			echo "begin: bin/run_omhelp.sh $ext $flag"
-			             bin/run_omhelp.sh $ext $flag
-			echo="end:   bin/run_omhelp.sh $ext $flag"
+			echo "bin/run_omhelp.sh $ext $flag"
+			      bin/run_omhelp.sh $ext $flag
 		done
 	done
 	#
