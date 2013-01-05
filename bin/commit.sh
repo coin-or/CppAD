@@ -76,6 +76,7 @@ done
 # check for abort do to unknown files
 unknown=`svn status | sed -n \
 	-e '/[/ ]junk\./d'  \
+	-e '/[/ ]temp\./d'  \
 	-e '/[/]test_one.cpp/d' \
 	-e '/[/]test_one.sh/d' \
 	-e '/^[?].*\.am$/p'  \
