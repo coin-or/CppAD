@@ -13,6 +13,7 @@ Please visit http://www.coin-or.org/CppAD/ for information on other licenses.
 $begin whats_new_13$$
 $dollar @$$
 $spell
+	src
 	jac
 	hpp
 	Wunused
@@ -27,6 +28,19 @@ This section contains a list of the changes to CppAD during 2013
 (in reverse order by date).
 The purpose of this section is to
 assist you in learning about changes between various versions of CppAD.
+
+$head 01-05$$
+$list number$$
+The $cref limits.cpp$$ example was failing on some machines 
+because they were using guard digits during calculations. 
+This has been fixed by using vectors instead of scalars
+for storing values.
+$lnext
+The $cref speed_example.cpp$$ was not linking when using a shared
+object library for the code in $code speed/src$$.
+This has been fixed by not including the library when linking
+the speed examples.
+$lend
 
 $head 01-02$$
 $list number$$

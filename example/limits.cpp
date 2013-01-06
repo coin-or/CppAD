@@ -1,6 +1,6 @@
 /* $Id$ */
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-12 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-13 Bradley M. Bell
 
 CppAD is distributed under multiple licenses. This distribution is under
 the terms of the 
@@ -48,46 +48,49 @@ namespace {
 	template <class Type>
 	bool check_epsilon(void)
 	{	bool ok    = true;
-		Type eps   = CppAD::numeric_limits<Type>::epsilon();
-		Type one   = 1;
-		Type two   = 2;
-		Type eps2  = eps / two; 
-		Type check = add_one(eps);
-		ok        &= one !=  check;
-		check      = add_one(eps2);
-		ok        &= one == check;
+		CppAD::vector<Type> eps(1), one(1), two(1), eps2(1), check(1);
+		eps[0]     = CppAD::numeric_limits<Type>::epsilon();
+		one[0]     = 1;
+		two[0]     = 2;
+		eps2[0]    = eps[0] / two[0]; 
+		check[0]   = add_one(eps[0]);
+		ok        &= one[0] != check[0];
+		check[0]   = add_one(eps2[0]);
+		ok        &= one[0] == check[0];
 		return ok;
 	}
 	// -----------------------------------------------------------------
 	template <class Type>
 	bool check_min(void)
 	{	bool ok    = true;
-		Type min   = CppAD::numeric_limits<Type>::min();
-		Type eps   = CppAD::numeric_limits<Type>::epsilon();
-		Type one   = 1;
-		Type three = 3;
-		Type tmp   = (min * eps) / three;
-		Type match = (tmp * three) / eps;
-		//        &= abs(match/min - one) > three * eps
-		ok        &= CppAD::abs_geq(match/min - one, three * eps);
+		CppAD::vector<Type> min(1), eps(1), one(1), three(1), tmp(1), match(1);
+		min[0]     = CppAD::numeric_limits<Type>::min();
+		eps[0]     = CppAD::numeric_limits<Type>::epsilon();
+		one[0]     = 1;
+		three[0]   = 3;
+		tmp[0]     = (min[0] * eps[0]) / three[0];
+		match[0]   = (tmp[0] * three[0]) / eps[0];
+		//        &= abs(match[0] / min[0] - one[0]) > three[0] * eps[0]
+		ok        &= CppAD::abs_geq(match[0] / min[0] - one[0], three[0] * eps[0]);
 		//
-		tmp        = (min / eps) * three;
-		match      = (tmp / three) * eps;
-		//        &= abs(match / min - one) < three * eps
-		ok        &= CppAD::abs_geq(three * eps, match / min - one);
+		tmp[0]     = (min[0] / eps[0]) * three[0];
+		match[0]   = (tmp[0] / three[0]) * eps[0];
+		//        &= abs(match[0] / min[0] - one[0]) < three[0] * eps[0]
+		ok        &= CppAD::abs_geq(three[0] * eps[0], match[0] / min[0] - one[0]);
 		return ok;
 	}
 	// -----------------------------------------------------------------
 	template <class Type>
 	bool check_max(void)
 	{	bool ok    = true;
-		Type max   = CppAD::numeric_limits<Type>::max();
-		Type eps   = CppAD::numeric_limits<Type>::epsilon();
-		Type one   = 1;
-		Type three = 3;
-		Type tmp   = max * ( one / eps);
-		Type match = tmp * eps;
-		ok        &= CppAD::abs(match / max - one) > three * eps;
+		CppAD::vector<Type> max(1), eps(1), one(1), three(1), tmp(1), match(1);
+		max[0]     = CppAD::numeric_limits<Type>::max();
+		eps[0]     = CppAD::numeric_limits<Type>::epsilon();
+		one[0]     = 1;
+		three[0]   = 3;
+		tmp[0]     = max[0] *  ( one[0] / eps[0]);
+		match[0]   = tmp[0] * eps[0];
+		ok        &= CppAD::abs(match[0] / max[0] - one[0]) > three[0] * eps[0];
 		return ok;
 	}
 	//
@@ -95,17 +98,19 @@ namespace {
 	bool check_max_complex(void)
 	{	typedef std::complex<Type> Complex;
 		bool ok    = true;
-		Complex c_max   = CppAD::numeric_limits<Complex>::max();
-		Complex c_eps   = CppAD::numeric_limits<Type>::epsilon();
-		ok &= c_eps.imag() == Type(0);
-		ok &= c_max.imag() == Type(0);
-		Type max   = c_max.real();
-		Type eps   = c_eps.real();
-		Type one   = 1;
-		Type three = 3;
-		Type tmp   = max * ( one / eps);
-		Type match = tmp * eps;
-		ok        &= CppAD::abs(match / max - one) > three * eps;
+		CppAD::vector<Complex> c_max(1), c_eps(1);
+		CppAD::vector<Type> max(1), eps(1), one(1), three(1), tmp(1), match(1);
+		c_max[0]     = CppAD::numeric_limits<Complex>::max();
+		c_eps[0]     = CppAD::numeric_limits<Type>::epsilon();
+		ok &= c_eps[0].imag() == Type(0);
+		ok &= c_max[0].imag() == Type(0);
+		max[0]     = c_max[0].real();
+		eps[0]     = c_eps[0].real();
+		one[0]     = 1;
+		three[0]   = 3;
+		tmp[0]     = max[0] *  ( one[0] / eps[0]);
+		match[0]   = tmp[0] * eps[0];
+		ok        &= CppAD::abs(match[0] / max[0] - one[0]) > three[0] * eps[0];
 		return ok;
 	}
 	//

@@ -1,7 +1,7 @@
 #! /bin/bash -e
 # $Id$
 # -----------------------------------------------------------------------------
-# CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-12 Bradley M. Bell
+# CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-13 Bradley M. Bell
 #
 # CppAD is distributed under multiple licenses. This distribution is under
 # the terms of the
@@ -24,6 +24,8 @@ do
 	dir_list=`find . -name "*$ext" | sed \
 		-e '/\/junk$/d' \
 		-e '/\/junk\./d' \
+		-e '/\/temp$/d' \
+		-e '/\/temp\./d' \
 		-e 's|^\./||' \
 		-e 's/^[^/]*$/./' \
 		-e '/^work\//d' \
@@ -36,8 +38,10 @@ do
 		list=`ls $dir/*$ext | sed \
 			-e '/\/config.h.in/d' \
 			-e '/\/makefile\.in/d' \
-			-e '/\junk$/d' \
-			-e '/\junk\./d'`
+			-e '/\/junk$/d' \
+			-e '/\/junk\./d' \
+			-e '/\/temp$/d' \
+			-e '/\/temp\./d'`
 		for file in $list
 		do
 			if ! head -2 $file | grep '$Id:.*\$' > /dev/null

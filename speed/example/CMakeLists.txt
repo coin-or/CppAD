@@ -1,6 +1,6 @@
 # $Id$
 # -----------------------------------------------------------------------------
-# CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-12 Bradley M. Bell
+# CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-13 Bradley M. Bell
 #
 # CppAD is distributed under multiple licenses. This distribution is under
 # the terms of the 
@@ -15,9 +15,6 @@
 # Specifies build type for this directory. Possible values are 
 # empty, Debug, Release, RelWithDebInfo and MinSizeRel
 SET(CMAKE_BUILD_TYPE RELEASE)
-
-# Local include directories to search (not in package_prefix/includdir)
-INCLUDE_DIRECTORIES( ${CMAKE_CURRENT_SOURCE_DIR}/../src )
 
 # add_executable(<name> [WIN32] [MACOSX_BUNDLE] [EXCLUDE_FROM_ALL]
 #                 source1 source2 ... sourceN
@@ -37,9 +34,6 @@ ADD_EXECUTABLE(speed_example EXCLUDE_FROM_ALL example.cpp
 
 # Compiler flags for cppad source
 add_cppad_cxx_flags( speed_example )
-
-# List of libraries to be linked into the specified target
-TARGET_LINK_LIBRARIES(speed_example speed_src )
 
 # Add the check_speed_example target
 ADD_CUSTOM_TARGET(check_speed_example 
