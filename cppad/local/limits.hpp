@@ -2,7 +2,7 @@
 # ifndef CPPAD_LIMITS_INCLUDED
 # define CPPAD_LIMITS_INCLUDED
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-12 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-13 Bradley M. Bell
 
 CppAD is distributed under multiple licenses. This distribution is under
 the terms of the 
@@ -29,50 +29,78 @@ $index limit, max$$
 $index limit, min$$
 $index limit, epsilon$$
 
-$section Numeric Limits For an AD Type$$
+$section Numeric Limits For an AD and Base Types$$
 
 $head Syntax$$
-$icode%eps% = numeric_limits::epsilon<%Float%>()
+$icode%eps% = numeric_limits<%Float%>::epsilon()
 %$$
-$icode%min% = numeric_limits::min<%Float%>()
+$icode%min% = numeric_limits<%Float%>::min()
 %$$
-$icode%max% = numeric_limits::min<%Float%>()
+$icode%max% = numeric_limits<%Float%>::max()
 %$$
 
 $head Purpose$$
 Obtain the value of some of the C++ standard numeric limits
-using the CppAD namespace version.
+using the CppAD namespace version of $code numeric_limits$$.
 These are all functions and have the prototype
 $codei%
-	%Type% numeric_limits<%Type%>::%fun%(%void%)
+	%Float% numeric_limits<%Float%>::%fun%(%void%)
 %$$
 where $icode fun$$ is $code epsilon$$, $code min$$, or $code max$$.
-Note that this is different than the standard namespace prototype
-for some types; e.g., $code std::complex<double>$$.
+$pre
 
-$head Type$$
+$$
+Note that C++ standard specifies that Non-fundamental standard
+types, such as $codei%std::complex<%T%>%$$ shall not have specializations
+of $code std::numeric_limits$$; see Section 18.2 of
+ISO/IEC 14882:1998(E).
+
+$head Float$$
 These functions are defined for all $codei%AD<%Base%>%$$,
-and for all corresponding $icode Base$$ types.
+and for all corresponding $icode Base$$ types;
+see $icode Base$$ type $cref/limits/base_std_math/limits/$$.
 
 $head eps$$
 The result $icode eps$$ is equal to machine epsilon and has prototype
 $codei%
-	%Type% eps
+	%Float% %eps%
 %$$
+CppAD tests the value $icode eps$$ by checking that the following are true
+$codei%
+	1 != 1 + %eps%
+	1 == 1 + %eps% / 2
+%$$
+where all the values, and calculations, are done with the precision
+corresponding to $icode Float$$.
+	
 
 $head min$$
 The result $icode min$$ is equal to 
 the minimum positive normalized value and has prototype
 $codei%
-	%Type% min
+	%Float% %min%
 %$$
+CppAD tests the value $icode min$$ by checking that the following are true
+$codei%
+	abs( ((%min% / 100) * 100) / %min% - 1 ) > 3 * %eps%
+	abs( ((%min% * 100) / (100 * (1 - %eps%)) / %min% - 1 ) < 3 * %eps%
+%$$
+where all the values, and calculations, are done with the precision
+corresponding to $icode Float$$.
 
 $head max$$
 The result $icode max$$ is equal to 
 the maximum finite value and has prototype
 $codei%
-	%Type% max
+	%Float% %max%
 %$$
+CppAD tests the value $icode max$$ by checking that the following are true
+$codei%
+	abs( ((%max% * 100) / 100) / %max% - 1 ) > 3 * %eps%
+	abs( ((%max% / 100) * (100 * (1 - %eps%)) / %max% - 1 ) < 3 * %eps%
+%$$
+where all the values, and calculations, are done with the precision
+corresponding to $icode Float$$.
 
 $head Example$$
 $children%
@@ -101,32 +129,32 @@ File that defines CppAD numeric_limits for AD types
 */
 
 /// Default value for all undefined numeric_limits types
-template <class Type>
+template <class Float>
 class numeric_limits {
 public:
 	/// machine epsilon
-	static Type epsilon(void)
+	static Float epsilon(void)
 	{	CPPAD_ASSERT_KNOWN(
 		false,
-		"numeric_limits<Type>::epsilon() is not specialized for this Type"
+		"numeric_limits<Float>::epsilon() is not specialized for this Float"
 		);
-		return Type(0);
+		return Float(0);
 	}
 	/// minimum positive normalized value
-	static Type min(void)
+	static Float min(void)
 	{	CPPAD_ASSERT_KNOWN(
 		false,
-		"numeric_limits<Type>::min() is not specialized for this Type"
+		"numeric_limits<Float>::min() is not specialized for this Float"
 		);
-		return Type(0);
+		return Float(0);
 	}
 	/// maximum finite value
-	static Type max(void)
+	static Float max(void)
 	{	CPPAD_ASSERT_KNOWN(
 		false,
-		"numeric_limits<Type>::max() is not specialized for this Type"
+		"numeric_limits<Float>::max() is not specialized for this Float"
 		);
-		return Type(0);
+		return Float(0);
 	}
 };
 

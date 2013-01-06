@@ -24,7 +24,7 @@ then
 	echo 'copy: Copies version number from CMakeLists.txt to other files.'
 	exit 1
 fi
-echo_exec() {
+echo_eval() {
      echo $* 
      eval $*
 }
@@ -114,6 +114,6 @@ do
 		echo '	no difference was found'
 	fi
 	#
-	echo_exec rm $name.old
+	echo_eval rm $name.old
 done
 echo 'bin/version.sh copy: OK'

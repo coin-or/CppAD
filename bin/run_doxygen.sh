@@ -1,7 +1,7 @@
 #! /bin/bash -e
 # $Id$
 # -----------------------------------------------------------------------------
-# CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-12 Bradley M. Bell
+# CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-13 Bradley M. Bell
 #
 # CppAD is distributed under multiple licenses. This distribution is under
 # the terms of the 
@@ -15,7 +15,7 @@ then
 	echo 'bin/run_doxygen.sh: must be executed from its parent directory'
 	exit 1
 fi
-echo_exec() {
+echo_eval() {
      echo $* 
      eval $*
 }
@@ -27,17 +27,17 @@ for name in doxyfile $error_file $output_directory
 do
 	if [ -e $name ]
 	then
-		echo_exec rm -r $name
+		echo_eval rm -r $name
 	fi
 done
-echo_exec mkdir doxydoc
-echo_exec bin/doxyfile.sh $version $error_file $output_directory
+echo_eval mkdir doxydoc
+echo_eval bin/doxyfile.sh $version $error_file $output_directory
 #
 echo 'doxygen doxyfile > doxygen.log'
 doxygen doxyfile       > doxygen.log
 #
-echo_exec cat doxygen.err
-echo_exec bin/check_doxygen.sh
+echo_eval cat doxygen.err
+echo_eval bin/check_doxygen.sh
 #
 echo 'OK: bin/run_doxygen.sh'
 exit 0

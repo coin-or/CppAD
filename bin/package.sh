@@ -15,30 +15,30 @@ then
 	echo "bin/package.sh: must be executed from its parent directory"
 	exit 1
 fi
-echo_exec() {
+echo_eval() {
      echo $* 
      eval $*
 }
 top_srcdir=`pwd`
 if [ -e package.log ]
 then
-	echo_exec rm package.log
+	echo_eval rm package.log
 fi
 # ----------------------------------------------------------------------------
 # Automated updates to source directory
 #
 # Use CMakeLists.txt to update version number in other files
 version=`bin/version.sh get`
-echo_exec bin/version.sh copy
+echo_eval bin/version.sh copy
 #
 # Update cppad/configure.hpp, example/test_one.sh, test_more/test_one.sh
 if [ ! -d work ]
 then
-	echo_exec mkdir work
+	echo_eval mkdir work
 fi
-echo_exec cd work
-echo_exec cmake ..
-echo_exec cd ..
+echo_eval cd work
+echo_eval cmake ..
+echo_eval cd ..
 # ----------------------------------------------------------------------------
 # Run automated checking of file names in original source directory
 # (check_include_omh.sh uses files built by cmake)
@@ -55,23 +55,23 @@ list="
 "
 for check in $list 
 do
-	echo_exec bin/$check
+	echo_eval bin/$check
 done
 # ----------------------------------------------------------------------------
 # Check for doxygen errors
-echo_exec bin/run_doxygen.sh
+echo_eval bin/run_doxygen.sh
 # ----------------------------------------------------------------------------
 # Create the package directory
 package_dir="work/cppad-$version"
 if [ -e "$package_dir" ]
 then
-	echo_exec rm -r $package_dir
+	echo_eval rm -r $package_dir
 fi
 if [ -e "$package_dir.epl.tgz" ]
 then
-	echo_exec rm $package_dir.epl.tgz
+	echo_eval rm $package_dir.epl.tgz
 fi
-echo_exec mkdir -p $package_dir
+echo_eval mkdir -p $package_dir
 # -----------------------------------------------------------------------------
 # Source file that are coppied to the package directory
 file_list=`find . \
@@ -125,7 +125,7 @@ do
 done
 # ----------------------------------------------------------------------------
 # build the xml version of documentation for this distribution
-echo_exec cd $package_dir
+echo_eval cd $package_dir
 #
 # Only include the *.xml verison of the documentation in distribution
 # So remove the table at the top (but save the original doc.omh file).
@@ -144,18 +144,18 @@ echo "bin/run_omhelp.sh xml"
 if ! bin/run_omhelp.sh xml
 then
 	mv omhelp.xml.log ../..
-	echo_exec mv doc.omh.save doc.omh
+	echo_eval mv doc.omh.save doc.omh
 	exit 1
 fi
 # Move the log to the directory where the package.sh command was executed
 mv omhelp.xml.log ../..
 #
-echo_exec mv doc.omh.save doc.omh
+echo_eval mv doc.omh.save doc.omh
 # ----------------------------------------------------------------------------
 # change back to the package parent directory and create the tarball
-echo_exec cd ..
-echo_exec tar -czf cppad-$version.epl.tgz cppad-$version
+echo_eval cd ..
+echo_eval tar -czf cppad-$version.epl.tgz cppad-$version
 # ----------------------------------------------------------------------------
 # create gpl version of package
-echo_exec cd ..
-echo_exec bin/gpl_license.sh cppad-$version work work
+echo_eval cd ..
+echo_eval bin/gpl_license.sh cppad-$version work work

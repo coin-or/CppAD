@@ -1,6 +1,6 @@
 /* $Id$ */
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-12 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-13 Bradley M. Bell
 
 CppAD is distributed under multiple licenses. This distribution is under
 the terms of the 
@@ -43,7 +43,6 @@ extern bool Div(void);
 extern bool DivEq(void);
 extern bool DivZeroOne(void);
 extern bool Erf(void);
-extern bool epsilon(void);
 extern bool Exp(void);
 extern bool ForHess(void);
 extern bool for_sparse_jac(void);
@@ -52,6 +51,7 @@ extern bool FromBase(void);
 extern bool FunCheck(void);
 extern bool ipopt_solve(void);
 extern bool jacobian(void);
+extern bool limits(void);
 extern bool Log(void);
 extern bool Log10(void);
 extern bool Mul(void);
@@ -150,7 +150,6 @@ int main(void)
 	ok &= Run( DivEq,           "DivEq"          );
 	ok &= Run( DivZeroOne,      "DivZeroOne"     );
 	ok &= Run( Erf,             "Erf"            );
-	ok &= Run( epsilon,         "epsilon"        );
 	ok &= Run( Exp,             "Exp"            );
 	ok &= Run( ForHess,         "ForHess"        );
 	ok &= Run( for_sparse_jac,  "for_sparse_jac" );
@@ -158,6 +157,7 @@ int main(void)
 	ok &= Run( FromBase,        "FromBase"       );
 	ok &= Run( FunCheck,        "FunCheck"       );
 	ok &= Run( jacobian,        "jacobian"       );
+	ok &= Run( limits,          "limits"         );
 	ok &= Run( Log,             "Log"            );
 	ok &= Run( Log10,           "Log10"          );
 	ok &= Run( Mul,             "Mul"            );

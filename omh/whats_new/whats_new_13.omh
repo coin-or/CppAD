@@ -29,6 +29,19 @@ This section contains a list of the changes to CppAD during 2013
 The purpose of this section is to
 assist you in learning about changes between various versions of CppAD.
 
+$head 01-06$$
+$list number$$
+The $cref limits$$ documentation was corrected an improved.
+$lnext
+The $cref limits.cpp$$ example was simplified and restricted to just testing
+for $code AD<double>$$. 
+$lnext
+Testing for types other than $code AD<double>$$
+was moved to $code test_more/limits.cpp$$.
+In addition, $code test_more/limits.cpp$$ was modified to avoid the
+use of guard digits (and hence test failure) on more machines.
+$lend
+
 $head 01-05$$
 $list number$$
 The $cref limits.cpp$$ example was failing on some machines 

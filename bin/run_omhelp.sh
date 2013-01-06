@@ -17,7 +17,7 @@ then
 fi
 # -----------------------------------------------------------------------------
 # bash function that echos and executes a command
-echo_exec() {
+echo_eval() {
 	echo $*
 	eval $*
 }
@@ -35,7 +35,7 @@ then
 fi
 if [ "$1" == "clean" ]
 then
-	echo_exec rm -rf doc
+	echo_eval rm -rf doc
 	exit 0
 fi
 ext="$1"
@@ -49,9 +49,9 @@ fi
 echo "Building doc/*.$ext printable=$printable"
 if [ ! -e doc ]
 then
-	echo_exec mkdir doc
+	echo_eval mkdir doc
 fi 
-echo_exec cd doc
+echo_eval cd doc
 cmd="omhelp ../doc.omh -noframe -debug -l http://www.coin-or.org/CppAD/"
 if [ "$ext" == "xml" ]
 then
@@ -87,7 +87,7 @@ then
 fi
 if [ -e 'index.htm' ]
 then
-	echo_exec rm index.htm
+	echo_eval rm index.htm
 fi
 cat << EOF > index.html
 <html><head><script>

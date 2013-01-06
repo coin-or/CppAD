@@ -15,11 +15,11 @@ then
 	echo "bin/check_all.sh: must be executed from its parent directory"
 	exit 1
 fi
-echo_exec() {
+echo_eval() {
      echo $* 
      eval $*
 }
-echo_exec_log() {
+echo_eval_log() {
 	echo "$* >> check_all.log"
 	echo $* >> $top_srcdir/check_all.log
 	eval $* >> $top_srcdir/check_all.log
@@ -31,7 +31,7 @@ next_program() {
 }
 if [ -e 'check_all.log' ]
 then
-	echo_exec rm check_all.log
+	echo_eval rm check_all.log
 fi 
 top_srcdir=`pwd`
 cmake_args=''
@@ -47,11 +47,11 @@ then
 fi
 # -----------------------------------------------------------------------------
 # Create package to run test in
-echo_exec bin/package.sh
+echo_eval bin/package.sh
 # -----------------------------------------------------------------------------
 # change into gpl version of package directory
 version=`bin/version.sh get`
-echo_exec cd work/cppad-$version
+echo_eval cd work/cppad-$version
 # -----------------------------------------------------------------------------
 list="
 	check_all.log
@@ -62,11 +62,11 @@ for name in $list
 do
 	if [ -e "$name" ]
 	then
-		echo_exec rm -r $name
+		echo_eval rm -r $name
 	fi
 done
-echo_exec mkdir work
-echo_exec cd work
+echo_eval mkdir work
+echo_eval cd work
 # -----------------------------------------------------------------------------
 cmake_args="$cmake_args  -D cmake_install_prefix=$HOME/prefix/cppad"
 if [ -d '/usr/include' ]
@@ -104,9 +104,9 @@ cmake_args="$cmake_args -D cppad_cxx_flags=\
 '-Wall -ansi -pedantic-errors -std=c++98 -Wshadow'"
 #
 #
-echo_exec_log cmake $cmake_args ..
+echo_eval_log cmake $cmake_args ..
 # -----------------------------------------------------------------------------
-echo_exec_log make check 
+echo_eval_log make check 
 # -----------------------------------------------------------------------------
 skip=''
 list='
@@ -128,7 +128,7 @@ do
 	then
 		skip="$skip $program"
 	else
-		echo_exec_log $program 
+		echo_eval_log $program 
 	fi
 done
 #
@@ -140,8 +140,8 @@ do
 	then
 		skip="$skip $program"
 	else
-		echo_exec_log $program correct 54321 
-		echo_exec_log $program correct 54321 retape
+		echo_eval_log $program correct 54321 
+		echo_eval_log $program correct 54321 retape
 	fi
 done
 #
@@ -158,28 +158,28 @@ do
 		program_list="$program_list $program"
 		#
 		# fast cases, test for all programs
-		echo_exec_log ./$program a11c
-		echo_exec_log ./$program simple_ad
-		echo_exec_log ./$program team_example
+		echo_eval_log ./$program a11c
+		echo_eval_log ./$program simple_ad
+		echo_eval_log ./$program team_example
 	fi
 done
 if [ "$program_list" != '' ]
 then
 	# test_time=1,max_thread=4,mega_sum=1
 	next_program
-	echo_exec_log ./$program harmonic 1 4 1
+	echo_eval_log ./$program harmonic 1 4 1
 	# 
 	# test_time=2,max_thread=4,num_zero=20,num_sub=30,num_sum=500,use_ad=true
 	next_program
-	echo_exec_log ./$program multi_newton 2 4 20 30 500 true
+	echo_eval_log ./$program multi_newton 2 4 20 30 500 true
 	#
 	# case that failed in the past
 	next_program
-	echo_exec_log ./$program multi_newton 1 1 100 700 1 true
+	echo_eval_log ./$program multi_newton 1 1 100 700 1 true
 	#
 	# case that failed in the past
 	next_program
-	echo_exec_log ./$program multi_newton 1 2 3 12 1 true
+	echo_eval_log ./$program multi_newton 1 2 3 12 1 true
 fi
 #
 # print_for test 
@@ -187,7 +187,7 @@ if [ ! -e 'print_for/print_for' ]
 then
 	skip="$skip print_for/print_for"
 else
-	echo_exec_log print_for/print_for 
+	echo_eval_log print_for/print_for 
 	print_for/print_for | sed -e '/^Test passes/,$d' > junk.1.$$
 	print_for/print_for | sed -e '1,/^Test passes/d' > junk.2.$$
 	if diff junk.1.$$ junk.2.$$
@@ -200,7 +200,7 @@ else
 	fi
 fi
 #
-echo_exec_log make install 
+echo_eval_log make install 
 #
 if [ "$skip" != '' ]
 then

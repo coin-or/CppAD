@@ -1,7 +1,7 @@
 #! /bin/bash -e
 # $Id$
 # -----------------------------------------------------------------------------
-# CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-12 Bradley M. Bell
+# CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-13 Bradley M. Bell
 #
 # CppAD is distributed under multiple licenses. This distribution is under
 # the terms of the
@@ -20,7 +20,7 @@ then
 	echo "bin/gpl_license.sh: must be executed from its parent directory"
 	exit 1
 fi
-echo_exec() {
+echo_eval() {
      echo $* 
      eval $*
 }
@@ -51,16 +51,16 @@ fi
 # delete old gpl version of tarball (if it exists)
 if [ -e $archive_dir/$archive_name.gpl.tgz ]
 then
-	echo_exec rm $archive_dir/$archive_name.gpl.tgz
+	echo_eval rm $archive_dir/$archive_name.gpl.tgz
 fi
 #
 # change into work directory
-echo_exec cd $work_dir
+echo_eval cd $work_dir
 #
 # delete old version of directory (if it exists)
 if [ -e $archive_name ]
 then
-	echo_exec rm -r $archive_name
+	echo_eval rm -r $archive_name
 fi
 if [ -e $archive_name ]
 then
@@ -69,19 +69,19 @@ then
 fi
 #
 # extract from the EPL version
-echo_exec tar -xzf $archive_dir/$archive_name.epl.tgz
+echo_eval tar -xzf $archive_dir/$archive_name.epl.tgz
 #
 # remove documentation directory (if it exists)
 if [ -e $archive_name/doc ]
 then
-	echo_exec rm -r $archive_name/doc
+	echo_eval rm -r $archive_name/doc
 fi
 #
 # change into the directory
-echo_exec cd $archive_name
+echo_eval cd $archive_name
 #
 # files that need removing
-echo_exec rm epl-v10.html epl-v10.txt
+echo_eval rm epl-v10.html epl-v10.txt
 #
 # files that need changing
 list=`find . \
@@ -98,7 +98,7 @@ list=`find . \
 	\( -name '*.txt'  \)`
 #
 # change back up to work directory (to be safe)
-echo_exec cd ..
+echo_eval cd ..
 #
 echo "Changing license from EPL to GPL"
 for file in $list
@@ -170,7 +170,7 @@ do
 done
 #
 # change into the version directory
-echo_exec cd $archive_name
+echo_eval cd $archive_name
 #
 # Only include the *.xml verison of the documentation in distribution
 # So remove the table at the top (but save the original doc.omh file).
@@ -189,18 +189,18 @@ echo "bin/run_omhelp.sh xml"
 if ! bin/run_omhelp.sh xml
 then
 	mv omhelp.xml.log ../..
-	echo_exec mv doc.omh.save doc.omh
+	echo_eval mv doc.omh.save doc.omh
 	exit 1
 fi
 # Move the log to the directory where the start directory
-echo_exec mv omhelp.xml.log $start_dir
+echo_eval mv omhelp.xml.log $start_dir
 #
-echo_exec mv doc.omh.save doc.omh
-echo_exec cd ..
+echo_eval mv doc.omh.save doc.omh
+echo_eval cd ..
 # ----------------------------------------------------------------------------
 #
 # create GPL tarball file as copy or the version directory
-echo_exec tar -czf $archive_dir/$archive_name.gpl.tgz $archive_name
+echo_eval tar -czf $archive_dir/$archive_name.gpl.tgz $archive_name
 
 # if we reach here, no error occurred
 echo "bin/gpl_license.sh: OK"
