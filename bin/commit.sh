@@ -12,6 +12,7 @@
 # -----------------------------------------------------------------------------
 # replacement text for this commit
 cat << EOF > bin/commit.user.$$
+BEGIN INSTRUCTIONS
 This is a template file for making commits to the CppAD repository.
 Lines with no 'at' characters, are general comments not connected to 
 a specific file. Lines containing an 'at' character are "file name" 
@@ -21,7 +22,9 @@ during
 for example this entire paragraph is preserved.
 
 dir/file.ext@ optional comment about this file.
+END INSTRUCTIONS
 EOF
+# EOF (this comment used by commit.sh itself)
 # -----------------------------------------------------------------------------
 if [ ! -e "bin/commit.sh" ]
 then
@@ -163,13 +166,23 @@ then
 		exit 1
 	fi
 	#
-	echo "mv bin/commit.sh bin/commit.sh.old"
-	mv bin/commit.sh bin/commit.sh.old
+	# use backslash so this instruction does not edit itself
+	echo 'cp bin/commit.sh bin/commit.sh.old'
+	cp bin/commit.sh bin/commit.sh.old
+	#
+	sed -e '/B\EGIN INSTRUCTIONS/,/E\ND INSTRUCTIONS/d' \
+		bin/commit.sh.old > bin/commit.sh
 	#
 	echo "creating new bin/commit.sh"
-	sed -n -e '1,/@/p' bin/commit.sh.old | sed -e '/@/d' > bin/commit.sh
-	sed bin/commit.list.$$ -e 's/$/@/'                  >> bin/commit.sh
-	sed -n -e '/^EOF/,$p' bin/commit.sh.old             >> bin/commit.sh
+	for file in $list
+	do
+		if ! grep "^$file@" bin/commit.sh > /dev/null
+		then
+			sed \
+			-e "1,/^# EOF/s|^EOF|$file@\n&|" \
+			-i bin/commit.sh
+		fi
+	done
 	#
 	echo "------------------------------------"
 	echo "diff bin/commit.sh.old bin/commit.sh"
