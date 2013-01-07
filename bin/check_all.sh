@@ -49,9 +49,21 @@ fi
 # Create package to run test in
 echo_eval bin/package.sh
 # -----------------------------------------------------------------------------
-# change into gpl version of package directory
+# choose which tarball to use for testing
 version=`bin/version.sh get`
-echo_eval cd work/cppad-$version
+cd work
+list=( `ls cppad-$version.*.tgz` )
+if [ "${#list[@]}" == '1' ]
+then
+	tarball="${list[0]}"
+	skip="$skip other_tarball"
+else
+	choice=`echo $RANDOM % 2 | bc`
+	tarball="${list[$choice]}"
+fi
+echo_eval rm -r cppad-$version
+echo_eval tar -xzf $tarball
+echo_eval cd cppad-$version
 # -----------------------------------------------------------------------------
 list="
 	check_all.log

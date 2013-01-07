@@ -25,6 +25,19 @@ then
 	echo_eval rm package.log
 fi
 # ----------------------------------------------------------------------------
+this_license=`\
+	grep '$verbatim%' omh/license.omh | sed -e 's|$verbatim%\(...\).*|\1|'`
+if [ "$this_license" == 'epl' ]
+then
+	remove_list='gpl-3.0.txt bin/gpl_license.sh'
+elif [ "$this_license" == 'gpl' ]
+then
+	remove_list='epl-v10.txt epl-v10.html bin/gpl_license.sh'
+else
+	echo 'bin/package.sh: cannot find license in omh/license.omh'
+	exit 1
+fi
+# ----------------------------------------------------------------------------
 # Automated updates to source directory
 #
 # Use CMakeLists.txt to update version number in other files
@@ -91,8 +104,6 @@ file_list=`find . \
 	\( -name '*.txt' \) | sed \
 		-e '/\.\/work\//d' \
 		-e '/\.\/build\//d' \
-		-e '/\/gpl_license.sh$/d' \
-		-e '/\/gpl-3.0.txt$/d' \
 		-e '/\/junk.sh$/d' \
 		-e '/\/temp.sh$/d' \
 		-e 's|^\./||'`
@@ -122,6 +133,13 @@ do
 	fi
 	echo "cp $file $package_dir/$file" >> package.log
 	cp $file $package_dir/$file
+done
+for file in $remove_list 
+do
+	if [ -e $package_dir/$file ]
+	then
+		echo_eval rm $package_dir/$file >> package.log
+	fi
 done
 # ----------------------------------------------------------------------------
 # build the xml version of documentation for this distribution
@@ -154,8 +172,16 @@ echo_eval mv doc.omh.save doc.omh
 # ----------------------------------------------------------------------------
 # change back to the package parent directory and create the tarball
 echo_eval cd ..
-echo_eval tar -czf cppad-$version.epl.tgz cppad-$version
+echo_eval tar -czf cppad-$version.$this_license.tgz cppad-$version
 # ----------------------------------------------------------------------------
 # create gpl version of package
 echo_eval cd ..
-echo_eval bin/gpl_license.sh cppad-$version work work
+if [ -e 'bin/gpl_license.sh' ]
+then
+	if [ "$this_license" != 'epl' ]
+	then
+		echo 'package.sh: bin/gpl_license.sh found in gpl verison of source.'
+		exit 1
+	fi
+	echo_eval bin/gpl_license.sh cppad-$version work work
+fi
