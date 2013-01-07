@@ -1,7 +1,7 @@
 #! /bin/bash -e
 # $Id$
 # -----------------------------------------------------------------------------
-# CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-12 Bradley M. Bell
+# CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-13 Bradley M. Bell
 #
 # CppAD is distributed under multiple licenses. This distribution is under
 # the terms of the
@@ -15,10 +15,15 @@ then
 	echo "bin/new_release.sh: must be executed from its parent directory"
 	exit 1
 fi
+# bash function that echos and executes a command
+echo_eval() {
+	echo $*
+	eval $*
+}
 # -----------------------------------------------------------------------------
 repository="https://projects.coin-or.org/svn/CppAD"
 stable_version="20130000"
-release="0"
+release='0'
 release_version="$stable_version.$release"
 msg="Creating releases/$release_version"
 # -----------------------------------------------------------------------------
@@ -40,38 +45,39 @@ then
 	echo "in file bin/new_release.sh to a higher release number."
 	exit 1
 fi
-echo "svn revert configure.ac"
-      svn revert configure.ac
-if ! grep "AC_INIT(cppad.*, $release_version" configure.ac > /dev/null
+#
+check_one=`bin/version.sh get`
+echo_eval svn revert doc.omh
+check_two=`grep "cppad-$stable_version" doc.omh \
+	| sed -e 's|cppad-\([0-9.]*\):.*|\1|'`
+if [ "$check_one" != "$release_version" ] || [ "$check_one" != "$check_two" ]
 then
-	echo bin/"new_release.sh: Change version number in configure.ac to be"
-	echo "$release_version, then execute"
-	echo "	./build.sh version automake configure"
-	echo "then commit the changes."
+	echo 'bin/new_release.sh:'
+	echo 'Set new version number with following commands:'
+	echo "	bin/version.sh set $release_version"
+	echo '	bin/version.sh copy'
+	echo 'then test and then commit the changes.'
 	exit 1
 fi
 # -----------------------------------------------------------------------------
 rep_stable="$repository/stable/$stable_version"
 rep_release="$repository/releases/$release_version"
-echo "svn copy $rep_stable $rep_release -m \"$msg\""
-      svn copy $rep_stable $rep_release -m "$msg"
+echo_eval svn copy $rep_stable $rep_release -m \"$msg\"
 # -----------------------------------------------------------------------------
 echo "cd ../.."
 cd ../..
 #
 if [ -e conf ]
 then
-	echo "rm -rf conf"
-	      rm -rf conf
+	echo_eval rm -rf conf.old
+	echo_eval mv conf conf.old
 fi
-echo "svn checkout $repository/conf conf"
-      svn checkout $repository/conf conf
+echo_eval svn checkout $repository/conf conf
 #
-echo "cd conf"
-      cd conf
+echo_eval cd conf
 #
 msg="Update stable and release numbers in projDesc.xml"
-echo bin/"new_release.sh: $msg"
+echo 'Settting stable and advance release in ../../conf/projDesc.xml.'
 sed -i projDesc.xml \
 	-e "/^ *<stable/,/^ *<\/stable/s/[0-9]\{8\}/$stable_version/" \
 	-e "/^ *<release/,/^ *<\/release/s/[0-9]\{8\}\.[0-9]*/$release_version/"
