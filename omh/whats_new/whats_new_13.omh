@@ -13,6 +13,7 @@ Please visit http://www.coin-or.org/CppAD/ for information on other licenses.
 $begin whats_new_13$$
 $dollar @$$
 $spell
+	microsoft
 	src
 	jac
 	hpp
@@ -28,6 +29,10 @@ This section contains a list of the changes to CppAD during 2013
 (in reverse order by date).
 The purpose of this section is to
 assist you in learning about changes between various versions of CppAD.
+
+$head 01-07$$
+Fix undefined $code microsoft_timer$$ when building the
+$cref speed_example.cpp$$ program.
 
 $head 01-06$$
 $list number$$
