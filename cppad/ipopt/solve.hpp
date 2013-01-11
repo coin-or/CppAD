@@ -2,7 +2,7 @@
 # ifndef CPPAD_SOLVE_INCLUDED
 # define CPPAD_SOLVE_INCLUDED
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-12 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-13 Bradley M. Bell
 
 CppAD is distributed under multiple licenses. This distribution is under
 the terms of the 
@@ -74,12 +74,6 @@ $href%
 	Ipopt
 %$$
 optimizer and CppAD for the derivative and sparsity calculations. 
-
-$head Assumption$$
-It is assumed that the
-$cref/operation sequence/glossary/Operation/Sequence/$$ 
-used by $cref/fg_eval/ipopt_solve/fg_eval/$$ to compute $icode fg$$ 
-does not depend on $icode x$$.
 
 $head Include File$$
 Currently, this routine 
