@@ -1,6 +1,6 @@
 /* $Id$ */
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-12 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-13 Bradley M. Bell
 
 CppAD is distributed under multiple licenses. This distribution is under
 the terms of the 
@@ -29,7 +29,7 @@ CppAD functions properly on your system.
 
 
 $head Run All$$
-In the $code work$$ subdirectory of the 
+In the $code build$$ subdirectory of the 
 $cref/distribution directory/download/Distribution Directory/$$
 execute the command
 $codep

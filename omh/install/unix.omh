@@ -1,6 +1,6 @@
 $Id$
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-12 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-13 Bradley M. Bell
 
 CppAD is distributed under multiple licenses. This distribution is under
 the terms of the 
@@ -92,11 +92,11 @@ $cref/current version/download/Compressed Tar File/Current Version/$$
 which has distribution directory $code cppad-20121230$$. 
 
 $head Work Directory$$
-Create the directory $code cppad-20121230/work$$,
-which will be referred to as the work directory below.
+Create the directory $code cppad-20121230/build$$,
+which will be referred to as the build directory below.
 
 $head Configure$$
-Execute the following command in the work directory:
+Execute the following command in the build directory:
 $index configure$$
 $codei%
 ./configure                                  \
@@ -129,7 +129,7 @@ You can build these libraries by executing the command
 $codei%
 	make 
 %$$ 
-in the work directory.
+in the build directory.
 
 $subhead Examples and Tests$$
 Once you have executed the $code make$$ command,
@@ -180,7 +180,7 @@ $tend
 In addition,
 you can run a large subset of correctness tests 
 (that are not intended to be examples)
-by executing the following commands starting in the work directory:
+by executing the following commands starting in the build directory:
 $codei%
 	cd test_more
 	make test
@@ -192,7 +192,7 @@ $index profile, cppad speed$$
 $index cppad, profile speed$$
 The CppAD derivative speed tests mentioned above can be profiled.
 You can test that the results computed during this profiling are correct
-by executing the following commands starting in the work directory:
+by executing the following commands starting in the build directory:
 $codei%
 	cd speed/profile
 	make test
@@ -391,7 +391,7 @@ $codei%
 %$$
 is a valid way to reference $code adouble.h$$.
 In this case, you can run the Adolc speed correctness tests 
-by executing the following commands starting in the work directory:
+by executing the following commands starting in the build directory:
 $codei%
 	cd speed/adolc
 	make test
@@ -477,7 +477,7 @@ $codei%
 %$$
 is a valid reference to $code badiff.h$$.
 In this case, you can run the Fadbad speed correctness tests
-by executing the following commands starting in the work directory:
+by executing the following commands starting in the build directory:
 $codei%
 	cd speed/fadbad
 	make test
@@ -503,7 +503,7 @@ $codei%
 is a valid reference to $code IpIpoptApplication.hpp$$.
 In this case, the CppAD interface to Ipopt
 $cref/examples/cppad_ipopt_nlp/Example/$$ can be built and tested
-by executing the following commands starting in the work directory:
+by executing the following commands starting in the build directory:
 $codei%
 	make
 	#
@@ -517,7 +517,7 @@ $codei%
 	make test
 %$$
 Once this has been done, you can execute the program
-$code ./speed$$ in the $code work/cppad_ipopt/speed$$ directory;
+$code ./speed$$ in the $code build/cppad_ipopt/speed$$ directory;
 see $cref ipopt_ode_speed.cpp$$.
 
 $head sacado_dir$$
@@ -535,7 +535,7 @@ $codei%
 %$$
 is a valid reference to $code Sacado.hpp$$.
 In this case, you can run the Sacado speed correctness tests
-by executing the following commands starting in the work directory:
+by executing the following commands starting in the build directory:
 $codei%
 	cd speed/sacado
 	make test

@@ -15,25 +15,36 @@ then
 	echo "bin/check_all.sh: must be executed from its parent directory"
 	exit 1
 fi
-echo_eval() {
-     echo $* 
-     eval $*
-}
-echo_eval_log() {
-	echo "$* >> check_all.log"
+echo_log_eval() {
+	echo $*
 	echo $* >> $top_srcdir/check_all.log
-	eval $* >> $top_srcdir/check_all.log
+	if ! eval $* >> $top_srcdir/check_all.log
+	then
+		echo "Error: check check_all.log"
+		exit 1
+	fi
 }
+log_eval() {
+	echo $* >> $top_srcdir/check_all.log
+	if ! eval $* >> $top_srcdir/check_all.log
+	then
+		echo "Error: check check_all.log"
+		exit 1
+	fi
+}
+if [ -e check_all.log ]
+then
+	echo "rm check_all.log"
+	rm check_all.log
+fi
+top_srcdir=`pwd`
+# ---------------------------------------------------------------------------
 # circular shift program list and set program to first entry in list
 next_program() {
 	program_list=`echo "$program_list" | sed -e 's| *\([^ ]*\) *\(.*\)|\2 \1|'`
 	program=`echo "$program_list" | sed -e 's| *\([^ ]*\).*|\1|'`
 }
-if [ -e 'check_all.log' ]
-then
-	echo_eval rm check_all.log
-fi 
-top_srcdir=`pwd`
+# ---------------------------------------------------------------------------
 cmake_args=''
 if [ "$1" != "" ]
 then
@@ -47,11 +58,12 @@ then
 fi
 # -----------------------------------------------------------------------------
 # Create package to run test in
-echo_eval bin/package.sh
+echo "bin/package.sh"
+bin/package.sh
 # -----------------------------------------------------------------------------
 # choose which tarball to use for testing
 version=`bin/version.sh get`
-cd work
+echo_log_eval cd build
 list=( `ls cppad-$version.*.tgz` )
 if [ "${#list[@]}" == '1' ]
 then
@@ -61,24 +73,23 @@ else
 	choice=`echo $RANDOM % 2 | bc`
 	tarball="${list[$choice]}"
 fi
-echo_eval rm -r cppad-$version
-echo_eval tar -xzf $tarball
-echo_eval cd cppad-$version
+echo_log_eval rm -r cppad-$version
+echo_log_eval tar -xzf $tarball
+echo_log_eval cd cppad-$version
 # -----------------------------------------------------------------------------
 list="
-	check_all.log
 	$HOME/prefix/cppad
-	work
+	build
 "
 for name in $list
 do
 	if [ -e "$name" ]
 	then
-		echo_eval rm -r $name
+		echo_log_eval rm -r $name
 	fi
 done
-echo_eval mkdir work
-echo_eval cd work
+echo_log_eval mkdir build
+echo_log_eval cd build
 # -----------------------------------------------------------------------------
 cmake_args="$cmake_args  -D cmake_install_prefix=$HOME/prefix/cppad"
 if [ -d '/usr/include' ]
@@ -116,9 +127,9 @@ cmake_args="$cmake_args -D cppad_cxx_flags=\
 '-Wall -ansi -pedantic-errors -std=c++98 -Wshadow'"
 #
 #
-echo_eval_log cmake $cmake_args ..
+echo_log_eval cmake $cmake_args ..
 # -----------------------------------------------------------------------------
-echo_eval_log make check 
+echo_log_eval make check 
 # -----------------------------------------------------------------------------
 skip=''
 list='
@@ -140,7 +151,7 @@ do
 	then
 		skip="$skip $program"
 	else
-		echo_eval_log $program 
+		echo_log_eval $program 
 	fi
 done
 #
@@ -152,8 +163,8 @@ do
 	then
 		skip="$skip $program"
 	else
-		echo_eval_log $program correct 54321 
-		echo_eval_log $program correct 54321 retape
+		echo_log_eval $program correct 54321 
+		echo_log_eval $program correct 54321 retape
 	fi
 done
 #
@@ -170,28 +181,28 @@ do
 		program_list="$program_list $program"
 		#
 		# fast cases, test for all programs
-		echo_eval_log ./$program a11c
-		echo_eval_log ./$program simple_ad
-		echo_eval_log ./$program team_example
+		echo_log_eval ./$program a11c
+		echo_log_eval ./$program simple_ad
+		echo_log_eval ./$program team_example
 	fi
 done
 if [ "$program_list" != '' ]
 then
 	# test_time=1,max_thread=4,mega_sum=1
 	next_program
-	echo_eval_log ./$program harmonic 1 4 1
+	echo_log_eval ./$program harmonic 1 4 1
 	# 
 	# test_time=2,max_thread=4,num_zero=20,num_sub=30,num_sum=500,use_ad=true
 	next_program
-	echo_eval_log ./$program multi_newton 2 4 20 30 500 true
+	echo_log_eval ./$program multi_newton 2 4 20 30 500 true
 	#
 	# case that failed in the past
 	next_program
-	echo_eval_log ./$program multi_newton 1 1 100 700 1 true
+	echo_log_eval ./$program multi_newton 1 1 100 700 1 true
 	#
 	# case that failed in the past
 	next_program
-	echo_eval_log ./$program multi_newton 1 2 3 12 1 true
+	echo_log_eval ./$program multi_newton 1 2 3 12 1 true
 fi
 #
 # print_for test 
@@ -199,26 +210,26 @@ if [ ! -e 'print_for/print_for' ]
 then
 	skip="$skip print_for/print_for"
 else
-	echo_eval_log print_for/print_for 
+	echo_log_eval print_for/print_for 
 	print_for/print_for | sed -e '/^Test passes/,$d' > junk.1.$$
 	print_for/print_for | sed -e '1,/^Test passes/d' > junk.2.$$
 	if diff junk.1.$$ junk.2.$$
 	then
 		rm junk.1.$$ junk.2.$$
-		echo "print_for: OK"  >> $top_srcdir/check_all.log
+		echo_log_eval echo "print_for: OK"  
 	else
-		echo "print_for: Error"  >> $top_srcdir/check_all.log
+		echo_log_eval echo "print_for: Error"
 		exit 1
 	fi
 fi
 #
-echo_eval_log make install 
+echo_log_eval make install 
 #
 if [ "$skip" != '' ]
 then
-	echo "check_all.sh: skip = $skip"
+	echo_log_eval echo "check_all.sh: skip = $skip"
 	exit 1
 fi
 #
-echo 'check_all.sh: OK'
+echo_log_eval echo 'check_all.sh: OK'
 exit 0

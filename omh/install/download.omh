@@ -67,7 +67,7 @@ $tend
 
 $subhead Release Versions$$
 Release versions of the compressed tar files can be found at the
-$href%http://www.coin-or.org/download/source/CppAD/%CppAD download page/%$$.
+$href%http://www.coin-or.org/download/source/CppAD/%CppAD download page%$$.
 These file have the form
 $codei%
 	cppad-%yyyymmdd%.%rel%.%lic%.tgz
@@ -121,8 +121,8 @@ $codei%
 %$$
 In addition, you can try the following commands:
 $codei%
-	mkdir work
-	cd work
+	mkdir build
+	cd build
 	%path_to_cmake%\cmake -G "NMake Makefiles" ..
 	%path_to_nmake%\nmake check
 %$$

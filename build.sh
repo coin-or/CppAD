@@ -48,10 +48,10 @@ then
      exit 0
 fi
 # -----------------------------------------------------------------------------
-if [ ! -e work ]
+if [ ! -e build ]
 then
-	echo "mkdir work"
-	mkdir work
+	echo "mkdir build"
+	mkdir build
 fi
 # -----------------------------------------------------------------------------
 # Today's date in yyyy-mm-dd decimal digit format where 
@@ -165,8 +165,8 @@ then
 	log_dir=`pwd`
 	log_file="$1.log"
 	#
-	echo "cd work"
-	cd work
+	echo "cd build"
+	cd build
 	#
 	dir_list="
 		--prefix=$CPPAD_DIR
@@ -291,10 +291,10 @@ then
 		      bin/$check
 	done
 	# ----------------------------------------------------------------------
-	# Things to do in the work directory
+	# Things to do in the build directory
 	# ----------------------------------------------------------------------
-	echo "cd work"
-	      cd work
+	echo "cd build"
+	      cd build
 	#
 	if [ -e cppad-$version ]
 	then
@@ -364,8 +364,8 @@ fi
 if [ "$1" = "gpl" ] 
 then
 	# create GPL licensed version
-	echo "bin/gpl_license.sh cppad-$version work work"
-	bin/gpl_license.sh cppad-$version work work
+	echo "bin/gpl_license.sh cppad-$version build build"
+	bin/gpl_license.sh cppad-$version build build
 	#
 	echo "OK: ./build.sh gpl"
 	exit 0
@@ -375,8 +375,8 @@ if [ "$1" = "copy2doc" ]
 then
 	for ext in epl gpl
 	do
-		echo "cp work/cppad-$version.$ext.tgz doc/cppad-$version.$ext.tgz"
-		cp work/cppad-$version.$ext.tgz doc/cppad-$version.$ext.tgz
+		echo "cp build/cppad-$version.$ext.tgz doc/cppad-$version.$ext.tgz"
+		cp build/cppad-$version.$ext.tgz doc/cppad-$version.$ext.tgz
 	done
 	#
 	echo "cp -r doxydoc doc/doxydoc"
@@ -424,11 +424,11 @@ then
 	echo "date > $log_file"
 	      date > $log_dir/$log_file
 	# ----------------------------------------------------------------------
-	# Things to do in the work directory
+	# Things to do in the build directory
 	# ----------------------------------------------------------------------
-	echo "cd work"
-	echo "cd work" >> $log_dir/$log_file
-	      cd work
+	echo "cd build"
+	echo "cd build" >> $log_dir/$log_file
+	      cd build
 	#
 	# erase old distribution directory
 	if [ -e cppad-$version ]
@@ -444,7 +444,7 @@ then
 	      tar -xzf cppad-$version.epl.tgz
 	#
 	# ----------------------------------------------------------------------
-	# Things to do in the work/disribution directory
+	# Things to do in the build/disribution directory
 	# ----------------------------------------------------------------------
 	echo "cd cppad-$version"
 	echo "cd cppad-$version" >> $log_dir/$log_file
@@ -466,11 +466,11 @@ then
 	      ./build.sh doxygen   >> $log_dir/$log_file
 	#
 	# ----------------------------------------------------------------------
-	# Things to do in the work/disribution/work directory
+	# Things to do in the build/disribution/build directory
 	# ----------------------------------------------------------------------
-	echo "cd work"
-	echo "cd work" >> $log_dir/$log_file
-	      cd work
+	echo "cd build"
+	echo "cd build" >> $log_dir/$log_file
+	      cd build
 	#
 	dir=`pwd` 
 	echo "To see progress in the 'make test' log file use"
@@ -556,16 +556,16 @@ fi
 cat << EOF
 usage: ./build.sh option_1 option_2 ...
 
-options                                                            requires
--------                                                            --------
+options                                                             requires
+-------                                                             --------
 version:  set version in AUTHORS, configure.ac, configure, ...
 omhelp:   build all formats of user documentation in doc/*. 
 automake: run the tools required by autoconf and automake.
-configure:run the configure script in the work directory.          automake
-dist:     create the distribution file work/cppad-version.epl.tgz. configure
-doxygen:  build developer documentation in doxydoc/*.              configure
-gpl:      create work/*.gpl.zip and work/*.epl.zip.                dist
-copy2doc: copy logs, tarballs & doxygen output into doc directory. dist,doxygen
+configure:run the configure script in the build directory.          automake
+dist:     create the distribution file build/cppad-version.epl.tgz. configure
+doxygen:  build developer documentation in doxydoc/*.               configure
+gpl:      create build/*.gpl.zip and build/*.epl.zip.               dist
+copy2doc: copy logs, tarballs & doxygen output into doc directory.  dist,doxygen
 
 all:      $all_cases
 test:     use tarball to make test and put result in build_test.log. dist

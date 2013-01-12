@@ -1,6 +1,6 @@
 $Id$
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-12 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-13 Bradley M. Bell
 
 CppAD is distributed under multiple licenses. This distribution is under
 the terms of the 
@@ -77,9 +77,9 @@ Only the $code cmake$$ command and the path to the distribution directory
 ($code ..$$ at the end of the command below) are required.
 In other words, the first and last lines below are required
 and all of the other lines are optional.
-Create a $code work$$ subdirectory of the 
+Create a $code build$$ subdirectory of the 
 $cref/distribution directory/download/Distribution Directory/$$,
-change into the $code work$$  directory, 
+change into the $code build$$  directory, 
 and execute the following command:
 $codei%
 cmake %%                                                          \

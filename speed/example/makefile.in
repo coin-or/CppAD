@@ -63,7 +63,7 @@ am_example_OBJECTS = example.$(OBJEXT) det_by_lu.$(OBJEXT) \
 	elapsed_seconds.$(OBJEXT) mat_sum_sq.$(OBJEXT) \
 	ode_evaluate.$(OBJEXT) sparse_hes_fun.$(OBJEXT) \
 	sparse_jac_fun.$(OBJEXT) speed_test.$(OBJEXT) \
-	time_test.$(OBJEXT)
+	time_test.$(OBJEXT) microsoft_timer.$(OBJEXT)
 example_OBJECTS = $(am_example_OBJECTS)
 example_LDADD = $(LDADD)
 example_DEPENDENCIES =
@@ -125,7 +125,7 @@ CYGPATH_W = @CYGPATH_W@
 
 # $Id$
 # -----------------------------------------------------------------------------
-# CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-12 Bradley M. Bell
+# CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-13 Bradley M. Bell
 #
 # CppAD is distributed under multiple licenses. This distribution is under
 # the terms of the 
@@ -264,7 +264,8 @@ example_SOURCES = \
 	sparse_hes_fun.cpp \
 	sparse_jac_fun.cpp \
 	speed_test.cpp \
-	time_test.cpp
+	time_test.cpp \
+	../src/microsoft_timer.cpp 
 
 all: all-am
 
@@ -319,6 +320,7 @@ distclean-compile:
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/elapsed_seconds.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/example.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/mat_sum_sq.Po@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/microsoft_timer.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/ode_evaluate.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/sparse_hes_fun.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/sparse_jac_fun.Po@am__quote@
@@ -338,6 +340,20 @@ distclean-compile:
 @AMDEP_TRUE@@am__fastdepCXX_FALSE@	source='$<' object='$@' libtool=no @AMDEPBACKSLASH@
 @AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
 @am__fastdepCXX_FALSE@	$(CXXCOMPILE) -c -o $@ `$(CYGPATH_W) '$<'`
+
+microsoft_timer.o: ../src/microsoft_timer.cpp
+@am__fastdepCXX_TRUE@	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -MT microsoft_timer.o -MD -MP -MF $(DEPDIR)/microsoft_timer.Tpo -c -o microsoft_timer.o `test -f '../src/microsoft_timer.cpp' || echo '$(srcdir)/'`../src/microsoft_timer.cpp
+@am__fastdepCXX_TRUE@	$(am__mv) $(DEPDIR)/microsoft_timer.Tpo $(DEPDIR)/microsoft_timer.Po
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	source='../src/microsoft_timer.cpp' object='microsoft_timer.o' libtool=no @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
+@am__fastdepCXX_FALSE@	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -c -o microsoft_timer.o `test -f '../src/microsoft_timer.cpp' || echo '$(srcdir)/'`../src/microsoft_timer.cpp
+
+microsoft_timer.obj: ../src/microsoft_timer.cpp
+@am__fastdepCXX_TRUE@	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -MT microsoft_timer.obj -MD -MP -MF $(DEPDIR)/microsoft_timer.Tpo -c -o microsoft_timer.obj `if test -f '../src/microsoft_timer.cpp'; then $(CYGPATH_W) '../src/microsoft_timer.cpp'; else $(CYGPATH_W) '$(srcdir)/../src/microsoft_timer.cpp'; fi`
+@am__fastdepCXX_TRUE@	$(am__mv) $(DEPDIR)/microsoft_timer.Tpo $(DEPDIR)/microsoft_timer.Po
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	source='../src/microsoft_timer.cpp' object='microsoft_timer.obj' libtool=no @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
+@am__fastdepCXX_FALSE@	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -c -o microsoft_timer.obj `if test -f '../src/microsoft_timer.cpp'; then $(CYGPATH_W) '../src/microsoft_timer.cpp'; else $(CYGPATH_W) '$(srcdir)/../src/microsoft_timer.cpp'; fi`
 
 ID: $(HEADERS) $(SOURCES) $(LISP) $(TAGS_FILES)
 	list='$(SOURCES) $(HEADERS) $(LISP) $(TAGS_FILES)'; \

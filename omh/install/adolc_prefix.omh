@@ -1,6 +1,6 @@
 /* $Id$ */
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-12 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-13 Bradley M. Bell
 
 CppAD is distributed under multiple licenses. This distribution is under
 the terms of the 
@@ -71,7 +71,7 @@ you will be able to run the ADOL-C examples listed above
 by executing the following commands starting in the
 $cref/distribution directory/download/Distribution Directory/$$:
 $codei%
-	cd work/example
+	cd build/example
 	make check_example
 %$$
 If you do this,
@@ -87,7 +87,7 @@ you will be able to run the ADOL-C speed correctness tests
 by executing the following commands starting in the
 $cref/distribution directory/download/Distribution Directory/$$:
 $codei%
-	cd work/speed/adolc
+	cd build/speed/adolc
 	make check_speed_adolc
 %$$
 After executing $code make check_speed_adolc$$, 

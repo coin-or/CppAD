@@ -15,15 +15,29 @@ then
 	echo "bin/package.sh: must be executed from its parent directory"
 	exit 1
 fi
-echo_eval() {
-     echo $* 
-     eval $*
+echo_log_eval() {
+	echo $*
+	echo $* >> $top_srcdir/package.log
+	if ! eval $* >> $top_srcdir/package.log
+	then
+		echo "Error: check package.log"
+		exit 1
+	fi
 }
-top_srcdir=`pwd`
+log_eval() {
+	echo $* >> $top_srcdir/package.log
+	if ! eval $* >> $top_srcdir/package.log
+	then
+		echo "Error: check package.log"
+		exit 1
+	fi
+}
 if [ -e package.log ]
 then
-	echo_eval rm package.log
+	echo "rm package.log"
+	rm package.log
 fi
+top_srcdir=`pwd`
 # ----------------------------------------------------------------------------
 this_license=`\
 	grep '$verbatim%' omh/license.omh | sed -e 's|$verbatim%\(...\).*|\1|'`
@@ -40,18 +54,10 @@ fi
 # ----------------------------------------------------------------------------
 # Automated updates to source directory
 #
-# Use CMakeLists.txt to update version number in other files
+# Get version number and make sure all copies of it are up to date.
 version=`bin/version.sh get`
-echo_eval bin/version.sh copy
-#
-# Update cppad/configure.hpp, example/test_one.sh, test_more/test_one.sh
-if [ ! -d work ]
-then
-	echo_eval mkdir work
-fi
-echo_eval cd work
-echo_eval cmake ..
-echo_eval cd ..
+echo_log_eval bin/version.sh get
+echo_log_eval bin/version.sh copy
 # ----------------------------------------------------------------------------
 # Run automated checking of file names in original source directory
 # (check_include_omh.sh uses files built by cmake)
@@ -68,23 +74,26 @@ list="
 "
 for check in $list 
 do
-	echo_eval bin/$check
+	echo_log_eval bin/$check
 done
 # ----------------------------------------------------------------------------
 # Check for doxygen errors
-echo_eval bin/run_doxygen.sh
+echo_log_eval bin/run_doxygen.sh
 # ----------------------------------------------------------------------------
 # Create the package directory
-package_dir="work/cppad-$version"
+package_dir="build/cppad-$version"
 if [ -e "$package_dir" ]
 then
-	echo_eval rm -r $package_dir
+	echo_log_eval rm -r $package_dir
 fi
-if [ -e "$package_dir.epl.tgz" ]
-then
-	echo_eval rm $package_dir.epl.tgz
-fi
-echo_eval mkdir -p $package_dir
+for lic in epl gpl
+do
+	if [ -e "$package_dir.epl.tgz" ]
+	then
+		echo_log_eval rm $package_dir.$lic.tgz
+	fi
+done
+echo_log_eval mkdir -p $package_dir
 # -----------------------------------------------------------------------------
 # Source file that are coppied to the package directory
 file_list=`find . \
@@ -102,7 +111,6 @@ file_list=`find . \
 	\( -name '*.sed' \) -or \
 	\( -name '*.sh' \) -or \
 	\( -name '*.txt' \) | sed \
-		-e '/\.\/work\//d' \
 		-e '/\.\/build\//d' \
 		-e '/\/junk.sh$/d' \
 		-e '/\/temp.sh$/d' \
@@ -119,7 +127,7 @@ other_files="
 "
 #
 # Copy the files, creating sub-directories when necessary
-echo "copy source files to work/$package_dir >> package.log"
+echo_log_eval echo "copy files to $package_dir"
 for file in $file_list $other_files
 do
 	sub_dir=`echo $file | sed -e 's|\(.*\)/[^/]*$|\1|'`
@@ -127,23 +135,22 @@ do
 	then
 		if [ ! -e "$package_dir/$sub_dir" ]
 		then
-			echo "mkdir -p $package_dir/$sub_dir" >> package.log
-			mkdir -p $package_dir/$sub_dir
+			log_eval mkdir -p $package_dir/$sub_dir
 		fi
 	fi
-	echo "cp $file $package_dir/$file" >> package.log
-	cp $file $package_dir/$file
+	log_eval cp $file $package_dir/$file
 done
+echo_log_eval echo "remove certain files from $package_dir"
 for file in $remove_list 
 do
 	if [ -e $package_dir/$file ]
 	then
-		echo_eval rm $package_dir/$file >> package.log
+		echo_log_eval rm $package_dir/$file 
 	fi
 done
 # ----------------------------------------------------------------------------
 # build the xml version of documentation for this distribution
-echo_eval cd $package_dir
+echo_log_eval cd $package_dir
 #
 # Only include the *.xml verison of the documentation in distribution
 # So remove the table at the top (but save the original doc.omh file).
@@ -153,29 +160,28 @@ then
 	echo "Missing comment expected in doc.omh"
 	exit 1
 fi
-echo "sed -i.save doc.omh ..."
+echo_log_eval echo "sed -i.save doc.omh ..."
 sed -i.save doc.omh \
 	-e '/This comment is used to remove the table below/,/$tend/d'
 #
 # This command creates omhelp.xml.log in current directory (and says so)
-echo "bin/run_omhelp.sh xml"
+echo_log_eval echo "bin/run_omhelp.sh xml"
 if ! bin/run_omhelp.sh xml
 then
-	mv omhelp.xml.log ../..
-	echo_eval mv doc.omh.save doc.omh
+	echo_log_eval cp omhelp.xml.log $top_srcdir/omhelp.xml.log
 	exit 1
 fi
-# Move the log to the directory where the package.sh command was executed
-mv omhelp.xml.log ../..
-#
-echo_eval mv doc.omh.save doc.omh
+# Copy the log to the directory where the package.sh command was executed
+echo_log_eval cp omhelp.xml.log $top_srcdir/omhelp.xml.log
+# Restore the original doc.omh
+echo_log_eval mv doc.omh.save doc.omh
 # ----------------------------------------------------------------------------
 # change back to the package parent directory and create the tarball
-echo_eval cd ..
-echo_eval tar -czf cppad-$version.$this_license.tgz cppad-$version
+echo_log_eval cd ..
+echo_log_eval tar -czf cppad-$version.$this_license.tgz cppad-$version
 # ----------------------------------------------------------------------------
 # create gpl version of package
-echo_eval cd ..
+echo_log_eval cd $top_srcdir
 if [ -e 'bin/gpl_license.sh' ]
 then
 	if [ "$this_license" != 'epl' ]
@@ -183,5 +189,5 @@ then
 		echo 'package.sh: bin/gpl_license.sh found in gpl verison of source.'
 		exit 1
 	fi
-	echo_eval bin/gpl_license.sh cppad-$version work work
+	echo_log_eval bin/gpl_license.sh cppad-$version build build
 fi
