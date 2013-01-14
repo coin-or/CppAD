@@ -77,21 +77,8 @@ do
 done
 # -----------------------------------------------------------------------
 # check for abort do to unknown files
-unknown=`svn status | sed -n \
-	-e '/[/ ]junk\./d'  \
-	-e '/[/ ]temp\./d'  \
-	-e '/[/]test_one.cpp/d' \
-	-e '/[/]test_one.sh/d' \
-	-e '/^[?].*\.am$/p'  \
-	-e '/^[?].*\.cpp$/p'  \
-	-e '/^[?].*\.hpp$/p'  \
-	-e '/^[?].*\.html$/p'  \
-	-e '/^[?].*\.in$/p'  \
-	-e '/^[?].*\.omh$/p'  \
-	-e '/^[?].*\.pc$/p'  \
-	-e '/^[?].*\.py$/p'  \
-	-e '/^[?].*\.sh$/p'   \
-	-e '/^[?].*\.txt$/p'  | sed -e 's/^[?]//'`
+unknown=`svn status | sed -n -e '/^[?]/p' | \
+	sed -e 's/^[?]//' -e "/bin\/commit.*.$$/d"`
 msg="aborting because the following files are unknown to svn"
 print_msg="no"
 for file in $unknown
@@ -113,8 +100,8 @@ then
 fi
 # -------------------------------------------------
 # list of files that changed
-svn status | sed -n -e '/^[ADMRC][ADMRC]* /p' | \
-	sed -e 's/^[ADMRC][ADMRC]* [+ ]*//' \
+svn status | sed -n -e '/^[ADMRC][ADMRC]* /p' -e '/^ [ADMRC] /p' | \
+	sed -e 's/^[ADMRC ]*[+ ]*//' \
 		-e '/^bin\/commit.sh$/d' -e '/^bin\/commit.sed$/d' | \
 	sort -u > bin/commit.list.$$
 # -------------------------------------------------
