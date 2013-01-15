@@ -1,7 +1,7 @@
 #! /bin/bash -e
 # $Id$
 # -----------------------------------------------------------------------------
-# CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-12 Bradley M. Bell
+# CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-13 Bradley M. Bell
 #
 # CppAD is distributed under multiple licenses. This distribution is under
 # the terms of the 
@@ -11,6 +11,17 @@
 # Please visit http://www.coin-or.org/CppAD/ for information on other licenses.
 # -----------------------------------------------------------------------------
 #!/bin/bash -e
+#
+if [ ! -e build ]
+then
+	mkdir build
+fi
+cd build
+if [ ! -e ../../cppad/configure.hpp ]
+then
+	cmake ../..
+fi
+#
 echo "$0"
 name=`echo $0 | sed -e 's|.*/||' -e 's|\..*||'`
 echo "create $name.cpp"
@@ -47,6 +58,10 @@ namespace {
 		size_t thread_num = thread_number();
 		thread_all_[thread_num].x.resize(1);
 		thread_all_[thread_num].x[0]=static_cast<double>(thread_num);
+
+		std::stringstream stream;
+		stream << "thread_num = " << thread_num << std::endl;
+		std::cout << stream.str();
 	}
 }
 
@@ -55,6 +70,10 @@ bool alloc_global(void)
 {	bool ok = true;
 	
 	size_t num_threads = NUMBER_THREADS;
+	if( omp_get_max_threads() < num_threads )
+	{	std::cout << "can't set num_threads = " << num_threads << std::endl;
+		ok = false;
+	}
 
 	// call setup for using thread_alloc in parallel mode.
 	thread_alloc::parallel_setup(num_threads, in_parallel, thread_number);
@@ -85,8 +104,8 @@ int main(void)
 	return int(! ok);
 } 
 EOF
-echo "g++ -g $name.cpp -I$HOME/cppad/trunk -fopenmp -o $name"
-g++ -g $name.cpp -I$HOME/cppad/trunk -fopenmp -o $name
+echo "g++ -g $name.cpp -I../.. -fopenmp -o $name"
+g++ -g $name.cpp -I../.. -fopenmp -o $name
 #
 echo "./$name"
 ./$name

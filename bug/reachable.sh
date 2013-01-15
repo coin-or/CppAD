@@ -1,7 +1,7 @@
 #! /bin/bash -e
 # $Id$
 # -----------------------------------------------------------------------------
-# CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-12 Bradley M. Bell
+# CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-13 Bradley M. Bell
 #
 # CppAD is distributed under multiple licenses. This distribution is under
 # the terms of the 
@@ -10,6 +10,16 @@
 # A copy of this license is included in the COPYING file of this distribution.
 # Please visit http://www.coin-or.org/CppAD/ for information on other licenses.
 # -----------------------------------------------------------------------------
+#
+if [ ! -e build ]
+then
+	mkdir build
+fi
+cd build
+if [ ! -e ../../cppad/configure.hpp ]
+then
+	cmake ../..
+fi
 #
 echo "create reachable.cpp"
 cat << EOF > reachable.cpp
@@ -36,8 +46,8 @@ int main (int argc, char *argv[])
 }
 EOF
 #
-echo "g++ -g -I..  reachable.cpp -o reachable"
-g++ -g -I.. reachable.cpp -o reachable
+echo "g++ -g -I../..  reachable.cpp -o reachable"
+g++ -g -I../.. reachable.cpp -o reachable
 #
 echo "valgrind --leak-check=full --show-reachable=yes ./reachable"
 valgrind --leak-check=full --show-reachable=yes ./reachable
