@@ -10,21 +10,16 @@
 # A copy of this license is included in the COPYING file of this distribution.
 # Please visit http://www.coin-or.org/CppAD/ for information on other licenses.
 # -----------------------------------------------------------------------------
-# replacement text for this commit
+# INSTRUCTIONS:
+# Directly below is where you specify which files are commited and make
+# comments about the commit.  Lines with no '@' characters, are general 
+# comments not connected to a specific file. Lines containing an '@' character 
+# are "file name" followed by a specific comment for that file. 
 cat << EOF > bin/commit.user.$$
-BEGIN INSTRUCTIONS
-This is a template file for making commits to the CppAD repository.
-Lines with no 'at' characters, are general comments not connected to 
-a specific file. Lines containing an 'at' character are "file name" 
-followed by comment. Lines before the first 'at' character are preserved
-during
-	bin/commit.sh edit 
-for example this entire paragraph is preserved.
+General comments about this commit go here (delete this line).
 
-dir/file.ext@ optional comment about this file.
-END INSTRUCTIONS
+dir/file.ext@ specific comment about this file (delete this line).
 EOF
-# EOF (this comment used by commit.sh itself)
 # -----------------------------------------------------------------------------
 if [ ! -e "bin/commit.sh" ]
 then
@@ -44,13 +39,12 @@ list:
 output a list of the files that have changes svn knows about.
 
 edit:
-Edit the file list of files at the top of bin/commit.sh to be the same as 
+Edit the list of files at the top of bin/commit.sh to be the same as 
 	bin/commit.sh list
-would output.  In addition, it displays the changes to bin/commit.sh. This 
+would output.  In addition, display the changes to bin/commit.sh. This 
 will include the new files in the list since the last edit of bin/commit.sh. 
-You should then edit bin/commit.sh by hand, to add comments about the changes, 
-(and remove bin/commit.sh from the list) before running the command
-	bin/commit.sh run
+You should then by hand edit bin/commit.sh, to add comments about the changes.
+See INSTRUCTIONS, at the beginning of this file:
 
 run:
 commits changes to the list of files in bin/commit.sh 
@@ -157,17 +151,25 @@ then
 	echo 'cp bin/commit.sh bin/commit.sh.old'
 	cp bin/commit.sh bin/commit.sh.old
 	#
-	sed -e '/B\EGIN INSTRUCTIONS/,/E\ND INSTRUCTIONS/d' \
-		bin/commit.sh.old > bin/commit.sh
-	#
 	echo "creating new bin/commit.sh"
 	for file in $list
 	do
 		if ! grep "^$file@" bin/commit.sh > /dev/null
 		then
 			sed \
-			-e "1,/^# EOF/s|^EOF|$file@\n&|" \
+			-e "/^# INSTRUCTIONS/,/^EOF/s|^EOF|$file@\n&|" \
 			-i bin/commit.sh
+		fi
+	done
+	#
+	# remove files that are no longer different
+	list=`sed -e '/@/! d' -e 's/@.*//' bin/commit.user.$$`
+	for file in $list
+	do
+		if ! grep "^$file\$" bin/commit.list.$$ > /dev/null
+		then
+			file=`echo $file | sed -e 's|/|\\\\/|g'`
+			sed -e "/^$file@/d" -i bin/commit.sh
 		fi
 	done
 	#
