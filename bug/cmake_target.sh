@@ -33,5 +33,7 @@ ADD_CUSTOM_TARGET(check_two hello_two DEPENDS hello_two)
 ADD_CUSTOM_TARGET(check DEPENDS check_one check_two)
 EOF
 #
+uname -a
+cmake --version
 cmake .
 make check
