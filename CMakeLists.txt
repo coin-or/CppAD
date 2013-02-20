@@ -152,14 +152,14 @@ command_line_arg(cmake_install_postfix NOTFOUND STRING
 	"cppad install postfix"
 )
 # -----------------------------------------------------------------------------
-# cppad_documentation
-command_line_arg(cppad_documentation NO BOOL 
-	"install cppad documentation"
-)
-# -----------------------------------------------------------------------------
 # cppad_cxx_flags
 command_line_arg(cppad_cxx_flags NOTFOUND STRING 
 	"extra flags used with cppad source (besides debug and release flags)"
+)
+# -----------------------------------------------------------------------------
+# cppad_documentation
+command_line_arg(cppad_documentation NO BOOL 
+	"install cppad documentation"
 )
 # -----------------------------------------------------------------------------
 # External package prefixes

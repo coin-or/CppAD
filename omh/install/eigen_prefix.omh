@@ -12,6 +12,7 @@ Please visit http://www.coin-or.org/CppAD/ for information on other licenses.
 $begin eigen_prefix$$
 $dollar @$$
 $spell
+	testvector
 	dir
 	namespace
 	Eigen
@@ -74,7 +75,7 @@ $index vector, eigen$$
 $index eigen, vector$$
 If you have specified $icode eigen_prefix$$ you can choose
 $codei%
-	-D cppad_test_vector_namespace=eigen
+	-D cppad_testvector=eigen
 %$$
 on the $cref/cmake command/cmake/CMake Command/$$ line.
 This we set the CppAD $cref testvector$$ to use Eigen vectors. 

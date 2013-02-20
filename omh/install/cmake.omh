@@ -97,8 +97,9 @@ cmake %%                                                          \
 	-D sacado_prefix=%sacado_prefix%                             \
 	\
 	-D cppad_cxx_flags=%cppad_cxx_flags%                         \
-	-D cppad_test_vector_namespace=%cppad_test_vector_namespace% \
 	-D cppad_documentation=%cppad_documentation%                 \
+	\
+	-D cppad_testvector=%cppad_testvector%                       \
 	-D cppad_max_num_threads=%cppad_max_num_threads%             \
 	-D cppad_sparse_list=%cppad_sparse_list%                     \
 	-D cppad_tape_id_type=%cppad_tape_id_type%                   \
@@ -240,9 +241,6 @@ currently generate a lot of shadowed variable warnings.
 Hence the $code -Wshadow$$ flag is automatically removed when
 compiling examples and test that use these packages.
 
-$head cppad_testvector$$
-See $tref cppad_testvector$$.
-
 $head cppad_documentation$$
 $index install, cppad documentation$$
 $index cppad, install documentation$$
@@ -265,6 +263,9 @@ $codei%
 	%prefix%/%datadir%/doc/%postfix%/cppad-%version%
 %$$
 where $icode postfix$$ is $icode cmake_install_postfix$$.
+
+$head cppad_testvector$$
+See $tref cppad_testvector$$.
 
 $head cppad_max_num_threads$$
 $index maximum, number threads$$

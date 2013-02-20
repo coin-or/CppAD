@@ -13,6 +13,10 @@ Please visit http://www.coin-or.org/CppAD/ for information on other licenses.
 $begin whats_new_13$$
 $dollar @$$
 $spell
+	cmake
+	namespace
+	testvector
+	eigen
 	microsoft
 	src
 	jac
@@ -29,6 +33,13 @@ This section contains a list of the changes to CppAD during 2013
 (in reverse order by date).
 The purpose of this section is to
 assist you in learning about changes between various versions of CppAD.
+
+$head 02-20$$
+The documentation for the $cref cmake$$ install option
+$code cppad_test_vector_namespace$$ was fixed to be
+$cref/cppad_testvector/cmake/cppad_testvector/$$.
+This was also fixed for the
+$cref/eigen test vector/eigen_prefix/Test Vector/$$ documentation.
 
 $head 01-07$$
 Fix undefined $code microsoft_timer$$ when building the

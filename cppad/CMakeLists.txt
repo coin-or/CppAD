@@ -1,6 +1,6 @@
 #CppAD $Id$
 # -----------------------------------------------------------------------------
-# CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-12 Bradley M. Bell
+# CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-13 Bradley M. Bell
 #
 # CppAD is distributed under multiple licenses. This distribution is under
 # the terms of the 
@@ -27,19 +27,19 @@ ENDMACRO(check_match)
 # -----------------------------------------------------------------------------
 # command line arguments
 #
-# cppad_sparse_list
-command_line_arg(cppad_sparse_list YES BOOL 
-	"use sparse list for internal sparse set representation"
-)
 #
 # cppad_testvector 
 command_line_arg(cppad_testvector cppad STRING
 "Namespace of vector used for testing, one of: boost, cppad, eigen, std"
 )
 #
-# cppad_tape_addr_type
-command_line_arg(cppad_tape_addr_type "unsigned int" STRING
-"type used to identify variables on one tape, size must be <= sizeof(size_t)"
+# cppad_max_num_threads
+command_line_arg(cppad_max_num_threads 48 STRING
+	"maximum number of threads that CppAD can use use"
+)
+# cppad_sparse_list
+command_line_arg(cppad_sparse_list YES BOOL 
+	"use sparse list for internal sparse set representation"
 )
 #
 # cppad_tape_id_type
@@ -47,9 +47,9 @@ command_line_arg(cppad_tape_id_type "unsigned int" STRING
 	"type used to identify different tapes, size must be <= sizeof(size_t)"
 )
 #
-# cppad_max_num_threads
-command_line_arg(cppad_max_num_threads 48 STRING
-	"maximum number of threads that CppAD can use use"
+# cppad_tape_addr_type
+command_line_arg(cppad_tape_addr_type "unsigned int" STRING
+"type used to identify variables on one tape, size must be <= sizeof(size_t)"
 )
 # -----------------------------------------------------------------------------
 # CPPAD_INTERNAL_SPARSE_SET

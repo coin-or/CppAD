@@ -117,14 +117,15 @@ do
 		cmake_args="$cmake_args  -D ${package}_prefix=$dir"
 	fi
 done
+cmake_args="$cmake_args -D cppad_cxx_flags=\
+'-Wall -ansi -pedantic-errors -std=c++98 -Wshadow'"
+cmake_args="$cmake_args -D cppad_documentation=YES"
+#
 cmake_args="$cmake_args -D cppad_sparse_list=YES"
 cmake_args="$cmake_args -D cppad_testvector=boost"
 cmake_args="$cmake_args -D cppad_tape_id_type='int'"
 cmake_args="$cmake_args -D cppad_tape_addr_type=int"
 cmake_args="$cmake_args -D cppad_max_num_threads=48"
-cmake_args="$cmake_args -D cppad_documentation=YES"
-cmake_args="$cmake_args -D cppad_cxx_flags=\
-'-Wall -ansi -pedantic-errors -std=c++98 -Wshadow'"
 #
 #
 echo_log_eval cmake $cmake_args ..
