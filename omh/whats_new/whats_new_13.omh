@@ -35,12 +35,17 @@ The purpose of this section is to
 assist you in learning about changes between various versions of CppAD.
 
 $head 02-20$$
+$list number$$
 The documentation for the $cref cmake$$ install option
 $code cppad_test_vector_namespace$$ was fixed to be
 $cref/cppad_testvector/cmake/cppad_testvector/$$.
 This was also fixed for the
 $cref/eigen test vector/eigen_prefix/Test Vector/$$ documentation.
-
+$lnext
+An option to specify that the compiler supports c++11 constructs,
+$cref/cppad_c11_flag/cmake/cppad_c11_flag/$$, was added
+to the $code cmake$$ command line.
+$lend
 $head 01-07$$
 Fix undefined $code microsoft_timer$$ when building the
 $cref speed_example.cpp$$ program.

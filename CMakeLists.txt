@@ -16,7 +16,7 @@
 CMAKE_MINIMUM_REQUIRED(VERSION 2.6)
 
 # cppad_version is used by set_version.sh to get the version number.
-SET(cppad_version      "20130102" )
+SET(cppad_version      "20130220" )
 SET(cppad_url          "http://www.coin-or.org/CppAD" )
 SET(cppad_description  "Differentiation of C++ Algorithms" )
 
@@ -115,6 +115,16 @@ MACRO(add_cppad_cxx_flags target_name)
 	ELSE( no_shadow )
 		SET(cxx_flags "${cppad_cxx_flags}")
 	ENDIF( no_shadow )
+	# sacado does not compile under c++11
+	IF( NOT ( ${target_name} STREQUAL speed_sacado) )
+		IF( cppad_c11_flag )
+			IF( cxx_flags )
+				SET(cxx_flags "${cppad_c11_flag} ${cxx_flags}" )
+			ELSE( cxx_flags )
+				SET(cxx_flags "${cppad_c11_flag}" )
+			ENDIF( cxx_flags )
+		ENDIF( cppad_c11_flag )
+	ENDIF( NOT ( ${target_name} STREQUAL speed_sacado) )
 	IF( cxx_flags )
 		SET_TARGET_PROPERTIES( 
 			${target_name} PROPERTIES COMPILE_FLAGS "${cxx_flags}"
@@ -152,9 +162,14 @@ command_line_arg(cmake_install_postfix NOTFOUND STRING
 	"cppad install postfix"
 )
 # -----------------------------------------------------------------------------
+# cppad_use_c11_flag
+command_line_arg(cppad_c11_flag NOTFOUND STRING 
+	"If this flag is present, it gets get c++11 complinace from compiler"
+)
+# -----------------------------------------------------------------------------
 # cppad_cxx_flags
 command_line_arg(cppad_cxx_flags NOTFOUND STRING 
-	"extra flags used with cppad source (besides debug and release flags)"
+	"extra flags used with cppad source (besides debug, release, c11 flags)"
 )
 # -----------------------------------------------------------------------------
 # cppad_documentation

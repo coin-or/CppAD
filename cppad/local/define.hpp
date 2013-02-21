@@ -3,7 +3,7 @@
 # define CPPAD_DEFINE_INCLUDED
 
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-12 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-13 Bradley M. Bell
 
 CppAD is distributed under multiple licenses. This distribution is under
 the terms of the 
@@ -91,7 +91,11 @@ If it is not yet defined,
 it is defined when cppad/local/define.hpp is included.
 */
 # ifndef CPPAD_NULL
+# if CPPAD_CPP11
+# define CPPAD_NULL     nullptr  
+# else
 # define CPPAD_NULL     0
+# endif
 # endif
  
 /*!

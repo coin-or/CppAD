@@ -1,6 +1,6 @@
 # $Id$
 # -----------------------------------------------------------------------------
-# CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-12 Bradley M. Bell
+# CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-13 Bradley M. Bell
 #
 # CppAD is distributed under multiple licenses. This distribution is under
 # the terms of the 
@@ -31,6 +31,7 @@ ADD_EXECUTABLE(test_more_ipopt_nlp EXCLUDE_FROM_ALL test_more.cpp
 	retape_k1_l1.cpp
 	retape_k1_l2.cpp
 )
+add_cppad_cxx_flags(test_more_ipopt_nlp)
 
 # List of libraries to be linked into the specified target
 TARGET_LINK_LIBRARIES(test_more_ipopt_nlp cppad_ipopt ${ipopt_LIBRARIES})

@@ -1,6 +1,6 @@
 // $Id$
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-12 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-13 Bradley M. Bell
 
 CppAD is distributed under multiple licenses. This distribution is under
 the terms of the 
@@ -92,7 +92,7 @@ namespace {
 	void thread_work(size_t thread_num)
 	{	bool ok = wait_for_work_ != CPPAD_NULL;
 		ok     &= wait_for_job_  != CPPAD_NULL;
-		ok     &= thread_num     != CPPAD_NULL;
+		ok     &= thread_num     != 0;
 
 		// thread specific storage of thread number for this thread
 		thread_num_ptr_.reset(& thread_all_[thread_num].thread_num );

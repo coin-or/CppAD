@@ -27,7 +27,6 @@ ENDMACRO(check_match)
 # -----------------------------------------------------------------------------
 # command line arguments
 #
-#
 # cppad_testvector 
 command_line_arg(cppad_testvector cppad STRING
 "Namespace of vector used for testing, one of: boost, cppad, eigen, std"
@@ -51,6 +50,14 @@ command_line_arg(cppad_tape_id_type "unsigned int" STRING
 command_line_arg(cppad_tape_addr_type "unsigned int" STRING
 "type used to identify variables on one tape, size must be <= sizeof(size_t)"
 )
+# ----------------------------------------------------------------------------
+# CPPAD_CPP11
+#
+IF( cppad_c11_flag )
+	SET(CPPAD_CPP11  1)
+ELSE( cppad_c11_flag )
+	SET(CPPAD_CPP11  0)
+ENDIF( cppad_c11_flag )
 # -----------------------------------------------------------------------------
 # CPPAD_INTERNAL_SPARSE_SET
 #

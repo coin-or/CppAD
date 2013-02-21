@@ -117,8 +117,8 @@ do
 		cmake_args="$cmake_args  -D ${package}_prefix=$dir"
 	fi
 done
-cmake_args="$cmake_args -D cppad_cxx_flags=\
-'-Wall -ansi -pedantic-errors -std=c++98 -Wshadow'"
+cmake_args="$cmake_args -D cppad_c11_flag='-std=c++11'"
+cmake_args="$cmake_args -D cppad_cxx_flags='-Wall -pedantic-errors -Wshadow'"
 cmake_args="$cmake_args -D cppad_documentation=YES"
 #
 cmake_args="$cmake_args -D cppad_sparse_list=YES"

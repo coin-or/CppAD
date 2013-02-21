@@ -3,7 +3,7 @@
 # define CPPAD_CONFIGURE_INCLUDED
 
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-12 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-13 Bradley M. Bell
 
 CppAD is distributed under multiple licenses. This distribution is under
 the terms of the 
@@ -45,6 +45,18 @@ Replacement for config.h so that all preprocessor symbols begin with CPPAD_
 cppad-yyyymmdd as a C string where yyyy is year, mm is month, and dd is day.
 */
 # define CPPAD_PACKAGE_STRING "cppad-@cppad_version@"
+
+/*!
+def CPPAD_CPP11
+is this a c++11 compliant compiler, 1 (yes) or 0 (no).
+CPPAD_NO_CPP11 is used by the Sacado speed test to surpress using c++11
+because Sacado does not support it.
+*/
+# ifdef CPPAD_NO_CPP11
+# define CPPAD_CPP11 0
+# else
+# define CPPAD_CPP11 @CPPAD_CPP11@
+# endif
  
  /*!
 def CPPAD_INTERNAL_SPARSE_SET
