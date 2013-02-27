@@ -20,6 +20,16 @@ $index limits$$
 $index example, limits$$
 $index test, limits$$
 
+$head Assumption$$
+This code assumes that the decimal point is infront of the mantissa.
+Hence dividing the minimum normalized value looses precision,
+while multiplying the maximum normalized value results in infinity. 
+
+$head Externals$$
+This example using external routines to get and set values
+so that the complier does not set the correspdong code and optimize
+it out.
+
 $code
 $verbatim%example/limits.cpp%0%// BEGIN C++%// END C++%1%$$
 $$
@@ -39,6 +49,7 @@ $end
 
 # include <cppad/cppad.hpp>
 # include <complex>
+# include "extern_value.hpp"
 
 namespace {
 	using CppAD::vector;
@@ -51,92 +62,59 @@ namespace {
 	template <class Type>
 	bool check_epsilon(void)
 	{	bool ok    = true;
-		vector<Type> eps(1), one(1), two(1), eps2(1), check(1);
-		eps[0]     = CppAD::numeric_limits<Type>::epsilon();
-		one[0]     = 1;
-		two[0]     = 2;
-		eps2[0]    = eps[0] / two[0]; 
-		check[0]   = add_one(eps[0]);
-		ok        &= one[0] != check[0];
-		check[0]   = add_one(eps2[0]);
-		ok        &= one[0] == check[0];
+		typedef extern_value<Type> value;
+		value eps( CppAD::numeric_limits<Type>::epsilon() );
+		value one( Type(1) );
+		value two( Type(2) );
+		value tmp( Type(0) );
+		//
+		tmp.set( add_one( eps.get() / two.get() ) ); 
+		ok        &= one.get() == tmp.get();
+		//
+		tmp.set( add_one( eps.get() ) ); 
+		ok        &= one.get() != tmp.get();
 		return ok;
 	}
 	// -----------------------------------------------------------------
 	template <class Type>
 	bool check_min(void)
 	{	bool ok    = true;
-		vector<Type> min(1),eps(1),one(1),three(1),hun(1),tmp(1),match(1);
-		min[0]     = CppAD::numeric_limits<Type>::min();
-		eps[0]     = CppAD::numeric_limits<Type>::epsilon();
-		one[0]     = Type(1);
-		three[0]   = Type(3);
-		hun[0]     = Type(100);
+		typedef extern_value<Type> value;
+		value min( CppAD::numeric_limits<Type>::min() );
+		value eps3( Type(3) * CppAD::numeric_limits<Type>::epsilon() );
+		value one( Type(1) );
+		value hun( Type(100) );
+		value tmp( Type(0) );
 		//
-		tmp[0]     = min[0] / hun[0];
-		match[0]   = tmp[0] * hun[0];
-		ok        &= abs_geq(match[0]/min[0] - one[0], three[0]*eps[0]);
+		tmp.set( min.get() / hun.get() );
+		tmp.set( tmp.get() * hun.get() );
+		ok        &= abs_geq(tmp.get()/min.get() - one.get(), eps3.get());
 		//
-		tmp[0]     = min[0] * hun[0];
-		match[0]   = tmp[0] / (hun[0] * (Type(1) - eps[0]) );
-		ok        &= ! abs_geq(match[0]/min[0] - one[0], three[0]*eps[0]);
+		tmp.set( min.get() * hun.get() );
+		tmp.set( tmp.get() / hun.get() );
+		ok        &= ! abs_geq(tmp.get()/min.get() - one.get(), eps3.get());
 		return ok;
 	}
+
 	// -----------------------------------------------------------------
 	template <class Type>
 	bool check_max(void)
 	{	bool ok    = true;
-		vector<Type> max(1),eps(1),one(1),three(1),hun(1),tmp(1),match(1);
-		max[0]     = CppAD::numeric_limits<Type>::max();
-		eps[0]     = CppAD::numeric_limits<Type>::epsilon();
-		one[0]     = Type(1);
-		three[0]   = Type(3);
-		hun[0]     = Type(100);
+		typedef extern_value<Type> value;
+		value max2( CppAD::numeric_limits<Type>::max() / Type(2) );
+		value eps3( Type(3) * CppAD::numeric_limits<Type>::epsilon() );
+		value one( Type(1) );
+		value hun( Type(100) );
+		value tmp( Type(0) );
 		//
-		tmp[0]     = max[0] * hun[0];
-		match[0]   = tmp[0] / hun[0];
-		ok        &= abs_geq(match[0]/max[0] - one[0],  three[0]*eps[0]);
+		tmp.set( max2.get() * hun.get() );
+		tmp.set( tmp.get() / hun.get() );
+		// tmp is infinite
+		ok        &= abs_geq(tmp.get() / max2.get() - one.get(), eps3.get() );
 		//
-		tmp[0]     = max[0] / hun[0];
-		match[0]   = tmp[0] * (hun[0] * (Type(1) - eps[0]) );
-		ok        &= ! abs_geq(match[0]/max[0] - one[0], three[0]*eps[0]);
-		return ok;
-	}
-	// ---------------------------------------------------------------------
-	template <class Type>
-	bool check_max_complex(void)
-	{	typedef std::complex<Type> Complex;
-		bool ok    = true;
-		vector<Complex> c_max(1), c_eps(1);
-		vector<Type> max(1),eps(1),one(1),three(1),hun(1),tmp(1),match(1);
-		c_max[0]   = CppAD::numeric_limits<Complex>::max();
-		c_eps[0]   = CppAD::numeric_limits<Type>::epsilon();
-		ok        &= c_eps[0].imag() == Type(0);
-		ok        &= c_max[0].imag() == Type(0);
-		max[0]    = c_max[0].real();
-		eps[0]    = c_eps[0].real();
-		one[0]    = Type(1);
-		three[0]  = Type(3);
-		hun[0]    = Type(100);
-		//
-		tmp[0]     = max[0] * hun[0];
-		match[0]   = tmp[0] / hun[0];
-		ok  &= CppAD::abs(match[0]/max[0] - one[0]) > three[0] * eps[0];
-		//
-		tmp[0]     = max[0] / hun[0];
-		match[0]   = tmp[0] * (hun[0] * (Type(1) - eps[0]));
-		ok  &= CppAD::abs(match[0]/max[0] - one[0]) < three[0] * eps[0];
-		return ok;
-	}
-	//
-	template <class Base>
-	bool check_max_ad_complex()
-	{	using CppAD::AD;
-		bool ok    = true;
-		AD<Base> c_max   = CppAD::numeric_limits< AD<Base> >::max();
-		ok &= Value(c_max).imag() == Base(0);
-		ok &= Value(c_max).real() == CppAD::numeric_limits<Base>::max();
-
+		tmp.set( max2.get() / hun.get() );
+		tmp.set( tmp.get() * hun.get() );
+		ok        &= ! abs_geq(tmp.get() / max2.get() - one.get(), eps3.get() );
 		return ok;
 	}
 }
@@ -175,14 +153,14 @@ bool limits(void)
 	// max for Base types defined by CppAD
 	ok &= check_max<float>();
 	ok &= check_max<double>();
-	ok &= check_max_complex<float>();
-	ok &= check_max_complex<double>();
+	ok &= check_max< std::complex<float> >();
+	ok &= check_max< std::complex<double> >();
 
 	// max for some AD types. 
 	ok &= check_max< AD<float> >();
 	ok &= check_max< AD<double> >();
-	ok &= check_max_ad_complex< std::complex<float> >();
-	ok &= check_max_ad_complex< std::complex<double> >();
+	ok &= check_max< AD< std::complex<float> > >();
+	ok &= check_max< AD< std::complex<double> > >();
 
 	return ok;
 }

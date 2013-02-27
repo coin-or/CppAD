@@ -113,6 +113,8 @@ test_more_SOURCES  = \
 	div_zero_one.cpp \
 	erf.cpp \
 	exp.cpp \
+	extern_value.cpp \
+	extern_value.hpp \
 	for_hess.cpp \
 	for_sparse_jac.cpp \
 	forward.cpp \

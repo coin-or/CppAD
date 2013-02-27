@@ -100,6 +100,7 @@ ADD_EXECUTABLE(test_more EXCLUDE_FROM_ALL test_more.cpp
 	div_zero_one.cpp
 	erf.cpp
 	exp.cpp
+	extern_value.cpp
 	for_hess.cpp
 	for_sparse_jac.cpp
 	forward.cpp
