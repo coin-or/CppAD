@@ -96,7 +96,6 @@ cmake %%                                                          \
 	-D ipopt_prefix=%ipopt_prefix%                               \
 	-D sacado_prefix=%sacado_prefix%                             \
 	\
-	-D cppad_c11_flag=%cppad_c11_flag%                         \
 	-D cppad_cxx_flags=%cppad_cxx_flags%                         \
 	-D cppad_documentation=%cppad_documentation%                 \
 	\
@@ -221,22 +220,6 @@ $rref fadbad_prefix$$
 $rref ipopt_prefix$$
 $rref sacado_prefix$$
 $tend
-
-$head cppad_c11_flag$$
-$index c++11, compile flag$$
-$index compile, c++11 flag$$
-$index flags, c++11 compile$$
-This specifies the compiler flag that gives c++11 compliance.
-For example, if you are using $code g++$$ you could specify
-$codep
-	-D cppad_c11_flag='-std=c++11'
-$$
-If you have partial compliance, using this flag may or many not work.
-If you get an error because the compiler only partially implements this 
-standard, omit this flag.
-There is once exception to this run,
-Sacado does not support c++11 so this flags is suppressed
-when compiling the routines used by $cref speed_sacado$$.
 
 $head cppad_cxx_flags$$
 $index c++, compile flags$$

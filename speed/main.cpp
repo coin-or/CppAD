@@ -1,6 +1,6 @@
 /* $Id$ */
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-12 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-13 Bradley M. Bell
 
 CppAD is distributed under multiple licenses. This distribution is under
 the terms of the 
@@ -40,7 +40,9 @@ Please visit http://www.coin-or.org/CppAD/ for information on other licenses.
 # ifdef SPEED_PROFILE
 # define AD_PACKAGE "profile"
 # endif
-# ifdef SPEED_SACADO
+// Sacado is a special case because is does not support c+11;
+// Hence the setting of this symbol affects all programs that use CppAD.
+# ifdef CPPAD_SPEED_SACADO
 # define AD_PACKAGE "sacado"
 # endif
 

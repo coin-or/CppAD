@@ -27,6 +27,7 @@ ENDMACRO(check_match)
 # -----------------------------------------------------------------------------
 # command line arguments
 #
+#
 # cppad_testvector 
 command_line_arg(cppad_testvector cppad STRING
 "Namespace of vector used for testing, one of: boost, cppad, eigen, std"
@@ -50,14 +51,6 @@ command_line_arg(cppad_tape_id_type "unsigned int" STRING
 command_line_arg(cppad_tape_addr_type "unsigned int" STRING
 "type used to identify variables on one tape, size must be <= sizeof(size_t)"
 )
-# ----------------------------------------------------------------------------
-# CPPAD_CPP11
-#
-IF( cppad_c11_flag )
-	SET(CPPAD_CPP11  1)
-ELSE( cppad_c11_flag )
-	SET(CPPAD_CPP11  0)
-ENDIF( cppad_c11_flag )
 # -----------------------------------------------------------------------------
 # CPPAD_INTERNAL_SPARSE_SET
 #
@@ -103,6 +96,26 @@ IF( CPPAD_EIGENVECTOR )
 		)
 	ENDIF( NOT eigen_prefix )
 ENDIF( CPPAD_EIGENVECTOR )
+
+# -----------------------------------------------------------------------------
+# CPPAD_NULLPTR
+#
+# CHECK_CXX_SOURCE_RUNS(source variable)
+SET(CMAKE_REQUIRED_INCLUDES  "")
+SET(CMAKE_REQUIRED_LIBRARIES "")
+SET(CMAKE_REQUIRED_FLAGS     ${cppad_cxx_flags})
+SET(source "
+int main(void)
+{	char *c = nullptr;
+	return 0;
+}" )
+CHECK_CXX_SOURCE_RUNS("${source}" nullptr_ok)
+IF( nullptr_ok )
+	SET(CPPAD_NULLPTR 1)
+ELSE( nullptr_ok )
+	SET(CPPAD_NULLPTR 0)
+ENDIF( nullptr_ok )
+MESSAGE(STATUS "CPPAD_NULLPTR = ${CPPAD_NULLPTR}" )
 
 # -----------------------------------------------------------------------------
 # CPPAD_GETTIMEOFDAY

@@ -16,7 +16,7 @@
 CMAKE_MINIMUM_REQUIRED(VERSION 2.6)
 
 # cppad_version is used by set_version.sh to get the version number.
-SET(cppad_version      "20130220" )
+SET(cppad_version      "20130301" )
 SET(cppad_url          "http://www.coin-or.org/CppAD" )
 SET(cppad_description  "Differentiation of C++ Algorithms" )
 
@@ -100,31 +100,33 @@ ENDMACRO(optional_package)
 # Add C++ compiler flags for a target, checking for special cases where
 # -Wshadow is left out.
 MACRO(add_cppad_cxx_flags target_name) 
+	SET(no_c11    NO)
+	IF( ${target_name} STREQUAL speed_sacado )
+		SET(no_c11 YES)
+	ENDIF( ${target_name} STREQUAL speed_sacado )
+	#
 	SET(no_shadow NO)
 	IF( ${target_name} STREQUAL example_eigen )
 		SET(no_shadow YES)
 	ENDIF( ${target_name} STREQUAL example_eigen )
+	#
 	IF( ${target_name} STREQUAL test_more_eigen )
 		SET(no_shadow YES)
 	ENDIF( ${target_name} STREQUAL test_more_eigen )
+	#
 	IF( ${target_name} STREQUAL speed_fadbad )
 		SET(no_shadow YES)
 	ENDIF( ${target_name} STREQUAL speed_fadbad )
-	IF( no_shadow )
-		SET(cxx_flags "${cppad_cxx_flags_skip_Wshadow}")
-	ELSE( no_shadow )
-		SET(cxx_flags "${cppad_cxx_flags}")
-	ENDIF( no_shadow )
-	# sacado does not compile under c++11
-	IF( NOT ( ${target_name} STREQUAL speed_sacado) )
-		IF( cppad_c11_flag )
-			IF( cxx_flags )
-				SET(cxx_flags "${cppad_c11_flag} ${cxx_flags}" )
-			ELSE( cxx_flags )
-				SET(cxx_flags "${cppad_c11_flag}" )
-			ENDIF( cxx_flags )
-		ENDIF( cppad_c11_flag )
-	ENDIF( NOT ( ${target_name} STREQUAL speed_sacado) )
+	#
+	IF( no_c11 )
+		SET(cxx_flags "${cppad_cxx_flags_skip_c11}")
+	ELSE( no_c11 )
+		IF( no_shadow )
+			SET(cxx_flags "${cppad_cxx_flags_skip_Wshadow}")
+		ELSE( no_shadow )
+			SET(cxx_flags "${cppad_cxx_flags}")
+		ENDIF( no_shadow )
+	ENDIF( no_c11 )
 	IF( cxx_flags )
 		SET_TARGET_PROPERTIES( 
 			${target_name} PROPERTIES COMPILE_FLAGS "${cxx_flags}"
@@ -162,14 +164,9 @@ command_line_arg(cmake_install_postfix NOTFOUND STRING
 	"cppad install postfix"
 )
 # -----------------------------------------------------------------------------
-# cppad_use_c11_flag
-command_line_arg(cppad_c11_flag NOTFOUND STRING 
-	"If this flag is present, it gets get c++11 complinace from compiler"
-)
-# -----------------------------------------------------------------------------
 # cppad_cxx_flags
 command_line_arg(cppad_cxx_flags NOTFOUND STRING 
-	"extra flags used with cppad source (besides debug, release, c11 flags)"
+	"extra flags used with cppad source (besides debug and release flags)"
 )
 # -----------------------------------------------------------------------------
 # cppad_documentation
@@ -211,6 +208,13 @@ FOREACH(dir ${cmake_install_libdirs})
 		SET(cppad_install_libdir ${dir})
 	ENDIF( NOT cppad_install_libdir )
 ENDFOREACH(dir ${cmake_install_libdirs})
+# -----------------------------------------------------------------------------
+# cppad_cxx_flags_skip_c11
+STRING(REGEX REPLACE 
+	"(.*)-std=c[+][+]11(.*)"         "\\1 \\2" 
+	cppad_cxx_flags_skip_c11 "${cppad_cxx_flags}"
+)
+MESSAGE(STATUS "cppad_cxx_flags_skip_c11 = ${cppad_cxx_flags_skip_c11}")
 # -----------------------------------------------------------------------------
 # cppad_cxx_flags_skip_Wshadow
 STRING(REGEX REPLACE 

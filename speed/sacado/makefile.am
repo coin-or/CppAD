@@ -1,6 +1,6 @@
 # $Id$
 # -----------------------------------------------------------------------------
-# CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-12 Bradley M. Bell
+# CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-13 Bradley M. Bell
 #
 # CppAD is distributed under multiple licenses. This distribution is under
 # the terms of the 
@@ -24,12 +24,12 @@ AM_CPPFLAGS   = \
 	$(EIGEN_INCLUDE)
 #
 # BEGIN OPTIMIZE
-AM_CXXFLAGS   = -O2 -DNDEBUG -DSPEED_SACADO \
+AM_CXXFLAGS   = -O2 -DNDEBUG -DCPPAD_SPEED_SACADO \
  	-DRAD_EQ_ALIAS -DRAD_AUTO_AD_Const $(CXX_FLAGS)
 # END OPTIMIZE
 #
 # BEGIN DEBUG
-# AM_CXXFLAGS   = -g $(CXX_FLAGS) $(CXX_FLAGS) -DSPEED_SACADO -DRAD_AUTO_AD_Const
+# AM_CXXFLAGS   = -g $(CXX_FLAGS) $(CXX_FLAGS) -DCPPAD_SPEED_SACADO -DRAD_AUTO_AD_Const
 # END DEBUG
 #
 LDADD            = -lspeed -lsacado -lteuchos

@@ -34,6 +34,10 @@ This section contains a list of the changes to CppAD during 2013
 The purpose of this section is to
 assist you in learning about changes between various versions of CppAD.
 
+$head 03-01$$
+Remove the $cref cmake$$ $code cppad_c11_flag$$ and instead 
+automatically detect if the compiler supports specific c++11 features.
+
 $head 02-27$$
 The test $cref limits.cpp$$ was failing during testing of Fedora-19; see
 $href%https://bugzilla.redhat.com/show_bug.cgi?id=913929% Bug 913929%$$.
@@ -48,7 +52,7 @@ This was also fixed for the
 $cref/eigen test vector/eigen_prefix/Test Vector/$$ documentation.
 $lnext
 An option to specify that the compiler supports c++11 constructs,
-$cref/cppad_c11_flag/cmake/cppad_c11_flag/$$, was added
+$code cppad_c11_flag$$, was added
 to the $code cmake$$ command line.
 $lend
 $head 01-07$$

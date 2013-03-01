@@ -47,15 +47,18 @@ cppad-yyyymmdd as a C string where yyyy is year, mm is month, and dd is day.
 # define CPPAD_PACKAGE_STRING "cppad-@cppad_version@"
 
 /*!
-def CPPAD_CPP11
-is this a c++11 compliant compiler, 1 (yes) or 0 (no).
-CPPAD_NO_CPP11 is used by the Sacado speed test to surpress using c++11
-because Sacado does not support it.
+def CPPAD_NULLPTR
+Does this compiler support the a c++11 null-pointer constant nullptr
+(true = 1, false = 0).
+
+The Sacado speed tests surpress using the c++11 flag because Sacado 
+does not support it. The cmake test for nullptr does not supress using c++11, 
+so we fall back to the c++98 standard for the Sacado case.
 */
-# ifdef CPPAD_NO_CPP11
-# define CPPAD_CPP11 0
+# ifdef CPPAD_SPEED_SACADO
+# define CPPAD_NULLPTR 0
 # else
-# define CPPAD_CPP11 @CPPAD_CPP11@
+# define CPPAD_NULLPTR @CPPAD_NULLPTR@
 # endif
  
  /*!

@@ -12,7 +12,7 @@ dnl ---------------------------------------------------------------------------
 dnl
 dnl Process this file with autoconf to produce a configure script.
 dnl   package   version              bug-report
-AC_INIT(cppad, 20130220, cppad@list.coin-or.org)
+AC_INIT(cppad, 20130301, cppad@list.coin-or.org)
 
 dnl By defalut disable maintainer mode when running configure;
 dnl --enable-maintainer-mode will enable it.
@@ -418,7 +418,8 @@ fi
 AC_MSG_NOTICE([********** End Checking Command Line arguments ***************])
 
 dnl auto-tools version cannot use c++11 compiler
-AC_SUBST(CPPAD_CPP11, 0)
+dnl so supress corresponding features
+AC_SUBST(CPPAD_NULLPTR, 0)
 
 dnl Determine if size_t has same size as unsigned int 
 AC_CHECK_SIZEOF([size_t])

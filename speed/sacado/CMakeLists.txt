@@ -26,9 +26,7 @@ SET(CMAKE_BUILD_TYPE RELEASE)
 # Adds flags to the compiler command line for sources in the current directory 
 # and below. This command can be used to add any flags, but it was originally 
 # intended to add preprocessor definitions. 
-#
-# sacado does not support c++11 so make sure it does not get used
-ADD_DEFINITIONS("-DSPEED_SACADO -DRAD_AUTO_AD_Const -DCPPAD_NO_CPP11")
+ADD_DEFINITIONS("-DCPPAD_SPEED_SACADO -DRAD_AUTO_AD_Const")
 
 # Local include directories to search (not in package_prefix/includdir)
 INCLUDE_DIRECTORIES( ${CMAKE_CURRENT_SOURCE_DIR}/../src )
@@ -50,7 +48,7 @@ ADD_EXECUTABLE(speed_sacado EXCLUDE_FROM_ALL ../main.cpp
 add_cppad_cxx_flags( speed_sacado )
 
 # List of libraries to be linked into the specified target
-TARGET_LINK_LIBRARIES(speed_sacado speed_src sacado )
+TARGET_LINK_LIBRARIES(speed_sacado speed_src sacado teuchos)
 
 # Add the check_speed_sacado target
 ADD_CUSTOM_TARGET(check_speed_sacado 
