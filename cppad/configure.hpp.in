@@ -47,7 +47,7 @@ cppad-yyyymmdd as a C string where yyyy is year, mm is month, and dd is day.
 # define CPPAD_PACKAGE_STRING "cppad-@cppad_version@"
 
 /*!
-def CPPAD_NULLPTR
+def CPPAD_HAS_NULLPTR
 Does this compiler support the a c++11 null-pointer constant nullptr
 (true = 1, false = 0).
 
@@ -56,9 +56,9 @@ does not support it. The cmake test for nullptr does not supress using c++11,
 so we fall back to the c++98 standard for the Sacado case.
 */
 # ifdef CPPAD_SPEED_SACADO
-# define CPPAD_NULLPTR 0
+# define CPPAD_HAS_NULLPTR 0
 # else
-# define CPPAD_NULLPTR @CPPAD_NULLPTR@
+# define CPPAD_HAS_NULLPTR @CPPAD_HAS_NULLPTR@
 # endif
  
  /*!

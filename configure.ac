@@ -419,7 +419,7 @@ AC_MSG_NOTICE([********** End Checking Command Line arguments ***************])
 
 dnl auto-tools version cannot use c++11 compiler
 dnl so supress corresponding features
-AC_SUBST(CPPAD_NULLPTR, 0)
+AC_SUBST(CPPAD_HAS_NULLPTR, 0)
 
 dnl Determine if size_t has same size as unsigned int 
 AC_CHECK_SIZEOF([size_t])

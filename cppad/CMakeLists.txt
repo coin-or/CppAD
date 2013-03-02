@@ -98,7 +98,7 @@ IF( CPPAD_EIGENVECTOR )
 ENDIF( CPPAD_EIGENVECTOR )
 
 # -----------------------------------------------------------------------------
-# CPPAD_NULLPTR
+# CPPAD_HAS_NULLPTR
 #
 # CHECK_CXX_SOURCE_RUNS(source variable)
 SET(CMAKE_REQUIRED_INCLUDES  "")
@@ -111,11 +111,11 @@ int main(void)
 }" )
 CHECK_CXX_SOURCE_RUNS("${source}" nullptr_ok)
 IF( nullptr_ok )
-	SET(CPPAD_NULLPTR 1)
+	SET(CPPAD_HAS_NULLPTR 1)
 ELSE( nullptr_ok )
-	SET(CPPAD_NULLPTR 0)
+	SET(CPPAD_HAS_NULLPTR 0)
 ENDIF( nullptr_ok )
-MESSAGE(STATUS "CPPAD_NULLPTR = ${CPPAD_NULLPTR}" )
+MESSAGE(STATUS "CPPAD_HAS_NULLPTR = ${CPPAD_HAS_NULLPTR}" )
 
 # -----------------------------------------------------------------------------
 # CPPAD_GETTIMEOFDAY

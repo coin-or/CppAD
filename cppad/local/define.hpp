@@ -91,7 +91,7 @@ If it is not yet defined,
 it is defined when cppad/local/define.hpp is included.
 */
 # ifndef CPPAD_NULL
-# if CPPAD_NULLPTR
+# if CPPAD_HAS_NULLPTR
 # define CPPAD_NULL     nullptr  
 # else
 # define CPPAD_NULL     0
