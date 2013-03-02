@@ -687,7 +687,7 @@ CPPFLAGS
 LDFLAGS
 CFLAGS
 CC
-CPPAD_NULLPTR
+CPPAD_HAS_NULLPTR
 CPPAD_TAPE_ID_TYPE
 TAPE_ID_TYPE
 CPPAD_TAPE_ADDR_TYPE
@@ -3168,7 +3168,7 @@ fi
 { $as_echo "$as_me:${as_lineno-$LINENO}: ********** End Checking Command Line arguments ***************" >&5
 $as_echo "$as_me: ********** End Checking Command Line arguments ***************" >&6;}
 
-CPPAD_NULLPTR=0
+CPPAD_HAS_NULLPTR=0
 
 
 ac_ext=c
