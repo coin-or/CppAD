@@ -3,7 +3,7 @@
 # define CPPAD_NAN_INCLUDED
 
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-12 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-13 Bradley M. Bell
 
 CppAD is distributed under multiple licenses. This distribution is under
 the terms of the 
@@ -46,10 +46,6 @@ is $code nan$$ if and only if the following returns true
 $codei%
 	%a% != %a%
 %$$ 
-Some systems do not get this correct, so we also use the fact that
-zero divided by zero should result in a $code nan$$.
-To be specific, if a value is not equal to itself or 
-if it is equal to zero divided by zero, it is considered to be a $code nan$$.
 
 $head Include$$
 The file $code cppad/nan.hpp$$ is included by $code cppad/cppad.hpp$$
@@ -139,24 +135,6 @@ $head Vector$$
 The type $icode Vector$$ must be a $cref SimpleVector$$ class with
 elements of type $icode Scalar$$.
 
-$head Parallel Mode$$
-$index parallel, user_atomic$$
-$index user_atomic, parallel$$
-The function $code isnan$$ uses static variables.
-Hence for each type $icode Scalar$$,
-the first call to
-$codei%
-	%b% = isnan(%s%)
-%$$
-must not be $cref/parallel/ta_in_parallel/$$ execution mode; 
-see $code isnan$$ in $cref/parallel_ad/parallel_ad/isnan/$$.
-
-$head Memory Allocation$$
-This function is called by CppAD even if it is not
-explicitly referenced by the users code.
-Hence any corresponding memory allocation for a static value
-of type $icode Scalar$$ my be preformed.
-
 $children%
 	example/nan.cpp
 %$$
@@ -190,9 +168,7 @@ inline Scalar nan(const Scalar &zero)
 
 template <class Scalar>
 inline bool isnan(const Scalar &s)
-{	CPPAD_ASSERT_FIRST_CALL_NOT_PARALLEL;	
-	static Scalar scalar_nan = nan( Scalar(0) );	
-	return (s != s) | (s == scalar_nan);
+{	return (s != s);
 }
 
 template <class Vector>

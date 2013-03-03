@@ -40,9 +40,7 @@ Please visit http://www.coin-or.org/CppAD/ for information on other licenses.
 # ifdef SPEED_PROFILE
 # define AD_PACKAGE "profile"
 # endif
-// Sacado is a special case because is does not support c+11;
-// Hence the setting of this symbol affects all programs that use CppAD.
-# ifdef CPPAD_SPEED_SACADO
+# ifdef SPEED_SACADO
 # define AD_PACKAGE "sacado"
 # endif
 

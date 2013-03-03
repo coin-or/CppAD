@@ -1,6 +1,6 @@
 $Id$
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-12 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-13 Bradley M. Bell
 
 CppAD is distributed under multiple licenses. This distribution is under
 the terms of the 
@@ -609,7 +609,7 @@ Change the upper limit for
 $cref omp_max_num_threads$$ from 32 to 48.
 $lnext
 Add $cref/parallel/ta_in_parallel/$$ documentation for,
-$cref/nan/nan/Parallel Mode/$$,
+$code nan$$,
 $cref/Rosen34/Rosen34/Parallel Mode/$$, and
 $cref/Runge45/Runge45/Parallel Mode/$$.
 $lnext

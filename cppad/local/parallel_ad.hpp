@@ -2,7 +2,7 @@
 # ifndef CPPAD_PARALLEL_AD_INCLUDED
 # define CPPAD_PARALLEL_AD_INCLUDED
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-12 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-13 Bradley M. Bell
 
 CppAD is distributed under multiple licenses. This distribution is under
 the terms of the 
@@ -16,7 +16,6 @@ $begin parallel_ad$$
 $spell
 	CppAD
 	num
-	isnan
 	std
 $$
 
@@ -43,14 +42,6 @@ The $cref/parallel_setup/ta_parallel_setup/$$ function informs CppAD of the
 maximum number of threads that can be active in parallel mode.
 This routine does extra setup 
 (and teardown) for the particular $icode Base$$ type.
-
-$head isnan$$
-This routine has the side effect of calling
-$codei%
-	%b% = isnan(%s%)
-%$$
-where $icode s$$ has type $icode%Base%$$, $codei%AD<%Base%>%$$, and
-$codei%std::complex<double>%$$.
 
 $head CheckSimpleVector$$
 This routine has the side effect of calling the routines
@@ -98,7 +89,6 @@ void parallel_ad(void)
 	// ensure statics in following functions are initialized
 	elapsed_seconds();
 	ErrorHandler::Current();
-	isnan( std::complex<double>(0.) );
 	NumArg(BeginOp);
 	one_element_std_set<size_t>();
 	two_element_std_set<size_t>();
@@ -117,8 +107,6 @@ void parallel_ad(void)
 	AD<Base>::tape_handle(0);	
 	AD<Base>::tape_manage(tape_manage_clear);
 	discrete<Base>::List();
-	isnan( Base(0.) );
-	isnan( AD<Base>(0.) );
 	CheckSimpleVector< Base, CppAD::vector<Base> >();
 	CheckSimpleVector< AD<Base>, CppAD::vector< AD<Base> > >();
 

@@ -13,6 +13,7 @@ Please visit http://www.coin-or.org/CppAD/ for information on other licenses.
 $begin whats_new_13$$
 $dollar @$$
 $spell
+	isnan
 	cmake
 	namespace
 	testvector
@@ -33,6 +34,16 @@ This section contains a list of the changes to CppAD during 2013
 (in reverse order by date).
 The purpose of this section is to
 assist you in learning about changes between various versions of CppAD.
+
+$head 03-02$$
+The function $cref/isnan/nan/$$ no longer allows for systems
+that return false for $icode%x% != %x%$$ when $icode x$$ is $code NaN$$.
+This makes the $code isnan$$ function faster.
+In addition, it removes the need to store a static value
+which causes complications for parallel execution (as well as other problems).
+Thus, it is no longer necessary for the first call to $code isnan$$
+to be during sequential execution and it has been removed from the
+multi-threading $cref/initialization/multi_thread/Initialization/$$ list.
 
 $head 03-01$$
 Remove the $cref cmake$$ $code cppad_c11_flag$$ and instead 

@@ -26,7 +26,7 @@ SET(CMAKE_BUILD_TYPE RELEASE)
 # Adds flags to the compiler command line for sources in the current directory 
 # and below. This command can be used to add any flags, but it was originally 
 # intended to add preprocessor definitions. 
-ADD_DEFINITIONS("-DCPPAD_SPEED_SACADO -DRAD_AUTO_AD_Const")
+ADD_DEFINITIONS("-DSPEED_SACADO -DRAD_AUTO_AD_Const")
 
 # Local include directories to search (not in package_prefix/includdir)
 INCLUDE_DIRECTORIES( ${CMAKE_CURRENT_SOURCE_DIR}/../src )

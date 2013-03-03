@@ -1,6 +1,6 @@
 /* $Id$ */
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-12 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-13 Bradley M. Bell
 
 CppAD is distributed under multiple licenses. This distribution is under
 the terms of the 
@@ -62,6 +62,9 @@ bool nan(void)
 	v[1] = double_nan;
 	ok &= CppAD::isnan(double_nan);
 	ok &= CppAD::hasnan(v);
+
+	// check that nan is not equal to itself
+	ok &= (double_nan != double_nan);
 
 	return ok;
 }
