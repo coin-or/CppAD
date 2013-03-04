@@ -45,18 +45,6 @@ next_program() {
 	program=`echo "$program_list" | sed -e 's| *\([^ ]*\).*|\1|'`
 }
 # ---------------------------------------------------------------------------
-cmake_args=''
-if [ "$1" != "" ]
-then
-	if [ "$1" == '--verbose' ]
-	then
-		cmake_args="$cmake_args  -D CMAKE_VERBOSE_MAKEFILE=1"
-	else
-		echo 'usage: bin/check_all.sh: [--verbose]'
-		exit 1
-	fi
-fi
-# -----------------------------------------------------------------------------
 # Create package to run test in
 echo "bin/package.sh"
 bin/package.sh
@@ -88,47 +76,8 @@ do
 		echo_log_eval rm -r $name
 	fi
 done
-echo_log_eval mkdir build
+echo_log_eval bin/run_cmake.sh
 echo_log_eval cd build
-# -----------------------------------------------------------------------------
-cmake_args="$cmake_args  -D cmake_install_prefix=$HOME/prefix/cppad"
-if [ -d '/usr/include' ]
-then
-	cmake_args="$cmake_args -D cmake_install_includedirs=include"
-fi
-#
-if [ -d '/usr/share' ]
-then
-	cmake_args="$cmake_args -D cmake_install_datadir=share"
-fi
-#
-if [ -d '/usr/lib64' ]
-then
-	cmake_args="$cmake_args -D cmake_install_libdirs='lib64;lib'"
-elif [ -d '/usr/lib' ]
-then
-	cmake_args="$cmake_args -D cmake_install_libdirs='lib;lib64'"
-fi
-for package in adolc eigen ipopt fadbad sacado
-do
-	dir=$HOME/prefix/$package
-	if [ -d "$dir" ]
-	then
-		cmake_args="$cmake_args  -D ${package}_prefix=$dir"
-	fi
-done
-cmake_args="$cmake_args -D cppad_cxx_flags=\
-'-Wall -pedantic-errors -std=c++11 -Wshadow'"
-cmake_args="$cmake_args -D cppad_documentation=YES"
-#
-cmake_args="$cmake_args -D cppad_sparse_list=YES"
-cmake_args="$cmake_args -D cppad_testvector=boost"
-cmake_args="$cmake_args -D cppad_tape_id_type='int'"
-cmake_args="$cmake_args -D cppad_tape_addr_type=int"
-cmake_args="$cmake_args -D cppad_max_num_threads=48"
-#
-#
-echo_log_eval cmake $cmake_args ..
 # -----------------------------------------------------------------------------
 echo_log_eval make check 
 # -----------------------------------------------------------------------------
