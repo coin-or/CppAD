@@ -51,14 +51,14 @@ def CPPAD_HAS_NULLPTR
 Does this compiler support the a c++11 null-pointer constant nullptr
 (true = 1, false = 0).
 */
-# define CPPAD_HAS_NULLPTR @CPPAD_HAS_NULLPTR@
+# define CPPAD_HAS_NULLPTR @cppad_has_nullptr@
  
  /*!
 def CPPAD_INTERNAL_SPARSE_SET
 is the internal representation used for sparse vectors of std::set<size_t>
 either sparse_set or sparse_list).
 */
-# define CPPAD_INTERNAL_SPARSE_SET @CPPAD_INTERNAL_SPARSE_SET@
+# define CPPAD_INTERNAL_SPARSE_SET @cppad_internal_sparse_set@
 
 /*!
 \def CPPAD_BOOSTVECTOR
@@ -67,7 +67,7 @@ we are using boost vector for CPPAD_TESTVECTOR.
 It this symbol is zero, 
 we are not using boost vector for CPPAD_TESTVECTOR.
 */
-# define CPPAD_BOOSTVECTOR @CPPAD_BOOSTVECTOR@
+# define CPPAD_BOOSTVECTOR @cppad_boostvector@
 
 /*!
 \def CPPAD_CPPADVECTOR
@@ -76,7 +76,7 @@ we are using CppAD vector for CPPAD_TESTVECTOR.
 It this symbol is zero, 
 we are not using CppAD vector for CPPAD_TESTVECTOR.
 */
-# define CPPAD_CPPADVECTOR @CPPAD_CPPADVECTOR@
+# define CPPAD_CPPADVECTOR @cppad_cppadvector@
 
 /*!
 \def CPPAD_STDVECTOR
@@ -85,7 +85,7 @@ we are using standard vector for CPPAD_TESTVECTOR.
 It this symbol is zero, 
 we are not using standard vector for CPPAD_TESTVECTOR.
 */
-# define CPPAD_STDVECTOR @CPPAD_STDVECTOR@
+# define CPPAD_STDVECTOR @cppad_stdvector@
 
 /*!
 \def CPPAD_EIGENVECTOR
@@ -94,7 +94,7 @@ we are using Eigen vector for CPPAD_TESTVECTOR.
 If this symbol is zero, 
 we are not using Eigen vector for CPPAD_TESTVECTOR.
 */
-# define CPPAD_EIGENVECTOR @CPPAD_EIGENVECTOR@
+# define CPPAD_EIGENVECTOR @cppad_eigenvector@
 
 /*!
 \def CPPAD_GETTIMEOFDAY
@@ -109,7 +109,7 @@ Otherwise, this smybol should be zero.
 If this symbol is one, the type size_t is the same as the type unsigned int,
 otherwise this symbol is zero.
 */
-# define CPPAD_SIZE_T_SAME_UNSIGNED_INT @CPPAD_SIZE_T_SAME_UNSIGNED_INT@
+# define CPPAD_SIZE_T_SAME_UNSIGNED_INT @cppad_size_t_same_unsigned_int@
 
 /*!
 \def CPPAD_TAPE_ADDR_TYPE
@@ -123,7 +123,7 @@ Make sure that the type chosen returns true for is_pod<CPPAD_TAPE_ADDR_TYPE>
 in pod_vector.hpp.
 This type is later defined as \c addr_t in the CppAD namespace.
 */
-# define CPPAD_TAPE_ADDR_TYPE @CPPAD_TAPE_ADDR_TYPE@
+# define CPPAD_TAPE_ADDR_TYPE @cppad_tape_addr_type@
 
 /*!
 \def CPPAD_TAPE_ID_TYPE
@@ -137,7 +137,7 @@ Make sure that the type chosen returns true for is_pod<CPPAD_TAPE_ID_TYPE>
 in pod_vector.hpp.
 This type is later defined as \c tape_id_t in the CppAD namespace.
 */
-# define CPPAD_TAPE_ID_TYPE @CPPAD_TAPE_ID_TYPE@
+# define CPPAD_TAPE_ID_TYPE @cppad_tape_id_type@
  
 /*!
 \def CPPAD_MAX_NUM_THREADS
