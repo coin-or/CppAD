@@ -118,7 +118,7 @@ ENDIF( nullptr_ok )
 MESSAGE(STATUS "cppad_has_nullptr = ${cppad_has_nullptr}" )
 
 # -----------------------------------------------------------------------------
-# cppad_has_gettimeofday
+# CPPAD_GETTIMEOFDAY
 #
 # CHECK_CXX_SOURCE_RUNS(source variable)
 SET(CMAKE_REQUIRED_INCLUDES  "")
@@ -133,11 +133,11 @@ int main(void)
 }" )
 CHECK_CXX_SOURCE_RUNS("${source}" gettimeofday_ok)
 IF( gettimeofday_ok )
-	SET(cppad_has_get_timeofday 1)
+	SET(CPPAD_GETTIMEOFDAY 1)
 ELSE( gettimeofday_ok )
-	SET(cppad_has_get_timeofday 0)
+	SET(CPPAD_GETTIMEOFDAY 0)
 ENDIF( gettimeofday_ok )
-MESSAGE(STATUS "cppad_has_get_timeofday = ${cppad_has_get_timeofday}" )
+MESSAGE(STATUS "CPPAD_GETTIMEOFDAY = ${CPPAD_GETTIMEOFDAY}" )
 # -----------------------------------------------------------------------------
 # cppad_size_t_same_unsigned_int
 #
