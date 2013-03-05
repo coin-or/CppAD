@@ -674,9 +674,9 @@ am__isrc
 INSTALL_DATA
 INSTALL_SCRIPT
 INSTALL_PROGRAM
-CPPAD_GETTIMEOFDAY
-CPPAD_CPPADVECTOR
-CPPAD_SIZE_T_SAME_UNSIGNED_INT
+cppad_has_gettimeofday
+cppad_cppadvector
+cppad_size_t_same_unsigned_int
 EGREP
 GREP
 CPP
@@ -687,12 +687,12 @@ CPPFLAGS
 LDFLAGS
 CFLAGS
 CC
-CPPAD_HAS_NULLPTR
-CPPAD_TAPE_ID_TYPE
+cppad_has_nullptr
+cppad_tape_id_type
 TAPE_ID_TYPE
-CPPAD_TAPE_ADDR_TYPE
+cppad_tape_addr_type
 TAPE_ADDR_TYPE
-CPPAD_MAX_NUM_THREADS_DEFAULT
+cppad_max_num_threads
 MAX_NUM_THREADS
 CppAD_OPENMP_FALSE
 CppAD_OPENMP_TRUE
@@ -723,10 +723,10 @@ ADOLC_DIR
 CppAD_POSTFIX_FALSE
 CppAD_POSTFIX_TRUE
 POSTFIX_DIR
-CPPAD_INTERNAL_SPARSE_SET
-CPPAD_EIGENVECTOR
-CPPAD_BOOSTVECTOR
-CPPAD_STDVECTOR
+cppad_internal_sparse_set
+cppad_eigenvector
+cppad_boostvector
+cppad_stdvector
 CppAD_DOCUMENTATION_FALSE
 CppAD_DOCUMENTATION_TRUE
 CppAD_HAVE_AR_FALSE
@@ -2791,10 +2791,10 @@ else
 fi
 
 if test "$stdvector" = "yes" ; then
-	CPPAD_STDVECTOR=1
+	cppad_stdvector=1
 
 else
-	CPPAD_STDVECTOR=0
+	cppad_stdvector=0
 
 fi
 { $as_echo "$as_me:${as_lineno-$LINENO}: result: $stdvector" >&5
@@ -2817,10 +2817,10 @@ if test "$boostvector" = "yes" ; then
 	if test "$stdvector" != "no" ; then
 		as_fn_error $? "cannot --with both stdvector and boostvector" "$LINENO" 5
 	fi
-	CPPAD_BOOSTVECTOR=1
+	cppad_boostvector=1
 
 else
-	CPPAD_BOOSTVECTOR=0
+	cppad_boostvector=0
 
 fi
 
@@ -2844,10 +2844,10 @@ if test "$eigenvector" = "yes" ; then
 	if test "$boostvector" != "no" ; then
 		as_fn_error $? "cannot --with both boostvector and eigenvector" "$LINENO" 5
 	fi
-	CPPAD_EIGENVECTOR=1
+	cppad_eigenvector=1
 
 else
-	CPPAD_EIGENVECTOR=0
+	cppad_eigenvector=0
 
 fi
 
@@ -2881,10 +2881,10 @@ if test "$sparse_set" = "yes" ; then
 	if test "$sparse_list" == "yes" ; then
 		as_fn_error $? "cannot --with both sparse_set and sparse_list" "$LINENO" 5
 	fi
-	CPPAD_INTERNAL_SPARSE_SET=sparse_set
+	cppad_internal_sparse_set=sparse_set
 
 else
-	CPPAD_INTERNAL_SPARSE_SET=sparse_list
+	cppad_internal_sparse_set=sparse_list
 
 fi
 
@@ -3095,7 +3095,7 @@ else
 	{ $as_echo "$as_me:${as_lineno-$LINENO}: result: no, using default value $max_num_threads" >&5
 $as_echo "no, using default value $max_num_threads" >&6; }
 fi
-CPPAD_MAX_NUM_THREADS_DEFAULT=$max_num_threads
+cppad_max_num_threads=$max_num_threads
 
 
 { $as_echo "$as_me:${as_lineno-$LINENO}: checking TAPE_ADDR_TYPE" >&5
@@ -3106,7 +3106,7 @@ if test "$TAPE_ADDR_TYPE" == "" ; then
 else
 	addr_t="$TAPE_ADDR_TYPE"
 fi
-CPPAD_TAPE_ADDR_TYPE=$addr_t
+cppad_tape_addr_type=$addr_t
 
 { $as_echo "$as_me:${as_lineno-$LINENO}: result: $addr_t" >&5
 $as_echo "$addr_t" >&6; }
@@ -3140,7 +3140,7 @@ if test "$TAPE_ID_TYPE" == "" ; then
 else
 	tape_id_t="$TAPE_ID_TYPE"
 fi
-CPPAD_TAPE_ID_TYPE=$tape_id_t
+cppad_tape_id_type=$tape_id_t
 
 { $as_echo "$as_me:${as_lineno-$LINENO}: result: $tape_id_t" >&5
 $as_echo "$tape_id_t" >&6; }
@@ -3168,7 +3168,7 @@ fi
 { $as_echo "$as_me:${as_lineno-$LINENO}: ********** End Checking Command Line arguments ***************" >&5
 $as_echo "$as_me: ********** End Checking Command Line arguments ***************" >&6;}
 
-CPPAD_HAS_NULLPTR=0
+cppad_has_nullptr=0
 
 
 ac_ext=c
@@ -4426,18 +4426,18 @@ _ACEOF
 
 
 if test "$ac_cv_size_t" == "$ac_cv_unsigned_int" ; then
-	CPPAD_SIZE_T_SAME_UNSIGNED_INT=1
+	cppad_size_t_same_unsigned_int=1
 
 else
-	CPPAD_SIZE_T_SAME_UNSIGNED_INT=0
+	cppad_size_t_same_unsigned_int=0
 
 fi
 
 if test "$stdvector$boostvector$eigenvector" = "nonono" ; then
-	CPPAD_CPPADVECTOR=1
+	cppad_cppadvector=1
 
 else
-	CPPAD_CPPADVECTOR=0
+	cppad_cppadvector=0
 
 fi
 
@@ -4450,10 +4450,10 @@ else
 fi
 
 if test "$gettimeofday" = "yes" ; then
-	CPPAD_GETTIMEOFDAY=1
+	cppad_has_gettimeofday=1
 
 else
-	CPPAD_GETTIMEOFDAY=0
+	cppad_has_gettimeofday=0
 
 fi
 

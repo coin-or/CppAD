@@ -11,9 +11,6 @@
 # -----------------------------------------------------------------------------
 # Build the cppad/configure.hpp file.
 # Inherit environment from ../CMakeLists.txt
-#
-# Note that this file breaks the convention that all local definitions
-# are in lower case (cmake definitions are in upper case).
 # -----------------------------------------------------------------------------
 MACRO(check_match match_variable match_constant output_variable) 
 	STRING(COMPARE EQUAL ${${match_variable}} ${match_constant} match_flag )
@@ -118,7 +115,7 @@ ENDIF( nullptr_ok )
 MESSAGE(STATUS "cppad_has_nullptr = ${cppad_has_nullptr}" )
 
 # -----------------------------------------------------------------------------
-# CPPAD_GETTIMEOFDAY
+# cppad_has_gettimeofday
 #
 # CHECK_CXX_SOURCE_RUNS(source variable)
 SET(CMAKE_REQUIRED_INCLUDES  "")
@@ -133,11 +130,11 @@ int main(void)
 }" )
 CHECK_CXX_SOURCE_RUNS("${source}" gettimeofday_ok)
 IF( gettimeofday_ok )
-	SET(CPPAD_GETTIMEOFDAY 1)
+	SET(cppad_has_gettimeofday 1)
 ELSE( gettimeofday_ok )
-	SET(CPPAD_GETTIMEOFDAY 0)
+	SET(cppad_has_gettimeofday 0)
 ENDIF( gettimeofday_ok )
-MESSAGE(STATUS "CPPAD_GETTIMEOFDAY = ${CPPAD_GETTIMEOFDAY}" )
+MESSAGE(STATUS "cppad_has_gettimeofday = ${cppad_has_gettimeofday}" )
 # -----------------------------------------------------------------------------
 # cppad_size_t_same_unsigned_int
 #
@@ -166,14 +163,6 @@ MESSAGE(STATUS
 # cppad_tape_addr_type, cppad_tape_id_type
 #
 FOREACH( cmake_var cppad_tape_id_type cppad_tape_addr_type )
-	# ----------------------------------------------------------------------
-	STRING(COMPARE EQUAL ${cmake_var} cppad_tape_id_type is_id)
-	IF( is_id )
-		SET(cppad_var   cppad_tape_id_type) 
-	ELSE( is_id )
-		SET(cppad_var   cppad_tape_addr_type) 
-	ENDIF( is_id )
-	# ----------------------------------------------------------------------
 	SET(source "
 # include <limits>
 int main(void)
@@ -187,12 +176,9 @@ int main(void)
 "Warning: using a signed ${cmake_var} (for CppAD developers not users)" 
 	)
 	ENDIF( ${cmake_var}_is_signed  )
-	# ----------------------------------------------------------------------
-	SET(${cppad_var} "${${cmake_var}}")
-	MESSAGE(STATUS "${cppad_var} = ${${cmake_var}}" )
 ENDFOREACH( cmake_var )
 # -----------------------------------------------------------------------------
-# CPPAD_MAX_NUM_THREADS
+# cppad_max_num_threads
 #
 SET(source "
 int main(void)
@@ -215,8 +201,7 @@ IF( NOT cppad_max_num_threads_is_integer_ge_4 )
 	"cppad_max_num_threads is not an integer greater than or equal 4"
 	)
 ENDIF( NOT cppad_max_num_threads_is_integer_ge_4 )
-SET(CPPAD_MAX_NUM_THREADS_DEFAULT "${cppad_max_num_threads}")
-MESSAGE(STATUS "cppad_max_num_threads = ${cppad_max_num_threads}")
+
 # -----------------------------------------------------------------------------
 # Copy a file to another location and modify its contents.
 # configure_file(InputFile OutputFile [COPYONLY] [ESCAPE_QUOTES] [@ONLY])

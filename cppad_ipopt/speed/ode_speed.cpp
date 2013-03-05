@@ -1,6 +1,6 @@
 /* $Id$ */
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-12 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-13 Bradley M. Bell
 
 CppAD is distributed under multiple licenses. This distribution is under
 the terms of the 
@@ -28,7 +28,7 @@ $end
 # include <cassert>
 # include <cstring>
 
-# if CPPAD_GETTIMEOFDAY & CPPAD_NO_MICROSOFT
+# if CPPAD_HAS_GETTIMEOFDAY & CPPAD_NO_MICROSOFT
 # include <sys/time.h>
 # else
 # include <ctime>
@@ -37,7 +37,7 @@ $end
 namespace {
 	double current_second(void)
 	{
-# if CPPAD_GETTIMEOFDAY & CPPAD_NOT_MICOROSOFT
+# if CPPAD_HAS_GETTIMEOFDAY & CPPAD_NOT_MICOROSOFT
 		struct timeval value;
 		gettimeofday(&value, 0);
 		return double(value.tv_sec) + double(value.tv_usec) * 1e-6;

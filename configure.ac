@@ -133,9 +133,9 @@ AC_ARG_WITH(stdvector,
 	[stdvector="no"]
 )
 if test "$stdvector" = "yes" ; then
-	AC_SUBST(CPPAD_STDVECTOR, 1)
+	AC_SUBST(cppad_stdvector, 1)
 else
-	AC_SUBST(CPPAD_STDVECTOR, 0)
+	AC_SUBST(cppad_stdvector, 0)
 fi
 AC_MSG_RESULT([$stdvector])
 
@@ -151,9 +151,9 @@ if test "$boostvector" = "yes" ; then
 	if test "$stdvector" != "no" ; then
 		AC_MSG_ERROR([cannot --with both stdvector and boostvector])
 	fi
-	AC_SUBST(CPPAD_BOOSTVECTOR, 1)
+	AC_SUBST(cppad_boostvector, 1)
 else
-	AC_SUBST(CPPAD_BOOSTVECTOR, 0)
+	AC_SUBST(cppad_boostvector, 0)
 fi
 
 dnl Are we using eigen vectors ----------------------------------------
@@ -171,9 +171,9 @@ if test "$eigenvector" = "yes" ; then
 	if test "$boostvector" != "no" ; then
 		AC_MSG_ERROR([cannot --with both boostvector and eigenvector])
 	fi
-	AC_SUBST(CPPAD_EIGENVECTOR, 1)
+	AC_SUBST(cppad_eigenvector, 1)
 else
-	AC_SUBST(CPPAD_EIGENVECTOR, 0)
+	AC_SUBST(cppad_eigenvector, 0)
 fi
 
 dnl Are we using sparse_set or sparse_list ----------------------------
@@ -196,9 +196,9 @@ if test "$sparse_set" = "yes" ; then
 	if test "$sparse_list" == "yes" ; then
 		AC_MSG_ERROR([cannot --with both sparse_set and sparse_list])
 	fi
-	AC_SUBST(CPPAD_INTERNAL_SPARSE_SET, sparse_set)
+	AC_SUBST(cppad_internal_sparse_set, sparse_set)
 else
-	AC_SUBST(CPPAD_INTERNAL_SPARSE_SET, sparse_list)
+	AC_SUBST(cppad_internal_sparse_set, sparse_list)
 fi
 
 dnl The postfix directiory corresponding to CppAD ------------------------
@@ -350,7 +350,7 @@ else
 	max_num_threads="48"
 	AC_MSG_RESULT([no, using default value $max_num_threads])
 fi 
-AC_SUBST(CPPAD_MAX_NUM_THREADS_DEFAULT, [$max_num_threads])
+AC_SUBST(cppad_max_num_threads, [$max_num_threads])
 
 dnl type used for addresses in AD tapes [ default = unsigned int ] -----------
 AC_MSG_CHECKING([TAPE_ADDR_TYPE])
@@ -360,7 +360,7 @@ if test "$TAPE_ADDR_TYPE" == "" ; then
 else
 	addr_t="$TAPE_ADDR_TYPE"
 fi
-AC_SUBST(CPPAD_TAPE_ADDR_TYPE, [$addr_t])
+AC_SUBST(cppad_tape_addr_type, [$addr_t])
 AC_MSG_RESULT([$addr_t])
 ok="no"
 if test "$addr_t" == "size_t" ; then
@@ -392,7 +392,7 @@ if test "$TAPE_ID_TYPE" == "" ; then
 else
 	tape_id_t="$TAPE_ID_TYPE"
 fi
-AC_SUBST(CPPAD_TAPE_ID_TYPE, [$tape_id_t])
+AC_SUBST(cppad_tape_id_type, [$tape_id_t])
 AC_MSG_RESULT([$tape_id_t])
 ok="no"
 if test "$tape_id_t" == "size_t" ; then
@@ -419,22 +419,22 @@ AC_MSG_NOTICE([********** End Checking Command Line arguments ***************])
 
 dnl auto-tools version cannot use c++11 compiler
 dnl so supress corresponding features
-AC_SUBST(CPPAD_HAS_NULLPTR, 0)
+AC_SUBST(cppad_has_nullptr, 0)
 
 dnl Determine if size_t has same size as unsigned int 
 AC_CHECK_SIZEOF([size_t])
 AC_CHECK_SIZEOF([unsigned int])
 if test "$ac_cv_size_t" == "$ac_cv_unsigned_int" ; then
-	AC_SUBST(CPPAD_SIZE_T_SAME_UNSIGNED_INT, 1)
+	AC_SUBST(cppad_size_t_same_unsigned_int, 1)
 else
-	AC_SUBST(CPPAD_SIZE_T_SAME_UNSIGNED_INT, 0)
+	AC_SUBST(cppad_size_t_same_unsigned_int, 0)
 fi
 
 dnl Determine which definition we are using for CPPAD_TESTVECTOR
 if test "$stdvector$boostvector$eigenvector" = "nonono" ; then
-	AC_SUBST(CPPAD_CPPADVECTOR, 1)
+	AC_SUBST(cppad_cppadvector, 1)
 else 
-	AC_SUBST(CPPAD_CPPADVECTOR, 0)
+	AC_SUBST(cppad_cppadvector, 0)
 fi
 
 dnl the gettimeofday check automatically generates a yes / no configure msg
@@ -444,9 +444,9 @@ AC_CHECK_FUNC(
 	[gettimeofday="no"]
 )
 if test "$gettimeofday" = "yes" ; then
-	AC_SUBST(CPPAD_GETTIMEOFDAY, 1)
+	AC_SUBST(cppad_has_gettimeofday, 1)
 else
-	AC_SUBST(CPPAD_GETTIMEOFDAY, 0)
+	AC_SUBST(cppad_has_gettimeofday, 0)
 fi
 
 dnl Run any macros required for proper operation of generated makefiles

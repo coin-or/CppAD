@@ -3,7 +3,7 @@
 # define CPPAD_ELAPSED_SECONDS_INCLUDED
 
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-12 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-13 Bradley M. Bell
 
 CppAD is distributed under multiple licenses. This distribution is under
 the terms of the 
@@ -73,7 +73,7 @@ $end
 
 # ifdef _MSC_VER
 extern double microsoft_timer(void);
-# elif CPPAD_GETTIMEOFDAY 
+# elif CPPAD_HAS_GETTIMEOFDAY 
 # include <sys/time.h>
 # else
 # include <ctime>
@@ -111,7 +111,7 @@ inline double elapsed_seconds(void)
 # ifdef _MSC_VER
 {	return microsoft_timer(); }
 
-# elif CPPAD_GETTIMEOFDAY 
+# elif CPPAD_HAS_GETTIMEOFDAY 
 {	CPPAD_ASSERT_FIRST_CALL_NOT_PARALLEL;
 	static bool           first_ = true;
 	static struct timeval tv_;		

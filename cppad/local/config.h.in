@@ -7,7 +7,7 @@
 #undef CPPAD_CPPADVECTOR
 
 /* does system support gettimeofday (overriden if _MSC_VER defined) */
-#undef CPPAD_GETTIMEOFDAY
+#undef CPPAD_HAS_GETTIMEOFDAY
 
 /* is CPPAD_TESTVECTOR == std::vector */
 #undef CPPAD_STDVECTOR
