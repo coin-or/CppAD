@@ -57,41 +57,9 @@ INCLUDE(cmake/command_line_arg.cmake)
 #
 # optional_package(prefix_variable description)
 INCLUDE(cmake/optional_package.cmake)
-# -----------------------------------------------------------------------------
-# add_cppad_cxx_flags
 #
-# Add C++ compiler flags for a target, checking for special cases where
-# -Wshadow is left out.
-MACRO(add_cppad_cxx_flags target_name) 
-	#
-	SET(no_shadow NO)
-	IF( ${target_name} STREQUAL example_eigen )
-		SET(no_shadow YES)
-	ENDIF( ${target_name} STREQUAL example_eigen )
-	#
-	IF( ${target_name} STREQUAL test_more_eigen )
-		SET(no_shadow YES)
-	ENDIF( ${target_name} STREQUAL test_more_eigen )
-	#
-	IF( ${target_name} STREQUAL speed_fadbad )
-		SET(no_shadow YES)
-	ENDIF( ${target_name} STREQUAL speed_fadbad )
-	#
-	IF( ${target_name} STREQUAL speed_sacado )
-		SET(cxx_flags "${cppad_cxx_flags_sacado}")
-	ELSE( ${target_name} STREQUAL speed_sacado )
-		IF( no_shadow )
-			SET(cxx_flags "${cppad_cxx_flags_skip_Wshadow}")
-		ELSE( no_shadow )
-			SET(cxx_flags "${cppad_cxx_flags}")
-		ENDIF( no_shadow )
-	ENDIF( ${target_name} STREQUAL speed_sacado )
-	IF( cxx_flags )
-		SET_TARGET_PROPERTIES( 
-			${target_name} PROPERTIES COMPILE_FLAGS "${cxx_flags}"
-		)
-	ENDIF( cxx_flags )
-ENDMACRO(add_cppad_cxx_flags) 
+# add_cppad_cxx_flags(target_name)
+INCLUDE(cmake/add_cppad_cxx_flags.cmake)
 # =============================================================================
 # command line arguments
 # =============================================================================
@@ -176,12 +144,19 @@ ELSE( ${cppad_cxx_flags} MATCHES ".*-std=c[+][+]11.*" )
 ENDIF( ${cppad_cxx_flags} MATCHES ".*-std=c[+][+]11.*" )
 MESSAGE(STATUS "cppad_cxx_flags_sacado = ${cppad_cxx_flags_sacado}")
 # -----------------------------------------------------------------------------
-# cppad_cxx_flags_skip_Wshadow
+# cppad_cxx_flags_skip_eigen
 STRING(REGEX REPLACE 
 	"(.*)-Wshadow(.*)"         "\\1 \\2" 
-	cppad_cxx_flags_skip_Wshadow "${cppad_cxx_flags}"
+	cppad_cxx_flags_eigen "${cppad_cxx_flags}"
 )
-MESSAGE(STATUS "cppad_cxx_flags_skip_Wshadow = ${cppad_cxx_flags_skip_Wshadow}")
+MESSAGE(STATUS "cppad_cxx_flags_eigen = ${cppad_cxx_flags_eigen}")
+# -----------------------------------------------------------------------------
+# cppad_cxx_flags_skip_fadbad
+STRING(REGEX REPLACE 
+	"(.*)-Wshadow(.*)"         "\\1 \\2" 
+	cppad_cxx_flags_fadbad "${cppad_cxx_flags}"
+)
+MESSAGE(STATUS "cppad_cxx_flags_fadbad = ${cppad_cxx_flags_fadbad}")
 # -----------------------------------------------------------------------------
 # cppad_abs_includedir, cppad_abs_libdir, cppad_abs_datadir, cppad_abs_docdir
 IF ( cmake_install_postfix )

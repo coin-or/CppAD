@@ -12,11 +12,11 @@
 # =============================================================================
 # add_to_list(variable_list constant_value)
 #
-# variables_list (in/out):
+# variables_list: (in/out)
 # The variable containing the list of values. 
 # The original list may be ""; i.e., the empty list.
 #
-# constant_value (in):
+# constant_value: (in)
 # Is the value we are adding to the list. This value cannot be empty.
 #
 MACRO(add_to_list variable_list constant_value )
