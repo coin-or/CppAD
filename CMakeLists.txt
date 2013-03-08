@@ -26,10 +26,15 @@ SET(cppad_description  "Differentiation of C++ Algorithms" )
 # project(projectname [CXX] [C] [Java])
 PROJECT(cppad)
 
+# Add this directory to the list of C++ preprocessor include directories
+# for the entire project.
 # include_directories([AFTER|BEFORE] [SYSTEM] dir1 dir2 ...)
 INCLUDE_DIRECTORIES( ${cppad_SOURCE_DIR} )
+
+
+
 # =============================================================================
-# Some cmake language extensions
+# Some system cmake language extensions
 # =============================================================================
 # CHECK_CXX_SOURCE_COMPILES(source variable)
 # Checks whether the code given in source will compile, link and run and
@@ -37,36 +42,19 @@ INCLUDE_DIRECTORIES( ${cppad_SOURCE_DIR} )
 # CMAKE_REQUIRED_LIBRARIES, CMAKE_REQUIRED_FLAGS and CMAKE_REQUIRED_INCLUDES 
 # accordingly if additional libraries or compiler flags are required. 
 INCLUDE(CheckCXXSourceRuns)
-# =============================================================================
-# Some macros
-# =============================================================================
-# dos_path_to_unix
+
+# ============================================================================
+# Some local cmake language
+# ============================================================================
+# ----------------------------------------------------------------------------
+# dos_path_to_unix(dos_path unix_path)
+INCLUDE(cmake/dos_path_to_unix.cmake)
+# 
+# add_to_list(variable_list constant_value)
+INCLUDE(cmake/add_to_list.cmake)
 #
-# Set the unix_variable to the dos_path but with \ replaced by /
-MACRO(dos_path_to_unix dos_constant unix_variable )
-	STRING(REGEX REPLACE "[\\]" "/" ${unix_variable} "${dos_constant}" )
-ENDMACRO(dos_path_to_unix dos_path unix_path)
-# -----------------------------------------------------------------------------
-# add_to_list
-#
-# Set the the list to include the value at the end. An empty original list
-# is denoted by the string value "" (the value may not be empty).
-MACRO(add_to_list variable_list constant_value )
-	IF( "${${variable_list}}" STREQUAL "" )
-		SET( ${variable_list} ${constant_value} )
-	ELSE( "${${variable_list}}" STREQUAL "" )
-		SET( ${variable_list} ${${variable_list}} ${constant_value} )
-	ENDIF( "${${variable_list}}" STREQUAL "" )
-ENDMACRO(add_to_list) 
-# -----------------------------------------------------------------------------
-# command_line_arg
-#
-# Define a command line argument and set its default value
-# also echo it in the cmake status output.
-MACRO(command_line_arg variable default type description)
-	SET(${variable} "${default}" CACHE $type "${description}")
-	MESSAGE(STATUS "${variable} = ${${variable}}")
-ENDMACRO( command_line_arg )
+# command_line_arg(variable default type description)
+INCLUDE(cmake/command_line_arg.cmake)
 # -----------------------------------------------------------------------------
 # optional_package
 #

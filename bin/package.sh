@@ -100,6 +100,7 @@ file_list=`find . \
 	\( -name '*.ac' \) -or \
 	\( -name '*.am' \) -or \
 	\( -name '*.c' \) -or \
+	\( -name '*.cmake' \) -or \
 	\( -name '*.cpp' \) -or \
 	\( -name '*.h' \) -or \
 	\( -name '*.hpp' \) -or \

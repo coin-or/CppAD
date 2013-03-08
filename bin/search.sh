@@ -1,7 +1,7 @@
 #! /bin/bash -e
 # $Id$
 # -----------------------------------------------------------------------------
-# CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-12 Bradley M. Bell
+# CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-13 Bradley M. Bell
 #
 # CppAD is distributed under multiple licenses. This distribution is under
 # the terms of the
@@ -22,11 +22,12 @@ then
 	exit 1
 fi
 pattern="$1"
-extensions='.ac .am .cpp .hpp .in .omh .pc .sh .txt'
+extensions='.ac .am .c .cmake .cpp .h .hpp .in .omh .pc .py .sed .sh .txt'
 directories='
 	.
 	bin
 	cppad 
+	cppad/cmake
 	cppad/example 
 	cppad/ipopt
 	cppad/local 
