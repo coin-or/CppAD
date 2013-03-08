@@ -46,7 +46,6 @@ INCLUDE(CheckCXXSourceRuns)
 # ============================================================================
 # Some local cmake language
 # ============================================================================
-# ----------------------------------------------------------------------------
 # dos_path_to_unix(dos_path unix_path)
 INCLUDE(cmake/dos_path_to_unix.cmake)
 # 
@@ -55,33 +54,9 @@ INCLUDE(cmake/add_to_list.cmake)
 #
 # command_line_arg(variable default type description)
 INCLUDE(cmake/command_line_arg.cmake)
-# -----------------------------------------------------------------------------
-# optional_package
 #
-# Check for package_prefix and if it is specified, set correspodong
-# include and link directories.
-MACRO(optional_package prefix_variable description) 
-	SET(${prefix_variable} NOTFOUND CACHE PATH "${description}")
-	SET(prefix ${${prefix_variable}} )
-	MESSAGE(STATUS "${prefix_variable} = ${prefix}")
-	IF ( prefix )
-		# List of preprocessor include file search directories
-		FOREACH(dir ${cmake_install_includedirs})
-			IF(IS_DIRECTORY ${prefix}/${dir} )
-				INCLUDE_DIRECTORIES( ${prefix}/${dir} )
-				MESSAGE(STATUS "Found ${prefix}/${dir}")
-			ENDIF(IS_DIRECTORY ${prefix}/${dir} )
-		ENDFOREACH(dir)
-		# Paths in which the linker will search for libraries,
-		# only applies to targets created after it is called
-		FOREACH(dir ${cmake_install_libdirs})
-			IF(IS_DIRECTORY ${prefix}/${dir} )
-				LINK_DIRECTORIES( ${prefix}/${dir} )
-				MESSAGE(STATUS "Found ${prefix}/${dir}")
-			ENDIF(IS_DIRECTORY ${prefix}/${dir} )
-		ENDFOREACH(dir)
-	ENDIF ( prefix )
-ENDMACRO(optional_package)
+# optional_package(prefix_variable description)
+INCLUDE(cmake/optional_package.cmake)
 # -----------------------------------------------------------------------------
 # add_cppad_cxx_flags
 #
