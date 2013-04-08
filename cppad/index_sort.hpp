@@ -3,7 +3,7 @@
 # define CPPAD_INDEX_SORT_INCLUDED
 
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-12 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-13 Bradley M. Bell
 
 CppAD is distributed under multiple licenses. This distribution is under
 the terms of the 
@@ -61,7 +61,7 @@ $codei%
 %$$
 and for $icode%i% = 0 , %...% , %size%-2%$$,
 $codei%
-	( %keys%[ %ind%[%i%+1] ] < %keys%[ %ind[%i%] ] ) == false
+	( %keys%[ %ind%[%i%+1] ] < %keys%[ %ind%[%i%] ] ) == false
 %$$
 
 
