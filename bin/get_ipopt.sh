@@ -53,7 +53,7 @@ if [ -e ThirdParty/HSL ]
 then
 	echo_eval rm -rf ThirdParty/HSL
 fi
-for package in Mumps Metis
+for package in Blas Lapack Metis Mumps
 do
 	if [ ! -e "ThirdParty/$package/get.$package.done" ]
 	then
@@ -74,8 +74,17 @@ export PKG_CONFIG_PATH="$prefix/$libdir/pkgconfig"
 echo_eval ./configure \
 	--enable-debug \
 	--prefix="$prefix" \
-	--libdir="$prefix/$libdir" \
-	--with-blas-lib=-lblas \
-	--with-lapack-lib=-llapack
+	--libdir="$prefix/$libdir" 
 # -----------------------------------------------------------------------------
 echo_eval make install 
+# -----------------------------------------------------------------------------
+for file in ipopt.pc ipopt-uninstalled.pc
+do
+	file_path="$prefix/$libdir/pkgconfig/$file"
+	if grep '\-llapack \-lblas' $file_path > /dev/null
+	then
+		echo "Patch $file_path"
+		echo "so it references coin versions of lapack and blas"
+		sed -e 's|-llapack -lblas|-lcoinlapack -lcoinblas|' -i $file_path
+	fi
+done
