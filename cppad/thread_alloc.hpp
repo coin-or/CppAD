@@ -3,7 +3,7 @@
 # define CPPAD_THREAD_ALLOC_INCLUDED
 
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-12 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-13 Bradley M. Bell
 
 CppAD is distributed under multiple licenses. This distribution is under
 the terms of the 
@@ -728,6 +728,7 @@ $end
 /* -----------------------------------------------------------------------
 $begin ta_get_memory$$
 $spell
+	std
 	num
 	ptr
 	thread_alloc
@@ -753,6 +754,10 @@ $codei%
 	size_t %min_bytes%
 %$$
 It specifies the minimum number of bytes to allocate.
+This value must be less than
+$codep
+	std::numeric_limits<size_t>::max() / 2
+$$
 
 $head cap_bytes$$
 This argument has prototype
@@ -810,6 +815,12 @@ $end
 	static void* get_memory(size_t min_bytes, size_t& cap_bytes)
 	{	// see first_trace below	
 		CPPAD_ASSERT_FIRST_CALL_NOT_PARALLEL;
+
+		// check that number of requested bytes is not to large
+		CPPAD_ASSERT_KNOWN(
+			min_bytes < std::numeric_limits<size_t>::max() / 2 ,
+			"get_memory(min_bytes, cap_bytes): min_bytes is too large"
+		);
 
 		size_t num_cap = capacity_info()->number;
 		using std::cout;
