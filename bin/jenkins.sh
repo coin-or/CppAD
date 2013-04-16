@@ -35,4 +35,4 @@ echo_eval rm -rf build
 echo_eval mkdir build
 echo_eval cd build
 echo_eval ../trunk/configure IPOPT_DIR="$dist_dir/build/prefix"
-echo_eval make test | tee test.out
+echo_eval make test 

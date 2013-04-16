@@ -38,6 +38,34 @@ This section contains a list of the changes to CppAD during 2013
 The purpose of this section is to
 assist you in learning about changes between various versions of CppAD.
 
+$head 04-16$$
+The script $cref get_ipopt.sh$$ has been added.
+If you are using UNix, and you do not have 
+$href%http://www.coin-or.org/projects/Ipopt.xml%Ipopt%$$  
+installed on your system, you can use this script 
+to download and install a local copy for use with CppAD. 
+
+$head 04-14$$
+The following program,
+when executed, would cause a CppAD assertion with an unknown source:
+$codep
+	# include <cppad/cppad.hpp>
+	int main(void)
+	{	size_t min_bytes = static_cast<size_t>(-1);
+		size_t cap_bytes;
+		void *v_ptr = CppAD::thread_alloc::get_memory(min_bytes, cap_bytes);
+		return 0;
+	}
+$$
+It now generates the following message, 
+(when compiled without $cref/NDEBUG/faq/Speed/NDEBUG/$$)"
+$codep
+	get_memory(min_bytes, cap_bytes): min_bytes is too large
+	Error detected by false result for
+		min_bytes < std::numeric_limits<size_t>::max() / 2
+$$
+
+
 $head 03-02$$
 The function $cref/isnan/nan/$$ no longer allows for systems
 that return false for $icode%x% != %x%$$ when $icode x$$ is $code NaN$$.
@@ -118,26 +146,6 @@ $codei%
 %...%rev_sparse_jac.hpp:315:9: warning: unused variable 'm' [-Wunused-variable]
 %$$ 
 This has been fixed.
-
-$head 04-14$$
-The following program,
-when executed, would cause a CppAD assertion with an unknown source:
-$codep
-	# include <cppad/cppad.hpp>
-	int main(void)
-	{	size_t min_bytes = static_cast<size_t>(-1);
-		size_t cap_bytes;
-		void *v_ptr = CppAD::thread_alloc::get_memory(min_bytes, cap_bytes);
-		return 0;
-	}
-$$
-It now generates the following message, 
-(when compiled without $cref/NDEBUG/faq/Speed/NDEBUG/$$)"
-$codep
-	get_memory(min_bytes, cap_bytes): min_bytes is too large
-	Error detected by false result for
-		min_bytes < std::numeric_limits<size_t>::max() / 2
-$$
 
 
 $end
