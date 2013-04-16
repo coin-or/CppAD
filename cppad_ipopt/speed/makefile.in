@@ -72,15 +72,36 @@ DEFAULT_INCLUDES =
 depcomp = $(SHELL) $(top_srcdir)/depcomp
 am__depfiles_maybe = depfiles
 am__mv = mv -f
+AM_V_lt = $(am__v_lt_@AM_V@)
+am__v_lt_ = $(am__v_lt_@AM_DEFAULT_V@)
+am__v_lt_0 = --silent
 CXXCOMPILE = $(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) \
 	$(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS)
+AM_V_CXX = $(am__v_CXX_@AM_V@)
+am__v_CXX_ = $(am__v_CXX_@AM_DEFAULT_V@)
+am__v_CXX_0 = @echo "  CXX   " $@;
+AM_V_at = $(am__v_at_@AM_V@)
+am__v_at_ = $(am__v_at_@AM_DEFAULT_V@)
+am__v_at_0 = @
 CXXLD = $(CXX)
 CXXLINK = $(CXXLD) $(AM_CXXFLAGS) $(CXXFLAGS) $(AM_LDFLAGS) $(LDFLAGS) \
 	-o $@
+AM_V_CXXLD = $(am__v_CXXLD_@AM_V@)
+am__v_CXXLD_ = $(am__v_CXXLD_@AM_DEFAULT_V@)
+am__v_CXXLD_0 = @echo "  CXXLD " $@;
 COMPILE = $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) \
 	$(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS)
+AM_V_CC = $(am__v_CC_@AM_V@)
+am__v_CC_ = $(am__v_CC_@AM_DEFAULT_V@)
+am__v_CC_0 = @echo "  CC    " $@;
 CCLD = $(CC)
 LINK = $(CCLD) $(AM_CFLAGS) $(CFLAGS) $(AM_LDFLAGS) $(LDFLAGS) -o $@
+AM_V_CCLD = $(am__v_CCLD_@AM_V@)
+am__v_CCLD_ = $(am__v_CCLD_@AM_DEFAULT_V@)
+am__v_CCLD_0 = @echo "  CCLD  " $@;
+AM_V_GEN = $(am__v_GEN_@AM_V@)
+am__v_GEN_ = $(am__v_GEN_@AM_DEFAULT_V@)
+am__v_GEN_0 = @echo "  GEN   " $@;
 SOURCES = $(speed_SOURCES)
 DIST_SOURCES = $(speed_SOURCES)
 am__can_run_installinfo = \
@@ -96,6 +117,7 @@ ABS_TOP_SRCDIR = @ABS_TOP_SRCDIR@
 ACLOCAL = @ACLOCAL@
 ADOLC_DIR = @ADOLC_DIR@
 AMTAR = @AMTAR@
+AM_DEFAULT_VERBOSITY = @AM_DEFAULT_VERBOSITY@
 AUTOCONF = @AUTOCONF@
 AUTOHEADER = @AUTOHEADER@
 AUTOMAKE = @AUTOMAKE@
@@ -328,7 +350,7 @@ clean-checkPROGRAMS:
 	-test -z "$(check_PROGRAMS)" || rm -f $(check_PROGRAMS)
 speed$(EXEEXT): $(speed_OBJECTS) $(speed_DEPENDENCIES) $(EXTRA_speed_DEPENDENCIES) 
 	@rm -f speed$(EXEEXT)
-	$(CXXLINK) $(speed_OBJECTS) $(speed_LDADD) $(LIBS)
+	$(AM_V_CXXLD)$(CXXLINK) $(speed_OBJECTS) $(speed_LDADD) $(LIBS)
 
 mostlyclean-compile:
 	-rm -f *.$(OBJEXT)
@@ -345,88 +367,88 @@ distclean-compile:
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/vec_fun_pattern.Po@am__quote@
 
 .cpp.o:
-@am__fastdepCXX_TRUE@	$(CXXCOMPILE) -MT $@ -MD -MP -MF $(DEPDIR)/$*.Tpo -c -o $@ $<
-@am__fastdepCXX_TRUE@	$(am__mv) $(DEPDIR)/$*.Tpo $(DEPDIR)/$*.Po
-@AMDEP_TRUE@@am__fastdepCXX_FALSE@	source='$<' object='$@' libtool=no @AMDEPBACKSLASH@
+@am__fastdepCXX_TRUE@	$(AM_V_CXX)$(CXXCOMPILE) -MT $@ -MD -MP -MF $(DEPDIR)/$*.Tpo -c -o $@ $<
+@am__fastdepCXX_TRUE@	$(AM_V_at)$(am__mv) $(DEPDIR)/$*.Tpo $(DEPDIR)/$*.Po
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	$(AM_V_CXX)source='$<' object='$@' libtool=no @AMDEPBACKSLASH@
 @AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
-@am__fastdepCXX_FALSE@	$(CXXCOMPILE) -c -o $@ $<
+@am__fastdepCXX_FALSE@	$(AM_V_CXX@am__nodep@)$(CXXCOMPILE) -c -o $@ $<
 
 .cpp.obj:
-@am__fastdepCXX_TRUE@	$(CXXCOMPILE) -MT $@ -MD -MP -MF $(DEPDIR)/$*.Tpo -c -o $@ `$(CYGPATH_W) '$<'`
-@am__fastdepCXX_TRUE@	$(am__mv) $(DEPDIR)/$*.Tpo $(DEPDIR)/$*.Po
-@AMDEP_TRUE@@am__fastdepCXX_FALSE@	source='$<' object='$@' libtool=no @AMDEPBACKSLASH@
+@am__fastdepCXX_TRUE@	$(AM_V_CXX)$(CXXCOMPILE) -MT $@ -MD -MP -MF $(DEPDIR)/$*.Tpo -c -o $@ `$(CYGPATH_W) '$<'`
+@am__fastdepCXX_TRUE@	$(AM_V_at)$(am__mv) $(DEPDIR)/$*.Tpo $(DEPDIR)/$*.Po
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	$(AM_V_CXX)source='$<' object='$@' libtool=no @AMDEPBACKSLASH@
 @AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
-@am__fastdepCXX_FALSE@	$(CXXCOMPILE) -c -o $@ `$(CYGPATH_W) '$<'`
+@am__fastdepCXX_FALSE@	$(AM_V_CXX@am__nodep@)$(CXXCOMPILE) -c -o $@ `$(CYGPATH_W) '$<'`
 
 cppad_ipopt_nlp.o: ../src/cppad_ipopt_nlp.cpp
-@am__fastdepCXX_TRUE@	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -MT cppad_ipopt_nlp.o -MD -MP -MF $(DEPDIR)/cppad_ipopt_nlp.Tpo -c -o cppad_ipopt_nlp.o `test -f '../src/cppad_ipopt_nlp.cpp' || echo '$(srcdir)/'`../src/cppad_ipopt_nlp.cpp
-@am__fastdepCXX_TRUE@	$(am__mv) $(DEPDIR)/cppad_ipopt_nlp.Tpo $(DEPDIR)/cppad_ipopt_nlp.Po
-@AMDEP_TRUE@@am__fastdepCXX_FALSE@	source='../src/cppad_ipopt_nlp.cpp' object='cppad_ipopt_nlp.o' libtool=no @AMDEPBACKSLASH@
+@am__fastdepCXX_TRUE@	$(AM_V_CXX)$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -MT cppad_ipopt_nlp.o -MD -MP -MF $(DEPDIR)/cppad_ipopt_nlp.Tpo -c -o cppad_ipopt_nlp.o `test -f '../src/cppad_ipopt_nlp.cpp' || echo '$(srcdir)/'`../src/cppad_ipopt_nlp.cpp
+@am__fastdepCXX_TRUE@	$(AM_V_at)$(am__mv) $(DEPDIR)/cppad_ipopt_nlp.Tpo $(DEPDIR)/cppad_ipopt_nlp.Po
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	$(AM_V_CXX)source='../src/cppad_ipopt_nlp.cpp' object='cppad_ipopt_nlp.o' libtool=no @AMDEPBACKSLASH@
 @AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
-@am__fastdepCXX_FALSE@	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -c -o cppad_ipopt_nlp.o `test -f '../src/cppad_ipopt_nlp.cpp' || echo '$(srcdir)/'`../src/cppad_ipopt_nlp.cpp
+@am__fastdepCXX_FALSE@	$(AM_V_CXX@am__nodep@)$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -c -o cppad_ipopt_nlp.o `test -f '../src/cppad_ipopt_nlp.cpp' || echo '$(srcdir)/'`../src/cppad_ipopt_nlp.cpp
 
 cppad_ipopt_nlp.obj: ../src/cppad_ipopt_nlp.cpp
-@am__fastdepCXX_TRUE@	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -MT cppad_ipopt_nlp.obj -MD -MP -MF $(DEPDIR)/cppad_ipopt_nlp.Tpo -c -o cppad_ipopt_nlp.obj `if test -f '../src/cppad_ipopt_nlp.cpp'; then $(CYGPATH_W) '../src/cppad_ipopt_nlp.cpp'; else $(CYGPATH_W) '$(srcdir)/../src/cppad_ipopt_nlp.cpp'; fi`
-@am__fastdepCXX_TRUE@	$(am__mv) $(DEPDIR)/cppad_ipopt_nlp.Tpo $(DEPDIR)/cppad_ipopt_nlp.Po
-@AMDEP_TRUE@@am__fastdepCXX_FALSE@	source='../src/cppad_ipopt_nlp.cpp' object='cppad_ipopt_nlp.obj' libtool=no @AMDEPBACKSLASH@
+@am__fastdepCXX_TRUE@	$(AM_V_CXX)$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -MT cppad_ipopt_nlp.obj -MD -MP -MF $(DEPDIR)/cppad_ipopt_nlp.Tpo -c -o cppad_ipopt_nlp.obj `if test -f '../src/cppad_ipopt_nlp.cpp'; then $(CYGPATH_W) '../src/cppad_ipopt_nlp.cpp'; else $(CYGPATH_W) '$(srcdir)/../src/cppad_ipopt_nlp.cpp'; fi`
+@am__fastdepCXX_TRUE@	$(AM_V_at)$(am__mv) $(DEPDIR)/cppad_ipopt_nlp.Tpo $(DEPDIR)/cppad_ipopt_nlp.Po
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	$(AM_V_CXX)source='../src/cppad_ipopt_nlp.cpp' object='cppad_ipopt_nlp.obj' libtool=no @AMDEPBACKSLASH@
 @AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
-@am__fastdepCXX_FALSE@	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -c -o cppad_ipopt_nlp.obj `if test -f '../src/cppad_ipopt_nlp.cpp'; then $(CYGPATH_W) '../src/cppad_ipopt_nlp.cpp'; else $(CYGPATH_W) '$(srcdir)/../src/cppad_ipopt_nlp.cpp'; fi`
+@am__fastdepCXX_FALSE@	$(AM_V_CXX@am__nodep@)$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -c -o cppad_ipopt_nlp.obj `if test -f '../src/cppad_ipopt_nlp.cpp'; then $(CYGPATH_W) '../src/cppad_ipopt_nlp.cpp'; else $(CYGPATH_W) '$(srcdir)/../src/cppad_ipopt_nlp.cpp'; fi`
 
 hes_fg_map.o: ../src/hes_fg_map.cpp
-@am__fastdepCXX_TRUE@	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -MT hes_fg_map.o -MD -MP -MF $(DEPDIR)/hes_fg_map.Tpo -c -o hes_fg_map.o `test -f '../src/hes_fg_map.cpp' || echo '$(srcdir)/'`../src/hes_fg_map.cpp
-@am__fastdepCXX_TRUE@	$(am__mv) $(DEPDIR)/hes_fg_map.Tpo $(DEPDIR)/hes_fg_map.Po
-@AMDEP_TRUE@@am__fastdepCXX_FALSE@	source='../src/hes_fg_map.cpp' object='hes_fg_map.o' libtool=no @AMDEPBACKSLASH@
+@am__fastdepCXX_TRUE@	$(AM_V_CXX)$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -MT hes_fg_map.o -MD -MP -MF $(DEPDIR)/hes_fg_map.Tpo -c -o hes_fg_map.o `test -f '../src/hes_fg_map.cpp' || echo '$(srcdir)/'`../src/hes_fg_map.cpp
+@am__fastdepCXX_TRUE@	$(AM_V_at)$(am__mv) $(DEPDIR)/hes_fg_map.Tpo $(DEPDIR)/hes_fg_map.Po
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	$(AM_V_CXX)source='../src/hes_fg_map.cpp' object='hes_fg_map.o' libtool=no @AMDEPBACKSLASH@
 @AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
-@am__fastdepCXX_FALSE@	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -c -o hes_fg_map.o `test -f '../src/hes_fg_map.cpp' || echo '$(srcdir)/'`../src/hes_fg_map.cpp
+@am__fastdepCXX_FALSE@	$(AM_V_CXX@am__nodep@)$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -c -o hes_fg_map.o `test -f '../src/hes_fg_map.cpp' || echo '$(srcdir)/'`../src/hes_fg_map.cpp
 
 hes_fg_map.obj: ../src/hes_fg_map.cpp
-@am__fastdepCXX_TRUE@	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -MT hes_fg_map.obj -MD -MP -MF $(DEPDIR)/hes_fg_map.Tpo -c -o hes_fg_map.obj `if test -f '../src/hes_fg_map.cpp'; then $(CYGPATH_W) '../src/hes_fg_map.cpp'; else $(CYGPATH_W) '$(srcdir)/../src/hes_fg_map.cpp'; fi`
-@am__fastdepCXX_TRUE@	$(am__mv) $(DEPDIR)/hes_fg_map.Tpo $(DEPDIR)/hes_fg_map.Po
-@AMDEP_TRUE@@am__fastdepCXX_FALSE@	source='../src/hes_fg_map.cpp' object='hes_fg_map.obj' libtool=no @AMDEPBACKSLASH@
+@am__fastdepCXX_TRUE@	$(AM_V_CXX)$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -MT hes_fg_map.obj -MD -MP -MF $(DEPDIR)/hes_fg_map.Tpo -c -o hes_fg_map.obj `if test -f '../src/hes_fg_map.cpp'; then $(CYGPATH_W) '../src/hes_fg_map.cpp'; else $(CYGPATH_W) '$(srcdir)/../src/hes_fg_map.cpp'; fi`
+@am__fastdepCXX_TRUE@	$(AM_V_at)$(am__mv) $(DEPDIR)/hes_fg_map.Tpo $(DEPDIR)/hes_fg_map.Po
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	$(AM_V_CXX)source='../src/hes_fg_map.cpp' object='hes_fg_map.obj' libtool=no @AMDEPBACKSLASH@
 @AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
-@am__fastdepCXX_FALSE@	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -c -o hes_fg_map.obj `if test -f '../src/hes_fg_map.cpp'; then $(CYGPATH_W) '../src/hes_fg_map.cpp'; else $(CYGPATH_W) '$(srcdir)/../src/hes_fg_map.cpp'; fi`
+@am__fastdepCXX_FALSE@	$(AM_V_CXX@am__nodep@)$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -c -o hes_fg_map.obj `if test -f '../src/hes_fg_map.cpp'; then $(CYGPATH_W) '../src/hes_fg_map.cpp'; else $(CYGPATH_W) '$(srcdir)/../src/hes_fg_map.cpp'; fi`
 
 jac_g_map.o: ../src/jac_g_map.cpp
-@am__fastdepCXX_TRUE@	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -MT jac_g_map.o -MD -MP -MF $(DEPDIR)/jac_g_map.Tpo -c -o jac_g_map.o `test -f '../src/jac_g_map.cpp' || echo '$(srcdir)/'`../src/jac_g_map.cpp
-@am__fastdepCXX_TRUE@	$(am__mv) $(DEPDIR)/jac_g_map.Tpo $(DEPDIR)/jac_g_map.Po
-@AMDEP_TRUE@@am__fastdepCXX_FALSE@	source='../src/jac_g_map.cpp' object='jac_g_map.o' libtool=no @AMDEPBACKSLASH@
+@am__fastdepCXX_TRUE@	$(AM_V_CXX)$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -MT jac_g_map.o -MD -MP -MF $(DEPDIR)/jac_g_map.Tpo -c -o jac_g_map.o `test -f '../src/jac_g_map.cpp' || echo '$(srcdir)/'`../src/jac_g_map.cpp
+@am__fastdepCXX_TRUE@	$(AM_V_at)$(am__mv) $(DEPDIR)/jac_g_map.Tpo $(DEPDIR)/jac_g_map.Po
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	$(AM_V_CXX)source='../src/jac_g_map.cpp' object='jac_g_map.o' libtool=no @AMDEPBACKSLASH@
 @AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
-@am__fastdepCXX_FALSE@	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -c -o jac_g_map.o `test -f '../src/jac_g_map.cpp' || echo '$(srcdir)/'`../src/jac_g_map.cpp
+@am__fastdepCXX_FALSE@	$(AM_V_CXX@am__nodep@)$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -c -o jac_g_map.o `test -f '../src/jac_g_map.cpp' || echo '$(srcdir)/'`../src/jac_g_map.cpp
 
 jac_g_map.obj: ../src/jac_g_map.cpp
-@am__fastdepCXX_TRUE@	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -MT jac_g_map.obj -MD -MP -MF $(DEPDIR)/jac_g_map.Tpo -c -o jac_g_map.obj `if test -f '../src/jac_g_map.cpp'; then $(CYGPATH_W) '../src/jac_g_map.cpp'; else $(CYGPATH_W) '$(srcdir)/../src/jac_g_map.cpp'; fi`
-@am__fastdepCXX_TRUE@	$(am__mv) $(DEPDIR)/jac_g_map.Tpo $(DEPDIR)/jac_g_map.Po
-@AMDEP_TRUE@@am__fastdepCXX_FALSE@	source='../src/jac_g_map.cpp' object='jac_g_map.obj' libtool=no @AMDEPBACKSLASH@
+@am__fastdepCXX_TRUE@	$(AM_V_CXX)$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -MT jac_g_map.obj -MD -MP -MF $(DEPDIR)/jac_g_map.Tpo -c -o jac_g_map.obj `if test -f '../src/jac_g_map.cpp'; then $(CYGPATH_W) '../src/jac_g_map.cpp'; else $(CYGPATH_W) '$(srcdir)/../src/jac_g_map.cpp'; fi`
+@am__fastdepCXX_TRUE@	$(AM_V_at)$(am__mv) $(DEPDIR)/jac_g_map.Tpo $(DEPDIR)/jac_g_map.Po
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	$(AM_V_CXX)source='../src/jac_g_map.cpp' object='jac_g_map.obj' libtool=no @AMDEPBACKSLASH@
 @AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
-@am__fastdepCXX_FALSE@	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -c -o jac_g_map.obj `if test -f '../src/jac_g_map.cpp'; then $(CYGPATH_W) '../src/jac_g_map.cpp'; else $(CYGPATH_W) '$(srcdir)/../src/jac_g_map.cpp'; fi`
+@am__fastdepCXX_FALSE@	$(AM_V_CXX@am__nodep@)$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -c -o jac_g_map.obj `if test -f '../src/jac_g_map.cpp'; then $(CYGPATH_W) '../src/jac_g_map.cpp'; else $(CYGPATH_W) '$(srcdir)/../src/jac_g_map.cpp'; fi`
 
 sparse_map2vec.o: ../src/sparse_map2vec.cpp
-@am__fastdepCXX_TRUE@	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -MT sparse_map2vec.o -MD -MP -MF $(DEPDIR)/sparse_map2vec.Tpo -c -o sparse_map2vec.o `test -f '../src/sparse_map2vec.cpp' || echo '$(srcdir)/'`../src/sparse_map2vec.cpp
-@am__fastdepCXX_TRUE@	$(am__mv) $(DEPDIR)/sparse_map2vec.Tpo $(DEPDIR)/sparse_map2vec.Po
-@AMDEP_TRUE@@am__fastdepCXX_FALSE@	source='../src/sparse_map2vec.cpp' object='sparse_map2vec.o' libtool=no @AMDEPBACKSLASH@
+@am__fastdepCXX_TRUE@	$(AM_V_CXX)$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -MT sparse_map2vec.o -MD -MP -MF $(DEPDIR)/sparse_map2vec.Tpo -c -o sparse_map2vec.o `test -f '../src/sparse_map2vec.cpp' || echo '$(srcdir)/'`../src/sparse_map2vec.cpp
+@am__fastdepCXX_TRUE@	$(AM_V_at)$(am__mv) $(DEPDIR)/sparse_map2vec.Tpo $(DEPDIR)/sparse_map2vec.Po
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	$(AM_V_CXX)source='../src/sparse_map2vec.cpp' object='sparse_map2vec.o' libtool=no @AMDEPBACKSLASH@
 @AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
-@am__fastdepCXX_FALSE@	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -c -o sparse_map2vec.o `test -f '../src/sparse_map2vec.cpp' || echo '$(srcdir)/'`../src/sparse_map2vec.cpp
+@am__fastdepCXX_FALSE@	$(AM_V_CXX@am__nodep@)$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -c -o sparse_map2vec.o `test -f '../src/sparse_map2vec.cpp' || echo '$(srcdir)/'`../src/sparse_map2vec.cpp
 
 sparse_map2vec.obj: ../src/sparse_map2vec.cpp
-@am__fastdepCXX_TRUE@	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -MT sparse_map2vec.obj -MD -MP -MF $(DEPDIR)/sparse_map2vec.Tpo -c -o sparse_map2vec.obj `if test -f '../src/sparse_map2vec.cpp'; then $(CYGPATH_W) '../src/sparse_map2vec.cpp'; else $(CYGPATH_W) '$(srcdir)/../src/sparse_map2vec.cpp'; fi`
-@am__fastdepCXX_TRUE@	$(am__mv) $(DEPDIR)/sparse_map2vec.Tpo $(DEPDIR)/sparse_map2vec.Po
-@AMDEP_TRUE@@am__fastdepCXX_FALSE@	source='../src/sparse_map2vec.cpp' object='sparse_map2vec.obj' libtool=no @AMDEPBACKSLASH@
+@am__fastdepCXX_TRUE@	$(AM_V_CXX)$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -MT sparse_map2vec.obj -MD -MP -MF $(DEPDIR)/sparse_map2vec.Tpo -c -o sparse_map2vec.obj `if test -f '../src/sparse_map2vec.cpp'; then $(CYGPATH_W) '../src/sparse_map2vec.cpp'; else $(CYGPATH_W) '$(srcdir)/../src/sparse_map2vec.cpp'; fi`
+@am__fastdepCXX_TRUE@	$(AM_V_at)$(am__mv) $(DEPDIR)/sparse_map2vec.Tpo $(DEPDIR)/sparse_map2vec.Po
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	$(AM_V_CXX)source='../src/sparse_map2vec.cpp' object='sparse_map2vec.obj' libtool=no @AMDEPBACKSLASH@
 @AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
-@am__fastdepCXX_FALSE@	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -c -o sparse_map2vec.obj `if test -f '../src/sparse_map2vec.cpp'; then $(CYGPATH_W) '../src/sparse_map2vec.cpp'; else $(CYGPATH_W) '$(srcdir)/../src/sparse_map2vec.cpp'; fi`
+@am__fastdepCXX_FALSE@	$(AM_V_CXX@am__nodep@)$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -c -o sparse_map2vec.obj `if test -f '../src/sparse_map2vec.cpp'; then $(CYGPATH_W) '../src/sparse_map2vec.cpp'; else $(CYGPATH_W) '$(srcdir)/../src/sparse_map2vec.cpp'; fi`
 
 vec_fun_pattern.o: ../src/vec_fun_pattern.cpp
-@am__fastdepCXX_TRUE@	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -MT vec_fun_pattern.o -MD -MP -MF $(DEPDIR)/vec_fun_pattern.Tpo -c -o vec_fun_pattern.o `test -f '../src/vec_fun_pattern.cpp' || echo '$(srcdir)/'`../src/vec_fun_pattern.cpp
-@am__fastdepCXX_TRUE@	$(am__mv) $(DEPDIR)/vec_fun_pattern.Tpo $(DEPDIR)/vec_fun_pattern.Po
-@AMDEP_TRUE@@am__fastdepCXX_FALSE@	source='../src/vec_fun_pattern.cpp' object='vec_fun_pattern.o' libtool=no @AMDEPBACKSLASH@
+@am__fastdepCXX_TRUE@	$(AM_V_CXX)$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -MT vec_fun_pattern.o -MD -MP -MF $(DEPDIR)/vec_fun_pattern.Tpo -c -o vec_fun_pattern.o `test -f '../src/vec_fun_pattern.cpp' || echo '$(srcdir)/'`../src/vec_fun_pattern.cpp
+@am__fastdepCXX_TRUE@	$(AM_V_at)$(am__mv) $(DEPDIR)/vec_fun_pattern.Tpo $(DEPDIR)/vec_fun_pattern.Po
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	$(AM_V_CXX)source='../src/vec_fun_pattern.cpp' object='vec_fun_pattern.o' libtool=no @AMDEPBACKSLASH@
 @AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
-@am__fastdepCXX_FALSE@	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -c -o vec_fun_pattern.o `test -f '../src/vec_fun_pattern.cpp' || echo '$(srcdir)/'`../src/vec_fun_pattern.cpp
+@am__fastdepCXX_FALSE@	$(AM_V_CXX@am__nodep@)$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -c -o vec_fun_pattern.o `test -f '../src/vec_fun_pattern.cpp' || echo '$(srcdir)/'`../src/vec_fun_pattern.cpp
 
 vec_fun_pattern.obj: ../src/vec_fun_pattern.cpp
-@am__fastdepCXX_TRUE@	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -MT vec_fun_pattern.obj -MD -MP -MF $(DEPDIR)/vec_fun_pattern.Tpo -c -o vec_fun_pattern.obj `if test -f '../src/vec_fun_pattern.cpp'; then $(CYGPATH_W) '../src/vec_fun_pattern.cpp'; else $(CYGPATH_W) '$(srcdir)/../src/vec_fun_pattern.cpp'; fi`
-@am__fastdepCXX_TRUE@	$(am__mv) $(DEPDIR)/vec_fun_pattern.Tpo $(DEPDIR)/vec_fun_pattern.Po
-@AMDEP_TRUE@@am__fastdepCXX_FALSE@	source='../src/vec_fun_pattern.cpp' object='vec_fun_pattern.obj' libtool=no @AMDEPBACKSLASH@
+@am__fastdepCXX_TRUE@	$(AM_V_CXX)$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -MT vec_fun_pattern.obj -MD -MP -MF $(DEPDIR)/vec_fun_pattern.Tpo -c -o vec_fun_pattern.obj `if test -f '../src/vec_fun_pattern.cpp'; then $(CYGPATH_W) '../src/vec_fun_pattern.cpp'; else $(CYGPATH_W) '$(srcdir)/../src/vec_fun_pattern.cpp'; fi`
+@am__fastdepCXX_TRUE@	$(AM_V_at)$(am__mv) $(DEPDIR)/vec_fun_pattern.Tpo $(DEPDIR)/vec_fun_pattern.Po
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	$(AM_V_CXX)source='../src/vec_fun_pattern.cpp' object='vec_fun_pattern.obj' libtool=no @AMDEPBACKSLASH@
 @AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
-@am__fastdepCXX_FALSE@	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -c -o vec_fun_pattern.obj `if test -f '../src/vec_fun_pattern.cpp'; then $(CYGPATH_W) '../src/vec_fun_pattern.cpp'; else $(CYGPATH_W) '$(srcdir)/../src/vec_fun_pattern.cpp'; fi`
+@am__fastdepCXX_FALSE@	$(AM_V_CXX@am__nodep@)$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -c -o vec_fun_pattern.obj `if test -f '../src/vec_fun_pattern.cpp'; then $(CYGPATH_W) '../src/vec_fun_pattern.cpp'; else $(CYGPATH_W) '$(srcdir)/../src/vec_fun_pattern.cpp'; fi`
 
 ID: $(HEADERS) $(SOURCES) $(LISP) $(TAGS_FILES)
 	list='$(SOURCES) $(HEADERS) $(LISP) $(TAGS_FILES)'; \

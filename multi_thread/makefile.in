@@ -91,15 +91,36 @@ DEFAULT_INCLUDES =
 depcomp = $(SHELL) $(top_srcdir)/depcomp
 am__depfiles_maybe = depfiles
 am__mv = mv -f
+AM_V_lt = $(am__v_lt_@AM_V@)
+am__v_lt_ = $(am__v_lt_@AM_DEFAULT_V@)
+am__v_lt_0 = --silent
 CXXCOMPILE = $(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) \
 	$(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS)
+AM_V_CXX = $(am__v_CXX_@AM_V@)
+am__v_CXX_ = $(am__v_CXX_@AM_DEFAULT_V@)
+am__v_CXX_0 = @echo "  CXX   " $@;
+AM_V_at = $(am__v_at_@AM_V@)
+am__v_at_ = $(am__v_at_@AM_DEFAULT_V@)
+am__v_at_0 = @
 CXXLD = $(CXX)
 CXXLINK = $(CXXLD) $(AM_CXXFLAGS) $(CXXFLAGS) $(AM_LDFLAGS) $(LDFLAGS) \
 	-o $@
+AM_V_CXXLD = $(am__v_CXXLD_@AM_V@)
+am__v_CXXLD_ = $(am__v_CXXLD_@AM_DEFAULT_V@)
+am__v_CXXLD_0 = @echo "  CXXLD " $@;
 COMPILE = $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) \
 	$(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS)
+AM_V_CC = $(am__v_CC_@AM_V@)
+am__v_CC_ = $(am__v_CC_@AM_DEFAULT_V@)
+am__v_CC_0 = @echo "  CC    " $@;
 CCLD = $(CC)
 LINK = $(CCLD) $(AM_CFLAGS) $(CFLAGS) $(AM_LDFLAGS) $(LDFLAGS) -o $@
+AM_V_CCLD = $(am__v_CCLD_@AM_V@)
+am__v_CCLD_ = $(am__v_CCLD_@AM_DEFAULT_V@)
+am__v_CCLD_0 = @echo "  CCLD  " $@;
+AM_V_GEN = $(am__v_GEN_@AM_V@)
+am__v_GEN_ = $(am__v_GEN_@AM_DEFAULT_V@)
+am__v_GEN_0 = @echo "  GEN   " $@;
 SOURCES = $(bthread_test_SOURCES) $(openmp_test_SOURCES) \
 	$(pthread_test_SOURCES)
 DIST_SOURCES = $(bthread_test_SOURCES) $(openmp_test_SOURCES) \
@@ -117,6 +138,7 @@ ABS_TOP_SRCDIR = @ABS_TOP_SRCDIR@
 ACLOCAL = @ACLOCAL@
 ADOLC_DIR = @ADOLC_DIR@
 AMTAR = @AMTAR@
+AM_DEFAULT_VERBOSITY = @AM_DEFAULT_VERBOSITY@
 AUTOCONF = @AUTOCONF@
 AUTOHEADER = @AUTOHEADER@
 AUTOMAKE = @AUTOMAKE@
@@ -373,13 +395,13 @@ clean-checkPROGRAMS:
 	-test -z "$(check_PROGRAMS)" || rm -f $(check_PROGRAMS)
 bthread_test$(EXEEXT): $(bthread_test_OBJECTS) $(bthread_test_DEPENDENCIES) $(EXTRA_bthread_test_DEPENDENCIES) 
 	@rm -f bthread_test$(EXEEXT)
-	$(CXXLINK) $(bthread_test_OBJECTS) $(bthread_test_LDADD) $(LIBS)
+	$(AM_V_CXXLD)$(CXXLINK) $(bthread_test_OBJECTS) $(bthread_test_LDADD) $(LIBS)
 openmp_test$(EXEEXT): $(openmp_test_OBJECTS) $(openmp_test_DEPENDENCIES) $(EXTRA_openmp_test_DEPENDENCIES) 
 	@rm -f openmp_test$(EXEEXT)
-	$(CXXLINK) $(openmp_test_OBJECTS) $(openmp_test_LDADD) $(LIBS)
+	$(AM_V_CXXLD)$(CXXLINK) $(openmp_test_OBJECTS) $(openmp_test_LDADD) $(LIBS)
 pthread_test$(EXEEXT): $(pthread_test_OBJECTS) $(pthread_test_DEPENDENCIES) $(EXTRA_pthread_test_DEPENDENCIES) 
 	@rm -f pthread_test$(EXEEXT)
-	$(CXXLINK) $(pthread_test_OBJECTS) $(pthread_test_LDADD) $(LIBS)
+	$(AM_V_CXXLD)$(CXXLINK) $(pthread_test_OBJECTS) $(pthread_test_LDADD) $(LIBS)
 
 mostlyclean-compile:
 	-rm -f *.$(OBJEXT)
@@ -406,144 +428,144 @@ distclean-compile:
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/thread_test.Po@am__quote@
 
 .cpp.o:
-@am__fastdepCXX_TRUE@	$(CXXCOMPILE) -MT $@ -MD -MP -MF $(DEPDIR)/$*.Tpo -c -o $@ $<
-@am__fastdepCXX_TRUE@	$(am__mv) $(DEPDIR)/$*.Tpo $(DEPDIR)/$*.Po
-@AMDEP_TRUE@@am__fastdepCXX_FALSE@	source='$<' object='$@' libtool=no @AMDEPBACKSLASH@
+@am__fastdepCXX_TRUE@	$(AM_V_CXX)$(CXXCOMPILE) -MT $@ -MD -MP -MF $(DEPDIR)/$*.Tpo -c -o $@ $<
+@am__fastdepCXX_TRUE@	$(AM_V_at)$(am__mv) $(DEPDIR)/$*.Tpo $(DEPDIR)/$*.Po
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	$(AM_V_CXX)source='$<' object='$@' libtool=no @AMDEPBACKSLASH@
 @AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
-@am__fastdepCXX_FALSE@	$(CXXCOMPILE) -c -o $@ $<
+@am__fastdepCXX_FALSE@	$(AM_V_CXX@am__nodep@)$(CXXCOMPILE) -c -o $@ $<
 
 .cpp.obj:
-@am__fastdepCXX_TRUE@	$(CXXCOMPILE) -MT $@ -MD -MP -MF $(DEPDIR)/$*.Tpo -c -o $@ `$(CYGPATH_W) '$<'`
-@am__fastdepCXX_TRUE@	$(am__mv) $(DEPDIR)/$*.Tpo $(DEPDIR)/$*.Po
-@AMDEP_TRUE@@am__fastdepCXX_FALSE@	source='$<' object='$@' libtool=no @AMDEPBACKSLASH@
+@am__fastdepCXX_TRUE@	$(AM_V_CXX)$(CXXCOMPILE) -MT $@ -MD -MP -MF $(DEPDIR)/$*.Tpo -c -o $@ `$(CYGPATH_W) '$<'`
+@am__fastdepCXX_TRUE@	$(AM_V_at)$(am__mv) $(DEPDIR)/$*.Tpo $(DEPDIR)/$*.Po
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	$(AM_V_CXX)source='$<' object='$@' libtool=no @AMDEPBACKSLASH@
 @AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
-@am__fastdepCXX_FALSE@	$(CXXCOMPILE) -c -o $@ `$(CYGPATH_W) '$<'`
+@am__fastdepCXX_FALSE@	$(AM_V_CXX@am__nodep@)$(CXXCOMPILE) -c -o $@ `$(CYGPATH_W) '$<'`
 
 team_bthread.o: bthread/team_bthread.cpp
-@am__fastdepCXX_TRUE@	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -MT team_bthread.o -MD -MP -MF $(DEPDIR)/team_bthread.Tpo -c -o team_bthread.o `test -f 'bthread/team_bthread.cpp' || echo '$(srcdir)/'`bthread/team_bthread.cpp
-@am__fastdepCXX_TRUE@	$(am__mv) $(DEPDIR)/team_bthread.Tpo $(DEPDIR)/team_bthread.Po
-@AMDEP_TRUE@@am__fastdepCXX_FALSE@	source='bthread/team_bthread.cpp' object='team_bthread.o' libtool=no @AMDEPBACKSLASH@
+@am__fastdepCXX_TRUE@	$(AM_V_CXX)$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -MT team_bthread.o -MD -MP -MF $(DEPDIR)/team_bthread.Tpo -c -o team_bthread.o `test -f 'bthread/team_bthread.cpp' || echo '$(srcdir)/'`bthread/team_bthread.cpp
+@am__fastdepCXX_TRUE@	$(AM_V_at)$(am__mv) $(DEPDIR)/team_bthread.Tpo $(DEPDIR)/team_bthread.Po
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	$(AM_V_CXX)source='bthread/team_bthread.cpp' object='team_bthread.o' libtool=no @AMDEPBACKSLASH@
 @AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
-@am__fastdepCXX_FALSE@	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -c -o team_bthread.o `test -f 'bthread/team_bthread.cpp' || echo '$(srcdir)/'`bthread/team_bthread.cpp
+@am__fastdepCXX_FALSE@	$(AM_V_CXX@am__nodep@)$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -c -o team_bthread.o `test -f 'bthread/team_bthread.cpp' || echo '$(srcdir)/'`bthread/team_bthread.cpp
 
 team_bthread.obj: bthread/team_bthread.cpp
-@am__fastdepCXX_TRUE@	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -MT team_bthread.obj -MD -MP -MF $(DEPDIR)/team_bthread.Tpo -c -o team_bthread.obj `if test -f 'bthread/team_bthread.cpp'; then $(CYGPATH_W) 'bthread/team_bthread.cpp'; else $(CYGPATH_W) '$(srcdir)/bthread/team_bthread.cpp'; fi`
-@am__fastdepCXX_TRUE@	$(am__mv) $(DEPDIR)/team_bthread.Tpo $(DEPDIR)/team_bthread.Po
-@AMDEP_TRUE@@am__fastdepCXX_FALSE@	source='bthread/team_bthread.cpp' object='team_bthread.obj' libtool=no @AMDEPBACKSLASH@
+@am__fastdepCXX_TRUE@	$(AM_V_CXX)$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -MT team_bthread.obj -MD -MP -MF $(DEPDIR)/team_bthread.Tpo -c -o team_bthread.obj `if test -f 'bthread/team_bthread.cpp'; then $(CYGPATH_W) 'bthread/team_bthread.cpp'; else $(CYGPATH_W) '$(srcdir)/bthread/team_bthread.cpp'; fi`
+@am__fastdepCXX_TRUE@	$(AM_V_at)$(am__mv) $(DEPDIR)/team_bthread.Tpo $(DEPDIR)/team_bthread.Po
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	$(AM_V_CXX)source='bthread/team_bthread.cpp' object='team_bthread.obj' libtool=no @AMDEPBACKSLASH@
 @AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
-@am__fastdepCXX_FALSE@	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -c -o team_bthread.obj `if test -f 'bthread/team_bthread.cpp'; then $(CYGPATH_W) 'bthread/team_bthread.cpp'; else $(CYGPATH_W) '$(srcdir)/bthread/team_bthread.cpp'; fi`
+@am__fastdepCXX_FALSE@	$(AM_V_CXX@am__nodep@)$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -c -o team_bthread.obj `if test -f 'bthread/team_bthread.cpp'; then $(CYGPATH_W) 'bthread/team_bthread.cpp'; else $(CYGPATH_W) '$(srcdir)/bthread/team_bthread.cpp'; fi`
 
 a11c_bthread.o: bthread/a11c_bthread.cpp
-@am__fastdepCXX_TRUE@	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -MT a11c_bthread.o -MD -MP -MF $(DEPDIR)/a11c_bthread.Tpo -c -o a11c_bthread.o `test -f 'bthread/a11c_bthread.cpp' || echo '$(srcdir)/'`bthread/a11c_bthread.cpp
-@am__fastdepCXX_TRUE@	$(am__mv) $(DEPDIR)/a11c_bthread.Tpo $(DEPDIR)/a11c_bthread.Po
-@AMDEP_TRUE@@am__fastdepCXX_FALSE@	source='bthread/a11c_bthread.cpp' object='a11c_bthread.o' libtool=no @AMDEPBACKSLASH@
+@am__fastdepCXX_TRUE@	$(AM_V_CXX)$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -MT a11c_bthread.o -MD -MP -MF $(DEPDIR)/a11c_bthread.Tpo -c -o a11c_bthread.o `test -f 'bthread/a11c_bthread.cpp' || echo '$(srcdir)/'`bthread/a11c_bthread.cpp
+@am__fastdepCXX_TRUE@	$(AM_V_at)$(am__mv) $(DEPDIR)/a11c_bthread.Tpo $(DEPDIR)/a11c_bthread.Po
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	$(AM_V_CXX)source='bthread/a11c_bthread.cpp' object='a11c_bthread.o' libtool=no @AMDEPBACKSLASH@
 @AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
-@am__fastdepCXX_FALSE@	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -c -o a11c_bthread.o `test -f 'bthread/a11c_bthread.cpp' || echo '$(srcdir)/'`bthread/a11c_bthread.cpp
+@am__fastdepCXX_FALSE@	$(AM_V_CXX@am__nodep@)$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -c -o a11c_bthread.o `test -f 'bthread/a11c_bthread.cpp' || echo '$(srcdir)/'`bthread/a11c_bthread.cpp
 
 a11c_bthread.obj: bthread/a11c_bthread.cpp
-@am__fastdepCXX_TRUE@	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -MT a11c_bthread.obj -MD -MP -MF $(DEPDIR)/a11c_bthread.Tpo -c -o a11c_bthread.obj `if test -f 'bthread/a11c_bthread.cpp'; then $(CYGPATH_W) 'bthread/a11c_bthread.cpp'; else $(CYGPATH_W) '$(srcdir)/bthread/a11c_bthread.cpp'; fi`
-@am__fastdepCXX_TRUE@	$(am__mv) $(DEPDIR)/a11c_bthread.Tpo $(DEPDIR)/a11c_bthread.Po
-@AMDEP_TRUE@@am__fastdepCXX_FALSE@	source='bthread/a11c_bthread.cpp' object='a11c_bthread.obj' libtool=no @AMDEPBACKSLASH@
+@am__fastdepCXX_TRUE@	$(AM_V_CXX)$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -MT a11c_bthread.obj -MD -MP -MF $(DEPDIR)/a11c_bthread.Tpo -c -o a11c_bthread.obj `if test -f 'bthread/a11c_bthread.cpp'; then $(CYGPATH_W) 'bthread/a11c_bthread.cpp'; else $(CYGPATH_W) '$(srcdir)/bthread/a11c_bthread.cpp'; fi`
+@am__fastdepCXX_TRUE@	$(AM_V_at)$(am__mv) $(DEPDIR)/a11c_bthread.Tpo $(DEPDIR)/a11c_bthread.Po
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	$(AM_V_CXX)source='bthread/a11c_bthread.cpp' object='a11c_bthread.obj' libtool=no @AMDEPBACKSLASH@
 @AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
-@am__fastdepCXX_FALSE@	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -c -o a11c_bthread.obj `if test -f 'bthread/a11c_bthread.cpp'; then $(CYGPATH_W) 'bthread/a11c_bthread.cpp'; else $(CYGPATH_W) '$(srcdir)/bthread/a11c_bthread.cpp'; fi`
+@am__fastdepCXX_FALSE@	$(AM_V_CXX@am__nodep@)$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -c -o a11c_bthread.obj `if test -f 'bthread/a11c_bthread.cpp'; then $(CYGPATH_W) 'bthread/a11c_bthread.cpp'; else $(CYGPATH_W) '$(srcdir)/bthread/a11c_bthread.cpp'; fi`
 
 simple_ad_bthread.o: bthread/simple_ad_bthread.cpp
-@am__fastdepCXX_TRUE@	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -MT simple_ad_bthread.o -MD -MP -MF $(DEPDIR)/simple_ad_bthread.Tpo -c -o simple_ad_bthread.o `test -f 'bthread/simple_ad_bthread.cpp' || echo '$(srcdir)/'`bthread/simple_ad_bthread.cpp
-@am__fastdepCXX_TRUE@	$(am__mv) $(DEPDIR)/simple_ad_bthread.Tpo $(DEPDIR)/simple_ad_bthread.Po
-@AMDEP_TRUE@@am__fastdepCXX_FALSE@	source='bthread/simple_ad_bthread.cpp' object='simple_ad_bthread.o' libtool=no @AMDEPBACKSLASH@
+@am__fastdepCXX_TRUE@	$(AM_V_CXX)$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -MT simple_ad_bthread.o -MD -MP -MF $(DEPDIR)/simple_ad_bthread.Tpo -c -o simple_ad_bthread.o `test -f 'bthread/simple_ad_bthread.cpp' || echo '$(srcdir)/'`bthread/simple_ad_bthread.cpp
+@am__fastdepCXX_TRUE@	$(AM_V_at)$(am__mv) $(DEPDIR)/simple_ad_bthread.Tpo $(DEPDIR)/simple_ad_bthread.Po
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	$(AM_V_CXX)source='bthread/simple_ad_bthread.cpp' object='simple_ad_bthread.o' libtool=no @AMDEPBACKSLASH@
 @AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
-@am__fastdepCXX_FALSE@	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -c -o simple_ad_bthread.o `test -f 'bthread/simple_ad_bthread.cpp' || echo '$(srcdir)/'`bthread/simple_ad_bthread.cpp
+@am__fastdepCXX_FALSE@	$(AM_V_CXX@am__nodep@)$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -c -o simple_ad_bthread.o `test -f 'bthread/simple_ad_bthread.cpp' || echo '$(srcdir)/'`bthread/simple_ad_bthread.cpp
 
 simple_ad_bthread.obj: bthread/simple_ad_bthread.cpp
-@am__fastdepCXX_TRUE@	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -MT simple_ad_bthread.obj -MD -MP -MF $(DEPDIR)/simple_ad_bthread.Tpo -c -o simple_ad_bthread.obj `if test -f 'bthread/simple_ad_bthread.cpp'; then $(CYGPATH_W) 'bthread/simple_ad_bthread.cpp'; else $(CYGPATH_W) '$(srcdir)/bthread/simple_ad_bthread.cpp'; fi`
-@am__fastdepCXX_TRUE@	$(am__mv) $(DEPDIR)/simple_ad_bthread.Tpo $(DEPDIR)/simple_ad_bthread.Po
-@AMDEP_TRUE@@am__fastdepCXX_FALSE@	source='bthread/simple_ad_bthread.cpp' object='simple_ad_bthread.obj' libtool=no @AMDEPBACKSLASH@
+@am__fastdepCXX_TRUE@	$(AM_V_CXX)$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -MT simple_ad_bthread.obj -MD -MP -MF $(DEPDIR)/simple_ad_bthread.Tpo -c -o simple_ad_bthread.obj `if test -f 'bthread/simple_ad_bthread.cpp'; then $(CYGPATH_W) 'bthread/simple_ad_bthread.cpp'; else $(CYGPATH_W) '$(srcdir)/bthread/simple_ad_bthread.cpp'; fi`
+@am__fastdepCXX_TRUE@	$(AM_V_at)$(am__mv) $(DEPDIR)/simple_ad_bthread.Tpo $(DEPDIR)/simple_ad_bthread.Po
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	$(AM_V_CXX)source='bthread/simple_ad_bthread.cpp' object='simple_ad_bthread.obj' libtool=no @AMDEPBACKSLASH@
 @AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
-@am__fastdepCXX_FALSE@	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -c -o simple_ad_bthread.obj `if test -f 'bthread/simple_ad_bthread.cpp'; then $(CYGPATH_W) 'bthread/simple_ad_bthread.cpp'; else $(CYGPATH_W) '$(srcdir)/bthread/simple_ad_bthread.cpp'; fi`
+@am__fastdepCXX_FALSE@	$(AM_V_CXX@am__nodep@)$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -c -o simple_ad_bthread.obj `if test -f 'bthread/simple_ad_bthread.cpp'; then $(CYGPATH_W) 'bthread/simple_ad_bthread.cpp'; else $(CYGPATH_W) '$(srcdir)/bthread/simple_ad_bthread.cpp'; fi`
 
 team_openmp.o: openmp/team_openmp.cpp
-@am__fastdepCXX_TRUE@	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -MT team_openmp.o -MD -MP -MF $(DEPDIR)/team_openmp.Tpo -c -o team_openmp.o `test -f 'openmp/team_openmp.cpp' || echo '$(srcdir)/'`openmp/team_openmp.cpp
-@am__fastdepCXX_TRUE@	$(am__mv) $(DEPDIR)/team_openmp.Tpo $(DEPDIR)/team_openmp.Po
-@AMDEP_TRUE@@am__fastdepCXX_FALSE@	source='openmp/team_openmp.cpp' object='team_openmp.o' libtool=no @AMDEPBACKSLASH@
+@am__fastdepCXX_TRUE@	$(AM_V_CXX)$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -MT team_openmp.o -MD -MP -MF $(DEPDIR)/team_openmp.Tpo -c -o team_openmp.o `test -f 'openmp/team_openmp.cpp' || echo '$(srcdir)/'`openmp/team_openmp.cpp
+@am__fastdepCXX_TRUE@	$(AM_V_at)$(am__mv) $(DEPDIR)/team_openmp.Tpo $(DEPDIR)/team_openmp.Po
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	$(AM_V_CXX)source='openmp/team_openmp.cpp' object='team_openmp.o' libtool=no @AMDEPBACKSLASH@
 @AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
-@am__fastdepCXX_FALSE@	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -c -o team_openmp.o `test -f 'openmp/team_openmp.cpp' || echo '$(srcdir)/'`openmp/team_openmp.cpp
+@am__fastdepCXX_FALSE@	$(AM_V_CXX@am__nodep@)$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -c -o team_openmp.o `test -f 'openmp/team_openmp.cpp' || echo '$(srcdir)/'`openmp/team_openmp.cpp
 
 team_openmp.obj: openmp/team_openmp.cpp
-@am__fastdepCXX_TRUE@	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -MT team_openmp.obj -MD -MP -MF $(DEPDIR)/team_openmp.Tpo -c -o team_openmp.obj `if test -f 'openmp/team_openmp.cpp'; then $(CYGPATH_W) 'openmp/team_openmp.cpp'; else $(CYGPATH_W) '$(srcdir)/openmp/team_openmp.cpp'; fi`
-@am__fastdepCXX_TRUE@	$(am__mv) $(DEPDIR)/team_openmp.Tpo $(DEPDIR)/team_openmp.Po
-@AMDEP_TRUE@@am__fastdepCXX_FALSE@	source='openmp/team_openmp.cpp' object='team_openmp.obj' libtool=no @AMDEPBACKSLASH@
+@am__fastdepCXX_TRUE@	$(AM_V_CXX)$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -MT team_openmp.obj -MD -MP -MF $(DEPDIR)/team_openmp.Tpo -c -o team_openmp.obj `if test -f 'openmp/team_openmp.cpp'; then $(CYGPATH_W) 'openmp/team_openmp.cpp'; else $(CYGPATH_W) '$(srcdir)/openmp/team_openmp.cpp'; fi`
+@am__fastdepCXX_TRUE@	$(AM_V_at)$(am__mv) $(DEPDIR)/team_openmp.Tpo $(DEPDIR)/team_openmp.Po
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	$(AM_V_CXX)source='openmp/team_openmp.cpp' object='team_openmp.obj' libtool=no @AMDEPBACKSLASH@
 @AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
-@am__fastdepCXX_FALSE@	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -c -o team_openmp.obj `if test -f 'openmp/team_openmp.cpp'; then $(CYGPATH_W) 'openmp/team_openmp.cpp'; else $(CYGPATH_W) '$(srcdir)/openmp/team_openmp.cpp'; fi`
+@am__fastdepCXX_FALSE@	$(AM_V_CXX@am__nodep@)$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -c -o team_openmp.obj `if test -f 'openmp/team_openmp.cpp'; then $(CYGPATH_W) 'openmp/team_openmp.cpp'; else $(CYGPATH_W) '$(srcdir)/openmp/team_openmp.cpp'; fi`
 
 a11c_openmp.o: openmp/a11c_openmp.cpp
-@am__fastdepCXX_TRUE@	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -MT a11c_openmp.o -MD -MP -MF $(DEPDIR)/a11c_openmp.Tpo -c -o a11c_openmp.o `test -f 'openmp/a11c_openmp.cpp' || echo '$(srcdir)/'`openmp/a11c_openmp.cpp
-@am__fastdepCXX_TRUE@	$(am__mv) $(DEPDIR)/a11c_openmp.Tpo $(DEPDIR)/a11c_openmp.Po
-@AMDEP_TRUE@@am__fastdepCXX_FALSE@	source='openmp/a11c_openmp.cpp' object='a11c_openmp.o' libtool=no @AMDEPBACKSLASH@
+@am__fastdepCXX_TRUE@	$(AM_V_CXX)$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -MT a11c_openmp.o -MD -MP -MF $(DEPDIR)/a11c_openmp.Tpo -c -o a11c_openmp.o `test -f 'openmp/a11c_openmp.cpp' || echo '$(srcdir)/'`openmp/a11c_openmp.cpp
+@am__fastdepCXX_TRUE@	$(AM_V_at)$(am__mv) $(DEPDIR)/a11c_openmp.Tpo $(DEPDIR)/a11c_openmp.Po
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	$(AM_V_CXX)source='openmp/a11c_openmp.cpp' object='a11c_openmp.o' libtool=no @AMDEPBACKSLASH@
 @AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
-@am__fastdepCXX_FALSE@	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -c -o a11c_openmp.o `test -f 'openmp/a11c_openmp.cpp' || echo '$(srcdir)/'`openmp/a11c_openmp.cpp
+@am__fastdepCXX_FALSE@	$(AM_V_CXX@am__nodep@)$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -c -o a11c_openmp.o `test -f 'openmp/a11c_openmp.cpp' || echo '$(srcdir)/'`openmp/a11c_openmp.cpp
 
 a11c_openmp.obj: openmp/a11c_openmp.cpp
-@am__fastdepCXX_TRUE@	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -MT a11c_openmp.obj -MD -MP -MF $(DEPDIR)/a11c_openmp.Tpo -c -o a11c_openmp.obj `if test -f 'openmp/a11c_openmp.cpp'; then $(CYGPATH_W) 'openmp/a11c_openmp.cpp'; else $(CYGPATH_W) '$(srcdir)/openmp/a11c_openmp.cpp'; fi`
-@am__fastdepCXX_TRUE@	$(am__mv) $(DEPDIR)/a11c_openmp.Tpo $(DEPDIR)/a11c_openmp.Po
-@AMDEP_TRUE@@am__fastdepCXX_FALSE@	source='openmp/a11c_openmp.cpp' object='a11c_openmp.obj' libtool=no @AMDEPBACKSLASH@
+@am__fastdepCXX_TRUE@	$(AM_V_CXX)$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -MT a11c_openmp.obj -MD -MP -MF $(DEPDIR)/a11c_openmp.Tpo -c -o a11c_openmp.obj `if test -f 'openmp/a11c_openmp.cpp'; then $(CYGPATH_W) 'openmp/a11c_openmp.cpp'; else $(CYGPATH_W) '$(srcdir)/openmp/a11c_openmp.cpp'; fi`
+@am__fastdepCXX_TRUE@	$(AM_V_at)$(am__mv) $(DEPDIR)/a11c_openmp.Tpo $(DEPDIR)/a11c_openmp.Po
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	$(AM_V_CXX)source='openmp/a11c_openmp.cpp' object='a11c_openmp.obj' libtool=no @AMDEPBACKSLASH@
 @AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
-@am__fastdepCXX_FALSE@	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -c -o a11c_openmp.obj `if test -f 'openmp/a11c_openmp.cpp'; then $(CYGPATH_W) 'openmp/a11c_openmp.cpp'; else $(CYGPATH_W) '$(srcdir)/openmp/a11c_openmp.cpp'; fi`
+@am__fastdepCXX_FALSE@	$(AM_V_CXX@am__nodep@)$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -c -o a11c_openmp.obj `if test -f 'openmp/a11c_openmp.cpp'; then $(CYGPATH_W) 'openmp/a11c_openmp.cpp'; else $(CYGPATH_W) '$(srcdir)/openmp/a11c_openmp.cpp'; fi`
 
 simple_ad_openmp.o: openmp/simple_ad_openmp.cpp
-@am__fastdepCXX_TRUE@	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -MT simple_ad_openmp.o -MD -MP -MF $(DEPDIR)/simple_ad_openmp.Tpo -c -o simple_ad_openmp.o `test -f 'openmp/simple_ad_openmp.cpp' || echo '$(srcdir)/'`openmp/simple_ad_openmp.cpp
-@am__fastdepCXX_TRUE@	$(am__mv) $(DEPDIR)/simple_ad_openmp.Tpo $(DEPDIR)/simple_ad_openmp.Po
-@AMDEP_TRUE@@am__fastdepCXX_FALSE@	source='openmp/simple_ad_openmp.cpp' object='simple_ad_openmp.o' libtool=no @AMDEPBACKSLASH@
+@am__fastdepCXX_TRUE@	$(AM_V_CXX)$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -MT simple_ad_openmp.o -MD -MP -MF $(DEPDIR)/simple_ad_openmp.Tpo -c -o simple_ad_openmp.o `test -f 'openmp/simple_ad_openmp.cpp' || echo '$(srcdir)/'`openmp/simple_ad_openmp.cpp
+@am__fastdepCXX_TRUE@	$(AM_V_at)$(am__mv) $(DEPDIR)/simple_ad_openmp.Tpo $(DEPDIR)/simple_ad_openmp.Po
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	$(AM_V_CXX)source='openmp/simple_ad_openmp.cpp' object='simple_ad_openmp.o' libtool=no @AMDEPBACKSLASH@
 @AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
-@am__fastdepCXX_FALSE@	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -c -o simple_ad_openmp.o `test -f 'openmp/simple_ad_openmp.cpp' || echo '$(srcdir)/'`openmp/simple_ad_openmp.cpp
+@am__fastdepCXX_FALSE@	$(AM_V_CXX@am__nodep@)$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -c -o simple_ad_openmp.o `test -f 'openmp/simple_ad_openmp.cpp' || echo '$(srcdir)/'`openmp/simple_ad_openmp.cpp
 
 simple_ad_openmp.obj: openmp/simple_ad_openmp.cpp
-@am__fastdepCXX_TRUE@	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -MT simple_ad_openmp.obj -MD -MP -MF $(DEPDIR)/simple_ad_openmp.Tpo -c -o simple_ad_openmp.obj `if test -f 'openmp/simple_ad_openmp.cpp'; then $(CYGPATH_W) 'openmp/simple_ad_openmp.cpp'; else $(CYGPATH_W) '$(srcdir)/openmp/simple_ad_openmp.cpp'; fi`
-@am__fastdepCXX_TRUE@	$(am__mv) $(DEPDIR)/simple_ad_openmp.Tpo $(DEPDIR)/simple_ad_openmp.Po
-@AMDEP_TRUE@@am__fastdepCXX_FALSE@	source='openmp/simple_ad_openmp.cpp' object='simple_ad_openmp.obj' libtool=no @AMDEPBACKSLASH@
+@am__fastdepCXX_TRUE@	$(AM_V_CXX)$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -MT simple_ad_openmp.obj -MD -MP -MF $(DEPDIR)/simple_ad_openmp.Tpo -c -o simple_ad_openmp.obj `if test -f 'openmp/simple_ad_openmp.cpp'; then $(CYGPATH_W) 'openmp/simple_ad_openmp.cpp'; else $(CYGPATH_W) '$(srcdir)/openmp/simple_ad_openmp.cpp'; fi`
+@am__fastdepCXX_TRUE@	$(AM_V_at)$(am__mv) $(DEPDIR)/simple_ad_openmp.Tpo $(DEPDIR)/simple_ad_openmp.Po
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	$(AM_V_CXX)source='openmp/simple_ad_openmp.cpp' object='simple_ad_openmp.obj' libtool=no @AMDEPBACKSLASH@
 @AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
-@am__fastdepCXX_FALSE@	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -c -o simple_ad_openmp.obj `if test -f 'openmp/simple_ad_openmp.cpp'; then $(CYGPATH_W) 'openmp/simple_ad_openmp.cpp'; else $(CYGPATH_W) '$(srcdir)/openmp/simple_ad_openmp.cpp'; fi`
+@am__fastdepCXX_FALSE@	$(AM_V_CXX@am__nodep@)$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -c -o simple_ad_openmp.obj `if test -f 'openmp/simple_ad_openmp.cpp'; then $(CYGPATH_W) 'openmp/simple_ad_openmp.cpp'; else $(CYGPATH_W) '$(srcdir)/openmp/simple_ad_openmp.cpp'; fi`
 
 team_pthread.o: pthread/team_pthread.cpp
-@am__fastdepCXX_TRUE@	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -MT team_pthread.o -MD -MP -MF $(DEPDIR)/team_pthread.Tpo -c -o team_pthread.o `test -f 'pthread/team_pthread.cpp' || echo '$(srcdir)/'`pthread/team_pthread.cpp
-@am__fastdepCXX_TRUE@	$(am__mv) $(DEPDIR)/team_pthread.Tpo $(DEPDIR)/team_pthread.Po
-@AMDEP_TRUE@@am__fastdepCXX_FALSE@	source='pthread/team_pthread.cpp' object='team_pthread.o' libtool=no @AMDEPBACKSLASH@
+@am__fastdepCXX_TRUE@	$(AM_V_CXX)$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -MT team_pthread.o -MD -MP -MF $(DEPDIR)/team_pthread.Tpo -c -o team_pthread.o `test -f 'pthread/team_pthread.cpp' || echo '$(srcdir)/'`pthread/team_pthread.cpp
+@am__fastdepCXX_TRUE@	$(AM_V_at)$(am__mv) $(DEPDIR)/team_pthread.Tpo $(DEPDIR)/team_pthread.Po
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	$(AM_V_CXX)source='pthread/team_pthread.cpp' object='team_pthread.o' libtool=no @AMDEPBACKSLASH@
 @AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
-@am__fastdepCXX_FALSE@	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -c -o team_pthread.o `test -f 'pthread/team_pthread.cpp' || echo '$(srcdir)/'`pthread/team_pthread.cpp
+@am__fastdepCXX_FALSE@	$(AM_V_CXX@am__nodep@)$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -c -o team_pthread.o `test -f 'pthread/team_pthread.cpp' || echo '$(srcdir)/'`pthread/team_pthread.cpp
 
 team_pthread.obj: pthread/team_pthread.cpp
-@am__fastdepCXX_TRUE@	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -MT team_pthread.obj -MD -MP -MF $(DEPDIR)/team_pthread.Tpo -c -o team_pthread.obj `if test -f 'pthread/team_pthread.cpp'; then $(CYGPATH_W) 'pthread/team_pthread.cpp'; else $(CYGPATH_W) '$(srcdir)/pthread/team_pthread.cpp'; fi`
-@am__fastdepCXX_TRUE@	$(am__mv) $(DEPDIR)/team_pthread.Tpo $(DEPDIR)/team_pthread.Po
-@AMDEP_TRUE@@am__fastdepCXX_FALSE@	source='pthread/team_pthread.cpp' object='team_pthread.obj' libtool=no @AMDEPBACKSLASH@
+@am__fastdepCXX_TRUE@	$(AM_V_CXX)$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -MT team_pthread.obj -MD -MP -MF $(DEPDIR)/team_pthread.Tpo -c -o team_pthread.obj `if test -f 'pthread/team_pthread.cpp'; then $(CYGPATH_W) 'pthread/team_pthread.cpp'; else $(CYGPATH_W) '$(srcdir)/pthread/team_pthread.cpp'; fi`
+@am__fastdepCXX_TRUE@	$(AM_V_at)$(am__mv) $(DEPDIR)/team_pthread.Tpo $(DEPDIR)/team_pthread.Po
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	$(AM_V_CXX)source='pthread/team_pthread.cpp' object='team_pthread.obj' libtool=no @AMDEPBACKSLASH@
 @AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
-@am__fastdepCXX_FALSE@	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -c -o team_pthread.obj `if test -f 'pthread/team_pthread.cpp'; then $(CYGPATH_W) 'pthread/team_pthread.cpp'; else $(CYGPATH_W) '$(srcdir)/pthread/team_pthread.cpp'; fi`
+@am__fastdepCXX_FALSE@	$(AM_V_CXX@am__nodep@)$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -c -o team_pthread.obj `if test -f 'pthread/team_pthread.cpp'; then $(CYGPATH_W) 'pthread/team_pthread.cpp'; else $(CYGPATH_W) '$(srcdir)/pthread/team_pthread.cpp'; fi`
 
 a11c_pthread.o: pthread/a11c_pthread.cpp
-@am__fastdepCXX_TRUE@	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -MT a11c_pthread.o -MD -MP -MF $(DEPDIR)/a11c_pthread.Tpo -c -o a11c_pthread.o `test -f 'pthread/a11c_pthread.cpp' || echo '$(srcdir)/'`pthread/a11c_pthread.cpp
-@am__fastdepCXX_TRUE@	$(am__mv) $(DEPDIR)/a11c_pthread.Tpo $(DEPDIR)/a11c_pthread.Po
-@AMDEP_TRUE@@am__fastdepCXX_FALSE@	source='pthread/a11c_pthread.cpp' object='a11c_pthread.o' libtool=no @AMDEPBACKSLASH@
+@am__fastdepCXX_TRUE@	$(AM_V_CXX)$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -MT a11c_pthread.o -MD -MP -MF $(DEPDIR)/a11c_pthread.Tpo -c -o a11c_pthread.o `test -f 'pthread/a11c_pthread.cpp' || echo '$(srcdir)/'`pthread/a11c_pthread.cpp
+@am__fastdepCXX_TRUE@	$(AM_V_at)$(am__mv) $(DEPDIR)/a11c_pthread.Tpo $(DEPDIR)/a11c_pthread.Po
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	$(AM_V_CXX)source='pthread/a11c_pthread.cpp' object='a11c_pthread.o' libtool=no @AMDEPBACKSLASH@
 @AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
-@am__fastdepCXX_FALSE@	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -c -o a11c_pthread.o `test -f 'pthread/a11c_pthread.cpp' || echo '$(srcdir)/'`pthread/a11c_pthread.cpp
+@am__fastdepCXX_FALSE@	$(AM_V_CXX@am__nodep@)$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -c -o a11c_pthread.o `test -f 'pthread/a11c_pthread.cpp' || echo '$(srcdir)/'`pthread/a11c_pthread.cpp
 
 a11c_pthread.obj: pthread/a11c_pthread.cpp
-@am__fastdepCXX_TRUE@	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -MT a11c_pthread.obj -MD -MP -MF $(DEPDIR)/a11c_pthread.Tpo -c -o a11c_pthread.obj `if test -f 'pthread/a11c_pthread.cpp'; then $(CYGPATH_W) 'pthread/a11c_pthread.cpp'; else $(CYGPATH_W) '$(srcdir)/pthread/a11c_pthread.cpp'; fi`
-@am__fastdepCXX_TRUE@	$(am__mv) $(DEPDIR)/a11c_pthread.Tpo $(DEPDIR)/a11c_pthread.Po
-@AMDEP_TRUE@@am__fastdepCXX_FALSE@	source='pthread/a11c_pthread.cpp' object='a11c_pthread.obj' libtool=no @AMDEPBACKSLASH@
+@am__fastdepCXX_TRUE@	$(AM_V_CXX)$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -MT a11c_pthread.obj -MD -MP -MF $(DEPDIR)/a11c_pthread.Tpo -c -o a11c_pthread.obj `if test -f 'pthread/a11c_pthread.cpp'; then $(CYGPATH_W) 'pthread/a11c_pthread.cpp'; else $(CYGPATH_W) '$(srcdir)/pthread/a11c_pthread.cpp'; fi`
+@am__fastdepCXX_TRUE@	$(AM_V_at)$(am__mv) $(DEPDIR)/a11c_pthread.Tpo $(DEPDIR)/a11c_pthread.Po
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	$(AM_V_CXX)source='pthread/a11c_pthread.cpp' object='a11c_pthread.obj' libtool=no @AMDEPBACKSLASH@
 @AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
-@am__fastdepCXX_FALSE@	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -c -o a11c_pthread.obj `if test -f 'pthread/a11c_pthread.cpp'; then $(CYGPATH_W) 'pthread/a11c_pthread.cpp'; else $(CYGPATH_W) '$(srcdir)/pthread/a11c_pthread.cpp'; fi`
+@am__fastdepCXX_FALSE@	$(AM_V_CXX@am__nodep@)$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -c -o a11c_pthread.obj `if test -f 'pthread/a11c_pthread.cpp'; then $(CYGPATH_W) 'pthread/a11c_pthread.cpp'; else $(CYGPATH_W) '$(srcdir)/pthread/a11c_pthread.cpp'; fi`
 
 simple_ad_pthread.o: pthread/simple_ad_pthread.cpp
-@am__fastdepCXX_TRUE@	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -MT simple_ad_pthread.o -MD -MP -MF $(DEPDIR)/simple_ad_pthread.Tpo -c -o simple_ad_pthread.o `test -f 'pthread/simple_ad_pthread.cpp' || echo '$(srcdir)/'`pthread/simple_ad_pthread.cpp
-@am__fastdepCXX_TRUE@	$(am__mv) $(DEPDIR)/simple_ad_pthread.Tpo $(DEPDIR)/simple_ad_pthread.Po
-@AMDEP_TRUE@@am__fastdepCXX_FALSE@	source='pthread/simple_ad_pthread.cpp' object='simple_ad_pthread.o' libtool=no @AMDEPBACKSLASH@
+@am__fastdepCXX_TRUE@	$(AM_V_CXX)$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -MT simple_ad_pthread.o -MD -MP -MF $(DEPDIR)/simple_ad_pthread.Tpo -c -o simple_ad_pthread.o `test -f 'pthread/simple_ad_pthread.cpp' || echo '$(srcdir)/'`pthread/simple_ad_pthread.cpp
+@am__fastdepCXX_TRUE@	$(AM_V_at)$(am__mv) $(DEPDIR)/simple_ad_pthread.Tpo $(DEPDIR)/simple_ad_pthread.Po
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	$(AM_V_CXX)source='pthread/simple_ad_pthread.cpp' object='simple_ad_pthread.o' libtool=no @AMDEPBACKSLASH@
 @AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
-@am__fastdepCXX_FALSE@	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -c -o simple_ad_pthread.o `test -f 'pthread/simple_ad_pthread.cpp' || echo '$(srcdir)/'`pthread/simple_ad_pthread.cpp
+@am__fastdepCXX_FALSE@	$(AM_V_CXX@am__nodep@)$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -c -o simple_ad_pthread.o `test -f 'pthread/simple_ad_pthread.cpp' || echo '$(srcdir)/'`pthread/simple_ad_pthread.cpp
 
 simple_ad_pthread.obj: pthread/simple_ad_pthread.cpp
-@am__fastdepCXX_TRUE@	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -MT simple_ad_pthread.obj -MD -MP -MF $(DEPDIR)/simple_ad_pthread.Tpo -c -o simple_ad_pthread.obj `if test -f 'pthread/simple_ad_pthread.cpp'; then $(CYGPATH_W) 'pthread/simple_ad_pthread.cpp'; else $(CYGPATH_W) '$(srcdir)/pthread/simple_ad_pthread.cpp'; fi`
-@am__fastdepCXX_TRUE@	$(am__mv) $(DEPDIR)/simple_ad_pthread.Tpo $(DEPDIR)/simple_ad_pthread.Po
-@AMDEP_TRUE@@am__fastdepCXX_FALSE@	source='pthread/simple_ad_pthread.cpp' object='simple_ad_pthread.obj' libtool=no @AMDEPBACKSLASH@
+@am__fastdepCXX_TRUE@	$(AM_V_CXX)$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -MT simple_ad_pthread.obj -MD -MP -MF $(DEPDIR)/simple_ad_pthread.Tpo -c -o simple_ad_pthread.obj `if test -f 'pthread/simple_ad_pthread.cpp'; then $(CYGPATH_W) 'pthread/simple_ad_pthread.cpp'; else $(CYGPATH_W) '$(srcdir)/pthread/simple_ad_pthread.cpp'; fi`
+@am__fastdepCXX_TRUE@	$(AM_V_at)$(am__mv) $(DEPDIR)/simple_ad_pthread.Tpo $(DEPDIR)/simple_ad_pthread.Po
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	$(AM_V_CXX)source='pthread/simple_ad_pthread.cpp' object='simple_ad_pthread.obj' libtool=no @AMDEPBACKSLASH@
 @AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
-@am__fastdepCXX_FALSE@	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -c -o simple_ad_pthread.obj `if test -f 'pthread/simple_ad_pthread.cpp'; then $(CYGPATH_W) 'pthread/simple_ad_pthread.cpp'; else $(CYGPATH_W) '$(srcdir)/pthread/simple_ad_pthread.cpp'; fi`
+@am__fastdepCXX_FALSE@	$(AM_V_CXX@am__nodep@)$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -c -o simple_ad_pthread.obj `if test -f 'pthread/simple_ad_pthread.cpp'; then $(CYGPATH_W) 'pthread/simple_ad_pthread.cpp'; else $(CYGPATH_W) '$(srcdir)/pthread/simple_ad_pthread.cpp'; fi`
 
 ID: $(HEADERS) $(SOURCES) $(LISP) $(TAGS_FILES)
 	list='$(SOURCES) $(HEADERS) $(LISP) $(TAGS_FILES)'; \

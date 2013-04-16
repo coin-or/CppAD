@@ -1,7 +1,7 @@
 #! /bin/bash -e
 # $Id$
 # -----------------------------------------------------------------------------
-# CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-12 Bradley M. Bell
+# CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-13 Bradley M. Bell
 #
 # CppAD is distributed under multiple licenses. This distribution is under
 # the terms of the
@@ -26,6 +26,7 @@ grep '$verbatim%' * */* */*/* 2> /dev/null | sed \
 	-e 's|:.*$verbatim%| |' \
 	-e 's|%.*||' \
 	-e '/^junk /d' \
+	-e '/^junk.sh /d' \
 	-e '/^doxydoc\//d' \
 	-e '/^work\//d' \
 	-e '/^build\//d' \

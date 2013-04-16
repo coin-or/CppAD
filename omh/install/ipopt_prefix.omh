@@ -1,6 +1,6 @@
 /* $Id$ */
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-12 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-13 Bradley M. Bell
 
 CppAD is distributed under multiple licenses. This distribution is under
 the terms of the 
@@ -58,5 +58,16 @@ $codei%
 	cd cppad_ipopt
 	make check_ipopt
 %$$
+
+$children%
+	bin/get_ipopt.sh
+%$$
+$head get_ipopt$$
+$index get, ipopt$$
+$index ipopt, get$$
+If you are using Unix, you can download and install
+a copy of Ipopt using $cref get_ipopt.sh$$.
+The corresponding $icode ipopt_prefix$$ would be
+$code build/prefix$$.
 
 $end

@@ -10,6 +10,39 @@
 # A copy of this license is included in the COPYING file of this distribution.
 # Please visit http://www.coin-or.org/CppAD/ for information on other licenses.
 # -----------------------------------------------------------------------------
+# $begin get_ipopt.sh$$ $newlinech #$$
+# $spell
+#	Ipopt
+#	CppAD
+# $$
+#
+# $section Download and Install Ipopt in Build Directory$$
+# $index ipopt, download and install$$
+# $index download, install ipopt$$
+# $index install, ipopt$$ 
+#
+# $head Syntax$$
+# $code bin/get_ipopt.sh$$
+#
+# $head Purpose$$
+# If you are using Unix, this command will download and install 
+# $href%http://www.coin-or.org/projects/Ipopt.xml%Ipopt%$$ in the
+# CppAD $code build$$ directory.
+#
+# $head Distribution Directory$$
+# This command must be executed in the 
+# $cref/distribution directory/download/Distribution Directory/$$.
+#
+# $head External Directory$$
+# The Ipopt source code is downloaded and compiled in the sub-directory
+# $code build/external$$ below the distribution directory.
+#
+# $head Prefix Directory$$
+# The Ipopt libraries and include files are installed in the sub-directory
+# $code build/prefix$$ below the distribution directory.
+#
+# $end
+# -----------------------------------------------------------------------------
 if [ $0 != "bin/get_ipopt.sh" ]
 then
 	echo "bin/get_ipopt.sh: must be executed from its parent directory"
@@ -77,14 +110,3 @@ echo_eval ./configure \
 	--libdir="$prefix/$libdir" 
 # -----------------------------------------------------------------------------
 echo_eval make install 
-# -----------------------------------------------------------------------------
-for file in ipopt.pc ipopt-uninstalled.pc
-do
-	file_path="$prefix/$libdir/pkgconfig/$file"
-	if grep '\-llapack \-lblas' $file_path > /dev/null
-	then
-		echo "Patch $file_path"
-		echo "so it references coin versions of lapack and blas"
-		sed -e 's|-llapack -lblas|-lcoinlapack -lcoinblas|' -i $file_path
-	fi
-done

@@ -1,7 +1,7 @@
 #! /bin/bash -e
 # $Id$
 # -----------------------------------------------------------------------------
-# CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-12 Bradley M. Bell
+# CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-13 Bradley M. Bell
 #
 # CppAD is distributed under multiple licenses. This distribution is under
 # the terms of the
@@ -15,6 +15,9 @@ then
 	echo "bin/check_include_omh.sh: must be executed from its parent directory"
 	exit 1
 fi
+sh_files_with_omhelp_documentation='
+	bin/get_ipopt.sh
+'
 # -----------------------------------------------------------------------------
 # Make sure omhelp, under cygwin, has not matched file names with wrong case.
 echo "Checking difference between OMhelp include directives and file names."
@@ -32,6 +35,7 @@ find . \( -name '*.c'   \) -or \
 		-e '/.\/doc\//d' \
 		-e 's|./||' \
 		> bin/check_include_omh.1.$$
+echo $sh_files_with_omhelp_documentation >> bin/check_include_omh.1.$$
 for file in `cat bin/check_include_omh.1.$$`
 do
 	# assume $childtable, ... , $verbatim use % for delimiter
