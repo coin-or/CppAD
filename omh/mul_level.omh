@@ -1,6 +1,6 @@
 $Id$
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-12 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-13 Bradley M. Bell
 
 CppAD is distributed under multiple licenses. This distribution is under
 the terms of the 
@@ -101,7 +101,7 @@ $codei%
 %$$
 where $icode X$$ is 
 a $cref SimpleVector$$ with elements of type 
-$codei%CPPAD_TESTVECTOR(AD< AD<double>) >%$$.
+$codei%AD< AD<double>) >%$$.
 This will start recording a new tape of 
 operations performed using $codei%AD< AD<double> >%$$ class objects.
 

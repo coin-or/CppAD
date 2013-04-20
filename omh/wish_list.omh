@@ -1,6 +1,6 @@
 $Id$
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-12 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-13 Bradley M. Bell
 
 CppAD is distributed under multiple licenses. This distribution is under
 the terms of the 
@@ -189,9 +189,16 @@ $head user_atomic$$
 $index user, atomic functions$$
 $index atomic, user functions$$
 $index functions, user_atomic$$
+
+$subhead Sparsity Patterns$$
 The $cref user_atomic$$ functions should allow the user to chose vectors
 of bits, instead of standard sets, for representing sparsity. This would
 be more efficient for most cases.
 
+$subhead Use AD$$
+The $cref atomic_usead.cpp$$ example is to simple to be useful
+in reducing the size of the tape. 
+We should include a more complex example where there are more calculations,
+$latex n \neq m$$, $latex n \neq 1$$, and $latex m \neq 1$$.
 
 $end

@@ -3,7 +3,7 @@
 # define CPPAD_USER_ATOMIC_INCLUDED
 
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-12 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-13 Bradley M. Bell
 
 CppAD is distributed under multiple licenses. This distribution is under
 the terms of the 
@@ -81,6 +81,11 @@ and letting CppAD do the rest.
 In this case, $code CPPAD_USER_ATOMIC$$ can be used
 add the user code for $latex f(x)$$, and its derivatives,
 to the set of $codei%AD<%Base%>%$$ atomic operations. 
+$pre
+
+$$
+Another possible purpose is to reduce the size of the tape; 
+see $cref/use AD/user_atomic/Example/Use AD/$$
 
 $head Partial Implementation$$
 The routines 
@@ -230,6 +235,15 @@ to the derivatives of $latex Y(t)$$ at $latex t = 0$$ in the following way:
 $latex \[
 	y_j^\ell = \frac{1}{ \ell ! } Y_j^{(\ell)} (0)
 \] $$
+
+$subhead forward$$
+In the case of $icode forward$$,
+for $latex i = 0 , \ldots , m-1$$, $latex ty[ i *( k  + 1) + k ]$$ is an output
+and all the other components of $icode ty$$ are inputs.
+
+$subhead reverse$$
+In the case of $icode reverse$$,
+all the components of $icode ty$$ are inputs.
 
 $head afun$$
 The macro argument $icode afun$$,
@@ -688,6 +702,7 @@ while in $cref/parallel/ta_in_parallel/$$ execution mode.
 
 $children%
 	example/reciprocal.cpp%
+	example/atomic_usead.cpp%
 	example/user_tan.cpp%
 	example/mat_mul.cpp
 %$$
@@ -696,6 +711,13 @@ $head Example$$
 $subhead Reciprocal$$
 The file $cref reciprocal.cpp$$ contains the simplest example and test
 of a user atomic operation.
+
+$subhead Use AD$$
+The file $cref atomic_usead.cpp$$ uses AD to compute the derivatives 
+inside a user defined atomic function.
+This may have the advantage of reducing the size of the tape, because
+a repeated section of code would only be taped once
+(see the $cref/use AD/WishList/user_atomic/Use AD/$$ wish list item).
 
 $subhead Tangent Function$$
 The file $cref user_tan.cpp$$ contains an example and test
