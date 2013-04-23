@@ -65,23 +65,6 @@ namespace { // Begin empty namespace
 	}
 
 	// ----------------------------------------------------------------------
-	// a utility to compute the union of two sets.
-	void my_union(
-		std::set<size_t>&         result  ,
-		const std::set<size_t>&   left    ,
-		const std::set<size_t>&   right   )
-	{	std::set<size_t> temp;
-		std::set_union(
-			left.begin()              ,
-			left.end()                ,
-			right.begin()             ,
-			right.end()               ,
-			std::inserter(temp, temp.begin())
-		);
-		result.swap(temp);
-	}
-
-	// ----------------------------------------------------------------------
 	// forward mode routine called by CppAD
 	bool atomic_usead_forward(
 		size_t                   id ,
