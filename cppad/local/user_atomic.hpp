@@ -702,7 +702,7 @@ while in $cref/parallel/ta_in_parallel/$$ execution mode.
 
 $children%
 	example/reciprocal.cpp%
-	example/atomic_usead.cpp%
+	example/atom_usead_1.cpp%
 	example/user_tan.cpp%
 	example/mat_mul.cpp
 %$$
@@ -713,7 +713,7 @@ The file $cref reciprocal.cpp$$ contains the simplest example and test
 of a user atomic operation.
 
 $subhead Use AD$$
-The file $cref atomic_usead.cpp$$ uses AD to compute the derivatives 
+The file $cref atom_usead_1.cpp$$ uses AD to compute the derivatives 
 inside a user defined atomic function.
 This may have the advantage of reducing the size of the tape, because
 a repeated section of code would only be taped once

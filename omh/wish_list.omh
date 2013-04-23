@@ -196,7 +196,7 @@ of bits, instead of standard sets, for representing sparsity. This would
 be more efficient for most cases.
 
 $subhead Use AD$$
-The $cref atomic_usead.cpp$$ example is to simple to be useful
+The $cref atom_usead_1.cpp$$ example is to simple to be useful
 in reducing the size of the tape. 
 We should include a more complex example where there are more calculations,
 $latex n \neq m$$, $latex n \neq 1$$, and $latex m \neq 1$$.

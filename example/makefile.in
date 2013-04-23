@@ -80,7 +80,7 @@ am__example_SOURCES_DIST = mul_level_adolc.cpp mul_level_adolc_ode.cpp \
 	example.cpp abort_recording.cpp abs.cpp acos.cpp add.cpp \
 	add_eq.cpp ad_assign.cpp ad_ctor.cpp ad_fun.cpp ad_in_c.cpp \
 	ad_input.cpp ad_output.cpp asin.cpp atan.cpp atan2.cpp \
-	atomic_usead.cpp base_alloc.hpp base_require.cpp \
+	atom_usead_1.cpp base_alloc.hpp base_require.cpp \
 	bender_quad.cpp bool_fun.cpp capacity_taylor.cpp \
 	change_const.cpp check_numeric_type.cpp \
 	check_simple_vector.cpp checkpoint.cpp compare.cpp \
@@ -117,7 +117,7 @@ am_example_OBJECTS = $(am__objects_1) example.$(OBJEXT) \
 	add.$(OBJEXT) add_eq.$(OBJEXT) ad_assign.$(OBJEXT) \
 	ad_ctor.$(OBJEXT) ad_fun.$(OBJEXT) ad_in_c.$(OBJEXT) \
 	ad_input.$(OBJEXT) ad_output.$(OBJEXT) asin.$(OBJEXT) \
-	atan.$(OBJEXT) atan2.$(OBJEXT) atomic_usead.$(OBJEXT) \
+	atan.$(OBJEXT) atan2.$(OBJEXT) atom_usead_1.$(OBJEXT) \
 	base_require.$(OBJEXT) bender_quad.$(OBJEXT) \
 	bool_fun.$(OBJEXT) capacity_taylor.$(OBJEXT) \
 	change_const.$(OBJEXT) check_numeric_type.$(OBJEXT) \
@@ -427,7 +427,7 @@ example_SOURCES = \
 	asin.cpp \
 	atan.cpp \
 	atan2.cpp \
-	atomic_usead.cpp \
+	atom_usead_1.cpp \
 	base_alloc.hpp \
 	base_require.cpp \
 	bender_quad.cpp \
@@ -613,7 +613,7 @@ distclean-compile:
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/asin.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/atan.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/atan2.Po@am__quote@
-@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/atomic_usead.Po@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/atom_usead_1.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/base_require.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/bender_quad.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/bool_fun.Po@am__quote@

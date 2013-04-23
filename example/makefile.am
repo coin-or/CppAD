@@ -82,7 +82,7 @@ example_SOURCES   = \
 	asin.cpp \
 	atan.cpp \
 	atan2.cpp \
-	atomic_usead.cpp \
+	atom_usead_1.cpp \
 	base_alloc.hpp \
 	base_require.cpp \
 	bender_quad.cpp \

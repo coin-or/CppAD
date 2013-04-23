@@ -58,7 +58,7 @@ extern bool ad_output(void);
 extern bool Asin(void);
 extern bool Atan(void);
 extern bool Atan2(void);
-extern bool atomic_usead(void);
+extern bool atom_usead_1(void);
 extern bool base_require(void);
 extern bool BenderQuad(void);
 extern bool BoolFun(void);
@@ -220,7 +220,7 @@ int main(void)
 	ok &= Run( Asin,              "Asin"             );
 	ok &= Run( Atan,              "Atan"             );
 	ok &= Run( Atan2,             "Atan2"            );
-	ok &= Run( atomic_usead,      "atomic_usead"     );
+	ok &= Run( atom_usead_1,      "atom_usead_1"     );
 	ok &= Run( BenderQuad,        "BenderQuad"       );
 	ok &= Run( BoolFun,           "BoolFun"          );
 	ok &= Run( capacity_taylor,   "capacity_taylor"  );

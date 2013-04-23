@@ -94,7 +94,7 @@ $rref ad_output.cpp$$
 $rref Asin.cpp$$
 $rref atan2.cpp$$
 $rref atan.cpp$$
-$rref atomic_usead.cpp$$
+$rref atom_usead_1.cpp$$
 $rref base_adolc.hpp$$
 $rref base_alloc.hpp$$
 $rref base_complex.hpp$$

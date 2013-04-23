@@ -39,7 +39,7 @@ The purpose of this section is to
 assist you in learning about changes between various versions of CppAD.
 
 $head 04-20$$
-The example $cref atomic_usead.cpp$$ was added.
+The example $cref atom_usead_1.cpp$$ was added.
 
 $head 04-16$$
 The script $cref get_ipopt.sh$$ has been added.

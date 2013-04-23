@@ -84,7 +84,7 @@ ADD_EXECUTABLE(example EXCLUDE_FROM_ALL example.cpp
 	asin.cpp
 	atan.cpp
 	atan2.cpp
-	atomic_usead.cpp
+	atom_usead_1.cpp
 	base_alloc.hpp
 	base_require.cpp
 	bender_quad.cpp
