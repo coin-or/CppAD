@@ -231,14 +231,17 @@ bool atom_usead_2(void)
 	// Create approximate g(t) = [ t, t^2 / 2 ]
 	//
 	// domain space vector
-	vector< AD<double> > at(1), ax(3), ay(2);
-	at[0]         = 1.0;        // t
-	CppAD::Independent(at);
-	size_t M      = 3;          // number of r steps to take
-	AD<double> dt = at[0] / M;  // size of each r step
-	ax[0]         = 0.0;        // value of z_0 (t) = t, at t = 0
+	size_t n = 3, m = 2;
+	vector< AD<double> > au(n), ax(n), ay(m);
+	au[0]         = 0.0;        // value of z_0 (t) = t, at t = 0
 	ax[1]         = 0.0;        // value of z_1 (t) = t^2/2, at t = 0
-	ax[2]         = dt;         // step size for each r step.
+	au[2]         = 1.0;        // final t
+	CppAD::Independent(au);
+	size_t M      = 3;          // number of r steps to take
+	ax[0]         = au[0];      // value of z_0 (t) = t, at t = 0
+	ax[1]         = au[1];      // value of z_1 (t) = t^2/2, at t = 0
+	AD<double> dt = au[2] / M;  // size of each r step
+	ax[2]         = dt;
 	for(size_t i_step = 0; i_step < M; i_step++)
 	{	size_t id = 0;               // not used
 		atom_usead_2(id, ax, ay); 
@@ -246,35 +249,52 @@ bool atom_usead_2(void)
 		ax[1] = ay[1];
 	}
 
-	// create f: t -> g(t) and stop tape recording
-	ADFun<double> f(at, ay); 
+	// create f: u -> y and stop tape recording
+	// y_0(t) = u_0 + t
+	// y_1(t) = u_1 + u_0 * t + t^2 / 2
+	// where t = u_3
+	ADFun<double> f(au, ay); 
 
 	// --------------------------------------------------------------------
 	// Check forward mode results
 	//
 	// function values
-	vector<double> x_p(1), y_p(2);
-	size_t p = 0;
-	double t = 0.75;
-	x_p[0]   = t;
-	y_p      = f.Forward(p, x_p);
-	ok &= NearEqual( y_p[0], t,  eps, eps);
-	ok &= NearEqual( y_p[1], t*t/2.0,  eps, eps);
+	vector<double> up(n), yp(m);
+	size_t p  = 0;
+	double t  = 0.75;
+	double u0 = 0.5;
+	double u1 = 0.25;
+	double check;
+	up[0]     = u0;
+	up[1]     = u1;
+	up[2]     = t;
+	yp        = f.Forward(p, up);
+	check     = u0 + t;
+	ok &= NearEqual( yp[0], check,  eps, eps);
+	check     = u1 + u0 * t + t * t / 2.0;
+	ok &= NearEqual( yp[1], check,  eps, eps);
 	//
-	// first derivative 
-	p = 1;
-	x_p[0]   = 1.0;
-	y_p      = f.Forward(p, x_p);
-	ok &= NearEqual( y_p[0], 1.0,  eps, eps);
-	ok &= NearEqual( y_p[1], t,  eps, eps);
+	// forward mode first derivative w.r.t t
+	p         = 1;
+	up[0]     = 0.0;
+	up[1]     = 0.0;
+	up[2]     = 1.0;
+	yp        = f.Forward(p, up);
+	check     = 1.0;
+	ok &= NearEqual( yp[0], check,  eps, eps);
+	check     = u0 + t;
+	ok &= NearEqual( yp[1], check,  eps, eps);
 	//
-	// second order taylor coefficient 
-	p = 2;
-	x_p[0]   = 0.0;
-	y_p      = f.Forward(p, x_p);
-	ok &= NearEqual( y_p[0], 0.0,  eps, eps);
-	ok &= NearEqual( y_p[1], 0.5,  eps, eps);
-	
+	// forward mode second order Taylor coefficient w.r.t t
+	p         = 2;
+	up[0]     = 0.0;
+	up[1]     = 0.0;
+	up[2]     = 0.0;
+	yp        = f.Forward(p, up);
+	check     = 0.0;
+	ok &= NearEqual( yp[0], check,  eps, eps);
+	check     = 1.0 / 2.0;
+	ok &= NearEqual( yp[1], check,  eps, eps);
 
 	// --------------------------------------------------------------------
 	destroy_r();
