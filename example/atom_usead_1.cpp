@@ -13,27 +13,33 @@ Please visit http://www.coin-or.org/CppAD/ for information on other licenses.
 /*
 $begin atom_usead_1.cpp$$
 $spell
+	checkpoint
+	var
 $$
 
-$section Computing Atomic Function Derivatives Using AD$$
+$section Using AD to Compute Atomic Function Derivatives$$
 
-$index AD, inside user_atomic$$
+$index AD, inside atomic$$
 $index user, atomic AD inside$$
 $index atomic, AD inside$$
+$index checkpoint$$
 
 $head Purpose$$
 Consider the case where an inner function is used repeatedly in the 
 definition of an outer function.
-In this case, it may sometimes be useful to tape the inner function once,
-and then use it as an atomic operation during the definition
-of the outer function.
+In this case, it may reduce the number of variables
+$cref/size_var/seq_property/size_var/$$,
+and hence the required memory.
+This is similar the 
+$cref/checkpoint/checkpoint.cpp/$$.
 
 $head Simple Case$$
 This example is the same as $cref reciprocal.cpp$$, except that it 
 uses AD to compute the 
 derivatives needed by an atomic function.
 This is a simple example of an inner function, and hence not really
-useful for the purpose above.
+useful for the purpose above; 
+see $cref atom_usead_2.cpp$$ for a more complete example.
 
 $code
 $verbatim%example/atom_usead_1.cpp%0%// BEGIN C++%// END C++%1%$$

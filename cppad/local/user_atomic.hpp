@@ -703,6 +703,7 @@ while in $cref/parallel/ta_in_parallel/$$ execution mode.
 $children%
 	example/reciprocal.cpp%
 	example/atom_usead_1.cpp%
+	example/atom_usead_2.cpp%
 	example/user_tan.cpp%
 	example/mat_mul.cpp
 %$$
