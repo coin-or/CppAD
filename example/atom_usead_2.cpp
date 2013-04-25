@@ -73,15 +73,15 @@ namespace { // Begin empty namespace
 		vector< AD<double> > x(n), zi(m), y(m), e(m);
 		// The value of x does not matter because the operation sequence
 		// does not depend on x. 
-		x[0]  = 0.0;  // initial value for t
-		x[1]  = 0.0;  // initial value for t^2 / 2
-		x[2]  = 0.1;  // step size in t
+		x[0]  = 0.0;  // initial value z_0 (t) at t = ti
+		x[1]  = 0.0;  // initial value z_1 (t) at t = ti
+		x[2]  = 0.1;  // final time for this integration
 		CppAD::Independent(x);
-		zi[0]         = x[0];
-		zi[1]         = x[1];
-		AD<double> ti = 0.0;
-		AD<double> tf = x[2];
-		size_t M      = 1;
+		zi[0]         = x[0];  // z_0 (t) at t = ti
+		zi[1]         = x[1];  // z_1 (t) at t = ti
+		AD<double> ti = 0.0;   // t does not appear in ODE so does not matter
+		AD<double> tf = x[2];  // final time
+		size_t M      = 2;     // number of Runge45 steps to take
 		Fun F;
 		y             = CppAD::Runge45(F, M, ti, tf, zi, e);
 		r_ptr_        = new ADFun<double>(x, y);
@@ -234,11 +234,11 @@ bool atom_usead_2(void)
 	vector< AD<double> > at(1), ax(3), ay(2);
 	at[0]         = 1.0;        // t
 	CppAD::Independent(at);
-	size_t M      = 1;          // number of steps
-	AD<double> dt = at[0] / M;  // size of each step
-	ax[0]         = 0.0;        // value of t at 0
-	ax[1]         = 0.0;        // value of t^2 at 0
-	ax[2]         = at[0];      // final time
+	size_t M      = 3;          // number of r steps to take
+	AD<double> dt = at[0] / M;  // size of each r step
+	ax[0]         = 0.0;        // value of z_0 (t) = t, at t = 0
+	ax[1]         = 0.0;        // value of z_1 (t) = t^2/2, at t = 0
+	ax[2]         = dt;         // step size for each r step.
 	for(size_t i_step = 0; i_step < M; i_step++)
 	{	size_t id = 0;               // not used
 		atom_usead_2(id, ax, ay); 
@@ -252,12 +252,29 @@ bool atom_usead_2(void)
 	// --------------------------------------------------------------------
 	// Check forward mode results
 	//
-	// check function value 
-	double check = Value(at[0]);
-	ok &= NearEqual( Value(ay[0]) , check,  eps, eps);
-
-	check = Value(at[0] * at[0] ) / 2.0;
-	ok &= NearEqual( Value(ay[1]) , check,  eps, eps);
+	// function values
+	vector<double> x_p(1), y_p(2);
+	size_t p = 0;
+	double t = 0.75;
+	x_p[0]   = t;
+	y_p      = f.Forward(p, x_p);
+	ok &= NearEqual( y_p[0], t,  eps, eps);
+	ok &= NearEqual( y_p[1], t*t/2.0,  eps, eps);
+	//
+	// first derivative 
+	p = 1;
+	x_p[0]   = 1.0;
+	y_p      = f.Forward(p, x_p);
+	ok &= NearEqual( y_p[0], 1.0,  eps, eps);
+	ok &= NearEqual( y_p[1], t,  eps, eps);
+	//
+	// second order taylor coefficient 
+	p = 2;
+	x_p[0]   = 0.0;
+	y_p      = f.Forward(p, x_p);
+	ok &= NearEqual( y_p[0], 0.0,  eps, eps);
+	ok &= NearEqual( y_p[1], 0.5,  eps, eps);
+	
 
 	// --------------------------------------------------------------------
 	destroy_r();
