@@ -81,7 +81,7 @@ namespace { // Begin empty namespace
 		zi[1]         = x[1];  // z_1 (t) at t = ti
 		AD<double> ti = 0.0;   // t does not appear in ODE so does not matter
 		AD<double> tf = x[2];  // final time
-		size_t M      = 2;     // number of Runge45 steps to take
+		size_t M      = 3;     // number of Runge45 steps to take
 		Fun F;
 		y             = CppAD::Runge45(F, M, ti, tf, zi, e);
 		r_ptr_        = new ADFun<double>(x, y);
@@ -108,7 +108,7 @@ namespace { // Begin empty namespace
 		assert( m == 2 );
 		assert( k == 0 || vx.size() == 0 );
 		bool ok = true;	
-		vector<double> x_p(n), y_p(m);
+		vector<double> xp(n), yp(m);
 		size_t i, j;
 
 		// check for special case
@@ -121,16 +121,16 @@ namespace { // Begin empty namespace
 		// then compute ty[k]
 		for(size_t p = 0; p <= k; p++)
 		{	for(j = 0; j < n; j++)
-				x_p[j] = tx[j * (k + 1) + p];
-			y_p    = r_ptr_->Forward(p, x_p);
+				xp[j] = tx[j * (k+1) + p];
+			yp    = r_ptr_->Forward(p, xp);
 			if( p == k )
 			{	for(i = 0; i < m; i++)
-					ty[i * (k + 1) + p] = y_p[i];
+					ty[i * (k+1) + p] = yp[i];
 			}
 # ifndef NDEBUG
 			else
 			{	for(i = 0; i < m; i++)
-					assert( ty[i * (k + 1) + p] == y_p[i] );
+					assert( ty[i * (k+1) + p] == yp[i] );
 			}
 # endif
 		}
@@ -151,7 +151,33 @@ namespace { // Begin empty namespace
 	{	assert( id == 0 );
 		assert( n == 3 );
 		assert( m == 2 );
-		bool ok = false;	
+		bool ok = true;	
+		vector<double> xp(n), w( (k+1) * m ), dw( (k+1) * n );
+
+		// make sure r_ has proper forward mode coefficients 
+		size_t i, j, p;
+		for(p = 0; p <= k; p++)
+		{	for(j = 0; j < n; j++)
+				xp[j] = tx[j * (k+1) + p];
+# ifdef NDEBUG
+			r_ptr_->Forward(p, xp);
+# else
+			vector<double> yp(m);
+			yp = r_ptr_->Forward(p, xp);
+			for(i = 0; i < m; i++)
+				assert( ty[i * (k+1) + p] == yp[i] );
+# endif
+		}
+		for(i = 0; i < m; i++)
+		{	for(p = 0; p <=k; p++)
+				w[ i * (k+1) + p] = py[ i * (k+1) + p];
+		}
+		dw = r_ptr_->Reverse(k+1, w);
+		for(j = 0; j < n; j++)
+		{	for(p = 0; p <=k; p++)
+				px[ j * (k+1) + p] = dw[ j * (k+1) + p];
+		}
+
 		return ok;
 	}
 	// ----------------------------------------------------------------------
@@ -237,7 +263,7 @@ bool atom_usead_2(void)
 	ax[1]         = 0.0;        // value of z_1 (t) = t^2/2, at t = 0
 	au[2]         = 1.0;        // final t
 	CppAD::Independent(au);
-	size_t M      = 3;          // number of r steps to take
+	size_t M      = 2;          // number of r steps to take
 	ax[0]         = au[0];      // value of z_0 (t) = t, at t = 0
 	ax[1]         = au[1];      // value of z_1 (t) = t^2/2, at t = 0
 	AD<double> dt = au[2] / M;  // size of each r step
@@ -270,9 +296,9 @@ bool atom_usead_2(void)
 	up[2]     = t;
 	yp        = f.Forward(p, up);
 	check     = u0 + t;
-	ok &= NearEqual( yp[0], check,  eps, eps);
+	ok       &= NearEqual( yp[0], check,  eps, eps);
 	check     = u1 + u0 * t + t * t / 2.0;
-	ok &= NearEqual( yp[1], check,  eps, eps);
+	ok       &= NearEqual( yp[1], check,  eps, eps);
 	//
 	// forward mode first derivative w.r.t t
 	p         = 1;
@@ -281,9 +307,9 @@ bool atom_usead_2(void)
 	up[2]     = 1.0;
 	yp        = f.Forward(p, up);
 	check     = 1.0;
-	ok &= NearEqual( yp[0], check,  eps, eps);
+	ok       &= NearEqual( yp[0], check,  eps, eps);
 	check     = u0 + t;
-	ok &= NearEqual( yp[1], check,  eps, eps);
+	ok       &= NearEqual( yp[1], check,  eps, eps);
 	//
 	// forward mode second order Taylor coefficient w.r.t t
 	p         = 2;
@@ -292,10 +318,32 @@ bool atom_usead_2(void)
 	up[2]     = 0.0;
 	yp        = f.Forward(p, up);
 	check     = 0.0;
-	ok &= NearEqual( yp[0], check,  eps, eps);
+	ok       &= NearEqual( yp[0], check,  eps, eps);
 	check     = 1.0 / 2.0;
-	ok &= NearEqual( yp[1], check,  eps, eps);
-
+	ok       &= NearEqual( yp[1], check,  eps, eps);
+	//
+	// reverse mode derivative w.r.t. u0, u1, t of y_1 (t)
+	vector<double> w(m * p), dw(n * p);
+	w[0 * p + 0]  = 0.0;
+	w[1 * p + 0]  = 0.0;
+	w[0 * p + 1]  = 0.0;
+	w[1 * p + 1]  = 1.0;
+	dw        = f.Reverse(p, w);
+	// derivative of y_1(t) = u_1 + u_0 * t + t^2 / 2,  w.r.t. u
+	check     = t;
+	ok       &= NearEqual( dw[0 * p + 1], check,  eps, eps);
+	check     = 1.0;
+	ok       &= NearEqual( dw[1 * p + 1], check,  eps, eps);
+	check     = u0 + t;
+	ok       &= NearEqual( dw[2 * p + 1], check,  eps, eps);
+	// derivative of [ \partial_t y_1 ] = u_0 + t,  w.r.t u
+	check     = 1.0;
+	ok       &= NearEqual( dw[0 * p + 0], check,  eps, eps);
+	check     = 0.0;
+	ok       &= NearEqual( dw[1 * p + 0], check,  eps, eps);
+	check     = 1.0;
+	ok       &= NearEqual( dw[2 * p + 0], check,  eps, eps);
+	
 	// --------------------------------------------------------------------
 	destroy_r();
 
