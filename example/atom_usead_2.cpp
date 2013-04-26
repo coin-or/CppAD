@@ -192,7 +192,15 @@ namespace { // Begin empty namespace
 	{	assert( id == 0 );
 		assert( n == 3 );
 		assert( m == 2 );
-		bool ok = false;
+		bool ok = true;
+
+		vector< std::set<size_t> > R(n), S(m);
+		for(size_t j = 0; j < n; j++)
+			R[j] = r[j];
+		S = r_ptr_->ForSparseJac(q, R);
+		for(size_t i = 0; i < m; i++)
+			s[i] = S[i];
+		
 		return ok; 
 	}
 	// ----------------------------------------------------------------------
@@ -208,7 +216,24 @@ namespace { // Begin empty namespace
 		assert( id == 0 );
 		assert( n == 3 );
 		assert( m == 2 );
-		bool ok = false;
+		bool ok = true;
+
+		vector< std::set<size_t> > R(q), S(q);
+		std::set<size_t>::const_iterator itr;
+		size_t i;
+		// untranspose s
+		for(i = 0; i < m; i++)
+		{	for(itr = s[i].begin(); itr != s[i].end(); itr++)
+				S[*itr].insert(i);
+		}
+		R = r_ptr_->RevSparseJac(q, S);
+		// transpose r
+		for(i = 0; i < m; i++)
+			r[i].clear();
+		for(i = 0; i < q; i++)
+		{	for(itr = R[i].begin(); itr != R[i].end(); itr++)
+				r[*itr].insert(i);
+		}
 		return ok; 
 	}
 	// ----------------------------------------------------------------------
@@ -254,9 +279,7 @@ bool atom_usead_2(void)
 	create_r();
 
 	// --------------------------------------------------------------------
-	// Create approximate g(t) = [ t, t^2 / 2 ]
-	//
-	// domain space vector
+	// domain and range space vectors
 	size_t n = 3, m = 2;
 	vector< AD<double> > au(n), ax(n), ay(m);
 	au[0]         = 0.0;        // value of z_0 (t) = t, at t = 0
@@ -276,9 +299,9 @@ bool atom_usead_2(void)
 	}
 
 	// create f: u -> y and stop tape recording
-	// y_0(t) = u_0 + t
-	// y_1(t) = u_1 + u_0 * t + t^2 / 2
-	// where t = u_3
+	// y_0(t) = u_0 + t                   = u_0 + u_2
+	// y_1(t) = u_1 + u_0 * t + t^2 / 2   = u_1 + u_0 * u_2 + u_2^2 / 2
+	// where t = u_2
 	ADFun<double> f(au, ay); 
 
 	// --------------------------------------------------------------------
@@ -287,17 +310,17 @@ bool atom_usead_2(void)
 	// function values
 	vector<double> up(n), yp(m);
 	size_t p  = 0;
-	double t  = 0.75;
 	double u0 = 0.5;
 	double u1 = 0.25;
+	double u2 = 0.75;
 	double check;
 	up[0]     = u0;
 	up[1]     = u1;
-	up[2]     = t;
+	up[2]     = u2;
 	yp        = f.Forward(p, up);
-	check     = u0 + t;
+	check     = u0 + u2;
 	ok       &= NearEqual( yp[0], check,  eps, eps);
-	check     = u1 + u0 * t + t * t / 2.0;
+	check     = u1 + u0 * u2 + u2 * u2 / 2.0;
 	ok       &= NearEqual( yp[1], check,  eps, eps);
 	//
 	// forward mode first derivative w.r.t t
@@ -308,7 +331,7 @@ bool atom_usead_2(void)
 	yp        = f.Forward(p, up);
 	check     = 1.0;
 	ok       &= NearEqual( yp[0], check,  eps, eps);
-	check     = u0 + t;
+	check     = u0 + u2;
 	ok       &= NearEqual( yp[1], check,  eps, eps);
 	//
 	// forward mode second order Taylor coefficient w.r.t t
@@ -321,28 +344,62 @@ bool atom_usead_2(void)
 	ok       &= NearEqual( yp[0], check,  eps, eps);
 	check     = 1.0 / 2.0;
 	ok       &= NearEqual( yp[1], check,  eps, eps);
-	//
-	// reverse mode derivative w.r.t. u0, u1, t of y_1 (t)
+	// --------------------------------------------------------------------
+	// reverse mode derivatives of \partial_t y_1 (t)
 	vector<double> w(m * p), dw(n * p);
 	w[0 * p + 0]  = 0.0;
 	w[1 * p + 0]  = 0.0;
 	w[0 * p + 1]  = 0.0;
 	w[1 * p + 1]  = 1.0;
 	dw        = f.Reverse(p, w);
-	// derivative of y_1(t) = u_1 + u_0 * t + t^2 / 2,  w.r.t. u
-	check     = t;
+	// derivative of y_1(u) = u_1 + u_0 * u_2 + u_2^2 / 2,  w.r.t. u
+	// is equal deritative of \partial_u2 y_1(u) w.r.t \partial_u2 u
+	check     = u2;
 	ok       &= NearEqual( dw[0 * p + 1], check,  eps, eps);
 	check     = 1.0;
 	ok       &= NearEqual( dw[1 * p + 1], check,  eps, eps);
-	check     = u0 + t;
+	check     = u0 + u2;
 	ok       &= NearEqual( dw[2 * p + 1], check,  eps, eps);
-	// derivative of [ \partial_t y_1 ] = u_0 + t,  w.r.t u
+	// derivative of \partial_t y_1 w.r.t u = u_0 + t,  w.r.t u
 	check     = 1.0;
 	ok       &= NearEqual( dw[0 * p + 0], check,  eps, eps);
 	check     = 0.0;
 	ok       &= NearEqual( dw[1 * p + 0], check,  eps, eps);
 	check     = 1.0;
 	ok       &= NearEqual( dw[2 * p + 0], check,  eps, eps);
+	// --------------------------------------------------------------------
+	// forward mode sparsity pattern for the Jacobian
+	// f_u = [   1, 0,   1 ]
+	//       [ u_2, 1, u_2 ] 
+	size_t i, j, q = n;
+	CppAD::vectorBool r(n * q), s(m * q);
+	// r = identity sparsity pattern
+	for(i = 0; i < n; i++)
+		for(j = 0; j < q; j++)
+			r[i*n +j] = (i == j); 
+	s   = f.ForSparseJac(q, r);
+	ok &= s[ 0 * q + 0] == true;
+	ok &= s[ 0 * q + 1] == false;
+	ok &= s[ 0 * q + 2] == true;
+	ok &= s[ 1 * q + 0] == true;
+	ok &= s[ 1 * q + 1] == true;
+	ok &= s[ 1 * q + 2] == true;
+	// --------------------------------------------------------------------
+	// reverse mode sparsity pattern for the Jacobian
+	p = m;
+	s.resize(p * m);
+	r.resize(p * n);
+	// s = identity sparsity pattern
+	for(i = 0; i < p; i++)
+		for(j = 0; j < m; j++)
+			s[i*m +j] = (i == j); 
+	r   = f.RevSparseJac(p, s);
+	ok &= r[ 0 * n + 0] == true;
+	ok &= r[ 0 * n + 1] == false;
+	ok &= r[ 0 * n + 2] == true;
+	ok &= r[ 1 * n + 0] == true;
+	ok &= r[ 1 * n + 1] == true;
+	ok &= r[ 1 * n + 2] == true;
 	
 	// --------------------------------------------------------------------
 	destroy_r();
