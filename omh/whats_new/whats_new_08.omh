@@ -1,6 +1,6 @@
 $Id$
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-12 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-13 Bradley M. Bell
 
 CppAD is distributed under multiple licenses. This distribution is under
 the terms of the 
@@ -114,7 +114,7 @@ $code ipopt_cppad/ipopt_cppad_ode$$.
 
 $head 09-30$$
 Add or modify some wish list entries; see
-$cref/cppad_ipopt_nlp/WishList/cppad_ipopt_nlp/$$,
+($code cppad_ipopt_nlp$$ since removed),
 $cref/multiple arguments/WishList/Multiple Arguments/$$,
 and sparsity patterns
 ($cref/sparsity patterns/glossary/Sparsity Pattern/$$ has been fulfilled). 

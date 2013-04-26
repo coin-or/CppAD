@@ -714,11 +714,12 @@ The file $cref reciprocal.cpp$$ contains the simplest example and test
 of a user atomic operation.
 
 $subhead Use AD$$
-The file $cref atom_usead_1.cpp$$ uses AD to compute the derivatives 
+The examples 
+$cref atom_usead_1.cpp$$ and $cref atom_usead_2.cpp$$
+use AD to compute the derivatives 
 inside a user defined atomic function.
 This may have the advantage of reducing the size of the tape, because
-a repeated section of code would only be taped once
-(see the $cref/use AD/WishList/user_atomic/Use AD/$$ wish list item).
+a repeated section of code would only be taped once.
 
 $subhead Tangent Function$$
 The file $cref user_tan.cpp$$ contains an example and test

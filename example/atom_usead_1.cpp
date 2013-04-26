@@ -220,16 +220,16 @@ namespace { // Begin empty namespace
 		std::set<size_t>::iterator itr;
 		for(itr = u[0].begin(); itr != u[0].end(); itr++)
 			Ut[*itr] = true;
-		A = r_ptr_-> ForSparseJac(q, Ut);
+		A = r_ptr_-> RevSparseJac(q, Ut);
 
 		// compute sparsity pattern for H(x) = R^T * (S * F)''(x)
-		vector<bool> H(q), R(q);
+		vector<bool> H(q), R(n);
 		for(p = 0; p < q; p++)
 			R[p] = false;
 		for(itr = r[0].begin(); itr != r[0].end(); itr++)
 			R[*itr] = true;
 		r_ptr_->ForSparseJac(q, R);
-		H = r_ptr_->RevSparseHes(q, s);
+		H = r_ptr_->RevSparseHes(q, S);
 
 		// compute sparsity pattern for V(x) = A(x)^T + H(x)^T
 		v[0].clear();

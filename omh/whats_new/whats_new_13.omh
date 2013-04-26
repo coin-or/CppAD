@@ -38,6 +38,11 @@ This section contains a list of the changes to CppAD during 2013
 The purpose of this section is to
 assist you in learning about changes between various versions of CppAD.
 
+$head 04-26$$
+The example $cref atom_usead_2.cpp$$ was completed. 
+This is a more realistic, but also more complicated, example of
+using AD to computed derivatives inside an atomic function.
+
 $head 04-20$$
 The example $cref atom_usead_1.cpp$$ was added.
 

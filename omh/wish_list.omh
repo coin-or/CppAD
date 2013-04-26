@@ -11,6 +11,7 @@ Please visit http://www.coin-or.org/CppAD/ for information on other licenses.
 -------------------------------------------------------------------------- */
 $begin WishList$$
 $spell
+	Checkpointing
 	cmake
 	Berger
 	namespace
@@ -54,36 +55,22 @@ $head BenderQuad$$
 See the $cref/problem/BenderQuad/Problem/$$ with the 
 current $code BenderQuad$$ specifications.
 
-$head cppad_ipopt_nlp$$
-$index cppad_ipopt_nlp$$
-$list number$$
-Create a separate documentation page for using $code cppad_ipopt_nlp$$
-with the $cref/simple representation/cppad_ipopt_nlp/Simple Representation/$$. 
+$head Checkpointing$$
+The $cref atom_usead_2.cpp$$ example shows how one could
+create an atomic function using an $code ADFun$$ object.
+This could be made easy for the user and would be
+a good way to package checkpointing.
 
-$lnext
-The vector of sets $cref/sparsity pattern/glossary/Sparsity Pattern/$$
-could be compared for speed with of vector of bools
-(and used instead if it is faster).
+$subhead Multiple Order Forward$$
+Multiple order forward mode would make this more efficient.
+As $cref atom_usead_2.cpp$$ stands, it has to recalculate the
+same forward mode information more than necessary.
 
-$lnext
-Perhaps it would help to cache the solution of the sparse Jacobian
-and spare Hessian graph coloring algorithm.
-Then, when the sparsity pattern does not depend on the argument value,
-these colorings would not have to be recomputed.
-
-$lnext
-In the case where $codei%retape(%k%)%$$ is true for some $icode k$$,
-one can still use the structure of the representation to compute a 
-sparsity structure. Currently $code cppad_ipopt_nlp$$ uses a dense 
-sparsity structure for this case
-
-$lnext
-The $icode new_x$$ flag could be used to avoid zero order forward mode
-computations. Because the same $code ADFun$$ object is used at different
-argument values, this would require forward mode at multiple argument values
-(see $cref/multiple arguments/WishList/Multiple Arguments/$$). 
-
-$lend
+$subhead Iterator Interface$$
+If the necessary functions had iterator interfaces
+(in addition to simple vector interfaces),
+it would not be necessary to copy information to simple vectors
+with the correct dimension.
 
 $head cppad_ipopt_sum$$
 Create a simpler class an Ipopt AD interface with the objective
@@ -102,8 +89,10 @@ $index speed, improve$$
 It has been suggested that computing and storing forward mode
 results for multiple argument values (and for multiple orders)
 is faster for Adolc. 
-Perhaps CppAD should allow for forward mode at multiple argument values
-(perhaps multiple orders).
+Perhaps CppAD should allow for forward mode at multiple orders and 
+multiple argument values; see 
+$cref/multiple order forward/WishList/Checkpointing/Multiple Order Forward/$$
+above.
 
 $head Numeric Limits$$
 $index testing, machine epsilon$$
@@ -194,11 +183,5 @@ $subhead Sparsity Patterns$$
 The $cref user_atomic$$ functions should allow the user to chose vectors
 of bits, instead of standard sets, for representing sparsity. This would
 be more efficient for most cases.
-
-$subhead Use AD$$
-The $cref atom_usead_1.cpp$$ example is to simple to be useful
-in reducing the size of the tape. 
-We should include a more complex example where there are more calculations,
-$latex n \neq m$$, $latex n \neq 1$$, and $latex m \neq 1$$.
 
 $end

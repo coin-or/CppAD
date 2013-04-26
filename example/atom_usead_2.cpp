@@ -252,7 +252,47 @@ namespace { // Begin empty namespace
 		assert( id == 0 );
 		assert( n == 3 );
 		assert( m == 2 );
-		bool ok = false;
+		bool ok = true;
+		std::set<size_t>::const_iterator itr;
+
+		// compute sparsity pattern for T(x) = S(x) * f'(x)
+		vector< std::set<size_t> > T(1), S(1);
+		size_t i, j;
+		S[0].clear();
+		for(i = 0; i < m; i++)
+			if( s[i] )
+				S[0].insert(i);
+		T = r_ptr_->RevSparseJac(1, S);
+		for(i = 0; i < m; i++)
+			t[i] = false;
+		for(itr = T[0].begin(); itr != T[0].end(); itr++)
+			t[*itr] = true;
+
+		// compute sparsity pattern for A(x)^T = U(x)^T * f'(x)
+		vector< std::set<size_t> > Ut(q), At(q);
+		for(i = 0; i < m; i++)
+		{	for(itr = u[i].begin(); itr != u[i].end(); itr++)
+				Ut[*itr].insert(i);
+		}
+		At = r_ptr_->RevSparseJac(q, Ut);
+
+		// compute sparsity pattern for H(x)^T = R^T * (S * F)''(x)
+		vector< std::set<size_t> > R(n), Ht(q);
+		for(j = 0; j < n; j++)
+			R[j] = r[j];
+		r_ptr_->ForSparseJac(q, R);
+		Ht = r_ptr_->RevSparseHes(q, S);
+
+		// compute sparsity pattern for V(x) = A(x) + H(x)^T
+		for(j = 0; j < n; j++)
+			v[j].clear();
+		for(i = 0; i < q; i++)
+		{	for(itr = At[i].begin(); itr != At[i].end(); itr++)
+				v[*itr].insert(i);
+			for(itr = Ht[i].begin(); itr != Ht[i].end(); itr++)
+				v[*itr].insert(i);
+		}
+
 		return ok;
 	}
 	// ---------------------------------------------------------------------
@@ -400,6 +440,27 @@ bool atom_usead_2(void)
 	ok &= r[ 1 * n + 0] == true;
 	ok &= r[ 1 * n + 1] == true;
 	ok &= r[ 1 * n + 2] == true;
+
+	// --------------------------------------------------------------------
+	// Hessian sparsity for y_1 (u) = u_1 + u_0 * u_2 + u_2^2 / 2
+	s.resize(m);
+	s[0] = false;
+	s[1] = true;
+	r.resize(n * n);
+	for(i = 0; i < n; i++)
+		for(j = 0; j < n; j++)
+			r[ i * n + j ] = (i == j);
+	CppAD::vectorBool h(n * n);
+	h   = f.RevSparseHes(n, s);
+	ok &= h[0 * n + 0] == false;
+	ok &= h[0 * n + 1] == false;
+	ok &= h[0 * n + 2] == true;
+	ok &= h[1 * n + 0] == false;
+	ok &= h[1 * n + 1] == false;
+	ok &= h[1 * n + 2] == false;
+	ok &= h[2 * n + 0] == true;
+	ok &= h[2 * n + 1] == false;
+	ok &= h[2 * n + 2] == true;
 	
 	// --------------------------------------------------------------------
 	destroy_r();
