@@ -60,4 +60,16 @@ by executing the command $code ./speed_fadbad$$;
 see $cref speed_main$$ for the meaning of the command line
 options to this program.
 
+$children%
+	bin/get_fadbad.sh
+%$$
+$head get_fadbad$$
+$index get, fadbad$$
+$index fadbad, get$$
+If you are using Unix, you can download and install
+a copy of Fadbad using $cref get_fadbad.sh$$.
+The corresponding $icode fadbad_prefix$$ would be
+$code build/prefix$$.
+
+
 $end

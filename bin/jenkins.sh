@@ -22,17 +22,24 @@ then
 	exit 1
 fi
 # distribution direcotry corresponding to this version of CppAD
-dist_dir=`pwd`
+trunk_dir=`pwd`
+# Running bin/get_fadbad.sh will install include files in
+#	trunk_dir/build/prefix/include/FADBAD++
+echo_eval bin/get_fadbad.sh
+#
 # Running bin/get_ipopt.sh will
-# build ipopt in: dist_dir/trunk/build/external
-# install it in:  dist_dir/trunk/build/prefix
+# build ipopt in: trunk_dir/build/external
+# install it in:  trunk_dir/build/prefix
 # It will re-use the currently compiled verison if available.
 echo_eval bin/get_ipopt.sh
-echo_eval cd ..
 #
-# Use dist_dir/../build to build and test CppAD (no reuse)
+#
+# Use trunk_dir/../build to build and test CppAD (no reuse)
+echo_eval cd ..
 echo_eval rm -rf build
 echo_eval mkdir build
 echo_eval cd build
-echo_eval ../trunk/configure IPOPT_DIR="$dist_dir/build/prefix"
+echo_eval $trunk_dir/configure \
+	IPOPT_DIR="$trunk_dir/build/prefix" \
+	FADBAD_DIR="$trunk_dir/build/prefix" 
 echo_eval make test 

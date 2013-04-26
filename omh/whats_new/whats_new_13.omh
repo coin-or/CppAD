@@ -39,9 +39,19 @@ The purpose of this section is to
 assist you in learning about changes between various versions of CppAD.
 
 $head 04-26$$
+$list number$$
 The example $cref atom_usead_2.cpp$$ was completed. 
 This is a more realistic, but also more complicated, example of
 using AD to computed derivatives inside an atomic function.
+$lnext
+The script $cref get_fadbad.sh$$ has been added.
+If you are using UNix, and you do not have 
+$href%http://www.fadbad.com%FADBAD%$$
+installed on your system, you can use this script 
+to download and install a local copy for use with CppAD. 
+$lend
+
+$end
 
 $head 04-20$$
 The example $cref atom_usead_1.cpp$$ was added.
