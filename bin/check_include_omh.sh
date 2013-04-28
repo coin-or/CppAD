@@ -15,9 +15,7 @@ then
 	echo "bin/check_include_omh.sh: must be executed from its parent directory"
 	exit 1
 fi
-sh_files_with_omhelp_documentation='
-	bin/get_ipopt.sh
-'
+sh_files_with_omhelp_documentation=`ls bin/get_*.sh`
 # -----------------------------------------------------------------------------
 # Make sure omhelp, under cygwin, has not matched file names with wrong case.
 echo "Checking difference between OMhelp include directives and file names."

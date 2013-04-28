@@ -61,4 +61,17 @@ by executing the command $code ./speed_sacado$$;
 see $cref speed_main$$ for the meaning of the command line
 options to this program.
 
+$children%
+	bin/get_sacado.sh
+%$$
+$head get_sacado$$
+$index get, sacado$$
+$index sacado, get$$
+If you are using Unix, you can download and install
+a copy of Sacado using $cref get_sacado.sh$$.
+The corresponding $icode sacado_prefix$$ would be
+$code build/prefix$$.
+
+
+
 $end

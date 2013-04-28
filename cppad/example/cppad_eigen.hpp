@@ -2,7 +2,7 @@
 # ifndef CPPAD_CPPAD_EIGEN_INCLUDED
 # define CPPAD_CPPAD_EIGEN_INCLUDED
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-12 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-13 Bradley M. Bell
 
 CppAD is distributed under multiple licenses. This distribution is under
 the terms of the 
@@ -14,6 +14,12 @@ Please visit http://www.coin-or.org/CppAD/ for information on other licenses.
 /*
 $begin cppad_eigen.hpp$$
 $spell
+	impl
+	typename
+	Real Real
+	inline
+	neg
+	eps
 	plugin
 	atan
 	Num
@@ -134,6 +140,27 @@ namespace CppAD {
 		{	return CppAD::AD<Base>(0.); }
 		template <class Base> AD<Base> abs2(const AD<Base>& x)
 		{	return x * x; }
+}
+
+namespace Eigen { 
+	namespace internal {
+
+		template<class Base> 
+		struct significant_decimals_default_impl< CppAD::AD<Base>, false>
+		{	typedef CppAD::AD<Base> Scalar;
+
+  			typedef typename NumTraits<Scalar>::Real RealScalar;
+  			static inline int run()
+  			{	Scalar neg_log_eps = - log(
+					NumTraits<RealScalar>::epsilon()
+				);
+				int ceil_neg_log_eps = Integer( neg_log_eps );
+				if( Scalar(ceil_neg_log_eps) < neg_log_eps )
+					ceil_neg_log_eps++;
+				return ceil_neg_log_eps;
+  			}
+		};
+	}
 }
 /* $$
 $end

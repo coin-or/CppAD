@@ -13,6 +13,10 @@ Please visit http://www.coin-or.org/CppAD/ for information on other licenses.
 $begin whats_new_13$$
 $dollar @$$
 $spell
+	typename
+	bool
+	struct
+	impl
 	std
 	alloc
 	ptr
@@ -38,6 +42,28 @@ This section contains a list of the changes to CppAD during 2013
 The purpose of this section is to
 assist you in learning about changes between various versions of CppAD.
 
+$head 04-28$$
+The scripts $cref get_eigen.sh$$ and $cref get_sacado.sh$$ were added.
+If you are using Unix, and you do not have 
+$href%http://eigen.tuxfamily.org%Eigen%$$ or
+$href%http://trilinos.sandia.gov/packages/sacado%Sacado%$$ 
+installed on your system, you can use the corresponding script 
+to download and install a local copy for use when testing CppAD. 
+
+
+$head 04-27$$
+There was a problem using the output operator $code <<$$ with
+and $cref/eigen/cppad_eigen.hpp/$$ matrix of $code AD$$ elements.
+This has been fixed using a template partial specialization of
+$codep
+	template<typename Scalar, bool IsInteger>
+	struct significant_decimals_default_impl
+$$
+because the original template requires definition of a implicit conversion 
+from the scalar type to an $code int$$ and this is dangerous for AD types
+(note that $cref Integer$$ is used for explicit conversions).
+
+
 $head 04-26$$
 $list number$$
 The example $cref atom_usead_2.cpp$$ was completed. 
@@ -45,10 +71,10 @@ This is a more realistic, but also more complicated, example of
 using AD to computed derivatives inside an atomic function.
 $lnext
 The script $cref get_fadbad.sh$$ has been added.
-If you are using UNix, and you do not have 
+If you are using Unix, and you do not have 
 $href%http://www.fadbad.com%FADBAD%$$
 installed on your system, you can use this script 
-to download and install a local copy for use with CppAD. 
+to download and install a local copy for use when testing CppAD. 
 $lend
 
 $end
@@ -58,10 +84,10 @@ The example $cref atom_usead_1.cpp$$ was added.
 
 $head 04-16$$
 The script $cref get_ipopt.sh$$ has been added.
-If you are using UNix, and you do not have 
+If you are using Unix, and you do not have 
 $href%http://www.coin-or.org/projects/Ipopt.xml%Ipopt%$$  
 installed on your system, you can use this script 
-to download and install a local copy for use with CppAD. 
+to download and install a local copy for use when testing CppAD. 
 
 $head 04-14$$
 The following program,

@@ -17,11 +17,13 @@ cat << EOF > eigen_io.cpp
 
 int main()
 {	
-	typedef Eigen::Matrix< CppAD::AD<double>, 1, 1> MatrixAD;
+	typedef Eigen::Matrix< CppAD::AD<double>, 2, 2> MatrixAD;
 	MatrixAD X;
-	X(0, 0) = 1;
-
+	X << 1, 2, 3, 4;
 	std::cout << X << std::endl;
+	std::cout << "output above should be" << std::endl;
+	std::cout << "1 2" << std::endl;
+	std::cout << "3 4" << std::endl;
 	return 0;
 }
 EOF
@@ -34,3 +36,4 @@ echo_eval g++ \
 	-std=c++11 \
 	-o eigen_io
 echo_eval ./eigen_io
+echo_eval rm eigen_io.cpp eigen_io

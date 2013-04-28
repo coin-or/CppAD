@@ -69,8 +69,14 @@ echo_eval cd build/external
 if [ ! -e "Ipopt-$version" ]
 then
 	echo_eval svn checkout "$repository/stable/$version Ipopt-$version"
+	ipopt_up_to_date='yes'
 else
-	echo_eval svn update "Ipopt-$version"
+	if svn update "Ipopt-$version"
+	then
+		ipopt_up_to_date='yes'
+	else
+		ipopt_up_to_date='no'
+	fi
 fi
 echo_eval cd "Ipopt-$version"
 # -----------------------------------------------------------------------------
@@ -113,4 +119,9 @@ echo_eval ./configure \
 # -----------------------------------------------------------------------------
 echo_eval make install 
 #
-echo "get_ipopt.sh: OK"
+if [ "$ipopt_up_to_date" == 'no' ]
+then
+	echo "get_ipopt.sh: OK except could not update Ipopt"
+else
+	echo "get_ipopt.sh: OK"
+fi

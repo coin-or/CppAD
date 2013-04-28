@@ -1,6 +1,6 @@
 /* $Id$ */
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-12 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-13 Bradley M. Bell
 
 CppAD is distributed under multiple licenses. This distribution is under
 the terms of the 
@@ -43,11 +43,19 @@ bool cppad_eigen(void)
 	ok &= traits::lowest() == 
 		std::numeric_limits<double>::min();
 
-	CppAD::AD<double> x = 2.0;
+	AD<double> x = 2.0;
 	ok  &= conj(x)  == x;
 	ok  &= real(x)  == x;
 	ok  &= imag(x)  == 0.0;
 	ok  &= abs2(x)  == 4.0;
 
+	// Outputing a matrix used to fail before paritali specialization of
+	// struct significant_decimals_default_impl in cppad_eigen.hpp. 
+	Eigen::Matrix< AD<double>, 1, 1> X;
+	X(0, 0) = AD<double>(1);
+	std::stringstream stream_out;
+	stream_out << X;
+	ok &= "1" == stream_out.str();
+	
 	return ok;
 }

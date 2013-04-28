@@ -50,7 +50,7 @@ $index version, CppAD$$
 
 $comment bin/version assumes that : follows cppad version number here$$
 $section 
-cppad-20130423: A Package for Differentiation of C++ Algorithms
+cppad-20130428: A Package for Differentiation of C++ Algorithms
 $$ 
 
 $comment This comment is used to remove the table below$$

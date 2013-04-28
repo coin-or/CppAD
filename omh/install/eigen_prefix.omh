@@ -80,5 +80,17 @@ $codei%
 on the $cref/cmake command/cmake/CMake Command/$$ line.
 This we set the CppAD $cref testvector$$ to use Eigen vectors. 
 
+$children%
+	bin/get_eigen.sh
+%$$
+$head get_eigen$$
+$index get, eigen$$
+$index eigen, get$$
+If you are using Unix, you can download and install
+a copy of Eigen using $cref get_eigen.sh$$.
+The corresponding $icode eigen_prefix$$ would be
+$code build/prefix$$.
+
+
 
 $end
