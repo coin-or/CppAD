@@ -1,6 +1,6 @@
 /* $Id$ */
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-12 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-13 Bradley M. Bell
 
 CppAD is distributed under multiple licenses. This distribution is under
 the terms of the 
@@ -40,6 +40,14 @@ $end
 # include <limits>
 # include <cmath>
 # include <cassert>
+//
+# include <cppad/configure.hpp>
+# if CPPAD_HAS_NULLPTR
+# define CPPAD_NULL nullptr
+# else
+# define CPPAD_NULL 0
+# endif
+//
 # define NUMBER_THREADS 4
 
 # ifdef NDEBUG
@@ -63,7 +71,7 @@ namespace {
 	{	start_arg* arg = static_cast<start_arg*>( arg_vptr );
 		a1(arg->n, arg->a, arg->b);
 
-		void* no_status = 0;
+		void* no_status = CPPAD_NULL;
 		pthread_exit(no_status);
 
 		return no_status;
@@ -111,7 +119,7 @@ bool a11c(void)
 		) );
 	}
 	for(j = 0; j < n_thread; j++)
-	{	void* no_status = 0;
+	{	void* no_status = CPPAD_NULL;
 		CHECK_ZERO( pthread_join(thread[j], &no_status) );
 	}
 

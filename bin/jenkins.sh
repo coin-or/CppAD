@@ -25,7 +25,12 @@ log_eval() {
 	echo $*  >> ../jenkins.log
 	echo $*  >> ../jenkins.err
 	echo $* "1>> ../jenkins.log 2>> ../jenkins.err"
-	eval $*  1>> ../jenkins.log 2>> ../jenkins.err
+	if ! eval $*  1>> ../jenkins.log 2>> ../jenkins.err
+	then
+		echo_eval cat jenkins.log
+		echo_eval cat jenkins.err
+		exit 1
+	fi
 }
 for ext in log err
 do

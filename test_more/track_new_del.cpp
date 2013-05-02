@@ -1,6 +1,6 @@
 /* $Id$ */
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-12 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-13 Bradley M. Bell
 
 CppAD is distributed under multiple licenses. This distribution is under
 the terms of the 
@@ -40,7 +40,7 @@ bool track_new_del(void)
 	size_t count = CPPAD_TRACK_COUNT();
 
 	// allocate an array of lenght 5
-	double *ptr = 0;
+	double *ptr = CPPAD_NULL;
 	size_t  newlen = 5;
 	ptr = CPPAD_TRACK_NEW_VEC(newlen, ptr);
 

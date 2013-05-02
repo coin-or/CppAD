@@ -3,7 +3,7 @@
 # define CPPAD_DIV_OP_INCLUDED
 
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-12 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-13 Bradley M. Bell
 
 CppAD is distributed under multiple licenses. This distribution is under
 the terms of the 
@@ -58,8 +58,8 @@ inline void forward_divvv_op(
 	Base* z = taylor + i_z    * nc_taylor;
 
 
-        // Using CondExp, it can make sense to divide by zero,
-        // so do not make it an error.
+	// Using CondExp, it can make sense to divide by zero,
+	// so do not make it an error.
 	size_t k;
 	z[d] = x[d];
 	for(k = 1; k <= d; k++)
@@ -202,9 +202,9 @@ inline void forward_divpv_op(
 	// Paraemter value
 	Base x = parameter[ arg[0] ];
 
-        // Using CondExp, it can make sense to divide by zero,
-        // so do not make it an error.
-        size_t k;
+	// Using CondExp, it can make sense to divide by zero,
+	// so do not make it an error.
+	size_t k;
 # if USE_CPPAD_FORWARD0SWEEP
 	z[d] = Base(0);
 # else

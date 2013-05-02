@@ -113,10 +113,23 @@ namespace { // Begin empty namespace
 
 		// check for special case
 		if( vx.size() > 0 )
-		{	vy[0] = vx[0] | vx[1] | vx[2];
-			vy[1] = vy[0];
+		{	//Compute r, a Jacobian sparsity pattern.
+			// Use reverse mode because m < n.
+			vector< std::set<size_t> > s(m), r(m);
+			for(i = 0; i < m; i++)
+				s[i].insert(i);
+			r = r_ptr_->RevSparseJac(m, s);
+			std::set<size_t>::const_iterator itr;
+			for(i = 0; i < m; i++)
+			{	vy[i] = false;
+				for(itr = s[i].begin(); itr != s[i].end(); itr++)
+				{	j = *itr;
+					assert( j < n );
+					// y[i] depends on the value of x[j]
+					vy[i] |= vx[j];
+				}
+			}
 		}
-
 		// make sure r_ has proper lower order Taylor coefficients stored
 		// then compute ty[k]
 		for(size_t p = 0; p <= k; p++)

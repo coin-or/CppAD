@@ -3,7 +3,7 @@
 # define CPPAD_FORWARD0SWEEP_INCLUDED
 
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-12 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-13 Bradley M. Bell
 
 CppAD is distributed under multiple licenses. This distribution is under
 the terms of the 
@@ -121,7 +121,7 @@ size_t forward0sweep(
 
 	// constant and non-constant version of the operation argument indices
 	addr_t*         non_const_arg;
-	const addr_t*   arg = 0;
+	const addr_t*   arg = CPPAD_NULL;
 
 	// initialize the comparision operator (ComOp) counter
 	size_t compareCount = 0;

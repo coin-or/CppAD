@@ -23,8 +23,12 @@ echo "-------------------------------------------------------"
 ok="yes"
 for ext in .cpp .hpp
 do
-	dir_list=`find . -name "*$ext" | sed -e '/junk\.[^.]*$/d' \
-		-e 's|^\./||' -e '/^build/d' -e 's|/[^/]*$||' | sort -u`  
+	dir_list=`find . -name "*$ext" | sed \
+		-e '/junk\.[^.]*$/d' \
+		-e '/\/build\//d' \
+		-e '/\/new\//d' \
+		-e 's|^\./||' \
+		-e 's|/[^/]*$||' | sort -u`  
 	for dir in $dir_list 
 	do
 		list=`ls $dir/*$ext`

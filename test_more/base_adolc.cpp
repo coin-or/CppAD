@@ -1,6 +1,6 @@
 /* $Id$ */
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-12 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-13 Bradley M. Bell
 
 CppAD is distributed under multiple licenses. This distribution is under
 the terms of the
@@ -63,7 +63,7 @@ bool base_adolc(void)
 	trace_off();
 
 	// arrays for Adolc zos_forward
-	double *x = 0, *y = 0;
+	double *x = CPPAD_NULL, *y = CPPAD_NULL;
 	x = CPPAD_TRACK_NEW_VEC(n, x);
 	y = CPPAD_TRACK_NEW_VEC(m, y);
 

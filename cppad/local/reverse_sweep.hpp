@@ -3,7 +3,7 @@
 # define CPPAD_REVERSE_SWEEP_INCLUDED
 
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-12 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-13 Bradley M. Bell
 
 CppAD is distributed under multiple licenses. This distribution is under
 the terms of the 
@@ -145,7 +145,7 @@ void ReverseSweep(
 	size_t         i_op;
 	size_t        i_var;
 
-	const addr_t*   arg = 0;
+	const addr_t*   arg = CPPAD_NULL;
 
 	// check numvar argument
 	CPPAD_ASSERT_UNKNOWN( Rec->num_rec_var() == numvar );
@@ -155,7 +155,7 @@ void ReverseSweep(
 	const size_t num_par = Rec->num_rec_par();
 
 	// pointer to the beginning of the parameter vector
-	const Base* parameter = 0;
+	const Base* parameter = CPPAD_NULL;
 	if( num_par > 0 )
 		parameter = Rec->GetPar();
 

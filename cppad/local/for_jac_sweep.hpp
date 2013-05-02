@@ -2,7 +2,7 @@
 # ifndef CPPAD_FOR_JAC_SWEEP_INCLUDED
 # define CPPAD_FOR_JAC_SWEEP_INCLUDED
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-12 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-13 Bradley M. Bell
 
 CppAD is distributed under multiple licenses. This distribution is under
 the terms of the 
@@ -89,7 +89,7 @@ void ForJacSweep(
 	size_t         i_op;
 	size_t        i_var;
 
-	const addr_t*   arg = 0;
+	const addr_t*   arg = CPPAD_NULL;
 
 	size_t            i, j, k;
 

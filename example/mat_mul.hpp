@@ -3,7 +3,7 @@
 # define CPPAD_MAT_MUL_INCLUDED
 
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-12 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-13 Bradley M. Bell
 
 CppAD is distributed under multiple licenses. This distribution is under
 the terms of the 
@@ -94,7 +94,7 @@ $codep */
 	// number of columns in the result matrix
 	size_t nc_result_ = 0;
 	// which components of x are variables
-	vector<bool>* vx_ = 0;
+	vector<bool>* vx_ = CPPAD_NULL;
 
 	// get the information corresponding to this call
 	void get_info(size_t id, size_t k, size_t n, size_t m)

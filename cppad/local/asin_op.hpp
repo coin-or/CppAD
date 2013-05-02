@@ -3,7 +3,7 @@
 # define CPPAD_ASIN_OP_INCLUDED
 
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-12 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-13 Bradley M. Bell
 
 CppAD is distributed under multiple licenses. This distribution is under
 the terms of the 
@@ -59,16 +59,16 @@ inline void forward_asin_op(
 	Base* b = z      -       nc_taylor;  // called y in documentation
 
 	size_t k;
-	Base qj;
+	Base uj;
 	if( j == 0 )
-	{	z[j] = asin( x[0] );
-		qj   = Base(1) - x[0] * x[0];
-		b[j] = sqrt( qj );
+	{	z[0] = asin( x[0] );
+		uj   = Base(1) - x[0] * x[0];
+		b[0] = sqrt( uj );
 	}
 	else
-	{	qj = 0.;
+	{	uj = 0.;
 		for(k = 0; k <= j; k++)
-			qj -= x[k] * x[j-k];
+			uj -= x[k] * x[j-k];
 		b[j] = Base(0);
 		z[j] = Base(0);
 		for(k = 1; k < j; k++)
@@ -78,7 +78,7 @@ inline void forward_asin_op(
 		b[j] /= Base(j);
 		z[j] /= Base(j);
 		//
-		b[j] += qj / Base(2);
+		b[j] += uj / Base(2);
 		z[j] += x[j];
 		//
 		b[j] /= b[0];
