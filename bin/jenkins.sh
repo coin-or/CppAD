@@ -27,8 +27,8 @@ log_eval() {
 	echo $* "1>> ../jenkins.log 2>> ../jenkins.err"
 	if ! eval $*  1>> ../jenkins.log 2>> ../jenkins.err
 	then
-		echo_eval cat jenkins.log
-		echo_eval cat jenkins.err
+		echo_eval cat ../jenkins.log
+		echo_eval cat ../jenkins.err
 		exit 1
 	fi
 }
