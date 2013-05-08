@@ -1,6 +1,6 @@
 /* $Id$ */
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-12 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-13 Bradley M. Bell
 
 CppAD is distributed under multiple licenses. This distribution is under
 the terms of the
@@ -48,7 +48,7 @@ bool base_require(void)
 	ok &= thread == 0;
 
 	// y = x^2
-	size_t n = 1, m = 2;
+	size_t n = 1, m = 1;
 	CPPAD_TESTVECTOR(ad_base_alloc) a_x(n), a_y(m);
 	a_x[0] = ad_base_alloc(1.);
 	CppAD::Independent(a_x);

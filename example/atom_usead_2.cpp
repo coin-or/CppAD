@@ -147,6 +147,9 @@ namespace { // Begin empty namespace
 			}
 # endif
 		}
+		// no longer need the Taylor coefficients in r_ptr_
+		// (have to reconstruct them every time)
+		r_ptr_->capacity_taylor(0);
 		return ok;
 	}
 	// ----------------------------------------------------------------------
@@ -190,6 +193,9 @@ namespace { // Begin empty namespace
 		{	for(p = 0; p <=k; p++)
 				px[ j * (k+1) + p] = dw[ j * (k+1) + p];
 		}
+		// no longer need the Taylor coefficients in r_ptr_
+		// (have to reconstruct them every time)
+		r_ptr_->capacity_taylor(0);
 
 		return ok;
 	}
@@ -213,6 +219,10 @@ namespace { // Begin empty namespace
 		S = r_ptr_->ForSparseJac(q, R);
 		for(size_t i = 0; i < m; i++)
 			s[i] = S[i];
+
+		// no longer need the forward mode sparsity pattern
+		// (have to reconstruct them every time)
+		r_ptr_->size_forward_set(0);
 		
 		return ok; 
 	}
@@ -305,6 +315,10 @@ namespace { // Begin empty namespace
 			for(itr = Ht[i].begin(); itr != Ht[i].end(); itr++)
 				v[*itr].insert(i);
 		}
+
+		// no longer need the forward mode sparsity pattern
+		// (have to reconstruct them every time)
+		r_ptr_->size_forward_set(0);
 
 		return ok;
 	}

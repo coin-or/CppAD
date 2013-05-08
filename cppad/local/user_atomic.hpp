@@ -377,7 +377,7 @@ $icode%k% == 0%$$ and $icode%vy%.size() >= %m%$$.
 The input values of the elements of $icode vy$$ do not matter.
 Upon return, for $latex j = 0 , \ldots , m-1$$,
 $icode%vy%[%i%]%$$ is true if and only if
-$icode%ay%[%j%]%$$ is a variable.
+$icode%ay%[%i%]%$$ is a variable.
 (CppAD uses $icode vy$$ to reduce the necessary computations.)
 
 $head reverse$$

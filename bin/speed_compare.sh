@@ -1,7 +1,7 @@
 #! /bin/bash -e
 # $Id$
 # -----------------------------------------------------------------------------
-# CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-12 Bradley M. Bell
+# CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-13 Bradley M. Bell
 #
 # CppAD is distributed under multiple licenses. This distribution is under
 # the terms of the 
@@ -56,48 +56,41 @@ then
 fi
 # -------------------------------------------------------------------------
 #
-if [ ! -e work/speed/cppad/cur_speed$options.out ]
+if [ ! -e build/speed/cppad/cur_speed$options.out ]
 then
-	echo "svn list cppad"
-	list_cppad=`svn list cppad`
 	# revert cppad source code to the current version
 	if [ "$new_cppad" != "" ]
 	then
 		for file in $new_cppad
 		do
-			if (echo $list_cppad | grep $file > /dev/null)
+			echo "svn revert cppad/$file"
+			if ! svn revert cppad/$file
 			then
-				echo "svn revert cppad/$file"
-				svn revert cppad/$file
+				echo "assuming cppad/$file not in repository"
 			fi
 		done
 	fi
-	echo "svn list cppad/local"
-	list_local=`svn list cppad/local`
 	# revert cppad/local source code to the current version
 	if [ "$new_local" != "" ]
 	then
 		for file in $new_local
 		do
-			if (echo $list_local | grep $file > /dev/null)
+			echo "svn revert cppad/local/$file"
+			if ! svn revert cppad/local/$file
 			then
-				echo "svn revert cppad/local/$file"
-				svn revert cppad/local/$file
+				echo "assuming cppad/local/$file not in repository"
 			fi
 		done
 	fi
 	#
 	# compile and link the current version
-	echo "cd work/speed/src; make clean; make"
-	cd work/speed/src; make clean; make
-	#
-	echo "cd ../cppad; make clean; make test"
-	cd ../cppad; make clean; make test
+	echo "cd build; make check_speed_cppad; cd speed/cppad"
+	cd build; make check_speed_cppad; cd speed/cppad
 	#
 	# run speed test for the current version
 	opt=`echo $options | sed -e 's|_||g'`
-	echo "./cppad speed 123 $opt > cur_speed$options.out"
-	./cppad speed 123 $opt > cur_speed$options.out
+	echo "./speed_cppad speed 123 $opt > cur_speed$options.out"
+	./speed_cppad speed 123 $opt > cur_speed$options.out
 	#
 	echo "cd ../../.."
 	cd ../../..
@@ -117,28 +110,23 @@ do
 	cp cppad/local/new/$file cppad/local/$file
 done
 #
-if [ ! -e work/speed/cppad/new_speed$options.out ]
+if [ ! -e build/speed/cppad/new_speed$options.out ]
 then
-	#
 	# compile and link the new version
-	echo "cd work/speed/src; make clean; make"
-	cd work/speed/src; make clean; make
-	#
-	echo "cd ../cppad; make clean; make test"
-	cd ../cppad; make clean; make test
-	#
+	echo "cd build; make check_speed_cppad; cd speed/cppad"
+	cd build; make check_speed_cppad; cd speed/cppad
 	#
 	# run speed test for the new version
 	opt=`echo $options | sed -e 's|_||g'`
-	echo "./cppad speed 123 $opt > new_speed$options.out"
-	./cppad speed 123 $opt > new_speed$options.out
+	echo "./speed_cppad speed 123 $opt > new_speed$options.out"
+	./speed_cppad speed 123 $opt > new_speed$options.out
 	#
 	echo "cd ../../.."
 	cd ../../..
 fi
 # compare versions
-echo "cd work/speed/cppad"
-cd work/speed/cppad
+echo "cd build/speed/cppad"
+cd build/speed/cppad
 #
 echo "sed -n -e 's|_rate|_rate_cur|' -e '/_rate_/p' \\"
 echo "       -e 's|::available|::available_cur|' -e '/::available/p' \\"

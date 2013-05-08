@@ -120,7 +120,7 @@ private:
 		// -----------------------------------------------------------------
 		/// make default constructor private. It is only used by constructor
 		/// for `root arrays below.
-		block_t(void) : extra_(0), tc_index_(0), next_(0) 
+		block_t(void) : extra_(0), tc_index_(0), next_(CPPAD_NULL) 
 		{ }
 	};
 
@@ -861,7 +861,7 @@ $end
 		// check if we already have a node we can use
 		void* v_node              = available_root->next_;
 		block_t* node             = reinterpret_cast<block_t*>(v_node);
-		if( node != 0 )
+		if( node != CPPAD_NULL )
 		{	CPPAD_ASSERT_UNKNOWN( node->tc_index_ == tc_index );
 
 			// remove node from available list
@@ -1001,7 +1001,7 @@ $end
 		void* v_node         = reinterpret_cast<void*>(node);
 		block_t* inuse_root  = info->root_inuse_ + c_index;
 		block_t* previous    = inuse_root;
-		while( (previous->next_ != 0) & (previous->next_ != v_node) )
+		while( (previous->next_ != CPPAD_NULL) & (previous->next_ != v_node) )
 			previous = reinterpret_cast<block_t*>(previous->next_);	
 
 		// check that v_ptr is valid
@@ -1119,7 +1119,7 @@ $end
 		{	size_t capacity = capacity_vec[c_index];
 			block_t* available_root = info->root_available_ + c_index;
 			void* v_ptr             = available_root->next_;
-			while( v_ptr != 0 )
+			while( v_ptr != CPPAD_NULL )
 			{	block_t* node = reinterpret_cast<block_t*>(v_ptr); 
 				void* next    = node->next_;
 				::operator delete(v_ptr);
@@ -1127,7 +1127,7 @@ $end
 
 				dec_available(capacity, thread);
 			}
-			available_root->next_ = 0;
+			available_root->next_ = CPPAD_NULL;
 		}
 		CPPAD_ASSERT_UNKNOWN( available(thread) == 0 );
 		if( inuse(thread) == 0 )
