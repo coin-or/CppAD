@@ -1,6 +1,6 @@
 /* $Id$ */
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-12 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-13 Bradley M. Bell
 
 CppAD is distributed under multiple licenses. This distribution is under
 the terms of the 
@@ -391,6 +391,44 @@ bool case_three()
 	return ok;
 }
 
+
+// case where s is not identity matrix
+bool case_four()
+{	
+	bool ok = true;
+	using namespace CppAD;
+
+	// dimension of the domain space
+	size_t n = 2; 
+
+	// dimension of the range space
+	size_t m = n;
+
+	// independent and variable vectors 
+	CPPAD_TESTVECTOR(AD<double>) ax(n), ay(m);
+	ax[0] = 2.; 
+	ax[1] = 3.;
+	Independent(ax);
+	ay[0] = ax[1];
+	ay[1] = ax[0];
+
+	// create function object F : x -> y
+	ADFun<double> F(ax, ay);
+
+	// evaluate the dependency matrix for F(x)
+	size_t q = 1;
+	CPPAD_TESTVECTOR( bool ) s(q * m), r(q * n);
+	s[0] = true;
+	s[1] = false;
+	r = F.RevSparseJac(q, s);
+
+	ok &= r.size() == q * n;
+	ok &= r[0] == false;
+	ok &= r[1] == true;
+
+	return ok;
+}
+
 } // END empty namespace
 
 bool rev_sparse_jac(void)
@@ -399,6 +437,7 @@ bool rev_sparse_jac(void)
 	ok &= case_one();
 	ok &= case_two();
 	ok &= case_three();
+	ok &= case_four();
 
 	return ok;
 }

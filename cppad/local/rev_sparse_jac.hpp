@@ -225,7 +225,7 @@ void RevSparseJacBool(
 	for(i = 0; i < m; i++)
 	{	CPPAD_ASSERT_UNKNOWN( dep_taddr[i] < total_num_var );
 
-		for(j = 0; j < p; j++) if( s[ i * m + j ] )
+		for(j = 0; j < p; j++) if( s[ i * p + j ] )
 			var_sparsity.add_element( dep_taddr[i], j );
 	}
 

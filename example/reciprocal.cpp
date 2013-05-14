@@ -248,7 +248,7 @@ namespace { // Begin empty namespace
 			my_union(v[0], v[0], r[0] );
 
 
-		return false;
+		return true;
 	}
 	// ---------------------------------------------------------------------
 	// Declare the AD<double> routine reciprocal(id, ax, ay)
@@ -354,7 +354,7 @@ bool reciprocal(void)
 	// Hessian sparsity (using previous ForSparseJac call) 
 	CppAD::vectorBool s3(m), h(q * n);
 	s3[0] = true;        // compute sparsity pattern for f[0]
-	h     = f.RevSparseJac(q, s3);
+	h     = f.RevSparseHes(q, s3);
 	ok  &= h[0] == true; // second partial of f[0] w.r.t. x[0] may be non-zero
 
 	// -----------------------------------------------------------------

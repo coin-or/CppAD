@@ -979,7 +979,7 @@ public:
 		size_t thread = thread_alloc::thread_num();
 # ifndef NDEBUG
 		bool ok;
-		std::string msg = "user_atomoc: ";
+		std::string msg = "user_atomic: ";
 # endif
 		vector <Base>& x  = x_[thread];
 		vector <Base>& y  = y_[thread];
