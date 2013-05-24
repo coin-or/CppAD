@@ -413,6 +413,7 @@ nobase_myinclude_HEADERS = \
 	cppad/base_require.hpp \
 	cppad/check_numeric_type.hpp \
 	cppad/check_simple_vector.hpp \
+	cppad/configure.hpp \
 	cppad/cppad.hpp \
 	cppad/elapsed_seconds.hpp \
 	cppad/example/base_adolc.hpp \

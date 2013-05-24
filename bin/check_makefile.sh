@@ -25,7 +25,7 @@ ls \
 	cppad/local/*.hpp \
 	cppad/ipopt/*.hpp \
 	cppad/speed/*.hpp  | \
-	sed -e '/^cppad\/configure.hpp/d' -e '/^cppad\/config\.h$/d' | \
+	sed -e '/^cppad\/config\.h$/d' | \
 	sort > check_makefile1.$$
 #
 sed < makefile.am -n \
