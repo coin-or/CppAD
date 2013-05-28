@@ -11,16 +11,15 @@ Please visit http://www.coin-or.org/CppAD/ for information on other licenses.
 -------------------------------------------------------------------------- */
 
 /*
-$begin reciprocal.cpp$$
+$begin old_reciprocal.cpp$$
+$section Old Atomic Operation Reciprocal: Example and Test$$
+$index user, old atomic reciprocal$$
+$index atomic, old atomic reciprocal$$
+$index reciprocal, old atomic$$
 
-$section Reciprocal as a User Atomic Operation: Example and Test$$
-
-$index reciprocal, user_atomic$$
-$index user, atomic reciprocal$$
-$index atomic, reciprocal$$
-$index test, user_atomic$$
-$index user_atomic, example$$
-$index example, user_atomic$$
+$head Deprecated$$
+This example has been deprecated;
+see $cref atomic_reciprocal.cpp$$ instead.
 
 $head Theory$$
 The example below defines the user atomic function 
@@ -28,7 +27,7 @@ $latex f : \B{R}^n \rightarrow \B{R}^m$$ where
 $latex n = 1$$, $latex m = 1$$, and $latex f(x) = 1 / x$$.
 
 $code
-$verbatim%example/reciprocal.cpp%0%// BEGIN C++%// END C++%1%$$
+$verbatim%example/atomic/old_reciprocal.cpp%0%// BEGIN C++%// END C++%1%$$
 $$
 
 $end
@@ -223,9 +222,9 @@ namespace { // Begin empty namespace
 		size_t                                q ,
 		const vector< std::set<size_t> >&     r ,
 		const vector<bool>&                   s ,
-		vector<bool>&                         t ,
+		      vector<bool>&                   t ,
 		const vector< std::set<size_t> >&     u ,
-		vector< std::set<size_t> >&           v )
+		      vector< std::set<size_t> >&     v )
 	{	// Can just return false if not use RevSparseHes.
 		assert( id == 0 );
 		assert( n == 1 );
@@ -264,7 +263,7 @@ namespace { // Begin empty namespace
 	)
 } // End empty namespace
 
-bool reciprocal(void)
+bool old_reciprocal(void)
 {	bool ok = true;
 	using CppAD::AD;
 	using CppAD::NearEqual;
@@ -295,7 +294,8 @@ bool reciprocal(void)
 	reciprocal(id, au, ay);	// y = 1 / u = x
 
 	// create f: x -> y and stop tape recording
-	CppAD::ADFun<double> f(ax, ay);  // f(x) = x
+	CppAD::ADFun<double> f;
+	f.Dependent (ax, ay);  // f(x) = x
 
 	// --------------------------------------------------------------------
 	// Check forward mode results
@@ -304,9 +304,15 @@ bool reciprocal(void)
 	double check = x0;
 	ok &= NearEqual( Value(ay[0]) , check,  eps, eps);
 
-	// check first order forward mode
+	// check sero order forward mode
 	size_t p;
 	vector<double> x_p(n), y_p(m);
+	p      = 0;
+	x_p[0] = x0;
+	y_p    = f.Forward(p, x_p);
+	ok &= NearEqual(y_p[0] , check,  eps, eps);
+
+	// check first order forward mode
 	p      = 1;
 	x_p[0] = 1;
 	y_p    = f.Forward(p, x_p);
@@ -358,7 +364,7 @@ bool reciprocal(void)
 	ok  &= h[0] == true; // second partial of f[0] w.r.t. x[0] may be non-zero
 
 	// -----------------------------------------------------------------
-	// Free all temporary work space associated with user_atomic objects. 
+	// Free all temporary work space associated with old_atomic objects. 
 	// (If there are future calls to user atomic functions, they will 
 	// create new temporary work space.)
 	CppAD::user_atomic<double>::clear();

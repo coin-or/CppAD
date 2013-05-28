@@ -100,6 +100,7 @@ test_more_SOURCES  = \
 	atan2.cpp \
 	base_alloc.cpp \
 	check_simple_vector.cpp \
+	checkpoint.cpp \
 	compare.cpp \
 	compare_change.cpp \
 	cond_exp.cpp \
@@ -118,6 +119,7 @@ test_more_SOURCES  = \
 	for_hess.cpp \
 	for_sparse_jac.cpp \
 	forward.cpp \
+	forward_mul.cpp \
 	from_base.cpp \
 	fun_check.cpp \
 	jacobian.cpp \

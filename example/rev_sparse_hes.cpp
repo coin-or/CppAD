@@ -1,6 +1,6 @@
 /* $Id$ */
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-12 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-13 Bradley M. Bell
 
 CppAD is distributed under multiple licenses. This distribution is under
 the terms of the 
@@ -110,6 +110,15 @@ bool BoolCases(void)
 		for(j = 0; j < n; j++) 
 			ok &= (h[ i * n + j ] == check_f1[ i * n + j ] );
 
+	// call that transposed the result
+	bool transpose = true;
+	h    = f.RevSparseHes(n, s, transpose);
+
+	// This h is symmetric, because R is symmetric, not really testing here
+	for(i = 0; i < n; i++)
+		for(j = 0; j < n; j++) 
+			ok &= (h[ j * n + i ] == check_f1[ i * n + j ] );
+
 	return ok;
 }
 // define the template function SetCases<Vector> in empty namespace
@@ -175,6 +184,18 @@ bool SetCases(void)
 	for(i = 0; i < n; i++)
 	{	for(j = 0; j < n; j++)
 		{	bool found = h[i].find(j) != h[i].end();
+			ok        &= (found == check_f1[i * n + j]);
+		}
+	}
+
+	// call that transposed the result
+	bool transpose = true;
+	h    = f.RevSparseHes(n, s, transpose);
+
+	// This h is symmetric, because R is symmetric, not really testing here
+	for(i = 0; i < n; i++)
+	{	for(j = 0; j < n; j++)
+		{	bool found = h[j].find(i) != h[j].end();
 			ok        &= (found == check_f1[i * n + j]);
 		}
 	}

@@ -1,6 +1,6 @@
 $Id$
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-12 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-13 Bradley M. Bell
 
 CppAD is distributed under multiple licenses. This distribution is under
 the terms of the 
@@ -312,14 +312,37 @@ The argument $icode x_p$$ has prototype
 $codei%
 	const %Vector%& %x_p%
 %$$
-(see $cref/Vector/ForwardAny/Vector/$$ below)
-and its size 
-must be equal to $icode n$$, the dimension of the
+(see $cref/Vector/ForwardAny/Vector/$$ below).
+As above, we use $icode n$$ to denote the dimension of the
 $cref/domain/seq_property/Domain/$$ space for $icode f$$.
+The size of $icode x_p$$ must be either $icode n$$ or 
+$icode%n%*(%p%+1)%$$.
+
+$subhead Restrictions$$
+Note if $icode f$$ uses $cref old_atomic$$ functions,
+the size of $icode x_p$$ must be $icode n$$.
+
+$subhead One Order$$
+If $icode%x_p%.size() == %n%$$,
 The $th p$$ order Taylor coefficient for $latex X(t)$$ 
 is defined by this value; i.e., $latex x^{(p)} = x\_p$$.
-(The lower order Taylor coefficients for $latex X(t)$$ are
-defined by previous calls to $code Forward$$.)
+For $latex k = 0 , \ldots , p-1$$,
+the $th k$$ order Taylor coefficient $latex x^{(k)}$$ 
+is defined by $icode x_k$$ in the previous call to
+$codei%
+	%f%.Forward(%k%, %x_k%)
+%$$
+
+$subhead Multiple Orders$$
+If $icode%x_p%.size() == %n%*(%p%+1)%$$,
+For $latex k = 0 , \ldots , p$$,
+for $latex j = 0 , \ldots , n$$,
+the $th j$$ component of the $th k$$ order Taylor coefficient 
+$latex x_j^{(k)}$$ 
+is defined by $icode x_j^k$$ were
+$codei%
+	%x_j^k% = %x_p%[ %j% * %p% + %k% ]
+%$$
 
 $head s$$
 If the argument $icode s$$ is not present, $code std::cout$$
@@ -338,13 +361,27 @@ The return value $icode y_p$$ has prototype
 $codei%
 	%Vector% %y_p%
 %$$
-(see $cref/Vector/ForwardAny/Vector/$$ below)
-and its value is 
-The $th p$$ order Taylor coefficient for $latex Y(t)$$; i.e.,
-$latex y^{(p)} = y\_p$$. 
-The size of $icode y_p$$ 
-is equal to $icode m$$, the dimension of the
+(see $cref/Vector/ForwardAny/Vector/$$ below).
+As above, we use $icode m$$ to denote the dimension of the
 $cref/range/seq_property/Range/$$ space for $icode f$$.
+
+$subhead One Order$$
+If $icode%x_p%.size() == %n%$$,
+the vector $icode y_p$$ has size $icode m$$.
+The $th p$$ order Taylor coefficient for $latex Y(t)$$ 
+is defined by this value; i.e., $latex y^{(p)} = y\_p$$.
+
+$subhead Multiple Orders$$
+If $icode%x_p%.size() == %n%*(%p%+1)%$$,
+the vector $icode y_p$$ has size $icode%m%*(%p%+1)%$$.
+For $latex k = 0 , \ldots , p$$,
+for $latex i = 0 , \ldots , m$$,
+the $th i$$ component of the $th k$$ order Taylor coefficient 
+$latex y_i^{(k)}$$ 
+is defined by $icode y_i^k$$ were
+$codei%
+	%y_i^k% = %y_p%[ %i% * %p% + %k% ]
+%$$
 
 $head Vector$$
 The type $icode Vector$$ must be a $cref SimpleVector$$ class with
@@ -354,7 +391,7 @@ The routine $cref CheckSimpleVector$$ will generate an error message
 if this is not the case.
 
 $head Zero Order$$
-In the case where $latex p = 0$$,
+In the case where $latex p = 0$$ and $icode%x_p%.size() == %n%$$,
 the result $icode y_p$$ is given by
 $latex \[
 \begin{array}{rcl}
@@ -372,7 +409,7 @@ $icode y$$
 in $cref ForwardZero$$.
 
 $head First Order$$
-In the case where $latex p = 1$$,
+In the case where $latex p = 1$$ and $icode%x_p%.size() == %n%$$,
 the result $icode y_p$$ is given by
 $latex \[
 \begin{array}{rcl}
@@ -401,7 +438,7 @@ y^{(1)} = \D{F}{x_j} ( x^{(0)} )
 \] $$
 
 $head Second Order$$
-In the case where $latex p = 2$$,
+In the case where $latex p = 2$$ and $icode%x_p%.size() == %n%$$,
 the $th i$$ element of 
 the result $icode y_p$$ is given by
 $latex \[
@@ -455,9 +492,9 @@ $latex \[
 
 $head Example$$
 The file
-$cref forward.cpp$$
-contains an example and test of this operation.
-It returns true if it succeeds and false otherwise.
+$cref forward.cpp$$ ( $cref forward_mul.cpp$$ )
+contains an example and test using one order (multiple orders).
+They return true if they succeed and false otherwise.
 
 $end
 -----------------------------------------------------------------------------

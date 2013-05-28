@@ -1,6 +1,6 @@
 // $Id$
-# ifndef CPPAD_MAT_MUL_INCLUDED
-# define CPPAD_MAT_MUL_INCLUDED
+# ifndef CPPAD_OLD_MAT_MUL_INCLUDED
+# define CPPAD_OLD_MAT_MUL_INCLUDED
 
 /* --------------------------------------------------------------------------
 CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-13 Bradley M. Bell
@@ -14,9 +14,9 @@ Please visit http://www.coin-or.org/CppAD/ for information on other licenses.
 -------------------------------------------------------------------------- */
 
 /*
-$begin mat_mul.hpp$$
+$begin old_mat_mul.hpp$$
 $spell
-	mat_mul.hpp
+	old_mat_mul.hpp
 	cppad
 	CppAD
 	namespace
@@ -46,25 +46,25 @@ $$
 
 $section Define Matrix Multiply as a User Atomic Operation$$
 
-$index mat_mul, define$$
+$index old_mat_mul, define$$
 $index matrix, multiply$$
 $index multiply, matrix$$
-$index user_atomic, test$$
-$index test, user_atomic$$
-$index user_atomic, example$$
-$index example, user_atomic$$
+$index old_atomic, test$$
+$index test, old_atomic$$
+$index old_atomic, example$$
+$index example, old_atomic$$
 
 $head Syntax$$
 This file is located in the $code example$$ directory.
 It can be copied to the current working directory and included
 with the syntax
 $codei%
-	# include "mat_mul.hpp"
+	# include "old_mat_mul.hpp"
 %$$
 
 $head Example$$
-The file $cref mat_mul.cpp$$ contains an example use of 
-$code mat_mul.hpp$$.
+The file $cref old_mat_mul.cpp$$ contains an example use of 
+$code old_mat_mul.hpp$$.
 It returns true if it succeeds and false otherwise.
 
 $head Begin Source$$
@@ -168,7 +168,7 @@ $codep */
 		const vector<double>&         tx ,
 		const vector<double>&         ty ,
 		vector<double>&               px ,
-		const vector<double>          py ) 
+		const vector<double>&         py ) 
 	{	size_t i, j;
 		size_t order_result = order_left + order_right; 
 		for(i = 0; i < nr_result_; i++)

@@ -1,7 +1,7 @@
 #! /bin/bash -e
 # $Id$
 # -----------------------------------------------------------------------------
-# CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-12 Bradley M. Bell
+# CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-13 Bradley M. Bell
 #
 # CppAD is distributed under multiple licenses. This distribution is under
 # the terms of the
@@ -25,6 +25,7 @@ fi
 version="$1"
 error_file="$2"
 output_directory="$3"
+# 2DO: change EXTRACT_ALL to NO so get warnings for undocumented functions.
 echo "create bin/doxyfile.$$"
 cat << EOF > bin/doxyfile.$$
 ALWAYS_DETAILED_SEC     = YES

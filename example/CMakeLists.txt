@@ -16,6 +16,9 @@
 # empty, Debug, Release, RelWithDebInfo and MinSizeRel
 SET(CMAKE_BUILD_TYPE DEBUG)
 
+# atomic examples
+ADD_SUBDIRECTORY(atomic)
+
 # adolc_prefix
 IF ( adolc_prefix )
 	# Extra source files if we are including adolc
@@ -84,8 +87,6 @@ ADD_EXECUTABLE(example EXCLUDE_FROM_ALL example.cpp
 	asin.cpp
 	atan.cpp
 	atan2.cpp
-	atom_usead_1.cpp
-	atom_usead_2.cpp
 	base_alloc.hpp
 	base_require.cpp
 	bender_quad.cpp
@@ -94,7 +95,6 @@ ADD_EXECUTABLE(example EXCLUDE_FROM_ALL example.cpp
 	change_const.cpp
 	check_numeric_type.cpp
 	check_simple_vector.cpp
-	checkpoint.cpp
 	compare.cpp
 	compare_change.cpp
 	complex_poly.cpp
@@ -112,6 +112,7 @@ ADD_EXECUTABLE(example EXCLUDE_FROM_ALL example.cpp
 	for_one.cpp
 	for_two.cpp
 	forward.cpp
+	forward_mul.cpp
 	for_sparse_jac.cpp
 	fun_assign.cpp
 	fun_check.cpp
@@ -139,8 +140,6 @@ ADD_EXECUTABLE(example EXCLUDE_FROM_ALL example.cpp
 	lu_vec_ad.cpp
 	lu_vec_ad.hpp
 	lu_vec_ad_ok.cpp
-	mat_mul.cpp
-	mat_mul.hpp
 	mul.cpp
 	mul_eq.cpp
 	mul_level.cpp
@@ -164,7 +163,6 @@ ADD_EXECUTABLE(example EXCLUDE_FROM_ALL example.cpp
 	pow.cpp
 	pow_int.cpp
 	print_for.cpp
-	reciprocal.cpp
 	reverse_any.cpp
 	reverse_one.cpp
 	reverse_three.cpp
@@ -195,7 +193,6 @@ ADD_EXECUTABLE(example EXCLUDE_FROM_ALL example.cpp
 	thread_alloc.cpp
 	unary_minus.cpp
 	unary_plus.cpp
-	user_tan.cpp
 	value.cpp
 	var2par.cpp
 	vec_ad.cpp
@@ -209,4 +206,8 @@ add_cppad_cxx_flags(example)
 TARGET_LINK_LIBRARIES(example ${example_adolc} ${example_eigen})
 
 # Add the check_example target
-ADD_CUSTOM_TARGET(check_example example DEPENDS example ${example_ipopt})
+ADD_CUSTOM_TARGET(check_example example DEPENDS 
+	example 
+	check_example_atomic 
+	${example_ipopt}
+)

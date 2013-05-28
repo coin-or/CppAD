@@ -3,7 +3,7 @@
 # define CPPAD_SINH_OP_INCLUDED
 
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-12 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-13 Bradley M. Bell
 
 CppAD is distributed under multiple licenses. This distribution is under
 the terms of the 
@@ -41,7 +41,8 @@ and derivatives of z.
 */
 template <class Base>
 inline void forward_sinh_op(
-	size_t j           ,
+	size_t q           ,
+	size_t p           ,
 	size_t i_z         ,
 	size_t i_x         ,
 	size_t nc_taylor   , 
@@ -51,7 +52,8 @@ inline void forward_sinh_op(
 	CPPAD_ASSERT_UNKNOWN( NumArg(SinhOp) == 1 );
 	CPPAD_ASSERT_UNKNOWN( NumRes(SinhOp) == 2 );
 	CPPAD_ASSERT_UNKNOWN( i_x + 1 < i_z );
-	CPPAD_ASSERT_UNKNOWN( j < nc_taylor );
+	CPPAD_ASSERT_UNKNOWN( p < nc_taylor );
+	CPPAD_ASSERT_UNKNOWN( q <= p );
 
 	// Taylor coefficients corresponding to argument and result
 	Base* x = taylor + i_x * nc_taylor;
@@ -62,11 +64,12 @@ inline void forward_sinh_op(
 	// rest of this routine is identical for the following cases:
 	// forward_sin_op, forward_cos_op, forward_sinh_op, forward_cosh_op.
 	size_t k;
-	if( j == 0 )
-	{	s[j] = sinh( x[0] );
-		c[j] = cosh( x[0] );
+	if( q == 0 )
+	{	s[0] = sinh( x[0] );
+		c[0] = cosh( x[0] );
+		q++;
 	}
-	else
+	for(size_t j = q; j <= p; j++)
 	{
 		s[j] = Base(0);
 		c[j] = Base(0);

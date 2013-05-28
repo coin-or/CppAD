@@ -3,7 +3,7 @@
 # define CPPAD_FOR_SPARSE_JAC_INCLUDED
 
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-12 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-13 Bradley M. Bell
 
 CppAD is distributed under multiple licenses. This distribution is under
 the terms of the 
@@ -34,7 +34,9 @@ $index sparsity, forward Jacobian$$
 $index pattern, forward Jacobian$$
 
 $head Syntax$$
-$icode%s% = %f%.ForSparseJac(%q%, %r%)%$$
+$icode%s% = %f%.ForSparseJac(%q%, %r%)
+%$$
+$icode%s% = %f%.ForSparseJac(%q%, %r%, %transpose%)%$$
 
 $head Purpose$$
 We use $latex F : B^n \rightarrow B^m$$ to denote the
@@ -116,35 +118,67 @@ It specifies the number of columns in
 $latex R \in B^{n \times q}$$ and the Jacobian 
 $latex S(x) \in B^{m \times q}$$. 
 
+$head transpose$$
+The argument $icode transpose$$ has prototype
+$codei%
+	bool %transpose%
+%$$
+The default value $code false$$ is used when $icode transpose$$ is not present.
+
+
 $head r$$
 The argument $icode r$$ has prototype
 $codei%
 	const %VectorSet%& %r%
 %$$
-(see $cref/VectorSet/ForSparseJac/VectorSet/$$ below).
-If it has elements of type $code bool$$,
+see $cref/VectorSet/ForSparseJac/VectorSet/$$ below.
+
+$subhead transpose false$$
+If $icode r$$ has elements of type $code bool$$,
 its size is $latex n * q$$.
 If it has elements of type $code std::set<size_t>$$,
 its size is $latex n$$ and all the set elements must be between
 zero and $icode%q%-1%$$ inclusive.
 It specifies a 
 $cref/sparsity pattern/glossary/Sparsity Pattern/$$ 
-for the matrix $icode R$$.
+for the matrix $icode R \in B^{n \times q}$$.
+
+$subhead transpose true$$
+If $icode r$$ has elements of type $code bool$$,
+its size is $latex q * n$$.
+If it has elements of type $code std::set<size_t>$$,
+its size is $latex q$$ and all the set elements must be between
+zero and $icode%n%-1%$$ inclusive.
+It specifies a 
+$cref/sparsity pattern/glossary/Sparsity Pattern/$$ 
+for the matrix $icode R^\R{T} \in B^{q \times n}$$.
 
 $head s$$
 The return value $icode s$$ has prototype
 $codei%
 	%VectorSet% %s%
 %$$
-(see $cref/VectorSet/ForSparseJac/VectorSet/$$ below).
-If it has elements of type $code bool$$,
+see $cref/VectorSet/ForSparseJac/VectorSet/$$ below.
+
+$subhead transpose false$$
+If $icode s$$ has elements of type $code bool$$,
 its size is $latex m * q$$.
 If it has elements of type $code std::set<size_t>$$,
 its size is $latex m$$ and all its set elements are between
 zero and $icode%q%-1%$$ inclusive.
 It specifies a 
 $cref/sparsity pattern/glossary/Sparsity Pattern/$$ 
-for the matrix $latex S(x)$$.
+for the matrix $latex S(x) \in B^{m \times q}$$.
+
+$subhead transpose true$$
+If $icode s$$ has elements of type $code bool$$,
+its size is $latex q * m$$.
+If it has elements of type $code std::set<size_t>$$,
+its size is $latex q$$ and all its set elements are between
+zero and $icode%m%-1%$$ inclusive.
+It specifies a 
+$cref/sparsity pattern/glossary/Sparsity Pattern/$$ 
+for the matrix $latex S(x)^\R{T} \in B^{q \times m}$$.
 
 $head VectorSet$$
 The type $icode VectorSet$$ must be a $cref SimpleVector$$ class with
@@ -198,6 +232,9 @@ is the base type for this recording.
 \tparam VectorSet
 is a simple vector class with elements of type \c bool.
 
+\param transpose
+are the sparsity patterns transposed.
+
 \param q
 is the number of columns in the matrix \f$ R \f$.
 
@@ -240,6 +277,7 @@ tape (given the sparsity pattern for the independent variables is \f$ R \f$).
 */
 template <class Base, class VectorSet> 
 void ForSparseJacBool(
+	bool                   transpose        ,
 	size_t                 q                , 
 	const VectorSet&       r                ,
 	VectorSet&             s                ,
@@ -256,10 +294,17 @@ void ForSparseJacBool(
 	size_t m = dep_taddr.size();
 	size_t n = ind_taddr.size();
 
-	CPPAD_ASSERT_UNKNOWN(q > 0 );
-	CPPAD_ASSERT_UNKNOWN( size_t(r.size()) == n * q );
+	CPPAD_ASSERT_KNOWN(
+		q > 0,
+		"ForSparseJac: q is not greater than zero"
+	);
+	CPPAD_ASSERT_KNOWN( 
+		size_t(r.size()) == n * q,
+		"ForSparseJac: size of r is not equal to\n"
+		"q times domain dimension for ADFun object."
+	);
 
-	// allocate memory for the requested sparsity calculation
+	// allocate memory for the requested sparsity calculation result
 	for_jac_sparsity.resize(total_num_var, q);
 
 	// set values corresponding to independent variables
@@ -269,8 +314,14 @@ void ForSparseJacBool(
 		CPPAD_ASSERT_UNKNOWN( play.GetOp( ind_taddr[i] ) == InvOp );
 
 		// set bits that are true
-		for(j = 0; j < q; j++) if( r[ i * q + j ] )
-			for_jac_sparsity.add_element( ind_taddr[i], j);
+		if( transpose )
+		{	for(j = 0; j < q; j++) if( r[ j * n + i ] )
+				for_jac_sparsity.add_element( ind_taddr[i], j);
+		}
+		else
+		{	for(j = 0; j < q; j++) if( r[ i * q + j ] )
+				for_jac_sparsity.add_element( ind_taddr[i], j);
+		}
 	}
 
 	// evaluate the sparsity patterns
@@ -287,13 +338,21 @@ void ForSparseJacBool(
 	{	CPPAD_ASSERT_UNKNOWN( dep_taddr[i] < total_num_var );
 
 		// extract the result from for_jac_sparsity
-		for(j = 0; j < q; j++)
-			s[ i * q + j ] = false;
+		if( transpose )
+		{	for(j = 0; j < q; j++)
+				s[ j * m + i ] = false;
+		}
+		else
+		{	for(j = 0; j < q; j++)
+				s[ i * q + j ] = false;
+		}
 		CPPAD_ASSERT_UNKNOWN( for_jac_sparsity.end() == q );
 		for_jac_sparsity.begin( dep_taddr[i] );
 		j = for_jac_sparsity.next_element();
 		while( j < q )
-		{	s[i * q + j ] = true;
+		{	if( transpose )
+				s[j * m + i] = true;
+			else	s[i * q + j] = true;
 			j = for_jac_sparsity.next_element();
 		}
 	}
@@ -312,6 +371,9 @@ see \c SparseJacBool.
 
 \tparam VectorSet
 is a simple vector class with elements of type \c std::set<size_t>.
+
+\param transpose
+see \c SparseJacBool.
 
 \param q
 see \c SparseJacBool.
@@ -340,6 +402,7 @@ see \c SparseJacBool.
 
 template <class Base, class VectorSet> 
 void ForSparseJacSet(
+	bool                        transpose        , 
 	size_t                      q                , 
 	const VectorSet&            r                ,
 	VectorSet&                  s                ,
@@ -357,31 +420,60 @@ void ForSparseJacSet(
 	size_t m = dep_taddr.size();
 	size_t n = ind_taddr.size();
 
-	CPPAD_ASSERT_UNKNOWN(q > 0 );
-	CPPAD_ASSERT_UNKNOWN( size_t(r.size()) == n );
+	CPPAD_ASSERT_KNOWN(
+		q > 0,
+		"RevSparseJac: q is not greater than zero"
+	);
+	CPPAD_ASSERT_KNOWN(
+		size_t(r.size()) == n || transpose,
+		"RevSparseJac: size of r is not equal to n and transpose is false."
+	);
+	CPPAD_ASSERT_KNOWN(
+		size_t(r.size()) == q || ! transpose,
+		"RevSparseJac: size of r is not equal to q and transpose is true."
+	);
 
 	// allocate memory for the requested sparsity calculation
 	for_jac_sparsity.resize(total_num_var, q);
 
 	// set values corresponding to independent variables
-	for(i = 0; i < n; i++)
-	{	CPPAD_ASSERT_UNKNOWN( ind_taddr[i] < total_num_var );
-		// ind_taddr[i] is operator taddr for i-th independent variable
-		CPPAD_ASSERT_UNKNOWN( play.GetOp( ind_taddr[i] ) == InvOp );
-
-		// add the elements that are present
-		itr = r[i].begin();
-		while( itr != r[i].end() )
-		{	j = *itr++;
-			CPPAD_ASSERT_KNOWN(
-				j < q,
-				"ForSparseJac: an element of the set r[i] "
-				"has value greater than or equal q."
-			);
-			for_jac_sparsity.add_element( ind_taddr[i], j);
+	if( transpose )
+	{	for(i = 0; i < q; i++)
+		{	// add the elements that are present
+			itr = r[i].begin();
+			while( itr != r[i].end() )
+			{	j = *itr++;
+				CPPAD_ASSERT_KNOWN(
+				j < n,
+				"ForSparseJac: transpose is true and element of the set\n"
+				"r[j] has value greater than or equal n."
+				);
+				CPPAD_ASSERT_UNKNOWN( ind_taddr[j] < total_num_var );
+				// operator for j-th independent variable
+				CPPAD_ASSERT_UNKNOWN( play.GetOp( ind_taddr[j] ) == InvOp );
+				for_jac_sparsity.add_element( ind_taddr[j], i);
+			}
 		}
 	}
+	else
+	{	for(i = 0; i < n; i++)
+		{	CPPAD_ASSERT_UNKNOWN( ind_taddr[i] < total_num_var );
+			// ind_taddr[i] is operator taddr for i-th independent variable
+			CPPAD_ASSERT_UNKNOWN( play.GetOp( ind_taddr[i] ) == InvOp );
 
+			// add the elements that are present
+			itr = r[i].begin();
+			while( itr != r[i].end() )
+			{	j = *itr++;
+				CPPAD_ASSERT_KNOWN(
+					j < q,
+					"ForSparseJac: an element of the set r[i] "
+					"has value greater than or equal q."
+				);
+				for_jac_sparsity.add_element( ind_taddr[i], j);
+			}
+		}
+	}
 	// evaluate the sparsity patterns
 	ForJacSweep(
 		n,
@@ -391,10 +483,10 @@ void ForSparseJacSet(
 	);
 
 	// return values corresponding to dependent variables
-	CPPAD_ASSERT_UNKNOWN( size_t(s.size()) == m );
+	CPPAD_ASSERT_UNKNOWN( size_t(s.size()) == m || transpose );
+	CPPAD_ASSERT_UNKNOWN( size_t(s.size()) == q || ! transpose );
 	for(i = 0; i < m; i++)
 	{	CPPAD_ASSERT_UNKNOWN( dep_taddr[i] < total_num_var );
-		CPPAD_ASSERT_UNKNOWN( s[i].empty() );
 
 		// extract results from for_jac_sparsity
 		// and add corresponding elements to sets in s
@@ -402,7 +494,9 @@ void ForSparseJacSet(
 		for_jac_sparsity.begin( dep_taddr[i] );
 		j = for_jac_sparsity.next_element();
 		while( j < q )
-		{	s[i].insert(j);
+		{	if( transpose )
+				s[j].insert(i);
+			else	s[i].insert(j);
 			j = for_jac_sparsity.next_element();
 		}
 	}
@@ -418,6 +512,9 @@ applies.
 is a \c bool value. This argument is used to dispatch to the proper source
 code depending on the value of \c VectorSet::value_type.
 
+\param transpose
+See \c ForSparseJac(q, r).
+
 \param q
 See \c ForSparseJac(q, r).
 
@@ -432,6 +529,7 @@ template <class Base>
 template <class VectorSet>
 void ADFun<Base>::ForSparseJacCase(
 	bool                set_type      ,
+	bool                transpose     ,
 	size_t              q             ,
 	const VectorSet&    r             ,
 	VectorSet&          s             )
@@ -443,14 +541,9 @@ void ADFun<Base>::ForSparseJacCase(
 	// dimension size of result vector
 	s.resize( m * q );
 
-	CPPAD_ASSERT_KNOWN(
-		size_t(r.size()) == Domain() * q,
-		"ForSparseJac: using vectors of bools and r (second argument) length"
-		"\nis not equal to q (first argument) times domain dimension."
-	);
-
-	// store results in r and for_jac_sparse_pack_
+	// store results in s and for_jac_sparse_pack_
 	ForSparseJacBool(
+		transpose        , 
 		q                , 
 		r                ,
 		s                ,
@@ -474,6 +567,9 @@ is a \c std::set<size_t> object.
 This argument is used to dispatch to the proper source
 code depending on the value of \c VectorSet::value_type.
 
+\param transpose
+See \c ForSparseJac(q, r).
+
 \param q
 See \c ForSparseJac(q, r).
 
@@ -487,28 +583,25 @@ template <class Base>
 template <class VectorSet>
 void ADFun<Base>::ForSparseJacCase(
 	const std::set<size_t>&    set_type      ,
+	bool                       transpose     ,
 	size_t                     q             ,
 	const VectorSet&           r             ,
 	VectorSet&                 s             )
-{
+{	size_t m = Range();
 
 	// check VectorSet is Simple Vector class with sets for elements
 	CheckSimpleVector<std::set<size_t>, VectorSet>(
 		one_element_std_set<size_t>(), two_element_std_set<size_t>()
 	);
 
-	CPPAD_ASSERT_KNOWN(
-		size_t(r.size()) == Domain() ,
-		"ForSparseJac: using vectors of sets and r (second argument) length"
-		"\nis not equal to the domain dimension for ADFun object."
-	);
-
 	// dimension size of result vector
-	size_t m = Range();
-	s.resize( m );
+	if( transpose )
+		s.resize(q);
+	else	s.resize( m );
 
 	// store results in r and for_jac_sparse_pack_
 	CppAD::ForSparseJacSet(
+		transpose        , 
 		q                , 
 		r                ,
 		s                ,
@@ -542,20 +635,25 @@ is the number of columns in the matrix \f$ R \f$.
 \param r
 is a sparsity pattern for the matrix \f$ R \f$.
 
+\param transpose
+are sparsity patterns for \f$ R \f$ and \f$ S(x) \f$ transposed.
+
 \return
-If \c VectorSet::value_type is \c bool,
-the return value \c s is a vector with size \c m*q
-where \c m is the number of dependent variables
-corresponding to the operation sequence stored in \c f. 
-If \c VectorSet::value_type is \c std::set<size_t>,
-the return value \c s is a vector of sets with size \c m
-and with all its elements between zero and \a q - 1.
-The value of \a s is the sparsity pattern for the matrix
+The value of \c transpose is false (true),
+the return value is a sparsity pattern for \f$ S(x) \f$ (\f$ S(x)^T \f$) where
 \f[
 	S(x) = F^{(1)} (x) * R
 \f]
 where \f$ F \f$ is the function corresponding to the operation sequence
 and \a x is any argument value.
+If \c VectorSet::value_type is \c bool,
+the return value has size \f$ m * q \f$ (\f$ q * m \f$). 
+where \c m is the number of dependent variables
+corresponding to the operation sequence stored in \c f. 
+If \c VectorSet::value_type is \c std::set<size_t>,
+the return value has size \f$ m \f$ ( \f$ q \f$ )
+and with all its elements between zero and 
+\f$ q - 1 \f$ ( \f$ m - 1 \f$).
 
 \par Side Effects
 If \c VectorSet::value_type is \c bool,
@@ -585,14 +683,10 @@ template <class Base>
 template <class VectorSet>
 VectorSet ADFun<Base>::ForSparseJac(
 	size_t             q             , 
-	const VectorSet&   r             )
+	const VectorSet&   r             ,
+	bool               transpose     )
 {	VectorSet s;
 	typedef typename VectorSet::value_type Set_type; 
-
-	CPPAD_ASSERT_KNOWN(
-		q > 0,
-		"ForSparseJac: q (first arugment) is not greater than zero"
-	);
 
 	// free all memory currently in sparsity patterns
 	for_jac_sparse_pack_.resize(0, 0);
@@ -600,6 +694,7 @@ VectorSet ADFun<Base>::ForSparseJac(
 
 	ForSparseJacCase(
 		Set_type()  ,
+		transpose   ,
 		q           ,
 		r           ,
 		s

@@ -3,7 +3,7 @@
 # define CPPAD_AD_FUN_INCLUDED
 
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-12 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-13 Bradley M. Bell
 
 CppAD is distributed under multiple licenses. This distribution is under
 the terms of the 
@@ -126,6 +126,7 @@ private:
 	template <class VectorSet>
 	void ForSparseJacCase(
 		bool               set_type  ,
+		bool               transpose ,
 		size_t             q         ,
 		const VectorSet&   r         ,  
 		VectorSet&         s
@@ -135,6 +136,7 @@ private:
 	template <class VectorSet>
 	void ForSparseJacCase(
 		const std::set<size_t>&  set_type  ,
+		bool                     transpose ,
 		size_t                   q         ,
 		const VectorSet&         r         ,  
 		VectorSet&               s
@@ -145,6 +147,7 @@ private:
 	template <class VectorSet>
 	void RevSparseJacCase(
 		bool               set_type  ,
+		bool               transpose ,
 		size_t             p         ,
 		const VectorSet&   s         ,  
 		VectorSet&         r
@@ -154,6 +157,7 @@ private:
 	template <class VectorSet>
 	void RevSparseJacCase(
 		const std::set<size_t>&  set_type  ,
+		bool                     transpose ,
 		size_t                   p         ,
 		const VectorSet&         s         ,  
 		VectorSet&               r
@@ -164,6 +168,7 @@ private:
 	template <class VectorSet>
 	void RevSparseHesCase(
 		bool               set_type  ,
+		bool               transpose ,
 		size_t             q         ,
 		const VectorSet&   s         ,  
 		VectorSet&         h
@@ -173,6 +178,7 @@ private:
 	template <class VectorSet>
 	void RevSparseHesCase(
 		const std::set<size_t>&  set_type  ,
+		bool                     transpose ,
 		size_t                   q         ,
 		const VectorSet&         s         ,  
 		VectorSet&               h
@@ -340,19 +346,19 @@ public:
 	// (see doxygen documentation in for_sparse_jac.hpp)
 	template <typename VectorSet>
 	VectorSet ForSparseJac(
-		size_t q, const VectorSet &r
+		size_t q, const VectorSet &r, bool transpose = false
 	);
 	// reverse mode Jacobian sparsity 
 	// (see doxygen documentation in rev_sparse_jac.hpp)
 	template <typename VectorSet>
 	VectorSet RevSparseJac(
-		size_t q, const VectorSet &s
+		size_t q, const VectorSet &s, bool transpose = false
 	);
 	// reverse mode Hessian sparsity 
 	// (see doxygen documentation in rev_sparse_hes.hpp)
 	template <typename VectorSet>
 	VectorSet RevSparseHes(
-		size_t q, const VectorSet &s
+		size_t q, const VectorSet &s, bool transpose = false
 	);
 
 	/// amount of memeory used for Jacobain sparsity pattern

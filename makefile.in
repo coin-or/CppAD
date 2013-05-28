@@ -130,7 +130,7 @@ CTAGS = ctags
 DIST_SUBDIRS = cppad_ipopt/src example/ipopt_solve cppad_ipopt/example \
 	cppad_ipopt/speed cppad_ipopt/test speed/src speed/adolc \
 	speed/cppad speed/double speed/example speed/fadbad \
-	speed/profile speed/sacado example compare_c \
+	speed/profile speed/sacado example example/atomic compare_c \
 	introduction/get_started introduction/exp_apx print_for \
 	multi_thread multi_thread/test_multi test_more
 DISTFILES = $(DIST_COMMON) $(DIST_SOURCES) $(TEXINFOS) $(EXTRA_DIST)
@@ -419,6 +419,7 @@ nobase_myinclude_HEADERS = \
 	cppad/example/base_adolc.hpp \
 	cppad/example/cppad_eigen.hpp \
 	cppad/example/eigen_plugin.hpp \
+	cppad/example/matrix_mul.hpp \
 	cppad/error_handler.hpp \
 	cppad/index_sort.hpp \
 	cppad/ipopt/solve.hpp \
@@ -443,6 +444,7 @@ nobase_myinclude_HEADERS = \
 	cppad/local/asin_op.hpp \
 	cppad/local/atan2.hpp \
 	cppad/local/atan_op.hpp \
+	cppad/local/atomic_base.hpp \
 	cppad/local/base_complex.hpp \
 	cppad/local/base_cond_exp.hpp \
 	cppad/local/base_double.hpp \
@@ -452,6 +454,7 @@ nobase_myinclude_HEADERS = \
 	cppad/local/bool_fun.hpp \
 	cppad/local/bool_valued.hpp \
 	cppad/local/cap_taylor.hpp \
+	cppad/local/checkpoint.hpp \
 	cppad/local/compare.hpp \
 	cppad/local/comp_op.hpp \
 	cppad/local/compute_assign.hpp \
@@ -554,7 +557,7 @@ nobase_myinclude_HEADERS = \
 	cppad/local/unary_plus.hpp \
 	cppad/local/undef.hpp \
 	cppad/local/user_ad.hpp \
-	cppad/local/user_atomic.hpp \
+	cppad/local/old_atomic.hpp \
 	cppad/local/value.hpp \
 	cppad/local/var2par.hpp \
 	cppad/local/vec_ad.hpp \
@@ -599,6 +602,7 @@ SUBDIRS = \
 	$(IPOPT_DIRS) \
 	$(SPEED_DIRS) \
 	example \
+	example/atomic \
 	compare_c \
 	introduction/get_started \
 	introduction/exp_apx \
@@ -623,6 +627,8 @@ EXTRA_DIST = \
 	cppad/CMakeLists.txt \
 	pkgconfig/CMakeLists.txt \
 	example/CMakeLists.txt \
+	example/atomic/CMakeLists.txt \
+	example/ipopt_solve/CMakeLists.txt \
 	test_more/CMakeLists.txt \
 	CMakeLists.txt \
 	cppad_ipopt/src/CMakeLists.txt \
@@ -649,6 +655,7 @@ test_directory_list = \
 	$(IPOPT_TESTS) \
 	$(SPEED_TESTS) \
 	example \
+	example/atomic \
 	compare_c \
 	introduction/get_started \
 	introduction/exp_apx \

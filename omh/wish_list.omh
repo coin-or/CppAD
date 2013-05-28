@@ -55,17 +55,6 @@ $head BenderQuad$$
 See the $cref/problem/BenderQuad/Problem/$$ with the 
 current $code BenderQuad$$ specifications.
 
-$head Checkpointing$$
-The $cref atom_usead_2.cpp$$ example shows how one could
-create an atomic function using an $code ADFun$$ object.
-This could be made easy for the user and would be
-a good way to package checkpointing.
-
-$subhead Multiple Order Forward$$
-Multiple order forward mode would make this more efficient.
-As $cref atom_usead_2.cpp$$ stands, it has to recalculate the
-same forward mode information more than necessary.
-
 $subhead Iterator Interface$$
 If the necessary functions had iterator interfaces
 (in addition to simple vector interfaces),
@@ -89,10 +78,8 @@ $index speed, improve$$
 It has been suggested that computing and storing forward mode
 results for multiple argument values (and for multiple orders)
 is faster for Adolc. 
-Perhaps CppAD should allow for forward mode at multiple orders and 
-multiple argument values; see 
-$cref/multiple order forward/WishList/Checkpointing/Multiple Order Forward/$$
-above.
+Perhaps CppAD should allow for forward mode at 
+multiple argument values.
 
 $head Numeric Limits$$
 $index testing, machine epsilon$$
@@ -174,13 +161,13 @@ $index sequence, operation tracing$$
 $index tracing, operation sequence$$
 Add operation sequence tracing to the user API and documentation.
 
-$head user_atomic$$
+$head old_atomic$$
 $index user, atomic functions$$
 $index atomic, user functions$$
-$index functions, user_atomic$$
+$index functions, old_atomic$$
 
 $subhead Sparsity Patterns$$
-The $cref user_atomic$$ functions should allow the user to chose vectors
+The $cref old_atomic$$ functions should allow the user to chose vectors
 of bits, instead of standard sets, for representing sparsity. This would
 be more efficient for most cases.
 

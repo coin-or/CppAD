@@ -1,6 +1,6 @@
 /* $Id$ */
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-12 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-13 Bradley M. Bell
 
 CppAD is distributed under multiple licenses. This distribution is under
 the terms of the 
@@ -85,6 +85,24 @@ bool BoolCases(void)
 
 	// check that values are stored
 	ok &= (f.size_forward_bool() > 0);
+	ok &= (f.size_forward_set() == 0);
+
+	// sparsity pattern for F'(x)^T, note R is the identity, so R^T = R
+	bool transpose = true;
+	Vector st(n * m);
+	st = f.ForSparseJac(n, r, transpose);
+
+	// check values
+	ok &= (st[ 0 * m + 0 ] == true);  // Y[0] does     depend on X[0]
+	ok &= (st[ 1 * m + 0 ] == false); // Y[0] does not depend on X[1]
+	ok &= (st[ 0 * m + 1 ] == true);  // Y[1] does     depend on X[0]
+	ok &= (st[ 1 * m + 1 ] == true);  // Y[1] does     depend on X[1]
+	ok &= (st[ 0 * m + 2 ] == false); // Y[2] does not depend on X[0]
+	ok &= (st[ 1 * m + 2 ] == true);  // Y[2] does     depend on X[1]
+
+	// check that values are stored
+	ok &= (f.size_forward_bool() > 0);
+	ok &= (f.size_forward_set() == 0);
 
 	// free values from forward calculation
 	f.size_forward_bool(0);
@@ -135,21 +153,43 @@ bool SetCases(void)
 
 	// Y[0] does     depend on X[0]
 	found = s[0].find(0) != s[0].end();  ok &= ( found == true );  
-
 	// Y[0] does not depend on X[1]
 	found = s[0].find(1) != s[0].end();  ok &= ( found == false ); 
-
 	// Y[1] does     depend on X[0]
 	found = s[1].find(0) != s[1].end();  ok &= ( found == true );  
-
 	// Y[1] does     depend on X[1]
 	found = s[1].find(1) != s[1].end();  ok &= ( found == true );  
-
 	// Y[2] does not depend on X[0]
 	found = s[2].find(0) != s[2].end();  ok &= ( found == false );  
-
 	// Y[2] does     depend on X[1]
 	found = s[2].find(1) != s[2].end();  ok &= ( found == true );  
+
+	// check that values are stored
+	ok &= (f.size_forward_set() > 0);
+	ok &= (f.size_forward_bool() == 0);
+
+
+	// sparsity pattern for F'(x)^T
+	bool transpose = true;
+	Vector st(n);
+	st = f.ForSparseJac(n, r, transpose);
+
+	// Y[0] does     depend on X[0]
+	found = st[0].find(0) != st[0].end();  ok &= ( found == true );  
+	// Y[0] does not depend on X[1]
+	found = st[1].find(0) != st[1].end();  ok &= ( found == false ); 
+	// Y[1] does     depend on X[0]
+	found = st[0].find(1) != st[0].end();  ok &= ( found == true );  
+	// Y[1] does     depend on X[1]
+	found = st[1].find(1) != st[1].end();  ok &= ( found == true );  
+	// Y[2] does not depend on X[0]
+	found = st[0].find(2) != st[0].end();  ok &= ( found == false );  
+	// Y[2] does     depend on X[1]
+	found = st[1].find(2) != st[1].end();  ok &= ( found == true );  
+
+	// check that values are stored
+	ok &= (f.size_forward_set() > 0);
+	ok &= (f.size_forward_bool() == 0);
 
 	return ok;
 }

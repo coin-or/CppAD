@@ -3,7 +3,7 @@
 # define CPPAD_ADD_OP_INCLUDED
 
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-12 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-13 Bradley M. Bell
 
 CppAD is distributed under multiple licenses. This distribution is under
 the terms of the 
@@ -38,7 +38,8 @@ and the argument \a parameter is not used.
 
 template <class Base>
 inline void forward_addvv_op(
-	size_t        d           , 
+	size_t        q           , 
+	size_t        p           , 
 	size_t        i_z         ,
 	const addr_t* arg         ,
 	const Base*   parameter   ,
@@ -50,14 +51,16 @@ inline void forward_addvv_op(
 	CPPAD_ASSERT_UNKNOWN( NumRes(AddvvOp) == 1 );
 	CPPAD_ASSERT_UNKNOWN( size_t(arg[0]) < i_z );
 	CPPAD_ASSERT_UNKNOWN( size_t(arg[1]) < i_z );
-	CPPAD_ASSERT_UNKNOWN( d < nc_taylor );
+	CPPAD_ASSERT_UNKNOWN( p < nc_taylor );
+	CPPAD_ASSERT_UNKNOWN( q <= p  );
 
 	// Taylor coefficients corresponding to arguments and result
 	Base* x = taylor + arg[0] * nc_taylor;
 	Base* y = taylor + arg[1] * nc_taylor;
 	Base* z = taylor + i_z    * nc_taylor;
 
-	z[d] = x[d] + y[d];
+	for(size_t j = q; j <= p; j++)
+		z[j] = x[j] + y[j];
 }
 
 /*!
@@ -159,7 +162,8 @@ this operations is for the case where x is a parameter and y is a variable.
 
 template <class Base>
 inline void forward_addpv_op(
-	size_t        d           , 
+	size_t        q           , 
+	size_t        p           , 
 	size_t        i_z         ,
 	const addr_t* arg         ,
 	const Base*   parameter   ,
@@ -170,22 +174,21 @@ inline void forward_addpv_op(
 	CPPAD_ASSERT_UNKNOWN( NumArg(AddpvOp) == 2 );
 	CPPAD_ASSERT_UNKNOWN( NumRes(AddpvOp) == 1 );
 	CPPAD_ASSERT_UNKNOWN( size_t(arg[1]) < i_z );
-	CPPAD_ASSERT_UNKNOWN( d < nc_taylor );
+	CPPAD_ASSERT_UNKNOWN( p < nc_taylor );
+	CPPAD_ASSERT_UNKNOWN( q <= p );
 
 	// Taylor coefficients corresponding to arguments and result
 	Base* y = taylor + arg[1] * nc_taylor;
 	Base* z = taylor + i_z    * nc_taylor;
 
-# if CPPAD_USE_FORWARD0SWEEP
-	CPPAD_ASSERT_UNKNOWN( d > 0 );
-	z[d] = y[d];
-# else
-	// Paraemter value
-	Base x = parameter[ arg[0] ];
-	if( d == 0 )
-		z[d] = x + y[d];
-	else	z[d] = y[d];
-# endif
+	if( q == 0 )
+	{	// Paraemter value
+		Base x = parameter[ arg[0] ];
+		z[0] = x + y[0];
+		q++;
+	}
+	for(size_t j = q; j <= p; j++)
+		z[j] = y[j];
 }
 /*!
 Compute zero order forward mode Taylor coefficient for result of op = AddpvOp.

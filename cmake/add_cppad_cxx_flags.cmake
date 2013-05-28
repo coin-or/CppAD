@@ -31,7 +31,13 @@ MACRO(add_cppad_cxx_flags target_name)
 			SET(flags "${cppad_cxx_flags_${package}}")
 		ENDIF( ${target_name} MATCHES ".*_${package}$" )
 	ENDFOREACH(package)
-	SET_TARGET_PROPERTIES( 
-		${target_name} PROPERTIES COMPILE_FLAGS "${flags}"
-	)
+	IF( flags )
+		SET_TARGET_PROPERTIES( 
+			${target_name} PROPERTIES COMPILE_FLAGS "${flags}"
+		)
+	ELSE( flags )
+		SET_TARGET_PROPERTIES( 
+			${target_name} PROPERTIES COMPILE_FLAGS ""
+		)
+	ENDIF( flags )
 ENDMACRO(add_cppad_cxx_flags) 

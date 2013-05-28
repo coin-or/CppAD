@@ -32,13 +32,13 @@ echo "DryRun = $DryRun"
 repository='https://projects.coin-or.org/svn/CppAD'
 #
 # Name of the directory where the changes have been committed
-from_branch='branches/sparse'
+from_branch='branches/atomic'
 #
 # Version of the repository corresponding to from_branch just before changes
-Start=2474
+Start=2797
 # 
 # Version of the repository corresponding to from_branch after the changes
-End=2479
+End=2858
 #
 # the svn merge command
 cmd="svn merge $DryRun -r $Start:$End $repository/$from_branch"

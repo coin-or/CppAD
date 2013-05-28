@@ -21,6 +21,26 @@ CPPAD_BEGIN_NAMESPACE
 Compute zero order forward mode Taylor coefficients.
 */
 
+/*
+\def CPPAD_ATOMIC_CALL
+This avoids warnings when NDEBUG is defined and user_ok is not used.
+If \c NDEBUG is defined, this resolves to
+\code
+	user_atom->forward
+\endcode
+otherwise, it respolves to
+\code
+	user_ok = user_atom->forward
+\endcode
+This maco is undefined at the end of this file to facillitate is 
+use with a different definition in other files.
+*/
+# ifdef NDEBUG
+# define CPPAD_ATOMIC_CALL user_atom->forward
+# else
+# define CPPAD_ATOMIC_CALL user_ok = user_atom->forward
+# endif
+
 /*!
 \def CPPAD_FORWARD0SWEEP_TRACE
 This value is either zero or one. 
@@ -140,15 +160,24 @@ size_t forward0sweep(
 	}
 
 	// work space used by UserOp.
-	const size_t user_k = 0;     // order of this forward mode calculation
+	const size_t user_q = 0;     // lowest order
+	const size_t user_p = 0;     // highest order
+	vector<bool> user_vx;        // empty vecotor
+	vector<bool> user_vy;        // empty vecotor
 	vector<Base> user_tx;        // argument vector Taylor coefficients 
 	vector<Base> user_ty;        // result vector Taylor coefficients 
-	size_t user_index = 0;       // indentifier for this user_atomic operation
+	size_t user_index = 0;       // indentifier for this atomic operation
 	size_t user_id    = 0;       // user identifier for this call to operator
 	size_t user_i     = 0;       // index in result vector
 	size_t user_j     = 0;       // index in argument vector
 	size_t user_m     = 0;       // size of result vector
 	size_t user_n     = 0;       // size of arugment vector
+	//
+	atomic_base<Base>* user_atom = CPPAD_NULL; // user's atomic op calculator
+# ifndef NDEBUG
+	bool               user_ok   = false;      // atomic op return value
+# endif
+	//
 	// next expected operator in a UserOp sequence
 	enum { user_start, user_arg, user_ret, user_end } user_state = user_start;
 
@@ -234,7 +263,7 @@ size_t forward0sweep(
 			// we must inform next_forward of this special case.
 			Rec->forward_csum(op, arg, i_op, i_var);
 			forward_csum_op(
-				0, i_var, arg, num_par, parameter, J, Taylor
+				0, 0, i_var, arg, num_par, parameter, J, Taylor
 			);
 			break;
 
@@ -509,9 +538,10 @@ size_t forward0sweep(
 				user_id    = arg[1];
 				user_n     = arg[2];
 				user_m     = arg[3];
-				if(user_tx.size() < user_n)
+				user_atom  = atomic_base<Base>::list(user_index);
+				if(user_tx.size() != user_n)
 					user_tx.resize(user_n);
-				if(user_ty.size() < user_m)
+				if(user_ty.size() != user_m)
 					user_ty.resize(user_m);
 				user_j     = 0;
 				user_i     = 0;
@@ -523,6 +553,13 @@ size_t forward0sweep(
 				CPPAD_ASSERT_UNKNOWN( user_id    == size_t(arg[1]) );
 				CPPAD_ASSERT_UNKNOWN( user_n     == size_t(arg[2]) );
 				CPPAD_ASSERT_UNKNOWN( user_m     == size_t(arg[3]) );
+# ifndef NDEBUG
+				if( ! user_ok )
+				{	std::string msg = user_atom->afun_name()
+					+ ": atomic_base.forward: returned false";
+					CPPAD_ASSERT_KNOWN(false, msg.c_str() );
+				}
+# endif
 				user_state = user_start;
 			}
 			break;
@@ -535,8 +572,9 @@ size_t forward0sweep(
 			user_tx[user_j++] = parameter[ arg[0] ];
 			if( user_j == user_n )
 			{	// call users function for this operation
-				user_atomic<Base>::forward(user_index, user_id, 
-					user_k, user_n, user_m, user_tx, user_ty
+				user_atom->set_id(user_id);
+				CPPAD_ATOMIC_CALL(user_q, user_p, 
+					user_vx, user_vy, user_tx, user_ty
 				);
 				user_state = user_ret;
 			}
@@ -550,8 +588,9 @@ size_t forward0sweep(
 			user_tx[user_j++] = Taylor[ arg[0] * J + 0 ];
 			if( user_j == user_n )
 			{	// call users function for this operation
-				user_atomic<Base>::forward(user_index, user_id,
-					user_k, user_n, user_m, user_tx, user_ty
+				user_atom->set_id(user_id);
+				CPPAD_ATOMIC_CALL(user_q, user_p, 
+					user_vx, user_vy, user_tx, user_ty
 				);
 				user_state = user_ret;
 			}
@@ -611,5 +650,6 @@ CPPAD_END_NAMESPACE
 
 // preprocessor symbols that are local to this file
 # undef CPPAD_FORWARD0SWEEP_TRACE
+# undef CPPAD_ATOMIC_CALL
 
 # endif

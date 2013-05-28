@@ -3,7 +3,7 @@
 # define CPPAD_AD_INCLUDED
 
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-12 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-13 Bradley M. Bell
 
 CppAD is distributed under multiple licenses. This distribution is under
 the terms of the 
@@ -100,8 +100,8 @@ class AD {
 	// classes
 	friend class ADTape<Base>;
 	friend class ADFun<Base>;
+	friend class atomic_base<Base>;
 	friend class discrete<Base>;
-	friend class user_atomic<Base>;
 	friend class VecAD<Base>;
 	friend class VecAD_reference<Base>;
 

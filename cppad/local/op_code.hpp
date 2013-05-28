@@ -3,7 +3,7 @@
 # define CPPAD_OP_CODE_INCLUDED
 
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-12 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-13 Bradley M. Bell
 
 CppAD is distributed under multiple licenses. This distribution is under
 the terms of the 
@@ -494,9 +494,9 @@ void printOp(
 		*/
 		CPPAD_ASSERT_UNKNOWN( ind[3+ind[0]+ind[1]] == ind[0]+ind[1] );
 		printOpField(os, " pr=", Rec->GetPar(ind[2]), ncol);
-		for(i = 0; i < ind[0]; i++)
+		for(i = 0; i < size_t(ind[0]); i++)
 			 printOpField(os, " +v=", ind[3+i], ncol);
-		for(i = 0; i < ind[1]; i++)
+		for(i = 0; i < size_t(ind[1]); i++)
 			 printOpField(os, " -v=", ind[3+ind[0]+i], ncol);
 		break;
 
@@ -596,8 +596,9 @@ void printOp(
 
 		case UserOp:
 		CPPAD_ASSERT_UNKNOWN( NumArg(op) == 4 );
-		{	const char* name = user_atomic<Base>::name(ind[0]);
-			printOpField(os, " f=",   name, ncol);
+		{	atomic_base<Base>* atom = atomic_base<Base>::list(ind[0]);
+			std::string name = atom->name();
+			printOpField(os, " f=",   name.c_str(), ncol);
 			printOpField(os, " i=", ind[1], ncol);
 			printOpField(os, " n=", ind[2], ncol);
 			printOpField(os, " m=", ind[3], ncol);

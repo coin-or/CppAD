@@ -11,18 +11,21 @@ Please visit http://www.coin-or.org/CppAD/ for information on other licenses.
 -------------------------------------------------------------------------- */
 
 /*
-$begin atom_usead_1.cpp$$
+$begin old_usead_1.cpp$$
 $spell
 	checkpoint
 	var
 $$
 
 $section Using AD to Compute Atomic Function Derivatives$$
-
 $index AD, inside atomic$$
 $index user, atomic AD inside$$
 $index atomic, AD inside$$
 $index checkpoint$$
+
+$head Deprecated$$
+This example has been deprecated because it is easier to use the 
+$cref checkpoint$$ class instead.
 
 $head Purpose$$
 Consider the case where an inner function is used repeatedly in the 
@@ -30,19 +33,17 @@ definition of an outer function.
 In this case, it may reduce the number of variables
 $cref/size_var/seq_property/size_var/$$,
 and hence the required memory.
-This is similar the 
-$cref/checkpoint/checkpoint.cpp/$$.
 
 $head Simple Case$$
-This example is the same as $cref reciprocal.cpp$$, except that it 
+This example is the same as $cref old_reciprocal.cpp$$, except that it 
 uses AD to compute the 
 derivatives needed by an atomic function.
 This is a simple example of an inner function, and hence not really
 useful for the purpose above; 
-see $cref atom_usead_2.cpp$$ for a more complete example.
+see $cref old_usead_2.cpp$$ for a more complete example.
 
 $code
-$verbatim%example/atom_usead_1.cpp%0%// BEGIN C++%// END C++%1%$$
+$verbatim%example/atomic/old_usead_1.cpp%0%// BEGIN C++%// END C++%1%$$
 $$
 
 $end
@@ -72,7 +73,7 @@ namespace { // Begin empty namespace
 
 	// ----------------------------------------------------------------------
 	// forward mode routine called by CppAD
-	bool atom_usead_1_forward(
+	bool reciprocal_forward(
 		size_t                   id ,
 		size_t                    k ,
 		size_t                    n ,
@@ -106,7 +107,7 @@ namespace { // Begin empty namespace
 	}
 	// ----------------------------------------------------------------------
 	// reverse mode routine called by CppAD
-	bool atom_usead_1_reverse(
+	bool reciprocal_reverse(
 		size_t                   id ,
 		size_t                    k ,
 		size_t                    n ,
@@ -144,7 +145,7 @@ namespace { // Begin empty namespace
 	}
 	// ----------------------------------------------------------------------
 	// forward Jacobian sparsity routine called by CppAD
-	bool atom_usead_1_for_jac_sparse(
+	bool reciprocal_for_jac_sparse(
 		size_t                               id ,             
 		size_t                                n ,
 		size_t                                m ,
@@ -165,7 +166,7 @@ namespace { // Begin empty namespace
 	}
 	// ----------------------------------------------------------------------
 	// reverse Jacobian sparsity routine called by CppAD
-	bool atom_usead_1_rev_jac_sparse(
+	bool reciprocal_rev_jac_sparse(
 		size_t                               id ,             
 		size_t                                n ,
 		size_t                                m ,
@@ -190,7 +191,7 @@ namespace { // Begin empty namespace
 	}
 	// ----------------------------------------------------------------------
 	// reverse Hessian sparsity routine called by CppAD
-	bool atom_usead_1_rev_hes_sparse(
+	bool reciprocal_rev_hes_sparse(
 		size_t                               id ,             
 		size_t                                n ,
 		size_t                                m ,
@@ -240,20 +241,20 @@ namespace { // Begin empty namespace
 		return ok;
 	}
 	// ---------------------------------------------------------------------
-	// Declare the AD<double> routine atom_usead_1(id, ax, ay)
+	// Declare the AD<double> routine reciprocal(id, ax, ay)
 	CPPAD_USER_ATOMIC(
-		atom_usead_1                 , 
+		reciprocal                 , 
 		CppAD::vector              ,
 		double                     , 
-		atom_usead_1_forward         , 
-		atom_usead_1_reverse         ,
-		atom_usead_1_for_jac_sparse  ,
-		atom_usead_1_rev_jac_sparse  ,
-		atom_usead_1_rev_hes_sparse  
+		reciprocal_forward         , 
+		reciprocal_reverse         ,
+		reciprocal_for_jac_sparse  ,
+		reciprocal_rev_jac_sparse  ,
+		reciprocal_rev_hes_sparse  
 	)
 } // End empty namespace
 
-bool atom_usead_1(void)
+bool old_usead_1(void)
 {	bool ok = true;
 	using CppAD::NearEqual;
 	double eps = 10. * CppAD::numeric_limits<double>::epsilon();
@@ -278,27 +279,34 @@ bool atom_usead_1(void)
 	size_t m = 1;
 	vector< AD<double> > ay(m);
 
-	// call user function and store atom_usead_1(x) in au[0] 
+	// call user function and store reciprocal(x) in au[0] 
 	vector< AD<double> > au(m);
 	size_t id = 0;           // not used
-	atom_usead_1(id, ax, au);	// u = 1 / x
+	reciprocal(id, ax, au);	// u = 1 / x
 
-	// call user function and store atom_usead_1(u) in ay[0] 
-	atom_usead_1(id, au, ay);	// y = 1 / u = x
+	// call user function and store reciprocal(u) in ay[0] 
+	reciprocal(id, au, ay);	// y = 1 / u = x
 
 	// create f: x -> y and stop tape recording
-	ADFun<double> f(ax, ay);  // f(x) = x
+	ADFun<double> f;
+	f.Dependent(ax, ay);  // f(x) = x
 
 	// --------------------------------------------------------------------
-	// Check forward mode results
+	// Check function value results
 	//
 	// check function value 
 	double check = x0;
 	ok &= NearEqual( Value(ay[0]) , check,  eps, eps);
 
-	// check first order forward mode
+	// check zero order forward mode
 	size_t p;
 	vector<double> x_p(n), y_p(m);
+	p      = 0;
+	x_p[0] = x0;
+	y_p    = f.Forward(p, x_p);
+	ok &= NearEqual(y_p[0] , check,  eps, eps);
+
+	// check first order forward mode
 	p      = 1;
 	x_p[0] = 1;
 	y_p    = f.Forward(p, x_p);
@@ -354,7 +362,7 @@ bool atom_usead_1(void)
 	destroy_r();
 
 	// -----------------------------------------------------------------
-	// Free all temporary work space associated with user_atomic objects. 
+	// Free all temporary work space associated with old_atomic objects. 
 	// (If there are future calls to user atomic functions, they will 
 	// create new temporary work space.)
 	CppAD::user_atomic<double>::clear();

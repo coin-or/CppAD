@@ -22,6 +22,26 @@ CPPAD_BEGIN_NAMESPACE
 Compute derivatives of arbitrary order Taylor coefficients.
 */
 
+/*
+\def CPPAD_ATOMIC_CALL
+This avoids warnings when NDEBUG is defined and user_ok is not used.
+If \c NDEBUG is defined, this resolves to
+\code
+	user_atom->reverse
+\endcode
+otherwise, it respolves to
+\code
+	user_ok = user_atom->reverse
+\endcode
+This maco is undefined at the end of this file to facillitate is 
+use with a different definition in other files.
+*/
+# ifdef NDEBUG
+# define CPPAD_ATOMIC_CALL user_atom->reverse
+# else
+# define CPPAD_ATOMIC_CALL user_ok = user_atom->reverse
+# endif
+
 /*!
 \def CPPAD_REVERSE_SWEEP_TRACE
 This value is either zero or one. 
@@ -160,19 +180,25 @@ void ReverseSweep(
 		parameter = Rec->GetPar();
 
 	// work space used by UserOp.
-	const size_t user_k  = d;    // order of this forward mode calculation
+	const size_t user_k  = d;    // highest order we are differentiating
 	const size_t user_k1 = d+1;  // number of orders for this calculation
 	vector<size_t> user_ix;      // variable indices for argument vector
 	vector<Base> user_tx;        // argument vector Taylor coefficients
 	vector<Base> user_ty;        // result vector Taylor coefficients
 	vector<Base> user_px;        // partials w.r.t argument vector
 	vector<Base> user_py;        // partials w.r.t. result vector
-	size_t user_index = 0;       // indentifier for this user_atomic operation
+	size_t user_index = 0;       // indentifier for this atomic operation
 	size_t user_id    = 0;       // user identifier for this call to operator
 	size_t user_i     = 0;       // index in result vector
 	size_t user_j     = 0;       // index in argument vector
 	size_t user_m     = 0;       // size of result vector
 	size_t user_n     = 0;       // size of arugment vector
+	//
+	atomic_base<Base>* user_atom = CPPAD_NULL; // user's atomic op calculator
+# ifndef NDEBUG
+	bool               user_ok   = false;      // atomic op return value
+# endif
+	//
 	// next expected operator in a UserOp sequence
 	enum { user_start, user_arg, user_ret, user_end } user_state = user_end;
 
@@ -520,13 +546,14 @@ void ReverseSweep(
 				user_id    = arg[1];
 				user_n     = arg[2];
 				user_m     = arg[3];
-				if(user_ix.size() < user_n)
+				user_atom  = atomic_base<Base>::list(user_index);
+				if(user_ix.size() != user_n)
 					user_ix.resize(user_n);
-				if(user_tx.size() < user_n * user_k1)
+				if(user_tx.size() != user_n * user_k1)
 				{	user_tx.resize(user_n * user_k1);
 					user_px.resize(user_n * user_k1);
 				}
-				if(user_ty.size() < user_m * user_k1)
+				if(user_ty.size() != user_m * user_k1)
 				{	user_ty.resize(user_m * user_k1);
 					user_py.resize(user_m * user_k1);
 				}
@@ -540,18 +567,25 @@ void ReverseSweep(
 				CPPAD_ASSERT_UNKNOWN( user_id    == size_t(arg[1]) );
 				CPPAD_ASSERT_UNKNOWN( user_n     == size_t(arg[2]) );
 				CPPAD_ASSERT_UNKNOWN( user_m     == size_t(arg[3]) );
-				user_state = user_end;
 
 				// call users function for this operation
-				user_atomic<Base>::reverse(user_index, user_id,
-					user_k, user_n, user_m, user_tx, user_ty,
-					user_px, user_py
+				user_atom->set_id(user_id);
+				CPPAD_ATOMIC_CALL(
+					user_k, user_tx, user_ty, user_px, user_py
 				);
+# ifndef NDEBUG
+				if( ! user_ok )
+				{	std::string msg = user_atom->afun_name()
+					+ ": atomic_base.reverse: returned false";
+					CPPAD_ASSERT_KNOWN(false, msg.c_str() );
+				}
+# endif
 				for(j = 0; j < user_n; j++) if( user_ix[j] > 0 )
 				{	for(ell = 0; ell < user_k1; ell++)
 						Partial[user_ix[j] * K + ell] +=
 							user_px[j * user_k1 + ell];
 				}
+				user_state = user_end;
 			}
 			break;
 
@@ -635,5 +669,6 @@ CPPAD_END_NAMESPACE
 
 // preprocessor symbols that are local to this file
 # undef CPPAD_REVERSE_SWEEP_TRACE
+# undef CPPAD_ATOMIC_CALL
 
 # endif

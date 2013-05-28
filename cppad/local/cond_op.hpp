@@ -2,7 +2,7 @@
 # ifndef CPPAD_COND_OP_INCLUDED
 # define CPPAD_COND_OP_INCLUDED
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-12 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-13 Bradley M. Bell
 
 CppAD is distributed under multiple licenses. This distribution is under
 the terms of the 
@@ -25,27 +25,32 @@ Compute forward mode Taylor coefficients for op = CExpOp.
 
 \copydetails conditional_exp_op
 
-\param d
-is the order of the Taylor coefficient of z that we are computing.
+\param q
+is the lowest order of the Taylor coefficient of z that we are computing.
+
+\param p
+is the highest order of the Taylor coefficient of z that we are computing.
 
 \param taylor
 \b Input:
-For j = 0, 1, 2, 3 and k = 0 , ... , \a d,
+For j = 0, 1, 2, 3 and k = 0 , ... , p,
 if y_j is a variable then
-\a taylor [ \a arg[2+j] * nc_taylor + k ]
+<code>taylor [ arg[2+j] * nc_taylor + k ]</code>
 is the k-th order Taylor coefficient corresponding to y_j.
 \n
-\b Input: \a taylor [ \a i_z * \a nc_taylor + k ] 
-for k = 0 , ... , \a d - 1
+\b Input: <code>taylor [ i_z * nc_taylor + k ]</code> 
+for k = 0 , ... , q-1,
 is the k-th order Taylor coefficient corresponding to z.
 \n
-\b Output: \a taylor [ \a i_z * \a nc_taylor + \a d ] 
-is the \a d-th order Taylor coefficient corresponding to z. 
+\b Output: <code>taylor [ i_z * nc_taylor + k ]</code>
+for k = q , ... , p, 
+is the k-th order Taylor coefficient corresponding to z. 
 
 */
 template <class Base>
 inline void forward_cond_op(
-	size_t         d           ,
+	size_t         q           ,
+	size_t         p           ,
 	size_t         i_z         ,
 	const addr_t*  arg         , 
 	size_t         num_par     ,
@@ -54,7 +59,7 @@ inline void forward_cond_op(
 	Base*          taylor      )
 {	Base y_0, y_1, y_2, y_3;
 	Base zero(0);
-	Base* z;
+	Base* z = taylor + i_z * nc_taylor;
 
 	CPPAD_ASSERT_UNKNOWN( size_t(arg[0]) < static_cast<size_t> (CompareNe) );
 	CPPAD_ASSERT_UNKNOWN( NumArg(CExpOp) == 6 );
@@ -77,10 +82,7 @@ inline void forward_cond_op(
 	{	CPPAD_ASSERT_UNKNOWN( size_t(arg[3]) < num_par );
 		y_1 = parameter[ arg[3] ];
 	}
-# if CPPAD_USE_FORWARD0SWEEP
-	CPPAD_ASSERT_UNKNOWN( d > 0 );
-# else
-	if( d == 0 )
+	if( q == 0 )
 	{	if( arg[1] & 4 )
 		{	CPPAD_ASSERT_UNKNOWN( size_t(arg[4]) < i_z );
 			y_2 = taylor[ arg[4] * nc_taylor + 0 ];
@@ -97,9 +99,16 @@ inline void forward_cond_op(
 		{	CPPAD_ASSERT_UNKNOWN( size_t(arg[5]) < num_par );
 			y_3 = parameter[ arg[5] ];
 		}
+		z[0] = CondExpOp(
+			CompareOp( arg[0] ),
+			y_0,
+			y_1,
+			y_2,
+			y_3
+		);
+		q++;
 	}
-	else
-# endif
+	for(size_t d = q; d <= p; d++)
 	{	if( arg[1] & 4 )
 		{	CPPAD_ASSERT_UNKNOWN( size_t(arg[4]) < i_z );
 			y_2 = taylor[ arg[4] * nc_taylor + d];
@@ -110,15 +119,14 @@ inline void forward_cond_op(
 			y_3 = taylor[ arg[5] * nc_taylor + d];
 		}
 		else	y_3 = zero;
+		z[d] = CondExpOp(
+			CompareOp( arg[0] ),
+			y_0,
+			y_1,
+			y_2,
+			y_3
+		);
 	}
-	z = taylor + i_z * nc_taylor;
-	z[d] = CondExpOp(
-		CompareOp( arg[0] ),
-		y_0,
-		y_1,
-		y_2,
-		y_3
-	);
 	return;
 }
 

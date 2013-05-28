@@ -187,7 +187,7 @@ $$
 is true and otherwise it is false.
 If this external symbol is true,
 and the AD package has a way to speed up the processing
-by adding $cref user_atomic$$ operations,
+by adding $cref old_atomic$$ operations,
 this should be included in computations.
 If it is false, user defined atomic operations should not be done.
 

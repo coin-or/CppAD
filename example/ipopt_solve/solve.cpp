@@ -1,6 +1,6 @@
 /* $Id$ */
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-12 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-13 Bradley M. Bell
 
 CppAD is distributed under multiple licenses. This distribution is under
 the terms of the 
@@ -40,7 +40,7 @@ namespace {
 			Run_ok_count++;
 		}
 		else
-		{	std::cout << "Error: " << "ipopt_solve, " << name << std::endl;
+		{	std::cout << "Error: " << "ipopt_solve: " << name << std::endl;
 			Run_error_count++;
 		}
 		return ok;

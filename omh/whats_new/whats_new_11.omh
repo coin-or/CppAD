@@ -338,11 +338,11 @@ These changes are described below under the headings
 $cref/08-21/whats_new_11/09-01/08-21/$$ through 
 $cref/08-31/whats_new_11/09-01/08-31/$$.
 $lnext
-There was a bug in the $cref user_atomic$$ functions
+There was a bug in the $cref old_atomic$$ functions
 in the case where none of the elements of the argument to the function
 was a $cref/variable/glossary/Variable/$$.
 This has been fixed.
-In addition, $cref user_tan.cpp$$ generated an assert for this
+In addition, $cref old_tan.cpp$$ generated an assert for this
 case and this has also been fixed (in addition to including an example
 for this case).
 $lend 
@@ -546,7 +546,7 @@ Make $code tan$$ and $code tanh$$ $cref/atomic/glossary/Operation/Atomic/$$
 operations; see $cref tan_forward$$ and $cref tan_reverse$$.
 
 $head 07-25$$
-Finish the $cref user_atomic$$ example $cref user_tan.cpp$$.
+Finish the $cref old_atomic$$ example $cref old_tan.cpp$$.
 This is also a design and implementation of the routines necessary
 to make $code tan$$ and $code tanh$$ CppAD atomic operations.
 
@@ -557,11 +557,11 @@ This has been fixed in $cref tan_reverse$$.
 
 $head 07-17$$
 $list number$$
-Fix bug in $cref user_atomic$$ functions.
+Fix bug in $cref old_atomic$$ functions.
 To be specific, the Taylor coefficients for $latex y$$,
 of order less than $icode k$$,
-were not passed into the $code user_atomic$$ 
-$cref/forward/user_atomic/forward/$$ callback function.
+were not passed into the $code old_atomic$$ 
+$cref/forward/old_atomic/forward/$$ callback function.
 $lnext
 Derive the theory for including the tangent and hyperbolic tangent
 as CppAD atomic operations $cref tan_forward$$ and $cref tan_reverse$$; 
@@ -569,7 +569,7 @@ see the wish list item $code Tan and Tanh$$.
 $lnext
 Implement and test forward mode calculation of derivative for
 the tangent and hyperbolic tangent functions; 
-see the new $cref user_atomic$$ example $cref user_tan.cpp$$.
+see the new $cref old_atomic$$ example $cref old_tan.cpp$$.
 $lend
 
 $head 07-14$$
@@ -849,8 +849,8 @@ It has been removed.
 
 $head 03-11$$
 The vector of sets argument 
-$cref/r/user_atomic/rev_hes_sparse/r/$$
-to the $code user_atomic$$ function $icode rev_hes_sparse$$
+$cref/r/old_atomic/rev_hes_sparse/r/$$
+to the $code old_atomic$$ function $icode rev_hes_sparse$$
 must have size greater than or equal to $icode n$$.
 There was a check that its size was greater than or equal $icode q$$.
 This was incorrect and has been fixed.
@@ -861,7 +861,7 @@ Add the $cref/conjugate gradient/conj_grad.cpp/$$ example.
 $head 02-22$$
 Add the $cref/atomic/speed_main/option_list/atomic/$$ option to the 
 speed test program and use 
-$cref mat_mul.hpp$$ during the
+$cref old_mat_mul.hpp$$ during the
 $cref cppad_mat_mul.cpp$$ speed test when the atomic option is specified.
 
 
@@ -888,24 +888,24 @@ $cref/cppad/cppad_mat_mul.cpp/$$ and $cref/double/double_mat_mul.cpp/$$ cases.
 speed comparison cases.)
 
 $head 02-09$$
-A variable in $code user_atomic.hpp$$ was declare of type $icode Base$$
+A variable in $code old_atomic.hpp$$ was declare of type $icode Base$$
 when it should have been declared of type $code size_t$$.
-It caused the $cref user_atomic$$ feature to fail with some base types.
+It caused the $cref old_atomic$$ feature to fail with some base types.
 This has been fixed.
 $pre
 
 $$
-The $cref mat_mul.hpp$$ example has been improved by 
+The $cref old_mat_mul.hpp$$ example has been improved by 
 caching the $latex x$$ variable information and using it during
-$cref/reverse Hessian sparsity/user_atomic/rev_hes_sparse/$$ calculations. 
+$cref/reverse Hessian sparsity/old_atomic/rev_hes_sparse/$$ calculations. 
 $pre
 
 $$
-Some of the $cref user_atomic$$ documentation was extended to
+Some of the $cref old_atomic$$ documentation was extended to
 include more explanation.
 
 $head 02-06$$
-The use can now define complex $cref/atomic/user_atomic/$$ operations
+The use can now define complex $cref/atomic/old_atomic/$$ operations
 and store them in a CppAD $cref ADFun$$ object.
 This item has been remove from the
 $cref/wish list/WishList/$$.

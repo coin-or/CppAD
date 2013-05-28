@@ -3,7 +3,7 @@
 # define CPPAD_MUL_OP_INCLUDED
 
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-12 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-13 Bradley M. Bell
 
 CppAD is distributed under multiple licenses. This distribution is under
 the terms of the 
@@ -38,7 +38,8 @@ and the argument \a parameter is not used.
 
 template <class Base>
 inline void forward_mulvv_op(
-	size_t        d           , 
+	size_t        q           , 
+	size_t        p           , 
 	size_t        i_z         ,
 	const addr_t* arg         ,
 	const Base*   parameter   ,
@@ -50,7 +51,8 @@ inline void forward_mulvv_op(
 	CPPAD_ASSERT_UNKNOWN( NumRes(MulvvOp) == 1 );
 	CPPAD_ASSERT_UNKNOWN( size_t(arg[0]) < i_z );
 	CPPAD_ASSERT_UNKNOWN( size_t(arg[1]) < i_z );
-	CPPAD_ASSERT_UNKNOWN( d < nc_taylor );
+	CPPAD_ASSERT_UNKNOWN( p < nc_taylor );
+	CPPAD_ASSERT_UNKNOWN( q <= p );
 
 	// Taylor coefficients corresponding to arguments and result
 	Base* x = taylor + arg[0] * nc_taylor;
@@ -58,9 +60,11 @@ inline void forward_mulvv_op(
 	Base* z = taylor + i_z    * nc_taylor;
 
 	size_t k;
-	z[d] = Base(0);
-	for(k = 0; k <= d; k++)
-		z[d] += x[d-k] * y[k];
+	for(size_t d = q; d <= p; d++)
+	{	z[d] = Base(0);
+		for(k = 0; k <= d; k++)
+			z[d] += x[d-k] * y[k];
+	}
 }
 
 /*!
@@ -170,7 +174,8 @@ this operations is for the case where x is a parameter and y is a variable.
 
 template <class Base>
 inline void forward_mulpv_op(
-	size_t        d           , 
+	size_t        q           , 
+	size_t        p           , 
 	size_t        i_z         ,
 	const addr_t* arg         ,
 	const Base*   parameter   ,
@@ -181,7 +186,8 @@ inline void forward_mulpv_op(
 	CPPAD_ASSERT_UNKNOWN( NumArg(MulpvOp) == 2 );
 	CPPAD_ASSERT_UNKNOWN( NumRes(MulpvOp) == 1 );
 	CPPAD_ASSERT_UNKNOWN( size_t(arg[1]) < i_z );
-	CPPAD_ASSERT_UNKNOWN( d < nc_taylor );
+	CPPAD_ASSERT_UNKNOWN( p < nc_taylor );
+	CPPAD_ASSERT_UNKNOWN( q <= p );
 
 	// Taylor coefficients corresponding to arguments and result
 	Base* y = taylor + arg[1] * nc_taylor;
@@ -190,7 +196,8 @@ inline void forward_mulpv_op(
 	// Paraemter value
 	Base x = parameter[ arg[0] ];
 
-	z[d] = x * y[d];
+	for(size_t d = q; d <= p; d++)
+		z[d] = x * y[d];
 }
 /*!
 Compute zero order forward mode Taylor coefficient for result of op = MulpvOp.

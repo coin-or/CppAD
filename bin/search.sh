@@ -37,6 +37,8 @@ directories='
 	cppad_ipopt/src
 	cppad_ipopt/test
 	example 
+	example/atomic
+	example/ipopt_solve
 	introduction/exp_apx
 	introduction/get_started
 	multi_thread

@@ -28,7 +28,7 @@ fi
 for ext in .cpp .hpp
 do
 	dir_list=`find . -name "*$ext" | sed -e '/junk\.[^.]*$/d' \
-		-e 's|^\./||' -e '/^work/d' -e 's|/[^/]*$||' | sort -u`  
+		-e 's|^\./||' -e '/^build/d' -e 's|/[^/]*$||' | sort -u`  
 	for dir in $dir_list 
 	do
 		list=`ls $dir/*$ext`

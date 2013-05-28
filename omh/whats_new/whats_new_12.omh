@@ -244,7 +244,7 @@ Change an Ipopt item to a $cref cppad_ipopt_nlp$$
 (which was removed because $code cppad_ipopt_nlp$$ is now deprecated).
 Add new $cref/cppad_ipopt_sum/WishList/cppad_ipopt_sum/$$ item.
 $lnext
-Add new $cref/user_atomic/WishList/user_atomic/$$ item.
+Add new $cref/old_atomic/WishList/old_atomic/$$ item.
 
 $lend
 
@@ -406,16 +406,16 @@ $code multi_thread/test.sh$$; see $cref/03-17/whats_new_12/03-17/$$
 
 $head 09-24$$
 Improve documentation for the 
-$cref user_atomic$$ 
-$cref/rev_hes_sparse/user_atomic/rev_hes_sparse/$$ 
+$cref old_atomic$$ 
+$cref/rev_hes_sparse/old_atomic/rev_hes_sparse/$$ 
 argument
-$cref/v/user_atomic/rev_hes_sparse/v/$$.
+$cref/v/old_atomic/rev_hes_sparse/v/$$.
 In addition,
-add sparsity calculations to the $cref reciprocal.cpp$$ example.
+add sparsity calculations to the $cref old_reciprocal.cpp$$ example.
 
 $head 09-11$$
-Add $cref reciprocal.cpp$$,
-a simpler $cref user_atomic$$ example.
+Add $code user_simple.cpp$$,
+a simpler $cref old_atomic$$ example.
 
 $head 08-05$$
 $list number$$
@@ -445,7 +445,7 @@ $codep
 	==6344== Conditional jump or move depends on uninitialised value(s)
 $$
 $lnext
-Fix mistake in $cref user_tan.cpp$$ where $code w[2] = 0$$
+Fix mistake in $cref old_tan.cpp$$ where $code w[2] = 0$$
 was missing before the call
 $codep
 	     dw    = F.Reverse(1, w);
@@ -482,8 +482,8 @@ added to the $code configure$$ command line.
 $lend
 
 $head 07-03$$
-Fix bug in $cref user_atomic$$ functions identification of variables
-that caused $cref user_tan.cpp$$ to fail with error message
+Fix bug in $cref old_atomic$$ functions identification of variables
+that caused $cref old_tan.cpp$$ to fail with error message
 $codep
 Error detected by false result for
     y_taddr > 0
@@ -712,11 +712,11 @@ multi-threading library.
 
 $head 04-18$$
 Add documentation and testing for not using $cref/free_all/ta_free_all/$$ and 
-$cref/user_atomic clear/user_atomic/clear/$$ while in
+$cref/old_atomic clear/old_atomic/clear/$$ while in
 $cref/parallel/ta_in_parallel/$$ mode.
 
 $head 04-17$$
-Fix bug when using $cref user_atomic$$ functions with 
+Fix bug when using $cref old_atomic$$ functions with 
 $cref/multi_threading/multi_thread/$$.
 
 $head 04-10$$

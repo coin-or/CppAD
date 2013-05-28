@@ -2,7 +2,7 @@
 # ifndef CPPAD_TEAM_THREAD_INCLUDED
 # define CPPAD_TEAM_THREAD_INCLUDED
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-12 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-13 Bradley M. Bell
 
 CppAD is distributed under multiple licenses. This distribution is under
 the terms of the 
@@ -86,7 +86,7 @@ $codei%
 $head team_name$$
 This routines returns a name that identifies this thread_team.
 The return value has prototype
-$icode%
+$codei%
 	const char* %name%
 %$$ 
 and is a statically allocated $code '\0'$$ terminated C string.

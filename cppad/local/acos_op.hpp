@@ -41,7 +41,8 @@ and derivatives of z.
 */
 template <class Base>
 inline void forward_acos_op(
-	size_t j           ,
+	size_t q           ,
+	size_t p           ,
 	size_t i_z         ,
 	size_t i_x         ,
 	size_t nc_taylor   , 
@@ -51,7 +52,8 @@ inline void forward_acos_op(
 	CPPAD_ASSERT_UNKNOWN( NumArg(AcosOp) == 1 );
 	CPPAD_ASSERT_UNKNOWN( NumRes(AcosOp) == 2 );
 	CPPAD_ASSERT_UNKNOWN( i_x + 1 < i_z );
-	CPPAD_ASSERT_UNKNOWN( j < nc_taylor );
+	CPPAD_ASSERT_UNKNOWN( p < nc_taylor );
+	CPPAD_ASSERT_UNKNOWN( q <= p );
 
 	// Taylor coefficients corresponding to argument and result
 	Base* x = taylor + i_x * nc_taylor;
@@ -60,12 +62,13 @@ inline void forward_acos_op(
 
 	size_t k;
 	Base uj;
-	if( j == 0 )
+	if( q == 0 )
 	{	z[0] = acos( x[0] );
 		uj   = Base(1) - x[0] * x[0];
 		b[0] = sqrt( uj );
+		q++;
 	}
-	else
+	for(size_t j = q; j <= p; j++)
 	{	uj = 0.;
 		for(k = 0; k <= j; k++)
 			uj -= x[k] * x[j-k];

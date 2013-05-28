@@ -3,7 +3,7 @@
 # define CPPAD_SPARSE_HES_FUN_INCLUDED
 
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-12 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-13 Bradley M. Bell
 
 CppAD is distributed under multiple licenses. This distribution is under
 the terms of the 
@@ -82,7 +82,7 @@ with elements of type $icode Float$$.
 
 $head n$$
 The argument $icode n$$ has prototype
-$icode%
+$codei%
 	size_t %n%
 %$$
 It specifies the dimension for the domain space for $latex f(x)$$.
@@ -119,7 +119,7 @@ All the elements of $icode col$$ must be between zero and $icode%n%-1%$$.
 
 $head p$$
 The argument $icode p$$ has prototype
-$icode%
+$codei%
 	size_t %p%
 %$$
 It is between zero and two and
@@ -128,7 +128,7 @@ that is being evaluated, i.e., $latex f^{(p)} (x)$$ is evaluated.
 
 $head fp$$
 The argument $icode fp$$ has prototype
-$icode%
+$codei%
 	%FloatVector%& %fp%
 %$$
 The input value of the elements of $icode fp$$ does not matter.

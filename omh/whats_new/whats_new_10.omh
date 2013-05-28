@@ -1,6 +1,6 @@
 $Id$
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-12 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-13 Bradley M. Bell
 
 CppAD is distributed under multiple licenses. This distribution is under
 the terms of the 
@@ -160,7 +160,7 @@ and optimization on.
 $head 03-11$$
 The old $cref reverse_any$$ example was moved to $cref reverse_three.cpp$$,
 the old checkpoint example is now the general case reverse example,
-and a better $cref/checkpointing/checkpoint.cpp/$$ example was created.
+and a better $code checkpoint.cpp/$$ example was created.
 
 $head 03-10$$
 The $cref optimize$$ routine would mistakenly remove some
@@ -170,9 +170,8 @@ This has been fixed.
 
 $head 03-09$$
 Extend $cref reverse_any$$ so that it can be used for 
-$cref/checkpointing/checkpoint.cpp/$$; i.e.,
+$cref/checkpointing/checkpoint/$$; i.e.,
 splitting reverse mode calculations at function composition points.
-
 
 $head 03-03$$
 Fixed a bug in handling

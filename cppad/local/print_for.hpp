@@ -3,7 +3,7 @@
 # define CPPAD_PRINT_FOR_INCLUDED
 
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-12 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-13 Bradley M. Bell
 
 CppAD is distributed under multiple licenses. This distribution is under
 the terms of the 
@@ -43,8 +43,8 @@ $codei%PrintFor(%pos%, %before%, %var%, %after%)
 
 $head Purpose$$
 The $cref/zero order forward/ForwardZero/$$ mode command
-$icode%
-	f%.Forward(0, %x%)
+$codei%
+	%f%.Forward(0, %x%)
 %$$
 assigns the 
 $cref/independent variable/glossary/Tape/Independent Variable/$$ vector

@@ -3,7 +3,7 @@
 # define CPPAD_TANH_OP_INCLUDED
 
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-12 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-13 Bradley M. Bell
 
 CppAD is distributed under multiple licenses. This distribution is under
 the terms of the 
@@ -41,7 +41,8 @@ and derivatives of z.
 */
 template <class Base>
 inline void forward_tanh_op(
-	size_t j           ,
+	size_t q           ,
+	size_t p           ,
 	size_t i_z         ,
 	size_t i_x         ,
 	size_t nc_taylor   , 
@@ -51,7 +52,8 @@ inline void forward_tanh_op(
 	CPPAD_ASSERT_UNKNOWN( NumArg(TanOp) == 1 );
 	CPPAD_ASSERT_UNKNOWN( NumRes(TanOp) == 2 );
 	CPPAD_ASSERT_UNKNOWN( i_x + 1 < i_z );
-	CPPAD_ASSERT_UNKNOWN( j < nc_taylor );
+	CPPAD_ASSERT_UNKNOWN( p < nc_taylor );
+	CPPAD_ASSERT_UNKNOWN( q <= p );
 
 	// Taylor coefficients corresponding to argument and result
 	Base* x = taylor + i_x * nc_taylor;
@@ -59,11 +61,12 @@ inline void forward_tanh_op(
 	Base* y = z      -       nc_taylor;
 
 	size_t k;
-	if( j == 0 )
-	{	z[j] = tanh( x[0] );
-		y[j] = z[j] * z[j];
+	if( q == 0 )
+	{	z[0] = tanh( x[0] );
+		y[0] = z[0] * z[0];
+		q++;
 	}
-	else
+	for(size_t j = q; j <= p; j++)
 	{	Base base_j = static_cast<Base>(j);
 
 		z[j] = x[j];

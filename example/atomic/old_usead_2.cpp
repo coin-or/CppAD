@@ -11,7 +11,7 @@ Please visit http://www.coin-or.org/CppAD/ for information on other licenses.
 -------------------------------------------------------------------------- */
 
 /*
-$begin atom_usead_2.cpp$$
+$begin old_usead_2.cpp$$
 $spell
 	checkpoint
 	var
@@ -24,8 +24,9 @@ $index user, atomic AD inside$$
 $index atomic, AD inside$$
 $index checkpoint$$
 
-$head Warning$$
-This example is currently under construction.
+$head Deprecated$$
+This example has been deprecated because it is easier to use the 
+$cref checkpoint$$ class instead.
 
 $head Purpose$$
 Consider the case where an inner function is used repeatedly in the 
@@ -33,11 +34,9 @@ definition of an outer function.
 In this case, it may reduce the number of variables
 $cref/size_var/seq_property/size_var/$$,
 and hence the required memory.
-This is similar the 
-$cref/checkpoint/checkpoint.cpp/$$.
 
 $code
-$verbatim%example/atom_usead_2.cpp%0%// BEGIN C++%// END C++%1%$$
+$verbatim%example/atomic/old_usead_2.cpp%0%// BEGIN C++%// END C++%1%$$
 $$
 
 $end
@@ -93,7 +92,7 @@ namespace { // Begin empty namespace
 
 	// ----------------------------------------------------------------------
 	// forward mode routine called by CppAD
-	bool atom_usead_2_forward(
+	bool solve_ode_forward(
 		size_t                   id ,
 		size_t                    k ,
 		size_t                    n ,
@@ -154,7 +153,7 @@ namespace { // Begin empty namespace
 	}
 	// ----------------------------------------------------------------------
 	// reverse mode routine called by CppAD
-	bool atom_usead_2_reverse(
+	bool solve_ode_reverse(
 		size_t                   id ,
 		size_t                    k ,
 		size_t                    n ,
@@ -201,7 +200,7 @@ namespace { // Begin empty namespace
 	}
 	// ----------------------------------------------------------------------
 	// forward Jacobian sparsity routine called by CppAD
-	bool atom_usead_2_for_jac_sparse(
+	bool solve_ode_for_jac_sparse(
 		size_t                               id ,             
 		size_t                                n ,
 		size_t                                m ,
@@ -228,7 +227,7 @@ namespace { // Begin empty namespace
 	}
 	// ----------------------------------------------------------------------
 	// reverse Jacobian sparsity routine called by CppAD
-	bool atom_usead_2_rev_jac_sparse(
+	bool solve_ode_rev_jac_sparse(
 		size_t                               id ,             
 		size_t                                n ,
 		size_t                                m ,
@@ -261,7 +260,7 @@ namespace { // Begin empty namespace
 	}
 	// ----------------------------------------------------------------------
 	// reverse Hessian sparsity routine called by CppAD
-	bool atom_usead_2_rev_hes_sparse(
+	bool solve_ode_rev_hes_sparse(
 		size_t                               id ,             
 		size_t                                n ,
 		size_t                                m ,
@@ -279,17 +278,13 @@ namespace { // Begin empty namespace
 		std::set<size_t>::const_iterator itr;
 
 		// compute sparsity pattern for T(x) = S(x) * f'(x)
-		vector< std::set<size_t> > T(1), S(1);
+		vector< std::set<size_t> > S(1);
 		size_t i, j;
 		S[0].clear();
 		for(i = 0; i < m; i++)
 			if( s[i] )
 				S[0].insert(i);
-		T = r_ptr_->RevSparseJac(1, S);
-		for(i = 0; i < m; i++)
-			t[i] = false;
-		for(itr = T[0].begin(); itr != T[0].end(); itr++)
-			t[*itr] = true;
+		t = r_ptr_->RevSparseJac(1, s);
 
 		// compute sparsity pattern for A(x)^T = U(x)^T * f'(x)
 		vector< std::set<size_t> > Ut(q), At(q);
@@ -323,20 +318,20 @@ namespace { // Begin empty namespace
 		return ok;
 	}
 	// ---------------------------------------------------------------------
-	// Declare the AD<double> routine atom_usead_2(id, ax, ay)
+	// Declare the AD<double> routine solve_ode(id, ax, ay)
 	CPPAD_USER_ATOMIC(
-		atom_usead_2                 , 
-		CppAD::vector              ,
-		double                     , 
-		atom_usead_2_forward         , 
-		atom_usead_2_reverse         ,
-		atom_usead_2_for_jac_sparse  ,
-		atom_usead_2_rev_jac_sparse  ,
-		atom_usead_2_rev_hes_sparse  
+		solve_ode                 , 
+		CppAD::vector             ,
+		double                    , 
+		solve_ode_forward         , 
+		solve_ode_reverse         ,
+		solve_ode_for_jac_sparse  ,
+		solve_ode_rev_jac_sparse  ,
+		solve_ode_rev_hes_sparse  
 	)
 } // End empty namespace
 
-bool atom_usead_2(void)
+bool old_usead_2(void)
 {	bool ok = true;
 	using CppAD::NearEqual;
 	double eps = 10. * CppAD::numeric_limits<double>::epsilon();
@@ -360,7 +355,7 @@ bool atom_usead_2(void)
 	ax[2]         = dt;
 	for(size_t i_step = 0; i_step < M; i_step++)
 	{	size_t id = 0;               // not used
-		atom_usead_2(id, ax, ay); 
+		solve_ode(id, ax, ay); 
 		ax[0] = ay[0];
 		ax[1] = ay[1];
 	}
@@ -369,12 +364,13 @@ bool atom_usead_2(void)
 	// y_0(t) = u_0 + t                   = u_0 + u_2
 	// y_1(t) = u_1 + u_0 * t + t^2 / 2   = u_1 + u_0 * u_2 + u_2^2 / 2
 	// where t = u_2
-	ADFun<double> f(au, ay); 
+	ADFun<double> f;
+	f.Dependent(au, ay); 
 
 	// --------------------------------------------------------------------
 	// Check forward mode results
 	//
-	// function values
+	// zero order forward
 	vector<double> up(n), yp(m);
 	size_t p  = 0;
 	double u0 = 0.5;
@@ -492,7 +488,7 @@ bool atom_usead_2(void)
 	// --------------------------------------------------------------------
 	destroy_r();
 
-	// Free all temporary work space associated with user_atomic objects. 
+	// Free all temporary work space associated with old_atomic objects. 
 	// (If there are future calls to user atomic functions, they will 
 	// create new temporary work space.)
 	CppAD::user_atomic<double>::clear();

@@ -38,7 +38,8 @@ and the argument \a parameter is not used.
 
 template <class Base>
 inline void forward_divvv_op(
-	size_t        d           , 
+	size_t        q           , 
+	size_t        p           , 
 	size_t        i_z         ,
 	const addr_t* arg         ,
 	const Base*   parameter   ,
@@ -50,7 +51,8 @@ inline void forward_divvv_op(
 	CPPAD_ASSERT_UNKNOWN( NumRes(DivvvOp) == 1 );
 	CPPAD_ASSERT_UNKNOWN( size_t(arg[0]) < i_z );
 	CPPAD_ASSERT_UNKNOWN( size_t(arg[1]) < i_z );
-	CPPAD_ASSERT_UNKNOWN( d < nc_taylor );
+	CPPAD_ASSERT_UNKNOWN( p < nc_taylor );
+	CPPAD_ASSERT_UNKNOWN( q <= p );
 
 	// Taylor coefficients corresponding to arguments and result
 	Base* x = taylor + arg[0] * nc_taylor;
@@ -61,10 +63,12 @@ inline void forward_divvv_op(
 	// Using CondExp, it can make sense to divide by zero,
 	// so do not make it an error.
 	size_t k;
-	z[d] = x[d];
-	for(k = 1; k <= d; k++)
-		z[d] -= z[d-k] * y[k];
-	z[d] /= y[0];
+	for(size_t d = q; d <= p; d++)
+	{	z[d] = x[d];
+		for(k = 1; k <= d; k++)
+			z[d] -= z[d-k] * y[k];
+		z[d] /= y[0];
+	}
 }
 
 
@@ -182,7 +186,8 @@ this operations is for the case where x is a parameter and y is a variable.
 
 template <class Base>
 inline void forward_divpv_op(
-	size_t        d           , 
+	size_t        q           , 
+	size_t        p           , 
 	size_t        i_z         ,
 	const addr_t* arg         ,
 	const Base*   parameter   ,
@@ -193,7 +198,8 @@ inline void forward_divpv_op(
 	CPPAD_ASSERT_UNKNOWN( NumArg(DivpvOp) == 2 );
 	CPPAD_ASSERT_UNKNOWN( NumRes(DivpvOp) == 1 );
 	CPPAD_ASSERT_UNKNOWN( size_t(arg[1]) < i_z );
-	CPPAD_ASSERT_UNKNOWN( d < nc_taylor );
+	CPPAD_ASSERT_UNKNOWN( p < nc_taylor );
+	CPPAD_ASSERT_UNKNOWN( q <= p );
 
 	// Taylor coefficients corresponding to arguments and result
 	Base* y = taylor + arg[1] * nc_taylor;
@@ -205,17 +211,16 @@ inline void forward_divpv_op(
 	// Using CondExp, it can make sense to divide by zero,
 	// so do not make it an error.
 	size_t k;
-# if USE_CPPAD_FORWARD0SWEEP
-	z[d] = Base(0);
-# else
-	if( d == 0 )
-		z[d] = x;
-	else	z[d] = Base(0);
-# endif
-	for(k = 1; k <= d; k++)
-		z[d] -= z[d-k] * y[k];
-	z[d] /= y[0];
-
+	if( q == 0 )
+	{	z[0] = x / y[0];
+		q++;
+	}
+	for(size_t d = q; d <= p; d++)
+	{	z[d] = Base(0);
+		for(k = 1; k <= d; k++)
+			z[d] -= z[d-k] * y[k];
+		z[d] /= y[0];
+	}
 }
 
 /*!
@@ -329,7 +334,8 @@ this operations is for the case where x is a variable and y is a parameter.
 
 template <class Base>
 inline void forward_divvp_op(
-	size_t        d           , 
+	size_t        q           , 
+	size_t        p           , 
 	size_t        i_z         ,
 	const addr_t* arg         ,
 	const Base*   parameter   ,
@@ -340,7 +346,8 @@ inline void forward_divvp_op(
 	CPPAD_ASSERT_UNKNOWN( NumArg(DivvpOp) == 2 );
 	CPPAD_ASSERT_UNKNOWN( NumRes(DivvpOp) == 1 );
 	CPPAD_ASSERT_UNKNOWN( size_t(arg[0]) < i_z );
-	CPPAD_ASSERT_UNKNOWN( d < nc_taylor );
+	CPPAD_ASSERT_UNKNOWN( p < nc_taylor );
+	CPPAD_ASSERT_UNKNOWN( q <= p );
 
 	// Taylor coefficients corresponding to arguments and result
 	Base* x = taylor + arg[0] * nc_taylor;
@@ -351,7 +358,8 @@ inline void forward_divvp_op(
 
 	// Using CondExp and multiple levels of AD, it can make sense 
 	// to divide by zero so do not make it an error.
-	z[d] = x[d] / y;
+	for(size_t d = q; d <= p; d++)
+		z[d] = x[d] / y;
 }
 
 

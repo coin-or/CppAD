@@ -94,8 +94,9 @@ $rref ad_output.cpp$$
 $rref Asin.cpp$$
 $rref atan2.cpp$$
 $rref atan.cpp$$
-$rref atom_usead_1.cpp$$
-$rref atom_usead_2.cpp$$
+$rref atomic_matrix_mul.hpp$$
+$cref atomic_reciprocal.cpp$$
+$cref atomic_tangent.cpp$$
 $rref base_adolc.hpp$$
 $rref base_alloc.hpp$$
 $rref base_complex.hpp$$
@@ -105,8 +106,8 @@ $rref bool_fun.cpp$$
 $rref capacity_taylor.cpp$$
 $rref change_const.cpp$$
 $rref check_numeric_type.cpp$$
-$rref checkpoint.cpp$$
 $rref check_simple_vector.cpp$$
+$rref checkpoint.cpp$$
 $rref compare_change.cpp$$
 $rref compare.cpp$$
 $rref complex_poly.cpp$$
@@ -131,6 +132,7 @@ $rref for_one.cpp$$
 $rref for_sparse_jac.cpp$$
 $rref for_two.cpp$$
 $rref forward.cpp$$
+$rref forward_mul.cpp$$
 $rref fun_assign.cpp$$
 $rref fun_check.cpp$$
 $rref get_started.cpp$$
@@ -162,8 +164,7 @@ $rref lu_invert.cpp$$
 $rref lu_ratio.cpp$$
 $rref lu_solve.cpp$$
 $rref lu_vec_ad_ok.cpp$$
-$rref mat_mul.cpp$$
-$rref mat_mul.hpp$$
+$rref atomic_mat_mul.cpp$$
 $rref mul.cpp$$
 $rref mul_eq.cpp$$
 $rref mul_level_adolc.cpp$$
@@ -185,6 +186,7 @@ $rref ode_gear_control.cpp$$
 $rref ode_gear.cpp$$
 $rref ode_stiff.cpp$$
 $rref ode_taylor.cpp$$
+$rref old_reciprocal.cpp$$
 $rref omp_alloc.cpp$$
 $rref optimize.cpp$$
 $rref opt_val_hes.cpp$$
@@ -194,7 +196,6 @@ $rref pow.cpp$$
 $rref pow_int.cpp$$
 $rref print_for_cout.cpp$$
 $rref print_for_string.cpp$$
-$rref reciprocal.cpp$$
 $rref reverse_any.cpp$$
 $rref reverse_one.cpp$$
 $rref reverse_three.cpp$$
@@ -237,7 +238,11 @@ $rref thread_alloc.cpp$$
 $rref thread_test.cpp$$
 $rref unary_minus.cpp$$
 $rref unary_plus.cpp$$
-$rref user_tan.cpp$$
+$rref old_mat_mul.cpp$$
+$rref old_mat_mul.hpp$$
+$rref old_usead_1.cpp$$
+$rref old_usead_2.cpp$$
+$rref old_tan.cpp$$
 $rref value.cpp$$
 $rref var2par.cpp$$
 $rref vec_ad.cpp$$

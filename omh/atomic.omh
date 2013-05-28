@@ -1,0 +1,25 @@
+/* $Id$ */
+/* --------------------------------------------------------------------------
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-13 Bradley M. Bell
+
+CppAD is distributed under multiple licenses. This distribution is under
+the terms of the 
+                    Eclipse Public License Version 1.0.
+
+A copy of this license is included in the COPYING file of this distribution.
+Please visit http://www.coin-or.org/CppAD/ for information on other licenses.
+-------------------------------------------------------------------------- */
+$begin atomic$$
+
+$section Atomic AD Functions$$
+$index atomic, ad function$$
+$index ad, atomic function$$
+$index operation, ad atomic$$
+$index function, ad atomic$$
+
+$childtable%
+	cppad/local/checkpoint.hpp%
+	omh/atomic_base.omh
+%$$
+
+$end

@@ -627,7 +627,7 @@ Determine the number of threads as set during $cref/parallel_setup/ta_parallel_s
 
 $head number$$
 The return value $icode number$$ has prototype
-$icode%
+$codei%
 	size_t %number%
 %$$ 
 and is equal to the value of 

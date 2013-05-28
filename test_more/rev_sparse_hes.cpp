@@ -1,6 +1,6 @@
 /* $Id$ */
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-12 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-13 Bradley M. Bell
 
 CppAD is distributed under multiple licenses. This distribution is under
 the terms of the 
@@ -440,6 +440,89 @@ bool case_five(void)
 	return ok;
 }
 
+bool case_six()
+{	bool ok = true;
+	using namespace CppAD;
+
+	// dimension of the domain space
+	size_t n = 3; 
+
+	// dimension of the range space
+	size_t m = 1;
+
+	// independent variable vector 
+	CPPAD_TESTVECTOR(AD<double>) X(n);
+	X[0] = 0.; 
+	X[1] = 1.;
+	X[2] = 2.;
+	Independent(X);
+	// y = z[j] where j might be zero or one.
+	CPPAD_TESTVECTOR(AD<double>) Y(m);
+	Y[0]  =  X[1] * X[2];
+	// create function object F : X -> Y
+	ADFun<double> F(X, Y);
+
+	// sparsity pattern for hessian of F^2
+	CPPAD_TESTVECTOR(bool) F2(n * n);
+	F2[0 * n + 0] = false; // partial w.r.t x[0], x[0]
+	F2[0 * n + 1] = false; // partial w.r.t x[0], x[1]
+	F2[0 * n + 2] = false; // partial w.r.t x[0], x[2]
+
+	F2[1 * n + 0] = false; // partial w.r.t x[1], x[0]
+	F2[1 * n + 1] = false; // partial w.r.t x[1], x[1]
+	F2[1 * n + 2] = true;  // partial w.r.t x[1], x[2]
+
+	F2[2 * n + 0] = false; // partial w.r.t x[2], x[0]
+	F2[2 * n + 1] = true;  // partial w.r.t x[2], x[1]
+	F2[2 * n + 2] = false; // partial w.r.t x[2], x[2]
+
+
+	// choose a non-symmetric sparsity patter for R
+	CPPAD_TESTVECTOR( bool ) r(n * n);
+	size_t i, j, k;
+	for(i = 0; i < n; i++)
+	{	for(j = 0; j < n; j++)
+			r[ i * n + j ] = false;
+		j = n - i - 1;
+		r[ j * n + j ] = true;
+	}
+
+	// sparsity pattern for H^T
+	CPPAD_TESTVECTOR(bool) Check(n * n);
+	for(i = 0; i < n; i++)
+	{	for(j = 0; j < n; j++)
+		{	Check[ i * n + j] = false;
+			for(k = 0; k < n; k++)
+				Check[i * n + j] |= F2[i * n + k] & r[ k * n + j];
+		}
+	}
+
+	// compute the reverse Hessian sparsity pattern for F^2 * R
+	F.ForSparseJac(n, r);
+	CPPAD_TESTVECTOR( bool ) s(m), h(n * n);
+	s[0] = 1.;
+	bool transpose = true;
+	h = F.RevSparseHes(n, s, transpose);
+
+	// check values
+	for(i = 0; i < n; i++)
+	{	for(j = 0; j < n; j++)
+			ok &= (h[i * n + j] == Check[i * n + j]);
+	}	
+
+	// compute the reverse Hessian sparsity pattern for R^T * F^2
+	transpose = false;
+	h = F.RevSparseHes(n, s, transpose);
+
+	// check values
+	for(i = 0; i < n; i++)
+	{	for(j = 0; j < n; j++)
+			ok &= (h[j * n + i] == Check[i * n + j]);
+	}	
+
+	return ok;
+}
+
 } // End of empty namespace
 
 bool rev_sparse_hes(void)
@@ -450,6 +533,7 @@ bool rev_sparse_hes(void)
 	ok &= case_three();
 	ok &= case_four();
 	ok &= case_five();
+	ok &= case_six();
 
 	return ok;
 }

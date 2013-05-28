@@ -1,0 +1,40 @@
+# $Id$
+# -----------------------------------------------------------------------------
+# CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-13 Bradley M. Bell
+#
+# CppAD is distributed under multiple licenses. This distribution is under
+# the terms of the 
+#                     Eclipse Public License Version 1.0.
+#
+# A copy of this license is included in the COPYING file of this distribution.
+# Please visit http://www.coin-or.org/CppAD/ for information on other licenses.
+# -----------------------------------------------------------------------------
+# automake input file
+#
+# CppAD pusts all it's preprocessor definitions in the cppad/configure.hpp
+DEFS          =
+#
+check_PROGRAMS    = atomic
+#
+AM_CXXFLAGS       = -g $(CXX_FLAGS) 
+#
+AM_CPPFLAGS       = -I. \
+	-I$(top_srcdir) \
+	$(BOOST_INCLUDE) \
+	$(EIGEN_INCLUDE) 
+#
+atomic_SOURCES   = \
+	atomic.cpp \
+	checkpoint.cpp \
+	mat_mul.cpp \
+	reciprocal.cpp \
+	tangent.cpp \
+	old_mat_mul.hpp \
+	old_mat_mul.cpp \
+	old_reciprocal.cpp \
+	old_tan.cpp \
+	old_usead_1.cpp \
+	old_usead_2.cpp 
+
+test: check
+	./atomic

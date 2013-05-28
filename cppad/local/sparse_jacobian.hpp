@@ -3,7 +3,7 @@
 # define CPPAD_SPARSE_JACOBIAN_INCLUDED
 
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-12 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-13 Bradley M. Bell
 
 CppAD is distributed under multiple licenses. This distribution is under
 the terms of the 
@@ -153,7 +153,7 @@ $latex \[
 
 $head work$$
 If this argument is present, it has prototype
-$icode%
+$codei%
 	sparse_jacobian_work& %work%
 %$$
 This object can only be used with the routines 

@@ -82,8 +82,6 @@ example_SOURCES   = \
 	asin.cpp \
 	atan.cpp \
 	atan2.cpp \
-	atom_usead_1.cpp \
-	atom_usead_2.cpp \
 	base_alloc.hpp \
 	base_require.cpp \
 	bender_quad.cpp \
@@ -92,7 +90,6 @@ example_SOURCES   = \
 	change_const.cpp \
 	check_numeric_type.cpp \
 	check_simple_vector.cpp \
-	checkpoint.cpp \
 	compare.cpp \
 	compare_change.cpp \
 	complex_poly.cpp \
@@ -110,6 +107,7 @@ example_SOURCES   = \
 	for_one.cpp \
 	for_two.cpp \
 	forward.cpp \
+	forward_mul.cpp \
 	for_sparse_jac.cpp \
 	fun_assign.cpp \
 	fun_check.cpp \
@@ -137,8 +135,6 @@ example_SOURCES   = \
 	lu_vec_ad.cpp \
 	lu_vec_ad.hpp \
 	lu_vec_ad_ok.cpp \
-	mat_mul.cpp \
-	mat_mul.hpp \
 	mul.cpp \
 	mul_eq.cpp \
 	mul_level.cpp \
@@ -162,7 +158,6 @@ example_SOURCES   = \
 	pow.cpp \
 	pow_int.cpp \
 	print_for.cpp \
-	reciprocal.cpp \
 	reverse_any.cpp \
 	reverse_one.cpp \
 	reverse_three.cpp \
@@ -193,7 +188,6 @@ example_SOURCES   = \
 	thread_alloc.cpp \
 	unary_minus.cpp \
 	unary_plus.cpp \
-	user_tan.cpp \
 	value.cpp \
 	var2par.cpp \
 	vec_ad.cpp  \

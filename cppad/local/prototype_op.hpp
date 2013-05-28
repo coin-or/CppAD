@@ -3,7 +3,7 @@
 # define CPPAD_PROTOTYPE_OP_INCLUDED
 
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-12 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-13 Bradley M. Bell
 
 CppAD is distributed under multiple licenses. This distribution is under
 the terms of the 
@@ -33,8 +33,11 @@ base type for the operator; i.e., this operation was recorded
 using AD< \a Base > and computations by this routine are done using type 
 \a Base.
 
-\param j
-order of the Taylor coefficient that we are computing.
+\param q
+lowest order of the Taylor coefficient that we are computing.
+
+\param p
+highest order of the Taylor coefficient that we are computing.
 
 \param i_z
 variable index corresponding to the result for this operation; 
@@ -48,26 +51,29 @@ i.e. the row index in \a taylor corresponding to x.
 number of colums in the matrix containing all the Taylor coefficients.
 
 \param taylor
-\b Input: \a taylor [ \a i_x * \a nc_taylor + k ] 
-for k = 0 , ... , \a j
+\b Input: <code>taylor [ i_x * nc_taylor + k ]</code>, 
+for k = 0 , ... , p,
 is the k-th order Taylor coefficient corresponding to x.
 \n
-\b Input: \a taylor [ \a i_z * \a nc_taylor + k ] 
-for k = 0 , ... , \a j - 1
+\b Input: <code>taylor [ i_z * nc_taylor + k ]</code>, 
+for k = 0 , ... , q-1,
 is the k-th order Taylor coefficient corresponding to z.
 \n
-\b Output: \a taylor [ \a i_z * \a nc_taylor + j ] 
-is the j-th order Taylor coefficient corresponding to z. 
+\b Output: <code>taylor [ i_z * nc_taylor + k ]</code>, 
+for k = q , ... , p,
+is the k-th order Taylor coefficient corresponding to z. 
 
 \par Checked Assertions
 \li NumArg(op) == 1
 \li NumRes(op) == 1
-\li \a i_x < \a i_z 
-\li \a j < \a nc_taylor
+\li i_x < i_z 
+\li p < nc_taylor
+\li q <= p
 */
 template <class Base>
 inline void forward_unary1_op(
-	size_t j           ,
+	size_t q           ,
+	size_t p           ,
 	size_t i_z         ,
 	size_t i_x         ,
 	size_t nc_taylor   , 
@@ -213,8 +219,11 @@ base type for the operator; i.e., this operation was recorded
 using AD< \a Base > and computations by this routine are done using type 
 \a Base.
 
-\param j
-order of the Taylor coefficients that we are computing.
+\param q
+lowest order of the Taylor coefficients that we are computing.
+
+\param p
+highest order of the Taylor coefficients that we are computing.
 
 \param i_z
 variable index corresponding to the last (primary) result for this operation; 
@@ -229,34 +238,38 @@ i.e. the row index in \a taylor corresponding to x.
 number of colums in the matrix containing all the Taylor coefficients.
 
 \param taylor
-\b Input: \a taylor [ \a i_x * \a nc_taylor + k ] 
-for k = 0 , ... , \a j
+\b Input: <code>taylor [ i_x * nc_taylor + k ]</code> 
+for k = 0 , ... , p,
 is the k-th order Taylor coefficient corresponding to x.
 \n
-\b Input: \a taylor [ \a i_z * \a nc_taylor + k ] 
-for k = 0 , ... , \a j - 1
+\b Input: <code>taylor [ i_z * nc_taylor + k ]</code> 
+for k = 0 , ... , q - 1,
 is the k-th order Taylor coefficient corresponding to z.
 \n
-\b Input: \a taylor [ ( \a i_z - 1) * \a nc_taylor + k ] 
-for k = 0 , ... , \a j - 1
+\b Input: <code>taylor [ ( i_z - 1) * nc_taylor + k ]</code> 
+for k = 0 , ... , q-1,
 is the k-th order Taylor coefficient corresponding to the auxillary result y.
 \n
-\b Output: \a taylor [ \a i_z * \a nc_taylor + j ] 
-is the j-th order Taylor coefficient corresponding to z. 
+\b Output: <code>taylor [ i_z * nc_taylor + k ]</code>,
+for k = q , ... , p,
+is the k-th order Taylor coefficient corresponding to z. 
 \n
-\b Output: \a taylor [ ( \a i_z - 1 ) * \a nc_taylor + j ] 
-is the j-th order Taylor coefficient corresponding to 
+\b Output: <code>taylor [ ( i_z - 1 ) * nc_taylor + k ]</code>, 
+for k = q , ... , p,
+is the k-th order Taylor coefficient corresponding to 
 the autillary result y.
 
 \par Checked Assertions 
 \li NumArg(op) == 1
 \li NumRes(op) == 2
-\li \a i_x + 1 < \a i_z 
-\li \a j < \a nc_taylor
+\li i_x + 1 < i_z 
+\li p < nc_taylor
+\li q <= p 
 */
 template <class Base>
 inline void forward_unary2_op(
-	size_t j           ,
+	size_t q           ,
+	size_t p           ,
 	size_t i_z         ,
 	size_t i_x         ,
 	size_t nc_taylor   , 
@@ -418,8 +431,11 @@ base type for the operator; i.e., this operation was recorded
 using AD< \a Base > and computations by this routine are done using type 
 \a Base.
 
-\param d
-order of the Taylor coefficient that we are computing.
+\param q
+lowest order of the Taylor coefficient that we are computing.
+
+\param p
+highest order of the Taylor coefficient that we are computing.
 
 \param i_z
 variable index corresponding to the result for this operation; 
@@ -445,31 +461,36 @@ is the value corresponding to y.
 number of colums in the matrix containing all the Taylor coefficients.
 
 \param taylor
-\b Input: If x is a variable, \a taylor [ \a arg[0] * \a nc_taylor + k ] 
-for k = 0 , ... , \a d
+\b Input: If x is a variable, 
+<code>taylor [ arg[0] * nc_taylor + k ]</code>, 
+for k = 0 , ... , p,
 is the k-th order Taylor coefficient corresponding to x.
 \n
-\b Input: If y is a variable, \a taylor [ \a arg[1] * \a nc_taylor + k ] 
-for k = 0 , ... , \a d
+\b Input: If y is a variable, 
+<code>taylor [ arg[1] * nc_taylor + k ]</code>, 
+for k = 0 , ... , p,
 is the k-th order Taylor coefficient corresponding to y.
 \n
-\b Input: \a taylor [ \a i_z * \a nc_taylor + k ] 
-for k = 0 , ... , \a d - 1
+\b Input: <code>taylor [ i_z * nc_taylor + k ]</code>, 
+for k = 0 , ... , q-1,
 is the k-th order Taylor coefficient corresponding to z.
 \n
-\b Output: \a taylor [ \a i_z * \a nc_taylor + \a d ] 
-is the \a d-th order Taylor coefficient corresponding to z. 
+\b Output: <code>taylor [ i_z * nc_taylor + k ]</code>, 
+for k = q, ... , p,
+is the k-th order Taylor coefficient corresponding to z. 
 
 \par Checked Assertions
 \li NumArg(op) == 2
 \li NumRes(op) == 1
-\li If x is a variable, \a arg[0] < \a i_z 
-\li If y is a variable, \a arg[1] < \a i_z 
-\li \a d < \a nc_taylor
+\li If x is a variable, arg[0] < i_z 
+\li If y is a variable, arg[1] < i_z 
+\li p <  nc_taylor
+\li q <=  p
 */
 template <class Base>
 inline void forward_binary_op(
-	size_t         d         ,
+	size_t        q          ,
+	size_t        p          ,
 	size_t        i_z        ,
 	const addr_t* arg        ,
 	const Base*   parameter  ,
@@ -660,8 +681,11 @@ base type for the operator; i.e., this operation was recorded
 using AD< \a Base > and computations by this routine are done using type 
 \a Base.
 
-\param d
-order of the Taylor coefficient that we are computing.
+\param q
+lowest order of the Taylor coefficient that we are computing.
+
+\param p
+highest order of the Taylor coefficient that we are computing.
 
 \param i_z
 variable index corresponding to the last (primary) result for this operation; 
@@ -695,31 +719,35 @@ is the value corresponding to y.
 number of colums in the matrix containing all the Taylor coefficients.
 
 \param taylor
-\b Input: If x is a variable, \a taylor [ \a arg[0] * \a nc_taylor + k ] 
-for k = 0 , ... , \a d
+\b Input: If x is a variable, 
+<code>taylor [ arg[0] * nc_taylor + k ]</code> 
+for k = 0 , ... , p,
 is the k-th order Taylor coefficient corresponding to x.
 \n
-\b Input: If y is a variable, \a taylor [ \a arg[1] * \a nc_taylor + k ] 
-for k = 0 , ... , \a d
+\b Input: If y is a variable, 
+<code>taylor [ arg[1] * nc_taylor + k ]</code> 
+for k = 0 , ... , p
 is the k-th order Taylor coefficient corresponding to y.
 \n
-\b Input: \a taylor [ \a (i_z - 2 + j) * \a nc_taylor + k ] 
-for j = 0, 1, 2 , and for k = 0 , ... , \a d - 1
+\b Input: <code>taylor [ (i_z-2+j) * nc_taylor + k ]</code>,
+for j = 0, 1, 2 , for k = 0 , ... , q-1,
 is the k-th order Taylor coefficient corresponding to z_j.
 \n
-\b Output: \a taylor [ \a (i_z - 2 + j) * \a nc_taylor + \a d ] 
-is the \a d-th order Taylor coefficient corresponding to z_j.
+\b Output: <code>taylor [ (i_z-2+j) * nc_taylor + k ]</code>, 
+is the k-th order Taylor coefficient corresponding to z_j.
 
 \par Checked Assertions
 \li NumArg(op) == 2
 \li NumRes(op) == 3
-\li If x is a variable, \a arg[0] < \a i_z - 2 
-\li If y is a variable, \a arg[1] < \a i_z - 2
-\li \a d < \a nc_taylor
+\li If x is a variable, arg[0] < i_z - 2 
+\li If y is a variable, arg[1] < i_z - 2
+\li p < nc_taylor
+\li q <= p
 */
 template <class Base>
 inline void forward_pow_op(
-	size_t        d          ,
+	size_t        q          ,
+	size_t        p          ,
 	size_t        i_z        ,
 	const addr_t* arg        ,
 	const Base*   parameter  ,

@@ -422,12 +422,107 @@ bool case_four()
 	s[1] = false;
 	r = F.RevSparseJac(q, s);
 
-	ok &= r.size() == q * n;
+	ok &= size_t( r.size() ) == q * n;
 	ok &= r[0] == false;
 	ok &= r[1] == true;
 
 	return ok;
 }
+
+bool case_five()
+{	bool ok = true;
+	using namespace CppAD;
+
+	// dimension of the domain space
+	size_t n = 2; 
+
+	// dimension of the range space
+	size_t m = 3;
+
+	// independent variable vector 
+	CPPAD_TESTVECTOR(AD<double>) X(n);
+	X[0] = 2.; 
+	X[1] = 3.;
+	Independent(X);
+
+	// dependent variable vector
+	CPPAD_TESTVECTOR(AD<double>) Y(m);
+
+	// check results vector
+	CPPAD_TESTVECTOR( bool )       Check(m * n);
+
+	// initialize index into Y
+	size_t index = 0;
+
+	// Y[0] only depends on X[0];
+	Y[index]             = pow(X[0], 2.);
+	Check[index * n + 0] = true;
+	Check[index * n + 1] = false;
+	index++;
+
+	// Y[1] depends on X[1]
+	Y[index]             = pow(2., X[1]);
+	Check[index * n + 0] = false;
+	Check[index * n + 1] = true;
+	index++;
+
+	// Y[2] depends on X[0] and X[1]
+	Y[index]             = pow(X[0], X[1]);
+	Check[index * n + 0] = true;
+	Check[index * n + 1] = true;
+	index++;
+
+	// check final index
+	assert( index == m );
+
+	// create function object F : X -> Y
+	ADFun<double> F(X, Y);
+
+	// -----------------------------------------------------------------
+	// dependency matrix for the identity function
+	CPPAD_TESTVECTOR( bool ) Py(m * m);
+	size_t i, j;
+	for(i = 0; i < m; i++)
+	{	for(j = 0; j < m; j++)
+			Py[ i * m + j ] = (i == j);
+	}
+
+	// evaluate the dependency matrix for F(x)
+	bool transpose = true;
+	CPPAD_TESTVECTOR( bool ) Px(n * m);
+	Px = F.RevSparseJac(m, Py, transpose);
+
+	// check values
+	for(i = 0; i < m; i++)
+	{	for(j = 0; j < n; j++)
+			ok &= (Px[j * m + i] == Check[i * n + j]);
+	}	
+
+	// ---------------------------------------------------------
+	// dependency matrix for the identity function 
+	CPPAD_TESTVECTOR(std::set<size_t>) Sy(m);
+	for(i = 0; i < m; i++)
+	{	assert( Sy[i].empty() );
+		Sy[i].insert(i);
+	}
+
+	// evaluate the dependency matrix for F(x)
+	CPPAD_TESTVECTOR(std::set<size_t>) Sx(n);
+	Sx = F.RevSparseJac(m, Sy, transpose);
+
+	// check values
+	bool found;
+	for(i = 0; i < m; i++)
+	{	for(j = 0; j < n; j++)
+		{	found = Sx[j].find(i) != Sx[j].end();
+			ok &= (found == Check[i * n + j]);
+		}
+	}	
+
+	return ok;
+}
+
+
 
 } // END empty namespace
 

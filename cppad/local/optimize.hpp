@@ -3,7 +3,7 @@
 # define CPPAD_OPTIMIZE_INCLUDED
 
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-12 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-13 Bradley M. Bell
 
 CppAD is distributed under multiple licenses. This distribution is under
 the terms of the 
@@ -45,7 +45,7 @@ compute function and derivative values.
 
 $head f$$
 The object $icode f$$ has prototype
-$icode%
+$codei%
 	ADFun<%Base%> %f%
 %$$
 
@@ -1070,10 +1070,10 @@ void optimize(
 				user_n     = arg[2];
 				user_m     = arg[3];
 				user_q     = 1;
-				if(user_r.size() < user_n )
-					user_r.resize(user_n);
-				if(user_s.size() < user_m )
-					user_s.resize(user_m);
+				if(user_s.size() != user_n )
+					user_s.resize(user_n);
+				if(user_r.size() != user_m )
+					user_r.resize(user_m);
 				user_j     = user_n;
 				user_i     = user_m;
 				user_state = user_ret;
@@ -1108,7 +1108,7 @@ void optimize(
 			CPPAD_ASSERT_UNKNOWN( size_t(arg[0]) <= i_var );
 			CPPAD_ASSERT_UNKNOWN( 0 < arg[0] );
 			--user_j;
-			if( ! user_r[user_j].empty() )
+			if( ! user_s[user_j].empty() )
 			{	tape[arg[0]].connect = yes_connected;
 				user_keep.top() = true;
 			}
@@ -1123,11 +1123,14 @@ void optimize(
 			CPPAD_ASSERT_UNKNOWN( NumArg(op) == 1 );
 			CPPAD_ASSERT_UNKNOWN( size_t(arg[0]) < num_par );
 			--user_i;
-			user_s[user_i].clear();
+			user_r[user_i].clear();
 			if( user_i == 0 )
 			{	// call users function for this operation
-				user_atomic<Base>::rev_jac_sparse(user_index, user_id,
-					user_n, user_m, user_q, user_r, user_s
+				atomic_base<Base>* atom = 
+					atomic_base<Base>::list(user_index);
+				atom->set_id(user_id);
+				atom->rev_sparse_jac(
+					user_q, user_r, user_s
 				);
 				user_state = user_arg;
 			}
@@ -1138,13 +1141,16 @@ void optimize(
 			CPPAD_ASSERT_UNKNOWN( user_state == user_ret );
 			CPPAD_ASSERT_UNKNOWN( 0 < user_i && user_i <= user_m );
 			--user_i;
-			user_s[user_i].clear();
+			user_r[user_i].clear();
 			if( tape[i_var].connect != not_connected )
-				user_s[user_i].insert(0);
+				user_r[user_i].insert(0);
 			if( user_i == 0 )
 			{	// call users function for this operation
-				user_atomic<Base>::rev_jac_sparse(user_index, user_id,
-					user_n, user_m, user_q, user_r, user_s
+				atomic_base<Base>* atom = 
+					atomic_base<Base>::list(user_index);
+				atom->set_id(user_id);
+				atom->rev_sparse_jac(
+					user_q, user_r, user_s
 				);
 				user_state = user_arg;
 			}

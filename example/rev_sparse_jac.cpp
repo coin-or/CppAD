@@ -1,6 +1,6 @@
 /* $Id$ */
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-12 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-13 Bradley M. Bell
 
 CppAD is distributed under multiple licenses. This distribution is under
 the terms of the 
@@ -44,42 +44,55 @@ bool BoolCases(void)
 
 	// domain space vector
 	size_t n = 2; 
-	CPPAD_TESTVECTOR(AD<double>) X(n);
-	X[0] = 0.; 
-	X[1] = 1.;
+	CPPAD_TESTVECTOR(AD<double>) ax(n);
+	ax[0] = 0.; 
+	ax[1] = 1.;
 
 	// declare independent variables and start recording
-	CppAD::Independent(X);
+	CppAD::Independent(ax);
 
 	// range space vector
 	size_t m = 3;
-	CPPAD_TESTVECTOR(AD<double>) Y(m);
-	Y[0] = X[0];
-	Y[1] = X[0] * X[1];
-	Y[2] = X[1];
+	CPPAD_TESTVECTOR(AD<double>) ay(m);
+	ay[0] = ax[0];
+	ay[1] = ax[0] * ax[1];
+	ay[2] = ax[1];
 
-	// create f: X -> Y and stop tape recording
-	CppAD::ADFun<double> f(X, Y);
+	// create f: x -> y and stop tape recording
+	CppAD::ADFun<double> f(ax, ay);
 
 	// sparsity pattern for the identity matrix
-	Vector s(m * m);
+	Vector r(m * m);
 	size_t i, j;
 	for(i = 0; i < m; i++)
 	{	for(j = 0; j < m; j++)
-			s[ i * m + j ] = (i == j);
+			r[ i * m + j ] = (i == j);
 	}
 
 	// sparsity pattern for F'(x)
-	Vector r(m * n);
-	r = f.RevSparseJac(m, s);
+	Vector s(m * n);
+	s = f.RevSparseJac(m, r);
 
 	// check values
-	ok &= (r[ 0 * n + 0 ] == true);  // Y[0] does     depend on X[0]
-	ok &= (r[ 0 * n + 1 ] == false); // Y[0] does not depend on X[1]
-	ok &= (r[ 1 * n + 0 ] == true);  // Y[1] does     depend on X[0]
-	ok &= (r[ 1 * n + 1 ] == true);  // Y[1] does     depend on X[1]
-	ok &= (r[ 2 * n + 0 ] == false); // Y[2] does not depend on X[0]
-	ok &= (r[ 2 * n + 1 ] == true);  // Y[2] does     depend on X[1]
+	ok &= (s[ 0 * n + 0 ] == true);  // y[0] does     depend on x[0]
+	ok &= (s[ 0 * n + 1 ] == false); // y[0] does not depend on x[1]
+	ok &= (s[ 1 * n + 0 ] == true);  // y[1] does     depend on x[0]
+	ok &= (s[ 1 * n + 1 ] == true);  // y[1] does     depend on x[1]
+	ok &= (s[ 2 * n + 0 ] == false); // y[2] does not depend on x[0]
+	ok &= (s[ 2 * n + 1 ] == true);  // y[2] does     depend on x[1]
+
+	// sparsity pattern for F'(x)^T, note R is the identity, so R^T = R
+	bool transpose = true;
+	Vector st(n * m);
+	st = f.RevSparseJac(m, r, transpose);
+
+	// check values
+	ok &= (st[ 0 * m + 0 ] == true);  // y[0] does     depend on x[0]
+	ok &= (st[ 1 * m + 0 ] == false); // y[0] does not depend on x[1]
+	ok &= (st[ 0 * m + 1 ] == true);  // y[1] does     depend on x[0]
+	ok &= (st[ 1 * m + 1 ] == true);  // y[1] does     depend on x[1]
+	ok &= (st[ 0 * m + 2 ] == false); // y[2] does not depend on x[0]
+	ok &= (st[ 1 * m + 2 ] == true);  // y[2] does     depend on x[1]
 
 	return ok;
 }
@@ -91,55 +104,68 @@ bool SetCases(void)
 
 	// domain space vector
 	size_t n = 2; 
-	CPPAD_TESTVECTOR(AD<double>) X(n);
-	X[0] = 0.; 
-	X[1] = 1.;
+	CPPAD_TESTVECTOR(AD<double>) ax(n);
+	ax[0] = 0.; 
+	ax[1] = 1.;
 
 	// declare independent variables and start recording
-	CppAD::Independent(X);
+	CppAD::Independent(ax);
 
 	// range space vector
 	size_t m = 3;
-	CPPAD_TESTVECTOR(AD<double>) Y(m);
-	Y[0] = X[0];
-	Y[1] = X[0] * X[1];
-	Y[2] = X[1];
+	CPPAD_TESTVECTOR(AD<double>) ay(m);
+	ay[0] = ax[0];
+	ay[1] = ax[0] * ax[1];
+	ay[2] = ax[1];
 
-	// create f: X -> Y and stop tape recording
-	CppAD::ADFun<double> f(X, Y);
+	// create f: x -> y and stop tape recording
+	CppAD::ADFun<double> f(ax, ay);
 
 	// sparsity pattern for the identity matrix
-	Vector s(m);
+	Vector r(m);
 	size_t i;
 	for(i = 0; i < m; i++)
-	{	assert( s[i].empty() );
-		s[i].insert(i);
+	{	assert( r[i].empty() );
+		r[i].insert(i);
 	}
 
 	// sparsity pattern for F'(x)
-	Vector r(m);
-	r = f.RevSparseJac(m, s);
+	Vector s(m);
+	s = f.RevSparseJac(m, r);
 
 	// check values
 	bool found;
 
-	// Y[0] does     depend on X[0]
-	found = r[0].find(0) != r[0].end();  ok &= (found == true);  
+	// y[0] does     depend on x[0]
+	found = s[0].find(0) != s[0].end();  ok &= (found == true);  
+	// y[0] does not depend on x[1]
+	found = s[0].find(1) != s[0].end();  ok &= (found == false); 
+	// y[1] does     depend on x[0]
+	found = s[1].find(0) != s[1].end();  ok &= (found == true);  
+	// y[1] does     depend on x[1]
+	found = s[1].find(1) != s[1].end();  ok &= (found == true);  
+	// y[2] does not depend on x[0]
+	found = s[2].find(0) != s[2].end();  ok &= (found == false); 
+	// y[2] does     depend on x[1]
+	found = s[2].find(1) != s[2].end();  ok &= (found == true);  
 
-	// Y[0] does not depend on X[1]
-	found = r[0].find(1) != r[0].end();  ok &= (found == false); 
+	// sparsity pattern for F'(x)^T
+	bool transpose = true;
+	Vector st(n);
+	st = f.RevSparseJac(m, r, transpose);
 
-	// Y[1] does     depend on X[0]
-	found = r[1].find(0) != r[1].end();  ok &= (found == true);  
-
-	// Y[1] does     depend on X[1]
-	found = r[1].find(1) != r[1].end();  ok &= (found == true);  
-
-	// Y[2] does not depend on X[0]
-	found = r[2].find(0) != r[2].end();  ok &= (found == false); 
-
-	// Y[2] does     depend on X[1]
-	found = r[2].find(1) != r[2].end();  ok &= (found == true);  
+	// y[0] does     depend on x[0]
+	found = st[0].find(0) != st[0].end();  ok &= (found == true);  
+	// y[0] does not depend on x[1]
+	found = st[1].find(0) != st[1].end();  ok &= (found == false); 
+	// y[1] does     depend on x[0]
+	found = st[0].find(1) != st[0].end();  ok &= (found == true);  
+	// y[1] does     depend on x[1]
+	found = st[1].find(1) != st[1].end();  ok &= (found == true);  
+	// y[2] does not depend on x[0]
+	found = st[0].find(2) != st[0].end();  ok &= (found == false); 
+	// y[2] does     depend on x[1]
+	found = st[1].find(2) != st[1].end();  ok &= (found == true);  
 
 	return ok;
 }
