@@ -58,7 +58,7 @@ class atomic_reciprocal : public CppAD::atomic_base<double> {
 public:
 	// ----------------------------------------------------------------------
 	// constructor
-	atomic_reciprocal(const char* name) : atomic_base(name)
+	atomic_reciprocal(const char* name) : atomic_base<double>(name)
 	{ }
 private:
 	// ----------------------------------------------------------------------
