@@ -178,7 +178,7 @@ sparsity_( set_sparsity_enum )
 }
 /// destructor informs CppAD that this atomic function with this index
 /// has dropped out of scope by setting its pointer to null
-~atomic_base(void)
+virtual ~atomic_base(void)
 {	CPPAD_ASSERT_UNKNOWN( list().size() > index_ );
 	list()[index_] = CPPAD_NULL;
 }

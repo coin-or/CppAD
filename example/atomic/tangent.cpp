@@ -61,7 +61,7 @@ public:
 	// ----------------------------------------------------------------------
 	// constructor
 	atomic_tangent(const char* name, bool hyperbolic) 
-	: atomic_base<float>(name),
+	: CppAD::atomic_base<float>(name),
 	hyperbolic_(hyperbolic)
 	{ }
 private:

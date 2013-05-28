@@ -67,7 +67,7 @@ public:
 	// ---------------------------------------------------------------------
 	// constructor
 	matrix_mul(size_t nr_result, size_t n_middle, size_t nc_result)
-	: atomic_base<double>("matrix_mul"),
+	: CppAD::atomic_base<double>("matrix_mul"),
 	nr_result_(nr_result) ,
 	n_middle_(n_middle)    ,
 	nc_result_(nc_result) ,
