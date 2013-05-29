@@ -312,7 +312,8 @@ $codei%
 	%ADVector%& %ay%
 %$$
 and size must be equal to $icode m$$.
-The input values of its elements do not matter.
+The input values of its elements 
+are not specified (must not matter).
 Upon return, it is an $codei%AD<%Base%>%$$ version of 
 $latex y = f(x)$$.
 
@@ -567,7 +568,8 @@ $codei%
 If $icode%vy%.size() == 0%$$, it should not be used.
 Otherwise, 
 $icode%p% == 0%$$ and $icode%vy%.size() == %m%$$.
-The input values of the elements of $icode vy$$ do not matter.
+The input values of the elements of $icode vy$$ 
+are not specified (must not matter).
 Upon return, for $latex j = 0 , \ldots , m-1$$,
 $icode%vy%[%i%]%$$ is true if and only if
 $icode%ay%[%i%]%$$ is a variable
@@ -832,7 +834,8 @@ $codei%
 	CppAD::vector<%Base%>& %px%
 %$$
 and $icode%px%.size() == n * (%p%+1)%$$.
-The input values of the elements of $icode px$$ do not matter.
+The input values of the elements of $icode px$$ 
+are not specified (must not matter).
 Upon return,
 for $latex j = 0 , \ldots , n-1$$ and $latex \ell = 0 , \ldots , p$$,
 $latex \[
@@ -953,7 +956,8 @@ This argument has prototype
 $codei%
 	%atomic_sparsity%& %s%
 %$$
-The input values of its elements do not matter.
+The input values of its elements 
+are not specified (must not matter).
 Upon return, $icode s$$ is a 
 $cref/atomic_sparsity/atomic_option/atomic_sparsity/$$ pattern for 
 $latex S(x) \in B^{m \times q}$$.
@@ -1053,7 +1057,8 @@ This argument has prototype
 $codei%
 	%atomic_sparsity%& %st%
 %$$
-The input value of its elements do not matter.
+The input value of its elements 
+are not specified (must not matter).
 Upon return, $icode s$$ is a 
 $cref/atomic_sparsity/atomic_option/atomic_sparsity/$$ pattern for
 $latex S(x)^\R{T} \in B^{n \times q}$$. 
@@ -1161,7 +1166,8 @@ $codei%
      CppAD:vector<bool>& %t%
 %$$
 and its size is $icode m$$.
-The input values of its elements do not matter.
+The input values of its elements 
+are not specified (must not matter).
 Upon return, $icode t$$ is a 
 sparsity pattern for 
 $latex T(x) \in B^{1 \times n}$$ where
@@ -1213,7 +1219,8 @@ This argument has prototype
 $codei%
      %atomic_sparsity%& %v%
 %$$
-The input value of its elements do not matter.
+The input value of its elements 
+are not specified (must not matter).
 Upon return, $icode v$$ is a 
 $cref/atomic_sparsity/atomic_option/atomic_sparsity/$$ pattern for 
 $latex V(x) \in B^{n \times q}$$ which is defined by

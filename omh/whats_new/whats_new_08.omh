@@ -114,8 +114,8 @@ $code ipopt_cppad/ipopt_cppad_ode$$.
 
 $head 09-30$$
 Add or modify some wish list entries; see
-($code cppad_ipopt_nlp$$ since removed),
-$cref/multiple arguments/WishList/Multiple Arguments/$$,
+$code cppad_ipopt_nlp$$ (since removed),
+$cref/multiple arguments/WishList/Multiple Argument Forward/$$,
 and sparsity patterns
 ($cref/sparsity patterns/glossary/Sparsity Pattern/$$ has been fulfilled). 
 

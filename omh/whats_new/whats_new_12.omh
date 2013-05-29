@@ -244,7 +244,7 @@ Change an Ipopt item to a $cref cppad_ipopt_nlp$$
 (which was removed because $code cppad_ipopt_nlp$$ is now deprecated).
 Add new $cref/cppad_ipopt_sum/WishList/cppad_ipopt_sum/$$ item.
 $lnext
-Add new $cref/old_atomic/WishList/old_atomic/$$ item.
+Add new $code old_atomic$$ $cref WishList$$ item (since removed).
 
 $lend
 

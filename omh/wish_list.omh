@@ -11,34 +11,17 @@ Please visit http://www.coin-or.org/CppAD/ for information on other licenses.
 -------------------------------------------------------------------------- */
 $begin WishList$$
 $spell
-	Checkpointing
-	cmake
-	Berger
-	namespace
-	omp_alloc
 	iterator
-	bools
-	Microsoft
-	inline
 	std
-	tanh
 	cos
 	booleans
-	Jacobian
-	recomputed
 	Ipopt
 	Adolc
-	Fadbad
-	Sacado
 	xml
 	hpp
-	CondExp
-	Vec
 	Cpp
 	Atan
-	retape
 	cppad
-	nlp
 $$
 
 $section The CppAD Wish List$$
@@ -73,10 +56,11 @@ One could build a CppAD library for use with the type $code AD<double>$$.
 This would speed up compilation for the most common usage where
 the $icode Base$$ type is $code double$$.
 
-$head Multiple Arguments$$
-$index speed, improve$$
+$head Multiple Argument Forward$$
+$index speed, forward$$
+$index forward, speed$$
 It has been suggested that computing and storing forward mode
-results for multiple argument values (and for multiple orders)
+results for multiple argument values
 is faster for Adolc. 
 Perhaps CppAD should allow for forward mode at 
 multiple argument values.
@@ -160,15 +144,5 @@ $index operation, sequence tracing$$
 $index sequence, operation tracing$$
 $index tracing, operation sequence$$
 Add operation sequence tracing to the user API and documentation.
-
-$head old_atomic$$
-$index user, atomic functions$$
-$index atomic, user functions$$
-$index functions, old_atomic$$
-
-$subhead Sparsity Patterns$$
-The $cref old_atomic$$ functions should allow the user to chose vectors
-of bits, instead of standard sets, for representing sparsity. This would
-be more efficient for most cases.
 
 $end

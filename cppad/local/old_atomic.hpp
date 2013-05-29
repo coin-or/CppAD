@@ -274,7 +274,8 @@ The $icode afun$$ result $icode ay$$ has prototype
 $codei%
 	%Tvector%< AD<%Base%> >& %ay%
 %$$
-The input values of its elements do not matter.
+The input values of its elements 
+are not specified (must not matter).
 Upon return, it is the $codei%AD<%Base%>%$$ version of the 
 result vector $latex y = f(x)$$.
 The dimension of the range space for $latex y = f (x)$$
@@ -374,7 +375,8 @@ $codei%
 If $icode%vy%.size() == 0%$$, it should not be used.
 Otherwise, 
 $icode%k% == 0%$$ and $icode%vy%.size() >= %m%$$.
-The input values of the elements of $icode vy$$ do not matter.
+The input values of the elements of $icode vy$$ 
+are not specified (must not matter).
 Upon return, for $latex j = 0 , \ldots , m-1$$,
 $icode%vy%[%i%]%$$ is true if and only if
 $icode%ay%[%j%]%$$ is a variable.
@@ -439,7 +441,8 @@ $codei%
 	CppAD::vector<%Base%>& %px%
 %$$
 and $icode%px%.size() >= (%k% + 1) * %n%$$.
-The input values of the elements of $icode px$$ do not matter.
+The input values of the elements of $icode px$$ 
+are not specified (must not matter).
 Upon return,
 for $latex j = 0 , \ldots , n-1$$ and $latex p = 0 , \ldots , k$$,
 $latex \[
@@ -508,7 +511,8 @@ $codei%
 	CppAD::vector< std::set<size_t> >& %s%
 %$$
 and $icode%s%.size() >= %m%%$$.
-The input values of its sets do not matter. Upon return 
+The input values of its sets 
+are not specified (must not matter). Upon return 
 for $latex i = 0 , \ldots , m-1$$,
 all the elements of $icode%s%[%i%]%$$ are between
 zero and $icode%q%-1%$$ inclusive.
@@ -560,7 +564,8 @@ $codei%
 	CppAD::vector< std::set<size_t> >& %r%
 %$$
 and $icode%r%.size() >= %n%$$.
-The input values of its sets do not matter.
+The input values of its sets 
+are not specified (must not matter).
 Upon return for $latex j = 0 , \ldots , n-1$$,
 all the elements of $icode%r%[%j%]%$$
 are between zero and $icode%q%-1%$$ inclusive.
@@ -617,7 +622,8 @@ $codei%
      CppAD::vector<bool>& %t%
 %$$
 and $icode%t%.size() >= %n%$$.
-The input values of its elements do not matter.
+The input values of its elements 
+are not specified (must not matter).
 Upon return it represents a sparsity pattern for the matrix 
 $latex T(x) \in B^{1 \times n}$$ defined by
 $latex \[
@@ -655,7 +661,8 @@ $codei%
      CppAD::vector< std::set<size_t> >& %v%
 %$$
 and $icode%v%.size() >= %n%$$.
-The input values of its elements do not matter.
+The input values of its elements 
+are not specified (must not matter).
 Upon return, for $latex j = 0, \ldots , n-1$$,
 all the elements of $icode%v%[%j%]%$$
 are between zero and $icode%q%-1%$$ inclusive.
