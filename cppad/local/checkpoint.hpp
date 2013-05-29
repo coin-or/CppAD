@@ -40,8 +40,8 @@ $index checkpoint, function$$
 $head Syntax$$
 $codei%checkpoint<%Base%> %afun%(%name%, %algo%, %ax%, %ay%)
 %afun%.option(%option_value%)
-%ok% = %algo%(%ax%, %ay%)
-%ok% = %afun%(%ax%, %ay%)
+%algo%(%ax%, %ay%)
+%afun%(%ax%, %ay%)
 checkpoint<%Base%>::clear()%$$
 
 $head Purpose$$
@@ -118,7 +118,7 @@ $head algo$$
 The type of $icode algo$$ is arbitrary, except for the fact that
 the syntax
 $codei%
-	%ok% = %algo%(%ax%, %ay%)
+	%algo%(%ax%, %ay%)
 %$$ 
 must evaluate the function $latex y = f(x)$$ using
 $codei%AD<%Base%>%$$ operations.
@@ -188,15 +188,7 @@ public:
 		// make a copy of ax because Independent modifies AD information
 		ADVector x_tmp(ax);
 	 	Independent(x_tmp);
-# ifndef NDEBUG
-		bool ok = algo(x_tmp, ay); 
-		CPPAD_ASSERT_KNOWN(
-			ok,
-			"checkpoint constructor: algo returned ok equal to false"
-		);
-# else
-		algo(ax, ay); 
-# endif
+		algo(x_tmp, ay); 
 		f_.Dependent(ay);
 	}
 	/*!

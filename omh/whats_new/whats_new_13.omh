@@ -13,6 +13,8 @@ Please visit http://www.coin-or.org/CppAD/ for information on other licenses.
 $begin whats_new_13$$
 $dollar @$$
 $spell
+	algo
+	afun
 	cxx
 	checkpointing
 	cout
@@ -44,6 +46,12 @@ This section contains a list of the changes to CppAD during 2013
 (in reverse order by date).
 The purpose of this section is to
 assist you in learning about changes between various versions of CppAD.
+
+$head 05-28$$
+Remove $icode ok$$ return flag from
+$cref/checkpoint algo/checkpoint/algo/$$ 
+and
+$cref/checkpoint afun/checkpoint/afun/$$. 
 
 $head 05-21$$
 $list number$$

@@ -108,7 +108,6 @@ ADD_EXECUTABLE(test_more EXCLUDE_FROM_ALL test_more.cpp
 	forward_mul.cpp
 	from_base.cpp
 	fun_check.cpp
-	ipopt_solve.cpp
 	jacobian.cpp
 	limits.cpp
 	log.cpp

@@ -25,8 +25,9 @@ ls \
 	cppad/local/*.hpp \
 	cppad/ipopt/*.hpp \
 	cppad/speed/*.hpp  | \
-	sed -e '/^cppad\/config\.h$/d' | \
-	sort > check_makefile1.$$
+	sed -e '/^cppad\/config\.h$/d' > check_makefile.1.$$
+echo 'cppad/configure.hpp' >> check_makefile.1.$$
+sort -u check_makefile.1.$$ > check_makefile.2.$$
 #
 sed < makefile.am -n \
 	-e '/^nobase_myinclude_HEADERS *=/,/^# End nobase_myinclude_HEADERS/p' | \
@@ -36,16 +37,15 @@ sed < makefile.am -n \
 		-e 's/ *\\$//' \
 		-e 's/ *$//' \
 		-e '/^$/d'  |
-	sort > check_makefile2.$$
+	sort > check_makefile.3.$$
 #
-if diff check_makefile1.$$ check_makefile2.$$
+if diff check_makefile.2.$$ check_makefile.3.$$
 then
 	ok="yes"
 else
 	ok="no"
 fi
-rm check_makefile1.$$
-rm check_makefile2.$$
+rm check_makefile.*.$$
 echo "-------------------------------------------------------" 
 if [ "$ok" = "no" ]
 then

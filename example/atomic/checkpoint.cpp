@@ -62,23 +62,23 @@ namespace {
 	using CppAD::AD;
 	typedef CPPAD_TESTVECTOR(AD<double>) ADVector;
 
-	bool f_algo(const ADVector& x, ADVector& y)
+	void f_algo(const ADVector& x, ADVector& y)
 	{	y[0] = 1.0;
 		y[1] = 1.0;
 		for(size_t k = 0; k < 5; k++)
 		{	y[0] *= x[0];
 			y[1] *= x[1];
 		}
-		return true;
+		return;
 	}
-	bool g_algo(const ADVector& y, ADVector& z)
+	void g_algo(const ADVector& y, ADVector& z)
 	{	z[0] = 0.0;
 		z[1] = 0.0;
 		for(size_t k = 0; k < 3; k++)
 		{	z[0] += y[0];
 			z[1] += y[1];
 		}
-		return true;
+		return;
 	}
 }
 
