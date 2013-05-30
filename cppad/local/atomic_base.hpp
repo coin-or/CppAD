@@ -228,7 +228,7 @@ $codei%
 	typedef CppAD::vector<bool> %atomic_sparsity%
 %$$
 If $icode r$$ is a sparsity pattern 
-for a matrix $icode R \in B^{p \times q}%$$:
+for a matrix $latex R \in B^{p \times q}$$:
 $icode%r%.size() == %p% * %q%$$.
 
 $subhead set_sparsity_enum$$
@@ -241,7 +241,7 @@ $codei%
 	typedef CppAD::vector< std::set<size_t> > %atomic_sparsity%
 %$$
 If $icode r$$ is a sparsity pattern 
-for a matrix $icode R \in B^{p \times q}%$$:
+for a matrix $code R \in B^{p \times q}$$:
 $icode%r%.size() == %p%$$, and for $latex i = 0 , \ldots , p-1$$,
 the elements of $icode%r%[%i%]%$$ are between zero and $latex q-1$$ inclusive. 
 

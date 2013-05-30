@@ -52,10 +52,10 @@ $latex f : B^n \rightarrow B^m$$.
 $head Method$$
 The $code checkpoint$$ class is derived from $code atomic_base$$
 and makes this easy.
-It implements all the 
+It implements all the $code atomic_base$$
 $cref/virtual functions/atomic_base/Virtual Functions/$$
-listed above and hence its source code $code cppad/local/checkpoint.hpp$$
-provides an example implementation.
+and hence its source code $code cppad/local/checkpoint.hpp$$
+provides an example implementation of $cref atomic_base$$.
 The difference is that $code checkpoint.hpp$$ uses AD 
 instead of user provided derivatives.
 
