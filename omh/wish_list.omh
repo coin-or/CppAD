@@ -11,6 +11,8 @@ Please visit http://www.coin-or.org/CppAD/ for information on other licenses.
 -------------------------------------------------------------------------- */
 $begin WishList$$
 $spell
+	checkpointing
+	afun
 	iterator
 	std
 	cos
@@ -38,10 +40,24 @@ $head BenderQuad$$
 See the $cref/problem/BenderQuad/Problem/$$ with the 
 current $code BenderQuad$$ specifications.
 
-$subhead Iterator Interface$$
-If the necessary functions had iterator interfaces
-(in addition to simple vector interfaces),
-it would not be necessary to copy information to simple vectors
+$head Checkpointing$$
+$index checkpoint$$
+It would be more flexible to also have a 
+$cref/checkpoint constructor/checkpoint/constructor/$$ 
+that passed in an $cref ADFun$$ object instead of a algorithm.
+Perhaps the syntax would be
+$codei%
+	checkpoint %afun%(%name%, %ad_fun%, %copy%)
+%$$
+where $icode copy$$ would determine if a separate copy of $icode ad_fun$$
+was made or if a pointer was used. 
+Note that if a pointer is used, it becomes invalid when the destructor
+for $icode ad_fun$$ is called.
+
+$head Iterator Interface$$
+If the CppAD API had iterator interfaces,
+in addition to simple vector interfaces,
+it would not be necessary to (sometimes) copy information to simple vectors
 with the correct dimension.
 
 $head cppad_ipopt_sum$$
@@ -93,7 +109,7 @@ hash codes are used to detect expressions that have already
 been computed.
 Perhaps this should be done during the original forward mode recording. 
 
-$head Variable Pairs$$
+$subhead Variable Pairs$$
 Suppose that $icode x$$ is a variable 
 and $codei%sin(%x%)%$$ is used in an expression.
 The extra expression $codei%cos(%x%)%$$ is also computed
