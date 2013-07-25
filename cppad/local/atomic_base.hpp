@@ -69,11 +69,11 @@ public:
 	// -----------------------------------------------------
 	// member functions not in user API
 	/// current sparsity setting
-	option_enum sparsity(void)
+	option_enum sparsity(void) const
 	{	return sparsity_; }
 
 	/// Name corresponding to a base_atomic object
-	std::string afun_name(void)
+	const std::string afun_name(void) const
 	{	return afun_name_; }
 /*
 $begin atomic_ctor$$
