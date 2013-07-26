@@ -13,6 +13,7 @@ Please visit http://www.coin-or.org/CppAD/ for information on other licenses.
 $begin whats_new_13$$
 $dollar @$$
 $spell
+	const
 	algo
 	afun
 	cxx
@@ -46,6 +47,11 @@ This section contains a list of the changes to CppAD during 2013
 (in reverse order by date).
 The purpose of this section is to
 assist you in learning about changes between various versions of CppAD.
+
+$head 07-26$$
+Allow for use of $code const::string&$$ as a possible type for
+$cref/name/atomic_ctor/atomic_base/name/$$ in the $code atomic_base$$
+constructor.
 
 $head 05-28$$
 Remove $icode ok$$ return flag from

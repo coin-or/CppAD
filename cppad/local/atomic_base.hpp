@@ -73,11 +73,12 @@ public:
 	{	return sparsity_; }
 
 	/// Name corresponding to a base_atomic object
-	const std::string afun_name(void) const
+	const std::string& afun_name(void) const
 	{	return afun_name_; }
 /*
 $begin atomic_ctor$$
 $spell
+	std
 	afun
 	arg
 	CppAD
@@ -138,9 +139,11 @@ The template parameter determines the
 $icode Base$$ type for this $codei%AD<%Base%>%$$ atomic operation.
 
 $subhead name$$
-This $icode atomic_base$$ constructor argument has prototype
+This $icode atomic_base$$ constructor argument has either of the
+following prototypes
 $codei%
-	const char* %name%
+	const char*        %name%
+	const std::string& %name%
 %$$
 It is the name for this atomic function and is used for error reporting.
 The suggested value for $icode name$$ is $icode afun$$ or $icode atomic_user$$,
@@ -166,9 +169,9 @@ Constructor
 \param name
 name used for error reporting
 */
-atomic_base(const char* name) :
-afun_name_(name),
-index_( list().size() ),
+atomic_base( const std::string&  name) :
+afun_name_( name )            ,
+index_( list().size() )       ,
 sparsity_( set_sparsity_enum )
 {	CPPAD_ASSERT_KNOWN(
 		! thread_alloc::in_parallel() ,

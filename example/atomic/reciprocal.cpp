@@ -57,8 +57,9 @@ void my_union(
 class atomic_reciprocal : public CppAD::atomic_base<double> {
 public:
 	// ----------------------------------------------------------------------
-	// constructor
-	atomic_reciprocal(const char* name) : CppAD::atomic_base<double>(name)
+	// constructor (example use of const std::string& instead of const char*)
+	atomic_reciprocal(const std::string& name) : 
+	CppAD::atomic_base<double>(name)
 	{ }
 private:
 	// ----------------------------------------------------------------------
