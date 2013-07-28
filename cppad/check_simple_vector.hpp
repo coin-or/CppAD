@@ -3,7 +3,7 @@
 # define CPPAD_CHECK_SIMPLE_VECTOR_INCLUDED
 
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-12 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-13 Bradley M. Bell
 
 CppAD is distributed under multiple licenses. This distribution is under
 the terms of the 
@@ -55,11 +55,11 @@ $codei%
 	const %Scalar%& %y%
 %$$
 In addition, the check
-$code%
+$codei%
 	%x% == %x%
 %$$
 will return the boolean value $code true$$, and 
-$code%
+$codei%
 	%x% == %y%
 %$$
 will return $code false$$.
@@ -123,7 +123,7 @@ namespace CppAD {
 	struct ok_if_S_same_as_T { };
 
 	template <class T>
-	struct ok_if_S_same_as_T<T,T> { typedef T ok; };
+	struct ok_if_S_same_as_T<T,T> { T value; };
 
 	template <class Scalar, class Vector>
 	void CheckSimpleVector(const Scalar& x, const Scalar& y)
@@ -137,7 +137,8 @@ namespace CppAD {
 		typedef typename Vector::value_type value_type;
 
 		// check that elements of Vector have type Scalar
-		typedef typename ok_if_S_same_as_T<Scalar, value_type>::ok ok;
+		struct ok_if_S_same_as_T<Scalar, value_type> x_copy;
+		x_copy.value = x;
 
 		// check default constructor
 		Vector d;
@@ -162,7 +163,7 @@ namespace CppAD {
 		);
 
 		// check copy constructor
-		s[0] = x;
+		s[0] = x_copy.value;
 		const Vector c(s);
 		s[0] = y;
 		CPPAD_ASSERT_KNOWN(

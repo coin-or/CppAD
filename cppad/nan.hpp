@@ -174,8 +174,6 @@ inline bool isnan(const Scalar &s)
 template <class Vector>
 bool hasnan(const Vector &v)
 {
-	typedef typename Vector::value_type Scalar;
-
 	bool found_nan;
 	size_t i;
 	i   = v.size();

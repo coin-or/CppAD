@@ -1,6 +1,6 @@
 /* $Id$ */
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-12 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-13 Bradley M. Bell
 
 CppAD is distributed under multiple licenses. This distribution is under
 the terms of the 
@@ -104,10 +104,8 @@ bool link_sparse_hessian(
 {
 	// -----------------------------------------------------
 	// setup
-	typedef vector<size_t>              SizeVector;
 	typedef vector<double>              DblVector;
 	typedef vector< std::set<size_t> >  SetVector;
-	typedef vector<bool>                BoolVector;
 	typedef CppAD::AD<double>           ADScalar;
 	typedef vector<ADScalar>            ADVector;
 
@@ -134,6 +132,7 @@ bool link_sparse_hessian(
 # if USE_SET_SPARSITY
 	SetVector sparsity(n);
 # else
+	typedef vector<bool>                BoolVector;
 	BoolVector sparsity(n * n);
 # endif
 	// initialize all entries as zero

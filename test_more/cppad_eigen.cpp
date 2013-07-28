@@ -23,8 +23,6 @@ bool cppad_eigen(void)
 	using Eigen::Dynamic;
 
 	typedef Eigen::NumTraits<AD<double> >         traits;
-	typedef Eigen::Matrix<AD<double>, Dynamic, 1> a_vector;
-	typedef a_vector::value_type                  a_scalar;
 
 	ok &= traits::IsComplex              == 0;
 	ok &= traits::IsInteger              == 0;

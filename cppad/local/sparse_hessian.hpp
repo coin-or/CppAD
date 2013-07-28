@@ -3,7 +3,7 @@
 # define CPPAD_SPARSE_HESSIAN_INCLUDED
 
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-12 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-13 Bradley M. Bell
 
 CppAD is distributed under multiple licenses. This distribution is under
 the terms of the 
@@ -563,7 +563,6 @@ size_t ADFun<Base>::SparseHessianCase(
 	sparse_pack sparsity;
 	if( work.color.size() == 0 )
 	{	bool transpose = false;
-		typedef typename VectorSet::value_type Set_type;
 		sparsity_user2internal(sparsity, p, n, n, transpose);
 	}
 	
@@ -636,7 +635,6 @@ size_t ADFun<Base>::SparseHessianCase(
 	CPPAD_INTERNAL_SPARSE_SET sparsity;
 	if( work.color.size() == 0 )
 	{	bool transpose = false;
-		typedef typename VectorSet::value_type Set_type;
 		sparsity_user2internal(sparsity, p, n, n, transpose);
 	}
 	

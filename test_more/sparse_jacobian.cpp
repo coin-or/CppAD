@@ -1,6 +1,6 @@
 /* $Id$ */
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-12 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-13 Bradley M. Bell
 
 CppAD is distributed under multiple licenses. This distribution is under
 the terms of the 
@@ -569,7 +569,6 @@ bool sparse_jacobian(void)
 	// ---------------------------------------------------------------
 	// vector of set cases
 	typedef std::vector< std::set<size_t> >   std_vector_set;
-	typedef std::valarray< std::set<size_t> > std_valarray_set;
 	typedef CppAD::vector< std::set<size_t> > cppad_vector_set;
 	//
 	ok &=      rc_set< CppAD::vector<double>, std_vector_set   >();
@@ -580,6 +579,7 @@ bool sparse_jacobian(void)
 	//
 	// According to section 26.3.2.3 of the 1998 C++ standard
 	// a const valarray does not return references to its elements.
+	// typedef std::valarray< std::set<size_t> > std_valarray_set;
 	// ok &= forward_set< std::valarray<double>, std_valarray_set >();
 	// ok &= reverse_set< std::valarray<double>, std_valarray_set >();
 	// ---------------------------------------------------------------

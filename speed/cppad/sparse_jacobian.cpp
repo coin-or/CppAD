@@ -1,6 +1,6 @@
 /* $Id$ */
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-12 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-13 Bradley M. Bell
 
 CppAD is distributed under multiple licenses. This distribution is under
 the terms of the 
@@ -91,9 +91,7 @@ bool link_sparse_jacobian(
 {
 	// -----------------------------------------------------
 	// setup
-	typedef CppAD::vector<size_t>       SizeVector;
 	typedef vector< std::set<size_t> >  SetVector;
-	typedef vector<bool>                BoolVector;
 	typedef CppAD::vector<double>       DblVector;
 	typedef CppAD::AD<double>           ADScalar;
 	typedef CppAD::vector<ADScalar>     ADVector;
@@ -116,6 +114,7 @@ bool link_sparse_jacobian(
 # if USE_SET_SPARSITY
 	SetVector sparsity(m);
 # else
+	typedef vector<bool>  BoolVector;
 	BoolVector sparsity(m * n);
 # endif
 	// initialize all entries as zero

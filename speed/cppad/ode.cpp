@@ -1,6 +1,6 @@
 /* $Id$ */
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-12 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-13 Bradley M. Bell
 
 CppAD is distributed under multiple licenses. This distribution is under
 the terms of the 
@@ -67,7 +67,6 @@ bool link_ode(
 	// setup
 	typedef CppAD::AD<double>       ADScalar;
 	typedef CppAD::vector<ADScalar> ADVector;
-	typedef CppAD::vector<double>   DblVector;
 
 	size_t j;
 	size_t p = 0;              // use ode to calculate function values

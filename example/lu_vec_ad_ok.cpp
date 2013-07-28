@@ -1,6 +1,6 @@
 /* $Id$ */
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-12 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-13 Bradley M. Bell
 
 CppAD is distributed under multiple licenses. This distribution is under
 the terms of the 
@@ -42,7 +42,6 @@ bool LuVecADOk(void)
 
 	using namespace CppAD;
 	typedef AD<double> ADdouble;
-	typedef CPPAD_TESTVECTOR(ADdouble) ADVector;
 
 	size_t              n = 3;
 	size_t              m = 2;
