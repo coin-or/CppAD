@@ -22,6 +22,8 @@ autom4te.cache
 build
 commit.sh.old
 configure.hpp
+config.guess
+config.sub
 doc
 doxydoc
 doxyfile
