@@ -18,9 +18,17 @@ fi
 echo_log_eval() {
 	echo $*
 	echo $* >> $top_srcdir/check_all.log
-	if ! eval $* >> $top_srcdir/check_all.log
+	if ! eval $* >> $top_srcdir/check_all.log 2> $top_srcdir/check_all.err
 	then
-		echo "Error: check check_all.log"
+		cat $top_srcdir/check_all.err
+		echo 'Error: see check_all.log'
+		exit 1
+	fi
+	msg=`cat $top_srcdir/check_all.err`
+	cat $top_srcdir/check_all.err
+	rm $top_srcdir/check_all.err
+	if [ "$msg" != '' ]
+	then
 		exit 1
 	fi
 }

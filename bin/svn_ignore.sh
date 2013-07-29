@@ -20,6 +20,7 @@ cat << EOF > bin/svn_ignore.$$
 aclocal.m4
 autom4te.cache
 build
+check_all.err
 commit.sh.old
 configure.hpp
 config.guess
