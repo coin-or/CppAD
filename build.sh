@@ -114,6 +114,9 @@ then
 			else
 				missing="$name"
 			fi
+		else
+			# force remake of files
+			rm "$name"
 		fi
 	done
 	if [ "$missing" != "" ]
