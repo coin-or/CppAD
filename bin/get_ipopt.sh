@@ -89,6 +89,11 @@ then
 	echo "so it does not print message with every run."
 	sed -e "s|^  $match = false;|$comment\n//&\n  $match = true;|" -i $file
 fi
+for file in ThirdParty/Blas/get.Blas ThirdParty/Lapack/get.Lapack
+do
+	sed -e 's|ftp:\(\/\/www.netlib.org\/\)|http:\1|' \
+		-i $file
+done
 # -----------------------------------------------------------------------------
 if [ -e ThirdParty/HSL ]
 then
