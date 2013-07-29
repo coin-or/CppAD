@@ -145,7 +145,7 @@ then
 	echo "automake --add-missing"
 	automake --add-missing
 	#
-	link_list="missing install-sh depcomp"
+	link_list="missing install-sh depcomp config.sub config.guess"
 	for name in $link_list
 	do
 		if [ -h "$name" ]
