@@ -101,6 +101,8 @@ then
 		install-sh 
 		missing 
 		configure 
+		config.guess
+		config.sub
 		$makefile_in
 	"
 	missing=""
