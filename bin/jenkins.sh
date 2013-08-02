@@ -74,10 +74,22 @@ echo_eval cd build
 #
 # configure cppad to use all the packages above
 #### SACADO_DIR="$trunk_dir/build/prefix" \
-log_eval $trunk_dir/configure \
+cat << EOF
+$trunk_dir/configure \\
+	EIGEN_DIR="$trunk_dir/build/prefix" \\
+	IPOPT_DIR="$trunk_dir/build/prefix" \\
+	FADBAD_DIR="$trunk_dir/build/prefix" 
+EOF
+if ! $trunk_dir/configure \
 	EIGEN_DIR="$trunk_dir/build/prefix" \
 	IPOPT_DIR="$trunk_dir/build/prefix" \
 	FADBAD_DIR="$trunk_dir/build/prefix" 
+then
+	echo "Error during configure command. Here is config.log file:"
+	echo "--------------------------------------------------------"
+	cat config.log
+	exit(1)
+fi
 #
 # compile the tests
 log_eval make check 
