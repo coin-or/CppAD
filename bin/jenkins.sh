@@ -88,7 +88,7 @@ then
 	echo "Error during configure command. Here is config.log file:"
 	echo "--------------------------------------------------------"
 	cat config.log
-	exit(1)
+	exit 1
 fi
 #
 # compile the tests
