@@ -45,7 +45,7 @@ Explination:
 In our case x = inf, y = 0, a = 1, b = 0, so we have
 
 (x + i*y)    (inf*1 - 0*0) + i*(0*1 - inf*0)
----------  =  ------------------------------ =  1 - i*nan
+---------  =  ------------------------------ =  inf - i*nan
 (a + i*b)            1*1 + 0*0
 EOF
 echo_eval rm gcc_complex.cpp gcc_complex
