@@ -13,6 +13,7 @@ Please visit http://www.coin-or.org/CppAD/ for information on other licenses.
 $begin whats_new_13$$
 $dollar @$$
 $spell
+	inf
 	const
 	algo
 	afun
@@ -47,6 +48,14 @@ This section contains a list of the changes to CppAD during 2013
 (in reverse order by date).
 The purpose of this section is to
 assist you in learning about changes between various versions of CppAD.
+
+$head 08-06$$
+Fix a case where the test $code test_more/limits.cpp$$ failed because
+$codep
+	double inf   = std::numeric_limits<double>::infinity();
+	double check = std::complex<double>(inf) / std::complex<float>(1.)
+$$
+can result in the imaginary part of $code check$$ being $code - nan$$.
 
 $head 07-26$$
 Allow for use of $code const::string&$$ as a possible type for

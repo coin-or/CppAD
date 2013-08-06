@@ -106,11 +106,17 @@ namespace {
 		value one( Type(1) );
 		value hun( Type(100) );
 		value tmp( Type(0) );
-		//
+
+		// In complex case, this operaiton can result in (inf, 0)
 		tmp.set( max2.get() * hun.get() );
+
+		// In complex case, this operaiotn can result in (inf,-nan)
+		// (where nan corresponds to inf * 0)
 		tmp.set( tmp.get() / hun.get() );
-		// tmp is infinite
-		ok        &= abs_geq(tmp.get() / max2.get() - one.get(), eps3.get() );
+
+		if( ! CppAD::isnan( tmp.get() ) ) ok &= abs_geq(
+			tmp.get() / max2.get() - one.get(), eps3.get()
+		);
 		//
 		tmp.set( max2.get() / hun.get() );
 		tmp.set( tmp.get() * hun.get() );
