@@ -60,13 +60,15 @@ version="trilinos-10.8.3-Source"
 web_page="http://trilinos.sandia.gov/download/files"
 prefix=`pwd`'/build/prefix'
 # -----------------------------------------------------------------------------
-# get version of cmake
-cmake_version=$( 
-	cmake --version |  sed \
+# determine which version of cmake to use
+cmake --version |  sed \
 		-e 's|[^0-9.]*||g' \
 		-e 's|\([0-9]*\)\.\([0-9]*\)\..*|\1 * 10 + \2|' \
-	| bc
-)
+	| bc > get_sacado.$$
+cmake_version=`cat get_sacado.$$`
+rm get_sacado.$$
+echo "cmake_version=$cmake_version"
+#
 cmake_program=''
 if [ "$cmake_version" -ge '27' ]
 then
