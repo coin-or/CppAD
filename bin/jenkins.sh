@@ -19,6 +19,13 @@ echo_eval() {
 	eval $*
 }
 # bash function that echos and executes a command
+for ext in log err
+do
+	if [ -e "../jenkins.$ext" ]
+	then
+		echo_eval rm ../jenkins.$ext
+	fi
+done
 log_eval() {
 	echo "------------------------------------------------" >> ../jenkins.log
 	echo "------------------------------------------------" >> ../jenkins.err
