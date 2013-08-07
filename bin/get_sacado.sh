@@ -60,6 +60,32 @@ version="trilinos-10.8.3-Source"
 web_page="http://trilinos.sandia.gov/download/files"
 prefix=`pwd`'/build/prefix'
 # -----------------------------------------------------------------------------
+# get version of cmake
+cmake_version=$( 
+	cmake --version |  sed \
+		-e 's|[^0-9.]*||g' \
+		-e 's|\([0-9]*\)\.\([0-9]*\)\..*|\1 * 10 + \2|' \
+	| bc
+)
+cmake_program=''
+if [ "$cmake_version" -ge '27' ]
+then
+	cmake_program='cmake'
+else
+	for cmake_version in 27 28 29
+	do
+		if which cmake$cmake_version >& /dev/null
+		then
+			cmake_program="cmake$cmake_version"
+		fi
+	done
+fi
+if [ "$cmake_program" == '' ]
+then
+	echo 'cannot find a verison of cmake that is 2.7 or higher'
+	exit 1
+fi
+# -----------------------------------------------------------------------------
 if [ -e /usr/lib64 ]
 then
 	libdir='lib64'
@@ -96,7 +122,7 @@ if [ -e CMakeCache.txt ]
 then
 	echo_eval rm CMakeCache.txt
 fi
-echo_eval cmake \
+echo_eval $cmake_program \
 	-D CMAKE_BUILD_TYPE:STRING=RELEASE \
 	-D Trilinos_ENABLE_Sacado:BOOL=ON \
 	-D Sacado_ENABLE_TESTS:BOOL=OFF \
