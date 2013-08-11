@@ -20,6 +20,8 @@ $spell
 	var
 	CppAD
 	cppad
+	std
+	CondExpEq
 $$
 
 $section Optimize an ADFun Object Tape$$
@@ -88,6 +90,32 @@ $head Comparison Operators$$
 Any comparison operators that are in the tape are removed by this operation.
 Hence the return value of $cref CompareChange$$ will always be zero
 for an optimized tape (even if $code NDEBUG$$ is not defined).
+
+$head Atomic Functions$$
+There are some subtitle issue with optimized $cref atomic$$ functions
+$latex v = g(u)$$.
+$list number$$
+The $cref atomic_rev_sparse_jac$$ function is be used to determine
+which components of $icode u$$ affect the dependent variables of $icode f$$.
+Currently this always uses $code std::set<size_t>$$ for the sparsity patterns.
+It should use the current setting of
+$cref/atomic_sparsity/atomic_option/atomic_sparsity/$$ for the
+atomic function $latex g(u)$$.
+$lnext
+If $icode%u%[%i%]%$$ does not affect the value of
+the dependent variables for $icode f$$,
+the value of $icode%u%[%i%]%$$ is set to $cref nan$$.
+Note that, when using $cref checkpoint$$,
+these $code nan$$ values will cause an error during forward mode
+and hence must be mapped to another value.
+For example;
+$codei%
+	CondExpEq(%ax%[%i%], %ax%[%i%], %ax%[%i%], %zero%)
+%$$
+would map to $icode%ax%[%i%]%$$ except if it is $code nan$$,
+in which case it maps to $icode zero$$.
+$lend
+
 
 $head Checking Optimization$$
 $index NDEBUG$$
@@ -224,7 +252,7 @@ Assertion: <tt>tape[i].arg[j] < i</tt>.
 \li <tt>tape[i].new_var</tt>
 Suppose 
 <tt>i <= current, j < NumArg( tape[i].op ), and k = tape[i].arg[j]</tt>,
-and \c j corresponds to a varialbe for operator <tt>tape[i].op</tt>.
+and \c j corresponds to a variable for operator <tt>tape[i].op</tt>.
 It follows that <tt>tape[k].new_var</tt>
 has alread been set to the variable in the new operation sequence 
 corresponding to the old variable index \c k.
@@ -241,7 +269,7 @@ NumRes( tape[current].op ) > 0.
 </tt>
 
 \param npar
-is the number of paraemters corresponding to this operation sequence.
+is the number of parameters corresponding to this operation sequence.
 
 \param par
 is a vector of length \a npar containing the parameters
@@ -624,7 +652,7 @@ Recording a cummulative cummulative summation starting at its highest parrent.
 is the object that will record the operations.
 
 \param work
-Is used for computaiton. On input and output,
+Is used for computation. On input and output,
 <tt>work.op_stack.empty()</tt>,
 <tt>work.add_stack.empty()</tt>, and
 <tt>work.sub_stack.empty()</tt>,
@@ -829,7 +857,7 @@ void optimize(
 	const size_t num_var = play->num_rec_var(); 
 
 # ifndef NDEBUG
-	// number of paraemters in the player
+	// number of parameters in the player
 	const size_t num_par = play->num_rec_par();
 # endif
 
@@ -887,6 +915,10 @@ void optimize(
 	size_t user_n     = 0;       // size of arugment vector
 	// next expected operator in a UserOp sequence
 	enum { user_start, user_arg, user_ret, user_end } user_state;
+
+	// During reverse mode, push true if user operation is connected, 
+	// push false otherwise. During forward mode, use to determine if 
+	// we are keeping this operation and then pop.
 	std::stack<bool> user_keep;
 
 	// Initialize a reverse mode sweep through the operation sequence
@@ -1618,8 +1650,17 @@ void optimize(
 			case UsravOp:
 			CPPAD_ASSERT_NARG_NRES(op, 1, 0);
 			new_arg[0] = tape[arg[0]].new_var;
-			rec->PutArg(new_arg[0]);
-			rec->PutOp(UsravOp);
+			if( new_arg[0] < num_var )
+			{	rec->PutArg(new_arg[0]);
+				rec->PutOp(UsravOp);
+			}
+			else
+			{	// This argument does not affect the result and
+				// has been optimized out so use nan in its place.
+				new_arg[0] = rec->PutPar( nan(Base(0)) );
+				rec->PutArg(new_arg[0]);
+				rec->PutOp(UsrapOp);
+			}
 			break;
 
 			case UsrrpOp:

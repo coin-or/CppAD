@@ -16,6 +16,57 @@ Please visit http://www.coin-or.org/CppAD/ for information on other licenses.
 
 
 namespace {
+	// -------------------------------------------------------------------
+	// Test of optimizing out arguments to an atomic function
+	void algo( 
+		const CppAD::vector< CppAD::AD<double> >& ax ,
+		      CppAD::vector< CppAD::AD<double> >& ay )
+	{	CppAD::AD<double> zero(0.);
+
+		// Arguments that are not used are mapped to nan
+		// but zero order forward mode does not like this.
+		for(size_t i = 0; i < ax.size(); i++)
+		{	// convert nan to zero in a way that get stored in op sequence
+			ay[i] = CondExpEq(ax[i], ax[i], ax[i], zero);
+		}
+	}
+	bool atomic_arguments(void)
+	{	bool ok = true;
+		using CppAD::AD;
+		using CppAD::vector;
+		vector< AD<double> > au(2), aw(2), ax(2), ay(1);
+
+		// create atomic function corresponding to algo
+		au[0] = 1.0;
+		au[1] = 2.0;
+		CppAD::checkpoint<double> algo_check("algo", algo, au, ax);
+
+		// start recording a new function
+		ax[0] = 3.0;
+		ax[1] = 4.0;
+		CppAD::Independent(ax);
+
+		// now use algo_check during the recording
+		au[0] = ax[0];
+		au[1] = ax[0] + ax[1];
+		algo_check(au, aw);
+
+		// now create a function that does not depend on au[1]
+		ay[0] = aw[0];
+		CppAD::ADFun<double> f(ax, ay);
+ 
+		// now optimize f so that the calculation of au[1] is removed
+		f.optimize();
+
+		// now compute and check a forward mode calculation
+		vector<double> x(2), y(1);
+		x[0] = 5.0;
+		x[1] = 6.0;
+		y    = f.Forward(0, x);
+		ok  &= (y[0] == x[0]); 
+
+		return ok;
+	}
 
 	// -------------------------------------------------------------------
 	// Test the reverse dependency analysis optimization
@@ -1116,6 +1167,8 @@ namespace {
 
 bool optimize(void)
 {	bool ok = true;
+	// check optimizing out atomic arguments
+	ok     &= atomic_arguments();
 	// check reverse dependency analysis optimization
 	ok     &= depend_one();
 	ok     &= depend_two();

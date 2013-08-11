@@ -49,6 +49,14 @@ This section contains a list of the changes to CppAD during 2013
 The purpose of this section is to
 assist you in learning about changes between various versions of CppAD.
 
+$head 08-11$$
+If an $cref atomic$$ function had arguments that did not affect
+the final dependent variables in $icode f$$,
+$cref/f.optimize()/optimize/$$ would fail.
+This has been fixed.
+In addition, documentation about using $code optimize$$
+with $cref/atomic functions/optimize/Atomic Functions/$$ has been added.
+
 $head 08-06$$
 Fix a case where the test $code test_more/limits.cpp$$ failed because
 $codep
