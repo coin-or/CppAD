@@ -50,7 +50,8 @@ $childtable%
 	cppad/local/fun_eval.hpp%
 	cppad/local/drivers.hpp%
 	cppad/local/fun_check.hpp%
-	cppad/local/optimize.hpp
+	cppad/local/optimize.hpp%
+	omh/check_for_nan.omh
 %$$
 
 $end
@@ -77,6 +78,9 @@ class ADFun {
 // ------------------------------------------------------------
 // Private member variables
 private:
+	/// Check for nan's and report message to user (default value is true).
+	bool check_for_nan_;
+
 	/// debug checking number of comparision operations that changed
 	size_t compare_change_;
 
@@ -325,9 +329,11 @@ public:
 	~ADFun(void)
 	{ }
 
-	/// deprecated: assign a new operation sequence
-	template <typename ADvector>
-	void Dependent(const ADvector &y);
+	/// set value of check_for_nan_
+	void check_for_nan(bool value)
+	{	check_for_nan_ = value; }
+	bool check_for_nan(void) const
+	{	return check_for_nan_; }
 
 	/// assign a new operation sequence
 	template <typename ADvector>
@@ -537,6 +543,10 @@ public:
 	// (see doxygen documentation in optimize.hpp)
 	void optimize(void);
 	// ------------------- Deprecated -----------------------------
+
+	/// deprecated: assign a new operation sequence
+	template <typename ADvector>
+	void Dependent(const ADvector &y);
 
 	/// deprecated: number of variables in opertion sequence
 	size_t Size(void) const

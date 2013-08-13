@@ -3,7 +3,7 @@
 # define CPPAD_REVERSE_INCLUDED
 
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-12 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-13 Bradley M. Bell
 
 CppAD is distributed under multiple licenses. This distribution is under
 the terms of the 
@@ -205,6 +205,10 @@ VectorBase ADFun<Base>::Reverse(size_t p, const VectorBase &w)
 				value[j * p + k ] =
 					Partial[ind_taddr_[j] * p + k];
 		}
+		CPPAD_ASSERT_KNOWN( ! ( hasnan(value) && check_for_nan_ ) ,
+			"dw = f.Reverse(p, w): has a nan,\n"
+			"but none of its Taylor coefficents are nan."
+		);
 	}
 
 	return value;

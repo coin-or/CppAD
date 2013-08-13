@@ -21,15 +21,8 @@ namespace {
 	void algo( 
 		const CppAD::vector< CppAD::AD<double> >& ax ,
 		      CppAD::vector< CppAD::AD<double> >& ay )
-	{	CppAD::AD<double> zero(0.);
+	{	ay = ax; }
 
-		// Arguments that are not used are mapped to nan
-		// but zero order forward mode does not like this.
-		for(size_t i = 0; i < ax.size(); i++)
-		{	// convert nan to zero in a way that get stored in op sequence
-			ay[i] = CondExpEq(ax[i], ax[i], ax[i], zero);
-		}
-	}
 	bool atomic_arguments(void)
 	{	bool ok = true;
 		using CppAD::AD;

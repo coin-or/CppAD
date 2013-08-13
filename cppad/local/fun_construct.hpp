@@ -149,12 +149,12 @@ $head Copy Constructor$$
 $index copy, ADFun constructor$$
 $index ADFun, copy constructor$$
 $index constructor, ADFun copy$$
-It is an error to attempt to use the $code%ADFun<%Base%>%$$ copy constructor;
+It is an error to attempt to use the $codei%ADFun<%Base%>%$$ copy constructor;
 i.e., the following syntax is not allowed:
 $codei%
-	ADFun<%Base%> g(f)
+	ADFun<%Base%> %g%(%f%)
 %$$
-where $icode f$$ is an $code%ADFun<%Base%>%$$ object.
+where $icode f$$ is an $codei%ADFun<%Base%>%$$ object.
 Use its $cref/default constructor/FunConstruct/Default Constructor/$$ instead
 and its assignment operator.
 
@@ -262,8 +262,9 @@ is the base for the recording that can be stored in this ADFun object;
 i.e., operation sequences that were recorded using the type \c AD<Base>.
 */
 template <typename Base>
-ADFun<Base>::ADFun(void)
-: total_num_var_(0)
+ADFun<Base>::ADFun(void) : 
+check_for_nan_(true) ,
+total_num_var_(0) 
 { }
 
 /*!
@@ -292,6 +293,7 @@ void ADFun<Base>::operator=(const ADFun<Base>& f)
 
 	// go through member variables in order
 	// (see ad_fun.hpp for meaning of each variable)
+	check_for_nan_             = true;
 	compare_change_            = 0;
 
 	taylor_.erase();
@@ -391,8 +393,9 @@ are stored in this ADFun object.
 */
 template <typename Base>
 template <typename VectorAD>
-ADFun<Base>::ADFun(const VectorAD &x, const VectorAD &y)
-: total_num_var_(0)
+ADFun<Base>::ADFun(const VectorAD &x, const VectorAD &y) : 
+check_for_nan_(true) ,
+total_num_var_(0)
 {
 	CPPAD_ASSERT_KNOWN(
 		x.size() > 0,

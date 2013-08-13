@@ -105,6 +105,7 @@ $rref bender_quad.cpp$$
 $rref bool_fun.cpp$$
 $rref capacity_taylor.cpp$$
 $rref change_const.cpp$$
+$rref check_for_nan.cpp$$
 $rref check_numeric_type.cpp$$
 $rref check_simple_vector.cpp$$
 $rref checkpoint.cpp$$

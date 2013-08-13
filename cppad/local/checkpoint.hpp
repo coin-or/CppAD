@@ -187,9 +187,18 @@ public:
 
 		// make a copy of ax because Independent modifies AD information
 		ADVector x_tmp(ax);
+		// delcare x_tmp as the independent variables
 	 	Independent(x_tmp);
+		// record mapping from x_tmp to ay
 		algo(x_tmp, ay); 
+		// create function f_ : x -> y
 		f_.Dependent(ay);
+		// suppress checking for nan in f_ results
+		// (see optimize documentation for atomic functions)
+		f_.check_for_nan(false);
+		// now optimize (we expect to use this function many times).
+		// This is not yet working on all tests, need to fix
+		// f_.optimize();
 	}
 	/*!
 	Implement the user call to <tt>afun(ax, ay)</tt>.

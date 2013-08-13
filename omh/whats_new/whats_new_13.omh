@@ -49,6 +49,22 @@ This section contains a list of the changes to CppAD during 2013
 The purpose of this section is to
 assist you in learning about changes between various versions of CppAD.
 
+$head 08-12$$
+$list number$$
+The ability to turn on and off checking for $cref nan$$ in
+$cref Forward$$ mode results has been added; see $cref check_for_nan$$.
+$lnext
+Use this option to remove the need to handel $code nan$$ as a special
+case in $cref checkpoint$$ functions that 
+$cref/atomic functions/optimize/Atomic Functions/$$ in within
+another function is optimized.
+$lnext
+Check $cref/reverse/reverse_any/$$  mode results when 
+$cref check_for_nan$$ is true.
+(It used to be the case that only $cref/forward/ForwardAny/$$ results
+were checked for $code nan$$.)
+$lend
+
 $head 08-11$$
 If an $cref atomic$$ function had arguments that did not affect
 the final dependent variables in $icode f$$,

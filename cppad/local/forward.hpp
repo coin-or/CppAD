@@ -158,29 +158,31 @@ Vector ADFun<Base>::Forward(
 		}
 	}
 # ifndef NDEBUG
-	bool ok = true;
-	if( p == 0 && n_order == 1 )
-		ok = ! hasnan(y_p);
-	else if( n_order != 1 )
-	{	for(i = 0; i < m; i++)
+	if( check_for_nan_ )
+	{	bool ok = true;
+		if( p == 0 && n_order == 1 )
+			ok = ! hasnan(y_p);
+		else if( n_order != 1 )
+		{	for(i = 0; i < m; i++)
 			ok &= ! isnan( y_p[ i * n_order + 0 ] );
-	} 
-	CPPAD_ASSERT_KNOWN(ok,
-		"y_p = f.Forward(p, x): has a zero order Taylor coefficient "
-		"with the value nan."
-	);  
-	if( p != 0 && n_order == 1 )
-		ok = ! hasnan(y_p);
-	else if( n_order != 1 )
-	{	for(i = 0; i < m; i++)
-		{	for(k = 1; k < n_order; k++)
-				ok &= ! isnan( y_p[ i * n_order + k ] );
+		} 
+		CPPAD_ASSERT_KNOWN(ok,
+			"y_p = f.Forward(p, x): has a zero order Taylor coefficient "
+			"with the value nan."
+		);  
+		if( p != 0 && n_order == 1 )
+			ok = ! hasnan(y_p);
+		else if( n_order != 1 )
+		{	for(i = 0; i < m; i++)
+			{	for(k = 1; k < n_order; k++)
+					ok &= ! isnan( y_p[ i * n_order + k ] );
+			}
 		}
-	}
-	CPPAD_ASSERT_KNOWN(ok,
+		CPPAD_ASSERT_KNOWN(ok,
 		"y_p = f.Forward(p, x): has a non-zero order Taylor coefficient\n"
 		"with the value nan (but zero order coefficients are not nan)."
-	);
+		);
+	}
 # endif
 
 

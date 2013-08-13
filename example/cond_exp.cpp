@@ -1,6 +1,6 @@
 /* $Id$ */
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-12 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-13 Bradley M. Bell
 
 CppAD is distributed under multiple licenses. This distribution is under
 the terms of the 
@@ -117,6 +117,7 @@ bool CondExp(void)
 	ok &= NearEqual(y[0], check, eps, eps);
 
 	// check derivative of y[0]
+	f.check_for_nan(false);
 	w[0] = 1.;
 	dw   = f.Reverse(1, w);
 	for(j = 0; j < n; j++)

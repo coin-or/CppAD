@@ -105,15 +105,6 @@ $lnext
 If $icode%u%[%i%]%$$ does not affect the value of
 the dependent variables for $icode f$$,
 the value of $icode%u%[%i%]%$$ is set to $cref nan$$.
-Note that, when using $cref checkpoint$$,
-these $code nan$$ values will cause an error during forward mode
-and hence must be mapped to another value.
-For example;
-$codei%
-	CondExpEq(%ax%[%i%], %ax%[%i%], %ax%[%i%], %zero%)
-%$$
-would map to $icode%ax%[%i%]%$$ except if it is $code nan$$,
-in which case it maps to $icode zero$$.
 $lend
 
 

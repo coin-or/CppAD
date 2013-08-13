@@ -93,6 +93,7 @@ ADD_EXECUTABLE(example EXCLUDE_FROM_ALL example.cpp
 	bool_fun.cpp
 	capacity_taylor.cpp
 	change_const.cpp
+	check_for_nan.cpp
 	check_numeric_type.cpp
 	check_simple_vector.cpp
 	compare.cpp
