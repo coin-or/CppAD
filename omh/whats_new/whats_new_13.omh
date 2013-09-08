@@ -49,6 +49,16 @@ This section contains a list of the changes to CppAD during 2013
 The purpose of this section is to
 assist you in learning about changes between various versions of CppAD.
 
+$head 09-07$$
+There was a bug in the cumulative sum operator
+(which is used by $cref optimize$$ )
+for $cref Forward$$ orders greater than zero.
+This was detected by the $cref checkpoint$$ tests
+when $code optimize$$ was used to make the 
+checkpoint functions faster.
+The bug has been fixed and the checkpoint functions now use
+optimize (and hence should be faster).
+
 $head 08-12$$
 $list number$$
 The ability to turn on and off checking for $cref nan$$ in

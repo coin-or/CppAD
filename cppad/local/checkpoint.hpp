@@ -198,7 +198,7 @@ public:
 		f_.check_for_nan(false);
 		// now optimize (we expect to use this function many times).
 		// This is not yet working on all tests, need to fix
-		// f_.optimize();
+		f_.optimize();
 	}
 	/*!
 	Implement the user call to <tt>afun(ax, ay)</tt>.

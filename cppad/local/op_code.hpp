@@ -488,9 +488,9 @@ void printOp(
 		ind[0] = number of addition variables in summation
 		ind[1] = number of subtraction variables in summation
 		ind[2] = index of parameter that initializes summation
-		ind[3], ... , ind[2+ind[0]] = index for positive variables
-		ind[3+ind[0]], ..., ind[2+ind[0]+ind[1]] = negative variables 
-		ind[3+ind[0]+ind[1]] = ind[0] + ind[1]
+		ind[3], ... , ind[2+ind[0]-1] = index for positive variables
+		ind[3+ind[0]], ..., ind[2+ind[0]+ind[1]-1] = negative variables 
+		ind[3+ind[0]+ind[1]] == ind[0] + ind[1]
 		*/
 		CPPAD_ASSERT_UNKNOWN( ind[3+ind[0]+ind[1]] == ind[0]+ind[1] );
 		printOpField(os, " pr=", Rec->GetPar(ind[2]), ncol);

@@ -115,7 +115,7 @@ inline void forward_csum_op(
 	// Taylor coefficients corresponding to result
 	Base* z = taylor + i_z    * nc_taylor;
 	for(k = q; k <= p; k++)
-		z[q] = zero;
+		z[k] = zero;
 	if( q == 0 )
 		z[q] = parameter[ arg[2] ];
 	Base* x;
