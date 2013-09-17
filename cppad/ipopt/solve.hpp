@@ -169,7 +169,7 @@ and $icode value$$ is its setting.
 $subhead Integer$$
 You can set any Ipopt integer option using a line with the following syntax:
 $codei%
-	Numeric %name% %value%
+	Integer %name% %value%
 %$$
 Here $icode name$$ is any valid Ipopt integer option 
 and $icode value$$ is its setting.

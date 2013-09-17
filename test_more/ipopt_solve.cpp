@@ -1,6 +1,6 @@
 /* $Id$ */
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-12 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-13 Bradley M. Bell
 
 CppAD is distributed under multiple licenses. This distribution is under
 the terms of the 
@@ -76,6 +76,7 @@ bool ipopt_solve(void)
 	std::string base_options;
 	// turn off any printing
 	base_options += "Integer print_level  0\n"; 
+	base_options += "String  sb         yes\n";
 	// maximum number of iterations
 	base_options += "Integer max_iter     10\n";
 	// approximate accuracy in first order necessary conditions;

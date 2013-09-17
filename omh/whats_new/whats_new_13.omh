@@ -13,6 +13,8 @@ Please visit http://www.coin-or.org/CppAD/ for information on other licenses.
 $begin whats_new_13$$
 $dollar @$$
 $spell
+	sb
+	IpIpoptAlg.cpp
 	inf
 	const
 	algo
@@ -48,6 +50,19 @@ This section contains a list of the changes to CppAD during 2013
 (in reverse order by date).
 The purpose of this section is to
 assist you in learning about changes between various versions of CppAD.
+
+$head 09-17$$
+$list number$$
+It appears, from inspecting the Ipopt source file
+$code Ipopt/src/Algorithm/IpIpoptAlg.cpp$$ that the option $code sb$$
+to $code yes$$ suppress the printing of the Ipopt banner.
+The Ipopt examples and tests have been changed to use this option
+(although it is not in the ipopt documentation).
+$lnext
+Fix the a typo in the documentation for $code ipopt_solve$$
+$cref/Integer/ipopt_solve/options/Integer/$$ options
+($code Numeric$$ was changed to $code Integer$$).
+$lend
 
 $head 09-07$$
 There was a bug in the cumulative sum operator

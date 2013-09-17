@@ -1,6 +1,6 @@
 /* $Id$ */
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-12 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-13 Bradley M. Bell
 
 CppAD is distributed under multiple licenses. This distribution is under
 the terms of the 
@@ -303,6 +303,7 @@ bool ode_inverse(void)
 	options += "Sparse  true        forward\n";
 	// turn off any printing
 	options += "Integer print_level 0\n"; 
+	options += "String  sb        yes\n";
 	// maximum number of iterations
 	options += "Integer max_iter    30\n";
 	// approximate accuracy in first order necessary conditions;

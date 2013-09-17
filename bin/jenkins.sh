@@ -80,26 +80,20 @@ echo_eval mkdir build
 echo_eval cd build
 #
 # configure cppad to use all the packages above
-if rpm --eval %{_host} > /dev/null
-then
-	build_type=`rpm --eval %{_host}`
-	build_type="--build=$build_type"
-fi
 build_type=`rpm --eval %{_host}`
-build_type="--build=$build_type"
 #
 # skip sacado for now
 #	SACADO_DIR="$trunk_dir/build/prefix" \\
 #	SACADO_DIR="$trunk_dir/build/prefix" \
 cat << EOF
 $trunk_dir/configure \\
-	$build_type \\
+	--build=$build_type \\
 	EIGEN_DIR="$trunk_dir/build/prefix" \\
 	IPOPT_DIR="$trunk_dir/build/prefix" \\
 	FADBAD_DIR="$trunk_dir/build/prefix" 
 EOF
 if ! $trunk_dir/configure \
-	$build_type \
+	--build=$build_type \
 	EIGEN_DIR="$trunk_dir/build/prefix" \
 	IPOPT_DIR="$trunk_dir/build/prefix" \
 	FADBAD_DIR="$trunk_dir/build/prefix" 
