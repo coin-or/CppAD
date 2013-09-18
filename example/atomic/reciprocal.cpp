@@ -385,7 +385,7 @@ bool reciprocal(void)
 	double check = x0;
 	ok &= NearEqual( Value(ay[0]) , check,  eps, eps);
 
-	// check sero order forward mode
+	// check zero order forward mode
 	size_t p;
 	vector<double> x_p(n), y_p(m);
 	p      = 0;

@@ -1,45 +1,30 @@
-// $Id$
-/* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-13 Bradley M. Bell
-
-CppAD is distributed under multiple licenses. This distribution is under
-the terms of the 
-                    Eclipse Public License Version 1.0.
-
-A copy of this license is included in the COPYING file of this distribution.
-Please visit http://www.coin-or.org/CppAD/ for information on other licenses.
--------------------------------------------------------------------------- */
-
-/*
-$begin atomic_get_started.cpp$$
-
-$section Getting Started with Atomic Operations: Example and Test$$
-$index get_started, atomic operation$$
-$index atomic, get_started $$
-$index operation, atomic get_started$$
-
-$head Purpose$$
-This example demonstrates the minimal amount of information
-necessary for a $cref atomic_base$$ operation.
-
-$code
-$verbatim%example/atomic/get_started.cpp%0%// BEGIN C++%// END C++%1%$$
-$$
-
-$end
-*/
-// BEGIN C++
+#! /bin/bash -e
+# $Id$
+# -----------------------------------------------------------------------------
+# CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-13 Bradley M. Bell
+#
+# CppAD is distributed under multiple licenses. This distribution is under
+# the terms of the 
+#                     Eclipse Public License Version 1.0.
+#
+# A copy of this license is included in the COPYING file of this distribution.
+# Please visit http://www.coin-or.org/CppAD/ for information on other licenses.
+# -----------------------------------------------------------------------------
+if [ ! -e build ]
+then
+	mkdir build
+fi
+cd build
+echo "$0"
+name=`echo $0 | sed -e 's|.*/||' -e 's|\..*||'`
+echo "create $name.cpp"
+cat << EOF > $name.cpp
 # include <cppad/cppad.hpp>
-
-namespace { // Begin empty namespace 
-// ----------------------------------------------------------------------
 using CppAD::vector;
-
+using CppAD::AD;
 //
 class atomic_get_started : public CppAD::atomic_base<double> {
 public:
-	// ----------------------------------------------------------------------
-	// constructor (example use of const std::string& instead of const char*)
 	atomic_get_started(const std::string& name) : 
 	CppAD::atomic_base<double>(name)
 	{ }
@@ -77,21 +62,23 @@ private:
 			ty[0] = f;
 		return ok;
 	}
-}; // End of atomic_get_started class
-}  // End empty namespace
+};
+AD<double> atomic_simple(const AD<double>& x)
+{	// should have static infront here
+	atomic_get_started afun("atomic_simple");
+	vector< AD<double> > vx(1);
+	vector< AD<double> > vy(1);
+	vx[0] = x;
+	afun(vx, vy);
+	return vy[0];
+}
 
-bool get_started(void)
+int main(void)
 {	bool ok = true;
 	using CppAD::AD;
 	using CppAD::NearEqual;
 	double eps = 10. * CppAD::numeric_limits<double>::epsilon();
 
-	// --------------------------------------------------------------------
-	// Create the atomic get_started object
-	atomic_get_started afun("atomic_get_started");
-	// --------------------------------------------------------------------
-	// Create the function f(x)
-	//
 	// domain space vector
 	size_t n  = 1;
 	double  x0 = 0.5;
@@ -106,11 +93,10 @@ bool get_started(void)
 	vector< AD<double> > ay(m);
 
 	// call user function and store get_started(x) in au[0] 
-	vector< AD<double> > au(m);
-	afun(ax, au);        // u = 1 / x
+	AD<double>  au = atomic_simple( ax[0] );
 
 	// now use AD division to invert to invert the operation
-	ay[0] = 1.0 / au[0]; // y = 1 / u = x
+	ay[0] = 1.0 / au;  // y = 1 / u = x
 
 	// create f: x -> y and stop tape recording
 	CppAD::ADFun<double> f;
@@ -128,9 +114,20 @@ bool get_started(void)
 	vector<double> x_p(n), y_p(m);
 	p      = 0;
 	x_p[0] = x0;
+	// ---------------------------------------------------------------------
+	std::cout << "Expect a meaning error message" << std::endl;
 	y_p    = f.Forward(p, x_p);
+	// ---------------------------------------------------------------------
 	ok &= NearEqual(y_p[0] , check,  eps, eps);
 
 	return ok;
 }
-// END C++
+EOF
+echo "g++ -g $name.cpp -I../.. -std=c++11 -o $name"
+g++ -g $name.cpp -I../.. -std=c++11 -o $name
+#
+echo "./$name"
+./$name
+#
+echo "rm $name $name.cpp"
+rm $name $name.cpp
