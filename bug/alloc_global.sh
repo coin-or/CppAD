@@ -68,11 +68,14 @@ namespace {
 // Test routine called by the master thread (thread_num = 0).
 bool alloc_global(void)
 {	bool ok = true;
+	using std::cout;
+	using std::endl;
 	
 	size_t num_threads = NUMBER_THREADS;
 	if( omp_get_max_threads() < num_threads )
-	{	std::cout << "can't set num_threads = " << num_threads << std::endl;
+	{	cout << "can't set num_threads = " << num_threads << endl;
 		ok = false;
+		return ok;
 	}
 
 	// call setup for using thread_alloc in parallel mode.
@@ -104,8 +107,8 @@ int main(void)
 	return int(! ok);
 } 
 EOF
-echo "g++ -g $name.cpp -I../.. -fopenmp -o $name"
-g++ -g $name.cpp -I../.. -fopenmp -o $name
+echo "g++ -g $name.cpp -I../.. -fopenmp -std=c++11 -o $name"
+g++ -g $name.cpp -I../.. -fopenmp -std=c++11 -o $name
 #
 echo "./$name"
 ./$name

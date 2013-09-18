@@ -46,8 +46,8 @@ int main (int argc, char *argv[])
 }
 EOF
 #
-echo "g++ -g -I../..  reachable.cpp -o reachable"
-g++ -g -I../.. reachable.cpp -o reachable
+echo "g++ -g -I../..  -std=c++11 reachable.cpp -o reachable"
+g++ -g -I../.. -std=c++11 reachable.cpp -o reachable
 #
 echo "valgrind --leak-check=full --show-reachable=yes ./reachable"
 valgrind --leak-check=full --show-reachable=yes ./reachable
