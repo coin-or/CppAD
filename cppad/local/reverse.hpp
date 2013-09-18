@@ -205,11 +205,11 @@ VectorBase ADFun<Base>::Reverse(size_t p, const VectorBase &w)
 				value[j * p + k ] =
 					Partial[ind_taddr_[j] * p + k];
 		}
-		CPPAD_ASSERT_KNOWN( ! ( hasnan(value) && check_for_nan_ ) ,
-			"dw = f.Reverse(p, w): has a nan,\n"
-			"but none of its Taylor coefficents are nan."
-		);
 	}
+	CPPAD_ASSERT_KNOWN( ! ( hasnan(value) && check_for_nan_ ) ,
+		"dw = f.Reverse(p, w): has a nan,\n"
+		"but none of its Taylor coefficents are nan."
+	);
 
 	return value;
 }

@@ -59,9 +59,10 @@ mkinstalldirs = $(install_sh) -d
 CONFIG_CLEAN_FILES =
 CONFIG_CLEAN_VPATH_FILES =
 am_atomic_OBJECTS = atomic.$(OBJEXT) checkpoint.$(OBJEXT) \
-	mat_mul.$(OBJEXT) reciprocal.$(OBJEXT) tangent.$(OBJEXT) \
-	old_mat_mul.$(OBJEXT) old_reciprocal.$(OBJEXT) \
-	old_tan.$(OBJEXT) old_usead_1.$(OBJEXT) old_usead_2.$(OBJEXT)
+	get_started.$(OBJEXT) mat_mul.$(OBJEXT) reciprocal.$(OBJEXT) \
+	tangent.$(OBJEXT) old_mat_mul.$(OBJEXT) \
+	old_reciprocal.$(OBJEXT) old_tan.$(OBJEXT) \
+	old_usead_1.$(OBJEXT) old_usead_2.$(OBJEXT)
 atomic_OBJECTS = $(am_atomic_OBJECTS)
 atomic_LDADD = $(LDADD)
 DEFAULT_INCLUDES = 
@@ -275,6 +276,7 @@ AM_CPPFLAGS = -I. \
 atomic_SOURCES = \
 	atomic.cpp \
 	checkpoint.cpp \
+	get_started.cpp \
 	mat_mul.cpp \
 	reciprocal.cpp \
 	tangent.cpp \
@@ -334,6 +336,7 @@ distclean-compile:
 
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/atomic.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/checkpoint.Po@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/get_started.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/mat_mul.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/old_mat_mul.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/old_reciprocal.Po@am__quote@

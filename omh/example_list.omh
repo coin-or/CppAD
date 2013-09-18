@@ -94,7 +94,9 @@ $rref ad_output.cpp$$
 $rref Asin.cpp$$
 $rref atan2.cpp$$
 $rref atan.cpp$$
+$rref atomic_get_started.cpp$$
 $rref atomic_matrix_mul.hpp$$
+$rref atomic_mat_mul.cpp$$
 $cref atomic_reciprocal.cpp$$
 $cref atomic_tangent.cpp$$
 $rref base_adolc.hpp$$
@@ -165,7 +167,6 @@ $rref lu_invert.cpp$$
 $rref lu_ratio.cpp$$
 $rref lu_solve.cpp$$
 $rref lu_vec_ad_ok.cpp$$
-$rref atomic_mat_mul.cpp$$
 $rref mul.cpp$$
 $rref mul_eq.cpp$$
 $rref mul_level_adolc.cpp$$

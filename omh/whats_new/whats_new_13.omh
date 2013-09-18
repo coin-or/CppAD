@@ -51,8 +51,13 @@ This section contains a list of the changes to CppAD during 2013
 The purpose of this section is to
 assist you in learning about changes between various versions of CppAD.
 
-$head 09-17$$
+$head 09-18$$
 $list number$$
+There was a bug during the
+$cref/checking for nan/check_for_nan/$$ during 
+$cref reverse$$ mode.
+This has been fixed.
+$lnext
 It appears, from inspecting the Ipopt source file
 $code Ipopt/src/Algorithm/IpIpoptAlg.cpp$$ that the option $code sb$$
 to $code yes$$ suppress the printing of the Ipopt banner.

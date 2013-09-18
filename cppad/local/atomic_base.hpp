@@ -737,7 +737,7 @@ this virtual function must be defined by the
 $cref/atomic_user/atomic_ctor/atomic_user/$$ class.
 It can just return $icode%ok% == false%$$ 
 (and not compute anything) for values
-of $icode%p% > 0%$$ that are greater than those used by your
+of $icode p$$ that are greater than those used by your
 $cref/reverse/Reverse/$$ mode calculations.
 
 $head p$$

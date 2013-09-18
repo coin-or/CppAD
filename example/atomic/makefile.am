@@ -26,6 +26,7 @@ AM_CPPFLAGS       = -I. \
 atomic_SOURCES   = \
 	atomic.cpp \
 	checkpoint.cpp \
+	get_started.cpp \
 	mat_mul.cpp \
 	reciprocal.cpp \
 	tangent.cpp \

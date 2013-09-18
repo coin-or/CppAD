@@ -21,6 +21,7 @@ Please visit http://www.coin-or.org/CppAD/ for information on other licenses.
 
 // external complied tests
 extern bool checkpoint(void);
+extern bool get_started(void);
 extern bool mat_mul(void);
 extern bool reciprocal(void);
 extern bool tangent(void);
@@ -57,6 +58,7 @@ int main(void)
 
 	// external compiled tests
 	ok &= Run( checkpoint,          "checkpoint"     );
+	ok &= Run( get_started,         "get_started"    );
 	ok &= Run( mat_mul,             "mat_mul"        );
 	ok &= Run( reciprocal,          "reciprocal"     );
 	ok &= Run( tangent,             "tangent"        );

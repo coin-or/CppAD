@@ -80,6 +80,7 @@ forward mode calculation of second derivatives.
 
 $childtable%
 	cppad/local/atomic_base.hpp%
+	example/atomic/get_started.cpp%
 	example/atomic/reciprocal.cpp%
 	example/atomic/tangent.cpp%
 	example/atomic/mat_mul.cpp

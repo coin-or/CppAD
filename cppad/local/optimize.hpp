@@ -1641,7 +1641,7 @@ void optimize(
 			case UsravOp:
 			CPPAD_ASSERT_NARG_NRES(op, 1, 0);
 			new_arg[0] = tape[arg[0]].new_var;
-			if( new_arg[0] < num_var )
+			if( size_t(new_arg[0]) < num_var )
 			{	rec->PutArg(new_arg[0]);
 				rec->PutOp(UsravOp);
 			}

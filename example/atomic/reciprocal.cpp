@@ -371,7 +371,7 @@ bool reciprocal(void)
 	vector< AD<double> > au(m);
 	afun(ax, au);        // u = 1 / x
 
-	// no use AD division to invert to invert the operation
+	// now use AD division to invert to invert the operation
 	ay[0] = 1.0 / au[0]; // y = 1 / u = x
 
 	// create f: x -> y and stop tape recording

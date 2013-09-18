@@ -82,7 +82,7 @@ cmake_args="$cmake_args -D cppad_cxx_flags=\
 # simple options
 cmake_args="$cmake_args -D cppad_documentation=YES"
 cmake_args="$cmake_args -D cppad_sparse_list=YES"
-cmake_args="$cmake_args -D cppad_testvector=boost"
+cmake_args="$cmake_args -D cppad_testvector=cppad"
 cmake_args="$cmake_args -D cppad_tape_id_type='int'"
 cmake_args="$cmake_args -D cppad_tape_addr_type=int"
 cmake_args="$cmake_args -D cppad_max_num_threads=48"
