@@ -546,7 +546,7 @@ void ReverseSweep(
 				user_id    = arg[1];
 				user_n     = arg[2];
 				user_m     = arg[3];
-				user_atom  = atomic_base<Base>::list(user_index);
+				user_atom  = atomic_base<Base>::class_object(user_index);
 				if(user_ix.size() != user_n)
 					user_ix.resize(user_n);
 				if(user_tx.size() != user_n * user_k1)

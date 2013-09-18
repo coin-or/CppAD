@@ -1150,7 +1150,7 @@ void optimize(
 			if( user_i == 0 )
 			{	// call users function for this operation
 				atomic_base<Base>* atom = 
-					atomic_base<Base>::list(user_index);
+					atomic_base<Base>::class_object(user_index);
 				atom->set_id(user_id);
 				atom->rev_sparse_jac(
 					user_q, user_r, user_s
@@ -1170,7 +1170,7 @@ void optimize(
 			if( user_i == 0 )
 			{	// call users function for this operation
 				atomic_base<Base>* atom = 
-					atomic_base<Base>::list(user_index);
+					atomic_base<Base>::class_object(user_index);
 				atom->set_id(user_id);
 				atom->rev_sparse_jac(
 					user_q, user_r, user_s

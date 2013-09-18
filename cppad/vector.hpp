@@ -3,7 +3,7 @@
 # define CPPAD_VECTOR_INCLUDED
 
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-12 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-13 Bradley M. Bell
 
 CppAD is distributed under multiple licenses. This distribution is under
 the terms of the 
@@ -235,7 +235,7 @@ $lnext
 Using these vectors affects the amount of memory 
 $cref/in_use/ta_inuse/$$ and $cref/available/ta_available/$$.
 $lnext
-Calling $cref/resize/CppAD_vector/resize/$$ with a zero argument,
+Calling $cref/clear/CppAD_vector/clear/$$,
 makes the corresponding memory available (though $code thread_alloc$$)
 to the current thread.
 $lnext

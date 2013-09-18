@@ -13,6 +13,7 @@ Please visit http://www.coin-or.org/CppAD/ for information on other licenses.
 $begin whats_new_13$$
 $dollar @$$
 $spell
+	resize
 	sb
 	IpIpoptAlg.cpp
 	inf
@@ -53,6 +54,13 @@ assist you in learning about changes between various versions of CppAD.
 
 $head 09-18$$
 $list number$$
+A mistake in the documentation for
+$cref/Memory and Parallel Mode/CppAD_vector/Memory and Parallel Mode/$$
+has been fixed.
+This corresponds to the change in the specifications for
+$cref/CppAD::vector::resize/CppAD_vector/resize/$$ made on
+$cref/2012-07-30/whats_new_12/07-30/$$
+$lnext
 There was a bug during the
 $cref/checking for nan/check_for_nan/$$ during 
 $cref reverse$$ mode.

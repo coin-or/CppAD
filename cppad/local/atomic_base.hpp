@@ -37,7 +37,7 @@ private:
 	/// name for this atomic funciton (used for error reporting)
 	const std::string afun_name_;
 
-	/// index of this object in the list of all objects (see list() below)
+	/// index of this object in class_object
 	const size_t index_;
 
 	// -----------------------------------------------------
@@ -59,7 +59,7 @@ private:
 	//      *_sweep.hpp, but it seems to work this way. Why ?
 	/// List of all the object in this class
 	/// (null pointer used for objects that have been deleted)
-	static std::vector<atomic_base *>& list(void)
+	static std::vector<atomic_base *>& class_object(void)
 	{	CPPAD_ASSERT_FIRST_CALL_NOT_PARALLEL;
 		static std::vector<atomic_base *> list_;
 		return list_;
@@ -170,25 +170,25 @@ Constructor
 name used for error reporting
 */
 atomic_base( const std::string&  name) :
-afun_name_( name )            ,
-index_( list().size() )       ,
+afun_name_( name )                  ,
+index_( class_object().size() )     ,
 sparsity_( set_sparsity_enum )
 {	CPPAD_ASSERT_KNOWN(
 		! thread_alloc::in_parallel() ,
 		"atomic_base: constructor cannot be called in parallel mode."
 	);
-	list().push_back(this);
+	class_object().push_back(this);
 }
 /// destructor informs CppAD that this atomic function with this index
 /// has dropped out of scope by setting its pointer to null
 virtual ~atomic_base(void)
-{	CPPAD_ASSERT_UNKNOWN( list().size() > index_ );
-	list()[index_] = CPPAD_NULL;
+{	CPPAD_ASSERT_UNKNOWN( class_object().size() > index_ );
+	class_object()[index_] = CPPAD_NULL;
 }
 /// atomic_base function object corresponding to a certain index
-static atomic_base* list(size_t index)
-{	CPPAD_ASSERT_UNKNOWN( list().size() > index );
-	return list()[index];
+static atomic_base* class_object(size_t index)
+{	CPPAD_ASSERT_UNKNOWN( class_object().size() > index );
+	return class_object()[index];
 }
 /*
 $begin atomic_option$$
@@ -1326,6 +1326,7 @@ $end
 */
 /*!
 Free all thread_alloc static memory held by atomic_base (avoids reallocations).
+(This does not include class_object() which is an std::vector.)
 */
 /// Free vector memory used by this class (work space)
 static void clear(void)
@@ -1333,12 +1334,12 @@ static void clear(void)
 		! thread_alloc::in_parallel() ,
 		"cannot use atomic_base clear during parallel execution"
 	);
-	size_t i = list().size();
+	size_t i = class_object().size();
 	while(i--)
 	{	size_t thread = CPPAD_MAX_NUM_THREADS;
 		while(thread--)
 		{
-			atomic_base* op = list()[i];
+			atomic_base* op = class_object()[i];
 			if( op != CPPAD_NULL )
 			{	op->afun_vx_[thread].clear();
 				op->afun_vy_[thread].clear();

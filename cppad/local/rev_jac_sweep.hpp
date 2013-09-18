@@ -544,7 +544,7 @@ void RevJacSweep(
 				user_id    = arg[1];
 				user_n     = arg[2];
 				user_m     = arg[3];
-				user_atom  = atomic_base<Base>::list(user_index);
+				user_atom  = atomic_base<Base>::class_object(user_index);
 				user_bool  = user_atom->sparsity() ==
 							atomic_base<Base>::bool_sparsity_enum;
 				if( user_bool )

@@ -587,7 +587,7 @@ size_t forward_sweep(
 				user_id    = arg[1];
 				user_n     = arg[2];
 				user_m     = arg[3];
-				user_atom  = atomic_base<Base>::list(user_index);
+				user_atom  = atomic_base<Base>::class_object(user_index);
 				if(user_tx.size() != user_n * user_p1)
 					user_tx.resize(user_n * user_p1);
 				if(user_ty.size() != user_m * user_p1)
