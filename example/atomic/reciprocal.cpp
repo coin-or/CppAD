@@ -25,19 +25,14 @@ to define the operation
 $latex f : \B{R}^n \rightarrow \B{R}^m$$ where
 $latex n = 1$$, $latex m = 1$$, and $latex f(x) = 1 / x$$.
 
-$code
-$verbatim%example/atomic/reciprocal.cpp%0%// BEGIN C++%// END C++%1%$$
-$$
+$nospell
 
-$end
-*/
-// BEGIN C++
+$head Start Class Definition$$
+$codep */
 # include <cppad/cppad.hpp>
-
-namespace { // Begin empty namespace 
-// ----------------------------------------------------------------------
-using CppAD::vector;
-
+namespace {           // isolate items below to this file
+using CppAD::vector;  // abbreviate as vector
+//
 // a utility to compute the union of two sets.
 void my_union(
 	std::set<size_t>&         result  ,
@@ -55,14 +50,18 @@ void my_union(
 }
 //
 class atomic_reciprocal : public CppAD::atomic_base<double> {
-public:
-	// ----------------------------------------------------------------------
-	// constructor (example use of const std::string& instead of const char*)
+/* $$
+$head Constructor $$
+$codep */
+	public:
+	// constructor (could use const char* for name)
 	atomic_reciprocal(const std::string& name) : 
 	CppAD::atomic_base<double>(name)
 	{ }
-private:
-	// ----------------------------------------------------------------------
+	private:
+/* $$
+$head forward$$
+$codep */
 	// forward mode routine called by CppAD
 	virtual bool forward(
 		size_t                    q ,
@@ -118,7 +117,9 @@ private:
 		assert( ! ok );
 		return ok;
 	}
-	// ----------------------------------------------------------------------
+/* $$
+$head reverse$$
+$codep */
 	// reverse mode routine called by CppAD
 	virtual bool reverse(
 		size_t                    p ,
@@ -183,7 +184,9 @@ private:
 		}
 		return ok;
 	}
-	// ----------------------------------------------------------------------
+/* $$
+$head for_sparse_jac$$
+$codep */
 	// forward Jacobian bool sparsity routine called by CppAD
 	virtual bool for_sparse_jac(
 		size_t                                q ,
@@ -219,7 +222,9 @@ private:
 
 		return true; 
 	}
-	// ----------------------------------------------------------------------
+/* $$
+$head rev_sparse_jac$$
+$codep */
 	// reverse Jacobian bool sparsity routine called by CppAD
 	virtual bool rev_sparse_jac(
 		size_t                                q  ,
@@ -255,7 +260,9 @@ private:
 
 		return true; 
 	}
-	// ----------------------------------------------------------------------
+/* $$
+$head rev_sparse_hes$$
+$codep */
 	// reverse Hessian bool sparsity routine called by CppAD
 	virtual bool rev_sparse_hes(
 		const vector<bool>&                   vx,
@@ -339,9 +346,15 @@ private:
 
 		return true;
 	}
+/* $$
+$head End Class Definition$$
+$codep */
 }; // End of atomic_reciprocal class
 }  // End empty namespace
 
+/* $$
+$head Use Atomic Function$$
+$codep */
 bool reciprocal(void)
 {	bool ok = true;
 	using CppAD::AD;
@@ -470,4 +483,7 @@ bool reciprocal(void)
 
 	return ok;
 }
-// END C++
+/* $$
+$$ $comment end nospell$$
+$end
+*/

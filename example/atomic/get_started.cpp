@@ -22,29 +22,27 @@ $head Purpose$$
 This example demonstrates the minimal amount of information
 necessary for a $cref atomic_base$$ operation.
 
-$code
-$verbatim%example/atomic/get_started.cpp%0%// BEGIN C++%// END C++%1%$$
-$$
+$nospell
 
-$end
-*/
-// BEGIN C++
+$head Start Class Definition$$
+$codep */
 # include <cppad/cppad.hpp>
-
-namespace { // Begin empty namespace 
-// ----------------------------------------------------------------------
-using CppAD::vector;
-
-//
+namespace {          // isolate items below to this file
+using CppAD::vector; // abbreviate as vector
 class atomic_get_started : public CppAD::atomic_base<double> {
-public:
-	// ----------------------------------------------------------------------
-	// constructor (example use of const std::string& instead of const char*)
+/* $$
+
+$head Constructor$$
+$codep */
+	public:
+	// constructor (could use const char* for name)
 	atomic_get_started(const std::string& name) : 
 	CppAD::atomic_base<double>(name)
 	{ }
-private:
-	// ----------------------------------------------------------------------
+	private:
+/* $$
+$head forward$$
+$codep */
 	// forward mode routine called by CppAD
 	virtual bool forward(
 		size_t                    q ,
@@ -77,9 +75,15 @@ private:
 			ty[0] = f;
 		return ok;
 	}
+/* $$
+$head End Class Definition$$
+$codep */
 }; // End of atomic_get_started class
 }  // End empty namespace
 
+/* $$
+$head Use Atomic Function$$
+$codep */
 bool get_started(void)
 {	bool ok = true;
 	using CppAD::AD;
@@ -133,4 +137,7 @@ bool get_started(void)
 
 	return ok;
 }
-// END C++
+/* $$
+$$ $comment end nospell$$
+$end
+*/

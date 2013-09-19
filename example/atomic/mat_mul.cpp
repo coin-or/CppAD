@@ -16,7 +16,7 @@ $spell
 	mul
 $$
 
-$section Matrix Multiply as a User Atomic Operation: Example and Test$$
+$section User Atomic Matrix Multiply: Example and Test$$
 $index atomic, matrix multiply example$$
 $index matrix, atomic multiply example$$
 $index multiply, matrix atomic$$
@@ -24,9 +24,12 @@ $index multiply, matrix atomic$$
 $children%
 	cppad/example/matrix_mul.hpp
 %$$
-$head Include File$$
-This routine uses the include file $cref atomic_matrix_mul.hpp$$.
 
+$head Class Definition$$
+This example uses the file $cref atomic_matrix_mul.hpp$$
+which defines matrix multiply as a $cref atomic_base$$ operation.
+
+$head Use Atomic Function$$
 $code
 $verbatim%example/atomic/mat_mul.cpp%0%// BEGIN C++%// END C++%1%$$
 $$

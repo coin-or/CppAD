@@ -89,6 +89,7 @@ $spell
 	bool
 	ctor
 	const
+	matrix_mul.hpp
 $$
 
 $section Atomic Function Constructor$$
@@ -152,6 +153,14 @@ $codei%
 It is the name for this atomic function and is used for error reporting.
 The suggested value for $icode name$$ is $icode afun$$ or $icode atomic_user$$,
 i.e., the name of the corresponding atomic object or class.
+
+$head Examples$$
+The following files contain example user atomic function constructors:
+$cref%get_started.cpp%atomic_get_started.cpp%Constructor%$$,
+$cref%reciprocal.cpp%atomic_reciprocal.cpp%Constructor%$$,
+$cref%tangent.cpp%atomic_tangent.cpp%Constructor%$$,
+$cref%matrix_mul.hpp%atomic_matrix_mul.hpp%Constructor%$$.
+
 
 $end
 */
@@ -497,6 +506,7 @@ void operator()(
 -----------------------------------------------------------------------------
 $begin atomic_forward$$
 $spell
+	mul.hpp
 	hes
 	afun
 	vx
@@ -643,7 +653,7 @@ $head ok$$
 If the required results are calculated, $icode ok$$ should be true.
 Otherwise, it should be false.
 
-$head Example$$
+$head Discussion$$
 For example, suppose that $icode%p% == 2%$$,
 and you know how to compute the function $latex f(x)$$,
 its first derivative $latex f^{(1)} (x)$$,
@@ -672,6 +682,14 @@ For $latex i = 0 , \ldots , m-1$$, and $latex k = 0 , 1 , 2$$,
 $latex \[
 	ty [ i * (p + 1) + k ] = y_i^k
 \] $$
+
+$head Examples$$
+The following files contain example atomic $code forward$$ functions:
+$cref%get_started.cpp%atomic_get_started.cpp%forward%$$,
+$cref%reciprocal.cpp%atomic_reciprocal.cpp%forward%$$,
+$cref%tangent.cpp%atomic_tangent.cpp%forward%$$,
+$cref%matrix_mul.hpp%atomic_matrix_mul.hpp%forward%$$.
+
  
 $end
 -----------------------------------------------------------------------------
@@ -711,6 +729,7 @@ virtual bool forward(
 -----------------------------------------------------------------------------
 $begin atomic_reverse$$
 $spell
+	mul.hpp
 	afun
 	ty
 	px
@@ -874,6 +893,13 @@ $codei%
 If it is $code true$$, the corresponding evaluation succeeded,
 otherwise it failed.
 
+$head Examples$$
+The following files contain example atomic $code reverse$$ functions:
+$cref%reciprocal.cpp%atomic_reciprocal.cpp%reverse%$$,
+$cref%tangent.cpp%atomic_tangent.cpp%reverse%$$,
+$cref%matrix_mul.hpp%atomic_matrix_mul.hpp%reverse%$$.
+
+
 $end
 -----------------------------------------------------------------------------
 */
@@ -908,6 +934,7 @@ virtual bool reverse(
 -------------------------------------- ---------------------------------------
 $begin atomic_for_sparse_jac$$
 $spell
+	mul.hpp
 	afun
 	Jacobian
 	jac
@@ -978,6 +1005,12 @@ $codei%
 If it is $code true$$, the corresponding evaluation succeeded,
 otherwise it failed.
 
+$head Examples$$
+The following files contain example atomic $code for_sparse_jac$$ functions:
+$cref%reciprocal.cpp%atomic_reciprocal.cpp%for_sparse_jac%$$,
+$cref%tangent.cpp%atomic_tangent.cpp%for_sparse_jac%$$,
+$cref%matrix_mul.hpp%atomic_matrix_mul.hpp%for_sparse_jac%$$.
+
 $end
 -----------------------------------------------------------------------------
 */
@@ -1007,6 +1040,7 @@ virtual bool for_sparse_jac(
 -------------------------------------- ---------------------------------------
 $begin atomic_rev_sparse_jac$$
 $spell
+	mul.hpp
 	rt
 	afun
 	Jacobian
@@ -1079,6 +1113,12 @@ $codei%
 If it is $code true$$, the corresponding evaluation succeeded,
 otherwise it failed.
 
+$head Examples$$
+The following files contain example atomic $code rev_sparse_jac$$ functions:
+$cref%reciprocal.cpp%atomic_reciprocal.cpp%rev_sparse_jac%$$,
+$cref%tangent.cpp%atomic_tangent.cpp%rev_sparse_jac%$$,
+$cref%matrix_mul.hpp%atomic_matrix_mul.hpp%rev_sparse_jac%$$.
+
 $end
 -----------------------------------------------------------------------------
 */
@@ -1108,6 +1148,7 @@ virtual bool rev_sparse_jac(
 -------------------------------------- ---------------------------------------
 $begin atomic_rev_sparse_hes$$
 $spell
+	mul.hpp
 	vx
 	afun
 	Jacobian
@@ -1255,6 +1296,12 @@ f^{(1)} (x)^\R{T} U(x)
 \sum_{i=1}^m S_i (x) \; f_i^{(2)} (x) R
 \end{array}
 \] $$
+
+$head Examples$$
+The following files contain example atomic $code rev_sparse_hes$$ functions:
+$cref%reciprocal.cpp%atomic_reciprocal.cpp%rev_sparse_hes%$$,
+$cref%tangent.cpp%atomic_tangent.cpp%rev_sparse_hes%$$,
+$cref%matrix_mul.hpp%atomic_matrix_mul.hpp%rev_sparse_hes%$$.
 
 $end
 -----------------------------------------------------------------------------

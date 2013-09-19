@@ -23,15 +23,11 @@ $index multiply, matrix atomic operation$$
 $index atomic, matrix multiply operation$$
 $index matrix, multiply atomic operation$$
 
-$code
-$verbatim%cppad/example/matrix_mul.hpp%0%// BEGIN C++%// END C++%1%$$
-$$
+$nospell
 
-$end
-*/
-// BEGIN C++
+$head Start Class Definition$$
+$codep */
 # include <cppad/cppad.hpp>
-
 namespace { // Begin empty namespace
 using CppAD::vector;
 //
@@ -52,7 +48,10 @@ void my_union(
 //
 // matrix result = left * right 
 class matrix_mul : public CppAD::atomic_base<double> {
-private:
+/* $$
+$head Constructor$$
+$codep */
+	private:
 	// number of rows in left operand and in the result
 	const size_t nr_result_;
 	// number of columns in left operand and rows in right operand
@@ -63,7 +62,7 @@ private:
 	const size_t n_;
 	// dimension of the range space
 	const size_t m_;
-public:
+	public:
 	// ---------------------------------------------------------------------
 	// constructor
 	matrix_mul(size_t nr_result, size_t n_middle, size_t nc_result)
@@ -74,8 +73,11 @@ public:
 	n_( nr_result * n_middle + n_middle * nc_result ) ,
 	m_( n_middle * nc_result ) 
 	{ }
-private:
-	// left matrix index in the taylor coefficient vector tx.
+	private:
+/* $$
+$head Left Operand Element Index$$
+$codep */
+	// left matrix element index in the taylor coefficient vector tx.
 	size_t left(
 		size_t i  , // left matrix row index
 		size_t j  , // left matrix column index
@@ -85,7 +87,10 @@ private:
 		assert( j < n_middle_ );
 		return (i * n_middle_ + j) * nk + k;
 	}
-	// right matrix index in the taylor coefficient vector tx.
+/* $$
+$head Right Operand Element Index$$
+$codep */
+	// right matrix element index in the taylor coefficient vector tx.
 	size_t right(
 		size_t i  , // right matrix row index
 		size_t j  , // right matrix column index
@@ -96,7 +101,10 @@ private:
 		size_t offset = nr_result_ * n_middle_;
 		return (offset + i * nc_result_ + j) * nk + k; 
 	}
-	// result matrix index in the taylor coefficient vector ty.
+/* $$
+$head Result Element Index$$
+$codep */
+	// result matrix element index in the taylor coefficient vector ty.
 	size_t result(
 		size_t i  , // result matrix row index
 		size_t j  , // result matrix column index
@@ -106,6 +114,9 @@ private:
 		assert( j < nc_result_ );
 		return (i * nc_result_ + j) * nk + k;
 	}
+/* $$
+$head Forward Matrix Multipliy$$
+$codep */
 	// Forward mode multiply Taylor coefficients in tx and sum into ty
 	// (for one pair of left and right orders)
 	void forward_multiply(
@@ -132,6 +143,9 @@ private:
 			}
 		}
 	}
+/* $$
+$head Reverse Matrix Multipliy$$
+$codep */
 	// Reverse mode partials of Taylor coefficients and sum into px
 	// (for one pair of left and right orders)
 	void reverse_multiply(
@@ -163,7 +177,9 @@ private:
 		}
 		return;
 	}
-	// ----------------------------------------------------------------------
+/* $$
+$head forward$$
+$codep */
 	// forward mode routine called by CppAD
 	bool forward(
 		size_t                    q ,
@@ -219,7 +235,9 @@ private:
 		// all orders are implented, so always return true
 		return true;
 	}
-	// ----------------------------------------------------------------------
+/* $$
+$head reverse$$
+$codep */
 	// reverse mode routine called by CppAD
 	virtual bool reverse(
 		size_t                     p ,
@@ -249,7 +267,9 @@ private:
 		// all orders are implented, so always return true
 		return true;
 	}
-	// ----------------------------------------------------------------------
+/* $$
+$head for_sparse_jac$$
+$codep */
 	// forward Jacobian sparsity routine called by CppAD
 	virtual bool for_sparse_jac(
 		size_t                                q ,
@@ -304,7 +324,9 @@ private:
 		}
 		return true;
 	}
-	// ----------------------------------------------------------------------
+/* $$
+$head rev_sparse_jac$$
+$codep */
 	// reverse Jacobian sparsity routine called by CppAD
 	virtual bool rev_sparse_jac(
 		size_t                                q ,
@@ -366,9 +388,10 @@ private:
 			}
 		}
 		return true;
-
 	}
-	// ----------------------------------------------------------------------
+/* $$
+$head rev_sparse_hes$$
+$codep */
 	// reverse Hessian sparsity routine called by CppAD
 	virtual bool rev_sparse_hes(
 		const vector<bool>&                   vx,
@@ -489,9 +512,16 @@ private:
 		}
 		return true;
 	}
-};
 
-} // End empty namespace
-// END C++
+/* $$
+$head End Class Definition$$
+$codep */
+}; // End of matrix_mul class
+}  // End empty namespace
+/* $$
+$$ $comment end nospell$$
+$end
+*/
+
 
 # endif

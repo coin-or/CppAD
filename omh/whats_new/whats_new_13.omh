@@ -52,6 +52,14 @@ This section contains a list of the changes to CppAD during 2013
 The purpose of this section is to
 assist you in learning about changes between various versions of CppAD.
 
+$head 09-19$$
+Add links from the $cref atomic_base$$ functions documentation
+to the corresponding examples.
+This required adding headings in the examples that 
+correspond to the function documentation sections. 
+For example; see 
+$cref/atomic forward examples/atomic_forward/Examples/$$.
+
 $head 09-18$$
 $list number$$
 A segmentation fault would occur if

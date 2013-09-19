@@ -26,18 +26,14 @@ The code below uses the $cref tan_forward$$ and $cref tan_reverse$$
 to implement the tangent and hyperbolic tangent
 functions as user atomic operations.
 
-$code
-$verbatim%example/atomic/tangent.cpp%0%// BEGIN C++%// END C++%1%$$
-$$
+$nospell
 
-$end
-*/
-// BEGIN C++
+$head Start Class Definition$$
+$codep */
 # include <cppad/cppad.hpp>
-
 namespace { // Begin empty namespace 
 using CppAD::vector;
-
+//
 // a utility to compute the union of two sets.
 void my_union(
 	std::set<size_t>&         result  ,
@@ -55,17 +51,21 @@ void my_union(
 }
 //
 class atomic_tangent : public CppAD::atomic_base<float> {
-private:
+/* $$
+$head Constructor $$
+$codep */
+	private:
 	const bool hyperbolic_; // is this hyperbolic tangent
-public:
-	// ----------------------------------------------------------------------
+	public:
 	// constructor
 	atomic_tangent(const char* name, bool hyperbolic) 
 	: CppAD::atomic_base<float>(name),
 	hyperbolic_(hyperbolic)
 	{ }
-private:
-	// ----------------------------------------------------------------------
+	private:
+/* $$
+$head forward$$
+$codep */
 	// forward mode routine called by CppAD
 	bool forward(
 		size_t                    q ,
@@ -120,7 +120,9 @@ private:
 		// All orders are implemented and there are no possible errors
 		return true;
 	}
-	// ----------------------------------------------------------------------
+/* $$
+$head reverse$$
+$codep */
 	// reverse mode routine called by CppAD
 	virtual bool reverse(
 		size_t                    p ,
@@ -174,7 +176,9 @@ private:
 
 		return true; 
 	}
-	// ----------------------------------------------------------------------
+/* $$
+$head for_sparse_jac$$
+$codep */
 	// forward Jacobian sparsity routine called by CppAD
 	virtual bool for_sparse_jac(
 		size_t                                q ,
@@ -209,7 +213,9 @@ private:
 
 		return true;
 	}
-	// ----------------------------------------------------------------------
+/* $$
+$head rev_sparse_jac$$
+$codep */
 	// reverse Jacobian sparsity routine called by CppAD
 	virtual bool rev_sparse_jac(
 		size_t                                q ,
@@ -240,7 +246,9 @@ private:
 		my_union(st[0], rt[0], rt[1]);
 		return true; 
 	}
-	// ----------------------------------------------------------------------
+/* $$
+$head rev_sparse_hes$$
+$codep */
 	// reverse Hessian sparsity routine called by CppAD
 	virtual bool rev_sparse_hes(
 		const vector<bool>&                   vx,
@@ -322,9 +330,15 @@ private:
 
 		return true;
 	}
+/* $$
+$head End Class Definition$$
+$codep */
 }; // End of atomic_tangent class
 }  // End empty namespace
 
+/* $$
+$head Use Atomic Function$$
+$codep */
 bool tangent(void)
 {	bool ok = true;
 	using CppAD::AD;
@@ -480,4 +494,7 @@ bool tangent(void)
 
 	return ok;
 }
-// END C++
+/* $$
+$$ $comment end nospell$$
+$end
+*/
