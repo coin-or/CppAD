@@ -290,6 +290,7 @@ void option(enum option_enum option_value)
 $begin atomic_afun$$
 
 $spell
+	mul
 	afun
 	const
 	CppAD
@@ -339,6 +340,13 @@ The input values of its elements
 are not specified (must not matter).
 Upon return, it is an $codei%AD<%Base%>%$$ version of 
 $latex y = f(x)$$.
+
+$head Examples$$
+The following files contain example uses of atomic functions:
+$cref%get_started.cpp%atomic_get_started.cpp%Use Atomic Function%$$,
+$cref%reciprocal.cpp%atomic_reciprocal.cpp%Use Atomic Function%$$,
+$cref%tangent.cpp%atomic_tangent.cpp%Use Atomic Function%$$,
+$cref%matrix_mul.cpp%atomic_mat_mul.cpp%Use Atomic Function%$$.
 
 $end
 -----------------------------------------------------------------------------
