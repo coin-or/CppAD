@@ -564,12 +564,6 @@ in the corresponding call to
 $codei%
 	%afun%(%ax%, %ay%, %id%)
 %$$
-This is only necessary to use for second order cross terms because
-CppAD knows which components are variables; e.g., see
-$code rev_sparse_hes$$ in the $cref atomic_matrix_mul.hpp$$ example.
-$pre
-
-$$
 If $icode%vx%.size() == 0%$$, 
 then $icode%vy%.size() == 0%$$ and neither of these vectors
 should be used.
