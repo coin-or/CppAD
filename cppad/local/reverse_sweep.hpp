@@ -547,6 +547,14 @@ void ReverseSweep(
 				user_n     = arg[2];
 				user_m     = arg[3];
 				user_atom  = atomic_base<Base>::class_object(user_index);
+# ifndef NDEBUG
+				if( user_atom == CPPAD_NULL )
+				{	std::string msg = 
+						atomic_base<Base>::class_name(user_index)
+						+ ": atomic_base function has been deleted";
+					CPPAD_ASSERT_KNOWN(false, msg.c_str() );
+				}
+# endif
 				if(user_ix.size() != user_n)
 					user_ix.resize(user_n);
 				if(user_tx.size() != user_n * user_k1)
@@ -575,8 +583,9 @@ void ReverseSweep(
 				);
 # ifndef NDEBUG
 				if( ! user_ok )
-				{	std::string msg = user_atom->afun_name()
-					+ ": atomic_base.reverse: returned false";
+				{	std::string msg = 
+						atomic_base<Base>::class_name(user_index)
+						+ ": atomic_base.reverse: returned false";
 					CPPAD_ASSERT_KNOWN(false, msg.c_str() );
 				}
 # endif

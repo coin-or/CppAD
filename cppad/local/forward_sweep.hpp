@@ -588,6 +588,14 @@ size_t forward_sweep(
 				user_n     = arg[2];
 				user_m     = arg[3];
 				user_atom  = atomic_base<Base>::class_object(user_index);
+# ifndef NDEBUG
+				if( user_atom == CPPAD_NULL )
+				{	std::string msg = 
+						atomic_base<Base>::class_name(user_index)
+						+ ": atomic_base function has been deleted";
+					CPPAD_ASSERT_KNOWN(false, msg.c_str() );
+				}
+# endif
 				if(user_tx.size() != user_n * user_p1)
 					user_tx.resize(user_n * user_p1);
 				if(user_ty.size() != user_m * user_p1)
@@ -612,8 +620,9 @@ size_t forward_sweep(
 				);
 # ifndef NDEBUG
 				if( ! user_ok )
-				{	std::string msg = user_atom->afun_name()
-					+ ": atomic_base.forward: returned false";
+				{	std::string msg = 
+						atomic_base<Base>::class_name(user_index)
+						+ ": atomic_base.forward: returned false";
 					CPPAD_ASSERT_KNOWN(false, msg.c_str() );
 				}
 # endif

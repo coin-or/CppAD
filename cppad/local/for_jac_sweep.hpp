@@ -547,6 +547,14 @@ void ForJacSweep(
 				user_n     = arg[2];
 				user_m     = arg[3];
 				user_atom  = atomic_base<Base>::class_object(user_index);
+# ifndef NDEBUG
+				if( user_atom == CPPAD_NULL )
+				{	std::string msg = 
+						atomic_base<Base>::class_name(user_index)
+						+ ": atomic_base function has been deleted";
+					CPPAD_ASSERT_KNOWN(false, msg.c_str() );
+				}
+# endif
 				user_bool  = user_atom->sparsity() ==
 							atomic_base<Base>::bool_sparsity_enum;
 				if( user_bool )
@@ -578,8 +586,9 @@ void ForJacSweep(
 				CPPAD_ASSERT_UNKNOWN( user_m     == size_t(arg[3]) );
 # ifndef NDEBUG
 				if( ! user_ok )
-				{	std::string msg = user_atom->afun_name()
-					+ ": atomic_base.for_sparse_jac: returned false";
+				{	std::string msg = 
+						atomic_base<Base>::class_name(user_index)
+						+ ": atomic_base.for_sparse_jac: returned false";
 					CPPAD_ASSERT_KNOWN(false, msg.c_str() );
 				}
 # endif

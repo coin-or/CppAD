@@ -54,6 +54,12 @@ assist you in learning about changes between various versions of CppAD.
 
 $head 09-18$$
 $list number$$
+A segmentation fault would occur if
+an $cref ADFun$$ object used an $cref atomic$$
+function that had been deleted.
+This has been fixed so that when $code NDEBUG$$ is not defined,
+an error message is generated.
+$lnext
 A mistake in the documentation for
 $cref/Memory and Parallel Mode/CppAD_vector/Memory and Parallel Mode/$$
 has been fixed.

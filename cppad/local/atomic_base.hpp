@@ -34,14 +34,13 @@ public:
 private:
 	// ------------------------------------------------------
 	// constants
-	/// name for this atomic funciton (used for error reporting)
-	const std::string afun_name_;
-
+	//
 	/// index of this object in class_object
 	const size_t index_;
 
 	// -----------------------------------------------------
 	// variables
+	//
 	/// sparsity pattern this object is currently using
 	/// (set by constructor and option member functions)
 	option_enum sparsity_;
@@ -55,26 +54,31 @@ private:
 
 	// -----------------------------------------------------
 	// static member functions
-	// 2DO: seems like this function needs to be public to be used by 
-	//      *_sweep.hpp, but it seems to work this way. Why ?
+	//
 	/// List of all the object in this class
-	/// (null pointer used for objects that have been deleted)
 	static std::vector<atomic_base *>& class_object(void)
 	{	CPPAD_ASSERT_FIRST_CALL_NOT_PARALLEL;
 		static std::vector<atomic_base *> list_;
+		return list_;
+	}
+	/// List of names for each object in this class
+	static std::vector<std::string>& class_name(void)
+	{	CPPAD_ASSERT_FIRST_CALL_NOT_PARALLEL;
+		static std::vector<std::string> list_;
 		return list_;
 	}
 	// =====================================================================
 public:
 	// -----------------------------------------------------
 	// member functions not in user API
+	//
 	/// current sparsity setting
 	option_enum sparsity(void) const
 	{	return sparsity_; }
 
 	/// Name corresponding to a base_atomic object
 	const std::string& afun_name(void) const
-	{	return afun_name_; }
+	{	return class_name()[index_]; }
 /*
 $begin atomic_ctor$$
 $spell
@@ -170,7 +174,6 @@ Constructor
 name used for error reporting
 */
 atomic_base( const std::string&  name) :
-afun_name_( name )                  ,
 index_( class_object().size() )     ,
 sparsity_( set_sparsity_enum )
 {	CPPAD_ASSERT_KNOWN(
@@ -178,17 +181,25 @@ sparsity_( set_sparsity_enum )
 		"atomic_base: constructor cannot be called in parallel mode."
 	);
 	class_object().push_back(this);
+	class_name().push_back(name);
+	CPPAD_ASSERT_UNKNOWN( class_object().size() == class_name().size() );
 }
 /// destructor informs CppAD that this atomic function with this index
 /// has dropped out of scope by setting its pointer to null
 virtual ~atomic_base(void)
 {	CPPAD_ASSERT_UNKNOWN( class_object().size() > index_ );
+	// change object pointer to null, but leave name for error reporting
 	class_object()[index_] = CPPAD_NULL;
 }
 /// atomic_base function object corresponding to a certain index
 static atomic_base* class_object(size_t index)
 {	CPPAD_ASSERT_UNKNOWN( class_object().size() > index );
 	return class_object()[index];
+}
+/// atomic_base function name corresponding to a certain index
+static const std::string& class_name(size_t index)
+{	CPPAD_ASSERT_UNKNOWN( class_name().size() > index );
+	return class_name()[index];
 }
 /*
 $begin atomic_option$$
@@ -354,7 +365,7 @@ void operator()(
 	size_t m = ay.size();
 # ifndef NDEBUG
 	bool ok;
-	std::string msg = "atomic_base: " + afun_name_ + ".eval: ";
+	std::string msg = "atomic_base: " + afun_name() + ".eval: ";
 	if( (n == 0) | (m == 0) )
 	{	msg += "ax.size() or ay.size() is zero";
 		CPPAD_ASSERT_KNOWN(false, msg.c_str() );
@@ -390,7 +401,7 @@ void operator()(
 			}
 # ifndef NDEBUG
 			if( tape_id != ax[j].tape_id_ )
-			{	msg += afun_name_ + 
+			{	msg += afun_name() + 
 				": ax contains variables from different threads.";
 				CPPAD_ASSERT_KNOWN(false, msg.c_str());
 			}
@@ -405,7 +416,7 @@ void operator()(
 # else
 	ok = forward(q, p, vx, vy, tx, ty);  
 	if( ! ok )
-	{	msg += afun_name_ + ": ok is false for "
+	{	msg += afun_name() + ": ok is false for "
 			"zero order forward mode calculation.";
 		CPPAD_ASSERT_KNOWN(false, msg.c_str());
 	}
