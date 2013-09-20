@@ -86,7 +86,12 @@ $childtable%
 	example/atomic/mat_mul.cpp
 %$$
 
-$head Example$$
+$head Examples$$
+
+$subhead Getting Started$$
+The file $cref atomic_get_started.cpp$$ contains an example and test
+that shows the minimal amount of information required to create
+a user defined atomic operation.
 
 $subhead Scalar Function$$
 The file $cref atomic_reciprocal.cpp$$ contains an example and test

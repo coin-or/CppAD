@@ -344,12 +344,15 @@ bool tangent(void)
 	using CppAD::AD;
 	using CppAD::NearEqual;
 	float eps = 10.f * CppAD::numeric_limits<float>::epsilon();
-
+/* $$
+$subhead Constructor$$
+$codep */
 	// --------------------------------------------------------------------
 	// Creater a tan and tanh object
 	atomic_tangent my_tan("my_tan", false), my_tanh("my_tanh", true);
-	// --------------------------------------------------------------------
-
+/* $$
+$subhead Recording$$
+$codep */
 	// domain space vector
 	size_t n  = 1;
 	float  x0 = 0.5;
@@ -384,7 +387,9 @@ bool tangent(void)
 	// create f: x -> f and stop tape recording
 	CppAD::ADFun<float> F;
 	F.Dependent(ax, af); 
-
+/* $$
+$subhead forward$$
+$codep */
 	// check function value 
 	float tan = std::tan(x0);
 	ok &= NearEqual(af[0] , tan,  eps, eps);
@@ -402,7 +407,9 @@ bool tangent(void)
 	CppAD::vector<float> dx(n), df(m);
 	dx[0] = 1.;
 	df    = F.Forward(1, dx);
-
+/* $$
+$subhead reverse$$
+$codep */
 	// compute derivative of tan - tanh using reverse mode
 	CppAD::vector<float> w(m), dw(n);
 	w[0]  = 1.;
@@ -438,7 +445,9 @@ bool tangent(void)
 	ok   &= NearEqual(two * ddf[1], tanhpp, eps, eps);
 	ok   &= NearEqual(ddw[0], w[0]*tanp  + w[1]*tanhp , eps, eps);
 	ok   &= NearEqual(ddw[1], w[0]*tanpp + w[1]*tanhpp, eps, eps);
-
+/* $$
+$subhead for_sparse_jac$$
+$codep */
 	// Forward mode computation of sparsity pattern for F.
 	size_t q = n;
 	// user vectorBool because m and n are small
@@ -448,7 +457,9 @@ bool tangent(void)
 	ok  &= (s1[0] == true);  // f[0] depends on x[0]
 	ok  &= (s1[1] == true);  // f[1] depends on x[0]
 	ok  &= (s1[2] == false); // f[2] does not depend on x[0]
-
+/* $$
+$subhead rev_sparse_jac$$
+$codep */
 	// Reverse mode computation of sparsity pattern for F.
 	size_t p = m;
 	CppAD::vectorBool s2(p * m), r2(p * n);
@@ -462,7 +473,9 @@ bool tangent(void)
 	ok  &= (r2[0] == true);  // f[0] depends on x[0]
 	ok  &= (r2[1] == true);  // f[1] depends on x[0]
 	ok  &= (r2[2] == false); // f[2] does not depend on x[0]
-
+/* $$
+$subhead rev_sparse_hes$$
+$codep */
 	// Hessian sparsity for f[0]
 	CppAD::vectorBool s3(m), h(q * n);
 	s3[0] = true;
@@ -476,7 +489,9 @@ bool tangent(void)
 	s3[2] = true;
 	h    = F.RevSparseHes(q, s3);
 	ok  &= (h[0] == false);  // Hessian is zero
-
+/* $$
+$subhead Large x Values$$
+$codep */
 	// check tanh results for a large value of x
 	x[0]  = std::numeric_limits<float>::max() / two;
 	f     = F.Forward(0, x);
@@ -486,12 +501,6 @@ bool tangent(void)
 	tanhp = 0.;
 	ok   &= NearEqual(df[1], tanhp, eps, eps);
  
-	// --------------------------------------------------------------------
-	// Free all temporary work space associated with atomic_basen objects. 
-	// (If there are future calls to user atomic functions, they will 
-	// create new temporary work space.)
-	CppAD::user_atomic<float>::clear();
-
 	return ok;
 }
 /* $$

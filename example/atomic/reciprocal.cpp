@@ -360,11 +360,15 @@ bool reciprocal(void)
 	using CppAD::AD;
 	using CppAD::NearEqual;
 	double eps = 10. * CppAD::numeric_limits<double>::epsilon();
-
+/* $$
+$subhead Constructor$$
+$codep */
 	// --------------------------------------------------------------------
 	// Create the atomic reciprocal object
 	atomic_reciprocal afun("atomic_reciprocal");
-	// --------------------------------------------------------------------
+/* $$
+$subhead Recording$$
+$codep */
 	// Create the function f(x)
 	//
 	// domain space vector
@@ -390,10 +394,9 @@ bool reciprocal(void)
 	// create f: x -> y and stop tape recording
 	CppAD::ADFun<double> f;
 	f.Dependent (ax, ay);  // f(x) = x
-
-	// --------------------------------------------------------------------
-	// Check forward mode results
-	//
+/* $$
+$subhead forward$$
+$codep */
 	// check function value 
 	double check = x0;
 	ok &= NearEqual( Value(ay[0]) , check,  eps, eps);
@@ -419,10 +422,9 @@ bool reciprocal(void)
 	y_p    = f.Forward(p, x_p);
 	check  = 0.;
 	ok &= NearEqual(y_p[0] , check,  eps, eps);
-
-	// --------------------------------------------------------------------
-	// Check reverse mode results
-	//
+/* $$
+$subhead reverse$$
+$codep */
 	// third order reverse mode 
 	p     = 3;
 	vector<double> w(m), dw(n * p);
@@ -433,8 +435,9 @@ bool reciprocal(void)
 	check = 0.;
 	ok &= NearEqual(dw[1] , check,  eps, eps);
 	ok &= NearEqual(dw[2] , check,  eps, eps);
-
-	// --------------------------------------------------------------------
+/* $$
+$subhead for_sparse_jac$$
+$codep */
 	// forward mode sparstiy pattern
 	size_t q = n;
 	CppAD::vectorBool r1(n * q), s1(m * q);
@@ -447,8 +450,9 @@ bool reciprocal(void)
 	afun.option( CppAD::atomic_base<double>::set_sparsity_enum );
 	s1    = f.ForSparseJac(q, r1);
 	ok  &= s1[0] == true;  // f[0] depends on x[0]  
-
-	// --------------------------------------------------------------------
+/* $$
+$subhead rev_sparse_jac$$
+$codep */
 	// reverse mode sparstiy pattern
 	p = m;
 	CppAD::vectorBool s2(p * m), r2(p * n);
@@ -461,8 +465,9 @@ bool reciprocal(void)
 	afun.option( CppAD::atomic_base<double>::set_sparsity_enum );
 	r2    = f.RevSparseJac(p, s2);
 	ok  &= r2[0] == true;  // f[0] depends on x[0]  
-
-	// --------------------------------------------------------------------
+/* $$
+$subhead rev_sparse_hes$$
+$codep */
 	// Hessian sparsity (using previous ForSparseJac call) 
 	CppAD::vectorBool s3(m), h(q * n);
 	s3[0] = true;        // compute sparsity pattern for f[0]
@@ -474,12 +479,6 @@ bool reciprocal(void)
 	afun.option( CppAD::atomic_base<double>::set_sparsity_enum );
 	h     = f.RevSparseHes(q, s3);
 	ok  &= h[0] == true; // second partial of f[0] w.r.t. x[0] may be non-zero
-
-	// -----------------------------------------------------------------
-	// Free all temporary work space associated with atomic_base objects. 
-	// (If there are future calls to user atomic functions, they will 
-	// create new temporary work space.)
-	CppAD::atomic_base<double>::clear();
 
 	return ok;
 }

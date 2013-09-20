@@ -89,11 +89,14 @@ bool get_started(void)
 	using CppAD::AD;
 	using CppAD::NearEqual;
 	double eps = 10. * CppAD::numeric_limits<double>::epsilon();
-
-	// --------------------------------------------------------------------
+/* $$
+$subhead Constructor$$
+$codep */
 	// Create the atomic get_started object
 	atomic_get_started afun("atomic_get_started");
-	// --------------------------------------------------------------------
+/* $$
+$subhead Recording$$
+$codep */
 	// Create the function f(x)
 	//
 	// domain space vector
@@ -119,10 +122,9 @@ bool get_started(void)
 	// create f: x -> y and stop tape recording
 	CppAD::ADFun<double> f;
 	f.Dependent (ax, ay);  // f(x) = x
-
-	// --------------------------------------------------------------------
-	// Check forward mode results
-	//
+/* $$
+$subhead forward$$
+$codep */
 	// check function value 
 	double check = x0;
 	ok &= NearEqual( Value(ay[0]) , check,  eps, eps);

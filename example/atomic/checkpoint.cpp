@@ -173,7 +173,6 @@ bool checkpoint(void)
 	for(i = 0; i < n; i++)
 		ok &= h_not[i] == h_yes[i];
 	
-	checkpoint<double>::clear();
 	return ok;
 }
 // END C++
