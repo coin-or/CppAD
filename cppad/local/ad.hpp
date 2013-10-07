@@ -23,7 +23,7 @@ Please visit http://www.coin-or.org/CppAD/ for information on other licenses.
 # include <cppad/local/player.hpp>
 # include <cppad/local/ad_tape.hpp>
 
-CPPAD_BEGIN_NAMESPACE
+namespace CppAD { // BEGIN_CPPAD_NAMESPACE
 
 typedef enum {
 	tape_manage_new, 
@@ -263,7 +263,7 @@ private:
 }; 
 // ---------------------------------------------------------------------------
 
-CPPAD_END_NAMESPACE
+} // END_CPPAD_NAMESPACE
 
 // tape linking private functions
 # include <cppad/local/tape_link.hpp>

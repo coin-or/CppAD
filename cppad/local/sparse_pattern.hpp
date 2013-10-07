@@ -19,7 +19,7 @@ Please visit http://www.coin-or.org/CppAD/ for information on other licenses.
 # include <cppad/local/sparse_set.hpp>
 # include <cppad/local/sparse_list.hpp>
 
-CPPAD_BEGIN_NAMESPACE
+namespace CppAD { // BEGIN_CPPAD_NAMESPACE
 /*!
 \defgroup sparse_pattern_hpp sparse_pattern.hpp
 \{
@@ -57,6 +57,6 @@ struct internal_sparsity< std::set<size_t> >
 }; 
 
 /*! \} */
-CPPAD_END_NAMESPACE
+} // END_CPPAD_NAMESPACE
 
 # endif

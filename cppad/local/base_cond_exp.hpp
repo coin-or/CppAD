@@ -153,7 +153,7 @@ $cref/base_alloc/base_alloc.hpp/CondExpRel/$$.
 $end
 */
 
-CPPAD_BEGIN_NAMESPACE
+namespace CppAD { // BEGIN_CPPAD_NAMESPACE
 
 /*!
 \defgroup base_cond_exp_hpp base_cond_exp.hpp
@@ -283,5 +283,5 @@ ResultType CondExpTemplate(
 }
 
 /*! \} */
-CPPAD_END_NAMESPACE
+} // END_CPPAD_NAMESPACE
 # endif

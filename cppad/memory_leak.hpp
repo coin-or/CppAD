@@ -117,7 +117,7 @@ $end
 # include <cppad/thread_alloc.hpp>
 # include <cppad/track_new_del.hpp>
 
-CPPAD_BEGIN_NAMESPACE
+namespace CppAD { // BEGIN_CPPAD_NAMESPACE
 /*!
 \defgroup memory_leak_hpp memory_leak.hpp
 \{
@@ -215,5 +215,5 @@ inline bool memory_leak(size_t add_static = 0)
 }
 
 /*! \} */
-CPPAD_END_NAMESPACE
+} // END_CPPAD_NAMESPACE
 # endif

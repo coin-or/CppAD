@@ -20,7 +20,7 @@ Please visit http://www.coin-or.org/CppAD/ for information on other licenses.
 // needed before one can use CPPAD_ASSERT_FIRST_CALL_NOT_PARALLEL
 # include <cppad/thread_alloc.hpp>
 
-CPPAD_BEGIN_NAMESPACE
+namespace CppAD { // BEGIN_CPPAD_NAMESPACE
 /*!
 \defgroup tape_link_hpp  tape_link.hpp
 \{
@@ -311,5 +311,5 @@ inline ADTape<Base> *AD<Base>::tape_this(void) const
 }
 
 /*! \} */
-CPPAD_END_NAMESPACE
+} // END_CPPAD_NAMESPACE
 # endif

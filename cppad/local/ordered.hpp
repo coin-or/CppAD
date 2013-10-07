@@ -15,7 +15,7 @@ Please visit http://www.coin-or.org/CppAD/ for information on other licenses.
 
 # include <cppad/local/define.hpp>
 
-CPPAD_BEGIN_NAMESPACE
+namespace CppAD { // BEGIN_CPPAD_NAMESPACE
 
 /*!
 \defgroup ordered_hpp ordered.hpp
@@ -100,6 +100,6 @@ bool abs_geq(const AD<Base>& x, const AD<Base>& y)
 {	return abs_geq(x.value_, y.value_); }
 // ============================================================================
 /*! \} */
-CPPAD_END_NAMESPACE
+} // END_CPPAD_NAMESPACE
 # endif
 

@@ -71,7 +71,7 @@ $end
 ------------------------------------------------------------------------------
 */
 
-CPPAD_BEGIN_NAMESPACE
+namespace CppAD { // BEGIN_CPPAD_NAMESPACE
 
 /*!
 \defgroup ad_ctor_hpp ad_ctor.hpp
@@ -164,5 +164,5 @@ inline AD<Base>::AD(const T &t)
 { }
 
 /*! \} */
-CPPAD_END_NAMESPACE
+} // END_CPPAD_NAMESPACE
 # endif

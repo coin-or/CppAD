@@ -144,7 +144,7 @@ $end
 # include <cppad/elapsed_seconds.hpp>
 # include <cppad/local/define.hpp>
 
-CPPAD_BEGIN_NAMESPACE
+namespace CppAD { // BEGIN_CPPAD_NAMESPACE
 /*!
 \defgroup time_test_hpp time_test.hpp
 \{
@@ -222,7 +222,7 @@ double time_test(Test test, double time_min, size_t test_size)
 }
 
 /*! \} */
-CPPAD_END_NAMESPACE
+} // END_CPPAD_NAMESPACE
 
 // END PROGRAM
 # endif

@@ -192,7 +192,7 @@ $end
 # include <cppad/local/pod_vector.hpp>
 # include <cppad/local/std_set.hpp>
 
-CPPAD_BEGIN_NAMESPACE
+namespace CppAD { // BEGIN_CPPAD_NAMESPACE
 /*!
 \defgroup rev_sparse_hes_hpp rev_sparse_hes.hpp
 \{
@@ -708,5 +708,5 @@ void ADFun<Base>::RevSparseHesCase(
 }
 
 /*! \} */
-CPPAD_END_NAMESPACE
+} // END_CPPAD_NAMESPACE
 # endif

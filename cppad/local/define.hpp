@@ -47,17 +47,6 @@ This preprocessor symbol makes it easier to compare these two options.
 */
 # define CPPAD_USE_FORWARD0SWEEP 1
 
-/*! 
-\def CPPAD_BEGIN_NAMESPACE
-Declares beginning of the CppAD namespace is a way not reconized by doxygen.
-
-\def CPPAD_END_NAMESPACE
-Used for end that matches the beginning of a CppAD namespace section.
-*/
-# define CPPAD_BEGIN_NAMESPACE namespace CppAD {
-# define CPPAD_END_NAMESPACE   }
-
-
 /*!
 \def CPPAD_INLINE_FRIEND_TEMPLATE_FUNCTION
 A version of the inline command that works with MC compiler.

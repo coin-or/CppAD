@@ -163,7 +163,7 @@ It returns true if it succeeds and false otherwise.
 $end
 ------------------------------------------------------------------------------
 */
-CPPAD_BEGIN_NAMESPACE
+namespace CppAD { // BEGIN_CPPAD_NAMESPACE
 /*!
 \defgroup ad_io_hpp ad_io.hpp
 \{
@@ -231,5 +231,5 @@ std::ostream& operator << (std::ostream &os, const VecAD_reference<Base> &x)
 { 	return (os << x.ADBase()); }
 
 /*! \} */
-CPPAD_END_NAMESPACE
+} // END_CPPAD_NAMESPACE
 # endif

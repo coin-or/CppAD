@@ -13,7 +13,7 @@ A copy of this license is included in the COPYING file of this distribution.
 Please visit http://www.coin-or.org/CppAD/ for information on other licenses.
 -------------------------------------------------------------------------- */
 
-CPPAD_BEGIN_NAMESPACE
+namespace CppAD { // BEGIN_CPPAD_NAMESPACE
 /*!
 \defgroup rev_hes_sweep_hpp rev_hes_sweep.hpp
 \{
@@ -799,7 +799,7 @@ void RevHesSweep(
 	return;
 }
 /*! \} */
-CPPAD_END_NAMESPACE
+} // END_CPPAD_NAMESPACE
 
 // preprocessor symbols that are local to this file
 # undef CPPAD_REV_HES_SWEEP_TRACE

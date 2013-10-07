@@ -17,7 +17,7 @@ Please visit http://www.coin-or.org/CppAD/ for information on other licenses.
 # include <omp.h>
 # endif
 
-CPPAD_BEGIN_NAMESPACE
+namespace CppAD { // BEGIN_CPPAD_NAMESPACE
 class omp_alloc{
 // ============================================================================
 public:
@@ -758,6 +758,6 @@ $cref/parallel/omp_in_parallel/$$ execution mode.
 $end
 -------------------------------------------------------------------------------
 */
-CPPAD_END_NAMESPACE
+} // END_CPPAD_NAMESPACE
 
 # endif

@@ -15,7 +15,7 @@ Please visit http://www.coin-or.org/CppAD/ for information on other licenses.
 # include <set>
 # include <cppad/local/pod_vector.hpp>
 
-CPPAD_BEGIN_NAMESPACE
+namespace CppAD { // BEGIN_CPPAD_NAMESPACE
 /*!
 \defgroup for_jac_sweep_hpp for_jac_sweep.hpp
 \{
@@ -716,7 +716,7 @@ void ForJacSweep(
 }
 
 /*! \} */
-CPPAD_END_NAMESPACE
+} // END_CPPAD_NAMESPACE
 
 // preprocessor symbols that are local to this file
 # undef CPPAD_FOR_JAC_SWEEP_TRACE

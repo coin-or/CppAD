@@ -66,7 +66,7 @@ $end
 ------------------------------------------------------------------------------
 */
 
-CPPAD_BEGIN_NAMESPACE
+namespace CppAD { // BEGIN_CPPAD_NAMESPACE
 
 /*!
 \defgroup ad_assign_hpp ad_assign.hpp
@@ -144,5 +144,5 @@ inline AD<Base>& AD<Base>::operator=(const T &t)
 
 
 /*! \} */
-CPPAD_END_NAMESPACE
+} // END_CPPAD_NAMESPACE
 # endif

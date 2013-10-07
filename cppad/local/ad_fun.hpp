@@ -57,7 +57,7 @@ $childtable%
 $end
 */
 
-CPPAD_BEGIN_NAMESPACE
+namespace CppAD { // BEGIN_CPPAD_NAMESPACE
 /*!
 \defgroup ad_fun_hpp ad_fun.hpp
 \{
@@ -578,7 +578,7 @@ public:
 // ---------------------------------------------------------------------------
 
 /*! \} */
-CPPAD_END_NAMESPACE
+} // END_CPPAD_NAMESPACE
 
 // non-user interfaces
 # include <cppad/local/forward0sweep.hpp>

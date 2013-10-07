@@ -236,7 +236,7 @@ $end
 */
 # include <cppad/local/std_set.hpp>
 
-CPPAD_BEGIN_NAMESPACE
+namespace CppAD { // BEGIN_CPPAD_NAMESPACE
 /*!
 \defgroup sparse_jacobian_hpp sparse_jacobian.hpp
 \{
@@ -1232,5 +1232,5 @@ VectorBase ADFun<Base>::SparseJacobian( const VectorBase& x )
 
 
 /*! \} */
-CPPAD_END_NAMESPACE
+} // END_CPPAD_NAMESPACE
 # endif

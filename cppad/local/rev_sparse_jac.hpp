@@ -163,7 +163,7 @@ $end
 
 # include <cppad/local/std_set.hpp>
 
-CPPAD_BEGIN_NAMESPACE
+namespace CppAD { // BEGIN_CPPAD_NAMESPACE
 /*!
 \defgroup rev_sparse_jac_hpp rev_sparse_jac.hpp
 \{
@@ -607,5 +607,5 @@ VectorSet ADFun<Base>::RevSparseJac(
 }
 
 /*! \} */
-CPPAD_END_NAMESPACE
+} // END_CPPAD_NAMESPACE
 # endif

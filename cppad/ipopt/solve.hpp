@@ -404,7 +404,7 @@ $end
 */
 # include <cppad/ipopt/solve_callback.hpp>
 
-CPPAD_BEGIN_NAMESPACE
+namespace CppAD { // BEGIN_CPPAD_NAMESPACE
 namespace ipopt {
 /*!
 \defgroup solve_hpp solve.hpp
@@ -642,5 +642,5 @@ void solve(
 
 /*! \} */
 } // end ipopt namespace
-CPPAD_END_NAMESPACE
+} // END_CPPAD_NAMESPACE
 # endif

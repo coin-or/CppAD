@@ -238,7 +238,7 @@ $end
 -----------------------------------------------------------------------------
 */
 
-CPPAD_BEGIN_NAMESPACE
+namespace CppAD { // BEGIN_CPPAD_NAMESPACE
 /*!
 \defgroup opt_val_hes_hpp opt_val_hes.hpp
 \{
@@ -527,6 +527,6 @@ int opt_val_hes(
 }
 
 /*! \} */
-CPPAD_END_NAMESPACE
+} // END_CPPAD_NAMESPACE
 
 # endif

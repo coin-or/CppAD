@@ -280,7 +280,7 @@ $end
 # include <cppad/check_simple_vector.hpp>
 # include <cppad/thread_alloc.hpp>
 
-CPPAD_BEGIN_NAMESPACE
+namespace CppAD { // BEGIN_CPPAD_NAMESPACE
 /*!
 \defgroup vector_hpp vector.hpp
 \{
@@ -775,5 +775,5 @@ inline std::ostream& operator << (
 }
 
 /*! \} */
-CPPAD_END_NAMESPACE
+} // END_CPPAD_NAMESPACE
 # endif

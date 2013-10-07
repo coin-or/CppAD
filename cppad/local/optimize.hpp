@@ -133,7 +133,7 @@ $end
 */
 # include <stack>
 
-CPPAD_BEGIN_NAMESPACE
+namespace CppAD { // BEGIN_CPPAD_NAMESPACE
 /*!
 \defgroup optimize_hpp optimize.hpp
 \{
@@ -1773,5 +1773,5 @@ void ADFun<Base>::optimize(void)
 }
 
 /*! \} */
-CPPAD_END_NAMESPACE
+} // END_CPPAD_NAMESPACE
 # endif

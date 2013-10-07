@@ -22,7 +22,7 @@ Please visit http://www.coin-or.org/CppAD/ for information on other licenses.
 // needed before one can use CPPAD_ASSERT_FIRST_CALL_NOT_PARALLEL
 # include <cppad/thread_alloc.hpp>
 
-CPPAD_BEGIN_NAMESPACE
+namespace CppAD { // BEGIN_CPPAD_NAMESPACE
 /*! 
 \defgroup op_code_hpp op_code.hpp
 \{
@@ -679,5 +679,5 @@ void printOp(
 }
 
 /*! \} */
-CPPAD_END_NAMESPACE
+} // END_CPPAD_NAMESPACE
 # endif

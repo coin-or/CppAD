@@ -18,7 +18,6 @@ Please visit http://www.coin-or.org/CppAD/ for information on other licenses.
 # undef CPPAD_ASSERT_NARG_NRES
 # undef CPPAD_ASSERT_NOT_PARALLEL
 //      CPPAD_ASSERT_UNKNOWN needed by cppad_ipopt
-//      CPPAD_BEGIN_NAMESPACE needed by cppad_ipopt
 //      CPPAD_BOOL_BINARY in user api
 //      CPPAD_BOOL_UNARY in user api
 # undef CPPAD_BOOSTVECTOR

@@ -120,7 +120,7 @@ $end
 # include <cppad/local/cppad_assert.hpp>
 # include <cppad/local/declare_ad.hpp>
 
-CPPAD_BEGIN_NAMESPACE
+namespace CppAD { // BEGIN_CPPAD_NAMESPACE
 /*!
 \defgroup limits_hpp limits.hpp
 \{
@@ -174,5 +174,5 @@ public:
 };
 
 /*! \} */
-CPPAD_END_NAMESPACE
+} // END_CPPAD_NAMESPACE
 # endif

@@ -209,7 +209,7 @@ $end
 
 # include <cppad/local/std_set.hpp>
 
-CPPAD_BEGIN_NAMESPACE
+namespace CppAD { // BEGIN_CPPAD_NAMESPACE
 /*!
 \defgroup for_sparse_jac_hpp for_sparse_jac.hpp
 \{
@@ -705,5 +705,5 @@ VectorSet ADFun<Base>::ForSparseJac(
 
 
 /*! \} */
-CPPAD_END_NAMESPACE
+} // END_CPPAD_NAMESPACE
 # endif

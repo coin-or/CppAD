@@ -27,7 +27,7 @@ Please visit http://www.coin-or.org/CppAD/ for information on other licenses.
 
 # include <cppad/local/cppad_assert.hpp>
 # include <cppad/local/define.hpp>
-CPPAD_BEGIN_NAMESPACE
+namespace CppAD { // BEGIN_CPPAD_NAMESPACE
 /*!
 \defgroup thread_alloc_hpp thread_alloc.hpp
 \{
@@ -1569,7 +1569,7 @@ $end
 
 
 /*! \} */
-CPPAD_END_NAMESPACE
+} // END_CPPAD_NAMESPACE
 
 // preprocessor symbols local to this file
 # undef CPPAD_MAX_NUM_CAPACITY

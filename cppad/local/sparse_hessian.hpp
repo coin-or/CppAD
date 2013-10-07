@@ -244,7 +244,7 @@ $end
 */
 # include <cppad/local/std_set.hpp>
 
-CPPAD_BEGIN_NAMESPACE
+namespace CppAD { // BEGIN_CPPAD_NAMESPACE
 /*!
 \defgroup sparse_hessian_hpp sparse_hessian.hpp
 \{
@@ -1106,5 +1106,5 @@ VectorBase ADFun<Base>::SparseHessian(const VectorBase &x, const VectorBase &w)
 }
 
 /*! \} */
-CPPAD_END_NAMESPACE
+} // END_CPPAD_NAMESPACE
 # endif

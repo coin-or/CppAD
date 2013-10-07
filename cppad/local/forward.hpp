@@ -32,7 +32,7 @@ $end
 // documened after Forward but included here so easy to see
 # include <cppad/local/cap_taylor.hpp>
 
-CPPAD_BEGIN_NAMESPACE
+namespace CppAD { // BEGIN_CPPAD_NAMESPACE
 /*!
 \defgroup forward_hpp forward.hpp
 \{
@@ -193,5 +193,5 @@ Vector ADFun<Base>::Forward(
 }
 
 /*! \} */
-CPPAD_END_NAMESPACE
+} // END_CPPAD_NAMESPACE
 # endif

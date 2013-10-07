@@ -237,7 +237,7 @@ $end
 ----------------------------------------------------------------------------
 */
 
-CPPAD_BEGIN_NAMESPACE
+namespace CppAD { // BEGIN_CPPAD_NAMESPACE
 /*!
 \defgroup fun_construct_hpp fun_construct.hpp
 \{
@@ -485,5 +485,5 @@ total_num_var_(0)
 }
 
 /*! \} */
-CPPAD_END_NAMESPACE
+} // END_CPPAD_NAMESPACE
 # endif

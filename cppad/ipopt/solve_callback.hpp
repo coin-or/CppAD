@@ -17,7 +17,7 @@ Please visit http://www.coin-or.org/CppAD/ for information on other licenses.
 # include <coin/IpTNLP.hpp>
 # include <cppad/ipopt/solve_result.hpp>
 
-CPPAD_BEGIN_NAMESPACE
+namespace CppAD { // BEGIN_CPPAD_NAMESPACE
 namespace ipopt {
 /*
 \defgroup solve_callback solve_callback.hpp
@@ -1112,6 +1112,6 @@ public:
 
 /*! \} */
 } // end namespace ipopt
-CPPAD_END_NAMESPACE
+} // END_CPPAD_NAMESPACE
 
 # endif

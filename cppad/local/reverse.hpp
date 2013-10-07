@@ -40,7 +40,7 @@ $end
 # include <algorithm>
 # include <cppad/local/pod_vector.hpp>
 
-CPPAD_BEGIN_NAMESPACE
+namespace CppAD { // BEGIN_CPPAD_NAMESPACE
 /*!
 \defgroup reverse_hpp reverse.hpp
 \{
@@ -216,5 +216,5 @@ VectorBase ADFun<Base>::Reverse(size_t p, const VectorBase &w)
 	
 
 /*! \} */
-CPPAD_END_NAMESPACE
+} // END_CPPAD_NAMESPACE
 # endif

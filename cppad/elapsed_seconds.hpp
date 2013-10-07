@@ -84,7 +84,7 @@ extern double microsoft_timer(void);
 
 // needed before one can use CPPAD_ASSERT_FIRST_CALL_NOT_PARALLEL
 # include <cppad/thread_alloc.hpp>
-CPPAD_BEGIN_NAMESPACE
+namespace CppAD { // BEGIN_CPPAD_NAMESPACE
 /*!
 \defgroup elapsed_seconds_hpp elapsed_seconds.hpp
 \{
@@ -149,5 +149,5 @@ inline double elapsed_seconds(void)
 # endif
 
 /*! \} */
-CPPAD_END_NAMESPACE
+} // END_CPPAD_NAMESPACE
 # endif

@@ -80,7 +80,7 @@ $end
 # include <cppad/check_simple_vector.hpp>
 # include <cppad/local/define.hpp>
 
-CPPAD_BEGIN_NAMESPACE
+namespace CppAD { // BEGIN_CPPAD_NAMESPACE
 /*!
 \defgroup index_sort_hpp index_sort.hpp
 \{
@@ -176,6 +176,6 @@ void index_sort(const VectorKey& keys, VectorSize& ind)
 }
 
 /*! \} */
-CPPAD_END_NAMESPACE
+} // END_CPPAD_NAMESPACE
 
 # endif
