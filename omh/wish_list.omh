@@ -11,12 +11,13 @@ Please visit http://www.coin-or.org/CppAD/ for information on other licenses.
 -------------------------------------------------------------------------- */
 $begin WishList$$
 $spell
+	recomputed
+	recomputation
 	checkpointing
 	afun
 	iterator
 	std
 	cos
-	booleans
 	Ipopt
 	Adolc
 	xml
@@ -53,6 +54,11 @@ where $icode copy$$ would determine if a separate copy of $icode ad_fun$$
 was made or if a pointer was used. 
 Note that if a pointer is used, it becomes invalid when the destructor
 for $icode ad_fun$$ is called.
+
+$head Forward Mode Recomputation$$
+If the results of $cref ForwardAny$$ have already been computed and are still
+stored in the $cref ADFun$$ object (see $cref size_taylor$$), 
+then they do not need to be recomputed and the results can just be returned.
 
 $head Iterator Interface$$
 If the CppAD API had iterator interfaces,
