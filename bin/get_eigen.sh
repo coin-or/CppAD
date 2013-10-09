@@ -68,7 +68,7 @@ echo_eval cd build/external
 # -----------------------------------------------------------------------------
 if [ ! -e "eigen-$version.tar.gz" ]
 then
-	echo_eval wget $web_page/$version.tar.gz
+	echo_eval wget --no-check-certificate $web_page/$version.tar.gz
 	echo_eval mv $version.tar.gz eigen-$version.tar.gz
 fi
 if [ -e eigen-eigen-* ]
