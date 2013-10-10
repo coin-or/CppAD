@@ -68,7 +68,10 @@ echo_eval cd build/external
 # -----------------------------------------------------------------------------
 if [ ! -e "Ipopt-$version" ]
 then
-	echo_eval svn checkout "$repository/stable/$version Ipopt-$version"
+	echo_eval svn checkout \
+		--no-auth-cache \
+		--non-interactive \
+		"$repository/stable/$version Ipopt-$version"
 	ipopt_up_to_date='yes'
 else
 	if svn update "Ipopt-$version"

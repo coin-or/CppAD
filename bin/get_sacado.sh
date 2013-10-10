@@ -103,7 +103,7 @@ echo_eval cd build/external
 # -----------------------------------------------------------------------------
 if [ ! -e "$version.tar.gz" ]
 then
-	echo_eval wget $web_page/$version.tar.gz
+	echo_eval wget --no-check-certificate $web_page/$version.tar.gz
 fi
 for package in Sacado Teuchos Trilinois 
 do

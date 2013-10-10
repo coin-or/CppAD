@@ -68,7 +68,7 @@ echo_eval cd build/external
 # -----------------------------------------------------------------------------
 if [ ! -e "FADBAD++-$version.tar.gz" ]
 then
-	echo_eval wget $web_page/FADBAD++-$version.tar.gz
+	echo_eval wget --no-check-certificate $web_page/FADBAD++-$version.tar.gz
 fi
 if [ -e "FADBAD++" ]
 then
