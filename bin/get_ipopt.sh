@@ -56,8 +56,8 @@ echo_eval() {
 }
 # -----------------------------------------------------------------------------
 echo 'Download ipopt to build/external and install it to build/prefix'
-version='3.10'
-repository='https://projects.coin-or.org/svn/Ipopt'
+version='3.10.4'
+web_page='http://www.coin-or.org/download/source/Ipopt'
 prefix=`pwd`'/build/prefix'
 # -----------------------------------------------------------------------------
 if [ ! -d build/external ]
@@ -66,32 +66,16 @@ then
 fi
 echo_eval cd build/external
 # -----------------------------------------------------------------------------
+if [ ! -e "Ipopt-$version.tgz" ]
+then
+	echo_eval wget --no-check-certificate "$web_page/Ipopt-$version.tgz"
+fi
 if [ ! -e "Ipopt-$version" ]
 then
-	echo_eval svn checkout \
-		--no-auth-cache \
-		--non-interactive \
-		"$repository/stable/$version Ipopt-$version"
-	ipopt_up_to_date='yes'
-else
-	if svn update "Ipopt-$version"
-	then
-		ipopt_up_to_date='yes'
-	else
-		ipopt_up_to_date='no'
-	fi
+	echo_eval tar -xzf Ipopt-$version.tgz
 fi
 echo_eval cd "Ipopt-$version"
 # -----------------------------------------------------------------------------
-file='Ipopt/src/Algorithm/IpIpoptAlg.cpp'
-comment='// Suppress printing startup message'
-if ! grep "$comment" $file > /dev/null
-then
-	match='static bool copyright_message_printed'
-	echo "Patch $file"
-	echo "so it does not print message with every run."
-	sed -e "s|^  $match = false;|$comment\n//&\n  $match = true;|" -i $file
-fi
 for file in ThirdParty/Blas/get.Blas ThirdParty/Lapack/get.Lapack
 do
 	sed -e 's|ftp:\(\/\/www.netlib.org\/\)|http:\1|' \
@@ -126,10 +110,3 @@ echo_eval ./configure \
 	--libdir="$prefix/$libdir" 
 # -----------------------------------------------------------------------------
 echo_eval make install 
-#
-if [ "$ipopt_up_to_date" == 'no' ]
-then
-	echo "get_ipopt.sh: OK except could not update Ipopt"
-else
-	echo "get_ipopt.sh: OK"
-fi
