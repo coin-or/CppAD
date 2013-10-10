@@ -95,7 +95,7 @@ else
 	libdir='lib'
 fi
 # -----------------------------------------------------------------------------
-if [ ! -d external ]
+if [ ! -d build/external ]
 then
 	echo_eval mkdir -p build/external
 fi

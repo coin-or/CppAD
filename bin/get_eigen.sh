@@ -60,7 +60,7 @@ version='3.2.0'
 web_page='https://bitbucket.org/eigen/eigen/get'
 prefix=`pwd`'/build/prefix'
 # -----------------------------------------------------------------------------
-if [ ! -d external ]
+if [ ! -d build/external ]
 then
 	echo_eval mkdir -p build/external
 fi

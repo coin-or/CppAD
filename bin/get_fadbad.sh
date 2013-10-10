@@ -60,7 +60,7 @@ version='2.1'
 web_page='http://www.fadbad.com/download'
 prefix=`pwd`'/build/prefix'
 # -----------------------------------------------------------------------------
-if [ ! -d external ]
+if [ ! -d build/external ]
 then
 	echo_eval mkdir -p build/external
 fi

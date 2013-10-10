@@ -60,7 +60,7 @@ version='3.10'
 repository='https://projects.coin-or.org/svn/Ipopt'
 prefix=`pwd`'/build/prefix'
 # -----------------------------------------------------------------------------
-if [ ! -d external ]
+if [ ! -d build/external ]
 then
 	echo_eval mkdir -p build/external
 fi
