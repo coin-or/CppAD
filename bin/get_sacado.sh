@@ -95,6 +95,17 @@ else
 	libdir='lib'
 fi
 # -----------------------------------------------------------------------------
+# check if we have a local copy of coin lapack and blas libraries installed
+coin_lapack_blas='no'
+if [ -e build/prefix/$libdir/libcoinlapack.a ]
+then
+	if [ -e build/prefix/$libdir/libcoinblas.a ]
+	then
+		coin_lapack_blas='yes'
+	fi
+fi
+echo "coin_lapack_blas=$coin_lapack_blas"
+# -----------------------------------------------------------------------------
 if [ ! -d build/external ]
 then
 	echo_eval mkdir -p build/external
@@ -124,13 +135,28 @@ if [ -e CMakeCache.txt ]
 then
 	echo_eval rm CMakeCache.txt
 fi
-echo_eval $cmake_program \
-	-D CMAKE_BUILD_TYPE:STRING=RELEASE \
-	-D Trilinos_ENABLE_Sacado:BOOL=ON \
-	-D Sacado_ENABLE_TESTS:BOOL=OFF \
-	-D CMAKE_INSTALL_PREFIX:PATH=$prefix \
-	-D Trilinos_INSTALL_LIB_DIR=$prefix/$libdir \
-	../
+if [ "$coin_lapack_blas" == 'yes' ]
+then
+	echo_eval $cmake_program \
+		-D CMAKE_BUILD_TYPE:STRING=RELEASE \
+		-D Trilinos_ENABLE_Sacado:BOOL=ON \
+		-D Sacado_ENABLE_TESTS:BOOL=OFF \
+		-D CMAKE_INSTALL_PREFIX:PATH=$prefix \
+		-D Trilinos_INSTALL_LIB_DIR=$prefix/$libdir \
+		-D LAPACK_LIBRARY_NAMES:STRING=coinlapack \
+		-D BLAS_LIBRARY_NAMES:STRING=coinblas \
+		-D LAPACK_LIBRARY_DIRS:STRING=../prefix/$libdir \
+		-D BLAS_LIBRARY_DIRS:STRING=../prefix/$libdir \
+		../
+else
+	echo_eval $cmake_program \
+		-D CMAKE_BUILD_TYPE:STRING=RELEASE \
+		-D Trilinos_ENABLE_Sacado:BOOL=ON \
+		-D Sacado_ENABLE_TESTS:BOOL=OFF \
+		-D CMAKE_INSTALL_PREFIX:PATH=$prefix \
+		-D Trilinos_INSTALL_LIB_DIR=$prefix/$libdir \
+		../
+fi
 echo_eval make install
 #
 echo "get_sacado.sh: OK"
