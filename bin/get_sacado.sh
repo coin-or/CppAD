@@ -131,10 +131,6 @@ then
 	echo_eval mkdir build
 fi
 echo_eval cd build
-if [ -e CMakeCache.txt ]
-then
-	echo_eval rm CMakeCache.txt
-fi
 if [ "$coin_lapack_blas" == 'yes' ]
 then
 	echo_eval $cmake_program \
