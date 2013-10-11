@@ -39,13 +39,6 @@ then
 	echo "see http://comments.gmane.org/gmane.text.doxygen.general/8594"
 	exit 0
 fi
-if (( $doxygen_version == 183 ))
-then
-	doxygen_version=`doxygen --version`
-	echo "doxygen version $doxygen_version is == 1.8.3"
-	echo "Have not yet determined if this is a problem or not"
-	exit 0
-fi
 list=`head doxygen.err`
 if [ "$list" == "" ]
 then
