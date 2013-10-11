@@ -120,7 +120,7 @@ echo_eval mv $git_name eigen-$version
 echo_eval cd eigen-$version
 echo_eval mkdir build
 echo_eval cd build
-echo_eval cmake .. -DCMAKE_INSTALL_PREFIX=$prefix
+echo_eval $cmake_program .. -DCMAKE_INSTALL_PREFIX=$prefix
 echo_eval make install
 echo_eval ln -s $prefix/include/eigen3/Eigen $prefix/include/Eigen
 #
