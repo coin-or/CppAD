@@ -61,17 +61,18 @@ log_eval bin/get_fadbad.sh
 #	trunk_dir/build/prefix/include/Eigen
 log_eval bin/get_eigen.sh
 #
-# Running bin/get_sacado.sh will
-# build sacado in: trunk_dir/build/external
-# install it in:   trunk_dir/build/prefix
-# It will re-use the currently compiled verison if available.
-log_eval bin/get_sacado.sh
-#
 # Running bin/get_ipopt.sh will
 # build ipopt in: trunk_dir/build/external
 # install it in:  trunk_dir/build/prefix
 # It will re-use the currently compiled verison if available.
 log_eval bin/get_ipopt.sh
+#
+# Running bin/get_sacado.sh will
+# build sacado in: trunk_dir/build/external
+# install it in:   trunk_dir/build/prefix
+# It will re-use the currently compiled verison if available.
+# It will also use libcoinlapack and libcoinblas if built by get_ipopt.sh
+log_eval bin/get_sacado.sh
 #
 # Use trunk_dir/../build to build and test CppAD (no reuse)
 echo_eval cd ..
