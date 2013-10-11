@@ -60,6 +60,34 @@ version='3.2.0'
 web_page='https://bitbucket.org/eigen/eigen/get'
 prefix=`pwd`'/build/prefix'
 # -----------------------------------------------------------------------------
+# determine which version of cmake to use
+cmake --version |  sed \
+		-e 's|[^0-9.]*||g' \
+		-e 's|\([0-9]*\)\.\([0-9]*\)\..*|\1 * 10 + \2|' \
+	| bc > get_sacado.$$
+cmake_version=`cat get_sacado.$$`
+rm get_sacado.$$
+echo "cmake_version=$cmake_version"
+#
+cmake_program=''
+if [ "$cmake_version" -ge '28' ]
+then
+	cmake_program='cmake'
+else
+	for cmake_version in 28 29
+	do
+		if which cmake$cmake_version >& /dev/null
+		then
+			cmake_program="cmake$cmake_version"
+		fi
+	done
+fi
+if [ "$cmake_program" == '' ]
+then
+	echo 'cannot find a verison of cmake that is 2.8 or higher'
+	exit 1
+fi
+# -----------------------------------------------------------------------------
 if [ ! -d build/external ]
 then
 	echo_eval mkdir -p build/external
