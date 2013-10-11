@@ -220,9 +220,9 @@ struct optimize_csum_stacks {
 
 
 /*!
-Documents arguments that are common to optimization helper functions
-(should not be called).
+Shared documentation for optimization helper functions (not called).
 
+<!-- define optimize_prototype -->
 \param tape
 is a vector that maps a variable index, in the old operation sequence,
 to an <tt>optimize_old_variable</tt> information record.
@@ -267,6 +267,7 @@ is a vector of length \a npar containing the parameters
 for this operation sequence; i.e.,
 given a parameter index \c i, the corresponding parameter value is
 <tt>par[i]</tt>.
+<!-- end optimize_prototype -->
 */
 template <class Base>
 void optimize_prototype(
@@ -282,7 +283,52 @@ Check a unary operator for a complete match with a previous operator.
 A complete match means that the result of the previous operator
 can be used inplace of the result for current operator.
 
-\copydetails optimize_prototype
+<!-- replace optimize_prototype -->
+\param tape
+is a vector that maps a variable index, in the old operation sequence,
+to an <tt>optimize_old_variable</tt> information record.
+Note that the index for this vector must be greater than or equal zero and 
+less than <tt>tape.size()</tt>.
+
+\li <tt>tape[i].op</tt> 
+is the operator in the old operation sequence
+corresponding to the old variable index \c i.
+Assertion: <tt>NumRes(tape[i].op) > 0</tt>.
+
+\li <tt>tape[i].arg</tt> 
+for <tt>j < NumArg( tape[i].op ), tape[i].arg[j]</tt>
+is the j-th the argument, in the old operation sequence,
+corresponding to the old variable index \c i.
+Assertion: <tt>tape[i].arg[j] < i</tt>.
+
+\li <tt>tape[i].new_var</tt>
+Suppose 
+<tt>i <= current, j < NumArg( tape[i].op ), and k = tape[i].arg[j]</tt>,
+and \c j corresponds to a variable for operator <tt>tape[i].op</tt>.
+It follows that <tt>tape[k].new_var</tt>
+has alread been set to the variable in the new operation sequence 
+corresponding to the old variable index \c k.
+This means that the \c new_var value has been set
+for all the possible arguments that come before \a current.
+
+\param current
+is the index in the old operation sequence for 
+the variable corresponding to the result for the current operator.
+Assertions: 
+<tt>
+current < tape.size(),
+NumRes( tape[current].op ) > 0.
+</tt>
+
+\param npar
+is the number of parameters corresponding to this operation sequence.
+
+\param par
+is a vector of length \a npar containing the parameters
+for this operation sequence; i.e.,
+given a parameter index \c i, the corresponding parameter value is
+<tt>par[i]</tt>.
+<!-- end optimize_prototype -->
 
 \param hash_table_var
 is a vector with size CPPAD_HASH_TABLE_SIZE
@@ -342,11 +388,75 @@ size_t optimize_unary_match(
 /*!
 Check a binary operator for a complete match with a previous operator,
 
-\copydetails optimize_unary_match
+<!-- replace optimize_prototype -->
+\param tape
+is a vector that maps a variable index, in the old operation sequence,
+to an <tt>optimize_old_variable</tt> information record.
+Note that the index for this vector must be greater than or equal zero and 
+less than <tt>tape.size()</tt>.
+
+\li <tt>tape[i].op</tt> 
+is the operator in the old operation sequence
+corresponding to the old variable index \c i.
+Assertion: <tt>NumRes(tape[i].op) > 0</tt>.
+
+\li <tt>tape[i].arg</tt> 
+for <tt>j < NumArg( tape[i].op ), tape[i].arg[j]</tt>
+is the j-th the argument, in the old operation sequence,
+corresponding to the old variable index \c i.
+Assertion: <tt>tape[i].arg[j] < i</tt>.
+
+\li <tt>tape[i].new_var</tt>
+Suppose 
+<tt>i <= current, j < NumArg( tape[i].op ), and k = tape[i].arg[j]</tt>,
+and \c j corresponds to a variable for operator <tt>tape[i].op</tt>.
+It follows that <tt>tape[k].new_var</tt>
+has alread been set to the variable in the new operation sequence 
+corresponding to the old variable index \c k.
+This means that the \c new_var value has been set
+for all the possible arguments that come before \a current.
+
+\param current
+is the index in the old operation sequence for 
+the variable corresponding to the result for the current operator.
+Assertions: 
+<tt>
+current < tape.size(),
+NumRes( tape[current].op ) > 0.
+</tt>
+
+\param npar
+is the number of parameters corresponding to this operation sequence.
+
+\param par
+is a vector of length \a npar containing the parameters
+for this operation sequence; i.e.,
+given a parameter index \c i, the corresponding parameter value is
+<tt>par[i]</tt>.
+<!-- end optimize_prototype -->
+
+\param hash_table_var
+is a vector with size CPPAD_HASH_TABLE_SIZE
+that maps a hash code to the corresponding 
+variable index in the old operation sequence.
+All the values in this table must be less than \a current.
+
+\param code
+The input value of code does not matter.
+The output value of code is the hash code corresponding to
+this operation in the new operation sequence.
+
+\return
+If the return value is zero,
+no match was found.
+If the return value is greater than zero,
+it is the index of a new variable that can be used to replace the 
+old variable.
+
 
 \par Restrictions:
 The binary operator must be an addition, subtraction, multiplication, division
-or power operator.
+or power operator.  NumArg( tape[current].op ) == 1.
 */
 template <class Base>
 inline size_t optimize_binary_match(
@@ -477,7 +587,52 @@ inline size_t optimize_binary_match(
 /*!
 Record an operation of the form (parameter op variable).
 
-\copydetails optimize_prototype
+<!-- replace optimize_prototype -->
+\param tape
+is a vector that maps a variable index, in the old operation sequence,
+to an <tt>optimize_old_variable</tt> information record.
+Note that the index for this vector must be greater than or equal zero and 
+less than <tt>tape.size()</tt>.
+
+\li <tt>tape[i].op</tt> 
+is the operator in the old operation sequence
+corresponding to the old variable index \c i.
+Assertion: <tt>NumRes(tape[i].op) > 0</tt>.
+
+\li <tt>tape[i].arg</tt> 
+for <tt>j < NumArg( tape[i].op ), tape[i].arg[j]</tt>
+is the j-th the argument, in the old operation sequence,
+corresponding to the old variable index \c i.
+Assertion: <tt>tape[i].arg[j] < i</tt>.
+
+\li <tt>tape[i].new_var</tt>
+Suppose 
+<tt>i <= current, j < NumArg( tape[i].op ), and k = tape[i].arg[j]</tt>,
+and \c j corresponds to a variable for operator <tt>tape[i].op</tt>.
+It follows that <tt>tape[k].new_var</tt>
+has alread been set to the variable in the new operation sequence 
+corresponding to the old variable index \c k.
+This means that the \c new_var value has been set
+for all the possible arguments that come before \a current.
+
+\param current
+is the index in the old operation sequence for 
+the variable corresponding to the result for the current operator.
+Assertions: 
+<tt>
+current < tape.size(),
+NumRes( tape[current].op ) > 0.
+</tt>
+
+\param npar
+is the number of parameters corresponding to this operation sequence.
+
+\param par
+is a vector of length \a npar containing the parameters
+for this operation sequence; i.e.,
+given a parameter index \c i, the corresponding parameter value is
+<tt>par[i]</tt>.
+<!-- end optimize_prototype -->
 
 \param rec
 is the object that will record the operations.
@@ -531,7 +686,52 @@ size_t optimize_record_pv(
 /*!
 Record an operation of the form (variable op parameter).
 
-\copydetails optimize_prototype
+<!-- replace optimize_prototype -->
+\param tape
+is a vector that maps a variable index, in the old operation sequence,
+to an <tt>optimize_old_variable</tt> information record.
+Note that the index for this vector must be greater than or equal zero and 
+less than <tt>tape.size()</tt>.
+
+\li <tt>tape[i].op</tt> 
+is the operator in the old operation sequence
+corresponding to the old variable index \c i.
+Assertion: <tt>NumRes(tape[i].op) > 0</tt>.
+
+\li <tt>tape[i].arg</tt> 
+for <tt>j < NumArg( tape[i].op ), tape[i].arg[j]</tt>
+is the j-th the argument, in the old operation sequence,
+corresponding to the old variable index \c i.
+Assertion: <tt>tape[i].arg[j] < i</tt>.
+
+\li <tt>tape[i].new_var</tt>
+Suppose 
+<tt>i <= current, j < NumArg( tape[i].op ), and k = tape[i].arg[j]</tt>,
+and \c j corresponds to a variable for operator <tt>tape[i].op</tt>.
+It follows that <tt>tape[k].new_var</tt>
+has alread been set to the variable in the new operation sequence 
+corresponding to the old variable index \c k.
+This means that the \c new_var value has been set
+for all the possible arguments that come before \a current.
+
+\param current
+is the index in the old operation sequence for 
+the variable corresponding to the result for the current operator.
+Assertions: 
+<tt>
+current < tape.size(),
+NumRes( tape[current].op ) > 0.
+</tt>
+
+\param npar
+is the number of parameters corresponding to this operation sequence.
+
+\param par
+is a vector of length \a npar containing the parameters
+for this operation sequence; i.e.,
+given a parameter index \c i, the corresponding parameter value is
+<tt>par[i]</tt>.
+<!-- end optimize_prototype -->
 
 \param rec
 is the object that will record the operations.
@@ -582,7 +782,52 @@ size_t optimize_record_vp(
 /*!
 Record an operation of the form (variable op variable).
 
-\copydetails optimize_prototype
+<!-- replace optimize_prototype -->
+\param tape
+is a vector that maps a variable index, in the old operation sequence,
+to an <tt>optimize_old_variable</tt> information record.
+Note that the index for this vector must be greater than or equal zero and 
+less than <tt>tape.size()</tt>.
+
+\li <tt>tape[i].op</tt> 
+is the operator in the old operation sequence
+corresponding to the old variable index \c i.
+Assertion: <tt>NumRes(tape[i].op) > 0</tt>.
+
+\li <tt>tape[i].arg</tt> 
+for <tt>j < NumArg( tape[i].op ), tape[i].arg[j]</tt>
+is the j-th the argument, in the old operation sequence,
+corresponding to the old variable index \c i.
+Assertion: <tt>tape[i].arg[j] < i</tt>.
+
+\li <tt>tape[i].new_var</tt>
+Suppose 
+<tt>i <= current, j < NumArg( tape[i].op ), and k = tape[i].arg[j]</tt>,
+and \c j corresponds to a variable for operator <tt>tape[i].op</tt>.
+It follows that <tt>tape[k].new_var</tt>
+has alread been set to the variable in the new operation sequence 
+corresponding to the old variable index \c k.
+This means that the \c new_var value has been set
+for all the possible arguments that come before \a current.
+
+\param current
+is the index in the old operation sequence for 
+the variable corresponding to the result for the current operator.
+Assertions: 
+<tt>
+current < tape.size(),
+NumRes( tape[current].op ) > 0.
+</tt>
+
+\param npar
+is the number of parameters corresponding to this operation sequence.
+
+\param par
+is a vector of length \a npar containing the parameters
+for this operation sequence; i.e.,
+given a parameter index \c i, the corresponding parameter value is
+<tt>par[i]</tt>.
+<!-- end optimize_prototype -->
 
 \param rec
 is the object that will record the operations.
@@ -637,7 +882,52 @@ size_t optimize_record_vv(
 /*!
 Recording a cummulative cummulative summation starting at its highest parrent.
 
-\copydetails optimize_prototype
+<!-- replace optimize_prototype -->
+\param tape
+is a vector that maps a variable index, in the old operation sequence,
+to an <tt>optimize_old_variable</tt> information record.
+Note that the index for this vector must be greater than or equal zero and 
+less than <tt>tape.size()</tt>.
+
+\li <tt>tape[i].op</tt> 
+is the operator in the old operation sequence
+corresponding to the old variable index \c i.
+Assertion: <tt>NumRes(tape[i].op) > 0</tt>.
+
+\li <tt>tape[i].arg</tt> 
+for <tt>j < NumArg( tape[i].op ), tape[i].arg[j]</tt>
+is the j-th the argument, in the old operation sequence,
+corresponding to the old variable index \c i.
+Assertion: <tt>tape[i].arg[j] < i</tt>.
+
+\li <tt>tape[i].new_var</tt>
+Suppose 
+<tt>i <= current, j < NumArg( tape[i].op ), and k = tape[i].arg[j]</tt>,
+and \c j corresponds to a variable for operator <tt>tape[i].op</tt>.
+It follows that <tt>tape[k].new_var</tt>
+has alread been set to the variable in the new operation sequence 
+corresponding to the old variable index \c k.
+This means that the \c new_var value has been set
+for all the possible arguments that come before \a current.
+
+\param current
+is the index in the old operation sequence for 
+the variable corresponding to the result for the current operator.
+Assertions: 
+<tt>
+current < tape.size(),
+NumRes( tape[current].op ) > 0.
+</tt>
+
+\param npar
+is the number of parameters corresponding to this operation sequence.
+
+\param par
+is a vector of length \a npar containing the parameters
+for this operation sequence; i.e.,
+given a parameter index \c i, the corresponding parameter value is
+<tt>par[i]</tt>.
+<!-- end optimize_prototype -->
 
 \param rec
 is the object that will record the operations.

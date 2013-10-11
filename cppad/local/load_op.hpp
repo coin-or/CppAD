@@ -23,7 +23,8 @@ Setting a variable so that it corresponds to current value of a VecAD element.
 */
 
 /*!
-Prototype for zero order forward mode implementation of op = LdpOp or LdvOp.
+Shared documentation for zero order forward mode implementation of 
+op = LdpOp or LdvOp (not called).
 
 The C++ source code corresponding to this operation is
 \verbatim
@@ -141,7 +142,8 @@ inline void forward_load_op_0(
 	CPPAD_ASSERT_UNKNOWN( false );
 }
 /*!
-Prototype sparsity operations corresponding to op = LdpOp or LdvOp.
+Shared documentation for sparsity operations corresponding to 
+op = LdpOp or LdvOp (not called).
 
 <!-- define sparse_load_op -->
 The C++ source code corresponding to this operation is

@@ -21,7 +21,7 @@ Forward, reverse, and sparse operations for conditional expressions.
 */
 
 /*!
-Common documentation for conditional expressions forward and reverse mode.
+Shared documentation for conditional expressions (not called).
 
 <!-- define conditional_exp_op -->
 The C++ source code coresponding to this operation is
@@ -111,7 +111,7 @@ inline void conditional_exp_op(
 }
 
 /*!
-Common documentation for conditional expression sparse operations.
+Shared documentation for conditional expression sparse operations (not called).
 
 <!-- define sparse_conditional_exp_op -->
 The C++ source code coresponding to this operation is
