@@ -63,8 +63,8 @@ prefix=`pwd`'/build/prefix'
 # determine which version of cmake to use
 cmake --version
 cmake --version |  sed \
-		-e 's|[^0-9]*||g' \
-		-e 's|\([0-9]*\)\.\([0-9]*\)\..*|\1 * 10 + \2|' \
+		-e 's|[^0-9]*|.|g ' \
+		-e 's|\.\([0-9]*\)\.\([0-9]*\).*|\1 * 10 + \2|' \
 	| bc > get_ipopt.$$
 cmake_version=`cat get_ipopt.$$`
 rm get_ipopt.$$
