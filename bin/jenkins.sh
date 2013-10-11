@@ -65,7 +65,7 @@ log_eval bin/get_eigen.sh
 # build sacado in: trunk_dir/build/external
 # install it in:   trunk_dir/build/prefix
 # It will re-use the currently compiled verison if available.
-# log_eval bin/get_sacado.sh
+log_eval bin/get_sacado.sh
 #
 # Running bin/get_ipopt.sh will
 # build ipopt in: trunk_dir/build/external
@@ -82,18 +82,17 @@ echo_eval cd build
 # configure cppad to use all the packages above
 build_type=`rpm --eval %{_host}`
 #
-# skip sacado for now
-#	SACADO_DIR="$trunk_dir/build/prefix" \\
-#	SACADO_DIR="$trunk_dir/build/prefix" \
 cat << EOF
 $trunk_dir/configure \\
 	--build=$build_type \\
+	SACADO_DIR="$trunk_dir/build/prefix" \\
 	EIGEN_DIR="$trunk_dir/build/prefix" \\
 	IPOPT_DIR="$trunk_dir/build/prefix" \\
 	FADBAD_DIR="$trunk_dir/build/prefix" 
 EOF
 if ! $trunk_dir/configure \
 	--build=$build_type \
+	SACADO_DIR="$trunk_dir/build/prefix" \
 	EIGEN_DIR="$trunk_dir/build/prefix" \
 	IPOPT_DIR="$trunk_dir/build/prefix" \
 	FADBAD_DIR="$trunk_dir/build/prefix" 
