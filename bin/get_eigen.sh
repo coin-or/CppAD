@@ -61,7 +61,6 @@ web_page='https://bitbucket.org/eigen/eigen/get'
 prefix=`pwd`'/build/prefix'
 # -----------------------------------------------------------------------------
 # determine which version of cmake to use
-cmake --version
 cmake --version |  sed \
 		-e 's|[^0-9]*|.|g ' \
 		-e 's|\.\([0-9]*\)\.\([0-9]*\).*|\1 * 10 + \2|' \

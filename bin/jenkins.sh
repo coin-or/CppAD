@@ -111,10 +111,8 @@ log_eval make check
 log_eval make test
 #
 # print the test results on the console
+echo 'copy make test output to console'
 sed -n -e '/^make test$/,$p' ../jenkins.log
-#
-# print final get_ipopt.sh result on the console 
-grep 'get_ipopt.sh:' ../jenkins.log
 #
 # make it here without an error exit
 echo "jenkins.sh: OK"

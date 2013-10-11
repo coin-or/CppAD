@@ -110,3 +110,5 @@ echo_eval ./configure \
 	--libdir="$prefix/$libdir" 
 # -----------------------------------------------------------------------------
 echo_eval make install 
+#
+echo "get_ipopt.sh: OK"

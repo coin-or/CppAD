@@ -55,6 +55,10 @@ was made or if a pointer was used.
 Note that if a pointer is used, it becomes invalid when the destructor
 for $icode ad_fun$$ is called.
 
+$head cppad_ipopt_sum$$
+Create a simpler class an Ipopt AD interface with the objective
+and other functions are sums of functions each of which gets recorded.
+
 $head Forward Mode Recomputation$$
 If the results of $cref ForwardAny$$ have already been computed and are still
 stored in the $cref ADFun$$ object (see $cref size_taylor$$), 
@@ -65,10 +69,6 @@ If the CppAD API had iterator interfaces,
 in addition to simple vector interfaces,
 it would not be necessary to (sometimes) copy information to simple vectors
 with the correct dimension.
-
-$head cppad_ipopt_sum$$
-Create a simpler class an Ipopt AD interface with the objective
-and other functions are sums of functions each of which gets recorded.
 
 $head Library$$
 $index compile, speed AD<double>$$
@@ -108,6 +108,11 @@ $cref seq_property$$.
 $head Optimization$$
 $index optimize, tape$$
 $index tape, optimize$$
+
+$subhead Conditional Expressions$$
+If the logical part of a $cref CondExp$$ is identically true
+or false, then only one of the two expressions needs to be evaluated.
+
 
 $subhead Expression Hashing$$
 During expression sequence $cref/optimization/optimize/$$,
