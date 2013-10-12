@@ -59,7 +59,13 @@ enum OpCode {
 	ComOp,    // Compare(cop, result, left, right)
 	CosOp,    //  cos(variable)
 	CoshOp,   // cosh(variable)
-	CSumOp,   // Cummulative summation (has variable number of arguments)
+	CSumOp,   // Cummulative summation 
+	// arg[0] = number of addition variables in summation
+	// arg[1] = number of subtraction variables in summation
+	// arg[2] = index of parameter that initializes summation
+	// arg[3] -> arg[2+arg[0]] = index for positive variables
+	// arg[3+arg[0]] -> arg[2+arg[0]+arg[1]] = index for minus variables 
+	// arg[3+arg[0]+arg[1]] = arg[0] + arg[1]
 	DisOp,    //  discrete::eval(index, variable)
 	DivpvOp,  //      parameter  / variable
 	DivvpOp,  //      variable   / parameter
@@ -488,8 +494,8 @@ void printOp(
 		ind[0] = number of addition variables in summation
 		ind[1] = number of subtraction variables in summation
 		ind[2] = index of parameter that initializes summation
-		ind[3], ... , ind[2+ind[0]-1] = index for positive variables
-		ind[3+ind[0]], ..., ind[2+ind[0]+ind[1]-1] = negative variables 
+		ind[3], ... , ind[2+ind[0]] = index for positive variables
+		ind[3+ind[0]], ..., ind[2+ind[0]+ind[1]] = negative variables 
 		ind[3+ind[0]+ind[1]] == ind[0] + ind[1]
 		*/
 		CPPAD_ASSERT_UNKNOWN( ind[3+ind[0]+ind[1]] == ind[0]+ind[1] );
