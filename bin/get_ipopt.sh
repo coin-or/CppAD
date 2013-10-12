@@ -12,6 +12,7 @@
 # -----------------------------------------------------------------------------
 # $begin get_ipopt.sh$$ $newlinech #$$
 # $spell
+#	tgz
 #	Ipopt
 #	CppAD
 # $$
@@ -41,6 +42,12 @@
 # The Ipopt libraries and include files are installed in the sub-directory
 # $code build/prefix$$ below the distribution directory.
 #
+# $head Reuse$$
+# The file $codei%build/external/Ipopt-%version%.tgz%$$
+# and the directory $codei%build/external/Ipopt-%version%$$
+# will be reused if they exist. Delete this file and directory
+# to get a complete rebuild.
+#
 # $end
 # -----------------------------------------------------------------------------
 if [ $0 != "bin/get_ipopt.sh" ]
@@ -56,7 +63,7 @@ echo_eval() {
 }
 # -----------------------------------------------------------------------------
 echo 'Download ipopt to build/external and install it to build/prefix'
-version='3.11.1'
+version='3.11.4'
 web_page='http://www.coin-or.org/download/source/Ipopt'
 prefix=`pwd`'/build/prefix'
 # -----------------------------------------------------------------------------

@@ -12,6 +12,7 @@
 # -----------------------------------------------------------------------------
 # $begin get_eigen.sh$$ $newlinech #$$
 # $spell
+#	gz
 #	Eigen
 #	CppAD
 # $$
@@ -39,7 +40,13 @@
 #
 # $head Prefix Directory$$
 # The Eigen include files are installed in the sub-directory
-# $code build/prefix/include/EIGEN$$ below the distribution directory.
+# $code build/prefix/include/Eigen$$ below the distribution directory.
+#
+# $head Reuse$$
+# The file $codei%build/external/eigen-%version%.tar.gz%$$
+# and the directory $codei%build/external/eigen-%version%$$
+# will be reused if they exist. Delete this file and directory
+# to get a complete rebuild.
 #
 # $end
 # -----------------------------------------------------------------------------
@@ -99,25 +106,28 @@ then
 	echo_eval wget --no-check-certificate $web_page/$version.tar.gz
 	echo_eval mv $version.tar.gz eigen-$version.tar.gz
 fi
+# -----------------------------------------------------------------------------
 if [ -e eigen-eigen-* ]
 then
 	echo_eval rm -r eigen-eigen-*
-fi
-if [ -e "eigen-$version" ]
-then
-	echo_eval rm -r eigen-$version
 fi
 if [ -e "$prefix/include/Eigen" ]
 then
 	echo_eval rm "$prefix/include/Eigen"
 fi
-echo_eval tar -xzf eigen-$version.tar.gz
-#
-git_name=`ls | grep eigen-eigen`
-echo_eval mv $git_name eigen-$version
+if [ ! -e eigen-$version ]
+then
+	echo_eval tar -xzf eigen-$version.tar.gz
+	git_name=`ls | grep eigen-eigen`
+	echo_eval mv $git_name eigen-$version
+fi
+# -----------------------------------------------------------------------------
 #
 echo_eval cd eigen-$version
-echo_eval mkdir build
+if [ ! -e build ]
+then
+	echo_eval mkdir build
+fi
 echo_eval cd build
 echo_eval $cmake_program .. -DCMAKE_INSTALL_PREFIX=$prefix
 echo_eval make install

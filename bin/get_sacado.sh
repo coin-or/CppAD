@@ -12,6 +12,8 @@
 # -----------------------------------------------------------------------------
 # $begin get_sacado.sh$$ $newlinech #$$
 # $spell
+#	trilinos
+#	gz
 #	Sacado
 #	CppAD
 # $$
@@ -40,6 +42,12 @@
 # $head Prefix Directory$$
 # The Sacado libraries and include files are installed in the sub-directory
 # $code build/prefix$$ below the distribution directory.
+#
+# $head Reuse$$
+# The file $codei%build/external/trilinos-%version%-Source.tar.gz%$$
+# and the directory $codei%build/external/trilinos-%version%-Source%$$
+# will be reused if they exist. Delete this file and directory
+# to get a complete rebuild.
 #
 # $end
 # -----------------------------------------------------------------------------

@@ -13,6 +13,7 @@ Please visit http://www.coin-or.org/CppAD/ for information on other licenses.
 $begin whats_new_13$$
 $dollar @$$
 $spell
+	sacado
 	resize
 	sb
 	IpIpoptAlg.cpp
@@ -51,6 +52,15 @@ This section contains a list of the changes to CppAD during 2013
 (in reverse order by date).
 The purpose of this section is to
 assist you in learning about changes between various versions of CppAD.
+
+$head 10-12$$
+Change $cref get_eigen.sh$$ so that it will reuse install information
+when it is present.
+In addition document reuse for
+$cref/get_eigen.sh/get_eigen.sh/Reuse/$$,
+$cref/get_ipopt.sh/get_ipopt.sh/Reuse/$$, and
+$cref/get_sacado.sh/get_sacado.sh/Reuse/$$.
+
 
 $head 09-20$$
 $list number$$

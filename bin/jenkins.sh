@@ -52,28 +52,28 @@ then
 	echo "bin/jenkins.sh: must be executed from its parent directory"
 	exit 1
 fi
-#
+# -----------------------------------------------------------------------
 # Running bin/get_fadbad.sh will install include files in
 #	trunk_dir/build/prefix/include/FADBAD++
 log_eval bin/get_fadbad.sh
-#
+# -----------------------------------------------------------------------
 # Running bin/get_eigen.sh will install include files in
 #	trunk_dir/build/prefix/include/Eigen
 log_eval bin/get_eigen.sh
-#
-# Running bin/get_ipopt.sh will
-# build ipopt in: trunk_dir/build/external
-# install it in:  trunk_dir/build/prefix
-# It will re-use the currently compiled verison if available.
+# -----------------------------------------------------------------------
+# Running bin/get_ipopt.sh will install include files in
+#	trunk_dir/build/prefix/include/coin
+# and library files in
+#	trunk_dir/build/prefix/$libdir
+# where $libdir is 'lib64' if /usr/lib64 exists and just 'lib' otherwise.
 log_eval bin/get_ipopt.sh
-#
-# Running bin/get_sacado.sh will
-# build sacado in: trunk_dir/build/external
-# install it in:   trunk_dir/build/prefix
-# It will re-use the currently compiled verison if available.
-# It will also use libcoinlapack and libcoinblas if built by get_ipopt.sh
+# -----------------------------------------------------------------------
+# Running bin/get_sacado.sh will install include files in
+#	trunk_dir/build/prefix/include
+# and library files in
+#	trunk_dir/build/prefix/$libdir
 log_eval bin/get_sacado.sh
-#
+# -----------------------------------------------------------------------
 # Use trunk_dir/../build to build and test CppAD (no reuse)
 echo_eval cd ..
 echo_eval rm -rf build
@@ -81,11 +81,17 @@ echo_eval mkdir build
 echo_eval cd build
 #
 # configure cppad to use all the packages above
-build_type=`rpm --eval %{_host}`
+if which rmp >& /dev/null 
+then
+	build_type=`rpm --eval %{_host}`
+	build_type="--build=$build_type"
+else
+	build_type=''
+fi
 #
 cat << EOF
 $trunk_dir/configure \\
-	--build=$build_type \\
+	$build_type \\
 	SACADO_DIR="$trunk_dir/build/prefix" \\
 	EIGEN_DIR="$trunk_dir/build/prefix" \\
 	IPOPT_DIR="$trunk_dir/build/prefix" \\
