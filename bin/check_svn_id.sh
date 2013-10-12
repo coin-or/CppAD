@@ -30,6 +30,7 @@ do
 		-e 's/^[^/]*$/./' \
 		-e '/^work\//d' \
 		-e '/^build\//d' \
+		-e '/^bug\/build\//d' \
 		-e '/svn_dist\//d' \
 		-e 's|/[^/]*$||' \
 		| sort -u`  

@@ -493,7 +493,11 @@ bool case_six()
 	{	for(j = 0; j < n; j++)
 		{	Check[ i * n + j] = false;
 			for(k = 0; k < n; k++)
-				Check[i * n + j] |= F2[i * n + k] & r[ k * n + j];
+			{	// some gcc versions std::vector<bool> do not support |=
+				// on elements (because they pack the bits).
+				bool tmp         = Check[i * n + j];
+				Check[i * n + j] = tmp | (F2[i * n + k] & r[ k * n + j]);
+			}
 		}
 	}
 
