@@ -95,14 +95,15 @@ $trunk_dir/configure \\
 	SACADO_DIR="$trunk_dir/build/prefix" \\
 	EIGEN_DIR="$trunk_dir/build/prefix" \\
 	IPOPT_DIR="$trunk_dir/build/prefix" \\
-	FADBAD_DIR="$trunk_dir/build/prefix" 
+	FADBAD_DIR="$trunk_dir/build/prefix"  \\
+	OPENMP_FLAGS=-fopenmp
 EOF
-if ! $trunk_dir/configure \
-	--build=$build_type \
+if ! $trunk_dir/configure $build_type \
 	SACADO_DIR="$trunk_dir/build/prefix" \
 	EIGEN_DIR="$trunk_dir/build/prefix" \
 	IPOPT_DIR="$trunk_dir/build/prefix" \
-	FADBAD_DIR="$trunk_dir/build/prefix" 
+	FADBAD_DIR="$trunk_dir/build/prefix" \
+	OPENMP_FLAGS=-fopenmp
 then
 	echo "Error during configure command. Here is config.log file:"
 	echo "--------------------------------------------------------"
