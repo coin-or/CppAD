@@ -2,7 +2,7 @@
 # ifndef CPPAD_BASE_ALLOC_INCLUDED
 # define CPPAD_BASE_ALLOC_INCLUDED
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-12 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-13 Bradley M. Bell
 
 CppAD is distributed under multiple licenses. This distribution is under
 the terms of the
@@ -43,7 +43,7 @@ $$
 $section Example AD<Base> Where Base Constructor Allocates Memory$$
 
 $head Purpose$$
-Demonstrate use of $code%AD<%Base%>%$$ 
+Demonstrate use of $codei%AD<%Base%>%$$ 
 where memory is allocated for each element of the type $icode Base$$.
 In addition, this is a complete example where all the 
 $cref/required Base/base_require/$$ type

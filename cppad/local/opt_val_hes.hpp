@@ -3,7 +3,7 @@
 # define CPPAD_OPT_VAL_HES_INCLUDED
 
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-12 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-13 Bradley M. Bell
 
 CppAD is distributed under multiple licenses. This distribution is under
 the terms of the 
@@ -98,7 +98,7 @@ $latex \[
 $head Fun$$
 The argument $icode fun$$ is an object of type $icode Fun$$ 
 which must support the member functions listed below.
-CppAD will may be recording operations of the type $code%AD<%Base%>%$$
+CppAD will may be recording operations of the type $codei%AD<%Base%>%$$
 when these member functions are called.
 These member functions must not stop such a recording; e.g.,
 they must not call $cref/AD<Base>::abort_recording/abort_recording/$$.

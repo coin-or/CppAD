@@ -2,7 +2,7 @@
 # ifndef CPPAD_CPPAD_IPOPT_NLP_INCLUDED
 # define CPPAD_CPPAD_IPOPT_NLP_INCLUDED
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-12 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-13 Bradley M. Bell
 
 CppAD is distributed under multiple licenses. This distribution is under
 the terms of the 
@@ -99,7 +99,7 @@ $codei%
 	%ipopt_prefix%/lib64/libipopt.a
 %$$
 you will need to add the corresponding directory; e.g.,
-$code%
+$codei%
 	export LD_LIBRARY_PATH="%ipopt_prefix%/lib64%:@LD_LIBRARY_PATH"
 %$$
 see $cref ipopt_prefix$$.

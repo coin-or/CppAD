@@ -490,7 +490,8 @@ Change the $cref/include/base_require/Include Order/$$ file name to
 $cref/base_require.hpp/base_require/$$.
 $lnext
 Use $cref base_float.hpp$$ and $cref base_double.hpp$$ as additional examples
-in the $code/CondExp/base_require/CondExp/$$ $icode Base$$ requirements.
+for the $cref/CondExp Base requirements/base_cond_exp/$$
+requirements.
 $lend
 
 $head 08-03$$
