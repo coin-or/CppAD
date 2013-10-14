@@ -284,7 +284,7 @@ AM_CXXFLAGS = -O2 -DNDEBUG -DSPEED_ADOLC $(CXX_FLAGS)
 # AM_CXXFLAGS   = -g $(CXX_FLAGS) -DSPEED_ADOLC
 # END DEBUG
 #
-LDADD = -lspeed -ladolc
+LDADD = -lspeed -ladolc -lColPack
 AM_LDFLAGS = -L../src -L$(ADOLC_DIR)/lib -L$(ADOLC_DIR)/lib64
 #
 adolc_SOURCES = \

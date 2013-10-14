@@ -24,7 +24,7 @@ endif
 if CppAD_ADOLC
 ADOLC_SRC_FILES   = base_adolc.cpp 
 ADOLC_EXTRA_FILES =
-ADOLC_LIB         = -ladolc -L$(ADOLC_DIR)/lib -L$(ADOLC_DIR)/lib64
+ADOLC_LIB         = -ladolc -lColPack -L$(ADOLC_DIR)/lib -L$(ADOLC_DIR)/lib64
 ADOLC_FLAGS       = -DCPPAD_ADOLC_TEST -I$(ADOLC_DIR)/include 
 else
 ADOLC_EXTRA_FILES = base_adolc.cpp

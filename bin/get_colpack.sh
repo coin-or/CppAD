@@ -92,35 +92,26 @@ then
 fi
 echo_eval cd ColPack-$version
 # -----------------------------------------------------------------------------
-echo_eval rm aclocal.m4 ltmain.sh
-echo_eval libtoolize
-echo_eval autoreconf --force
+if which autoconf > /dev/null
+then
+	echo_eval rm aclocal.m4 ltmain.sh
+	echo_eval libtoolize
+	echo_eval autoreconf --force
+fi
+# -----------------------------------------------------------------------------
 #
 system_name=`uname | sed -e 's|\(......\).*|\1|'`
-if [ "$version" == 'ColPack-1.0.9' ] && [ "$system_name" == 'CYGWIN' ]
+if [ "$system_name" == 'CYGWIN' ]
 then
-	sed -i.save \
-		-e 's|\(^ *enable_dlopen\)=no|\1=yes|' \
-		-e 's|\(^ *enable_win32_dll\)=no|\1=yes|' \
-		-e 's|\(^ *enable_shared\)=no|\1=yes|' \
-		-e 's|\(^ *enable_shared\)=no|\1=yes|' \
-		-e 's|\(^ *no) *enable_shared\)=no|\1=yes|' \
-		-e 's|\(^ *enable_static\)=yes|\1=no|' \
-		-e 's|\(^ *yes) *enable_static\)=yes|\1=no|' \
-		-e 's|\(^ *enable_shared_with_static_runtimes\)=no|\1=yes|' \
-		-e 's|\(^ *enable_shared_with_static_runtimes_CXX\)=no|\1=yes|' \
-		configure
+	lib_type='--enable-static --disable-shared'
+else
+	lib_type='--enable-static --enable-shared'
 fi
 echo_eval ./configure \
 	--prefix=$prefix \
 	--libdir=$prefix/$libdir \
-	--enable-shared
-if [ "$version" == 'ColPack-1.0.9' ] && [ "$system_name" == 'CYGWIN' ]
-then
-	sed -i.save \
-		-e 's|\(^ *allow_undefined\)=yes|\1=no|' \
-		libtool
-fi
+	$lib_type
+#
 echo_eval make install
 # -----------------------------------------------------------------------------
 echo "get_colpack: OK"

@@ -61,38 +61,38 @@ else
 fi
 # -----------------------------------------------------------------------
 # The following test can be used to skip install of other packages
-skip='false'
+skip='true'
 if [ "$skip" != 'true' ]
 then
-	# ----------------------------------------------------------------------
+	# -------------------------------------------------------------------
 	# Running bin/get_fadbad.sh will install include files in
 	#	$trunk_dir/build/prefix/include/FADBAD++
 	log_eval bin/get_fadbad.sh
-	# ----------------------------------------------------------------------
+	# -------------------------------------------------------------------
 	# Running bin/get_eigen.sh will install include files in
 	#	$trunk_dir/build/prefix/include/Eigen
 	log_eval bin/get_eigen.sh
-	# ----------------------------------------------------------------------
+	# -------------------------------------------------------------------
 	# Running bin/get_ipopt.sh will install include files in
 	#	$trunk_dir/build/prefix/include/coin
 	# and library files in
 	#	$trunk_dir/build/prefix/$libdir
-	# where $libdir is 'lib64' if /usr/lib64 exists and just 'lib' otherwise.
+	# where $libdir is 'lib64' if /usr/lib64 exists and 'lib' otherwise.
 	log_eval bin/get_ipopt.sh
-	# ----------------------------------------------------------------------
+	# -------------------------------------------------------------------
 	# Running bin/get_sacado.sh will install include files in
 	#	$trunk_dir/build/prefix/include
 	# and library files in
 	#	$trunk_dir/build/prefix/$libdir
 	log_eval bin/get_sacado.sh
-	# ----------------------------------------------------------------------
+	# -------------------------------------------------------------------
 	# Running bin/get_acolc.sh will install include files in
 	#	$trunk_dir/build/prefix/include/adolc
 	# and library files in
 	#	$trunk_dir/build/prefix/$libdir
 	log_eval bin/get_colpack.sh
 	log_eval bin/get_adolc.sh
-	# ----------------------------------------------------------------------
+	# -------------------------------------------------------------------
 fi
 # -----------------------------------------------------------------------
 system_name=`uname | sed -e 's|\(......\).*|\1|'`
@@ -121,6 +121,7 @@ fi
 cat << EOF
 $trunk_dir/configure \\
 	$build_type \\
+	ADOLC_DIR="$trunk_dir/build/prefix" \\
 	SACADO_DIR="$trunk_dir/build/prefix" \\
 	EIGEN_DIR="$trunk_dir/build/prefix" \\
 	IPOPT_DIR="$trunk_dir/build/prefix" \\

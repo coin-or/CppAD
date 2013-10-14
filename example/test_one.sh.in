@@ -67,7 +67,7 @@ for lib in lib lib64
 do
 	if [ -e @adolc_prefix@/$lib ]
 	then
-		cmd="$cmd -L@adolc_prefix@/$lib -ladolc"
+		cmd="$cmd -L@adolc_prefix@/$lib -ladolc -lColPack"
 		export LD_LIBRARY_PATH="$LD_LIBRARY_PATH:@adolc_prefix@/$lib"
 	fi
 done

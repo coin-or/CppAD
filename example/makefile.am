@@ -17,7 +17,7 @@ DEFS          =
 if CppAD_ADOLC
 ADOLC_SRC_FILES    =  mul_level_adolc.cpp mul_level_adolc_ode.cpp
 ADOLC_EXTRA_FILES  =
-ADOLC_LIB          = -ladolc -L$(ADOLC_DIR)/lib -L$(ADOLC_DIR)/lib64
+ADOLC_LIB          = -ladolc -lColPack -L$(ADOLC_DIR)/lib -L$(ADOLC_DIR)/lib64
 ADOLC_FLAGS        = -DCPPAD_ADOLC_EXAMPLES -I$(ADOLC_DIR)/include 
 else
 ADOLC_EXTRA_FILES =  mul_level_adolc.cpp mul_level_adolc_ode.cpp
