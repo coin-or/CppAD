@@ -54,6 +54,20 @@ This section contains a list of the changes to CppAD during 2013
 The purpose of this section is to
 assist you in learning about changes between various versions of CppAD.
 
+$head 10-14$$
+The script $cref get_adolc.sh$$ was added
+(for downloading and installing
+$href%https://projects.coin-or.org/ADOL-C%ADOL-C%$$) in the 
+$code build$$ directory.
+Note that this local install of Adolc requires ColPack; see
+$cref get_colpack.sh$$.
+
+$head 10-13$$
+Make sure that all of the 
+$cref/preprocessor symbols/cppad/Preprocessor Symbols/$$,
+that are not part of the CppAD API, are undefined when the
+$code <cppad/cppad.hpp>$$ file concludes.
+
 $head 10-12$$
 $list number$$
 Change $cref get_eigen.sh$$ so that it will reuse install information

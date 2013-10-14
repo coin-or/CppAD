@@ -2,7 +2,7 @@
 # ifndef CPPAD_BASE_ADOLC_INCLUDED
 # define CPPAD_BASE_ADOLC_INCLUDED
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-12 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-13 Bradley M. Bell
 
 CppAD is distributed under multiple licenses. This distribution is under
 the terms of the 
@@ -221,11 +221,11 @@ does not depend on the value of $icode x$$.
 $codep */
 namespace CppAD {
 	inline adouble sign(const adouble& x)
-	{	adouble s_plus, s_minus;
+	{	adouble s_plus, s_minus, half(.5);
 		// set s_plus to sign(x)/2,  except for case x == 0, s_plus = -.5
-		condassign(s_plus,  +x, -.5, .5);
+		condassign(s_plus,  +x, -half, +half);
 		// set s_minus to -sign(x)/2, except for case x == 0, s_minus = -.5
-		condassign(s_minus, -x, -.5, .5);
+		condassign(s_minus, -x, -half, +half);
 		// set s to sign(x)
 		return s_plus - s_minus;
 	}

@@ -62,6 +62,7 @@ echo_log_eval bin/version.sh copy
 # Run automated checking of file names in original source directory
 # (check_include_omh.sh uses files built by cmake)
 list="
+	check_define.sh
 	check_example.sh
 	check_if_0.sh
 	check_include_def.sh

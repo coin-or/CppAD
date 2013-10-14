@@ -1,0 +1,126 @@
+#! /bin/bash -e
+# $Id$
+# -----------------------------------------------------------------------------
+# CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-13 Bradley M. Bell
+#
+# CppAD is distributed under multiple licenses. This distribution is under
+# the terms of the 
+#                     Eclipse Public License Version 1.0.
+#
+# A copy of this license is included in the COPYING file of this distribution.
+# Please visit http://www.coin-or.org/CppAD/ for information on other licenses.
+# -----------------------------------------------------------------------------
+# $begin get_colpack.sh$$ $newlinech #$$
+# $spell
+#	colpack
+#	gz
+#	Col
+#	CppAD
+# $$
+#
+# $section Download and Install ColPack in Build Directory$$
+# $index colpack, download and install$$
+# $index download, install colpack$$
+# $index install, colpack$$ 
+#
+# $head Syntax$$
+# $code bin/get_colpack.sh$$
+#
+# $head Purpose$$
+# If you are using Unix, this command will download and install 
+# $href%http://www.cs.odu.edu/~dnguyen/dox/colpack/html/%ColPack%$$ in the
+# CppAD $code build$$ directory.
+#
+# $head Distribution Directory$$
+# This command must be executed in the 
+# $cref/distribution directory/download/Distribution Directory/$$.
+#
+# $head External Directory$$
+# The ColPack source code is downloaded into the sub-directory
+# $code build/external$$ below the distribution directory.
+#
+# $head Prefix Directory$$
+# The ColPack include files are installed in the sub-directory
+# $code build/prefix/include/ColPack$$ below the distribution directory.
+#
+# $head Reuse$$
+# The file $codei%build/external/ColPack-%version%.tar.gz%$$
+# and the directory $codei%build/external/ColPack-%version%$$
+# will be reused if they exist. Delete this file and directory
+# to get a complete rebuild.
+#
+# $end
+# -----------------------------------------------------------------------------
+if [ $0 != "bin/get_colpack.sh" ]
+then
+	echo "bin/get_colpack.sh: must be executed from its parent directory"
+	exit 1
+fi
+# -----------------------------------------------------------------------------
+# bash function that echos and executes a command
+echo_eval() {
+	echo $*
+	eval $*
+}
+# -----------------------------------------------------------------------------
+echo 'Download colpack to build/external and install it to build/prefix'
+version='1.0.9'
+web_page='http://cscapes.cs.purdue.edu/download/ColPack'
+prefix=`pwd`'/build/prefix'
+# --------------------------------------------------------------------------
+if [ -e /usr/lib64 ]
+then
+	libdir='lib64'
+else
+	libdir='lib'
+fi
+# -----------------------------------------------------------------------------
+if [ ! -d build/external ]
+then
+	echo_eval mkdir -p build/external
+fi
+echo_eval cd build/external
+# -----------------------------------------------------------------------------
+if [ ! -e "ColPack-$version.tar.gz" ]
+then
+	echo_eval wget --no-check-certificate $web_page/ColPack-$version.tar.gz
+fi
+# -----------------------------------------------------------------------------
+if [ ! -e ColPack-$version ]
+then
+	echo_eval tar -xzf ColPack-$version.tar.gz
+fi
+echo_eval cd ColPack-$version
+# -----------------------------------------------------------------------------
+echo_eval rm aclocal.m4 ltmain.sh
+echo_eval libtoolize
+echo_eval autoreconf --force
+#
+system_name=`uname | sed -e 's|\(......\).*|\1|'`
+if [ "$version" == 'ColPack-1.0.9' ] && [ "$system_name" == 'CYGWIN' ]
+then
+	sed -i.save \
+		-e 's|\(^ *enable_dlopen\)=no|\1=yes|' \
+		-e 's|\(^ *enable_win32_dll\)=no|\1=yes|' \
+		-e 's|\(^ *enable_shared\)=no|\1=yes|' \
+		-e 's|\(^ *enable_shared\)=no|\1=yes|' \
+		-e 's|\(^ *no) *enable_shared\)=no|\1=yes|' \
+		-e 's|\(^ *enable_static\)=yes|\1=no|' \
+		-e 's|\(^ *yes) *enable_static\)=yes|\1=no|' \
+		-e 's|\(^ *enable_shared_with_static_runtimes\)=no|\1=yes|' \
+		-e 's|\(^ *enable_shared_with_static_runtimes_CXX\)=no|\1=yes|' \
+		configure
+fi
+echo_eval ./configure \
+	--prefix=$prefix \
+	--libdir=$prefix/$libdir \
+	--enable-shared
+if [ "$version" == 'ColPack-1.0.9' ] && [ "$system_name" == 'CYGWIN' ]
+then
+	sed -i.save \
+		-e 's|\(^ *allow_undefined\)=yes|\1=no|' \
+		libtool
+fi
+echo_eval make install
+# -----------------------------------------------------------------------------
+echo "get_colpack: OK"

@@ -40,7 +40,8 @@ $end
 # include <limits>
 # include <cmath>
 # include <cassert>
-//
+
+// define CPPAD_NULPTR
 # include <cppad/configure.hpp>
 # if CPPAD_HAS_NULLPTR
 # define CPPAD_NULL nullptr

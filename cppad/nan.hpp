@@ -152,9 +152,16 @@ $end
 // needed before one can use CPPAD_ASSERT_FIRST_CALL_NOT_PARALLEL
 # include <cppad/thread_alloc.hpp>
 
+/*
+# define nan There must be a define for every CppAD undef
+*/
 # ifdef nan
 # undef nan
 # endif
+
+/*
+# define isnan There must be a define for every CppAD undef
+*/
 # ifdef isnan
 # undef isnan
 # endif

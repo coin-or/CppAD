@@ -3,7 +3,7 @@
 # define CPPAD_POW_INCLUDED
 
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-12 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-13 Bradley M. Bell
 
 CppAD is distributed under multiple licenses. This distribution is under
 the terms of the 
@@ -172,7 +172,7 @@ pow(const AD<Base>& x, const AD<Base>& y)
 	return result;
 }
 // =========================================================================
-// Fold operations in same way as CPPAD_FOLD_AD_VALUED_BINARY_OPERATION(Op)
+// Fold operations in same way as CPPAD_FOLD_AD_VALUED_BINARY_OPERATOR(Op)
 // -------------------------------------------------------------------------
 // Operations with VecAD_reference<Base> and AD<Base> only
 

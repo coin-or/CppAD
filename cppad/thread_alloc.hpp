@@ -51,7 +51,7 @@ Minimum number of double values that will fit in an allocation.
 /*!
 \def CPPAD_TRACE_CAPACITY
 If NDEBUG is not defined, print all calls to \c get_memory and \c return_memory
-that correspond to this capacity and thread CPPAD_TRACE_THEAD.
+that correspond to this capacity and thread CPPAD_TRACE_THREAD.
 (Note that if CPPAD_TRACE_CAPACITY is zero, or any other value not in the list
 of capacities, no tracing will be done.)
 */

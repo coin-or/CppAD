@@ -43,7 +43,6 @@ $rref mul_level_adolc.cpp$$
 $rref mul_level_adolc_ode.cpp$$
 $tend
 
-
 $head adolc_prefix$$
 $index adolc, prefix$$
 $index prefix, adolc$$
@@ -126,5 +125,16 @@ you must use the Cygwin format for the disk specification.
 For example, 
 if $code d:/adolc_base$$ is the proper directory,
 $code /cygdrive/d/adolc_base$$ should be used for $icode adolc_prefix$$.
+
+$children%
+	bin/get_adolc.sh
+%$$
+$head get_adolc$$
+$index get, adolc$$
+$index adolc, get$$
+If you are using Unix, you can download and install
+a copy of Adolc using $cref get_adolc.sh$$.
+The corresponding $icode adolc_prefix$$ would be
+$code build/prefix$$.
 
 $end

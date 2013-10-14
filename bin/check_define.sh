@@ -1,0 +1,47 @@
+#! /bin/bash -e
+# $Id$
+# -----------------------------------------------------------------------------
+# CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-13 Bradley M. Bell
+#
+# CppAD is distributed under multiple licenses. This distribution is under
+# the terms of the 
+#                     Eclipse Public License Version 1.0.
+#
+# A copy of this license is included in the COPYING file of this distribution.
+# Please visit http://www.coin-or.org/CppAD/ for information on other licenses.
+# -----------------------------------------------------------------------------
+if [ $0 != "bin/check_define.sh" ]
+then
+	echo "bin/check_define.sh: must be executed from its parent directory"
+	exit 1
+fi
+# -----------------------------------------------------------------------------
+echo "Difference between '# define' names and '# undef' names"
+echo '-----------------------------------------------------------------------'
+list=`find cppad \( -name '*.hpp' \) -or \( -name '*.hpp.in' \)`
+#
+for cmd in define undef
+do
+	for file in $list
+	do
+		sed -n -e "/^# *$cmd /p" $file | \
+			sed -e "s/^# *$cmd  *\([A-Za-z0-9_]*\).*/\1/" >> tmp.$$
+	done
+	if [ "$cmd" == 'define' ]
+	then
+		sed -e '/_INCLUDED$/d' -i tmp.$$
+	fi
+	sort -u tmp.$$ > $cmd.$$
+	rm tmp.$$
+done
+if ! diff define.$$ undef.$$
+then
+	echo "check_define.sh: exiting because defines and undefs do not match"
+	rm undef.$$
+	rm define.$$
+	exit 1
+fi
+echo '-----------------------------------------------------------------------'
+rm undef.$$
+rm define.$$
+exit 0

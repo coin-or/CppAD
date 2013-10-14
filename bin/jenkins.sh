@@ -52,27 +52,56 @@ then
 	echo "bin/jenkins.sh: must be executed from its parent directory"
 	exit 1
 fi
+# --------------------------------------------------------------------------
+if [ -e /usr/lib64 ]
+then
+	libdir='lib64'
+else
+	libdir='lib'
+fi
 # -----------------------------------------------------------------------
-# Running bin/get_fadbad.sh will install include files in
-#	trunk_dir/build/prefix/include/FADBAD++
-log_eval bin/get_fadbad.sh
+# The following test can be used to skip install of other packages
+skip='false'
+if [ "$skip" != 'true' ]
+then
+	# ----------------------------------------------------------------------
+	# Running bin/get_fadbad.sh will install include files in
+	#	$trunk_dir/build/prefix/include/FADBAD++
+	log_eval bin/get_fadbad.sh
+	# ----------------------------------------------------------------------
+	# Running bin/get_eigen.sh will install include files in
+	#	$trunk_dir/build/prefix/include/Eigen
+	log_eval bin/get_eigen.sh
+	# ----------------------------------------------------------------------
+	# Running bin/get_ipopt.sh will install include files in
+	#	$trunk_dir/build/prefix/include/coin
+	# and library files in
+	#	$trunk_dir/build/prefix/$libdir
+	# where $libdir is 'lib64' if /usr/lib64 exists and just 'lib' otherwise.
+	log_eval bin/get_ipopt.sh
+	# ----------------------------------------------------------------------
+	# Running bin/get_sacado.sh will install include files in
+	#	$trunk_dir/build/prefix/include
+	# and library files in
+	#	$trunk_dir/build/prefix/$libdir
+	log_eval bin/get_sacado.sh
+	# ----------------------------------------------------------------------
+	# Running bin/get_acolc.sh will install include files in
+	#	$trunk_dir/build/prefix/include/adolc
+	# and library files in
+	#	$trunk_dir/build/prefix/$libdir
+	log_eval bin/get_colpack.sh
+	log_eval bin/get_adolc.sh
+	# ----------------------------------------------------------------------
+fi
 # -----------------------------------------------------------------------
-# Running bin/get_eigen.sh will install include files in
-#	trunk_dir/build/prefix/include/Eigen
-log_eval bin/get_eigen.sh
-# -----------------------------------------------------------------------
-# Running bin/get_ipopt.sh will install include files in
-#	trunk_dir/build/prefix/include/coin
-# and library files in
-#	trunk_dir/build/prefix/$libdir
-# where $libdir is 'lib64' if /usr/lib64 exists and just 'lib' otherwise.
-log_eval bin/get_ipopt.sh
-# -----------------------------------------------------------------------
-# Running bin/get_sacado.sh will install include files in
-#	trunk_dir/build/prefix/include
-# and library files in
-#	trunk_dir/build/prefix/$libdir
-log_eval bin/get_sacado.sh
+system_name=`uname | sed -e 's|\(......\).*|\1|'`
+if [ "$system_name" == 'CYGWIN' ]
+then
+	export PATH="$trunk_dir/build/prefix/bin:$PATH"
+else
+	export LD_LIBRARY_PATH="$trunk_dir/build/prefix/$libdir"
+fi
 # -----------------------------------------------------------------------
 # Use trunk_dir/../build to build and test CppAD (no reuse)
 echo_eval cd ..
@@ -99,6 +128,7 @@ $trunk_dir/configure \\
 	OPENMP_FLAGS=-fopenmp
 EOF
 if ! $trunk_dir/configure $build_type \
+	ADOLC_DIR="$trunk_dir/build/prefix" \
 	SACADO_DIR="$trunk_dir/build/prefix" \
 	EIGEN_DIR="$trunk_dir/build/prefix" \
 	IPOPT_DIR="$trunk_dir/build/prefix" \

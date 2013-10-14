@@ -135,6 +135,10 @@ is requested, it is not necessary to compute $codei%cos(%x%)%$$.
 We should remove the computation of extra expressions derivatives that are 
 not need to compute the requested derivative of the original expression. 
 
+$head Preprocessor Symbols$$
+Make sure all the user API preprocessor symbols are list in
+the $cref preprocessor$$ section.
+
 $head Software Guidelines$$
 
 $subhead Boost$$

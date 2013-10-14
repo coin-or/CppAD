@@ -47,6 +47,7 @@ directories='
 	multi_thread/pthread
 	omh
 	omh/deprecated
+	omh/install
 	omh/whats_new
 	pkgconfig
 	print_for

@@ -97,12 +97,12 @@ we are not using Eigen vector for CPPAD_TESTVECTOR.
 # define CPPAD_EIGENVECTOR @cppad_eigenvector@
 
 /*!
-\def CPPAD_GETTIMEOFDAY
+\def CPPAD_HAS_GETTIMEOFDAY
 If this symbol is one, and _MSC_VER is not defined,
 this system supports the gettimeofday funcgtion.
 Otherwise, this smybol should be zero.
 */
-# define CPPAD_GETTIMEOFDAY @cppad_has_gettimeofday@
+# define CPPAD_HAS_GETTIMEOFDAY @cppad_has_gettimeofday@
 
 /*!
 \def CPPAD_SIZE_T_SAME_UNSIGNED_INT 

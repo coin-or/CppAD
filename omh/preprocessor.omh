@@ -45,9 +45,9 @@ Is a $code const char*$$ representation of this version of CppAD.
 
 $head Documented Elsewhere$$
 $table
-$cref/CPPAD_BOOL_UNARY/BoolFun/Create Unary/$$
+$cref/CPPAD_BOOL_BINARY/BoolFun/Create Binary/$$
 $rnext
-$cref/CPPAD_BOOL_UNARY/BoolFun/Create Binary/$$
+$cref/CPPAD_BOOL_UNARY/BoolFun/Create Unary/$$
 $rnext
 $cref/CPPAD_DISCRETE_FUNCTION/Discrete/$$
 $rnext
@@ -58,8 +58,6 @@ $rnext
 $cref/CPPAD_TAPE_ID_TYPE/cmake/cppad_tape_id_type/$$
 $rnext
 $cref/CPPAD_TESTVECTOR/testvector/$$
-$rnext
-$cref/CPPAD_USER_ATOMIC/old_atomic/$$
 $tend
 
 $head Deprecated$$
@@ -77,6 +75,8 @@ $rnext
 $cref/CPPAD_TRACK_EXTEND/TrackNewDel/TrackExtend/Macro/$$
 $rnext
 $cref/CPPAD_TRACK_COUNT/TrackNewDel/TrackCount/Macro/$$
+$rnext
+$cref/CPPAD_USER_ATOMIC/old_atomic/$$
 $rnext
 $cref/CppADTrackNewVec/TrackNewDel/TrackNewVec/Previously Deprecated/$$
 $rnext
