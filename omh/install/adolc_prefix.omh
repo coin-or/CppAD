@@ -59,10 +59,10 @@ is a valid way to reference to the include file $code adouble.h$$;
 Note that CppAD assumes ADOL-C has been configured with
 its sparse matrix computations enabled; i.e, using
 $codei%
-	--with-colpack=%adolck_prefix%
+	--with-colpack=%adolc_prefix%
 %$$
-In other words ColPack
-has been installed with the same prefix as ACOL-C; see
+In other words ColPack is installed and
+with the same prefix as ACOL-C; see
 $cref get_colpack.sh$$.
 
 $head Examples$$
