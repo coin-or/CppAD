@@ -96,7 +96,7 @@ then
 	#	$trunk_dir/build/prefix/include/adolc
 	# and library files in
 	#	$trunk_dir/build/prefix/$libdir
-	if has_autoconf
+	if [ $has_autoconf == 'yes' ]
 	then
 		log_eval bin/get_colpack.sh
 		log_eval bin/get_adolc.sh
