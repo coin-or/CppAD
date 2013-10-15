@@ -110,7 +110,7 @@ echo_eval mkdir build
 echo_eval cd build
 #
 # configure cppad to use all the packages above
-if which rmp >& /dev/null 
+if which rpm >& /dev/null 
 then
 	build_type=`rpm --eval %{_host}`
 	build_type="--build=$build_type"
@@ -129,7 +129,7 @@ $trunk_dir/configure \\
 	OPENMP_FLAGS=-fopenmp
 EOF
 if ! $trunk_dir/configure $build_type \
-	ADOLC_DIR="$trunk_dir/build/prefix" \\
+	ADOLC_DIR="$trunk_dir/build/prefix" \
 	SACADO_DIR="$trunk_dir/build/prefix" \
 	EIGEN_DIR="$trunk_dir/build/prefix" \
 	IPOPT_DIR="$trunk_dir/build/prefix" \
