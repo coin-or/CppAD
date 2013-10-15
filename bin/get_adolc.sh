@@ -122,7 +122,12 @@ fi
 # -----------------------------------------------------------------------------
 if which autoconf >& /dev/null
 then
-	echo_eval autoreconf -f -i
+	ac_version=`autoconf --version | \
+		sed -e 's|[^0-9]*\([0-9.]*\)[.]\([0-9]*\).*|\1 * 100 + \2|' | bc`
+	if [ "$ac_version" -ge 267 ]
+	then
+		echo_eval autoreconf -f -i
+	fi
 fi
 # -----------------------------------------------------------------------------
 if [ ! -e build ]
