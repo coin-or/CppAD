@@ -187,14 +187,14 @@ $index vectorBool$$
 The file $code <cppad/vector.hpp>$$ also defines the class
 $code CppAD::vectorBool$$.
 This has the same specifications as $code CppAD::vector<bool>$$ 
-with the following exceptions
+with the following exceptions:
 
-$list number$$
+$subhead Memory$$
 The class $code vectorBool$$ conserves on memory
 (on the other hand, $code CppAD::vector<bool>$$ is expected to be faster
 than $code vectorBool$$).
 
-$lnext
+$subhead Output$$
 The $code CppAD::vectorBool$$ output operator
 prints each boolean value as 
 a $code 0$$ for false,
@@ -203,22 +203,35 @@ and does not print any other output; i.e.,
 the vector is written a long sequence of zeros and ones with no
 surrounding $code {$$, $code }$$ and with no separating commas or spaces. 
 
-$lnext
+$subhead Element Type$$
 If $icode x$$ has type $code vectorBool$$
 and $icode i$$ has type $code size_t$$,
-the element access value $icode%x%[%i%]%$$ has an unspecified type
-(referred to here as $icode elementType$$)
-that can be implicitly converted to $code bool$$.
-The return value of the assignment operator
+the element access value $icode%x%[%i%]%$$ has an unspecified type,
+referred to here as $icode elementType$$, that supports the following
+operations:
+
+$list number$$
+$icode elementType$$ can be converted to $code bool$$; e.g.
+the following syntax is supported:
+$codei%
+	static_cast<bool>( %x%[%i%] )
+%$$
+
+$lnext
+$icode elementType$$ supports the assignment operator $code =$$ where the 
+right hand side is a $code bool$$ or an $icode elementType$$ object; e.g.,
+if $icode y$$ has type $code bool$$, the following syntax is supported:
 $codei%
 	%x%[%i%] = %y%
 %$$
-also has type $icode elementType$$. Thus, if $icode z$$
-has type $code bool$$, the syntax
+
+$lnext
+The result of an assignment to an $icode elementType$$
+also has type $icode elementType$$. 
+Thus, if $icode z$$ has type $code bool$$, the following syntax is supported:
 $codei%
 	%z% = %x%[%i%] = %y%
 %$$
-is valid.
 $lend
 
 $head Memory and Parallel Mode$$

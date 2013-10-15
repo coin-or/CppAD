@@ -55,6 +55,10 @@ This section contains a list of the changes to CppAD during 2013
 The purpose of this section is to
 assist you in learning about changes between various versions of CppAD.
 
+$head 10-15$$
+The documentation for the class
+$cref/vectorBool/CppAD_vector/vectorBool/$$ was improved.
+
 $head 10-14$$
 The script $cref get_adolc.sh$$ was added
 (for downloading and installing
