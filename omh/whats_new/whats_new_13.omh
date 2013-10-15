@@ -13,6 +13,7 @@ Please visit http://www.coin-or.org/CppAD/ for information on other licenses.
 $begin whats_new_13$$
 $dollar @$$
 $spell
+	Adolc
 	aka
 	sacado
 	resize

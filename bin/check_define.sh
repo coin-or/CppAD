@@ -24,8 +24,11 @@ for cmd in define undef
 do
 	for file in $list
 	do
-		sed -n -e "/^# *$cmd /p" $file | \
-			sed -e "s/^# *$cmd  *\([A-Za-z0-9_]*\).*/\1/" >> tmp.$$
+		if [ ! -e $file.in ]
+		then
+			sed -n -e "/^# *$cmd /p" $file | \
+				sed -e "s/^# *$cmd  *\([A-Za-z0-9_]*\).*/\1/" >> tmp.$$
+		fi
 	done
 	if [ "$cmd" == 'define' ]
 	then
