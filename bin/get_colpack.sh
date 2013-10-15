@@ -92,7 +92,7 @@ then
 fi
 echo_eval cd ColPack-$version
 # -----------------------------------------------------------------------------
-if which autoconf > /dev/null
+if which autoconf >& /dev/null
 then
 	echo_eval rm aclocal.m4 ltmain.sh
 	echo_eval libtoolize

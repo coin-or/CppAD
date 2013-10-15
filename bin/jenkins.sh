@@ -59,6 +59,12 @@ then
 else
 	libdir='lib'
 fi
+if which autoconf >& /dev/null
+then
+	has_autoconf='yes'
+else
+	has_autoconf='no'
+fi
 # -----------------------------------------------------------------------
 # The following test can be used to skip install of other packages
 skip='false'
@@ -90,8 +96,11 @@ then
 	#	$trunk_dir/build/prefix/include/adolc
 	# and library files in
 	#	$trunk_dir/build/prefix/$libdir
-	log_eval bin/get_colpack.sh
-	log_eval bin/get_adolc.sh
+	if has_autoconf
+	then
+		log_eval bin/get_colpack.sh
+		log_eval bin/get_adolc.sh
+	fi
 	# -------------------------------------------------------------------
 fi
 # -----------------------------------------------------------------------
@@ -117,11 +126,17 @@ then
 else
 	build_type=''
 fi
+if has_autoconf
+then
+	adolc_dir="ADOLC_DIR=$trunk_dir/build/prefix"
+else
+	adolc_dir=''
+fi
 #
 cat << EOF
 $trunk_dir/configure \\
 	$build_type \\
-	ADOLC_DIR="$trunk_dir/build/prefix" \\
+	$adolc_dir  \\
 	SACADO_DIR="$trunk_dir/build/prefix" \\
 	EIGEN_DIR="$trunk_dir/build/prefix" \\
 	IPOPT_DIR="$trunk_dir/build/prefix" \\
@@ -129,7 +144,7 @@ $trunk_dir/configure \\
 	OPENMP_FLAGS=-fopenmp
 EOF
 if ! $trunk_dir/configure $build_type \
-	ADOLC_DIR="$trunk_dir/build/prefix" \
+	$adolc_dir \
 	SACADO_DIR="$trunk_dir/build/prefix" \
 	EIGEN_DIR="$trunk_dir/build/prefix" \
 	IPOPT_DIR="$trunk_dir/build/prefix" \

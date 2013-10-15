@@ -120,7 +120,7 @@ then
 		-i 'ADOL-C/src/adouble.h'
 fi
 # -----------------------------------------------------------------------------
-if which autoconf > /dev/null
+if which autoconf >& /dev/null
 then
 	echo_eval autoreconf -f -i
 fi
