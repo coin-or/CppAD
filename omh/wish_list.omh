@@ -33,6 +33,11 @@ $index wish list$$
 $index new, features$$
 $index features, new$$
 
+$head Adolc$$
+$index adolc$$
+Create a documentation page that shows how to convert Adolc commands to
+CppAD commands.
+
 $head Atan2$$
 $index atan2$$
 The $cref/atan2/Atan2/$$ function could be made faster by adding
@@ -56,16 +61,14 @@ was made or if a pointer was used.
 Note that if a pointer is used, it becomes invalid when the destructor
 for $icode ad_fun$$ is called.
 
-$head cppad_ipopt_sum$$
-Create a simpler class an Ipopt AD interface with the objective
-and other functions are sums of functions each of which gets recorded.
-
 $head Forward Mode Recomputation$$
+$index forward$$
 If the results of $cref ForwardAny$$ have already been computed and are still
 stored in the $cref ADFun$$ object (see $cref size_taylor$$), 
 then they do not need to be recomputed and the results can just be returned.
 
 $head Iterator Interface$$
+$index iterator$$
 If the CppAD API had iterator interfaces,
 in addition to simple vector interfaces,
 it would not be necessary to (sometimes) copy information to simple vectors
@@ -137,6 +140,7 @@ We should remove the computation of extra expressions derivatives that are
 not need to compute the requested derivative of the original expression. 
 
 $head Preprocessor Symbols$$
+$index preprocessor$$
 Make sure all the user API preprocessor symbols are list in
 the $cref preprocessor$$ section.
 
@@ -175,9 +179,9 @@ $head Tracing$$
 $index operation, sequence tracing$$
 $index sequence, operation tracing$$
 $index tracing, operation sequence$$
-Add operation sequence tracing to the user API and documentation.
-This is currently done by changing the CppAD source code.
-Use the command
+Add tracing the operation sequence to the user API and documentation.
+Tracing the operation sequence is currently done by changing the CppAD 
+source code. Use the command
 $codep
 	grep '^# *define *CPPAD_.*_TRACE' cppad/local/*.hpp
 $$

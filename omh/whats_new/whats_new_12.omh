@@ -13,6 +13,7 @@ Please visit http://www.coin-or.org/CppAD/ for information on other licenses.
 $begin whats_new_12$$
 $dollar @$$
 $spell
+	checkpointing
 	Jacobians
 	doxygen
 	txt
@@ -242,7 +243,9 @@ Remove $cref VecAD$$ item about slicing from floating point type to $code int$$
 $lnext 
 Change an Ipopt item to a $cref cppad_ipopt_nlp$$
 (which was removed because $code cppad_ipopt_nlp$$ is now deprecated).
-Add new $cref/cppad_ipopt_sum/WishList/cppad_ipopt_sum/$$ item.
+Add new $code cppad_ipopt_sum$$ item to the wish list.
+(This has been removed because $cref/checkpointing/checkpoint/$$ 
+can now be used for this purpose.)
 $lnext
 Add new $code old_atomic$$ $cref WishList$$ item (since removed).
 
