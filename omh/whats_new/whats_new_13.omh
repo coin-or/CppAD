@@ -55,6 +55,9 @@ This section contains a list of the changes to CppAD during 2013
 The purpose of this section is to
 assist you in learning about changes between various versions of CppAD.
 
+$head 10-16$$
+Fix bug in $cref/Tracing/WishList/Tracing/$$ $cref atomic$$ functions.
+
 $head 10-15$$
 The documentation for the class
 $cref/vectorBool/CppAD_vector/vectorBool/$$ was improved.

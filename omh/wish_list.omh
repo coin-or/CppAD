@@ -11,9 +11,10 @@ Please visit http://www.coin-or.org/CppAD/ for information on other licenses.
 -------------------------------------------------------------------------- */
 $begin WishList$$
 $spell
+	Checkpointing
+	grep
 	recomputed
 	recomputation
-	checkpointing
 	afun
 	iterator
 	std
@@ -175,5 +176,11 @@ $index operation, sequence tracing$$
 $index sequence, operation tracing$$
 $index tracing, operation sequence$$
 Add operation sequence tracing to the user API and documentation.
+This is currently done by changing the CppAD source code.
+Use the command
+$codep
+	grep '^# *define *CPPAD_.*_TRACE' cppad/local/*.hpp
+$$
+to find all the possible tracing flags.
 
 $end
