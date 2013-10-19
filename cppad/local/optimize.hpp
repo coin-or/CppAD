@@ -91,6 +91,23 @@ Any comparison operators that are in the tape are removed by this operation.
 Hence the return value of $cref CompareChange$$ will always be zero
 for an optimized tape (even if $code NDEBUG$$ is not defined).
 
+$head Atomic Functions$$
+There are some subtitle issue with optimized $cref atomic$$ functions
+$latex v = g(u)$$.
+$list number$$
+The $cref atomic_rev_sparse_jac$$ function is be used to determine
+which components of $icode u$$ affect the dependent variables of $icode f$$.
+Currently this always uses $code std::set<size_t>$$ for the sparsity patterns.
+It should use the current setting of
+$cref/atomic_sparsity/atomic_option/atomic_sparsity/$$ for the
+atomic function $latex g(u)$$.
+$lnext
+If $icode%u%[%i%]%$$ does not affect the value of
+the dependent variables for $icode f$$,
+the value of $icode%u%[%i%]%$$ is set to $cref nan$$.
+$lend
+
+
 $head Checking Optimization$$
 $index NDEBUG$$
 If $cref/NDEBUG/Faq/Speed/NDEBUG/$$ is not defined,
@@ -1167,10 +1184,12 @@ void optimize(
 	CPPAD_ASSERT_UNKNOWN( j == num_vecad_ind );
 
 	// work space used by UserOp.
-# ifndef NDEBUG
+	typedef std::set<size_t> size_set;
+	size_t user_q     = 0;       // maximum set element plus one
+	vector< size_set > user_r;   // sparsity pattern for the argument x
+	vector< size_set > user_s;   // sparisty pattern for the result y
 	size_t user_index = 0;       // indentifier for this user_atomic operation
 	size_t user_id    = 0;       // user identifier for this call to operator
-# endif
 	size_t user_i     = 0;       // index in result vector
 	size_t user_j     = 0;       // index in argument vector
 	size_t user_m     = 0;       // size of result vector
@@ -1359,13 +1378,15 @@ void optimize(
 			CPPAD_ASSERT_UNKNOWN( NumRes( UserOp ) == 0 );
 			CPPAD_ASSERT_UNKNOWN( NumArg( UserOp ) == 4 );
 			if( user_state == user_end )
-			{
-# ifndef NDEBUG
-				user_index = arg[0];
+			{	user_index = arg[0];
 				user_id    = arg[1];
-# endif
 				user_n     = arg[2];
 				user_m     = arg[3];
+				user_q     = 1;
+				if(user_s.size() != user_n )
+					user_s.resize(user_n);
+				if(user_r.size() != user_m )
+					user_r.resize(user_m);
 				user_j     = user_n;
 				user_i     = user_m;
 				user_state = user_ret;
@@ -1400,8 +1421,10 @@ void optimize(
 			CPPAD_ASSERT_UNKNOWN( size_t(arg[0]) <= i_var );
 			CPPAD_ASSERT_UNKNOWN( 0 < arg[0] );
 			--user_j;
-			if( user_keep.top() )
-				tape[arg[0]].connect = yes_connected;
+			if( ! user_s[user_j].empty() )
+			{	tape[arg[0]].connect = yes_connected;
+				user_keep.top() = true;
+			}
 			if( user_j == 0 )
 				user_state = user_start;
 			break;
@@ -1413,8 +1436,17 @@ void optimize(
 			CPPAD_ASSERT_UNKNOWN( NumArg(op) == 1 );
 			CPPAD_ASSERT_UNKNOWN( size_t(arg[0]) < num_par );
 			--user_i;
+			user_r[user_i].clear();
 			if( user_i == 0 )
+			{	// call users function for this operation
+				atomic_base<Base>* atom = 
+					atomic_base<Base>::class_object(user_index);
+				atom->set_id(user_id);
+				atom->rev_sparse_jac(
+					user_q, user_r, user_s
+				);
 				user_state = user_arg;
+			}
 			break;
 
 			case UsrrvOp:
@@ -1422,10 +1454,19 @@ void optimize(
 			CPPAD_ASSERT_UNKNOWN( user_state == user_ret );
 			CPPAD_ASSERT_UNKNOWN( 0 < user_i && user_i <= user_m );
 			--user_i;
+			user_r[user_i].clear();
 			if( tape[i_var].connect != not_connected )
-				user_keep.top() = true;
+				user_r[user_i].insert(0);
 			if( user_i == 0 )
+			{	// call users function for this operation
+				atomic_base<Base>* atom = 
+					atomic_base<Base>::class_object(user_index);
+				atom->set_id(user_id);
+				atom->rev_sparse_jac(
+					user_q, user_r, user_s
+				);
 				user_state = user_arg;
+			}
 			break;
 			// ============================================================
 
