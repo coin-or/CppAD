@@ -55,6 +55,11 @@ This section contains a list of the changes to CppAD during 2013
 The purpose of this section is to
 assist you in learning about changes between various versions of CppAD.
 
+$head 10-19$$
+Remove the requirement that if $cref optimize$$ is used,
+all the $cref/user atomic/atomic_base/$$ functions must define 
+$cref atomic_rev_sparse_jac$$.
+
 $head 10-16$$
 Fix bug in $cref/Tracing/WishList/Tracing/$$ $cref atomic$$ functions.
 
@@ -166,9 +171,7 @@ The ability to turn on and off checking for $cref nan$$ in
 $cref Forward$$ mode results has been added; see $cref check_for_nan$$.
 $lnext
 Use this option to remove the need to handel $code nan$$ as a special
-case in $cref checkpoint$$ functions that 
-$cref/atomic functions/optimize/Atomic Functions/$$ in within
-another function is optimized.
+case in $cref checkpoint$$ and $cref atomic_base$$ functions.
 $lnext
 Check $cref/reverse/reverse_any/$$  mode results when 
 $cref check_for_nan$$ is true.
@@ -182,7 +185,8 @@ the final dependent variables in $icode f$$,
 $cref/f.optimize()/optimize/$$ would fail.
 This has been fixed.
 In addition, documentation about using $code optimize$$
-with $cref/atomic functions/optimize/Atomic Functions/$$ has been added.
+with $cref atomic_base$$ functions has been added.
+(This connection and documentation was later removed.)
 
 $head 08-06$$
 Fix a case where the test $code test_more/limits.cpp$$ failed because
