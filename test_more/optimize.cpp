@@ -35,28 +35,33 @@ namespace {
 		CppAD::checkpoint<double> algo_check("algo", algo, au, ax);
 
 		// start recording a new function
-		ax[0] = 3.0;
-		ax[1] = 4.0;
 		CppAD::Independent(ax);
 
 		// now use algo_check during the recording
-		au[0] = ax[0];
-		au[1] = ax[0] + ax[1];
+		au[0] = ax[0] + ax[1]; // this argument requires a new variable
+		au[1] = ax[0] - ax[1]; // this argument also requires a new variable
 		algo_check(au, aw);
 
-		// now create a function that does not depend on au[1]
+		// now create f(x) = x_0 - x_1 
 		ay[0] = aw[0];
 		CppAD::ADFun<double> f(ax, ay);
+
+		// number of variables before optimization
+		size_t n_before = f.size_var();
  
 		// now optimize f so that the calculation of au[1] is removed
 		f.optimize();
+
+		// check difference in number of variables
+		size_t n_after = f.size_var();
+		ok &= n_before == n_after + 1;
 
 		// now compute and check a forward mode calculation
 		vector<double> x(2), y(1);
 		x[0] = 5.0;
 		x[1] = 6.0;
 		y    = f.Forward(0, x);
-		ok  &= (y[0] == x[0]); 
+		ok  &= (y[0] == x[0] + x[1]); 
 
 		return ok;
 	}
