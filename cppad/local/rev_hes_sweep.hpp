@@ -207,7 +207,8 @@ void RevHesSweep(
 	CppAD::vectorBool zf_value(limit);
 	CppAD::vectorBool zh_value(limit);
 # endif
-	while(op != BeginOp)
+	bool more_operators = true;
+	while(more_operators)
 	{
 		// next op
 		play->next_reverse(op, arg, i_op, i_var);
@@ -273,7 +274,16 @@ void RevHesSweep(
 			// -------------------------------------------------
 
 			case BeginOp:
-			CPPAD_ASSERT_NARG_NRES(op, 0, 1)
+			CPPAD_ASSERT_NARG_NRES(op, 1, 1)
+			more_operators = false;
+			break;
+			// -------------------------------------------------
+
+			case CSkipOp:
+			// CSkipOp has a variable number of arguments and
+			// next_reverse thinks it one has one argument.
+			// We must inform next_reverse of this special case.
+			play->reverse_cskip(op, arg, i_op, i_var);
 			break;
 			// -------------------------------------------------
 
@@ -782,6 +792,7 @@ void RevHesSweep(
 		printOp(
 			std::cout, 
 			play,
+			i_op,
 			i_var,
 			op, 
 			arg,

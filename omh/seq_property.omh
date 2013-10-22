@@ -1,6 +1,6 @@
 $Id$
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-12 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-13 Bradley M. Bell
 
 CppAD is distributed under multiple licenses. This distribution is under
 the terms of the 
@@ -185,6 +185,8 @@ and is the total number of operator arguments in the operation sequence.
 For example, Binary operators (e.g. addition) have two arguments.
 Note that one integer index is stored in the operation sequence
 for each argument.
+Also note that, as of 2013-10-20, there is an extra 
+phantom argument with index 0 that is not used.
 
 $head size_text$$
 The result $icode s$$ has prototype

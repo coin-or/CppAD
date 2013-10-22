@@ -71,6 +71,8 @@ This is also equal to the number of rows in the matrix \a Taylor; i.e.,
 Rec->num_rec_var().
 
 \param Rec
+2DO: change this name from Rec to play (becuase it is a player 
+and not a recorder).
 The information stored in \a Rec
 is a recording of the operations corresponding to the function
 \f[
@@ -144,6 +146,12 @@ For j = 1 , ... , n and for k = 0 , ... , d,
 is the partial derivative of \f$ G( u ) \f$ with 
 respect to \f$ u_j^{(k)} \f$.
 
+\param cskip_op
+Is a vector with size Rec->num_rec_op().
+If cskip_op[i] is true, the operator index i in the recording
+does not affect any of the dependent variable (given the value
+of the independent variables).
+
 \par Assumptions
 The first operator on the tape is a BeginOp,
 and the next \a n operators are InvOp operations for the 
@@ -151,14 +159,15 @@ corresponding independent variables.
 */
 template <class Base>
 void ReverseSweep(
-	size_t                d,
-	size_t                n,
-	size_t                numvar,
-	player<Base>*         Rec,
-	size_t                J,
-	const Base*           Taylor,
-	size_t                K,
-	Base*                 Partial
+	size_t                      d,
+	size_t                      n,
+	size_t                      numvar,
+	player<Base>*               Rec,
+	size_t                      J,
+	const Base*                 Taylor,
+	size_t                      K,
+	Base*                       Partial,
+	const CppAD::vector<bool>&  cskip_op
 )
 {
 	OpCode           op;
@@ -211,15 +220,21 @@ void ReverseSweep(
 # if CPPAD_REVERSE_SWEEP_TRACE
 	std::cout << std::endl;
 # endif
-	while(op != BeginOp )
+	bool more_operators = true;
+	while(more_operators)
 	{	// next op
 		Rec->next_reverse(op, arg, i_op, i_var);
-# ifndef NDEBUG
-		if( i_op <= n )
-		{	CPPAD_ASSERT_UNKNOWN((op == InvOp) | (op == BeginOp));
+		CPPAD_ASSERT_UNKNOWN((i_op >  n) | (op == InvOp) | (op == BeginOp));
+		CPPAD_ASSERT_UNKNOWN((i_op <= n) | (op != InvOp) | (op != BeginOp));
+
+		// check if we are skipping this operation
+		while( cskip_op[i_op] )
+		{	if( op == CSumOp )
+			{	// CSumOp has a variable number of arguments
+				Rec->reverse_csum(op, arg, i_op, i_var);
+			}
+			Rec->next_reverse(op, arg, i_op, i_var);
 		}
-		else	CPPAD_ASSERT_UNKNOWN((op != InvOp) & (op != BeginOp));
-# endif
 
 		// rest of informaiton depends on the case
 # if CPPAD_REVERSE_SWEEP_TRACE
@@ -230,6 +245,7 @@ void ReverseSweep(
 		printOp(
 			std::cout, 
 			Rec,
+			i_op,
 			i_tmp,
 			op, 
 			arg,
@@ -293,9 +309,18 @@ void ReverseSweep(
 			// -------------------------------------------------
 
 			case BeginOp:
-			CPPAD_ASSERT_NARG_NRES(op, 0, 1);
+			CPPAD_ASSERT_NARG_NRES(op, 1, 1);
+			more_operators = false;
 			break;
 			// --------------------------------------------------
+
+			case CSkipOp:
+			// CSkipOp has a variable number of arguments and
+			// next_forward thinks it one has one argument.
+			// we must inform next_forward of this special case.
+			Rec->reverse_cskip(op, arg, i_op, i_var);
+			break;
+			// -------------------------------------------------
 
 			case CSumOp:
 			// CSumOp has a variable number of arguments and

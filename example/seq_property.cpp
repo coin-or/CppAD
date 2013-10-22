@@ -1,6 +1,6 @@
 /* $Id$ */
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-12 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-13 Bradley M. Bell
 
 CppAD is distributed under multiple licenses. This distribution is under
 the terms of the 
@@ -73,8 +73,8 @@ bool seq_property(void)
 	// Start with one for operator corresponding to phantom variable
 	size_t nop  = 1;
 
-	// Use narg to track the number of operator arguments
-	size_t narg = 0;
+	// Start with one for operator corresponding to phantom argument
+	size_t narg = 1;
 
 	// Use ntext to track the number of characters used to label
 	// output generated using PrintFor commands.

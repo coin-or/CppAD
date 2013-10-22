@@ -17,30 +17,147 @@ Please visit http://www.coin-or.org/CppAD/ for information on other licenses.
 
 namespace {
 	// -------------------------------------------------------------------
+	// Test conditional optimizing out call to an atomic function call
+	void k_algo(
+		const CppAD::vector< CppAD::AD<double> >& x ,
+		      CppAD::vector< CppAD::AD<double> >& y )
+	{	y[0] = x[0] + x[1]; }
+
+	void h_algo(
+		const CppAD::vector< CppAD::AD<double> >& x ,
+		      CppAD::vector< CppAD::AD<double> >& y )
+	{	y[0] = x[0] - x[1]; }
+
+	bool atomic_cond_exp(void)
+	{	bool ok = true;
+		typedef CppAD::vector< CppAD::AD<double> > ADVector;
+
+		// Create a checkpoint version of the function g
+		ADVector ax(2), ag(1), ah(1), ay(1);
+		ax[0] = 0.;
+		ax[1] = 1.;
+		CppAD::checkpoint<double> k_check("k_check", k_algo, ax, ag);
+		CppAD::checkpoint<double> h_check("h_check", h_algo, ax, ah);
+
+		// independent variable vector 
+		Independent(ax);
+
+		// atomic function calls that get conditionally used
+		k_check(ax, ag);
+		h_check(ax, ah);
+
+		// conditional expression
+		ay[0] = CondExpLt(ax[0], ax[1], ag[0], ah[0]); 
+	
+		// create function object f : ax -> ay
+		CppAD::ADFun<double> f;
+		f.Dependent(ax, ay);
+	
+		// use zero order to evaluate when condition is true
+		CppAD::vector<double>  x(2), dx(2);
+		CppAD::vector<double>  y(1), dy(1), w(1);
+		x[0] = 3.;
+		x[1] = 4.;
+		y    = f.Forward(0, x);
+		ok  &= y[0] == x[0] + x[1];
+
+		// before optimize
+		ok  &= f.number_skip() == 0;
+
+		// now optimize the operation sequence
+		f.optimize();
+
+		// optimized zero order forward when condition is false
+		x[0] = 4.;
+		x[1] = 3.;
+		y    = f.Forward(0, x);
+		ok   = y[0] == x[0] - x[1];
+
+		// after optimize can skip either call to g or call to h
+		ok  &= f.number_skip() == 1;
+
+		// optimized first order forward
+		dx[0] = 2.;
+		dx[1] = 1.;
+		dy    = f.Forward(1, dx);
+		ok   &= dy[0] == dx[0] - dx[1];
+
+		// optimized first order reverse
+		w[0]  = 1.;
+		dx    = f.Reverse(1, w);
+		ok   &= dx[0] == 1.;
+		ok   &= dx[1] == -1.;
+	
+		return ok;
+	}
+	// -------------------------------------------------------------------
 	// Test of optimizing out arguments to an atomic function
-	void algo( 
+	void g_algo( 
 		const CppAD::vector< CppAD::AD<double> >& ax ,
 		      CppAD::vector< CppAD::AD<double> >& ay )
 	{	ay = ax; }
 
+	bool atomic_no_used(void)
+	{	bool ok = true;
+		using CppAD::AD;
+		using CppAD::vector;
+	
+		// Create a checkpoint version of the function g
+		vector< AD<double> > ax(2), ay(1), az(1);
+		ax[0] = 0.;
+		ax[1] = 1.;
+		CppAD::checkpoint<double> g_check("g_check", g_algo, ax, ay);
+	
+		// independent variable vector 
+		Independent(ax);
+	
+		// call atomic function that does not get used
+		g_check(ax, ay);
+	
+		// conditional expression
+		az[0] = CondExpLt(ax[0], ax[1], ax[0] + ax[1], ax[0] - ax[1]); 
+		
+		// create function object f : ax -> az
+		CppAD::ADFun<double> f;
+		f.Dependent(ax, az);
+
+		// number of variables before optimization
+		size_t n_before = f.size_var();
+		
+		// now optimize the operation sequence
+		f.optimize();
+
+		// number of variables before optimization
+		size_t n_after = f.size_var();
+		ok            &= n_after + 1 == n_before;
+	
+		// check optimization works ok
+		vector<double> x(2), z(1);
+		x[0] = 4.;
+		x[1] = 3.;
+		z    = f.Forward(0, x);
+		ok   = z[0] == x[0] - x[1];
+		
+		return ok;
+	}
 	bool atomic_arguments(void)
 	{	bool ok = true;
 		using CppAD::AD;
 		using CppAD::vector;
 		vector< AD<double> > au(2), aw(2), ax(2), ay(1);
 
-		// create atomic function corresponding to algo
+		// create atomic function corresponding to g_algo
 		au[0] = 1.0;
 		au[1] = 2.0;
-		CppAD::checkpoint<double> algo_check("algo", algo, au, ax);
+		CppAD::checkpoint<double> g_check("g_algo", g_algo, au, ax);
 
 		// start recording a new function
 		CppAD::Independent(ax);
 
-		// now use algo_check during the recording
+		// now use g_check during the recording
 		au[0] = ax[0] + ax[1]; // this argument requires a new variable
 		au[1] = ax[0] - ax[1]; // this argument also requires a new variable
-		algo_check(au, aw);
+		g_check(au, aw);
 
 		// now create f(x) = x_0 - x_1 
 		ay[0] = aw[0];
@@ -764,7 +881,7 @@ namespace {
 	
 		return ok;
 	}
-	bool forward_sparse_jacobian_csum()
+	bool forward_sparse_jacobian()
 	{	bool ok = true;
 		using namespace CppAD;
 	
@@ -772,12 +889,13 @@ namespace {
 		size_t n = 3; 
 	
 		// dimension of the range space
-		size_t m = 2;
+		size_t m = 3;
 	
 		// independent variable vector 
 		CppAD::vector< AD<double> > X(n);
 		X[0] = 2.; 
 		X[1] = 3.;
+		X[2] = 4.;
 		Independent(X);
 	
 		// dependent variable vector
@@ -799,6 +917,17 @@ namespace {
 		// Y[1] 
 		Y[index]             = Y[0] - (X[1] + X[2]);
 		Check[index * n + 0] = true;
+		Check[index * n + 1] = true;
+		Check[index * n + 2] = true;
+		index++;
+
+		// Y[2] 
+		// 2DO: There is a subtitle issue that has to do with using reverse
+		// jacobian sparsity patterns during the optimization process.
+		// We need an option to include X[0] in the sparsity pattern
+		// so the optimizer can know it affects the results.
+		Y[index]             = CondExpLe(X[0], X[1], X[1]+X[1], X[2]-X[2]);
+		Check[index * n + 0] = false;
 		Check[index * n + 1] = true;
 		Check[index * n + 2] = true;
 		index++;
@@ -834,7 +963,7 @@ namespace {
 	
 		return ok;
 	}
-	bool reverse_sparse_jacobian_csum()
+	bool reverse_sparse_jacobian()
 	{	bool ok = true;
 		using namespace CppAD;
 	
@@ -842,12 +971,13 @@ namespace {
 		size_t n = 3; 
 	
 		// dimension of the range space
-		size_t m = 2;
+		size_t m = 3;
 	
 		// independent variable vector 
 		CppAD::vector< AD<double> > X(n);
 		X[0] = 2.; 
 		X[1] = 3.;
+		X[2] = 4.;
 		Independent(X);
 	
 		// dependent variable vector
@@ -869,6 +999,17 @@ namespace {
 		// Y[1] 
 		Y[index]             = Y[0] - (X[1] + X[2]);
 		Check[index * n + 0] = true;
+		Check[index * n + 1] = true;
+		Check[index * n + 2] = true;
+		index++;
+
+		// Y[2] 
+		// 2DO: There is a subtitle issue that has to do with using reverse
+		// jacobian sparsity patterns during the optimization process.
+		// We need an option to include X[0] in the sparsity pattern
+		// so the optimizer can know it affects the results.
+		Y[index]             = CondExpLe(X[0], X[1], X[1]+X[1], X[2]-X[2]);
+		Check[index * n + 0] = false;
 		Check[index * n + 1] = true;
 		Check[index * n + 2] = true;
 		index++;
@@ -901,26 +1042,37 @@ namespace {
 	
 		return ok;
 	}
-	bool reverse_sparse_hessian_csum(void)
+	bool reverse_sparse_hessian(void)
 	{	bool ok = true;
 		using CppAD::AD;
 		size_t i, j;
 	
-		size_t n = 2;
+		size_t n = 3;
 		CppAD::vector< AD<double> > X(n); 
 		X[0] = 1.;
 		X[1] = 2.;
+		X[2] = 3.;
 		CppAD::Independent(X);
 	
 		size_t m = 1;
 		CppAD::vector< AD<double> > Y(m);
-		Y[0] = (2. + X[0] + X[1] + 3.) * X[0];
+		Y[0] = CondExpGe( X[0], X[1], 
+			X[0] + (2. + X[1] + 3.) * X[1], 
+			X[0] + (2. + X[2] + 3.) * X[1]
+		);
 	
 		CppAD::vector<bool> check(n * n);
-		check[0 * n + 0] = true;  // partial w.r.t. x[0], x[0]
-		check[0 * n + 1] = true;  //                x[0], x[1]
-		check[1 * n + 0] = true;  //                x[1], x[0]
-		check[1 * n + 1] = false; //                x[1], x[1]
+		check[0 * n + 0] = false; // partial w.r.t. x[0], x[0]
+		check[0 * n + 1] = false; //                x[0], x[1]
+		check[0 * n + 2] = false; //                x[0], x[2]
+
+		check[1 * n + 0] = false; // partial w.r.t. x[1], x[0]
+		check[1 * n + 1] = true;  //                x[1], x[1]
+		check[1 * n + 2] = true;  //                x[1], x[2]
+
+		check[2 * n + 0] = false; // partial w.r.t. x[2], x[0]
+		check[2 * n + 1] = true;  //                x[2], x[1]
+		check[2 * n + 2] = false; //                x[2], x[2]
 	
 		// create function object F : X -> Y
 		CppAD::ADFun<double> F(X, Y);
@@ -1165,6 +1317,8 @@ namespace {
 
 bool optimize(void)
 {	bool ok = true;
+	// check optimizing out entire atomic function
+	ok     &= atomic_cond_exp();
 	// check optimizing out atomic arguments
 	ok     &= atomic_arguments();
 	// check reverse dependency analysis optimization
@@ -1180,9 +1334,10 @@ bool optimize(void)
 	ok     &= cummulative_sum();
 	ok     &= forward_csum();
 	ok     &= reverse_csum();
-	ok     &= forward_sparse_jacobian_csum();
-	ok     &= reverse_sparse_jacobian_csum();
-	ok     &= reverse_sparse_hessian_csum();
+	// sparsity patterns
+	ok     &= forward_sparse_jacobian();
+	ok     &= reverse_sparse_jacobian();
+	ok     &= reverse_sparse_hessian();
 	// check that CondExp properly detects dependencies
 	ok     &= cond_exp_depend();
 	// check old_atomic functions

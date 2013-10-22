@@ -181,7 +181,8 @@ VectorBase ADFun<Base>::Reverse(size_t p, const VectorBase &w)
 		taylor_col_dim_,
 		taylor_.data(),
 		p,
-		Partial.data()
+		Partial.data(),
+		cskip_op_
 	);
 
 	// return the derivative values

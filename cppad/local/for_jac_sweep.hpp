@@ -188,7 +188,8 @@ void ForJacSweep(
 	// skip the BeginOp at the beginning of the recording
 	play->start_forward(op, arg, i_op, i_var);
 	CPPAD_ASSERT_UNKNOWN( op == BeginOp );
-	while(op != EndOp)
+	bool more_operators = true;
+	while(more_operators)
 	{
 		// this op
 		play->next_forward(op, arg, i_op, i_var);
@@ -246,6 +247,14 @@ void ForJacSweep(
 			forward_sparse_jacobian_unary_op(
 				i_var, arg[0], var_sparsity
 			);
+			break;
+			// -------------------------------------------------
+
+			case CSkipOp:
+			// CSipOp has a variable number of arguments and
+			// next_forward thinks it one has one argument.
+			// we must inform next_forward of this special case.
+			play->forward_cskip(op, arg, i_op, i_var);
 			break;
 			// -------------------------------------------------
 
@@ -323,6 +332,7 @@ void ForJacSweep(
 
 			case EndOp:
 			CPPAD_ASSERT_NARG_NRES(op, 0, 0);
+			more_operators = false;
 			break;
 			// -------------------------------------------------
 
@@ -697,6 +707,7 @@ void ForJacSweep(
 		printOp(
 			std::cout,
 			play,
+			i_op,
 			i_var,
 			op,
 			arg,

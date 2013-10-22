@@ -145,25 +145,31 @@ Routines for optimizing a tape
 /*!
 State for this variable set during reverse sweep.
 */
-enum optimize_connection {
+enum optimize_connection_type {
 	/// There is no operation that connects this variable to the
 	/// independent variables.
-	not_connected     ,
+	not_connected        ,
 
 	/// There is one or more operations that connects this variable to the
 	/// independent variables.
-	yes_connected      ,
+	yes_connected        ,
 
-	/// There is only one parrent operation that connects this variable to 
-	/// the independent variables and it is one of the following:
-	///  AddvvOp, AddpvOp, SubpvOp, SubvpOp, or SubvvOp.
-	sum_connected      ,
+	/// There is only one parrent that connects this variable to the 
+	/// independent variables and the parent is a summation operation; i.e.,
+	/// AddvvOp, AddpvOp, SubpvOp, SubvpOp, or SubvvOp.
+	sum_connected        ,
 
-	/// Satisfies sum_connected and in addition 
-	/// the parrent operation is one of the following:
-	///  AddvvOp, AddpvOp, SubpvOp, SubvpOp, or SubvvOp.
-	csum_connected
+	/// Satisfies the sum_connected assumptions above and in addition 
+	/// this variable is the result of summation operator.
+	csum_connected       ,
 
+	/// This node is only connected in the case where the comparision is 
+	/// true for the conditional expression with index \c connect_index.
+	cexp_true_connected  ,
+
+	/// This node is only connected in the case where the comparision is 
+	/// false for the conditional expression with index \c connect_index.
+	cexp_false_connected
 };
 
 
@@ -181,11 +187,29 @@ struct optimize_old_variable {
 	const addr_t*       arg;
 
 	/// How is this variable connected to the independent variables
-	optimize_connection connect; 
+	optimize_connection_type connect_type; 
 
-	/// Set during forward sweep to the index in the
-	/// new operation sequence corresponding to this old varable.
+	/*!
+	The meaning of this index depends on \c connect_type as follows:
+
+	\par cexp_flag_connected
+	For flag equal to ture or false, \c connect_index is the index of the 
+	conditional expression corresponding to this connection.
+	*/
+	size_t connect_index;
+
+	/// New operation sequence corresponding to this old varable.
+	/// Set during forward sweep to the index in the new tape
 	addr_t new_var;
+
+	/// New operator index for this varable.
+	/// Set during forward sweep to the index in the new tape
+	size_t new_op;
+};
+
+struct optimize_size_pair {
+	size_t i_op;  // an operator index
+	size_t i_var; // a variable index
 };
 
 /*!
@@ -218,6 +242,52 @@ struct optimize_csum_stacks {
 	std::stack<size_t >                         sub_stack;
 };
 
+/*!
+CExpOp information that is copied to corresponding CSkipOp
+*/
+struct optimize_cskip_info {
+	/// comparision operator
+	CompareOp cop;
+	/// (flag & 1) is true if and only if left is a variable
+	/// (flag & 2) is true if and only if right is a variable
+	size_t flag;
+	/// index for left comparison operand
+	size_t left; 
+	/// index for right comparison operand
+	size_t right; 
+	/// set of variables to skip on true
+	CppAD::vector<size_t> skip_var_true;
+	/// set of variables to skip on false
+	CppAD::vector<size_t> skip_var_false;
+	/// set of operations to skip on true
+	CppAD::vector<size_t> skip_op_true;
+	/// set of operations to skip on false
+	CppAD::vector<size_t> skip_op_false;
+	/// size of skip_op_true
+	size_t n_op_true;
+	/// size of skip_op_false
+	size_t n_op_false;
+	/// index in the argument recording of first argument for this CSkipOp
+	size_t i_arg;
+};
+/*!
+Connection information for a user atomic function
+*/
+struct optimize_user_info {
+	/// type of connection for this atomic function
+	optimize_connection_type connect_type;
+	/// If this is an conditional connection, this is the index
+	/// of the correpsonding CondExpOp
+	size_t connect_index;
+	/// If this is a conditional connection, this is the operator
+	/// index of the beginning of the atomic call sequence; i.e.,
+	/// the first UserOp.
+	size_t op_begin;
+	/// If this is a conditional connection, this is one more than the
+	///  operator index of the ending of the atomic call sequence; i.e.,
+	/// the second UserOp.
+	size_t op_end;
+};
 
 /*!
 Shared documentation for optimization helper functions (not called).
@@ -645,11 +715,11 @@ AddpvOp, DivpvOp, MulpvOp, PowvpOp, SubpvOp.
 is the vector of arguments for this operator.
 
 \return
-the result value is the index corresponding to the current
+the result is the operaiton and variable index corresponding to the current
 operation in the new operation sequence.
 */
 template <class Base>
-size_t optimize_record_pv(
+optimize_size_pair optimize_record_pv(
 	const CppAD::vector<struct optimize_old_variable>& tape           ,
 	size_t                                             current        ,
 	size_t                                             npar           ,
@@ -677,9 +747,12 @@ size_t optimize_record_pv(
 	new_arg[0]   = rec->PutPar( par[arg[0]] );
 	new_arg[1]   = tape[ arg[1] ].new_var;
 	rec->PutArg( new_arg[0], new_arg[1] );
-	size_t i     = rec->PutOp(op);
-	CPPAD_ASSERT_UNKNOWN( size_t(new_arg[0]) < i );
-	return i;
+
+	optimize_size_pair ret;
+	ret.i_op  = rec->num_rec_op();
+	ret.i_var = rec->PutOp(op);
+	CPPAD_ASSERT_UNKNOWN( size_t(new_arg[0]) < ret.i_var );
+	return ret;
 }
 
 
@@ -744,11 +817,11 @@ DivvpOp, PowvpOp, SubvpOp.
 is the vector of arguments for this operator.
 
 \return
-the result value is the index corresponding to the current
+the result operation and variable index corresponding to the current
 operation in the new operation sequence.
 */
 template <class Base>
-size_t optimize_record_vp(
+optimize_size_pair optimize_record_vp(
 	const CppAD::vector<struct optimize_old_variable>& tape           ,
 	size_t                                             current        ,
 	size_t                                             npar           ,
@@ -774,9 +847,12 @@ size_t optimize_record_vp(
 	new_arg[0]   = tape[ arg[0] ].new_var;
 	new_arg[1]   = rec->PutPar( par[arg[1]] );
 	rec->PutArg( new_arg[0], new_arg[1] );
-	size_t i     = rec->PutOp(op);
-	CPPAD_ASSERT_UNKNOWN( size_t(new_arg[0]) < i );
-	return i;
+
+	optimize_size_pair ret;
+	ret.i_op  = rec->num_rec_op();
+	ret.i_var = rec->PutOp(op);
+	CPPAD_ASSERT_UNKNOWN( size_t(new_arg[0]) < ret.i_var );
+	return ret;
 }
 
 /*!
@@ -840,11 +916,11 @@ AddvvOp, DivvvOp, MulvvOp, PowvpOp, SubvvOp.
 is the vector of arguments for this operator.
 
 \return
-the result value is the index corresponding to the current
+the result is the operation and variable index corresponding to the current
 operation in the new operation sequence.
 */
 template <class Base>
-size_t optimize_record_vv(
+optimize_size_pair optimize_record_vv(
 	const CppAD::vector<struct optimize_old_variable>& tape           ,
 	size_t                                             current        ,
 	size_t                                             npar           ,
@@ -872,9 +948,13 @@ size_t optimize_record_vv(
 	new_arg[0]   = tape[ arg[0] ].new_var;
 	new_arg[1]   = tape[ arg[1] ].new_var;
 	rec->PutArg( new_arg[0], new_arg[1] );
-	size_t i     = rec->PutOp(op);
-	CPPAD_ASSERT_UNKNOWN( size_t(new_arg[0]) < i );
-	return i;
+
+	optimize_size_pair ret;
+	ret.i_op  = rec->num_rec_op();
+	ret.i_var = rec->PutOp(op);
+	CPPAD_ASSERT_UNKNOWN( size_t(new_arg[0]) < ret.i_var );
+	CPPAD_ASSERT_UNKNOWN( size_t(new_arg[1]) < ret.i_var );
+	return ret;
 }
 
 // ==========================================================================
@@ -944,12 +1024,13 @@ and then the elements can be reused with calls to \c optimize_record_csum.
 \par Exception
 <tt>tape[i].new_var</tt>
 is not yet defined for any node \c i that is \c csum_connected
-to the \a current node.
+to the \a current node
+(or that is \c sum_connected to a node that is \c csum_connected).
 For example; suppose that index \c j corresponds to a variable
 in the current operator,
 <tt>i = tape[current].arg[j]</tt>,
 and 
-<tt>tape[arg[j]].connect == csum_connected</tt>.
+<tt>tape[arg[j]].connect_type == csum_connected</tt>.
 It then follows that
 <tt>tape[i].new_var == tape.size()</tt>.
 
@@ -957,12 +1038,15 @@ It then follows that
 \li <tt>tape[current].op</tt> 
 must be one of <tt>AddpvOp, AddvvOp, SubpvOp, SubvpOp, SubvvOp</tt>.
 
-\li <tt>tape[current].connect</tt> must be \c yes_connected.
+\li <tt>tape[current].connect_type</tt> must be \c yes_connected.
+
+\li <tt>tape[j].connect_type == csum_connected</tt> for some index
+j that is a variable operand for the current operation.
 */
 
 
 template <class Base>
-size_t optimize_record_csum(
+optimize_size_pair optimize_record_csum(
 	const CppAD::vector<struct optimize_old_variable>& tape           ,
 	size_t                                             current        ,
 	size_t                                             npar           ,
@@ -974,7 +1058,7 @@ size_t optimize_record_csum(
 	CPPAD_ASSERT_UNKNOWN( work.op_stack.empty() );
 	CPPAD_ASSERT_UNKNOWN( work.add_stack.empty() );
 	CPPAD_ASSERT_UNKNOWN( work.sub_stack.empty() );
-	CPPAD_ASSERT_UNKNOWN( tape[current].connect == yes_connected );
+	CPPAD_ASSERT_UNKNOWN( tape[current].connect_type == yes_connected );
 
 	size_t                        i;
 	OpCode                        op;
@@ -987,6 +1071,19 @@ size_t optimize_record_csum(
 	var.add = true; 
 	work.op_stack.push( var );
 	Base sum_par(0);
+
+# ifndef NDEBUG
+	bool ok = false;
+	if( var.op == SubvpOp )
+		ok = tape[ tape[current].arg[0] ].connect_type == csum_connected;
+	if( var.op == AddpvOp || var.op == SubpvOp )
+		ok = tape[ tape[current].arg[1] ].connect_type == csum_connected;
+	if( var.op == AddvvOp || var.op == SubvvOp )
+	{	ok  = tape[ tape[current].arg[0] ].connect_type == csum_connected;
+		ok |= tape[ tape[current].arg[1] ].connect_type == csum_connected;
+	}
+	CPPAD_ASSERT_UNKNOWN( ok );
+# endif
 	while( ! work.op_stack.empty() )
 	{	var     = work.op_stack.top();
 		work.op_stack.pop();
@@ -1006,7 +1103,7 @@ size_t optimize_record_csum(
 			case AddvvOp:
 			case SubvpOp:
 			case SubvvOp:
-			if( tape[arg[0]].connect == csum_connected )
+			if( tape[arg[0]].connect_type == csum_connected )
 			{	CPPAD_ASSERT_UNKNOWN(
 					size_t(tape[arg[0]].new_var) == tape.size()
 				);
@@ -1039,7 +1136,7 @@ size_t optimize_record_csum(
 
 			case AddvvOp:
 			case AddpvOp:
-			if( tape[arg[1]].connect == csum_connected )
+			if( tape[arg[1]].connect_type == csum_connected )
 			{	CPPAD_ASSERT_UNKNOWN(
 					size_t(tape[arg[1]].new_var) == tape.size()
 				);
@@ -1082,10 +1179,13 @@ size_t optimize_record_csum(
 		work.sub_stack.pop();
 	}
 	rec->PutArg(n_add + n_sub);        // arg[3 + arg[0] + arg[1]]
-	i = rec->PutOp(CSumOp);
-	CPPAD_ASSERT_UNKNOWN(new_arg < tape.size());
 
-	return i;
+
+	optimize_size_pair ret;
+	ret.i_op  = rec->num_rec_op();
+	ret.i_var = rec->PutOp(CSumOp);
+	CPPAD_ASSERT_UNKNOWN( new_arg < ret.i_var );
+	return ret;
 }
 // ==========================================================================
 /*!
@@ -1157,17 +1257,17 @@ void optimize(
 
 	// initialize all variables has having no connections
 	for(i = 0; i < num_var; i++)
-		tape[i].connect = not_connected;
+		tape[i].connect_type = not_connected;
 
 	for(j = 0; j < m; j++)
 	{	// mark dependent variables as having one or more connections
-		tape[ dep_taddr[j] ].connect = yes_connected;
+		tape[ dep_taddr[j] ].connect_type = yes_connected;
 	}
 
 	// vecad_connect contains a value for each VecAD object.
 	// vecad maps a VecAD index (which corresponds to the beginning of the
 	// VecAD object) to the vecad_connect falg for the VecAD object.
-	CppAD::vector<optimize_connection>   vecad_connect(num_vecad_vec);
+	CppAD::vector<optimize_connection_type>   vecad_connect(num_vecad_vec);
 	CppAD::vector<size_t> vecad(num_vecad_ind);
 	j = 0;
 	for(i = 0; i < num_vecad_vec; i++)
@@ -1197,10 +1297,13 @@ void optimize(
 	// next expected operator in a UserOp sequence
 	enum { user_start, user_arg, user_ret, user_end } user_state;
 
-	// During reverse mode, push true if user operation is connected, 
-	// push false otherwise. During forward mode, use to determine if 
-	// we are keeping this operation and then pop.
-	std::stack<bool> user_keep;
+	// During reverse mode, compute type of connection for each call to
+	// a user atomic function.
+	CppAD::vector<optimize_user_info>    user_info;
+	size_t                               user_curr = 0;
+
+	/// During reverse mode, information for each CSkip operation
+	CppAD::vector<optimize_cskip_info>   cskip_info;
 
 	// Initialize a reverse mode sweep through the operation sequence
 	size_t i_op;
@@ -1211,8 +1314,8 @@ void optimize(
 	while(op != BeginOp)
 	{	// next op
 		play->next_reverse(op, arg, i_op, i_var);
-		// This if is not necessary becasue last assignment
-		// with this value of i_var will have NumRes(op) > 0
+
+		// Store the operator corresponding to each variable
 		if( NumRes(op) > 0 )
 		{	tape[i_var].op = op;
 			tape[i_var].arg = arg;
@@ -1223,6 +1326,9 @@ void optimize(
 		}
 		else	CPPAD_ASSERT_UNKNOWN((op != InvOp) & (op != BeginOp));
 # endif
+		optimize_connection_type connect_type  = tape[i_var].connect_type;
+		size_t                  connect_index  = tape[i_var].connect_index;
+		bool flag;
 		switch( op )
 		{
 			// Unary operator where operand is arg[0]
@@ -1241,8 +1347,31 @@ void optimize(
 			case SqrtOp:
 			case TanOp:
 			case TanhOp:
-			if( tape[i_var].connect != not_connected )
-				tape[arg[0]].connect = yes_connected;
+			switch( connect_type )
+			{	case not_connected:
+				break;
+	
+				case yes_connected:
+				case sum_connected:
+				case csum_connected: 
+				tape[arg[0]].connect_type = yes_connected;
+				break;
+
+				case cexp_true_connected:
+				case cexp_false_connected:
+				if( tape[arg[0]].connect_type == not_connected )
+				{	tape[arg[0]].connect_type  = connect_type;
+					tape[arg[0]].connect_index = connect_index;
+				}
+				flag  = tape[arg[0]].connect_type  != connect_type;
+				flag |= tape[arg[0]].connect_index != connect_index;
+				if( flag )
+					tape[arg[0]].connect_type = yes_connected;
+				break;
+
+				default:
+				CPPAD_ASSERT_UNKNOWN(false);
+			}
 			break; // --------------------------------------------
 
 			// Unary operator where operand is arg[1]
@@ -1250,34 +1379,101 @@ void optimize(
 			case DivpvOp:
 			case MulpvOp:
 			case PowpvOp:
-			if( tape[i_var].connect != not_connected )
-				tape[arg[1]].connect = yes_connected;
+			switch( connect_type )
+			{	case not_connected:
+				break;
+	
+				case yes_connected:
+				case sum_connected:
+				case csum_connected: 
+				tape[arg[1]].connect_type = yes_connected;
+				break;
+
+				case cexp_true_connected:
+				case cexp_false_connected:
+				if( tape[arg[1]].connect_type == not_connected )
+				{	tape[arg[1]].connect_type  = connect_type;
+					tape[arg[1]].connect_index = connect_index;
+				}
+				flag  = tape[arg[1]].connect_type  != connect_type;
+				flag |= tape[arg[1]].connect_index != connect_index;
+				if( flag )
+					tape[arg[1]].connect_type = yes_connected;
+				break;
+
+				default:
+				CPPAD_ASSERT_UNKNOWN(false);
+			}
 			break; // --------------------------------------------
 		
 			// Special case for SubvpOp
 			case SubvpOp:
-			if( tape[i_var].connect != not_connected )
-			{
-				if( tape[arg[0]].connect == not_connected )
-					tape[arg[0]].connect = sum_connected;
-				else
-					tape[arg[0]].connect = yes_connected;
-				if( tape[i_var].connect == sum_connected )
-					tape[i_var].connect = csum_connected;
+			switch( connect_type )
+			{	case not_connected:
+				break;
+	
+				case yes_connected:
+				case sum_connected:
+				case csum_connected: 
+				if( tape[arg[0]].connect_type == not_connected )
+					tape[arg[0]].connect_type = sum_connected;
+				else	tape[arg[0]].connect_type = yes_connected;
+				break;
+
+				case cexp_true_connected:
+				case cexp_false_connected:
+				if( tape[arg[0]].connect_type == not_connected )
+				{	tape[arg[0]].connect_type  = connect_type;
+					tape[arg[0]].connect_index = connect_index;
+				}
+				flag  = tape[arg[0]].connect_type  != connect_type;
+				flag |= tape[arg[0]].connect_index != connect_index;
+				if( flag )
+					tape[arg[0]].connect_type = yes_connected;
+				break;
+
+				default:
+				CPPAD_ASSERT_UNKNOWN(false);
+			}
+			if( connect_type == sum_connected )
+			{	// convert sum to csum connection for this variable
+				tape[i_var].connect_type = connect_type = csum_connected;
 			}
 			break; // --------------------------------------------
 		
 			// Special case for AddpvOp and SubpvOp
 			case AddpvOp:
 			case SubpvOp:
-			if( tape[i_var].connect != not_connected )
-			{
-				if( tape[arg[1]].connect == not_connected )
-					tape[arg[1]].connect = sum_connected;
-				else
-					tape[arg[1]].connect = yes_connected;
-				if( tape[i_var].connect == sum_connected )
-					tape[i_var].connect = csum_connected;
+			switch( connect_type )
+			{	case not_connected:
+				break;
+	
+				case yes_connected:
+				case sum_connected:
+				case csum_connected:
+				if( tape[arg[1]].connect_type == not_connected )
+					tape[arg[1]].connect_type = sum_connected;
+				else	tape[arg[1]].connect_type = yes_connected;
+				break;
+
+				case cexp_true_connected:
+				case cexp_false_connected:
+				if( tape[arg[1]].connect_type == not_connected )
+				{	tape[arg[1]].connect_type  = connect_type;
+					tape[arg[1]].connect_index = connect_index;
+				}
+				flag  = tape[arg[1]].connect_type  != connect_type;
+				flag |= tape[arg[1]].connect_index != connect_index;
+				if( flag )
+					tape[arg[1]].connect_type = yes_connected;
+				break;
+
+				default:
+				CPPAD_ASSERT_UNKNOWN(false);
+			}
+			if( connect_type == sum_connected )
+			{	// convert sum to csum connection for this variable
+				tape[i_var].connect_type = connect_type = csum_connected;
 			}
 			break; // --------------------------------------------
 
@@ -1285,19 +1481,36 @@ void optimize(
 			// Special case for AddvvOp and SubvvOp
 			case AddvvOp:
 			case SubvvOp:
-			if( tape[i_var].connect != not_connected )
-			{
-				if( tape[arg[0]].connect == not_connected )
-					tape[arg[0]].connect = sum_connected;
-				else
-					tape[arg[0]].connect = yes_connected;
+			for(i = 0; i < 2; i++) switch( connect_type )
+			{	case not_connected:
+				break;
 
-				if( tape[arg[1]].connect == not_connected )
-					tape[arg[1]].connect = sum_connected;
-				else
-					tape[arg[1]].connect = yes_connected;
-				if( tape[i_var].connect == sum_connected )
-					tape[i_var].connect = csum_connected;
+				case yes_connected:
+				case sum_connected:
+				case csum_connected:
+				if( tape[arg[i]].connect_type == not_connected )
+					tape[arg[i]].connect_type = sum_connected;
+				else	tape[arg[i]].connect_type = yes_connected;
+				break;
+
+				case cexp_true_connected:
+				case cexp_false_connected:
+				if( tape[arg[i]].connect_type == not_connected )
+				{	tape[arg[i]].connect_type  = connect_type;
+					tape[arg[i]].connect_index = connect_index;
+				}
+				flag  = tape[arg[i]].connect_type  != connect_type;
+				flag |= tape[arg[i]].connect_index != connect_index;
+				if( flag )
+					tape[arg[i]].connect_type = yes_connected;
+				break;
+
+				default:
+				CPPAD_ASSERT_UNKNOWN(false);
+			}
+			if( connect_type == sum_connected )
+			{	// convert sum to csum connection for this variable
+				tape[i_var].connect_type = connect_type = csum_connected;
 			}
 			break; // --------------------------------------------
 
@@ -1306,23 +1519,66 @@ void optimize(
 			case DivvvOp:
 			case MulvvOp:
 			case PowvvOp:
-			if( tape[i_var].connect != not_connected )
-			{
-				tape[arg[0]].connect = yes_connected;
-				tape[arg[1]].connect = yes_connected;
+			for(i = 0; i < 2; i++) switch( connect_type )
+			{	case not_connected:
+				break;
+
+				case yes_connected:
+				case sum_connected:
+				case csum_connected:
+				tape[arg[i]].connect_type = yes_connected;
+				break;
+
+				case cexp_true_connected:
+				case cexp_false_connected:
+				if( tape[arg[i]].connect_type == not_connected )
+				{	tape[arg[i]].connect_type  = connect_type;
+					tape[arg[i]].connect_index = connect_index;
+				}
+				flag  = tape[arg[i]].connect_type  != connect_type;
+				flag |= tape[arg[i]].connect_index != connect_index;
+				if( flag )
+					tape[arg[i]].connect_type = yes_connected;
+				break;
+
+				default:
+				CPPAD_ASSERT_UNKNOWN(false);
 			}
 			break; // --------------------------------------------
 
 			// Conditional expression operators
+			// 2DO: This does not handle nested conditional expressions; 
+			// i.e. Suppose i_var is connected to a conditional expression.
 			case CExpOp:
 			CPPAD_ASSERT_UNKNOWN( NumArg(CExpOp) == 6 );
-			if( tape[i_var].connect != not_connected )
-			{
+			if( tape[i_var].connect_type != not_connected )
+			{	optimize_cskip_info info;
+				info.cop        = CompareOp( arg[0] );
+				info.flag       = arg[1];
+				info.left       = arg[2];
+				info.right      = arg[3];
+				info.n_op_true  = 0;
+				info.n_op_false = 0;
+				size_t index = cskip_info.size();
+				cskip_info.push_back(info);
+
 				mask = 1;
 				for(i = 2; i < 6; i++)
-				{	if( arg[1] & mask )
-					{	CPPAD_ASSERT_UNKNOWN( size_t(arg[i]) < i_var );
-						tape[arg[i]].connect = yes_connected;
+				{	CPPAD_ASSERT_UNKNOWN( size_t(arg[i]) < i_var );
+					if( arg[1] & mask )
+					{	if( i == 2 || i == 3 )
+							tape[arg[i]].connect_type = yes_connected;
+						else
+						{	tape[arg[i]].connect_index = index;
+							if( i == 4 )
+								tape[arg[i]].connect_type = 
+										cexp_true_connected;
+							else
+							{	// i == 5
+								tape[arg[i]].connect_type = 
+										cexp_false_connected;
+							}
+						}
 					}
 					mask = mask << 1;
 				}
@@ -1330,17 +1586,21 @@ void optimize(
 			break;  // --------------------------------------------
 
 			// Operations where there is noting to do
-			case BeginOp:
 			case ComOp:
 			case EndOp:
-			case InvOp:
 			case ParOp:
 			case PriOp:
 			break;  // --------------------------------------------
 
+			// Operators that never get removed
+			case BeginOp:
+			case InvOp:
+			tape[i_var].connect_type = yes_connected;
+			break;
+
 			// Load using a parameter index
 			case LdpOp:
-			if( tape[i_var].connect != not_connected )
+			if( tape[i_var].connect_type != not_connected )
 			{
 				i                = vecad[ arg[0] - 1 ];
 				vecad_connect[i] = yes_connected;
@@ -1349,11 +1609,11 @@ void optimize(
 
 			// Load using a variable index
 			case LdvOp:
-			if( tape[i_var].connect != not_connected )
+			if( tape[i_var].connect_type != not_connected )
 			{
 				i                    = vecad[ arg[0] - 1 ];
 				vecad_connect[i]     = yes_connected;
-				tape[arg[1]].connect = yes_connected;
+				tape[arg[1]].connect_type = yes_connected;
 			}
 			break; // --------------------------------------------
 
@@ -1361,15 +1621,15 @@ void optimize(
 			case StpvOp:
 			i = vecad[ arg[0] - 1 ];
 			if( vecad_connect[i] != not_connected )
-				tape[arg[2]].connect = yes_connected;
+				tape[arg[2]].connect_type = yes_connected;
 			break; // --------------------------------------------
 
 			// Store a variable using a variable index
 			case StvvOp:
 			i = vecad[ arg[0] - 1 ];
 			if( vecad_connect[i] )
-			{	tape[arg[1]].connect = yes_connected;
-				tape[arg[2]].connect = yes_connected;
+			{	tape[arg[1]].connect_type = yes_connected;
+				tape[arg[2]].connect_type = yes_connected;
 			}
 			break; 
 			// ============================================================
@@ -1390,7 +1650,12 @@ void optimize(
 				user_j     = user_n;
 				user_i     = user_m;
 				user_state = user_ret;
-				user_keep.push(false);
+				//
+				optimize_user_info info;
+				info.connect_type = not_connected;
+				info.op_end       = i_op + 1;
+				user_info.push_back(info);
+				
 			}
 			else
 			{	CPPAD_ASSERT_UNKNOWN( user_state == user_start );
@@ -1399,6 +1664,10 @@ void optimize(
 				CPPAD_ASSERT_UNKNOWN( user_n     == size_t(arg[2]) );
 				CPPAD_ASSERT_UNKNOWN( user_m     == size_t(arg[3]) );
 				user_state = user_end;
+				//
+				CPPAD_ASSERT_UNKNOWN( user_curr + 1 == user_info.size() );
+				user_info[user_curr].op_begin = i_op;
+				user_curr                     = user_info.size();
                }
 			break;
 
@@ -1422,9 +1691,8 @@ void optimize(
 			CPPAD_ASSERT_UNKNOWN( 0 < arg[0] );
 			--user_j;
 			if( ! user_s[user_j].empty() )
-			{	tape[arg[0]].connect = yes_connected;
-				user_keep.top() = true;
-			}
+				tape[arg[0]].connect_type = 
+					user_info[user_curr].connect_type;
 			if( user_j == 0 )
 				user_state = user_start;
 			break;
@@ -1455,8 +1723,33 @@ void optimize(
 			CPPAD_ASSERT_UNKNOWN( 0 < user_i && user_i <= user_m );
 			--user_i;
 			user_r[user_i].clear();
-			if( tape[i_var].connect != not_connected )
+			switch( connect_type )
+			{	case not_connected:
+				break;
+
+				case yes_connected:
+				case sum_connected:
+				case csum_connected:
+				user_info[user_curr].connect_type = yes_connected;
 				user_r[user_i].insert(0);
+				break;
+
+				case cexp_true_connected:
+				case cexp_false_connected:
+				if( user_info[user_curr].connect_type == not_connected )
+				{	user_info[user_curr].connect_type  = connect_type;
+					user_info[user_curr].connect_index = connect_index;
+				}
+				flag  = user_info[user_curr].connect_type != connect_type;
+				flag |= user_info[user_curr].connect_index!=connect_index;
+				if( flag )
+					user_info[user_curr].connect_type = yes_connected;
+				user_r[user_i].insert(0);
+				break;
+
+				default:
+				CPPAD_ASSERT_UNKNOWN(false);
+			}
 			if( user_i == 0 )
 			{	// call users function for this operation
 				atomic_base<Base>* atom = 
@@ -1480,8 +1773,41 @@ void optimize(
 	tape[i_var].op = op;
 	// -------------------------------------------------------------
 
-	// Erase all information in the recording
-	rec->free();
+	// Determine which variables can be conditionally skipped
+	for(i = 0; i < num_var; i++)
+	{	if( tape[i].connect_type == cexp_true_connected )
+		{	j = tape[i].connect_index;
+			cskip_info[j].skip_var_false.push_back(i);
+		}
+		if( tape[i].connect_type == cexp_false_connected )
+		{	j = tape[i].connect_index;
+			cskip_info[j].skip_var_true.push_back(i);
+		}
+	}
+	// Move skip information from user_info to cskip_info
+	for(i = 0; i < user_info.size(); i++)
+	{	if( user_info[i].connect_type == cexp_true_connected )
+		{	j = user_info[i].connect_index;
+			cskip_info[j].n_op_false = 
+				user_info[i].op_end - user_info[i].op_begin;
+		}
+		if( user_info[i].connect_type == cexp_false_connected )
+		{	j = user_info[i].connect_index;
+			cskip_info[j].n_op_true = 
+				user_info[i].op_end - user_info[i].op_begin;
+		}
+	}
+
+	// Sort the conditional skip information by the maximum of the
+	// index for the left and right comparision operands
+	CppAD::vector<size_t> cskip_info_order( cskip_info.size() );
+	{	CppAD::vector<size_t> keys( cskip_info.size() );
+		for(i = 0; i < cskip_info.size(); i++)
+			keys[i] = std::max( cskip_info[i].left, cskip_info[i].right );
+		CppAD::index_sort(keys, cskip_info_order);
+	}
+	size_t cskip_info_next = 0;
+
 
 	// Initilaize table mapping hash code to variable index in tape
 	// as pointing to the BeginOp at the beginning of the tape
@@ -1490,10 +1816,15 @@ void optimize(
 		hash_table_var[i] = 0;
 	CPPAD_ASSERT_UNKNOWN( tape[0].op == BeginOp );
 
-	// initialize mapping from old variable index to new variable index
+	// initialize mapping from old variable index to new 
+	// operator and variable index
 	for(i = 0; i < num_var; i++)
+	{	tape[i].new_op  = 0;       // invalid index (except for BeginOp)
 		tape[i].new_var = num_var; // invalid index
-	
+	}
+
+	// Erase all information in the old recording
+	rec->free();
 
 	// initialize mapping from old VecAD index to new VecAD index
 	CppAD::vector<size_t> new_vecad_ind(num_vecad_ind);
@@ -1522,12 +1853,16 @@ void optimize(
 
 	// start playing the operations in the forward direction
 	play->start_forward(op, arg, i_op, i_var);
+	CPPAD_ASSERT_UNKNOWN( user_curr == user_info.size() );
 
 	// playing forward skips BeginOp at the beginning, but not EndOp at
 	// the end.  Put BeginOp at beginning of recording
 	CPPAD_ASSERT_UNKNOWN( op == BeginOp );
-	CPPAD_ASSERT_NARG_NRES(BeginOp, 0, 1);
+	CPPAD_ASSERT_NARG_NRES(BeginOp, 1, 1);
+	tape[i_var].new_op  = rec->num_rec_op();
 	tape[i_var].new_var = rec->PutOp(BeginOp);
+	rec->PutArg(0);
+
 
 	// temporary buffer for new argument values
 	addr_t new_arg[6];
@@ -1536,12 +1871,50 @@ void optimize(
 	// (decalared here to avoid realloaction of memory)
 	optimize_csum_stacks csum_work;
 
+	// tempory used to hold a size_pair
+	optimize_size_pair size_pair;
+
 	user_state = user_start;
 	while(op != EndOp)
 	{	// next op
 		play->next_forward(op, arg, i_op, i_var);
 		CPPAD_ASSERT_UNKNOWN( (i_op > n)  | (op == InvOp) );
 		CPPAD_ASSERT_UNKNOWN( (i_op <= n) | (op != InvOp) );
+
+		// determine if we should insert a conditional skip here
+		bool skip = cskip_info_next < cskip_info.size();
+		skip     &= (op != BeginOp) & (op != InvOp);
+		if( skip )
+		{	j     = cskip_info_order[cskip_info_next];
+			if( NumRes(op) > 0 )
+			{	skip &= cskip_info[j].left < i_var;
+				skip &= cskip_info[j].right < i_var;
+			}
+			else
+			{	skip &= cskip_info[j].left <= i_var;
+				skip &= cskip_info[j].right <= i_var;
+			}
+		}
+		if( skip )
+		{	cskip_info_next++;
+			skip &= cskip_info[j].skip_var_true.size() > 0 ||
+					cskip_info[j].skip_var_false.size() > 0;
+			if( skip )
+			{	optimize_cskip_info info = cskip_info[j];
+				CPPAD_ASSERT_UNKNOWN( NumRes(CSkipOp) == 0 );
+				size_t n_true  = 
+					info.skip_var_true.size() + info.n_op_true;
+				size_t n_false = 
+					info.skip_var_false.size() + info.n_op_false;
+				size_t n_arg   = 7 + n_true + n_false; 
+				// reserve space for the arguments to this operator but 
+				// delay setting them until we have all the new addresses
+				cskip_info[j].i_arg = rec->ReserveArg(n_arg);
+				CPPAD_ASSERT_UNKNOWN( cskip_info[i].i_arg > 0 );
+				rec->PutOp(CSkipOp);
+			}
+			else	cskip_info[j].i_arg = 0;
+		}
 
 		// determine if we should keep this operation in the new
 		// operation sequence
@@ -1571,8 +1944,8 @@ void optimize(
 			case SubpvOp:
 			case SubvpOp:
 			case SubvvOp:
-			keep  = tape[i_var].connect != not_connected;
-			keep &= tape[i_var].connect != csum_connected;
+			keep  = tape[i_var].connect_type != not_connected;
+			keep &= tape[i_var].connect_type != csum_connected;
 			break; 
 
 			case UserOp:
@@ -1580,11 +1953,11 @@ void optimize(
 			case UsravOp:
 			case UsrrpOp:
 			case UsrrvOp:
-			keep = user_keep.top();
+			keep = true;
 			break;
 
 			default:
-			keep = tape[i_var].connect != not_connected;
+			keep = tape[i_var].connect_type != not_connected;
 			break;
 		}
 
@@ -1622,8 +1995,8 @@ void optimize(
 				replace_hash = true;
 				new_arg[0]   = tape[ arg[0] ].new_var;
 				rec->PutArg( new_arg[0] );
-				i                   = rec->PutOp(op);
-				tape[i_var].new_var = i;
+				tape[i_var].new_op  = rec->num_rec_op();
+				tape[i_var].new_var = i = rec->PutOp(op);
 				CPPAD_ASSERT_UNKNOWN( size_t(new_arg[0]) < i );
 			}
 			break;
@@ -1631,10 +2004,10 @@ void optimize(
 			// Binary operators where 
 			// left is a variable and right is a parameter
 			case SubvpOp:
-			if( tape[arg[0]].connect == csum_connected )
+			if( tape[arg[0]].connect_type == csum_connected )
 			{
 				// convert to a sequence of summation operators
-				tape[i_var].new_var = optimize_record_csum(
+				size_pair = optimize_record_csum(
 					tape                , // inputs
 					i_var               ,
 					play->num_rec_par() ,
@@ -1642,6 +2015,8 @@ void optimize(
 					rec                 ,
 					csum_work
 				);
+				tape[i_var].new_op  = size_pair.i_op;
+				tape[i_var].new_var = size_pair.i_var;
 				// abort rest of this case
 				break;
 			}
@@ -1658,7 +2033,7 @@ void optimize(
 			if( match_var > 0 )
 				tape[i_var].new_var = match_var;
 			else
-			{	tape[i_var].new_var = optimize_record_vp(
+			{	size_pair = optimize_record_vp(
 					tape                , // inputs
 					i_var               ,
 					play->num_rec_par() ,
@@ -1667,6 +2042,8 @@ void optimize(
 					op                  ,
 					arg
 				);
+				tape[i_var].new_op  = size_pair.i_op;
+				tape[i_var].new_var = size_pair.i_var;
 				replace_hash = true;
 			}
 			break;
@@ -1675,10 +2052,10 @@ void optimize(
 			// left is a parameter and right is a variable
 			case SubpvOp:
 			case AddpvOp:
-			if( tape[arg[1]].connect == csum_connected )
+			if( tape[arg[1]].connect_type == csum_connected )
 			{
 				// convert to a sequence of summation operators
-				tape[i_var].new_var = optimize_record_csum(
+				size_pair = optimize_record_csum(
 					tape                , // inputs
 					i_var               ,
 					play->num_rec_par() ,
@@ -1686,6 +2063,8 @@ void optimize(
 					rec                 ,
 					csum_work
 				);
+				tape[i_var].new_op  = size_pair.i_op;
+				tape[i_var].new_var = size_pair.i_var;
 				// abort rest of this case
 				break;
 			}
@@ -1703,7 +2082,7 @@ void optimize(
 			if( match_var > 0 )
 				tape[i_var].new_var = match_var;
 			else
-			{	tape[i_var].new_var = optimize_record_pv(
+			{	size_pair = optimize_record_pv(
 					tape                , // inputs
 					i_var               ,
 					play->num_rec_par() ,
@@ -1712,6 +2091,8 @@ void optimize(
 					op                  ,
 					arg
 				);
+				tape[i_var].new_op  = size_pair.i_op;
+				tape[i_var].new_var = size_pair.i_var;
 				replace_hash = true;
 			}
 			break;
@@ -1720,12 +2101,12 @@ void optimize(
 			// both operators are variables
 			case AddvvOp:
 			case SubvvOp:
-			if( (tape[arg[0]].connect == csum_connected) |
-			    (tape[arg[1]].connect == csum_connected)
+			if( (tape[arg[0]].connect_type == csum_connected) |
+			    (tape[arg[1]].connect_type == csum_connected)
 			)
 			{
 				// convert to a sequence of summation operators
-				tape[i_var].new_var = optimize_record_csum(
+				size_pair = optimize_record_csum(
 					tape                , // inputs
 					i_var               ,
 					play->num_rec_par() ,
@@ -1733,6 +2114,8 @@ void optimize(
 					rec                 ,
 					csum_work
 				);
+				tape[i_var].new_op  = size_pair.i_op;
+				tape[i_var].new_var = size_pair.i_var;
 				// abort rest of this case
 				break;
 			}
@@ -1750,7 +2133,7 @@ void optimize(
 			if( match_var > 0 )
 				tape[i_var].new_var = match_var;
 			else
-			{	tape[i_var].new_var = optimize_record_vv(
+			{	size_pair = optimize_record_vv(
 					tape                , // inputs
 					i_var               ,
 					play->num_rec_par() ,
@@ -1759,6 +2142,8 @@ void optimize(
 					op                  ,
 					arg
 				);
+				tape[i_var].new_op  = size_pair.i_op;
+				tape[i_var].new_var = size_pair.i_var;
 				replace_hash = true;
 			}
 			break;
@@ -1789,6 +2174,7 @@ void optimize(
 				new_arg[4] ,
 				new_arg[5] 
 			);
+			tape[i_var].new_op  = rec->num_rec_op();
 			tape[i_var].new_var = rec->PutOp(op);
 			break;
 			// ---------------------------------------------------
@@ -1801,6 +2187,7 @@ void optimize(
 			// Operations with no arguments and one result
 			case InvOp:
 			CPPAD_ASSERT_NARG_NRES(op, 0, 1);
+			tape[i_var].new_op  = rec->num_rec_op();
 			tape[i_var].new_var = rec->PutOp(op);
 			break;
  			// ---------------------------------------------------
@@ -1810,6 +2197,7 @@ void optimize(
 			new_arg[0] = rec->PutPar( play->GetPar(arg[0] ) );
 
 			rec->PutArg( new_arg[0] );
+			tape[i_var].new_op  = rec->num_rec_op();
 			tape[i_var].new_var = rec->PutOp(op);
 			break;
 			// ---------------------------------------------------
@@ -1824,6 +2212,7 @@ void optimize(
 				new_arg[1], 
 				0
 			);
+			tape[i_var].new_op  = rec->num_rec_op();
 			tape[i_var].new_var = rec->PutOp(op);
 			break;
 			// ---------------------------------------------------
@@ -1839,6 +2228,7 @@ void optimize(
 				new_arg[1], 
 				0
 			);
+			tape[i_var].new_var = rec->num_rec_op();
 			tape[i_var].new_var = rec->PutOp(op);
 			break;
 			// ---------------------------------------------------
@@ -1911,49 +2301,64 @@ void optimize(
 			case UserOp:
 			CPPAD_ASSERT_NARG_NRES(op, 4, 0);
 			if( user_state == user_start )
-				user_state = user_arg;
+			{	user_state = user_arg;
+				CPPAD_ASSERT_UNKNOWN( user_curr > 0 );
+				user_curr--;
+				user_info[user_curr].op_begin = rec->num_rec_op();
+			}
 			else
 			{	user_state = user_start;
-				user_keep.pop();	
+				user_info[user_curr].op_end = rec->num_rec_op() + 1;
 			}
 			// user_index, user_id, user_n, user_m
-			rec->PutArg(arg[0], arg[1], arg[2], arg[3]);
-			rec->PutOp(UserOp);
+			if( user_info[user_curr].connect_type != not_connected )
+			{	rec->PutArg(arg[0], arg[1], arg[2], arg[3]);
+				rec->PutOp(UserOp);
+			}
 			break;
 
 			case UsrapOp:
 			CPPAD_ASSERT_NARG_NRES(op, 1, 0);
-			new_arg[0] = rec->PutPar( play->GetPar(arg[0]) );
-			rec->PutArg(new_arg[0]);
-			rec->PutOp(UsrapOp);
-			break;
-
-			case UsravOp:
-			CPPAD_ASSERT_NARG_NRES(op, 1, 0);
-			new_arg[0] = tape[arg[0]].new_var;
-			if( size_t(new_arg[0]) < num_var )
-			{	rec->PutArg(new_arg[0]);
-				rec->PutOp(UsravOp);
-			}
-			else
-			{	// This argument does not affect the result and
-				// has been optimized out so use nan in its place.
-				new_arg[0] = rec->PutPar( nan(Base(0)) );
+			if( user_info[user_curr].connect_type != not_connected )
+			{	new_arg[0] = rec->PutPar( play->GetPar(arg[0]) );
 				rec->PutArg(new_arg[0]);
 				rec->PutOp(UsrapOp);
 			}
 			break;
 
+			case UsravOp:
+			CPPAD_ASSERT_NARG_NRES(op, 1, 0);
+			if( user_info[user_curr].connect_type != not_connected )
+			{	new_arg[0] = tape[arg[0]].new_var;
+				if( size_t(new_arg[0]) < num_var )
+				{	rec->PutArg(new_arg[0]);
+					rec->PutOp(UsravOp);
+				}
+				else
+				{	// This argument does not affect the result and
+					// has been optimized out so use nan in its place.
+					new_arg[0] = rec->PutPar( nan(Base(0)) );
+					rec->PutArg(new_arg[0]);
+					rec->PutOp(UsrapOp);
+				}
+			}
+			break;
+
 			case UsrrpOp:
 			CPPAD_ASSERT_NARG_NRES(op, 1, 0);
-			new_arg[0] = rec->PutPar( play->GetPar(arg[0]) );
-			rec->PutArg(new_arg[0]);
-			rec->PutOp(UsrrpOp);
+			if( user_info[user_curr].connect_type != not_connected )
+			{	new_arg[0] = rec->PutPar( play->GetPar(arg[0]) );
+				rec->PutArg(new_arg[0]);
+				rec->PutOp(UsrrpOp);
+			}
 			break;
 			
 			case UsrrvOp:
 			CPPAD_ASSERT_NARG_NRES(op, 0, 1);
-			tape[i_var].new_var = rec->PutOp(UsrrvOp);
+			if( user_info[user_curr].connect_type != not_connected )
+			{	tape[i_var].new_op  = rec->num_rec_op();
+				tape[i_var].new_var = rec->PutOp(UsrrvOp);
+			}
 			break;
 			// ---------------------------------------------------
 
@@ -1972,8 +2377,74 @@ void optimize(
 	}
 	// modify the dependent variable vector to new indices
 	for(i = 0; i < dep_taddr.size(); i++ )
-	{	CPPAD_ASSERT_UNKNOWN( size_t(tape[ dep_taddr[i] ].new_var) < num_var );
+	{	CPPAD_ASSERT_UNKNOWN( size_t(tape[dep_taddr[i]].new_var) < num_var );
 		dep_taddr[i] = tape[ dep_taddr[i] ].new_var;
+	}
+
+# ifndef NDEBUG
+	size_t num_new_op = rec->num_rec_op();
+	for(i_var = 0; i_var < tape.size(); i_var++)
+		CPPAD_ASSERT_UNKNOWN( tape[i_var].new_op < num_new_op );
+# endif
+
+	// Move skip information from user_info to cskip_info
+	for(i = 0; i < user_info.size(); i++)
+	{	if( user_info[i].connect_type == cexp_true_connected )
+		{	j = user_info[i].connect_index;
+			k = user_info[i].op_begin;
+			while(k < user_info[i].op_end)
+				cskip_info[j].skip_op_false.push_back(k++);
+		}
+		if( user_info[i].connect_type == cexp_false_connected )
+		{	j = user_info[i].connect_index;
+			k = user_info[i].op_begin;
+			while(k < user_info[i].op_end)
+				cskip_info[j].skip_op_true.push_back(k++);
+		}
+	}
+
+	// fill in the arguments for the CSkip operations
+	CPPAD_ASSERT_UNKNOWN( cskip_info_next == cskip_info.size() );
+	for(i = 0; i < cskip_info.size(); i++)
+	{	optimize_cskip_info info = cskip_info[i];
+		if( info.i_arg > 0 )
+		{	CPPAD_ASSERT_UNKNOWN( info.n_op_true==info.skip_op_true.size() );
+			CPPAD_ASSERT_UNKNOWN(info.n_op_false==info.skip_op_false.size());
+			size_t n_true  = 
+				info.skip_var_true.size() + info.skip_op_true.size();
+			size_t n_false = 
+				info.skip_var_false.size() + info.skip_op_false.size();
+			size_t i_arg   = info.i_arg;
+			rec->ReplaceArg(i_arg++, info.cop   );
+			rec->ReplaceArg(i_arg++, info.flag  );
+			rec->ReplaceArg(i_arg++, info.left  );
+			rec->ReplaceArg(i_arg++, info.right );
+			rec->ReplaceArg(i_arg++, n_true     );
+			rec->ReplaceArg(i_arg++, n_false    );
+			for(j = 0; j < info.skip_var_true.size(); j++)
+			{	i_var = info.skip_var_true[j];
+				CPPAD_ASSERT_UNKNOWN( tape[i_var].new_op > 0 );
+				rec->ReplaceArg(i_arg++, tape[i_var].new_op );
+			} 
+			for(j = 0; j < info.skip_op_true.size(); j++)
+			{	i_op = info.skip_op_true[j];
+				rec->ReplaceArg(i_arg++, i_op);
+			} 
+			for(j = 0; j < info.skip_var_false.size(); j++)
+			{	i_var = info.skip_var_false[j];
+				CPPAD_ASSERT_UNKNOWN( tape[i_var].new_op > 0 );
+				rec->ReplaceArg(i_arg++, tape[i_var].new_op );
+			} 
+			for(j = 0; j < info.skip_op_false.size(); j++)
+			{	i_op = info.skip_op_false[j];
+				rec->ReplaceArg(i_arg++, i_op);
+			} 
+			rec->ReplaceArg(i_arg++, n_true + n_false);
+# ifndef NDEBUG
+			size_t n_arg   = 7 + n_true + n_false; 
+			CPPAD_ASSERT_UNKNOWN( info.i_arg + n_arg == i_arg );
+# endif
+		}
 	}
 }
 
@@ -1997,8 +2468,9 @@ void ADFun<Base>::optimize(void)
 	// number of independent variables
 	size_t n = ind_taddr_.size();
 
+	size_t i;
 # ifndef NDEBUG
-	size_t i, j, m = dep_taddr_.size();
+	size_t j, m = dep_taddr_.size();
 	CppAD::vector<Base> x(n), y(m), check(m);
 	bool check_zero_order = taylor_per_var_ > 0;
 	Base max_taylor(0);
@@ -2041,6 +2513,12 @@ void ADFun<Base>::optimize(void)
 	taylor_.free();
 	taylor_per_var_ = 0;
 	taylor_col_dim_ = 0;
+
+	// resize and initilaize conditional skip vector
+	// (must use player size because it now has the recoreder information)
+	cskip_op_.resize( play_.num_rec_op() );
+	for(i = 0; i < cskip_op_.size(); i++)
+		cskip_op_[i] = false;
 
 # ifndef NDEBUG
 	if( check_zero_order )

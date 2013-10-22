@@ -121,6 +121,7 @@ extern bool nan(void);
 extern bool Near_Equal(void);
 extern bool NearEqualExt(void);
 extern bool not_complex_ad(void);
+extern bool number_skip(void);
 extern bool NumericType(void);
 extern bool OdeErrControl(void);
 extern bool OdeErrMaxabs(void);
@@ -275,6 +276,7 @@ int main(void)
 	ok &= Run( Near_Equal,        "Near_Equal"       );
 	ok &= Run( NearEqualExt,      "NearEqualExt"     );
 	ok &= Run( not_complex_ad,    "not_complex_ad"   );
+	ok &= Run( number_skip,       "number_skip"      );
 	ok &= Run( NumericType,       "NumericType"      );
 	ok &= Run( OdeErrControl,     "OdeErrControl"    );
 	ok &= Run( OdeErrMaxabs,      "OdeErrMaxabs"     );

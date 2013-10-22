@@ -108,6 +108,10 @@ private:
 	/// results of the forward mode calculations
 	pod_vector<Base> taylor_;
 
+	/// which operations can be conditionally skipped
+	/// Set during forward pass of order zero
+	CppAD::vector<bool> cskip_op_;
+
 	/// Packed results of the forward mode Jacobian sparsity calculations.
 	/// for_jac_sparse_pack_.n_set() != 0  implies other sparsity results
 	/// are empty
@@ -427,6 +431,9 @@ public:
 
 	/// set number of coefficients currently allocated (per variable)
 	void capacity_taylor(size_t per_var);   
+
+	/// number of variables in conditional expressions that can be skipped
+	size_t number_skip(void);   
 
 	/// number of independent variables
 	size_t Domain(void) const

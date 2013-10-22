@@ -3,7 +3,7 @@
 # define CPPAD_DEPENDENT_INCLUDED
 
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-12 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-13 Bradley M. Bell
 
 CppAD is distributed under multiple licenses. This distribution is under
 the terms of the 
@@ -268,6 +268,12 @@ void ADFun<Base>::Dependent(ADTape<Base> *tape, const ADvector &y)
 
 	// total number of variables on the tape
 	total_num_var_ = tape->Rec_.num_rec_var();
+
+	// conditional skip vector
+	cskip_op_.clear();
+	cskip_op_.resize( tape->Rec_.num_rec_op() );
+	for(i = 0; i < cskip_op_.size(); i++)
+		cskip_op_[i] = false;
 
 	// now that each dependent variable has a place in the tape,
 	// and there is a EndOp at the end of the tape, we can transfer the 

@@ -180,6 +180,7 @@ $rref nan.cpp$$
 $rref near_equal.cpp$$
 $rref near_equal_ext.cpp$$
 $rref not_complex_ad.cpp$$
+$rref number_skip.cpp$$
 $rref numeric_type.cpp$$
 $rref ode_err_control.cpp$$
 $rref ode_err_maxabs.cpp$$

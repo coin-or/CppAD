@@ -187,7 +187,8 @@ void RevJacSweep(
 	std::cout << std::endl;
 	CppAD::vector<bool> z_value(limit);
 # endif
-	while(op != BeginOp )
+	bool more_operators = true;
+	while(more_operators)
 	{
 		// next op
 		play->next_reverse(op, arg, i_op, i_var);
@@ -253,7 +254,16 @@ void RevJacSweep(
 			// -------------------------------------------------
 
 			case BeginOp:
-			CPPAD_ASSERT_NARG_NRES(op, 0, 1);
+			CPPAD_ASSERT_NARG_NRES(op, 1, 1);
+			more_operators = false;
+			break;
+			// -------------------------------------------------
+
+			case CSkipOp:
+			// CSkipOp has a variable number of arguments and
+			// next_reverse thinks it one has one argument.
+			// We must inform next_reverse of this special case.
+			play->reverse_cskip(op, arg, i_op, i_var);
 			break;
 			// -------------------------------------------------
 
@@ -697,6 +707,7 @@ void RevJacSweep(
 		printOp(
 			std::cout, 
 			play,
+			i_op,
 			i_var,
 			op, 
 			arg,

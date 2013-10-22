@@ -149,6 +149,7 @@ ADD_EXECUTABLE(example EXCLUDE_FROM_ALL example.cpp
 	near_equal.cpp
 	near_equal_ext.cpp
 	not_complex_ad.cpp
+	number_skip.cpp
 	numeric_type.cpp
 	ode_err_control.cpp
 	ode_err_maxabs.cpp

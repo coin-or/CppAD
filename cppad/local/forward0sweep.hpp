@@ -74,6 +74,8 @@ This is also equal to the number of rows in the matrix \a Taylor; i.e.,
 \a Rec->num_rec_var().
 
 \param Rec
+2DO: change this name from Rec to play (becuase it is a player 
+and not a recorder).
 The information stored in \a Rec
 is a recording of the operations corresponding to the function
 \f[
@@ -110,6 +112,13 @@ variable with index i on the tape
 is the zero order Taylor coefficient for the variable with 
 index i on the tape.
 
+\param cskip_op
+Is a vector with size Rec->num_rec_op(),
+the input value of the elements does not matter.
+Upon return, if cskip_op[i] is true, the operator index i in the recording
+does not affect any of the dependent variable (given the value
+of the independent variables).
+
 \a return
 The return value is equal to the number of ComOp operations
 that have a different result from when the information in 
@@ -126,7 +135,8 @@ size_t forward0sweep(
 	size_t                numvar,
 	player<Base>         *Rec,
 	size_t                J,
-	Base                 *Taylor
+	Base                 *Taylor,
+	CppAD::vector<bool>&  cskip_op
 )
 {	CPPAD_ASSERT_UNKNOWN( J >= 1 );
 
@@ -158,6 +168,10 @@ size_t forward0sweep(
 			VectorVar[i] = false;
 		}
 	}
+
+	// zero order, so initialize conditional skip flags
+	for(i = 0; i < Rec->num_rec_op(); i++)
+		cskip_op[i] = false;
 
 	// work space used by UserOp.
 	const size_t user_q = 0;     // lowest order
@@ -206,16 +220,22 @@ size_t forward0sweep(
 # if CPPAD_FORWARD0SWEEP_TRACE
 	std::cout << std::endl;
 # endif
-	while(op != EndOp)
+	bool more_operators = true;
+	while(more_operators)
 	{
 		// this op
 		Rec->next_forward(op, arg, i_op, i_var);
-# ifndef NDEBUG
-		if( i_op <= n )
-		{	CPPAD_ASSERT_UNKNOWN((op == InvOp) | (op == BeginOp));
+		CPPAD_ASSERT_UNKNOWN( (i_op > n)  | (op == InvOp) );  
+		CPPAD_ASSERT_UNKNOWN( (i_op <= n) | (op != InvOp) );  
+
+		// check if we are skipping this operation
+		while( cskip_op[i_op] )
+		{	if( op == CSumOp )
+			{	// CSumOp has a variable number of arguments
+				Rec->forward_csum(op, arg, i_op, i_var);
+			}
+			Rec->next_forward(op, arg, i_op, i_var);
 		}
-		else	CPPAD_ASSERT_UNKNOWN((op != InvOp) & (op != BeginOp));
-# endif
 
 		// action to take depends on the case
 		switch( op )
@@ -257,17 +277,6 @@ size_t forward0sweep(
 			break;
 			// -------------------------------------------------
 
-			case CSumOp:
-			// CSumOp has a variable number of arguments and
-			// next_forward thinks it one has one argument.
-			// we must inform next_forward of this special case.
-			Rec->forward_csum(op, arg, i_op, i_var);
-			forward_csum_op(
-				0, 0, i_var, arg, num_par, parameter, J, Taylor
-			);
-			break;
-
-			// -------------------------------------------------
 			case CExpOp:
 			// Use the general case with d == 0 
 			// (could create an optimzied verison for this case)
@@ -297,6 +306,28 @@ size_t forward0sweep(
 			break;
 			// -------------------------------------------------
 
+			case CSkipOp:
+			// CSkipOp has a variable number of arguments and
+			// next_forward thinks it one has one argument.
+			// we must inform next_forward of this special case.
+			Rec->forward_cskip(op, arg, i_op, i_var);
+			forward_cskip_op_0(
+				i_var, arg, num_par, parameter, J, Taylor, cskip_op
+			);
+			break;
+			// -------------------------------------------------
+
+			case CSumOp:
+			// CSumOp has a variable number of arguments and
+			// next_forward thinks it one has one argument.
+			// we must inform next_forward of this special case.
+			Rec->forward_csum(op, arg, i_op, i_var);
+			forward_csum_op(
+				0, 0, i_var, arg, num_par, parameter, J, Taylor
+			);
+			break;
+			// -------------------------------------------------
+
 			case DisOp:
 			forward_dis_op_0(i_var, arg, J, Taylor);
 			break;
@@ -321,6 +352,7 @@ size_t forward0sweep(
 
 			case EndOp:
 			CPPAD_ASSERT_NARG_NRES(op, 0, 0);
+			more_operators = false;
 			break;
 			// -------------------------------------------------
 
@@ -625,7 +657,7 @@ size_t forward0sweep(
 			// -------------------------------------------------
 
 			default:
-			CPPAD_ASSERT_UNKNOWN(0);
+			CPPAD_ASSERT_UNKNOWN(false);
 		}
 # if CPPAD_FORWARD0SWEEP_TRACE
 		size_t       d      = 0;
@@ -635,6 +667,7 @@ size_t forward0sweep(
 		printOp(
 			std::cout, 
 			Rec,
+			i_op,
 			i_tmp,
 			op, 
 			arg,

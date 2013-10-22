@@ -3,7 +3,7 @@
 # define CPPAD_PLAYER_INCLUDED
 
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-12 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-13 Bradley M. Bell
 
 CppAD is distributed under multiple licenses. This distribution is under
 the terms of the 
@@ -226,13 +226,15 @@ public:
 	
 	/*!
 	\brief
-	Replace an argument index in the recording.
+	Replace an argument value in the recording.
+	2DO: change name of this routine to ReplaceArg.
 
 	\param i
-	is the index, in argument indices, that is to be replaced.
+	is the index, in the recording argument vector, 
+	of the value that is to be replaced.
 
 	\param value
-	is the new normal index value.
+	is the new argument value.
 	*/
 	void ReplaceInd(size_t i, size_t value)
 	{	rec_op_arg_[i] =  static_cast<addr_t>( value ); }
@@ -325,7 +327,7 @@ public:
 		var_index = var_index_   = 0;
 
 		CPPAD_ASSERT_UNKNOWN( op_  == BeginOp );
-		CPPAD_ASSERT_NARG_NRES(op_, 0, 1);
+		CPPAD_ASSERT_NARG_NRES(op_, 1, 1);
 
 		return;
 	}
@@ -339,9 +341,10 @@ public:
 	\param op
 	The input value of op does not matter. Its output value is the
 	next operator in the recording.
-	For speed, \c next_forward does not check for the special case
-	of <tt>op == CSumOp</tt>. In this case, the other return values
-	from \c next_forward must be corrected by a call to \c forward_csum.
+	For speed, \c next_forward does not check for the special cases
+	where  <tt>op == CSumOp</tt> or <tt>op == CSkipOp</tt>. In these cases, 
+	the other return values from \c next_forward must be corrected by a call 
+	to \c forward_csum or \c forward_cskip respectively.
 
 	\param op_arg
 	The input value of *op_arg does not matter. Its output value is the
@@ -423,6 +426,49 @@ public:
 		CPPAD_ASSERT_UNKNOWN( var_index_  < num_rec_var_ );
 	}
 	/*!
+	Correct \c next_forward return values when <tt>op == CSkipOp</tt>.
+
+	\param op
+	The input value of op must be the return value from the previous
+	call to \c next_forward and must be \c CSkipOp.
+
+	\param op_arg
+	The input value of *op_arg must be the return value from the 
+	previous call to \c next_forward. Its output value is the
+	beginning of the vector of argument indices for this operation.
+
+	\param op_index
+	The input value of op_index does must be the return value from the
+	previous call to \c next_forward. Its output value
+	is the index of this operator in the recording. 
+
+	\param var_index
+	The input value of var_index must be the return value from the
+	previous call to \c next_forward. Its output value is the
+	index of the primary (last) result corresponding to this.
+	*/
+	void forward_cskip(
+	OpCode& op, const addr_t*& op_arg, size_t& op_index, size_t& var_index)
+	{	using CppAD::NumRes;
+		using CppAD::NumArg;
+		CPPAD_ASSERT_UNKNOWN( op == CSkipOp );
+		CPPAD_ASSERT_UNKNOWN( NumArg(CSkipOp) == 0 );
+		CPPAD_ASSERT_UNKNOWN(
+		op_arg[4] + op_arg[5] == op_arg[ 6 + op_arg[4] + op_arg[5] ]
+		);
+		/*
+		The only thing that really needs fixing is op_arg_.
+		Actual number of arugments for this operator is
+			7 + op_arg[4] + op_arg[5]
+ 		We must change op_arg_ so that when you add NumArg(CSkipOp)
+		you get first argument for next operator in sequence.
+		*/
+		op_arg_    += 7 + op_arg[4] + op_arg[5];
+
+		CPPAD_ASSERT_UNKNOWN( op_arg_ + NumArg(op) <= rec_op_arg_.size() );
+		CPPAD_ASSERT_UNKNOWN( var_index_  < num_rec_var_ );
+	}
+	/*!
 	Get a non-constant version of op_arg returned by previous next_forward
 
 	\return
@@ -490,9 +536,10 @@ public:
 	beginning of the vector of argument indices for this operation.
 	The last operator sets op_arg equal to the beginning of the 
 	argument indices for the entire recording.
-	For speed, \c next_reverse does not check for the special case
-	of <tt>op == CSumOp</tt>. In this case, the other return values
-	from \c next_reverse must be corrected by a call to \c reverse_csum.
+	For speed, \c next_reverse does not check for the special cases
+	<tt>op == CSumOp</tt> or <tt>op == CSkipOp</tt>. In these cases, the other
+	return values from \c next_reverse must be corrected by a call to 
+	\c reverse_csum or \c reverse_cskip respectively.
 
 
 	\param op_index
@@ -569,6 +616,50 @@ public:
 
 		CPPAD_ASSERT_UNKNOWN(
 		op_arg[0] + op_arg[1] == op_arg[ 3 + op_arg[0] + op_arg[1] ]
+		);
+		CPPAD_ASSERT_UNKNOWN( op_index_  < rec_op_.size() );
+		CPPAD_ASSERT_UNKNOWN( op_arg_ + NumArg(op) <= rec_op_arg_.size() );
+		CPPAD_ASSERT_UNKNOWN( var_index_  < num_rec_var_ );
+	}
+	/*!
+	Correct \c next_reverse return values when <tt>op == CSkipOp</tt>.
+
+	\param op
+	The input value of op must be the return value from the previous
+	call to \c next_reverse and must be \c CSkipOp.
+
+	\param op_arg
+	The input value of *op_arg must be the return value from the 
+	previous call to \c next_reverse. Its output value is the
+	beginning of the vector of argument indices for this operation.
+
+	\param op_index
+	The input value of op_index must be the return value from the
+	previous call to \c next_reverse. Its output value
+	is the index of the this operator in the recording. 
+
+	\param var_index
+	The input value of var_index must be the return value from the 
+	previous call to \c next_reverse. Its output value is the
+	index of the primary (last) result corresponding to this operator.
+	*/
+
+	void reverse_cskip(
+	OpCode& op, const addr_t*& op_arg, size_t& op_index, size_t& var_index)
+	{	using CppAD::NumRes;
+		using CppAD::NumArg;
+		CPPAD_ASSERT_UNKNOWN( op == CSkipOp );
+		CPPAD_ASSERT_UNKNOWN( NumArg(CSkipOp) == 0 );
+		/*
+		The things needs fixing are op_arg_ and op_arg. Currently, 
+		op_arg points first arugment for the previous operator.
+		*/
+		--op_arg;
+		op_arg_    -= (op_arg[0] + 4);
+		op_arg      = op_arg_ + rec_op_arg_.data();
+
+		CPPAD_ASSERT_UNKNOWN(
+		op_arg[1] + op_arg[2] == op_arg[ 3 + op_arg[1] + op_arg[2] ]
 		);
 		CPPAD_ASSERT_UNKNOWN( op_index_  < rec_op_.size() );
 		CPPAD_ASSERT_UNKNOWN( op_arg_ + NumArg(op) <= rec_op_arg_.size() );

@@ -21,6 +21,7 @@ $section Forward Mode$$
 $childtable%
 	omh/forward.omh%
 	cppad/local/cap_taylor.hpp%
+	cppad/local/num_skip.hpp%
 	example/forward.cpp%
 	example/forward_mul.cpp
 %$$
@@ -31,6 +32,7 @@ $end
 
 // documened after Forward but included here so easy to see
 # include <cppad/local/cap_taylor.hpp>
+# include <cppad/local/num_skip.hpp>
 
 namespace CppAD { // BEGIN_CPPAD_NAMESPACE
 /*!
@@ -121,22 +123,26 @@ Vector ADFun<Base>::Forward(
 	{
 # if CPPAD_USE_FORWARD0SWEEP
 		compare_change_ = forward0sweep(s, true,
-			n, total_num_var_, &play_, taylor_col_dim_, taylor_.data()
+			n, total_num_var_, &play_, taylor_col_dim_, taylor_.data(),
+			cskip_op_
 		);
 # else
 		compare_change_ = forward_sweep(s, true, q,
-			p, n, total_num_var_, &play_, taylor_col_dim_, taylor_.data()
+			p, n, total_num_var_, &play_, taylor_col_dim_, taylor_.data(),
+			cskip_op_
 		);
 # endif
 	}
 	else if( q == 0 )
 	{	compare_change_ = forward_sweep(s, true, q,
-			p, n, total_num_var_, &play_, taylor_col_dim_, taylor_.data()
+			p, n, total_num_var_, &play_, taylor_col_dim_, taylor_.data(),
+			cskip_op_
 		);
 	}
 	else
 	{	forward_sweep(s, true, q,
-			p, n, total_num_var_, &play_, taylor_col_dim_, taylor_.data()
+			p, n, total_num_var_, &play_, taylor_col_dim_, taylor_.data(),
+			cskip_op_
 		);
 	}
 
