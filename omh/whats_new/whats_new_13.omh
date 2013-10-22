@@ -13,6 +13,8 @@ Please visit http://www.coin-or.org/CppAD/ for information on other licenses.
 $begin whats_new_13$$
 $dollar @$$
 $spell
+	CondExp
+	op_arg
 	Adolc
 	aka
 	sacado
@@ -54,6 +56,16 @@ This section contains a list of the changes to CppAD during 2013
 (in reverse order by date).
 The purpose of this section is to
 assist you in learning about changes between various versions of CppAD.
+
+$head 10-22$$
+$list number$$
+Add $cref/optimization/optimize/$$ of conditional expressions; see
+$cref/CondExp/CondExp/Optimize/$$.
+$lnext
+Add a phantom argument at the beginning of the operations sequence;
+$cref/size_op_arg/seq_property/size_op_arg/$$ and $cref seq_property.cpp$$.
+(This helps with the optimization mentioned above.)
+$lend
 
 $head 10-16$$
 Fix bug in $cref/Tracing/WishList/Tracing/$$ $cref atomic$$ functions.

@@ -11,6 +11,10 @@ Please visit http://www.coin-or.org/CppAD/ for information on other licenses.
 -------------------------------------------------------------------------- */
 $begin WishList$$
 $spell
+	Rel
+	Gt
+	Eq
+	CondExpLt
 	Checkpointing
 	grep
 	recomputed
@@ -60,6 +64,21 @@ where $icode copy$$ would determine if a separate copy of $icode ad_fun$$
 was made or if a pointer was used. 
 Note that if a pointer is used, it becomes invalid when the destructor
 for $icode ad_fun$$ is called.
+
+$head Conditional Expressions$$
+The $cref/optimization/CondExp/Optimize/$$ of conditional expressions
+$codei%
+	CondExp%Rel%(%left%, %right%, %true_case%, %false_case%
+%$$
+could be more efficient when it comes to nested conditional expressions.
+For example, give the code
+$codep
+	x = CondExpLt(left_x, right_x, true_x, false_x)
+	y = CondExpGt(left_y, right_y, true_y, false_y)
+	z = CondExpEq(left_z, right_z, x, y)
+$$
+not all the possible cases will be excluded by $cref optimize$$.
+
 
 $head Forward Mode Recomputation$$
 $index forward$$
