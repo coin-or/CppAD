@@ -255,6 +255,8 @@ struct optimize_cskip_info {
 	size_t left; 
 	/// index for right comparison operand
 	size_t right; 
+	/// maximum variable index between left and right
+	size_t max_left_right;
 	/// set of variables to skip on true
 	CppAD::vector<size_t> skip_var_true;
 	/// set of variables to skip on false
@@ -1559,28 +1561,29 @@ void optimize(
 				info.right      = arg[3];
 				info.n_op_true  = 0;
 				info.n_op_false = 0;
-				size_t index = cskip_info.size();
+				//
+				size_t index    = 0;
+				if( arg[1] & 1 )
+				{	index = std::max(index, info.left);
+					tape[info.left].connect_type = yes_connected;
+				}
+				if( arg[1] & 2 )
+				{	index = std::max(index, info.right);
+					tape[info.right].connect_type = yes_connected;
+				}
+				CPPAD_ASSERT_UNKNOWN( index > 0 );
+				info.max_left_right = index;
+				//
+				index = cskip_info.size();
 				cskip_info.push_back(info);
-
-				mask = 1;
-				for(i = 2; i < 6; i++)
-				{	CPPAD_ASSERT_UNKNOWN( size_t(arg[i]) < i_var );
-					if( arg[1] & mask )
-					{	if( i == 2 || i == 3 )
-							tape[arg[i]].connect_type = yes_connected;
-						else
-						{	tape[arg[i]].connect_index = index;
-							if( i == 4 )
-								tape[arg[i]].connect_type = 
-										cexp_true_connected;
-							else
-							{	// i == 5
-								tape[arg[i]].connect_type = 
-										cexp_false_connected;
-							}
-						}
-					}
-					mask = mask << 1;
+				//
+				if( arg[1] & 4 )
+				{	tape[arg[4]].connect_index = index;
+					tape[arg[4]].connect_type = cexp_true_connected;
+				}
+				if( arg[1] & 8 )
+				{	tape[arg[5]].connect_index = index;
+					tape[arg[5]].connect_type = cexp_false_connected;
 				}
 			}
 			break;  // --------------------------------------------
@@ -1887,13 +1890,9 @@ void optimize(
 		if( skip )
 		{	j     = cskip_info_order[cskip_info_next];
 			if( NumRes(op) > 0 )
-			{	skip &= cskip_info[j].left < i_var;
-				skip &= cskip_info[j].right < i_var;
-			}
+				skip &= cskip_info[j].max_left_right < i_var;
 			else
-			{	skip &= cskip_info[j].left <= i_var;
-				skip &= cskip_info[j].right <= i_var;
-			}
+				skip &= cskip_info[j].max_left_right <= i_var;
 		}
 		if( skip )
 		{	cskip_info_next++;

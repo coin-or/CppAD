@@ -71,7 +71,7 @@ namespace {
 		x[0] = 4.;
 		x[1] = 3.;
 		y    = f.Forward(0, x);
-		ok   = y[0] == x[0] - x[1];
+		ok  &= y[0] == x[0] - x[1];
 
 		// after optimize can skip either call to g or call to h
 		ok  &= f.number_skip() == 1;
@@ -103,7 +103,7 @@ namespace {
 		using CppAD::vector;
 	
 		// Create a checkpoint version of the function g
-		vector< AD<double> > ax(2), ay(1), az(1);
+		vector< AD<double> > ax(2), ay(2), az(1);
 		ax[0] = 0.;
 		ax[1] = 1.;
 		CppAD::checkpoint<double> g_check("g_check", g_algo, ax, ay);
@@ -118,25 +118,26 @@ namespace {
 		az[0] = CondExpLt(ax[0], ax[1], ax[0] + ax[1], ax[0] - ax[1]); 
 		
 		// create function object f : ax -> az
-		CppAD::ADFun<double> f;
-		f.Dependent(ax, az);
+		CppAD::ADFun<double> f(ax, az);
 
 		// number of variables before optimization
+		// (include ay[0] and ay[1])
 		size_t n_before = f.size_var();
 		
 		// now optimize the operation sequence
 		f.optimize();
 
-		// number of variables before optimization
+		// number of variables after optimization 
+		// (does not include ay[0] and ay[1])
 		size_t n_after = f.size_var();
-		ok            &= n_after + 1 == n_before;
+		ok            &= n_after + 2 == n_before;
 	
 		// check optimization works ok
 		vector<double> x(2), z(1);
 		x[0] = 4.;
 		x[1] = 3.;
 		z    = f.Forward(0, x);
-		ok   = z[0] == x[0] - x[1];
+		ok  &= z[0] == x[0] - x[1];
 		
 		return ok;
 	}
@@ -1320,6 +1321,7 @@ bool optimize(void)
 	// check optimizing out entire atomic function
 	ok     &= atomic_cond_exp();
 	// check optimizing out atomic arguments
+	ok     &= atomic_no_used();
 	ok     &= atomic_arguments();
 	// check reverse dependency analysis optimization
 	ok     &= depend_one();
@@ -1344,7 +1346,7 @@ bool optimize(void)
 	ok     &= old_atomic_test();
 	// case where results are not identically equal
 	ok     &= not_identically_equal();
-
+	//
 	CppAD::user_atomic<double>::clear();
 	return ok;
 }
