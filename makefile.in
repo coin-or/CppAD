@@ -464,6 +464,7 @@ nobase_myinclude_HEADERS = \
 	cppad/local/cosh_op.hpp \
 	cppad/local/cos_op.hpp \
 	cppad/local/cppad_assert.hpp \
+	cppad/local/cskip_op.hpp \
 	cppad/local/csum_op.hpp \
 	cppad/local/declare_ad.hpp \
 	cppad/local/define.hpp \
@@ -503,6 +504,7 @@ nobase_myinclude_HEADERS = \
 	cppad/local/mul.hpp \
 	cppad/local/mul_op.hpp \
 	cppad/local/near_equal_ext.hpp \
+	cppad/local/num_skip.hpp \
 	cppad/local/omp_max_thread.hpp \
 	cppad/local/op_code.hpp \
 	cppad/local/op.hpp \

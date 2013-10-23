@@ -13,6 +13,7 @@ Please visit http://www.coin-or.org/CppAD/ for information on other licenses.
 $begin whats_new_13$$
 $dollar @$$
 $spell
+	autotools
 	nz
 	Jacobian
 	CondExp
@@ -60,6 +61,7 @@ The purpose of this section is to
 assist you in learning about changes between various versions of CppAD.
 
 $head 10-23$$
+$list number$$
 Fix a bug in the optimization of calls to $cref atomic$$ functions.
 This bug existed before recent change to optimizing conditional expressions.
 This required adding the 
@@ -67,6 +69,12 @@ $cref/nz_compare/RevSparseJac/nz_compare/$$ argument to the
 reverse Jacobian sparsity pattern calculation.
 For further details; see sparsity heading under conditional expressions in the
 $cref/whish list/WishList/Conditional Expressions/Sparsity/$$.
+$lnext
+Fix the deprecated autotools install (see $cref InstallUnix$$)
+which was broken by the changes on 10-22.
+To be specific, the
+example for $cref number_skip$$ was not being included.
+$lend
 
 $head 10-22$$
 $list number$$
@@ -76,6 +84,9 @@ $lnext
 Add a phantom argument at the beginning of the operations sequence;
 $cref/size_op_arg/seq_property/size_op_arg/$$ and $cref seq_property.cpp$$.
 (This helps with the optimization mentioned above.)
+$lnext
+Add the function $cref number_skip$$ to measure how much optimization
+of the conditional expressions there is.
 $lend
 
 $head 10-16$$
