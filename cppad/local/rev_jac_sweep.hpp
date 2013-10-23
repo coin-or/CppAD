@@ -62,6 +62,14 @@ using AD< \a Base > and computations by this routine are done using type
 is the type used for vectors of sets. It can be either
 \c sparse_pack, \c sparse_set, or \c sparse_list.
 
+\param nz_compare
+Are the derivatives with respect to left and right of the expression below
+considered to be non-zero:
+\code
+	CondExpRel(left, right, if_true, if_false)
+\endcode
+This is used by the optimizer to obtain the correct dependency relations.
+
 \param n
 is the number of independent variables on the tape.
 
@@ -104,6 +112,7 @@ is given by the set with index index j in \a var_sparsity.
 
 template <class Base, class Vector_set>
 void RevJacSweep(
+	bool                  nz_compare,
 	size_t                n,
 	size_t                numvar,
 	player<Base>         *play,
@@ -280,7 +289,7 @@ void RevJacSweep(
 
 			case CExpOp:
 			reverse_sparse_jacobian_cond_op(
-				i_var, arg, num_par, var_sparsity
+				nz_compare, i_var, arg, num_par, var_sparsity
 			);
 			break;
 			// ---------------------------------------------------

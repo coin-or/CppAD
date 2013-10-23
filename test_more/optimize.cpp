@@ -16,6 +16,59 @@ Please visit http://www.coin-or.org/CppAD/ for information on other licenses.
 
 
 namespace {
+	// ----------------------------------------------------------------
+	// Test for bug where checkpoint function did not depend on
+	// the operands in the logical comparison because of the CondExp
+	// sparsity pattern.
+	void j_algo( 
+		const CppAD::vector< CppAD::AD<double> >& ax ,
+		      CppAD::vector< CppAD::AD<double> >& ay )
+	{	ay[0] = CondExpGt(ax[0], ax[1], ax[2], ax[3]); }
+	
+	bool cond_exp_sparsity(void)
+	{	bool ok = true;
+		using CppAD::AD;
+		using CppAD::vector;
+	
+		// Create a checkpoint version of the function g
+		vector< AD<double> > au(4), av(1);
+		for(size_t i = 0; i < 4; i++)
+			au[i] = AD<double>(i);
+		CppAD::checkpoint<double> j_check("j_check", j_algo, au, av);
+	
+		// independent variable vector 
+		vector< AD<double> > ax(2), ay(1);
+		ax[0] = 1.;
+		ax[1] = 1.;
+		Independent(ax);
+	
+		// call atomic function that does not get used
+		for(size_t i = 0; i < 4; i++) 
+			au[i] = ax[0] + AD<double>(i + 1) * ax[1];
+		j_check(au, ay);
+	
+		// create function object f : ax -> ay
+		CppAD::ADFun<double> f(ax, ay);
+	
+		// now optimize the operation sequence
+		f.optimize();
+	
+		// check result where true case is used; i.e., au[0] > au[1]
+		vector<double> x(2), y(1);
+		x[0] = 1.;
+		x[1] = -1;
+		y    = f.Forward(0, x);
+		ok  &= y[0] == x[0] + double(3) * x[1];
+		
+	
+		// check result where false case is used; i.e., au[0] <= au[1]
+		x[0] = 1.;
+		x[1] = 1;
+		y    = f.Forward(0, x);
+		ok  &= y[0] == x[0] + double(4) * x[1];
+		
+		return ok;
+	}
 	// -------------------------------------------------------------------
 	// Test conditional optimizing out call to an atomic function call
 	void k_algo(
@@ -1005,10 +1058,6 @@ namespace {
 		index++;
 
 		// Y[2] 
-		// 2DO: There is a subtitle issue that has to do with using reverse
-		// jacobian sparsity patterns during the optimization process.
-		// We need an option to include X[0] in the sparsity pattern
-		// so the optimizer can know it affects the results.
 		Y[index]             = CondExpLe(X[0], X[1], X[1]+X[1], X[2]-X[2]);
 		Check[index * n + 0] = false;
 		Check[index * n + 1] = true;
@@ -1318,6 +1367,9 @@ namespace {
 
 bool optimize(void)
 {	bool ok = true;
+	// check conditional expression sparsity pattern 
+	// (used to optimize calls to atomic functions). 
+	ok     &= cond_exp_sparsity();
 	// check optimizing out entire atomic function
 	ok     &= atomic_cond_exp();
 	// check optimizing out atomic arguments

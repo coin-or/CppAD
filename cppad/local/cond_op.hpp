@@ -880,6 +880,14 @@ where Rel is one of the following: Lt, Le, Eq, Ge, Gt.
 is the type used for vectors of sets. It can be either
 \c sparse_pack, \c sparse_set, or \c sparse_list.
 
+\param nz_compare
+Are the derivatives with respect to left and right of the expression below
+considered to be non-zero:
+\code
+	CondExpRel(left, right, if_true, if_false)
+\endcode
+This is used by the optimizer to obtain the correct dependency relations.
+
 \param i_z
 is the AD variable index corresponding to the variable z.
 
@@ -960,6 +968,7 @@ On input and output, this pattern corresponds to the function G.
 */
 template <class Vector_set>
 inline void reverse_sparse_jacobian_cond_op(
+	bool                nz_compare    ,
 	size_t              i_z           ,
 	const addr_t*       arg           , 
 	size_t              num_par       ,
@@ -990,6 +999,17 @@ inline void reverse_sparse_jacobian_cond_op(
 	{	CPPAD_ASSERT_UNKNOWN( size_t(arg[5]) < num_par );
 	}
 # endif
+	if( nz_compare )
+	{	if( arg[1] & 1 )
+		{	CPPAD_ASSERT_UNKNOWN( size_t(arg[2]) < i_z );
+			sparsity.binary_union(arg[2], arg[2], i_z, sparsity);
+		}
+		if( arg[1] & 2 )
+		{	CPPAD_ASSERT_UNKNOWN( size_t(arg[3]) < i_z );
+			sparsity.binary_union(arg[3], arg[3], i_z, sparsity);
+		}
+	}
+	// --------------------------------------------------------------------
 	if( arg[1] & 4 )
 	{	CPPAD_ASSERT_UNKNOWN( size_t(arg[4]) < i_z );
 		sparsity.binary_union(arg[4], arg[4], i_z, sparsity);

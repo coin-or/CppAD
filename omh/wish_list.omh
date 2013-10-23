@@ -11,6 +11,10 @@ Please visit http://www.coin-or.org/CppAD/ for information on other licenses.
 -------------------------------------------------------------------------- */
 $begin WishList$$
 $spell
+	jacobian
+	nz
+	RevSparseJac
+	optimizer
 	Rel
 	Gt
 	Eq
@@ -66,6 +70,8 @@ Note that if a pointer is used, it becomes invalid when the destructor
 for $icode ad_fun$$ is called.
 
 $head Conditional Expressions$$
+
+$subhead Nested$$
 The $cref/optimization/CondExp/Optimize/$$ of conditional expressions
 $codei%
 	CondExp%Rel%(%left%, %right%, %true_case%, %false_case%
@@ -79,6 +85,24 @@ $codep
 $$
 not all the possible cases will be excluded by $cref optimize$$.
 
+$subhead Sparsity$$
+The $cref/optimizer/optimize/$$ uses 
+$cref/atomic reverse jacobian sparsity/atomic_rev_sparse_jac/$$
+to determine which arguments affect the value of the results
+for the atomic functions (which include $cref checkpoint$$ functions).
+While the partials of
+$codei%
+	%z% = CondExp%Rel%( %left%, %right%, %if_true%, %if_false% )
+%$$
+with respect to $icode left$$ and $icode right$$ always evaluates to zero,
+the value of $icode z$$ does depend on the value of $icode left$$ and
+$icode right$$.
+The $cref checkpoint$$ functions use the value true for
+$cref/nz_compare/RevSparseJac/nz_compare/$$ when computing 
+reverse jacobian sparsity patterns.
+This enables the optimizer to properly track the dependencies.
+An $cref atomic_option$$ should be added so this is only
+done when the optimizer is using the sparsity pattern for this purpose.
 
 $head Forward Mode Recomputation$$
 $index forward$$

@@ -374,8 +374,11 @@ public:
 		bool ok  = true;
 
 		// compute rt
+		// 2DO: remove need for nz_compare all the time. It is only really
+		// necessary when optimizer calls this member function.
 		bool transpose = true;
-		st = f_.RevSparseJac(q, rt, transpose);
+		bool nz_compare = true;
+		st = f_.RevSparseJac(q, rt, transpose, nz_compare);
 
 		return ok; 
 	}

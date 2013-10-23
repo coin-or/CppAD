@@ -13,6 +13,8 @@ Please visit http://www.coin-or.org/CppAD/ for information on other licenses.
 $begin whats_new_13$$
 $dollar @$$
 $spell
+	nz
+	Jacobian
 	CondExp
 	op_arg
 	Adolc
@@ -56,6 +58,15 @@ This section contains a list of the changes to CppAD during 2013
 (in reverse order by date).
 The purpose of this section is to
 assist you in learning about changes between various versions of CppAD.
+
+$head 10-23$$
+Fix a bug in the optimization of calls to $cref atomic$$ functions.
+This bug existed before recent change to optimizing conditional expressions.
+This required adding the 
+$cref/nz_compare/RevSparseJac/nz_compare/$$ argument to the 
+reverse Jacobian sparsity pattern calculation.
+For further details; see sparsity heading under conditional expressions in the
+$cref/whish list/WishList/Conditional Expressions/Sparsity/$$.
 
 $head 10-22$$
 $list number$$
