@@ -74,7 +74,7 @@ $head Conditional Expressions$$
 $subhead Nested$$
 The $cref/optimization/CondExp/Optimize/$$ of conditional expressions
 $codei%
-	CondExp%Rel%(%left%, %right%, %true_case%, %false_case%
+	CondExp%Rel%(%left%, %right%, %true_case%, %false_case%)
 %$$
 could be more efficient when it comes to nested conditional expressions.
 For example, give the code
@@ -155,11 +155,6 @@ $cref seq_property$$.
 $head Optimization$$
 $index optimize, tape$$
 $index tape, optimize$$
-
-$subhead Conditional Expressions$$
-If the logical part of a $cref CondExp$$ is identically true
-or false, then only one of the two expressions needs to be evaluated.
-
 
 $subhead Expression Hashing$$
 During expression sequence $cref/optimization/optimize/$$,
