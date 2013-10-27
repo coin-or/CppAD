@@ -18,8 +18,9 @@ if sys.argv[0] != 'bin/replace_html.py' :
 	msg = 'bin/replace_html.py: must be executed from its parent directory'
 	sys.exit(msg)
 # 
-usage = '''\nusage: replace_html.py file_path
-where file_path is the path to the file with html text that is to be replaced. 
+usage = '''\nusage: replace_html.py old_file new_file
+where old_file is the path to the file with html text that is to be replaced
+and new_file is the new_file that will be created.
 
 Each set of replacement text is defined in the file by
 	<!-- define name -->source<!-- end name -->
@@ -30,20 +31,21 @@ The destination, where the replacement text is placed, is specified by
 	<!-- replace name -->desination<!-- end name -->
 where name refers to a defined replacement text and destination
 is the text that is replaced.
-
-Note that this overwrites the original file and so you may want to first make
-a backup copy.
 '''
 narg = len(sys.argv)
-if narg != 2 :
+if narg != 3 :
 	msg = '\nExpected 1 but found ' + str(narg-1) + ' command line arguments.'
 	sys.exit(usage + msg)
-file_path = sys.argv[1]
+old_file = sys.argv[1]
+new_file = sys.argv[2]
 # -----------------------------------------------------------------------------
-if not os.path.exists(file_path) :
-	msg = 'bin/replace_html.py: cannot find the file ' + file_path
+if not os.path.exists(old_file) :
+	msg = 'bin/replace_html.py: cannot find old_file = ' + old_file
 	sys.exit(msg)
-f_in    = open(file_path, 'rb')
+if os.path.exists(new_file) :
+	msg = 'bin/replace_html.py: cannot overwrite new_file ' + new_file
+	sys.exit(msg)
+f_in    = open(old_file, 'rb')
 data_in = f_in.read()
 f_in.close()
 # -----------------------------------------------------------------------------
@@ -104,7 +106,7 @@ while start < len(data_in) :
 			msg += ', end name = ' + next_end.group(1)
 			sys.exit(msg)
 # -----------------------------------------------------------------------------
-f_out    = open(file_path, 'wb')
+f_out    = open(new_file, 'wb')
 f_out.write(data_out)
 f_out.close()
 # -----------------------------------------------------------------------------

@@ -287,6 +287,7 @@ then
 		check_include_omh.sh
 		check_makefile.sh
 		check_op_code.sh
+		check_replace.sh
 		check_svn_id.sh
 		check_verbatim.sh
 	"

@@ -880,14 +880,6 @@ where Rel is one of the following: Lt, Le, Eq, Ge, Gt.
 is the type used for vectors of sets. It can be either
 \c sparse_pack, \c sparse_set, or \c sparse_list.
 
-\param nz_compare
-Are the derivatives with respect to left and right of the expression below
-considered to be non-zero:
-\code
-	CondExpRel(left, right, if_true, if_false)
-\endcode
-This is used by the optimizer to obtain the correct dependency relations.
-
 \param i_z
 is the AD variable index corresponding to the variable z.
 
@@ -944,6 +936,14 @@ is the total number of values in the vector \a parameter.
 \li For j = 0, 1, 2, 3 if y_j is a parameter, arg[2+j] < num_par.
 \li For j = 0, 1, 2, 3 if y_j is a variable, arg[2+j] < iz.
 <!-- end sparse_conditional_exp_op -->
+
+\param nz_compare
+Are the derivatives with respect to left and right of the expression below
+considered to be non-zero:
+\code
+	CondExpRel(left, right, if_true, if_false)
+\endcode
+This is used by the optimizer to obtain the correct dependency relations.
 
 
 \param sparsity
