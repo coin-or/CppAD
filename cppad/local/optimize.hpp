@@ -146,7 +146,7 @@ Routines for optimizing a tape
 /*!
 State for this variable set during reverse sweep.
 */
-enum optimize_connection_type {
+enum enum_connect_type {
 	/// There is no operation that connects this variable to the
 	/// independent variables.
 	not_connected        ,
@@ -188,7 +188,7 @@ struct struct_old_variable {
 	const addr_t*       arg;
 
 	/// How is this variable connected to the independent variables
-	optimize_connection_type connect_type; 
+	enum_connect_type connect_type; 
 
 	/*!
 	The meaning of this index depends on \c connect_type as follows:
@@ -214,7 +214,7 @@ struct struct_size_pair {
 };
 
 /*!
-Structures used by \c optimize_record_csum
+Structures used by \c record_csum
 to hold information about one variable.
 */
 struct struct_csum_variable {
@@ -231,7 +231,7 @@ struct struct_csum_variable {
 };
 
 /*!
-Structure used to pass work space from \c optimize to \c optimize_record_csum
+Structure used to pass work space from \c optimize to \c record_csum
 (so that stacks do not start from zero size every time).
 */
 struct struct_csum_stacks {
@@ -278,7 +278,7 @@ Connection information for a user atomic function
 */
 struct struct_user_info {
 	/// type of connection for this atomic function
-	optimize_connection_type connect_type;
+	enum_connect_type connect_type;
 	/// If this is an conditional connection, this is the index
 	/// of the correpsonding CondExpOp
 	size_t connect_index;
@@ -295,7 +295,7 @@ struct struct_user_info {
 /*!
 Shared documentation for optimization helper functions (not called).
 
-<!-- define optimize_prototype -->
+<!-- define prototype -->
 \param tape
 is a vector that maps a variable index, in the old operation sequence,
 to an <tt>struct_old_variable</tt> information record.
@@ -340,10 +340,10 @@ is a vector of length \a npar containing the parameters
 for this operation sequence; i.e.,
 given a parameter index \c i, the corresponding parameter value is
 <tt>par[i]</tt>.
-<!-- end optimize_prototype -->
+<!-- end prototype -->
 */
 template <class Base>
-void optimize_prototype(
+void prototype(
 	const CppAD::vector<struct struct_old_variable>& tape           ,
 	size_t                                             current        ,
 	size_t                                             npar           ,
@@ -356,7 +356,7 @@ Check a unary operator for a complete match with a previous operator.
 A complete match means that the result of the previous operator
 can be used inplace of the result for current operator.
 
-<!-- replace optimize_prototype -->
+<!-- replace prototype -->
 \param tape
 is a vector that maps a variable index, in the old operation sequence,
 to an <tt>struct_old_variable</tt> information record.
@@ -401,7 +401,7 @@ is a vector of length \a npar containing the parameters
 for this operation sequence; i.e.,
 given a parameter index \c i, the corresponding parameter value is
 <tt>par[i]</tt>.
-<!-- end optimize_prototype -->
+<!-- end prototype -->
 
 \param hash_table_var
 is a vector with size CPPAD_HASH_TABLE_SIZE
@@ -425,7 +425,7 @@ old variable.
 NumArg( tape[current].op ) == 1
 */
 template <class Base>
-size_t optimize_unary_match(
+size_t unary_match(
 	const CppAD::vector<struct struct_old_variable>& tape           ,
 	size_t                                             current        ,
 	size_t                                             npar           ,
@@ -461,7 +461,7 @@ size_t optimize_unary_match(
 /*!
 Check a binary operator for a complete match with a previous operator,
 
-<!-- replace optimize_prototype -->
+<!-- replace prototype -->
 \param tape
 is a vector that maps a variable index, in the old operation sequence,
 to an <tt>struct_old_variable</tt> information record.
@@ -506,7 +506,7 @@ is a vector of length \a npar containing the parameters
 for this operation sequence; i.e.,
 given a parameter index \c i, the corresponding parameter value is
 <tt>par[i]</tt>.
-<!-- end optimize_prototype -->
+<!-- end prototype -->
 
 \param hash_table_var
 is a vector with size CPPAD_HASH_TABLE_SIZE
@@ -532,7 +532,7 @@ The binary operator must be an addition, subtraction, multiplication, division
 or power operator.  NumArg( tape[current].op ) == 1.
 */
 template <class Base>
-inline size_t optimize_binary_match(
+inline size_t binary_match(
 	const CppAD::vector<struct struct_old_variable>& tape           ,
 	size_t                                             current        ,
 	size_t                                             npar           ,
@@ -660,7 +660,7 @@ inline size_t optimize_binary_match(
 /*!
 Record an operation of the form (parameter op variable).
 
-<!-- replace optimize_prototype -->
+<!-- replace prototype -->
 \param tape
 is a vector that maps a variable index, in the old operation sequence,
 to an <tt>struct_old_variable</tt> information record.
@@ -705,7 +705,7 @@ is a vector of length \a npar containing the parameters
 for this operation sequence; i.e.,
 given a parameter index \c i, the corresponding parameter value is
 <tt>par[i]</tt>.
-<!-- end optimize_prototype -->
+<!-- end prototype -->
 
 \param rec
 is the object that will record the operations.
@@ -722,7 +722,7 @@ the result is the operaiton and variable index corresponding to the current
 operation in the new operation sequence.
 */
 template <class Base>
-struct_size_pair optimize_record_pv(
+struct_size_pair record_pv(
 	const CppAD::vector<struct struct_old_variable>& tape           ,
 	size_t                                             current        ,
 	size_t                                             npar           ,
@@ -762,7 +762,7 @@ struct_size_pair optimize_record_pv(
 /*!
 Record an operation of the form (variable op parameter).
 
-<!-- replace optimize_prototype -->
+<!-- replace prototype -->
 \param tape
 is a vector that maps a variable index, in the old operation sequence,
 to an <tt>struct_old_variable</tt> information record.
@@ -807,7 +807,7 @@ is a vector of length \a npar containing the parameters
 for this operation sequence; i.e.,
 given a parameter index \c i, the corresponding parameter value is
 <tt>par[i]</tt>.
-<!-- end optimize_prototype -->
+<!-- end prototype -->
 
 \param rec
 is the object that will record the operations.
@@ -824,7 +824,7 @@ the result operation and variable index corresponding to the current
 operation in the new operation sequence.
 */
 template <class Base>
-struct_size_pair optimize_record_vp(
+struct_size_pair record_vp(
 	const CppAD::vector<struct struct_old_variable>& tape           ,
 	size_t                                             current        ,
 	size_t                                             npar           ,
@@ -861,7 +861,7 @@ struct_size_pair optimize_record_vp(
 /*!
 Record an operation of the form (variable op variable).
 
-<!-- replace optimize_prototype -->
+<!-- replace prototype -->
 \param tape
 is a vector that maps a variable index, in the old operation sequence,
 to an <tt>struct_old_variable</tt> information record.
@@ -906,7 +906,7 @@ is a vector of length \a npar containing the parameters
 for this operation sequence; i.e.,
 given a parameter index \c i, the corresponding parameter value is
 <tt>par[i]</tt>.
-<!-- end optimize_prototype -->
+<!-- end prototype -->
 
 \param rec
 is the object that will record the operations.
@@ -923,7 +923,7 @@ the result is the operation and variable index corresponding to the current
 operation in the new operation sequence.
 */
 template <class Base>
-struct_size_pair optimize_record_vv(
+struct_size_pair record_vv(
 	const CppAD::vector<struct struct_old_variable>& tape           ,
 	size_t                                             current        ,
 	size_t                                             npar           ,
@@ -965,7 +965,7 @@ struct_size_pair optimize_record_vv(
 /*!
 Recording a cummulative cummulative summation starting at its highest parrent.
 
-<!-- replace optimize_prototype -->
+<!-- replace prototype -->
 \param tape
 is a vector that maps a variable index, in the old operation sequence,
 to an <tt>struct_old_variable</tt> information record.
@@ -1010,7 +1010,7 @@ is a vector of length \a npar containing the parameters
 for this operation sequence; i.e.,
 given a parameter index \c i, the corresponding parameter value is
 <tt>par[i]</tt>.
-<!-- end optimize_prototype -->
+<!-- end prototype -->
 
 \param rec
 is the object that will record the operations.
@@ -1022,7 +1022,7 @@ Is used for computation. On input and output,
 <tt>work.sub_stack.empty()</tt>,
 are all true true.
 These stacks are passed in so that elements can be allocated once
-and then the elements can be reused with calls to \c optimize_record_csum.
+and then the elements can be reused with calls to \c record_csum.
 
 \par Exception
 <tt>tape[i].new_var</tt>
@@ -1049,7 +1049,7 @@ j that is a variable operand for the current operation.
 
 
 template <class Base>
-struct_size_pair optimize_record_csum(
+struct_size_pair record_csum(
 	const CppAD::vector<struct struct_old_variable>& tape           ,
 	size_t                                             current        ,
 	size_t                                             npar           ,
@@ -1270,7 +1270,7 @@ void optimize_run(
 	// vecad_connect contains a value for each VecAD object.
 	// vecad maps a VecAD index (which corresponds to the beginning of the
 	// VecAD object) to the vecad_connect falg for the VecAD object.
-	CppAD::vector<optimize_connection_type>   vecad_connect(num_vecad_vec);
+	CppAD::vector<enum_connect_type>   vecad_connect(num_vecad_vec);
 	CppAD::vector<size_t> vecad(num_vecad_ind);
 	j = 0;
 	for(i = 0; i < num_vecad_vec; i++)
@@ -1329,7 +1329,7 @@ void optimize_run(
 		}
 		else	CPPAD_ASSERT_UNKNOWN((op != InvOp) & (op != BeginOp));
 # endif
-		optimize_connection_type connect_type  = tape[i_var].connect_type;
+		enum_connect_type connect_type  = tape[i_var].connect_type;
 		size_t                  connect_index  = tape[i_var].connect_index;
 		bool flag;
 		switch( op )
@@ -1871,7 +1871,7 @@ void optimize_run(
 	// temporary buffer for new argument values
 	addr_t new_arg[6];
 
-	// temporary work space used by optimize_record_csum
+	// temporary work space used by record_csum
 	// (decalared here to avoid realloaction of memory)
 	struct_csum_stacks csum_work;
 
@@ -1980,7 +1980,7 @@ void optimize_run(
 			case SqrtOp:
 			case TanOp:
 			case TanhOp:
-			match_var = optimize_unary_match(
+			match_var = unary_match(
 				tape                ,  // inputs 
 				i_var               ,
 				play->num_rec_par() ,
@@ -2007,7 +2007,7 @@ void optimize_run(
 			if( tape[arg[0]].connect_type == csum_connected )
 			{
 				// convert to a sequence of summation operators
-				size_pair = optimize_record_csum(
+				size_pair = record_csum(
 					tape                , // inputs
 					i_var               ,
 					play->num_rec_par() ,
@@ -2022,7 +2022,7 @@ void optimize_run(
 			}
 			case DivvpOp:
 			case PowvpOp:
-			match_var = optimize_binary_match(
+			match_var = binary_match(
 				tape                ,  // inputs 
 				i_var               ,
 				play->num_rec_par() ,
@@ -2033,7 +2033,7 @@ void optimize_run(
 			if( match_var > 0 )
 				tape[i_var].new_var = match_var;
 			else
-			{	size_pair = optimize_record_vp(
+			{	size_pair = record_vp(
 					tape                , // inputs
 					i_var               ,
 					play->num_rec_par() ,
@@ -2055,7 +2055,7 @@ void optimize_run(
 			if( tape[arg[1]].connect_type == csum_connected )
 			{
 				// convert to a sequence of summation operators
-				size_pair = optimize_record_csum(
+				size_pair = record_csum(
 					tape                , // inputs
 					i_var               ,
 					play->num_rec_par() ,
@@ -2071,7 +2071,7 @@ void optimize_run(
 			case DivpvOp:
 			case MulpvOp:
 			case PowpvOp:
-			match_var = optimize_binary_match(
+			match_var = binary_match(
 				tape                ,  // inputs 
 				i_var               ,
 				play->num_rec_par() ,
@@ -2082,7 +2082,7 @@ void optimize_run(
 			if( match_var > 0 )
 				tape[i_var].new_var = match_var;
 			else
-			{	size_pair = optimize_record_pv(
+			{	size_pair = record_pv(
 					tape                , // inputs
 					i_var               ,
 					play->num_rec_par() ,
@@ -2106,7 +2106,7 @@ void optimize_run(
 			)
 			{
 				// convert to a sequence of summation operators
-				size_pair = optimize_record_csum(
+				size_pair = record_csum(
 					tape                , // inputs
 					i_var               ,
 					play->num_rec_par() ,
@@ -2122,7 +2122,7 @@ void optimize_run(
 			case DivvvOp:
 			case MulvvOp:
 			case PowvvOp:
-			match_var = optimize_binary_match(
+			match_var = binary_match(
 				tape                ,  // inputs 
 				i_var               ,
 				play->num_rec_par() ,
@@ -2133,7 +2133,7 @@ void optimize_run(
 			if( match_var > 0 )
 				tape[i_var].new_var = match_var;
 			else
-			{	size_pair = optimize_record_vv(
+			{	size_pair = record_vv(
 					tape                , // inputs
 					i_var               ,
 					play->num_rec_par() ,
