@@ -134,6 +134,7 @@ $end
 # include <stack>
 
 namespace CppAD { // BEGIN_CPPAD_NAMESPACE
+namespace optimize { // BEGIN_CPPAD_OPTIMIZE_NAMESPACE
 /*!
 \defgroup optimize_hpp optimize.hpp
 \{
@@ -177,7 +178,7 @@ enum optimize_connection_type {
 Structure used by \c optimize to hold information about one variable.
 in the old operation seqeunce.
 */
-struct optimize_old_variable {
+struct struct_old_variable {
 	/// Operator for which this variable is the result, \c NumRes(op) > 0.
 	/// Set by the reverse sweep at beginning of optimization.
 	OpCode              op;       
@@ -207,7 +208,7 @@ struct optimize_old_variable {
 	size_t new_op;
 };
 
-struct optimize_size_pair {
+struct struct_size_pair {
 	size_t i_op;  // an operator index
 	size_t i_var; // a variable index
 };
@@ -216,7 +217,7 @@ struct optimize_size_pair {
 Structures used by \c optimize_record_csum
 to hold information about one variable.
 */
-struct optimize_csum_variable {
+struct struct_csum_variable {
 	/// Operator for which this variable is the result, \c NumRes(op) > 0.
 	OpCode              op;       
 
@@ -233,9 +234,9 @@ struct optimize_csum_variable {
 Structure used to pass work space from \c optimize to \c optimize_record_csum
 (so that stacks do not start from zero size every time).
 */
-struct optimize_csum_stacks {
+struct struct_csum_stacks {
 	/// stack of operations in the cummulative summation 
-	std::stack<struct optimize_csum_variable>   op_stack;
+	std::stack<struct struct_csum_variable>   op_stack;
 	/// stack of variables to be added
 	std::stack<size_t >                         add_stack;
 	/// stack of variables to be subtracted
@@ -245,7 +246,7 @@ struct optimize_csum_stacks {
 /*!
 CExpOp information that is copied to corresponding CSkipOp
 */
-struct optimize_cskip_info {
+struct struct_cskip_info {
 	/// comparision operator
 	CompareOp cop;
 	/// (flag & 1) is true if and only if left is a variable
@@ -275,7 +276,7 @@ struct optimize_cskip_info {
 /*!
 Connection information for a user atomic function
 */
-struct optimize_user_info {
+struct struct_user_info {
 	/// type of connection for this atomic function
 	optimize_connection_type connect_type;
 	/// If this is an conditional connection, this is the index
@@ -297,7 +298,7 @@ Shared documentation for optimization helper functions (not called).
 <!-- define optimize_prototype -->
 \param tape
 is a vector that maps a variable index, in the old operation sequence,
-to an <tt>optimize_old_variable</tt> information record.
+to an <tt>struct_old_variable</tt> information record.
 Note that the index for this vector must be greater than or equal zero and 
 less than <tt>tape.size()</tt>.
 
@@ -343,7 +344,7 @@ given a parameter index \c i, the corresponding parameter value is
 */
 template <class Base>
 void optimize_prototype(
-	const CppAD::vector<struct optimize_old_variable>& tape           ,
+	const CppAD::vector<struct struct_old_variable>& tape           ,
 	size_t                                             current        ,
 	size_t                                             npar           ,
 	const Base*                                        par            )
@@ -358,7 +359,7 @@ can be used inplace of the result for current operator.
 <!-- replace optimize_prototype -->
 \param tape
 is a vector that maps a variable index, in the old operation sequence,
-to an <tt>optimize_old_variable</tt> information record.
+to an <tt>struct_old_variable</tt> information record.
 Note that the index for this vector must be greater than or equal zero and 
 less than <tt>tape.size()</tt>.
 
@@ -425,7 +426,7 @@ NumArg( tape[current].op ) == 1
 */
 template <class Base>
 size_t optimize_unary_match(
-	const CppAD::vector<struct optimize_old_variable>& tape           ,
+	const CppAD::vector<struct struct_old_variable>& tape           ,
 	size_t                                             current        ,
 	size_t                                             npar           ,
 	const Base*                                        par            ,
@@ -463,7 +464,7 @@ Check a binary operator for a complete match with a previous operator,
 <!-- replace optimize_prototype -->
 \param tape
 is a vector that maps a variable index, in the old operation sequence,
-to an <tt>optimize_old_variable</tt> information record.
+to an <tt>struct_old_variable</tt> information record.
 Note that the index for this vector must be greater than or equal zero and 
 less than <tt>tape.size()</tt>.
 
@@ -532,7 +533,7 @@ or power operator.  NumArg( tape[current].op ) == 1.
 */
 template <class Base>
 inline size_t optimize_binary_match(
-	const CppAD::vector<struct optimize_old_variable>& tape           ,
+	const CppAD::vector<struct struct_old_variable>& tape           ,
 	size_t                                             current        ,
 	size_t                                             npar           ,
 	const Base*                                        par            ,
@@ -662,7 +663,7 @@ Record an operation of the form (parameter op variable).
 <!-- replace optimize_prototype -->
 \param tape
 is a vector that maps a variable index, in the old operation sequence,
-to an <tt>optimize_old_variable</tt> information record.
+to an <tt>struct_old_variable</tt> information record.
 Note that the index for this vector must be greater than or equal zero and 
 less than <tt>tape.size()</tt>.
 
@@ -721,8 +722,8 @@ the result is the operaiton and variable index corresponding to the current
 operation in the new operation sequence.
 */
 template <class Base>
-optimize_size_pair optimize_record_pv(
-	const CppAD::vector<struct optimize_old_variable>& tape           ,
+struct_size_pair optimize_record_pv(
+	const CppAD::vector<struct struct_old_variable>& tape           ,
 	size_t                                             current        ,
 	size_t                                             npar           ,
 	const Base*                                        par            ,
@@ -750,7 +751,7 @@ optimize_size_pair optimize_record_pv(
 	new_arg[1]   = tape[ arg[1] ].new_var;
 	rec->PutArg( new_arg[0], new_arg[1] );
 
-	optimize_size_pair ret;
+	struct_size_pair ret;
 	ret.i_op  = rec->num_rec_op();
 	ret.i_var = rec->PutOp(op);
 	CPPAD_ASSERT_UNKNOWN( size_t(new_arg[0]) < ret.i_var );
@@ -764,7 +765,7 @@ Record an operation of the form (variable op parameter).
 <!-- replace optimize_prototype -->
 \param tape
 is a vector that maps a variable index, in the old operation sequence,
-to an <tt>optimize_old_variable</tt> information record.
+to an <tt>struct_old_variable</tt> information record.
 Note that the index for this vector must be greater than or equal zero and 
 less than <tt>tape.size()</tt>.
 
@@ -823,8 +824,8 @@ the result operation and variable index corresponding to the current
 operation in the new operation sequence.
 */
 template <class Base>
-optimize_size_pair optimize_record_vp(
-	const CppAD::vector<struct optimize_old_variable>& tape           ,
+struct_size_pair optimize_record_vp(
+	const CppAD::vector<struct struct_old_variable>& tape           ,
 	size_t                                             current        ,
 	size_t                                             npar           ,
 	const Base*                                        par            ,
@@ -850,7 +851,7 @@ optimize_size_pair optimize_record_vp(
 	new_arg[1]   = rec->PutPar( par[arg[1]] );
 	rec->PutArg( new_arg[0], new_arg[1] );
 
-	optimize_size_pair ret;
+	struct_size_pair ret;
 	ret.i_op  = rec->num_rec_op();
 	ret.i_var = rec->PutOp(op);
 	CPPAD_ASSERT_UNKNOWN( size_t(new_arg[0]) < ret.i_var );
@@ -863,7 +864,7 @@ Record an operation of the form (variable op variable).
 <!-- replace optimize_prototype -->
 \param tape
 is a vector that maps a variable index, in the old operation sequence,
-to an <tt>optimize_old_variable</tt> information record.
+to an <tt>struct_old_variable</tt> information record.
 Note that the index for this vector must be greater than or equal zero and 
 less than <tt>tape.size()</tt>.
 
@@ -922,8 +923,8 @@ the result is the operation and variable index corresponding to the current
 operation in the new operation sequence.
 */
 template <class Base>
-optimize_size_pair optimize_record_vv(
-	const CppAD::vector<struct optimize_old_variable>& tape           ,
+struct_size_pair optimize_record_vv(
+	const CppAD::vector<struct struct_old_variable>& tape           ,
 	size_t                                             current        ,
 	size_t                                             npar           ,
 	const Base*                                        par            ,
@@ -951,7 +952,7 @@ optimize_size_pair optimize_record_vv(
 	new_arg[1]   = tape[ arg[1] ].new_var;
 	rec->PutArg( new_arg[0], new_arg[1] );
 
-	optimize_size_pair ret;
+	struct_size_pair ret;
 	ret.i_op  = rec->num_rec_op();
 	ret.i_var = rec->PutOp(op);
 	CPPAD_ASSERT_UNKNOWN( size_t(new_arg[0]) < ret.i_var );
@@ -967,7 +968,7 @@ Recording a cummulative cummulative summation starting at its highest parrent.
 <!-- replace optimize_prototype -->
 \param tape
 is a vector that maps a variable index, in the old operation sequence,
-to an <tt>optimize_old_variable</tt> information record.
+to an <tt>struct_old_variable</tt> information record.
 Note that the index for this vector must be greater than or equal zero and 
 less than <tt>tape.size()</tt>.
 
@@ -1048,13 +1049,13 @@ j that is a variable operand for the current operation.
 
 
 template <class Base>
-optimize_size_pair optimize_record_csum(
-	const CppAD::vector<struct optimize_old_variable>& tape           ,
+struct_size_pair optimize_record_csum(
+	const CppAD::vector<struct struct_old_variable>& tape           ,
 	size_t                                             current        ,
 	size_t                                             npar           ,
 	const Base*                                        par            ,
 	recorder<Base>*                                    rec            ,
-	optimize_csum_stacks&                              work           )
+	struct_csum_stacks&                              work           )
 {
 	
 	CPPAD_ASSERT_UNKNOWN( work.op_stack.empty() );
@@ -1066,7 +1067,7 @@ optimize_size_pair optimize_record_csum(
 	OpCode                        op;
 	const addr_t*                 arg;
 	bool                          add;
-	struct optimize_csum_variable var;
+	struct struct_csum_variable var;
 
 	var.op  = tape[current].op;
 	var.arg = tape[current].arg;
@@ -1183,7 +1184,7 @@ optimize_size_pair optimize_record_csum(
 	rec->PutArg(n_add + n_sub);        // arg[3 + arg[0] + arg[1]]
 
 
-	optimize_size_pair ret;
+	struct_size_pair ret;
 	ret.i_op  = rec->num_rec_op();
 	ret.i_var = rec->PutOp(CSumOp);
 	CPPAD_ASSERT_UNKNOWN( new_arg < ret.i_var );
@@ -1219,7 +1220,7 @@ operation sequence corresponding to \a play.
 */
 
 template <class Base>
-void optimize(
+void optimize_run(
 	size_t                       n         ,
 	CppAD::vector<size_t>&       dep_taddr ,
 	player<Base>*                play      ,
@@ -1253,7 +1254,7 @@ void optimize(
 	// -------------------------------------------------------------
 	// data structure that maps variable index in original operation
 	// sequence to corresponding operator information
-	CppAD::vector<struct optimize_old_variable> tape(num_var);
+	CppAD::vector<struct struct_old_variable> tape(num_var);
 	// -------------------------------------------------------------
 	// Determine how each variable is connected to the dependent variables
 
@@ -1301,11 +1302,11 @@ void optimize(
 
 	// During reverse mode, compute type of connection for each call to
 	// a user atomic function.
-	CppAD::vector<optimize_user_info>    user_info;
+	CppAD::vector<struct_user_info>    user_info;
 	size_t                               user_curr = 0;
 
 	/// During reverse mode, information for each CSkip operation
-	CppAD::vector<optimize_cskip_info>   cskip_info;
+	CppAD::vector<struct_cskip_info>   cskip_info;
 
 	// Initialize a reverse mode sweep through the operation sequence
 	size_t i_op;
@@ -1554,7 +1555,7 @@ void optimize(
 			case CExpOp:
 			CPPAD_ASSERT_UNKNOWN( NumArg(CExpOp) == 6 );
 			if( tape[i_var].connect_type != not_connected )
-			{	optimize_cskip_info info;
+			{	struct_cskip_info info;
 				info.cop        = CompareOp( arg[0] );
 				info.flag       = arg[1];
 				info.left       = arg[2];
@@ -1654,7 +1655,7 @@ void optimize(
 				user_i     = user_m;
 				user_state = user_ret;
 				//
-				optimize_user_info info;
+				struct_user_info info;
 				info.connect_type = not_connected;
 				info.op_end       = i_op + 1;
 				user_info.push_back(info);
@@ -1872,10 +1873,10 @@ void optimize(
 
 	// temporary work space used by optimize_record_csum
 	// (decalared here to avoid realloaction of memory)
-	optimize_csum_stacks csum_work;
+	struct_csum_stacks csum_work;
 
 	// tempory used to hold a size_pair
-	optimize_size_pair size_pair;
+	struct_size_pair size_pair;
 
 	user_state = user_start;
 	while(op != EndOp)
@@ -1899,7 +1900,7 @@ void optimize(
 			skip &= cskip_info[j].skip_var_true.size() > 0 ||
 					cskip_info[j].skip_var_false.size() > 0;
 			if( skip )
-			{	optimize_cskip_info info = cskip_info[j];
+			{	struct_cskip_info info = cskip_info[j];
 				CPPAD_ASSERT_UNKNOWN( NumRes(CSkipOp) == 0 );
 				size_t n_true  = 
 					info.skip_var_true.size() + info.n_op_true;
@@ -2405,7 +2406,7 @@ void optimize(
 	// fill in the arguments for the CSkip operations
 	CPPAD_ASSERT_UNKNOWN( cskip_info_next == cskip_info.size() );
 	for(i = 0; i < cskip_info.size(); i++)
-	{	optimize_cskip_info info = cskip_info[i];
+	{	struct_cskip_info info = cskip_info[i];
 		if( info.i_arg > 0 )
 		{	CPPAD_ASSERT_UNKNOWN( info.n_op_true==info.skip_op_true.size() );
 			CPPAD_ASSERT_UNKNOWN(info.n_op_false==info.skip_op_false.size());
@@ -2446,6 +2447,8 @@ void optimize(
 		}
 	}
 }
+
+} // END_CPPAD_OPTIMIZE_NAMESPACE
 
 /*!
 Optimize a player object operation sequence
@@ -2495,7 +2498,7 @@ void ADFun<Base>::optimize(void)
 # endif
 
 	// create the optimized recording
-	CppAD::optimize<Base>(n, dep_taddr_, &play_, &rec);
+	CppAD::optimize::optimize_run<Base>(n, dep_taddr_, &play_, &rec);
 
 	// number of variables in the recording
 	total_num_var_ = rec.num_rec_var();
