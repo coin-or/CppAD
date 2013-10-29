@@ -17,6 +17,64 @@ Please visit http://www.coin-or.org/CppAD/ for information on other licenses.
 
 namespace {
 	// ----------------------------------------------------------------
+	// Test nested conditional expressions.
+	int nested_cond_exp(void)
+	{	bool ok = true;
+		using CppAD::AD;
+		using CppAD::vector;
+	
+		// independent variable vector 
+		vector< AD<double> > ax(2), ay(1);
+		ax[0] = 1.0;
+		ax[1] = 2.0;
+		Independent(ax);
+	
+		// first conditional expression
+		AD<double> ac1 = CondExpLe(ax[0], ax[1], 2.0 * ax[0], 3.0 * ax[1] );
+	
+		// second conditional expression
+		AD<double> ac2 = CondExpGe(ax[0], ax[1], 4.0 * ax[0], 5.0 * ax[1] );
+	
+		// third conditional expression
+		AD<double> ac3 = CondExpLt(ax[0], ax[1], 6.0 * ac1, 7.0 * ac2 );
+	
+		// create function object f : ax -> ay
+		ay[0] = ac3;
+		CppAD::ADFun<double> f(ax, ay);
+	
+		// now optimize the operation sequence
+		f.optimize();
+	
+		// now zero order forward
+		vector<double> x(2), y(1);
+		for(size_t i = 0; i < 3; i++)
+		{	x[0] = 1.0 - double(i);
+			x[1] = - x[0];
+			y    = f.Forward(0, x);
+			//
+			// first conditional expression
+			double c1;
+			if( x[0] <= x[1] )
+				c1 = 2.0 * x[0];
+			else	c1 = 3.0 * x[1];
+			//
+			// second conditional expression
+			double c2;
+			if( x[0] >= x[1] )
+				c2 = 4.0 * x[0];
+			else	c2 = 5.0 * x[1];
+	
+			// third conditional expression
+			double c3;
+			if( x[0] < x[1] )
+				c3 = 6.0 * c1;
+			else	c3 = 7.0 * c2;
+	
+			ok &= y[0] == c3;
+		}
+		return ok;
+	}
+	// ----------------------------------------------------------------
 	// Test for bug where checkpoint function did not depend on
 	// the operands in the logical comparison because of the CondExp
 	// sparsity pattern.
@@ -1367,6 +1425,8 @@ namespace {
 
 bool optimize(void)
 {	bool ok = true;
+	// check nested conditional expressions
+	ok     &= nested_cond_exp();
 	// check conditional expression sparsity pattern 
 	// (used to optimize calls to atomic functions). 
 	ok     &= cond_exp_sparsity();

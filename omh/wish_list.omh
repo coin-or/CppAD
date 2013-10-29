@@ -71,20 +71,6 @@ for $icode ad_fun$$ is called.
 
 $head Conditional Expressions$$
 
-$subhead Nested$$
-The $cref/optimization/CondExp/Optimize/$$ of conditional expressions
-$codei%
-	CondExp%Rel%(%left%, %right%, %true_case%, %false_case%)
-%$$
-could be more efficient when it comes to nested conditional expressions.
-For example, give the code
-$codep
-	x = CondExpLt(left_x, right_x, true_x, false_x)
-	y = CondExpGt(left_y, right_y, true_y, false_y)
-	z = CondExpEq(left_z, right_z, x, y)
-$$
-not all the possible cases will be excluded by $cref optimize$$.
-
 $subhead Sparsity$$
 The $cref/optimizer/optimize/$$ uses 
 $cref/atomic reverse jacobian sparsity/atomic_rev_sparse_jac/$$

@@ -175,12 +175,16 @@ Class used to hold information about one conditional expression.
 */
 class class_cexp_pair {
 public:
-	/// This is the index of the conditional expression (in cksip_info)
-	/// for this connection
-	size_t index_;
 	/// If this is true (false) this connection is only for the case where
 	/// the comparision in the conditional expression is true (false)
 	bool compare_; 
+	/// This is the index of the conditional expression (in cksip_info)
+	/// for this connection
+	size_t index_;
+	/// constructor
+	class_cexp_pair(const bool& compare, const size_t& index)
+	: compare_(compare), index_(index)
+	{ }
 	/// assignment operator
 	void operator=(const class_cexp_pair& right)
 	{	index_   = right.index_;
@@ -242,9 +246,9 @@ struct struct_old_variable {
 
 	/*!
 	If \c connect_type is \c cexp_connected,
-	this is the corresponding infromation for the conditional connection.
+	this is the corresponding infromation for the conditional connections.
 	*/
-	class_cexp_pair cexp_pair;
+	std::set<class_cexp_pair> cexp_set;
 
 	/// New operation sequence corresponding to this old varable.
 	/// Set during forward sweep to the index in the new tape
@@ -327,8 +331,8 @@ struct struct_user_info {
 	/// type of connection for this atomic function
 	enum_connect_type connect_type;
 	/// If this is an conditional connection, this is the information
-	/// of the correpsonding CondExpOp
-	class_cexp_pair cexp_pair;
+	/// of the correpsonding CondExpOp operators
+	std::set<class_cexp_pair> cexp_set;
 	/// If this is a conditional connection, this is the operator
 	/// index of the beginning of the atomic call sequence; i.e.,
 	/// the first UserOp.
@@ -1376,9 +1380,8 @@ void optimize_run(
 		}
 		else	CPPAD_ASSERT_UNKNOWN((op != InvOp) & (op != BeginOp));
 # endif
-		enum_connect_type connect_type  = tape[i_var].connect_type;
-		class_cexp_pair  cexp_pair      = tape[i_var].cexp_pair;
-		bool flag;
+		enum_connect_type connect_type      = tape[i_var].connect_type;
+		std::set<class_cexp_pair>& cexp_set = tape[i_var].cexp_set;
 		switch( op )
 		{
 			// Unary operator where operand is arg[0]
@@ -1410,12 +1413,16 @@ void optimize_run(
 				case cexp_connected:
 				if( tape[arg[0]].connect_type == not_connected )
 				{	tape[arg[0]].connect_type = cexp_connected;
-					tape[arg[0]].cexp_pair    = cexp_pair;
+					tape[arg[0]].cexp_set     = cexp_set;
 				}
-				flag  = tape[arg[0]].connect_type != connect_type;
-				flag |= tape[arg[0]].cexp_pair    != cexp_pair;
-				if( flag )
-					tape[arg[0]].connect_type = yes_connected;
+				else if( tape[arg[0]].connect_type == cexp_connected )
+				{	tape[arg[0]].cexp_set = intersection(
+						tape[arg[0]].cexp_set, cexp_set
+					);
+					if( tape[arg[0]].cexp_set.empty() )
+						tape[arg[0]].connect_type = yes_connected;
+				}
+				else	tape[arg[0]].connect_type = yes_connected;
 				break;
 
 				default:
@@ -1441,12 +1448,16 @@ void optimize_run(
 				case cexp_connected:
 				if( tape[arg[1]].connect_type == not_connected )
 				{	tape[arg[1]].connect_type = cexp_connected;
-					tape[arg[1]].cexp_pair    = cexp_pair;
+					tape[arg[1]].cexp_set     = cexp_set;
 				}
-				flag  = tape[arg[1]].connect_type != connect_type;
-				flag |= tape[arg[1]].cexp_pair    != cexp_pair;
-				if( flag )
-					tape[arg[1]].connect_type = yes_connected;
+				else if( tape[arg[1]].connect_type == cexp_connected )
+				{	tape[arg[1]].cexp_set = intersection(
+						tape[arg[1]].cexp_set, cexp_set
+					);
+					if( tape[arg[1]].cexp_set.empty() )
+						tape[arg[1]].connect_type = yes_connected;
+				}
+				else	tape[arg[1]].connect_type = yes_connected;
 				break;
 
 				default:
@@ -1471,14 +1482,17 @@ void optimize_run(
 				case cexp_connected:
 				if( tape[arg[0]].connect_type == not_connected )
 				{	tape[arg[0]].connect_type = cexp_connected;
-					tape[arg[0]].cexp_pair    = cexp_pair;
+					tape[arg[0]].cexp_set     = cexp_set;
 				}
-				flag  = tape[arg[0]].connect_type != connect_type;
-				flag |= tape[arg[0]].cexp_pair    != cexp_pair;
-				if( flag )
-					tape[arg[0]].connect_type = yes_connected;
+				else if( tape[arg[0]].connect_type == cexp_connected )
+				{	tape[arg[0]].cexp_set = intersection(
+						tape[arg[0]].cexp_set, cexp_set
+					);
+					if( tape[arg[0]].cexp_set.empty() )
+						tape[arg[0]].connect_type = yes_connected;
+				}
+				else	tape[arg[0]].connect_type = yes_connected;
 				break;
-
 
 				default:
 				CPPAD_ASSERT_UNKNOWN(false);
@@ -1507,12 +1521,16 @@ void optimize_run(
 				case cexp_connected:
 				if( tape[arg[1]].connect_type == not_connected )
 				{	tape[arg[1]].connect_type = cexp_connected;
-					tape[arg[1]].cexp_pair    = cexp_pair;
+					tape[arg[1]].cexp_set     = cexp_set;
 				}
-				flag  = tape[arg[1]].connect_type != connect_type;
-				flag |= tape[arg[1]].cexp_pair    != cexp_pair;
-				if( flag )
-					tape[arg[1]].connect_type = yes_connected;
+				else if( tape[arg[1]].connect_type == cexp_connected )
+				{	tape[arg[1]].cexp_set = intersection(
+						tape[arg[1]].cexp_set, cexp_set
+					);
+					if( tape[arg[1]].cexp_set.empty() )
+						tape[arg[1]].connect_type = yes_connected;
+				}
+				else	tape[arg[1]].connect_type = yes_connected;
 				break;
 
 				default:
@@ -1540,16 +1558,19 @@ void optimize_run(
 				else	tape[arg[i]].connect_type = yes_connected;
 				break;
 
-
 				case cexp_connected:
 				if( tape[arg[i]].connect_type == not_connected )
 				{	tape[arg[i]].connect_type = cexp_connected;
-					tape[arg[i]].cexp_pair    = cexp_pair;
+					tape[arg[i]].cexp_set     = cexp_set;
 				}
-				flag  = tape[arg[i]].connect_type != connect_type;
-				flag |= tape[arg[i]].cexp_pair    != cexp_pair;
-				if( flag )
-					tape[arg[i]].connect_type = yes_connected;
+				else if( tape[arg[i]].connect_type == cexp_connected )
+				{	tape[arg[i]].cexp_set = intersection(
+						tape[arg[i]].cexp_set, cexp_set
+					);
+					if( tape[arg[i]].cexp_set.empty() )
+						tape[arg[i]].connect_type = yes_connected;
+				}
+				else	tape[arg[i]].connect_type = yes_connected;
 				break;
 
 				default:
@@ -1579,12 +1600,16 @@ void optimize_run(
 				case cexp_connected:
 				if( tape[arg[i]].connect_type == not_connected )
 				{	tape[arg[i]].connect_type = cexp_connected;
-					tape[arg[i]].cexp_pair    = cexp_pair;
+					tape[arg[i]].cexp_set     = cexp_set;
 				}
-				flag  = tape[arg[i]].connect_type != connect_type;
-				flag |= tape[arg[i]].cexp_pair    != cexp_pair;
-				if( flag )
-					tape[arg[i]].connect_type = yes_connected;
+				else if( tape[arg[i]].connect_type == cexp_connected )
+				{	tape[arg[i]].cexp_set = intersection(
+						tape[arg[i]].cexp_set, cexp_set
+					);
+					if( tape[arg[i]].cexp_set.empty() )
+						tape[arg[i]].connect_type = yes_connected;
+				}
+				else	tape[arg[i]].connect_type = yes_connected;
 				break;
 
 				default:
@@ -1593,11 +1618,9 @@ void optimize_run(
 			break; // --------------------------------------------
 
 			// Conditional expression operators
-			// 2DO: This does not handle nested conditional expressions; 
-			// i.e. Suppose i_var is connected to a conditional expression.
 			case CExpOp:
 			CPPAD_ASSERT_UNKNOWN( NumArg(CExpOp) == 6 );
-			if( tape[i_var].connect_type != not_connected )
+			if( connect_type != not_connected )
 			{	struct_cskip_info info;
 				info.cop        = CompareOp( arg[0] );
 				info.flag       = arg[1];
@@ -1622,14 +1645,18 @@ void optimize_run(
 				cskip_info.push_back(info);
 				//
 				if( arg[1] & 4 )
-				{	tape[arg[4]].connect_type       = cexp_connected;
-					tape[arg[4]].cexp_pair.index_   = index;
-					tape[arg[4]].cexp_pair.compare_ = true;
+				{	tape[arg[4]].connect_type = cexp_connected;
+					tape[arg[4]].cexp_set     = cexp_set;
+					tape[arg[4]].cexp_set.insert(
+						class_cexp_pair(true, index)
+					);
 				}
 				if( arg[1] & 8 )
-				{	tape[arg[5]].connect_type       = cexp_connected;
-					tape[arg[5]].cexp_pair.index_   = index;
-					tape[arg[5]].cexp_pair.compare_ = false;
+				{	tape[arg[5]].connect_type = cexp_connected;
+					tape[arg[5]].cexp_set     = cexp_set;
+					tape[arg[5]].cexp_set.insert(
+						class_cexp_pair(false, index)
+					);
 				}
 			}
 			break;  // --------------------------------------------
@@ -1786,13 +1813,16 @@ void optimize_run(
 				case cexp_connected:
 				if( user_info[user_curr].connect_type == not_connected )
 				{	user_info[user_curr].connect_type  = connect_type;
-					user_info[user_curr].cexp_pair     = cexp_pair;
+					user_info[user_curr].cexp_set      = cexp_set;
 				}
-				flag  = user_info[user_curr].connect_type != connect_type;
-				flag |= user_info[user_curr].cexp_pair    != cexp_pair;
-				if( flag )
-					user_info[user_curr].connect_type = yes_connected;
-				user_r[user_i].insert(0);
+				else if(user_info[user_curr].connect_type==cexp_connected)
+				{	user_info[user_curr].cexp_set = intersection(
+						user_info[user_curr].cexp_set, cexp_set
+					);
+					if( user_info[user_curr].cexp_set.empty() )
+						user_info[user_curr].connect_type = yes_connected;
+				}
+				else	user_info[user_curr].connect_type = yes_connected;
 				break;
 
 				default:
@@ -1824,22 +1854,32 @@ void optimize_run(
 	// Determine which variables can be conditionally skipped
 	for(i = 0; i < num_var; i++)
 	{	if( tape[i].connect_type == cexp_connected )
-		{	j = tape[i].cexp_pair.index_;
-			if( tape[i].cexp_pair.compare_ == true )
-				cskip_info[j].skip_var_false.push_back(i);
-			else cskip_info[j].skip_var_true.push_back(i);
+		{	std::set<class_cexp_pair>::const_iterator itr = 
+				tape[i].cexp_set.begin();
+			while( itr != tape[i].cexp_set.end() )
+			{	j = itr->index_;
+				if( itr->compare_ == true )
+					cskip_info[j].skip_var_false.push_back(i);
+				else cskip_info[j].skip_var_true.push_back(i);
+				itr++;
+			}
 		}
 	}
-	// Move skip information from user_info to cskip_info
+	// Determine size of skip information in user_info 
 	for(i = 0; i < user_info.size(); i++)
 	{	if( user_info[i].connect_type == cexp_connected )
-		{	j = user_info[i].cexp_pair.index_;
-			if( user_info[i].cexp_pair.compare_ == true )
-				cskip_info[j].n_op_false = 
-					user_info[i].op_end - user_info[i].op_begin;
-			else
-				cskip_info[j].n_op_true = 
-					user_info[i].op_end - user_info[i].op_begin;
+		{	std::set<class_cexp_pair>::const_iterator itr = 
+				user_info[i].cexp_set.begin();
+			while( itr != user_info[i].cexp_set.end() )
+			{	j = itr->index_;
+				if( itr->compare_ == true )
+					cskip_info[j].n_op_false = 
+						user_info[i].op_end - user_info[i].op_begin;
+				else
+					cskip_info[j].n_op_true = 
+						user_info[i].op_end - user_info[i].op_begin;
+				itr++;
+			}
 		}
 	}
 
@@ -1951,7 +1991,7 @@ void optimize_run(
 				// reserve space for the arguments to this operator but 
 				// delay setting them until we have all the new addresses
 				cskip_info[j].i_arg = rec->ReserveArg(n_arg);
-				CPPAD_ASSERT_UNKNOWN( cskip_info[i].i_arg > 0 );
+				CPPAD_ASSERT_UNKNOWN( cskip_info[j].i_arg > 0 );
 				rec->PutOp(CSkipOp);
 			}
 			else	cskip_info[j].i_arg = 0;
@@ -2431,12 +2471,18 @@ void optimize_run(
 	// Move skip information from user_info to cskip_info
 	for(i = 0; i < user_info.size(); i++)
 	{	if( user_info[i].connect_type == cexp_connected )
-		{	j = user_info[i].cexp_pair.index_;
-			k = user_info[i].op_begin;
-			while(k < user_info[i].op_end)
-				if( user_info[i].cexp_pair.compare_ == true )
-					cskip_info[j].skip_op_false.push_back(k++);
-				else	cskip_info[j].skip_op_true.push_back(k++);
+		{	std::set<class_cexp_pair>::const_iterator itr =
+				user_info[i].cexp_set.begin();
+			while( itr != user_info[i].cexp_set.end() )
+			{	j = itr->index_;
+				k = user_info[i].op_begin;
+				while(k < user_info[i].op_end)
+				{	if( itr->compare_ == true )
+						cskip_info[j].skip_op_false.push_back(k++);
+					else	cskip_info[j].skip_op_true.push_back(k++);
+				}
+				itr++;
+			}
 		}
 	}
 
