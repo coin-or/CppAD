@@ -170,15 +170,59 @@ enum enum_connect_type {
 
 };
 
-struct struct_cexp_pair {
-	/// If this is true (false) this connection is only for the case where
-	/// the comparision in the conditional expression is true (false)
-	bool compare; 
+/*!
+Class used to hold information about one conditional expression.
+*/
+class class_cexp_pair {
+public:
 	/// This is the index of the conditional expression (in cksip_info)
 	/// for this connection
-	size_t index;
+	size_t index_;
+	/// If this is true (false) this connection is only for the case where
+	/// the comparision in the conditional expression is true (false)
+	bool compare_; 
+	/// assignment operator
+	void operator=(const class_cexp_pair& right)
+	{	index_   = right.index_;
+		compare_ = right.compare_;
+	}
+	/// not equal operator
+	bool operator!=(const class_cexp_pair& right)
+	{	return (index_ != right.index_) | (compare_ != right.compare_);
+	}
+	/// Less than operator 
+	/// (required for intersection of two sets of class_cexp_pair elements).
+	bool operator<(const class_cexp_pair& right) const
+	{	if( index_ == right.index_ )
+			return size_t(compare_) < size_t(right.compare_);	
+		return index_ < right.index_;
+	}
 };
+/*!
+Compute intersection of two sets of class_cexp_pair elements.
 
+\param left
+first operand of the intersection
+
+\param right 
+second operand of the intersection
+
+\result
+the intersection of left and right
+*/
+inline std::set<class_cexp_pair> intersection(
+	std::set<class_cexp_pair>& left  ,
+	std::set<class_cexp_pair>& right )
+{	std::set<class_cexp_pair> result;
+	std::set_intersection(
+		left.begin()  ,
+		left.end()    ,
+		right.begin() ,
+		right.end()   ,
+		std::inserter(result, result.begin())
+	);
+	return result;	
+}
 
 /*!
 Structure used by \c optimize to hold information about one variable.
@@ -200,7 +244,7 @@ struct struct_old_variable {
 	If \c connect_type is \c cexp_connected,
 	this is the corresponding infromation for the conditional connection.
 	*/
-	struct_cexp_pair cexp_pair;
+	class_cexp_pair cexp_pair;
 
 	/// New operation sequence corresponding to this old varable.
 	/// Set during forward sweep to the index in the new tape
@@ -284,7 +328,7 @@ struct struct_user_info {
 	enum_connect_type connect_type;
 	/// If this is an conditional connection, this is the information
 	/// of the correpsonding CondExpOp
-	struct_cexp_pair cexp_pair;
+	class_cexp_pair cexp_pair;
 	/// If this is a conditional connection, this is the operator
 	/// index of the beginning of the atomic call sequence; i.e.,
 	/// the first UserOp.
@@ -1333,7 +1377,7 @@ void optimize_run(
 		else	CPPAD_ASSERT_UNKNOWN((op != InvOp) & (op != BeginOp));
 # endif
 		enum_connect_type connect_type  = tape[i_var].connect_type;
-		struct_cexp_pair  cexp_pair     = tape[i_var].cexp_pair;
+		class_cexp_pair  cexp_pair      = tape[i_var].cexp_pair;
 		bool flag;
 		switch( op )
 		{
@@ -1369,8 +1413,7 @@ void optimize_run(
 					tape[arg[0]].cexp_pair    = cexp_pair;
 				}
 				flag  = tape[arg[0]].connect_type != connect_type;
-				flag |= tape[arg[0]].cexp_pair.compare!=cexp_pair.compare;
-				flag |= tape[arg[0]].cexp_pair.index != cexp_pair.index;
+				flag |= tape[arg[0]].cexp_pair    != cexp_pair;
 				if( flag )
 					tape[arg[0]].connect_type = yes_connected;
 				break;
@@ -1401,8 +1444,7 @@ void optimize_run(
 					tape[arg[1]].cexp_pair    = cexp_pair;
 				}
 				flag  = tape[arg[1]].connect_type != connect_type;
-				flag |= tape[arg[1]].cexp_pair.compare!=cexp_pair.compare;
-				flag |= tape[arg[1]].cexp_pair.index != cexp_pair.index;
+				flag |= tape[arg[1]].cexp_pair    != cexp_pair;
 				if( flag )
 					tape[arg[1]].connect_type = yes_connected;
 				break;
@@ -1432,8 +1474,7 @@ void optimize_run(
 					tape[arg[0]].cexp_pair    = cexp_pair;
 				}
 				flag  = tape[arg[0]].connect_type != connect_type;
-				flag |= tape[arg[0]].cexp_pair.compare!=cexp_pair.compare;
-				flag |= tape[arg[0]].cexp_pair.index != cexp_pair.index;
+				flag |= tape[arg[0]].cexp_pair    != cexp_pair;
 				if( flag )
 					tape[arg[0]].connect_type = yes_connected;
 				break;
@@ -1469,8 +1510,7 @@ void optimize_run(
 					tape[arg[1]].cexp_pair    = cexp_pair;
 				}
 				flag  = tape[arg[1]].connect_type != connect_type;
-				flag |= tape[arg[1]].cexp_pair.compare!=cexp_pair.compare;
-				flag |= tape[arg[1]].cexp_pair.index != cexp_pair.index;
+				flag |= tape[arg[1]].cexp_pair    != cexp_pair;
 				if( flag )
 					tape[arg[1]].connect_type = yes_connected;
 				break;
@@ -1507,8 +1547,7 @@ void optimize_run(
 					tape[arg[i]].cexp_pair    = cexp_pair;
 				}
 				flag  = tape[arg[i]].connect_type != connect_type;
-				flag |= tape[arg[i]].cexp_pair.compare!=cexp_pair.compare;
-				flag |= tape[arg[i]].cexp_pair.index != cexp_pair.index;
+				flag |= tape[arg[i]].cexp_pair    != cexp_pair;
 				if( flag )
 					tape[arg[i]].connect_type = yes_connected;
 				break;
@@ -1543,8 +1582,7 @@ void optimize_run(
 					tape[arg[i]].cexp_pair    = cexp_pair;
 				}
 				flag  = tape[arg[i]].connect_type != connect_type;
-				flag |= tape[arg[i]].cexp_pair.compare!=cexp_pair.compare;
-				flag |= tape[arg[i]].cexp_pair.index != cexp_pair.index;
+				flag |= tape[arg[i]].cexp_pair    != cexp_pair;
 				if( flag )
 					tape[arg[i]].connect_type = yes_connected;
 				break;
@@ -1585,13 +1623,13 @@ void optimize_run(
 				//
 				if( arg[1] & 4 )
 				{	tape[arg[4]].connect_type       = cexp_connected;
-					tape[arg[4]].cexp_pair.index    = index;
-					tape[arg[4]].cexp_pair.compare  = true;
+					tape[arg[4]].cexp_pair.index_   = index;
+					tape[arg[4]].cexp_pair.compare_ = true;
 				}
 				if( arg[1] & 8 )
 				{	tape[arg[5]].connect_type       = cexp_connected;
-					tape[arg[5]].cexp_pair.index    = index;
-					tape[arg[5]].cexp_pair.compare  = false;
+					tape[arg[5]].cexp_pair.index_   = index;
+					tape[arg[5]].cexp_pair.compare_ = false;
 				}
 			}
 			break;  // --------------------------------------------
@@ -1751,10 +1789,7 @@ void optimize_run(
 					user_info[user_curr].cexp_pair     = cexp_pair;
 				}
 				flag  = user_info[user_curr].connect_type != connect_type;
-				flag |= user_info[user_curr].cexp_pair.compare !=
-					cexp_pair.compare;
-				flag |= user_info[user_curr].cexp_pair.index !=
-					cexp_pair.index;
+				flag |= user_info[user_curr].cexp_pair    != cexp_pair;
 				if( flag )
 					user_info[user_curr].connect_type = yes_connected;
 				user_r[user_i].insert(0);
@@ -1789,8 +1824,8 @@ void optimize_run(
 	// Determine which variables can be conditionally skipped
 	for(i = 0; i < num_var; i++)
 	{	if( tape[i].connect_type == cexp_connected )
-		{	j = tape[i].cexp_pair.index;
-			if( tape[i].cexp_pair.compare == true )
+		{	j = tape[i].cexp_pair.index_;
+			if( tape[i].cexp_pair.compare_ == true )
 				cskip_info[j].skip_var_false.push_back(i);
 			else cskip_info[j].skip_var_true.push_back(i);
 		}
@@ -1798,8 +1833,8 @@ void optimize_run(
 	// Move skip information from user_info to cskip_info
 	for(i = 0; i < user_info.size(); i++)
 	{	if( user_info[i].connect_type == cexp_connected )
-		{	j = user_info[i].cexp_pair.index;
-			if( user_info[i].cexp_pair.compare == true )
+		{	j = user_info[i].cexp_pair.index_;
+			if( user_info[i].cexp_pair.compare_ == true )
 				cskip_info[j].n_op_false = 
 					user_info[i].op_end - user_info[i].op_begin;
 			else
@@ -2396,10 +2431,10 @@ void optimize_run(
 	// Move skip information from user_info to cskip_info
 	for(i = 0; i < user_info.size(); i++)
 	{	if( user_info[i].connect_type == cexp_connected )
-		{	j = user_info[i].cexp_pair.index;
+		{	j = user_info[i].cexp_pair.index_;
 			k = user_info[i].op_begin;
 			while(k < user_info[i].op_end)
-				if( user_info[i].cexp_pair.compare == true )
+				if( user_info[i].cexp_pair.compare_ == true )
 					cskip_info[j].skip_op_false.push_back(k++);
 				else	cskip_info[j].skip_op_true.push_back(k++);
 		}
