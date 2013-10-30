@@ -69,8 +69,11 @@ $codep
 	y = CondExpGt(left_y, right_y, true_y, false_y)
 	z = CondExpEq(left_z, right_z, x, y)
 $$
-Only two of the conditional expressions will be evaluated
+only two of the conditional expressions will be evaluated
 (one will be skipped depending on the result of $code left_z == right_z$$).
+For more details, see
+$cref/nesting conditional expressions/
+WishList/Conditional Expressions/Nesting/$$
 
 $head 10-23$$
 $list number$$
