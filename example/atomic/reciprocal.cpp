@@ -248,7 +248,7 @@ $codep */
 		size_t                                q  ,
 		const vector< std::set<size_t> >&     rt ,
 		      vector< std::set<size_t> >&     st )
-	{	// This function needed if using RevSparseJac
+	{	// This function needed if using optimize or if using RevSparseJac
 		// with afun.option( CppAD::atomic_base<double>::set_sparsity_enum )
 		size_t n = st.size();
 		size_t m = rt.size();

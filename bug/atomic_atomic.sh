@@ -1,7 +1,17 @@
 #! /bin/bash -e
+# $Id$
 # -----------------------------------------------------------------------------
-# Bug when result of an atomic fucntion is used as argument to another
-# atomic function (and the tape is optimized)
+# CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-13 Bradley M. Bell
+#
+# CppAD is distributed under multiple licenses. This distribution is under
+# the terms of the 
+#                     Eclipse Public License Version 1.0.
+#
+# A copy of this license is included in the COPYING file of this distribution.
+# Please visit http://www.coin-or.org/CppAD/ for information on other licenses.
+# -----------------------------------------------------------------------------
+# Missing error message when result of an atomic fucntion is used as 
+# argument to another atomic function (and the tape is optimized)
 # -----------------------------------------------------------------------------
 if [ ! -e build ]
 then
@@ -12,6 +22,7 @@ echo "$0"
 name=`echo $0 | sed -e 's|.*/||' -e 's|\..*||'`
 cat << EOF > $name.cpp
 # include <cppad/cppad.hpp>
+# define DEFINE_REVERSE_SPARSE_JACOBIAN 0 // change to 1 and program will work
 
 namespace {
 	using CppAD::vector;
@@ -39,6 +50,27 @@ namespace {
 			}
 			return false;
 		}
+
+# if DEFINE_REVERSE_SPARSE_JACOBIAN
+		// reverse Jacobian set sparsity routine called by CppAD
+		// This function needed because using optimize.
+		virtual bool rev_sparse_jac(
+			size_t                                q  ,
+			const vector< std::set<size_t> >&     rt ,
+			      vector< std::set<size_t> >&     st )
+		{	// This function needed if using RevSparseJac (or optimize)
+			size_t n = st.size();
+			size_t m = rt.size();
+			assert( n == 1 );
+			assert( m == 1 );
+	
+			// sparsity for S(x)^T = f'(x)^T * R^T is same as for R^T
+			st[0] = rt[0];
+	
+			return true; 
+		}
+# endif
+
 	}; // end class
 }
 int main()  {

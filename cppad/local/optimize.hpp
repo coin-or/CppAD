@@ -98,9 +98,9 @@ $list number$$
 The $cref atomic_rev_sparse_jac$$ function is be used to determine
 which components of $icode u$$ affect the dependent variables of $icode f$$.
 Currently this always uses $code std::set<size_t>$$ for the sparsity patterns.
-It should use the current setting of
+(It should use the current setting of
 $cref/atomic_sparsity/atomic_option/atomic_sparsity/$$ for the
-atomic function $latex g(u)$$.
+atomic function $latex g(u)$$.)
 $lnext
 If $icode%u%[%i%]%$$ does not affect the value of
 the dependent variables for $icode f$$,
@@ -1354,7 +1354,7 @@ void optimize_run(
 	// During reverse mode, compute type of connection for each call to
 	// a user atomic function.
 	CppAD::vector<struct_user_info>    user_info;
-	size_t                               user_curr = 0;
+	size_t                             user_curr = 0;
 
 	/// During reverse mode, information for each CSkip operation
 	CppAD::vector<struct_cskip_info>   cskip_info;
@@ -1786,9 +1786,19 @@ void optimize_run(
 				atomic_base<Base>* atom = 
 					atomic_base<Base>::class_object(user_index);
 				atom->set_id(user_id);
-				atom->rev_sparse_jac(
-					user_q, user_r, user_s
-				);
+# if NDEBUG
+				atom->rev_sparse_jac(user_q, user_r, user_s);
+# else
+				if( ! atom->rev_sparse_jac( user_q, user_r, user_s ) )
+				{	std::string s =
+						"Optimizing an ADFun object"
+						" that contains the atomic function\n\t";
+					s += atom->afun_name();
+					s += "\nand std::set version of rev_sparse_jac"
+					     " returned false";
+					CPPAD_ASSERT_KNOWN(false, s.c_str() );
+				}
+# endif
 				user_state = user_arg;
 			}
 			break;
@@ -1833,9 +1843,19 @@ void optimize_run(
 				atomic_base<Base>* atom = 
 					atomic_base<Base>::class_object(user_index);
 				atom->set_id(user_id);
-				atom->rev_sparse_jac(
-					user_q, user_r, user_s
-				);
+# if NDEBUG
+				atom->rev_sparse_jac(user_q, user_r, user_s);
+# else
+				if( ! atom->rev_sparse_jac( user_q, user_r, user_s ) )
+				{	std::string s =
+						"Optimizing an ADFun object"
+						" that contains the atomic function\n\t";
+					s += atom->afun_name();
+					s += "\nand std::set version of rev_sparse_jac"
+					     " returned false";
+					CPPAD_ASSERT_KNOWN(false, s.c_str() );
+				}
+# endif
 				user_state = user_arg;
 			}
 			break;
