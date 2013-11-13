@@ -230,7 +230,7 @@ $codep */
 		size_t                                q  ,
 		const vector<bool>&                   rt ,
 		      vector<bool>&                   st )
-	{	// This function needed if using RevSparseJac
+	{	// This function needed if using RevSparseJac or optimize
 		// with afun.option( CppAD::atomic_base<double>::bool_sparsity_enum )
 		size_t n = st.size() / q;
 		size_t m = rt.size() / q;
@@ -248,7 +248,7 @@ $codep */
 		size_t                                q  ,
 		const vector< std::set<size_t> >&     rt ,
 		      vector< std::set<size_t> >&     st )
-	{	// This function needed if using optimize or if using RevSparseJac
+	{	// This function needed if using RevSparseJac or optimize
 		// with afun.option( CppAD::atomic_base<double>::set_sparsity_enum )
 		size_t n = st.size();
 		size_t m = rt.size();

@@ -16,6 +16,8 @@ Please visit http://www.coin-or.org/CppAD/ for information on other licenses.
 /*
 $begin optimize$$
 $spell
+	jac
+	bool
 	Taylor
 	var
 	CppAD
@@ -93,19 +95,20 @@ for an optimized tape (even if $code NDEBUG$$ is not defined).
 
 $head Atomic Functions$$
 There are some subtitle issue with optimized $cref atomic$$ functions
-$latex v = g(u)$$.
-$list number$$
+$latex v = g(u)$$:
+
+$subhead rev_sparse_jac$$
 The $cref atomic_rev_sparse_jac$$ function is be used to determine
 which components of $icode u$$ affect the dependent variables of $icode f$$.
-Currently this always uses $code std::set<size_t>$$ for the sparsity patterns.
-(It should use the current setting of
-$cref/atomic_sparsity/atomic_option/atomic_sparsity/$$ for the
-atomic function $latex g(u)$$.)
-$lnext
+The current setting of the 
+$cref/atomic_sparsity/atomic_option/atomic_sparsity/$$ pattern for each
+atomic function is used to determine if the $code bool$$ or 
+$code std::set<size_t>$$ version of $cref atomic_rev_sparse_jac$$ is used.
+
+$subhead nan$$
 If $icode%u%[%i%]%$$ does not affect the value of
 the dependent variables for $icode f$$,
 the value of $icode%u%[%i%]%$$ is set to $cref nan$$.
-$lend
 
 
 $head Checking Optimization$$
@@ -1339,8 +1342,11 @@ void optimize_run(
 
 	// work space used by UserOp.
 	typedef std::set<size_t> size_set;
-	vector<size_set> user_r_set;   // sparsity pattern for the argument x
-	vector<size_set> user_s_set;   // sparisty pattern for the result y
+	vector<size_set> user_r_set;   // set sparsity pattern for result
+	vector<size_set> user_s_set;   // set sparisty pattern for argument
+	vector<bool>     user_r_bool;  // bool sparsity pattern for result 
+	vector<bool>     user_s_bool;  // bool sparisty pattern for argument
+	//
 	size_t user_q     = 0;       // column dimension for sparsity patterns
 	size_t user_index = 0;       // indentifier for this user_atomic operation
 	size_t user_id    = 0;       // user identifier for this call to operator
@@ -1348,7 +1354,9 @@ void optimize_run(
 	size_t user_j     = 0;       // index in argument vector
 	size_t user_m     = 0;       // size of result vector
 	size_t user_n     = 0;       // size of arugment vector
+	//
 	atomic_base<Base>* user_atom = CPPAD_NULL; // current user atomic function 
+	bool               user_set  = true;       // use set sparsity (or bool)
 
 	// next expected operator in a UserOp sequence
 	enum { user_start, user_arg, user_ret, user_end } user_state;
@@ -1722,11 +1730,19 @@ void optimize_run(
 				user_m     = arg[3];
 				user_q     = 1;
 				user_atom  = atomic_base<Base>::class_object(user_index);
+				user_set   = user_atom->sparsity() ==
+					atomic_base<Base>::set_sparsity_enum;
 				//
 				if(user_s_set.size() != user_n )
 					user_s_set.resize(user_n);
 				if(user_r_set.size() != user_m )
 					user_r_set.resize(user_m);
+				//
+				// Note user_q is zero, but us it for clarity of code
+				if(user_s_bool.size() != user_n * user_q )
+					user_s_bool.resize(user_n * user_q);
+				if(user_r_bool.size() != user_m * user_q )
+					user_r_bool.resize(user_m * user_q);
 				//
 				user_j     = user_n;
 				user_i     = user_m;
@@ -1771,9 +1787,16 @@ void optimize_run(
 			CPPAD_ASSERT_UNKNOWN( size_t(arg[0]) <= i_var );
 			CPPAD_ASSERT_UNKNOWN( 0 < arg[0] );
 			--user_j;
-			if( ! user_s_set[user_j].empty() )
-				tape[arg[0]].connect_type = 
-					user_info[user_curr].connect_type;
+			if( user_set )
+			{	if( ! user_s_set[user_j].empty() )
+					tape[arg[0]].connect_type = 
+						user_info[user_curr].connect_type;
+			}
+			else
+			{	if( user_s_bool[user_j] )
+					tape[arg[0]].connect_type = 
+						user_info[user_curr].connect_type;
+			}
 			if( user_j == 0 )
 				user_state = user_start;
 			break;
@@ -1784,6 +1807,7 @@ void optimize_run(
 			CPPAD_ASSERT_UNKNOWN( 0 < user_i && user_i <= user_m );
 			--user_i;
 			user_r_set[user_i].clear();
+			user_r_bool[user_i] = false;
 			switch( connect_type )
 			{	case not_connected:
 				break;
@@ -1793,6 +1817,7 @@ void optimize_run(
 				case csum_connected:
 				user_info[user_curr].connect_type = yes_connected;
 				user_r_set[user_i].insert(0);
+				user_r_bool[user_i] = true;
 				break;
 
 				case cexp_connected:
@@ -1825,22 +1850,41 @@ void optimize_run(
 				CPPAD_ASSERT_UNKNOWN( size_t(arg[0]) < num_par );
 				--user_i;
 				user_r_set[user_i].clear();
+				user_r_bool[user_i] = false;
 			}
 			if( user_i == 0 )
 			{	// call users function for this operation
 				user_atom->set_id(user_id);
 # if NDEBUG
-				user_atom->rev_sparse_jac(user_q, user_r_set, user_s_set);
+				if( user_set )
+				{	user_atom->
+						rev_sparse_jac(user_q, user_r_set, user_s_set);
+				}
+				else
+				{	user_atom->
+						rev_sparse_jac(user_q, user_r_bool, user_s_bool);
+				}
 # else
-				bool flag =
-				user_atom->rev_sparse_jac(user_q, user_r_set, user_s_set);
+				bool flag;
+				if( user_set )
+				{	flag = user_atom->
+						rev_sparse_jac(user_q, user_r_set, user_s_set);
+				}
+				else
+				{	flag = user_atom->
+						rev_sparse_jac(user_q, user_r_bool, user_s_bool);
+				}
 				if( ! flag )
 				{	std::string s =
 						"Optimizing an ADFun object"
 						" that contains the atomic function\n\t";
 					s += user_atom->afun_name();
-					s += "\nand std::set version of rev_sparse_jac"
-					     " returned false";
+					//
+					if( user_set )
+						s += "\nand std::set ";
+					else	s += "\nand bool ";
+					//
+					s += " version of rev_sparse_jac returned false";
 					CPPAD_ASSERT_KNOWN(false, s.c_str() );
 				}
 # endif

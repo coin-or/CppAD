@@ -197,7 +197,6 @@ public:
 		// (see optimize documentation for atomic functions)
 		f_.check_for_nan(false);
 		// now optimize (we expect to use this function many times).
-		// This is not yet working on all tests, need to fix
 		f_.optimize();
 	}
 	/*!
@@ -395,8 +394,11 @@ public:
 		bool ok  = true;
 
 		// compute rt
-		bool transpose = true;
-		st = f_.RevSparseJac(q, rt, transpose);
+		bool transpose  = true;
+		bool nz_compare = true;
+		// 2DO: remove need for nz_compare all the time. It is only really
+		// necessary when optimizer calls this member function.
+		st = f_.RevSparseJac(q, rt, transpose, nz_compare);
 
 		return ok; 
 	}

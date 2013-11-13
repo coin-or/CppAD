@@ -16,6 +16,9 @@ Please visit http://www.coin-or.org/CppAD/ for information on other licenses.
 
 
 namespace {
+	// note this enum type is not part of the API (but its values are)
+	CppAD::atomic_base<double>::option_enum atomic_sparsity_option;
+	//
 	// ----------------------------------------------------------------
 	// Test nested conditional expressions.
 	int nested_cond_exp(void)
@@ -83,7 +86,7 @@ namespace {
 		      CppAD::vector< CppAD::AD<double> >& ay )
 	{	ay[0] = CondExpGt(ax[0], ax[1], ax[2], ax[3]); }
 	
-	bool cond_exp_sparsity(void)
+	bool atomic_cond_exp_sparsity(void)
 	{	bool ok = true;
 		using CppAD::AD;
 		using CppAD::vector;
@@ -107,8 +110,10 @@ namespace {
 	
 		// create function object f : ax -> ay
 		CppAD::ADFun<double> f(ax, ay);
+
 	
 		// now optimize the operation sequence
+		j_check.option( atomic_sparsity_option );
 		f.optimize();
 	
 		// check result where true case is used; i.e., au[0] > au[1]
@@ -173,6 +178,8 @@ namespace {
 		ok  &= y[0] == x[0] + x[1];
 
 		// before optimize
+		k_check.option( atomic_sparsity_option );
+		h_check.option( atomic_sparsity_option );
 		ok  &= f.number_skip() == 0;
 
 		// now optimize the operation sequence
@@ -236,6 +243,7 @@ namespace {
 		size_t n_before = f.size_var();
 		
 		// now optimize the operation sequence
+		g_check.option( atomic_sparsity_option );
 		f.optimize();
 
 		// number of variables after optimization 
@@ -279,6 +287,7 @@ namespace {
 		size_t n_before = f.size_var();
  
 		// now optimize f so that the calculation of au[1] is removed
+		g_check.option( atomic_sparsity_option );
 		f.optimize();
 
 		// check difference in number of variables
@@ -1425,16 +1434,21 @@ namespace {
 
 bool optimize(void)
 {	bool ok = true;
+	atomic_sparsity_option = CppAD::atomic_base<double>::bool_sparsity_enum;
+	for(size_t i = 0; i < 2; i++)
+	{	// check conditional expression sparsity pattern 
+		// (used to optimize calls to atomic functions). 
+		ok     &= atomic_cond_exp_sparsity();
+		// check optimizing out entire atomic function
+		ok     &= atomic_cond_exp();
+		// check optimizing out atomic arguments
+		ok     &= atomic_no_used();
+		ok     &= atomic_arguments();
+		atomic_sparsity_option = 
+			CppAD::atomic_base<double>::set_sparsity_enum;
+	}
 	// check nested conditional expressions
 	ok     &= nested_cond_exp();
-	// check conditional expression sparsity pattern 
-	// (used to optimize calls to atomic functions). 
-	ok     &= cond_exp_sparsity();
-	// check optimizing out entire atomic function
-	ok     &= atomic_cond_exp();
-	// check optimizing out atomic arguments
-	ok     &= atomic_no_used();
-	ok     &= atomic_arguments();
 	// check reverse dependency analysis optimization
 	ok     &= depend_one();
 	ok     &= depend_two();

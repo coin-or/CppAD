@@ -252,7 +252,7 @@ the type for $icode atomic_sparsity$$ is one of the two choices below
 
 $subhead bool_sparsity_enum$$
 $index bool_sparsity_enum$$
-If $icode option_value$$ is $code atomic_base::bool_sparsity_enum$$, 
+If $icode option_value$$ is $codei%atomic_base<%Base%>::bool_sparsity_enum%$$, 
 then the type used by $icode afun$$ for
 $cref/sparsity patterns/glossary/Sparsity Pattern/$$,
 (after the option is set) will be
@@ -265,7 +265,7 @@ $icode%r%.size() == %p% * %q%$$.
 
 $subhead set_sparsity_enum$$
 $index set_sparsity_enum$$
-If $icode option_value$$ is $code atomic_base::set_sparsity_enum$$, 
+If $icode option_value$$ is $icode%atomic_base<%Base%>::set_sparsity_enum%$$, 
 then the type used by $icode afun$$ for
 $cref/sparsity patterns/glossary/Sparsity Pattern/$$,
 (after the option is set) will be
@@ -273,7 +273,7 @@ $codei%
 	typedef CppAD::vector< std::set<size_t> > %atomic_sparsity%
 %$$
 If $icode r$$ is a sparsity pattern 
-for a matrix $code R \in B^{p \times q}$$:
+for a matrix $latex R \in B^{p \times q}$$:
 $icode%r%.size() == %p%$$, and for $latex i = 0 , \ldots , p-1$$,
 the elements of $icode%r%[%i%]%$$ are between zero and $latex q-1$$ inclusive. 
 

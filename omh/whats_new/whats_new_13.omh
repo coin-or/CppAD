@@ -60,12 +60,21 @@ This section contains a list of the changes to CppAD during 2013
 The purpose of this section is to
 assist you in learning about changes between various versions of CppAD.
 
+$head 11-13$$
+It used to be that one had to define the $code std::set$$ version of
+$cref atomic_rev_sparse_jac$$ for each atomic function that was
+part of an $cref ADFun$$ object that was $cref/optimized/optimize/$$.
+Now the current 
+$cref/atomic_sparsity/atomic_option/atomic_sparsity/$$ setting is used
+to determine if the $code bool$$ or $code std::set$$ version of
+$code rev_sparse_jac$$ is used by the optimization process.
+
 $head 11-12$$
-Add error detection and reporting (when $code NDEBUG$$ is not defined)
+Error detection and reporting (when $code NDEBUG$$ is not defined)
 has been added for the following case:
 Using $cref optimize$$
 with $cref atomic_base$$ functions that have not defined
-$cref/rev_sparse_jac/atomic_rev_sparse_jac/$$.
+$cref/rev_sparse_jac/optimize/Atomic Functions/rev_sparse_jac/$$.
 
 $head 10-29$$
 The $cref/optimization/CondExp/Optimize/$$ 
