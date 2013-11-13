@@ -1339,15 +1339,17 @@ void optimize_run(
 
 	// work space used by UserOp.
 	typedef std::set<size_t> size_set;
-	size_t user_q     = 0;       // maximum set element plus one
-	vector< size_set > user_r;   // sparsity pattern for the argument x
-	vector< size_set > user_s;   // sparisty pattern for the result y
+	vector<size_set> user_r_set;   // sparsity pattern for the argument x
+	vector<size_set> user_s_set;   // sparisty pattern for the result y
+	size_t user_q     = 0;       // column dimension for sparsity patterns
 	size_t user_index = 0;       // indentifier for this user_atomic operation
 	size_t user_id    = 0;       // user identifier for this call to operator
 	size_t user_i     = 0;       // index in result vector
 	size_t user_j     = 0;       // index in argument vector
 	size_t user_m     = 0;       // size of result vector
 	size_t user_n     = 0;       // size of arugment vector
+	atomic_base<Base>* user_atom = CPPAD_NULL; // current user atomic function 
+
 	// next expected operator in a UserOp sequence
 	enum { user_start, user_arg, user_ret, user_end } user_state;
 
@@ -1719,10 +1721,13 @@ void optimize_run(
 				user_n     = arg[2];
 				user_m     = arg[3];
 				user_q     = 1;
-				if(user_s.size() != user_n )
-					user_s.resize(user_n);
-				if(user_r.size() != user_m )
-					user_r.resize(user_m);
+				user_atom  = atomic_base<Base>::class_object(user_index);
+				//
+				if(user_s_set.size() != user_n )
+					user_s_set.resize(user_n);
+				if(user_r_set.size() != user_m )
+					user_r_set.resize(user_m);
+				//
 				user_j     = user_n;
 				user_i     = user_m;
 				user_state = user_ret;
@@ -1766,41 +1771,11 @@ void optimize_run(
 			CPPAD_ASSERT_UNKNOWN( size_t(arg[0]) <= i_var );
 			CPPAD_ASSERT_UNKNOWN( 0 < arg[0] );
 			--user_j;
-			if( ! user_s[user_j].empty() )
+			if( ! user_s_set[user_j].empty() )
 				tape[arg[0]].connect_type = 
 					user_info[user_curr].connect_type;
 			if( user_j == 0 )
 				user_state = user_start;
-			break;
-
-			case UsrrpOp:
-			// parameter result in an atomic operation sequence
-			CPPAD_ASSERT_UNKNOWN( user_state == user_ret );
-			CPPAD_ASSERT_UNKNOWN( 0 < user_i && user_i <= user_m );
-			CPPAD_ASSERT_UNKNOWN( NumArg(op) == 1 );
-			CPPAD_ASSERT_UNKNOWN( size_t(arg[0]) < num_par );
-			--user_i;
-			user_r[user_i].clear();
-			if( user_i == 0 )
-			{	// call users function for this operation
-				atomic_base<Base>* atom = 
-					atomic_base<Base>::class_object(user_index);
-				atom->set_id(user_id);
-# if NDEBUG
-				atom->rev_sparse_jac(user_q, user_r, user_s);
-# else
-				if( ! atom->rev_sparse_jac( user_q, user_r, user_s ) )
-				{	std::string s =
-						"Optimizing an ADFun object"
-						" that contains the atomic function\n\t";
-					s += atom->afun_name();
-					s += "\nand std::set version of rev_sparse_jac"
-					     " returned false";
-					CPPAD_ASSERT_KNOWN(false, s.c_str() );
-				}
-# endif
-				user_state = user_arg;
-			}
 			break;
 
 			case UsrrvOp:
@@ -1808,7 +1783,7 @@ void optimize_run(
 			CPPAD_ASSERT_UNKNOWN( user_state == user_ret );
 			CPPAD_ASSERT_UNKNOWN( 0 < user_i && user_i <= user_m );
 			--user_i;
-			user_r[user_i].clear();
+			user_r_set[user_i].clear();
 			switch( connect_type )
 			{	case not_connected:
 				break;
@@ -1817,7 +1792,7 @@ void optimize_run(
 				case sum_connected:
 				case csum_connected:
 				user_info[user_curr].connect_type = yes_connected;
-				user_r[user_i].insert(0);
+				user_r_set[user_i].insert(0);
 				break;
 
 				case cexp_connected:
@@ -1838,19 +1813,32 @@ void optimize_run(
 				default:
 				CPPAD_ASSERT_UNKNOWN(false);
 			}
+			// drop into op = UsrrpOp code to handle case where user_i == 0
+			// for both UsrrvOp and UsrrpOp together.
+
+			case UsrrpOp:
+			if( op == UsrrpOp )
+			{	// parameter result in an atomic operation sequence
+				CPPAD_ASSERT_UNKNOWN( user_state == user_ret );
+				CPPAD_ASSERT_UNKNOWN( 0 < user_i && user_i <= user_m );
+				CPPAD_ASSERT_UNKNOWN( NumArg(op) == 1 );
+				CPPAD_ASSERT_UNKNOWN( size_t(arg[0]) < num_par );
+				--user_i;
+				user_r_set[user_i].clear();
+			}
 			if( user_i == 0 )
 			{	// call users function for this operation
-				atomic_base<Base>* atom = 
-					atomic_base<Base>::class_object(user_index);
-				atom->set_id(user_id);
+				user_atom->set_id(user_id);
 # if NDEBUG
-				atom->rev_sparse_jac(user_q, user_r, user_s);
+				user_atom->rev_sparse_jac(user_q, user_r_set, user_s_set);
 # else
-				if( ! atom->rev_sparse_jac( user_q, user_r, user_s ) )
+				bool flag =
+				user_atom->rev_sparse_jac(user_q, user_r_set, user_s_set);
+				if( ! flag )
 				{	std::string s =
 						"Optimizing an ADFun object"
 						" that contains the atomic function\n\t";
-					s += atom->afun_name();
+					s += user_atom->afun_name();
 					s += "\nand std::set version of rev_sparse_jac"
 					     " returned false";
 					CPPAD_ASSERT_KNOWN(false, s.c_str() );
