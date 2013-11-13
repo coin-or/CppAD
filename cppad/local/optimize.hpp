@@ -1738,7 +1738,7 @@ void optimize_run(
 				if(user_r_set.size() != user_m )
 					user_r_set.resize(user_m);
 				//
-				// Note user_q is zero, but us it for clarity of code
+				// Note user_q is 1, but use it for clarity of code
 				if(user_s_bool.size() != user_n * user_q )
 					user_s_bool.resize(user_n * user_q);
 				if(user_r_bool.size() != user_m * user_q )
