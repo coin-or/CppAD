@@ -23,6 +23,7 @@ Please visit http://www.coin-or.org/CppAD/ for information on other licenses.
 extern bool checkpoint(void);
 extern bool get_started(void);
 extern bool mat_mul(void);
+extern bool norm_sq(void);
 extern bool reciprocal(void);
 extern bool tangent(void);
 extern bool old_mat_mul(void);
@@ -60,6 +61,7 @@ int main(void)
 	ok &= Run( checkpoint,          "checkpoint"     );
 	ok &= Run( get_started,         "get_started"    );
 	ok &= Run( mat_mul,             "mat_mul"        );
+	ok &= Run( norm_sq,             "norm_sq"        );
 	ok &= Run( reciprocal,          "reciprocal"     );
 	ok &= Run( tangent,             "tangent"        );
 	ok &= Run( old_mat_mul,         "old_mat_mul"    );

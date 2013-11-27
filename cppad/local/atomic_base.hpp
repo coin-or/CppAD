@@ -82,6 +82,7 @@ public:
 /*
 $begin atomic_ctor$$
 $spell
+	sq
 	std
 	afun
 	arg
@@ -159,6 +160,7 @@ $head Examples$$
 $subhead Define Constructor$$
 The following are links to user atomic function constructor definitions:
 $cref%get_started.cpp%atomic_get_started.cpp%Constructor%$$,
+$cref%norm_sq.cpp%atomic_norm_sq.cpp%Constructor%$$,
 $cref%reciprocal.cpp%atomic_reciprocal.cpp%Constructor%$$,
 $cref%tangent.cpp%atomic_tangent.cpp%Constructor%$$,
 $cref%matrix_mul.hpp%atomic_matrix_mul.hpp%Constructor%$$.
@@ -166,6 +168,7 @@ $cref%matrix_mul.hpp%atomic_matrix_mul.hpp%Constructor%$$.
 $subhead Use Constructor$$
 The following are links to user atomic function constructor uses:
 $cref%get_started.cpp%atomic_get_started.cpp%Use Atomic Function%Constructor%$$,
+$cref%norm_sq.cpp%atomic_norm_sq.cpp%Use Atomic Function%Constructor%$$,
 $cref%reciprocal.cpp%atomic_reciprocal.cpp%Use Atomic Function%Constructor%$$,
 $cref%tangent.cpp%atomic_tangent.cpp%Use Atomic Function%Constructor%$$,
 $cref%mat_mul.cpp%atomic_mat_mul.cpp%Use Atomic Function%Constructor%$$.
@@ -222,6 +225,7 @@ static const std::string& class_name(size_t index)
 /*
 $begin atomic_option$$
 $spell
+	sq
 	enum
 	afun
 	bool
@@ -299,6 +303,7 @@ void option(enum option_enum option_value)
 $begin atomic_afun$$
 
 $spell
+	sq
 	mul
 	afun
 	const
@@ -354,6 +359,7 @@ $head Examples$$
 The following files contain example uses of 
 the AD version of atomic functions during recording:
 $cref%get_started.cpp%atomic_get_started.cpp%Use Atomic Function%Recording%$$,
+$cref%norm_sq.cpp%atomic_norm_sq.cpp%Use Atomic Function%Recording%$$,
 $cref%reciprocal.cpp%atomic_reciprocal.cpp%Use Atomic Function%Recording%$$,
 $cref%tangent.cpp%atomic_tangent.cpp%Use Atomic Function%Recording%$$,
 $cref%matrix_mul.cpp%atomic_mat_mul.cpp%Use Atomic Function%Recording%$$.
@@ -524,6 +530,7 @@ void operator()(
 -----------------------------------------------------------------------------
 $begin atomic_forward$$
 $spell
+	sq
 	mul.hpp
 	hes
 	afun
@@ -706,6 +713,7 @@ $head Examples$$
 $subhead Define forward$$
 The following files contain example atomic $code forward$$ functions:
 $cref%get_started.cpp%atomic_get_started.cpp%forward%$$,
+$cref%norm_sq.cpp%atomic_norm_sq.cpp%forward%$$,
 $cref%reciprocal.cpp%atomic_reciprocal.cpp%forward%$$,
 $cref%tangent.cpp%atomic_tangent.cpp%forward%$$,
 $cref%matrix_mul.hpp%atomic_matrix_mul.hpp%forward%$$.
@@ -713,6 +721,7 @@ $cref%matrix_mul.hpp%atomic_matrix_mul.hpp%forward%$$.
 $subhead Use forward$$
 The following are links to user atomic function forward uses:
 $cref%get_started.cpp%atomic_get_started.cpp%Use Atomic Function%forward%$$,
+$cref%norm_sq.cpp%atomic_norm_sq.cpp%Use Atomic Function%forward%$$,
 $cref%reciprocal.cpp%atomic_reciprocal.cpp%Use Atomic Function%forward%$$,
 $cref%tangent.cpp%atomic_tangent.cpp%Use Atomic Function%forward%$$,
 $cref%mat_mul.cpp%atomic_mat_mul.cpp%Use Atomic Function%forward%$$.
@@ -756,6 +765,7 @@ virtual bool forward(
 -----------------------------------------------------------------------------
 $begin atomic_reverse$$
 $spell
+	sq
 	mul.hpp
 	afun
 	ty
@@ -924,12 +934,14 @@ $head Examples$$
 
 $subhead Define reverse$$
 The following files contain example atomic $code reverse$$ functions:
+$cref%norm_sq.cpp%atomic_norm_sq.cpp%reverse%$$,
 $cref%reciprocal.cpp%atomic_reciprocal.cpp%reverse%$$,
 $cref%tangent.cpp%atomic_tangent.cpp%reverse%$$,
 $cref%matrix_mul.hpp%atomic_matrix_mul.hpp%reverse%$$.
 
 $subhead Use reverse$$
 The following are links to user atomic function constructor uses:
+$cref%norm_sq.cpp%atomic_norm_sq.cpp%Use Atomic Function%reverse%$$,
 $cref%reciprocal.cpp%atomic_reciprocal.cpp%Use Atomic Function%reverse%$$,
 $cref%tangent.cpp%atomic_tangent.cpp%Use Atomic Function%reverse%$$,
 $cref%mat_mul.cpp%atomic_mat_mul.cpp%Use Atomic Function%reverse%$$.
@@ -968,6 +980,7 @@ virtual bool reverse(
 -------------------------------------- ---------------------------------------
 $begin atomic_for_sparse_jac$$
 $spell
+	sq
 	mul.hpp
 	afun
 	Jacobian
@@ -1043,12 +1056,15 @@ $head Examples$$
 
 $subhead Define for_sparse_jac$$
 The following files contain example atomic $code for_sparse_jac$$ functions:
+$cref%norm_sq.cpp%atomic_norm_sq.cpp%for_sparse_jac%$$,
 $cref%reciprocal.cpp%atomic_reciprocal.cpp%for_sparse_jac%$$,
 $cref%tangent.cpp%atomic_tangent.cpp%for_sparse_jac%$$,
 $cref%matrix_mul.hpp%atomic_matrix_mul.hpp%for_sparse_jac%$$.
 
 $subhead Use for_sparse_jac$$
 The following are links to user atomic function constructor uses:
+$cref%norm_sq.cpp%
+	atomic_norm_sq.cpp%Use Atomic Function%for_sparse_jac%$$,
 $cref%reciprocal.cpp%
 	atomic_reciprocal.cpp%Use Atomic Function%for_sparse_jac%$$,
 $cref%tangent.cpp%atomic_tangent.cpp%Use Atomic Function%for_sparse_jac%$$,
@@ -1083,6 +1099,7 @@ virtual bool for_sparse_jac(
 -------------------------------------- ---------------------------------------
 $begin atomic_rev_sparse_jac$$
 $spell
+	sq
 	mul.hpp
 	rt
 	afun
@@ -1160,12 +1177,15 @@ $head Examples$$
 
 $subhead Define rev_sparse_jac$$
 The following files contain example atomic $code rev_sparse_jac$$ functions:
+$cref%norm_sq.cpp%atomic_norm_sq.cpp%rev_sparse_jac%$$,
 $cref%reciprocal.cpp%atomic_reciprocal.cpp%rev_sparse_jac%$$,
 $cref%tangent.cpp%atomic_tangent.cpp%rev_sparse_jac%$$,
 $cref%matrix_mul.hpp%atomic_matrix_mul.hpp%rev_sparse_jac%$$.
 
 $subhead Use rev_sparse_jac$$
 The following are links to user atomic function constructor uses:
+$cref%norm_sq.cpp%
+	atomic_norm_sq.cpp%Use Atomic Function%rev_sparse_jac%$$,
 $cref%reciprocal.cpp%
 	atomic_reciprocal.cpp%Use Atomic Function%rev_sparse_jac%$$,
 $cref%tangent.cpp%atomic_tangent.cpp%Use Atomic Function%rev_sparse_jac%$$,
@@ -1200,6 +1220,7 @@ virtual bool rev_sparse_jac(
 -------------------------------------- ---------------------------------------
 $begin atomic_rev_sparse_hes$$
 $spell
+	sq
 	mul.hpp
 	vx
 	afun
@@ -1353,12 +1374,15 @@ $head Examples$$
 
 $subhead Define rev_sparse_hes$$
 The following files contain example atomic $code rev_sparse_hes$$ functions:
+$cref%norm_sq.cpp%atomic_norm_sq.cpp%rev_sparse_hes%$$,
 $cref%reciprocal.cpp%atomic_reciprocal.cpp%rev_sparse_hes%$$,
 $cref%tangent.cpp%atomic_tangent.cpp%rev_sparse_hes%$$,
 $cref%matrix_mul.hpp%atomic_matrix_mul.hpp%rev_sparse_hes%$$.
 
 $subhead Use rev_sparse_hes$$
 The following are links to user atomic function constructor uses:
+$cref%norm_sq.cpp%
+	atomic_norm_sq.cpp%Use Atomic Function%rev_sparse_hes%$$,
 $cref%reciprocal.cpp%
 	atomic_reciprocal.cpp%Use Atomic Function%rev_sparse_hes%$$,
 $cref%tangent.cpp%atomic_tangent.cpp%Use Atomic Function%rev_sparse_hes%$$,
@@ -1413,6 +1437,7 @@ virtual bool rev_sparse_hes(
 ------------------------------------------------------------------------------
 $begin atomic_base_clear$$
 $spell
+	sq
 	alloc
 $$
 

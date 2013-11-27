@@ -21,6 +21,7 @@ ADD_EXECUTABLE(example_atomic EXCLUDE_FROM_ALL
 	checkpoint.cpp
 	get_started.cpp
 	mat_mul.cpp
+	norm_sq.cpp
 	reciprocal.cpp
 	tangent.cpp
 	old_reciprocal.cpp

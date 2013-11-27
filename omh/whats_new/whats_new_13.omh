@@ -61,8 +61,13 @@ The purpose of this section is to
 assist you in learning about changes between various versions of CppAD.
 
 $head 11-27$$
+$list number$$
 Fix bug when using $cref optimize$$ with an $cref ADFun$$ object containing 
 the $cref sign$$ function.
+$lnext
+Add $cref atomic_norm_sq.cpp$$, an atomic function example
+with domain dimension two and range dimension one.
+$lend
 
 $head 11-13$$
 It used to be that one had to define the $code std::set$$ version of

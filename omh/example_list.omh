@@ -97,6 +97,7 @@ $rref atan.cpp$$
 $rref atomic_get_started.cpp$$
 $rref atomic_matrix_mul.hpp$$
 $rref atomic_mat_mul.cpp$$
+$cref atomic_norm_sq.cpp$$
 $cref atomic_reciprocal.cpp$$
 $cref atomic_tangent.cpp$$
 $rref base_adolc.hpp$$
