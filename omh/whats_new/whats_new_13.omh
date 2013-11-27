@@ -60,6 +60,10 @@ This section contains a list of the changes to CppAD during 2013
 The purpose of this section is to
 assist you in learning about changes between various versions of CppAD.
 
+$head 11-27$$
+Fix bug when using $cref optimize$$ with an $cref ADFun$$ object containing 
+the $cref sign$$ function.
+
 $head 11-13$$
 It used to be that one had to define the $code std::set$$ version of
 $cref atomic_rev_sparse_jac$$ for each atomic function that was

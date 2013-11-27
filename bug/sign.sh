@@ -29,31 +29,42 @@ cat << EOF > $name.cpp
 #include <cppad/cppad.hpp>
 
 int main()  {
-	using std::cout;
 	using CppAD::vector;
 	using CppAD::AD;
 
+	// tape the sign function
 	vector< AD<double> > ax(1), ay(1);
 	ax[0] = 3.;
-
 	CppAD::Independent(ax);
-
 	ay[0] = CppAD::sign(ax[0]); 
-
 	CppAD::ADFun<double> tape;
 	tape.Dependent(ax,ay);
 
+	// optimize the tape
 	tape.optimize();
 
-	return(0);
+	// execute sign function
+	vector<double> x(1), y(1);
+	x[0] = -3;
+	y    = tape.Forward(0, x);
 
+	// check result
+	if( y[0] != -1.0 )
+		return 1;
+	return 0;
 }
 EOF
 echo "g++ -std=c++11 -g -I../.. -I$HOME/prefix/eigen/include $name.cpp -o $name"
 g++ -std=c++11 -g -I../.. -I$HOME/prefix/eigen/include $name.cpp -o $name
 #
-echo "./$name"
-./$name
+echo "build/$name"
+if ! ./$name
+then
+	echo "./$name.sh: Error"
+	exit 1
+fi
 #
 echo "rm $name $name.cpp"
 rm $name $name.cpp
+#
+echo "./$name.sh: OK"
