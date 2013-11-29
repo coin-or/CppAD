@@ -16,7 +16,7 @@ $spell
 	sq
 $$
 
-$section Euclidean Norms: Example and Test$$
+$section Euclidean Norm Squared: Example and Test$$
 $index norm_sq, atomic operation$$
 $index atomic, norm_sq$$
 $index Euclidean, norm example$$
@@ -28,7 +28,7 @@ to define the operation
 $latex f : \B{R}^n \rightarrow \B{R}^m$$ where
 $latex n = 2$$, $latex m = 1$$, where
 $latex \[
-	f(x) =  \sqrt{ x_0^2 + x_1^2 } 
+	f(x) =  x_0^2 + x_1^2
 \] $$
 
 $nospell
@@ -86,19 +86,18 @@ $codep */
 		// return flag
 		bool ok = p <= 1;
 
-		// check for defining variable information
-		// This case must always be implemented
+		// Variable information must always be implemented.
+		// y_0 is a variable if and only if x_0 or x_1 is a variable.
 		if( vx.size() > 0 )
 			vy[0] = vx[0] | vx[1];
 
-		// Order zero forward mode.
-		// This case must always be implemented
+		// Order zero forward mode must always be implemented.
 		// y^0 = f( x^0 ) 
-		double x_00 = tx[ 0*(p+1) + 0];
-		double x_10 = tx[ 1*(p+1) + 0];
-		double f = x_00 * x_00 + x_10 * x_10;
+		double x_00 = tx[ 0*(p+1) + 0];        // x_0^0
+		double x_10 = tx[ 1*(p+1) + 0];        // x_10
+		double f = x_00 * x_00 + x_10 * x_10;  // f( x^0 )
 		if( q <= 0 )
-			ty[0] = f;
+			ty[0] = f;   // y_0^0
 		if( p <= 0 )
 			return ok;
 		assert( vx.size() == 0 );
@@ -106,16 +105,16 @@ $codep */
 		// Order one forward mode.
 		// This case needed if first order forward mode is used.
 		// y^1 = f'( x^0 ) x^1
-		double x_01 = tx[ 0*(p+1) + 1];
-		double x_11 = tx[ 1*(p+1) + 1];
-		double fp_0 = 2.0 * x_00;
-		double fp_1 = 2.0 * x_10;
+		double x_01 = tx[ 0*(p+1) + 1];   // x_0^1
+		double x_11 = tx[ 1*(p+1) + 1];   // x_1^1
+		double fp_0 = 2.0 * x_00;         // partial f w.r.t x_0^0
+		double fp_1 = 2.0 * x_10;         // partial f w.r.t x_1^0
 		if( q <= 1 )
-			ty[1] = fp_0 * x_01 + fp_1 * x_11; 
+			ty[1] = fp_0 * x_01 + fp_1 * x_11; // f'( x^0 ) * x^1
 		if( p <= 1 )
 			return ok;
 
-		// Assume we are not using forward mode with order > 2
+		// Assume we are not using forward mode with order > 1
 		assert( ! ok );
 		return ok;
 	}
@@ -142,15 +141,16 @@ $codep */
 		switch(p)
 		{	case 0:
 			// This case needed if first order reverse mode is used
-			// reverse: F^0 ( tx ) = y^0 = f( x^0 )
-			fp_0  =  2.0 * tx[0];
-			fp_1  =  2.0 * tx[1];
-			px[0] = py[0] * fp_0;;
-			px[1] = py[0] * fp_1;;
+			// F ( {x} ) = f( x^0 ) = y^0
+			fp_0  =  2.0 * tx[0];  // partial F w.r.t. x_0^0
+			fp_1  =  2.0 * tx[1];  // partial F w.r.t. x_0^1
+			px[0] = py[0] * fp_0;; // partial G w.r.t. x_0^0
+			px[1] = py[0] * fp_1;; // partial G w.r.t. x_0^1
 			assert(ok);
 			break;
 
 			default:
+			// Assume we are not using reverse with order > 1 (p > 0)
 			assert(!ok);
 		}
 		return ok;
@@ -171,6 +171,7 @@ $codep */
 		assert( m == 1 );
 
 		// sparsity for S(x) = f'(x) * R 
+		// where f'(x) = 2 * [ x_0, x_1 ]
 		for(size_t j = 0; j < q; j++)
 		{	s[j] = false;
 			for(size_t i = 0; i < n; i++)
@@ -191,6 +192,7 @@ $codep */
 		assert( m == 1 );
 
 		// sparsity for S(x) = f'(x) * R 
+		// where f'(x) = 2 * [ x_0, x_1 ]
 		my_union(s[0], r[0], r[1]);
 
 		return true; 
@@ -211,6 +213,7 @@ $codep */
 		assert( m == 1 );
 
 		// sparsity for S(x)^T = f'(x)^T * R^T 
+		// where f'(x)^T = 2 * [ x_0, x_1]^T
 		for(size_t j = 0; j < q; j++)
 			for(size_t i = 0; i < n; i++)
 				st[i * q + j] = rt[j];
@@ -230,6 +233,7 @@ $codep */
 		assert( m == 1 );
 
 		// sparsity for S(x)^T = f'(x)^T * R^T 
+		// where f'(x)^T = 2 * [ x_0, x_1]^T
 		st[0] = rt[0];
 		st[1] = rt[0];
 
@@ -258,7 +262,7 @@ $codep */
 		assert( m == 1 );
 
 		// There are no cross term second derivatives for this case,
-		// so it is not necessary to vx.
+		// so it is not necessary to use vx.
 
 		// sparsity for T(x) = S(x) * f'(x) 
 		t[0] = s[0];
@@ -309,6 +313,7 @@ $codep */
 		// so it is not necessary to vx.
 
 		// sparsity for T(x) = S(x) * f'(x) 
+		// where f'(x) = 2 * [ x_0, x_1 ]
 		t[0] = s[0];
 		t[1] = s[0];
 	
@@ -316,12 +321,15 @@ $codep */
 		// U(x) = g''(y) * f'(x) * R
 		// S(x) = g'(y)
 		
-		// back propagate the sparsity for U, note f'(x) may be non-zero
+		// Compute sparsity for f'(x)^T * U(x)
+		// where f'(x)^T = 2 * [ x_0, x_1 ]^T
 		v[0] = u[0];
 		v[1] = u[0];
 
-		// include forward Jacobian sparsity in Hessian sparsity
-		// (note sparsty for f''(x) * R same as for R)
+		// include sparsity for g'(y) * f''(x) * R
+		// where f''(x) = [ 2 , 0 ]
+		//                [ 0 , 2 ]
+		// note there are no cross terms
 		if( s[0] )
 		{	for(size_t i = 0; i < n; i++)
 				my_union(v[i], v[i], r[i] );
