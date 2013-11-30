@@ -28,7 +28,7 @@ atomic_SOURCES   = \
 	checkpoint.cpp \
 	get_started.cpp \
 	mat_mul.cpp \
-	nrom_sq.cpp \
+	norm_sq.cpp \
 	reciprocal.cpp \
 	tangent.cpp \
 	old_mat_mul.hpp \
