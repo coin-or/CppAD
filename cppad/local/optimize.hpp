@@ -169,7 +169,7 @@ enum enum_connect_type {
 
 	/// This node is only connected in the case where the comparision is 
 	/// true for the conditional expression with index \c connect_index.
-	cexp_connected  ,
+	cexp_connected
 
 };
 
