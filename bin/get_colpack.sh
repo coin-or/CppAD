@@ -104,6 +104,8 @@ system_name=`uname | sed -e 's|\(......\).*|\1|'`
 if [ "$system_name" == 'CYGWIN' ]
 then
 	lib_type='--enable-static --disable-shared'
+	echo_eval ls -l ./configure
+	echo_eval chmod +x ./configure
 else
 	lib_type='--enable-static --enable-shared'
 fi
