@@ -115,10 +115,16 @@ then they do not need to be recomputed and the results can just be returned.
 
 $head Iterator Interface$$
 $index iterator$$
-If the CppAD API had iterator interfaces,
-in addition to simple vector interfaces,
-it would not be necessary to (sometimes) copy information to simple vectors
-with the correct dimension.
+All of the CppAD simple vector interfaces should also have an
+iterator version for the following reasons:
+$list number$$
+It would not be necessary to copy information to simple vectors
+when it was originally stored in a different type of container.
+$lnext
+It would not be necessary to reallocate memory for a result that is
+repeatedly calculated
+(because an iterator for the result container would be passed in).
+$lend
 
 $head Library$$
 $index compile, speed AD<double>$$
