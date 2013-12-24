@@ -108,7 +108,7 @@ namespace Eigen {
 
 		// relaxed version of machine epsilon for comparison of different
 		// operations that should result in the same value
-		static CppAD::AD<Base> dummy_epsilon(void)
+		static CppAD::AD<Base> dummy_precision(void)
 		{	return 100. * 
 				CppAD::numeric_limits< CppAD::AD<Base> >::epsilon(); 
 		}
@@ -135,7 +135,7 @@ namespace CppAD {
 		template <class Base> const AD<Base>& real(const AD<Base>& x)
 		{	return x; }
 
-		// functions that return values
+		// functions that return values (note abs is defined by cppad.hpp)
 		template <class Base> AD<Base> imag(const AD<Base>& x)
 		{	return CppAD::AD<Base>(0.); }
 		template <class Base> AD<Base> abs2(const AD<Base>& x)

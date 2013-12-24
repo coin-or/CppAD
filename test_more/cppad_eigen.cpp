@@ -34,7 +34,7 @@ bool cppad_eigen(void)
 
 	ok &= traits::epsilon() == 
 		std::numeric_limits<double>::epsilon();
-	ok &= traits::dummy_epsilon() == 
+	ok &= traits::dummy_precision() == 
 		100.* std::numeric_limits<double>::epsilon();
 	ok &= traits::highest() == 
 		std::numeric_limits<double>::max();

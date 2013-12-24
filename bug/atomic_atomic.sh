@@ -93,13 +93,12 @@ int main()  {
 	CppAD::ADFun<double> f;
 	f.Dependent(ax,ay);
 
-	y_before = f.Forward(0,x);
+	std::cout << "-----------------------------------------------------\n";
+	std::cout << "Expect an erorr message about missing rev_sparse_jac:\n";
+	std::cout << "-----------------------------------------------------\n";
 	f.optimize();
 	y_after = f.Forward(0,x);
 
-	if( fabs( y_before[0] - y_after[0] ) <= 1e-5 )
-		std::cout << "opt_atomic: OK" << std::endl;
-	else	std::cout << "opt_atomic: Error" << std::endl;
 	return(0);
 }
 EOF
