@@ -13,6 +13,7 @@ Please visit http://www.coin-or.org/CppAD/ for information on other licenses.
 $begin whats_new_13$$
 $dollar @$$
 $spell
+	Num
 	autotools
 	nz
 	Jacobian
@@ -59,6 +60,14 @@ This section contains a list of the changes to CppAD during 2013
 (in reverse order by date).
 The purpose of this section is to
 assist you in learning about changes between various versions of CppAD.
+
+$head 12-24$$
+The interface to $cref/eigen/cppad_eigen.hpp/$$ defined a function
+$codei%
+	NumTraits< CppAD::AD<%Base%> >::dummy_epsilon()
+%$$
+that should have been named $code dummy_precision()$$.
+This has been fixed.
 
 $head 11-27$$
 $list number$$
