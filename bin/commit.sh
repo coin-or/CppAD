@@ -18,7 +18,7 @@
 cat << EOF > bin/commit.user.$$
 General comments about this commit go here (delete this line).
 
-dir/file.ext@ specific comment about this file (delete this line).
+bin/new_stable.sh@
 EOF
 # -----------------------------------------------------------------------------
 if [ ! -e "bin/commit.sh" ]
@@ -69,6 +69,13 @@ do
 		exit 1
 	fi
 done
+# -----------------------------------------------------------------------
+yy=`date +%y`
+if ! grep "[-]$yy" bin/commit.sed > /dev/null
+then
+     echo 'commit.sed worng year in it. Fix it and commit it separately'
+     exit 1
+fi
 # -----------------------------------------------------------------------
 # check for abort do to unknown files
 unknown=`svn status | sed -n -e '/^[?]/p' | \
