@@ -46,7 +46,7 @@ int main() {
 EOF
 echo_eval g++ \
 	$name.cpp \
-	-I$HOME/cppad/trunk \
+	-I../.. \
 	-I$HOME/prefix/eigen/include \
 	-g \
 	-O0 \
