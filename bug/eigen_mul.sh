@@ -34,7 +34,7 @@ cat << EOF > $name.cpp
 #include <Eigen/Core>
 #include <cppad/cppad.hpp>
 
-// set this flag to one to get a version that works
+// set this flag to 1 to get a version that works without warning
 # define USE_EVAL 0
 
 int main() {
