@@ -16,9 +16,9 @@ then
 	exit 1
 fi
 # -----------------------------------------------------------------------------
-copy_from_trunk='keep'     # do (frist time), keep (use current), redo
-trunk_revision='2700'      # trunk revision number that stable corresponds to
-yyyy_mm_dd='2013-00-00'    # Date corresponding to this trunk revision
+copy_from_trunk='redo'     # do (frist time), keep (use current), redo
+trunk_revision='3027'      # trunk revision number that stable corresponds to
+yyyy_mm_dd='2014-00-00'    # Date corresponding to this trunk revision
 # -----------------------------------------------------------------------------
 echo "copy_from_trunk=$copy_from_trunk"
 echo "trunk_revision=$trunk_revision"
@@ -37,24 +37,6 @@ then
 	echo bin/"new_stable.sh: must execute this script in the trunk"
 	exit 1
 fi
-# -----------------------------------------------------------------------------
-# check copyright date in bin/commit.sh is current
-cat << EOF > bin/new_stable.1.$$
-# CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-13 Bradley M. Bell
-EOF
-yy=`echo $yyyy_mm_dd | sed -e 's|..\(..\).*|\1|'`
-cat << EOF > bin/new_stable.2.$$
-# CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-$yy Bradley M. Bell
-EOF
-sed -i -f bin/commit.sed bin/new_stable.1.$$
-if ! diff bin/new_stable.1.$$ bin/new_stable.2.$$ 
-then
-	echo 'new_stable.sh: Copyright year in bin/commit.sed is out of date.'
-	echo 'Fix it and then rerun bin/new_stable.sh.'
-	rm bin/new_stable.*.$$ 
-	exit 1
-fi
-rm bin/new_stable.*.$$ 
 # -----------------------------------------------------------------------------
 echo "cd .."
 cd ..

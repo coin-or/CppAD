@@ -16,6 +16,12 @@
 #  A2 * B2 * A2;
 #            ^
 # ------------------------------------------------------------------------------
+# bash function that echos and executes a command
+echo_eval() {
+	echo $*
+	eval $*
+}
+# -----------------------------------------------
 if [ ! -e build ]
 then
 	mkdir build
@@ -28,22 +34,40 @@ cat << EOF > $name.cpp
 #include <Eigen/Core>
 #include <cppad/cppad.hpp>
 
+// set this flag to one to get a version that works
+# define USE_EVAL 0
+
 int main() {
 	using Eigen::Matrix;
 	using Eigen::Dynamic;
 	typedef CppAD::AD<double> AScalar;
 
-	Matrix<AScalar, Dynamic, Dynamic> A2(1,1);
-	Matrix<AScalar, Dynamic, Dynamic> B2(1,1);
+	Matrix<AScalar, Dynamic, Dynamic> A(1,1);
+	Matrix<AScalar, Dynamic, Dynamic> B(1,1);
+	Matrix<AScalar, Dynamic, Dynamic> C(1,1);
+	Matrix<AScalar, Dynamic, Dynamic> D(1,1);
 
-	A2(0,0) = 1.0;
-	B2(0,0) = 2.0;
+	A(0,0) = 1.0;
+	B(0,0) = 2.0;
+	C(0,0) = 3.0;
+# if USE_EVAL
+	D      = A * (B * C).eval(); 
+# else
+	D      = A * (B * C); 
+# endif
 
-	A2 * B2 * A2; 
-
+	if( D(0,0) != 6.0 )
+	{	std::cout << "eigen_mul: Error" << std::endl;
+		return 1;
+	}
+	std::cout << "eigen_mul: OK" << std::endl;
 	return 0;
 }
 EOF
+if [ -e "$name" ]
+then
+	echo_eval rm $name
+fi
 echo_eval g++ \
 	$name.cpp \
 	-I../.. \
