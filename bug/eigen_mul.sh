@@ -31,8 +31,7 @@ echo "$0"
 name=`echo $0 | sed -e 's|.*/||' -e 's|\..*||'`
 #
 cat << EOF > $name.cpp
-#include <Eigen/Core>
-#include <cppad/cppad.hpp>
+#include <cppad/example/cppad_eigen.hpp>
 
 // set this flag to 1 to get a version that works without warning
 # define USE_EVAL 0
