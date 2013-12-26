@@ -61,6 +61,11 @@ This section contains a list of the changes to CppAD during 2013
 The purpose of this section is to
 assist you in learning about changes between various versions of CppAD.
 
+$head 12-26$$
+Document fact that
+$cref/monthly versions/download/Compressed Tar File/Monthly Versions/$$
+of the CppAD compressed tar file last till the end of the year.
+
 $head 12-24$$
 The interface to $cref/eigen/cppad_eigen.hpp/$$ defined a function
 $codei%

@@ -13,6 +13,8 @@ Please visit http://www.coin-or.org/CppAD/ for information on other licenses.
 $begin download$$
 $escape $$
 $spell
+	yyyy
+	tarballs
 	mkdir
 	cmake
 	nmake
@@ -58,12 +60,24 @@ and compressed with $code gzip$$:
 
 $subhead Current Version$$
 The download files below are for the current version of CppAD.
-
 $table
 EPL License $pre  $$ $cnext $href%cppad-20130918.epl.tgz%$$ 
 $rnext
 GPL License $pre  $$ $cnext $href%cppad-20130918.gpl.tgz%$$
 $tend
+These tarballs only last for a few days.
+
+$subhead Monthly Versions$$
+Monthly versions of the compressed tar files,
+are kept around until the end of the current year,
+when the next release version (see below) is created.
+These file have the form
+$codei%
+	cppad-%yyyy%0101.%lic%.tgz
+%$$
+where the license code $icode lic$$ 
+is $code gpl$$ or $code epl$$
+and $icode yyyy$$ is the current year.
 
 $subhead Release Versions$$
 Release versions of the compressed tar files can be found at the
