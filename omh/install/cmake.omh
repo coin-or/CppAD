@@ -13,6 +13,7 @@ Please visit http://www.coin-or.org/CppAD/ for information on other licenses.
 $begin cmake$$
 $escape $$
 $spell
+	ctor
 	op
 	arg
 	sizeof
@@ -104,6 +105,7 @@ cmake %%                                                          \
 	-D cppad_sparse_list=%cppad_sparse_list%                     \
 	-D cppad_tape_id_type=%cppad_tape_id_type%                   \
 	-D cppad_tape_addr_type=%cppad_tape_addr_type%               \
+	-D cppad_implicit_ctor_from_any_type=%cppad_implicit_ctor%   \
 	\
 	..
 %$$
@@ -336,6 +338,16 @@ $cref/size_op_arg/seq_property/size_op_arg/$$,
 $cref/size_par/seq_property/size_text/$$,
 $cref/size_par/seq_property/size_par/$$,
 $cref/size_par/seq_property/size_VecAD/$$.
+
+$head cppad_implicit_ctor$$
+$index ctor, implicit or explicit$$
+$index implicit, ctor$$
+$index explicit, ctor$$
+The default value for $icode cppad_implicit_ctor$$ is $code NO$$.
+If it is $code YES$$,
+there is an implicit type constructor (type conversion)
+from any type to $codei%AD<%Base%>%$$.
+Otherwise this constructor is explicit.
 
 
 $children%

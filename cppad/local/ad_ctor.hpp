@@ -18,6 +18,8 @@ Please visit http://www.coin-or.org/CppAD/ for information on other licenses.
 
 $begin ad_ctor$$
 $spell
+	cppad
+	ctor
 	initializes
 	Vec
 	const
@@ -53,12 +55,23 @@ $codei%
 %$$ 
 
 $subhead explicit$$
-There is an explicit constructor where $icode x$$ has the prototype
-prototypes:
+There is an explicit constructor where $icode x$$ has prototype
 $codei%
 	const %Type%&        %x%
 %$$ 
-or any type that has an explicit constructor of the form
+for any type that has an explicit constructor of the form
+$icode%Base%(%x%)%$$.
+
+$subhead deprecated$$
+$index deprecated, constructor$$
+$index constructor, deprecated$$
+If you set $cref/cppad_implicit_ctor/cmake/cppad_implicit_ctor/$$
+to be $code YES$$ during the install procedure,
+you will get an implicit constructor with prototype
+$codei%
+	const %Type%&        %x%
+%$$ 
+for any type that has an explicit constructor of the form
 $icode%Base%(%x%)%$$.
 
 $head y$$

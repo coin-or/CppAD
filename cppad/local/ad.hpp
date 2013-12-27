@@ -161,8 +161,13 @@ public:
 	inline AD(const VecAD_reference<Base> &x);
 	inline AD& operator=(const VecAD_reference<Base> &x);
 
-	// explicit construction from some other type
+# if CPPAD_IMPLICIT_CTOR
+	// implicit construction from some other type (depricated)
+	template <class T> inline AD(const T &t);
+# else
+	// explicit construction from some other type (depricated)
 	template <class T> inline explicit AD(const T &t);
+# endif
 
 	// assignment from some other type
 	template <class T> inline AD& operator=(const T &right);

@@ -61,6 +61,14 @@ either sparse_set or sparse_list).
 # define CPPAD_INTERNAL_SPARSE_SET @cppad_internal_sparse_set@
 
 /*!
+\def CPPAD_IMPLICIT_CTOR
+If this symbol is one, an implicit constor of AD<Base> is defined 
+where the argument has any type.
+Otherwise this constructor is explicit.
+*/
+# define CPPAD_IMPLICIT_CTOR @cppad_implicit_ctor@
+
+/*!
 \def CPPAD_BOOSTVECTOR
 If this symbol is one, and _MSC_VER is not defined,
 we are using boost vector for CPPAD_TESTVECTOR.

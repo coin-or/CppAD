@@ -13,6 +13,7 @@ Please visit http://www.coin-or.org/CppAD/ for information on other licenses.
 $begin whats_new_13$$
 $dollar @$$
 $spell
+	ctor
 	Num
 	autotools
 	nz
@@ -66,9 +67,9 @@ The constructor from an arbitrary type to $codei%AD<%Base%>%$$ was
 implicit, but there was no specification to this effect.
 The caused problems when using CppAD with 
 $cref/eigen/eigen_prefix/$$.
-This constructor has been changed to be 
+The default for this constructor has been changed to be 
 $cref/explicit/ad_ctor/x/explicit/$$.
-In addition the 
+In addition, other 
 $cref/implicit/ad_ctor/x/implicit/$$ constructors
 are now listed in the documentation.
 $pre
@@ -78,6 +79,9 @@ If you get a compiler error on an assignment to an
 $icode%AD%<%Base%>%$$ variable (that used to work)
 try an explicit conversion to 
 $icode Base$$ or $codei%AD<%Base%>%$$ before the assignment.
+A deprecated alternative is to make this constructor implicit using the
+$cref/cppad_implicit_ctor/cmake/cppad_implicit_ctor/$$ option
+during the install procedure.
 
 $head 12-26$$
 Document fact that
