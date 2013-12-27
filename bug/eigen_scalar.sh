@@ -50,7 +50,7 @@ public:
 	{	value_ = value; }
 
 # if DEFINE_TEMPLATED_CONSTRUCTOR
-	template <class T> myscalar(const T& value)
+	template <class T> explicit myscalar(const T& value)
 	{	value_ = double(value); }	
 # endif
 

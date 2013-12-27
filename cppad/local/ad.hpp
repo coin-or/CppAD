@@ -146,23 +146,25 @@ public:
 	// type of value
 	typedef Base value_type;
 
-	// default constructor
+	// implicit default constructor
 	inline AD(void);
 
-	// use default copy constructor and assignment operator
+	// use default implicit copy constructor and assignment operator
 	// inline AD(const AD &x);
 	// inline AD& operator=(const AD &x);
 
-	// construction and assingment from base type
+	// implicit construction and assingment from base type
 	inline AD(const Base &b);
 	inline AD& operator=(const Base &b); 
 
-	// contructor and assignment from VecAD<Base>::reference
+	// implicit contructor and assignment from VecAD<Base>::reference
 	inline AD(const VecAD_reference<Base> &x);
 	inline AD& operator=(const VecAD_reference<Base> &x);
 
-	// construction and assignment from some other type
-	template <class T> inline AD(const T &t);
+	// explicit construction from some other type
+	template <class T> inline explicit AD(const T &t);
+
+	// assignment from some other type
 	template <class T> inline AD& operator=(const T &right);
 
 	// base type corresponding to an AD object

@@ -1,6 +1,6 @@
 /* $Id$ */
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-12 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-13 Bradley M. Bell
 
 CppAD is distributed under multiple licenses. This distribution is under
 the terms of the 
@@ -45,7 +45,7 @@ namespace {
 		template <class Float>
 		Float operator () (const Float &x)
 		{	size_t i;
-			Float   f = 1;
+			Float   f(1);
 			for(i = 0; i < degree; i++)
 				f *= x;
 			return f;
@@ -61,8 +61,8 @@ namespace {
 		Fun F(degree);
 
 		// arguments to RombergOne
-		Float a = 0.;
-		Float b = 1.;
+		Float a(0);
+		Float b(1);
 		Float r;
 		size_t n = 4;
 		Float e;
@@ -70,8 +70,8 @@ namespace {
 
 		// int_a^b F(x) dx = 
 		//	[ b^(degree+1) - a^(degree+1) ] / (degree+1) 
-		Float bpow = 1.;
-		Float apow = 1.;
+		Float bpow(1);
+		Float apow(1);
 		for(i = 0; i <= degree; i++)
 		{	bpow *= b;
 			apow *= a;
@@ -83,7 +83,7 @@ namespace {
 		// step size corresponding to error estimate
 		step *= Float(2.);
 		// step size raised to a power
-		Float spow = Float(1.);
+		Float spow = Float(1);
 
 		for(p = 0; p < n; p++)
 		{	spow = spow * step * step;

@@ -3,7 +3,7 @@
 # define CPPAD_DET_OF_MINOR_INCLUDED
 
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-12 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-13 Bradley M. Bell
 
 CppAD is distributed under multiple licenses. This distribution is under
 the terms of the 
@@ -235,7 +235,7 @@ Scalar det_of_minor(
 	if( n == 1 ) return a[ R0 * m + Cj ];
 
 	// initialize determinant of the minor M
-	Scalar detM = 0;
+	Scalar detM = Scalar(0);
 
 	// initialize sign of factor for next sub-minor
 	int s = 1;

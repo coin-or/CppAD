@@ -3,7 +3,7 @@
 # define CPPAD_AD_CTOR_INCLUDED
 
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-12 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-13 Bradley M. Bell
 
 CppAD is distributed under multiple licenses. This distribution is under
 the terms of the 
@@ -43,15 +43,22 @@ creates a new $codei%AD<%Base%>%$$ object $icode y$$
 and initializes its value as equal to $icode x$$.
 
 $head x$$
-The argument $icode x$$ has prototype
+
+$subhead implicit$$
+There is an implicit constructor where $icode x$$ has one of the following
+prototypes:
 $codei%
-	const %Type% &%x%
+	const %Base%&        %x%
+	const VecAD<%Base%>& %x%
 %$$ 
-where $icode Type$$ is
-$codei%VecAD<%Base%>::reference%$$,
-$codei%AD<%Base%>%$$,
-$icode Base$$, 
-or any type that has a constructor of the form
+
+$subhead explicit$$
+There is an explicit constructor where $icode x$$ has the prototype
+prototypes:
+$codei%
+	const %Type%&        %x%
+%$$ 
+or any type that has an explicit constructor of the form
 $icode%Base%(%x%)%$$.
 
 $head y$$

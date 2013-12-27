@@ -61,6 +61,24 @@ This section contains a list of the changes to CppAD during 2013
 The purpose of this section is to
 assist you in learning about changes between various versions of CppAD.
 
+$head 12-27$$
+The constructor from an arbitrary type to $codei%AD<%Base%>%$$ was
+implicit, but there was no specification to this effect.
+The caused problems when using CppAD with 
+$cref/eigen/eigen_prefix/$$.
+This constructor has been changed to be 
+$cref/explicit/ad_ctor/x/explicit/$$.
+In addition the 
+$cref/implicit/ad_ctor/x/implicit/$$ constructors
+are now listed in the documentation.
+$pre
+
+$$
+If you get a compiler error on an assignment to an 
+$icode%AD%<%Base%>%$$ variable (that used to work)
+try an explicit conversion to 
+$icode Base$$ or $codei%AD<%Base%>%$$ before the assignment.
+
 $head 12-26$$
 Document fact that
 $cref/monthly versions/download/Compressed Tar File/Monthly Versions/$$

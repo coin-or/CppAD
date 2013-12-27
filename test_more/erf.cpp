@@ -1,6 +1,6 @@
 /* $Id$ */
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-12 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-13 Bradley M. Bell
 
 CppAD is distributed under multiple licenses. This distribution is under
 the terms of the 
@@ -57,7 +57,7 @@ bool Erf(void)
 		ok         &= NearEqual(derf, dy[0], 0., 2e-3);
 
 		// test using erf with AD< AD<double> >
-		AD< AD<double> > X0 = x[0];
+		AD< AD<double> > X0 = AD<double>( x[0] );
 		AD< AD<double> > Y0 = erf(X0);
 
 		ok &= ( y[0] == Value( Value(Y0) ) );
