@@ -54,6 +54,20 @@ public:
 	{	value_ = double(value); }	
 # endif
 
+	// binary operators
+	myscalar operator+(const myscalar& right) const
+	{	myscalar result = value_ + right.value_;
+		return result;
+	}
+	myscalar operator*(const myscalar& right) const
+	{	myscalar result = value_ * right.value_;
+		return result;
+	}
+	bool operator!=(const myscalar& right) const
+	{	bool result = value_ != right.value_;
+		return result;
+	}
+
 	// assignments
 	myscalar& operator=(const double& value)
 	{	value_ = value; 
@@ -67,20 +81,6 @@ public:
 	}
 
 };
-// ------------------------------------------------------------------------
-// binary operators
-myscalar operator+(const myscalar& left, const myscalar& right)
-{	myscalar result = left.value_ + right.value_;
-	return result;
-}
-myscalar operator*(const myscalar& left, const myscalar& right)
-{	myscalar result = left.value_ * right.value_;
-	return result;
-}
-bool operator!=(const myscalar& left, const myscalar& right)
-{	bool result = left.value_ != right.value_;
-	return result;
-}
 // ------------------------------------------------------------------------
 int main() {
 	using Eigen::Matrix;
