@@ -18,7 +18,7 @@
 cat << EOF > bin/commit.user.$$
 General comments about this commit go here (delete this line).
 
-bin/new_stable.sh@
+dir/file.ext@ optional comment about this file.
 EOF
 # -----------------------------------------------------------------------------
 if [ ! -e "bin/commit.sh" ]
