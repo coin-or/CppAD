@@ -65,7 +65,11 @@ $icode%Base%(%x%)%$$.
 $subhead deprecated$$
 $index deprecated, constructor$$
 $index constructor, deprecated$$
-If you set $cref/cppad_implicit_ctor/cmake/cppad_implicit_ctor/$$
+If you set 
+$cref/cppad_implicit_ctor_from_any_type
+	/cmake
+	/cppad_implicit_ctor_from_any_type
+/$$
 to be $code YES$$ during the install procedure,
 you will get an implicit constructor with prototype
 $codei%

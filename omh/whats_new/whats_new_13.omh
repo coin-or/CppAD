@@ -80,8 +80,11 @@ $icode%AD%<%Base%>%$$ variable (that used to work)
 try an explicit conversion to 
 $icode Base$$ or $codei%AD<%Base%>%$$ before the assignment.
 A deprecated alternative is to make this constructor implicit using the
-$cref/cppad_implicit_ctor/cmake/cppad_implicit_ctor/$$ option
-during the install procedure.
+$cref/cppad_implicit_ctor_from_any_type
+	/cmake
+	/cppad_implicit_ctor_from_any_type
+/$$
+option during the install procedure.
 
 $head 12-26$$
 Document fact that

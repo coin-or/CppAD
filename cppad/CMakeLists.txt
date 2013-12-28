@@ -48,17 +48,17 @@ command_line_arg(cppad_tape_addr_type "unsigned int" STRING
 "type used to identify variables on one tape, size must be <= sizeof(size_t)"
 )
 #
-# cppad_implicit_ctor_from_any_type
-command_line_arg(cppad_implicit_ctor_from_any_type NO BOOL 
+# cppad_implicit_ctor_from_any_type_from_any_type
+command_line_arg(cppad_implicit_ctor_from_any_type_from_any_type NO BOOL 
 	"implicit (instead of explicit) conversion from any type to AD<Base>"
 )
 # -----------------------------------------------------------------------------
 # cppad_explicit_ctor
-IF( cppad_implicit_ctor_from_any_type )
-	SET(cppad_implicit_ctor 1)
-ELSE( cppad_implicit_ctor_from_any_type )
-	SET(cppad_implicit_ctor 0)
-ENDIF( cppad_implicit_ctor_from_any_type )
+IF( cppad_implicit_ctor_from_any_type_from_any_type )
+	SET(cppad_implicit_ctor_from_any_type 1)
+ELSE( cppad_implicit_ctor_from_any_type_from_any_type )
+	SET(cppad_implicit_ctor_from_any_type 0)
+ENDIF( cppad_implicit_ctor_from_any_type_from_any_type )
 # -----------------------------------------------------------------------------
 # cppad_internal_sparse_set
 #

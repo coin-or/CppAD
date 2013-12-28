@@ -83,29 +83,29 @@ $cref/distribution directory/download/Distribution Directory/$$,
 change into the $code build$$  directory, 
 and execute the following command:
 $codei%
-cmake %%                                                          \
-	-G %generator%                                               \
-	-D cmake_install_prefix=%cmake_install_prefix%               \
-	-D cmake_install_includedirs=%cmake_install_includedirs%     \
-	-D cmake_install_datadir=%cmake_install_datadir%             \
-	-D cmake_install_libdirs=%cmake_install_libdirs%             \
-	-D cmake_install_postfix=%cmake_install_postfix%             \
+cmake %%                                                                      \
+	-G %generator%                                                           \
+	-D cmake_install_prefix=%cmake_install_prefix%                           \
+	-D cmake_install_includedirs=%cmake_install_includedirs%                 \
+	-D cmake_install_datadir=%cmake_install_datadir%                         \
+	-D cmake_install_libdirs=%cmake_install_libdirs%                         \
+	-D cmake_install_postfix=%cmake_install_postfix%                         \
 	\
-	-D adolc_prefix=%adolc_prefix%                               \
-	-D eigen_prefix=%eigen_prefix%                               \
-	-D fadbad_prefix=%fadbad_prefix%                             \
-	-D ipopt_prefix=%ipopt_prefix%                               \
-	-D sacado_prefix=%sacado_prefix%                             \
+	-D adolc_prefix=%adolc_prefix%                                           \
+	-D eigen_prefix=%eigen_prefix%                                           \
+	-D fadbad_prefix=%fadbad_prefix%                                         \
+	-D ipopt_prefix=%ipopt_prefix%                                           \
+	-D sacado_prefix=%sacado_prefix%                                         \
 	\
-	-D cppad_cxx_flags=%cppad_cxx_flags%                         \
-	-D cppad_documentation=%cppad_documentation%                 \
+	-D cppad_cxx_flags=%cppad_cxx_flags%                                     \
+	-D cppad_documentation=%cppad_documentation%                             \
 	\
-	-D cppad_testvector=%cppad_testvector%                       \
-	-D cppad_max_num_threads=%cppad_max_num_threads%             \
-	-D cppad_sparse_list=%cppad_sparse_list%                     \
-	-D cppad_tape_id_type=%cppad_tape_id_type%                   \
-	-D cppad_tape_addr_type=%cppad_tape_addr_type%               \
-	-D cppad_implicit_ctor_from_any_type=%cppad_implicit_ctor%   \
+	-D cppad_testvector=%cppad_testvector%                                   \
+	-D cppad_max_num_threads=%cppad_max_num_threads%                         \
+	-D cppad_sparse_list=%cppad_sparse_list%                                 \
+	-D cppad_tape_id_type=%cppad_tape_id_type%                               \
+	-D cppad_tape_addr_type=%cppad_tape_addr_type%                           \
+	-D cppad_implicit_ctor_from_any_type=%cppad_implicit_ctor_from_any_type% \
 	\
 	..
 %$$
@@ -339,15 +339,17 @@ $cref/size_par/seq_property/size_text/$$,
 $cref/size_par/seq_property/size_par/$$,
 $cref/size_par/seq_property/size_VecAD/$$.
 
-$head cppad_implicit_ctor$$
+$head cppad_implicit_ctor_from_any_type$$
 $index ctor, implicit or explicit$$
 $index implicit, ctor$$
 $index explicit, ctor$$
-The default value for $icode cppad_implicit_ctor$$ is $code NO$$.
-If it is $code YES$$,
-there is an implicit type constructor (type conversion)
+The default value for $icode cppad_implicit_ctor_from_any_type$$ is $code NO$$.
+If it is $code YES$$, there is a 
+$cref/deprecated/ad_ctor/x/deprecated/$$
+implicit type constructor (type conversion)
 from any type to $codei%AD<%Base%>%$$.
-Otherwise this constructor is explicit.
+Otherwise this constructor is 
+$cref/explicit/ad_ctor/x/explicit/$$.
 
 
 $children%

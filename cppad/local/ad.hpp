@@ -161,7 +161,7 @@ public:
 	inline AD(const VecAD_reference<Base> &x);
 	inline AD& operator=(const VecAD_reference<Base> &x);
 
-# if CPPAD_IMPLICIT_CTOR
+# if CPPAD_IMPLICIT_CTOR_FROM_ANY_TYPE
 	// implicit construction from some other type (depricated)
 	template <class T> inline AD(const T &t);
 # else
