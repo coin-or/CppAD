@@ -21,25 +21,45 @@ echo_eval() {
 	echo $*
 	eval $*
 }
-# ---------------------------------------------------------------------------
-# clean all variables in cmake cache
-cmake_args='-U .+'
-if [ "$1" != "" ]
-then
+# -----------------------------------------------
+verbose='no'
+testvector='boost'
+while [ "$1" != "" ]
+do
 	if [ "$1" == '--verbose' ]
 	then
-		# echo each command that make executes
-		cmake_args="$cmake_args  -D CMAKE_VERBOSE_MAKEFILE=1"
+		verbose='yes'
+	elif [ "$1" == '--cppad_vector' ]
+	then
+		testvector='cppad'
+	elif [ "$1" == '--boost_vector' ]
+	then
+		testvector='boost'
+	elif [ "$1" == '--eigen_vector' ]
+	then
+		testvector='eigen'
 	else
-		echo 'usage: bin/run_cmake.sh: [--verbose]'
+		options='[--verbose] [--<package>_vector]'
+		echo "usage: bin/run_cmake.sh: $options"
+		echo 'where <package> is cppad, boost, or eigen'
 		exit 1
 	fi
-fi
+	shift
+done
 if [ ! -e build ]
 then
 	echo_eval mkdir build
 fi
 echo_eval cd build
+# ---------------------------------------------------------------------------
+# clean all variables in cmake cache
+cmake_args='-U .+'
+#
+if [ "$verbose" == 'yes' ]
+then
+	# echo each command that make executes
+	cmake_args="$cmake_args  -D CMAKE_VERBOSE_MAKEFILE=1"
+fi
 # -----------------------------------------------------------------------------
 # cmake_install_prefix
 cmake_args="$cmake_args  -D cmake_install_prefix=$HOME/prefix/cppad"
@@ -76,14 +96,17 @@ do
 done
 #
 # cppad_cxx_flags
-cmake_args="$cmake_args -D cppad_cxx_flags=\
-'-Wall -pedantic-errors -std=c++11 -Wshadow'"
+cmake_args="$cmake_args -D cppad_cxx_flags='-Wall -pedantic-errors -std=c++11'"
+if [ "$testvector" != 'eigen' ]
+then
+ 	cmake_args="$cmake_args -Wshadow"
+fi
 #
 # simple options
 cmake_args="$cmake_args -D cppad_implicit_ctor_from_any_type_from_any_type=NO"
 cmake_args="$cmake_args -D cppad_documentation=YES"
 cmake_args="$cmake_args -D cppad_sparse_list=YES"
-cmake_args="$cmake_args -D cppad_testvector=cppad"
+cmake_args="$cmake_args -D cppad_testvector=$testvector"
 cmake_args="$cmake_args -D cppad_tape_id_type='int'"
 cmake_args="$cmake_args -D cppad_tape_addr_type=int"
 cmake_args="$cmake_args -D cppad_max_num_threads=48"

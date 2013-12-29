@@ -97,10 +97,10 @@ int main() {
 	D      = A * (B * C); 
 
 	if( D(0,0) != myscalar(6.0) )
-	{	std::cout << "eigen_mul: Error" << std::endl;
+	{	std::cout << "$name: Error" << std::endl;
 		return 1;
 	}
-	std::cout << "eigen_mul: OK" << std::endl;
+	std::cout << "$name: OK" << std::endl;
 	return 0;
 }
 EOF
