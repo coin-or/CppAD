@@ -69,9 +69,9 @@ is used to define $code value_type$$
 in the Eigen matrix class definition so its vectors are 
 $cref/simple vectors/SimpleVector/$$.
 $codep */
-# include <cppad/cppad.hpp>
 # define EIGEN_MATRIXBASE_PLUGIN <cppad/example/eigen_plugin.hpp>
 # include <Eigen/Core>
+# include <cppad/cppad.hpp>
 /* $$
 $head Eigen NumTraits$$
 Eigen needs the following definitions to work properly

@@ -50,6 +50,9 @@ Preprecessor definitions that presist after cppad/cppad.hpp is included:
 # undef CppADTrackExtend      deprecated version of CPPAD_TRACK_EXTEND
 # undef CppADTrackNewVec      deprecated version of CPPAD_TRACK_NEW_VEC
 # undef CppADvector           deprecated version of CPPAD_TEST_VECTOR
+
+// for conditional testing when implicit conversion is not present
+# undef CPPAD_IMPLICIT_CTOR_FROM_ANY_TYPE
 -----------------------------------------------------------------------------
 */
 // Preprecessor definitions that do not presist 
@@ -66,7 +69,6 @@ Preprecessor definitions that presist after cppad/cppad.hpp is included:
 # undef CPPAD_FOR_JAC_SWEEP_TRACE
 # undef CPPAD_HAS_GETTIMEOFDAY
 # undef CPPAD_HAS_NULLPTR
-# undef CPPAD_IMPLICIT_CTOR_FROM_ANY_TYPE
 # undef CPPAD_INLINE_FRIEND_TEMPLATE_FUNCTION
 # undef CPPAD_MAX_NUM_CAPACITY
 # undef CPPAD_MIN_DOUBLE_CAPACITY

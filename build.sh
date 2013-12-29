@@ -226,14 +226,16 @@ cat << EOF
 $dir_list \\
 CXX_FLAGS=\"$cxx_flags\" \\
 $special_types OPENMP_FLAGS=-fopenmp \\
---with-sparse_list --with-Documentation
+--with-sparse_list --with-Documentation \\
+--with-implicit_ctor
 EOF
 	#
 	../configure > $log_dir/$log_file \
 		$dir_list \
 		CXX_FLAGS="$cxx_flags" \
 		$special_types OPENMP_FLAGS=-fopenmp \
-		--with-sparse_list --with-Documentation 
+		--with-sparse_list --with-Documentation \
+		--with-implicit_ctor
 	#
 	for file in $configure_file_list
 	do

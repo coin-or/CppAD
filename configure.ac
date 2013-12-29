@@ -202,6 +202,24 @@ else
 	AC_SUBST(cppad_internal_sparse_set, sparse_list)
 fi
 
+
+dnl Are we including an implicit constructor from any type -----------
+AC_MSG_CHECKING([--with-implicit_ctor])
+AC_ARG_WITH(implicit_ctor, 
+	AC_HELP_STRING(
+		[--with-implicit_ctor], 
+		[include an implicit AD<Base> constructor from any type]
+	),
+	[implicit_ctor="yes"],
+	[implicit_ctor="no"]
+)
+AC_MSG_RESULT([$implicit_ctor])
+if test "$implicit_ctor" = "yes" ; then
+	AC_SUBST(cppad_implicit_ctor_from_any_type, "1")
+else
+	AC_SUBST(cppad_implicit_ctor_from_any_type, "0")
+fi
+
 dnl The postfix directiory corresponding to CppAD ------------------------
 AC_MSG_CHECKING([POSTFIX_DIR])
 AC_ARG_VAR(POSTFIX_DIR, 

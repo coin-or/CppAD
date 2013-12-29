@@ -62,6 +62,21 @@ This section contains a list of the changes to CppAD during 2013
 The purpose of this section is to
 assist you in learning about changes between various versions of CppAD.
 
+$head 12-29$$
+$list number$$
+The include file 
+$cref cppad_eigen.hpp$$ now automatically includes $code cppad.hpp$$.
+There was a problem with this automation
+when $code eigen$$ was used for the cppad
+$cref testvector$$.
+This has been fixed.
+$lnext
+There was a problem with deprecated $cref InstallUnix$$
+(created when optional implicit constructor from any type was added).
+This has been fixed by adding the
+$cref/--with-implicit_ctor/InstallUnix/--with-implicit_ctor/$$ option.
+$lend
+
 $head 12-27$$
 The constructor from an arbitrary type to $codei%AD<%Base%>%$$ was
 implicit, but there was no specification to this effect.

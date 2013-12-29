@@ -15,7 +15,6 @@ Test of Eigen Interface to CppAD Scalar Types
 $end
 */
 # include <cppad/example/cppad_eigen.hpp>
-# include <cppad/cppad.hpp>
 
 bool cppad_eigen(void)
 {	bool ok = true;
@@ -56,6 +55,7 @@ bool cppad_eigen(void)
 	stream_out << X;
 	ok &= "1" == stream_out.str();
 
+# if ! CPPAD_IMPLICIT_CTOR_FROM_ANY_TYPE 
 	// multiplying three matrices together used to cause warning
 	// before making ctor from arbitrary type to AD<Base> explicit.
 	typedef CppAD::AD<double> AScalar;
@@ -65,6 +65,7 @@ bool cppad_eigen(void)
 	C(0,0) = 3.0;
 	D      = A * B * C; 
 	ok    &= D(0,0) == 6.0 ;
+# endif
 	
 	return ok;
 }
