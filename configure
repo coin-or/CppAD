@@ -723,7 +723,7 @@ ADOLC_DIR
 CppAD_POSTFIX_FALSE
 CppAD_POSTFIX_TRUE
 POSTFIX_DIR
-cppad_implicit_ctor_from_any_type
+cppad_explicit_ctor_from_any_type
 cppad_internal_sparse_set
 cppad_eigenvector
 cppad_boostvector
@@ -799,7 +799,7 @@ with_boostvector
 with_eigenvector
 with_sparse_set
 with_sparse_list
-with_implicit_ctor
+with_explicit_ctor
 enable_dependency_tracking
 '
       ac_precious_vars='build_alias
@@ -1467,7 +1467,7 @@ Optional Packages:
   --with-eigenvector      default is no
   --with-sparse_set       default is not specified
   --with-sparse_list      default is not specified
-  --with-implicit_ctor    include an implicit AD<Base> constructor from any
+  --with-explicit_ctor    include an explicit AD<Base> constructor from any
                           type
 
 Some influential environment variables:
@@ -2546,7 +2546,7 @@ fi
 case $enable_silent_rules in
 yes) AM_DEFAULT_VERBOSITY=0;;
 no)  AM_DEFAULT_VERBOSITY=1;;
-*)   AM_DEFAULT_VERBOSITY=1;;
+*)   AM_DEFAULT_VERBOSITY=0;;
 esac
 am_make=${MAKE-make}
 { $as_echo "$as_me:${as_lineno-$LINENO}: checking whether $am_make supports nested variables" >&5
@@ -2939,24 +2939,24 @@ else
 fi
 
 
-{ $as_echo "$as_me:${as_lineno-$LINENO}: checking --with-implicit_ctor" >&5
-$as_echo_n "checking --with-implicit_ctor... " >&6; }
+{ $as_echo "$as_me:${as_lineno-$LINENO}: checking --with-explicit_ctor" >&5
+$as_echo_n "checking --with-explicit_ctor... " >&6; }
 
-# Check whether --with-implicit_ctor was given.
-if test "${with_implicit_ctor+set}" = set; then :
-  withval=$with_implicit_ctor; implicit_ctor="yes"
+# Check whether --with-explicit_ctor was given.
+if test "${with_explicit_ctor+set}" = set; then :
+  withval=$with_explicit_ctor; explicit_ctor="yes"
 else
-  implicit_ctor="no"
+  explicit_ctor="no"
 
 fi
 
-{ $as_echo "$as_me:${as_lineno-$LINENO}: result: $implicit_ctor" >&5
-$as_echo "$implicit_ctor" >&6; }
-if test "$implicit_ctor" = "yes" ; then
-	cppad_implicit_ctor_from_any_type="1"
+{ $as_echo "$as_me:${as_lineno-$LINENO}: result: $explicit_ctor" >&5
+$as_echo "$explicit_ctor" >&6; }
+if test "$explicit_ctor" = "yes" ; then
+	cppad_explicit_ctor_from_any_type="1"
 
 else
-	cppad_implicit_ctor_from_any_type="0"
+	cppad_explicit_ctor_from_any_type="0"
 
 fi
 
