@@ -55,7 +55,7 @@ bool cppad_eigen(void)
 	stream_out << X;
 	ok &= "1" == stream_out.str();
 
-# if ! CPPAD_IMPLICIT_CTOR_FROM_ANY_TYPE 
+# if CPPAD_EXPLICIT_CTOR_FROM_ANY_TYPE 
 	// multiplying three matrices together used to cause warning
 	// before making ctor from arbitrary type to AD<Base> explicit.
 	typedef CppAD::AD<double> AScalar;

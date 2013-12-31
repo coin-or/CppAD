@@ -103,7 +103,7 @@ then
 fi
 #
 # simple options
-cmake_args="$cmake_args -D cppad_implicit_ctor_from_any_type_from_any_type=NO"
+cmake_args="$cmake_args -D cppad_explicit_ctor_from_any_type_from_any_type=YES"
 cmake_args="$cmake_args -D cppad_documentation=YES"
 cmake_args="$cmake_args -D cppad_sparse_list=YES"
 cmake_args="$cmake_args -D cppad_testvector=$testvector"

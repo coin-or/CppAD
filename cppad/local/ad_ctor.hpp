@@ -45,8 +45,6 @@ creates a new $codei%AD<%Base%>%$$ object $icode y$$
 and initializes its value as equal to $icode x$$.
 
 $head x$$
-
-$subhead implicit$$
 There is an implicit constructor where $icode x$$ has one of the following
 prototypes:
 $codei%
@@ -54,29 +52,20 @@ $codei%
 	const VecAD<%Base%>& %x%
 %$$ 
 
-$subhead explicit$$
-There is an explicit constructor where $icode x$$ has prototype
+$subhead Other Types$$
+By default, there is an implicit constructor where $icode x$$ has prototype
 $codei%
 	const %Type%&        %x%
 %$$ 
-for any type that has an explicit constructor of the form
+for any $icode Type$$ that has an explicit constructor of the form
 $icode%Base%(%x%)%$$.
-
-$subhead deprecated$$
-$index deprecated, constructor$$
-$index constructor, deprecated$$
 If you set 
-$cref/cppad_implicit_ctor_from_any_type
+$cref/cppad_explicit_ctor_from_any_type
 	/cmake
-	/cppad_implicit_ctor_from_any_type
+	/cppad_explicit_ctor_from_any_type
 /$$
 to be $code YES$$ during the install procedure,
-you will get an implicit constructor with prototype
-$codei%
-	const %Type%&        %x%
-%$$ 
-for any type that has an explicit constructor of the form
-$icode%Base%(%x%)%$$.
+This constructor is explicit.
 
 $head y$$
 The target $icode y$$ has prototype

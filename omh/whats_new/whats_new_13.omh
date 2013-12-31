@@ -13,6 +13,7 @@ Please visit http://www.coin-or.org/CppAD/ for information on other licenses.
 $begin whats_new_13$$
 $dollar @$$
 $spell
+	eval
 	ctor
 	Num
 	autotools
@@ -62,10 +63,31 @@ This section contains a list of the changes to CppAD during 2013
 The purpose of this section is to
 assist you in learning about changes between various versions of CppAD.
 
+$head 12-31$$
+There is a problem when using 
+$cref/eigen 3.2/eigen_prefix/$$ matrix expressions of the form
+$code A * B * C$$ with AD scalars.
+This is expected to be fixed in eigen 3.3.
+One temporary solution is to change these expressions to
+$code A * (B * C).eval()$$.
+Another solution is to use
+$cref/cppad_explicit_ctor_from_any_type
+	/cmake
+	/cppad_explicit_ctor_from_any_type
+/$$
+The default (see below) for this option has been changed from 
+explicit to implicit (as it was before 2013-12-27).
+If you choose to use the explicit constructor,
+you may get a compiler error on an assignment to an 
+$icode%AD%<%Base%>%$$ variable (that works with the implicit constructor).
+Try conversion to 
+$icode Base$$ or $codei%AD<%Base%>%$$ before the assignment.
+
 $head 12-29$$
 $list number$$
 The include file 
 $cref cppad_eigen.hpp$$ now automatically includes $code cppad.hpp$$.
+$lnext
 There was a problem with this automation
 when $code eigen$$ was used for the cppad
 $cref testvector$$.
@@ -74,32 +96,19 @@ $lnext
 There was a problem with deprecated $cref InstallUnix$$
 (created when optional implicit constructor from any type was added).
 This has been fixed by adding the
-$cref/--with-implicit_ctor/InstallUnix/--with-implicit_ctor/$$ option.
+$code --with-implicit_ctor$$ option.
 $lend
 
 $head 12-27$$
 The constructor from an arbitrary type to $codei%AD<%Base%>%$$ was
 implicit, but there was no specification to this effect.
 The caused problems when using CppAD with 
-$cref/eigen/eigen_prefix/$$.
-The default for this constructor has been changed to be 
-$cref/explicit/ad_ctor/x/explicit/$$.
-In addition, other 
-$cref/implicit/ad_ctor/x/implicit/$$ constructors
+$cref/eigen 3.2/eigen_prefix/$$.
+The default for this constructor has been changed to be explicit
+(changed back to implicit on 12-31).
+In addition, other implicit 
+$cref/constructors/ad_ctor/x/$$ 
 are now listed in the documentation.
-$pre
-
-$$
-If you get a compiler error on an assignment to an 
-$icode%AD%<%Base%>%$$ variable (that used to work)
-try an explicit conversion to 
-$icode Base$$ or $codei%AD<%Base%>%$$ before the assignment.
-A deprecated alternative is to make this constructor implicit using the
-$cref/cppad_implicit_ctor_from_any_type
-	/cmake
-	/cppad_implicit_ctor_from_any_type
-/$$
-option during the install procedure.
 
 $head 12-26$$
 Document fact that
