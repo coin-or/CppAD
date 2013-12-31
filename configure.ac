@@ -203,21 +203,21 @@ else
 fi
 
 
-dnl Are we including an explicit constructor from any type -----------
-AC_MSG_CHECKING([--with-explicit_ctor])
-AC_ARG_WITH(explicit_ctor, 
+dnl Are we including an implicit constructor from any type -----------
+AC_MSG_CHECKING([--with-implicit_ctor])
+AC_ARG_WITH(implicit_ctor, 
 	AC_HELP_STRING(
-		[--with-explicit_ctor], 
-		[include an explicit AD<Base> constructor from any type]
+		[--with-implicit_ctor], 
+		[include an implicit AD<Base> constructor from any type]
 	),
-	[explicit_ctor="yes"],
-	[explicit_ctor="no"]
+	[implicit_ctor="yes"],
+	[implicit_ctor="no"]
 )
-AC_MSG_RESULT([$explicit_ctor])
-if test "$explicit_ctor" = "yes" ; then
-	AC_SUBST(cppad_explicit_ctor_from_any_type, "1")
+AC_MSG_RESULT([$implicit_ctor])
+if test "$implicit_ctor" = "yes" ; then
+	AC_SUBST(cppad_implicit_ctor_from_any_type, "1")
 else
-	AC_SUBST(cppad_explicit_ctor_from_any_type, "0")
+	AC_SUBST(cppad_implicit_ctor_from_any_type, "0")
 fi
 
 dnl The postfix directiory corresponding to CppAD ------------------------

@@ -105,7 +105,7 @@ cmake %%                                                                      \
 	-D cppad_sparse_list=%cppad_sparse_list%                                 \
 	-D cppad_tape_id_type=%cppad_tape_id_type%                               \
 	-D cppad_tape_addr_type=%cppad_tape_addr_type%                           \
-	-D cppad_explicit_ctor_from_any_type=%cppad_explicit_ctor_from_any_type% \
+	-D cppad_implicit_ctor_from_any_type=%cppad_implicit_ctor_from_any_type% \
 	\
 	..
 %$$
@@ -339,14 +339,17 @@ $cref/size_par/seq_property/size_text/$$,
 $cref/size_par/seq_property/size_par/$$,
 $cref/size_par/seq_property/size_VecAD/$$.
 
-$head cppad_explicit_ctor_from_any_type$$
+$head cppad_implicit_ctor_from_any_type$$
 $index ctor, implicit or explicit$$
 $index implicit, ctor$$
 $index explicit, ctor$$
-The default the $cref/constructor/ad_ctor/x/Other Types/$$ (type conversion)
-from any type to $codei%AD<%Base%>%$$ is implicit.
-If $icode cppad_explicit_ctor_from_any_type$$ is $code YES$$,
-this constructor is explicit.
+The default value for $icode cppad_implicit_ctor_from_any_type$$ is $code NO$$.
+If it is $code YES$$, there is a 
+$cref/deprecated/ad_ctor/x/deprecated/$$
+implicit type constructor (type conversion)
+from any type to $codei%AD<%Base%>%$$.
+Otherwise this constructor is 
+$cref/explicit/ad_ctor/x/explicit/$$.
 
 
 $children%
