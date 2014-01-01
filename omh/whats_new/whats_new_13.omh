@@ -66,9 +66,9 @@ $head 12-29$$
 $list number$$
 The include file 
 $cref cppad_eigen.hpp$$ now automatically includes $code cppad.hpp$$.
+$lnext
 There was a problem with this automation
-when $code eigen$$ was used for the cppad
-$cref testvector$$.
+when $code eigen$$ was used for the cppad $cref testvector$$.
 This has been fixed.
 $lnext
 There was a problem with deprecated $cref InstallUnix$$
@@ -81,7 +81,7 @@ $head 12-27$$
 The constructor from an arbitrary type to $codei%AD<%Base%>%$$ was
 implicit, but there was no specification to this effect.
 The caused problems when using CppAD with 
-$cref/eigen/eigen_prefix/$$.
+$cref/eigen 3.2/eigen_prefix/$$ (scheduled to be fixed in 3.3).
 The default for this constructor has been changed to be 
 $cref/explicit/ad_ctor/x/explicit/$$.
 In addition, other 
@@ -90,10 +90,14 @@ are now listed in the documentation.
 $pre
 
 $$
-If you get a compiler error on an assignment to an 
-$icode%AD%<%Base%>%$$ variable (that used to work)
-try an explicit conversion to 
-$icode Base$$ or $codei%AD<%Base%>%$$ before the assignment.
+If you get a compiler error on an constructor / assignment of the form
+$codei%
+	AD<%Base%> x = %y%
+%$$
+(that used to work) try changing the constructor call to
+$codei%
+	AD<%Base%>( %y% )
+%$$
 A deprecated alternative is to make this constructor implicit using the
 $cref/cppad_implicit_ctor_from_any_type
 	/cmake

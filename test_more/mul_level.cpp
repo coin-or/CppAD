@@ -35,13 +35,10 @@ bool One(void)
 	typedef CppAD::AD<ADdouble> ADDdouble;   // for two levels of taping
 	size_t n = 2;                            // dimension for example
 
-	CPPAD_TESTVECTOR(ADdouble)   a_x(n);
-	CPPAD_TESTVECTOR(ADDdouble) aa_x(n);
-
 	// value of the independent variables
-	a_x[0] = 2.; a_x[1] = 3.;
-	Independent(a_x);
-	aa_x[0] = a_x[0]; aa_x[1] = a_x[1];
+	CPPAD_TESTVECTOR(ADDdouble) aa_x(n);
+	aa_x[0] = 1.; aa_x[1] = 3.; // test conversion double to AD< AD<double> >
+	aa_x[0] = 2. * aa_x[0];     // test double * AD< AD<double> >
 	CppAD::Independent(aa_x);
 
 	// compute the function f(x) = 2 * x[0] * x[1]
@@ -49,7 +46,12 @@ bool One(void)
 	aa_f[0] = 2. * aa_x[0] * aa_x[1];
 	CppAD::ADFun<ADdouble> F(aa_x, aa_f);
 
-	// re-evaluate f(2, 3) (must get proper deepedence on a_x).
+	// value of the independent variables
+	CPPAD_TESTVECTOR(ADdouble)   a_x(n);
+	a_x[0] = 2.; a_x[1] = 3.;
+	Independent(a_x);
+
+	// re-evaluate f(2, 3) (must get deepedence on a_x).
 	size_t p = 0;
 	CPPAD_TESTVECTOR(ADdouble) a_fp(1);
 	a_fp    = F.Forward(p, a_x);

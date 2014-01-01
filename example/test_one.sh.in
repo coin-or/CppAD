@@ -41,7 +41,7 @@ sed < example.cpp > test_one.cpp \
 #
 if echo "$fun" | grep 'eigen' > /dev/null
 then
-	cxxflags='-g -Wall -ansi -pedantic-errors -Wno-long-long'
+	cxxflags='-g -Wall -ansi -pedantic-errors'
 else
 	cxxflags='-g -Wall -ansi -pedantic-errors -Wshadow'
 fi
