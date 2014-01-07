@@ -3,7 +3,7 @@
 # define CPPAD_OPTIMIZE_INCLUDED
 
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-13 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-14 Bradley M. Bell
 
 CppAD is distributed under multiple licenses. This distribution is under
 the terms of the 
@@ -1856,7 +1856,7 @@ void optimize_run(
 			if( user_i == 0 )
 			{	// call users function for this operation
 				user_atom->set_id(user_id);
-# if NDEBUG
+# ifndef NDEBUG
 				if( user_set )
 				{	user_atom->
 						rev_sparse_jac(user_q, user_r_set, user_s_set);
