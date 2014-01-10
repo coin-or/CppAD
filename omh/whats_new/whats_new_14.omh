@@ -1,0 +1,33 @@
+$Id$
+/* --------------------------------------------------------------------------
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-14 Bradley M. Bell
+
+CppAD is distributed under multiple licenses. This distribution is under
+the terms of the 
+                    Eclipse Public License Version 1.0.
+
+A copy of this license is included in the COPYING file of this distribution.
+Please visit http://www.coin-or.org/CppAD/ for information on other licenses.
+-------------------------------------------------------------------------- */
+
+$begin whats_new_14$$
+$dollar @$$
+$spell
+	CppAD
+$$
+
+$section CppAD Changes and Additions During 2014$$
+
+$head Introduction$$
+This section contains a list of the changes to CppAD during 2014
+(in reverse order by date).
+The purpose of this section is to
+assist you in learning about changes between various versions of CppAD.
+
+$head 01-10$$
+The change on $cref/2013-12-27/whats_new_13/12-27/$$
+caused a conversion error in $cref atan2$$ when it was used with
+$code AD< AD<double> >$$ arguments (and other similar cases).
+This has been fixed.
+
+$end

@@ -3,7 +3,7 @@
 # define CPPAD_ATAN2_INCLUDED
 
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-12 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-14 Bradley M. Bell
 
 CppAD is distributed under multiple licenses. This distribution is under
 the terms of the 
@@ -100,9 +100,9 @@ AD<Base> atan2 (const AD<Base> &y, const AD<Base> &x)
 	AD<Base> beta;
 	AD<Base> theta;
 
-	AD<Base> zero = 0;
-	AD<Base> pi2  = 2. * atan(1.);
-	AD<Base> pi   = 2. * pi2;
+	AD<Base> zero(0.);
+	AD<Base> pi2(2. * atan(1.));
+	AD<Base> pi(2. * pi2);
 
 	AD<Base> ax = abs(x);
 	AD<Base> ay = abs(y);

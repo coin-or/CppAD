@@ -1,6 +1,6 @@
 /* $Id$ */
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-12 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-14 Bradley M. Bell
 
 CppAD is distributed under multiple licenses. This distribution is under
 the terms of the 
@@ -17,7 +17,20 @@ Old example and test now just used for validation testing.
 # include <cppad/cppad.hpp>
 # include <cmath>
 
-bool Atan2(void)
+namespace { // begin empty namespace
+
+bool ad_ad(void)
+{	bool ok = true;
+	using CppAD::AD;
+
+	AD< AD<double> > x(2.), y(2.);
+	AD< AD<double> > z = atan2(y, x);
+	CppAD::NearEqual( Value( Value(z) ), atan(1.), 1e-10, 1e-10 );
+
+	return ok;
+}
+
+bool general(void)
 {	bool ok = true;
 
 	using CppAD::atan;
@@ -86,6 +99,16 @@ bool Atan2(void)
 		jfac *= (j + 1);
 		value = 0.;
 	}
+
+	return ok;
+}
+
+} // end empty namespace
+
+bool atan2(void)
+{	bool ok = true;
+	ok     &= ad_ad();
+	ok     &= general();
 
 	return ok;
 }
