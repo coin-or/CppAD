@@ -14,6 +14,8 @@ $begin whats_new_14$$
 $dollar @$$
 $spell
 	CppAD
+	cppad
+	datadir
 $$
 
 $section CppAD Changes and Additions During 2014$$
@@ -23,6 +25,17 @@ This section contains a list of the changes to CppAD during 2014
 (in reverse order by date).
 The purpose of this section is to
 assist you in learning about changes between various versions of CppAD.
+
+$head 01-21$$
+The destination directory for the
+$cref/cppad documentation/cmake/cppad_documentation/$$ 
+used to be one of the following:
+$codei%
+	%prefix%/%datadir%/doc/cppad-%version%
+	%prefix%/%datadir%/doc/%postfix%cppad-%version%
+%$$
+This has been changed by dropping the $icode version$$ number
+at the end of the directory name.
 
 $head 01-10$$
 The change on $cref/2013-12-27/whats_new_13/12-27/$$

@@ -1,6 +1,6 @@
 $Id$
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-13 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-14 Bradley M. Bell
 
 CppAD is distributed under multiple licenses. This distribution is under
 the terms of the 
@@ -252,7 +252,7 @@ If $icode cppad_documentation$$ is $code YES$$,
 and $cref/cmake_install_postfix/cmake/cmake_install_postfix/$$ is empty,
 the CppAD XML documentation files will be installed in the directory
 $codei%
-	%prefix%/%datadir%/doc/cppad-%version%
+	%prefix%/%datadir%/doc/cppad
 %$$
 where $icode prefix$$ is
 $cref/cmake_install_prefix/cmake/cmake_install_prefix/$$,
@@ -262,7 +262,7 @@ and $icode version$$ is the version number for this copy of CppAD.
 If $icode cmake_install_postfix$$ is non-empty,
 the CppAD XML documentation files will be installed in the directory
 $codei%
-	%prefix%/%datadir%/doc/%postfix%/cppad-%version%
+	%prefix%/%datadir%/doc/%postfix%/cppad
 %$$
 where $icode postfix$$ is $icode cmake_install_postfix$$.
 
