@@ -13,6 +13,7 @@ Please visit http://www.coin-or.org/CppAD/ for information on other licenses.
 $begin cmake$$
 $escape $$
 $spell
+	pkgconfig
 	ctor
 	op
 	arg
@@ -43,6 +44,7 @@ $spell
 	fadbad
 	sacado
 	datadir
+	docdir
 	includedirs
 	libdirs
 	cxx 
@@ -72,7 +74,7 @@ $head CMake Command$$
 $index cmake, command$$
 $index configure, cppad$$
 $index cppad, configure$$
-The command below assume that $code cmake$$ is in your execution
+The command below assumes that $code cmake$$ is in your execution
 path. If not, you can put the path to $code cmake$$ in font the command. 
 Only the $code cmake$$ command and the path to the distribution directory
 ($code ..$$ at the end of the command below) are required.
@@ -88,6 +90,7 @@ cmake %%                                                                      \
 	-D cmake_install_prefix=%cmake_install_prefix%                           \
 	-D cmake_install_includedirs=%cmake_install_includedirs%                 \
 	-D cmake_install_datadir=%cmake_install_datadir%                         \
+	-D cmake_install_docdir=%cmake_install_docdir%                           \
 	-D cmake_install_libdirs=%cmake_install_libdirs%                         \
 	-D cmake_install_postfix=%cmake_install_postfix%                         \
 	\
@@ -98,7 +101,6 @@ cmake %%                                                                      \
 	-D sacado_prefix=%sacado_prefix%                                         \
 	\
 	-D cppad_cxx_flags=%cppad_cxx_flags%                                     \
-	-D cppad_documentation=%cppad_documentation%                             \
 	\
 	-D cppad_testvector=%cppad_testvector%                                   \
 	-D cppad_max_num_threads=%cppad_max_num_threads%                         \
@@ -163,13 +165,28 @@ where the data files will be installed.
 The default value for this directory is $code share$$.
 For example, if 
 $icode cmake_install_prefix$$ and
-$icode cmake_install_postfix$$ are not specified, and
-$icode cppad_documentation$$ is $code YES$$, 
-the file $code doc/cppad.xml$$ will be installed in the location
+$icode cmake_install_postfix$$ are not specified,
+the $cref pkgconfig$$ file $code cppad.pc$$ will be installed in the location
 $codei%
-	/usr/share/doc/cppad-%version%/cppad.xml
+	/usr/share/pkgconfig/cppad.pc
 %$$
-where $icode version$$ is version number for this copy of CppAD.
+
+$head cmake_install_docdir$$
+$index install, data directory$$
+$index data directory, install$$
+This is the directory is present, the documentation files are installed
+in this sub-directory below the $icode cmake_install_prefix$$.
+The default value for this directory is $code share$$.
+For example, if 
+$icode cmake_install_prefix$$ and
+$icode cmake_install_postfix$$ are not specified, and
+$codei%
+	-D cmake_install_docdir=share/doc
+%$$ 
+the file $code cppad.xml$$ will be installed in the location
+$codei%
+	/usr/share/doc/cppad/cppad.xml
+%$$
 
 $head cmake_install_libdirs$$
 $index install, library directories$$
@@ -204,12 +221,11 @@ For example,
 if $icode cmake_install_prefix$$ and
 $icode cmake_install_postfix$$ are not specified, and
 $codei%
-	-D cppad_documentation=YES
 	-D cmake_install_postfix=coin
 %$$
-the file $code cppad.xml$$ will be installed in the location
+the $cref pkgconfig$$ file $code cppad.pc$$ will be installed in the location
 $codei%
-	/usr/share/coin/doc/cppad-%version%/cppad.xml
+	/usr/share/coin/pkgconfig/cppad.pc
 %$$
 
 $head package_prefix$$
@@ -242,29 +258,6 @@ $cref/eigen/eigen_prefix/$$ and $cref/fadbad/fadbad_prefix/$$
 currently generate a lot of shadowed variable warnings.
 Hence the $code -Wshadow$$ flag is automatically removed when
 compiling examples and test that use these packages.
-
-$head cppad_documentation$$
-$index install, cppad documentation$$
-$index cppad, install documentation$$
-$index documentation, install$$
-The default value for $icode cppad_documentation$$ is $code NO$$.
-If $icode cppad_documentation$$ is $code YES$$,
-and $cref/cmake_install_postfix/cmake/cmake_install_postfix/$$ is empty,
-the CppAD XML documentation files will be installed in the directory
-$codei%
-	%prefix%/%datadir%/doc/cppad
-%$$
-where $icode prefix$$ is
-$cref/cmake_install_prefix/cmake/cmake_install_prefix/$$,
-$icode datadir$$ is
-$cref/cmake_install_datadir/cmake/cmake_install_datadir/$$,
-and $icode version$$ is the version number for this copy of CppAD. 
-If $icode cmake_install_postfix$$ is non-empty,
-the CppAD XML documentation files will be installed in the directory
-$codei%
-	%prefix%/%datadir%/doc/%postfix%/cppad
-%$$
-where $icode postfix$$ is $icode cmake_install_postfix$$.
 
 $head cppad_testvector$$
 See $tref cppad_testvector$$.

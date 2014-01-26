@@ -13,6 +13,8 @@ Please visit http://www.coin-or.org/CppAD/ for information on other licenses.
 $begin whats_new_14$$
 $dollar @$$
 $spell
+	cmake
+	docdir
 	CppAD
 	cppad
 	datadir
@@ -26,9 +28,24 @@ This section contains a list of the changes to CppAD during 2014
 The purpose of this section is to
 assist you in learning about changes between various versions of CppAD.
 
+$head 01-26$$
+The destination directory for the
+$cref/cppad documentation/cmake/cmake_install_docdir/$$
+is now set separately from the data directory
+using the $code cmake$$ option
+$codei%
+	-D cmake_install_docdir=%cmake_install_docdir%
+%$$
+This has increased the flexibility of the documentation installation
+and removed the need for the option
+$codei%
+	-D cppad_documentation=%yes_or_no%
+%$$
+which has been removed.
+	
 $head 01-21$$
 The destination directory for the
-$cref/cppad documentation/cmake/cppad_documentation/$$ 
+cppad documentation
 used to be one of the following:
 $codei%
 	%prefix%/%datadir%/doc/cppad-%version%

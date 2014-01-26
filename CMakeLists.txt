@@ -68,6 +68,11 @@ command_line_arg(cmake_install_datadir share STRING
 	"directory, below prefix, where cmake installs cppad data files"
 )
 # -----------------------------------------------------------------------------
+# cmake_install_docdir
+command_line_arg(cmake_install_docdir "" STRING 
+	"directory, below prefix, where cmake installs cppad documentation files"
+)
+# -----------------------------------------------------------------------------
 # cmake_install_includedirs
 command_line_arg(cmake_install_includedirs include STRING 
 	"directories, below prefix, where cmake installs include files"
@@ -97,9 +102,15 @@ command_line_arg(cppad_cxx_flags NOTFOUND STRING
 )
 # -----------------------------------------------------------------------------
 # cppad_documentation
-command_line_arg(cppad_documentation NO BOOL 
-	"install cppad documentation"
+command_line_arg(cppad_documentation "" STRING 
+	"install cppad documentation: use camke_install_docdir instead"
 )
+STRING(COMPARE NOTEQUAL "${cppad_documentation}" "" cppad_documentation_error)
+IF( cppad_documentation_error )
+	MESSAGE(FATAL_ERROR 
+"cppad_documentation is no longer an option, use cmake_install_docdir instead"
+	)
+ENDIF( cppad_documentation_error )
 # -----------------------------------------------------------------------------
 # External package prefixes
 #
@@ -159,6 +170,9 @@ STRING(REGEX REPLACE
 MESSAGE(STATUS "cppad_cxx_flags_fadbad = ${cppad_cxx_flags_fadbad}")
 # -----------------------------------------------------------------------------
 # cppad_abs_includedir, cppad_abs_libdir, cppad_abs_datadir, cppad_abs_docdir
+#
+# cppad_abs_docdir is not used if cmake_install_docdir is ""
+#
 IF ( cmake_install_postfix )
 	SET(cppad_abs_includedir 
 "${cmake_install_prefix}/${cppad_install_includedir}/${cmake_install_postfix}" 
@@ -173,7 +187,7 @@ IF ( cmake_install_postfix )
 		CACHE INTERNAL "cppad install data file directory" FORCE
 	)
 	SET(cppad_abs_docdir 
-"${cmake_install_prefix}/${cmake_install_datadir}/doc/${cmake_install_postfix}" 
+"${cmake_install_prefix}/${cmake_install_docdir}/${cmake_install_postfix}" 
 		CACHE INTERNAL "cppad install data file directory" FORCE
 	)
 ELSE ( cmake_install_postfix )
@@ -190,7 +204,7 @@ ELSE ( cmake_install_postfix )
 		CACHE INTERNAL "cppad install data file directory" FORCE
 	)
 	SET(cppad_abs_docdir 
-		"${cmake_install_prefix}/${cmake_install_datadir}/doc" 
+		"${cmake_install_prefix}/${cmake_install_docdir}" 
 		CACHE INTERNAL "cppad install data file directory" FORCE
 	)
 ENDIF ( cmake_install_postfix )
@@ -332,6 +346,7 @@ INSTALL(
 )
 #
 # During install copy doc direcrory to cppad_abs_docdir/cppad
+STRING( COMPARE NOTEQUAL "${cmake_install_docdir}" "" cppad_documentation )
 IF ( cppad_documentation )
 	INSTALL( DIRECTORY "doc/" DESTINATION ${cppad_abs_docdir}/cppad )
 ENDIF ( cppad_documentation )
