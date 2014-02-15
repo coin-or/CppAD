@@ -1,4 +1,5 @@
 #! /bin/bash -e
+# $Id$
 if [ "$1" != 'forward' ] && [ "$1" != 'reverse' ]
 then
  	echo 'usage: ./colpack.sh option'

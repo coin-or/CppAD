@@ -1,6 +1,6 @@
 /* $Id$ */
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-12 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-14 Bradley M. Bell
 
 CppAD is distributed under multiple licenses. This distribution is under
 the terms of the 
@@ -12,6 +12,7 @@ Please visit http://www.coin-or.org/CppAD/ for information on other licenses.
 /*
 $begin adolc_sparse_hessian.cpp$$
 $spell
+	boolsparsity
 	retape
 	hess
 	int int_n
@@ -53,6 +54,10 @@ $codep */
 # include <cppad/thread_alloc.hpp>
 # include <cppad/speed/sparse_hes_fun.hpp>
 
+// list of possible options
+extern bool global_memory, global_retape, global_atomic, global_optimize;
+extern bool global_boolsparsity;
+
 bool link_sparse_hessian(
 	size_t                           size     , 
 	size_t                           repeat   , 
@@ -61,10 +66,10 @@ bool link_sparse_hessian(
 	const CppAD::vector<size_t>     &col      ,
 	CppAD::vector<double>           &hessian  )
 {
-	// speed test global option values
-	extern bool global_retape, global_atomic, global_optimize;
-	if( global_atomic || global_optimize )
+	if( global_atomic )
 		return false; 
+	if( global_memory || global_optimize || global_boolsparsity )
+		return false;
 
 	// -----------------------------------------------------
 	// setup

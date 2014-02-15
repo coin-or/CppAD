@@ -1,6 +1,6 @@
 /* $Id$ */
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-13 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-14 Bradley M. Bell
 
 CppAD is distributed under multiple licenses. This distribution is under
 the terms of the 
@@ -47,6 +47,7 @@ Please visit http://www.coin-or.org/CppAD/ for information on other licenses.
 /*
 $begin speed_main$$
 $spell
+	boolsparsity
 	optionlist
 	underbar
 	alloc
@@ -139,6 +140,9 @@ This is a list of options that follow $icode seed$$ value.
 The order of the options does not matter and the list can be empty.
 Each option in the list, must be separate 
 command line argument to the main program. 
+The documentation below specifics how CppAD uses these options,
+see the examples in $cref speed_adolc$$ for how another package might
+uses these options.
 
 $subhead retape$$
 If the option $code retape$$ is present, the symbol
@@ -147,11 +151,11 @@ $codep
 $$
 is true and otherwise it is false.
 If this external symbol is true,
-every test must retape the 
+CppAD will retape the 
 $cref/operation sequence/glossary/Operation/Sequence/$$
 for each test repetition.
 If it is false,
-the AD package is allowed to use one taping of the operation
+CppAD will use one taping of the operation
 sequence for all the repetitions of that speed test.
 $pre
 
@@ -161,7 +165,7 @@ have a fixed operations sequence.
 The operation sequence for $code det_lu$$ 
 may be different for each repetition of the test because it
 depends on the matrix for which the determinant is being calculated. 
-For this reason,
+For this reason, the CppAD test
 $cref cppad_det_lu.cpp$$ returns false 
 (for test not implemented)
 when $code global_retape$$ is false.
@@ -173,11 +177,8 @@ $codep
 $$
 is true and otherwise it is false.
 If this external symbol is true,
-and the AD package has an optional way to spend time optimizing
-the operation sequence,
-this optimization should be done before doing computations.
-If it is false,
-this optimization should not be done.
+CppAD will optimize the operation sequence before doing computations.
+If it is false, this optimization should not be done.
 
 $subhead atomic$$
 If the option $code atomic$$ is present, the symbol
@@ -185,11 +186,10 @@ $codep
 	extern bool global_atomic
 $$
 is true and otherwise it is false.
-If this external symbol is true,
-and the AD package has a way to speed up the processing
-by adding $cref old_atomic$$ operations,
-this should be included in computations.
-If it is false, user defined atomic operations should not be done.
+If this external symbol is true, CppAD will use its user defined 
+$cref/atomic/atomic_base/$$ operation is used for the test.
+If no such atomic operation exists,
+and atomic is chosen, CppAD returns false for the test.
 
 $subhead memory$$
 If the option $code memory$$ is present, the symbol
@@ -201,9 +201,23 @@ If it is true, the CppAD
 $cref/hold_memory/ta_hold_memory/$$ routine will be called by 
 the main program before any of the tests are executed.
 This should make the CppAD $code thread_alloc$$ allocator faster.
-If it is false, standard memory allocation should be done by.
-Otherwise the test can use special memory allocation to try 
-and improve speed.
+If it is false, CppAD will used standard memory allocation. 
+
+$subhead boolsparsity$$
+If the option $code boolsparsity$$ is present, the symbol
+$codep
+	extern bool global_boolsparsity
+$$
+is true and otherwise it is false.
+If it is true, CppAD will use a
+$cref/vector of bool/glossary/Sparsity Pattern/Vector of Boolean/$$
+for its sparsity patterns during the
+$cref/sparse_jacobian/link_sparse_jacobian/$$ and
+$cref/sparse_hessian/link_sparse_hessian/$$ speed tests.
+Otherwise it will use a 
+$cref/vector of sets/glossary/Sparsity Pattern/Vector of Sets/$$.
+The other tests do not use sparsity patterns and so they return false
+if this option is chosen.
 
 $head Correctness Results$$
 An output line of the following form:
@@ -278,6 +292,7 @@ bool   global_retape;
 bool   global_optimize;
 bool   global_atomic;
 bool   global_memory;
+bool   global_boolsparsity;
 
 namespace {
 	using std::cout;
@@ -287,10 +302,11 @@ namespace {
 	void not_available_message(const char* test_name)
 	{	cout << AD_PACKAGE << ": " << test_name;
 		cout << " is not availabe with " << endl;
-		cout << "global_retape = " << global_retape;
-		cout << ", global_optimize = " << global_optimize;
-		cout << ", global_atomic = " << global_atomic;
-		cout << ", global_memory = " << global_memory;
+		cout << "retape = " << global_retape;
+		cout << ", optimize = " << global_optimize;
+		cout << ", atomic = " << global_atomic;
+		cout << ", memory = " << global_memory;
+		cout << ", boolsparsity = " << global_boolsparsity;
 		cout << endl;
 	}
 
@@ -328,6 +344,8 @@ namespace {
 			cout << "_atomic";
 		if( global_memory )
 			cout << "_memory";
+		if( global_boolsparsity )
+			cout << "_boolsparsity";
 		cout << "_ok = ";
 		if( ok )
 		{	cout << " true" << endl;
@@ -358,6 +376,8 @@ namespace {
 			cout << "_atomic";
 		if( global_memory )
 			cout << "_memory";
+		if( global_boolsparsity )
+			cout << "_boolsparsity";
 		cout << "_rate = ";
 
 		cout << std::fixed;
@@ -421,10 +441,11 @@ int main(int argc, char *argv[])
 		error = match == test_error;
 		iseed = std::atoi( argv[2] );
 		error |= iseed < 0;
-		global_retape   = false;
-		global_optimize = false;
-		global_atomic   = false;
-		global_memory   = false;
+		global_retape       = false;
+		global_optimize     = false;
+		global_atomic       = false;
+		global_memory       = false;
+		global_boolsparsity = false;
 		for(i = 3; i < size_t(argc); i++)
 		{	if( strcmp(argv[i], "retape") == 0 )
 				global_retape = true;
@@ -434,6 +455,8 @@ int main(int argc, char *argv[])
 				global_atomic = true;
 			else if( strcmp(argv[i], "memory") == 0 )
 				global_memory = true;
+			else if( strcmp(argv[i], "boolsparsity") == 0 )
+				global_boolsparsity = true;
 			else
 				error = true;
 		}
@@ -450,7 +473,8 @@ int main(int argc, char *argv[])
 		cout << " \"retape\",";
 		cout << " \"optimize\",";
 		cout << " \"atomic\",";
-		cout << " \"memory\"." << endl << endl;
+		cout << " \"memory\",";
+		cout << " \"boolsparsity\"." << endl << endl;
 		return 1;
 	}
 	if( global_memory )

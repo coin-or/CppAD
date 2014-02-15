@@ -1,6 +1,6 @@
 /* $Id$ */
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-13 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-14 Bradley M. Bell
 
 CppAD is distributed under multiple licenses. This distribution is under
 the terms of the 
@@ -12,6 +12,7 @@ Please visit http://www.coin-or.org/CppAD/ for information on other licenses.
 /*
 $begin cppad_sparse_hessian.cpp$$
 $spell
+	boolsparsity
 	namespace
 	Jac
 	retape
@@ -51,8 +52,8 @@ $codep */
 # include <cppad/speed/sparse_hes_fun.hpp>
 # include "print_optimize.hpp"
 
-// determines if we are using bool or set sparsity patterns
-# define USE_SET_SPARSITY 1
+// Note that CppAD uses global_memory at the main program level
+extern bool global_retape, global_atomic, global_optimize, global_boolsparsity;
 
 namespace {
 	using CppAD::vector;
@@ -102,6 +103,8 @@ bool link_sparse_hessian(
 	const CppAD::vector<size_t>&     col      ,
 	CppAD::vector<double>&           hessian  )
 {
+	if( global_atomic )
+		return false;
 	// -----------------------------------------------------
 	// setup
 	typedef vector<double>              DblVector;
@@ -129,19 +132,15 @@ bool link_sparse_hessian(
 	previous_size = size;
 
 	// declare sparsity pattern
-# if USE_SET_SPARSITY
-	SetVector sparsity(n);
-# else
-	typedef vector<bool>                BoolVector;
-	BoolVector sparsity(n * n);
-# endif
+	SetVector  set_sparsity(n);
+	BoolVector bool_sparsity(n * n);
+
 	// initialize all entries as zero
 	for(i = 0; i < n; i++)
 	{	for(j = 0; j < n; j++)
 			hessian[ i * n + j] = 0.;
 	}
 	// ------------------------------------------------------
-	extern bool global_retape;
 	if( global_retape) while(repeat--)
 	{	// choose a value for x 
 		CppAD::uniform_01(n, x);
@@ -157,20 +156,25 @@ bool link_sparse_hessian(
 		// create function object f : X -> Y
 		f.Dependent(a_x, a_y);
 
-		extern bool global_optimize;
 		if( global_optimize )
 		{	print_optimize(f, print, "cppad_sparse_hessian_optimize", size);
 			print = false;
 		}
 
 		// calculate the Hessian sparsity pattern for this function
-		calc_sparsity(sparsity, f);
+		if( global_boolsparsity )
+			calc_sparsity(bool_sparsity, f);
+		else
+			calc_sparsity(set_sparsity, f);
 
 		// structure that holds some of work done by SparseHessian
 		CppAD::sparse_hessian_work work;
 
 		// calculate this Hessian at this x
-		f.SparseHessian(x, w, sparsity, row, col, hes, work);
+		if( global_boolsparsity)
+			f.SparseHessian(x, w, bool_sparsity, row, col, hes, work);
+		else
+			f.SparseHessian(x, w, set_sparsity, row, col, hes, work);
 		for(k = 0; k < K; k++)
 		{	hessian[ row[k] * n + col[k] ] = hes[k];
 			hessian[ col[k] * n + row[k] ] = hes[k];
@@ -191,14 +195,16 @@ bool link_sparse_hessian(
 		// create function object f : X -> Y
 		f.Dependent(a_x, a_y);
 
-		extern bool global_optimize;
 		if( global_optimize )
 		{	print_optimize(f, print, "cppad_sparse_hessian_optimize", size);
 			print = false;
 		}
 
 		// calculate the Hessian sparsity pattern for this function
-		calc_sparsity(sparsity, f);
+		if( global_boolsparsity)
+			calc_sparsity(bool_sparsity, f);
+		else
+			calc_sparsity(set_sparsity, f);
 
 		// declare structure that holds some of work done by SparseHessian
 		CppAD::sparse_hessian_work work;
@@ -208,7 +214,10 @@ bool link_sparse_hessian(
 			CppAD::uniform_01(n, x);
 
 			// calculate sparsity at this x
-			f.SparseHessian(x, w, sparsity, row, col, hes, work);
+			if( global_boolsparsity )
+				f.SparseHessian(x, w, bool_sparsity, row, col, hes, work);
+			else
+				f.SparseHessian(x, w, set_sparsity, row, col, hes, work);
 
 			for(k = 0; k < K; k++)
 			{	hessian[ row[k] * n + col[k] ] = hes[k];

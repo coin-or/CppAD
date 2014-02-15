@@ -1,6 +1,6 @@
 /* $Id$ */
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-12 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-14 Bradley M. Bell
 
 CppAD is distributed under multiple licenses. This distribution is under
 the terms of the 
@@ -15,6 +15,7 @@ Please visit http://www.coin-or.org/CppAD/ for information on other licenses.
 /*
 $begin adolc_sparse_jacobian.cpp$$
 $spell
+	boolsparsity
 	adouble
 	int int_n
 	cppad.hpp
@@ -51,6 +52,10 @@ $codep */
 # include <cppad/speed/uniform_01.hpp>
 # include <cppad/speed/sparse_jac_fun.hpp>
 
+// list of possible options
+extern bool global_memory, global_retape, global_atomic, global_optimize;
+extern bool global_boolsparsity;
+
 bool link_sparse_jacobian(
 	size_t                     size     , 
 	size_t                     repeat   , 
@@ -60,9 +65,9 @@ bool link_sparse_jacobian(
 	CppAD::vector<size_t>     &col      ,
 	CppAD::vector<double>     &jacobian )
 {
-	// speed test global option values
-	extern bool global_retape, global_atomic, global_optimize;
-	if( global_atomic || global_optimize )
+	if( global_atomic )
+		return false; 
+	if( global_memory || global_optimize )
 		return false; 
 
 	// -----------------------------------------------------
@@ -91,12 +96,17 @@ bool link_sparse_jacobian(
 	// function value in double
 	DblVector y = thread_alloc::create_array<double>(m, capacity);
 
+	
 	// options that control sparse_jac
 	int        options[4];
-	options[0] = 0; // sparsity pattern by index domains
-	options[1] = 0; // safe mode
-	options[2] = 0; // not used if options[0] == 0
-	options[3] = 0; // forward mode (column compression)
+	extern bool global_boolsparsity;
+	if( global_boolsparsity )
+		options[0] = 1;  // sparsity by propagation of bit pattern
+	else
+		options[0] = 0;  // sparsity pattern by index domains
+	options[1] = 0; // (0 = safe mode, 1 = tight mode)
+	options[2] = 0; // automatic detect forward/reverse (if options[0]==1)
+	options[3] = 0; // (0 = column compression, 1 = row compression)
 
 	// structure that holds some of the work done by sparse_jac
 	int        nnz;                   // number of non-zero values

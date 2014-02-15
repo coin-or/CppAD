@@ -1,6 +1,6 @@
 /* $Id$ */
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-12 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-14 Bradley M. Bell
 
 CppAD is distributed under multiple licenses. This distribution is under
 the terms of the 
@@ -12,6 +12,7 @@ Please visit http://www.coin-or.org/CppAD/ for information on other licenses.
 /*
 $begin adolc_det_minor.cpp$$
 $spell
+	boolsparsity
 	thread_alloc
 	retape
 	cppad
@@ -49,6 +50,10 @@ $codep */
 # include <cppad/speed/det_by_minor.hpp>
 # include <cppad/speed/uniform_01.hpp>
 
+// list of possible options
+extern bool global_memory, global_retape, global_atomic, global_optimize;
+extern bool global_boolsparsity;
+
 bool link_det_minor(
 	size_t                     size     , 
 	size_t                     repeat   , 
@@ -56,8 +61,9 @@ bool link_det_minor(
 	CppAD::vector<double>     &gradient )
 {
 	// speed test global option values
-	extern bool global_retape, global_atomic, global_optimize;
-	if( global_atomic || global_optimize )
+	if( global_atomic || global_boolsparsity )
+		return false; 
+	if( global_memory || global_optimize )
 		return false; 
 
 	// -----------------------------------------------------

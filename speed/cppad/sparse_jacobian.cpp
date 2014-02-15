@@ -1,6 +1,6 @@
 /* $Id$ */
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-13 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-14 Bradley M. Bell
 
 CppAD is distributed under multiple licenses. This distribution is under
 the terms of the 
@@ -12,6 +12,7 @@ Please visit http://www.coin-or.org/CppAD/ for information on other licenses.
 /*
 $begin cppad_sparse_jacobian.cpp$$
 $spell
+	boolsparsity
 	namespace
 	retape
 	work work
@@ -51,8 +52,8 @@ $codep */
 # include <cppad/speed/sparse_jac_fun.hpp>
 # include "print_optimize.hpp"
 
-// determines if we are using bool or set sparsity patterns
-# define USE_SET_SPARSITY 1
+// Note that CppAD uses global_memory at the main program level
+extern bool global_retape, global_atomic, global_optimize, global_boolsparsity;
 
 namespace {
 	using CppAD::vector;
@@ -89,6 +90,8 @@ bool link_sparse_jacobian(
 	CppAD::vector<size_t>     &col      ,
 	CppAD::vector<double>     &jacobian )
 {
+	if( global_atomic )
+		return false;
 	// -----------------------------------------------------
 	// setup
 	typedef vector< std::set<size_t> >  SetVector;
@@ -111,19 +114,15 @@ bool link_sparse_jacobian(
 	previous_size = size;
 
 	// declare sparsity pattern
-# if USE_SET_SPARSITY
-	SetVector sparsity(m);
-# else
-	typedef vector<bool>  BoolVector;
-	BoolVector sparsity(m * n);
-# endif
+	SetVector  set_sparsity(m);
+	BoolVector bool_sparsity(m * n);
+
 	// initialize all entries as zero
 	for(i = 0; i < m; i++)
 	{	for(j = 0; j < n; j++)
 			jacobian[ i * n + j ] = 0.;
 	}
 	// ------------------------------------------------------
-	extern bool global_retape;
 	if( global_retape ) while(repeat--)
 	{	// choose a value for x 
 		CppAD::uniform_01(n, x);
@@ -139,21 +138,26 @@ bool link_sparse_jacobian(
 		// create function object f : X -> Y
 		f.Dependent(a_x, a_y);
 
-		extern bool global_optimize;
 		if( global_optimize )
 		{	print_optimize(f, print, "cppad_sparse_jacobian_optimize", size);
 			print = false;
 		}
 
 		// calculate the Jacobian sparsity pattern for this function
-		calc_sparsity(sparsity, f);
+		if( global_boolsparsity )
+			calc_sparsity(bool_sparsity, f);
+		else
+			calc_sparsity(set_sparsity, f);
 
 		// structure that holds some of the work done by SparseJacobian
 		CppAD::sparse_jacobian_work work;
 
 		// calculate the Jacobian at this x
 		// (use forward mode because m > n ?)
-		f.SparseJacobianForward(x, sparsity, row, col, jac, work);
+		if( global_boolsparsity)
+			f.SparseJacobianForward(x, bool_sparsity, row, col, jac, work);
+		else
+			f.SparseJacobianForward(x, set_sparsity, row, col, jac, work);
 		for(k = 0; k < K; k++)
 			jacobian[ row[k] * n + col[k] ] = jac[k];
 	}
@@ -172,14 +176,16 @@ bool link_sparse_jacobian(
 		// create function object f : X -> Y
 		f.Dependent(a_x, a_y);
 
-		extern bool global_optimize;
 		if( global_optimize )
 		{	print_optimize(f, print, "cppad_sparse_jacobian_optimize", size);
 			print = false;
 		}
 
 		// calculate the Jacobian sparsity pattern for this function
-		calc_sparsity(sparsity, f);
+		if( global_boolsparsity )
+			calc_sparsity(bool_sparsity, f);
+		else
+			calc_sparsity(set_sparsity, f);
 
 		// structure that holds some of the work done by SparseJacobian
 		CppAD::sparse_jacobian_work work;
@@ -190,7 +196,14 @@ bool link_sparse_jacobian(
 
 			// calculate the Jacobian at this x
 			// (use forward mode because m > n ?)
-			f.SparseJacobianForward(x, sparsity, row, col, jac, work);
+			if( global_boolsparsity )
+				f.SparseJacobianForward(
+					x, bool_sparsity, row, col, jac, work
+				);
+			else
+				f.SparseJacobianForward(
+					x, set_sparsity, row, col, jac, work
+				);
 			for(k = 0; k < K; k++)
 				jacobian[ row[k] * n + col[k] ] = jac[k];
 		}

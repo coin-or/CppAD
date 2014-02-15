@@ -1,6 +1,6 @@
 /* $Id$ */
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-12 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-14 Bradley M. Bell
 
 CppAD is distributed under multiple licenses. This distribution is under
 the terms of the 
@@ -12,6 +12,7 @@ Please visit http://www.coin-or.org/CppAD/ for information on other licenses.
 /*
 $begin cppad_poly.cpp$$
 $spell
+	boolsparsity
 	retape
 	coef
 	ddp
@@ -53,6 +54,9 @@ $codep */
 # include <cppad/speed/uniform_01.hpp>
 # include "print_optimize.hpp"
 
+// Note that CppAD uses global_memory at the main program level
+extern bool global_retape, global_atomic, global_optimize, global_boolsparsity;
+
 bool link_poly(
 	size_t                     size     , 
 	size_t                     repeat   , 
@@ -61,8 +65,7 @@ bool link_poly(
 	CppAD::vector<double>     &ddp      )  // second derivative w.r.t z  
 {
 	// speed test global option values
-	extern bool global_retape, global_atomic, global_optimize;
-	if( global_atomic )
+	if( global_atomic || global_boolsparsity )
 		return false;
 
 	// -----------------------------------------------------
@@ -146,7 +149,6 @@ bool link_poly(
 		// create function object f : A -> detA
 		f.Dependent(Z, P);
 
-		extern bool global_optimize;
 		if( global_optimize )
 		{	print_optimize(f, print, "cppad_poly_optimize", size);
 			print = false;

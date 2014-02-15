@@ -1,6 +1,6 @@
 /* $Id$ */
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-13 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-14 Bradley M. Bell
 
 CppAD is distributed under multiple licenses. This distribution is under
 the terms of the 
@@ -12,6 +12,7 @@ Please visit http://www.coin-or.org/CppAD/ for information on other licenses.
 /*
 $begin cppad_mat_mul.cpp$$
 $spell
+	boolsparsity
 	resize
 	nr
 	nc
@@ -50,6 +51,9 @@ $codep */
 # include <cppad/example/matrix_mul.hpp>
 # include "print_optimize.hpp"
 
+// Note that CppAD uses global_memory at the main program level
+extern bool global_retape, global_atomic, global_optimize, global_boolsparsity;
+
 bool link_mat_mul(
 	size_t                           size     , 
 	size_t                           repeat   , 
@@ -58,9 +62,8 @@ bool link_mat_mul(
 	CppAD::vector<double>&           dz
 )
 {
-	// speed test global option values
-	extern bool global_retape, global_atomic, global_optimize;
-
+	if( global_boolsparsity )
+		return false;
 	// -----------------------------------------------------
 	// setup
 	typedef CppAD::AD<double>           ADScalar; 

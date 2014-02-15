@@ -1,7 +1,7 @@
 #! /bin/bash -e
 # $Id$
 # -----------------------------------------------------------------------------
-# CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-13 Bradley M. Bell
+# CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-14 Bradley M. Bell
 #
 # CppAD is distributed under multiple licenses. This distribution is under
 # the terms of the
@@ -127,9 +127,10 @@ do
 	sed -i $archive_name/$file \
 -e 's/Eclipse Public License Version 1.0/GNU General Public License Version 3/' 
 	#
-	if ! grep "GNU General Public License Version 3" $archive_name/$file > /dev/null
+	if ! grep "GNU General Public License Version 3" $archive_name/$file \
+		> /dev/null
 	then
-		if [ "$name" != "config.h.in" ]
+		if [ "$name" != 'config.h.in' ] && [ "$name" != 'colpack.sh' ]
 		then
 			echo "Cannot change EPL to GPL for $archive_name/$file"
 			exit 1
