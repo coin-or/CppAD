@@ -70,7 +70,6 @@ bool link_sparse_hessian(
 		return false; 
 	if( global_memory || global_optimize || global_boolsparsity )
 		return false;
-
 	// -----------------------------------------------------
 	// setup
 	typedef unsigned int*    SizeVector;

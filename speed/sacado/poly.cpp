@@ -12,6 +12,7 @@ Please visit http://www.coin-or.org/CppAD/ for information on other licenses.
 /*
 $begin sacado_poly.cpp$$
 $spell
+	boolsparsity
 	onetape
 	cppad
 	cpp
@@ -55,6 +56,10 @@ $codep */
 # include <cppad/speed/uniform_01.hpp>
 # include <Sacado.hpp>
 
+// list of possible options
+extern bool global_memory, global_onetape, global_atomic, global_optimize;
+extern bool global_boolsparsity;
+
 bool link_poly(
 	size_t                     size     , 
 	size_t                     repeat   , 
@@ -62,11 +67,10 @@ bool link_poly(
 	CppAD::vector<double>     &z        ,  // polynomial argument value
 	CppAD::vector<double>     &ddp      )  // second derivative w.r.t z  
 {
-	// speed test global option values
-	extern bool global_onetape, global_atomic, global_optimize;
-	if( global_onetape || global_atomic || global_optimize )
+	if( global_atomic || global_boolsparsity )
 		return false;
-
+	if( global_memory || global_onetape || global_optimize )
+		return false;
 	// -----------------------------------------------------
 	// setup
 	typedef Sacado::Tay::Taylor<double>  ADScalar;

@@ -50,7 +50,6 @@ $codep */
 extern bool global_memory, global_onetape, global_atomic, global_optimize;
 extern bool global_boolsparsity;
 
-
 bool link_ode(
 	size_t                     size       ,
 	size_t                     repeat     ,

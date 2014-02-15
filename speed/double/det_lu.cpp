@@ -1,6 +1,6 @@
 /* $Id$ */
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-12 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-14 Bradley M. Bell
 
 CppAD is distributed under multiple licenses. This distribution is under
 the terms of the 
@@ -12,6 +12,8 @@ Please visit http://www.coin-or.org/CppAD/ for information on other licenses.
 /*
 $begin double_det_lu.cpp$$
 $spell
+	onetape
+	boolsparsity
 	bool
 	cppad
 	hpp
@@ -39,12 +41,18 @@ $codep */
 # include <cppad/speed/det_by_lu.hpp>
 # include <cppad/speed/uniform_01.hpp>
 
+// Note that CppAD uses global_memory at the main program level
+extern bool
+	global_onetape, global_atomic, global_optimize, global_boolsparsity;
+
 bool link_det_lu(
 	size_t                           size     , 
 	size_t                           repeat   , 
 	CppAD::vector<double>           &matrix   ,
 	CppAD::vector<double>           &det      )
 {
+	if(global_onetape||global_atomic||global_optimize||global_boolsparsity)
+		return false;
 	// -----------------------------------------------------
 	// setup
 	CppAD::det_by_lu<double>  Det(size);

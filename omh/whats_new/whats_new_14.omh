@@ -48,6 +48,9 @@ $lnext
 The documentation, and example source code, for all the speed
 $cref/options/speed_main/option_list/$$ was improved
 (made clearer).
+$lnext
+Improve the success rate for 
+$cref speed_test.cpp$$ and $cref time_test.cpp$$.
 $lend
 
 $head 01-26$$

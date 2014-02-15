@@ -1,6 +1,6 @@
 /* $Id$ */
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-12 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-14 Bradley M. Bell
 
 CppAD is distributed under multiple licenses. This distribution is under
 the terms of the 
@@ -62,7 +62,7 @@ namespace { // empty namespace
 		{	i = size_;
 			while(i)
 			{	--i;
-				c[i] = a[i] + b[i];
+				c[i] = a[i] * b[i];
 			}
 		}
 		// teardown
@@ -75,11 +75,11 @@ namespace { // empty namespace
 bool time_test(void)
 {	bool ok = true;
 
-	// use a small amount of time (we do not need accurate results)
-	double time_min = .2; 
+	// minimum amount of time to run test
+	double time_min = 0.5; 
 
 	// size of first test case
-	size_ = 10;
+	size_ = 20;
 
 	// run the first test case
 	double time_first = CppAD::time_test(test, time_min);
@@ -91,8 +91,10 @@ bool time_test(void)
 	double time_second = CppAD::time_test(test, time_min);
 
 	// for this case, time should be linear w.r.t size
-	double rel_diff = std::abs(1. - 2. * time_first / time_second );
-	ok             &= (rel_diff <= .1);
+	double rel_diff = 1. - 2. * time_first / time_second;
+	ok             &= (std::fabs(rel_diff) <= .1);
+	if( ! ok )
+		std::cout << std::endl << "rel_diff = " << rel_diff  << std::endl;
  
 	return ok;
 }

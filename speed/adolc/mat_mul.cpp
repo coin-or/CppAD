@@ -65,7 +65,6 @@ bool link_mat_mul(
 		return false; 
 	if( global_memory || global_atomic || global_optimize )
 		return false;
-
 	// -----------------------------------------------------
 	// setup
 	typedef adouble    ADScalar;

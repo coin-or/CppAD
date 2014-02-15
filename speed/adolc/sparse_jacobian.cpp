@@ -69,7 +69,6 @@ bool link_sparse_jacobian(
 		return false; 
 	if( global_memory || global_optimize )
 		return false; 
-
 	// -----------------------------------------------------
 	// setup
 	typedef unsigned int*    SizeVector;

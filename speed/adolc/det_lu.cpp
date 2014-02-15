@@ -66,7 +66,6 @@ bool link_det_lu(
 		return false;
 	if( global_memory || global_optimize )
 		return false;
-
 	// -----------------------------------------------------
 	// setup
 	int tag  = 0;         // tape identifier

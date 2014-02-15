@@ -56,12 +56,12 @@ $codep */
 # include <cppad/poly.hpp>
 # include <cppad/vector.hpp>
 # include <cppad/thread_alloc.hpp>
+# include "alloc_mat.hpp"
 
 // list of possible options
 extern bool global_memory, global_onetape, global_atomic, global_optimize;
 extern bool global_boolsparsity;
 
-# include "alloc_mat.hpp"
 bool link_poly(
 	size_t                     size     , 
 	size_t                     repeat   , 
@@ -73,7 +73,6 @@ bool link_poly(
 		return false;
 	if( global_memory || global_optimize )
 		return false;
-
 	// -----------------------------------------------------
 	// setup
 	size_t i;

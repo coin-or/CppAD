@@ -65,7 +65,6 @@ bool link_det_minor(
 		return false; 
 	if( global_memory || global_optimize )
 		return false; 
-
 	// -----------------------------------------------------
 	// setup
 	typedef adouble    ADScalar;

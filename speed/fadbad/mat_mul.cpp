@@ -14,6 +14,7 @@ $begin fadbad_mat_mul.cpp$$
 $spell
 	badiff
 	sq
+	boolsparsity
 	onetape
 	typedef
 	diff
@@ -45,6 +46,11 @@ $codep */
 # include <cppad/speed/mat_sum_sq.hpp>
 # include <cppad/speed/uniform_01.hpp>
 # include <cppad/vector.hpp>
+
+// list of possible options
+extern bool global_memory, global_onetape, global_atomic, global_optimize;
+extern bool global_boolsparsity;
+
 bool link_mat_mul(
 	size_t                           size     , 
 	size_t                           repeat   , 
@@ -53,10 +59,10 @@ bool link_mat_mul(
 	CppAD::vector<double>&           dz       )
 {
 	// speed test global option values
-	extern bool global_onetape, global_atomic, global_optimize;
-	if( global_onetape || global_atomic || global_optimize )
+	if( global_boolsparsity )
+		return false; 
+	if( global_memory || global_onetape || global_atomic || global_optimize )
 		return false;
-
 	// The correctness check for this test is failing, so abort (for now).
 	return false;
 

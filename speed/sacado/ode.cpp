@@ -12,6 +12,7 @@ Please visit http://www.coin-or.org/CppAD/ for information on other licenses.
 /*
 $begin sacado_ode.cpp$$
 $spell
+	boolsparsity
 	jacobian
 	Sacado
 	cppad
@@ -45,6 +46,10 @@ $codep */
 # include <cppad/speed/uniform_01.hpp>
 # include <cppad/speed/ode_evaluate.hpp>
 
+// list of possible options
+extern bool global_memory, global_onetape, global_atomic, global_optimize;
+extern bool global_boolsparsity;
+
 bool link_ode(
 	size_t                     size       ,
 	size_t                     repeat     ,
@@ -52,16 +57,16 @@ bool link_ode(
 	CppAD::vector<double>      &jacobian
 )
 {
+	// speed test global option values
+	if( global_atomic || global_boolsparsity )
+		return false;
+	if( global_memory || global_onetape || global_optimize )
+		return false;
+	// -------------------------------------------------------------
+	// setup
 	assert( x.size() == size );
 	assert( jacobian.size() == size * size );
 
-	// speed test global option values
-	extern bool global_onetape, global_atomic, global_optimize;
-	if( global_onetape || global_atomic || global_optimize )
-		return false;
-
-	// -------------------------------------------------------------
-	// setup
 	typedef Sacado::Fad::DFad<double>  ADScalar;
 	typedef CppAD::vector<ADScalar>    ADVector;
 

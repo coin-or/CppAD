@@ -12,6 +12,7 @@ Please visit http://www.coin-or.org/CppAD/ for information on other licenses.
 /*
 $begin sacado_mat_mul.cpp$$
 $spell
+	boolsparsity
 	sq
 	onetape
 	typedef
@@ -44,6 +45,11 @@ $codep */
 # include <cppad/vector.hpp>
 # include <cppad/speed/mat_sum_sq.hpp>
 # include <cppad/speed/uniform_01.hpp>
+
+// list of possible options
+extern bool global_memory, global_onetape, global_atomic, global_optimize;
+extern bool global_boolsparsity;
+
 bool link_mat_mul(
 	size_t                           size     , 
 	size_t                           repeat   , 
@@ -52,10 +58,10 @@ bool link_mat_mul(
 	CppAD::vector<double>&           dz       )
 {
 	// speed test global option values
-	extern bool global_onetape, global_atomic, global_optimize;
-	if( global_onetape || global_atomic || global_optimize )
+	if( global_boolsparsity )
+		return false; 
+	if( global_memory || global_onetape || global_atomic || global_optimize )
 		return false;
-
 	// -----------------------------------------------------
 	// setup
 

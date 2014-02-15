@@ -24,10 +24,11 @@ $spell
 	cstring
 	cppad
 	hpp
+	boolsparsity
 	onetape
-        Fadbad
-        bool
-        CppAD
+	Fadbad
+	bool
+	CppAD
 $$
 
 $section Fadbad Speed: Ode$$
@@ -52,6 +53,10 @@ $codep */
 # include <cppad/speed/uniform_01.hpp>
 # include <cppad/speed/ode_evaluate.hpp>
 
+// list of possible options
+extern bool global_memory, global_onetape, global_atomic, global_optimize;
+extern bool global_boolsparsity;
+
 namespace fadbad {
 	// define fabs for use by ode_evaluate
 	fadbad::F<double> fabs(const fadbad::F<double>& x)
@@ -65,16 +70,16 @@ bool link_ode(
 	CppAD::vector<double>      &jacobian
 )
 {
+	// speed test global option values
+	if( global_atomic || global_boolsparsity )
+		return false;
+	if( global_memory || global_onetape || global_optimize )
+		return false;
+	// -------------------------------------------------------------
+	// setup
 	assert( x.size() == size );
 	assert( jacobian.size() == size * size );
 
-	// speed test global option values
-	extern bool global_onetape, global_atomic, global_optimize;
-	if( global_onetape || global_atomic || global_optimize )
-		return false;
-
-	// -------------------------------------------------------------
-	// setup
 	typedef fadbad::F<double>       ADScalar;
 	typedef CppAD::vector<ADScalar> ADVector;
 
