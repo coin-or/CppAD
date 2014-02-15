@@ -1,6 +1,6 @@
 /* $Id$ */
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-12 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-14 Bradley M. Bell
 
 CppAD is distributed under multiple licenses. This distribution is under
 the terms of the 
@@ -12,7 +12,7 @@ Please visit http://www.coin-or.org/CppAD/ for information on other licenses.
 /*
 $begin sacado_det_minor.cpp$$
 $spell
-	retape
+	onetape
 	cppad
 	det
 	const
@@ -52,8 +52,8 @@ bool link_det_minor(
 	CppAD::vector<double>     &gradient )
 {
 	// speed test global option values
-	extern bool global_retape, global_atomic, global_optimize;
-	if( ! global_retape || global_optimize || global_atomic )
+	extern bool global_onetape, global_atomic, global_optimize;
+	if( global_onetape || global_optimize || global_atomic )
 		return false;
 
 	// -----------------------------------------------------

@@ -20,7 +20,7 @@ $spell
 	mul
 	hpp
 	bool
-	retape
+	onetape
 	sq
 	var
 	std::cout
@@ -52,7 +52,8 @@ $codep */
 # include "print_optimize.hpp"
 
 // Note that CppAD uses global_memory at the main program level
-extern bool global_retape, global_atomic, global_optimize, global_boolsparsity;
+extern bool
+	global_onetape, global_atomic, global_optimize, global_boolsparsity;
 
 bool link_mat_mul(
 	size_t                           size     , 
@@ -94,7 +95,7 @@ bool link_mat_mul(
 	previous_size = size;
 
 	// ------------------------------------------------------
-	if( global_retape ) while(repeat--)
+	if( ! global_onetape ) while(repeat--)
 	{	// get the next matrix
 		CppAD::uniform_01(n, x);
 		for( j = 0; j < n; j++)

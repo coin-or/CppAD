@@ -13,7 +13,7 @@ Please visit http://www.coin-or.org/CppAD/ for information on other licenses.
 $begin adolc_det_lu.cpp$$
 $spell
 	boolsparsity
-	retape
+	onetape
 	thread_alloc
 	cppad
 	fos
@@ -52,7 +52,7 @@ $codep */
 # include <cppad/track_new_del.hpp>
 
 // list of possible options
-extern bool global_memory, global_retape, global_atomic, global_optimize;
+extern bool global_memory, global_onetape, global_atomic, global_optimize;
 extern bool global_boolsparsity;
 
 bool link_det_lu(
@@ -62,7 +62,7 @@ bool link_det_lu(
 	CppAD::vector<double>     &gradient )
 {
 	// speed test global option values
-	if( ! global_retape || global_atomic || global_boolsparsity )
+	if( global_onetape || global_atomic || global_boolsparsity )
 		return false;
 	if( global_memory || global_optimize )
 		return false;

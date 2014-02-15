@@ -19,7 +19,7 @@ $spell
 	adouble
 	int int_n
 	cppad.hpp
-	retape
+	onetape
 	typedef
 	alloc
 	jac
@@ -53,7 +53,7 @@ $codep */
 # include <cppad/speed/sparse_jac_fun.hpp>
 
 // list of possible options
-extern bool global_memory, global_retape, global_atomic, global_optimize;
+extern bool global_memory, global_onetape, global_atomic, global_optimize;
 extern bool global_boolsparsity;
 
 bool link_sparse_jacobian(
@@ -120,7 +120,7 @@ bool link_sparse_jacobian(
 			jacobian[ i * n + j ] = 0.;
 	}
 	// ----------------------------------------------------------------------
-	if( global_retape ) while(repeat--)
+	if( ! global_onetape ) while(repeat--)
 	{	// choose a value for x
 		CppAD::uniform_01(n, x);
 

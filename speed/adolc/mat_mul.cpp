@@ -14,7 +14,7 @@ $begin adolc_mat_mul.cpp$$
 $spell
 	boolsparsity
 	sq
-	retape
+	onetape
 	adouble
 	typedef
 	alloc
@@ -50,7 +50,7 @@ $codep */
 # include <cppad/vector.hpp>
 
 // list of possible options
-extern bool global_memory, global_retape, global_atomic, global_optimize;
+extern bool global_memory, global_onetape, global_atomic, global_optimize;
 extern bool global_boolsparsity;
 
 bool link_mat_mul(
@@ -101,7 +101,7 @@ bool link_mat_mul(
 	double* grad = thread_alloc::create_array<double>(size_t(n), capacity);
 
 	// ----------------------------------------------------------------------
-	if( global_retape ) while(repeat--)
+	if( ! global_onetape ) while(repeat--)
 	{	// choose a matrix
 		CppAD::uniform_01(n, mat);
 

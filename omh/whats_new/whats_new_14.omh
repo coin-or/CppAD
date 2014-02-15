@@ -13,6 +13,10 @@ Please visit http://www.coin-or.org/CppAD/ for information on other licenses.
 $begin whats_new_14$$
 $dollar @$$
 $spell
+	onetape
+	retape
+	fadbad
+	sacado
 	boolsparsity
 	cmake
 	docdir
@@ -30,11 +34,21 @@ The purpose of this section is to
 assist you in learning about changes between various versions of CppAD.
 
 $head 02-15$$
+$list number$$
 The $cref/boolsparsity/speed_main/option_list/boolsparsity/$$ option
 was added to the $cref speed_main$$ program.
-In addition, the documentation for all the speed
-$cref/options/speed_main/option_list/$$ was improved.
-
+$lnext
+The $code retape$$ option what changed to 
+$cref/onetape/speed_main/option_list/onetape/$$ so that the default
+is to retape (option not present).
+This was done because 
+$cref/fadbad/fadbad_prefix/$$ and
+$cref/sacado/sacado_prefix/$$ always retape.
+$lnext
+The documentation, and example source code, for all the speed
+$cref/options/speed_main/option_list/$$ was improved
+(made clearer).
+$lend
 
 $head 01-26$$
 The destination directory for the

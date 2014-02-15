@@ -14,7 +14,7 @@ $begin adolc_poly.cpp$$
 $spell
 	boolsparsity
 	alloc
-	retape
+	onetape
 	coef
 	cppad
 	hos
@@ -58,7 +58,7 @@ $codep */
 # include <cppad/thread_alloc.hpp>
 
 // list of possible options
-extern bool global_memory, global_retape, global_atomic, global_optimize;
+extern bool global_memory, global_onetape, global_atomic, global_optimize;
 extern bool global_boolsparsity;
 
 # include "alloc_mat.hpp"
@@ -110,7 +110,7 @@ bool link_poly(
 	x[0][1] = 0.;  // second order
 
 	// ----------------------------------------------------------------------
-	if( global_retape ) while(repeat--)
+	if( ! global_onetape ) while(repeat--)
 	{	// choose an argument value
 		CppAD::uniform_01(1, z);
 

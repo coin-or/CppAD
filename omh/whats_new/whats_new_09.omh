@@ -1,6 +1,6 @@
 $Id$
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-12 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-14 Bradley M. Bell
 
 CppAD is distributed under multiple licenses. This distribution is under
 the terms of the 
@@ -282,7 +282,7 @@ that it uses a list of options instead of a boolean flag for each option.
 This will make it possible to add options in the future with out
 having to change all the existing tests because the options are now
 global variables instead of arguments to the speed test routines; for example,
-see $cref/retape/speed_main/option_list/retape/$$.
+see $code retape$$ speed test option.
 
 $subhead 08-10$$
 The routine for $cref/optimizing/optimize/$$ the operation sequence

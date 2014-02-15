@@ -1,6 +1,6 @@
 /* $Id$ */
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-12 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-14 Bradley M. Bell
 
 CppAD is distributed under multiple licenses. This distribution is under
 the terms of the 
@@ -14,7 +14,7 @@ $begin fadbad_mat_mul.cpp$$
 $spell
 	badiff
 	sq
-	retape
+	onetape
 	typedef
 	diff
 	Fadbad
@@ -53,8 +53,8 @@ bool link_mat_mul(
 	CppAD::vector<double>&           dz       )
 {
 	// speed test global option values
-	extern bool global_retape, global_atomic, global_optimize;
-	if( ! global_retape || global_atomic || global_optimize )
+	extern bool global_onetape, global_atomic, global_optimize;
+	if( global_onetape || global_atomic || global_optimize )
 		return false;
 
 	// The correctness check for this test is failing, so abort (for now).

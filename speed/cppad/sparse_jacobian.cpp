@@ -14,7 +14,7 @@ $begin cppad_sparse_jacobian.cpp$$
 $spell
 	boolsparsity
 	namespace
-	retape
+	onetape
 	work work
 	jac
 	CppAD
@@ -53,7 +53,8 @@ $codep */
 # include "print_optimize.hpp"
 
 // Note that CppAD uses global_memory at the main program level
-extern bool global_retape, global_atomic, global_optimize, global_boolsparsity;
+extern bool
+	global_onetape, global_atomic, global_optimize, global_boolsparsity;
 
 namespace {
 	using CppAD::vector;
@@ -123,7 +124,7 @@ bool link_sparse_jacobian(
 			jacobian[ i * n + j ] = 0.;
 	}
 	// ------------------------------------------------------
-	if( global_retape ) while(repeat--)
+	if( ! global_onetape ) while(repeat--)
 	{	// choose a value for x 
 		CppAD::uniform_01(n, x);
 		for(k = 0; k < n; k++)

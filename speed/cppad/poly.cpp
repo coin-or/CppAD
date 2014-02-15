@@ -13,7 +13,7 @@ Please visit http://www.coin-or.org/CppAD/ for information on other licenses.
 $begin cppad_poly.cpp$$
 $spell
 	boolsparsity
-	retape
+	onetape
 	coef
 	ddp
 	ADScalar
@@ -55,7 +55,8 @@ $codep */
 # include "print_optimize.hpp"
 
 // Note that CppAD uses global_memory at the main program level
-extern bool global_retape, global_atomic, global_optimize, global_boolsparsity;
+extern bool
+	global_onetape, global_atomic, global_optimize, global_boolsparsity;
 
 bool link_poly(
 	size_t                     size     , 
@@ -101,7 +102,7 @@ bool link_poly(
 	previous_size = size;
 
 	// --------------------------------------------------------------------
-	if( global_retape ) while(repeat--)
+	if( ! global_onetape ) while(repeat--)
 	{
 		// choose an argument value
 		CppAD::uniform_01(1, z);

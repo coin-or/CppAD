@@ -1,6 +1,6 @@
 $Id$
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-13 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-14 Bradley M. Bell
 
 CppAD is distributed under multiple licenses. This distribution is under
 the terms of the 
@@ -627,7 +627,7 @@ does not depend on the repetition; see
 $cref/p == 0/ode_evaluate/p/p == 0/$$ in its documentation.
 $lnext
 Use same argument for taping and derivative evaluation when
-$cref/retape/speed_main/option_list/retape/$$ is true.
+$code retape$$ speed test option is true.
 $lnext
 Implement the $icode%retape% == false%$$ option
 in $cref cppad_ode.cpp$$.
@@ -651,7 +651,7 @@ $cref cppad_sparse_jacobian.cpp$$
 to use
 the $icode row$$, $icode col$$ interface to $cref sparse_hessian$$.
 In addition, implement the speed test 
-$cref/retape/speed_main/option_list/retape/$$ option for these tests.
+$code retape$$ speed test option for these tests.
 
 $head 05-31$$
 Add the $cref cppad_print_optimize$$ routine to so that the corresponding
@@ -665,7 +665,7 @@ Change specifications for
 $cref link_sparse_hessian$$ so that the row and column indices are 
 inputs (instead of being chosen randomly by the test for each repetition).
 This enables use of the 
-$cref/retape/speed_main/option_list/retape/$$ option
+$code retape$$ speed test option
 during sparse Hessian speed tests.
 
 $head 05-29$$

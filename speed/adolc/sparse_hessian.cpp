@@ -13,7 +13,7 @@ Please visit http://www.coin-or.org/CppAD/ for information on other licenses.
 $begin adolc_sparse_hessian.cpp$$
 $spell
 	boolsparsity
-	retape
+	onetape
 	hess
 	int int_n
 	nnz
@@ -55,7 +55,7 @@ $codep */
 # include <cppad/speed/sparse_hes_fun.hpp>
 
 // list of possible options
-extern bool global_memory, global_retape, global_atomic, global_optimize;
+extern bool global_memory, global_onetape, global_atomic, global_optimize;
 extern bool global_boolsparsity;
 
 bool link_sparse_hessian(
@@ -116,7 +116,7 @@ bool link_sparse_hessian(
 			hessian[ i * n + j ] = 0.;
 	}
 	// ----------------------------------------------------------------------
-	if( global_retape ) while(repeat--)
+	if( ! global_onetape ) while(repeat--)
 	{	// choose a value for x
 		CppAD::uniform_01(n, x);
 

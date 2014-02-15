@@ -13,7 +13,7 @@ Please visit http://www.coin-or.org/CppAD/ for information on other licenses.
 $begin cppad_det_minor.cpp$$
 $spell
 	boolsparsity
-	retape
+	onetape
 	vector Vector
 	typedef
 	cppad
@@ -51,7 +51,8 @@ $codep */
 # include "print_optimize.hpp"
 
 // Note that CppAD uses global_memory at the main program level
-extern bool global_retape, global_atomic, global_optimize, global_boolsparsity;
+extern bool
+	global_onetape, global_atomic, global_optimize, global_boolsparsity;
 
 bool link_det_minor(
 	size_t                     size     , 
@@ -90,7 +91,7 @@ bool link_det_minor(
 	previous_size = size;
 
 	// ---------------------------------------------------------------------
-	if( global_retape ) while(repeat--)
+	if( ! global_onetape ) while(repeat--)
 	{
 		// choose a matrix
 		CppAD::uniform_01(n, matrix);

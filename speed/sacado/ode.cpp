@@ -1,6 +1,6 @@
 /* $Id$ */
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-13 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-14 Bradley M. Bell
 
 CppAD is distributed under multiple licenses. This distribution is under
 the terms of the 
@@ -17,7 +17,7 @@ $spell
 	cppad
 	hpp
 	bool
-	retape
+	onetape
 	CppAD
 	typedef
 	endif
@@ -56,8 +56,8 @@ bool link_ode(
 	assert( jacobian.size() == size * size );
 
 	// speed test global option values
-	extern bool global_retape, global_atomic, global_optimize;
-	if( ! global_retape || global_atomic || global_optimize )
+	extern bool global_onetape, global_atomic, global_optimize;
+	if( global_onetape || global_atomic || global_optimize )
 		return false;
 
 	// -------------------------------------------------------------

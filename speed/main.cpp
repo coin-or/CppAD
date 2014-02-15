@@ -47,13 +47,13 @@ Please visit http://www.coin-or.org/CppAD/ for information on other licenses.
 /*
 $begin speed_main$$
 $spell
+	onetape
 	boolsparsity
 	optionlist
 	underbar
 	alloc
 	mat_mul
 	retaped
-	retape
 	bool
 	ddp
 	cppad
@@ -144,19 +144,18 @@ The documentation below specifics how CppAD uses these options,
 see the examples in $cref speed_adolc$$ for how another package might
 uses these options.
 
-$subhead retape$$
-If the option $code retape$$ is present, the symbol
+$subhead onetape$$
+If the option $code onetape$$ is present, the symbol
 $codep
-	extern bool global_retape
+	extern bool global_onetape
 $$
 is true and otherwise it is false.
 If this external symbol is true,
-CppAD will retape the 
-$cref/operation sequence/glossary/Operation/Sequence/$$
-for each test repetition.
-If it is false,
 CppAD will use one taping of the operation
 sequence for all the repetitions of that speed test.
+Otherwise, the 
+$cref/operation sequence/glossary/Operation/Sequence/$$
+will be retaped for each test repetition.
 $pre
 
 $$
@@ -167,8 +166,8 @@ may be different for each repetition of the test because it
 depends on the matrix for which the determinant is being calculated. 
 For this reason, the CppAD test
 $cref cppad_det_lu.cpp$$ returns false 
-(for test not implemented)
-when $code global_retape$$ is false.
+(indicating that the test not implemented)
+when $code global_onetape$$ is true.
 
 $subhead optimize$$
 If the option $code optimize$$ is present, the symbol
@@ -288,7 +287,7 @@ CPPAD_DECLARE_SPEED(poly);
 CPPAD_DECLARE_SPEED(sparse_hessian);
 CPPAD_DECLARE_SPEED(sparse_jacobian);
 
-bool   global_retape;
+bool   global_onetape;
 bool   global_optimize;
 bool   global_atomic;
 bool   global_memory;
@@ -302,7 +301,7 @@ namespace {
 	void not_available_message(const char* test_name)
 	{	cout << AD_PACKAGE << ": " << test_name;
 		cout << " is not availabe with " << endl;
-		cout << "retape = " << global_retape;
+		cout << "onetape = " << global_onetape;
 		cout << ", optimize = " << global_optimize;
 		cout << ", atomic = " << global_atomic;
 		cout << ", memory = " << global_memory;
@@ -336,8 +335,8 @@ namespace {
 		ok = correct_case(false);
 # endif
 		cout << AD_PACKAGE << "_" << case_name;
-		if( global_retape )
-			cout << "_retape";
+		if( global_onetape )
+			cout << "_onetape";
 		if( global_optimize )
 			cout << "_optimize";
 		if( global_atomic )
@@ -368,8 +367,8 @@ namespace {
 		output(size_vec);
 		cout << endl;
 		cout << AD_PACKAGE << "_" << case_name;
-		if( global_retape )
-			cout << "_retape";
+		if( global_onetape )
+			cout << "_onetape";
 		if( global_optimize )
 			cout << "_optimize";
 		if( global_atomic )
@@ -441,14 +440,14 @@ int main(int argc, char *argv[])
 		error = match == test_error;
 		iseed = std::atoi( argv[2] );
 		error |= iseed < 0;
-		global_retape       = false;
+		global_onetape      = false;
 		global_optimize     = false;
 		global_atomic       = false;
 		global_memory       = false;
 		global_boolsparsity = false;
 		for(i = 3; i < size_t(argc); i++)
-		{	if( strcmp(argv[i], "retape") == 0 )
-				global_retape = true;
+		{	if( strcmp(argv[i], "onetape") == 0 )
+				global_onetape = true;
 			else if( strcmp(argv[i], "optimize") == 0 )
 				global_optimize = true;
 			else if( strcmp(argv[i], "atomic") == 0 )
@@ -470,7 +469,7 @@ int main(int argc, char *argv[])
 		cout << "seed choices: ";
 		cout << "a positive integer used as a random seed." << endl;
 		cout << "option choices: ";
-		cout << " \"retape\",";
+		cout << " \"onetape\",";
 		cout << " \"optimize\",";
 		cout << " \"atomic\",";
 		cout << " \"memory\",";

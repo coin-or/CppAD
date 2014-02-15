@@ -14,7 +14,7 @@ $begin adolc_det_minor.cpp$$
 $spell
 	boolsparsity
 	thread_alloc
-	retape
+	onetape
 	cppad
 	zos
 	fos
@@ -51,7 +51,7 @@ $codep */
 # include <cppad/speed/uniform_01.hpp>
 
 // list of possible options
-extern bool global_memory, global_retape, global_atomic, global_optimize;
+extern bool global_memory, global_onetape, global_atomic, global_optimize;
 extern bool global_boolsparsity;
 
 bool link_det_minor(
@@ -101,7 +101,7 @@ bool link_det_minor(
 	double* grad = thread_alloc::create_array<double>(size_t(n), capacity);
 
 	// ----------------------------------------------------------------------
-	if( global_retape ) while(repeat--)
+	if( ! global_onetape ) while(repeat--)
 	{	// choose a matrix
 		CppAD::uniform_01(n, mat);
 

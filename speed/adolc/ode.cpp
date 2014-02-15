@@ -23,7 +23,7 @@ $spell
 	Adolc
 	bool
 	CppAD
-	retape
+	onetape
 $$
 
 $section Adolc Speed: Ode$$
@@ -46,6 +46,10 @@ $codep */
 # include <cppad/speed/ode_evaluate.hpp>
 # include <cppad/speed/uniform_01.hpp>
 
+// list of possible options
+extern bool global_memory, global_onetape, global_atomic, global_optimize;
+extern bool global_boolsparsity;
+
 
 bool link_ode(
 	size_t                     size       ,
@@ -54,16 +58,16 @@ bool link_ode(
 	CppAD::vector<double>      &jac
 )
 {
+	// speed test global option values
+	if( global_atomic || global_boolsparsity )
+		return false;
+	if( global_memory || global_optimize )
+		return false;
+	// -------------------------------------------------------------
+	// setup
 	assert( x.size() == size );
 	assert( jac.size() == size * size );
 
-	// speed test global option values
-	extern bool global_retape, global_atomic, global_optimize;
-	if( global_atomic || global_optimize )
-		return false;
-
-	// -------------------------------------------------------------
-	// setup
 	typedef CppAD::vector<adouble> ADVector;
 	typedef CppAD::vector<double>  DblVector;
 
@@ -92,7 +96,7 @@ bool link_ode(
 		jac_ptr[i] = jac_raw + i * n;
 
 	// -------------------------------------------------------------
-	if( global_retape) while(repeat--)
+	if( ! global_onetape ) while(repeat--)
 	{ 	// choose next x value
 		uniform_01(n, x);
 
