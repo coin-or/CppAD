@@ -1,7 +1,7 @@
 #! /bin/bash -e
 # $Id$
 # -----------------------------------------------------------------------------
-# CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-13 Bradley M. Bell
+# CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-14 Bradley M. Bell
 #
 # CppAD is distributed under multiple licenses. This distribution is under
 # the terms of the 
@@ -105,24 +105,10 @@ fi
 echo_eval cd ADOL-C-$version
 # -----------------------------------------------------------------------------
 system=`uname | tr [A-Z] [a-z] | sed -e 's|\([a-z][a-z]*\).*|\1|'`
-if [ "$system" == 'cygwin' ] && [ "$version" == '2.3.0' ]
-then
-	# see http://list.coin-or.org/pipermail/adol-c/2012-April/000814.html
-	echo 'changing ADOL-C/src/adouble.cpp'
-	sed \
-		-e '/^double fmin(/,/^}/s|^|// |' \
-		-e '/^double fmax(/,/^}/s|^|// |' \
-		-i 'ADOL-C/src/adouble.cpp'
-	echo 'changing ADOL-C/src/adouble.h'
-	sed \
-		-e '/^double [A-Z_]* fmin(/s|^|// |' \
-		-e '/^double [A-Z_]* fmax(/s|^|// |' \
-		-i 'ADOL-C/src/adouble.h'
-fi
 # -----------------------------------------------------------------------------
 if which autoconf >& /dev/null
 then
-	ac_version=`autoconf --version | \
+	ac_version=`autoconf --version | sed -n -e '/^autoconf/p' | \
 		sed -e 's|[^0-9]*\([0-9.]*\)[.]\([0-9]*\).*|\1 * 100 + \2|' | bc`
 	if [ "$ac_version" -ge 267 ]
 	then

@@ -1,6 +1,6 @@
 # $Id$
 # -----------------------------------------------------------------------------
-# CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-12 Bradley M. Bell
+# CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-14 Bradley M. Bell
 #
 # CppAD is distributed under multiple licenses. This distribution is under
 # the terms of the 
@@ -44,7 +44,8 @@ cppad_SOURCES = \
 
 test: check
 	./cppad correct 123
-	./cppad correct 123 retape
+	./cppad correct 123 onetape
 	./cppad correct 123 optimize
 	./cppad correct 123 atomic
 	./cppad correct 123 memory
+	./cppad correct 123 boolsparsity
