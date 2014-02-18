@@ -3,7 +3,7 @@
 # define CPPAD_NAN_INCLUDED
 
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-13 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-14 Bradley M. Bell
 
 CppAD is distributed under multiple licenses. This distribution is under
 the terms of the 
@@ -185,8 +185,9 @@ bool hasnan(const Vector &v)
 	size_t i;
 	i   = v.size();
 	found_nan = false;
+	// on MS Visual Studio 2012, CppAD required in front of isnan ?
 	while(i--)
-		found_nan |= isnan(v[i]);
+		found_nan |= CppAD::isnan(v[i]);
 	return found_nan;
 }
 

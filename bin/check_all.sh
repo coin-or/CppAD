@@ -1,7 +1,7 @@
 #! /bin/bash -e
 # $Id$
 # -----------------------------------------------------------------------------
-# CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-13 Bradley M. Bell
+# CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-14 Bradley M. Bell
 #
 # CppAD is distributed under multiple licenses. This distribution is under
 # the terms of the
@@ -59,6 +59,7 @@ echo "bin/package.sh"
 bin/package.sh
 # -----------------------------------------------------------------------------
 # choose which tarball to use for testing
+skip=''
 version=`bin/version.sh get`
 echo_log_eval cd build
 list=( `ls cppad-$version.*.tgz` )
@@ -90,45 +91,26 @@ echo_log_eval cd build
 # -----------------------------------------------------------------------------
 echo_log_eval make check 
 # -----------------------------------------------------------------------------
-skip=''
-list='
-	cppad_ipopt/example/example_ipopt_nlp
-	cppad_ipopt/speed/speed_ipopt_nlp
-	cppad_ipopt/test/test_more_ipopt_nlp
-	example/example
-	example/ipopt_solve/example_ipopt_solve
-	introduction/exp_apx/introduction_exp_apx
-	introduction/get_started/introduction_get_started
-	speed/example/speed_example
-	test_more/test_more
-'
-#
-# standard tests
-for program in $list
+for package in adolc eigen ipopt fadbad sacado
 do
-	if [ ! -e "$program" ]
+	dir=$HOME/prefix/$package
+	if [ ! -d "$dir" ]
 	then
-		skip="$skip $program"
-	else
-		echo_log_eval $program 
+		skip="$skip $package"
 	fi
 done
 #
-# speed tests
-for dir in adolc cppad double fadbad sacado profile
-do
-	program="speed/$dir/speed_${dir}"
-	if [ ! -e "$program" ]
-	then
-		skip="$skip $program"
-	else
-		echo_log_eval $program correct 54321 
-		echo_log_eval $program correct 54321 retape
-	fi
-done
+# extra speed tests
+echo_eval speed/cppad/speed_cppad correct 432 onetape
+echo_eval speed/cppad/speed_cppad correct 432 optimize
+echo_eval speed/cppad/speed_cppad correct 432 atomic
+echo_eval speed/cppad/speed_cppad correct 432 memory
+echo_eval speed/cppad/speed_cppad correct 432 boolsparsity
 #
-# multi_thread tests
+echo_eval speed/adolc/speed_adolc correct 432 onetape
+#
 # ----------------------------------------------------------------------------
+# extra multi_thread tests
 program_list=''
 for dir in bthread openmp pthread
 do

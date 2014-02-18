@@ -13,6 +13,7 @@ Please visit http://www.coin-or.org/CppAD/ for information on other licenses.
 $begin whats_new_14$$
 $dollar @$$
 $spell
+	isnan
 	onetape
 	retape
 	fadbad
@@ -32,6 +33,10 @@ This section contains a list of the changes to CppAD during 2014
 (in reverse order by date).
 The purpose of this section is to
 assist you in learning about changes between various versions of CppAD.
+
+$head 02-17$$
+Fix ambiguous call to $cref/isnan/nan/isnan/$$ 
+during MS Visual Studio 2012 compilation.
 
 $head 02-15$$
 $list number$$
