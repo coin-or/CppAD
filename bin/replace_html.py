@@ -1,7 +1,7 @@
 #! /bin/python
 # $Id$
 # -----------------------------------------------------------------------------
-# CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-13 Bradley M. Bell
+# CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-14 Bradley M. Bell
 #
 # CppAD is distributed under multiple licenses. This distribution is under
 # the terms of the
@@ -34,7 +34,7 @@ is the text that is replaced.
 '''
 narg = len(sys.argv)
 if narg != 3 :
-	msg = '\nExpected 1 but found ' + str(narg-1) + ' command line arguments.'
+	msg = '\nExpected 2 but found ' + str(narg-1) + ' command line arguments.'
 	sys.exit(usage + msg)
 old_file = sys.argv[1]
 new_file = sys.argv[2]
