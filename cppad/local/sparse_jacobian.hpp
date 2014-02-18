@@ -113,15 +113,16 @@ $codei%
 %$$
 (see $cref/VectorSize/sparse_jacobian/VectorSize/$$ below).
 They specify which rows and columns of $latex F^{(1)} (x)$$ are
-returned and in what order.
+computes and in what order.
 We use $latex K$$ to denote the value $icode%jac%.size()%$$
 which must also equal the size of $icode row$$ and $icode col$$.
 Furthermore,
 for $latex k = 0 , \ldots , K-1$$, it must hold that
 $latex row[k] < m$$ and $latex col[k] < n$$.
-In addition, 
-all of the $latex (row[k], col[k])$$ pairs must correspond to a true value
-in the sparsity pattern $icode p$$.
+All of the $latex (row[k], col[k])$$ pairs must correspond to an entry
+in the sparsity pattern $icode p$$,
+but not all such entries need be included
+in the $latex (row[k], col[k])$$ pairs. 
 
 $head jac$$
 The result $icode jac$$ has prototype
@@ -297,18 +298,25 @@ Note that we do not change the values in \c p_transpose,
 but is not \c const because we use its iterator facility.
 
 \param jac [out]
-is the vector of Jacobian values.
-It must have the same size as \c work.user_row. 
+is the vector of Jacobian values. We use \c K to denote the size of \c jac.
 The return value <code>jac[k]</code> is the partial of the
 <code>work.user_row[k]</code> range component of the function with respect
 the the <code>work.user_col[k]</code> domain component of its argument.
 
 \param work
 <code>work.user_row</code> [in] 
-is the users row index vector.
-\n 
+is a vector with size <code>K+1</code>,
+for <code>k < K</code>, <code>work.user_row[k]</code>
+is a copy of the user's row index values.
+for <code>k == K</code>, <code>work.user_row[k] = m</code>
+the number of rows in the Jacobian.
+\n
 <code>work.user_col</code> [in] 
-is the users column index vector.
+is a vector with size <code>K+1</code>,
+for <code>k < K</code>, <code>work.user_col[k]</code>
+is a copy of the user's column index values.
+for <code>k == K</code>, <code>work.user_col[k] = n</code>
+the number of columns in the Jacobian.
 \n 
 <code>work.sort_col</code> [in] 
 is an index vector that sorts \c work_user_col.
@@ -548,10 +556,18 @@ the the <code>work.user_col[k]</code> domain component of its argument.
 
 \param work
 <code>work.user_row</code> [in] 
-is the users row index vector.
-\n 
+is a vector with size <code>K+1</code>,
+for <code>k < K</code>, <code>work.user_row[k]</code>
+is a copy of the user's row index values.
+for <code>k == K</code>, <code>work.user_row[k] = m</code>
+the number of rows in the Jacobian.
+\n
 <code>work.user_col</code> [in] 
-is the users column index vector.
+is a vector with size <code>K+1</code>,
+for <code>k < K</code>, <code>work.user_col[k]</code>
+is a copy of the user's column index values.
+for <code>k == K</code>, <code>work.user_col[k] = n</code>
+the number of columns in the Jacobian.
 \n 
 <code>work.sort_row</code> [in] 
 is an index vector that sorts work_user_row.
