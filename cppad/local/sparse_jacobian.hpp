@@ -337,7 +337,6 @@ size_t ADFun<Base>::SparseJacobianFor(
 	VectorBase&           jac         ,
 	sparse_jacobian_work& work        )
 {
-	using   CppAD::vectorBool;
 	size_t i, j, k, ell;
 
 	CppAD::vector<size_t>& row(work.user_row);
@@ -377,10 +376,15 @@ size_t ADFun<Base>::SparseJacobianFor(
 		work.sort_col.resize(K+1);
 		index_sort(work.user_col, work.sort_col);
 
+		// initialize columns that are in the returned jacobian
+		CppAD::vector<bool> col_used(n);
+		for(j = 0; j < n; j++)
+				col_used[j] = false;
+
 		// rows and columns that are in the returned jacobian
-		VectorSet r_used, c_used;
-		r_used.resize(n, m);
-		c_used.resize(m, n);
+		VectorSet c2r_used, r2c_used;
+		c2r_used.resize(n, m);
+		r2c_used.resize(m, n);
 		k = 0;
 		while( k < K )
 		{	CPPAD_ASSERT_UNKNOWN( 
@@ -394,8 +398,9 @@ size_t ADFun<Base>::SparseJacobianFor(
 				"SparseJacobianForward: "
 				"an (row, col) pair is not in sparsity pattern."
 			);
-			r_used.add_element(col[sort_col[k]], row[sort_col[k]]);
-			c_used.add_element(row[sort_col[k]], col[sort_col[k]]);
+			col_used[ col[k] ] = true;
+			c2r_used.add_element(col[k], row[k]);
+			r2c_used.add_element(row[k], col[k]);
 			k++;
 		}
 	
@@ -406,7 +411,7 @@ size_t ADFun<Base>::SparseJacobianFor(
 		{	p_transpose.begin(j);
 			i = p_transpose.next_element();
 			while( i != p_transpose.end() )
-			{	if( ! c_used.is_element(i, j) )
+			{	if( ! r2c_used.is_element(i, j) )
 					not_used.add_element(i, j);
 				i = p_transpose.next_element();
 			}
@@ -414,65 +419,72 @@ size_t ADFun<Base>::SparseJacobianFor(
 
 		// initial coloring
 		color.resize(n);
+		ell = 0;
 		for(j = 0; j < n; j++)
-			color[j] = j;
+			if( col_used[j] )	
+				color[j] = ell++;
+			else	color[j] = n;
 	
 		// See GreedyPartialD2Coloring Algorithm Section 3.6.2 of
 		// Graph Coloring in Optimization Revisited by
 		// Assefaw Gebremedhin, Fredrik Maane, Alex Pothen
-		vectorBool forbidden(n);
-		for(j = 1; j < n; j++)
+		CppAD::vector<bool> forbidden(n);
+		for(j = 1; j < n; j++) if( color[j] < n )
 		{
 			// initial all colors as ok for this column
 			// (value of forbidden for ell > j does not matter)
-			for(ell = 0; ell <= j; ell++)
+			for(ell = 0; ell <= color[j]; ell++)
 				forbidden[ell] = false;
 	
+			// Forbid colors for which this row would destroy results:
+			//
 			// for each row that is non-zero for this column
 			p_transpose.begin(j);
 			i = p_transpose.next_element();
 			while( i != p_transpose.end() )
-			{	// for each column that this row uses
-				c_used.begin(i);
-				ell = c_used.next_element();
-				while( ell != c_used.end() )
+			{	// for each column that this used with this row
+				r2c_used.begin(i);
+				ell = r2c_used.next_element();
+				while( ell != r2c_used.end() )
 				{	// if this is not the same column, forbid its color
-					if( ell < j )
+					if( (ell < j) & (color[ell] < n) )
 						forbidden[ color[ell] ] = true;
-					ell = c_used.next_element();
+					ell = r2c_used.next_element();
 				}
 				i = p_transpose.next_element();
 			}
 	
+			// Forbid colors that destroy results needed for this row
+			//
 			// for each row that this column uses
-			r_used.begin(j);
-			i = r_used.next_element();
-			while( i != r_used.end() )
+			c2r_used.begin(j);
+			i = c2r_used.next_element();
+			while( i != c2r_used.end() )
 			{	// For each column that is non-zero for this row
 				// (the used columns have already been checked above).
 				not_used.begin(i);
 				ell = not_used.next_element();
 				while( ell != not_used.end() )
 				{	// if this is not the same column, forbid its color
-					if( ell < j )
+					if( (ell < j) & (color[ell] < n)  )
 						forbidden[ color[ell] ] = true;
 					ell = not_used.next_element();
 				}
-				i = r_used.next_element();
+				i = c2r_used.next_element();
 			}
 
 			// pick the color with smallest index
 			ell = 0;
 			while( forbidden[ell] )
 			{	ell++;
-				CPPAD_ASSERT_UNKNOWN( ell <= j );
+				CPPAD_ASSERT_UNKNOWN( ell <= color[j] );
 			}
 			color[j] = ell;
 		}
 	}
 	size_t n_color = 1;
-	for(ell = 0; ell < n; ell++) 
-		n_color = std::max(n_color, color[ell] + 1);
+	for(j = 0; j < n; j++) if( color[j] < n )
+		n_color = std::max(n_color, color[j] + 1);
 
 	// direction vector for calls to forward
 	VectorBase dx(n);
@@ -487,37 +499,27 @@ size_t ADFun<Base>::SparseJacobianFor(
 	// loop over colors
 	size_t n_sweep = 0;
 	for(ell = 0; ell < n_color; ell++)
-	{	bool any = false;
+	{	n_sweep++;
+
+		// combine all columns with this color
+		for(j = 0; j < n; j++)
+		{	dx[j] = zero;
+			if( color[j] == ell )
+				dx[j] = one;
+		}
+		// call forward mode for all these columns at once
+		dy = Forward(1, dx);
+
+		// set the corresponding components of the result
 		k = 0;
 		for(j = 0; j < n; j++) if( color[j] == ell )
-		{	// find first k such that col[sort_col[k]] has color ell
-			if( ! any )
-			{	while( col[sort_col[k]] < j )
-					k++;
-				any = col[sort_col[k]] == j;
-			}
-		}
-		if( any )
-		{	n_sweep++;
-			// combine all columns with this color
-			for(j = 0; j < n; j++)
-			{	dx[j] = zero;
-				if( color[j] == ell )
-					dx[j] = one;
-			}
-			// call forward mode for all these columns at once
-			dy = Forward(1, dx);
-
-			// set the corresponding components of the result
-			for(j = 0; j < n; j++) if( color[j] == ell )
-			{	// find first index in c for this column
-				while( col[sort_col[k]] < j )
-					k++;
-				// extract the row results for this column
-				while( col[sort_col[k]] == j ) 
-				{	jac[ sort_col[k] ] = dy[row[sort_col[k]]];
-					k++;
-				}
+		{	// find first k index for this column
+			while( col[sort_col[k]] < j )
+				k++;
+			// extract the row results for this column
+			while( col[sort_col[k]] == j ) 
+			{	jac[ sort_col[k] ] = dy[row[sort_col[k]]];
+				k++;
 			}
 		}
 	}
@@ -587,7 +589,6 @@ size_t ADFun<Base>::SparseJacobianRev(
 	VectorBase&           jac         ,
 	sparse_jacobian_work& work        )
 {
-	using   CppAD::vectorBool;
 	size_t i, j, k, ell;
 
 	CppAD::vector<size_t>& row(work.user_row);
@@ -626,10 +627,15 @@ size_t ADFun<Base>::SparseJacobianRev(
 		work.sort_row.resize(K+1);
 		index_sort(work.user_row, work.sort_row);
 
+		// initialize rows that are in the returned jacobian
+		CppAD::vector<bool> row_used(m);
+		for(i = 0; i < m; i++)
+				row_used[i] = false;
+
 		// rows and columns that are in the returned jacobian
-		VectorSet r_used, c_used;
-		r_used.resize(n, m);
-		c_used.resize(m, n);
+		VectorSet c2r_used, r2c_used;
+		c2r_used.resize(n, m);
+		r2c_used.resize(m, n);
 		k = 0;
 		while( k < K )
 		{	CPPAD_ASSERT_UNKNOWN( 
@@ -643,8 +649,9 @@ size_t ADFun<Base>::SparseJacobianRev(
 				"SparseJacobianReverse: "
 				"an (row, col) pair is not in sparsity pattern."
 			);
-			r_used.add_element(col[sort_row[k]], row[sort_row[k]]);
-			c_used.add_element(row[sort_row[k]], col[sort_row[k]]);
+			row_used[ row[k] ] = true;
+			c2r_used.add_element(col[k], row[k]);
+			r2c_used.add_element(row[k], col[k]);
 			k++;
 		}
 	
@@ -655,7 +662,7 @@ size_t ADFun<Base>::SparseJacobianRev(
 		{	p.begin(i);
 			j = p.next_element();
 			while( j != p.end() )
-			{	if( ! r_used.is_element(j , i) )
+			{	if( ! c2r_used.is_element(j , i) )
 					not_used.add_element(j, i);
 				j = p.next_element();
 			}
@@ -663,70 +670,75 @@ size_t ADFun<Base>::SparseJacobianRev(
 	
 		// initial coloring
 		color.resize(m);
+		ell = 0;
 		for(i = 0; i < m; i++)
-			color[i] = i;
+			if( row_used[i] )
+				color[i] = ell++;
+			else	color[i] = m;
 	
 		// See GreedyPartialD2Coloring Algorithm Section 3.6.2 of
 		// Graph Coloring in Optimization Revisited by
 		// Assefaw Gebremedhin, Fredrik Maane, Alex Pothen
-		vectorBool forbidden(m);
-		for(i = 1; i < m; i++)
+		CppAD::vector<bool> forbidden(m);
+		for(i = 1; i < m; i++) if( color[i] < m )
 		{
 			// initial all colors as ok for this row
 			// (value of forbidden for ell > i does not matter)
-			for(ell = 0; ell <= i; ell++)
+			for(ell = 0; ell <= color[i]; ell++)
 				forbidden[ell] = false;
 	
 			// -----------------------------------------------------
-			// Forbid colors for which this row would destroy results 
+			// Forbid colors for which this row would destroy results:
+			//
 			// for each column that is non-zero for this row
 			p.begin(i);
 			j = p.next_element();
 			while( j != p.end() )
-			{	// for each row that this column uses
-				r_used.begin(j);
-				ell = r_used.next_element();
-				while( ell != r_used.end() )
+			{	// for each row that is used with this column uses
+				c2r_used.begin(j);
+				ell = c2r_used.next_element();
+				while( ell != c2r_used.end() )
 				{	// if this is not the same row, forbid its color 
-					if( ell < i )
+					if( (ell < i) & (color[ell] < m) )
 						forbidden[ color[ell] ] = true;
-					ell = r_used.next_element();
+					ell = c2r_used.next_element();
 				}
 				j = p.next_element();
 			}
 
 	
 			// -----------------------------------------------------
-			// Forbid colors that would destroy results for this row.
+			// Forbid colors that destroy results needed for this row.
+			//
 			// for each column that this row uses
-			c_used.begin(i);
-			j = c_used.next_element();
-			while( j != c_used.end() )
+			r2c_used.begin(i);
+			j = r2c_used.next_element();
+			while( j != r2c_used.end() )
 			{	// For each row that is non-zero for this column
 				// (the used rows have already been checked above).
 				not_used.begin(j);
 				ell = not_used.next_element();
 				while( ell != not_used.end() )
 				{	// if this is not the same row, forbid its color 
-					if( ell < i )
+					if( (ell < i) & (color[ell] < m) )
 						forbidden[ color[ell] ] = true;
 					ell = not_used.next_element();
 				}
-				j = c_used.next_element();
+				j = r2c_used.next_element();
 			}
 
 			// pick the color with smallest index
 			ell = 0;
 			while( forbidden[ell] )
 			{	ell++;
-				CPPAD_ASSERT_UNKNOWN( ell <= i );
+				CPPAD_ASSERT_UNKNOWN( ell <= color[i] );
 			}
 			color[i] = ell;
 		}
 	}
 	size_t n_color = 1;
-	for(ell = 0; ell < m; ell++) 
-		n_color = std::max(n_color, color[ell] + 1);
+	for(i = 0; i < m; i++) if( color[i] < m ) 
+		n_color = std::max(n_color, color[i] + 1);
 
 	// weighting vector for calls to reverse
 	VectorBase w(m);
@@ -741,37 +753,27 @@ size_t ADFun<Base>::SparseJacobianRev(
 	// loop over colors
 	size_t n_sweep = 0;
 	for(ell = 0; ell < n_color; ell++)
-	{	bool any = false;
+	{	n_sweep++;
+
+		// combine all the rows with this color
+		for(i = 0; i < m; i++)
+		{	w[i] = zero;
+			if( color[i] == ell )
+				w[i] = one;
+		}
+		// call reverse mode for all these rows at once
+		dw = Reverse(1, w);
+
+		// set the corresponding components of the result
 		k = 0;
 		for(i = 0; i < m; i++) if( color[i] == ell )
-		{	// find first k such that row[sort_row[k]] has color ell
-			if( ! any )
-			{	while( row[sort_row[k]] < i )
-					k++;
-				any = row[sort_row[k]] == i;
-			}
-		}
-		if( any )
-		{	n_sweep++;
-			// combine all the rows with this color
-			for(i = 0; i < m; i++)
-			{	w[i] = zero;
-				if( color[i] == ell )
-					w[i] = one;
-			}
-			// call reverse mode for all these rows at once
-			dw = Reverse(1, w);
-
-			// set the corresponding components of the result
-			for(i = 0; i < m; i++) if( color[i] == ell )
-			{	// find first index in r for this row
-				while( row[sort_row[k]] < i )
-					k++;
-				// extract the row results for this row
-				while( row[sort_row[k]] == i ) 
-				{	jac[ sort_row[k] ] = dw[col[sort_row[k]]];
-					k++;
-				}
+		{	// find first k index for this row
+			while( row[sort_row[k]] < i )
+				k++;
+			// extract the row results for this row
+			while( row[sort_row[k]] == i ) 
+			{	jac[ sort_row[k] ] = dw[col[sort_row[k]]];
+				k++;
 			}
 		}
 	}
@@ -900,7 +902,7 @@ size_t ADFun<Base>::SparseJacobianForward(
 	}
 	if( work.color.size() != 0 )
 		for(size_t j = 0; j < n; j++) CPPAD_ASSERT_KNOWN(
-			work.color[j] < n,
+			work.color[j] <= n,
 			"SparseJacobianForward: invalid value in work."
 	);
 # endif
@@ -1034,7 +1036,7 @@ size_t ADFun<Base>::SparseJacobianReverse(
 	}
 	if( work.color.size() != 0 )
 		for(size_t i = 0; i < m; i++) CPPAD_ASSERT_KNOWN(
-			work.color[i] < m,
+			work.color[i] <= m,
 			"SparseJacobianReverse: invalid value in work."
 	);
 # endif
