@@ -235,6 +235,7 @@ $end
 ==============================================================================
 */
 # include <cppad/local/std_set.hpp>
+# include <cppad/local/sparse_color.hpp>
 
 namespace CppAD { // BEGIN_CPPAD_NAMESPACE
 /*!
@@ -324,7 +325,7 @@ size_t ADFun<Base>::SparseJacobianFor(
 	      VectorBase&            jac         ,
 	       sparse_jacobian_work& work        )
 {
-	size_t i, j, k, ell;
+	size_t j, k, ell;
 
 	CppAD::vector<size_t>& order(work.order);
 	CppAD::vector<size_t>& color(work.color);
@@ -355,103 +356,9 @@ size_t ADFun<Base>::SparseJacobianFor(
 		CPPAD_ASSERT_UNKNOWN( p_transpose.n_set() ==  n );
 		CPPAD_ASSERT_UNKNOWN( p_transpose.end() ==  m );
 
-		// initialize columns that are in the returned jacobian
-		CppAD::vector<bool> col_used(n);
-		for(j = 0; j < n; j++)
-				col_used[j] = false;
-
-		// rows and columns that are in the returned jacobian
-		VectorSet c2r_used, r2c_used;
-		c2r_used.resize(n, m);
-		r2c_used.resize(m, n);
-		for(k = 0; k < K; k++)
-		{	CPPAD_ASSERT_KNOWN(
-				p_transpose.is_element(col[k], row[k]) ,
-				"SparseJacobianForward: a (row, col) pair "
-				"is not in the sparsity pattern."
-			);
-			col_used[ col[k] ] = true;
-			c2r_used.add_element(col[k], row[k]);
-			r2c_used.add_element(row[k], col[k]);
-		}
-	
-		// given a row index, which columns are non-zero and not used
-		VectorSet not_used;
-		not_used.resize(m, n);
-		for(j = 0; j < n; j++)
-		{	p_transpose.begin(j);
-			i = p_transpose.next_element();
-			while( i != p_transpose.end() )
-			{	if( ! r2c_used.is_element(i, j) )
-					not_used.add_element(i, j);
-				i = p_transpose.next_element();
-			}
-		}
-
-		// initial coloring
+		// execute coloring algorithm
 		color.resize(n);
-		ell = 0;
-		for(j = 0; j < n; j++)
-			if( col_used[j] )	
-				color[j] = ell++;
-			else	color[j] = n;
-	
-		// See GreedyPartialD2Coloring Algorithm Section 3.6.2 of
-		// Graph Coloring in Optimization Revisited by
-		// Assefaw Gebremedhin, Fredrik Maane, Alex Pothen
-		CppAD::vector<bool> forbidden(n);
-		for(j = 1; j < n; j++) if( color[j] < n )
-		{
-			// initial all colors as ok for this column
-			// (value of forbidden for ell > j does not matter)
-			for(ell = 0; ell <= color[j]; ell++)
-				forbidden[ell] = false;
-	
-			// Forbid colors for which this row would destroy results:
-			//
-			// for each row that is non-zero for this column
-			p_transpose.begin(j);
-			i = p_transpose.next_element();
-			while( i != p_transpose.end() )
-			{	// for each column that this used with this row
-				r2c_used.begin(i);
-				ell = r2c_used.next_element();
-				while( ell != r2c_used.end() )
-				{	// if this is not the same column, forbid its color
-					if( (ell < j) & (color[ell] < n) )
-						forbidden[ color[ell] ] = true;
-					ell = r2c_used.next_element();
-				}
-				i = p_transpose.next_element();
-			}
-	
-			// Forbid colors that destroy results needed for this row
-			//
-			// for each row that this column uses
-			c2r_used.begin(j);
-			i = c2r_used.next_element();
-			while( i != c2r_used.end() )
-			{	// For each column that is non-zero for this row
-				// (the used columns have already been checked above).
-				not_used.begin(i);
-				ell = not_used.next_element();
-				while( ell != not_used.end() )
-				{	// if this is not the same column, forbid its color
-					if( (ell < j) & (color[ell] < n)  )
-						forbidden[ color[ell] ] = true;
-					ell = not_used.next_element();
-				}
-				i = c2r_used.next_element();
-			}
-
-			// pick the color with smallest index
-			ell = 0;
-			while( forbidden[ell] )
-			{	ell++;
-				CPPAD_ASSERT_UNKNOWN( ell <= color[j] );
-			}
-			color[j] = ell;
-		}
+		sparse_color(p_transpose, col, row, color);
 
 		// put sorting indices in color order
 		VectorSize key(K);
@@ -558,7 +465,7 @@ size_t ADFun<Base>::SparseJacobianRev(
 	      VectorBase&           jac         ,
 	      sparse_jacobian_work& work        )
 {
-	size_t i, j, k, ell;
+	size_t i, k, ell;
 
 	CppAD::vector<size_t>& order(work.order);
 	CppAD::vector<size_t>& color(work.color);
@@ -585,109 +492,13 @@ size_t ADFun<Base>::SparseJacobianRev(
 	Forward(0, x);
 
 	if( color.size() == 0 )
-	{	CPPAD_ASSERT_UNKNOWN( p.n_set() ==  m );
-		CPPAD_ASSERT_UNKNOWN( p.end() ==  n );
+	{
+		CPPAD_ASSERT_UNKNOWN( p.n_set() == m );
+		CPPAD_ASSERT_UNKNOWN( p.end()   == n );
 
-		// initialize rows that are in the returned jacobian
-		CppAD::vector<bool> row_used(m);
-		for(i = 0; i < m; i++)
-				row_used[i] = false;
-
-		// rows and columns that are in the returned jacobian
-		VectorSet c2r_used, r2c_used;
-		c2r_used.resize(n, m);
-		r2c_used.resize(m, n);
-		for(k = 0;  k < K; k++)
-		{	CPPAD_ASSERT_KNOWN(
-				p.is_element(row[k], col[k]) ,
-				"SparseJacobianReverse: a (row, col) pair "
-				"is not in the sparsity pattern."
-			);
-			row_used[ row[k] ] = true;
-			c2r_used.add_element(col[k], row[k]);
-			r2c_used.add_element(row[k], col[k]);
-		}
-	
-		// given a column index, which rows are non-zero and not used
-		VectorSet not_used;
-		not_used.resize(n, m);
-		for(i = 0; i < m; i++)
-		{	p.begin(i);
-			j = p.next_element();
-			while( j != p.end() )
-			{	if( ! c2r_used.is_element(j , i) )
-					not_used.add_element(j, i);
-				j = p.next_element();
-			}
-		}
-	
-		// initial coloring
+		// execute the coloring algorithm
 		color.resize(m);
-		ell = 0;
-		for(i = 0; i < m; i++)
-			if( row_used[i] )
-				color[i] = ell++;
-			else	color[i] = m;
-	
-		// See GreedyPartialD2Coloring Algorithm Section 3.6.2 of
-		// Graph Coloring in Optimization Revisited by
-		// Assefaw Gebremedhin, Fredrik Maane, Alex Pothen
-		CppAD::vector<bool> forbidden(m);
-		for(i = 1; i < m; i++) if( color[i] < m )
-		{
-			// initial all colors as ok for this row
-			// (value of forbidden for ell > i does not matter)
-			for(ell = 0; ell <= color[i]; ell++)
-				forbidden[ell] = false;
-	
-			// -----------------------------------------------------
-			// Forbid colors for which this row would destroy results:
-			//
-			// for each column that is non-zero for this row
-			p.begin(i);
-			j = p.next_element();
-			while( j != p.end() )
-			{	// for each row that is used with this column uses
-				c2r_used.begin(j);
-				ell = c2r_used.next_element();
-				while( ell != c2r_used.end() )
-				{	// if this is not the same row, forbid its color 
-					if( (ell < i) & (color[ell] < m) )
-						forbidden[ color[ell] ] = true;
-					ell = c2r_used.next_element();
-				}
-				j = p.next_element();
-			}
-
-	
-			// -----------------------------------------------------
-			// Forbid colors that destroy results needed for this row.
-			//
-			// for each column that this row uses
-			r2c_used.begin(i);
-			j = r2c_used.next_element();
-			while( j != r2c_used.end() )
-			{	// For each row that is non-zero for this column
-				// (the used rows have already been checked above).
-				not_used.begin(j);
-				ell = not_used.next_element();
-				while( ell != not_used.end() )
-				{	// if this is not the same row, forbid its color 
-					if( (ell < i) & (color[ell] < m) )
-						forbidden[ color[ell] ] = true;
-					ell = not_used.next_element();
-				}
-				j = r2c_used.next_element();
-			}
-
-			// pick the color with smallest index
-			ell = 0;
-			while( forbidden[ell] )
-			{	ell++;
-				CPPAD_ASSERT_UNKNOWN( ell <= color[i] );
-			}
-			color[i] = ell;
-		}
+		sparse_color(p, row, col, color);
 
 		// put sorting indices in color order
 		VectorSize key(K);
@@ -1128,7 +939,6 @@ VectorBase ADFun<Base>::SparseJacobian( const VectorBase& x )
 	}
 	return SparseJacobian(x, p);
 }
-
 
 /*! \} */
 } // END_CPPAD_NAMESPACE
