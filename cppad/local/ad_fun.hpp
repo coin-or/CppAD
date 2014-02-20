@@ -3,7 +3,7 @@
 # define CPPAD_AD_FUN_INCLUDED
 
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-13 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-14 Bradley M. Bell
 
 CppAD is distributed under multiple licenses. This distribution is under
 the terms of the 
@@ -196,21 +196,25 @@ private:
 	// ------------------------------------------------------------
 	// Forward mode version of SparseJacobian
 	// (see doxygen in sparse_jacobian.hpp)
-	template <class VectorBase, class VectorSet>
+	template <class VectorBase, class VectorSet, class VectorSize>
 	size_t SparseJacobianFor(
-		const VectorBase&     x               ,
-		VectorSet&            p_transpose     ,
-		VectorBase&           jac             ,
-		sparse_jacobian_work& work
+		const VectorBase&           x               ,
+		      VectorSet&            p_transpose     ,
+		const VectorSize&           row             ,
+		const VectorSize&           col             ,
+		      VectorBase&           jac             ,
+		      sparse_jacobian_work& work
 	);
 	// Reverse mode version of SparseJacobian
 	// (see doxygen in sparse_jacobian.hpp)
-	template <class VectorBase, class VectorSet>
+	template <class VectorBase, class VectorSet, class VectorSize>
 	size_t SparseJacobianRev(
-		const VectorBase&     x               ,
-		VectorSet&            p               ,
-		VectorBase&           jac             ,
-		sparse_jacobian_work& work
+		const VectorBase&           x               ,
+		      VectorSet&            p               ,
+		const VectorSize&           row             ,
+		const VectorSize&           col             ,
+		      VectorBase&           jac             ,
+		      sparse_jacobian_work& work
 	);
 	// ------------------------------------------------------------
 	// vector of bool version of SparseJacobian
