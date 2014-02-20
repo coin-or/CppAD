@@ -251,10 +251,6 @@ recomputed.
 */
 class sparse_jacobian_work {
 	public:
-		/// version of user row array with the extra value m at end
-		CppAD::vector<size_t> user_row;
-		/// version of user col array with the extra value n at end
-		CppAD::vector<size_t> user_col;
 		/// indices that sort the user arrays by row 
 		/// with the extra value K at the end
 		CppAD::vector<size_t> sort_row;
@@ -265,8 +261,7 @@ class sparse_jacobian_work {
 		CppAD::vector<size_t> color;
 		/// inform CppAD that this information needs to be recomputed
 		void clear(void)
-		{	user_row.clear();
-			user_col.clear();
+		{
 			sort_row.clear();
 			sort_col.clear();
 			color.clear();
@@ -307,12 +302,12 @@ It must have the same size as \c row.
 \param jac [out]
 is the vector of Jacobian values. We use \c K to denote the size of \c jac.
 The return value <code>jac[k]</code> is the partial of the
-<code>work.user_row[k]</code> range component of the function with respect
-the the <code>work.user_col[k]</code> domain component of its argument.
+<code>row[k]</code> range component of the function with respect
+the the <code>col[k]</code> domain component of its argument.
 
 \param work
 This structure contains information that is computed by \c SparseJacobainFor.
-If the sparsity pattern, \c user_row vector, or \c user_col vectors
+If the sparsity pattern, \c row vector, or \c col vectors
 are not the same between calls to \c SparseJacobianFor, 
 \c work.clear() must be called to reinitialize \c work.
 
@@ -550,12 +545,12 @@ It must have the same size as \c row.
 is the vector of Jacobian values.
 It must have the same size as \c row. 
 The return value <code>jac[k]</code> is the partial of the
-<code>work.user_row[k]</code> range component of the function with respect
-the the <code>work.user_col[k]</code> domain component of its argument.
+<code>row[k]</code> range component of the function with respect
+the the <code>col[k]</code> domain component of its argument.
 
 \param work
 This structure contains information that is computed by \c SparseJacobainFor.
-If the sparsity pattern, \c user_row vector, or \c user_col vectors
+If the sparsity pattern, \c row vector, or \c col vectors
 are not the same between calls to \c SparseJacobianFor, 
 \c work.clear() must be called to reinitialize \c work.
 
