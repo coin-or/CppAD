@@ -1,6 +1,6 @@
 # $Id$
 # -----------------------------------------------------------------------------
-# CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-13 Bradley M. Bell
+# CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-14 Bradley M. Bell
 #
 # CppAD is distributed under multiple licenses. This distribution is under
 # the terms of the 
@@ -233,6 +233,7 @@ nobase_myinclude_HEADERS =  \
 	cppad/local/sparse_binary_op.hpp \
 	cppad/local/sparse_hessian.hpp \
 	cppad/local/sparse.hpp \
+	cppad/local/sparse_color.hpp \
 	cppad/local/sparse_jacobian.hpp \
 	cppad/local/sparse_list.hpp \
 	cppad/local/sparse_pack.hpp \
