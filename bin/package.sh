@@ -114,6 +114,7 @@ file_list=`find . \
 	\( -name '*.sed' \) -or \
 	\( -name '*.sh' \) -or \
 	\( -name '*.txt' \) | sed \
+		-e '/\/new\//d' \
 		-e '/\.\/build\//d' \
 		-e '/bug\/build\//d' \
 		-e '/\/junk.sh$/d' \

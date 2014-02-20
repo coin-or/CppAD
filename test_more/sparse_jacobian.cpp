@@ -1,6 +1,6 @@
 /* $Id$ */
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-13 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-14 Bradley M. Bell
 
 CppAD is distributed under multiple licenses. This distribution is under
 the terms of the 
@@ -318,7 +318,7 @@ bool reverse_bool(void)
 		s[i * m + i] = true;
 	}
 	p   = f.RevSparseJac(m, s);
-	jac = f.SparseJacobian(x);
+	jac = f.SparseJacobian(x, p);
 	for(k = 0; k < 12; k++)
 		ok &=  NearEqual(check[k], jac[k], 1e-10, 1e-10 );
 
@@ -375,7 +375,7 @@ bool reverse_set(void)
 	for(i = 0; i < m; i++)
 		s[i].insert(i);
 	p   = f.RevSparseJac(m, s);
-	jac = f.SparseJacobian(x);
+	jac = f.SparseJacobian(x, p);
 	for(k = 0; k < 12; k++)
 		ok &=  NearEqual(check[k], jac[k], 1e-10, 1e-10 );
 
@@ -439,7 +439,7 @@ bool forward_bool(void)
 		r[j * n + j] = true;
 	}
 	p   = f.ForSparseJac(n, r);
-	jac = f.SparseJacobian(x);
+	jac = f.SparseJacobian(x, p);
 	for(k = 0; k < 12; k++)
 		ok &=  NearEqual(check[k], jac[k], 1e-10, 1e-10 );
 
@@ -499,7 +499,7 @@ bool forward_set(void)
 	for(j = 0; j < n; j++)
 		r[j].insert(j);
 	p   = f.ForSparseJac(n, r);
-	jac = f.SparseJacobian(x);
+	jac = f.SparseJacobian(x, p);
 	for(k = 0; k < 12; k++)
 		ok &=  NearEqual(check[k], jac[k], 1e-10, 1e-10 );
 
