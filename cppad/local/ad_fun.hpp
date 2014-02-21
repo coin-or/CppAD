@@ -217,96 +217,17 @@ private:
 		      sparse_jacobian_work& work
 	);
 	// ------------------------------------------------------------
-	// vector of bool version of SparseJacobian
-	// (see doxygen in sparse_jacobian.hpp)
-	template <class VectorBase, class VectorSet>
-	size_t SparseJacobianCase(
-		bool                     set_type    ,
-		const VectorBase&        x           ,
-		const VectorSet&         p           ,
-		VectorBase&              jac         ,
-		sparse_jacobian_work&    work
-	);
-	// vector of std::set<size_t> version of SparseJacobian
-	// (see doxygen in sparse_jacobian.hpp)
-	template <class VectorBase, class VectorSet>
-	size_t SparseJacobianCase(
-		const std::set<size_t>&  set_type    ,
-		const VectorBase&        x           ,
-		const VectorSet&         p           ,
-		VectorBase&              jac         ,
-		sparse_jacobian_work&    work
-	);
-	// vector of bool version of SparseJacobian
-	// (see doxygen in sparse_jacobian.hpp)
-	template <class VectorBase, class VectorSet>
-	void SparseJacobianCase(
-		bool                     set_type    ,
-		const VectorBase&        x           ,
-		const VectorSet&         p           ,
-		VectorBase&              jac
-	);
-	// vector of std::set<size_t> version of SparseJacobian
-	// (see doxygen in sparse_jacobian.hpp)
-	template <class VectorBase, class VectorSet>
-	void SparseJacobianCase(
-		const std::set<size_t>&  set_type    ,
-		const VectorBase&        x           ,
-		const VectorSet&         p           ,
-		VectorBase&              jac
-	);
-	// ------------------------------------------------------------
 	// combined sparse_set, sparse_list and sparse_pack version of 
 	// SparseHessian (see doxygen in sparse_hessian.hpp)
-	template <class VectorBase, class VectorSet>
+	template <class VectorBase, class VectorSet, class VectorSize>
 	size_t SparseHessianCompute(
-		const VectorBase&        x           ,
-		const VectorBase&        w           ,
-		VectorSet&               sparsity    ,
-		VectorBase&              hes         ,
-		sparse_hessian_work&     work
-	);
-	// vector of bool version of SparseHessian
-	// (see doxygen in sparse_hessian.hpp)
-	template <class VectorBase, class VectorSet>
-	size_t SparseHessianCase(
-		bool                     set_type    ,
-		const VectorBase&        x           ,
-		const VectorBase&        w           ,
-		const VectorSet&         p           ,
-		VectorBase&              hes         ,
-		sparse_hessian_work&     work
-	);
-	// vector of std::set<size_t> version of SparseHessian
-	// (see doxygen in sparse_hessian.hpp)
-	template <class VectorBase, class VectorSet>
-	size_t SparseHessianCase(
-		const std::set<size_t>&  set_type    ,
-		const VectorBase&        x           ,
-		const VectorBase&        w           ,
-		const VectorSet&         p           ,
-		VectorBase&              hes         ,
-		sparse_hessian_work&     work
-	);
-	// vector of bool version of SparseHessian
-	// (see doxygen in sparse_hessian.hpp)
-	template <class VectorBase, class VectorSet>
-	void SparseHessianCase(
-		bool                     set_type    ,
-		const VectorBase&        x           ,
-		const VectorBase&        w           ,
-		const VectorSet&         p           ,
-		VectorBase&              hes
-	);
-	// vector of std::set<size_t> version of SparseHessian
-	// (see doxygen in sparse_hessian.hpp)
-	template <class VectorBase, class VectorSet>
-	void SparseHessianCase(
-		const std::set<size_t>&  set_type    ,
-		const VectorBase&        x           ,
-		const VectorBase&        w           ,
-		const VectorSet&         p           ,
-		VectorBase&              hes
+		const VectorBase&              x           ,
+		const VectorBase&              w           ,
+		      VectorSet&               sparsity    ,
+		const VectorSize&              row         ,
+		const VectorSize&              col         ,
+		      VectorBase&              hes         ,
+		      sparse_hessian_work&     work
 	);
 // ------------------------------------------------------------
 public:

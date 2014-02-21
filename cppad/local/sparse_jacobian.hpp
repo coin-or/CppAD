@@ -351,6 +351,10 @@ size_t ADFun<Base>::SparseJacobianFor(
 	// Point at which we are evaluating the Jacobian
 	Forward(0, x);
 
+	// check for case where nothing (except Forward above) to do
+	if( K == 0 )
+		return 0;
+
 	if( color.size() == 0 )
 	{
 		CPPAD_ASSERT_UNKNOWN( p_transpose.n_set() ==  n );
@@ -490,6 +494,10 @@ size_t ADFun<Base>::SparseJacobianRev(
 
 	// Point at which we are evaluating the Jacobian
 	Forward(0, x);
+
+	// check for case where nothing (except Forward above) to do
+	if( K == 0 )
+		return 0;
 
 	if( color.size() == 0 )
 	{
