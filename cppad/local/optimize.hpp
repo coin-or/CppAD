@@ -64,7 +64,7 @@ derivatives using the original operation sequence.
 $subhead Testing$$
 You can run the CppAD $cref/speed/speed_main/$$ tests and see
 the corresponding changes in number of variables and execution time; 
-see $cref cppad_test$$.
+see $cref cmake_check$$.
 
 $head Efficiency$$
 The $code optimize$$ member function

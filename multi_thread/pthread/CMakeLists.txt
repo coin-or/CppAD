@@ -1,6 +1,6 @@
 # $Id$
 # -----------------------------------------------------------------------------
-# CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-12 Bradley M. Bell
+# CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-14 Bradley M. Bell
 #
 # CppAD is distributed under multiple licenses. This distribution is under
 # the terms of the 
@@ -22,7 +22,7 @@ INCLUDE_DIRECTORIES( ${CMAKE_CURRENT_SOURCE_DIR}/.. )
 # add_executable(<name> [WIN32] [MACOSX_BUNDLE] [EXCLUDE_FROM_ALL]
 #                 source1 source2 ... sourceN
 # )
-ADD_EXECUTABLE(pthread_test EXCLUDE_FROM_ALL ../thread_test.cpp 
+ADD_EXECUTABLE(multi_thread_pthread EXCLUDE_FROM_ALL ../thread_test.cpp 
 	../multi_newton_time.cpp
 	../multi_newton.cpp
 	../multi_newton_work.cpp
@@ -36,17 +36,17 @@ ADD_EXECUTABLE(pthread_test EXCLUDE_FROM_ALL ../thread_test.cpp
 )
 
 # Compiler flags for cppad source
-add_cppad_cxx_flags( pthread_test )
+add_cppad_cxx_flags( multi_thread_pthread )
 
 # Paths in which the linker will search for libraries,
 # only applies to targets created after it is called
 LINK_DIRECTORIES( ${pthread_lib_path} )
 
 # List of libraries to be linked into the specified target
-TARGET_LINK_LIBRARIES(pthread_test ${pthread_lib})
+TARGET_LINK_LIBRARIES(multi_thread_pthread ${pthread_lib})
 
-# Add the check_pthread target
-ADD_CUSTOM_TARGET(check_pthread 
-	pthread_test simple_ad 
-	DEPENDS pthread_test
+# Add the check_multi_thread_pthread target
+ADD_CUSTOM_TARGET(check_multi_thread_pthread 
+	multi_thread_pthread simple_ad 
+	DEPENDS multi_thread_pthread
 )

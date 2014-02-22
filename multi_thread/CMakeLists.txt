@@ -1,6 +1,6 @@
 # $Id$
 # -----------------------------------------------------------------------------
-# CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-12 Bradley M. Bell
+# CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-14 Bradley M. Bell
 #
 # CppAD is distributed under multiple licenses. This distribution is under
 # the terms of the 
@@ -29,7 +29,7 @@ FIND_PACKAGE(OpenMP)
 IF ( OPENMP_FOUND )
 	# OpenMP_CXX_FLAGS - flags to add to the CXX compiler for OpenMP support
 	ADD_SUBDIRECTORY(openmp)
-	add_to_list(list_multi_thread check_openmp)
+	add_to_list(list_multi_thread check_multi_thread_openmp)
 ENDIF ( OPENMP_FOUND )
 
 # If pthreads found, set pthread_lib and pthread_lib_path and process subdir
@@ -44,7 +44,7 @@ IF ( pthread_lib_path )
 	)   
 	IF ( pthread_ok )
 		ADD_SUBDIRECTORY(pthread)
-		add_to_list(list_multi_thread check_pthread)
+		add_to_list(list_multi_thread check_multi_thread_pthread)
 	ENDIF ( pthread_ok )
 ENDIF ( pthread_lib_path )
 
@@ -78,7 +78,7 @@ int main(void)
 	ENDIF ( NOT bthread_ok )
 	IF ( bthread_ok OR bthread_mt_ok )
 		ADD_SUBDIRECTORY(bthread)
-		add_to_list(list_multi_thread check_bthread)
+		add_to_list(list_multi_thread check_multi_thread_bthread)
 	ENDIF ( bthread_ok OR bthread_mt_ok )
 ENDIF ( Boost_FOUND )
 

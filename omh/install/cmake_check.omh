@@ -1,6 +1,6 @@
 /* $Id$ */
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-13 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-14 Bradley M. Bell
 
 CppAD is distributed under multiple licenses. This distribution is under
 the terms of the 
@@ -9,9 +9,10 @@ the terms of the
 A copy of this license is included in the COPYING file of this distribution.
 Please visit http://www.coin-or.org/CppAD/ for information on other licenses.
 -------------------------------------------------------------------------- */
-$begin cppad_test$$
+$begin cmake_check$$
 $spell
 	nlp
+	cppad
 	makefiles
 	ipopt
 	CppAD
@@ -19,7 +20,7 @@ $spell
 	nmake
 $$
 
-$section Running the CppAD Examples and Tests$$
+$section Checking the CppAD Examples and Tests$$
 
 $head Purpose$$
 After you configure your system with the 
@@ -28,7 +29,7 @@ can run the CppAD example and tests to make sure that
 CppAD functions properly on your system.
 
 
-$head Run All$$
+$head Check All$$
 In the $code build$$ subdirectory of the 
 $cref/distribution directory/download/Distribution Directory/$$
 execute the command
@@ -51,14 +52,14 @@ $rnext
 $code make check_compare_c$$ $cnext 
 	$tref compare_c$$ 
 $rnext
-$code make check_example$$   $cnext 
-	most of the $cref Example$$ programs
-$rnext
 $code make check_introduction$$   $cnext 
 	the programs in the $cref Introduction$$
 $rnext
+$code make check_example$$   $cnext 
+	most of the $cref Example$$ programs
+$rnext
 $code make check_print_for$$ $cnext 
-	the print_for command
+	the $cref PrintFor$$  command
 $rnext
 $code make check_test_more$$ $cnext 
 	correctness tests that are not examples 
@@ -69,7 +70,7 @@ $rnext
 $code make check_speed$$ $cnext 
 	single threading $cref speed$$ tests (run correctness only)
 $rnext
-$code make check_ipopt_nlp$$ $cnext 
+$code make check_cppad_ipopt$$ $cnext 
 	the $cref cppad_ipopt_nlp$$ speed and correctness tests
 $rnext
 $tend

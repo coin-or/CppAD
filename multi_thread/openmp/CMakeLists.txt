@@ -1,6 +1,6 @@
 # $Id$
 # -----------------------------------------------------------------------------
-# CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-12 Bradley M. Bell
+# CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-14 Bradley M. Bell
 #
 # CppAD is distributed under multiple licenses. This distribution is under
 # the terms of the 
@@ -26,7 +26,7 @@ ADD_DEFINITIONS( ${OpenMP_CXX_FLAGS} )
 # add_executable(<name> [WIN32] [MACOSX_BUNDLE] [EXCLUDE_FROM_ALL]
 #                 source1 source2 ... sourceN
 # )
-ADD_EXECUTABLE(openmp_test EXCLUDE_FROM_ALL ../thread_test.cpp 
+ADD_EXECUTABLE(multi_thread_openmp EXCLUDE_FROM_ALL ../thread_test.cpp 
 	../multi_newton_time.cpp
 	../multi_newton.cpp
 	../multi_newton_work.cpp
@@ -40,13 +40,13 @@ ADD_EXECUTABLE(openmp_test EXCLUDE_FROM_ALL ../thread_test.cpp
 )
 
 # Compiler flags for cppad source
-add_cppad_cxx_flags( openmp_test )
+add_cppad_cxx_flags( multi_thread_openmp )
 
 # Extra flags used by linker for openmp support
 SET(CMAKE_EXE_LINKER_FLAGS ${OpenMP_CXX_FLAGS} )
 
-# Add the check_openmp target
-ADD_CUSTOM_TARGET(check_openmp 
-	openmp_test simple_ad
-	DEPENDS openmp_test
+# Add the check_multi_thread_openmp target
+ADD_CUSTOM_TARGET(check_multi_thread_openmp 
+	multi_thread_openmp simple_ad
+	DEPENDS multi_thread_openmp
 )

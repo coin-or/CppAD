@@ -1,6 +1,6 @@
 /* $Id$ */
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-12 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-14 Bradley M. Bell
 
 CppAD is distributed under multiple licenses. This distribution is under
 the terms of the 
@@ -33,11 +33,11 @@ $index thread, multi example$$
 $section Run Multi-Threading Examples and Speed Tests$$
 
 $head Syntax$$
-$codei%./%threading%_test a11c
-./%threading%_test simple_ad
-./%threading%_test team_example
-./%threading%_test harmonic %test_time% %max_threads% %mega_sum%
-./%threading%_test multi_newton %test_time% %max_threads% \
+$codei%./multi_thread_%threading% a11c
+./multi_thread_%threading% simple_ad
+./multi_thread_%threading% team_example
+./multi_thread_%threading% harmonic %test_time% %max_threads% %mega_sum%
+./multi_thread_%threading% multi_newton %test_time% %max_threads% \
 	%num_zero% %num_sub% %num_sum% %use_ad%
 %$$ 
 

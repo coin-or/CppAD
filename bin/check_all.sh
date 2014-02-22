@@ -112,9 +112,9 @@ echo_eval speed/adolc/speed_adolc correct 432 onetape
 # ----------------------------------------------------------------------------
 # extra multi_thread tests
 program_list=''
-for dir in bthread openmp pthread
+for threading in bthread openmp pthread
 do
-	program="multi_thread/${dir}/${dir}_test"
+	program="multi_thread/${threading}/multi_thread_${threading}"
 	if [ ! -e $program ]
 	then
 		skip="$skip $program"

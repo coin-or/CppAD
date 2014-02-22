@@ -312,7 +312,7 @@ add_to_list(list_check check_speed)
 #
 IF ( ipopt_prefix )
 	ADD_SUBDIRECTORY(cppad_ipopt)
-	add_to_list(list_check check_ipopt_nlp)
+	add_to_list(list_check check_cppad_ipopt)
 ENDIF( ipopt_prefix )
 #
 ADD_CUSTOM_TARGET(check DEPENDS ${list_check})

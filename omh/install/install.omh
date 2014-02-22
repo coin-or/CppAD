@@ -1,6 +1,6 @@
 $Id$
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-12 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-14 Bradley M. Bell
 
 CppAD is distributed under multiple licenses. This distribution is under
 the terms of the 
@@ -27,16 +27,17 @@ $section CppAD Download, Test, and Install Instructions$$
 
 $head Instructions$$
 
-$subhead Download$$
+$subhead Step 1: Download$$
 Use the $cref download$$ instructions to obtain a copy or CppAD.
 
-$subhead Cmake$$
+$subhead Step 2: Cmake$$
 Use the $cref cmake$$ instructions to configure CppAD.
 
-$subhead Test$$
-Use the $cref cppad_test$$ instructions to test CppAD.
+$subhead Step 3: Check$$
+Use the $cref cmake_check$$ instructions to check the 
+CppAD examples and tests.
 
-$subhead Install$$
+$subhead Step 4: Install$$
 Use the command
 $codep
 	make install
@@ -54,7 +55,7 @@ $cref/generator/cmake/generator/$$ option for the $code cmake$$ command.
 $childtable%
 	omh/install/download.omh%
 	omh/install/cmake.omh%
-	omh/install/cppad_test.omh%
+	omh/install/cmake_check.omh%
 	omh/install/pkgconfig.omh%
 	omh/install/unix.omh
 %$$

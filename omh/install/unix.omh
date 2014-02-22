@@ -1,6 +1,6 @@
 $Id$
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-13 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-14 Bradley M. Bell
 
 CppAD is distributed under multiple licenses. This distribution is under
 the terms of the 
@@ -79,7 +79,7 @@ $index unix, CppAD install$$
 $index free, unix install$$
 $index install, unix CppAD$$
 
-$section Unix Test and Installation$$
+$section Deprecated Unix Test and Installation$$
 
 $head Deprecated$$
 These install instructions have been deprecated.

@@ -135,7 +135,7 @@ the deprecated $cref InstallUnix$$ instructions to the new $cref cmake$$
 instructions.
 $lnext
 Include the $cref Introduction$$ programs in the 
-$cref cppad_test$$ built using $cref cmake$$.
+$cref cmake_check$$ built using $cref cmake$$.
 $lnext
 Deprecate $cref cppad_ipopt_nlp$$ and replace it by $cref ipopt_solve$$
 which is easier to use.

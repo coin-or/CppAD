@@ -13,6 +13,9 @@ Please visit http://www.coin-or.org/CppAD/ for information on other licenses.
 $begin whats_new_14$$
 $dollar @$$
 $spell
+	openmp
+	pthread
+	bthread
 	isnan
 	onetape
 	retape
@@ -33,6 +36,12 @@ This section contains a list of the changes to CppAD during 2014
 (in reverse order by date).
 The purpose of this section is to
 assist you in learning about changes between various versions of CppAD.
+
+$head 02-22$$
+The program names in
+$cref  thread_test.cpp$$ where changes from
+$icode%threading%_test%$$ to $codei%multi_thread_%threading%$$
+where $icode threading$$ is $code openmp$$, $code pthread$$ or $code bthread$$.
 
 $head 02-17$$
 Fix ambiguous call to $cref/isnan/nan/isnan/$$ 
