@@ -1,6 +1,6 @@
 # $Id$
 # -----------------------------------------------------------------------------
-# CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-12 Bradley M. Bell
+# CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-14 Bradley M. Bell
 #
 # CppAD is distributed under multiple licenses. This distribution is under
 # the terms of the 
@@ -28,13 +28,13 @@ ENDIF ( NOT ipopt_prefix )
 ADD_SUBDIRECTORY(src)
 #
 ADD_SUBDIRECTORY(example)
-add_to_list(list_ipopt_nlp check_example_ipopt_nlp)
+add_to_list(list_ipopt_nlp check_cppad_ipopt_example)
 #
 ADD_SUBDIRECTORY(speed)
-add_to_list(list_ipopt_nlp check_speed_ipopt_nlp)
+add_to_list(list_ipopt_nlp check_cppad_ipopt_speed)
 #
 ADD_SUBDIRECTORY(test)
-add_to_list(list_ipopt_nlp check_test_more_ipopt_nlp)
+add_to_list(list_ipopt_nlp check_cppad_ipopt_test)
 
-# Add the check_ipopt_nlp target
-ADD_CUSTOM_TARGET(check_ipopt_nlp DEPENDS ${list_ipopt_nlp} )
+# Add the check_cppad_ipopt target
+ADD_CUSTOM_TARGET(check_cppad_ipopt DEPENDS ${list_ipopt_nlp} )

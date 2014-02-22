@@ -1,6 +1,6 @@
 # $Id$
 # -----------------------------------------------------------------------------
-# CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-12 Bradley M. Bell
+# CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-14 Bradley M. Bell
 #
 # CppAD is distributed under multiple licenses. This distribution is under
 # the terms of the 
@@ -27,7 +27,7 @@ LINK_DIRECTORIES( ${ipopt_LIBRARY_DIRS} )
 #                 source1 source2 ... sourceN
 # )
 # Include source for cppad_ipopt library so we build it without debugging 
-ADD_EXECUTABLE(speed_ipopt_nlp EXCLUDE_FROM_ALL 
+ADD_EXECUTABLE(cppad_ipopt_speed EXCLUDE_FROM_ALL 
 	speed.cpp
 	../src/cppad_ipopt_nlp.cpp
 	../src/fun_record.hpp
@@ -39,13 +39,13 @@ ADD_EXECUTABLE(speed_ipopt_nlp EXCLUDE_FROM_ALL
 )
 
 # Add extra compiler flags
-add_cppad_cxx_flags( speed_ipopt_nlp )
+add_cppad_cxx_flags( cppad_ipopt_speed )
 
 # List of libraries to be linked into the specified target
-TARGET_LINK_LIBRARIES(speed_ipopt_nlp cppad_ipopt ${ipopt_LIBRARIES})
+TARGET_LINK_LIBRARIES(cppad_ipopt_speed cppad_ipopt ${ipopt_LIBRARIES})
 
-# Add the check_speed_ipopt_nlp target
-ADD_CUSTOM_TARGET(check_speed_ipopt_nlp
-	speed_ipopt_nlp
-	DEPENDS speed_ipopt_nlp cppad_ipopt
+# Add the check_cppad_ipopt_speed target
+ADD_CUSTOM_TARGET(check_cppad_ipopt_speed
+	cppad_ipopt_speed
+	DEPENDS cppad_ipopt_speed cppad_ipopt
 )

@@ -1,6 +1,6 @@
 # $Id$
 # -----------------------------------------------------------------------------
-# CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-12 Bradley M. Bell
+# CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-14 Bradley M. Bell
 #
 # CppAD is distributed under multiple licenses. This distribution is under
 # the terms of the 
@@ -25,7 +25,7 @@ LINK_DIRECTORIES( ${CMAKE_CURRENT_BINARY_DIR}/../src ${ipopt_LIBRARY_DIRS} )
 # add_executable(<name> [WIN32] [MACOSX_BUNDLE] [EXCLUDE_FROM_ALL]
 #                 source1 source2 ... sourceN
 # )
-ADD_EXECUTABLE(example_ipopt_nlp EXCLUDE_FROM_ALL 
+ADD_EXECUTABLE(cppad_ipopt_example EXCLUDE_FROM_ALL 
 	example.cpp
 	get_started.cpp
 	ode_check.cpp
@@ -39,13 +39,13 @@ ADD_EXECUTABLE(example_ipopt_nlp EXCLUDE_FROM_ALL
 )
 
 # Extra compiler flags
-add_cppad_cxx_flags( example_ipopt_nlp )
+add_cppad_cxx_flags( cppad_ipopt_example )
 
 # List of libraries to be linked into the specified target
-TARGET_LINK_LIBRARIES(example_ipopt_nlp cppad_ipopt ${ipopt_LIBRARIES})
+TARGET_LINK_LIBRARIES(cppad_ipopt_example cppad_ipopt ${ipopt_LIBRARIES})
 
-# Add the check_example_ipopt_nlp target
-ADD_CUSTOM_TARGET(check_example_ipopt_nlp
-	example_ipopt_nlp
-	DEPENDS example_ipopt_nlp cppad_ipopt
+# Add the check_cppad_ipopt_example target
+ADD_CUSTOM_TARGET(check_cppad_ipopt_example
+	cppad_ipopt_example
+	DEPENDS cppad_ipopt_example cppad_ipopt
 )
