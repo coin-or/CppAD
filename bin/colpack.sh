@@ -31,22 +31,22 @@ cat<< EOF > build/colpack/colpack.cpp
 #include "ColPackHeaders.h"
 
 int main()
-{	using std::cout;
+{	size_t i, j, k;
+
+	using std::cout;
 	using std::endl;	
 
-	double*** dp3_Seed = new double**;
-	int *ip1_SeedRowCount = new int;
-	int *ip1_SeedColumnCount = new int;
-
 	//* 32x9 matrix
-	int          i_RowCount          = 32;
-	int          i_ColumnCount       = 9;
-	int          i_MaxNonZerosInRows = 3;
+	size_t       i_RowCount          = 32;
+	size_t       i_ColumnCount       = 9;
+	size_t       i_MaxNonZerosInRows = 3;
 
 	// JP[32][9]
-	unsigned int **JP                   = new unsigned int* [i_RowCount];
-	for(int i = 0; i < i_RowCount; i++)
-		JP[i] = new unsigned int[i_MaxNonZerosInRows + 1];
+	std::vector<unsigned int *> JP(i_RowCount);
+	unsigned int n_data    = i_RowCount * (i_MaxNonZerosInRows + 1);
+	std::vector<unsigned int> JP_memory(n_data);
+	for(i = 0; i < i_RowCount; i++)
+		JP[i] = JP_memory.data() + i * (i_MaxNonZerosInRows + 1);
 	//
 	JP[0][0] = 0;
 	JP[1][0] = 1;   JP[1][1] = 0;
@@ -81,65 +81,62 @@ int main()
 	JP[30][0] = 1;  JP[30][1] = 8;
 	JP[31][0] = 0;
 	cout << endl << "Sparsity pattern of Jacobian:" << endl;
-	for(int i = 0; i < i_RowCount; i++)
-	{	cout << i << ": ";
-		for (int j = 1; j <= (int) JP[i][0]; j++)
-			cout << " " << JP[i][j];
+	cout << "    ";
+	for(k = 0; k < 9; k++)
+		cout << setw(3) << k;
+	cout << endl;
+	for(i = 0; i < i_RowCount; i++)
+	{	cout << setw(3) << i << ":";
+		k = 0;
+		for (j = 1; j <= (int) JP[i][0]; j++)
+		{	while(k < JP[i][j])
+			{	cout << setw(3) << 0;
+				k++;
+			}
+			cout << setw(3) << 1;
+			k++;
+		}
+		while(k < 9)
+		{	cout << setw(3) << 0;
+			k++;
+		}
 		cout << endl;
 	}
 
 
 	// Step 1: Read the sparsity pattern of the given Jacobian matrix 
 	// (adolc format) and create the corresponding bipartite graph
-	ColPack::BipartiteGraphPartialColoringInterface * g = new 
-		ColPack::BipartiteGraphPartialColoringInterface(
-			SRC_MEM_ADOLC, JP, i_RowCount, i_ColumnCount
+	ColPack::BipartiteGraphPartialColoringInterface g(
+			SRC_MEM_ADOLC, JP.data(), i_RowCount, i_ColumnCount
 	);
-	g->PrintBipartiteGraph();
+	g.PrintBipartiteGraph();
 
 	// Step 2: Do Partial-Distance-Two-Coloring 
 	// of the bipartite graph with the specified ordering
-	g->PartialDistanceTwoColoring(
+	g.PartialDistanceTwoColoring(
 		"SMALLEST_LAST", "$color_variant"
 	);
-	g->PrintColumnPartialColors();
-	g->PrintColumnPartialColoringMetrics();
+	g.PrintColumnPartialColors();
+	g.PrintColumnPartialColoringMetrics();
 
 	// Step 3: From the coloring information, create and return seed matrix
-	(*dp3_Seed) = g->GetSeedMatrix(ip1_SeedRowCount, ip1_SeedColumnCount);
-	double **RSeed = *dp3_Seed;
-	int rows = *ip1_SeedRowCount;
-	int cols = *ip1_SeedColumnCount;
+	int ip1_SeedRowCount;
+	int ip1_SeedColumnCount;
+	double** RSeed = 
+		g.GetSeedMatrix(&ip1_SeedRowCount, &ip1_SeedColumnCount);
+	int rows = ip1_SeedRowCount;
+	int cols = ip1_SeedColumnCount;
 	cout << "Seed matrix: (" << rows << "," << cols << ")" << endl;
-	for(int i=0; i<rows; i++) {
-		for(int j=0; j<cols; j++) {
-			cout << setw(2) << int(RSeed[i][j]);
-		}
+	cout << "    ";
+	for(j = 0; j < cols; j++)
+		cout << setw(3) << j;
+	cout << endl;
+	for(i = 0; i < rows; i++)
+	{	cout << setw(3) << i << ":";
+		for(j = 0; j < cols; j++)
+			cout << setw(3) << int(RSeed[i][j]);
 		cout << endl;
 	}
-
-
-
-	//GraphColoringInterface * g = new GraphColoringInterface();
-	delete g;
-	g = NULL;
-
-	//double*** dp3_Seed = new double**;
-	delete dp3_Seed;
-	dp3_Seed = NULL;
-	RSeed = NULL;
-
-	//int *ip1_SeedRowCount = new int;
-	delete ip1_SeedRowCount;
-	ip1_SeedRowCount = NULL;
-
-	//int *ip1_SeedColumnCount = new int;
-	delete ip1_SeedColumnCount;
-	ip1_SeedColumnCount = NULL;
-
-	// unsigned int **Jp = new unsigned int *[i_RowCount]; //[5][5]
-	free_2DMatrix(JP, i_RowCount);
-	JP = NULL;
 
 	return 0;
 }
