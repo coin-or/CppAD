@@ -1,6 +1,6 @@
 # $Id$
 # -----------------------------------------------------------------------------
-# CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-13 Bradley M. Bell
+# CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-14 Bradley M. Bell
 #
 # CppAD is distributed under multiple licenses. This distribution is under
 # the terms of the 
@@ -41,9 +41,10 @@ EIGEN_EXTRA_FILES   = eigen_det.cpp eigen_array.cpp
 EIGEN_LIB           =
 endif
 # -------------------------------------------------------------------------
-# Microsoft project files an script to run a single test
+# auto-tools does not support use of colpack
 EXTRA_DIST        =  \
 	test_one.sh.in \
+	colpack.cpp \
 	$(ADOLC_EXTRA_FILES) \
 	$(EIGEN_EXTRA_FILES)
 #

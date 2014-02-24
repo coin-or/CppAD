@@ -1,7 +1,7 @@
 #! /bin/bash -e
 # $Id$
 # -----------------------------------------------------------------------------
-# CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-13 Bradley M. Bell
+# CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-14 Bradley M. Bell
 #
 # CppAD is distributed under multiple licenses. This distribution is under
 # the terms of the 
@@ -282,8 +282,9 @@ then
 	#
 	# Run automated checking of file names in original source directory
 	list="
+		check_define.sh
 		check_example.sh
-		check_if_0.sh
+		check_if.sh
 		check_include_def.sh
 		check_include_file.sh
 		check_include_omh.sh

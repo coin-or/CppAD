@@ -271,6 +271,7 @@ cppad_cflags = @cppad_cflags@
 cppad_cppadvector = @cppad_cppadvector@
 cppad_description = @cppad_description@
 cppad_eigenvector = @cppad_eigenvector@
+cppad_has_colpack = @cppad_has_colpack@
 cppad_has_gettimeofday = @cppad_has_gettimeofday@
 cppad_has_nullptr = @cppad_has_nullptr@
 cppad_implicit_ctor_from_any_type = @cppad_implicit_ctor_from_any_type@
@@ -465,6 +466,7 @@ nobase_myinclude_HEADERS = \
 	cppad/local/cosh_op.hpp \
 	cppad/local/cos_op.hpp \
 	cppad/local/cppad_assert.hpp \
+	cppad/local/cppad_colpack.hpp \
 	cppad/local/cskip_op.hpp \
 	cppad/local/csum_op.hpp \
 	cppad/local/declare_ad.hpp \

@@ -321,6 +321,7 @@ cppad_cflags = @cppad_cflags@
 cppad_cppadvector = @cppad_cppadvector@
 cppad_description = @cppad_description@
 cppad_eigenvector = @cppad_eigenvector@
+cppad_has_colpack = @cppad_has_colpack@
 cppad_has_gettimeofday = @cppad_has_gettimeofday@
 cppad_has_nullptr = @cppad_has_nullptr@
 cppad_implicit_ctor_from_any_type = @cppad_implicit_ctor_from_any_type@
@@ -390,9 +391,10 @@ top_srcdir = @top_srcdir@
 @CppAD_EIGEN_DIR_TRUE@	-I$(EIGEN_DIR)/include 
 
 # -------------------------------------------------------------------------
-# Microsoft project files an script to run a single test
+# auto-tools does not support use of colpack
 EXTRA_DIST = \
 	test_one.sh.in \
+	colpack.cpp \
 	$(ADOLC_EXTRA_FILES) \
 	$(EIGEN_EXTRA_FILES)
 
