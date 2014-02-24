@@ -95,6 +95,7 @@ cmake %%                                                                      \
 	-D cmake_install_postfix=%cmake_install_postfix%                         \
 	\
 	-D adolc_prefix=%adolc_prefix%                                           \
+	-D colpack_prefix=%colpack_prefix%                                       \
 	-D eigen_prefix=%eigen_prefix%                                           \
 	-D fadbad_prefix=%fadbad_prefix%                                         \
 	-D ipopt_prefix=%ipopt_prefix%                                           \
@@ -233,6 +234,7 @@ $index package, prefix$$
 $index prefix, package$$
 $table
 $rref adolc_prefix$$
+$rref colpack_prefix$$
 $rref eigen_prefix$$
 $rref fadbad_prefix$$
 $rref ipopt_prefix$$
@@ -347,6 +349,7 @@ $cref/explicit/ad_ctor/x/explicit/$$.
 
 $children%
 	omh/install/adolc_prefix.omh%
+	omh/install/colpack_prefix.omh%
 	omh/install/eigen_prefix.omh%
 	omh/install/fadbad_prefix.omh%
 	omh/install/ipopt_prefix.omh%

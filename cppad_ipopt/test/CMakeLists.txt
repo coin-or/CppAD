@@ -34,7 +34,11 @@ ADD_EXECUTABLE(cppad_ipopt_test EXCLUDE_FROM_ALL test_more.cpp
 add_cppad_cxx_flags(cppad_ipopt_test)
 
 # List of libraries to be linked into the specified target
-TARGET_LINK_LIBRARIES(cppad_ipopt_test cppad_ipopt ${ipopt_LIBRARIES})
+TARGET_LINK_LIBRARIES(cppad_ipopt_test 
+	cppad_ipopt 
+	${ipopt_LIBRARIES} 
+	${colpack_libs} 
+)
 
 # Add the check_cppad_ipopt_test target
 ADD_CUSTOM_TARGET(check_cppad_ipopt_test

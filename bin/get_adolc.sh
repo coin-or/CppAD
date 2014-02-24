@@ -31,9 +31,6 @@
 # $href%https://projects.coin-or.org/ADOL-C%ADOL-C%$$ in the
 # CppAD $code build$$ directory.
 #
-# $children%
-#	bin/get_colpack.sh
-# %$$
 # $head Requirements$$
 # You must first use $cref get_colpack.sh$$ to download and install
 # $code ColPack$$ (coloring algorithms used for sparse matrix derivatives).

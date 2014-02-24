@@ -87,7 +87,7 @@ then
 fi
 #
 # {package}_prefix
-for package in adolc eigen ipopt fadbad sacado
+for package in adolc colpack eigen ipopt fadbad sacado
 do
 	dir=$HOME/prefix/$package
 	if [ -d "$dir" ]

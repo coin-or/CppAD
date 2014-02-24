@@ -1,6 +1,6 @@
 # $Id$
 # -----------------------------------------------------------------------------
-# CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-12 Bradley M. Bell
+# CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-14 Bradley M. Bell
 #
 # CppAD is distributed under multiple licenses. This distribution is under
 # the terms of the 
@@ -28,6 +28,7 @@ ADD_LIBRARY(speed_src EXCLUDE_FROM_ALL
 	link_sparse_hessian.cpp
 	link_sparse_jacobian.cpp
 	microsoft_timer.cpp
+	${colpack_sources}
 )
 
 # Compiler flags for cppad source

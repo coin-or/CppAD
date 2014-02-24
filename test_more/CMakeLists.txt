@@ -1,6 +1,6 @@
 # $Id$
 # -----------------------------------------------------------------------------
-# CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-13 Bradley M. Bell
+# CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-14 Bradley M. Bell
 #
 # CppAD is distributed under multiple licenses. This distribution is under
 # the terms of the 
@@ -32,6 +32,17 @@ ELSE ( adolc_prefix )
 	SET(adolc_sources "")
 	SET(test_more_adolc "")
 ENDIF ( adolc_prefix )
+
+# colpack_prefix
+IF ( colpack_prefix )
+	# Extra source files if we are including colpack
+	SET(colpack_sources ../cppad/local/cppad_colpack.cpp)
+	# add colpack to list of libraries
+	SET(colpack_libs "ColPack")
+ELSE ( colpack_prefix )
+	SET(colpack_sources "")
+	SET(colpack_libs "")
+ENDIF ( colpack_prefix )
 
 # sources that use ipopt
 IF ( ipopt_prefix )
@@ -74,6 +85,7 @@ CONFIGURE_FILE(
 # )
 ADD_EXECUTABLE(test_more EXCLUDE_FROM_ALL test_more.cpp
 	${adolc_sources}
+	${colpack_sources}
 	${ipopt_sources}
 	${eigen_sources}
 	abs.cpp
@@ -159,6 +171,7 @@ add_cppad_cxx_flags(test_more)
 
 # List of libraries to be linked into the specified target
 TARGET_LINK_LIBRARIES(test_more 
+	${colpack_libs}
 	${test_more_adolc} 
 	${test_more_ipopt}
 	${test_more_eigen}

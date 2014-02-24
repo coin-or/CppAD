@@ -1,6 +1,6 @@
 # $Id$
 # -----------------------------------------------------------------------------
-# CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-12 Bradley M. Bell
+# CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-14 Bradley M. Bell
 #
 # CppAD is distributed under multiple licenses. This distribution is under
 # the terms of the 
@@ -11,6 +11,17 @@
 # -----------------------------------------------------------------------------
 # Build the speed/* directory tests 
 # Inherit environment from ../CMakeList.txt
+
+# colpack_prefix
+IF ( colpack_prefix )
+	# Extra source files if we are including colpack
+	SET(colpack_sources ../../cppad/local/cppad_colpack.cpp)
+	# add colpack to list of libraries
+	SET(colpack_libs "ColPack")
+ELSE ( colpack_prefix )
+	SET(colpack_sources "")
+	SET(colpack_libs "")
+ENDIF ( colpack_prefix )
 
 # Initialize list of tests as empty
 SET(list_speed "")

@@ -117,6 +117,9 @@ ENDIF( cppad_documentation_error )
 # adolc_prefix
 optional_package(adolc_prefix "adolc install prefix")
 #
+# colpack_prefix
+optional_package(colpack_prefix "colpack install prefix")
+#
 # eigen_prefix
 optional_package(eigen_prefix "eigen install prefix")
 #
@@ -128,6 +131,14 @@ optional_package(ipopt_prefix "ipopt install prefix")
 #
 # sacado_prefix
 optional_package(sacado_prefix "sacado install prefix")
+# -----------------------------------------------------------------------------
+# cppad_has_colpack
+#
+IF( colpack_prefix )
+	SET(cppad_has_colpack 1)
+ELSE( colpack_prefix )
+	SET(cppad_has_colpack 0)
+ENDIF( colpack_prefix )
 # =============================================================================
 # automated system configuration
 # =============================================================================
@@ -343,6 +354,11 @@ INSTALL(
 	DIRECTORY "cppad/" 
 	DESTINATION ${cppad_abs_includedir}/cppad
 	FILES_MATCHING PATTERN "*.hpp"
+)
+INSTALL( 
+	DIRECTORY "cppad/local" 
+	DESTINATION ${cppad_abs_includedir}/cppad/local
+	FILES_MATCHING PATTERN "cppad_colpack.cpp"
 )
 #
 # During install copy doc direcrory to cppad_abs_docdir/cppad

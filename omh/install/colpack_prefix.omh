@@ -1,0 +1,86 @@
+/* $Id$ */
+/* --------------------------------------------------------------------------
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-14 Bradley M. Bell
+
+CppAD is distributed under multiple licenses. This distribution is under
+the terms of the 
+                    Eclipse Public License Version 1.0.
+
+A copy of this license is included in the COPYING file of this distribution.
+Please visit http://www.coin-or.org/CppAD/ for information on other licenses.
+-------------------------------------------------------------------------- */
+$begin colpack_prefix$$
+$dollar @$$
+$spell
+	cppad.hpp
+	namespace
+	std
+	CppAD
+	includedirs
+	colpack
+	cmake
+	dir
+	Jacobians
+$$
+
+$section Including the ColPack Sparsity Calculations$$
+$index colpack, sparsity$$
+$index sparsity, colpack$$
+
+$head Purpose$$
+If you specify a $icode colpack_prefix$$ on the 
+$cref/cmake command/cmake/CMake Command/$$ line,
+the CppAD $cref sparse_jacobian$$ calculations use the
+$href%http://http://cscapes.cs.purdue.edu/coloringpage/%ColPack%$$ package.
+
+$head colpack_prefix$$
+$index colpack, prefix$$
+$index prefix, colpack$$
+If ColPack is installed on your system, you can 
+specify a value for its install $icode colpack_prefix$$ on the
+$cref cmake$$ command line.
+The value of $icode colpack_prefix$$ must be such that,
+for one of the directories $icode dir$$ in
+$cref/cmake_install_includedirs/cmake/cmake_install_includedirs/$$,
+$codei%
+	%colpack_prefix%/%dir%/ColPack/ColPackHeaders.h
+%$$
+is a valid way to reference to the include file $code ColPackHeaders.h$$.
+
+$head cppad_colpack$$
+$index cppad_colpack$$
+The ColPack header files has a
+$codei%
+	using namespace std
+%$$
+at the global level. 
+For this reason, CppAD does not include these files.
+It is therefore necessary to compile and link the short file
+$codei%
+	%prefix%/include/cppad/local/cppad_colpack.cpp
+%$$
+where $icode prefix$$ is such that $code cppad.hpp$$ was installed in
+$codei%
+	%prefix%/include/cppad/cppad.hpp
+%$$
+Hopefully, future versions of ColPack will not have this problem
+and it will no longer be necessary to do this.
+
+$children%
+	example/colpack.cpp%
+	bin/get_colpack.sh
+%$$
+$head Example$$
+The file $cref colpack.cpp$$ contains an example and test of using
+ColPack to compute the coloring for sparse Jacobians.
+It returns true, if it succeeds and false otherwise.
+
+$head get_colpack$$
+$index get, colpack$$
+$index colpack, get$$
+If you are using Unix, you can download and install
+a copy of ColPack using $cref get_colpack.sh$$.
+The corresponding $icode colpack_prefix$$ would be
+$code build/prefix$$.
+
+$end

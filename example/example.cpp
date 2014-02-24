@@ -66,6 +66,7 @@ extern bool change_const(void);
 extern bool check_for_nan(void);
 extern bool CheckNumericType(void);
 extern bool CheckSimpleVector(void);
+extern bool colpack(void);
 extern bool Compare(void);
 extern bool CompareChange(void);
 extern bool complex_poly(void);
@@ -328,6 +329,9 @@ int main(void)
 # ifdef CPPAD_ADOLC_EXAMPLES
 	ok &= Run( mul_level_adolc,      "mul_level_adolc"     );
 	ok &= Run( mul_level_adolc_ode,  "mul_level_adolc_ode" );
+# endif
+# ifdef CPPAD_COLPACK_EXAMPLES
+	ok &= Run( colpack,           "colpack"          );
 # endif
 # ifdef CPPAD_EIGEN_EXAMPLES
 	ok &= Run( eigen_array,       "eigen_array"      );

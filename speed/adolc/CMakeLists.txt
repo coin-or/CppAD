@@ -1,6 +1,6 @@
 # $Id$
 # -----------------------------------------------------------------------------
-# CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-12 Bradley M. Bell
+# CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-14 Bradley M. Bell
 #
 # CppAD is distributed under multiple licenses. This distribution is under
 # the terms of the 
@@ -48,7 +48,7 @@ ADD_EXECUTABLE(speed_adolc EXCLUDE_FROM_ALL ../main.cpp alloc_mat.cpp
 add_cppad_cxx_flags( speed_adolc )
 
 # List of libraries to be linked into the specified target
-TARGET_LINK_LIBRARIES(speed_adolc speed_src adolc )
+TARGET_LINK_LIBRARIES(speed_adolc speed_src adolc ${colpack_libs} )
 
 # Add the check_speed_adolc target
 ADD_CUSTOM_TARGET(check_speed_adolc 

@@ -42,7 +42,11 @@ ADD_EXECUTABLE(cppad_ipopt_example EXCLUDE_FROM_ALL
 add_cppad_cxx_flags( cppad_ipopt_example )
 
 # List of libraries to be linked into the specified target
-TARGET_LINK_LIBRARIES(cppad_ipopt_example cppad_ipopt ${ipopt_LIBRARIES})
+TARGET_LINK_LIBRARIES(cppad_ipopt_example 
+	cppad_ipopt 
+	${ipopt_LIBRARIES}
+	${colpack_libs}
+)
 
 # Add the check_cppad_ipopt_example target
 ADD_CUSTOM_TARGET(check_cppad_ipopt_example

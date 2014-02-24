@@ -12,13 +12,24 @@
 # Build the cppad_ipopt/* directory tests 
 # Inherit environment from ../CMakeList.txt
 
+# colpack_prefix
+IF ( colpack_prefix )
+	# Extra source files if we are including colpack
+	SET(colpack_sources ../../cppad/local/cppad_colpack.cpp)
+	# add colpack to list of libraries
+	SET(colpack_libs "ColPack")
+ELSE ( colpack_prefix )
+	SET(colpack_sources "")
+	SET(colpack_libs "")
+ENDIF ( colpack_prefix )
+
 # Initialize list of tests as empty
 SET(list_ipopt_nlp "")
 
 # assert ipopt_prefix is defined
 IF ( NOT ipopt_prefix )
 	MESSAGE(FATAL_ERROR 
-		"cppad_ipopt/speed/CMakeLists.txt: ipopt_prefix = ${ipopt_prefix}"
+		"cppad_ipopt/CMakeLists.txt: ipopt_prefix = ${ipopt_prefix}"
 	)
 ENDIF ( NOT ipopt_prefix )
 

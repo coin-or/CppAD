@@ -1,6 +1,6 @@
 # $Id$
 # -----------------------------------------------------------------------------
-# CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-13 Bradley M. Bell
+# CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-14 Bradley M. Bell
 #
 # CppAD is distributed under multiple licenses. This distribution is under
 # the terms of the 
@@ -33,6 +33,19 @@ ELSE ( adolc_prefix )
 	SET(adolc_sources "")
 	SET(example_adolc "")
 ENDIF ( adolc_prefix )
+
+# colpack_prefix
+IF ( colpack_prefix )
+	# Extra source files if we are including colpack
+	SET(colpack_sources colpack.cpp ../cppad/local/cppad_colpack.cpp)
+	# Adds -D define flags to the compilation of source files.
+	ADD_DEFINITIONS("-DCPPAD_COLPACK_EXAMPLES")
+	# add colpack to list of libraries
+	SET(example_colpack "ColPack")
+ELSE ( colpack_prefix )
+	SET(colpack_sources "")
+	SET(example_colpack "")
+ENDIF ( colpack_prefix )
 
 # eigen_prefix
 IF ( eigen_prefix )
@@ -73,6 +86,7 @@ CONFIGURE_FILE(
 # )
 ADD_EXECUTABLE(example EXCLUDE_FROM_ALL example.cpp
 	${adolc_sources}
+	${colpack_sources}
 	abort_recording.cpp
 	abs.cpp
 	acos.cpp
@@ -205,7 +219,11 @@ ADD_EXECUTABLE(example EXCLUDE_FROM_ALL example.cpp
 add_cppad_cxx_flags(example) 
 
 # List of libraries to be linked into the specified target
-TARGET_LINK_LIBRARIES(example ${example_adolc} ${example_eigen})
+TARGET_LINK_LIBRARIES(example 
+	${example_adolc} 
+	${example_colpack} 
+	${example_eigen}
+)
 
 # Add the check_example target
 ADD_CUSTOM_TARGET(check_example example DEPENDS 

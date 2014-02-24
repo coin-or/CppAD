@@ -15,6 +15,9 @@ Please visit http://www.coin-or.org/CppAD/ for information on other licenses.
 /*
 $begin sparse_jacobian$$
 $spell
+	cppad
+	colpack
+	cmake
 	recomputed
 	valarray
 	std
@@ -167,6 +170,19 @@ or any of these values have changed,
 you must first call $icode%work%.clear()%$$
 to inform CppAD that this information needs to be recomputed.
 
+$subhead color_method$$
+The coloring algorithm determines which columns (forward mode)
+or rows (reverse mode) can be computed during the same sweep.
+This field has prototype
+$codep%
+	std::string %work%.color_method
+%$$
+and its default value (after a constructor or $code clear()$$) 
+is $code "cppad"$$.
+If $cref colpack_prefix$$ is specified on the
+$cref/cmake command/cmake/CMake Command/$$ line,
+you can set this method to $code "colpack"$$.
+
 $head n_sweep$$
 The return value $icode n_sweep$$ has prototype
 $codei%
@@ -251,13 +267,21 @@ recomputed.
 */
 class sparse_jacobian_work {
 	public:
+		/// Coloring method: sparse_color_cppad or sparse_color_colpack
+		/// (this field is set by user)
+		std::string color_method;
 		/// indices that sort the user row and col arrays by color 
 		CppAD::vector<size_t> order;
 		/// results of the coloring algorithm
 		CppAD::vector<size_t> color;
-		/// inform CppAD that this information needs to be recomputed
+	
+		/// constructor
+		sparse_jacobian_work(void) : color_method("cppad")
+		{ }
+		/// reset coloring method to its default and
+		/// inform CppAD that color and order need to be recomputed
 		void clear(void)
-		{
+		{	color_method = "cppad";
 			order.clear();
 			color.clear();
 		}
@@ -304,7 +328,8 @@ The return value <code>jac[k]</code> is the partial of the
 the the <code>col[k]</code> domain component of its argument.
 
 \param work
-This structure contains information that is computed by \c SparseJacobainFor.
+<code>work.color_method</code> is an input. The rest of
+this structure contains information that is computed by \c SparseJacobainFor.
 If the sparsity pattern, \c row vector, or \c col vectors
 are not the same between calls to \c SparseJacobianFor, 
 \c work.clear() must be called to reinitialize \c work.
@@ -362,7 +387,24 @@ size_t ADFun<Base>::SparseJacobianFor(
 
 		// execute coloring algorithm
 		color.resize(n);
-		sparse_color(p_transpose, col, row, color);
+		if(	work.color_method == "cppad" )
+			sparse_color_cppad(p_transpose, col, row, color);
+		else if( work.color_method == "colpack" )
+		{
+# if CPPAD_HAS_COLPACK
+			sparse_color_colpack(p_transpose, col, row, color);
+# else
+			CPPAD_ASSERT_KNOWN(
+				false,
+				"SparseJacobianForward: work.color_method = colpack "
+				"and colpack_prefix missing from cmake command line."
+			);
+# endif
+		}
+		else CPPAD_ASSERT_KNOWN(
+			false,
+			"SparseJacobianForward: work.color_method is not valid."
+		);
 
 		// put sorting indices in color order
 		VectorSize key(K);
@@ -448,9 +490,10 @@ The return value <code>jac[k]</code> is the partial of the
 the the <code>col[k]</code> domain component of its argument.
 
 \param work
-This structure contains information that is computed by \c SparseJacobainFor.
+<code>work.color_method</code> is an input. The rest of
+This structure contains information that is computed by \c SparseJacobainRev.
 If the sparsity pattern, \c row vector, or \c col vectors
-are not the same between calls to \c SparseJacobianFor, 
+are not the same between calls to \c SparseJacobianRev, 
 \c work.clear() must be called to reinitialize \c work.
 
 \return
@@ -506,7 +549,24 @@ size_t ADFun<Base>::SparseJacobianRev(
 
 		// execute the coloring algorithm
 		color.resize(m);
-		sparse_color(p, row, col, color);
+		if(	work.color_method == "cppad" )
+			sparse_color_cppad(p, row, col, color);
+		else if( work.color_method == "colpack" )
+		{
+# if CPPAD_HAS_COLPACK
+			sparse_color_colpack(p, row, col, color);
+# else
+			CPPAD_ASSERT_KNOWN(
+				false,
+				"SparseJacobianReverse: work.color_method = colpack "
+				"and colpack_prefix missing from cmake command line."
+			);
+# endif
+		}
+		else CPPAD_ASSERT_KNOWN(
+			false,
+			"SparseJacobianReverse: work.color_method is not valid."
+		);
 
 		// put sorting indices in color order
 		VectorSize key(K);
@@ -597,7 +657,7 @@ The return value <code>jac[k]</code> is the partial of the
 the the <code>col[k]</code> domain component of its argument.
 
 \param work [in,out]
-\c work contains information that depends on the function object, 
+this structure contains information that depends on the function object, 
 sparsity pattern, \c row vector, and \c col vector.
 If they are not the same between calls to \c SparseJacobianForward, 
 \c work.clear() must be called to reinitialize them.
@@ -705,7 +765,7 @@ The return value <code>jac[k]</code> is the partial of the
 the the <code>col[k]</code> domain component of its argument.
 
 \param work [in,out]
-\c work contains information that depends on the function object, 
+this structure contains information that depends on the function object, 
 sparsity pattern, \c row vector, and \c col vector.
 If they are not the same between calls to \c SparseJacobianReverse, 
 \c work.clear() must be called to reinitialize them.

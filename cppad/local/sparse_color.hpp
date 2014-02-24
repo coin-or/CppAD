@@ -12,6 +12,8 @@ the terms of the
 A copy of this license is included in the COPYING file of this distribution.
 Please visit http://www.coin-or.org/CppAD/ for information on other licenses.
 -------------------------------------------------------------------------- */
+# include <cppad/local/cppad_colpack.hpp>
+
 namespace CppAD { // BEGIN_CPPAD_NAMESPACE
 /*!
 \defgroup sparse_color_hpp sparse_color.hpp
@@ -42,7 +44,7 @@ All of the \c ns sets are initially empty.
 <code>p.add_element(s, e)</code>
 add element \c e to set with index \c s.
 
-\param pattern
+\param pattern [in]
 Is a representation of the sparsity pattern for the matrix.
 Note that \c sparse_color does not change the values in \c pattern,
 but it is not \c const because its iterator facility modifies some of its
@@ -68,10 +70,10 @@ in the row specified by the previous call to <code>pattern.begin</code>.
 If there are no more such columns, the value
 <code>pattern.end()</code> is returned.
 
-\param row
+\param row [in]
 is a vector specifying which row indices to compute.
 
-\param col
+\param col [in]
 is a vector, with the same size as \c row,
 that specifies which column indices to compute.
 For each  valid index \c k, the index pair
@@ -80,7 +82,7 @@ It may be that some entries in the sparsity pattern do not need to be computed;
 i.e, do not appear in the set of
 <code>(row[k], col[k])</code> entries.
 
-\param color
+\param color [out]
 is a vector with size \c m.
 The input value of its elements does not matter.
 Upon return, it is a coloring for the rows of the sparse matrix.
@@ -102,7 +104,7 @@ This routine tries to minimize, with respect to the choice of colors,
 the maximum, with respct to \c k, of <code>color[ row[k] ]</code>.
 */
 template <class VectorSet, class VectorSize>
-void sparse_color(
+void sparse_color_cppad(
 	      VectorSet&        pattern ,
 	const VectorSize&       row     ,
 	const VectorSize&       col     ,
@@ -220,9 +222,64 @@ void sparse_color(
 	return;
 }
 
+# if CPPAD_HAS_COLPACK
+/*!
+Colpack version of determining which rows of a sparse matrix 
+can be computed together.
+
+\copydetails sparse_color
+*/
+template <class VectorSet, class VectorSize>
+void sparse_color_colpack(
+	      VectorSet&        pattern ,
+	const VectorSize&       row     ,
+	const VectorSize&       col     ,
+	CppAD::vector<size_t>&  color   )
+{	size_t i, j, k;	
+	size_t m = pattern.n_set();
+	size_t n = pattern.end();
+
+	// Determine number of non-zero entries in each row
+	CppAD::vector<size_t> n_nonzero(m);
+	size_t n_nonzero_total = 0;
+	for(i = 0; i < m; i++)
+	{	n_nonzero[i] = 0;
+		pattern.begin(i);
+		j = pattern.next_element();
+		while( j != pattern.end() )
+		{	n_nonzero[i]++;
+			j = pattern.next_element();
+		}
+		n_nonzero_total += n_nonzero[i];
+	}
+
+	// Allocate memory and fill in Adolc sparsity pattern
+	std::vector<unsigned int*> adolc_pattern(m);
+	std::vector<unsigned int>  adolc_memory(m + n_nonzero_total);
+	size_t i_memory = 0;
+	for(i = 0; i < m; i++)
+	{	adolc_pattern[i]    = adolc_memory.data() + i_memory;
+		adolc_pattern[i][0] = n_nonzero[i];
+		pattern.begin(i);
+		j = pattern.next_element();
+		k = 1;
+		while(j != pattern.end() )
+		{	adolc_pattern[i][k++] = j;
+			j = pattern.next_element();
+		}
+		CPPAD_ASSERT_UNKNOWN( k == 1 + n_nonzero[i] );
+		i_memory += k;
+	}
+	CPPAD_ASSERT_UNKNOWN( i_memory == m + n_nonzero_total );
+
+	// Must use an external routine for this part of the calculation because
+	// ColPack/ColPackHeaders.h has as 'using namespace std' at global level.
+	cppad_colpack(color, m, n, adolc_pattern);
+
+	return;
+}
+# endif // CPPAD_HAS_COLPACK
+
 /*! \} */
 } // END_CPPAD_NAMESPACE
 # endif
-
-
-

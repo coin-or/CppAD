@@ -374,7 +374,7 @@ size_t ADFun<Base>::SparseHessianCompute(
 
 		// execute coloring algorithm
 		color.resize(n);
-		sparse_color(sparsity, row, col, color);
+		sparse_color_cppad(sparsity, row, col, color);
 
 		// put sorting indices in color order
 		VectorSize key(K);

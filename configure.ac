@@ -1,6 +1,6 @@
 dnl $Id$
 dnl ---------------------------------------------------------------------------
-dnl CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-13 Bradley M. Bell
+dnl CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-14 Bradley M. Bell
 dnl
 dnl CppAD is distributed under multiple licenses. This distribution is under
 dnl the terms of the
@@ -435,6 +435,9 @@ if test "$ok" == "no" ; then
 	)
 fi
 AC_MSG_NOTICE([********** End Checking Command Line arguments ***************])
+
+dnl auto-tools version does not support ColPack coloring 
+AC_SUBST(cppad_has_colpack, 0)
 
 dnl auto-tools version cannot use c++11 compiler
 dnl so supress corresponding features

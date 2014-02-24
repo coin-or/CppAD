@@ -13,6 +13,7 @@ Please visit http://www.coin-or.org/CppAD/ for information on other licenses.
 $begin whats_new_14$$
 $dollar @$$
 $spell
+	Jacobian
 	openmp
 	pthread
 	bthread
@@ -36,6 +37,13 @@ This section contains a list of the changes to CppAD during 2014
 (in reverse order by date).
 The purpose of this section is to
 assist you in learning about changes between various versions of CppAD.
+
+$head 02-23$$
+The $cref/color_method/sparse_jacobian/work/color_method/$$
+option was added to the sparse Jacobian calculations.
+This examples one to use $cref/ColPack/colpack_prefix/$$ 
+do color the rows or columns.
+
 
 $head 02-22$$
 The program names in
