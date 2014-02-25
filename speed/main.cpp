@@ -25,22 +25,22 @@ Please visit http://www.coin-or.org/CppAD/ for information on other licenses.
 # include <cppad/track_new_del.hpp>
 # include <cppad/thread_alloc.hpp>
 
-# ifdef SPEED_ADOLC
+# ifdef CPPAD_ADOLC_SPEED
 # define AD_PACKAGE "adolc"
 # endif
-# ifdef SPEED_CPPAD
+# ifdef CPPAD_CPPAD_SPEED
 # define AD_PACKAGE "cppad"
 # endif
-# ifdef SPEED_DOUBLE
+# ifdef CPPAD_DOUBLE_SPEED
 # define AD_PACKAGE "double"
 # endif
-# ifdef SPEED_FADBAD
+# ifdef CPPAD_FADBAD_SPEED
 # define AD_PACKAGE "fadbad"
 # endif
-# ifdef SPEED_PROFILE
+# ifdef CPPAD_PROFILE_SPEED
 # define AD_PACKAGE "profile"
 # endif
-# ifdef SPEED_SACADO
+# ifdef CPPAD_SACADO_SPEED
 # define AD_PACKAGE "sacado"
 # endif
 
@@ -346,7 +346,7 @@ namespace {
 	static size_t Run_error_count = 0;
 	bool run_correct(bool correct_case(bool), const char *case_name)
 	{	bool ok;
-# ifdef SPEED_DOUBLE
+# ifdef CPPAD_DOUBLE_SPEED
 		ok = correct_case(true);
 # else
 		ok = correct_case(false);

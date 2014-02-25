@@ -19,7 +19,7 @@ SET(CMAKE_BUILD_TYPE RELEASE)
 # Adds flags to the compiler command line for sources in the current directory 
 # and below. This command can be used to add any flags, but it was originally 
 # intended to add preprocessor definitions. 
-ADD_DEFINITIONS("-DSPEED_PROFILE -pg")
+ADD_DEFINITIONS("-DCPPAD_PROFILE_SPEED -pg")
 
 # Extra flags used by the linker when creating an executable. 
 SET(CMAKE_EXE_LINKER_FLAGS "-pg")

@@ -158,10 +158,15 @@ void sparse_color_cppad(
 			color[i] = ell++;
 		else	color[i] = m;
 	}
+	/*
+	See GreedyPartialD2Coloring Algorithm Section 3.6.2 of
+	Graph Coloring in Optimization Revisited by
+	Assefaw Gebremedhin, Fredrik Maane, Alex Pothen
 
-	// See GreedyPartialD2Coloring Algorithm Section 3.6.2 of
-	// Graph Coloring in Optimization Revisited by
-	// Assefaw Gebremedhin, Fredrik Maane, Alex Pothen
+	The algorithm above was modified (by Brad Bell) to take advantage of the 
+	fact that only the entries (subset of the sparsity pattern) specified by 
+	row and col need to be computed.
+	*/
 	CppAD::vector<bool> forbidden(m);
 	for(i = 1; i < m; i++) // for each row that appears
 	if( color[i] < m )
