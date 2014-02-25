@@ -20,48 +20,28 @@ SET(CMAKE_BUILD_TYPE DEBUG)
 ADD_SUBDIRECTORY(atomic)
 
 # adolc_prefix
-IF ( adolc_prefix )
-	# Extra source files if we are including adolc
-	SET(adolc_sources 
-		mul_level_adolc.cpp mul_level_adolc_ode.cpp
-	)
-	# Adds -D define flags to the compilation of source files.
-	ADD_DEFINITIONS("-DCPPAD_ADOLC_EXAMPLES")
-	# add adolc to list of libraries
-	SET(example_adolc adolc)
-ELSE ( adolc_prefix )
-	SET(adolc_sources "")
-	SET(example_adolc "")
-ENDIF ( adolc_prefix )
+SET(sources mul_level_adolc.cpp mul_level_adolc_ode.cpp)
+sources_libs_define(adolc "${sources}" adolc ADOLC_EXAMPLES)
 
 # colpack_prefix
-IF ( colpack_prefix )
-	# Extra source files if we are including colpack
-	SET(colpack_sources colpack.cpp ../cppad/local/cppad_colpack.cpp)
-	# Adds -D define flags to the compilation of source files.
-	ADD_DEFINITIONS("-DCPPAD_COLPACK_EXAMPLES")
-	# add colpack to list of libraries
-	SET(example_colpack "ColPack")
-ELSE ( colpack_prefix )
-	SET(colpack_sources "")
-	SET(example_colpack "")
-ENDIF ( colpack_prefix )
+SET(sources colpack.cpp ../cppad/local/cppad_colpack.cpp)
+sources_libs_define(colpack "${sources}" ColPack COLPACK_EXAMPLES)
 
 # eigen_prefix
 IF ( eigen_prefix )
 	# compile eigen library separately so can use different compiler flags
-	ADD_LIBRARY(example_eigen 
+	ADD_LIBRARY(example_eigen_lib
 		eigen_det.cpp
 		eigen_array.cpp
 	)
 	# Adds -D define flags to the compilation of source files.
 	ADD_DEFINITIONS("-DCPPAD_EIGEN_EXAMPLES")
-	add_cppad_cxx_flags(example_eigen)
+	add_cppad_cxx_flags(example_eigen_lib)
 	#
 	# Add eigen to list of libraries
-	SET(example_eigen example_eigen)
+	SET(eigen_libs example_eigen_lib)
 ELSE ( eigen_prefix )
-	SET(example_eigen "")
+	SET(eigen_libs "")
 ENDIF ( eigen_prefix )
 
 # ipopt_prefix
@@ -220,9 +200,9 @@ add_cppad_cxx_flags(example)
 
 # List of libraries to be linked into the specified target
 TARGET_LINK_LIBRARIES(example 
-	${example_adolc} 
-	${example_colpack} 
-	${example_eigen}
+	${adolc_libs} 
+	${colpack_libs} 
+	${eigen_libs}
 )
 
 # Add the check_example target

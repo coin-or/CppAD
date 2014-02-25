@@ -60,6 +60,9 @@ INCLUDE(cmake/optional_package.cmake)
 #
 # add_cppad_cxx_flags(target_name)
 INCLUDE(cmake/add_cppad_cxx_flags.cmake)
+#
+# sources_libs_define(prefix_name sources libs define)
+INCLUDE(cmake/sources_libs_define.cmake)
 # =============================================================================
 # command line arguments
 # =============================================================================
