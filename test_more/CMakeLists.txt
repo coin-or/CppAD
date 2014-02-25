@@ -20,57 +20,34 @@ SET(CMAKE_BUILD_TYPE DEBUG)
 # test using CPPAD_MAX_NUM_THREADS equal to one (its smallest value)
 ADD_DEFINITIONS("-DCPPAD_MAX_NUM_THREADS=1")
 
-# sources that use adolc
-IF ( adolc_prefix )
-	# Extra source files if we are including adolc
-	SET(adolc_sources base_adolc.cpp)
-	# Adds -D define flags to the compilation of source files.
-	ADD_DEFINITIONS("-DCPPAD_ADOLC_TEST")
-	# add adolc to list of libraries
-	SET(test_more_adolc adolc)
-ELSE ( adolc_prefix )
-	SET(adolc_sources "")
-	SET(test_more_adolc "")
-ENDIF ( adolc_prefix )
+# adolc_prefix
+SET(sources base_adolc.cpp)
+sources_libs_define(adolc "${sources}" adolc ADOLC_TEST)
 
 # colpack_prefix
-IF ( colpack_prefix )
-	# Extra source files if we are including colpack
-	SET(colpack_sources ../cppad/local/cppad_colpack.cpp)
-	# add colpack to list of libraries
-	SET(colpack_libs "ColPack")
-ELSE ( colpack_prefix )
-	SET(colpack_sources "")
-	SET(colpack_libs "")
-ENDIF ( colpack_prefix )
+SET(sources ../cppad/local/cppad_colpack.cpp)
+sources_libs_define(colpack "${sources}" ColPack COLPACK_TEST)
 
-# sources that use ipopt
-IF ( ipopt_prefix )
-	# Extra source files if we are including ipopt
-	SET(ipopt_sources ipopt_solve.cpp)
-	# Adds -D define flags to the compilation of source files.
-	ADD_DEFINITIONS("-DCPPAD_IPOPT_TEST")
-	# add ipopt (and libraries it depends on) to list of libraries
-	SET(test_more_ipopt ${ipopt_LIBRARIES} )
-ELSE ( ipopt_prefix )
-	SET(ipopt_sources "")
-	SET(test_more_ipopt "")
-ENDIF ( ipopt_prefix )
+# ipopt_prefix
+SET(sources ipopt_solve.cpp)
+sources_libs_define(ipopt "${sources}" "${ipopt_LIBRARIES}" IPOPT_TEST)
 
 # sources that use eigen
 IF ( eigen_prefix )
 	# compile eigen library separately so can use different compiler flags
-	ADD_LIBRARY(test_more_eigen EXCLUDE_FROM_ALL cppad_eigen.cpp)
+	ADD_LIBRARY(test_more_eigen_lib EXCLUDE_FROM_ALL 
+		cppad_eigen.cpp
+	)
 	# Adds -D define flags to the compilation of source files.
 	ADD_DEFINITIONS("-DCPPAD_EIGEN_TEST")
 	# Add other compiler flags 
-	add_cppad_cxx_flags(test_more_eigen) 
+	add_cppad_cxx_flags(test_more_eigen_lib) 
 	#
 	# Add eigen to list of libraries
-	SET(test_more_eigen test_more_eigen)
+	SET(eigen_libs test_more_eigen_lib)
 ELSE ( eigen_prefix )
 	SET(eigen_sources "")
-	SET(test_more_eigen "")
+	SET(eigen_libs "")
 ENDIF ( eigen_prefix )
 
 # Copy a file to another location and modify its contents.
@@ -172,12 +149,10 @@ add_cppad_cxx_flags(test_more)
 # List of libraries to be linked into the specified target
 TARGET_LINK_LIBRARIES(test_more 
 	${colpack_libs}
-	${test_more_adolc} 
-	${test_more_ipopt}
-	${test_more_eigen}
+	${adolc_libs} 
+	${ipopt_libs}
+	${eigen_libs}
 )
 
 # Add the check_test_more target
-ADD_CUSTOM_TARGET(
-	check_test_more test_more DEPENDS test_more ${test_more_eigen} 
-)
+ADD_CUSTOM_TARGET( check_test_more test_more DEPENDS test_more )

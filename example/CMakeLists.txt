@@ -16,8 +16,12 @@
 # empty, Debug, Release, RelWithDebInfo and MinSizeRel
 SET(CMAKE_BUILD_TYPE DEBUG)
 
+# initialize check_depends
+SET(check_depends example)
+
 # atomic examples
 ADD_SUBDIRECTORY(atomic)
+add_to_list(check_depends check_example_atomic)
 
 # adolc_prefix
 SET(sources mul_level_adolc.cpp mul_level_adolc_ode.cpp)
@@ -30,7 +34,7 @@ sources_libs_define(colpack "${sources}" ColPack COLPACK_EXAMPLES)
 # eigen_prefix
 IF ( eigen_prefix )
 	# compile eigen library separately so can use different compiler flags
-	ADD_LIBRARY(example_eigen_lib
+	ADD_LIBRARY(example_eigen_lib EXCLUDE_FROM_ALL
 		eigen_det.cpp
 		eigen_array.cpp
 	)
@@ -47,9 +51,7 @@ ENDIF ( eigen_prefix )
 # ipopt_prefix
 IF( ipopt_prefix )
 	ADD_SUBDIRECTORY(ipopt_solve)
-	SET(example_ipopt check_example_ipopt_solve)
-ELSE( ipopt_prefix )
-	SET(example_ipopt "")
+	add_to_list(check_depends check_example_ipopt_solve)
 ENDIF( ipopt_prefix )
 
 
@@ -206,8 +208,4 @@ TARGET_LINK_LIBRARIES(example
 )
 
 # Add the check_example target
-ADD_CUSTOM_TARGET(check_example example DEPENDS 
-	example 
-	check_example_atomic 
-	${example_ipopt}
-)
+ADD_CUSTOM_TARGET(check_example example DEPENDS ${check_depends})

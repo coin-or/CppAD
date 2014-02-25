@@ -298,38 +298,38 @@ ENDIF( ipopt_prefix )
 # add_subdirectory(source_dir [binary_dir] [EXCLUDE_FROM_ALL])
 #
 # Initialize list of tests as empty
-SET(list_check "")
+SET(check_depends "")
 #
 ADD_SUBDIRECTORY(cppad)
 ADD_SUBDIRECTORY(pkgconfig)
 #
 ADD_SUBDIRECTORY(compare_c)
-add_to_list(list_check check_compare_c)
+add_to_list(check_depends check_compare_c)
 #
 ADD_SUBDIRECTORY(example)
-add_to_list(list_check check_example)
+add_to_list(check_depends check_example)
 #
 ADD_SUBDIRECTORY(introduction)
-add_to_list(list_check check_introduction)
+add_to_list(check_depends check_introduction)
 #
 ADD_SUBDIRECTORY(print_for)
-add_to_list(list_check check_print_for)
+add_to_list(check_depends check_print_for)
 #
 ADD_SUBDIRECTORY(test_more)
-add_to_list(list_check check_test_more)
+add_to_list(check_depends check_test_more)
 #
 ADD_SUBDIRECTORY(multi_thread)
-add_to_list(list_check check_multi_thread)
+add_to_list(check_depends check_multi_thread)
 #
 ADD_SUBDIRECTORY(speed)
-add_to_list(list_check check_speed)
+add_to_list(check_depends check_speed)
 #
 IF ( ipopt_prefix )
 	ADD_SUBDIRECTORY(cppad_ipopt)
-	add_to_list(list_check check_cppad_ipopt)
+	add_to_list(check_depends check_cppad_ipopt)
 ENDIF( ipopt_prefix )
 #
-ADD_CUSTOM_TARGET(check DEPENDS ${list_check})
+ADD_CUSTOM_TARGET(check DEPENDS ${check_depends})
 #
 # =============================================================================
 # install procedure
