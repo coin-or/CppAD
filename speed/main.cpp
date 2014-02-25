@@ -47,6 +47,7 @@ Please visit http://www.coin-or.org/CppAD/ for information on other licenses.
 /*
 $begin speed_main$$
 $spell
+	colpack
 	onetape
 	boolsparsity
 	optionlist
@@ -169,6 +170,20 @@ $cref cppad_det_lu.cpp$$ returns false
 (indicating that the test not implemented)
 when $code global_onetape$$ is true.
 
+$subhead colpack$$
+If the option $code colpack$$ is present, the symbol
+$codep
+	extern bool global_colpack
+$$
+is true and otherwise it is false.
+This symbols only affects the
+$cref/sparse_jacobian/link_sparse_jacobian/$$ and
+$cref/sparse_hessian/link_sparse_hessian/$$ tests.
+If this external symbol is true,
+CppAD will use $cref/colpack/colpack_prefix/$$ to do the coloring 
+for its 
+Otherwise, it will use it's own coloring algorithm.
+
 $subhead optimize$$
 If the option $code optimize$$ is present, the symbol
 $codep
@@ -177,7 +192,7 @@ $$
 is true and otherwise it is false.
 If this external symbol is true,
 CppAD will optimize the operation sequence before doing computations.
-If it is false, this optimization should not be done.
+If it is false, this optimization will not be done.
 
 $subhead atomic$$
 If the option $code atomic$$ is present, the symbol
@@ -288,6 +303,7 @@ CPPAD_DECLARE_SPEED(sparse_hessian);
 CPPAD_DECLARE_SPEED(sparse_jacobian);
 
 bool   global_onetape;
+bool   global_colpack;
 bool   global_optimize;
 bool   global_atomic;
 bool   global_memory;
@@ -302,6 +318,7 @@ namespace {
 	{	cout << AD_PACKAGE << ": " << test_name;
 		cout << " is not availabe with " << endl;
 		cout << "onetape = " << global_onetape;
+		cout << ", colpack = " << global_colpack;
 		cout << ", optimize = " << global_optimize;
 		cout << ", atomic = " << global_atomic;
 		cout << ", memory = " << global_memory;
@@ -337,6 +354,8 @@ namespace {
 		cout << AD_PACKAGE << "_" << case_name;
 		if( global_onetape )
 			cout << "_onetape";
+		if( global_colpack )
+			cout << "_colpack";
 		if( global_optimize )
 			cout << "_optimize";
 		if( global_atomic )
@@ -369,6 +388,8 @@ namespace {
 		cout << AD_PACKAGE << "_" << case_name;
 		if( global_onetape )
 			cout << "_onetape";
+		if( global_colpack )
+			cout << "_colpack";
 		if( global_optimize )
 			cout << "_optimize";
 		if( global_atomic )
@@ -441,6 +462,7 @@ int main(int argc, char *argv[])
 		iseed = std::atoi( argv[2] );
 		error |= iseed < 0;
 		global_onetape      = false;
+		global_colpack      = false;
 		global_optimize     = false;
 		global_atomic       = false;
 		global_memory       = false;
@@ -448,6 +470,8 @@ int main(int argc, char *argv[])
 		for(i = 3; i < size_t(argc); i++)
 		{	if( strcmp(argv[i], "onetape") == 0 )
 				global_onetape = true;
+			else if( strcmp(argv[i], "colpack") == 0 )
+				global_colpack = true;
 			else if( strcmp(argv[i], "optimize") == 0 )
 				global_optimize = true;
 			else if( strcmp(argv[i], "atomic") == 0 )
@@ -470,6 +494,7 @@ int main(int argc, char *argv[])
 		cout << "a positive integer used as a random seed." << endl;
 		cout << "option choices: ";
 		cout << " \"onetape\",";
+		cout << " \"colpack\",";
 		cout << " \"optimize\",";
 		cout << " \"atomic\",";
 		cout << " \"memory\",";

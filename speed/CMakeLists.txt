@@ -13,18 +13,11 @@
 # Inherit environment from ../CMakeList.txt
 
 # colpack_prefix
-IF ( colpack_prefix )
-	# Extra source files if we are including colpack
-	SET(colpack_sources ../../cppad/local/cppad_colpack.cpp)
-	# add colpack to list of libraries
-	SET(colpack_libs "ColPack")
-ELSE ( colpack_prefix )
-	SET(colpack_sources "")
-	SET(colpack_libs "")
-ENDIF ( colpack_prefix )
+SET(sources ../../cppad/local/cppad_colpack.cpp)
+sources_libs_define(colpack "${sources}" ColPack COLPACK_SPEED)
 
 # Initialize list of tests as empty
-SET(list_speed "")
+SET(check_depends "")
 
 # The CMakeLists.txt file in the specified source directory is processed 
 # before the current input file continues beyond this command.
@@ -32,29 +25,29 @@ SET(list_speed "")
 ADD_SUBDIRECTORY(src)
 #
 ADD_SUBDIRECTORY(cppad)
-add_to_list(list_speed check_speed_cppad)
+add_to_list(check_depends check_speed_cppad)
 #
 ADD_SUBDIRECTORY(double)
-add_to_list(list_speed check_speed_double)
+add_to_list(check_depends check_speed_double)
 #
 ADD_SUBDIRECTORY(example)
-add_to_list(list_speed check_speed_example)
+add_to_list(check_depends check_speed_example)
 #
 ADD_SUBDIRECTORY(profile)
-add_to_list(list_speed check_speed_profile)
+add_to_list(check_depends check_speed_profile)
 #
 IF ( adolc_prefix )
 	ADD_SUBDIRECTORY(adolc)
-	add_to_list(list_speed check_speed_adolc)
+	add_to_list(check_depends check_speed_adolc)
 ENDIF( adolc_prefix )
 IF ( fadbad_prefix )
 	ADD_SUBDIRECTORY(fadbad)
-	add_to_list(list_speed check_speed_fadbad)
+	add_to_list(check_depends check_speed_fadbad)
 ENDIF( fadbad_prefix )
 IF ( sacado_prefix )
 	ADD_SUBDIRECTORY(sacado)
-	add_to_list(list_speed check_speed_sacado)
+	add_to_list(check_depends check_speed_sacado)
 ENDIF( sacado_prefix )
 
 # check_speed
-ADD_CUSTOM_TARGET(check_speed DEPENDS ${list_speed} )
+ADD_CUSTOM_TARGET(check_speed DEPENDS ${check_depends} )

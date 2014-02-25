@@ -12,6 +12,9 @@ Please visit http://www.coin-or.org/CppAD/ for information on other licenses.
 /*
 $begin cppad_sparse_jacobian.cpp$$
 $spell
+	ifdef
+	ifndef
+	colpack
 	boolsparsity
 	namespace
 	onetape
@@ -54,7 +57,8 @@ $codep */
 
 // Note that CppAD uses global_memory at the main program level
 extern bool
-	global_onetape, global_atomic, global_optimize, global_boolsparsity;
+	global_onetape, global_colpack,
+	global_atomic, global_optimize, global_boolsparsity;
 
 namespace {
 	using CppAD::vector;
@@ -93,6 +97,10 @@ bool link_sparse_jacobian(
 {
 	if( global_atomic )
 		return false;
+# ifndef CPPAD_COLPACK_SPEED
+	if( global_colpack )
+		return false;
+# endif
 	// -----------------------------------------------------
 	// setup
 	typedef vector< std::set<size_t> >  SetVector;
@@ -152,7 +160,10 @@ bool link_sparse_jacobian(
 
 		// structure that holds some of the work done by SparseJacobian
 		CppAD::sparse_jacobian_work work;
-
+# ifdef CPPAD_COLPACK_SPEED
+		if( global_colpack )
+			work.color_method = "colpack";
+# endif
 		// calculate the Jacobian at this x
 		// (use forward mode because m > n ?)
 		if( global_boolsparsity)
@@ -190,6 +201,10 @@ bool link_sparse_jacobian(
 
 		// structure that holds some of the work done by SparseJacobian
 		CppAD::sparse_jacobian_work work;
+# ifdef CPPAD_COLPACK_SPEED
+		if( global_colpack )
+			work.color_method = "colpack";
+# endif
 
 		while(repeat--)
 		{	// choose a value for x 

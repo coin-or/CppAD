@@ -13,18 +13,11 @@
 # Inherit environment from ../CMakeList.txt
 
 # colpack_prefix
-IF ( colpack_prefix )
-	# Extra source files if we are including colpack
-	SET(colpack_sources ../../cppad/local/cppad_colpack.cpp)
-	# add colpack to list of libraries
-	SET(colpack_libs "ColPack")
-ELSE ( colpack_prefix )
-	SET(colpack_sources "")
-	SET(colpack_libs "")
-ENDIF ( colpack_prefix )
+SET(sources ../../cppad/local/cppad_colpack.cpp)
+sources_libs_define(colpack "${sources}" ColPack "")
 
 # Initialize list of tests as empty
-SET(list_ipopt_nlp "")
+SET(check_depends "")
 
 # assert ipopt_prefix is defined
 IF ( NOT ipopt_prefix )
@@ -39,13 +32,13 @@ ENDIF ( NOT ipopt_prefix )
 ADD_SUBDIRECTORY(src)
 #
 ADD_SUBDIRECTORY(example)
-add_to_list(list_ipopt_nlp check_cppad_ipopt_example)
+add_to_list(check_depends check_cppad_ipopt_example)
 #
 ADD_SUBDIRECTORY(speed)
-add_to_list(list_ipopt_nlp check_cppad_ipopt_speed)
+add_to_list(check_depends check_cppad_ipopt_speed)
 #
 ADD_SUBDIRECTORY(test)
-add_to_list(list_ipopt_nlp check_cppad_ipopt_test)
+add_to_list(check_depends check_cppad_ipopt_test)
 
 # Add the check_cppad_ipopt target
-ADD_CUSTOM_TARGET(check_cppad_ipopt DEPENDS ${list_ipopt_nlp} )
+ADD_CUSTOM_TARGET(check_cppad_ipopt DEPENDS ${check_depends} )

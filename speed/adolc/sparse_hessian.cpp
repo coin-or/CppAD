@@ -12,6 +12,7 @@ Please visit http://www.coin-or.org/CppAD/ for information on other licenses.
 /*
 $begin adolc_sparse_hessian.cpp$$
 $spell
+	colpack
 	boolsparsity
 	onetape
 	hess
@@ -56,7 +57,7 @@ $codep */
 
 // list of possible options
 extern bool global_memory, global_onetape, global_atomic, global_optimize;
-extern bool global_boolsparsity;
+extern bool global_colpack, global_boolsparsity;
 
 bool link_sparse_hessian(
 	size_t                           size     , 
@@ -66,7 +67,7 @@ bool link_sparse_hessian(
 	const CppAD::vector<size_t>     &col      ,
 	CppAD::vector<double>           &hessian  )
 {
-	if( global_atomic )
+	if( global_atomic || (! global_colpack) )
 		return false; 
 	if( global_memory || global_optimize || global_boolsparsity )
 		return false;

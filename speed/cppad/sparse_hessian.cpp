@@ -12,6 +12,7 @@ Please visit http://www.coin-or.org/CppAD/ for information on other licenses.
 /*
 $begin cppad_sparse_hessian.cpp$$
 $spell
+	colpack
 	boolsparsity
 	namespace
 	Jac
@@ -54,7 +55,8 @@ $codep */
 
 // Note that CppAD uses global_memory at the main program level
 extern bool
-	global_onetape, global_atomic, global_optimize, global_boolsparsity;
+	global_onetape, global_colpack, 
+	global_atomic, global_optimize, global_boolsparsity;
 
 namespace {
 	using CppAD::vector;
@@ -104,7 +106,7 @@ bool link_sparse_hessian(
 	const CppAD::vector<size_t>&     col      ,
 	CppAD::vector<double>&           hessian  )
 {
-	if( global_atomic )
+	if( global_atomic || global_colpack )
 		return false;
 	// -----------------------------------------------------
 	// setup

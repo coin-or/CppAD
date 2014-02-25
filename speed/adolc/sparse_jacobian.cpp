@@ -15,6 +15,7 @@ Please visit http://www.coin-or.org/CppAD/ for information on other licenses.
 /*
 $begin adolc_sparse_jacobian.cpp$$
 $spell
+	colpack
 	boolsparsity
 	adouble
 	int int_n
@@ -54,7 +55,7 @@ $codep */
 
 // list of possible options
 extern bool global_memory, global_onetape, global_atomic, global_optimize;
-extern bool global_boolsparsity;
+extern bool global_colpack, global_boolsparsity;
 
 bool link_sparse_jacobian(
 	size_t                     size     , 
@@ -65,7 +66,7 @@ bool link_sparse_jacobian(
 	CppAD::vector<size_t>     &col      ,
 	CppAD::vector<double>     &jacobian )
 {
-	if( global_atomic )
+	if( global_atomic || (! global_colpack) )
 		return false; 
 	if( global_memory || global_optimize )
 		return false; 
