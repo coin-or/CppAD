@@ -13,6 +13,7 @@ Please visit http://www.coin-or.org/CppAD/ for information on other licenses.
 $begin whats_new_14$$
 $dollar @$$
 $spell
+	adolc
 	colpack
 	Jacobian
 	openmp
@@ -38,6 +39,22 @@ This section contains a list of the changes to CppAD during 2014
 (in reverse order by date).
 The purpose of this section is to
 assist you in learning about changes between various versions of CppAD.
+
+$head 02-26$$
+$list number$$
+The 
+$cref/adolc/speed_adolc/$$ and
+$cref/cppad/speed_cppad/$$ sparse jacobian speed tests now print out
+$cref/n_sweep/sparse_jacobian/n_sweep/$$.
+$lnext
+The size of some of the $cref speed$$ test cases has been increased
+to test behavior for larger problems.
+$lnext
+A link to $cref ode_evaluate$$ was missing in the
+$cref/Speed Utility Routines/speed_utility/Speed Utility Routines/$$ table.
+This has been fixed.
+$lend
+
 
 $head 02-23$$
 The $cref/color_method/sparse_jacobian/work/color_method/$$

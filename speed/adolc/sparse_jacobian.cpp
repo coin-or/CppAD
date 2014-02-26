@@ -15,6 +15,7 @@ Please visit http://www.coin-or.org/CppAD/ for information on other licenses.
 /*
 $begin adolc_sparse_jacobian.cpp$$
 $spell
+	sparsedrivers.cpp
 	colpack
 	boolsparsity
 	adouble
@@ -105,7 +106,7 @@ bool link_sparse_jacobian(
 	else
 		options[0] = 0;  // sparsity pattern by index domains
 	options[1] = 0; // (0 = safe mode, 1 = tight mode)
-	options[2] = 0; // automatic detect forward/reverse (if options[0]==1)
+	options[2] = 0; // see changing to -1 and back to 0 below
 	options[3] = 0; // (0 = column compression, 1 = row compression)
 
 	// structure that holds some of the work done by sparse_jac
@@ -175,8 +176,15 @@ bool link_sparse_jacobian(
 			a_y[i] >>= y[i];
 		trace_off();
 
-		// is this a repeat call at the same argument
+		// Retrieve n_sweep using undocumented feature of sparsedrivers.cpp
 		int same_pattern = 0;
+		options[2]       = -1;
+		int n_sweep = sparse_jac(tag, int(m), int(n), 
+			same_pattern, x, &nnz, &rind, &cind, &values, options
+		);
+		options[2]       = 0;
+		extern size_t global_sparse_jacobian_n_sweep;
+		global_sparse_jacobian_n_sweep = size_t(n_sweep);
 
 		while(repeat--)
 		{	// choose a value for x

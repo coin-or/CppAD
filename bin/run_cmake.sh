@@ -24,6 +24,7 @@ echo_eval() {
 # -----------------------------------------------
 verbose='no'
 testvector='boost'
+debug_speed='no'
 while [ "$1" != "" ]
 do
 	if [ "$1" == '--verbose' ]
@@ -38,14 +39,27 @@ do
 	elif [ "$1" == '--eigen_vector' ]
 	then
 		testvector='eigen'
+	elif [ "$1" == '--debug_speed' ]
+	then
+		debug_speed='yes'
 	else
-		options='[--verbose] [--<package>_vector]'
+		options='[--verbose] [--<package>_vector] [--debug_speed]'
 		echo "usage: bin/run_cmake.sh: $options"
 		echo 'where <package> is cppad, boost, or eigen'
 		exit 1
 	fi
 	shift
 done
+# ---------------------------------------------------------------------------
+if [ "$debug_speed" == 'yes' ]
+then
+	sed -e 's|^SET(CMAKE_BUILD_TYPE .*|SET(CMAKE_BUILD_TYPE DEBUG)|' \
+		-i  speed/CMakeLists.txt
+else
+	sed -e 's|^SET(CMAKE_BUILD_TYPE .*|SET(CMAKE_BUILD_TYPE RELEASE)|' \
+		-i speed/CMakeLists.txt
+fi
+# ---------------------------------------------------------------------------
 if [ ! -e build ]
 then
 	echo_eval mkdir build

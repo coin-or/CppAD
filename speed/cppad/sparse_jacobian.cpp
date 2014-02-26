@@ -206,6 +206,7 @@ bool link_sparse_jacobian(
 			work.color_method = "colpack";
 # endif
 
+		extern size_t global_sparse_jacobian_n_sweep;
 		while(repeat--)
 		{	// choose a value for x 
 			CppAD::uniform_01(n, x);
@@ -213,11 +214,11 @@ bool link_sparse_jacobian(
 			// calculate the Jacobian at this x
 			// (use forward mode because m > n ?)
 			if( global_boolsparsity )
-				f.SparseJacobianForward(
+				global_sparse_jacobian_n_sweep = f.SparseJacobianForward(
 					x, bool_sparsity, row, col, jac, work
 				);
 			else
-				f.SparseJacobianForward(
+				global_sparse_jacobian_n_sweep = f.SparseJacobianForward(
 					x, set_sparsity, row, col, jac, work
 				);
 			for(k = 0; k < K; k++)

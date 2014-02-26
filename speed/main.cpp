@@ -309,6 +309,9 @@ bool   global_atomic;
 bool   global_memory;
 bool   global_boolsparsity;
 
+// may be set by spasre_jacobian 
+size_t global_sparse_jacobian_n_sweep = 0;
+
 namespace {
 	using std::cout;
 	using std::endl;
@@ -517,11 +520,11 @@ int main(int argc, char *argv[])
 	CppAD::vector<size_t> size_sparse_hessian(n_size);
 	CppAD::vector<size_t> size_sparse_jacobian(n_size);
 	for(i = 0; i < n_size; i++) 
-	{	size_det_lu[i]      = 3 * i + 1;
-		size_det_minor[i]   = i + 1;
-		size_mat_mul[i]     = 10 * (i + 1);
-		size_ode[i]         = 3 * i + 1;
-		size_poly[i]        = 8 * i + 1;
+	{	size_det_minor[i]   = i + 1;
+		size_det_lu[i]      = 10 * i + 1;
+		size_mat_mul[i]     = 10 * i + 1;
+		size_ode[i]         = 10 * i + 1;
+		size_poly[i]        = 10 * i + 1;
 		size_sparse_hessian[i]  = 100 * (i + 1) * (i + 1);
 		size_sparse_jacobian[i] = 100 * (i + 1) * (i + 1);
 	}
@@ -660,6 +663,12 @@ int main(int argc, char *argv[])
 		run_speed(
 		speed_sparse_jacobian, size_sparse_jacobian, "sparse_jacobian"
 		);
+		if( global_sparse_jacobian_n_sweep != 0 )
+		{	cout << AD_PACKAGE 
+			<< "_global_sparse_jacobian_n_sweep = " 
+			<< global_sparse_jacobian_n_sweep 
+			<< endl;
+		}
 		break;
 		// ---------------------------------------------------------
 		

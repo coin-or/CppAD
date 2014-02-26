@@ -100,14 +100,14 @@ do
 	fi
 done
 #
-# extra speed tests
-echo_eval speed/cppad/speed_cppad correct 432 onetape
-echo_eval speed/cppad/speed_cppad correct 432 optimize
-echo_eval speed/cppad/speed_cppad correct 432 atomic
-echo_eval speed/cppad/speed_cppad correct 432 memory
-echo_eval speed/cppad/speed_cppad correct 432 boolsparsity
-#
-echo_eval speed/adolc/speed_adolc correct 432 onetape
+# extra speed tests not run with option specified
+for option in onetape colpack optimize atomic memory boolsparsity
+do
+	echo_eval speed/cppad/speed_cppad correct 432 $option
+done
+echo_eval speed/adolc/speed_adolc correct         432 onetape
+echo_eval speed/adolc/speed_adolc sparse_jacobian 432 onetape colpack
+echo_eval speed/adolc/speed_adolc sparse_hessian  432 onetape colpack
 #
 # ----------------------------------------------------------------------------
 # extra multi_thread tests
