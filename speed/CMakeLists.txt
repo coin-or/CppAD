@@ -12,6 +12,10 @@
 # Build the speed/* directory tests 
 # Inherit environment from ../CMakeList.txt
 
+# Specify build type for this directory and all its subdirectories. 
+# Possible values are DEBUG, RELEASE, RelWithDebInfo and MinSizeRel
+SET(CMAKE_BUILD_TYPE RELEASE)
+
 # colpack_prefix
 SET(sources ../../cppad/local/cppad_colpack.cpp)
 sources_libs_define(colpack "${sources}" ColPack COLPACK_SPEED)

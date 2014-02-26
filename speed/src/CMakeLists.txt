@@ -11,10 +11,7 @@
 # -----------------------------------------------------------------------------
 # Build the cppad_ipopt/src library
 # Inherit environment from ../CMakeList.txt
-
-# Specifies build type for this directory. Possible values are 
-# empty, Debug, Release, RelWithDebInfo and MinSizeRel
-SET(CMAKE_BUILD_TYPE RELEASE)
+# CMAKE_BUILD_TYPE determined by parent directory
 
 #  add_library(<name> [STATIC | SHARED | MODULE] [EXCLUDE_FROM_ALL]
 #	source1 source2 ... sourceN)

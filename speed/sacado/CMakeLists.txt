@@ -11,6 +11,7 @@
 # -----------------------------------------------------------------------------
 # Build the speed/sacado directory tests 
 # Inherit environment from ../CMakeList.txt
+# CMAKE_BUILD_TYPE determined by parent directory
 
 # assert sacado_prefix is defined
 IF ( NOT sacado_prefix )
@@ -18,10 +19,6 @@ IF ( NOT sacado_prefix )
 		"speed/sacado/CMakeLists.txt: sacado_prefix = ${sacado_prefix}"
 	)
 ENDIF ( NOT sacado_prefix )
-
-# Specifies build type for this directory. Possible values are 
-# empty, Debug, Release, RelWithDebInfo and MinSizeRel
-SET(CMAKE_BUILD_TYPE RELEASE)
 
 # Adds flags to the compiler command line for sources in the current directory 
 # and below. This command can be used to add any flags, but it was originally 

@@ -11,6 +11,7 @@
 # -----------------------------------------------------------------------------
 # Build the speed/adolc directory tests 
 # Inherit environment from ../CMakeList.txt
+# CMAKE_BUILD_TYPE determined by parent directory
 
 # assert adolc_prefix is defined
 IF ( NOT adolc_prefix )
@@ -19,9 +20,6 @@ IF ( NOT adolc_prefix )
 	)
 ENDIF ( NOT adolc_prefix )
 
-# Specifies build type for this directory. Possible values are 
-# empty, Debug, Release, RelWithDebInfo and MinSizeRel
-SET(CMAKE_BUILD_TYPE RELEASE)
 
 # Adds flags to the compiler command line for sources in the current directory 
 # and below. This command can be used to add any flags, but it was originally 

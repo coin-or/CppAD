@@ -11,6 +11,7 @@
 # -----------------------------------------------------------------------------
 # Build the speed/fadbad directory tests 
 # Inherit environment from ../CMakeList.txt
+# CMAKE_BUILD_TYPE determined by parent directory
 
 # assert fadbad_prefix is defined
 IF ( NOT fadbad_prefix )
@@ -18,10 +19,6 @@ IF ( NOT fadbad_prefix )
 		"speed/fadbad/CMakeLists.txt: fadbad_prefix = ${fadbad_prefix}"
 	)
 ENDIF ( NOT fadbad_prefix )
-
-# Specifies build type for this directory. Possible values are 
-# empty, Debug, Release, RelWithDebInfo and MinSizeRel
-SET(CMAKE_BUILD_TYPE RELEASE)
 
 # Adds flags to the compiler command line for sources in the current directory 
 # and below. This command can be used to add any flags, but it was originally 
