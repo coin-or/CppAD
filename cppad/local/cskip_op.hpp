@@ -3,7 +3,7 @@
 # define CPPAD_CSKIP_OP_INCLUDED
 
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-13 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-14 Bradley M. Bell
 
 CppAD is distributed under multiple licenses. This distribution is under
 the terms of the 
@@ -102,7 +102,7 @@ If right is a variable,
 <code>taylor [ arg[3] * nc_taylor + 0 ]</code>
 is the zeroth order Taylor coefficient corresponding to right.
 
-\param \cskip_var [in,out]
+\param \cskip_op [in,out]
 is vector specifying which operations are at this point are know to be
 unecessary and can be skipped. 
 This is both an input and an output.
@@ -115,7 +115,7 @@ inline void forward_cskip_op_0(
 	const Base*          parameter      ,
 	size_t               nc_taylor      ,
 	Base*                taylor         ,
-	CppAD::vector<bool>& cskip_var      )
+	bool*                cskip_op       )
 {
 	CPPAD_ASSERT_UNKNOWN( size_t(arg[0]) < size_t(CompareNe) );
 	CPPAD_ASSERT_UNKNOWN( arg[1] != 0 );
@@ -177,11 +177,11 @@ inline void forward_cskip_op_0(
 	}
 	if( true_case )
 	{	for(size_t i = 0; i < size_t(arg[4]); i++)
-			cskip_var[ arg[6+i] ] = true; 
+			cskip_op[ arg[6+i] ] = true; 
 	}
 	else
 	{	for(size_t i = 0; i < size_t(arg[5]); i++)
-			cskip_var[ arg[6+arg[4]+i] ] = true; 
+			cskip_op[ arg[6+arg[4]+i] ] = true; 
 	}
 	return;
 }

@@ -120,7 +120,7 @@ is the k-th order Taylor coefficient for the variable with
 index i on the tape.
 
 \param cskip_op
-Is a vector with size \c numvar,
+Is a vector with size play->num_rec_op().
 
 \li <tt>q = 0</tt>
 In this case,
@@ -153,10 +153,10 @@ size_t forward_sweep(
 	const size_t          p,
 	const size_t          n,
 	const size_t          numvar,
-	player<Base>         *play,
+	player<Base>*         play,
 	const size_t          J,
-	Base                 *Taylor,
-	CppAD::vector<bool>&  cskip_op
+	Base*                 Taylor,
+	bool*                 cskip_op
 )
 {	CPPAD_ASSERT_UNKNOWN( J >= p + 1 );
 	CPPAD_ASSERT_UNKNOWN( q <= p );
@@ -255,6 +255,7 @@ size_t forward_sweep(
 		play->next_forward(op, arg, i_op, i_var);
 		CPPAD_ASSERT_UNKNOWN( (i_op > n)  | (op == InvOp) );  
 		CPPAD_ASSERT_UNKNOWN( (i_op <= n) | (op != InvOp) );  
+		CPPAD_ASSERT_UNKNOWN( i_op < play->num_rec_op() );
 
 		// check if we are skipping this operation
 		while( cskip_op[i_op] )
@@ -263,6 +264,7 @@ size_t forward_sweep(
 				play->forward_csum(op, arg, i_op, i_var);
 			}
 			play->next_forward(op, arg, i_op, i_var);
+			CPPAD_ASSERT_UNKNOWN( i_op < play->num_rec_op() );
 		}
 
 		// action depends on the operator

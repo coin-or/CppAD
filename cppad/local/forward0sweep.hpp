@@ -131,10 +131,10 @@ size_t forward0sweep(
 	bool                  print,
 	size_t                n,
 	size_t                numvar,
-	player<Base>         *play,
+	player<Base>*         play,
 	size_t                J,
-	Base                 *Taylor,
-	CppAD::vector<bool>&  cskip_op
+	Base*                 Taylor,
+	bool*                 cskip_op
 )
 {	CPPAD_ASSERT_UNKNOWN( J >= 1 );
 
@@ -225,6 +225,7 @@ size_t forward0sweep(
 		play->next_forward(op, arg, i_op, i_var);
 		CPPAD_ASSERT_UNKNOWN( (i_op > n)  | (op == InvOp) );  
 		CPPAD_ASSERT_UNKNOWN( (i_op <= n) | (op != InvOp) );  
+		CPPAD_ASSERT_UNKNOWN( i_op < play->num_rec_op() );
 
 		// check if we are skipping this operation
 		while( cskip_op[i_op] )
@@ -233,6 +234,7 @@ size_t forward0sweep(
 				play->forward_csum(op, arg, i_op, i_var);
 			}
 			play->next_forward(op, arg, i_op, i_var);
+			CPPAD_ASSERT_UNKNOWN( i_op < play->num_rec_op() );
 		}
 
 		// action to take depends on the case

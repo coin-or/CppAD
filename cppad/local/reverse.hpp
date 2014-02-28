@@ -3,7 +3,7 @@
 # define CPPAD_REVERSE_INCLUDED
 
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-13 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-14 Bradley M. Bell
 
 CppAD is distributed under multiple licenses. This distribution is under
 the terms of the 
@@ -173,6 +173,7 @@ VectorBase ADFun<Base>::Reverse(size_t p, const VectorBase &w)
 	}
 
 	// evaluate the derivatives
+	CPPAD_ASSERT_UNKNOWN( cskip_op_.size() == play_.num_rec_op() );
 	ReverseSweep(
 		p - 1,
 		n,
@@ -182,7 +183,7 @@ VectorBase ADFun<Base>::Reverse(size_t p, const VectorBase &w)
 		taylor_.data(),
 		p,
 		Partial.data(),
-		cskip_op_
+		cskip_op_.data()
 	);
 
 	// return the derivative values

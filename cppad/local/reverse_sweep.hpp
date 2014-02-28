@@ -165,7 +165,7 @@ void ReverseSweep(
 	const Base*                 Taylor,
 	size_t                      K,
 	Base*                       Partial,
-	const CppAD::vector<bool>&  cskip_op
+	bool*                       cskip_op
 )
 {
 	OpCode           op;
@@ -224,6 +224,7 @@ void ReverseSweep(
 		play->next_reverse(op, arg, i_op, i_var);
 		CPPAD_ASSERT_UNKNOWN((i_op >  n) | (op == InvOp) | (op == BeginOp));
 		CPPAD_ASSERT_UNKNOWN((i_op <= n) | (op != InvOp) | (op != BeginOp));
+		CPPAD_ASSERT_UNKNOWN( i_op < play->num_rec_op() );
 
 		// check if we are skipping this operation
 		while( cskip_op[i_op] )
@@ -232,6 +233,7 @@ void ReverseSweep(
 				play->reverse_csum(op, arg, i_op, i_var);
 			}
 			play->next_reverse(op, arg, i_op, i_var);
+			CPPAD_ASSERT_UNKNOWN( i_op < play->num_rec_op() );
 		}
 
 		// rest of informaiton depends on the case
@@ -315,7 +317,7 @@ void ReverseSweep(
 			case CSkipOp:
 			// CSkipOp has a variable number of arguments and
 			// next_forward thinks it one has one argument.
-			// we must inform next_forward of this special case.
+			// we must inform next_reverse of this special case.
 			play->reverse_cskip(op, arg, i_op, i_var);
 			break;
 			// -------------------------------------------------
