@@ -3,7 +3,7 @@
 # define CPPAD_VECTOR_INCLUDED
 
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-13 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-14 Bradley M. Bell
 
 CppAD is distributed under multiple licenses. This distribution is under
 the terms of the 
@@ -132,7 +132,6 @@ extends the vector $icode x$$ so that its new size is $icode n$$ plus one
 and $icode%x%[%n%]%$$ is equal to $icode s$$
 (equal in the sense of the $icode Scalar$$ assignment operator).
 
-
 $head push_vector$$
 $index push_vector, CppAD$$
 $index vector, CppAD push$$
@@ -182,6 +181,28 @@ The can be useful when using very large vectors
 and when checking for memory leaks (and there are global vectors)
 see the $cref/memory/CppAD_vector/Memory and Parallel Mode/$$ discussion.
 
+$head data$$
+$index data, CppAD vector$$
+$index vector, CppAD data$$
+If $icode x$$ is a $codei%CppAD::vector<%Scalar%>%$$ object
+$codei%
+	%x%.data()
+%$$
+returns a pointer to a $icode Scalar$$ object such that for
+$codei%0 <= %i% < %x%.size()%$$,
+$icode%x%[%i%]%$$ and $icode%x%.data()[%i%]%$$ 
+are the same $icode Scalar$$ object.
+If $icode x$$ is $code const$$, the pointer is $code const$$.
+If $icode%x%.capacity()%$$ is zero, the value of the pointer is not defined.
+The pointer may no longer be valid after the following operations on 
+$icode x$$:
+its destructor,
+$code clear$$,
+$code resize$$, 
+$code push_back$$,
+$code push_vector$$,
+assignment to another vector when original size of $icode x$$ is zero. 
+
 $head vectorBool$$
 $index vectorBool$$
 The file $code <cppad/vector.hpp>$$ also defines the class
@@ -193,6 +214,10 @@ $subhead Memory$$
 The class $code vectorBool$$ conserves on memory
 (on the other hand, $code CppAD::vector<bool>$$ is expected to be faster
 than $code vectorBool$$).
+
+$subhead data$$
+The $cref/data/CppAD_vector/data/$$ function is not supported by
+$code vectorBool$$.
 
 $subhead Output$$
 The $code CppAD::vectorBool$$ output operator
@@ -361,6 +386,14 @@ public:
 	/// number of elements currently in this vector.
 	inline size_t size(void) const
 	{	return length_; }
+
+	/// raw pointer to the data
+	inline Type* data(void)
+	{	return data_; }
+
+	/// const raw pointer to the data
+	inline const Type* data(void) const
+	{	return data_; }
 
 	/// change the number of elements in this vector.
 	inline void resize(

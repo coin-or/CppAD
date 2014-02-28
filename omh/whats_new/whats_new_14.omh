@@ -42,6 +42,10 @@ This section contains a list of the changes to CppAD during 2014
 The purpose of this section is to
 assist you in learning about changes between various versions of CppAD.
 
+$head 02-28$$
+The $cref/data/CppAD_vector/data/$$ function was added to the
+$code CppAD::vector$$ template class.
+
 $head 02-27$$
 The CppAD developer documentation for the subdirectory
 $code cppad/ipopt$$ was not being built by the command 

@@ -16,10 +16,10 @@ Please visit http://www.coin-or.org/CppAD/ for information on other licenses.
 
 namespace CppAD {
 	void cppad_colpack(
-		      CppAD::vector<size_t>&       color         ,
-		size_t                             m             ,
-		size_t                             n             ,
-		const std::vector<unsigned int*>&  adolc_pattern )
+		      CppAD::vector<size_t>&         color         ,
+		size_t                               m             ,
+		size_t                               n             ,
+		const CppAD::vector<unsigned int*>&  adolc_pattern )
 	{	size_t i, k;
 		CPPAD_ASSERT_UNKNOWN( adolc_pattern.size() == m );
 	

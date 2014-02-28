@@ -259,8 +259,8 @@ void sparse_color_colpack(
 	}
 
 	// Allocate memory and fill in Adolc sparsity pattern
-	std::vector<unsigned int*> adolc_pattern(m);
-	std::vector<unsigned int>  adolc_memory(m + n_nonzero_total);
+	CppAD::vector<unsigned int*> adolc_pattern(m);
+	CppAD::vector<unsigned int>  adolc_memory(m + n_nonzero_total);
 	size_t i_memory = 0;
 	for(i = 0; i < m; i++)
 	{	adolc_pattern[i]    = adolc_memory.data() + i_memory;

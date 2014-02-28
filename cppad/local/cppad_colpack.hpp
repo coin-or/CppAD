@@ -63,10 +63,10 @@ This routine tries to minimize, with respect to the choice of colors,
 the maximum, with respct to \c k, of <code>color[ row[k] ]</code>.
 */
 extern void cppad_colpack(
-	      CppAD::vector<size_t>&       color         ,
-	size_t                             m             ,
-	size_t                             n             ,
-	const std::vector<unsigned int*>&  adolc_pattern
+	      CppAD::vector<size_t>&         color         ,
+	size_t                               m             ,
+	size_t                               n             ,
+	const CppAD::vector<unsigned int*>&  adolc_pattern
 );
 
 /*! \} */
