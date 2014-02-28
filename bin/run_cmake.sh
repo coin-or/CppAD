@@ -25,6 +25,7 @@ echo_eval() {
 verbose='no'
 testvector='boost'
 debug_speed='no'
+profile_speed='no'
 while [ "$1" != "" ]
 do
 	if [ "$1" == '--verbose' ]
@@ -42,8 +43,14 @@ do
 	elif [ "$1" == '--debug_speed' ]
 	then
 		debug_speed='yes'
+		profile_speed='no'
+	elif [ "$1" == '--profile_speed' ]
+	then
+		profile_speed='yes'
+		debug_speed='no'
 	else
-		options='[--verbose] [--<package>_vector] [--debug_speed]'
+		options='[--verbose] [--<package>_vector]'
+		options="$options [--debug_speed] [--profile_speed']"
 		echo "usage: bin/run_cmake.sh: $options"
 		echo 'where <package> is cppad, boost, or eigen'
 		exit 1
@@ -54,6 +61,10 @@ done
 if [ "$debug_speed" == 'yes' ]
 then
 	sed -e 's|^SET(CMAKE_BUILD_TYPE .*|SET(CMAKE_BUILD_TYPE DEBUG)|' \
+		-i  speed/CMakeLists.txt
+elif [ "$profile_speed" == 'yes' ]
+then
+	sed -e 's|^SET(CMAKE_BUILD_TYPE .*|SET(CMAKE_BUILD_TYPE MinSizeRel)|' \
 		-i  speed/CMakeLists.txt
 else
 	sed -e 's|^SET(CMAKE_BUILD_TYPE .*|SET(CMAKE_BUILD_TYPE RELEASE)|' \

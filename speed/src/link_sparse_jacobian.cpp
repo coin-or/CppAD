@@ -136,7 +136,7 @@ namespace {
 	using CppAD::vector;
 
 	/*!
- 	Class used by choose_row_col to determin order of row and column indices
+ 	Class used by choose_row_col to determine order of row and column indices
 	*/
 	class Key {
 	public:
@@ -176,7 +176,10 @@ namespace {
 	Function that randomly choose the row and column indices
 
 	\param n [in]
-	is the dimension of the argument space for the function f(x).
+	is the dimension of the domain space for the function f(x).
+
+	\param m [in]
+	is the dimension of the range space for the function f(x).
 
 	\param row [out]
 	the input size and elements of \c row do not matter.

@@ -12,6 +12,9 @@
 # Build the speed/* directory tests 
 # Inherit environment from ../CMakeList.txt
 
+# CppAD developers use MinSizeRel for profiling the speed tests
+SET(CMAKE_CXX_FLAGS_MINSIZEREL "-O0 -DNDEBUG")
+
 # Specify build type for this directory and all its subdirectories. 
 # Possible values are DEBUG, RELEASE, RelWithDebInfo and MinSizeRel
 SET(CMAKE_BUILD_TYPE RELEASE)
