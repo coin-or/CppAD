@@ -3,7 +3,7 @@
 # define CPPAD_NUM_SKIP_INCLUDED
 
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-13 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-14 Bradley M. Bell
 
 CppAD is distributed under multiple licenses. This distribution is under
 the terms of the 
@@ -84,11 +84,11 @@ size_t ADFun<Base>::number_skip(void)
 	size_t n_skip = 0;
 
 	// start playback
-	play_.start_forward(op, arg, i_op, i_var);
+	play_.forward_start(op, arg, i_op, i_var);
 	CPPAD_ASSERT_UNKNOWN(op == BeginOp)
 	while(op != EndOp)
 	{	// next op
-		play_.next_forward(op, arg, i_op, i_var);
+		play_.forward_next(op, arg, i_op, i_var);
 		if( op == CSumOp)
 			play_.forward_csum(op, arg, i_op, i_var);
 		else if (op == CSkipOp)

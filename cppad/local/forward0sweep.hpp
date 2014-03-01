@@ -91,7 +91,7 @@ with in the tape and this changes during palyback.
 The second exception is the fact that the 
 zero order ( \a d = 0 ) versions of the VecAD operators LdpOp and LdvOp 
 modify the corresponding \a op_arg values returned by 
-\ref player::next_forward and \ref player::next_reverse; see the
+\ref player::forward_next and \ref player::reverse_next; see the
 \link load_op.hpp LdpOp and LdvOp \endlink operations.
 
 \param J
@@ -213,7 +213,7 @@ size_t forward0sweep(
 		text = play->GetTxt(0);
 
 	// skip the BeginOp at the beginning of the recording
-	play->start_forward(op, arg, i_op, i_var);
+	play->forward_start(op, arg, i_op, i_var);
 	CPPAD_ASSERT_UNKNOWN( op == BeginOp );
 # if CPPAD_FORWARD0SWEEP_TRACE
 	std::cout << std::endl;
@@ -222,7 +222,7 @@ size_t forward0sweep(
 	while(more_operators)
 	{
 		// this op
-		play->next_forward(op, arg, i_op, i_var);
+		play->forward_next(op, arg, i_op, i_var);
 		CPPAD_ASSERT_UNKNOWN( (i_op > n)  | (op == InvOp) );  
 		CPPAD_ASSERT_UNKNOWN( (i_op <= n) | (op != InvOp) );  
 		CPPAD_ASSERT_UNKNOWN( i_op < play->num_rec_op() );
@@ -233,7 +233,7 @@ size_t forward0sweep(
 			{	// CSumOp has a variable number of arguments
 				play->forward_csum(op, arg, i_op, i_var);
 			}
-			play->next_forward(op, arg, i_op, i_var);
+			play->forward_next(op, arg, i_op, i_var);
 			CPPAD_ASSERT_UNKNOWN( i_op < play->num_rec_op() );
 		}
 
@@ -308,23 +308,23 @@ size_t forward0sweep(
 
 			case CSkipOp:
 			// CSkipOp has a variable number of arguments and
-			// next_forward thinks it one has one argument.
-			// we must inform next_forward of this special case.
-			play->forward_cskip(op, arg, i_op, i_var);
+			// forward_next thinks it has no arguments.
+			// we must inform forward_next of this special case.
 			forward_cskip_op_0(
 				i_var, arg, num_par, parameter, J, Taylor, cskip_op
 			);
+			play->forward_cskip(op, arg, i_op, i_var);
 			break;
 			// -------------------------------------------------
 
 			case CSumOp:
 			// CSumOp has a variable number of arguments and
-			// next_forward thinks it one has one argument.
-			// we must inform next_forward of this special case.
-			play->forward_csum(op, arg, i_op, i_var);
+			// forward_next thinks it has no arguments.
+			// we must inform forward_next of this special case.
 			forward_csum_op(
 				0, 0, i_var, arg, num_par, parameter, J, Taylor
 			);
+			play->forward_csum(op, arg, i_op, i_var);
 			break;
 			// -------------------------------------------------
 

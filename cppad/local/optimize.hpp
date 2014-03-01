@@ -1371,13 +1371,13 @@ void optimize_run(
 
 	// Initialize a reverse mode sweep through the operation sequence
 	size_t i_op;
-	play->start_reverse(op, arg, i_op, i_var);
+	play->reverse_start(op, arg, i_op, i_var);
 	CPPAD_ASSERT_UNKNOWN( op == EndOp );
 	size_t mask;
 	user_state = user_end;
 	while(op != BeginOp)
 	{	// next op
-		play->next_reverse(op, arg, i_op, i_var);
+		play->reverse_next(op, arg, i_op, i_var);
 
 		// Store the operator corresponding to each variable
 		if( NumRes(op) > 0 )
@@ -1991,7 +1991,7 @@ void optimize_run(
 	CPPAD_ASSERT_UNKNOWN( j == num_vecad_ind );
 
 	// start playing the operations in the forward direction
-	play->start_forward(op, arg, i_op, i_var);
+	play->forward_start(op, arg, i_op, i_var);
 	CPPAD_ASSERT_UNKNOWN( user_curr == user_info.size() );
 
 	// playing forward skips BeginOp at the beginning, but not EndOp at
@@ -2016,7 +2016,7 @@ void optimize_run(
 	user_state = user_start;
 	while(op != EndOp)
 	{	// next op
-		play->next_forward(op, arg, i_op, i_var);
+		play->forward_next(op, arg, i_op, i_var);
 		CPPAD_ASSERT_UNKNOWN( (i_op > n)  | (op == InvOp) );
 		CPPAD_ASSERT_UNKNOWN( (i_op <= n) | (op != InvOp) );
 

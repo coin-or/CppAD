@@ -3,7 +3,7 @@
 # define CPPAD_OP_CODE_INCLUDED
 
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-13 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-14 Bradley M. Bell
 
 CppAD is distributed under multiple licenses. This distribution is under
 the terms of the 
@@ -227,7 +227,7 @@ inline size_t NumArg( OpCode op)
 	CPPAD_ASSERT_UNKNOWN( size_t(op) < size_t(NumberOp) );
 # endif
 
-	return NumArgTable[(size_t) op];
+	return NumArgTable[op];
 }
 
 /*!
@@ -313,7 +313,7 @@ inline size_t NumRes(OpCode op)
 	// this test ensures that all indices are within the table
 	CPPAD_ASSERT_UNKNOWN( size_t(op) < size_t(NumberOp) );
 
-	return NumResTable[(size_t) op];
+	return NumResTable[op];
 }
 
 /*!

@@ -488,7 +488,7 @@ int main(int argc, char *argv[])
 		}
 	}
 	if( error )
-	{	cout << "usage: ./" 
+	{	cout << "usage: ./speed_" 
 		     << AD_PACKAGE << " test seed option_list" << endl;
 		cout << "test choices: " << endl;
 		for(i = 0; i < n_test; i++)

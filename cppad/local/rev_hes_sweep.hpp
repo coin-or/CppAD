@@ -3,7 +3,7 @@
 # define CPPAD_REV_HES_SWEEP_INCLUDED
 
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-13 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-14 Bradley M. Bell
 
 CppAD is distributed under multiple licenses. This distribution is under
 the terms of the 
@@ -200,7 +200,7 @@ void RevHesSweep(
 
 
 	// Initialize
-	play->start_reverse(op, arg, i_op, i_var);
+	play->reverse_start(op, arg, i_op, i_var);
 	CPPAD_ASSERT_UNKNOWN( op == EndOp );
 # if CPPAD_REV_HES_SWEEP_TRACE
 	std::cout << std::endl;
@@ -211,7 +211,7 @@ void RevHesSweep(
 	while(more_operators)
 	{
 		// next op
-		play->next_reverse(op, arg, i_op, i_var);
+		play->reverse_next(op, arg, i_op, i_var);
 # ifndef NDEBUG
 		if( i_op <= n )
 		{	CPPAD_ASSERT_UNKNOWN((op == InvOp) | (op == BeginOp));
@@ -281,16 +281,16 @@ void RevHesSweep(
 
 			case CSkipOp:
 			// CSkipOp has a variable number of arguments and
-			// next_reverse thinks it one has one argument.
-			// We must inform next_reverse of this special case.
+			// reverse_next thinks it one has one argument.
+			// We must inform reverse_next of this special case.
 			play->reverse_cskip(op, arg, i_op, i_var);
 			break;
 			// -------------------------------------------------
 
 			case CSumOp:
 			// CSumOp has a variable number of arguments and
-			// next_reverse thinks it one has one argument.
-			// We must inform next_reverse of this special case.
+			// reverse_next thinks it one has one argument.
+			// We must inform reverse_next of this special case.
 			play->reverse_csum(op, arg, i_op, i_var);
 			reverse_sparse_hessian_csum_op(
 				i_var, arg, RevJac, rev_hes_sparse

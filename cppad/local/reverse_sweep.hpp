@@ -213,7 +213,7 @@ void ReverseSweep(
 	size_t j, ell;
 
 	// Initialize
-	play->start_reverse(op, arg, i_op, i_var);
+	play->reverse_start(op, arg, i_op, i_var);
 	CPPAD_ASSERT_UNKNOWN( op == EndOp );
 # if CPPAD_REVERSE_SWEEP_TRACE
 	std::cout << std::endl;
@@ -221,7 +221,7 @@ void ReverseSweep(
 	bool more_operators = true;
 	while(more_operators)
 	{	// next op
-		play->next_reverse(op, arg, i_op, i_var);
+		play->reverse_next(op, arg, i_op, i_var);
 		CPPAD_ASSERT_UNKNOWN((i_op >  n) | (op == InvOp) | (op == BeginOp));
 		CPPAD_ASSERT_UNKNOWN((i_op <= n) | (op != InvOp) | (op != BeginOp));
 		CPPAD_ASSERT_UNKNOWN( i_op < play->num_rec_op() );
@@ -232,7 +232,7 @@ void ReverseSweep(
 			{	// CSumOp has a variable number of arguments
 				play->reverse_csum(op, arg, i_op, i_var);
 			}
-			play->next_reverse(op, arg, i_op, i_var);
+			play->reverse_next(op, arg, i_op, i_var);
 			CPPAD_ASSERT_UNKNOWN( i_op < play->num_rec_op() );
 		}
 
@@ -316,16 +316,16 @@ void ReverseSweep(
 
 			case CSkipOp:
 			// CSkipOp has a variable number of arguments and
-			// next_forward thinks it one has one argument.
-			// we must inform next_reverse of this special case.
+			// forward_next thinks it one has one argument.
+			// we must inform reverse_next of this special case.
 			play->reverse_cskip(op, arg, i_op, i_var);
 			break;
 			// -------------------------------------------------
 
 			case CSumOp:
 			// CSumOp has a variable number of arguments and
-			// next_reverse thinks it one has one argument.
-			// We must inform next_reverse of this special case.
+			// reverse_next thinks it one has one argument.
+			// We must inform reverse_next of this special case.
 			play->reverse_csum(op, arg, i_op, i_var);
 			reverse_csum_op(
 				d, i_var, arg, K, Partial

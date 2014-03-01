@@ -2,7 +2,7 @@
 # ifndef CPPAD_FOR_JAC_SWEEP_INCLUDED
 # define CPPAD_FOR_JAC_SWEEP_INCLUDED
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-13 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-14 Bradley M. Bell
 
 CppAD is distributed under multiple licenses. This distribution is under
 the terms of the 
@@ -186,13 +186,13 @@ void ForJacSweep(
 # endif
 
 	// skip the BeginOp at the beginning of the recording
-	play->start_forward(op, arg, i_op, i_var);
+	play->forward_start(op, arg, i_op, i_var);
 	CPPAD_ASSERT_UNKNOWN( op == BeginOp );
 	bool more_operators = true;
 	while(more_operators)
 	{
 		// this op
-		play->next_forward(op, arg, i_op, i_var);
+		play->forward_next(op, arg, i_op, i_var);
 		CPPAD_ASSERT_UNKNOWN( (i_op > n)  | (op == InvOp) );  
 		CPPAD_ASSERT_UNKNOWN( (i_op <= n) | (op != InvOp) );  
 
@@ -252,20 +252,20 @@ void ForJacSweep(
 
 			case CSkipOp:
 			// CSipOp has a variable number of arguments and
-			// next_forward thinks it one has one argument.
-			// we must inform next_forward of this special case.
+			// forward_next thinks it has no arguments.
+			// we must inform forward_next of this special case.
 			play->forward_cskip(op, arg, i_op, i_var);
 			break;
 			// -------------------------------------------------
 
 			case CSumOp:
 			// CSumOp has a variable number of arguments and
-			// next_forward thinks it one has one argument.
-			// we must inform next_forward of this special case.
-			play->forward_csum(op, arg, i_op, i_var);
+			// forward_next thinks it has no arguments.
+			// we must inform forward_next of this special case.
 			forward_sparse_jacobian_csum_op(
 				i_var, arg, var_sparsity
 			);
+			play->forward_csum(op, arg, i_op, i_var);
 			break;
 			// -------------------------------------------------
 
