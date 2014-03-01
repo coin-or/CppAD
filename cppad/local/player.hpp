@@ -3,7 +3,7 @@
 # define CPPAD_PLAYER_INCLUDED
 
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-13 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-14 Bradley M. Bell
 
 CppAD is distributed under multiple licenses. This distribution is under
 the terms of the 
@@ -157,11 +157,10 @@ public:
 		rec_text_.erase();
 	}
 
-// ------------------ Old method of palying back a recording -----------------
 public:
 	/*! 
 	\brief 
-	Fetch an operator from the recording.
+	Old method of fetching an operator from the recording.
 
 	\return 
 	the i-th operator in the recording.
@@ -224,21 +223,6 @@ public:
 		return rec_text_.data() + i;
 	}
 	
-	/*!
-	\brief
-	Replace an argument value in the recording.
-	2DO: change name of this routine to ReplaceArg.
-
-	\param i
-	is the index, in the recording argument vector, 
-	of the value that is to be replaced.
-
-	\param value
-	is the new argument value.
-	*/
-	void ReplaceInd(size_t i, size_t value)
-	{	rec_op_arg_[i] =  static_cast<addr_t>( value ); }
-
 	/// Fetch number of variables in the recording.
 	size_t num_rec_var(void) const
 	{	return num_rec_var_; }
