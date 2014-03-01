@@ -271,7 +271,7 @@ private:
 	size_t    op_index_;
 
 	/// Current offset of the argument indices in rec_op_arg_ 
-	size_t    op_arg_;
+	addr_t*   op_arg_;
 
 	/// Index for primary (last) variable corresponding to current operator
 	size_t    var_index_;
@@ -305,8 +305,7 @@ public:
 	OpCode& op, const addr_t*& op_arg, size_t& op_index, size_t& var_index)
 	{
 		op        = op_          = OpCode( rec_op_[0] ); 
-		op_arg_   = 0;
-		op_arg    = rec_op_arg_.data();
+		op_arg    = op_arg_      = rec_op_arg_.data();
 		op_index  = op_index_    = 0;
 		var_index = var_index_   = 0;
 
@@ -354,16 +353,19 @@ public:
 		op_index    = ++op_index_;
 
 		// first argument for next operator 
-		op_arg_    += NumArg(op_);                   // index
-		op_arg      = op_arg_ + rec_op_arg_.data();  // pointer
+		op_arg      = op_arg_    += NumArg(op_);
 
 		// next operator
 		op          = op_         = OpCode( rec_op_[ op_index_ ] );
 
 		// index for last result for next operator
 		var_index   = var_index_ += NumRes(op);
+		
 
-		CPPAD_ASSERT_UNKNOWN( op_arg_ + NumArg(op) <= rec_op_arg_.size() );
+		CPPAD_ASSERT_UNKNOWN( rec_op_arg_.data() <= op_arg_ );
+		CPPAD_ASSERT_UNKNOWN( 
+			op_arg_ + NumArg(op) <= rec_op_arg_.data() + rec_op_arg_.size() 
+		);
 		CPPAD_ASSERT_UNKNOWN( var_index_  < num_rec_var_ );
 	}
 	/*!
@@ -394,6 +396,7 @@ public:
 		using CppAD::NumArg;
 		CPPAD_ASSERT_UNKNOWN( op == CSumOp );
 		CPPAD_ASSERT_UNKNOWN( NumArg(CSumOp) == 0 );
+		CPPAD_ASSERT_UNKNOWN( op_arg == op_arg_ );
 		CPPAD_ASSERT_UNKNOWN(
 		op_arg[0] + op_arg[1] == op_arg[ 3 + op_arg[0] + op_arg[1] ]
 		);
@@ -404,9 +407,12 @@ public:
  		We must change op_arg_ so that when you add NumArg(CSumOp)
 		you get first argument for next operator in sequence.
 		*/
-		op_arg_    += op_arg[0] + op_arg[1] + 4;
+		op_arg_   += op_arg[0] + op_arg[1] + 4;
 
-		CPPAD_ASSERT_UNKNOWN( op_arg_ + NumArg(op) <= rec_op_arg_.size() );
+		CPPAD_ASSERT_UNKNOWN( rec_op_arg_.data() <= op_arg_ );
+		CPPAD_ASSERT_UNKNOWN( 
+			op_arg_ + NumArg(op) <= rec_op_arg_.data() + rec_op_arg_.size()
+		);
 		CPPAD_ASSERT_UNKNOWN( var_index_  < num_rec_var_ );
 	}
 	/*!
@@ -437,6 +443,7 @@ public:
 		using CppAD::NumArg;
 		CPPAD_ASSERT_UNKNOWN( op == CSkipOp );
 		CPPAD_ASSERT_UNKNOWN( NumArg(CSkipOp) == 0 );
+		CPPAD_ASSERT_UNKNOWN( op_arg_ == op_arg );
 		CPPAD_ASSERT_UNKNOWN(
 		op_arg[4] + op_arg[5] == op_arg[ 6 + op_arg[4] + op_arg[5] ]
 		);
@@ -449,7 +456,10 @@ public:
 		*/
 		op_arg_    += 7 + op_arg[4] + op_arg[5];
 
-		CPPAD_ASSERT_UNKNOWN( op_arg_ + NumArg(op) <= rec_op_arg_.size() );
+		CPPAD_ASSERT_UNKNOWN( rec_op_arg_.data() <= op_arg_ );
+		CPPAD_ASSERT_UNKNOWN( 
+			op_arg_ + NumArg(op) <= rec_op_arg_.data() + rec_op_arg_.size()
+		);
 		CPPAD_ASSERT_UNKNOWN( var_index_  < num_rec_var_ );
 	}
 	/*!
@@ -460,7 +470,7 @@ public:
 	corresponding to the previous call to next_forward.
 	*/
 	addr_t* forward_non_const_arg(void)
-	{	return op_arg_ + rec_op_arg_.data(); }
+	{	return op_arg_; }
 
 	/*!
 	Start a play back of the recording during a reverse sweep.
@@ -491,12 +501,9 @@ public:
 	void start_reverse(
 	OpCode& op, const addr_t*& op_arg, size_t& op_index, size_t& var_index)
 	{
-		op_arg_     = rec_op_arg_.size();                // index
-		op_arg      = op_arg_ + rec_op_arg_.data();      // pointer
-
+		op_arg      = op_arg_     = rec_op_arg_.data() + rec_op_arg_.size();
 		op_index    = op_index_   = rec_op_.size() - 1; 
 		var_index   = var_index_  = num_rec_var_ - 1;
-
 		op          = op_         = OpCode( rec_op_[ op_index_ ] );
 		CPPAD_ASSERT_UNKNOWN( op_ == EndOp );
 		CPPAD_ASSERT_NARG_NRES(op, 0, 0);
@@ -557,9 +564,11 @@ public:
 		op          = op_         = OpCode( rec_op_[ op_index_ ] ); // value
 
 		// first argument for next operator
-		CPPAD_ASSERT_UNKNOWN( op_arg_ >= NumArg(op)  );
-		op_arg_    -= NumArg(op);                            // index
-		op_arg      = op_arg_ + rec_op_arg_.data();          // pointer
+		op_arg      = op_arg_    -= NumArg(op);
+		CPPAD_ASSERT_UNKNOWN( rec_op_arg_.data() <= op_arg_ );
+		CPPAD_ASSERT_UNKNOWN( 
+			op_arg_ + NumArg(op) <= rec_op_arg_.data() + rec_op_arg_.size() 
+		);
 	}
 	/*!
 	Correct \c next_reverse return values when <tt>op == CSumOp</tt>.
@@ -589,20 +598,20 @@ public:
 	{	using CppAD::NumRes;
 		using CppAD::NumArg;
 		CPPAD_ASSERT_UNKNOWN( op == CSumOp );
+		CPPAD_ASSERT_UNKNOWN( op_arg == op_arg_ );
 		CPPAD_ASSERT_UNKNOWN( NumArg(CSumOp) == 0 );
 		/*
-		The things needs fixing are op_arg_ and op_arg. Currently, 
-		op_arg points first arugment for the previous operator.
+		The variables that need fixing are op_arg_ and op_arg. Currently, 
+		op_arg points first argument for the previous operator.
 		*/
 		--op_arg;
-		op_arg_    -= (op_arg[0] + 4);
-		op_arg      = op_arg_ + rec_op_arg_.data();
+		op_arg      = op_arg_    -= (op_arg[0] + 4);
 
 		CPPAD_ASSERT_UNKNOWN(
 		op_arg[0] + op_arg[1] == op_arg[ 3 + op_arg[0] + op_arg[1] ]
 		);
 		CPPAD_ASSERT_UNKNOWN( op_index_  < rec_op_.size() );
-		CPPAD_ASSERT_UNKNOWN( op_arg_ + NumArg(op) <= rec_op_arg_.size() );
+		CPPAD_ASSERT_UNKNOWN( rec_op_arg_.data() <= op_arg_ );
 		CPPAD_ASSERT_UNKNOWN( var_index_  < num_rec_var_ );
 	}
 	/*!
@@ -632,21 +641,21 @@ public:
 	OpCode& op, const addr_t*& op_arg, size_t& op_index, size_t& var_index)
 	{	using CppAD::NumRes;
 		using CppAD::NumArg;
+		CPPAD_ASSERT_UNKNOWN( op_arg == op_arg_ );
 		CPPAD_ASSERT_UNKNOWN( op == CSkipOp );
 		CPPAD_ASSERT_UNKNOWN( NumArg(CSkipOp) == 0 );
 		/*
-		The things needs fixing are op_arg_ and op_arg. Currently, 
+		The variables that need fixing are op_arg_ and op_arg. Currently, 
 		op_arg points first arugment for the previous operator.
 		*/
 		--op_arg;
-		op_arg_    -= (op_arg[0] + 4);
-		op_arg      = op_arg_ + rec_op_arg_.data();
+		op_arg      = op_arg_    -= (op_arg[0] + 4);
 
 		CPPAD_ASSERT_UNKNOWN(
 		op_arg[1] + op_arg[2] == op_arg[ 3 + op_arg[1] + op_arg[2] ]
 		);
 		CPPAD_ASSERT_UNKNOWN( op_index_  < rec_op_.size() );
-		CPPAD_ASSERT_UNKNOWN( op_arg_ + NumArg(op) <= rec_op_arg_.size() );
+		CPPAD_ASSERT_UNKNOWN( rec_op_arg_.data() <= op_arg_ );
 		CPPAD_ASSERT_UNKNOWN( var_index_  < num_rec_var_ );
 	}
 
