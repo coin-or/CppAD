@@ -383,7 +383,7 @@ public:
 	/*!
 	Correct \c forward_next return values when <tt>op == CSumOp</tt>.
 
-	\param op [in,out]
+	\param op [in]
 	The input value of op must be the return value from the previous
 	call to \c forward_next and must be \c CSumOp. It is not modified.
 
@@ -392,7 +392,7 @@ public:
 	previous call to \c forward_next. Its output value is the
 	beginning of the vector of argument indices for the next operation.
 
-	\param op_index [in,out]
+	\param op_index [in]
 	The input value of \c op_index does must be the return value from the
 	previous call to \c forward_next. Its is not modified.
 
@@ -432,7 +432,7 @@ public:
 	/*!
 	Correct \c forward_next return values when <tt>op == CSkipOp</tt>.
 
-	\param op [in,out]
+	\param op [in]
 	The input value of op must be the return value from the previous
 	call to \c forward_next and must be \c CSkipOp. It is not modified.
 
@@ -441,7 +441,7 @@ public:
 	previous call to \c forward_next. Its output value is the
 	beginning of the vector of argument indices for the next operation.
 
-	\param op_index [in,out]
+	\param op_index [in]
 	The input value of \c op_index does must be the return value from the
 	previous call to \c forward_next. Its is not modified.
 
@@ -482,12 +482,11 @@ public:
 	Get a non-constant version of op_arg returned by previous forward_next
 
 	\return
-	The return value is equal to the return value of \c op_arg 
-	corresponding to the previous call to forward_next.
+	The return value is a non-constant version of a non-constant version of 
+	\c op_arg.
 	*/
 	addr_t* forward_non_const_arg(void)
-	{	return op_arg_; }
-
+	{    return op_arg_; }
 	/*!
 	Start a play back of the recording during a reverse sweep.
 
@@ -600,20 +599,20 @@ public:
 	/*!
 	Correct \c reverse_next return values when <tt>op == CSumOp</tt>.
 
-	\param op [in,out]
+	\param op [in]
 	The input value of \c op must be the return value from the previous
 	call to \c reverse_next and must be \c CSumOp. It is not modified.
 
-	\param op_arg
+	\param op_arg [in,out]
 	The input value of \c op_arg must be the return value from the 
 	previous call to \c reverse_next. Its output value is the
 	beginning of the vector of argument indices for this operation.
 
-	\param op_index [in,out]
+	\param op_index [in]
 	The input value of \c op_index must be the return value from the
 	previous call to \c reverse_next. It is not modified.
 
-	\param var_index
+	\param var_index [in]
 	The input value of \c var_index must be the return value from the 
 	previous call to \c reverse_next. It is not modified.
 	*/
@@ -647,20 +646,20 @@ public:
 	Correct \c reverse_next return values when <tt>op == CSkipOp</tt>.
 
 
-	\param op [in,out]
+	\param op [int]
 	The input value of \c op must be the return value from the previous
 	call to \c reverse_next and must be \c CSkipOp. It is not modified.
 
-	\param op_arg
+	\param op_arg [in,out]
 	The input value of \c op_arg must be the return value from the 
 	previous call to \c reverse_next. Its output value is the
 	beginning of the vector of argument indices for this operation.
 
-	\param op_index [in,out]
+	\param op_index [in]
 	The input value of \c op_index must be the return value from the
 	previous call to \c reverse_next. It is not modified.
 
-	\param var_index
+	\param var_index [in]
 	The input value of \c var_index must be the return value from the 
 	previous call to \c reverse_next. It is not modified.
 	*/
