@@ -59,12 +59,11 @@ am__configure_deps = $(am__aclocal_m4_deps) $(CONFIGURE_DEPENDENCIES) \
 mkinstalldirs = $(install_sh) -d
 CONFIG_CLEAN_FILES = gprof.sed
 CONFIG_CLEAN_VPATH_FILES =
-am_profile_OBJECTS = print_optimize.$(OBJEXT) main.$(OBJEXT) \
-	ode.$(OBJEXT) det_lu.$(OBJEXT) det_minor.$(OBJEXT) \
-	mat_mul.$(OBJEXT) poly.$(OBJEXT) sparse_hessian.$(OBJEXT) \
-	sparse_jacobian.$(OBJEXT) link_det_lu.$(OBJEXT) \
-	link_det_minor.$(OBJEXT) link_mat_mul.$(OBJEXT) \
-	link_ode.$(OBJEXT) link_poly.$(OBJEXT) \
+am_profile_OBJECTS = main.$(OBJEXT) ode.$(OBJEXT) det_lu.$(OBJEXT) \
+	det_minor.$(OBJEXT) mat_mul.$(OBJEXT) poly.$(OBJEXT) \
+	sparse_hessian.$(OBJEXT) sparse_jacobian.$(OBJEXT) \
+	link_det_lu.$(OBJEXT) link_det_minor.$(OBJEXT) \
+	link_mat_mul.$(OBJEXT) link_ode.$(OBJEXT) link_poly.$(OBJEXT) \
 	link_sparse_hessian.$(OBJEXT) link_sparse_jacobian.$(OBJEXT) \
 	microsoft_timer.$(OBJEXT)
 profile_OBJECTS = $(am_profile_OBJECTS)
@@ -90,16 +89,6 @@ CXXLINK = $(CXXLD) $(AM_CXXFLAGS) $(CXXFLAGS) $(AM_LDFLAGS) $(LDFLAGS) \
 AM_V_CXXLD = $(am__v_CXXLD_@AM_V@)
 am__v_CXXLD_ = $(am__v_CXXLD_@AM_DEFAULT_V@)
 am__v_CXXLD_0 = @echo "  CXXLD " $@;
-COMPILE = $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) \
-	$(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS)
-AM_V_CC = $(am__v_CC_@AM_V@)
-am__v_CC_ = $(am__v_CC_@AM_DEFAULT_V@)
-am__v_CC_0 = @echo "  CC    " $@;
-CCLD = $(CC)
-LINK = $(CCLD) $(AM_CFLAGS) $(CFLAGS) $(AM_LDFLAGS) $(LDFLAGS) -o $@
-AM_V_CCLD = $(am__v_CCLD_@AM_V@)
-am__v_CCLD_ = $(am__v_CCLD_@AM_DEFAULT_V@)
-am__v_CCLD_0 = @echo "  CCLD  " $@;
 AM_V_GEN = $(am__v_GEN_@AM_V@)
 am__v_GEN_ = $(am__v_GEN_@AM_DEFAULT_V@)
 am__v_GEN_0 = @echo "  GEN   " $@;
@@ -143,7 +132,7 @@ CYGPATH_W = @CYGPATH_W@
 
 # $Id$
 # -----------------------------------------------------------------------------
-# CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-12 Bradley M. Bell
+# CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-14 Bradley M. Bell
 #
 # CppAD is distributed under multiple licenses. This distribution is under
 # the terms of the 
@@ -292,8 +281,6 @@ AM_CXXFLAGS = -pg -O2 -DCPPAD_PROFILE_SPEED -DNDEBUG $(CXX_FLAGS)
 AM_LDFLAGS = -pg
 #
 profile_SOURCES = \
-	../cppad/print_optimize.hpp \
-	../cppad/print_optimize.cpp \
 	../main.cpp \
 	../cppad/ode.cpp \
 	../cppad/det_lu.cpp  \
@@ -374,7 +361,6 @@ distclean-compile:
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/microsoft_timer.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/ode.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/poly.Po@am__quote@
-@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/print_optimize.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/sparse_hessian.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/sparse_jacobian.Po@am__quote@
 
@@ -391,20 +377,6 @@ distclean-compile:
 @AMDEP_TRUE@@am__fastdepCXX_FALSE@	$(AM_V_CXX)source='$<' object='$@' libtool=no @AMDEPBACKSLASH@
 @AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
 @am__fastdepCXX_FALSE@	$(AM_V_CXX@am__nodep@)$(CXXCOMPILE) -c -o $@ `$(CYGPATH_W) '$<'`
-
-print_optimize.o: ../cppad/print_optimize.cpp
-@am__fastdepCXX_TRUE@	$(AM_V_CXX)$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -MT print_optimize.o -MD -MP -MF $(DEPDIR)/print_optimize.Tpo -c -o print_optimize.o `test -f '../cppad/print_optimize.cpp' || echo '$(srcdir)/'`../cppad/print_optimize.cpp
-@am__fastdepCXX_TRUE@	$(AM_V_at)$(am__mv) $(DEPDIR)/print_optimize.Tpo $(DEPDIR)/print_optimize.Po
-@AMDEP_TRUE@@am__fastdepCXX_FALSE@	$(AM_V_CXX)source='../cppad/print_optimize.cpp' object='print_optimize.o' libtool=no @AMDEPBACKSLASH@
-@AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
-@am__fastdepCXX_FALSE@	$(AM_V_CXX@am__nodep@)$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -c -o print_optimize.o `test -f '../cppad/print_optimize.cpp' || echo '$(srcdir)/'`../cppad/print_optimize.cpp
-
-print_optimize.obj: ../cppad/print_optimize.cpp
-@am__fastdepCXX_TRUE@	$(AM_V_CXX)$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -MT print_optimize.obj -MD -MP -MF $(DEPDIR)/print_optimize.Tpo -c -o print_optimize.obj `if test -f '../cppad/print_optimize.cpp'; then $(CYGPATH_W) '../cppad/print_optimize.cpp'; else $(CYGPATH_W) '$(srcdir)/../cppad/print_optimize.cpp'; fi`
-@am__fastdepCXX_TRUE@	$(AM_V_at)$(am__mv) $(DEPDIR)/print_optimize.Tpo $(DEPDIR)/print_optimize.Po
-@AMDEP_TRUE@@am__fastdepCXX_FALSE@	$(AM_V_CXX)source='../cppad/print_optimize.cpp' object='print_optimize.obj' libtool=no @AMDEPBACKSLASH@
-@AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
-@am__fastdepCXX_FALSE@	$(AM_V_CXX@am__nodep@)$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -c -o print_optimize.obj `if test -f '../cppad/print_optimize.cpp'; then $(CYGPATH_W) '../cppad/print_optimize.cpp'; else $(CYGPATH_W) '$(srcdir)/../cppad/print_optimize.cpp'; fi`
 
 main.o: ../main.cpp
 @am__fastdepCXX_TRUE@	$(AM_V_CXX)$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -MT main.o -MD -MP -MF $(DEPDIR)/main.Tpo -c -o main.o `test -f '../main.cpp' || echo '$(srcdir)/'`../main.cpp
