@@ -62,10 +62,10 @@ extern bool global_colpack, global_boolsparsity;
 bool link_sparse_hessian(
 	size_t                           size     , 
 	size_t                           repeat   , 
-	CppAD::vector<double>           &x_return ,
-	const CppAD::vector<size_t>     &row      ,
-	const CppAD::vector<size_t>     &col      ,
-	CppAD::vector<double>           &hessian  )
+	const CppAD::vector<size_t>&     row      ,
+	const CppAD::vector<size_t>&     col      ,
+	      CppAD::vector<double>&     x_return ,
+	      CppAD::vector<double>&     hessian  )
 {
 	if( global_atomic || (! global_colpack) )
 		return false; 

@@ -44,9 +44,15 @@ The purpose of this section is to
 assist you in learning about changes between various versions of CppAD.
 
 $head 03-01$$
+$list number$$
 Change the prototype for $icode row$$ and $icode col$$ in the 
 $cref link_sparse_jacobian$$ speed test to be $code const$$; i.e.,
 they are not changed.
+$lnext
+Move $icode x$$ near end of $cref link_sparse_hessian$$ speed test
+parameter list,
+(as is the case for $cref link_sparse_jacobian$$).
+$lend
 
 $head 02-28$$
 The $cref/data/CppAD_vector/data/$$ function was added to the

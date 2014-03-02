@@ -28,10 +28,10 @@ $codep */
 bool link_sparse_hessian(
         size_t                           size       ,
         size_t                           repeat     ,
-        CppAD::vector<double>            &x         ,
-        const CppAD::vector<size_t>      &row       ,
-        const CppAD::vector<size_t>      &col       ,
-        CppAD::vector<double>            &hessian
+        const CppAD::vector<size_t>&      row       ,
+        const CppAD::vector<size_t>&      col       ,
+              CppAD::vector<double>&      x         ,
+              CppAD::vector<double>&      hessian
 )
 {
 	return false;
