@@ -320,13 +320,12 @@ namespace {
 	void not_available_message(const char* test_name)
 	{	cout << AD_PACKAGE << ": " << test_name;
 		cout << " is not availabe with " << endl;
-		cout << "onetape = " << global_onetape;
-		cout << ", colpack = " << global_colpack;
-		cout << ", optimize = " << global_optimize;
-		cout << ", atomic = " << global_atomic;
-		cout << ", memory = " << global_memory;
-		cout << ", boolsparsity = " << global_boolsparsity;
-		cout << endl;
+		cout << "onetape = " << global_onetape << endl;
+		cout << "colpack = " << global_colpack << endl;
+		cout << "optimize = " << global_optimize << endl;
+		cout << "atomic = " << global_atomic << endl;
+		cout << "memory = " << global_memory << endl;
+		cout << "boolsparsity = " << global_boolsparsity << endl;
 	}
 
 	// ------------------------------------------------------
@@ -347,13 +346,20 @@ namespace {
 	// function that runs one correctness case
 	static size_t Run_ok_count    = 0;
 	static size_t Run_error_count = 0;
-	bool run_correct(bool correct_case(bool), const char *case_name)
-	{	bool ok;
+	bool run_correct(
+		bool available_case(void) ,
+		bool correct_case(bool)   , 
+		const char *case_name     )
+	{	bool available = available_case();
+		bool ok        = true;
+		if( available )	
+		{
 # ifdef CPPAD_DOUBLE_SPEED
-		ok = correct_case(true);
+			ok = correct_case(true);
 # else
-		ok = correct_case(false);
+			ok = correct_case(false);
 # endif
+		}
 		cout << AD_PACKAGE << "_" << case_name;
 		if( global_onetape )
 			cout << "_onetape";
@@ -367,14 +373,18 @@ namespace {
 			cout << "_memory";
 		if( global_boolsparsity )
 			cout << "_boolsparsity";
-		cout << "_ok = ";
-		if( ok )
-		{	cout << " true" << endl;
-			Run_ok_count++;
-		}
+		if( ! available )
+			cout << "_available = false" << endl;
 		else
-		{	cout << " false" << endl;
-			Run_error_count++;
+		{	cout << "_ok = ";
+			if( ok )
+			{	cout << " true" << endl;
+				Run_ok_count++;
+			}
+			else
+			{	cout << " false" << endl;
+				Run_error_count++;
+			}
 		}
 		return ok;
 	}
@@ -533,26 +543,28 @@ int main(int argc, char *argv[])
 	{
 		// run all the correctness tests
 		case test_correct:
-		if( available_det_lu() ) ok &= run_correct(
-			correct_det_lu,           "det_lu"       
+		ok &= run_correct( available_det_lu, correct_det_lu, "det_lu"       
 		);
-		if( available_det_minor() ) ok &= run_correct(
-			correct_det_minor,        "det_minor"    
+		ok &= run_correct(
+			available_det_minor, correct_det_minor, "det_minor"    
 		);
-		if( available_mat_mul() ) ok &= run_correct(
-			correct_mat_mul,          "mat_mul"    
+		ok &= run_correct(
+			available_mat_mul, correct_mat_mul, "mat_mul"    
 		);
-		if( available_ode() ) ok &= run_correct(
-			correct_ode,             "ode"         
+		ok &= run_correct(
+			available_ode, correct_ode, "ode"         
 		);
-		if( available_poly() ) ok &= run_correct(
-			correct_poly,            "poly"         
+		ok &= run_correct( available_poly, correct_poly, "poly"         
 		);
-		if( available_sparse_hessian() ) ok &= run_correct(
-			correct_sparse_hessian,  "sparse_hessian"         
+		ok &= run_correct(
+			available_sparse_hessian, 
+			correct_sparse_hessian,
+			"sparse_hessian"         
 		);
-		if( available_sparse_jacobian() ) ok &= run_correct(
-			correct_sparse_jacobian, "sparse_jacobian"         
+		ok &= run_correct(
+			available_sparse_jacobian, 
+			correct_sparse_jacobian,
+			"sparse_jacobian"         
 		);
 		// summarize results
 		assert( ok || (Run_error_count > 0) );
@@ -598,7 +610,9 @@ int main(int argc, char *argv[])
 		{	not_available_message( argv[1] ); 
 			exit(1);
 		}
-		ok &= run_correct(correct_det_lu,           "det_lu");
+		ok &= run_correct(
+			available_det_lu, correct_det_lu, "det_lu")
+		;
 		run_speed(speed_det_lu,    size_det_lu,     "det_lu");
 		break;
 		// ---------------------------------------------------------
@@ -608,7 +622,9 @@ int main(int argc, char *argv[])
 		{	not_available_message( argv[1] ); 
 			exit(1);
 		}
-		ok &= run_correct(correct_det_minor,       "det_minor");
+		ok &= run_correct(
+			available_det_minor, correct_det_minor, "det_minor"
+		);
 		run_speed(speed_det_minor, size_det_minor, "det_minor");
 		break;
 		// ---------------------------------------------------------
@@ -618,7 +634,9 @@ int main(int argc, char *argv[])
 		{	not_available_message( argv[1] ); 
 			exit(1);
 		}
-		ok &= run_correct(correct_mat_mul,     "mat_mul");
+		ok &= run_correct(
+			available_mat_mul, correct_mat_mul, "mat_mul"
+		);
 		run_speed(speed_mat_mul, size_mat_mul, "mat_mul");
 		break;
 		// ---------------------------------------------------------
@@ -628,7 +646,9 @@ int main(int argc, char *argv[])
 		{	not_available_message( argv[1] ); 
 			exit(1);
 		}
-		ok &= run_correct(correct_ode,           "ode");
+		ok &= run_correct(
+			available_ode, correct_ode, "ode"
+		);
 		run_speed(speed_ode,      size_ode,      "ode");
 		break;
 		// ---------------------------------------------------------
@@ -638,7 +658,9 @@ int main(int argc, char *argv[])
 		{	not_available_message( argv[1] ); 
 			exit(1);
 		}
-		ok &= run_correct(correct_poly,            "poly");
+		ok &= run_correct(
+			available_poly, correct_poly, "poly"
+		);
 		run_speed(speed_poly,      size_poly,      "poly");
 		break;
 		// ---------------------------------------------------------
@@ -648,7 +670,11 @@ int main(int argc, char *argv[])
 		{	not_available_message( argv[1] ); 
 			exit(1);
 		}
-		ok &= run_correct(correct_sparse_hessian, "sparse_hessian");
+		ok &= run_correct(
+			available_sparse_hessian,
+			correct_sparse_hessian,
+			"sparse_hessian"
+		);
 		run_speed(
 		speed_sparse_hessian, size_sparse_hessian,  "sparse_hessian");
 		break;
@@ -659,7 +685,11 @@ int main(int argc, char *argv[])
 		{	not_available_message( argv[1] ); 
 			exit(1);
 		}
-		ok &= run_correct(correct_sparse_jacobian, "sparse_jacobian");
+		ok &= run_correct(
+			available_sparse_jacobian,
+			correct_sparse_jacobian,
+			"sparse_jacobian"
+		);
 		run_speed(
 		speed_sparse_jacobian, size_sparse_jacobian, "sparse_jacobian"
 		);

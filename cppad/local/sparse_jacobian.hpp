@@ -182,6 +182,8 @@ is $code "cppad"$$.
 If $cref colpack_prefix$$ is specified on the
 $cref/cmake command/cmake/CMake Command/$$ line,
 you can set this method to $code "colpack"$$.
+This value only matters on the first call to $code sparse_jacobian$$
+after the $icode work$$ constructor or a call to $code clear$$.
 
 $head n_sweep$$
 The return value $icode n_sweep$$ has prototype
@@ -191,6 +193,8 @@ $codei%
 If $code SparseJacobianForward$$ ($code SparseJacobianReverse$$) is used, 
 $icode n_sweep$$ is the number of first order forward (reverse) sweeps 
 used to compute the requested Jacobian values. 
+(This is also the number of colors determined by the coloring method
+mentioned above).
 This is proportional to the total work that $code SparseJacobian$$ does, 
 not counting the zero order forward sweep, 
 or the work to combine multiple columns (rows) into a single sweep.

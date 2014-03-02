@@ -43,6 +43,20 @@ This section contains a list of the changes to CppAD during 2014
 The purpose of this section is to
 assist you in learning about changes between various versions of CppAD.
 
+$head 03-02$$
+$list number$$
+In the output for the speed
+$cref/correct/speed_main/test/correct/$$ test,
+mention which tests are not available. 
+Note that the set of available tests can depend on the
+$cref/list of options/speed_main/option_list/$$.
+$lnext
+In the documentation for
+$cref/n_sweep/sparse_jacobian/n_sweep/$$,
+mention that it is equal to the number of colors determined by the
+$cref/color_method/sparse_jacobian/work/color_method/$$.
+$lend
+
 $head 03-01$$
 $list number$$
 Change the prototype for $icode row$$ and $icode col$$ in the 
