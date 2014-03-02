@@ -346,13 +346,13 @@ public:
 
 	/// default constructor sets capacity_ = length_ = data_ = 0
 	inline vector(void) 
-	: capacity_(0), length_(0), data_(0)
+	: capacity_(0), length_(0), data_(CPPAD_NULL)
 	{ }
 	/// sizing constructor
 	inline vector(
 		/// number of elements in this vector
 		size_t n
-	) : capacity_(0), length_(n), data_(0)
+	) : capacity_(0), length_(n), data_(CPPAD_NULL)
 	{	if( length_ > 0 )
 		{	// set capacity and data
 			data_ = thread_alloc::create_array<Type>(length_, capacity_); 
@@ -362,7 +362,7 @@ public:
 	inline vector(
 		/// the *this vector will be a copy of \c x
 		const vector& x
-	) : capacity_(0), length_(x.length_), data_(0)
+	) : capacity_(0), length_(x.length_), data_(CPPAD_NULL)
 	{	if( length_ > 0 )
 		{	// set capacity and data	
 			data_ = thread_alloc::create_array<Type>(length_, capacity_); 
@@ -613,13 +613,13 @@ public:
 	typedef bool value_type;
 
 	/// default constructor (sets all member data to zero)
-	inline vectorBool(void) : n_unit_(0), length_(0), data_(0)
+	inline vectorBool(void) : n_unit_(0), length_(0), data_(CPPAD_NULL)
 	{ }
 	/// sizing constructor
 	inline vectorBool(
 		/// number of bits in this vector
 		size_t n
-	) : n_unit_(0), length_(n), data_(0)
+	) : n_unit_(0), length_(n), data_(CPPAD_NULL)
 	{	if( length_ > 0 )
 		{	// set n_unit and data
 			size_t min_unit = unit_min();
@@ -630,7 +630,7 @@ public:
 	inline vectorBool(
 		/// the *this vector will be a copy of \c v
 		const vectorBool& v
-	) : n_unit_(0), length_(v.length_), data_(0)
+	) : n_unit_(0), length_(v.length_), data_(CPPAD_NULL)
 	{	if( length_ > 0 )
 		{	// set n_unit and data
 			size_t min_unit = unit_min();

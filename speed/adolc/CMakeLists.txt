@@ -49,7 +49,9 @@ add_cppad_cxx_flags( speed_adolc )
 TARGET_LINK_LIBRARIES(speed_adolc speed_src adolc ${colpack_libs} )
 
 # Add the check_speed_adolc target
-ADD_CUSTOM_TARGET(check_speed_adolc 
-	speed_adolc correct 54321
-	DEPENDS speed_adolc speed_src
+ADD_CUSTOM_TARGET(
+	check_speed_adolc 
+	speed_adolc correct 54321 colpack
+	DEPENDS 
+	speed_adolc speed_src
 )
