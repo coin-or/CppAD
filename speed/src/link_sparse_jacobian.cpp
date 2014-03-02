@@ -13,6 +13,8 @@ Please visit http://www.coin-or.org/CppAD/ for information on other licenses.
 /*
 $begin link_sparse_jacobian$$
 $spell
+	colpack
+	cppad
 	const
 	bool
 	CppAD
@@ -34,7 +36,8 @@ $codei%extern bool link_sparse_jacobian(
 	const CppAD::vector<size_t>& %row%       ,
 	const CppAD::vector<size_t>& %col%       , 
 	      CppAD::vector<double>& %x%         ,
-	      CppAD::vector<double>& %jacobian%
+	      CppAD::vector<double>& %jacobian%  ,
+	      size_t&                %n_sweep%
 );
 %$$
 
@@ -90,9 +93,9 @@ $codei%
 %$$
 and its size is $latex n$$; i.e., $icode%x%.size() == %size%$$.
 The input value of the elements of $icode x$$ does not matter.
-On output, it has been set to the last
+On output, it has been set to the 
 argument value for which the function,
-or its derivative, is being evaluated.
+or its derivative, is being evaluated and placed in $icode jacobian$$.
 The value of this vector need not change with each repetition.
 
 $head jacobian$$
@@ -107,6 +110,15 @@ $latex j = 0 , \ldots , n-1$$,
 $latex \[
 	\D{f[i]}{x[j]} (x) = jacobian [ i * n + j ]
 \] $$
+
+$head n_sweep$$
+The input value of $icode n_sweep$$ does not matter. On output,
+it is the value $cref/n_sweep/sparse_jacobian/n_sweep/$$ corresponding
+to the evaluation of $icode jacobian$$.
+This is also the number of colors corresponding to the 
+$cref/coloring method/sparse_jacobian/work/color_method/$$
+which can be set to $cref/colpack/speed_main/option_list/colpack/$$
+and is otherwise $code cppad$$.
 
 $subhead double$$
 In the case where $icode package$$ is $code double$$,
@@ -245,20 +257,25 @@ number of times tha the test is repeated.
 \param m [in]
 is the dimension of the range space for f(x).
 
-\param x [out]
-is a vector of size \c n containing
-the argument at which the Jacobian was evaluated during the last repetition.
-
 \param row [in]
 is the row indices correpsonding to non-zero Jacobian entries.
 
 \param col [in]
 is the column indices corresponding to non-zero Jacobian entries.
 
+\param x [out]
+is a vector of size \c n containing
+the argument at which the Jacobian was evaluated during the last repetition.
+
 \param jacobian [out]
 is a vector with size <code>m * n</code> 
 containing the value of the Jacobian of f(x) 
 corresponding to the last repetition.
+
+\param n_sweep [out]
+The input value of this parameter does not matter.
+Upon return, it is the number of sweeps (colors) corresponding
+to the sparse jacobian claculation.
 
 \return
 is true, if the sparse Jacobian speed test is implemented for this package,
@@ -271,7 +288,8 @@ extern bool link_sparse_jacobian(
 	const CppAD::vector<size_t>&      row       ,
 	const CppAD::vector<size_t>&      col       , 
 	      CppAD::vector<double>&      x         ,
-	      CppAD::vector<double>&      jacobian
+	      CppAD::vector<double>&      jacobian  ,
+	      size_t&                     n_sweep
 );
 
 /*!
@@ -282,19 +300,20 @@ true, if spare Jacobian available for this package, and false otherwise.
 */
 bool available_sparse_jacobian(void)
 {	size_t n      = 10;
-	size_t m      = 3 * n;
+	size_t m      = 2 * n;
 	size_t repeat = 1;
-	vector<double> x(n);
-	vector<double> jacobian(m * n);
 	vector<size_t> row, col; 
 	choose_row_col(n, m, row, col);
 
-	return link_sparse_jacobian(n, repeat, m, row, col, x, jacobian);
+	vector<double> x(n);
+	vector<double> jacobian(m * n);
+	size_t         n_sweep;
+	return link_sparse_jacobian(n, repeat, m, row, col, x, jacobian, n_sweep);
 }
 /*!
 Does final sparse Jacobian value pass correctness test.
 
-\param is_package_double
+\param is_package_double [in]
 if true, we are checking function values instead of derivatives.
 
 \return
@@ -305,14 +324,15 @@ bool correct_sparse_jacobian(bool is_package_double)
 	bool ok       = true;
 	double eps    = 10. * CppAD::numeric_limits<double>::epsilon();
 	size_t n      = 5;
-	size_t m      = 3 * n;
+	size_t m      = 2 * n;
 	size_t repeat = 1;
-	vector<double> x(n);
-	vector<double> jacobian(m * n);
 	vector<size_t> row, col;
 	choose_row_col(n, m, row, col);
 
-	link_sparse_jacobian(n, repeat, m, row, col, x, jacobian);
+	vector<double> x(n);
+	vector<double> jacobian(m * n);
+	size_t         n_sweep;
+	link_sparse_jacobian(n, repeat, m, row, col, x, jacobian, n_sweep);
 
 	if( is_package_double)
 	{	// check f(x)
@@ -343,23 +363,51 @@ bool correct_sparse_jacobian(bool is_package_double)
 /*!
 Sparse Jacobian speed test.
 
-\param size
+\param size [in]
 is the dimension of the argument space for this speed test.
 
-\param repeat
+\param repeat [in]
 is the number of times to repeate the speed test.
 */
 void speed_sparse_jacobian(size_t size, size_t repeat)
 {	size_t n   = size;	
-	size_t m   = 3 * n;
-	vector<double> x(n);
-	vector<double> jacobian(m * n);
+	size_t m   = 2 * n;
 	vector<size_t> row, col;
 	choose_row_col(n, m, row, col);
 
 	// note that cppad/sparse_jacobian.cpp assumes that x.size()
 	// is the size corresponding to this test
-	link_sparse_jacobian(n, repeat, m, row, col, x, jacobian);
+	vector<double> x(n);
+	vector<double> jacobian(m * n);
+	size_t         n_sweep;
+	link_sparse_jacobian(n, repeat, m, row, col, x, jacobian, n_sweep);
 	return;
 }
+/*!
+Sparse Jacobian speed test information.
+
+\param size [in]
+is the \c size parameter in the corresponding call to speed_sparse_jacobian.
+
+\param n_sweep [out]
+The input value of this parameter does not matter.
+Upon return, it is the value \c n_sweep retruned by the corresponding
+call to \c link_sparse_jacobian.
+*/
+void info_sparse_jacobian(size_t size, size_t& n_sweep)
+{	size_t n      = size;	
+	size_t m      = 2 * n;
+	size_t repeat = 1;
+	vector<size_t> row, col;
+	choose_row_col(n, m, row, col);
+
+	// note that cppad/sparse_jacobian.cpp assumes that x.size()
+	// is the size corresponding to this test
+	vector<double> x(n);
+	vector<double> jacobian(m * n);
+	link_sparse_jacobian(n, repeat, m, row, col, x, jacobian, n_sweep);
+	return;
+}
+
+
 /*! \} */

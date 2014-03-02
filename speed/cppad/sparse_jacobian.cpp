@@ -94,7 +94,8 @@ bool link_sparse_jacobian(
 	const CppAD::vector<size_t>&     row      ,
 	const CppAD::vector<size_t>&     col      ,
 	      CppAD::vector<double>&     x        ,
-	      CppAD::vector<double>&     jacobian )
+	      CppAD::vector<double>&     jacobian ,
+	      size_t&                    n_sweep  )
 {
 	if( global_atomic )
 		return false;
@@ -167,10 +168,12 @@ bool link_sparse_jacobian(
 # endif
 		// calculate the Jacobian at this x
 		// (use forward mode because m > n ?)
-		if( global_boolsparsity)
-			f.SparseJacobianForward(x, bool_sparsity, row, col, jac, work);
-		else
-			f.SparseJacobianForward(x, set_sparsity, row, col, jac, work);
+		if( global_boolsparsity) n_sweep = f.SparseJacobianForward(
+				x, bool_sparsity, row, col, jac, work
+		);
+		else n_sweep = f.SparseJacobianForward(
+				x, set_sparsity, row, col, jac, work
+		);
 		for(k = 0; k < K; k++)
 			jacobian[ row[k] * n + col[k] ] = jac[k];
 	}
@@ -207,21 +210,18 @@ bool link_sparse_jacobian(
 			work.color_method = "colpack";
 # endif
 
-		extern size_t global_sparse_jacobian_n_sweep;
 		while(repeat--)
 		{	// choose a value for x 
 			CppAD::uniform_01(n, x);
 
 			// calculate the Jacobian at this x
 			// (use forward mode because m > n ?)
-			if( global_boolsparsity )
-				global_sparse_jacobian_n_sweep = f.SparseJacobianForward(
+			if( global_boolsparsity ) n_sweep = f.SparseJacobianForward(
 					x, bool_sparsity, row, col, jac, work
-				);
-			else
-				global_sparse_jacobian_n_sweep = f.SparseJacobianForward(
+			);
+			else n_sweep = f.SparseJacobianForward(
 					x, set_sparsity, row, col, jac, work
-				);
+			);
 			for(k = 0; k < K; k++)
 				jacobian[ row[k] * n + col[k] ] = jac[k];
 		}

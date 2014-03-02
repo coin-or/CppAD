@@ -288,6 +288,7 @@ $tend
 $end 
 -----------------------------------------------------------------------------
 */
+// external routines
 
 # define CPPAD_DECLARE_SPEED(name)                       \
      extern bool available_##name(void);                 \
@@ -302,15 +303,17 @@ CPPAD_DECLARE_SPEED(poly);
 CPPAD_DECLARE_SPEED(sparse_hessian);
 CPPAD_DECLARE_SPEED(sparse_jacobian);
 
+// info is different for each test
+extern void info_sparse_jacobian(size_t size, size_t& n_sweep);
+
+// --------------------------------------------------------------------------
+
 bool   global_onetape;
 bool   global_colpack;
 bool   global_optimize;
 bool   global_atomic;
 bool   global_memory;
 bool   global_boolsparsity;
-
-// may be set by spasre_jacobian 
-size_t global_sparse_jacobian_n_sweep = 0;
 
 namespace {
 	using std::cout;
@@ -374,17 +377,17 @@ namespace {
 		if( global_boolsparsity )
 			cout << "_boolsparsity";
 		if( ! available )
-			cout << "_available = false" << endl;
+		{	cout << "_available = false" << endl;
+			return ok;
+		}
+		cout << "_ok = ";
+		if( ok )
+		{	cout << " true" << endl;
+			Run_ok_count++;
+		}
 		else
-		{	cout << "_ok = ";
-			if( ok )
-			{	cout << " true" << endl;
-				Run_ok_count++;
-			}
-			else
-			{	cout << " false" << endl;
-				Run_error_count++;
-			}
+		{	cout << " false" << endl;
+			Run_error_count++;
 		}
 		return ok;
 	}
@@ -398,21 +401,7 @@ namespace {
 		cout << AD_PACKAGE << "_" << case_name << "_size = ";
 		output(size_vec);
 		cout << endl;
-		cout << AD_PACKAGE << "_" << case_name;
-		if( global_onetape )
-			cout << "_onetape";
-		if( global_colpack )
-			cout << "_colpack";
-		if( global_optimize )
-			cout << "_optimize";
-		if( global_atomic )
-			cout << "_atomic";
-		if( global_memory )
-			cout << "_memory";
-		if( global_boolsparsity )
-			cout << "_boolsparsity";
-		cout << "_rate = ";
-
+		cout << AD_PACKAGE << "_" << case_name << "_rate = ";
 		cout << std::fixed;
 		for(size_t i = 0; i < size_vec.size(); i++)
 		{	if( i == 0 )
@@ -693,12 +682,16 @@ int main(int argc, char *argv[])
 		run_speed(
 		speed_sparse_jacobian, size_sparse_jacobian, "sparse_jacobian"
 		);
-		if( global_sparse_jacobian_n_sweep != 0 )
-		{	cout << AD_PACKAGE 
-			<< "_global_sparse_jacobian_n_sweep = " 
-			<< global_sparse_jacobian_n_sweep 
-			<< endl;
+		cout << AD_PACKAGE << "_sparse_jacobian_n_sweep = ";
+		for(size_t i = 0; i < size_sparse_jacobian.size(); i++)
+		{	if( i == 0 )
+				cout << "[ ";
+			else	cout << ", ";	
+			size_t n_sweep;
+			info_sparse_jacobian(size_sparse_jacobian[i], n_sweep);
+			cout << n_sweep;
 		}
+		cout << " ]" << endl;
 		break;
 		// ---------------------------------------------------------
 		

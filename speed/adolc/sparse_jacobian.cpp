@@ -66,7 +66,8 @@ bool link_sparse_jacobian(
 	const CppAD::vector<size_t>&     row      ,
 	const CppAD::vector<size_t>&     col      ,
 	      CppAD::vector<double>&     x_return ,
-	      CppAD::vector<double>&     jacobian )
+	      CppAD::vector<double>&     jacobian ,
+	      size_t&                    n_sweep  )
 {
 	if( global_atomic || (! global_colpack) )
 		return false; 
@@ -121,13 +122,37 @@ bool link_sparse_jacobian(
 	{	for(j = 0; j < n; j++)
 			jacobian[ i * n + j ] = 0.;
 	}
+
+	// choose a value for x
+	CppAD::uniform_01(n, x);
+
+	// declare independent variables
+	int keep = 0; // keep forward mode results 
+	trace_on(tag, keep);
+	for(j = 0; j < n; j++)
+		a_x[j] <<= x[j];
+
+	// AD computation of f (x) 
+	CppAD::sparse_jac_fun<ADScalar>(m, n, a_x, row, col, order, a_y);
+
+	// create function object f : x -> y
+	for(i = 0; i < m; i++)
+		a_y[i] >>= y[i];
+	trace_off();
+
+	// Retrieve n_sweep using undocumented feature of sparsedrivers.cpp
+	int same_pattern = 0;
+	options[2]       = -1;
+	n_sweep = sparse_jac(tag, int(m), int(n), 
+		same_pattern, x, &nnz, &rind, &cind, &values, options
+	);
+	options[2]       = 0;
 	// ----------------------------------------------------------------------
 	if( ! global_onetape ) while(repeat--)
 	{	// choose a value for x
 		CppAD::uniform_01(n, x);
 
 		// declare independent variables
-		int keep = 0; // keep forward mode results 
 		trace_on(tag, keep);
 		for(j = 0; j < n; j++)
 			a_x[j] <<= x[j];
@@ -160,34 +185,7 @@ bool link_sparse_jacobian(
 		free(values);
 	}
 	else
-	{	// choose a value for x
-		CppAD::uniform_01(n, x);
-
-		// declare independent variables
-		int keep = 0; // keep forward mode results 
-		trace_on(tag, keep);
-		for(j = 0; j < n; j++)
-			a_x[j] <<= x[j];
-
-		// AD computation of f (x) 
-		CppAD::sparse_jac_fun<ADScalar>(m, n, a_x, row, col, order, a_y);
-
-		// create function object f : x -> y
-		for(i = 0; i < m; i++)
-			a_y[i] >>= y[i];
-		trace_off();
-
-		// Retrieve n_sweep using undocumented feature of sparsedrivers.cpp
-		int same_pattern = 0;
-		options[2]       = -1;
-		int n_sweep = sparse_jac(tag, int(m), int(n), 
-			same_pattern, x, &nnz, &rind, &cind, &values, options
-		);
-		options[2]       = 0;
-		extern size_t global_sparse_jacobian_n_sweep;
-		global_sparse_jacobian_n_sweep = size_t(n_sweep);
-
-		while(repeat--)
+	{	while(repeat--)
 		{	// choose a value for x
 			CppAD::uniform_01(n, x);
 

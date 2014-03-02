@@ -58,7 +58,8 @@ bool link_sparse_jacobian(
 	const CppAD::vector<size_t>&     row      ,
 	const CppAD::vector<size_t>&     col      ,
 	      CppAD::vector<double>&     x        ,
-	      CppAD::vector<double>&     jacobian )
+	      CppAD::vector<double>&     jacobian ,
+	      size_t&                    n_sweep  )
 {
 	if(global_onetape||global_atomic||global_optimize||global_boolsparsity)
 		return false;
