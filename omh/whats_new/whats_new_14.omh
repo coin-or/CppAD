@@ -13,6 +13,7 @@ Please visit http://www.coin-or.org/CppAD/ for information on other licenses.
 $begin whats_new_14$$
 $dollar @$$
 $spell
+	const
 	doxygen
 	ipopt
 	adolc
@@ -41,6 +42,11 @@ This section contains a list of the changes to CppAD during 2014
 (in reverse order by date).
 The purpose of this section is to
 assist you in learning about changes between various versions of CppAD.
+
+$head 03-01$$
+Change the prototype for $icode row$$ and $icode col$$ in the 
+$cref link_sparse_jacobian$$ speed test to be $code const$$; i.e.,
+they are not changed.
 
 $head 02-28$$
 The $cref/data/CppAD_vector/data/$$ function was added to the

@@ -13,6 +13,7 @@ Please visit http://www.coin-or.org/CppAD/ for information on other licenses.
 /*
 $begin link_sparse_jacobian$$
 $spell
+	const
 	bool
 	CppAD
 	Jacobian
@@ -27,13 +28,13 @@ $section Speed Testing Sparse Jacobian$$
 
 $head Prototype$$
 $codei%extern bool link_sparse_jacobian(
-	size_t                 %size%      ,
-	size_t                 %repeat%    ,
-	size_t                 %m%         ,
-	CppAD::vector<double> &%x%         ,
-	CppAD::vector<size_t> &%row%       ,
-	CppAD::vector<size_t> &%col%       , 
-	CppAD::vector<double> &%jacobian%
+	size_t                       %size%      ,
+	size_t                       %repeat%    ,
+	size_t                       %m%         ,
+	const CppAD::vector<size_t>& %row%       ,
+	const CppAD::vector<size_t>& %col%       , 
+	      CppAD::vector<double>& %x%         ,
+	      CppAD::vector<double>& %jacobian%
 );
 %$$
 
@@ -64,31 +65,16 @@ $latex row[k]$$ and $latex col[k]$$ for $latex k = 0 , \ldots , K-1$$.
 $head m$$
 Is the dimension of the range space for the function $latex f(x)$$.
 
-$head x$$
-The argument $icode x$$ has prototype
-$codei%
-        CppAD::vector<double> &%x%
-%$$
-and its size is $latex n$$; i.e., $icode%x%.size() == %size%$$.
-The input value of the elements of $icode x$$ does not matter.
-On output, it has been set to the
-argument value for which the function,
-or its derivative, is being evaluated.
-The value of this vector need not change with each repetition.
-
 $head row$$
 The size of the vector $icode row$$ defines the value $latex K$$.
-The input value of the elements of $icode row$$ does not matter.
-On output, it has been set the row index vector
-for the last repetition.
-All the elements of $icode row$$ must are between zero and $latex m-1$$.
+All the elements of $icode row$$ are between zero and $latex m-1$$.
 
 $head col$$
 The argument $icode col$$ is a vector with size $latex K$$.
 The input value of its elements does not matter.
 On output, it has been set the column index vector
 for the last repetition.
-All the elements of $icode col$$ must are between zero and $latex n-1$$.
+All the elements of $icode col$$ are between zero and $latex n-1$$.
 $pre
 
 $$
@@ -97,13 +83,24 @@ $codei%
 	%row%[%j%] != %row%[%k%] || %col%[%j%] != %col%[%k%]
 %$$
 
+$head x$$
+The argument $icode x$$ has prototype
+$codei%
+        CppAD::vector<double>& %x%
+%$$
+and its size is $latex n$$; i.e., $icode%x%.size() == %size%$$.
+The input value of the elements of $icode x$$ does not matter.
+On output, it has been set to the last
+argument value for which the function,
+or its derivative, is being evaluated.
+The value of this vector need not change with each repetition.
+
 $head jacobian$$
 The argument $icode jacobian$$ is a vector with 
 $latex m \times n$$ elements.
 The input value of its elements does not matter. 
 The output value of its elements is the Jacobian of the function $latex f(x)$$
-that corresponds to output values of 
-$icode row$$, $icode col$$, and $icode x$$.
+that corresponds to output values of $icode x$$.
 To be more specific, for
 $latex i = 0 , \ldots , m - 1$$,
 $latex j = 0 , \ldots , n-1$$,
@@ -268,13 +265,13 @@ is true, if the sparse Jacobian speed test is implemented for this package,
 and false otherwise.
 */
 extern bool link_sparse_jacobian(
-	size_t                     size       ,
-	size_t                     repeat     ,
-	size_t                     m          ,
-	CppAD::vector<double>      &x         ,
-	CppAD::vector<size_t>      &row       ,
-	CppAD::vector<size_t>      &col       , 
-	CppAD::vector<double>      &jacobian
+	size_t                            size      ,
+	size_t                            repeat    ,
+	size_t                            m         ,
+	const CppAD::vector<size_t>&      row       ,
+	const CppAD::vector<size_t>&      col       , 
+	      CppAD::vector<double>&      x         ,
+	      CppAD::vector<double>&      jacobian
 );
 
 /*!
@@ -292,7 +289,7 @@ bool available_sparse_jacobian(void)
 	vector<size_t> row, col; 
 	choose_row_col(n, m, row, col);
 
-	return link_sparse_jacobian(n, repeat, m, x, row, col, jacobian);
+	return link_sparse_jacobian(n, repeat, m, row, col, x, jacobian);
 }
 /*!
 Does final sparse Jacobian value pass correctness test.
@@ -315,7 +312,7 @@ bool correct_sparse_jacobian(bool is_package_double)
 	vector<size_t> row, col;
 	choose_row_col(n, m, row, col);
 
-	link_sparse_jacobian(n, repeat, m, x, row, col, jacobian);
+	link_sparse_jacobian(n, repeat, m, row, col, x, jacobian);
 
 	if( is_package_double)
 	{	// check f(x)
@@ -362,7 +359,7 @@ void speed_sparse_jacobian(size_t size, size_t repeat)
 
 	// note that cppad/sparse_jacobian.cpp assumes that x.size()
 	// is the size corresponding to this test
-	link_sparse_jacobian(n, repeat, m, x, row, col, jacobian);
+	link_sparse_jacobian(n, repeat, m, row, col, x, jacobian);
 	return;
 }
 /*! \} */

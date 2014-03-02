@@ -15,6 +15,7 @@ Please visit http://www.coin-or.org/CppAD/ for information on other licenses.
 /*
 $begin sacado_sparse_jacobian.cpp$$
 $spell
+	const
 	bool
 	CppAD
 	sacado
@@ -26,13 +27,13 @@ $section sacado Speed: sparse_jacobian$$
 $codep */
 // A sacado version of this test is not yet available
 bool link_sparse_jacobian(
-	size_t                     size     , 
-	size_t                     repeat   , 
-	size_t                     m        ,
-	CppAD::vector<double>     &x        ,
-	CppAD::vector<size_t>     &i        ,
-	CppAD::vector<size_t>     &j        ,
-	CppAD::vector<double>     &jacobian )
+	size_t                           size     , 
+	size_t                           repeat   , 
+	size_t                           m        ,
+	const CppAD::vector<size_t>&     row      ,
+	const CppAD::vector<size_t>&     col      ,
+	      CppAD::vector<double>&     x        ,
+	      CppAD::vector<double>&     jacobian )
 {
 	return false;
 }
