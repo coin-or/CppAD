@@ -33,8 +33,6 @@ AM_CXXFLAGS   = -pg -O2 -DCPPAD_PROFILE_SPEED -DNDEBUG $(CXX_FLAGS)
 AM_LDFLAGS    = -pg
 #
 profile_SOURCES = \
-	../cppad/print_optimize.hpp \
-	../cppad/print_optimize.cpp \
 	../main.cpp \
 	../cppad/ode.cpp \
 	../cppad/det_lu.cpp  \

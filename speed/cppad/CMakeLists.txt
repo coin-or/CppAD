@@ -24,7 +24,7 @@ INCLUDE_DIRECTORIES( ${CMAKE_CURRENT_SOURCE_DIR}/../src )
 # add_executable(<name> [WIN32] [MACOSX_BUNDLE] [EXCLUDE_FROM_ALL]
 #                 source1 source2 ... sourceN
 # )
-ADD_EXECUTABLE(speed_cppad EXCLUDE_FROM_ALL ../main.cpp print_optimize.cpp
+ADD_EXECUTABLE(speed_cppad EXCLUDE_FROM_ALL ../main.cpp 
 	det_lu.cpp
 	det_minor.cpp
 	mat_mul.cpp

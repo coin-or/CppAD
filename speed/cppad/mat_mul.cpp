@@ -49,7 +49,6 @@ $codep */
 # include <cppad/speed/mat_sum_sq.hpp>
 # include <cppad/speed/uniform_01.hpp>
 # include <cppad/example/matrix_mul.hpp>
-# include "print_optimize.hpp"
 
 // Note that CppAD uses global_memory at the main program level
 extern bool
@@ -89,11 +88,6 @@ bool link_mat_mul(
 	size_t nc_result = size;
 	matrix_mul atom_mul(nr_result, n_middle, nc_result);
 
-	// use the unspecified fact that size is non-decreasing between calls
-	static size_t previous_size = 0;
-	bool print    = (repeat > 1) & (previous_size != size);
-	previous_size = size;
-
 	// ------------------------------------------------------
 	if( ! global_onetape ) while(repeat--)
 	{	// get the next matrix
@@ -122,9 +116,7 @@ bool link_mat_mul(
 		f.Dependent(X, Z);
 
 		if( global_optimize )
-		{	print_optimize(f, print, "cppad_mat_mul_optimize", size);
-			print = false;
-		}
+			f.optimize();
 
 		// evaluate and return gradient using reverse mode
 		z  = f.Forward(0, x);
@@ -158,9 +150,7 @@ bool link_mat_mul(
 		f.Dependent(X, Z);
 
 		if( global_optimize )
-		{	print_optimize(f, print, "cppad_mat_mul_optimize", size);
-			print = false;
-		}
+			f.optimize();
 		while(repeat--)
 		{	// get a next matrix
 			CppAD::uniform_01(n, x);

@@ -28,8 +28,6 @@ INCLUDE_DIRECTORIES( ${CMAKE_CURRENT_SOURCE_DIR}/../src )
 #                 source1 source2 ... sourceN
 # )
 ADD_EXECUTABLE(speed_profile EXCLUDE_FROM_ALL ../main.cpp 
-	../cppad/print_optimize.hpp
-	../cppad/print_optimize.cpp
 	../cppad/ode.cpp
 	../cppad/det_lu.cpp 
 	../cppad/det_minor.cpp 

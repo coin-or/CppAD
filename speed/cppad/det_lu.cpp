@@ -48,7 +48,6 @@ $codep */
 # include <cppad/vector.hpp>
 # include <cppad/speed/det_by_lu.hpp>
 # include <cppad/speed/uniform_01.hpp>
-# include "print_optimize.hpp"
 
 // Note that CppAD uses global_memory at the main program level
 extern bool
@@ -81,12 +80,6 @@ bool link_det_lu(
 	CppAD::vector<double> w(1);
 	w[0] = 1.;
 
-	// use the unspecified fact that size is non-decreasing between calls
-	static size_t previous_size = 0;
-	bool print    = (repeat > 1) & (previous_size != size);
-	previous_size = size;
-
-
 	// ------------------------------------------------------
 	while(repeat--)
 	{	// get the next matrix
@@ -102,11 +95,8 @@ bool link_det_lu(
 
 		// create function object f : A -> detA
 		f.Dependent(A, detA);
-
 		if( global_optimize )
-		{	print_optimize(f, print, "cppad_det_lu_optimize", size);
-			print = false;
-		}
+			f.optimize();
 
 		// evaluate and return gradient using reverse mode
 		f.Forward(0, matrix);

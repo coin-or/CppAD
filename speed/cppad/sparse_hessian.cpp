@@ -51,7 +51,6 @@ $codep */
 # include <cppad/cppad.hpp>
 # include <cppad/speed/uniform_01.hpp>
 # include <cppad/speed/sparse_hes_fun.hpp>
-# include "print_optimize.hpp"
 
 // Note that CppAD uses global_memory at the main program level
 extern bool
@@ -129,11 +128,6 @@ bool link_sparse_hessian(
 	// weights for hessian calculation (only one component of f)
 	w[0] = 1.;
 
-	// use the unspecified fact that size is non-decreasing between calls
-	static size_t previous_size = 0;
-	bool print    = (repeat > 1) & (previous_size != size);
-	previous_size = size;
-
 	// declare sparsity pattern
 	SetVector  set_sparsity(n);
 	BoolVector bool_sparsity(n * n);
@@ -160,9 +154,7 @@ bool link_sparse_hessian(
 		f.Dependent(a_x, a_y);
 
 		if( global_optimize )
-		{	print_optimize(f, print, "cppad_sparse_hessian_optimize", size);
-			print = false;
-		}
+			f.optimize();
 
 		// calculate the Hessian sparsity pattern for this function
 		if( global_boolsparsity )
@@ -199,9 +191,7 @@ bool link_sparse_hessian(
 		f.Dependent(a_x, a_y);
 
 		if( global_optimize )
-		{	print_optimize(f, print, "cppad_sparse_hessian_optimize", size);
-			print = false;
-		}
+			f.optimize();
 
 		// calculate the Hessian sparsity pattern for this function
 		if( global_boolsparsity)

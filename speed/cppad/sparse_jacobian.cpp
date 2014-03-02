@@ -54,7 +54,6 @@ $codep */
 # include <cppad/cppad.hpp>
 # include <cppad/speed/uniform_01.hpp>
 # include <cppad/speed/sparse_jac_fun.hpp>
-# include "print_optimize.hpp"
 
 // Note that CppAD uses global_memory at the main program level
 extern bool
@@ -119,11 +118,6 @@ bool link_sparse_jacobian(
 	DblVector  jac(K);        // non-zeros in Jacobian
 	CppAD::ADFun<double> f;   // AD function object
 
-	// use the unspecified fact that size is non-decreasing between calls
-	static size_t previous_size = 0;
-	bool print    = (repeat > 1) & (previous_size != size);
-	previous_size = size;
-
 	// declare sparsity pattern
 	SetVector  set_sparsity(m);
 	BoolVector bool_sparsity(m * n);
@@ -150,9 +144,7 @@ bool link_sparse_jacobian(
 		f.Dependent(a_x, a_y);
 
 		if( global_optimize )
-		{	print_optimize(f, print, "cppad_sparse_jacobian_optimize", size);
-			print = false;
-		}
+			f.optimize();
 
 		// calculate the Jacobian sparsity pattern for this function
 		if( global_boolsparsity )
@@ -193,9 +185,7 @@ bool link_sparse_jacobian(
 		f.Dependent(a_x, a_y);
 
 		if( global_optimize )
-		{	print_optimize(f, print, "cppad_sparse_jacobian_optimize", size);
-			print = false;
-		}
+			f.optimize();
 
 		// calculate the Jacobian sparsity pattern for this function
 		if( global_boolsparsity )

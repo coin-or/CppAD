@@ -48,7 +48,6 @@ $codep */
 # include <cppad/vector.hpp>
 # include <cppad/speed/det_by_minor.hpp>
 # include <cppad/speed/uniform_01.hpp>
-# include "print_optimize.hpp"
 
 // Note that CppAD uses global_memory at the main program level
 extern bool
@@ -85,11 +84,6 @@ bool link_det_minor(
 	// the AD function object
 	CppAD::ADFun<double> f;
 
-	// use the unspecified fact that size is non-decreasing between calls
-	static size_t previous_size = 0;
-	bool print    = (repeat > 1) & (previous_size != size);
-	previous_size = size;
-
 	// ---------------------------------------------------------------------
 	if( ! global_onetape ) while(repeat--)
 	{
@@ -108,9 +102,7 @@ bool link_det_minor(
 		f.Dependent(A, detA);
 
 		if( global_optimize )
-		{	print_optimize(f, print, "cppad_det_minor_optimize", size);
-			print = false;
-		}
+			f.optimize();
 	
 		// evaluate the determinant at the new matrix value
 		f.Forward(0, matrix);
@@ -135,9 +127,7 @@ bool link_det_minor(
 		f.Dependent(A, detA);
 
 		if( global_optimize )
-		{	print_optimize(f, print, "cppad_det_minor_optimize", size);
-			print = false;
-		}
+			f.optimize();
 	
 		// ------------------------------------------------------
 		while(repeat--)

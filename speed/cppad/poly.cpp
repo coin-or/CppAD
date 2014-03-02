@@ -52,7 +52,6 @@ $head Implementation$$
 $codep */
 # include <cppad/cppad.hpp>
 # include <cppad/speed/uniform_01.hpp>
-# include "print_optimize.hpp"
 
 // Note that CppAD uses global_memory at the main program level
 extern bool
@@ -96,11 +95,6 @@ bool link_poly(
 	// AD function object
 	CppAD::ADFun<double> f;
 
-	// use the unspecified fact that size is non-decreasing between calls
-	static size_t previous_size = 0;
-	bool print    = (repeat > 1) & (previous_size != size);
-	previous_size = size;
-
 	// --------------------------------------------------------------------
 	if( ! global_onetape ) while(repeat--)
 	{
@@ -118,9 +112,7 @@ bool link_poly(
 		f.Dependent(Z, P);
 
 		if( global_optimize )
-		{	print_optimize(f, print, "cppad_poly_optimize", size);
-			print = false;
-		}
+			f.optimize();
 
 		// pre-allocate memory for three forward mode calculations
 		f.capacity_taylor(3);
@@ -151,9 +143,7 @@ bool link_poly(
 		f.Dependent(Z, P);
 
 		if( global_optimize )
-		{	print_optimize(f, print, "cppad_poly_optimize", size);
-			print = false;
-		}
+			f.optimize();
 
 		while(repeat--)
 		{	// sufficient memory is allocated by second repetition

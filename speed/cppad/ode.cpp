@@ -47,7 +47,6 @@ $codep */
 # include <cppad/speed/ode_evaluate.hpp>
 # include <cppad/speed/uniform_01.hpp>
 # include <cassert>
-# include "print_optimize.hpp"
 
 // Note that CppAD uses global_memory at the main program level
 extern bool
@@ -79,11 +78,6 @@ bool link_ode(
 	ADVector  X(n), Y(m);      // independent and dependent variables
 	CppAD::ADFun<double>  f;   // AD function
 
-	// use the unspecified fact that size is non-decreasing between calls
-	static size_t previous_size = 0;
-	bool print    = (repeat > 1) & (previous_size != size);
-	previous_size = size;
-
 	// -------------------------------------------------------------
 	if( ! global_onetape ) while(repeat--)
 	{ 	// choose next x value
@@ -101,9 +95,8 @@ bool link_ode(
 		f.Dependent(X, Y);
 
 		if( global_optimize )
-		{	print_optimize(f, print, "cppad_ode_optimize", size);
-			print = false;
-		}
+			f.optimize();
+
 		jacobian = f.Jacobian(x);
 	}
 	else
@@ -122,9 +115,7 @@ bool link_ode(
 		f.Dependent(X, Y);
 
 		if( global_optimize )
-		{	print_optimize(f, print, "cppad_ode_optimize", size);
-			print = false;
-		}
+			f.optimize();
 		while(repeat--)
 		{	// get next argument value
 			uniform_01(n, x);

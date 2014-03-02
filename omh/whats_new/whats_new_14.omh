@@ -55,6 +55,12 @@ In the documentation for
 $cref/n_sweep/sparse_jacobian/n_sweep/$$,
 mention that it is equal to the number of colors determined by the
 $cref/color_method/sparse_jacobian/work/color_method/$$.
+$lnext
+The $cref speed_cppad$$ tests were simplified by removing the printing
+of auxillary information related to the 
+$cref/optimize/speed_main/option_list/optimize/$$ option.
+Future auxillary information will be passed back in a manner similar to
+$cref/n_sweep/link_sparse_jacobian/n_sweep/$$ for the sparse jacobian test.
 $lend
 
 $head 03-01$$
