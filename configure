@@ -687,6 +687,7 @@ CPPFLAGS
 LDFLAGS
 CFLAGS
 CC
+cppad_has_rvalue
 cppad_has_nullptr
 cppad_has_colpack
 cppad_tape_id_type
@@ -3245,6 +3246,8 @@ cppad_has_colpack=0
 
 
 cppad_has_nullptr=0
+
+cppad_has_rvalue=0
 
 
 ac_ext=c

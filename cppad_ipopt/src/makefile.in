@@ -261,6 +261,7 @@ cppad_eigenvector = @cppad_eigenvector@
 cppad_has_colpack = @cppad_has_colpack@
 cppad_has_gettimeofday = @cppad_has_gettimeofday@
 cppad_has_nullptr = @cppad_has_nullptr@
+cppad_has_rvalue = @cppad_has_rvalue@
 cppad_implicit_ctor_from_any_type = @cppad_implicit_ctor_from_any_type@
 cppad_internal_sparse_set = @cppad_internal_sparse_set@
 cppad_libs = @cppad_libs@

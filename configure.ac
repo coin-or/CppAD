@@ -442,6 +442,7 @@ AC_SUBST(cppad_has_colpack, 0)
 dnl auto-tools version cannot use c++11 compiler
 dnl so supress corresponding features
 AC_SUBST(cppad_has_nullptr, 0)
+AC_SUBST(cppad_has_rvalue, 0)
 
 dnl Determine if size_t has same size as unsigned int 
 AC_CHECK_SIZEOF([size_t])
