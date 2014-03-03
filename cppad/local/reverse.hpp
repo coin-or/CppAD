@@ -173,7 +173,7 @@ VectorBase ADFun<Base>::Reverse(size_t p, const VectorBase &w)
 	}
 
 	// evaluate the derivatives
-	CPPAD_ASSERT_UNKNOWN( cskip_op_.size() == play_.num_rec_op() );
+	CPPAD_ASSERT_UNKNOWN( cskip_op_.size() == play_.num_op_rec() );
 	ReverseSweep(
 		p - 1,
 		n,

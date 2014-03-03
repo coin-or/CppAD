@@ -806,7 +806,7 @@ struct_size_pair record_pv(
 	rec->PutArg( new_arg[0], new_arg[1] );
 
 	struct_size_pair ret;
-	ret.i_op  = rec->num_rec_op();
+	ret.i_op  = rec->num_op_rec();
 	ret.i_var = rec->PutOp(op);
 	CPPAD_ASSERT_UNKNOWN( size_t(new_arg[0]) < ret.i_var );
 	return ret;
@@ -906,7 +906,7 @@ struct_size_pair record_vp(
 	rec->PutArg( new_arg[0], new_arg[1] );
 
 	struct_size_pair ret;
-	ret.i_op  = rec->num_rec_op();
+	ret.i_op  = rec->num_op_rec();
 	ret.i_var = rec->PutOp(op);
 	CPPAD_ASSERT_UNKNOWN( size_t(new_arg[0]) < ret.i_var );
 	return ret;
@@ -1007,7 +1007,7 @@ struct_size_pair record_vv(
 	rec->PutArg( new_arg[0], new_arg[1] );
 
 	struct_size_pair ret;
-	ret.i_op  = rec->num_rec_op();
+	ret.i_op  = rec->num_op_rec();
 	ret.i_var = rec->PutOp(op);
 	CPPAD_ASSERT_UNKNOWN( size_t(new_arg[0]) < ret.i_var );
 	CPPAD_ASSERT_UNKNOWN( size_t(new_arg[1]) < ret.i_var );
@@ -1239,7 +1239,7 @@ struct_size_pair record_csum(
 
 
 	struct_size_pair ret;
-	ret.i_op  = rec->num_rec_op();
+	ret.i_op  = rec->num_op_rec();
 	ret.i_var = rec->PutOp(CSumOp);
 	CPPAD_ASSERT_UNKNOWN( new_arg < ret.i_var );
 	return ret;
@@ -1292,18 +1292,18 @@ void optimize_run(
 	size_t m = dep_taddr.size();
 
 	// number of variables in the player
-	const size_t num_var = play->num_rec_var(); 
+	const size_t num_var = play->num_var_rec(); 
 
 # ifndef NDEBUG
 	// number of parameters in the player
-	const size_t num_par = play->num_rec_par();
+	const size_t num_par = play->num_par_rec();
 # endif
 
 	// number of  VecAD indices 
-	size_t num_vecad_ind   = play->num_rec_vecad_ind();
+	size_t num_vecad_ind   = play->num_vec_ind_rec();
 
 	// number of VecAD vectors
-	size_t num_vecad_vec   = play->num_rec_vecad_vec();
+	size_t num_vecad_vec   = play->num_vecad_vec_rec();
 
 	// -------------------------------------------------------------
 	// data structure that maps variable index in original operation
@@ -1998,7 +1998,7 @@ void optimize_run(
 	// the end.  Put BeginOp at beginning of recording
 	CPPAD_ASSERT_UNKNOWN( op == BeginOp );
 	CPPAD_ASSERT_NARG_NRES(BeginOp, 1, 1);
-	tape[i_var].new_op  = rec->num_rec_op();
+	tape[i_var].new_op  = rec->num_op_rec();
 	tape[i_var].new_var = rec->PutOp(BeginOp);
 	rec->PutArg(0);
 
@@ -2119,7 +2119,7 @@ void optimize_run(
 			match_var = unary_match(
 				tape                ,  // inputs 
 				i_var               ,
-				play->num_rec_par() ,
+				play->num_par_rec() ,
 				play->GetPar()      ,
 				hash_table_var      ,
 				code                  // outputs
@@ -2131,7 +2131,7 @@ void optimize_run(
 				replace_hash = true;
 				new_arg[0]   = tape[ arg[0] ].new_var;
 				rec->PutArg( new_arg[0] );
-				tape[i_var].new_op  = rec->num_rec_op();
+				tape[i_var].new_op  = rec->num_op_rec();
 				tape[i_var].new_var = i = rec->PutOp(op);
 				CPPAD_ASSERT_UNKNOWN( size_t(new_arg[0]) < i );
 			}
@@ -2146,7 +2146,7 @@ void optimize_run(
 				size_pair = record_csum(
 					tape                , // inputs
 					i_var               ,
-					play->num_rec_par() ,
+					play->num_par_rec() ,
 					play->GetPar()      ,
 					rec                 ,
 					csum_work
@@ -2161,7 +2161,7 @@ void optimize_run(
 			match_var = binary_match(
 				tape                ,  // inputs 
 				i_var               ,
-				play->num_rec_par() ,
+				play->num_par_rec() ,
 				play->GetPar()      ,
 				hash_table_var      ,
 				code                  // outputs
@@ -2172,7 +2172,7 @@ void optimize_run(
 			{	size_pair = record_vp(
 					tape                , // inputs
 					i_var               ,
-					play->num_rec_par() ,
+					play->num_par_rec() ,
 					play->GetPar()      ,
 					rec                 ,
 					op                  ,
@@ -2194,7 +2194,7 @@ void optimize_run(
 				size_pair = record_csum(
 					tape                , // inputs
 					i_var               ,
-					play->num_rec_par() ,
+					play->num_par_rec() ,
 					play->GetPar()      ,
 					rec                 ,
 					csum_work
@@ -2210,7 +2210,7 @@ void optimize_run(
 			match_var = binary_match(
 				tape                ,  // inputs 
 				i_var               ,
-				play->num_rec_par() ,
+				play->num_par_rec() ,
 				play->GetPar()      ,
 				hash_table_var      ,
 				code                  // outputs
@@ -2221,7 +2221,7 @@ void optimize_run(
 			{	size_pair = record_pv(
 					tape                , // inputs
 					i_var               ,
-					play->num_rec_par() ,
+					play->num_par_rec() ,
 					play->GetPar()      ,
 					rec                 ,
 					op                  ,
@@ -2245,7 +2245,7 @@ void optimize_run(
 				size_pair = record_csum(
 					tape                , // inputs
 					i_var               ,
-					play->num_rec_par() ,
+					play->num_par_rec() ,
 					play->GetPar()      ,
 					rec                 ,
 					csum_work
@@ -2261,7 +2261,7 @@ void optimize_run(
 			match_var = binary_match(
 				tape                ,  // inputs 
 				i_var               ,
-				play->num_rec_par() ,
+				play->num_par_rec() ,
 				play->GetPar()      ,
 				hash_table_var      ,
 				code                  // outputs
@@ -2272,7 +2272,7 @@ void optimize_run(
 			{	size_pair = record_vv(
 					tape                , // inputs
 					i_var               ,
-					play->num_rec_par() ,
+					play->num_par_rec() ,
 					play->GetPar()      ,
 					rec                 ,
 					op                  ,
@@ -2310,7 +2310,7 @@ void optimize_run(
 				new_arg[4] ,
 				new_arg[5] 
 			);
-			tape[i_var].new_op  = rec->num_rec_op();
+			tape[i_var].new_op  = rec->num_op_rec();
 			tape[i_var].new_var = rec->PutOp(op);
 			break;
 			// ---------------------------------------------------
@@ -2323,7 +2323,7 @@ void optimize_run(
 			// Operations with no arguments and one result
 			case InvOp:
 			CPPAD_ASSERT_NARG_NRES(op, 0, 1);
-			tape[i_var].new_op  = rec->num_rec_op();
+			tape[i_var].new_op  = rec->num_op_rec();
 			tape[i_var].new_var = rec->PutOp(op);
 			break;
  			// ---------------------------------------------------
@@ -2333,7 +2333,7 @@ void optimize_run(
 			new_arg[0] = rec->PutPar( play->GetPar(arg[0] ) );
 
 			rec->PutArg( new_arg[0] );
-			tape[i_var].new_op  = rec->num_rec_op();
+			tape[i_var].new_op  = rec->num_op_rec();
 			tape[i_var].new_var = rec->PutOp(op);
 			break;
 			// ---------------------------------------------------
@@ -2348,7 +2348,7 @@ void optimize_run(
 				new_arg[1], 
 				0
 			);
-			tape[i_var].new_op  = rec->num_rec_op();
+			tape[i_var].new_op  = rec->num_op_rec();
 			tape[i_var].new_var = rec->PutOp(op);
 			break;
 			// ---------------------------------------------------
@@ -2364,7 +2364,7 @@ void optimize_run(
 				new_arg[1], 
 				0
 			);
-			tape[i_var].new_var = rec->num_rec_op();
+			tape[i_var].new_var = rec->num_op_rec();
 			tape[i_var].new_var = rec->PutOp(op);
 			break;
 			// ---------------------------------------------------
@@ -2440,11 +2440,11 @@ void optimize_run(
 			{	user_state = user_arg;
 				CPPAD_ASSERT_UNKNOWN( user_curr > 0 );
 				user_curr--;
-				user_info[user_curr].op_begin = rec->num_rec_op();
+				user_info[user_curr].op_begin = rec->num_op_rec();
 			}
 			else
 			{	user_state = user_start;
-				user_info[user_curr].op_end = rec->num_rec_op() + 1;
+				user_info[user_curr].op_end = rec->num_op_rec() + 1;
 			}
 			// user_index, user_id, user_n, user_m
 			if( user_info[user_curr].connect_type != not_connected )
@@ -2492,7 +2492,7 @@ void optimize_run(
 			case UsrrvOp:
 			CPPAD_ASSERT_NARG_NRES(op, 0, 1);
 			if( user_info[user_curr].connect_type != not_connected )
-			{	tape[i_var].new_op  = rec->num_rec_op();
+			{	tape[i_var].new_op  = rec->num_op_rec();
 				tape[i_var].new_var = rec->PutOp(UsrrvOp);
 			}
 			break;
@@ -2518,7 +2518,7 @@ void optimize_run(
 	}
 
 # ifndef NDEBUG
-	size_t num_new_op = rec->num_rec_op();
+	size_t num_new_op = rec->num_op_rec();
 	for(i_var = 0; i_var < tape.size(); i_var++)
 		CPPAD_ASSERT_UNKNOWN( tape[i_var].new_op < num_new_op );
 # endif
@@ -2639,7 +2639,7 @@ void ADFun<Base>::optimize(void)
 	CppAD::optimize::optimize_run<Base>(n, dep_taddr_, &play_, &rec);
 
 	// number of variables in the recording
-	total_num_var_ = rec.num_rec_var();
+	total_num_var_ = rec.num_var_rec();
 
 	// now replace the recording
 	play_.get(rec);
@@ -2656,7 +2656,7 @@ void ADFun<Base>::optimize(void)
 
 	// resize and initilaize conditional skip vector
 	// (must use player size because it now has the recoreder information)
-	cskip_op_.resize( play_.num_rec_op() );
+	cskip_op_.resize( play_.num_op_rec() );
 	for(i = 0; i < cskip_op_.size(); i++)
 		cskip_op_[i] = false;
 

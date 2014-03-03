@@ -224,31 +224,31 @@ public:
 	}
 	
 	/// Fetch number of variables in the recording.
-	size_t num_rec_var(void) const
+	size_t num_var_rec(void) const
 	{	return num_var_rec_; }
 
 	/// Fetch number of operators in the recording.
-	size_t num_rec_op(void) const
+	size_t num_op_rec(void) const
 	{	return op_rec_.size(); }
 
 	/// Fetch number of VecAD indices in the recording.
-	size_t num_rec_vecad_ind(void) const
+	size_t num_vec_ind_rec(void) const
 	{	return vec_ind_rec_.size(); }
 
 	/// Fetch number of VecAD vectors in the recording
-	size_t num_rec_vecad_vec(void) const
+	size_t num_vecad_vec_rec(void) const
 	{	return num_vecad_vec_rec_; }
 
 	/// Fetch number of argument indices in the recording.
-	size_t num_rec_op_arg(void) const
+	size_t num_op_arg_rec(void) const
 	{	return op_arg_rec_.size(); }
 
 	/// Fetch number of parameters in the recording.
-	size_t num_rec_par(void) const
+	size_t num_par_rec(void) const
 	{	return par_rec_.size(); }
 
 	/// Fetch number of characters (representing strings) in the recording.
-	size_t num_rec_text(void) const
+	size_t num_text_rec(void) const
 	{	return text_rec_.size(); }
 
 	/// Fetch a rough measure of amount of memory used to store recording

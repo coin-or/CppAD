@@ -118,7 +118,7 @@ Vector ADFun<Base>::Forward(
 	}
 
 	// evaluate the derivatives
-	CPPAD_ASSERT_UNKNOWN( cskip_op_.size() == play_.num_rec_op() );
+	CPPAD_ASSERT_UNKNOWN( cskip_op_.size() == play_.num_op_rec() );
 	size_t q = (p + 1) - n_order;
 	if( p == 0 )
 	{

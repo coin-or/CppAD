@@ -68,7 +68,7 @@ is the number of independent variables on the tape.
 \param numvar
 is the total number of variables on the tape.
 This is also equal to the number of rows in the matrix \a Taylor; i.e.,
-play->num_rec_var().
+play->num_var_rec().
 
 \param play
 The information stored in \a play
@@ -145,7 +145,7 @@ is the partial derivative of \f$ G( u ) \f$ with
 respect to \f$ u_j^{(k)} \f$.
 
 \param cskip_op
-Is a vector with size play->num_rec_op().
+Is a vector with size play->num_op_rec().
 If cskip_op[i] is true, the operator index i in the recording
 does not affect any of the dependent variable (given the value
 of the independent variables).
@@ -175,11 +175,11 @@ void ReverseSweep(
 	const addr_t*   arg = CPPAD_NULL;
 
 	// check numvar argument
-	CPPAD_ASSERT_UNKNOWN( play->num_rec_var() == numvar );
+	CPPAD_ASSERT_UNKNOWN( play->num_var_rec() == numvar );
 	CPPAD_ASSERT_UNKNOWN( numvar > 0 );
 
 	// length of the parameter vector (used by CppAD assert macros)
-	const size_t num_par = play->num_rec_par();
+	const size_t num_par = play->num_par_rec();
 
 	// pointer to the beginning of the parameter vector
 	const Base* parameter = CPPAD_NULL;
@@ -224,7 +224,7 @@ void ReverseSweep(
 		play->reverse_next(op, arg, i_op, i_var);
 		CPPAD_ASSERT_UNKNOWN((i_op >  n) | (op == InvOp) | (op == BeginOp));
 		CPPAD_ASSERT_UNKNOWN((i_op <= n) | (op != InvOp) | (op != BeginOp));
-		CPPAD_ASSERT_UNKNOWN( i_op < play->num_rec_op() );
+		CPPAD_ASSERT_UNKNOWN( i_op < play->num_op_rec() );
 
 		// check if we are skipping this operation
 		while( cskip_op[i_op] )
@@ -233,7 +233,7 @@ void ReverseSweep(
 				play->reverse_csum(op, arg, i_op, i_var);
 			}
 			play->reverse_next(op, arg, i_op, i_var);
-			CPPAD_ASSERT_UNKNOWN( i_op < play->num_rec_op() );
+			CPPAD_ASSERT_UNKNOWN( i_op < play->num_op_rec() );
 		}
 
 		// rest of informaiton depends on the case

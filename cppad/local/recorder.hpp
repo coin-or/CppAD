@@ -2,7 +2,7 @@
 # ifndef CPPAD_RECORDER_INCLUDED
 # define CPPAD_RECORDER_INCLUDED
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-13 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-14 Bradley M. Bell
 
 CppAD is distributed under multiple licenses. This distribution is under
 the terms of the 
@@ -120,11 +120,11 @@ public:
 	inline size_t PutTxt(const char *text);
 
 	/// Number of variables currently stored in the recording.
-	size_t num_rec_var(void) const
+	size_t num_var_rec(void) const
 	{	return num_rec_var_; }
 
 	/// Number of operators currently stored in the recording.
-	size_t num_rec_op(void) const
+	size_t num_op_rec(void) const
 	{	return  rec_op_.size(); }
 
 	/// Approximate amount of memory used by the recording 

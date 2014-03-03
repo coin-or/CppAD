@@ -49,7 +49,7 @@ is the number of independent variables on the tape.
 
 \param numvar
 is the total number of variables on the tape; i.e.,
-\a play->num_rec_var().
+\a play->num_var_rec().
 This is also the number of rows in the entire sparsity pattern 
 \a rev_hes_sparse.
 
@@ -117,12 +117,12 @@ void RevHesSweep(
 	const addr_t*   arg = CPPAD_NULL;
 
 	// length of the parameter vector (used by CppAD assert macros)
-	const size_t num_par = play->num_rec_par();
+	const size_t num_par = play->num_par_rec();
 
 	size_t             i, j, k;
 
 	// check numvar argument
-	CPPAD_ASSERT_UNKNOWN( play->num_rec_var()     == numvar );
+	CPPAD_ASSERT_UNKNOWN( play->num_var_rec()     == numvar );
 	CPPAD_ASSERT_UNKNOWN( for_jac_sparse.n_set() == numvar );
 	CPPAD_ASSERT_UNKNOWN( rev_hes_sparse.n_set() == numvar );
 	CPPAD_ASSERT_UNKNOWN( numvar > 0 );
@@ -139,8 +139,8 @@ void RevHesSweep(
 	// vecad_sparsity contains a sparsity pattern for each VecAD object.
 	// vecad_ind maps a VecAD index (beginning of the VecAD object) 
 	// to the index for the corresponding set in vecad_sparsity.
-	size_t num_vecad_ind   = play->num_rec_vecad_ind();
-	size_t num_vecad_vec   = play->num_rec_vecad_vec();
+	size_t num_vecad_ind   = play->num_vec_ind_rec();
+	size_t num_vecad_vec   = play->num_vecad_vec_rec();
 	Vector_set vecad_sparse;
 	vecad_sparse.resize(num_vecad_vec, limit);
 	pod_vector<size_t> vecad_ind;
@@ -163,7 +163,7 @@ void RevHesSweep(
 			// initialize this vector's reverse jacobian value 
 			vecad_jac[i] = false;
 		}
-		CPPAD_ASSERT_UNKNOWN( j == play->num_rec_vecad_ind() );
+		CPPAD_ASSERT_UNKNOWN( j == play->num_vec_ind_rec() );
 	}
 
 	// work space used by UserOp.

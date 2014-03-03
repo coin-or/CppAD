@@ -3,7 +3,7 @@
 # define CPPAD_DEPENDENT_INCLUDED
 
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-13 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-14 Bradley M. Bell
 
 CppAD is distributed under multiple licenses. This distribution is under
 the terms of the 
@@ -267,11 +267,11 @@ void ADFun<Base>::Dependent(ADTape<Base> *tape, const ADvector &y)
 	tape->Rec_.PutOp(EndOp);
 
 	// total number of variables on the tape
-	total_num_var_ = tape->Rec_.num_rec_var();
+	total_num_var_ = tape->Rec_.num_var_rec();
 
 	// conditional skip vector
 	cskip_op_.clear();
-	cskip_op_.resize( tape->Rec_.num_rec_op() );
+	cskip_op_.resize( tape->Rec_.num_op_rec() );
 	for(i = 0; i < cskip_op_.size(); i++)
 		cskip_op_[i] = false;
 
@@ -284,7 +284,7 @@ void ADFun<Base>::Dependent(ADTape<Base> *tape, const ADvector &y)
 	AD<Base>::tape_manage(tape_manage_delete);
 
 	// total number of varables in this recording 
-	CPPAD_ASSERT_UNKNOWN( total_num_var_ == play_.num_rec_var() );
+	CPPAD_ASSERT_UNKNOWN( total_num_var_ == play_.num_var_rec() );
 
 	// used to determine if there is an operation sequence in *this
 	CPPAD_ASSERT_UNKNOWN( total_num_var_ > 0 );

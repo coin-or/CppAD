@@ -79,7 +79,7 @@ is the number of independent variables on the tape.
 \param numvar
 is the total number of variables on the tape.
 This is also equal to the number of rows in the matrix \a Taylor; i.e.,
-play->num_rec_var().
+play->num_var_rec().
 
 \param play
 The information stored in \a play
@@ -120,7 +120,7 @@ is the k-th order Taylor coefficient for the variable with
 index i on the tape.
 
 \param cskip_op
-Is a vector with size play->num_rec_op().
+Is a vector with size play->num_op_rec().
 
 \li <tt>q = 0</tt>
 In this case,
@@ -187,7 +187,7 @@ size_t forward_sweep(
 	if( q == 0 )
 	{
 		// this includes order zero calculation, initialize vector indices
-		i = play->num_rec_vecad_ind();
+		i = play->num_vec_ind_rec();
 		if( i > 0 )
 		{	VectorInd.extend(i);
 			VectorVar.extend(i);
@@ -197,7 +197,7 @@ size_t forward_sweep(
 			}
 		}
 		// includes zero order, so initialize conditional skip flags
-		for(i = 0; i < play->num_rec_op(); i++)
+		for(i = 0; i < play->num_op_rec(); i++)
 			cskip_op[i] = false;
 	}
 
@@ -224,10 +224,10 @@ size_t forward_sweep(
 	enum { user_start, user_arg, user_ret, user_end } user_state = user_start;
 
 	// check numvar argument
-	CPPAD_ASSERT_UNKNOWN( play->num_rec_var() == numvar );
+	CPPAD_ASSERT_UNKNOWN( play->num_var_rec() == numvar );
 
 	// length of the parameter vector (used by CppAD assert macros)
-	const size_t num_par = play->num_rec_par();
+	const size_t num_par = play->num_par_rec();
 
 	// pointer to the beginning of the parameter vector
 	const Base* parameter = CPPAD_NULL;
@@ -235,7 +235,7 @@ size_t forward_sweep(
 		parameter = play->GetPar();
 
 	// length of the text vector (used by CppAD assert macros)
-	const size_t num_text = play->num_rec_text();
+	const size_t num_text = play->num_text_rec();
 
 	// pointer to the beginning of the text vector
 	const char* text = CPPAD_NULL;
@@ -255,7 +255,7 @@ size_t forward_sweep(
 		play->forward_next(op, arg, i_op, i_var);
 		CPPAD_ASSERT_UNKNOWN( (i_op > n)  | (op == InvOp) );  
 		CPPAD_ASSERT_UNKNOWN( (i_op <= n) | (op != InvOp) );  
-		CPPAD_ASSERT_UNKNOWN( i_op < play->num_rec_op() );
+		CPPAD_ASSERT_UNKNOWN( i_op < play->num_op_rec() );
 
 		// check if we are skipping this operation
 		while( cskip_op[i_op] )
@@ -264,7 +264,7 @@ size_t forward_sweep(
 				play->forward_csum(op, arg, i_op, i_var);
 			}
 			play->forward_next(op, arg, i_op, i_var);
-			CPPAD_ASSERT_UNKNOWN( i_op < play->num_rec_op() );
+			CPPAD_ASSERT_UNKNOWN( i_op < play->num_op_rec() );
 		}
 
 		// action depends on the operator
@@ -415,7 +415,7 @@ size_t forward_sweep(
 					parameter, 
 					J, 
 					Taylor,
-					play->num_rec_vecad_ind(),
+					play->num_vec_ind_rec(),
 					VectorVar.data(),
 					VectorInd.data()
 				);
@@ -438,7 +438,7 @@ size_t forward_sweep(
 					parameter, 
 					J, 
 					Taylor,
-					play->num_rec_vecad_ind(),
+					play->num_vec_ind_rec(),
 					VectorVar.data(),
 					VectorInd.data()
 				);
@@ -540,7 +540,7 @@ size_t forward_sweep(
 					num_par, 
 					J, 
 					Taylor,
-					play->num_rec_vecad_ind(),
+					play->num_vec_ind_rec(),
 					VectorVar.data(),
 					VectorInd.data()
 				);
@@ -556,7 +556,7 @@ size_t forward_sweep(
 					num_par, 
 					J, 
 					Taylor,
-					play->num_rec_vecad_ind(),
+					play->num_vec_ind_rec(),
 					VectorVar.data(),
 					VectorInd.data()
 				);
@@ -572,7 +572,7 @@ size_t forward_sweep(
 					num_par, 
 					J, 
 					Taylor,
-					play->num_rec_vecad_ind(),
+					play->num_vec_ind_rec(),
 					VectorVar.data(),
 					VectorInd.data()
 				);
@@ -588,7 +588,7 @@ size_t forward_sweep(
 					num_par, 
 					J, 
 					Taylor,
-					play->num_rec_vecad_ind(),
+					play->num_vec_ind_rec(),
 					VectorVar.data(),
 					VectorInd.data()
 				);
@@ -760,7 +760,7 @@ size_t forward_sweep(
 	}
 # endif
 	CPPAD_ASSERT_UNKNOWN( user_state == user_start );
-	CPPAD_ASSERT_UNKNOWN( i_var + 1 == play->num_rec_var() );
+	CPPAD_ASSERT_UNKNOWN( i_var + 1 == play->num_var_rec() );
 
 	return compareCount;
 }

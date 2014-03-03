@@ -69,7 +69,7 @@ is the number of independent variables on the tape.
 
 \param numvar
 is the total number of variables on the tape; i.e.,
-\a play->num_rec_var().
+\a play->num_var_rec().
 
 \param play
 The information stored in \a play
@@ -96,7 +96,7 @@ corresponds to the set with index i in \a var_sparsity.
 
 \par Checked Assertions:
 \li numvar == var_sparsity.n_set()
-\li numvar == play->num_rec_var()
+\li numvar == play->num_var_rec()
 */
 
 template <class Base, class Vector_set>
@@ -115,11 +115,11 @@ void ForJacSweep(
 	size_t            i, j, k;
 
 	// check numvar argument
-	CPPAD_ASSERT_UNKNOWN( play->num_rec_var()  == numvar );
+	CPPAD_ASSERT_UNKNOWN( play->num_var_rec()  == numvar );
 	CPPAD_ASSERT_UNKNOWN( var_sparsity.n_set() == numvar );
 
 	// length of the parameter vector (used by CppAD assert macros)
-	const size_t num_par = play->num_rec_par();
+	const size_t num_par = play->num_par_rec();
 
 	// cum_sparsity accumulates sparsity pattern a cummulative sum
 	size_t limit = var_sparsity.end();
@@ -128,8 +128,8 @@ void ForJacSweep(
 	// to all the other variables.
 	// vecad_ind maps a VecAD index (the beginning of the
 	// VecAD object) to its from index in vecad_sparsity
-	size_t num_vecad_ind   = play->num_rec_vecad_ind();
-	size_t num_vecad_vec   = play->num_rec_vecad_vec();
+	size_t num_vecad_ind   = play->num_vec_ind_rec();
+	size_t num_vecad_vec   = play->num_vecad_vec_rec();
 	Vector_set  vecad_sparsity;
 	vecad_sparsity.resize(num_vecad_vec, limit);
 	pod_vector<size_t> vecad_ind;
@@ -147,7 +147,7 @@ void ForJacSweep(
 			// start of next VecAD
 			j       += length + 1;
 		}
-		CPPAD_ASSERT_UNKNOWN( j == play->num_rec_vecad_ind() );
+		CPPAD_ASSERT_UNKNOWN( j == play->num_vec_ind_rec() );
 	}
 
 	// --------------------------------------------------------------
@@ -721,7 +721,7 @@ void ForJacSweep(
 # else
 	}
 # endif
-	CPPAD_ASSERT_UNKNOWN( i_var + 1 == play->num_rec_var() );
+	CPPAD_ASSERT_UNKNOWN( i_var + 1 == play->num_var_rec() );
 
 	return;
 }

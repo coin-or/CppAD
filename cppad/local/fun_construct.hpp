@@ -453,7 +453,7 @@ total_num_var_(0)
 	}
 
 	// use independent variable values to fill in values for others
-	CPPAD_ASSERT_UNKNOWN( cskip_op_.size() == play_.num_rec_op() );
+	CPPAD_ASSERT_UNKNOWN( cskip_op_.size() == play_.num_op_rec() );
 # if CPPAD_USE_FORWARD0SWEEP
 	compare_change_ = forward0sweep(std::cout, false,
 		n, total_num_var_, &play_, taylor_col_dim_, taylor_.data(),
