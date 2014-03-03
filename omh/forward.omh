@@ -1,6 +1,6 @@
 $Id$
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-13 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-14 Bradley M. Bell
 
 CppAD is distributed under multiple licenses. This distribution is under
 the terms of the 
@@ -28,7 +28,7 @@ $section Zero Order Forward Mode: Function Values$$
 $head Syntax$$
 $icode%y% = %f%.Forward(0, %x%)
 %$$
-$icode%y% = %f%.Forward(x, %x%, %s%)%$$
+$icode%y% = %f%.Forward(0, %x%, %s%)%$$
 
 $head Purpose$$
 We use $latex F : B^n \rightarrow B^m$$ to denote the
