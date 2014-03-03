@@ -240,7 +240,7 @@ public:
 	{	return num_vecad_vec_rec_; }
 
 	/// Fetch number of argument indices in the recording.
-	size_t num_op_rec_arg(void) const
+	size_t num_rec_op_arg(void) const
 	{	return op_arg_rec_.size(); }
 
 	/// Fetch number of parameters in the recording.
