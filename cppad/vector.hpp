@@ -16,6 +16,7 @@ Please visit http://www.coin-or.org/CppAD/ for information on other licenses.
 /*
 $begin CppAD_vector$$
 $spell
+	rvalues
 	thread_alloc
 	cppad.hpp
 	Bool
@@ -94,6 +95,12 @@ An example use of this reference is in multiple assignments of the form
 $codei%
 	%z% = %y% = %x%
 %$$
+
+$subhead Move Semantics$$
+If the C++ compiler supports move semantic rvalues using the $code &&$$
+syntax, then it will be used during the vector assignment statement.
+This means that return values and other temporaries are not be copied,
+but rather pointers are transferred.
 
 $head Element Access$$
 $index [], CppAD vector$$
@@ -438,6 +445,26 @@ public:
 			data_[i] = x.data_[i];
 		return *this;
 	}
+# if CPPAD_HAS_RVALUE
+	/// vector assignment operator with move semantics
+	inline vector& operator=(
+		/// right hand size of the assingment operation
+		vector&& x
+	)
+	{	if( this != &x )
+		{	clear();
+			//
+			length_   = x.length_;
+			capacity_ = x.capacity_;
+			data_     = x.data_;
+			//
+			x.length_   = 0;
+			x.capacity_ = 0;
+			x.data_     = CPPAD_NULL;
+		}
+		return *this;
+	}
+# endif
 	/// non-constant element access; i.e., we can change this element value
 	Type& operator[](
 		/// element index, must be less than length
@@ -700,6 +727,28 @@ public:
 			data_[i] = v.data_[i];
 		return *this;
 	}
+# if CPPAD_HAS_RVALUE
+	/// vector assignment operator with move semantics
+	inline vectorBool& operator=(
+		/// right hand size of the assingment operation
+		vectorBool&& x
+	)
+	{	if( this != &x )
+		{	clear();
+			//
+			length_   = x.length_;
+			n_unit_   = x.n_unit_;
+			data_     = x.data_;
+			//
+			x.length_   = 0;
+			x.n_unit_   = 0;
+			x.data_     = CPPAD_NULL;
+		}
+		return *this;
+	}
+# endif
+
+
 	/// non-constant element access; i.e., we can change this element value
 	vectorBoolElement operator[](
 		/// element index, must be less than length

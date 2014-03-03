@@ -1,6 +1,6 @@
 #CppAD $Id$
 # -----------------------------------------------------------------------------
-# CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-13 Bradley M. Bell
+# CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-14 Bradley M. Bell
 #
 # CppAD is distributed under multiple licenses. This distribution is under
 # the terms of the 
@@ -105,6 +105,27 @@ IF( cppad_eigenvector )
 	ENDIF( NOT eigen_prefix )
 ENDIF( cppad_eigenvector )
 
+# -----------------------------------------------------------------------------
+# cppad_has_rvalue
+#
+# CHECK_CXX_SOURCE_RUNS(source variable)
+SET(CMAKE_REQUIRED_INCLUDES  "")
+SET(CMAKE_REQUIRED_LIBRARIES "")
+SET(CMAKE_REQUIRED_FLAGS     ${cppad_cxx_flags})
+SET(source "
+int main(void)
+{	int&& value = 1 + 2;
+	if( value != 3 )
+		return 1;
+	return 0;
+}" )
+CHECK_CXX_SOURCE_RUNS("${source}" rvalue_ok)
+IF( rvalue_ok )
+	SET(cppad_has_rvalue 1)
+ELSE( rvalue_ok )
+	SET(cppad_has_rvalue 0)
+ENDIF( rvalue_ok )
+MESSAGE(STATUS "cppad_has_rvalue = ${cppad_has_rvalue}" )
 # -----------------------------------------------------------------------------
 # cppad_has_nullptr
 #

@@ -41,6 +41,12 @@ Replacement for config.h so that all preprocessor symbols begin with CPPAD_
 */
 
 /*!
+\def CPPAD_HAS_RVALUE
+Does this compiler cupport c++11 rvalues; i.e., values with move semantics
+*/
+# define CPPAD_HAS_RVALUE @cppad_has_rvalue@
+
+/*!
 \def CPPAD_PACKAGE_STRING
 cppad-yyyymmdd as a C string where yyyy is year, mm is month, and dd is day.
 */

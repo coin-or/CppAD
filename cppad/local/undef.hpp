@@ -68,6 +68,7 @@ Preprecessor definitions that presist after cppad/cppad.hpp is included:
 # undef CPPAD_FOLD_BOOL_VALUED_BINARY_OPERATOR
 # undef CPPAD_FOR_JAC_SWEEP_TRACE
 # undef CPPAD_HAS_COLPACK
+# undef CPPAD_HAS_RVALUE
 # undef CPPAD_HAS_GETTIMEOFDAY
 # undef CPPAD_HAS_NULLPTR
 # undef CPPAD_INLINE_FRIEND_TEMPLATE_FUNCTION

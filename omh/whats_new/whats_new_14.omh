@@ -61,6 +61,9 @@ of auxillary information related to the
 $cref/optimize/speed_main/option_list/optimize/$$ option.
 Future auxillary information will be passed back in a manner similar to
 $cref/n_sweep/link_sparse_jacobian/n_sweep/$$ for the sparse jacobian test.
+$lnext
+$cref/Move semantics/CppAD_vector/Assignment/Move Semantics/$$
+were added to the $code CppAD::vector$$ assignment operator.
 $lend
 
 $head 03-01$$
