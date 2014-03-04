@@ -154,9 +154,12 @@ size_t forward0sweep(
 	// initialize the comparision operator (ComOp) counter
 	size_t compareCount = 0;
 
-	// This is an order zero calculation, initialize vector indices
-	pod_vector<size_t> vecad_index;   // address for each element
-	pod_vector<bool>   vecad_is_var;  // is element a variable
+	// This is an order zero calculation, initialize vecad information
+	//
+	// mapping from vecad index to parameter or variable index
+	pod_vector<size_t> vecad_index;
+	// Does this vecad index corresponding to a variable (otherwise parameter)
+	pod_vector<bool>   vecad_is_var;
 	size_t  i = play->num_vec_ind_rec();
 	if( i > 0 )
 	{	vecad_index.extend(i);
