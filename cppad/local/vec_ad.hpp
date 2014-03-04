@@ -349,8 +349,8 @@ class VecAD_reference {
 	friend class ADTape<Base>;
 
 private:
-	VecAD<Base>      *vec_;         // pointer to entire vector
-	mutable AD<Base>  ind_;         // index for this element
+	VecAD<Base> *vec_;         // pointer to entire vector
+	AD<Base>     ind_;         // index for this element
 public:
 	VecAD_reference(VecAD<Base> *v, const AD<Base> &x) 
 		: vec_( v ) , ind_(x)
@@ -408,23 +408,22 @@ public:
 			else
 			{	CPPAD_ASSERT_UNKNOWN( NumRes(LdvOp) == 1 );
 				CPPAD_ASSERT_UNKNOWN( NumArg(LdvOp) == 3 );
-
+				addr_t ind_taddr;
 				if( Parameter(ind_) )
 				{	// kludge that should not be needed
 					// if ind_ instead of i is used for index
 					// in the tape
-					ind_.tape_id_  = vec_->tape_id_;
-					ind_.taddr_    = tape->RecordParOp(
+					ind_taddr  = tape->RecordParOp(
 						ind_.value_
 					);
 				}
-				CPPAD_ASSERT_UNKNOWN( Variable(ind_) );
-				CPPAD_ASSERT_UNKNOWN( ind_.taddr_ > 0 );
+				else	ind_taddr = ind_.taddr_;
+				CPPAD_ASSERT_UNKNOWN( ind_taddr > 0 );
 
 				// put operand addresses in tape
 				// (value of third arugment does not matter)
 				tape->Rec_.PutArg(
-					vec_->offset_, ind_.taddr_, 0
+					vec_->offset_, ind_taddr, 0
 				);
 				// put operator in the tape, ind_ is a variable
 				result.taddr_ = tape->Rec_.PutOp(LdvOp);
