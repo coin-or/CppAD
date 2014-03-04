@@ -70,7 +70,7 @@ is the number of independent variables on the tape.
 
 \param numvar
 is the total number of variables on the tape.
-This is also equal to the number of rows in the matrix \a Taylor; i.e.,
+This is also equal to the number of rows in the matrix \a taylor; i.e.,
 \a play->num_var_rec().
 
 \param play
@@ -95,18 +95,18 @@ modify the corresponding \a op_arg values returned by
 \link load_op.hpp LdpOp and LdvOp \endlink operations.
 
 \param J
-Is the number of columns in the coefficient matrix \a Taylor.
+Is the number of columns in the coefficient matrix \a taylor.
 This must be greater than or equal one.
 
-\param Taylor
+\param taylor
 \b Input: For j = 1 , ... , \a n,
-\a Taylor [ j * J + 0 ]
+\a taylor [ j * J + 0 ]
 variable with index i on the tape 
 (independent variable with index (j-1) in the independent variable vector).
 \n
 \n
 \b Output: For i = \a n + 1, ... , \a numvar - 1,
-\a Taylor [ i * J + 0 ]
+\a taylor [ i * J + 0 ]
 is the zero order Taylor coefficient for the variable with 
 index i on the tape.
 
@@ -133,7 +133,7 @@ size_t forward0sweep(
 	size_t                numvar,
 	player<Base>*         play,
 	size_t                J,
-	Base*                 Taylor,
+	Base*                 taylor,
 	bool*                 cskip_op
 )
 {	CPPAD_ASSERT_UNKNOWN( J >= 1 );
@@ -155,15 +155,15 @@ size_t forward0sweep(
 	size_t compareCount = 0;
 
 	// This is an order zero calculation, initialize vector indices
-	pod_vector<size_t> VectorInd;  // address for each element
-	pod_vector<bool>   VectorVar;  // is element a variable
+	pod_vector<size_t> vecad_index;   // address for each element
+	pod_vector<bool>   vecad_is_var;  // is element a variable
 	size_t  i = play->num_vec_ind_rec();
 	if( i > 0 )
-	{	VectorInd.extend(i);
-		VectorVar.extend(i);
+	{	vecad_index.extend(i);
+		vecad_is_var.extend(i);
 		while(i--)
-		{	VectorInd[i] = play->GetVecInd(i);
-			VectorVar[i] = false;
+		{	vecad_index[i] = play->GetVecInd(i);
+			vecad_is_var[i] = false;
 		}
 	}
 
@@ -241,39 +241,39 @@ size_t forward0sweep(
 		switch( op )
 		{
 			case AbsOp:
-			forward_abs_op_0(i_var, arg[0], J, Taylor);
+			forward_abs_op_0(i_var, arg[0], J, taylor);
 			break;
 			// -------------------------------------------------
 
 			case AddvvOp:
-			forward_addvv_op_0(i_var, arg, parameter, J, Taylor);
+			forward_addvv_op_0(i_var, arg, parameter, J, taylor);
 			break;
 			// -------------------------------------------------
 
 			case AddpvOp:
 			CPPAD_ASSERT_UNKNOWN( size_t(arg[0]) < num_par );
-			forward_addpv_op_0(i_var, arg, parameter, J, Taylor);
+			forward_addpv_op_0(i_var, arg, parameter, J, taylor);
 			break;
 			// -------------------------------------------------
 
 			case AcosOp:
 			// sqrt(1 - x * x), acos(x)
 			CPPAD_ASSERT_UNKNOWN( i_var < numvar  );
-			forward_acos_op_0(i_var, arg[0], J, Taylor);
+			forward_acos_op_0(i_var, arg[0], J, taylor);
 			break;
 			// -------------------------------------------------
 
 			case AsinOp:
 			// sqrt(1 - x * x), asin(x)
 			CPPAD_ASSERT_UNKNOWN( i_var < numvar  );
-			forward_asin_op_0(i_var, arg[0], J, Taylor);
+			forward_asin_op_0(i_var, arg[0], J, taylor);
 			break;
 			// -------------------------------------------------
 
 			case AtanOp:
 			// 1 + x * x, atan(x)
 			CPPAD_ASSERT_UNKNOWN( i_var < numvar  );
-			forward_atan_op_0(i_var, arg[0], J, Taylor);
+			forward_atan_op_0(i_var, arg[0], J, taylor);
 			break;
 			// -------------------------------------------------
 
@@ -281,13 +281,13 @@ size_t forward0sweep(
 			// Use the general case with d == 0 
 			// (could create an optimzied verison for this case)
 			forward_cond_op_0(
-				i_var, arg, num_par, parameter, J, Taylor
+				i_var, arg, num_par, parameter, J, taylor
 			);
 			break;
 			// ---------------------------------------------------
 			case ComOp:
 			forward_comp_op_0(
-			compareCount, arg, num_par, parameter, J, Taylor
+			compareCount, arg, num_par, parameter, J, taylor
 			);
 			break;
 			// ---------------------------------------------------
@@ -295,14 +295,14 @@ size_t forward0sweep(
 			case CosOp:
 			// sin(x), cos(x)
 			CPPAD_ASSERT_UNKNOWN( i_var < numvar  );
-			forward_cos_op_0(i_var, arg[0], J, Taylor);
+			forward_cos_op_0(i_var, arg[0], J, taylor);
 			break;
 			// ---------------------------------------------------
 
 			case CoshOp:
 			// sinh(x), cosh(x)
 			CPPAD_ASSERT_UNKNOWN( i_var < numvar  );
-			forward_cosh_op_0(i_var, arg[0], J, Taylor);
+			forward_cosh_op_0(i_var, arg[0], J, taylor);
 			break;
 			// -------------------------------------------------
 
@@ -311,7 +311,7 @@ size_t forward0sweep(
 			// forward_next thinks it has no arguments.
 			// we must inform forward_next of this special case.
 			forward_cskip_op_0(
-				i_var, arg, num_par, parameter, J, Taylor, cskip_op
+				i_var, arg, num_par, parameter, J, taylor, cskip_op
 			);
 			play->forward_cskip(op, arg, i_op, i_var);
 			break;
@@ -322,31 +322,31 @@ size_t forward0sweep(
 			// forward_next thinks it has no arguments.
 			// we must inform forward_next of this special case.
 			forward_csum_op(
-				0, 0, i_var, arg, num_par, parameter, J, Taylor
+				0, 0, i_var, arg, num_par, parameter, J, taylor
 			);
 			play->forward_csum(op, arg, i_op, i_var);
 			break;
 			// -------------------------------------------------
 
 			case DisOp:
-			forward_dis_op_0(i_var, arg, J, Taylor);
+			forward_dis_op_0(i_var, arg, J, taylor);
 			break;
 			// -------------------------------------------------
 
 			case DivvvOp:
-			forward_divvv_op_0(i_var, arg, parameter, J, Taylor);
+			forward_divvv_op_0(i_var, arg, parameter, J, taylor);
 			break;
 			// -------------------------------------------------
 
 			case DivpvOp:
 			CPPAD_ASSERT_UNKNOWN( size_t(arg[0]) < num_par );
-			forward_divpv_op_0(i_var, arg, parameter, J, Taylor);
+			forward_divpv_op_0(i_var, arg, parameter, J, taylor);
 			break;
 			// -------------------------------------------------
 
 			case DivvpOp:
 			CPPAD_ASSERT_UNKNOWN( size_t(arg[1]) < num_par );
-			forward_divvp_op_0(i_var, arg, parameter, J, Taylor);
+			forward_divvp_op_0(i_var, arg, parameter, J, taylor);
 			break;
 			// -------------------------------------------------
 
@@ -357,7 +357,7 @@ size_t forward0sweep(
 			// -------------------------------------------------
 
 			case ExpOp:
-			forward_exp_op_0(i_var, arg[0], J, Taylor);
+			forward_exp_op_0(i_var, arg[0], J, taylor);
 			break;
 			// -------------------------------------------------
 
@@ -366,8 +366,8 @@ size_t forward0sweep(
 			// -------------------------------------------------
 
 			case LdpOp:
-			CPPAD_ASSERT_UNKNOWN( VectorInd.size() != 0 );
-			CPPAD_ASSERT_UNKNOWN( VectorVar.size() != 0 );
+			CPPAD_ASSERT_UNKNOWN( vecad_index.size() != 0 );
+			CPPAD_ASSERT_UNKNOWN( vecad_is_var.size() != 0 );
 			non_const_arg = play->forward_non_const_arg();
 			forward_load_p_op_0(
 				i_var, 
@@ -375,17 +375,17 @@ size_t forward0sweep(
 				num_par, 
 				parameter, 
 				J, 
-				Taylor,
+				taylor,
 				play->num_vec_ind_rec(),
-				VectorVar.data(),
-				VectorInd.data()
+				vecad_is_var.data(),
+				vecad_index.data()
 			);
 			break;
 			// -------------------------------------------------
 
 			case LdvOp:
-			CPPAD_ASSERT_UNKNOWN( VectorInd.size() != 0 );
-			CPPAD_ASSERT_UNKNOWN( VectorVar.size() != 0 );
+			CPPAD_ASSERT_UNKNOWN( vecad_index.size() != 0 );
+			CPPAD_ASSERT_UNKNOWN( vecad_is_var.size() != 0 );
 			non_const_arg = play->forward_non_const_arg();
 			forward_load_v_op_0(
 				i_var, 
@@ -393,57 +393,57 @@ size_t forward0sweep(
 				num_par, 
 				parameter, 
 				J, 
-				Taylor,
+				taylor,
 				play->num_vec_ind_rec(),
-				VectorVar.data(),
-				VectorInd.data()
+				vecad_is_var.data(),
+				vecad_index.data()
 			);
 			break;
 			// -------------------------------------------------
 
 			case LogOp:
-			forward_log_op_0(i_var, arg[0], J, Taylor);
+			forward_log_op_0(i_var, arg[0], J, taylor);
 			break;
 			// -------------------------------------------------
 
 			case MulvvOp:
-			forward_mulvv_op_0(i_var, arg, parameter, J, Taylor);
+			forward_mulvv_op_0(i_var, arg, parameter, J, taylor);
 			break;
 			// -------------------------------------------------
 
 			case MulpvOp:
 			CPPAD_ASSERT_UNKNOWN( size_t(arg[0]) < num_par );
-			forward_mulpv_op_0(i_var, arg, parameter, J, Taylor);
+			forward_mulpv_op_0(i_var, arg, parameter, J, taylor);
 			break;
 			// -------------------------------------------------
 
 			case ParOp:
 			forward_par_op_0(
-				i_var, arg, num_par, parameter, J, Taylor
+				i_var, arg, num_par, parameter, J, taylor
 			);
 			break;
 			// -------------------------------------------------
 
 			case PowvpOp:
 			CPPAD_ASSERT_UNKNOWN( size_t(arg[1]) < num_par );
-			forward_powvp_op_0(i_var, arg, parameter, J, Taylor);
+			forward_powvp_op_0(i_var, arg, parameter, J, taylor);
 			break;
 			// -------------------------------------------------
 
 			case PowpvOp:
 			CPPAD_ASSERT_UNKNOWN( size_t(arg[0]) < num_par );
-			forward_powpv_op_0(i_var, arg, parameter, J, Taylor);
+			forward_powpv_op_0(i_var, arg, parameter, J, taylor);
 			break;
 			// -------------------------------------------------
 
 			case PowvvOp:
-			forward_powvv_op_0(i_var, arg, parameter, J, Taylor);
+			forward_powvv_op_0(i_var, arg, parameter, J, taylor);
 			break;
 			// -------------------------------------------------
 
 			case PriOp:
 			if( print ) forward_pri_0(s_out,
-				i_var, arg, num_text, text, num_par, parameter, J, Taylor
+				i_var, arg, num_text, text, num_par, parameter, J, taylor
 			);
 			break;
 			// -------------------------------------------------
@@ -451,26 +451,26 @@ size_t forward0sweep(
 			case SignOp:
 			// cos(x), sin(x)
 			CPPAD_ASSERT_UNKNOWN( i_var < numvar  );
-			forward_sign_op_0(i_var, arg[0], J, Taylor);
+			forward_sign_op_0(i_var, arg[0], J, taylor);
 			break;
 			// -------------------------------------------------
 
 			case SinOp:
 			// cos(x), sin(x)
 			CPPAD_ASSERT_UNKNOWN( i_var < numvar  );
-			forward_sin_op_0(i_var, arg[0], J, Taylor);
+			forward_sin_op_0(i_var, arg[0], J, taylor);
 			break;
 			// -------------------------------------------------
 
 			case SinhOp:
 			// cosh(x), sinh(x)
 			CPPAD_ASSERT_UNKNOWN( i_var < numvar  );
-			forward_sinh_op_0(i_var, arg[0], J, Taylor);
+			forward_sinh_op_0(i_var, arg[0], J, taylor);
 			break;
 			// -------------------------------------------------
 
 			case SqrtOp:
-			forward_sqrt_op_0(i_var, arg[0], J, Taylor);
+			forward_sqrt_op_0(i_var, arg[0], J, taylor);
 			break;
 			// -------------------------------------------------
 
@@ -480,10 +480,10 @@ size_t forward0sweep(
 				arg, 
 				num_par, 
 				J, 
-				Taylor,
+				taylor,
 				play->num_vec_ind_rec(),
-				VectorVar.data(),
-				VectorInd.data()
+				vecad_is_var.data(),
+				vecad_index.data()
 			);
 			break;
 			// -------------------------------------------------
@@ -494,10 +494,10 @@ size_t forward0sweep(
 				arg, 
 				num_par, 
 				J, 
-				Taylor,
+				taylor,
 				play->num_vec_ind_rec(),
-				VectorVar.data(),
-				VectorInd.data()
+				vecad_is_var.data(),
+				vecad_index.data()
 			);
 			break;
 			// -------------------------------------------------
@@ -508,10 +508,10 @@ size_t forward0sweep(
 				arg, 
 				num_par, 
 				J, 
-				Taylor,
+				taylor,
 				play->num_vec_ind_rec(),
-				VectorVar.data(),
-				VectorInd.data()
+				vecad_is_var.data(),
+				vecad_index.data()
 			);
 			break;
 			// -------------------------------------------------
@@ -522,42 +522,42 @@ size_t forward0sweep(
 				arg, 
 				num_par, 
 				J, 
-				Taylor,
+				taylor,
 				play->num_vec_ind_rec(),
-				VectorVar.data(),
-				VectorInd.data()
+				vecad_is_var.data(),
+				vecad_index.data()
 			);
 			break;
 			// -------------------------------------------------
 
 			case SubvvOp:
-			forward_subvv_op_0(i_var, arg, parameter, J, Taylor);
+			forward_subvv_op_0(i_var, arg, parameter, J, taylor);
 			break;
 			// -------------------------------------------------
 
 			case SubpvOp:
 			CPPAD_ASSERT_UNKNOWN( size_t(arg[0]) < num_par );
-			forward_subpv_op_0(i_var, arg, parameter, J, Taylor);
+			forward_subpv_op_0(i_var, arg, parameter, J, taylor);
 			break;
 			// -------------------------------------------------
 
 			case SubvpOp:
 			CPPAD_ASSERT_UNKNOWN( size_t(arg[1]) < num_par );
-			forward_subvp_op_0(i_var, arg, parameter, J, Taylor);
+			forward_subvp_op_0(i_var, arg, parameter, J, taylor);
 			break;
 			// -------------------------------------------------
 
 			case TanOp:
 			// tan(x)^2, tan(x)
 			CPPAD_ASSERT_UNKNOWN( i_var < numvar  );
-			forward_tan_op_0(i_var, arg[0], J, Taylor);
+			forward_tan_op_0(i_var, arg[0], J, taylor);
 			break;
 			// -------------------------------------------------
 
 			case TanhOp:
 			// tanh(x)^2, tanh(x)
 			CPPAD_ASSERT_UNKNOWN( i_var < numvar  );
-			forward_tanh_op_0(i_var, arg[0], J, Taylor);
+			forward_tanh_op_0(i_var, arg[0], J, taylor);
 			break;
 			// -------------------------------------------------
 
@@ -626,7 +626,7 @@ size_t forward0sweep(
 			CPPAD_ASSERT_UNKNOWN( user_state == user_arg );
 			CPPAD_ASSERT_UNKNOWN( user_j < user_n );
 			CPPAD_ASSERT_UNKNOWN( size_t(arg[0]) <= i_var );
-			user_tx[user_j++] = Taylor[ arg[0] * J + 0 ];
+			user_tx[user_j++] = taylor[ arg[0] * J + 0 ];
 			if( user_j == user_n )
 			{	// call users function for this operation
 				user_atom->set_id(user_id);
@@ -650,7 +650,7 @@ size_t forward0sweep(
 			// variable result in an atomic operation sequence
 			CPPAD_ASSERT_UNKNOWN( user_state == user_ret );
 			CPPAD_ASSERT_UNKNOWN( user_i < user_m );
-			Taylor[ i_var * J + 0 ] = user_ty[user_i++];
+			taylor[ i_var * J + 0 ] = user_ty[user_i++];
 			if( user_i == user_m )
 				user_state = user_end;
 			break;
@@ -662,7 +662,7 @@ size_t forward0sweep(
 # if CPPAD_FORWARD0SWEEP_TRACE
 		size_t       d      = 0;
 		size_t       i_tmp  = i_var;
-		Base*        Z_tmp  = Taylor + i_var * J;
+		Base*        Z_tmp  = taylor + i_var * J;
 
 		printOp(
 			std::cout, 
