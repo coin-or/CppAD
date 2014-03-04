@@ -44,7 +44,7 @@ private:
 	size_t    num_vecad_vec_rec_;
 
 	/// The VecAD indices in the recording.
-	pod_vector<addr_t> vec_ind_rec_;
+	pod_vector<addr_t> vecad_ind_rec_;
 
 	/// The operation argument indices in the recording
 	pod_vector<addr_t> op_arg_rec_;
@@ -63,7 +63,7 @@ public:
 	player(void) : 
 	num_var_rec_(0)                                      ,
 	op_rec_( std::numeric_limits<addr_t>::max() )        ,
-	vec_ind_rec_( std::numeric_limits<addr_t>::max() ) ,
+	vecad_ind_rec_( std::numeric_limits<addr_t>::max() ) ,
 	op_arg_rec_( std::numeric_limits<addr_t>::max() )    ,
 	par_rec_( std::numeric_limits<addr_t>::max() )       ,
 	text_rec_( std::numeric_limits<addr_t>::max() )
@@ -88,30 +88,30 @@ public:
 	{	size_t i;
 
 		// Var
-		num_var_rec_        = rec.num_rec_var_;
+		num_var_rec_        = rec.num_var_rec_;
 
 		// Op
-		op_rec_.swap(rec.rec_op_);
+		op_rec_.swap(rec.op_rec_);
 
 		// VecInd
-		vec_ind_rec_.swap(rec.rec_vecad_ind_);
+		vecad_ind_rec_.swap(rec.vecad_ind_rec_);
 
 		// Arg
-		op_arg_rec_.swap(rec.rec_op_arg_);
+		op_arg_rec_.swap(rec.op_arg_rec_);
 
 		// Par
-		par_rec_.swap(rec.rec_par_);
+		par_rec_.swap(rec.par_rec_);
 
 		// Txt
-		text_rec_.swap(rec.rec_text_);
+		text_rec_.swap(rec.text_rec_);
 
 		// set the number of VecAD vectors
 		num_vecad_vec_rec_ = 0;
-		for(i = 0; i < vec_ind_rec_.size(); i += vec_ind_rec_[i] + 1)
+		for(i = 0; i < vecad_ind_rec_.size(); i += vecad_ind_rec_[i] + 1)
 			num_vecad_vec_rec_++;
-		// vec_ind_rec_ contains size of each VecAD followed by
+		// vecad_ind_rec_ contains size of each VecAD followed by
 		// the parameter indices used to iniialize it.
-		CPPAD_ASSERT_UNKNOWN( i == vec_ind_rec_.size() );
+		CPPAD_ASSERT_UNKNOWN( i == vecad_ind_rec_.size() );
 	}
 
 	/*!  
@@ -130,7 +130,7 @@ public:
 
 		// VecInd
 		num_vecad_vec_rec_  = play.num_vecad_vec_rec_;
-		vec_ind_rec_      = play.vec_ind_rec_;
+		vecad_ind_rec_      = play.vecad_ind_rec_;
 
 		// Arg
 		op_arg_rec_         = play.op_arg_rec_;
@@ -151,7 +151,7 @@ public:
 		num_vecad_vec_rec_ = 0;
 
 		op_rec_.erase();
-		vec_ind_rec_.erase();
+		vecad_ind_rec_.erase();
 		op_arg_rec_.erase();
 		par_rec_.erase();
 		text_rec_.erase();
@@ -182,7 +182,7 @@ public:
 	the index of the VecAD index in recording
 	*/
 	size_t GetVecInd (size_t i) const
-	{	return vec_ind_rec_[i]; }
+	{	return vecad_ind_rec_[i]; }
 
 	/*! 
 	\brief 
@@ -233,7 +233,7 @@ public:
 
 	/// Fetch number of VecAD indices in the recording.
 	size_t num_vec_ind_rec(void) const
-	{	return vec_ind_rec_.size(); }
+	{	return vecad_ind_rec_.size(); }
 
 	/// Fetch number of VecAD vectors in the recording
 	size_t num_vecad_vec_rec(void) const
@@ -258,7 +258,7 @@ public:
 		     + op_arg_rec_.size()    * sizeof(addr_t)
 		     + par_rec_.size()       * sizeof(Base)
 		     + text_rec_.size()      * sizeof(char)
-		     + vec_ind_rec_.size() * sizeof(addr_t)
+		     + vecad_ind_rec_.size() * sizeof(addr_t)
 		;
 	}
 
