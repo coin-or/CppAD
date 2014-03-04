@@ -540,7 +540,8 @@ public:
 			offset_ = 
 			AD<Base>::tape_ptr(x.tape_id_)->AddVec(length_, data_);
 
-			// advance pointer by one so is always > 0
+			// Advance pointer by one so starts at first component of this 
+			// vector; i.e., skip lenght at begining (so is always > 0) 
 			offset_++; 
 
 			// tape id corresponding to this offest
