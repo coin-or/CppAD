@@ -71,7 +71,7 @@ $index cppad, speed test$$
 $index speed, test cppad$$
 $index test, cppad speed$$
 
-$section Speed Testing Main Program$$
+$section Speed Testing a C++ Operator Overloading AD Package$$
 
 $head Syntax$$
 $codei%speed/%package%/%package% %test% %seed% %option_list%$$
@@ -234,8 +234,9 @@ The other tests do not use sparsity patterns and so they return false
 if this option is chosen.
 
 $head Correctness Results$$
-An output line of the following form:
+One, but not both, of the following two output lines
 $codei%
+	%package%_%test%_%optionlist%_available = false
 	%package%_%test%_%optionlist%_ok = %flag%
 %$$
 is generated for each correctness test where
@@ -250,8 +251,8 @@ For each speed test, corresponds to three lines of the
 following form are generated:
 $codei%
 	%package%_%test%_%optionlist%_ok   = %flag%
-	%package%_%test%_%optionlist%_size = [ %size_1%, %...%, %size_n% ]
-	%package%_%test%_%optionlist%_rate = [ %rate_1%, %...%, %rate_n% ]
+	%package%_%test%_size = [ %size_1%, %...%, %size_n% ]
+	%package%_%test%_rate = [ %rate_1%, %...%, %rate_n% ]
 %$$
 The values $icode package$$, $icode test$$, $icode optionlist$$,
 and $icode flag$$ are as in the correctness results above.
@@ -259,6 +260,17 @@ The values $icode size_1$$, ..., $icode size_n$$ are the
 size arguments used for the corresponding tests.
 The values $icode rate_1$$, ..., $icode rate_n$$ are the number of times
 per second that the corresponding size problem executed.
+
+$subhead sparse_jacobian$$
+The $cref/sparse_jacobian/link_sparse_jacobian/$$ test has an extra output
+line with the following form
+$codei%
+	%package%_sparse_jacobian_n_sweep = [ %n_sweep_1%, %...%, %n_sweep_n% ]
+%$$
+The values $icode n_sweep_1$$, ..., $icode n_sweep_n$$ are the number of 
+sweeps (colors) used for each sparse Jacobian calculation; see
+$cref/n_sweep/sparse_jacobian/n_sweep/$$.
+
 
 $children%
 	speed/src/link_det_lu.cpp%
