@@ -2,7 +2,7 @@
 # ifndef CPPAD_COND_OP_INCLUDED
 # define CPPAD_COND_OP_INCLUDED
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-13 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-14 Bradley M. Bell
 
 CppAD is distributed under multiple licenses. This distribution is under
 the terms of the 
@@ -269,32 +269,32 @@ number of columns in the matrix containing the Taylor coefficients.
 \li For j = 0, 1, 2, 3 if y_j is a variable, arg[2+j] < iz.
 <!-- end conditional_exp_op -->
 
-\param q
+\param p
 is the lowest order of the Taylor coefficient of z that we are computing.
 
-\param p
+\param q
 is the highest order of the Taylor coefficient of z that we are computing.
 
 \param taylor
 \b Input:
-For j = 0, 1, 2, 3 and k = 0 , ... , p,
+For j = 0, 1, 2, 3 and k = 0 , ... , q,
 if y_j is a variable then
 <code>taylor [ arg[2+j] * nc_taylor + k ]</code>
 is the k-th order Taylor coefficient corresponding to y_j.
 \n
 \b Input: <code>taylor [ i_z * nc_taylor + k ]</code> 
-for k = 0 , ... , q-1,
+for k = 0 , ... , p-1,
 is the k-th order Taylor coefficient corresponding to z.
 \n
 \b Output: <code>taylor [ i_z * nc_taylor + k ]</code>
-for k = q , ... , p, 
+for k = p , ... , q, 
 is the k-th order Taylor coefficient corresponding to z. 
 
 */
 template <class Base>
 inline void forward_cond_op(
-	size_t         q           ,
 	size_t         p           ,
+	size_t         q           ,
 	size_t         i_z         ,
 	const addr_t*  arg         , 
 	size_t         num_par     ,
@@ -326,7 +326,7 @@ inline void forward_cond_op(
 	{	CPPAD_ASSERT_UNKNOWN( size_t(arg[3]) < num_par );
 		y_1 = parameter[ arg[3] ];
 	}
-	if( q == 0 )
+	if( p == 0 )
 	{	if( arg[1] & 4 )
 		{	CPPAD_ASSERT_UNKNOWN( size_t(arg[4]) < i_z );
 			y_2 = taylor[ arg[4] * nc_taylor + 0 ];
@@ -350,9 +350,9 @@ inline void forward_cond_op(
 			y_2,
 			y_3
 		);
-		q++;
+		p++;
 	}
-	for(size_t d = q; d <= p; d++)
+	for(size_t d = p; d <= q; d++)
 	{	if( arg[1] & 4 )
 		{	CPPAD_ASSERT_UNKNOWN( size_t(arg[4]) < i_z );
 			y_2 = taylor[ arg[4] * nc_taylor + d];

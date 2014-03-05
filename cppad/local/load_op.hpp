@@ -3,7 +3,7 @@
 # define CPPAD_LOAD_OP_INCLUDED
 
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-13 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-14 Bradley M. Bell
 
 CppAD is distributed under multiple licenses. This distribution is under
 the terms of the 
@@ -333,10 +333,10 @@ using AD< \a Base > and computations by this routine are done using type
 is the code corresponding to this operator; i.e., LdpOp or LdvOp
 (only used for error checking).
 
-\param q
+\param p
 is the lowest order of the Taylor coefficient that we are computing.
 
-\param p
+\param q
 is the highest order of the Taylor coefficient that we are computing.
 
 \param i_z
@@ -355,25 +355,25 @@ number of columns in the matrix containing the Taylor coefficients.
 \param taylor
 \b Input: if y[x] is a variable, 
 <code>taylor[ arg[2] * nc_taylor + k ]</code>
-for k = 0 , ... , p,
+for k = 0 , ... , q,
 is the k-order Taylor coefficient corresponding to y[x].
 \n
 \b Output: <code>taylor[ i_z * nc_taylor + d ]</code>
-for k = q , ... , p,
+for k = p , ... , q,
 is the k-order Taylor coefficient for the variable z.
 
 \par Checked Assertions 
 \li NumArg(op) == 3
 \li NumRes(op) == 1
-\li p < nc_taylor
-\li 0 < q <= p 
+\li q < nc_taylor
+\li 0 < p <= q 
 \li size_t(arg[2]) < i_z
 */
 template <class Base>
 inline void forward_load_op(
 	OpCode         op          ,
-	size_t         q           ,
 	size_t         p           ,
+	size_t         q           ,
 	size_t         i_z         ,
 	const addr_t*  arg         , 
 	size_t         nc_taylor   ,
@@ -382,18 +382,18 @@ inline void forward_load_op(
 
 	CPPAD_ASSERT_UNKNOWN( NumArg(op) == 3 );
 	CPPAD_ASSERT_UNKNOWN( NumRes(op) == 1 );
-	CPPAD_ASSERT_UNKNOWN( p < nc_taylor );
-	CPPAD_ASSERT_UNKNOWN( 0 < q && q <= p );
+	CPPAD_ASSERT_UNKNOWN( q < nc_taylor );
+	CPPAD_ASSERT_UNKNOWN( 0 < p && p <= q );
 	CPPAD_ASSERT_UNKNOWN( size_t(arg[2]) < i_z );
 
 	Base* z      = taylor + i_z * nc_taylor;
 	if( arg[2] > 0 )
 	{	Base* y_x = taylor + arg[2] * nc_taylor;
-		for(size_t d = q; d <= p; d++)
+		for(size_t d = p; d <= q; d++)
 			z[d] = y_x[d];
 	}
 	else
-	{	for(size_t d = q; d <= p; d++)
+	{	for(size_t d = p; d <= q; d++)
 			z[d] = Base(0);
 	}
 }

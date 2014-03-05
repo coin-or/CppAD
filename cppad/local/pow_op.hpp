@@ -3,7 +3,7 @@
 # define CPPAD_POW_OP_INCLUDED
 
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-13 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-14 Bradley M. Bell
 
 CppAD is distributed under multiple licenses. This distribution is under
 the terms of the 
@@ -34,8 +34,8 @@ and the argument \a parameter is not used.
 
 template <class Base>
 inline void forward_powvv_op(
-	size_t        q           , 
 	size_t        p           , 
+	size_t        q           , 
 	size_t        i_z         ,
 	const addr_t* arg         ,
 	const Base*   parameter   ,
@@ -50,31 +50,31 @@ inline void forward_powvv_op(
 	CPPAD_ASSERT_UNKNOWN( NumRes(PowvvOp) == 3 );
 	CPPAD_ASSERT_UNKNOWN( size_t(arg[0]) < i_z );
 	CPPAD_ASSERT_UNKNOWN( size_t(arg[1]) < i_z );
-	CPPAD_ASSERT_UNKNOWN( p < nc_taylor );
-	CPPAD_ASSERT_UNKNOWN( q <= p );
+	CPPAD_ASSERT_UNKNOWN( q < nc_taylor );
+	CPPAD_ASSERT_UNKNOWN( p <= q );
 
 	// z_0 = log(x)
-	forward_log_op(q, p, i_z, arg[0], nc_taylor, taylor);
+	forward_log_op(p, q, i_z, arg[0], nc_taylor, taylor);
 
 	// z_1 = z_0 * y
 	addr_t adr[2];
 	adr[0] = i_z;
 	adr[1] = arg[1];
-	forward_mulvv_op(q, p, i_z+1, adr, parameter, nc_taylor, taylor);
+	forward_mulvv_op(p, q, i_z+1, adr, parameter, nc_taylor, taylor);
 
 	// z_2 = exp(z_1)
 	// final result for zero order case is exactly the same as for Base
-	if( q == 0 )
+	if( p == 0 )
 	{	// Taylor coefficients corresponding to arguments and result
 		Base* x   = taylor + arg[0]  * nc_taylor;
 		Base* y   = taylor + arg[1]  * nc_taylor;
 		Base* z_2 = taylor + (i_z+2) * nc_taylor;
 
 		z_2[0] = pow(x[0], y[0]);
-		q++;
+		p++;
 	}
-	if( q <= p )
-		forward_exp_op(q, p, i_z+2, i_z+1, nc_taylor, taylor);
+	if( p <= q )
+		forward_exp_op(p, q, i_z+2, i_z+1, nc_taylor, taylor);
 }
 
 /*!
@@ -192,8 +192,8 @@ this operations is for the case where x is a parameter and y is a variable.
 
 template <class Base>
 inline void forward_powpv_op(
-	size_t        q           , 
 	size_t        p           , 
+	size_t        q           , 
 	size_t        i_z         ,
 	const addr_t* arg         ,
 	const Base*   parameter   ,
@@ -207,8 +207,8 @@ inline void forward_powpv_op(
 	CPPAD_ASSERT_UNKNOWN( NumArg(PowpvOp) == 2 );
 	CPPAD_ASSERT_UNKNOWN( NumRes(PowpvOp) == 3 );
 	CPPAD_ASSERT_UNKNOWN( size_t(arg[1]) < i_z );
-	CPPAD_ASSERT_UNKNOWN( p < nc_taylor );
-	CPPAD_ASSERT_UNKNOWN( q <= p );
+	CPPAD_ASSERT_UNKNOWN( q < nc_taylor );
+	CPPAD_ASSERT_UNKNOWN( p <= q );
 
 	// Taylor coefficients corresponding to arguments and result
 	Base* z_0 = taylor + i_z    * nc_taylor;
@@ -216,7 +216,7 @@ inline void forward_powpv_op(
 	// z_0 = log(x)
 	Base x    = parameter[ arg[0] ];
 	size_t d;
-	for(d = q; d <= p; d++)
+	for(d = p; d <= q; d++)
 	{	if( d == 0 )
 			z_0[d] = log(x);
 		else	z_0[d] = Base(0);
@@ -228,18 +228,18 @@ inline void forward_powpv_op(
 	adr[1] = arg[1];          // variable index of y in taylor
 
 	// use taylor both for parameter and variable values (trick)
-	forward_mulpv_op(q, p, i_z+1, adr, taylor, nc_taylor, taylor);
+	forward_mulpv_op(p, q, i_z+1, adr, taylor, nc_taylor, taylor);
 
 	// z_2 = exp(z_1)
 	// zero order case exactly same as Base type operation
-	if( q == 0 )
+	if( p == 0 )
 	{	Base* y   = taylor + arg[1]  * nc_taylor;
 		Base* z_2 = taylor + (i_z+2) * nc_taylor;
 		z_2[0] = pow(x, y[0]);
-		q++;
+		p++;
 	}
-	if( q <= p )
-		forward_exp_op(q, p, i_z+2, i_z+1, nc_taylor, taylor);
+	if( p <= q )
+		forward_exp_op(p, q, i_z+2, i_z+1, nc_taylor, taylor);
 }
 /*!
 Compute zero order forward mode Taylor coefficient for result of op = PowpvOp.
@@ -358,8 +358,8 @@ this operations is for the case where x is a variable and y is a parameter.
 
 template <class Base>
 inline void forward_powvp_op(
-	size_t        q           , 
 	size_t        p           , 
+	size_t        q           , 
 	size_t        i_z         ,
 	const addr_t* arg         ,
 	const Base*   parameter   ,
@@ -373,29 +373,29 @@ inline void forward_powvp_op(
 	CPPAD_ASSERT_UNKNOWN( NumArg(PowvpOp) == 2 );
 	CPPAD_ASSERT_UNKNOWN( NumRes(PowvpOp) == 3 );
 	CPPAD_ASSERT_UNKNOWN( size_t(arg[0]) < i_z );
-	CPPAD_ASSERT_UNKNOWN( p < nc_taylor );
-	CPPAD_ASSERT_UNKNOWN( q <= p );
+	CPPAD_ASSERT_UNKNOWN( q < nc_taylor );
+	CPPAD_ASSERT_UNKNOWN( p <= q );
 
 	// z_0 = log(x)
-	forward_log_op(q, p, i_z, arg[0], nc_taylor, taylor);
+	forward_log_op(p, q, i_z, arg[0], nc_taylor, taylor);
 
 	// z_1 = y * z_0
 	addr_t adr[2];
 	adr[0] = arg[1];
 	adr[1] = i_z;
-	forward_mulpv_op(q, p, i_z+1, adr, parameter, nc_taylor, taylor);
+	forward_mulpv_op(p, q, i_z+1, adr, parameter, nc_taylor, taylor);
 
 	// z_2 = exp(z_1)
 	// zero order case exactly same as Base type operation
-	if( q == 0 )
+	if( p == 0 )
 	{	Base* z_2 = taylor + (i_z+2) * nc_taylor;
 		Base* x   = taylor + arg[0] * nc_taylor;
 		Base  y   = parameter[ arg[1] ];
 		z_2[0]  = pow(x[0], y);
-		q++;
+		p++;
 	}
-	if( q <= p )
-		forward_exp_op(q, p, i_z+2, i_z+1, nc_taylor, taylor);
+	if( p <= q )
+		forward_exp_op(p, q, i_z+2, i_z+1, nc_taylor, taylor);
 }
 
 /*!

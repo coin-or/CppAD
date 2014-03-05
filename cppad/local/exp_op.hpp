@@ -3,7 +3,7 @@
 # define CPPAD_EXP_OP_INCLUDED
 
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-13 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-14 Bradley M. Bell
 
 CppAD is distributed under multiple licenses. This distribution is under
 the terms of the 
@@ -35,8 +35,8 @@ The C++ source code corresponding to this operation is
 */
 template <class Base>
 inline void forward_exp_op(
-	size_t q           ,
 	size_t p           ,
+	size_t q           ,
 	size_t i_z         ,
 	size_t i_x         ,
 	size_t nc_taylor   , 
@@ -46,19 +46,19 @@ inline void forward_exp_op(
 	CPPAD_ASSERT_UNKNOWN( NumArg(ExpOp) == 1 );
 	CPPAD_ASSERT_UNKNOWN( NumRes(ExpOp) == 1 );
 	CPPAD_ASSERT_UNKNOWN( i_x < i_z );
-	CPPAD_ASSERT_UNKNOWN( p < nc_taylor );
-	CPPAD_ASSERT_UNKNOWN( q <= p );
+	CPPAD_ASSERT_UNKNOWN( q < nc_taylor );
+	CPPAD_ASSERT_UNKNOWN( p <= q );
 
 	// Taylor coefficients corresponding to argument and result
 	Base* x = taylor + i_x * nc_taylor;
 	Base* z = taylor + i_z * nc_taylor;
 
 	size_t k;
-	if( q == 0 )
+	if( p == 0 )
 	{	z[0] = exp( x[0] );
-		q++;
+		p++;
 	}
-	for(size_t j = q; j <= p; j++)
+	for(size_t j = p; j <= q; j++)
 	{
 		z[j] = x[1] * z[j-1];
 		for(k = 2; k <= j; k++)
