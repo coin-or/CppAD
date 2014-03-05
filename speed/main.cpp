@@ -84,11 +84,19 @@ $head package$$
 
 $subhead AD Package$$
 The command line argument
-$icode package$$ specifies one of the following AD packages:
+$icode package$$ specifies one of the AD package.
+The CppAD distribution comes with support for the following packages:
 $cref/adolc/speed_adolc/$$,
 $cref/cppad/speed_cppad/$$, 
 $cref/fadbad/speed_fadbad/$$, 
 $cref/sacado/speed_sacado/$$.
+You can extend this program to include other package.
+Such an extension need not include all the tests. 
+For example, 
+$cref link_sparse_hessian$$ just returns $code false$$ for the
+$cref/fadbad/fadbad_sparse_hessian.cpp/$$ and
+$cref/sacado/sacado_sparse_hessian.cpp/$$ packages.
+
 
 $subhead double$$
 The value
@@ -117,6 +125,8 @@ $cref/ode/link_ode/$$,
 $cref/poly/link_poly/$$,
 $cref/sparse_hessian/link_sparse_hessian/$$,
 $cref/sparse_jacobian/link_sparse_jacobian/$$.
+You can experiment with changing the implementation of a
+particular test for a particular package.
 
 $subhead correct$$
 If $icode test$$ is equal to $code correct$$,
@@ -284,8 +294,9 @@ $children%
 %$$
 
 $head Link Functions$$
-Each speed test defines it's own version of one of the following 
-functions that link the speed test to the main program described above:
+Each $cref/package/speed_main/package/$$
+defines it's own version of one of the link functions listed below.
+Each of these functions links this main program to the corresponding test:
 $table
 $rref link_det_lu$$
 $rref link_det_minor$$
