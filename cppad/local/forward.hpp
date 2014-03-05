@@ -52,17 +52,17 @@ recording of operations used the type \c AD<Base>.
 \tparam Vector
 is a Simple Vector class with eleements of type \c Base.
 
-\param p
+\param q
 is the hightest order for this forward mode computation; i.e., 
-after this calculation there will be <code>p+1</code>
+after this calculation there will be <code>q+1</code>
 Taylor coefficients per variables.
 
-\param x_p
+\param x_q
 contains Taylor coefficients for the independent variables.
-The size of \a x_p must either be \c n or <code>n*(p+1)</code>,
-We define <code>q = p + 1 - x_p.size() / n</code>. 
+The size of \a x_q must either be \c n or <code>n*(q+1)</code>,
+We define <code>p = q + 1 - x_q.size() / n</code>. 
 The Taylor coefficients of order k, for
-k = q, ... , p are calculated.
+k = p, ... , q are calculated.
 
 \param s
 Is the stream where output corresponding to \c PriOp operations will written.
@@ -71,8 +71,8 @@ Is the stream where output corresponding to \c PriOp operations will written.
 template <typename Base>
 template <typename Vector>
 Vector ADFun<Base>::Forward(
-	size_t p                    , 
-	const Vector& x_p           , 
+	size_t q                    , 
+	const Vector& x_q           , 
 	std::ostream& s             )
 {	// temporary indices
 	size_t i, j, k;
@@ -87,22 +87,22 @@ Vector ADFun<Base>::Forward(
 	CheckSimpleVector<Base, Vector>();
 
 	CPPAD_ASSERT_KNOWN(
-		size_t(x_p.size()) == n || size_t(x_p.size()) == n*(p+1),
-		"Forward: x_p.size() is not equal n or n*(p+1)"
+		size_t(x_q.size()) == n || size_t(x_q.size()) == n*(q+1),
+		"Forward: x_q.size() is not equal n or n*(q+1)"
 	);
-	size_t n_order = size_t(x_p.size()) / n;
+	size_t n_order = size_t(x_q.size()) / n;
 	CPPAD_ASSERT_KNOWN(
-		p <= taylor_per_var_ || n_order == p + 1,
+		q <= taylor_per_var_ || n_order == q + 1,
 		"The number of Taylor coefficient currently stored in this ADFun\n"
-		"is less than p and x_p.size() != n*(p+1)."
+		"is less than q and x_q.size() != n*(q+1)."
 	);  
 
 	// check if the taylor_ matrix needs more columns
-	if( taylor_col_dim_ <= p )
-		capacity_taylor(p + 1);
-	CPPAD_ASSERT_UNKNOWN( taylor_col_dim_ > p );
+	if( taylor_col_dim_ <= q )
+		capacity_taylor(q + 1);
+	CPPAD_ASSERT_UNKNOWN( taylor_col_dim_ > q );
 
-	// set the p-th order taylor_ coefficients for independent variables
+	// set the q-th order taylor_ coefficients for independent variables
 	for(j = 0; j < n; j++)
 	{	CPPAD_ASSERT_UNKNOWN( ind_taddr_[j] < total_num_var_ );
 
@@ -111,16 +111,16 @@ Vector ADFun<Base>::Forward(
 
 		// It is also variable taddr for j-th independent variable
 		if( n_order ==  1 )
-			taylor_[ind_taddr_[j] * taylor_col_dim_ + p] = x_p[j];
+			taylor_[ind_taddr_[j] * taylor_col_dim_ + q] = x_q[j];
 		else for(k = 0; k < n_order; k++)
 			taylor_[ind_taddr_[j] * taylor_col_dim_ + k] = 
-				x_p[j * n_order + k];
+				x_q[j * n_order + k];
 	}
 
 	// evaluate the derivatives
 	CPPAD_ASSERT_UNKNOWN( cskip_op_.size() == play_.num_op_rec() );
-	size_t q = (p + 1) - n_order;
-	if( p == 0 )
+	size_t p = (q + 1) - n_order;
+	if( q == 0 )
 	{
 # if CPPAD_USE_FORWARD0SWEEP
 		compare_change_ = forward0sweep(s, true,
@@ -128,77 +128,77 @@ Vector ADFun<Base>::Forward(
 			cskip_op_.data()
 		);
 # else
-		compare_change_ = forward_sweep(s, true, q,
-			p, n, total_num_var_, &play_, taylor_col_dim_, taylor_.data(),
+		compare_change_ = forward_sweep(s, true, p,
+			q, n, total_num_var_, &play_, taylor_col_dim_, taylor_.data(),
 			cskip_op_.data()
 		);
 # endif
 	}
-	else if( q == 0 )
-	{	compare_change_ = forward_sweep(s, true, q,
-			p, n, total_num_var_, &play_, taylor_col_dim_, taylor_.data(),
+	else if( p == 0 )
+	{	compare_change_ = forward_sweep(s, true, p,
+			q, n, total_num_var_, &play_, taylor_col_dim_, taylor_.data(),
 			cskip_op_.data()
 		);
 	}
 	else
-	{	forward_sweep(s, true, q,
-			p, n, total_num_var_, &play_, taylor_col_dim_, taylor_.data(),
+	{	forward_sweep(s, true, p,
+			q, n, total_num_var_, &play_, taylor_col_dim_, taylor_.data(),
 			cskip_op_.data()
 		);
 	}
 
 	// return Taylor coefficients for dependent variables
-	Vector y_p;
+	Vector y_q;
 	if( n_order == 1 )
-	{	y_p.resize(m);
+	{	y_q.resize(m);
 		for(i = 0; i < m; i++)
 		{	CPPAD_ASSERT_UNKNOWN( dep_taddr_[i] < total_num_var_ );
-			y_p[i] = taylor_[dep_taddr_[i] * taylor_col_dim_ + p];
+			y_q[i] = taylor_[dep_taddr_[i] * taylor_col_dim_ + q];
 		}
 	}
 	else
-	{	y_p.resize(m * n_order );
+	{	y_q.resize(m * n_order );
 		for(i = 0; i < m; i++)	
 		{	for(k = 0; k < n_order; k++)
-				y_p[ i * n_order + k] = 
+				y_q[ i * n_order + k] = 
 					taylor_[ dep_taddr_[i] * taylor_col_dim_ + k ]; 
 		}
 	}
 # ifndef NDEBUG
 	if( check_for_nan_ )
 	{	bool ok = true;
-		if( p == 0 && n_order == 1 )
-			ok = ! hasnan(y_p);
+		if( q == 0 && n_order == 1 )
+			ok = ! hasnan(y_q);
 		else if( n_order != 1 )
 		{	for(i = 0; i < m; i++)
 			// on MS Visual Studio 2012, CppAD required in front of isnan ?
-			ok &= ! CppAD::isnan( y_p[ i * n_order + 0 ] );
+			ok &= ! CppAD::isnan( y_q[ i * n_order + 0 ] );
 		} 
 		CPPAD_ASSERT_KNOWN(ok,
-			"y_p = f.Forward(p, x): has a zero order Taylor coefficient "
+			"y_q = f.Forward(q, x): has a zero order Taylor coefficient "
 			"with the value nan."
 		);  
-		if( p != 0 && n_order == 1 )
-			ok = ! hasnan(y_p);
+		if( q != 0 && n_order == 1 )
+			ok = ! hasnan(y_q);
 		else if( n_order != 1 )
 		{	for(i = 0; i < m; i++)
 			{	for(k = 1; k < n_order; k++)
 					// Studio 2012, CppAD required in front of isnan ?
-					ok &= ! CppAD::isnan( y_p[ i * n_order + k ] );
+					ok &= ! CppAD::isnan( y_q[ i * n_order + k ] );
 			}
 		}
 		CPPAD_ASSERT_KNOWN(ok,
-		"y_p = f.Forward(p, x): has a non-zero order Taylor coefficient\n"
+		"y_q = f.Forward(q, x): has a non-zero order Taylor coefficient\n"
 		"with the value nan (but zero order coefficients are not nan)."
 		);
 	}
 # endif
 
 
-	// now we have p + 1  taylor_ coefficients per variable
-	taylor_per_var_ = p + 1;
+	// now we have q + 1  taylor_ coefficients per variable
+	taylor_per_var_ = q + 1;
 
-	return y_p;
+	return y_q;
 }
 
 /*! \} */
