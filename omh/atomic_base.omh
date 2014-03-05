@@ -1,6 +1,6 @@
 /* $Id$ */
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-13 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-14 Bradley M. Bell
 
 CppAD is distributed under multiple licenses. This distribution is under
 the terms of the 
@@ -40,8 +40,8 @@ $head Syntax$$
 $codei%
 %atomic_user% %afun%(%n%, %m%, %use_set%, %user_arg_list%)
 %afun%(%ax%, %ay%)
-%ok% = %afun%.forward(%q%, %p%, %vx%, %vy%, %tx%, %ty%)
-%ok% = %afun%.reverse(%p%, %tx%, %ty%, %px%, %py%)
+%ok% = %afun%.forward(%p%, %q%, %vx%, %vy%, %tx%, %ty%)
+%ok% = %afun%.reverse(%q%, %tx%, %ty%, %px%, %py%)
 %ok% = %afun%.for_sparse_jac(%q%, %r%, %s%)
 %ok% = %afun%.rev_sparse_jac(%q%, %r%, %s%)
 %ok% = %afun%.rev_sparse_hes(%vx%, %s%, %t%, %q%, %r%, %u%, %v%)
@@ -70,11 +70,11 @@ $cref/rev_sparse_hes/atomic_rev_sparse_hes/$$.
 These virtual functions have a default implementation
 that returns $icode%ok% == false%$$.
 The $code forward$$ function, 
-for the case $icode%p% == 0%$$, must be implemented.
+for the case $icode%q% == 0%$$, must be implemented.
 Otherwise, only those functions
 required by the your calculations need to be implemented. 
 For example, 
-$icode forward$$ for the case $icode%p% == 2%$$ can just return
+$icode forward$$ for the case $icode%q% == 2%$$ can just return
 $icode%ok% == false%$$ unless you require
 forward mode calculation of second derivatives.
 

@@ -1,6 +1,6 @@
 // $Id$
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-13 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-14 Bradley M. Bell
 
 CppAD is distributed under multiple licenses. This distribution is under
 the terms of the 
@@ -131,18 +131,18 @@ namespace { // Begin empty namespace
 		}
 		// make sure r_ has proper lower order Taylor coefficients stored
 		// then compute ty[k]
-		for(size_t p = 0; p <= k; p++)
+		for(size_t q = 0; q <= k; q++)
 		{	for(j = 0; j < n; j++)
-				xp[j] = tx[j * (k+1) + p];
-			yp    = r_ptr_->Forward(p, xp);
-			if( p == k )
+				xp[j] = tx[j * (k+1) + q];
+			yp    = r_ptr_->Forward(q, xp);
+			if( q == k )
 			{	for(i = 0; i < m; i++)
-					ty[i * (k+1) + p] = yp[i];
+					ty[i * (k+1) + q] = yp[i];
 			}
 # ifndef NDEBUG
 			else
 			{	for(i = 0; i < m; i++)
-					assert( ty[i * (k+1) + p] == yp[i] );
+					assert( ty[i * (k+1) + q] == yp[i] );
 			}
 # endif
 		}
@@ -170,27 +170,27 @@ namespace { // Begin empty namespace
 		vector<double> xp(n), w( (k+1) * m ), dw( (k+1) * n );
 
 		// make sure r_ has proper forward mode coefficients 
-		size_t i, j, p;
-		for(p = 0; p <= k; p++)
+		size_t i, j, q;
+		for(q = 0; q <= k; q++)
 		{	for(j = 0; j < n; j++)
-				xp[j] = tx[j * (k+1) + p];
+				xp[j] = tx[j * (k+1) + q];
 # ifdef NDEBUG
-			r_ptr_->Forward(p, xp);
+			r_ptr_->Forward(q, xp);
 # else
 			vector<double> yp(m);
-			yp = r_ptr_->Forward(p, xp);
+			yp = r_ptr_->Forward(q, xp);
 			for(i = 0; i < m; i++)
-				assert( ty[i * (k+1) + p] == yp[i] );
+				assert( ty[i * (k+1) + q] == yp[i] );
 # endif
 		}
 		for(i = 0; i < m; i++)
-		{	for(p = 0; p <=k; p++)
-				w[ i * (k+1) + p] = py[ i * (k+1) + p];
+		{	for(q = 0; q <=k; q++)
+				w[ i * (k+1) + q] = py[ i * (k+1) + q];
 		}
 		dw = r_ptr_->Reverse(k+1, w);
 		for(j = 0; j < n; j++)
-		{	for(p = 0; p <=k; p++)
-				px[ j * (k+1) + p] = dw[ j * (k+1) + p];
+		{	for(q = 0; q <=k; q++)
+				px[ j * (k+1) + q] = dw[ j * (k+1) + q];
 		}
 		// no longer need the Taylor coefficients in r_ptr_
 		// (have to reconstruct them every time)
@@ -204,7 +204,7 @@ namespace { // Begin empty namespace
 		size_t                               id ,             
 		size_t                                n ,
 		size_t                                m ,
-		size_t                                q ,
+		size_t                                p ,
 		const vector< std::set<size_t> >&     r ,
 		vector< std::set<size_t> >&           s )
 	{	assert( id == 0 );
@@ -215,7 +215,7 @@ namespace { // Begin empty namespace
 		vector< std::set<size_t> > R(n), S(m);
 		for(size_t j = 0; j < n; j++)
 			R[j] = r[j];
-		S = r_ptr_->ForSparseJac(q, R);
+		S = r_ptr_->ForSparseJac(p, R);
 		for(size_t i = 0; i < m; i++)
 			s[i] = S[i];
 
@@ -231,7 +231,7 @@ namespace { // Begin empty namespace
 		size_t                               id ,             
 		size_t                                n ,
 		size_t                                m ,
-		size_t                                q ,
+		size_t                                p ,
 		vector< std::set<size_t> >&           r ,
 		const vector< std::set<size_t> >&     s )
 	{
@@ -240,7 +240,7 @@ namespace { // Begin empty namespace
 		assert( m == 2 );
 		bool ok = true;
 
-		vector< std::set<size_t> > R(q), S(q);
+		vector< std::set<size_t> > R(p), S(p);
 		std::set<size_t>::const_iterator itr;
 		size_t i;
 		// untranspose s
@@ -248,11 +248,11 @@ namespace { // Begin empty namespace
 		{	for(itr = s[i].begin(); itr != s[i].end(); itr++)
 				S[*itr].insert(i);
 		}
-		R = r_ptr_->RevSparseJac(q, S);
+		R = r_ptr_->RevSparseJac(p, S);
 		// transpose r
 		for(i = 0; i < m; i++)
 			r[i].clear();
-		for(i = 0; i < q; i++)
+		for(i = 0; i < p; i++)
 		{	for(itr = R[i].begin(); itr != R[i].end(); itr++)
 				r[*itr].insert(i);
 		}
@@ -264,7 +264,7 @@ namespace { // Begin empty namespace
 		size_t                               id ,             
 		size_t                                n ,
 		size_t                                m ,
-		size_t                                q ,
+		size_t                                p ,
 		const vector< std::set<size_t> >&     r ,
 		const vector<bool>&                   s ,
 		vector<bool>&                         t ,
@@ -287,24 +287,24 @@ namespace { // Begin empty namespace
 		t = r_ptr_->RevSparseJac(1, s);
 
 		// compute sparsity pattern for A(x)^T = U(x)^T * f'(x)
-		vector< std::set<size_t> > Ut(q), At(q);
+		vector< std::set<size_t> > Ut(p), At(p);
 		for(i = 0; i < m; i++)
 		{	for(itr = u[i].begin(); itr != u[i].end(); itr++)
 				Ut[*itr].insert(i);
 		}
-		At = r_ptr_->RevSparseJac(q, Ut);
+		At = r_ptr_->RevSparseJac(p, Ut);
 
 		// compute sparsity pattern for H(x)^T = R^T * (S * F)''(x)
-		vector< std::set<size_t> > R(n), Ht(q);
+		vector< std::set<size_t> > R(n), Ht(p);
 		for(j = 0; j < n; j++)
 			R[j] = r[j];
-		r_ptr_->ForSparseJac(q, R);
-		Ht = r_ptr_->RevSparseHes(q, S);
+		r_ptr_->ForSparseJac(p, R);
+		Ht = r_ptr_->RevSparseHes(p, S);
 
 		// compute sparsity pattern for V(x) = A(x) + H(x)^T
 		for(j = 0; j < n; j++)
 			v[j].clear();
-		for(i = 0; i < q; i++)
+		for(i = 0; i < p; i++)
 		{	for(itr = At[i].begin(); itr != At[i].end(); itr++)
 				v[*itr].insert(i);
 			for(itr = Ht[i].begin(); itr != Ht[i].end(); itr++)
@@ -372,7 +372,7 @@ bool old_usead_2(void)
 	//
 	// zero order forward
 	vector<double> up(n), yp(m);
-	size_t p  = 0;
+	size_t q  = 0;
 	double u0 = 0.5;
 	double u1 = 0.25;
 	double u2 = 0.75;
@@ -380,83 +380,83 @@ bool old_usead_2(void)
 	up[0]     = u0;
 	up[1]     = u1;
 	up[2]     = u2;
-	yp        = f.Forward(p, up);
+	yp        = f.Forward(q, up);
 	check     = u0 + u2;
 	ok       &= NearEqual( yp[0], check,  eps, eps);
 	check     = u1 + u0 * u2 + u2 * u2 / 2.0;
 	ok       &= NearEqual( yp[1], check,  eps, eps);
 	//
 	// forward mode first derivative w.r.t t
-	p         = 1;
+	q         = 1;
 	up[0]     = 0.0;
 	up[1]     = 0.0;
 	up[2]     = 1.0;
-	yp        = f.Forward(p, up);
+	yp        = f.Forward(q, up);
 	check     = 1.0;
 	ok       &= NearEqual( yp[0], check,  eps, eps);
 	check     = u0 + u2;
 	ok       &= NearEqual( yp[1], check,  eps, eps);
 	//
 	// forward mode second order Taylor coefficient w.r.t t
-	p         = 2;
+	q         = 2;
 	up[0]     = 0.0;
 	up[1]     = 0.0;
 	up[2]     = 0.0;
-	yp        = f.Forward(p, up);
+	yp        = f.Forward(q, up);
 	check     = 0.0;
 	ok       &= NearEqual( yp[0], check,  eps, eps);
 	check     = 1.0 / 2.0;
 	ok       &= NearEqual( yp[1], check,  eps, eps);
 	// --------------------------------------------------------------------
 	// reverse mode derivatives of \partial_t y_1 (t)
-	vector<double> w(m * p), dw(n * p);
-	w[0 * p + 0]  = 0.0;
-	w[1 * p + 0]  = 0.0;
-	w[0 * p + 1]  = 0.0;
-	w[1 * p + 1]  = 1.0;
-	dw        = f.Reverse(p, w);
+	vector<double> w(m * q), dw(n * q);
+	w[0 * q + 0]  = 0.0;
+	w[1 * q + 0]  = 0.0;
+	w[0 * q + 1]  = 0.0;
+	w[1 * q + 1]  = 1.0;
+	dw        = f.Reverse(q, w);
 	// derivative of y_1(u) = u_1 + u_0 * u_2 + u_2^2 / 2,  w.r.t. u
 	// is equal deritative of \partial_u2 y_1(u) w.r.t \partial_u2 u
 	check     = u2;
-	ok       &= NearEqual( dw[0 * p + 1], check,  eps, eps);
+	ok       &= NearEqual( dw[0 * q + 1], check,  eps, eps);
 	check     = 1.0;
-	ok       &= NearEqual( dw[1 * p + 1], check,  eps, eps);
+	ok       &= NearEqual( dw[1 * q + 1], check,  eps, eps);
 	check     = u0 + u2;
-	ok       &= NearEqual( dw[2 * p + 1], check,  eps, eps);
+	ok       &= NearEqual( dw[2 * q + 1], check,  eps, eps);
 	// derivative of \partial_t y_1 w.r.t u = u_0 + t,  w.r.t u
 	check     = 1.0;
-	ok       &= NearEqual( dw[0 * p + 0], check,  eps, eps);
+	ok       &= NearEqual( dw[0 * q + 0], check,  eps, eps);
 	check     = 0.0;
-	ok       &= NearEqual( dw[1 * p + 0], check,  eps, eps);
+	ok       &= NearEqual( dw[1 * q + 0], check,  eps, eps);
 	check     = 1.0;
-	ok       &= NearEqual( dw[2 * p + 0], check,  eps, eps);
+	ok       &= NearEqual( dw[2 * q + 0], check,  eps, eps);
 	// --------------------------------------------------------------------
 	// forward mode sparsity pattern for the Jacobian
 	// f_u = [   1, 0,   1 ]
 	//       [ u_2, 1, u_2 ] 
-	size_t i, j, q = n;
-	CppAD::vectorBool r(n * q), s(m * q);
+	size_t i, j, p = n;
+	CppAD::vectorBool r(n * p), s(m * p);
 	// r = identity sparsity pattern
 	for(i = 0; i < n; i++)
-		for(j = 0; j < q; j++)
+		for(j = 0; j < p; j++)
 			r[i*n +j] = (i == j); 
-	s   = f.ForSparseJac(q, r);
-	ok &= s[ 0 * q + 0] == true;
-	ok &= s[ 0 * q + 1] == false;
-	ok &= s[ 0 * q + 2] == true;
-	ok &= s[ 1 * q + 0] == true;
-	ok &= s[ 1 * q + 1] == true;
-	ok &= s[ 1 * q + 2] == true;
+	s   = f.ForSparseJac(p, r);
+	ok &= s[ 0 * p + 0] == true;
+	ok &= s[ 0 * p + 1] == false;
+	ok &= s[ 0 * p + 2] == true;
+	ok &= s[ 1 * p + 0] == true;
+	ok &= s[ 1 * p + 1] == true;
+	ok &= s[ 1 * p + 2] == true;
 	// --------------------------------------------------------------------
 	// reverse mode sparsity pattern for the Jacobian
-	p = m;
-	s.resize(p * m);
-	r.resize(p * n);
+	q = m;
+	s.resize(q * m);
+	r.resize(q * n);
 	// s = identity sparsity pattern
-	for(i = 0; i < p; i++)
+	for(i = 0; i < q; i++)
 		for(j = 0; j < m; j++)
 			s[i*m +j] = (i == j); 
-	r   = f.RevSparseJac(p, s);
+	r   = f.RevSparseJac(q, s);
 	ok &= r[ 0 * n + 0] == true;
 	ok &= r[ 0 * n + 1] == false;
 	ok &= r[ 0 * n + 2] == true;

@@ -1,6 +1,6 @@
 // $Id$
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-13 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-14 Bradley M. Bell
 
 CppAD is distributed under multiple licenses. This distribution is under
 the terms of the 
@@ -188,7 +188,7 @@ namespace { // Begin empty namespace
 		size_t                               id ,             
 		size_t                                n ,
 		size_t                                m ,
-		size_t                                q ,
+		size_t                                p ,
 		const vector< std::set<size_t> >&     r ,
 		vector< std::set<size_t> >&           s )
 	{
@@ -210,7 +210,7 @@ namespace { // Begin empty namespace
 		size_t                               id ,             
 		size_t                                n ,
 		size_t                                m ,
-		size_t                                q ,
+		size_t                                p ,
 		vector< std::set<size_t> >&           r ,
 		const vector< std::set<size_t> >&     s )
 	{
@@ -231,7 +231,7 @@ namespace { // Begin empty namespace
 		size_t                               id ,             
 		size_t                                n ,
 		size_t                                m ,
-		size_t                                q ,
+		size_t                                p ,
 		const vector< std::set<size_t> >&     r ,
 		const vector<bool>&                   s ,
 		vector<bool>&                         t ,
@@ -373,41 +373,41 @@ bool old_tan(void)
 	ok   &= NearEqual(ddw[1], w[0]*tanpp + w[1]*tanhpp, eps, eps);
 
 	// Forward mode computation of sparsity pattern for F.
-	size_t q = n;
+	size_t p = n;
 	// user vectorBool because m and n are small
-	CppAD::vectorBool r1(q), s1(m * q);
+	CppAD::vectorBool r1(p), s1(m * p);
 	r1[0] = true;            // propagate sparsity for x[0]
-	s1    = F.ForSparseJac(q, r1);
+	s1    = F.ForSparseJac(p, r1);
 	ok  &= (s1[0] == true);  // f[0] depends on x[0]
 	ok  &= (s1[1] == true);  // f[1] depends on x[0]
 	ok  &= (s1[2] == false); // f[2] does not depend on x[0]
 
 	// Reverse mode computation of sparsity pattern for F.
-	size_t p = m;
-	CppAD::vectorBool s2(p * m), r2(p * n);
+	size_t q = m;
+	CppAD::vectorBool s2(q * m), r2(q * n);
 	// Sparsity pattern for identity matrix
 	size_t i, j;
-	for(i = 0; i < p; i++)
+	for(i = 0; i < q; i++)
 	{	for(j = 0; j < m; j++)
-			s2[i * p + j] = (i == j);
+			s2[i * q + j] = (i == j);
 	}
-	r2   = F.RevSparseJac(p, s2);
+	r2   = F.RevSparseJac(q, s2);
 	ok  &= (r2[0] == true);  // f[0] depends on x[0]
 	ok  &= (r2[1] == true);  // f[1] depends on x[0]
 	ok  &= (r2[2] == false); // f[2] does not depend on x[0]
 
 	// Hessian sparsity for f[0]
-	CppAD::vectorBool s3(m), h(q * n);
+	CppAD::vectorBool s3(m), h(p * n);
 	s3[0] = true;
 	s3[1] = false;
 	s3[2] = false;
-	h    = F.RevSparseHes(q, s3);
+	h    = F.RevSparseHes(p, s3);
 	ok  &= (h[0] == true);  // Hessian is non-zero
 
 	// Hessian sparsity for f[2]
 	s3[0] = false;
 	s3[2] = true;
-	h    = F.RevSparseHes(q, s3);
+	h    = F.RevSparseHes(p, s3);
 	ok  &= (h[0] == false);  // Hessian is zero
 
 	// check tanh results for a large value of x

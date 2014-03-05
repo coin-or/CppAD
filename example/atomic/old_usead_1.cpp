@@ -1,6 +1,6 @@
 // $Id$
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-13 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-14 Bradley M. Bell
 
 CppAD is distributed under multiple licenses. This distribution is under
 the terms of the 
@@ -88,7 +88,7 @@ namespace { // Begin empty namespace
 		assert( m == 1 );
 		assert( k == 0 || vx.size() == 0 );
 		bool ok = true;	
-		vector<double> x_p(1), y_p(1);
+		vector<double> x_q(1), y_q(1);
 
 		// check for special case
 		if( vx.size() > 0 )
@@ -96,12 +96,12 @@ namespace { // Begin empty namespace
 
 		// make sure r_ has proper lower order Taylor coefficients stored
 		// then compute ty[k]
-		for(size_t p = 0; p <= k; p++)
-		{	x_p[0] = tx[p];
-			y_p    = r_ptr_->Forward(p, x_p);
-			if( p == k )
-				ty[k] = y_p[0];
-			assert( p == k || ty[p] == y_p[0] );
+		for(size_t q = 0; q <= k; q++)
+		{	x_q[0] = tx[q];
+			y_q    = r_ptr_->Forward(q, x_q);
+			if( q == k )
+				ty[k] = y_q[0];
+			assert( q == k || ty[q] == y_q[0] );
 		}
 		return ok;
 	}
@@ -121,25 +121,25 @@ namespace { // Begin empty namespace
 		assert( n == 1 );
 		assert( m == 1 );
 		bool ok = true;	
-		vector<double> x_p(1), w(k+1), dw(k+1);
+		vector<double> x_q(1), w(k+1), dw(k+1);
 
 		// make sure r_ has proper forward mode coefficients 
-		size_t p;
-		for(p = 0; p <= k; p++)
-		{	x_p[0] = tx[p];
+		size_t q;
+		for(q = 0; q <= k; q++)
+		{	x_q[0] = tx[q];
 # ifdef NDEBUG
-			r_ptr_->Forward(p, x_p);
+			r_ptr_->Forward(q, x_q);
 # else
-			vector<double> y_p(1);
-			y_p    = r_ptr_->Forward(p, x_p);
-			assert( ty[p] == y_p[0] );
+			vector<double> y_q(1);
+			y_q    = r_ptr_->Forward(q, x_q);
+			assert( ty[q] == y_q[0] );
 # endif
 		}
-		for(p = 0; p <=k; p++)
-			w[p] = py[p];
+		for(q = 0; q <=k; q++)
+			w[q] = py[q];
 		dw = r_ptr_->Reverse(k+1, w);
-		for(p = 0; p <=k; p++)
-			px[p] = dw[p];
+		for(q = 0; q <=k; q++)
+			px[q] = dw[q];
 
 		return ok;
 	}
@@ -149,7 +149,7 @@ namespace { // Begin empty namespace
 		size_t                               id ,             
 		size_t                                n ,
 		size_t                                m ,
-		size_t                                q ,
+		size_t                                p ,
 		const vector< std::set<size_t> >&     r ,
 		vector< std::set<size_t> >&           s )
 	{	assert( id == 0 );
@@ -159,7 +159,7 @@ namespace { // Begin empty namespace
 
 		vector< std::set<size_t> > R(1), S(1);
 		R[0] = r[0];
-		S = r_ptr_->ForSparseJac(q, R);
+		S = r_ptr_->ForSparseJac(p, R);
 		s[0] = S[0];
 
 		return ok; 
@@ -170,7 +170,7 @@ namespace { // Begin empty namespace
 		size_t                               id ,             
 		size_t                                n ,
 		size_t                                m ,
-		size_t                                q ,
+		size_t                                p ,
 		vector< std::set<size_t> >&           r ,
 		const vector< std::set<size_t> >&     s )
 	{
@@ -179,13 +179,13 @@ namespace { // Begin empty namespace
 		assert( m == 1 );
 		bool ok = true;
 
-		vector< std::set<size_t> > R(q), S(q);
-		size_t p;
-		for(p = 0; p < q; p++)
-			S[p] = s[p];
-		R = r_ptr_->RevSparseJac(q, S);
-		for(p = 0; p < q; p++)
-			r[p] = R[p];
+		vector< std::set<size_t> > R(p), S(p);
+		size_t q;
+		for(q = 0; q < p; q++)
+			S[q] = s[q];
+		R = r_ptr_->RevSparseJac(p, S);
+		for(q = 0; q < p; q++)
+			r[q] = R[q];
 
 		return ok; 
 	}
@@ -195,7 +195,7 @@ namespace { // Begin empty namespace
 		size_t                               id ,             
 		size_t                                n ,
 		size_t                                m ,
-		size_t                                q ,
+		size_t                                p ,
 		const vector< std::set<size_t> >&     r ,
 		const vector<bool>&                   s ,
 		vector<bool>&                         t ,
@@ -214,29 +214,29 @@ namespace { // Begin empty namespace
 		t[0]   = T[0];
 
 		// compute sparsity pattern for A(x) = U(x)^T * f'(x)
-		vector<bool> Ut(q), A(q);
-		size_t p;
-		for(p = 0; p < q; p++)
-			Ut[p] = false;
+		vector<bool> Ut(p), A(p);
+		size_t q;
+		for(q = 0; q < p; q++)
+			Ut[q] = false;
 		std::set<size_t>::iterator itr;
 		for(itr = u[0].begin(); itr != u[0].end(); itr++)
 			Ut[*itr] = true;
-		A = r_ptr_-> RevSparseJac(q, Ut);
+		A = r_ptr_-> RevSparseJac(p, Ut);
 
 		// compute sparsity pattern for H(x) = R^T * (S * F)''(x)
-		vector<bool> H(q), R(n);
-		for(p = 0; p < q; p++)
-			R[p] = false;
+		vector<bool> H(p), R(n);
+		for(q = 0; q < p; q++)
+			R[q] = false;
 		for(itr = r[0].begin(); itr != r[0].end(); itr++)
 			R[*itr] = true;
-		r_ptr_->ForSparseJac(q, R);
-		H = r_ptr_->RevSparseHes(q, S);
+		r_ptr_->ForSparseJac(p, R);
+		H = r_ptr_->RevSparseHes(p, S);
 
 		// compute sparsity pattern for V(x) = A(x)^T + H(x)^T
 		v[0].clear();
-		for(p = 0; p < q; p++)
-			if( A[p] | H[p] )
-				v[0].insert(p);
+		for(q = 0; q < p; q++)
+			if( A[q] | H[q] )
+				v[0].insert(q);
 
 		return ok;
 	}
@@ -299,35 +299,35 @@ bool old_usead_1(void)
 	ok &= NearEqual( Value(ay[0]) , check,  eps, eps);
 
 	// check zero order forward mode
-	size_t p;
-	vector<double> x_p(n), y_p(m);
-	p      = 0;
-	x_p[0] = x0;
-	y_p    = f.Forward(p, x_p);
-	ok &= NearEqual(y_p[0] , check,  eps, eps);
+	size_t q;
+	vector<double> x_q(n), y_q(m);
+	q      = 0;
+	x_q[0] = x0;
+	y_q    = f.Forward(q, x_q);
+	ok &= NearEqual(y_q[0] , check,  eps, eps);
 
 	// check first order forward mode
-	p      = 1;
-	x_p[0] = 1;
-	y_p    = f.Forward(p, x_p);
+	q      = 1;
+	x_q[0] = 1;
+	y_q    = f.Forward(q, x_q);
 	check  = 1.;
-	ok &= NearEqual(y_p[0] , check,  eps, eps);
+	ok &= NearEqual(y_q[0] , check,  eps, eps);
 
 	// check second order forward mode
-	p      = 2;
-	x_p[0] = 0;
-	y_p    = f.Forward(p, x_p);
+	q      = 2;
+	x_q[0] = 0;
+	y_q    = f.Forward(q, x_q);
 	check  = 0.;
-	ok &= NearEqual(y_p[0] , check,  eps, eps);
+	ok &= NearEqual(y_q[0] , check,  eps, eps);
 
 	// --------------------------------------------------------------------
 	// Check reverse mode results
 	//
 	// third order reverse mode 
-	p     = 3;
-	vector<double> w(m), dw(n * p);
+	q     = 3;
+	vector<double> w(m), dw(n * q);
 	w[0]  = 1.;
-	dw    = f.Reverse(p, w);
+	dw    = f.Reverse(q, w);
 	check = 1.;
 	ok &= NearEqual(dw[0] , check,  eps, eps);
 	check = 0.;
@@ -336,25 +336,25 @@ bool old_usead_1(void)
 
 	// --------------------------------------------------------------------
 	// forward mode sparstiy pattern
-	size_t q = n;
-	CppAD::vectorBool r1(n * q), s1(m * q);
+	size_t p = n;
+	CppAD::vectorBool r1(n * p), s1(m * p);
 	r1[0] = true;          // compute sparsity pattern for x[0]
-	s1    = f.ForSparseJac(q, r1);
+	s1    = f.ForSparseJac(p, r1);
 	ok  &= s1[0] == true;  // f[0] depends on x[0]  
 
 	// --------------------------------------------------------------------
 	// reverse mode sparstiy pattern
-	p = m;
-	CppAD::vectorBool s2(p * m), r2(p * n);
+	q = m;
+	CppAD::vectorBool s2(q * m), r2(q * n);
 	s2[0] = true;          // compute sparsity pattern for f[0]
-	r2    = f.RevSparseJac(p, s2);
+	r2    = f.RevSparseJac(q, s2);
 	ok  &= r2[0] == true;  // f[0] depends on x[0]  
 
 	// --------------------------------------------------------------------
 	// Hessian sparsity (using previous ForSparseJac call) 
-	CppAD::vectorBool s3(m), h(q * n);
+	CppAD::vectorBool s3(m), h(p * n);
 	s3[0] = true;        // compute sparsity pattern for f[0]
-	h     = f.RevSparseJac(q, s3);
+	h     = f.RevSparseJac(p, s3);
 	ok  &= h[0] == true; // second partial of f[0] w.r.t. x[0] may be non-zero
 
 	// -----------------------------------------------------------------

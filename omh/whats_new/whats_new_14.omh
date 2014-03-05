@@ -43,6 +43,12 @@ This section contains a list of the changes to CppAD during 2014
 The purpose of this section is to
 assist you in learning about changes between various versions of CppAD.
 
+$head 03-05$$
+The names $icode p$$ and $icode q$$ in the 
+$cref atomic_forward$$ and $cref atomic_reverse$$ functions
+were reverse so that $icode%p% <= %q%$$. 
+This is only a notational change to make the arguments easier to remember.
+
 $head 03-02$$
 $list number$$
 In the output for the speed

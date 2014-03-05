@@ -3,7 +3,7 @@
 # define CPPAD_CHECKPOINT_INCLUDED
 
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-13 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-14 Bradley M. Bell
 
 CppAD is distributed under multiple licenses. This distribution is under
 the terms of the 
@@ -230,18 +230,18 @@ public:
 	\copydetails atomic_base::forward
  	*/
 	virtual bool forward(
-		size_t                    q ,
 		size_t                    p ,
+		size_t                    q ,
 		const vector<bool>&      vx , 
 		      vector<bool>&      vy , 
 		const vector<Base>&      tx ,
 		      vector<Base>&      ty )
 	{
 		CPPAD_ASSERT_UNKNOWN( f_.size_var() > 0 );
-		CPPAD_ASSERT_UNKNOWN( tx.size() % (p+1) == 0 );
-		CPPAD_ASSERT_UNKNOWN( ty.size() % (p+1) == 0 );
-		size_t n = tx.size() / (p+1);
-		size_t m = ty.size() / (p+1);
+		CPPAD_ASSERT_UNKNOWN( tx.size() % (q+1) == 0 );
+		CPPAD_ASSERT_UNKNOWN( ty.size() % (q+1) == 0 );
+		size_t n = tx.size() / (q+1);
+		size_t m = ty.size() / (q+1);
 		bool ok  = true;	
 		size_t i, j;
 
@@ -272,7 +272,7 @@ public:
 				}
 			}
 		}
-		ty = f_.Forward(p, tx);
+		ty = f_.Forward(q, tx);
 
 		// no longer need the Taylor coefficients in f_
 		// (have to reconstruct them every time)
@@ -285,37 +285,37 @@ public:
 	\copydetails atomic_base::reverse
  	*/
 	virtual bool reverse(
-		size_t                    p  ,
+		size_t                    q  ,
 		const vector<Base>&       tx ,
 		const vector<Base>&       ty ,
 		      vector<Base>&       px ,
 		const vector<Base>&       py )
 	{
 		CPPAD_ASSERT_UNKNOWN( f_.size_var() > 0 );
-		CPPAD_ASSERT_UNKNOWN( tx.size() % (p+1) == 0 );
-		CPPAD_ASSERT_UNKNOWN( ty.size() % (p+1) == 0 );
+		CPPAD_ASSERT_UNKNOWN( tx.size() % (q+1) == 0 );
+		CPPAD_ASSERT_UNKNOWN( ty.size() % (q+1) == 0 );
 		bool ok  = true;	
 
 		// put proper forward mode coefficients in f_
 # ifdef NDEBUG
-		f_.Forward(p, tx);
+		f_.Forward(q, tx);
 # else
-		size_t n = tx.size() / (p+1);
-		size_t m = ty.size() / (p+1);
-		CPPAD_ASSERT_UNKNOWN( px.size() == n * (p+1) );
-		CPPAD_ASSERT_UNKNOWN( py.size() == m * (p+1) );
+		size_t n = tx.size() / (q+1);
+		size_t m = ty.size() / (q+1);
+		CPPAD_ASSERT_UNKNOWN( px.size() == n * (q+1) );
+		CPPAD_ASSERT_UNKNOWN( py.size() == m * (q+1) );
 		size_t i, j, k;
 		//
-		vector<Base> check_ty = f_.Forward(p, tx);
+		vector<Base> check_ty = f_.Forward(q, tx);
 		for(i = 0; i < m; i++)
-		{	for(k = 0; k <= p; k++)
-			{	j = i * (p+1) + k;
+		{	for(k = 0; k <= q; k++)
+			{	j = i * (q+1) + k;
 				CPPAD_ASSERT_UNKNOWN( check_ty[j] == ty[j] );
 			}
 		}
 # endif
 		// now can run reverse mode
-		px = f_.Reverse(p+1, py);
+		px = f_.Reverse(q+1, py);
 
 		// no longer need the Taylor coefficients in f_
 		// (have to reconstruct them every time)

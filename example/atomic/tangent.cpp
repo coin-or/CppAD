@@ -1,6 +1,6 @@
 // $Id$
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-13 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-14 Bradley M. Bell
 
 CppAD is distributed under multiple licenses. This distribution is under
 the terms of the 
@@ -68,19 +68,19 @@ $head forward$$
 $codep */
 	// forward mode routine called by CppAD
 	bool forward(
-		size_t                    q ,
 		size_t                    p ,
+		size_t                    q ,
 		const vector<bool>&      vx ,
 		      vector<bool>&     vzy ,
 		const vector<float>&     tx ,
 		      vector<float>&    tzy
 	)
-	{	size_t p1 = p + 1;
-		size_t n  = tx.size()  / p1;
-		size_t m  = tzy.size() / p1;
+	{	size_t q1 = q + 1;
+		size_t n  = tx.size()  / q1;
+		size_t m  = tzy.size() / q1;
 		assert( n == 1 );
 		assert( m == 2 );
-		assert( q <= p );
+		assert( p <= q );
 		size_t j, k;
 
 		// check if this is during the call to old_tan(id, ax, ay)
@@ -90,18 +90,18 @@ $codep */
 			vzy[1] = vx[0];
 		}
 
-		if( q == 0 )
+		if( p == 0 )
 		{	// z^{(0)} = tan( x^{(0)} ) or tanh( x^{(0)} )
 			if( hyperbolic_ )
 				tzy[0] = tanh( tx[0] );
 			else	tzy[0] = tan( tx[0] );
 
 			// y^{(0)} = z^{(0)} * z^{(0)}
-			tzy[p1 + 0] = tzy[0] * tzy[0];
+			tzy[q1 + 0] = tzy[0] * tzy[0];
 		
-			q++;
+			p++;
 		}
-		for(j = q; j <= p; j++)
+		for(j = p; j <= q; j++)
 		{	float j_inv = 1.f / float(j);
 			if( hyperbolic_ )
 				j_inv = - j_inv;
@@ -109,12 +109,12 @@ $codep */
 			// z^{(j)} = x^{(j)} +- sum_{k=1}^j k x^{(k)} y^{(j-k)} / j
 			tzy[j] = tx[j];  
 			for(k = 1; k <= j; k++)
-				tzy[j] += tx[k] * tzy[p1 + j-k] * k * j_inv;
+				tzy[j] += tx[k] * tzy[q1 + j-k] * k * j_inv;
 
 			// y^{(j)} = sum_{k=0}^j z^{(k)} z^{(j-k)}
-			tzy[p1 + j] = 0.;
+			tzy[q1 + j] = 0.;
 			for(k = 0; k <= j; k++)
-				tzy[p1 + j] += tzy[k] * tzy[j-k];
+				tzy[q1 + j] += tzy[k] * tzy[j-k];
 		}
 
 		// All orders are implemented and there are no possible errors
@@ -125,17 +125,17 @@ $head reverse$$
 $codep */
 	// reverse mode routine called by CppAD
 	virtual bool reverse(
-		size_t                    p ,
+		size_t                    q ,
 		const vector<float>&     tx ,
 		const vector<float>&    tzy ,
 		      vector<float>&     px ,
 		const vector<float>&    pzy
 	)
-	{	size_t p1 = p + 1;
-		size_t n  = tx.size()  / p1;
-		size_t m  = tzy.size() / p1;	
-		assert( px.size()  == n * p1 );
-		assert( pzy.size() == m * p1 );
+	{	size_t q1 = q + 1;
+		size_t n  = tx.size()  / q1;
+		size_t m  = tzy.size() / q1;	
+		assert( px.size()  == n * q1 );
+		assert( pzy.size() == m * q1 );
 		assert( n == 1 );
 		assert( m == 2 );
 
@@ -145,11 +145,11 @@ $codep */
 		vector<float> qzy = pzy;
 
 		// initialize accumultion of reverse mode partials
-		for(k = 0; k < p1; k++)
+		for(k = 0; k < q1; k++)
 			px[k] = 0.;
 
 		// eliminate positive orders
-		for(j = p; j > 0; j--)
+		for(j = q; j > 0; j--)
 		{	float j_inv = 1.f / float(j);
 			if( hyperbolic_ )
 				j_inv = - j_inv;
@@ -157,22 +157,22 @@ $codep */
 			// H_{x^{(k)}} += delta(j-k) +- H_{z^{(j)} y^{(j-k)} * k / j
 			px[j] += qzy[j];
 			for(k = 1; k <= j; k++)
-				px[k] += qzy[j] * tzy[p1 + j-k] * k * j_inv;  
+				px[k] += qzy[j] * tzy[q1 + j-k] * k * j_inv;  
 
 			// H_{y^{j-k)} += +- H_{z^{(j)} x^{(k)} * k / j
 			for(k = 1; k <= j; k++)
-				qzy[p1 + j-k] += qzy[j] * tx[k] * k * j_inv;  
+				qzy[q1 + j-k] += qzy[j] * tx[k] * k * j_inv;  
 
 			// H_{z^{(k)}} += H_{y^{(j-1)}} * z^{(j-k-1)} * 2. 
 			for(k = 0; k < j; k++)
-				qzy[k] += qzy[p1 + j-1] * tzy[j-k-1] * 2.f; 
+				qzy[k] += qzy[q1 + j-1] * tzy[j-k-1] * 2.f; 
 		}
 
 		// eliminate order zero
 		if( hyperbolic_ )
-			px[0] += qzy[0] * (1.f - tzy[p1 + 0]);
+			px[0] += qzy[0] * (1.f - tzy[q1 + 0]);
 		else
-			px[0] += qzy[0] * (1.f + tzy[p1 + 0]);
+			px[0] += qzy[0] * (1.f + tzy[q1 + 0]);
 
 		return true; 
 	}
@@ -181,25 +181,25 @@ $head for_sparse_jac$$
 $codep */
 	// forward Jacobian sparsity routine called by CppAD
 	virtual bool for_sparse_jac(
-		size_t                                q ,
+		size_t                                p ,
 		const vector<bool>&                   r ,
 		      vector<bool>&                   s )
-	{	size_t n = r.size() / q;
-		size_t m = s.size() / q;
+	{	size_t n = r.size() / p;
+		size_t m = s.size() / p;
 		assert( n == 1 );
 		assert( m == 2 );
 
 		// sparsity for S(x) = f'(x) * R
-		for(size_t j = 0; j < q; j++)
-		{	s[0 * q + j] = r[j];
-			s[1 * q + j] = r[j];
+		for(size_t j = 0; j < p; j++)
+		{	s[0 * p + j] = r[j];
+			s[1 * p + j] = r[j];
 		}
 
 		return true;
 	}
 	// forward Jacobian sparsity routine called by CppAD
 	virtual bool for_sparse_jac(
-		size_t                                q ,
+		size_t                                p ,
 		const vector< std::set<size_t> >&     r ,
 		      vector< std::set<size_t> >&     s )
 	{	size_t n = r.size();
@@ -218,23 +218,23 @@ $head rev_sparse_jac$$
 $codep */
 	// reverse Jacobian sparsity routine called by CppAD
 	virtual bool rev_sparse_jac(
-		size_t                                q ,
+		size_t                                p ,
 		const vector<bool>&                  rt ,
 		      vector<bool>&                  st )
-	{	size_t n = st.size() / q;
-		size_t m = rt.size() / q;
+	{	size_t n = st.size() / p;
+		size_t m = rt.size() / p;
 		assert( n == 1 );
 		assert( m == 2 );
 
 		// sparsity for S(x)^T = f'(x)^T * R^T
-		for(size_t j = 0; j < q; j++)
-			st[j] = rt[0 * q + j] | rt[1 * q + j];
+		for(size_t j = 0; j < p; j++)
+			st[j] = rt[0 * p + j] | rt[1 * p + j];
 
 		return true; 
 	}
 	// reverse Jacobian sparsity routine called by CppAD
 	virtual bool rev_sparse_jac(
-		size_t                                q ,
+		size_t                                p ,
 		const vector< std::set<size_t> >&    rt ,
 		      vector< std::set<size_t> >&    st )
 	{	size_t n = st.size();
@@ -254,16 +254,16 @@ $codep */
 		const vector<bool>&                   vx,
 		const vector<bool>&                   s ,
 		      vector<bool>&                   t ,
-		size_t                                q ,
+		size_t                                p ,
 		const vector<bool>&                   r ,
 		const vector<bool>&                   u ,
 		      vector<bool>&                   v )
 	{
 		size_t m = s.size();
 		size_t n = t.size();
-		assert( r.size() == n * q );
-		assert( u.size() == m * q );
-		assert( v.size() == n * q );
+		assert( r.size() == n * p );
+		assert( u.size() == m * p );
+		assert( v.size() == n * p );
 		assert( n == 1 );
 		assert( m == 2 );
 
@@ -280,13 +280,13 @@ $codep */
 		// back propagate the sparsity for U, note both components 
 		// of f'(x) may be non-zero;
 		size_t j;
-		for(j = 0; j < q; j++)
-			v[j] = u[ 0 * q + j ] | u[ 1 * q + j ];
+		for(j = 0; j < p; j++)
+			v[j] = u[ 0 * p + j ] | u[ 1 * p + j ];
 
 		// include forward Jacobian sparsity in Hessian sparsity
 		// (note sparsty for f''(x) * R same as for R)
 		if( s[0] | s[1] )
-		{	for(j = 0; j < q; j++)
+		{	for(j = 0; j < p; j++)
 				v[j] |= r[j];
 		}
 
@@ -297,7 +297,7 @@ $codep */
 		const vector<bool>&                   vx,
 		const vector<bool>&                   s ,
 		      vector<bool>&                   t ,
-		size_t                                q ,
+		size_t                                p ,
 		const vector< std::set<size_t> >&     r ,
 		const vector< std::set<size_t> >&     u ,
 		      vector< std::set<size_t> >&     v )
@@ -449,11 +449,11 @@ $codep */
 $subhead for_sparse_jac$$
 $codep */
 	// Forward mode computation of sparsity pattern for F.
-	size_t q = n;
+	size_t p = n;
 	// user vectorBool because m and n are small
-	CppAD::vectorBool r1(q), s1(m * q);
+	CppAD::vectorBool r1(p), s1(m * p);
 	r1[0] = true;            // propagate sparsity for x[0]
-	s1    = F.ForSparseJac(q, r1);
+	s1    = F.ForSparseJac(p, r1);
 	ok  &= (s1[0] == true);  // f[0] depends on x[0]
 	ok  &= (s1[1] == true);  // f[1] depends on x[0]
 	ok  &= (s1[2] == false); // f[2] does not depend on x[0]
@@ -461,15 +461,15 @@ $codep */
 $subhead rev_sparse_jac$$
 $codep */
 	// Reverse mode computation of sparsity pattern for F.
-	size_t p = m;
-	CppAD::vectorBool s2(p * m), r2(p * n);
+	size_t q = m;
+	CppAD::vectorBool s2(q * m), r2(q * n);
 	// Sparsity pattern for identity matrix
 	size_t i, j;
-	for(i = 0; i < p; i++)
+	for(i = 0; i < q; i++)
 	{	for(j = 0; j < m; j++)
-			s2[i * p + j] = (i == j);
+			s2[i * q + j] = (i == j);
 	}
-	r2   = F.RevSparseJac(p, s2);
+	r2   = F.RevSparseJac(q, s2);
 	ok  &= (r2[0] == true);  // f[0] depends on x[0]
 	ok  &= (r2[1] == true);  // f[1] depends on x[0]
 	ok  &= (r2[2] == false); // f[2] does not depend on x[0]
@@ -477,17 +477,17 @@ $codep */
 $subhead rev_sparse_hes$$
 $codep */
 	// Hessian sparsity for f[0]
-	CppAD::vectorBool s3(m), h(q * n);
+	CppAD::vectorBool s3(m), h(p * n);
 	s3[0] = true;
 	s3[1] = false;
 	s3[2] = false;
-	h    = F.RevSparseHes(q, s3);
+	h    = F.RevSparseHes(p, s3);
 	ok  &= (h[0] == true);  // Hessian is non-zero
 
 	// Hessian sparsity for f[2]
 	s3[0] = false;
 	s3[2] = true;
-	h    = F.RevSparseHes(q, s3);
+	h    = F.RevSparseHes(p, s3);
 	ok  &= (h[0] == false);  // Hessian is zero
 /* $$
 $subhead Large x Values$$

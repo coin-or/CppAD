@@ -1,6 +1,6 @@
 // $Id$
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-13 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-14 Bradley M. Bell
 
 CppAD is distributed under multiple licenses. This distribution is under
 the terms of the 
@@ -45,20 +45,20 @@ $head forward$$
 $codep */
 	// forward mode routine called by CppAD
 	virtual bool forward(
-		size_t                    q ,
 		size_t                    p ,
+		size_t                    q ,
 		const vector<bool>&      vx ,
 		      vector<bool>&      vy ,
 		const vector<double>&    tx ,
 		      vector<double>&    ty
 	)
-	{	size_t n = tx.size() / (p + 1);
-		size_t m = ty.size() / (p + 1);
+	{	size_t n = tx.size() / (q + 1);
+		size_t m = ty.size() / (q + 1);
 		assert( n == 1 );
 		assert( m == 1 );
 
 		// return flag
-		bool ok = p == 0;
+		bool ok = q == 0;
 		if( ! ok )
 			return ok;
 
@@ -71,7 +71,7 @@ $codep */
 		// This case must always be implemented
 		// y^0 = f( x^0 ) = 1 / x^0
 		double f = 1. / tx[0];
-		if( q <= 0 )
+		if( p <= 0 )
 			ty[0] = f;
 		return ok;
 	}
@@ -130,12 +130,12 @@ $codep */
 	ok &= NearEqual( Value(ay[0]) , check,  eps, eps);
 
 	// check zero order forward mode
-	size_t p;
-	vector<double> x_p(n), y_p(m);
-	p      = 0;
-	x_p[0] = x0;
-	y_p    = f.Forward(p, x_p);
-	ok &= NearEqual(y_p[0] , check,  eps, eps);
+	size_t q;
+	vector<double> x_q(n), y_q(m);
+	q      = 0;
+	x_q[0] = x0;
+	y_q    = f.Forward(q, x_q);
+	ok &= NearEqual(y_q[0] , check,  eps, eps);
 
 	return ok;
 }

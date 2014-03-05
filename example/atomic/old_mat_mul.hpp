@@ -3,7 +3,7 @@
 # define CPPAD_OLD_MAT_MUL_INCLUDED
 
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-13 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-14 Bradley M. Bell
 
 CppAD is distributed under multiple licenses. This distribution is under
 the terms of the 
@@ -304,7 +304,7 @@ $codep */
 		size_t                               id ,             
 		size_t                                n ,
 		size_t                                m ,
-		size_t                                q ,
+		size_t                                p ,
 		const vector< std::set<size_t> >&     r ,
 		vector< std::set<size_t> >&           s )
 	{	size_t i, j, k, im_left, middle, mj_right, ij_result;
@@ -335,7 +335,7 @@ $codep */
 		size_t                               id ,             
 		size_t                                n ,
 		size_t                                m ,
-		size_t                                q ,
+		size_t                                p ,
 		vector< std::set<size_t> >&           r ,
 		const vector< std::set<size_t> >&     s )
 	{	size_t i, j, k, im_left, middle, mj_right, ij_result;
@@ -368,7 +368,7 @@ $codep */
 		size_t                               id ,             
 		size_t                                n ,
 		size_t                                m ,
-		size_t                                q ,
+		size_t                                p ,
 		const vector< std::set<size_t> >&     r ,
 		const vector<bool>&                   s ,
 		vector<bool>&                         t ,
