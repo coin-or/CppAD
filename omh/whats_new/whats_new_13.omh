@@ -1,6 +1,6 @@
 $Id$
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-13 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-14 Bradley M. Bell
 
 CppAD is distributed under multiple licenses. This distribution is under
 the terms of the 
@@ -384,7 +384,7 @@ names were all changed to begin with $code user$$.
 
 $head 05-04$$
 The option to compute 
-$cref/multiple orders/ForwardAny/x_p/Multiple Orders/$$ was added.
+$cref/multiple orders/ForwardAny/x_q/Multiple Orders/$$ was added.
 The $cref old_usead_2.cpp$$ example shows the need for this.
 The problem is that a new atomic function interface needs to be designed
 with checkpointing as a particular application.

@@ -1,6 +1,6 @@
 $Id$
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-13 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-14 Bradley M. Bell
 
 CppAD is distributed under multiple licenses. This distribution is under
 the terms of the 
@@ -256,7 +256,7 @@ w_i \sum_{\ell=0}^{n-1}
 \left[ F_i^{(2)} \left( x^{(0)} \right) * x^{(1)} \right]_j
 \end{array}
 \] $$
-Thus the vector $latex ( dw[1], dw[3], \ldots , dw[ n * p - 1 ] )$$
+Thus the vector $latex ( dw[1], dw[3], \ldots , dw[ n * q - 1 ] )$$
 is equal to the Hessian of $latex F_i (x)$$ times the direction
 $latex x^{(1)}$$.
 In the special case where 
@@ -304,7 +304,7 @@ $index mode, any order reverse$$
 $index derivative, reverse mode$$
 
 $head Syntax$$
-$icode%dw% = %f%.Reverse(%p%, %w%)%$$
+$icode%dw% = %f%.Reverse(%q%, %w%)%$$
 
 
 $head Purpose$$
@@ -320,7 +320,7 @@ which is specified by the following notation:
 $head Notation$$
 
 $subhead x^(k)$$
-For $latex k = 0, \ldots , p-1$$,
+For $latex k = 0, \ldots , q-1$$,
 the vector $latex x^{(k)} \in B^n$$ is defined as the value of 
 $icode x_k$$ in the previous calls of the form
 $codei%
@@ -335,11 +335,11 @@ $cref/operation sequence/glossary/Operation/Sequence/$$ was recorded.
 
 $subhead X(t, u)$$
 The function
-$latex X : B \times B^{n \times p} \rightarrow B^n$$ is defined by
+$latex X : B \times B^{n \times q} \rightarrow B^n$$ is defined by
 $latex \[
-	X ( t , u ) = u^{(0)} + u^{(1)} * t + \cdots + u^{(p-1)} * t^{p-1} 
+	X ( t , u ) = u^{(0)} + u^{(1)} * t + \cdots + u^{(q-1)} * t^{q-1} 
 \] $$ 
-Note that for $latex k = 0 , \ldots , p-1$$,
+Note that for $latex k = 0 , \ldots , q-1$$,
 $latex u^{(k)}$$ is related to the $th k$$ partial of $latex X(t, u)$$ 
 with respect to $latex t$$ by
 $latex \[
@@ -348,22 +348,22 @@ $latex \[
 
 $subhead Y(t, u)$$
 The function
-$latex Y : B \times B^{n \times p} \rightarrow B^m$$ is defined by
+$latex Y : B \times B^{n \times q} \rightarrow B^m$$ is defined by
 $latex \[
 	Y(t, u) = F [ X(t,u) ]
 \]$$
 
 $subhead w^(k)$$
-If the argument $icode w$$ has size $icode%m% * %p%$$,
-for $latex k = 0 , \ldots , p-1$$ and $latex i = 0, \ldots , m-1$$,
+If the argument $icode w$$ has size $icode%m% * %q%$$,
+for $latex k = 0 , \ldots , q-1$$ and $latex i = 0, \ldots , m-1$$,
 $latex \[
-	w_i^{(k)} = w [ i * p + k ]
+	w_i^{(k)} = w [ i * q + k ]
 \] $$
 If the argument $icode w$$ has size $icode m$$,
-for $latex k = 0 , \ldots , p-1$$ and $latex i = 0, \ldots , m-1$$,
+for $latex k = 0 , \ldots , q-1$$ and $latex i = 0, \ldots , m-1$$,
 $latex \[
 w_i^{(k)} = \left\{ \begin{array}{ll}
-	w [ i ] & {\rm if} \; k = p-1
+	w [ i ] & {\rm if} \; k = q-1
 	\\
 	0       & {\rm otherwise}
 \end{array} \right.
@@ -371,9 +371,9 @@ w_i^{(k)} = \left\{ \begin{array}{ll}
 
 
 $subhead W(u)$$
-The function $latex W : B^{n \times p} \rightarrow B$$ is defined by
+The function $latex W : B^{n \times q} \rightarrow B$$ is defined by
 $latex \[
-W(u) = \sum_{k=0}^{p-1} ( w^{(k)} )^\R{T} \frac{1}{k !} \Dpow{k}{t} Y(0, u)
+W(u) = \sum_{k=0}^{q-1} ( w^{(k)} )^\R{T} \frac{1}{k !} \Dpow{k}{t} Y(0, u)
 \] $$
 
 
@@ -386,13 +386,13 @@ Before this call to $code Reverse$$, the value returned by
 $codei%
 	%f%.size_taylor()
 %$$
-must be greater than or equal $icode p$$
+must be greater than or equal $icode q$$
 (see $cref size_taylor$$).
 
-$head p$$
-The argument $icode p$$ has prototype
+$head q$$
+The argument $icode q$$ has prototype
 $codei%
-	size_t %p%
+	size_t %q%
 %$$
 and specifies the number of Taylor coefficients to be differentiated
 (for each variable).
@@ -405,7 +405,7 @@ $codei%
 %$$
 (see $cref/Vector/reverse_any/Vector/$$ below)
 and its size 
-must be equal to $icode m$$ or $icode%m% * %p%$$, 
+must be equal to $icode m$$ or $icode%m% * %q%$$, 
 It specifies the weighting vector $icode w$$
 in the definition of 
 $cref/W(u)/reverse_any/Notation/W(u)/$$.
@@ -417,11 +417,11 @@ $codei%
 	%Vector% %dw%
 %$$
 (see $cref/Vector/reverse_any/Vector/$$ below).
-It is a vector with size $latex n \times p$$.
-For $latex j = 0, \ldots, n-1$$ and $latex k = 0 , \ldots , p-1$$
-If the argument $icode w$$ has size $icode%m% * %p%$$,
+It is a vector with size $latex n \times q$$.
+For $latex j = 0, \ldots, n-1$$ and $latex k = 0 , \ldots , q-1$$
+If the argument $icode w$$ has size $icode%m% * %q%$$,
 $latex \[
-	dw[ j * p + k ] = W^{(1)} ( x )_{j,k} 
+	dw[ j * q + k ] = W^{(1)} ( x )_{j,k} 
 \] $$
 where $latex u = x$$ is value of the Taylor coefficients where the 
 derivative is evaluated.
@@ -430,7 +430,7 @@ $pre
 $$
 If the argument $icode w$$ has size $icode m$$,
 $latex \[
-	dw[ j * p + p - k - 1 ] = W^{(1)} ( x )_{j,k} 
+	dw[ j * q + q - k - 1 ] = W^{(1)} ( x )_{j,k} 
 \] $$
 where $latex u = x$$ is value of the Taylor coefficients where the 
 derivative is evaluated.
@@ -440,7 +440,7 @@ compatible.
 
 $head First Order$$
 We consider the case where 
-$icode%p% = 1%$$ and $icode%w%.size() == %m%$$.
+$icode%q% = 1%$$ and $icode%w%.size() == %m%$$.
 In this case
 $latex \[
 \begin{array}{rcl}
@@ -457,7 +457,7 @@ This is the same as the result documented in $cref reverse_one$$.
 
 $head Second Order$$
 We consider the case where 
-$icode%p% = 2%$$ and $icode%w%.size() == %m%$$.
+$icode%q% = 2%$$ and $icode%w%.size() == %m%$$.
 In this case
 $latex \[
 \begin{array}{rcl}

@@ -45,7 +45,10 @@ assist you in learning about changes between various versions of CppAD.
 
 $head 03-05$$
 The names $icode p$$ and $icode q$$ in the 
-$cref atomic_forward$$ and $cref atomic_reverse$$ functions
+$cref/forward/forwardany/$$,
+$cref/reverse/reverse_any/$$,
+$cref atomic_forward$$, and 
+$cref atomic_reverse$$ functions
 were reverse so that $icode%p% <= %q%$$. 
 This is only a notational change to make the arguments easier to remember.
 

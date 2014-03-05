@@ -218,9 +218,9 @@ $index derivative, forward mode$$
 $index calculate, forward mode$$
 
 $head Syntax$$
-$icode%y_p% = %f%.Forward(%p%, %x_p% )
+$icode%y_q% = %f%.Forward(%q%, %x_q% )
 %$$
-$icode%y_p% = %f%.Forward(%p%, %x_p%, %s%)
+$icode%y_q% = %f%.Forward(%q%, %x_q%, %s%)
 %$$
 
 
@@ -250,9 +250,9 @@ The function
 $latex X : B \rightarrow B^n$$ is defined using
 a sequence of Taylor coefficients $latex x^{(k)} \in B^n$$:
 $latex \[
-	X(t) = x^{(0)} + x^{(1)} * t + \cdots + x^{(p)} * t^p 
+	X(t) = x^{(0)} + x^{(1)} * t + \cdots + x^{(q)} * t^q 
 \] $$ 
-For $latex k = 0, \ldots , p$$,
+For $latex k = 0, \ldots , q$$,
 the vector $latex x^{(k)}$$ above is defined as the value of 
 $icode x_k$$ in the previous call (counting this call) of the form
 $codei%
@@ -276,9 +276,9 @@ $latex Y(t) = F[ X(t) ] $$.
 We use $latex y^{(k)} \in B^m$$ 
 to denote the $th k$$ order Taylor coefficient of $latex Y(t)$$; i.e.,
 $latex \[
-	Y(t) = y^{(0)} + y^{(1)} * t + \cdots, + y^{(p)} * t^p + o( t^p ) 
+	Y(t) = y^{(0)} + y^{(1)} * t + \cdots, + y^{(q)} * t^q + o( t^q ) 
 \] $$ 
-where $latex o( t^p ) * t^{-p} \rightarrow 0$$ 
+where $latex o( t^q ) * t^{-q} \rightarrow 0$$ 
 as $latex t \rightarrow 0$$.
 Note that $latex y^{(k)}$$ is related to 
 the $th k$$ derivative of $latex Y(t)$$ by
@@ -297,36 +297,36 @@ Before this call to $code Forward$$, the value returned by
 $codei%
 	%f%.size_taylor()
 %$$
-must be greater than or equal $latex p$$.
-After this call it will be will be $latex p+1$$ (see $cref size_taylor$$).
+must be greater than or equal $latex q$$.
+After this call it will be will be $latex q+1$$ (see $cref size_taylor$$).
 
-$head p$$
-The argument $icode p$$ has prototype
+$head q$$
+The argument $icode q$$ has prototype
 $codei%
-	size_t %p%
+	size_t %q%
 %$$
 and specifies the order of the Taylor coefficients to be calculated.
 
-$head x_p$$
-The argument $icode x_p$$ has prototype
+$head x_q$$
+The argument $icode x_q$$ has prototype
 $codei%
-	const %Vector%& %x_p%
+	const %Vector%& %x_q%
 %$$
 (see $cref/Vector/ForwardAny/Vector/$$ below).
 As above, we use $icode n$$ to denote the dimension of the
 $cref/domain/seq_property/Domain/$$ space for $icode f$$.
-The size of $icode x_p$$ must be either $icode n$$ or 
-$icode%n%*(%p%+1)%$$.
+The size of $icode x_q$$ must be either $icode n$$ or 
+$icode%n%*(%q%+1)%$$.
 
 $subhead Restrictions$$
 Note if $icode f$$ uses $cref old_atomic$$ functions,
-the size of $icode x_p$$ must be $icode n$$.
+the size of $icode x_q$$ must be $icode n$$.
 
 $subhead One Order$$
-If $icode%x_p%.size() == %n%$$,
-The $th p$$ order Taylor coefficient for $latex X(t)$$ 
-is defined by this value; i.e., $latex x^{(p)} = x\_p$$.
-For $latex k = 0 , \ldots , p-1$$,
+If $icode%x_q%.size() == %n%$$,
+The $th q$$ order Taylor coefficient for $latex X(t)$$ 
+is defined by this value; i.e., $latex x^{(q)} = x\_p$$.
+For $latex k = 0 , \ldots , q-1$$,
 the $th k$$ order Taylor coefficient $latex x^{(k)}$$ 
 is defined by $icode x_k$$ in the previous call to
 $codei%
@@ -334,14 +334,14 @@ $codei%
 %$$
 
 $subhead Multiple Orders$$
-If $icode%x_p%.size() == %n%*(%p%+1)%$$,
-For $latex k = 0 , \ldots , p$$,
+If $icode%x_q%.size() == %n%*(%q%+1)%$$,
+For $latex k = 0 , \ldots , q$$,
 for $latex j = 0 , \ldots , n$$,
 the $th j$$ component of the $th k$$ order Taylor coefficient 
 $latex x_j^{(k)}$$ 
 is defined by $icode x_j^k$$ were
 $codei%
-	%x_j^k% = %x_p%[ %j% * %p% + %k% ]
+	%x_j^k% = %x_q%[ %j% * %q% + %k% ]
 %$$
 
 $head s$$
@@ -351,36 +351,36 @@ Otherwise, this argument has prototype
 $codei%
 	std::ostream& %s%
 %$$
-If $icode%p% == 0%$$,
+If $icode%q% == 0%$$,
 $icode s$$ specifies where the output corresponding to $cref PrintFor$$
 will be written.
-If $icode%p% != 0%$$, $icode s$$ is not used.
+If $icode%q% != 0%$$, $icode s$$ is not used.
 
-$head y_p$$
-The return value $icode y_p$$ has prototype
+$head y_q$$
+The return value $icode y_q$$ has prototype
 $codei%
-	%Vector% %y_p%
+	%Vector% %y_q%
 %$$
 (see $cref/Vector/ForwardAny/Vector/$$ below).
 As above, we use $icode m$$ to denote the dimension of the
 $cref/range/seq_property/Range/$$ space for $icode f$$.
 
 $subhead One Order$$
-If $icode%x_p%.size() == %n%$$,
-the vector $icode y_p$$ has size $icode m$$.
-The $th p$$ order Taylor coefficient for $latex Y(t)$$ 
-is defined by this value; i.e., $latex y^{(p)} = y\_p$$.
+If $icode%x_q%.size() == %n%$$,
+the vector $icode y_q$$ has size $icode m$$.
+The $th q$$ order Taylor coefficient for $latex Y(t)$$ 
+is defined by this value; i.e., $latex y^{(q)} = y\_p$$.
 
 $subhead Multiple Orders$$
-If $icode%x_p%.size() == %n%*(%p%+1)%$$,
-the vector $icode y_p$$ has size $icode%m%*(%p%+1)%$$.
-For $latex k = 0 , \ldots , p$$,
+If $icode%x_q%.size() == %n%*(%q%+1)%$$,
+the vector $icode y_q$$ has size $icode%m%*(%q%+1)%$$.
+For $latex k = 0 , \ldots , q$$,
 for $latex i = 0 , \ldots , m$$,
 the $th i$$ component of the $th k$$ order Taylor coefficient 
 $latex y_i^{(k)}$$ 
 is defined by $icode y_i^k$$ were
 $codei%
-	%y_i^k% = %y_p%[ %i% * %p% + %k% ]
+	%y_i^k% = %y_q%[ %i% * %q% + %k% ]
 %$$
 
 $head Vector$$
@@ -391,8 +391,8 @@ The routine $cref CheckSimpleVector$$ will generate an error message
 if this is not the case.
 
 $head Zero Order$$
-In the case where $latex p = 0$$ and $icode%x_p%.size() == %n%$$,
-the result $icode y_p$$ is given by
+In the case where $latex q = 0$$ and $icode%x_q%.size() == %n%$$,
+the result $icode y_q$$ is given by
 $latex \[
 \begin{array}{rcl}
 y^{(0)} & = & (F \circ X) ( 0 ) \\
@@ -400,7 +400,7 @@ y^{(0)} & = & (F \circ X) ( 0 ) \\
 \end{array}
 \] $$
 The agrees with the simplification where
-$latex p$$, 
+$latex q$$, 
 $latex x^{(0)}$$, and 
 $latex y^{(0)}$$ above are replaced by
 $code 0$$, 
@@ -409,8 +409,8 @@ $icode y$$
 in $cref ForwardZero$$.
 
 $head First Order$$
-In the case where $latex p = 1$$ and $icode%x_p%.size() == %n%$$,
-the result $icode y_p$$ is given by
+In the case where $latex q = 1$$ and $icode%x_q%.size() == %n%$$,
+the result $icode y_q$$ is given by
 $latex \[
 \begin{array}{rcl}
 y^{(1)} & = & (F \circ X)^{(1)} ( 0 ) \\
@@ -419,7 +419,7 @@ y^{(1)} & = & (F \circ X)^{(1)} ( 0 ) \\
 \end{array}
 \] $$
 The agrees with the simplification where 
-$latex p$$, 
+$latex q$$, 
 $latex x^{(0)}$$, 
 $latex x^{(1)}$$, and 
 $latex y^{(1)}$$ above are replaced by
@@ -438,9 +438,9 @@ y^{(1)} = \D{F}{x_j} ( x^{(0)} )
 \] $$
 
 $head Second Order$$
-In the case where $latex p = 2$$ and $icode%x_p%.size() == %n%$$,
+In the case where $latex q = 2$$ and $icode%x_q%.size() == %n%$$,
 the $th i$$ element of 
-the result $icode y_p$$ is given by
+the result $icode y_q$$ is given by
 $latex \[
 \begin{array}{rcl}
 y_i^{(2)} 
@@ -551,15 +551,15 @@ the zero order Taylor coefficients during this constructor.
 $head Forward$$
 After a call to $cref/Forward/ForwardAny/$$ with the syntax
 $codei%
-        %f%.Forward(%p%, %x_p%)
+        %f%.Forward(%q%, %x_q%)
 %$$
 the value of $icode s$$ returned by $code size_taylor$$ 
-would be $latex p + 1$$.
+would be $latex q + 1$$.
 The call to $code Forward$$ above
 uses the lower order Taylor coefficients to compute and store 
-the $th p$$ order Taylor coefficients for all
+the $th q$$ order Taylor coefficients for all
 the variables in the operation sequence corresponding to $icode f$$.
-Thus there are $latex p + 1$$ (order zero through $icode p$$)
+Thus there are $latex q + 1$$ (order zero through $icode q$$)
 Taylor coefficients per variable.
 (You can determine the number of variables in the operation sequence
 using the $cref/size_var/seq_property/size_var/$$ function.)
