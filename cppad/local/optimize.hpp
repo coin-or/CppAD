@@ -2608,9 +2608,8 @@ void ADFun<Base>::optimize(void)
 	// number of independent variables
 	size_t n = ind_taddr_.size();
 
-	size_t i;
 # ifndef NDEBUG
-	size_t j, m = dep_taddr_.size();
+	size_t i, j, m = dep_taddr_.size();
 	CppAD::vector<Base> x(n), y(m), check(m);
 	bool check_zero_order = taylor_per_var_ > 0;
 	Base max_taylor(0);
@@ -2657,8 +2656,6 @@ void ADFun<Base>::optimize(void)
 	// resize and initilaize conditional skip vector
 	// (must use player size because it now has the recoreder information)
 	cskip_op_.resize( play_.num_op_rec() );
-	for(i = 0; i < cskip_op_.size(); i++)
-		cskip_op_[i] = false;
 
 # ifndef NDEBUG
 	if( check_zero_order )

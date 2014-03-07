@@ -272,8 +272,6 @@ void ADFun<Base>::Dependent(ADTape<Base> *tape, const ADvector &y)
 	// conditional skip vector
 	cskip_op_.clear();
 	cskip_op_.resize( tape->Rec_.num_op_rec() );
-	for(i = 0; i < cskip_op_.size(); i++)
-		cskip_op_[i] = false;
 
 	// now that each dependent variable has a place in the tape,
 	// and there is a EndOp at the end of the tape, we can transfer the 
