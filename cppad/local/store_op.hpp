@@ -3,7 +3,7 @@
 # define CPPAD_STORE_OP_INCLUDED
 
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-13 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-14 Bradley M. Bell
 
 CppAD is distributed under multiple licenses. This distribution is under
 the terms of the 
@@ -32,14 +32,13 @@ where v is a VecAD<Base> vector, x is an AD<Base> object,
 and y is AD<Base> or Base objects. 
 We define the index corresponding to v[x] by
 \verbatim
-	i_v_x = combined[ arg[0] + i_vec ]
+	i_v_x = element_by_ind[ arg[0] + i_vec ].index
 \endverbatim
-where i_vec is defined under the heading \a arg[1] below:
+where i_vec is defined under the heading arg[1] below:
 
 \tparam Base
 base type for the operator; i.e., this operation was recorded
-using AD< \a Base > and computations by this routine are done using type 
-\a Base.
+using AD<Base> and computations by this routine are done using type Base.
 
 \param i_z
 is the index corresponding to the previous variable on the tape
@@ -47,27 +46,28 @@ is the index corresponding to the previous variable on the tape
 
 \param arg
 \n
-\a arg[0]
+arg[0]
+\n
 is the offset of this VecAD vector relative to the beginning 
-of the \a combined VecAD array.
+of the element_by_ind array.
 \n
 \n 
-\a arg[1] 
+arg[1] 
 \n
-If this is a StppOp or StpvOp operation 
-(the index x is a parameter), i_vec is defined by
+If this is a StppOp or StpvOp operation (if x is a parameter), 
+i_vec is defined by
 \verbatim
 	i_vec = arg[1]
 \endverbatim
-If this is a StvpOp or StvvOp operation 
-(the index x is a variable), i_vec is defined by
+If this is a StvpOp or StvvOp operation (if x is a variable),
+i_vec is defined by
 \verbatim
 	i_vec = floor( taylor[ arg[1] * nc_taylor + 0 ] )
 \endverbatim
 where floor(c) is the greatest integer less that or equal c.
 \n
 \n
-\a arg[2]
+arg[2]
 \n
 index corresponding to the third operand for this operator;
 i.e. the index corresponding to y.
@@ -80,36 +80,36 @@ is the total number of parameters on the tape
 number of columns in the matrix containing the Taylor coefficients.
 
 \param taylor
-\b Input: in StvpOp and StvvOp cases, \a taylor[ arg[1] * nc_taylor + 0 ]
-is used to compute the index in the definition of i_vec above
+In StvpOp and StvvOp cases, <code><taylor[ arg[1] * nc_taylor + 0 ]</code>
+is used to compute the index in the definition of i_vec above.
 
-\param nc_combined
-is the total number of elements in the combined VecAD array.
-
-\param variable
-\b Output: If y is a varable (StpvOp or StvvOp), 
-\a variable [ \a arg[0] + i_vec ] is set to true.
-Otherwise y is a paraemter (StppOp or StvpOp) and 
-\a variable [ \a arg[0] + i_vec ] is set to false.
-
-\param combined
-\b Output: \a combined [ \a arg[0] + i_vec ]
-is set equal to \a arg[2].
+\param element_by_ind
+\n
+is_var
+\n
+If y is a varable (StpvOp and StvvOp cases), 
+<code>element_by_ind[ arg[0] + i_vec ].is_var</code> is set to true.
+Otherwise y is a paraemter (StppOp and StvpOp cases) and 
+<code>element_by_ind[ arg[0] + i_vec ].is_var</code> is set to false.
+\n
+index
+\n
+<code>element_by_ind[ arg[0] - 1 ] .index</code>
+is the number of elements in the user vector containing this element.
+The value <code>element_by_ind[ arg[0] + i_vec].index</code>
+is set equal to arg[2].
 
 \par Check User Errors
 \li Check that the index is with in range; i.e.
-i_vec < combined[ \a arg[0] - 1 ]
-Note that, if x is a parameter, is the corresponding vector index
-and it does not change.
+<code>i_vec < element_by_ind[ arg[0] - 1 ].index</code>
+Note that, if x is a parameter, 
+the corresponding vector index and it does not change.
 In this case, the error above should be detected during tape recording.
 
 \par Checked Assertions 
-\li combined != CPPAD_NULL
-\li variable != CPPAD_NULL
 \li NumArg(op) == 3
 \li NumRes(op) == 0
-\li 0 <  \a arg[0]
-\li \a arg[0] + i_vec < nc_combined
+\li 0 <  arg[0]
 \li if y is a parameter, arg[2] < num_par
 \li if x is a variable, arg[1] <= i_z
 \li if y is a variable, arg[2] <= i_z
@@ -121,9 +121,7 @@ inline void forward_store_op_0(
 	size_t         num_par     ,
 	size_t         nc_taylor   ,
 	Base*          taylor      ,
-	size_t         nc_combined ,
-	bool*          variable    ,
-	size_t*        combined    )
+	pod_vector<vecad_element>& element_by_ind )
 {
 	// This routine is only for documentaiton, it should not be used
 	CPPAD_ASSERT_UNKNOWN( false );
@@ -226,25 +224,20 @@ inline void forward_store_pp_op_0(
 	size_t         num_par     ,
 	size_t         nc_taylor   ,
 	Base*          taylor      ,
-	size_t         nc_combined ,
-	bool*          variable    ,
-	size_t*        combined    )
+	pod_vector<vecad_element>& element_by_ind )
 {	size_t i_vec = arg[1];
 
 	// Because the index is a parameter, this indexing error should be 
 	// caught and reported to the user when the tape is recording.
-	CPPAD_ASSERT_UNKNOWN( i_vec < combined[ arg[0] - 1 ] );
+	CPPAD_ASSERT_UNKNOWN( i_vec < element_by_ind[ arg[0] - 1 ].index );
 
-	CPPAD_ASSERT_UNKNOWN( variable != CPPAD_NULL );
-	CPPAD_ASSERT_UNKNOWN( combined != CPPAD_NULL );
 	CPPAD_ASSERT_UNKNOWN( NumArg(StppOp) == 3 );
 	CPPAD_ASSERT_UNKNOWN( NumRes(StppOp) == 0 );
 	CPPAD_ASSERT_UNKNOWN( 0 < arg[0] );
-	CPPAD_ASSERT_UNKNOWN( arg[0] + i_vec < nc_combined );
 	CPPAD_ASSERT_UNKNOWN( size_t(arg[2]) < num_par );
 
-	variable[ arg[0] + i_vec ] = false;
-	combined[ arg[0] + i_vec ] = arg[2];
+	element_by_ind[ arg[0] + i_vec ].is_var = false;
+	element_by_ind[ arg[0] + i_vec ].index  = arg[2];
 }
 
 /*!
@@ -259,25 +252,20 @@ inline void forward_store_pv_op_0(
 	size_t         num_par     ,
 	size_t         nc_taylor   ,
 	Base*          taylor      ,
-	size_t         nc_combined ,
-	bool*          variable    ,
-	size_t*        combined    )
+	pod_vector<vecad_element>& element_by_ind )
 {	size_t i_vec = arg[1];
 
 	// Because the index is a parameter, this indexing error should be 
 	// caught and reported to the user when the tape is recording.
-	CPPAD_ASSERT_UNKNOWN( i_vec < combined[ arg[0] - 1 ] );
+	CPPAD_ASSERT_UNKNOWN( i_vec < element_by_ind[ arg[0] - 1 ].index );
 
-	CPPAD_ASSERT_UNKNOWN( variable != CPPAD_NULL );
-	CPPAD_ASSERT_UNKNOWN( combined != CPPAD_NULL );
 	CPPAD_ASSERT_UNKNOWN( NumArg(StpvOp) == 3 );
 	CPPAD_ASSERT_UNKNOWN( NumRes(StpvOp) == 0 );
 	CPPAD_ASSERT_UNKNOWN( 0 < arg[0] );
-	CPPAD_ASSERT_UNKNOWN( arg[0] + i_vec < nc_combined );
 	CPPAD_ASSERT_UNKNOWN( size_t(arg[2]) <= i_z );
 
-	variable[ arg[0] + i_vec ] = true;
-	combined[ arg[0] + i_vec ] = arg[2];
+	element_by_ind[ arg[0] + i_vec ].is_var = true;
+	element_by_ind[ arg[0] + i_vec ].index  = arg[2];
 }
 
 /*!
@@ -292,27 +280,22 @@ inline void forward_store_vp_op_0(
 	size_t         num_par     ,
 	size_t         nc_taylor   ,
 	Base*          taylor      ,
-	size_t         nc_combined ,
-	bool*          variable    ,
-	size_t*        combined    )
+	pod_vector<vecad_element>& element_by_ind )
 {	
 	CPPAD_ASSERT_UNKNOWN( size_t(arg[1]) <= i_z );
 	size_t i_vec = Integer( taylor[ arg[1] * nc_taylor + 0 ] );
 	CPPAD_ASSERT_KNOWN( 
-		i_vec < combined[ arg[0] - 1 ] ,
+		i_vec < element_by_ind[ arg[0] - 1 ].index ,
 		"VecAD: index during zero order forward sweep is out of range"
 	);
 
-	CPPAD_ASSERT_UNKNOWN( variable != CPPAD_NULL );
-	CPPAD_ASSERT_UNKNOWN( combined != CPPAD_NULL );
 	CPPAD_ASSERT_UNKNOWN( NumArg(StvpOp) == 3 );
 	CPPAD_ASSERT_UNKNOWN( NumRes(StvpOp) == 0 );
 	CPPAD_ASSERT_UNKNOWN( 0 < arg[0] );
-	CPPAD_ASSERT_UNKNOWN( arg[0] + i_vec < nc_combined );
 	CPPAD_ASSERT_UNKNOWN( size_t(arg[2]) < num_par );
 
-	variable[ arg[0] + i_vec ] = false;
-	combined[ arg[0] + i_vec ] = arg[2];
+	element_by_ind[ arg[0] + i_vec ].is_var = false;
+	element_by_ind[ arg[0] + i_vec ].index  = arg[2];
 }
 
 /*!
@@ -327,27 +310,22 @@ inline void forward_store_vv_op_0(
 	size_t         num_par     ,
 	size_t         nc_taylor   ,
 	Base*          taylor      ,
-	size_t         nc_combined ,
-	bool*          variable    ,
-	size_t*        combined    )
+	pod_vector<vecad_element>& element_by_ind )
 {	
 	CPPAD_ASSERT_UNKNOWN( size_t(arg[1]) <= i_z );
 	size_t i_vec = Integer( taylor[ arg[1] * nc_taylor + 0 ] );
 	CPPAD_ASSERT_KNOWN( 
-		i_vec < combined[ arg[0] - 1 ] ,
+		i_vec < element_by_ind[ arg[0] - 1 ].index ,
 		"VecAD: index during zero order forward sweep is out of range"
 	);
 
-	CPPAD_ASSERT_UNKNOWN( variable != CPPAD_NULL );
-	CPPAD_ASSERT_UNKNOWN( combined != CPPAD_NULL );
 	CPPAD_ASSERT_UNKNOWN( NumArg(StvpOp) == 3 );
 	CPPAD_ASSERT_UNKNOWN( NumRes(StvpOp) == 0 );
 	CPPAD_ASSERT_UNKNOWN( 0 < arg[0] );
-	CPPAD_ASSERT_UNKNOWN( arg[0] + i_vec < nc_combined );
 	CPPAD_ASSERT_UNKNOWN( size_t(arg[2]) <= i_z );
 
-	variable[ arg[0] + i_vec ] = true;
-	combined[ arg[0] + i_vec ] = arg[2];
+	element_by_ind[ arg[0] + i_vec ].is_var = true;
+	element_by_ind[ arg[0] + i_vec ].index  = arg[2];
 }
 
 /*!

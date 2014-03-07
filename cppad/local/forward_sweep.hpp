@@ -182,18 +182,17 @@ size_t forward_sweep(
 	// initialize the comparision operator (ComOp) counter
 	size_t compareCount = 0;
 
-	pod_vector<size_t> vecad_index;   // address for each element
-	pod_vector<bool>   vecad_is_var;  // is element a variable
+	// initialize vecad information
+	pod_vector<vecad_element> element_by_ind; 
 	if( p == 0 )
 	{
 		// this includes order zero calculation, initialize vector indices
 		i = play->num_vec_ind_rec();
 		if( i > 0 )
-		{	vecad_index.extend(i);
-			vecad_is_var.extend(i);
+		{	element_by_ind.extend(i);
 			while(i--)
-			{	vecad_index[i] = play->GetVecInd(i);
-				vecad_is_var[i] = false;
+			{	element_by_ind[i].index = play->GetVecInd(i);
+				element_by_ind[i].is_var = false;
 			}
 		}
 		// includes zero order, so initialize conditional skip flags
@@ -415,9 +414,7 @@ size_t forward_sweep(
 					parameter, 
 					J, 
 					taylor,
-					play->num_vec_ind_rec(),
-					vecad_is_var.data(),
-					vecad_index.data()
+					element_by_ind
 				);
 				if( p < q )
 					forward_load_op( op, p+1, q, i_var, arg, J, taylor);
@@ -438,9 +435,7 @@ size_t forward_sweep(
 					parameter, 
 					J, 
 					taylor,
-					play->num_vec_ind_rec(),
-					vecad_is_var.data(),
-					vecad_index.data()
+					element_by_ind
 				);
 				if( p < q )
 					forward_load_op( op, p+1, q, i_var, arg, J, taylor);
@@ -540,9 +535,7 @@ size_t forward_sweep(
 					num_par, 
 					J, 
 					taylor,
-					play->num_vec_ind_rec(),
-					vecad_is_var.data(),
-					vecad_index.data()
+					element_by_ind
 				);
 			}
 			break;
@@ -556,9 +549,7 @@ size_t forward_sweep(
 					num_par, 
 					J, 
 					taylor,
-					play->num_vec_ind_rec(),
-					vecad_is_var.data(),
-					vecad_index.data()
+					element_by_ind
 				);
 			}
 			break;
@@ -572,9 +563,7 @@ size_t forward_sweep(
 					num_par, 
 					J, 
 					taylor,
-					play->num_vec_ind_rec(),
-					vecad_is_var.data(),
-					vecad_index.data()
+					element_by_ind
 				);
 			}
 			break;
@@ -588,9 +577,7 @@ size_t forward_sweep(
 					num_par, 
 					J, 
 					taylor,
-					play->num_vec_ind_rec(),
-					vecad_is_var.data(),
-					vecad_index.data()
+					element_by_ind
 				);
 			}
 			break;

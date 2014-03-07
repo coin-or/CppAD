@@ -156,17 +156,13 @@ size_t forward0sweep(
 
 	// This is an order zero calculation, initialize vecad information
 	//
-	// mapping from vecad index to parameter or variable index
-	pod_vector<size_t> vecad_index;
-	// Does this vecad index corresponding to a variable (otherwise parameter)
-	pod_vector<bool>   vecad_is_var;
+	pod_vector<vecad_element> element_by_ind;
 	size_t  i = play->num_vec_ind_rec();
 	if( i > 0 )
-	{	vecad_index.extend(i);
-		vecad_is_var.extend(i);
+	{	element_by_ind.extend(i);
 		while(i--)
-		{	vecad_index[i] = play->GetVecInd(i);
-			vecad_is_var[i] = false;
+		{	element_by_ind[i].index  = play->GetVecInd(i);
+			element_by_ind[i].is_var = false;
 		}
 	}
 
@@ -369,8 +365,6 @@ size_t forward0sweep(
 			// -------------------------------------------------
 
 			case LdpOp:
-			CPPAD_ASSERT_UNKNOWN( vecad_index.size() != 0 );
-			CPPAD_ASSERT_UNKNOWN( vecad_is_var.size() != 0 );
 			non_const_arg = play->forward_non_const_arg();
 			forward_load_p_op_0(
 				i_var, 
@@ -379,16 +373,12 @@ size_t forward0sweep(
 				parameter, 
 				J, 
 				taylor,
-				play->num_vec_ind_rec(),
-				vecad_is_var.data(),
-				vecad_index.data()
+				element_by_ind
 			);
 			break;
 			// -------------------------------------------------
 
 			case LdvOp:
-			CPPAD_ASSERT_UNKNOWN( vecad_index.size() != 0 );
-			CPPAD_ASSERT_UNKNOWN( vecad_is_var.size() != 0 );
 			non_const_arg = play->forward_non_const_arg();
 			forward_load_v_op_0(
 				i_var, 
@@ -397,9 +387,7 @@ size_t forward0sweep(
 				parameter, 
 				J, 
 				taylor,
-				play->num_vec_ind_rec(),
-				vecad_is_var.data(),
-				vecad_index.data()
+				element_by_ind
 			);
 			break;
 			// -------------------------------------------------
@@ -484,9 +472,7 @@ size_t forward0sweep(
 				num_par, 
 				J, 
 				taylor,
-				play->num_vec_ind_rec(),
-				vecad_is_var.data(),
-				vecad_index.data()
+				element_by_ind
 			);
 			break;
 			// -------------------------------------------------
@@ -498,9 +484,7 @@ size_t forward0sweep(
 				num_par, 
 				J, 
 				taylor,
-				play->num_vec_ind_rec(),
-				vecad_is_var.data(),
-				vecad_index.data()
+				element_by_ind
 			);
 			break;
 			// -------------------------------------------------
@@ -512,9 +496,7 @@ size_t forward0sweep(
 				num_par, 
 				J, 
 				taylor,
-				play->num_vec_ind_rec(),
-				vecad_is_var.data(),
-				vecad_index.data()
+				element_by_ind
 			);
 			break;
 			// -------------------------------------------------
@@ -526,9 +508,7 @@ size_t forward0sweep(
 				num_par, 
 				J, 
 				taylor,
-				play->num_vec_ind_rec(),
-				vecad_is_var.data(),
-				vecad_index.data()
+				element_by_ind
 			);
 			break;
 			// -------------------------------------------------
