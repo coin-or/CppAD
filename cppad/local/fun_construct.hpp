@@ -326,7 +326,6 @@ void ADFun<Base>::operator=(const ADFun<Base>& f)
 	}
 
 	// allocate and copy the conditional skip information
-	cskip_op_.clear();
 	cskip_op_ = f.cskip_op_;
 
 	// allocate and copy the forward sparsity information
