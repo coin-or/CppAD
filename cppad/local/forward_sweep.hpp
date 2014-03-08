@@ -121,19 +121,43 @@ index i on the tape.
 
 \param cskip_op
 Is a vector with size play->num_op_rec().
-
-\li <tt>p = 0</tt>
+\n
+\n
+<tt>p = 0</tt>
+\n
 In this case,
 the input value of the elements does not matter.
 Upon return, if cskip_op[i] is true, the operator with index i
 does not affect any of the dependent variable (given the value
 of the independent variables).
-
-\li <tt>p > 0</tt>
+\n
+\n
+<tt>p > 0</tt>
+\n
 The vector is not modified and
 if cskip_op[i] is true, the operator with index i
 does not affect any of the dependent variable (given the value
 of the independent variables).
+
+\param element_by_load_op
+is a vector with size play->num_load_op_rec().
+\n
+\n
+<tt>p == 0</tt>
+\n
+In this case,
+The input value of the elements does not matter.
+Upon return, it is the variable index corresponding to the
+load instruction.
+In the case where the index is zero,
+the instruction corresponds to a parameter (not variable).
+\n
+\n
+<tt>p > 0</tt>
+\n
+Is the variable index corresponding to each load instruction.
+In the case where the index is zero,
+the instruction corresponds to a parameter (not variable).
 
 \a return
 If \a q is not zero, the return value is zero.
@@ -156,7 +180,8 @@ size_t forward_sweep(
 	player<Base>*         play,
 	const size_t          J,
 	Base*                 taylor,
-	bool*                 cskip_op
+	bool*                 cskip_op,
+	pod_vector<addr_t>&   element_by_load_op
 )
 {	CPPAD_ASSERT_UNKNOWN( J >= q + 1 );
 	CPPAD_ASSERT_UNKNOWN( p <= q );
@@ -199,6 +224,7 @@ size_t forward_sweep(
 		for(i = 0; i < play->num_op_rec(); i++)
 			cskip_op[i] = false;
 	}
+	// values of element_by_load_op do not matter
 
 	// Work space used by UserOp. Note User assumes p = q.
 	const size_t user_q1 = q+1;  // number of orders for this user calculation
@@ -414,14 +440,16 @@ size_t forward_sweep(
 					parameter, 
 					J, 
 					taylor,
-					element_by_ind
+					element_by_ind,
+					element_by_load_op
 				);
-				if( p < q )
-					forward_load_op( op, p+1, q, i_var, arg, J, taylor);
+				if( p < q ) forward_load_op( 
+					op, p+1, q, i_var, arg, J, taylor, element_by_load_op
+				);
 			}
-			else
-			{	forward_load_op( op, p, q, i_var, arg, J, taylor);
-			}
+			else	forward_load_op(
+					op, p, q, i_var, arg, J, taylor, element_by_load_op
+			);
 			break;
 			// -------------------------------------------------
 
@@ -435,14 +463,16 @@ size_t forward_sweep(
 					parameter, 
 					J, 
 					taylor,
-					element_by_ind
+					element_by_ind,
+					element_by_load_op
 				);
-				if( p < q )
-					forward_load_op( op, p+1, q, i_var, arg, J, taylor);
+				if( p < q ) forward_load_op(
+					op, p+1, q, i_var, arg, J, taylor, element_by_load_op
+				);
 			}
-			else
-			{	forward_load_op( op, p, q, i_var, arg, J, taylor);
-			}
+			else	forward_load_op( 
+				op, p, q, i_var, arg, J, taylor, element_by_load_op
+			);
 			break;
 			// -------------------------------------------------
 

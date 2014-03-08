@@ -325,8 +325,12 @@ void ADFun<Base>::operator=(const ADFun<Base>& f)
 		}
 	}
 
-	// allocate and copy the conditional skip information
+	// copy the conditional skip information
 	cskip_op_ = f.cskip_op_;
+
+	// copy the vecad load operation information
+	load_op_  = f.load_op_;
+	
 
 	// allocate and copy the forward sparsity information
 	size_t n_set = f.for_jac_sparse_pack_.n_set();
@@ -453,16 +457,17 @@ total_num_var_(0)
 
 	// use independent variable values to fill in values for others
 	CPPAD_ASSERT_UNKNOWN( cskip_op_.size() == play_.num_op_rec() );
+	CPPAD_ASSERT_UNKNOWN( load_op_.size()  == play_.num_load_op_rec() );
 # if CPPAD_USE_FORWARD0SWEEP
 	compare_change_ = forward0sweep(std::cout, false,
 		n, total_num_var_, &play_, taylor_col_dim_, taylor_.data(),
-		cskip_op_.data()
+		cskip_op_.data(), load_op_
 	);
 # else
 	size_t p = 0;
 	compare_change_ = forward_sweep(std::cout, false,
 		p, p, n, total_num_var_, &play_, taylor_col_dim_, taylor_.data(),
-		cskip_op_.data()
+		cskip_op_.data(), load_op_
 	);
 # endif
 	CPPAD_ASSERT_UNKNOWN( compare_change_ == 0 );

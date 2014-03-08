@@ -174,6 +174,7 @@ VectorBase ADFun<Base>::Reverse(size_t q, const VectorBase &w)
 
 	// evaluate the derivatives
 	CPPAD_ASSERT_UNKNOWN( cskip_op_.size() == play_.num_op_rec() );
+	CPPAD_ASSERT_UNKNOWN( load_op_.size()  == play_.num_load_op_rec() );
 	ReverseSweep(
 		q - 1,
 		n,
@@ -183,7 +184,8 @@ VectorBase ADFun<Base>::Reverse(size_t q, const VectorBase &w)
 		taylor_.data(),
 		q,
 		Partial.data(),
-		cskip_op_.data()
+		cskip_op_.data(),
+		load_op_
 	);
 
 	// return the derivative values

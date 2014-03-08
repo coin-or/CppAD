@@ -391,17 +391,17 @@ public:
 			CPPAD_ASSERT_UNKNOWN( tape != CPPAD_NULL );
 			CPPAD_ASSERT_UNKNOWN( vec_->offset_ > 0  );
 	
+			size_t load_op_index = tape->Rec_.num_load_op_rec();
 			if( IdenticalPar(ind_) )
 			{	CPPAD_ASSERT_UNKNOWN( NumRes(LdpOp) == 1 );
 				CPPAD_ASSERT_UNKNOWN( NumArg(LdpOp) == 3 );
 
 				// put operand addresses in tape
-				// (value of third arugment does not matter)
 				tape->Rec_.PutArg(
-					vec_->offset_, i, 0
+					vec_->offset_, i, load_op_index
 				);
 				// put operator in the tape, ind_ is a parameter
-				result.taddr_ = tape->Rec_.PutOp(LdpOp);
+				result.taddr_ = tape->Rec_.PutLoadOp(LdpOp);
 				// change result to variable for this load
 				result.tape_id_ = tape->id_;
 			} 
@@ -423,10 +423,10 @@ public:
 				// put operand addresses in tape
 				// (value of third arugment does not matter)
 				tape->Rec_.PutArg(
-					vec_->offset_, ind_taddr, 0
+					vec_->offset_, ind_taddr, load_op_index
 				);
 				// put operator in the tape, ind_ is a variable
-				result.taddr_ = tape->Rec_.PutOp(LdvOp);
+				result.taddr_ = tape->Rec_.PutLoadOp(LdvOp);
 				// change result to variable for this load
 				result.tape_id_ = tape->id_;
 			}

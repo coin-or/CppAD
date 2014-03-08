@@ -41,6 +41,9 @@ private:
 	/// Number of variables in the recording.
 	size_t    num_var_rec_;
 
+	/// Number vecad load operations (LdpOp or LdvOp) currently in recording.
+	size_t	num_load_op_rec_;
+
 	/// The operators in the recording.
 	pod_vector<CPPAD_OP_CODE_TYPE> op_rec_;
 
@@ -62,6 +65,7 @@ public:
 	recorder(void) : 
 	thread_offset_( thread_alloc::thread_num() * CPPAD_HASH_TABLE_SIZE ) ,
 	num_var_rec_(0)                                      ,
+	num_load_op_rec_(0)                                  ,
 	op_rec_( std::numeric_limits<addr_t>::max() )        ,
 	vecad_ind_rec_( std::numeric_limits<addr_t>::max() ) ,
 	op_arg_rec_( std::numeric_limits<addr_t>::max() )    ,
@@ -82,15 +86,18 @@ public:
 	to the system (so as to conserve on memory).
 	*/
 	void free(void)
-	{	num_var_rec_  = 0;
+	{	num_var_rec_     = 0;
+		num_load_op_rec_ = 0;
 		op_rec_.free();
 		vecad_ind_rec_.free();
 		op_arg_rec_.free();
 		par_rec_.free();
 		text_rec_.free();
 	}
-	/// Start recording the next operator in the operation sequence.
+	/// Put next operator in the operation sequence.
 	inline size_t PutOp(OpCode op);
+	/// Put a vecad load operator in the operation sequence (special case)
+	inline size_t PutLoadOp(OpCode op);
 	/// Add a value to the end of the current vector of VecAD indices.
 	inline size_t PutVecInd(size_t vec_ind);
 	/// Find or add a parameter to the current vector of parameters.
@@ -123,6 +130,10 @@ public:
 	size_t num_var_rec(void) const
 	{	return num_var_rec_; }
 
+	/// Number of LdpOp and LdvOp operations currently in the recording.
+	size_t num_load_op_rec(void) const
+	{	return num_load_op_rec_; }
+
 	/// Number of operators currently stored in the recording.
 	size_t num_op_rec(void) const
 	{	return  op_rec_.size(); }
@@ -138,7 +149,7 @@ public:
 };
 
 /*!
-Start recording the next operator in the operation sequence.
+Put next operator in the operation sequence.
 
 This sets the op code for the next operation in this recording.
 This call must be followed by putting the corresponding 
@@ -149,7 +160,7 @@ argument indices in the recording.
 
 \param op
 Is the op code corresponding to the the operation that is being
-recorded. 
+recorded (which must not be LdpOp or LdvOp).
 
 \return
 The return value is the index of the primary (last) variable 
@@ -158,9 +169,9 @@ The number of variables corresponding to the operation is given by
 \verbatim
 	NumRes(op)
 \endverbatim
-With each call to PutOp 
+With each call to PutOp or PutLoadOp,
 the return index increases by the number of variables corresponding
-to this call to PutOp.
+to the call.
 This index starts at zero after the default constructor
 and after each call to Erase.
 */
@@ -169,10 +180,61 @@ inline size_t recorder<Base>::PutOp(OpCode op)
 {	size_t i    = op_rec_.extend(1);
 	op_rec_[i]  = static_cast<CPPAD_OP_CODE_TYPE>(op);
 	CPPAD_ASSERT_UNKNOWN( op_rec_.size() == i + 1 );
+	CPPAD_ASSERT_UNKNOWN( (op != LdpOp) & (op != LdvOp) );
 
 	// first operator should be a BeginOp and NumRes( BeginOp ) > 0
 	num_var_rec_ += NumRes(op);
 	CPPAD_ASSERT_UNKNOWN( num_var_rec_ > 0 );
+
+	return num_var_rec_ - 1;
+}
+
+/*!
+Put next LdpOp or LdvOp operator in operation sequence (special cases).
+
+This sets the op code for the next operation in this recording.
+This call must be followed by putting the corresponding 
+\verbatim
+	NumArg(op)
+\endverbatim
+argument indices in the recording.
+
+\param op
+Is the op code corresponding to the the operation that is being
+recorded (which must be LdpOp or LdvOp).
+
+\return
+The return value is the index of the primary (last) variable 
+corresponding to the result of this operation. 
+The number of variables corresponding to the operation is given by
+\verbatim
+	NumRes(op)
+\endverbatim
+which must be one for this operation.
+With each call to PutLoadOp or PutOp,
+the return index increases by the number of variables corresponding
+to this call to the call.
+This index starts at zero after the default constructor
+and after each call to Erase.
+
+\par num_load_op_rec()
+The return value for <code>num_load_op_rec()</code> 
+increases by one after each call to this function
+(and starts at zero after the default constructor or Erase).
+*/
+template <class Base>
+inline size_t recorder<Base>::PutLoadOp(OpCode op)
+{	size_t i    = op_rec_.extend(1);
+	op_rec_[i]  = static_cast<CPPAD_OP_CODE_TYPE>(op);
+	CPPAD_ASSERT_UNKNOWN( op_rec_.size() == i + 1 );
+	CPPAD_ASSERT_UNKNOWN( (op == LdpOp) | (op == LdvOp) );
+
+	// first operator should be a BeginOp and NumRes( BeginOp ) > 0
+	num_var_rec_ += NumRes(op);
+	CPPAD_ASSERT_UNKNOWN( num_var_rec_ > 0 );
+
+	// count this vecad load operation
+	num_load_op_rec_++;
 
 	return num_var_rec_ - 1;
 }

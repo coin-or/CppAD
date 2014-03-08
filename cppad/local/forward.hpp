@@ -119,31 +119,32 @@ Vector ADFun<Base>::Forward(
 
 	// evaluate the derivatives
 	CPPAD_ASSERT_UNKNOWN( cskip_op_.size() == play_.num_op_rec() );
+	CPPAD_ASSERT_UNKNOWN( load_op_.size()   == play_.num_load_op_rec() );
 	size_t p = (q + 1) - n_order;
 	if( q == 0 )
 	{
 # if CPPAD_USE_FORWARD0SWEEP
 		compare_change_ = forward0sweep(s, true,
 			n, total_num_var_, &play_, taylor_col_dim_, taylor_.data(),
-			cskip_op_.data()
+			cskip_op_.data(), load_op_
 		);
 # else
 		compare_change_ = forward_sweep(s, true, p,
 			q, n, total_num_var_, &play_, taylor_col_dim_, taylor_.data(),
-			cskip_op_.data()
+			cskip_op_.data(), load_op_
 		);
 # endif
 	}
 	else if( p == 0 )
 	{	compare_change_ = forward_sweep(s, true, p,
 			q, n, total_num_var_, &play_, taylor_col_dim_, taylor_.data(),
-			cskip_op_.data()
+			cskip_op_.data(), load_op_
 		);
 	}
 	else
 	{	forward_sweep(s, true, p,
 			q, n, total_num_var_, &play_, taylor_col_dim_, taylor_.data(),
-			cskip_op_.data()
+			cskip_op_.data(), load_op_
 		);
 	}
 

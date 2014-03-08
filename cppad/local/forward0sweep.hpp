@@ -111,11 +111,19 @@ is the zero order Taylor coefficient for the variable with
 index i on the tape.
 
 \param cskip_op
-Is a vector with size play->num_op_rec(),
-the input value of the elements does not matter.
+Is a vector with size play->num_op_rec().
+The input value of the elements does not matter.
 Upon return, if cskip_op[i] is true, the operator index i in the recording
 does not affect any of the dependent variable (given the value
 of the independent variables).
+
+\param element_by_load_op
+Is a vector with size play->num_load_op_rec().
+The input value of the elements does not matter.
+Upon return, it is the variable index corresponding to the
+load instruction.
+In the special case where the index is zero,
+the instruction corresponds to a parameter (not variable).
 
 \a return
 The return value is equal to the number of ComOp operations
@@ -134,7 +142,8 @@ size_t forward0sweep(
 	player<Base>*         play,
 	size_t                J,
 	Base*                 taylor,
-	bool*                 cskip_op
+	bool*                 cskip_op,
+	pod_vector<addr_t>&   element_by_load_op
 )
 {	CPPAD_ASSERT_UNKNOWN( J >= 1 );
 
@@ -155,7 +164,6 @@ size_t forward0sweep(
 	size_t compareCount = 0;
 
 	// This is an order zero calculation, initialize vecad information
-	//
 	pod_vector<vecad_element> element_by_ind;
 	size_t  i = play->num_vec_ind_rec();
 	if( i > 0 )
@@ -165,6 +173,7 @@ size_t forward0sweep(
 			element_by_ind[i].is_var = false;
 		}
 	}
+	// values of element_by_load_op do not matter.
 
 	// zero order, so initialize conditional skip flags
 	for(i = 0; i < play->num_op_rec(); i++)
@@ -373,7 +382,8 @@ size_t forward0sweep(
 				parameter, 
 				J, 
 				taylor,
-				element_by_ind
+				element_by_ind,
+				element_by_load_op
 			);
 			break;
 			// -------------------------------------------------
@@ -387,7 +397,8 @@ size_t forward0sweep(
 				parameter, 
 				J, 
 				taylor,
-				element_by_ind
+				element_by_ind,
+				element_by_load_op
 			);
 			break;
 			// -------------------------------------------------

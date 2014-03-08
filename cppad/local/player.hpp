@@ -37,11 +37,14 @@ private:
 	/// Number of variables in the recording.
 	size_t    num_var_rec_;
 
-	/// The operators in the recording.
-	pod_vector<CPPAD_OP_CODE_TYPE> op_rec_;
+	/// number of vecad load opeations in the reconding
+	size_t    num_load_op_rec_;
 
 	/// Number of VecAD vectors in the recording
 	size_t    num_vecad_vec_rec_;
+
+	/// The operators in the recording.
+	pod_vector<CPPAD_OP_CODE_TYPE> op_rec_;
 
 	/// The VecAD indices in the recording.
 	pod_vector<addr_t> vecad_ind_rec_;
@@ -62,6 +65,7 @@ public:
 	/// Default constructor
 	player(void) : 
 	num_var_rec_(0)                                      ,
+	num_load_op_rec_(0)                                      ,
 	op_rec_( std::numeric_limits<addr_t>::max() )        ,
 	vecad_ind_rec_( std::numeric_limits<addr_t>::max() ) ,
 	op_arg_rec_( std::numeric_limits<addr_t>::max() )    ,
@@ -74,7 +78,6 @@ public:
 	{ }
 
 	// ===============================================================
-	// Begin two functions with idential code but different argument types.
 	/*!  
  	Moving an operation sequence from a recorder to a player
  
@@ -87,33 +90,35 @@ public:
 	void get(recorder<Base>& rec)
 	{	size_t i;
 
-		// Var
+		// just set size_t values
 		num_var_rec_        = rec.num_var_rec_;
+		num_load_op_rec_    = rec.num_load_op_rec_; 
 
-		// Op
+		// op_rec_
 		op_rec_.swap(rec.op_rec_);
 
-		// VecInd
+		// vec_ind_rec_
 		vecad_ind_rec_.swap(rec.vecad_ind_rec_);
 
-		// Arg
+		// op_arg_rec_
 		op_arg_rec_.swap(rec.op_arg_rec_);
 
-		// Par
+		// par_rec_
 		par_rec_.swap(rec.par_rec_);
 
-		// Txt
+		// text_rec_
 		text_rec_.swap(rec.text_rec_);
 
 		// set the number of VecAD vectors
 		num_vecad_vec_rec_ = 0;
 		for(i = 0; i < vecad_ind_rec_.size(); i += vecad_ind_rec_[i] + 1)
 			num_vecad_vec_rec_++;
+
 		// vecad_ind_rec_ contains size of each VecAD followed by
 		// the parameter indices used to iniialize it.
 		CPPAD_ASSERT_UNKNOWN( i == vecad_ind_rec_.size() );
 	}
-
+	// ===============================================================
 	/*!  
  	Copying an operation sequence from one player to another
  
@@ -122,32 +127,22 @@ public:
  	*/
 	void operator=(const player& play)
 	{	
-		// Var
 		num_var_rec_        = play.num_var_rec_;
-
-		// Op
+		num_load_op_rec_    = play.num_load_op_rec_;
 		op_rec_             = play.op_rec_;
-
-		// VecInd
 		num_vecad_vec_rec_  = play.num_vecad_vec_rec_;
 		vecad_ind_rec_      = play.vecad_ind_rec_;
-
-		// Arg
 		op_arg_rec_         = play.op_arg_rec_;
-
-		// Par
 		par_rec_            = play.par_rec_;
-
-		// Txt
 		text_rec_           = play.text_rec_;
 	}
-	// End two functions with idential code but different argument types.
 	// ===============================================================
 
 	/// Erase all information in an operation sequence player.
 	void Erase(void)
 	{	
 		num_var_rec_       = 0;
+		num_load_op_rec_   = 0;
 		num_vecad_vec_rec_ = 0;
 
 		op_rec_.erase();
@@ -222,10 +217,14 @@ public:
 	{	CPPAD_ASSERT_UNKNOWN(i < text_rec_.size() );
 		return text_rec_.data() + i;
 	}
-	
+
 	/// Fetch number of variables in the recording.
 	size_t num_var_rec(void) const
 	{	return num_var_rec_; }
+
+	/// Fetch number of vecad load operations
+	size_t num_load_op_rec(void) const
+	{	return num_load_op_rec_; }
 
 	/// Fetch number of operators in the recording.
 	size_t num_op_rec(void) const

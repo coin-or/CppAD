@@ -2342,14 +2342,15 @@ void optimize_run(
 			CPPAD_ASSERT_NARG_NRES(op, 3, 1);
 			new_arg[0] = new_vecad_ind[ arg[0] ];
 			new_arg[1] = arg[1];
+			new_arg[2] = rec->num_load_op_rec();
 			CPPAD_ASSERT_UNKNOWN( size_t(new_arg[0]) < num_vecad_ind );
 			rec->PutArg( 
 				new_arg[0], 
 				new_arg[1], 
-				0
+				new_arg[2]
 			);
 			tape[i_var].new_op  = rec->num_op_rec();
-			tape[i_var].new_var = rec->PutOp(op);
+			tape[i_var].new_var = rec->PutLoadOp(op);
 			break;
 			// ---------------------------------------------------
 			// Load using a variable index
@@ -2357,15 +2358,16 @@ void optimize_run(
 			CPPAD_ASSERT_NARG_NRES(op, 3, 1);
 			new_arg[0] = new_vecad_ind[ arg[0] ];
 			new_arg[1] = tape[arg[1]].new_var;
+			new_arg[2] = rec->num_load_op_rec();
 			CPPAD_ASSERT_UNKNOWN( size_t(new_arg[0]) < num_vecad_ind );
 			CPPAD_ASSERT_UNKNOWN( size_t(new_arg[1]) < num_var );
 			rec->PutArg( 
 				new_arg[0], 
 				new_arg[1], 
-				0
+				new_arg[2]
 			);
 			tape[i_var].new_var = rec->num_op_rec();
-			tape[i_var].new_var = rec->PutOp(op);
+			tape[i_var].new_var = rec->PutLoadOp(op);
 			break;
 			// ---------------------------------------------------
 			// Store a parameter using a parameter index

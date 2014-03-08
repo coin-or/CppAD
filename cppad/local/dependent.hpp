@@ -273,6 +273,10 @@ void ADFun<Base>::Dependent(ADTape<Base> *tape, const ADvector &y)
 	cskip_op_.erase();
 	cskip_op_.extend( tape->Rec_.num_op_rec() );
 
+	// vecad load operation vector
+	load_op_.erase();
+	load_op_.extend( tape->Rec_.num_load_op_rec() );
+
 	// now that each dependent variable has a place in the tape,
 	// and there is a EndOp at the end of the tape, we can transfer the 
 	// recording to the player and and erase the tape.

@@ -112,6 +112,10 @@ private:
 	/// Set during forward pass of order zero
 	pod_vector<bool> cskip_op_;
 
+	/// Variable on the tape corresponding to each vecad load operation
+	/// (if zero, the operation corresponds to a parameter).
+	pod_vector<addr_t> load_op_;
+
 	/// Packed results of the forward mode Jacobian sparsity calculations.
 	/// for_jac_sparse_pack_.n_set() != 0  implies other sparsity results
 	/// are empty

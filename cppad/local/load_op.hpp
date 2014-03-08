@@ -24,7 +24,7 @@ Setting a variable so that it corresponds to current value of a VecAD element.
 
 /*!
 Structure used to hold tape information about one vecad element.
-Defining here uses fact that load_op.hpp include before store_op.hpp.
+Defining here uses fact that load_op.hpp is included before store_op.hpp.
 */
 typedef struct { 
 	/// is this a variable index
@@ -79,11 +79,8 @@ where floor(c) is the greatest integer less that or equal c.
 \n
 \n
 arg[2]
-\n
-If v[x] is a parameter, arg[2] is set to zero 
-(which is not a valid variable index).
-If v[x] is a variable, 
-arg[2] is set to the variable index corresponding to v[x]; i.e.  i_v_x.
+Is the index of this vecad load instruction in the
+element_by_load_op array.
 
 \param num_par
 is the total number of parameters on the tape
@@ -123,6 +120,14 @@ index
 <code>element_by_ind[ arg[0] - 1 ].index</code> 
 is the number of elements in the user vector containing this element.
 
+\param element_by_load_op
+is a vector with size play->num_load_op_rec().
+The input value of its elements does not matter.
+Upon return,  it contains the variable index corresponding to each load 
+instruction.
+In the case where the index is zero,
+the instruction corresponds to a parameter (not variable).
+
 \par Check User Errors
 \li In the LdvOp case check that the index is with in range; i.e.
 <code>i_vec < element_by_ind[ arg[0] - 1 ].index</code>. 
@@ -147,7 +152,8 @@ inline void forward_load_op_0(
 	const Base*    parameter   ,
 	size_t         nc_taylor   ,
 	Base*          taylor      ,
-	pod_vector<vecad_element>& element_by_ind )
+	pod_vector<vecad_element>& element_by_ind ,
+	pod_vector<addr_t>&        element_by_load_op )
 {
 	// This routine is only for documentaiton, it should not be used
 	CPPAD_ASSERT_UNKNOWN( false );
@@ -242,7 +248,8 @@ inline void forward_load_p_op_0(
 	const Base*    parameter   ,
 	size_t         nc_taylor   ,
 	Base*          taylor      ,
-	pod_vector<vecad_element>& element_by_ind )
+	pod_vector<vecad_element>& element_by_ind     ,
+	pod_vector<addr_t>&        element_by_load_op )
 {	size_t i_vec = arg[1];
 
 	// Because the index is a parameter, this indexing error should be
@@ -258,14 +265,14 @@ inline void forward_load_p_op_0(
 	Base* z       = taylor + i_z * nc_taylor;
 	if( element_by_ind[ arg[0] + i_vec ].is_var )
 	{	CPPAD_ASSERT_UNKNOWN( i_v_x < i_z );
+		element_by_load_op[ arg[2] ] = i_v_x;
 		Base* v_x = taylor + i_v_x * nc_taylor;
-		arg[2]    = i_v_x;
 		z[0]      = v_x[0];
 	}
 	else
 	{	CPPAD_ASSERT_UNKNOWN( i_v_x < num_par );
+		element_by_load_op[ arg[2] ] = 0;
 		Base v_x  = parameter[i_v_x];
-		arg[2]    = 0;
 		z[0]      = v_x;
 	}
 }
@@ -283,7 +290,8 @@ inline void forward_load_v_op_0(
 	const Base*    parameter   ,
 	size_t         nc_taylor   ,
 	Base*          taylor      ,
-	pod_vector<vecad_element>& element_by_ind )
+	pod_vector<vecad_element>& element_by_ind     ,
+	pod_vector<addr_t>&        element_by_load_op )
 {
 	CPPAD_ASSERT_UNKNOWN( NumArg(LdvOp) == 3 );
 	CPPAD_ASSERT_UNKNOWN( NumRes(LdvOp) == 1 );
@@ -300,14 +308,14 @@ inline void forward_load_v_op_0(
 	Base* z       = taylor + i_z * nc_taylor;
 	if( element_by_ind[ arg[0] + i_vec ].is_var )
 	{	CPPAD_ASSERT_UNKNOWN( i_v_x < i_z );
+		element_by_load_op[ arg[2] ] = i_v_x;
 		Base* v_x = taylor + i_v_x * nc_taylor;
-		arg[2]    = i_v_x;
 		z[0]      = v_x[0];
 	}
 	else
 	{	CPPAD_ASSERT_UNKNOWN( i_v_x < num_par );
+		element_by_load_op[ arg[2] ] = 0;
 		Base v_x  = parameter[i_v_x];
-		arg[2]    = 0;
 		z[0]      = v_x;
 	}
 }
@@ -340,10 +348,8 @@ is the AD variable index corresponding to the variable z.
 
 \param arg
 arg[2]
-If v[x] is a parameter, <code>arg[2]</code> is zero 
-(which is not a valid variable index).
-If v[x] is a variable, 
-<code>arg[2]</code> is the variable index corresponding to v[x].
+Is the index of this vecad load instruction in the
+element_by_load_op array.
 
 \param nc_taylor
 number of columns in the matrix containing the Taylor coefficients.
@@ -363,6 +369,12 @@ Output
 for k = p , ... , q,
 is set to the k-order Taylor coefficient for the variable z.
 
+\param element_by_load_op
+is a vector with size play->num_load_op_rec().
+It contains the variable index corresponding to each load instruction.
+In the case where the index is zero,
+the instruction corresponds to a parameter (not variable).
+
 \par Checked Assertions 
 \li NumArg(op) == 3
 \li NumRes(op) == 1
@@ -378,18 +390,19 @@ inline void forward_load_op(
 	size_t         i_z         ,
 	const addr_t*  arg         , 
 	size_t         nc_taylor   ,
-	Base*          taylor      )
-{
+	Base*          taylor      ,
+	const pod_vector<addr_t>&  element_by_load_op )
+{	size_t i_load = size_t( element_by_load_op[ arg[2] ] );
 
 	CPPAD_ASSERT_UNKNOWN( NumArg(op) == 3 );
 	CPPAD_ASSERT_UNKNOWN( NumRes(op) == 1 );
 	CPPAD_ASSERT_UNKNOWN( q < nc_taylor );
 	CPPAD_ASSERT_UNKNOWN( 0 < p && p <= q );
-	CPPAD_ASSERT_UNKNOWN( size_t(arg[2]) < i_z );
+	CPPAD_ASSERT_UNKNOWN( i_load < i_z );
 
 	Base* z      = taylor + i_z * nc_taylor;
-	if( arg[2] > 0 )
-	{	Base* v_x = taylor + arg[2] * nc_taylor;
+	if( i_load > 0 )
+	{	Base* v_x = taylor + i_load * nc_taylor;
 		for(size_t d = p; d <= q; d++)
 			z[d] = v_x[d];
 	}
@@ -433,10 +446,8 @@ is the AD variable index corresponding to the variable z.
 
 \param arg
 \a arg[2]
-If y[x] is a parameter, \a arg[2] is zero 
-(which is not a valid variable index).
-If y[x] is a variable, 
-\a arg[2] is the variable index corresponding to y[x].
+Is the index of this vecad load instruction in the
+element_by_load_op array.
 
 \param nc_taylor
 number of columns in the matrix containing the Taylor coefficients
@@ -469,6 +480,12 @@ the k-th order Taylor coefficient for x.
 On input, it corresponds to the function G,
 and on output it corresponds to the the function H. 
 
+\param element_by_load_op
+is a vector with size play->num_load_op_rec().
+It contains the variable index corresponding to each load instruction.
+In the case where the index is zero,
+the instruction corresponds to a parameter (not variable).
+
 \par Checked Assertions 
 \li NumArg(op) == 3
 \li NumRes(op) == 1
@@ -484,18 +501,19 @@ inline void reverse_load_op(
 	size_t         nc_taylor   ,
 	const Base*    taylor      ,
 	size_t         nc_partial  ,
-	Base*          partial     )
-{
+	Base*          partial     ,
+	const pod_vector<addr_t>& element_by_load_op )
+{	size_t i_load = size_t( element_by_load_op[ arg[2] ] );
 
 	CPPAD_ASSERT_UNKNOWN( NumArg(op) == 3 );
 	CPPAD_ASSERT_UNKNOWN( NumRes(op) == 1 );
 	CPPAD_ASSERT_UNKNOWN( d < nc_taylor );
-	CPPAD_ASSERT_UNKNOWN( size_t(arg[2]) < i_z );
+	CPPAD_ASSERT_UNKNOWN( i_load < i_z );
 
-	if( arg[2] > 0 )
+	if( i_load > 0 )
 	{
 		Base* pz   = partial + i_z    * nc_partial;
-		Base* py_x = partial + arg[2] * nc_partial;
+		Base* py_x = partial + i_load * nc_partial;
 		size_t j = d + 1;
 		while(j--)
 			py_x[j]   += pz[j];
