@@ -270,7 +270,7 @@ private:
 	size_t    op_index_;
 
 	/// Current offset of the argument indices in op_arg_rec_ 
-	addr_t*   op_arg_;
+	const addr_t*   op_arg_;
 
 	/// Index for primary (last) variable corresponding to current operator
 	size_t    var_index_;
@@ -477,15 +477,6 @@ public:
 		);
 		CPPAD_ASSERT_UNKNOWN( var_index_  < num_var_rec_ );
 	}
-	/*!
-	Get a non-constant version of op_arg returned by previous forward_next
-
-	\return
-	The return value is a non-constant version of a non-constant version of 
-	\c op_arg.
-	*/
-	addr_t* forward_non_const_arg(void)
-	{    return op_arg_; }
 	/*!
 	Start a play back of the recording during a reverse sweep.
 

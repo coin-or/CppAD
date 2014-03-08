@@ -157,7 +157,6 @@ size_t forward0sweep(
 	size_t        i_var;
 
 	// constant and non-constant version of the operation argument indices
-	addr_t*         non_const_arg;
 	const addr_t*   arg = CPPAD_NULL;
 
 	// initialize the comparision operator (ComOp) counter
@@ -374,10 +373,9 @@ size_t forward0sweep(
 			// -------------------------------------------------
 
 			case LdpOp:
-			non_const_arg = play->forward_non_const_arg();
 			forward_load_p_op_0(
 				i_var, 
-				non_const_arg, 
+				arg, 
 				num_par, 
 				parameter, 
 				J, 
@@ -389,10 +387,9 @@ size_t forward0sweep(
 			// -------------------------------------------------
 
 			case LdvOp:
-			non_const_arg = play->forward_non_const_arg();
 			forward_load_v_op_0(
 				i_var, 
-				non_const_arg, 
+				arg, 
 				num_par, 
 				parameter, 
 				J, 

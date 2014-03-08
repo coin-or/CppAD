@@ -147,7 +147,7 @@ In this case, the error above should be detected during tape recording.
 template <class Base>
 inline void forward_load_op_0(
 	size_t         i_z         ,
-	addr_t*        arg         , 
+	const addr_t*  arg         , 
 	size_t         num_par     ,
 	const Base*    parameter   ,
 	size_t         nc_taylor   ,
@@ -243,7 +243,7 @@ Zero order forward mode implementation of op = LdpOp.
 template <class Base>
 inline void forward_load_p_op_0(
 	size_t         i_z         ,
-	addr_t*        arg         , 
+	const addr_t*  arg         , 
 	size_t         num_par     ,
 	const Base*    parameter   ,
 	size_t         nc_taylor   ,
@@ -285,7 +285,7 @@ Zero order forward mode implementation of op = LdvOp.
 template <class Base>
 inline void forward_load_v_op_0(
 	size_t         i_z         ,
-	addr_t*        arg         , 
+	const addr_t*  arg         , 
 	size_t         num_par     ,
 	const Base*    parameter   ,
 	size_t         nc_taylor   ,

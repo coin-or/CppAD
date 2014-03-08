@@ -195,9 +195,6 @@ size_t forward_sweep(
 	// next variables 
 	size_t        i_var;
 
-	// arg (not as a constant)
-	addr_t*         non_const_arg = CPPAD_NULL;
-
 	// arg (as a constant)
 	const addr_t*   arg = CPPAD_NULL;
 
@@ -432,10 +429,9 @@ size_t forward_sweep(
 
 			case LdpOp:
 			if( p == 0 )
-			{	non_const_arg = play->forward_non_const_arg();
-				forward_load_p_op_0(
+			{	forward_load_p_op_0(
 					i_var, 
-					non_const_arg, 
+					arg, 
 					num_par, 
 					parameter, 
 					J, 
@@ -455,10 +451,9 @@ size_t forward_sweep(
 
 			case LdvOp:
 			if( p == 0 )
-			{	non_const_arg = play->forward_non_const_arg();
-				forward_load_v_op_0(
+			{	forward_load_v_op_0(
 					i_var, 
-					non_const_arg, 
+					arg, 
 					num_par, 
 					parameter, 
 					J, 

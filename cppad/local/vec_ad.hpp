@@ -52,7 +52,6 @@ $pre
 $$
 $icode%r% = %v%[%x%]%$$
 
-
 $head Purpose$$
 If either $icode v$$ or $icode x$$ is a 
 $cref/variable/glossary/Variable/$$,
@@ -309,38 +308,55 @@ $end
 */
 # include <cppad/local/pod_vector.hpp>
 
-// Use this define to get around a bug in doxygen 1.7.5.
-// To be explicit, the documentiion for the routines in tape_link.hpp
-// you use this typedef in place of the macro below.
+namespace CppAD { //  BEGIN_CPPAD_NAMESPACE
+/*!
+\defgroup vec_ad_hpp vec_ad.hpp
+\{
+\file vec_ad.hpp
+Defines the VecAD<Base> class.
+*/
 
+/*!
+\def CPPAD_VEC_AD_COMPUTED_ASSIGNMENT(op, name)
+Prints an error message if the correspinding computed assignment is used.
+
+THis macro is used to print an error message if any of the
+computed assignments are used with the VecAD_reference class.
+The argument \c op is one of the following:
++= , -= , *= , /=.
+The argument \c name, is a string literal with the name of the 
+computed assignment \c op.
+*/
 # define CPPAD_VEC_AD_COMPUTED_ASSIGNMENT(op, name)                     \
 VecAD_reference& operator op (const VecAD_reference<Base> &right)       \
 {	CPPAD_ASSERT_KNOWN(                                                \
-		0,                                                            \
+		false,                                                        \
 		"Cannot use a ADVec element on left side of" name             \
 	);                                                                 \
 	return *this;                                                      \
 }                                                                       \
 VecAD_reference& operator op (const AD<Base> &right)                    \
 {	CPPAD_ASSERT_KNOWN(                                                \
-		0,                                                            \
+		false,                                                        \
 		"Cannot use a ADVec element on left side of" name             \
 	);                                                                 \
 	return *this;                                                      \
 }                                                                       \
 VecAD_reference& operator op (const Base &right)                        \
 {	CPPAD_ASSERT_KNOWN(                                                \
-		0,                                                            \
+		false,                                                        \
 		"Cannot use a ADVec element on left side of" name             \
 	);                                                                 \
 	return *this;                                                      \
 }
 
+/*!
+Class used to hold a reference to an element of a VecAD object.
 
-//  BEGIN CppAD namespace
-namespace CppAD {
-
-// Element of VecAD
+\tparam Base
+Elements of this class act like an AD<Base> (in a restricted sense),
+in addition they track (on the tape) the index they correspond to.
+*/
 template <class Base>
 class VecAD_reference {
 	friend bool  Parameter<Base> (const VecAD<Base> &vec);
@@ -349,11 +365,22 @@ class VecAD_reference {
 	friend class ADTape<Base>;
 
 private:
-	VecAD<Base> *vec_;         // pointer to entire vector
+	/// pointer to vecad vector that this is a element of
+	VecAD<Base> *vec_;
+	/// index in vecad vector that this element corresponds to
 	AD<Base>     ind_;         // index for this element
 public:
-	VecAD_reference(VecAD<Base> *v, const AD<Base> &x) 
-		: vec_( v ) , ind_(x)
+	/*!
+	consructor
+
+	\param vec
+	value of vec_
+
+	\param ind
+	value of ind_
+	*/
+	VecAD_reference(VecAD<Base> *vec, const AD<Base>& ind) 
+		: vec_( vec ) , ind_(ind)
 	{ }
 
 	// assignment operators
@@ -369,7 +396,8 @@ public:
 	CPPAD_VEC_AD_COMPUTED_ASSIGNMENT( /= , " /= " )
 
 
-	// AD<Base> constructor
+	/// Conversion from VecAD_reference to AD<Base>.
+	/// puts the correspond vecad load instruction in the tape.
 	AD<Base> ADBase(void) const
 	{	AD<Base> result;
 
@@ -435,7 +463,9 @@ public:
 	}
 };
 
-// VecAD
+/*!
+Vector of AD objects that tracks indexing operations on the tape.
+*/
 template <class Base>
 class VecAD {
 	friend bool  Parameter<Base> (const VecAD<Base> &vec);
@@ -446,31 +476,31 @@ class VecAD {
 	friend std::ostream& operator << <Base>
 		(std::ostream &os, const VecAD<Base> &vec_);
 private:
-	// size of this VecAD vector
+	/// size of this VecAD vector
 	const  size_t   length_; 
 
-	// elements of this vector 
+	/// elements of this vector 
 	pod_vector<Base> data_; 
 
-	// offset in cummulate vector corresponding to this object
+	/// offset in cummulate vector corresponding to this object
 	size_t offset_; 
 
-	// tape id corresponding to the offset
+	/// tape id corresponding to the offset
 	tape_id_t tape_id_;
 public:
-	// declare the user's view of this type here
+	/// declare the user's view of this type here
 	typedef VecAD_reference<Base> reference;
 
-	// default constructor
-	// initialize tape_id_ same as for default constructor; see default.hpp
+	/// default constructor
+	/// initialize tape_id_ same as for default constructor; see default.hpp
 	VecAD(void) 
 	: length_(0) 
 	, offset_(0)
 	, tape_id_(0)
 	{	CPPAD_ASSERT_UNKNOWN( Parameter(*this) ); }
 
-	// constructor 
-	// initialize tape_id_ same as for parameters; see ad_copy.hpp
+	/// sizing constructor 
+	/// initialize tape_id_ same as for parameters; see ad_copy.hpp
 	VecAD(size_t n) 
 	: length_(n)
 	, offset_(0)
@@ -489,15 +519,18 @@ public:
 		CPPAD_ASSERT_UNKNOWN( Parameter(*this) );
 	}
 
-	// destructor
+	/// destructor
 	~VecAD(void)
 	{ }
 
-	// size
+	/// number of elements in the vector
 	size_t size(void)
 	{	return length_; }
 
-	// not taped element access
+	/// element access (not taped)
+	///
+	/// \param i
+	/// element index
 	Base &operator[](size_t i)
 	{
 		CPPAD_ASSERT_KNOWN( 
@@ -513,7 +546,14 @@ public:
 		return data_[i];
 	}
 
-	// taped elemement access
+	/*! delayed taped elemement access 
+	
+	\param x
+	element index
+
+	\par
+	This operation may convert this vector from a parameter to a variable
+	*/
 	VecAD_reference<Base> operator[](const AD<Base> &x) 
 	{
 		CPPAD_ASSERT_KNOWN(
@@ -554,6 +594,12 @@ public:
 };
 
 
+/*!
+Taped setting of element to a value.
+
+\param y
+value that element is set to.
+*/
 template <class Base>
 void VecAD_reference<Base>::operator=(const AD<Base> &y)
 {
@@ -617,6 +663,13 @@ void VecAD_reference<Base>::operator=(const AD<Base> &y)
 	}
 }
 
+
+/*!
+Taped setting of element to a value.
+
+\param y
+value that element is set to.
+*/
 template <class Base>
 void VecAD_reference<Base>::operator=(const Base &y)
 { 
@@ -661,28 +714,36 @@ void VecAD_reference<Base>::operator=(const Base &y)
 	}
 }
 
-// fold this case into AD<Base> case above
+/*!
+Taped setting of element to a value.
+
+\param y
+value that element is set to.
+
+\par
+this case gets folded into case where value is AD<Base>. 
+*/
 template <class Base>
 inline void VecAD_reference<Base>::operator=
 (const VecAD_reference<Base> &y)
 {	*this = y.ADBase(); }
 
-// fold this case into Base case above
+/*!
+Taped setting of element to a value.
+
+\param y
+value that element is set to.
+
+\par
+this case gets folded into case where value is Base. 
+*/
 template <class Base>
 inline void VecAD_reference<Base>::operator=(int y)
 {	*this = Base(y); }
 
-template <class Base>
-CPPAD_INLINE_FRIEND_TEMPLATE_FUNCTION
-std::ostream& operator << (std::ostream &os, const VecAD<Base> &v)
-{
- 	os << "vecAD( length = " << v.length_ 
-	   << ", offset = "      << v.offset_ << ")";
-	return os;
-}
 
-
-} // END CppAD namespace
+/*! \} */
+} // END_CPPAD_NAMESPACE
 
 // preprocessor symbols that are local to this file
 # undef CPPAD_VEC_AD_COMPUTED_ASSIGNMENT
