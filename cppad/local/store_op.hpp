@@ -32,7 +32,7 @@ where v is a VecAD<Base> vector, x is an AD<Base> object,
 and y is AD<Base> or Base objects. 
 We define the index corresponding to v[x] by
 \verbatim
-	i_v_x = element_by_ind[ arg[0] + i_vec ].index
+	i_v_x = index_by_ind[ arg[0] + i_vec ]
 \endverbatim
 where i_vec is defined under the heading arg[1] below:
 
@@ -88,20 +88,20 @@ is used to compute the index in the definition of i_vec above.
 is_var
 \n
 If y is a varable (StpvOp and StvvOp cases), 
-<code>element_by_ind[ arg[0] + i_vec ].is_var</code> is set to true.
+<code>isvar_by_ind[ arg[0] + i_vec ] </code> is set to true.
 Otherwise y is a paraemter (StppOp and StvpOp cases) and 
-<code>element_by_ind[ arg[0] + i_vec ].is_var</code> is set to false.
+<code>isvar_by_ind[ arg[0] + i_vec ] </code> is set to false.
 \n
 index
 \n
 <code>element_by_ind[ arg[0] - 1 ] .index</code>
 is the number of elements in the user vector containing this element.
-The value <code>element_by_ind[ arg[0] + i_vec].index</code>
+The value <code>index_by_ind[ arg[0] + i_vec]</code>
 is set equal to arg[2].
 
 \par Check User Errors
 \li Check that the index is with in range; i.e.
-<code>i_vec < element_by_ind[ arg[0] - 1 ].index</code>
+<code>i_vec < index_by_ind[ arg[0] - 1 ]</code>
 Note that, if x is a parameter, 
 the corresponding vector index and it does not change.
 In this case, the error above should be detected during tape recording.
@@ -121,7 +121,8 @@ inline void forward_store_op_0(
 	size_t         num_par     ,
 	size_t         nc_taylor   ,
 	Base*          taylor      ,
-	pod_vector<vecad_element>& element_by_ind )
+	bool*          isvar_by_ind   ,
+	size_t*        index_by_ind   )
 {
 	// This routine is only for documentaiton, it should not be used
 	CPPAD_ASSERT_UNKNOWN( false );
@@ -224,20 +225,21 @@ inline void forward_store_pp_op_0(
 	size_t         num_par     ,
 	size_t         nc_taylor   ,
 	Base*          taylor      ,
-	pod_vector<vecad_element>& element_by_ind )
+	bool*          isvar_by_ind   ,
+	size_t*        index_by_ind   )
 {	size_t i_vec = arg[1];
 
 	// Because the index is a parameter, this indexing error should be 
 	// caught and reported to the user when the tape is recording.
-	CPPAD_ASSERT_UNKNOWN( i_vec < element_by_ind[ arg[0] - 1 ].index );
+	CPPAD_ASSERT_UNKNOWN( i_vec < index_by_ind[ arg[0] - 1 ] );
 
 	CPPAD_ASSERT_UNKNOWN( NumArg(StppOp) == 3 );
 	CPPAD_ASSERT_UNKNOWN( NumRes(StppOp) == 0 );
 	CPPAD_ASSERT_UNKNOWN( 0 < arg[0] );
 	CPPAD_ASSERT_UNKNOWN( size_t(arg[2]) < num_par );
 
-	element_by_ind[ arg[0] + i_vec ].is_var = false;
-	element_by_ind[ arg[0] + i_vec ].index  = arg[2];
+	isvar_by_ind[ arg[0] + i_vec ]  = false;
+	index_by_ind[ arg[0] + i_vec ]  = arg[2];
 }
 
 /*!
@@ -252,20 +254,21 @@ inline void forward_store_pv_op_0(
 	size_t         num_par     ,
 	size_t         nc_taylor   ,
 	Base*          taylor      ,
-	pod_vector<vecad_element>& element_by_ind )
+	bool*          isvar_by_ind   ,
+	size_t*        index_by_ind   )
 {	size_t i_vec = arg[1];
 
 	// Because the index is a parameter, this indexing error should be 
 	// caught and reported to the user when the tape is recording.
-	CPPAD_ASSERT_UNKNOWN( i_vec < element_by_ind[ arg[0] - 1 ].index );
+	CPPAD_ASSERT_UNKNOWN( i_vec < index_by_ind[ arg[0] - 1 ] );
 
 	CPPAD_ASSERT_UNKNOWN( NumArg(StpvOp) == 3 );
 	CPPAD_ASSERT_UNKNOWN( NumRes(StpvOp) == 0 );
 	CPPAD_ASSERT_UNKNOWN( 0 < arg[0] );
 	CPPAD_ASSERT_UNKNOWN( size_t(arg[2]) <= i_z );
 
-	element_by_ind[ arg[0] + i_vec ].is_var = true;
-	element_by_ind[ arg[0] + i_vec ].index  = arg[2];
+	isvar_by_ind[ arg[0] + i_vec ]  = true;
+	index_by_ind[ arg[0] + i_vec ]  = arg[2];
 }
 
 /*!
@@ -280,12 +283,13 @@ inline void forward_store_vp_op_0(
 	size_t         num_par     ,
 	size_t         nc_taylor   ,
 	Base*          taylor      ,
-	pod_vector<vecad_element>& element_by_ind )
+	bool*          isvar_by_ind   ,
+	size_t*        index_by_ind   )
 {	
 	CPPAD_ASSERT_UNKNOWN( size_t(arg[1]) <= i_z );
 	size_t i_vec = Integer( taylor[ arg[1] * nc_taylor + 0 ] );
 	CPPAD_ASSERT_KNOWN( 
-		i_vec < element_by_ind[ arg[0] - 1 ].index ,
+		i_vec < index_by_ind[ arg[0] - 1 ] ,
 		"VecAD: index during zero order forward sweep is out of range"
 	);
 
@@ -294,8 +298,8 @@ inline void forward_store_vp_op_0(
 	CPPAD_ASSERT_UNKNOWN( 0 < arg[0] );
 	CPPAD_ASSERT_UNKNOWN( size_t(arg[2]) < num_par );
 
-	element_by_ind[ arg[0] + i_vec ].is_var = false;
-	element_by_ind[ arg[0] + i_vec ].index  = arg[2];
+	isvar_by_ind[ arg[0] + i_vec ]  = false;
+	index_by_ind[ arg[0] + i_vec ]  = arg[2];
 }
 
 /*!
@@ -310,12 +314,13 @@ inline void forward_store_vv_op_0(
 	size_t         num_par     ,
 	size_t         nc_taylor   ,
 	Base*          taylor      ,
-	pod_vector<vecad_element>& element_by_ind )
+	bool*          isvar_by_ind   ,
+	size_t*        index_by_ind   )
 {	
 	CPPAD_ASSERT_UNKNOWN( size_t(arg[1]) <= i_z );
 	size_t i_vec = Integer( taylor[ arg[1] * nc_taylor + 0 ] );
 	CPPAD_ASSERT_KNOWN( 
-		i_vec < element_by_ind[ arg[0] - 1 ].index ,
+		i_vec < index_by_ind[ arg[0] - 1 ] ,
 		"VecAD: index during zero order forward sweep is out of range"
 	);
 
@@ -324,8 +329,8 @@ inline void forward_store_vv_op_0(
 	CPPAD_ASSERT_UNKNOWN( 0 < arg[0] );
 	CPPAD_ASSERT_UNKNOWN( size_t(arg[2]) <= i_z );
 
-	element_by_ind[ arg[0] + i_vec ].is_var = true;
-	element_by_ind[ arg[0] + i_vec ].index  = arg[2];
+	isvar_by_ind[ arg[0] + i_vec ]  = true;
+	index_by_ind[ arg[0] + i_vec ]  = arg[2];
 }
 
 /*!

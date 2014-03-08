@@ -150,7 +150,7 @@ If cskip_op[i] is true, the operator index i in the recording
 does not affect any of the dependent variable (given the value
 of the independent variables).
 
-\param element_by_load_op
+\param var_by_load_op
 is a vector with size play->num_load_op_rec().
 Is the variable index corresponding to each load instruction.
 In the case where the index is zero,
@@ -172,7 +172,7 @@ void ReverseSweep(
 	size_t                      K,
 	Base*                       Partial,
 	bool*                       cskip_op,
-	const pod_vector<addr_t>&   element_by_load_op
+	const pod_vector<addr_t>&   var_by_load_op
 )
 {
 	OpCode           op;
@@ -413,14 +413,14 @@ void ReverseSweep(
 			// --------------------------------------------------
 			case LdpOp:
 			reverse_load_op(
-			op, d, i_var, arg, J, Taylor, K, Partial, element_by_load_op
+		op, d, i_var, arg, J, Taylor, K, Partial, var_by_load_op.data()
 			);
 			break;
 			// -------------------------------------------------
 
 			case LdvOp:
 			reverse_load_op(
-			op, d, i_var, arg, J, Taylor, K, Partial, element_by_load_op
+		op, d, i_var, arg, J, Taylor, K, Partial, var_by_load_op.data()
 			);
 			break;
 			// -------------------------------------------------

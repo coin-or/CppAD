@@ -117,7 +117,7 @@ Upon return, if cskip_op[i] is true, the operator index i in the recording
 does not affect any of the dependent variable (given the value
 of the independent variables).
 
-\param element_by_load_op
+\param var_by_load_op
 Is a vector with size play->num_load_op_rec().
 The input value of the elements does not matter.
 Upon return, it is the variable index corresponding to the
@@ -143,7 +143,7 @@ size_t forward0sweep(
 	size_t                J,
 	Base*                 taylor,
 	bool*                 cskip_op,
-	pod_vector<addr_t>&   element_by_load_op
+	pod_vector<addr_t>&   var_by_load_op
 )
 {	CPPAD_ASSERT_UNKNOWN( J >= 1 );
 
@@ -163,16 +163,18 @@ size_t forward0sweep(
 	size_t compareCount = 0;
 
 	// This is an order zero calculation, initialize vecad information
-	pod_vector<vecad_element> element_by_ind;
+	pod_vector<bool>   isvar_by_ind;
+	pod_vector<size_t> index_by_ind;
 	size_t  i = play->num_vec_ind_rec();
 	if( i > 0 )
-	{	element_by_ind.extend(i);
+	{	isvar_by_ind.extend(i);
+			index_by_ind.extend(i);
 		while(i--)
-		{	element_by_ind[i].index  = play->GetVecInd(i);
-			element_by_ind[i].is_var = false;
+		{	index_by_ind[i]  = play->GetVecInd(i);
+			isvar_by_ind[i]  = false;
 		}
 	}
-	// values of element_by_load_op do not matter.
+	// values of var_by_load_op do not matter.
 
 	// zero order, so initialize conditional skip flags
 	for(i = 0; i < play->num_op_rec(); i++)
@@ -380,8 +382,9 @@ size_t forward0sweep(
 				parameter, 
 				J, 
 				taylor,
-				element_by_ind,
-				element_by_load_op
+				isvar_by_ind.data(),
+				index_by_ind.data(),
+				var_by_load_op.data()
 			);
 			break;
 			// -------------------------------------------------
@@ -394,8 +397,9 @@ size_t forward0sweep(
 				parameter, 
 				J, 
 				taylor,
-				element_by_ind,
-				element_by_load_op
+				isvar_by_ind.data(),
+				index_by_ind.data(),
+				var_by_load_op.data()
 			);
 			break;
 			// -------------------------------------------------
@@ -480,7 +484,8 @@ size_t forward0sweep(
 				num_par, 
 				J, 
 				taylor,
-				element_by_ind
+				isvar_by_ind.data(),
+				index_by_ind.data()
 			);
 			break;
 			// -------------------------------------------------
@@ -492,7 +497,8 @@ size_t forward0sweep(
 				num_par, 
 				J, 
 				taylor,
-				element_by_ind
+				isvar_by_ind.data(),
+				index_by_ind.data()
 			);
 			break;
 			// -------------------------------------------------
@@ -504,7 +510,8 @@ size_t forward0sweep(
 				num_par, 
 				J, 
 				taylor,
-				element_by_ind
+				isvar_by_ind.data(),
+				index_by_ind.data()
 			);
 			break;
 			// -------------------------------------------------
@@ -516,7 +523,8 @@ size_t forward0sweep(
 				num_par, 
 				J, 
 				taylor,
-				element_by_ind
+				isvar_by_ind.data(),
+				index_by_ind.data()
 			);
 			break;
 			// -------------------------------------------------

@@ -139,7 +139,7 @@ if cskip_op[i] is true, the operator with index i
 does not affect any of the dependent variable (given the value
 of the independent variables).
 
-\param element_by_load_op
+\param var_by_load_op
 is a vector with size play->num_load_op_rec().
 \n
 \n
@@ -181,7 +181,7 @@ size_t forward_sweep(
 	const size_t          J,
 	Base*                 taylor,
 	bool*                 cskip_op,
-	pod_vector<addr_t>&   element_by_load_op
+	pod_vector<addr_t>&   var_by_load_op
 )
 {	CPPAD_ASSERT_UNKNOWN( J >= q + 1 );
 	CPPAD_ASSERT_UNKNOWN( p <= q );
@@ -205,23 +205,25 @@ size_t forward_sweep(
 	size_t compareCount = 0;
 
 	// initialize vecad information
-	pod_vector<vecad_element> element_by_ind; 
+	pod_vector<bool>   isvar_by_ind;
+	pod_vector<size_t> index_by_ind; 
 	if( p == 0 )
 	{
 		// this includes order zero calculation, initialize vector indices
 		i = play->num_vec_ind_rec();
 		if( i > 0 )
-		{	element_by_ind.extend(i);
+		{	isvar_by_ind.extend(i);
+			index_by_ind.extend(i);
 			while(i--)
-			{	element_by_ind[i].index = play->GetVecInd(i);
-				element_by_ind[i].is_var = false;
+			{	index_by_ind[i] = play->GetVecInd(i);
+				isvar_by_ind[i]  = false;
 			}
 		}
 		// includes zero order, so initialize conditional skip flags
 		for(i = 0; i < play->num_op_rec(); i++)
 			cskip_op[i] = false;
 	}
-	// values of element_by_load_op do not matter
+	// values of var_by_load_op do not matter
 
 	// Work space used by UserOp. Note User assumes p = q.
 	const size_t user_q1 = q+1;  // number of orders for this user calculation
@@ -436,15 +438,16 @@ size_t forward_sweep(
 					parameter, 
 					J, 
 					taylor,
-					element_by_ind,
-					element_by_load_op
+					isvar_by_ind.data(),
+					index_by_ind.data(),
+					var_by_load_op.data()
 				);
 				if( p < q ) forward_load_op( 
-					op, p+1, q, i_var, arg, J, taylor, element_by_load_op
+				op, p+1, q, i_var, arg, J, taylor, var_by_load_op.data()
 				);
 			}
 			else	forward_load_op(
-					op, p, q, i_var, arg, J, taylor, element_by_load_op
+				op, p, q, i_var, arg, J, taylor, var_by_load_op.data()
 			);
 			break;
 			// -------------------------------------------------
@@ -458,15 +461,16 @@ size_t forward_sweep(
 					parameter, 
 					J, 
 					taylor,
-					element_by_ind,
-					element_by_load_op
+					isvar_by_ind.data(),
+					index_by_ind.data(),
+					var_by_load_op.data()
 				);
 				if( p < q ) forward_load_op(
-					op, p+1, q, i_var, arg, J, taylor, element_by_load_op
+				op, p+1, q, i_var, arg, J, taylor, var_by_load_op.data()
 				);
 			}
 			else	forward_load_op( 
-				op, p, q, i_var, arg, J, taylor, element_by_load_op
+			op, p, q, i_var, arg, J, taylor, var_by_load_op.data()
 			);
 			break;
 			// -------------------------------------------------
@@ -560,7 +564,8 @@ size_t forward_sweep(
 					num_par, 
 					J, 
 					taylor,
-					element_by_ind
+					isvar_by_ind.data(),
+					index_by_ind.data()
 				);
 			}
 			break;
@@ -574,7 +579,8 @@ size_t forward_sweep(
 					num_par, 
 					J, 
 					taylor,
-					element_by_ind
+					isvar_by_ind.data(),
+					index_by_ind.data()
 				);
 			}
 			break;
@@ -588,7 +594,8 @@ size_t forward_sweep(
 					num_par, 
 					J, 
 					taylor,
-					element_by_ind
+					isvar_by_ind.data(),
+					index_by_ind.data()
 				);
 			}
 			break;
@@ -602,7 +609,8 @@ size_t forward_sweep(
 					num_par, 
 					J, 
 					taylor,
-					element_by_ind
+					isvar_by_ind.data(),
+					index_by_ind.data()
 				);
 			}
 			break;
