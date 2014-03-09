@@ -13,6 +13,8 @@ Please visit http://www.coin-or.org/CppAD/ for information on other licenses.
 $begin whats_new_14$$
 $dollar @$$
 $spell
+	forwardzero
+	forwardone
 	const
 	doxygen
 	ipopt
@@ -42,6 +44,12 @@ This section contains a list of the changes to CppAD during 2014
 (in reverse order by date).
 The purpose of this section is to
 assist you in learning about changes between various versions of CppAD.
+
+$head 03-09$$
+The documentation links
+$code forwardzero$$ and $code forwardone$$ have been changed to
+$cref forward_zero$$ and $cref forward_one$$ respectively.
+This may affect links from other web pages to the CppAD documentation.
 
 $head 03-05$$
 The names $icode p$$ and $icode q$$ in the 

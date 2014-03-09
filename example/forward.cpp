@@ -1,6 +1,6 @@
 /* $Id$ */
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-12 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-14 Bradley M. Bell
 
 CppAD is distributed under multiple licenses. This distribution is under
 the terms of the 
@@ -57,7 +57,7 @@ bool ForwardCases(void)
 	// initially, the variable values during taping are stored in f
 	ok &= f.size_taylor() == 1;
 
-	// zero order forward mode using notaiton in ForwardZero
+	// zero order forward mode using notaiton in forward_zero
 	// use the template parameter Vector for the vector type
 	Vector x(n);
 	Vector y(m);
@@ -67,7 +67,7 @@ bool ForwardCases(void)
 	ok  &= NearEqual(y[0] , x[0]*x[0]*x[1], 1e-10, 1e-10);
 	ok  &= f.size_taylor() == 1;
 
-	// first order forward mode using notation in ForwardOne
+	// first order forward mode using notation in forward_one
 	// X(t)           = x + dx * t
 	// Y(t) = F[X(t)] = y + dy * t + o(t)
 	Vector dx(n);

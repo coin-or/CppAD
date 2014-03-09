@@ -56,7 +56,7 @@ must be greater than or equal one (see $cref size_taylor$$).
 
 $head x$$
 The vector $icode x$$ in expression for $icode dw$$ above
-corresponds to the previous call to $cref ForwardZero$$
+corresponds to the previous call to $cref forward_zero$$
 using this ADFun object $icode f$$; i.e.,
 $codei%
 	%f%.Forward(0, %x%)

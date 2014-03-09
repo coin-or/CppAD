@@ -10,7 +10,7 @@ A copy of this license is included in the COPYING file of this distribution.
 Please visit http://www.coin-or.org/CppAD/ for information on other licenses.
 -------------------------------------------------------------------------- */
 
-$begin ForwardZero$$
+$begin forward_zero$$
 $spell
 	std::cout
 	ostream
@@ -58,7 +58,7 @@ The argument $icode x$$ has prototype
 $codei%
 	const %Vector%& %x%
 %$$
-(see $cref/Vector/ForwardZero/Vector/$$ below)
+(see $cref/Vector/forward_zero/Vector/$$ below)
 and its size 
 must be equal to $icode n$$, the dimension of the
 $cref/domain/seq_property/Domain/$$ space for $icode f$$.
@@ -78,7 +78,7 @@ The result $icode y$$ has prototype
 $codei%
 	%Vector% %y%
 %$$
-(see $cref/Vector/ForwardZero/Vector/$$ below)
+(see $cref/Vector/forward_zero/Vector/$$ below)
 and its value is $latex F(x)$$.
 The size of $icode y$$ 
 is equal to $icode m$$, the dimension of the
@@ -99,7 +99,7 @@ It returns true if it succeeds and false otherwise.
 
 $end
 ---------------------------------------------------------------------------
-$begin ForwardOne$$
+$begin forward_one$$
 $spell
 	dy
 	Jacobian
@@ -146,7 +146,7 @@ After this call it will be will be two (see $cref size_taylor$$).
 
 $head x$$
 The vector $icode x$$ in expression for $icode dy$$ above
-corresponds to the previous call to $cref ForwardZero$$
+corresponds to the previous call to $cref forward_zero$$
 using this ADFun object $icode f$$; i.e.,
 $codei%
 	%f%.Forward(0, %x%)
@@ -161,7 +161,7 @@ The argument $icode dx$$ has prototype
 $codei%
 	const %Vector%& %x%
 %$$
-(see $cref/Vector/ForwardOne/Vector/$$ below)
+(see $cref/Vector/forward_one/Vector/$$ below)
 and its size 
 must be equal to $icode n$$, the dimension of the
 $cref/domain/seq_property/Domain/$$ space for $icode f$$.
@@ -174,7 +174,7 @@ The result $icode dy$$ has prototype
 $codei%
 	%Vector% %dy%
 %$$
-(see $cref/Vector/ForwardOne/Vector/$$ below)
+(see $cref/Vector/forward_one/Vector/$$ below)
 and its value is $latex F^{(1)} (x) * dx$$.
 The size of $icode dy$$ 
 is equal to $icode m$$, the dimension of the
@@ -237,12 +237,12 @@ $latex \[
 
 $subhead Function Values$$
 If you are using forward mode to compute values for $latex F(x)$$,
-$cref ForwardZero$$ is simpler to understand
+$cref forward_zero$$ is simpler to understand
 than this explanation of the general case.
 
 $subhead Derivative Values$$
 If you are using forward mode to compute values for $latex F^{(1)} (x) * dx$$,
-$cref ForwardOne$$ is simpler to understand
+$cref forward_one$$ is simpler to understand
 than this explanation of the general case.
 
 $head X(t)$$
@@ -406,7 +406,7 @@ $latex y^{(0)}$$ above are replaced by
 $code 0$$, 
 $icode x$$, and 
 $icode y$$ 
-in $cref ForwardZero$$.
+in $cref forward_zero$$.
 
 $head First Order$$
 In the case where $latex q = 1$$ and $icode%x_q%.size() == %n%$$,
@@ -427,7 +427,7 @@ $code 1$$,
 $icode x$$, 
 $icode dx$$, and 
 $icode dy$$ 
-in $cref ForwardOne$$.
+in $cref forward_one$$.
 $pre
 
 $$
@@ -651,7 +651,7 @@ equal to the values in $icode x$$
 (so AD operation sequence properly represents the algorithm
 for this value of independent variables).
 On the other hand, re-taping the AD operation sequence usually takes 
-significantly more time than evaluation using $cref ForwardZero$$.
+significantly more time than evaluation using $cref forward_zero$$.
 If the functions values have not changed (see $cref FunCheck$$)
 it may not be worth re-taping a new AD operation sequence. 
 

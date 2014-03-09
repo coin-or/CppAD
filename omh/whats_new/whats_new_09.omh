@@ -268,7 +268,7 @@ The subheading dates below represent when the correspond change was made in
 $code branches/optimize$$.
 
 $subhead 08-13$$
-An automatic check of the $cref ForwardZero$$ results was added
+An automatic check of the $cref forward_zero$$ results was added
 after each call to $cref/f.optimize()/optimize/$$
 (this $cref/check/optimize/Checking Optimization/$$ 
 is skipped when $code NDEBUG$$ is defined).

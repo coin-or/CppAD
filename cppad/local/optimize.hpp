@@ -70,7 +70,7 @@ $head Efficiency$$
 The $code optimize$$ member function
 may greatly reduce the number of variables 
 in the operation sequence; see $cref/size_var/seq_property/size_var/$$.
-If a $cref/zero order forward/ForwardZero/$$ calculation is done during
+If a $cref/zero order forward/forward_zero/$$ calculation is done during
 the construction of $icode f$$, it will require more memory
 and time than required after the optimization procedure.
 In addition, it will need to be redone.
@@ -115,7 +115,7 @@ $head Checking Optimization$$
 $index NDEBUG$$
 If $cref/NDEBUG/Faq/Speed/NDEBUG/$$ is not defined,
 and $cref/f.size_taylor()/size_taylor/$$ is greater than zero,
-a $cref ForwardZero$$ calculation is done using the optimized version
+a $cref forward_zero$$ calculation is done using the optimized version
 of $icode f$$ and the results are checked to see that they are
 the same as before.
 If they are not the same, the

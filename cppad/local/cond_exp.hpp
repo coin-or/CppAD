@@ -3,7 +3,7 @@
 # define CPPAD_COND_EXP_INCLUDED
 
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-13 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-14 Bradley M. Bell
 
 CppAD is distributed under multiple licenses. This distribution is under
 the terms of the 
@@ -121,7 +121,7 @@ $codei%
 $head Optimize$$
 The $cref optimize$$ method will optimize conditional expressions
 in the following way:
-During $cref/zero order forward mode/ForwardZero/$$,
+During $cref/zero order forward mode/forward_zero/$$,
 once the value of the $icode left$$ and $icode right$$ have been determined, 
 it is known if the true or false case is required.
 From this point on, values corresponding to the case that is not required

@@ -1,6 +1,6 @@
 $Id$
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-12 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-14 Bradley M. Bell
 
 CppAD is distributed under multiple licenses. This distribution is under
 the terms of the 
@@ -763,7 +763,7 @@ the $cref ForSparseJac$$ calculation in only for the current
 independent variable values.
 In this case, the sparsity pattern can be (and has been) 
 made more efficient; i.e., fewer true values 
-(because it only applies to the current $cref ForwardZero$$).
+(because it only applies to the current $cref forward_zero$$).
 $pre
 
 $$
@@ -815,7 +815,7 @@ improved and split into $cref reverse_one$$ and $cref reverse_any$$.
 
 $head 04-03$$
 Create separate sections for the 
-$cref/zero/ForwardZero/$$ and $cref ForwardOne$$ first order case
+$cref/zero/forward_zero/$$ and $cref forward_one$$ first order case
 of $cref Forward$$ mode.
 $pre
 
