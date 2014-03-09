@@ -1,0 +1,106 @@
+/* $Id$ */
+/* --------------------------------------------------------------------------
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-14 Bradley M. Bell
+
+CppAD is distributed under multiple licenses. This distribution is under
+the terms of the 
+                    Eclipse Public License Version 1.0.
+
+A copy of this license is included in the COPYING file of this distribution.
+Please visit http://www.coin-or.org/CppAD/ for information on other licenses.
+-------------------------------------------------------------------------- */
+$begin forward_one$$
+$spell
+	dy
+	Jacobian
+	Taylor
+	const
+$$
+
+$section First Order Forward Mode: Derivative Values$$
+
+$index Forward, order one$$
+$index one, order Forward$$
+$index order, one Forward$$
+
+
+$head Syntax$$
+$icode%dy% = %f%.Forward(1, %dx%)
+%$$
+$icode%dy% = %f%.Forward(1, %dx%, %s%)
+%$$
+
+
+$head Purpose$$
+We use $latex F : B^n \rightarrow B^m$$ to denote the
+$cref/AD function/glossary/AD Function/$$ corresponding to $icode f$$.
+The result of the syntax above is
+$latex \[
+	dy = F^{(1)} (x) * dx
+\] $$
+where $latex F^{(1)} (x)$$ is the Jacobian of $latex F$$ 
+evaluated at $latex x$$.
+
+$head f$$
+The object $icode f$$ has prototype
+$codei%
+	ADFun<%Base%> %f%
+%$$
+Note that the $cref ADFun$$ object $icode f$$ is not $code const$$.
+Before this call to $code Forward$$, the value returned by
+$codei%
+	%f%.size_taylor()
+%$$
+must be greater than or equal one.
+After this call it will be will be two (see $cref size_taylor$$).
+
+$head x$$
+The vector $icode x$$ in expression for $icode dy$$ above
+corresponds to the previous call to $cref forward_zero$$
+using this ADFun object $icode f$$; i.e.,
+$codei%
+	%f%.Forward(0, %x%)
+%$$
+If there is no previous call with the first argument zero,
+the value of the $cref/independent/Independent/$$ variables 
+during the recording of the AD sequence of operations is used
+for $icode x$$.
+
+$head dx$$
+The argument $icode dx$$ has prototype
+$codei%
+	const %Vector%& %x%
+%$$
+(see $cref/Vector/forward_one/Vector/$$ below)
+and its size 
+must be equal to $icode n$$, the dimension of the
+$cref/domain/seq_property/Domain/$$ space for $icode f$$.
+
+$head s$$
+The argument $icode s$$, if present, is not used during this operation.
+
+$head dy$$
+The result $icode dy$$ has prototype
+$codei%
+	%Vector% %dy%
+%$$
+(see $cref/Vector/forward_one/Vector/$$ below)
+and its value is $latex F^{(1)} (x) * dx$$.
+The size of $icode dy$$ 
+is equal to $icode m$$, the dimension of the
+$cref/range/seq_property/Range/$$ space for $icode f$$.
+
+$head Vector$$
+The type $icode Vector$$ must be a $cref SimpleVector$$ class with
+$cref/elements of type/SimpleVector/Elements of Specified Type/$$
+$icode Base$$.
+The routine $cref CheckSimpleVector$$ will generate an error message
+if this is not the case.
+
+$head Example$$
+The file
+$cref forward.cpp$$
+contains an example and test of this operation.
+It returns true if it succeeds and false otherwise.
+
+$end

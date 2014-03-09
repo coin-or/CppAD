@@ -1,0 +1,99 @@
+/* $Id$ */
+/* --------------------------------------------------------------------------
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-14 Bradley M. Bell
+
+CppAD is distributed under multiple licenses. This distribution is under
+the terms of the 
+                    Eclipse Public License Version 1.0.
+
+A copy of this license is included in the COPYING file of this distribution.
+Please visit http://www.coin-or.org/CppAD/ for information on other licenses.
+-------------------------------------------------------------------------- */
+$begin forward_zero$$
+$spell
+	std::cout
+	ostream
+	const
+	Taylor
+	dy
+	Jacobian
+$$
+$index Forward, order zero$$
+$index zero, order Forward$$
+$index order, zero Forward$$
+
+$section Zero Order Forward Mode: Function Values$$
+
+$head Syntax$$
+$icode%y% = %f%.Forward(0, %x%)
+%$$
+$icode%y% = %f%.Forward(0, %x%, %s%)%$$
+
+$head Purpose$$
+We use $latex F : B^n \rightarrow B^m$$ to denote the
+$cref/AD function/glossary/AD Function/$$ corresponding to $icode f$$.
+The result of the syntax above is
+$latex \[
+	y = F(x)
+\] $$
+(See the $cref/FunCheck discussion/FunCheck/Discussion/$$ for
+possible differences between $latex F(x)$$ and the algorithm that defined
+the operation sequence.)
+
+$head f$$
+The object $icode f$$ has prototype
+$codei%
+	ADFun<%Base%> %f%
+%$$
+Note that the $cref ADFun$$ object $icode f$$ is not $code const$$.
+After this call to $code Forward$$, the value returned by
+$codei%
+	%f%.size_taylor()
+%$$
+will be equal to one (see $cref size_taylor$$).
+
+$head x$$
+The argument $icode x$$ has prototype
+$codei%
+	const %Vector%& %x%
+%$$
+(see $cref/Vector/forward_zero/Vector/$$ below)
+and its size 
+must be equal to $icode n$$, the dimension of the
+$cref/domain/seq_property/Domain/$$ space for $icode f$$.
+
+$head s$$
+If the argument $icode s$$ is not present, $code std::cout$$
+is used in its place.
+Otherwise, this argument has prototype
+$codei%
+	std::ostream& %s%
+%$$
+It specifies where the output corresponding to $cref PrintFor$$,
+and this zero order forward mode call, will be written.
+
+$head y$$
+The result $icode y$$ has prototype
+$codei%
+	%Vector% %y%
+%$$
+(see $cref/Vector/forward_zero/Vector/$$ below)
+and its value is $latex F(x)$$.
+The size of $icode y$$ 
+is equal to $icode m$$, the dimension of the
+$cref/range/seq_property/Range/$$ space for $icode f$$.
+
+$head Vector$$
+The type $icode Vector$$ must be a $cref SimpleVector$$ class with
+$cref/elements of type/SimpleVector/Elements of Specified Type/$$
+$icode Base$$.
+The routine $cref CheckSimpleVector$$ will generate an error message
+if this is not the case.
+
+$head Example$$
+The file
+$cref forward.cpp$$
+contains an example and test of this operation.
+It returns true if it succeeds and false otherwise.
+
+$end

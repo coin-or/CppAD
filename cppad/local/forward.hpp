@@ -13,23 +13,6 @@ A copy of this license is included in the COPYING file of this distribution.
 Please visit http://www.coin-or.org/CppAD/ for information on other licenses.
 -------------------------------------------------------------------------- */
 
-/*
-$begin Forward$$
-
-$section Forward Mode$$
-
-$childtable%
-	omh/forward.omh%
-	cppad/local/cap_taylor.hpp%
-	cppad/local/num_skip.hpp%
-	example/forward.cpp%
-	example/forward_mul.cpp
-%$$
-
-$end
------------------------------------------------------------------------------
-*/
-
 // documened after Forward but included here so easy to see
 # include <cppad/local/cap_taylor.hpp>
 # include <cppad/local/num_skip.hpp>

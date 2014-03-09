@@ -3,7 +3,7 @@
 # define CPPAD_FUN_EVAL_INCLUDED
 
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-06 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-14 Bradley M. Bell
 
 CppAD is distributed under multiple licenses. This distribution is under
 the terms of the 
@@ -24,7 +24,7 @@ $index ADFun, evaluate$$
 $section Evaluate ADFun Functions, Derivatives, and Sparsity Patterns$$
 
 $childtable%
-	cppad/local/forward.hpp%
+	omh/forward/forward.omh%
 	cppad/local/reverse.hpp%
 	cppad/local/sparse.hpp
 %$$
