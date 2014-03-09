@@ -195,7 +195,7 @@ It returns true if it succeeds and false otherwise.
 
 $end
 --------------------------------------------------------------------------
-$begin ForwardAny$$
+$begin forward_any$$
 $spell
 	std::cout
 	ostream
@@ -312,7 +312,7 @@ The argument $icode x_q$$ has prototype
 $codei%
 	const %Vector%& %x_q%
 %$$
-(see $cref/Vector/ForwardAny/Vector/$$ below).
+(see $cref/Vector/forward_any/Vector/$$ below).
 As above, we use $icode n$$ to denote the dimension of the
 $cref/domain/seq_property/Domain/$$ space for $icode f$$.
 The size of $icode x_q$$ must be either $icode n$$ or 
@@ -361,7 +361,7 @@ The return value $icode y_q$$ has prototype
 $codei%
 	%Vector% %y_q%
 %$$
-(see $cref/Vector/ForwardAny/Vector/$$ below).
+(see $cref/Vector/forward_any/Vector/$$ below).
 As above, we use $icode m$$ to denote the dimension of the
 $cref/range/seq_property/Range/$$ space for $icode f$$.
 
@@ -549,7 +549,7 @@ there is an implicit call to $code Forward$$ that computes
 the zero order Taylor coefficients during this constructor.
 
 $head Forward$$
-After a call to $cref/Forward/ForwardAny/$$ with the syntax
+After a call to $cref/Forward/forward_any/$$ with the syntax
 $codei%
         %f%.Forward(%q%, %x_q%)
 %$$

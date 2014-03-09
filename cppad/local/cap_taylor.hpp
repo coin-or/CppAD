@@ -3,7 +3,7 @@
 # define CPPAD_CAP_TAYLOR_INCLUDED
 
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-12 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-14 Bradley M. Bell
 
 CppAD is distributed under multiple licenses. This distribution is under
 the terms of the 
@@ -38,7 +38,7 @@ $head Purpose$$
 The Taylor coefficients calculated by $cref Forward$$ mode calculations
 are retained in an $cref ADFun$$ object for subsequent use during 
 $cref Reverse$$ mode or higher order Forward mode calculations.
-To be specific, a call to $cref/Forward/ForwardAny/$$ with the syntax
+To be specific, a call to $cref/Forward/forward_any/$$ with the syntax
 $codei%
         %y_p% = %f%.Forward(%p%, %x_p%)
 %$$

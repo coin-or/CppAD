@@ -1,6 +1,6 @@
 $Id$
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-13 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-14 Bradley M. Bell
 
 CppAD is distributed under multiple licenses. This distribution is under
 the terms of the 
@@ -29,7 +29,7 @@ $icode%b% = %f%.check_for_nan()
 
 $head Purpose$$
 If $code NDEBUG$$ is not defined and
-the result of a $cref/forward/ForwardAny/$$ or $cref/reverse/reverse_any/$$
+the result of a $cref/forward/forward_any/$$ or $cref/reverse/reverse_any/$$
 calculation contains a  $cref nan$$,
 CppAD halts with an error message.
 This can be suppressed using $code check_for_nan$$.

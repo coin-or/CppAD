@@ -15,6 +15,7 @@ $dollar @$$
 $spell
 	forwardzero
 	forwardone
+	forwardany
 	const
 	doxygen
 	ipopt
@@ -47,13 +48,15 @@ assist you in learning about changes between various versions of CppAD.
 
 $head 03-09$$
 The documentation links
-$code forwardzero$$ and $code forwardone$$ have been changed to
-$cref forward_zero$$ and $cref forward_one$$ respectively.
+$code forwardzero$$, $code forwardone$$, and $code forwardany$$
+have been changed to
+$cref forward_zero$$, $cref forward_one$$, 
+and $cref forward_any$$ respectively.
 This may affect links from other web pages to the CppAD documentation.
 
 $head 03-05$$
 The names $icode p$$ and $icode q$$ in the 
-$cref/forward/forwardany/$$,
+$cref/forward/forward_any/$$,
 $cref/reverse/reverse_any/$$,
 $cref atomic_forward$$, and 
 $cref atomic_reverse$$ functions

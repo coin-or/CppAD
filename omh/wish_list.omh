@@ -1,6 +1,6 @@
 $Id$
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-13 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-14 Bradley M. Bell
 
 CppAD is distributed under multiple licenses. This distribution is under
 the terms of the 
@@ -109,7 +109,7 @@ done when the optimizer is using the sparsity pattern for this purpose.
 
 $head Forward Mode Recomputation$$
 $index forward$$
-If the results of $cref ForwardAny$$ have already been computed and are still
+If the results of $cref forward_any$$ have already been computed and are still
 stored in the $cref ADFun$$ object (see $cref size_taylor$$), 
 then they do not need to be recomputed and the results can just be returned.
 

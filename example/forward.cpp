@@ -78,7 +78,7 @@ bool ForwardCases(void)
 	ok   &= NearEqual(dy[0] , 2.*x[0]*x[1], 1e-10, 1e-10);
 	ok   &= f.size_taylor() == 2;
 
-	// second order forward mode using notaiton in ForwardAny
+	// second order forward mode using notaiton in forward_any
 	// X(t) =           x + dx * t + x_2 * t^2
 	// Y(t) = F[X(t)] = y + dy * t + y_2 * t^2 + o(t^3)
 	Vector x_2(n);
