@@ -49,7 +49,7 @@ is the index corresponding to the previous variable on the tape
 arg[0]
 \n
 is the offset of this VecAD vector relative to the beginning 
-of the element_by_ind array.
+of the isvar_by_ind and index_by_ind arrays.
 \n
 \n 
 arg[1] 
@@ -83,18 +83,14 @@ number of columns in the matrix containing the Taylor coefficients.
 In StvpOp and StvvOp cases, <code><taylor[ arg[1] * nc_taylor + 0 ]</code>
 is used to compute the index in the definition of i_vec above.
 
-\param element_by_ind
-\n
-is_var
-\n
+\param isvar_by_ind
 If y is a varable (StpvOp and StvvOp cases), 
 <code>isvar_by_ind[ arg[0] + i_vec ] </code> is set to true.
 Otherwise y is a paraemter (StppOp and StvpOp cases) and 
 <code>isvar_by_ind[ arg[0] + i_vec ] </code> is set to false.
-\n
-index
-\n
-<code>element_by_ind[ arg[0] - 1 ] .index</code>
+
+\param index_by_ind
+<code>index_by_ind[ arg[0] - 1 ]</code>
 is the number of elements in the user vector containing this element.
 The value <code>index_by_ind[ arg[0] + i_vec]</code>
 is set equal to arg[2].

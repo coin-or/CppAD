@@ -15,24 +15,19 @@ then
 	echo "bin/speed_compare.sh: must be executed from its parent directory"
 	exit 1
 fi
-options=""
-if [ "$1" == "onetape" ] || [ "$1" == "optimize" ]
+if [ "$1" == '' ]
 then
-	options="_$1"
-elif [ "$1" != "none" ]
-then
-	echo "usage: bin/speed_compare.sh option_1 option_2"
-	echo "       where the option choices are: 'none', 'onetape', 'optimize'"
+cat << EOF
+usage: bin/speed_compare.sh option_1 option_2 ...
+where the possible options are:
+	onetape, colpack, optimize, atomic, memory, boolsparsity
+Use the special value 'none' for no options
+EOF
 	exit 1
 fi
-if [ "$2" == "onetape" ] || [ "$2" == "optimize" ]
+if [ "$1" == 'none' ]
 then
-	options="${options}_$2"
-elif [ "$2" != "none" ]
-then
-	echo "usage: bin/speed_compare.sh option_1 option_2"
-	echo "       where the option choices are: 'none', 'onetape', 'optimize'"
-	exit 1
+	shift
 fi
 if [ ! -d cppad/new ]
 then
@@ -56,7 +51,7 @@ then
 fi
 # -------------------------------------------------------------------------
 #
-if [ ! -e build/speed/cppad/cur_speed$options.out ]
+if [ ! -e build/speed/cppad/cur_speed.out ]
 then
 	# revert cppad source code to the current version
 	if [ "$new_cppad" != "" ]
@@ -88,9 +83,8 @@ then
 	cd build; make check_speed_cppad; cd speed/cppad
 	#
 	# run speed test for the current version
-	tmp=`echo $options | sed -e 's|_| |g'`
-	echo "./speed_cppad speed 123 $tmp > cur_speed$options.out"
-	./speed_cppad speed 123 $tmp > cur_speed$options.out
+	echo "./speed_cppad speed 123 $tmp $* > cur_speed.out"
+	./speed_cppad speed 123 $* > cur_speed.out
 	#
 	echo "cd ../../.."
 	cd ../../..
@@ -110,16 +104,15 @@ do
 	cp cppad/local/new/$file cppad/local/$file
 done
 #
-if [ ! -e build/speed/cppad/new_speed$options.out ]
+if [ ! -e build/speed/cppad/new_speed.out ]
 then
 	# compile and link the new version
 	echo "cd build; make check_speed_cppad; cd speed/cppad"
 	cd build; make check_speed_cppad; cd speed/cppad
 	#
 	# run speed test for the new version
-	tmp=`echo $options | sed -e 's|_| |g'`
-	echo "./speed_cppad speed 123 $tmp > new_speed$options.out"
-	./speed_cppad speed 123 $tmp > new_speed$options.out
+	echo "./speed_cppad speed 123 $* > new_speed.out"
+	./speed_cppad speed 123 $* > new_speed.out
 	#
 	echo "cd ../../.."
 	cd ../../..
@@ -130,17 +123,17 @@ cd build/speed/cppad
 #
 echo "sed -n -e 's|_rate|_rate_cur|' -e '/_rate_/p' \\"
 echo "       -e 's|available|available_cur|' -e '/available_cur/p' \\"
-echo "	cur_speed$options.out > run.out"
+echo "	cur_speed.out > run.out"
 sed -n -e 's|_rate|_rate_cur|' -e '/_rate_/p' \
 	-e 's|available|available_cur|' -e '/available_cur/p' \
-	cur_speed$options.out > run.out
+	cur_speed.out > run.out
 #
 echo "sed -n -e 's|_rate|_rate_new|' -e '/_rate_/p' \\"
 echo "       -e 's|available|available_new|' -e '/available_new/p' \\"
-echo "	new_speed$options.out >> run.out"
+echo "	new_speed.out >> run.out"
 sed -n -e 's|_rate|_rate_new|' -e '/_rate_/p' \
 	-e 's|available|available_new|' -e '/available_new/p' \
-	new_speed$options.out >> run.out
+	new_speed.out >> run.out
 #
 echo "cat run.out | sort -u"
 cat run.out | sort -u

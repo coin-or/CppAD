@@ -376,9 +376,9 @@ size_t forward0sweep(
 
 			case LdpOp:
 			forward_load_p_op_0(
+				play,
 				i_var, 
 				arg, 
-				num_par, 
 				parameter, 
 				J, 
 				taylor,
@@ -391,9 +391,9 @@ size_t forward0sweep(
 
 			case LdvOp:
 			forward_load_v_op_0(
+				play,
 				i_var, 
 				arg, 
-				num_par, 
 				parameter, 
 				J, 
 				taylor,
