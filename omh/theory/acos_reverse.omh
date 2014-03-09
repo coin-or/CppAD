@@ -1,7 +1,7 @@
 $Id$
 // BEGIN SHORT COPYRIGHT
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-06 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-14 Bradley M. Bell
 
 CppAD is distributed under multiple licenses. This distribution is under
 the terms of the 
@@ -12,18 +12,18 @@ Please visit http://www.coin-or.org/CppAD/ for information on other licenses.
 -------------------------------------------------------------------------- */
 // END SHORT COPYRIGHT
 
-$begin AsinReverse$$
+$begin AcosReverse$$
 $spell
-	asin
+	acos
 	Taylor
-	Arcsine
+	Arccosine
 $$
 
-$index asin, reverse theory$$
-$index theory, asin reverse$$
-$index reverse, asin theory$$
+$index acos, reverse theory$$
+$index theory, acos reverse$$
+$index reverse, acos theory$$
 
-$section Arcsine Function Reverse Mode Theory$$
+$section Arccosine Function Reverse Mode Theory$$
 
 
 We use the reverse theory
@@ -50,13 +50,13 @@ $latex \[
 \] $$ 
 in the definition for $latex G$$ and $latex H$$.
 The forward mode formulas for the
-$cref/asin/AsinForward/$$ 
+$cref/acos/AcosForward/$$ 
 function are
 $latex \[
 \begin{array}{rcl}
 	q^{(0)}  & = & 1 - x^{(0)} x^{(0)} \\
 	b^{(j)}  & = & \sqrt{ q^{(0)} }    \\
-	z^{(j)}  & = & \arcsin ( x^{(0)} )
+	z^{(j)}  & = & \arccos ( x^{(0)} )
 \end{array}
 \] $$
 
@@ -74,10 +74,10 @@ b^{(j)} & = &
 		- \sum_{k=1}^{j-1} k b^{(k)} b^{(j-k)}  
 	\right)
 \\
-z^{(j)} & = & \frac{1}{j} \frac{1}{ b^{(0)} } 
+z^{(j)} & = & - \frac{1}{j} \frac{1}{ b^{(0)} } 
 \left(
 	j x^{(j)}
-	- \sum_{k=1}^{j-1} k z^{(k)}  b^{(j-k)} 
+	+ \sum_{k=1}^{j-1} k z^{(k)}  b^{(j-k)} 
 \right)
 \end{array}
 \] $$ 
@@ -93,7 +93,7 @@ $latex \[
 \\
 & = &
 \D{G}{ x^{(j)} }  
-+ \D{G}{ z^{(j)} } \frac{1}{ b^{(0)} }
+- \D{G}{ z^{(j)} } \frac{1}{ b^{(0)} }
 - \D{G}{ b^{(j)} } \frac{ x^{(0)} }{ b^{(0)} }
 \end{array}
 \] $$ 
@@ -128,7 +128,7 @@ $latex \[
 \\
 & = & 
 \D{G}{ x^{(j)} } 
-+ \D{G}{ z^{(j)} } \frac{1}{ b^{(0)} } 
+- \D{G}{ z^{(j)} } \frac{1}{ b^{(0)} } 
 - \D{G}{ b^{(j)} } \frac{ x^{(0)} }{ b^{(0)} }
 \\
 \D{H}{ b^{(j - k)} } & = & 

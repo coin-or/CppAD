@@ -1,6 +1,6 @@
 $Id$
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-11 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-14 Bradley M. Bell
 
 CppAD is distributed under multiple licenses. This distribution is under
 the terms of the 
@@ -192,14 +192,14 @@ and $latex z^{(j+1)}$$.
 
 
 $children%
-	omh/exp_forward.omh%
-	omh/log_forward.omh%
-	omh/sqrt_forward.omh%
-	omh/sin_cos_forward.omh%
-	omh/atan_forward.omh%
-	omh/asin_forward.omh%
-	omh/acos_forward.omh%
-	omh/tan_forward.omh
+	omh/theory/exp_forward.omh%
+	omh/theory/log_forward.omh%
+	omh/theory/sqrt_forward.omh%
+	omh/theory/sin_cos_forward.omh%
+	omh/theory/atan_forward.omh%
+	omh/theory/asin_forward.omh%
+	omh/theory/acos_forward.omh%
+	omh/theory/tan_forward.omh
 %$$
 
 $subhead Cases that Apply Recursion Above$$
