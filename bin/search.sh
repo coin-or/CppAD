@@ -22,7 +22,6 @@ then
 	exit 1
 fi
 pattern="$1"
-extensions='.ac .am .c .cmake .cpp .h .hpp .in .omh .pc .py .sed .sh .txt'
 list='
 	bin
 	cppad 
@@ -43,5 +42,5 @@ do
 	dir_list="$dir_list $sub_list"
 done
 #
-find_files.sh "$pattern" "$extensions" "$dir_list" | \
-	 sed -e '/\/makefile.in/d'
+grep -l -r  "$pattern" $dir_list | \
+	 sed -e '/\/makefile.in/d' -e '/test_one.exe/d' 
