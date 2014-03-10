@@ -22,7 +22,7 @@ then
 	exit 1
 fi
 pattern="$1"
-list='
+dir_list='
 	bin
 	cppad 
 	cppad_ipopt
@@ -35,12 +35,6 @@ list='
 	speed
 	test_more 
 '
-dir_list=''
-for dir in $list
-do
-	sub_list=`find $dir -type d | sed -e '/\/new$/d'`
-	dir_list="$dir_list $sub_list"
-done
 #
 grep -l -r  "$pattern" $dir_list | \
 	 sed -e '/\/makefile.in/d' -e '/test_one.exe/d' 
