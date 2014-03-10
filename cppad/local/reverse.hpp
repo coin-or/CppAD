@@ -13,30 +13,6 @@ A copy of this license is included in the COPYING file of this distribution.
 Please visit http://www.coin-or.org/CppAD/ for information on other licenses.
 -------------------------------------------------------------------------- */
 
-/*
-$begin Reverse$$
-$spell
-	typename
-	xk
-	xp
-	dw
-	Ind
-	uj
-	std
-	arg
-	const
-	taylor_
-$$
-
-$section Reverse Mode$$ 
-
-$childtable%
-	omh/reverse.omh
-%$$
-
-$end
------------------------------------------------------------------------------
-*/
 # include <algorithm>
 # include <cppad/local/pod_vector.hpp>
 

@@ -25,7 +25,7 @@ $section Evaluate ADFun Functions, Derivatives, and Sparsity Patterns$$
 
 $childtable%
 	omh/forward/forward.omh%
-	cppad/local/reverse.hpp%
+	omh/reverse/reverse.omh%
 	cppad/local/sparse.hpp
 %$$
 
