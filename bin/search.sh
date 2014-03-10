@@ -1,7 +1,7 @@
 #! /bin/bash -e
 # $Id$
 # -----------------------------------------------------------------------------
-# CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-13 Bradley M. Bell
+# CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-14 Bradley M. Bell
 #
 # CppAD is distributed under multiple licenses. This distribution is under
 # the terms of the
@@ -23,45 +23,25 @@ then
 fi
 pattern="$1"
 extensions='.ac .am .c .cmake .cpp .h .hpp .in .omh .pc .py .sed .sh .txt'
-directories='
-	.
+list='
 	bin
 	cppad 
-	cppad/cmake
-	cppad/example 
-	cppad/ipopt
-	cppad/local 
-	cppad/speed 
-	cppad_ipopt/example
-	cppad_ipopt/speed
-	cppad_ipopt/src
-	cppad_ipopt/test
+	cppad_ipopt
 	example 
-	example/atomic
-	example/ipopt_solve
-	introduction/exp_apx
-	introduction/get_started
+	introduction
 	multi_thread
-	multi_thread/bthread
-	multi_thread/openmp
-	multi_thread/pthread
 	omh
-	omh/deprecated
-	omh/install
-	omh/whats_new
 	pkgconfig
 	print_for
 	speed
-	speed/adolc
-	speed/cppad
-	speed/double
-	speed/example
-	speed/fadbad
-	speed/profile
-	speed/sacado
-	speed/src
 	test_more 
 '
+dir_list=''
+for dir in $list
+do
+	sub_list=`find $dir -type d | sed -e '/\/new$/d'`
+	dir_list="$dir_list $sub_list"
+done
 #
-find_files.sh "$pattern" "$extensions" "$directories" | \
+find_files.sh "$pattern" "$extensions" "$dir_list" | \
 	 sed -e '/\/makefile.in/d'
