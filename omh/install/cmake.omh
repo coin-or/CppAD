@@ -177,7 +177,6 @@ $index install, data directory$$
 $index data directory, install$$
 This is the directory is present, the documentation files are installed
 in this sub-directory below the $icode cmake_install_prefix$$.
-The default value for this directory is $code share$$.
 For example, if 
 $icode cmake_install_prefix$$ and
 $icode cmake_install_postfix$$ are not specified, and

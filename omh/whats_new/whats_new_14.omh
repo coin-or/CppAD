@@ -46,6 +46,12 @@ This section contains a list of the changes to CppAD during 2014
 The purpose of this section is to
 assist you in learning about changes between various versions of CppAD.
 
+$head 03-12$$
+The documentation does not get installed if
+$cref/cmake_install_docdir/cmake/cmake_install_docdir/$$
+is not specified. 
+The reference to a default for this directory been removed.
+
 $head 03-09$$
 The documentation links
 $code forwardzero$$, $code forwardone$$, and $code forwardany$$
