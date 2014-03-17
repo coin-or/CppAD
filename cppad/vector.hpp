@@ -451,7 +451,11 @@ public:
 		/// right hand size of the assingment operation
 		vector&& x
 	)
-	{	if( this != &x )
+	{	CPPAD_ASSERT_KNOWN(
+			length_ == x.length_ || (length_ == 0),
+			"vector: size miss match in assignment operation"
+		);
+		if( this != &x )
 		{	clear();
 			//
 			length_   = x.length_;
