@@ -37,4 +37,6 @@ dir_list='
 '
 #
 grep -l -r  "$pattern" $dir_list | \
-	 sed -e '/\/makefile.in/d' -e '/test_one.exe/d' 
+	 sed -e '/\/makefile.in/d' -e '/test_one.exe/d'  -e '/\/new\//d'
+grep -l "$pattern" makefile.am CMakeLists.txt doc.omh | \
+	 sed -e '/\/makefile.in/d' -e '/test_one.exe/d'  -e '/\/new\//d'
