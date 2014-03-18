@@ -46,6 +46,16 @@ This section contains a list of the changes to CppAD during 2014
 The purpose of this section is to
 assist you in learning about changes between various versions of CppAD.
 
+$head 03-17$$
+The 
+$cref/move semantics/CppAD_vector/Assignment/Move Semantics/$$
+version of the $code CppAD::vector$$ assignment statement
+was not checking vector sizes.
+This has been fixed so that things work the same with compilers
+that do not have move semantics.
+(Note that with move semantics, no extra memory allocation is done
+even if the target vector has a different size.)
+
 $head 03-12$$
 The documentation does not get installed if
 $cref/cmake_install_docdir/cmake/cmake_install_docdir/$$
