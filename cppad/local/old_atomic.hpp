@@ -340,7 +340,7 @@ by calls to $icode afun$$.
 It is used,
 with $icode%vx%.size() = 0%$$ and
 $icode k$$ equal to the order of the derivative begin computed,
-by calls to $cref/forward/forward_any/$$.
+by calls to $cref/forward/forward_order/$$.
 
 $subhead vx$$
 The $icode forward$$ argument $icode vx$$ has prototype

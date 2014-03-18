@@ -106,7 +106,7 @@ $rref base_complex.hpp$$
 $rref base_require.cpp$$
 $rref bender_quad.cpp$$
 $rref bool_fun.cpp$$
-$rref capacity_taylor.cpp$$
+$rref capacity_order.cpp$$
 $rref change_const.cpp$$
 $rref check_for_nan.cpp$$
 $rref check_numeric_type.cpp$$
@@ -137,7 +137,7 @@ $rref for_one.cpp$$
 $rref for_sparse_jac.cpp$$
 $rref for_two.cpp$$
 $rref forward.cpp$$
-$rref forward_mul.cpp$$
+$rref forward_order.cpp$$
 $rref fun_assign.cpp$$
 $rref fun_check.cpp$$
 $rref get_started.cpp$$

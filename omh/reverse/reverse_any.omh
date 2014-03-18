@@ -113,17 +113,17 @@ $codei%
 %$$
 Before this call to $code Reverse$$, the value returned by
 $codei%
-	%f%.size_taylor()
+	%f%.size_order()
 %$$
 must be greater than or equal $icode q$$
-(see $cref size_taylor$$).
+(see $cref size_order$$).
 
 $head q$$
 The argument $icode q$$ has prototype
 $codei%
 	size_t %q%
 %$$
-and specifies the number of Taylor coefficients to be differentiated
+and specifies the number of Taylor coefficient orders to be differentiated
 (for each variable).
 
 

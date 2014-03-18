@@ -276,7 +276,7 @@ public:
 
 		// no longer need the Taylor coefficients in f_
 		// (have to reconstruct them every time)
-		f_.capacity_taylor(0);
+		f_.capacity_order(0);
 		return ok;
 	}
 	/*!
@@ -319,7 +319,7 @@ public:
 
 		// no longer need the Taylor coefficients in f_
 		// (have to reconstruct them every time)
-		f_.capacity_taylor(0);
+		f_.capacity_order(0);
 		return ok;
 	}
 	/*!

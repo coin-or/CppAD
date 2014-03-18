@@ -109,8 +109,8 @@ done when the optimizer is using the sparsity pattern for this purpose.
 
 $head Forward Mode Recomputation$$
 $index forward$$
-If the results of $cref forward_any$$ have already been computed and are still
-stored in the $cref ADFun$$ object (see $cref size_taylor$$), 
+If the results of $cref forward_order$$ have already been computed and are still
+stored in the $cref ADFun$$ object (see $cref size_order$$), 
 then they do not need to be recomputed and the results can just be returned.
 
 $head Iterator Interface$$

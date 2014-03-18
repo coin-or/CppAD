@@ -3,7 +3,7 @@
 # define CPPAD_DEFINE_INCLUDED
 
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-13 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-14 Bradley M. Bell
 
 CppAD is distributed under multiple licenses. This distribution is under
 the terms of the 
@@ -33,19 +33,6 @@ in pod_vector.hpp.
 */
 # define CPPAD_OP_CODE_TYPE unsigned char
 
-/*!
-\def CPPAD_USE_FORWARD0SWEEP
-If ture, use compute zero order sweeps using a specialized routine.
-
-The value of this define should be zero or one. 
-If it is one, a specialized routine is used for zero order forward sweeps.
-Otherwise, use the general forward routine is used for zero order.
-Using the specialized routine is an optimization that makes the source
-more complicated and a significant speed improvement has not been 
-verified (as yet).
-This preprocessor symbol makes it easier to compare these two options.
-*/
-# define CPPAD_USE_FORWARD0SWEEP 1
 
 /*!
 \def CPPAD_INLINE_FRIEND_TEMPLATE_FUNCTION

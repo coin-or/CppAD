@@ -94,7 +94,7 @@ ADD_EXECUTABLE(test_more EXCLUDE_FROM_ALL test_more.cpp
 	for_hess.cpp
 	for_sparse_jac.cpp
 	forward.cpp
-	forward_mul.cpp
+	forward_order.cpp
 	from_base.cpp
 	fun_check.cpp
 	jacobian.cpp

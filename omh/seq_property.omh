@@ -1,6 +1,6 @@
 $Id$
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-13 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-14 Bradley M. Bell
 
 CppAD is distributed under multiple licenses. This distribution is under
 the terms of the 
@@ -51,7 +51,7 @@ $icode%s% = %f%.size_op_seq()
 %$$
 
 $subhead See Also$$
-$cref size_taylor$$, $cref capacity_taylor$$.
+$cref size_order$$, $cref capacity_order$$.
 
 $head Purpose$$
 The operations above return properties of the
@@ -137,8 +137,8 @@ one for a phantom variable with tape address zero,
 one for each component of the range that is a parameter.
 The amount of work and memory necessary for computing function values
 and derivatives using $icode f$$ is roughly proportional to $icode s$$.
-(The function call $cref/f.size_taylor()/size_taylor/$$ 
-returns the number of Taylor coefficients, per variable,
+(The function call $cref/f.size_order()/size_order/$$ 
+returns the number of Taylor coefficient orders, per variable,direction,
 currently stored in $icode f$$.)
 $pre
 

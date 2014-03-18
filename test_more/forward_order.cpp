@@ -1,6 +1,6 @@
 /* $Id$ */
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-13 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-14 Bradley M. Bell
 
 CppAD is distributed under multiple licenses. This distribution is under
 the terms of the 
@@ -11,23 +11,6 @@ Please visit http://www.coin-or.org/CppAD/ for information on other licenses.
 -------------------------------------------------------------------------- */
 
 /*
-$begin forward_mul.cpp$$
-$spell
-	Cpp
-$$
-
-$section Forward Mode: Example and Test of Multiple Orders$$
-$index forward, multiple orders$$
-$index multiple, forward orders$$
-$index order, multiple forward$$
-$index example, forward multiple orders$$
-$index test, forward multiple orders$$
-
-$code
-$verbatim%example/forward_mul.cpp%0%// BEGIN C++%// END C++%1%$$
-$$
-
-$end
 */
 // BEGIN C++
 # include <cppad/cppad.hpp>
@@ -39,7 +22,7 @@ namespace {
 	CPPAD_DISCRETE_FUNCTION(double, my_discrete)
 
 }
-bool forward_mul(void)
+bool forward_order(void)
 {	bool ok = true;
 	using CppAD::AD;
 	using CppAD::NearEqual;
@@ -99,7 +82,7 @@ bool forward_mul(void)
 	f.Dependent(X, Y);
 
 	// initially, no values stored in f
-	ok &= f.size_taylor() == 0;
+	ok &= f.size_order() == 0;
 
 	// Set X_j (t) = x + t
 	size_t p = 2, p1 = p+1;

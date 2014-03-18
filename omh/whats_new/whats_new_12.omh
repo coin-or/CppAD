@@ -792,7 +792,7 @@ $cref/sequence constructor/FunConstruct/Sequence Constructor/$$.
 $head 03-26$$
 Calling $code taylor_capacity$$, with to with capacity equal to zero,
 was not
-$cref/freeing memory/capacity_taylor/c/Freeing Memory/$$.
+$cref/freeing memory/capacity_order/c/Freeing Memory/$$.
 This has been fixed.
 
 $head 03-23$$

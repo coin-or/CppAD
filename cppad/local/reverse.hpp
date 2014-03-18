@@ -105,11 +105,11 @@ VectorBase ADFun<Base>::Reverse(size_t q, const VectorBase &w)
 	size_t m = dep_taddr_.size();
 
 	pod_vector<Base> Partial;
-	Partial.extend(total_num_var_ * q);
+	Partial.extend(num_var_tape_  * q);
 
 	// update maximum memory requirement
 	// memoryMax = std::max( memoryMax, 
-	// 	Memory() + total_num_var_ * q * sizeof(Base)
+	// 	Memory() + num_var_tape_  * q * sizeof(Base)
 	// );
 
 	// check VectorBase is Simple Vector class with Base type elements
@@ -125,20 +125,20 @@ VectorBase ADFun<Base>::Reverse(size_t q, const VectorBase &w)
 		"The first argument to Reverse must be greater than zero."
 	);  
 	CPPAD_ASSERT_KNOWN(
-		taylor_per_var_ >= q,
+		num_order_taylor_ >= q,
 		"Less that q taylor_ coefficients are currently stored"
 		" in this ADFun object."
 	);  
 
 	// initialize entire Partial matrix to zero
-	for(i = 0; i < total_num_var_; i++)
+	for(i = 0; i < num_var_tape_; i++)
 		for(j = 0; j < q; j++)
 			Partial[i * q + j] = zero;
 
 	// set the dependent variable direction
 	// (use += because two dependent variables can point to same location)
 	for(i = 0; i < m; i++)
-	{	CPPAD_ASSERT_UNKNOWN( dep_taddr_[i] < total_num_var_ );
+	{	CPPAD_ASSERT_UNKNOWN( dep_taddr_[i] < num_var_tape_  );
 		if( size_t(w.size()) == m )
 			Partial[dep_taddr_[i] * q + q - 1] += w[i];
 		else
@@ -154,9 +154,9 @@ VectorBase ADFun<Base>::Reverse(size_t q, const VectorBase &w)
 	ReverseSweep(
 		q - 1,
 		n,
-		total_num_var_,
+		num_var_tape_,
 		&play_,
-		taylor_col_dim_,
+		cap_order_taylor_,
 		taylor_.data(),
 		q,
 		Partial.data(),
@@ -167,7 +167,7 @@ VectorBase ADFun<Base>::Reverse(size_t q, const VectorBase &w)
 	// return the derivative values
 	VectorBase value(n * q);
 	for(j = 0; j < n; j++)
-	{	CPPAD_ASSERT_UNKNOWN( ind_taddr_[j] < total_num_var_ );
+	{	CPPAD_ASSERT_UNKNOWN( ind_taddr_[j] < num_var_tape_  );
 
 		// independent variable taddr equals its operator taddr 
 		CPPAD_ASSERT_UNKNOWN( play_.GetOp( ind_taddr_[j] ) == InvOp );

@@ -3,7 +3,7 @@
 # define CPPAD_REV_SPARSE_HES_INCLUDED
 
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-13 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-14 Bradley M. Bell
 
 CppAD is distributed under multiple licenses. This distribution is under
 the terms of the 
@@ -633,7 +633,7 @@ void ADFun<Base>::RevSparseHesCase(
 		"use bool for the elements of r."
 	);
 	CPPAD_ASSERT_UNKNOWN( for_jac_sparse_set_.n_set() == 0 );
-	CPPAD_ASSERT_UNKNOWN( for_jac_sparse_pack_.n_set() == total_num_var_ );
+	CPPAD_ASSERT_UNKNOWN( for_jac_sparse_pack_.n_set() == num_var_tape_  );
 	
 	// use sparse_pack for the calculation
 	CppAD::RevSparseHesBool( 
@@ -641,7 +641,7 @@ void ADFun<Base>::RevSparseHesCase(
 		q                        ,
 		s                        ,
 		h                        ,
-		total_num_var_           ,
+		num_var_tape_            ,
 		dep_taddr_               ,
 		ind_taddr_               ,
 		play_                    ,
@@ -691,7 +691,7 @@ void ADFun<Base>::RevSparseHesCase(
 		"use std::set<size_t> for the elements of r."
 	);
 	CPPAD_ASSERT_UNKNOWN( for_jac_sparse_pack_.n_set() == 0 );
-	CPPAD_ASSERT_UNKNOWN( for_jac_sparse_set_.n_set() == total_num_var_ );
+	CPPAD_ASSERT_UNKNOWN( for_jac_sparse_set_.n_set() == num_var_tape_  );
 	
 	// use sparse_pack for the calculation
 	CppAD::RevSparseHesSet( 
@@ -699,7 +699,7 @@ void ADFun<Base>::RevSparseHesCase(
 		q                        ,
 		s                        ,
 		h                        ,
-		total_num_var_           ,
+		num_var_tape_            ,
 		dep_taddr_               ,
 		ind_taddr_               ,
 		play_                    ,

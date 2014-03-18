@@ -1,6 +1,6 @@
 $Id$
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-12 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-14 Bradley M. Bell
 
 CppAD is distributed under multiple licenses. This distribution is under
 the terms of the 
@@ -34,6 +34,10 @@ $icode%s% = %f%.Size()
 $icode%t% = %f%.taylor_size()
 %$$
 $icode%u% = %f%.use_VecAD()
+%$$
+$icode%v% = %f%.size_taylor()
+%$$
+$icode%w% = %f%.capacity_taylor()
 %$$
 
 
@@ -82,7 +86,7 @@ Zero order corresponds to function values being stored in $icode f$$.
 In the future, we would like to be able to erase the function
 values so that $icode f$$ uses less memory. 
 In this case, the return value of $code Order$$ would not make sense.
-Use $cref size_taylor$$ to obtain 
+Use $cref size_order$$ to obtain 
 the number of Taylor coefficients currently stored
 in the ADFun object $icode f$$ 
 (which is equal to the order plus one).
@@ -136,13 +140,11 @@ The result $icode t$$ has prototype
 $codei%
 	size_t %t%
 %$$
-and is the number of Taylor coefficients, 
-per variable in the AD operation sequence,
+and is the number of Taylor coefficient orders
 currently calculated and stored in the ADFun object $icode f$$.
 
 $subhead Deprecated$$
-For the purpose of uniform naming,
-this function has been replaced by $cref size_taylor$$.
+This function has been replaced by $cref size_order$$.
 
 $head use_VecAD$$
 $index ADFun, use_VecAD$$
@@ -163,6 +165,32 @@ You can instead use
 $codei%
 	%u% = %f%.size_VecAD() > 0
 %$$
+
+$head size_taylor$$
+$index ADFun, size_taylor$$
+$index size_taylor, ADFun$$
+The result $icode v$$ has prototype
+$codei%
+	size_t %v%
+%$$
+and is the number of Taylor coefficient orders
+currently calculated and stored in the ADFun object $icode f$$.
+
+$subhead Deprecated$$
+This function has been replaced by $cref size_order$$.
+
+$head capacity_taylor$$
+$index ADFun, capacity_taylor$$
+$index capacity_taylor, ADFun$$
+The result $icode w$$ has prototype
+$codei%
+	size_t %w%
+%$$
+and is the number of Taylor coefficient orders currently allocated
+in the ADFun object $icode f$$.
+
+$subhead Deprecated$$
+This function has been replaced by $cref capacity_order$$.
 
 
 $end

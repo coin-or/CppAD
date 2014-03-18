@@ -50,9 +50,9 @@ $codei%
 %$$
 Before this call to $code Reverse$$, the value returned by
 $codei%
-	%f%.size_taylor()
+	%f%.size_order()
 %$$
-must be greater than or equal one (see $cref size_taylor$$).
+must be greater than or equal one (see $cref size_order$$).
 
 $head x$$
 The vector $icode x$$ in expression for $icode dw$$ above

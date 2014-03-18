@@ -3,7 +3,7 @@
 # define CPPAD_REV_SPARSE_JAC_INCLUDED
 
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-13 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-14 Bradley M. Bell
 
 CppAD is distributed under multiple licenses. This distribution is under
 the terms of the 
@@ -531,7 +531,7 @@ void ADFun<Base>::RevSparseJacCase(
 		q              ,
 		r              ,
 		s              ,
-		total_num_var_ ,
+		num_var_tape_  ,
 		dep_taddr_     ,
 		ind_taddr_     ,
 		play_
@@ -586,7 +586,7 @@ void ADFun<Base>::RevSparseJacCase(
 		q              ,
 		r              ,
 		s              ,
-		total_num_var_ ,
+		num_var_tape_  ,
 		dep_taddr_     ,
 		ind_taddr_     ,
 		play_

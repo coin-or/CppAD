@@ -1,6 +1,6 @@
 /* $Id$ */
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-12 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-14 Bradley M. Bell
 
 CppAD is distributed under multiple licenses. This distribution is under
 the terms of the 
@@ -93,7 +93,7 @@ bool FunCheckCases(void)
 
 	// stop tape and store operation sequence in f : X -> Y
 	f.Dependent(X, Y);
-	ok &= (f.size_taylor() == 0);  // no implicit forward operation
+	ok &= (f.size_order() == 0);  // no implicit forward operation
 
 	// create function object to use with double
 	Fun<double, Vector> g(n);
@@ -122,7 +122,7 @@ bool FunCheckCases(void)
 
 	// stop tape and store operation sequence in f : X -> Y
 	f.Dependent(X, Y);
-	ok &= (f.size_taylor() == 0);  // no implicit forward with this x
+	ok &= (f.size_order() == 0);  // no implicit forward with this x
 
 	// function values should agree now
 	ok      &= FunCheck(f, g, x, a, r);

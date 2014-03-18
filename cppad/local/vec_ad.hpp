@@ -276,10 +276,10 @@ $cref/parameters/glossary/Parameter/$$).
 The effect of this can be seen by executing the following steps:
 
 $list number$$
-In the file $code cppad/local/forward_sweep.h$$,
-change the definition of $code CPPAD_FORWARD_SWEEP_TRACE$$ to
+In the file $code cppad/local/forward1sweep.h$$,
+change the definition of $code CPPAD_FORWARD1SWEEP_TRACE$$ to
 $codep
-	# define CPPAD_FORWARD_SWEEP_TRACE 1
+	# define CPPAD_FORWARD1SWEEP_TRACE 1
 $$
 $lnext
 In the $code Example$$ directory, execute the command

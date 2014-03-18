@@ -114,7 +114,7 @@ the value of $icode%u%[%i%]%$$ is set to $cref nan$$.
 $head Checking Optimization$$
 $index NDEBUG$$
 If $cref/NDEBUG/Faq/Speed/NDEBUG/$$ is not defined,
-and $cref/f.size_taylor()/size_taylor/$$ is greater than zero,
+and $cref/f.size_order()/size_order/$$ is greater than zero,
 a $cref forward_zero$$ calculation is done using the optimized version
 of $icode f$$ and the results are checked to see that they are
 the same as before.
@@ -2613,25 +2613,25 @@ void ADFun<Base>::optimize(void)
 # ifndef NDEBUG
 	size_t i, j, m = dep_taddr_.size();
 	CppAD::vector<Base> x(n), y(m), check(m);
-	bool check_zero_order = taylor_per_var_ > 0;
 	Base max_taylor(0);
+	bool check_zero_order = num_order_taylor_ > 0;
 	if( check_zero_order )
 	{	// zero order coefficients for independent vars
 		for(j = 0; j < n; j++)
 		{	CPPAD_ASSERT_UNKNOWN( play_.GetOp(j+1) == InvOp );
 			CPPAD_ASSERT_UNKNOWN( ind_taddr_[j]    == j+1   );
-			x[j] = taylor_[ ind_taddr_[j] * taylor_col_dim_ + 0];
+			x[j] = taylor_[ ind_taddr_[j] * cap_order_taylor_ + 0];
 		}
 		// zero order coefficients for dependent vars
 		for(i = 0; i < m; i++)
-		{	CPPAD_ASSERT_UNKNOWN( dep_taddr_[i] < total_num_var_ );
-			y[i] = taylor_[ dep_taddr_[i] * taylor_col_dim_ + 0];
+		{	CPPAD_ASSERT_UNKNOWN( dep_taddr_[i] < num_var_tape_  );
+			y[i] = taylor_[ dep_taddr_[i] * cap_order_taylor_ + 0];
 		}
 		// maximum zero order coefficient not counting BeginOp at beginning
 		// (which is correpsonds to uninitialized memory).
-		for(i = 1; i < total_num_var_; i++)
-		{	if(  abs_geq(taylor_[i*taylor_col_dim_+0] , max_taylor) )
-				max_taylor = taylor_[i*taylor_col_dim_+0];
+		for(i = 1; i < num_var_tape_; i++)
+		{	if(  abs_geq(taylor_[i*cap_order_taylor_+0] , max_taylor) )
+				max_taylor = taylor_[i*cap_order_taylor_+0];
 		}
 	}
 # endif
@@ -2640,7 +2640,7 @@ void ADFun<Base>::optimize(void)
 	CppAD::optimize::optimize_run<Base>(n, dep_taddr_, &play_, &rec);
 
 	// number of variables in the recording
-	total_num_var_ = rec.num_var_rec();
+	num_var_tape_  = rec.num_var_rec();
 
 	// now replace the recording
 	play_.get(rec);
@@ -2652,8 +2652,8 @@ void ADFun<Base>::optimize(void)
 
 	// free old Taylor coefficient memory
 	taylor_.free();
-	taylor_per_var_ = 0;
-	taylor_col_dim_ = 0;
+	num_order_taylor_     = 0;
+	cap_order_taylor_     = 0;
 
 	// resize and initilaize conditional skip vector
 	// (must use player size because it now has the recoreder information)
@@ -2675,7 +2675,7 @@ void ADFun<Base>::optimize(void)
 
 		// Erase memory that this calculation was done so NDEBUG gives 
 		// same final state for this object (from users perspective)
-		taylor_per_var_ = 0;
+		num_order_taylor_     = 0;
 	}
 # endif
 }

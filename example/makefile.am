@@ -87,7 +87,7 @@ example_SOURCES   = \
 	base_require.cpp \
 	bender_quad.cpp \
 	bool_fun.cpp \
-	capacity_taylor.cpp \
+	capacity_order.cpp \
 	change_const.cpp \
 	check_for_nan.cpp \
 	check_numeric_type.cpp \
@@ -109,7 +109,7 @@ example_SOURCES   = \
 	for_one.cpp \
 	for_two.cpp \
 	forward.cpp \
-	forward_mul.cpp \
+	forward_order.cpp \
 	for_sparse_jac.cpp \
 	fun_assign.cpp \
 	fun_check.cpp \

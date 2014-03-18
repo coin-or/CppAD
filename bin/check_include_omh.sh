@@ -31,6 +31,8 @@ find . \( -name '*.c'   \) -or \
 		-e '/.\/build\//d' \
 		-e '/.\/new\//d' \
 		-e '/.\/doc\//d' \
+		-e '/.\/junk$/d' \
+		-e '/.\/junk\./d' \
 		-e 's|./||' \
 		> bin/check_include_omh.1.$$
 echo $sh_files_with_omhelp_documentation >> bin/check_include_omh.1.$$

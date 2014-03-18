@@ -79,7 +79,7 @@ fi
 # -----------------------------------------------------------------------
 # check for abort do to unknown files
 unknown=`svn status | sed -n -e '/^[?]/p' | \
-	sed -e 's/^[?]//' -e "/bin\/commit.*.$$/d"`
+	sed -e 's/^[?]//' -e "/bin\/commit.*.$$/d" -e '/\/new$/d'`
 msg="aborting because the following files are unknown to svn"
 print_msg="no"
 for file in $unknown

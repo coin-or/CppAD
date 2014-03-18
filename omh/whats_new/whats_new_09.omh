@@ -67,7 +67,7 @@ $code ADFun$$ $cref/assignment operator/FunConstruct/Assignment Operator/$$
 was changed so that it now copies forward mode
 Taylor coefficients and sparsity pattern information.
 (This assignment operator was added on $cref/10-24/whats_new_09/10-24/$$.)
-You can use $cref capacity_taylor$$ to delete the Taylor coefficients
+You can use $cref capacity_order$$ to delete the Taylor coefficients
 before copying them.
 Two new functions were added so that you can query and delete the
 forward mode sparsity information;

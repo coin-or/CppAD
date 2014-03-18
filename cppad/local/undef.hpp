@@ -85,7 +85,6 @@ Preprecessor definitions that presist after cppad/cppad.hpp is included:
 # undef CPPAD_TRACE_CAPACITY
 # undef CPPAD_TRACE_THREAD
 # undef CPPAD_TRACK_DEBUG
-# undef CPPAD_USE_FORWARD0SWEEP
 # undef CPPAD_USER_MACRO
 # undef CPPAD_USER_MACRO_ONE
 # undef CPPAD_USER_MACRO_TWO

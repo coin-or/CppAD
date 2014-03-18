@@ -115,7 +115,7 @@ bool link_poly(
 			f.optimize();
 
 		// pre-allocate memory for three forward mode calculations
-		f.capacity_taylor(3);
+		f.capacity_order(3);
 
 		// evaluate the polynomial 
 		p = f.Forward(0, z);

@@ -28,6 +28,7 @@ $$
 $end
 */
 // BEGIN C++
+# include <limits>
 # include <cppad/cppad.hpp>
 namespace { // --------------------------------------------------------
 // define the template function ForwardCases<Vector> in empty namespace
@@ -36,59 +37,57 @@ bool ForwardCases(void)
 {	bool ok = true;
 	using CppAD::AD;
 	using CppAD::NearEqual;
+	double eps = 10. * std::numeric_limits<double>::epsilon();
 
 	// domain space vector
 	size_t n = 2;
-	CPPAD_TESTVECTOR(AD<double>) X(n);
-	X[0] = 0.; 
-	X[1] = 1.;
+	CPPAD_TESTVECTOR(AD<double>) ax(n);
+	ax[0] = 0.; 
+	ax[1] = 1.;
 
 	// declare independent variables and starting recording
-	CppAD::Independent(X);
+	CppAD::Independent(ax);
 
 	// range space vector
 	size_t m = 1;
-	CPPAD_TESTVECTOR(AD<double>) Y(m);
-	Y[0] = X[0] * X[0] * X[1];
+	CPPAD_TESTVECTOR(AD<double>) ay(m);
+	ay[0] = ax[0] * ax[0] * ax[1];
 
-	// create f: X -> Y and stop tape recording
-	CppAD::ADFun<double> f(X, Y);
+	// create f: x -> y and stop tape recording
+	CppAD::ADFun<double> f(ax, ay);
 
 	// initially, the variable values during taping are stored in f
-	ok &= f.size_taylor() == 1;
+	ok &= f.size_order() == 1;
 
-	// zero order forward mode using notaiton in forward_zero
+	// zero order forward mode using notation in forward_zero
 	// use the template parameter Vector for the vector type
-	Vector x(n);
-	Vector y(m);
-	x[0] = 3.;
-	x[1] = 4.;
-	y    = f.Forward(0, x);
-	ok  &= NearEqual(y[0] , x[0]*x[0]*x[1], 1e-10, 1e-10);
-	ok  &= f.size_taylor() == 1;
+	Vector x0(n), y0(m);
+	x0[0] = 3.;
+	x0[1] = 4.;
+	y0    = f.Forward(0, x0);
+	ok  &= NearEqual(y0[0] , x0[0]*x0[0]*x0[1], eps, eps);
+	ok  &= f.size_order() == 1;
 
 	// first order forward mode using notation in forward_one
-	// X(t)           = x + dx * t
-	// Y(t) = F[X(t)] = y + dy * t + o(t)
-	Vector dx(n);
-	Vector dy(m);
-	dx[0] = 1.;
-	dx[1] = 0.;
-	dy    = f.Forward(1, dx); // partial F w.r.t. x[0]
-	ok   &= NearEqual(dy[0] , 2.*x[0]*x[1], 1e-10, 1e-10);
-	ok   &= f.size_taylor() == 2;
+	// X(t)           = x0 + x1 * t
+	// Y(t) = F[X(t)] = y0 + y1 * t + o(t)
+	Vector x1(n), y1(m);
+	x1[0] = 1.;
+	x1[1] = 0.;
+	y1    = f.Forward(1, x1); // partial F w.r.t. x_0
+	ok   &= NearEqual(y1[0] , 2.*x0[0]*x0[1], eps, eps);
+	ok   &= f.size_order() == 2;
 
-	// second order forward mode using notaiton in forward_any
-	// X(t) =           x + dx * t + x_2 * t^2
-	// Y(t) = F[X(t)] = y + dy * t + y_2 * t^2 + o(t^3)
-	Vector x_2(n);
-	Vector y_2(m);
-	x_2[0]      = 0.;
-	x_2[1]      = 0.;
-	y_2         = f.Forward(2, x_2);
-	double F_00 = 2. * y_2[0]; // second partial F w.r.t. x[0], x[0]
-	ok         &= NearEqual(F_00, 2.*x[1], 1e-10, 1e-10);
-	ok         &= f.size_taylor() == 3;
+	// second order forward mode using notation in forward_order
+	// X(t) =           x0 + x1 * t + x2 * t^2
+	// Y(t) = F[X(t)] = y0 + y1 * t + y2 * t^2 + o(t^3)
+	Vector x2(n), y2(m);
+	x2[0]      = 0.;
+	x2[1]      = 0.;
+	y2         = f.Forward(2, x2);
+	double F_00 = 2. * y2[0]; // second partial F w.r.t. x_0, x_0
+	ok         &= NearEqual(F_00, 2.*x0[1], eps, eps);
+	ok         &= f.size_order() == 3;
 
 	return ok;
 }

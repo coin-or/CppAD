@@ -1,6 +1,6 @@
 /* $Id$ */
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-13 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-14 Bradley M. Bell
 
 CppAD is distributed under multiple licenses. This distribution is under
 the terms of the 
@@ -179,7 +179,7 @@ namespace {
 			f = empty;
 		else	
 		{	// free all the Taylor coefficients stored in f
-			f.capacity_taylor(0);
+			f.capacity_order(0);
 		}
 
 		// record the function G(x)

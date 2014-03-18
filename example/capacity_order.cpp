@@ -1,6 +1,6 @@
 /* $Id$ */
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-12 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-14 Bradley M. Bell
 
 CppAD is distributed under multiple licenses. This distribution is under
 the terms of the 
@@ -11,18 +11,18 @@ Please visit http://www.coin-or.org/CppAD/ for information on other licenses.
 -------------------------------------------------------------------------- */
 
 /*
-$begin capacity_taylor.cpp$$
+$begin capacity_order.cpp$$
 $spell
 	Taylor
 $$
 
 $section Controlling Taylor Coefficient Memory Allocation: Example and Test$$
 
-$index capacity_taylor, example$$
-$index example, capacity_taylor$$
+$index capacity_order, example$$
+$index example, capacity_order$$
 
 $code
-$verbatim%example/capacity_taylor.cpp%0%// BEGIN C++%// END C++%1%$$
+$verbatim%example/capacity_order.cpp%0%// BEGIN C++%// END C++%1%$$
 $$
 
 $end
@@ -62,10 +62,10 @@ namespace {
 		ok           &= thread == 0; // this should be master thread
 
 		// The highest order forward mode calculation below is first order.
-		// This corresponds to two Taylor coefficient per variable
+		// This corresponds to two Taylor coefficient per variable,direction
 		// (orders zero and one). Preallocate memory for speed.
 		size_t inuse  = thread_alloc::inuse(thread);
-		f.capacity_taylor(2);
+		f.capacity_order(2);
 		ok &= thread_alloc::inuse(thread) > inuse;
 
 		// zero order forward mode
@@ -83,13 +83,13 @@ namespace {
 	
 		// Suppose we no longer need the first order Taylor coefficients.
 		inuse = thread_alloc::inuse(thread);
-		f.capacity_taylor(1); // just keep zero order coefficients
+		f.capacity_order(1); // just keep zero order coefficients
 		ok   &= thread_alloc::inuse(thread) < inuse;
 	
 		// Suppose we no longer need the zero order Taylor coefficients
-		// (could have done this first and not used f.capacity_taylor(1)).
+		// (could have done this first and not used f.capacity_order(1)).
 		inuse = thread_alloc::inuse(thread);
-		f.capacity_taylor(0);
+		f.capacity_order(0);
 		ok   &= thread_alloc::inuse(thread) < inuse;
 	
 		// turn off memory holding
@@ -98,7 +98,7 @@ namespace {
 		return ok;
 	}
 }
-bool capacity_taylor(void)
+bool capacity_order(void)
 {	bool ok = true;
 	using CppAD::thread_alloc;
 

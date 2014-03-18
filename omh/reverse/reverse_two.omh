@@ -82,9 +82,9 @@ $codei%
 %$$
 Before this call to $code Reverse$$, the value returned by
 $codei%
-	%f%.size_taylor()
+	%f%.size_order()
 %$$
-must be greater than or equal two (see $cref size_taylor$$).
+must be greater than or equal two (see $cref size_order$$).
 
 $head w$$
 The argument $icode w$$ has prototype

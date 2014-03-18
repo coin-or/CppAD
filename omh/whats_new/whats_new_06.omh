@@ -576,10 +576,10 @@ $cref ADFun$$ objects use even less memory and can be used
 for a subsequent AD operation sequence."
 
 $subhead 06-17$$
-Added $cref capacity_taylor$$ which can be used to control
+Added $cref capacity_order$$ which can be used to control
 the amount of memory used to store $cref Forward$$ results.
 Also $cref/deprecated/FunDeprecated/$$ $code taylor_size$$, and defined 
-$cref size_taylor$$ in its place.
+$cref size_order$$ in its place.
 
 $subhead 06-18$$
 Added the $cref/ADFun default constructor/FunConstruct/$$
@@ -821,7 +821,7 @@ $pre
 
 $$
 The ADFun $cref/Size/FunDeprecated/Size/$$ member function
-has been deprecated (use $cref size_taylor$$ instead).
+has been deprecated (use $cref size_order$$ instead).
 $pre
 
 $$

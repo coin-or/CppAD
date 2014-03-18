@@ -148,7 +148,7 @@ namespace { // Begin empty namespace
 		}
 		// no longer need the Taylor coefficients in r_ptr_
 		// (have to reconstruct them every time)
-		r_ptr_->capacity_taylor(0);
+		r_ptr_->capacity_order(0);
 		return ok;
 	}
 	// ----------------------------------------------------------------------
@@ -194,7 +194,7 @@ namespace { // Begin empty namespace
 		}
 		// no longer need the Taylor coefficients in r_ptr_
 		// (have to reconstruct them every time)
-		r_ptr_->capacity_taylor(0);
+		r_ptr_->capacity_order(0);
 
 		return ok;
 	}

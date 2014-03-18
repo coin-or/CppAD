@@ -13,6 +13,7 @@ Please visit http://www.coin-or.org/CppAD/ for information on other licenses.
 $begin whats_new_14$$
 $dollar @$$
 $spell
+	taylor
 	forwardzero
 	forwardone
 	forwardany
@@ -46,6 +47,22 @@ This section contains a list of the changes to CppAD during 2014
 The purpose of this section is to
 assist you in learning about changes between various versions of CppAD.
 
+$head 03-18$$
+$list number$$
+The 
+$cref/size_taylor/FunDeprecated/size_taylor/$$
+and
+$cref/capacity_taylor/FunDeprecated/capacity_taylor/$$
+functions were deprecated;
+use $cref size_order$$ and $cref capacity_order$$ instead.
+$lnext
+The documentation for $cref forward$$ and the examples
+$cref forward.cpp$$, $cref forward_order.cpp$$, have been improved. 
+To be more specific, $cref forward_order$$ now references the special
+cases $cref forward_zero$$, $cref forward_one$$ and the new case
+$cref forward_two$$.
+$lend
+
 $head 03-17$$
 The 
 $cref/move semantics/CppAD_vector/Assignment/Move Semantics/$$
@@ -56,23 +73,17 @@ that do not have move semantics.
 (Note that with move semantics, no extra memory allocation is done
 even if the target vector has a different size.)
 
-$head 03-12$$
-The documentation does not get installed if
-$cref/cmake_install_docdir/cmake/cmake_install_docdir/$$
-is not specified. 
-The reference to a default for this directory been removed.
-
 $head 03-09$$
 The documentation links
 $code forwardzero$$, $code forwardone$$, and $code forwardany$$
 have been changed to
 $cref forward_zero$$, $cref forward_one$$, 
-and $cref forward_any$$ respectively.
+and $cref forward_order$$ respectively.
 This may affect links from other web pages to the CppAD documentation.
 
 $head 03-05$$
 The names $icode p$$ and $icode q$$ in the 
-$cref/forward/forward_any/$$,
+$cref/forward/forward_order/$$,
 $cref/reverse/reverse_any/$$,
 $cref atomic_forward$$, and 
 $cref atomic_reverse$$ functions

@@ -149,7 +149,7 @@ nobase_myinclude_HEADERS =  \
 	cppad/local/bender_quad.hpp \
 	cppad/local/bool_fun.hpp \
 	cppad/local/bool_valued.hpp \
-	cppad/local/cap_taylor.hpp \
+	cppad/local/capacity_order.hpp \
 	cppad/local/checkpoint.hpp \
 	cppad/local/compare.hpp \
 	cppad/local/comp_op.hpp \
@@ -181,8 +181,8 @@ nobase_myinclude_HEADERS =  \
 	cppad/local/for_sparse_jac.hpp \
 	cppad/local/for_two.hpp \
 	cppad/local/forward0sweep.hpp \
+	cppad/local/forward1sweep.hpp \
 	cppad/local/forward.hpp \
-	cppad/local/forward_sweep.hpp \
 	cppad/local/fun_check.hpp \
 	cppad/local/fun_construct.hpp \
 	cppad/local/fun_eval.hpp \

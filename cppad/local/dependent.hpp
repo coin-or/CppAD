@@ -108,9 +108,9 @@ $head Forward$$
 No $cref Forward$$ calculation is preformed during this operation.
 Thus, directly after this operation,
 $codei%
-	%f%.size_taylor()
+	%f%.size_order()
 %$$ 
-is zero (see $cref size_taylor$$).
+is zero (see $cref size_order$$).
 
 $head Parallel Mode$$
 $index parallel, Dependent$$
@@ -228,6 +228,10 @@ After this operation, all memory allocated for this tape is deleted.
 
 \param y
 The dependent variable vector for the function being stored in this object.
+
+\par
+All of the private member data in ad_fun.hpp is set to correspond to the 
+new tape except for check_for_nan_.
 */
 
 template <typename Base>
@@ -246,17 +250,19 @@ void ADFun<Base>::Dependent(ADTape<Base> *tape, const ADvector &y)
 		y.size() > 0,
 		"ADFun operation sequence dependent variable size is zero size"
 	); 
-
-	// set total number of variables in tape, parameter flag, 
-	// make a tape copy of dependent variables that are parameters, 
-	// and store tape address for each dependent variable
+	// ---------------------------------------------------------------------
+	// Begin setting ad_fun.hpp private member data
+	// ---------------------------------------------------------------------
+	// dep_parameter_, dep_taddr_
 	CPPAD_ASSERT_UNKNOWN( NumRes(ParOp) == 1 );
 	dep_parameter_.resize(m);
 	dep_taddr_.resize(m);
 	for(i = 0; i < m; i++)
 	{	dep_parameter_[i] = CppAD::Parameter(y[i]);
 		if( dep_parameter_[i] )
+		{	// make a tape copy of dependent variables that are parameters, 
 			y_taddr = tape->RecordParOp( y[i].value_ );
+		}
 		else	y_taddr = y[i].taddr_;
 
 		CPPAD_ASSERT_UNKNOWN( y_taddr > 0 );
@@ -266,49 +272,56 @@ void ADFun<Base>::Dependent(ADTape<Base> *tape, const ADvector &y)
 	// put an EndOp at the end of the tape
 	tape->Rec_.PutOp(EndOp);
 
-	// total number of variables on the tape
-	total_num_var_ = tape->Rec_.num_var_rec();
+	// some size_t values in ad_fun.hpp
+	compare_change_       = 0;
+	num_order_taylor_     = 0;
+	cap_order_taylor_     = 0;
 
-	// conditional skip vector
+	// num_var_tape_
+	// Now that all the variables are in the tape, we can set this value.
+	num_var_tape_       = tape->Rec_.num_var_rec();
+
+	// taylor_
+	taylor_.erase();
+
+	// cskip_op_
 	cskip_op_.erase();
 	cskip_op_.extend( tape->Rec_.num_op_rec() );
 
-	// vecad load operation vector
+	// load_op_
 	load_op_.erase();
 	load_op_.extend( tape->Rec_.num_load_op_rec() );
 
-	// now that each dependent variable has a place in the tape,
+	// play_
+	// Now that each dependent variable has a place in the tape,
 	// and there is a EndOp at the end of the tape, we can transfer the 
 	// recording to the player and and erase the tape.
 	play_.get(tape->Rec_);
+
+	// ind_taddr_
+	// Note that play_ has been set, we can use it to check operators
+	ind_taddr_.resize(n);
+	CPPAD_ASSERT_UNKNOWN( n < num_var_tape_);
+	for(j = 0; j < n; j++)
+	{	CPPAD_ASSERT_UNKNOWN( play_.GetOp(j+1) == InvOp );
+		ind_taddr_[j] = j+1;
+	}
+
+	// for_jac_sparse_pack_, for_jac_sparse_set_
+	for_jac_sparse_pack_.resize(0, 0);
+	for_jac_sparse_set_.resize(0,0);
+	// ---------------------------------------------------------------------
+	// End set ad_fun.hpp private member data
+	// ---------------------------------------------------------------------
 
 	// now we can delete the tape
 	AD<Base>::tape_manage(tape_manage_delete);
 
 	// total number of varables in this recording 
-	CPPAD_ASSERT_UNKNOWN( total_num_var_ == play_.num_var_rec() );
+	CPPAD_ASSERT_UNKNOWN( num_var_tape_  == play_.num_var_rec() );
 
 	// used to determine if there is an operation sequence in *this
-	CPPAD_ASSERT_UNKNOWN( total_num_var_ > 0 );
-
-	// free old buffers
-	for_jac_sparse_pack_.resize(0, 0);
-	for_jac_sparse_set_.resize(0,0);
-
-	// initial row and column dimensions
-	taylor_.erase();
-	taylor_per_var_   = 0;
-	taylor_col_dim_   = 0;
-
-	// set tape address 
-	ind_taddr_.resize(n);
-	CPPAD_ASSERT_UNKNOWN(
-		n < total_num_var_
-	);
-	for(j = 0; j < n; j++)
-	{	CPPAD_ASSERT_UNKNOWN( play_.GetOp(j+1) == InvOp );
-		ind_taddr_[j] = j+1;
-	}
+	CPPAD_ASSERT_UNKNOWN( num_var_tape_  > 0 );
 
 }
 

@@ -304,7 +304,7 @@ another function is optimized.
 $lnext
 Check $cref/reverse/reverse_any/$$  mode results when 
 $cref check_for_nan$$ is true.
-(It used to be the case that only $cref/forward/forward_any/$$ results
+(It used to be the case that only $cref/forward/forward_order/$$ results
 were checked for $code nan$$.)
 $lend
 
@@ -384,7 +384,7 @@ names were all changed to begin with $code user$$.
 
 $head 05-04$$
 The option to compute 
-$cref/multiple orders/forward_any/x_q/Multiple Orders/$$ was added.
+$cref/multiple orders/forward_order/xq/Multiple Orders/$$ was added.
 The $cref old_usead_2.cpp$$ example shows the need for this.
 The problem is that a new atomic function interface needs to be designed
 with checkpointing as a particular application.
