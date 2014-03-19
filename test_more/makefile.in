@@ -83,7 +83,7 @@ am__test_more_SOURCES_DIST = base_adolc.cpp ipopt_solve.cpp \
 	copy.cpp cos.cpp cosh.cpp dbl_epsilon.cpp div.cpp div_eq.cpp \
 	div_zero_one.cpp erf.cpp exp.cpp extern_value.cpp \
 	extern_value.hpp for_hess.cpp for_sparse_jac.cpp forward.cpp \
-	forward_mul.cpp from_base.cpp fun_check.cpp jacobian.cpp \
+	forward_order.cpp from_base.cpp fun_check.cpp jacobian.cpp \
 	limits.cpp log.cpp log10.cpp mul.cpp mul_eq.cpp mul_level.cpp \
 	mul_zero_one.cpp ndebug.cpp near_equal_ext.cpp neg.cpp \
 	ode_err_control.cpp optimize.cpp parameter.cpp poly.cpp \
@@ -109,9 +109,9 @@ am_test_more_OBJECTS = $(am__objects_1) $(am__objects_2) \
 	div_eq.$(OBJEXT) div_zero_one.$(OBJEXT) erf.$(OBJEXT) \
 	exp.$(OBJEXT) extern_value.$(OBJEXT) for_hess.$(OBJEXT) \
 	for_sparse_jac.$(OBJEXT) forward.$(OBJEXT) \
-	forward_mul.$(OBJEXT) from_base.$(OBJEXT) fun_check.$(OBJEXT) \
-	jacobian.$(OBJEXT) limits.$(OBJEXT) log.$(OBJEXT) \
-	log10.$(OBJEXT) mul.$(OBJEXT) mul_eq.$(OBJEXT) \
+	forward_order.$(OBJEXT) from_base.$(OBJEXT) \
+	fun_check.$(OBJEXT) jacobian.$(OBJEXT) limits.$(OBJEXT) \
+	log.$(OBJEXT) log10.$(OBJEXT) mul.$(OBJEXT) mul_eq.$(OBJEXT) \
 	mul_level.$(OBJEXT) mul_zero_one.$(OBJEXT) ndebug.$(OBJEXT) \
 	near_equal_ext.$(OBJEXT) neg.$(OBJEXT) \
 	ode_err_control.$(OBJEXT) optimize.$(OBJEXT) \
@@ -206,7 +206,7 @@ CYGPATH_W = @CYGPATH_W@
 
 # $Id$
 # -----------------------------------------------------------------------------
-# CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-13 Bradley M. Bell
+# CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-14 Bradley M. Bell
 #
 # CppAD is distributed under multiple licenses. This distribution is under
 # the terms of the 
@@ -433,7 +433,7 @@ test_more_SOURCES = \
 	for_hess.cpp \
 	for_sparse_jac.cpp \
 	forward.cpp \
-	forward_mul.cpp \
+	forward_order.cpp \
 	from_base.cpp \
 	fun_check.cpp \
 	jacobian.cpp \
@@ -568,7 +568,7 @@ distclean-compile:
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/for_hess.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/for_sparse_jac.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/forward.Po@am__quote@
-@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/forward_mul.Po@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/forward_order.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/from_base.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/fun_check.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/ipopt_solve.Po@am__quote@
