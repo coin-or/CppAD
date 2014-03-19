@@ -19,41 +19,28 @@ fi
 echo "Checking for \$Id:.*\$ in beginning of source code"
 echo "-------------------------------------------------------" 
 ok="yes"
-for ext in .hpp .cpp .omh .sh .in
-do
-	dir_list=`find . -name "*$ext" | sed \
-		-e '/\/junk$/d' \
+list=`find . \
+	\( -name \*.hpp \) -or \
+	\( -name \*.cpp \) -or \
+	\( -name \*.omh \) -or \
+	\( -name \*.sh \) -or \
+	\( -name \*.in \) -or \
+	\( -name makefile.am \) -or \
+	\( -name CMakeLists.txt \) |
+	sed \
+		-e '/\/build\//d'  \
+		-e '/makefile\.in/d'  \
+		-e '/config\.h\.in/d' \
 		-e '/\/junk\./d' \
-		-e '/\/temp$/d' \
-		-e '/\/temp\./d' \
-		-e 's|^\./||' \
-		-e 's/^[^/]*$/./' \
-		-e '/^work\//d' \
-		-e '/^build\//d' \
-		-e '/^new\//d' \
-		-e '/\/new\//d' \
-		-e '/^bug\/build\//d' \
-		-e '/svn_dist\//d' \
-		-e 's|/[^/]*$||' \
-		| sort -u`  
-	for dir in $dir_list 
-	do
-		list=`ls $dir/*$ext | sed \
-			-e '/\/config.h.in/d' \
-			-e '/\/makefile\.in/d' \
-			-e '/\/junk$/d' \
-			-e '/\/junk\./d' \
-			-e '/\/temp$/d' \
-			-e '/\/temp\./d'`
-		for file in $list
-		do
-			if ! head -2 $file | grep '$Id:.*\$' > /dev/null
-			then
-				echo "$file does not have '\$Id:.*\$' in first two lines"
-				ok="no"
-			fi
-		done
-	done
+		-e '/\/temp\./d'
+`
+for file in $list
+do
+	if ! head -2 $file | grep '$Id:.*\$' > /dev/null
+	then
+		echo "$file does not have '\$Id:.*\$' in first two lines"
+		ok="no"
+	fi
 done
 echo "-------------------------------------------------------" 
 if [ "$ok" = "no" ]
