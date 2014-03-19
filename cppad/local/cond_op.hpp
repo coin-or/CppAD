@@ -14,7 +14,6 @@ Please visit http://www.coin-or.org/CppAD/ for information on other licenses.
 
 namespace CppAD { // BEGIN_CPPAD_NAMESPACE
 /*!
-\defgroup cond_op_hpp cond_op.hpp
 \{
 \file cond_op.hpp
 Forward, reverse, and sparse operations for conditional expressions.
@@ -1194,6 +1193,5 @@ inline void reverse_sparse_hessian_cond_op(
 	return;
 }
 
-/*! \} */
 } // END_CPPAD_NAMESPACE
 # endif

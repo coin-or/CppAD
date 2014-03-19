@@ -16,7 +16,6 @@ Please visit http://www.coin-or.org/CppAD/ for information on other licenses.
 
 namespace CppAD { // BEGIN_CPPAD_NAMESPACE
 /*!
-\defgroup atan_op_hpp atan_op.hpp
 \{
 \file atan_op.hpp
 Forward and reverse mode calculations for z = atan(x).
@@ -186,6 +185,5 @@ inline void reverse_atan_op(
 	px[0] += pz[0] / b[0] + pb[0] * Base(2) * x[0];
 }
 
-/*! \} */
 } // END_CPPAD_NAMESPACE
 # endif

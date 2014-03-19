@@ -15,7 +15,6 @@ Please visit http://www.coin-or.org/CppAD/ for information on other licenses.
 
 namespace CppAD { // BEGIN_CPPAD_NAMESPACE
 /*!
-\defgroup log_op_hpp log_op.hpp
 \{
 \file log_op.hpp
 Forward and reverse mode calculations for z = log(x).
@@ -162,6 +161,5 @@ inline void reverse_log_op(
 	px[0] += pz[0] / x[0];
 }
 
-/*! \} */
 } // END_CPPAD_NAMESPACE
 # endif

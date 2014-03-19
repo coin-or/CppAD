@@ -15,7 +15,6 @@ Please visit http://www.coin-or.org/CppAD/ for information on other licenses.
 
 namespace CppAD { // BEGIN_CPPAD_NAMESPACE
 /*!
-\defgroup store_op_hpp store_op.hpp
 \{
 \file store_op.hpp
 Changing the current value of a VecAD element.
@@ -572,6 +571,5 @@ inline void reverse_sparse_hessian_store_op(
 	return;
 }
 
-/*! \} */
 } // END_CPPAD_NAMESPACE
 # endif

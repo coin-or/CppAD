@@ -3,7 +3,7 @@
 # define CPPAD_CPPAD_ASSERT_INCLUDED
 
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-12 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-14 Bradley M. Bell
 
 CppAD is distributed under multiple licenses. This distribution is under
 the terms of the 
@@ -14,7 +14,6 @@ Please visit http://www.coin-or.org/CppAD/ for information on other licenses.
 -------------------------------------------------------------------------- */
 
 /*!
-\defgroup cppad_assert_hpp cppad_assert.hpp
 \{
 \file cppad_assert.hpp
 Define the CppAD error checking macros (all of which begin with CPPAD_ASSERT_)
@@ -199,5 +198,4 @@ execution is terminated and the source code line number is reported.
 	}
 # endif
 
-/*! \} */
 # endif

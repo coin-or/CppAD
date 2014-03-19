@@ -1,6 +1,6 @@
 /* $Id$ */
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-12 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-14 Bradley M. Bell
 
 CppAD is distributed under multiple licenses. This distribution is under
 the terms of the 
@@ -30,7 +30,6 @@ Please visit http://www.coin-or.org/CppAD/ for information on other licenses.
 namespace cppad_ipopt {
 // ---------------------------------------------------------------------------
 /*!
-\defgroup cppad_ipopt_nlp_cpp cppad_ipopt_nlp.cpp
 \{
 \file cppad_ipopt_nlp.cpp
 \brief Member functions for the cppad_ipopt_nlp class.
@@ -1141,6 +1140,5 @@ bool cppad_ipopt_nlp::intermediate_callback(
 }
 
 // ---------------------------------------------------------------------------
-/*! \} */
 } // end namespace cppad_ipopt
 // ---------------------------------------------------------------------------

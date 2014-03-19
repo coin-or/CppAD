@@ -139,7 +139,6 @@ $end
 namespace CppAD { // BEGIN_CPPAD_NAMESPACE
 namespace optimize { // BEGIN_CPPAD_OPTIMIZE_NAMESPACE
 /*!
-\defgroup optimize_hpp optimize.hpp
 \{
 \file optimize.hpp
 Routines for optimizing a tape
@@ -2680,6 +2679,5 @@ void ADFun<Base>::optimize(void)
 # endif
 }
 
-/*! \} */
 } // END_CPPAD_NAMESPACE
 # endif

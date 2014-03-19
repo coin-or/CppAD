@@ -16,7 +16,6 @@ Please visit http://www.coin-or.org/CppAD/ for information on other licenses.
 
 namespace CppAD { // BEGIN_CPPAD_NAMESPACE
 /*!
-\defgroup sinh_op_hpp sinh_op.hpp
 \{
 \file sinh_op.hpp
 Forward and reverse mode calculations for z = sinh(x).
@@ -186,6 +185,5 @@ inline void reverse_sinh_op(
 	px[0] += pc[0] * s[0];
 }
 
-/*! \} */
 } // END_CPPAD_NAMESPACE
 # endif

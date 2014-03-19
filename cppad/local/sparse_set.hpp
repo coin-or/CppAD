@@ -3,7 +3,7 @@
 # define CPPAD_SPARSE_SET_INCLUDED
 
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-12 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-14 Bradley M. Bell
 
 CppAD is distributed under multiple licenses. This distribution is under
 the terms of the 
@@ -20,7 +20,6 @@ Please visit http://www.coin-or.org/CppAD/ for information on other licenses.
 
 namespace CppAD { // BEGIN_CPPAD_NAMESPACE
 /*!
-\defgroup sparse_set_hpp sparse_set.hpp
 \{
 \file sparse_set.hpp
 Vector of sets of positive integers stored as std::set<size_t>.
@@ -371,6 +370,5 @@ void sparsity_user2internal(
 	return;
 }
 
-/*! \} */
 } // END_CPPAD_NAMESPACE
 # endif

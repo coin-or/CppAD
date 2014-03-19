@@ -23,8 +23,7 @@ Please visit http://www.coin-or.org/CppAD/ for information on other licenses.
 # include <cppad/thread_alloc.hpp>
 
 namespace CppAD { // BEGIN_CPPAD_NAMESPACE
-/*! 
-\defgroup op_code_hpp op_code.hpp
+/*!
 \{
 \file op_code.hpp
 Defines the OpCode enum type and functions related to it.
@@ -758,6 +757,5 @@ void printOp(
 	std::cout << std::endl;
 }
 
-/*! \} */
 } // END_CPPAD_NAMESPACE
 # endif

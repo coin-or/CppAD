@@ -16,7 +16,6 @@ Please visit http://www.coin-or.org/CppAD/ for information on other licenses.
 
 namespace CppAD { // BEGIN_CPPAD_NAMESPACE
 /*!
-\defgroup reverse_sweep_hpp reverse_sweep.hpp
 \{
 \file reverse_sweep.hpp
 Compute derivatives of arbitrary order Taylor coefficients.
@@ -705,7 +704,6 @@ void ReverseSweep(
 	CPPAD_ASSERT_UNKNOWN( i_var == 0 );
 }
 
-/*! \} */
 } // END_CPPAD_NAMESPACE
 
 // preprocessor symbols that are local to this file

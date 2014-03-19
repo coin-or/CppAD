@@ -3,7 +3,7 @@
 # define CPPAD_COMP_OP_INCLUDED
 
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-13 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-14 Bradley M. Bell
 
 CppAD is distributed under multiple licenses. This distribution is under
 the terms of the 
@@ -16,7 +16,6 @@ Please visit http://www.coin-or.org/CppAD/ for information on other licenses.
 
 namespace CppAD { // BEGIN_CPPAD_NAMESPACE
 /*!
-\defgroup comp_op_hpp comp_op.hpp
 \{
 \file comp_op.hpp
 Zero order forward mode check how many comparisons changed.
@@ -169,6 +168,5 @@ inline void forward_comp_op_0(
 	}
 	return;
 }
-/*! \} */
 } // END_CPPAD_NAMESPACE
 # endif

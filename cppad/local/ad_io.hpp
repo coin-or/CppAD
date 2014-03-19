@@ -3,7 +3,7 @@
 # define CPPAD_AD_IO_INCLUDED
 
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-12 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-14 Bradley M. Bell
 
 CppAD is distributed under multiple licenses. This distribution is under
 the terms of the 
@@ -165,7 +165,6 @@ $end
 */
 namespace CppAD { // BEGIN_CPPAD_NAMESPACE
 /*!
-\defgroup ad_io_hpp ad_io.hpp
 \{
 \file ad_io.hpp
 AD<Base> input and ouput stream operators.
@@ -230,6 +229,5 @@ CPPAD_INLINE_FRIEND_TEMPLATE_FUNCTION
 std::ostream& operator << (std::ostream &os, const VecAD_reference<Base> &x)
 { 	return (os << x.ADBase()); }
 
-/*! \} */
 } // END_CPPAD_NAMESPACE
 # endif

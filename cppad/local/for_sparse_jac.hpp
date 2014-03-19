@@ -211,7 +211,6 @@ $end
 
 namespace CppAD { // BEGIN_CPPAD_NAMESPACE
 /*!
-\defgroup for_sparse_jac_hpp for_sparse_jac.hpp
 \{
 \file for_sparse_jac.hpp
 Forward mode Jacobian sparsity patterns.
@@ -704,6 +703,5 @@ VectorSet ADFun<Base>::ForSparseJac(
 }
 
 
-/*! \} */
 } // END_CPPAD_NAMESPACE
 # endif

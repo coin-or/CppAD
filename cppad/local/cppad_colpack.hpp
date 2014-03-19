@@ -15,7 +15,6 @@ Please visit http://www.coin-or.org/CppAD/ for information on other licenses.
 
 namespace CppAD { // BEGIN_CPPAD_NAMESPACE
 /*!
-\defgroup cppad_colpack_hpp cppad_colpack.hpp
 \{
 \file cppad_colpack.hpp
 External interface to Colpack routines used by cppad.
@@ -69,7 +68,6 @@ extern void cppad_colpack(
 	const CppAD::vector<unsigned int*>&  adolc_pattern
 );
 
-/*! \} */
 } // END_CPPAD_NAMESPACE
 
 # endif

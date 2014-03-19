@@ -16,7 +16,6 @@ Please visit http://www.coin-or.org/CppAD/ for information on other licenses.
 
 namespace CppAD { // BEGIN_CPPAD_NAMESPACE
 /*!
-\defgroup exp_op_hpp exp_op.hpp
 \{
 \file exp_op.hpp
 Forward and reverse mode calculations for z = exp(x).
@@ -148,6 +147,5 @@ inline void reverse_exp_op(
 	px[0] += pz[0] * z[0];
 }
 
-/*! \} */
 } // END_CPPAD_NAMESPACE
 # endif

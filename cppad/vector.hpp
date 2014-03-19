@@ -327,7 +327,6 @@ $end
 
 namespace CppAD { // BEGIN_CPPAD_NAMESPACE
 /*!
-\defgroup vector_hpp vector.hpp
 \{
 \file vector.hpp
 File used to define CppAD::vector and CppAD::vectorBool
@@ -873,6 +872,5 @@ inline std::ostream& operator << (
 	return os;
 }
 
-/*! \} */
 } // END_CPPAD_NAMESPACE
 # endif

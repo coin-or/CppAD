@@ -16,7 +16,6 @@ Please visit http://www.coin-or.org/CppAD/ for information on other licenses.
 
 namespace CppAD { // BEGIN_CPPAD_NAMESPACE
 /*!
-\defgroup sparse_color_hpp sparse_color.hpp
 \{
 \file sparse_color.hpp
 Sparse coloring algorithm.
@@ -285,6 +284,5 @@ void sparse_color_colpack(
 }
 # endif // CPPAD_HAS_COLPACK
 
-/*! \} */
 } // END_CPPAD_NAMESPACE
 # endif

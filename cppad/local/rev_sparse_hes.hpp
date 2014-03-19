@@ -194,7 +194,6 @@ $end
 
 namespace CppAD { // BEGIN_CPPAD_NAMESPACE
 /*!
-\defgroup rev_sparse_hes_hpp rev_sparse_hes.hpp
 \{
 \file rev_sparse_hes.hpp
 Reverse mode Hessian sparsity patterns.
@@ -707,6 +706,5 @@ void ADFun<Base>::RevSparseHesCase(
 	);
 }
 
-/*! \} */
 } // END_CPPAD_NAMESPACE
 # endif

@@ -3,7 +3,7 @@
 # define CPPAD_DISCRETE_INCLUDED
 
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-12 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-14 Bradley M. Bell
 
 CppAD is distributed under multiple licenses. This distribution is under
 the terms of the 
@@ -165,7 +165,6 @@ $end
 
 namespace CppAD { // BEGIN_CPPAD_NAMESPACE
 /*!
-\defgroup discrete_hpp discrete.hpp
 \{
 \file discrete.hpp
 user define discrete functions
@@ -307,6 +306,5 @@ public:
 	}
 };
 
-/*! \} */
 } // END_CPPAD_NAMESPACE
 # endif

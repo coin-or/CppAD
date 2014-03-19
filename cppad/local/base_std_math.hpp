@@ -3,7 +3,7 @@
 # define CPPAD_BASE_STD_MATH_INCLUDED
 
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-12 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-14 Bradley M. Bell
 
 CppAD is distributed under multiple licenses. This distribution is under
 the terms of the 
@@ -183,7 +183,6 @@ $end
 namespace CppAD { // BEGIN_CPPAD_NAMESPACE
 
 /*!
-\defgroup base_std_math_hpp base_std_math.hpp
 \{
 \file base_std_math.hpp
 Defintions that aid meeting Base type requirements for standard math functions.
@@ -202,7 +201,6 @@ using the corresponding function <code>std::Fun</code>.
 	inline Type Fun(const Type& x)           \
 	{	return std::Fun(x); }
 
-/*! \} */
 } // END_CPPAD_NAMESPACE
 
 # endif

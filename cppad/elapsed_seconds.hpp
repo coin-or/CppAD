@@ -3,7 +3,7 @@
 # define CPPAD_ELAPSED_SECONDS_INCLUDED
 
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-13 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-14 Bradley M. Bell
 
 CppAD is distributed under multiple licenses. This distribution is under
 the terms of the 
@@ -86,7 +86,6 @@ extern double microsoft_timer(void);
 # include <cppad/thread_alloc.hpp>
 namespace CppAD { // BEGIN_CPPAD_NAMESPACE
 /*!
-\defgroup elapsed_seconds_hpp elapsed_seconds.hpp
 \{
 \file elapsed_seconds.hpp
 \brief Function that returns the elapsed seconds from first call.
@@ -148,6 +147,5 @@ inline double elapsed_seconds(void)
 }
 # endif
 
-/*! \} */
 } // END_CPPAD_NAMESPACE
 # endif

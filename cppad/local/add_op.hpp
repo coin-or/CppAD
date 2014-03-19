@@ -15,7 +15,6 @@ Please visit http://www.coin-or.org/CppAD/ for information on other licenses.
 
 namespace CppAD { // BEGIN_CPPAD_NAMESPACE
 /*!
-\defgroup add_op_hpp add_op.hpp
 \{
 \file add_op.hpp
 Forward and reverse mode calculations for z = x + y.
@@ -270,6 +269,5 @@ inline void reverse_addpv_op(
 }
 
 
-/*! \} */
 } // END_CPPAD_NAMESPACE
 # endif

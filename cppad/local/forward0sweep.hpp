@@ -15,7 +15,6 @@ Please visit http://www.coin-or.org/CppAD/ for information on other licenses.
 
 namespace CppAD { // BEGIN_CPPAD_NAMESPACE
 /*!
-\defgroup forward0sweep_hpp forward0sweep.hpp
 \{
 \file forward0sweep.hpp
 Compute zero order forward mode Taylor coefficients.
@@ -700,7 +699,6 @@ size_t forward0sweep(
 	return compareCount;
 }
 
-/*! \} */
 } // END_CPPAD_NAMESPACE
 
 // preprocessor symbols that are local to this file

@@ -136,7 +136,6 @@ $end
 # include <cppad/index_sort.hpp>
 
 /*!
-\defgroup link_sparse_jacobian_cpp link_sparse_jacobian.cpp
 \{
 \file link_sparse_jacobian.cpp
 Defines and implement sparse Jacobian speed link to package specific code.
@@ -410,4 +409,3 @@ void info_sparse_jacobian(size_t size, size_t& n_sweep)
 }
 
 
-/*! \} */

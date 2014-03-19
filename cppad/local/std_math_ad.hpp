@@ -3,7 +3,7 @@
 # define CPPAD_STD_MATH_AD_INCLUDED
 
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-12 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-14 Bradley M. Bell
 
 CppAD is distributed under multiple licenses. This distribution is under
 the terms of the 
@@ -252,7 +252,6 @@ $end
 */
 
 /*!
-\defgroup std_math_ad_hpp std_math_ad.hpp
 \{
 \file std_math_ad.hpp
 Define AD<Base> standard math functions (using their Base versions)
@@ -340,5 +339,4 @@ namespace CppAD {
 
 # undef CPPAD_STANDARD_MATH_UNARY_AD
 
-/*! \} */
 # endif 

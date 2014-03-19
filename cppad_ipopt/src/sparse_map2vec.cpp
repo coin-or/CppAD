@@ -1,6 +1,6 @@
 /* $Id$ */
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-12 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-14 Bradley M. Bell
 
 CppAD is distributed under multiple licenses. This distribution is under
 the terms of the 
@@ -16,7 +16,6 @@ Please visit http://www.coin-or.org/CppAD/ for information on other licenses.
 namespace cppad_ipopt {
 // ---------------------------------------------------------------------------
 /*!
-\defgroup sparse_map2vec_cpp sparse_map2vec.cpp
 \{
 \file sparse_map2vec.cpp
 \brief Create a two vector sparsity representation from a vector of maps.
@@ -94,6 +93,5 @@ void sparse_map2vec(
 }
 
 // ---------------------------------------------------------------------------
-/*! \} */
 } // end namespace cppad_ipopt
 // ---------------------------------------------------------------------------

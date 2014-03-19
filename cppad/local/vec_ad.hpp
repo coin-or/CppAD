@@ -310,7 +310,6 @@ $end
 
 namespace CppAD { //  BEGIN_CPPAD_NAMESPACE
 /*!
-\defgroup vec_ad_hpp vec_ad.hpp
 \{
 \file vec_ad.hpp
 Defines the VecAD<Base> class.
@@ -742,7 +741,6 @@ inline void VecAD_reference<Base>::operator=(int y)
 {	*this = Base(y); }
 
 
-/*! \} */
 } // END_CPPAD_NAMESPACE
 
 // preprocessor symbols that are local to this file

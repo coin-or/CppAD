@@ -16,7 +16,6 @@ Please visit http://www.coin-or.org/CppAD/ for information on other licenses.
 
 namespace CppAD { // BEGIN_CPPAD_NAMESPACE
 /*!
-\defgroup acos_op_hpp acos_op.hpp
 \{
 \file acos_op.hpp
 Forward and reverse mode calculations for z = acos(x).
@@ -210,6 +209,5 @@ inline void reverse_acos_op(
 	px[0] -= ( pz[0] + pb[0] * x[0]) / b[0];
 }
 
-/*! \} */
 } // END_CPPAD_NAMESPACE
 # endif

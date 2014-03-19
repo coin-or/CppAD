@@ -3,7 +3,7 @@
 # define CPPAD_POD_VECTOR_INCLUDED
 
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-12 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-14 Bradley M. Bell
 
 CppAD is distributed under multiple licenses. This distribution is under
 the terms of the 
@@ -20,7 +20,6 @@ Please visit http://www.coin-or.org/CppAD/ for information on other licenses.
 
 namespace CppAD { // BEGIN_CPPAD_NAMESPACE
 /*!
-\defgroup pod_vector_hpp pod_vector.hpp
 \{
 \file pod_vector.hpp
 File used to define pod_vector class
@@ -272,6 +271,5 @@ public:
 	}
 };
 
-/*! \} */
 } // END_CPPAD_NAMESPACE
 # endif

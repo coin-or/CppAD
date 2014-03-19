@@ -15,7 +15,6 @@ Please visit http://www.coin-or.org/CppAD/ for information on other licenses.
 
 namespace CppAD { // BEGIN_CPPAD_NAMESPACE
 /*!
-\defgroup div_op_hpp div_op.hpp
 \{
 \file div_op.hpp
 Forward and reverse mode calculations for z = x / y.
@@ -448,6 +447,5 @@ inline void reverse_divvp_op(
 	}
 }
 
-/*! \} */
 } // END_CPPAD_NAMESPACE
 # endif

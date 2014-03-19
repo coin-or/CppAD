@@ -15,7 +15,6 @@ Please visit http://www.coin-or.org/CppAD/ for information on other licenses.
 namespace CppAD { // BEGIN_CPPAD_NAMESPACE
 namespace ipopt {
 /*!
-\defgroup solve_result solve_result.hpp
 \{
 \file solve_result.hpp
 Class that contains information about solve problem result
@@ -69,7 +68,6 @@ public:
 	{	status = not_defined; }
 };
 
-/*! \} */
 } // end namespace ipopt
 } // END_CPPAD_NAMESPACE
 

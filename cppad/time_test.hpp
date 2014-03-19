@@ -3,7 +3,7 @@
 # define CPPAD_TIME_TEST_INCLUDED
 
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-12 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-14 Bradley M. Bell
 
 CppAD is distributed under multiple licenses. This distribution is under
 the terms of the 
@@ -146,7 +146,6 @@ $end
 
 namespace CppAD { // BEGIN_CPPAD_NAMESPACE
 /*!
-\defgroup time_test_hpp time_test.hpp
 \{
 \file time_test.hpp
 \brief Function that preforms one timing test (for speed of execution).
@@ -221,7 +220,6 @@ double time_test(Test test, double time_min, size_t test_size)
 	return time;
 }
 
-/*! \} */
 } // END_CPPAD_NAMESPACE
 
 // END PROGRAM

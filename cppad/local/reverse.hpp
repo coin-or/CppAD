@@ -18,7 +18,6 @@ Please visit http://www.coin-or.org/CppAD/ for information on other licenses.
 
 namespace CppAD { // BEGIN_CPPAD_NAMESPACE
 /*!
-\defgroup reverse_hpp reverse.hpp
 \{
 \file reverse.hpp
 Compute derivatives using reverse mode.
@@ -195,6 +194,5 @@ VectorBase ADFun<Base>::Reverse(size_t q, const VectorBase &w)
 }
 	
 
-/*! \} */
 } // END_CPPAD_NAMESPACE
 # endif

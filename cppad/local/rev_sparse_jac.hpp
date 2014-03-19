@@ -185,7 +185,6 @@ $end
 
 namespace CppAD { // BEGIN_CPPAD_NAMESPACE
 /*!
-\defgroup rev_sparse_jac_hpp rev_sparse_jac.hpp
 \{
 \file rev_sparse_jac.hpp
 Reverse mode Jacobian sparsity patterns.
@@ -662,6 +661,5 @@ VectorSet ADFun<Base>::RevSparseJac(
 	return s;
 }
 
-/*! \} */
 } // END_CPPAD_NAMESPACE
 # endif

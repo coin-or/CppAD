@@ -16,7 +16,6 @@ Please visit http://www.coin-or.org/CppAD/ for information on other licenses.
 
 namespace CppAD { // BEGIN_CPPAD_NAMESPACE
 /*!
-\defgroup prototype_op_hpp prototype_op.hpp
 \{
 \file prototype_op.hpp
 Documentation for generic cases (these generic cases are never used).
@@ -1103,6 +1102,5 @@ inline void reverse_sparse_hessian_binary_op(
 }
 
 
-/*! \} */
 } // END_CPPAD_NAMESPACE
 # endif

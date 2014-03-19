@@ -3,7 +3,7 @@
 # define CPPAD_AD_CTOR_INCLUDED
 
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-13 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-14 Bradley M. Bell
 
 CppAD is distributed under multiple licenses. This distribution is under
 the terms of the 
@@ -98,7 +98,6 @@ $end
 namespace CppAD { // BEGIN_CPPAD_NAMESPACE
 
 /*!
-\defgroup ad_ctor_hpp ad_ctor.hpp
 \{
 \file ad_ctor.hpp
 AD<Base> constructors and and copy operations.
@@ -187,6 +186,5 @@ inline AD<Base>::AD(const T &t)
 , taddr_(0)
 { }
 
-/*! \} */
 } // END_CPPAD_NAMESPACE
 # endif

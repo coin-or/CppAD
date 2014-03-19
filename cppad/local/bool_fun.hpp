@@ -3,7 +3,7 @@
 # define CPPAD_BOOL_FUN_INCLUDED
 
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-12 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-14 Bradley M. Bell
 
 CppAD is distributed under multiple licenses. This distribution is under
 the terms of the 
@@ -156,11 +156,9 @@ $end
 
 namespace CppAD { // BEGIN_CPPAD_NAMESPACE
 /*!
-\defgroup bool_fun_hpp bool_fun.hpp
 \{
 \file bool_fun.hpp
-Routines and macros that implement functions from AD<Base> to bool
-\ref bool_fun_hpp.
+Routines and macros that implement functions from AD<Base> to bool.
 */
 
 /*!
@@ -248,6 +246,5 @@ inline bool AD<Base>::BinaryBool(
 	return FunName(x.value_, y.value_);
 }
 
-/*! \} */
 } // END_CPPAD_NAMESPACE
 # endif

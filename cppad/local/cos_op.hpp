@@ -16,7 +16,6 @@ Please visit http://www.coin-or.org/CppAD/ for information on other licenses.
 
 namespace CppAD { // BEGIN_CPPAD_NAMESPACE
 /*!
-\defgroup cos_op_hpp cos_op.hpp
 \{
 \file cos_op.hpp
 Forward and reverse mode calculations for z = cos(x).
@@ -187,6 +186,5 @@ inline void reverse_cos_op(
 	px[0] -= pc[0] * s[0];
 }
 
-/*! \} */
 } // END_CPPAD_NAMESPACE
 # endif

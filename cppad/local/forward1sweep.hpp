@@ -15,7 +15,6 @@ Please visit http://www.coin-or.org/CppAD/ for information on other licenses.
 
 namespace CppAD { // BEGIN_CPPAD_NAMESPACE
 /*!
-\defgroup forward1sweep_hpp forward1sweep.hpp
 \{
 \file forward1sweep.hpp
 Compute one Taylor coefficient for each order requested.
@@ -810,6 +809,5 @@ size_t forward1sweep(
 # undef CPPAD_FORWARD1SWEEP_TRACE
 # undef CPPAD_ATOMIC_CALL
 
-/*! \} */
 } // END_CPPAD_NAMESPACE
 # endif

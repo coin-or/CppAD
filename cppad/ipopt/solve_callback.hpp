@@ -20,7 +20,6 @@ Please visit http://www.coin-or.org/CppAD/ for information on other licenses.
 namespace CppAD { // BEGIN_CPPAD_NAMESPACE
 namespace ipopt {
 /*!
-\defgroup solve_callback solve_callback.hpp
 \{
 \file solve_callback.hpp
 \brief Class that connects ipopt::solve to Ipopt
@@ -1110,7 +1109,6 @@ public:
 	}
 };
 
-/*! \} */
 } // end namespace ipopt
 } // END_CPPAD_NAMESPACE
 

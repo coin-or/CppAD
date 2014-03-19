@@ -246,7 +246,6 @@ $end
 
 namespace CppAD { // BEGIN_CPPAD_NAMESPACE
 /*!
-\defgroup sparse_hessian_hpp sparse_hessian.hpp
 \{
 \file sparse_hessian.hpp
 Sparse Hessian driver routine and helper functions.
@@ -686,6 +685,5 @@ VectorBase ADFun<Base>::SparseHessian(const VectorBase &x, const VectorBase &w)
 	return SparseHessian(x, w, p);
 }
 
-/*! \} */
 } // END_CPPAD_NAMESPACE
 # endif

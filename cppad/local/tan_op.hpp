@@ -16,7 +16,6 @@ Please visit http://www.coin-or.org/CppAD/ for information on other licenses.
 
 namespace CppAD { // BEGIN_CPPAD_NAMESPACE
 /*!
-\defgroup tan_op_hpp tan_op.hpp
 \{
 \file tan_op.hpp
 Forward and reverse mode calculations for z = tan(x).
@@ -181,6 +180,5 @@ inline void reverse_tan_op(
 	px[0] += pz[0] * (Base(1) + y[0]);
 }
 
-/*! \} */
 } // END_CPPAD_NAMESPACE
 # endif

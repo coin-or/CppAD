@@ -2,7 +2,7 @@
 # ifndef CPPAD_LIMITS_INCLUDED
 # define CPPAD_LIMITS_INCLUDED
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-13 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-14 Bradley M. Bell
 
 CppAD is distributed under multiple licenses. This distribution is under
 the terms of the 
@@ -122,7 +122,6 @@ $end
 
 namespace CppAD { // BEGIN_CPPAD_NAMESPACE
 /*!
-\defgroup limits_hpp limits.hpp
 \{
 \file limits.hpp
 File that defines CppAD numeric_limits for AD types
@@ -173,6 +172,5 @@ public:
 	{	return AD<Base>( numeric_limits<Base>::max() ); }
 };
 
-/*! \} */
 } // END_CPPAD_NAMESPACE
 # endif

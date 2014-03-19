@@ -15,7 +15,6 @@ Please visit http://www.coin-or.org/CppAD/ for information on other licenses.
 
 namespace CppAD { // BEGIN_CPPAD_NAMESPACE
 /*!
-\defgroup cskip_op_hpp cskip_op.hpp
 \{
 \file cskip_op.hpp
 Zero order forward mode set which operations to skip.
@@ -185,7 +184,6 @@ inline void forward_cskip_op_0(
 	}
 	return;
 }
-/*! \} */
 } // END_CPPAD_NAMESPACE
 # endif
 
