@@ -84,8 +84,7 @@ where \f$ n \f$ is the number of independent variables and
 \n
 \n
 The object play is effectly constant.
-There are two exceptions to this.
-The first exception is that while palying back the tape
+The exception to this is that while palying back the tape
 the object play holds information about the current location
 with in the tape and this changes during palyback. 
 
@@ -98,8 +97,8 @@ This must be greater than or equal one.
 \param taylor
 \n
 \b Input:
-For j = 1 , ... , n,
-<code>taylor [j * J + 0]</code>
+For i = 1 , ... , n,
+<code>taylor [i * J + 0]</code>
 variable with index j on the tape 
 (these are the independent variables).
 \n
@@ -113,17 +112,18 @@ index i on the tape.
 \param cskip_op
 Is a vector with size play->num_op_rec().
 The input value of the elements does not matter.
-Upon return, if cskip_op[i] is true, the operator index i in the recording
-does not affect any of the dependent variable (given the value
-of the independent variables).
+Upon return, if cskip_op[i] is true, the operator index i 
+does not affect any of the dependent variable 
+(given the value of the independent variables).
 
 \param var_by_load_op
 Is a vector with size play->num_load_op_rec().
 The input value of the elements does not matter.
-Upon return, it is the variable index corresponding to the
-load instruction.
-In the special case where the index is zero,
-the instruction corresponds to a parameter (not variable).
+Upon return, 
+it is the variable index corresponding the result for each load operator.
+In the case where the index is zero,
+the load operator results in a parameter (not a variable).
+Note that the is no variable with index zero on the tape.
 
 \return
 The return value is equal to the number of ComOp operations
@@ -151,7 +151,6 @@ size_t forward0sweep(
 	// use p, q, r so other forward sweeps can use code defined here
 	size_t p = 0;
 	size_t q = 0;
-	size_t r = 1;
 	/*
 	<!-- define forward0sweep_code_define -->
 	*/
@@ -174,25 +173,22 @@ size_t forward0sweep(
 	pod_vector<bool>   isvar_by_ind;
 	pod_vector<size_t> index_by_ind;
 	if( p == 0 )
-	{	size_t i, ell;
+	{	size_t i;
 
 		// this includes order zero calculation, initialize vector indices
 		size_t num = play->num_vec_ind_rec();
 		if( num > 0 )
-		{	isvar_by_ind.extend(num * r );
-			index_by_ind.extend(num * r );
+		{	isvar_by_ind.extend(num);
+			index_by_ind.extend(num);
 			for(i = 0; i < num; i++)
-			{	for(ell = 0; ell < r; ell++)
-				{	index_by_ind[num * ell + i] = play->GetVecInd(i);
-					isvar_by_ind[num * ell + i] = false;
-				}
+			{	index_by_ind[i] = play->GetVecInd(i);
+				isvar_by_ind[i] = false;
 			}
 		}
 		// includes zero order, so initialize conditional skip flags
 		num = play->num_op_rec();
 		for(i = 0; i < num; i++)
-			for(ell = 0; ell < r; ell++)
-				cskip_op[num * ell + i] = false;
+			cskip_op[i] = false;
 	}
 
 	// work space used by UserOp.

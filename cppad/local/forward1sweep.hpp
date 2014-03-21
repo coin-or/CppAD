@@ -83,8 +83,7 @@ where \f$ n \f$ is the number of independent variables and
 \n
 \n
 The object play is effectly constant.
-There are two exceptions to this.
-The first exception is that while palying back the tape
+The exception to this is that while palying back the tape
 the object play holds information about the current location
 with in the tape and this changes during palyback. 
 
@@ -103,13 +102,14 @@ Is a vector with size play->num_op_rec().
 In this case,
 the input value of the elements does not matter.
 Upon return, if cskip_op[i] is true, the operator with index i
-does not affect any of the dependent variable (given the value
-of the independent variables).
+does not affect any of the dependent variable 
+(given the value of the independent variables).
 \n
 \n
 <tt>p > 0</tt>
 \n
-In this case cskip_op is not modified and has the meaning above.
+In this case cskip_op is not modified and has the same meaning 
+as its return value above.
 
 \param var_by_load_op
 is a vector with size play->num_load_op_rec().
@@ -119,15 +119,17 @@ is a vector with size play->num_load_op_rec().
 \n
 In this case,
 The input value of the elements does not matter.
-Upon return, it is the variable index corresponding to the
-load instruction.
+Upon return, 
+it is the variable index corresponding the result for each load operator.
 In the case where the index is zero,
-the instruction corresponds to a parameter (not variable).
+the load operator results in a parameter (not a variable).
+Note that the is no variable with index zero on the tape.
 \n
 \n
 <tt>p > 0</tt>
 \n
-In this case var_by_load_op is not modified and has the meaning above.
+In this case var_by_load_op is not modified and has the meaning 
+as its return value above.
 
 \param p
 is the lowest order of the Taylor coefficients
@@ -140,19 +142,19 @@ that are computed during this call.
 \param taylor
 \n
 \b Input:
-For <code>i = 1 , ... , numvar-1</code>, and 
-<code>for k = 0 , ... , p-1</code>,
+For <code>i = 1 , ... , numvar-1</code>,
+<code>k = 0 , ... , p-1</code>,
 <code>taylor[ J*i + k]</code>
 is the k-th order Taylor coefficient corresponding to 
 the i-th variable.
 \n
 \n
 \b Input:
-For <code>j = 1 , ... , n</code>, and 
-for <code>k = p , ... , q</code>,
+For <code>i = 1 , ... , n</code>,
+<code>k = p , ... , q</code>,
 <code>taylor[ J*j + k]</code>
 is the k-th order Taylor coefficient corresponding to 
-the j-th variable 
+the i-th variable 
 (these are the independent varaibles).
 \n
 \n
@@ -192,8 +194,6 @@ size_t forward1sweep(
 	CPPAD_ASSERT_UNKNOWN( J >= q + 1 );
 	CPPAD_ASSERT_UNKNOWN( play->num_var_rec() == numvar );
 
-	// define r so forward0sweep_code_define can be used with general case
-	size_t r = 1;
 	/*
 	<!-- replace forward0sweep_code_define -->
 	*/
@@ -216,25 +216,22 @@ size_t forward1sweep(
 	pod_vector<bool>   isvar_by_ind;
 	pod_vector<size_t> index_by_ind;
 	if( p == 0 )
-	{	size_t i, ell;
+	{	size_t i;
 
 		// this includes order zero calculation, initialize vector indices
 		size_t num = play->num_vec_ind_rec();
 		if( num > 0 )
-		{	isvar_by_ind.extend(num * r );
-			index_by_ind.extend(num * r );
+		{	isvar_by_ind.extend(num);
+			index_by_ind.extend(num);
 			for(i = 0; i < num; i++)
-			{	for(ell = 0; ell < r; ell++)
-				{	index_by_ind[num * ell + i] = play->GetVecInd(i);
-					isvar_by_ind[num * ell + i] = false;
-				}
+			{	index_by_ind[i] = play->GetVecInd(i);
+				isvar_by_ind[i] = false;
 			}
 		}
 		// includes zero order, so initialize conditional skip flags
 		num = play->num_op_rec();
 		for(i = 0; i < num; i++)
-			for(ell = 0; ell < r; ell++)
-				cskip_op[num * ell + i] = false;
+			cskip_op[i] = false;
 	}
 
 	// work space used by UserOp.
