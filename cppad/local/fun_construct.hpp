@@ -19,7 +19,7 @@ $spell
 	num
 	Jac
 	bool
-	taylor_
+	taylor
 	var
 	ADvector
 	const
@@ -107,7 +107,6 @@ $head Sequence Constructor$$
 $index sequence, ADFun constructor$$
 $index ADFun, sequence constructor$$
 $index constructor, ADFun sequence$$
-The default constructor 
 The sequence constructor 
 $codei%
 	ADFun<%Base%> %f%(%x%, %y%)
@@ -119,7 +118,7 @@ $codei%
 	Independent(%x%)
 %$$
 and stores the corresponding operation sequence in the object $icode f$$.
-It then stores the first order taylor_ coefficients 
+It then stores the zero order Taylor coefficients 
 (corresponding to the value of $icode x$$) in $icode f$$.
 This is equivalent to the following steps using the default constructor:
 
@@ -135,7 +134,7 @@ $codei%
 %$$
 (see $cref Dependent$$).
 $lnext
-Calculating the first order taylor_ coefficients for all 
+Calculating the first order Taylor coefficients for all 
 the variables in the operation sequence using
 $codei%
 	%f%.Forward(%p%, %x_p%)
