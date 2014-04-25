@@ -71,7 +71,7 @@ $codei%
 and 
 $codei%
 	ADFun<%Base%> %f%(%x%, %y%)
-%$$.
+%$$
 
 $head y$$
 If the argument $icode y$$ is present, it has prototype
@@ -134,7 +134,7 @@ $codei%
 %$$
 (see $cref Dependent$$).
 $lnext
-Calculating the first order Taylor coefficients for all 
+Calculate the zero order Taylor coefficients for all 
 the variables in the operation sequence using
 $codei%
 	%f%.Forward(%p%, %x_p%)
@@ -164,7 +164,7 @@ $index operator, ADFun assignment$$
 The $codei%ADFun<%Base%>%$$ assignment operation
 $codei%
 	%g% = %f%
-%$$.
+%$$
 makes a copy of the operation sequence currently stored in $icode f$$
 in the object $icode g$$.
 The object $icode f$$ is not affected by this operation and
