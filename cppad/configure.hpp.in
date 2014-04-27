@@ -34,7 +34,6 @@ $end
 */
 
 /*!
-\{
  \file configure.hpp
 Replacement for config.h so that all preprocessor symbols begin with CPPAD_ 
 */

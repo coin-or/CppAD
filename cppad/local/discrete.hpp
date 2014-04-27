@@ -165,7 +165,6 @@ $end
 
 namespace CppAD { // BEGIN_CPPAD_NAMESPACE
 /*!
-\{
 \file discrete.hpp
 user define discrete functions
 */

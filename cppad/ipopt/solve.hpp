@@ -407,7 +407,6 @@ $end
 namespace CppAD { // BEGIN_CPPAD_NAMESPACE
 namespace ipopt {
 /*!
-\{
 \file solve.hpp
 \brief Implement the ipopt::solve Nonlinear Programming Solver 
 */

@@ -240,7 +240,6 @@ $end
 
 namespace CppAD { // BEGIN_CPPAD_NAMESPACE
 /*!
-\{
 \file opt_val_hes.hpp
 \brief Computing Jabobians and Hessians of Optimal Values
 */

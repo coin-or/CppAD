@@ -86,7 +86,6 @@ extern double microsoft_timer(void);
 # include <cppad/thread_alloc.hpp>
 namespace CppAD { // BEGIN_CPPAD_NAMESPACE
 /*!
-\{
 \file elapsed_seconds.hpp
 \brief Function that returns the elapsed seconds from first call.
 */

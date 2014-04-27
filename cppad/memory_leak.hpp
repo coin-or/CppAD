@@ -119,7 +119,6 @@ $end
 
 namespace CppAD { // BEGIN_CPPAD_NAMESPACE
 /*!
-\{
 \file memory_leak.hpp
 File that implements a memory check at end of a CppAD program
 */

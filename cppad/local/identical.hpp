@@ -17,7 +17,6 @@ Please visit http://www.coin-or.org/CppAD/ for information on other licenses.
 
 namespace CppAD { // BEGIN_CPPAD_NAMESPACE
 /*!
-\{
 \file identical.hpp
 Check if certain properties is true for any possible AD tape play back.
 */

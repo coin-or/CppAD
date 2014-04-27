@@ -156,7 +156,6 @@ $end
 
 namespace CppAD { // BEGIN_CPPAD_NAMESPACE
 /*!
-\{
 \file bool_fun.hpp
 Routines and macros that implement functions from AD<Base> to bool.
 */

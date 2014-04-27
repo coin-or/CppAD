@@ -59,7 +59,6 @@ $end
 
 namespace CppAD { // BEGIN_CPPAD_NAMESPACE
 /*!
-\{
 \file ad_fun.hpp
 File used to define the ADFun<Base> class.
 */

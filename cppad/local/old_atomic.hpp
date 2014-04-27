@@ -747,7 +747,6 @@ $end
 
 namespace CppAD { // BEGIN_CPPAD_NAMESPACE
 /*!
-\{
 \file old_atomic.hpp
 user defined atomic operations.
 */

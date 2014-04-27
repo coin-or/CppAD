@@ -24,7 +24,6 @@ Please visit http://www.coin-or.org/CppAD/ for information on other licenses.
 
 namespace CppAD { // BEGIN_CPPAD_NAMESPACE
 /*!
-\{
 \file op_code.hpp
 Defines the OpCode enum type and functions related to it.
 

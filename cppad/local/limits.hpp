@@ -122,7 +122,6 @@ $end
 
 namespace CppAD { // BEGIN_CPPAD_NAMESPACE
 /*!
-\{
 \file limits.hpp
 File that defines CppAD numeric_limits for AD types
 */

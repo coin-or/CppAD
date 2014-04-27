@@ -211,7 +211,6 @@ $end
 
 namespace CppAD { // BEGIN_CPPAD_NAMESPACE
 /*!
-\{
 \file for_sparse_jac.hpp
 Forward mode Jacobian sparsity patterns.
 */

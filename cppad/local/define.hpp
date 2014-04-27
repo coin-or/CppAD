@@ -14,7 +14,6 @@ Please visit http://www.coin-or.org/CppAD/ for information on other licenses.
 -------------------------------------------------------------------------- */
 
 /*!
-\{
 \file define.hpp
 Define processor symbols and macros that are used by CppAD.
 */

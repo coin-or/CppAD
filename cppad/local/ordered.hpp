@@ -18,7 +18,6 @@ Please visit http://www.coin-or.org/CppAD/ for information on other licenses.
 namespace CppAD { // BEGIN_CPPAD_NAMESPACE
 
 /*!
-\{
 \file ordered.hpp
 Check and AD values ordering properties relative to zero.
 */

@@ -239,7 +239,6 @@ $end
 
 namespace CppAD { // BEGIN_CPPAD_NAMESPACE
 /*!
-\{
 \file fun_construct.hpp
 ADFun function constructors and assignment operator.
 */

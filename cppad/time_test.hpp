@@ -146,7 +146,6 @@ $end
 
 namespace CppAD { // BEGIN_CPPAD_NAMESPACE
 /*!
-\{
 \file time_test.hpp
 \brief Function that preforms one timing test (for speed of execution).
 */

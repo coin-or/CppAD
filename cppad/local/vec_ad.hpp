@@ -310,7 +310,6 @@ $end
 
 namespace CppAD { //  BEGIN_CPPAD_NAMESPACE
 /*!
-\{
 \file vec_ad.hpp
 Defines the VecAD<Base> class.
 */

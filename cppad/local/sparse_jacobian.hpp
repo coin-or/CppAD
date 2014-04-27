@@ -259,7 +259,6 @@ $end
 
 namespace CppAD { // BEGIN_CPPAD_NAMESPACE
 /*!
-\{
 \file sparse_jacobian.hpp
 Sparse Jacobian driver routine and helper functions.
 */

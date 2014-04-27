@@ -156,7 +156,6 @@ $end
 namespace CppAD { // BEGIN_CPPAD_NAMESPACE
 
 /*!
-\{
 \file base_cond_exp.hpp
 CondExp operations that aid in meeting Base type requirements.
 */

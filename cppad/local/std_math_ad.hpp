@@ -252,7 +252,6 @@ $end
 */
 
 /*!
-\{
 \file std_math_ad.hpp
 Define AD<Base> standard math functions (using their Base versions)
 */

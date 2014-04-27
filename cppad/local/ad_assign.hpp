@@ -69,7 +69,6 @@ $end
 namespace CppAD { // BEGIN_CPPAD_NAMESPACE
 
 /*!
-\{
 \file ad_assign.hpp
 AD<Base> constructors and and copy operations.
 */

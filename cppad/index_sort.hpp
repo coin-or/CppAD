@@ -82,7 +82,6 @@ $end
 
 namespace CppAD { // BEGIN_CPPAD_NAMESPACE
 /*!
-\{
 \file index_sort.hpp
 File used to implement the CppAD index sort utility
 */

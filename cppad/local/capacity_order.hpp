@@ -120,7 +120,6 @@ $end
 
 namespace CppAD { // BEGIN_CPPAD_NAMESPACE
 /*!
-\{
 \file capacity_order.hpp
 Control of number of orders allocated.
 \}

@@ -246,7 +246,6 @@ $end
 
 namespace CppAD { // BEGIN_CPPAD_NAMESPACE
 /*!
-\{
 \file sparse_hessian.hpp
 Sparse Hessian driver routine and helper functions.
 */

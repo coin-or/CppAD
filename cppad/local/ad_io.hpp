@@ -165,7 +165,6 @@ $end
 */
 namespace CppAD { // BEGIN_CPPAD_NAMESPACE
 /*!
-\{
 \file ad_io.hpp
 AD<Base> input and ouput stream operators.
 */

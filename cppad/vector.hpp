@@ -327,7 +327,6 @@ $end
 
 namespace CppAD { // BEGIN_CPPAD_NAMESPACE
 /*!
-\{
 \file vector.hpp
 File used to define CppAD::vector and CppAD::vectorBool
 */

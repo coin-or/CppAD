@@ -14,7 +14,6 @@ Please visit http://www.coin-or.org/CppAD/ for information on other licenses.
 
 namespace CppAD { // BEGIN_CPPAD_NAMESPACE
 /*!
-\{
 \file sparse_unary_op.hpp
 Forward and reverse mode sparsity patterns for unary operators.
 */
