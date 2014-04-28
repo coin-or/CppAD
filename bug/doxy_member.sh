@@ -10,8 +10,8 @@
 # A copy of this license is included in the COPYING file of this distribution.
 # Please visit http://www.coin-or.org/CppAD/ for information on other licenses.
 # -----------------------------------------------------------------------------
-# Trying to figure out why documentation details for ADFun::Forward
-# are missing. This similar case seems to work.
+# Trying to figure out why ADFun::Forward appers twice where there is only
+# one implementation.
 #
 # ------------------------------------------------------------------------------
 # bash function that echos and executes a command
@@ -34,12 +34,13 @@ done
 # -------------------------------------------------------------------------
 cat << EOF > $name.hpp
 
+template<class T>
 class my_class {
 private:
-	int value_;
+	T value_;
 public:
-	void set_value(int value = 0);
-	int  get_value(void);
+	void set_value(T value = 0);
+	T  get_value(void);
 };
 EOF
 cat << EOF > implement.hpp
@@ -54,7 +55,8 @@ Member function that sets the value.
 \\param value [in]
 New value.
 */
-void my_class::set_value(int value)
+template<class T>
+void my_class<T>::set_value(T value)
 {	value_ = value; }
 
 /*!
@@ -63,7 +65,8 @@ Member function that gets the value.
 \\return
 Current value.
 */
-int my_class::get_value(void)
+template<class T>
+T my_class<T>::get_value(void)
 {	return value_; }
 EOF
 cat << EOF > $name.cpp
@@ -71,7 +74,7 @@ cat << EOF > $name.cpp
 # include "$name.hpp"
 # include "implement.hpp"
 int main(void)
-{	my_class x;
+{	my_class<int> x;
 	x.set_value(2);
 	std::cout << "x.value = " << x.get_value() << std::endl;
 	return 0;
