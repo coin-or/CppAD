@@ -38,7 +38,7 @@ class my_class {
 private:
 	int value_;
 public:
-	void set_value(int value);
+	void set_value(int value = 0);
 	int  get_value(void);
 };
 EOF
