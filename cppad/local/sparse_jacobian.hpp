@@ -255,7 +255,7 @@ $end
 ==============================================================================
 */
 # include <cppad/local/std_set.hpp>
-# include <cppad/local/sparse_color.hpp>
+# include <cppad/local/color_general.hpp>
 
 namespace CppAD { // BEGIN_CPPAD_NAMESPACE
 /*!
@@ -269,7 +269,7 @@ recomputed.
 */
 class sparse_jacobian_work {
 	public:
-		/// Coloring method: sparse_color_cppad or sparse_color_colpack
+		/// Coloring method: color_general_cppad or color_general_colpack
 		/// (this field is set by user)
 		std::string color_method;
 		/// indices that sort the user row and col arrays by color 
@@ -390,11 +390,11 @@ size_t ADFun<Base>::SparseJacobianFor(
 		// execute coloring algorithm
 		color.resize(n);
 		if(	work.color_method == "cppad" )
-			sparse_color_cppad(p_transpose, col, row, color);
+			color_general_cppad(p_transpose, col, row, color);
 		else if( work.color_method == "colpack" )
 		{
 # if CPPAD_HAS_COLPACK
-			sparse_color_colpack(p_transpose, col, row, color);
+			color_general_colpack(p_transpose, col, row, color);
 # else
 			CPPAD_ASSERT_KNOWN(
 				false,
@@ -552,11 +552,11 @@ size_t ADFun<Base>::SparseJacobianRev(
 		// execute the coloring algorithm
 		color.resize(m);
 		if(	work.color_method == "cppad" )
-			sparse_color_cppad(p, row, col, color);
+			color_general_cppad(p, row, col, color);
 		else if( work.color_method == "colpack" )
 		{
 # if CPPAD_HAS_COLPACK
-			sparse_color_colpack(p, row, col, color);
+			color_general_colpack(p, row, col, color);
 # else
 			CPPAD_ASSERT_KNOWN(
 				false,

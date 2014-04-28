@@ -15,7 +15,7 @@ Please visit http://www.coin-or.org/CppAD/ for information on other licenses.
 # include <ColPack/ColPackHeaders.h>
 
 namespace CppAD {
-	void cppad_colpack(
+	void cppad_colpack_general(
 		      CppAD::vector<size_t>&         color         ,
 		size_t                               m             ,
 		size_t                               n             ,

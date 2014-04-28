@@ -1,6 +1,6 @@
 /* $Id$ */
-# ifndef CPPAD_SPARSE_COLOR_INCLUDED
-# define CPPAD_SPARSE_COLOR_INCLUDED
+# ifndef CPPAD_COLOR_GENERAL_INCLUDED
+# define CPPAD_COLOR_GENERAL_INCLUDED
 
 /* --------------------------------------------------------------------------
 CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-14 Bradley M. Bell
@@ -16,13 +16,13 @@ Please visit http://www.coin-or.org/CppAD/ for information on other licenses.
 
 namespace CppAD { // BEGIN_CPPAD_NAMESPACE
 /*!
-\file sparse_color.hpp
-Sparse coloring algorithm.
+\file color_general.hpp
+Coloring algorithm for a general sparse matrix.
 */
 // --------------------------------------------------------------------------
 /*!
-Determine which rows of a sparse matrix can be computed together; i.e., do
-not have non-zero overlapping values.
+Determine which rows of a general sparse matrix can be computed together; 
+i.e., do not have non-zero overlapping values.
 
 \tparam VectorSize
 is a simple vector class with elements of type \c size_t.
@@ -44,7 +44,7 @@ add element \c e to set with index \c s.
 
 \param pattern [in]
 Is a representation of the sparsity pattern for the matrix.
-Note that \c sparse_color does not change the values in \c pattern,
+Note that \c color_general does not change the values in \c pattern,
 but it is not \c const because its iterator facility modifies some of its
 internal data.
 \n
@@ -102,7 +102,7 @@ This routine tries to minimize, with respect to the choice of colors,
 the maximum, with respct to \c k, of <code>color[ row[k] ]</code>.
 */
 template <class VectorSet, class VectorSize>
-void sparse_color_cppad(
+void color_general_cppad(
 	      VectorSet&        pattern ,
 	const VectorSize&       row     ,
 	const VectorSize&       col     ,
@@ -230,10 +230,10 @@ void sparse_color_cppad(
 Colpack version of determining which rows of a sparse matrix 
 can be computed together.
 
-\copydetails sparse_color
+\copydetails color_general
 */
 template <class VectorSet, class VectorSize>
-void sparse_color_colpack(
+void color_general_colpack(
 	      VectorSet&        pattern ,
 	const VectorSize&       row     ,
 	const VectorSize&       col     ,
@@ -277,7 +277,7 @@ void sparse_color_colpack(
 
 	// Must use an external routine for this part of the calculation because
 	// ColPack/ColPackHeaders.h has as 'using namespace std' at global level.
-	cppad_colpack(color, m, n, adolc_pattern);
+	cppad_colpack_general(color, m, n, adolc_pattern);
 
 	return;
 }
