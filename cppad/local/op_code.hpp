@@ -45,6 +45,7 @@ operands have type AD< \a Base > use the following convention for thier endings:
 For example, AddpvOp represents the addition operator where the left
 operand is a parameter and the right operand is a variable.
 */
+// alphabetical order is checked by bin/check_op_code.sh
 enum OpCode {
 	AbsOp,    //  abs(variable)
 	AcosOp,   // asin(variable)
@@ -130,9 +131,16 @@ enum OpCode {
 // at the end of this list and only at the end of this list.
 
 /*!
-Table containing number of arguments for the corresponding operator.
+Number of arguments for a specified operator.
 
-The i-th element in this table specifes the number of arguments stored for each
+\return
+Number of arguments corresponding to the specified operator.
+
+\param op 
+Operator for which we are fetching the number of arugments.
+
+\par NumArgTable
+this table specifes the number of arguments stored for each
 occurance of the operator that is the i-th value in the OpCode enum type.
 For example, for the first three OpCode enum values we have
 \verbatim
@@ -143,72 +151,60 @@ AddpvOp  1                2  indices of parameter and variable we are adding
 \endverbatim
 Note that the meaning of the arguments depends on the operator.
 */
-const size_t NumArgTable[] = {
-	1, // AbsOp
-	1, // AcosOp
-	2, // AddpvOp
-	2, // AddvvOp
-	1, // AsinOp
-	1, // AtanOp
-	1, // BeginOp  offset first real argument to have index 1
-	6, // CExpOp
-	4, // ComOp
-	1, // CosOp
-	1, // CoshOp
-	0, // CSkipOp  (actually has a variable number of arguments, not zero)
-	0, // CSumOp   (actually has a variable number of arguments, not zero)
-	2, // DisOp
-	2, // DivpvOp
-	2, // DivvpOp
-	2, // DivvvOp
-	0, // EndOp
-	1, // ExpOp
-	0, // InvOp
-	3, // LdpOp
-	3, // LdvOp
-	1, // LogOp
-	2, // MulpvOp
-	2, // MulvvOp
-	1, // ParOp
-	2, // PowpvOp
-	2, // PowvpOp
-	2, // PowvvOp
-	5, // PriOp
-	1, // SignOp
-	1, // SinOp
-	1, // SinhOp
-	1, // SqrtOp
-	3, // StppOp
-	3, // StpvOp
-	3, // StvpOp
-	3, // StvvOp
-	2, // SubpvOp
-	2, // SubvpOp
-	2, // SubvvOp
-	1, // TanOp
-	1, // TanhOp
-	4, // UserOp
-	1, // UsrapOp
-	1, // UsravOp
-	1, // UsrrpOp
-	0  // UsrrvOp
-};
-
-/*!
-Fetch the number of arguments for a specified operator.
-
-\return
-Number of arguments corresponding to the specified operator.
-
-\param op 
-Operator for which we are fetching the number of arugments.
-
-- Check that argument taple size equal to NumberOp
-- Check that \c CPPAD_OP_CODE_TYPE can support all the operator codes.
-- Check that \c op is a valid operator value.
-*/
 inline size_t NumArg( OpCode op)
 {	CPPAD_ASSERT_FIRST_CALL_NOT_PARALLEL;
+
+	// agreement with OpCode is checked by bin/check_op_code.sh
+	static const size_t NumArgTable[] = {
+		1, // AbsOp
+		1, // AcosOp
+		2, // AddpvOp
+		2, // AddvvOp
+		1, // AsinOp
+		1, // AtanOp
+		1, // BeginOp  offset first real argument to have index 1
+		6, // CExpOp
+		4, // ComOp
+		1, // CosOp
+		1, // CoshOp
+		0, // CSkipOp  (actually has a variable number of arguments, not zero)
+		0, // CSumOp   (actually has a variable number of arguments, not zero)
+		2, // DisOp
+		2, // DivpvOp
+		2, // DivvpOp
+		2, // DivvvOp
+		0, // EndOp
+		1, // ExpOp
+		0, // InvOp
+		3, // LdpOp
+		3, // LdvOp
+		1, // LogOp
+		2, // MulpvOp
+		2, // MulvvOp
+		1, // ParOp
+		2, // PowpvOp
+		2, // PowvpOp
+		2, // PowvvOp
+		5, // PriOp
+		1, // SignOp
+		1, // SinOp
+		1, // SinhOp
+		1, // SqrtOp
+		3, // StppOp
+		3, // StpvOp
+		3, // StvpOp
+		3, // StvvOp
+		2, // SubpvOp
+		2, // SubvpOp
+		2, // SubvvOp
+		1, // TanOp
+		1, // TanhOp
+		4, // UserOp
+		1, // UsrapOp
+		1, // UsravOp
+		1, // UsrrpOp
+		0  // UsrrvOp
+	};
 # ifndef NDEBUG
 	// only do these checks once to save time
 	static bool first = true;
@@ -229,9 +225,13 @@ inline size_t NumArg( OpCode op)
 }
 
 /*!
-Number of variables resulting from the corresponding operation.
+Number of variables resulting from the specified operation.
 
-The i-th element in this table specifes the number of varibles for each
+\param op
+Operator for which we are fecching the number of results.
+
+\par NumResTable
+table specifes the number of varibles that result for each
 occurance of the operator that is the i-th value in the OpCode enum type.
 For example, for the first three OpCode enum values we have
 \verbatim
@@ -241,70 +241,62 @@ AcosOp   1                2  acos(x) and sqrt(1-x*x) are required for this op
 AddpvOp  1                1  variable that is the result of the addition
 \endverbatim
 */
-// alphabetical order (ignoring the Op at the end)
-const size_t NumResTable[] = {
-	1, // AbsOp
-	2, // AcosOp
-	1, // AddpvOp
-	1, // AddvvOp
-	2, // AsinOp
-	2, // AtanOp
-	1, // BeginOp  offsets first variable to have index one (not zero)
-	1, // CExpOp
-	0, // ComOp
-	2, // CosOp
-	2, // CoshOp
-	0, // CSkipOp
-	1, // CSumOp
-	1, // DisOp
-	1, // DivpvOp
-	1, // DivvpOp
-	1, // DivvvOp
-	0, // EndOp
-	1, // ExpOp
-	1, // InvOp
-	1, // LdpOp
-	1, // LdvOp
-	1, // LogOp
-	1, // MulpvOp
-	1, // MulvvOp
-	1, // ParOp
-	3, // PowpvOp
-	3, // PowvpOp
-	3, // PowvvOp
-	0, // PriOp
-	1, // SignOp
-	2, // SinOp
-	2, // SinhOp
-	1, // SqrtOp
-	0, // StppOp
-	0, // StpvOp
-	0, // StvpOp
-	0, // StvvOp
-	1, // SubpvOp
-	1, // SubvpOp
-	1, // SubvvOp
-	2, // TanOp
-	2, // TanhOp
-	0, // UserOp
-	0, // UsrapOp
-	0, // UsravOp
-	0, // UsrrpOp
-	1, // UsrrvOp
-	0  // Last entry not used: avoids warning by g++ 4.3.2 when pycppad builds
-};
-
-/*!
-Fetch the number of variables resulting from the specified operation.
-
-\return
-number of variables resulting from the specified operator.
-
-\param op 
-Operator for which we are fetching the number of result variables.
-*/
 inline size_t NumRes(OpCode op)
-{	// check ensuring conversion to size_t is as expected
+{	CPPAD_ASSERT_FIRST_CALL_NOT_PARALLEL;
+
+	// agreement with OpCode is checked by bin/check_op_code.sh
+	static const size_t NumResTable[] = {
+		1, // AbsOp
+		2, // AcosOp
+		1, // AddpvOp
+		1, // AddvvOp
+		2, // AsinOp
+		2, // AtanOp
+		1, // BeginOp  offsets first variable to have index one (not zero)
+		1, // CExpOp
+		0, // ComOp
+		2, // CosOp
+		2, // CoshOp
+		0, // CSkipOp
+		1, // CSumOp
+		1, // DisOp
+		1, // DivpvOp
+		1, // DivvpOp
+		1, // DivvvOp
+		0, // EndOp
+		1, // ExpOp
+		1, // InvOp
+		1, // LdpOp
+		1, // LdvOp
+		1, // LogOp
+		1, // MulpvOp
+		1, // MulvvOp
+		1, // ParOp
+		3, // PowpvOp
+		3, // PowvpOp
+		3, // PowvvOp
+		0, // PriOp
+		1, // SignOp
+		2, // SinOp
+		2, // SinhOp
+		1, // SqrtOp
+		0, // StppOp
+		0, // StpvOp
+		0, // StvpOp
+		0, // StvvOp
+		1, // SubpvOp
+		1, // SubvpOp
+		1, // SubvvOp
+		2, // TanOp
+		2, // TanhOp
+		0, // UserOp
+		0, // UsrapOp
+		0, // UsravOp
+		0, // UsrrpOp
+		1, // UsrrvOp
+		0  // Last entry not used: avoids g++ 4.3.2 warn when pycppad builds
+	};
+	// check ensuring conversion to size_t is as expected
 	CPPAD_ASSERT_UNKNOWN( size_t(NumberOp) == 
 		sizeof(NumResTable) / sizeof(NumResTable[0]) - 1
 	);
@@ -312,6 +304,78 @@ inline size_t NumRes(OpCode op)
 	CPPAD_ASSERT_UNKNOWN( size_t(op) < size_t(NumberOp) );
 
 	return NumResTable[op];
+}
+
+
+/*!
+Fetch the name for a specified operation.
+
+\return
+name of the specified operation.
+
+\param op 
+Operator for which we are fetching the name
+*/
+inline const char* OpName(OpCode op)
+{	// agreement with OpCode is checked by bin/check_op_code.sh
+	static const char *OpNameTable[] = {
+		"Abs"   ,
+		"Acos"  ,
+		"Addpv" ,
+		"Addvv" ,
+		"Asin"  ,
+		"Atan"  ,
+		"Begin" ,
+		"CExp"  ,
+		"Com"   ,
+		"Cos"   ,
+		"Cosh"  ,
+		"CSkip" ,
+		"CSum"  ,
+		"Dis"   ,
+		"Divpv" ,
+		"Divvp" ,
+		"Divvv" ,
+		"End"   ,
+		"Exp"   ,
+		"Inv"   ,
+		"Ldp"   ,
+		"Ldv"   ,
+		"Log"   ,
+		"Mulpv" ,
+		"Mulvv" ,
+		"Par"   ,
+		"Powpv" ,
+		"Powvp" ,
+		"Powvv" ,
+		"Pri"   ,
+		"Sign"  ,
+		"Sin"   ,
+		"Sinh"  ,
+		"Sqrt"  ,
+		"Stpp"  ,
+		"Stpv"  ,
+		"Stvp"  ,
+		"Stvv"  ,
+		"Subpv" ,
+		"Subvp" ,
+		"Subvv" ,
+		"Tan"   ,
+		"Tanh"  ,
+		"User"  ,
+		"Usrap" ,
+		"Usrav" ,
+		"Usrrp" ,
+		"Usrrv"  
+	};
+	// check ensuring conversion to size_t is as expected
+	CPPAD_ASSERT_UNKNOWN( 
+		size_t(NumberOp) == sizeof(OpNameTable)/sizeof(OpNameTable[0]) 
+	);
+	// this test ensures that all indices are within the table
+	CPPAD_ASSERT_UNKNOWN( size_t(op) < size_t(NumberOp) );
+
+	return OpNameTable[op];
 }
 
 /*!
@@ -446,75 +510,21 @@ void printOp(
 	size_t                 nrz    ,
 	const  Value          *rz     )
 {	size_t i;
-	
 	CPPAD_ASSERT_KNOWN(
 		! thread_alloc::in_parallel() ,
 		"cannot print trace of AD operations in parallel mode"
 	);
 	static const char *CompareOpName[] = 
 		{ "Lt", "Le", "Eq", "Ge", "Gt", "Ne" };
-	static const char *OpName[] = {
-		"Abs"   ,
-		"Acos"  ,
-		"Addpv" ,
-		"Addvv" ,
-		"Asin"  ,
-		"Atan"  ,
-		"Begin" ,
-		"CExp"  ,
-		"Com"   ,
-		"Cos"   ,
-		"Cosh"  ,
-		"CSkip" ,
-		"CSum"  ,
-		"Dis"   ,
-		"Divpv" ,
-		"Divvp" ,
-		"Divvv" ,
-		"End"   ,
-		"Exp"   ,
-		"Inv"   ,
-		"Ldp"   ,
-		"Ldv"   ,
-		"Log"   ,
-		"Mulpv" ,
-		"Mulvv" ,
-		"Par"   ,
-		"Powpv" ,
-		"Powvp" ,
-		"Powvv" ,
-		"Pri"   ,
-		"Sign"  ,
-		"Sin"   ,
-		"Sinh"  ,
-		"Sqrt"  ,
-		"Stpp"  ,
-		"Stpv"  ,
-		"Stvp"  ,
-		"Stvv"  ,
-		"Subpv" ,
-		"Subvp" ,
-		"Subvv" ,
-		"Tan"   ,
-		"Tanh"  ,
-		"User"  ,
-		"Usrap" ,
-		"Usrav" ,
-		"Usrrp" ,
-		"Usrrv"
-	};
-	CPPAD_ASSERT_UNKNOWN( 
-		size_t(NumberOp) == sizeof(OpName) / sizeof(OpName[0])
-	);
 
 	// print operator
 	printOpField(os,  "o=",      i_op,  5);
 	printOpField(os,  "v=",      i_var, 5);
 	if( op == CExpOp || op == CSkipOp || op == ComOp )
-	{	printOpField(os, "", OpName[op], 5); 
+	{	printOpField(os, "", OpName(op), 5); 
 		printOpField(os, "", CompareOpName[ ind[0] ], 3);
 	}
-	else	printOpField(os, "", OpName[op], 8); 
+	else	printOpField(os, "", OpName(op), 8); 
 
 	// print other fields
 	size_t ncol = 5;
@@ -696,6 +706,10 @@ void printOp(
 		break;
 
 		case BeginOp:
+		// argument not used (created by independent)
+		CPPAD_ASSERT_UNKNOWN( NumArg(op) == 1 );
+		break;
+
 		case EndOp:
 		case InvOp:
 		case UsrrvOp:

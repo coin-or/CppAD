@@ -1,7 +1,7 @@
 #! /bin/bash -e
 # $Id$
 # -----------------------------------------------------------------------------
-# CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-12 Bradley M. Bell
+# CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-14 Bradley M. Bell
 #
 # CppAD is distributed under multiple licenses. This distribution is under
 # the terms of the
@@ -31,11 +31,11 @@ then
 fi
 # -----------------------------------------------------------------------------
 # check NumArgTable
-sed -n -e '/NumArgTable\[\]/,/^};/p' cppad/local/op_code.hpp | \
+sed -n -e '/NumArgTable\[\]/,/^[ \t]*};/p' cppad/local/op_code.hpp | \
 	sed \
 		-e '/NumArgTable\[\]/d' \
-		-e '/^};/d' \
-		-e 's|^[ 	]*[0-9],* *// *||' \
+		-e '/^[ \t]*};/d' \
+		-e 's|^[ \t]*[0-9],* *// *||' \
 		-e 's|Op.*||' \
 		> bin/op_code.3.$$
 #
@@ -47,12 +47,12 @@ then
 fi
 # -----------------------------------------------------------------------------
 # check NumResTable (last line of NumResTable is not used)
-sed -n -e '/NumResTable\[\]/,/^};/p' cppad/local/op_code.hpp | \
+sed -n -e '/NumResTable\[\]/,/^[ \t]*};/p' cppad/local/op_code.hpp | \
 	sed \
 		-e '/NumResTable\[\]/d' \
-		-e '/^};/d' \
+		-e '/^[ \t]*};/d' \
 		-e '/Last entry not used/d' \
-		-e 's|^[ 	]*[0-9],* *// *||' \
+		-e 's|^[ \t]*[0-9],* *// *||' \
 		-e 's|Op.*||' \
 		> bin/op_code.4.$$
 #
@@ -64,12 +64,12 @@ then
 	exit 1
 fi
 # -----------------------------------------------------------------------------
-# check OpName 
-sed -n -e '/char \*OpName\[\]/,/^[ 	]*};/p' cppad/local/op_code.hpp | \
+# check OpNameTable
+sed -n -e '/const char \*OpNameTable\[\]/,/^[ \t]*};/p' cppad/local/op_code.hpp | \
 	sed \
-		-e '/char \*OpName\[\]/d' \
-		-e '/^[ 	]*};/d' \
-		-e 's|^[ 	]*"||' \
+		-e '/OpNameTable\[\]/d' \
+		-e '/^[ \t]*};/d' \
+		-e 's|^[ \t]*"||' \
 		-e 's|".*||' \
 		> bin/op_code.5.$$
 #

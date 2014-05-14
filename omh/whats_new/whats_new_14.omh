@@ -13,6 +13,8 @@ Please visit http://www.coin-or.org/CppAD/ for information on other licenses.
 $begin whats_new_14$$
 $dollar @$$
 $spell
+	op
+	hpp
 	taylor
 	forwardzero
 	forwardone
@@ -46,6 +48,20 @@ This section contains a list of the changes to CppAD during 2014
 (in reverse order by date).
 The purpose of this section is to
 assist you in learning about changes between various versions of CppAD.
+
+$head 05-14$$
+$list number$$
+There were some global variables in the file 
+$code cppad/local/op_code.hpp$$ that might have caused multiple definitions
+during link time for CppAD applications. 
+These variables have been changed to be local so that this cannot happen.
+$lnext
+There was a mistaken assert that the number of arguments for the 
+$code BeginOp$$ was zero that caused an abort when using the undocumented
+$code TRACE$$ option available in files of the form 
+$codei%cppad/local/%*%sweep.hpp/%$$.
+This has been fixed.
+$lend
 
 $head 03-18$$
 $list number$$
