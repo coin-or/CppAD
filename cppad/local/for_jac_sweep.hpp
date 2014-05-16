@@ -696,6 +696,8 @@ void ForJacSweep(
 		const addr_t*   arg_tmp = arg;
 		if( op == CSumOp )
 			arg_tmp = arg - arg[-1] - 4;
+		if( op == CSkipOp )
+			arg_tmp = arg - arg[-1] - 7;
 		//
 		// value for this variable
 		for(j = 0; j < limit; j++)

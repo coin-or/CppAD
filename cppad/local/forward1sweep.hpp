@@ -781,6 +781,9 @@ size_t forward1sweep(
 		const addr_t*   arg_tmp = arg;
 		if( op == CSumOp )
 			arg_tmp = arg - arg[-1] - 4;
+		if( op == CSkipOp )
+			arg_tmp = arg - arg[-1] - 7;
+		//
 		printOp(
 			std::cout, 
 			play,

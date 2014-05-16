@@ -50,8 +50,8 @@ The purpose of this section is to
 assist you in learning about changes between various versions of CppAD.
 
 $head 05-16$$
-There was a mistake in printing the arguments for the 
-$code CSumOp$$ when using the undocumented
+There was a mistake in printing the arguments for 
+$code CSumOp$$ and $code CSkipOp$$ when using the undocumented
 $code TRACE$$ option during forward mode (available in files of the form 
 $codei%cppad/local/%*%sweep.hpp/%$$).
 This has been fixed.
