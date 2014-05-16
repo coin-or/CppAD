@@ -693,6 +693,10 @@ void ForJacSweep(
 			CPPAD_ASSERT_UNKNOWN(0);
 		}
 # if CPPAD_FOR_JAC_SWEEP_TRACE
+		const addr_t*   arg_tmp = arg;
+		if( op == CSumOp )
+			arg_tmp = arg - arg[-1] - 4;
+		//
 		// value for this variable
 		for(j = 0; j < limit; j++)
 			z_value[j] = false;
@@ -708,7 +712,7 @@ void ForJacSweep(
 			i_op,
 			i_var,
 			op,
-			arg,
+			arg_tmp,
 			1,
 			&z_value,
 			0,

@@ -49,6 +49,13 @@ This section contains a list of the changes to CppAD during 2014
 The purpose of this section is to
 assist you in learning about changes between various versions of CppAD.
 
+$head 05-16$$
+There was a mistake in printing the arguments for the 
+$code CSumOp$$ when using the undocumented
+$code TRACE$$ option during forward mode (available in files of the form 
+$codei%cppad/local/%*%sweep.hpp/%$$).
+This has been fixed.
+
 $head 05-14$$
 $list number$$
 There were some global variables in the file 

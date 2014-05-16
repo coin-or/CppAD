@@ -667,9 +667,12 @@ size_t forward0sweep(
 			CPPAD_ASSERT_UNKNOWN(false);
 		}
 # if CPPAD_FORWARD0SWEEP_TRACE
-		size_t       d      = 0;
-		size_t       i_tmp  = i_var;
-		Base*        Z_tmp  = taylor + i_var * J;
+		size_t          d      = 0;
+		size_t          i_tmp  = i_var;
+		Base*           Z_tmp  = taylor + i_var * J;
+		const addr_t*   arg_tmp = arg;
+		if( op == CSumOp )
+			arg_tmp = arg - arg[-1] - 4;
 
 		printOp(
 			std::cout, 
@@ -677,7 +680,7 @@ size_t forward0sweep(
 			i_op,
 			i_tmp,
 			op, 
-			arg,
+			arg_tmp,
 			d + 1, 
 			Z_tmp, 
 			0, 
