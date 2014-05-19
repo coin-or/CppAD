@@ -13,6 +13,9 @@ Please visit http://www.coin-or.org/CppAD/ for information on other licenses.
 $begin whats_new_14$$
 $dollar @$$
 $spell
+	asin
+	acos
+	uj
 	op
 	hpp
 	taylor
@@ -48,6 +51,15 @@ This section contains a list of the changes to CppAD during 2014
 (in reverse order by date).
 The purpose of this section is to
 assist you in learning about changes between various versions of CppAD.
+
+$head 05-19$$
+In the files 
+$code cppad/local/asin_op.hpp$$ and $code cppad/local/acos_op.hpp$$
+there were assignments of the form $code uj = 0.$$ where $code u_j$$
+has type $cref/Base/glossary/Base Type/$$.
+These may have not be defined operations in certain cases and
+have been converted to $code uj = Base(0)$$.
+
 
 $head 05-16$$
 There was a mistake in printing the arguments for 

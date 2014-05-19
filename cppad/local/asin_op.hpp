@@ -67,7 +67,7 @@ inline void forward_asin_op(
 		p++;
 	}
 	for(size_t j = p; j <= q; j++)
-	{	uj = 0.;
+	{	uj = Base(0);
 		for(k = 0; k <= j; k++)
 			uj -= x[k] * x[j-k];
 		b[j] = Base(0);
