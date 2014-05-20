@@ -78,8 +78,8 @@ z^{(j)}
 x^{(j)} \pm \frac{1}{j}  \sum_{k=1}^j k x^{(k)} y^{(j-k)}
 \end{array}
 \] $$ 
-Once we have computed $latex z^{(j+1)}$$,
-we can compute $latex y^{(j+1)}$$ as follows:
+Once we have computed $latex z^{(j)}$$,
+we can compute $latex y^{(j)}$$ as follows:
 $latex \[
 y^{(j)} = \sum_{k=0}^j z^{(k)} z^{(j-k)}
 \] $$
