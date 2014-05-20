@@ -1,7 +1,7 @@
 #! /bin/bash -e
 # $Id$
 # -----------------------------------------------------------------------------
-# CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-13 Bradley M. Bell
+# CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-14 Bradley M. Bell
 #
 # CppAD is distributed under multiple licenses. This distribution is under
 # the terms of the
@@ -19,33 +19,17 @@ fi
 echo "Differences between include file names and ifndef at top directives."
 echo "Also make sure same ifndef not used by two different files."
 echo "-------------------------------------------------------------------"
-grep '^# *ifndef *CPPAD_[0-9a-zA-Z_]*_INCLUDED$' \
-	cppad_ipopt/*/*.hpp \
-	cppad/*.hpp \
-	cppad/example/*.hpp \
-	cppad/local/*.hpp \
-	cppad/speed/*.hpp \
-	example/*.hpp \
-	example/atomic/*.hpp \
-	multi_thread/*.hpp \
-	| sed \
-	-e 's|.*# *ifndef *CPPAD_\([0-9a-zA-Z_]*\)_INCLUDED$|\1.HPP|' \
+list=`find . -name '*.hpp' | sed \
+	-e '\/new\//d' -e '/\/build\//d' -e '/\/junk.hpp$/d' -e '/\/temp.hpp/d'`
+#
+grep '^# *ifndef *CPPAD_[0-9a-zA-Z_]*_INCLUDED$' $list \
+	| sed -e 's|.*# *ifndef *CPPAD_\([0-9a-zA-Z_]*\)_INCLUDED$|\1.HPP|' \
 	| tr [a-zA-Z] [A-Za-z] \
 	| sort \
 	> bin/check_include_def.1.$$
- 
-ls \
-	cppad_ipopt/*/*.hpp \
-	cppad/*.hpp \
-	cppad/example/*.hpp \
-	cppad/local/*.hpp \
-	cppad/speed/*.hpp \
-	example/*.hpp \
-	example/atomic/*.hpp \
-	multi_thread/*.hpp \
-	| sed -e 's|.*/||' \
-	| sort -u \
-	> bin/check_include_def.2.$$
+#
+echo "$list" | sed -e 's|\([^ ]*\)/||g' | sort -u > bin/check_include_def.2.$$
+#
 if diff bin/check_include_def.1.$$ bin/check_include_def.2.$$
 then
 	different="no"

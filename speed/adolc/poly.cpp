@@ -56,7 +56,7 @@ $codep */
 # include <cppad/poly.hpp>
 # include <cppad/vector.hpp>
 # include <cppad/thread_alloc.hpp>
-# include "alloc_mat.hpp"
+# include "adolc_alloc_mat.hpp"
 
 // list of possible options
 extern bool global_memory, global_onetape, global_atomic, global_optimize;

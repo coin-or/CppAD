@@ -1,6 +1,6 @@
 /* $Id$ */
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-13 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-14 Bradley M. Bell
 
 CppAD is distributed under multiple licenses. This distribution is under
 the terms of the 
@@ -9,6 +9,9 @@ the terms of the
 A copy of this license is included in the COPYING file of this distribution.
 Please visit http://www.coin-or.org/CppAD/ for information on other licenses.
 -------------------------------------------------------------------------- */
+
+# ifndef CPPAD_EXTERN_VALUE_INCLUDED
+# define CPPAD_EXTERN_VALUE_INCLUDED
 
 template <class Type> 
 class extern_value  {
@@ -19,3 +22,5 @@ public:
 	void set(Type value);
 	Type get(void);
 };
+
+# endif

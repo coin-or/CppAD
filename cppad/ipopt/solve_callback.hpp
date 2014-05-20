@@ -1,6 +1,6 @@
 /* $Id$ */
-# ifndef CPPAD_SOLVE_FULL_INCLUDED
-# define CPPAD_SOLVE_FULL_INCLUDED
+# ifndef CPPAD_SOLVE_CALLBACK_INCLUDED
+# define CPPAD_SOLVE_CALLBACK_INCLUDED
 /* --------------------------------------------------------------------------
 CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-14 Bradley M. Bell
 

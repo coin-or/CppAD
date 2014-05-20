@@ -13,6 +13,8 @@ Please visit http://www.coin-or.org/CppAD/ for information on other licenses.
 $begin whats_new_14$$
 $dollar @$$
 $spell
+	alloc
+	ifndef
 	asin
 	acos
 	uj
@@ -51,6 +53,19 @@ This section contains a list of the changes to CppAD during 2014
 (in reverse order by date).
 The purpose of this section is to
 assist you in learning about changes between various versions of CppAD.
+
+$head 05-20$$
+$list number$$
+Move $code speed/adolc/alloc_mat.hpp$$ to 
+$code speed/adolc/adolc_alloc_mat.hpp$$ so it has the
+same name is its $code # ifndef$$ command.
+$lnext
+Fix $code # ifndef$$ command in 
+$code cppad/ipopt/solve_callback.hpp$$.
+$lnext
+Add $code # ifndef$$ command to $code test_more/extern_value.hpp$$.
+$lend
+
 
 $head 05-19$$
 In the files 

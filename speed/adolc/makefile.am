@@ -35,7 +35,7 @@ LDADD            = -lspeed -ladolc -lColPack
 AM_LDFLAGS       = -L../src -L$(ADOLC_DIR)/lib -L$(ADOLC_DIR)/lib64
 #
 adolc_SOURCES = \
-	alloc_mat.hpp \
+	adolc_alloc_mat.hpp \
 	alloc_mat.cpp \
 	../main.cpp \
 	det_lu.cpp \
