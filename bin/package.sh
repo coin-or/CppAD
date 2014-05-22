@@ -117,8 +117,8 @@ file_list=`find . \
 		-e '/\/new\//d' \
 		-e '/\.\/build\//d' \
 		-e '/bug\/build\//d' \
-		-e '/\/junk.sh$/d' \
-		-e '/\/temp.sh$/d' \
+		-e '/\/junk\.[a-z]*$/d' \
+		-e '/\/temp\.[a-z]*$/d' \
 		-e 's|^\./||'`
 other_files="
 	AUTHORS 
