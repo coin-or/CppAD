@@ -1,7 +1,7 @@
 #! /bin/bash -e
 # $Id$
 # -----------------------------------------------------------------------------
-# CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-13 Bradley M. Bell
+# CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-14 Bradley M. Bell
 #
 # CppAD is distributed under multiple licenses. This distribution is under
 # the terms of the
@@ -43,8 +43,13 @@ done
 cat bin/check_include_file.1.$$ | \
 	sed -e 's%[^<]*<%%'  -e 's%>.*$%%' | \
 	sort -u > bin/check_include_file.2.$$
-# The file cppad/local/prototype_op.hpp should never be included. 
-# All other files should. (The file cppad/configure.hpp may not yet be created).
+# The following files should never be included:
+#	cppad/local/prototype_op.hpp 
+#	cppad/example/eigen_plugin.hpp
+#	*/junk.hpp
+#	*/temp.hpp
+# All other files should. 
+# The file cppad/configure.hpp may not yet be created.
 ls	cppad/*.hpp \
 	cppad/example/*.hpp \
 	cppad/ipopt/*.hpp \
@@ -52,8 +57,10 @@ ls	cppad/*.hpp \
 	cppad/speed/*.hpp | sed \
 		-e '1,1s|^|cppad/configure.hpp\n|' \
 		-e '/cppad\/local\/prototype_op.hpp/d' \
-		-e '/cppad\/example\/eigen_plugin.hpp/d' | \
-		sort -u > bin/check_include_file.3.$$ 
+		-e '/cppad\/example\/eigen_plugin.hpp/d' \
+		-e '/\/junk\.hpp$/d' \
+		-e '/\/temp\.hpp$/d' \
+		| sort -u > bin/check_include_file.3.$$ 
 if diff bin/check_include_file.2.$$ bin/check_include_file.3.$$
 then
 	different="no"
