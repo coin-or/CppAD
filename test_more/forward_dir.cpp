@@ -570,7 +570,7 @@ namespace {
 		x0[0] = 2.2;
 		y0  = f.Forward(0, x0);
 		ok &= y0.size() == m;
-		ok &= NearEqual(y0[0], std::round(x0[0]) + x0[0], eps, eps); 
+		ok &= NearEqual(y0[0], round_off(x0[0]) + x0[0], eps, eps); 
 	
 		// first order Taylor coefficients
 		size_t r = 2, ell;
