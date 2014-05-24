@@ -540,7 +540,9 @@ namespace {
 	// ---------------------------------------------------------------------
 	// DisOp (test assuming that AddvvOp is correct)
 	double round_off(const double& x)
-	{	return std::round(x); }
+	{	// std::round(x); is C++11, so we avoid using it
+		return std::floor( x + 0.5 );
+	}
 	CPPAD_DISCRETE_FUNCTION(double, round_off)
 	bool dis_op(void)
 	{	bool ok = true;
