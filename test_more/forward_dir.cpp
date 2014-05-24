@@ -13,6 +13,7 @@ Please visit http://www.coin-or.org/CppAD/ for information on other licenses.
 // MulvvOp is tested by example/forward_dir.cpp
 
 # include <limits>
+# include <cmath>
 # include <cppad/cppad.hpp>
 
 namespace {
