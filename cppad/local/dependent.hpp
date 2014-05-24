@@ -143,6 +143,11 @@ $end
 namespace CppAD {
 
 /*!
+\file dependent.hpp
+Different versions of Dependent function.
+*/
+
+/*!
 Determine the \c tape corresponding to this exeuction thread and then use
 <code>Dependent(tape, y)</code> to store this tapes recording in a function.
 
@@ -275,6 +280,7 @@ void ADFun<Base>::Dependent(ADTape<Base> *tape, const ADvector &y)
 	// some size_t values in ad_fun.hpp
 	compare_change_       = 0;
 	num_order_taylor_     = 0;
+	num_direction_taylor_ = 0;
 	cap_order_taylor_     = 0;
 
 	// num_var_tape_

@@ -1,6 +1,6 @@
 /* $Id$ */
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-12 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-14 Bradley M. Bell
 
 CppAD is distributed under multiple licenses. This distribution is under
 the terms of the 
@@ -18,6 +18,53 @@ Test higher order derivatives for tan(x) function.
 # include <cppad/cppad.hpp>
 
 namespace {
+	bool tan_two(void)
+	{	bool ok = true;
+		using CppAD::AD;
+		using CppAD::NearEqual;
+		double eps = 10. * std::numeric_limits<double>::epsilon();
+	
+		// domain space vector
+		size_t n = 1;
+		CPPAD_TESTVECTOR(AD<double>) ax(n);
+		ax[0] = 0.5; 
+	
+		// declare independent variables and starting recording
+		CppAD::Independent(ax);
+	
+		// range space vector
+		size_t m = 1;
+		CPPAD_TESTVECTOR(AD<double>) ay(m);
+		ay[0] = tan( ax[0] );
+	
+		// create f: x -> y and stop tape recording
+		CppAD::ADFun<double> f(ax, ay);
+	
+		// first order Taylor coefficient
+		CPPAD_TESTVECTOR(double) x1(n), y1;
+		x1[0] = 2.0;
+		y1    = f.Forward(1, x1);
+		ok   &= y1.size() == m;
+		
+		// secondorder Taylor coefficients
+		CPPAD_TESTVECTOR(double) x2(n), y2;
+		x2[0] = 0.0;
+		y2    = f.Forward(2, x2);
+		ok   &= y2.size() == m;
+		// 
+		// Y  (t)    = F[X_0(t)] 
+		//           =  tan(0.5 + 2t )
+		// Y' (t)    =  2 * cos(0.5 + 2t )^(-2)
+		double sec_sq  = 1.0 / ( cos(0.5) * cos(0.5) );
+		double check   = 2.0 * sec_sq;
+		ok  &= NearEqual(y1[0] , check, eps, eps);
+		//
+		// Y''(0)    = 8*cos(0.5)^(-3)*sin(0.5) 
+		check = 8.0 * tan(0.5) * sec_sq / 2.0;
+		ok    &= NearEqual(y2[0] , check, eps, eps);
+		//
+		return ok;
+	}
 	bool tan_case(bool tan_first)
 	{	bool ok = true;
 		double eps = 100. * std::numeric_limits<double>::epsilon();
@@ -120,9 +167,12 @@ namespace {
 }
 bool tan(void)
 {	bool ok = true;
+	//
 	ok     &= tan_case(true);
 	ok     &= tan_case(false);
 	ok     &= tanh_case(true);
 	ok     &= tanh_case(false);
+	//
+	ok     &= tan_two();
 	return ok;
 }

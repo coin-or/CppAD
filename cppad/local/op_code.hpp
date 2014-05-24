@@ -444,20 +444,15 @@ void printOpField(
 }
 
 /*!
-Prints a single operator, its operands, and the corresponding result values.
+Prints a single operator and its operands
 
 \tparam Base
 Is the base type for these AD< \a Base > operations.
 
-\tparam Value
-Determines the type of the values that we are printing.
-
 \param os
 is the output stream that the information is printed on.
 
-\param Rec
-2DO: change this name from Rec to play (becuase it is a player 
-and not a recorder).
+\param play
 Is the entire recording for the tape that this operator is in.
 
 \param i_op
@@ -465,7 +460,7 @@ is the index for the operator corresponding to this operation.
 
 \param i_var
 is the index for the variable corresponding to the result of this operation
-(ignored if NumRes(op) == 0).
+(if NumRes(op) > 0).
 
 \param op
 The operator code (OpCode) for this operation.
@@ -473,42 +468,15 @@ The operator code (OpCode) for this operation.
 \param ind
 is the vector of argument indices for this operation
 (must have NumArg(op) elements).
-
-\param nfz
-is the number of forward sweep calculated values of type Value
-that correspond to this operation
-(ignored if NumRes(op) == 0).
-
-\param fz
-points to the first forward calculated value
-that correspond to this operation
-(ignored if NumRes(op) == 0).
-
-\param nrz
-is the number of reverse sweep calculated values of type Value
-that correspond to this operation
-(ignored if NumRes(op) == 0).
-
-\param rz
-points to the first reverse calculated value
-that correspond to this operation
-(ignored if NumRes(op) == 0).
-
-\par 2DO
-print the operator index (in addition to the variables index).
 */
-template <class Base, class Value>
+template <class Base>
 void printOp(
-	std::ostream          &os     , 
-	const player<Base>   *Rec     ,
+	std::ostream&          os     , 
+	const player<Base>*    play   ,
 	size_t                 i_op   , 
 	size_t                 i_var  , 
 	OpCode                 op     ,
-	const addr_t          *ind    ,
-	size_t                 nfz    ,
-	const  Value          *fz     ,
-	size_t                 nrz    ,
-	const  Value          *rz     )
+	const addr_t*          ind    )
 {	size_t i;
 	CPPAD_ASSERT_KNOWN(
 		! thread_alloc::in_parallel() ,
@@ -519,7 +487,9 @@ void printOp(
 
 	// print operator
 	printOpField(os,  "o=",      i_op,  5);
-	printOpField(os,  "v=",      i_var, 5);
+	if( NumRes(op) > 0 && op != BeginOp )
+		printOpField(os,  "v=",      i_var, 5);
+	else	printOpField(os,  "v=",      "",    5);
 	if( op == CExpOp || op == CSkipOp || op == ComOp )
 	{	printOpField(os, "", OpName(op), 5); 
 		printOpField(os, "", CompareOpName[ ind[0] ], 3);
@@ -547,10 +517,10 @@ void printOp(
 		CPPAD_ASSERT_UNKNOWN(ind[1] != 0);
 		if( ind[1] & 1 )
 			printOpField(os, " vl=", ind[2], ncol);
-		else	printOpField(os, " pl=", Rec->GetPar(ind[2]), ncol);
+		else	printOpField(os, " pl=", play->GetPar(ind[2]), ncol);
 		if( ind[1] & 2 )
 			printOpField(os, " vr=", ind[3], ncol);
-		else	printOpField(os, " pr=", Rec->GetPar(ind[3]), ncol);
+		else	printOpField(os, " pr=", play->GetPar(ind[3]), ncol);
 		if( size_t(ind[4]) < 3 )
 		{	for(i = 0; i < size_t(ind[4]); i++)
 			 	printOpField(os, " ot=", ind[6+i], ncol);
@@ -582,7 +552,7 @@ void printOp(
 		ind[3+ind[0]+ind[1]] == ind[0] + ind[1]
 		*/
 		CPPAD_ASSERT_UNKNOWN( ind[3+ind[0]+ind[1]] == ind[0]+ind[1] );
-		printOpField(os, " pr=", Rec->GetPar(ind[2]), ncol);
+		printOpField(os, " pr=", play->GetPar(ind[2]), ncol);
 		for(i = 0; i < size_t(ind[0]); i++)
 			 printOpField(os, " +v=", ind[3+i], ncol);
 		for(i = 0; i < size_t(ind[1]); i++)
@@ -605,7 +575,7 @@ void printOp(
 		CPPAD_ASSERT_UNKNOWN( NumArg(op) == 3 );
 		printOpField(os, "off=", ind[0], ncol);
 		printOpField(os, "idx=", ind[1], ncol);
-		printOpField(os, " pr=", Rec->GetPar(ind[2]), ncol);
+		printOpField(os, " pr=", play->GetPar(ind[2]), ncol);
 		break;
 
 		case StpvOp:
@@ -619,7 +589,7 @@ void printOp(
 		CPPAD_ASSERT_UNKNOWN( NumArg(op) == 3 );
 		printOpField(os, "off=", ind[0], ncol);
 		printOpField(os, " vl=", ind[1], ncol);
-		printOpField(os, " pr=", Rec->GetPar(ind[2]), ncol);
+		printOpField(os, " pr=", play->GetPar(ind[2]), ncol);
 		break;
 
 		case StvvOp:
@@ -645,7 +615,7 @@ void printOp(
 		case PowpvOp:
 		case DivpvOp:
 		CPPAD_ASSERT_UNKNOWN( NumArg(op) == 2 );
-		printOpField(os, " pl=", Rec->GetPar(ind[0]), ncol);
+		printOpField(os, " pl=", play->GetPar(ind[0]), ncol);
 		printOpField(os, " vr=", ind[1], ncol);
 		break;
 
@@ -654,7 +624,7 @@ void printOp(
 		case SubvpOp:
 		CPPAD_ASSERT_UNKNOWN( NumArg(op) == 2 );
 		printOpField(os, " vl=", ind[0], ncol);
-		printOpField(os, " pr=", Rec->GetPar(ind[1]), ncol);
+		printOpField(os, " pr=", play->GetPar(ind[1]), ncol);
 		break;
 
 		case AbsOp:
@@ -680,7 +650,7 @@ void printOp(
 		case UsrapOp:
 		case UsrrpOp:
 		CPPAD_ASSERT_UNKNOWN( NumArg(op) == 1 );
-		printOpField(os, "  p=", Rec->GetPar(ind[0]), ncol);
+		printOpField(os, "  p=", play->GetPar(ind[0]), ncol);
 		break;
 
 		case UserOp:
@@ -697,12 +667,12 @@ void printOp(
 		CPPAD_ASSERT_NARG_NRES(op, 5, 0);
 		if( ind[0] & 1 )
 			printOpField(os, " v=", ind[1], ncol);
-		else	printOpField(os, " p=", Rec->GetPar(ind[1]), ncol);
-		os << "before=\"" << Rec->GetTxt(ind[2]) << "\"";
+		else	printOpField(os, " p=", play->GetPar(ind[1]), ncol);
+		os << "before=\"" << play->GetTxt(ind[2]) << "\"";
 		if( ind[0] & 2 )
 			printOpField(os, " v=", ind[3], ncol);
-		else	printOpField(os, " p=", Rec->GetPar(ind[3]), ncol);
-		os << "after=\"" << Rec->GetTxt(ind[4]) << "\"";
+		else	printOpField(os, " p=", play->GetPar(ind[3]), ncol);
+		os << "after=\"" << play->GetTxt(ind[4]) << "\"";
 		break;
 
 		case BeginOp:
@@ -730,16 +700,16 @@ void printOp(
 		CPPAD_ASSERT_UNKNOWN( NumArg(op) == 6 );
 		if( ind[1] & 1 )
 			printOpField(os, " vl=", ind[2], ncol);
-		else	printOpField(os, " pl=", Rec->GetPar(ind[2]), ncol);
+		else	printOpField(os, " pl=", play->GetPar(ind[2]), ncol);
 		if( ind[1] & 2 )
 			printOpField(os, " vr=", ind[3], ncol);
-		else	printOpField(os, " pr=", Rec->GetPar(ind[3]), ncol);
+		else	printOpField(os, " pr=", play->GetPar(ind[3]), ncol);
 		if( ind[1] & 4 )
 			printOpField(os, " vt=", ind[4], ncol);
-		else	printOpField(os, " pt=", Rec->GetPar(ind[4]), ncol);
+		else	printOpField(os, " pt=", play->GetPar(ind[4]), ncol);
 		if( ind[1] & 8 )
 			printOpField(os, " vf=", ind[5], ncol);
-		else	printOpField(os, " pf=", Rec->GetPar(ind[5]), ncol);
+		else	printOpField(os, " pf=", play->GetPar(ind[5]), ncol);
 		break;
 
 		case ComOp:
@@ -750,24 +720,62 @@ void printOp(
 		else	printOpField(os, "res=", 0, ncol);
 		if( ind[1] & 2 )
 			printOpField(os, " vl=", ind[2], ncol);
-		else	printOpField(os, " pl=", Rec->GetPar(ind[2]), ncol);
+		else	printOpField(os, " pl=", play->GetPar(ind[2]), ncol);
 		if( ind[1] & 4 )
 			printOpField(os, " vr=", ind[3], ncol);
-		else	printOpField(os, " pr=", Rec->GetPar(ind[3]), ncol);
+		else	printOpField(os, " pr=", play->GetPar(ind[3]), ncol);
 		break;
 
 		default:
 		CPPAD_ASSERT_UNKNOWN(0);
 	}
+}
+
+/*!
+Prints the result values correspnding to an operator.
+
+\tparam Base
+Is the base type for these AD< \a Base > operations.
+
+\tparam Value
+Determines the type of the values that we are printing.
+
+\param os
+is the output stream that the information is printed on.
+
+\param nfz
+is the number of forward sweep calculated values of type Value
+that correspond to this operation
+(ignored if NumRes(op) == 0).
+
+\param fz
+points to the first forward calculated value
+that correspond to this operation
+(ignored if NumRes(op) == 0).
+
+\param nrz
+is the number of reverse sweep calculated values of type Value
+that correspond to this operation
+(ignored if NumRes(op) == 0).
+
+\param rz
+points to the first reverse calculated value
+that correspond to this operation
+(ignored if NumRes(op) == 0).
+*/
+template <class Value>
+void printOpResult(
+	std::ostream          &os     , 
+	size_t                 nfz    ,
+	const  Value          *fz     ,
+	size_t                 nrz    ,
+	const  Value          *rz     )
+{
 	size_t k;
-	if( NumRes(op) > 0 && (op != BeginOp) )
-	{ 
-		for(k = 0; k < nfz; k++)
-			std::cout << "| fz[" << k << "]=" << fz[k];
-		for(k = 0; k < nrz; k++)
-			std::cout << "| rz[" << k << "]=" << rz[k];
-	}
-	std::cout << std::endl;
+	for(k = 0; k < nfz; k++)
+		os << "| fz[" << k << "]=" << fz[k];
+	for(k = 0; k < nrz; k++)
+		os << "| rz[" << k << "]=" << rz[k];
 }
 
 } // END_CPPAD_NAMESPACE

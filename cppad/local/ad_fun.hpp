@@ -88,6 +88,9 @@ private:
 	/// maximum number of orders that will fit in taylor_
 	size_t cap_order_taylor_;
 
+	/// number of directions stored in taylor_
+	size_t num_direction_taylor_;
+
 	/// number of variables in the recording (play_)
 	size_t num_var_tape_;
 
@@ -272,7 +275,11 @@ public:
 	template <typename ADvector>
 	void Dependent(const ADvector &x, const ADvector &y);
 
-	/// forward mode sweep
+	/// forward mode user API, one order multiple directions.
+	template <typename VectorBase>
+	VectorBase Forward(size_t q, size_t r, const VectorBase& x);
+
+	/// forward mode user API, multiple directions one order.
 	template <typename VectorBase>
 	VectorBase Forward(size_t q, 
 		const VectorBase& x, std::ostream& s = std::cout
@@ -348,6 +355,10 @@ public:
 	size_t size_order(void) const
 	{	return num_order_taylor_; } 
 
+	/// number taylor coefficient directions calculated 
+	size_t size_direction(void) const
+	{	return num_direction_taylor_; } 
+
 	/// number of characters in the operation sequence
 	size_t size_text(void) const
 	{	return play_.num_text_rec(); }
@@ -360,8 +371,11 @@ public:
 	size_t size_VecAD(void) const
 	{	return play_.num_vec_ind_rec(); }
 
+	/// set number of orders currently allocated (user API)
+	void capacity_order(size_t c);
+
 	/// set number of orders and directions currently allocated
-	void capacity_order(size_t c);   
+	void capacity_order(size_t c, size_t r);   
 
 	/// number of variables in conditional expressions that can be skipped
 	size_t number_skip(void);   
@@ -531,6 +545,7 @@ public:
 // non-user interfaces
 # include <cppad/local/forward0sweep.hpp>
 # include <cppad/local/forward1sweep.hpp>
+# include <cppad/local/forward2sweep.hpp>
 # include <cppad/local/reverse_sweep.hpp>
 # include <cppad/local/for_jac_sweep.hpp>
 # include <cppad/local/rev_jac_sweep.hpp>

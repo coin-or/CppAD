@@ -297,6 +297,7 @@ void ADFun<Base>::operator=(const ADFun<Base>& f)
 	compare_change_            = f.compare_change_;
 	num_order_taylor_          = f.num_order_taylor_;
 	cap_order_taylor_          = f.cap_order_taylor_;
+	num_direction_taylor_      = f.num_direction_taylor_;
 	num_var_tape_              = f.num_var_tape_;
 	//
 	// CppAD::vector objects
@@ -431,9 +432,12 @@ ADFun<Base>::ADFun(const VectorAD &x, const VectorAD &y)
 
 	// allocate memory for one zero order taylor_ coefficient
 	CPPAD_ASSERT_UNKNOWN( num_order_taylor_ == 0 );
+	CPPAD_ASSERT_UNKNOWN( num_direction_taylor_ == 0 );
 	size_t c = 1;
-	capacity_order(c);
+	size_t r = 1;
+	capacity_order(c, r);
 	CPPAD_ASSERT_UNKNOWN( cap_order_taylor_     == c );
+	CPPAD_ASSERT_UNKNOWN( num_direction_taylor_ == r );
 
 	// set zero order coefficients corresponding to indpendent variables
 	CPPAD_ASSERT_UNKNOWN( n == ind_taddr_.size() );

@@ -66,25 +66,25 @@ is the number of parameters in \a parameter.
 \param parameter
 is the parameter vector for this operation sequence.
 
-\param nc_taylor
+\param cap_order
 number of colums in the matrix containing all the Taylor coefficients.
 
 \param taylor
-\b Input: <tt>taylor [ arg[2+i] * nc_taylor + k ]</tt>
+\b Input: <tt>taylor [ arg[2+i] * cap_order + k ]</tt>
 for <tt>i = 1 , ... , m</tt> 
 and <tt>k = 0 , ... , q</tt>
 is the k-th order Taylor coefficient corresponding to <tt>x(i)</tt>
 \n
-\b Input: <tt>taylor [ arg[2+m+i] * nc_taylor + k ]</tt>
+\b Input: <tt>taylor [ arg[2+m+i] * cap_order + k ]</tt>
 for <tt>i = 1 , ... , n</tt> 
 and <tt>k = 0 , ... , q</tt>
 is the k-th order Taylor coefficient corresponding to <tt>y(i)</tt>
 \n
-\b Input: <tt>taylor [ i_z * nc_taylor + k ]</tt>
+\b Input: <tt>taylor [ i_z * cap_order + k ]</tt>
 for k = 0 , ... , p,
 is the k-th order Taylor coefficient corresponding to z.
 \n
-\b Output: <tt>taylor [ i_z * nc_taylor + k ]</tt>
+\b Output: <tt>taylor [ i_z * cap_order + k ]</tt>
 for k = p , ... , q,
 is the \a k-th order Taylor coefficient corresponding to z.
 */
@@ -96,14 +96,14 @@ inline void forward_csum_op(
 	const addr_t* arg         ,
 	size_t        num_par     ,
 	const Base*   parameter   ,
-	size_t        nc_taylor   ,
+	size_t        cap_order   ,
 	Base*         taylor      )
 {	Base zero(0);
 	size_t i, j, k;
 
 	// check assumptions
 	CPPAD_ASSERT_UNKNOWN( NumRes(CSumOp) == 1 );
-	CPPAD_ASSERT_UNKNOWN( q < nc_taylor );
+	CPPAD_ASSERT_UNKNOWN( q < cap_order );
 	CPPAD_ASSERT_UNKNOWN( p <= q );
 	CPPAD_ASSERT_UNKNOWN( size_t(arg[2]) < num_par );
 	CPPAD_ASSERT_UNKNOWN( 
@@ -111,7 +111,7 @@ inline void forward_csum_op(
 	); 
 
 	// Taylor coefficients corresponding to result
-	Base* z = taylor + i_z    * nc_taylor;
+	Base* z = taylor + i_z    * cap_order;
 	for(k = p; k <= q; k++)
 		z[k] = zero;
 	if( p == 0 )
@@ -121,16 +121,135 @@ inline void forward_csum_op(
 	j = 2;
 	while(i--)
 	{	CPPAD_ASSERT_UNKNOWN( size_t(arg[j+1]) < i_z );
-		x     = taylor + arg[++j] * nc_taylor;
+		x     = taylor + arg[++j] * cap_order;
 		for(k = p; k <= q; k++)
 			z[k] += x[k];
 	}	
 	i = arg[1];
 	while(i--)
 	{	CPPAD_ASSERT_UNKNOWN( size_t(arg[j+1]) < i_z );
-		x     = taylor + arg[++j] * nc_taylor;
+		x     = taylor + arg[++j] * cap_order;
 		for(k = p; k <= q; k++)
 			z[k] -= x[k];
+	}	
+}
+
+/*!
+Multiple direction forward mode Taylor coefficients for op = CsumOp.
+
+This operation is 
+\verbatim
+	z = s + x(1) + ... + x(m) - y(1) - ... - y(n).
+\endverbatim
+
+\tparam Base
+base type for the operator; i.e., this operation was recorded
+using AD<Base> and computations by this routine are done using type
+\a Base.
+
+\param q
+order ot the Taylor coefficients that we are computing.
+
+\param r
+number of directions for Taylor coefficients that we are computing.
+
+\param i_z
+variable index corresponding to the result for this operation;
+i.e. the row index in \a taylor corresponding to z.
+
+\param arg
+\a arg[0] 
+is the number of addition variables in this cummulative summation; i.e.,
+<tt>m</tt>.
+\n
+\a arg[1] 
+is the number of subtraction variables in this cummulative summation; i.e.,
+\c m.
+\n
+<tt>parameter[ arg[2] ]</tt>
+is the parameter value \c s in this cummunative summation.
+\n
+<tt>arg[2+i]</tt>
+for <tt>i = 1 , ... , m</tt> is the variable index of <tt>x(i)</tt>. 
+\n
+<tt>arg[2+arg[0]+i]</tt>
+for <tt>i = 1 , ... , n</tt> is the variable index of <tt>y(i)</tt>. 
+
+\param num_par
+is the number of parameters in \a parameter.
+
+\param parameter
+is the parameter vector for this operation sequence.
+
+\param cap_order
+number of colums in the matrix containing all the Taylor coefficients.
+
+\param taylor
+\b Input: <tt>taylor [ arg[2+i]*((cap_order-1)*r + 1) + 0 ]</tt>
+for <tt>i = 1 , ... , m</tt> 
+is the 0-th order Taylor coefficient corresponding to <tt>x(i)</tt> and
+<tt>taylor [ arg[2+i]*((cap_order-1)*r + 1) + (q-1)*r + ell + 1 ]</tt>
+for <tt>i = 1 , ... , m</tt>,
+<tt>ell = 0 , ... , r-1</tt> 
+is the q-th order Taylor coefficient corresponding to <tt>x(i)</tt>
+and direction ell.
+\n
+\b Input: <tt>taylor [ arg[2+m+i]*((cap_order-1)*r + 1) + 0 ]</tt>
+for <tt>i = 1 , ... , n</tt> 
+is the 0-th order Taylor coefficient corresponding to <tt>y(i)</tt> and
+<tt>taylor [ arg[2+m+i]*((cap_order-1)*r + 1) + (q-1)*r + ell + 1 ]</tt>
+for <tt>i = 1 , ... , n</tt>,
+<tt>ell = 0 , ... , r-1</tt> 
+is the q-th order Taylor coefficient corresponding to <tt>y(i)</tt>
+and direction ell.
+\n
+\b Output: <tt>taylor [ i_z*((cap_order-1)*r+1) + (q-1)*r + ell + 1 ]</tt>
+is the \a q-th order Taylor coefficient corresponding to z
+for direction <tt>ell = 0 , ... , r-1</tt>.
+*/
+template <class Base>
+inline void forward_csum_op_dir(
+	size_t        q           , 
+	size_t        r           , 
+	size_t        i_z         ,
+	const addr_t* arg         ,
+	size_t        num_par     ,
+	const Base*   parameter   ,
+	size_t        cap_order   ,
+	Base*         taylor      )
+{	Base zero(0);
+	size_t i, j, ell;
+
+	// check assumptions
+	CPPAD_ASSERT_UNKNOWN( NumRes(CSumOp) == 1 );
+	CPPAD_ASSERT_UNKNOWN( q < cap_order );
+	CPPAD_ASSERT_UNKNOWN( 0 < q );
+	CPPAD_ASSERT_UNKNOWN( size_t(arg[2]) < num_par );
+	CPPAD_ASSERT_UNKNOWN( 
+		arg[0] + arg[1] == arg[ arg[0] + arg[1] + 3 ]
+	); 
+
+	// Taylor coefficients corresponding to result
+	size_t num_taylor_per_var = (cap_order-1) * r + 1;
+	size_t m                  = (q-1)*r + 1;
+	Base* z = taylor + i_z * num_taylor_per_var + m;
+	for(ell = 0; ell < r; ell++)
+		z[ell] = zero;
+	Base* x;
+	i = arg[0];
+	j = 2;
+	while(i--)
+	{	CPPAD_ASSERT_UNKNOWN( size_t(arg[j+1]) < i_z );
+		x = taylor + arg[++j] * num_taylor_per_var + m;
+		for(ell = 0; ell < r; ell++)
+			z[ell] += x[ell];
+	}	
+	i = arg[1];
+	while(i--)
+	{	CPPAD_ASSERT_UNKNOWN( size_t(arg[j+1]) < i_z );
+		x = taylor + arg[++j] * num_taylor_per_var + m;
+		for(ell = 0; ell < r; ell++)
+			z[ell] -= x[ell];
 	}	
 }
 

@@ -53,18 +53,18 @@ is the number of parameters in \a parameter.
 \b Input: \a parameter[ \a arg[0] ] is the value of a component
 of y that is a parameter. 
 
-\param nc_taylor
+\param cap_order
 number of colums in the matrix containing all the Taylor coefficients.
 
 \param taylor
-\b Output: \a taylor [ \a i_z * \a nc_taylor + 0 ] 
+\b Output: \a taylor [ \a i_z * \a cap_order + 0 ] 
 is the zero order Taylor coefficient corresponding to z. 
 
 \par Checked Assertions where op is the unary operator with one result:
 \li NumArg(op) == 1
 \li NumRes(op) == 1
 \li \a size_t(arg[0]) < num_par 
-\li \a 0 < \a nc_taylor
+\li \a 0 < \a cap_order
 */
 template <class Base>
 inline void forward_par_op_0(
@@ -72,16 +72,16 @@ inline void forward_par_op_0(
 	const addr_t* arg         ,
 	size_t        num_par     ,
 	const Base*   parameter   ,
-	size_t        nc_taylor   , 
+	size_t        cap_order   , 
 	Base*         taylor      )
 {	
 	// check assumptions
 	CPPAD_ASSERT_UNKNOWN( NumArg(ParOp) == 1 );
 	CPPAD_ASSERT_UNKNOWN( NumRes(ParOp) == 1 );
 	CPPAD_ASSERT_UNKNOWN( size_t(arg[0]) < num_par );
-	CPPAD_ASSERT_UNKNOWN( 0 < nc_taylor );
+	CPPAD_ASSERT_UNKNOWN( 0 < cap_order );
 
-	Base* z = taylor + i_z * nc_taylor;
+	Base* z = taylor + i_z * cap_order;
 
 	z[0]  = parameter[ arg[0] ];
 }

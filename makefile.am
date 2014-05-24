@@ -182,6 +182,7 @@ nobase_myinclude_HEADERS =  \
 	cppad/local/for_two.hpp \
 	cppad/local/forward0sweep.hpp \
 	cppad/local/forward1sweep.hpp \
+	cppad/local/forward2sweep.hpp \
 	cppad/local/forward.hpp \
 	cppad/local/fun_check.hpp \
 	cppad/local/fun_construct.hpp \

@@ -54,6 +54,30 @@ This section contains a list of the changes to CppAD during 2014
 The purpose of this section is to
 assist you in learning about changes between various versions of CppAD.
 
+$head 05-23$$
+$list number$$
+Add multiple direction for mode
+$cref forward_dir$$ and use it to speed up the forward
+version of $cref sparse_jacobian$$.
+Below is an example run of $cref cppad_sparse_jacobian.cpp$$ results
+before this change:
+$codep
+	cppad_sparse_jacobian_size = [ 100, 400, 900, 1600, 2500 ]
+	cppad_sparse_jacobian_rate = [ 2973, 431.94, 142.25, 78.64, 26.87 ]
+$$
+and after this change:
+$codep
+	cppad_sparse_jacobian_size = [ 100, 400, 900, 1600, 2500 ]
+	cppad_sparse_jacobian_rate = [ 6389, 954.26, 314.04, 180.06, 56.95 ]
+$$
+Due to the success of this change, other
+$cref/multiple direction/WishList/Multiple Directions/$$ items
+were added to the wish list.
+$lnext
+Improve the  forward mode tracing of arguments to,
+and results from, user defined $cref atomic$$ operations.
+$lend
+
 $head 05-20$$
 $list number$$
 Move $code speed/adolc/alloc_mat.hpp$$ to 

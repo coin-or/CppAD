@@ -785,22 +785,29 @@ void RevHesSweep(
 		{	zh_value[j] = true;
 			j = rev_hes_sparse.next_element();
 		}
-		// should also print RevJac[i_var], but printOp does not
-		// yet allow for this.
 		printOp(
 			std::cout, 
 			play,
 			i_op,
 			i_var,
 			op, 
-			arg,
+			arg
+		);
+		// should also print RevJac[i_var], but printOpResult does not
+		// yet allow for this
+		if( NumRes(op) > 0 && op != BeginOp ) printOpResult(
+			std::cout, 
 			1, 
 			&zf_value, 
 			1, 
 			&zh_value
 		);
-# endif
+		std::cout << std::endl;
 	}
+	std::cout << std::endl;
+# else
+	}
+# endif
 	// values corresponding to BeginOp
 	CPPAD_ASSERT_UNKNOWN( i_op == 0 );
 	CPPAD_ASSERT_UNKNOWN( i_var == 0 );

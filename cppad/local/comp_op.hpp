@@ -84,13 +84,13 @@ Vector of parameters corresponding to the tape.
 If left is a parameter, \a parameter[ arg[2] ] is its value.
 If right is a parameter, \a parameter[ arg[3] ] is its value.
 
-\param nc_taylor
+\param cap_order
 number of columns in the matrix containing the Taylor coefficients.
 
 \param taylor
 Matrix of Taylor coefficients.
-If left is a variable, \a taylor[ arg[2] * nc_taylor + 0 ] is its value.
-If right is a variable, \a taylor[ arg[3] * nc_taylor + 0 ] is its value.
+If left is a variable, \a taylor[ arg[2] * cap_order + 0 ] is its value.
+If right is a variable, \a taylor[ arg[3] * cap_order + 0 ] is its value.
 
 
 \par Checked Assertions where op is a binary operator:
@@ -108,7 +108,7 @@ inline void forward_comp_op_0(
 	const addr_t*  arg         , 
 	size_t         num_par     ,
 	const Base*    parameter   ,
-	size_t         nc_taylor   ,
+	size_t         cap_order   ,
 	Base*          taylor      )
 {	bool result;
 	Base left;
@@ -124,7 +124,7 @@ inline void forward_comp_op_0(
 
 	// value of left operand for this forward sweep
 	if( arg[1] & 2 )
-		left = taylor[ arg[2] * nc_taylor + 0 ];
+		left = taylor[ arg[2] * cap_order + 0 ];
 	else
 	{	CPPAD_ASSERT_UNKNOWN( size_t(arg[2]) < num_par );
 		left = parameter[ arg[2] ];
@@ -132,7 +132,7 @@ inline void forward_comp_op_0(
 
 	// value of right operand for this forward sweep.
 	if( arg[1] & 4 )
-		right = taylor[ arg[3] * nc_taylor + 0 ];
+		right = taylor[ arg[3] * cap_order + 0 ];
 	else
 	{	CPPAD_ASSERT_UNKNOWN( size_t(arg[3]) < num_par );
 		right = parameter[ arg[3] ];

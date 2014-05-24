@@ -85,7 +85,7 @@ is the total number of values in the vector \a parameter.
 For j = 0, 1, 2, 3,
 if y_j is a parameter, \a parameter [ arg[2 + j] ] is its value.
 
-\param nc_taylor
+\param cap_order
 number of columns in the matrix containing the Taylor coefficients.
 
 \par Checked Assertions
@@ -103,7 +103,7 @@ inline void conditional_exp_op(
 	const addr_t*  arg         , 
 	size_t         num_par     ,
 	const Base*    parameter   ,
-	size_t         nc_taylor   )
+	size_t         cap_order   )
 {	// This routine is only for documentation, it should never be used
 	CPPAD_ASSERT_UNKNOWN( false );
 }
@@ -255,7 +255,7 @@ is the total number of values in the vector \a parameter.
 For j = 0, 1, 2, 3,
 if y_j is a parameter, \a parameter [ arg[2 + j] ] is its value.
 
-\param nc_taylor
+\param cap_order
 number of columns in the matrix containing the Taylor coefficients.
 
 \par Checked Assertions
@@ -277,14 +277,14 @@ is the highest order of the Taylor coefficient of z that we are computing.
 \b Input:
 For j = 0, 1, 2, 3 and k = 0 , ... , q,
 if y_j is a variable then
-<code>taylor [ arg[2+j] * nc_taylor + k ]</code>
+<code>taylor [ arg[2+j] * cap_order + k ]</code>
 is the k-th order Taylor coefficient corresponding to y_j.
 \n
-\b Input: <code>taylor [ i_z * nc_taylor + k ]</code> 
+\b Input: <code>taylor [ i_z * cap_order + k ]</code> 
 for k = 0 , ... , p-1,
 is the k-th order Taylor coefficient corresponding to z.
 \n
-\b Output: <code>taylor [ i_z * nc_taylor + k ]</code>
+\b Output: <code>taylor [ i_z * cap_order + k ]</code>
 for k = p , ... , q, 
 is the k-th order Taylor coefficient corresponding to z. 
 
@@ -297,11 +297,11 @@ inline void forward_cond_op(
 	const addr_t*  arg         , 
 	size_t         num_par     ,
 	const Base*    parameter   ,
-	size_t         nc_taylor   ,
+	size_t         cap_order   ,
 	Base*          taylor      )
 {	Base y_0, y_1, y_2, y_3;
 	Base zero(0);
-	Base* z = taylor + i_z * nc_taylor;
+	Base* z = taylor + i_z * cap_order;
 
 	CPPAD_ASSERT_UNKNOWN( size_t(arg[0]) < static_cast<size_t> (CompareNe) );
 	CPPAD_ASSERT_UNKNOWN( NumArg(CExpOp) == 6 );
@@ -310,7 +310,7 @@ inline void forward_cond_op(
 
 	if( arg[1] & 1 )
 	{	CPPAD_ASSERT_UNKNOWN( size_t(arg[2]) < i_z );
-		y_0 = taylor[ arg[2] * nc_taylor + 0 ];
+		y_0 = taylor[ arg[2] * cap_order + 0 ];
 	}
 	else
 	{	CPPAD_ASSERT_UNKNOWN( size_t(arg[2]) < num_par );
@@ -318,7 +318,7 @@ inline void forward_cond_op(
 	}
 	if( arg[1] & 2 )
 	{	CPPAD_ASSERT_UNKNOWN( size_t(arg[3]) < i_z );
-		y_1 = taylor[ arg[3] * nc_taylor + 0 ];
+		y_1 = taylor[ arg[3] * cap_order + 0 ];
 	}
 	else
 	{	CPPAD_ASSERT_UNKNOWN( size_t(arg[3]) < num_par );
@@ -327,7 +327,7 @@ inline void forward_cond_op(
 	if( p == 0 )
 	{	if( arg[1] & 4 )
 		{	CPPAD_ASSERT_UNKNOWN( size_t(arg[4]) < i_z );
-			y_2 = taylor[ arg[4] * nc_taylor + 0 ];
+			y_2 = taylor[ arg[4] * cap_order + 0 ];
 		}
 		else
 		{	CPPAD_ASSERT_UNKNOWN( size_t(arg[4]) < num_par );
@@ -335,7 +335,7 @@ inline void forward_cond_op(
 		}
 		if( arg[1] & 8 )
 		{	CPPAD_ASSERT_UNKNOWN( size_t(arg[5]) < i_z );
-			y_3 = taylor[ arg[5] * nc_taylor + 0 ];
+			y_3 = taylor[ arg[5] * cap_order + 0 ];
 		}
 		else
 		{	CPPAD_ASSERT_UNKNOWN( size_t(arg[5]) < num_par );
@@ -353,15 +353,186 @@ inline void forward_cond_op(
 	for(size_t d = p; d <= q; d++)
 	{	if( arg[1] & 4 )
 		{	CPPAD_ASSERT_UNKNOWN( size_t(arg[4]) < i_z );
-			y_2 = taylor[ arg[4] * nc_taylor + d];
+			y_2 = taylor[ arg[4] * cap_order + d];
 		}
 		else	y_2 = zero;
 		if( arg[1] & 8 )
 		{	CPPAD_ASSERT_UNKNOWN( size_t(arg[5]) < i_z );
-			y_3 = taylor[ arg[5] * nc_taylor + d];
+			y_3 = taylor[ arg[5] * cap_order + d];
 		}
 		else	y_3 = zero;
 		z[d] = CondExpOp(
+			CompareOp( arg[0] ),
+			y_0,
+			y_1,
+			y_2,
+			y_3
+		);
+	}
+	return;
+}
+
+/*!
+Multiple directions forward mode Taylor coefficients for op = CExpOp.
+
+<!-- replace conditional_exp_op -->
+The C++ source code coresponding to this operation is
+\verbatim
+	z = CondExpRel(y_0, y_1, y_2, y_3)
+\endverbatim
+where Rel is one of the following: Lt, Le, Eq, Ge, Gt. 
+
+\tparam Base
+base type for the operator; i.e., this operation was recorded
+using AD< \a Base > and computations by this routine are done using type 
+\a Base.
+
+\param i_z
+is the AD variable index corresponding to the variable z.
+
+\param arg
+\n
+\a arg[0]
+is static cast to size_t from the enum type
+\verbatim
+	enum CompareOp {
+		CompareLt, 
+		CompareLe, 
+		CompareEq, 
+		CompareGe, 
+		CompareGt, 
+		CompareNe
+	}
+\endverbatim
+for this operation.
+Note that arg[0] cannot be equal to CompareNe.
+\n
+\n
+\a arg[1] & 1
+\n
+If this is zero, y_0 is a parameter. Otherwise it is a variable.
+\n
+\n
+\a arg[1] & 2
+\n
+If this is zero, y_1 is a parameter. Otherwise it is a variable.
+\n
+\n
+\a arg[1] & 4
+\n
+If this is zero, y_2 is a parameter. Otherwise it is a variable.
+\n
+\n
+\a arg[1] & 8
+\n
+If this is zero, y_3 is a parameter. Otherwise it is a variable.
+\n
+\n
+\a arg[2 + j ] for j = 0, 1, 2, 3
+\n
+is the index corresponding to y_j.
+
+\param num_par
+is the total number of values in the vector \a parameter.
+
+\param parameter
+For j = 0, 1, 2, 3,
+if y_j is a parameter, \a parameter [ arg[2 + j] ] is its value.
+
+\param cap_order
+number of columns in the matrix containing the Taylor coefficients.
+
+\par Checked Assertions
+\li NumArg(CExpOp) == 6
+\li NumRes(CExpOp) == 1
+\li arg[0] < static_cast<size_t> ( CompareNe )
+\li arg[1] != 0; i.e., not all of y_0, y_1, y_2, y_3 are parameters.
+\li For j = 0, 1, 2, 3 if y_j is a parameter, arg[2+j] < num_par.
+\li For j = 0, 1, 2, 3 if y_j is a variable, arg[2+j] < iz.
+<!-- end conditional_exp_op -->
+
+\param q
+is order of the Taylor coefficient of z that we are computing.
+
+\param r
+is the number of Taylor coefficient directions that we are computing.
+
+\par tpv
+We use the notation
+<code>tpv = (cap_order-1) * r + 1</code>
+which is the number of Taylor coefficients per variable
+
+\param taylor
+\b Input:
+For j = 0, 1, 2, 3, k = 1, ..., q,
+if y_j is a variable then
+<code>taylor [ arg[2+j] * tpv + 0 ]</code>
+is the zero order Taylor coefficient corresponding to y_j and
+<code>taylor [ arg[2+j] * tpv + (k-1)*r+1+ell</code> is its
+k-th order Taylor coefficient in the ell-th direction.
+\n
+\b Input: 
+For j = 0, 1, 2, 3, k = 1, ..., q-1,
+<code>taylor [ i_z * tpv + 0 ]</code> 
+is the zero order Taylor coefficient corresponding to z and
+<code>taylor [ i_z * tpv + (k-1)*r+1+ell</code> is its
+k-th order Taylor coefficient in the ell-th direction.
+\n
+\b Output: <code>taylor [ i_z * tpv + (q-1)*r+1+ell ]</code>
+is the q-th order Taylor coefficient corresponding to z
+in the ell-th direction. 
+*/
+template <class Base>
+inline void forward_cond_op_dir(
+	size_t         q           ,
+	size_t         r           ,
+	size_t         i_z         ,
+	const addr_t*  arg         , 
+	size_t         num_par     ,
+	const Base*    parameter   ,
+	size_t         cap_order   ,
+	Base*          taylor      )
+{	Base y_0, y_1, y_2, y_3;
+	Base zero(0);
+	size_t num_taylor_per_var = (cap_order-1) * r + 1;
+	Base* z = taylor + i_z * num_taylor_per_var;
+
+	CPPAD_ASSERT_UNKNOWN( size_t(arg[0]) < static_cast<size_t> (CompareNe) );
+	CPPAD_ASSERT_UNKNOWN( NumArg(CExpOp) == 6 );
+	CPPAD_ASSERT_UNKNOWN( NumRes(CExpOp) == 1 );
+	CPPAD_ASSERT_UNKNOWN( arg[1] != 0 );
+	CPPAD_ASSERT_UNKNOWN( 0 < q );
+	CPPAD_ASSERT_UNKNOWN( q < cap_order );
+
+	if( arg[1] & 1 )
+	{	CPPAD_ASSERT_UNKNOWN( size_t(arg[2]) < i_z );
+		y_0 = taylor[ arg[2] * num_taylor_per_var + 0 ];
+	}
+	else
+	{	CPPAD_ASSERT_UNKNOWN( size_t(arg[2]) < num_par );
+		y_0 = parameter[ arg[2] ];
+	}
+	if( arg[1] & 2 )
+	{	CPPAD_ASSERT_UNKNOWN( size_t(arg[3]) < i_z );
+		y_1 = taylor[ arg[3] * num_taylor_per_var + 0 ];
+	}
+	else
+	{	CPPAD_ASSERT_UNKNOWN( size_t(arg[3]) < num_par );
+		y_1 = parameter[ arg[3] ];
+	}
+	size_t m = (q-1) * r + 1;
+	for(size_t ell = 0; ell < r; ell++)
+	{	if( arg[1] & 4 )
+		{	CPPAD_ASSERT_UNKNOWN( size_t(arg[4]) < i_z );
+			y_2 = taylor[ arg[4] * num_taylor_per_var + m + ell];
+		}
+		else	y_2 = zero;
+		if( arg[1] & 8 )
+		{	CPPAD_ASSERT_UNKNOWN( size_t(arg[5]) < i_z );
+			y_3 = taylor[ arg[5] * num_taylor_per_var + m + ell];
+		}
+		else	y_3 = zero;
+		z[m+ell] = CondExpOp(
 			CompareOp( arg[0] ),
 			y_0,
 			y_1,
@@ -439,7 +610,7 @@ is the total number of values in the vector \a parameter.
 For j = 0, 1, 2, 3,
 if y_j is a parameter, \a parameter [ arg[2 + j] ] is its value.
 
-\param nc_taylor
+\param cap_order
 number of columns in the matrix containing the Taylor coefficients.
 
 \par Checked Assertions
@@ -455,10 +626,10 @@ number of columns in the matrix containing the Taylor coefficients.
 \b Input:
 For j = 0, 1, 2, 3,
 if y_j is a variable then
-\a taylor [ \a arg[2+j] * nc_taylor + 0 ]
+\a taylor [ \a arg[2+j] * cap_order + 0 ]
 is the zero order Taylor coefficient corresponding to y_j.
 \n
-\b Output: \a taylor [ \a i_z * \a nc_taylor + 0 ] 
+\b Output: \a taylor [ \a i_z * \a cap_order + 0 ] 
 is the zero order Taylor coefficient corresponding to z. 
 */
 template <class Base>
@@ -467,7 +638,7 @@ inline void forward_cond_op_0(
 	const addr_t*  arg         , 
 	size_t         num_par     ,
 	const Base*    parameter   ,
-	size_t         nc_taylor   ,
+	size_t         cap_order   ,
 	Base*          taylor      )
 {	Base y_0, y_1, y_2, y_3;
 	Base* z;
@@ -479,7 +650,7 @@ inline void forward_cond_op_0(
 
 	if( arg[1] & 1 )
 	{	CPPAD_ASSERT_UNKNOWN( size_t(arg[2]) < i_z );
-		y_0 = taylor[ arg[2] * nc_taylor + 0 ];
+		y_0 = taylor[ arg[2] * cap_order + 0 ];
 	}
 	else
 	{	CPPAD_ASSERT_UNKNOWN( size_t(arg[2]) < num_par );
@@ -487,7 +658,7 @@ inline void forward_cond_op_0(
 	}
 	if( arg[1] & 2 )
 	{	CPPAD_ASSERT_UNKNOWN( size_t(arg[3]) < i_z );
-		y_1 = taylor[ arg[3] * nc_taylor + 0 ];
+		y_1 = taylor[ arg[3] * cap_order + 0 ];
 	}
 	else
 	{	CPPAD_ASSERT_UNKNOWN( size_t(arg[3]) < num_par );
@@ -495,7 +666,7 @@ inline void forward_cond_op_0(
 	}
 	if( arg[1] & 4 )
 	{	CPPAD_ASSERT_UNKNOWN( size_t(arg[4]) < i_z );
-		y_2 = taylor[ arg[4] * nc_taylor + 0 ];
+		y_2 = taylor[ arg[4] * cap_order + 0 ];
 	}
 	else
 	{	CPPAD_ASSERT_UNKNOWN( size_t(arg[4]) < num_par );
@@ -503,13 +674,13 @@ inline void forward_cond_op_0(
 	}
 	if( arg[1] & 8 )
 	{	CPPAD_ASSERT_UNKNOWN( size_t(arg[5]) < i_z );
-		y_3 = taylor[ arg[5] * nc_taylor + 0 ];
+		y_3 = taylor[ arg[5] * cap_order + 0 ];
 	}
 	else
 	{	CPPAD_ASSERT_UNKNOWN( size_t(arg[5]) < num_par );
 		y_3 = parameter[ arg[5] ];
 	}
-	z = taylor + i_z * nc_taylor;
+	z = taylor + i_z * cap_order;
 	z[0] = CondExpOp(
 		CompareOp( arg[0] ),
 		y_0,
@@ -595,7 +766,7 @@ is the total number of values in the vector \a parameter.
 For j = 0, 1, 2, 3,
 if y_j is a parameter, \a parameter [ arg[2 + j] ] is its value.
 
-\param nc_taylor
+\param cap_order
 number of columns in the matrix containing the Taylor coefficients.
 
 \par Checked Assertions
@@ -614,10 +785,10 @@ is the order of the Taylor coefficient of z that we are  computing.
 \b Input:
 For j = 0, 1, 2, 3 and k = 0 , ... , \a d,
 if y_j is a variable then
-\a taylor [ \a arg[2+j] * nc_taylor + k ]
+\a taylor [ \a arg[2+j] * cap_order + k ]
 is the k-th order Taylor coefficient corresponding to y_j.
 \n
-\a taylor [ \a i_z * \a nc_taylor + k ] 
+\a taylor [ \a i_z * \a cap_order + k ] 
 for k = 0 , ... , \a d
 is the k-th order Taylor coefficient corresponding to z.
 
@@ -632,7 +803,7 @@ if y_j is a variable then
 is the partial derivative of G( z , y , x , w , u , ... )
 with respect to the k-th order Taylor coefficient corresponding to y_j.
 \n
-\b Input: \a partial [ \a i_z * \a nc_taylor + k ] 
+\b Input: \a partial [ \a i_z * \a cap_order + k ] 
 for k = 0 , ... , \a d
 is the partial derivative of G( z , y , x , w , u , ... )
 with respect to the k-th order Taylor coefficient corresponding to z.
@@ -652,7 +823,7 @@ inline void reverse_cond_op(
 	const addr_t*  arg         , 
 	size_t         num_par     ,
 	const Base*    parameter   ,
-	size_t         nc_taylor   ,
+	size_t         cap_order   ,
 	const Base*    taylor      ,
 	size_t         nc_partial  ,
 	Base*          partial     )
@@ -670,7 +841,7 @@ inline void reverse_cond_op(
 	pz = partial + i_z * nc_partial + 0;
 	if( arg[1] & 1 )
 	{	CPPAD_ASSERT_UNKNOWN( size_t(arg[2]) < i_z );
-		y_0 = taylor[ arg[2] * nc_taylor + 0 ];
+		y_0 = taylor[ arg[2] * cap_order + 0 ];
 	}
 	else
 	{	CPPAD_ASSERT_UNKNOWN( size_t(arg[2]) < num_par );
@@ -678,7 +849,7 @@ inline void reverse_cond_op(
 	}
 	if( arg[1] & 2 )
 	{	CPPAD_ASSERT_UNKNOWN( size_t(arg[3]) < i_z );
-		y_1 = taylor[ arg[3] * nc_taylor + 0 ];
+		y_1 = taylor[ arg[3] * cap_order + 0 ];
 	}
 	else
 	{	CPPAD_ASSERT_UNKNOWN( size_t(arg[3]) < num_par );

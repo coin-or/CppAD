@@ -119,6 +119,7 @@ test_more_SOURCES  = \
 	for_hess.cpp \
 	for_sparse_jac.cpp \
 	forward.cpp \
+	forward_dir.cpp \
 	forward_order.cpp \
 	from_base.cpp \
 	fun_check.cpp \

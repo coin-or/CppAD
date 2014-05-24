@@ -29,9 +29,10 @@ list=`find . \
 	\( -name CMakeLists.txt \) |
 	sed \
 		-e '/\/build\//d'  \
-		-e '/makefile\.in/d'  \
 		-e '/config\.h\.in/d' \
 		-e '/\/junk\./d' \
+		-e '/makefile\.in/d'  \
+		-e '/\/new\//d'  \
 		-e '/\/temp\./d'
 `
 for file in $list

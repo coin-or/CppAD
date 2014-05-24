@@ -134,14 +134,21 @@ One could build a CppAD library for use with the type $code AD<double>$$.
 This would speed up compilation for the most common usage where
 the $icode Base$$ type is $code double$$.
 
-$head Multiple Argument Forward$$
+$head Multiple Directions$$
 $index speed, forward$$
 $index forward, speed$$
-It has been suggested that computing and storing forward mode
-results for multiple argument values
-is faster for Adolc. 
-Perhaps CppAD should allow for forward mode at 
-multiple argument values.
+$list number$$
+Extend the $cref forward_dir$$ routine so they can do multiple orders
+as well as multiple directions at the same time.
+$lnext
+Extend the $cref atomic$$ functions so they can use multiple directions
+and multiple orders at the same time
+(currently they compute one direction and one order at a time).
+$lnext
+Extend the $cref Reverse$$ routines so they can handle one reverse direction
+for multiple forward directions, or multiple reverse directions for
+one forward direction.
+$lend
 
 $head Numeric Limits$$
 $index testing, machine epsilon$$

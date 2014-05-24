@@ -89,15 +89,15 @@ If left is a parameter,
 If right is a parameter,
 <code>parameter [ arg[3] ]</code> is its value.
 
-\param nc_taylor [in]
+\param cap_order [in]
 number of columns in the matrix containing the Taylor coefficients.
 
 \param taylor [in]
 If left is a variable,
-<code>taylor [ arg[2] * nc_taylor + 0 ]</code>
+<code>taylor [ arg[2] * cap_order + 0 ]</code>
 is the zeroth order Taylor coefficient corresponding to left.
 If right is a variable,
-<code>taylor [ arg[3] * nc_taylor + 0 ]</code>
+<code>taylor [ arg[3] * cap_order + 0 ]</code>
 is the zeroth order Taylor coefficient corresponding to right.
 
 \param \cskip_op [in,out]
@@ -111,7 +111,7 @@ inline void forward_cskip_op_0(
 	const addr_t*        arg            ,
 	size_t               num_par        ,
 	const Base*          parameter      ,
-	size_t               nc_taylor      ,
+	size_t               cap_order      ,
 	Base*                taylor         ,
 	bool*                cskip_op       )
 {
@@ -121,7 +121,7 @@ inline void forward_cskip_op_0(
 	Base left, right;
 	if( arg[1] & 1 )
 	{	CPPAD_ASSERT_UNKNOWN( size_t(arg[2]) <= i_z );
-		left = taylor[ arg[2] * nc_taylor + 0 ];
+		left = taylor[ arg[2] * cap_order + 0 ];
 		CPPAD_ASSERT_UNKNOWN( IdenticalPar(left) );
 	}
 	else
@@ -131,7 +131,7 @@ inline void forward_cskip_op_0(
 	}
 	if( arg[1] & 2 )
 	{	CPPAD_ASSERT_UNKNOWN( size_t(arg[3]) <= i_z );
-		right = taylor[ arg[3] * nc_taylor + 0 ];
+		right = taylor[ arg[3] * cap_order + 0 ];
 		CPPAD_ASSERT_UNKNOWN( IdenticalPar(right) );
 	}
 	else

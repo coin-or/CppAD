@@ -12,6 +12,12 @@ the terms of the
 A copy of this license is included in the COPYING file of this distribution.
 Please visit http://www.coin-or.org/CppAD/ for information on other licenses.
 -------------------------------------------------------------------------- */
+
+// maximum number of sparse directions to compute at the same time
+
+// # define CPPAD_SPARSE_JACOBIAN_MAX_MULTIPLE_DIRECTION 1
+# define CPPAD_SPARSE_JACOBIAN_MAX_MULTIPLE_DIRECTION 64
+
 /*
 $begin sparse_jacobian$$
 $spell
@@ -419,15 +425,13 @@ size_t ADFun<Base>::SparseJacobianFor(
 	for(j = 0; j < n; j++) if( color[j] < n )
 		n_color = std::max(n_color, color[j] + 1);
 
-	// direction vector for calls to forward
-	VectorBase dx(n);
-
-	// location for return values from forward
-	VectorBase dy(m);
-
 	// initialize the return value
 	for(k = 0; k < K; k++)
 		jac[k] = zero;
+
+# if CPPAD_SPARSE_JACOBIAN_MAX_MULTIPLE_DIRECTION == 1
+	// direction vector and return values for calls to forward
+	VectorBase dx(n), dy(m);
 
 	// loop over colors
 	k = 0;
@@ -449,6 +453,43 @@ size_t ADFun<Base>::SparseJacobianFor(
 			k++;
 		}
 	}
+# else
+	// abbreviation for this value
+	size_t max_r = CPPAD_SPARSE_JACOBIAN_MAX_MULTIPLE_DIRECTION;
+	CPPAD_ASSERT_UNKNOWN( max_r > 1 );
+
+	// count the number of colors done so far
+	size_t count_color = 0;
+	// count the sparse matrix entries done so far
+	k = 0;
+	while( count_color < n_color )
+	{	// number of colors we will do this time
+		size_t r = std::min(max_r , n_color - count_color);
+		VectorBase dx(n * r), dy(m * r);
+
+		// loop over colors we will do this tme
+		for(ell = 0; ell < r; ell++) 	
+		{	// combine all columns with this color
+			for(j = 0; j < n; j++)
+			{	dx[j * r + ell] = zero;
+				if( color[j] == ell + count_color )
+					dx[j * r + ell] = one;
+			}
+		}
+		size_t q           = 1;
+		dy = Forward(q, r, dx);
+
+		// store results
+		for(ell = 0; ell < r; ell++) 	
+		{	// set the components of the result for this color
+			while( k < K && color[ col[order[k]] ] == ell + count_color ) 
+			{	jac[ order[k] ] = dy[ row[order[k]] * r + ell ];
+				k++;
+			}
+		}
+		count_color += r;
+	}
+# endif
 	return n_color;
 }
 /*!
@@ -1011,4 +1052,5 @@ VectorBase ADFun<Base>::SparseJacobian( const VectorBase& x )
 }
 
 } // END_CPPAD_NAMESPACE
+# undef CPPAD_SPARSE_JACOBIAN_MAX_MULTIPLE_DIRECTION
 # endif

@@ -180,7 +180,7 @@ void ForJacSweep(
 
 # if CPPAD_FOR_JAC_SWEEP_TRACE
 	std::cout << std::endl;
-	CppAD::vector<bool> z_value(limit);
+	CppAD::vectorBool z_value(limit);
 # endif
 
 	// skip the BeginOp at the beginning of the recording
@@ -714,12 +714,16 @@ void ForJacSweep(
 			i_op,
 			i_var,
 			op,
-			arg_tmp,
+			arg_tmp
+		);
+		if( NumRes(op) > 0 ) printOpResult(
+			std::cout,
 			1,
 			&z_value,
 			0,
-			(CppAD::vector<bool> *) CPPAD_NULL
+			(CppAD::vectorBool *) CPPAD_NULL
 		);
+		std::cout << std::endl;
 	}
 	std::cout << std::endl;
 # else

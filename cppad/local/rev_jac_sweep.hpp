@@ -192,7 +192,7 @@ void RevJacSweep(
 	CPPAD_ASSERT_UNKNOWN( op == EndOp );
 # if CPPAD_REV_JAC_SWEEP_TRACE
 	std::cout << std::endl;
-	CppAD::vector<bool> z_value(limit);
+	CppAD::vectorBool z_value(limit);
 # endif
 	bool more_operators = true;
 	while(more_operators)
@@ -717,14 +717,21 @@ void RevJacSweep(
 			i_op,
 			i_var,
 			op, 
-			arg,
+			arg
+		);
+		if( NumRes(op) > 0 && op != BeginOp ) printOpResult(
+			std::cout, 
 			0, 
-			(CppAD::vector<bool> *) CPPAD_NULL,
+			(CppAD::vectorBool *) CPPAD_NULL,
 			1, 
 			&z_value
 		);
-# endif
+		std::cout << std::endl;
 	}
+	std::cout << std::endl;
+# else
+	}
+# endif
 	// values corresponding to BeginOp
 	CPPAD_ASSERT_UNKNOWN( i_op == 0 );
 	CPPAD_ASSERT_UNKNOWN( i_var == 0 );

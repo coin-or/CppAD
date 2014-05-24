@@ -127,7 +127,19 @@ VectorBase ADFun<Base>::Reverse(size_t q, const VectorBase &w)
 		"Less that q taylor_ coefficients are currently stored"
 		" in this ADFun object."
 	);  
-
+	// special case where multiple forward directions have been computed,
+	// but we are only using the one direction zero order results
+	if( (q == 1) & (num_direction_taylor_ > 1) )
+	{	num_order_taylor_ = 1;        // number of orders to copy
+		size_t c = cap_order_taylor_; // keep the same capacity setting
+		size_t r = 1;                 // only keep one direction
+		capacity_order(c, r);
+	}
+	CPPAD_ASSERT_KNOWN(
+		num_direction_taylor_ == 1,
+		"Reverse mode for Forward(q, r, xq) with more than one direction"
+		"\n(r > 1) is not yet supported for q > 1."
+	);
 	// initialize entire Partial matrix to zero
 	for(i = 0; i < num_var_tape_; i++)
 		for(j = 0; j < q; j++)

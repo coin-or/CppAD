@@ -126,8 +126,7 @@ Control of number of orders allocated.
 */
 
 /*!
-Control of number of orders allocated.
-
+Control of number of orders and directions allocated.
 
 \tparam Base
 The type used during the forward mode computations; i.e., the corresponding
@@ -135,37 +134,51 @@ recording of operations used the type AD<Base>.
 
 \param c
 is the number of orders to allocate memory for.
-If <code>c == 0</code>,
-the values num_order_taylor_, cap_order_taylor_, and num_direction_taylor_
+If <code>c == 0</code> then \c r must also be zero.
+In this case num_order_taylor_, cap_order_taylor_, and num_direction_taylor_
 are all set to zero.
 In addition, taylor_.free() is called.
+
+\param r
+is the number of directions to allocate memory for.
+If <code>c == 1</code> then \c r must also be one.
+In all cases, it must hold that 
+<code>
+	r == num_direction_taylor_ || num_order_taylor <= 1
+</code>
+Upon return, num_direction_taylor_ is equal to r.
 
 \par num_order_taylor_
 The output value of num_order_taylor_ is the mininumum of its input
 value and c. This minimum is the number of orders that are copied to the
 new taylor coefficient buffer.
+
+\par num_direction_taylor_
+The output value of num_direction_taylor_ is equal to \c r.
 */
 
 template <typename Base>
-void ADFun<Base>::capacity_order(size_t c)
+void ADFun<Base>::capacity_order(size_t c, size_t r)
 {	// temporary indices
-	size_t i, k;
+	size_t i, k, ell;
 
-	if(c == cap_order_taylor_ ) 
+	if( (c == cap_order_taylor_) & (r == num_direction_taylor_) ) 
 		return;
 
 	if( c == 0 )
-	{	taylor_.free();
+	{	CPPAD_ASSERT_UNKNOWN( r == 0 );
+		taylor_.free();
 		num_order_taylor_     = 0;
 		cap_order_taylor_     = 0;
+		num_direction_taylor_ = r;
 		return;
 	}
+	CPPAD_ASSERT_UNKNOWN(r==num_direction_taylor_ || num_order_taylor_<=1);
 	
-	// Allocate new matrix with requested number of columns 
-	size_t new_len   = num_var_tape_  * c;
+	// Allocate new taylor with requested number of orders and directions  
+	size_t new_len   = ( (c-1)*r + 1 ) * num_var_tape_;
 	pod_vector<Base> new_taylor;
 	new_taylor.extend(new_len);
-
 
 	// number of orders to copy
 	size_t p = std::min(num_order_taylor_, c);
@@ -174,19 +187,74 @@ void ADFun<Base>::capacity_order(size_t c)
 		// old order capacity
 		size_t C = cap_order_taylor_;
 
+		// old number of directions
+		size_t R = num_direction_taylor_;
+
 		// copy the old data into the new matrix
+		CPPAD_ASSERT_UNKNOWN( p == 1 || r == R );
 		for(i = 0; i < num_var_tape_; i++)
-		{	for(k = 0; k < p; k++)
-				new_taylor[ c*i + k] = taylor_[ C*i + k];
+		{	// copy zero order
+			size_t old_index = ((C-1) * R + 1) * i + 0;
+			size_t new_index = ((c-1) * r + 1) * i + 0;
+			new_taylor[ new_index ] = taylor_[ old_index ];
+			// copy higher orders
+			for(k = 1; k < p; k++)
+			{	for(ell = 0; ell < R; ell++)
+				{	old_index = ((C-1) * R + 1) * i + (k-1) * R + ell + 1;
+					new_index = ((c-1) * r + 1) * i + (k-1) * r + ell + 1;
+					new_taylor[ new_index ] = taylor_[ old_index ];
+				}
+			}
 		}
 	}
 
 	// replace taylor_ by new_taylor
 	taylor_.swap(new_taylor);
-	cap_order_taylor_ = c;
-	num_order_taylor_ = p;
+	cap_order_taylor_     = c;
+	num_order_taylor_     = p;
+	num_direction_taylor_ = r;
 
 	// note that the destructor for new_taylor will free the old taylor memory
+	return;
+}
+
+/*!
+User API control of number of orders allocated.
+
+\tparam Base
+The type used during the forward mode computations; i.e., the corresponding
+recording of operations used the type AD<Base>.
+
+\param c
+is the number of orders to allocate memory for.
+If <code>c == 0</code>, 
+num_order_taylor_, cap_order_taylor_, and num_direction_taylor_
+are all set to zero.
+In addition, taylor_.free() is called.
+
+\par num_order_taylor_
+The output value of num_order_taylor_ is the mininumum of its input
+value and c. This minimum is the number of orders that are copied to the
+new taylor coefficient buffer.
+
+\par num_direction_taylor_
+If \c is zero (one), \c num_direction_taylor_ is set to zero (one).
+Otherwise, if \c num_direction_taylor_ is zero, it is set to one.
+Othwerwise, \c num_direction_taylor_ is not modified.
+*/
+
+template <typename Base>
+void ADFun<Base>::capacity_order(size_t c)
+{	size_t r;
+	if( (c == 0) | (c == 1) )
+	{	r = c;
+		capacity_order(c, r);
+		return;
+	}
+	r = num_direction_taylor_;
+	if( r == 0 )
+		r = 1;
+	capacity_order(c, r);
 	return;
 }
 

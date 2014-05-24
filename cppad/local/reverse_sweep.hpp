@@ -246,21 +246,23 @@ void ReverseSweep(
 		size_t       i_tmp  = i_var;
 		const Base*  Z_tmp  = Taylor + i_var * J;
 		const Base*  pZ_tmp = Partial + i_var * K;
-
 		printOp(
 			std::cout, 
 			play,
 			i_op,
 			i_tmp,
 			op, 
-			arg,
+			arg
+		);
+		if( NumRes(op) > 0 && op != BeginOp ) printOpResult(
+			std::cout, 
 			d + 1, 
 			Z_tmp, 
 			d + 1, 
 			pZ_tmp 
 		);
+		std::cout << std::endl;
 # endif
-
 		switch( op )
 		{
 

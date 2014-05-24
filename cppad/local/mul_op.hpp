@@ -41,7 +41,7 @@ inline void forward_mulvv_op(
 	size_t        i_z         ,
 	const addr_t* arg         ,
 	const Base*   parameter   ,
-	size_t        nc_taylor   ,
+	size_t        cap_order   ,
 	Base*         taylor      )
 {
 	// check assumptions
@@ -49,19 +49,65 @@ inline void forward_mulvv_op(
 	CPPAD_ASSERT_UNKNOWN( NumRes(MulvvOp) == 1 );
 	CPPAD_ASSERT_UNKNOWN( size_t(arg[0]) < i_z );
 	CPPAD_ASSERT_UNKNOWN( size_t(arg[1]) < i_z );
-	CPPAD_ASSERT_UNKNOWN( q < nc_taylor );
+	CPPAD_ASSERT_UNKNOWN( q < cap_order );
 	CPPAD_ASSERT_UNKNOWN( p <= q );
 
 	// Taylor coefficients corresponding to arguments and result
-	Base* x = taylor + arg[0] * nc_taylor;
-	Base* y = taylor + arg[1] * nc_taylor;
-	Base* z = taylor + i_z    * nc_taylor;
+	Base* x = taylor + arg[0] * cap_order;
+	Base* y = taylor + arg[1] * cap_order;
+	Base* z = taylor + i_z    * cap_order;
 
 	size_t k;
 	for(size_t d = p; d <= q; d++)
 	{	z[d] = Base(0);
 		for(k = 0; k <= d; k++)
 			z[d] += x[d-k] * y[k];
+	}
+}
+/*!
+Multiple directions forward mode Taylor coefficients for op = MulvvOp.
+
+The C++ source code corresponding to this operation is
+\verbatim
+	z = x * y
+\endverbatim
+In the documentation below,
+this operations is for the case where both x and y are variables
+and the argument \a parameter is not used.
+
+\copydetails forward_binary_op_dir
+*/
+
+template <class Base>
+inline void forward_mulvv_op_dir(
+	size_t        q           , 
+	size_t        r           , 
+	size_t        i_z         ,
+	const addr_t* arg         ,
+	const Base*   parameter   ,
+	size_t        cap_order   ,
+	Base*         taylor      )
+{
+	// check assumptions
+	CPPAD_ASSERT_UNKNOWN( NumArg(MulvvOp) == 2 );
+	CPPAD_ASSERT_UNKNOWN( NumRes(MulvvOp) == 1 );
+	CPPAD_ASSERT_UNKNOWN( size_t(arg[0]) < i_z );
+	CPPAD_ASSERT_UNKNOWN( size_t(arg[1]) < i_z );
+	CPPAD_ASSERT_UNKNOWN( 0 < q );
+	CPPAD_ASSERT_UNKNOWN( q < cap_order );
+
+	// Taylor coefficients corresponding to arguments and result
+	size_t num_taylor_per_var = (cap_order-1) * r + 1;
+	Base* x = taylor + arg[0] * num_taylor_per_var;
+	Base* y = taylor + arg[1] * num_taylor_per_var;
+	Base* z = taylor +    i_z * num_taylor_per_var;
+
+	size_t k, ell, m;
+	for(ell = 0; ell < r; ell++)
+	{	m = (q-1)*r + ell + 1;
+		z[m] = x[0] * y[m] + x[m] * y[0]; 
+		for(k = 1; k < q; k++)
+			z[m] += x[(q-k-1)*r + ell + 1] * y[(k-1)*r + ell + 1];
 	}
 }
 
@@ -84,7 +130,7 @@ inline void forward_mulvv_op_0(
 	size_t        i_z         ,
 	const addr_t* arg         ,
 	const Base*   parameter   ,
-	size_t        nc_taylor   ,
+	size_t        cap_order   ,
 	Base*         taylor      )
 {
 	// check assumptions
@@ -94,9 +140,9 @@ inline void forward_mulvv_op_0(
 	CPPAD_ASSERT_UNKNOWN( size_t(arg[1]) < i_z );
 
 	// Taylor coefficients corresponding to arguments and result
-	Base* x = taylor + arg[0] * nc_taylor;
-	Base* y = taylor + arg[1] * nc_taylor;
-	Base* z = taylor + i_z    * nc_taylor;
+	Base* x = taylor + arg[0] * cap_order;
+	Base* y = taylor + arg[1] * cap_order;
+	Base* z = taylor + i_z    * cap_order;
 
 	z[0] = x[0] * y[0];
 }
@@ -121,7 +167,7 @@ inline void reverse_mulvv_op(
 	size_t        i_z         ,
 	const addr_t* arg         ,
 	const Base*   parameter   ,
-	size_t        nc_taylor   ,
+	size_t        cap_order   ,
 	const Base*   taylor      ,
 	size_t        nc_partial  ,
 	Base*         partial     )
@@ -131,12 +177,12 @@ inline void reverse_mulvv_op(
 	CPPAD_ASSERT_UNKNOWN( NumRes(MulvvOp) == 1 );
 	CPPAD_ASSERT_UNKNOWN( size_t(arg[0]) < i_z );
 	CPPAD_ASSERT_UNKNOWN( size_t(arg[1]) < i_z );
-	CPPAD_ASSERT_UNKNOWN( d < nc_taylor );
+	CPPAD_ASSERT_UNKNOWN( d < cap_order );
 	CPPAD_ASSERT_UNKNOWN( d < nc_partial );
 
 	// Arguments
-	const Base* x  = taylor + arg[0] * nc_taylor;
-	const Base* y  = taylor + arg[1] * nc_taylor;
+	const Base* x  = taylor + arg[0] * cap_order;
+	const Base* y  = taylor + arg[1] * cap_order;
 
 	// Partial derivatives corresponding to arguments and result
 	Base* px = partial + arg[0] * nc_partial;
@@ -177,25 +223,67 @@ inline void forward_mulpv_op(
 	size_t        i_z         ,
 	const addr_t* arg         ,
 	const Base*   parameter   ,
-	size_t        nc_taylor   ,
+	size_t        cap_order   ,
 	Base*         taylor      )
 {
 	// check assumptions
 	CPPAD_ASSERT_UNKNOWN( NumArg(MulpvOp) == 2 );
 	CPPAD_ASSERT_UNKNOWN( NumRes(MulpvOp) == 1 );
 	CPPAD_ASSERT_UNKNOWN( size_t(arg[1]) < i_z );
-	CPPAD_ASSERT_UNKNOWN( q < nc_taylor );
+	CPPAD_ASSERT_UNKNOWN( q < cap_order );
 	CPPAD_ASSERT_UNKNOWN( p <= q );
 
 	// Taylor coefficients corresponding to arguments and result
-	Base* y = taylor + arg[1] * nc_taylor;
-	Base* z = taylor + i_z    * nc_taylor;
+	Base* y = taylor + arg[1] * cap_order;
+	Base* z = taylor + i_z    * cap_order;
 
 	// Paraemter value
 	Base x = parameter[ arg[0] ];
 
 	for(size_t d = p; d <= q; d++)
 		z[d] = x * y[d];
+}
+/*!
+Multiple directions forward mode Taylor coefficients for op = MulpvOp.
+
+The C++ source code corresponding to this operation is
+\verbatim
+	z = x * y
+\endverbatim
+In the documentation below,
+this operations is for the case where x is a parameter and y is a variable.
+
+\copydetails forward_binary_op_dir
+*/
+
+template <class Base>
+inline void forward_mulpv_op_dir(
+	size_t        q           , 
+	size_t        r           , 
+	size_t        i_z         ,
+	const addr_t* arg         ,
+	const Base*   parameter   ,
+	size_t        cap_order   ,
+	Base*         taylor      )
+{
+	// check assumptions
+	CPPAD_ASSERT_UNKNOWN( NumArg(MulpvOp) == 2 );
+	CPPAD_ASSERT_UNKNOWN( NumRes(MulpvOp) == 1 );
+	CPPAD_ASSERT_UNKNOWN( size_t(arg[1]) < i_z );
+	CPPAD_ASSERT_UNKNOWN( 0 < q );
+	CPPAD_ASSERT_UNKNOWN( q < cap_order );
+
+	// Taylor coefficients corresponding to arguments and result
+	size_t num_taylor_per_var = (cap_order-1) * r + 1;
+	size_t m                  = (q-1) * r + 1;
+	Base* y = taylor + arg[1] * num_taylor_per_var + m;
+	Base* z = taylor + i_z    * num_taylor_per_var + m;
+
+	// Paraemter value
+	Base x = parameter[ arg[0] ];
+
+	for(size_t ell = 0; ell < r; ell++)
+		z[ell] = x * y[ell];
 }
 /*!
 Compute zero order forward mode Taylor coefficient for result of op = MulpvOp.
@@ -215,7 +303,7 @@ inline void forward_mulpv_op_0(
 	size_t        i_z         ,
 	const addr_t* arg         ,
 	const Base*   parameter   ,
-	size_t        nc_taylor   ,
+	size_t        cap_order   ,
 	Base*         taylor      )
 {
 	// check assumptions
@@ -227,8 +315,8 @@ inline void forward_mulpv_op_0(
 	Base x = parameter[ arg[0] ];
 
 	// Taylor coefficients corresponding to arguments and result
-	Base* y = taylor + arg[1] * nc_taylor;
-	Base* z = taylor + i_z    * nc_taylor;
+	Base* y = taylor + arg[1] * cap_order;
+	Base* z = taylor + i_z    * cap_order;
 
 	z[0] = x * y[0];
 }
@@ -252,7 +340,7 @@ inline void reverse_mulpv_op(
 	size_t        i_z         ,
 	const addr_t* arg         ,
 	const Base*   parameter   ,
-	size_t        nc_taylor   ,
+	size_t        cap_order   ,
 	const Base*   taylor      ,
 	size_t        nc_partial  ,
 	Base*         partial     )
@@ -261,7 +349,7 @@ inline void reverse_mulpv_op(
 	CPPAD_ASSERT_UNKNOWN( NumArg(MulvvOp) == 2 );
 	CPPAD_ASSERT_UNKNOWN( NumRes(MulvvOp) == 1 );
 	CPPAD_ASSERT_UNKNOWN( size_t(arg[1]) < i_z );
-	CPPAD_ASSERT_UNKNOWN( d < nc_taylor );
+	CPPAD_ASSERT_UNKNOWN( d < cap_order );
 	CPPAD_ASSERT_UNKNOWN( d < nc_partial );
 
 	// Arguments

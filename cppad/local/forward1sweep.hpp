@@ -189,6 +189,9 @@ size_t forward1sweep(
 	pod_vector<addr_t>&   var_by_load_op
 )
 {
+	// number of directions
+	const size_t r = 1;
+
 	CPPAD_ASSERT_UNKNOWN( p <= q );
 	CPPAD_ASSERT_UNKNOWN( J >= q + 1 );
 	CPPAD_ASSERT_UNKNOWN( play->num_var_rec() == numvar );
@@ -251,7 +254,8 @@ size_t forward1sweep(
 # endif
 	//
 	// next expected operator in a UserOp sequence
-	enum { user_start, user_arg, user_ret, user_end } user_state = user_start;
+	enum { user_start, user_arg, user_ret, user_end, user_trace }
+	user_state = user_start;
 
 	// length of the parameter vector (used by CppAD assert macros)
 	const size_t num_par = play->num_par_rec();
@@ -400,15 +404,7 @@ size_t forward1sweep(
 			// -------------------------------------------------
 
 			case DisOp:
-			i = p;
-			if( i == 0 )
-			{	forward_dis_op_0(i_var, arg, J, taylor);
-				i++;
-			}
-			while(i <= q)
-			{	taylor[ i_var * J + i] = Base(0);
-				i++;
-			}
+			forward_dis_op(p, q, r, i_var, arg, J, taylor);
 			break;
 			// -------------------------------------------------
 
@@ -441,7 +437,7 @@ size_t forward1sweep(
 			// -------------------------------------------------
 
 			case InvOp:
-			CPPAD_ASSERT_UNKNOWN( NumArg(op) == 0 );
+			CPPAD_ASSERT_NARG_NRES(op, 0, 1);
 			break;
 			// -------------------------------------------------
 
@@ -459,11 +455,29 @@ size_t forward1sweep(
 					var_by_load_op.data()
 				);
 				if( p < q ) forward_load_op( 
-				op, p+1, q, i_var, arg, J, taylor, var_by_load_op.data()
+					play,
+					op,
+					p+1,
+					q,
+					r,
+					J,
+					i_var,
+					arg,
+					var_by_load_op.data(),
+					taylor
 				);
 			}
-			else	forward_load_op(
-				op, p, q, i_var, arg, J, taylor, var_by_load_op.data()
+			else	forward_load_op( 
+				play,
+				op,
+				p,
+				q,
+				r,
+				J,
+				i_var,
+				arg,
+				var_by_load_op.data(),
+				taylor
 			);
 			break;
 			// -------------------------------------------------
@@ -481,12 +495,30 @@ size_t forward1sweep(
 					index_by_ind.data(),
 					var_by_load_op.data()
 				);
-				if( p < q ) forward_load_op(
-				op, p+1, q, i_var, arg, J, taylor, var_by_load_op.data()
+				if( p < q ) forward_load_op( 
+					play,
+					op,
+					p+1,
+					q,
+					r,
+					J,
+					i_var,
+					arg,
+					var_by_load_op.data(),
+					taylor
 				);
 			}
 			else	forward_load_op( 
-			op, p, q, i_var, arg, J, taylor, var_by_load_op.data()
+				play,
+				op,
+				p,
+				q,
+				r,
+				J,
+				i_var,
+				arg,
+				var_by_load_op.data(),
+				taylor
 			);
 			break;
 			// -------------------------------------------------
@@ -716,8 +748,11 @@ size_t forward1sweep(
 						for(k = p; k <= q; k++)
 							taylor[ user_iy[i] * J + k ] = 
 								user_ty[ i * user_q1 + k ];
-
+# if CPPAD_FORWARD1SWEEP_TRACE
+				user_state = user_trace;
+# else
 				user_state = user_start;
+# endif
 			}
 			break;
 
@@ -776,26 +811,57 @@ size_t forward1sweep(
 			CPPAD_ASSERT_UNKNOWN(0);
 		}
 # if CPPAD_FORWARD1SWEEP_TRACE
-		size_t          i_tmp  = i_var;
-		Base*           Z_tmp  = taylor + J * i_var;
+		if( user_state == user_trace )
+		{	user_state = user_start;
+
+			CPPAD_ASSERT_UNKNOWN( op == UserOp );
+			CPPAD_ASSERT_UNKNOWN( NumArg(UsrrvOp) == 0 );
+			for(i = 0; i < user_m; i++) if( user_iy[i] > 0 )
+			{	size_t i_tmp   = (i_op + i) - user_m;
+				printOp(
+					std::cout, 
+					play,
+					i_tmp,
+					user_iy[i],
+					UsrrvOp, 
+					CPPAD_NULL
+				);
+				Base* Z_tmp = taylor + user_iy[i] * J;
+				printOpResult(
+					std::cout, 
+					q + 1, 
+					Z_tmp,
+					0, 
+					(Base *) CPPAD_NULL
+				);
+				std::cout << std::endl;
+			}
+		}
+		Base*           Z_tmp   = taylor + J * i_var;
 		const addr_t*   arg_tmp = arg;
 		if( op == CSumOp )
 			arg_tmp = arg - arg[-1] - 4;
 		if( op == CSkipOp )
 			arg_tmp = arg - arg[-1] - 7;
-		//
-		printOp(
-			std::cout, 
-			play,
-			i_op,
-			i_tmp,
-			op, 
-			arg_tmp,
-			q + 1, 
-			Z_tmp, 
-			0, 
-			(Base *) CPPAD_NULL
-		);
+		if( op != UsrrvOp )
+		{
+			printOp(
+				std::cout, 
+				play,
+				i_op,
+				i_var,
+				op, 
+				arg_tmp
+			);
+			if( NumRes(op) > 0 ) printOpResult(
+				std::cout, 
+				q + 1, 
+				Z_tmp, 
+				0, 
+				(Base *) CPPAD_NULL
+			);
+			std::cout << std::endl;
+		}
 	}
 	std::cout << std::endl;
 # else

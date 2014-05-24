@@ -109,6 +109,7 @@ ADD_EXECUTABLE(example EXCLUDE_FROM_ALL example.cpp
 	for_one.cpp
 	for_two.cpp
 	forward.cpp
+	forward_dir.cpp
 	forward_order.cpp
 	for_sparse_jac.cpp
 	fun_assign.cpp
