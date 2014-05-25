@@ -3,7 +3,7 @@
 # define CPPAD_JACOBIAN_INCLUDED
 
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-12 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-14 Bradley M. Bell
 
 CppAD is distributed under multiple licenses. This distribution is under
 the terms of the 
@@ -120,8 +120,8 @@ void JacobianFor(ADFun<Base> &f, const Vector &x, Vector &jac)
 {	size_t i;
 	size_t j;
 
-	size_t m = f.Domain();
-	size_t n = f.Range();
+	size_t n = f.Domain();
+	size_t m = f.Range();
 
 	// check Vector is Simple Vector class with Base type elements
 	CheckSimpleVector<Base, Vector>();
@@ -130,15 +130,15 @@ void JacobianFor(ADFun<Base> &f, const Vector &x, Vector &jac)
 	CPPAD_ASSERT_UNKNOWN( size_t(jac.size()) == f.Range() * f.Domain() );
 
 	// argument and result for forward mode calculations
-	Vector u(m);
-	Vector v(n);
+	Vector u(n);
+	Vector v(m);
 
 	// initialize all the components
-	for(j = 0; j < m; j++)
+	for(j = 0; j < n; j++)
 		u[j] = Base(0);
 	
 	// loop through the different coordinate directions
-	for(j = 0; j < m; j++)
+	for(j = 0; j < n; j++)
 	{	// set u to the j-th coordinate direction
 		u[j] = Base(1);
 
@@ -149,8 +149,8 @@ void JacobianFor(ADFun<Base> &f, const Vector &x, Vector &jac)
 		u[j] = Base(0);
 
 		// return the result
-		for(i = 0; i < n; i++)
-			jac[ i * m + j ] = v[i];
+		for(i = 0; i < m; i++)
+			jac[ i * n + j ] = v[i];
 	}
 }
 template <typename Base, typename Vector>
@@ -158,26 +158,26 @@ void JacobianRev(ADFun<Base> &f, const Vector &x, Vector &jac)
 {	size_t i;
 	size_t j;
 
-	size_t m = f.Domain();
-	size_t n = f.Range();
+	size_t n = f.Domain();
+	size_t m = f.Range();
 
 	CPPAD_ASSERT_UNKNOWN( size_t(x.size())   == f.Domain() );
 	CPPAD_ASSERT_UNKNOWN( size_t(jac.size()) == f.Range() * f.Domain() );
 
 	// argument and result for reverse mode calculations
-	Vector u(m);
-	Vector v(n);
+	Vector u(n);
+	Vector v(m);
 
 	// initialize all the components
-	for(i = 0; i < n; i++)
+	for(i = 0; i < m; i++)
 		v[i] = Base(0);
 	
 	// loop through the different coordinate directions
-	for(i = 0; i < n; i++)
+	for(i = 0; i < m; i++)
 	{	if( f.Parameter(i) )
 		{	// return zero for this component of f
-			for(j = 0; j < m; j++)
-				jac[ i * m + j ] = Base(0);
+			for(j = 0; j < n; j++)
+				jac[ i * n + j ] = Base(0);
 		}
 		else
 		{ 
@@ -191,8 +191,8 @@ void JacobianRev(ADFun<Base> &f, const Vector &x, Vector &jac)
 			v[i] = Base(0);
 
 			// return the result
-			for(j = 0; j < m; j++)
-				jac[ i * m + j ] = u[j];
+			for(j = 0; j < n; j++)
+				jac[ i * n + j ] = u[j];
 		}
 	}
 }
@@ -201,11 +201,11 @@ template <typename Base>
 template <typename Vector>
 Vector ADFun<Base>::Jacobian(const Vector &x)
 {	size_t i;
-	size_t m = Domain();
-	size_t n = Range();
+	size_t n = Domain();
+	size_t m = Range();
 
 	CPPAD_ASSERT_KNOWN(
-		size_t(x.size()) == m,
+		size_t(x.size()) == n,
 		"Jacobian: length of x not equal domain dimension for F"
 	); 
 
@@ -213,11 +213,11 @@ Vector ADFun<Base>::Jacobian(const Vector &x)
 	Forward(0, x);
 
 	// work factor for forward mode
-	size_t workForward = m; 
+	size_t workForward = n; 
 
 	// work factor for reverse mode
 	size_t workReverse = 0;
-	for(i = 0; i < n; i++)
+	for(i = 0; i < m; i++)
 	{	if( ! Parameter(i) )
 			++workReverse;
 	}
