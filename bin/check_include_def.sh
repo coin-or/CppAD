@@ -19,8 +19,7 @@ fi
 echo "Differences between include file names and ifndef at top directives."
 echo "Also make sure same ifndef not used by two different files."
 echo "-------------------------------------------------------------------"
-list=`find . -name '*.hpp' | sed \
-	-e '\/new\//d' -e '/\/build\//d' -e '/\/junk.hpp$/d' -e '/\/temp.hpp/d'`
+list=`bin/list_files.sh .hpp`
 #
 grep '^# *ifndef *CPPAD_[0-9a-zA-Z_]*_INCLUDED$' $list \
 	| sed -e 's|.*# *ifndef *CPPAD_\([0-9a-zA-Z_]*\)_INCLUDED$|\1.HPP|' \

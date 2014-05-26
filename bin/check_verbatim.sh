@@ -1,7 +1,7 @@
 #! /bin/bash -e
 # $Id$
 # -----------------------------------------------------------------------------
-# CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-13 Bradley M. Bell
+# CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-14 Bradley M. Bell
 #
 # CppAD is distributed under multiple licenses. This distribution is under
 # the terms of the
@@ -19,47 +19,41 @@ fi
 # Make sure that OMhelp verbatim commands referr to same file as command
 echo "Checking that OMhelp verbatim commands include from file they appear in." 
 echo "----------------------------------------------------------------------"
-# use 2> to avoid warnings about greping directories, should fix this 
-# some other way
-grep '$verbatim%' * */* */*/* 2> /dev/null | sed \
-	-e '/^bin\//d' \
-	-e 's|:.*$verbatim%| |' \
-	-e 's|%.*||' \
-	-e '/^junk /d' \
-	-e '/^junk.sh /d' \
-	-e '/^doxydoc\//d' \
-	-e '/^work\//d' \
-	-e '/^build\//d' \
-	-e '/^doc\//d' \
-	-e '/\/test_one\.cpp /d' \
-	-e '/\/speed_[a-z]*\.omh /d' \
-	-e '/omh\/license.omh /d' \
-	-e '/cppad\/local\/cond_exp.hpp /d' \
-	> bin/check_verbatim.1.$$
+list=`bin/list_files.sh .c .cpp .hpp .omh .txt .am`
 different="no"
-file=""
-for this in `cat bin/check_verbatim.1.$$`
+for file in $list 
 do
-	
-	if [ "$file" == "" ]
+	line=`sed -n -e '/$verbatim[^a-z]/p' $file`
+	if [ "$line" != '' ]
 	then
-		file="$this"
-	else
+		reference=`echo $line | sed -e 's|$verbatim%\([^%]*\)%.*|\1|'` 
+		#
 		file_root=`echo $file | sed \
 			-e 's|.*/||' -e 's|_hpp\.omh||' -e 's|\.[^.]*$||'`
-		this_root=`echo $this | sed \
+		#
+		ref_root=`echo $reference | sed \
 			-e 's|.*/||' -e 's|\.[^.]*$||'`
-		if [ "$file_root" != "$this_root" ]
+		#
+		if [ "$file_root" != "$ref_root" ]
 		then
-			echo "in $file references $this"
-			different="yes"
+			# special cases
+			ok='false'
+			if [ "$file_root" == 'cond_exp' ] && [ "$ref_root" == 'atan2' ]
+			then
+				ok='true'
+			fi
+			if [ "$file_root" == 'license' ] && [ "$ref_root" == 'epl-v10' ]
+			then
+				ok='true'
+			fi
+			#
+			if [ "$ok" == 'false' ]
+			then
+				echo "\$verbatim in $file references $reference"
+				different="yes"
+			fi
 		fi
-		file=""
 	fi
-done
-for index in 1
-do
-	rm bin/check_verbatim.$index.$$
 done
 echo "-------------------------------------------------------------------"
 if [ $different = "yes" ]

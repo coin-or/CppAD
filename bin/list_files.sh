@@ -21,16 +21,22 @@ then
 cat << EOF
 usage: list_files.sh ext_1 [ ext_2 ... ]
 
-lists files with the specified extensions excluding those of the form
-	*/build/*, */new/*, */junk\$ext, */temp\$ext
+lists files with the specified extensions excluding those of the form:
+*/new/*, build/*, doc/*, doxydoc/*, */test_one.cpp, /junk\$ext, */temp\$ext
+
 where \$ext takes the values ext_1, ext_2, ...
+File and directory names do not begin with './'.
 EOF
 fi
 for ext in $*
 do
+	# should change '.' to '[.]' before executing sed comand below
 	find . -name "*$ext" | sed \
-		-e '/[/]build[/]/d' \
 		-e '/[/]new[/]/d' \
+		-e '/build[/]/d' \
+		-e '/doc[/]/d' \
+		-e '/doxydoc[/]/d' \
+		-e '/[/]test_one.cpp$/d' \
 		-e "/[/]junk$ext"'$/d' \
 		-e "/[/]temp$ext"'$/d' \
 		-e 's|^[.]/||'

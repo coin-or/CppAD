@@ -19,22 +19,13 @@ fi
 echo "Checking for \$Id:.*\$ in beginning of source code"
 echo "-------------------------------------------------------" 
 ok="yes"
-list=`find . \
-	\( -name \*.hpp \) -or \
-	\( -name \*.cpp \) -or \
-	\( -name \*.omh \) -or \
-	\( -name \*.sh \) -or \
-	\( -name \*.in \) -or \
-	\( -name makefile.am \) -or \
-	\( -name CMakeLists.txt \) |
-	sed \
-		-e '/\/build\//d'  \
-		-e '/config\.h\.in/d' \
-		-e '/\/junk\./d' \
-		-e '/makefile\.in/d'  \
-		-e '/\/new\//d'  \
-		-e '/\/temp\./d'
-`
+list=`bin/list_files.sh .hpp .cpp .omh .sh .in .am .txt | sed \
+	-e '/^gpl-3.0.txt$/d' \
+	-e '/^epl-v10.txt$/d' \
+	-e '/cppad\/local\/config.h.in$/d' \
+	-e '/^makefile.in$/d' \
+	-e '/\/makefile.in$/d' `
+#
 for file in $list
 do
 	if ! head -2 $file | grep '$Id:.*\$' > /dev/null

@@ -80,6 +80,8 @@ Only the $code cmake$$ command and the path to the distribution directory
 ($code ..$$ at the end of the command below) are required.
 In other words, the first and last lines below are required
 and all of the other lines are optional.
+
+$subhead Build Directory$$
 Create a $code build$$ subdirectory of the 
 $cref/distribution directory/download/Distribution Directory/$$,
 change into the $code build$$  directory, 

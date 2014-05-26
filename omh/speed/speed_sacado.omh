@@ -1,6 +1,6 @@
 $Id$
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-12 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-14 Bradley M. Bell
 
 CppAD is distributed under multiple licenses. This distribution is under
 the terms of the 
@@ -12,6 +12,7 @@ Please visit http://www.coin-or.org/CppAD/ for information on other licenses.
 
 $begin speed_sacado$$
 $spell
+	cmake
 	SacadoDir
 	CppAD
 	Cygwin
@@ -29,37 +30,27 @@ Sacado with other AD packages.
 This section links to the source code the Sacado speed tests
 (any suggestions to make the Sacado results faster are welcome).
 
-$head sacado_dir$$
-To run these tests, you must include the $code configure$$ command line option
-$codei%
-	SACADO_DIR=%sacado_dir%
-%$$
-during $cref/installation/InstallUnix/sacado_dir/$$.
+$head sacado_prefix$$
+To run these tests, 
+you must include the $cref sacado_prefix$$ 
+in you $cref/cmake command/cmake/CMake Command/$$.
 
 
 $head Running Tests$$
 To build these speed tests, and run their correctness tests,
 execute the following commands starting in the
-$cref/work directory/InstallUnix/Work Directory/$$:
+$cref/build directory/cmake/CMake Command/Build Directory/$$:
 $codei%
 	cd speed/sacado
-	make test
+	make check_speed_sacado VERBOSE=1
 %$$
 You can then run the corresponding speed tests 
 with the following command
 $codei%
-	./sacado speed %seed%
+	./speed_sacado speed %seed%
 %$$
 where $icode seed$$ is a positive integer.
 See $cref speed_main$$ for more options.
-
-$head C++ Compiler Flags$$
-The C++ compiler flags used to build the Sacado speed tests are
-$code
-$verbatim%speed/sacado/makefile.am%5%# BEGIN OPTIMIZE%# END OPTIMIZE%$$
-$$
-where $code CXX_FLAGS$$ is specified by the 
-$cref/configure/InstallUnix/Configure/$$ command.
 
 $contents%
 	speed/sacado/det_minor.cpp%

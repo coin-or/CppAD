@@ -21,33 +21,21 @@ fi
 echo "Checking for '# if 0' and '# if NDEBUG' commands in source code"
 echo "-------------------------------------------------------" 
 ok="yes"
-for ext in .cpp .hpp
+list=`bin/list_files.sh .cpp .hpp .hpp.in`
+for file in $list
 do
-	dir_list=`find . -name "*$ext" | sed \
-		-e '/junk\.[^.]*$/d' \
-		-e '/\/build\//d' \
-		-e '/\/new\//d' \
-		-e 's|^\./||' \
-		-e 's|/[^/]*$||' | sort -u`  
-	for dir in $dir_list 
-	do
-		list=`ls $dir/*$ext`
-		for file in $list
-		do
-			if grep '^# *if *0 *$' $file > /dev/null
-			then
-				# CppAD uses /* comment */ for all its block commnets
-				echo "$file has an '# if 0' preprocessor command"
-				ok="no"
-			fi
-			if grep '^# *if *NDEBUG *$' $file > /dev/null
-			then
-				# This should probably be # ifndef NDEBUG ?
-				echo "$file has an '# if NDEBUG' preprocessor command"
-				ok="no"
-			fi
-		done
-	done
+	if grep '^# *if *0 *$' $file > /dev/null
+	then
+		# CppAD uses /* comment */ for all its block commnets
+		echo "$file has an '# if 0' preprocessor command"
+		ok="no"
+	fi
+	if grep '^# *if *NDEBUG *$' $file > /dev/null
+	then
+		# This should probably be # ifndef NDEBUG ?
+		echo "$file has an '# if NDEBUG' preprocessor command"
+		ok="no"
+	fi
 done
 echo "-------------------------------------------------------" 
 if [ "$ok" = "no" ]

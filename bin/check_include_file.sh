@@ -25,42 +25,29 @@ then
 	echo "bin/check_include_file.sh: unexpected bin/check_include_file.1.$$"
 	exit 1
 fi
-for ext in .cpp .hpp
+list=`bin/list_files.sh .cpp .hpp`
+for file in $list
 do
-	dir_list=`find . -name "*$ext" | sed -e '/junk\.[^.]*$/d' \
-		-e 's|^\./||' -e '/^build/d' -e 's|/[^/]*$||' | sort -u`  
-	for dir in $dir_list 
-	do
-		list=`ls $dir/*$ext`
-		for file in $list
-		do
-			sed -n -e '/^# *include *<cppad\//p' $file \
-				>> bin/check_include_file.1.$$
-		done
-	done
+	sed -n -e '/^# *include *<cppad\//p' $file \
+		>> bin/check_include_file.1.$$
 done
 #
 cat bin/check_include_file.1.$$ | \
 	sed -e 's%[^<]*<%%'  -e 's%>.*$%%' | \
 	sort -u > bin/check_include_file.2.$$
+#
 # The following files should never be included:
 #	cppad/local/prototype_op.hpp 
 #	cppad/example/eigen_plugin.hpp
-#	*/junk.hpp
-#	*/temp.hpp
 # All other files should. 
 # The file cppad/configure.hpp may not yet be created.
-ls	cppad/*.hpp \
-	cppad/example/*.hpp \
-	cppad/ipopt/*.hpp \
-	cppad/local/*.hpp \
-	cppad/speed/*.hpp | sed \
+bin/list_files.sh .hpp | sed -n -e '/cppad\//p' | \
+	sed \
 		-e '1,1s|^|cppad/configure.hpp\n|' \
 		-e '/cppad\/local\/prototype_op.hpp/d' \
-		-e '/cppad\/example\/eigen_plugin.hpp/d' \
-		-e '/\/junk\.hpp$/d' \
-		-e '/\/temp\.hpp$/d' \
-		| sort -u > bin/check_include_file.3.$$ 
+		-e '/cppad\/example\/eigen_plugin.hpp/d' | \
+	sort -u > bin/check_include_file.3.$$ 
+#
 if diff bin/check_include_file.2.$$ bin/check_include_file.3.$$
 then
 	different="no"

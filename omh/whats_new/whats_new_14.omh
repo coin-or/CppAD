@@ -55,6 +55,12 @@ The purpose of this section is to
 assist you in learning about changes between various versions of CppAD.
 
 $head 05-23$$
+The $cref speed$$ test instructions were converted from using
+the old auto-tools $cref/unix install/InstallUnix/$$ instructions
+to use the $cref cmake$$ install instructions.
+These instructions should work on any system, not just unix.
+
+$head 05-22$$
 $list number$$
 Add multiple direction for mode
 $cref forward_dir$$ and use it to speed up the forward

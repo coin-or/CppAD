@@ -12,6 +12,7 @@ Please visit http://www.coin-or.org/CppAD/ for information on other licenses.
 
 $begin speed_cppad$$
 $spell
+	cmake
 	cppad
 	CppAD
 	Cygwin
@@ -36,29 +37,22 @@ certain changes improve its execution speed
 This section links to the source code the CppAD speed tests
 (any suggestions to make the CppAD results faster are welcome).
 
+
 $head Running Tests$$
 To build these speed tests, and run their correctness tests,
 execute the following commands starting in the
-$cref/work directory/InstallUnix/Work Directory/$$:
+$cref/build directory/cmake/CMake Command/Build Directory/$$:
 $codei%
 	cd speed/cppad
-	make test
+	make check_speed_cppad VERBOSE=1
 %$$
 You can then run the corresponding speed tests 
 with the following command
 $codei%
-	./cppad speed %seed%
+	./speed_cppad speed %seed%
 %$$
 where $icode seed$$ is a positive integer.
 See $cref speed_main$$ for more options.
-
-$head C++ Compiler Flags$$
-The C++ compiler flags used to build the CppAD speed tests are
-$code
-$verbatim%speed/cppad/makefile.am%5%# BEGIN OPTIMIZE%# END OPTIMIZE%$$
-$$
-where $code CXX_FLAGS$$ is specified by the 
-$cref/configure/InstallUnix/Configure/$$ command.
 
 $contents%
 	speed/cppad/det_minor.cpp%

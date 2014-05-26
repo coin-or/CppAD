@@ -1,7 +1,7 @@
 #! /bin/bash -e
 # $Id$
 # -----------------------------------------------------------------------------
-# CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-13 Bradley M. Bell
+# CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-14 Bradley M. Bell
 #
 # CppAD is distributed under multiple licenses. This distribution is under
 # the terms of the
@@ -15,27 +15,16 @@ then
 	echo "bin/check_include_omh.sh: must be executed from its parent directory"
 	exit 1
 fi
-sh_files_with_omhelp_documentation=`ls bin/get_*.sh`
 # -----------------------------------------------------------------------------
 # Make sure omhelp, under cygwin, has not matched file names with wrong case.
 echo "Checking difference between OMhelp include directives and file names."
 echo "----------------------------------------------------------------------"
 # super list of file names that are referenced by omhelp commands
-find . \( -name '*.c'   \) -or \
-       \( -name '*.cpp' \) -or \
-       \( -name '*.hpp' \) -or \
-       \( -name '*.omh' \) -or \
-       \( -name '*.txt' \) -or \
-       \( -name '*.am' \) | sed \
-		-e '/.\/work\//d' \
-		-e '/.\/build\//d' \
-		-e '/.\/new\//d' \
-		-e '/.\/doc\//d' \
-		-e '/.\/junk$/d' \
-		-e '/.\/junk\./d' \
-		-e 's|./||' \
-		> bin/check_include_omh.1.$$
-echo $sh_files_with_omhelp_documentation >> bin/check_include_omh.1.$$
+bin/list_files.sh .c .cpp .hpp .omh .txt .am  > bin/check_include_omh.1.$$
+#
+# add *.sh files with omhelp documentation
+ls bin/get_*.sh >> bin/check_include_omh.1.$$
+#
 for file in `cat bin/check_include_omh.1.$$`
 do
 	# assume $childtable, ... , $verbatim use % for delimiter

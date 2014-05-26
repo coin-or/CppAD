@@ -1,7 +1,7 @@
 #! /bin/bash -e
 # $Id$
 # -----------------------------------------------------------------------------
-# CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-13 Bradley M. Bell
+# CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-14 Bradley M. Bell
 #
 # CppAD is distributed under multiple licenses. This distribution is under
 # the terms of the
@@ -18,14 +18,9 @@ fi
 # -----------------------------------------------------------------------------
 echo "Checking include files listed in makefile.am"
 echo "-------------------------------------------------------" 
-ls \
-	cppad/*.h \
-	cppad/*.hpp \
-	cppad/example/*.hpp \
-	cppad/local/*.hpp \
-	cppad/ipopt/*.hpp \
-	cppad/speed/*.hpp  | \
-	sed -e '/^cppad\/config\.h$/d' > check_makefile.1.$$
+bin/list_files.sh .h .hpp | \
+	sed -n -e '/cppad\//p' -e '/^cppad\/config\.h$/d' \
+	> check_makefile.1.$$
 echo 'cppad/configure.hpp' >> check_makefile.1.$$
 sort -u check_makefile.1.$$ > check_makefile.2.$$
 #

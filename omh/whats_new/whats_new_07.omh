@@ -163,8 +163,7 @@ $head 11-06$$
 Added the $code -DRAD_EQ_ALIAS$$ compiler flag to the 
 $cref/Sacado speed tests/speed_sacado/$$.
 In addition, compiler flag documentation was included for
-$cref/Sacado/speed_sacado/C++ Compiler Flags/$$ and 
-all the other speed tests.
+Sacado and all the other speed tests.
 
 $head 11-05$$
 MS project files have been added for running the

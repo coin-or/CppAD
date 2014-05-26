@@ -1,7 +1,7 @@
 #! /bin/bash -e
 # $Id$
 # -----------------------------------------------------------------------------
-# CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-13 Bradley M. Bell
+# CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-14 Bradley M. Bell
 #
 # CppAD is distributed under multiple licenses. This distribution is under
 # the terms of the 
@@ -18,7 +18,7 @@ fi
 # -----------------------------------------------------------------------------
 echo "Difference between '# define' names and '# undef' names"
 echo '-----------------------------------------------------------------------'
-list=`find cppad \( -name '*.hpp' \) -or \( -name '*.hpp.in' \)`
+list=`bin/list_files.sh .hpp .hpp.in | sed -n -e '/^cppad\//p'`
 #
 for cmd in define undef
 do
