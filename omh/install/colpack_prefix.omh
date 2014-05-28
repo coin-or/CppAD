@@ -12,6 +12,7 @@ Please visit http://www.coin-or.org/CppAD/ for information on other licenses.
 $begin colpack_prefix$$
 $dollar @$$
 $spell
+	datadir
 	cppad.hpp
 	namespace
 	std
@@ -47,8 +48,8 @@ $codei%
 %$$
 is a valid way to reference to the include file $code ColPackHeaders.h$$.
 
-$head cppad_colpack$$
-$index cppad_colpack$$
+$head cppad_colpack.cpp$$
+$index cppad_colpack.cpp$$
 The ColPack header files has a
 $codei%
 	using namespace std
@@ -57,8 +58,10 @@ at the global level.
 For this reason, CppAD does not include these files.
 It is therefore necessary to compile and link the short file
 $codei%
-	%prefix%/include/cppad/local/cppad_colpack.cpp
+	%prefix%/%dir%/cppad/cppad_colpack.cpp
 %$$
+where $icode dir$$ is the 
+$cref/cmake_install_datadir/cmake/cmake_install_datadir/$$ and
 where $icode prefix$$ is such that $code cppad.hpp$$ was installed in
 $codei%
 	%prefix%/include/cppad/cppad.hpp

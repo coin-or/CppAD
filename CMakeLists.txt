@@ -346,7 +346,7 @@ ADD_CUSTOM_TARGET(check DEPENDS ${check_depends})
 # Note a trailing / in the source directory name drops the source directory
 # name during the copy.
 #
-# During install copy all ithe cppad include files to 
+# During install copy all the cppad include files to 
 # ${cppad_abs_includedir}/cppad  
 INSTALL( 
 	DIRECTORY "cppad/" 
@@ -359,9 +359,8 @@ INSTALL(
 	FILES_MATCHING PATTERN "*.hpp"
 )
 INSTALL( 
-	DIRECTORY "cppad/local" 
-	DESTINATION ${cppad_abs_includedir}/cppad/local
-	FILES_MATCHING PATTERN "cppad_colpack.cpp"
+	FILES "cppad/local/cppad_colpack.cpp"
+	DESTINATION ${cppad_abs_datadir}/cppad
 )
 #
 # During install copy doc direcrory to cppad_abs_docdir/cppad

@@ -1,6 +1,6 @@
 #CppAD $Id$
 # -----------------------------------------------------------------------------
-# CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-12 Bradley M. Bell
+# CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-14 Bradley M. Bell
 #
 # CppAD is distributed under multiple licenses. This distribution is under
 # the terms of the 
@@ -24,6 +24,24 @@ IF( ipopt_prefix )
 		ENDIF(IS_DIRECTORY ${ipopt_prefix}/${dir} )
 	ENDFOREACH(dir)
 ENDIF( ipopt_prefix )
+#
+IF( colpack_prefix )
+	# Cannot use requires because colpack does not have a pkgconfig file.
+	# SET(cppad_requires "colpack")
+	SET(cppad_libs "${cppad_libs} -lColPack")
+	FOREACH(dir ${cmake_install_libdirs})
+		IF(IS_DIRECTORY ${colpack_prefix}/${dir} )
+			SET(cppad_cflags "${cppad_cflags} -L${colpack_prefix}/${dir}" )
+		ENDIF(IS_DIRECTORY ${colpack_prefix}/${dir} )
+	ENDFOREACH(dir)
+	FOREACH(dir ${cmake_install_includedirs})
+		SET(check_dir ${colpack_prefix}/${dir} )
+		IF(IS_DIRECTORY ${check_dir} )
+			SET(cppad_cflags "${cppad_cflags} -I${check_dir}" )
+		ENDIF(IS_DIRECTORY ${check_dir} )
+	ENDFOREACH(dir)
+ENDIF( colpack_prefix )
+#
 MESSAGE(STATUS "cppad_cflags = ${cppad_cflags}")
 MESSAGE(STATUS "cppad_libs = ${cppad_libs}")
 MESSAGE(STATUS "cppad_requires = ${cppad_requires}")
