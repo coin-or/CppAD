@@ -24,7 +24,6 @@ $spell
 	cstring
 	cppad
 	hpp
-	boolsparsity
 	onetape
 	Fadbad
 	bool
@@ -55,7 +54,6 @@ $codep */
 
 // list of possible options
 extern bool global_memory, global_onetape, global_atomic, global_optimize;
-extern bool global_boolsparsity;
 
 namespace fadbad {
 	// define fabs for use by ode_evaluate
@@ -71,7 +69,7 @@ bool link_ode(
 )
 {
 	// speed test global option values
-	if( global_atomic || global_boolsparsity )
+	if( global_atomic )
 		return false;
 	if( global_memory || global_onetape || global_optimize )
 		return false;

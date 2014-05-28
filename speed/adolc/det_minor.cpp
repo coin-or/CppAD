@@ -12,7 +12,6 @@ Please visit http://www.coin-or.org/CppAD/ for information on other licenses.
 /*
 $begin adolc_det_minor.cpp$$
 $spell
-	boolsparsity
 	thread_alloc
 	onetape
 	cppad
@@ -52,7 +51,6 @@ $codep */
 
 // list of possible options
 extern bool global_memory, global_onetape, global_atomic, global_optimize;
-extern bool global_boolsparsity;
 
 bool link_det_minor(
 	size_t                     size     , 
@@ -61,7 +59,7 @@ bool link_det_minor(
 	CppAD::vector<double>     &gradient )
 {
 	// speed test global option values
-	if( global_atomic || global_boolsparsity )
+	if( global_atomic )
 		return false; 
 	if( global_memory || global_optimize )
 		return false; 

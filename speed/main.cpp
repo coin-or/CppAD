@@ -71,10 +71,10 @@ $index cppad, speed test$$
 $index speed, test cppad$$
 $index test, cppad speed$$
 
-$section Speed Testing a C++ Operator Overloading AD Package$$
+$section Running the Speed Test Program$$
 
 $head Syntax$$
-$codei%speed/%package%/%package% %test% %seed% %option_list%$$
+$codei%speed/%package%/speed_%package% %test% %seed% %option_list%$$
 
 $head Purpose$$
 A version of this program runs the correctness tests
@@ -180,20 +180,6 @@ $cref cppad_det_lu.cpp$$ returns false
 (indicating that the test not implemented)
 when $code global_onetape$$ is true.
 
-$subhead colpack$$
-If the option $code colpack$$ is present, the symbol
-$codep
-	extern bool global_colpack
-$$
-is true and otherwise it is false.
-This symbols only affects the
-$cref/sparse_jacobian/link_sparse_jacobian/$$ and
-$cref/sparse_hessian/link_sparse_hessian/$$ tests.
-If this external symbol is true,
-CppAD will use $cref/colpack/colpack_prefix/$$ to do the coloring 
-for its 
-Otherwise, it will use it's own coloring algorithm.
-
 $subhead optimize$$
 If the option $code optimize$$ is present, the symbol
 $codep
@@ -227,6 +213,12 @@ the main program before any of the tests are executed.
 This should make the CppAD $code thread_alloc$$ allocator faster.
 If it is false, CppAD will used standard memory allocation. 
 
+$head Sparsity Options$$
+The following options only apply to the 
+$cref/sparse_jacobian/link_sparse_jacobian/$$ and
+$cref/sparse_hessian/link_sparse_hessian/$$ tests.
+The other tests will ignore these options:
+
 $subhead boolsparsity$$
 If the option $code boolsparsity$$ is present, the symbol
 $codep
@@ -235,13 +227,20 @@ $$
 is true and otherwise it is false.
 If it is true, CppAD will use a
 $cref/vector of bool/glossary/Sparsity Pattern/Vector of Boolean/$$
-for its sparsity patterns during the
-$cref/sparse_jacobian/link_sparse_jacobian/$$ and
-$cref/sparse_hessian/link_sparse_hessian/$$ speed tests.
+for its sparsity patterns. 
 Otherwise it will use a 
 $cref/vector of sets/glossary/Sparsity Pattern/Vector of Sets/$$.
-The other tests do not use sparsity patterns and so they return false
-if this option is chosen.
+
+$subhead colpack$$
+If the option $code colpack$$ is present, the symbol
+$codep
+	extern bool global_colpack
+$$
+is true and otherwise it is false.
+If this external symbol is true,
+CppAD will use $cref/colpack/colpack_prefix/$$ to do the coloring 
+for its 
+Otherwise, it will use it's own coloring algorithm.
 
 $head Correctness Results$$
 One, but not both, of the following two output lines

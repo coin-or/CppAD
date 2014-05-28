@@ -54,6 +54,17 @@ This section contains a list of the changes to CppAD during 2014
 The purpose of this section is to
 assist you in learning about changes between various versions of CppAD.
 
+$head 05-28$$
+$list number$$
+Change the $cref/boolsparsity/speed_main/Sparsity Options/boolsparsity/$$
+so that it only affects the sparsity speed tests
+$cref/sparse_jacobian/link_sparse_jacobian/$$ and
+$cref/sparse_hessian/link_sparse_hessian/$$;
+i.e., it is now ignored by the other tests.
+$lnext
+Improve the $cref speed$$ documentation page.
+$lend
+
 $head 05-27$$
 $list number$$
 The $cref/cppad_colpack.cpp/colpack_prefix/cppad_colpack.cpp/$$
@@ -248,7 +259,7 @@ The $cref/color_method/sparse_jacobian/work/color_method/$$
 option was added to the sparse Jacobian calculations.
 This enables one to use $cref/ColPack/colpack_prefix/$$ 
 do color the rows or columns.
-The speed test $cref/colpack/speed_main/option_list/colpack/$$ option 
+The speed test $cref/colpack/speed_main/Sparsity Options/colpack/$$ option 
 was also added (but not yet implemented for 
 $cref/sparse_hessian/link_sparse_hessian/$$ speed tests).
 
@@ -265,7 +276,7 @@ during MS Visual Studio 2012 compilation.
 
 $head 02-15$$
 $list number$$
-The $cref/boolsparsity/speed_main/option_list/boolsparsity/$$ option
+The $cref/boolsparsity/speed_main/Sparsity Options/boolsparsity/$$ option
 was added to the $cref speed_main$$ program.
 $lnext
 The $code retape$$ option what changed to 

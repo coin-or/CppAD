@@ -13,7 +13,6 @@ Please visit http://www.coin-or.org/CppAD/ for information on other licenses.
 $begin double_det_minor.cpp$$
 $spell
 	onetape
-	boolsparsity
 	retape
 	bool
 	cppad
@@ -43,7 +42,7 @@ $codep */
 
 // Note that CppAD uses global_memory at the main program level
 extern bool
-	global_onetape, global_atomic, global_optimize, global_boolsparsity;
+	global_onetape, global_atomic, global_optimize;
 
 bool link_det_minor(
 	size_t                     size     , 
@@ -51,7 +50,7 @@ bool link_det_minor(
 	CppAD::vector<double>     &matrix   ,
 	CppAD::vector<double>     &det      )
 {
-	if(global_onetape||global_atomic||global_optimize||global_boolsparsity)
+	if(global_onetape||global_atomic||global_optimize)
 		return false;
 	// -----------------------------------------------------
 	// setup

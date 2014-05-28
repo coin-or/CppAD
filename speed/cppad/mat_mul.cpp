@@ -12,7 +12,6 @@ Please visit http://www.coin-or.org/CppAD/ for information on other licenses.
 /*
 $begin cppad_mat_mul.cpp$$
 $spell
-	boolsparsity
 	resize
 	nr
 	nc
@@ -52,7 +51,7 @@ $codep */
 
 // Note that CppAD uses global_memory at the main program level
 extern bool
-	global_onetape, global_atomic, global_optimize, global_boolsparsity;
+	global_onetape, global_atomic, global_optimize;
 
 bool link_mat_mul(
 	size_t                           size     , 
@@ -62,8 +61,6 @@ bool link_mat_mul(
 	CppAD::vector<double>&           dz
 )
 {
-	if( global_boolsparsity )
-		return false;
 	// -----------------------------------------------------
 	// setup
 	typedef CppAD::AD<double>           ADScalar; 

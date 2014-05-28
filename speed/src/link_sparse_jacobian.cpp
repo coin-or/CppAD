@@ -117,7 +117,7 @@ it is the value $cref/n_sweep/sparse_jacobian/n_sweep/$$ corresponding
 to the evaluation of $icode jacobian$$.
 This is also the number of colors corresponding to the 
 $cref/coloring method/sparse_jacobian/work/color_method/$$
-which can be set to $cref/colpack/speed_main/option_list/colpack/$$
+which can be set to $cref/colpack/speed_main/Sparsity Options/colpack/$$
 and is otherwise $code cppad$$.
 
 $subhead double$$

@@ -13,7 +13,6 @@ Please visit http://www.coin-or.org/CppAD/ for information on other licenses.
 $begin double_ode.cpp$$
 $spell
 	onetape
-	boolsparsity
 	Jacobian
 	CppAD
 	cppad
@@ -46,7 +45,7 @@ $codep */
 
 // Note that CppAD uses global_memory at the main program level
 extern bool
-	global_onetape, global_atomic, global_optimize, global_boolsparsity;
+	global_onetape, global_atomic, global_optimize;
 
 bool link_ode(
 	size_t                     size       ,
@@ -55,7 +54,7 @@ bool link_ode(
 	CppAD::vector<double>      &jacobian
 )
 {
-	if(global_onetape||global_atomic||global_optimize||global_boolsparsity)
+	if(global_onetape||global_atomic||global_optimize)
 		return false;
 	// -------------------------------------------------------------
 	// setup

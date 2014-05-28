@@ -13,7 +13,6 @@ Please visit http://www.coin-or.org/CppAD/ for information on other licenses.
 $begin double_mat_mul.cpp$$
 $spell
 	onetape
-	boolsparsity
 	CppAD
 	cppad
 	mul_mat
@@ -44,7 +43,7 @@ $codep */
 
 // Note that CppAD uses global_memory at the main program level
 extern bool
-	global_onetape, global_atomic, global_optimize, global_boolsparsity;
+	global_onetape, global_atomic, global_optimize;
 
 bool link_mat_mul(
 	size_t                           size     , 
@@ -54,7 +53,7 @@ bool link_mat_mul(
 	CppAD::vector<double>&           dz
 )
 {
-	if(global_onetape||global_atomic||global_optimize||global_boolsparsity)
+	if(global_onetape||global_atomic||global_optimize)
 		return false;
 	// -----------------------------------------------------
 	size_t n = size * size; // number of independent variables

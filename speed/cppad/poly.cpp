@@ -12,7 +12,6 @@ Please visit http://www.coin-or.org/CppAD/ for information on other licenses.
 /*
 $begin cppad_poly.cpp$$
 $spell
-	boolsparsity
 	onetape
 	coef
 	ddp
@@ -55,7 +54,7 @@ $codep */
 
 // Note that CppAD uses global_memory at the main program level
 extern bool
-	global_onetape, global_atomic, global_optimize, global_boolsparsity;
+	global_onetape, global_atomic, global_optimize;
 
 bool link_poly(
 	size_t                     size     , 
@@ -65,7 +64,7 @@ bool link_poly(
 	CppAD::vector<double>     &ddp      )  // second derivative w.r.t z  
 {
 	// speed test global option values
-	if( global_atomic || global_boolsparsity )
+	if( global_atomic )
 		return false;
 
 	// -----------------------------------------------------
