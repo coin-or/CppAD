@@ -54,6 +54,19 @@ This section contains a list of the changes to CppAD during 2014
 The purpose of this section is to
 assist you in learning about changes between various versions of CppAD.
 
+$head 05-27$$
+$list number$$
+The $cref/cppad_colpack.cpp/colpack_prefix/cppad_colpack.cpp/$$
+file was not being copied to the specified directory.
+In addition, the specified directory was changed from an include
+directory to data directory
+($code cppad_colpack.cpp$$ is not an include file).
+$lnext
+If $cref colpack_prefix$$  was specified, the CppAD 
+$cref pkgconfig$$ file was missing some information.
+This has been fixed.
+$lend
+
 $head 05-23$$
 The $cref speed$$ test instructions were converted from using
 the old auto-tools $cref/unix install/InstallUnix/$$ instructions
