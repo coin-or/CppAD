@@ -44,9 +44,36 @@ ADD_EXECUTABLE(speed_sacado EXCLUDE_FROM_ALL ../main.cpp
 # Compiler flags for cppad source
 add_cppad_cxx_flags( speed_sacado )
 
-# List of libraries to be linked into the specified target
-TARGET_LINK_LIBRARIES(speed_sacado speed_src sacado teuchos)
+# Find name used for teuchos library
+SET(teuchos_lib NOTFOUND)
+FOREACH(dir ${cmake_install_libdirs})
+	FILE(GLOB file_list ${sacado_prefix}/${dir}/libteuchoscore.*)
+	IF(file_list)
+		SET(teuchos_lib teuchoscore)
+	ENDIF(file_list)
+	FILE(GLOB file_list ${sacado_prefix}/${dir}/libteuchos.*)
+	IF(file_list)
+		SET(teuchos_lib teuchos)
+	ENDIF(file_list)
+ENDFOREACH(dir)
 
+# List of libraries to be linked into the specified target
+IF(teuchos_lib)
+	TARGET_LINK_LIBRARIES(speed_sacado speed_src sacado ${teuchos_lib})
+ELSE(teuchos_lib)
+	MESSAGE(FATAT_ERROR
+"
+For all dir in cmake_install_libdirs, cannot find either
+	sacado_prefix/dir/teuchos
+	sacado_prefix/dir/teuchoscore
+where
+	sacado_prefix = ${sacado_prefix}
+	cmake_install_libdirs = ${cmake_install_libdirs}
+	teuchos_lib= ${teuchos_lib}
+"
+	)
+ENDIF(teuchos_lib)
+#
 # Add the check_speed_sacado target
 ADD_CUSTOM_TARGET(check_speed_sacado 
 	speed_sacado correct 54321

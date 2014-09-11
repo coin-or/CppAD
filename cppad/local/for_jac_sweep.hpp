@@ -193,6 +193,7 @@ void ForJacSweep(
 		play->forward_next(op, arg, i_op, i_var);
 		CPPAD_ASSERT_UNKNOWN( (i_op > n)  | (op == InvOp) );  
 		CPPAD_ASSERT_UNKNOWN( (i_op <= n) | (op != InvOp) );  
+		CPPAD_ASSERT_ARG_BEFORE_RESULT(op, arg, i_var);
 
 		// rest of information depends on the case
 		switch( op )

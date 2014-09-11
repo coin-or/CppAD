@@ -197,4 +197,19 @@ execution is terminated and the source code line number is reported.
 	}
 # endif
 
+/*!
+\def CPPAD_ASSERT_ARG_BEFORE_RESULT
+Check that operator arguments come before result.
+
+If \c NDEBUG is defined, this macro has no effect,
+otherwise it calls the function assert_arg_before_result.
+*/
+# ifdef NDEBUG
+# define CPPAD_ASSERT_ARG_BEFORE_RESULT(op, arg, result)
+# else
+# define CPPAD_ASSERT_ARG_BEFORE_RESULT(op, arg, result) \
+	assert_arg_before_result(op, arg, result)
+	
+# endif
+
 # endif

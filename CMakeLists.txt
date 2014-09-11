@@ -171,14 +171,14 @@ MESSAGE(STATUS "cppad_cxx_flags_sacado = ${cppad_cxx_flags_sacado}")
 # -----------------------------------------------------------------------------
 # cppad_cxx_flags_skip_eigen
 STRING(REGEX REPLACE 
-	"(.*)-Wshadow(.*)"         "\\1 \\2" 
+	"(.*)-Wshadow(.*)"         "\\1-Wno-shadow\\2" 
 	cppad_cxx_flags_eigen "${cppad_cxx_flags}"
 )
 MESSAGE(STATUS "cppad_cxx_flags_eigen = ${cppad_cxx_flags_eigen}")
 # -----------------------------------------------------------------------------
 # cppad_cxx_flags_skip_fadbad
 STRING(REGEX REPLACE 
-	"(.*)-Wshadow(.*)"         "\\1 \\2" 
+	"(.*)-Wshadow(.*)"         "\\1-Wno-shadow\\2" 
 	cppad_cxx_flags_fadbad "${cppad_cxx_flags}"
 )
 MESSAGE(STATUS "cppad_cxx_flags_fadbad = ${cppad_cxx_flags_fadbad}")

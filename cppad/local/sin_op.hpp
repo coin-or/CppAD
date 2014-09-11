@@ -49,7 +49,6 @@ inline void forward_sin_op(
 	// check assumptions
 	CPPAD_ASSERT_UNKNOWN( NumArg(SinOp) == 1 );
 	CPPAD_ASSERT_UNKNOWN( NumRes(SinOp) == 2 );
-	CPPAD_ASSERT_UNKNOWN( i_x + 1 < i_z );
 	CPPAD_ASSERT_UNKNOWN( q < cap_order );
 	CPPAD_ASSERT_UNKNOWN( p <= q );
 
@@ -107,7 +106,6 @@ inline void forward_sin_op_dir(
 	// check assumptions
 	CPPAD_ASSERT_UNKNOWN( NumArg(SinOp) == 1 );
 	CPPAD_ASSERT_UNKNOWN( NumRes(SinOp) == 2 );
-	CPPAD_ASSERT_UNKNOWN( i_x + 1 < i_z );
 	CPPAD_ASSERT_UNKNOWN( 0 < q );
 	CPPAD_ASSERT_UNKNOWN( q < cap_order );
 
@@ -160,7 +158,6 @@ inline void forward_sin_op_0(
 	// check assumptions
 	CPPAD_ASSERT_UNKNOWN( NumArg(SinOp) == 1 );
 	CPPAD_ASSERT_UNKNOWN( NumRes(SinOp) == 2 );
-	CPPAD_ASSERT_UNKNOWN( i_x + 1 < i_z );
 	CPPAD_ASSERT_UNKNOWN( 0 < cap_order );
 
 	// Taylor coefficients corresponding to argument and result
@@ -201,7 +198,6 @@ inline void reverse_sin_op(
 	// check assumptions
 	CPPAD_ASSERT_UNKNOWN( NumArg(SinOp) == 1 );
 	CPPAD_ASSERT_UNKNOWN( NumRes(SinOp) == 2 );
-	CPPAD_ASSERT_UNKNOWN( i_x + 1 < i_z );
 	CPPAD_ASSERT_UNKNOWN( d < cap_order );
 	CPPAD_ASSERT_UNKNOWN( d < nc_partial );
 

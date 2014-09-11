@@ -48,7 +48,6 @@ inline void forward_cos_op(
 	// check assumptions
 	CPPAD_ASSERT_UNKNOWN( NumArg(CosOp) == 1 );
 	CPPAD_ASSERT_UNKNOWN( NumRes(CosOp) == 2 );
-	CPPAD_ASSERT_UNKNOWN( i_x + 1 < i_z );
 	CPPAD_ASSERT_UNKNOWN( q < cap_order );
 	CPPAD_ASSERT_UNKNOWN( p <= q );
 
@@ -107,7 +106,6 @@ inline void forward_cos_op_dir(
 	// check assumptions
 	CPPAD_ASSERT_UNKNOWN( NumArg(CosOp) == 1 );
 	CPPAD_ASSERT_UNKNOWN( NumRes(CosOp) == 2 );
-	CPPAD_ASSERT_UNKNOWN( i_x + 1 < i_z );
 	CPPAD_ASSERT_UNKNOWN( 0 < q );
 	CPPAD_ASSERT_UNKNOWN( q < cap_order );
 
@@ -159,7 +157,6 @@ inline void forward_cos_op_0(
 	// check assumptions
 	CPPAD_ASSERT_UNKNOWN( NumArg(CosOp) == 1 );
 	CPPAD_ASSERT_UNKNOWN( NumRes(CosOp) == 2 );
-	CPPAD_ASSERT_UNKNOWN( i_x + 1 < i_z );
 	CPPAD_ASSERT_UNKNOWN( 0 < cap_order );
 
 	// Taylor coefficients corresponding to argument and result
@@ -199,7 +196,6 @@ inline void reverse_cos_op(
 	// check assumptions
 	CPPAD_ASSERT_UNKNOWN( NumArg(CosOp) == 1 );
 	CPPAD_ASSERT_UNKNOWN( NumRes(CosOp) == 2 );
-	CPPAD_ASSERT_UNKNOWN( i_x + 1 < i_z );
 	CPPAD_ASSERT_UNKNOWN( d < cap_order );
 	CPPAD_ASSERT_UNKNOWN( d < nc_partial );
 

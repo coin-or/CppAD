@@ -29,7 +29,16 @@ MACRO(add_cppad_cxx_flags target_name)
 	FOREACH(package eigen fadbad sacado)
 		IF( ${target_name} MATCHES ".*_${package}$" )
 			SET(flags "${cppad_cxx_flags_${package}}")
+			MESSAGE(STATUS 
+				"${target_name} cxx_flags = ${cppad_cxx_flags_${package}}"
+			)
 		ENDIF( ${target_name} MATCHES ".*_${package}$" )
+		IF( ${target_name} MATCHES ".*_${package}_lib$" )
+			SET(flags "${cppad_cxx_flags_${package}}")
+			MESSAGE(STATUS 
+				"${target_name} cxx_flags = ${cppad_cxx_flags_${package}}"
+			)
+		ENDIF( ${target_name} MATCHES ".*_${package}_lib$" )
 	ENDFOREACH(package)
 	IF( flags )
 		SET_TARGET_PROPERTIES( 

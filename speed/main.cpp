@@ -705,7 +705,7 @@ int main(int argc, char *argv[])
 		speed_sparse_jacobian, size_sparse_jacobian, "sparse_jacobian"
 		);
 		cout << AD_PACKAGE << "_sparse_jacobian_n_sweep = ";
-		for(size_t i = 0; i < size_sparse_jacobian.size(); i++)
+		for(i = 0; i < size_sparse_jacobian.size(); i++)
 		{	if( i == 0 )
 				cout << "[ ";
 			else	cout << ", ";	

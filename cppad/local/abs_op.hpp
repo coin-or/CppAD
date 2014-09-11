@@ -42,7 +42,6 @@ inline void forward_abs_op(
 	// check assumptions
 	CPPAD_ASSERT_UNKNOWN( NumArg(AbsOp) == 1 );
 	CPPAD_ASSERT_UNKNOWN( NumRes(AbsOp) == 1 );
-	CPPAD_ASSERT_UNKNOWN( i_x < i_z );
 	CPPAD_ASSERT_UNKNOWN( q < cap_order );
 	CPPAD_ASSERT_UNKNOWN( p <= q );
 
@@ -76,7 +75,6 @@ inline void forward_abs_op_dir(
 	// check assumptions
 	CPPAD_ASSERT_UNKNOWN( NumArg(AbsOp) == 1 );
 	CPPAD_ASSERT_UNKNOWN( NumRes(AbsOp) == 1 );
-	CPPAD_ASSERT_UNKNOWN( i_x < i_z );
 	CPPAD_ASSERT_UNKNOWN( 0 < q );
 	CPPAD_ASSERT_UNKNOWN( q < cap_order );
 
@@ -111,7 +109,6 @@ inline void forward_abs_op_0(
 	// check assumptions
 	CPPAD_ASSERT_UNKNOWN( NumArg(AbsOp) == 1 );
 	CPPAD_ASSERT_UNKNOWN( NumRes(AbsOp) == 1 );
-	CPPAD_ASSERT_UNKNOWN( i_x < i_z );
 	CPPAD_ASSERT_UNKNOWN( 0 < cap_order );
 
 	// Taylor coefficients corresponding to argument and result
@@ -145,7 +142,6 @@ inline void reverse_abs_op(
 	// check assumptions
 	CPPAD_ASSERT_UNKNOWN( NumArg(AbsOp) == 1 );
 	CPPAD_ASSERT_UNKNOWN( NumRes(AbsOp) == 1 );
-	CPPAD_ASSERT_UNKNOWN( i_x < i_z );
 	CPPAD_ASSERT_UNKNOWN( d < cap_order );
 	CPPAD_ASSERT_UNKNOWN( d < nc_partial );
 

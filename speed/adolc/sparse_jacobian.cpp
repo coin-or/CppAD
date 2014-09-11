@@ -166,7 +166,7 @@ bool link_sparse_jacobian(
 		trace_off();
 
 		// is this a repeat call with the same sparsity pattern
-		int same_pattern = 0;
+		same_pattern = 0;
 
 		// calculate the jacobian at this x
 		rind   = CPPAD_NULL;

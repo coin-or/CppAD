@@ -64,7 +64,6 @@ is the k-th order Taylor coefficient corresponding to z.
 \par Checked Assertions
 \li NumArg(op) == 1
 \li NumRes(op) == 1
-\li i_x < i_z 
 \li q < cap_order
 \li p <= q
 */

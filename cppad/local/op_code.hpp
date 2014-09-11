@@ -778,5 +778,52 @@ void printOpResult(
 		os << "| rz[" << k << "]=" << rz[k];
 }
 
+/*!
+If NDEBUG is not defined, assert that arguments come before result.
+
+\param op
+Operator for which we are checking order.
+
+\param result
+is the variable index for the result.
+
+\param arg
+is a vector of lenght NumArg(op) pointing to the arguments
+for this operation.
+*/
+inline void assert_arg_before_result(
+	OpCode op, const addr_t* arg, size_t result
+)
+{
+	switch( op )
+	{
+		case AbsOp:
+		case ExpOp:
+		case LogOp:
+		case ParOp:
+		case SignOp:
+		case SqrtOp:
+		CPPAD_ASSERT_UNKNOWN( size_t(arg[0]) < result );
+		break;
+
+		case AcosOp:
+		case AsinOp:
+		case AtanOp:
+		case CosOp:
+		case CoshOp:
+		case SinOp:
+		case SinhOp:
+		case TanOp:
+		case TanhOp:
+		CPPAD_ASSERT_UNKNOWN( size_t(arg[0]) + 1 < result );
+		break;
+
+		default:
+		break;
+
+	}
+	return;
+}
+
 } // END_CPPAD_NAMESPACE
 # endif
