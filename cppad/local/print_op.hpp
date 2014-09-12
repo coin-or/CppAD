@@ -35,10 +35,6 @@ using AD< \a Base > and computations by this routine are done using type
 \param s_out
 the results are printed on this output stream.
 
-\param i_z
-is the index of the next variable on the tape
-(only used for error checking).
-
 \param arg
 \a arg[0] & 1
 \n
@@ -100,13 +96,12 @@ Contains the value of variables.
 \li NumRes(PriOp)  == 0
 \li text          !=  CPPAD_NULL
 \li arg[1]         <  num_text
-\li if \a pos is a variable, arg[1] < i_z, otherwise arg[1] < num_par
-\li if \a var is a variable, arg[3] < i_z, otherwise arg[3] < num_par
+\li if \a pos is a parameter, arg[1] < num_par
+\li if \a var is a parameter, arg[3] < num_par
 */
 template <class Base>
 inline void forward_pri_0(
 	std::ostream& s_out       ,
-	size_t        i_z         ,
 	const addr_t* arg         ,
 	size_t        num_text    ,
 	const char*   text        ,
@@ -121,8 +116,7 @@ inline void forward_pri_0(
 
 	// pos
 	if( arg[0] & 1 )
-	{	CPPAD_ASSERT_UNKNOWN( size_t(arg[1]) <= i_z );
-		pos = taylor[ arg[1] * cap_order + 0 ];
+	{	pos = taylor[ arg[1] * cap_order + 0 ];
 	}
 	else
 	{	CPPAD_ASSERT_UNKNOWN( size_t(arg[1]) < num_par );
@@ -135,8 +129,7 @@ inline void forward_pri_0(
 
 	// var
 	if( arg[0] & 2 )
-	{	CPPAD_ASSERT_UNKNOWN( size_t(arg[3]) <= i_z );
-		var = taylor[ arg[3] * cap_order + 0 ];
+	{	var = taylor[ arg[3] * cap_order + 0 ];
 	}
 	else
 	{	CPPAD_ASSERT_UNKNOWN( size_t(arg[3]) < num_par );

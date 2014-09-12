@@ -49,7 +49,6 @@ cmd="g++ test_one.cpp $*
 	-o test_one.exe
 	$cxxflags
 	-g
-	-lboost_thread-mt
 	-std=c++11 
 	-I../.. 
 "

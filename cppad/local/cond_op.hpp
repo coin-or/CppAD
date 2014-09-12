@@ -94,7 +94,6 @@ number of columns in the matrix containing the Taylor coefficients.
 \li arg[0] < static_cast<size_t> ( CompareNe )
 \li arg[1] != 0; i.e., not all of y_0, y_1, y_2, y_3 are parameters.
 \li For j = 0, 1, 2, 3 if y_j is a parameter, arg[2+j] < num_par.
-\li For j = 0, 1, 2, 3 if y_j is a variable, arg[2+j] < iz.
 <!-- end conditional_exp_op -->
 */
 template <class Base>
@@ -176,7 +175,6 @@ is the total number of values in the vector \a parameter.
 \li arg[0] < static_cast<size_t> ( CompareNe )
 \li arg[1] != 0; i.e., not all of y_0, y_1, y_2, y_3 are parameters.
 \li For j = 0, 1, 2, 3 if y_j is a parameter, arg[2+j] < num_par.
-\li For j = 0, 1, 2, 3 if y_j is a variable, arg[2+j] < iz.
 <!-- end sparse_conditional_exp_op -->
 */
 template <class Vector_set>
@@ -264,7 +262,6 @@ number of columns in the matrix containing the Taylor coefficients.
 \li arg[0] < static_cast<size_t> ( CompareNe )
 \li arg[1] != 0; i.e., not all of y_0, y_1, y_2, y_3 are parameters.
 \li For j = 0, 1, 2, 3 if y_j is a parameter, arg[2+j] < num_par.
-\li For j = 0, 1, 2, 3 if y_j is a variable, arg[2+j] < iz.
 <!-- end conditional_exp_op -->
 
 \param p
@@ -309,7 +306,7 @@ inline void forward_cond_op(
 	CPPAD_ASSERT_UNKNOWN( arg[1] != 0 );
 
 	if( arg[1] & 1 )
-	{	CPPAD_ASSERT_UNKNOWN( size_t(arg[2]) < i_z );
+	{
 		y_0 = taylor[ arg[2] * cap_order + 0 ];
 	}
 	else
@@ -317,7 +314,7 @@ inline void forward_cond_op(
 		y_0 = parameter[ arg[2] ];
 	}
 	if( arg[1] & 2 )
-	{	CPPAD_ASSERT_UNKNOWN( size_t(arg[3]) < i_z );
+	{
 		y_1 = taylor[ arg[3] * cap_order + 0 ];
 	}
 	else
@@ -326,7 +323,7 @@ inline void forward_cond_op(
 	}
 	if( p == 0 )
 	{	if( arg[1] & 4 )
-		{	CPPAD_ASSERT_UNKNOWN( size_t(arg[4]) < i_z );
+		{
 			y_2 = taylor[ arg[4] * cap_order + 0 ];
 		}
 		else
@@ -334,7 +331,7 @@ inline void forward_cond_op(
 			y_2 = parameter[ arg[4] ];
 		}
 		if( arg[1] & 8 )
-		{	CPPAD_ASSERT_UNKNOWN( size_t(arg[5]) < i_z );
+		{
 			y_3 = taylor[ arg[5] * cap_order + 0 ];
 		}
 		else
@@ -352,12 +349,12 @@ inline void forward_cond_op(
 	}
 	for(size_t d = p; d <= q; d++)
 	{	if( arg[1] & 4 )
-		{	CPPAD_ASSERT_UNKNOWN( size_t(arg[4]) < i_z );
+		{
 			y_2 = taylor[ arg[4] * cap_order + d];
 		}
 		else	y_2 = zero;
 		if( arg[1] & 8 )
-		{	CPPAD_ASSERT_UNKNOWN( size_t(arg[5]) < i_z );
+		{
 			y_3 = taylor[ arg[5] * cap_order + d];
 		}
 		else	y_3 = zero;
@@ -448,7 +445,6 @@ number of columns in the matrix containing the Taylor coefficients.
 \li arg[0] < static_cast<size_t> ( CompareNe )
 \li arg[1] != 0; i.e., not all of y_0, y_1, y_2, y_3 are parameters.
 \li For j = 0, 1, 2, 3 if y_j is a parameter, arg[2+j] < num_par.
-\li For j = 0, 1, 2, 3 if y_j is a variable, arg[2+j] < iz.
 <!-- end conditional_exp_op -->
 
 \param q
@@ -505,7 +501,7 @@ inline void forward_cond_op_dir(
 	CPPAD_ASSERT_UNKNOWN( q < cap_order );
 
 	if( arg[1] & 1 )
-	{	CPPAD_ASSERT_UNKNOWN( size_t(arg[2]) < i_z );
+	{
 		y_0 = taylor[ arg[2] * num_taylor_per_var + 0 ];
 	}
 	else
@@ -513,7 +509,7 @@ inline void forward_cond_op_dir(
 		y_0 = parameter[ arg[2] ];
 	}
 	if( arg[1] & 2 )
-	{	CPPAD_ASSERT_UNKNOWN( size_t(arg[3]) < i_z );
+	{
 		y_1 = taylor[ arg[3] * num_taylor_per_var + 0 ];
 	}
 	else
@@ -523,12 +519,12 @@ inline void forward_cond_op_dir(
 	size_t m = (q-1) * r + 1;
 	for(size_t ell = 0; ell < r; ell++)
 	{	if( arg[1] & 4 )
-		{	CPPAD_ASSERT_UNKNOWN( size_t(arg[4]) < i_z );
+		{
 			y_2 = taylor[ arg[4] * num_taylor_per_var + m + ell];
 		}
 		else	y_2 = zero;
 		if( arg[1] & 8 )
-		{	CPPAD_ASSERT_UNKNOWN( size_t(arg[5]) < i_z );
+		{
 			y_3 = taylor[ arg[5] * num_taylor_per_var + m + ell];
 		}
 		else	y_3 = zero;
@@ -619,7 +615,6 @@ number of columns in the matrix containing the Taylor coefficients.
 \li arg[0] < static_cast<size_t> ( CompareNe )
 \li arg[1] != 0; i.e., not all of y_0, y_1, y_2, y_3 are parameters.
 \li For j = 0, 1, 2, 3 if y_j is a parameter, arg[2+j] < num_par.
-\li For j = 0, 1, 2, 3 if y_j is a variable, arg[2+j] < iz.
 <!-- end conditional_exp_op -->
 
 \param taylor
@@ -649,7 +644,7 @@ inline void forward_cond_op_0(
 	CPPAD_ASSERT_UNKNOWN( arg[1] != 0 );
 
 	if( arg[1] & 1 )
-	{	CPPAD_ASSERT_UNKNOWN( size_t(arg[2]) < i_z );
+	{
 		y_0 = taylor[ arg[2] * cap_order + 0 ];
 	}
 	else
@@ -657,7 +652,7 @@ inline void forward_cond_op_0(
 		y_0 = parameter[ arg[2] ];
 	}
 	if( arg[1] & 2 )
-	{	CPPAD_ASSERT_UNKNOWN( size_t(arg[3]) < i_z );
+	{
 		y_1 = taylor[ arg[3] * cap_order + 0 ];
 	}
 	else
@@ -665,7 +660,7 @@ inline void forward_cond_op_0(
 		y_1 = parameter[ arg[3] ];
 	}
 	if( arg[1] & 4 )
-	{	CPPAD_ASSERT_UNKNOWN( size_t(arg[4]) < i_z );
+	{
 		y_2 = taylor[ arg[4] * cap_order + 0 ];
 	}
 	else
@@ -673,7 +668,7 @@ inline void forward_cond_op_0(
 		y_2 = parameter[ arg[4] ];
 	}
 	if( arg[1] & 8 )
-	{	CPPAD_ASSERT_UNKNOWN( size_t(arg[5]) < i_z );
+	{
 		y_3 = taylor[ arg[5] * cap_order + 0 ];
 	}
 	else
@@ -775,7 +770,6 @@ number of columns in the matrix containing the Taylor coefficients.
 \li arg[0] < static_cast<size_t> ( CompareNe )
 \li arg[1] != 0; i.e., not all of y_0, y_1, y_2, y_3 are parameters.
 \li For j = 0, 1, 2, 3 if y_j is a parameter, arg[2+j] < num_par.
-\li For j = 0, 1, 2, 3 if y_j is a variable, arg[2+j] < iz.
 <!-- end conditional_exp_op -->
 
 \param d
@@ -840,7 +834,7 @@ inline void reverse_cond_op(
 
 	pz = partial + i_z * nc_partial + 0;
 	if( arg[1] & 1 )
-	{	CPPAD_ASSERT_UNKNOWN( size_t(arg[2]) < i_z );
+	{
 		y_0 = taylor[ arg[2] * cap_order + 0 ];
 	}
 	else
@@ -848,7 +842,7 @@ inline void reverse_cond_op(
 		y_0 = parameter[ arg[2] ];
 	}
 	if( arg[1] & 2 )
-	{	CPPAD_ASSERT_UNKNOWN( size_t(arg[3]) < i_z );
+	{
 		y_1 = taylor[ arg[3] * cap_order + 0 ];
 	}
 	else
@@ -856,7 +850,7 @@ inline void reverse_cond_op(
 		y_1 = parameter[ arg[3] ];
 	}
 	if( arg[1] & 4 )
-	{	CPPAD_ASSERT_UNKNOWN( size_t(arg[4]) < i_z );
+	{
 		py_2 = partial + arg[4] * nc_partial;
 		size_t j = d + 1;
 		while(j--)
@@ -870,7 +864,7 @@ inline void reverse_cond_op(
 		}
 	}
 	if( arg[1] & 8 )
-	{	CPPAD_ASSERT_UNKNOWN( size_t(arg[5]) < i_z );
+	{
 		py_3 = partial + arg[5] * nc_partial;
 		size_t j = d + 1;
 		while(j--)
@@ -954,7 +948,6 @@ is the total number of values in the vector \a parameter.
 \li arg[0] < static_cast<size_t> ( CompareNe )
 \li arg[1] != 0; i.e., not all of y_0, y_1, y_2, y_3 are parameters.
 \li For j = 0, 1, 2, 3 if y_j is a parameter, arg[2+j] < num_par.
-\li For j = 0, 1, 2, 3 if y_j is a variable, arg[2+j] < iz.
 <!-- end sparse_conditional_exp_op -->
 
 \param sparsity
@@ -990,22 +983,22 @@ inline void forward_sparse_jacobian_cond_op(
 
 # ifndef NDEBUG
 	if( arg[1] & 1 )
-	{	CPPAD_ASSERT_UNKNOWN( size_t(arg[2]) < i_z );
+	{
 	}
 	else
 	{	CPPAD_ASSERT_UNKNOWN( size_t(arg[2]) < num_par );
 	}
 	if( arg[1] & 2 )
-	{	CPPAD_ASSERT_UNKNOWN( size_t(arg[3]) < i_z );
+	{
 	}
 	else
 	{	CPPAD_ASSERT_UNKNOWN( size_t(arg[3]) < num_par );
 	}
 # endif
 	if( arg[1] & 4 )
-	{	CPPAD_ASSERT_UNKNOWN( size_t(arg[4]) < i_z );
+	{
 		if( arg[1] & 8 )
-		{	CPPAD_ASSERT_UNKNOWN( size_t(arg[5]) < i_z );
+		{
 			sparsity.binary_union(i_z, arg[4], arg[5], sparsity);
 		}
 		else
@@ -1016,7 +1009,7 @@ inline void forward_sparse_jacobian_cond_op(
 	else
 	{	CPPAD_ASSERT_UNKNOWN( size_t(arg[4]) < num_par );
 		if( arg[1] & 8 )
-		{	CPPAD_ASSERT_UNKNOWN( size_t(arg[5]) < i_z );
+		{
 			sparsity.assignment(i_z, arg[5], sparsity);
 		}
 		else
@@ -1103,7 +1096,6 @@ is the total number of values in the vector \a parameter.
 \li arg[0] < static_cast<size_t> ( CompareNe )
 \li arg[1] != 0; i.e., not all of y_0, y_1, y_2, y_3 are parameters.
 \li For j = 0, 1, 2, 3 if y_j is a parameter, arg[2+j] < num_par.
-\li For j = 0, 1, 2, 3 if y_j is a variable, arg[2+j] < iz.
 <!-- end sparse_conditional_exp_op -->
 
 \param nz_compare
@@ -1150,13 +1142,13 @@ inline void reverse_sparse_jacobian_cond_op(
 
 # ifndef NDEBUG
 	if( arg[1] & 1 )
-	{	CPPAD_ASSERT_UNKNOWN( size_t(arg[2]) < i_z );
+	{
 	}
 	else
 	{	CPPAD_ASSERT_UNKNOWN( size_t(arg[2]) < num_par );
 	}
 	if( arg[1] & 2 )
-	{	CPPAD_ASSERT_UNKNOWN( size_t(arg[3]) < i_z );
+	{
 	}
 	else
 	{	CPPAD_ASSERT_UNKNOWN( size_t(arg[3]) < num_par );
@@ -1170,21 +1162,21 @@ inline void reverse_sparse_jacobian_cond_op(
 # endif
 	if( nz_compare )
 	{	if( arg[1] & 1 )
-		{	CPPAD_ASSERT_UNKNOWN( size_t(arg[2]) < i_z );
+		{
 			sparsity.binary_union(arg[2], arg[2], i_z, sparsity);
 		}
 		if( arg[1] & 2 )
-		{	CPPAD_ASSERT_UNKNOWN( size_t(arg[3]) < i_z );
+		{
 			sparsity.binary_union(arg[3], arg[3], i_z, sparsity);
 		}
 	}
 	// --------------------------------------------------------------------
 	if( arg[1] & 4 )
-	{	CPPAD_ASSERT_UNKNOWN( size_t(arg[4]) < i_z );
+	{
 		sparsity.binary_union(arg[4], arg[4], i_z, sparsity);
 	}
 	if( arg[1] & 8 )
-	{	CPPAD_ASSERT_UNKNOWN( size_t(arg[5]) < i_z );
+	{
 		sparsity.binary_union(arg[5], arg[5], i_z, sparsity);
 	}
 	return;
@@ -1266,7 +1258,6 @@ is the total number of values in the vector \a parameter.
 \li arg[0] < static_cast<size_t> ( CompareNe )
 \li arg[1] != 0; i.e., not all of y_0, y_1, y_2, y_3 are parameters.
 \li For j = 0, 1, 2, 3 if y_j is a parameter, arg[2+j] < num_par.
-\li For j = 0, 1, 2, 3 if y_j is a variable, arg[2+j] < iz.
 <!-- end sparse_conditional_exp_op -->
 
 
@@ -1330,13 +1321,13 @@ inline void reverse_sparse_hessian_cond_op(
 
 # ifndef NDEBUG
 	if( arg[1] & 1 )
-	{	CPPAD_ASSERT_UNKNOWN( size_t(arg[2]) < i_z );
+	{
 	}
 	else
 	{	CPPAD_ASSERT_UNKNOWN( size_t(arg[2]) < num_par );
 	}
 	if( arg[1] & 2 )
-	{	CPPAD_ASSERT_UNKNOWN( size_t(arg[3]) < i_z );
+	{
 	}
 	else
 	{	CPPAD_ASSERT_UNKNOWN( size_t(arg[3]) < num_par );
@@ -1349,13 +1340,13 @@ inline void reverse_sparse_hessian_cond_op(
 	}
 # endif
 	if( arg[1] & 4 )
-	{	CPPAD_ASSERT_UNKNOWN( size_t(arg[4]) < i_z );
+	{
 
 		hes_sparsity.binary_union(arg[4], arg[4], i_z, hes_sparsity);
 		jac_reverse[ arg[4] ] |= jac_reverse[i_z];
 	}
 	if( arg[1] & 8 )
-	{	CPPAD_ASSERT_UNKNOWN( size_t(arg[5]) < i_z );
+	{
 
 		hes_sparsity.binary_union(arg[5], arg[5], i_z, hes_sparsity);
 		jac_reverse[ arg[5] ] |= jac_reverse[i_z];

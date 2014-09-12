@@ -574,7 +574,7 @@ size_t forward1sweep(
 
 			case PriOp:
 			if( (p == 0) & print ) forward_pri_0(s_out,
-				i_var, arg, num_text, text, num_par, parameter, J, taylor
+				arg, num_text, text, num_par, parameter, J, taylor
 			);
 			break;
 			// -------------------------------------------------

@@ -783,6 +783,7 @@ If NDEBUG is not defined, assert that arguments come before result.
 
 \param op
 Operator for which we are checking order.
+All the operators are checked except for those of the form UserOp or Usr..Op.
 
 \param result
 is the variable index for the result.
@@ -797,6 +798,16 @@ inline void assert_arg_before_result(
 {
 	switch( op )
 	{
+
+		// These cases are not included below
+		case UserOp:
+		case UsrapOp:
+		case UsravOp:
+		case UsrrpOp:
+		case UsrrvOp:
+		break;
+		// ------------------------------------------------------------------
+
 		// 0 arguments
 		case CSkipOp:
 		case CSumOp:
@@ -804,6 +815,10 @@ inline void assert_arg_before_result(
 		case InvOp:
 		break;
 		// ------------------------------------------------------------------
+
+		// 1 argument, but is not used
+		case BeginOp:
+		break;
 
 		// 1 argument , 1 result
 		case AbsOp:
@@ -875,7 +890,7 @@ inline void assert_arg_before_result(
 		case StppOp:
 		break;
 
-		// 3 arguments, second variable, one result
+		// 3 arguments, second variable, 1 result
 		case LdvOp:
 		CPPAD_ASSERT_UNKNOWN( size_t(arg[1]) < result );
 		break;
@@ -895,17 +910,49 @@ inline void assert_arg_before_result(
 		CPPAD_ASSERT_UNKNOWN( size_t(arg[1]) <= result );
 		CPPAD_ASSERT_UNKNOWN( size_t(arg[2]) <= result );
 		break;
-
-
 		// ------------------------------------------------------------------
-		// These cases are executed by and checked during sweep routines
-		case UsrapOp:
-		case UsravOp:
-		case UsrrpOp:
-		case UsrrvOp:
+
+		// 4 arguments, no result
+		case ComOp:
+		if( arg[1] & 2 )
+		{	CPPAD_ASSERT_UNKNOWN( size_t(arg[2]) <= result );
+		}
+		if( arg[1] & 4 )
+		{	CPPAD_ASSERT_UNKNOWN( size_t(arg[3]) <= result );
+		}
 		break;
+		// ------------------------------------------------------------------
+
+		// 5 arguments, no result
+		case PriOp:
+		if( arg[0] & 1 )
+		{	CPPAD_ASSERT_UNKNOWN( size_t(arg[1]) <= result );
+		}
+		if( arg[0] & 2 )
+		{	CPPAD_ASSERT_UNKNOWN( size_t(arg[3]) <= result );
+		}
+		break;
+		// ------------------------------------------------------------------
+
+		// 6 arguments, 1 result
+		case CExpOp:
+		if( arg[1] & 1 )
+		{	CPPAD_ASSERT_UNKNOWN( size_t(arg[2]) < result );
+		}
+		if( arg[1] & 2 )
+		{	CPPAD_ASSERT_UNKNOWN( size_t(arg[3]) < result );
+		}
+		if( arg[1] & 4 )
+		{	CPPAD_ASSERT_UNKNOWN( size_t(arg[4]) < result );
+		}
+		if( arg[1] & 8 )
+		{	CPPAD_ASSERT_UNKNOWN( size_t(arg[5]) < result );
+		}
+		break;
+		// ------------------------------------------------------------------
 
 		default:
+		CPPAD_ASSERT_UNKNOWN(false);
 		break;
 
 	}
