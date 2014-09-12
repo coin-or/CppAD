@@ -105,8 +105,6 @@ In this case, the error above should be detected during tape recording.
 \li NumRes(op) == 0
 \li 0 <  arg[0]
 \li if y is a parameter, arg[2] < num_par
-\li if x is a variable, arg[1] <= i_z
-\li if y is a variable, arg[2] <= i_z
 */
 template <class Base>
 inline void forward_store_op_0(
@@ -259,7 +257,6 @@ inline void forward_store_pv_op_0(
 	CPPAD_ASSERT_UNKNOWN( NumArg(StpvOp) == 3 );
 	CPPAD_ASSERT_UNKNOWN( NumRes(StpvOp) == 0 );
 	CPPAD_ASSERT_UNKNOWN( 0 < arg[0] );
-	CPPAD_ASSERT_UNKNOWN( size_t(arg[2]) <= i_z );
 
 	isvar_by_ind[ arg[0] + i_vec ]  = true;
 	index_by_ind[ arg[0] + i_vec ]  = arg[2];
@@ -280,7 +277,6 @@ inline void forward_store_vp_op_0(
 	bool*          isvar_by_ind   ,
 	size_t*        index_by_ind   )
 {	
-	CPPAD_ASSERT_UNKNOWN( size_t(arg[1]) <= i_z );
 	size_t i_vec = Integer( taylor[ arg[1] * cap_order + 0 ] );
 	CPPAD_ASSERT_KNOWN( 
 		i_vec < index_by_ind[ arg[0] - 1 ] ,
@@ -311,7 +307,6 @@ inline void forward_store_vv_op_0(
 	bool*          isvar_by_ind   ,
 	size_t*        index_by_ind   )
 {	
-	CPPAD_ASSERT_UNKNOWN( size_t(arg[1]) <= i_z );
 	size_t i_vec = Integer( taylor[ arg[1] * cap_order + 0 ] );
 	CPPAD_ASSERT_KNOWN( 
 		i_vec < index_by_ind[ arg[0] - 1 ] ,
@@ -321,7 +316,6 @@ inline void forward_store_vv_op_0(
 	CPPAD_ASSERT_UNKNOWN( NumArg(StvpOp) == 3 );
 	CPPAD_ASSERT_UNKNOWN( NumRes(StvpOp) == 0 );
 	CPPAD_ASSERT_UNKNOWN( 0 < arg[0] );
-	CPPAD_ASSERT_UNKNOWN( size_t(arg[2]) <= i_z );
 
 	isvar_by_ind[ arg[0] + i_vec ]  = true;
 	index_by_ind[ arg[0] + i_vec ]  = arg[2];

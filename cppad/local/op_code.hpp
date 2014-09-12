@@ -870,6 +870,34 @@ inline void assert_arg_before_result(
 		break;
 		// ------------------------------------------------------------------
 
+		// 3 arguments, none variables
+		case LdpOp:
+		case StppOp:
+		break;
+
+		// 3 arguments, second variable, one result
+		case LdvOp:
+		CPPAD_ASSERT_UNKNOWN( size_t(arg[1]) < result );
+		break;
+		
+		// 3 arguments, third variable, no result
+		case StpvOp:
+		CPPAD_ASSERT_UNKNOWN( size_t(arg[2]) <= result );
+		break;
+
+		// 3 arguments, second variable, no result
+		case StvpOp:
+		CPPAD_ASSERT_UNKNOWN( size_t(arg[1]) <= result );
+		break;
+
+		// 3 arguments, second and third variable, no result
+		case StvvOp:
+		CPPAD_ASSERT_UNKNOWN( size_t(arg[1]) <= result );
+		CPPAD_ASSERT_UNKNOWN( size_t(arg[2]) <= result );
+		break;
+
+
+		// ------------------------------------------------------------------
 		// These cases are executed by and checked during sweep routines
 		case UsrapOp:
 		case UsravOp:

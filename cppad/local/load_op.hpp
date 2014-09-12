@@ -276,7 +276,6 @@ inline void forward_load_v_op_0(
 {	CPPAD_ASSERT_UNKNOWN( NumArg(LdvOp) == 3 );
 	CPPAD_ASSERT_UNKNOWN( NumRes(LdvOp) == 1 );
 	CPPAD_ASSERT_UNKNOWN( 0 < arg[0] );
-	CPPAD_ASSERT_UNKNOWN( size_t(arg[1]) < i_z );
 	CPPAD_ASSERT_UNKNOWN( arg[2] < play->num_load_op_rec() );
 
 	size_t i_vec = Integer( taylor[ arg[1] * cap_order + 0 ] );

@@ -50,7 +50,7 @@ cmd="g++ test_one.cpp $*
 	$cxxflags
 	-g
 	-fopenmp
-	-lboost_thread-mt
+	-lboost_thread
 	-lpthread
 	-std=c++11 -DCPPAD_ADOLC_EXAMPLES -DCPPAD_EIGEN_EXAMPLES
 	-I.. 
