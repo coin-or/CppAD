@@ -797,6 +797,15 @@ inline void assert_arg_before_result(
 {
 	switch( op )
 	{
+		// 0 arguments
+		case CSkipOp:
+		case CSumOp:
+		case EndOp:
+		case InvOp:
+		break;
+		// ------------------------------------------------------------------
+
+		// 1 argument , 1 result
 		case AbsOp:
 		case ExpOp:
 		case LogOp:
@@ -806,6 +815,7 @@ inline void assert_arg_before_result(
 		CPPAD_ASSERT_UNKNOWN( size_t(arg[0]) < result );
 		break;
 
+		// 1 argument, 2 results
 		case AcosOp:
 		case AsinOp:
 		case AtanOp:
@@ -816,6 +826,55 @@ inline void assert_arg_before_result(
 		case TanOp:
 		case TanhOp:
 		CPPAD_ASSERT_UNKNOWN( size_t(arg[0]) + 1 < result );
+		break;
+		// ------------------------------------------------------------------
+
+		// 2 arguments (both variables), 1 results
+		case AddvvOp:
+		case DivvvOp:
+		case MulvvOp:
+		case SubvvOp:
+		CPPAD_ASSERT_UNKNOWN( size_t(arg[0]) < result );
+		CPPAD_ASSERT_UNKNOWN( size_t(arg[1]) < result );
+		break;
+
+		// 2 arguments (first variables), 1 results
+		case DivvpOp:
+		case SubvpOp:
+		CPPAD_ASSERT_UNKNOWN( size_t(arg[0]) < result );
+		break;
+
+		// 2 arguments (second variables), 1 results
+		case AddpvOp:
+		case DisOp:
+		case DivpvOp:
+		case MulpvOp:
+		case SubpvOp:
+		CPPAD_ASSERT_UNKNOWN( size_t(arg[1]) < result );
+		break;
+
+		// 2 arguments (both variables), 3 results
+		case PowvvOp:
+		CPPAD_ASSERT_UNKNOWN( size_t(arg[0]) + 2 < result );
+		CPPAD_ASSERT_UNKNOWN( size_t(arg[1]) + 2 < result );
+		break;
+
+		// 2 arguments (first variable), 3 results
+		case PowvpOp:
+		CPPAD_ASSERT_UNKNOWN( size_t(arg[0]) + 2 < result );
+		break;
+
+		// 2 arguments (second variable), 3 results
+		case PowpvOp:
+		CPPAD_ASSERT_UNKNOWN( size_t(arg[1]) + 2 < result );
+		break;
+		// ------------------------------------------------------------------
+
+		// These cases are executed by and checked during sweep routines
+		case UsrapOp:
+		case UsravOp:
+		case UsrrpOp:
+		case UsrrvOp:
 		break;
 
 		default:

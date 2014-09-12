@@ -638,8 +638,6 @@ is the k-th order Taylor coefficient corresponding to z.
 \par Checked Assertions
 \li NumArg(op) == 2
 \li NumRes(op) == 1
-\li If x is a variable, arg[0] < i_z 
-\li If y is a variable, arg[1] < i_z 
 \li q <  cap_order
 \li p <=  q
 */
@@ -735,8 +733,6 @@ corresponding to z and the ell-th direction.
 \par Checked Assertions
 \li NumArg(op) == 2
 \li NumRes(op) == 1
-\li If x is a variable, arg[0] < i_z 
-\li If y is a variable, arg[1] < i_z 
 \li 0 < q <  cap_order
 */
 template <class Base>
@@ -798,8 +794,6 @@ is the zero order Taylor coefficient corresponding to z.
 \par Checked Assertions
 \li NumArg(op) == 2
 \li NumRes(op) == 1
-\li If x is a variable, \a arg[0] < \a i_z 
-\li If y is a variable, \a arg[1] < \a i_z 
 */
 template <class Base>
 inline void forward_binary_op_0(

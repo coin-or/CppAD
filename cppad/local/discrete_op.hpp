@@ -84,7 +84,6 @@ is the k-th order Taylor coefficient corresponding to z
 \par Checked Assertions where op is the unary operator with one result:
 \li NumArg(op) == 2
 \li NumRes(op) == 1
-\li arg[1] < i_z 
 \li q < cap_order
 \li 0 < r
 */
@@ -101,7 +100,6 @@ inline void forward_dis_op(
 	// check assumptions
 	CPPAD_ASSERT_UNKNOWN( NumArg(DisOp) == 2 );
 	CPPAD_ASSERT_UNKNOWN( NumRes(DisOp) == 1 );
-	CPPAD_ASSERT_UNKNOWN( size_t(arg[1]) < i_z );
 	CPPAD_ASSERT_UNKNOWN( q < cap_order );
 	CPPAD_ASSERT_UNKNOWN( 0 < r );
 

@@ -46,8 +46,6 @@ inline void forward_powvv_op(
 	// check assumptions
 	CPPAD_ASSERT_UNKNOWN( NumArg(PowvvOp) == 2 );
 	CPPAD_ASSERT_UNKNOWN( NumRes(PowvvOp) == 3 );
-	CPPAD_ASSERT_UNKNOWN( size_t(arg[0]) < i_z );
-	CPPAD_ASSERT_UNKNOWN( size_t(arg[1]) < i_z );
 	CPPAD_ASSERT_UNKNOWN( q < cap_order );
 	CPPAD_ASSERT_UNKNOWN( p <= q );
 
@@ -103,7 +101,6 @@ inline void forward_powvv_op_dir(
 	// check assumptions
 	CPPAD_ASSERT_UNKNOWN( NumArg(PowvvOp) == 2 );
 	CPPAD_ASSERT_UNKNOWN( NumRes(PowvvOp) == 3 );
-	CPPAD_ASSERT_UNKNOWN( size_t(arg[0]) < i_z );
 	CPPAD_ASSERT_UNKNOWN( 0 < q );
 	CPPAD_ASSERT_UNKNOWN( q < cap_order );
 
@@ -147,8 +144,6 @@ inline void forward_powvv_op_0(
 	// check assumptions
 	CPPAD_ASSERT_UNKNOWN( NumArg(PowvvOp) == 2 );
 	CPPAD_ASSERT_UNKNOWN( NumRes(PowvvOp) == 3 );
-	CPPAD_ASSERT_UNKNOWN( size_t(arg[0]) < i_z );
-	CPPAD_ASSERT_UNKNOWN( size_t(arg[1]) < i_z );
 
 	// Taylor coefficients corresponding to arguments and result
 	Base* x   = taylor + arg[0] * cap_order;
@@ -194,8 +189,6 @@ inline void reverse_powvv_op(
 	// check assumptions
 	CPPAD_ASSERT_UNKNOWN( NumArg(PowvvOp) == 2 );
 	CPPAD_ASSERT_UNKNOWN( NumRes(PowvvOp) == 3 );
-	CPPAD_ASSERT_UNKNOWN( size_t(arg[0]) < i_z );
-	CPPAD_ASSERT_UNKNOWN( size_t(arg[1]) < i_z );
 	CPPAD_ASSERT_UNKNOWN( d < cap_order );
 	CPPAD_ASSERT_UNKNOWN( d < nc_partial );
 
@@ -248,7 +241,6 @@ inline void forward_powpv_op(
 	// check assumptions
 	CPPAD_ASSERT_UNKNOWN( NumArg(PowpvOp) == 2 );
 	CPPAD_ASSERT_UNKNOWN( NumRes(PowpvOp) == 3 );
-	CPPAD_ASSERT_UNKNOWN( size_t(arg[1]) < i_z );
 	CPPAD_ASSERT_UNKNOWN( q < cap_order );
 	CPPAD_ASSERT_UNKNOWN( p <= q );
 
@@ -314,7 +306,6 @@ inline void forward_powpv_op_dir(
 	// check assumptions
 	CPPAD_ASSERT_UNKNOWN( NumArg(PowpvOp) == 2 );
 	CPPAD_ASSERT_UNKNOWN( NumRes(PowpvOp) == 3 );
-	CPPAD_ASSERT_UNKNOWN( size_t(arg[1]) < i_z );
 	CPPAD_ASSERT_UNKNOWN( 0 < q );
 	CPPAD_ASSERT_UNKNOWN( q < cap_order );
 
@@ -367,7 +358,6 @@ inline void forward_powpv_op_0(
 	// check assumptions
 	CPPAD_ASSERT_UNKNOWN( NumArg(PowpvOp) == 2 );
 	CPPAD_ASSERT_UNKNOWN( NumRes(PowpvOp) == 3 );
-	CPPAD_ASSERT_UNKNOWN( size_t(arg[1]) < i_z );
 
 	// Paraemter value
 	Base x = parameter[ arg[0] ];
@@ -419,7 +409,6 @@ inline void reverse_powpv_op(
 	// check assumptions
 	CPPAD_ASSERT_UNKNOWN( NumArg(PowvvOp) == 2 );
 	CPPAD_ASSERT_UNKNOWN( NumRes(PowvvOp) == 3 );
-	CPPAD_ASSERT_UNKNOWN( size_t(arg[1]) < i_z );
 	CPPAD_ASSERT_UNKNOWN( d < cap_order );
 	CPPAD_ASSERT_UNKNOWN( d < nc_partial );
 
@@ -471,7 +460,6 @@ inline void forward_powvp_op(
 	// check assumptions
 	CPPAD_ASSERT_UNKNOWN( NumArg(PowvpOp) == 2 );
 	CPPAD_ASSERT_UNKNOWN( NumRes(PowvpOp) == 3 );
-	CPPAD_ASSERT_UNKNOWN( size_t(arg[0]) < i_z );
 	CPPAD_ASSERT_UNKNOWN( q < cap_order );
 	CPPAD_ASSERT_UNKNOWN( p <= q );
 
@@ -525,7 +513,6 @@ inline void forward_powvp_op_dir(
 	// check assumptions
 	CPPAD_ASSERT_UNKNOWN( NumArg(PowvpOp) == 2 );
 	CPPAD_ASSERT_UNKNOWN( NumRes(PowvpOp) == 3 );
-	CPPAD_ASSERT_UNKNOWN( size_t(arg[0]) < i_z );
 	CPPAD_ASSERT_UNKNOWN( 0 < q );
 	CPPAD_ASSERT_UNKNOWN( q < cap_order );
 
@@ -569,7 +556,6 @@ inline void forward_powvp_op_0(
 	// check assumptions
 	CPPAD_ASSERT_UNKNOWN( NumArg(PowvpOp) == 2 );
 	CPPAD_ASSERT_UNKNOWN( NumRes(PowvpOp) == 3 );
-	CPPAD_ASSERT_UNKNOWN( size_t(arg[0]) < i_z );
 
 	// Paraemter value
 	Base y = parameter[ arg[1] ];
@@ -621,7 +607,6 @@ inline void reverse_powvp_op(
 	// check assumptions
 	CPPAD_ASSERT_UNKNOWN( NumArg(PowvpOp) == 2 );
 	CPPAD_ASSERT_UNKNOWN( NumRes(PowvpOp) == 3 );
-	CPPAD_ASSERT_UNKNOWN( size_t(arg[0]) < i_z );
 	CPPAD_ASSERT_UNKNOWN( d < cap_order );
 	CPPAD_ASSERT_UNKNOWN( d < nc_partial );
 

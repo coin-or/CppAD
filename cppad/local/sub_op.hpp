@@ -47,8 +47,6 @@ inline void forward_subvv_op(
 	// check assumptions
 	CPPAD_ASSERT_UNKNOWN( NumArg(SubvvOp) == 2 );
 	CPPAD_ASSERT_UNKNOWN( NumRes(SubvvOp) == 1 );
-	CPPAD_ASSERT_UNKNOWN( size_t(arg[0]) < i_z );
-	CPPAD_ASSERT_UNKNOWN( size_t(arg[1]) < i_z );
 	CPPAD_ASSERT_UNKNOWN( q < cap_order );
 	CPPAD_ASSERT_UNKNOWN( p <= q );
 
@@ -87,8 +85,6 @@ inline void forward_subvv_op_dir(
 	// check assumptions
 	CPPAD_ASSERT_UNKNOWN( NumArg(SubvvOp) == 2 );
 	CPPAD_ASSERT_UNKNOWN( NumRes(SubvvOp) == 1 );
-	CPPAD_ASSERT_UNKNOWN( size_t(arg[0]) < i_z );
-	CPPAD_ASSERT_UNKNOWN( size_t(arg[1]) < i_z );
 	CPPAD_ASSERT_UNKNOWN( 0 < q );
 	CPPAD_ASSERT_UNKNOWN( q < cap_order );
 
@@ -128,8 +124,6 @@ inline void forward_subvv_op_0(
 	// check assumptions
 	CPPAD_ASSERT_UNKNOWN( NumArg(SubvvOp) == 2 );
 	CPPAD_ASSERT_UNKNOWN( NumRes(SubvvOp) == 1 );
-	CPPAD_ASSERT_UNKNOWN( size_t(arg[0]) < i_z );
-	CPPAD_ASSERT_UNKNOWN( size_t(arg[1]) < i_z );
 
 	// Taylor coefficients corresponding to arguments and result
 	Base* x = taylor + arg[0] * cap_order;
@@ -167,8 +161,6 @@ inline void reverse_subvv_op(
 	// check assumptions
 	CPPAD_ASSERT_UNKNOWN( NumArg(SubvvOp) == 2 );
 	CPPAD_ASSERT_UNKNOWN( NumRes(SubvvOp) == 1 );
-	CPPAD_ASSERT_UNKNOWN( size_t(arg[0]) < i_z );
-	CPPAD_ASSERT_UNKNOWN( size_t(arg[1]) < i_z );
 	CPPAD_ASSERT_UNKNOWN( d < cap_order );
 	CPPAD_ASSERT_UNKNOWN( d < nc_partial );
 
@@ -213,7 +205,6 @@ inline void forward_subpv_op(
 	// check assumptions
 	CPPAD_ASSERT_UNKNOWN( NumArg(SubpvOp) == 2 );
 	CPPAD_ASSERT_UNKNOWN( NumRes(SubpvOp) == 1 );
-	CPPAD_ASSERT_UNKNOWN( size_t(arg[1]) < i_z );
 	CPPAD_ASSERT_UNKNOWN( q < cap_order );
 	CPPAD_ASSERT_UNKNOWN( p <= q );
 
@@ -256,7 +247,6 @@ inline void forward_subpv_op_dir(
 	// check assumptions
 	CPPAD_ASSERT_UNKNOWN( NumArg(SubpvOp) == 2 );
 	CPPAD_ASSERT_UNKNOWN( NumRes(SubpvOp) == 1 );
-	CPPAD_ASSERT_UNKNOWN( size_t(arg[1]) < i_z );
 	CPPAD_ASSERT_UNKNOWN( 0 < q );
 	CPPAD_ASSERT_UNKNOWN( q < cap_order );
 
@@ -294,7 +284,6 @@ inline void forward_subpv_op_0(
 	// check assumptions
 	CPPAD_ASSERT_UNKNOWN( NumArg(SubpvOp) == 2 );
 	CPPAD_ASSERT_UNKNOWN( NumRes(SubpvOp) == 1 );
-	CPPAD_ASSERT_UNKNOWN( size_t(arg[1]) < i_z );
 
 	// Paraemter value
 	Base x = parameter[ arg[0] ];
@@ -333,7 +322,6 @@ inline void reverse_subpv_op(
 	// check assumptions
 	CPPAD_ASSERT_UNKNOWN( NumArg(SubvvOp) == 2 );
 	CPPAD_ASSERT_UNKNOWN( NumRes(SubvvOp) == 1 );
-	CPPAD_ASSERT_UNKNOWN( size_t(arg[1]) < i_z );
 	CPPAD_ASSERT_UNKNOWN( d < cap_order );
 	CPPAD_ASSERT_UNKNOWN( d < nc_partial );
 
@@ -376,7 +364,6 @@ inline void forward_subvp_op(
 	// check assumptions
 	CPPAD_ASSERT_UNKNOWN( NumArg(SubvpOp) == 2 );
 	CPPAD_ASSERT_UNKNOWN( NumRes(SubvpOp) == 1 );
-	CPPAD_ASSERT_UNKNOWN( size_t(arg[0]) < i_z );
 	CPPAD_ASSERT_UNKNOWN( q < cap_order );
 	CPPAD_ASSERT_UNKNOWN( p <= q );
 
@@ -419,7 +406,6 @@ inline void forward_subvp_op_dir(
 	// check assumptions
 	CPPAD_ASSERT_UNKNOWN( NumArg(SubvpOp) == 2 );
 	CPPAD_ASSERT_UNKNOWN( NumRes(SubvpOp) == 1 );
-	CPPAD_ASSERT_UNKNOWN( size_t(arg[0]) < i_z );
 	CPPAD_ASSERT_UNKNOWN( 0 < q );
 	CPPAD_ASSERT_UNKNOWN( q < cap_order );
 
@@ -458,7 +444,6 @@ inline void forward_subvp_op_0(
 	// check assumptions
 	CPPAD_ASSERT_UNKNOWN( NumArg(SubvpOp) == 2 );
 	CPPAD_ASSERT_UNKNOWN( NumRes(SubvpOp) == 1 );
-	CPPAD_ASSERT_UNKNOWN( size_t(arg[0]) < i_z );
 
 	// Parameter value
 	Base y = parameter[ arg[1] ];
@@ -497,7 +482,6 @@ inline void reverse_subvp_op(
 	// check assumptions
 	CPPAD_ASSERT_UNKNOWN( NumArg(SubvpOp) == 2 );
 	CPPAD_ASSERT_UNKNOWN( NumRes(SubvpOp) == 1 );
-	CPPAD_ASSERT_UNKNOWN( size_t(arg[0]) < i_z );
 	CPPAD_ASSERT_UNKNOWN( d < cap_order );
 	CPPAD_ASSERT_UNKNOWN( d < nc_partial );
 
