@@ -54,6 +54,11 @@ This section contains a list of the changes to CppAD during 2014
 The purpose of this section is to
 assist you in learning about changes between various versions of CppAD.
 
+$head 10-21$$
+Fix a typo in documentation for 
+$cref/any order reverse/reverse_any/$$.
+To be specific, $latex x^{(k)}$$ was changed to be $latex u^{(k)}$$. 
+
 $head 05-28$$
 $list number$$
 Change the $cref/boolsparsity/speed_main/Sparsity Options/boolsparsity/$$

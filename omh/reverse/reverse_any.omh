@@ -48,15 +48,15 @@ which is specified by the following notation:
 
 $head Notation$$
 
-$subhead x^(k)$$
+$subhead u^(k)$$
 For $latex k = 0, \ldots , q-1$$,
-the vector $latex x^{(k)} \in B^n$$ is defined as the value of 
+the vector $latex u^{(k)} \in B^n$$ is defined as the value of 
 $icode x_k$$ in the previous calls of the form
 $codei%
 	%f%.Forward(%k%, %x_k%)
 %$$ 
 If there is no previous call with $latex k = 0$$,
-$latex x^{(0)}$$ is the value of the independent variables when the 
+$latex u^{(0)}$$ is the value of the independent variables when the 
 corresponding 
 AD of $icode Base$$
 $cref/operation sequence/glossary/Operation/Sequence/$$ was recorded.
