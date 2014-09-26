@@ -585,7 +585,7 @@ or power operator.  NumArg( tape[current].op ) == 1.
 */
 template <class Base>
 inline size_t binary_match(
-	const CppAD::vector<struct struct_old_variable>& tape           ,
+	const CppAD::vector<struct struct_old_variable>&   tape           ,
 	size_t                                             current        ,
 	size_t                                             npar           ,
 	const Base*                                        par            ,
@@ -602,7 +602,15 @@ inline size_t binary_match(
 	CPPAD_ASSERT_UNKNOWN( NumArg(op) == 2 );
 	CPPAD_ASSERT_UNKNOWN( NumRes(op) >  0 );
 	switch(op)
-	{	// parameter op variable ----------------------------------
+	{	// index op variable
+		case DisOp:
+		// parameter not defined for this case
+		CPPAD_ASSERT_UNKNOWN( size_t(arg[1]) < current );
+		new_arg[0]   = arg[0];
+		new_arg[1]   = tape[arg[1]].new_var;
+		break;
+
+		// parameter op variable ----------------------------------
 		case AddpvOp:
 		case MulpvOp:
 		case DivpvOp:
@@ -662,18 +670,24 @@ inline size_t binary_match(
 	CPPAD_ASSERT_UNKNOWN( i < current );
 	if( op == tape[i].op )
 	{	bool match = true;
-		size_t j;
-		for(j = 0; j < 2; j++)
-		{	size_t k = tape[i].arg[j];
-			if( parameter[j] )
-			{	CPPAD_ASSERT_UNKNOWN( k < npar );
-				match &= IdenticalEqualPar(
-					par[ arg[j] ], par[k]
-				);
-			}
-			else
-			{	CPPAD_ASSERT_UNKNOWN( k < i );
-				match &= (new_arg[j] == tape[k].new_var);
+		if( op == DisOp )
+		{	match   &= new_arg[0] == tape[i].arg[0];
+			size_t k = tape[i].arg[1];
+			match   &= new_arg[1] == tape[k].new_var;
+		}
+		else
+		{	for(size_t j = 0; j < 2; j++)
+			{	size_t k = tape[i].arg[j];
+				if( parameter[j] )
+				{	CPPAD_ASSERT_UNKNOWN( k < npar );
+					match &= IdenticalEqualPar(
+						par[ arg[j] ], par[k]
+					);
+				}
+				else
+				{	CPPAD_ASSERT_UNKNOWN( k < i );
+					match &= (new_arg[j] == tape[k].new_var);
+				}
 			}
 		}
 		if( match )
@@ -1392,7 +1406,7 @@ void optimize_run(
 		std::set<class_cexp_pair>& cexp_set = tape[i_var].cexp_set;
 		switch( op )
 		{
-			// Unary operator where operand is arg[0]
+			// One variable corresponding to arg[0]
 			case AbsOp:
 			case AcosOp:
 			case AsinOp:
@@ -1439,7 +1453,7 @@ void optimize_run(
 			}
 			break; // --------------------------------------------
 
-			// Unary operator where operand is arg[1]
+			// One variable corresponding to arg[1]
 			case DisOp:
 			case DivpvOp:
 			case MulpvOp:
@@ -1670,7 +1684,7 @@ void optimize_run(
 			}
 			break;  // --------------------------------------------
 
-			// Operations where there is noting to do
+			// Operations where there is nothing to do
 			case ComOp:
 			case EndOp:
 			case ParOp:
@@ -2181,6 +2195,33 @@ void optimize_run(
 				replace_hash = true;
 			}
 			break;
+			// ---------------------------------------------------
+			// Binary operators where 
+			// left is an index and right is a variable
+			case DisOp:
+			match_var = binary_match(
+				tape                ,  // inputs 
+				i_var               ,
+				play->num_par_rec() ,
+				play->GetPar()      ,
+				hash_table_var      ,
+				code                  // outputs
+			);
+			if( match_var > 0 )
+				tape[i_var].new_var = match_var;
+			else
+			{	new_arg[0] = arg[0];
+				new_arg[1] = tape[ arg[1] ].new_var;
+				rec->PutArg( new_arg[0], new_arg[1] ); 
+				tape[i_var].new_op  = rec->num_op_rec();
+				tape[i_var].new_var = rec->PutOp(op);
+				CPPAD_ASSERT_UNKNOWN( 
+					size_t(new_arg[1]) < tape[i_var].new_var
+				);
+				replace_hash = true;
+			}
+			break;
+
 			// ---------------------------------------------------
 			// Binary operators where 
 			// left is a parameter and right is a variable

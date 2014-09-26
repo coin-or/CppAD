@@ -229,7 +229,7 @@ public:
 	/*!
 	Constructor called for each invocation of CPPAD_DISCRETE_FUNCTION.
 
-	Put this objec in the list of all objects for this class and set
+	Put this object in the list of all objects for this class and set
 	the constant private data name_, f_, and index_.
 
 	\param Name

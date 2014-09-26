@@ -1430,6 +1430,33 @@ namespace {
 	
 		return ok;
 	}
+	// -----------------------------------------------------------------------
+	double floor(const double& x)
+	{	return std::floor(x); }
+	CPPAD_DISCRETE_FUNCTION(double, floor)
+	bool discrete_function(void)
+	{	bool ok = true;
+		using CppAD::vector;
+	
+		vector< CppAD::AD<double> > ax(1), ay(1);
+		ax[0] = 0.0; 
+		CppAD::Independent(ax);
+		ay[0] =  floor(ax[0]) + floor(ax[0]);  
+		CppAD::ADFun<double> f(ax, ay);
+	
+		size_t size_before = f.size_var();
+		f.optimize(); 
+		size_t size_after = f.size_var();
+		ok &= size_after + 1 == size_before;
+	
+		vector<double> x(1), y(1);
+		x[0] = -2.2;
+		y    = f.Forward(0, x);
+		ok &= y[0] == -6.0;
+	
+		return ok;
+	}
+	// -----------------------------------------------------------------------
 }
 
 bool optimize(void)
@@ -1472,6 +1499,8 @@ bool optimize(void)
 	ok     &= old_atomic_test();
 	// case where results are not identically equal
 	ok     &= not_identically_equal();
+	// case where a discrete function is used
+	ok     &= discrete_function();
 	//
 	CppAD::user_atomic<double>::clear();
 	return ok;
