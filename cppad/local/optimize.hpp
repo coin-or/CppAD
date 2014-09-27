@@ -1892,7 +1892,7 @@ void optimize_run(
 						"Optimizing an ADFun object"
 						" that contains the atomic function\n\t";
 					s += user_atom->afun_name();
-					s += "\nCurrent atomoic_sparsity is set to";
+					s += "\nCurrent atomic_sparsity is set to";
 					//
 					if( user_set )
 						s += " std::set\nand std::set";
