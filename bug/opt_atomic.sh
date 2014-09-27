@@ -61,23 +61,6 @@ private:
 		ok = false;
 		return ok;
 	}
-	virtual bool rev_sparse_jac(
-		size_t                                p  ,
-		const vector<bool>&                   rt ,
-		      vector<bool>&                   st )
-	{	// This function needed if using RevSparseJac or optimize
-		// with afun.option( CppAD::atomic_base<double>::bool_sparsity_enum )
-		size_t n = st.size() / p;
-		size_t m = rt.size() / p;
-		assert( n == 1 );
-		assert( m == 1 );
-
-		// sparsity for S(x)^T = f'(x)^T * R^T is same as sparsity for R^T
-		for(size_t i = 0; i < p; i++)
-			st[i] = rt[i];
-
-		return true; 
-	}
 	// reverse Jacobian set sparsity routine called by CppAD
 	virtual bool rev_sparse_jac(
 		size_t                                p  ,
@@ -99,21 +82,18 @@ private:
 
 
 int main(){
-  vector<AD<double> > x(2);
-  vector<AD<double> > y(1);
-  x[0]=1; x[1]=1;
-  AD<double> zero=0.0;  
-  // Create the atomic reciprocal object
-  atomic_reciprocal afun("atomic_reciprocal");
-  vector< AD<double> > ax(1);
-  vector< AD<double> > ay(1);
-  Independent(x);
-  ax[0] = x[0] + x[1];
-  afun(ax,ay);
-  y[0] = CondExpGt(ay[0],zero,zero,ay[0]);
-  ADFun<double> F(x,y);
+	// Create the atomic function
+	atomic_reciprocal afun("atomic_reciprocal");
+
+	vector< AD<double> > ax(1), ay(1);
+	ax[0]=1;
+	Independent(ax);
+	afun(ax, ay);
+	AD<double> az = 0.0;  
+  	ay[0] = CondExpGt(ay[0], az, az, ay[0]);
+	ADFun<double> F(ax, ay);
   
-  F.optimize();  // <-- Line that cause problem
+	F.optimize();
 }
 EOF
 # -----------------------------------------------------------------------------
