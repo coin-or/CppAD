@@ -54,8 +54,13 @@ This section contains a list of the changes to CppAD during 2014
 The purpose of this section is to
 assist you in learning about changes between various versions of CppAD.
 
+$head 09-27$$
+Fix a bug that occurred when 
+$cref/f.optimize/optimize/$$ was used with a function $icode f$$
+that contained calls to user defined $cref atomic$$ operations.
+
 $head 09-25$$
-Fix a bug when 
+Fix a bug that occurred when 
 $cref/f.optimize/optimize/$$ was used with a function $icode f$$
 that contained $cref discrete$$ functions.
 

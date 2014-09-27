@@ -2034,7 +2034,9 @@ void optimize_run(
 
 		// determine if we should insert a conditional skip here
 		bool skip = cskip_info_next < cskip_info.size();
-		skip     &= (op != BeginOp) & (op != InvOp);
+		skip     &= op != BeginOp;
+		skip     &= op != InvOp;
+		skip     &= user_state == user_start;
 		if( skip )
 		{	j     = cskip_info_order[cskip_info_next];
 			if( NumRes(op) > 0 )

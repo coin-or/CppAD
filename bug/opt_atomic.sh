@@ -83,17 +83,35 @@ private:
 
 int main(){
 	// Create the atomic function
-	atomic_reciprocal afun("atomic_reciprocal");
+	atomic_reciprocal afun("reciprocal");
 
-	vector< AD<double> > ax(1), ay(1);
-	ax[0]=1;
+	AD<double> zero = 0.0;
+
+	vector< AD<double> > ax(2);
+	ax[0] = 1.0;
+	ax[1] = 2.0;
 	Independent(ax);
-	afun(ax, ay);
-	AD<double> az = 0.0;  
-  	ay[0] = CondExpGt(ay[0], az, az, ay[0]);
-	ADFun<double> F(ax, ay);
-  
-	F.optimize();
+
+	vector< AD<double> > au(1), av(1), aw(1);
+	au[0] = ax[0];
+	afun(au, av);
+	au[0] = ax[1];
+	afun(au, aw);
+
+	vector< AD<double> > ay(1);
+  	ay[0] = CondExpGt(av[0], zero, av[0], aw[0]);
+	ADFun<double> f(ax, ay);
+
+	// run case that skips the second call to afun
+	// (can use trace in forward0sweep.hpp to see this).
+	vector<double> x(2), y_before(1), y_after(1);
+	x[0]      = 1.0;
+	x[1]      = 2.0;
+	y_before  = f.Forward(0, x);
+	f.optimize();
+	y_after   = f.Forward(0, x);
+
+	assert( y_before[0] == y_after[0] );
 }
 EOF
 # -----------------------------------------------------------------------------
