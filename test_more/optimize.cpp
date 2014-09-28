@@ -1457,12 +1457,12 @@ namespace {
 		return ok;
 	}
 	// ----------------------------------------------------------------
-	// Test bug where atomic functions were not properly conditionally skipped.
 	void i_algo( 
 		const CppAD::vector< CppAD::AD<double> >& ax ,
 		      CppAD::vector< CppAD::AD<double> >& ay )
 	{	ay[0] = 1.0 / ax[0]; }
-	
+	//
+	// Test bug where atomic functions were not properly conditionally skipped.
 	bool cond_exp_skip_atomic(void)
 	{	bool ok = true;
 		using CppAD::AD;
@@ -1501,6 +1501,49 @@ namespace {
 	
 		ok &= y_before[0] == y_after[0];
 		
+		return ok;
+	}
+	//
+	// Test bug where conditional dependence did not pass through
+	// atomic functions
+	bool cond_exp_atomic_dependence(void)
+	{	bool ok = true;
+		using CppAD::AD;
+		using CppAD::vector;
+	
+		// Create a checkpoint version of the function i_algo
+		vector< AD<double> > au(1), av(1), aw(1);
+		au[0] = 1.0;
+		CppAD::checkpoint<double> i_check("i_check", i_algo, au, av);
+	
+		vector< AD<double> > ax(2), ay(1);
+		AD<double> zero = 0.0;  
+		ax[0] = 1.0;
+		ax[1] = 1.0;
+		Independent(ax);
+		av[0] = ax[0] + ax[1];
+		i_check(av, aw);
+		ay[0] = CondExpGt(aw[0], zero, zero, aw[0]);
+		CppAD::ADFun<double> f;
+		f.Dependent(ax, ay);
+
+		// run case that skips the second call to afun
+		// (but not for order zero)
+		vector<double> x(2), y_before(1), y_after(1);
+		vector<double> dx(2), dy_before(1), dy_after(1);
+		x[0]      = 1.0;
+		x[1]      = 1.0;
+		y_before  = f.Forward(0, x);
+		dx[0]     = 2.0;
+		dx[1]     = 2.0;
+		dy_before = f.Forward(1, dx);
+		f.optimize();
+		y_after   = f.Forward(0, x);
+		dy_after  = f.Forward(1, dx);
+
+		ok &= y_before[0]  == y_after[0];
+		ok &= dy_before[0] == dy_after[0];
+
 		return ok;
 	}
 	// -----------------------------------------------------------------------
@@ -1550,6 +1593,8 @@ bool optimize(void)
 	ok     &= discrete_function();
 	// check conditional skip of an atomic function
 	ok     &= cond_exp_skip_atomic();
+	// check conditional dependence through atomic function
+	ok     &= cond_exp_atomic_dependence();
 	//
 	CppAD::user_atomic<double>::clear();
 	return ok;
