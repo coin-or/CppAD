@@ -55,7 +55,7 @@ The purpose of this section is to
 assist you in learning about changes between various versions of CppAD.
 
 $head 09-28$$
-Fix three more bugs related to optimizing condition conditional expressions.
+Fix more bugs related to optimizing condition conditional expressions.
 $list number$$
 Using old instead of new operator indices.
 $lnext
