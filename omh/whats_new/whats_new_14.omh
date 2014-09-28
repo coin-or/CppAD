@@ -54,6 +54,18 @@ This section contains a list of the changes to CppAD during 2014
 The purpose of this section is to
 assist you in learning about changes between various versions of CppAD.
 
+$head 09-28$$
+Fix three more bugs related to optimizing condition conditional expressions.
+$list number$$
+Using old instead of new operator indices.
+$lnext
+Not properly following dependence back through atomic operations.
+$lnext
+Aborting during forward order zero, when skipping computation for a variable 
+that was already completed (the skip is still useful for higher orders
+and for reverse mode).
+$lend
+
 $head 09-27$$
 Fix a bug that occurred when 
 $cref/f.optimize/optimize/$$ was used with a function $icode f$$

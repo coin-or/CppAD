@@ -109,6 +109,11 @@ int main()
 	
 	ok &= y_before[0] == y_after[0];
 
+	if( ok )
+		std::cout << "OK" << std::endl;
+	else
+		std::cout << "Error" << std::endl;
+
 	return( ! ok );
 }
 EOF

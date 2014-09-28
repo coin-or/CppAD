@@ -1846,6 +1846,8 @@ void optimize_run(
 						user_info[user_curr].connect_type = yes_connected;
 				}
 				else	user_info[user_curr].connect_type = yes_connected;
+				user_r_set[user_i].insert(0);
+				user_r_bool[user_i] = true;
 				break;
 
 				default:
@@ -1957,7 +1959,10 @@ void optimize_run(
 			keys[i] = std::max( cskip_info[i].left, cskip_info[i].right );
 		CppAD::index_sort(keys, cskip_info_order);
 	}
-	size_t cskip_info_next = 0;
+	// index in sorted order
+	size_t cskip_order_next = 0;
+	// index in order during reverse sweep
+	size_t cskip_info_index = cskip_info.size();
 
 
 	// Initilaize table mapping hash code to variable index in tape
@@ -2033,19 +2038,19 @@ void optimize_run(
 		CPPAD_ASSERT_UNKNOWN( (i_op <= n) | (op != InvOp) );
 
 		// determine if we should insert a conditional skip here
-		bool skip = cskip_info_next < cskip_info.size();
+		bool skip = cskip_order_next < cskip_info.size();
 		skip     &= op != BeginOp;
 		skip     &= op != InvOp;
 		skip     &= user_state == user_start;
 		if( skip )
-		{	j     = cskip_info_order[cskip_info_next];
+		{	j     = cskip_info_order[cskip_order_next];
 			if( NumRes(op) > 0 )
 				skip &= cskip_info[j].max_left_right < i_var;
 			else
 				skip &= cskip_info[j].max_left_right <= i_var;
 		}
 		if( skip )
-		{	cskip_info_next++;
+		{	cskip_order_next++;
 			skip &= cskip_info[j].skip_var_true.size() > 0 ||
 					cskip_info[j].skip_var_false.size() > 0;
 			if( skip )
@@ -2353,6 +2358,14 @@ void optimize_run(
 			);
 			tape[i_var].new_op  = rec->num_op_rec();
 			tape[i_var].new_var = rec->PutOp(op);
+			//
+			// The new addresses for left and right are used during 
+			// fill in the arguments for the CSkip operations. This does not
+			// affect max_left_right which is used during this sweep.
+			CPPAD_ASSERT_UNKNOWN( cskip_info_index > 0 );
+			cskip_info_index--;
+			cskip_info[ cskip_info_index ].left  = new_arg[2];
+			cskip_info[ cskip_info_index ].right = new_arg[3];
 			break;
 			// ---------------------------------------------------
 			// Operations with no arguments and no results
@@ -2585,7 +2598,7 @@ void optimize_run(
 	}
 
 	// fill in the arguments for the CSkip operations
-	CPPAD_ASSERT_UNKNOWN( cskip_info_next == cskip_info.size() );
+	CPPAD_ASSERT_UNKNOWN( cskip_order_next == cskip_info.size() );
 	for(i = 0; i < cskip_info.size(); i++)
 	{	struct_cskip_info info = cskip_info[i];
 		if( info.i_arg > 0 )

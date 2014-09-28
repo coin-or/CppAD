@@ -40,4 +40,9 @@ echo "g++ -I../.. --std=c++11 -g $name.cpp -o $name"
 g++ -I../.. --std=c++11 -g $name.cpp -o $name
 #
 echo "./$name"
-./$name
+if ./$name
+then
+	echo "OK"
+else
+	echo "Error"
+fi
