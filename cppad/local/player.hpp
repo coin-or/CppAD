@@ -618,14 +618,18 @@ public:
 		CPPAD_ASSERT_UNKNOWN( NumArg(CSumOp) == 0 );
 		/*
 		The variables that need fixing are op_arg_ and op_arg. Currently, 
-		op_arg points first argument for the previous operator.
+		op_arg points to the last argument for the previous operator.
 		*/
+		// last argument for this csum operation
 		--op_arg;
+		// first argument for this csum operation
 		op_arg      = op_arg_    -= (op_arg[0] + 4);
+		// now op_arg points to the first argument for this csum operator
 
 		CPPAD_ASSERT_UNKNOWN(
 		op_arg[0] + op_arg[1] == op_arg[ 3 + op_arg[0] + op_arg[1] ]
 		);
+
 		CPPAD_ASSERT_UNKNOWN( op_index_  < op_rec_.size() );
 		CPPAD_ASSERT_UNKNOWN( op_arg_rec_.data() <= op_arg_ );
 		CPPAD_ASSERT_UNKNOWN( var_index_  < num_var_rec_ );
@@ -665,13 +669,15 @@ public:
 		CPPAD_ASSERT_UNKNOWN( NumArg(CSkipOp) == 0 );
 		/*
 		The variables that need fixing are op_arg_ and op_arg. Currently, 
-		op_arg points first arugment for the previous operator.
+		op_arg points to the last arugment for the previous operator.
 		*/
+		// last argument for this cskip operation
 		--op_arg;
-		op_arg      = op_arg_    -= (op_arg[0] + 4);
+		// first argument for this cskip operation
+		op_arg      = op_arg_    -= (op_arg[0] + 7);
 
 		CPPAD_ASSERT_UNKNOWN(
-		op_arg[1] + op_arg[2] == op_arg[ 3 + op_arg[1] + op_arg[2] ]
+		op_arg[4] + op_arg[5] == op_arg[ 6 + op_arg[4] + op_arg[5] ]
 		);
 		CPPAD_ASSERT_UNKNOWN( op_index_  < op_rec_.size() );
 		CPPAD_ASSERT_UNKNOWN( op_arg_rec_.data() <= op_arg_ );

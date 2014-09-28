@@ -1651,6 +1651,7 @@ void optimize_run(
 				info.right      = arg[3];
 				info.n_op_true  = 0;
 				info.n_op_false = 0;
+				info.i_arg      = 0; // case where no CSkipOp for this CExpOp
 				//
 				size_t index    = 0;
 				if( arg[1] & 1 )
@@ -2051,15 +2052,12 @@ void optimize_run(
 		}
 		if( skip )
 		{	cskip_order_next++;
-			skip &= cskip_info[j].skip_var_true.size() > 0 ||
-					cskip_info[j].skip_var_false.size() > 0;
+			struct_cskip_info info = cskip_info[j];
+			size_t n_true  = info.skip_var_true.size() + info.n_op_true;
+			size_t n_false = info.skip_var_false.size() + info.n_op_false;
+			skip &= n_true > 0 || n_false > 0;
 			if( skip )
-			{	struct_cskip_info info = cskip_info[j];
-				CPPAD_ASSERT_UNKNOWN( NumRes(CSkipOp) == 0 );
-				size_t n_true  = 
-					info.skip_var_true.size() + info.n_op_true;
-				size_t n_false = 
-					info.skip_var_false.size() + info.n_op_false;
+			{	CPPAD_ASSERT_UNKNOWN( NumRes(CSkipOp) == 0 );
 				size_t n_arg   = 7 + n_true + n_false; 
 				// reserve space for the arguments to this operator but 
 				// delay setting them until we have all the new addresses
@@ -2067,7 +2065,6 @@ void optimize_run(
 				CPPAD_ASSERT_UNKNOWN( cskip_info[j].i_arg > 0 );
 				rec->PutOp(CSkipOp);
 			}
-			else	cskip_info[j].i_arg = 0;
 		}
 
 		// determine if we should keep this operation in the new

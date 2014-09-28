@@ -250,12 +250,25 @@ void ReverseSweep(
 			{	// CSumOp has a variable number of arguments
 				play->reverse_csum(op, arg, i_op, i_var);
 			}
-			play->reverse_next(op, arg, i_op, i_var);
+			CPPAD_ASSERT_UNKNOWN( op != CSkipOp );
+			// if( op == CSkipOp )
+			// {	// CSkip has a variable number of arguments
+			// 	play->reverse_cskip(op, arg, i_op, i_var);
+			// }
 			CPPAD_ASSERT_UNKNOWN( i_op < play->num_op_rec() );
+			play->reverse_next(op, arg, i_op, i_var);
 		}
 
 		// rest of informaiton depends on the case
 # if CPPAD_REVERSE_SWEEP_TRACE
+		if( op == CSumOp )
+		{	// CSumOp has a variable number of arguments
+			play->reverse_csum(op, arg, i_op, i_var);
+		}
+		if( op == CSkipOp )
+		{	// CSkip has a variable number of arguments
+			play->reverse_cskip(op, arg, i_op, i_var);
+		}
 		size_t       i_tmp  = i_var;
 		const Base*  Z_tmp  = Taylor + i_var * J;
 		const Base*  pZ_tmp = Partial + i_var * K;
@@ -338,7 +351,9 @@ void ReverseSweep(
 			// CSkipOp has a variable number of arguments and
 			// forward_next thinks it one has one argument.
 			// we must inform reverse_next of this special case.
+# if ! CPPAD_REVERSE_SWEEP_TRACE
 			play->reverse_cskip(op, arg, i_op, i_var);
+# endif
 			break;
 			// -------------------------------------------------
 
@@ -346,7 +361,9 @@ void ReverseSweep(
 			// CSumOp has a variable number of arguments and
 			// reverse_next thinks it one has one argument.
 			// We must inform reverse_next of this special case.
+# if ! CPPAD_REVERSE_SWEEP_TRACE
 			play->reverse_csum(op, arg, i_op, i_var);
+# endif
 			reverse_csum_op(
 				d, i_var, arg, K, Partial
 			);

@@ -238,6 +238,11 @@ size_t forward2sweep(
 			{	// CSumOp has a variable number of arguments 
 				play->forward_csum(op, arg, i_op, i_var);
 			}
+			CPPAD_ASSERT_UNKNOWN( op != CSkipOp );
+			// if( op == CSkipOp )
+			// {	// CSkip has a variable number of arguments
+			// 	play->forward_cskip(op, arg, i_op, i_var);
+			// }
 			play->forward_next(op, arg, i_op, i_var);
 			CPPAD_ASSERT_UNKNOWN( i_op < play->num_op_rec() );
 		}
