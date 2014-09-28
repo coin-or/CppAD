@@ -1547,6 +1547,43 @@ namespace {
 		return ok;
 	}
 	// -----------------------------------------------------------------------
+	// Test reverse mode conditionalay skipping commands.
+	template <class Type>
+	Type my_max(const CppAD::vector<Type>& arg)
+	{	Type res = arg[0];
+		for(size_t j = 0;j < arg.size(); j++)
+    		res = CondExpGt(res, arg[j], res, arg[j]);
+		return res;
+  	}
+	bool cond_exp_reverse(void)
+	{	bool ok = true;
+		size_t n = 3;
+		using CppAD::vector;
+		using CppAD::AD;
+	
+		vector< AD<double> > ax(n), ay(1);
+		for(size_t j = 0; j < n; j++)
+			ax[j] = 1.0;
+		Independent(ax);
+		ay[0] = my_max(ax) + my_max(ax);
+		CppAD::ADFun<double> f(ax, ay);
+	
+		f.optimize();
+	
+		vector<double> x(n), w(1), dx(n);
+		for(size_t j = 0;j < n; j++)
+			x[j] = double(j);
+		f.Forward(0, x);
+		w[0] = 1.0;
+		dx = f.Reverse(1, w);
+		for(size_t j = 0; j < n; j++)
+		{	if( j == n-1 )
+				ok &= dx[j] == 2.0;
+			else
+				ok &= dx[j] == 0.0;
+		}
+		return ok;
+	}
 }
 
 bool optimize(void)
@@ -1595,6 +1632,8 @@ bool optimize(void)
 	ok     &= cond_exp_skip_atomic();
 	// check conditional dependence through atomic function
 	ok     &= cond_exp_atomic_dependence();
+	// check reverse mode conditional skipping
+	ok     &= cond_exp_reverse();
 	//
 	CppAD::user_atomic<double>::clear();
 	return ok;

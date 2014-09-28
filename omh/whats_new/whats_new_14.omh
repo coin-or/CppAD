@@ -64,6 +64,12 @@ $lnext
 Aborting during forward order zero, when skipping computation for a variable 
 that was already completed (the skip is still useful for higher orders
 and for reverse mode).
+$lnext
+Reverse mode not properly handling the variable number of arguments in the
+conditional skip operation.
+$lnext
+Reverse mode tracing not properly handling the variable number
+of argument operations; i.e., conditional skip and cumulative summation.
 $lend
 
 $head 09-27$$
