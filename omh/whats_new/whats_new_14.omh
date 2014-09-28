@@ -57,7 +57,8 @@ assist you in learning about changes between various versions of CppAD.
 $head 09-27$$
 Fix a bug that occurred when 
 $cref/f.optimize/optimize/$$ was used with a function $icode f$$
-that contained calls to user defined $cref atomic$$ operations.
+that contained calls to user defined $cref atomic$$ operations
+and $cref/conditional expressions/CondExp/$$.
 
 $head 09-25$$
 Fix a bug that occurred when 

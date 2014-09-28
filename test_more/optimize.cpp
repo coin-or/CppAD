@@ -1456,6 +1456,53 @@ namespace {
 	
 		return ok;
 	}
+	// ----------------------------------------------------------------
+	// Test bug where atomic functions were not properly conditionally skipped.
+	void i_algo( 
+		const CppAD::vector< CppAD::AD<double> >& ax ,
+		      CppAD::vector< CppAD::AD<double> >& ay )
+	{	ay[0] = 1.0 / ax[0]; }
+	
+	bool cond_exp_skip_atomic(void)
+	{	bool ok = true;
+		using CppAD::AD;
+		using CppAD::vector;
+	
+		// Create a checkpoint version of the function i_algo
+		vector< AD<double> > au(1), av(1), aw(1);
+		au[0] = 1.0;
+		CppAD::checkpoint<double> i_check("i_check", i_algo, au, av);
+	
+		// independent variable vector 
+		vector< AD<double> > ax(2), ay(1);
+		ax[0] = 1.0;
+		ax[1] = 2.0;
+		Independent(ax);
+	
+		// call atomic function that does not get used
+		au[0] = ax[0];
+		i_check(au, av);
+		au[0] = ax[1];
+		i_check(au, aw);
+		AD<double> zero = 0.0;
+		ay[0] = CondExpGt(av[0], zero, av[0], aw[0]);
+
+		// create function object f : ax -> ay
+		CppAD::ADFun<double> f(ax, ay);
+
+		// run case that skips the second call to afun
+		// (can use trace in forward0sweep.hpp to see this).
+		vector<double> x(2), y_before(1), y_after(1);
+		x[0]      = 1.0;
+		x[1]      = 2.0;
+		y_before  = f.Forward(0, x);
+		f.optimize();
+		y_after   = f.Forward(0, x);
+	
+		ok &= y_before[0] == y_after[0];
+		
+		return ok;
+	}
 	// -----------------------------------------------------------------------
 }
 
@@ -1501,6 +1548,8 @@ bool optimize(void)
 	ok     &= not_identically_equal();
 	// case where a discrete function is used
 	ok     &= discrete_function();
+	// check conditional skip of an atomic function
+	ok     &= cond_exp_skip_atomic();
 	//
 	CppAD::user_atomic<double>::clear();
 	return ok;
