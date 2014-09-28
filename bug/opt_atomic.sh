@@ -14,6 +14,8 @@ cat << EOF
 Assert during optimization of an atomic function.
 EOF
 cat << EOF > bug.$$
+// Another bug (reported by Kasper Kristensen) optimizing combination of 
+// conditional expressions and atomic functions.
 # include <cppad/cppad.hpp>
 
 using CppAD::vector;
@@ -81,37 +83,33 @@ private:
 };
 
 
-int main(){
-	// Create the atomic function
+int main()
+{	bool ok = true;
 	atomic_reciprocal afun("reciprocal");
 
-	AD<double> zero = 0.0;
-
-	vector< AD<double> > ax(2);
+	vector< AD<double> > av(1), aw(1), ax(2), ay(1);
+	AD<double> zero = 0.0;  
 	ax[0] = 1.0;
-	ax[1] = 2.0;
+	ax[1] = 1.0;
 	Independent(ax);
-
-	vector< AD<double> > au(1), av(1), aw(1);
-	au[0] = ax[0];
-	afun(au, av);
-	au[0] = ax[1];
-	afun(au, aw);
-
-	vector< AD<double> > ay(1);
-  	ay[0] = CondExpGt(av[0], zero, av[0], aw[0]);
-	ADFun<double> f(ax, ay);
+	av[0] = ax[0] + ax[1];
+	afun(av, aw);
+	ay[0] = CondExpGt(aw[0], zero, zero, aw[0]);
+	ADFun<double> f;
+	f.Dependent(ax, ay);
 
 	// run case that skips the second call to afun
-	// (can use trace in forward0sweep.hpp to see this).
+	// (but not for order zero)
 	vector<double> x(2), y_before(1), y_after(1);
 	x[0]      = 1.0;
-	x[1]      = 2.0;
+	x[1]      = 1.0;
 	y_before  = f.Forward(0, x);
 	f.optimize();
 	y_after   = f.Forward(0, x);
+	
+	ok &= y_before[0] == y_after[0];
 
-	assert( y_before[0] == y_after[0] );
+	return( ! ok );
 }
 EOF
 # -----------------------------------------------------------------------------
