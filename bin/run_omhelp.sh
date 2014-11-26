@@ -61,17 +61,12 @@ if [ $printable == 'yes' ]
 then
 	cmd="$cmd -printable"
 fi
-echo "$cmd > omhelp.$ext.log"
-if !  $cmd > ../omhelp.$ext.log
+echo "$cmd >& omhelp.$ext.log"
+if !  $cmd >& ../omhelp.$ext.log
 then
-	if ! grep "^OMhelp Error:" ../omhelp.$ext.log
-	then
-		echo "OMhelp could not build doc/*.$ext documentation."
-		cat ../omhelp.$ext.log
-	else
-		echo "OMhelp could not build doc/*.$ext documentation."
-		echo "See the complete error message in omhelp.$ext.log"
-	fi
+	cat ../omhelp.$ext.log
+	echo "OMhelp could not build doc/*.$ext documentation."
+	grep "^OMhelp Error:" ../omhelp.$ext.log
 	exit 1
 fi
 if grep "^OMhelp Warning:" ../omhelp.$ext.log
