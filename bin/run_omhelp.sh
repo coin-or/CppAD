@@ -64,9 +64,14 @@ fi
 echo "$cmd > omhelp.$ext.log"
 if !  $cmd > ../omhelp.$ext.log
 then
-	grep "^OMhelp Error:" ../omhelp.$ext.log
-	echo "OMhelp could not build doc/*.$ext documentation."
-	echo "See the complete error message in omhelp.$ext.log"
+	if ! grep "^OMhelp Error:" ../omhelp.$ext.log
+	then
+		echo "OMhelp could not build doc/*.$ext documentation."
+		cat ../omhelp.$ext.log
+	else
+		echo "OMhelp could not build doc/*.$ext documentation."
+		echo "See the complete error message in omhelp.$ext.log"
+	fi
 	exit 1
 fi
 if grep "^OMhelp Warning:" ../omhelp.$ext.log
