@@ -19,6 +19,8 @@ fi
 cat << EOF > bin/svn_ignore.$$
 aclocal.m4
 autom4te.cache
+config.guess
+config.sub
 build
 check_all.err
 commit.sh.old

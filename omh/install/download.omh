@@ -61,9 +61,9 @@ and compressed with $code gzip$$:
 $subhead Current Version$$
 The download files below are for the current version of CppAD.
 $table
-EPL License $pre  $$ $cnext $href%cppad-20130918.epl.tgz%$$ 
+EPL License $pre  $$ $cnext $href%cppad-20141127.epl.tgz%$$ 
 $rnext
-GPL License $pre  $$ $cnext $href%cppad-20130918.gpl.tgz%$$
+GPL License $pre  $$ $cnext $href%cppad-20141127.gpl.tgz%$$
 $tend
 These tarballs only last for a few days.
 
