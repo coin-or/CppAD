@@ -64,7 +64,7 @@ echo_eval() {
 }
 # -----------------------------------------------------------------------------
 echo 'Download sacado to build/external and install it to build/prefix'
-version="trilinos-10.8.3-Source"
+version="trilinos-11.12.1-Source"
 web_page="http://trilinos.sandia.gov/download/files"
 prefix=`pwd`'/build/prefix'
 # -----------------------------------------------------------------------------
