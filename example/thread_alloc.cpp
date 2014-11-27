@@ -36,9 +36,12 @@ $end
 # include <cppad/thread_alloc.hpp>
 # include <cppad/memory_leak.hpp>
 # include <vector>
+# include <limits>
 
 
 namespace { // Begin empty namespace
+
+	
 
 bool raw_allocate(void)
 {	bool ok = true;
@@ -164,6 +167,51 @@ bool type_allocate(void)
 
 } // End empty namespace
 
+bool check_alignment(void)
+{	bool ok = true;
+	using CppAD::thread_alloc;
+
+	// number of binary digits in a size_t value
+	size_t n_digit = std::numeric_limits<size_t>::digits;
+
+	// must be a multiple of 8
+	ok &= (n_digit % 8) == 0;
+
+	// number of bytes in a size_t value
+	size_t n_byte  = n_digit / 8;
+
+	// check raw allocation -------------------------------------------------
+	size_t min_bytes = 1;
+	size_t cap_bytes;
+	void* v_ptr = thread_alloc::get_memory(min_bytes, cap_bytes);
+
+	// convert to a size_t value
+	size_t v_size_t = reinterpret_cast<size_t>(v_ptr);
+
+	// check that it is aligned
+	ok &= (v_size_t % n_byte) == 0;
+
+	// return memory to available pool 
+	thread_alloc::return_memory(v_ptr);
+
+	// check array allocation ----------------------------------------------
+	size_t size_min = 1;
+	size_t size_out;
+	my_char *array_ptr = 
+		thread_alloc::create_array<my_char>(size_min, size_out);
+
+	// convert to a size_t value
+	size_t array_size_t = reinterpret_cast<size_t>(array_ptr);
+
+	// check that it is aligned
+	ok &= (array_size_t % n_byte) == 0;
+
+	// return memory to avialable pool
+	thread_alloc::delete_array(array_ptr);
+
+	return ok;
+}
+
 
 bool thread_alloc(void)
 {	bool ok  = true;
@@ -185,7 +233,10 @@ bool thread_alloc(void)
 
 	// run typed allocation tests
 	ok &= type_allocate();
-	
+
+	// check alignment
+	ok &= check_alignment();
+
 	// return allocator to its default mode
 	thread_alloc::hold_memory(false);
 	return ok;

@@ -54,6 +54,13 @@ This section contains a list of the changes to CppAD during 2014
 The purpose of this section is to
 assist you in learning about changes between various versions of CppAD.
 
+$head 11-27$$
+Add alignment to the 
+$cref/get_memory/ta_get_memory/Alignment/$$ and
+$cref/create_array/ta_create_array/Alignment/$$ specifications
+and 
+$cref/thread_alloc example/thread_alloc.cpp/$$.
+
 $head 09-28$$
 Fix more bugs related to optimizing condition conditional expressions.
 $list number$$

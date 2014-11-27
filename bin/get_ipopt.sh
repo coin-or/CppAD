@@ -63,7 +63,7 @@ echo_eval() {
 }
 # -----------------------------------------------------------------------------
 echo 'Download ipopt to build/external and install it to build/prefix'
-version='3.11.4'
+version='3.11.9'
 web_page='http://www.coin-or.org/download/source/Ipopt'
 prefix=`pwd`'/build/prefix'
 # -----------------------------------------------------------------------------

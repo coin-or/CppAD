@@ -113,7 +113,7 @@ private:
 		size_t             extra_;
 		/// an index that uniquely idenfifies both thread and capacity
 		size_t             tc_index_;
-		/// pointer to the next memory allocation with the the same tc_index_
+		/// pointer to the next memory allocation with the same tc_index_
 		void*              next_;
 		// -----------------------------------------------------------------
 		/// make default constructor private. It is only used by constructor
@@ -787,6 +787,12 @@ The current $icode min_bytes$$ is between
 the previous $icode min_bytes$$ and previous $icode cap_bytes$$.
 $lend
 
+$head Alignment$$
+We call a memory allocation aligned if the address is a multiple
+of the number of bytes in a $code size_t$$ value.
+If the system $code new$$ allocator is aligned, then $icode v_ptr$$
+pointer is also aligned.
+
 $head Example$$
 $cref thread_alloc.cpp$$
 
@@ -1370,6 +1376,12 @@ The $cref/available/ta_available/$$ memory will decrease by $icode delta$$,
 (and the allocation will be faster)
 if a previous allocation with $icode size_min$$ between its current value
 and $icode size_out$$ is available. 
+
+$head Alignment$$
+We call a memory allocation aligned if the address is a multiple
+of the number of bytes in a $code size_t$$ value.
+If the system $code new$$ allocator is aligned, then $icode array$$
+pointer is also aligned.
 
 $head Example$$
 $cref thread_alloc.cpp$$
