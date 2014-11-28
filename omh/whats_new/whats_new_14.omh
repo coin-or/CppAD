@@ -13,6 +13,8 @@ Please visit http://www.coin-or.org/CppAD/ for information on other licenses.
 $begin whats_new_14$$
 $dollar @$$
 $spell
+	autoconf
+	automake
 	alloc
 	ifndef
 	asin
@@ -55,11 +57,16 @@ The purpose of this section is to
 assist you in learning about changes between various versions of CppAD.
 
 $head 11-27$$
+$list number$$
 Add alignment to the 
 $cref/get_memory/ta_get_memory/Alignment/$$ and
 $cref/create_array/ta_create_array/Alignment/$$ specifications
 and 
 $cref/thread_alloc example/thread_alloc.cpp/$$.
+$lnext
+Advance the deprecated $cref/unix install/InstallUnix/$$ utilities to
+autoconf-2.69 and automake-1.13.4.
+$lend
 
 $head 09-28$$
 Fix more bugs related to optimizing condition conditional expressions.

@@ -124,6 +124,8 @@ other_files="
 	AUTHORS 
 	ChangeLog 
 	configure 
+	config.guess
+	config.sub
 	COPYING 
 	depcomp
 	INSTALL 
