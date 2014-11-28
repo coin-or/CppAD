@@ -61,7 +61,7 @@ else
 fi
 # -----------------------------------------------------------------------
 # The following test can be used to skip install of other packages
-skip='false'
+skip='true'
 if [ "$skip" != 'true' ]
 then
 	# -------------------------------------------------------------------

@@ -13,6 +13,7 @@ Please visit http://www.coin-or.org/CppAD/ for information on other licenses.
 $begin whats_new_14$$
 $dollar @$$
 $spell
+	omhelp
 	autoconf
 	automake
 	alloc
@@ -55,6 +56,10 @@ This section contains a list of the changes to CppAD during 2014
 (in reverse order by date).
 The purpose of this section is to
 assist you in learning about changes between various versions of CppAD.
+
+$head 11-28$$
+Improve the $cref/index/_index/$$ and $cref/search/_search/$$ using
+a new version of the $code omhelp$$ documentation tool.
 
 $head 11-27$$
 $list number$$

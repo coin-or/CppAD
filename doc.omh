@@ -22,6 +22,51 @@ $navigate%
 	Down_up_0%_up_0%
 	Current%Headings
 %$$
+$comment -------------------------------------------------------------
+default automatic indexing command for all CppAD documentaiton
+$$
+$aindex section head subhead$$
+$comment -------------------------------------------------------------
+Latex used throughout the CppAD documentation
+$$
+$latex
+\newcommand{\W}[1]{ \; #1 \; }
+\newcommand{\R}[1]{ {\rm #1} }
+\newcommand{\B}[1]{ {\bf #1} }
+\newcommand{\D}[2]{ \frac{\partial #1}{\partial #2} }
+\newcommand{\DD}[3]{ \frac{\partial^2 #1}{\partial #2 \partial #3} }
+\newcommand{\Dpow}[2]{ \frac{\partial^{#1}}{\partial  {#2}^{#1}} }
+\newcommand{\dpow}[2]{ \frac{ {\rm d}^{#1}}{{\rm d}\, {#2}^{#1}} }
+$$
+$comment -------------------------------------------------------------
+hilite commands used throughout the CppAD documentation
+$$
+$hilitecmd%
+	verbatim%
+	codep
+%$$
+$hiliteseq%
+
+ CppAD::%AD%<%                AD
+%       %AD%<%                AD
+
+%CppAD::%ADFun%<%             FunConstruct
+%       %ADFun%<%             FunConstruct
+
+%       %CPPAD_TESTVECTOR%(% testvector
+
+      %.%Forward%(%           Forward
+
+%CppAD::%Independent%(%       Independent
+%       %Independent%(%       Independent
+
+      %.%Jacobian%(%          Jacobian
+
+%CppAD::%NearEqual%(%         NearEqual
+%       %NearEqual%(%         NearEqual
+
+      %.%Reverse%(%           Reverse
+%$$
 $spell
 	cppad.hpp
 	cppad
@@ -224,47 +269,6 @@ $childtable%
 	omh/example.omh%
 	omh/speed/speed.omh%
 	omh/appendix.omh
-%$$
-
-$latex
-% --------------------------------------------------------------------
-% Latex macros defined here and used throughout the CppAD documentation
-\newcommand{\W}[1]{ \; #1 \; }
-\newcommand{\R}[1]{ {\rm #1} }
-\newcommand{\B}[1]{ {\bf #1} }
-\newcommand{\D}[2]{ \frac{\partial #1}{\partial #2} }
-\newcommand{\DD}[3]{ \frac{\partial^2 #1}{\partial #2 \partial #3} }
-\newcommand{\Dpow}[2]{ \frac{\partial^{#1}}{\partial  {#2}^{#1}} }
-\newcommand{\dpow}[2]{ \frac{ {\rm d}^{#1}}{{\rm d}\, {#2}^{#1}} }
-$$
-$comment -------------------------------------------------------------
-hilite commands used throughout the CppAD documentation
-$$
-$hilitecmd%
-	verbatim%
-	codep
-%$$
-$hiliteseq%
-
- CppAD::%AD%<%                AD
-%       %AD%<%                AD
-
-%CppAD::%ADFun%<%             FunConstruct
-%       %ADFun%<%             FunConstruct
-
-%       %CPPAD_TESTVECTOR%(% testvector
-
-      %.%Forward%(%           Forward
-
-%CppAD::%Independent%(%       Independent
-%       %Independent%(%       Independent
-
-      %.%Jacobian%(%          Jacobian
-
-%CppAD::%NearEqual%(%         NearEqual
-%       %NearEqual%(%         NearEqual
-
-      %.%Reverse%(%           Reverse
 %$$
 
 $end
