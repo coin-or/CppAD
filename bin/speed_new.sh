@@ -10,15 +10,15 @@
 # A copy of this license is included in the COPYING file of this distribution.
 # Please visit http://www.coin-or.org/CppAD/ for information on other licenses.
 # -----------------------------------------------------------------------------
-if [ ! -e "bin/speed_compare.sh" ]
+if [ ! -e "bin/speed_new.sh" ]
 then
-	echo "bin/speed_compare.sh: must be executed from its parent directory"
+	echo "bin/speed_new.sh: must be executed from its parent directory"
 	exit 1
 fi
 if [ "$1" == '' ]
 then
 cat << EOF
-usage: bin/speed_compare.sh option_1 option_2 ...
+usage: bin/speed_new.sh option_1 option_2 ...
 where the possible options are:
 	onetape, colpack, optimize, atomic, memory, boolsparsity
 Use the special value 'none' for no options
@@ -31,13 +31,13 @@ then
 fi
 if [ ! -d cppad/new ]
 then
-	echo "speed_comapre.sh: the directory cppad/new does not exist."
+	echo "speed_new.sh: the directory cppad/new does not exist."
 	echo "It contains new source code for the cppad directory (can be empty)."
 	exit 1
 fi
 if [ ! -d cppad/local/new ]
 then
-	echo "speed_comapre.sh: the directory cppad/local/new does not exist"
+	echo "speed_new.sh: the directory cppad/local/new does not exist"
 	echo "It contains new source code for the cppad/local (can be empty)."
 	exit 1
 fi
@@ -46,7 +46,7 @@ new_cppad=`cd cppad/new ; ls`
 new_local=`cd cppad/local/new ; ls`
 if [ "$new_cppad" == "" ] && [ "$new_local" == "" ]
 then
-	echo "speed_compare.sh: both cppad/new and cppad/local/new are empty"
+	echo "speed_new.sh: both cppad/new and cppad/local/new are empty"
 	exit 1
 fi
 # -------------------------------------------------------------------------
