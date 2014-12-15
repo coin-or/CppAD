@@ -57,6 +57,10 @@ This section contains a list of the changes to CppAD during 2014
 The purpose of this section is to
 assist you in learning about changes between various versions of CppAD.
 
+$head 12-15$$
+Correct the title and $cref _index$$ entries for $cref forward_two$$
+from first to second order.
+
 $head 11-28$$
 Improve the $cref/index/_index/$$ and $cref/search/_search/$$ using
 a new version of the $code omhelp$$ documentation tool.

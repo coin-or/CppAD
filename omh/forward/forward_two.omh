@@ -16,11 +16,11 @@ $spell
 	const
 $$
 
-$section First Order Forward Mode: Derivative Values$$
+$section Second Order Forward Mode: Derivative Values$$
 
-$index Forward, order one$$
-$index one, order Forward$$
-$index order, one Forward$$
+$index Forward, order two$$
+$index two, order Forward$$
+$index order, two Forward$$
 
 
 $head Syntax$$
