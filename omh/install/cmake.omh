@@ -13,6 +13,8 @@ Please visit http://www.coin-or.org/CppAD/ for information on other licenses.
 $begin cmake$$
 $escape $$
 $spell
+	cstdint
+	uint
 	pkgconfig
 	ctor
 	op
@@ -300,6 +302,7 @@ $index tape, memory$$
 The type $icode cppad_tape_id_type$$ 
 is used for identifying different tapes.
 The valid values for this type are
+$code unsigned char$$,
 $code unsigned short int$$,
 $code unsigned int$$, and
 $code size_t$$.
@@ -312,6 +315,14 @@ $codei%
 must be larger than the maximum number of tapes used by one thread times
 $cref/CPPAD_MAX_NUM_THREADS/multi_thread/CPPAD_MAX_NUM_THREADS/$$.
 
+$subhead cstdint$$
+If all of the following $code cstdint$$ types are defined,
+they can also be used as the value of $icode cppad_tape_addr_type$$:
+$code uint8_t$$,
+$code uint16_t$$,
+$code uint32_t$$,
+$code uint64_t$$.
+
 $head cppad_tape_addr_type$$
 $index memory, usage$$
 $index memory, tape$$
@@ -319,6 +330,7 @@ $index tape, memory$$
 The type $icode cppad_tape_addr_type$$ 
 is used for address in the AD recordings (tapes).
 The valid values for this argument are
+$code unsigned char$$,
 $code unsigned short int$$,
 $code unsigned int$$,
 $code size_t$$.
@@ -334,6 +346,14 @@ $cref/size_op_arg/seq_property/size_op_arg/$$,
 $cref/size_par/seq_property/size_text/$$,
 $cref/size_par/seq_property/size_par/$$,
 $cref/size_par/seq_property/size_VecAD/$$.
+
+$subhead cstdint$$
+If all of the following $code cstdint$$ types are defined,
+they can also be used as the value of $icode cppad_tape_addr_type$$:
+$code uint8_t$$,
+$code uint16_t$$,
+$code uint32_t$$,
+$code uint64_t$$.
 
 $head cppad_implicit_ctor_from_any_type$$
 $index ctor, implicit or explicit$$

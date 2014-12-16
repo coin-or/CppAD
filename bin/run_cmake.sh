@@ -137,8 +137,8 @@ cmake_args="$cmake_args -D cppad_cxx_flags='$cppad_cxx_flags'"
 cmake_args="$cmake_args -D cppad_implicit_ctor_from_any_type_from_any_type=NO"
 cmake_args="$cmake_args -D cppad_sparse_list=YES"
 cmake_args="$cmake_args -D cppad_testvector=$testvector"
-cmake_args="$cmake_args -D cppad_tape_id_type='int'"
-cmake_args="$cmake_args -D cppad_tape_addr_type=int"
+cmake_args="$cmake_args -D cppad_tape_id_type='int32_t'"
+cmake_args="$cmake_args -D cppad_tape_addr_type=int32_t"
 cmake_args="$cmake_args -D cppad_max_num_threads=48"
 #
 echo_eval cmake $cmake_args ..

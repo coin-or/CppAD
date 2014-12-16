@@ -13,6 +13,8 @@ Please visit http://www.coin-or.org/CppAD/ for information on other licenses.
 $begin whats_new_14$$
 $dollar @$$
 $spell
+	cstdint
+	addr
 	omhelp
 	autoconf
 	automake
@@ -56,6 +58,12 @@ This section contains a list of the changes to CppAD during 2014
 (in reverse order by date).
 The purpose of this section is to
 assist you in learning about changes between various versions of CppAD.
+
+$head 12-16$$
+If the $code c++11$$ include file $code <cstdint>$$
+defines all the standard types, they can be used by to specify
+$cref/cppad_tape_addr_type/cmake/cppad_tape_addr_type/cstdint/$$ and
+$cref/cppad_tape_id_type/cmake/cppad_tape_id_type/cstdint/$$.
 
 $head 12-15$$
 Correct the title and $cref _index$$ entries for $cref forward_two$$

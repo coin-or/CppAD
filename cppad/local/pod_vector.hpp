@@ -13,6 +13,9 @@ A copy of this license is included in the COPYING file of this distribution.
 Please visit http://www.coin-or.org/CppAD/ for information on other licenses.
 -------------------------------------------------------------------------- */
 
+# if CPPAD_CSTDINT_HAS_8_TO_64
+# include <cstdint>
+# endif
 # include <algorithm>
 # include <cppad/thread_alloc.hpp>
 # include <cppad/local/cppad_assert.hpp>
@@ -31,15 +34,31 @@ A list of which Types pod_vector<Type> consideres to be plain old data
 template <class Type> inline bool is_pod(void)           { return false; }   
 /// system pod types so far:
 template <> inline bool is_pod<bool>(void)               { return true; }
-template <> inline bool is_pod<char>(void)               { return true; }
 template <> inline bool is_pod<float>(void)              { return true; }
 template <> inline bool is_pod<double>(void)             { return true; }
+# if CPPAD_CSTDINT_HAS_8_TO_64
+template <> inline bool is_pod<int8_t>(void)             { return true;  }  
+template <> inline bool is_pod<int16_t>(void)            { return true;  }  
+template <> inline bool is_pod<int32_t>(void)            { return true;  }  
+template <> inline bool is_pod<int64_t>(void)            { return true;  }  
+//
+template <> inline bool is_pod<uint8_t>(void)            { return true;  }  
+template <> inline bool is_pod<uint16_t>(void)           { return true;  }  
+template <> inline bool is_pod<uint32_t>(void)           { return true;  }  
+template <> inline bool is_pod<uint64_t>(void)           { return true;  }  
+# else // CPPAD_CSTDINT_HAS_8_TO_64
+template <> inline bool is_pod<char>(void)               { return true; }
+template <> inline bool is_pod<short int>(void)          { return true; }
+template <> inline bool is_pod<int>(void)                { return true; }
+//
 template <> inline bool is_pod<unsigned char>(void)      { return true; }
 template <> inline bool is_pod<unsigned short int>(void) { return true; }
 template <> inline bool is_pod<unsigned int>(void)       { return true; }
 # if ! CPPAD_SIZE_T_SAME_UNSIGNED_INT
 template <> inline bool is_pod<size_t>(void)             { return true; }
 # endif
+# endif // CPPAD_CSTDINT_HAS_8_TO_64
+
 /// CppAD pod types so far: 
 template <> inline bool is_pod<OpCode>(void)             { return true; }
 

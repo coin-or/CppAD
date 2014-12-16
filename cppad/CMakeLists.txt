@@ -192,6 +192,32 @@ MESSAGE(STATUS
 	"cppad_size_t_same_unsigned_int = ${cppad_size_t_same_unsigned_int}" 
 )
 # -----------------------------------------------------------------------------
+# cppad_has_cstdint_8_to_64
+#
+# CHECK_CXX_SOURCE_RUNS(source variable)
+SET(CMAKE_REQUIRED_INCLUDES  "")
+SET(CMAKE_REQUIRED_LIBRARIES "")
+SET(CMAKE_REQUIRED_FLAGS     "")
+SET(source "
+# include <cstdint>
+template <class T> inline bool is_pod(void)               { return false; }
+template <>        inline bool is_pod<uint8_t>(void)      { return true;  }  
+template <>        inline bool is_pod<uint16_t>(void)     { return true;  }  
+template <>        inline bool is_pod<uint32_t>(void)     { return true;  }  
+template <>        inline bool is_pod<uint64_t>(void)     { return true;  }  
+int main(void)
+{	return 0; }
+" )
+CHECK_CXX_SOURCE_RUNS("${source}" has_cstdint_8_to_64)
+IF( has_cstdint_8_to_64 )
+	SET(cppad_has_cstdint_8_to_64 0)
+ELSE( has_cstdint_8_to_64 )
+	SET(cppad_has_cstdint_8_to_64 1)
+ENDIF( has_cstdint_8_to_64 )
+MESSAGE(STATUS 
+	"cppad_has_cstdint_8_to_64 = ${cppad_has_cstdint_8_to_64}" 
+)
+# -----------------------------------------------------------------------------
 # cppad_tape_addr_type, cppad_tape_id_type
 #
 FOREACH( cmake_var cppad_tape_id_type cppad_tape_addr_type )

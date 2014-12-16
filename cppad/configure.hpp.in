@@ -130,6 +130,13 @@ otherwise this symbol is zero.
 # define CPPAD_SIZE_T_SAME_UNSIGNED_INT @cppad_size_t_same_unsigned_int@
 
 /*!
+\def CPPAD_HAS_CSTDINT_8_TO_64 
+If this symbol is one, the types uint_8, uint_16, uint_32, and uint_64
+are defined.  otherwise this symbol is zero.
+*/
+# define CPPAD_HAS_CSTDINT_8_TO_64 @cppad_has_cstdint_8_to_64@
+
+/*!
 \def CPPAD_TAPE_ADDR_TYPE
 Is the type used to store address on the tape. If not size_t, then 
 <code>sizeof(CPPAD_TAPE_ADDR_TYPE) <= sizeof( size_t )</code>
