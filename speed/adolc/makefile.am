@@ -10,12 +10,16 @@
 # Please visit http://www.coin-or.org/CppAD/ for information on other licenses.
 # -----------------------------------------------------------------------------
 #
-# automake input file
+# Copy source file so that main.o does not end up in parent directory
+BUILT_SOURCES = main.cpp
+main.cpp:
+	cp $(srcdir)/../main.cpp main.cpp
+#
 #
 # CppAD pusts all it's preprocessor definitions in the cppad/configure.hpp
 DEFS          =
 #
-check_PROGRAMS   = adolc 
+check_PROGRAMS   = speed_adolc 
 #
 AM_CPPFLAGS   = \
 	-I$(top_srcdir) \
@@ -34,10 +38,10 @@ AM_CXXFLAGS   = -O2 -DNDEBUG -DCPPAD_ADOLC_SPEED $(CXX_FLAGS)
 LDADD            = -lspeed -ladolc -lColPack
 AM_LDFLAGS       = -L../src -L$(ADOLC_DIR)/lib -L$(ADOLC_DIR)/lib64
 #
-adolc_SOURCES = \
+speed_adolc_SOURCES = \
 	adolc_alloc_mat.hpp \
 	alloc_mat.cpp \
-	../main.cpp \
+	main.cpp \
 	det_lu.cpp \
 	det_minor.cpp \
 	mat_mul.cpp \
@@ -47,5 +51,5 @@ adolc_SOURCES = \
 	sparse_jacobian.cpp
 
 test: check
-	./adolc correct 123
-	./adolc correct 123 onetape
+	./speed_adolc correct 123 colpack
+	./speed_adolc correct 123 onetape colpack

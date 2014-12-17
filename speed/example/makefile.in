@@ -77,7 +77,7 @@ PRE_UNINSTALL = :
 POST_UNINSTALL = :
 build_triplet = @build@
 host_triplet = @host@
-check_PROGRAMS = example$(EXEEXT)
+check_PROGRAMS = speed_example$(EXEEXT)
 subdir = speed/example
 DIST_COMMON = $(srcdir)/makefile.in $(srcdir)/makefile.am \
 	$(top_srcdir)/depcomp
@@ -89,15 +89,15 @@ mkinstalldirs = $(install_sh) -d
 CONFIG_CLEAN_FILES =
 CONFIG_CLEAN_VPATH_FILES =
 am__dirstamp = $(am__leading_dot)dirstamp
-am_example_OBJECTS = example.$(OBJEXT) det_by_lu.$(OBJEXT) \
+am_speed_example_OBJECTS = example.$(OBJEXT) det_by_lu.$(OBJEXT) \
 	det_by_minor.$(OBJEXT) det_of_minor.$(OBJEXT) \
 	elapsed_seconds.$(OBJEXT) mat_sum_sq.$(OBJEXT) \
 	ode_evaluate.$(OBJEXT) sparse_hes_fun.$(OBJEXT) \
 	sparse_jac_fun.$(OBJEXT) speed_test.$(OBJEXT) \
 	time_test.$(OBJEXT) ../src/microsoft_timer.$(OBJEXT)
-example_OBJECTS = $(am_example_OBJECTS)
-example_LDADD = $(LDADD)
-example_DEPENDENCIES =
+speed_example_OBJECTS = $(am_speed_example_OBJECTS)
+speed_example_LDADD = $(LDADD)
+speed_example_DEPENDENCIES =
 AM_V_P = $(am__v_P_@AM_V@)
 am__v_P_ = $(am__v_P_@AM_DEFAULT_V@)
 am__v_P_0 = false
@@ -127,8 +127,8 @@ AM_V_CXXLD = $(am__v_CXXLD_@AM_V@)
 am__v_CXXLD_ = $(am__v_CXXLD_@AM_DEFAULT_V@)
 am__v_CXXLD_0 = @echo "  CXXLD   " $@;
 am__v_CXXLD_1 = 
-SOURCES = $(example_SOURCES)
-DIST_SOURCES = $(example_SOURCES)
+SOURCES = $(speed_example_SOURCES)
+DIST_SOURCES = $(speed_example_SOURCES)
 am__can_run_installinfo = \
   case $$AM_UPDATE_INFO_DIR in \
     n|no|NO) false;; \
@@ -335,7 +335,7 @@ AM_CXXFLAGS = -g $(CXX_FLAGS)
 #
 LDADD = -lspeed
 AM_LDFLAGS = -L../src
-example_SOURCES = \
+speed_example_SOURCES = \
 	example.cpp \
 	det_by_lu.cpp \
 	det_by_minor.cpp \
@@ -395,9 +395,9 @@ clean-checkPROGRAMS:
 ../src/microsoft_timer.$(OBJEXT): ../src/$(am__dirstamp) \
 	../src/$(DEPDIR)/$(am__dirstamp)
 
-example$(EXEEXT): $(example_OBJECTS) $(example_DEPENDENCIES) $(EXTRA_example_DEPENDENCIES) 
-	@rm -f example$(EXEEXT)
-	$(AM_V_CXXLD)$(CXXLINK) $(example_OBJECTS) $(example_LDADD) $(LIBS)
+speed_example$(EXEEXT): $(speed_example_OBJECTS) $(speed_example_DEPENDENCIES) $(EXTRA_speed_example_DEPENDENCIES) 
+	@rm -f speed_example$(EXEEXT)
+	$(AM_V_CXXLD)$(CXXLINK) $(speed_example_OBJECTS) $(speed_example_LDADD) $(LIBS)
 
 mostlyclean-compile:
 	-rm -f *.$(OBJEXT)
@@ -640,7 +640,7 @@ uninstall-am:
 
 
 test: check
-	./example
+	./speed_example
 
 # Tell versions [3.59,3.63) of GNU make to not export all variables.
 # Otherwise a system limit (for SysV at least) may be exceeded.

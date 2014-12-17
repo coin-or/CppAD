@@ -59,6 +59,10 @@ This section contains a list of the changes to CppAD during 2014
 The purpose of this section is to
 assist you in learning about changes between various versions of CppAD.
 
+$head 12-17$$
+Fix some compiler warnings and $cref speed$$ program names
+when using the deprecated $cref/auto-tools/InstallUnix/$$ install procedure.
+
 $head 12-16$$
 If the $code c++11$$ include file $code <cstdint>$$
 defines all the standard types, they can be used by to specify
@@ -70,7 +74,7 @@ Correct the title and $cref _index$$ entries for $cref forward_two$$
 from first to second order.
 
 $head 11-28$$
-Improve the $cref/index/_index/$$ and $cref/search/_search/$$ using
+Improve the $cref/index/_index/$$ and $code search$$ using
 a new version of the $code omhelp$$ documentation tool.
 
 $head 11-27$$

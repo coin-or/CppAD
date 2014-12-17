@@ -77,7 +77,7 @@ PRE_UNINSTALL = :
 POST_UNINSTALL = :
 build_triplet = @build@
 host_triplet = @host@
-check_PROGRAMS = double$(EXEEXT)
+check_PROGRAMS = speed_double$(EXEEXT)
 subdir = speed/double
 DIST_COMMON = $(srcdir)/makefile.in $(srcdir)/makefile.am \
 	$(top_srcdir)/depcomp
@@ -88,14 +88,13 @@ am__configure_deps = $(am__aclocal_m4_deps) $(CONFIGURE_DEPENDENCIES) \
 mkinstalldirs = $(install_sh) -d
 CONFIG_CLEAN_FILES =
 CONFIG_CLEAN_VPATH_FILES =
-am__dirstamp = $(am__leading_dot)dirstamp
-am_double_OBJECTS = ../main.$(OBJEXT) det_lu.$(OBJEXT) \
+am_speed_double_OBJECTS = main.$(OBJEXT) det_lu.$(OBJEXT) \
 	det_minor.$(OBJEXT) mat_mul.$(OBJEXT) ode.$(OBJEXT) \
 	poly.$(OBJEXT) sparse_hessian.$(OBJEXT) \
 	sparse_jacobian.$(OBJEXT)
-double_OBJECTS = $(am_double_OBJECTS)
-double_LDADD = $(LDADD)
-double_DEPENDENCIES =
+speed_double_OBJECTS = $(am_speed_double_OBJECTS)
+speed_double_LDADD = $(LDADD)
+speed_double_DEPENDENCIES =
 AM_V_P = $(am__v_P_@AM_V@)
 am__v_P_ = $(am__v_P_@AM_DEFAULT_V@)
 am__v_P_0 = false
@@ -125,8 +124,8 @@ AM_V_CXXLD = $(am__v_CXXLD_@AM_V@)
 am__v_CXXLD_ = $(am__v_CXXLD_@AM_DEFAULT_V@)
 am__v_CXXLD_0 = @echo "  CXXLD   " $@;
 am__v_CXXLD_1 = 
-SOURCES = $(double_SOURCES)
-DIST_SOURCES = $(double_SOURCES)
+SOURCES = $(speed_double_SOURCES)
+DIST_SOURCES = $(speed_double_SOURCES)
 am__can_run_installinfo = \
   case $$AM_UPDATE_INFO_DIR in \
     n|no|NO) false;; \
@@ -179,20 +178,6 @@ CXX_FLAGS = @CXX_FLAGS@
 CXX_FLAGS_EIGEN = @CXX_FLAGS_EIGEN@
 CXX_FLAGS_FADBAD = @CXX_FLAGS_FADBAD@
 CYGPATH_W = @CYGPATH_W@
-
-# $Id$
-# -----------------------------------------------------------------------------
-# CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-14 Bradley M. Bell
-#
-# CppAD is distributed under multiple licenses. This distribution is under
-# the terms of the 
-#                     Eclipse Public License Version 1.0.
-#
-# A copy of this license is included in the COPYING file of this distribution.
-# Please visit http://www.coin-or.org/CppAD/ for information on other licenses.
-# -----------------------------------------------------------------------------
-#
-# automake input file
 #
 # CppAD pusts all it's preprocessor definitions in the cppad/configure.hpp
 DEFS = 
@@ -323,6 +308,21 @@ target_alias = @target_alias@
 top_build_prefix = @top_build_prefix@
 top_builddir = @top_builddir@
 top_srcdir = @top_srcdir@
+
+# $Id$
+# -----------------------------------------------------------------------------
+# CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-14 Bradley M. Bell
+#
+# CppAD is distributed under multiple licenses. This distribution is under
+# the terms of the 
+#                     Eclipse Public License Version 1.0.
+#
+# A copy of this license is included in the COPYING file of this distribution.
+# Please visit http://www.coin-or.org/CppAD/ for information on other licenses.
+# -----------------------------------------------------------------------------
+#
+# Copy source file so that main.o does not end up in parent directory
+BUILT_SOURCES = main.cpp
 #
 AM_CPPFLAGS = -I$(top_srcdir) $(BOOST_INCLUDE) $(EIGEN_INCLUDE)
 #
@@ -337,8 +337,8 @@ AM_CXXFLAGS = -O2 -DNDEBUG -DCPPAD_DOUBLE_SPEED $(CXX_FLAGS)
 LDADD = -lspeed
 AM_LDFLAGS = -L../src
 #
-double_SOURCES = \
-	../main.cpp \
+speed_double_SOURCES = \
+	main.cpp \
 	det_lu.cpp  \
 	det_minor.cpp \
 	mat_mul.cpp \
@@ -347,7 +347,8 @@ double_SOURCES = \
 	sparse_hessian.cpp \
 	sparse_jacobian.cpp
 
-all: all-am
+all: $(BUILT_SOURCES)
+	$(MAKE) $(AM_MAKEFLAGS) all-am
 
 .SUFFIXES:
 .SUFFIXES: .cpp .o .obj
@@ -384,28 +385,20 @@ $(am__aclocal_m4_deps):
 
 clean-checkPROGRAMS:
 	-test -z "$(check_PROGRAMS)" || rm -f $(check_PROGRAMS)
-../$(am__dirstamp):
-	@$(MKDIR_P) ..
-	@: > ../$(am__dirstamp)
-../$(DEPDIR)/$(am__dirstamp):
-	@$(MKDIR_P) ../$(DEPDIR)
-	@: > ../$(DEPDIR)/$(am__dirstamp)
-../main.$(OBJEXT): ../$(am__dirstamp) ../$(DEPDIR)/$(am__dirstamp)
 
-double$(EXEEXT): $(double_OBJECTS) $(double_DEPENDENCIES) $(EXTRA_double_DEPENDENCIES) 
-	@rm -f double$(EXEEXT)
-	$(AM_V_CXXLD)$(CXXLINK) $(double_OBJECTS) $(double_LDADD) $(LIBS)
+speed_double$(EXEEXT): $(speed_double_OBJECTS) $(speed_double_DEPENDENCIES) $(EXTRA_speed_double_DEPENDENCIES) 
+	@rm -f speed_double$(EXEEXT)
+	$(AM_V_CXXLD)$(CXXLINK) $(speed_double_OBJECTS) $(speed_double_LDADD) $(LIBS)
 
 mostlyclean-compile:
 	-rm -f *.$(OBJEXT)
-	-rm -f ../*.$(OBJEXT)
 
 distclean-compile:
 	-rm -f *.tab.c
 
-@AMDEP_TRUE@@am__include@ @am__quote@../$(DEPDIR)/main.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/det_lu.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/det_minor.Po@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/main.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/mat_mul.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/ode.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/poly.Po@am__quote@
@@ -512,10 +505,12 @@ distdir: $(DISTFILES)
 	done
 check-am: all-am
 	$(MAKE) $(AM_MAKEFLAGS) $(check_PROGRAMS)
-check: check-am
+check: $(BUILT_SOURCES)
+	$(MAKE) $(AM_MAKEFLAGS) check-am
 all-am: makefile
 installdirs:
-install: install-am
+install: $(BUILT_SOURCES)
+	$(MAKE) $(AM_MAKEFLAGS) install-am
 install-exec: install-exec-am
 install-data: install-data-am
 uninstall: uninstall-am
@@ -541,18 +536,17 @@ clean-generic:
 distclean-generic:
 	-test -z "$(CONFIG_CLEAN_FILES)" || rm -f $(CONFIG_CLEAN_FILES)
 	-test . = "$(srcdir)" || test -z "$(CONFIG_CLEAN_VPATH_FILES)" || rm -f $(CONFIG_CLEAN_VPATH_FILES)
-	-rm -f ../$(DEPDIR)/$(am__dirstamp)
-	-rm -f ../$(am__dirstamp)
 
 maintainer-clean-generic:
 	@echo "This command is intended for maintainers to use"
 	@echo "it deletes files that may require special tools to rebuild."
+	-test -z "$(BUILT_SOURCES)" || rm -f $(BUILT_SOURCES)
 clean: clean-am
 
 clean-am: clean-checkPROGRAMS clean-generic mostlyclean-am
 
 distclean: distclean-am
-	-rm -rf ../$(DEPDIR) ./$(DEPDIR)
+	-rm -rf ./$(DEPDIR)
 	-rm -f makefile
 distclean-am: clean-am distclean-compile distclean-generic \
 	distclean-tags
@@ -598,7 +592,7 @@ install-ps-am:
 installcheck-am:
 
 maintainer-clean: maintainer-clean-am
-	-rm -rf ../$(DEPDIR) ./$(DEPDIR)
+	-rm -rf ./$(DEPDIR)
 	-rm -f makefile
 maintainer-clean-am: distclean-am maintainer-clean-generic
 
@@ -616,7 +610,7 @@ ps-am:
 
 uninstall-am:
 
-.MAKE: check-am install-am install-strip
+.MAKE: all check check-am install install-am install-strip
 
 .PHONY: CTAGS GTAGS TAGS all all-am check check-am clean \
 	clean-checkPROGRAMS clean-generic cscopelist-am ctags ctags-am \
@@ -631,9 +625,11 @@ uninstall-am:
 	mostlyclean-compile mostlyclean-generic pdf pdf-am ps ps-am \
 	tags tags-am uninstall uninstall-am
 
+main.cpp:
+	cp $(srcdir)/../main.cpp main.cpp
 
 test: check
-	./double correct 123
+	./speed_double correct 123
 
 # Tell versions [3.59,3.63) of GNU make to not export all variables.
 # Otherwise a system limit (for SysV at least) may be exceeded.

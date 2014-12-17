@@ -77,7 +77,7 @@ PRE_UNINSTALL = :
 POST_UNINSTALL = :
 build_triplet = @build@
 host_triplet = @host@
-check_PROGRAMS = profile$(EXEEXT)
+check_PROGRAMS = speed_profile$(EXEEXT)
 subdir = speed/profile
 DIST_COMMON = $(srcdir)/makefile.in $(srcdir)/makefile.am \
 	$(srcdir)/gprof.sed.in $(top_srcdir)/depcomp
@@ -88,20 +88,16 @@ am__configure_deps = $(am__aclocal_m4_deps) $(CONFIGURE_DEPENDENCIES) \
 mkinstalldirs = $(install_sh) -d
 CONFIG_CLEAN_FILES = gprof.sed
 CONFIG_CLEAN_VPATH_FILES =
-am__dirstamp = $(am__leading_dot)dirstamp
-am_profile_OBJECTS = ../main.$(OBJEXT) ../cppad/ode.$(OBJEXT) \
-	../cppad/det_lu.$(OBJEXT) ../cppad/det_minor.$(OBJEXT) \
-	../cppad/mat_mul.$(OBJEXT) ../cppad/poly.$(OBJEXT) \
-	../cppad/sparse_hessian.$(OBJEXT) \
-	../cppad/sparse_jacobian.$(OBJEXT) \
-	../src/link_det_lu.$(OBJEXT) ../src/link_det_minor.$(OBJEXT) \
-	../src/link_mat_mul.$(OBJEXT) ../src/link_ode.$(OBJEXT) \
-	../src/link_poly.$(OBJEXT) \
-	../src/link_sparse_hessian.$(OBJEXT) \
-	../src/link_sparse_jacobian.$(OBJEXT) \
-	../src/microsoft_timer.$(OBJEXT)
-profile_OBJECTS = $(am_profile_OBJECTS)
-profile_LDADD = $(LDADD)
+am__objects_1 = main.$(OBJEXT) ode.$(OBJEXT) det_lu.$(OBJEXT) \
+	det_minor.$(OBJEXT) mat_mul.$(OBJEXT) poly.$(OBJEXT) \
+	sparse_hessian.$(OBJEXT) sparse_jacobian.$(OBJEXT) \
+	link_det_lu.$(OBJEXT) link_det_minor.$(OBJEXT) \
+	link_mat_mul.$(OBJEXT) link_ode.$(OBJEXT) link_poly.$(OBJEXT) \
+	link_sparse_hessian.$(OBJEXT) link_sparse_jacobian.$(OBJEXT) \
+	microsoft_timer.$(OBJEXT)
+am_speed_profile_OBJECTS = $(am__objects_1)
+speed_profile_OBJECTS = $(am_speed_profile_OBJECTS)
+speed_profile_LDADD = $(LDADD)
 AM_V_P = $(am__v_P_@AM_V@)
 am__v_P_ = $(am__v_P_@AM_DEFAULT_V@)
 am__v_P_0 = false
@@ -131,8 +127,8 @@ AM_V_CXXLD = $(am__v_CXXLD_@AM_V@)
 am__v_CXXLD_ = $(am__v_CXXLD_@AM_DEFAULT_V@)
 am__v_CXXLD_0 = @echo "  CXXLD   " $@;
 am__v_CXXLD_1 = 
-SOURCES = $(profile_SOURCES)
-DIST_SOURCES = $(profile_SOURCES)
+SOURCES = $(speed_profile_SOURCES)
+DIST_SOURCES = $(speed_profile_SOURCES)
 am__can_run_installinfo = \
   case $$AM_UPDATE_INFO_DIR in \
     n|no|NO) false;; \
@@ -185,20 +181,6 @@ CXX_FLAGS = @CXX_FLAGS@
 CXX_FLAGS_EIGEN = @CXX_FLAGS_EIGEN@
 CXX_FLAGS_FADBAD = @CXX_FLAGS_FADBAD@
 CYGPATH_W = @CYGPATH_W@
-
-# $Id$
-# -----------------------------------------------------------------------------
-# CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-14 Bradley M. Bell
-#
-# CppAD is distributed under multiple licenses. This distribution is under
-# the terms of the 
-#                     Eclipse Public License Version 1.0.
-#
-# A copy of this license is included in the COPYING file of this distribution.
-# Please visit http://www.coin-or.org/CppAD/ for information on other licenses.
-# -----------------------------------------------------------------------------
-#
-# automake input file
 #
 # CppAD pusts all it's preprocessor definitions in the cppad/configure.hpp
 DEFS = 
@@ -329,6 +311,39 @@ target_alias = @target_alias@
 top_build_prefix = @top_build_prefix@
 top_builddir = @top_builddir@
 top_srcdir = @top_srcdir@
+
+# $Id$
+# -----------------------------------------------------------------------------
+# CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-14 Bradley M. Bell
+#
+# CppAD is distributed under multiple licenses. This distribution is under
+# the terms of the 
+#                     Eclipse Public License Version 1.0.
+#
+# A copy of this license is included in the COPYING file of this distribution.
+# Please visit http://www.coin-or.org/CppAD/ for information on other licenses.
+# -----------------------------------------------------------------------------
+source_list = \
+	main.cpp \
+	ode.cpp \
+	det_lu.cpp \
+	det_minor.cpp \
+	mat_mul.cpp \
+	poly.cpp \
+	sparse_hessian.cpp \
+	sparse_jacobian.cpp \
+	link_det_lu.cpp \
+	link_det_minor.cpp \
+	link_mat_mul.cpp \
+	link_ode.cpp \
+	link_poly.cpp \
+	link_sparse_hessian.cpp \
+	link_sparse_jacobian.cpp \
+	microsoft_timer.cpp
+
+#
+# make separate copy of source files because  building with different flags
+BUILT_SOURCES = $(source_list)
 #
 EXTRA_DIST = \
 	gprof.sed
@@ -346,25 +361,9 @@ AM_CXXFLAGS = -pg -O2 -DCPPAD_PROFILE_SPEED -DNDEBUG $(CXX_FLAGS)
 #
 AM_LDFLAGS = -pg
 #
-profile_SOURCES = \
-	../main.cpp \
-	../cppad/ode.cpp \
-	../cppad/det_lu.cpp  \
-	../cppad/det_minor.cpp  \
-	../cppad/mat_mul.cpp  \
-	../cppad/poly.cpp \
-	../cppad/sparse_hessian.cpp \
-	../cppad/sparse_jacobian.cpp \
-	../src/link_det_lu.cpp \
-	../src/link_det_minor.cpp \
-	../src/link_mat_mul.cpp \
-	../src/link_ode.cpp \
-	../src/link_poly.cpp \
-	../src/link_sparse_hessian.cpp \
-	../src/link_sparse_jacobian.cpp \
-	../src/microsoft_timer.cpp
-
-all: all-am
+speed_profile_SOURCES = $(source_list)
+all: $(BUILT_SOURCES)
+	$(MAKE) $(AM_MAKEFLAGS) all-am
 
 .SUFFIXES:
 .SUFFIXES: .cpp .o .obj
@@ -403,85 +402,33 @@ gprof.sed: $(top_builddir)/config.status $(srcdir)/gprof.sed.in
 
 clean-checkPROGRAMS:
 	-test -z "$(check_PROGRAMS)" || rm -f $(check_PROGRAMS)
-../$(am__dirstamp):
-	@$(MKDIR_P) ..
-	@: > ../$(am__dirstamp)
-../$(DEPDIR)/$(am__dirstamp):
-	@$(MKDIR_P) ../$(DEPDIR)
-	@: > ../$(DEPDIR)/$(am__dirstamp)
-../main.$(OBJEXT): ../$(am__dirstamp) ../$(DEPDIR)/$(am__dirstamp)
-../cppad/$(am__dirstamp):
-	@$(MKDIR_P) ../cppad
-	@: > ../cppad/$(am__dirstamp)
-../cppad/$(DEPDIR)/$(am__dirstamp):
-	@$(MKDIR_P) ../cppad/$(DEPDIR)
-	@: > ../cppad/$(DEPDIR)/$(am__dirstamp)
-../cppad/ode.$(OBJEXT): ../cppad/$(am__dirstamp) \
-	../cppad/$(DEPDIR)/$(am__dirstamp)
-../cppad/det_lu.$(OBJEXT): ../cppad/$(am__dirstamp) \
-	../cppad/$(DEPDIR)/$(am__dirstamp)
-../cppad/det_minor.$(OBJEXT): ../cppad/$(am__dirstamp) \
-	../cppad/$(DEPDIR)/$(am__dirstamp)
-../cppad/mat_mul.$(OBJEXT): ../cppad/$(am__dirstamp) \
-	../cppad/$(DEPDIR)/$(am__dirstamp)
-../cppad/poly.$(OBJEXT): ../cppad/$(am__dirstamp) \
-	../cppad/$(DEPDIR)/$(am__dirstamp)
-../cppad/sparse_hessian.$(OBJEXT): ../cppad/$(am__dirstamp) \
-	../cppad/$(DEPDIR)/$(am__dirstamp)
-../cppad/sparse_jacobian.$(OBJEXT): ../cppad/$(am__dirstamp) \
-	../cppad/$(DEPDIR)/$(am__dirstamp)
-../src/$(am__dirstamp):
-	@$(MKDIR_P) ../src
-	@: > ../src/$(am__dirstamp)
-../src/$(DEPDIR)/$(am__dirstamp):
-	@$(MKDIR_P) ../src/$(DEPDIR)
-	@: > ../src/$(DEPDIR)/$(am__dirstamp)
-../src/link_det_lu.$(OBJEXT): ../src/$(am__dirstamp) \
-	../src/$(DEPDIR)/$(am__dirstamp)
-../src/link_det_minor.$(OBJEXT): ../src/$(am__dirstamp) \
-	../src/$(DEPDIR)/$(am__dirstamp)
-../src/link_mat_mul.$(OBJEXT): ../src/$(am__dirstamp) \
-	../src/$(DEPDIR)/$(am__dirstamp)
-../src/link_ode.$(OBJEXT): ../src/$(am__dirstamp) \
-	../src/$(DEPDIR)/$(am__dirstamp)
-../src/link_poly.$(OBJEXT): ../src/$(am__dirstamp) \
-	../src/$(DEPDIR)/$(am__dirstamp)
-../src/link_sparse_hessian.$(OBJEXT): ../src/$(am__dirstamp) \
-	../src/$(DEPDIR)/$(am__dirstamp)
-../src/link_sparse_jacobian.$(OBJEXT): ../src/$(am__dirstamp) \
-	../src/$(DEPDIR)/$(am__dirstamp)
-../src/microsoft_timer.$(OBJEXT): ../src/$(am__dirstamp) \
-	../src/$(DEPDIR)/$(am__dirstamp)
 
-profile$(EXEEXT): $(profile_OBJECTS) $(profile_DEPENDENCIES) $(EXTRA_profile_DEPENDENCIES) 
-	@rm -f profile$(EXEEXT)
-	$(AM_V_CXXLD)$(CXXLINK) $(profile_OBJECTS) $(profile_LDADD) $(LIBS)
+speed_profile$(EXEEXT): $(speed_profile_OBJECTS) $(speed_profile_DEPENDENCIES) $(EXTRA_speed_profile_DEPENDENCIES) 
+	@rm -f speed_profile$(EXEEXT)
+	$(AM_V_CXXLD)$(CXXLINK) $(speed_profile_OBJECTS) $(speed_profile_LDADD) $(LIBS)
 
 mostlyclean-compile:
 	-rm -f *.$(OBJEXT)
-	-rm -f ../*.$(OBJEXT)
-	-rm -f ../cppad/*.$(OBJEXT)
-	-rm -f ../src/*.$(OBJEXT)
 
 distclean-compile:
 	-rm -f *.tab.c
 
-@AMDEP_TRUE@@am__include@ @am__quote@../$(DEPDIR)/main.Po@am__quote@
-@AMDEP_TRUE@@am__include@ @am__quote@../cppad/$(DEPDIR)/det_lu.Po@am__quote@
-@AMDEP_TRUE@@am__include@ @am__quote@../cppad/$(DEPDIR)/det_minor.Po@am__quote@
-@AMDEP_TRUE@@am__include@ @am__quote@../cppad/$(DEPDIR)/mat_mul.Po@am__quote@
-@AMDEP_TRUE@@am__include@ @am__quote@../cppad/$(DEPDIR)/ode.Po@am__quote@
-@AMDEP_TRUE@@am__include@ @am__quote@../cppad/$(DEPDIR)/poly.Po@am__quote@
-@AMDEP_TRUE@@am__include@ @am__quote@../cppad/$(DEPDIR)/sparse_hessian.Po@am__quote@
-@AMDEP_TRUE@@am__include@ @am__quote@../cppad/$(DEPDIR)/sparse_jacobian.Po@am__quote@
-@AMDEP_TRUE@@am__include@ @am__quote@../src/$(DEPDIR)/link_det_lu.Po@am__quote@
-@AMDEP_TRUE@@am__include@ @am__quote@../src/$(DEPDIR)/link_det_minor.Po@am__quote@
-@AMDEP_TRUE@@am__include@ @am__quote@../src/$(DEPDIR)/link_mat_mul.Po@am__quote@
-@AMDEP_TRUE@@am__include@ @am__quote@../src/$(DEPDIR)/link_ode.Po@am__quote@
-@AMDEP_TRUE@@am__include@ @am__quote@../src/$(DEPDIR)/link_poly.Po@am__quote@
-@AMDEP_TRUE@@am__include@ @am__quote@../src/$(DEPDIR)/link_sparse_hessian.Po@am__quote@
-@AMDEP_TRUE@@am__include@ @am__quote@../src/$(DEPDIR)/link_sparse_jacobian.Po@am__quote@
-@AMDEP_TRUE@@am__include@ @am__quote@../src/$(DEPDIR)/microsoft_timer.Po@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/det_lu.Po@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/det_minor.Po@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/link_det_lu.Po@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/link_det_minor.Po@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/link_mat_mul.Po@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/link_ode.Po@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/link_poly.Po@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/link_sparse_hessian.Po@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/link_sparse_jacobian.Po@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/main.Po@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/mat_mul.Po@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/microsoft_timer.Po@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/ode.Po@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/poly.Po@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/sparse_hessian.Po@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/sparse_jacobian.Po@am__quote@
 
 .cpp.o:
 @am__fastdepCXX_TRUE@	$(AM_V_CXX)depbase=`echo $@ | sed 's|[^/]*$$|$(DEPDIR)/&|;s|\.o$$||'`;\
@@ -583,10 +530,12 @@ distdir: $(DISTFILES)
 	done
 check-am: all-am
 	$(MAKE) $(AM_MAKEFLAGS) $(check_PROGRAMS)
-check: check-am
+check: $(BUILT_SOURCES)
+	$(MAKE) $(AM_MAKEFLAGS) check-am
 all-am: makefile
 installdirs:
-install: install-am
+install: $(BUILT_SOURCES)
+	$(MAKE) $(AM_MAKEFLAGS) install-am
 install-exec: install-exec-am
 install-data: install-data-am
 uninstall: uninstall-am
@@ -612,22 +561,17 @@ clean-generic:
 distclean-generic:
 	-test -z "$(CONFIG_CLEAN_FILES)" || rm -f $(CONFIG_CLEAN_FILES)
 	-test . = "$(srcdir)" || test -z "$(CONFIG_CLEAN_VPATH_FILES)" || rm -f $(CONFIG_CLEAN_VPATH_FILES)
-	-rm -f ../$(DEPDIR)/$(am__dirstamp)
-	-rm -f ../$(am__dirstamp)
-	-rm -f ../cppad/$(DEPDIR)/$(am__dirstamp)
-	-rm -f ../cppad/$(am__dirstamp)
-	-rm -f ../src/$(DEPDIR)/$(am__dirstamp)
-	-rm -f ../src/$(am__dirstamp)
 
 maintainer-clean-generic:
 	@echo "This command is intended for maintainers to use"
 	@echo "it deletes files that may require special tools to rebuild."
+	-test -z "$(BUILT_SOURCES)" || rm -f $(BUILT_SOURCES)
 clean: clean-am
 
 clean-am: clean-checkPROGRAMS clean-generic mostlyclean-am
 
 distclean: distclean-am
-	-rm -rf ../$(DEPDIR) ../cppad/$(DEPDIR) ../src/$(DEPDIR)
+	-rm -rf ./$(DEPDIR)
 	-rm -f makefile
 distclean-am: clean-am distclean-compile distclean-generic \
 	distclean-tags
@@ -673,7 +617,7 @@ install-ps-am:
 installcheck-am:
 
 maintainer-clean: maintainer-clean-am
-	-rm -rf ../$(DEPDIR) ../cppad/$(DEPDIR) ../src/$(DEPDIR)
+	-rm -rf ./$(DEPDIR)
 	-rm -f makefile
 maintainer-clean-am: distclean-am maintainer-clean-generic
 
@@ -691,7 +635,7 @@ ps-am:
 
 uninstall-am:
 
-.MAKE: check-am install-am install-strip
+.MAKE: all check check-am install install-am install-strip
 
 .PHONY: CTAGS GTAGS TAGS all all-am check check-am clean \
 	clean-checkPROGRAMS clean-generic cscopelist-am ctags ctags-am \
@@ -706,9 +650,42 @@ uninstall-am:
 	mostlyclean-compile mostlyclean-generic pdf pdf-am ps ps-am \
 	tags tags-am uninstall uninstall-am
 
-
+#
+main.cpp: $(srcdir)/../main.cpp
+	cp $(srcdir)/../main.cpp main.cpp
+ode.cpp: $(srcdir)/../cppad/ode.cpp
+	cp $(srcdir)/../cppad/ode.cpp ode.cpp
+det_lu.cpp: $(srcdir)/../cppad/det_lu.cpp
+	cp $(srcdir)/../cppad/det_lu.cpp det_lu.cpp
+det_minor.cpp: $(srcdir)/../cppad/det_minor.cpp
+	cp $(srcdir)/../cppad/det_minor.cpp det_minor.cpp
+mat_mul.cpp: $(srcdir)/../cppad/mat_mul.cpp
+	cp $(srcdir)/../cppad/mat_mul.cpp mat_mul.cpp
+poly.cpp: $(srcdir)/../cppad/poly.cpp
+	cp $(srcdir)/../cppad/poly.cpp poly.cpp
+sparse_hessian.cpp: $(srcdir)/../cppad/sparse_hessian.cpp
+	cp $(srcdir)/../cppad/sparse_hessian.cpp sparse_hessian.cpp
+sparse_jacobian.cpp: $(srcdir)/../cppad/sparse_jacobian.cpp
+	cp $(srcdir)/../cppad/sparse_jacobian.cpp sparse_jacobian.cpp
+link_det_lu.cpp: $(srcdir)/../src/link_det_lu.cpp
+	cp $(srcdir)/../src/link_det_lu.cpp link_det_lu.cpp
+link_det_minor.cpp: $(srcdir)/../src/link_det_minor.cpp
+	cp $(srcdir)/../src/link_det_minor.cpp link_det_minor.cpp
+link_mat_mul.cpp: $(srcdir)/../src/link_mat_mul.cpp
+	cp $(srcdir)/../src/link_mat_mul.cpp link_mat_mul.cpp
+link_ode.cpp: $(srcdir)/../src/link_ode.cpp
+	cp $(srcdir)/../src/link_ode.cpp link_ode.cpp
+link_poly.cpp: $(srcdir)/../src/link_poly.cpp
+	cp $(srcdir)/../src/link_poly.cpp link_poly.cpp
+link_sparse_hessian.cpp: $(srcdir)/../src/link_sparse_hessian.cpp
+	cp $(srcdir)/../src/link_sparse_hessian.cpp link_sparse_hessian.cpp
+link_sparse_jacobian.cpp: $(srcdir)/../src/link_sparse_jacobian.cpp
+	cp $(srcdir)/../src/link_sparse_jacobian.cpp link_sparse_jacobian.cpp
+microsoft_timer.cpp: $(srcdir)/../src/microsoft_timer.cpp
+	cp $(srcdir)/../src/microsoft_timer.cpp microsoft_timer.cpp
+#
 test: check
-	./profile correct 123
+	./speed_profile correct 123
 
 # Tell versions [3.59,3.63) of GNU make to not export all variables.
 # Otherwise a system limit (for SysV at least) may be exceeded.

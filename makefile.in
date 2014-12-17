@@ -713,6 +713,7 @@ EXTRA_DIST = \
 	cppad_ipopt/test/CMakeLists.txt \
 	cppad_ipopt/CMakeLists.txt \
 	cppad_ipopt/speed/CMakeLists.txt \
+	speed/main.cpp \
 	speed/cppad/CMakeLists.txt \
 	speed/adolc/CMakeLists.txt \
 	speed/fadbad/CMakeLists.txt \

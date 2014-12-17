@@ -10,12 +10,16 @@
 # Please visit http://www.coin-or.org/CppAD/ for information on other licenses.
 # -----------------------------------------------------------------------------
 #
-# automake input file
+# Copy source file so that main.o does not end up in parent directory
+BUILT_SOURCES = main.cpp
+main.cpp:
+	cp $(srcdir)/../main.cpp main.cpp
+#
 #
 # CppAD pusts all it's preprocessor definitions in the cppad/configure.hpp
 DEFS          =
 #
-check_PROGRAMS   = fadbad 
+check_PROGRAMS   = speed_fadbad 
 #
 AM_CPPFLAGS   = \
 	-I$(top_srcdir) \
@@ -35,8 +39,8 @@ AM_CXXFLAGS   = -O2 -DNDEBUG -DCPPAD_FADBAD_SPEED $(CXX_FLAGS_FADBAD)
 LDADD           = -lspeed
 AM_LDFLAGS      = -L../src
 #
-fadbad_SOURCES = \
-	../main.cpp \
+speed_fadbad_SOURCES = \
+	main.cpp \
 	det_lu.cpp  \
 	det_minor.cpp  \
 	mat_mul.cpp  \
@@ -46,4 +50,4 @@ fadbad_SOURCES = \
 	sparse_jacobian.cpp
 
 test: check
-	./fadbad correct 123
+	./speed_fadbad correct 123

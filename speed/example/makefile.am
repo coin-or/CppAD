@@ -17,7 +17,7 @@ DEFS          =
 EXTRA_DIST        =  \
 	speed_program.cpp
 #
-check_PROGRAMS    = example 
+check_PROGRAMS    = speed_example 
 #
 AM_CPPFLAGS       = -I. -I$(top_srcdir) $(BOOST_INCLUDE) $(EIGEN_INCLUDE)
 #
@@ -25,7 +25,7 @@ AM_CXXFLAGS       = -g $(CXX_FLAGS)
 #
 LDADD             = -lspeed
 AM_LDFLAGS        = -L../src
-example_SOURCES   = \
+speed_example_SOURCES   = \
 	example.cpp \
 	det_by_lu.cpp \
 	det_by_minor.cpp \
@@ -40,4 +40,4 @@ example_SOURCES   = \
 	../src/microsoft_timer.cpp 
 
 test: check
-	./example
+	./speed_example

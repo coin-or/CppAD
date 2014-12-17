@@ -10,12 +10,15 @@
 # Please visit http://www.coin-or.org/CppAD/ for information on other licenses.
 # -----------------------------------------------------------------------------
 #
-# automake input file
+# Copy source file so that main.o does not end up in parent directory
+BUILT_SOURCES = main.cpp
+main.cpp:
+	cp $(srcdir)/../main.cpp main.cpp
 #
 # CppAD pusts all it's preprocessor definitions in the cppad/configure.hpp
 DEFS          =
 #
-check_PROGRAMS   = double 
+check_PROGRAMS   = speed_double 
 #
 AM_CPPFLAGS   = -I$(top_srcdir) $(BOOST_INCLUDE) $(EIGEN_INCLUDE)
 #
@@ -30,8 +33,8 @@ AM_CXXFLAGS   = -O2 -DNDEBUG -DCPPAD_DOUBLE_SPEED $(CXX_FLAGS)
 LDADD           = -lspeed
 AM_LDFLAGS      = -L../src
 #
-double_SOURCES = \
-	../main.cpp \
+speed_double_SOURCES = \
+	main.cpp \
 	det_lu.cpp  \
 	det_minor.cpp \
 	mat_mul.cpp \
@@ -41,4 +44,4 @@ double_SOURCES = \
 	sparse_jacobian.cpp
 
 test: check
-	./double correct 123
+	./speed_double correct 123

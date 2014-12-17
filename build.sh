@@ -219,7 +219,7 @@ then
 	cxx_flags="-Wall -ansi -pedantic-errors -std=c++98 -Wshadow"
 #_build_test_only:	if [ -e $EIGEN_DIR/include/Eigen ]
 #_build_test_only:	then
-#_build_test_only:	cxx_flags="-Wall -ansi -pedantic-errors -std=c++98 -Wno-long-long"
+#_build_test_only:	cxx_flags="-Wall -ansi -pedantic-errors -std=c++98 -Wno-long-long -Wno-sign-compare"
 #_build_test_only:	fi
 cat << EOF
 ../configure > $log_file \\

@@ -9,8 +9,59 @@
 # A copy of this license is included in the COPYING file of this distribution.
 # Please visit http://www.coin-or.org/CppAD/ for information on other licenses.
 # -----------------------------------------------------------------------------
+source_list = \
+	main.cpp \
+	ode.cpp \
+	det_lu.cpp \
+	det_minor.cpp \
+	mat_mul.cpp \
+	poly.cpp \
+	sparse_hessian.cpp \
+	sparse_jacobian.cpp \
+	link_det_lu.cpp \
+	link_det_minor.cpp \
+	link_mat_mul.cpp \
+	link_ode.cpp \
+	link_poly.cpp \
+	link_sparse_hessian.cpp \
+	link_sparse_jacobian.cpp \
+	microsoft_timer.cpp
 #
-# automake input file
+# make separate copy of source files because  building with different flags
+BUILT_SOURCES = $(source_list)
+#
+main.cpp: $(srcdir)/../main.cpp
+	cp $(srcdir)/../main.cpp main.cpp
+ode.cpp: $(srcdir)/../cppad/ode.cpp
+	cp $(srcdir)/../cppad/ode.cpp ode.cpp
+det_lu.cpp: $(srcdir)/../cppad/det_lu.cpp
+	cp $(srcdir)/../cppad/det_lu.cpp det_lu.cpp
+det_minor.cpp: $(srcdir)/../cppad/det_minor.cpp
+	cp $(srcdir)/../cppad/det_minor.cpp det_minor.cpp
+mat_mul.cpp: $(srcdir)/../cppad/mat_mul.cpp
+	cp $(srcdir)/../cppad/mat_mul.cpp mat_mul.cpp
+poly.cpp: $(srcdir)/../cppad/poly.cpp
+	cp $(srcdir)/../cppad/poly.cpp poly.cpp
+sparse_hessian.cpp: $(srcdir)/../cppad/sparse_hessian.cpp
+	cp $(srcdir)/../cppad/sparse_hessian.cpp sparse_hessian.cpp
+sparse_jacobian.cpp: $(srcdir)/../cppad/sparse_jacobian.cpp
+	cp $(srcdir)/../cppad/sparse_jacobian.cpp sparse_jacobian.cpp
+link_det_lu.cpp: $(srcdir)/../src/link_det_lu.cpp
+	cp $(srcdir)/../src/link_det_lu.cpp link_det_lu.cpp
+link_det_minor.cpp: $(srcdir)/../src/link_det_minor.cpp
+	cp $(srcdir)/../src/link_det_minor.cpp link_det_minor.cpp
+link_mat_mul.cpp: $(srcdir)/../src/link_mat_mul.cpp
+	cp $(srcdir)/../src/link_mat_mul.cpp link_mat_mul.cpp
+link_ode.cpp: $(srcdir)/../src/link_ode.cpp
+	cp $(srcdir)/../src/link_ode.cpp link_ode.cpp
+link_poly.cpp: $(srcdir)/../src/link_poly.cpp
+	cp $(srcdir)/../src/link_poly.cpp link_poly.cpp
+link_sparse_hessian.cpp: $(srcdir)/../src/link_sparse_hessian.cpp
+	cp $(srcdir)/../src/link_sparse_hessian.cpp link_sparse_hessian.cpp
+link_sparse_jacobian.cpp: $(srcdir)/../src/link_sparse_jacobian.cpp
+	cp $(srcdir)/../src/link_sparse_jacobian.cpp link_sparse_jacobian.cpp
+microsoft_timer.cpp: $(srcdir)/../src/microsoft_timer.cpp
+	cp $(srcdir)/../src/microsoft_timer.cpp microsoft_timer.cpp
 #
 # CppAD pusts all it's preprocessor definitions in the cppad/configure.hpp
 DEFS          =
@@ -18,7 +69,7 @@ DEFS          =
 EXTRA_DIST       =  \
 	gprof.sed
 #
-check_PROGRAMS   = profile 
+check_PROGRAMS   = speed_profile 
 #
 AM_CPPFLAGS   = -I$(top_srcdir) $(BOOST_INCLUDE) $(EIGEN_INCLUDE)
 #
@@ -32,23 +83,7 @@ AM_CXXFLAGS   = -pg -O2 -DCPPAD_PROFILE_SPEED -DNDEBUG $(CXX_FLAGS)
 #
 AM_LDFLAGS    = -pg
 #
-profile_SOURCES = \
-	../main.cpp \
-	../cppad/ode.cpp \
-	../cppad/det_lu.cpp  \
-	../cppad/det_minor.cpp  \
-	../cppad/mat_mul.cpp  \
-	../cppad/poly.cpp \
-	../cppad/sparse_hessian.cpp \
-	../cppad/sparse_jacobian.cpp \
-	../src/link_det_lu.cpp \
-	../src/link_det_minor.cpp \
-	../src/link_mat_mul.cpp \
-	../src/link_ode.cpp \
-	../src/link_poly.cpp \
-	../src/link_sparse_hessian.cpp \
-	../src/link_sparse_jacobian.cpp \
-	../src/microsoft_timer.cpp
-
+speed_profile_SOURCES = $(source_list)
+#
 test: check
-	./profile correct 123
+	./speed_profile correct 123
