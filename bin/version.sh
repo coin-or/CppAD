@@ -75,7 +75,7 @@ sed  \
 #
 echo 'sed -i.old configure.ac ...'
 sed  \
-	-e "s/(cppad, [0-9]\{8\}[.0-9]* *,/(cppad, $version,/"  \
+	-e "s/(\[cppad\], *\[[0-9]\{8\}[.0-9]*\] *,/([cppad], [$version],/"  \
 	-i.old configure.ac
 #
 echo 'sed -i.old configure ...'

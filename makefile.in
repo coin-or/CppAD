@@ -336,6 +336,7 @@ cppad_cppadvector = @cppad_cppadvector@
 cppad_description = @cppad_description@
 cppad_eigenvector = @cppad_eigenvector@
 cppad_has_colpack = @cppad_has_colpack@
+cppad_has_cstdint_8_to_64 = @cppad_has_cstdint_8_to_64@
 cppad_has_gettimeofday = @cppad_has_gettimeofday@
 cppad_has_nullptr = @cppad_has_nullptr@
 cppad_has_rvalue = @cppad_has_rvalue@

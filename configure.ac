@@ -12,7 +12,7 @@ dnl ---------------------------------------------------------------------------
 dnl
 dnl Process this file with autoconf to produce a configure script.
 dnl   package   version              bug-report
-AC_INIT(cppad, 20141127, cppad@list.coin-or.org)
+AC_INIT([cppad], [20141217], [cppad@list.coin-or.org])
 AM_SILENT_RULES([yes])
 
 dnl By defalut disable maintainer mode when running configure;
@@ -443,6 +443,7 @@ dnl auto-tools version cannot use c++11 compiler
 dnl so supress corresponding features
 AC_SUBST(cppad_has_nullptr, 0)
 AC_SUBST(cppad_has_rvalue, 0)
+AC_SUBST(cppad_has_cstdint_8_to_64, 0)
 
 dnl Determine if size_t has same size as unsigned int 
 AC_CHECK_SIZEOF([size_t])
@@ -474,7 +475,7 @@ fi
 
 dnl Run any macros required for proper operation of generated makefiles
 dnl nostdinc: Do not define standard include directories in generated makefiles
-AM_INIT_AUTOMAKE(nostdinc)
+AM_INIT_AUTOMAKE([nostdinc subdir-objects -Wall])
 
 dnl Use LIBTOOL for cppad_ipopt ?
 dnl AC_PROG_LIBTOOL
