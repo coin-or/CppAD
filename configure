@@ -708,13 +708,6 @@ cppad_size_t_same_unsigned_int
 EGREP
 GREP
 CPP
-OBJEXT
-EXEEXT
-ac_ct_CC
-CPPFLAGS
-LDFLAGS
-CFLAGS
-CC
 cppad_has_cstdint_8_to_64
 cppad_has_rvalue
 cppad_has_nullptr
@@ -763,7 +756,15 @@ CppAD_DOCUMENTATION_FALSE
 CppAD_DOCUMENTATION_TRUE
 CppAD_HAVE_AR_FALSE
 CppAD_HAVE_AR_TRUE
-have_ar
+OBJEXT
+EXEEXT
+ac_ct_CC
+CPPFLAGS
+LDFLAGS
+CFLAGS
+CC
+ac_ct_AR
+AR
 CppAD_PKG_CONFIG_FALSE
 CppAD_PKG_CONFIG_TRUE
 have_pkg_config
@@ -836,6 +837,11 @@ enable_dependency_tracking
       ac_precious_vars='build_alias
 host_alias
 target_alias
+CC
+CFLAGS
+LDFLAGS
+LIBS
+CPPFLAGS
 POSTFIX_DIR
 ADOLC_DIR
 EIGEN_DIR
@@ -848,11 +854,6 @@ OPENMP_FLAGS
 MAX_NUM_THREADS
 TAPE_ADDR_TYPE
 TAPE_ID_TYPE
-CC
-CFLAGS
-LDFLAGS
-LIBS
-CPPFLAGS
 CPP
 CXX
 CXXFLAGS
@@ -1507,6 +1508,13 @@ Optional Packages:
                           type
 
 Some influential environment variables:
+  CC          C compiler command
+  CFLAGS      C compiler flags
+  LDFLAGS     linker flags, e.g. -L<lib dir> if you have libraries in a
+              nonstandard directory <lib dir>
+  LIBS        libraries to pass to the linker, e.g. -l<library>
+  CPPFLAGS    (Objective) C/C++ preprocessor flags, e.g. -I<include dir> if
+              you have headers in a nonstandard directory <include dir>
   POSTFIX_DIR postfix directory for CppAD installation
   ADOLC_DIR   value of configure prefix directory during Adolc install
   EIGEN_DIR   value of configure prefix directory during Eigen install
@@ -1523,13 +1531,6 @@ Some influential environment variables:
               type used for addresses in AD tapes
   TAPE_ID_TYPE
               type used for addresses in AD tapes
-  CC          C compiler command
-  CFLAGS      C compiler flags
-  LDFLAGS     linker flags, e.g. -L<lib dir> if you have libraries in a
-              nonstandard directory <lib dir>
-  LIBS        libraries to pass to the linker, e.g. -l<library>
-  CPPFLAGS    (Objective) C/C++ preprocessor flags, e.g. -I<include dir> if
-              you have headers in a nonstandard directory <include dir>
   CPP         C preprocessor
   CXX         C++ compiler command
   CXXFLAGS    C++ compiler flags
@@ -2693,603 +2694,8 @@ else
 fi
 
 
-# Extract the first word of "ar", so it can be a program name with args.
-set dummy ar; ac_word=$2
-{ $as_echo "$as_me:${as_lineno-$LINENO}: checking for $ac_word" >&5
-$as_echo_n "checking for $ac_word... " >&6; }
-if ${ac_cv_prog_have_ar+:} false; then :
-  $as_echo_n "(cached) " >&6
-else
-  if test -n "$have_ar"; then
-  ac_cv_prog_have_ar="$have_ar" # Let the user override the test.
-else
-as_save_IFS=$IFS; IFS=$PATH_SEPARATOR
-for as_dir in $PATH
-do
-  IFS=$as_save_IFS
-  test -z "$as_dir" && as_dir=.
-    for ac_exec_ext in '' $ac_executable_extensions; do
-  if as_fn_executable_p "$as_dir/$ac_word$ac_exec_ext"; then
-    ac_cv_prog_have_ar="yes"
-    $as_echo "$as_me:${as_lineno-$LINENO}: found $as_dir/$ac_word$ac_exec_ext" >&5
-    break 2
-  fi
-done
-  done
-IFS=$as_save_IFS
-
-  test -z "$ac_cv_prog_have_ar" && ac_cv_prog_have_ar="no"
-fi
-fi
-have_ar=$ac_cv_prog_have_ar
-if test -n "$have_ar"; then
-  { $as_echo "$as_me:${as_lineno-$LINENO}: result: $have_ar" >&5
-$as_echo "$have_ar" >&6; }
-else
-  { $as_echo "$as_me:${as_lineno-$LINENO}: result: no" >&5
-$as_echo "no" >&6; }
-fi
-
-
- if test "$have_ar" = "yes"; then
-  CppAD_HAVE_AR_TRUE=
-  CppAD_HAVE_AR_FALSE='#'
-else
-  CppAD_HAVE_AR_TRUE='#'
-  CppAD_HAVE_AR_FALSE=
-fi
-
-if test "$have_ar" = "no"; then
-	{ $as_echo "$as_me:${as_lineno-$LINENO}: WARNING: cannot build any libraries because ar is missing, speed/* is not used
-	" >&5
-$as_echo "$as_me: WARNING: cannot build any libraries because ar is missing, speed/* is not used
-	" >&2;}
-fi
-
-{ $as_echo "$as_me:${as_lineno-$LINENO}: *** Check command line arguments that are longer used ****" >&5
-$as_echo "$as_me: *** Check command line arguments that are longer used ****" >&6;}
-
-if test "$CPP_ERROR_WARN" != "" ; then
-    as_fn_error $? "The CPP_ERROR_WARN configure option is now CXX_FLAGS" "$LINENO" 5
-fi
-
-# Check whether --with-SpeedExample was given.
-if test "${with_SpeedExample+set}" = set; then :
-  withval=$with_SpeedExample; SpeedExample="yes"
-else
-  SpeedExample="no"
-
-fi
-
-if test "$SpeedExample" = "yes" ; then
-    as_fn_error $? "--with-SpeedExample not necessary, see install instructions." "$LINENO" 5
-fi
-
-# Check whether --with-profiling was given.
-if test "${with_profiling+set}" = set; then :
-  withval=$with_profiling; profiling="yes"
-else
-  profiling="no"
-
-fi
-
-if test "$profiling" = "yes" ; then
-    as_fn_error $? "--with-profiling not necessary, see install instructions." "$LINENO" 5
-fi
-
-# Check whether --with-Speed was given.
-if test "${with_Speed+set}" = set; then :
-  withval=$with_Speed; Speed="yes"
-else
-  Speed="no"
-
-fi
-
-if test "$Speed" = "yes" ; then
-    as_fn_error $? "--with-Speed not necessary, see install instructions." "$LINENO" 5
-fi
-
-# Check whether --with-Introduction was given.
-if test "${with_Introduction+set}" = set; then :
-  withval=$with_Introduction; Introduction="yes"
-else
-  Introduction="no"
-
-fi
-
-if test "$Introduction" = "yes" ; then
-    as_fn_error $? "--with-Introduction not necessary, see install instructions." "$LINENO" 5
-fi
-
-# Check whether --with-Example was given.
-if test "${with_Example+set}" = set; then :
-  withval=$with_Example; Example="yes"
-else
-  Example="no"
-
-fi
-
-if test "$Example" = "yes" ; then
-    as_fn_error $? "--with-Example not necessary, see install instructions." "$LINENO" 5
-fi
-
-# Check whether --with-TestMore was given.
-if test "${with_TestMore+set}" = set; then :
-  withval=$with_TestMore; TestMore="yes"
-else
-  TestMore="no"
-
-fi
-
-if test "$TestMore" = "yes" ; then
-    as_fn_error $? "--with-TestMore not necessary, see install instructions." "$LINENO" 5
-fi
-
-# Check whether --with-PrintFor was given.
-if test "${with_PrintFor+set}" = set; then :
-  withval=$with_PrintFor; PrintFor="yes"
-else
-  PrintFor="no"
-
-fi
-
-if test "$PrintFor" = "yes" ; then
-    as_fn_error $? "--with-PrintFor not necessary, see install instructions." "$LINENO" 5
-fi
-{ $as_echo "$as_me:${as_lineno-$LINENO}: ******  Check command line arguments that are used ***********" >&5
-$as_echo "$as_me: ******  Check command line arguments that are used ***********" >&6;}
-{ $as_echo "$as_me:${as_lineno-$LINENO}: checking --prefix" >&5
-$as_echo_n "checking --prefix... " >&6; }
-if test "$prefix" = "NONE" ; then
-	{ $as_echo "$as_me:${as_lineno-$LINENO}: result: $HOME" >&5
-$as_echo "$HOME" >&6; }
-else
-	{ $as_echo "$as_me:${as_lineno-$LINENO}: result: $prefix" >&5
-$as_echo "$prefix" >&6; }
-fi
-
-{ $as_echo "$as_me:${as_lineno-$LINENO}: checking --with-Documentation" >&5
-$as_echo_n "checking --with-Documentation... " >&6; }
-
-# Check whether --with-Documentation was given.
-if test "${with_Documentation+set}" = set; then :
-  withval=$with_Documentation; Documentation="yes"
-else
-  Documentation="no"
-
-fi
-
- if test "$Documentation" = "yes"; then
-  CppAD_DOCUMENTATION_TRUE=
-  CppAD_DOCUMENTATION_FALSE='#'
-else
-  CppAD_DOCUMENTATION_TRUE='#'
-  CppAD_DOCUMENTATION_FALSE=
-fi
-
-{ $as_echo "$as_me:${as_lineno-$LINENO}: result: $Documentation" >&5
-$as_echo "$Documentation" >&6; }
-
-{ $as_echo "$as_me:${as_lineno-$LINENO}: checking --with-stdvector" >&5
-$as_echo_n "checking --with-stdvector... " >&6; }
-
-# Check whether --with-stdvector was given.
-if test "${with_stdvector+set}" = set; then :
-  withval=$with_stdvector; stdvector="yes"
-else
-  stdvector="no"
-
-fi
-
-if test "$stdvector" = "yes" ; then
-	cppad_stdvector=1
-
-else
-	cppad_stdvector=0
-
-fi
-{ $as_echo "$as_me:${as_lineno-$LINENO}: result: $stdvector" >&5
-$as_echo "$stdvector" >&6; }
-
-{ $as_echo "$as_me:${as_lineno-$LINENO}: checking --with-boostvector" >&5
-$as_echo_n "checking --with-boostvector... " >&6; }
-
-# Check whether --with-boostvector was given.
-if test "${with_boostvector+set}" = set; then :
-  withval=$with_boostvector; boostvector="yes"
-else
-  boostvector="no"
-
-fi
-
-{ $as_echo "$as_me:${as_lineno-$LINENO}: result: $boostvector" >&5
-$as_echo "$boostvector" >&6; }
-if test "$boostvector" = "yes" ; then
-	if test "$stdvector" != "no" ; then
-		as_fn_error $? "cannot --with both stdvector and boostvector" "$LINENO" 5
-	fi
-	cppad_boostvector=1
-
-else
-	cppad_boostvector=0
-
-fi
-
-{ $as_echo "$as_me:${as_lineno-$LINENO}: checking --with-eigenvector" >&5
-$as_echo_n "checking --with-eigenvector... " >&6; }
-
-# Check whether --with-eigenvector was given.
-if test "${with_eigenvector+set}" = set; then :
-  withval=$with_eigenvector; eigenvector="yes"
-else
-  eigenvector="no"
-
-fi
-
-{ $as_echo "$as_me:${as_lineno-$LINENO}: result: $eigenvector" >&5
-$as_echo "$eigenvector" >&6; }
-if test "$eigenvector" = "yes" ; then
-	if test "$stdvector" != "no" ; then
-		as_fn_error $? "cannot --with both stdvector and eigenvector" "$LINENO" 5
-	fi
-	if test "$boostvector" != "no" ; then
-		as_fn_error $? "cannot --with both boostvector and eigenvector" "$LINENO" 5
-	fi
-	cppad_eigenvector=1
-
-else
-	cppad_eigenvector=0
-
-fi
-
-{ $as_echo "$as_me:${as_lineno-$LINENO}: checking --with-sparse_set" >&5
-$as_echo_n "checking --with-sparse_set... " >&6; }
-
-# Check whether --with-sparse_set was given.
-if test "${with_sparse_set+set}" = set; then :
-  withval=$with_sparse_set; sparse_set="yes"
-else
-  sparse_set="no"
-
-fi
-
-{ $as_echo "$as_me:${as_lineno-$LINENO}: result: $sparse_set" >&5
-$as_echo "$sparse_set" >&6; }
-{ $as_echo "$as_me:${as_lineno-$LINENO}: checking --with-sparse_list" >&5
-$as_echo_n "checking --with-sparse_list... " >&6; }
-
-# Check whether --with-sparse_list was given.
-if test "${with_sparse_list+set}" = set; then :
-  withval=$with_sparse_list; sparse_list="yes"
-else
-  sparse_list="no"
-
-fi
-
-{ $as_echo "$as_me:${as_lineno-$LINENO}: result: $sparse_list" >&5
-$as_echo "$sparse_list" >&6; }
-if test "$sparse_set" = "yes" ; then
-	if test "$sparse_list" == "yes" ; then
-		as_fn_error $? "cannot --with both sparse_set and sparse_list" "$LINENO" 5
-	fi
-	cppad_internal_sparse_set=sparse_set
-
-else
-	cppad_internal_sparse_set=sparse_list
-
-fi
-
-
-{ $as_echo "$as_me:${as_lineno-$LINENO}: checking --with-implicit_ctor" >&5
-$as_echo_n "checking --with-implicit_ctor... " >&6; }
-
-# Check whether --with-implicit_ctor was given.
-if test "${with_implicit_ctor+set}" = set; then :
-  withval=$with_implicit_ctor; implicit_ctor="yes"
-else
-  implicit_ctor="no"
-
-fi
-
-{ $as_echo "$as_me:${as_lineno-$LINENO}: result: $implicit_ctor" >&5
-$as_echo "$implicit_ctor" >&6; }
-if test "$implicit_ctor" = "yes" ; then
-	cppad_implicit_ctor_from_any_type="1"
-
-else
-	cppad_implicit_ctor_from_any_type="0"
-
-fi
-
-{ $as_echo "$as_me:${as_lineno-$LINENO}: checking POSTFIX_DIR" >&5
-$as_echo_n "checking POSTFIX_DIR... " >&6; }
-
- if test "$POSTFIX_DIR" != ""; then
-  CppAD_POSTFIX_TRUE=
-  CppAD_POSTFIX_FALSE='#'
-else
-  CppAD_POSTFIX_TRUE='#'
-  CppAD_POSTFIX_FALSE=
-fi
-
-if test "$POSTFIX_DIR" != "" ; then
-	{ $as_echo "$as_me:${as_lineno-$LINENO}: result: $POSTFIX_DIR" >&5
-$as_echo "$POSTFIX_DIR" >&6; }
-else
-	{ $as_echo "$as_me:${as_lineno-$LINENO}: result: no" >&5
-$as_echo "no" >&6; }
-fi
-
-{ $as_echo "$as_me:${as_lineno-$LINENO}: checking ADOLC_DIR" >&5
-$as_echo_n "checking ADOLC_DIR... " >&6; }
-
- if test "$ADOLC_DIR" != ""; then
-  CppAD_ADOLC_TRUE=
-  CppAD_ADOLC_FALSE='#'
-else
-  CppAD_ADOLC_TRUE='#'
-  CppAD_ADOLC_FALSE=
-fi
-
-if test "$ADOLC_DIR" != "" ; then
-	{ $as_echo "$as_me:${as_lineno-$LINENO}: result: $ADOLC_DIR" >&5
-$as_echo "$ADOLC_DIR" >&6; }
-	if test "$have_ar" = "no"; then
-		as_fn_error $? "ar is missing and ADOLC_DIR is present" "$LINENO" 5
-	fi
-else
-	{ $as_echo "$as_me:${as_lineno-$LINENO}: result: no" >&5
-$as_echo "no" >&6; }
-fi
-
-{ $as_echo "$as_me:${as_lineno-$LINENO}: checking EIGEN_DIR" >&5
-$as_echo_n "checking EIGEN_DIR... " >&6; }
-
- if test "$EIGEN_DIR" != ""; then
-  CppAD_EIGEN_DIR_TRUE=
-  CppAD_EIGEN_DIR_FALSE='#'
-else
-  CppAD_EIGEN_DIR_TRUE='#'
-  CppAD_EIGEN_DIR_FALSE=
-fi
-
-if test "$EIGEN_DIR" != "" ; then
-	{ $as_echo "$as_me:${as_lineno-$LINENO}: result: $EIGEN_DIR" >&5
-$as_echo "$EIGEN_DIR" >&6; }
-	EIGEN_INCLUDE=-I$EIGEN_DIR/include
-
-else
-	{ $as_echo "$as_me:${as_lineno-$LINENO}: result: no" >&5
-$as_echo "no" >&6; }
-
-fi
-
-{ $as_echo "$as_me:${as_lineno-$LINENO}: checking FADBAD_DIR" >&5
-$as_echo_n "checking FADBAD_DIR... " >&6; }
-
- if test "$FADBAD_DIR" != ""; then
-  CppAD_FADBAD_TRUE=
-  CppAD_FADBAD_FALSE='#'
-else
-  CppAD_FADBAD_TRUE='#'
-  CppAD_FADBAD_FALSE=
-fi
-
-if test "$FADBAD_DIR" != "" ; then
-	{ $as_echo "$as_me:${as_lineno-$LINENO}: result: $FADBAD_DIR" >&5
-$as_echo "$FADBAD_DIR" >&6; }
-	if test "$have_ar" = "no"; then
-		as_fn_error $? "ar is missing and FADBAD_DIR is present" "$LINENO" 5
-	fi
-else
-	{ $as_echo "$as_me:${as_lineno-$LINENO}: result: no" >&5
-$as_echo "no" >&6; }
-fi
-
-{ $as_echo "$as_me:${as_lineno-$LINENO}: checking SACADO_DIR" >&5
-$as_echo_n "checking SACADO_DIR... " >&6; }
-
- if test "$SACADO_DIR" != ""; then
-  CppAD_SACADO_TRUE=
-  CppAD_SACADO_FALSE='#'
-else
-  CppAD_SACADO_TRUE='#'
-  CppAD_SACADO_FALSE=
-fi
-
-if test "$SACADO_DIR" != "" ; then
-	{ $as_echo "$as_me:${as_lineno-$LINENO}: result: $SACADO_DIR" >&5
-$as_echo "$SACADO_DIR" >&6; }
-	if test "$have_ar" = "no"; then
-		as_fn_error $? "ar is missing and SACADO_DIR is present" "$LINENO" 5
-	fi
-else
-	{ $as_echo "$as_me:${as_lineno-$LINENO}: result: no" >&5
-$as_echo "no" >&6; }
-fi
-
-{ $as_echo "$as_me:${as_lineno-$LINENO}: checking IPOPT_DIR" >&5
-$as_echo_n "checking IPOPT_DIR... " >&6; }
-
- if test "$IPOPT_DIR" != ""; then
-  CppAD_IPOPT_TRUE=
-  CppAD_IPOPT_FALSE='#'
-else
-  CppAD_IPOPT_TRUE='#'
-  CppAD_IPOPT_FALSE=
-fi
-
-if test "$IPOPT_DIR" != "" ; then
-	{ $as_echo "$as_me:${as_lineno-$LINENO}: result: $IPOPT_DIR" >&5
-$as_echo "$IPOPT_DIR" >&6; }
-	if test "$have_ar" = "no"; then
-		as_fn_error $? "ar is missing and IPOPT_DIR is present" "$LINENO" 5
-	fi
-else
-	{ $as_echo "$as_me:${as_lineno-$LINENO}: result: no" >&5
-$as_echo "no" >&6; }
-fi
-
-{ $as_echo "$as_me:${as_lineno-$LINENO}: checking BOOST_DIR" >&5
-$as_echo_n "checking BOOST_DIR... " >&6; }
-
- if test "$BOOST_DIR" != ""; then
-  CppAD_BOOST_DIR_TRUE=
-  CppAD_BOOST_DIR_FALSE='#'
-else
-  CppAD_BOOST_DIR_TRUE='#'
-  CppAD_BOOST_DIR_FALSE=
-fi
-
-if test "$BOOST_DIR" != "" ; then
-	{ $as_echo "$as_me:${as_lineno-$LINENO}: result: $BOOST_DIR" >&5
-$as_echo "$BOOST_DIR" >&6; }
-	BOOST_INCLUDE=-I$BOOST_DIR/include
-
-else
-	{ $as_echo "$as_me:${as_lineno-$LINENO}: result: no" >&5
-$as_echo "no" >&6; }
-
-fi
-
-#
-{ $as_echo "$as_me:${as_lineno-$LINENO}: checking CXX_FLAGS" >&5
-$as_echo_n "checking CXX_FLAGS... " >&6; }
-
-# cxx_flags for fadbad and eigen
-if test "$CXX_FLAGS" != "" ; then
-	{ $as_echo "$as_me:${as_lineno-$LINENO}: result: $CXX_FLAGS" >&5
-$as_echo "$CXX_FLAGS" >&6; }
-	cxx_flags_fadbad=`echo "$CXX_FLAGS" | sed -e 's|-Wshadow||'`
-	cxx_flags_eigen="$cxx_flags_fadbda -Wno-long-long"
-else
-	{ $as_echo "$as_me:${as_lineno-$LINENO}: result: no" >&5
-$as_echo "no" >&6; }
-	cxx_flags_fadbad=""
-	cxx_flags_eigen=""
-fi
-CXX_FLAGS_FADBAD="$cxx_flags_fadbad"
-
-CXX_FLAGS_EIGEN="$cxx_flags_eigen"
-
-
-{ $as_echo "$as_me:${as_lineno-$LINENO}: checking OPENMP_FLAGS" >&5
-$as_echo_n "checking OPENMP_FLAGS... " >&6; }
-
-if test "$OPENMP_FLAGS" != "" ; then
-	{ $as_echo "$as_me:${as_lineno-$LINENO}: result: $OPENMP_FLAGS" >&5
-$as_echo "$OPENMP_FLAGS" >&6; }
-else
-	{ $as_echo "$as_me:${as_lineno-$LINENO}: result: no" >&5
-$as_echo "no" >&6; }
-fi
- if test "$OPENMP_FLAGS" != ""; then
-  CppAD_OPENMP_TRUE=
-  CppAD_OPENMP_FALSE='#'
-else
-  CppAD_OPENMP_TRUE='#'
-  CppAD_OPENMP_FALSE=
-fi
-
-
-{ $as_echo "$as_me:${as_lineno-$LINENO}: checking MAX_NUM_THREADS" >&5
-$as_echo_n "checking MAX_NUM_THREADS... " >&6; }
-
-if test "$MAX_NUM_THREADS" != "" ; then
-	{ $as_echo "$as_me:${as_lineno-$LINENO}: result: $MAX_NUM_THREADS" >&5
-$as_echo "$MAX_NUM_THREADS" >&6; }
-  	if test "$MAX_NUM_THREADS" -lt "4" ; then
-		as_fn_error $? " MAX_NUM_THREADS=$MAX_NUM_THREADS is less than 4
-		" "$LINENO" 5
-	fi
-	max_num_threads="$MAX_NUM_THREADS"
-else
-	max_num_threads="48"
-	{ $as_echo "$as_me:${as_lineno-$LINENO}: result: no, using default value $max_num_threads" >&5
-$as_echo "no, using default value $max_num_threads" >&6; }
-fi
-cppad_max_num_threads=$max_num_threads
-
-
-{ $as_echo "$as_me:${as_lineno-$LINENO}: checking TAPE_ADDR_TYPE" >&5
-$as_echo_n "checking TAPE_ADDR_TYPE... " >&6; }
-
-if test "$TAPE_ADDR_TYPE" == "" ; then
-	addr_t="unsigned int"
-else
-	addr_t="$TAPE_ADDR_TYPE"
-fi
-cppad_tape_addr_type=$addr_t
-
-{ $as_echo "$as_me:${as_lineno-$LINENO}: result: $addr_t" >&5
-$as_echo "$addr_t" >&6; }
-ok="no"
-if test "$addr_t" == "size_t" ; then
-	ok="yes"
-fi
-if test "$addr_t" == "int" ; then
-	{ $as_echo "$as_me:${as_lineno-$LINENO}: WARNING: TAPE_ADDR_TYPE=int is for CppAD developers (not users)
-	" >&5
-$as_echo "$as_me: WARNING: TAPE_ADDR_TYPE=int is for CppAD developers (not users)
-	" >&2;}
-	ok="yes"
-fi
-if test "$addr_t" == "unsigned int" ; then
-	ok="yes"
-fi
-if test "$addr_t" == "unsigned short int" ; then
-	ok="yes"
-fi
-if test "$ok" == "no" ; then
-  	as_fn_error $? "$addr_t is not a valid choice for TAPE_ADDR_TYPE
-	" "$LINENO" 5
-fi
-
-{ $as_echo "$as_me:${as_lineno-$LINENO}: checking TAPE_ID_TYPE" >&5
-$as_echo_n "checking TAPE_ID_TYPE... " >&6; }
-
-if test "$TAPE_ID_TYPE" == "" ; then
-	tape_id_t="unsigned int"
-else
-	tape_id_t="$TAPE_ID_TYPE"
-fi
-cppad_tape_id_type=$tape_id_t
-
-{ $as_echo "$as_me:${as_lineno-$LINENO}: result: $tape_id_t" >&5
-$as_echo "$tape_id_t" >&6; }
-ok="no"
-if test "$tape_id_t" == "size_t" ; then
-	ok="yes"
-fi
-if test "$tape_id_t" == "int" ; then
-	{ $as_echo "$as_me:${as_lineno-$LINENO}: WARNING: TAPE_ID_TYPE=int is for CppAD developers (not users)
-	" >&5
-$as_echo "$as_me: WARNING: TAPE_ID_TYPE=int is for CppAD developers (not users)
-	" >&2;}
-	ok="yes"
-fi
-if test "$tape_id_t" == "unsigned int" ; then
-	ok="yes"
-fi
-if test "$tape_id_t" == "unsigned short int" ; then
-	ok="yes"
-fi
-if test "$ok" == "no" ; then
-  	as_fn_error $? "$tape_id_t is not a valid choice for TAPE_ID_TYPE
-	" "$LINENO" 5
-fi
-{ $as_echo "$as_me:${as_lineno-$LINENO}: ********** End Checking Command Line arguments ***************" >&5
-$as_echo "$as_me: ********** End Checking Command Line arguments ***************" >&6;}
-
-cppad_has_colpack=0
-
-
-cppad_has_nullptr=0
-
-cppad_has_rvalue=0
-
-cppad_has_cstdint_8_to_64=0
-
+# expand $ac_aux_dir to an absolute path
+am_aux_dir=`cd $ac_aux_dir && pwd`
 
 ac_ext=c
 ac_cpp='$CPP $CPPFLAGS'
@@ -4081,6 +3487,726 @@ ac_link='$CC -o conftest$ac_exeext $CFLAGS $CPPFLAGS $LDFLAGS conftest.$ac_ext $
 ac_compiler_gnu=$ac_cv_c_compiler_gnu
 
 
+if test -n "$ac_tool_prefix"; then
+  for ac_prog in ar lib "link -lib"
+  do
+    # Extract the first word of "$ac_tool_prefix$ac_prog", so it can be a program name with args.
+set dummy $ac_tool_prefix$ac_prog; ac_word=$2
+{ $as_echo "$as_me:${as_lineno-$LINENO}: checking for $ac_word" >&5
+$as_echo_n "checking for $ac_word... " >&6; }
+if ${ac_cv_prog_AR+:} false; then :
+  $as_echo_n "(cached) " >&6
+else
+  if test -n "$AR"; then
+  ac_cv_prog_AR="$AR" # Let the user override the test.
+else
+as_save_IFS=$IFS; IFS=$PATH_SEPARATOR
+for as_dir in $PATH
+do
+  IFS=$as_save_IFS
+  test -z "$as_dir" && as_dir=.
+    for ac_exec_ext in '' $ac_executable_extensions; do
+  if as_fn_executable_p "$as_dir/$ac_word$ac_exec_ext"; then
+    ac_cv_prog_AR="$ac_tool_prefix$ac_prog"
+    $as_echo "$as_me:${as_lineno-$LINENO}: found $as_dir/$ac_word$ac_exec_ext" >&5
+    break 2
+  fi
+done
+  done
+IFS=$as_save_IFS
+
+fi
+fi
+AR=$ac_cv_prog_AR
+if test -n "$AR"; then
+  { $as_echo "$as_me:${as_lineno-$LINENO}: result: $AR" >&5
+$as_echo "$AR" >&6; }
+else
+  { $as_echo "$as_me:${as_lineno-$LINENO}: result: no" >&5
+$as_echo "no" >&6; }
+fi
+
+
+    test -n "$AR" && break
+  done
+fi
+if test -z "$AR"; then
+  ac_ct_AR=$AR
+  for ac_prog in ar lib "link -lib"
+do
+  # Extract the first word of "$ac_prog", so it can be a program name with args.
+set dummy $ac_prog; ac_word=$2
+{ $as_echo "$as_me:${as_lineno-$LINENO}: checking for $ac_word" >&5
+$as_echo_n "checking for $ac_word... " >&6; }
+if ${ac_cv_prog_ac_ct_AR+:} false; then :
+  $as_echo_n "(cached) " >&6
+else
+  if test -n "$ac_ct_AR"; then
+  ac_cv_prog_ac_ct_AR="$ac_ct_AR" # Let the user override the test.
+else
+as_save_IFS=$IFS; IFS=$PATH_SEPARATOR
+for as_dir in $PATH
+do
+  IFS=$as_save_IFS
+  test -z "$as_dir" && as_dir=.
+    for ac_exec_ext in '' $ac_executable_extensions; do
+  if as_fn_executable_p "$as_dir/$ac_word$ac_exec_ext"; then
+    ac_cv_prog_ac_ct_AR="$ac_prog"
+    $as_echo "$as_me:${as_lineno-$LINENO}: found $as_dir/$ac_word$ac_exec_ext" >&5
+    break 2
+  fi
+done
+  done
+IFS=$as_save_IFS
+
+fi
+fi
+ac_ct_AR=$ac_cv_prog_ac_ct_AR
+if test -n "$ac_ct_AR"; then
+  { $as_echo "$as_me:${as_lineno-$LINENO}: result: $ac_ct_AR" >&5
+$as_echo "$ac_ct_AR" >&6; }
+else
+  { $as_echo "$as_me:${as_lineno-$LINENO}: result: no" >&5
+$as_echo "no" >&6; }
+fi
+
+
+  test -n "$ac_ct_AR" && break
+done
+
+  if test "x$ac_ct_AR" = x; then
+    AR="false"
+  else
+    case $cross_compiling:$ac_tool_warned in
+yes:)
+{ $as_echo "$as_me:${as_lineno-$LINENO}: WARNING: using cross tools not prefixed with host triplet" >&5
+$as_echo "$as_me: WARNING: using cross tools not prefixed with host triplet" >&2;}
+ac_tool_warned=yes ;;
+esac
+    AR=$ac_ct_AR
+  fi
+fi
+
+: ${AR=ar}
+
+{ $as_echo "$as_me:${as_lineno-$LINENO}: checking the archiver ($AR) interface" >&5
+$as_echo_n "checking the archiver ($AR) interface... " >&6; }
+if ${am_cv_ar_interface+:} false; then :
+  $as_echo_n "(cached) " >&6
+else
+  am_cv_ar_interface=ar
+   cat confdefs.h - <<_ACEOF >conftest.$ac_ext
+/* end confdefs.h.  */
+int some_variable = 0;
+_ACEOF
+if ac_fn_c_try_compile "$LINENO"; then :
+  am_ar_try='$AR cru libconftest.a conftest.$ac_objext >&5'
+      { { eval echo "\"\$as_me\":${as_lineno-$LINENO}: \"$am_ar_try\""; } >&5
+  (eval $am_ar_try) 2>&5
+  ac_status=$?
+  $as_echo "$as_me:${as_lineno-$LINENO}: \$? = $ac_status" >&5
+  test $ac_status = 0; }
+      if test "$ac_status" -eq 0; then
+        am_cv_ar_interface=ar
+      else
+        am_ar_try='$AR -NOLOGO -OUT:conftest.lib conftest.$ac_objext >&5'
+        { { eval echo "\"\$as_me\":${as_lineno-$LINENO}: \"$am_ar_try\""; } >&5
+  (eval $am_ar_try) 2>&5
+  ac_status=$?
+  $as_echo "$as_me:${as_lineno-$LINENO}: \$? = $ac_status" >&5
+  test $ac_status = 0; }
+        if test "$ac_status" -eq 0; then
+          am_cv_ar_interface=lib
+        else
+          am_cv_ar_interface=unknown
+        fi
+      fi
+      rm -f conftest.lib libconftest.a
+
+fi
+rm -f core conftest.err conftest.$ac_objext conftest.$ac_ext
+
+fi
+{ $as_echo "$as_me:${as_lineno-$LINENO}: result: $am_cv_ar_interface" >&5
+$as_echo "$am_cv_ar_interface" >&6; }
+
+case $am_cv_ar_interface in
+ar)
+  ;;
+lib)
+  # Microsoft lib, so override with the ar-lib wrapper script.
+  # FIXME: It is wrong to rewrite AR.
+  # But if we don't then we get into trouble of one sort or another.
+  # A longer-term fix would be to have automake use am__AR in this case,
+  # and then we could set am__AR="$am_aux_dir/ar-lib \$(AR)" or something
+  # similar.
+  AR="$am_aux_dir/ar-lib $AR"
+  ;;
+unknown)
+  as_fn_error $? "could not determine $AR interface" "$LINENO" 5
+  ;;
+esac
+
+ if test "$AR" = "ar"; then
+  CppAD_HAVE_AR_TRUE=
+  CppAD_HAVE_AR_FALSE='#'
+else
+  CppAD_HAVE_AR_TRUE='#'
+  CppAD_HAVE_AR_FALSE=
+fi
+
+if test "$AR" != "ar"; then
+	{ $as_echo "$as_me:${as_lineno-$LINENO}: WARNING: cannot build any libraries because ar is missing; e.g,, speed/* not built
+	" >&5
+$as_echo "$as_me: WARNING: cannot build any libraries because ar is missing; e.g,, speed/* not built
+	" >&2;}
+fi
+
+{ $as_echo "$as_me:${as_lineno-$LINENO}: *** Check command line arguments that are longer used ****" >&5
+$as_echo "$as_me: *** Check command line arguments that are longer used ****" >&6;}
+
+if test "$CPP_ERROR_WARN" != "" ; then
+    as_fn_error $? "The CPP_ERROR_WARN configure option is now CXX_FLAGS" "$LINENO" 5
+fi
+
+# Check whether --with-SpeedExample was given.
+if test "${with_SpeedExample+set}" = set; then :
+  withval=$with_SpeedExample; SpeedExample="yes"
+else
+  SpeedExample="no"
+
+fi
+
+if test "$SpeedExample" = "yes" ; then
+    as_fn_error $? "--with-SpeedExample not necessary, see install instructions." "$LINENO" 5
+fi
+
+# Check whether --with-profiling was given.
+if test "${with_profiling+set}" = set; then :
+  withval=$with_profiling; profiling="yes"
+else
+  profiling="no"
+
+fi
+
+if test "$profiling" = "yes" ; then
+    as_fn_error $? "--with-profiling not necessary, see install instructions." "$LINENO" 5
+fi
+
+# Check whether --with-Speed was given.
+if test "${with_Speed+set}" = set; then :
+  withval=$with_Speed; Speed="yes"
+else
+  Speed="no"
+
+fi
+
+if test "$Speed" = "yes" ; then
+    as_fn_error $? "--with-Speed not necessary, see install instructions." "$LINENO" 5
+fi
+
+# Check whether --with-Introduction was given.
+if test "${with_Introduction+set}" = set; then :
+  withval=$with_Introduction; Introduction="yes"
+else
+  Introduction="no"
+
+fi
+
+if test "$Introduction" = "yes" ; then
+    as_fn_error $? "--with-Introduction not necessary, see install instructions." "$LINENO" 5
+fi
+
+# Check whether --with-Example was given.
+if test "${with_Example+set}" = set; then :
+  withval=$with_Example; Example="yes"
+else
+  Example="no"
+
+fi
+
+if test "$Example" = "yes" ; then
+    as_fn_error $? "--with-Example not necessary, see install instructions." "$LINENO" 5
+fi
+
+# Check whether --with-TestMore was given.
+if test "${with_TestMore+set}" = set; then :
+  withval=$with_TestMore; TestMore="yes"
+else
+  TestMore="no"
+
+fi
+
+if test "$TestMore" = "yes" ; then
+    as_fn_error $? "--with-TestMore not necessary, see install instructions." "$LINENO" 5
+fi
+
+# Check whether --with-PrintFor was given.
+if test "${with_PrintFor+set}" = set; then :
+  withval=$with_PrintFor; PrintFor="yes"
+else
+  PrintFor="no"
+
+fi
+
+if test "$PrintFor" = "yes" ; then
+    as_fn_error $? "--with-PrintFor not necessary, see install instructions." "$LINENO" 5
+fi
+{ $as_echo "$as_me:${as_lineno-$LINENO}: ******  Check command line arguments that are used ***********" >&5
+$as_echo "$as_me: ******  Check command line arguments that are used ***********" >&6;}
+{ $as_echo "$as_me:${as_lineno-$LINENO}: checking --prefix" >&5
+$as_echo_n "checking --prefix... " >&6; }
+if test "$prefix" = "NONE" ; then
+	{ $as_echo "$as_me:${as_lineno-$LINENO}: result: $HOME" >&5
+$as_echo "$HOME" >&6; }
+else
+	{ $as_echo "$as_me:${as_lineno-$LINENO}: result: $prefix" >&5
+$as_echo "$prefix" >&6; }
+fi
+
+{ $as_echo "$as_me:${as_lineno-$LINENO}: checking --with-Documentation" >&5
+$as_echo_n "checking --with-Documentation... " >&6; }
+
+# Check whether --with-Documentation was given.
+if test "${with_Documentation+set}" = set; then :
+  withval=$with_Documentation; Documentation="yes"
+else
+  Documentation="no"
+
+fi
+
+ if test "$Documentation" = "yes"; then
+  CppAD_DOCUMENTATION_TRUE=
+  CppAD_DOCUMENTATION_FALSE='#'
+else
+  CppAD_DOCUMENTATION_TRUE='#'
+  CppAD_DOCUMENTATION_FALSE=
+fi
+
+{ $as_echo "$as_me:${as_lineno-$LINENO}: result: $Documentation" >&5
+$as_echo "$Documentation" >&6; }
+
+{ $as_echo "$as_me:${as_lineno-$LINENO}: checking --with-stdvector" >&5
+$as_echo_n "checking --with-stdvector... " >&6; }
+
+# Check whether --with-stdvector was given.
+if test "${with_stdvector+set}" = set; then :
+  withval=$with_stdvector; stdvector="yes"
+else
+  stdvector="no"
+
+fi
+
+if test "$stdvector" = "yes" ; then
+	cppad_stdvector=1
+
+else
+	cppad_stdvector=0
+
+fi
+{ $as_echo "$as_me:${as_lineno-$LINENO}: result: $stdvector" >&5
+$as_echo "$stdvector" >&6; }
+
+{ $as_echo "$as_me:${as_lineno-$LINENO}: checking --with-boostvector" >&5
+$as_echo_n "checking --with-boostvector... " >&6; }
+
+# Check whether --with-boostvector was given.
+if test "${with_boostvector+set}" = set; then :
+  withval=$with_boostvector; boostvector="yes"
+else
+  boostvector="no"
+
+fi
+
+{ $as_echo "$as_me:${as_lineno-$LINENO}: result: $boostvector" >&5
+$as_echo "$boostvector" >&6; }
+if test "$boostvector" = "yes" ; then
+	if test "$stdvector" != "no" ; then
+		as_fn_error $? "cannot --with both stdvector and boostvector" "$LINENO" 5
+	fi
+	cppad_boostvector=1
+
+else
+	cppad_boostvector=0
+
+fi
+
+{ $as_echo "$as_me:${as_lineno-$LINENO}: checking --with-eigenvector" >&5
+$as_echo_n "checking --with-eigenvector... " >&6; }
+
+# Check whether --with-eigenvector was given.
+if test "${with_eigenvector+set}" = set; then :
+  withval=$with_eigenvector; eigenvector="yes"
+else
+  eigenvector="no"
+
+fi
+
+{ $as_echo "$as_me:${as_lineno-$LINENO}: result: $eigenvector" >&5
+$as_echo "$eigenvector" >&6; }
+if test "$eigenvector" = "yes" ; then
+	if test "$stdvector" != "no" ; then
+		as_fn_error $? "cannot --with both stdvector and eigenvector" "$LINENO" 5
+	fi
+	if test "$boostvector" != "no" ; then
+		as_fn_error $? "cannot --with both boostvector and eigenvector" "$LINENO" 5
+	fi
+	cppad_eigenvector=1
+
+else
+	cppad_eigenvector=0
+
+fi
+
+{ $as_echo "$as_me:${as_lineno-$LINENO}: checking --with-sparse_set" >&5
+$as_echo_n "checking --with-sparse_set... " >&6; }
+
+# Check whether --with-sparse_set was given.
+if test "${with_sparse_set+set}" = set; then :
+  withval=$with_sparse_set; sparse_set="yes"
+else
+  sparse_set="no"
+
+fi
+
+{ $as_echo "$as_me:${as_lineno-$LINENO}: result: $sparse_set" >&5
+$as_echo "$sparse_set" >&6; }
+{ $as_echo "$as_me:${as_lineno-$LINENO}: checking --with-sparse_list" >&5
+$as_echo_n "checking --with-sparse_list... " >&6; }
+
+# Check whether --with-sparse_list was given.
+if test "${with_sparse_list+set}" = set; then :
+  withval=$with_sparse_list; sparse_list="yes"
+else
+  sparse_list="no"
+
+fi
+
+{ $as_echo "$as_me:${as_lineno-$LINENO}: result: $sparse_list" >&5
+$as_echo "$sparse_list" >&6; }
+if test "$sparse_set" = "yes" ; then
+	if test "$sparse_list" == "yes" ; then
+		as_fn_error $? "cannot --with both sparse_set and sparse_list" "$LINENO" 5
+	fi
+	cppad_internal_sparse_set=sparse_set
+
+else
+	cppad_internal_sparse_set=sparse_list
+
+fi
+
+
+{ $as_echo "$as_me:${as_lineno-$LINENO}: checking --with-implicit_ctor" >&5
+$as_echo_n "checking --with-implicit_ctor... " >&6; }
+
+# Check whether --with-implicit_ctor was given.
+if test "${with_implicit_ctor+set}" = set; then :
+  withval=$with_implicit_ctor; implicit_ctor="yes"
+else
+  implicit_ctor="no"
+
+fi
+
+{ $as_echo "$as_me:${as_lineno-$LINENO}: result: $implicit_ctor" >&5
+$as_echo "$implicit_ctor" >&6; }
+if test "$implicit_ctor" = "yes" ; then
+	cppad_implicit_ctor_from_any_type="1"
+
+else
+	cppad_implicit_ctor_from_any_type="0"
+
+fi
+
+{ $as_echo "$as_me:${as_lineno-$LINENO}: checking POSTFIX_DIR" >&5
+$as_echo_n "checking POSTFIX_DIR... " >&6; }
+
+ if test "$POSTFIX_DIR" != ""; then
+  CppAD_POSTFIX_TRUE=
+  CppAD_POSTFIX_FALSE='#'
+else
+  CppAD_POSTFIX_TRUE='#'
+  CppAD_POSTFIX_FALSE=
+fi
+
+if test "$POSTFIX_DIR" != "" ; then
+	{ $as_echo "$as_me:${as_lineno-$LINENO}: result: $POSTFIX_DIR" >&5
+$as_echo "$POSTFIX_DIR" >&6; }
+else
+	{ $as_echo "$as_me:${as_lineno-$LINENO}: result: no" >&5
+$as_echo "no" >&6; }
+fi
+
+{ $as_echo "$as_me:${as_lineno-$LINENO}: checking ADOLC_DIR" >&5
+$as_echo_n "checking ADOLC_DIR... " >&6; }
+
+ if test "$ADOLC_DIR" != ""; then
+  CppAD_ADOLC_TRUE=
+  CppAD_ADOLC_FALSE='#'
+else
+  CppAD_ADOLC_TRUE='#'
+  CppAD_ADOLC_FALSE=
+fi
+
+if test "$ADOLC_DIR" != "" ; then
+	{ $as_echo "$as_me:${as_lineno-$LINENO}: result: $ADOLC_DIR" >&5
+$as_echo "$ADOLC_DIR" >&6; }
+	if test "$have_ar" = "no"; then
+		as_fn_error $? "ar is missing and ADOLC_DIR is present" "$LINENO" 5
+	fi
+else
+	{ $as_echo "$as_me:${as_lineno-$LINENO}: result: no" >&5
+$as_echo "no" >&6; }
+fi
+
+{ $as_echo "$as_me:${as_lineno-$LINENO}: checking EIGEN_DIR" >&5
+$as_echo_n "checking EIGEN_DIR... " >&6; }
+
+ if test "$EIGEN_DIR" != ""; then
+  CppAD_EIGEN_DIR_TRUE=
+  CppAD_EIGEN_DIR_FALSE='#'
+else
+  CppAD_EIGEN_DIR_TRUE='#'
+  CppAD_EIGEN_DIR_FALSE=
+fi
+
+if test "$EIGEN_DIR" != "" ; then
+	{ $as_echo "$as_me:${as_lineno-$LINENO}: result: $EIGEN_DIR" >&5
+$as_echo "$EIGEN_DIR" >&6; }
+	EIGEN_INCLUDE=-I$EIGEN_DIR/include
+
+else
+	{ $as_echo "$as_me:${as_lineno-$LINENO}: result: no" >&5
+$as_echo "no" >&6; }
+
+fi
+
+{ $as_echo "$as_me:${as_lineno-$LINENO}: checking FADBAD_DIR" >&5
+$as_echo_n "checking FADBAD_DIR... " >&6; }
+
+ if test "$FADBAD_DIR" != ""; then
+  CppAD_FADBAD_TRUE=
+  CppAD_FADBAD_FALSE='#'
+else
+  CppAD_FADBAD_TRUE='#'
+  CppAD_FADBAD_FALSE=
+fi
+
+if test "$FADBAD_DIR" != "" ; then
+	{ $as_echo "$as_me:${as_lineno-$LINENO}: result: $FADBAD_DIR" >&5
+$as_echo "$FADBAD_DIR" >&6; }
+	if test "$have_ar" = "no"; then
+		as_fn_error $? "ar is missing and FADBAD_DIR is present" "$LINENO" 5
+	fi
+else
+	{ $as_echo "$as_me:${as_lineno-$LINENO}: result: no" >&5
+$as_echo "no" >&6; }
+fi
+
+{ $as_echo "$as_me:${as_lineno-$LINENO}: checking SACADO_DIR" >&5
+$as_echo_n "checking SACADO_DIR... " >&6; }
+
+ if test "$SACADO_DIR" != ""; then
+  CppAD_SACADO_TRUE=
+  CppAD_SACADO_FALSE='#'
+else
+  CppAD_SACADO_TRUE='#'
+  CppAD_SACADO_FALSE=
+fi
+
+if test "$SACADO_DIR" != "" ; then
+	{ $as_echo "$as_me:${as_lineno-$LINENO}: result: $SACADO_DIR" >&5
+$as_echo "$SACADO_DIR" >&6; }
+	if test "$have_ar" = "no"; then
+		as_fn_error $? "ar is missing and SACADO_DIR is present" "$LINENO" 5
+	fi
+else
+	{ $as_echo "$as_me:${as_lineno-$LINENO}: result: no" >&5
+$as_echo "no" >&6; }
+fi
+
+{ $as_echo "$as_me:${as_lineno-$LINENO}: checking IPOPT_DIR" >&5
+$as_echo_n "checking IPOPT_DIR... " >&6; }
+
+ if test "$IPOPT_DIR" != ""; then
+  CppAD_IPOPT_TRUE=
+  CppAD_IPOPT_FALSE='#'
+else
+  CppAD_IPOPT_TRUE='#'
+  CppAD_IPOPT_FALSE=
+fi
+
+if test "$IPOPT_DIR" != "" ; then
+	{ $as_echo "$as_me:${as_lineno-$LINENO}: result: $IPOPT_DIR" >&5
+$as_echo "$IPOPT_DIR" >&6; }
+	if test "$have_ar" = "no"; then
+		as_fn_error $? "ar is missing and IPOPT_DIR is present" "$LINENO" 5
+	fi
+else
+	{ $as_echo "$as_me:${as_lineno-$LINENO}: result: no" >&5
+$as_echo "no" >&6; }
+fi
+
+{ $as_echo "$as_me:${as_lineno-$LINENO}: checking BOOST_DIR" >&5
+$as_echo_n "checking BOOST_DIR... " >&6; }
+
+ if test "$BOOST_DIR" != ""; then
+  CppAD_BOOST_DIR_TRUE=
+  CppAD_BOOST_DIR_FALSE='#'
+else
+  CppAD_BOOST_DIR_TRUE='#'
+  CppAD_BOOST_DIR_FALSE=
+fi
+
+if test "$BOOST_DIR" != "" ; then
+	{ $as_echo "$as_me:${as_lineno-$LINENO}: result: $BOOST_DIR" >&5
+$as_echo "$BOOST_DIR" >&6; }
+	BOOST_INCLUDE=-I$BOOST_DIR/include
+
+else
+	{ $as_echo "$as_me:${as_lineno-$LINENO}: result: no" >&5
+$as_echo "no" >&6; }
+
+fi
+
+#
+{ $as_echo "$as_me:${as_lineno-$LINENO}: checking CXX_FLAGS" >&5
+$as_echo_n "checking CXX_FLAGS... " >&6; }
+
+# cxx_flags for fadbad and eigen
+if test "$CXX_FLAGS" != "" ; then
+	{ $as_echo "$as_me:${as_lineno-$LINENO}: result: $CXX_FLAGS" >&5
+$as_echo "$CXX_FLAGS" >&6; }
+	cxx_flags_fadbad=`echo "$CXX_FLAGS" | sed -e 's|-Wshadow||'`
+	cxx_flags_eigen="$cxx_flags_fadbda -Wno-long-long"
+else
+	{ $as_echo "$as_me:${as_lineno-$LINENO}: result: no" >&5
+$as_echo "no" >&6; }
+	cxx_flags_fadbad=""
+	cxx_flags_eigen=""
+fi
+CXX_FLAGS_FADBAD="$cxx_flags_fadbad"
+
+CXX_FLAGS_EIGEN="$cxx_flags_eigen"
+
+
+{ $as_echo "$as_me:${as_lineno-$LINENO}: checking OPENMP_FLAGS" >&5
+$as_echo_n "checking OPENMP_FLAGS... " >&6; }
+
+if test "$OPENMP_FLAGS" != "" ; then
+	{ $as_echo "$as_me:${as_lineno-$LINENO}: result: $OPENMP_FLAGS" >&5
+$as_echo "$OPENMP_FLAGS" >&6; }
+else
+	{ $as_echo "$as_me:${as_lineno-$LINENO}: result: no" >&5
+$as_echo "no" >&6; }
+fi
+ if test "$OPENMP_FLAGS" != ""; then
+  CppAD_OPENMP_TRUE=
+  CppAD_OPENMP_FALSE='#'
+else
+  CppAD_OPENMP_TRUE='#'
+  CppAD_OPENMP_FALSE=
+fi
+
+
+{ $as_echo "$as_me:${as_lineno-$LINENO}: checking MAX_NUM_THREADS" >&5
+$as_echo_n "checking MAX_NUM_THREADS... " >&6; }
+
+if test "$MAX_NUM_THREADS" != "" ; then
+	{ $as_echo "$as_me:${as_lineno-$LINENO}: result: $MAX_NUM_THREADS" >&5
+$as_echo "$MAX_NUM_THREADS" >&6; }
+  	if test "$MAX_NUM_THREADS" -lt "4" ; then
+		as_fn_error $? " MAX_NUM_THREADS=$MAX_NUM_THREADS is less than 4
+		" "$LINENO" 5
+	fi
+	max_num_threads="$MAX_NUM_THREADS"
+else
+	max_num_threads="48"
+	{ $as_echo "$as_me:${as_lineno-$LINENO}: result: no, using default value $max_num_threads" >&5
+$as_echo "no, using default value $max_num_threads" >&6; }
+fi
+cppad_max_num_threads=$max_num_threads
+
+
+{ $as_echo "$as_me:${as_lineno-$LINENO}: checking TAPE_ADDR_TYPE" >&5
+$as_echo_n "checking TAPE_ADDR_TYPE... " >&6; }
+
+if test "$TAPE_ADDR_TYPE" == "" ; then
+	addr_t="unsigned int"
+else
+	addr_t="$TAPE_ADDR_TYPE"
+fi
+cppad_tape_addr_type=$addr_t
+
+{ $as_echo "$as_me:${as_lineno-$LINENO}: result: $addr_t" >&5
+$as_echo "$addr_t" >&6; }
+ok="no"
+if test "$addr_t" == "size_t" ; then
+	ok="yes"
+fi
+if test "$addr_t" == "int" ; then
+	{ $as_echo "$as_me:${as_lineno-$LINENO}: WARNING: TAPE_ADDR_TYPE=int is for CppAD developers (not users)
+	" >&5
+$as_echo "$as_me: WARNING: TAPE_ADDR_TYPE=int is for CppAD developers (not users)
+	" >&2;}
+	ok="yes"
+fi
+if test "$addr_t" == "unsigned int" ; then
+	ok="yes"
+fi
+if test "$addr_t" == "unsigned short int" ; then
+	ok="yes"
+fi
+if test "$ok" == "no" ; then
+  	as_fn_error $? "$addr_t is not a valid choice for TAPE_ADDR_TYPE
+	" "$LINENO" 5
+fi
+
+{ $as_echo "$as_me:${as_lineno-$LINENO}: checking TAPE_ID_TYPE" >&5
+$as_echo_n "checking TAPE_ID_TYPE... " >&6; }
+
+if test "$TAPE_ID_TYPE" == "" ; then
+	tape_id_t="unsigned int"
+else
+	tape_id_t="$TAPE_ID_TYPE"
+fi
+cppad_tape_id_type=$tape_id_t
+
+{ $as_echo "$as_me:${as_lineno-$LINENO}: result: $tape_id_t" >&5
+$as_echo "$tape_id_t" >&6; }
+ok="no"
+if test "$tape_id_t" == "size_t" ; then
+	ok="yes"
+fi
+if test "$tape_id_t" == "int" ; then
+	{ $as_echo "$as_me:${as_lineno-$LINENO}: WARNING: TAPE_ID_TYPE=int is for CppAD developers (not users)
+	" >&5
+$as_echo "$as_me: WARNING: TAPE_ID_TYPE=int is for CppAD developers (not users)
+	" >&2;}
+	ok="yes"
+fi
+if test "$tape_id_t" == "unsigned int" ; then
+	ok="yes"
+fi
+if test "$tape_id_t" == "unsigned short int" ; then
+	ok="yes"
+fi
+if test "$ok" == "no" ; then
+  	as_fn_error $? "$tape_id_t is not a valid choice for TAPE_ID_TYPE
+	" "$LINENO" 5
+fi
+{ $as_echo "$as_me:${as_lineno-$LINENO}: ********** End Checking Command Line arguments ***************" >&5
+$as_echo "$as_me: ********** End Checking Command Line arguments ***************" >&6;}
+
+cppad_has_colpack=0
+
+
+cppad_has_nullptr=0
+
+cppad_has_rvalue=0
+
+cppad_has_cstdint_8_to_64=0
+
+
 ac_ext=c
 ac_cpp='$CPP $CPPFLAGS'
 ac_compile='$CC -c $CFLAGS $CPPFLAGS conftest.$ac_ext >&5'
@@ -4776,9 +4902,6 @@ test "$program_suffix" != NONE &&
 # By default was `s,x,x', remove it if useless.
 ac_script='s/[\\$]/&&/g;s/;s,x,x,$//'
 program_transform_name=`$as_echo "$program_transform_name" | sed "$ac_script"`
-
-# expand $ac_aux_dir to an absolute path
-am_aux_dir=`cd $ac_aux_dir && pwd`
 
 if test x"${MISSING+set}" != xset; then
   case $am_aux_dir in

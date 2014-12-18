@@ -87,7 +87,8 @@ DIST_COMMON = INSTALL NEWS README AUTHORS ChangeLog \
 	$(top_srcdir)/pkgconfig/cppad.pc.in \
 	$(top_srcdir)/pkgconfig/cppad-uninstalled.pc.in \
 	$(am__myinclude_HEADERS_DIST) $(nobase_myinclude_HEADERS) \
-	COPYING config.guess config.sub depcomp install-sh missing
+	COPYING ar-lib config.guess config.sub depcomp install-sh \
+	missing
 ACLOCAL_M4 = $(top_srcdir)/aclocal.m4
 am__aclocal_m4_deps = $(top_srcdir)/configure.ac
 am__configure_deps = $(am__aclocal_m4_deps) $(CONFIGURE_DEPENDENCIES) \
@@ -239,6 +240,7 @@ ACLOCAL = @ACLOCAL@
 ADOLC_DIR = @ADOLC_DIR@
 AMTAR = @AMTAR@
 AM_DEFAULT_VERBOSITY = @AM_DEFAULT_VERBOSITY@
+AR = @AR@
 AUTOCONF = @AUTOCONF@
 AUTOHEADER = @AUTOHEADER@
 AUTOMAKE = @AUTOMAKE@
@@ -313,6 +315,7 @@ abs_builddir = @abs_builddir@
 abs_srcdir = @abs_srcdir@
 abs_top_builddir = @abs_top_builddir@
 abs_top_srcdir = @abs_top_srcdir@
+ac_ct_AR = @ac_ct_AR@
 ac_ct_CC = @ac_ct_CC@
 ac_ct_CXX = @ac_ct_CXX@
 ac_ct_FC = @ac_ct_FC@
@@ -357,7 +360,6 @@ docdir = @docdir@
 dvidir = @dvidir@
 eigen_prefix = @eigen_prefix@
 exec_prefix = @exec_prefix@
-have_ar = @have_ar@
 have_pkg_config = @have_pkg_config@
 host = @host@
 host_alias = @host_alias@

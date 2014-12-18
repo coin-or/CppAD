@@ -32,11 +32,11 @@ dnl Check for programs
 AC_CHECK_PROG(have_pkg_config, [pkg-config], [yes], [no])
 AM_CONDITIONAL(CppAD_PKG_CONFIG, test "$have_pkg_config" = "yes")
 
-AC_CHECK_PROG(have_ar, [ar], [yes], [no])
-AM_CONDITIONAL(CppAD_HAVE_AR, test "$have_ar" = "yes")
-if test "$have_ar" = "no"; then
+AM_PROG_AR()
+AM_CONDITIONAL(CppAD_HAVE_AR, test "$AR" = "ar")
+if test "$AR" != "ar"; then
 	AC_MSG_WARN(
-	[cannot build any libraries because ar is missing, speed/* is not used] 
+	[cannot build any libraries because ar is missing; e.g,, speed/* not built] 
 	)
 fi
 
