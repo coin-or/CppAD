@@ -18,14 +18,7 @@ echo_eval() {
 	echo $*
 	eval $*
 }
-# bash function that echos and executes a command
-for ext in log err
-do
-	if [ -e "../jenkins.$ext" ]
-	then
-		echo_eval rm ../jenkins.$ext
-	fi
-done
+# bash function that logs stdout, stderr, and executes a command
 log_eval() {
 	echo "------------------------------------------------" >> ../jenkins.log
 	echo "------------------------------------------------" >> ../jenkins.err
@@ -65,6 +58,10 @@ skip='false'
 if [ "$skip" != 'true' ]
 then
 	# -------------------------------------------------------------------
+	# Source code is downloaded in $trunk_dir/build/external
+	# This command causses a complete download, build, and install
+	rm -r build/external
+	# -------------------------------------------------------------------
 	# Running bin/get_fadbad.sh will install include files in
 	#	$trunk_dir/build/prefix/include/FADBAD++
 	log_eval bin/get_fadbad.sh
@@ -86,11 +83,14 @@ then
 	#	$trunk_dir/build/prefix/$libdir
 	log_eval bin/get_sacado.sh
 	# -------------------------------------------------------------------
+	# Running bin/get_colpack.sh will install library files in
+	#	$trunk_dir/build/prefix/$libdir
+	log_eval bin/get_colpack.sh
+	# -------------------------------------------------------------------
 	# Running bin/get_acolc.sh will install include files in
 	#	$trunk_dir/build/prefix/include/adolc
 	# and library files in
 	#	$trunk_dir/build/prefix/$libdir
-	log_eval bin/get_colpack.sh
 	log_eval bin/get_adolc.sh
 	# -------------------------------------------------------------------
 fi
