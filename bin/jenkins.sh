@@ -53,14 +53,17 @@ else
 	libdir='lib'
 fi
 # -----------------------------------------------------------------------
+log_eval g++ --version
+# -----------------------------------------------------------------------
 # The following test can be used to skip install of other packages
 skip='false'
 if [ "$skip" != 'true' ]
 then
+	# this comand cleans out the previous install for all externals
+	log_eval rm -r build/prefix 
 	# -------------------------------------------------------------------
-	# Source code is downloaded in $trunk_dir/build/external
-	# This command causses a complete download, build, and install
-	rm -r build/external
+	# This command causes a new download, and compile for all externals
+	#	log_eval rm -r build/external
 	# -------------------------------------------------------------------
 	# Running bin/get_fadbad.sh will install include files in
 	#	$trunk_dir/build/prefix/include/FADBAD++

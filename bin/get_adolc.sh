@@ -68,7 +68,10 @@ echo_eval() {
 }
 # -----------------------------------------------------------------------------
 echo 'Download adolc to build/external and install it to build/prefix'
-version='2.5.2'
+# ADOL-C verison 2.5.2 results in:
+#	adouble.h:74: error: 'badouble::badouble()' is protected
+# when using the g++ compiler on the coin jenkins system.
+version='2.4.1'
 web_page="http://www.coin-or.org/download/source/ADOL-C"
 prefix=`pwd`'/build/prefix'
 # --------------------------------------------------------------------------
