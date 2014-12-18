@@ -10,6 +10,19 @@
 # A copy of this license is included in the COPYING file of this distribution.
 # Please visit http://www.coin-or.org/CppAD/ for information on other licenses.
 # -----------------------------------------------------------------------------
+if [ $0 != "bin/jenkins.sh" ]
+then
+	echo "bin/jenkins.sh: must be executed from its parent directory"
+	exit 1
+fi
+if [ "$1" != 'none' ] && [ "$1" != 'build' ] && [ "$1" != 'install' ] 
+then
+	echo 'bin/junk.sh: redo_external'
+	echo 'Where redo_external is one of: build, install, none' 
+	exit 1
+fi
+redo_external="$1"
+# -----------------------------------------------------------------------------
 # distribution directory corresponding to this version of CppAD
 trunk_dir=`pwd`
 # -----------------------------------------------------------------------------
@@ -39,12 +52,6 @@ do
 		echo_eval rm ../jenkins.$ext
 	fi
 done
-# -----------------------------------------------
-if [ $0 != "bin/jenkins.sh" ]
-then
-	echo "bin/jenkins.sh: must be executed from its parent directory"
-	exit 1
-fi
 # --------------------------------------------------------------------------
 if [ -e /usr/lib64 ]
 then
@@ -53,17 +60,20 @@ else
 	libdir='lib'
 fi
 # -----------------------------------------------------------------------
-log_eval g++ --version
+g++ --version
 # -----------------------------------------------------------------------
-# The following test can be used to skip install of other packages
-skip='false'
-if [ "$skip" != 'true' ]
+# Build and install external packages
+if [ "$redo_external" != 'none' ]
 then
-	# this comand cleans out the previous install for all externals
-	log_eval rm -r build/prefix 
 	# -------------------------------------------------------------------
-	# This command causes a new download, and compile for all externals
-	#	log_eval rm -r build/external
+	# this comand cleans out the previous install for all externals
+	echo_eval rm -rf build/prefix 
+	# -------------------------------------------------------------------
+	if [ "$redo_extrnal" == 'build' ]
+	then
+		# This command causes a new download, and compile for all externals
+		echo_eval rm -rf build/external
+	fi
 	# -------------------------------------------------------------------
 	# Running bin/get_fadbad.sh will install include files in
 	#	$trunk_dir/build/prefix/include/FADBAD++
