@@ -37,11 +37,15 @@ then
 	exit 1
 fi
 #
-sed -n -e 's|_rate|_rate_one|' -e '/_rate_/p' \
+sed -n \
+	-e 's|^[a-z]*_||' \
+	-e 's|_rate|_rate_one|' -e '/_rate_one/p' \
 	-e 's|available|available_one|' -e '/available_one/p' \
 	$speed_one > speed_diff.$$
 #
-sed -n -e 's|_rate|_rate_two|' -e '/_rate_/p' \
+sed -n \
+	-e 's|^[a-z]*_||' \
+	-e 's|_rate|_rate_two|' -e '/_rate_two/p' \
 	-e 's|available|available_two|' -e '/available_two/p' \
 	$speed_two >> speed_diff.$$
 #
