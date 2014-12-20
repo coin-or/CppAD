@@ -152,7 +152,7 @@ MESSAGE(STATUS "cppad_has_nullptr = ${cppad_has_nullptr}" )
 # CHECK_CXX_SOURCE_RUNS(source variable)
 SET(CMAKE_REQUIRED_INCLUDES  "")
 SET(CMAKE_REQUIRED_LIBRARIES "")
-SET(CMAKE_REQUIRED_FLAGS     "")
+SET(CMAKE_REQUIRED_FLAGS     ${cppad_cxx_flags})
 SET(source "
 # include<sys/time.h>
 int main(void)
@@ -173,7 +173,7 @@ MESSAGE(STATUS "cppad_has_gettimeofday = ${cppad_has_gettimeofday}" )
 # CHECK_CXX_SOURCE_RUNS(source variable)
 SET(CMAKE_REQUIRED_INCLUDES  "")
 SET(CMAKE_REQUIRED_LIBRARIES "")
-SET(CMAKE_REQUIRED_FLAGS     "")
+SET(CMAKE_REQUIRED_FLAGS     ${cppad_cxx_flags})
 SET(source "
 # include <cstring>
 template <class T> inline bool is_pod(void)               { return false; }
@@ -197,7 +197,7 @@ MESSAGE(STATUS
 # CHECK_CXX_SOURCE_RUNS(source variable)
 SET(CMAKE_REQUIRED_INCLUDES  "")
 SET(CMAKE_REQUIRED_LIBRARIES "")
-SET(CMAKE_REQUIRED_FLAGS     "")
+SET(CMAKE_REQUIRED_FLAGS     ${cppad_cxx_flags})
 SET(source "
 # include <cstdint>
 template <class T> inline bool is_pod(void)               { return false; }
@@ -210,9 +210,9 @@ int main(void)
 " )
 CHECK_CXX_SOURCE_RUNS("${source}" has_cstdint_8_to_64)
 IF( has_cstdint_8_to_64 )
-	SET(cppad_has_cstdint_8_to_64 0)
-ELSE( has_cstdint_8_to_64 )
 	SET(cppad_has_cstdint_8_to_64 1)
+ELSE( has_cstdint_8_to_64 )
+	SET(cppad_has_cstdint_8_to_64 0)
 ENDIF( has_cstdint_8_to_64 )
 MESSAGE(STATUS 
 	"cppad_has_cstdint_8_to_64 = ${cppad_has_cstdint_8_to_64}" 
