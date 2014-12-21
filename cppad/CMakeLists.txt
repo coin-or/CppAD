@@ -1,4 +1,4 @@
-# $Id$
+# $Id:$
 # -----------------------------------------------------------------------------
 # CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-14 Bradley M. Bell
 #
@@ -168,7 +168,7 @@ ELSE( gettimeofday_ok )
 ENDIF( gettimeofday_ok )
 MESSAGE(STATUS "cppad_has_gettimeofday = ${cppad_has_gettimeofday}" )
 # -----------------------------------------------------------------------------
-# cppad_size_t_same_unsigned_int
+# cppad_size_t_not_unsigned_int
 #
 # CHECK_CXX_SOURCE_RUNS(source variable)
 SET(CMAKE_REQUIRED_INCLUDES  "")
@@ -184,12 +184,12 @@ int main(void)
 " )
 CHECK_CXX_SOURCE_RUNS("${source}" size_t_not_unsigned_int)
 IF( size_t_not_unsigned_int )
-	SET(cppad_size_t_same_unsigned_int 0)
+	SET(cppad_size_t_not_unsigned_int 1)
 ELSE( size_t_not_unsigned_int )
-	SET(cppad_size_t_same_unsigned_int 1)
+	SET(cppad_size_t_not_unsigned_int 0)
 ENDIF( size_t_not_unsigned_int )
 MESSAGE(STATUS 
-	"cppad_size_t_same_unsigned_int = ${cppad_size_t_same_unsigned_int}" 
+	"cppad_size_t_not_unsigned_int = ${cppad_size_t_not_unsigned_int}" 
 )
 # -----------------------------------------------------------------------------
 # cppad_has_cstdint_8_to_64

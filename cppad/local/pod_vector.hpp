@@ -1,4 +1,4 @@
-/* $Id$ */
+// $Id:$
 # ifndef CPPAD_POD_VECTOR_INCLUDED
 # define CPPAD_POD_VECTOR_INCLUDED
 
@@ -54,7 +54,7 @@ template <> inline bool is_pod<int>(void)                { return true; }
 template <> inline bool is_pod<unsigned char>(void)      { return true; }
 template <> inline bool is_pod<unsigned short int>(void) { return true; }
 template <> inline bool is_pod<unsigned int>(void)       { return true; }
-# if ! CPPAD_SIZE_T_SAME_UNSIGNED_INT
+# if CPPAD_SIZE_T_NOT_UNSIGNED_INT
 template <> inline bool is_pod<size_t>(void)             { return true; }
 # endif
 # endif // CPPAD_CSTDINT_HAS_8_TO_64

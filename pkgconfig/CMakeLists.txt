@@ -1,4 +1,4 @@
-#CppAD $Id$
+# $Id:$
 # -----------------------------------------------------------------------------
 # CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-14 Bradley M. Bell
 #

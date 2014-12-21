@@ -1,4 +1,4 @@
-/* $Id$ */
+// $Id:$
 # ifndef CPPAD_CONFIGURE_INCLUDED
 # define CPPAD_CONFIGURE_INCLUDED
 
@@ -123,11 +123,11 @@ Otherwise, this smybol should be zero.
 # define CPPAD_HAS_GETTIMEOFDAY @cppad_has_gettimeofday@
 
 /*!
-\def CPPAD_SIZE_T_SAME_UNSIGNED_INT 
-If this symbol is one, the type size_t is the same as the type unsigned int,
-otherwise this symbol is zero.
+\def CPPAD_SIZE_T_NOT_UNSIGNED_INT 
+If this symbol is zero, the type size_t is the same as the type unsigned int,
+otherwise this symbol is one.
 */
-# define CPPAD_SIZE_T_SAME_UNSIGNED_INT @cppad_size_t_same_unsigned_int@
+# define CPPAD_SIZE_T_NOT_UNSIGNED_INT @cppad_size_t_not_unsigned_int@
 
 /*!
 \def CPPAD_HAS_CSTDINT_8_TO_64 
