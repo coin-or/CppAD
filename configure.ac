@@ -449,9 +449,9 @@ dnl Determine if size_t has same size as unsigned int
 AC_CHECK_SIZEOF([size_t])
 AC_CHECK_SIZEOF([unsigned int])
 if test "$ac_cv_size_t" == "$ac_cv_unsigned_int" ; then
-	AC_SUBST(cppad_size_t_same_unsigned_int, 1)
+	AC_SUBST(cppad_size_t_not_unsigned_int, 1)
 else
-	AC_SUBST(cppad_size_t_same_unsigned_int, 0)
+	AC_SUBST(cppad_size_t_not_unsigned_int, 0)
 fi
 
 dnl Determine which definition we are using for CPPAD_TESTVECTOR

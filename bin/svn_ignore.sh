@@ -18,6 +18,7 @@ fi
 # -----------------------------------------------------------------------------
 cat << EOF > bin/svn_ignore.$$
 aclocal.m4
+ar-lib
 autom4te.cache
 build
 check_all.err

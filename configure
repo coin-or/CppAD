@@ -704,7 +704,7 @@ INSTALL_SCRIPT
 INSTALL_PROGRAM
 cppad_has_gettimeofday
 cppad_cppadvector
-cppad_size_t_same_unsigned_int
+cppad_size_t_not_unsigned_int
 EGREP
 GREP
 CPP
@@ -4671,10 +4671,10 @@ _ACEOF
 
 
 if test "$ac_cv_size_t" == "$ac_cv_unsigned_int" ; then
-	cppad_size_t_same_unsigned_int=1
+	cppad_size_t_not_unsigned_int=1
 
 else
-	cppad_size_t_same_unsigned_int=0
+	cppad_size_t_not_unsigned_int=0
 
 fi
 

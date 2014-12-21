@@ -24,6 +24,7 @@ dir_list='
 '
 top_dir_list='
 aclocal.m4
+ar-lib
 autom4te.cache
 build
 commit.sh.old
