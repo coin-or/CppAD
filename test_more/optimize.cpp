@@ -1584,6 +1584,40 @@ namespace {
 		}
 		return ok;
 	}
+	// Test case where an expression depends on both the true
+	// and false cases (bug fixed 2014-12-22)
+	bool cond_exp_both_true_and_false(void)
+	{	bool ok = true;
+		using CppAD::vector;
+		using CppAD::AD;
+
+		// f(x) = x[0] + x[0] if x[0] >= 3
+		//      = x[0] + x[1] otherwise 
+		vector< AD<double> > ax(2), ay(1);
+		ax[0] = 1.0;
+		ax[1] = 2.0;
+		Independent(ax);
+		AD<double> three(3);
+		AD<double> value = ax[0] + ax[1];
+		ay[0] = CppAD::CondExpGe(ax[0], three, value, value);
+		CppAD::ADFun<double> f(ax, ay);
+		f.optimize();
+
+		// check case where x[0] >= 3
+		vector<double> x(2), y(1);
+		x[0] = 4.0;
+		x[1] = 2.0;
+		y    = f.Forward(0, x);
+		ok  &= y[0] == x[0] + x[1];
+
+		// check case where x[0] < 3
+		x[0] = 1.0;
+		x[1] = 2.0;
+		y    = f.Forward(0, x);
+		ok  &= y[0] == x[0] + x[1];
+
+		return ok;
+	}
 }
 
 bool optimize(void)
@@ -1634,6 +1668,8 @@ bool optimize(void)
 	ok     &= cond_exp_atomic_dependence();
 	// check reverse mode conditional skipping
 	ok     &= cond_exp_reverse();
+	// check case where an expresion needed by both true and false case
+	ok     &=  cond_exp_both_true_and_false();
 	//
 	CppAD::user_atomic<double>::clear();
 	return ok;

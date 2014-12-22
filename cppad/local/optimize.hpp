@@ -1669,18 +1669,35 @@ void optimize_run(
 				cskip_info.push_back(info);
 				//
 				if( arg[1] & 4 )
-				{	tape[arg[4]].connect_type = cexp_connected;
-					tape[arg[4]].cexp_set     = cexp_set;
-					tape[arg[4]].cexp_set.insert(
-						class_cexp_pair(true, index)
-					);
+				{	if( tape[arg[4]].connect_type == not_connected )	
+					{	tape[arg[4]].connect_type = cexp_connected;
+						tape[arg[4]].cexp_set     = cexp_set;
+						tape[arg[4]].cexp_set.insert(
+							class_cexp_pair(true, index)
+						);
+					}
+					else
+					{	// if arg[4] is cexp_connected, it could be 
+						// connected for both the true and false case
+						// 2DO: if previously cexp_connected
+						// and the true/false sense is the same, should
+						// keep this conditional connnection.
+						tape[arg[4]].cexp_set.clear();
+						tape[arg[4]].connect_type = yes_connected;
+					}
 				}
 				if( arg[1] & 8 )
-				{	tape[arg[5]].connect_type = cexp_connected;
-					tape[arg[5]].cexp_set     = cexp_set;
-					tape[arg[5]].cexp_set.insert(
-						class_cexp_pair(false, index)
-					);
+				{	if( tape[arg[5]].connect_type == not_connected )	
+					{	tape[arg[5]].connect_type = cexp_connected;
+						tape[arg[5]].cexp_set     = cexp_set;
+						tape[arg[5]].cexp_set.insert(
+							class_cexp_pair(false, index)
+						);
+					}
+					else
+					{	tape[arg[5]].cexp_set.clear();
+						tape[arg[5]].connect_type = yes_connected;
+					}
 				}
 			}
 			break;  // --------------------------------------------

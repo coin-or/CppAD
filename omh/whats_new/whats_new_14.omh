@@ -59,6 +59,12 @@ This section contains a list of the changes to CppAD during 2014
 The purpose of this section is to
 assist you in learning about changes between various versions of CppAD.
 
+$head 12-22$$
+There was a bug related to 
+$cref/optimizing/CondExp/Optimize/$$ 
+conditional expressions. 
+This has been fixed.
+
 $head 12-17$$
 Fix some compiler warnings and $cref speed$$ program names
 when using the deprecated $cref/auto-tools/InstallUnix/$$ install procedure.

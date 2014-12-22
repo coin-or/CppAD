@@ -71,6 +71,7 @@ list="
 	check_makefile.sh
 	check_op_code.sh
 	check_replace.sh
+	check_svn_id.sh
 	check_verbatim.sh
 "
 for check in $list 

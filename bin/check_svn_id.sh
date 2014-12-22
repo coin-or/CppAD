@@ -16,7 +16,7 @@ then
 	exit 1
 fi
 # -----------------------------------------------------------------------------
-echo "Checking for \$Id:.*\$ in beginning of source code"
+echo "Checking for \$Id.*\$ in beginning of source code"
 echo "-------------------------------------------------------" 
 ok="yes"
 list=`bin/list_files.sh .hpp .cpp .omh .sh .in .am .txt | sed \
@@ -29,9 +29,9 @@ list=`bin/list_files.sh .hpp .cpp .omh .sh .in .am .txt | sed \
 #
 for file in $list
 do
-	if ! head -2 $file | grep '$Id:.*\$' > /dev/null
+	if ! head -2 $file | grep '$Id.*\$' > /dev/null
 	then
-		echo "$file does not have '\$Id:.*\$' in first two lines"
+		echo "$file does not have '\$Id.*\$' in first two lines"
 		ok="no"
 	fi
 done
