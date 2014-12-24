@@ -61,8 +61,8 @@ bool Erf(void)
 	CPPAD_TESTVECTOR(double) x2(1), y2(1);
 	x2[0] = 0.0;
 	y2    = f.Forward(2, x2);
-	check = df.Forward(1, x1) / 2.0;
-	ok   &= NearEqual(check[0], y2[0], 0., 2e-3);
+	check = df.Forward(1, x1);
+	ok   &= NearEqual(check[0] / 2.0, y2[0], 0., 2e-3);
 # if CPPAD_COMPILER_HAS_ERF
 	ok   &= NearEqual(check[0], y2[0], eps, eps);
 # endif
@@ -71,8 +71,8 @@ bool Erf(void)
 	CPPAD_TESTVECTOR(double) x3(1), y3(1);
 	x3[0] = 0.0;
 	y3    = f.Forward(3, x3);
-	check = df.Forward(2, x2) / 3.0;
-	ok   &= NearEqual(check[0], y3[0], 0., 2e-3);
+	check = df.Forward(2, x2);
+	ok   &= NearEqual(check[0] / 3.0, y3[0], 0., 2e-3);
 # if CPPAD_COMPILER_HAS_ERF
 	ok   &= NearEqual(check[0], y3[0], eps, eps);
 # endif
