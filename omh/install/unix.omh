@@ -82,7 +82,10 @@ $index install, unix CppAD$$
 $section Deprecated Unix Test and Installation$$
 
 $head Deprecated$$
-These install instructions have been deprecated.
+These install instructions have been deprecated and no improvements
+have been added since 2012.
+For example, this install procedure will not detect any of the 
+$code c++11$$ extensions.
 You should use the $cref cmake$$ instructions to install CppAD.
 
 $head Distribution Directory$$
