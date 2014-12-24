@@ -1,4 +1,4 @@
-/* $Id$ */
+// $Id:$
 # ifndef CPPAD_ERF_INCLUDED
 # define CPPAD_ERF_INCLUDED
 
@@ -19,6 +19,8 @@ $begin erf$$
 
 $section The AD Error Function$$
 $spell
+	std
+	cmath
 	Vedder
 	Cpp
 	namespace
@@ -59,7 +61,20 @@ $cref/independent/glossary/Operation/Independent/$$
 of $icode x$$.
 
 $head Method$$
-This is a fast approximation (few numerical operations) 
+
+$subhead CPPAD_COMPILER_HAS_ERF$$
+$index CPPAD_COMPILER_HAS_ERF$$
+This preprocessor symbol is one if
+the function $codei%std::erf(double %x%)%$$ is defined the in the
+include file $code <cmath>$$.
+Otherwise this preprocessor symbol is zero.
+If this preprocessor symbols is one,
+CppAD uses the compiler's version of $code erf$$
+and it corresponds to an $cref/atomic/glossary/Operation/Atomic/$$ operation.
+
+$subhead Other$$
+If the function $codei%std::erf(double %x%)%$$ is not defined, 
+CppAD uses a fast approximation (few numerical operations) 
 with relative error bound $latex 4 \times 10^{-4}$$; see
 Vedder, J.D.,
 $icode Simple approximations for the error function and its inverse$$,
@@ -81,10 +96,13 @@ It returns true if it succeeds and false otherwise.
 $end
 -------------------------------------------------------------------------------
 */
+# include <cppad/configure.hpp>
 # include <cppad/local/cppad_assert.hpp>
 
 // needed before one can use CPPAD_ASSERT_FIRST_CALL_NOT_PARALLEL
 # include <cppad/thread_alloc.hpp>
+
+# if ! CPPAD_COMPILER_HAS_ERF
 
 // BEGIN CppAD namespace
 namespace CppAD {   
@@ -115,4 +133,5 @@ inline AD<Base> erf(const VecAD_reference<Base> &x)
 
 } // END CppAD namespace
 
-# endif
+# endif // CPPAD_COMPILER_HAS_ERF
+# endif // CPPAD_ERF_INCLUDED

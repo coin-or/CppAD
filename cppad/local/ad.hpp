@@ -205,6 +205,9 @@ public:
 	inline AD sqrt(void) const;
 	inline AD tan(void) const;
 	inline AD tanh(void) const;
+# if CPPAD_COMPILER_HAS_ERF
+	inline AD erf(void) const;
+# endif
 
 	// ----------------------------------------------------------
 	// static public member functions

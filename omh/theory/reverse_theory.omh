@@ -177,7 +177,8 @@ $childtable%
 	omh/theory/atan_reverse.omh%
 	omh/theory/asin_reverse.omh%
 	omh/theory/acos_reverse.omh%
-	omh/theory/tan_reverse.omh
+	omh/theory/tan_reverse.omh%
+	omh/theory/erf_reverse.omh
 %$$
 
 $end

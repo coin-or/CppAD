@@ -357,6 +357,14 @@ void RevHesSweep(
 			break;
 			// -------------------------------------------------
 
+			case ErfOp:
+			CPPAD_ASSERT_NARG_NRES(op, 1, 1)
+			reverse_sparse_hessian_nonlinear_unary_op(
+			i_var, arg[0], RevJac, for_jac_sparse, rev_hes_sparse
+			);
+			break;
+			// -------------------------------------------------
+
 			case ExpOp:
 			CPPAD_ASSERT_NARG_NRES(op, 1, 1)
 			reverse_sparse_hessian_nonlinear_unary_op(

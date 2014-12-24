@@ -25,6 +25,7 @@ list=`bin/list_files.sh .hpp .cpp .omh .sh .in .am .txt | sed \
 	-e '/cppad\/local\/config.h.in$/d' \
 	-e '/^makefile.in$/d' \
 	-e '/^svn_commit.sh$/d' \
+	-e '/^git_commit.sh$/d' \
 	-e '/\/makefile.in$/d' `
 #
 for file in $list

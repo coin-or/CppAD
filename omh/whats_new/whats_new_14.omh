@@ -49,6 +49,8 @@ $spell
 	CppAD
 	cppad
 	datadir
+	erf
+	cmath
 $$
 
 $section CppAD Changes and Additions During 2014$$
@@ -58,6 +60,18 @@ This section contains a list of the changes to CppAD during 2014
 (in reverse order by date).
 The purpose of this section is to
 assist you in learning about changes between various versions of CppAD.
+
+$head 12-23$$
+The c++11 standard includes the error function $cref erf$$ in 
+$code cmath$$.
+If the c++ compiler has the error function defined in $code cmath$$,
+the complier version of the error function is used and it corresponds to an
+atomic operation.
+$pre
+
+$$
+Fix typo in tangent reverse mode theory for
+$cref/Positive Orders/tan_reverse/Positive Orders Z(t)/$$.
 
 $head 12-22$$
 There was a bug related to 

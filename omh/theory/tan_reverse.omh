@@ -70,7 +70,7 @@ $latex \[
 & = &
 \D{G}{ x^{(k)} } + 
 \D{G}{ z^{(j)} }
-\left[ \delta ( j - k ) \pm \D{G}{ z^{(j)} }\frac{k}{j} y^{(j-k)} \right]
+\left[ \delta ( j - k ) \pm \frac{k}{j} y^{(j-k)} \right]
 \end{array}
 \] $$ 
 where $latex \delta ( j - k )$$ is one if $latex j = k$$ and zero

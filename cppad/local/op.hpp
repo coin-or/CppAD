@@ -31,6 +31,7 @@ Please visit http://www.coin-or.org/CppAD/ for information on other licenses.
 # include <cppad/local/csum_op.hpp>
 # include <cppad/local/discrete_op.hpp>
 # include <cppad/local/div_op.hpp>
+# include <cppad/local/erf_op.hpp>
 # include <cppad/local/exp_op.hpp>
 # include <cppad/local/load_op.hpp>
 # include <cppad/local/log_op.hpp>

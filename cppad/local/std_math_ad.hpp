@@ -285,12 +285,11 @@ acos, asin, atan, cos, cosh, exp, fabs, log, sin, sinh, sqrt, tan, tanh.
         CPPAD_ASSERT_UNKNOWN( Parameter(result) );                \
                                                                   \
         if( Variable(*this) )                                     \
-        {   CPPAD_ASSERT_UNKNOWN( NumRes(Op) <= 2 );              \
-            CPPAD_ASSERT_UNKNOWN( NumArg(Op) == 1 );              \
+        {   CPPAD_ASSERT_UNKNOWN( NumArg(Op) == 1 );              \
             ADTape<Base> *tape = tape_this();                     \
             tape->Rec_.PutArg(taddr_);                            \
             result.taddr_ = tape->Rec_.PutOp(Op);                 \
-            result.tape_id_    = tape->id_;                            \
+            result.tape_id_    = tape->id_;                       \
         }                                                         \
         return result;                                            \
     }                                                             \
@@ -314,6 +313,42 @@ namespace CppAD {
      CPPAD_STANDARD_MATH_UNARY_AD(sqrt, SqrtOp)
      CPPAD_STANDARD_MATH_UNARY_AD(tan, TanOp)
      CPPAD_STANDARD_MATH_UNARY_AD(tanh, TanhOp)
+
+# if CPPAD_COMPILER_HAS_ERF
+	// Error function is a special case
+	template <class Base>
+	inline AD<Base> erf(const AD<Base> &x)
+	{	return x.erf(); }
+	template <class Base>
+	inline AD<Base> AD<Base>::erf (void) const
+	{
+		AD<Base> result;
+		result.value_ = CppAD::erf(value_);
+		CPPAD_ASSERT_UNKNOWN( Parameter(result) );
+
+		if( Variable(*this) )
+		{	CPPAD_ASSERT_UNKNOWN( NumArg(ErfOp) == 3 );
+			ADTape<Base> *tape = tape_this();
+			// arg[0] = argument to erf function
+			tape->Rec_.PutArg(taddr_);
+			// arg[1] = zero
+			addr_t p  = tape->Rec_.PutPar( Base(0) );
+			tape->Rec_.PutArg(p);
+			// arg[2] = 2 / sqrt(pi)
+			p = tape->Rec_.PutPar(Base(
+				1.0 / std::sqrt( std::atan(1.0) )
+			));
+			tape->Rec_.PutArg(p);
+			//
+			result.taddr_ = tape->Rec_.PutOp(ErfOp);
+			result.tape_id_    = tape->id_;
+		}
+		return result;
+	}
+	template <class Base>
+	inline AD<Base> erf(const VecAD_reference<Base> &x)
+	{	return erf( x.ADBase() ); }
+# endif
 
      /*!
 	Compute the log of base 10 of x where  has type AD<Base>

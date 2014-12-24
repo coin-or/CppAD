@@ -90,6 +90,7 @@ enum OpCode {
 	DivvpOp,  //      variable   / parameter
 	DivvvOp,  //      variable   / variable
 	EndOp,    //  used to mark the end of the tape
+	ErfOp,    //  erf(variable)
 	ExpOp,    //  exp(variable)
 	InvOp,    //                             independent variable
 	LdpOp,    //    z[parameter]
@@ -174,6 +175,7 @@ inline size_t NumArg( OpCode op)
 		2, // DivvpOp
 		2, // DivvvOp
 		0, // EndOp
+		3, // ErfOp
 		1, // ExpOp
 		0, // InvOp
 		3, // LdpOp
@@ -264,6 +266,7 @@ inline size_t NumRes(OpCode op)
 		1, // DivvpOp
 		1, // DivvvOp
 		0, // EndOp
+		5, // ErfOp
 		1, // ExpOp
 		1, // InvOp
 		1, // LdpOp
@@ -337,6 +340,7 @@ inline const char* OpName(OpCode op)
 		"Divvp" ,
 		"Divvv" ,
 		"End"   ,
+		"Erf"   ,
 		"Exp"   ,
 		"Inv"   ,
 		"Ldp"   ,
@@ -646,6 +650,13 @@ void printOp(
 		printOpField(os, "  v=", ind[0], ncol);
 		break;
 
+		case ErfOp:
+		CPPAD_ASSERT_UNKNOWN( NumArg(op) == 3 );
+		// ind[2] points to the parameter 0
+		// ind[3] points to the parameter 2 / sqrt(pi)
+		printOpField(os, "  v=", ind[0], ncol);
+		break;
+
 		case ParOp:
 		case UsrapOp:
 		case UsrrpOp:
@@ -841,6 +852,11 @@ inline void assert_arg_before_result(
 		case TanOp:
 		case TanhOp:
 		CPPAD_ASSERT_UNKNOWN( size_t(arg[0]) + 1 < result );
+		break;
+
+		// 1 argument, 5 results
+		case ErfOp:
+		CPPAD_ASSERT_UNKNOWN( size_t(arg[0]) + 4 < result );
 		break;
 		// ------------------------------------------------------------------
 

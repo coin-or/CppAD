@@ -199,7 +199,8 @@ $children%
 	omh/theory/atan_forward.omh%
 	omh/theory/asin_forward.omh%
 	omh/theory/acos_forward.omh%
-	omh/theory/tan_forward.omh
+	omh/theory/tan_forward.omh%
+	omh/theory/erf_forward.omh
 %$$
 
 $subhead Cases that Apply Recursion Above$$

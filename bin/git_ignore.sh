@@ -23,6 +23,7 @@ dir_list='
 	./@/@
 '
 top_dir_list='
+git_commit.sh
 aclocal.m4
 ar-lib
 autom4te.cache

@@ -218,6 +218,31 @@ MESSAGE(STATUS
 	"cppad_has_cstdint_8_to_64 = ${cppad_has_cstdint_8_to_64}" 
 )
 # -----------------------------------------------------------------------------
+# cppad_compiler_has_erf
+#
+# CHECK_CXX_SOURCE_RUNS(source variable)
+SET(CMAKE_REQUIRED_INCLUDES  "")
+SET(CMAKE_REQUIRED_LIBRARIES "")
+SET(CMAKE_REQUIRED_FLAGS     ${cppad_cxx_flags})
+SET(source "
+# include <cmath>
+int main(void)
+{	if( std::erf(0.0) == 0.0 )
+		return 0; 
+	return 1;
+}
+" )
+CHECK_CXX_SOURCE_RUNS("${source}" has_error_function)
+IF( has_error_function )
+	SET(cppad_compiler_has_erf 1)
+ELSE( has_error_function )
+	SET(cppad_compiler_has_erf 0)
+ENDIF( has_error_function )
+MESSAGE(STATUS 
+	"has_error_function = ${has_error_function}" 
+	"cppad_compiler_has_erf = ${cppad_compiler_has_erf}" 
+)
+# -----------------------------------------------------------------------------
 # cppad_tape_addr_type, cppad_tape_id_type
 #
 FOREACH( cmake_var cppad_tape_id_type cppad_tape_addr_type )

@@ -14,6 +14,7 @@ Please visit http://www.coin-or.org/CppAD/ for information on other licenses.
 /*
 $begin base_adolc.hpp$$
 $spell
+	erf
 	ifndef
 	define
 	endif
@@ -213,6 +214,27 @@ $code sin$$,
 $code sinh$$,
 $code sqrt$$,
 $code tan$$.
+
+$head erf$$
+If the error function is supported by the compiler,
+it must also be supported by a $icode Base$$ type;
+see $cref/erf/base_std_math/erf/$$.
+The adolc package does not support this function:
+$codep */
+namespace CppAD {
+# if CPPAD_COMPILER_HAS_ERF
+	inline adouble erf(const adouble& x)
+	{	CPPAD_ASSERT_KNOWN( 
+			false,
+			"erf: adolc does not support the error function"
+		);
+		return 0;
+	}
+# endif
+}
+/* $$ 
+
+
 
 $head sign$$
 This $cref/required/base_require/$$ function is defined using the 

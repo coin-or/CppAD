@@ -175,6 +175,7 @@ nobase_myinclude_HEADERS =  \
 	cppad/local/epsilon.hpp \
 	cppad/local/equal_op_seq.hpp \
 	cppad/local/erf.hpp \
+	cppad/local/erf_op.hpp \
 	cppad/local/exp_op.hpp \
 	cppad/local/for_jac_sweep.hpp \
 	cppad/local/for_one.hpp \

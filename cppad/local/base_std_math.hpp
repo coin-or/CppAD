@@ -30,6 +30,7 @@ $spell
 	const
 	CppAD
 	namespace
+	erf
 $$
 
 $section Base Type Requirements for Standard Math Functions$$
@@ -88,6 +89,21 @@ must be defined and have the same prototype as $codei%CppAD::%Fun%$$.
 For example, 
 $cref/float/base_float.hpp/Unary Standard Math/$$.
 
+$head erf$$
+$index erf, base require$$
+$index base, erf require$$
+$index require, base erf$$
+If the error function is supported by the compiler,
+$cref/CPPAD_COMPILER_HAS_ERF/erf/Method/CPPAD_COMPILER_HAS_ERF/$$
+is one,
+the type $icode Base$$ must support the syntax
+$codei%
+	%y% = CppAD::erf(%x%)
+%$$
+where $icode x$$ and $icode y$$ have the same prototype as above.
+For example, see
+$cref/base_alloc/base_alloc.hpp/erf/$$.
+
 $head sign$$
 $index sign, base require$$
 $index base, sign require$$
@@ -98,20 +114,13 @@ $codei%
 %$$
 which computes
 $latex \[
-z = \left\{ \begin{array}{ll} 
+y = \left\{ \begin{array}{ll}
 	+1 & {\rm if} \; x > 0 \\
 	 0 & {\rm if} \; x = 0 \\
 	-1 & {\rm if} \; x < 0
 \end{array} \right.
 \] $$
-The arguments $icode x$$ has prototype
-$codei%
-	const %Base%& %x%
-%$$
-and the return value $icode z$$ has prototype
-$codei%
-	%Base% %z%
-%$$
+where $icode x$$ and $icode y$$ have the same prototype as above.
 For example, see
 $cref/base_alloc/base_alloc.hpp/sign/$$.
 Note that, if ordered comparisons are not defined for the type $icode Base$$,
@@ -197,7 +206,7 @@ where the argument \c x and return value \c y have type \c Type
 using the corresponding function <code>std::Fun</code>.
 */
 # define CPPAD_STANDARD_MATH_UNARY(Type, Fun) \
-	inline Type Fun(const Type& x)           \
+	inline Type Fun(const Type& x)            \
 	{	return std::Fun(x); }
 
 } // END_CPPAD_NAMESPACE

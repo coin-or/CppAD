@@ -5,7 +5,7 @@
 CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-14 Bradley M. Bell
 
 CppAD is distributed under multiple licenses. This distribution is under
-the terms of the 
+the terms of the
                     Eclipse Public License Version 1.0.
 
 A copy of this license is included in the COPYING file of this distribution.
@@ -23,7 +23,7 @@ Compute Forward mode Jacobian sparsity patterns.
 
 /*!
 \def CPPAD_FOR_JAC_SWEEP_TRACE
-This value is either zero or one. 
+This value is either zero or one.
 Zero is the normal operational value.
 If it is one, a trace of every for_jac_sweep computation is printed.
 */
@@ -40,7 +40,7 @@ otherwise, it respolves to
 \code
 	user_ok = user_atom->for_sparse_jac
 \endcode
-This maco is undefined at the end of this file to facillitate is 
+This maco is undefined at the end of this file to facillitate is
 use with a different definition in other files.
 */
 # ifdef NDEBUG
@@ -55,7 +55,7 @@ ForJacSweep computes the sparsity pattern for all the other variables.
 
 \tparam Base
 base type for the operator; i.e., this operation sequence was recorded
-using AD< \a Base > and computations by this routine are done using type 
+using AD< \a Base > and computations by this routine are done using type
 \a Base.
 
 \tparam Vector_set
@@ -83,7 +83,7 @@ the object \a play holds information about the currentl location
 with in the tape and this changes during playback.
 
 \param var_sparsity
-\b Input: For j = 1 , ... , \a n, 
+\b Input: For j = 1 , ... , \a n,
 the sparsity pattern for the independent variable with index (j-1)
 corresponds to the set with index j in \a var_sparsity.
 \n
@@ -139,7 +139,7 @@ void ForJacSweep(
 		{	// length of this VecAD
 			length   = play->GetVecInd(j);
 			// set to proper index for this VecAD
-			vecad_ind[j] = i; 
+			vecad_ind[j] = i;
 			for(k = 1; k <= length; k++)
 				vecad_ind[j+k] = num_vecad_vec; // invalid index
 			// start of next VecAD
@@ -191,8 +191,8 @@ void ForJacSweep(
 	{
 		// this op
 		play->forward_next(op, arg, i_op, i_var);
-		CPPAD_ASSERT_UNKNOWN( (i_op > n)  | (op == InvOp) );  
-		CPPAD_ASSERT_UNKNOWN( (i_op <= n) | (op != InvOp) );  
+		CPPAD_ASSERT_UNKNOWN( (i_op > n)  | (op == InvOp) );
+		CPPAD_ASSERT_UNKNOWN( (i_op <= n) | (op != InvOp) );
 		CPPAD_ASSERT_ARG_BEFORE_RESULT(op, arg, i_var);
 
 		// rest of information depends on the case
@@ -332,6 +332,14 @@ void ForJacSweep(
 			case EndOp:
 			CPPAD_ASSERT_NARG_NRES(op, 0, 0);
 			more_operators = false;
+			break;
+			// -------------------------------------------------
+
+			case ErfOp:
+			CPPAD_ASSERT_NARG_NRES(op, 1, 1);
+			forward_sparse_jacobian_unary_op(
+				i_var, arg[0], var_sparsity
+			);
 			break;
 			// -------------------------------------------------
 
@@ -558,7 +566,7 @@ void ForJacSweep(
 				user_atom  = atomic_base<Base>::class_object(user_index);
 # ifndef NDEBUG
 				if( user_atom == CPPAD_NULL )
-				{	std::string msg = 
+				{	std::string msg =
 						atomic_base<Base>::class_name(user_index)
 						+ ": atomic_base function has been deleted";
 					CPPAD_ASSERT_KNOWN(false, msg.c_str() );
@@ -595,7 +603,7 @@ void ForJacSweep(
 				CPPAD_ASSERT_UNKNOWN( user_m     == size_t(arg[3]) );
 # ifndef NDEBUG
 				if( ! user_ok )
-				{	std::string msg = 
+				{	std::string msg =
 						atomic_base<Base>::class_name(user_index)
 						+ ": atomic_base.for_sparse_jac: returned false";
 					CPPAD_ASSERT_KNOWN(false, msg.c_str() );

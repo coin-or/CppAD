@@ -22,45 +22,87 @@ bool Erf(void)
 	using CppAD::atan;
 	using CppAD::exp;
 	using CppAD::sqrt;
-
+# if CPPAD_COMPILER_HAS_ERF
+	double eps = 100.0 * std::numeric_limits<double>::epsilon();
+# endif
 	// Construct function object corresponding to erf
-	CPPAD_TESTVECTOR(AD<double>) X(1);
-	CPPAD_TESTVECTOR(AD<double>) Y(1);
-	X[0] = 0.;
-	Independent(X);
-	Y[0] = erf(X[0]);
-	ADFun<double> Erf(X, Y);
+	CPPAD_TESTVECTOR(AD<double>) ax(1);
+	CPPAD_TESTVECTOR(AD<double>) ay(1);
+	ax[0] = 0.;
+	Independent(ax);
+	ay[0] = erf(ax[0]);
+	ADFun<double> f(ax, ay);
+
+	// Construct function object corresponding to derivative of erf
+	Independent(ax);
+	double pi = 4.0 * atan(1.0);
+	ay[0] = exp( - ax[0] * ax[0] ) * 2.0 / sqrt(pi);
+	ADFun<double> df(ax, ay);
 
 	// vectors to use with function object
-	CPPAD_TESTVECTOR(double) x(1);
-	CPPAD_TESTVECTOR(double) y(1);
-	CPPAD_TESTVECTOR(double) dx(1);
-	CPPAD_TESTVECTOR(double) dy(1);
+	CPPAD_TESTVECTOR(double) x0(1), y0(1), x1(1), y1(1), check(1);
 
 	// check value at zero
-	x[0]  = 0.;
-	y = Erf.Forward(0, x);	
-	ok &= NearEqual(0., y[0], 4e-4, 0.);
+	x0[0]    = 1.5;
+	y0       = f.Forward(0, x0);	
+	check[0] = 0.96611;
+	ok      &= std::fabs(check[0] - y0[0]) <= 4e-4;
 
 	// check the derivative of error function
-	dx[0]         = 1.;
-	double pi     = 4. * atan(1.);
-	double factor = 2. / sqrt( pi );
-	int i;
-	for(i = -10; i <= 10; i++)
-	{	x[0] = i / 4.;
-		y    = Erf.Forward(0, x);	
+	x1[0] = 1.0;
+	y1    = f.Forward(1, x1);
+	check = df.Forward(0, x0);
+	ok   &= NearEqual(check[0], y1[0], 0., 2e-3);
+# if CPPAD_COMPILER_HAS_ERF
+	ok   &= NearEqual(check[0], y1[0], eps, eps);
+# endif
 
-		// check derivative
-		double derf = factor * exp( - x[0] * x[0] );
-		dy          = Erf.Forward(1, dx);
-		ok         &= NearEqual(derf, dy[0], 0., 2e-3);
+	// check second derivative
+	CPPAD_TESTVECTOR(double) x2(1), y2(1);
+	x2[0] = 0.0;
+	y2    = f.Forward(2, x2);
+	check = df.Forward(1, x1) / 2.0;
+	ok   &= NearEqual(check[0], y2[0], 0., 2e-3);
+# if CPPAD_COMPILER_HAS_ERF
+	ok   &= NearEqual(check[0], y2[0], eps, eps);
+# endif
 
-		// test using erf with AD< AD<double> >
-		AD< AD<double> > X0 = AD<double>( x[0] );
-		AD< AD<double> > Y0 = erf(X0);
+	// check third derivative
+	CPPAD_TESTVECTOR(double) x3(1), y3(1);
+	x3[0] = 0.0;
+	y3    = f.Forward(3, x3);
+	check = df.Forward(2, x2) / 3.0;
+	ok   &= NearEqual(check[0], y3[0], 0., 2e-3);
+# if CPPAD_COMPILER_HAS_ERF
+	ok   &= NearEqual(check[0], y3[0], eps, eps);
+# endif
 
-		ok &= ( y[0] == Value( Value(Y0) ) );
-	}
+	// check 4-th order of reverse mode
+	CPPAD_TESTVECTOR(double) w(1), dy(4), x4(1), y4(1);
+	x4[0] = 0.0;
+	w[0]  = 1.0;
+	dy    = f.Reverse(4, w);
+	y4    = f.Forward(4, x4);
+	//
+	ok  &= NearEqual(dy[0], y1[0], 0., 2e-3);
+# if CPPAD_COMPILER_HAS_ERF
+	ok  &= NearEqual(dy[0], y1[0], eps, eps);
+# endif
+	//
+	ok  &= NearEqual(dy[1], 2.0 * y2[0], 0., 2e-3);
+# if CPPAD_COMPILER_HAS_ERF
+	ok  &= NearEqual(dy[1], 2.0 * y2[0], eps, eps);
+# endif
+	//
+	ok  &= NearEqual(dy[2], 3.0 * y3[0], 0., 2e-3);
+# if CPPAD_COMPILER_HAS_ERF
+	ok  &= NearEqual(dy[2], 3.0 * y3[0], eps, eps);
+# endif
+	//
+	ok  &= NearEqual(dy[3], 4.0 * y4[0], 0., 2e-3);
+# if CPPAD_COMPILER_HAS_ERF
+	ok  &= NearEqual(dy[3], 4.0 * y4[0], eps, eps);
+# endif
+
 	return ok;
 }

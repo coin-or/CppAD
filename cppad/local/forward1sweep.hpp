@@ -357,6 +357,15 @@ size_t forward1sweep(
 			break;
 			// -------------------------------------------------
 
+# if CPPAD_COMPILER_HAS_ERF
+			case ErfOp:
+			CPPAD_ASSERT_UNKNOWN( CPPAD_COMPILER_HAS_ERF );
+			// 2DO: implement zero order version of this function
+			forward_erf_op(p, q, i_var, arg, parameter, J, taylor);
+			break;
+# endif
+			// -------------------------------------------------
+
 			case CExpOp:
 			forward_cond_op(
 				p, q, i_var, arg, num_par, parameter, J, taylor

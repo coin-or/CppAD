@@ -11,6 +11,7 @@ the terms of the
 A copy of this license is included in the COPYING file of this distribution.
 Please visit http://www.coin-or.org/CppAD/ for information on other licenses.
 -------------------------------------------------------------------------- */
+# include <cppad/configure.hpp>
 # include <limits>
 # include <complex>
 
@@ -20,6 +21,7 @@ Please visit http://www.coin-or.org/CppAD/ for information on other licenses.
 /*
 $begin base_complex.hpp$$
 $spell
+	endif
 	eps
 	abs_geq
 	Rel
@@ -169,6 +171,18 @@ namespace CppAD {
 	{	return std::abs(x) >= std::abs(y); }
 }
 /* $$
+
+$head erf$$
+Complex types do not support the error function
+(use CPPAD_USER_MACRO define above).
+$codep */
+# if CPPAD_COMPILER_HAS_ERF
+namespace CppAD {
+	CPPAD_USER_MACRO(erf)
+}
+# endif
+/* $$
+
 
 $head Integer$$
 The implementation of this function must agree

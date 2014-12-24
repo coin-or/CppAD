@@ -137,6 +137,13 @@ are defined.  otherwise this symbol is zero.
 # define CPPAD_HAS_CSTDINT_8_TO_64 @cppad_has_cstdint_8_to_64@
 
 /*!
+\def CPPAD_COMPILER_HAS_ERF
+If this symbol is one, the function std::erf(double) is defined by the
+C++ compiler, otherwise the symbol is zero.
+*/
+# define CPPAD_COMPILER_HAS_ERF @cppad_compiler_has_erf@
+
+/*!
 \def CPPAD_TAPE_ADDR_TYPE
 Is the type used to store address on the tape. If not size_t, then 
 <code>sizeof(CPPAD_TAPE_ADDR_TYPE) <= sizeof( size_t )</code>

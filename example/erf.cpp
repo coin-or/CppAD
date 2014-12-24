@@ -45,25 +45,26 @@ bool Erf(void)
 	// domain space vector
 	size_t n  = 1;
 	double x0 = 0.5;
-	CPPAD_TESTVECTOR(AD<double>) x(n);
-	x[0]      = x0;
+	CPPAD_TESTVECTOR(AD<double>) ax(n);
+	ax[0]     = x0;
 
 	// declare independent variables and start tape recording
-	CppAD::Independent(x);
-
-	// a temporary value
+	CppAD::Independent(ax);
 
 	// range space vector 
 	size_t m = 1;
-	CPPAD_TESTVECTOR(AD<double>) y(m);
-	y[0] = CppAD::erf(x[0]);
+	CPPAD_TESTVECTOR(AD<double>) ay(m);
+	ay[0] = CppAD::erf(ax[0]);
 
 	// create f: x -> y and stop tape recording
-	CppAD::ADFun<double> f(x, y); 
+	CppAD::ADFun<double> f(ax, ay); 
 
 	// check relative erorr 
-	double erf_x0 = 0.5205;
-	ok &= NearEqual(y[0] , erf_x0,  4e-4 , 0.);
+	double erf_x0 = 0.52050;
+	ok &= NearEqual(ay[0] , erf_x0,  0.,    4e-4);
+# if CPPAD_COMPILER_HAS_ERF
+	ok &= NearEqual(ay[0] , erf_x0,  0.,    1e-5);
+# endif
 
 	// value of derivative of erf at x0
 	double pi     = 4. * std::atan(1.);
@@ -75,24 +76,30 @@ bool Erf(void)
 	CPPAD_TESTVECTOR(double) dy(m);
 	dx[0] = 1.;
 	dy    = f.Forward(1, dx);
-	ok   &= NearEqual(dy[0], check, 4e-4, 0.);
+	ok   &= NearEqual(dy[0], check,  0.,  4e-4);
+# if CPPAD_COMPILER_HAS_ERF
+	ok   &= NearEqual(dy[0], check,  0.,  eps);
+# endif
 
 	// reverse computation of derivative of y[0]
 	CPPAD_TESTVECTOR(double)  w(m);
 	CPPAD_TESTVECTOR(double) dw(n);
 	w[0]  = 1.;
 	dw    = f.Reverse(1, w);
-	ok   &= NearEqual(dw[0], check, 4e-4, 0.);
+	ok   &= NearEqual(dw[0], check, 0., 4e-4);
+# if CPPAD_COMPILER_HAS_ERF
+	ok   &= NearEqual(dw[0], check,  0.,  eps);
+# endif
 
 	// use a VecAD<Base>::reference object with erf
 	CppAD::VecAD<double> v(1);
 	AD<double> zero(0);
 	v[zero]           = x0;
 	AD<double> result = CppAD::erf(v[zero]);
-	ok   &= NearEqual(result, y[0], eps, eps);
+	ok   &= NearEqual(result, ay[0], eps, eps);
 
 	// use a double with erf
-	ok   &= NearEqual(CppAD::erf(x0), y[0], eps, eps);
+	ok   &= NearEqual(CppAD::erf(x0), ay[0], eps, eps);
 
 	return ok;
 }

@@ -46,7 +46,6 @@ $spell
 	Op
 	std
 	CondExp
-	erf
 $$
 
 $index Base, require$$
