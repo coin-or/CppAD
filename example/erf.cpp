@@ -76,7 +76,7 @@ bool Erf(void)
 	CPPAD_TESTVECTOR(double) dy(m);
 	dx[0] = 1.;
 	dy    = f.Forward(1, dx);
-	ok   &= NearEqual(dy[0], check,  0.,  4e-4);
+	ok   &= NearEqual(dy[0], check,  0.,  1e-3);
 # if CPPAD_COMPILER_HAS_ERF
 	ok   &= NearEqual(dy[0], check,  0.,  eps);
 # endif
@@ -86,9 +86,9 @@ bool Erf(void)
 	CPPAD_TESTVECTOR(double) dw(n);
 	w[0]  = 1.;
 	dw    = f.Reverse(1, w);
-	ok   &= NearEqual(dw[0], check, 0., 4e-4);
+	ok   &= NearEqual(dw[0], check,  0., 1e-1);
 # if CPPAD_COMPILER_HAS_ERF
-	ok   &= NearEqual(dw[0], check,  0.,  eps);
+	ok   &= NearEqual(dw[0], check,  0., eps);
 # endif
 
 	// use a VecAD<Base>::reference object with erf
