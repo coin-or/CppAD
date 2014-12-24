@@ -280,6 +280,7 @@ builddir = @builddir@
 cppad_SOURCE_DIR = @cppad_SOURCE_DIR@
 cppad_boostvector = @cppad_boostvector@
 cppad_cflags = @cppad_cflags@
+cppad_compiler_has_erf = @cppad_compiler_has_erf@
 cppad_cppadvector = @cppad_cppadvector@
 cppad_description = @cppad_description@
 cppad_eigenvector = @cppad_eigenvector@

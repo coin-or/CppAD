@@ -335,6 +335,7 @@ builddir = @builddir@
 cppad_SOURCE_DIR = @cppad_SOURCE_DIR@
 cppad_boostvector = @cppad_boostvector@
 cppad_cflags = @cppad_cflags@
+cppad_compiler_has_erf = @cppad_compiler_has_erf@
 cppad_cppadvector = @cppad_cppadvector@
 cppad_description = @cppad_description@
 cppad_eigenvector = @cppad_eigenvector@
@@ -553,6 +554,7 @@ nobase_myinclude_HEADERS = \
 	cppad/local/epsilon.hpp \
 	cppad/local/equal_op_seq.hpp \
 	cppad/local/erf.hpp \
+	cppad/local/erf_op.hpp \
 	cppad/local/exp_op.hpp \
 	cppad/local/for_jac_sweep.hpp \
 	cppad/local/for_one.hpp \
