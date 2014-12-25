@@ -64,7 +64,7 @@ bool Erf(void)
 	check = df.Forward(1, x1);
 	ok   &= NearEqual(check[0] / 2.0, y2[0], 0., 2e-3);
 # if CPPAD_COMPILER_HAS_ERF
-	ok   &= NearEqual(check[0], y2[0], eps, eps);
+	ok   &= NearEqual(check[0] / 2.0, y2[0], eps, eps);
 # endif
 
 	// check third derivative
@@ -74,7 +74,7 @@ bool Erf(void)
 	check = df.Forward(2, x2);
 	ok   &= NearEqual(check[0] / 3.0, y3[0], 0., 2e-3);
 # if CPPAD_COMPILER_HAS_ERF
-	ok   &= NearEqual(check[0], y3[0], eps, eps);
+	ok   &= NearEqual(check[0] / 3.0, y3[0], eps, eps);
 # endif
 
 	// check 4-th order of reverse mode
