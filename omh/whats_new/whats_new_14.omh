@@ -61,6 +61,12 @@ This section contains a list of the changes to CppAD during 2014
 The purpose of this section is to
 assist you in learning about changes between various versions of CppAD.
 
+$head 12-25$$
+There was another bug related to 
+$cref/optimizing/CondExp/Optimize/$$ 
+conditional expressions. 
+This has been fixed.
+
 $head 12-23$$
 The c++11 standard includes the error function $cref erf$$ in 
 $code cmath$$.

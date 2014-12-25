@@ -251,6 +251,9 @@ struct struct_old_variable {
 	*/
 	std::set<class_cexp_pair> cexp_set;
 
+	/// Result of check for a match for this varable.
+	addr_t match_var;
+
 	/// New operation sequence corresponding to this old varable.
 	/// Set during forward sweep to the index in the new tape
 	addr_t new_var;
@@ -477,7 +480,7 @@ old variable.
 NumArg( tape[current].op ) == 1
 */
 template <class Base>
-size_t unary_match(
+addr_t unary_match(
 	const CppAD::vector<struct struct_old_variable>& tape           ,
 	size_t                                             current        ,
 	size_t                                             npar           ,
@@ -584,7 +587,7 @@ The binary operator must be an addition, subtraction, multiplication, division
 or power operator.  NumArg( tape[current].op ) == 1.
 */
 template <class Base>
-inline size_t binary_match(
+inline addr_t binary_match(
 	const CppAD::vector<struct struct_old_variable>&   tape           ,
 	size_t                                             current        ,
 	size_t                                             npar           ,
@@ -597,7 +600,7 @@ inline size_t binary_match(
 	bool          parameter[2];
 
 	// initialize return value
-	size_t  match_var = 0;
+	addr_t  match_var = 0;
 
 	CPPAD_ASSERT_UNKNOWN( NumArg(op) == 2 );
 	CPPAD_ASSERT_UNKNOWN( NumRes(op) >  0 );
@@ -2129,7 +2132,6 @@ void optimize_run(
 			break;
 		}
 
-		size_t         match_var    = 0;
 		unsigned short code         = 0;
 		bool           replace_hash = false;
 		if( keep ) switch( op )
@@ -2149,7 +2151,7 @@ void optimize_run(
 			case SqrtOp:
 			case TanOp:
 			case TanhOp:
-			match_var = unary_match(
+			tape[i_var].match_var = unary_match(
 				tape                ,  // inputs 
 				i_var               ,
 				play->num_par_rec() ,
@@ -2157,8 +2159,8 @@ void optimize_run(
 				hash_table_var      ,
 				code                  // outputs
 			);
-			if( match_var > 0 )
-				tape[i_var].new_var = match_var;
+			if( tape[i_var].match_var > 0 )
+				tape[i_var].new_var = tape[i_var].match_var;
 			else
 			{
 				replace_hash = true;
@@ -2191,7 +2193,7 @@ void optimize_run(
 			}
 			case DivvpOp:
 			case PowvpOp:
-			match_var = binary_match(
+			tape[i_var].match_var = binary_match(
 				tape                ,  // inputs 
 				i_var               ,
 				play->num_par_rec() ,
@@ -2199,8 +2201,8 @@ void optimize_run(
 				hash_table_var      ,
 				code                  // outputs
 			);
-			if( match_var > 0 )
-				tape[i_var].new_var = match_var;
+			if( tape[i_var].match_var > 0 )
+				tape[i_var].new_var = tape[i_var].match_var;
 			else
 			{	size_pair = record_vp(
 					tape                , // inputs
@@ -2220,7 +2222,7 @@ void optimize_run(
 			// Binary operators where 
 			// left is an index and right is a variable
 			case DisOp:
-			match_var = binary_match(
+			tape[i_var].match_var = binary_match(
 				tape                ,  // inputs 
 				i_var               ,
 				play->num_par_rec() ,
@@ -2228,8 +2230,8 @@ void optimize_run(
 				hash_table_var      ,
 				code                  // outputs
 			);
-			if( match_var > 0 )
-				tape[i_var].new_var = match_var;
+			if( tape[i_var].match_var > 0 )
+				tape[i_var].new_var = tape[i_var].match_var;
 			else
 			{	new_arg[0] = arg[0];
 				new_arg[1] = tape[ arg[1] ].new_var;
@@ -2267,7 +2269,7 @@ void optimize_run(
 			case DivpvOp:
 			case MulpvOp:
 			case PowpvOp:
-			match_var = binary_match(
+			tape[i_var].match_var = binary_match(
 				tape                ,  // inputs 
 				i_var               ,
 				play->num_par_rec() ,
@@ -2275,8 +2277,8 @@ void optimize_run(
 				hash_table_var      ,
 				code                  // outputs
 			);
-			if( match_var > 0 )
-				tape[i_var].new_var = match_var;
+			if( tape[i_var].match_var > 0 )
+				tape[i_var].new_var = tape[i_var].match_var;
 			else
 			{	size_pair = record_pv(
 					tape                , // inputs
@@ -2318,7 +2320,7 @@ void optimize_run(
 			case DivvvOp:
 			case MulvvOp:
 			case PowvvOp:
-			match_var = binary_match(
+			tape[i_var].match_var = binary_match(
 				tape                ,  // inputs 
 				i_var               ,
 				play->num_par_rec() ,
@@ -2326,8 +2328,8 @@ void optimize_run(
 				hash_table_var      ,
 				code                  // outputs
 			);
-			if( match_var > 0 )
-				tape[i_var].new_var = match_var;
+			if( tape[i_var].match_var > 0 )
+				tape[i_var].new_var = tape[i_var].match_var;
 			else
 			{	size_pair = record_vv(
 					tape                , // inputs
@@ -2631,8 +2633,14 @@ void optimize_run(
 			rec->ReplaceArg(i_arg++, n_false    );
 			for(j = 0; j < info.skip_var_true.size(); j++)
 			{	i_var = info.skip_var_true[j];
-				CPPAD_ASSERT_UNKNOWN( tape[i_var].new_op > 0 );
-				rec->ReplaceArg(i_arg++, tape[i_var].new_op );
+				if( tape[i_var].match_var > 0 )
+				{	// the operation for this argument has been removed
+					rec->ReplaceArg(i_arg++, 0);
+				}
+				else
+				{	CPPAD_ASSERT_UNKNOWN( tape[i_var].new_op > 0 );
+					rec->ReplaceArg(i_arg++, tape[i_var].new_op );
+				}
 			} 
 			for(j = 0; j < info.skip_op_true.size(); j++)
 			{	i_op = info.skip_op_true[j];
@@ -2640,8 +2648,14 @@ void optimize_run(
 			} 
 			for(j = 0; j < info.skip_var_false.size(); j++)
 			{	i_var = info.skip_var_false[j];
-				CPPAD_ASSERT_UNKNOWN( tape[i_var].new_op > 0 );
-				rec->ReplaceArg(i_arg++, tape[i_var].new_op );
+				if( tape[i_var].match_var > 0 )
+				{	// the operation for this argument has been removed
+					rec->ReplaceArg(i_arg++, 0);
+				}
+				else
+				{	CPPAD_ASSERT_UNKNOWN( tape[i_var].new_op > 0 );
+					rec->ReplaceArg(i_arg++, tape[i_var].new_op );
+				}
 			} 
 			for(j = 0; j < info.skip_op_false.size(); j++)
 			{	i_op = info.skip_op_false[j];

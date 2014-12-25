@@ -1593,28 +1593,31 @@ namespace {
 
 		// f(x) = x[0] + x[0] if x[0] >= 3
 		//      = x[0] + x[1] otherwise 
-		vector< AD<double> > ax(2), ay(1);
+		vector< AD<double> > ax(2), ay(2);
 		ax[0] = 1.0;
 		ax[1] = 2.0;
 		Independent(ax);
 		AD<double> three(3);
 		AD<double> value = ax[0] + ax[1];
-		ay[0] = CppAD::CondExpGe(ax[0], three, value, value);
+		ay[0]  = CppAD::CondExpGe(ax[0], three, value, value);
+		ay[1]  = CppAD::CondExpGe(ax[0], three, ax[0]+ax[1], ax[0]+ax[1]);
 		CppAD::ADFun<double> f(ax, ay);
 		f.optimize();
 
 		// check case where x[0] >= 3
-		vector<double> x(2), y(1);
+		vector<double> x(2), y(2);
 		x[0] = 4.0;
 		x[1] = 2.0;
 		y    = f.Forward(0, x);
 		ok  &= y[0] == x[0] + x[1];
+		ok  &= y[1] == x[0] + x[1];
 
 		// check case where x[0] < 3
 		x[0] = 1.0;
 		x[1] = 2.0;
 		y    = f.Forward(0, x);
 		ok  &= y[0] == x[0] + x[1];
+		ok  &= y[1] == x[0] + x[1];
 
 		return ok;
 	}
@@ -1622,6 +1625,7 @@ namespace {
 
 bool optimize(void)
 {	bool ok = true;
+
 	atomic_sparsity_option = CppAD::atomic_base<double>::bool_sparsity_enum;
 	for(size_t i = 0; i < 2; i++)
 	{	// check conditional expression sparsity pattern 
