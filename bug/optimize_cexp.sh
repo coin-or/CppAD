@@ -20,15 +20,15 @@ using namespace CppAD;
 int main(){
 	bool ok = true;
 	vector< AD<double> > ax(1), ay(1);
-	ax[0] = 0.;
+	ax[0] = 1.0;
 	Independent(ax);
-	ay[0] = CondExpGe(ax[0], ax[0], exp( ax[0] ), exp( ax[0] ));
+	ay[0] = CondExpGe(ax[0], ax[0], exp(ax[0]), exp(ax[0]));
 	ADFun<double> f(ax, ay);
 
 	f.optimize();
 
 	vector<double> x0(1), y0(1);
-	x0[0] = 1.0;
+	x0[0] = Value(ax[0]);
 	y0    = f.Forward(0, x0);
 	ok   &= y0[0] == Value(ay[0]);
 	if( ok )
