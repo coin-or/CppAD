@@ -11,37 +11,29 @@
 # Please visit http://www.coin-or.org/CppAD/ for information on other licenses.
 # -----------------------------------------------------------------------------
 cat << EOF
-Running this script causes an assert connected to optimizing
-the recording of a Jacobian calculation.
+Running this script causes an assert connected to conditional expressions.
 EOF
 cat << EOF > bug.$$
 # include <cppad/cppad.hpp>
 using namespace CppAD;
 
 int main(){
-	// F(x) = sin(x[0]) if x[0] >= 3
-	//      = sin(x[1]) otherwise
-	vector<AD<AD<double> > > a2x(2), a2y(1);
-	a2x[0]=1; a2x[1]=2;
-	Independent(a2x);
-	AD<AD<double> > three(3);
-	// note if you change sin to 1.0/ you get a different assertion
-	a2y[0] = sin( CppAD::CondExpGe(a2x[0], three, a2x[0], a2x[1]) );
-	ADFun<AD<double> > F(a2x, a2y);
-
-	// G_0(x) = partial F(x) w.r.t x[0]
-	//        = cos( x[0] ) if x[0] >= 3
-	//        = 0           otherwise
-	// G_1(x) = cos( x[1] ) if x[0] <  3
-	//        = 0           otherwise
-	vector<AD<double> > ax(2), ay(2);
-	ax[0]=1; ax[1]=2;
+	bool ok = true;
+	vector< AD<double> > ax(1), ay(1);
+	ax[0] = 0.;
 	Independent(ax);
-	ay = F.Jacobian(ax);
-	ADFun<double> G(ax, ay);
+	ay[0] = CondExpGe(ax[0], ax[0], exp( ax[0] ), exp( ax[0] ));
+	ADFun<double> f(ax, ay);
 
-	// causes an assertion
-	G.optimize();
+	f.optimize();
+
+	vector<double> x0(1), y0(1);
+	x0[0] = 1.0;
+	y0    = f.Forward(0, x0);
+	ok   &= y0[0] == Value(ay[0]);
+	if( ok )
+		return 0;
+	return 1;
 }
 EOF
 # -----------------------------------------------------------------------------
@@ -60,6 +52,8 @@ echo "./$name"
 if ./$name
 then
 	echo "OK"
+	exit 0
 else
 	echo "Error"
+	exit 1
 fi
