@@ -84,6 +84,7 @@ $childtable%
 	example/atomic/norm_sq.cpp%
 	example/atomic/reciprocal.cpp%
 	example/atomic/tangent.cpp%
+	example/atomic/hes_sparse.cpp%
 	example/atomic/mat_mul.cpp
 %$$
 
@@ -103,6 +104,10 @@ $subhead Vector Range$$
 The file $cref atomic_tangent.cpp$$ contains another example
 where the user provides the code for computing derivatives.
 This example is more complex because the range has two components.
+
+$subhead Hessian Sparsity Patterns$$
+The file $cref atomic_hes_sparse.cpp$$ contains an minimal example
+where the user provides the code for computing Hessian sparsity patterns.
 
 $head General Case$$
 The file $cref atomic_mat_mul.cpp$$ contains a more general example

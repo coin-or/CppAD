@@ -61,6 +61,10 @@ This section contains a list of the changes to CppAD during 2014
 The purpose of this section is to
 assist you in learning about changes between various versions of CppAD.
 
+$head 12-27$$
+A minimal example for computing cross terms in atomic operation
+Hessian sparsity patterns $cref atomic_hes_sparse.cpp$$ was added.
+
 $head 12-25$$
 There was another bug related to 
 $cref/optimizing/CondExp/Optimize/$$ 

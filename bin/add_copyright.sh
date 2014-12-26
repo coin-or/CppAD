@@ -38,7 +38,7 @@ echo "write copyright message to bin/add_copyright.$$"
 case $ext in
 	cpp | hpp | omh)
 	cat << EOF  > bin/add_copyright.$$
-/* \$Id:\$ */
+// \$Id\$
 /* --------------------------------------------------------------------------
 CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-14 Bradley M. Bell
 

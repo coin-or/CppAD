@@ -22,6 +22,7 @@ Please visit http://www.coin-or.org/CppAD/ for information on other licenses.
 // external complied tests
 extern bool checkpoint(void);
 extern bool get_started(void);
+extern bool hes_sparse(void);
 extern bool mat_mul(void);
 extern bool norm_sq(void);
 extern bool reciprocal(void);
@@ -60,6 +61,7 @@ int main(void)
 	// external compiled tests
 	ok &= Run( checkpoint,          "checkpoint"     );
 	ok &= Run( get_started,         "get_started"    );
+	ok &= Run( hes_sparse,          "hes_sparse"     );
 	ok &= Run( mat_mul,             "mat_mul"        );
 	ok &= Run( norm_sq,             "norm_sq"        );
 	ok &= Run( reciprocal,          "reciprocal"     );
