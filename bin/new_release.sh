@@ -25,16 +25,6 @@ repository="https://projects.coin-or.org/svn/CppAD"
 stable_version="20150000"
 release='0'
 release_version="$stable_version.$release"
-msg="Creating releases/$release_version"
-# -----------------------------------------------------------------------------
-# check initial working directory
-dir=`pwd | sed -e 's|.*/[Cc][Pp][Pp][Aa][Dd]/||'`
-check="stable/$stable_version"
-if [ "$dir" != "$check" ]
-then
-	echo bin/"new_release.sh: must execute this script in $check"
-	exit 1
-fi
 # -----------------------------------------------------------------------------
 # Check release version
 if svn list $repository/releases | grep "$release_version" > /dev/null
@@ -45,9 +35,12 @@ then
 	echo "in file bin/new_release.sh to a higher release number."
 	exit 1
 fi
+# -----------------------------------------------------------------------------
+echo_eval git checkout $stable_version
+# -----------------------------------------------------------------------------
 #
 check_one=`bin/version.sh get`
-echo_eval svn revert doc.omh
+echo_eval git checkout doc.omh
 check_two=`grep "cppad-$stable_version" doc.omh \
 	| sed -e 's|cppad-\([0-9.]*\):.*|\1|'`
 if [ "$check_one" != "$release_version" ] || [ "$check_one" != "$check_two" ]
@@ -60,18 +53,22 @@ then
 	exit 1
 fi
 # -----------------------------------------------------------------------------
+# tag this version of the repository
+git tag -m "corresponds $repository/releases/$release_version" $release_version
+#
+# copy committed changes to subversion version
+echo_eval git svn dcommit
+# -----------------------------------------------------------------------------
+msg="Creating releases/$release_version"
 rep_stable="$repository/stable/$stable_version"
 rep_release="$repository/releases/$release_version"
 echo_eval svn copy $rep_stable $rep_release -m \"$msg\"
 # -----------------------------------------------------------------------------
-echo "cd ../.."
-cd ../..
-#
-if [ -e conf ]
+if [ ! -e build ]
 then
-	echo_eval rm -rf conf.old
-	echo_eval mv conf conf.old
+	echo_eval mkdir -p build
 fi
+echo_eval cd build 
 echo_eval svn checkout $repository/conf conf
 #
 echo_eval cd conf
