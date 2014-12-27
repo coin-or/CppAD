@@ -22,7 +22,7 @@ echo_eval() {
 }
 # -----------------------------------------------------------------------------
 repository="https://projects.coin-or.org/svn/CppAD"
-stable_version="20130000"
+stable_version="20150000"
 release='0'
 release_version="$stable_version.$release"
 msg="Creating releases/$release_version"
