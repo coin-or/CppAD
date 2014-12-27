@@ -54,7 +54,13 @@ then
 fi
 # -----------------------------------------------------------------------------
 # tag this version of the repository
-git tag -m "corresponds $repository/releases/$release_version" $release_version
+if git tag --list | grep "$release_version"
+then
+	git tag -d $release_version
+fi
+git tag -a \
+	-m "corresponds $repository/releases/$release_version" \
+	$release_version
 #
 # copy committed changes to subversion version
 echo_eval git svn dcommit
