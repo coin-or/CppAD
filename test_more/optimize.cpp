@@ -1593,31 +1593,37 @@ namespace {
 
 		// f(x) = x[0] + x[0] if x[0] >= 3
 		//      = x[0] + x[1] otherwise 
-		vector< AD<double> > ax(2), ay(2);
+		vector< AD<double> > ax(2), ay(3);
 		ax[0] = 1.0;
 		ax[1] = 2.0;
 		Independent(ax);
 		AD<double> three(3);
 		AD<double> value = ax[0] + ax[1];
+		// a simple value
 		ay[0]  = CppAD::CondExpGe(ax[0], three, value, value);
-		ay[1]  = CppAD::CondExpGe(ax[0], three, ax[0]+ax[1], ax[0]+ax[1]);
+		// a  binary exprpression
+		ay[1]  = CppAD::CondExpGe(ax[0], three, ax[0]-ax[1], ax[0]-ax[1]);
+		// a unary expression
+		ay[2]  = CppAD::CondExpGe(ax[0], three, exp(ax[0]), exp(ax[0]) );
 		CppAD::ADFun<double> f(ax, ay);
 		f.optimize();
 
 		// check case where x[0] >= 3
-		vector<double> x(2), y(2);
+		vector<double> x(2), y(3);
 		x[0] = 4.0;
 		x[1] = 2.0;
 		y    = f.Forward(0, x);
 		ok  &= y[0] == x[0] + x[1];
-		ok  &= y[1] == x[0] + x[1];
+		ok  &= y[1] == x[0] - x[1];
+		ok  &= y[2] == exp(x[0]);
 
 		// check case where x[0] < 3
 		x[0] = 1.0;
 		x[1] = 2.0;
 		y    = f.Forward(0, x);
 		ok  &= y[0] == x[0] + x[1];
-		ok  &= y[1] == x[0] + x[1];
+		ok  &= y[1] == x[0] - x[1];
+		ok  &= y[2] == exp(x[0]);
 
 		return ok;
 	}

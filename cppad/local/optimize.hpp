@@ -251,9 +251,6 @@ struct struct_old_variable {
 	*/
 	std::set<class_cexp_pair> cexp_set;
 
-	/// Result of check for a match for this varable.
-	addr_t match_var;
-
 	/// New operation sequence corresponding to this old varable.
 	/// Set during forward sweep to the index in the new tape
 	addr_t new_var;
@@ -261,6 +258,9 @@ struct struct_old_variable {
 	/// New operator index for this varable.
 	/// Set during forward sweep to the index in the new tape
 	size_t new_op;
+
+	/// Did this variable match another variable in the operation sequence
+	bool match;
 };
 
 struct struct_size_pair {
@@ -473,8 +473,8 @@ this operation in the new operation sequence.
 If the return value is zero,
 no match was found.
 If the return value is greater than zero,
-it is the index of a new variable that can be used to replace the 
-old variable.
+it is the old operation sequence index of a variable,
+that comes before current and can be used to replace the current variable.
 
 \par Restrictions:
 NumArg( tape[current].op ) == 1
@@ -502,13 +502,13 @@ addr_t unary_match(
 		npar                ,
 		par
 	);
-	size_t  i               = hash_table_var[code];
-	CPPAD_ASSERT_UNKNOWN( i < current );
-	if( op == tape[i].op )
-	{	size_t k = tape[i].arg[0];
-		CPPAD_ASSERT_UNKNOWN( k < i );
+	size_t  i_var  = hash_table_var[code];
+	CPPAD_ASSERT_UNKNOWN( i_var < current );
+	if( op == tape[i_var].op )
+	{	size_t k = tape[i_var].arg[0];
+		CPPAD_ASSERT_UNKNOWN( k < i_var );
 		if (new_arg[0] == tape[k].new_var )
-			return tape[i].new_var;
+			return i_var;
 	}
 	return 0;
 } 
@@ -669,18 +669,18 @@ inline addr_t binary_match(
 		npar                ,
 		par
 	);
-	size_t  i  = hash_table_var[code];
-	CPPAD_ASSERT_UNKNOWN( i < current );
-	if( op == tape[i].op )
+	size_t  i_var  = hash_table_var[code];
+	CPPAD_ASSERT_UNKNOWN( i_var < current );
+	if( op == tape[i_var].op )
 	{	bool match = true;
 		if( op == DisOp )
-		{	match   &= new_arg[0] == tape[i].arg[0];
-			size_t k = tape[i].arg[1];
+		{	match   &= new_arg[0] == tape[i_var].arg[0];
+			size_t k = tape[i_var].arg[1];
 			match   &= new_arg[1] == tape[k].new_var;
 		}
 		else
 		{	for(size_t j = 0; j < 2; j++)
-			{	size_t k = tape[i].arg[j];
+			{	size_t k = tape[i_var].arg[j];
 				if( parameter[j] )
 				{	CPPAD_ASSERT_UNKNOWN( k < npar );
 					match &= IdenticalEqualPar(
@@ -688,40 +688,38 @@ inline addr_t binary_match(
 					);
 				}
 				else
-				{	CPPAD_ASSERT_UNKNOWN( k < i );
+				{	CPPAD_ASSERT_UNKNOWN( k < i_var );
 					match &= (new_arg[j] == tape[k].new_var);
 				}
 			}
 		}
 		if( match )
-			match_var = tape[i].new_var;
+			match_var = i_var;
 	}
 	if( (match_var > 0) | ( (op != AddvvOp) & (op != MulvvOp ) ) )
 		return match_var;
 
 	// check for match with argument order switched ----------------------
 	CPPAD_ASSERT_UNKNOWN( op == AddvvOp || op == MulvvOp );
-	i          = new_arg[0];
-	new_arg[0] = new_arg[1];
-	new_arg[1] = i;
+	std::swap(new_arg[0], new_arg[1]);
 	unsigned short code_switch = hash_code(
 		op                  , 
 		new_arg             ,
 		npar                ,
 		par
 	);
-	i  = hash_table_var[code_switch];
-	CPPAD_ASSERT_UNKNOWN( i < current );
-	if( op == tape[i].op )
+	i_var  = hash_table_var[code_switch];
+	CPPAD_ASSERT_UNKNOWN( i_var < current );
+	if( op == tape[i_var].op )
 	{	bool match = true;
 		size_t j;
 		for(j = 0; j < 2; j++)
-		{	size_t k = tape[i].arg[j];
-			CPPAD_ASSERT_UNKNOWN( k < i );
+		{	size_t k = tape[i_var].arg[j];
+			CPPAD_ASSERT_UNKNOWN( k < i_var );
 			match &= (new_arg[j] == tape[k].new_var);
 		}
 		if( match )
-			match_var = tape[i].new_var;
+			match_var = i_var;
 	}
 	return match_var;
 } 
@@ -2134,6 +2132,8 @@ void optimize_run(
 
 		unsigned short code         = 0;
 		bool           replace_hash = false;
+		addr_t         match_var;
+		tape[i_var].match = false;
 		if( keep ) switch( op )
 		{
 			// Unary operator where operand is arg[0]
@@ -2151,7 +2151,7 @@ void optimize_run(
 			case SqrtOp:
 			case TanOp:
 			case TanhOp:
-			tape[i_var].match_var = unary_match(
+			match_var = unary_match(
 				tape                ,  // inputs 
 				i_var               ,
 				play->num_par_rec() ,
@@ -2159,8 +2159,11 @@ void optimize_run(
 				hash_table_var      ,
 				code                  // outputs
 			);
-			if( tape[i_var].match_var > 0 )
-				tape[i_var].new_var = tape[i_var].match_var;
+			if( match_var > 0 )
+			{	tape[i_var].match     = true;
+				tape[match_var].match = true;
+				tape[i_var].new_var   = tape[match_var].new_var;
+			}
 			else
 			{
 				replace_hash = true;
@@ -2193,7 +2196,7 @@ void optimize_run(
 			}
 			case DivvpOp:
 			case PowvpOp:
-			tape[i_var].match_var = binary_match(
+			match_var = binary_match(
 				tape                ,  // inputs 
 				i_var               ,
 				play->num_par_rec() ,
@@ -2201,8 +2204,11 @@ void optimize_run(
 				hash_table_var      ,
 				code                  // outputs
 			);
-			if( tape[i_var].match_var > 0 )
-				tape[i_var].new_var = tape[i_var].match_var;
+			if( match_var > 0 )
+			{	tape[i_var].match     = true;
+				tape[match_var].match = true;
+				tape[i_var].new_var   = tape[match_var].new_var;
+			}
 			else
 			{	size_pair = record_vp(
 					tape                , // inputs
@@ -2222,7 +2228,7 @@ void optimize_run(
 			// Binary operators where 
 			// left is an index and right is a variable
 			case DisOp:
-			tape[i_var].match_var = binary_match(
+			match_var = binary_match(
 				tape                ,  // inputs 
 				i_var               ,
 				play->num_par_rec() ,
@@ -2230,8 +2236,11 @@ void optimize_run(
 				hash_table_var      ,
 				code                  // outputs
 			);
-			if( tape[i_var].match_var > 0 )
-				tape[i_var].new_var = tape[i_var].match_var;
+			if( match_var > 0 )
+			{	tape[i_var].match     = true;
+				tape[match_var].match = true;
+				tape[i_var].new_var   = tape[match_var].new_var;
+			}
 			else
 			{	new_arg[0] = arg[0];
 				new_arg[1] = tape[ arg[1] ].new_var;
@@ -2269,7 +2278,7 @@ void optimize_run(
 			case DivpvOp:
 			case MulpvOp:
 			case PowpvOp:
-			tape[i_var].match_var = binary_match(
+			match_var = binary_match(
 				tape                ,  // inputs 
 				i_var               ,
 				play->num_par_rec() ,
@@ -2277,8 +2286,11 @@ void optimize_run(
 				hash_table_var      ,
 				code                  // outputs
 			);
-			if( tape[i_var].match_var > 0 )
-				tape[i_var].new_var = tape[i_var].match_var;
+			if( match_var > 0 )
+			{	tape[i_var].match     = true;
+				tape[match_var].match = true;
+				tape[i_var].new_var   = tape[match_var].new_var;
+			}
 			else
 			{	size_pair = record_pv(
 					tape                , // inputs
@@ -2320,7 +2332,7 @@ void optimize_run(
 			case DivvvOp:
 			case MulvvOp:
 			case PowvvOp:
-			tape[i_var].match_var = binary_match(
+			match_var = binary_match(
 				tape                ,  // inputs 
 				i_var               ,
 				play->num_par_rec() ,
@@ -2328,8 +2340,11 @@ void optimize_run(
 				hash_table_var      ,
 				code                  // outputs
 			);
-			if( tape[i_var].match_var > 0 )
-				tape[i_var].new_var = tape[i_var].match_var;
+			if( match_var > 0 )
+			{	tape[i_var].match     = true;
+				tape[match_var].match = true;
+				tape[i_var].new_var   = tape[match_var].new_var;
+			}
 			else
 			{	size_pair = record_vv(
 					tape                , // inputs
@@ -2633,7 +2648,7 @@ void optimize_run(
 			rec->ReplaceArg(i_arg++, n_false    );
 			for(j = 0; j < info.skip_var_true.size(); j++)
 			{	i_var = info.skip_var_true[j];
-				if( tape[i_var].match_var > 0 )
+				if( tape[i_var].match )
 				{	// the operation for this argument has been removed
 					rec->ReplaceArg(i_arg++, 0);
 				}
@@ -2648,7 +2663,7 @@ void optimize_run(
 			} 
 			for(j = 0; j < info.skip_var_false.size(); j++)
 			{	i_var = info.skip_var_false[j];
-				if( tape[i_var].match_var > 0 )
+				if( tape[i_var].match )
 				{	// the operation for this argument has been removed
 					rec->ReplaceArg(i_arg++, 0);
 				}
