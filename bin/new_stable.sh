@@ -10,17 +10,16 @@
 # A copy of this license is included in the COPYING file of this distribution.
 # Please visit http://www.coin-or.org/CppAD/ for information on other licenses.
 # -----------------------------------------------------------------------------
-# bash function that echos and executes a command
-echo_eval() {
-	echo $*
-	eval $*
-}
-# -----------------------------------------------------------------------------
 if [ "$0" != "bin/new_stable.sh" ]
 then
 	echo "bin/new_stable.sh: must be executed from its parent directory"
 	exit 1
 fi
+# bash function that echos and executes a command
+echo_eval() {
+	echo $*
+	eval $*
+}
 # -----------------------------------------------------------------------------
 copy_from_trunk='keep'     # do (frist time), keep (use current)
 trunk_revision='3507'      # trunk revision number that stable corresponds to
@@ -99,12 +98,13 @@ sed -i omh/install/download.omh \
 #
 # Instructions --------------------------------------------------------------
 cat << EOF
-1: Review differences using git.
-2: If you find problems, fix both master and $new_stable bin/new_stable.sh.
+1: Review differences using git. If you find problems, fix both 
+   master and $new_stable versions of bin/new_stable.sh.
 3: Run the following commands:
 	bin/check_all.sh
-4: If errors occur, fix bin/new_stable.sh, re-run it, and goto 3.
-5: In stable/$stable_version check first, then run the script
+4: If errors occur, fix both master and $new_stable version of 
+   bin/new_stable.sh and goto 3.
+5: Run the script
       bin/new_release.sh	
 EOF
 exit 0
