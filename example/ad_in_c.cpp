@@ -41,6 +41,7 @@ $end
 
 namespace { // Begin empty namespace *****************************************
 
+/*
 void debug_print(const char *label, double d)
 {	using std::printf;
 
@@ -51,6 +52,7 @@ void debug_print(const char *label, double d)
 		printf("%x", byte[i]);
 	printf("\n");
 }
+*/
 
 // type in C corresponding to an AD<double> object 
 typedef struct { void*  p_void; } cad;

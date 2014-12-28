@@ -91,6 +91,7 @@ test_more_SOURCES  = \
 	test_more.cpp \
 	abs.cpp \
 	acos.cpp \
+	adfun_copy.cpp \
 	asin.cpp \
 	assign.cpp \
 	add.cpp \
@@ -131,7 +132,6 @@ test_more_SOURCES  = \
 	mul_eq.cpp \
 	mul_level.cpp \
 	mul_zero_one.cpp \
-	ndebug.cpp \
 	near_equal_ext.cpp \
 	neg.cpp \
 	ode_err_control.cpp \
@@ -167,10 +167,6 @@ test_more_SOURCES  = \
 	vec_ad.cpp \
 	vec_ad_par.cpp \
 	vec_unary.cpp 
-
-ndebug.$(OBJEXT): ndebug.cpp
-	$(CXXCOMPILE) \
-	-DNDEBUG -c $(top_srcdir)/test_more/ndebug.cpp -o ndebug.$(OBJEXT)
 
 test: check
 	./test_more
