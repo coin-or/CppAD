@@ -171,7 +171,6 @@ int main(void)
 	ok &= Run( mul_level,       "mul_level"      );
 	ok &= Run( MulEq,           "MulEq"          );
 	ok &= Run( MulZeroOne,      "MulZeroOne"     );
-	ok &= Run( ndebug,          "ndebug"         );
 	ok &= Run( NearEqualExt,    "NearEqualExt"   );
 	ok &= Run( Neg,             "Neg"            );
 	ok &= Run( ode_err_control, "ode_err_control");
