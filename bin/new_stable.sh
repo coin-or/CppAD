@@ -10,15 +10,21 @@
 # A copy of this license is included in the COPYING file of this distribution.
 # Please visit http://www.coin-or.org/CppAD/ for information on other licenses.
 # -----------------------------------------------------------------------------
-if [ ! -e "bin/new_stable.sh" ]
+# bash function that echos and executes a command
+echo_eval() {
+	echo $*
+	eval $*
+}
+# -----------------------------------------------------------------------------
+if [ "$0" != "bin/new_stable.sh" ]
 then
 	echo "bin/new_stable.sh: must be executed from its parent directory"
 	exit 1
 fi
 # -----------------------------------------------------------------------------
-copy_from_trunk='redo'     # do (frist time), keep (use current), redo
-trunk_revision='3027'      # trunk revision number that stable corresponds to
-yyyy_mm_dd='2014-00-00'    # Date corresponding to this trunk revision
+copy_from_trunk='keep'     # do (frist time), keep (use current), redo
+trunk_revision='3507'      # trunk revision number that stable corresponds to
+yyyy_mm_dd='2015-00-00'    # Date corresponding to this trunk revision
 # -----------------------------------------------------------------------------
 echo "copy_from_trunk=$copy_from_trunk"
 echo "trunk_revision=$trunk_revision"
@@ -30,65 +36,52 @@ repository="https://projects.coin-or.org/svn/CppAD"
 rep_trunk="$repository/trunk"
 rep_stable="$repository/stable/$stable_version"
 # -----------------------------------------------------------------------------
-# check initial working directory
-dir=`pwd | sed -e 's|.*/||'`
-if [ "$dir" != "trunk" ]
-then
-	echo bin/"new_stable.sh: must execute this script in the trunk"
-	exit 1
-fi
-# -----------------------------------------------------------------------------
-echo "cd .."
-cd ..
-#
 if [ "$copy_from_trunk" = "redo" ] 
 then
-	# delete old copy of branch
+	# delete old stable copy 
 	msg="Replacing old stable/$stable_version."
 	echo "svn delete $rep_stable -m \"$msg\""
-	      svn delete $rep_stable -m "$msg"
+	svn delete $rep_stable -m "$msg"
 fi
+# -----------------------------------------------------------------------------
 if [ "$copy_from_trunk" = "do" ] || [ "$copy_from_trunk" = "redo" ]
 then
 	#
-	# create the new stable version
+	# create the new stable copy
 	temp_1="Create stable/$stable_version"
 	temp_2="from trunk at revision $trunk_revision."
 	msg="$temp_1 $temp_2"
 	echo "svn copy -r $trunk_revision $rep_trunk $rep_stable -m \"$msg\""
-	      svn copy -r $trunk_revision $rep_trunk $rep_stable -m "$msg"
-	if [ ! -d stable ]
-	then
-		echo "mkdir stable"
-		      mkdir stable
-	fi
+	svn copy -r $trunk_revision $rep_trunk $rep_stable -m "$msg"
 fi
-if [ -e "stable/$stable_version" ]
+# -----------------------------------------------------------------------------
+echo 'Use git-svn to fetch the new stable version'
+fetch="stable/$stable_version:refs/remotes/svn/stable/$stable_version"
+if ! grep "fetch *= *$fetch" .git/config > /dev/null
 then
-	echo "rm -rf stable/$stable_version"
-	      rm -rf stable/$stable_version
+	sed -e "s|^\turl *=.*|&\n\tfetch = $fetch|" -i .git/config
+fi
+# 
+# fetch the branch
+echo_eval git svn fetch
+# -----------------------------------------------------------------------------
+# checkout the new stable version
+if git branch | grep "$stable_version" 
+then
+	git checkout $stable_version
+else
+	echo_eval git checkout -b $stable_version svn/stable/$stable_version
 fi
 #
-# retrieve stable version from repository ------------------------------------
-#
-echo "svn checkout -q $rep_stable stable/$stable_version"
-      svn checkout -q $rep_stable stable/$stable_version
-#
-# make sure that bin/new_stable.sh corresponds to this version 
+# make sure that bin/new_stable.sh corresponds to current master version 
 # (may not be same as version in repository that was copied).
-echo "cp trunk/bin/new_stable.sh stable/$stable_version/bin/new_stable.sh"
-      cp trunk/bin/new_stable.sh stable/$stable_version/bin/new_stable.sh
-#
-echo "cd stable/$stable_version"
-      cd stable/$stable_version
+echo_eval git show master:bin/new_stable.sh > bin/new_stable.sh
 #
 # set the version number in root CMakeLists.txt to $stable_version
-echo "bin/version.sh set $release_version"
-      bin/version.sh set $release_version
+echo_eval bin/version.sh set $release_version
 #
 # copy version number to other files
-echo "bin/version.sh copy"
-      bin/version.sh copy 
+echo_eval bin/version.sh copy
 #
 # set the value of stable version in corresponding new_release.sh
 echo "automatic editing: $stable_version/bin/new_release.sh"
@@ -107,22 +100,12 @@ sed -i omh/install/download.omh \
 #
 # Instructions --------------------------------------------------------------
 cat << EOF
-1: In the directory stable/$stable_version, review differences using
-       bin/commit.sh list
-   All changed files should be present. Review the differences.
-2: If you find problems, fix trunk/bin/new_stable.sh, re-run it, and goto 1.
-3: In stable/$stable_version run the following commands:
+1: Review differences using git.
+2: If you find problems, fix master:bin/new_stable.sh, re-run it, and goto 1.
+3: Run the following commands:
 	bin/check_all.sh
-      ./build.sh all test
-4: If errors occur, fix trunk/bin/new_stable.sh, re-run it, and goto 1.
-5: Commit changes to trunk/bin/new_stable.sh 
-6: In stable/$stable_version commit changes using
-	bin/commit.sh edit
-   then edit bin/commit.sh to change the comments and then run
-      bin/commit.sh run
-7: Make sure commited all necessary changes in stable/$stable_version
-      bin/commit.sh list
-8: In stable/$stable_version check first, then run the script
+4: If errors occur, fix bin/new_stable.sh, re-run it, and goto 3.
+5: In stable/$stable_version check first, then run the script
       bin/new_release.sh	
 EOF
 exit 0
