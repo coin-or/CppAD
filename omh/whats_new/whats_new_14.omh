@@ -72,6 +72,12 @@ $cref/cppad_implicit_ctor_from_any_type/
 	cmake/cppad_implicit_ctor_from_any_type
 /$$.
 Note that this option is deprecated and may eventually be removed.
+$lnext
+The $code clang++$$ compiler was optimizing out the calculations
+in the $cref time_test.cpp$$ and $cref speed_test.cpp$$ examples.
+This caused these tests to hang while trying to determine how
+many times to repeat the test.
+This has been fixed.
 $lend
 
 $head 12-27$$
