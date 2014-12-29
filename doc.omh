@@ -101,8 +101,8 @@ $$
 $comment This comment is used to remove the table below$$
 $table
 $cnext
-	One web page per Section $pre  $$ $cnext
-	All as one web page
+	One section per web page $pre  $$ $cnext
+	All sections in one web page
 $rnext
 $cnext
 	(fast to load) $pre  $$ $cnext
