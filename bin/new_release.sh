@@ -86,4 +86,4 @@ sed -i projDesc.xml \
 	-e "/^ *<release/,/^ *<\/release/s/[0-9]\{8\}\.[0-9]*/$release_version/"
 #
 echo "Use the command the following command to finish the process"
-echo "	svn commit -m \"$msg\" ../../conf/projDesc.xml"
+echo "	svn commit -m \"$msg\" build/conf/projDesc.xml"
