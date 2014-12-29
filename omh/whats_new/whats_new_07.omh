@@ -351,7 +351,8 @@ $cref speed_main$$.
 
 $head 10-05$$
 Added and example using complex calculations for a 
-function that is not complex differentiable ($cref not_complex_ad.cpp$$).
+function that is not complex differentiable $code not_complex_ad.cpp$$.
+(This example has been removed; see $cref/complex FAQ/Faq/Complex Types/$$.)
 
 $head 10-02$$ 
 Extend the $cref pow$$ function to work for any case where one argument

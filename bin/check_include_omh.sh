@@ -27,8 +27,9 @@ ls bin/get_*.sh >> bin/check_include_omh.1.$$
 #
 for file in `cat bin/check_include_omh.1.$$`
 do
-	# assume $childtable, ... , $verbatim use % for delimiter
-	# also assume verbatim commands use one line (would be nice to allow
+	# 1. assume $childtable, ... , $verbatim use % for delimiter
+	# 2. assume verbatim commands use one line.
+	# 3. assume $childtable, $children, $contents use multiple lines.
 	# multiple line verbatim commands).
 	sed -n < $file >> bin/check_include_omh.2.$$ \
 		-e 's/^#[ \t][ \t]*//' \
