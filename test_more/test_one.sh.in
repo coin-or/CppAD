@@ -84,10 +84,6 @@ do
 		cmd="$cmd $cflags $libs"
 	fi
 done
-if [ "$1" == 'ndebug.cpp' ]
-then
-	cmd="$cmd -DNDEBUG"
-fi
 echo $cmd
 $cmd
 echo "./test_one.exe"

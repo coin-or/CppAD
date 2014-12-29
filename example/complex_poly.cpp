@@ -23,9 +23,6 @@ $index polynomial, complex$$
 $index example, complex polynomial$$
 $index test, complex polynomial$$
 
-$head See Also$$
-$cref not_complex_ad.cpp$$
-
 $head Poly$$
 Select this link to view specifications for $cref Poly$$:
 

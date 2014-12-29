@@ -39,38 +39,37 @@ $end
 */
 // BEGIN C++
 # include <cppad/time_test.hpp>
-# include <vector>
+# include <cppad/vector.hpp>
 
 namespace { // empty namespace
+	using CppAD::vector;
 
 	// size for the test
 	size_t size_;
 
+	vector<double> a, b, c;
 	void test(size_t repeat)
 	{	// setup
-		double *a = new double[size_];
-		double *b = new double[size_];
-		double *c = new double[size_];
+		a.resize(size_);
+		b.resize(size_);
+		c.resize(size_);
 		size_t i  = size_;;
 		while(i)
 		{	--i;
 			a[i] = i;
 			b[i] = 2 * i;
+			c[i] = 0.0;
 		}
 		// operations we are timing
 		while(repeat--)
-		{	i = size_;
+		{	i = size_;;
 			while(i)
 			{	--i;
-				c[i] = a[i] * b[i];
+				c[i] += std::sqrt(a[i] * a[i] + b[i] * b[i]);
 			}
 		}
-		// teardown
-		delete [] a;
-		delete [] b;
-		delete [] c;
-		return;
 	}
+
 }
 bool time_test(void)
 {	bool ok = true;
@@ -96,6 +95,9 @@ bool time_test(void)
 	if( ! ok )
 		std::cout << std::endl << "rel_diff = " << rel_diff  << std::endl;
  
+	a.clear();
+	b.clear();
+	c.clear();
 	return ok;
 }
 // END C++

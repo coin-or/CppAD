@@ -203,5 +203,6 @@ bool Div(void)
 {	bool ok = true;
 	ok &= DivTestOne();
 	ok &= DivTestTwo(); 
+	ok &= DivTestThree(); 
 	return ok;
 }

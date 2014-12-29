@@ -13,6 +13,7 @@ Please visit http://www.coin-or.org/CppAD/ for information on other licenses.
 $begin Faq$$
 $escape !$$
 $spell
+	instantiating
 	cppad@list.coin-or.org
 	faq
 	std
@@ -44,7 +45,7 @@ $codei%
 	Independent(%u%);
 %$$
 Before the call to $cref Independent$$,
-$icode%u[%0%]%$$ is a $cref/parameter/glossary/Parameter/$$
+$icode%u%[0]%$$ is a $cref/parameter/glossary/Parameter/$$
 and after the call it is a variable.
 Thus in the first case, $icode v$$ is a variable
 and in the second case it is a parameter.
@@ -98,18 +99,18 @@ $codei%
 	AD< std::complex<%Base%> >
 	std::complex< AD<%Base%> >
 %$$
-Some functions are real differentiable than are not complex differentiable
-(for example, the $cref/complex abs function/abs/Complex Types/$$).
-If you have to differentiate such functions, you should use
+The $cref/complex abs function/abs/Complex Types/$$ is differentiable
+with respect to its real and imaginary parts,
+but it is not complex differentiable.
+Thus one would prefer to use
 $codei%
 	std::complex< AD<%Base%> >
 %$$
-If you are sure that you will not need to take any real partials
-of complex valued function, it is more efficient to use
-$codei%
-	AD< std::complex<%Base%> >
-%$$
-
+On the other hand, the C++ standard only specifies 
+$codei%std::complex<%Type%>%$$ where $icode Type$$ is 
+$code float$$, $code double$$, or $code lone double$$.
+The effect of instantiating the template complex for any other type 
+is unspecified. 
 
 $head Exceptions$$
 $index test, exception$$

@@ -533,6 +533,7 @@ bool rev_sparse_jac(void)
 	ok &= case_two();
 	ok &= case_three();
 	ok &= case_four();
+	ok &= case_five();
 
 	return ok;
 }
