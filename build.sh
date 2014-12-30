@@ -19,7 +19,7 @@ FADBAD_DIR=$HOME/prefix/fadbad
 IPOPT_DIR=$HOME/prefix/ipopt
 SACADO_DIR=$HOME/prefix/sacado
 # version type is one of "trunk" or "stable"
-version_type="trunk"
+version_type="stable"
 # -----------------------------------------------------------------------------
 if [ $0 != "./build.sh" ]
 then
