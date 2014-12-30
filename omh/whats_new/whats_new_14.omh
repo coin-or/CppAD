@@ -53,6 +53,7 @@ $spell
 	cmath
 	ctor
 	std
+	num
 $$
 
 $section CppAD Changes and Additions During 2014$$
@@ -62,6 +63,14 @@ This section contains a list of the changes to CppAD during 2014
 (in reverse order by date).
 The purpose of this section is to
 assist you in learning about changes between various versions of CppAD.
+
+$head 12-30$$
+There was a bug in the $cref cmake$$ whereby it would sometimes mistakenly
+exit with the error message
+$codep
+	cppad_max_num_threads is not an integer greater than or equal 4
+$$
+This has been fixed.
 
 $head 12-29$$
 The example $code not_complex_ad.cpp$$ was using the type
