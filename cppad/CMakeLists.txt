@@ -246,6 +246,9 @@ MESSAGE(STATUS
 # cppad_tape_addr_type, cppad_tape_id_type
 #
 FOREACH( cmake_var cppad_tape_id_type cppad_tape_addr_type )
+	SET(CMAKE_REQUIRED_INCLUDES  "")
+	SET(CMAKE_REQUIRED_LIBRARIES "")
+	SET(CMAKE_REQUIRED_FLAGS     ${cppad_cxx_flags})
 	SET(source "
 # include <limits>
 int main(void)
@@ -263,14 +266,21 @@ ENDFOREACH( cmake_var )
 # -----------------------------------------------------------------------------
 # cppad_max_num_threads
 #
+SET(CMAKE_REQUIRED_INCLUDES  "")
+SET(CMAKE_REQUIRED_LIBRARIES "")
+SET(CMAKE_REQUIRED_FLAGS     )
 SET(source "
 int main(void)
 {	const char* number = \"${cppad_max_num_threads}\";
 	int value = 0;
-	while( '0' <= *number && *number <= '9' && *number != char(0) )
+	while( *number == ' ' )
+		number++;
+	while( '0' <= *number && *number <= '9' )
 	{	value = 10 * value + (int)(*number - '0');
 		number++;
 	}
+	while( *number == ' ' )
+		number++;
 	if( *number != char(0) )
 		return 1;
 	if( value < 4 )
