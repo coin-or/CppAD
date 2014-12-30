@@ -63,6 +63,9 @@ INCLUDE(cmake/add_cppad_cxx_flags.cmake)
 #
 # sources_libs_define(prefix_name sources libs define)
 INCLUDE(cmake/sources_libs_define.cmake)
+#
+# check_source_runs(source variable)
+INCLUDE(cmake/check_source_runs.cmake)
 # =============================================================================
 # command line arguments
 # =============================================================================

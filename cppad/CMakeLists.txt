@@ -108,72 +108,40 @@ ENDIF( cppad_eigenvector )
 # -----------------------------------------------------------------------------
 # cppad_has_rvalue
 #
-# CHECK_CXX_SOURCE_RUNS(source variable)
-SET(CMAKE_REQUIRED_INCLUDES  "")
-SET(CMAKE_REQUIRED_LIBRARIES "")
-SET(CMAKE_REQUIRED_FLAGS     ${cppad_cxx_flags})
 SET(source "
 int main(void)
 {	int&& value = 1 + 2;
 	if( value != 3 )
 		return 1;
 	return 0;
-}" )
-CHECK_CXX_SOURCE_RUNS("${source}" rvalue_ok)
-IF( rvalue_ok )
-	SET(cppad_has_rvalue 1)
-ELSE( rvalue_ok )
-	SET(cppad_has_rvalue 0)
-ENDIF( rvalue_ok )
-MESSAGE(STATUS "cppad_has_rvalue = ${cppad_has_rvalue}" )
+}" 
+)
+check_source_runs("${source}" cppad_has_rvalue)
 # -----------------------------------------------------------------------------
 # cppad_has_nullptr
 #
-# CHECK_CXX_SOURCE_RUNS(source variable)
-SET(CMAKE_REQUIRED_INCLUDES  "")
-SET(CMAKE_REQUIRED_LIBRARIES "")
-SET(CMAKE_REQUIRED_FLAGS     ${cppad_cxx_flags})
 SET(source "
 int main(void)
 {	char *c = nullptr;
 	return 0;
-}" )
-CHECK_CXX_SOURCE_RUNS("${source}" nullptr_ok)
-IF( nullptr_ok )
-	SET(cppad_has_nullptr 1)
-ELSE( nullptr_ok )
-	SET(cppad_has_nullptr 0)
-ENDIF( nullptr_ok )
-MESSAGE(STATUS "cppad_has_nullptr = ${cppad_has_nullptr}" )
-
+}"
+)
+check_source_runs("${source}" cppad_has_nullptr)
 # -----------------------------------------------------------------------------
 # cppad_has_gettimeofday
 #
-# CHECK_CXX_SOURCE_RUNS(source variable)
-SET(CMAKE_REQUIRED_INCLUDES  "")
-SET(CMAKE_REQUIRED_LIBRARIES "")
-SET(CMAKE_REQUIRED_FLAGS     ${cppad_cxx_flags})
 SET(source "
 # include<sys/time.h>
 int main(void)
 {	struct timeval time;
 	gettimeofday(&time, 0);
 	return 0;
-}" )
-CHECK_CXX_SOURCE_RUNS("${source}" gettimeofday_ok)
-IF( gettimeofday_ok )
-	SET(cppad_has_gettimeofday 1)
-ELSE( gettimeofday_ok )
-	SET(cppad_has_gettimeofday 0)
-ENDIF( gettimeofday_ok )
-MESSAGE(STATUS "cppad_has_gettimeofday = ${cppad_has_gettimeofday}" )
+}"
+)
+check_source_runs("${source}" cppad_has_gettimeofday)
 # -----------------------------------------------------------------------------
 # cppad_size_t_not_unsigned_int
 #
-# CHECK_CXX_SOURCE_RUNS(source variable)
-SET(CMAKE_REQUIRED_INCLUDES  "")
-SET(CMAKE_REQUIRED_LIBRARIES "")
-SET(CMAKE_REQUIRED_FLAGS     ${cppad_cxx_flags})
 SET(source "
 # include <cstring>
 template <class T> inline bool is_pod(void)               { return false; }
@@ -181,23 +149,12 @@ template <>        inline bool is_pod<unsigned int>(void) { return true;  }
 template <>        inline bool is_pod<size_t>(void)       { return true;  }  
 int main(void)
 {	return 0; }
-" )
-CHECK_CXX_SOURCE_RUNS("${source}" size_t_not_unsigned_int)
-IF( size_t_not_unsigned_int )
-	SET(cppad_size_t_not_unsigned_int 1)
-ELSE( size_t_not_unsigned_int )
-	SET(cppad_size_t_not_unsigned_int 0)
-ENDIF( size_t_not_unsigned_int )
-MESSAGE(STATUS 
-	"cppad_size_t_not_unsigned_int = ${cppad_size_t_not_unsigned_int}" 
+"
 )
+check_source_runs("${source}" cppad_size_t_not_unsigned_int)
 # -----------------------------------------------------------------------------
 # cppad_has_cstdint_8_to_64
 #
-# CHECK_CXX_SOURCE_RUNS(source variable)
-SET(CMAKE_REQUIRED_INCLUDES  "")
-SET(CMAKE_REQUIRED_LIBRARIES "")
-SET(CMAKE_REQUIRED_FLAGS     ${cppad_cxx_flags})
 SET(source "
 # include <cstdint>
 template <class T> inline bool is_pod(void)               { return false; }
@@ -207,23 +164,12 @@ template <>        inline bool is_pod<uint32_t>(void)     { return true;  }
 template <>        inline bool is_pod<uint64_t>(void)     { return true;  }  
 int main(void)
 {	return 0; }
-" )
-CHECK_CXX_SOURCE_RUNS("${source}" has_cstdint_8_to_64)
-IF( has_cstdint_8_to_64 )
-	SET(cppad_has_cstdint_8_to_64 1)
-ELSE( has_cstdint_8_to_64 )
-	SET(cppad_has_cstdint_8_to_64 0)
-ENDIF( has_cstdint_8_to_64 )
-MESSAGE(STATUS 
-	"cppad_has_cstdint_8_to_64 = ${cppad_has_cstdint_8_to_64}" 
+"
 )
+check_source_runs("${source}" cppad_has_cstdint_8_to_64)
 # -----------------------------------------------------------------------------
 # cppad_compiler_has_erf
 #
-# CHECK_CXX_SOURCE_RUNS(source variable)
-SET(CMAKE_REQUIRED_INCLUDES  "")
-SET(CMAKE_REQUIRED_LIBRARIES "")
-SET(CMAKE_REQUIRED_FLAGS     ${cppad_cxx_flags})
 SET(source "
 # include <cmath>
 int main(void)
@@ -231,37 +177,27 @@ int main(void)
 		return 0; 
 	return 1;
 }
-" )
-CHECK_CXX_SOURCE_RUNS("${source}" has_error_function)
-IF( has_error_function )
-	SET(cppad_compiler_has_erf 1)
-ELSE( has_error_function )
-	SET(cppad_compiler_has_erf 0)
-ENDIF( has_error_function )
-MESSAGE(STATUS 
-	"has_error_function = ${has_error_function}" 
-	"cppad_compiler_has_erf = ${cppad_compiler_has_erf}" 
+"
 )
+check_source_runs("${source}" cppad_compiler_has_erf)
 # -----------------------------------------------------------------------------
 # cppad_tape_addr_type, cppad_tape_id_type
 #
-FOREACH( cmake_var cppad_tape_id_type cppad_tape_addr_type )
-	SET(CMAKE_REQUIRED_INCLUDES  "")
-	SET(CMAKE_REQUIRED_LIBRARIES "")
-	SET(CMAKE_REQUIRED_FLAGS     ${cppad_cxx_flags})
+FOREACH(cmake_var cppad_tape_id_type cppad_tape_addr_type )
 	SET(source "
 # include <limits>
 int main(void)
 {	bool is_signed = std::numeric_limits<${${cmake_var}}>::is_signed;
 	return int(! is_signed);
 }
-" )
-	CHECK_CXX_SOURCE_RUNS("${source}" ${cmake_var}_is_signed)
-	IF( ${cmake_var}_is_signed  )
+"
+	)
+	check_source_runs("${source}" ${cmake_var}_is_signed)
+	IF( ${cmake_var}_is_signed STREQUAL 1  )
 		MESSAGE(STATUS 
 "Warning: using a signed ${cmake_var} (for CppAD developers not users)" 
 	)
-	ENDIF( ${cmake_var}_is_signed  )
+	ENDIF( ${cmake_var}_is_signed STREQUAL 1  )
 ENDFOREACH( cmake_var )
 # -----------------------------------------------------------------------------
 # cppad_max_num_threads
