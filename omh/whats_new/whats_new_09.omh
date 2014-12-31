@@ -512,7 +512,7 @@ of the solution of an ODE with respect to a parameter
 
 $head 02-15$$
 Change the distribution
-$cref/compressed tar file/download/Compressed Tar File/$$
+$cref/compressed tar file/download/Compressed Archives/$$
 to only contain one copy of the documentation.
 Link to the current Internet documentation for the other three copies.
 

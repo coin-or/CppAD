@@ -845,7 +845,7 @@ $code openmp_newton_example.cpp$$ test case.
 $head 03-19$$
 The subversion write protected directory 
 $code bin/.svn$$ was mistakenly part of the
-$cref/compressed tar file/download/Compressed Tar File/$$.
+$cref/compressed tar file/download/Compressed Archives/$$.
 It has been removed.
 
 $head 03-11$$
