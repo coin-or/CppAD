@@ -62,12 +62,12 @@ $subhead Current Version$$
 The download files below are for the current version of CppAD.
 $table
 EPL License $pre  $$ $cnext $href%
-http://www.coin-or.org/download/source/CppAD/cppad-20150000.0.epl.tgz%
-cppad-20150000.0.epl.tgz%$$ 
+http://www.coin-or.org/download/source/CppAD/cppad-20141230.epl.tgz%
+cppad-20141230.epl.tgz%$$ 
 $rnext
 GPL License $pre  $$ $cnext $href%
-http://www.coin-or.org/download/source/CppAD/cppad-20150000.0.gpl.tgz%
-cppad-20150000.0.gpl.tgz%$$
+http://www.coin-or.org/download/source/CppAD/cppad-20141230.gpl.tgz%
+cppad-20141230.gpl.tgz%$$
 $tend
 These tarballs only last for a few days.
 
