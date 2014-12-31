@@ -30,7 +30,23 @@ clang='no'
 testvector='boost'
 while [ "$1" != "" ]
 do
-	if [ "$1" == '--verbose' ]
+	if [ "$1" == '--help' ]
+	then
+		cat << EOF
+usage: bin/run_cmake.sh: \\
+	[--help] \\
+	[--verbose] \\
+	[--c++98] \\
+	[--debug_speed] \\
+	[--profile_speed] \\
+	[--clang ] \\
+	[--<package>_vector]
+The --help option just prints this message and exits.
+The value <package> above must be one of: cppad, boost, or eigen.
+
+EOF
+		exit 0
+	elif [ "$1" == '--verbose' ]
 	then
 		verbose='yes'
 	elif [ "$1" == '--c++98' ]
@@ -57,17 +73,7 @@ do
 	then
 		testvector='eigen'
 	else
-		cat << EOF
-usage: bin/run_cmake.sh: \\
-	[--verbose] \\
-	[--c++98] \\
-	[--debug_speed] \\
-	[--profile_speed] \\
-	[--clang ] \\
-	[--<package>_vector]
-
-where <package> is cppad, boost, or eigen
-EOF
+		echo "$1 is an invalid option, try bin/run_cmake.sh --help"
 		exit 1
 	fi
 	shift
