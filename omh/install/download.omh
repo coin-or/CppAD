@@ -14,6 +14,8 @@ $begin download$$
 $escape $$
 $spell
 	yyyy
+	mm
+	dd
 	tarballs
 	mkdir
 	cmake
@@ -54,48 +56,66 @@ below as the distribution directory.
 To be specific, the distribution directory contains the file
 $code cppad/cppad.hpp$$.
 
-$head Compressed Tar File$$
-These files have been archived with $code tar$$
-and compressed with $code gzip$$:
-
-$subhead Current Version$$
-The download files below are for the current version of CppAD.
+$head Compressed Archives$$
+These files have been archived using $code tar$$ and compressed using
+$code gzip$$:
 $table
-EPL License $pre  $$ $cnext $href%
+$bold version$$ $pre  $$ $cnext $bold license$$ $pre  $$ $cnext $bold link$$ 
+$rnext
+current  $cnext EPL $cnext $href%
 http://www.coin-or.org/download/source/CppAD/cppad-20141230.epl.tgz%
 cppad-20141230.epl.tgz%$$ 
 $rnext
-GPL License $pre  $$ $cnext $href%
+current  $cnext GPL $cnext $href%
 http://www.coin-or.org/download/source/CppAD/cppad-20141230.gpl.tgz%
 cppad-20141230.gpl.tgz%$$
+$rnext
+old      $cnext Both $cnext 
+$href%http://www.coin-or.org/download/source/CppAD/%CppAD download page%$$
 $tend
+
+$subhead Current Version$$
+The current versions listed above correspond to the subversion 
+$href%https://projects.coin-or.org/CppAD/browser/trunk%trunk%$$
+and the git
+$href%https://github.com/bradbell/cppad%master%$$.
 These tarballs only last for a few days.
 
-$subhead Monthly Versions$$
-Monthly versions of the compressed tar files,
-are kept around until the end of the current year,
-when the next release version (see below) is created.
+$subhead Release Versions$$
+Release versions of the compressed tar files are available on the
+$href%http://www.coin-or.org/download/source/CppAD/%CppAD download page%$$.
+This includes all the releases going back to 2007.
 These file have the form
+$codei%
+	cppad-%yyyymmdd%.%rel%.%lic%.tgz
+%$$
+The license code $icode lic$$ 
+is $code gpl$$, $code epl$$ or $code cpl$$ where
+$code gpl$$ denotes the GNU General Public License,
+$code epl$$ denotes the Eclipse Public License, and
+$code cpl$$ denotes the Common Public License 
+(not being used for new versions).
+The version number $icode yyyymmdd$$ 
+is the date at which the features
+of the program were frozen where
+$icode yyyy$$ is the year, $icode mm$$ is the month, and $icode dd$$ 
+is the day.
+The release number $icode rel$$ 
+corresponds to a bug fix index where
+higher numbers corresponding to more bug fixes.
+
+$subhead Monthly Versions$$
+Monthly versions of the compressed tar files are available on the
+$href%http://www.coin-or.org/download/source/CppAD/%CppAD download page%$$.
+These are kept until the end of the current year,
+when the next release is created.
+The monthly versions have the form
 $codei%
 	cppad-%yyyy%0101.%lic%.tgz
 %$$
 where the license code $icode lic$$ 
 is $code gpl$$ or $code epl$$
 and $icode yyyy$$ is the current year.
-
-$subhead Release Versions$$
-Release versions of the compressed tar files can be found at the
-$href%http://www.coin-or.org/download/source/CppAD/%CppAD download page%$$.
-These file have the form
-$codei%
-	cppad-%yyyymmdd%.%rel%.%lic%.tgz
-%$$
-where the license code $icode lic$$ 
-is $code gpl$$, $code epl$$ or $code cpl$$
-($code cpl$$ stands for the Common Public License),
-$icode yyyymmdd$$ is the date at which the features
-of the program were frozen, and each $icode rel$$ number
-corresponds to a bug fix (higher numbers corresponding to more bug fixes).
 
 $subhead Unix File Extraction$$
 On unix, you can use the command
@@ -148,6 +168,7 @@ $lend
 
 
 $subhead Install Instructions$$
+The instructions on the web correspond to the current version of CppAD.
 If you are using an old version of CppAD
 You should follow the install instructions in 
 the $code doc$$ subdirectory of the distribution directory.
@@ -167,7 +188,8 @@ $cref/install instructions/download/Subversion/Install Instructions/$$ below.
 $lnext
 Only the 
 $href%http://opensource.org/licenses/EPL-1.0%EPL licensed%$$
-version of CppAD can be obtained by this download procedure.
+version of CppAD can be obtained by this download procedure
+(some old versions correspond to CPL instead of EPL).
 $lend
 
 $subhead Current Version$$
@@ -232,8 +254,8 @@ shows it is in your path.
 Once you have done this, 
 in the distribution directory execute the following command:
 $codei%
-	./build.sh configure omhelp
-%$$.
+	./build.sh omhelp
+%$$
 You will then be able to follow the install instructions in 
 the $code doc$$ subdirectory of the distribution directory.
 
