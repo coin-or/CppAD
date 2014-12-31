@@ -10,9 +10,9 @@
 # A copy of this license is included in the COPYING file of this distribution.
 # Please visit http://www.coin-or.org/CppAD/ for information on other licenses.
 # -----------------------------------------------------------------------------
-if [ $0 != "bin/clean.sh" ]
+if [ $0 != "bin/clean_tar.sh" ]
 then
-	echo "bin/clean.sh: must be executed from its parent directory"
+	echo "bin/clean_tar.sh: must be executed from its parent directory"
 	exit 1
 fi
 # bash function that echos and executes a command
@@ -33,7 +33,10 @@ do
 done
 for dir in build doc doxydoc
 do
-	echo_eval rm -rf $dir
+	if [ -e "$dir" ]
+	then
+		echo_eval rm -r $dir
+	fi
 done
 list=`find . -name 'new'`
 for dir in $list
@@ -54,13 +57,11 @@ list=`find . \
 	\( -name 'configure.hpp' \) -or \
 	\( -name 'git_commit.sh' \) -or \
 	\( -name 'junk' \) -or \
-	\( -name 'temp' \)`
+	\( -name 'temp' \) | \
+	sed -e '/\.git\//d' -e '/example\/atomic\/test_one.sh/d' `
 for file in $list
 do
-	if ! ( echo $file | grep '\.git\/' > /dev/null )
-	then
-		echo "rm $file"
-	fi
+	echo_eval rm $file
 done 
 version=`date +%Y%m%d`
 name=`pwd | sed -e 's|.*/||'`
