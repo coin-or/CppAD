@@ -182,7 +182,7 @@ $lnext
 A set of programs for doing $cref/speed/$$ comparisons between
 $href%https://projects.coin-or.org/ADOL-C%Adolc%$$,
 CppAD,
-$href%http://www.imm.dtu.dk/fadbad.html/%Fadbad%$$,
+$href%http://www.fadbad.com/%Fadbad%$$,
 and
 $href%http://trilinos.sandia.gov/packages/sacado/%Sacado%$$
 are included.

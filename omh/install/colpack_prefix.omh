@@ -32,7 +32,7 @@ $head Purpose$$
 If you specify a $icode colpack_prefix$$ on the 
 $cref/cmake command/cmake/CMake Command/$$ line,
 the CppAD $cref sparse_jacobian$$ calculations use the
-$href%http://http://cscapes.cs.purdue.edu/coloringpage/%ColPack%$$ package.
+$href%http://http://cscapes.cs.purdue.edu/dox/ColPack/html%ColPack%$$ package.
 
 $head colpack_prefix$$
 $index colpack, prefix$$

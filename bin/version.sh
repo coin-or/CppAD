@@ -46,6 +46,8 @@ then
 		echo 'No change in CMakeLists.txt'
 		exit 1
 	fi
+	echo_eval rm CMakeLists.txt.old
+	#
 	echo 'bin/version.sh set: OK'
 	exit 0
 fi

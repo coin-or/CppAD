@@ -22,13 +22,14 @@
 # $index colpack, download and install$$
 # $index download, install colpack$$
 # $index install, colpack$$ 
+# $index get_colpack.sh$$
 #
 # $head Syntax$$
 # $code bin/get_colpack.sh$$
 #
 # $head Purpose$$
 # If you are using Unix, this command will download and install 
-# $href%http://www.cs.odu.edu/~dnguyen/dox/colpack/html/%ColPack%$$ in the
+# $href%http://cscapes.cs.purdue.edu/dox/ColPack/html/%ColPack%$$ in the
 # CppAD $code build$$ directory.
 #
 # $head Distribution Directory$$

@@ -14,6 +14,8 @@ Please visit http://www.coin-or.org/CppAD/ for information on other licenses.
 # include <cppad/vector.hpp>
 # include <ColPack/ColPackHeaders.h>
 
+# define CPPAD_SPARSE_HESSIAN_STAR_COLORING 1
+
 namespace CppAD {
 	void cppad_colpack_general(
 		      CppAD::vector<size_t>&         color         ,
@@ -91,9 +93,14 @@ namespace CppAD {
 				n
 		);
 	
-		// Color the graph with the speciied ordering
-		// graph.Coloring("SMALLEST_LAST", "STAR") is slower in adolc testing
+		// Variant of coloring with the specified ordering 
+# if CPPAD_SPARSE_HESSIAN_STAR_COLORING
+		graph.Coloring("SMALLEST_LAST", "STAR");
+# else
+		// faster is speed/adolc/sparse_hessian.cpp test
+		// but sucks up memory and fails in Pierre Maritinon's bocop_test.
 		graph.Coloring("SMALLEST_LAST", "ACYCLIC_FOR_INDIRECT_RECOVERY");
+# endif
 	
 		// Use coloring information to create seed matrix
 		int n_seed_row;

@@ -395,10 +395,7 @@ $codei%
 $head adolc_dir$$
 $index Adolc, unix$$
 If you have 
-$href%
-	http://www.math.tu-dresden.de/~adol-c/%
-	Adolc 1.10.2
-%$$
+$href%https://projects.coin-or.org/ADOL-C%ADOL-C%$$
 installed on your system, you can 
 specify a value for $icode adolc_dir$$ in the 
 $cref/configure/InstallUnix/Configure/$$ command line.

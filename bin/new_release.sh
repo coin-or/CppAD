@@ -36,7 +36,7 @@ then
 	exit 1
 fi
 # -----------------------------------------------------------------------------
-echo_eval git checkout $stable_version
+echo_eval git checkout stable/$stable_version
 # -----------------------------------------------------------------------------
 #
 check_one=`bin/version.sh get`
@@ -62,8 +62,12 @@ git tag -a \
 	-m "corresponds $repository/releases/$release_version" \
 	$release_version
 #
-# copy committed changes to subversion version
+# copy committed changes to coin repository
 echo_eval git svn dcommit
+#
+# copy commited changes to github repository
+echo_eval git push github stable/$stable_version
+echo_eval git push --tabs github
 # -----------------------------------------------------------------------------
 msg="Creating releases/$release_version"
 rep_stable="$repository/stable/$stable_version"
