@@ -23,7 +23,7 @@ echo_eval() {
 # -----------------------------------------------------------------------------
 repository="https://projects.coin-or.org/svn/CppAD"
 stable_version="20150000"
-release='0'
+release='1'
 release_version="$stable_version.$release"
 # -----------------------------------------------------------------------------
 # Check release version
@@ -36,7 +36,7 @@ then
 	exit 1
 fi
 # -----------------------------------------------------------------------------
-echo_eval git checkout $stable_version
+echo_eval git checkout stable/$stable_version
 # -----------------------------------------------------------------------------
 #
 check_one=`bin/version.sh get`
