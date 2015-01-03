@@ -12,6 +12,8 @@ Please visit http://www.coin-or.org/CppAD/ for information on other licenses.
 /*
 $begin cppad_sparse_hessian.cpp$$
 $spell
+	ifdef
+	ifndef
 	colpack
 	boolsparsity
 	namespace
@@ -105,8 +107,12 @@ bool link_sparse_hessian(
 	      CppAD::vector<double>&     x        ,
 	      CppAD::vector<double>&     hessian  )
 {
-	if( global_atomic || global_colpack )
+	if( global_atomic )
 		return false;
+# ifndef CPPAD_COLPACK_SPEED
+	if( global_colpack )
+		return false;
+# endif
 	// -----------------------------------------------------
 	// setup
 	typedef vector<double>              DblVector;
@@ -164,7 +170,10 @@ bool link_sparse_hessian(
 
 		// structure that holds some of work done by SparseHessian
 		CppAD::sparse_hessian_work work;
-
+# ifdef CPPAD_COLPACK_SPEED
+		if( global_colpack )
+			work.color_method = "colpack";
+# endif
 		// calculate this Hessian at this x
 		if( global_boolsparsity)
 			f.SparseHessian(x, w, bool_sparsity, row, col, hes, work);
@@ -201,7 +210,10 @@ bool link_sparse_hessian(
 
 		// declare structure that holds some of work done by SparseHessian
 		CppAD::sparse_hessian_work work;
-
+# ifdef CPPAD_COLPACK_SPEED
+		if( global_colpack )
+			work.color_method = "colpack";
+# endif
 		while(repeat--)
 		{	// choose a value for x
 			CppAD::uniform_01(n, x);

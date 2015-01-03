@@ -112,7 +112,8 @@ $rref check_for_nan.cpp$$
 $rref check_numeric_type.cpp$$
 $rref check_simple_vector.cpp$$
 $rref checkpoint.cpp$$
-$rref colpack.cpp$$
+$rref colpack_hes.cpp$$
+$rref colpack_jac.cpp$$
 $rref compare_change.cpp$$
 $rref compare.cpp$$
 $rref complex_poly.cpp$$

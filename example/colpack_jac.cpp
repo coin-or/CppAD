@@ -11,19 +11,20 @@ Please visit http://www.coin-or.org/CppAD/ for information on other licenses.
 -------------------------------------------------------------------------- */
 
 /*
-$begin colpack.cpp$$
+$begin colpack_jac.cpp$$
 $spell
-	colpack
+	colpack_jac
+	jacobian
 $$
 
 $section Using ColPack: Example and Test$$
 
-$index example, colpack$$
-$index test, colpack$$
-$index spare, colpack$$
+$index example, colpack jacobian$$
+$index test, colpack jacobian$$
+$index sparse, colpack jacobian$$
 
 $code
-$verbatim%example/colpack.cpp%0%// BEGIN C++%// END C++%1%$$
+$verbatim%example/colpack_jac.cpp%0%// BEGIN C++%// END C++%1%$$
 $$
 
 $end
@@ -31,7 +32,7 @@ $end
 // BEGIN C++
 
 # include <cppad/cppad.hpp>
-bool colpack(void)
+bool colpack_jac(void)
 {	bool ok = true;
 	using CppAD::AD;
 	using CppAD::NearEqual;

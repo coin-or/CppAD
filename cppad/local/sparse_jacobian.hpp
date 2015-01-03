@@ -189,7 +189,8 @@ If $cref colpack_prefix$$ is specified on the
 $cref/cmake command/cmake/CMake Command/$$ line,
 you can set this method to $code "colpack"$$.
 This value only matters on the first call to $code sparse_jacobian$$
-after the $icode work$$ constructor or a call to $code clear$$.
+that follows the $icode work$$ constructor or a call to
+$icode%work%.clear()%$$.
 
 $head n_sweep$$
 The return value $icode n_sweep$$ has prototype
@@ -275,7 +276,7 @@ recomputed.
 */
 class sparse_jacobian_work {
 	public:
-		/// Coloring method: color_general_cppad or color_general_colpack
+		/// Coloring method: "cppad", or "colpack"
 		/// (this field is set by user)
 		std::string color_method;
 		/// indices that sort the user row and col arrays by color 

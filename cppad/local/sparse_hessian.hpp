@@ -24,6 +24,9 @@ $spell
 	hes
 	const
 	Taylor
+	cppad
+	cmake
+	colpack
 $$
 
 $section Sparse Hessian: Easy Driver$$
@@ -171,9 +174,25 @@ This object can only be used with the routines $code SparseHessian$$.
 During its the first use, information is stored in $icode work$$.
 This is used to reduce the work done by future calls to $code SparseHessian$$ 
 with the same $icode f$$, $icode p$$, $icode row$$, and $icode col$$.
-If a future call is make where any of these values have changed,
+If a future call is made where any of these values have changed,
 you must first call $icode%work%.clear()%$$
 to inform CppAD that this information needs to be recomputed.
+
+$subhead color_method$$
+The coloring algorithm determines which rows and columns
+can be computed during the same sweep.
+This field has prototype
+$codep%
+	std::string %work%.color_method
+%$$
+and its default value (after a constructor or $code clear()$$) 
+is $code "cppad"$$.
+If $cref colpack_prefix$$ is specified on the
+$cref/cmake command/cmake/CMake Command/$$ line,
+you can set this method to $code "colpack"$$.
+This value only matters on the first call to $code sparse_hessian$$ that
+follows the $icode work$$ constructor or a call to 
+$icode%work.clear()%$$.
 
 $head n_sweep$$
 The return value $icode n_sweep$$ has prototype
@@ -243,6 +262,8 @@ $end
 -----------------------------------------------------------------------------
 */
 # include <cppad/local/std_set.hpp>
+# include <cppad/local/color_general.hpp>
+# include <cppad/local/color_symmetric.hpp>
 
 namespace CppAD { // BEGIN_CPPAD_NAMESPACE
 /*!
@@ -256,13 +277,27 @@ so it does not need to be recomputed.
 */
 class sparse_hessian_work {
 	public:
+		/// Coloring method: "cppad", or "colpack"
+		/// (this field is set by user)
+		std::string color_method;
+		/// row and column indicies for return values
+		/// (some may be reflected by star coloring algorithm)
+		CppAD::vector<size_t> row;
+		CppAD::vector<size_t> col;
 		/// indices that sort the user row and col arrays by color
 		CppAD::vector<size_t> order;
 		/// results of the coloring algorithm
 		CppAD::vector<size_t> color;
+
+		/// constructor
+		sparse_hessian_work(void) : color_method("cppad")
+		{ }
 		/// inform CppAD that this information needs to be recomputed
 		void clear(void)
-		{	order.clear();
+		{	color_method = "cppad";
+			row.clear();
+			col.clear();
+			order.clear();
 			color.clear();
 		}
 };
@@ -294,16 +329,16 @@ $latex F(x)$$.
 \param sparsity [in]
 is the sparsity pattern for the Hessian that we are calculating.
 
-\param row [in]
+\param user_row [in]
 is the vector of row indices for the returned Hessian values.
 
-\param col [in]
+\param user_col [in]
 is the vector of columns indices for the returned Hessian values.
-It must have the same size are r.
+It must have the same size as user_row.
 
 \param hes [out]
 is the vector of Hessian values.
-It must have the same size are r. 
+It must have the same size as user_row. 
 The return value <code>hes[k]</code> is the second partial of 
 \f$ w^{\rm T} F(x)\f$ with respect to the
 <code>row[k]</code> and <code>col[k]</code> component of \f$ x\f$.
@@ -328,14 +363,16 @@ size_t ADFun<Base>::SparseHessianCompute(
 	const VectorBase&           x           ,
 	const VectorBase&           w           ,
 	      VectorSet&            sparsity    ,
-	const VectorSize&           row         ,
-	const VectorSize&           col         ,
+	const VectorSize&           user_row    ,
+	const VectorSize&           user_col    ,
 	      VectorBase&           hes         ,
 	      sparse_hessian_work&  work        )
 {
 	using   CppAD::vectorBool;
 	size_t i, k, ell;
 
+	CppAD::vector<size_t>& row(work.row);
+	CppAD::vector<size_t>& col(work.col);
 	CppAD::vector<size_t>& color(work.color);
 	CppAD::vector<size_t>& order(work.order);
 
@@ -348,13 +385,16 @@ size_t ADFun<Base>::SparseHessianCompute(
 	// check VectorBase is Simple Vector class with Base type elements
 	CheckSimpleVector<Base, VectorBase>();
 
-	CPPAD_ASSERT_UNKNOWN( size_t(x.size()) == n );
-	CPPAD_ASSERT_UNKNOWN( color.size() == 0 || color.size() == n );
-
 	// number of components of Hessian that are required
 	size_t K = hes.size();
-	CPPAD_ASSERT_UNKNOWN( row.size() == K );
-	CPPAD_ASSERT_UNKNOWN( col.size() == K );
+	CPPAD_ASSERT_UNKNOWN( user_row.size() == K );
+	CPPAD_ASSERT_UNKNOWN( user_col.size() == K );
+
+	CPPAD_ASSERT_UNKNOWN( size_t(x.size()) == n );
+	CPPAD_ASSERT_UNKNOWN( color.size() == 0 || color.size() == n );
+	CPPAD_ASSERT_UNKNOWN( row.size() == 0   || row.size() == K );
+	CPPAD_ASSERT_UNKNOWN( col.size() == 0   || col.size() == K );
+
 
 	// Point at which we are evaluating the Hessian
 	Forward(0, x);
@@ -370,9 +410,36 @@ size_t ADFun<Base>::SparseHessianCompute(
 		CPPAD_ASSERT_UNKNOWN( sparsity.n_set() ==  n );
 		CPPAD_ASSERT_UNKNOWN( sparsity.end() ==  n );
 
+		// copy user rwo and col to work space
+		row.resize(K);
+		col.resize(K);
+		for(k = 0; k < K; k++)
+		{	row[k] = user_row[k];
+			col[k] = user_col[k];
+		}
+
 		// execute coloring algorithm
 		color.resize(n);
-		color_general_cppad(sparsity, row, col, color);
+		if( work.color_method == "cppad" )
+			color_general_cppad(sparsity, row, col, color);
+		else if( work.color_method == "colpack" )
+		{
+# if CPPAD_HAS_COLPACK
+			color_symmetric_colpack(sparsity, row, col, color);
+# else
+			CPPAD_ASSERT_KNOWN(
+				false,
+				"SparseHessian: work.color_method = colpack "
+				"and colpack_prefix missing from cmake command line."
+			);
+# endif
+		}
+		else
+		{	CPPAD_ASSERT_KNOWN(
+				false,
+				"SparseHessian: work.color_method is not valid."
+			);
+		}
 
 		// put sorting indices in color order
 		VectorSize key(K);

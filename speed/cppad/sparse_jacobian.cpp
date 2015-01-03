@@ -199,7 +199,6 @@ bool link_sparse_jacobian(
 		if( global_colpack )
 			work.color_method = "colpack";
 # endif
-
 		while(repeat--)
 		{	// choose a value for x 
 			CppAD::uniform_01(n, x);

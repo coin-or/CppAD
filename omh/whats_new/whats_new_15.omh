@@ -1,0 +1,34 @@
+$Id$
+/* --------------------------------------------------------------------------
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-14 Bradley M. Bell
+
+CppAD is distributed under multiple licenses. This distribution is under
+the terms of the 
+                    Eclipse Public License Version 1.0.
+
+A copy of this license is included in the COPYING file of this distribution.
+Please visit http://www.coin-or.org/CppAD/ for information on other licenses.
+-------------------------------------------------------------------------- */
+
+$begin whats_new_15$$
+$dollar @$$
+$spell
+	CppAD
+	colpack
+$$
+
+$section CppAD Changes and Additions During 2015$$
+
+$head Introduction$$
+This section contains a list of the changes to CppAD during 2015
+(in reverse order by date).
+The purpose of this section is to
+assist you in learning about changes between various versions of CppAD.
+
+$head 01-02$$
+Added to option to uses 
+$cref/colpack/colpack_prefix/$$ for the sparse Hessian 
+$cref/coloring method/sparse_hessian/work/color_method/$$; 
+see the example $cref colpack_hes.cpp$$.
+
+$end

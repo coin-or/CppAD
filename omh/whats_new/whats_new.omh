@@ -24,6 +24,7 @@ The purpose of these sections is to
 assist you in learning about changes between various versions of CppAD.
 
 $children%
+	omh/whats_new/whats_new_15.omh%
 	omh/whats_new/whats_new_14.omh%
 	omh/whats_new/whats_new_13.omh%
 	omh/whats_new/whats_new_12.omh%
@@ -39,9 +40,10 @@ $children%
 %$$
 
 $head This Year$$
-$cref whats_new_14$$
+$cref whats_new_15$$
 
 $head Previous Years$$
+$cref whats_new_14$$
 $cref whats_new_13$$
 $cref whats_new_12$$
 $cref whats_new_11$$,

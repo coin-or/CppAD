@@ -28,7 +28,11 @@ SET(sources mul_level_adolc.cpp mul_level_adolc_ode.cpp)
 sources_libs_define(adolc "${sources}" adolc ADOLC_EXAMPLES)
 
 # colpack_prefix
-SET(sources colpack.cpp ../cppad/local/cppad_colpack.cpp)
+SET(sources 
+	colpack_hes.cpp 
+	colpack_jac.cpp 
+	../cppad/local/cppad_colpack.cpp
+)
 sources_libs_define(colpack "${sources}" ColPack COLPACK_EXAMPLES)
 
 # eigen_prefix

@@ -69,13 +69,14 @@ $codei%
 Hopefully, future versions of ColPack will not have this problem
 and it will no longer be necessary to do this.
 
-$children%
-	example/colpack.cpp%
-	bin/get_colpack.sh
+$children%example/colpack_jac.cpp
+	%example/colpack_hes.cpp
+	%bin/get_colpack.sh
 %$$
 $head Example$$
-The file $cref colpack.cpp$$ contains an example and test of using
-ColPack to compute the coloring for sparse Jacobians.
+The file $cref colpack_jac.cpp$$ ($cref colpack_hes.cpp$$)
+contains an example and test of using ColPack to compute the coloring for 
+sparse Jacobians (Hessians).
 It returns true, if it succeeds and false otherwise.
 
 $head get_colpack$$

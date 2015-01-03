@@ -14,131 +14,142 @@ Please visit http://www.coin-or.org/CppAD/ for information on other licenses.
 # include <cppad/vector.hpp>
 # include <ColPack/ColPackHeaders.h>
 
-# define CPPAD_SPARSE_HESSIAN_STAR_COLORING 1
+namespace CppAD { // BEGIN_CPPAD_NAMESPACE
+// ----------------------------------------------------------------------
+void cppad_colpack_general(
+	CppAD::vector<size_t>&               color         ,
+	size_t                               m             ,
+	size_t                               n             ,
+	const CppAD::vector<unsigned int*>&  adolc_pattern )
+{	size_t i, k;
+	CPPAD_ASSERT_UNKNOWN( adolc_pattern.size() == m );
+	CPPAD_ASSERT_UNKNOWN( color.size() == m );
 
-namespace CppAD {
-	void cppad_colpack_general(
-		      CppAD::vector<size_t>&         color         ,
-		size_t                               m             ,
-		size_t                               n             ,
-		const CppAD::vector<unsigned int*>&  adolc_pattern )
-	{	size_t i, k;
-		CPPAD_ASSERT_UNKNOWN( adolc_pattern.size() == m );
-	
-		// Use adolc sparsity pattern to create corresponding bipartite graph
-		ColPack::BipartiteGraphPartialColoringInterface graph(
-				SRC_MEM_ADOLC,
-				adolc_pattern.data(),
-				m,
-				n
-		);
-	
-		// row ordered Partial-Distance-Two-Coloring of the bipartite graph 
-		graph.PartialDistanceTwoColoring(
-			"SMALLEST_LAST", "ROW_PARTIAL_DISTANCE_TWO"
-		);
-	
-		// Use coloring information to create seed matrix
-		int n_seed_row;
-		int n_seed_col;
-		double** seed_matrix = graph.GetSeedMatrix(&n_seed_row, &n_seed_col);
-		CPPAD_ASSERT_UNKNOWN( size_t(n_seed_col) == m );
-	
-		// now return coloring in format required by CppAD
-		for(i = 0; i < m; i++)
-			color[i] = m;
-		for(k = 0; k < size_t(n_seed_row); k++)
-		{	for(i = 0; i < m; i++)
-			{	if( seed_matrix[k][i] != 0.0 ) 
-				{	// check that no row appears twice in the coloring
-					CPPAD_ASSERT_UNKNOWN( color[i] == m );
-					color[i] = k;
-				}
+	// Use adolc sparsity pattern to create corresponding bipartite graph
+	ColPack::BipartiteGraphPartialColoringInterface graph(
+			SRC_MEM_ADOLC,
+			adolc_pattern.data(),
+			m,
+			n
+	);
+
+	// row ordered Partial-Distance-Two-Coloring of the bipartite graph 
+	graph.PartialDistanceTwoColoring(
+		"SMALLEST_LAST", "ROW_PARTIAL_DISTANCE_TWO"
+	);
+
+	// Use coloring information to create seed matrix
+	int n_seed_row;
+	int n_seed_col;
+	double** seed_matrix = graph.GetSeedMatrix(&n_seed_row, &n_seed_col);
+	CPPAD_ASSERT_UNKNOWN( size_t(n_seed_col) == m );
+
+	// now return coloring in format required by CppAD
+	for(i = 0; i < m; i++)
+		color[i] = m;
+	for(k = 0; k < size_t(n_seed_row); k++)
+	{	for(i = 0; i < m; i++)
+		{	if( seed_matrix[k][i] != 0.0 ) 
+			{	// check that no row appears twice in the coloring
+				CPPAD_ASSERT_UNKNOWN( color[i] == m );
+				color[i] = k;
 			}
 		}
-# ifndef NDEBUG
-		// check that all non-zero rows appear in the coloring
-		for(i = 0; i < m; i++)
-			CPPAD_ASSERT_UNKNOWN(color[i] < m || adolc_pattern[i][0] == 0);
-
-		// check that no rows with the same color have overlapping entries
-		CppAD::vector<bool> found(n);
-		for(k = 0; k < size_t(n_seed_row); k++)
-		{	size_t j, ell;
-			for(j = 0; j < n; j++)
-				found[j] = false;
-			for(i = 0; i < m; i++) if( color[i] == k )
-			{	for(ell = 0; ell < adolc_pattern[i][0]; ell++)
-				{	j = adolc_pattern[i][1 + ell];
-					CPPAD_ASSERT_UNKNOWN( ! found[j] );
-					found[j] = true;
-				}
-			}
-		}
-# endif
-		return;
 	}
-	// The following routine is not yet used or tested.
-	void cppad_colpack_symmetric(
-		      CppAD::vector<size_t>&         color         ,
-		size_t                               n             ,
-		const CppAD::vector<unsigned int*>&  adolc_pattern )
-	{	size_t i, k;
-		CPPAD_ASSERT_UNKNOWN( adolc_pattern.size() == n );
-	
-		// Use adolc sparsity pattern to create corresponding bipartite graph
-		ColPack::GraphColoringInterface graph(
-				SRC_MEM_ADOLC,
-				adolc_pattern.data(),
-				n
-		);
-	
-		// Variant of coloring with the specified ordering 
-# if CPPAD_SPARSE_HESSIAN_STAR_COLORING
-		graph.Coloring("SMALLEST_LAST", "STAR");
-# else
-		// faster is speed/adolc/sparse_hessian.cpp test
-		// but sucks up memory and fails in Pierre Maritinon's bocop_test.
-		graph.Coloring("SMALLEST_LAST", "ACYCLIC_FOR_INDIRECT_RECOVERY");
-# endif
-	
-		// Use coloring information to create seed matrix
-		int n_seed_row;
-		int n_seed_col;
-		double** seed_matrix = graph.GetSeedMatrix(&n_seed_row, &n_seed_col);
-		CPPAD_ASSERT_UNKNOWN( size_t(n_seed_col) == n );
-	
-		// now return coloring in format required by CppAD
-		for(i = 0; i < n; i++)
-			color[i] = n;
-		for(k = 0; k < size_t(n_seed_row); k++)
-		{	for(i = 0; i < n; i++)
-			{	if( seed_matrix[k][i] != 0.0 ) 
-				{	CPPAD_ASSERT_UNKNOWN( color[i] == n );
-					color[i] = k;
-				}
-			}
-		}
 # ifndef NDEBUG
-		for(i = 0; i < n; i++)
-			CPPAD_ASSERT_UNKNOWN(color[i] < n || adolc_pattern[i][0] == 0);
+	// check that all non-zero rows appear in the coloring
+	for(i = 0; i < m; i++)
+		CPPAD_ASSERT_UNKNOWN(color[i] < m || adolc_pattern[i][0] == 0);
 
-		// The coloring above will probably fail this  test.
-		// Check that no rows with the same color have overlapping entries:
-		CppAD::vector<bool> found(n);
-		for(k = 0; k < size_t(n_seed_row); k++)
-		{	size_t j, ell;
-			for(j = 0; j < n; j++)
-				found[j] = false;
-			for(i = 0; i < n; i++) if( color[i] == k )
-			{	for(ell = 0; ell < adolc_pattern[i][0]; ell++)
-				{	j = adolc_pattern[i][1 + ell];
-					CPPAD_ASSERT_UNKNOWN( ! found[j] );
-					found[j] = true;
-				}
+	// check that no rows with the same color have overlapping entries
+	CppAD::vector<bool> found(n);
+	for(k = 0; k < size_t(n_seed_row); k++)
+	{	size_t j, ell;
+		for(j = 0; j < n; j++)
+			found[j] = false;
+		for(i = 0; i < m; i++) if( color[i] == k )
+		{	for(ell = 0; ell < adolc_pattern[i][0]; ell++)
+			{	j = adolc_pattern[i][1 + ell];
+				CPPAD_ASSERT_UNKNOWN( ! found[j] );
+				found[j] = true;
 			}
 		}
-# endif
-		return;
 	}
+# endif
+	return;
 }
+// ----------------------------------------------------------------------
+void cppad_colpack_symmetric(
+	CppAD::vector<size_t>&               color         ,
+	size_t                               m             ,
+	const CppAD::vector<unsigned int*>&  adolc_pattern )
+{	size_t i;
+	CPPAD_ASSERT_UNKNOWN( adolc_pattern.size() == m );
+	CPPAD_ASSERT_UNKNOWN( color.size() == m );
+
+	// Use adolc sparsity pattern to create corresponding bipartite graph
+	ColPack::GraphColoringInterface graph(
+			SRC_MEM_ADOLC,
+			adolc_pattern.data(),
+			m
+	);
+
+	// Use STAR coloring because it has a direct recovery scheme; i.e.,
+	// not necessary to solve equations to extract values.
+	graph.Coloring("SMALLEST_LAST", "STAR");
+
+	// Use coloring information to create seed matrix
+	int n_seed_row;
+	int n_seed_col;
+	double** seed_matrix = graph.GetSeedMatrix(&n_seed_row, &n_seed_col);
+	CPPAD_ASSERT_UNKNOWN( size_t(n_seed_row) == m );
+
+	// now return coloring for each row in format required by CppAD
+	for(i = 0; i < m; i++)
+		color[i] = m;
+	for(i = 0; i < m; i++)
+	{	for(size_t k = 0; k < size_t(n_seed_col); k++)
+		{	if( seed_matrix[i][k] != 0.0 ) 
+			{	CPPAD_ASSERT_UNKNOWN( color[i] == m );
+				color[i] = k;
+			}
+		}
+	}
+
+# ifndef NDEBUG
+	// check that every entry in the symetric matrix can be direclty recovered
+	size_t i1, i2, j1, j2, k1, k2, nz1, nz2;
+	for(i1 = 0; i1 < m; i1++)
+	{	nz1 = size_t(adolc_pattern[i1][0]);
+		for(k1 = 1; k1 <= nz1; k1++)	
+		{	j1 = adolc_pattern[i1][k1];
+
+			// check of a forward on color[i1] followed by a reverse
+			// can recover entry (i1, j1)
+			bool color_i1_ok = true;
+			for(i2 = 0; i2 < m; i2++) if( i1 != i2 && color[i1] == color[i2] )
+			{	nz2 = adolc_pattern[i2][0];
+				for(k2 = 1; k2 <= nz2; k2++)
+				{	j2 = adolc_pattern[i2][k2];	
+					color_i1_ok &= (j1 != j2);
+				}
+			}
+
+			// check of a forward on color[j1] followed by a reverse
+			// can recover entry (j1, i1)
+			bool color_j1_ok = true;
+			for(j2 = 0; j2 < m; j2++) if( j1 != j2 && color[j1] == color[j2] )
+			{	nz2 = adolc_pattern[j2][0];
+				for(k2 = 1; k2 <= nz2; k2++)
+				{	i2 = adolc_pattern[j2][k2];	
+					color_j1_ok &= (i1 != i2);
+				}
+			}
+
+			CPPAD_ASSERT_UNKNOWN( color_i1_ok || color_j1_ok );
+		}
+	}
+# endif
+	return;
+}
+} // END_CPPAD_NAMESPACE
