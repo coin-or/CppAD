@@ -36,7 +36,7 @@ operations under \c pattern and the following operations where
 Constructs a new vector of sets object.
 \n
 <code>p.resize(ns, ne)</code>
-resizes \p to \c ns sets with elements between zero \c ne.
+resizes \c p to \c ns sets with elements between zero \c ne.
 All of the \c ns sets are initially empty.
 \n
 <code>p.add_element(s, e)</code>
