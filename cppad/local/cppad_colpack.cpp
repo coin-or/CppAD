@@ -15,6 +15,33 @@ Please visit http://www.coin-or.org/CppAD/ for information on other licenses.
 # include <ColPack/ColPackHeaders.h>
 
 namespace CppAD { // BEGIN_CPPAD_NAMESPACE
+/*!
+\file cppad_colpack.cpp
+The CppAD interface to the Colpack coloring algorithms.
+*/
+
+/*!
+Determine which rows of a general sparse matrix can be computed together;
+i.e., do not have non-zero entries with the same column index.
+
+\param color
+is a vector with color.size() == m.
+For i = 0 , ... , m-1, color[i] is the color for the corresponding row
+of the matrix. If color[i1]==color[i2], (i1, j1) is in sparsity pattern,
+and (i2, j2) is in sparsity pattern, then j1 is not equal to j2.
+
+\param m
+is the number of rows in the matrix.
+
+\param n
+is the number of columns in the matrix.
+
+\param adolc_pattern
+is a vector with adolc_pattern.size() == m.
+For i = 0 , ... , m-1, and for k = 1, ... ,adolc_pattern[i][0],
+the entry with index (i, adolc_pattern[i][k]) is a non-zero
+in the sparsity pattern for the matrix.
+*/
 // ----------------------------------------------------------------------
 void cppad_colpack_general(
 	CppAD::vector<size_t>&               color         ,

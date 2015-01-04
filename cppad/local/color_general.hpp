@@ -22,7 +22,7 @@ Coloring algorithm for a general sparse matrix.
 // --------------------------------------------------------------------------
 /*!
 Determine which rows of a general sparse matrix can be computed together; 
-i.e., do not have non-zero overlapping values.
+i.e., do not have non-zero entries with the same column index.
 
 \tparam VectorSize
 is a simple vector class with elements of type \c size_t.
