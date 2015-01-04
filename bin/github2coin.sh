@@ -1,5 +1,5 @@
 #! /bin/bash -e
-# $Id$
+# $Id:$
 # -----------------------------------------------------------------------------
 # CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-15 Bradley M. Bell
 #
@@ -15,6 +15,13 @@ then
 	echo "bin/github2coin.sh: must be executed from its parent directory"
 	exit 1
 fi
+if [ "$1" == '' ]
+then
+	echo "usage: bin/github2coin.sh branch"
+	exit 1
+fi
+branch="$1"
+# -----------------------------------------------------------------------------
 #! /bin/bash -e
 pause() {
 	response=''
@@ -27,15 +34,18 @@ pause() {
 		exit 1
 	fi
 }
+# -----------------------------------------------------------------------------
+# push git/repo to git repository
 echo_eval cd $HOME/cppad/git/repo
+echo_eval git checkout $branch
 echo_eval git push
 pause
+# pull from git repository to git_svn
 echo_eval cd $HOME/cppad/git_svn
-echo_eval git checkout master
 echo_eval git fetch github
-pause
-echo_eval git merge --squash github/master
+echo_eval git checkout $branch
+echo_eval git merge --squash github/$branch
 pause
 echo_eval git commit
-pause
+# push from git_svn repository to svn repositroy
 echo_eval git svn dcommit
