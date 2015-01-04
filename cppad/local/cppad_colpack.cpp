@@ -15,6 +15,32 @@ Please visit http://www.coin-or.org/CppAD/ for information on other licenses.
 # include <ColPack/ColPackHeaders.h>
 
 namespace CppAD { // BEGIN_CPPAD_NAMESPACE
+/*!
+\file cppad_colpack.cpp
+The CppAD interface to the Colpack coloring algorithms.
+*/
+
+/*!
+Determine which rows of a general sparse matrix can be computed together.
+
+\param color
+is a vector with color.size() == m.
+For i = 0 , ... , m-1, color[i] is the color for the corresponding row
+of the matrix. If color[i1]==color[i2], (i1, j1) is in sparsity pattern,
+and (i2, j2) is in sparsity pattern, then j1 is not equal to j2.
+
+\param m
+is the number of rows in the matrix.
+
+\param n
+is the number of columns in the matrix.
+
+\param adolc_pattern
+is a vector with adolc_pattern.size() == m.
+For i = 0 , ... , m-1, and for k = 1, ... ,adolc_pattern[i][0],
+the entry with index (i, adolc_pattern[i][k]) is a non-zero
+in the sparsity pattern for the matrix.
+*/
 // ----------------------------------------------------------------------
 void cppad_colpack_general(
 	CppAD::vector<size_t>&               color         ,
@@ -79,6 +105,27 @@ void cppad_colpack_general(
 	return;
 }
 // ----------------------------------------------------------------------
+/*!
+Determine which rows of a symmetrix sparse matrix can be computed together.
+
+\param color
+is a vector with color.size() == m.
+For i = 0 , ... , m-1, color[i] is the color for the corresponding row
+of the matrix. We say that a sparsity pattern entry (i, j) is valid if
+for all i1, such that color[i1]==color[i],
+and all j1, such that (i1, j1) is in sparsity pattern, j1 != j.
+The coloring is chosen so that for all (i, j) in the sparsity pattern;
+either (i, j) or (j, i) is valid (possibly both).
+
+\param m
+is the number of rows (and columns) in the matrix.
+
+\param adolc_pattern
+is a vector with adolc_pattern.size() == m.
+For i = 0 , ... , m-1, and for k = 1, ... ,adolc_pattern[i][0],
+the entry with index (i, adolc_pattern[i][k]) is 
+in the sparsity pattern for the symmetric matrix.
+*/
 void cppad_colpack_symmetric(
 	CppAD::vector<size_t>&               color         ,
 	size_t                               m             ,

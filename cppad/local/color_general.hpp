@@ -22,7 +22,7 @@ Coloring algorithm for a general sparse matrix.
 // --------------------------------------------------------------------------
 /*!
 Determine which rows of a general sparse matrix can be computed together; 
-i.e., do not have non-zero overlapping values.
+i.e., do not have non-zero entries with the same column index.
 
 \tparam VectorSize
 is a simple vector class with elements of type \c size_t.
@@ -36,7 +36,7 @@ operations under \c pattern and the following operations where
 Constructs a new vector of sets object.
 \n
 <code>p.resize(ns, ne)</code>
-resizes \p to \c ns sets with elements between zero \c ne.
+resizes \c p to \c ns sets with elements between zero \c ne.
 All of the \c ns sets are initially empty.
 \n
 <code>p.add_element(s, e)</code>
