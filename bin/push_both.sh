@@ -1,5 +1,5 @@
 #! /bin/bash -e
-# $Id:$
+# $Id$
 # -----------------------------------------------------------------------------
 # CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-15 Bradley M. Bell
 #
@@ -17,11 +17,7 @@ then
 fi
 if [ "$1" == '' ]
 then
-<<<<<<< HEAD:bin/github2coin.sh
-	echo "usage: bin/github2coin.sh branch"
-=======
 	echo "usage: bin/push_both.sh branch"
->>>>>>> github/master:bin/push_both.sh
 	exit 1
 fi
 branch="$1"
@@ -39,8 +35,6 @@ pause() {
 	fi
 }
 # -----------------------------------------------------------------------------
-<<<<<<< HEAD:bin/github2coin.sh
-=======
 # git remote add github https://github.com/bradbell/cppad
 # 
 # check that things are OK to proceed
@@ -48,16 +42,12 @@ echo_eval cd $HOME/cppad/git_svn
 echo_eval git svn rebase 
 pause
 #
->>>>>>> github/master:bin/push_both.sh
 # push git/repo to git repository
 echo_eval cd $HOME/cppad/git/repo
 echo_eval git checkout $branch
 echo_eval git push
 pause
-<<<<<<< HEAD:bin/github2coin.sh
-=======
 #
->>>>>>> github/master:bin/push_both.sh
 # pull from git repository to git_svn
 echo_eval cd $HOME/cppad/git_svn
 echo_eval git fetch github
@@ -65,10 +55,7 @@ echo_eval git checkout $branch
 echo_eval git merge --squash github/$branch
 pause
 echo_eval git commit
-<<<<<<< HEAD:bin/github2coin.sh
-=======
 #
->>>>>>> github/master:bin/push_both.sh
 # push from git_svn repository to svn repositroy
 echo_eval git svn dcommit
 #
