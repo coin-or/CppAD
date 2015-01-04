@@ -530,6 +530,8 @@ nobase_myinclude_HEADERS = \
 	cppad/local/bool_valued.hpp \
 	cppad/local/capacity_order.hpp \
 	cppad/local/checkpoint.hpp \
+	cppad/local/color_general.hpp \
+	cppad/local/color_symmetric.hpp \
 	cppad/local/compare.hpp \
 	cppad/local/comp_op.hpp \
 	cppad/local/compute_assign.hpp \
@@ -615,7 +617,6 @@ nobase_myinclude_HEADERS = \
 	cppad/local/sparse_binary_op.hpp \
 	cppad/local/sparse_hessian.hpp \
 	cppad/local/sparse.hpp \
-	cppad/local/color_general.hpp \
 	cppad/local/sparse_jacobian.hpp \
 	cppad/local/sparse_list.hpp \
 	cppad/local/sparse_pack.hpp \

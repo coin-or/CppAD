@@ -1,9 +1,10 @@
 // $Id$
 # ifndef CPPAD_COLOR_SYMMETRIC_INCLUDED
 # define CPPAD_COLOR_SYMMETRIC_INCLUDED
+# if CPPAD_HAS_COLPACK
 
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-14 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-15 Bradley M. Bell
 
 CppAD is distributed under multiple licenses. This distribution is under
 the terms of the 
@@ -177,4 +178,5 @@ void color_symmetric_colpack(
 	return;
 }
 
+# endif
 # endif

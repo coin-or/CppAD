@@ -467,7 +467,8 @@ top_srcdir = @top_srcdir@
 # auto-tools does not support use of colpack
 EXTRA_DIST = \
 	test_one.sh.in \
-	colpack.cpp \
+	colpack_hes.cpp \
+	colpack_jac.cpp \
 	$(ADOLC_EXTRA_FILES) \
 	$(EIGEN_EXTRA_FILES)
 
