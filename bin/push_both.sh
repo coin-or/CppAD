@@ -43,7 +43,7 @@ echo_eval git svn rebase
 echo 'Should be no changes here'
 pause
 echo_eval git fetch github
-echo_eval git merge --squash github/$branch
+echo_eval git merge --no-commit github/$branch
 echo 'Should be no changes here'
 pause
 #
@@ -58,7 +58,7 @@ pause
 echo_eval cd $HOME/cppad/git_svn
 echo_eval git fetch github
 echo_eval git checkout $branch
-echo_eval git merge --squash github/$branch
+echo_eval git merge --no-commit github/$branch
 pause
 echo_eval git commit
 #
