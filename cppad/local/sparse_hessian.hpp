@@ -3,7 +3,7 @@
 # define CPPAD_SPARSE_HESSIAN_INCLUDED
 
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-14 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-15 Bradley M. Bell
 
 CppAD is distributed under multiple licenses. This distribution is under
 the terms of the 
@@ -16,6 +16,7 @@ Please visit http://www.coin-or.org/CppAD/ for information on other licenses.
 /*
 $begin sparse_hessian$$
 $spell
+	jacobian
 	recomputed
 	CppAD
 	valarray
@@ -182,17 +183,34 @@ $subhead color_method$$
 The coloring algorithm determines which rows and columns
 can be computed during the same sweep.
 This field has prototype
-$codep%
+$codei%
 	std::string %work%.color_method
 %$$
-and its default value (after a constructor or $code clear()$$) 
-is $code "cppad"$$.
-If $cref colpack_prefix$$ is specified on the
-$cref/cmake command/cmake/CMake Command/$$ line,
-you can set this method to $code "colpack"$$.
 This value only matters on the first call to $code sparse_hessian$$ that
 follows the $icode work$$ constructor or a call to 
-$icode%work.clear()%$$.
+$icode%work%.clear()%$$.
+$codei%
+
+"cppad.symmetric"
+%$$
+This is the default coloring method (after a constructor or $code clear()$$).
+It takes advantage of the fact that the Hessian matrix
+is symmetric to find a coloring that requires fewer 
+$cref/sweeps/sparse_hessian/n_sweep/$$.
+$codei%
+
+"cppad.general"
+%$$
+This is the same as the $code "cppad"$$ method for the
+$cref/sparse_jacobian/sparse_jacobian/work/color_method/$$ calculation.
+$codei%
+
+"colpack.star"
+%$$
+This method requires that
+$cref colpack_prefix$$ was specified on the
+$cref/cmake command/cmake/CMake Command/$$ line.
+It also takes advantage of the fact that the Hessian matrix is symmetric.
 
 $head n_sweep$$
 The return value $icode n_sweep$$ has prototype
@@ -290,7 +308,7 @@ class sparse_hessian_work {
 		CppAD::vector<size_t> color;
 
 		/// constructor
-		sparse_hessian_work(void) : color_method("cppad")
+		sparse_hessian_work(void) : color_method("cppad.symmetric")
 		{ }
 		/// inform CppAD that this information needs to be recomputed
 		void clear(void)
@@ -420,16 +438,18 @@ size_t ADFun<Base>::SparseHessianCompute(
 
 		// execute coloring algorithm
 		color.resize(n);
-		if( work.color_method == "cppad" )
+		if( work.color_method == "cppad.general" )
 			color_general_cppad(sparsity, row, col, color);
-		else if( work.color_method == "colpack" )
+		else if( work.color_method == "cppad.symmetric" )
+			color_symmetric_cppad(sparsity, row, col, color);
+		else if( work.color_method == "colpack.star" )
 		{
 # if CPPAD_HAS_COLPACK
 			color_symmetric_colpack(sparsity, row, col, color);
 # else
 			CPPAD_ASSERT_KNOWN(
 				false,
-				"SparseHessian: work.color_method = colpack "
+				"SparseHessian: work.color_method = colpack.star"
 				"and colpack_prefix missing from cmake command line."
 			);
 # endif

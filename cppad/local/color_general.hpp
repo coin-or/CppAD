@@ -3,7 +3,7 @@
 # define CPPAD_COLOR_GENERAL_INCLUDED
 
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-14 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-15 Bradley M. Bell
 
 CppAD is distributed under multiple licenses. This distribution is under
 the terms of the 
@@ -25,12 +25,12 @@ Determine which rows of a general sparse matrix can be computed together;
 i.e., do not have non-zero entries with the same column index.
 
 \tparam VectorSize
-is a simple vector class with elements of type \c size_t.
+is a simple vector class with elements of type size_t.
 
 \tparam VectorSet
 is an unspecified type with the exception that it must support the
-operations under \c pattern and the following operations where
-\c p is a \c VectorSet object:
+operations under pattern and the following operations where
+p is a VectorSet object:
 \n
 <code>VectorSet p</code>
 Constructs a new vector of sets object.
@@ -44,8 +44,8 @@ add element \c e to set with index \c s.
 
 \param pattern [in]
 Is a representation of the sparsity pattern for the matrix.
-Note that \c color_general does not change the values in \c pattern,
-but it is not \c const because its iterator facility modifies some of its
+Note that color_general does not change the values in pattern,
+but it is not const because its iterator facility modifies some of its
 internal data.
 \n
 <code>m = pattern.n_set()</code>
@@ -63,7 +63,7 @@ instructs the iterator facility to start iterating over
 columns in the i-th row of the sparsity pattern.
 \n
 <code>j = pattern.next_element()</code>
-Sets \c j to the next possibly non-zero column 
+Sets j to the next possibly non-zero column 
 in the row specified by the previous call to <code>pattern.begin</code>.
 If there are no more such columns, the value
 <code>pattern.end()</code> is returned.
@@ -72,34 +72,35 @@ If there are no more such columns, the value
 is a vector specifying which row indices to compute.
 
 \param col [in]
-is a vector, with the same size as \c row,
+is a vector, with the same size as row,
 that specifies which column indices to compute.
-For each  valid index \c k, the index pair
+For each  valid index k, the index pair
 <code>(row[k], col[k])</code> must be present in the sparsity pattern.
 It may be that some entries in the sparsity pattern do not need to be computed;
 i.e, do not appear in the set of
 <code>(row[k], col[k])</code> entries.
 
 \param color [out]
-is a vector with size \c m.
+is a vector with size m.
 The input value of its elements does not matter.
 Upon return, it is a coloring for the rows of the sparse matrix.
 \n
 \n
-If for come \c i, <code>color[i] == m</code>, then 
-the i-th row does not appear in the vector \c row.
+If for some i, <code>color[i] == m</code>, then 
+the i-th row does not appear in the vector row.
 Otherwise, <code>color[i] < m</code>.
 \n
 \n
 Suppose two differen rows, <code>i != r</code> have the same color and
-column index \c j is such that both of the pairs 
+column index j is such that both of the pairs 
 <code>(i, j)</code> and <code>(r, j)</code> appear in the sparsity pattern.
 It follows that neither of these pairs appear in the set of
 <code>(row[k], col[k])</code> entries.
 \n
 \n
 This routine tries to minimize, with respect to the choice of colors,
-the maximum, with respct to \c k, of <code>color[ row[k] ]</code>.
+the maximum, with respct to k, of <code>color[ row[k] ]</code>
+(not counting the indices k for which row[k] == m).
 */
 template <class VectorSet, class VectorSize>
 void color_general_cppad(

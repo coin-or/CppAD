@@ -1,6 +1,6 @@
 /* $Id$ */
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-14 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-15 Bradley M. Bell
 
 CppAD is distributed under multiple licenses. This distribution is under
 the terms of the 
@@ -121,24 +121,31 @@ bool colpack_hes(void)
 	size_t K = row.size();
 	d_vector hes(K);
 
-	// empty work structure
-	CppAD::sparse_hessian_work work;
-	ok &= work.color_method == "cppad";
+	// contrast and check results using both cppad and colpack
+	for(size_t i_method = 0; i_method < 3; i_method++)
+	{	// empty work structure
+		CppAD::sparse_hessian_work work;
+		ok &= work.color_method == "cppad.symmetric";
+		if( i_method == 1 )
+			work.color_method = "cppad.general";
+		if( i_method == 2 )
+			work.color_method = "colpack.star";
 
-	// choose to use ColPack
-	work.color_method = "colpack";
+		// compute Hessian
+		d_vector w(m);
+		w[0] = 1.0;
+		size_t n_sweep = f.SparseHessian(x, w, p, row, col, hes, work);
 
-	// compute Hessian
-	d_vector w(m);
-	w[0] = 1.0;
-	size_t n_sweep = f.SparseHessian(x, w, p, row, col, hes, work);
-
-	// check result
-	for(k = 0; k < K; k++)
-	{	ell = row[k] * n + col[k];
-		ok &= NearEqual(check[ell], hes[k], eps, eps);
+		// check result
+		for(k = 0; k < K; k++)
+		{	ell = row[k] * n + col[k];
+			ok &= NearEqual(check[ell], hes[k], eps, eps);
+		}
+		if( work.color_method != "cppad.general" )
+			ok &= n_sweep == 2;
+		else
+			ok &= n_sweep == 5;
 	}
-	ok &= n_sweep == 2;
 
 	return ok;
 }

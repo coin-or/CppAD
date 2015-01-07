@@ -1,6 +1,6 @@
-/* $Id$ */
+/* $Id: link_sparse_jacobian.cpp 3311 2014-05-28 16:21:08Z bradbell $ */
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-14 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-15 Bradley M. Bell
 
 CppAD is distributed under multiple licenses. This distribution is under
 the terms of the 
@@ -116,8 +116,8 @@ The input value of $icode n_sweep$$ does not matter. On output,
 it is the value $cref/n_sweep/sparse_jacobian/n_sweep/$$ corresponding
 to the evaluation of $icode jacobian$$.
 This is also the number of colors corresponding to the 
-$cref/coloring method/sparse_jacobian/work/color_method/$$
-which can be set to $cref/colpack/speed_main/Sparsity Options/colpack/$$
+$cref/coloring method/sparse_jacobian/work/color_method/$$,
+which can be set to $cref/colpack/speed_main/Sparsity Options/colpack/$$,
 and is otherwise $code cppad$$.
 
 $subhead double$$

@@ -40,12 +40,18 @@ pause() {
 # check that things are OK to proceed
 echo_eval cd $HOME/cppad/git_svn
 echo_eval git svn rebase 
+echo 'Should be no changes here'
+pause
+echo_eval git fetch github
+echo_eval git merge --squash github/$branch
+echo 'Should be no changes here'
 pause
 #
 # push git/repo to git repository
 echo_eval cd $HOME/cppad/git/repo
 echo_eval git checkout $branch
 echo_eval git push
+echo "Should fast forward $branch to github"
 pause
 #
 # pull from git repository to git_svn

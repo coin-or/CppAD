@@ -1,7 +1,7 @@
 #! /bin/bash -e
 # $Id$
 # -----------------------------------------------------------------------------
-# CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-14 Bradley M. Bell
+# CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-15 Bradley M. Bell
 #
 # CppAD is distributed under multiple licenses. This distribution is under
 # the terms of the 
@@ -41,6 +41,18 @@ then
 	echo "It contains new source code for the cppad/local (can be empty)."
 	exit 1
 fi
+# -----------------------------------------------------------------------------
+if [ -d '.git' ]
+then
+	revert_cmd='git checkout'
+elif [ -d .svn ]
+then
+	revert_cmd='svn revert'
+else
+	echo 'speed_new.sh: Cannot find ./.git or ./.svn'
+	exit 1
+fi
+# -----------------------------------------------------------------------------
 # Source code files that are changing 
 new_cppad=`cd cppad/new ; ls`
 new_local=`cd cppad/local/new ; ls`
@@ -58,8 +70,8 @@ then
 	then
 		for file in $new_cppad
 		do
-			echo "svn revert cppad/$file"
-			if ! svn revert cppad/$file
+			echo "$revert_cmd cppad/$file"
+			if ! $revert_cmd cppad/$file
 			then
 				echo "assuming cppad/$file not in repository"
 			fi
@@ -70,8 +82,8 @@ then
 	then
 		for file in $new_local
 		do
-			echo "svn revert cppad/local/$file"
-			if ! svn revert cppad/local/$file
+			echo "$revert_cmd cppad/local/$file"
+			if ! $revert_cmd cppad/local/$file
 			then
 				echo "assuming cppad/local/$file not in repository"
 			fi
