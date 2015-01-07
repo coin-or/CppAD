@@ -37,20 +37,6 @@ pause() {
 # -----------------------------------------------------------------------------
 # git remote add github https://github.com/bradbell/cppad
 # 
-# check that things are OK to proceed
-echo_eval cd $HOME/cppad/git_svn
-echo_eval git fetch github
-github_hash=`git show-ref --hash github/$branch`
-gitsvn_hash=`git show-ref --hash $branch | head -1`
-echo "github_hash=$github_hash"
-echo "gitsvn_hash=$gitsvn_hash"
-if [ "$github_hash" != "$gitsvn_hash" ]
-then
-	echo "should be equal"
-	exit 1
-fi
-pause
-#
 # push git/repo to github 
 echo_eval cd $HOME/cppad/git/repo
 echo_eval git checkout $branch
