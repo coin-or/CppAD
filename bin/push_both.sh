@@ -49,8 +49,6 @@ then
 	echo "should be equal"
 	exit 1
 fi
-echo_eval git svn rebase 
-echo 'Should be no changes here'
 pause
 #
 # push git/repo to git repository
