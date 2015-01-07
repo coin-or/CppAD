@@ -62,9 +62,8 @@ pause
 #
 # pull from git repository to git_svn
 echo_eval cd $HOME/cppad/git_svn
-echo_eval git fetch github
 echo_eval git checkout $branch
-echo_eval git merge github/$branch
+echo_eval git pull github master
 echo "Should fast forward from github to $branch"
 pause
 #
