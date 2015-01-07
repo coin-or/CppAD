@@ -1,5 +1,5 @@
 #! /bin/bash -e
-# $Id$
+# $Id: push_both.sh 3569 2015-01-07 18:50:40Z bradbell $
 # -----------------------------------------------------------------------------
 # CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-15 Bradley M. Bell
 #
@@ -46,24 +46,29 @@ echo "github_hash=$github_hash"
 echo "gitsvn_hash=$gitsvn_hash"
 if [ "$github_hash" != "$gitsvn_hash" ]
 then
-	echo "should be equal"
 	exit 1
 fi
+echo_eval git svn rebase 
+echo 'Should be no changes here'
 pause
 #
 # push git/repo to git repository
 echo_eval cd $HOME/cppad/git/repo
+git log | sed -e "/$github_hash/,\$d" > $HOME/cppad/git_svn/message.$$
 echo_eval git checkout $branch
 echo_eval git push
-echo "Should fast forward from $branch to github"
+echo "Should fast forward $branch to github"
 pause
 #
 # pull from git repository to git_svn
 echo_eval cd $HOME/cppad/git_svn
+echo_eval git fetch github
 echo_eval git checkout $branch
-echo_eval git pull github master
-echo "Should fast forward from github to $branch"
+echo_eval git merge --no-commit github/$branch
+echo_eval cat message.$$
 pause
+echo_eval git commit -F message.$$
+echo_eval rm message.$$
 #
 # push from git_svn repository to svn repositroy
 echo_eval git svn dcommit
