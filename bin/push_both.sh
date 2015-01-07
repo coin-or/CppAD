@@ -51,21 +51,21 @@ then
 fi
 pause
 #
-# push git/repo to git repository
+# push git/repo to github 
 echo_eval cd $HOME/cppad/git/repo
 echo_eval git checkout $branch
 echo_eval git push
 echo "Should fast forward from $branch to github"
 pause
 #
-# pull from git repository to git_svn
+# pull from github to git_svn
 echo_eval cd $HOME/cppad/git_svn
 echo_eval git checkout $branch
 echo_eval git pull github master
 echo "Should fast forward from github to $branch"
 pause
 #
-# push from git_svn repository to svn repositroy
+# push from git_svn to coin/svn 
 echo_eval git svn dcommit
 #
 # check that everyting OK at end
