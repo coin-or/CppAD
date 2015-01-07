@@ -46,6 +46,7 @@ echo "github_hash=$github_hash"
 echo "gitsvn_hash=$gitsvn_hash"
 if [ "$github_hash" != "$gitsvn_hash" ]
 then
+	echo "should be equal"
 	exit 1
 fi
 echo_eval git svn rebase 
@@ -54,21 +55,18 @@ pause
 #
 # push git/repo to git repository
 echo_eval cd $HOME/cppad/git/repo
-git log | sed -e "/$github_hash/,\$d" > $HOME/cppad/git_svn/message.$$
 echo_eval git checkout $branch
 echo_eval git push
-echo "Should fast forward $branch to github"
+echo "Should fast forward from $branch to github"
 pause
 #
 # pull from git repository to git_svn
 echo_eval cd $HOME/cppad/git_svn
 echo_eval git fetch github
 echo_eval git checkout $branch
-echo_eval git merge --no-commit github/$branch
-echo_eval cat message.$$
+echo_eval git merge github/$branch
+echo "Should fast forward from github to $branch"
 pause
-echo_eval git commit -F message.$$
-echo_eval rm message.$$
 #
 # push from git_svn repository to svn repositroy
 echo_eval git svn dcommit
