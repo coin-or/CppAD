@@ -3,7 +3,7 @@
 # define CPPAD_SPARSE_HES_FUN_INCLUDED
 
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-13 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-15 Bradley M. Bell
 
 CppAD is distributed under multiple licenses. This distribution is under
 the terms of the 
@@ -116,13 +116,18 @@ and its size must be $latex K$$; i.e., the same as for $icode col$$.
 It specifies the second 
 index of $latex x$$ for the non-zero Hessian terms.
 All the elements of $icode col$$ must be between zero and $icode%n%-1%$$.
+There are no duplicated entries requested, to be specific,
+if $icode%k1% != %k2%$$ then 
+$codei%
+	( %row%[%k1%] , %col%[%k1%] ) != ( %row%[%k2%] , %col%[%k2%] ) 
+%$$
 
 $head p$$
 The argument $icode p$$ has prototype
 $codei%
 	size_t %p%
 %$$
-It is between zero and two and
+It is either zero or two and
 specifies the order of the derivative of $latex f$$
 that is being evaluated, i.e., $latex f^{(p)} (x)$$ is evaluated.
 
@@ -137,19 +142,11 @@ $subhead Function$$
 If $icode p$$ is zero, $icode fp$$ has size one and
 $icode%fp%[0]%$$ is the value of $latex f(x)$$.
 
-$subhead Gradient$$
-If $icode p$$ is one, $icode fp$$ has size $icode n$$ and 
-for $latex j = 0 , \ldots , n-1$$
-$latex \[
-	\D{f}{x[j]} = fp [ j ]
-\] $$
-
 $subhead Hessian$$
-If $icode p$$ is two, $icode fp$$ has size $icode%n% * %n%$$ and
-for $latex i = 0 , \ldots , n-1$$,
-$latex j = 0 , \ldots , n-1$$
+If $icode p$$ is two, $icode fp$$ has size $icode K$$ and
+for $latex k = 0 , \ldots , K-1$$,
 $latex \[
-	\DD{f}{x[i]}{x[j]} = fp [ i * n + j ]
+	\DD{f}{ x[ \R{row}[k] ] }{ x[ \R{col}[k] ]} = fp [k]
 \] $$
 
 $children%
@@ -194,44 +191,74 @@ namespace CppAD {
 
 		// check value of p
 		CPPAD_ASSERT_KNOWN(
-			p < 3,
-			"sparse_hes_fun: p > 2"
+			p == 0 || p == 2,
+			"sparse_hes_fun: p != 0 and p != 2"
 		);
 
-		size_t i, j, k;
-		size_t size = 1;
-		for(k = 0; k < p; k++)
-			size *= n;
-		for(k = 0; k < size; k++)
-			fp[k] = Float(0);
-
 		size_t K = row.size();
+		size_t i, j, k;
+		if( p == 0 )
+			fp[0] = Float(0);
+		else
+		{	for(k = 0; k < K; k++)
+				fp[k] = Float(0);
+		}
+
+		// determine which diagonal entries are present in row[k], col[k]
+		CppAD::vector<size_t> diagonal(n);
+		for(i = 0; i < n; i++)
+			diagonal[i] = K;   // no diagonal entry for this row 
+		for(k = 0; k < K; k++)
+		{	if( row[k] == col[k] )
+			{	CPPAD_ASSERT_UNKNOWN( diagonal[row[k]] == K );
+				// index of the diagonal entry 
+				diagonal[ row[k] ] = k;
+			}
+		}
+
+		// determine which entries must be multiplied by a factor of two
+		CppAD::vector<Float> factor(K);
+		for(k = 0; k < K; k++)
+		{	factor[k] = Float(1); 
+			for(size_t k1 = 0; k1 < K; k1++)
+			{	bool reflected = true;
+				reflected &= k != k1;
+				reflected &= row[k] != col[k];
+				reflected &= row[k] == col[k1];
+				reflected &= col[k] == row[k1];	
+				if( reflected )
+					factor[k] = Float(2);
+			}
+		}
+
 		Float t;
-		Float dt_i;
-		Float dt_j;
 		for(k = 0; k < K; k++)
 		{	i    = row[k];
 			j    = col[k];
 			t    = exp( x[i] * x[j] );	
-			dt_i = t * x[j];
-			dt_j = t * x[i];
 			switch(p)
 			{
 				case 0:
 				fp[0] += t;
 				break;
 
-				case 1:
-				fp[i] += dt_i;
-				fp[j] += dt_j;
-				break;
-
 				case 2:
-				fp[i * n + i] += dt_i * x[j];
-				fp[i * n + j] += t + dt_j * x[j];
-				//
-				fp[j * n + i] += t + dt_i * x[i];
-				fp[j * n + j] += dt_j * x[i];
+				if( i == j )
+				{	// dt_dxi = 2.0 * xi * t
+					fp[k] += ( Float(2) + Float(4) * x[i] * x[i] ) * t;
+				}
+				else
+				{	// dt_dxi = xj * t
+					fp[k] += factor[k] * ( Float(1) + x[i] * x[j] ) * t;
+					if( diagonal[i] != K )
+					{	size_t ki = diagonal[i];
+						fp[ki] += x[j] * x[j] * t;
+					}
+					if( diagonal[j] != K )
+					{	size_t kj = diagonal[j];
+						fp[kj] += x[i] * x[i] * t;
+					}
+				}
 				break;
 			}
 		}

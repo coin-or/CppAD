@@ -1,6 +1,6 @@
-/* $Id$ */
+/* $Id: main.cpp 3320 2014-09-11 23:06:21Z bradbell $ */
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-14 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-15 Bradley M. Bell
 
 CppAD is distributed under multiple licenses. This distribution is under
 the terms of the 
@@ -270,15 +270,19 @@ size arguments used for the corresponding tests.
 The values $icode rate_1$$, ..., $icode rate_n$$ are the number of times
 per second that the corresponding size problem executed.
 
-$subhead sparse_jacobian$$
-The $cref/sparse_jacobian/link_sparse_jacobian/$$ test has an extra output
+$subhead n_sweep$$
+The $cref/sparse_jacobian/link_sparse_jacobian/$$ 
+and $cref/sparse_hessian/link_sparse_hessian/$$ tests has an extra output
 line with the following form
 $codei%
-	%package%_sparse_jacobian_n_sweep = [ %n_sweep_1%, %...%, %n_sweep_n% ]
+	%package%_sparse_%test%_n_sweep = [ %n_sweep_1%, %...%, %n_sweep_n% ]
 %$$
+were $icode test$$ is $code jacobian$$ ($code hessian$$).
 The values $icode n_sweep_1$$, ..., $icode n_sweep_n$$ are the number of 
-sweeps (colors) used for each sparse Jacobian calculation; see
-$cref/n_sweep/sparse_jacobian/n_sweep/$$.
+sweeps (colors) used for each sparse Jacobian (Hessian) calculation; see
+$icode n_sweep$$ for
+$cref/sparse_jacobian/sparse_jacobian/n_sweep/$$ and
+$cref/sparse_hessian/sparse_hessian/n_sweep/$$.
 
 
 $children%
@@ -327,6 +331,7 @@ CPPAD_DECLARE_SPEED(sparse_jacobian);
 
 // info is different for each test
 extern void info_sparse_jacobian(size_t size, size_t& n_sweep);
+extern void info_sparse_hessian(size_t size, size_t& n_sweep);
 
 // --------------------------------------------------------------------------
 
@@ -687,7 +692,18 @@ int main(int argc, char *argv[])
 			"sparse_hessian"
 		);
 		run_speed(
-		speed_sparse_hessian, size_sparse_hessian,  "sparse_hessian");
+			speed_sparse_hessian, size_sparse_hessian,  "sparse_hessian"
+		);
+		cout << AD_PACKAGE << "_sparse_hessian_sweep = ";
+		for(i = 0; i < size_sparse_hessian.size(); i++)
+		{	if( i == 0 )
+				cout << "[ ";
+			else	cout << ", ";	
+			size_t n_sweep;
+			info_sparse_hessian(size_sparse_hessian[i], n_sweep);
+			cout << n_sweep;
+		}
+		cout << " ]" << endl;
 		break;
 		// ---------------------------------------------------------
 
@@ -702,7 +718,7 @@ int main(int argc, char *argv[])
 			"sparse_jacobian"
 		);
 		run_speed(
-		speed_sparse_jacobian, size_sparse_jacobian, "sparse_jacobian"
+			speed_sparse_jacobian, size_sparse_jacobian, "sparse_jacobian"
 		);
 		cout << AD_PACKAGE << "_sparse_jacobian_n_sweep = ";
 		for(i = 0; i < size_sparse_jacobian.size(); i++)

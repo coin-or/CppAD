@@ -1,6 +1,6 @@
-/* $Id$ */
+/* $Id: sparse_hessian.cpp 3136 2014-03-02 11:54:07Z bradbell $ */
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-14 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-15 Bradley M. Bell
 
 CppAD is distributed under multiple licenses. This distribution is under
 the terms of the 
@@ -16,7 +16,7 @@ $spell
 	boolsparsity
 	onetape
 	hess
-	int int_n
+	int 
 	nnz
 	cind
 	const
@@ -64,8 +64,9 @@ bool link_sparse_hessian(
 	size_t                           repeat   , 
 	const CppAD::vector<size_t>&     row      ,
 	const CppAD::vector<size_t>&     col      ,
-	      CppAD::vector<double>&     x_return ,
-	      CppAD::vector<double>&     hessian  )
+	CppAD::vector<double>&           x_return ,
+	CppAD::vector<double>&           hessian  ,
+	size_t&                          n_sweep )
 {
 	if( global_atomic || (! global_colpack) )
 		return false; 
@@ -79,7 +80,7 @@ bool link_sparse_hessian(
 	typedef ADScalar*        ADVector;
 
 
-	size_t i, j;         // temporary indices
+	size_t i, j, k;         // temporary indices
 	size_t order = 0;    // derivative order corresponding to function
 	size_t m = 1;        // number of dependent variables
 	size_t n = size;     // number of independent variables
@@ -110,11 +111,6 @@ bool link_sparse_hessian(
 	SizeVector cind   = CPPAD_NULL;   // column indices
 	DblVector  values = CPPAD_NULL;   // Hessian values
 
-	// initialize all entries as zero
-	for(i = 0; i < m; i++)
-	{	for(j = 0; j < n; j++)
-			hessian[ i * n + j ] = 0.;
-	}
 	// ----------------------------------------------------------------------
 	if( ! global_onetape ) while(repeat--)
 	{	// choose a value for x
@@ -140,13 +136,19 @@ bool link_sparse_hessian(
 		rind   = CPPAD_NULL;
 		cind   = CPPAD_NULL;
 		values = CPPAD_NULL;
-		sparse_hess(tag, int(n), 
+		sparse_hess(tag, int(n),
 			same_pattern, x, &nnz, &rind, &cind, &values, options
 		);
-		int int_n = int(n);
-		for(int k = 0; k < nnz; k++)
-		{	hessian[ rind[k] * int_n + cind[k] ] = values[k];
-			hessian[ cind[k] * int_n + rind[k] ] = values[k];
+		size_t K = row.size();
+		for(int ell = 0; ell < nnz; ell++)
+		{	i = size_t(rind[ell]);
+			j = size_t(cind[ell]);
+			for(k = 0; k < K; k++)
+			{	if( row[k] == i && col[k] == j )
+					hessian[k] = values[ell];
+				if( col[k] == i && row[k] == j )
+					hessian[k] = values[ell];
+			}
 		}
 
 		// free raw memory allocated by sparse_hess
@@ -179,17 +181,20 @@ bool link_sparse_hessian(
 			CppAD::uniform_01(n, x);
 
 			// calculate the hessian at this x
-			sparse_hess(tag, int(n), 
+			sparse_hess(tag, int(n),
 				same_pattern, x, &nnz, &rind, &cind, &values, options
 			);
 			same_pattern = 1;
 		}
-		int int_n = int(n);
-		for(int k = 0; k < nnz; k++)
-		{	hessian[ rind[k] * int_n + cind[k] ] = values[k];
-			hessian[ cind[k] * int_n + rind[k] ] = values[k];
+		size_t K = row.size();
+		for(int ell = 0; ell < nnz; ell++)
+		{	i = size_t(rind[ell]);
+			j = size_t(cind[ell]);
+			for(k = 0; k < K; k++)
+			{	if( (row[k]==i && col[k]==j) || (row[k]==j && col[k]==i) )
+					hessian[k] = values[ell];
+			}
 		}
-
 		// free raw memory allocated by sparse_hessian
 		free(rind);
 		free(cind);
@@ -199,6 +204,9 @@ bool link_sparse_hessian(
 	// return argument 
 	for(j = 0; j < n; j++)
 		x_return[j] = x[j];
+
+	// do not know how to return number of sweeps used
+	n_sweep = 0;
 
 	// tear down
 	thread_alloc::delete_array(a_x);

@@ -1,9 +1,9 @@
 $Id$
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-14 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-15 Bradley M. Bell
 
 CppAD is distributed under multiple licenses. This distribution is under
-the terms of the 
+the terms of the
                     Eclipse Public License Version 1.0.
 
 A copy of this license is included in the COPYING file of this distribution.
@@ -15,6 +15,8 @@ $dollar @$$
 $spell
 	CppAD
 	colpack
+	hes
+	cppad
 $$
 
 $section CppAD Changes and Additions During 2015$$
@@ -25,10 +27,43 @@ This section contains a list of the changes to CppAD during 2015
 The purpose of this section is to
 assist you in learning about changes between various versions of CppAD.
 
+$head color_hes Branch$$
+$list number$$
+Specify the type of 
+$cref/coloring/sparse_hessian/work/color_method/$$
+for the sparse hessian calculations. 
+To be specific, instead of $code "cppad"$$ and $code "colpack"$$,
+the choices are $code "cppad.symmetric"$$, $code "cppad.general"$$,
+and $code "colpack.star"$$.
+This is not compatible with the change on 
+$cref/01-02/whats_new_15/01-02/$$, which was so recent 
+that this should not be a problem.
+$lnext
+The $cref/n_sweep/link_sparse_hessian/n_sweep/$$ values were
+not begin returned properly by
+$cref cppad_sparse_hessian.cpp$$ and
+$cref adolc_sparse_hessian.cpp$$.
+The CppAD version has been fixed and the ADOL-C version
+has been set to zero.
+$lnext
+The $cref link_sparse_hessian$$ example case was to sparse for good
+testing (by mistake).
+This has been fixed.
+$lnext
+Add $icode n_sweep$$ to
+$cref/link_sparse_hessian/link_sparse_hessian/n_sweep/$$ and
+$cref/speed_main/speed_main/Speed Results/n_sweep/$$.
+$lnext
+Change the $code cppad$$ sparse Hessian
+$cref/color_method/sparse_hessian/work/color_method/$$
+to take advantage of the symmetry of the Hessian
+(in a similar fashion to the $code colpack$$ coloring method).
+$lend
+
 $head 01-02$$
-Added to option to uses 
-$cref/colpack/colpack_prefix/$$ for the sparse Hessian 
-$cref/coloring method/sparse_hessian/work/color_method/$$; 
+Added to option to uses
+$cref/colpack/colpack_prefix/$$ for the sparse Hessian
+$cref/coloring method/sparse_hessian/work/color_method/$$;
 see the example $cref colpack_hes.cpp$$.
 
 $end

@@ -1,6 +1,6 @@
 /* $Id$ */
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-12 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-15 Bradley M. Bell
 
 CppAD is distributed under multiple licenses. This distribution is under
 the terms of the 
@@ -38,13 +38,13 @@ bool sparse_hes_fun(void)
 
 	typedef CppAD::AD<double> ADScalar;
 
-	size_t i, j, k;
+	size_t j, k;
 	double eps = 10. * CppAD::numeric_limits<double>::epsilon();
-	size_t n   = 3;
+	size_t n   = 5;
 	size_t m   = 1;
-	size_t K   = 5;
+	size_t K   = 2 * n;
 	CppAD::vector<size_t>       row(K),  col(K);
-	CppAD::vector<double>       x(n),    yp(n * n);
+	CppAD::vector<double>       x(n),    ypp(n * n);
 	CppAD::vector<ADScalar>     a_x(n),  a_y(m);
 
 	// choose x
@@ -53,8 +53,12 @@ bool sparse_hes_fun(void)
 
 	// choose row, col
 	for(k = 0; k < K; k++)
-	{	row[k] = k % n;
-		col[k] = (K - k) % n;
+	{	row[k] = k % 3;
+		col[k] = k / 3;
+	}
+	for(k = 0; k < K; k++)
+	{	for(size_t k1 = 0; k1 < K; k1++)
+			assert( k == k1 || row[k] != row[k1] || col[k] != col[k1] );
 	}
 
 	// declare independent variables
@@ -66,7 +70,7 @@ bool sparse_hes_fun(void)
 
 	// evaluate Hessian
 	order = 2;
-	CppAD::sparse_hes_fun<double>(n, x, row, col, order, yp);
+	CppAD::sparse_hes_fun<double>(n, x, row, col, order, ypp);
 
 	// use AD to evaluate Hessian
 	CppAD::ADFun<double>   f(a_x, a_y);
@@ -74,9 +78,9 @@ bool sparse_hes_fun(void)
 	// compoute Hessian of f_0 (x)
 	hes = f.Hessian(x, 0);
 
-	for(i = 0; i < n; i++)
-	{	for(j = 0; j < n; j++)
-			ok &= NearEqual(hes[i * n + j], yp[i * n + j] , eps, eps);
+	for(k = 0; k < K; k++)
+	{	size_t index = row[k] * n + col[k];
+		ok &= NearEqual(hes[index], ypp[k] , eps, eps);
 	}
 	return ok;
 }

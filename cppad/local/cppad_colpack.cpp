@@ -1,6 +1,6 @@
 /* $Id$ */
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-14 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-15 Bradley M. Bell
 
 CppAD is distributed under multiple licenses. This distribution is under
 the terms of the 
@@ -112,7 +112,7 @@ Determine which rows of a symmetrix sparse matrix can be computed together.
 is a vector with color.size() == m.
 For i = 0 , ... , m-1, color[i] is the color for the corresponding row
 of the matrix. We say that a sparsity pattern entry (i, j) is valid if
-for all i1, such that color[i1]==color[i],
+for all i1, such that i1 != i and color[i1]==color[i],
 and all j1, such that (i1, j1) is in sparsity pattern, j1 != j.
 The coloring is chosen so that for all (i, j) in the sparsity pattern;
 either (i, j) or (j, i) is valid (possibly both).
