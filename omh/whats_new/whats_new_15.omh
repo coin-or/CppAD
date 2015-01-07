@@ -27,7 +27,8 @@ This section contains a list of the changes to CppAD during 2015
 The purpose of this section is to
 assist you in learning about changes between various versions of CppAD.
 
-$head color_hes Branch$$
+$head 01-07$$
+The following changes were merged in from the $code color_hes$$ branch:
 $list number$$
 Specify the type of 
 $cref/coloring/sparse_hessian/work/color_method/$$
