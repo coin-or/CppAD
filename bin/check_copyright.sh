@@ -41,7 +41,7 @@ do
 	if [ -e $file ]
 	then
 		sed -f check_copyright.1.$$ $file > check_copyright.2.$$
-		if ! diff $file check_copyright.2.$$
+		if ! diff $file check_copyright.2.$$ > /dev/null
 		then
 			echo '----------------------------------------------------'
 			echo "check_copyright.sh: automatic changes to $file:"
