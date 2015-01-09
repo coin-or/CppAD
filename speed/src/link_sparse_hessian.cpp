@@ -316,6 +316,8 @@ bool correct_sparse_hessian(bool is_package_double)
 	size_t K = row.size();
 	vector<double> hessian(K);
 
+	// The double package assuems hessian.size() >= 1
+	CPPAD_ASSERT_UNKNOWN( K >= 1 );
 	size_t n_sweep;
 	link_sparse_hessian(n, repeat, row, col, x, hessian, n_sweep);
 
@@ -332,7 +334,7 @@ bool correct_sparse_hessian(bool is_package_double)
 	CppAD::sparse_hes_fun<double>(n, x, row, col, order, check);
 	bool ok = true;
 	size_t k;
-	for( k = 0; k < size; k++)
+	for(k = 0; k < size; k++)
 		ok &= CppAD::NearEqual(check[k], hessian[k], 1e-10, 1e-10);
 
 	return ok;
@@ -348,10 +350,16 @@ is the dimension of the argument space for this speed test.
 is the number of times to repeate the speed test.
 */
 void speed_sparse_hessian(size_t size, size_t repeat)
-{	size_t n = size;	
-	vector<double> x(n);
+{	CPPAD_ASSERT_UNKNOWN( size > 0 );
+	static size_t previous_size = 0;
 	vector<size_t> row, col;
-	choose_row_col(n, row, col);
+
+	size_t n = size;	
+	vector<double> x(n);
+	if( size != previous_size )
+	{	choose_row_col(n, row, col);
+		previous_size = size;
+	}
 	size_t K = row.size();
 	vector<double> hessian(K);
 
@@ -365,12 +373,12 @@ void speed_sparse_hessian(size_t size, size_t repeat)
 Sparse Hessian speed test information.
 
 \param size [in]
-is the \c size parameter in the corresponding call to speed_sparse_jacobian.
+is the \c size parameter in the corresponding call to speed_sparse_hessian.
 
 \param n_sweep [out]
 The input value of this parameter does not matter.
 Upon return, it is the value \c n_sweep retruned by the corresponding
-call to \c link_sparse_jacobian.
+call to \c link_sparse_hessian.
 */
 void info_sparse_hessian(size_t size, size_t& n_sweep)
 {	size_t n      = size;	
@@ -378,7 +386,7 @@ void info_sparse_hessian(size_t size, size_t& n_sweep)
 	vector<size_t> row, col;
 	choose_row_col(n, row, col);
 
-	// note that cppad/sparse_jacobian.cpp assumes that x.size()
+	// note that cppad/speed/sparse_hessian.cpp assumes that x.size()
 	// is the size corresponding to this test
 	vector<double> x(n);
 	size_t K = row.size();
@@ -386,4 +394,3 @@ void info_sparse_hessian(size_t size, size_t& n_sweep)
 	link_sparse_hessian(n, repeat, row, col, x, hessian, n_sweep);
 	return;
 }
-

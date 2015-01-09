@@ -44,7 +44,7 @@ bool sparse_hes_fun(void)
 	size_t m   = 1;
 	size_t K   = 2 * n;
 	CppAD::vector<size_t>       row(K),  col(K);
-	CppAD::vector<double>       x(n),    ypp(n * n);
+	CppAD::vector<double>       x(n),    ypp(K);
 	CppAD::vector<ADScalar>     a_x(n),  a_y(m);
 
 	// choose x

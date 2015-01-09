@@ -105,34 +105,26 @@ bool link_sparse_jacobian(
 	// -----------------------------------------------------
 	// setup
 	typedef vector< std::set<size_t> >  SetVector;
-	typedef CppAD::vector<double>       DblVector;
 	typedef CppAD::AD<double>           ADScalar;
 	typedef CppAD::vector<ADScalar>     ADVector;
 
-	size_t i, j, k;
+	size_t j;
 	size_t order = 0;         // derivative order corresponding to function 
-	size_t K     = row.size();// number of row and column indices 
 	size_t n     = size;      // number of independent variables
 	ADVector   a_x(n);        // AD domain space vector
 	ADVector   a_y(m);        // AD range space vector y = g(x)
-	DblVector  jac(K);        // non-zeros in Jacobian
 	CppAD::ADFun<double> f;   // AD function object
 
 	// declare sparsity pattern
 	SetVector  set_sparsity(m);
 	BoolVector bool_sparsity(m * n);
 
-	// initialize all entries as zero
-	for(i = 0; i < m; i++)
-	{	for(j = 0; j < n; j++)
-			jacobian[ i * n + j ] = 0.;
-	}
 	// ------------------------------------------------------
 	if( ! global_onetape ) while(repeat--)
 	{	// choose a value for x 
 		CppAD::uniform_01(n, x);
-		for(k = 0; k < n; k++)
-			a_x[k] = x[k];
+		for(j = 0; j < n; j++)
+			a_x[j] = x[j];
 
 		// declare independent variables
 		Independent(a_x);	
@@ -161,19 +153,17 @@ bool link_sparse_jacobian(
 		// calculate the Jacobian at this x
 		// (use forward mode because m > n ?)
 		if( global_boolsparsity) n_sweep = f.SparseJacobianForward(
-				x, bool_sparsity, row, col, jac, work
+				x, bool_sparsity, row, col, jacobian, work
 		);
 		else n_sweep = f.SparseJacobianForward(
-				x, set_sparsity, row, col, jac, work
+				x, set_sparsity, row, col, jacobian, work
 		);
-		for(k = 0; k < K; k++)
-			jacobian[ row[k] * n + col[k] ] = jac[k];
 	}
 	else
 	{	// choose a value for x 
 		CppAD::uniform_01(n, x);
-		for(k = 0; k < n; k++)
-			a_x[k] = x[k];
+		for(j = 0; j < n; j++)
+			a_x[j] = x[j];
 
 		// declare independent variables
 		Independent(a_x);	
@@ -206,13 +196,11 @@ bool link_sparse_jacobian(
 			// calculate the Jacobian at this x
 			// (use forward mode because m > n ?)
 			if( global_boolsparsity ) n_sweep = f.SparseJacobianForward(
-					x, bool_sparsity, row, col, jac, work
+					x, bool_sparsity, row, col, jacobian, work
 			);
 			else n_sweep = f.SparseJacobianForward(
-					x, set_sparsity, row, col, jac, work
+					x, set_sparsity, row, col, jacobian, work
 			);
-			for(k = 0; k < K; k++)
-				jacobian[ row[k] * n + col[k] ] = jac[k];
 		}
 	}
 	return true;

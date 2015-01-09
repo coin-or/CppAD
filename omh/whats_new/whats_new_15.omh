@@ -17,6 +17,7 @@ $spell
 	colpack
 	hes
 	cppad
+	Jacobian
 $$
 
 $section CppAD Changes and Additions During 2015$$
@@ -26,6 +27,16 @@ This section contains a list of the changes to CppAD during 2015
 (in reverse order by date).
 The purpose of this section is to
 assist you in learning about changes between various versions of CppAD.
+
+$head 01-09$$
+The change 01-07 below included (but did not mention) using
+a sparse, instead of full, structure for the Hessian in the test.
+This has also been done for the
+$cref/sparse Jacobian/link_sparse_jacobian/$$ test.
+In addition, for both the sparse Hessian and sparse Jacobian tests,
+the choice of the sparse function was made only once, for each test size.
+This also reduced the amount of computation not connected what is being tested.
+
 
 $head 01-07$$
 The following changes were merged in from the $code color_hes$$ branch:
@@ -41,7 +52,7 @@ $cref/01-02/whats_new_15/01-02/$$, which was so recent
 that this should not be a problem.
 $lnext
 The $cref/n_sweep/link_sparse_hessian/n_sweep/$$ values were
-not begin returned properly by
+not being returned properly by
 $cref cppad_sparse_hessian.cpp$$ and
 $cref adolc_sparse_hessian.cpp$$.
 The CppAD version has been fixed and the ADOL-C version
