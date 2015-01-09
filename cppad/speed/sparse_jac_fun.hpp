@@ -133,6 +133,8 @@ The argument $icode fp$$ has prototype
 $codei%
 	%FloatVector%& %fp%
 %$$
+If $icode%p% = 0%$$, it size is $icode m$$
+otherwise its size is $icode K$$.
 The input value of the elements of $icode fp$$ does not matter.
 
 $subhead Function$$
@@ -140,11 +142,10 @@ If $icode p$$ is zero, $icode fp$$ has size $latex m$$ and
 $codei%(%fp%[0]%, ... , %fp%[%m%-1])%$$ is the value of $latex f(x)$$.
 
 $subhead Jacobian$$
-If $icode p$$ is one, $icode fp$$ has size $icode%m% * %n%$$ and 
-for $latex i = 0 , \ldots , m-1$$,
-$latex j = 0 , \ldots , n-1$$
+If $icode p$$ is one, $icode fp$$ has size $icode K$$ and 
+for $latex k = 0 , \ldots , K-1$$,
 $latex \[
-	\D{f[i]}{x[j]} = fp [ i * n + j ]
+	\D{f[ \R{row}[i] ]}{x[ \R{col}[j] ]} = fp [k]
 \] $$
 
 $children%
@@ -189,17 +190,20 @@ namespace CppAD {
 		CheckNumericType<Float>();
 		// check value of p
 		CPPAD_ASSERT_KNOWN(
-			p < 2,
-			"sparse_jac_fun: p > 1"
+			p == 0 || p == 1,
+			"sparse_jac_fun: p != 0 and p != 1"
+		);
+		size_t K = row.size();
+		CPPAD_ASSERT_KNOWN(
+			K >= m,
+			"sparse_jac_fun: row.size() < m"
 		);
 		size_t i, j, k;
-		size_t size = m;
-		if( p > 0 )
-			size *= n;
-		for(k = 0; k < size; k++)
-			fp[k] = Float(0);
 
-		size_t K = row.size();
+		if( p == 0 )
+			for(i = 0; i < m; i++)
+				fp[i] = Float(0);
+
 		Float t;
 		for(k = 0; k < K; k++)
 		{	i    = row[k];
@@ -212,7 +216,7 @@ namespace CppAD {
 				break;
 
 				case 1:
-				fp[i * n + j] += t * x[j];
+				fp[k] = t * x[j];
 				break;
 			}
 		}

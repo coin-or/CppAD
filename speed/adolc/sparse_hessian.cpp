@@ -139,15 +139,16 @@ bool link_sparse_hessian(
 		sparse_hess(tag, int(n),
 			same_pattern, x, &nnz, &rind, &cind, &values, options
 		);
-		size_t K = row.size();
-		for(int ell = 0; ell < nnz; ell++)
-		{	i = size_t(rind[ell]);
-			j = size_t(cind[ell]);
-			for(k = 0; k < K; k++)
-			{	if( row[k] == i && col[k] == j )
-					hessian[k] = values[ell];
-				if( col[k] == i && row[k] == j )
-					hessian[k] = values[ell];
+		// only needed last time through loop
+		if( repeat == 0 )
+		{	size_t K = row.size();
+			for(int ell = 0; ell < nnz; ell++)
+			{	i = size_t(rind[ell]);
+				j = size_t(cind[ell]);
+				for(k = 0; k < K; k++)
+				{	if( (row[k]==i && col[k]==j) || (row[k]==j && col[k]==i) )
+						hessian[k] = values[ell];
+				}
 			}
 		}
 

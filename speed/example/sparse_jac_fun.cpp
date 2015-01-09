@@ -38,13 +38,13 @@ bool sparse_jac_fun(void)
 
 	bool ok = true;
 
-	size_t i, j, k;
+	size_t j, k;
 	double eps = CppAD::numeric_limits<double>::epsilon();
 	size_t n   = 3;
 	size_t m   = 4;
 	size_t K   = 5;
 	CppAD::vector<size_t>       row(K), col(K);
-	CppAD::vector<double>       x(n),   yp(m * n);
+	CppAD::vector<double>       x(n),   yp(K);
 	CppAD::vector< AD<double> > a_x(n), a_y(m);
 
 	// choose x
@@ -73,11 +73,10 @@ bool sparse_jac_fun(void)
 	CppAD::vector<double>  jac(m * n);
 	jac = f.Jacobian(x);
 
-	for(i = 0; i < m; i++)
-	{	for(j = 0; j < n; j++)
-			ok &= NearEqual(jac[i * n + j], yp[i * n + j] , eps, eps);
-	}
- 
+	for(k = 0; k < K; k++)
+	{	size_t index = row[k] * n + col[k];
+		ok &= NearEqual(jac[index], yp[k] , eps, eps);
+ 	}
 	return ok;
 }
 // END C++
