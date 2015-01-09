@@ -141,7 +141,7 @@ fi
 package_list='fadbad adolc eigen ipopt sacado'
 if [ "$no_colpack" == 'no' ]
 then
-	package_list="$list colpack"
+	package_list="$package_list colpack"
 fi
 for package in $package_list
 do

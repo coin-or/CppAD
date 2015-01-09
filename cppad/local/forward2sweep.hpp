@@ -3,7 +3,7 @@
 # define CPPAD_FORWARD2SWEEP_INCLUDED
 
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-14 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-15 Bradley M. Bell
 
 CppAD is distributed under multiple licenses. This distribution is under
 the terms of the 
@@ -405,7 +405,7 @@ size_t forward2sweep(
 			// -------------------------------------------------
 
 			case ParOp:
-			k = i_var*(J-1)*r + i_var + (q-1)*r;
+			k = i_var*(J-1)*r + i_var + (q-1)*r + 1;
 			for(ell = 0; ell < r; ell++)
 				taylor[k + ell] = Base(0); 
 			break;
