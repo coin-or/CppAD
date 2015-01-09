@@ -27,6 +27,7 @@ standard='c++11'
 debug_speed='no'
 profile_speed='no'
 clang='no'
+no_colpack='no'
 testvector='boost'
 while [ "$1" != "" ]
 do
@@ -40,6 +41,7 @@ usage: bin/run_cmake.sh: \\
 	[--debug_speed] \\
 	[--profile_speed] \\
 	[--clang ] \\
+	[--no_colpack] \\
 	[--<package>_vector]
 The --help option just prints this message and exits.
 The value <package> above must be one of: cppad, boost, or eigen.
@@ -63,6 +65,9 @@ EOF
 	elif [ "$1" == '--clang' ]
 	then
 		clang='yes'
+	elif [ "$1" == '--no_colpack' ]
+	then
+		no_colpack='yes'
 	elif [ "$1" == '--cppad_vector' ]
 	then
 		testvector='cppad'
@@ -133,7 +138,12 @@ then
 fi
 #
 # {package}_prefix
-for package in fadbad colpack adolc eigen ipopt sacado
+package_list='fadbad adolc eigen ipopt sacado'
+if [ "$no_colpack" == 'no' ]
+then
+	package_list="$list colpack"
+fi
+for package in $package_list
 do
 	dir=$HOME/prefix/$package
 	if [ -d "$dir" ]
