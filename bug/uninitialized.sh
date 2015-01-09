@@ -14,7 +14,7 @@
 # File created by Joao Leal
 #
 cat << EOF
-Running this progam generates the following error in the file valgrind.log:
+Running this progam used to generate the following error message:
 
 ==19174== Conditional jump or move depends on uninitialised value(s)
 ==19174==    at 0x41681B: 
@@ -69,8 +69,8 @@ mv ../bug.$$ $name.cpp
 echo "g++ -I../.. --std=c++11 -g $name.cpp -o $name"
 g++ -I../.. --std=c++11 -g $name.cpp -o $name
 #
-echo "valgrind --error-exitcode=1 --track-origins=yes ./$name >& valgrind.log" 
-if valgrind --error-exitcode=1 --track-origins=yes ./$name >& ../valgrind.log
+echo "valgrind --error-exitcode=1 --track-origins=yes ./$name" 
+if valgrind --error-exitcode=1 --track-origins=yes ./$name
 then
 	echo 'uninitialized.sh: OK'
 	exit 0

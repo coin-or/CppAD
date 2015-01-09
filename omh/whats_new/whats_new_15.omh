@@ -13,6 +13,7 @@ Please visit http://www.coin-or.org/CppAD/ for information on other licenses.
 $begin whats_new_15$$
 $dollar @$$
 $spell
+	onetape
 	CppAD
 	colpack
 	hes
@@ -29,13 +30,28 @@ The purpose of this section is to
 assist you in learning about changes between various versions of CppAD.
 
 $head 01-09$$
+$list number$$
 The change 01-07 below included (but did not mention) using
 a sparse, instead of full, structure for the Hessian in the test.
 This has also been done for the
 $cref/sparse Jacobian/link_sparse_jacobian/$$ test.
-In addition, for both the sparse Hessian and sparse Jacobian tests,
-the choice of the sparse function was made only once, for each test size.
-This also reduced the amount of computation not connected what is being tested.
+$lnext
+For both the 
+$cref/sparse_jacobian/link_sparse_jacobian/$$ and
+$cref/sparse_hessian/link_sparse_hessian/$$ tests,
+the sparse function is only chosen once
+(it used to be different for every repeat).
+This reduced the amount of computation not connected what is being tested.
+It also make the $cref/onetape/speed_main/option_list/onetape/$$ a valid
+option for these tests.
+$lnext
+There was a bug in the
+$cref/multiple direction forward/forward_dir/$$ routine.
+Results for function values that are
+$cref/parameter/parvar/$$ were not being computed properly
+(all the derivatives are zero in this case).
+This has been fixed.
+$lend
 
 
 $head 01-07$$

@@ -1,6 +1,6 @@
 /* $Id$ */
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-14 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-15 Bradley M. Bell
 
 CppAD is distributed under multiple licenses. This distribution is under
 the terms of the 
@@ -938,6 +938,54 @@ namespace {
 		return ok;
 	}
 	// ---------------------------------------------------------------------
+	// ParOp
+	bool par_op(void)
+	{	bool ok = true;
+		size_t j;
+
+		// domain space vector
+		size_t n = 1;
+		CPPAD_TESTVECTOR(AD<double>) ax(n);
+		ax[0] = 0.5;
+
+		// declare independent variables and starting recording
+		CppAD::Independent(ax);
+
+		// range space vector
+		size_t m = 1;
+		CPPAD_TESTVECTOR(AD<double>) ay(m);
+		ay[0] = 0.0 * ax[0];
+
+		// create f: x -> y and stop tape recording
+		CppAD::ADFun<double> f(ax, ay);
+
+		// first order Taylor coefficients
+		size_t r = 2, ell;
+		CPPAD_TESTVECTOR(double) x1(r*n), y1;
+		for(ell = 0; ell < r; ell++)
+		{	for(j = 0; j < n; j++)
+				x1[ r * j + ell ] = double(j + ell + 1);
+		}
+		y1  = f.Forward(1, r, x1);
+		ok &= y1.size() == r*m;
+
+		// secondorder Taylor coefficients
+		CPPAD_TESTVECTOR(double) x2(r*n), y2;
+		for(ell = 0; ell < r; ell++)
+		{	for(j = 0; j < n; j++)
+				x2[ r * j + ell ] = double(j + ell + 2);
+		}
+		y2  = f.Forward(2, r, x2);
+		ok &= y2.size() == r*m;
+		//
+		// Y_0  (t)    = 0.0
+		for(ell = 0; ell < r; ell++)
+		{	ok &= y1[ell] == 0.0;
+			ok &= y2[ell] == 0.0;
+		}
+		return ok;
+	}
+	// ---------------------------------------------------------------------
 	// PowvvOp  (test assuming LogOp, ExpOp and DivvvOp are correct)
 	bool powvv_op(void)
 	{	bool ok = true;
@@ -1555,6 +1603,7 @@ bool forward_dir(void)
 	ok     &= load_op();
 	ok     &= log_op();
 	ok     &= mulpv_op();
+	ok     &= par_op();
 	ok     &= powpv_op();
 	ok     &= powvp_op();
 	ok     &= powvv_op();
