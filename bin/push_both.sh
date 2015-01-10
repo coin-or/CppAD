@@ -47,21 +47,16 @@ pause
 # pull from github to git_svn
 echo_eval cd $HOME/cppad/git_svn
 echo_eval git checkout $branch
-echo_eval git pull github master
-echo "Should fast forward from github to $branch"
+msg='new head that syncs github with coin-svn'
+echo "git pull -m \""$msg"\" github $branch"
+git pull -m "$msg" github $branch
 pause
 #
 # push from git_svn to coin/svn 
+echo_eval git svn rebase 
 echo_eval git svn dcommit
 #
-# check that everyting OK at end
-echo_eval git svn rebase 
-#
 # now sync github up with change do git_svn caused by dcommit
-msg='new head corresponding to git-svn push to coin-svn'
-echo "git pull -m \""$msg"\" github $branch"
-git pull -m "$msg" github $branch
-echo "git push -m \""$msg"\" github $branch"
-git push -m "$msg" github $branch
+echo_eval push github $branch
 echo_eval git show-ref $branch
 echo "giv_svn hash codes for $branch should be the same"
