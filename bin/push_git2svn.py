@@ -53,7 +53,8 @@ def system(cmd) :
 			shell=True
 		)
 	except subprocess.CalledProcessError :
-		msg = 'bin/push_git2svn.py exiting because command above failed'
+		msg  = subprocess.CalledProcessError.output
+		msg += '\nbin/push_git2svn.py exiting because command above failed'
 		sys.exit(cmd + '\n\n' + msg)
 	return output
 def print_system(cmd) :
@@ -64,8 +65,9 @@ def print_system(cmd) :
 			stderr=subprocess.STDOUT,
 			shell=True
 		)
-	except subprocess.CalledProcessError :
-		msg = 'bin/push_git2svn.py exiting because command above failed'
+	except subprocess.CalledProcessError as info :
+		msg  = info.output
+		msg += '\nbin/push_git2svn.py exiting because command above failed'
 		sys.exit(msg)
 	return output
 # -----------------------------------------------------------------------------
@@ -90,7 +92,7 @@ if not os.path.isdir(work_directory) :
 # checkout svn version of directory
 svn_directory = work_directory + '/svn'
 if os.path.isdir(svn_directory) :
-	print('use existing ' + svn_directory)
+	print('Use existing svn directory: ' + svn_directory)
 	pause()
 	cmd = 'svn revert --recursive ' + svn_directory
 	print_system(cmd)
@@ -106,11 +108,23 @@ else :
 	cmd  = 'svn checkout '
 	cmd +=  svn_repository + '/' + svn_branch_path + ' ' + svn_directory
 	print_system(cmd)
+# ----------------------------------------------------------------------------
+# git hash code corresponding to verison isn svn directory
+cmd           = 'svn info ' + svn_directory
+svn_info      = system(cmd)
+rev_pattern   = re.compile('Last Changed Rev: ([0-9]+)')
+match         = re.search(rev_pattern, svn_info)
+svn_revision  = match.group(1)
+cmd           = 'svn log -r ' + svn_revision + ' ' + svn_directory
+svn_log       = system(cmd)
+hash_pattern  = re.compile('https://github.com/bradbell/cppad ([0-9a-f]+)')
+match         = re.search(hash_pattern, svn_log)
+svn_hash_code = match.group(1)
 # -----------------------------------------------------------------------------
 # export the git verison of the directory
 git_directory = work_directory + '/git'
 if os.path.isdir(git_directory) :
-	print('use existing ' + git_directory)
+	print('Use existing git directory: ' + git_directory)
 	pause()
 else :
 	cmd  = 'svn export '
@@ -181,17 +195,48 @@ for git_file in created_list :
 			print_system(cmd)
 #
 for svn_file in deleted_list :
-	cmd = 'svn delete ' + svn_directory + '/' + svn_file
-	print_system(cmd)
+	svn_file_path = svn_directory + '/' + svn_file
+	if os.path.isfile(svn_file_path) :
+		cmd = 'svn delete --force ' + svn_file_path
+		print_system(cmd)
 #
 for git_file in git_file_list :
-	if git_file not in created_list :
+	do_cp = True
+	do_cp = do_cp and git_file not in created_list
+	if git_file in svn_file_list :
+		git_f     = open(git_directory + '/' + git_file, 'rb')
+		git_data  = git_f.read()
+		git_f.close()
+		git_data  = re.sub(id_pattern, '', git_data)
+		#
+		svn_f    = open(svn_directory + '/' + git_file, 'rb')
+		svn_data = svn_f.read()
+		svn_f.close()
+		svn_data = re.sub(id_pattern, '', svn_data)
+		#
+		do_cp = do_cp and git_data != svn_data
+	if do_cp :
 		cmd  = 'cp ' + git_directory + '/' + git_file + ' \\\n\t'
 		cmd += svn_directory + '/' + git_file 
 		system(cmd)
 # -----------------------------------------------------------------------------
+data  = 'merge to branch: ' + svn_branch_path + '\n'
+data += 'from repository: ' + git_repository + '\n'
+data += 'start hash code:  ' + svn_hash_code + '\n'
+data += 'end   hash code:  ' + git_hash_code + '\n\n'
+sed_cmd = "sed -e '/" + svn_hash_code + "/,$d'"
+if svn_branch_path == 'trunk' :
+	cmd    = 'git log origin/master | ' + sed_cmd
+else :
+	cmd    = 'git log origin/' + git_branch_path + ' | ' + sed_cmd
+output = print_system(cmd)
+data += output
+log_f = open( svn_directory + '/push_git2svn.log' , 'wb')
+log_f.write(data)
+log_f.close()
 msg  = '\nChange into svn directory with the command\n\t'
 msg += 'cd ' + svn_directory + '\n'
 msg += 'If these changes are OK, execute the command:\n\t'
-msg += 'svn commit -m \\\n"' + git_repository + ' ' + git_hash_code + '"'
+msg += 'svn commit --file push_git2svn.log\n'
+msg += 'You may want to edit the log push_git2svn.log'
 print(msg)
