@@ -37,8 +37,9 @@ pause() {
 # -----------------------------------------------------------------------------
 # git remote add github https://github.com/bradbell/cppad
 # 
-# push git/repo to github 
+# change into local git repository
 echo_eval cd $HOME/cppad/git/repo
+#
 echo_eval git checkout $branch
 echo_eval git push
 echo "Should fast forward from $branch to github"
