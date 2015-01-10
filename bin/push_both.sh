@@ -56,3 +56,12 @@ echo_eval git svn dcommit
 #
 # check that everyting OK at end
 echo_eval git svn rebase 
+#
+# now sync github up with change do git_svn caused by dcommit
+msg='new head corresponding to git-svn push to coin-svn'
+echo "git pull -m \""$msg"\" github $branch"
+git pull -m "$msg" github $branch
+echo "git push -m \""$msg"\" github $branch"
+git push -m "$msg" github $branch
+echo_eval git show-ref $branch
+echo "giv_svn hash codes for $branch should be the same"
