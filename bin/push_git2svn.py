@@ -18,15 +18,18 @@ import re
 import subprocess
 # -----------------------------------------------------------------------------
 # command line arguments
-usage = '\nusage: bin/push_git2svn.py svn_branch_path'
+usage = '\tbin/push_git2svn.py svn_branch_path\n'
 narg  = len(sys.argv)
 if sys.argv[0] != 'bin/push_git2svn.py' :
 	msg = 'bin/push_git2svn.py must be executed from its parent directory'
-	sys.exit(usage + '\n\n' + msg)
+	sys.exit(usage + msg)
 if narg != 2 :
 	msg = 'expected 1 but found ' + str(narg-1) + ' command line arguments'
-	sys.exit(usage + '\n\n' + msg)
+	sys.exit(usage + msg)
 svn_branch_path = sys.argv[1]
+if svn_branch_path == 'master' :
+	msg = 'trunk is the svn_branch_path for the master branch'
+	sys.exit(usage + msg)
 # -----------------------------------------------------------------------------
 # some settings
 svn_repository = 'https://projects.coin-or.org/svn/CppAD'
@@ -52,7 +55,18 @@ def system(cmd) :
 	except subprocess.CalledProcessError :
 		msg = 'bin/push_git2svn.py exiting because command above failed'
 		sys.exit(cmd + '\n\n' + msg)
+	return output
+def print_system(cmd) :
 	print(cmd)
+	try :
+		output = subprocess.check_output(
+			cmd,
+			stderr=subprocess.STDOUT,
+			shell=True
+		)
+	except subprocess.CalledProcessError :
+		msg = 'bin/push_git2svn.py exiting because command above failed'
+		sys.exit(msg)
 	return output
 # -----------------------------------------------------------------------------
 # determine git_branch_path
@@ -79,7 +93,7 @@ if os.path.isdir(svn_directory) :
 	print('use existing ' + svn_directory)
 	pause()
 	cmd = 'svn revert --recursive ' + svn_directory
-	system(cmd)
+	print_system(cmd)
 	cmd        = 'svn status ' + svn_directory
 	svn_status = system(cmd)
 	svn_status = svn_status.split('\n')
@@ -91,7 +105,7 @@ if os.path.isdir(svn_directory) :
 else :
 	cmd  = 'svn checkout '
 	cmd +=  svn_repository + '/' + svn_branch_path + ' ' + svn_directory
-	system(cmd)
+	print_system(cmd)
 # -----------------------------------------------------------------------------
 # export the git verison of the directory
 git_directory = work_directory + '/git'
@@ -101,7 +115,7 @@ if os.path.isdir(git_directory) :
 else :
 	cmd  = 'svn export '
 	cmd +=  git_repository + '/' + git_branch_path + ' ' + git_directory
-	system(cmd)
+	print_system(cmd)
 # -----------------------------------------------------------------------------
 # list of files for the svn and git directories
 svn_pattern = re.compile(svn_directory + '/')
@@ -139,6 +153,7 @@ for name in svn_file_list :
 # -----------------------------------------------------------------------------
 # automated svn commands
 id_pattern = re.compile(r'^.*\$Id.*')
+#
 for git_file in created_list :
 	git_f     = open(git_directory + '/' + git_file, 'rb')
 	git_data  = git_f.read()
@@ -156,20 +171,27 @@ for git_file in created_list :
 			assert not found
 			cmd  = 'svn copy ' + svn_directory + '/' + svn_file + ' \\\n\t'
 			cmd += svn_directory + '/' + git_file
-			system(cmd)
+			print_system(cmd)
 			found = True
 	if not found :
 			cmd  = 'cp ' + git_directory + '/' + git_file + ' \\\n\t'
 			cmd += svn_directory + '/' + git_file 
 			system(cmd)
 			cmd  = 'svn add ' + svn_directory + '/' + git_file
-			system(cmd)
+			print_system(cmd)
+#
 for svn_file in deleted_list :
 	cmd = 'svn delete ' + svn_directory + '/' + svn_file
-	system(cmd)
+	print_system(cmd)
+#
+for git_file in git_file_list :
+	if git_file not in created_list :
+		cmd  = 'cp ' + git_directory + '/' + git_file + ' \\\n\t'
+		cmd += svn_directory + '/' + git_file 
+		system(cmd)
 # -----------------------------------------------------------------------------
 msg  = '\nChange into svn directory with the command\n\t'
 msg += 'cd ' + svn_directory + '\n'
-msg += 'If thes changes are OK, execute the command:\n\t'
+msg += 'If these changes are OK, execute the command:\n\t'
 msg += 'svn commit -m \\\n"' + git_repository + ' ' + git_hash_code + '"'
 print(msg)
