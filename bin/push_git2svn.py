@@ -96,6 +96,8 @@ if os.path.isdir(svn_directory) :
 	pause()
 	cmd = 'svn revert --recursive ' + svn_directory
 	print_system(cmd)
+	cmd = 'svn update ' + svn_directory
+	print_system(cmd)
 	cmd        = 'svn status ' + svn_directory
 	svn_status = system(cmd)
 	svn_status = svn_status.split('\n')
@@ -112,12 +114,12 @@ else :
 # git hash code corresponding to verison isn svn directory
 cmd           = 'svn info ' + svn_directory
 svn_info      = system(cmd)
-rev_pattern   = re.compile('Last Changed Rev: ([0-9]+)')
+rev_pattern   = re.compile('Last Changed Rev: *([0-9]+)')
 match         = re.search(rev_pattern, svn_info)
 svn_revision  = match.group(1)
 cmd           = 'svn log -r ' + svn_revision + ' ' + svn_directory
 svn_log       = system(cmd)
-hash_pattern  = re.compile('https://github.com/bradbell/cppad ([0-9a-f]+)')
+hash_pattern  = re.compile('\nend   hash code: *([0-9a-f]+)')
 match         = re.search(hash_pattern, svn_log)
 svn_hash_code = match.group(1)
 # -----------------------------------------------------------------------------
@@ -222,16 +224,16 @@ for git_file in git_file_list :
 # -----------------------------------------------------------------------------
 data  = 'merge to branch: ' + svn_branch_path + '\n'
 data += 'from repository: ' + git_repository + '\n'
-data += 'start hash code:  ' + svn_hash_code + '\n'
-data += 'end   hash code:  ' + git_hash_code + '\n\n'
+data += 'start hash code: ' + svn_hash_code + '\n'
+data += 'end   hash code: ' + git_hash_code + '\n\n'
 sed_cmd = "sed -e '/" + svn_hash_code + "/,$d'"
 if svn_branch_path == 'trunk' :
 	cmd    = 'git log origin/master | ' + sed_cmd
 else :
 	cmd    = 'git log origin/' + git_branch_path + ' | ' + sed_cmd
-output = print_system(cmd)
-data += output
-log_f = open( svn_directory + '/push_git2svn.log' , 'wb')
+output = system(cmd)
+data  += output
+log_f  = open( svn_directory + '/push_git2svn.log' , 'wb')
 log_f.write(data)
 log_f.close()
 msg  = '\nChange into svn directory with the command\n\t'
