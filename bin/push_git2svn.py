@@ -111,7 +111,7 @@ else :
 	cmd +=  svn_repository + '/' + svn_branch_path + ' ' + svn_directory
 	print_system(cmd)
 # ----------------------------------------------------------------------------
-# git hash code corresponding to verison isn svn directory
+# git hash code corresponding to verison in svn directory
 cmd           = 'svn info ' + svn_directory
 svn_info      = system(cmd)
 rev_pattern   = re.compile('Last Changed Rev: *([0-9]+)')
