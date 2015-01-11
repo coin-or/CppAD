@@ -10,6 +10,9 @@
 # A copy of this license is included in the COPYING file of this distribution.
 # Please visit http://www.coin-or.org/CppAD/ for information on other licenses.
 # -----------------------------------------------------------------------------
+echo 'Need to change this from using git-svn to using push_git2svn.sh'
+echo 'See bin/new_release.sh.'
+exit 1
 if [ "$0" != "bin/new_stable.sh" ]
 then
 	echo "bin/new_stable.sh: must be executed from its parent directory"

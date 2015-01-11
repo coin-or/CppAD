@@ -23,7 +23,7 @@ echo_eval() {
 # -----------------------------------------------------------------------------
 repository="https://projects.coin-or.org/svn/CppAD"
 stable_version="20150000"
-release='0'
+release='2'
 release_version="$stable_version.$release"
 # -----------------------------------------------------------------------------
 # Check release version
@@ -49,7 +49,10 @@ then
 	echo 'Set new version number with following commands:'
 	echo "	bin/version.sh set $release_version"
 	echo '	bin/version.sh copy'
-	echo 'then test and then commit the changes.'
+	echo 'Then test and then commit the changes.'
+	echo 'Then push changes to github.'
+	echo 'Then execute the following command:'
+	echo "	bin/push_git2svn.sh  stable/$stable_version"
 	exit 1
 fi
 # -----------------------------------------------------------------------------
@@ -61,13 +64,6 @@ fi
 git tag -a \
 	-m "corresponds $repository/releases/$release_version" \
 	$release_version
-#
-# copy committed changes to coin repository
-echo_eval git svn dcommit
-#
-# copy commited changes to github repository
-echo_eval git push github stable/$stable_version
-echo_eval git push --tabs github
 # -----------------------------------------------------------------------------
 msg="Creating releases/$release_version"
 rep_stable="$repository/stable/$stable_version"

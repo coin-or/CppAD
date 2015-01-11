@@ -53,8 +53,8 @@ def system(cmd) :
 			stderr=subprocess.STDOUT,
 			shell=True
 		)
-	except subprocess.CalledProcessError :
-		msg  = subprocess.CalledProcessError.output
+	except subprocess.CalledProcessError as info :
+		msg  = info.output
 		msg += '\nbin/push_git2svn.py exiting because command above failed'
 		sys.exit(cmd + '\n\n' + msg)
 	return output
@@ -72,19 +72,22 @@ def print_system(cmd) :
 		sys.exit(msg)
 	return output
 # -----------------------------------------------------------------------------
-# determine git_branch_path
-if svn_branch_path == 'trunk' or svn_branch_path.startswith('branches/') :
+# determine git_branch_name
+if svn_branch_path == 'trunk' :
+	git_branch_name = 'master'
+	git_branch_path = svn_branch_path
+elif svn_branch_path.startswith('branches/') :
+	git_branch_name = svn_branch_path[len('branches/'):]
 	git_branch_path = svn_branch_path
 else :
+	git_branch_name = svn_branch_path
 	git_branch_path = 'branches/' + svn_branch_path
 # -----------------------------------------------------------------------------
 # hash code for the git branch
-if svn_branch_path == 'trunk' :
-	cmd = 'git show-ref origin/master'
-else :
-	cmd = 'git show-ref origin/' + git_branch_path 
+cmd = 'git show-ref origin/' + git_branch_name 
 git_hash_code = system(cmd)
-git_hash_code = git_hash_code.replace(' refs/remotes/origin/master\n', '')
+pattern       = ' refs/remotes/origin/' + git_branch_name
+git_hash_code = git_hash_code.replace(pattern, '')
 # -----------------------------------------------------------------------------
 # make sure work directory exists
 if not os.path.isdir(work_directory) :
@@ -131,7 +134,10 @@ cmd           = 'svn log -r ' + svn_revision + ' ' + svn_directory
 svn_log       = system(cmd)
 hash_pattern  = re.compile('\nend   hash code: *([0-9a-f]+)')
 match         = re.search(hash_pattern, svn_log)
-svn_hash_code = match.group(1)
+if match :
+	svn_hash_code = match.group(1)
+else :
+	svn_hash_code = None
 # -----------------------------------------------------------------------------
 # export the git verison of the directory
 git_directory = work_directory + '/git'
@@ -177,7 +183,7 @@ for name in svn_file_list :
 
 # -----------------------------------------------------------------------------
 # automated svn commands
-id_pattern = re.compile(r'^.*\$Id.*')
+id_pattern = re.compile(r'^.*\$Id.*$', re.MULTILINE)
 #
 for git_file in created_list :
 	git_f     = open(git_directory + '/' + git_file, 'rb')
@@ -233,21 +239,27 @@ for git_file in git_file_list :
 # -----------------------------------------------------------------------------
 data  = 'merge to branch: ' + svn_branch_path + '\n'
 data += 'from repository: ' + git_repository + '\n'
-data += 'start hash code: ' + svn_hash_code + '\n'
-data += 'end   hash code: ' + git_hash_code + '\n\n'
-sed_cmd = "sed -e '/" + svn_hash_code + "/,$d'"
-if svn_branch_path == 'trunk' :
-	cmd    = 'git log origin/master | ' + sed_cmd
+if svn_hash_code != None :
+	data += 'start hash code: ' + svn_hash_code + '\n'
 else :
-	cmd    = 'git log origin/' + git_branch_path + ' | ' + sed_cmd
-output = system(cmd)
-data  += output
+	data += 'start hash code: missing\n'
+data   += 'end   hash code: ' + git_hash_code + '\n\n'
+if svn_hash_code != None :
+	sed_cmd = "sed -e '/" + svn_hash_code + "/,$d'"
+	cmd     = 'git log origin/' + git_branch_name + ' | ' + sed_cmd
+	output = system(cmd)
+	data  += output
 log_f  = open( svn_directory + '/push_git2svn.log' , 'wb')
 log_f.write(data)
 log_f.close()
+#
 msg  = '\nChange into svn directory with the command\n\t'
 msg += 'cd ' + svn_directory + '\n'
 msg += 'If these changes are OK, execute the command:\n\t'
 msg += 'svn commit --file push_git2svn.log\n'
-msg += 'You may want to edit the log push_git2svn.log'
+if svn_hash_code != None :
+	msg += 'You should inspect and possibly edit push_git2svn.log'
+else :
+	msg += 'The start hash code could not be automatically determined.\n'
+	msg += 'You should edit push_git2svn.log to describe the changes.'
 print(msg)
