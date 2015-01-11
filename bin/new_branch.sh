@@ -15,19 +15,13 @@ then
 	echo 'bin/new_branch.sh: must be executed from its parent directory'
 	exit 1
 fi
-if [ ! -e '.git/svn' ]
+if [ "$1" == '' ] || [ "$2" == 'trunk' ]
 then
-	echo 'bin/new_branch.sh: must be executed in the git_svn repository'
+	echo 'usage:  bin/new_branch.sh svn_branch_path'
+	echo 'copies the current trunk to svn_branch_path'
 	exit 1
 fi
-if [ "$2" == '' ]
-then
-	echo 'usage:  bin/new_branch.sh branch_path svn_revision'
-	exit 1
-fi
-branch_path="$1"
-svn_revision="$2"
-repository='https://projects.coin-or.org/svn/CppAD'
+svn_branch_path="$1"
 # -----------------------------------------------------------------------------
 # bash function that echos and executes a command
 echo_eval() {
@@ -35,36 +29,77 @@ echo_eval() {
 	eval $*
 }
 # -----------------------------------------------------------------------------
-# make sure repsitories are in sync
-echo_eval git svn rebase
-echo_eval git fetch github 
+# some settings
+svn_repository='https://projects.coin-or.org/svn/CppAD'
+git_repository='https://github.com/bradbell/cppad'
+work_directory='build/work'
 # -----------------------------------------------------------------------------
-msg="Creating $branch_path from trunk at revision $svn_revision."
-cmd="svn copy -r $svn_revision $repository/trunk $repository/$branch_path"
-echo "$cmd -m \"$msg\""
-$cmd -m "$msg"
-# ----------------------------------------------------------------------------
-echo 'Use git-svn to fetch the new stable version'
-fetch="$branch_path:refs/remotes/svn/$branch_path"
-if ! grep "fetch *= *$fetch" .git/config > /dev/null
+# check that remote master is in sync
+hash_origin=`git show-ref origin/master | sed -e 's|^\([0-9a-f]*\).*|\1|'`
+hash_list=`git show-ref master | sed -e 's|^\([0-9a-f]*\).*|\1|'`
+for hash in $hash_list
+do
+	if [ "$hash" != "$hash_origin" ]
+	then
+		echo_eval git show-ref master
+		echo 'exiting because hash codes are different'
+		exit 1
+	fi
+done
+# -----------------------------------------------------------------------------
+# make sure work directory exists
+if [ ! -d "$work_directory" ]
 then
-	# backup current version of .git/config
-	index='1'
-	while [ -e .git/config.$index ]
-	do
-		index=`expr $index + 1`
-	done
-	echo_eval cp .git/config .git/config.$index
-	#
-	sed -e "s|^\turl *= *$repository|&\n\tfetch = $fetch|" -i .git/config
+	echo_eval mkdir -p "$work_directory"
 fi
-# fetch the branch
-echo_eval git svn fetch
 # -----------------------------------------------------------------------------
-# checkout the new stable version
-branch_name=`echo $branch_path | sed -e 's|branches/||'`
-echo_eval git checkout -b $branch_name svn/$branch_path
+# checkout svn version of directory
+svn_directory="$work_directory/svn"
+if [ -e "$svn_directory" ]
+then
+	echo 'Use existing svn direcory'
+	echo "	$svn_directory"
+	read -p '? [y/n] ' response
+	if [ "$response" != 'y' ]
+	then
+		echo_eval rm -r $svn_directory
+	else
+		echo_eval svn revert --recursive $svn_directory
+		svn_status=`svn status $svn_directory | \
+			sed -n -e '/^\?/p' | sed -e 's|^\? *||'`
+		for file_name in $svn_status
+		do
+			echo_eval rm $file_name
+		done
+	fi
+fi
+if [ ! -e "$svn_directory" ]
+then
+	echo_eval svn checkout $svn_repository/trunk $svn_directory
+fi
+# ----------------------------------------------------------------------------
+# git hash code corresponding to current version of trunk
+svn_revision=`svn info $svn_directory | \
+	sed -n -e '/^Last Changed Rev:/p' | sed -e 's|^Last Changed Rev: *||'`
+hash_svn=`svn log -r $svn_revision $svn_directory | \
+	sed -n -e '/^end *hash *code:/p' | sed -e 's|^end *hash *code: *||'`
+if [ "$hash_origin" != "$hash_svn" ]
+then
+	echo "$hash_origin hash code for master"
+	echo "$hash_svn hash code for trunk"
+	echo 'Exiting because hash codes are different.'
+	echo 'Use the following command to fix this'
+	echo '	bin/push_git2svn.py trunk'
+	exit 1
+fi  
 # -----------------------------------------------------------------------------
-# push it to github
-git push github $branch_name
+cat << EOF > $svn_directory/new_branch.log
+copy trunk to:   $svn_branch_path
+start hash code: $hash_origin
+EOF
+echo_eval svn copy --file new_branch.log \
+	$repository/trunk $repository/$branch_path
 # -----------------------------------------------------------------------------
+echo_eval git checkout master
+git_branch_name=`echo $svn_branch_path | sed -e 's|^branches/||'`
+echo_eval git branch $git_branch_name
