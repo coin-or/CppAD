@@ -405,7 +405,7 @@ size_t forward2sweep(
 			// -------------------------------------------------
 
 			case ParOp:
-			k = i_var*(J-1)*r + i_var + (q-1)*r;
+			k = i_var*(J-1)*r + i_var + (q-1)*r + 1;
 			for(ell = 0; ell < r; ell++)
 				taylor[k + ell] = Base(0); 
 			break;
