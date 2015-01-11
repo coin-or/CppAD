@@ -80,7 +80,7 @@ echo_eval svn checkout $repository/conf conf
 echo_eval cd conf
 #
 msg="Update stable and release numbers in projDesc.xml"
-echo 'Settting stable and advance release in ../../conf/projDesc.xml.'
+echo 'Settting stable and advance release in build/conf/projDesc.xml.'
 sed -i projDesc.xml \
 	-e "/^ *<stable/,/^ *<\/stable/s/[0-9]\{8\}/$stable_version/" \
 	-e "/^ *<release/,/^ *<\/release/s/[0-9]\{8\}\.[0-9]*/$release_version/"
