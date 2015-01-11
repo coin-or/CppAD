@@ -37,13 +37,14 @@ git_repository = 'https://github.com/bradbell/cppad'
 work_directory = 'build/push_git2svn'
 # -----------------------------------------------------------------------------
 # some simple functions
-def pause() :
+def pause(question, choice_list) :
 	response=''
-	while response != 'y\n' and  response != 'n\n' :
-		print('Continue [y/n] ')
+	while not response in choice_list :
+		print(question, end='')
 		response = sys.stdin.readline()
-	if response == 'n\n' :
-		sys.exit('user abort')
+		if response.endswith('\n') :
+			response = response[:-1]
+	return response
 #
 def system(cmd) :
 	try :
@@ -92,8 +93,17 @@ if not os.path.isdir(work_directory) :
 # checkout svn version of directory
 svn_directory = work_directory + '/svn'
 if os.path.isdir(svn_directory) :
-	print('Use existing svn directory: ' + svn_directory)
-	pause()
+	question    = 'Use existing svn directory:\n\t' 
+	question   +=  svn_directory + '\n'
+	question   += 'or remove it and check out a new copy ? [use/new] '
+	choice_list = [ 'use' , 'new' ]
+	choice      = pause(question, choice_list)
+	if choice == 'new' :
+		cmd         = 'rm -r ' + svn_directory
+		print_system(cmd)
+else :
+	choice      = 'new'
+if choice == 'use' :
 	cmd = 'svn revert --recursive ' + svn_directory
 	print_system(cmd)
 	cmd = 'svn update ' + svn_directory
@@ -126,12 +136,11 @@ svn_hash_code = match.group(1)
 # export the git verison of the directory
 git_directory = work_directory + '/git'
 if os.path.isdir(git_directory) :
-	print('Use existing git directory: ' + git_directory)
-	pause()
-else :
-	cmd  = 'svn export '
-	cmd +=  git_repository + '/' + git_branch_path + ' ' + git_directory
+	cmd = 'rm -r ' + git_directory
 	print_system(cmd)
+cmd  = 'svn export '
+cmd +=  git_repository + '/' + git_branch_path + ' ' + git_directory
+print_system(cmd)
 # -----------------------------------------------------------------------------
 # list of files for the svn and git directories
 svn_pattern = re.compile(svn_directory + '/')
