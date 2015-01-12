@@ -65,6 +65,7 @@ then
 		echo_eval rm -r $svn_directory
 	else
 		echo_eval svn revert --recursive $svn_directory
+		echo_eval svn update $svn_directory
 		svn_status=`svn status $svn_directory | \
 			sed -n -e '/^\?/p' | sed -e 's|^\? *||'`
 		for file_name in $svn_status
@@ -93,13 +94,16 @@ then
 	exit 1
 fi  
 # -----------------------------------------------------------------------------
-cat << EOF > $svn_directory/new_branch.log
-copy trunk to:   $svn_branch_path
-start hash code: $hash_origin
-EOF
-echo_eval svn copy --file new_branch.log \
-	$repository/trunk $repository/$branch_path
-# -----------------------------------------------------------------------------
 echo_eval git checkout master
 git_branch_name=`echo $svn_branch_path | sed -e 's|^branches/||'`
 echo_eval git branch $git_branch_name
+echo_eval git checkout $git_branch_name
+git push --set-upstream origin $git_branch_name
+# -----------------------------------------------------------------------------
+cat << EOF > $svn_directory/new_branch.log
+copy trunk to:   $svn_branch_path
+start hash code: $hash_origin
+end   hash code: $hash_origin
+EOF
+echo_eval svn copy --file new_branch.log \
+	$svn_repository/trunk $svn_repository/$svn_branch_path
