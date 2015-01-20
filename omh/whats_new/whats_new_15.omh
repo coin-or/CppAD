@@ -31,6 +31,7 @@ The purpose of this section is to
 assist you in learning about changes between various versions of CppAD.
 
 $head 01-20$$
+$list number$$
 The new $cref compare_change$$ interface has been created 
 and the old $cref CompareChange$$ function has been deprecated; 
 see the $cref compare_change.cpp$$ example.
@@ -38,9 +39,8 @@ This enables one to determine the source code during taping
 that corresponds to changes in the comparisons during 
 $cref/zero order forward/forward_zero/$$ operations; see
 $cref/abort_op_index/Independent/abort_op_index/$$.
-$pre
 
-$$
+$lnext
 This new $cref compare_change$$ interface can detect comparison changes 
 even if $cref/NDEBUG/Faq/Speed/NDEBUG/$$ is defined and 
 even if $cref/f.optimize()/optimize/$$ has been called.
@@ -51,6 +51,12 @@ $codei%
 and was not even defined when $code NDEBUG$$ was defined.
 There was a resulting speed effect for this; see the wish list
 $cref/compare change/WishList/Optimization/Comparison Changes/$$ entry.
+
+$lnext
+The date when some features where deprecated has been added to the
+documentation. For example, see
+$cref/Deprecated 2006-12-17/include_deprecated/Deprecated 2006-12-17/$$.
+$lend
 
 $head 01-09$$
 $list number$$
