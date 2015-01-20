@@ -2,7 +2,7 @@
 # ifndef CPPAD_RECORDER_INCLUDED
 # define CPPAD_RECORDER_INCLUDED
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-14 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-15 Bradley M. Bell
 
 CppAD is distributed under multiple licenses. This distribution is under
 the terms of the 
@@ -33,6 +33,10 @@ class recorder {
 	friend class player<Base>;
 
 private:
+	/// operator index at which to abort recording with an error
+	/// (do not abort when zero)
+	size_t abort_op_index_;
+
 	/// offset for this thread in the static hash table
 	const size_t thread_offset_;
 
@@ -69,7 +73,17 @@ public:
 	op_arg_rec_( std::numeric_limits<addr_t>::max() )    ,
 	par_rec_( std::numeric_limits<addr_t>::max() )       ,
 	text_rec_( std::numeric_limits<addr_t>::max() )
-	{ }
+	{
+		abort_op_index_ = 0;
+	}
+
+	/// Set the abort index
+	void set_abort_op_index(size_t abort_op_index)
+	{	abort_op_index_ = abort_op_index; }
+
+	/// Get the abort index
+	size_t get_abort_op_index(void)
+	{	return abort_op_index_; }
 
 	/// Destructor
 	~recorder(void)
@@ -176,6 +190,10 @@ and after each call to Erase.
 template <class Base>
 inline size_t recorder<Base>::PutOp(OpCode op)
 {	size_t i    = op_rec_.extend(1);
+	CPPAD_ASSERT_KNOWN(
+		(abort_op_index_ == 0) || (abort_op_index_ != i),
+		"Operator index equals abort_op_index in Independent"
+	);
 	op_rec_[i]  = static_cast<CPPAD_OP_CODE_TYPE>(op);
 	CPPAD_ASSERT_UNKNOWN( op_rec_.size() == i + 1 );
 	CPPAD_ASSERT_UNKNOWN( (op != LdpOp) & (op != LdvOp) );
@@ -223,6 +241,11 @@ increases by one after each call to this function
 template <class Base>
 inline size_t recorder<Base>::PutLoadOp(OpCode op)
 {	size_t i    = op_rec_.extend(1);
+	CPPAD_ASSERT_KNOWN(
+		(abort_op_index_ == 0) || (abort_op_index_ != i),
+		"This is the abort operator index specified by "
+		"Independent(x, abort_op_index)."
+	);
 	op_rec_[i]  = static_cast<CPPAD_OP_CODE_TYPE>(op);
 	CPPAD_ASSERT_UNKNOWN( op_rec_.size() == i + 1 );
 	CPPAD_ASSERT_UNKNOWN( (op == LdpOp) | (op == LdvOp) );

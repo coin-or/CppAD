@@ -3,7 +3,7 @@
 # define CPPAD_FORWARD_INCLUDED
 
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-14 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-15 Bradley M. Bell
 
 CppAD is distributed under multiple licenses. This distribution is under
 the terms of the 
@@ -147,22 +147,21 @@ VectorBase ADFun<Base>::Forward(
 	CPPAD_ASSERT_UNKNOWN( cskip_op_.size() == play_.num_op_rec() );
 	CPPAD_ASSERT_UNKNOWN( load_op_.size()  == play_.num_load_op_rec() );
 	if( q == 0 )
-	{
-		compare_change_ = forward0sweep(s, true,
+	{	forward0sweep(s, true,
 			n, num_var_tape_, &play_, C, 
-			taylor_.data(), cskip_op_.data(), load_op_
-		);
-	}
-	else if( p == 0 )
-	{	compare_change_ = forward1sweep(s, true, p, q, 
-			n, num_var_tape_, &play_, C, 
-			taylor_.data(), cskip_op_.data(), load_op_
+			taylor_.data(), cskip_op_.data(), load_op_,
+			compare_change_count_,
+			compare_change_number_,
+			compare_change_op_index_
 		);
 	}
 	else
 	{	forward1sweep(s, true, p, q, 
 			n, num_var_tape_, &play_, C, 
-			taylor_.data(), cskip_op_.data(), load_op_
+			taylor_.data(), cskip_op_.data(), load_op_,
+			compare_change_count_,
+			compare_change_number_,
+			compare_change_op_index_
 		);
 	}
 

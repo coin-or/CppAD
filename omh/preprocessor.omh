@@ -62,9 +62,9 @@ $tend
 
 $head Deprecated$$
 $table
-$cref/CppADCreateDiscrete/Discrete/Deprecated/$$
+$cref/CppADCreateDiscrete/Discrete/CppADCreateDiscrete Deprecated 2007-07-28/$$
 $rnext
-$cref/CppADvector/test_vector/Deprecated/$$
+$cref/CppADvector/test_vector/Deprecated 2012-07-03/$$
 $rnext
 $cref/CPPAD_TEST_VECTOR/test_vector/$$
 $rnext

@@ -27,7 +27,7 @@ $index epsilon, AD$$
 
 $section Machine Epsilon For AD Types$$
 
-$head Deprecated$$
+$head Deprecated 2012-06-17$$
 $index deprecated, epsilon$$
 This routine has bee deprecated.
 You should use the $cref/numeric_limits/limits/$$ $code epsilon$$ instead.

@@ -42,6 +42,9 @@ This file is included by
 $code cppad/cppad.hpp$$, but it can also be included separately with out
 the rest of the $code CppAD$$.
 
+$head Deprecated 2011-08-23$$
+Use $cref thread_alloc$$ instead.
+
 $childtable%
 	cppad/omp_alloc.hpp%
 	example/omp_alloc.cpp

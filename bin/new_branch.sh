@@ -31,7 +31,6 @@ echo_eval() {
 # -----------------------------------------------------------------------------
 # some settings
 svn_repository='https://projects.coin-or.org/svn/CppAD'
-git_repository='https://github.com/bradbell/cppad'
 work_directory='build/work'
 # -----------------------------------------------------------------------------
 # check that remote master is in sync

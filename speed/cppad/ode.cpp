@@ -96,6 +96,9 @@ bool link_ode(
 		if( global_optimize )
 			f.optimize();
 
+		// skip comparison operators
+		f.compare_change_count(0);
+
 		jacobian = f.Jacobian(x);
 	}
 	else
@@ -115,6 +118,10 @@ bool link_ode(
 
 		if( global_optimize )
 			f.optimize();
+
+		// skip comparison operators
+		f.compare_change_count(0);
+
 		while(repeat--)
 		{	// get next argument value
 			uniform_01(n, x);

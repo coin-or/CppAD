@@ -31,7 +31,7 @@ $index deprecated, include file$$
 $index include, deprecated file$$
 $index file, deprecated include$$
 
-$head Purpose$$
+$head Deprecated 2006-12-17$$
 The following is a list of deprecated include file names 
 and the corresponding names that should be used. 
 For example, if your program uses the deprecated preprocessor command

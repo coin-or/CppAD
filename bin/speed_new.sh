@@ -20,7 +20,7 @@ then
 cat << EOF
 usage: bin/speed_new.sh option_1 option_2 ...
 where the possible options are:
-	onetape, colpack, optimize, atomic, memory, boolsparsity
+	onetape, colpack, optimize, atomic, memory, boolsparsity, colpack
 Use the special value 'none' for no options
 EOF
 	exit 1
@@ -95,7 +95,7 @@ then
 	cd build; make check_speed_cppad; cd speed/cppad
 	#
 	# run speed test for the current version
-	echo "./speed_cppad speed 123 $tmp $* > cur_speed.out"
+	echo "./speed_cppad speed 123 $* > cur_speed.out"
 	./speed_cppad speed 123 $* > cur_speed.out
 	#
 	echo "cd ../../.."

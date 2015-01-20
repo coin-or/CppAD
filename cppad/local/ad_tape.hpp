@@ -3,7 +3,7 @@
 # define CPPAD_AD_TAPE_INCLUDED
 
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-14 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-15 Bradley M. Bell
 
 CppAD is distributed under multiple licenses. This distribution is under
 the terms of the 
@@ -118,14 +118,6 @@ private:
 		const AD<Base> &falseCase
 	);
 
-	// see Compare.h
-	void RecordCompare(
-		enum CompareOp  cop      ,
-		bool            result   ,
-		const AD<Base> &left     ,
-		const AD<Base> &right
-	);
-
 	// place a VecAD object in the tape
 	size_t AddVec(
 		size_t                   length,
@@ -138,6 +130,8 @@ public:
 	// public function only used by CppAD::Independent
 	template <typename VectorADBase>
 	void Independent(VectorADBase &u);
+	template <typename VectorADBase>
+	void Independent(VectorADBase &u, size_t abort_op_index);
 
 };
 // ---------------------------------------------------------------------------

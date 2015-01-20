@@ -31,7 +31,7 @@ $index delete, track$$
 $index track, new and delete$$
 $index memory, track$$
 
-$head Deprecated$$
+$head Deprecated 2007-07-23$$
 $index deprecated, track memory$$
 All these routines have been deprecated.
 You should use the $cref thread_alloc$$ memory allocator instead

@@ -3,7 +3,7 @@
 # define CPPAD_OPTIMIZE_INCLUDED
 
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-14 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-15 Bradley M. Bell
 
 CppAD is distributed under multiple licenses. This distribution is under
 the terms of the 
@@ -87,11 +87,6 @@ $codei%
 %$$ 
 See the discussion about
 $cref/sequence constructors/FunConstruct/Sequence Constructor/$$.
-
-$head Comparison Operators$$
-Any comparison operators that are in the tape are removed by this operation.
-Hence the return value of $cref CompareChange$$ will always be zero
-for an optimized tape (even if $code NDEBUG$$ is not defined).
 
 $head Atomic Functions$$
 There are some subtitle issue with optimized $cref atomic$$ functions
@@ -1704,7 +1699,6 @@ void optimize_run(
 			break;  // --------------------------------------------
 
 			// Operations where there is nothing to do
-			case ComOp:
 			case EndOp:
 			case ParOp:
 			case PriOp:
@@ -1716,7 +1710,28 @@ void optimize_run(
 			tape[i_var].connect_type = yes_connected;
 			break;
 
-			// Load using a parameter index
+			// Compare operators never get removed -----------------
+			case LepvOp:
+			case LtpvOp:
+			case EqpvOp:
+			case NepvOp:
+			tape[arg[1]].connect_type = yes_connected;
+			break;
+
+			case LevpOp:
+			case LtvpOp:
+			tape[arg[0]].connect_type = yes_connected;
+			break;
+
+			case LevvOp:
+			case LtvvOp:
+			case EqvvOp:
+			case NevvOp:
+			tape[arg[0]].connect_type = yes_connected;
+			tape[arg[1]].connect_type = yes_connected;
+			break;
+
+			// Load using a parameter index ----------------------
 			case LdpOp:
 			if( tape[i_var].connect_type != not_connected )
 			{
@@ -2089,7 +2104,20 @@ void optimize_run(
 		// operation sequence
 		bool keep;
 		switch( op )
-		{	case ComOp:
+		{	// see wish_list/Optimize/CompareChange entry.
+			case EqpvOp:
+			case EqvvOp:
+			case LepvOp:
+			case LevpOp:
+			case LevvOp:
+			case LtpvOp:
+			case LtvpOp:
+			case LtvvOp:
+			case NepvOp:
+			case NevvOp:
+			keep = true;
+			break;
+
 			case PriOp:
 			keep = false;
 			break;
@@ -2404,6 +2432,39 @@ void optimize_run(
 			CPPAD_ASSERT_NARG_NRES(op, 0, 0);
 			rec->PutOp(op);
 			break;
+			// ---------------------------------------------------
+			// Operations with two arguments and no results
+			case LepvOp:
+			case LtpvOp:
+			case EqpvOp:
+			case NepvOp:
+			CPPAD_ASSERT_NARG_NRES(op, 2, 0);
+			new_arg[0] = rec->PutPar( play->GetPar(arg[0]) );
+			new_arg[1] = tape[arg[1]].new_var;
+			rec->PutArg(new_arg[0], new_arg[1]);
+			rec->PutOp(op);
+			break;
+			//
+			case LevpOp:
+			case LtvpOp:
+			CPPAD_ASSERT_NARG_NRES(op, 2, 0);
+			new_arg[0] = tape[arg[0]].new_var;
+			new_arg[1] = rec->PutPar( play->GetPar(arg[1]) );
+			rec->PutArg(new_arg[0], new_arg[1]);
+			rec->PutOp(op);
+			break;
+			//
+			case LevvOp:
+			case LtvvOp:
+			case EqvvOp:
+			case NevvOp:
+			CPPAD_ASSERT_NARG_NRES(op, 2, 0);
+			new_arg[0] = tape[arg[0]].new_var;
+			new_arg[1] = tape[arg[1]].new_var;
+			rec->PutArg(new_arg[0], new_arg[1]);
+			rec->PutOp(op);
+			break;
+
 			// ---------------------------------------------------
 			// Operations with no arguments and one result
 			case InvOp:
@@ -2741,6 +2802,9 @@ void ADFun<Base>::optimize(void)
 
 	// now replace the recording
 	play_.get(rec);
+
+	// set flag so this function knows it has been optimized
+	has_been_optimized_ = true;
 
 	// free memory allocated for sparse Jacobian calculation
 	// (the results are no longer valid)

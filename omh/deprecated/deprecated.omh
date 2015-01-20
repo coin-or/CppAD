@@ -1,6 +1,6 @@
 /* $Id$ */
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-13 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-15 Bradley M. Bell
 
 CppAD is distributed under multiple licenses. This distribution is under
 the terms of the 
@@ -20,6 +20,7 @@ $section CppAD Deprecated API Features$$
 $childtable%
 	omh/deprecated/include_deprecated.omh%
 	omh/deprecated/fun_deprecated.omh%
+	omh/deprecated/compare_change.omh%
 	cppad/local/omp_max_thread.hpp%
 	cppad/track_new_del.hpp%
 	omh/deprecated/omp_alloc.omh%
@@ -34,7 +35,7 @@ $table
 $cref/CppADCreateUnaryBool/BoolFun/Deprecated/$$  $cnext 
 	$title BoolFun$$ 
 $rnext
-$cref/CppADCreateDiscrete/Discrete/Deprecated/$$  $cnext 
+$cref/CppADCreateDiscrete/Discrete/CppADCreateDiscrete Deprecated 2007-07-28/$$  $cnext 
 	$title Discrete$$
 $rnext
 $cref InstallUnix$$                               $cnext

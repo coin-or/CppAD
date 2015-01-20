@@ -3,7 +3,7 @@
 # define CPPAD_CHECKPOINT_INCLUDED
 
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-14 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-15 Bradley M. Bell
 
 CppAD is distributed under multiple licenses. This distribution is under
 the terms of the 
@@ -196,6 +196,9 @@ public:
 		f_.check_for_nan(false);
 		// now optimize (we expect to use this function many times).
 		f_.optimize();
+		// now disable checking of comparison opertaions
+		// 2DO: add a debugging mode that checks for changes and aborts
+		f_.compare_change_count(0);
 	}
 	/*!
 	Implement the user call to <tt>afun(ax, ay)</tt>.

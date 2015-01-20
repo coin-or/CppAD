@@ -1,6 +1,6 @@
 /* $Id$ */
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-14 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-15 Bradley M. Bell
 
 CppAD is distributed under multiple licenses. This distribution is under
 the terms of the 
@@ -69,7 +69,7 @@ extern bool CheckSimpleVector(void);
 extern bool colpack_hes(void);
 extern bool colpack_jac(void);
 extern bool Compare(void);
-extern bool CompareChange(void);
+extern bool compare_change(void);
 extern bool complex_poly(void);
 extern bool CondExp(void);
 extern bool conj_grad(void);
@@ -228,7 +228,7 @@ int main(void)
 	ok &= Run( CheckNumericType,  "CheckNumericType" );
 	ok &= Run( CheckSimpleVector, "CheckSimpleVector");
 	ok &= Run( Compare,           "Compare"          );
-	ok &= Run( CompareChange,     "CompareChange"    );
+	ok &= Run( compare_change,    "compare_change"   );
 	ok &= Run( complex_poly,      "complex_poly"     );
 	ok &= Run( CondExp,           "CondExp"          );
 	ok &= Run( conj_grad,         "conj_grad"        );

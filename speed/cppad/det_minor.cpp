@@ -102,6 +102,9 @@ bool link_det_minor(
 
 		if( global_optimize )
 			f.optimize();
+
+		// skip comparison operators
+		f.compare_change_count(0);
 	
 		// evaluate the determinant at the new matrix value
 		f.Forward(0, matrix);
@@ -127,6 +130,9 @@ bool link_det_minor(
 
 		if( global_optimize )
 			f.optimize();
+
+		// skip comparison operators
+		f.compare_change_count(0);
 	
 		// ------------------------------------------------------
 		while(repeat--)

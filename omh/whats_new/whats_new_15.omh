@@ -13,6 +13,7 @@ Please visit http://www.coin-or.org/CppAD/ for information on other licenses.
 $begin whats_new_15$$
 $dollar @$$
 $spell
+	op
 	onetape
 	CppAD
 	colpack
@@ -28,6 +29,28 @@ This section contains a list of the changes to CppAD during 2015
 (in reverse order by date).
 The purpose of this section is to
 assist you in learning about changes between various versions of CppAD.
+
+$head 01-20$$
+The new $cref compare_change$$ interface has been created 
+and the old $cref CompareChange$$ function has been deprecated; 
+see the $cref compare_change.cpp$$ example.
+This enables one to determine the source code during taping
+that corresponds to changes in the comparisons during 
+$cref/zero order forward/forward_zero/$$ operations; see
+$cref/abort_op_index/Independent/abort_op_index/$$.
+$pre
+
+$$
+This new $cref compare_change$$ interface can detect comparison changes 
+even if $cref/NDEBUG/Faq/Speed/NDEBUG/$$ is defined and 
+even if $cref/f.optimize()/optimize/$$ has been called.
+The deprecated function $code CompareChange$$ used to always return zero after
+$codei%
+	%f%.optimize()
+%$$
+and was not even defined when $code NDEBUG$$ was defined.
+There was a resulting speed effect for this; see the wish list
+$cref/compare change/WishList/Optimization/Comparison Changes/$$ entry.
 
 $head 01-09$$
 $list number$$

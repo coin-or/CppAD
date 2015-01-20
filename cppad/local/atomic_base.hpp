@@ -242,7 +242,7 @@ $icode%afun%.option(%option_value%)%$$
 $head atomic_sparsity$$
 $index atomic_sparsity$$
 $index sparsity, atomic$$
-You can used this option to set to type used for 
+You can used this option to set the type used for 
 $icode afun$$ sparsity patterns.
 This does not apply individual calls to $icode afun$$,
 but rather all its uses between when the sparsity pattern is set and when

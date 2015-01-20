@@ -3,7 +3,7 @@
 # define CPPAD_REV_HES_SWEEP_INCLUDED
 
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-14 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-15 Bradley M. Bell
 
 CppAD is distributed under multiple licenses. This distribution is under
 the terms of the 
@@ -303,12 +303,6 @@ void RevHesSweep(
 			break;
 			// ---------------------------------------------------
 
-			case ComOp:
-			CPPAD_ASSERT_NARG_NRES(op, 4, 0)
-			CPPAD_ASSERT_UNKNOWN( arg[1] > 1 );
-			break;
-			// --------------------------------------------------
-
 			case CosOp:
 			// sin(x), cos(x)
 			CPPAD_ASSERT_NARG_NRES(op, 1, 2)
@@ -406,6 +400,20 @@ void RevHesSweep(
 				RevJac,
 				vecad_jac.data()
 			);
+			break;
+			// -------------------------------------------------
+
+			case EqpvOp:
+			case EqvvOp:
+			case LtpvOp:
+			case LtvpOp:
+			case LtvvOp:
+			case LepvOp:
+			case LevpOp:
+			case LevvOp:
+			case NepvOp:
+			case NevvOp:
+			CPPAD_ASSERT_NARG_NRES(op, 2, 0);
 			break;
 			// -------------------------------------------------
 

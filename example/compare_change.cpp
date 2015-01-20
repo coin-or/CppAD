@@ -1,6 +1,6 @@
 /* $Id$ */
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-12 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-15 Bradley M. Bell
 
 CppAD is distributed under multiple licenses. This distribution is under
 the terms of the 
@@ -44,69 +44,133 @@ namespace { // put this function in the empty namespace
 			return x;
 		return y;
 	}
+	struct error_info {
+		bool known;
+		int  line;
+		std::string file;
+		std::string exp;
+		std::string msg;
+	};
+	void error_handler(
+		bool        known       ,
+		int         line        ,
+		const char *file        ,
+		const char *exp         ,
+		const char *msg         )
+	{	// error handler must not return, so throw an exception
+		error_info info;
+		info.known = known;
+		info.line  = line;
+		info.file  = file;
+		info.exp   = exp;
+		info.msg   = msg;
+		throw info;
+	}
+
 }
 
-bool CompareChange(void)
+bool compare_change(void)
 {	bool ok = true;
-// f.CompareChange not defined when NDEBUG is true
-# ifndef NDEBUG
-
 	using CppAD::AD;
-	using CppAD::ADFun;
-	using CppAD::Independent;
 
 	// domain space vector
 	size_t n = 2;
-	CPPAD_TESTVECTOR(AD<double>) X(n);
-	X[0] = 3.;
-	X[1] = 4.;
+	CPPAD_TESTVECTOR(AD<double>) ax(n);
+	ax[0] = 3.;
+	ax[1] = 4.;
 
 	// declare independent variables and start tape recording
-	CppAD::Independent(X);
+	CppAD::Independent(ax);
 
 	// range space vector
 	size_t m = 1;
-	CPPAD_TESTVECTOR(AD<double>) Y(m);
-	Y[0] = Minimum(X[0], X[1]);
+	CPPAD_TESTVECTOR(AD<double>) ay(m);
+	ay[0] = Minimum(ax[0], ax[1]);
 
 	// create f: x -> y and stop tape recording
-	ADFun<double> f(X, Y);
+	CppAD::ADFun<double> f(ax, ay);
 
-	// evaluate zero mode Forward where conditional has the same result
-	// note that f.CompareChange is not defined when NDEBUG is true
-	CPPAD_TESTVECTOR(double) x(n);
-	CPPAD_TESTVECTOR(double) y(m);
-	x[0] = 3.5;
-	x[1] = 4.;  
+	// set count to one (not necessry because is its default value)
+	f.compare_change_count(1);
+
+	// evaluate zero mode Forward where comparison has the same result
+	// as during taping; i.e., x[0] < x[1].
+	CPPAD_TESTVECTOR(double) x(n), y(m);
+	x[0] = 2.;
+	x[1] = 3.;  
 	y    = f.Forward(0, x);
 	ok  &= (y[0] == x[0]);
 	ok  &= (y[0] == Minimum(x[0], x[1]));
-	ok  &= (f.CompareChange() == 0);
+	ok  &= (f.compare_change_number() == 0);
+	ok  &= (f.compare_change_op_index() == 0);
 
-	// evaluate zero mode Forward where conditional has different result
-	x[0] = 4.;
-	x[1] = 3.;
+	// evaluate zero mode Forward where comparison has different result
+	// as during taping; i.e., x[0] >= x[1].
+	x[0] = 3.;
+	x[1] = 2.;
 	y    = f.Forward(0, x);
 	ok  &= (y[0] == x[0]);
 	ok  &= (y[0] != Minimum(x[0], x[1]));
-	ok  &= (f.CompareChange() == 1); 
+	ok  &= (f.compare_change_number() == 1); 
+	ok  &= (f.compare_change_op_index() > 0 ); 
+	size_t op_index = f.compare_change_op_index();
 
-	// re-tape to obtain the new AD operation sequence
-	X[0] = 4.;
-	X[1] = 3.;
-	Independent(X);
-	Y[0] = Minimum(X[0], X[1]);
+	// Local block during which default CppAD error handler is replaced.
+	// If you do not replace the default CppAD error handler,
+	// and you run in the debugger, you will be able to inspect the
+	// call stack and see that 'if( x < y )' is where the comparison is.
+	bool caught_error = false;
+	{	CppAD::ErrorHandler local_error_handler(error_handler);
 
-	// stop tape and store result in f
-	f.Dependent(Y);
+		std::string check_msg = 
+			"Operator index equals abort_op_index in Independent";
+		try {
+			// determine the operation index where the change occurred
+			CppAD::Independent(ax, op_index);
+			ay[0] = Minimum(ax[0], ax[1]);
+		}
+		catch( error_info info )
+		{	caught_error = true;
+			ok          &= info.known;
+			ok          &= info.msg == check_msg;
+			// Must abort the recording so we can start a new one
+			// (and to avoid a memory leak).
+			AD<double>::abort_recording();
+		}
+	}
+	ok &= caught_error;
 
-	// evaluate the function at new argument values
+
+	// set count to zero to demonstrate case where comparisons are not checked
+	f.compare_change_count(0);
+	y    = f.Forward(0, x);
+	ok  &= (y[0] == x[0]);
+	ok  &= (y[0] != Minimum(x[0], x[1]));
+	ok  &= (f.compare_change_number()   == 0); 
+	ok  &= (f.compare_change_op_index() == 0); 
+
+	// now demonstrate that compare_change_number works for an optimized
+	// tape (note that compare_change_op_index is always zero after optimize)
+	f.optimize();
+	f.compare_change_count(1);
+	y    = f.Forward(0, x);
+	ok  &= (y[0] == x[0]);
+	ok  &= (y[0] != Minimum(x[0], x[1]));
+	ok  &= (f.compare_change_number()   == 1); 
+	ok  &= (f.compare_change_op_index() == 0); 
+
+	// now retape to get the a tape that agrees with the algorithm
+	ax[0] = x[0];
+	ax[1] = x[1];
+	Independent(ax);
+	ay[0] = Minimum(ax[0], ax[1]);
+	f.Dependent(ax, ay);
 	y    = f.Forward(0, x);
 	ok  &= (y[0] == x[1]);
 	ok  &= (y[0] == Minimum(x[0], x[1]));
-	ok  &= (f.CompareChange() == 0); 
+	ok  &= (f.compare_change_number()   == 0); 
+	ok  &= (f.compare_change_op_index() == 0); 
 
-# endif
 	return ok;
 }
 

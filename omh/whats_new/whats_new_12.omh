@@ -615,7 +615,7 @@ $lend
 $head 06-02$$
 $list number$$
 Remove the deprecated symbol
-$cref/CppADvector/test_vector/Deprecated/$$ from the
+$cref/CppADvector/test_vector/Deprecated 2012-07-03/$$ from the
 $cref det_by_lu$$ speed test source code $cref det_by_lu.hpp$$.
 $lnext
 Include $cref memory_leak$$ in the list of 

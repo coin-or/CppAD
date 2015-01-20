@@ -45,7 +45,7 @@ $index CppAD, nonlinear programming$$
 $index Ipopt, AD$$
 $index AD, Ipopt$$
 
-$head Deprecated$$
+$head Deprecated 2012-11-28$$
 This interface to Ipopt is deprecated, use $cref ipopt_solve$$ instead.
 
 $head Syntax$$

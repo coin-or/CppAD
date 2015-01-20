@@ -1,7 +1,7 @@
 #! /bin/bash -e
 # $Id$
 # -----------------------------------------------------------------------------
-# CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-14 Bradley M. Bell
+# CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-15 Bradley M. Bell
 #
 # CppAD is distributed under multiple licenses. This distribution is under
 # the terms of the
@@ -22,21 +22,11 @@ then
 	exit 1
 fi
 pattern="$1"
-dir_list='
-	bin
-	cppad 
-	cppad_ipopt
-	example 
-	introduction
-	multi_thread
-	omh
-	pkgconfig
-	print_for
-	speed
-	test_more 
-'
-#
-grep -l -r  "$pattern" $dir_list | \
-	 sed -e '/\/makefile.in/d' -e '/test_one.exe/d'  -e '/\/new\//d'
-grep -l "$pattern" makefile.am CMakeLists.txt doc.omh | \
-	 sed -e '/\/makefile.in/d' -e '/test_one.exe/d'  -e '/\/new\//d'
+if [ ! -e .git ]
+then
+	echo 'bin/search.sh: is only implemented for git repsoitory'
+	exit 1
+fi
+# -----------------------------------------------------------------------------
+file_list=`git ls-files`
+grep -l "$pattern" $file_list

@@ -1,6 +1,6 @@
 /* $Id$ */
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-13 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-15 Bradley M. Bell
 
 CppAD is distributed under multiple licenses. This distribution is under
 the terms of the 
@@ -310,61 +310,55 @@ namespace {
 	void depend_fun
 	(const Vector& x, Vector& y, size_t& original, size_t& opt)
 	{	typedef typename Vector::value_type Scalar;
-		Scalar a;
+		Scalar not_used;
 		Scalar one(1), two(2), three(3), four(4);
-		original = 0;
-		opt      = 0;
+
+		// independent variable and phantom at beginning
+		original = 1 + x.size();
+		opt      = 1 + x.size();
 
 		// unary operator where operand is arg[0]
-		a = CppAD::abs(x[0]); 
-		if( a < 1. )
-			y[0] = sin(x[0]);
-		else	y[0] = cos(x[0]); 
+		// (note that sin corresponds to two tape variables)
+		not_used = CppAD::abs(x[0]); 
+		y[0]     = sin(x[0]);
 		original += 3;
 		opt      += 2;
 
 		// binary operator where left operand is a variable
 		// and right operand is a parameter
-		a = x[1] + 2.;
-		if( a < 3. )
-			y[1] = x[1] * 3.;
-		else	y[1] = x[1] / 2.;
+		not_used = not_used + 2.;
+		y[1]     = x[1] * 3.;
 		original += 2;
 		opt      += 1;
 
 		// binary operator where left operand is a parameter
 		// and right operation is a variable
-		a = 2. - x[2];
-		if( a < 4. )
-			y[2] = 3. / x[2];
-		else	y[2] = 4. + x[2];
+		not_used = 2. - not_used;
+		y[2]     = 3. / x[2];
 		original += 2;
 		opt      += 1;
 
 		// binary operator where both operands are variables
-		a = x[3] - x[2];
-		if( a < 4. )
-			y[3] = x[3] / x[2];
-		else	y[3] = x[3] + x[2];
+		not_used  = x[3] - not_used;
+		y[3]      = x[3] / x[2];
 		original += 2;
 		opt      += 1;
 
-		// this conditional expression that will be optimized out
-		a = CppAD::CondExpLt(x[0], x[1], x[2], x[3]);
-		// 1 of the following 2 conditional expressions will be kept
-		if( a < 5. )
-			y[4] = CppAD::CondExpLt(x[4], one, two, three);
-		else	y[4] = CppAD::CondExpLt(x[4], two, three, four);
-		original += 2;
+		// conditional expression that will be optimized out
+		not_used = CppAD::CondExpLt(x[0], x[1], x[2], x[3]) + not_used;
+		y[4]     = CppAD::CondExpLt(x[4], one, two, three);
+		original += 3;
 		opt      += 1;
 
-		// Make sure that a parameter dependent variable
+		// y[5] does not depend on the value of not_used.
+		// Make sure a parameter, corresponding to a dependent variable,
 		// is not optimized out of the operation sequence.
-		// In addition, we do not use the argument x[5], to
-		// make sure it is not optimized out.
-		y[5] = 1.;
+		y[5]      = 0.0 * not_used;
 		original += 1;
 		opt      += 1;
+
+		// Wwe do not use the argument x[5], to
+		// make sure it is not optimized out.
 
 		return;
 	}
@@ -404,13 +398,13 @@ namespace {
 			ok &= (y[i] == check[i]);
 	
 		// Check size before optimization
-		ok &= F.size_var() == (n + 1 + original);
+		ok &= F.size_var() == original;
 	
 		// Optimize the operation sequence
 		F.optimize();
 	
 		// Check size after optimization
-		ok &= F.size_var() == (n + 1 + opt);
+		ok &= F.size_var() == opt;
 	
 		// check result now
 		// (should have already been checked if NDEBUG not defined)

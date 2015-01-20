@@ -3,7 +3,7 @@
 # define CPPAD_INDEPENDENT_INCLUDED
 
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-14 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-15 Bradley M. Bell
 
 CppAD is distributed under multiple licenses. This distribution is under
 the terms of the 
@@ -17,6 +17,7 @@ Please visit http://www.coin-or.org/CppAD/ for information on other licenses.
 
 $begin Independent$$
 $spell
+	op
 	alloc
 	num
 	Cpp
@@ -34,7 +35,10 @@ $index variable, independent$$
 $section Declare Independent Variables and Start Recording$$
 
 $head Syntax$$
-$codei%Independent(%x%)%$$
+$codei%Independent(%x%)
+%$$
+$codei%Independent(%x%, %abort_op_index%)
+%$$
 
 $head Purpose$$
 Start recording 
@@ -45,9 +49,10 @@ $cref/operation sequence/glossary/Operation/Sequence/$$ is completed,
 it must be transferred to a function object; see below.
 
 $head Start Recording$$
-An operation sequence recording is started by the command
+An operation sequence recording is started by the commands
 $codei%
 	Independent(%x%)
+	Independent(%x%, %abort_op_index%)
 %$$
 
 $head Stop Recording$$
@@ -55,11 +60,11 @@ The recording is stopped,
 and the operation sequence is transferred to the AD function object $icode f$$,
 using either the $cref/function constructor/FunConstruct/$$
 $codei%
-	ADFun<%Base%> %f%( %x%, %y%)
+	ADFun<%Base%> %f%(%x%, %y%)
 %$$
 or the $cref/dependent variable specifier/Dependent/$$
 $codei%
-	%f%.Dependent( %x%, %y%)
+	%f%.Dependent(%x%, %y%)
 %$$
 The only other way to stop a recording is using
 $cref abort_recording$$.
@@ -77,6 +82,17 @@ $codei%
 The size of the vector $icode x$$, must be greater than zero,
 and is the number of independent variables for this
 AD operation sequence.
+
+$head abort_op_index$$
+$index abort_op_index$$
+It specifies the operator index at which the execution is be aborted 
+by calling the CppAD $cref/error handler/ErrorHandler/$$.
+When this error handler leads to an assert, the user
+can inspect the call stack to see the source code corresponding to 
+this operator index; see
+$cref/purpose/compare_change/op_index/Purpose/$$.
+No abort will occur if $icode abort_op_index$$ is zero,
+of if $cref/NDEBUG/Faq/Speed/NDEBUG/$$ is defined.
 
 $head VectorAD$$
 The type $icode VectorAD$$ must be a $cref SimpleVector$$ class with
@@ -120,7 +136,7 @@ namespace CppAD {
 
 template <typename Base>
 template <typename VectorAD>
-void ADTape<Base>::Independent(VectorAD &x)
+void ADTape<Base>::Independent(VectorAD &x, size_t abort_op_index)
 {
 	// check VectorAD is Simple Vector class with AD<Base> elements
 	CheckSimpleVector< AD<Base>, VectorAD>();
@@ -132,6 +148,9 @@ void ADTape<Base>::Independent(VectorAD &x)
 		"Indepdendent: the argument vector x has zero size"
 	);
 	CPPAD_ASSERT_UNKNOWN( Rec_.num_var_rec() == 0 );
+
+	// set the abort index before doing anything else
+	Rec_.set_abort_op_index(abort_op_index);
 
 	// mark the beginning of the tape and skip the first variable index 
 	// (zero) because parameters use taddr zero
@@ -155,7 +174,7 @@ void ADTape<Base>::Independent(VectorAD &x)
 }
 
 template <typename VectorAD>
-inline void Independent(VectorAD &x)
+inline void Independent(VectorAD &x, size_t abort_op_index)
 {	typedef typename VectorAD::value_type ADBase;
 	typedef typename ADBase::value_type   Base;
 	CPPAD_ASSERT_KNOWN(
@@ -165,10 +184,12 @@ inline void Independent(VectorAD &x)
 		"AD<Base>::abort_recording() would abort this previous recording."
 	);
 	ADTape<Base>* tape = ADBase::tape_manage(tape_manage_new);
-	tape->Independent(x); 
+	tape->Independent(x, abort_op_index); 
 }
-
-
+template <typename VectorAD>
+inline void Independent(VectorAD &x)
+{	size_t abort_op_index = 0;
+	Independent(x, abort_op_index); }
 } 
 // END CppAD namespace
 

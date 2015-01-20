@@ -134,12 +134,10 @@ load instruction.
 In the case where the index is zero,
 the instruction corresponds to a parameter (not variable).
 
-\return
-The return value is zero.
 */
 
 template <class Base>
-size_t forward2sweep(
+void forward2sweep(
 	const size_t                q,
 	const size_t                r,
 	const size_t                n,
@@ -169,9 +167,6 @@ size_t forward2sweep(
 
 	// operation argument indices
 	const addr_t*   arg = CPPAD_NULL;
-
-	// initialize the comparision operator (ComOp) counter
-	const size_t compareCount = 0;
 
 	// work space used by UserOp.
 	vector<bool> user_vx;        // empty vecotor
@@ -294,11 +289,6 @@ size_t forward2sweep(
 			break;
 			// ---------------------------------------------------
 
-			case ComOp:
-			CPPAD_ASSERT_UNKNOWN(q > 0 );
-			break;
-			// ---------------------------------------------------
-
 			case CosOp:
 			// sin(x), cos(x)
 			CPPAD_ASSERT_UNKNOWN( i_var < numvar  );
@@ -386,12 +376,26 @@ size_t forward2sweep(
 				taylor
 			);
 			break;
+			// ---------------------------------------------------
+
+			case EqpvOp:
+			case EqvvOp:
+			case LtpvOp:
+			case LtvpOp:
+			case LtvvOp:
+			case LepvOp:
+			case LevpOp:
+			case LevvOp:
+			case NepvOp:
+			case NevvOp:
+			CPPAD_ASSERT_UNKNOWN(q > 0 );
+			break;
 			// -------------------------------------------------
 
 			case LogOp:
 			forward_log_op_dir(q, r, i_var, arg[0], J, taylor);
 			break;
-			// -------------------------------------------------
+			// ---------------------------------------------------
 
 			case MulvvOp:
 			forward_mulvv_op_dir(q, r, i_var, arg, parameter, J, taylor);
@@ -735,7 +739,7 @@ size_t forward2sweep(
 	CPPAD_ASSERT_UNKNOWN( user_state == user_start );
 	CPPAD_ASSERT_UNKNOWN( i_var + 1 == play->num_var_rec() );
 
-	return compareCount;
+	return;
 }
 
 // preprocessor symbols that are local to this file

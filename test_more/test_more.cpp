@@ -1,6 +1,6 @@
 /* $Id$ */
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-14 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-15 Bradley M. Bell
 
 CppAD is distributed under multiple licenses. This distribution is under
 the terms of the 
@@ -33,7 +33,7 @@ extern bool base_alloc_test(void);
 extern bool check_simple_vector(void);
 extern bool checkpoint(void);
 extern bool Compare(void);
-extern bool CompareChange(void);
+extern bool compare_change(void);
 extern bool CondExp(void);
 extern bool CondExpAD(void);
 extern bool copy(void);
@@ -144,7 +144,7 @@ int main(void)
 	ok &= Run( check_simple_vector, "check_simple_vector" );
 	ok &= Run( checkpoint,      "checkpoint"     );
 	ok &= Run( Compare,         "Compare"        );
-	ok &= Run( CompareChange,   "CompareChange"  );
+	ok &= Run( compare_change,  "compare_change" );
 	ok &= Run( CondExp,         "CondExp"        );
 	ok &= Run( CondExpAD,       "CondExpAD"      );
 	ok &= Run( copy,            "copy"           );

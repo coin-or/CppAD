@@ -35,7 +35,7 @@ $index test, vector$$
 
 $section Choosing The Vector Testing Template Class$$
 
-$head Deprecated$$
+$head Deprecated 2012-07-03$$
 $index deprecated, test vector$$
 The $code CPPAD_TEST_VECTOR$$ macro has been deprecated,
 use $cref/CPPAD_TESTVECTOR/testvector/$$ instead.
@@ -126,7 +126,7 @@ and $code std::valarray$$ with CppAD is always tested to some degree.
 Specifying $icode boost_dir$$ will increase the amount of
 Ublas vector testing. 
 
-$head CppADvector$$
+$head CppADvector Deprecated 2007-07-28$$
 The preprocessor symbol $code CppADvector$$ is defined to
 have the same value as $code CPPAD_TEST_VECTOR$$ but its use is deprecated:
 $codep */

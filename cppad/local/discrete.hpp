@@ -147,7 +147,7 @@ functions to avoid retaping a calculation that requires interpolation.
 $cref interp_retape.cpp$$
 shows how interpolation can be done with retaping.)
 
-$head Deprecated$$
+$head CppADCreateDiscrete Deprecated 2007-07-28$$
 $index CppADCreateDiscrete, deprecated$$
 $index deprecated, CppADCreateDiscrete$$
 The preprocessor symbol $code CppADCreateDiscrete$$

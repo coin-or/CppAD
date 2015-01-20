@@ -81,7 +81,7 @@ $index install, unix CppAD$$
 
 $section Deprecated Unix Test and Installation$$
 
-$head Deprecated$$
+$head Deprecated 2012-12-26$$
 These install instructions have been deprecated and no improvements
 have been added since 2012.
 For example, this install procedure will not detect any of the 

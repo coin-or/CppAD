@@ -113,6 +113,9 @@ bool link_poly(
 		if( global_optimize )
 			f.optimize();
 
+		// skip comparison operators
+		f.compare_change_count(0);
+
 		// pre-allocate memory for three forward mode calculations
 		f.capacity_order(3);
 
@@ -143,6 +146,9 @@ bool link_poly(
 
 		if( global_optimize )
 			f.optimize();
+
+		// skip comparison operators
+		f.compare_change_count(0);
 
 		while(repeat--)
 		{	// sufficient memory is allocated by second repetition

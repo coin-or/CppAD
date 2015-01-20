@@ -97,6 +97,9 @@ bool link_det_lu(
 		if( global_optimize )
 			f.optimize();
 
+		// skip comparison operators
+		f.compare_change_count(0);
+
 		// evaluate and return gradient using reverse mode
 		f.Forward(0, matrix);
 		gradient = f.Reverse(1, w);

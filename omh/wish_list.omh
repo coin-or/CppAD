@@ -1,6 +1,6 @@
 $Id$
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-14 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-15 Bradley M. Bell
 
 CppAD is distributed under multiple licenses. This distribution is under
 the terms of the 
@@ -11,6 +11,8 @@ Please visit http://www.coin-or.org/CppAD/ for information on other licenses.
 -------------------------------------------------------------------------- */
 $begin WishList$$
 $spell
+	onetape
+	Op
 	jacobian
 	nz
 	RevSparseJac
@@ -171,6 +173,15 @@ $cref seq_property$$.
 $head Optimization$$
 $index optimize, tape$$
 $index tape, optimize$$
+
+$subhead Comparison Changes$$
+The comparison operators used to not be taped when
+$cref/NDEBUG/Faq/Speed/NDEBUG/$$ was defined.
+They are now taped so that the $cref compare_change$$ interface
+works even for compiler optimize code.
+This caused a significant slow down in the 
+$cref cppad_det_lu.cpp$$ speed test (with no options specified).
+Perhaps there should be an option to skip the comparison taping.
 
 $subhead Expression Hashing$$
 During expression sequence $cref/optimization/optimize/$$,

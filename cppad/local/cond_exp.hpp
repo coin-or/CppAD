@@ -131,7 +131,7 @@ as well as forward and reverse derivatives calculations.
 There is one exception to this optimization; see
 $cref/wish list/WishList/Conditional Expressions/$$.
 
-$head Deprecated$$
+$head Deprecate 2005-08-07$$
 Previous versions of CppAD used 
 $codei%
 	CondExp(%flag%, %if_true%, %if_false%)

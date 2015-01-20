@@ -115,6 +115,9 @@ bool link_mat_mul(
 		if( global_optimize )
 			f.optimize();
 
+		// skip comparison operators
+		f.compare_change_count(0);
+
 		// evaluate and return gradient using reverse mode
 		z  = f.Forward(0, x);
 		dz = f.Reverse(1, w);
@@ -148,6 +151,10 @@ bool link_mat_mul(
 
 		if( global_optimize )
 			f.optimize();
+
+		// skip comparison operators
+		f.compare_change_count(0);
+
 		while(repeat--)
 		{	// get a next matrix
 			CppAD::uniform_01(n, x);

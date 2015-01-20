@@ -3,7 +3,7 @@
 # define CPPAD_AD_INCLUDED
 
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-13 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-15 Bradley M. Bell
 
 CppAD is distributed under multiple licenses. This distribution is under
 the terms of the 
@@ -39,7 +39,7 @@ class AD {
 
 	// template friend functions where template parameter is not bound
 	template <class VectorAD>
-	friend void Independent(VectorAD &x);
+	friend void Independent(VectorAD &x, size_t abort_op_index);
 
 	// one argument functions
 	friend bool Parameter          <Base> 

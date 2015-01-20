@@ -156,6 +156,9 @@ bool link_sparse_hessian(
 		if( global_optimize )
 			f.optimize();
 
+		// skip comparison operators
+		f.compare_change_count(0);
+
 		// calculate the Hessian sparsity pattern for this function
 		if( global_boolsparsity )
 			calc_sparsity(bool_sparsity, f);
@@ -193,6 +196,9 @@ bool link_sparse_hessian(
 
 		if( global_optimize )
 			f.optimize();
+
+		// skip comparison operators
+		f.compare_change_count(0);
 
 		// calculate the Hessian sparsity pattern for this function
 		if( global_boolsparsity)

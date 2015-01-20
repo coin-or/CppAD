@@ -62,7 +62,7 @@ $codei%
 %$$
 See $cref Dependent$$ for a description of this operation.
 
-$subhead Deprecated$$
+$subhead Deprecated 2007-08-07$$
 This syntax was deprecated when CppAD was extended to allow
 for more than one $codei%AD<%Base%>%$$ recording to be
 active at one time. 
@@ -81,7 +81,7 @@ This is the highest order of the
 $cref/Taylor coefficients/glossary/Taylor Coefficient/$$
 that are currently stored in $icode f$$.
 
-$subhead Deprecated$$
+$subhead Deprecated 2006-03-31$$
 Zero order corresponds to function values being stored in $icode f$$.
 In the future, we would like to be able to erase the function
 values so that $icode f$$ uses less memory. 
@@ -104,7 +104,7 @@ information currently stored in $icode f$$.
 This memory is returned to the system when the destructor for 
 $icode f$$ is called.
 
-$subhead Deprecated$$
+$subhead Deprecated 2006-03-31$$
 It used to be the case that an ADFun object just kept increasing its
 buffers to the maximum size necessary during its lifetime.
 It would then return the buffers to the system when its destructor
@@ -126,7 +126,7 @@ one for each component of the domain that is a parameter.
 The amount of work and memory necessary for computing function values
 and derivatives using $icode f$$ is roughly proportional to $icode s$$.
 
-$subhead Deprecated$$
+$subhead Deprecated 2006-04-03$$
 There are other sizes attached to an ADFun object, for example,
 the number of operations in the sequence.
 In order to avoid confusion with these other sizes,
@@ -143,7 +143,7 @@ $codei%
 and is the number of Taylor coefficient orders
 currently calculated and stored in the ADFun object $icode f$$.
 
-$subhead Deprecated$$
+$subhead Deprecated 2006-06-17$$
 This function has been replaced by $cref size_order$$.
 
 $head use_VecAD$$
@@ -160,7 +160,7 @@ stored in $icode f$$ contains
 $cref/VecAD/VecAD/VecAD<Base>::reference/$$ operands.
 Otherwise $icode u$$ is false.
 
-$subhead Deprecated$$
+$subhead Deprecated 2006-04-08$$
 You can instead use
 $codei%
 	%u% = %f%.size_VecAD() > 0
@@ -176,7 +176,7 @@ $codei%
 and is the number of Taylor coefficient orders
 currently calculated and stored in the ADFun object $icode f$$.
 
-$subhead Deprecated$$
+$subhead Deprecated 2014-03-18$$
 This function has been replaced by $cref size_order$$.
 
 $head capacity_taylor$$
@@ -189,7 +189,7 @@ $codei%
 and is the number of Taylor coefficient orders currently allocated
 in the ADFun object $icode f$$.
 
-$subhead Deprecated$$
+$subhead Deprecated 2014-03-18$$
 This function has been replaced by $cref capacity_order$$.
 
 
