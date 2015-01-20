@@ -449,7 +449,7 @@ AC_SUBST(cppad_compiler_has_erf, 0)
 dnl Determine if size_t has same size as unsigned int 
 AC_CHECK_SIZEOF([size_t])
 AC_CHECK_SIZEOF([unsigned int])
-if test "$ac_cv_size_t" == "$ac_cv_unsigned_int" ; then
+if test "$ac_cv_size_t" != "$ac_cv_unsigned_int" ; then
 	AC_SUBST(cppad_size_t_not_unsigned_int, 1)
 else
 	AC_SUBST(cppad_size_t_not_unsigned_int, 0)
