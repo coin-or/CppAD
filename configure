@@ -4673,7 +4673,7 @@ cat >>confdefs.h <<_ACEOF
 _ACEOF
 
 
-if test "$ac_cv_size_t" == "$ac_cv_unsigned_int" ; then
+if test "$ac_cv_sizeof_size_t" != "$ac_cv_sizeof_unsigned_int" ; then
 	cppad_size_t_not_unsigned_int=1
 
 else
