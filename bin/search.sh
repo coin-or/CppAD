@@ -1,7 +1,7 @@
 #! /bin/bash -e
 # $Id$
 # -----------------------------------------------------------------------------
-# CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-15 Bradley M. Bell
+# CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-14 Bradley M. Bell
 #
 # CppAD is distributed under multiple licenses. This distribution is under
 # the terms of the
@@ -22,11 +22,7 @@ then
 	exit 1
 fi
 pattern="$1"
-if [ ! -e .git ]
-then
-	echo 'bin/search.sh: is only implemented for git repsoitory'
-	exit 1
-fi
 # -----------------------------------------------------------------------------
-file_list=`git ls-files`
-grep -l "$pattern" $file_list
+list=`git ls-files | sed \
+	-e '/^configure/d' -e '/^makefile.in$/d' -e '/\/makefile.in$/d'`
+grep -l "$pattern" $list
