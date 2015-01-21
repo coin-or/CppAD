@@ -20,7 +20,9 @@ IF( ipopt_prefix )
 	SET(cppad_requires "ipopt")
 	FOREACH(dir ${cmake_install_includedirs})
 		IF(IS_DIRECTORY ${ipopt_prefix}/${dir} )
-			SET(cppad_pkgconfig_cflags "${cppad_cflags} -I${ipopt_prefix}/${dir}" )
+			SET(cppad_pkgconfig_cflags 
+				"${cppad_pkgconfig_cflags} -I${ipopt_prefix}/${dir}"
+			)
 		ENDIF(IS_DIRECTORY ${ipopt_prefix}/${dir} )
 	ENDFOREACH(dir)
 ENDIF( ipopt_prefix )
@@ -31,18 +33,22 @@ IF( colpack_prefix )
 	SET(cppad_libs "${cppad_libs} -lColPack")
 	FOREACH(dir ${cmake_install_libdirs})
 		IF(IS_DIRECTORY ${colpack_prefix}/${dir} )
-			SET(cppad_pkgconfig_cflags "${cppad_cflags} -L${colpack_prefix}/${dir}" )
+			SET(cppad_pkgconfig_cflags 
+				"${cppad_pkgconfig_cflags} -L${colpack_prefix}/${dir}"
+			)
 		ENDIF(IS_DIRECTORY ${colpack_prefix}/${dir} )
 	ENDFOREACH(dir)
 	FOREACH(dir ${cmake_install_includedirs})
 		SET(check_dir ${colpack_prefix}/${dir} )
 		IF(IS_DIRECTORY ${check_dir} )
-			SET(cppad_pkgconfig_cflags "${cppad_cflags} -I${check_dir}" )
+			SET(cppad_pkgconfig_cflags 
+				"${cppad_pkgconfig_cflags} -I${check_dir}"
+			)
 		ENDIF(IS_DIRECTORY ${check_dir} )
 	ENDFOREACH(dir)
 ENDIF( colpack_prefix )
 #
-MESSAGE(STATUS "cppad_pkgconfig_cflags = ${cppad_cflags}")
+MESSAGE(STATUS "cppad_pkgconfig_cflags = ${cppad_pkgconfig_cflags}")
 MESSAGE(STATUS "cppad_libs = ${cppad_libs}")
 MESSAGE(STATUS "cppad_requires = ${cppad_requires}")
 #
