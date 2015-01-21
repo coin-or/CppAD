@@ -15,6 +15,6 @@ Name:         cppad
 Description:  @cppad_description@
 Version:      @cppad_version@
 URL:          @cppad_url@
-Cflags:       @cppad_cflags@
+Cflags:       @cppad_pkgconfig_cflags@
 Libs:         @cppad_libs@
 Requires:     @cppad_requires@

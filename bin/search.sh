@@ -24,5 +24,5 @@ fi
 pattern="$1"
 # -----------------------------------------------------------------------------
 list=`git ls-files | sed \
-	-e '/^configure/d' -e '/^makefile.in$/d' -e '/\/makefile.in$/d'`
+	-e '/^configure$/d' -e '/^makefile.in$/d' -e '/\/makefile.in$/d'`
 grep -l "$pattern" $list

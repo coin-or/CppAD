@@ -699,14 +699,14 @@ AC_SUBST(cppad_description, "Differentiation of C++ Algorithms")
 AC_SUBST(cppad_version, ${PACKAGE_VERSION} )
 AC_SUBST(cppad_url, "http://www.coin-or.org/CppAD")
 if test "$prefix" == "NONE" ; then
-	cppad_cflags_value="-I$HOME/include"
+	cppad_pkgconfig_cflags_value="-I$HOME/include"
 	cppad_libs_value="-L$HOME/lib"
 else
-	cppad_cflags_value="-I$prefix/include"
+	cppad_pkgconfig_cflags_value="-I$prefix/include"
 	cppad_libs_value="-L$prefix/lib"
 fi
 if test "$POSTFIX_DIR" != "" ; then
-	cppad_cflags_value="$cppad_cflags_value/$POSTFIX_DIR"
+	cppad_pkgconfig_cflags_value="$cppad_cflags_value/$POSTFIX_DIR"
 	cppad_libs_value="$cppad_libs_value/$POSTFIX_DIR"
 fi
 if test "$IPOPT_DIR" == "" ; then
@@ -716,7 +716,7 @@ else
 	cppad_libs_value="$cppad_libs_value -lcppad_ipopt"
 	cppad_requires_value="ipopt"
 fi
-AC_SUBST(cppad_cflags,   "$cppad_cflags_value")
+AC_SUBST(cppad_pkgconfig_cflags,   "$cppad_cflags_value")
 AC_SUBST(cppad_libs,     "$cppad_libs_value")
 AC_SUBST(cppad_requires, "$cppad_requires_value")
 dnl
