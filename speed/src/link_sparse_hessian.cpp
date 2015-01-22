@@ -316,7 +316,7 @@ bool correct_sparse_hessian(bool is_package_double)
 	size_t K = row.size();
 	vector<double> hessian(K);
 
-	// The double package assuems hessian.size() >= 1
+	// The double package assumes hessian.size() >= 1
 	CPPAD_ASSERT_UNKNOWN( K >= 1 );
 	size_t n_sweep;
 	link_sparse_hessian(n, repeat, row, col, x, hessian, n_sweep);

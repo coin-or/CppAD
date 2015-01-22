@@ -3,7 +3,7 @@
 # define CPPAD_SPARSE_LIST_INCLUDED
 
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-14 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-15 Bradley M. Bell
 
 CppAD is distributed under multiple licenses. This distribution is under
 the terms of the 
@@ -30,25 +30,98 @@ private:
 	/// type used for each set in the vector of sets
 	/// (note that next is index in data_ for next element in this set).
 	struct Element { size_t value; size_t next; };
+
 	/// Number of sets that we are representing
 	/// (set by constructor and resize).
 	size_t n_set_;
+
 	/// Possible elements in each set are 0, 1, ..., end_ - 1;
 	size_t end_;
+
 	/// The data for all the elements in all the sets
 	CppAD::pod_vector<Element> data_;
+
 	/// next element
 	Element next_element_;
+
+	/// number of elements in data_ that are no longer being used.
+	size_t data_not_used_;
+private:
+	// -----------------------------------------------------------------
+	/*! Private member function that counts number of elements in a set.
+
+	\param index
+	is the index of the set we are counting.
+
+	\par Checked Assertions
+	\li index < n_set_
+	*/
+	size_t number_elements(size_t index) const
+	{	CPPAD_ASSERT_UNKNOWN(index < n_set_ );
+
+		size_t count   = 0;
+		size_t i       = index;
+		size_t value = data_[i].value;
+		while( value < end_ )
+		{	count++;
+			i     = data_[i].next;
+			value = data_[i].value;
+		}
+		return count;
+	}
+	// -----------------------------------------------------------------
+	/// Private member functions that does garbage collection.
+	void collect_garbage(void) 
+	{	CPPAD_ASSERT_UNKNOWN( 2 * data_not_used_ > data_.size() );
+		//
+		CPPAD_ASSERT_UNKNOWN( 
+			number_elements() + n_set_ + data_not_used_ == data_.size()
+		);
+
+		// copy the sets to a new data vector
+		pod_vector<Element> data_new;
+		data_new.extend(n_set_);
+		for(size_t i = 0; i < n_set_; i++)
+		{	size_t next     = i;
+			size_t next_new = i;
+			//
+			size_t value    = data_[next].value;
+			while( value < end_ )
+			{	data_new[next_new].value = value;	
+				// data_new[next_new].next  = data_new.extend(1);
+				// does not seem to work ?
+				size_t index_new         = data_new.extend(1);
+				data_new[next_new].next  = index_new;
+				//
+				next                     = data_[next].next;
+				next_new                 = data_new[next_new].next;
+				//
+				value                    = data_[next].value;
+			}
+			data_new[next_new].value = end_;
+		}
+		CPPAD_ASSERT_UNKNOWN( 
+			data_new.size() + data_not_used_ == data_.size()
+		);
+
+		// swap the new and old data vectors
+		data_.swap(data_new);
+
+		// all of the elements are used in this new version of data_
+		data_not_used_ = 0;
+	}
+
 public:
 	// -----------------------------------------------------------------
 	/*! Default constructor (no sets)
 	*/
 	sparse_list(void) : 
-	n_set_(0)                     , 
-	end_(0) 
+	n_set_(0)                 , 
+	end_(0)                   ,
+	data_not_used_(0)
 	{	next_element_.value = end_; }
 	// -----------------------------------------------------------------
-	/*! Make use of copy constructor an error
+	/*! Using copy constructor is a programing (not user) error
  
 	\param v
 	vector that we are attempting to make a copy of.
@@ -79,6 +152,7 @@ public:
 	{	n_set_                 = n_set_in;
 		end_                   = end_in;
 		next_element_.value    = end_in;
+		data_not_used_         = 0;
 		if( n_set_in == 0 )
 		{	// free all memory connected with this object
 			data_.free();
@@ -137,13 +211,13 @@ public:
 		}
 	}
 	// -----------------------------------------------------------------
-	/*! Is an element of a set.
+	/*! Is an element in a set.
 
 	\param index
 	is the index for this set in the vector of sets.
 
 	\param element
-	is the element we are adding to the set.
+	is the element we are checking to see if it is in set.
 
 	\par Checked Assertions
 	\li index    < n_set_
@@ -189,7 +263,8 @@ public:
 	If no such element exists, \c this->end() is returned.
 
 	\par Assumption
-	There is no call to \c add_element since the previvious \c begin
+	There is no call to \c add_element or \c binary_union
+	since the previvious \c begin
 	*/
 	size_t next_element(void)
 	{	size_t element = next_element_.value;
@@ -204,12 +279,26 @@ public:
 	\param target
 	is the index of the set we are setting to the empty set.
 
+	\par data_not_used_
+	increments this value by number of elements lost.
+
 	\par Checked Assertions
 	\li target < n_set_
 	*/
 	void clear(size_t target)
 	{	CPPAD_ASSERT_UNKNOWN( target < n_set_ );
+
+		// number of elements that will be deleted by this operation
+		size_t number_delete = number_elements(target);
+
+		// delete the elements from the set
 		data_[target].value = end_;
+
+		// adjust data_not_used_
+		data_not_used_ += number_delete;
+
+		if( 2 * data_not_used_ > data_.size() )
+			collect_garbage();
 	}
 	// -----------------------------------------------------------------
 	/*! Assign one set equal to another set.
@@ -225,6 +314,9 @@ public:
 	is the other \c sparse_list object (which may be the same as this
 	\c sparse_list object).
 
+	\par data_not_used_
+	increments this value by number of elements lost.
+
 	\par Checked Assertions
 	\li this_target  < n_set_
 	\li other_index  < other.n_set_
@@ -236,6 +328,13 @@ public:
 	{	CPPAD_ASSERT_UNKNOWN( this_target  <   n_set_        );
 		CPPAD_ASSERT_UNKNOWN( other_source <   other.n_set_  );
 		CPPAD_ASSERT_UNKNOWN( end_        == other.end()   );
+
+		// check if we are assigning a set to itself
+		if( (this == &other) & (this_target == other_source) )
+			return; 
+
+		// number of elements that will be deleted by this operation
+		size_t number_delete = number_elements(this_target);
 
 		size_t this_index        = this_target;
 		size_t other_index       = other_source;
@@ -249,6 +348,12 @@ public:
 			value                   = other.data_[other_index].value;
 		}
 		data_[this_index].value = end_;
+
+		// adjust data_not_used_
+		data_not_used_ += number_delete;
+
+		if( 2 * data_not_used_ > data_.size() )
+			collect_garbage();
 	}
 	// -----------------------------------------------------------------
 	/*! Assign a set equal to the union of two other sets.
@@ -286,11 +391,22 @@ public:
 		CPPAD_ASSERT_UNKNOWN( other_right < other.n_set_   );
 		CPPAD_ASSERT_UNKNOWN( end_        == other.end()   );
 
-		// merge left and right into target set
+		// determine if we will delete the original version of the target
+		size_t number_delete = 0;
+		bool delete_target = this_target == this_left;
+		delete_target     |= (this == &other) & (this_target == other_right);
+		if( delete_target )
+		{	// number of elements that will be deleted by this operation
+			number_delete = number_elements(this_target);
+		}
+
+		// value and next for left and right sets
 		size_t left_value  = data_[this_left].value;
 		size_t left_next   = data_[this_left].next;
 		size_t right_value = other.data_[other_right].value;
 		size_t right_next  = other.data_[other_right].next;
+
+		// merge left and right sets to form new target set
 		size_t current       = this_target;
 		while( (left_value < end_) | (right_value < end_) )
 		{	if( left_value == right_value )
@@ -312,6 +428,12 @@ public:
 			current = next;
 		}
 		data_[current].value = end_;
+
+		// adjust data_not_used_
+		data_not_used_ += number_delete;
+
+		if( 2 * data_not_used_ > data_.size() )
+			collect_garbage();
 	}
 	// -----------------------------------------------------------------
 	/*! Sum over all sets of the number of elements
@@ -323,12 +445,7 @@ public:
 	{	size_t i, count;
 		count = 0;
 		for(i = 0; i < n_set_; i++)
-		{	size_t index = i;
-			while( data_[index].value != end_ )
-			{	count++;
-				index = data_[index].next;
-			}
-		}
+			count += number_elements(i);	
 		return count;
 	}
 	// -----------------------------------------------------------------
