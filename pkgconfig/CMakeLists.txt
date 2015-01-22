@@ -13,11 +13,11 @@
 # Inherit environment from ../CMakeLists.txt
 #
 SET(cppad_pkgconfig_cflags "-I${cppad_abs_includedir}")
-SET(cppad_libs "")
-SET(cppad_requires "")
+SET(cppad_pkgconfig_libs "")
+SET(cppad_pkgconfig_requires "")
 IF( ipopt_prefix )
-	SET(cppad_libs "-L${cppad_abs_libdir} -lcppad_ipopt")
-	SET(cppad_requires "ipopt")
+	SET(cppad_pkgconfig_libs "-L${cppad_abs_libdir} -lcppad_ipopt")
+	SET(cppad_pkgconfig_requires "ipopt")
 	FOREACH(dir ${cmake_install_includedirs})
 		IF(IS_DIRECTORY ${ipopt_prefix}/${dir} )
 			SET(cppad_pkgconfig_cflags 
@@ -29,8 +29,8 @@ ENDIF( ipopt_prefix )
 #
 IF( colpack_prefix )
 	# Cannot use requires because colpack does not have a pkgconfig file.
-	# SET(cppad_requires "colpack")
-	SET(cppad_libs "${cppad_libs} -lColPack")
+	# SET(cppad_pkgconfig_requires "colpack")
+	SET(cppad_pkgconfig_libs "${cppad_pkgconfig_libs} -lColPack")
 	FOREACH(dir ${cmake_install_libdirs})
 		IF(IS_DIRECTORY ${colpack_prefix}/${dir} )
 			SET(cppad_pkgconfig_cflags 
@@ -39,18 +39,17 @@ IF( colpack_prefix )
 		ENDIF(IS_DIRECTORY ${colpack_prefix}/${dir} )
 	ENDFOREACH(dir)
 	FOREACH(dir ${cmake_install_includedirs})
-		SET(check_dir ${colpack_prefix}/${dir} )
-		IF(IS_DIRECTORY ${check_dir} )
+		IF(IS_DIRECTORY ${colpack_prefix}/${dir} )
 			SET(cppad_pkgconfig_cflags 
-				"${cppad_pkgconfig_cflags} -I${check_dir}"
+				"${cppad_pkgconfig_cflags} -I${colpack_prefix}/${dir}"
 			)
-		ENDIF(IS_DIRECTORY ${check_dir} )
+		ENDIF(IS_DIRECTORY ${colpack_prefix}/${dir} )
 	ENDFOREACH(dir)
 ENDIF( colpack_prefix )
 #
 MESSAGE(STATUS "cppad_pkgconfig_cflags = ${cppad_pkgconfig_cflags}")
-MESSAGE(STATUS "cppad_libs = ${cppad_libs}")
-MESSAGE(STATUS "cppad_requires = ${cppad_requires}")
+MESSAGE(STATUS "cppad_pkgconfig_libs = ${cppad_pkgconfig_libs}")
+MESSAGE(STATUS "cppad_pkgconfig_requires = ${cppad_pkgconfig_requires}")
 #
 # Copy a file to another location and modify its contents.
 # configure_file(InputFile OutputFile [COPYONLY] [ESCAPE_QUOTES] [@ONLY])
