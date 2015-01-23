@@ -1,6 +1,6 @@
 # $Id$
 # -----------------------------------------------------------------------------
-# CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-13 Bradley M. Bell
+# CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-15 Bradley M. Bell
 #
 # CppAD is distributed under multiple licenses. This distribution is under
 # the terms of the 
@@ -22,6 +22,7 @@
 MACRO(check_source_runs source variable)
 	SET(CMAKE_REQUIRED_INCLUDES  "")
 	SET(CMAKE_REQUIRED_LIBRARIES "")
+	SET(CMAKE_REQUIRED_DEFINITIONS "")
 	SET(CMAKE_REQUIRED_FLAGS     ${cppad_cxx_flags} )
 	CHECK_CXX_SOURCE_RUNS("${source}" result)
 	IF( result )
