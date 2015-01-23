@@ -26,11 +26,12 @@ Vector of sets of positive integers, each set stored as a singly
 linked list.
 */
 class sparse_list {
-private:
+public:
 	/// type used for each set in the vector of sets
 	/// (note that next is index in data_ for next element in this set).
 	struct Element { size_t value; size_t next; };
-
+private:
+	// -----------------------------------------------------------------
 	/// Number of sets that we are representing
 	/// (set by constructor and resize).
 	size_t n_set_;
@@ -46,7 +47,9 @@ private:
 
 	/// number of elements in data_ that are no longer being used.
 	size_t data_not_used_;
-private:
+
+	/// temporary data vector used for garbage collection
+	CppAD::pod_vector<Element> data_tmp_;
 	// -----------------------------------------------------------------
 	/*! Private member function that counts number of elements in a set.
 
@@ -78,39 +81,38 @@ private:
 			number_elements() + n_set_ + data_not_used_ == data_.size()
 		);
 
-		// copy the sets to a new data vector
-		pod_vector<Element> data_new;
-		data_new.extend(n_set_);
+		// copy the sets to a temporary data vector
+		data_tmp_.erase();
+		data_tmp_.extend(n_set_);
 		for(size_t i = 0; i < n_set_; i++)
 		{	size_t next     = i;
-			size_t next_new = i;
+			size_t next_tmp = i;
 			//
 			size_t value    = data_[next].value;
 			while( value < end_ )
-			{	data_new[next_new].value = value;	
-				// data_new[next_new].next  = data_new.extend(1);
+			{	data_tmp_[next_tmp].value = value;	
+				// data_tmp_[next_tmp].next  = data_tmp_.extend(1);
 				// does not seem to work ?
-				size_t index_new         = data_new.extend(1);
-				data_new[next_new].next  = index_new;
+				size_t index_tmp         = data_tmp_.extend(1);
+				data_tmp_[next_tmp].next = index_tmp;
 				//
 				next                     = data_[next].next;
-				next_new                 = data_new[next_new].next;
+				next_tmp                 = data_tmp_[next_tmp].next;
 				//
 				value                    = data_[next].value;
 			}
-			data_new[next_new].value = end_;
+			data_tmp_[next_tmp].value = end_;
 		}
 		CPPAD_ASSERT_UNKNOWN( 
-			data_new.size() + data_not_used_ == data_.size()
+			data_tmp_.size() + data_not_used_ == data_.size()
 		);
 
-		// swap the new and old data vectors
-		data_.swap(data_new);
+		// swap the tmp and old data vectors
+		data_.swap(data_tmp_);
 
 		// all of the elements are used in this new version of data_
 		data_not_used_ = 0;
 	}
-
 public:
 	// -----------------------------------------------------------------
 	/*! Default constructor (no sets)
@@ -465,6 +467,10 @@ public:
 	size_t end(void) const
 	{	return end_; }
 };
+// Tell pod_vector class that each Element is plain old data and hence
+// the corresponding constructor need not be called.
+template <> inline bool is_pod<typename sparse_list::Element>(void)
+{	return true; }
 
 /*! 
 Copy a user vector of sets sparsity pattern to an internal sparse_list object.
