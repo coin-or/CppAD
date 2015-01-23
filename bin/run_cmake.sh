@@ -28,6 +28,7 @@ debug_speed='no'
 profile_speed='no'
 clang='no'
 no_colpack='no'
+no_sparse_list='no'
 testvector='boost'
 while [ "$1" != "" ]
 do
@@ -42,6 +43,7 @@ usage: bin/run_cmake.sh: \\
 	[--profile_speed] \\
 	[--clang ] \\
 	[--no_colpack] \\
+	[--no_sparse_list] \\
 	[--<package>_vector]
 The --help option just prints this message and exits.
 The value <package> above must be one of: cppad, boost, or eigen.
@@ -68,6 +70,9 @@ EOF
 	elif [ "$1" == '--no_colpack' ]
 	then
 		no_colpack='yes'
+	elif [ "$1" == '--no_sparse_list' ]
+	then
+		no_sparse_list='yes'
 	elif [ "$1" == '--cppad_vector' ]
 	then
 		testvector='cppad'
@@ -152,6 +157,14 @@ do
 	fi
 done
 #
+# sparse_list
+if [ "$no_sparse_list" == 'yes' ]
+then
+	cmake_args="$cmake_args -D cppad_sparse_list=NO"
+else
+	cmake_args="$cmake_args -D cppad_sparse_list=YES"
+fi
+#
 # cppad_cxx_flags
 cppad_cxx_flags="-Wall -pedantic-errors -std=$standard"
 if [ "$testvector" != 'eigen' ]
@@ -169,7 +182,6 @@ fi
 #
 # simple options
 cmake_args="$cmake_args -D cppad_implicit_ctor_from_any_type=NO"
-cmake_args="$cmake_args -D cppad_sparse_list=YES"
 cmake_args="$cmake_args -D cppad_testvector=$testvector"
 cmake_args="$cmake_args -D cppad_tape_id_type='int32_t'"
 cmake_args="$cmake_args -D cppad_tape_addr_type=int32_t"
