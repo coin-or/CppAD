@@ -323,11 +323,11 @@ public:
 		size_t q, const VectorSet &s, bool transpose = false
 	);
 
-	/// amount of memeory used for Jacobain sparsity pattern
+	/// amount of memory used for Jacobain sparsity pattern
 	size_t size_forward_bool(void) const
 	{	return for_jac_sparse_pack_.memory(); }
 
-	/// free memeory used for Jacobain sparsity pattern
+	/// free memory used for Jacobain sparsity pattern
 	void size_forward_bool(size_t zero) 
 	{	CPPAD_ASSERT_KNOWN(
 			zero == 0,
@@ -340,7 +340,7 @@ public:
 	size_t size_forward_set(void) const
 	{	return for_jac_sparse_set_.number_elements(); }
 
-	/// free memeory used for Jacobain sparsity pattern
+	/// free memory used for Jacobain sparsity pattern
 	void size_forward_set(size_t zero)
 	{	CPPAD_ASSERT_KNOWN(
 			zero == 0,

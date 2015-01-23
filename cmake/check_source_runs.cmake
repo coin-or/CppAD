@@ -20,10 +20,14 @@
 # Note that this is the reverse of the status flag returned by the program.
 # 
 MACRO(check_source_runs source variable)
-	SET(CMAKE_REQUIRED_INCLUDES  "")
-	SET(CMAKE_REQUIRED_LIBRARIES "")
-	SET(CMAKE_REQUIRED_DEFINITIONS "")
-	SET(CMAKE_REQUIRED_FLAGS     ${cppad_cxx_flags} )
+	SET(CMAKE_REQUIRED_INCLUDES    "" )
+	SET(CMAKE_REQUIRED_LIBRARIES   "" )
+	SET(CMAKE_REQUIRED_DEFINITIONS "" )
+	IF( cppad_cxx_flags )
+		SET(CMAKE_REQUIRED_FLAGS   "${cppad_cxx_flags}" )
+	ELSE( cppad_cxx_flags )
+		SET(CMAKE_REQUIRED_FLAGS   "" )
+	ENDIF( cppad_cxx_flags )
 	CHECK_CXX_SOURCE_RUNS("${source}" result)
 	IF( result )
 		SET(${variable} 1)
