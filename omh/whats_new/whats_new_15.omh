@@ -41,6 +41,11 @@ $codei%
 %$$
 This has been fixed.
 
+$head 01-21$$
+The deprecated $cref InstallUnix$$ procedure had a bug in the
+detection of when the size of an $code unsigned int$$ 
+was the same as the size of a $code size_t$$. This has been fixed.
+
 
 $head 01-20$$
 $list number$$
