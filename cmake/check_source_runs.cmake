@@ -1,6 +1,6 @@
 # $Id$
 # -----------------------------------------------------------------------------
-# CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-13 Bradley M. Bell
+# CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-15 Bradley M. Bell
 #
 # CppAD is distributed under multiple licenses. This distribution is under
 # the terms of the 
@@ -20,14 +20,19 @@
 # Note that this is the reverse of the status flag returned by the program.
 # 
 MACRO(check_source_runs source variable)
-	SET(CMAKE_REQUIRED_INCLUDES  "")
-	SET(CMAKE_REQUIRED_LIBRARIES "")
-	SET(CMAKE_REQUIRED_FLAGS     ${cppad_cxx_flags} )
-	CHECK_CXX_SOURCE_RUNS("${source}" result)
-	IF( result )
+	SET(CMAKE_REQUIRED_INCLUDES    "" )
+	SET(CMAKE_REQUIRED_LIBRARIES   "" )
+	SET(CMAKE_REQUIRED_DEFINITIONS "" )
+	IF( cppad_cxx_flags )
+		SET(CMAKE_REQUIRED_FLAGS   "${cppad_cxx_flags}" )
+	ELSE( cppad_cxx_flags )
+		SET(CMAKE_REQUIRED_FLAGS   "" )
+	ENDIF( cppad_cxx_flags )
+	CHECK_CXX_SOURCE_RUNS("${source}" ${variable}_result)
+	IF( ${variable}_result )
 		SET(${variable} 1)
-	ELSE( result )
+	ELSE( ${variable}_result )
 		SET(${variable} 0)
-	ENDIF( result )
+	ENDIF( ${variable}_result )
 	MESSAGE(STATUS "${variable} = ${${variable}}" )
 ENDMACRO( check_source_runs )
