@@ -187,17 +187,17 @@ FOREACH(cmake_var cppad_tape_id_type cppad_tape_addr_type )
 	SET(source "
 # include <limits>
 int main(void)
-{	bool is_signed = std::numeric_limits<${${cmake_var}}>::is_signed;
-	return int(! is_signed);
+{	bool is_unsigned = ! std::numeric_limits<${${cmake_var}}>::is_signed;
+	return int(! is_unsigned);
 }
 "
 	)
-	check_source_runs("${source}" ${cmake_var}_is_signed)
-	IF( ${cmake_var}_is_signed STREQUAL 1  )
+	check_source_runs("${source}" ${cmake_var}_is_unsigned)
+	IF( ${cmake_var}_is_unsigned STREQUAL 0  )
 		MESSAGE(STATUS 
-"Warning: using a signed ${cmake_var} (for CppAD developers not users)" 
+"Warning: using a signed ${cmake_var} is for CppAD developers only !" 
 	)
-	ENDIF( ${cmake_var}_is_signed STREQUAL 1  )
+	ENDIF( ${cmake_var}_is_unsigned STREQUAL 0  )
 ENDFOREACH( cmake_var )
 # -----------------------------------------------------------------------------
 # cppad_max_num_threads
