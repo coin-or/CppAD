@@ -21,13 +21,13 @@ echo_eval() {
 	eval $*
 }
 # -----------------------------------------------------------------------------
-repository="https://projects.coin-or.org/svn/CppAD"
+svn_repository="https://projects.coin-or.org/svn/CppAD"
 stable_version="20150000"
-release='2'
+release='3'
 release_version="$stable_version.$release"
 # -----------------------------------------------------------------------------
 # Check release version
-if svn list $repository/releases | grep "$release_version" > /dev/null
+if svn list $svn_repository/releases | grep "$release_version" > /dev/null
 then
 	echo bin/"new_release.sh: Release number $release_version already exists."
 	echo "You must first change the assigment"
@@ -38,7 +38,28 @@ fi
 # -----------------------------------------------------------------------------
 echo_eval git checkout stable/$stable_version
 # -----------------------------------------------------------------------------
-#
+# check that local branch is up to date
+list=`git status -s`
+if [ "$list" != '' ]
+then
+	echo "new_release.sh: 'git status -s' is not empty"
+	exit 1
+fi
+# -----------------------------------------------------------------------------
+# check that remote branch agrees with local branch
+local_hash=`git show-ref stable/$stable_version | \
+	grep "refs/heads/stable/$stable_version" | \
+	sed -e "s| *refs/heads/stable/$stable_version||"`
+remote_hash=`git show-ref stable/$stable_version | \
+	grep "refs/remotes/origin/stable/$stable_version" | \
+	sed -e "s| *refs/remotes/origin/stable/$stable_version||"`
+if [ "$local_hash" != "$remote_hash" ]
+then
+	echo_eval git show-ref stable/$stable_version
+	echo 'new_release.sh: exiting because local and remote branch differ'
+	exit 1
+fi
+# -----------------------------------------------------------------------------
 check_one=`bin/version.sh get`
 echo_eval git checkout doc.omh
 check_two=`grep "cppad-$stable_version" doc.omh \
@@ -50,9 +71,16 @@ then
 	echo "	bin/version.sh set $release_version"
 	echo '	bin/version.sh copy'
 	echo 'Then test and then commit the changes.'
-	echo 'Then push changes to github.'
+fi
+# -----------------------------------------------------------------------------
+svn_hash=`svn log $svn_repository/stable/$stable_version --stop-on-copy | \
+	grep 'end *hash *code:' | head -1 | sed -e 's|end *hash *code: *||'`
+if [ "$svn_hash" != "$remote_hash" ]
+then
+	echo "svn hash code = $svn_hash"
+	echo "git hash code = $remote_hash"
 	echo 'Then execute the following command:'
-	echo "	bin/push_git2svn.sh  stable/$stable_version"
+	echo "	bin/push_git2svn.py stable/$stable_version"
 	exit 1
 fi
 # -----------------------------------------------------------------------------
@@ -62,12 +90,12 @@ then
 	git tag -d $release_version
 fi
 git tag -a \
-	-m "corresponds $repository/releases/$release_version" \
+	-m "corresponds $svn_repository/releases/$release_version" \
 	$release_version
 # -----------------------------------------------------------------------------
 msg="Creating releases/$release_version"
-rep_stable="$repository/stable/$stable_version"
-rep_release="$repository/releases/$release_version"
+rep_stable="$svn_repository/stable/$stable_version"
+rep_release="$svn_repository/releases/$release_version"
 echo_eval svn copy $rep_stable $rep_release -m \"$msg\"
 # -----------------------------------------------------------------------------
 if [ ! -e build ]
@@ -75,7 +103,7 @@ then
 	echo_eval mkdir -p build
 fi
 echo_eval cd build 
-echo_eval svn checkout $repository/conf conf
+echo_eval svn checkout $svn_repository/conf conf
 #
 echo_eval cd conf
 #
