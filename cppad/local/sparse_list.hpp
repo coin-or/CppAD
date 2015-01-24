@@ -29,7 +29,7 @@ class sparse_list {
 public:
 	/// type used for each set in the vector of sets
 	/// (note that next is index in data_ for next element in this set).
-	struct Element { size_t value; size_t next; };
+	struct pair_size_t { size_t value; size_t next; };
 private:
 	// -----------------------------------------------------------------
 	/// Number of sets that we are representing
@@ -40,16 +40,16 @@ private:
 	size_t end_;
 
 	/// The data for all the elements in all the sets
-	CppAD::pod_vector<Element> data_;
+	CppAD::pod_vector<pair_size_t> data_;
 
 	/// next element
-	Element next_element_;
+	pair_size_t next_pair_;
 
 	/// number of elements in data_ that are no longer being used.
 	size_t data_not_used_;
 
 	/// temporary data vector used for garbage collection
-	CppAD::pod_vector<Element> data_tmp_;
+	CppAD::pod_vector<pair_size_t> data_tmp_;
 	// -----------------------------------------------------------------
 	/*! Private member function that counts number of elements in a set.
 
@@ -121,7 +121,7 @@ public:
 	n_set_(0)                 , 
 	end_(0)                   ,
 	data_not_used_(0)
-	{	next_element_.value = end_; }
+	{	next_pair_.value = end_; }
 	// -----------------------------------------------------------------
 	/*! Using copy constructor is a programing (not user) error
  
@@ -153,7 +153,7 @@ public:
 	void resize(size_t n_set_in, size_t end_in) 
 	{	n_set_                 = n_set_in;
 		end_                   = end_in;
-		next_element_.value    = end_in;
+		next_pair_.value       = end_in;
 		data_not_used_         = 0;
 		if( n_set_in == 0 )
 		{	// free all memory connected with this object
@@ -252,7 +252,7 @@ public:
 	void begin(size_t index)
 	{	// initialize element to search for in this set
 		CPPAD_ASSERT_UNKNOWN( index < n_set_ );
-		next_element_  = data_[index]; 
+		next_pair_  = data_[index]; 
 
 		return;
 	}
@@ -269,9 +269,9 @@ public:
 	since the previvious \c begin
 	*/
 	size_t next_element(void)
-	{	size_t element = next_element_.value;
+	{	size_t element = next_pair_.value;
 		if( element != end_ )
-			next_element_ = data_[next_element_.next];
+			next_pair_ = data_[next_pair_.next];
 
 		return element;
 	}
@@ -467,9 +467,9 @@ public:
 	size_t end(void) const
 	{	return end_; }
 };
-// Tell pod_vector class that each Element is plain old data and hence
+// Tell pod_vector class that each pair_size_t is plain old data and hence
 // the corresponding constructor need not be called.
-template <> inline bool is_pod<typename sparse_list::Element>(void)
+template <> inline bool is_pod<sparse_list::pair_size_t>(void)
 {	return true; }
 
 /*! 

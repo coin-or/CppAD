@@ -20,6 +20,8 @@ $spell
 	hes
 	cppad
 	Jacobian
+	gettimeofday
+	cmake
 $$
 
 $section CppAD Changes and Additions During 2015$$
@@ -29,6 +31,16 @@ This section contains a list of the changes to CppAD during 2015
 (in reverse order by date).
 The purpose of this section is to
 assist you in learning about changes between various versions of CppAD.
+
+$head 01-23$$
+There was a bug in the $cref cmake$$ install detection of compiler features.
+One symptom of this bug was that on systems that had the $code gettimeofday$$
+function, the cmake install would sometimes report
+$codei%
+	cppad_has_gettimeofday = 0
+%$$
+This has been fixed.
+
 
 $head 01-20$$
 $list number$$
