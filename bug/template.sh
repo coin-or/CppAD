@@ -19,7 +19,7 @@ int main(void)
 {	// C++ source code 
 	using std::cout;
 
-	cout << "1. svn copy template.sh <name>.sh\n";
+	cout << "1. copy template.sh to <name>.sh\n";
 	cout << "2. Edit <name>.sh replacing description and C++ source code\n"; 
 	cout << "3. Run ./<name>.sh\n";
 	cout << "where <name> is a name that describes the bug\n";

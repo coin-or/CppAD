@@ -144,6 +144,8 @@ $end
 # include <cppad/elapsed_seconds.hpp>
 # include <cppad/local/define.hpp>
 
+# define CPPAD_EXTRA_RUN_BEFORE_TIMING 1
+
 namespace CppAD { // BEGIN_CPPAD_NAMESPACE
 /*!
 \file time_test.hpp
@@ -169,6 +171,9 @@ the repetitions of the operation being timed.
 template <class Test>
 double time_test(Test test, double time_min )
 {
+# if CPPAD_EXTRA_RUN_BEFORE_TIMING
+	test(1);
+# endif
 	size_t repeat = 0;
 	double s0     = elapsed_seconds();
 	double s1     = s0;
@@ -206,6 +211,9 @@ will be used for the value of \c size in the call to \c test.
 template <class Test>
 double time_test(Test test, double time_min, size_t test_size)
 {
+# if CPPAD_EXTRA_RUN_BEFORE_TIMING
+	test(test_size, 1);
+# endif
 	size_t repeat = 0;
 	double s0     = elapsed_seconds();
 	double s1     = s0;
@@ -221,5 +229,6 @@ double time_test(Test test, double time_min, size_t test_size)
 
 } // END_CPPAD_NAMESPACE
 
+# undef CPPAD_EXTRA_RUN_BEFORE_TIMING
 // END PROGRAM
 # endif
