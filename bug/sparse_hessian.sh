@@ -16,6 +16,20 @@ echo_eval() {
 	eval $*
 }
 # -----------------------------------------------------------------------------
+cat << EOF 
+There seems to be some problem with the sparse hessian, or its speed test.
+Running the command
+	./sparse_hessian.sh
+demonstrates the problem by running the speed test with
+	# define CPPAD_EXTRA_RUN_BEFORE_TIMING X
+where X is 0 and 1 (see cppad/time_test.hpp where this defintion is used).
+This has little effect on the rate of execution for the 100, 400, and 1600
+varable cases. For the 2500 variable case, the rate execution with 
+	# define CPPAD_EXTRA_RUN_BEFORE_TIMING 1
+is about 3000 executions per second and with 
+	# define CPPAD_EXTRA_RUN_BEFORE_TIMING 0
+is about 1 execution per second.
+EOF
 echo_eval cd build
 echo_eval cmake ../..
 #
