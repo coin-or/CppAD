@@ -170,21 +170,27 @@ IF( ${cppad_cxx_flags} MATCHES ".*-std=c[+][+]11.*" )
 ELSE( ${cppad_cxx_flags} MATCHES ".*-std=c[+][+]11.*" )
 	SET(cppad_cxx_flags_sacado ${cppad_cxx_flags} )
 ENDIF( ${cppad_cxx_flags} MATCHES ".*-std=c[+][+]11.*" )
-MESSAGE(STATUS "cppad_cxx_flags_sacado = ${cppad_cxx_flags_sacado}")
+IF( sacado_prefix )
+	MESSAGE(STATUS "cppad_cxx_flags_sacado = ${cppad_cxx_flags_sacado}")
+ENDIF( sacado_prefix )
 # -----------------------------------------------------------------------------
-# cppad_cxx_flags_skip_eigen
+# cppad_cxx_flags_eigen
 STRING(REGEX REPLACE 
 	"(.*)-Wshadow(.*)"         "\\1-Wno-shadow\\2" 
 	cppad_cxx_flags_eigen "${cppad_cxx_flags}"
 )
-MESSAGE(STATUS "cppad_cxx_flags_eigen = ${cppad_cxx_flags_eigen}")
+IF( eigen_prefix )
+	MESSAGE(STATUS "cppad_cxx_flags_eigen = ${cppad_cxx_flags_eigen}")
+ENDIF( eigen_prefix )
 # -----------------------------------------------------------------------------
-# cppad_cxx_flags_skip_fadbad
+# cppad_cxx_flags_fadbad
 STRING(REGEX REPLACE 
 	"(.*)-Wshadow(.*)"         "\\1-Wno-shadow\\2" 
 	cppad_cxx_flags_fadbad "${cppad_cxx_flags}"
 )
-MESSAGE(STATUS "cppad_cxx_flags_fadbad = ${cppad_cxx_flags_fadbad}")
+IF( fadbad_prefix )
+	MESSAGE(STATUS "cppad_cxx_flags_fadbad = ${cppad_cxx_flags_fadbad}")
+ENDIF( fadbad_prefix )
 # -----------------------------------------------------------------------------
 # cppad_abs_includedir, cppad_abs_libdir, cppad_abs_datadir, cppad_abs_docdir
 #
