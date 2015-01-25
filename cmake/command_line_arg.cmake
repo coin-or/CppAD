@@ -39,5 +39,5 @@ MACRO(command_line_arg variable default type description)
 	ENDIF( NOT ( ${type} STREQUAL "STRING" ) )
 	#
 	SET(${variable} "${default}" CACHE ${type} "${description}")
-	MESSAGE(STATUS "${variable} = \"${${variable}}\"")
+	MESSAGE(STATUS "${variable} = ${${variable}}")
 ENDMACRO( command_line_arg )

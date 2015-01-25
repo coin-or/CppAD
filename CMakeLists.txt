@@ -75,7 +75,7 @@ command_line_arg(cmake_install_datadir share STRING
 )
 # -----------------------------------------------------------------------------
 # cmake_install_docdir
-command_line_arg(cmake_install_docdir "" STRING 
+command_line_arg(cmake_install_docdir NOTFOUND STRING 
 	"directory, below prefix, where cmake installs cppad documentation files"
 )
 # -----------------------------------------------------------------------------
@@ -106,17 +106,6 @@ command_line_arg(cmake_install_postfix NOTFOUND STRING
 command_line_arg(cppad_cxx_flags NOTFOUND STRING 
 	"extra flags used with cppad source (besides debug and release flags)"
 )
-# -----------------------------------------------------------------------------
-# cppad_documentation
-command_line_arg(cppad_documentation "" STRING 
-	"install cppad documentation: use camke_install_docdir instead"
-)
-STRING(COMPARE NOTEQUAL "${cppad_documentation}" "" cppad_documentation_error)
-IF( cppad_documentation_error )
-	MESSAGE(FATAL_ERROR 
-"cppad_documentation is no longer an option, use cmake_install_docdir instead"
-	)
-ENDIF( cppad_documentation_error )
 # -----------------------------------------------------------------------------
 # External package prefixes
 #
@@ -373,7 +362,6 @@ INSTALL(
 )
 #
 # During install copy doc direcrory to cppad_abs_docdir/cppad
-STRING( COMPARE NOTEQUAL "${cmake_install_docdir}" "" cppad_documentation )
-IF ( cppad_documentation )
+IF ( cmake_install_docdir )
 	INSTALL( DIRECTORY "doc/" DESTINATION ${cppad_abs_docdir}/cppad )
-ENDIF ( cppad_documentation )
+ENDIF ( cmake_install_docdir )

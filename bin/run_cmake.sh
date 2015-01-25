@@ -28,7 +28,9 @@ debug_speed='no'
 profile_speed='no'
 clang='no'
 no_colpack='no'
+no_ipopt='no'
 no_sparse_list='no'
+no_documentation='no'
 testvector='boost'
 while [ "$1" != "" ]
 do
@@ -43,7 +45,9 @@ usage: bin/run_cmake.sh: \\
 	[--profile_speed] \\
 	[--clang ] \\
 	[--no_colpack] \\
+	[--no_ipopt] \\
 	[--no_sparse_list] \\
+	[--no_documentation] \\
 	[--<package>_vector]
 The --help option just prints this message and exits.
 The value <package> above must be one of: cppad, boost, or eigen.
@@ -70,9 +74,15 @@ EOF
 	elif [ "$1" == '--no_colpack' ]
 	then
 		no_colpack='yes'
+	elif [ "$1" == '--no_ipopt' ]
+	then
+		no_ipopt='yes'
 	elif [ "$1" == '--no_sparse_list' ]
 	then
 		no_sparse_list='yes'
+	elif [ "$1" == '--no_documentation' ]
+	then
+		no_documentation='yes'
 	elif [ "$1" == '--cppad_vector' ]
 	then
 		testvector='cppad'
@@ -130,6 +140,11 @@ fi
 if [ -d '/usr/share' ]
 then
 	cmake_args="$cmake_args -D cmake_install_datadir=share"
+fi
+#
+# cmake_install_docdir
+if [ -d '/usr/share' ] && [ "$no_documentation" == 'no' ]
+then
 	cmake_args="$cmake_args -D cmake_install_docdir=share/doc"
 fi
 #
@@ -143,10 +158,14 @@ then
 fi
 #
 # {package}_prefix
-package_list='fadbad adolc eigen ipopt sacado'
+package_list='fadbad adolc eigen sacado'
 if [ "$no_colpack" == 'no' ]
 then
 	package_list="$package_list colpack"
+fi
+if [ "$no_ipopt" == 'no' ]
+then
+	package_list="$package_list ipopt"
 fi
 for package in $package_list
 do
