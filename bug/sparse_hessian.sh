@@ -30,6 +30,10 @@ is about 3000 executions per second and with
 	# define CPPAD_EXTRA_RUN_BEFORE_TIMING 0
 is about 1 execution per second.
 EOF
+if [ ! -e build ]
+then
+	mkdir build
+fi
 echo_eval cd build
 echo_eval cmake ../..
 #
