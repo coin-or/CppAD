@@ -22,6 +22,7 @@ $spell
 	Jacobian
 	gettimeofday
 	cmake
+	hpp
 $$
 
 $section CppAD Changes and Additions During 2015$$
@@ -31,6 +32,12 @@ This section contains a list of the changes to CppAD during 2015
 (in reverse order by date).
 The purpose of this section is to
 assist you in learning about changes between various versions of CppAD.
+
+$head 01-26$$
+The change of global variables to local in
+$code cppad/local/op_code.hpp$$ on $cref/2014-50-14/whats_new_14/05-14/$$
+created a bug in $cref parallel_ad$$ (some local statics needed to
+be initialized). This has been fixed.
 
 $head 01-23$$
 There was a bug in the $cref cmake$$ install detection of compiler features.

@@ -90,6 +90,7 @@ void parallel_ad(void)
 	elapsed_seconds();
 	ErrorHandler::Current();
 	NumArg(BeginOp);
+	NumRes(BeginOp);
 	one_element_std_set<size_t>();
 	two_element_std_set<size_t>();
 
