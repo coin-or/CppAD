@@ -23,7 +23,7 @@ echo_eval() {
 # -----------------------------------------------------------------------------
 svn_repository="https://projects.coin-or.org/svn/CppAD"
 stable_version="20150000"
-release='3'
+release='4'
 release_version="$stable_version.$release"
 # -----------------------------------------------------------------------------
 # Check release version
@@ -88,10 +88,14 @@ fi
 if git tag --list | grep "$release_version"
 then
 	git tag -d $release_version
+	git push --delete origin $release_version
 fi
+#
 git tag -a \
 	-m "corresponds $svn_repository/releases/$release_version" \
 	$release_version
+#
+git push origin $release_version
 # -----------------------------------------------------------------------------
 msg="Creating releases/$release_version"
 rep_stable="$svn_repository/stable/$stable_version"
