@@ -393,13 +393,13 @@ the function f(x).
 
 \param[in] new_x
 is false if the previous call to any one of the 
-\ref Evaluation_Methods used the same value for \c x.
+\ref Deprecated_Evaluation_Methods used the same value for \c x.
 
 \param[out] obj_value
 is the value of the objective f(x) at this value of \c x.
 
 \return
-The return value is always true; see \ref Evaluation_Methods.
+The return value is always true; see \ref Deprecated_Evaluation_Methods.
 
 \par Efficiency
 This routine could be more efficient 
@@ -479,7 +479,7 @@ the gradient of f(x).
 
 \param[in] new_x
 is false if the previous call to any one of the 
-\ref Evaluation_Methods used the same value for \c x.
+\ref Deprecated_Evaluation_Methods used the same value for \c x.
 
 \param[out] grad_f
 is a vector of size \c n.
@@ -488,7 +488,7 @@ The output value of its elements is the gradient of f(x)
 at this value of.
 
 \return
-The return value is always true; see \ref Evaluation_Methods.
+The return value is always true; see \ref Deprecated_Evaluation_Methods.
 */
 bool cppad_ipopt_nlp::eval_grad_f(
 	Index n, const Number* x, bool new_x, Number* grad_f
@@ -572,7 +572,7 @@ the constraint function g(x).
 
 \param[in] new_x
 is false if the previous call to any one of the 
-\ref Evaluation_Methods used the same value for \c x.
+\ref Deprecated_Evaluation_Methods used the same value for \c x.
 
 \param[in] m
 is the dimension of the range space for g(x); i.e., must be equal to \c m_.
@@ -584,7 +584,7 @@ The output value of its elements is
 the value of the function g(x) at this value of \c x.
 
 \return
-The return value is always true; see \ref Evaluation_Methods.
+The return value is always true; see \ref Deprecated_Evaluation_Methods.
 */
 bool cppad_ipopt_nlp::eval_g(
 	Index n, const Number* x, bool new_x, Index m, Number* g
@@ -661,7 +661,7 @@ the gradient of g(x).
 
 \param[in] new_x
 is false if the previous call to any one of the 
-\ref Evaluation_Methods used the same value for \c x.
+\ref Deprecated_Evaluation_Methods used the same value for \c x.
 
 \param[in] m
 is the dimension of the range space for g(x); i.e., must be equal to \c m_.
@@ -700,7 +700,7 @@ value for the
 k-th possibly non-zero entry in the Jacobian of g(x).
 
 \return
-The return value is always true; see \ref Evaluation_Methods.
+The return value is always true; see \ref Deprecated_Evaluation_Methods.
 */
 bool cppad_ipopt_nlp::eval_jac_g(Index n, const Number* x, bool new_x,
                        Index m, Index nele_jac, Index* iRow, Index *jCol,
@@ -785,7 +785,7 @@ bool cppad_ipopt_nlp::eval_jac_g(Index n, const Number* x, bool new_x,
 /*!
 Evaluate the Hessian of the Lagragian
 
-\section The_Hessian_of_the_Lagragian The Hessian of the Lagragian
+\section Deprecated_Hessian_of_the_Lagragian The Hessian of the Lagragian
 The Hessian of the Lagragian is defined as
 \f[
 H(x, \sigma, \lambda ) 
@@ -803,11 +803,11 @@ the Hessian of the Lagrangian.
 
 \param[in] new_x
 is false if the previous call to any one of the 
-\ref Evaluation_Methods used the same value for \c x.
+\ref Deprecated_Evaluation_Methods used the same value for \c x.
 
 \param[in] obj_factor
 the value \f$ \sigma \f$ multiplying the Hessian of
-f(x) in the expression for \ref The_Hessian_of_the_Lagragian.
+f(x) in the expression for \ref Deprecated_Hessian_of_the_Lagragian.
 
 \param[in] m
 is the dimension of the range space for g(x); i.e., must be equal to \c m_.
@@ -815,7 +815,7 @@ is the dimension of the range space for g(x); i.e., must be equal to \c m_.
 \param[in] lambda
 if \c values is not \c NULL, \c lambda
 is a vector of size \c m specifing the value of \f$ \lambda \f$
-in the expression for \ref The_Hessian_of_the_Lagragian.
+in the expression for \ref Deprecated_Hessian_of_the_Lagragian.
 
 \param[in] new_lambda
 is true if the previous call to \c eval_h had the same value for
@@ -856,7 +856,7 @@ value for the
 k-th possibly non-zero entry in the Hessian of the Lagragian.
 
 \return
-The return value is always true; see \ref Evaluation_Methods.
+The return value is always true; see \ref Deprecated_Evaluation_Methods.
 */
 bool cppad_ipopt_nlp::eval_h(Index n, const Number* x, bool new_x,
                    Number obj_factor, Index m, const Number* lambda,

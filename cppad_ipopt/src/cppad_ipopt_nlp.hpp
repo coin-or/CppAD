@@ -720,7 +720,7 @@ The functions
 where for \f$ k = 0 , \ldots , K-1\f$,
 \f$ r_k : {\bf R}^{q(k)} \rightarrow {\bf R}^{p(k)} \f$.
 
-\section Evaluation_Methods Evaluation Methods
+\section Deprecated_Evaluation_Methods Evaluation Methods
 The set of evaluation methods for this class is
 \verbatim
 	{ eval_f, eval_grad_f, eval_g, eval_jac_g, eval_h }
