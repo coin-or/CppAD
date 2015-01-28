@@ -693,32 +693,33 @@ else
 fi
 AC_MSG_RESULT([cppad_ipopt_nlp libraries: $CPPAD_IPOPT_LIBS])
 dnl --------------------------------------------------------------------------
-dnl names set here so same cppad.pc.in works for both with cmake and autoconf.
+dnl Names set here so same cppad.pc.in works for both with cmake and autoconf.
+dnl (note that autoconf configuration does not allow for Colpack).
 dnl
 AC_SUBST(cppad_description, "Differentiation of C++ Algorithms")
 AC_SUBST(cppad_version, ${PACKAGE_VERSION} )
 AC_SUBST(cppad_url, "http://www.coin-or.org/CppAD")
 if test "$prefix" == "NONE" ; then
 	cppad_pkgconfig_cflags_value="-I$HOME/include"
-	cppad_libs_value="-L$HOME/lib"
+	cppad_pkgconfig_libs_value="-L$HOME/lib"
 else
 	cppad_pkgconfig_cflags_value="-I$prefix/include"
-	cppad_libs_value="-L$prefix/lib"
+	cppad_pkgconfig_libs_value="-L$prefix/lib"
 fi
 if test "$POSTFIX_DIR" != "" ; then
 	cppad_pkgconfig_cflags_value="$cppad_cflags_value/$POSTFIX_DIR"
-	cppad_libs_value="$cppad_libs_value/$POSTFIX_DIR"
+	cppad_pkgconfig_libs_value="$cppad_pkgconfig_libs_value/$POSTFIX_DIR"
 fi
 if test "$IPOPT_DIR" == "" ; then
-	cppad_libs_value=""
-	cppad_requires_value=""
+	cppad_pkgconfig_libs_value=""
+	cppad_pkgconfig_requires_value=""
 else
-	cppad_libs_value="$cppad_libs_value -lcppad_ipopt"
-	cppad_requires_value="ipopt"
+	cppad_pkgconfig_libs_value="$cppad_pkgconfig_libs_value -lcppad_ipopt"
+	cppad_pkgconfig_requires_value="ipopt"
 fi
-AC_SUBST(cppad_pkgconfig_cflags,   "$cppad_cflags_value")
-AC_SUBST(cppad_libs,     "$cppad_libs_value")
-AC_SUBST(cppad_requires, "$cppad_requires_value")
+AC_SUBST(cppad_pkgconfig_cflags,   "$cppad_pkgconfig_cflags_value")
+AC_SUBST(cppad_pkgconfig_libs,     "$cppad_pkgconfig_libs_value")
+AC_SUBST(cppad_pkgconfig_requires, "$cppad_pkgconfig_requires_value")
 dnl
 dnl names set here so cppad.pc-uninstalled works both with cmake and autoconf 
 AC_SUBST(cppad_SOURCE_DIR,  ${ABS_TOP_SRCDIR} )
