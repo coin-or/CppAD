@@ -85,7 +85,7 @@ $head CppAD Configuration Files$$
 In the table below, 
 $icode builddir$$ is the build directory; i.e., the directory where
 the CppAD
-$cref/Configure/InstallUnix/Configure/$$ command is executed.
+$cref/cmake command/cmake/CMake Command/$$ is executed.
 The directory $icode prefix$$ is the value of
 $cref/cmake_install_prefix/cmake/cmake_install_prefix/$$ during configuration.
 The directory $icode datadir$$ is the value of
