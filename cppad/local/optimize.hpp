@@ -2276,7 +2276,7 @@ void optimize_run(
 				tape[i_var].new_op  = rec->num_op_rec();
 				tape[i_var].new_var = rec->PutOp(op);
 				CPPAD_ASSERT_UNKNOWN( 
-					size_t(new_arg[1]) < tape[i_var].new_var
+					new_arg[1] < tape[i_var].new_var
 				);
 				replace_hash = true;
 			}

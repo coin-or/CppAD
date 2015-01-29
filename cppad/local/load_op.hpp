@@ -3,7 +3,7 @@
 # define CPPAD_LOAD_OP_INCLUDED
 
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-14 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-15 Bradley M. Bell
 
 CppAD is distributed under multiple licenses. This distribution is under
 the terms of the 
@@ -233,10 +233,10 @@ inline void forward_load_p_op_0(
 {	CPPAD_ASSERT_UNKNOWN( NumArg(LdpOp) == 3 );
 	CPPAD_ASSERT_UNKNOWN( NumRes(LdpOp) == 1 );
 	CPPAD_ASSERT_UNKNOWN( 0 < arg[0] );
-	CPPAD_ASSERT_UNKNOWN( arg[2] < play->num_load_op_rec() );
+	CPPAD_ASSERT_UNKNOWN( size_t(arg[2]) < play->num_load_op_rec() );
 
-	// Because the index is a parameter, this indexing error should be
-	// caught and reported to the user at an when the tape is recording.
+	// Because the index is a parameter, this indexing error should have been
+	// caught and reported to the user when the tape is recording.
 	size_t i_vec = arg[1];
 	CPPAD_ASSERT_UNKNOWN( i_vec < index_by_ind[ arg[0] - 1 ] );
 	CPPAD_ASSERT_UNKNOWN( arg[0] + i_vec < play->num_vec_ind_rec() );
@@ -276,7 +276,7 @@ inline void forward_load_v_op_0(
 {	CPPAD_ASSERT_UNKNOWN( NumArg(LdvOp) == 3 );
 	CPPAD_ASSERT_UNKNOWN( NumRes(LdvOp) == 1 );
 	CPPAD_ASSERT_UNKNOWN( 0 < arg[0] );
-	CPPAD_ASSERT_UNKNOWN( arg[2] < play->num_load_op_rec() );
+	CPPAD_ASSERT_UNKNOWN( size_t(arg[2]) < play->num_load_op_rec() );
 
 	size_t i_vec = Integer( taylor[ arg[1] * cap_order + 0 ] );
 	CPPAD_ASSERT_KNOWN( 
@@ -394,7 +394,7 @@ inline void forward_load_op(
 	CPPAD_ASSERT_UNKNOWN( 0 < r);
 	CPPAD_ASSERT_UNKNOWN( 0 < p);
 	CPPAD_ASSERT_UNKNOWN( p <= q );
-	CPPAD_ASSERT_UNKNOWN( arg[2] < play->num_load_op_rec() );
+	CPPAD_ASSERT_UNKNOWN( size_t(arg[2]) < play->num_load_op_rec() );
 
 	size_t i_var = size_t( var_by_load_op[ arg[2] ] );
 	CPPAD_ASSERT_UNKNOWN( i_var < i_z );
