@@ -26,31 +26,39 @@ $index test, cppad vector$$
 $index vector, cppad test$$
 
 $head Purpose$$
-The $cref/CPPAD_TESTVECTOR/testvector/$$ 
-template class is used for many of the CppAD examples and tests.
-If you are going to use 
-$code boost$$, $code cppad$$, $code eigen$$, or $code std$$ vectors
-in your CppAD code, you many want to test CppAD with the
-type of vectors you will be using.
+The value $icode cppad_testvector$$
+in the $cref/cmake command/cmake/CMake Command/$$ must be one of the
+following:
+$code boost$$, $code cppad$$, $code eigen$$, or $code std$$.
+It specifies which type of vector is corresponds to the template class
+$cref/CPPAD_TESTVECTOR/testvector/$$ 
+which is used for many of the CppAD examples and tests.
 
-$head cppad_testvector$$
-$index cppad_testvector$$
-The must be one of the following choices:
-$code boost$$, $code cppad$$, $code eigen$$ or $code std$$.
-It specifies which type of vectors are used for the
-$code CPPAD_TESTVECTOR$$ template class.
-The default value for $code cppad_testvector$$ is $code cppad$$.
+$head std$$
+$index std, vector$$
+$index vector, std$$
+If $icode%cppad_testvector%$$ is $icode std$$,
+the $code std::vector$$ template class is used to define
+$code CPPAD_TESTVECTOR$$.
+
+$head cppad$$
+$index cppad, vector$$
+$index vector, cppad$$
+If $icode%cppad_testvector%$$ is $icode cppad$$,
+the $cref cppad_vector$$ template class is used to define
+$code CPPAD_TESTVECTOR$$.
 
 $head boost$$
 $index boost, vector$$
 $index vector, boost$$
-If $icode cppad_testvector$$ is set to $code boost$$, the 
+If $icode%cppad_testvector%$$ is $icode boost$$,
 $href%
 	http://www.boost.org/doc/libs/1_52_0/libs/numeric/ublas/doc/vector.htm%
 	boost ublas vector
 %$$
-include files must be installed on your system.
-In addition, 
+template class is used to define
+$code CPPAD_TESTVECTOR$$.
+In this case, the
 $href%
 	http://www.cmake.org/cmake/help/cmake2.6docs.html#module:FindBoost%
 	cmake FindBoost
@@ -60,7 +68,10 @@ module must be able to automatically figure out where Boost is installed.
 $head eigen$$
 $index eigen, vector$$
 $index vector, eigen$$
-If $icode cppad_testvector$$ is set to $code eigen$$, 
+If $icode%cppad_testvector%$$ is $icode eigen$$,
+one of the eigen template classes is used to define
+$code CPPAD_TESTVECTOR$$.
+In this case,
 $cref eigen_prefix$$ must be specified on the $code cmake$$ command line. 
 
 
