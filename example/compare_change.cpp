@@ -119,7 +119,7 @@ bool compare_change(void)
 	// If you do not replace the default CppAD error handler,
 	// and you run in the debugger, you will be able to inspect the
 	// call stack and see that 'if( x < y )' is where the comparison is.
-	bool caught_error = false;
+	bool missed_error = true;
 	{	CppAD::ErrorHandler local_error_handler(error_handler);
 
 		std::string check_msg = 
@@ -128,9 +128,14 @@ bool compare_change(void)
 			// determine the operation index where the change occurred
 			CppAD::Independent(ax, op_index);
 			ay[0] = Minimum(ax[0], ax[1]);
+# ifdef NDEBUG
+			// CppAD does not spend time checking operator index when
+			// NDEBUG is defined
+			missed_error = false;
+# endif
 		}
 		catch( error_info info )
-		{	caught_error = true;
+		{	missed_error = false;
 			ok          &= info.known;
 			ok          &= info.msg == check_msg;
 			// Must abort the recording so we can start a new one
@@ -138,7 +143,7 @@ bool compare_change(void)
 			AD<double>::abort_recording();
 		}
 	}
-	ok &= caught_error;
+	ok &= ! missed_error;
 
 
 	// set count to zero to demonstrate case where comparisons are not checked

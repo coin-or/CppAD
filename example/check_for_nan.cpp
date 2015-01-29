@@ -63,8 +63,11 @@ bool check_for_nan(void)
 	try {
 		y = f.Forward(0, x);
 
-		// should never reach here
+# ifndef NDEBUG
+		// When compiled with NDEBUG defined,
+		// CppAD does not spend time checking for nan.
 		ok = false;
+# endif
 	}
 	catch(std::string msg)
 	{	ok &= msg == "myhandler";

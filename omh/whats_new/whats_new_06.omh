@@ -684,8 +684,8 @@ error codes; i.e., zero for no error and one for an error.
 $pre
 
 $$
-Add more discussion and a reference for the 
-$cref/gcc 3.4.4 -O2/Bugs/gcc 3.4.4 -O2/$$ bug.
+Add more discussion and a reference for a 
+$code gcc 3.4.4 -O2$$ bug (since been removed).
 
 $head 04-28$$
 Improve the $cref get_started.cpp$$ example and move

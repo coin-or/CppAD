@@ -592,8 +592,10 @@ Improve the index entries in the documentation that corresponds
 to the $code cppad/local$$ directory source code.
 
 $head 07-19$$
-The $cref WishList$$ and $cref Bugs$$ information
-were moved out of this section and into their own separate sections.
+The $cref WishList$$ and $code Bugs$$ information
+were moved out of this section and into their own separate sections
+(the Bugs section has been removed; see the $code bug$$ subdirectory
+instead).
 $pre
 
 $$

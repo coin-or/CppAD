@@ -71,15 +71,18 @@ then $cref install$$ the current version of CppAD.
 If this does not solve your problem, continue
 to the next step.
 $lnext
+Create a simple as possible demonstration of the bug; 
+see the file $code bug/template.sh$$ for a template that you can 
+edit for that purpose.
+The smaller the program, the better the bug report.
+$lnext
 Send an e-mail message to the mailing list 
 $href%
 	http://list.coin-or.org/mailman/listinfo/cppad%
 	cppad@list.coin-or.org
 %$$
 with a description of the bug.
-Attaching a small source code sample program that 
-demonstrates the bug is always helpful.
-The smaller the program, the better the bug report.
+Attaching your program that demonstrates the bug.
 $lend
 
 $head CompareChange$$
