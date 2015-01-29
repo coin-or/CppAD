@@ -1,6 +1,6 @@
 /* $Id$ */
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-12 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-15 Bradley M. Bell
 
 CppAD is distributed under multiple licenses. This distribution is under
 the terms of the 
@@ -99,6 +99,11 @@ bool ode_check(const SizeVector& N, const NumberVector& x)
 	}
 	Number obj_value = 0.; // optimal object (no noise in simulation)
 	ok &= CppAD::NearEqual(check, obj_value, rel_tol, abs_tol);
+
+	// Use this empty namespace function to avoid warning that it is not used
+	static size_t ode_check_count = 0;
+	ode_check_count++;
+	ok &= count_eval_r() == ode_check_count;
 
 	return ok;
 }
