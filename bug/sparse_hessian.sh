@@ -87,6 +87,8 @@ namespace {
 	void speed_sparse_hessian(size_t size, size_t repeat)
 	{	CPPAD_ASSERT_UNKNOWN( size > 0 );
 		static size_t previous_size = 0;
+
+		// The bug is here,  row and col should be static !!!
 		vector<size_t> row, col;
 
 		size_t n = size;
@@ -95,7 +97,6 @@ namespace {
 		{	choose_row_col(n, row, col);
 			previous_size = size;
 		}
-		size_t K = row.size();
 
 		// note that cppad/sparse_hessian.cpp assumes that x.size() == size
 		link_sparse_hessian(n, repeat, row, col, x);

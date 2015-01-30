@@ -352,7 +352,7 @@ is the number of times to repeate the speed test.
 void speed_sparse_hessian(size_t size, size_t repeat)
 {	CPPAD_ASSERT_UNKNOWN( size > 0 );
 	static size_t previous_size = 0;
-	vector<size_t> row, col;
+	static vector<size_t> row, col;
 
 	size_t n = size;	
 	vector<double> x(n);

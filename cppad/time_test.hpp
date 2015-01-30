@@ -144,7 +144,7 @@ $end
 # include <cppad/elapsed_seconds.hpp>
 # include <cppad/local/define.hpp>
 
-# define CPPAD_EXTRA_RUN_BEFORE_TIMING 1
+# define CPPAD_EXTRA_RUN_BEFORE_TIMING 0
 
 namespace CppAD { // BEGIN_CPPAD_NAMESPACE
 /*!
