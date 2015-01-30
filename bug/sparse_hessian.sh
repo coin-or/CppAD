@@ -27,57 +27,6 @@ namespace {
 	using CppAD::vector;
 	typedef vector< std::set<size_t> >  SetVector;
 
-	/*!
- 	Class used by choose_row_col to determin order of row and column indices
-	*/
-	class Key {
-	public:
-		/// row index
-		size_t row_;
-		/// column index
-		size_t col_;
-		/// default constructor
-		Key(void)
-		{ }
-		/*!
- 		Construct from a value for row and col
-
-		\param row
-		row value for this key
-
-		\param col
-		column value for this key
- 		*/
-		Key(size_t row, size_t col)
-		: row_(row), col_(col)
-		{ }
-		/*!
- 		Compare this key with another key using < operator
-
-		\param other
-		the other key.
-		*/
-		bool operator<(const Key& other) const
-		{	if( row_ == other.row_ )
-				return col_ < other.col_;
-			return row_ < other.row_;
-		}
-	};
-
-	/*!
-	Function that randomly choose the row and column indices
-
-	\param n [in]
-	is the dimension of the argument space for the function f(x).
-
-	\param row [out]
-	the input size and elements of \c row do not matter.
-	Upon return it is the chosen row indices.
-
-	\param col [out]
-	the input size and elements of \c col do not matter.
-	Upon return it is the chosen column indices.
-	*/
 	void choose_row_col(
 		size_t          n   ,
 		vector<size_t>& row ,
@@ -90,17 +39,8 @@ namespace {
 		col.resize(0);
 		for(i = 0; i < n; i++)
 		{	// generate max_per_row random column indices between 0 and i
-			vector<double> random(max_per_row);
-			CppAD::uniform_01(max_per_row, random);
-
-			// set the indices for this row
-			size_t k_start = col.size();
-			for(ell = 0; ell < max_per_row; ell++)
-			{	j = std::min(i, size_t(random[ell] * i) );
-				bool ok = true;
-				for(k = k_start; k < col.size(); k++)
-					ok &= j != col[k];
-				if( ok )
+			for(j = i; j < i + max_per_row; j++)
+			{	if( j < n )
 				{	row.push_back(i);
 					col.push_back(j);
 				}
