@@ -57,7 +57,7 @@ $childtable%
 	omh/install/cmake.omh%
 	omh/install/cmake_check.omh%
 	omh/install/pkgconfig.omh%
-	omh/install/unix.omh
+	omh/install/auto_tools.omh
 %$$
 
 

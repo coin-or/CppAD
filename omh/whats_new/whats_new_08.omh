@@ -252,7 +252,7 @@ In addition, the missing
 $icode retape$$ documentation was added.
 
 $head 07-02$$
-Extend $cref/configure/InstallUnix/Configure/$$ command to check for
+Extend $cref/configure/auto_tools/Configure/$$ command to check for
 extras libraries that are necessary for linking the ipopt example.
 
 $head 06-18$$
@@ -407,7 +407,7 @@ when the input matrix had not a number or infinity in it.
 This has been fixed.
 
 $head 01-24$$
-The $cref/postfix_dir/InstallUnix/postfix_dir/$$
+The $cref/postfix_dir/auto_tools/postfix_dir/$$
 has been added to the $code configure$$ command line options.
 
 $head 01-21$$

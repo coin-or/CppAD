@@ -76,7 +76,7 @@ $codep */
 # endif
 /* $$
 If you specify $code --with-eigenvector$$ on the 
-$cref/configure/InstallUnix/Configure/$$ command line,
+$cref/configure/auto_tools/Configure/$$ command line,
 $code CPPAD_EIGENVECTOR$$ is true.
 This vector type cannot be supported by $code CPPAD_TEST_VECTOR$$
 (use $cref/CPPAD_TESTVECTOR/testvector/$$ for this support)
@@ -91,7 +91,7 @@ $codep */
 
 $head std::vector$$
 If you specify $code --with-stdvector$$ on the 
-$cref/configure/InstallUnix/Configure/$$
+$cref/configure/auto_tools/Configure/$$
 command line during CppAD installation,
 $code CPPAD_STDVECTOR$$ is true
 and $code CPPAD_TEST_VECTOR$$ is defined by the following source code

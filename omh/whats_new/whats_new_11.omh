@@ -140,8 +140,8 @@ Create $cref preprocessor$$ section with pointers to all the
 preprocessor symbols that are in the CppAD API.
 
 $head 11-21$$
-Separate $cref/--with-boostvector/InstallUnix/--with-testvector/$$
-for $cref/boost_dir/InstallUnix/boost_dir/$$.
+Separate $cref/--with-boostvector/auto_tools/--with-testvector/$$
+for $cref/boost_dir/auto_tools/boost_dir/$$.
 This enables one to specify $icode boost_dir$$ for 
 $cref team_bthread.cpp$$ with out using boost vectors.
 
@@ -353,7 +353,7 @@ Move the $code sum_i_inv_time.cpp$$ test from
 $code openmp/run.sh$$ to $code openmp/run.cpp$$.
 $lnext
 Change $code --with-openmp$$ to
-$cref/OPENMP_FLAGS=openmp_flags/InstallUnix/openmp_flags/$$ configure
+$cref/OPENMP_FLAGS=openmp_flags/auto_tools/openmp_flags/$$ configure
 command line argument.
 $lend
 
@@ -362,7 +362,7 @@ $list number$$
 Create the $code openmp/run.cpp$$ program 
 and move the $code openmp_multi_newton.cpp$$ test from
 $code openmp/run.sh$$ to $code openmp/run.cpp$$.
-This uses $cref/configure/InstallUnix/Configure/$$
+This uses $cref/configure/auto_tools/Configure/$$
 information for building the tests.
 $lnext
 Document the $code --with-openmp$$ configure
@@ -575,10 +575,10 @@ $lend
 
 $head 07-14$$
 $list number$$
-The $cref InstallUnix$$ instructions for running the individual
+The $cref auto_tools$$ instructions for running the individual
 correctness and speed tests were out of date. 
 This has been fixed; see 
-$cref/example and tests/InstallUnix/make/Examples and Tests/$$.
+$cref/example and tests/auto_tools/make/Examples and Tests/$$.
 $lnext
 Move $code parallel_ad.cpp$$ from $code example$$ directory
 to $code openmp$$ directory (and convert it from a function to a program).
@@ -705,8 +705,8 @@ $lend
 
 $head 06-18$$
 $list number$$
-The $cref/tape_addr_type/InstallUnix/tape_addr_type/$$ option was added
-to the $cref/configure/InstallUnix/Configure/$$ command line.
+The $cref/tape_addr_type/auto_tools/tape_addr_type/$$ option was added
+to the $cref/configure/auto_tools/Configure/$$ command line.
 $lnext
 The function $cref/size_op_seq/seq_property/size_op_seq/$$ results uses
 $code sizeof(CppAD_TAPE_ADDR_TYPE)$$ 
@@ -717,7 +717,7 @@ Remove $code cppad/config.h$$ from CppAD distribution,
 This removes the need to undefine symbols that were
 defined by $code cppad/config.h$$ and that did not begin with $code CPPAD_$$.
 $lnext
-Change $cref/adolc/InstallUnix/adolc_dir/$$ library linkage so it
+Change $cref/adolc/auto_tools/adolc_dir/$$ library linkage so it
 works with version $code ADOL-C-2.2.0$$.
 $lend
 
@@ -952,7 +952,7 @@ The install of the documentation failed
 when it was done from a directory other than the top source directory.
 $lnext
 The GPL distribution had the output of the 
-$cref/configure/InstallUnix/Configure/$$ command in it.
+$cref/configure/auto_tools/Configure/$$ command in it.
 $lnext
 Since the change on 01-09, the file 
 $code omh/whats_new_11.omh$$ has been required to build the 
@@ -962,7 +962,7 @@ Fadbad was generating warnings due to the $code -Wshadow$$ flag
 with the $code g++$$ compiler.
 The Fadbad $cref/speed/speed_fadbad/$$ tests have a special
 flag with this warning removed from the
-$cref/cxx_flags/InstallUnix/cxx_flags/$$.
+$cref/cxx_flags/auto_tools/cxx_flags/$$.
 $lend
 
 $head 01-09$$
@@ -976,7 +976,7 @@ The version of automake used to build the corresponding
 $code makefile.in$$ files did not define $code abs_top_builddir$$.
 $lnext
 The include file $code cppad_ipopt_nlp.hpp$$ was always installed, even if 
-$cref/ipopt_dir/InstallUnix/ipopt_dir/$$ was not defined on the 
+$cref/ipopt_dir/auto_tools/ipopt_dir/$$ was not defined on the 
 $code configure$$ command line.
 $lnext
 The speed test library $code libspeed.a$$ was being installed

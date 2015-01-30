@@ -84,7 +84,7 @@ This has been fixed.
 $head 09-22$$
 Promote $cref cppad_ipopt_nlp$$ from an example to a library
 that gets installed 
-(provided that the $cref/ipopt_dir/InstallUnix/ipopt_dir/$$
+(provided that the $cref/ipopt_dir/auto_tools/ipopt_dir/$$
 is specified on the $code configure$$ command line).
 
 $head 08-21$$
@@ -94,14 +94,14 @@ both older and newer versions of $code ipopt$$.
 $head 07-14$$
 The new versions of ipopt use $code pkg-config$$ to record the location
 where its necessary libraries are stored on the system.
-The cppad $cref/configure/InstallUnix/Configure/$$ command has
+The cppad $cref/configure/auto_tools/Configure/$$ command has
 been improved so that it can work both with versions of ipopt that use
 $code pkg-config$$ and ones that don't.
 
 $head 07-11$$
 Old versions of the ipopt library were located in 
 $icode%ipopt_dir%/lib/libipopt.%*%$$
-(see $cref/ipopt_dir/InstallUnix/ipopt_dir/$$),
+(see $cref/ipopt_dir/auto_tools/ipopt_dir/$$),
 but newer versions will be located in 
 $icode%ipopt_dir%/lib/coin/libipopt.%*%$$.
 The directory $icode%ipopt_dir%/lib/coin%$$ has been added to the library
@@ -191,7 +191,7 @@ $head 02-08$$
 A bug was introduced in the $cref/02-05/whats_new_10/02-05/$$
 change whereby the $code make$$ command tried to build the
 $code libcppad_ipopt.a$$ library even if $code IPOPT_DIR$$ was
-not specified on the $cref/configure/InstallUnix/Configure/$$ command line.
+not specified on the $cref/configure/auto_tools/Configure/$$ command line.
 This has been fixed.
 
 $head 02-06$$
@@ -212,7 +212,7 @@ $list number$$
 Simplify running all the tests by adding the
 $code make test$$ command.
 $lnext
-Simplify the $cref/configure/InstallUnix/Configure/$$ command by removing
+Simplify the $cref/configure/auto_tools/Configure/$$ command by removing
 need for:
 $code --with-Speed$$,
 $code --with-Introduction$$,

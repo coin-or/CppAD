@@ -38,8 +38,8 @@ $rnext
 $cref/CppADCreateDiscrete/Discrete/CppADCreateDiscrete Deprecated 2007-07-28/$$  $cnext 
 	$title Discrete$$
 $rnext
-$cref InstallUnix$$                               $cnext
-	$title InstallUnix$$
+$cref auto_tools$$                               $cnext
+	$title auto_tools$$
 $tend
 
 

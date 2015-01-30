@@ -71,10 +71,10 @@ There was a problem with this automation
 when $code eigen$$ was used for the cppad $cref testvector$$.
 This has been fixed.
 $lnext
-There was a problem with deprecated $cref InstallUnix$$
+There was a problem with deprecated $cref auto_tools$$
 (created when optional implicit constructor from any type was added).
 This has been fixed by adding the
-$cref/--with-implicit_ctor/InstallUnix/--with-implicit_ctor/$$ option.
+$cref/--with-implicit_ctor/auto_tools/--with-implicit_ctor/$$ option.
 $lend
 
 $head 12-27$$
@@ -168,7 +168,7 @@ reverse Jacobian sparsity pattern calculation.
 For further details; see sparsity heading under conditional expressions in the
 $cref/whish list/WishList/Conditional Expressions/Sparsity/$$.
 $lnext
-Fix the deprecated autotools install (see $cref InstallUnix$$)
+Fix the deprecated autotools install (see $cref auto_tools$$)
 which was broken by the changes on 10-22.
 To be specific, the
 example for $cref number_skip$$ was not being included.

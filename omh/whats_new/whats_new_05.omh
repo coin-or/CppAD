@@ -337,7 +337,7 @@ This makes $code VecAD$$ some what more efficient.
 
 $head 11-19$$
 Improve the output messages generated during execution of the 
-$cref/configure/InstallUnix/Configure/$$ command.
+$cref/configure/auto_tools/Configure/$$ command.
 $pre
 
 $$
@@ -399,7 +399,7 @@ Add $cref/sparsity patterns/glossary/Sparsity Pattern/$$ to
 the whish list.
 
 $head 10-18$$
-The Unix install $cref/configure/InstallUnix/Configure/$$ command
+The Unix install $cref/configure/auto_tools/Configure/$$ command
 was missing the $code --$$ before of the $code prefix$$ command line
 argument.
 
@@ -420,7 +420,7 @@ so that $code CppAD::vector<bool>$$ does not pack one bit per value
 
 $head 10-12$$
 Change the 
-$cref/configure/InstallUnix/Configure/$$ script so that compilation of the
+$cref/configure/auto_tools/Configure/$$ script so that compilation of the
 $cref get_started.cpp$$ and $cref print_for_cout.cpp$$ examples are optional.
 $pre
 
@@ -434,7 +434,7 @@ out of date. This has been fixed.
 $head 10-06$$
 Change the Unix install $code configure$$ script
 so that is reports information using the same order and notation as its
-$cref/documentation/InstallUnix/Configure/$$.
+$cref/documentation/auto_tools/Configure/$$.
 $pre
 
 $$
@@ -454,7 +454,7 @@ has been removed from the documentation.
 
 $head 09-27$$
 Add the 
-$cref/prefix_dir/InstallUnix/prefix_dir/$$ and 
+$cref/prefix_dir/auto_tools/prefix_dir/$$ and 
 $icode postfix_dir$$ ($icode postfix_dir$$ has since been removed) 
 options to the $code configure$$ command line.
 This gives the user more control over the location where CppAD is installed.
@@ -480,8 +480,8 @@ $pre
 $$
 Make the building of the 
 $code Example$$, $code TestMore$$, and $code Speed$$, directories
-optional during the $cref/configure/InstallUnix/Configure/$$ command.
-The $cref/Unix installation instructions/InstallUnix/$$ were 
+optional during the $cref/configure/auto_tools/Configure/$$ command.
+The $cref/Unix installation instructions/auto_tools/$$ were 
 overhauled to make the larger set of options easy to understand.
 
 $head 09-14$$
@@ -607,7 +607,7 @@ $cref WishList$$ to make it more efficient.
 
 $head 07-15$$
 The $code BOOST_DIR$$ and $code CPP_ERROR_WARN$$
-$cref/configure/InstallUnix/Configure/$$ options 
+$cref/configure/auto_tools/Configure/$$ options 
 were not properly implemented for compiling the  
 $code lib$$ sub-directory.
 This has been fixed.
@@ -860,7 +860,7 @@ During the process above, the function $cref/Variable/ParVar/$$ was added.
 
 
 $head 04-20$$
-Add $cref/profiling/InstallUnix/Profiling CppAD/$$
+Add $cref/profiling/auto_tools/Profiling CppAD/$$
 to the speed tests.
 
 $head 04-19$$
@@ -899,10 +899,10 @@ An new multiple level of AD example $cref mul_level$$ was added.
 
 $head 03-01$$
 An option that specifies error and warning 
-$cref/flags/InstallUnix/cxx_flags/$$
+$cref/flags/auto_tools/cxx_flags/$$
 for all the C++ compile commands,
 was added to the
-$cref/Unix installation instructions/InstallUnix/$$.
+$cref/Unix installation instructions/auto_tools/$$.
 
 
 $head 02-24$$

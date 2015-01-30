@@ -57,9 +57,9 @@ $codei%
 	sudo ln -s cppad CppAD
 %$$
 where 
-$cref/prefix_dir/InstallUnix/prefix_dir/$$
+$cref/prefix_dir/auto_tools/prefix_dir/$$
 is the prefix directory corresponding to your
-$cref/Unix installation/InstallUnix/$$.
+$cref/Unix installation/auto_tools/$$.
 This will link form the deprecated commands
 to the commands that should be used:
 

@@ -137,7 +137,7 @@ the install windows procedure.
 This has been fixed.
 
 $head 11-02$$
-The $cref/unix installation/InstallUnix/$$ required the user
+The $cref/unix installation/auto_tools/$$ required the user
 to touch the files to get the dates in proper order.
 This is no longer necessary.
 
@@ -234,7 +234,7 @@ $pre
 
 $$
 Links to the ADOLC and FADBAD download pages were added
-to the $cref/unix installation/InstallUnix/$$ instructions.
+to the $cref/unix installation/auto_tools/$$ instructions.
 
 $head 09-29$$
 The include files for the $cref library$$ are now included
@@ -253,7 +253,7 @@ $pre
 $$
 The changes on $cref/09-21/whats_new_04/09-21/$$ did not fix all
 the file date and time problems; i.e., automake was still running
-in response to the $cref/unix installation/InstallUnix/$$ 
+in response to the $cref/unix installation/auto_tools/$$ 
 $code make$$ command.
 
 
@@ -273,7 +273,7 @@ $$
 The date of the files $code aclocal.m4$$ and $code config.h.in$$
 were later than the date of top level $code Makefile.am$$.
 This caused the $code make$$ command during the 
-$cref/unix installation/InstallUnix/$$
+$cref/unix installation/auto_tools/$$
 to try to run $code autoconf$$
 and this did not work on systems with very old versions of $code autoconf$$.
 This has been fixed.
@@ -297,7 +297,7 @@ The $icode Base$$ type requirements were simplified.
 $pre
 
 $$
-The $cref/Unix installation/InstallUnix/$$ instructions
+The $cref/Unix installation/auto_tools/$$ instructions
 were modified so just one make command was executed at the top level.
 This was necessary because the order of the makes is now important
 (as previously suggested, the makes did not work properly).
@@ -308,7 +308,7 @@ users can debug the computation of function values
 at arguments that are different from those used when taping.
 
 $head 09-07$$
-In the $cref/Unix installation/InstallUnix/$$ instructions
+In the $cref/Unix installation/auto_tools/$$ instructions
 place $code ./$$ in front of current directory program names; for example,
 $code ./GetStarted$$ instead of $code GetStarted$$
 (because some unix systems do not have the current directory
@@ -328,7 +328,7 @@ $codei%<cppad/%name%.h>%$$.
 
 $head 09-02$$
 Some more messages were added to the output of $code configure$$
-during the $cref/Unix installation/InstallUnix/$$.
+during the $cref/Unix installation/auto_tools/$$.
 $pre
 
 $$

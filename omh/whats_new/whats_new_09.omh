@@ -455,7 +455,7 @@ In stead, a message is printed explaining that timing tests need
 to be run without a lot of other demands on the system.
 
 $head 06-21$$
-The configure instructions for $cref/ipopt_dir/InstallUnix/ipopt_dir/$$
+The configure instructions for $cref/ipopt_dir/auto_tools/ipopt_dir/$$
 had the wrong path for $code IpIpoptApplication.hpp$$.
 This has been fixed.
 
@@ -490,7 +490,7 @@ $lend
 
 $head 05-20$$
 A change was make to the trunk on 05-19 (svn revision 1361) that broke the
-$cref/Unix install/InstallUnix/$$ procedure.
+$cref/Unix install/auto_tools/$$ procedure.
 This was has been fixed (revision 1362).
 
 $head 03-24$$

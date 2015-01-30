@@ -131,7 +131,7 @@ $head 12-26$$
 In $code branches/ipopt_solve$$:
 $list number$$
 Convert documentation most all documentation references from
-the deprecated $cref InstallUnix$$ instructions to the new $cref cmake$$
+the deprecated $cref auto_tools$$ instructions to the new $cref cmake$$
 instructions.
 $lnext
 Include the $cref Introduction$$ programs in the 
@@ -202,11 +202,11 @@ $lend
 
 $head 12-14$$
 $list number$$
-Fix the old $cref InstallUnix$$ so that it works with the
+Fix the old $cref auto_tools$$ so that it works with the
 new $code cppad.pc$$.
 $lnext
 Fix the old installation 
-$cref/--with-Documentation/InstallUnix/--with-Documentation/$$ option
+$cref/--with-Documentation/auto_tools/--with-Documentation/$$ option
 (it was attempting to copy from the wrong directory).
 $lend
 
@@ -278,7 +278,7 @@ $lend
 $head 11-17$$
 $list number$$
 Finish documenting the new $cref cmake$$ configuration instructions
-and deprecate the old $cref/unix/InstallUnix/$$ instructions.
+and deprecate the old $cref/unix/auto_tools/$$ instructions.
 $lnext
 Change the specifications for
 $cref/CPPAD_MAX_NUM_THREADS/multi_thread/CPPAD_MAX_NUM_THREADS/$$
@@ -302,7 +302,7 @@ $cref cmake$$ configuration procedure during installation.
 This included factoring out the 
 $cref download$$ procedure as a separate section
 so that the same download instruction also apply to the 
-$cref/unix/InstallUnix/$$ install procedure.
+$cref/unix/auto_tools/$$ install procedure.
 
 $lnext
 Changed 
@@ -352,13 +352,13 @@ $cref/CondExpOp/base_alloc.hpp/CondExpOp/$$ function.
 This has been fixed and the comments for this example have been improved.
 
 $head 10-31$$
-The CppAD $cref/profiling/InstallUnix/Profiling CppAD/$$ was not compiling
+The CppAD $cref/profiling/auto_tools/Profiling CppAD/$$ was not compiling
 the $code speed/src/*.cpp$$ files with the profiling flag.
 This has been changes 
 (only for the profiling speed test).
 
 $head 10-30$$
-The $cref/fadbad_dir/InstallUnix/fadbad_dir/$$ directory install instructions
+The $cref/fadbad_dir/auto_tools/fadbad_dir/$$ directory install instructions
 were changed.
 To be specific, $code FADBAD++$$ was changed to $code include/FADBAD++$$.
 This makes it more like the other optional packages.
@@ -425,7 +425,7 @@ $list number$$
 A new type was added for the internal representation of
 $cref/vector of sets/glossary/Sparsity Pattern/Vector of Sets/$$
 sparsity patterns; see the configure
-$cref/--with-sparse_option/InstallUnix/--with-sparse_option/$$.
+$cref/--with-sparse_option/auto_tools/--with-sparse_option/$$.
 $lnext
 A new speed test, $cref compare_c$$, compares the speed of the same
 source code compiled with C and C++.
@@ -466,7 +466,7 @@ $lend
 
 $head 07-07$$
 Add the $code CPPAD_TAPE_ID_TYPE$$ argument to the 
-$cref/configure/InstallUnix/Configure/$$ command line.
+$cref/configure/auto_tools/Configure/$$ command line.
 
 $head 07-05$$
 Deprecate $cref/CPPAD_TEST_VECTOR/test_vector/$$ and use
@@ -480,7 +480,7 @@ Replace the requirement that the $cref SimpleVector$$
 $cref/size/SimpleVector/Size/$$ function return a $code size_t$$ value to
 the requirement that it can be converted to a $code size_t$$ value.
 $lnext
-The $cref/--with-eigenvector/InstallUnix/Configure/$$ option was
+The $cref/--with-eigenvector/auto_tools/Configure/$$ option was
 added to the $code configure$$ command line.
 $lend
 
@@ -540,7 +540,7 @@ linear algebra package.
 $head 06-15$$
 Include the $cref base_adolc.hpp$$ as
 $code <cppad/example/base_adolc.hpp>$$ under the 
-$cref/prefix_dir/InstallUnix/prefix_dir/$$ directory.
+$cref/prefix_dir/auto_tools/prefix_dir/$$ directory.
 
 $head 06-12$$
 Increase the size and of the 
@@ -701,7 +701,7 @@ $lend
 
 
 $head 04-19$$
-The $cref/BOOST_DIR/InstallUnix/boost_dir/$$ 
+The $cref/BOOST_DIR/auto_tools/boost_dir/$$ 
 configure command line value has been changed to be the corresponding
 prefix during the installation of boost.
 To be specific, it used to be that
@@ -724,9 +724,9 @@ $cref/multi_threading/multi_thread/$$.
 
 $head 04-10$$
 Add control of the 
-$cref/max_num_threads/InstallUnix/max_num_threads/$$ argument
+$cref/max_num_threads/auto_tools/max_num_threads/$$ argument
 to the unix 
-$cref/configure/InstallUnix/Configure/$$ command.
+$cref/configure/auto_tools/Configure/$$ command.
 
 $head 04-06$$
 $list number$$
@@ -755,7 +755,7 @@ Fixed a race condition when using CppAD with
 $cref/multi-threading/multi_thread/$$. 
 This has been fixed and the error message below no longer occurs.
 Suppose that you ran the CppAD 
-$cref/configure/InstallUnix/Configure/$$ command in the $code work$$
+$cref/configure/auto_tools/Configure/$$ command in the $code work$$
 directory.
 If you then edited the file $code work/multi_thread/makefile$$
 and changed
@@ -855,7 +855,7 @@ $cref simple_ad_bthread.cpp$$
 and $cref simple_ad_pthread.cpp$$.
 $lnext
 Fix bug in finding boost multi-threading library
-(due to fact that $cref/boost_dir/InstallUnix/boost_dir/$$ 
+(due to fact that $cref/boost_dir/auto_tools/boost_dir/$$ 
 is not the prefix during the boost installation).
 $lend
 
@@ -913,12 +913,12 @@ $lend
 $head 01-30$$
 Make another attempt to fix linking with boost threads where the wrong
 version of the library is in the system include directory; i.e.,
-to have $cref/boost_dir/InstallUnix/boost_dir/$$ override the default
+to have $cref/boost_dir/auto_tools/boost_dir/$$ override the default
 library.
 
 $head 01-27$$
 There were some problems with 
-$cref/configure's/InstallUnix/Configure/$$ automatic detection of
+$cref/configure's/auto_tools/Configure/$$ automatic detection of
 the boost multi-threading library. 
 These have been fixed.
 
@@ -970,7 +970,7 @@ $lend
 
 $head 01-16$$
 The test program $code multi_thread/test.sh$$ failed if the 
-$cref/openmp_flags/InstallUnix/openmp_flags/$$ not present in the
+$cref/openmp_flags/auto_tools/openmp_flags/$$ not present in the
 $code configure$$ command.
 This has been fixed.
 In addition, this $code test.sh$$ has been made faster by cycling through
@@ -979,7 +979,7 @@ test.
 
 $head 01-15$$
 Fix $code make test$$ so it works when 
-$cref/configure/InstallUnix/Configure/$$ is run in the distribution directory
+$cref/configure/auto_tools/Configure/$$ is run in the distribution directory
 $codei%cppad-%yyyymmdd%$$
 (not just when it is run in a different directory).
 
