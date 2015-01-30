@@ -3,7 +3,7 @@
 # define CPPAD_TAPE_LINK_INCLUDED
 
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-14 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-15 Bradley M. Bell
 
 CppAD is distributed under multiple licenses. This distribution is under
 the terms of the 
@@ -209,43 +209,70 @@ The value of <tt>*tape_id_ptr(thread)</tt> will be advanced by
 */
 template <class Base>
 ADTape<Base>*  AD<Base>::tape_manage(tape_manage_job job)
-{	CPPAD_ASSERT_FIRST_CALL_NOT_PARALLEL
-	static ADTape<Base>* tape_table[CPPAD_MAX_NUM_THREADS];
+{	// this routine has static variables so first call cannot be in parallel
+	CPPAD_ASSERT_FIRST_CALL_NOT_PARALLEL
+
+	// The tape for the master thread
 	static ADTape<Base>  tape_zero;
+
+	// Pointer to the tape for each thread
+	static ADTape<Base>* tape_table[CPPAD_MAX_NUM_THREADS];
+
+	// The id current being used for each of the tapes
 	static tape_id_t     tape_id_save[CPPAD_MAX_NUM_THREADS];
 
+	// Thread corresponding to this call
 	size_t thread        = thread_alloc::thread_num();
+
+	// tape_manage_clear
 	if( job == tape_manage_clear )
-	{	CPPAD_ASSERT_UNKNOWN(thread == 0 && (! thread_alloc::in_parallel()));	
+	{	// This operation cannot be done in parallel
+		CPPAD_ASSERT_UNKNOWN(thread == 0 && (! thread_alloc::in_parallel()));	
 		for(thread = 0; thread < CPPAD_MAX_NUM_THREADS; thread++)
-		{	if( tape_table[thread] != CPPAD_NULL )
-			{	tape_id_save[thread]    = tape_table[thread]->id_;
+		{	// if this thread has a tape
+			if( tape_table[thread] != CPPAD_NULL )
+			{	// id corresponding to this thread
+				tape_id_save[thread]    = tape_table[thread]->id_;
 				*tape_id_handle(thread) = &tape_id_save[thread];
 
+				// delete all but the master thread
 				if( thread != 0 )
 					delete( tape_table[thread] );
+
+				// set the tape pointer to null
 				tape_table[thread]   = CPPAD_NULL;
 			}
 		}  
 		return CPPAD_NULL;
 	}
+
+	// id and tape fpor this thread
 	tape_id_t** tape_id  = tape_id_handle(thread);
 	ADTape<Base>** tape  = tape_handle(thread);
 
+	// check if there is no tape currently attached to this thread
 	if( tape_table[thread] == CPPAD_NULL )
 	{	// allocate separate memroy to avoid false sharing
 		if( thread == 0 )
+		{	// mastert tape is a static in this routine
 			tape_table[thread] = &tape_zero;
-		else	tape_table[thread] = new ADTape<Base>();
+		}
+		else
+		{	// other tapes are allocated
+			tape_table[thread] = new ADTape<Base>();
+		}
+		// current id and pointer to this tape
 		tape_table[thread]->id_ = tape_id_save[thread];
 		*tape_id                = &tape_table[thread]->id_;
 
-		// init tape id > 0 and thread == tape id % CPPAD_MAX_NUM_THREADS
+		// if id is zero, initialize it so that
+		// thread == tape id % CPPAD_MAX_NUM_THREADS
 		if( **tape_id == 0 )
 			**tape_id = thread + CPPAD_MAX_NUM_THREADS;
 	}
 	// make sure tape_id_handle(thread) is pointing to the proper place
 	CPPAD_ASSERT_UNKNOWN( *tape_id == &tape_table[thread]->id_ );
+
 	// make sure tape_id value is valid for this thread
 	CPPAD_ASSERT_UNKNOWN( 
 		size_t( **tape_id % CPPAD_MAX_NUM_THREADS ) == thread 

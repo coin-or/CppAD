@@ -132,6 +132,7 @@ bool compare_change(void)
 			// CppAD does not spend time checking operator index when
 			// NDEBUG is defined
 			missed_error = false;
+			AD<double>::abort_recording();
 # endif
 		}
 		catch( error_info info )
