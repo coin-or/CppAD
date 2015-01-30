@@ -21,7 +21,6 @@ Changing CPPAD_EXTRA_RUN_BEFORE_TIMING dramatically changes timing results.
 EOF
 cat << EOF > bug.$$
 # include <cppad/cppad.hpp>
-# include <cppad/speed/uniform_01.hpp>
 # include <cppad/speed/sparse_hes_fun.hpp>
 namespace {
 	using CppAD::vector;
@@ -47,7 +46,7 @@ namespace {
 			}
 		}
 	}
-	void calc_sparsity(SetVector& sparsity_set, CppAD::ADFun<double>& f)
+	void calc_sparsity(SetVector& set_sparsity, CppAD::ADFun<double>& f)
 	{	size_t n = f.Domain();
 		size_t m = f.Range();
 		CPPAD_ASSERT_UNKNOWN( m == 1 );
@@ -59,20 +58,17 @@ namespace {
 		SetVector s_set(m);
 		s_set[0].insert(0);
 		//
-		sparsity_set = f.RevSparseHes(n, s_set);
+		set_sparsity = f.RevSparseHes(n, s_set);
 	}
 	bool link_sparse_hessian(
 		size_t                           size     ,
 		size_t                           repeat   ,
 		const CppAD::vector<size_t>&     row      ,
 		const CppAD::vector<size_t>&     col      ,
-		CppAD::vector<double>&           x        ,
-		CppAD::vector<double>&           hessian  ,
-		size_t&                          n_sweep  )
+		CppAD::vector<double>&           x        )
 	{
 		// -----------------------------------------------------
 		// setup
-		typedef vector<double>              DblVector;
 		typedef CppAD::AD<double>           ADScalar;
 		typedef vector<ADScalar>            ADVector;
 
@@ -82,11 +78,6 @@ namespace {
 		size_t n = size;          // number of independent variables
 		ADVector   a_x(n);        // AD domain space vector
 		ADVector   a_y(m);        // AD range space vector
-		DblVector  w(m);          // double range space vector
-		CppAD::ADFun<double> f;   // AD function object
-
-		// weights for hessian calculation (only one component of f)
-		w[0] = 1.;
 
 		// declare sparsity pattern
 		SetVector  set_sparsity(n);
@@ -94,9 +85,8 @@ namespace {
 		// ------------------------------------------------------
 		while(repeat--)
 		{	// choose a value for x
-			CppAD::uniform_01(n, x);
 			for(j = 0; j < n; j++)
-				a_x[j] = x[j];
+				a_x[j] = 0.0;
 
 			// declare independent variables
 			Independent(a_x);
@@ -105,10 +95,8 @@ namespace {
 			CppAD::sparse_hes_fun<ADScalar>(n, a_x, row, col, order, a_y);
 
 			// create function object f : X -> Y
+			CppAD::ADFun<double> f;
 			f.Dependent(a_x, a_y);
-
-			// skip comparison operators
-			f.compare_change_count(0);
 
 			// calculate the Hessian sparsity pattern for this function
 			calc_sparsity(set_sparsity, f);
@@ -128,11 +116,9 @@ namespace {
 			previous_size = size;
 		}
 		size_t K = row.size();
-		vector<double> hessian(K);
 
 		// note that cppad/sparse_hessian.cpp assumes that x.size() == size
-		size_t n_sweep;
-		link_sparse_hessian(n, repeat, row, col, x, hessian, n_sweep);
+		link_sparse_hessian(n, repeat, row, col, x);
 		return;
 	}
 
