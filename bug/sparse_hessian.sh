@@ -98,9 +98,6 @@ namespace {
 			CppAD::ADFun<double> f;
 			f.Dependent(a_x, a_y);
 
-			// calculate the Hessian sparsity pattern for this function
-			calc_sparsity(set_sparsity, f);
-
 		}
 		return true;
 	}
@@ -141,11 +138,11 @@ cd build
 echo "$0"
 name=`echo $0 | sed -e 's|.*/||' -e 's|\..*||'`
 mv ../bug.$$ $name.cpp
-for flag in 0 1
+for flag in 1 0
 do
 	echo_eval \
 		sed -e "'s|\\(CPPAD_EXTRA_RUN_BEFORE_TIMING\\) *[01]|\\1 $flag|'" \
 		-i ../../cppad/time_test.hpp
-	echo_eval  g++ -I../.. --std=c++11 -DNDEBUG -O2 $name.cpp -o $name
+	echo_eval  g++ -I../.. --std=c++11 -DNDEBUG -pg -g $name.cpp -o $name
 	echo_eval ./$name
 done
