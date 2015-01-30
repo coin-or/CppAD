@@ -46,20 +46,6 @@ namespace {
 			}
 		}
 	}
-	void calc_sparsity(SetVector& set_sparsity, CppAD::ADFun<double>& f)
-	{	size_t n = f.Domain();
-		size_t m = f.Range();
-		CPPAD_ASSERT_UNKNOWN( m == 1 );
-		SetVector r_set(n);
-		for(size_t i = 0; i < n; i++)
-			r_set[i].insert(i);
-		f.ForSparseJac(n, r_set);
-		//
-		SetVector s_set(m);
-		s_set[0].insert(0);
-		//
-		set_sparsity = f.RevSparseHes(n, s_set);
-	}
 	bool link_sparse_hessian(
 		size_t                           size     ,
 		size_t                           repeat   ,
@@ -78,9 +64,6 @@ namespace {
 		size_t n = size;          // number of independent variables
 		ADVector   a_x(n);        // AD domain space vector
 		ADVector   a_y(m);        // AD range space vector
-
-		// declare sparsity pattern
-		SetVector  set_sparsity(n);
 
 		// ------------------------------------------------------
 		while(repeat--)
@@ -138,11 +121,11 @@ cd build
 echo "$0"
 name=`echo $0 | sed -e 's|.*/||' -e 's|\..*||'`
 mv ../bug.$$ $name.cpp
-for flag in 1 0
+for flag in 0 1
 do
 	echo_eval \
 		sed -e "'s|\\(CPPAD_EXTRA_RUN_BEFORE_TIMING\\) *[01]|\\1 $flag|'" \
 		-i ../../cppad/time_test.hpp
-	echo_eval  g++ -I../.. --std=c++11 -DNDEBUG -pg -g $name.cpp -o $name
+	echo_eval  g++ -I../.. --std=c++11 -DNDEBUG -g $name.cpp -o $name
 	echo_eval ./$name
 done
