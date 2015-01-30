@@ -113,12 +113,6 @@ namespace {
 			// calculate the Hessian sparsity pattern for this function
 			calc_sparsity(set_sparsity, f);
 
-			// structure that holds some of work done by SparseHessian
-			CppAD::sparse_hessian_work work;
-			// calculate this Hessian at this x
-			n_sweep = f.SparseHessian(
-					x, w, set_sparsity, row, col, hessian, work
-			);
 		}
 		return true;
 	}
@@ -145,7 +139,7 @@ namespace {
 }
 int main(void)
 {
-	size_t size  = 2500;
+	size_t size  = 3000;
 	double time_min = 1.0;
 	double time = CppAD::time_test(speed_sparse_hessian, time_min, size);
 	std::cout << "time = " << time << std::endl;
