@@ -171,25 +171,24 @@ $codei%
 The default value for $icode cmake_install_postfix$$ is empty; i.e,
 there is no bottom level relative directory for the installed files.
 
+
 $head cmake_install_includedirs$$
 $index install, include directories$$
-$index include directories, install$$
-This can be one directory, or a list of directories separated
+$index include, install directories$$
+This is one directory, or a list of directories separated
 by spaces or by semi-colons.
-This first entry in the list is the directory, 
-below the $icode cmake_install_prefix$$,
-where the CppAD include files will be installed.
-This directory, and the others in the list, are used for searching
-for include files.
-The default value for this directory list is $code include$$.
-For example, if 
-$icode cmake_install_prefix$$,
-$icode cmake_install_includedirs$$, and
-$icode cmake_install_postfix$$, are not specified,
-the file $code cppad.hpp$$ will be installed in the location
+This first entry in the list is the middle level relative path below which
+the CppAD include files are installed.
+The entire list is used for searching for include files.
+For example,
+if $icode cmake_install_prefix$$ is $code /usr$$,
+$icode cmake_install_includedirs$$ is $code include$$, and
+$icode cmake_install_postfix$$ is not specified,
+the file $code cppad.hpp$$ is installed in the location
 $codei%
 	/usr/include/cppad/cppad.hpp
 %$$
+The default value for this directory list is $code include$$.
 
 $head cmake_install_libdirs$$
 $index install, library directories$$
