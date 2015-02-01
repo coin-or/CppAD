@@ -3,7 +3,7 @@ $Id$
 CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-14 Bradley M. Bell
 
 CppAD is distributed under multiple licenses. This distribution is under
-the terms of the 
+the terms of the
                     Eclipse Public License Version 1.0.
 
 A copy of this license is included in the COPYING file of this distribution.
@@ -49,7 +49,7 @@ $spell
 	docdir
 	includedirs
 	libdirs
-	cxx 
+	cxx
 	max num
 	postfix
 	id
@@ -64,29 +64,29 @@ $index cppad, cmake configure$$
 
 $head The CMake Program$$
 $index cmake$$
-The 
-$href%http://www.cmake.org/cmake/help/install.html%cmake%$$  
+The
+$href%http://www.cmake.org/cmake/help/install.html%cmake%$$
 program enables one to create a single set of scripts,
-called $code CMakeLists.txt$$, 
+called $code CMakeLists.txt$$,
 that can be used to test and install a program on Unix, Microsoft, or
-Apple operating systems. 
+Apple operating systems.
 For example, one can use it to automatically generate Microsoft project files.
-   
+
 $head CMake Command$$
 $index cmake, command$$
 $index configure, cppad$$
 $index cppad, configure$$
 The command below assumes that $code cmake$$ is in your execution
-path. If not, you can put the path to $code cmake$$ in font the command. 
+path. If not, you can put the path to $code cmake$$ in font the command.
 Only the $code cmake$$ command and the path to the distribution directory
 ($code ..$$ at the end of the command below) are required.
 In other words, the first and last lines below are required
 and all of the other lines are optional.
 
 $subhead Build Directory$$
-Create a $code build$$ subdirectory of the 
+Create a $code build$$ subdirectory of the
 $cref/distribution directory/download/Distribution Directory/$$,
-change into the $code build$$  directory, 
+change into the $code build$$  directory,
 and execute the following command:
 $codei%
 cmake %%                                                                     \
@@ -130,7 +130,7 @@ $icode generator$$ $cnext Description $rnext
 $code "Unix Makefiles"$$   $cnext make files for unix operating system $rnext
 $code "NMake Makefiles"$$  $cnext make files for Visual Studio
 $tend
-Other generator choices are available; see the cmake 
+Other generator choices are available; see the cmake
 $href%http://www.cmake.org/cmake/help/cmake2.6docs.html#section_Generators%
 generators%$$ documentation.
 
@@ -214,11 +214,11 @@ $codei%
 $head cmake_install_datadir$$
 $index install, data directory$$
 $index data directory, install$$
-This is the directory, 
+This is the directory,
 below the $icode cmake_install_prefix$$,
 where the data files will be installed.
 The default value for this directory is $code share$$.
-For example, if 
+For example, if
 $icode cmake_install_prefix$$ and
 $icode cmake_install_postfix$$ are not specified,
 the $cref pkgconfig$$ file $code cppad.pc$$ will be installed in the location
@@ -231,12 +231,12 @@ $index install, data directory$$
 $index data directory, install$$
 This is the directory is present, the documentation files are installed
 in this sub-directory below the $icode cmake_install_prefix$$.
-For example, if 
+For example, if
 $icode cmake_install_prefix$$ and
 $icode cmake_install_postfix$$ are not specified, and
 $codei%
 	-D cmake_install_docdir=share/doc
-%$$ 
+%$$
 the file $code cppad.xml$$ will be installed in the location
 $codei%
 	/usr/share/doc/cppad/cppad.xml
@@ -293,7 +293,7 @@ $head cppad_sparse_list$$
 $index sparsity, internal structure$$
 $index sparsity, vector of sets$$
 There are two possible values for this option, $code YES$$ and $code NO$$.
-This affect the internal data structure used to store a 
+This affect the internal data structure used to store a
 $cref/sparsity pattern/glossary/Sparsity Pattern/$$ when the
 users version of the sparsity pattern is a vector of $code std::set<size_t>$$.
 If $icode cppad_sparse_list$$ is $code NO$$
@@ -309,7 +309,7 @@ $head cppad_tape_id_type$$
 $index memory, usage$$
 $index memory, tape$$
 $index tape, memory$$
-The type $icode cppad_tape_id_type$$ 
+The type $icode cppad_tape_id_type$$
 is used for identifying different tapes.
 The valid values for this type are
 $code unsigned char$$,
@@ -337,7 +337,7 @@ $head cppad_tape_addr_type$$
 $index memory, usage$$
 $index memory, tape$$
 $index tape, memory$$
-The type $icode cppad_tape_addr_type$$ 
+The type $icode cppad_tape_addr_type$$
 is used for address in the AD recordings (tapes).
 The valid values for this argument are
 $code unsigned char$$,
@@ -370,11 +370,11 @@ $index ctor, implicit or explicit$$
 $index implicit, ctor$$
 $index explicit, ctor$$
 The default value for $icode cppad_implicit_ctor_from_any_type$$ is $code NO$$.
-If it is $code YES$$, there is a 
+If it is $code YES$$, there is a
 $cref/deprecated/ad_ctor/x/deprecated/$$
 implicit type constructor (type conversion)
 from any type to $codei%AD<%Base%>%$$.
-Otherwise this constructor is 
+Otherwise this constructor is
 $cref/explicit/ad_ctor/x/explicit/$$.
 
 
