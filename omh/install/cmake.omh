@@ -144,8 +144,8 @@ $codei%
 %$$
 For example,
 if $icode cmake_install_prefix$$ is $code /usr$$,
-$icode cmake_install_postfix$$ is not specified, and
-$icode cmake_install_includedirs$$ is $code include$$,
+$icode cmake_install_includedirs$$ is $code include$$, and
+$icode cmake_install_postfix$$ is not specified,
 the file $code cppad.hpp$$ is installed in the location
 $codei%
 	/usr/include/cppad/cppad.hpp
@@ -155,21 +155,21 @@ The default value for $icode cmake_install_prefix$$ is $code /usr$$.
 $head cmake_install_postfix$$
 $index install, postfix$$
 $index postfix, install$$
-This is the directory, 
-below the include, data, and library directories,
-where files will be installed.
-The default value for this directory is empty 
-(as the example cases above demonstrate).
-For example, 
-if $icode cmake_install_prefix$$ and
-$icode cmake_install_postfix$$ are not specified, and
+This is the bottom level relative path below which
+all of the CppAD files are installed by the command
 $codei%
-	-D cmake_install_postfix=coin
+	make install
 %$$
-the $cref pkgconfig$$ file $code cppad.pc$$ will be installed in the location
+For example,
+if $icode cmake_install_prefix$$ is $code /usr$$,
+$icode cmake_install_includedirs$$ is $code include$$, and
+$icode cmake_install_postfix$$ is $code coin$$,
+the file $code cppad.hpp$$ is installed in the location
 $codei%
-	/usr/share/coin/pkgconfig/cppad.pc
+	/usr/include/coin/cppad/cppad.hpp
 %$$
+The default value for $icode cmake_install_postfix$$ is empty; i.e,
+there is no bottom level relative directory for the installed files.
 
 $head cmake_install_includedirs$$
 $index install, include directories$$
