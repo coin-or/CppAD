@@ -89,32 +89,32 @@ $cref/distribution directory/download/Distribution Directory/$$,
 change into the $code build$$  directory, 
 and execute the following command:
 $codei%
-cmake %%                                                                      \
-	-G %generator%                                                           \
-	-D cmake_install_prefix=%cmake_install_prefix%                           \
-	-D cmake_install_includedirs=%cmake_install_includedirs%                 \
-	-D cmake_install_datadir=%cmake_install_datadir%                         \
-	-D cmake_install_docdir=%cmake_install_docdir%                           \
-	-D cmake_install_libdirs=%cmake_install_libdirs%                         \
-	-D cmake_install_postfix=%cmake_install_postfix%                         \
-	\
-	-D adolc_prefix=%adolc_prefix%                                           \
-	-D colpack_prefix=%colpack_prefix%                                       \
-	-D eigen_prefix=%eigen_prefix%                                           \
-	-D fadbad_prefix=%fadbad_prefix%                                         \
-	-D ipopt_prefix=%ipopt_prefix%                                           \
-	-D sacado_prefix=%sacado_prefix%                                         \
-	\
-	-D cppad_cxx_flags=%cppad_cxx_flags%                                     \
-	\
-	-D cppad_testvector=%cppad_testvector%                                   \
-	-D cppad_max_num_threads=%cppad_max_num_threads%                         \
-	-D cppad_sparse_list=%cppad_sparse_list%                                 \
-	-D cppad_tape_id_type=%cppad_tape_id_type%                               \
-	-D cppad_tape_addr_type=%cppad_tape_addr_type%                           \
-	-D cppad_implicit_ctor_from_any_type=%cppad_implicit_ctor_from_any_type% \
-	\
-	..
+cmake %%                                                                     \
+    -G %generator%                                                           \
+    -D cmake_install_prefix=%cmake_install_prefix%                           \
+    -D cmake_install_includedirs=%cmake_install_includedirs%                 \
+    -D cmake_install_libdirs=%cmake_install_libdirs%                         \
+    -D cmake_install_datadir=%cmake_install_datadir%                         \
+    -D cmake_install_docdir=%cmake_install_docdir%                           \
+    -D cmake_install_postfix=%cmake_install_postfix%                         \
+    \
+    -D adolc_prefix=%adolc_prefix%                                           \
+    -D colpack_prefix=%colpack_prefix%                                       \
+    -D eigen_prefix=%eigen_prefix%                                           \
+    -D fadbad_prefix=%fadbad_prefix%                                         \
+    -D ipopt_prefix=%ipopt_prefix%                                           \
+    -D sacado_prefix=%sacado_prefix%                                         \
+    \
+    -D cppad_cxx_flags=%cppad_cxx_flags%                                     \
+    \
+    -D cppad_testvector=%cppad_testvector%                                   \
+    -D cppad_max_num_threads=%cppad_max_num_threads%                         \
+    -D cppad_sparse_list=%cppad_sparse_list%                                 \
+    -D cppad_tape_id_type=%cppad_tape_id_type%                               \
+    -D cppad_tape_addr_type=%cppad_tape_addr_type%                           \
+    -D cppad_implicit_ctor_from_any_type=%cppad_implicit_ctor_from_any_type% \
+    \
+    ..
 %$$
 
 $head generator$$
@@ -161,6 +161,27 @@ $codei%
 	/usr/include/cppad/cppad.hpp
 %$$
 
+$head cmake_install_libdirs$$
+$index install, library directories$$
+$index library directories, install$$
+This can be one directory, or a list of directories separated
+by spaces or semi-colons.
+The first entry in the list is the directory,
+below the $icode cmake_install_prefix$$,
+where the CppAD library files will be installed.
+This directory, and the others in the list, are used for searching
+for library files.
+The default value for this directory list is $code lib$$.
+For example, if
+$icode cmake_install_prefix$$,
+$icode cmake_install_postfix$$,
+$icode cmake_install_libdirs$$ are not specified, and
+$icode ipopt_prefix$$ is specified,
+the file $code libcppad_ipopt.a$$ will be installed in the location
+$codei%
+	/usr/lib/libcppad_ipopt.a
+%$$
+
 $head cmake_install_datadir$$
 $index install, data directory$$
 $index data directory, install$$
@@ -190,27 +211,6 @@ $codei%
 the file $code cppad.xml$$ will be installed in the location
 $codei%
 	/usr/share/doc/cppad/cppad.xml
-%$$
-
-$head cmake_install_libdirs$$
-$index install, library directories$$
-$index library directories, install$$
-This can be one directory, or a list of directories separated
-by spaces or semi-colons.
-The first entry in the list is the directory, 
-below the $icode cmake_install_prefix$$,
-where the CppAD library files will be installed.
-This directory, and the others in the list, are used for searching
-for library files.
-The default value for this directory list is $code lib$$.
-For example, if 
-$icode cmake_install_prefix$$,
-$icode cmake_install_postfix$$,
-$icode cmake_install_libdirs$$ are not specified, and
-$icode ipopt_prefix$$ is specified,
-the file $code libcppad_ipopt.a$$ will be installed in the location
-$codei%
-	/usr/lib/libcppad_ipopt.a
 %$$
 
 $head cmake_install_postfix$$
