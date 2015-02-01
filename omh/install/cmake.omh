@@ -137,12 +137,20 @@ generators%$$ documentation.
 $head cmake_install_prefix$$
 $index install, prefix$$
 $index prefix, install$$
-This is the prefix directory for the CppAD files that get installed by the 
+This is the top level absolute path below which
+all of the CppAD files are installed by the command
 $codei%
 	make install
 %$$
-All of the installed files will be placed below this directory.
-The default value for this directory is $code /usr$$.
+For example,
+if $icode cmake_install_prefix$$ is $code /usr$$,
+$icode cmake_install_postfix$$ is not specified, and
+$icode cmake_install_includedirs$$ is $code include$$,
+the file $code cppad.hpp$$ is installed in the location
+$codei%
+	/usr/include/cppad/cppad.hpp
+%$$
+The default value for $icode cmake_install_prefix$$ is $code /usr$$.
 
 $head cmake_install_postfix$$
 $index install, postfix$$
