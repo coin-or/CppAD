@@ -356,10 +356,12 @@ INSTALL(
 	DESTINATION ${cppad_abs_includedir}/cppad
 	FILES_MATCHING PATTERN "*.hpp"
 )
-INSTALL( 
-	FILES "cppad/local/cppad_colpack.cpp"
-	DESTINATION ${cppad_abs_datadir}/cppad
-)
+IF( colpack_prefix )
+	INSTALL( 
+		FILES "cppad/local/cppad_colpack.cpp"
+		DESTINATION ${cppad_abs_datadir}/cppad
+	)
+ENDIF( colpack_prefix )
 #
 # During install copy doc direcrory to cppad_abs_docdir/cppad
 IF ( cmake_install_docdir )
