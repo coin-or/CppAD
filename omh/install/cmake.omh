@@ -91,12 +91,15 @@ and execute the following command:
 $codei%
 cmake %%                                                                     \
     -G %generator%                                                           \
+	\
     -D cmake_install_prefix=%cmake_install_prefix%                           \
+    -D cmake_install_postfix=%cmake_install_postfix%                         \
+	\
     -D cmake_install_includedirs=%cmake_install_includedirs%                 \
     -D cmake_install_libdirs=%cmake_install_libdirs%                         \
+	\
     -D cmake_install_datadir=%cmake_install_datadir%                         \
     -D cmake_install_docdir=%cmake_install_docdir%                           \
-    -D cmake_install_postfix=%cmake_install_postfix%                         \
     \
     -D adolc_prefix=%adolc_prefix%                                           \
     -D colpack_prefix=%colpack_prefix%                                       \
@@ -140,6 +143,25 @@ $codei%
 %$$
 All of the installed files will be placed below this directory.
 The default value for this directory is $code /usr$$.
+
+$head cmake_install_postfix$$
+$index install, postfix$$
+$index postfix, install$$
+This is the directory, 
+below the include, data, and library directories,
+where files will be installed.
+The default value for this directory is empty 
+(as the example cases above demonstrate).
+For example, 
+if $icode cmake_install_prefix$$ and
+$icode cmake_install_postfix$$ are not specified, and
+$codei%
+	-D cmake_install_postfix=coin
+%$$
+the $cref pkgconfig$$ file $code cppad.pc$$ will be installed in the location
+$codei%
+	/usr/share/coin/pkgconfig/cppad.pc
+%$$
 
 $head cmake_install_includedirs$$
 $index install, include directories$$
@@ -211,25 +233,6 @@ $codei%
 the file $code cppad.xml$$ will be installed in the location
 $codei%
 	/usr/share/doc/cppad/cppad.xml
-%$$
-
-$head cmake_install_postfix$$
-$index install, postfix$$
-$index postfix, install$$
-This is the directory, 
-below the include, data, and library directories,
-where files will be installed.
-The default value for this directory is empty 
-(as the example cases above demonstrate).
-For example, 
-if $icode cmake_install_prefix$$ and
-$icode cmake_install_postfix$$ are not specified, and
-$codei%
-	-D cmake_install_postfix=coin
-%$$
-the $cref pkgconfig$$ file $code cppad.pc$$ will be installed in the location
-$codei%
-	/usr/share/coin/pkgconfig/cppad.pc
 %$$
 
 $head package_prefix$$
