@@ -190,26 +190,25 @@ $codei%
 %$$
 The default value for this directory list is $code include$$.
 
+
 $head cmake_install_libdirs$$
-$index install, library directories$$
-$index library directories, install$$
-This can be one directory, or a list of directories separated
-by spaces or semi-colons.
-The first entry in the list is the directory,
-below the $icode cmake_install_prefix$$,
-where the CppAD library files will be installed.
-This directory, and the others in the list, are used for searching
-for library files.
-The default value for this directory list is $code lib$$.
-For example, if
-$icode cmake_install_prefix$$,
-$icode cmake_install_postfix$$,
-$icode cmake_install_libdirs$$ are not specified, and
-$icode ipopt_prefix$$ is specified,
-the file $code libcppad_ipopt.a$$ will be installed in the location
+$index install, lib directories$$
+$index lib, install directories$$
+This is one directory, or a list of directories separated
+by spaces or by semi-colons.
+This first entry in the list is the middle level relative path below which
+the CppAD library files are installed.
+The entire list is used for searching for library files.
+For example,
+if $icode cmake_install_prefix$$ is $code /usr$$,
+$icode cmake_install_libdirs$$ is $code lib$$,
+$icode cmake_install_postfix$$ is not specified,
+and $icode ipopt_prefix$$ is specified,
+the file $code libcppad_ipopt.a$$ is installed in the location
 $codei%
 	/usr/lib/libcppad_ipopt.a
 %$$
+The default value for this directory list is $code lib$$.
 
 $head cmake_install_datadir$$
 $index install, data directory$$
