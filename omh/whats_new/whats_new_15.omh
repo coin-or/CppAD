@@ -39,7 +39,7 @@ The purpose of this section is to
 assist you in learning about changes between various versions of CppAD.
 
 $head 02-02$$
-Improve the documentation for the 
+Improve the documentation for the
 $cref/cmake command/cmake/CMake Command/$$ line options
 $codei%
 	cmake_install_%dir%
@@ -72,22 +72,22 @@ This has been fixed.
 
 $head 01-21$$
 The deprecated $cref auto_tools$$ procedure had a bug in the
-detection of when the size of an $code unsigned int$$ 
+detection of when the size of an $code unsigned int$$
 was the same as the size of a $code size_t$$. This has been fixed.
 
 $head 01-20$$
 $list number$$
-The new $cref compare_change$$ interface has been created 
-and the old $cref CompareChange$$ function has been deprecated; 
+The new $cref compare_change$$ interface has been created
+and the old $cref CompareChange$$ function has been deprecated;
 see the $cref compare_change.cpp$$ example.
 This enables one to determine the source code during taping
-that corresponds to changes in the comparisons during 
+that corresponds to changes in the comparisons during
 $cref/zero order forward/forward_zero/$$ operations; see
 $cref/abort_op_index/Independent/abort_op_index/$$.
 
 $lnext
-This new $cref compare_change$$ interface can detect comparison changes 
-even if $cref/NDEBUG/Faq/Speed/NDEBUG/$$ is defined and 
+This new $cref compare_change$$ interface can detect comparison changes
+even if $cref/NDEBUG/Faq/Speed/NDEBUG/$$ is defined and
 even if $cref/f.optimize()/optimize/$$ has been called.
 The deprecated function $code CompareChange$$ used to always return zero after
 $codei%
@@ -110,7 +110,7 @@ a sparse, instead of full, structure for the Hessian in the test.
 This has also been done for the
 $cref/sparse Jacobian/link_sparse_jacobian/$$ test.
 $lnext
-For both the 
+For both the
 $cref/sparse_jacobian/link_sparse_jacobian/$$ and
 $cref/sparse_hessian/link_sparse_hessian/$$ tests,
 the sparse function is only chosen once
@@ -131,14 +131,14 @@ $lend
 $head 01-07$$
 The following changes were merged in from the $code color_hes$$ branch:
 $list number$$
-Specify the type of 
+Specify the type of
 $cref/coloring/sparse_hessian/work/color_method/$$
-for the sparse hessian calculations. 
+for the sparse hessian calculations.
 To be specific, instead of $code "cppad"$$ and $code "colpack"$$,
 the choices are $code "cppad.symmetric"$$, $code "cppad.general"$$,
 and $code "colpack.star"$$.
-This is not compatible with the change on 
-$cref/01-02/whats_new_15/01-02/$$, which was so recent 
+This is not compatible with the change on
+$cref/01-02/whats_new_15/01-02/$$, which was so recent
 that this should not be a problem.
 $lnext
 The $cref/n_sweep/link_sparse_hessian/n_sweep/$$ values were
