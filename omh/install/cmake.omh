@@ -156,10 +156,7 @@ $head cmake_install_postfix$$
 $index install, postfix$$
 $index postfix, install$$
 This is the bottom level relative path below which
-all of the CppAD files are installed by the command
-$codei%
-	make install
-%$$
+all of the CppAD files are installed.
 For example,
 if $icode cmake_install_prefix$$ is $code /usr$$,
 $icode cmake_install_includedirs$$ is $code include$$, and
@@ -211,19 +208,19 @@ $codei%
 The default value for this directory list is $code lib$$.
 
 $head cmake_install_datadir$$
-$index install, data directory$$
-$index data directory, install$$
-This is the directory,
-below the $icode cmake_install_prefix$$,
-where the data files will be installed.
-The default value for this directory is $code share$$.
-For example, if
-$icode cmake_install_prefix$$ and
-$icode cmake_install_postfix$$ are not specified,
-the $cref pkgconfig$$ file $code cppad.pc$$ will be installed in the location
+$index install, datadir$$
+$index datadir, install$$
+This is the middle level relative path below which
+the CppAD data files are installed.
+For example,
+if $icode cmake_install_prefix$$ is $code /usr$$,
+$icode cmake_install_datadir$$ is $code share$$, and
+$icode cmake_install_postfix$$ is not specified,
+the $cref pkgconfig$$ file $code cppad.pc$$ is installed in the location
 $codei%
 	/usr/share/pkgconfig/cppad.pc
 %$$
+The default value for $icode cmake_install_datadir$$ is $code share$$.
 
 $head cmake_install_docdir$$
 $index install, data directory$$
