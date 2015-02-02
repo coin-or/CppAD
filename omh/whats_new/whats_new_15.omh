@@ -23,6 +23,11 @@ $spell
 	gettimeofday
 	cmake
 	hpp
+	dir
+	includedirs
+	libdirs
+	datadir
+	docdir
 $$
 
 $section CppAD Changes and Additions During 2015$$
@@ -32,6 +37,16 @@ This section contains a list of the changes to CppAD during 2015
 (in reverse order by date).
 The purpose of this section is to
 assist you in learning about changes between various versions of CppAD.
+
+$head 02-02$$
+Improve the documentation for the 
+$cref/cmake command/cmake/CMake Command/$$ line options
+$codei%
+	cmake_install_%dir%
+%$$
+for $icode dir$$ equal to
+$code prefix$$, $code postfix$$, $code includedirs$$, $code libdirs$$,
+$code datadir$$, and $code docdir$$.
 
 $head 01-30$$
 Fix bug in $cref link_sparse_hessian$$ speed test introduced on
