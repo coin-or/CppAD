@@ -223,20 +223,20 @@ $codei%
 The default value for $icode cmake_install_datadir$$ is $code share$$.
 
 $head cmake_install_docdir$$
-$index install, data directory$$
-$index data directory, install$$
-This is the directory is present, the documentation files are installed
-in this sub-directory below the $icode cmake_install_prefix$$.
-For example, if
-$icode cmake_install_prefix$$ and
-$icode cmake_install_postfix$$ are not specified, and
-$codei%
-	-D cmake_install_docdir=share/doc
-%$$
-the file $code cppad.xml$$ will be installed in the location
+$index install, documentation$$
+$index documentation, install$$
+This is the middle level relative path below which
+the CppAD documentation files are installed.
+For example,
+if $icode cmake_install_prefix$$ is $code /usr$$,
+$icode cmake_install_docdir$$ is $code share/doc$$, and
+$icode cmake_install_postfix$$ is not specified,
+the file $code cppad.xml$$ is installed in the location
 $codei%
 	/usr/share/doc/cppad/cppad.xml
 %$$
+There is no default value for $icode cmake_install_docdir$$.
+If it is not specified, the documentation files are not installed.
 
 $head package_prefix$$
 $index package, prefix$$
