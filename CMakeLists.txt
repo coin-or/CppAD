@@ -1,6 +1,6 @@
 # $Id$
 # -----------------------------------------------------------------------------
-# CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-14 Bradley M. Bell
+# CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-15 Bradley M. Bell
 #
 # CppAD is distributed under multiple licenses. This distribution is under
 # the terms of the 
@@ -181,45 +181,24 @@ IF( fadbad_prefix )
 	MESSAGE(STATUS "cppad_cxx_flags_fadbad = ${cppad_cxx_flags_fadbad}")
 ENDIF( fadbad_prefix )
 # -----------------------------------------------------------------------------
-# cppad_abs_includedir, cppad_abs_libdir, cppad_abs_datadir, cppad_abs_docdir
-#
-# cppad_abs_docdir is not used if cmake_install_docdir is ""
-#
-IF ( cmake_install_postfix )
-	SET(cppad_abs_includedir 
-"${cmake_install_prefix}/${cppad_install_includedir}/${cmake_install_postfix}" 
-		CACHE INTERNAL "cppad install include file directory" FORCE
-	)
-	SET(cppad_abs_libdir 
-"${cmake_install_prefix}/${cppad_install_libdir}/${cmake_install_postfix}" 
-		CACHE INTERNAL "cppad install library file directory" FORCE
-	)
-	SET(cppad_abs_datadir 
-"${cmake_install_prefix}/${cmake_install_datadir}/${cmake_install_postfix}" 
-		CACHE INTERNAL "cppad install data file directory" FORCE
-	)
-	SET(cppad_abs_docdir 
-"${cmake_install_prefix}/${cmake_install_docdir}/${cmake_install_postfix}" 
-		CACHE INTERNAL "cppad install data file directory" FORCE
-	)
-ELSE ( cmake_install_postfix )
-	SET(cppad_abs_includedir 
-		"${cmake_install_prefix}/${cppad_install_includedir}" 
-		CACHE INTERNAL "cppad install include file directory" FORCE
-	)
-	SET(cppad_abs_libdir 
-		"${cmake_install_prefix}/${cppad_install_libdir}" 
-		CACHE INTERNAL "cppad install library file directory" FORCE
-	)
-	SET(cppad_abs_datadir 
-		"${cmake_install_prefix}/${cmake_install_datadir}" 
-		CACHE INTERNAL "cppad install data file directory" FORCE
-	)
-	SET(cppad_abs_docdir 
-		"${cmake_install_prefix}/${cmake_install_docdir}" 
-		CACHE INTERNAL "cppad install data file directory" FORCE
-	)
-ENDIF ( cmake_install_postfix )
+# set cppad_abs_${middle_name} for middle_name equal to:
+#	includedir, liddir, datadir, docdir
+FOREACH(middle_names includedirs libdirs datadir docdir)
+	STRING(REGEX REPLACE "dirs" "dir" middle_name ${middle_names})
+	SET(middle_value NOTFOUND)
+	FOREACH(dir ${cmake_install_${middle_names}})
+		IF( NOT middle_value )
+			SET(middle_value ${dir})
+		ENDIF( NOT middle_value )
+	ENDFOREACH(dir ${cmake_install_${middle_names}})
+	#
+	SET(tmp "${cmake_install_prefix}/${middle_value}" )
+	IF ( cmake_install_postfix )
+		SET(cppad_abs_${middle_name} ${tmp}/${cmake_install_postfix})
+	ELSE ( cmake_install_postfix )
+		SET(cppad_abs_${middle_name} ${tmp})
+	ENDIF ( cmake_install_postfix )
+ENDFOREACH(middle_names includedirs libdirs datadir docdir)
 # -----------------------------------------------------------------------------
 # boost_prefix
 FIND_PACKAGE(Boost)
