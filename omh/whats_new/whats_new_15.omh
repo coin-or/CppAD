@@ -38,6 +38,12 @@ This section contains a list of the changes to CppAD during 2015
 The purpose of this section is to
 assist you in learning about changes between various versions of CppAD.
 
+$head 02-03$$
+Improved the searching for the boost multi-threading library
+which is used for by the $cref team_bthread.cpp$$ case of the
+$cref thread_test.cpp$$ example and test.
+
+
 $head 02-02$$
 Improve the documentation for the
 $cref/cmake command/cmake/CMake Command/$$ line options

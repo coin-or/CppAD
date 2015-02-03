@@ -48,38 +48,47 @@ IF ( pthread_lib_path )
 	ENDIF ( pthread_ok )
 ENDIF ( pthread_lib_path )
 
-# If boost threads found, set 
-# bthread_lib, bthread_lib_path and process its subdir
-# 
-# FIND_PACKAGE(Boost) was done by ../CMakeLists.txt
+# IF we find a boost multi-threadding library, define the corresponding 
+# bthread_lib, bthread_lib_path, and process the bthread subdirectory.
 IF ( Boost_FOUND )
-	#
-	SET(CMAKE_REQUIRED_INCLUDES  "${boost_prefix}/${cmake_install_includdir}")
-	#
-	SET(bthread_lib               "boost_thread" )
-	SET(CMAKE_REQUIRED_LIBRARIES "${bthread_lib}" )
-	#
-	SET(bthread_lib_path "${boost_prefix}/${cppad_install_libdir}" )
-	SET(CMAKE_REQUIRED_FLAGS     "-L${bthread_lib_path}" )
-	#
-	# CHECK_CXX_SOURCE_RUNS(source variable)
-	SET(source "
+	SET(bthread_lib NOTFOUND)
+	FOREACH(idir ${cmake_install_includedirs})
+		FOREACH(ldir ${cmake_install_libdirs})
+			FOREACH(lname boost_thread-mt boost_thread )
+				# abort this search when find a match
+				IF( NOT bthread_lib )
+					#
+					SET(CMAKE_REQUIRED_INCLUDES  "${boost_prefix}/${idir}")
+					SET(CMAKE_REQUIRED_LIBRARIES "${lname}" )
+					SET(lpath                    "${boost_prefix}/${ldir}" )
+					SET(CMAKE_REQUIRED_FLAGS     "-L${lpath}" )
+					# CHECK_CXX_SOURCE_RUNS(source variable)
+					SET(source "
 # include <boost/thread.hpp>
 int main(void) 
 {	boost::barrier wait(1);
 	return 0;
-}"	)
-	CHECK_CXX_SOURCE_RUNS("${source}" bthread_ok)
+}"					)
+					SET(flag ${idir}_${ldir}_${lname}_ok )
+					CHECK_CXX_SOURCE_RUNS("${source}" ${flag} )
+					IF ( ${flag} )
+						SET(bthread_lib      ${lname} )
+						SET(bthread_lib_path ${lpath} )
+					ENDIF ( ${flag} )
+				ENDIF( NOT bthread_lib )
+			ENDFOREACH(lname boost_thread boost_thread-mt)
+		ENDFOREACH(ldir ${cmake_install_liddirs})
+	ENDFOREACH(idir ${cmake_install_includedirs})
 	#
-	IF ( NOT bthread_ok )
-		SET(bthread_lib               "boost_thread-mt" )
-		SET(CMAKE_REQUIRED_LIBRARIES "${bthread_lib}" )
-		CHECK_CXX_SOURCE_RUNS("${source}" bthread_mt_ok)
-	ENDIF ( NOT bthread_ok )
-	IF ( bthread_ok OR bthread_mt_ok )
+	IF( bthread_lib )
 		ADD_SUBDIRECTORY(bthread)
 		add_to_list(check_depends check_multi_thread_bthread)
-	ENDIF ( bthread_ok OR bthread_mt_ok )
+		MESSAGE(STATUS 
+		"boost multi-threading library = ${bthread_lib_path}/${bthread_lib}"
+		)
+	ELSE( bthread_lib )
+		MESSAGE(STATUS "Could not find boost multi-threading library")
+	ENDIF( bthread_lib )
 ENDIF ( Boost_FOUND )
 
 # check_multi_thread

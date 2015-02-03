@@ -137,14 +137,6 @@ ENDIF( colpack_prefix )
 # =============================================================================
 # automated system configuration
 # =============================================================================
-# cppad_install_libdir
-SET(cppad_install_libdir NOTFOUND)
-FOREACH(dir ${cmake_install_libdirs})
-	IF( NOT cppad_install_libdir )
-		SET(cppad_install_libdir ${dir})
-	ENDIF( NOT cppad_install_libdir )
-ENDFOREACH(dir ${cmake_install_libdirs})
-# -----------------------------------------------------------------------------
 # cppad_cxx_flags_sacado
 IF( ${cppad_cxx_flags} MATCHES ".*-std=c[+][+]11.*" )
 	SET(cppad_cxx_flags_sacado "${cppad_cxx_flags} -D HAS_C99_TR1_CMATH" )
