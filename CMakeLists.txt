@@ -137,14 +137,6 @@ ENDIF( colpack_prefix )
 # =============================================================================
 # automated system configuration
 # =============================================================================
-# cppad_install_includedir
-SET(cppad_install_includedir NOTFOUND)
-FOREACH(dir ${cmake_install_includedirs})
-	IF( NOT cppad_install_includedir )
-		SET(cppad_install_includedir ${dir})
-	ENDIF( NOT cppad_install_includedir )
-ENDFOREACH(dir ${cmake_install_includedirs})
-# -----------------------------------------------------------------------------
 # cppad_install_libdir
 SET(cppad_install_libdir NOTFOUND)
 FOREACH(dir ${cmake_install_libdirs})
