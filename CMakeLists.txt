@@ -13,7 +13,8 @@
 # Some constants
 # =============================================================================
 # Set the minimum required version of cmake for this project.
-CMAKE_MINIMUM_REQUIRED(VERSION 2.6)
+# see http://www.cmake.org/pipermail/cmake/2013-January/053213.html
+CMAKE_MINIMUM_REQUIRED(VERSION 2.8)
 
 # cppad_version is used by set_version.sh to get the version number.
 SET(cppad_version      "20141230" )
