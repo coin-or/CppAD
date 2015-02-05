@@ -77,7 +77,9 @@ $index cmake, command$$
 $index configure, cppad$$
 $index cppad, configure$$
 The command below assumes that $code cmake$$ is in your execution
-path. If not, you can put the path to $code cmake$$ in font the command.
+path with version greater than or equal 2.8.
+If not, you can put the path to the version of $code cmake$$
+in font the command.
 Only the $code cmake$$ command and the path to the distribution directory
 ($code ..$$ at the end of the command below) are required.
 In other words, the first and last lines below are required

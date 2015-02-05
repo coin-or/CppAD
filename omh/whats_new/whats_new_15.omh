@@ -41,11 +41,17 @@ The purpose of this section is to
 assist you in learning about changes between various versions of CppAD.
 
 $head 02-04$$
+$list number$$
 Enable the same install of CppAD to be used both with and without C++11
 features; e.g., with both $code g++ --std=c++11$$ and with
 $code g++ --std=c++98$$. Previously if the
 $cref/cppad_cxx_flags/cmake/cppad_cxx_flags/$$ specified C++11,
 then it could only be used in that way.
+$lnext
+The $cref/cmake command/cmake/CMake Command/$$ now requires the version
+of $code cmake$$ to be greater than or equal 2.8
+(due a bug in $code cmake$$ version 2.6).
+$lend
 
 $head 02-03$$
 Improved the searching for the boost multi-threading library
