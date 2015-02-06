@@ -38,35 +38,35 @@ $end
 Replacement for config.h so that all preprocessor symbols begin with CPPAD_
 */
 
+# if __cplusplus >= 201100
 /*!
 \def CPPAD_HAS_RVALUE
 C++11: Does compiler cupport rvalues; i.e., values with move semantics
 */
-# if __cplusplus >= 201100
 # define CPPAD_HAS_RVALUE @cppad_has_rvalue@
 # endif
 
+# if __cplusplus >= 201100
 /*!
 def CPPAD_HAS_NULLPTR
 C++11: Does compiler support the null-pointer constant nullptr
 */
-# if __cplusplus >= 201100
 # define CPPAD_HAS_NULLPTR @cppad_has_nullptr@
 # endif
 
+# if __cplusplus >= 201100
 /*!
 \def CPPAD_HAS_CSTDINT_8_TO_64
 C++11: Does compiler support the types uint_8, uint_16, uint_32, and uint_64
 */
-# if __cplusplus >= 201100
 # define CPPAD_HAS_CSTDINT_8_TO_64 @cppad_has_cstdint_8_to_64@
 # endif
 
+# if __cplusplus >= 201100
 /*!
 \def CPPAD_COMPILER_HAS_ERF
 C++11: Does compiler support std::erf(double) 
 */
-# if __cplusplus >= 201100
 # define CPPAD_COMPILER_HAS_ERF @cppad_compiler_has_erf@
 # endif
 

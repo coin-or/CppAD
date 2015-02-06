@@ -40,6 +40,13 @@ This section contains a list of the changes to CppAD during 2015
 The purpose of this section is to
 assist you in learning about changes between various versions of CppAD.
 
+$head 02-06$$
+There was a bug in the coloring method change on
+$cref/2015-01-07/whats_new_15/01-07/$$.
+To be specific, $icode%work%.color_method%$$ was not being set
+to $code "cppad.symmetric"$$ after $icode%work%.color_method.clear()%$$.
+This has been fixed.
+
 $head 02-04$$
 $list number$$
 Enable the same install of CppAD to be used both with and without C++11

@@ -122,12 +122,10 @@ bool colpack_hes(void)
 	d_vector hes(K);
 
 	// contrast and check results using both cppad and colpack
+	CppAD::sparse_hessian_work work;
 	for(size_t i_method = 0; i_method < 3; i_method++)
 	{	// empty work structure
-		CppAD::sparse_hessian_work work;
 		ok &= work.color_method == "cppad.symmetric";
-		if( i_method == 1 )
-			work.color_method = "cppad.general";
 		if( i_method == 2 )
 			work.color_method = "colpack.star";
 
@@ -145,6 +143,10 @@ bool colpack_hes(void)
 			ok &= n_sweep == 2;
 		else
 			ok &= n_sweep == 5;
+		//
+		// check that clear resets color_method to cppad.symmetric
+		work.clear();
+		ok &= work.color_method == "cppad.symmetric";
 	}
 
 	return ok;
