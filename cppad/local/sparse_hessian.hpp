@@ -312,7 +312,7 @@ class sparse_hessian_work {
 		{ }
 		/// inform CppAD that this information needs to be recomputed
 		void clear(void)
-		{	color_method = "cppad";
+		{	color_method = "cppad.symmetric";
 			row.clear();
 			col.clear();
 			order.clear();
