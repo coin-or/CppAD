@@ -1,6 +1,6 @@
 # $Id$
 # -----------------------------------------------------------------------------
-# CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-14 Bradley M. Bell
+# CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-15 Bradley M. Bell
 #
 # CppAD is distributed under multiple licenses. This distribution is under
 # the terms of the 
@@ -16,7 +16,9 @@
 #  add_library(<name> [STATIC | SHARED | MODULE] [EXCLUDE_FROM_ALL]
 #	source1 source2 ... sourceN)
 # )
-ADD_LIBRARY(speed_src EXCLUDE_FROM_ALL
+# Make libspeed_src a static library because this is just for testing
+# and is not installed (do not have to worry about library search path).
+ADD_LIBRARY(speed_src STATIC EXCLUDE_FROM_ALL
 	link_det_lu.cpp
 	link_det_minor.cpp
 	link_mat_mul.cpp
