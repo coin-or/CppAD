@@ -84,7 +84,7 @@ class multpow_cl {
     void eval(const MatrixBase<TX>& x,
 	      double& f) {
     
-    f = x(0)*pow(x(1),x(2));
+    f = x[0]*pow(x[1],x[2]);
   }
 
   template<typename TX, typename TD>
@@ -94,14 +94,14 @@ class multpow_cl {
     
     MatrixBase<TD>& df = const_cast<MatrixBase<TD>&>(df_);    
     
-    const double a = x(0);
-    const double b = x(1);
-    const double c = x(2);
+    const double a = x[0];
+    const double b = x[1];
+    const double c = x[2];
     
     f = a*pow(b, c);
-    df(0) = pow(b, c);
-    df(1) = a*c*pow(b,c-1);
-    df(2) = a*pow(b, c)*log(b);
+    df[0] = pow(b, c);
+    df[1] = a*c*pow(b,c-1);
+    df[2] = a*pow(b, c)*log(b);
   }
   
   
@@ -114,9 +114,9 @@ class multpow_cl {
     MatrixBase<TD>& df = const_cast<MatrixBase<TD>&>(df_);
     MatrixBase<TH>& hess = const_cast<MatrixBase<TH>&>(hess_);
 
-    const double a = x(0);
-    const double b = x(1);
-    const double c = x(2);
+    const double a = x[0];
+    const double b = x[1];
+    const double c = x[2];
 
     f = a*pow(b, c);
     df(0) = pow(b, c);
@@ -184,15 +184,15 @@ class mb_atomic : public CppAD::atomic_base<double> {
     if ((q <= 0) && (p == 0)) {
       double f;
       func->eval(x.row(0),f);
-      y(0) = f;      
+      y[0] = f;      
     }
 	
     if ((q <= 1) && (p == 1)) {
       double f;
       VectorXd df(n);
       func->eval(x.row(0),f,df);
-      y(0) = f;      
-      y(1) = df.dot(x.row(1));    
+      y[0] = f;      
+      y[1] = df.dot(x.row(1));    
     }
 	
     if ((q <= 2) && (p == 2)) {
@@ -200,11 +200,11 @@ class mb_atomic : public CppAD::atomic_base<double> {
       VectorXd df(n);
       MatrixXd hess(n,n);
       func->eval(x.row(0), f, df, hess);
-      y(0) = f;      
-      y(1) = df.dot(x.row(1)); 	
-      y(2) = x.row(1) * hess * x.row(1).transpose();    
-      y(2) *= 0.5;
-      y(2) += df.dot(x.row(2));
+      y[0] = f;      
+      y[1] = df.dot(x.row(1)); 	
+      y[2] = x.row(1) * hess * x.row(1).transpose();    
+      y[2] *= 0.5;
+      y[2] += df.dot(x.row(2));
     }
 	
     return ok;
@@ -320,23 +320,24 @@ AScalar multpow_atomic(const AScalar& a, const AScalar& b, const AScalar& c) {
   static mb_atomic<multpow_cl> multpow_func("atomic_multpow");
   VectorXA y(1);     
   VectorXA x(3);
-  x << a, b, c; 
+  x[0] = a;
+  x[1] = b;
+  x[2] = c;
   multpow_func(x,y); // f = a*b^c
   return(y[0]);
 }
 
 struct multpow_test_atomic {  
-  template<typename TA>  
-  AScalar eval(const MatrixBase<TA>& Y) {
+  AScalar eval(const VectorXA& Y) {
 
 
     // f = (a1*b1^c1 + a2*b2^c2)^2;
-    // where ai = Y(3*i), bi = Y(3*i+1), ci = Y(3*i+2)
+    // where ai = Y[3*i], bi = Y[3*i+1], ci = Y[3*i+2]
     
     size_t n = Y.size()/3;
     AScalar res1 = 0.0;
     for (size_t i=0; i<n; i++) {
-      res1 += multpow_atomic(Y(3*i), Y(3*i+1), Y(3*i+2));
+      res1 += multpow_atomic(Y[3*i], Y[3*i+1], Y[3*i+2]);
     }
     return (res1*res1);
   }
@@ -344,16 +345,15 @@ struct multpow_test_atomic {
 
 
 struct multpow_test_cppad {  
-  template<typename TA>  
-  AScalar eval(const MatrixBase<TA>& Y) {
+  AScalar eval(const VectorXA& Y) {
 
     // f = (a1*b1^c1 + a2*b2^c2)^2;
-    // where ai = Y(3*i), bi = Y(3*i+1), ci = Y(3*i+2)
+    // where ai = Y[3*i], bi = Y[3*i+1], ci = Y[3*i+2]
     
     size_t n = Y.size()/3;
     AScalar res1 = 0.0;
     for (size_t i=0; i<n; i++) {
-      res1 += Y(3*i)*pow(Y(3*i+1), Y(3*i+2));
+      res1 += Y[3*i]*pow(Y[3*i+1], Y[3*i+2]);
     }
     return (res1*res1);
   }
@@ -368,74 +368,57 @@ int main() {
 
   int nvars = 6;
   VectorXd X(nvars);
-  X << .1, .2, .3, .4, .5, .6;
+  for(size_t i = 0; i < nvars; i++)
+     X[i] = double(i+1) / 10.0;
 
   VectorXd w(1);
-  w(0) = 1.0;
+  w[0] = 1.0;
 
   VectorXA f1(1); // to hold result
   VectorXA f2(1); // to hold result
-  VectorXA P = X.cast<AScalar>();
+  VectorXA P(nvars);
+  for(size_t i = 0; i < nvars; i++)
+     P[i] = X[i];
 
-  std::shared_ptr<multpow_test_atomic> func1;
-  func1 = std::make_shared<multpow_test_atomic>();
-
-  std::shared_ptr<multpow_test_cppad> func2;
-  func2 = std::make_shared<multpow_test_cppad>();
-
+  multpow_test_atomic func1;
+  multpow_test_cppad  func2;
 
   // record tapes  
   CppAD::Independent(P);
-  f1(0) = func1->eval(P);
+  f1[0] = func1.eval(P);
   tape1.Dependent(P, f1);
   tape1.optimize();
 
 
   CppAD::Independent(P);
-  f2(0) = func2->eval(P);
+  f2[0] = func2.eval(P);
   tape2.Dependent(P, f2);
   tape2.optimize();
 
   // compute f, df, d2f
 
-  VectorXd val1(1);
-  val1 = tape1.Forward(0, X);
-  VectorXd grad1 = tape1.Jacobian(X);
-  MatrixXd hess_dense1 = MatrixXd::Map(tape1.Hessian(X, size_t(0)).data(), nvars, nvars);
-  MatrixXd hess_sparse1 = MatrixXd::Map(tape1.SparseHessian(X, w).data(),
-					 nvars, nvars);
+  tape1.Forward(0, X);
+  VectorXd hess_sparse1 = tape1.SparseHessian(X, w);
      
-  VectorXd val2(1);
-  val2 = tape2.Forward(0, X);
-  VectorXd grad2 = tape2.Jacobian(X);
-  MatrixXd hess_dense2 = MatrixXd::Map(tape2.Hessian(X, size_t(0)).data(), nvars, nvars);
-  MatrixXd hess_sparse2 = MatrixXd::Map(tape2.SparseHessian(X, w).data(),
-					nvars, nvars);
+  tape2.Forward(0, X);
+  VectorXd hess_sparse2 = tape2.SparseHessian(X, w);
   
-  using std::cout;
-  using std::endl;
+  std::cout << "mb_atomic:" << std::endl;
+  for(size_t i = 0; i < nvars; i++)
+  {  for(size_t j = 0; j < nvars; j++)
+        std::cout << " " << std::setw(10) 
+        << hess_sparse1[ i * nvars + j]; 
+     std::cout << std::endl;
+  }
 
-  Eigen::IOFormat fmt(3);
+  std::cout << "cppad:" << std::endl;
+  for(size_t i = 0; i < nvars; i++)
+  {  for(size_t j = 0; j < nvars; j++)
+        std::cout << " " << std::setw(10) 
+        << hess_sparse2[ i * nvars + j]; 
+     std::cout << std::endl;
+  }
 
-  cout << "Objective function.\\n";
-  cout << "\\tmb_atomic: " << val1(0) << endl;
-  cout << "\\tcppad:  " << val2(0) << endl << endl;
-
-
-  cout << "Gradient.\\n";
-  cout << "\\nmb_atomic:\\n " << grad1.format(fmt) << endl;
-  cout << "\\ncppad:\\n" << grad2.format(fmt) << endl << endl;
-
-
-  cout << "Dense hessian.\\n";
-  cout << "\\nmb_atomic:\\n" << hess_dense1.format(fmt) << endl;
-  cout << "\\ncppad:\\n" << hess_dense2.format(fmt) << endl << endl;
-
-
-  cout << "Sparse hessian.\\n";
-  cout << "\\nmb_atomic:\\n" << hess_sparse1.format(fmt) << endl;
-  cout << "\\ncppad:\\n" << hess_sparse2.format(fmt) << endl << endl;
- 
 }
 EOF
 # -----------------------------------------------------------------------------
