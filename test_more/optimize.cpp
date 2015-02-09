@@ -16,6 +16,10 @@ Please visit http://www.coin-or.org/CppAD/ for information on other licenses.
 
 
 namespace {
+	// accuracy for almost equal checks
+	double eps = 10. * std::numeric_limits<double>::epsilon();
+	using CppAD::NearEqual;
+
 	// note this enum type is not part of the API (but its values are)
 	CppAD::atomic_base<double>::option_enum atomic_sparsity_option;
 	//
@@ -395,7 +399,7 @@ namespace {
 		y = F.Forward(0, x);
 		depend_fun(x, check, original, opt);
 		for(i = 0; i < m; i++)
-			ok &= (y[i] == check[i]);
+			ok &= NearEqual(y[i], check[i], eps, eps);
 	
 		// Check size before optimization
 		ok &= F.size_var() == original;
@@ -410,7 +414,7 @@ namespace {
 		// (should have already been checked if NDEBUG not defined)
 		y = F.Forward(0, x);
 		for(i = 0; i < m; i++)
-			ok &= (y[i] == check[i]);
+			ok &= NearEqual(y[i], check[i], eps, eps);
 	
 		return ok;
 	}
@@ -527,15 +531,14 @@ namespace {
 		w[2] = 1.;
 		dw = F.Reverse(1, w);
 
-		double eps = 20. * std::numeric_limits<double>::epsilon();
 		double check = x[1] * pow( x[0], x[1] - 1. );
-		ok &= CppAD::NearEqual( dw[0], check, eps, eps );
+		ok &= NearEqual( dw[0], check, eps, eps );
 
 		check = log( x[0] ) * pow( x[0], x[1] );
-		ok &= CppAD::NearEqual( dw[1], check, eps, eps );
+		ok &= NearEqual( dw[1], check, eps, eps );
 
 		check = 0.;
-		ok &= CppAD::NearEqual( dw[2], check, eps, eps );
+		ok &= NearEqual( dw[2], check, eps, eps );
 	
 		return ok;
 	}
@@ -644,7 +647,7 @@ namespace {
 		y = F.Forward(0, x);
 		duplicate_fun(x, check, original, opt);
 		for(i = 0; i < m; i++)
-			ok &= (y[i] == check[i]);
+			ok &= NearEqual(y[i], check[i], eps, eps);
 	
 		// Check size before optimization
 		ok &= F.size_var() == (n + 1 + original);
@@ -659,7 +662,7 @@ namespace {
 		// (should have already been checked if NDEBUG not defined)
 		y = F.Forward(0, x);
 		for(i = 0; i < m; i++)
-			ok &= (y[i] == check[i]);
+			ok &= NearEqual(y[i], check[i], eps, eps);
 	
 		return ok;
 	}
@@ -935,7 +938,7 @@ namespace {
 		x0[0]    = 3.;
 		x0[1]    = 4.;
 		y0       = F.Forward(0, x0);
-		ok      &= NearEqual(y0[0] , x0[0]+x0[0]+x0[1], 1e-10, 1e-10);
+		ok      &= NearEqual(y0[0] , x0[0]+x0[0]+x0[1], eps, eps);
 	
 		// evaluate derivative of F in X[0] direction
 		CppAD::vector<double> x1( F.Domain() );
@@ -943,7 +946,7 @@ namespace {
 		x1[0]    = 1.;
 		x1[1]    = 0.;
 		y1       = F.Forward(1, x1);
-		ok      &= NearEqual(y1[0] , x1[0]+x1[0]+x1[1], 1e-10, 1e-10);
+		ok      &= NearEqual(y1[0] , x1[0]+x1[0]+x1[1], eps, eps);
 	
 		// evaluate second derivative of F in X[0] direction
 		CppAD::vector<double> x2( F.Domain() );
@@ -952,7 +955,7 @@ namespace {
 		x2[1]       = 0.;
 		y2          = F.Forward(2, x2);
 		double F_00 = 2. * y2[0];
-		ok         &= NearEqual(F_00, 0., 1e-10, 1e-10);
+		ok         &= NearEqual(F_00, 0., eps, eps);
 	
 		return ok;
 	}
@@ -984,15 +987,15 @@ namespace {
 		x0[0]    = 3.;
 		x0[1]    = 4.;
 		y0       = F.Forward(0, x0);
-		ok      &= NearEqual(y0[0] , x0[0]-x0[0]+x0[1], 1e-10, 1e-10);
+		ok      &= NearEqual(y0[0] , x0[0]-x0[0]+x0[1], eps, eps);
 	
 		// evaluate derivative of F 
 		CppAD::vector<double> dF( F.Domain() );
 		CppAD::vector<double> w( F.Range() );
 		w[0]    = 1.;
 		dF      = F.Reverse(1, w);
-		ok     &= NearEqual(dF[0] , 0., 1e-10, 1e-10);
-		ok     &= NearEqual(dF[1] , 1., 1e-10, 1e-10);
+		ok     &= NearEqual(dF[0] , 0., eps, eps);
+		ok     &= NearEqual(dF[1] , 1., eps, eps);
 	
 		return ok;
 	}

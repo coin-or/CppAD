@@ -1,7 +1,7 @@
 #! /bin/bash -e
 # $Id$
 # -----------------------------------------------------------------------------
-# CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-13 Bradley M. Bell
+# CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-15 Bradley M. Bell
 #
 # CppAD is distributed under multiple licenses. This distribution is under
 # the terms of the 
@@ -90,9 +90,7 @@ class multpow_cl {
   template<typename TX, typename TD>
     void eval(const MatrixBase<TX>& x, 
 	      double& f,
-	      const MatrixBase<TD>& df_) {
-    
-    MatrixBase<TD>& df = const_cast<MatrixBase<TD>&>(df_);    
+	      MatrixBase<TD>& df) {
     
     const double a = x[0];
     const double b = x[1];
@@ -108,20 +106,17 @@ class multpow_cl {
   template<typename TX, typename TD, typename TH>
     void eval(const MatrixBase<TX>& x, 
 	      double& f,
-	      const MatrixBase<TD>& df_,
-	      const MatrixBase<TH>& hess_) {
+	      MatrixBase<TD>& df,
+	      MatrixBase<TH>& hess) {
     
-    MatrixBase<TD>& df = const_cast<MatrixBase<TD>&>(df_);
-    MatrixBase<TH>& hess = const_cast<MatrixBase<TH>&>(hess_);
-
     const double a = x[0];
     const double b = x[1];
     const double c = x[2];
 
     f = a*pow(b, c);
-    df(0) = pow(b, c);
-    df(1) = a*c*pow(b,c-1);
-    df(2) = a*pow(b, c)*log(b);
+    df[0] = pow(b, c);
+    df[1] = a*c*pow(b,c-1);
+    df[2] = a*pow(b, c)*log(b);
     
     hess(0,0) = 0;
     hess(1,1) = a*c*(c-1)*pow(b, c-2);
