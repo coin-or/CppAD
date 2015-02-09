@@ -401,7 +401,7 @@ namespace {
 		y = F.Forward(0, x);
 		depend_fun(x, check, original, opt);
 		for(i = 0; i < m; i++)
-			ok &= (y[i] == check[i]);
+			ok &= CppAD::NearEqual(y[i], check[i], 1e-10, 1e-10);
 	
 		// Check size before optimization
 		ok &= F.size_var() == (n + 1 + original);
@@ -416,7 +416,7 @@ namespace {
 		// (should have already been checked if NDEBUG not defined)
 		y = F.Forward(0, x);
 		for(i = 0; i < m; i++)
-			ok &= (y[i] == check[i]);
+			ok &= CppAD::NearEqual(y[i], check[i], 1e-10, 1e-10);
 	
 		return ok;
 	}
@@ -650,7 +650,7 @@ namespace {
 		y = F.Forward(0, x);
 		duplicate_fun(x, check, original, opt);
 		for(i = 0; i < m; i++)
-			ok &= (y[i] == check[i]);
+			ok &= CppAD::NearEqual(y[i], check[i], 1e-10, 1e-10);
 	
 		// Check size before optimization
 		ok &= F.size_var() == (n + 1 + original);
@@ -665,7 +665,7 @@ namespace {
 		// (should have already been checked if NDEBUG not defined)
 		y = F.Forward(0, x);
 		for(i = 0; i < m; i++)
-			ok &= (y[i] == check[i]);
+			ok &= CppAD::NearEqual(y[i], check[i], 1e-10, 1e-10);
 	
 		return ok;
 	}
