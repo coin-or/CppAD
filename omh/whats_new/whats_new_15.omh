@@ -40,6 +40,11 @@ This section contains a list of the changes to CppAD during 2015
 The purpose of this section is to
 assist you in learning about changes between various versions of CppAD.
 
+$head 02-09$$
+The test $code test_more/optimize.cpp$$ was failing on some systems
+because an exactly equality check should have been a near equal check.
+This has been fixed.
+
 $head 02-06$$
 There was a bug in the coloring method change on
 $cref/2015-01-07/whats_new_15/01-07/$$.
