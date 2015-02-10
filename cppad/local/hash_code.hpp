@@ -3,7 +3,7 @@
 # define CPPAD_HASH_CODE_INCLUDED
 
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-14 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-15 Bradley M. Bell
 
 CppAD is distributed under multiple licenses. This distribution is under
 the terms of the 
@@ -217,6 +217,7 @@ unsigned short hash_code(
 		case AtanOp:
 		case CosOp:
 		case CoshOp:
+		case ErfOp:
 		case ExpOp:
 		case LogOp:
 		case SignOp:
@@ -225,6 +226,7 @@ unsigned short hash_code(
 		case SqrtOp:
 		case TanOp:
 		case TanhOp:
+		CPPAD_ASSERT_UNKNOWN( NumArg(op) == 1 || op == ErfOp );
 		v = reinterpret_cast<const unsigned short*>(arg + 0);
 		i = short_addr_t;
 		while(i--)

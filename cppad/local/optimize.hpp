@@ -486,7 +486,9 @@ addr_t unary_match(
 	OpCode        op  = tape[current].op;
 	addr_t new_arg[1];
 	
-	CPPAD_ASSERT_UNKNOWN( NumArg(op) == 1 );
+	// ErfOp has three arguments, but the second and third are always the
+	// parameters 0 and 2 / sqrt(pi) respectively.
+	CPPAD_ASSERT_UNKNOWN( NumArg(op) == 1 || op == ErfOp);
 	CPPAD_ASSERT_UNKNOWN( NumRes(op) > 0  );
 	CPPAD_ASSERT_UNKNOWN( size_t(arg[0]) < current );
 	new_arg[0] = tape[arg[0]].new_var;
@@ -1410,6 +1412,7 @@ void optimize_run(
 			case CosOp:
 			case CoshOp:
 			case DivvpOp:
+			case ErfOp:
 			case ExpOp:
 			case LogOp:
 			case PowvpOp:
@@ -2171,6 +2174,7 @@ void optimize_run(
 			case AtanOp:
 			case CosOp:
 			case CoshOp:
+			case ErfOp:
 			case ExpOp:
 			case LogOp:
 			case SignOp:
@@ -2200,6 +2204,16 @@ void optimize_run(
 				tape[i_var].new_op  = rec->num_op_rec();
 				tape[i_var].new_var = i = rec->PutOp(op);
 				CPPAD_ASSERT_UNKNOWN( size_t(new_arg[0]) < i );
+				if( op == ErfOp )
+				{	// Error function is a special case
+					// second argument is always the parameter 0
+					// third argument is always the parameter 2 / sqrt(pi)
+					CPPAD_ASSERT_UNKNOWN( NumArg(ErfOp) == 3 );
+					rec->PutArg( rec->PutPar( Base(0) ) );
+					rec->PutArg( rec->PutPar( 
+						Base( 1.0 / std::sqrt( std::atan(1.0) ) )
+					) );
+				}
 			}
 			break;
 			// ---------------------------------------------------

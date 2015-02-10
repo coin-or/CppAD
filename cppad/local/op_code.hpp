@@ -698,8 +698,8 @@ void printOp(
 
 		case ErfOp:
 		CPPAD_ASSERT_UNKNOWN( NumArg(op) == 3 );
-		// ind[2] points to the parameter 0
-		// ind[3] points to the parameter 2 / sqrt(pi)
+		// ind[1] points to the parameter 0
+		// ind[2] points to the parameter 2 / sqrt(pi)
 		printOpField(os, "  v=", ind[0], ncol);
 		break;
 

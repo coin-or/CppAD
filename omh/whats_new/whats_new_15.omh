@@ -31,6 +31,7 @@ $spell
 	docdir
 	std
 	cxx
+	erf
 $$
 
 $section CppAD Changes and Additions During 2015$$
@@ -40,6 +41,15 @@ This section contains a list of the changes to CppAD during 2015
 (in reverse order by date).
 The purpose of this section is to
 assist you in learning about changes between various versions of CppAD.
+
+$head 02-10$$
+The change on $cref/2014-12-23/whats_new_14/12-23/$$ introduced a
+bug when the c++11 version of the error function was used with
+an $cref/optimized/optimize/$$ function. see
+$cref/CPPAD_COMPILER_HAS_ERF/erf/Method/CPPAD_COMPILER_HAS_ERF/$$.
+There was also a bug in the sparsity calculations for when
+this erf function was included.
+These bugs have been fixed.
 
 $head 02-09$$
 The test $code test_more/optimize.cpp$$ was failing on some systems
