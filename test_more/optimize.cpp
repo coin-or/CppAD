@@ -545,6 +545,35 @@ namespace {
 	
 		return ok;
 	}
+	bool depend_four(void)
+	{	// erf function is a special case for optimize
+		bool ok = true;
+# if CPPAD_COMPILER_HAS_ERF
+		using CppAD::AD;
+		using CppAD::vector;
+
+		size_t n = 1;
+		size_t m = 1;
+		vector< AD<double> > X(n), Y(m);
+		vector<double>       x(n);
+		X[0] = x[0] = double(0.5);
+
+		CppAD::Independent(X);
+
+		Y[0] = erf(X[0]) + erf(X[0]);
+
+		CppAD::ADFun<double> F(X, Y);
+
+		vector<double> y_original     = F.Forward(0, x);
+		size_t         size_original  = F.size_var();
+		F.optimize();
+		// version 20150000 does not remove duplicate erf function calls.
+		ok &= F.size_var() == size_original;
+		vector<double> y = F.Forward(0, x);
+		ok &=  CppAD::NearEqual(y[0], y_original[0], 1e-10, 1e-10);
+# endif
+		return ok;
+	}
 	// ===================================================================
 	// Test duplicate operation analysis
 
@@ -1651,6 +1680,7 @@ bool optimize(void)
 	ok     &= depend_one();
 	ok     &= depend_two();
 	ok     &= depend_three();
+	ok     &= depend_four();
 	// check removal of duplicate expressions
 	ok     &= duplicate_one();
 	ok     &= duplicate_two();

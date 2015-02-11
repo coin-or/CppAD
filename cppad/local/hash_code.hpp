@@ -217,6 +217,7 @@ unsigned short hash_code(
 		case AtanOp:
 		case CosOp:
 		case CoshOp:
+		case ErfOp:
 		case ExpOp:
 		case LogOp:
 		case SignOp:

@@ -336,7 +336,7 @@ void ForJacSweep(
 			// -------------------------------------------------
 
 			case ErfOp:
-			CPPAD_ASSERT_NARG_NRES(op, 1, 1);
+			CPPAD_ASSERT_NARG_NRES(op, 3, 5);
 			forward_sparse_jacobian_unary_op(
 				i_var, arg[0], var_sparsity
 			);

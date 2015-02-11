@@ -1415,6 +1415,7 @@ void optimize_run(
 			case CosOp:
 			case CoshOp:
 			case DivvpOp:
+			case ErfOp:
 			case ExpOp:
 			case LogOp:
 			case PowvpOp:
@@ -2174,6 +2175,23 @@ void optimize_run(
 				CPPAD_ASSERT_UNKNOWN( size_t(new_arg[0]) < i );
 			}
 			break;
+
+			case ErfOp:
+			// 20150000 version does not optimzie this out
+			// next years version does.
+			{	CPPAD_ASSERT_UNKNOWN( NumArg(ErfOp) == 3 );
+				// second argument is always parameter 0
+				// third argument is always parameter 2 / sqrt(pi)
+				tape[i_var].new_op  = rec->num_op_rec();
+				tape[i_var].new_var = rec->PutOp(op);
+				rec->PutArg( tape[ arg[0] ].new_var );
+				rec->PutArg( rec->PutPar( Base(0) ) );
+				rec->PutArg( rec->PutPar( 
+					Base( 1.0 / std::sqrt( std::atan(1.0) ) )
+				) );
+			}
+			break;
+
 			// ---------------------------------------------------
 			// Binary operators where 
 			// left is a variable and right is a parameter
