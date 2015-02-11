@@ -1953,7 +1953,8 @@ void optimize_run(
 	}
 	// values corresponding to BeginOp
 	CPPAD_ASSERT_UNKNOWN( i_op == 0 && i_var == 0 && op == BeginOp );
-	tape[i_var].op = op;
+	tape[i_var].op           = op;
+	tape[i_var].connect_type = yes_connected;
 	// -------------------------------------------------------------
 
 	// Determine which variables can be conditionally skipped
@@ -2724,8 +2725,9 @@ void optimize_run(
 			for(j = 0; j < info.skip_var_true.size(); j++)
 			{	i_var = info.skip_var_true[j];
 				if( tape[i_var].match )
-				{	// the operation for this argument has been removed
-					rec->ReplaceArg(i_arg++, 0);
+				{	// The operation for this argument has been removed,
+					// so use an operator index that never comes up.
+					rec->ReplaceArg(i_arg++, rec->num_op_rec());
 				}
 				else
 				{	CPPAD_ASSERT_UNKNOWN( tape[i_var].new_op > 0 );
@@ -2739,8 +2741,9 @@ void optimize_run(
 			for(j = 0; j < info.skip_var_false.size(); j++)
 			{	i_var = info.skip_var_false[j];
 				if( tape[i_var].match )
-				{	// the operation for this argument has been removed
-					rec->ReplaceArg(i_arg++, 0);
+				{	// The operation for this argument has been removed,
+					// so use an operator index that never comes up.
+					rec->ReplaceArg(i_arg++, rec->num_op_rec());
 				}
 				else
 				{	CPPAD_ASSERT_UNKNOWN( tape[i_var].new_op > 0 );

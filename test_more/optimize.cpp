@@ -1283,6 +1283,40 @@ namespace {
 
 		return ok;
 	}
+	// check that CondExp properly handels expressions that get 
+	// removed during opitmization
+	bool cond_exp_removed(void)
+	{	bool ok = true;
+		using CppAD::AD;
+		AD<double> zero(0.);
+	
+		size_t n = 1;
+		CppAD::vector< AD<double> > X(n); 
+		X[0] = 1.0;
+		CppAD::Independent(X);
+	
+		size_t m = 1;
+		CppAD::vector< AD<double> > Y(m);
+
+		AD<double> true_case  = sin(X[0]) + sin(X[0]);
+		AD<double> false_case = cos(X[0]) + cos(X[0]);
+		Y[0] = CondExpLt(X[0],  zero,  true_case, false_case);
+
+		CppAD::ADFun<double> f(X, Y);
+		f.optimize();
+
+		CppAD::vector<double> x(n), y(m), w(m), dw(n);
+		x[0] = 1.0;
+		y    = f.Forward(0, x);
+		ok &= NearEqual(y[0], false_case, eps, eps);
+
+		w[0] = 1.0;
+		dw   = f.Reverse(1, w);
+		// derivative of cos is minus sin
+		ok &= NearEqual(dw[0], - true_case, eps, eps);
+
+		return ok;
+	}
 	// -------------------------------------------------------------------
 	void my_union(
 		std::set<size_t>&         result  ,
@@ -1656,7 +1690,6 @@ namespace {
 
 bool optimize(void)
 {	bool ok = true;
-
 	atomic_sparsity_option = CppAD::atomic_base<double>::bool_sparsity_enum;
 	for(size_t i = 0; i < 2; i++)
 	{	// check conditional expression sparsity pattern 
@@ -1692,6 +1725,8 @@ bool optimize(void)
 	ok     &= reverse_sparse_hessian();
 	// check that CondExp properly detects dependencies
 	ok     &= cond_exp_depend();
+	// check that it properly handles expressions that have been removed
+	ok     &= cond_exp_removed();
 	// check old_atomic functions
 	ok     &= old_atomic_test();
 	// case where results are not identically equal
