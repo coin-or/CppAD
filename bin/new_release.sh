@@ -23,7 +23,7 @@ echo_eval() {
 # -----------------------------------------------------------------------------
 svn_repository="https://projects.coin-or.org/svn/CppAD"
 stable_version="20150000"
-release='5'
+release='6'
 release_version="$stable_version.$release"
 # -----------------------------------------------------------------------------
 # Check release version

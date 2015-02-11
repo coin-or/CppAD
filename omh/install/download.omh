@@ -63,12 +63,12 @@ $table
 $bold version$$ $pre  $$ $cnext $bold license$$ $pre  $$ $cnext $bold link$$ 
 $rnext
 current  $cnext EPL $cnext $href%
-http://www.coin-or.org/download/source/CppAD/cppad-20150000.5.epl.tgz%
-cppad-20150000.5.epl.tgz%$$ 
+http://www.coin-or.org/download/source/CppAD/cppad-20150000.6.epl.tgz%
+cppad-20150000.6.epl.tgz%$$ 
 $rnext
 current  $cnext GPL $cnext $href%
-http://www.coin-or.org/download/source/CppAD/cppad-20150000.5.gpl.tgz%
-cppad-20150000.5.gpl.tgz%$$
+http://www.coin-or.org/download/source/CppAD/cppad-20150000.6.gpl.tgz%
+cppad-20150000.6.gpl.tgz%$$
 $rnext
 old      $cnext Both $cnext 
 $href%http://www.coin-or.org/download/source/CppAD/%CppAD download page%$$
