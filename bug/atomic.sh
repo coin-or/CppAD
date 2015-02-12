@@ -56,6 +56,15 @@ typedef Eigen::Matrix<AScalar, Dynamic, 1> VectorXA;
 typedef Eigen::Matrix<AScalar, Dynamic, Dynamic> MatrixXA;
 typedef Eigen::Triplet<double> TT;
 
+VectorXd my_column(
+	const double* matrix, size_t n_row, size_t n_col, size_t index)
+{	VectorXd col(n_row);
+	assert( index < n_col );
+	for(size_t i = 0; i < n_row; i++)
+		col[i] = matrix[ i * n_col + index];
+	return col;
+}
+
 inline void my_union( 
 	      std::set<size_t>&         result  , 
 	      const std::set<size_t>&   left    , 
@@ -164,7 +173,6 @@ class mb_atomic : public CppAD::atomic_base<double> {
 	
     size_t n = tx.size() / (p+1);
 	
-    const Map<const MatrixXd> x = MatrixXd::Map(&(tx[0]),p+1,n);
     Map<VectorXd> y = VectorXd::Map(&(ty[0]),p+1);
 	
     bool ok = (p <= 2) && (q <= p);
@@ -178,28 +186,37 @@ class mb_atomic : public CppAD::atomic_base<double> {
     
     if ((q <= 0) && (p == 0)) {
       double f;
-      func->eval(x.row(0),f);
+      VectorXd x_row_0 = my_column(tx.data(), n, q+1, 0);
+      func->eval(x_row_0,f);
       y[0] = f;      
     }
 	
     if ((q <= 1) && (p == 1)) {
       double f;
       VectorXd df(n);
-      func->eval(x.row(0),f,df);
+      VectorXd x_row_0 = my_column(tx.data(), n, q+1, 0);
+      func->eval(x_row_0,f,df);
       y[0] = f;      
-      y[1] = df.dot(x.row(1));    
+      VectorXd x_row_1 = my_column(tx.data(), n, q+1, 1);
+      y[1] = df.dot(x_row_1);    
     }
 	
     if ((q <= 2) && (p == 2)) {
       double f;
       VectorXd df(n);
       MatrixXd hess(n,n);
-      func->eval(x.row(0), f, df, hess);
+      VectorXd x_row_0 = my_column(tx.data(), n, q+1, 0);
+      func->eval(x_row_0, f, df, hess);
       y[0] = f;      
-      y[1] = df.dot(x.row(1)); 	
-      y[2] = x.row(1) * hess * x.row(1).transpose();    
+      VectorXd x_row_1 = my_column(tx.data(), n, q+1, 1);
+      y[1] = df.dot(x_row_1); 	
+      for(size_t i = 0; i < n; i++)
+      {   for(size_t j = 0; j < n; j++)
+              y[2] += x_row_1[i] * hess(i,j) * x_row_1[j];
+      }
       y[2] *= 0.5;
-      y[2] += df.dot(x.row(2));
+      VectorXd x_row_2 = my_column(tx.data(), n, q+1, 2);
+      y[2] += df.dot(x_row_2);
     }
 	
     return ok;
@@ -217,8 +234,6 @@ class mb_atomic : public CppAD::atomic_base<double> {
   {		
     size_t n = tx.size() / (q+1);
 	
-    const Map<const MatrixXd> x = MatrixXd::Map(&(tx[0]), q+1, n);
-	
     double f;
     VectorXd df(n);     
     MatrixXd dy(n, q+1);
@@ -226,15 +241,18 @@ class mb_atomic : public CppAD::atomic_base<double> {
     bool ok = (q <= 2);
 	
     if (q == 0) {
-      func->eval(x.row(0), f, df);
+      VectorXd x_row_0 = my_column(tx.data(), n, q+1, 0);
+      func->eval(x_row_0, f, df);
       dy.col(0) = df;
     }
     
     if (q >= 1) {
       MatrixXd hess(n,n);
-      func->eval(x.row(0), f, df, hess);
+      VectorXd x_row_0 = my_column(tx.data(), n, q+1, 0);
+      func->eval(x_row_0, f, df, hess);
       dy.col(0) = df;
-      dy.col(1) = hess * x.row(1).transpose();
+      VectorXd x_row_1 = my_column(tx.data(), n, q+1, 1);
+      dy.col(1) = hess * x_row_1;
     }
 	
     for (size_t j=0; j<n; j++){
