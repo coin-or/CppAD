@@ -65,6 +65,14 @@ VectorXd my_column(
 	return col;
 }
 
+double my_dot(const VectorXd& x, const VectorXd& y)
+{	assert( x.size() == y.size() );
+	double dot = 0.0;
+	for(size_t i = 0; i < x.size(); i++)
+		dot += x[i] * y[i];
+	return dot;
+}
+
 inline void my_union( 
 	      std::set<size_t>&         result  , 
 	      const std::set<size_t>&   left    , 
@@ -198,7 +206,7 @@ class mb_atomic : public CppAD::atomic_base<double> {
       func->eval(x_row_0,f,df);
       y[0] = f;      
       VectorXd x_row_1 = my_column(tx.data(), n, q+1, 1);
-      y[1] = df.dot(x_row_1);    
+      y[1] = my_dot(df, x_row_1);    
     }
 	
     if ((q <= 2) && (p == 2)) {
@@ -209,14 +217,15 @@ class mb_atomic : public CppAD::atomic_base<double> {
       func->eval(x_row_0, f, df, hess);
       y[0] = f;      
       VectorXd x_row_1 = my_column(tx.data(), n, q+1, 1);
-      y[1] = df.dot(x_row_1); 	
+      y[1] = my_dot(df, x_row_1); 	
+      y[2] = 0.0;
       for(size_t i = 0; i < n; i++)
       {   for(size_t j = 0; j < n; j++)
               y[2] += x_row_1[i] * hess(i,j) * x_row_1[j];
       }
       y[2] *= 0.5;
       VectorXd x_row_2 = my_column(tx.data(), n, q+1, 2);
-      y[2] += df.dot(x_row_2);
+      y[2] += my_dot(df, x_row_2);
     }
 	
     return ok;
