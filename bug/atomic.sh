@@ -245,31 +245,31 @@ class mb_atomic : public CppAD::atomic_base<double> {
 	
     double f;
     VectorXd df(n);     
-    MatrixXd dy(n, q+1);
+    VectorXd dy( n * (q+1) );
 
-    bool ok = (q <= 2);
+    bool ok = (q < 2);
 	
-    if (q == 0) {
-      VectorXd x_row_0 = my_column(tx.data(), n, q+1, 0);
-      func->eval(x_row_0, f, df);
-      dy.col(0) = df;
-    }
+    VectorXd x_row_0 = my_column(tx.data(), n, q+1, 0);
+    func->eval(x_row_0, f, df);
+	for(size_t j = 0; j < n; j++)
+       dy[ j*(q+1) + 0 ] = df[j]; 
     
     if (q >= 1) {
       MatrixXd hess(n,n);
-      VectorXd x_row_0 = my_column(tx.data(), n, q+1, 0);
       func->eval(x_row_0, f, df, hess);
-      dy.col(0) = df;
       VectorXd x_row_1 = my_column(tx.data(), n, q+1, 1);
-      dy.col(1) = hess * x_row_1;
+      VectorXd dy_col_1 = hess * x_row_1;
+	  for(size_t j = 0; j < n; j++)
+         dy[ j*(q+1) + 1 ] = dy_col_1[j]; 
+      
     }
 	
     for (size_t j=0; j<n; j++){
       for (size_t L=0; L <= q; L++) {
-	px[j*(q+1)+L] = 0;
-	for (size_t k=L; k<=q; k++) {
-	  px[j*(q+1)+L] += py[k]*dy(j, k-L);
-	}
+	      px[j*(q+1)+L] = 0;
+	      for (size_t k=L; k<=q; k++) {
+	          px[j*(q+1)+L] += py[k]*dy[ j*(q+1) + k-L];
+	      }
       }
     }	
     return ok;
