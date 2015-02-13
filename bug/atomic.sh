@@ -17,35 +17,8 @@ fi
 cd build
 builddir=`pwd`
 # -----------------------------------------------------------------------------
-cat << EOF > eigen_plugin.h
-typedef Scalar value_type;
-EOF
-cat << EOF > eigen_sparse_plugin.h
-# ifndef CPPAD_EIGEN_SPARSE_PLUGIN_INCLUDED
-# define CPPAD_EIGEN_SPARSE_PLUGIN_INCLUDED
-
-typedef Scalar value_type;
-
-# endif
-
-template<typename S, int R, int Opt, int MR, int MC>
-inline void reserve(const Matrix<S,R,Opt,MR,MC> &reserveSizes)
-{
-  reserveInnerVectors(reserveSizes);
-}
-EOF
 cat << EOF > atomic.cpp
-#define EIGEN_MATRIX_PLUGIN "$builddir/eigen_plugin.h"
-#define EIGEN_SPARSEMATRIX_PLUGIN "$builddir/eigen_sparse_plugin.h"
-
-#include <Eigen/Eigen>
-#include <Eigen/Sparse>
 #include <cppad/cppad.hpp>
-
-
-using Eigen::Dynamic;
-using Eigen::MatrixBase;
-using Eigen::MatrixXd;
 
 using CppAD::vector;
 
@@ -435,9 +408,8 @@ int main() {
 EOF
 # -----------------------------------------------------------------------------
 name='atomic'
-echo \
-"g++ -I$HOME/prefix/eigen/include -I../.. --std=c++11 -g $name.cpp -o $name"
-g++ -I$HOME/prefix/eigen/include -I../.. --std=c++11 -g $name.cpp -o $name
+echo "g++ -I../.. --std=c++11 -g $name.cpp -o $name"
+g++ -I../.. --std=c++11 -g $name.cpp -o $name
 #
 echo "./$name"
 if ./$name
