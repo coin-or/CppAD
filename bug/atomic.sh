@@ -45,16 +45,13 @@ cat << EOF > atomic.cpp
 
 using Eigen::Dynamic;
 using Eigen::MatrixBase;
-using Eigen::Map;
 using Eigen::MatrixXd;
-using Eigen::VectorXd;
 
 using CppAD::vector;
 
 typedef CppAD::AD<double> AScalar;
-typedef Eigen::Matrix<AScalar, Dynamic, 1> VectorXA;
-typedef Eigen::Matrix<AScalar, Dynamic, Dynamic> MatrixXA;
-typedef Eigen::Triplet<double> TT;
+typedef vector<double>    VectorXd;
+typedef vector<AScalar>   VectorXA;
 
 VectorXd my_column(
 	const double* matrix, size_t n_row, size_t n_col, size_t index)
@@ -171,8 +168,6 @@ class mb_atomic : public CppAD::atomic_base<double> {
 
     size_t n = tx.size() / (p+1);
 
-    Map<VectorXd> y = VectorXd::Map(&(ty[0]),p+1);
-
     bool ok = (p <= 2) && (q <= p);
 
     if( vx.size() > 0 ) {
@@ -186,7 +181,7 @@ class mb_atomic : public CppAD::atomic_base<double> {
       double f;
       VectorXd x_row_0 = my_column(tx.data(), n, q+1, 0);
       func->eval(x_row_0,f);
-      y[0] = f;
+      ty[0] = f;
     }
 
     if ((q <= 1) && (p == 1)) {
@@ -194,9 +189,9 @@ class mb_atomic : public CppAD::atomic_base<double> {
       VectorXd df(n);
       VectorXd x_row_0 = my_column(tx.data(), n, q+1, 0);
       func->eval(x_row_0,f,df);
-      y[0] = f;
+      ty[0] = f;
       VectorXd x_row_1 = my_column(tx.data(), n, q+1, 1);
-      y[1] = my_dot(df, x_row_1);
+      ty[1] = my_dot(df, x_row_1);
     }
 
     if ((q <= 2) && (p == 2)) {
@@ -205,17 +200,17 @@ class mb_atomic : public CppAD::atomic_base<double> {
       VectorXd hess(n * n);
       VectorXd x_row_0 = my_column(tx.data(), n, q+1, 0);
       func->eval(x_row_0, f, df, hess);
-      y[0] = f;
+      ty[0] = f;
       VectorXd x_row_1 = my_column(tx.data(), n, q+1, 1);
-      y[1] = my_dot(df, x_row_1);
-      y[2] = 0.0;
+      ty[1] = my_dot(df, x_row_1);
+      ty[2] = 0.0;
       for(size_t i = 0; i < n; i++)
       {   for(size_t j = 0; j < n; j++)
-              y[2] += x_row_1[i] * hess[i * 3 + j] * x_row_1[j];
+              ty[2] += x_row_1[i] * hess[i * 3 + j] * x_row_1[j];
       }
-      y[2] *= 0.5;
+      ty[2] *= 0.5;
       VectorXd x_row_2 = my_column(tx.data(), n, q+1, 2);
-      y[2] += my_dot(df, x_row_2);
+      ty[2] += my_dot(df, x_row_2);
     }
 
     return ok;
