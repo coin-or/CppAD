@@ -114,8 +114,7 @@ class multpow_cl {
   }
 
 
-  template<typename TH>
-  void eval(const VectorXd& x, double& f, VectorXd& df, MatrixBase<TH>& hess) {
+  void eval(const VectorXd& x, double& f, VectorXd& df, VectorXd& hess) {
 
     const double a = x[0];
     const double b = x[1];
@@ -126,15 +125,15 @@ class multpow_cl {
     df[1] = a*c*pow(b,c-1);
     df[2] = a*pow(b, c)*log(b);
 
-    hess(0,0) = 0;
-    hess(1,1) = a*c*(c-1)*pow(b, c-2);
-    hess(2,2) = a*pow(log(b),2)*pow(b,c);
-    hess(0,1) = c*pow(b, c-1);
-    hess(1,0) = hess(0,1);
-    hess(0,2) = pow(b,c)*log(b);
-    hess(2,0) = hess(0,2);
-    hess(1,2) = a*(1+c*log(b))*pow(b,c-1);
-    hess(2,1) = hess(1,2);
+    hess[0 * 3 + 0] = 0;
+    hess[1 * 3 + 1] = a*c*(c-1)*pow(b, c-2);
+    hess[2 * 3 + 2] = a*pow(log(b),2)*pow(b,c);
+    hess[0 * 3 + 1] = c*pow(b, c-1);
+    hess[1 * 3 + 0] = hess[0 * 3 + 1];
+    hess[0 * 3 + 2] = pow(b,c)*log(b);
+    hess[2 * 3 + 0] = hess[0 * 3 + 2];
+    hess[1 * 3 + 2] = a*(1+c*log(b))*pow(b,c-1);
+    hess[2 * 3 + 1] = hess[1 * 3 + 2];
   }
 };
 
@@ -203,7 +202,7 @@ class mb_atomic : public CppAD::atomic_base<double> {
     if ((q <= 2) && (p == 2)) {
       double f;
       VectorXd df(n);
-      MatrixXd hess(n,n);
+      VectorXd hess(n * n);
       VectorXd x_row_0 = my_column(tx.data(), n, q+1, 0);
       func->eval(x_row_0, f, df, hess);
       y[0] = f;
@@ -212,7 +211,7 @@ class mb_atomic : public CppAD::atomic_base<double> {
       y[2] = 0.0;
       for(size_t i = 0; i < n; i++)
       {   for(size_t j = 0; j < n; j++)
-              y[2] += x_row_1[i] * hess(i,j) * x_row_1[j];
+              y[2] += x_row_1[i] * hess[i * 3 + j] * x_row_1[j];
       }
       y[2] *= 0.5;
       VectorXd x_row_2 = my_column(tx.data(), n, q+1, 2);
@@ -246,10 +245,15 @@ class mb_atomic : public CppAD::atomic_base<double> {
        dy[ j*(q+1) + 0 ] = df[j];
 
     if (q >= 1) {
-      MatrixXd hess(n,n);
+      VectorXd hess(n * n);
       func->eval(x_row_0, f, df, hess);
       VectorXd x_row_1 = my_column(tx.data(), n, q+1, 1);
-      VectorXd dy_col_1 = hess * x_row_1;
+      VectorXd dy_col_1(n);
+      for(size_t i = 0; i < n; i++)
+      {   dy_col_1[i] = 0.0;
+          for(size_t j = 0; j < n; j++)
+             dy_col_1[i] += hess[ i * 3 + j] * x_row_1[j];
+      }
 	  for(size_t j = 0; j < n; j++)
          dy[ j*(q+1) + 1 ] = dy_col_1[j];
 
