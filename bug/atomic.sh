@@ -97,17 +97,11 @@ class multpow_cl {
   
  public:
   
-  template<typename TX>
-    void eval(const MatrixBase<TX>& x,
-	      double& f) {
-    
+  void eval(const VectorXd& x, double& f) {
     f = x[0]*pow(x[1],x[2]);
   }
 
-  template<typename TX, typename TD>
-    void eval(const MatrixBase<TX>& x, 
-	      double& f,
-	      MatrixBase<TD>& df) {
+  void eval(const VectorXd& x, double& f, VectorXd& df) {
     
     const double a = x[0];
     const double b = x[1];
@@ -120,11 +114,8 @@ class multpow_cl {
   }
   
   
-  template<typename TX, typename TD, typename TH>
-    void eval(const MatrixBase<TX>& x, 
-	      double& f,
-	      MatrixBase<TD>& df,
-	      MatrixBase<TH>& hess) {
+  template<typename TH>
+  void eval(const VectorXd& x, double& f, VectorXd& df, MatrixBase<TH>& hess) {
     
     const double a = x[0];
     const double b = x[1];
