@@ -59,6 +59,12 @@ inline void my_union(
   result.swap(temp);
 }
 
+void multpow_ad(const VectorXA& ax, VectorXA& ay)
+{ 
+    ay[0] = ax[0]*pow(ax[1],ax[2]);
+    return;
+}
+
 
 class multpow_cl {
 
@@ -332,13 +338,43 @@ struct multpow_test_atomic {
 struct multpow_test_cppad {
   AScalar eval(const VectorXA& Y) {
 
-    // f = (a1*b1^c1 + a2*b2^c2)^2;
-    // where ai = Y[3*i], bi = Y[3*i+1], ci = Y[3*i+2]
-
+    VectorXA ax(3), ay(1);
     size_t n = Y.size()/3;
     AScalar res1 = 0.0;
     for (size_t i=0; i<n; i++) {
-      res1 += Y[3*i]*pow(Y[3*i+1], Y[3*i+2]);
+      ax[0] = Y[3*i + 0];
+      ax[1] = Y[3*i + 1];
+      ax[2] = Y[3*i + 2];
+      multpow_ad(ax, ay);
+      res1 += ay[0];
+    }
+    return (res1*res1);
+  }
+};
+
+class multpow_test_checkpoint {
+public:
+   CppAD::checkpoint<double>* multpow;
+
+   multpow_test_checkpoint(void)
+   {   VectorXA ax(3), ay(1);
+       ax[0] = 1.0; ax[1] = 1.0; ax[2] = 1.0;
+       multpow = new CppAD::checkpoint<double>("multpow", multpow_ad, ax, ay);
+   }
+   ~multpow_test_checkpoint(void)
+   {    delete multpow; }
+
+  AScalar eval(const VectorXA& Y) {
+
+    VectorXA ax(3), ay(1);
+    size_t n = Y.size()/3;
+    AScalar res1 = 0.0;
+    for (size_t i=0; i<n; i++) {
+      ax[0] = Y[3*i + 0];
+      ax[1] = Y[3*i + 1];
+      ax[2] = Y[3*i + 2];
+      (*multpow)(ax, ay);
+      res1 += ay[0];
     }
     return (res1*res1);
   }
@@ -347,8 +383,7 @@ struct multpow_test_cppad {
 
 int main() {
 
-  CppAD::ADFun<double> tape1;
-  CppAD::ADFun<double> tape2;
+  CppAD::ADFun<double> tape1, tape2, tape3;
   CppAD::sparse_hessian_work hess_info;
 
   int nvars = 6;
@@ -359,34 +394,38 @@ int main() {
   VectorXd w(1);
   w[0] = 1.0;
 
-  VectorXA f1(1); // to hold result
-  VectorXA f2(1); // to hold result
+  VectorXA f(1); // to hold result
   VectorXA P(nvars);
   for(size_t i = 0; i < nvars; i++)
      P[i] = X[i];
 
-  multpow_test_atomic func1;
-  multpow_test_cppad  func2;
+  multpow_test_atomic     func1;
+  multpow_test_cppad      func2;
+  multpow_test_checkpoint func3;
 
   // record tapes
   CppAD::Independent(P);
-  f1[0] = func1.eval(P);
-  tape1.Dependent(P, f1);
-  tape1.optimize();
+  f[0] = func1.eval(P);
+  tape1.Dependent(P, f);
+
+  CppAD::Independent(P);
+  f[0] = func2.eval(P);
+  tape2.Dependent(P, f);
 
 
   CppAD::Independent(P);
-  f2[0] = func2.eval(P);
-  tape2.Dependent(P, f2);
-  tape2.optimize();
+  f[0] = func3.eval(P);
+  tape3.Dependent(P, f);
 
-  // compute f, df, d2f
 
   tape1.Forward(0, X);
   VectorXd hess_sparse1 = tape1.SparseHessian(X, w);
 
   tape2.Forward(0, X);
   VectorXd hess_sparse2 = tape2.SparseHessian(X, w);
+
+  tape3.Forward(0, X);
+  VectorXd hess_sparse3 = tape3.SparseHessian(X, w);
 
   std::cout << "mb_atomic:" << std::endl;
   for(size_t i = 0; i < nvars; i++)
@@ -401,6 +440,14 @@ int main() {
   {  for(size_t j = 0; j < nvars; j++)
         std::cout << " " << std::setw(10)
         << hess_sparse2[ i * nvars + j];
+     std::cout << std::endl;
+  }
+
+  std::cout << "checkpoint:" << std::endl;
+  for(size_t i = 0; i < nvars; i++)
+  {  for(size_t j = 0; j < nvars; j++)
+        std::cout << " " << std::setw(10)
+        << hess_sparse3[ i * nvars + j];
      std::cout << std::endl;
   }
 
