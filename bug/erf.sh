@@ -11,7 +11,7 @@
 # Please visit http://www.coin-or.org/CppAD/ for information on other licenses.
 # -----------------------------------------------------------------------------
 cat << EOF
-Description
+Sparse and Dense Hessians give different results.
 EOF
 cat << EOF > bug.$$
 #include <cppad/cppad.hpp>
@@ -25,6 +25,8 @@ typedef CppAD::vector<AScalar> avec;
 
 
 int main() {
+  bool ok = true;
+  double eps = 1.0 * std::numeric_limits<double>::epsilon();
 
   using std::cout;
   using std::endl;
@@ -59,6 +61,12 @@ int main() {
   cout << "Sparse hessian.\\n";
   cout << hess_sparse1 << endl;
 
+  for(size_t i = 0; i < nvars * nvars; i++)
+    ok &= CppAD::NearEqual( hess_dense1[i], hess_sparse1[i], eps, eps);
+
+  if( ok )
+    return 0;
+  return 1;
 }
 EOF
 # -----------------------------------------------------------------------------
