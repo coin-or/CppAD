@@ -49,7 +49,6 @@ int main() {
   ay[0] = erf( 2.0 * ax[0] );
   f.Dependent(ax, ay);
 
-
   vec hess_dense = f.Hessian(x, 0);
   vec hess_sparse = f.SparseHessian(x, w);
 
@@ -61,6 +60,17 @@ int main() {
 
   for(size_t i = 0; i < nvars * nvars; i++)
     ok &= CppAD::NearEqual( hess_dense[i], hess_sparse[i], eps, eps);
+
+  // Define g(u) = erf(2 * u)
+  // g'(u)   = 2 * erf'(2 * u)
+  //         = 2 * exp( - 2 * u * 2 * u ) * 2 / sqrt(pi)
+  //         = exp( - 4 * u * u ) * 4 / sqrt(pi)
+  // g''(u)  = - exp( - 4 * u * u ) * 32 * u / sqrt(pi) 
+  double root_pi      = std::sqrt( 4.0 * atan(1.0) );
+  double check_hess_0 = -std::exp(-4.0 * x[0] * x[0]) * 32.0 * x[0] / root_pi;
+  cout << "check hess[0] = " << check_hess_0 << endl;
+
+  ok &= CppAD::NearEqual(hess_dense[0], check_hess_0, eps, eps);
 
   if( ok )
     return 0;
