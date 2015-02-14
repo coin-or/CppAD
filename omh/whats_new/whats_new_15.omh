@@ -44,6 +44,11 @@ This section contains a list of the changes to CppAD during 2015
 The purpose of this section is to
 assist you in learning about changes between various versions of CppAD.
 
+$head 02-14$$
+Fix another bug in the derivative calculations for the
+c++11 version of the error function; see
+$cref/CPPAD_COMPILER_HAS_ERF/erf/Method/CPPAD_COMPILER_HAS_ERF/$$.
+
 $head 02-11$$
 Fix a bug in the optimization of conditional expressions. To be specific,
 if $cref/NDEBUG/faq/Speed/NDEBUG/$$ is not defined, one could get

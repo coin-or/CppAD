@@ -3,7 +3,7 @@
 # define CPPAD_MUL_OP_INCLUDED
 
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-14 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-15 Bradley M. Bell
 
 CppAD is distributed under multiple licenses. This distribution is under
 the terms of the 
@@ -335,8 +335,8 @@ inline void reverse_mulpv_op(
 	Base*         partial     )
 {
 	// check assumptions
-	CPPAD_ASSERT_UNKNOWN( NumArg(MulvvOp) == 2 );
-	CPPAD_ASSERT_UNKNOWN( NumRes(MulvvOp) == 1 );
+	CPPAD_ASSERT_UNKNOWN( NumArg(MulpvOp) == 2 );
+	CPPAD_ASSERT_UNKNOWN( NumRes(MulpvOp) == 1 );
 	CPPAD_ASSERT_UNKNOWN( d < cap_order );
 	CPPAD_ASSERT_UNKNOWN( d < nc_partial );
 
