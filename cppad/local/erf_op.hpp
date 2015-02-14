@@ -105,7 +105,7 @@ inline void forward_erf_op(
 	const Base*   parameter   ,
 	size_t        cap_order   ,
 	Base*         taylor      )
-{	
+{
 	// check assumptions
 	CPPAD_ASSERT_UNKNOWN( NumArg(ErfOp) == 3 );
 	CPPAD_ASSERT_UNKNOWN( NumRes(ErfOp) == 5 );
@@ -351,7 +351,7 @@ inline void reverse_erf_op(
 	const Base*   taylor      ,
 	size_t        nc_partial  ,
 	Base*         partial     )
-{	
+{
 	// check assumptions
 	CPPAD_ASSERT_UNKNOWN( NumArg(ErfOp) == 3 );
 	CPPAD_ASSERT_UNKNOWN( NumRes(ErfOp) == 5 );
