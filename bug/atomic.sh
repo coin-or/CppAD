@@ -252,7 +252,7 @@ class mb_atomic : public CppAD::atomic_base<double> {
 			      const vector<std::set<size_t> >&   r ,
 			      vector<std::set<size_t> >&         s
 			      ) {
-    size_t n = r.size() / q;
+    size_t n = r.size();
     s[0] = r[0];
     for (size_t i=0; i<n; i++) {
       my_union(s[0], s[0], r[i]);
