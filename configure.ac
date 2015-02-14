@@ -485,7 +485,23 @@ dnl Determine if ranlib is present and where it is if present (set RANLIB)
 AC_PROG_RANLIB
 
 dnl AC_PROG_CXX([compiler-search-list]) outputs CXX as C++ compiler to use
-AC_PROG_CXX
+AC_ARG_ENABLE([msvc],
+  [AC_HELP_STRING([--enable-msvc],
+                  [Prefer (i)cl/ifort/link over GNU on MinGW/Cygwin.])],
+  [enable_msvc=$enableval],
+  [enable_msvc=no])
+    
+if test "$enable_msvc" = yes; then
+  case $build in
+    *-cygwin* | *-mingw*) ;;
+    *) AC_MSG_ERROR([--enable-msvc option only has an effect under Cygwin or MinGW]) ;;
+  esac
+fi
+if  test "$enable_msvc" = yes; then
+    AC_PROG_CXX([cl, icl])
+else
+    AC_PROG_CXX
+fi
 AC_MSG_CHECKING([whether using Microsoft C++ compiler])
 AM_CONDITIONAL(CppAD_MS_COMPILER, test "$CXX" == "cl" || test "$CXX" == "icl")
 if test "$CXX" == "cl" || test "$CXX" == "icl"; then
