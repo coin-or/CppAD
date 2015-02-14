@@ -50,19 +50,17 @@ int main() {
   f.Dependent(ax, ay);
 
 
-  vec val1(1);
-  val1 = f.Forward(0, x);
-  vec hess_dense1 = f.Hessian(x, size_t(0));
-  vec hess_sparse1 = f.SparseHessian(x, w);
+  vec hess_dense = f.Hessian(x, 0);
+  vec hess_sparse = f.SparseHessian(x, w);
 
   cout << "Dense hessian.\\n";
-  cout << hess_dense1 << endl;
+  cout << hess_dense << endl;
 
   cout << "Sparse hessian.\\n";
-  cout << hess_sparse1 << endl;
+  cout << hess_sparse << endl;
 
   for(size_t i = 0; i < nvars * nvars; i++)
-    ok &= CppAD::NearEqual( hess_dense1[i], hess_sparse1[i], eps, eps);
+    ok &= CppAD::NearEqual( hess_dense[i], hess_sparse[i], eps, eps);
 
   if( ok )
     return 0;
