@@ -32,6 +32,46 @@ dnl Check for programs
 AC_CHECK_PROG(have_pkg_config, [pkg-config], [yes], [no])
 AM_CONDITIONAL(CppAD_PKG_CONFIG, test "$have_pkg_config" = "yes")
 
+dnl AC_PROG_CXX([compiler-search-list]) outputs CXX as C++ compiler to use
+AC_ARG_ENABLE([msvc],
+  [AC_HELP_STRING([--enable-msvc],
+                  [Prefer (i)cl/ifort/link over GNU on MinGW/Cygwin.])],
+  [enable_msvc=$enableval],
+  [enable_msvc=no])
+    
+if  test "$enable_msvc" != no; then
+    AC_PROG_CXX([cl icl g++])
+else
+    AC_PROG_CXX
+fi
+AC_MSG_CHECKING([whether using Microsoft C++ compiler])
+AM_CONDITIONAL(CppAD_MS_COMPILER, test "$CXX" == "cl" || test "$CXX" == "icl")
+if test "$CXX" == "cl" || test "$CXX" == "icl"; then
+	AC_MSG_RESULT([yes])
+else
+	AC_MSG_RESULT([no])
+fi
+dnl erase any setting of CXXFLAGS, see CXX_FLAGS documentation
+AC_SUBST(CXXFLAGS, "")
+
+dnl AC_PROG_CC([compiler-search-list]) outputs CC as C compiler to use
+if  test "$enable_msvc" != no; then
+    AC_PROG_CC([cl icl gcc])
+else
+    AC_PROG_CC
+fi
+AC_MSG_CHECKING([whether using Microsoft C++ compiler])
+dnl erase any setting of CFLAGS
+AC_SUBST(CFLAGS, "")
+
+dnl AC_PROG_F77([compiler-search-list]) outputs F77 as Fortran compiler to use
+if  test "$enable_msvc" != no; then
+    AC_PROG_F77([ifort gfortran])
+else
+    AC_PROG_F77
+fi
+
+dnl ----------------------------------------------------------------------
 AM_PROG_AR()
 AM_CONDITIONAL(CppAD_HAVE_AR, test "$AR" = "ar")
 if test "$AR" != "ar"; then
@@ -483,25 +523,6 @@ dnl AC_PROG_LIBTOOL
 
 dnl Determine if ranlib is present and where it is if present (set RANLIB)
 AC_PROG_RANLIB
-
-dnl AC_PROG_CXX([compiler-search-list]) outputs CXX as C++ compiler to use
-AC_PROG_CXX
-AC_MSG_CHECKING([whether using Microsoft C++ compiler])
-AM_CONDITIONAL(CppAD_MS_COMPILER, test "$CXX" == "cl" || test "$CXX" == "icl")
-if test "$CXX" == "cl" || test "$CXX" == "icl"; then
-	AC_MSG_RESULT([yes])
-else
-	AC_MSG_RESULT([no])
-fi
-dnl erase any setting of CXXFLAGS, see CXX_FLAGS documentation
-AC_SUBST(CXXFLAGS, "")
-
-
-dnl AC_PROG_CC([compiler-search-list]) outputs CC as C++ compiler to use
-AC_PROG_CC
-AC_MSG_CHECKING([whether using Microsoft C++ compiler])
-dnl erase any setting of CFLAGS
-AC_SUBST(CFLAGS, "")
 
 dnl Have configure check source directory to see if cppad/CppAD.h is there
 AC_CONFIG_SRCDIR(cppad/CppAD.h)
