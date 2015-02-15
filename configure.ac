@@ -39,7 +39,7 @@ AC_ARG_ENABLE([msvc],
   [enable_msvc=$enableval],
   [enable_msvc=no])
     
-if  test "$enable_msvc" = yes; then
+if  test "$enable_msvc" != no; then
     AC_PROG_CXX([cl icl g++])
 else
     AC_PROG_CXX
@@ -55,7 +55,7 @@ dnl erase any setting of CXXFLAGS, see CXX_FLAGS documentation
 AC_SUBST(CXXFLAGS, "")
 
 dnl AC_PROG_CC([compiler-search-list]) outputs CC as C compiler to use
-if  test "$enable_msvc" = yes; then
+if  test "$enable_msvc" != no; then
     AC_PROG_CC([cl icl gcc])
 else
     AC_PROG_CC
@@ -65,7 +65,7 @@ dnl erase any setting of CFLAGS
 AC_SUBST(CFLAGS, "")
 
 dnl AC_PROG_F77([compiler-search-list]) outputs F77 as Fortran compiler to use
-if  test "$enable_msvc" = yes; then
+if  test "$enable_msvc" != no; then
     AC_PROG_F77([ifort gfortran])
 else
     AC_PROG_F77
