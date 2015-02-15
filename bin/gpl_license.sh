@@ -117,9 +117,9 @@ do
 	fi
 	if grep "GNU General Public License" $archive_name/$file > /dev/null
 	then
-		echo "gpl_license.sh: name=$name"
 		if [ "$name" != "doc.omh" ] && [ "$name" != 'download.omh' ]
 		then
+			echo "gpl_license.sh: name=$name"
 			echo "GPL license in initial $archive_name/$file"
 			exit 1
 		fi

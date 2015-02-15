@@ -64,7 +64,7 @@ then
 	version=`bin/version.sh get`
 else
 	version=`grep '^ *AC_INIT(' configure.ac | 
-		sed -e 's/[^,]*, *\([^ ,]*\).*/\1/'`
+		sed -e 's/[^,]*, *\([^ ,]*\).*/\1/' -e 's|\[||' -e 's|\]||'`
 	yyyy_mm_dd=`echo $version | 
 		sed -e 's|\..*||' -e 's|\(....\)\(..\)|\1-\2-|'`
 fi

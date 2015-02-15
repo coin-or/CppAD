@@ -26,6 +26,12 @@ AC_PREFIX_DEFAULT(${HOME})
 dnl cygwin end delete:
 dnl cygwin replace: AC_PREFIX_DEFAULT(/usr)
 
+dnl Run any macros required for proper operation of generated makefiles
+dnl nostdinc: Do not define standard include directories in generated makefiles
+dnl Note this must come before AC_PROG_CC; see 
+dnl http://lists.gnu.org/archive/html/automake/2010-08/msg00113.html
+AM_INIT_AUTOMAKE([nostdinc subdir-objects -Wall])
+
 dnl --------------------------------------------------------------------------
 dnl Check for programs
 
@@ -473,10 +479,6 @@ if test "$gettimeofday" = "yes" ; then
 else
 	AC_SUBST(cppad_has_gettimeofday, 0)
 fi
-
-dnl Run any macros required for proper operation of generated makefiles
-dnl nostdinc: Do not define standard include directories in generated makefiles
-AM_INIT_AUTOMAKE([nostdinc subdir-objects -Wall])
 
 dnl Use LIBTOOL for cppad_ipopt ?
 dnl AC_PROG_LIBTOOL
