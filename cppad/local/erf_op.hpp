@@ -250,7 +250,7 @@ inline void forward_erf_op_0(
 
 	// zero order Taylor coefficient for z_4
 	Base* x    = taylor + arg[0]  * cap_order;
-	Base* z_4  = taylor + i_z + 4 * cap_order;
+	Base* z_4  = taylor + (i_z + 4) * cap_order;
 	z_4[0] = erf(x[0]);
 }
 
