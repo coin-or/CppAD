@@ -32,20 +32,6 @@ dnl Note this must come before AC_PROG_CC; see
 dnl http://lists.gnu.org/archive/html/automake/2010-08/msg00113.html
 AM_INIT_AUTOMAKE([nostdinc subdir-objects -Wall])
 
-dnl --------------------------------------------------------------------------
-dnl Check if this system has pkgconfig
-AC_CHECK_PROG(have_pkg_config, [pkg-config], [yes], [no])
-AM_CONDITIONAL(CppAD_PKG_CONFIG, test "$have_pkg_config" = "yes")
-
-dnl --------------------------------------------------------------------------
-dnl Check if this system has ar
-AM_PROG_AR()
-AM_CONDITIONAL(CppAD_HAVE_AR, test "$AR" = "ar")
-if test "$AR" != "ar"; then
-	AC_MSG_WARN(
-	[cannot build any libraries because ar is missing; e.g,, speed/* not built]
-	)
-fi
 
 dnl ----------------------------------------------------------------------
 AC_MSG_NOTICE([*** Check command line arguments that are longer used ****])
@@ -460,11 +446,11 @@ dnl Begin enable_msvc cases --------------------------------------------------
 dnl See AC_ARG(ENABLE([msvx] in command line arguments above
 
 dnl AC_PROG_CXX([compiler-search-list]) outputs CXX as C++ compiler to use
-if  test "$enable_msvc" = yes; then
+if  test "$enable_msvc" = no; then
+	AC_PROG_CXX
+else
 	dnl This case is defined and supported by Ted Ralphs
 	AC_PROG_CXX([cl icl g++])
-else
-	AC_PROG_CXX
 fi
 AC_MSG_CHECKING([whether using Microsoft C++ compiler])
 AM_CONDITIONAL(CppAD_MS_COMPILER, test "$CXX" == "cl" || test "$CXX" == "icl")
@@ -477,26 +463,38 @@ dnl erase any setting of CXXFLAGS, see CXX_FLAGS documentation
 AC_SUBST(CXXFLAGS, "")
 
 dnl AC_PROG_CC([compiler-search-list]) outputs CC as C compiler to use
-if  test "$enable_msvc" = yes; then
+if  test "$enable_msvc" = no; then
+	AC_PROG_CC
+else
 	dnl This case is defined and supported by Ted Ralphs
 	AC_PROG_CC([cl icl gcc])
-else
-	AC_PROG_CC
 fi
 dnl erase any setting of CFLAGS
 AC_SUBST(CFLAGS, "")
 
-dnl This was in Ted's changes, but I (Brad) do not think it is necessary
+dnl This is in Ted's changes, but I (Brad) do not think it is necessary
 dnl Because CppAD does not have any fortran. It may however be necessary for
 dnl proper setting by AC_FC_LIBRARY_LDFLAGS ?
 dnl AC_PROG_F77([compiler-search-list]) outputs F77 as Fortran compiler to use
-dnl if  test "$enable_msvc" = yes; then
-dnl 	dnl This case is defined and support by Ted Ralphs
-dnl	AC_PROG_F77([ifort gfortran])
-dnl fi
+if  test "$enable_msvc" != no; then
+	dnl This case is defined and support by Ted Ralphs
+	AC_PROG_F77([ifort gfortran])
+fi
 
 dnl End enable_msvc cases ---------------------------------------------------
 
+dnl Check if this system has ar
+AM_PROG_AR()
+AM_CONDITIONAL(CppAD_HAVE_AR, test "$AR" = "ar")
+if test "$AR" != "ar"; then
+	AC_MSG_WARN(
+	[cannot build any libraries because ar is missing; e.g,, speed/* not built]
+	)
+fi
+
+dnl Check if this system has pkgconfig
+AC_CHECK_PROG(have_pkg_config, [pkg-config], [yes], [no])
+AM_CONDITIONAL(CppAD_PKG_CONFIG, test "$have_pkg_config" = "yes")
 
 dnl auto-tools version does not support ColPack coloring
 AC_SUBST(cppad_has_colpack, 0)
