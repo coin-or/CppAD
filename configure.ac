@@ -452,15 +452,6 @@ else
 	dnl This case is defined and supported by Ted Ralphs
 	AC_PROG_CXX([cl icl g++])
 fi
-AC_MSG_CHECKING([whether using Microsoft C++ compiler])
-AM_CONDITIONAL(CppAD_MS_COMPILER, test "$CXX" == "cl" || test "$CXX" == "icl")
-if test "$CXX" == "cl" || test "$CXX" == "icl"; then
-	AC_MSG_RESULT([yes])
-else
-	AC_MSG_RESULT([no])
-fi
-dnl erase any setting of CXXFLAGS, see CXX_FLAGS documentation
-AC_SUBST(CXXFLAGS, "")
 
 dnl AC_PROG_CC([compiler-search-list]) outputs CC as C compiler to use
 if  test "$enable_msvc" = no; then
@@ -469,19 +460,29 @@ else
 	dnl This case is defined and supported by Ted Ralphs
 	AC_PROG_CC([cl icl gcc])
 fi
-dnl erase any setting of CFLAGS
-AC_SUBST(CFLAGS, "")
 
-dnl This is in Ted's changes, but I (Brad) do not think it is necessary
-dnl Because CppAD does not have any fortran. It may however be necessary for
-dnl proper setting by AC_FC_LIBRARY_LDFLAGS ?
-dnl AC_PROG_F77([compiler-search-list]) outputs F77 as Fortran compiler to use
+dnl This setting is required for proper setting by AC_FC_LIBRARY_LDFLAGS
+dnl AC_PROG_FC([compiler-search-list], [dialect]) 
 if  test "$enable_msvc" != no; then
 	dnl This case is defined and support by Ted Ralphs
-	AC_PROG_F77([ifort gfortran])
+	AC_PROG_FC([ifort gfortran])
 fi
 
 dnl End enable_msvc cases ---------------------------------------------------
+
+AC_MSG_CHECKING([whether using Microsoft C++ compiler])
+AM_CONDITIONAL(CppAD_MS_COMPILER, test "$CXX" == "cl" || test "$CXX" == "icl")
+if test "$CXX" == "cl" || test "$CXX" == "icl"; then
+	AC_MSG_RESULT([yes])
+else
+	AC_MSG_RESULT([no])
+fi
+
+dnl erase any setting of CXXFLAGS, see CXX_FLAGS documentation
+AC_SUBST(CXXFLAGS, "")
+
+dnl erase any setting of CFLAGS
+AC_SUBST(CFLAGS, "")
 
 dnl Check if this system has ar
 AM_PROG_AR()
