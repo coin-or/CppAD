@@ -45,7 +45,7 @@ The purpose of this section is to
 assist you in learning about changes between various versions of CppAD.
 
 $head 02-16$$
-The new example $cref sub_sparse_hes.cpp$$ shows one way to 
+The new example $cref sub_sparse_hes.cpp$$ shows one way to
 compute a Hessian for a subset of variables without having to compute
 the sparsity pattern for the entire functions.
 

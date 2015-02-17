@@ -32,20 +32,6 @@ dnl Note this must come before AC_PROG_CC; see
 dnl http://lists.gnu.org/archive/html/automake/2010-08/msg00113.html
 AM_INIT_AUTOMAKE([nostdinc subdir-objects -Wall])
 
-dnl --------------------------------------------------------------------------
-dnl Check for programs
-
-AC_CHECK_PROG(have_pkg_config, [pkg-config], [yes], [no])
-AM_CONDITIONAL(CppAD_PKG_CONFIG, test "$have_pkg_config" = "yes")
-
-AM_PROG_AR()
-AM_CONDITIONAL(CppAD_HAVE_AR, test "$AR" = "ar")
-if test "$AR" != "ar"; then
-	AC_MSG_WARN(
-	[cannot build any libraries because ar is missing; e.g,, speed/* not built]
-	)
-fi
-
 dnl ----------------------------------------------------------------------
 AC_MSG_NOTICE([*** Check command line arguments that are longer used ****])
 
@@ -110,6 +96,19 @@ if test "$PrintFor" = "yes" ; then
 fi
 dnl --------------------------------------------------------------------------
 AC_MSG_NOTICE([******  Check command line arguments that are used ***********])
+
+dnl -----------------------------------------------------------------------
+dnl The case where enable_msvc != no is defined and supported by Ted Ralphs
+AC_MSG_CHECKING([--enable-msvc])
+AC_ARG_ENABLE([msvc],
+  [AC_HELP_STRING([--enable-msvc],
+                  [Prefer (i)cl/ifort/link over GNU on MinGW/Cygwin.])],
+  [enable_msvc=$enableval],
+  [enable_msvc=no]
+)
+AC_MSG_RESULT([$enable_msvc])
+
+
 dnl the prefix directory corresponding to CppAD -------------------------
 dnl The following seems to work but NONE is not in autoconf specifications
 AC_MSG_CHECKING([--prefix])
@@ -442,6 +441,48 @@ if test "$ok" == "no" ; then
 fi
 AC_MSG_NOTICE([********** End Checking Command Line arguments ***************])
 
+dnl --------------------------------------------------------------------------
+if test "$enable_msvc" == "no"
+then
+	cxx_list="g++ clang++ CC pgCC icpc gpp cxx cc++"
+	cc_list="gcc clang cc pgcc icc"
+	fc_list="gfortran ifort g95 fort77 f77 g77 pgf90 pgf77 ifc frt af77"
+else
+	dnl This case defined and supported by Ted Ralphs
+	cxx_list="icl cl g++"
+	cc_list="icl cl gcc"
+	fc_list="ifort gfortran"
+fi
+dnl --------------------------------------------------------------------------
+
+dnl AC_PROG_CXX([compiler-search-list]) outputs CXX as C++ compiler to use
+AC_PROG_CXX([$cxx_list])
+dnl erase any setting of CXXFLAGS, see CXX_FLAGS documentation
+AC_SUBST(CXXFLAGS, "")
+
+dnl AC_PROG_CC([compiler-search-list]) outputs CC as C++ compiler to use
+AC_PROG_CC([$cc_list])
+dnl erase any setting of CFLAGS
+AC_SUBST(CFLAGS, "")
+
+dnl AC_PROG_FC ([compiler-search-list], [dialect])
+AC_PROG_FC([$fc_list])
+dnl not compiling any fortran so no need to touch flags
+
+dnl Check for pkgconfig
+AC_CHECK_PROG(have_pkg_config, [pkg-config], [yes], [no])
+AM_CONDITIONAL(CppAD_PKG_CONFIG, test "$have_pkg_config" = "yes")
+
+dnl check if we can build libraries
+AM_PROG_AR()
+AM_CONDITIONAL(CppAD_HAVE_AR, test "$AR" = "ar")
+if test "$AR" != "ar"; then
+	AC_MSG_WARN(
+	[cannot build any libraries because ar is missing; e.g,, speed/* not built]
+	)
+fi
+
+
 dnl auto-tools version does not support ColPack coloring
 AC_SUBST(cppad_has_colpack, 0)
 
@@ -486,8 +527,6 @@ dnl AC_PROG_LIBTOOL
 dnl Determine if ranlib is present and where it is if present (set RANLIB)
 AC_PROG_RANLIB
 
-dnl AC_PROG_CXX([compiler-search-list]) outputs CXX as C++ compiler to use
-AC_PROG_CXX
 AC_MSG_CHECKING([whether using Microsoft C++ compiler])
 AM_CONDITIONAL(CppAD_MS_COMPILER, test "$CXX" == "cl" || test "$CXX" == "icl")
 if test "$CXX" == "cl" || test "$CXX" == "icl"; then
@@ -495,15 +534,8 @@ if test "$CXX" == "cl" || test "$CXX" == "icl"; then
 else
 	AC_MSG_RESULT([no])
 fi
-dnl erase any setting of CXXFLAGS, see CXX_FLAGS documentation
-AC_SUBST(CXXFLAGS, "")
 
 
-dnl AC_PROG_CC([compiler-search-list]) outputs CC as C++ compiler to use
-AC_PROG_CC
-AC_MSG_CHECKING([whether using Microsoft C++ compiler])
-dnl erase any setting of CFLAGS
-AC_SUBST(CFLAGS, "")
 
 dnl Have configure check source directory to see if cppad/CppAD.h is there
 AC_CONFIG_SRCDIR(cppad/CppAD.h)
