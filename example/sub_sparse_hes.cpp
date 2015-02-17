@@ -18,6 +18,10 @@ $index hessian, sparse subset$$
 
 $section Computing Sparse Hessian for a Subset of Variables$$
 
+$head Purpose$$
+This example shows how to compute the Hessian for a subset of the variables
+without having to compute the sparsity pattern for the entire function.
+
 $head Function$$
 We consider the function
 $latex f : \B{R}^{nu} \times \B{R}^{nv}  \rightarrow \B{R}$$ defined by
@@ -71,8 +75,8 @@ bool sub_sparse_hes(void)
 	size_t i, j;
 
 	// start recording with x = (u , v)
-	size_t nu = 3;
-	size_t nv = 1;
+	size_t nu = 10;
+	size_t nv = 5;
 	size_t n  = nu + nv;
 	vector<adouble> ax(n);
 	for(j = 0; j < n; j++)
@@ -122,7 +126,10 @@ bool sub_sparse_hes(void)
 	aw[0] = 1.0;
 	for(j = 0; j < nu; j++)
 		au[j] = ax[j];
-	g.SparseHessian(au, aw, p, row, col, ahes, work);
+	size_t n_sweep = g.SparseHessian(au, aw, p, row, col, ahes, work);
+
+	// The Hessian w.r.t u is diagonal
+	ok &= n_sweep == 1;
 
 	// record H(u, v) = Hessian of f w.r.t u
 	CppAD::ADFun<double> H(ax, ahes);

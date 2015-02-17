@@ -131,9 +131,10 @@ am__example_SOURCES_DIST = mul_level_adolc.cpp mul_level_adolc_ode.cpp \
 	romberg_mul.cpp romberg_one.cpp rosen_34.cpp runge45_1.cpp \
 	runge45_2.cpp seq_property.cpp simple_vector.cpp sign.cpp \
 	sin.cpp sinh.cpp sparse_hessian.cpp sparse_jacobian.cpp \
-	sqrt.cpp stack_machine.cpp sub.cpp sub_eq.cpp tan.cpp tanh.cpp \
-	tape_index.cpp thread_alloc.cpp unary_minus.cpp unary_plus.cpp \
-	value.cpp var2par.cpp vec_ad.cpp vector_bool.cpp
+	sqrt.cpp stack_machine.cpp sub.cpp sub_eq.cpp \
+	sub_sparse_hes.cpp tan.cpp tanh.cpp tape_index.cpp \
+	thread_alloc.cpp unary_minus.cpp unary_plus.cpp value.cpp \
+	var2par.cpp vec_ad.cpp vector_bool.cpp
 @CppAD_ADOLC_TRUE@am__objects_1 = mul_level_adolc.$(OBJEXT) \
 @CppAD_ADOLC_TRUE@	mul_level_adolc_ode.$(OBJEXT)
 am_example_OBJECTS = $(am__objects_1) example.$(OBJEXT) \
@@ -182,10 +183,10 @@ am_example_OBJECTS = $(am__objects_1) example.$(OBJEXT) \
 	sin.$(OBJEXT) sinh.$(OBJEXT) sparse_hessian.$(OBJEXT) \
 	sparse_jacobian.$(OBJEXT) sqrt.$(OBJEXT) \
 	stack_machine.$(OBJEXT) sub.$(OBJEXT) sub_eq.$(OBJEXT) \
-	tan.$(OBJEXT) tanh.$(OBJEXT) tape_index.$(OBJEXT) \
-	thread_alloc.$(OBJEXT) unary_minus.$(OBJEXT) \
-	unary_plus.$(OBJEXT) value.$(OBJEXT) var2par.$(OBJEXT) \
-	vec_ad.$(OBJEXT) vector_bool.$(OBJEXT)
+	sub_sparse_hes.$(OBJEXT) tan.$(OBJEXT) tanh.$(OBJEXT) \
+	tape_index.$(OBJEXT) thread_alloc.$(OBJEXT) \
+	unary_minus.$(OBJEXT) unary_plus.$(OBJEXT) value.$(OBJEXT) \
+	var2par.$(OBJEXT) vec_ad.$(OBJEXT) vector_bool.$(OBJEXT)
 example_OBJECTS = $(am_example_OBJECTS)
 example_LDADD = $(LDADD)
 am__DEPENDENCIES_1 =
@@ -295,10 +296,10 @@ CYGPATH_W = @CYGPATH_W@
 
 # $Id$
 # -----------------------------------------------------------------------------
-# CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-14 Bradley M. Bell
+# CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-15 Bradley M. Bell
 #
 # CppAD is distributed under multiple licenses. This distribution is under
-# the terms of the 
+# the terms of the
 #                     Eclipse Public License Version 1.0.
 #
 # A copy of this license is included in the COPYING file of this distribution.
@@ -444,7 +445,7 @@ top_srcdir = @top_srcdir@
 @CppAD_ADOLC_FALSE@ADOLC_LIB = 
 @CppAD_ADOLC_TRUE@ADOLC_LIB = -ladolc -lColPack -L$(ADOLC_DIR)/lib -L$(ADOLC_DIR)/lib64
 @CppAD_ADOLC_FALSE@ADOLC_FLAGS = 
-@CppAD_ADOLC_TRUE@ADOLC_FLAGS = -DCPPAD_ADOLC_EXAMPLES -I$(ADOLC_DIR)/include 
+@CppAD_ADOLC_TRUE@ADOLC_FLAGS = -DCPPAD_ADOLC_EXAMPLES -I$(ADOLC_DIR)/include
 @CppAD_EIGEN_DIR_FALSE@@CppAD_HAVE_AR_TRUE@EIGEN_EXTRA_FILES = eigen_det.cpp eigen_array.cpp
 # -------------------------------------------------------------------------
 # make a special library so can have it's own compile flags (see configure.ac)
@@ -461,7 +462,7 @@ top_srcdir = @top_srcdir@
 @CppAD_EIGEN_DIR_TRUE@@CppAD_HAVE_AR_TRUE@libeigen_a_CXXFLAGS = \
 @CppAD_EIGEN_DIR_TRUE@@CppAD_HAVE_AR_TRUE@	-g $(CXX_FLAGS_EIGEN) \
 @CppAD_EIGEN_DIR_TRUE@@CppAD_HAVE_AR_TRUE@	-DCPPAD_EIGEN_EXAMPLES \
-@CppAD_EIGEN_DIR_TRUE@@CppAD_HAVE_AR_TRUE@	-I$(EIGEN_DIR)/include 
+@CppAD_EIGEN_DIR_TRUE@@CppAD_HAVE_AR_TRUE@	-I$(EIGEN_DIR)/include
 
 # -------------------------------------------------------------------------
 # auto-tools does not support use of colpack
@@ -607,6 +608,7 @@ example_SOURCES = \
 	stack_machine.cpp \
 	sub.cpp \
 	sub_eq.cpp \
+	sub_sparse_hes.cpp \
 	tan.cpp \
 	tanh.cpp \
 	tape_index.cpp \
@@ -616,7 +618,7 @@ example_SOURCES = \
 	value.cpp \
 	var2par.cpp \
 	vec_ad.cpp  \
-	vector_bool.cpp 
+	vector_bool.cpp
 
 all: all-am
 
@@ -795,6 +797,7 @@ distclean-compile:
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/stack_machine.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/sub.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/sub_eq.Po@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/sub_sparse_hes.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/tan.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/tanh.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/tape_index.Po@am__quote@
