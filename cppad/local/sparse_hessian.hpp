@@ -266,15 +266,23 @@ the zero order Taylor coefficients correspond to
 $icode%f%.Forward(0, %x%)%$$
 and the other coefficients are unspecified.
 
-$head Example$$
 $children%
-	example/sparse_hessian.cpp
+	example/sparse_hessian.cpp%
+	example/sub_sparse_hes.cpp
 %$$
+
+$head Example$$
 The routine
 $cref sparse_hessian.cpp$$ 
 is examples and tests of $code sparse_hessian$$.
 It return $code true$$, if it succeeds and $code false$$ otherwise.
 
+$head Subset Hessian$$
+The routine
+$cref sub_sparse_hes.cpp$$ 
+is examples and test for computing a sparse Hessian 
+for a subset of the variables.
+It return $code true$$, if it succeeds and $code false$$ otherwise.
 
 $end
 -----------------------------------------------------------------------------

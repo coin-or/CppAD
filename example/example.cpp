@@ -163,6 +163,7 @@ extern bool Sqrt(void);
 extern bool StackMachine(void);
 extern bool Sub(void);
 extern bool SubEq(void);
+extern bool sub_sparse_hes(void);
 extern bool Tan(void);
 extern bool Tanh(void);
 extern bool TapeIndex(void);
@@ -317,6 +318,7 @@ int main(void)
 	ok &= Run( StackMachine,      "StackMachine"     );
 	ok &= Run( Sub,               "Sub"              );
 	ok &= Run( SubEq,             "SubEq"            );
+	ok &= Run( sub_sparse_hes,    "sub_sparse_hes"   );
 	ok &= Run( Tan,               "Tan"              );
 	ok &= Run( Tanh,              "Tanh"             );
 	ok &= Run( TapeIndex,         "TapeIndex"        );
