@@ -3,7 +3,7 @@
 CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-15 Bradley M. Bell
 
 CppAD is distributed under multiple licenses. This distribution is under
-the terms of the 
+the terms of the
                     Eclipse Public License Version 1.0.
 
 A copy of this license is included in the COPYING file of this distribution.
@@ -22,9 +22,9 @@ $head Function$$
 We consider the function
 $latex f : \B{R}^{nu} \times \B{R}^{nv}  \rightarrow \B{R}$$ defined by
 $latex \[
-f (u, v) = 
-\left( \sum_{j=0}^{nu-1} u_j^3 \right) 
-\left( \sum_{j=0}^{nv-1} v_j \right) 
+f (u, v) =
+\left( \sum_{j=0}^{nu-1} u_j^3 \right)
+\left( \sum_{j=0}^{nv-1} v_j \right)
 \] $$
 
 $head Subset$$
@@ -36,7 +36,7 @@ where this Hessian is sparse.
 
 $head Example$$
 The following code shows one way to compute this subset of the
-Hessian of $latex f$$. 
+Hessian of $latex f$$.
 $code
 $verbatim%example/sub_sparse_hes.cpp%0%// BEGIN C++%// END C++%1%$$
 $$
@@ -58,7 +58,7 @@ namespace {
 		for(i = 0; i < u.size(); i++)
 			sum_cube_u += u[i] * u[i] * u[i] / 6.0;
 		return sum_v * sum_cube_u;
-	} 
+	}
 }
 
 bool sub_sparse_hes(void)
@@ -92,7 +92,7 @@ bool sub_sparse_hes(void)
 
 	// record g(u)
 	vector<a2double> a2y(1);
-	a2y[0] = f(a2u, a2v); 
+	a2y[0] = f(a2u, a2v);
 	CppAD::ADFun<adouble> g;
 	g.Dependent(a2u, a2y);
 
@@ -109,7 +109,7 @@ bool sub_sparse_hes(void)
 	for(i = 0; i < nu; i++)
 	{	std::set<size_t>::const_iterator itr;
 		for(itr = p[i].begin(); itr != p[i].end(); itr++)
-		{	j = *itr;	
+		{	j = *itr;
 			if( j <= i )
 			{  	row.push_back(i);
 				col.push_back(j);

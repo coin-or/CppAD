@@ -6,7 +6,7 @@
 CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-15 Bradley M. Bell
 
 CppAD is distributed under multiple licenses. This distribution is under
-the terms of the 
+the terms of the
                     Eclipse Public License Version 1.0.
 
 A copy of this license is included in the COPYING file of this distribution.
@@ -45,10 +45,10 @@ We use $latex n$$ for the $cref/domain/seq_property/Domain/$$ size,
 and $latex m$$ for the $cref/range/seq_property/Range/$$ size of $icode f$$.
 We use $latex F : \B{R}^n \rightarrow \B{R}^m$$ do denote the
 $cref/AD function/glossary/AD Function/$$
-corresponding to $icode f$$. 
-The syntax above sets $icode hes$$ to the Hessian 
+corresponding to $icode f$$.
+The syntax above sets $icode hes$$ to the Hessian
 $latex \[
-	H(x) = \dpow{2}{x} \sum_{i=1}^m w_i F_i (x) 
+	H(x) = \dpow{2}{x} \sum_{i=1}^m w_i F_i (x)
 \] $$
 This routine takes advantage of the sparsity of the Hessian
 in order to reduce the amount of computation necessary.
@@ -73,7 +73,7 @@ $codei%
 	const %VectorBase%& %x%
 %$$
 (see $cref/VectorBase/sparse_hessian/VectorBase/$$ below)
-and its size 
+and its size
 must be equal to $icode n$$, the dimension of the
 $cref/domain/seq_property/Domain/$$ space for $icode f$$.
 It specifies
@@ -85,7 +85,7 @@ $codei%
 	const %VectorBase%& %w%
 %$$
 and size $latex m$$.
-It specifies the value of $latex w_i$$ in the expression 
+It specifies the value of $latex w_i$$ in the expression
 for $icode hes$$.
 The more components of $latex w$$ that are identically zero,
 the more sparse the resulting Hessian may be (and hence the more efficient
@@ -103,12 +103,12 @@ If it has elements of type $code std::set<size_t>$$,
 its size is $latex n$$ and all its set elements are between
 zero and $latex n - 1$$.
 It specifies a
-$cref/sparsity pattern/glossary/Sparsity Pattern/$$ 
+$cref/sparsity pattern/glossary/Sparsity Pattern/$$
 for the Hessian $latex H(x)$$.
 $pre
 
 $$
-If this sparsity pattern does not change between calls to 
+If this sparsity pattern does not change between calls to
 $codei SparseHessian$$, it should be faster to calculate $icode p$$ once and
 pass this argument to $codei SparseHessian$$.
 In addition,
@@ -133,7 +133,7 @@ which must also equal the size of $icode row$$ and $icode col$$.
 Furthermore,
 for $latex k = 0 , \ldots , K-1$$, it must hold that
 $latex row[k] < n$$ and $latex col[k] < n$$.
-In addition, 
+In addition,
 all of the $latex (row[k], col[k])$$ pairs must correspond to a true value
 in the sparsity pattern $icode p$$.
 
@@ -145,7 +145,7 @@ $codei%
 In the case where $icode row$$ and $icode col$$ are not present,
 the size of $icode hes$$ is $latex n * n$$ and
 its size is $latex n * n$$.
-In this case, for $latex i = 0 , \ldots , n - 1 $$ 
+In this case, for $latex i = 0 , \ldots , n - 1 $$
 and $latex ell = 0 , \ldots , n - 1$$
 $latex \[
 	hes [ j * n + \ell ] = \DD{ w^{\rm T} F }{ x_j }{ x_\ell } ( x )
@@ -154,7 +154,7 @@ $pre
 
 $$
 In the case where the arguments $icode row$$ and $icode col$$ are present,
-we use $latex K$$ to denote the size of $icode hes$$. 
+we use $latex K$$ to denote the size of $icode hes$$.
 The input value of its elements does not matter.
 Upon return, for $latex k = 0 , \ldots , K - 1$$,
 $latex \[
@@ -173,7 +173,7 @@ $codei%
 %$$
 This object can only be used with the routines $code SparseHessian$$.
 During its the first use, information is stored in $icode work$$.
-This is used to reduce the work done by future calls to $code SparseHessian$$ 
+This is used to reduce the work done by future calls to $code SparseHessian$$
 with the same $icode f$$, $icode p$$, $icode row$$, and $icode col$$.
 If a future call is made where any of these values have changed,
 you must first call $icode%work%.clear()%$$
@@ -187,7 +187,7 @@ $codei%
 	std::string %work%.color_method
 %$$
 This value only matters on the first call to $code sparse_hessian$$ that
-follows the $icode work$$ constructor or a call to 
+follows the $icode work$$ constructor or a call to
 $icode%work%.clear()%$$.
 $codei%
 
@@ -195,7 +195,7 @@ $codei%
 %$$
 This is the default coloring method (after a constructor or $code clear()$$).
 It takes advantage of the fact that the Hessian matrix
-is symmetric to find a coloring that requires fewer 
+is symmetric to find a coloring that requires fewer
 $cref/sweeps/sparse_hessian/n_sweep/$$.
 $codei%
 
@@ -217,13 +217,13 @@ The return value $icode n_sweep$$ has prototype
 $codei%
 	size_t %n_sweep%
 %$$
-It is the number of first order forward sweeps 
+It is the number of first order forward sweeps
 used to compute the requested Hessian values.
-Each first forward sweep is followed by a second order reverse sweep 
+Each first forward sweep is followed by a second order reverse sweep
 so it is also the number of reverse sweeps.
-This is proportional to the total work that $code SparseHessian$$ does, 
-not counting the zero order forward sweep, 
-or the work to combine multiple columns into a single 
+This is proportional to the total work that $code SparseHessian$$ does,
+not counting the zero order forward sweep,
+or the work to combine multiple columns into a single
 forward-reverse sweep pair.
 
 $head VectorBase$$
@@ -244,11 +244,11 @@ if this is not the case.
 
 $subhead Restrictions$$
 If $icode VectorSet$$ has elements of $code std::set<size_t>$$,
-then $icode%p%[%i%]%$$ must return a reference (not a copy) to the 
+then $icode%p%[%i%]%$$ must return a reference (not a copy) to the
 corresponding set.
 According to section 26.3.2.3 of the 1998 C++ standard,
 $code std::valarray< std::set<size_t> >$$ does not satisfy
-this condition. 
+this condition.
 
 $head VectorSize$$
 The type $icode VectorSize$$ must be a $cref SimpleVector$$ class with
@@ -259,7 +259,7 @@ if this is not the case.
 
 $head Uses Forward$$
 After each call to $cref Forward$$,
-the object $icode f$$ contains the corresponding 
+the object $icode f$$ contains the corresponding
 $cref/Taylor coefficients/glossary/Taylor Coefficient/$$.
 After a call to any of the sparse Hessian routines,
 the zero order Taylor coefficients correspond to
@@ -273,14 +273,14 @@ $children%
 
 $head Example$$
 The routine
-$cref sparse_hessian.cpp$$ 
+$cref sparse_hessian.cpp$$
 is examples and tests of $code sparse_hessian$$.
 It return $code true$$, if it succeeds and $code false$$ otherwise.
 
 $head Subset Hessian$$
 The routine
-$cref sub_sparse_hes.cpp$$ 
-is examples and test for computing a sparse Hessian 
+$cref sub_sparse_hes.cpp$$
+is examples and test for computing a sparse Hessian
 for a subset of the variables.
 It return $code true$$, if it succeeds and $code false$$ otherwise.
 
@@ -298,7 +298,7 @@ Sparse Hessian driver routine and helper functions.
 */
 // ===========================================================================
 /*!
-class used by SparseHessian to hold information 
+class used by SparseHessian to hold information
 so it does not need to be recomputed.
 */
 class sparse_hessian_work {
@@ -338,7 +338,7 @@ is the base type for the recording that is stored in this ADFun<Base object.
 is a simple vector class with elements of type \a Base.
 
 \tparam VectorSet
-is a simple vector class with elements of type 
+is a simple vector class with elements of type
 \c bool or \c std::set<size_t>.
 
 \tparam VectorSize
@@ -364,15 +364,15 @@ It must have the same size as user_row.
 
 \param hes [out]
 is the vector of Hessian values.
-It must have the same size as user_row. 
-The return value <code>hes[k]</code> is the second partial of 
+It must have the same size as user_row.
+The return value <code>hes[k]</code> is the second partial of
 \f$ w^{\rm T} F(x)\f$ with respect to the
 <code>row[k]</code> and <code>col[k]</code> component of \f$ x\f$.
 
 \param work
 This structure contains information that is computed by \c SparseHessianCompute.
 If the sparsity pattern, \c row vector, or \c col vectors
-are not the same between calls to \c SparseHessianCompute, 
+are not the same between calls to \c SparseHessianCompute,
 \c work.clear() must be called to reinitialize \c work.
 
 \return
@@ -509,7 +509,7 @@ size_t ADFun<Base>::SparseHessianCompute(
 		ddw = Reverse(2, w);
 
 		// set the corresponding components of the result
-		while( k < K && color[ row[ order[k] ] ] == ell ) 
+		while( k < K && color[ row[ order[k] ] ] == ell )
 		{	hes[ order[k] ] = ddw[ col[ order[k] ] * 2 + 1 ];
 			k++;
 		}
@@ -534,7 +534,7 @@ is the base type for the recording that is stored in this ADFun<Base object.
 is a simple vector class with elements of type \a Base.
 
 \tparam VectorSet
-is a simple vector class with elements of type 
+is a simple vector class with elements of type
 \c bool or \c std::set<size_t>.
 
 \tparam VectorSize
@@ -560,15 +560,15 @@ It must have the same size are r.
 
 \param hes [out]
 is the vector of Hessian values.
-It must have the same size are r. 
-The return value <code>hes[k]</code> is the second partial of 
+It must have the same size are r.
+The return value <code>hes[k]</code> is the second partial of
 \f$ w^{\rm T} F(x)\f$ with respect to the
 <code>row[k]</code> and <code>col[k]</code> component of \f$ x\f$.
 
 \param work
 This structure contains information that is computed by \c SparseHessianCompute.
 If the sparsity pattern, \c row vector, or \c col vectors
-are not the same between calls to \c SparseHessian, 
+are not the same between calls to \c SparseHessian,
 \c work.clear() must be called to reinitialize \c work.
 
 \return
@@ -596,11 +596,11 @@ size_t ADFun<Base>::SparseHessian(
 	CPPAD_ASSERT_KNOWN(
 		size_t(x.size()) == n ,
 		"SparseHessian: size of x not equal domain dimension for f."
-	); 
+	);
 	CPPAD_ASSERT_KNOWN(
 		size_t(row.size()) == K && size_t(col.size()) == K ,
 		"SparseHessian: either r or c does not have the same size as ehs."
-	); 
+	);
 	CPPAD_ASSERT_KNOWN(
 		work.color.size() == 0 || work.color.size() == n,
 		"SparseHessian: invalid value in work."
@@ -664,7 +664,7 @@ It must have size equal to the range dimension for this ADFun<Base> object.
 is a sparsity pattern for the Hessian.
 
 \return
-Will be a vector of size \c n * n containing the Hessian of 
+Will be a vector of size \c n * n containing the Hessian of
 at the point specified by \a x
 (where \c n is the domain dimension for this ADFun<Base> object).
 */
@@ -695,7 +695,7 @@ VectorBase ADFun<Base>::SparseHessian(
 	// arguments to SparseHessianCompute
 	Pattern_type          s;
 	CppAD::vector<size_t> row;
-	CppAD::vector<size_t> col; 
+	CppAD::vector<size_t> col;
 	sparse_hessian_work   work;
 	bool transpose = false;
 	sparsity_user2internal(s, p, n, n, transpose);
@@ -748,7 +748,7 @@ The argument \a w specifies the weights for each component.
 It must have size equal to the range dimension for this ADFun<Base> object.
 
 \return
-Will be a vector of size \c n * n containing the Hessian of 
+Will be a vector of size \c n * n containing the Hessian of
 at the point specified by \a x
 (where \c n is the domain dimension for this ADFun<Base> object).
 */
