@@ -117,10 +117,10 @@ else
 fi
 # -----------------------------------------------------------------------
 # Use trunk_dir/../build to build and test CppAD (no reuse)
-echo_eval cd ..
-echo_eval rm -rf build
-echo_eval mkdir build
 echo_eval cd build
+echo_eval rm -rf auto_tools
+echo_eval mkdir auto_tools
+echo_eval cd auto_tools
 #
 # configure cppad to use all the packages above
 if which rpm >& /dev/null 
