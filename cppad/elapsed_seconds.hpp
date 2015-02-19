@@ -6,7 +6,7 @@
 CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-15 Bradley M. Bell
 
 CppAD is distributed under multiple licenses. This distribution is under
-the terms of the 
+the terms of the
                     Eclipse Public License Version 1.0.
 
 A copy of this license is included in the COPYING file of this distribution.
@@ -39,7 +39,7 @@ $list number$$
 If the C++11 $code std::chrono::high_resolution_clock$$ is available,
 it will be used for timing.
 $lnext
-Otherwise, if running under the Microsoft compiler, 
+Otherwise, if running under the Microsoft compiler,
 $code ::GetSystemTime$$ will be used for timing.
 $lnext
 Otherwise, if $code gettimeofday$$ is available, it is used for timing.
@@ -48,12 +48,12 @@ Otherwise, $code std::clock()$$ will be used for timing.
 $lend
 
 $head s$$
-is a $code double$$ equal to the 
+is a $code double$$ equal to the
 number of seconds since the first call to $code elapsed_seconds$$.
 
 $head Microsoft Systems$$
 It you are using $code ::GetSystemTime$$,
-you will need to link in the external routine 
+you will need to link in the external routine
 called $cref microsoft_timer$$.
 
 $children%
@@ -68,8 +68,8 @@ $end
 -----------------------------------------------------------------------
 */
 
-// For some unknown reason under Fedora (which needs to be understood), 
-// if you move this include for cppad_assert.hpp below include for define.hpp, 
+// For some unknown reason under Fedora (which needs to be understood),
+// if you move this include for cppad_assert.hpp below include for define.hpp,
 //		cd work/speed/example
 //		make test.sh
 // fails with the error message 'gettimeofday' not defined.
@@ -85,7 +85,7 @@ $end
 # include <chrono>
 # elif _MSC_VER
 extern double microsoft_timer(void);
-# elif CPPAD_HAS_GETTIMEOFDAY 
+# elif CPPAD_HAS_GETTIMEOFDAY
 # include <sys/time.h>
 # else
 # include <ctime>
@@ -126,16 +126,16 @@ inline double elapsed_seconds(void)
 	std::chrono::time_point<std::chrono::high_resolution_clock> now;
     now   = std::chrono::high_resolution_clock::now();
     std::chrono::duration<double> difference = now - start_;
-	return difference.count(); 
+	return difference.count();
 }
 // --------------------------------------------------------------------------
 # elif _MSC_VER
 {	return microsoft_timer(); }
 // --------------------------------------------------------------------------
-# elif CPPAD_HAS_GETTIMEOFDAY 
+# elif CPPAD_HAS_GETTIMEOFDAY
 {	CPPAD_ASSERT_FIRST_CALL_NOT_PARALLEL;
 	static bool           first_ = true;
-	static struct timeval tv_;		
+	static struct timeval tv_;
 	struct timeval        tv;
 	if( first_ )
 	{	gettimeofday(&tv_, CPPAD_NULL);
@@ -168,7 +168,7 @@ inline double elapsed_seconds(void)
 
 	return diff;
 }
-# endif 
+# endif
 // --------------------------------------------------------------------------
 } // END_CPPAD_NAMESPACE
 # endif

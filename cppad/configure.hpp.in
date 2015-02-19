@@ -65,7 +65,7 @@ C++11: Does compiler support the types uint_8, uint_16, uint_32, and uint_64
 # if __cplusplus >= 201100
 /*!
 \def CPPAD_COMPILER_HAS_ERF
-C++11: Does compiler support std::erf(double) 
+C++11: Does compiler support std::erf(double)
 */
 # define CPPAD_COMPILER_HAS_ERF @cppad_compiler_has_erf@
 # endif

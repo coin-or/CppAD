@@ -6,7 +6,7 @@
 CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-15 Bradley M. Bell
 
 CppAD is distributed under multiple licenses. This distribution is under
-the terms of the 
+the terms of the
                     Eclipse Public License Version 1.0.
 
 A copy of this license is included in the COPYING file of this distribution.
@@ -56,7 +56,7 @@ Preprecessor definitions that presist after cppad/cppad.hpp is included:
 # undef CPPAD_IMPLICIT_CTOR_FROM_ANY_TYPE
 -----------------------------------------------------------------------------
 */
-// Preprecessor definitions that do not presist 
+// Preprecessor definitions that do not presist
 # undef CPPAD_ASSERT_NARG_NRES
 # undef CPPAD_ASSERT_NOT_PARALLEL
 # undef CPPAD_ASSERT_ARG_BEFORE_RESULT
