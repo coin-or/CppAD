@@ -3,7 +3,7 @@
 # define CPPAD_UNDEF_INCLUDED
 
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-14 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-15 Bradley M. Bell
 
 CppAD is distributed under multiple licenses. This distribution is under
 the terms of the 
@@ -27,7 +27,7 @@ Preprecessor definitions that presist after cppad/cppad.hpp is included:
 # undef CPPAD_BOOL_UNARY          in user api
 # undef CPPAD_DISCRETE_FUNCTION   in user api
 # undef CPPAD_EIGENVECTOR         in user api
-# undef CPPAD_COMPILER_HAS_ERF  in user api
+# undef CPPAD_COMPILER_HAS_ERF    in user api
 # undef CPPAD_INTERNAL_SPARSE_SET in user api
 # undef CPPAD_MAX_NUM_THREADS     in user api
 # undef CPPAD_NULL                in user api
@@ -72,6 +72,7 @@ Preprecessor definitions that presist after cppad/cppad.hpp is included:
 # undef CPPAD_HAS_COLPACK
 # undef CPPAD_HAS_CSTDINT_8_TO_64
 # undef CPPAD_HAS_RVALUE
+# undef CPPAD_HAS_HIGH_RESOLUTION_CLOCK
 # undef CPPAD_HAS_GETTIMEOFDAY
 # undef CPPAD_HAS_NULLPTR
 # undef CPPAD_INLINE_FRIEND_TEMPLATE_FUNCTION

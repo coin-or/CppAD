@@ -34,6 +34,7 @@ $spell
 	erf
 	var
 	NumRes
+	chrono
 $$
 
 $section CppAD Changes and Additions During 2015$$
@@ -43,6 +44,11 @@ This section contains a list of the changes to CppAD during 2015
 (in reverse order by date).
 The purpose of this section is to
 assist you in learning about changes between various versions of CppAD.
+
+$head 02-18$$
+If the compiler supports the c++11 feature
+$code std::chrono:high_resolution_clock$$ then use it for
+the $cref elapsed_seconds$$ function.
 
 $head 02-16$$
 The new example $cref sub_sparse_hes.cpp$$ shows one way to

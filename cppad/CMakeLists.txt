@@ -1,6 +1,6 @@
 # $Id:$
 # -----------------------------------------------------------------------------
-# CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-14 Bradley M. Bell
+# CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-15 Bradley M. Bell
 #
 # CppAD is distributed under multiple licenses. This distribution is under
 # the terms of the 
@@ -105,6 +105,8 @@ IF( cppad_eigenvector )
 	ENDIF( NOT eigen_prefix )
 ENDIF( cppad_eigenvector )
 
+# =============================================================================
+# Begin C++11 features
 # -----------------------------------------------------------------------------
 # cppad_has_rvalue
 #
@@ -127,31 +129,6 @@ int main(void)
 }"
 )
 check_source_runs("${source}" cppad_has_nullptr)
-# -----------------------------------------------------------------------------
-# cppad_has_gettimeofday
-#
-SET(source "
-# include<sys/time.h>
-int main(void)
-{	struct timeval time;
-	gettimeofday(&time, 0);
-	return 0;
-}"
-)
-check_source_runs("${source}" cppad_has_gettimeofday)
-# -----------------------------------------------------------------------------
-# cppad_size_t_not_unsigned_int
-#
-SET(source "
-# include <cstring>
-template <class T> inline bool is_pod(void)               { return false; }
-template <>        inline bool is_pod<unsigned int>(void) { return true;  }  
-template <>        inline bool is_pod<size_t>(void)       { return true;  }  
-int main(void)
-{	return 0; }
-"
-)
-check_source_runs("${source}" cppad_size_t_not_unsigned_int)
 # -----------------------------------------------------------------------------
 # cppad_has_cstdint_8_to_64
 #
@@ -180,6 +157,51 @@ int main(void)
 "
 )
 check_source_runs("${source}" cppad_compiler_has_erf)
+# -----------------------------------------------------------------------------
+# cppad_has_high_resolution_clock
+#
+SET(source "
+# include <chrono>
+int main(void)
+{	std::chrono::time_point<std::chrono::high_resolution_clock> start, end;
+    start = std::chrono::high_resolution_clock::now();
+    end   = std::chrono::high_resolution_clock::now();
+    std::chrono::duration<double> difference = end - start;
+	double elapsed_seconds = difference.count();
+	if( elapsed_seconds > 0.0 )
+		return 0;
+	return 1; 
+}
+"
+)
+check_source_runs("${source}" cppad_has_high_resolution_clock)
+# =============================================================================
+# End C++11 features
+# -----------------------------------------------------------------------------
+# cppad_has_gettimeofday
+#
+SET(source "
+# include<sys/time.h>
+int main(void)
+{	struct timeval time;
+	gettimeofday(&time, 0);
+	return 0;
+}"
+)
+check_source_runs("${source}" cppad_has_gettimeofday)
+# -----------------------------------------------------------------------------
+# cppad_size_t_not_unsigned_int
+#
+SET(source "
+# include <cstring>
+template <class T> inline bool is_pod(void)               { return false; }
+template <>        inline bool is_pod<unsigned int>(void) { return true;  }  
+template <>        inline bool is_pod<size_t>(void)       { return true;  }  
+int main(void)
+{	return 0; }
+"
+)
+check_source_runs("${source}" cppad_size_t_not_unsigned_int)
 # -----------------------------------------------------------------------------
 # cppad_tape_addr_type, cppad_tape_id_type
 #
