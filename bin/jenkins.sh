@@ -21,7 +21,7 @@ then
 	echo 'where redo_external is one of: build, install, none'
 	echo
 	echo 'build:   download build and install all the externals'
-	echo 'install: reused as much of previous build as possible'
+	echo 'install: reuse as much of previous build as possible'
 	echo 'none:    uses the previous install (fastest option)'
 	exit 1
 fi

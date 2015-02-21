@@ -69,9 +69,10 @@ web_page="http://trilinos.org/oldsite/download/files"
 prefix=`pwd`'/build/prefix'
 # -----------------------------------------------------------------------------
 # determine which version of cmake to use
-cmake --version |  sed \
+cmake --version |  sed -n \
 		-e 's|[^0-9]*|.|g ' \
 		-e 's|\.\([0-9]*\)\.\([0-9]*\).*|\1 * 10 + \2|' \
+		-e '1,1p' \
 	| bc > get_sacado.$$
 cmake_version=`cat get_sacado.$$`
 rm get_sacado.$$
