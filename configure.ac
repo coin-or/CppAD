@@ -751,9 +751,9 @@ else
 	cppad_pkgconfig_libs_value="$cppad_pkgconfig_libs_value -lcppad_ipopt"
 	cppad_pkgconfig_requires_value="ipopt"
 fi
-AC_SUBST(cppad_pkgconfig_cflags,   "$cppad_pkgconfig_cflags_value")
-AC_SUBST(cppad_pkgconfig_libs,     "$cppad_pkgconfig_libs_value")
-AC_SUBST(cppad_pkgconfig_requires, "$cppad_pkgconfig_requires_value")
+AC_SUBST(cppad_cflags,   "$cppad_pkgconfig_cflags_value")
+AC_SUBST(cppad_libs,     "$cppad_pkgconfig_libs_value")
+AC_SUBST(cppad_requires, "$cppad_pkgconfig_requires_value")
 dnl
 dnl names set here so cppad.pc-uninstalled works both with cmake and autoconf
 AC_SUBST(cppad_SOURCE_DIR,  ${ABS_TOP_SRCDIR} )
