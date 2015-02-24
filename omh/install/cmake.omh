@@ -243,6 +243,8 @@ If it is not specified, the documentation files are not installed.
 $head package_prefix$$
 $index package, prefix$$
 $index prefix, package$$
+Each of these packages corresponds to optional CppAD examples,
+that can be compiled and tested if the corresponding prefix is provided:
 $table
 $rref adolc_prefix$$
 $rref colpack_prefix$$
