@@ -41,7 +41,12 @@ then
 else
 	cxxflags='-g -Wall -ansi -pedantic-errors -Wshadow'
 fi
-cmd="g++ test_one.cpp $*
+cmd="g++ test_one.cpp $*"
+if [ -e @colpack_prefix@/include ]
+then
+	cmd="$cmd ../cppad/local/cppad_colpack.cpp"
+fi
+cmd="$cmd
 	-o test_one.exe
 	$cxxflags
 	-std=c++11
