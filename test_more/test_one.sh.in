@@ -1,10 +1,10 @@
 #! /bin/bash -e
 # $Id$
 # -----------------------------------------------------------------------------
-# CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-14 Bradley M. Bell
+# CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-15 Bradley M. Bell
 #
 # CppAD is distributed under multiple licenses. This distribution is under
-# the terms of the 
+# the terms of the
 #                     Eclipse Public License Version 1.0.
 #
 # A copy of this license is included in the COPYING file of this distribution.
@@ -32,7 +32,7 @@ then
 fi
 sed < test_more.cpp > test_one.cpp \
 -e '/ok *\&= *Run( /d' \
--e "s/.*This line is used by test_one.sh.*/	ok \&= Run( $fun, \"$fun\");/"  
+-e "s/.*This line is used by test_one.sh.*/	ok \&= Run( $fun, \"$fun\");/"
 #
 #
 if echo "$fun" | grep 'eigen' > /dev/null
@@ -54,7 +54,7 @@ cmd="$cmd
 	-DCPPAD_OPENMP_TEST
 	-DCPPAD_MAX_NUM_THREADS=1
 	@OPENMP_FLAGS@
-	-I.. 
+	-I..
 "
 if [ -e @adolc_prefix@/include ]
 then
@@ -83,7 +83,7 @@ do
 	if [ -e @ipopt_prefix@/$lib/pkgconfig ]
 	then
 		export PKG_CONFIG_PATH="@ipopt_prefix@/$lib/pkgconfig"
-		cflags=`pkg-config --cflags ipopt | 
+		cflags=`pkg-config --cflags ipopt |
 			sed -e 's|/coin$|/|' -e 's|/coin | |'`
 		libs=`pkg-config --libs ipopt`
 		cmd="$cmd $cflags $libs"
