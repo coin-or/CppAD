@@ -1,9 +1,9 @@
 /* $Id$ */
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-14 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-15 Bradley M. Bell
 
 CppAD is distributed under multiple licenses. This distribution is under
-the terms of the 
+the terms of the
                     Eclipse Public License Version 1.0.
 
 A copy of this license is included in the COPYING file of this distribution.
@@ -29,7 +29,7 @@ $index colpack, sparsity$$
 $index sparsity, colpack$$
 
 $head Purpose$$
-If you specify a $icode colpack_prefix$$ on the 
+If you specify a $icode colpack_prefix$$ on the
 $cref/cmake command/cmake/CMake Command/$$ line,
 the CppAD $cref sparse_jacobian$$ calculations use the
 $href%http://cscapes.cs.purdue.edu/dox/ColPack/html%ColPack%$$ package.
@@ -37,7 +37,7 @@ $href%http://cscapes.cs.purdue.edu/dox/ColPack/html%ColPack%$$ package.
 $head colpack_prefix$$
 $index colpack, prefix$$
 $index prefix, colpack$$
-If ColPack is installed on your system, you can 
+If ColPack is installed on your system, you can
 specify a value for its install $icode colpack_prefix$$ on the
 $cref cmake$$ command line.
 The value of $icode colpack_prefix$$ must be such that,
@@ -54,13 +54,13 @@ The ColPack header files has a
 $codei%
 	using namespace std
 %$$
-at the global level. 
+at the global level.
 For this reason, CppAD does not include these files.
 It is therefore necessary to compile and link the short file
 $codei%
 	%prefix%/%dir%/cppad/cppad_colpack.cpp
 %$$
-where $icode dir$$ is the 
+where $icode dir$$ is the
 $cref/cmake_install_datadir/cmake/cmake_install_datadir/$$ and
 where $icode prefix$$ is such that $code cppad.hpp$$ was installed in
 $codei%
@@ -75,7 +75,7 @@ $children%example/colpack_jac.cpp
 %$$
 $head Example$$
 The file $cref colpack_jac.cpp$$ ($cref colpack_hes.cpp$$)
-contains an example and test of using ColPack to compute the coloring for 
+contains an example and test of using ColPack to compute the coloring for
 sparse Jacobians (Hessians).
 It returns true, if it succeeds and false otherwise.
 
