@@ -4,7 +4,7 @@
 # CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-13 Bradley M. Bell
 #
 # CppAD is distributed under multiple licenses. This distribution is under
-# the terms of the 
+# the terms of the
 #                     Eclipse Public License Version 1.0.
 #
 # A copy of this license is included in the COPYING file of this distribution.
@@ -17,7 +17,7 @@ Bug report corresponding to:
 This program exits with the following assertion:
 	Error detected by false result for
 		IdenticalPar(left)
-	at line 126 in the file 
+	at line 126 in the file
 		../../cppad/local/cskip_op.hpp
 EOF
 cat << EOF > bug.$$
@@ -32,7 +32,7 @@ int main(void) {
 	std::vector<double> x{0, 1};
 
 	/**
-	* First tape 
+	* First tape
 	* (using AD<AD<double> >)
 	*/
 	std::vector<a2double> a2x(x.size());
