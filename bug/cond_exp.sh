@@ -14,7 +14,7 @@ cat << EOF
 Bug report corresponding to:
 	https://github.com/coin-or/CppAD/issues/7
 
-This program files with the following assertion:
+This program exits with the following assertion:
 	Error detected by false result for
 		IdenticalPar(left)
 	at line 126 in the file 
@@ -45,9 +45,10 @@ int main(void) {
 	a2double a = a2x[0] * a2x[1];
 	a2y[0] = CondExpEq(a2x[0], a2double(1.0), a, a2double(0.0));
 
-	// create f: X -> Y 
-	ADFun<adouble> f1(a2x, a2y);
-	f1.optimize();
+	// af(x) = x_0 * x_1 if x[0] == 1
+	//         0.0       otherwise
+	ADFun<adouble> af(a2x, a2y);
+	af.optimize();
 
 	/**
 	* Second tape
@@ -56,16 +57,18 @@ int main(void) {
 	std::vector<adouble> ax{adouble(1), adouble(0)};
 	Independent(ax);
 
-	std::vector<adouble> ay = f1.Forward(0, ax);
+	std::vector<adouble> ay = af.Forward(0, ax);
 
-	CppAD::ADFun<double> f2(ax, ay);
+	// f(x) = x_0 * x_1 if x[0] == 1
+	//        0.0       otherwise
+	CppAD::ADFun<double> f(ax, ay);
 
 	/**
 	* Use second tape
 	*/
 	x = {1, 0.5};
 
-	std::vector<double> y = f2.Forward(0, x);
+	std::vector<double> y = f.Forward(0, x);
 
 	//std::cout << y[0] << std::endl;
 	assert(std::abs(y[0] - x[0] * x[1]) < 1e-10);
