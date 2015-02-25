@@ -3,7 +3,7 @@
 # define CPPAD_BASE_REQUIRE_INCLUDED
 
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-13 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-15 Bradley M. Bell
 
 CppAD is distributed under multiple licenses. This distribution is under
 the terms of the 
@@ -130,12 +130,12 @@ $cref/base_float/base_float.hpp/Integer/$$ and
 $cref/base_alloc/base_alloc.hpp/Integer/$$.
 
 $childtable%
-	omh/base_member.omh%
+	omh/base_require/base_member.omh%
 	cppad/local/base_cond_exp.hpp%
-	omh/base_identical.omh%
-	omh/base_ordered.omh%
+	omh/base_require/base_identical.omh%
+	omh/base_require/base_ordered.omh%
 	cppad/local/base_std_math.hpp%
-	omh/base_example.omh
+	omh/base_require/base_example.omh
 %$$
 
 $end
