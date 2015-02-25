@@ -3,7 +3,7 @@
 CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-15 Bradley M. Bell
 
 CppAD is distributed under multiple licenses. This distribution is under
-the terms of the 
+the terms of the
                     Eclipse Public License Version 1.0.
 
 A copy of this license is included in the COPYING file of this distribution.
@@ -29,13 +29,13 @@ $head EqualOpSeq$$
 $index EqualOpSeq, base require$$
 $index base, EqualOpSeq require$$
 $index require, base EqualOpSeq$$
-If function $cref EqualOpSeq$$ is used with 
+If function $cref EqualOpSeq$$ is used with
 arguments of type $codei%AD<%Base%>%$$,
 the type $icode Base$$ must support the syntax
 $codei%
 	%b% = CppAD::EqualOpSeq(%u%, %v%)
 %$$
-This should return true if and only if 
+This should return true if and only if
 $icode u$$ is identically equal to $icode v$$
 and it makes no different which one is used.
 The arguments $icode u$$ and $icode v$$ have prototype
@@ -68,7 +68,7 @@ The type $icode Base$$ is $codei%AD<double>%$$,
 $icode x[0] = x[1] = 1.$$,
 then $cref independent$$ is used to make $icode x$$ the independent
 variable vector,
-and then $icode u = x[0]$$, $icode v = x[1]$$, 
+and then $icode u = x[0]$$, $icode v = x[1]$$,
 Note that during a future $cref Forward$$ calculation,
 $icode u$$ and $icode v$$ could correspond to different values.
 For example, see
@@ -80,7 +80,7 @@ $index base, identical require$$
 $index require, base identical$$
 
 $subhead IdenticalPar$$
-A $icode Base$$ is a $cref/parameter/glossary/Parameter/$$ 
+A $icode Base$$ is a $cref/parameter/glossary/Parameter/$$
 when used in an $codei%AD<%Base%>%$$ operation sequence.
 It is however still possible for a parameter to change its value.
 For example,
@@ -116,7 +116,7 @@ $table
 $bold Syntax$$ $cnext $bold Result$$
 $rnext
 $icode%b% = IdenticalPar(%u%)%$$ $pre  $$
-	$cnext the $icode Base$$ value will always be the same 
+	$cnext the $icode Base$$ value will always be the same
 $rnext
 $icode%b% = IdenticalZero(%u%)%$$ $pre  $$
 	$cnext $icode u$$ equals zero and $codei%IdenticalPar(%u%)%$$
@@ -131,7 +131,7 @@ $icode%b% = IdenticalEqualPar(%u%, %v%)%$$ $pre  $$
 $tend
 
 $subhead Examples$$
-See 
+See
 $cref/base_alloc/base_alloc.hpp/Identical/$$.
 
 $end

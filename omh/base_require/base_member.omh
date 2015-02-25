@@ -3,7 +3,7 @@
 CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-15 Bradley M. Bell
 
 CppAD is distributed under multiple licenses. This distribution is under
-the terms of the 
+the terms of the
                     Eclipse Public License Version 1.0.
 
 A copy of this license is included in the COPYING file of this distribution.
@@ -24,7 +24,7 @@ $section Required Base Class Member Functions$$
 $head Notation$$
 $table
 $bold Symbol$$ $cnext $bold Meaning$$ $rnext
-$icode Base$$  $cnext 
+$icode Base$$  $cnext
 	The base type corresponding to $codei%AD<%Base%>%$$
 $rnext
 $icode b$$     $cnext
@@ -60,7 +60,7 @@ $code -$$
 the following operation must be supported:
 $codei%
 	%z% = %op% %x%$$
- 
+
 $head Assignment Operators$$
 For $icode op$$ equal to
 $icode =$$,
@@ -70,7 +70,7 @@ $code *=$$, and
 $code /=$$ the following operation must be supported:
 $codei%
 	%z% %op% %x%$$
- 
+
 $head Binary Operators$$
 For $icode op$$ equal to
 $code +$$,
@@ -79,7 +79,7 @@ $code *$$, and
 $code /$$ the following operation must be supported:
 $codei%
 	%z% = %x% %op% %y%$$
- 
+
 $head Bool Operators$$
 For $icode op$$ equal to
 $code ==$$,
@@ -91,6 +91,6 @@ $codei%
 
 $head Example$$
 See the heading Class Definition in
-$cref/base_alloc/base_alloc.hpp/Class Definition/$$. 
+$cref/base_alloc/base_alloc.hpp/Class Definition/$$.
 
 $end

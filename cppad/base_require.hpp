@@ -6,7 +6,7 @@
 CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-15 Bradley M. Bell
 
 CppAD is distributed under multiple licenses. This distribution is under
-the terms of the 
+the terms of the
                     Eclipse Public License Version 1.0.
 
 A copy of this license is included in the COPYING file of this distribution.
@@ -40,7 +40,7 @@ $spell
 	Lt
 	Le
 	Eq
-	Ge 
+	Ge
 	Gt
 	inline
 	Op
@@ -66,10 +66,10 @@ This section lists the requirements that the type
 $icode Base$$ so that the type $codei%AD<%Base%>%$$ can be used.
 
 $subhead Standard Base Types$$
-In the case where $icode Base$$ is 
-$code float$$, 
+In the case where $icode Base$$ is
+$code float$$,
 $code double$$,
-$code std::complex<float>$$, 
+$code std::complex<float>$$,
 $code std::complex<double>$$,
 or $codei%AD<%Other%>%$$,
 these requirements are provided by including the file
@@ -78,11 +78,11 @@ $code cppad/cppad.hpp$$.
 $head Include Order$$
 If you are linking a non-standard base type to CppAD,
 you must first include the file $code cppad/base_require.hpp$$,
-then provide the specifications below, 
+then provide the specifications below,
 and then include the file $code cppad/cppad.hpp$$.
 
 $head Numeric Type$$
-The type $icode Base$$ must support all the operations for a 
+The type $icode Base$$ must support all the operations for a
 $cref NumericType$$.
 
 $head Output Operator$$
@@ -95,7 +95,7 @@ $codei%
 %$$
 where $icode os$$ is an $code std::ostream&$$
 and $icode x$$ is a $code const base_alloc&$$.
-For example, see 
+For example, see
 $cref/base_alloc/base_alloc.hpp/Output Operator/$$.
 
 $head Integer$$
