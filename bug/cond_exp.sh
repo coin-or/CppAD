@@ -11,16 +11,28 @@
 # Please visit http://www.coin-or.org/CppAD/ for information on other licenses.
 # -----------------------------------------------------------------------------
 cat << EOF
-Bug report corresponding to:
+The two programs below corresponding to:
 	https://github.com/coin-or/CppAD/issues/7
+	https://github.com/coin-or/CppAD/issues/8
 
-This program exits with the following assertion:
+The first program exits with the following assertion:
 	Error detected by false result for
 		IdenticalPar(left)
 	at line 126 in the file
 		../../cppad/local/cskip_op.hpp
+
+The second program exists with the following assertion:
+	cppad-20141230 error from a known source:
+	dw = f.Reverse(q, w): has a nan,
+	but none of its Taylor coefficents are nan.
+	Error detected by false result for
+		! ( hasnan(value) && check_for_nan_ )
+	at line 202 in the file
+		../../cppad/local/reverse.hpp
+which sould not be the case
+
 EOF
-cat << EOF > bug.$$
+cat << EOF > bug_1.cpp
 #include <iostream>
 #include <cppad/cppad.hpp>
 int main(void) {
@@ -75,6 +87,32 @@ int main(void) {
 
 }
 EOF
+cat << EOF > bug_2.cpp
+#include <cppad/cppad.hpp>
+using namespace CppAD;
+
+int main(void) {
+    std::vector<AD<double>> X(2);
+    X[0] = 1.;
+    X[1] = 1.;
+    Independent(X);
+
+    std::vector<AD<double>> Y(1);
+    // Y[0] = X[1] > 1.0 ? X[0] / X[1] : 0;
+    Y[0] = CondExpGt(X[1], AD<double>(1.0), X[0] / X[1], AD<double>(0.0));
+
+    ADFun<double> fun(X, Y);
+    std::vector<double> u(2);
+    u[0] = 1.;
+    u[1] = 0.;
+    std::vector<double> J(2);
+    J = fun.Jacobian(u);
+    assert(J[0] == 0.0);
+    assert(J[1] == 0.0);
+
+    return 0;
+}
+EOF
 # -----------------------------------------------------------------------------
 if [ ! -e build ]
 then
@@ -83,14 +121,24 @@ fi
 cd build
 echo "$0"
 name=`echo $0 | sed -e 's|.*/||' -e 's|\..*||'`
-mv ../bug.$$ $name.cpp
-echo "g++ -I../.. --std=c++11 -g $name.cpp -o $name"
-g++ -I../.. --std=c++11 -g $name.cpp -o $name
-#
-echo "./$name"
-if ./$name
+ok='ture'
+for number in 1 2
+do
+	mv ../bug_$number.cpp ${name}_$number.cpp
+	#
+	echo "g++ -I../.. --std=c++11 -g ${name}_$number.cpp -o ${name}_$number"
+	g++ -I../.. --std=c++11 -g ${name}_$number.cpp -o ${name}_$number
+	#
+	echo "./${name}_$number"
+	if ! ./${name}_$number
+	then
+		ok='false'
+	fi
+	echo
+done
+if [ "$ok" == 'true' ]
 then
-    echo "OK"
+	echo "OK"
 else
-    echo "Error"
+	echo "Error"
 fi
