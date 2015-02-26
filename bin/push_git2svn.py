@@ -16,6 +16,7 @@ import sys
 import os
 import re
 import subprocess
+import pdb
 # -----------------------------------------------------------------------------
 # command line arguments
 usage = '\tbin/push_git2svn.py svn_branch_path\n'
@@ -71,6 +72,15 @@ def print_system(cmd) :
 		msg += '\nbin/push_git2svn.py exiting because command above failed'
 		sys.exit(msg)
 	return output
+
+id_pattern    = re.compile(r'^.*\$Id.*$',      re.MULTILINE)
+white_pattern = re.compile(r'[ \t]+$',         re.MULTILINE)
+date_pattern  = re.compile(r'2003-[0-9][0-9]', re.MULTILINE)
+def ignore_data(data) :
+	data = re.sub(id_pattern,    '', data)
+	data = re.sub(white_pattern, '', data)
+	data = re.sub(date_pattern,  '', data)
+	return data
 # -----------------------------------------------------------------------------
 # determine git_branch_name
 if svn_branch_path == 'trunk' :
@@ -151,10 +161,14 @@ print_system(cmd)
 # list of files for the svn and git directories
 svn_pattern = re.compile(svn_directory + '/')
 svn_file_list = []
+svn_dir_list  = []
 for directory, dir_list, file_list in os.walk(svn_directory) :
 	ok = ( directory.find('/.svn/') == -1 )
 	ok = ok and ( not directory.endswith('/.svn') )
 	if ok :
+		if directory != svn_directory :
+			local_name = re.sub(svn_pattern, '', directory)
+			svn_dir_list.append(local_name)
 		for name in file_list :
 			local_name = directory + '/' + name
 			local_name = re.sub(svn_pattern, '', local_name)
@@ -162,47 +176,67 @@ for directory, dir_list, file_list in os.walk(svn_directory) :
 #
 git_pattern = re.compile(git_directory + '/')
 git_file_list = []
+git_dir_list  = []
 for directory, dir_list, file_list in os.walk(git_directory) :
 	index =  directory.find('/.svn/')
 	assert index == -1
+	if directory != git_directory :
+		local_name = re.sub(git_pattern, '', directory)
+		git_dir_list.append(local_name)
 	for name in file_list :
 		local_name = directory + '/' + name
 		local_name = re.sub(git_pattern, '', local_name)
 		git_file_list.append( local_name )
 # -----------------------------------------------------------------------------
 # list of files that have been created and deleted
-created_list=[]
+created_file_list=[]
 for name in git_file_list :
 	if not name in svn_file_list :
-		created_list.append(name)
+		created_file_list.append(name)
 #
-deleted_list=[]
+deleted_file_list=[]
 for name in svn_file_list :
 	if not name in git_file_list :
-		deleted_list.append(name)
-
+		deleted_file_list.append(name)
+# -----------------------------------------------------------------------------
+# list of directories that have been created and deleted
+created_dir_list=[]
+for name in git_dir_list :
+	if not name in svn_dir_list :
+		created_dir_list.append(name)
+#
+deleted_dir_list=[]
+for name in svn_dir_list :
+	if not name in git_dir_list :
+		deleted_dir_list.append(name)
 # -----------------------------------------------------------------------------
 # automated svn commands
-id_pattern = re.compile(r'^.*\$Id.*$', re.MULTILINE)
 #
-for git_file in created_list :
+for git_dir in created_dir_list :
+	cmd  = 'svn mkdir ' + svn_directory + '/' + git_dir
+	print_system(cmd)
+#
+for git_file in created_file_list :
 	git_f     = open(git_directory + '/' + git_file, 'rb')
 	git_data  = git_f.read()
 	git_f.close()
-	git_data  = re.sub(id_pattern, '', git_data)
+	git_data  = ignore_data(git_data)
 	#
 	found = False
-	for svn_file in deleted_list :
+	for svn_file in deleted_file_list :
 		svn_f    = open(svn_directory + '/' + svn_file, 'rb')
 		svn_data = svn_f.read()
 		svn_f.close()
-		svn_data = re.sub(id_pattern, '', svn_data)
+		svn_data = ignore_data(svn_data)
 		#
 		if svn_data == git_data :
 			assert not found
 			cmd  = 'svn copy ' + svn_directory + '/' + svn_file + ' \\\n\t'
 			cmd += svn_directory + '/' + git_file
 			print_system(cmd)
+			cmd  = 'cp ' + git_directory + '/' + git_file + ' \\\n\t'
+			cmd += svn_directory + '/' + git_file 
+			system(cmd)
 			found = True
 	if not found :
 			cmd  = 'cp ' + git_directory + '/' + git_file + ' \\\n\t'
@@ -211,7 +245,7 @@ for git_file in created_list :
 			cmd  = 'svn add ' + svn_directory + '/' + git_file
 			print_system(cmd)
 #
-for svn_file in deleted_list :
+for svn_file in deleted_file_list :
 	svn_file_path = svn_directory + '/' + svn_file
 	if os.path.isfile(svn_file_path) :
 		cmd = 'svn delete --force ' + svn_file_path
@@ -219,23 +253,27 @@ for svn_file in deleted_list :
 #
 for git_file in git_file_list :
 	do_cp = True
-	do_cp = do_cp and git_file not in created_list
+	do_cp = do_cp and git_file not in created_file_list
 	if git_file in svn_file_list :
 		git_f     = open(git_directory + '/' + git_file, 'rb')
 		git_data  = git_f.read()
 		git_f.close()
-		git_data  = re.sub(id_pattern, '', git_data)
+		git_data  = ignore_data(git_data)
 		#
 		svn_f    = open(svn_directory + '/' + git_file, 'rb')
 		svn_data = svn_f.read()
 		svn_f.close()
-		svn_data = re.sub(id_pattern, '', svn_data)
+		svn_data = ignore_data(svn_data)
 		#
 		do_cp = do_cp and git_data != svn_data
 	if do_cp :
 		cmd  = 'cp ' + git_directory + '/' + git_file + ' \\\n\t'
 		cmd += svn_directory + '/' + git_file 
 		system(cmd)
+#
+for svn_dir in deleted_dir_list :
+	cmd  = 'svn rm ' + svn_directory + '/' + svn_dir
+	print_system(cmd)
 # -----------------------------------------------------------------------------
 data  = 'merge to branch: ' + svn_branch_path + '\n'
 data += 'from repository: ' + git_repository + '\n'
