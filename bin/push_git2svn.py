@@ -4,7 +4,7 @@
 # CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-15 Bradley M. Bell
 #
 # CppAD is distributed under multiple licenses. This distribution is under
-# the terms of the 
+# the terms of the
 #                     Eclipse Public License Version 1.0.
 #
 # A copy of this license is included in the COPYING file of this distribution.
@@ -94,7 +94,7 @@ else :
 	git_branch_path = 'branches/' + svn_branch_path
 # -----------------------------------------------------------------------------
 # hash code for the git branch
-cmd = 'git show-ref origin/' + git_branch_name 
+cmd = 'git show-ref origin/' + git_branch_name
 git_hash_code = system(cmd)
 pattern       = ' refs/remotes/origin/' + git_branch_name
 git_hash_code = git_hash_code.replace(pattern, '')
@@ -106,7 +106,7 @@ if not os.path.isdir(work_directory) :
 # checkout svn version of directory
 svn_directory = work_directory + '/svn'
 if os.path.isdir(svn_directory) :
-	question    = 'Use existing svn directory:\n\t' 
+	question    = 'Use existing svn directory:\n\t'
 	question   +=  svn_directory + '\n'
 	question   += 'or remove it and check out a new copy ? [use/new] '
 	choice_list = [ 'use' , 'new' ]
@@ -235,12 +235,12 @@ for git_file in created_file_list :
 			cmd += svn_directory + '/' + git_file
 			print_system(cmd)
 			cmd  = 'cp ' + git_directory + '/' + git_file + ' \\\n\t'
-			cmd += svn_directory + '/' + git_file 
+			cmd += svn_directory + '/' + git_file
 			system(cmd)
 			found = True
 	if not found :
 			cmd  = 'cp ' + git_directory + '/' + git_file + ' \\\n\t'
-			cmd += svn_directory + '/' + git_file 
+			cmd += svn_directory + '/' + git_file
 			system(cmd)
 			cmd  = 'svn add ' + svn_directory + '/' + git_file
 			print_system(cmd)
@@ -268,7 +268,7 @@ for git_file in git_file_list :
 		do_cp = do_cp and git_data != svn_data
 	if do_cp :
 		cmd  = 'cp ' + git_directory + '/' + git_file + ' \\\n\t'
-		cmd += svn_directory + '/' + git_file 
+		cmd += svn_directory + '/' + git_file
 		system(cmd)
 #
 for svn_dir in deleted_dir_list :
