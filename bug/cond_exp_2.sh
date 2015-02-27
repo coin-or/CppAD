@@ -4,27 +4,49 @@
 # CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-13 Bradley M. Bell
 #
 # CppAD is distributed under multiple licenses. This distribution is under
-# the terms of the 
+# the terms of the
 #                     Eclipse Public License Version 1.0.
 #
 # A copy of this license is included in the COPYING file of this distribution.
 # Please visit http://www.coin-or.org/CppAD/ for information on other licenses.
 # -----------------------------------------------------------------------------
 cat << EOF
-Description
+This program corresponds to:
+	https://github.com/coin-or/CppAD/issues/8
+it exits with the following assertion
+	dw = f.Reverse(q, w): has a nan,
+	but none of its Taylor coefficents are nan.
+	Error detected by false result for
+		! ( hasnan(value) && check_for_nan_ )
+	at line 202 in the file
+		../../cppad/local/reverse.hpp
+which sould not be the case
 EOF
 cat << EOF > bug.$$
-# include <iostream>
-int main(void)
-{	// C++ source code 
-	using std::cout;
+#include <cppad/cppad.hpp>
+using namespace CppAD;
 
-	cout << "1. copy template.sh to <name>.sh\n";
-	cout << "2. Edit <name>.sh replacing description and C++ source code\n"; 
-	cout << "3. Run ./<name>.sh\n";
-	cout << "where <name> is a name that describes the bug\n";
-	
-	return 0;
+int main(void) {
+    std::vector< AD<double> > ax(2);
+    ax[0] = 1.;
+    ax[1] = 1.;
+    Independent(ax);
+
+    std::vector< AD<double> > ay(1);
+    // y_0 = x_0 / x_1 if x_1 > 1.0
+	//       0.0       otherwise
+    ay[0] = CondExpGt(ax[1], AD<double>(1.0), ax[0] / ax[1], AD<double>(0.0));
+
+    ADFun<double> f(ax, ay);
+    std::vector<double> x(2);
+    x[0] = 1.;
+    x[1] = 0.;
+    std::vector<double> J(2);
+    J = f.Jacobian(x);
+    assert(J[0] == 0.0);
+    assert(J[1] == 0.0);
+
+    return 0;
 }
 EOF
 # -----------------------------------------------------------------------------
