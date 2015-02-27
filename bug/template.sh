@@ -1,10 +1,10 @@
 #! /bin/bash -e
 # $Id$
 # -----------------------------------------------------------------------------
-# CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-13 Bradley M. Bell
+# CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-15 Bradley M. Bell
 #
 # CppAD is distributed under multiple licenses. This distribution is under
-# the terms of the 
+# the terms of the
 #                     Eclipse Public License Version 1.0.
 #
 # A copy of this license is included in the COPYING file of this distribution.
@@ -16,14 +16,14 @@ EOF
 cat << EOF > bug.$$
 # include <iostream>
 int main(void)
-{	// C++ source code 
+{	// C++ source code
 	using std::cout;
 
 	cout << "1. copy template.sh to <name>.sh\n";
-	cout << "2. Edit <name>.sh replacing description and C++ source code\n"; 
+	cout << "2. Edit <name>.sh replacing description and C++ source code\n";
 	cout << "3. Run ./<name>.sh\n";
 	cout << "where <name> is a name that describes the bug\n";
-	
+
 	return 0;
 }
 EOF
