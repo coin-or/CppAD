@@ -6,7 +6,7 @@
 CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-15 Bradley M. Bell
 
 CppAD is distributed under multiple licenses. This distribution is under
-the terms of the 
+the terms of the
                     Eclipse Public License Version 1.0.
 
 A copy of this license is included in the COPYING file of this distribution.
@@ -31,7 +31,7 @@ otherwise, it respolves to
 \code
 	user_ok = user_atom->reverse
 \endcode
-This maco is undefined at the end of this file to facillitate is 
+This maco is undefined at the end of this file to facillitate is
 use with a different definition in other files.
 */
 # ifdef NDEBUG
@@ -42,7 +42,7 @@ use with a different definition in other files.
 
 /*!
 \def CPPAD_REVERSE_SWEEP_TRACE
-This value is either zero or one. 
+This value is either zero or one.
 Zero is the normal operational value.
 If it is one, a trace of every reverse_sweep computation is printed.
 */
@@ -53,11 +53,11 @@ Compute derivative of arbitrary order forward mode Taylor coefficients.
 
 \tparam Base
 base type for the operator; i.e., this operation sequence was recorded
-using AD< \a Base > and computations by this routine are done using type 
+using AD< \a Base > and computations by this routine are done using type
 \a Base.
 
 \param d
-is the highest order Taylor coefficients that 
+is the highest order Taylor coefficients that
 we are computing the derivative of.
 
 \param n
@@ -81,27 +81,27 @@ of the form
 <code>
 	f.Forward(k, x_k)
 </code>
-We define 
+We define
 \f$ X : {\bf R}^{n \times d} \rightarrow {\bf R}^n \f$ by
 \f[
 	X(t, u) =  u^{(0)} + u^{(1)} t + \cdots + u^{(d)} t^d
 \f]
-We define 
+We define
 \f$ Y : {\bf R}^{n \times d} \rightarrow {\bf R}^m \f$ by
 \f[
 	Y(t, u) =  F[ X(t, u) ]
 \f]
-We define the function 
+We define the function
 \f$ W : {\bf R}^{n \times d} \rightarrow {\bf R} \f$ by
 \f[
-W(u) 
-= 
-\sum_{k=0}^{d} ( w^{(k)} )^{\rm T} 
+W(u)
+=
+\sum_{k=0}^{d} ( w^{(k)} )^{\rm T}
 	\frac{1}{k !} \frac{\partial^k}{\partial t^k} Y(0, u)
 \f]
 (The matrix \f$ w \in {\bf R}^m \f$,
 is defined below under the heading Partial.)
-Note that the scale factor  1 / k  converts 
+Note that the scale factor  1 / k  converts
 the k-th partial derivative to the k-th order Taylor coefficient.
 This routine computes the derivative of \f$ W(u) \f$
 with respect to all the Taylor coefficients
@@ -112,7 +112,7 @@ The object \a play is effectly constant.
 There is an exception to this,
 while palying back the tape
 the object \a play holds information about the current location
-with in the tape and this changes during palyback. 
+with in the tape and this changes during palyback.
 
 \param J
 Is the number of columns in the coefficient matrix \a Taylor.
@@ -121,7 +121,7 @@ This must be greater than or equal \a d + 1.
 \param Taylor
 For i = 1 , ... , \a numvar, and for k = 0 , ... , \a d,
 \a Taylor [ i * J + k ]
-is the k-th order Taylor coefficient corresponding to 
+is the k-th order Taylor coefficient corresponding to
 variable with index i on the tape.
 The value \f$ u \in {\bf R}^{n \times d} \f$,
 at which the derivative is computed,
@@ -137,22 +137,22 @@ It must be greater than or equal \a d + 1.
 \b Input:
 The last \f$ m \f$ rows of \a Partial are inputs.
 The matrix \f$ w \f$, used to define \f$ W(u) \f$,
-is specified by these rows. 
-For i = 0 , ... , m - 1, 
+is specified by these rows.
+For i = 0 , ... , m - 1,
 for k = 0 , ... , d,
 <code>Partial [ (numvar - m + i ) * K + k ] = w[i,k]</code>.
 \n
 \n
 \b Temporary:
-For i = n+1 , ... , \a numvar - 1 and for k = 0 , ... , d, 
+For i = n+1 , ... , \a numvar - 1 and for k = 0 , ... , d,
 the value of \a Partial [ i * K + k ] is used for temporary work space
-and its output value is not defined. 
+and its output value is not defined.
 \n
 \n
 \b Output:
-For j = 1 , ... , n and for k = 0 , ... , d, 
-\a Partial [ j * K + k ] 
-is the partial derivative of \f$ W( u ) \f$ with 
+For j = 1 , ... , n and for k = 0 , ... , d,
+\a Partial [ j * K + k ]
+is the partial derivative of \f$ W( u ) \f$ with
 respect to \f$ u_j^{(k)} \f$.
 
 \param cskip_op
@@ -169,7 +169,7 @@ the instruction corresponds to a parameter (not variable).
 
 \par Assumptions
 The first operator on the tape is a BeginOp,
-and the next \a n operators are InvOp operations for the 
+and the next \a n operators are InvOp operations for the
 corresponding independent variables.
 */
 template <class Base>
@@ -273,19 +273,19 @@ void ReverseSweep(
 		const Base*  Z_tmp  = Taylor + i_var * J;
 		const Base*  pZ_tmp = Partial + i_var * K;
 		printOp(
-			std::cout, 
+			std::cout,
 			play,
 			i_op,
 			i_tmp,
-			op, 
+			op,
 			arg
 		);
 		if( NumRes(op) > 0 && op != BeginOp ) printOpResult(
-			std::cout, 
-			d + 1, 
-			Z_tmp, 
-			d + 1, 
-			pZ_tmp 
+			std::cout,
+			d + 1,
+			Z_tmp,
+			d + 1,
+			pZ_tmp
 		);
 		std::cout << std::endl;
 # endif
@@ -373,14 +373,14 @@ void ReverseSweep(
 
 			case CExpOp:
 			reverse_cond_op(
-				d, 
-				i_var, 
-				arg, 
-				num_par, 
-				parameter, 
-				J, 
+				d,
+				i_var,
+				arg,
+				num_par,
+				parameter,
+				J,
 				Taylor,
-				K, 
+				K,
 				Partial
 			);
 			break;
@@ -404,7 +404,7 @@ void ReverseSweep(
 
 			case DisOp:
 			// Derivative of discrete operation is zero so no
-			// contribution passes through this operation. 
+			// contribution passes through this operation.
 			break;
 			// --------------------------------------------------
 
@@ -630,7 +630,7 @@ void ReverseSweep(
 				user_atom  = atomic_base<Base>::class_object(user_index);
 # ifndef NDEBUG
 				if( user_atom == CPPAD_NULL )
-				{	std::string msg = 
+				{	std::string msg =
 						atomic_base<Base>::class_name(user_index)
 						+ ": atomic_base function has been deleted";
 					CPPAD_ASSERT_KNOWN(false, msg.c_str() );
@@ -664,7 +664,7 @@ void ReverseSweep(
 				);
 # ifndef NDEBUG
 				if( ! user_ok )
-				{	std::string msg = 
+				{	std::string msg =
 						atomic_base<Base>::class_name(user_index)
 						+ ": atomic_base.reverse: returned false";
 					CPPAD_ASSERT_KNOWN(false, msg.c_str() );
@@ -690,7 +690,7 @@ void ReverseSweep(
 			user_tx[user_j * user_k1 + 0] = parameter[ arg[0]];
 			for(ell = 1; ell < user_k1; ell++)
 				user_tx[user_j * user_k1 + ell] = Base(0.);
-			
+
 			if( user_j == 0 )
 				user_state = user_start;
 			break;
