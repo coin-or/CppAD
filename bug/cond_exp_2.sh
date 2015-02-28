@@ -1,7 +1,7 @@
 #! /bin/bash -e
 # $Id$
 # -----------------------------------------------------------------------------
-# CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-13 Bradley M. Bell
+# CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-15 Bradley M. Bell
 #
 # CppAD is distributed under multiple licenses. This distribution is under
 # the terms of the
@@ -11,40 +11,49 @@
 # Please visit http://www.coin-or.org/CppAD/ for information on other licenses.
 # -----------------------------------------------------------------------------
 cat << EOF
-This program corresponds to:
-	https://github.com/coin-or/CppAD/issues/8
-it exits with the following assertion
-	dw = f.Reverse(q, w): has a nan,
-	but none of its Taylor coefficents are nan.
-	Error detected by false result for
-		! ( hasnan(value) && check_for_nan_ )
-	at line 202 in the file
-		../../cppad/local/reverse.hpp
-which sould not be the case
+The skip during reverse mode should check that the multiplier is identically
+zero. Here is an example that demonstrates why.
 EOF
 cat << EOF > bug.$$
 #include <cppad/cppad.hpp>
-using namespace CppAD;
-
 int main(void) {
-    std::vector< AD<double> > ax(2);
-    ax[0] = 1.;
-    ax[1] = 1.;
+	bool ok = true;
+    using namespace CppAD;
+
+	double eps = 10. * std::numeric_limits<double>::epsilon();
+
+    typedef AD<double> adouble;
+    typedef AD<adouble> a2double;
+
+    std::vector<double> x{-1.0, -1.0};
+
+    std::vector<a2double> a2x(x.size());
+    for (size_t i = 0; i < a2x.size(); i++) {
+        a2x[i] = adouble(x[i]);
+    }
+    Independent(a2x);
+
+    std::vector<a2double> a2y(1);    
+    a2y[0] = CondExpGt(a2x[0], a2double(1.0), a2x[0] / a2x[1], a2double(0.0));
+
+    ADFun<adouble> f1;
+    f1.Dependent(a2x, a2y);
+
+    std::vector<adouble> ax{adouble(x[0]), adouble(x[1])};
     Independent(ax);
 
-    std::vector< AD<double> > ay(1);
-    // y_0 = x_0 / x_1 if x_1 > 1.0
-	//       0.0       otherwise
-    ay[0] = CondExpGt(ax[1], AD<double>(1.0), ax[0] / ax[1], AD<double>(0.0));
+    std::vector<adouble> ay = f1.Jacobian(ax);
 
-    ADFun<double> f(ax, ay);
-    std::vector<double> x(2);
-    x[0] = 1.;
-    x[1] = 0.;
-    std::vector<double> J(2);
-    J = f.Jacobian(x);
-    assert(J[0] == 0.0);
-    assert(J[1] == 0.0);
+    CppAD::ADFun<double> f2;
+    f2.Dependent(ax, ay);
+
+    x = {2, 1};
+
+    std::vector<double> y = f2.Forward(0, x);    
+    ok &= CppAD::NearEqual(y[0], 1.0/ x[1], eps, eps);
+
+	if( ! ok )
+		return 1;
 
     return 0;
 }
