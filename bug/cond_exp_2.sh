@@ -33,7 +33,7 @@ int main(void) {
     }
     Independent(a2x);
 
-    std::vector<a2double> a2y(1);    
+    std::vector<a2double> a2y(1);
     a2y[0] = CondExpGt(a2x[0], a2double(1.0), a2x[0] / a2x[1], a2double(0.0));
 
     ADFun<adouble> f1;
@@ -49,7 +49,7 @@ int main(void) {
 
     x = {2, 1};
 
-    std::vector<double> y = f2.Forward(0, x);    
+    std::vector<double> y = f2.Forward(0, x);
     ok &= CppAD::NearEqual(y[0], 1.0/ x[1], eps, eps);
 
 	if( ! ok )
