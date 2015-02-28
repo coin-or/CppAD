@@ -192,9 +192,8 @@ inline void reverse_divvv_op(
 	// If pz is zero, make sure this operation has no effect
 	// (zero times infinity or nan would be non-zero).
 	bool skip(true);
-	Base bzero(0.0);
 	for(size_t i_d = 0; i_d <= d; i_d++)
-		skip &= pz[i_d] == bzero;
+		skip &= IdenticalZero(pz[i_d]);
 	if( skip )
 		return;
 
@@ -390,9 +389,8 @@ inline void reverse_divpv_op(
 	// If pz is zero, make sure this operation has no effect
 	// (zero times infinity or nan would be non-zero).
 	bool skip(true);
-	Base bzero(0.0);
 	for(size_t i_d = 0; i_d <= d; i_d++)
-		skip &= pz[i_d] == bzero;
+		skip &= IdenticalZero(pz[i_d]);
 	if( skip )
 		return;
 

@@ -123,7 +123,10 @@ bool CondExp(void)
 	{	if( x[j] > 0 )
 			ok &= NearEqual(dw[j], log(x[j]) + 1., eps, eps);
 		else
+		{	// Note that in case where dw has type AD<double> and is a variable
+			// this dw[j] can be nan (zero times nan is not zero).
 			ok &= NearEqual(dw[j], 0.0, eps, eps);
+		}
 	}
 
 	return ok;

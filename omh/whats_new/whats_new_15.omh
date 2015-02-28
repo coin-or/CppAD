@@ -70,6 +70,11 @@ This has been fixed so that only the conditional expression case that is used
 affects the reverse mode results.
 The example $cref cond_exp.cpp$$ was changed to reflect this
 (a check for $code nan$$ was changed to a check for zero).
+Note that this fix only works when 
+$cref/IdenticalPar/base_identical/Identical/IdenticalPar/$$ is true for the
+base type of the result in the conditional expression; i.e.,
+one can still get a $code nan$$ effect from the case that is not selected
+when using $code AD< AD<double> >$$ conditional expressions. 
 
 $head 02-18$$
 If the compiler supports the c++11 feature

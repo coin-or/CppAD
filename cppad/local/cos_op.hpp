@@ -214,9 +214,8 @@ inline void reverse_cos_op(
 	// If pc is zero, make sure this operation has no effect
 	// (zero times infinity or nan would be non-zero).
 	bool skip(true);
-	Base bzero(0.0);
 	for(size_t i_d = 0; i_d <= d; i_d++)
-		skip &= pc[i_d] == bzero;
+		skip &= IdenticalZero(pc[i_d]);
 	if( skip )
 		return;
 
