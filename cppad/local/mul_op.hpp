@@ -181,6 +181,14 @@ inline void reverse_mulvv_op(
 	Base* py = partial + arg[1] * nc_partial;
 	Base* pz = partial + i_z    * nc_partial;
 
+	// If pz is zero, make sure this operation has no effect
+	// (zero times infinity or nan would be non-zero).
+	bool skip(true);
+	Base bzero(0.0);
+	for(size_t i_d = 0; i_d <= d; i_d++)
+		skip &= pz[i_d] == bzero;
+	if( skip )
+		return;
 
 	// number of indices to access
 	size_t j = d + 1;

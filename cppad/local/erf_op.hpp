@@ -360,6 +360,16 @@ inline void reverse_erf_op(
 	// array used to pass parameter values for sub-operations
 	addr_t addr[2];
 
+	// If pz is zero, make sure this operation has no effect
+	// (zero times infinity or nan would be non-zero).
+	Base* pz  = partial + i_z * nc_partial;
+	bool skip(true);
+	Base bzero(0.0);
+	for(size_t i_d = 0; i_d <= d; i_d++)
+		skip &= pz[i_d] == bzero;
+	if( skip )
+		return;
+
 	// convert from final result to first result
 	i_z -= 4; // 4 = NumRes(ErfOp) - 1;
 

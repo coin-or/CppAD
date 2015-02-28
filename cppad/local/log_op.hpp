@@ -3,10 +3,10 @@
 # define CPPAD_LOG_OP_INCLUDED
 
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-14 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-15 Bradley M. Bell
 
 CppAD is distributed under multiple licenses. This distribution is under
-the terms of the 
+the terms of the
                     Eclipse Public License Version 1.0.
 
 A copy of this license is included in the COPYING file of this distribution.
@@ -35,9 +35,9 @@ inline void forward_log_op(
 	size_t q           ,
 	size_t i_z         ,
 	size_t i_x         ,
-	size_t cap_order   , 
+	size_t cap_order   ,
 	Base*  taylor      )
-{	
+{
 	size_t k;
 
 	// check assumptions
@@ -87,9 +87,9 @@ inline void forward_log_op_dir(
 	size_t r           ,
 	size_t i_z         ,
 	size_t i_x         ,
-	size_t cap_order   , 
+	size_t cap_order   ,
 	Base*  taylor      )
-{	
+{
 
 	// check assumptions
 	CPPAD_ASSERT_UNKNOWN( NumArg(LogOp) == 1 );
@@ -108,7 +108,7 @@ inline void forward_log_op_dir(
 		for(size_t k = 1; k < q; k++)
 			z[m+ell] -= Base(k) * z[(k-1)*r+1+ell] * x[(q-k-1)*r+1+ell];
 		z[m+ell] /= (Base(q) * x[0]);
-	}	
+	}
 }
 
 /*!
@@ -125,7 +125,7 @@ template <class Base>
 inline void forward_log_op_0(
 	size_t i_z         ,
 	size_t i_x         ,
-	size_t cap_order   , 
+	size_t cap_order   ,
 	Base*  taylor      )
 {
 
@@ -157,11 +157,11 @@ inline void reverse_log_op(
 	size_t      d            ,
 	size_t      i_z          ,
 	size_t      i_x          ,
-	size_t      cap_order    , 
+	size_t      cap_order    ,
 	const Base* taylor       ,
 	size_t      nc_partial   ,
 	Base*       partial      )
-{	size_t j, k;	
+{	size_t j, k;
 
 	// check assumptions
 	CPPAD_ASSERT_UNKNOWN( NumArg(LogOp) == 1 );
@@ -176,6 +176,15 @@ inline void reverse_log_op(
 	// Taylor coefficients and partials corresponding to result
 	const Base* z  = taylor  + i_z * cap_order;
 	Base* pz       = partial + i_z * nc_partial;
+
+	// If pz is zero, make sure this operation has no effect
+	// (zero times infinity or nan would be non-zero).
+	bool skip(true);
+	Base bzero(0.0);
+	for(size_t i_d = 0; i_d <= d; i_d++)
+		skip &= pz[i_d] == bzero;
+	if( skip )
+		return;
 
 	j = d;
 	while(j)

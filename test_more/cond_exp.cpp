@@ -1,9 +1,9 @@
 /* $Id$ */
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-13 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-15 Bradley M. Bell
 
 CppAD is distributed under multiple licenses. This distribution is under
-the terms of the 
+the terms of the
                     Eclipse Public License Version 1.0.
 
 A copy of this license is included in the COPYING file of this distribution.
@@ -11,7 +11,7 @@ Please visit http://www.coin-or.org/CppAD/ for information on other licenses.
 -------------------------------------------------------------------------- */
 
 /*
-Comprehensive test built on 08/07 for new user interface to CondExp 
+Comprehensive test built on 08/07 for new user interface to CondExp
 */
 // BEGIN C++
 
@@ -32,9 +32,9 @@ bool CondExp_pvvv(void)
 	Independent(X);
 
 	// parameter value
-	AD<double> one = 1.; 
+	AD<double> one = 1.;
 
-	// dependent variable vector 
+	// dependent variable vector
 	CPPAD_TESTVECTOR(AD<double>) Y(5);
 
 	// CondExp(parameter, variable, variable, variable)
@@ -44,7 +44,7 @@ bool CondExp_pvvv(void)
 	Y[3] = CondExpGe(one, X[0], X[1], X[2]);
 	Y[4] = CondExpGt(one, X[0], X[1], X[2]);
 
-	// create f: X -> Y 
+	// create f: X -> Y
 	ADFun<double> f(X, Y);
 
 	// vectors for function values
@@ -62,7 +62,7 @@ bool CondExp_pvvv(void)
 	ok &= Y[3] == X[1];
 	ok &= Y[4] == X[1];
 
-	// function values 
+	// function values
 	v[0] = 2.;
 	v[1] = 1.;
 	v[2] = 0.;
@@ -94,7 +94,7 @@ bool CondExp_pvvv(void)
 	ok   &= (dv[0] == 0.);
 	ok   &= (dv[1] == dw[0] + dw[1] );
 	ok   &= (dv[2] == dw[2] + dw[3] + dw[4] );
-	
+
 	return ok;
 }
 bool CondExp_vpvv(void)
@@ -110,9 +110,9 @@ bool CondExp_vpvv(void)
 	Independent(X);
 
 	// parameter value
-	AD<double> one = 1.; 
+	AD<double> one = 1.;
 
-	// dependent variable vector 
+	// dependent variable vector
 	CPPAD_TESTVECTOR(AD<double>) Y(5);
 
 	// CondExp(variable, parameter, variable, variable)
@@ -122,7 +122,7 @@ bool CondExp_vpvv(void)
 	Y[3] = CondExpGe(X[0], one, X[1], X[2]);
 	Y[4] = CondExpGt(X[0], one, X[1], X[2]);
 
-	// create f: X -> Y 
+	// create f: X -> Y
 	ADFun<double> f(X, Y);
 
 	// vectors for function values
@@ -140,7 +140,7 @@ bool CondExp_vpvv(void)
 	ok &= Y[3] == X[2];
 	ok &= Y[4] == X[2];
 
-	// function values 
+	// function values
 	v[0] = 2.;
 	v[1] = 1.;
 	v[2] = 0.;
@@ -172,7 +172,7 @@ bool CondExp_vpvv(void)
 	ok   &= (dv[0] == 0.);
 	ok   &= (dv[1] == dw[3] + dw[4] );
 	ok   &= (dv[2] == dw[0] + dw[1] + dw[2] );
-	
+
 	return ok;
 }
 bool CondExp_vvpv(void)
@@ -188,9 +188,9 @@ bool CondExp_vvpv(void)
 	Independent(X);
 
 	// parameter value
-	AD<double> three = 3.; 
+	AD<double> three = 3.;
 
-	// dependent variable vector 
+	// dependent variable vector
 	CPPAD_TESTVECTOR(AD<double>) Y(5);
 
 	// CondExp(variable, variable, parameter, variable)
@@ -200,7 +200,7 @@ bool CondExp_vvpv(void)
 	Y[3] = CondExpGe(X[0], X[1], three, X[2]);
 	Y[4] = CondExpGt(X[0], X[1], three, X[2]);
 
-	// create f: X -> Y 
+	// create f: X -> Y
 	ADFun<double> f(X, Y);
 
 	// vectors for function values
@@ -218,7 +218,7 @@ bool CondExp_vvpv(void)
 	ok &= Y[3] == X[2];
 	ok &= Y[4] == X[2];
 
-	// function values 
+	// function values
 	v[0] = 2.;
 	v[1] = 1.;
 	v[2] = 0.;
@@ -250,7 +250,7 @@ bool CondExp_vvpv(void)
 	ok   &= (dv[0] == 0.);
 	ok   &= (dv[1] == 0.);
 	ok   &= (dv[2] == dw[0] + dw[1] + dw[2] );
-	
+
 	return ok;
 }
 bool CondExp_vvvp(void)
@@ -266,9 +266,9 @@ bool CondExp_vvvp(void)
 	Independent(X);
 
 	// parameter value
-	AD<double> three = 3.; 
+	AD<double> three = 3.;
 
-	// dependent variable vector 
+	// dependent variable vector
 	CPPAD_TESTVECTOR(AD<double>) Y(5);
 
 	// CondExp(variable, variable, variable, parameter)
@@ -278,7 +278,7 @@ bool CondExp_vvvp(void)
 	Y[3] = CondExpGe(X[0], X[1], X[2], three);
 	Y[4] = CondExpGt(X[0], X[1], X[2], three);
 
-	// create f: X -> Y 
+	// create f: X -> Y
 	ADFun<double> f(X, Y);
 
 	// vectors for function values
@@ -296,7 +296,7 @@ bool CondExp_vvvp(void)
 	ok &= Y[3] == three;
 	ok &= Y[4] == three;
 
-	// function values 
+	// function values
 	v[0] = 2.;
 	v[1] = 1.;
 	v[2] = 0.;
@@ -328,13 +328,13 @@ bool CondExp_vvvp(void)
 	ok   &= (dv[0] == 0.);
 	ok   &= (dv[1] == 0.);
 	ok   &= (dv[2] == dw[3] + dw[4] );
-	
+
 	return ok;
 }
 
 # include <limits>
 bool SecondOrderReverse(void)
-{	// Bradley M. Bell 2009-07-04 
+{	// Bradley M. Bell 2009-07-04
 	// Reverse mode for CExpOp was only modifying the highest order partial
 	// This test demonstrated the bug
 	bool ok = true;
@@ -351,7 +351,7 @@ bool SecondOrderReverse(void)
 	CPPAD_TESTVECTOR(AD<double>) Y(m);
 
 	AD<double> left = X[0];
-	AD<double> right = X[0] * X[0]; 
+	AD<double> right = X[0] * X[0];
 	AD<double> exp_if_true  = left;
 	AD<double> exp_if_false = right;
 
@@ -365,7 +365,7 @@ bool SecondOrderReverse(void)
 	exp_if_true  = right;
 	Z            = CondExpGt(left, right, exp_if_true, exp_if_false);
 	Y[1]         = Z * Z;
-	
+
 	CppAD::ADFun<double> f(X, Y);
 
 	// first order forward
@@ -383,11 +383,11 @@ bool SecondOrderReverse(void)
 
 	// check first derivative in dw
 	double check = 2. * Value( X[0] );
-	ok &= NearEqual(dw[0], check, eps, eps); 
+	ok &= NearEqual(dw[0], check, eps, eps);
 
 	// check second derivative in dw
 	check = 2.;
-	ok &= NearEqual(dw[1], check, eps, eps); 
+	ok &= NearEqual(dw[1], check, eps, eps);
 
 	// test exp_if_false case
 	w[0] = 0.;
@@ -397,11 +397,11 @@ bool SecondOrderReverse(void)
 
 	// check first derivative in dw
 	check = 2. * Value( X[0] );
-	ok &= NearEqual(dw[0], check, eps, eps); 
+	ok &= NearEqual(dw[0], check, eps, eps);
 
 	// check second derivative in dw
 	check = 2.;
-	ok &= NearEqual(dw[1], check, eps, eps); 
+	ok &= NearEqual(dw[1], check, eps, eps);
 
 	return ok;
 }
@@ -414,7 +414,7 @@ bool OldExample(void)
 
 	using CppAD::AD;
 	using CppAD::NearEqual;
-	using CppAD::log; 
+	using CppAD::log;
 	using CppAD::abs;
 	double eps = 100. * std::numeric_limits<double>::epsilon();
 
@@ -444,7 +444,7 @@ bool OldExample(void)
 		Sum += CppAD::CondExpEq(X[j], Zero, MinusInfinity, Zero);
 	}
 
-	// range space vector 
+	// range space vector
 	size_t m = 1;
 	CPPAD_TESTVECTOR(AD<double>) Y(m);
 	Y[0] = Sum;
@@ -454,8 +454,8 @@ bool OldExample(void)
 
 	// vectors for arguments to the function object f
 	CPPAD_TESTVECTOR(double) x(n);   // argument values
-	CPPAD_TESTVECTOR(double) y(m);   // function values 
-	CPPAD_TESTVECTOR(double) w(m);   // function weights 
+	CPPAD_TESTVECTOR(double) y(m);   // function values
+	CPPAD_TESTVECTOR(double) w(m);   // function weights
 	CPPAD_TESTVECTOR(double) dw(n);  // derivative of weighted function
 
 	// a case where abs( x[j] ) > 0 for all j
@@ -463,11 +463,11 @@ bool OldExample(void)
 	double sign   = 1.;
 	for(j = 0; j < n; j++)
 	{	sign *= -1.;
-		x[j] = sign * double(j + 1); 
+		x[j] = sign * double(j + 1);
 		check += log( abs( x[j] ) );
 	}
 
-	// function value 
+	// function value
 	y  = f.Forward(0, x);
 	ok &= ( y[0] == check );
 
@@ -476,18 +476,18 @@ bool OldExample(void)
 	dw   = f.Reverse(1, w);
 	for(j = 0; j < n; j++)
 	{	if( x[j] > 0. )
-			ok &= NearEqual(dw[j], 1./abs( x[j] ), eps, eps); 
-		else	ok &= NearEqual(dw[j], -1./abs( x[j] ), eps, eps); 
+			ok &= NearEqual(dw[j], 1./abs( x[j] ), eps, eps);
+		else	ok &= NearEqual(dw[j], -1./abs( x[j] ), eps, eps);
 	}
 
 	// a case where x[0] is equal to zero
 	sign = 1.;
 	for(j = 0; j < n; j++)
 	{	sign *= -1.;
-		x[j] = sign * double(j); 
+		x[j] = sign * double(j);
 	}
 
-	// function value 
+	// function value
 	y   = f.Forward(0, x);
 	ok &= ( y[0] == -Infinity(0.) );
 
@@ -497,16 +497,13 @@ bool OldExample(void)
 	dw   = f.Reverse(1, w);
 	for(j = 0; j < n; j++)
 	{	if( x[j] > 0. )
-			ok &= NearEqual(dw[j], 1./abs( x[j] ), eps, eps); 
+			ok &= NearEqual(dw[j], 1./abs( x[j] ), eps, eps);
 		else if( x[j] < 0. )
-			ok &= NearEqual(dw[j], -1./abs( x[j] ), eps, eps); 
+			ok &= NearEqual(dw[j], -1./abs( x[j] ), eps, eps);
 		else
-		{	// in this case computing dw[j] ends up multiplying 
-			// -infinity * zero and hence results in Nan
-			ok &= CppAD::isnan(dw[j]);
-		}
+			ok &= NearEqual(dw[j], 0.0, eps, eps);
 	}
-	
+
 	return ok;
 }
 } // end empty namespace

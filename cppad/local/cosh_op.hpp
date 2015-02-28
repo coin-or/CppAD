@@ -3,10 +3,10 @@
 # define CPPAD_COSH_OP_INCLUDED
 
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-14 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-15 Bradley M. Bell
 
 CppAD is distributed under multiple licenses. This distribution is under
-the terms of the 
+the terms of the
                     Eclipse Public License Version 1.0.
 
 A copy of this license is included in the COPYING file of this distribution.
@@ -43,9 +43,9 @@ inline void forward_cosh_op(
 	size_t q           ,
 	size_t i_z         ,
 	size_t i_x         ,
-	size_t cap_order   , 
+	size_t cap_order   ,
 	Base*  taylor      )
-{	
+{
 	// check assumptions
 	CPPAD_ASSERT_UNKNOWN( NumArg(CoshOp) == 1 );
 	CPPAD_ASSERT_UNKNOWN( NumRes(CoshOp) == 2 );
@@ -100,9 +100,9 @@ inline void forward_cosh_op_dir(
 	size_t r           ,
 	size_t i_z         ,
 	size_t i_x         ,
-	size_t cap_order   , 
+	size_t cap_order   ,
 	Base*  taylor      )
-{	
+{
 	// check assumptions
 	CPPAD_ASSERT_UNKNOWN( NumArg(CoshOp) == 1 );
 	CPPAD_ASSERT_UNKNOWN( NumRes(CoshOp) == 2 );
@@ -151,7 +151,7 @@ template <class Base>
 inline void forward_cosh_op_0(
 	size_t i_z         ,
 	size_t i_x         ,
-	size_t cap_order   , 
+	size_t cap_order   ,
 	Base*  taylor      )
 {
 	// check assumptions
@@ -188,7 +188,7 @@ inline void reverse_cosh_op(
 	size_t      d            ,
 	size_t      i_z          ,
 	size_t      i_x          ,
-	size_t      cap_order    , 
+	size_t      cap_order    ,
 	const Base* taylor       ,
 	size_t      nc_partial   ,
 	Base*       partial      )
@@ -211,6 +211,15 @@ inline void reverse_cosh_op(
 	const Base* s  = c  - cap_order; // called y in documentation
 	Base* ps       = pc - nc_partial;
 
+	// If pc is zero, make sure this operation has no effect
+	// (zero times infinity or nan would be non-zero).
+	bool skip(true);
+	Base bzero(0.0);
+	for(size_t i_d = 0; i_d <= d; i_d++)
+		skip &= pc[i_d] == bzero;
+	if( skip )
+		return;
+
 	// rest of this routine is identical for the following cases:
 	// reverse_sin_op, reverse_cos_op, reverse_sinh_op, reverse_cosh_op.
 	size_t j = d;
@@ -223,7 +232,7 @@ inline void reverse_cosh_op(
 		{
 			px[k]   += ps[j] * Base(k) * c[j-k];
 			px[k]   += pc[j] * Base(k) * s[j-k];
-	
+
 			ps[j-k] += pc[j] * Base(k) * x[k];
 			pc[j-k] += ps[j] * Base(k) * x[k];
 

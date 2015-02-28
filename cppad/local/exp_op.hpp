@@ -3,10 +3,10 @@
 # define CPPAD_EXP_OP_INCLUDED
 
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-14 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-15 Bradley M. Bell
 
 CppAD is distributed under multiple licenses. This distribution is under
-the terms of the 
+the terms of the
                     Eclipse Public License Version 1.0.
 
 A copy of this license is included in the COPYING file of this distribution.
@@ -37,9 +37,9 @@ inline void forward_exp_op(
 	size_t q           ,
 	size_t i_z         ,
 	size_t i_x         ,
-	size_t cap_order   , 
+	size_t cap_order   ,
 	Base*  taylor      )
-{	
+{
 	// check assumptions
 	CPPAD_ASSERT_UNKNOWN( NumArg(ExpOp) == 1 );
 	CPPAD_ASSERT_UNKNOWN( NumRes(ExpOp) == 1 );
@@ -81,9 +81,9 @@ inline void forward_exp_op_dir(
 	size_t r           ,
 	size_t i_z         ,
 	size_t i_x         ,
-	size_t cap_order   , 
+	size_t cap_order   ,
 	Base*  taylor      )
-{	
+{
 	// check assumptions
 	CPPAD_ASSERT_UNKNOWN( NumArg(ExpOp) == 1 );
 	CPPAD_ASSERT_UNKNOWN( NumRes(ExpOp) == 1 );
@@ -93,7 +93,7 @@ inline void forward_exp_op_dir(
 	// Taylor coefficients corresponding to argument and result
 	size_t num_taylor_per_var = (cap_order-1) * r + 1;
 	Base* x = taylor + i_x * num_taylor_per_var;
-	Base* z = taylor + i_z * num_taylor_per_var; 
+	Base* z = taylor + i_z * num_taylor_per_var;
 
 	size_t m = (q-1)*r + 1;
 	for(size_t ell = 0; ell < r; ell++)
@@ -118,7 +118,7 @@ template <class Base>
 inline void forward_exp_op_0(
 	size_t i_z         ,
 	size_t i_x         ,
-	size_t cap_order   , 
+	size_t cap_order   ,
 	Base*  taylor      )
 {
 	// check assumptions
@@ -148,7 +148,7 @@ inline void reverse_exp_op(
 	size_t      d            ,
 	size_t      i_z          ,
 	size_t      i_x          ,
-	size_t      cap_order    , 
+	size_t      cap_order    ,
 	const Base* taylor       ,
 	size_t      nc_partial   ,
 	Base*       partial      )
@@ -167,6 +167,15 @@ inline void reverse_exp_op(
 	const Base* z  = taylor  + i_z * cap_order;
 	Base* pz       = partial + i_z * nc_partial;
 
+	// If pz is zero, make sure this operation has no effect
+	// (zero times infinity or nan would be non-zero).
+	bool skip(true);
+	Base bzero(0.0);
+	for(size_t i_d = 0; i_d <= d; i_d++)
+		skip &= pz[i_d] == bzero;
+	if( skip )
+		return;
+
 	// loop through orders in reverse
 	size_t j, k;
 	j = d;
@@ -175,7 +184,7 @@ inline void reverse_exp_op(
 		pz[j] /= Base(j);
 
 		for(k = 1; k <= j; k++)
-		{	px[k]   += pz[j] * Base(k) * z[j-k]; 	
+		{	px[k]   += pz[j] * Base(k) * z[j-k];
 			pz[j-k] += pz[j] * Base(k) * x[k];
 		}
 		--j;

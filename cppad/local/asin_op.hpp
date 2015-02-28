@@ -3,10 +3,10 @@
 # define CPPAD_ASIN_OP_INCLUDED
 
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-14 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-15 Bradley M. Bell
 
 CppAD is distributed under multiple licenses. This distribution is under
-the terms of the 
+the terms of the
                     Eclipse Public License Version 1.0.
 
 A copy of this license is included in the COPYING file of this distribution.
@@ -43,9 +43,9 @@ inline void forward_asin_op(
 	size_t q           ,
 	size_t i_z         ,
 	size_t i_x         ,
-	size_t cap_order   , 
+	size_t cap_order   ,
 	Base*  taylor      )
-{	
+{
 	// check assumptions
 	CPPAD_ASSERT_UNKNOWN( NumArg(AsinOp) == 1 );
 	CPPAD_ASSERT_UNKNOWN( NumRes(AsinOp) == 2 );
@@ -107,9 +107,9 @@ inline void forward_asin_op_dir(
 	size_t r           ,
 	size_t i_z         ,
 	size_t i_x         ,
-	size_t cap_order   , 
+	size_t cap_order   ,
 	Base*  taylor      )
-{	
+{
 	// check assumptions
 	CPPAD_ASSERT_UNKNOWN( NumArg(AcosOp) == 1 );
 	CPPAD_ASSERT_UNKNOWN( NumRes(AcosOp) == 2 );
@@ -127,12 +127,12 @@ inline void forward_asin_op_dir(
 	for(ell = 0; ell < r; ell ++)
 	{	Base uq = - 2.0 * x[m + ell] * x[0];
 		for(k = 1; k < q; k++)
-			uq -= x[(k-1)*r+1+ell] * x[(q-k-1)*r+1+ell]; 
+			uq -= x[(k-1)*r+1+ell] * x[(q-k-1)*r+1+ell];
 		b[m+ell] = Base(0);
 		z[m+ell] = Base(0);
 		for(k = 1; k < q; k++)
-		{	b[m+ell] += Base(k) * b[(k-1)*r+1+ell] * b[(q-k-1)*r+1+ell]; 
-			z[m+ell] += Base(k) * z[(k-1)*r+1+ell] * b[(q-k-1)*r+1+ell]; 
+		{	b[m+ell] += Base(k) * b[(k-1)*r+1+ell] * b[(q-k-1)*r+1+ell];
+			z[m+ell] += Base(k) * z[(k-1)*r+1+ell] * b[(q-k-1)*r+1+ell];
 		}
 		b[m+ell] = ( uq / Base(2) - b[m+ell] / Base(q) ) / b[0];
 		z[m+ell] = ( x[m+ell]     - z[m+ell] / Base(q) ) / b[0];
@@ -158,7 +158,7 @@ template <class Base>
 inline void forward_asin_op_0(
 	size_t i_z         ,
 	size_t i_x         ,
-	size_t cap_order   , 
+	size_t cap_order   ,
 	Base*  taylor      )
 {
 	// check assumptions
@@ -195,7 +195,7 @@ inline void reverse_asin_op(
 	size_t      d            ,
 	size_t      i_z          ,
 	size_t      i_x          ,
-	size_t      cap_order    , 
+	size_t      cap_order    ,
 	const Base* taylor       ,
 	size_t      nc_partial   ,
 	Base*       partial      )
@@ -218,6 +218,15 @@ inline void reverse_asin_op(
 	const Base* b  = z  - cap_order; // called y in documentation
 	Base* pb       = pz - nc_partial;
 
+	// If pz is zero, make sure this operation has no effect
+	// (zero times infinity or nan would be non-zero).
+	bool skip(true);
+	Base bzero(0.0);
+	for(size_t i_d = 0; i_d <= d; i_d++)
+		skip &= pz[i_d] == bzero;
+	if( skip )
+		return;
+
 	// number of indices to access
 	size_t j = d;
 	size_t k;
@@ -229,8 +238,8 @@ inline void reverse_asin_op(
 		// scale partials w.r.t z[j] by 1 / b[0]
 		pz[j] /= b[0];
 
-		// update partials w.r.t b^0 
-		pb[0] -= pz[j] * z[j] + pb[j] * b[j]; 
+		// update partials w.r.t b^0
+		pb[0] -= pz[j] * z[j] + pb[j] * b[j];
 
 		// update partial w.r.t. x^0
 		px[0] -= pb[j] * x[j];
@@ -245,7 +254,7 @@ inline void reverse_asin_op(
 		{	// update partials w.r.t b^(j-k)
 			pb[j-k] -= Base(k) * pz[j] * z[k] + pb[j] * b[k];
 
-			// update partials w.r.t. x^k 
+			// update partials w.r.t. x^k
 			px[k]   -= pb[j] * x[j-k];
 
 			// update partials w.r.t. z^k

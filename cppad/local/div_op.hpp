@@ -3,10 +3,10 @@
 # define CPPAD_DIV_OP_INCLUDED
 
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-14 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-15 Bradley M. Bell
 
 CppAD is distributed under multiple licenses. This distribution is under
-the terms of the 
+the terms of the
                     Eclipse Public License Version 1.0.
 
 A copy of this license is included in the COPYING file of this distribution.
@@ -36,8 +36,8 @@ and the argument \a parameter is not used.
 
 template <class Base>
 inline void forward_divvv_op(
-	size_t        p           , 
-	size_t        q           , 
+	size_t        p           ,
+	size_t        q           ,
 	size_t        i_z         ,
 	const addr_t* arg         ,
 	const Base*   parameter   ,
@@ -82,8 +82,8 @@ and the argument \a parameter is not used.
 
 template <class Base>
 inline void forward_divvv_op_dir(
-	size_t        q           , 
-	size_t        r           , 
+	size_t        q           ,
+	size_t        r           ,
 	size_t        i_z         ,
 	const addr_t* arg         ,
 	const Base*   parameter   ,
@@ -108,7 +108,7 @@ inline void forward_divvv_op_dir(
 	size_t m = (q-1) * r + 1;
 	for(size_t ell = 0; ell < r; ell++)
 	{	z[m+ell] = x[m+ell] - z[0] * y[m+ell];
-		for(size_t k = 1; k < q; k++)		
+		for(size_t k = 1; k < q; k++)
 			z[m+ell] -= z[(q-k-1)*r+1+ell] * y[(k-1)*r+1+ell];
 		z[m+ell] /= y[0];
 	}
@@ -165,7 +165,7 @@ and the argument \a parameter is not used.
 
 template <class Base>
 inline void reverse_divvv_op(
-	size_t        d           , 
+	size_t        d           ,
 	size_t        i_z         ,
 	const addr_t* arg         ,
 	const Base*   parameter   ,
@@ -189,6 +189,15 @@ inline void reverse_divvv_op(
 	Base* py = partial + arg[1] * nc_partial;
 	Base* pz = partial + i_z    * nc_partial;
 
+	// If pz is zero, make sure this operation has no effect
+	// (zero times infinity or nan would be non-zero).
+	bool skip(true);
+	Base bzero(0.0);
+	for(size_t i_d = 0; i_d <= d; i_d++)
+		skip &= pz[i_d] == bzero;
+	if( skip )
+		return;
+
 	// Using CondExp, it can make sense to divide by zero
 	// so do not make it an error.
 
@@ -204,7 +213,7 @@ inline void reverse_divvv_op(
 		for(k = 1; k <= j; k++)
 		{	pz[j-k] -= pz[j] * y[k];
 			py[k]   -= pz[j] * z[j-k];
-		}	
+		}
 		py[0] -= pz[j] * z[j];
 	}
 }
@@ -225,8 +234,8 @@ this operations is for the case where x is a parameter and y is a variable.
 
 template <class Base>
 inline void forward_divpv_op(
-	size_t        p           , 
-	size_t        q           , 
+	size_t        p           ,
+	size_t        q           ,
 	size_t        i_z         ,
 	const addr_t* arg         ,
 	const Base*   parameter   ,
@@ -275,8 +284,8 @@ this operations is for the case where x is a parameter and y is a variable.
 
 template <class Base>
 inline void forward_divpv_op_dir(
-	size_t        q           , 
-	size_t        r           , 
+	size_t        q           ,
+	size_t        r           ,
 	size_t        i_z         ,
 	const addr_t* arg         ,
 	const Base*   parameter   ,
@@ -355,7 +364,7 @@ this operations is for the case where x is a parameter and y is a variable.
 
 template <class Base>
 inline void reverse_divpv_op(
-	size_t        d           , 
+	size_t        d           ,
 	size_t        i_z         ,
 	const addr_t* arg         ,
 	const Base*   parameter   ,
@@ -378,6 +387,15 @@ inline void reverse_divpv_op(
 	Base* py = partial + arg[1] * nc_partial;
 	Base* pz = partial + i_z    * nc_partial;
 
+	// If pz is zero, make sure this operation has no effect
+	// (zero times infinity or nan would be non-zero).
+	bool skip(true);
+	Base bzero(0.0);
+	for(size_t i_d = 0; i_d <= d; i_d++)
+		skip &= pz[i_d] == bzero;
+	if( skip )
+		return;
+
 	// Using CondExp, it can make sense to divide by zero so do not
 	// make it an error.
 
@@ -392,7 +410,7 @@ inline void reverse_divpv_op(
 		for(k = 1; k <= j; k++)
 		{	pz[j-k] -= pz[j] * y[k];
 			py[k]   -= pz[j] * z[j-k];
-		}	
+		}
 		py[0] -= pz[j] * z[j];
 	}
 }
@@ -414,8 +432,8 @@ this operations is for the case where x is a variable and y is a parameter.
 
 template <class Base>
 inline void forward_divvp_op(
-	size_t        p           , 
-	size_t        q           , 
+	size_t        p           ,
+	size_t        q           ,
 	size_t        i_z         ,
 	const addr_t* arg         ,
 	const Base*   parameter   ,
@@ -435,7 +453,7 @@ inline void forward_divvp_op(
 	// Parameter value
 	Base y = parameter[ arg[1] ];
 
-	// Using CondExp and multiple levels of AD, it can make sense 
+	// Using CondExp and multiple levels of AD, it can make sense
 	// to divide by zero so do not make it an error.
 	for(size_t d = p; d <= q; d++)
 		z[d] = x[d] / y;
@@ -455,8 +473,8 @@ this operations is for the case where x is a variable and y is a parameter.
 
 template <class Base>
 inline void forward_divvp_op_dir(
-	size_t        q           , 
-	size_t        r           , 
+	size_t        q           ,
+	size_t        r           ,
 	size_t        i_z         ,
 	const addr_t* arg         ,
 	const Base*   parameter   ,
@@ -477,7 +495,7 @@ inline void forward_divvp_op_dir(
 	// Parameter value
 	Base y = parameter[ arg[1] ];
 
-	// Using CondExp and multiple levels of AD, it can make sense 
+	// Using CondExp and multiple levels of AD, it can make sense
 	// to divide by zero so do not make it an error.
 	size_t m = (q-1)*r + 1;
 	for(size_t ell = 0; ell < r; ell++)
@@ -535,7 +553,7 @@ this operations is for the case where x is a variable and y is a parameter.
 
 template <class Base>
 inline void reverse_divvp_op(
-	size_t        d           , 
+	size_t        d           ,
 	size_t        i_z         ,
 	const addr_t* arg         ,
 	const Base*   parameter   ,

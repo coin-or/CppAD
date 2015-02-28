@@ -35,6 +35,9 @@ $spell
 	var
 	NumRes
 	chrono
+	aeps
+	CondExpGt
+	hasnan
 $$
 
 $section CppAD Changes and Additions During 2015$$
@@ -44,6 +47,29 @@ This section contains a list of the changes to CppAD during 2015
 (in reverse order by date).
 The purpose of this section is to
 assist you in learning about changes between various versions of CppAD.
+
+$head 02-28$$
+It used to be the case that the
+$cref/Reverse mode/reverse/$$ would propagate $cref nan$$
+through the $cref/conditional expression/condexp/$$
+case that is not used.
+For example, if
+$codep
+	Independent(ax);
+	AD<double> aeps = 1e-10;
+	ay[0] = CondExpGt( ax[0], aeps, 1.0/ax[0], 1.0/aeps );
+	ADFun<double> f(ax, ay);
+$$
+The corresponding reverse mode calculation,
+at $code x[0] = 0.0$$, would result in
+$codep
+	Error detected by false result for
+    	! ( hasnan(value) && check_for_nan_ )
+$$
+This has been fixed so that only the conditional expression case that is used
+affects the reverse mode results.
+The example $cref cond_exp.cpp$$ was changed to reflect this
+(a check for $code nan$$ was changed to a check for zero).
 
 $head 02-18$$
 If the compiler supports the c++11 feature
