@@ -36,6 +36,7 @@ extern bool Compare(void);
 extern bool compare_change(void);
 extern bool CondExp(void);
 extern bool CondExpAD(void);
+extern bool cond_exp_rev(void);
 extern bool copy(void);
 extern bool Cos(void);
 extern bool Cosh(void);
@@ -147,6 +148,7 @@ int main(void)
 	ok &= Run( compare_change,  "compare_change" );
 	ok &= Run( CondExp,         "CondExp"        );
 	ok &= Run( CondExpAD,       "CondExpAD"      );
+	ok &= Run( cond_exp_rev,    "cond_exp_rev"   );
 	ok &= Run( copy,            "copy"           );
 	ok &= Run( Cos,             "Cos"            );
 	ok &= Run( Cosh,            "Cosh"           );

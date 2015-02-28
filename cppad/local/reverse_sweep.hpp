@@ -299,6 +299,15 @@ void ReverseSweep(
 			break;
 			// --------------------------------------------------
 
+			case AcosOp:
+                        // sqrt(1 - x * x), acos(x)
+			CPPAD_ASSERT_UNKNOWN( i_var < numvar );
+			reverse_acos_op(
+				d, i_var, arg[0], J, Taylor, K, Partial
+			);
+			break;
+			// --------------------------------------------------
+
 			case AddvvOp:
 			reverse_addvv_op(
 				d, i_var, arg, parameter, J, Taylor, K, Partial
@@ -310,15 +319,6 @@ void ReverseSweep(
 			CPPAD_ASSERT_UNKNOWN( size_t(arg[0]) < num_par );
 			reverse_addpv_op(
 				d, i_var, arg, parameter, J, Taylor, K, Partial
-			);
-			break;
-			// --------------------------------------------------
-
-			case AcosOp:
-                        // sqrt(1 - x * x), acos(x)
-			CPPAD_ASSERT_UNKNOWN( i_var < numvar );
-			reverse_acos_op(
-				d, i_var, arg[0], J, Taylor, K, Partial
 			);
 			break;
 			// --------------------------------------------------
