@@ -25,7 +25,11 @@ int main(void) {
     typedef AD<double> adouble;
     typedef AD<adouble> a2double;
 
-    std::vector<double> x{-1.0, -1.0};
+    // This works (does not generate a nan)
+    // std::vector<double> x{-1.0, -1.0};
+
+    // This fails
+    std::vector<double> x{0.0, 0.0};
 
     std::vector<a2double> a2x(x.size());
     for (size_t i = 0; i < a2x.size(); i++) {

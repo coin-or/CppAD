@@ -47,7 +47,12 @@ int main(void) {
 	// af(x) = x_0 * x_1 if x[0] == 1
 	//         0.0       otherwise
 	ADFun<adouble> af(a2x, a2y);
-	af.optimize("no_conditional_skip");
+
+	// This works
+	// af.optimize("no_conditional_skip");
+
+	// This fails
+	af.optimize();
 
 	/**
 	* Second tape
