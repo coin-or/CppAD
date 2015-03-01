@@ -72,7 +72,7 @@ The example $cref cond_exp.cpp$$ was changed to reflect this
 (a check for $code nan$$ was changed to a check for zero).
 Note that this fix only works when
 $cref/IdenticalPar/base_identical/Identical/IdenticalPar/$$ is true for the
-base type of the result in the conditional expression; i.e.,
+base type of the result in the conditional expression; e.g.,
 one can still get a $code nan$$ effect from the case that is not selected
 when using $code AD< AD<double> >$$ conditional expressions.
 
