@@ -6,7 +6,7 @@
 CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-15 Bradley M. Bell
 
 CppAD is distributed under multiple licenses. This distribution is under
-the terms of the 
+the terms of the
                     Eclipse Public License Version 1.0.
 
 A copy of this license is included in the COPYING file of this distribution.
@@ -45,7 +45,7 @@ be very large and involve many operations; see the
 size functions in $cref seq_property$$.
 The $icode%f%.optimize%$$ procedure reduces the number of operations,
 and thereby the time and the memory, required to
-compute function and derivative values. 
+compute function and derivative values.
 
 $head f$$
 The object $icode f$$ has prototype
@@ -63,18 +63,18 @@ derivatives using the original operation sequence.
 
 $subhead Testing$$
 You can run the CppAD $cref/speed/speed_main/$$ tests and see
-the corresponding changes in number of variables and execution time; 
+the corresponding changes in number of variables and execution time;
 see $cref cmake_check$$.
 
 $head Efficiency$$
 The $code optimize$$ member function
-may greatly reduce the number of variables 
+may greatly reduce the number of variables
 in the operation sequence; see $cref/size_var/seq_property/size_var/$$.
 If a $cref/zero order forward/forward_zero/$$ calculation is done during
 the construction of $icode f$$, it will require more memory
 and time than required after the optimization procedure.
 In addition, it will need to be redone.
-For this reason, it is more efficient to use 
+For this reason, it is more efficient to use
 $codei%
 	ADFun<%Base%> %f%;
 	%f%.Dependent(%x%, %y%);
@@ -84,7 +84,7 @@ instead of
 $codei%
 	ADFun<%Base%> %f%(%x%, %y%)
 	%f%.optimize();
-%$$ 
+%$$
 See the discussion about
 $cref/sequence constructors/FunConstruct/Sequence Constructor/$$.
 
@@ -95,9 +95,9 @@ $latex v = g(u)$$:
 $subhead rev_sparse_jac$$
 The $cref atomic_rev_sparse_jac$$ function is be used to determine
 which components of $icode u$$ affect the dependent variables of $icode f$$.
-The current setting of the 
+The current setting of the
 $cref/atomic_sparsity/atomic_option/atomic_sparsity/$$ pattern for each
-atomic function is used to determine if the $code bool$$ or 
+atomic function is used to determine if the $code bool$$ or
 $code std::set<size_t>$$ version of $cref atomic_rev_sparse_jac$$ is used.
 
 $subhead nan$$
@@ -151,16 +151,16 @@ enum enum_connect_type {
 	/// independent variables.
 	yes_connected        ,
 
-	/// There is only one parrent that connects this variable to the 
+	/// There is only one parrent that connects this variable to the
 	/// independent variables and the parent is a summation operation; i.e.,
 	/// AddvvOp, AddpvOp, SubpvOp, SubvpOp, or SubvvOp.
 	sum_connected        ,
 
-	/// Satisfies the sum_connected assumptions above and in addition 
+	/// Satisfies the sum_connected assumptions above and in addition
 	/// this variable is the result of summation operator.
 	csum_connected       ,
 
-	/// This node is only connected in the case where the comparision is 
+	/// This node is only connected in the case where the comparision is
 	/// true for the conditional expression with index \c connect_index.
 	cexp_connected
 
@@ -173,7 +173,7 @@ class class_cexp_pair {
 public:
 	/// If this is true (false) this connection is only for the case where
 	/// the comparision in the conditional expression is true (false)
-	bool compare_; 
+	bool compare_;
 	/// This is the index of the conditional expression (in cksip_info)
 	/// for this connection
 	size_t index_;
@@ -190,11 +190,11 @@ public:
 	bool operator!=(const class_cexp_pair& right)
 	{	return (index_ != right.index_) | (compare_ != right.compare_);
 	}
-	/// Less than operator 
+	/// Less than operator
 	/// (required for intersection of two sets of class_cexp_pair elements).
 	bool operator<(const class_cexp_pair& right) const
 	{	if( index_ == right.index_ )
-			return size_t(compare_) < size_t(right.compare_);	
+			return size_t(compare_) < size_t(right.compare_);
 		return index_ < right.index_;
 	}
 };
@@ -204,7 +204,7 @@ Compute intersection of two sets of class_cexp_pair elements.
 \param left
 first operand of the intersection
 
-\param right 
+\param right
 second operand of the intersection
 
 \result
@@ -221,7 +221,7 @@ inline std::set<class_cexp_pair> intersection(
 		right.end()   ,
 		std::inserter(result, result.begin())
 	);
-	return result;	
+	return result;
 }
 
 /*!
@@ -231,14 +231,14 @@ in the old operation seqeunce.
 struct struct_old_variable {
 	/// Operator for which this variable is the result, \c NumRes(op) > 0.
 	/// Set by the reverse sweep at beginning of optimization.
-	OpCode              op;       
+	OpCode              op;
 
 	/// Pointer to first argument (child) for this operator.
 	/// Set by the reverse sweep at beginning of optimization.
 	const addr_t*       arg;
 
 	/// How is this variable connected to the independent variables
-	enum_connect_type connect_type; 
+	enum_connect_type connect_type;
 
 	/*!
 	If \c connect_type is \c cexp_connected,
@@ -269,7 +269,7 @@ to hold information about one variable.
 */
 struct struct_csum_variable {
 	/// Operator for which this variable is the result, \c NumRes(op) > 0.
-	OpCode              op;       
+	OpCode              op;
 
 	/// Pointer to first argument (child) for this operator.
 	/// Set by the reverse sweep at beginning of optimization.
@@ -285,7 +285,7 @@ Structure used to pass work space from \c optimize to \c record_csum
 (so that stacks do not start from zero size every time).
 */
 struct struct_csum_stacks {
-	/// stack of operations in the cummulative summation 
+	/// stack of operations in the cummulative summation
 	std::stack<struct struct_csum_variable>   op_stack;
 	/// stack of variables to be added
 	std::stack<size_t >                         add_stack;
@@ -303,9 +303,9 @@ struct struct_cskip_info {
 	/// (flag & 2) is true if and only if right is a variable
 	size_t flag;
 	/// index for left comparison operand
-	size_t left; 
+	size_t left;
 	/// index for right comparison operand
-	size_t right; 
+	size_t right;
 	/// maximum variable index between left and right
 	size_t max_left_right;
 	/// set of variables to skip on true
@@ -349,34 +349,34 @@ Shared documentation for optimization helper functions (not called).
 \param tape
 is a vector that maps a variable index, in the old operation sequence,
 to an <tt>struct_old_variable</tt> information record.
-Note that the index for this vector must be greater than or equal zero and 
+Note that the index for this vector must be greater than or equal zero and
 less than <tt>tape.size()</tt>.
 
-\li <tt>tape[i].op</tt> 
+\li <tt>tape[i].op</tt>
 is the operator in the old operation sequence
 corresponding to the old variable index \c i.
 Assertion: <tt>NumRes(tape[i].op) > 0</tt>.
 
-\li <tt>tape[i].arg</tt> 
+\li <tt>tape[i].arg</tt>
 for <tt>j < NumArg( tape[i].op ), tape[i].arg[j]</tt>
 is the j-th the argument, in the old operation sequence,
 corresponding to the old variable index \c i.
 Assertion: <tt>tape[i].arg[j] < i</tt>.
 
 \li <tt>tape[i].new_var</tt>
-Suppose 
+Suppose
 <tt>i <= current, j < NumArg( tape[i].op ), and k = tape[i].arg[j]</tt>,
 and \c j corresponds to a variable for operator <tt>tape[i].op</tt>.
 It follows that <tt>tape[k].new_var</tt>
-has alread been set to the variable in the new operation sequence 
+has alread been set to the variable in the new operation sequence
 corresponding to the old variable index \c k.
 This means that the \c new_var value has been set
 for all the possible arguments that come before \a current.
 
 \param current
-is the index in the old operation sequence for 
+is the index in the old operation sequence for
 the variable corresponding to the result for the current operator.
-Assertions: 
+Assertions:
 <tt>
 current < tape.size(),
 NumRes( tape[current].op ) > 0.
@@ -410,34 +410,34 @@ can be used inplace of the result for current operator.
 \param tape
 is a vector that maps a variable index, in the old operation sequence,
 to an <tt>struct_old_variable</tt> information record.
-Note that the index for this vector must be greater than or equal zero and 
+Note that the index for this vector must be greater than or equal zero and
 less than <tt>tape.size()</tt>.
 
-\li <tt>tape[i].op</tt> 
+\li <tt>tape[i].op</tt>
 is the operator in the old operation sequence
 corresponding to the old variable index \c i.
 Assertion: <tt>NumRes(tape[i].op) > 0</tt>.
 
-\li <tt>tape[i].arg</tt> 
+\li <tt>tape[i].arg</tt>
 for <tt>j < NumArg( tape[i].op ), tape[i].arg[j]</tt>
 is the j-th the argument, in the old operation sequence,
 corresponding to the old variable index \c i.
 Assertion: <tt>tape[i].arg[j] < i</tt>.
 
 \li <tt>tape[i].new_var</tt>
-Suppose 
+Suppose
 <tt>i <= current, j < NumArg( tape[i].op ), and k = tape[i].arg[j]</tt>,
 and \c j corresponds to a variable for operator <tt>tape[i].op</tt>.
 It follows that <tt>tape[k].new_var</tt>
-has alread been set to the variable in the new operation sequence 
+has alread been set to the variable in the new operation sequence
 corresponding to the old variable index \c k.
 This means that the \c new_var value has been set
 for all the possible arguments that come before \a current.
 
 \param current
-is the index in the old operation sequence for 
+is the index in the old operation sequence for
 the variable corresponding to the result for the current operator.
-Assertions: 
+Assertions:
 <tt>
 current < tape.size(),
 NumRes( tape[current].op ) > 0.
@@ -455,7 +455,7 @@ given a parameter index \c i, the corresponding parameter value is
 
 \param hash_table_var
 is a vector with size CPPAD_HASH_TABLE_SIZE
-that maps a hash code to the corresponding 
+that maps a hash code to the corresponding
 variable index in the old operation sequence.
 All the values in this table must be less than \a current.
 
@@ -485,7 +485,7 @@ addr_t unary_match(
 {	const addr_t* arg = tape[current].arg;
 	OpCode        op  = tape[current].op;
 	addr_t new_arg[1];
-	
+
 	// ErfOp has three arguments, but the second and third are always the
 	// parameters 0 and 2 / sqrt(pi) respectively.
 	CPPAD_ASSERT_UNKNOWN( NumArg(op) == 1 || op == ErfOp);
@@ -494,7 +494,7 @@ addr_t unary_match(
 	new_arg[0] = tape[arg[0]].new_var;
 	CPPAD_ASSERT_UNKNOWN( size_t(new_arg[0]) < current );
 	code = hash_code(
-		op                  , 
+		op                  ,
 		new_arg             ,
 		npar                ,
 		par
@@ -508,7 +508,7 @@ addr_t unary_match(
 			return i_var;
 	}
 	return 0;
-} 
+}
 
 /*!
 Check a binary operator for a complete match with a previous operator,
@@ -517,34 +517,34 @@ Check a binary operator for a complete match with a previous operator,
 \param tape
 is a vector that maps a variable index, in the old operation sequence,
 to an <tt>struct_old_variable</tt> information record.
-Note that the index for this vector must be greater than or equal zero and 
+Note that the index for this vector must be greater than or equal zero and
 less than <tt>tape.size()</tt>.
 
-\li <tt>tape[i].op</tt> 
+\li <tt>tape[i].op</tt>
 is the operator in the old operation sequence
 corresponding to the old variable index \c i.
 Assertion: <tt>NumRes(tape[i].op) > 0</tt>.
 
-\li <tt>tape[i].arg</tt> 
+\li <tt>tape[i].arg</tt>
 for <tt>j < NumArg( tape[i].op ), tape[i].arg[j]</tt>
 is the j-th the argument, in the old operation sequence,
 corresponding to the old variable index \c i.
 Assertion: <tt>tape[i].arg[j] < i</tt>.
 
 \li <tt>tape[i].new_var</tt>
-Suppose 
+Suppose
 <tt>i <= current, j < NumArg( tape[i].op ), and k = tape[i].arg[j]</tt>,
 and \c j corresponds to a variable for operator <tt>tape[i].op</tt>.
 It follows that <tt>tape[k].new_var</tt>
-has alread been set to the variable in the new operation sequence 
+has alread been set to the variable in the new operation sequence
 corresponding to the old variable index \c k.
 This means that the \c new_var value has been set
 for all the possible arguments that come before \a current.
 
 \param current
-is the index in the old operation sequence for 
+is the index in the old operation sequence for
 the variable corresponding to the result for the current operator.
-Assertions: 
+Assertions:
 <tt>
 current < tape.size(),
 NumRes( tape[current].op ) > 0.
@@ -562,7 +562,7 @@ given a parameter index \c i, the corresponding parameter value is
 
 \param hash_table_var
 is a vector with size CPPAD_HASH_TABLE_SIZE
-that maps a hash code to the corresponding 
+that maps a hash code to the corresponding
 variable index in the old operation sequence.
 All the values in this table must be less than \a current.
 
@@ -575,7 +575,7 @@ this operation in the new operation sequence.
 If the return value is zero,
 no match was found.
 If the return value is greater than zero,
-it is the index of a new variable that can be used to replace the 
+it is the index of a new variable that can be used to replace the
 old variable.
 
 
@@ -661,7 +661,7 @@ inline addr_t binary_match(
 		CPPAD_ASSERT_UNKNOWN(false);
 	}
 	code = hash_code(
-		op                  , 
+		op                  ,
 		new_arg             ,
 		npar                ,
 		par
@@ -700,7 +700,7 @@ inline addr_t binary_match(
 	CPPAD_ASSERT_UNKNOWN( op == AddvvOp || op == MulvvOp );
 	std::swap(new_arg[0], new_arg[1]);
 	unsigned short code_switch = hash_code(
-		op                  , 
+		op                  ,
 		new_arg             ,
 		npar                ,
 		par
@@ -719,7 +719,7 @@ inline addr_t binary_match(
 			match_var = i_var;
 	}
 	return match_var;
-} 
+}
 
 /*!
 Record an operation of the form (parameter op variable).
@@ -728,34 +728,34 @@ Record an operation of the form (parameter op variable).
 \param tape
 is a vector that maps a variable index, in the old operation sequence,
 to an <tt>struct_old_variable</tt> information record.
-Note that the index for this vector must be greater than or equal zero and 
+Note that the index for this vector must be greater than or equal zero and
 less than <tt>tape.size()</tt>.
 
-\li <tt>tape[i].op</tt> 
+\li <tt>tape[i].op</tt>
 is the operator in the old operation sequence
 corresponding to the old variable index \c i.
 Assertion: <tt>NumRes(tape[i].op) > 0</tt>.
 
-\li <tt>tape[i].arg</tt> 
+\li <tt>tape[i].arg</tt>
 for <tt>j < NumArg( tape[i].op ), tape[i].arg[j]</tt>
 is the j-th the argument, in the old operation sequence,
 corresponding to the old variable index \c i.
 Assertion: <tt>tape[i].arg[j] < i</tt>.
 
 \li <tt>tape[i].new_var</tt>
-Suppose 
+Suppose
 <tt>i <= current, j < NumArg( tape[i].op ), and k = tape[i].arg[j]</tt>,
 and \c j corresponds to a variable for operator <tt>tape[i].op</tt>.
 It follows that <tt>tape[k].new_var</tt>
-has alread been set to the variable in the new operation sequence 
+has alread been set to the variable in the new operation sequence
 corresponding to the old variable index \c k.
 This means that the \c new_var value has been set
 for all the possible arguments that come before \a current.
 
 \param current
-is the index in the old operation sequence for 
+is the index in the old operation sequence for
 the variable corresponding to the result for the current operator.
-Assertions: 
+Assertions:
 <tt>
 current < tape.size(),
 NumRes( tape[current].op ) > 0.
@@ -777,7 +777,7 @@ is the object that will record the operations.
 \param op
 is the operator that we are recording which must be one of the following:
 AddpvOp, DivpvOp, MulpvOp, PowvpOp, SubpvOp.
- 
+
 \param arg
 is the vector of arguments for this operator.
 
@@ -830,34 +830,34 @@ Record an operation of the form (variable op parameter).
 \param tape
 is a vector that maps a variable index, in the old operation sequence,
 to an <tt>struct_old_variable</tt> information record.
-Note that the index for this vector must be greater than or equal zero and 
+Note that the index for this vector must be greater than or equal zero and
 less than <tt>tape.size()</tt>.
 
-\li <tt>tape[i].op</tt> 
+\li <tt>tape[i].op</tt>
 is the operator in the old operation sequence
 corresponding to the old variable index \c i.
 Assertion: <tt>NumRes(tape[i].op) > 0</tt>.
 
-\li <tt>tape[i].arg</tt> 
+\li <tt>tape[i].arg</tt>
 for <tt>j < NumArg( tape[i].op ), tape[i].arg[j]</tt>
 is the j-th the argument, in the old operation sequence,
 corresponding to the old variable index \c i.
 Assertion: <tt>tape[i].arg[j] < i</tt>.
 
 \li <tt>tape[i].new_var</tt>
-Suppose 
+Suppose
 <tt>i <= current, j < NumArg( tape[i].op ), and k = tape[i].arg[j]</tt>,
 and \c j corresponds to a variable for operator <tt>tape[i].op</tt>.
 It follows that <tt>tape[k].new_var</tt>
-has alread been set to the variable in the new operation sequence 
+has alread been set to the variable in the new operation sequence
 corresponding to the old variable index \c k.
 This means that the \c new_var value has been set
 for all the possible arguments that come before \a current.
 
 \param current
-is the index in the old operation sequence for 
+is the index in the old operation sequence for
 the variable corresponding to the result for the current operator.
-Assertions: 
+Assertions:
 <tt>
 current < tape.size(),
 NumRes( tape[current].op ) > 0.
@@ -879,7 +879,7 @@ is the object that will record the operations.
 \param op
 is the operator that we are recording which must be one of the following:
 DivvpOp, PowvpOp, SubvpOp.
- 
+
 \param arg
 is the vector of arguments for this operator.
 
@@ -929,34 +929,34 @@ Record an operation of the form (variable op variable).
 \param tape
 is a vector that maps a variable index, in the old operation sequence,
 to an <tt>struct_old_variable</tt> information record.
-Note that the index for this vector must be greater than or equal zero and 
+Note that the index for this vector must be greater than or equal zero and
 less than <tt>tape.size()</tt>.
 
-\li <tt>tape[i].op</tt> 
+\li <tt>tape[i].op</tt>
 is the operator in the old operation sequence
 corresponding to the old variable index \c i.
 Assertion: <tt>NumRes(tape[i].op) > 0</tt>.
 
-\li <tt>tape[i].arg</tt> 
+\li <tt>tape[i].arg</tt>
 for <tt>j < NumArg( tape[i].op ), tape[i].arg[j]</tt>
 is the j-th the argument, in the old operation sequence,
 corresponding to the old variable index \c i.
 Assertion: <tt>tape[i].arg[j] < i</tt>.
 
 \li <tt>tape[i].new_var</tt>
-Suppose 
+Suppose
 <tt>i <= current, j < NumArg( tape[i].op ), and k = tape[i].arg[j]</tt>,
 and \c j corresponds to a variable for operator <tt>tape[i].op</tt>.
 It follows that <tt>tape[k].new_var</tt>
-has alread been set to the variable in the new operation sequence 
+has alread been set to the variable in the new operation sequence
 corresponding to the old variable index \c k.
 This means that the \c new_var value has been set
 for all the possible arguments that come before \a current.
 
 \param current
-is the index in the old operation sequence for 
+is the index in the old operation sequence for
 the variable corresponding to the result for the current operator.
-Assertions: 
+Assertions:
 <tt>
 current < tape.size(),
 NumRes( tape[current].op ) > 0.
@@ -978,7 +978,7 @@ is the object that will record the operations.
 \param op
 is the operator that we are recording which must be one of the following:
 AddvvOp, DivvvOp, MulvvOp, PowvpOp, SubvvOp.
- 
+
 \param arg
 is the vector of arguments for this operator.
 
@@ -1033,34 +1033,34 @@ Recording a cummulative cummulative summation starting at its highest parrent.
 \param tape
 is a vector that maps a variable index, in the old operation sequence,
 to an <tt>struct_old_variable</tt> information record.
-Note that the index for this vector must be greater than or equal zero and 
+Note that the index for this vector must be greater than or equal zero and
 less than <tt>tape.size()</tt>.
 
-\li <tt>tape[i].op</tt> 
+\li <tt>tape[i].op</tt>
 is the operator in the old operation sequence
 corresponding to the old variable index \c i.
 Assertion: <tt>NumRes(tape[i].op) > 0</tt>.
 
-\li <tt>tape[i].arg</tt> 
+\li <tt>tape[i].arg</tt>
 for <tt>j < NumArg( tape[i].op ), tape[i].arg[j]</tt>
 is the j-th the argument, in the old operation sequence,
 corresponding to the old variable index \c i.
 Assertion: <tt>tape[i].arg[j] < i</tt>.
 
 \li <tt>tape[i].new_var</tt>
-Suppose 
+Suppose
 <tt>i <= current, j < NumArg( tape[i].op ), and k = tape[i].arg[j]</tt>,
 and \c j corresponds to a variable for operator <tt>tape[i].op</tt>.
 It follows that <tt>tape[k].new_var</tt>
-has alread been set to the variable in the new operation sequence 
+has alread been set to the variable in the new operation sequence
 corresponding to the old variable index \c k.
 This means that the \c new_var value has been set
 for all the possible arguments that come before \a current.
 
 \param current
-is the index in the old operation sequence for 
+is the index in the old operation sequence for
 the variable corresponding to the result for the current operator.
-Assertions: 
+Assertions:
 <tt>
 current < tape.size(),
 NumRes( tape[current].op ) > 0.
@@ -1096,13 +1096,13 @@ to the \a current node
 For example; suppose that index \c j corresponds to a variable
 in the current operator,
 <tt>i = tape[current].arg[j]</tt>,
-and 
+and
 <tt>tape[arg[j]].connect_type == csum_connected</tt>.
 It then follows that
 <tt>tape[i].new_var == tape.size()</tt>.
 
 \par Restriction:
-\li <tt>tape[current].op</tt> 
+\li <tt>tape[current].op</tt>
 must be one of <tt>AddpvOp, AddvvOp, SubpvOp, SubvpOp, SubvvOp</tt>.
 
 \li <tt>tape[current].connect_type</tt> must be \c yes_connected.
@@ -1121,7 +1121,7 @@ struct_size_pair record_csum(
 	recorder<Base>*                                    rec            ,
 	struct_csum_stacks&                              work           )
 {
-	
+
 	CPPAD_ASSERT_UNKNOWN( work.op_stack.empty() );
 	CPPAD_ASSERT_UNKNOWN( work.add_stack.empty() );
 	CPPAD_ASSERT_UNKNOWN( work.sub_stack.empty() );
@@ -1135,7 +1135,7 @@ struct_size_pair record_csum(
 
 	var.op  = tape[current].op;
 	var.arg = tape[current].arg;
-	var.add = true; 
+	var.add = true;
 	work.op_stack.push( var );
 	Base sum_par(0);
 
@@ -1176,7 +1176,7 @@ struct_size_pair record_csum(
 				);
 				var.op  = tape[arg[0]].op;
 				var.arg = tape[arg[0]].arg;
-				var.add = add; 
+				var.add = add;
 				work.op_stack.push( var );
 			}
 			else if( add )
@@ -1260,7 +1260,7 @@ Convert a player object to an optimized recorder object
 
 \tparam Base
 base type for the operator; i.e., this operation was recorded
-using AD< \a Base > and computations by this routine are done using type 
+using AD< \a Base > and computations by this routine are done using type
 \a Base.
 
 \param options
@@ -1295,13 +1295,13 @@ void optimize_run(
 	size_t                       n         ,
 	CppAD::vector<size_t>&       dep_taddr ,
 	player<Base>*                play      ,
-	recorder<Base>*              rec       ) 
+	recorder<Base>*              rec       )
 {
 	// temporary indices
 	size_t i, j, k;
 
 	// check options
-	bool conditional_skip = 
+	bool conditional_skip =
 		options.find("no_conditional_skip", 0) == std::string::npos;
 
 	// temporary variables
@@ -1313,14 +1313,14 @@ void optimize_run(
 	size_t m = dep_taddr.size();
 
 	// number of variables in the player
-	const size_t num_var = play->num_var_rec(); 
+	const size_t num_var = play->num_var_rec();
 
 # ifndef NDEBUG
 	// number of parameters in the player
 	const size_t num_par = play->num_par_rec();
 # endif
 
-	// number of  VecAD indices 
+	// number of  VecAD indices
 	size_t num_vecad_ind   = play->num_vec_ind_rec();
 
 	// number of VecAD vectors
@@ -1353,7 +1353,7 @@ void optimize_run(
 		// length of this VecAD
 		size_t length = play->GetVecInd(j);
 		// set to proper index for this VecAD
-		vecad[j] = i; 
+		vecad[j] = i;
 		for(k = 1; k <= length; k++)
 			vecad[j+k] = num_vecad_vec; // invalid index
 		// start of next VecAD
@@ -1365,7 +1365,7 @@ void optimize_run(
 	typedef std::set<size_t> size_set;
 	vector<size_set> user_r_set;   // set sparsity pattern for result
 	vector<size_set> user_s_set;   // set sparisty pattern for argument
-	vector<bool>     user_r_bool;  // bool sparsity pattern for result 
+	vector<bool>     user_r_bool;  // bool sparsity pattern for result
 	vector<bool>     user_s_bool;  // bool sparisty pattern for argument
 	//
 	size_t user_q     = 0;       // column dimension for sparsity patterns
@@ -1376,7 +1376,7 @@ void optimize_run(
 	size_t user_m     = 0;       // size of result vector
 	size_t user_n     = 0;       // size of arugment vector
 	//
-	atomic_base<Base>* user_atom = CPPAD_NULL; // current user atomic function 
+	atomic_base<Base>* user_atom = CPPAD_NULL; // current user atomic function
 	bool               user_set  = true;       // use set sparsity (or bool)
 
 	// next expected operator in a UserOp sequence
@@ -1436,10 +1436,10 @@ void optimize_run(
 			switch( connect_type )
 			{	case not_connected:
 				break;
-	
+
 				case yes_connected:
 				case sum_connected:
-				case csum_connected: 
+				case csum_connected:
 				tape[arg[0]].connect_type = yes_connected;
 				break;
 
@@ -1472,10 +1472,10 @@ void optimize_run(
 			switch( connect_type )
 			{	case not_connected:
 				break;
-	
+
 				case yes_connected:
 				case sum_connected:
-				case csum_connected: 
+				case csum_connected:
 				tape[arg[1]].connect_type = yes_connected;
 				break;
 
@@ -1499,16 +1499,16 @@ void optimize_run(
 				CPPAD_ASSERT_UNKNOWN(false);
 			}
 			break; // --------------------------------------------
-		
+
 			// Special case for SubvpOp
 			case SubvpOp:
 			switch( connect_type )
 			{	case not_connected:
 				break;
-	
+
 				case yes_connected:
 				case sum_connected:
-				case csum_connected: 
+				case csum_connected:
 				if( tape[arg[0]].connect_type == not_connected )
 					tape[arg[0]].connect_type = sum_connected;
 				else	tape[arg[0]].connect_type = yes_connected;
@@ -1538,14 +1538,14 @@ void optimize_run(
 				tape[i_var].connect_type = connect_type = csum_connected;
 			}
 			break; // --------------------------------------------
-		
+
 			// Special case for AddpvOp and SubpvOp
 			case AddpvOp:
 			case SubpvOp:
 			switch( connect_type )
 			{	case not_connected:
 				break;
-	
+
 				case yes_connected:
 				case sum_connected:
 				case csum_connected:
@@ -1579,7 +1579,7 @@ void optimize_run(
 			}
 			break; // --------------------------------------------
 
-		
+
 			// Special case for AddvvOp and SubvvOp
 			case AddvvOp:
 			case SubvvOp:
@@ -1620,7 +1620,7 @@ void optimize_run(
 			}
 			break; // --------------------------------------------
 
-			// Other binary operators 
+			// Other binary operators
 			// where operands are arg[0], arg[1]
 			case DivvvOp:
 			case MulvvOp:
@@ -1686,7 +1686,7 @@ void optimize_run(
 				//
 				if( arg[1] & 4 )
 				{	if( conditional_skip &&
-						tape[arg[4]].connect_type == not_connected )	
+						tape[arg[4]].connect_type == not_connected )
 					{	tape[arg[4]].connect_type = cexp_connected;
 						tape[arg[4]].cexp_set     = cexp_set;
 						tape[arg[4]].cexp_set.insert(
@@ -1694,7 +1694,7 @@ void optimize_run(
 						);
 					}
 					else
-					{	// if arg[4] is cexp_connected, it could be 
+					{	// if arg[4] is cexp_connected, it could be
 						// connected for both the true and false case
 						// 2DO: if previously cexp_connected
 						// and the true/false sense is the same, should
@@ -1705,7 +1705,7 @@ void optimize_run(
 				}
 				if( arg[1] & 8 )
 				{	if( conditional_skip &&
-						tape[arg[5]].connect_type == not_connected )	
+						tape[arg[5]].connect_type == not_connected )
 					{	tape[arg[5]].connect_type = cexp_connected;
 						tape[arg[5]].cexp_set     = cexp_set;
 						tape[arg[5]].cexp_set.insert(
@@ -1786,7 +1786,7 @@ void optimize_run(
 			{	tape[arg[1]].connect_type = yes_connected;
 				tape[arg[2]].connect_type = yes_connected;
 			}
-			break; 
+			break;
 			// ============================================================
 			case UserOp:
 			// start or end atomic operation sequence
@@ -1821,7 +1821,7 @@ void optimize_run(
 				info.connect_type = not_connected;
 				info.op_end       = i_op + 1;
 				user_info.push_back(info);
-				
+
 			}
 			else
 			{	CPPAD_ASSERT_UNKNOWN( user_state == user_start );
@@ -1858,12 +1858,12 @@ void optimize_run(
 			--user_j;
 			if( user_set )
 			{	if( ! user_s_set[user_j].empty() )
-					tape[arg[0]].connect_type = 
+					tape[arg[0]].connect_type =
 						user_info[user_curr].connect_type;
 			}
 			else
 			{	if( user_s_bool[user_j] )
-					tape[arg[0]].connect_type = 
+					tape[arg[0]].connect_type =
 						user_info[user_curr].connect_type;
 			}
 			if( user_j == 0 )
@@ -1980,7 +1980,7 @@ void optimize_run(
 	// Determine which variables can be conditionally skipped
 	for(i = 0; i < num_var; i++)
 	{	if( tape[i].connect_type == cexp_connected )
-		{	std::set<class_cexp_pair>::const_iterator itr = 
+		{	std::set<class_cexp_pair>::const_iterator itr =
 				tape[i].cexp_set.begin();
 			while( itr != tape[i].cexp_set.end() )
 			{	j = itr->index_;
@@ -1991,18 +1991,18 @@ void optimize_run(
 			}
 		}
 	}
-	// Determine size of skip information in user_info 
+	// Determine size of skip information in user_info
 	for(i = 0; i < user_info.size(); i++)
 	{	if( user_info[i].connect_type == cexp_connected )
-		{	std::set<class_cexp_pair>::const_iterator itr = 
+		{	std::set<class_cexp_pair>::const_iterator itr =
 				user_info[i].cexp_set.begin();
 			while( itr != user_info[i].cexp_set.end() )
 			{	j = itr->index_;
 				if( itr->compare_ == true )
-					cskip_info[j].n_op_false = 
+					cskip_info[j].n_op_false =
 						user_info[i].op_end - user_info[i].op_begin;
 				else
-					cskip_info[j].n_op_true = 
+					cskip_info[j].n_op_true =
 						user_info[i].op_end - user_info[i].op_begin;
 				itr++;
 			}
@@ -2030,7 +2030,7 @@ void optimize_run(
 		hash_table_var[i] = 0;
 	CPPAD_ASSERT_UNKNOWN( tape[0].op == BeginOp );
 
-	// initialize mapping from old variable index to new 
+	// initialize mapping from old variable index to new
 	// operator and variable index
 	for(i = 0; i < num_var; i++)
 	{	tape[i].new_op  = 0;       // invalid index (except for BeginOp)
@@ -2043,7 +2043,7 @@ void optimize_run(
 	// initialize mapping from old VecAD index to new VecAD index
 	CppAD::vector<size_t> new_vecad_ind(num_vecad_ind);
 	for(i = 0; i < num_vecad_ind; i++)
-		new_vecad_ind[i] = num_vecad_ind; // invalid index 
+		new_vecad_ind[i] = num_vecad_ind; // invalid index
 
 	j = 0;     // index into the old set of indices
 	for(i = 0; i < num_vecad_vec; i++)
@@ -2056,7 +2056,7 @@ void optimize_run(
 			for(k = 1; k <= length; k++) new_vecad_ind[j+k] =
 				rec->PutVecInd(
 					rec->PutPar(
-						play->GetPar( 
+						play->GetPar(
 							play->GetVecInd(j+k)
 			) ) );
 		}
@@ -2115,8 +2115,8 @@ void optimize_run(
 			skip &= n_true > 0 || n_false > 0;
 			if( skip )
 			{	CPPAD_ASSERT_UNKNOWN( NumRes(CSkipOp) == 0 );
-				size_t n_arg   = 7 + n_true + n_false; 
-				// reserve space for the arguments to this operator but 
+				size_t n_arg   = 7 + n_true + n_false;
+				// reserve space for the arguments to this operator but
 				// delay setting them until we have all the new addresses
 				cskip_info[j].i_arg = rec->ReserveArg(n_arg);
 				CPPAD_ASSERT_UNKNOWN( cskip_info[j].i_arg > 0 );
@@ -2167,7 +2167,7 @@ void optimize_run(
 			case SubvvOp:
 			keep  = tape[i_var].connect_type != not_connected;
 			keep &= tape[i_var].connect_type != csum_connected;
-			break; 
+			break;
 
 			case UserOp:
 			case UsrapOp:
@@ -2205,7 +2205,7 @@ void optimize_run(
 			case TanOp:
 			case TanhOp:
 			match_var = unary_match(
-				tape                ,  // inputs 
+				tape                ,  // inputs
 				i_var               ,
 				play->num_par_rec() ,
 				play->GetPar()      ,
@@ -2231,14 +2231,14 @@ void optimize_run(
 					// third argument is always the parameter 2 / sqrt(pi)
 					CPPAD_ASSERT_UNKNOWN( NumArg(ErfOp) == 3 );
 					rec->PutArg( rec->PutPar( Base(0) ) );
-					rec->PutArg( rec->PutPar( 
+					rec->PutArg( rec->PutPar(
 						Base( 1.0 / std::sqrt( std::atan(1.0) ) )
 					) );
 				}
 			}
 			break;
 			// ---------------------------------------------------
-			// Binary operators where 
+			// Binary operators where
 			// left is a variable and right is a parameter
 			case SubvpOp:
 			if( tape[arg[0]].connect_type == csum_connected )
@@ -2260,7 +2260,7 @@ void optimize_run(
 			case DivvpOp:
 			case PowvpOp:
 			match_var = binary_match(
-				tape                ,  // inputs 
+				tape                ,  // inputs
 				i_var               ,
 				play->num_par_rec() ,
 				play->GetPar()      ,
@@ -2288,11 +2288,11 @@ void optimize_run(
 			}
 			break;
 			// ---------------------------------------------------
-			// Binary operators where 
+			// Binary operators where
 			// left is an index and right is a variable
 			case DisOp:
 			match_var = binary_match(
-				tape                ,  // inputs 
+				tape                ,  // inputs
 				i_var               ,
 				play->num_par_rec() ,
 				play->GetPar()      ,
@@ -2307,10 +2307,10 @@ void optimize_run(
 			else
 			{	new_arg[0] = arg[0];
 				new_arg[1] = tape[ arg[1] ].new_var;
-				rec->PutArg( new_arg[0], new_arg[1] ); 
+				rec->PutArg( new_arg[0], new_arg[1] );
 				tape[i_var].new_op  = rec->num_op_rec();
 				tape[i_var].new_var = rec->PutOp(op);
-				CPPAD_ASSERT_UNKNOWN( 
+				CPPAD_ASSERT_UNKNOWN(
 					new_arg[1] < tape[i_var].new_var
 				);
 				replace_hash = true;
@@ -2318,7 +2318,7 @@ void optimize_run(
 			break;
 
 			// ---------------------------------------------------
-			// Binary operators where 
+			// Binary operators where
 			// left is a parameter and right is a variable
 			case SubpvOp:
 			case AddpvOp:
@@ -2342,7 +2342,7 @@ void optimize_run(
 			case MulpvOp:
 			case PowpvOp:
 			match_var = binary_match(
-				tape                ,  // inputs 
+				tape                ,  // inputs
 				i_var               ,
 				play->num_par_rec() ,
 				play->GetPar()      ,
@@ -2370,7 +2370,7 @@ void optimize_run(
 			}
 			break;
 			// ---------------------------------------------------
-			// Binary operator where 
+			// Binary operator where
 			// both operators are variables
 			case AddvvOp:
 			case SubvvOp:
@@ -2396,7 +2396,7 @@ void optimize_run(
 			case MulvvOp:
 			case PowvvOp:
 			match_var = binary_match(
-				tape                ,  // inputs 
+				tape                ,  // inputs
 				i_var               ,
 				play->num_par_rec() ,
 				play->GetPar()      ,
@@ -2433,11 +2433,11 @@ void optimize_run(
 			for(i = 2; i < 6; i++)
 			{	if( arg[1] & mask )
 				{	new_arg[i] = tape[arg[i]].new_var;
-					CPPAD_ASSERT_UNKNOWN( 
-						size_t(new_arg[i]) < num_var 
+					CPPAD_ASSERT_UNKNOWN(
+						size_t(new_arg[i]) < num_var
 					);
 				}
-				else	new_arg[i] = rec->PutPar( 
+				else	new_arg[i] = rec->PutPar(
 						play->GetPar( arg[i] )
 				);
 				mask = mask << 1;
@@ -2448,12 +2448,12 @@ void optimize_run(
 				new_arg[2] ,
 				new_arg[3] ,
 				new_arg[4] ,
-				new_arg[5] 
+				new_arg[5]
 			);
 			tape[i_var].new_op  = rec->num_op_rec();
 			tape[i_var].new_var = rec->PutOp(op);
 			//
-			// The new addresses for left and right are used during 
+			// The new addresses for left and right are used during
 			// fill in the arguments for the CSkip operations. This does not
 			// affect max_left_right which is used during this sweep.
 			CPPAD_ASSERT_UNKNOWN( cskip_info_index > 0 );
@@ -2525,9 +2525,9 @@ void optimize_run(
 			new_arg[1] = arg[1];
 			new_arg[2] = rec->num_load_op_rec();
 			CPPAD_ASSERT_UNKNOWN( size_t(new_arg[0]) < num_vecad_ind );
-			rec->PutArg( 
-				new_arg[0], 
-				new_arg[1], 
+			rec->PutArg(
+				new_arg[0],
+				new_arg[1],
 				new_arg[2]
 			);
 			tape[i_var].new_op  = rec->num_op_rec();
@@ -2542,9 +2542,9 @@ void optimize_run(
 			new_arg[2] = rec->num_load_op_rec();
 			CPPAD_ASSERT_UNKNOWN( size_t(new_arg[0]) < num_vecad_ind );
 			CPPAD_ASSERT_UNKNOWN( size_t(new_arg[1]) < num_var );
-			rec->PutArg( 
-				new_arg[0], 
-				new_arg[1], 
+			rec->PutArg(
+				new_arg[0],
+				new_arg[1],
 				new_arg[2]
 			);
 			tape[i_var].new_var = rec->num_op_rec();
@@ -2559,8 +2559,8 @@ void optimize_run(
 			new_arg[2] = rec->PutPar( play->GetPar(arg[2]) );
 			CPPAD_ASSERT_UNKNOWN( size_t(new_arg[0]) < num_vecad_ind );
 			rec->PutArg(
-				new_arg[0], 
-				new_arg[1], 
+				new_arg[0],
+				new_arg[1],
 				new_arg[2]
 			);
 			rec->PutOp(op);
@@ -2575,8 +2575,8 @@ void optimize_run(
 			CPPAD_ASSERT_UNKNOWN( size_t(new_arg[0]) < num_vecad_ind );
 			CPPAD_ASSERT_UNKNOWN( size_t(new_arg[1]) < num_var );
 			rec->PutArg(
-				new_arg[0], 
-				new_arg[1], 
+				new_arg[0],
+				new_arg[1],
 				new_arg[2]
 			);
 			rec->PutOp(op);
@@ -2592,8 +2592,8 @@ void optimize_run(
 			CPPAD_ASSERT_UNKNOWN( size_t(new_arg[1]) < num_var );
 			CPPAD_ASSERT_UNKNOWN( size_t(new_arg[2]) < num_var );
 			rec->PutArg(
-				new_arg[0], 
-				new_arg[1], 
+				new_arg[0],
+				new_arg[1],
 				new_arg[2]
 			);
 			rec->PutOp(op);
@@ -2609,8 +2609,8 @@ void optimize_run(
 			CPPAD_ASSERT_UNKNOWN( size_t(new_arg[1]) < num_var );
 			CPPAD_ASSERT_UNKNOWN( size_t(new_arg[2]) < num_var );
 			rec->PutArg(
-				new_arg[0], 
-				new_arg[1], 
+				new_arg[0],
+				new_arg[1],
 				new_arg[2]
 			);
 			rec->PutOp(op);
@@ -2671,7 +2671,7 @@ void optimize_run(
 				rec->PutOp(UsrrpOp);
 			}
 			break;
-			
+
 			case UsrrvOp:
 			CPPAD_ASSERT_NARG_NRES(op, 0, 1);
 			if( user_info[user_curr].connect_type != not_connected )
@@ -2687,7 +2687,7 @@ void optimize_run(
 
 		}
 		if( replace_hash )
-		{	// The old variable index i_var corresponds to the 
+		{	// The old variable index i_var corresponds to the
 			// new variable index tape[i_var].new_var. In addition
 			// this is the most recent variable that has this code.
 			hash_table_var[code] = i_var;
@@ -2731,9 +2731,9 @@ void optimize_run(
 		if( info.i_arg > 0 )
 		{	CPPAD_ASSERT_UNKNOWN( info.n_op_true==info.skip_op_true.size() );
 			CPPAD_ASSERT_UNKNOWN(info.n_op_false==info.skip_op_false.size());
-			size_t n_true  = 
+			size_t n_true  =
 				info.skip_var_true.size() + info.skip_op_true.size();
-			size_t n_false = 
+			size_t n_false =
 				info.skip_var_false.size() + info.skip_op_false.size();
 			size_t i_arg   = info.i_arg;
 			rec->ReplaceArg(i_arg++, info.cop   );
@@ -2753,11 +2753,11 @@ void optimize_run(
 				{	CPPAD_ASSERT_UNKNOWN( tape[i_var].new_op > 0 );
 					rec->ReplaceArg(i_arg++, tape[i_var].new_op );
 				}
-			} 
+			}
 			for(j = 0; j < info.skip_op_true.size(); j++)
 			{	i_op = info.skip_op_true[j];
 				rec->ReplaceArg(i_arg++, i_op);
-			} 
+			}
 			for(j = 0; j < info.skip_var_false.size(); j++)
 			{	i_var = info.skip_var_false[j];
 				if( tape[i_var].match )
@@ -2769,14 +2769,14 @@ void optimize_run(
 				{	CPPAD_ASSERT_UNKNOWN( tape[i_var].new_op > 0 );
 					rec->ReplaceArg(i_arg++, tape[i_var].new_op );
 				}
-			} 
+			}
 			for(j = 0; j < info.skip_op_false.size(); j++)
 			{	i_op = info.skip_op_false[j];
 				rec->ReplaceArg(i_arg++, i_op);
-			} 
+			}
 			rec->ReplaceArg(i_arg++, n_true + n_false);
 # ifndef NDEBUG
-			size_t n_arg   = 7 + n_true + n_false; 
+			size_t n_arg   = 7 + n_true + n_false;
 			CPPAD_ASSERT_UNKNOWN( info.i_arg + n_arg == i_arg );
 # endif
 		}
@@ -2793,7 +2793,7 @@ but the same funcition and derivative values.
 
 \tparam Base
 base type for the operator; i.e., this operation was recorded
-using AD< \a Base > and computations by this routine are done using type 
+using AD< \a Base > and computations by this routine are done using type
 \a Base.
 
 \param options
@@ -2871,12 +2871,12 @@ void ADFun<Base>::optimize(const std::string& options)
 
 		// check results
 		Base eps = 10. * epsilon<Base>();
-		for(i = 0; i < m; i++) CPPAD_ASSERT_KNOWN( 
+		for(i = 0; i < m; i++) CPPAD_ASSERT_KNOWN(
 			abs_geq( eps * max_taylor , check[i] - y[i] ) ,
 			"Error during check of f.optimize()."
 		);
 
-		// Erase memory that this calculation was done so NDEBUG gives 
+		// Erase memory that this calculation was done so NDEBUG gives
 		// same final state for this object (from users perspective)
 		num_order_taylor_     = 0;
 	}
