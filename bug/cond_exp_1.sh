@@ -1,7 +1,7 @@
 #! /bin/bash -e
 # $Id$
 # -----------------------------------------------------------------------------
-# CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-13 Bradley M. Bell
+# CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-15 Bradley M. Bell
 #
 # CppAD is distributed under multiple licenses. This distribution is under
 # the terms of the
@@ -47,7 +47,7 @@ int main(void) {
 	// af(x) = x_0 * x_1 if x[0] == 1
 	//         0.0       otherwise
 	ADFun<adouble> af(a2x, a2y);
-	af.optimize();
+	af.optimize("no_conditional_skip");
 
 	/**
 	* Second tape

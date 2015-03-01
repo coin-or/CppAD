@@ -1263,6 +1263,12 @@ base type for the operator; i.e., this operation was recorded
 using AD< \a Base > and computations by this routine are done using type 
 \a Base.
 
+\param options
+The possible values for this string are:
+"", "no_conditional_skip".
+If it is "no_conditional_skip", then no conditional skip operations
+will be generated.
+
 \param n
 is the number of independent variables on the tape.
 
@@ -1285,6 +1291,7 @@ operation sequence corresponding to \a play.
 
 template <class Base>
 void optimize_run(
+	const std::string&           options   ,
 	size_t                       n         ,
 	CppAD::vector<size_t>&       dep_taddr ,
 	player<Base>*                play      ,
@@ -1292,6 +1299,10 @@ void optimize_run(
 {
 	// temporary indices
 	size_t i, j, k;
+
+	// check options
+	bool conditional_skip = 
+		options.find("no_conditional_skip", 0) == std::string::npos;
 
 	// temporary variables
 	OpCode        op;   // current operator
@@ -1433,6 +1444,7 @@ void optimize_run(
 				break;
 
 				case cexp_connected:
+				CPPAD_ASSERT_UNKNOWN( conditional_skip )
 				if( tape[arg[0]].connect_type == not_connected )
 				{	tape[arg[0]].connect_type = cexp_connected;
 					tape[arg[0]].cexp_set     = cexp_set;
@@ -1468,6 +1480,7 @@ void optimize_run(
 				break;
 
 				case cexp_connected:
+				CPPAD_ASSERT_UNKNOWN( conditional_skip )
 				if( tape[arg[1]].connect_type == not_connected )
 				{	tape[arg[1]].connect_type = cexp_connected;
 					tape[arg[1]].cexp_set     = cexp_set;
@@ -1502,6 +1515,7 @@ void optimize_run(
 				break;
 
 				case cexp_connected:
+				CPPAD_ASSERT_UNKNOWN( conditional_skip )
 				if( tape[arg[0]].connect_type == not_connected )
 				{	tape[arg[0]].connect_type = cexp_connected;
 					tape[arg[0]].cexp_set     = cexp_set;
@@ -1541,6 +1555,7 @@ void optimize_run(
 				break;
 
 				case cexp_connected:
+				CPPAD_ASSERT_UNKNOWN( conditional_skip )
 				if( tape[arg[1]].connect_type == not_connected )
 				{	tape[arg[1]].connect_type = cexp_connected;
 					tape[arg[1]].cexp_set     = cexp_set;
@@ -1581,6 +1596,7 @@ void optimize_run(
 				break;
 
 				case cexp_connected:
+				CPPAD_ASSERT_UNKNOWN( conditional_skip )
 				if( tape[arg[i]].connect_type == not_connected )
 				{	tape[arg[i]].connect_type = cexp_connected;
 					tape[arg[i]].cexp_set     = cexp_set;
@@ -1620,6 +1636,7 @@ void optimize_run(
 				break;
 
 				case cexp_connected:
+				CPPAD_ASSERT_UNKNOWN( conditional_skip )
 				if( tape[arg[i]].connect_type == not_connected )
 				{	tape[arg[i]].connect_type = cexp_connected;
 					tape[arg[i]].cexp_set     = cexp_set;
@@ -1668,7 +1685,8 @@ void optimize_run(
 				cskip_info.push_back(info);
 				//
 				if( arg[1] & 4 )
-				{	if( tape[arg[4]].connect_type == not_connected )	
+				{	if( conditional_skip &&
+						tape[arg[4]].connect_type == not_connected )	
 					{	tape[arg[4]].connect_type = cexp_connected;
 						tape[arg[4]].cexp_set     = cexp_set;
 						tape[arg[4]].cexp_set.insert(
@@ -1686,7 +1704,8 @@ void optimize_run(
 					}
 				}
 				if( arg[1] & 8 )
-				{	if( tape[arg[5]].connect_type == not_connected )	
+				{	if( conditional_skip &&
+						tape[arg[5]].connect_type == not_connected )	
 					{	tape[arg[5]].connect_type = cexp_connected;
 						tape[arg[5]].cexp_set     = cexp_set;
 						tape[arg[5]].cexp_set.insert(
@@ -1871,6 +1890,7 @@ void optimize_run(
 				break;
 
 				case cexp_connected:
+				CPPAD_ASSERT_UNKNOWN( conditional_skip );
 				if( user_info[user_curr].connect_type == not_connected )
 				{	user_info[user_curr].connect_type  = connect_type;
 					user_info[user_curr].cexp_set      = cexp_set;
@@ -2776,9 +2796,14 @@ base type for the operator; i.e., this operation was recorded
 using AD< \a Base > and computations by this routine are done using type 
 \a Base.
 
+\param options
+The default value for this option is the empty string.
+The only other possible value is "no_conditional_skip".
+If this option is present, no conditional skip operators will be generated.
+
 */
 template <class Base>
-void ADFun<Base>::optimize(void)
+void ADFun<Base>::optimize(const std::string& options)
 {	// place to store the optimized version of the recording
 	recorder<Base> rec;
 
@@ -2812,7 +2837,7 @@ void ADFun<Base>::optimize(void)
 # endif
 
 	// create the optimized recording
-	CppAD::optimize::optimize_run<Base>(n, dep_taddr_, &play_, &rec);
+	CppAD::optimize::optimize_run<Base>(options, n, dep_taddr_, &play_, &rec);
 
 	// number of variables in the recording
 	num_var_tape_  = rec.num_var_rec();

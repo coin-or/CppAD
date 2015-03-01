@@ -524,7 +524,7 @@ public:
 
 	// Optimize the tape
 	// (see doxygen documentation in optimize.hpp)
-	void optimize(void);
+	void optimize(const std::string& options = "");
 	// ------------------- Deprecated -----------------------------
 
 	/// deprecated: assign a new operation sequence
