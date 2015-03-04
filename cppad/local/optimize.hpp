@@ -200,7 +200,7 @@ public:
 };
 
 /*!
-A container that is like std::set<class_cexp_pair> except that it does 
+A container that is like std::set<class_cexp_pair> except that it does
 not allocate empty sets and only has a few operations.
 */
 class class_set_cexp_pair {
