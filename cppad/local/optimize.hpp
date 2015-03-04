@@ -198,32 +198,142 @@ public:
 		return index_ < right.index_;
 	}
 };
+
 /*!
-Compute intersection of two sets of class_cexp_pair elements.
-
-\param left
-first operand of the intersection
-
-\param right
-second operand of the intersection
-
-\result
-the intersection of left and right
+A container that is like std::set<class_cexp_pair> except that it does 
+not allocate empty sets and only has a few operations.
 */
-inline std::set<class_cexp_pair> intersection(
-	std::set<class_cexp_pair>& left  ,
-	std::set<class_cexp_pair>& right )
-{	std::set<class_cexp_pair> result;
-	std::set_intersection(
-		left.begin()  ,
-		left.end()    ,
-		right.begin() ,
-		right.end()   ,
-		std::inserter(result, result.begin())
-	);
-	return result;
-}
+class class_set_cexp_pair {
+private:
+	std::set<class_cexp_pair>* ptr_;
 
+	void new_ptr(void)
+	{	CPPAD_ASSERT_UNKNOWN( ptr_ == CPPAD_NULL );
+		ptr_ = new std::set<class_cexp_pair>;
+		CPPAD_ASSERT_UNKNOWN( ptr_ != CPPAD_NULL );
+		// std::cout << "new ptr_ = " << ptr_ << std::endl;
+	}
+
+	void delete_ptr(void)
+	{	if( ptr_ != CPPAD_NULL )
+		{	// std::cout << "delete ptr_ = " << ptr_ << std::endl;
+			delete ptr_;
+		}
+	}
+
+public:
+	/// constructor
+	class_set_cexp_pair(void)
+	{	ptr_ = CPPAD_NULL; }
+
+	/// destructor
+	~class_set_cexp_pair(void)
+	{	delete_ptr(); }
+
+	void print(void)
+	{	if( ptr_ == CPPAD_NULL )
+		{	std::cout << "{ }";
+			return;
+		}
+		const char* sep = "{ ";
+		std::set<class_cexp_pair>::const_iterator itr;
+		for(itr = ptr_->begin(); itr != ptr_->end(); itr++)
+		{	std::cout << sep;
+			std::cout << "(" << itr->compare_ << "," << itr->index_ << ")";
+			sep = ", ";
+		}
+		std::cout << "}";
+	}
+
+	/// assignment operator
+	void operator=(const class_set_cexp_pair& other)
+	{	// make this a copy of the other set
+		if( other.ptr_ == CPPAD_NULL )
+		{	if( ptr_ == CPPAD_NULL )
+				return;
+			ptr_->clear();
+			return;
+		}
+		if( ptr_ == CPPAD_NULL )
+			new_ptr();
+		*ptr_ = *other.ptr_;
+	}
+
+	/// insert an element in this set
+	void insert(const class_cexp_pair& element)
+	{	if( ptr_ == CPPAD_NULL )
+			new_ptr();
+		ptr_->insert(element);
+	}
+
+	/// is this set empty
+	bool empty(void) const
+	{	if( ptr_ == CPPAD_NULL )
+			return true;
+		return ptr_->empty();
+	}
+
+	/// remove the elements in this set
+	void clear(void) const
+	{	if( ptr_ == CPPAD_NULL )
+			return;
+		ptr_->clear();
+	}
+
+	// returns begin pointer for the set
+	std::set<class_cexp_pair>::const_iterator begin(void)
+	{	if( ptr_ == CPPAD_NULL )
+			new_ptr();
+		return ptr_->begin();
+	}
+
+	// returns end pointer for the set
+	std::set<class_cexp_pair>::const_iterator end(void)
+	{	if( ptr_ == CPPAD_NULL )
+			new_ptr();
+		return ptr_->end();
+	}
+
+	/*!
+	Make this set the intersection of itself with another set.
+
+	\param other
+	the other set
+
+	*/
+	void intersection(const class_set_cexp_pair& other )
+	{	// empty result case
+		if( ptr_ == CPPAD_NULL )
+			return;
+
+		// empty result case
+		if( other.ptr_ == CPPAD_NULL )
+		{	ptr_->clear();
+			return;
+		}
+
+		// put result here
+		class_set_cexp_pair result;
+		CPPAD_ASSERT_UNKNOWN( result.ptr_ == CPPAD_NULL );
+		result.new_ptr();
+		CPPAD_ASSERT_UNKNOWN( result.ptr_ != CPPAD_NULL );
+
+		// do the intersection
+		std::set_intersection(
+			ptr_->begin()   ,
+			ptr_->end()     ,
+			other.ptr_->begin()  ,
+			other.ptr_->end()    ,
+			std::inserter(*result.ptr_, result.ptr_->begin())
+		);
+
+		// swap this and the result
+		std::swap(ptr_, result.ptr_);
+
+		return;
+	}
+
+};
 /*!
 Structure used by \c optimize to hold information about one variable.
 in the old operation seqeunce.
@@ -244,7 +354,7 @@ struct struct_old_variable {
 	If \c connect_type is \c cexp_connected,
 	this is the corresponding infromation for the conditional connections.
 	*/
-	std::set<class_cexp_pair> cexp_set;
+	class_set_cexp_pair cexp_set;
 
 	/// New operation sequence corresponding to this old varable.
 	/// Set during forward sweep to the index in the new tape
@@ -331,7 +441,7 @@ struct struct_user_info {
 	enum_connect_type connect_type;
 	/// If this is an conditional connection, this is the information
 	/// of the correpsonding CondExpOp operators
-	std::set<class_cexp_pair> cexp_set;
+	class_set_cexp_pair cexp_set;
 	/// If this is a conditional connection, this is the operator
 	/// index of the beginning of the atomic call sequence; i.e.,
 	/// the first UserOp.
@@ -1412,7 +1522,7 @@ void optimize_run(
 		else	CPPAD_ASSERT_UNKNOWN((op != InvOp) & (op != BeginOp));
 # endif
 		enum_connect_type connect_type      = tape[i_var].connect_type;
-		std::set<class_cexp_pair>& cexp_set = tape[i_var].cexp_set;
+		class_set_cexp_pair&  cexp_set = tape[i_var].cexp_set;
 		switch( op )
 		{
 			// One variable corresponding to arg[0]
@@ -1450,9 +1560,7 @@ void optimize_run(
 					tape[arg[0]].cexp_set     = cexp_set;
 				}
 				else if( tape[arg[0]].connect_type == cexp_connected )
-				{	tape[arg[0]].cexp_set = intersection(
-						tape[arg[0]].cexp_set, cexp_set
-					);
+				{	tape[arg[0]].cexp_set.intersection(cexp_set);
 					if( tape[arg[0]].cexp_set.empty() )
 						tape[arg[0]].connect_type = yes_connected;
 				}
@@ -1486,9 +1594,7 @@ void optimize_run(
 					tape[arg[1]].cexp_set     = cexp_set;
 				}
 				else if( tape[arg[1]].connect_type == cexp_connected )
-				{	tape[arg[1]].cexp_set = intersection(
-						tape[arg[1]].cexp_set, cexp_set
-					);
+				{	tape[arg[1]].cexp_set.intersection(cexp_set);
 					if( tape[arg[1]].cexp_set.empty() )
 						tape[arg[1]].connect_type = yes_connected;
 				}
@@ -1521,9 +1627,7 @@ void optimize_run(
 					tape[arg[0]].cexp_set     = cexp_set;
 				}
 				else if( tape[arg[0]].connect_type == cexp_connected )
-				{	tape[arg[0]].cexp_set = intersection(
-						tape[arg[0]].cexp_set, cexp_set
-					);
+				{	tape[arg[0]].cexp_set.intersection(cexp_set);
 					if( tape[arg[0]].cexp_set.empty() )
 						tape[arg[0]].connect_type = yes_connected;
 				}
@@ -1561,9 +1665,7 @@ void optimize_run(
 					tape[arg[1]].cexp_set     = cexp_set;
 				}
 				else if( tape[arg[1]].connect_type == cexp_connected )
-				{	tape[arg[1]].cexp_set = intersection(
-						tape[arg[1]].cexp_set, cexp_set
-					);
+				{	tape[arg[1]].cexp_set.intersection(cexp_set);
 					if( tape[arg[1]].cexp_set.empty() )
 						tape[arg[1]].connect_type = yes_connected;
 				}
@@ -1602,9 +1704,7 @@ void optimize_run(
 					tape[arg[i]].cexp_set     = cexp_set;
 				}
 				else if( tape[arg[i]].connect_type == cexp_connected )
-				{	tape[arg[i]].cexp_set = intersection(
-						tape[arg[i]].cexp_set, cexp_set
-					);
+				{	tape[arg[i]].cexp_set.intersection(cexp_set);
 					if( tape[arg[i]].cexp_set.empty() )
 						tape[arg[i]].connect_type = yes_connected;
 				}
@@ -1642,9 +1742,7 @@ void optimize_run(
 					tape[arg[i]].cexp_set     = cexp_set;
 				}
 				else if( tape[arg[i]].connect_type == cexp_connected )
-				{	tape[arg[i]].cexp_set = intersection(
-						tape[arg[i]].cexp_set, cexp_set
-					);
+				{	tape[arg[i]].cexp_set.intersection(cexp_set);
 					if( tape[arg[i]].cexp_set.empty() )
 						tape[arg[i]].connect_type = yes_connected;
 				}
@@ -1896,9 +1994,7 @@ void optimize_run(
 					user_info[user_curr].cexp_set      = cexp_set;
 				}
 				else if(user_info[user_curr].connect_type==cexp_connected)
-				{	user_info[user_curr].cexp_set = intersection(
-						user_info[user_curr].cexp_set, cexp_set
-					);
+				{	user_info[user_curr].cexp_set.intersection(cexp_set);
 					if( user_info[user_curr].cexp_set.empty() )
 						user_info[user_curr].connect_type = yes_connected;
 				}
