@@ -280,7 +280,7 @@ public:
 	}
 
 	/// remove the elements in this set
-	void clear(void) 
+	void clear(void)
 	{	if( ptr_ == CPPAD_NULL )
 			return;
 		CPPAD_ASSERT_UNKNOWN( ! empty() );
