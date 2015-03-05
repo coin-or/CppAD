@@ -205,6 +205,7 @@ not allocate empty sets and only has a few operations.
 */
 class class_set_cexp_pair {
 private:
+	// This set is empty if and only if ptr_ == CPPAD_NULL;
 	std::set<class_cexp_pair>* ptr_;
 
 	void new_ptr(void)
@@ -219,6 +220,7 @@ private:
 		{	// std::cout << "delete ptr_ = " << ptr_ << std::endl;
 			delete ptr_;
 		}
+		ptr_ = CPPAD_NULL;
 	}
 
 public:
@@ -235,6 +237,7 @@ public:
 		{	std::cout << "{ }";
 			return;
 		}
+		CPPAD_ASSERT_UNKNOWN( ! empty() );
 		const char* sep = "{ ";
 		std::set<class_cexp_pair>::const_iterator itr;
 		for(itr = ptr_->begin(); itr != ptr_->end(); itr++)
@@ -251,9 +254,10 @@ public:
 		if( other.ptr_ == CPPAD_NULL )
 		{	if( ptr_ == CPPAD_NULL )
 				return;
-			ptr_->clear();
+			delete_ptr();
 			return;
 		}
+		CPPAD_ASSERT_UNKNOWN( ! other.empty() );
 		if( ptr_ == CPPAD_NULL )
 			new_ptr();
 		*ptr_ = *other.ptr_;
@@ -264,33 +268,34 @@ public:
 	{	if( ptr_ == CPPAD_NULL )
 			new_ptr();
 		ptr_->insert(element);
+		CPPAD_ASSERT_UNKNOWN( ! empty() );
 	}
 
 	/// is this set empty
 	bool empty(void) const
 	{	if( ptr_ == CPPAD_NULL )
 			return true;
-		return ptr_->empty();
+		CPPAD_ASSERT_UNKNOWN( ! ptr_->empty() );
+		return false;
 	}
 
 	/// remove the elements in this set
-	void clear(void) const
+	void clear(void) 
 	{	if( ptr_ == CPPAD_NULL )
 			return;
-		ptr_->clear();
+		CPPAD_ASSERT_UNKNOWN( ! empty() );
+		delete_ptr();
 	}
 
 	// returns begin pointer for the set
 	std::set<class_cexp_pair>::const_iterator begin(void)
-	{	if( ptr_ == CPPAD_NULL )
-			new_ptr();
+	{	CPPAD_ASSERT_UNKNOWN( ! empty() );
 		return ptr_->begin();
 	}
 
 	// returns end pointer for the set
 	std::set<class_cexp_pair>::const_iterator end(void)
-	{	if( ptr_ == CPPAD_NULL )
-			new_ptr();
+	{	CPPAD_ASSERT_UNKNOWN( ! empty() );
 		return ptr_->end();
 	}
 
@@ -308,7 +313,7 @@ public:
 
 		// empty result case
 		if( other.ptr_ == CPPAD_NULL )
-		{	ptr_->clear();
+		{	delete_ptr();
 			return;
 		}
 
@@ -326,6 +331,8 @@ public:
 			other.ptr_->end()    ,
 			std::inserter(*result.ptr_, result.ptr_->begin())
 		);
+		if( result.ptr_->empty() )
+			result.delete_ptr();
 
 		// swap this and the result
 		std::swap(ptr_, result.ptr_);
@@ -2075,7 +2082,8 @@ void optimize_run(
 
 	// Determine which variables can be conditionally skipped
 	for(i = 0; i < num_var; i++)
-	{	if( tape[i].connect_type == cexp_connected )
+	{	if( tape[i].connect_type == cexp_connected &&
+		  ! tape[i].cexp_set.empty() )
 		{	std::set<class_cexp_pair>::const_iterator itr =
 				tape[i].cexp_set.begin();
 			while( itr != tape[i].cexp_set.end() )
@@ -2089,7 +2097,8 @@ void optimize_run(
 	}
 	// Determine size of skip information in user_info
 	for(i = 0; i < user_info.size(); i++)
-	{	if( user_info[i].connect_type == cexp_connected )
+	{	if( user_info[i].connect_type == cexp_connected &&
+		  ! user_info[i].cexp_set.empty() )
 		{	std::set<class_cexp_pair>::const_iterator itr =
 				user_info[i].cexp_set.begin();
 			while( itr != user_info[i].cexp_set.end() )
@@ -2804,7 +2813,8 @@ void optimize_run(
 
 	// Move skip information from user_info to cskip_info
 	for(i = 0; i < user_info.size(); i++)
-	{	if( user_info[i].connect_type == cexp_connected )
+	{	if( user_info[i].connect_type == cexp_connected &&
+		  ! user_info[i].cexp_set.empty() )
 		{	std::set<class_cexp_pair>::const_iterator itr =
 				user_info[i].cexp_set.begin();
 			while( itr != user_info[i].cexp_set.end() )
