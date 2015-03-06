@@ -48,7 +48,7 @@ This section contains a list of the changes to CppAD during 2015
 The purpose of this section is to
 assist you in learning about changes between various versions of CppAD.
 
-$head 03-04$$
+$head 03-06$$
 The developers of the
 $href%https://github.com/kaskr/adcomp%TMB%$$ package reported that
 for large $cref ADFun$$ tapes, the $cref optimize$$ routine uses
@@ -56,8 +56,8 @@ a large amount of memory because it allocates a standard set for
 each variable on the tape. These sets are only necessary for variables in
 $cref/conditional expressions/condexp/$$ that can be skipped once
 the independent variables have a set value.
-The problem has been fixed by using a NULL pointer for the empty set
-corresponding to variables that are not conditionally connected to the results.
+The problem has been reduced by using a NULL pointer for the empty set
+and similar changes. It still needs more work.
 
 $head 02-28$$
 It used to be the case that the
