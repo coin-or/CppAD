@@ -171,32 +171,40 @@ Class used to hold information about one conditional expression.
 */
 class class_cexp_pair {
 public:
+	/// packs both the compare and index information
+	/// compare = pack_ % 2
+	/// index   = pack_ / 2
+	size_t pack_;
+
 	/// If this is true (false) this connection is only for the case where
 	/// the comparision in the conditional expression is true (false)
-	bool compare_;
+	bool compare(void) const
+	{	return bool(pack_ % 2); }
+
 	/// This is the index of the conditional expression (in cksip_info)
 	/// for this connection
-	size_t index_;
+	size_t index(void) const
+	{	return pack_ / 2; }
+
 	/// constructor
-	class_cexp_pair(const bool& compare, const size_t& index)
-	: compare_(compare), index_(index)
-	{ }
+	class_cexp_pair(const bool& compare_arg, const size_t& index_arg)
+	: pack_(size_t(compare_arg) + 2 * index_arg )
+	{	CPPAD_ASSERT_UNKNOWN( compare_arg == compare() );
+		CPPAD_ASSERT_UNKNOWN( index_arg == index() );
+	}
+
 	/// assignment operator
 	void operator=(const class_cexp_pair& right)
-	{	index_   = right.index_;
-		compare_ = right.compare_;
-	}
+	{	pack_ = right.pack_; }
+
 	/// not equal operator
 	bool operator!=(const class_cexp_pair& right)
-	{	return (index_ != right.index_) | (compare_ != right.compare_);
-	}
+	{	return pack_ != right.pack_; }
+
 	/// Less than operator
 	/// (required for intersection of two sets of class_cexp_pair elements).
 	bool operator<(const class_cexp_pair& right) const
-	{	if( index_ == right.index_ )
-			return size_t(compare_) < size_t(right.compare_);
-		return index_ < right.index_;
-	}
+	{	return pack_ < right.pack_; }
 };
 
 /*!
@@ -242,7 +250,7 @@ public:
 		std::set<class_cexp_pair>::const_iterator itr;
 		for(itr = ptr_->begin(); itr != ptr_->end(); itr++)
 		{	std::cout << sep;
-			std::cout << "(" << itr->compare_ << "," << itr->index_ << ")";
+			std::cout << "(" << itr->compare() << "," << itr->index() << ")";
 			sep = ", ";
 		}
 		std::cout << "}";
@@ -2087,8 +2095,8 @@ void optimize_run(
 		{	std::set<class_cexp_pair>::const_iterator itr =
 				tape[i].cexp_set.begin();
 			while( itr != tape[i].cexp_set.end() )
-			{	j = itr->index_;
-				if( itr->compare_ == true )
+			{	j = itr->index();
+				if( itr->compare() == true )
 					cskip_info[j].skip_var_false.push_back(i);
 				else cskip_info[j].skip_var_true.push_back(i);
 				itr++;
@@ -2102,8 +2110,8 @@ void optimize_run(
 		{	std::set<class_cexp_pair>::const_iterator itr =
 				user_info[i].cexp_set.begin();
 			while( itr != user_info[i].cexp_set.end() )
-			{	j = itr->index_;
-				if( itr->compare_ == true )
+			{	j = itr->index();
+				if( itr->compare() == true )
 					cskip_info[j].n_op_false =
 						user_info[i].op_end - user_info[i].op_begin;
 				else
@@ -2818,10 +2826,10 @@ void optimize_run(
 		{	std::set<class_cexp_pair>::const_iterator itr =
 				user_info[i].cexp_set.begin();
 			while( itr != user_info[i].cexp_set.end() )
-			{	j = itr->index_;
+			{	j = itr->index();
 				k = user_info[i].op_begin;
 				while(k < user_info[i].op_end)
-				{	if( itr->compare_ == true )
+				{	if( itr->compare() == true )
 						cskip_info[j].skip_op_false.push_back(k++);
 					else	cskip_info[j].skip_op_true.push_back(k++);
 				}
