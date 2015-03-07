@@ -3,7 +3,7 @@
 CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-15 Bradley M. Bell
 
 CppAD is distributed under multiple licenses. This distribution is under
-the terms of the 
+the terms of the
                     Eclipse Public License Version 1.0.
 
 A copy of this license is included in the COPYING file of this distribution.
@@ -32,32 +32,32 @@ namespace {
 	{	bool ok = true;
 		using CppAD::AD;
 		using CppAD::vector;
-	
-		// independent variable vector 
+
+		// independent variable vector
 		vector< AD<double> > ax(2), ay(1);
 		ax[0] = 1.0;
 		ax[1] = 2.0;
 		Independent(ax);
-	
+
 		// first conditional expression
 		AD<double> ac1 = CondExpLe(ax[0], ax[1], 2.0 * ax[0], 3.0 * ax[1] );
-	
+
 		// second conditional expression
 		AD<double> ac2 = CondExpGe(ax[0], ax[1], 4.0 * ax[0], 5.0 * ax[1] );
-	
+
 		// third conditional expression
 		AD<double> ac3 = CondExpLt(ax[0], ax[1], 6.0 * ac1, 7.0 * ac2 );
-	
+
 		// create function object f : ax -> ay
 		ay[0] = ac3;
 		CppAD::ADFun<double> f(ax, ay);
-	
+
 		// now optimize the operation sequence
 		if( conditional_skip )
 			f.optimize();
 		else
 			f.optimize("no_conditional_skip");
-	
+
 		// now zero order forward
 		vector<double> x(2), y(1);
 		for(size_t i = 0; i < 3; i++)
@@ -76,13 +76,13 @@ namespace {
 			if( x[0] >= x[1] )
 				c2 = 4.0 * x[0];
 			else	c2 = 5.0 * x[1];
-	
+
 			// third conditional expression
 			double c3;
 			if( x[0] < x[1] )
 				c3 = 6.0 * c1;
 			else	c3 = 7.0 * c2;
-	
+
 			ok &= y[0] == c3;
 		}
 		return ok;
@@ -91,58 +91,58 @@ namespace {
 	// Test for bug where checkpoint function did not depend on
 	// the operands in the logical comparison because of the CondExp
 	// sparsity pattern.
-	void j_algo( 
+	void j_algo(
 		const CppAD::vector< CppAD::AD<double> >& ax ,
 		      CppAD::vector< CppAD::AD<double> >& ay )
 	{	ay[0] = CondExpGt(ax[0], ax[1], ax[2], ax[3]); }
-	
+
 	bool atomic_cond_exp_sparsity(void)
 	{	bool ok = true;
 		using CppAD::AD;
 		using CppAD::vector;
-	
+
 		// Create a checkpoint version of the function g
 		vector< AD<double> > au(4), av(1);
 		for(size_t i = 0; i < 4; i++)
 			au[i] = AD<double>(i);
 		CppAD::checkpoint<double> j_check("j_check", j_algo, au, av);
-	
-		// independent variable vector 
+
+		// independent variable vector
 		vector< AD<double> > ax(2), ay(1);
 		ax[0] = 1.;
 		ax[1] = 1.;
 		Independent(ax);
-	
+
 		// call atomic function that does not get used
-		for(size_t i = 0; i < 4; i++) 
+		for(size_t i = 0; i < 4; i++)
 			au[i] = ax[0] + AD<double>(i + 1) * ax[1];
 		j_check(au, ay);
-	
+
 		// create function object f : ax -> ay
 		CppAD::ADFun<double> f(ax, ay);
 
-	
+
 		// now optimize the operation sequence
 		j_check.option( atomic_sparsity_option );
 		if( conditional_skip )
 			f.optimize();
 		else
 			f.optimize("no_conditional_skip");
-	
+
 		// check result where true case is used; i.e., au[0] > au[1]
 		vector<double> x(2), y(1);
 		x[0] = 1.;
 		x[1] = -1;
 		y    = f.Forward(0, x);
 		ok  &= y[0] == x[0] + double(3) * x[1];
-		
-	
+
+
 		// check result where false case is used; i.e., au[0] <= au[1]
 		x[0] = 1.;
 		x[1] = 1;
 		y    = f.Forward(0, x);
 		ok  &= y[0] == x[0] + double(4) * x[1];
-		
+
 		return ok;
 	}
 	// -------------------------------------------------------------------
@@ -168,7 +168,7 @@ namespace {
 		CppAD::checkpoint<double> k_check("k_check", k_algo, ax, ag);
 		CppAD::checkpoint<double> h_check("h_check", h_algo, ax, ah);
 
-		// independent variable vector 
+		// independent variable vector
 		Independent(ax);
 
 		// atomic function calls that get conditionally used
@@ -176,12 +176,12 @@ namespace {
 		h_check(ax, ah);
 
 		// conditional expression
-		ay[0] = CondExpLt(ax[0], ax[1], ag[0], ah[0]); 
-	
+		ay[0] = CondExpLt(ax[0], ax[1], ag[0], ah[0]);
+
 		// create function object f : ax -> ay
 		CppAD::ADFun<double> f;
 		f.Dependent(ax, ay);
-	
+
 		// use zero order to evaluate when condition is true
 		CppAD::vector<double>  x(2), dx(2);
 		CppAD::vector<double>  y(1), dy(1), w(1);
@@ -221,12 +221,12 @@ namespace {
 		dx    = f.Reverse(1, w);
 		ok   &= dx[0] == 1.;
 		ok   &= dx[1] == -1.;
-	
+
 		return ok;
 	}
 	// -------------------------------------------------------------------
 	// Test of optimizing out arguments to an atomic function
-	void g_algo( 
+	void g_algo(
 		const CppAD::vector< CppAD::AD<double> >& ax ,
 		      CppAD::vector< CppAD::AD<double> >& ay )
 	{	ay = ax; }
@@ -235,29 +235,29 @@ namespace {
 	{	bool ok = true;
 		using CppAD::AD;
 		using CppAD::vector;
-	
+
 		// Create a checkpoint version of the function g
 		vector< AD<double> > ax(2), ay(2), az(1);
 		ax[0] = 0.;
 		ax[1] = 1.;
 		CppAD::checkpoint<double> g_check("g_check", g_algo, ax, ay);
-	
-		// independent variable vector 
+
+		// independent variable vector
 		Independent(ax);
-	
+
 		// call atomic function that does not get used
 		g_check(ax, ay);
-	
+
 		// conditional expression
-		az[0] = CondExpLt(ax[0], ax[1], ax[0] + ax[1], ax[0] - ax[1]); 
-		
+		az[0] = CondExpLt(ax[0], ax[1], ax[0] + ax[1], ax[0] - ax[1]);
+
 		// create function object f : ax -> az
 		CppAD::ADFun<double> f(ax, az);
 
 		// number of variables before optimization
 		// (include ay[0] and ay[1])
 		size_t n_before = f.size_var();
-		
+
 		// now optimize the operation sequence
 		g_check.option( atomic_sparsity_option );
 		if( conditional_skip )
@@ -265,18 +265,18 @@ namespace {
 		else
 			f.optimize("no_conditional_skip");
 
-		// number of variables after optimization 
+		// number of variables after optimization
 		// (does not include ay[0] and ay[1])
 		size_t n_after = f.size_var();
 		ok            &= n_after + 2 == n_before;
-	
+
 		// check optimization works ok
 		vector<double> x(2), z(1);
 		x[0] = 4.;
 		x[1] = 3.;
 		z    = f.Forward(0, x);
 		ok  &= z[0] == x[0] - x[1];
-		
+
 		return ok;
 	}
 	bool atomic_arguments(void)
@@ -298,13 +298,13 @@ namespace {
 		au[1] = ax[0] - ax[1]; // this argument also requires a new variable
 		g_check(au, aw);
 
-		// now create f(x) = x_0 - x_1 
+		// now create f(x) = x_0 - x_1
 		ay[0] = aw[0];
 		CppAD::ADFun<double> f(ax, ay);
 
 		// number of variables before optimization
 		size_t n_before = f.size_var();
- 
+
 		// now optimize f so that the calculation of au[1] is removed
 		g_check.option( atomic_sparsity_option );
 		if( conditional_skip )
@@ -321,7 +321,7 @@ namespace {
 		x[0] = 5.0;
 		x[1] = 6.0;
 		y    = f.Forward(0, x);
-		ok  &= (y[0] == x[0] + x[1]); 
+		ok  &= (y[0] == x[0] + x[1]);
 
 		return ok;
 	}
@@ -341,7 +341,7 @@ namespace {
 
 		// unary operator where operand is arg[0]
 		// (note that sin corresponds to two tape variables)
-		not_used = CppAD::abs(x[0]); 
+		not_used = CppAD::abs(x[0]);
 		y[0]     = sin(x[0]);
 		original += 3;
 		opt      += 2;
@@ -392,25 +392,25 @@ namespace {
 		size_t original;
 		size_t opt;
 		size_t i, j;
-	
+
 		// domain space vector
 		size_t n  = 6;
 		CppAD::vector< AD<double> > X(n);
 		for(j = 0; j < n; j++)
-			X[j] = 1. / double(j + 1); 
-	
+			X[j] = 1. / double(j + 1);
+
 		// declare independent variables and start tape recording
 		CppAD::Independent(X);
-	
-		// range space vector 
+
+		// range space vector
 		size_t m = n;
 		CppAD::vector< AD<double> > Y(m);
 		depend_fun(X, Y, original, opt);
-	
+
 		// create f: X -> Y and stop tape recording
 		CppAD::ADFun<double> F;
-		F.Dependent(X, Y); 
-	
+		F.Dependent(X, Y);
+
 		CppAD::vector<double> x(n), y(m), check(m);
 		for(j = 0; j < n; j++)
 			x[j] = Value(X[j]);
@@ -418,25 +418,25 @@ namespace {
 		depend_fun(x, check, original, opt);
 		for(i = 0; i < m; i++)
 			ok &= NearEqual(y[i], check[i], eps, eps);
-	
+
 		// Check size before optimization
 		ok &= F.size_var() == original;
-	
+
 		// Optimize the operation sequence
 		if( conditional_skip )
 			F.optimize();
 		else
 			F.optimize("no_conditional_skip");
-	
+
 		// Check size after optimization
 		ok &= F.size_var() == opt;
-	
+
 		// check result now
 		// (should have already been checked if NDEBUG not defined)
 		y = F.Forward(0, x);
 		for(i = 0; i < m; i++)
 			ok &= NearEqual(y[i], check[i], eps, eps);
-	
+
 		return ok;
 	}
 
@@ -450,7 +450,7 @@ namespace {
 		size_t n  = 2;
 		CppAD::vector< AD<double> > X(n);
 		for(j = 0; j < n; j++)
-			X[j] = double(j); 
+			X[j] = double(j);
 
 		// range space vector
 		size_t m = 3;
@@ -462,7 +462,7 @@ namespace {
 			U[i] = 0;
 		for(j = 0; j < n; j++)
 			V[j] = 0;
-	
+
 		// declare independent variables and start tape recording
 		CppAD::Independent(X);
 
@@ -481,15 +481,15 @@ namespace {
 		{	AD<double> I(i);
 			Y[i] = U[I];
 		}
-	
+
 		// create f: X -> Y and stop tape recording
-		// Y[ X[0] ] = X[1] and other components of Y are zero. 
+		// Y[ X[0] ] = X[1] and other components of Y are zero.
 		CppAD::ADFun<double> F;
-		F.Dependent(X, Y); 
+		F.Dependent(X, Y);
 
 		// Check number of VecAD vectors plus number of VecAD elements
-		ok &= (F.size_VecAD() == 2 + n + m); 
-	
+		ok &= (F.size_VecAD() == 2 + n + m);
+
 		CppAD::vector<double> x(n), y(m);
 		for(j = 0; j < n; j++)
 			x[j] = double(j);
@@ -507,14 +507,14 @@ namespace {
 			F.optimize("no_conditional_skip");
 
 		// Check number of VecAD vectors plus number of VecAD elements
-		ok &= (F.size_VecAD() == 1 + m); 
+		ok &= (F.size_VecAD() == 1 + m);
 		y = F.Forward(0, x);
 		for(i = 0; i < m; i++)
 		{	if( i != static_cast<size_t>(x[0]) )
 				ok &= (y[i] == 0.);
 			else	ok &= (y[i] == x[1]);
 		}
-		
+
 		return ok;
 	}
 	bool depend_three(void)
@@ -525,19 +525,19 @@ namespace {
 
 		size_t n = 3;
 		size_t j;
-	
+
 		vector< AD<double> >    X(n), Y(n);
-		vector<double>          x(n), y(n); 
-	
+		vector<double>          x(n), y(n);
+
 		for(j = 0; j < n; j++)
 			X[j] = x[j] = double(j+2);
-	
+
 		CppAD::Independent(X);
-	                
+
 		Y[0] = pow(X[0], 2.0);
 		Y[1] = pow(2.0, X[1]);
 		Y[2] = pow(X[0], X[1]);
-	
+
 		CppAD::ADFun<double> F(X, Y);
 		if( conditional_skip )
 			F.optimize();
@@ -552,7 +552,7 @@ namespace {
 			ok &= ( y[j] == Value(Y[j]) );
 
 		// check reverse mode derivative
-		vector<double>   w(n), dw(n); 
+		vector<double>   w(n), dw(n);
 		w[0] = 0.;
 		w[1] = 0.;
 		w[2] = 1.;
@@ -566,7 +566,7 @@ namespace {
 
 		check = 0.;
 		ok &= NearEqual( dw[2], check, eps, eps );
-	
+
 		return ok;
 	}
 	bool depend_four(void)
@@ -611,7 +611,7 @@ namespace {
 		opt      = 0;
 
 		// unary operator where operand is arg[0] and one result
-		Scalar a1 = CppAD::exp(x[0]); 
+		Scalar a1 = CppAD::exp(x[0]);
 		original += 1;
 		opt      += 1;
 
@@ -680,25 +680,25 @@ namespace {
 		size_t original;
 		size_t opt;
 		size_t i, j;
-	
+
 		// domain space vector
 		size_t n  = 7;
 		CppAD::vector< AD<double> > X(n);
 		for(j = 0; j < n; j++)
-			X[j] = 1. / double(j + 1); 
-	
+			X[j] = 1. / double(j + 1);
+
 		// declare independent variables and start tape recording
 		CppAD::Independent(X);
-	
-		// range space vector 
+
+		// range space vector
 		size_t m = n;
 		CppAD::vector< AD<double> > Y(m);
 		duplicate_fun(X, Y, original, opt);
-	
+
 		// create f: X -> Y and stop tape recording
 		CppAD::ADFun<double> F;
-		F.Dependent(X, Y); 
-	
+		F.Dependent(X, Y);
+
 		CppAD::vector<double> x(n), y(m), check(m);
 		for(j = 0; j < n; j++)
 			x[j] = Value(X[j]);
@@ -706,25 +706,25 @@ namespace {
 		duplicate_fun(x, check, original, opt);
 		for(i = 0; i < m; i++)
 			ok &= NearEqual(y[i], check[i], eps, eps);
-	
+
 		// Check size before optimization
 		ok &= F.size_var() == (n + 1 + original);
-	
+
 		// Optimize the operation sequence
 		if( conditional_skip )
 			F.optimize();
 		else
 			F.optimize("no_conditional_skip");
-	
+
 		// Check size after optimization
 		ok &= F.size_var() == (n + 1 + opt);
-	
+
 		// check result now
 		// (should have already been checked if NDEBUG not defined)
 		y = F.Forward(0, x);
 		for(i = 0; i < m; i++)
 			ok &= NearEqual(y[i], check[i], eps, eps);
-	
+
 		return ok;
 	}
 	// -------------------------------------------------------------------
@@ -739,7 +739,7 @@ namespace {
 		size_t n  = 1;
 		CppAD::vector< AD<double> > X(n);
 		for(j = 0; j < n; j++)
-			X[j] = double(j + 2); 
+			X[j] = double(j + 2);
 
 		// range space vector
 		size_t m = 1;
@@ -759,19 +759,19 @@ namespace {
 
 		// create a duplicate that can only be dectected using new
 		// argument indices
-		AD<double> B2 = A2 / 2.; 
+		AD<double> B2 = A2 / 2.;
 
-		// Make a new variable for result 
+		// Make a new variable for result
 		// and make it depend on all the variables
 		Y[0] = B1 + B2;
 
 		// create f: X -> Y and stop tape recording
 		CppAD::ADFun<double> F;
-		F.Dependent(X, Y); 
+		F.Dependent(X, Y);
 
 		// check number of variables in original function
-		ok &= (F.size_var() ==  1 + n + m + 4 ); 
-	
+		ok &= (F.size_var() ==  1 + n + m + 4 );
+
 		CppAD::vector<double> x(n), y(m);
 		for(j = 0; j < n; j++)
 			x[j] = double(j + 2);
@@ -786,7 +786,7 @@ namespace {
 			F.optimize("no_conditional_skip");
 
 		// check number of variables  in optimized version
-		ok &= (F.size_var() == 1 + n + m + 2 ); 
+		ok &= (F.size_var() == 1 + n + m + 2 );
 
 		y   = F.Forward(0, x);
 		for(i = 0; i < m; i++)
@@ -806,7 +806,7 @@ namespace {
 		size_t n  = 1;
 		CppAD::vector< AD<double> > X(n);
 		for(j = 0; j < n; j++)
-			X[j] = double(j + 2); 
+			X[j] = double(j + 2);
 
 		// range space vector
 		size_t m = 1;
@@ -826,19 +826,19 @@ namespace {
 
 		// create a duplicate that can only be dectected using new
 		// argument indices
-		AD<double> B2 = 2. * A2; 
+		AD<double> B2 = 2. * A2;
 
-		// Make a new variable for result 
+		// Make a new variable for result
 		// and make it depend on all the variables
 		Y[0] = B1 + B2;
 
 		// create f: X -> Y and stop tape recording
 		CppAD::ADFun<double> F;
-		F.Dependent(X, Y); 
+		F.Dependent(X, Y);
 
 		// check number of variables in original function
-		ok &= (F.size_var() ==  1 + n + m + 4 ); 
-	
+		ok &= (F.size_var() ==  1 + n + m + 4 );
+
 		CppAD::vector<double> x(n), y(m);
 		for(j = 0; j < n; j++)
 			x[j] = double(j + 2);
@@ -853,7 +853,7 @@ namespace {
 			F.optimize("no_conditional_skip");
 
 		// check number of variables  in optimized version
-		ok &= (F.size_var() == 1 + n + m + 2 ); 
+		ok &= (F.size_var() == 1 + n + m + 2 );
 
 		y   = F.Forward(0, x);
 		for(i = 0; i < m; i++)
@@ -881,7 +881,7 @@ namespace {
 		// declare independent variables and start tape recording
 		CppAD::Independent(X);
 
-		// check a huge number of same operation with different operands 
+		// check a huge number of same operation with different operands
 		size_t n_operations = std::min(
 			size_t(CPPAD_HASH_TABLE_SIZE) + 5,
 			size_t(std::numeric_limits<CPPAD_TAPE_ADDR_TYPE>::max()) - 5
@@ -892,11 +892,11 @@ namespace {
 
 		// create f: X -> Y and stop tape recording
 		CppAD::ADFun<double> F;
-		F.Dependent(X, Y); 
+		F.Dependent(X, Y);
 
 		// check number of variables in original function
-		ok &= (F.size_var() ==  1 + n + n_operations ); 
-	
+		ok &= (F.size_var() ==  1 + n + n_operations );
+
 		CppAD::vector<double> x(n), y(m);
 		x[0] = 1.;
 
@@ -909,7 +909,7 @@ namespace {
 			F.optimize("no_conditional_skip");
 
 		// check same number of variables in optimized version
-		ok &= (F.size_var() == 1 + n + n_operations ); 
+		ok &= (F.size_var() == 1 + n + n_operations );
 
 		y   = F.Forward(0, x);
 		ok &= ( y[0] == Value( Y[0] ) );
@@ -928,7 +928,7 @@ namespace {
 		size_t n  = 7;
 		CppAD::vector< AD<double> > X(n);
 		for(j = 0; j < n; j++)
-			X[j] = double(j + 2); 
+			X[j] = double(j + 2);
 
 		size_t n_original = 1 + n;
 		size_t n_optimize = 1 + n;
@@ -956,11 +956,11 @@ namespace {
 		n_optimize += 1;
 
 		CppAD::ADFun<double> F;
-		F.Dependent(X, Y); 
+		F.Dependent(X, Y);
 
 		// check number of variables in original function
-		ok &= (F.size_var() ==  n_original ); 
-	
+		ok &= (F.size_var() ==  n_original );
+
 		CppAD::vector<double> x(n), y(m);
 		for(j = 0; j < n; j++)
 			x[j] = double(j + 2);
@@ -975,7 +975,7 @@ namespace {
 			F.optimize("no_conditional_skip");
 
 		// check number of variables  in optimized version
-		ok &= (F.size_var() == n_optimize ); 
+		ok &= (F.size_var() == n_optimize );
 
 		y   = F.Forward(0, x);
 		for(i = 0; i < m; i++)
@@ -986,36 +986,36 @@ namespace {
 	// -------------------------------------------------------------------
 	bool forward_csum(void)
 	{	bool ok = true;
-	
+
 		using namespace CppAD;
-	
-		// independent variable vector 
+
+		// independent variable vector
 		CppAD::vector< AD<double> > X(2);
-		X[0] = 0.; 
+		X[0] = 0.;
 		X[1] = 1.;
 		Independent(X);
-	
+
 		// compute sum of elements in X
 		CppAD::vector< AD<double> > Y(1);
 		Y[0] = X[0] + X[0] + X[1];
-	
+
 		// create function object F : X -> Y
 		ADFun<double> F(X, Y);
-	
+
 		// now optimize the operation sequence
 		if( conditional_skip )
 			F.optimize();
 		else
 			F.optimize("no_conditional_skip");
-	
-		// use zero order to evaluate F[ (3, 4) ] 
+
+		// use zero order to evaluate F[ (3, 4) ]
 		CppAD::vector<double>  x0( F.Domain() );
 		CppAD::vector<double>  y0( F.Range() );
 		x0[0]    = 3.;
 		x0[1]    = 4.;
 		y0       = F.Forward(0, x0);
 		ok      &= NearEqual(y0[0] , x0[0]+x0[0]+x0[1], eps, eps);
-	
+
 		// evaluate derivative of F in X[0] direction
 		CppAD::vector<double> x1( F.Domain() );
 		CppAD::vector<double> y1( F.Range() );
@@ -1023,7 +1023,7 @@ namespace {
 		x1[1]    = 0.;
 		y1       = F.Forward(1, x1);
 		ok      &= NearEqual(y1[0] , x1[0]+x1[0]+x1[1], eps, eps);
-	
+
 		// evaluate second derivative of F in X[0] direction
 		CppAD::vector<double> x2( F.Domain() );
 		CppAD::vector<double> y2( F.Range() );
@@ -1032,93 +1032,93 @@ namespace {
 		y2          = F.Forward(2, x2);
 		double F_00 = 2. * y2[0];
 		ok         &= NearEqual(F_00, 0., eps, eps);
-	
+
 		return ok;
 	}
 	// -------------------------------------------------------------------
 	bool reverse_csum(void)
 	{	bool ok = true;
-	
+
 		using namespace CppAD;
-	
-		// independent variable vector 
+
+		// independent variable vector
 		CppAD::vector< AD<double> > X(2);
-		X[0] = 0.; 
+		X[0] = 0.;
 		X[1] = 1.;
 		Independent(X);
-	
+
 		// compute sum of elements in X
 		CppAD::vector< AD<double> > Y(1);
 		Y[0] = X[0] - (X[0] - X[1]);
-	
+
 		// create function object F : X -> Y
 		ADFun<double> F(X, Y);
-	
+
 		// now optimize the operation sequence
 		if( conditional_skip )
 			F.optimize();
 		else
 			F.optimize("no_conditional_skip");
-	
-		// use zero order to evaluate F[ (3, 4) ] 
+
+		// use zero order to evaluate F[ (3, 4) ]
 		CppAD::vector<double>  x0( F.Domain() );
 		CppAD::vector<double>  y0( F.Range() );
 		x0[0]    = 3.;
 		x0[1]    = 4.;
 		y0       = F.Forward(0, x0);
 		ok      &= NearEqual(y0[0] , x0[0]-x0[0]+x0[1], eps, eps);
-	
-		// evaluate derivative of F 
+
+		// evaluate derivative of F
 		CppAD::vector<double> dF( F.Domain() );
 		CppAD::vector<double> w( F.Range() );
 		w[0]    = 1.;
 		dF      = F.Reverse(1, w);
 		ok     &= NearEqual(dF[0] , 0., eps, eps);
 		ok     &= NearEqual(dF[1] , 1., eps, eps);
-	
+
 		return ok;
 	}
 	bool forward_sparse_jacobian()
 	{	bool ok = true;
 		using namespace CppAD;
-	
+
 		// dimension of the domain space
-		size_t n = 3; 
-	
+		size_t n = 3;
+
 		// dimension of the range space
 		size_t m = 3;
-	
-		// independent variable vector 
+
+		// independent variable vector
 		CppAD::vector< AD<double> > X(n);
-		X[0] = 2.; 
+		X[0] = 2.;
 		X[1] = 3.;
 		X[2] = 4.;
 		Independent(X);
-	
+
 		// dependent variable vector
 		CppAD::vector< AD<double> > Y(m);
-	
+
 		// check results vector
 		CppAD::vector< bool >       Check(m * n);
-	
+
 		// initialize index into Y
 		size_t index = 0;
-	
-		// Y[0] 
+
+		// Y[0]
 		Y[index]             = X[0] + X[1] + 5.;
 		Check[index * n + 0] = true;
 		Check[index * n + 1] = true;
 		Check[index * n + 2] = false;
 		index++;
-	
-		// Y[1] 
+
+		// Y[1]
 		Y[index]             = Y[0] - (X[1] + X[2]);
 		Check[index * n + 0] = true;
 		Check[index * n + 1] = true;
 		Check[index * n + 2] = true;
 		index++;
 
-		// Y[2] 
+		// Y[2]
 		// 2DO: There is a subtitle issue that has to do with using reverse
 		// jacobian sparsity patterns during the optimization process.
 		// We need an option to include X[0] in the sparsity pattern
@@ -1128,30 +1128,30 @@ namespace {
 		Check[index * n + 1] = true;
 		Check[index * n + 2] = true;
 		index++;
-	
+
 		// check final index
 		assert( index == m );
-	
+
 		// create function object F : X -> Y
 		ADFun<double> F(X, Y);
 		if( conditional_skip )
 			F.optimize();
 		else
 			F.optimize("no_conditional_skip");
-	
+
 		// ---------------------------------------------------------
-		// dependency matrix for the identity function 
+		// dependency matrix for the identity function
 		CppAD::vector< std::set<size_t> > Sx(n);
 		size_t i, j;
 		for(i = 0; i < n; i++)
 		{	assert( Sx[i].empty() );
 			Sx[i].insert(i);
 		}
-	
+
 		// evaluate the dependency matrix for F(x)
 		CppAD::vector< std::set<size_t> > Sy(m);
 		Sy = F.ForSparseJac(n, Sx);
-	
+
 		// check values
 		bool found;
 		for(i = 0; i < m; i++)
@@ -1159,67 +1159,67 @@ namespace {
 			{	found = Sy[i].find(j) != Sy[i].end();
 				ok &= (found == Check[i * n + j]);
 			}
-		}	
-	
+		}
+
 		return ok;
 	}
 	bool reverse_sparse_jacobian()
 	{	bool ok = true;
 		using namespace CppAD;
-	
+
 		// dimension of the domain space
-		size_t n = 3; 
-	
+		size_t n = 3;
+
 		// dimension of the range space
 		size_t m = 3;
-	
-		// independent variable vector 
+
+		// independent variable vector
 		CppAD::vector< AD<double> > X(n);
-		X[0] = 2.; 
+		X[0] = 2.;
 		X[1] = 3.;
 		X[2] = 4.;
 		Independent(X);
-	
+
 		// dependent variable vector
 		CppAD::vector< AD<double> > Y(m);
-	
+
 		// check results vector
 		CppAD::vector< bool >       Check(m * n);
-	
+
 		// initialize index into Y
 		size_t index = 0;
-	
-		// Y[0] 
+
+		// Y[0]
 		Y[index]             = X[0] + X[1] + 5.;
 		Check[index * n + 0] = true;
 		Check[index * n + 1] = true;
 		Check[index * n + 2] = false;
 		index++;
-	
-		// Y[1] 
+
+		// Y[1]
 		Y[index]             = Y[0] - (X[1] + X[2]);
 		Check[index * n + 0] = true;
 		Check[index * n + 1] = true;
 		Check[index * n + 2] = true;
 		index++;
 
-		// Y[2] 
+		// Y[2]
 		Y[index]             = CondExpLe(X[0], X[1], X[1]+X[1], X[2]-X[2]);
 		Check[index * n + 0] = false;
 		Check[index * n + 1] = true;
 		Check[index * n + 2] = true;
 		index++;
-	
+
 		// check final index
 		assert( index == m );
-	
+
 		// create function object F : X -> Y
 		ADFun<double> F(X, Y);
 		if( conditional_skip )
 			F.optimize();
 		else
 			F.optimize("no_conditional_skip");
-	
+
 		// ----------------------------------------------------------
 		// dependency matrix for the identity function
 		CppAD::vector< bool > Py(m * m);
@@ -1228,38 +1228,38 @@ namespace {
 		{	for(j = 0; j < m; j++)
 				Py[ i * m + j ] = (i == j);
 		}
-	
+
 		// evaluate the dependency matrix for F(x)
 		CppAD::vector< bool > Px(m * n);
 		Px = F.RevSparseJac(m, Py);
-	
+
 		// check values
 		for(i = 0; i < m; i++)
 		{	for(j = 0; j < n; j++)
 				ok &= (Px[i * n + j] == Check[i * n + j]);
-		}	
-	
+		}
+
 		return ok;
 	}
 	bool reverse_sparse_hessian(void)
 	{	bool ok = true;
 		using CppAD::AD;
 		size_t i, j;
-	
+
 		size_t n = 3;
-		CppAD::vector< AD<double> > X(n); 
+		CppAD::vector< AD<double> > X(n);
 		X[0] = 1.;
 		X[1] = 2.;
 		X[2] = 3.;
 		CppAD::Independent(X);
-	
+
 		size_t m = 1;
 		CppAD::vector< AD<double> > Y(m);
-		Y[0] = CondExpGe( X[0], X[1], 
-			X[0] + (2. + X[1] + 3.) * X[1], 
+		Y[0] = CondExpGe( X[0], X[1],
+			X[0] + (2. + X[1] + 3.) * X[1],
 			X[0] + (2. + X[2] + 3.) * X[1]
 		);
-	
+
 		CppAD::vector<bool> check(n * n);
 		check[0 * n + 0] = false; // partial w.r.t. x[0], x[0]
 		check[0 * n + 1] = false; //                x[0], x[1]
@@ -1272,25 +1272,25 @@ namespace {
 		check[2 * n + 0] = false; // partial w.r.t. x[2], x[0]
 		check[2 * n + 1] = true;  //                x[2], x[1]
 		check[2 * n + 2] = false; //                x[2], x[2]
-	
+
 		// create function object F : X -> Y
 		CppAD::ADFun<double> F(X, Y);
 		if( conditional_skip )
 			F.optimize();
 		else
 			F.optimize("no_conditional_skip");
-	
+
 		// sparsity pattern for the identity function U(x) = x
 		CppAD::vector<bool> Px(n * n);
 		for(i = 0; i < n; i++)
 			for(j = 0; j < n; j++)
 				Px[ i * n + j ] = (i == j);
-	
+
 		// compute sparsity pattern for Jacobian of F(U(x))
 		CppAD::vector<bool> P_jac(m * n);
 		P_jac = F.ForSparseJac(n, Px);
-	
-		// compute sparsity pattern for Hessian of F_k ( U(x) ) 
+
+		// compute sparsity pattern for Hessian of F_k ( U(x) )
 		CppAD::vector<bool> Py(m);
 		CppAD::vector<bool> Pxx(n * n);
 		Py[0] = true;
@@ -1298,7 +1298,7 @@ namespace {
 		// check values
 		for(i = 0; i < n * n; i++)
 			ok &= (Pxx[i] == check[i]);
-	
+
 		return ok;
 	}
 	// check that CondExp properly detects dependencies
@@ -1307,15 +1307,15 @@ namespace {
 		using CppAD::AD;
 
 		AD<double> zero(0.), one(1.), two(2.), three(3.);
-	
+
 		size_t n = 4;
-		CppAD::vector< AD<double> > X(n); 
+		CppAD::vector< AD<double> > X(n);
 		X[0] = zero;
 		X[1] = one;
 		X[2] = two;
 		X[3] = three;
 		CppAD::Independent(X);
-	
+
 		size_t m = 4;
 		CppAD::vector< AD<double> > Y(m);
 		Y[0] = CondExpLt(X[0] + .5,  one,  two, three);
@@ -1346,18 +1346,18 @@ namespace {
 
 		return ok;
 	}
-	// check that CondExp properly handels expressions that get 
+	// check that CondExp properly handels expressions that get
 	// removed during opitmization
 	bool cond_exp_removed(void)
 	{	bool ok = true;
 		using CppAD::AD;
 		AD<double> zero(0.);
-	
+
 		size_t n = 1;
-		CppAD::vector< AD<double> > X(n); 
+		CppAD::vector< AD<double> > X(n);
 		X[0] = 1.0;
 		CppAD::Independent(X);
-	
+
 		size_t m = 1;
 		CppAD::vector< AD<double> > Y(m);
 
@@ -1401,15 +1401,15 @@ namespace {
 
 	bool old_atomic_forward(
 		size_t                         id ,
-		size_t                          k , 
+		size_t                          k ,
 		size_t                          n ,
 		size_t                          m ,
 		const CppAD::vector<bool>&     vx ,
 		CppAD::vector<bool>&           vy ,
-		const CppAD::vector<double>&   tx , 
+		const CppAD::vector<double>&   tx ,
 		CppAD::vector<double>&         ty )
 	{	assert(n == 3 && m == 2);
-		if( k > 0 ) 
+		if( k > 0 )
 			return false;
 
 		// y[0] = x[0] + x[1]
@@ -1417,20 +1417,20 @@ namespace {
 
 		// y[1] = x[1] + x[2]
 		ty[1] = tx[1] + tx[2];
-		
+
 		if( vy.size() > 0 )
 		{	vy[0] = (vx[0] | vx[1]);
 			vy[1] = (vx[1] | vx[2]);
 		}
-		return true; 
+		return true;
 	}
 
 	bool old_atomic_reverse(
 		size_t                         id ,
-		size_t                          k , 
-		size_t                          n , 
-		size_t                          m , 
-		const CppAD::vector<double>&   tx , 
+		size_t                          k ,
+		size_t                          n ,
+		size_t                          m ,
+		const CppAD::vector<double>&   tx ,
 		const CppAD::vector<double>&   ty ,
 		CppAD::vector<double>&         px ,
 		const CppAD::vector<double>&   py )
@@ -1463,7 +1463,7 @@ namespace {
 		my_union(r[1], r[1], s[1]);
 		my_union(r[2], r[2], s[1]);
 
-		return true; 
+		return true;
 	}
 
 	bool old_atomic_rev_hes_sparse(
@@ -1486,7 +1486,7 @@ namespace {
 		old_atomic_reverse        ,
 		old_atomic_for_jac_sparse ,
 		old_atomic_rev_jac_sparse ,
-		old_atomic_rev_hes_sparse 
+		old_atomic_rev_hes_sparse
 	)
 
 	bool old_atomic_test(void)
@@ -1537,7 +1537,7 @@ namespace {
 		for(j = 0; j < n; j++)
 			ax[j] = 1. / 3.;
 		CppAD::Independent(ax);
-	
+
 		// dependent variable vector
 		size_t m = 1;
 		CppAD::vector< AD<double> > ay(m);
@@ -1548,14 +1548,14 @@ namespace {
 			else	ay[0] -= ax[j];
 		}
 		CppAD::ADFun<double> f(ax, ay);
-	
+
 		// Used to fail assert in optimize that forward mode results
 		// are identically equal
 		if( conditional_skip )
 			f.optimize();
 		else
 			f.optimize("no_conditional_skip");
-	
+
 		return ok;
 	}
 	// -----------------------------------------------------------------------
@@ -1565,30 +1565,30 @@ namespace {
 	bool discrete_function(void)
 	{	bool ok = true;
 		using CppAD::vector;
-	
+
 		vector< CppAD::AD<double> > ax(1), ay(1);
-		ax[0] = 0.0; 
+		ax[0] = 0.0;
 		CppAD::Independent(ax);
-		ay[0] =  floor(ax[0]) + floor(ax[0]);  
+		ay[0] =  floor(ax[0]) + floor(ax[0]);
 		CppAD::ADFun<double> f(ax, ay);
-	
+
 		size_t size_before = f.size_var();
 		if( conditional_skip )
-			f.optimize(); 
+			f.optimize();
 		else
 			f.optimize("no_conditional_skip");
 		size_t size_after = f.size_var();
 		ok &= size_after + 1 == size_before;
-	
+
 		vector<double> x(1), y(1);
 		x[0] = -2.2;
 		y    = f.Forward(0, x);
 		ok &= y[0] == -6.0;
-	
+
 		return ok;
 	}
 	// ----------------------------------------------------------------
-	void i_algo( 
+	void i_algo(
 		const CppAD::vector< CppAD::AD<double> >& ax ,
 		      CppAD::vector< CppAD::AD<double> >& ay )
 	{	ay[0] = 1.0 / ax[0]; }
@@ -1598,18 +1598,18 @@ namespace {
 	{	bool ok = true;
 		using CppAD::AD;
 		using CppAD::vector;
-	
+
 		// Create a checkpoint version of the function i_algo
 		vector< AD<double> > au(1), av(1), aw(1);
 		au[0] = 1.0;
 		CppAD::checkpoint<double> i_check("i_check", i_algo, au, av);
-	
-		// independent variable vector 
+
+		// independent variable vector
 		vector< AD<double> > ax(2), ay(1);
 		ax[0] = 1.0;
 		ax[1] = 2.0;
 		Independent(ax);
-	
+
 		// call atomic function that does not get used
 		au[0] = ax[0];
 		i_check(au, av);
@@ -1632,9 +1632,9 @@ namespace {
 		else
 			f.optimize("no_conditional_skip");
 		y_after   = f.Forward(0, x);
-	
+
 		ok &= y_before[0] == y_after[0];
-		
+
 		return ok;
 	}
 	//
@@ -1644,14 +1644,14 @@ namespace {
 	{	bool ok = true;
 		using CppAD::AD;
 		using CppAD::vector;
-	
+
 		// Create a checkpoint version of the function i_algo
 		vector< AD<double> > au(1), av(1), aw(1);
 		au[0] = 1.0;
 		CppAD::checkpoint<double> i_check("i_check", i_algo, au, av);
-	
+
 		vector< AD<double> > ax(2), ay(1);
-		AD<double> zero = 0.0;  
+		AD<double> zero = 0.0;
 		ax[0] = 1.0;
 		ax[1] = 1.0;
 		Independent(ax);
@@ -1697,19 +1697,19 @@ namespace {
 		size_t n = 3;
 		using CppAD::vector;
 		using CppAD::AD;
-	
+
 		vector< AD<double> > ax(n), ay(1);
 		for(size_t j = 0; j < n; j++)
 			ax[j] = 1.0;
 		Independent(ax);
 		ay[0] = my_max(ax) + my_max(ax);
 		CppAD::ADFun<double> f(ax, ay);
-	
+
 		if( conditional_skip )
 			f.optimize();
 		else
 			f.optimize("no_conditional_skip");
-	
+
 		vector<double> x(n), w(1), dx(n);
 		for(size_t j = 0;j < n; j++)
 			x[j] = double(j);
@@ -1732,7 +1732,7 @@ namespace {
 		using CppAD::AD;
 
 		// f(x) = x[0] + x[0] if x[0] >= 3
-		//      = x[0] + x[1] otherwise 
+		//      = x[0] + x[1] otherwise
 		vector< AD<double> > ax(2), ay(3);
 		ax[0] = 1.0;
 		ax[1] = 2.0;
@@ -1779,15 +1779,15 @@ bool optimize(void)
 
 	// atomic sparsity loop
 	for(size_t i = 0; i < 2; i++)
-	{	// check conditional expression sparsity pattern 
-		// (used to optimize calls to atomic functions). 
+	{	// check conditional expression sparsity pattern
+		// (used to optimize calls to atomic functions).
 		ok     &= atomic_cond_exp_sparsity();
 		// check optimizing out entire atomic function
 		ok     &= atomic_cond_exp();
 		// check optimizing out atomic arguments
 		ok     &= atomic_no_used();
 		ok     &= atomic_arguments();
-		atomic_sparsity_option = 
+		atomic_sparsity_option =
 			CppAD::atomic_base<double>::set_sparsity_enum;
 	}
 
