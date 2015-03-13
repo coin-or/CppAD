@@ -3,10 +3,10 @@
 # define CPPAD_AD_CTOR_INCLUDED
 
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-14 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-15 Bradley M. Bell
 
 CppAD is distributed under multiple licenses. This distribution is under
-the terms of the 
+the terms of the
                     Eclipse Public License Version 1.0.
 
 A copy of this license is included in the COPYING file of this distribution.
@@ -40,7 +40,7 @@ $codei%AD<%Base%> %y%(%x%)
 %$$
 
 $head Purpose$$
-creates a new $codei%AD<%Base%>%$$ object $icode y$$ 
+creates a new $codei%AD<%Base%>%$$ object $icode y$$
 and initializes its value as equal to $icode x$$.
 
 $head x$$
@@ -51,20 +51,20 @@ prototypes:
 $codei%
 	const %Base%&        %x%
 	const VecAD<%Base%>& %x%
-%$$ 
+%$$
 
 $subhead explicit$$
 There is an explicit constructor where $icode x$$ has prototype
 $codei%
 	const %Type%&        %x%
-%$$ 
+%$$
 for any type that has an explicit constructor of the form
 $icode%Base%(%x%)%$$.
 
 $subhead deprecated$$
 $index deprecated, constructor$$
 $index constructor, deprecated$$
-If you set 
+If you set
 $cref/cppad_implicit_ctor_from_any_type
 	/cmake
 	/cppad_implicit_ctor_from_any_type
@@ -73,7 +73,7 @@ to be $code YES$$ during the install procedure,
 you will get an implicit constructor with prototype
 $codei%
 	const %Type%&        %x%
-%$$ 
+%$$
 for any type that has an explicit constructor of the form
 $icode%Base%(%x%)%$$.
 
@@ -103,11 +103,11 @@ AD<Base> constructors and and copy operations.
 
 /*!
 \page AD_default_ctor
-Use default copy constructor 
+Use default copy constructor
 because they may be optimized better than the code below:
 \code
 template <class Base>
-inline AD<Base>::AD(const AD &x) 
+inline AD<Base>::AD(const AD &x)
 {
 	value_    = x.value_;
 	tape_id_  = x.tape_id_;
@@ -125,7 +125,7 @@ Default Constructor.
 Base type for this AD object.
 */
 template <class Base>
-inline AD<Base>::AD(void) 
+inline AD<Base>::AD(void)
 : value_()
 , tape_id_(0)
 , taddr_(0)
@@ -144,13 +144,13 @@ The tape identifier will be an invalid tape identifier,
 so this object is initially a parameter.
 */
 template <class Base>
-inline AD<Base>::AD(const Base &b) 
+inline AD<Base>::AD(const Base &b)
 : value_(b)
 , tape_id_(0)
 , taddr_(0)
 {	// check that this is a parameter
 	CPPAD_ASSERT_UNKNOWN( Parameter(*this) );
-}	
+}
 
 /*!
 Constructor from an ADVec<Base> element drops the vector information.
@@ -178,7 +178,7 @@ is the object that is being converted from T to AD<Base>.
 */
 template <class Base>
 template <class T>
-inline AD<Base>::AD(const T &t) 
+inline AD<Base>::AD(const T &t)
 : value_(Base(t))
 , tape_id_(0)
 , taddr_(0)

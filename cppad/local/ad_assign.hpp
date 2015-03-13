@@ -3,10 +3,10 @@
 # define CPPAD_AD_ASSIGN_INCLUDED
 
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-14 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-15 Bradley M. Bell
 
 CppAD is distributed under multiple licenses. This distribution is under
-the terms of the 
+the terms of the
                     Eclipse Public License Version 1.0.
 
 A copy of this license is included in the COPYING file of this distribution.
@@ -35,17 +35,17 @@ $icode%y% = %x%$$
 
 $head Purpose$$
 Assigns the value in $icode x$$ to the object $icode y$$.
-In either case, 
+In either case,
 
 $head x$$
 The argument $icode x$$ has prototype
 $codei%
 	const %Type% &%x%
-%$$ 
+%$$
 where $icode Type$$ is
 $codei%VecAD<%Base%>::reference%$$,
 $codei%AD<%Base%>%$$,
-$icode Base$$, 
+$icode Base$$,
 or any type that has an implicit constructor of the form
 $icode%Base%(%x%)%$$.
 
