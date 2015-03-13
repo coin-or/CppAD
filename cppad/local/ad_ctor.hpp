@@ -38,7 +38,6 @@ $codei%AD<%Base%> %y%()
 %$$
 $codei%AD<%Base%> %y%(%x%)
 %$$
-$codei%AD<%Base%> %y% = %x%$$
 
 $head Purpose$$
 creates a new $codei%AD<%Base%>%$$ object $icode y$$ 

@@ -46,7 +46,7 @@ where $icode Type$$ is
 $codei%VecAD<%Base%>::reference%$$,
 $codei%AD<%Base%>%$$,
 $icode Base$$, 
-or any type that has a constructor of the form
+or any type that has an implicit constructor of the form
 $icode%Base%(%x%)%$$.
 
 $head y$$

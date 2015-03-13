@@ -14,7 +14,7 @@ cat << EOF
 Description
 EOF
 cat << EOF > bug.$$
-# include <iostream>
+# include <cppad/cppad.hpp>
 int main(void)
 {	// C++ source code
 	using std::cout;
