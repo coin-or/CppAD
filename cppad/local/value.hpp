@@ -3,7 +3,7 @@
 # define CPPAD_VALUE_INCLUDED
 
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-12 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-15 Bradley M. Bell
 
 CppAD is distributed under multiple licenses. This distribution is under
 the terms of the 
@@ -29,6 +29,9 @@ $section Convert From an AD Type to its Base Type$$
 
 $head Syntax$$
 $icode%b% = Value(%x%)%$$
+
+$head See Also$$
+$cref var2par$$
 
 
 $head Purpose$$

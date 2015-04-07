@@ -15,21 +15,15 @@ then
 	echo "bin/check_copyright.sh: must be executed from its parent directory"
 	exit 1
 fi
-if [ -d '.git' ]
-then
-	scc='git'
-elif [ -d '.svn' ]
-then
-	scc='svn'
-else
-	echo 'check_copright.sh: cannot find .git or .svn'
-	exit 1
-fi
-if ! ${scc}_commit.sh list > /dev/null
-then
-	${scc}_commit.sh list
-fi
-list=`${scc}_commit.sh list | sed -e '/makefile.in$/d'`
+list=`git status | sed -n \
+        -e '/^[#\t ]*deleted:/p' \
+        -e '/^[#\t ]*modified:/p' \
+        -e '/^[#\t ]*both modified:/p' \
+        -e '/^[#\t ]*renamed:/p' \
+        -e '/^[#\t ]*new file:/p' | \
+            sed -e 's/^.*: *//' -e 's/ -> /\n/' | \
+			sed -e '/makefile.in$/d' |
+                sort -u`
 cat << EOF > check_copyright.1.$$
 # Change copyright second year to current year
 s/Copyright (C) \\([0-9]*\\)-[0-9][0-9] Bradley M. Bell/Copyright (C) \\1-15 Bradley M. Bell/

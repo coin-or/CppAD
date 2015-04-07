@@ -3,7 +3,7 @@
 # define CPPAD_VAR2PAR_INCLUDED
 
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-12 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-15 Bradley M. Bell
 
 CppAD is distributed under multiple licenses. This distribution is under
 the terms of the 
@@ -31,6 +31,9 @@ $section Convert an AD Variable to a Parameter$$
 
 $head Syntax$$
 $icode%y% = Var2Par(%x%)%$$
+
+$head See Also$$
+$cref value$$
 
 
 $head Purpose$$
