@@ -3,7 +3,7 @@ $Id$
 CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-15 Bradley M. Bell
 
 CppAD is distributed under multiple licenses. This distribution is under
-the terms of the 
+the terms of the
                     Eclipse Public License Version 1.0.
 
 A copy of this license is included in the COPYING file of this distribution.
@@ -61,20 +61,20 @@ Create a documentation page that shows how to convert Adolc commands to
 CppAD commands.
 
 $head BenderQuad$$
-See the $cref/problem/BenderQuad/Problem/$$ with the 
+See the $cref/problem/BenderQuad/Problem/$$ with the
 current $code BenderQuad$$ specifications.
 
 $head Checkpointing$$
 $index checkpoint$$
-It would be more flexible to also have a 
-$cref/checkpoint constructor/checkpoint/constructor/$$ 
+It would be more flexible to also have a
+$cref/checkpoint constructor/checkpoint/constructor/$$
 that passed in an $cref ADFun$$ object instead of a algorithm.
 Perhaps the syntax would be
 $codei%
 	checkpoint %afun%(%name%, %ad_fun%, %copy%)
 %$$
 where $icode copy$$ would determine if a separate copy of $icode ad_fun$$
-was made or if a pointer was used. 
+was made or if a pointer was used.
 Note that if a pointer is used, it becomes invalid when the destructor
 for $icode ad_fun$$ is called.
 
@@ -88,17 +88,17 @@ $codep
 	z = CondExpEq(left_z, right_z, x, y)
 $$
 only two of the expressions
-$code true_x$$, $code false_x$$, $code true_y$$, $code false_y$$ 
-will be evaluated 
+$code true_x$$, $code false_x$$, $code true_y$$, $code false_y$$
+will be evaluated
 (two will be skipped depending on the result of $code left_z == right_z$$).
 Not all of the expressions corresponding to
 $code left_x$$, $code right_x$$, $code left_y$$, $code right_y$$ need to be
 evaluate, but they are.
-The optimizer could be improved to skip two more expressions 
+The optimizer could be improved to skip two more expressions
 (depending on the result of $code left_z == right_z$$).
 
 $subhead Sparsity$$
-The $cref/optimizer/optimize/$$ uses 
+The $cref/optimizer/optimize/$$ uses
 $cref/atomic reverse jacobian sparsity/atomic_rev_sparse_jac/$$
 to determine which arguments affect the value of the results
 for the atomic functions (which include $cref checkpoint$$ functions).
@@ -110,7 +110,7 @@ with respect to $icode left$$ and $icode right$$ always evaluates to zero,
 the value of $icode z$$ does depend on the value of $icode left$$ and
 $icode right$$.
 The $cref checkpoint$$ functions use the value true for
-$cref/nz_compare/RevSparseJac/nz_compare/$$ when computing 
+$cref/nz_compare/RevSparseJac/nz_compare/$$ when computing
 reverse jacobian sparsity patterns.
 This enables the optimizer to properly track the dependencies.
 An $cref atomic_option$$ should be added so this is only
@@ -119,7 +119,7 @@ done when the optimizer is using the sparsity pattern for this purpose.
 $head Forward Mode Recomputation$$
 $index forward$$
 If the results of $cref forward_order$$ have already been computed and are still
-stored in the $cref ADFun$$ object (see $cref size_order$$), 
+stored in the $cref ADFun$$ object (see $cref size_order$$),
 then they do not need to be recomputed and the results can just be returned.
 
 $head Iterator Interface$$
@@ -169,9 +169,9 @@ see $cref tan.cpp$$.
 $head Operation Sequence$$
 $index sequence, operation$$
 $index operation, sequence$$
-It is possible to detect if the 
-AD of $icode Base$$ 
-$cref/operation sequence/glossary/Operation/Sequence/$$ 
+It is possible to detect if the
+AD of $icode Base$$
+$cref/operation sequence/glossary/Operation/Sequence/$$
 does not depend on any of the
 $cref/independent variable/glossary/Tape/Independent Variable/$$ values.
 This could be returned as an extra
@@ -186,7 +186,7 @@ The comparison operators used to not be taped when
 $cref/NDEBUG/Faq/Speed/NDEBUG/$$ was defined.
 They are now taped so that the $cref compare_change$$ interface
 works even for compiler optimize code.
-This caused a significant slow down in the 
+This caused a significant slow down in the
 $cref cppad_det_lu.cpp$$ speed test (with no options specified).
 Perhaps there should be an option to skip the comparison taping.
 
@@ -194,22 +194,22 @@ $subhead Expression Hashing$$
 During expression sequence $cref/optimization/optimize/$$,
 hash codes are used to detect expressions that have already
 been computed.
-Perhaps this should be done during the original forward mode recording. 
+Perhaps this should be done during the original forward mode recording.
 
 $subhead Variable Pairs$$
-Suppose that $icode x$$ is a variable 
+Suppose that $icode x$$ is a variable
 and $codei%sin(%x%)%$$ is used in an expression.
 The extra expression $codei%cos(%x%)%$$ is also computed
 during a $cref Forward$$ calculation.
 This is because the derivative of the original expression
 is expressed in terms of the values of the other expression.
-In general, 
-the representation of the derivative of an expression to order $icode p$$ 
+In general,
+the representation of the derivative of an expression to order $icode p$$
 may include the derivative of another expression to order $icode%p%-1%$$.
-In our example, if only the value $codei%sin(%x%)%$$ 
+In our example, if only the value $codei%sin(%x%)%$$
 is requested, it is not necessary to compute $codei%cos(%x%)%$$.
-We should remove the computation of extra expressions derivatives that are 
-not need to compute the requested derivative of the original expression. 
+We should remove the computation of extra expressions derivatives that are
+not need to compute the requested derivative of the original expression.
 
 $head Preprocessor Symbols$$
 $index preprocessor$$
@@ -225,16 +225,16 @@ These guidelines are not followed by the current CppAD source code,
 but perhaps they should be:
 
 $list number$$
-Names (except as noted below) 
+Names (except as noted below)
 should be all lowercase, with words separated by underscores.
-For example, acronyms should be treated as ordinary names 
+For example, acronyms should be treated as ordinary names
 (xml_parser instead of XML_parser).
 
 $lnext
 Template parameter names should begin with an uppercase letter.
 
 $lnext
-Use spaces rather than tabs.  
+Use spaces rather than tabs.
 Currently, CppAD uses a tabs stops at column multiples of 5.
 Five columns were chosen to avoid high levels of indenting and to allow for
 $codep
@@ -243,7 +243,7 @@ $codep
 	else	statement
 $$
 with a tab after the else.
-Automatic conversion to actual spaces should be easy. 
+Automatic conversion to actual spaces should be easy.
 
 $lend
 
@@ -252,7 +252,7 @@ $index operation, sequence tracing$$
 $index sequence, operation tracing$$
 $index tracing, operation sequence$$
 Add tracing the operation sequence to the user API and documentation.
-Tracing the operation sequence is currently done by changing the CppAD 
+Tracing the operation sequence is currently done by changing the CppAD
 source code. Use the command
 $codep
 	grep '^# *define *CPPAD_.*_TRACE' cppad/local/*.hpp
