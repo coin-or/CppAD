@@ -3,7 +3,7 @@
 CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-15 Bradley M. Bell
 
 CppAD is distributed under multiple licenses. This distribution is under
-the terms of the 
+the terms of the
                     Eclipse Public License Version 1.0.
 
 A copy of this license is included in the COPYING file of this distribution.
@@ -104,7 +104,7 @@ bool reverse()
 		ok &=  NearEqual(check[ell], jac[ell], eps, eps );
 
 	// using row and column indices to compute non-zero in rows 1 and 2
-	// (skip row 0). 
+	// (skip row 0).
 	size_t K = 6;
 	i_vector row(K), col(K);
 	jac.resize(K);
@@ -119,13 +119,13 @@ bool reverse()
 				k++;
 			}
 		}
-	} 
+	}
 	ok &= k == K;
 
 	// empty work structure
 	CppAD::sparse_jacobian_work work;
 
-	// could use p_b 
+	// could use p_b
 	size_t n_sweep = f.SparseJacobianReverse(x, p_s, row, col, jac, work);
 	for(k = 0; k < K; k++)
 	{	ell = row[k] * n + col[k];
@@ -190,9 +190,9 @@ bool forward()
 	      [ 0 1 x_2 ]
 	*/
 	d_vector check(m * n);
-	check[0] = 1.; check[1]  = 0.; check[2]  = 1.; 
+	check[0] = 1.; check[1]  = 0.; check[2]  = 1.;
 	check[3] = 1.; check[4]  = 0.; check[5]  = 1.;
-	check[6] = 0.; check[7]  = 1.; check[8]  = 1.; 
+	check[6] = 0.; check[7]  = 1.; check[8]  = 1.;
 	check[9] = 0.; check[10] = 1.; check[11] = x[2];
 	for(ell = 0; ell < size_t(check.size()); ell++)
 		ok &=  NearEqual(check[ell], jac[ell], eps, eps );
@@ -219,7 +219,7 @@ bool forward()
 		ok &=  NearEqual(check[ell], jac[ell], eps, eps );
 
 	// using row and column indices to compute non-zero elements excluding
-	// row 0 and column 0. 
+	// row 0 and column 0.
 	size_t K = 5;
 	i_vector row(K), col(K);
 	jac.resize(K);
@@ -234,13 +234,13 @@ bool forward()
 				k++;
 			}
 		}
-	} 
+	}
 	ok &= k == K;
 
 	// empty work structure
 	CppAD::sparse_jacobian_work work;
 
-	// could use p_s 
+	// could use p_s
 	size_t n_sweep = f.SparseJacobianForward(x, p_b, row, col, jac, work);
 	for(k = 0; k < K; k++)
 	{    ell = row[k] * n + col[k];
@@ -259,7 +259,7 @@ bool forward()
 
 	return ok;
 }
-} // End empty namespace 
+} // End empty namespace
 
 bool sparse_jacobian(void)
 {	bool ok = true;

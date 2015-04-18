@@ -6,7 +6,7 @@
 CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-15 Bradley M. Bell
 
 CppAD is distributed under multiple licenses. This distribution is under
-the terms of the 
+the terms of the
                     Eclipse Public License Version 1.0.
 
 A copy of this license is included in the COPYING file of this distribution.
@@ -52,10 +52,10 @@ We use $latex n$$ for the $cref/domain/seq_property/Domain/$$ size,
 and $latex m$$ for the $cref/range/seq_property/Range/$$ size of $icode f$$.
 We use $latex F : \B{R}^n \rightarrow \B{R}^m$$ do denote the
 $cref/AD function/glossary/AD Function/$$
-corresponding to $icode f$$. 
-The syntax above sets $icode jac$$ to the Jacobian 
+corresponding to $icode f$$.
+The syntax above sets $icode jac$$ to the Jacobian
 $latex \[
-	jac = F^{(1)} (x) 
+	jac = F^{(1)} (x)
 \] $$
 This routine takes advantage of the sparsity of the Jacobian
 in order to reduce the amount of computation necessary.
@@ -80,7 +80,7 @@ $codei%
 	const %VectorBase%& %x%
 %$$
 (see $cref/VectorBase/sparse_jacobian/VectorBase/$$ below)
-and its size 
+and its size
 must be equal to $icode n$$, the dimension of the
 $cref/domain/seq_property/Domain/$$ space for $icode f$$.
 It specifies
@@ -97,14 +97,14 @@ its size is $latex m * n$$.
 If it has elements of type $code std::set<size_t>$$,
 its size is $latex m$$ and all its set elements are between
 zero and $latex n - 1$$.
-It specifies a 
-$cref/sparsity pattern/glossary/Sparsity Pattern/$$ 
+It specifies a
+$cref/sparsity pattern/glossary/Sparsity Pattern/$$
 for the Jacobian $latex F^{(1)} (x)$$.
 $pre
 
 $$
-If this sparsity pattern does not change between calls to 
-$codei SparseJacobian$$, it should be faster to calculate $icode p$$ once 
+If this sparsity pattern does not change between calls to
+$codei SparseJacobian$$, it should be faster to calculate $icode p$$ once
 (using $cref ForSparseJac$$ or $cref RevSparseJac$$)
 and then pass $icode p$$ to $codei SparseJacobian$$.
 Furthermore, if you specify $icode work$$ in the calling sequence,
@@ -115,7 +115,7 @@ $pre
 $$
 In addition,
 if you specify $icode p$$, CppAD will use the same
-type of sparsity representation 
+type of sparsity representation
 (vectors of $code bool$$ or vectors of $code std::set<size_t>$$)
 for its internal calculations.
 Otherwise, the representation
@@ -155,7 +155,7 @@ $pre
 
 $$
 In the case where the arguments $icode row$$ and $icode col$$ are present,
-we use $latex K$$ to denote the size of $icode jac$$. 
+we use $latex K$$ to denote the size of $icode jac$$.
 The input value of its elements does not matter.
 Upon return, for $latex k = 0 , \ldots , K - 1$$,
 $latex \[
@@ -172,11 +172,11 @@ If this argument is present, it has prototype
 $codei%
 	sparse_jacobian_work& %work%
 %$$
-This object can only be used with the routines 
+This object can only be used with the routines
 $code SparseJacobianForward$$ and $code SparseJacobianReverse$$.
 During its the first use, information is stored in $icode work$$.
 This is used to reduce the work done by future calls to the same mode
-(forward or reverse), 
+(forward or reverse),
 the same $icode f$$, $icode p$$, $icode row$$, and $icode col$$.
 If a future call is for a different mode,
 or any of these values have changed,
@@ -190,7 +190,7 @@ This field has prototype
 $codep%
 	std::string %work%.color_method
 %$$
-and its default value (after a constructor or $code clear()$$) 
+and its default value (after a constructor or $code clear()$$)
 is $code "cppad"$$.
 If $cref colpack_prefix$$ is specified on the
 $cref/cmake command/cmake/CMake Command/$$ line,
@@ -203,7 +203,7 @@ $subhead p$$
 If $icode work$$ is present, and it is not the first call after
 its construction or a clear,
 the sparsity pattern $icode p$$ is not used.
-This enables one to free the sparsity pattern 
+This enables one to free the sparsity pattern
 and still compute corresponding sparse Jacobians.
 
 $head n_sweep$$
@@ -211,13 +211,13 @@ The return value $icode n_sweep$$ has prototype
 $codei%
 	size_t %n_sweep%
 %$$
-If $code SparseJacobianForward$$ ($code SparseJacobianReverse$$) is used, 
-$icode n_sweep$$ is the number of first order forward (reverse) sweeps 
-used to compute the requested Jacobian values. 
+If $code SparseJacobianForward$$ ($code SparseJacobianReverse$$) is used,
+$icode n_sweep$$ is the number of first order forward (reverse) sweeps
+used to compute the requested Jacobian values.
 (This is also the number of colors determined by the coloring method
 mentioned above).
-This is proportional to the total work that $code SparseJacobian$$ does, 
-not counting the zero order forward sweep, 
+This is proportional to the total work that $code SparseJacobian$$ does,
+not counting the zero order forward sweep,
 or the work to combine multiple columns (rows) into a single sweep.
 
 $head VectorBase$$
@@ -238,11 +238,11 @@ if this is not the case.
 
 $subhead Restrictions$$
 If $icode VectorSet$$ has elements of $code std::set<size_t>$$,
-then $icode%p%[%i%]%$$ must return a reference (not a copy) to the 
+then $icode%p%[%i%]%$$ must return a reference (not a copy) to the
 corresponding set.
 According to section 26.3.2.3 of the 1998 C++ standard,
 $code std::valarray< std::set<size_t> >$$ does not satisfy
-this condition. 
+this condition.
 
 $head VectorSize$$
 The type $icode VectorSize$$ must be a $cref SimpleVector$$ class with
@@ -253,7 +253,7 @@ if this is not the case.
 
 $head Uses Forward$$
 After each call to $cref Forward$$,
-the object $icode f$$ contains the corresponding 
+the object $icode f$$ contains the corresponding
 $cref/Taylor coefficients/glossary/Taylor Coefficient/$$.
 After a call to any of the sparse Jacobian routines,
 the zero order Taylor coefficients correspond to
@@ -285,7 +285,7 @@ Sparse Jacobian driver routine and helper functions.
 */
 // ===========================================================================
 /*!
-class used by SparseJacobian to hold information so it does not need to be 
+class used by SparseJacobian to hold information so it does not need to be
 recomputed.
 */
 class sparse_jacobian_work {
@@ -293,11 +293,11 @@ class sparse_jacobian_work {
 		/// Coloring method: "cppad", or "colpack"
 		/// (this field is set by user)
 		std::string color_method;
-		/// indices that sort the user row and col arrays by color 
+		/// indices that sort the user row and col arrays by color
 		CppAD::vector<size_t> order;
 		/// results of the coloring algorithm
 		CppAD::vector<size_t> color;
-	
+
 		/// constructor
 		sparse_jacobian_work(void) : color_method("cppad")
 		{ }
@@ -330,7 +330,7 @@ is a simple vector class with elements of type \c size_t.
 is a vector specifing the point at which to compute the Jacobian.
 
 \param p_transpose [in]
-If <code>work.color.size() != 0</code>, 
+If <code>work.color.size() != 0</code>,
 then \c p_transpose is not used.
 Otherwise, it is a
 sparsity pattern for the transpose of the Jacobian of this ADFun<Base> object.
@@ -354,7 +354,7 @@ the the <code>col[k]</code> domain component of its argument.
 <code>work.color_method</code> is an input. The rest of
 this structure contains information that is computed by \c SparseJacobainFor.
 If the sparsity pattern, \c row vector, or \c col vectors
-are not the same between calls to \c SparseJacobianFor, 
+are not the same between calls to \c SparseJacobianFor,
 \c work.clear() must be called to reinitialize \c work.
 
 \return
@@ -463,7 +463,7 @@ size_t ADFun<Base>::SparseJacobianFor(
 		dy = Forward(1, dx);
 
 		// set the corresponding components of the result
-		while( k < K && color[ col[order[k]] ] == ell ) 
+		while( k < K && color[ col[order[k]] ] == ell )
 		{	jac[ order[k] ] = dy[row[order[k]]];
 			k++;
 		}
@@ -483,7 +483,7 @@ size_t ADFun<Base>::SparseJacobianFor(
 		VectorBase dx(n * r), dy(m * r);
 
 		// loop over colors we will do this tme
-		for(ell = 0; ell < r; ell++) 	
+		for(ell = 0; ell < r; ell++)
 		{	// combine all columns with this color
 			for(j = 0; j < n; j++)
 			{	dx[j * r + ell] = zero;
@@ -495,9 +495,9 @@ size_t ADFun<Base>::SparseJacobianFor(
 		dy = Forward(q, r, dx);
 
 		// store results
-		for(ell = 0; ell < r; ell++) 	
+		for(ell = 0; ell < r; ell++)
 		{	// set the components of the result for this color
-			while( k < K && color[ col[order[k]] ] == ell + count_color ) 
+			while( k < K && color[ col[order[k]] ] == ell + count_color )
 			{	jac[ order[k] ] = dy[ row[order[k]] * r + ell ];
 				k++;
 			}
@@ -542,7 +542,7 @@ It must have the same size as \c row.
 
 \param jac [out]
 is the vector of Jacobian values.
-It must have the same size as \c row. 
+It must have the same size as \c row.
 The return value <code>jac[k]</code> is the partial of the
 <code>row[k]</code> range component of the function with respect
 the the <code>col[k]</code> domain component of its argument.
@@ -551,7 +551,7 @@ the the <code>col[k]</code> domain component of its argument.
 <code>work.color_method</code> is an input. The rest of
 This structure contains information that is computed by \c SparseJacobainRev.
 If the sparsity pattern, \c row vector, or \c col vectors
-are not the same between calls to \c SparseJacobianRev, 
+are not the same between calls to \c SparseJacobianRev,
 \c work.clear() must be called to reinitialize \c work.
 
 \return
@@ -634,7 +634,7 @@ size_t ADFun<Base>::SparseJacobianRev(
 		index_sort(key, order);
 	}
 	size_t n_color = 1;
-	for(i = 0; i < m; i++) if( color[i] < m ) 
+	for(i = 0; i < m; i++) if( color[i] < m )
 		n_color = std::max(n_color, color[i] + 1);
 
 	// weighting vector for calls to reverse
@@ -662,7 +662,7 @@ size_t ADFun<Base>::SparseJacobianRev(
 		dw = Reverse(1, w);
 
 		// set the corresponding components of the result
-		while( k < K && color[ row[order[k]] ]  == ell ) 
+		while( k < K && color[ row[order[k]] ]  == ell )
 		{	jac[ order[k] ] = dw[col[order[k]]];
 			k++;
 		}
@@ -688,7 +688,7 @@ is the base type for the recording that is stored in this
 is a simple vector class with elements of type \a Base.
 
 \tparam VectorSet
-is a simple vector class with elements of type 
+is a simple vector class with elements of type
 \c bool or \c std::set<size_t>.
 
 \tparam VectorSize
@@ -709,15 +709,15 @@ It must have the same size as \c row.
 
 \param jac [out]
 is the vector of Jacobian values.
-It must have the same size as \c row. 
+It must have the same size as \c row.
 The return value <code>jac[k]</code> is the partial of the
 <code>row[k]</code> range component of the function with respect
 the the <code>col[k]</code> domain component of its argument.
 
 \param work [in,out]
-this structure contains information that depends on the function object, 
+this structure contains information that depends on the function object,
 sparsity pattern, \c row vector, and \c col vector.
-If they are not the same between calls to \c SparseJacobianForward, 
+If they are not the same between calls to \c SparseJacobianForward,
 \c work.clear() must be called to reinitialize them.
 
 \return
@@ -743,12 +743,12 @@ size_t ADFun<Base>::SparseJacobianForward(
 	CPPAD_ASSERT_KNOWN(
 		size_t(x.size()) == n ,
 		"SparseJacobianForward: size of x not equal domain dimension for f."
-	); 
+	);
 	CPPAD_ASSERT_KNOWN(
 		size_t(row.size()) == K && size_t(col.size()) == K ,
 		"SparseJacobianForward: either r or c does not have "
 		"the same size as jac."
-	); 
+	);
 	CPPAD_ASSERT_KNOWN(
 		work.color.size() == 0 || work.color.size() == n,
 		"SparseJacobianForward: invalid value in work."
@@ -796,7 +796,7 @@ is the base type for the recording that is stored in this
 is a simple vector class with elements of type \a Base.
 
 \tparam VectorSet
-is a simple vector class with elements of type 
+is a simple vector class with elements of type
 \c bool or \c std::set<size_t>.
 
 \tparam VectorSize
@@ -817,15 +817,15 @@ It must have the same size as \c row.
 
 \param jac [out]
 is the vector of Jacobian values.
-It must have the same size as \c row. 
+It must have the same size as \c row.
 The return value <code>jac[k]</code> is the partial of the
 <code>row[k]</code> range component of the function with respect
 the the <code>col[k]</code> domain component of its argument.
 
 \param work [in,out]
-this structure contains information that depends on the function object, 
+this structure contains information that depends on the function object,
 sparsity pattern, \c row vector, and \c col vector.
-If they are not the same between calls to \c SparseJacobianReverse, 
+If they are not the same between calls to \c SparseJacobianReverse,
 \c work.clear() must be called to reinitialize them.
 
 \return
@@ -851,12 +851,12 @@ size_t ADFun<Base>::SparseJacobianReverse(
 	CPPAD_ASSERT_KNOWN(
 		size_t(x.size()) == n ,
 		"SparseJacobianReverse: size of x not equal domain dimension for f."
-	); 
+	);
 	CPPAD_ASSERT_KNOWN(
 		size_t(row.size()) == K && size_t(col.size()) == K ,
 		"SparseJacobianReverse: either r or c does not have "
 		"the same size as jac."
-	); 
+	);
 	CPPAD_ASSERT_KNOWN(
 		work.color.size() == 0 || work.color.size() == m,
 		"SparseJacobianReverse: invalid value in work."
@@ -877,7 +877,7 @@ size_t ADFun<Base>::SparseJacobianReverse(
 			"SparseJacobianReverse: invalid value in work."
 	);
 # endif
- 
+
 	typedef typename VectorSet::value_type Set_type;
 	typedef typename internal_sparsity<Set_type>::pattern_type Pattern_type;
 	Pattern_type s;
@@ -904,7 +904,7 @@ is the base type for the recording that is stored in this
 is a simple vector class with elements of type \a Base.
 
 \tparam VectorSet
-is a simple vector class with elements of type 
+is a simple vector class with elements of type
 \c bool or \c std::set<size_t>.
 
 \param x [in]
@@ -963,10 +963,10 @@ VectorBase ADFun<Base>::SparseJacobian(
 				k++;
 				i = s_transpose.next_element();
 			}
-		} 
+		}
 		size_t K = k;
 		VectorBase J(K);
-	
+
 		// now we have folded this into the following case
 		SparseJacobianFor(x, s_transpose, row, col, J, work);
 
@@ -991,7 +991,7 @@ VectorBase ADFun<Base>::SparseJacobian(
 				k++;
 				j = s.next_element();
 			}
-		} 
+		}
 		size_t K = k;
 		VectorBase J(K);
 
@@ -1004,7 +1004,7 @@ VectorBase ADFun<Base>::SparseJacobian(
 	}
 
 	return jac;
-} 
+}
 
 /*!
 Compute a sparse Jacobian.
@@ -1042,7 +1042,7 @@ VectorBase ADFun<Base>::SparseJacobian( const VectorBase& x )
 	if( n <= m )
 	{	size_t j, k;
 
-		// use forward mode 
+		// use forward mode
 		VectorBool r(n * n);
 		for(j = 0; j < n; j++)
 		{	for(k = 0; k < n; k++)
@@ -1054,7 +1054,7 @@ VectorBase ADFun<Base>::SparseJacobian( const VectorBase& x )
 	else
 	{	size_t i, k;
 
-		// use reverse mode 
+		// use reverse mode
 		VectorBool s(m * m);
 		for(i = 0; i < m; i++)
 		{	for(k = 0; k < m; k++)

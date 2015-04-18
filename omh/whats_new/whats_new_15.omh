@@ -52,7 +52,7 @@ $head 04-18$$
 In the sparse jacobian and sparse hessian calculations,
 If $icode work$$ is present, and has already been computed,
 the sparsity pattern $icode p$$ is not used.
-This has been added to the documentation; see 
+This has been added to the documentation; see
 $cref/sparse jacobian/sparse_jacobian/work/p/$$ and
 $cref/sparse hessian/sparse_hessian/work/p/$$ documentation
 for $icode work$$ and $icode p$$.

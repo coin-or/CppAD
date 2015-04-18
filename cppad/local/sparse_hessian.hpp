@@ -217,12 +217,12 @@ This method requires that
 $cref colpack_prefix$$ was specified on the
 $cref/cmake command/cmake/CMake Command/$$ line.
 It also takes advantage of the fact that the Hessian matrix is symmetric.
- 
+
 $subhead p$$
 If $icode work$$ is present, and it is not the first call after
 its construction or a clear,
 the sparsity pattern $icode p$$ is not used.
-This enables one to free the sparsity pattern 
+This enables one to free the sparsity pattern
 and still compute corresponding sparse Hessians.
 
 $head n_sweep$$
