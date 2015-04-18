@@ -3,7 +3,7 @@
 # define CPPAD_SPARSE_JACOBIAN_INCLUDED
 
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-14 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-15 Bradley M. Bell
 
 CppAD is distributed under multiple licenses. This distribution is under
 the terms of the 
@@ -31,6 +31,7 @@ $spell
 	Bool
 	jac
 	Jacobian
+	Jacobians
 	const
 	Taylor
 $$
@@ -106,6 +107,12 @@ If this sparsity pattern does not change between calls to
 $codei SparseJacobian$$, it should be faster to calculate $icode p$$ once 
 (using $cref ForSparseJac$$ or $cref RevSparseJac$$)
 and then pass $icode p$$ to $codei SparseJacobian$$.
+Furthermore, if you specify $icode work$$ in the calling sequence,
+it is not necessary to keep the sparsity pattern; see the heading
+$cref/p/sparse_jacobian/work/p/$$ under the $icode work$$ description.
+$pre
+
+$$
 In addition,
 if you specify $icode p$$, CppAD will use the same
 type of sparsity representation 
@@ -191,6 +198,13 @@ you can set this method to $code "colpack"$$.
 This value only matters on the first call to $code sparse_jacobian$$
 that follows the $icode work$$ constructor or a call to
 $icode%work%.clear()%$$.
+
+$subhead p$$
+If $icode work$$ is present, and it is not the first call after
+its construction or a clear,
+the sparsity pattern $icode p$$ is not used.
+This enables one to free the sparsity pattern 
+and still compute corresponding sparse Jacobians.
 
 $head n_sweep$$
 The return value $icode n_sweep$$ has prototype

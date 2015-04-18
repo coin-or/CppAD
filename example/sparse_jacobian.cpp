@@ -1,6 +1,6 @@
 /* $Id$ */
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-12 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-15 Bradley M. Bell
 
 CppAD is distributed under multiple licenses. This distribution is under
 the terms of the 
@@ -135,7 +135,8 @@ bool reverse()
 
 	// now recompute at a different x value (using work from previous call)
 	check[11] = x[3] = 10.;
-	n_sweep = f.SparseJacobianReverse(x, p_s, row, col, jac, work);
+	std::vector< std::set<size_t> > not_used;
+	n_sweep = f.SparseJacobianReverse(x, not_used, row, col, jac, work);
 	for(k = 0; k < K; k++)
 	{	ell = row[k] * n + col[k];
 		ok &= NearEqual(check[ell], jac[k], eps, eps);

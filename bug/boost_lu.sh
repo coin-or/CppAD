@@ -11,10 +11,10 @@
 # Please visit http://www.coin-or.org/CppAD/ for information on other licenses.
 # -----------------------------------------------------------------------------
 cat << EOF
-This test results in a very long error message with boost-1.55.0 and 
+This test results in a very long error message with boost-1.55.0 and
 gcc-4.9.2. Here is the gist of the message:
 	/usr/include/boost/numeric/ublas/detail/matrix_assign.hpp:33:35:
-	error: no match for ‘operator<’ 
+	error: no match for ‘operator<’
 	... snip ...
 		return norm_inf (e1 - e2) < epsilon *
                                    ^

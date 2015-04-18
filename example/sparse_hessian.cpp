@@ -1,6 +1,6 @@
 /* $Id$ */
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-12 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-15 Bradley M. Bell
 
 CppAD is distributed under multiple licenses. This distribution is under
 the terms of the 
@@ -161,7 +161,8 @@ bool sparse_hessian(void)
 	x[1]       = 0.5;
 	ell        = 1 * n + 1;
 	check[ell] = 6.0 * x[1];
-	n_sweep    = f.SparseHessian(x, w, p_set, row, col, hes, work);
+	s_vector   not_used;
+	n_sweep    = f.SparseHessian(x, w, not_used, row, col, hes, work);
 	for(k = 0; k < K; k++)
 	{	ell = row[k] * n + col[k];
 		ok &=  NearEqual(w[0] * check[ell], hes[k], eps, eps );

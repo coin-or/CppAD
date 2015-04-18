@@ -111,6 +111,12 @@ $$
 If this sparsity pattern does not change between calls to
 $codei SparseHessian$$, it should be faster to calculate $icode p$$ once and
 pass this argument to $codei SparseHessian$$.
+Furthermore, if you specify $icode work$$ in the calling sequence,
+it is not necessary to keep the sparsity pattern; see the heading
+$cref/p/sparse_hessian/work/p/$$ under the $icode work$$ description.
+$pre
+
+$$
 In addition,
 if you specify $icode p$$, CppAD will use the same
 type of sparsity representation
@@ -211,6 +217,13 @@ This method requires that
 $cref colpack_prefix$$ was specified on the
 $cref/cmake command/cmake/CMake Command/$$ line.
 It also takes advantage of the fact that the Hessian matrix is symmetric.
+ 
+$subhead p$$
+If $icode work$$ is present, and it is not the first call after
+its construction or a clear,
+the sparsity pattern $icode p$$ is not used.
+This enables one to free the sparsity pattern 
+and still compute corresponding sparse Hessians.
 
 $head n_sweep$$
 The return value $icode n_sweep$$ has prototype
