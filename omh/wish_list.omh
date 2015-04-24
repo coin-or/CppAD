@@ -11,8 +11,8 @@ Please visit http://www.coin-or.org/CppAD/ for information on other licenses.
 -------------------------------------------------------------------------- */
 $begin WishList$$
 $spell
-	onetape
-	Op
+	Recomputation
+	expm
 	jacobian
 	nz
 	RevSparseJac
@@ -24,16 +24,14 @@ $spell
 	Checkpointing
 	grep
 	recomputed
-	recomputation
 	afun
 	iterator
 	std
 	cos
-	Ipopt
 	Adolc
 	xml
 	hpp
-	Cpp
+	CppAD
 	Atan
 	cppad
 	atanh
@@ -49,7 +47,7 @@ $index features, new$$
 $head Standard Math Functions$$
 The following functions are part of the C++11 standard math library
 and could be added to CppAD:
-$code atanh$$, $code asinh$$, $code acosh$$.
+$code atanh$$, $code asinh$$, $code acosh$$, $code expm1$$, $code log1p$$
 
 $subhead atan2$$
 The $cref/atan2/Atan2/$$ function could be made faster by adding
