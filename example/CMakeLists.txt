@@ -85,6 +85,7 @@ ADD_EXECUTABLE(example EXCLUDE_FROM_ALL example.cpp
 	ad_input.cpp
 	ad_output.cpp
 	asin.cpp
+	asinh.cpp
 	atan.cpp
 	atan2.cpp
 	base_alloc.hpp

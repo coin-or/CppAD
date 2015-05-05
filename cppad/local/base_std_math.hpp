@@ -3,7 +3,7 @@
 # define CPPAD_BASE_STD_MATH_INCLUDED
 
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-14 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-15 Bradley M. Bell
 
 CppAD is distributed under multiple licenses. This distribution is under
 the terms of the 
@@ -16,6 +16,7 @@ Please visit http://www.coin-or.org/CppAD/ for information on other licenses.
 /* 
 $begin base_std_math$$
 $spell
+	asinh
 	inline
 	fabs
 	isnan
@@ -88,6 +89,18 @@ This macro uses the functions $codei%std::%Fun%$$ which
 must be defined and have the same prototype as $codei%CppAD::%Fun%$$.
 For example, 
 $cref/float/base_float.hpp/Unary Standard Math/$$.
+
+$head asinh$$
+If the inverse hyperbolic sine function is supported by the compiler,
+$cref/CPPAD_COMPILER_HAS_ASINH/asinh/CPPAD_COMPILER_HAS_ASINH/$$
+is one,
+the type $icode Base$$ must support the syntax
+$codei%
+	%y% = CppAD::asinh(%x%)
+%$$
+where $icode x$$ and $icode y$$ have the same prototype as above.
+For example, see
+$cref/base_alloc/base_alloc.hpp/asinh/$$.
 
 $head erf$$
 $index erf, base require$$

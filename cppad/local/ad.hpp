@@ -205,6 +205,9 @@ public:
 	inline AD sqrt(void) const;
 	inline AD tan(void) const;
 	inline AD tanh(void) const;
+# if CPPAD_COMPILER_HAS_ASINH
+	inline AD asinh(void) const;
+# endif
 # if CPPAD_COMPILER_HAS_ERF
 	inline AD erf(void) const;
 # endif

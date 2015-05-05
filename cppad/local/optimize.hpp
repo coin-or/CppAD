@@ -1546,6 +1546,7 @@ void optimize_run(
 			case AbsOp:
 			case AcosOp:
 			case AsinOp:
+			case AsinhOp:
 			case AtanOp:
 			case CosOp:
 			case CoshOp:
@@ -2309,6 +2310,7 @@ void optimize_run(
 			case AbsOp:
 			case AcosOp:
 			case AsinOp:
+			case AsinhOp:
 			case AtanOp:
 			case CosOp:
 			case CoshOp:

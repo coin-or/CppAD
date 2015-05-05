@@ -1,7 +1,7 @@
 $Id$
 // BEGIN SHORT COPYRIGHT
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-14 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-15 Bradley M. Bell
 
 CppAD is distributed under multiple licenses. This distribution is under
 the terms of the 
@@ -12,7 +12,7 @@ Please visit http://www.coin-or.org/CppAD/ for information on other licenses.
 -------------------------------------------------------------------------- */
 // END SHORT COPYRIGHT
 
-$begin AsinReverse$$
+$begin asin_reverse$$
 $spell
 	asin
 	Taylor
@@ -23,7 +23,7 @@ $index asin, reverse theory$$
 $index theory, asin reverse$$
 $index reverse, asin theory$$
 
-$section Arcsine Function Reverse Mode Theory$$
+$section Arc Sine and Hyperbolic Sine Reverse Mode Theory$$
 
 
 We use the reverse theory
@@ -33,39 +33,39 @@ $xref%
 	standard math function
 %$$
 definition for the functions $latex H$$ and $latex G$$.
-In addition, 
-
-we use $latex q$$ and $latex b$$ 
-for the $th p$$ order Taylor coefficient 
-row vectors corresponding to functions
+In addition, we use the forward mode notation in
+$cref asin_forward$$ for
 $latex \[
 \begin{array}{rcl}
-	Q(t) & = & 1 - X(t) * X(t) \\
+	Q(t) & = & 1 \mp X(t) * X(t) \\
 	B(t) & = & \sqrt{ Q(t) }
 \end{array}
 \] $$ 
+We use $latex q$$ and $latex b$$ 
+for the $th p$$ order Taylor coefficient 
+row vectors corresponding to these functions
 and replace $latex z^{(j)}$$ by
 $latex \[
 	( z^{(j)} , b^{(j)} )
 \] $$ 
 in the definition for $latex G$$ and $latex H$$.
-The forward mode formulas for the
-$cref/asin/AsinForward/$$ 
+The zero order forward mode formulas for the
+$cref/asin/asin_forward/$$ 
 function are
 $latex \[
 \begin{array}{rcl}
-	q^{(0)}  & = & 1 - x^{(0)} x^{(0)} \\
-	b^{(j)}  & = & \sqrt{ q^{(0)} }    \\
-	z^{(j)}  & = & \arcsin ( x^{(0)} )
+	q^{(0)}  & = & 1 \mp x^{(0)} x^{(0)} \\
+	b^{(0)}  & = & \sqrt{ q^{(0)} }    \\
+	z^{(0)}  & = & F( x^{(0)} )
 \end{array}
 \] $$
-
-for the case $latex j = 0$$, and for $latex j > 0$$,
-
+where $latex F(x) = \R{arcsin} (x)$$ for $latex -$$
+and $latex F(x) = \R{arcsinh} (x) $$ for $latex +$$.
+For the orders $latex j$$ greater than zero we have
 $latex \[
 \begin{array}{rcl}
 q^{(j)} & = &  
-	- \sum_{k=0}^j x^{(k)} x^{(j-k)} 
+	\mp \sum_{k=0}^j x^{(k)} x^{(j-k)} 
 \\
 b^{(j)} & = &
 	\frac{1}{j} \frac{1}{ b^{(0)} } 
@@ -94,7 +94,7 @@ $latex \[
 & = &
 \D{G}{ x^{(j)} }  
 + \D{G}{ z^{(j)} } \frac{1}{ b^{(0)} }
-- \D{G}{ b^{(j)} } \frac{ x^{(0)} }{ b^{(0)} }
+\mp \D{G}{ b^{(j)} } \frac{ x^{(0)} }{ b^{(0)} }
 \end{array}
 \] $$ 
 
@@ -119,7 +119,7 @@ $latex \[
 \\
 & = & 
 \D{G}{ x^{(0)} } 
-- \D{G}{ b^{(j)} } \frac{ x^{(j)} }{ b^{(0)} }
+\mp \D{G}{ b^{(j)} } \frac{ x^{(j)} }{ b^{(0)} }
 \\
 \D{H}{ x^{(j)} } & = & 
 \D{G}{ x^{(j)} } 
@@ -129,7 +129,7 @@ $latex \[
 & = & 
 \D{G}{ x^{(j)} } 
 + \D{G}{ z^{(j)} } \frac{1}{ b^{(0)} } 
-- \D{G}{ b^{(j)} } \frac{ x^{(0)} }{ b^{(0)} }
+\mp \D{G}{ b^{(j)} } \frac{ x^{(0)} }{ b^{(0)} }
 \\
 \D{H}{ b^{(j - k)} } & = & 
 \D{G}{ b^{(j - k)} } 
@@ -148,7 +148,7 @@ $latex \[
 \\
 & = & 
 \D{G}{ x^{(k)} } 
-- \D{G}{ b^{(j)} } \frac{ x^{(j-k)} }{ b^{(0)} }
+\mp \D{G}{ b^{(j)} } \frac{ x^{(j-k)} }{ b^{(0)} }
 \\
 \D{H}{ z^{(k)} } & = & 
 \D{G}{ z^{(k)} } 

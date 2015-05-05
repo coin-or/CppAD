@@ -27,11 +27,6 @@ $spell
 	Gt
 	cppad.hpp
 	namespace
-	acos
-	asin
-	atan
-	cos
-	sqrt
 	optimizations
 	bool
 	const

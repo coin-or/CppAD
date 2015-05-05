@@ -1,6 +1,6 @@
 # $Id$
 # -----------------------------------------------------------------------------
-# CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-14 Bradley M. Bell
+# CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-15 Bradley M. Bell
 #
 # CppAD is distributed under multiple licenses. This distribution is under
 # the terms of the 
@@ -138,6 +138,8 @@ nobase_myinclude_HEADERS =  \
 	cppad/local/ad_valued.hpp \
 	cppad/local/arithmetic.hpp \
 	cppad/local/asin_op.hpp \
+	cppad/local/asinh.hpp \
+	cppad/local/asinh_op.hpp \
 	cppad/local/atan2.hpp \
 	cppad/local/atan_op.hpp \
 	cppad/local/atomic_base.hpp \

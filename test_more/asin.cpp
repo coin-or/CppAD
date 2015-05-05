@@ -1,6 +1,6 @@
 /* $Id$ */
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-12 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-15 Bradley M. Bell
 
 CppAD is distributed under multiple licenses. This distribution is under
 the terms of the 
@@ -16,7 +16,7 @@ Old example now only used for validation testing.
 
 # include <cppad/cppad.hpp>
 
-bool Asin(void)
+bool asin(void)
 {	bool ok = true;
 
 	using CppAD::asin;

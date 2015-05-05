@@ -2,7 +2,7 @@
 # ifndef CPPAD_BASE_ADOLC_INCLUDED
 # define CPPAD_BASE_ADOLC_INCLUDED
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-13 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-15 Bradley M. Bell
 
 CppAD is distributed under multiple licenses. This distribution is under
 the terms of the 
@@ -14,6 +14,7 @@ Please visit http://www.coin-or.org/CppAD/ for information on other licenses.
 /*
 $begin base_adolc.hpp$$
 $spell
+	asinh
 	erf
 	ifndef
 	define
@@ -214,6 +215,25 @@ $code sin$$,
 $code sinh$$,
 $code sqrt$$,
 $code tan$$.
+
+$head asinh$$
+If the inverse hyperbolic sine function is supported by the compiler,
+it must also be supported by a $icode Base$$ type;
+see $cref/asinh/base_std_math/asinh/$$.
+The adolc package does not support this function:
+$codep */
+namespace CppAD {
+# if CPPAD_COMPILER_HAS_ASINH
+	inline adouble asinh(const adouble& x)
+	{	CPPAD_ASSERT_KNOWN( 
+			false,
+			"erf: adolc does not support the inverse hyperbolic sine function"
+		);
+		return 0;
+	}
+# endif
+}
+/* $$ 
 
 $head erf$$
 If the error function is supported by the compiler,

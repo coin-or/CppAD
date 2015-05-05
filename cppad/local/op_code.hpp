@@ -52,6 +52,7 @@ enum OpCode {
 	AddpvOp,  //      parameter  + variable
 	AddvvOp,  //      variable   + variable
 	AsinOp,   // asin(variable)
+	AsinhOp,  // asinh(variable)
 	AtanOp,   // atan(variable)
 	BeginOp,  // used to mark the beginning of the tape
 	CExpOp,   // CondExpRel(left, right, trueCase, falseCase)
@@ -171,6 +172,7 @@ inline size_t NumArg( OpCode op)
 		2, // AddpvOp
 		2, // AddvvOp
 		1, // AsinOp
+		1, // AsinhOp
 		1, // AtanOp
 		1, // BeginOp  offset first real argument to have index 1
 		6, // CExpOp
@@ -271,6 +273,7 @@ inline size_t NumRes(OpCode op)
 		1, // AddpvOp
 		1, // AddvvOp
 		2, // AsinOp
+		2, // AsinhOp
 		2, // AtanOp
 		1, // BeginOp  offsets first variable to have index one (not zero)
 		1, // CExpOp
@@ -354,6 +357,7 @@ inline const char* OpName(OpCode op)
 		"Addpv" ,
 		"Addvv" ,
 		"Asin"  ,
+		"Asinh"  ,
 		"Atan"  ,
 		"Begin" ,
 		"CExp"  ,
@@ -680,6 +684,7 @@ void printOp(
 		case AbsOp:
 		case AcosOp:
 		case AsinOp:
+		case AsinhOp:
 		case AtanOp:
 		case CosOp:
 		case CoshOp:
@@ -876,6 +881,7 @@ inline void assert_arg_before_result(
 		// 1 argument, 2 results
 		case AcosOp:
 		case AsinOp:
+		case AsinhOp:
 		case AtanOp:
 		case CosOp:
 		case CoshOp:

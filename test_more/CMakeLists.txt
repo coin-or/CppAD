@@ -68,6 +68,7 @@ ADD_EXECUTABLE(test_more EXCLUDE_FROM_ALL test_more.cpp
 	acos.cpp
 	adfun_copy.cpp
 	asin.cpp
+	asinh.cpp
 	assign.cpp
 	add.cpp
 	add_eq.cpp

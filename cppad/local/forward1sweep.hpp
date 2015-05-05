@@ -366,6 +366,13 @@ void forward1sweep(
 			break;
 			// -------------------------------------------------
 
+			case AsinhOp:
+			// sqrt(1 + x * x), asin(x)
+			CPPAD_ASSERT_UNKNOWN( i_var < numvar  );
+			forward_asinh_op(p, q, i_var, arg[0], J, taylor);
+			break;
+			// -------------------------------------------------
+
 			case AtanOp:
 			// 1 + x * x, atan(x)
 			CPPAD_ASSERT_UNKNOWN( i_var < numvar  );

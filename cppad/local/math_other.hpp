@@ -3,7 +3,7 @@
 # define CPPAD_MATH_OTHER_INCLUDED
 
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-12 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-15 Bradley M. Bell
 
 CppAD is distributed under multiple licenses. This distribution is under
 the terms of the 
@@ -26,6 +26,7 @@ $section Other AD Math Functions$$
 
 $childtable%
 	cppad/local/abs.hpp%
+	cppad/local/asinh.hpp%
 	cppad/local/sign.hpp%
 	cppad/local/atan2.hpp%
 	cppad/local/erf.hpp%
@@ -37,6 +38,7 @@ $end
 */
 
 # include <cppad/local/abs.hpp>
+# include <cppad/local/asinh.hpp>
 # include <cppad/local/sign.hpp>
 # include <cppad/local/atan2.hpp>
 # include <cppad/local/erf.hpp>

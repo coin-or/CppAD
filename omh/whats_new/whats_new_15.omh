@@ -13,6 +13,7 @@ Please visit http://www.coin-or.org/CppAD/ for information on other licenses.
 $begin whats_new_15$$
 $dollar @$$
 $spell
+	asinh
 	src
 	op
 	onetape
@@ -47,6 +48,12 @@ This section contains a list of the changes to CppAD during 2015
 (in reverse order by date).
 The purpose of this section is to
 assist you in learning about changes between various versions of CppAD.
+
+$head 05-05$$
+Add the inverse hyperbolic sine function $cref asinh$$. 
+If you are defining your own base type,
+note that $cref/asinh/base_std_math/asinh/$$
+was added to the base type requirements.
 
 $head 04-18$$
 In the sparse jacobian and sparse hessian calculations,

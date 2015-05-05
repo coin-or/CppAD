@@ -47,7 +47,7 @@ $index features, new$$
 $head Standard Math Functions$$
 The following functions are part of the C++11 standard math library
 and could be added to CppAD:
-$code atanh$$, $code asinh$$, $code acosh$$, $code expm1$$, $code log1p$$
+$code atanh$$, $code acosh$$, $code expm1$$, $code log1p$$
 
 $subhead atan2$$
 The $cref/atan2/Atan2/$$ function could be made faster by adding

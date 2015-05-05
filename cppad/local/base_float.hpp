@@ -2,7 +2,7 @@
 # ifndef CPPAD_BASE_FLOAT_INCLUDED
 # define CPPAD_BASE_FLOAT_INCLUDED
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-12 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-15 Bradley M. Bell
 
 CppAD is distributed under multiple licenses. This distribution is under
 the terms of the
@@ -17,6 +17,7 @@ Please visit http://www.coin-or.org/CppAD/ for information on other licenses.
 /*
 $begin base_float.hpp$$
 $spell
+	asinh
 	erf
 	endif
 	abs_geq
@@ -146,6 +147,9 @@ namespace CppAD {
 	CPPAD_STANDARD_MATH_UNARY(float, sqrt)
 	CPPAD_STANDARD_MATH_UNARY(float, tan)
 	CPPAD_STANDARD_MATH_UNARY(float, tanh)
+# if CPPAD_COMPILER_HAS_ASINH
+	CPPAD_STANDARD_MATH_UNARY(float, asinh)
+# endif
 # if CPPAD_COMPILER_HAS_ERF
 	CPPAD_STANDARD_MATH_UNARY(float, erf)
 # endif

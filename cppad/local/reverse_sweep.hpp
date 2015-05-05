@@ -332,6 +332,15 @@ void ReverseSweep(
 			break;
 			// --------------------------------------------------
 
+			case AsinhOp:
+			// sqrt(1 - x * x), asin(x)
+			CPPAD_ASSERT_UNKNOWN( i_var < numvar );
+			reverse_asinh_op(
+				d, i_var, arg[0], J, Taylor, K, Partial
+			);
+			break;
+			// --------------------------------------------------
+
 			case AtanOp:
 			// 1 + x * x, atan(x)
 			CPPAD_ASSERT_UNKNOWN( i_var < numvar );

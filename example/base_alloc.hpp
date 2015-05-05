@@ -2,7 +2,7 @@
 # ifndef CPPAD_BASE_ALLOC_INCLUDED
 # define CPPAD_BASE_ALLOC_INCLUDED
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-13 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-15 Bradley M. Bell
 
 CppAD is distributed under multiple licenses. This distribution is under
 the terms of the
@@ -14,6 +14,7 @@ Please visit http://www.coin-or.org/CppAD/ for information on other licenses.
 /*
 $begin base_alloc.hpp$$
 $spell
+	asinh
 	Rel
 	Lt Le Eq Ge Gt
 	Cond
@@ -298,6 +299,16 @@ namespace CppAD {
 	inline base_alloc abs(const base_alloc& x)
 	{	return std::fabs(*x.ptrdbl_); }
 }
+/* $$
+
+$head asinh$$
+The following defines the $code CppAD::asinh$$ function that
+is required th use $code AD<Base_alloc>$$:
+$codep */
+# if CPPAD_COMPILER_HAS_ASINH
+	inline base_alloc asinh(const base_alloc& x)
+	{	return std::asinh(*x.ptrdbl_); }
+# endif
 /* $$
 
 $head erf$$

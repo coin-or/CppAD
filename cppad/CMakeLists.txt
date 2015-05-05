@@ -146,17 +146,21 @@ int main(void)
 check_source_runs("${source}" cppad_has_cstdint_8_to_64)
 # -----------------------------------------------------------------------------
 # cppad_compiler_has_erf
+# cppad_compiler_has_asinh
 #
-SET(source "
+SET(source_template "
 # include <cmath>
 int main(void)
-{	if( std::erf(0.0) == 0.0 )
+{	if( std::c11_function(0.0) == 0.0 )
 		return 0;
 	return 1;
 }
 "
 )
-check_source_runs("${source}" cppad_compiler_has_erf)
+FOREACH(c11_function erf asinh)
+	STRING(REPLACE "c11_function" ${c11_function} source "${source_template}" ) 
+	check_source_runs("${source}" cppad_compiler_has_${c11_function} )
+ENDFOREACH(c11_function erf asinh)
 # -----------------------------------------------------------------------------
 # cppad_has_high_resolution_clock
 #

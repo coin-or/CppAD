@@ -72,6 +72,14 @@ C++11: Does compiler support std::erf(double)
 
 # if __cplusplus >= 201100
 /*!
+\def CPPAD_COMPILER_HAS_ASINH
+C++11: Does compiler support std::asinh(double)
+*/
+# define CPPAD_COMPILER_HAS_ASINH @cppad_compiler_has_asinh@
+# endif
+
+# if __cplusplus >= 201100
+/*!
 \def CPPAD_HAS_HIGH_RESOLUTION_CLOCK
 C++11: Does compiler support std::chrono::high_resolution_clock
 */
