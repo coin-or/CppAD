@@ -211,7 +211,7 @@ $rref SqrtForward$$
 $rref SinCosForward$$
 $rref AtanForward$$
 $rref asin_forward$$
-$rref AcosForward$$
+$rref acos_forward$$
 $tend
 
 $subhead Special Cases$$

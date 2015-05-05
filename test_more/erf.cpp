@@ -103,6 +103,7 @@ namespace {
 
 		return ok;
 	}
+# if CPPAD_COMPILER_HAS_ERF
 	bool hessian(void)
 	{	bool ok = true;
 		double eps = 1.0 * std::numeric_limits<double>::epsilon();
@@ -145,6 +146,7 @@ namespace {
 		}
 		return ok;
 	}
+# endif
 }
 bool erf(void)
 {	bool ok = true;

@@ -14,16 +14,14 @@ Please visit http://www.coin-or.org/CppAD/ for information on other licenses.
 
 $begin asin_forward$$
 $spell
+	asinh
 	asin
 	Arcsine
 	Taylor
 $$
 
-$index asin, forward theory$$
-$index theory, asin forward$$
-$index forward, asin theory$$
-
 $section Arc Sine and Hyperbolic Sine Forward Taylor Polynomial Theory$$
+$mindex asin, asinh$$
 
 $head Derivatives$$
 $latex \[
@@ -39,12 +37,10 @@ $latex \[
 	\sqrt{ 1 \mp x * x } * F^{(1)} (x) - 0 * F (u)  = 1
 \] $$
 and in the
-$xref/
-	ForwardTheory/
-	Standard Math Functions/
-	Differential Equation/
-	standard math function differential equation/
-	1
+$cref/standard math function differential equation
+	/ForwardTheory
+	/Standard Math Functions
+	/Differential Equation
 /$$,
 $latex A(x) = 0$$,
 $latex B(x) = \sqrt{1 \mp x * x }$$,
