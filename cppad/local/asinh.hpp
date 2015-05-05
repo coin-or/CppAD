@@ -84,7 +84,7 @@ namespace CppAD {
 
 template <class Type>
 Type asinh_template(const Type &x)
-{	return CppAD::log( x + CppAD::sqrt( Type(one) + x * x ) );
+{	return CppAD::log( x + CppAD::sqrt( Type(1) + x * x ) );
 }
 
 inline float asinh(const float &x)
