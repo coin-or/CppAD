@@ -3,10 +3,10 @@
 # define CPPAD_CSKIP_OP_INCLUDED
 
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-14 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-15 Bradley M. Bell
 
 CppAD is distributed under multiple licenses. This distribution is under
-the terms of the 
+the terms of the
                     Eclipse Public License Version 1.0.
 
 A copy of this license is included in the COPYING file of this distribution.
@@ -39,11 +39,11 @@ less than or equal this value.
 is static cast to size_t from the enum type
 \verbatim
 	enum CompareOp {
-		CompareLt, 
-		CompareLe, 
-		CompareEq, 
-		CompareGe, 
-		CompareGt, 
+		CompareLt,
+		CompareLe,
+		CompareEq,
+		CompareGe,
+		CompareGt,
 		CompareNe
 	}
 \endverbatim
@@ -60,16 +60,16 @@ If this is zero, left is a a parameter. Otherwise it is a variable.
 \n
 If this is zero, right is a parameter. Otherwise it is a variable.
 \n
-\a arg[2] 
+\a arg[2]
 is the index corresponding to left in comparision.
 \n
-\a arg[3] 
+\a arg[3]
 is the index corresponding to right in comparision.
 \n
-\a arg[4] 
+\a arg[4]
 is the number of operations to skip if the comparision result is true.
 \n
-\a arg[5] 
+\a arg[5]
 is the number of operations to skip if the comparision result is false.
 \n
 <tt>arg[5+i]</tt>
@@ -100,9 +100,9 @@ If right is a variable,
 <code>taylor [ arg[3] * cap_order + 0 ]</code>
 is the zeroth order Taylor coefficient corresponding to right.
 
-\param \cskip_op [in,out]
+\param cskip_op [in,out]
 is vector specifying which operations are at this point are know to be
-unecessary and can be skipped. 
+unecessary and can be skipped.
 This is both an input and an output.
 */
 template <class Base>
@@ -177,11 +177,11 @@ inline void forward_cskip_op_0(
 	}
 	if( true_case )
 	{	for(size_t i = 0; i < size_t(arg[4]); i++)
-			cskip_op[ arg[6+i] ] = true; 
+			cskip_op[ arg[6+i] ] = true;
 	}
 	else
 	{	for(size_t i = 0; i < size_t(arg[5]); i++)
-			cskip_op[ arg[6+arg[4]+i] ] = true; 
+			cskip_op[ arg[6+arg[4]+i] ] = true;
 	}
 	return;
 }
