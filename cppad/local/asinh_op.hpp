@@ -1,6 +1,7 @@
 /* $Id$ */
 # ifndef CPPAD_ASINH_OP_INCLUDED
 # define CPPAD_ASINH_OP_INCLUDED
+# if CPPAD_COMPILER_HAS_ASINH
 
 /* --------------------------------------------------------------------------
 CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-15 Bradley M. Bell
@@ -267,4 +268,5 @@ inline void reverse_asinh_op(
 }
 
 } // END_CPPAD_NAMESPACE
+# endif
 # endif

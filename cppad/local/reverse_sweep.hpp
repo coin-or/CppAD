@@ -332,6 +332,7 @@ void ReverseSweep(
 			break;
 			// --------------------------------------------------
 
+# if CPPAD_COMPILER_HAS_ASINH
 			case AsinhOp:
 			// sqrt(1 - x * x), asin(x)
 			CPPAD_ASSERT_UNKNOWN( i_var < numvar );
@@ -339,6 +340,7 @@ void ReverseSweep(
 				d, i_var, arg[0], J, Taylor, K, Partial
 			);
 			break;
+# endif
 			// --------------------------------------------------
 
 			case AtanOp:
