@@ -46,9 +46,9 @@ $$
 $section Example AD<Base> Where Base Constructor Allocates Memory$$
 
 $head Purpose$$
-Demonstrate use of $codei%AD<%Base%>%$$ 
+Demonstrate use of $codei%AD<%Base%>%$$
 where memory is allocated for each element of the type $icode Base$$.
-In addition, this is a complete example where all the 
+In addition, this is a complete example where all the
 $cref/required Base/base_require/$$ type
 operations are defined (as apposed to other examples where
 some of the operations for the Base type are already defined).
@@ -62,8 +62,8 @@ $codep */
 /* $$
 
 $head Computed Assignment Macro$$
-This macro is used for the 
-$code base_alloc$$ computed assignment operators; to be specific, 
+This macro is used for the
+$code base_alloc$$ computed assignment operators; to be specific,
 used with $icode op $$ equal to
 $code +=$$,
 $code -=$$,
@@ -76,8 +76,8 @@ $codep */
 /* $$
 
 $head Binary Operator Macro$$
-This macro is used for the 
-$code base_alloc$$ binary operators (as member functions); to be specific, 
+This macro is used for the
+$code base_alloc$$ binary operators (as member functions); to be specific,
 used with $icode op $$ equal to
 $code +$$,
 $code -$$,
@@ -95,9 +95,9 @@ $codep */
 /* $$
 
 $head Boolean Operator Macro$$
-This macro can be used for the 
-$code base_alloc$$ binary operators that have a 
-$code bool$$ result; to be specific, 
+This macro can be used for the
+$code base_alloc$$ binary operators that have a
+$code bool$$ result; to be specific,
 used with $icode op $$ equal to
 $code ==$$,
 $code !=$$,
@@ -115,7 +115,7 @@ $codep */
 /* $$
 
 $head Class Definition$$
-The following example class 
+The following example class
 defines the necessary $cref base_member$$ functions.
 It is made more complicated by storing a pointer to a $code double$$
 instead of the $code double$$ value itself.
@@ -127,18 +127,18 @@ public:
 
 	base_alloc(void)
 	{	size_t cap;
-		void* v  = CppAD::thread_alloc::get_memory(sizeof(double), cap); 
+		void* v  = CppAD::thread_alloc::get_memory(sizeof(double), cap);
 		ptrdbl_  = static_cast<double*>(v);
 	}
 	base_alloc(double dbl)
 	{	size_t cap;
-		void *v  = CppAD::thread_alloc::get_memory(sizeof(double), cap); 
+		void *v  = CppAD::thread_alloc::get_memory(sizeof(double), cap);
 		ptrdbl_  = static_cast<double*>(v);
 		*ptrdbl_ = dbl;
 	}
 	base_alloc(const base_alloc& x)
 	{	size_t cap;
-		void *v  = CppAD::thread_alloc::get_memory(sizeof(double), cap); 
+		void *v  = CppAD::thread_alloc::get_memory(sizeof(double), cap);
 		ptrdbl_  = static_cast<double*>(v);
 		*ptrdbl_ = *x.ptrdbl_;
 	}
@@ -165,7 +165,7 @@ public:
 	BASE_ALLOC_BINARY_OPERATOR(/)
 	BASE_ALLOC_BOOL_OPERATOR(==)
 	BASE_ALLOC_BOOL_OPERATOR(!=)
-	// The <= operator is not necessary for the base type requirements 
+	// The <= operator is not necessary for the base type requirements
 	// (needed so we can use NearEqual with base_alloc arguments).
 	BASE_ALLOC_BOOL_OPERATOR(<=)
 };
@@ -176,11 +176,11 @@ The type $code base_alloc$$ does not use $cref CondExp$$ operations.
 Hence its $code CondExpOp$$ function is defined by
 $codep */
 namespace CppAD {
-	inline base_alloc CondExpOp( 
+	inline base_alloc CondExpOp(
 		enum CompareOp     cop          ,
 		const base_alloc&       left         ,
-		const base_alloc&       right        , 
-		const base_alloc&       exp_if_true  , 
+		const base_alloc&       right        ,
+		const base_alloc&       exp_if_true  ,
 		const base_alloc&       exp_if_false )
 	{	// not used
 		assert(false);
@@ -272,10 +272,10 @@ $codep */
 	inline base_alloc fun (const base_alloc& x) \
 	{ return   std::fun(*x.ptrdbl_); }
 /* $$
-The following invocations of the macro above define the 
+The following invocations of the macro above define the
 $cref/unary standard math/base_std_math/Unary Standard Math/$$ functions
 (except for $code abs$$):
-$codep */ 
+$codep */
 namespace CppAD {
 	BASE_ALLOC_STD_MATH(acos)
 	BASE_ALLOC_STD_MATH(asin)
@@ -292,7 +292,7 @@ namespace CppAD {
 	BASE_ALLOC_STD_MATH(tanh)
 }
 /* $$
-The absolute value function is special because its $code std$$ name is 
+The absolute value function is special because its $code std$$ name is
 $code fabs$$
 $codep */
 namespace CppAD {
@@ -335,7 +335,7 @@ namespace CppAD {
 	}
 }
 /* $$
- 
+
 $head pow $$
 The following defines a $code CppAD::pow$$ function that
 is required to use $code AD<base_alloc>$$:
@@ -363,7 +363,7 @@ namespace CppAD {
 		{	return std::numeric_limits<base_alloc>::max(); }
 	};
 	// deprecated machine epsilon
-	template <> 
+	template <>
 	inline base_alloc epsilon<base_alloc>(void)
 	{	return numeric_limits<base_alloc>::epsilon(); }
 }

@@ -6,7 +6,7 @@
 CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-15 Bradley M. Bell
 
 CppAD is distributed under multiple licenses. This distribution is under
-the terms of the 
+the terms of the
                     Eclipse Public License Version 1.0.
 
 A copy of this license is included in the COPYING file of this distribution.
@@ -73,15 +73,15 @@ CppAD uses the compiler's version of $code erf$$
 and it corresponds to an $cref/atomic/glossary/Operation/Atomic/$$ operation.
 
 $subhead Other$$
-If the function $codei%std::erf(double %x%)%$$ is not defined, 
-CppAD uses a fast approximation (few numerical operations) 
+If the function $codei%std::erf(double %x%)%$$ is not defined,
+CppAD uses a fast approximation (few numerical operations)
 with relative error bound $latex 4 \times 10^{-4}$$; see
 Vedder, J.D.,
 $icode Simple approximations for the error function and its inverse$$,
-American Journal of Physics, 
-v 55, 
-n 8, 
-1987, 
+American Journal of Physics,
+v 55,
+n 8,
+1987,
 p 762-3.
 
 $head Example$$
@@ -90,7 +90,7 @@ $children%
 %$$
 The file
 $cref erf.cpp$$
-contains an example and test of this function.   
+contains an example and test of this function.
 It returns true if it succeeds and false otherwise.
 
 $end
@@ -100,13 +100,13 @@ $end
 # if ! CPPAD_COMPILER_HAS_ERF
 
 // BEGIN CppAD namespace
-namespace CppAD {   
+namespace CppAD {
 
 template <class Type>
 Type erf_template(const Type &x)
 {	using CppAD::exp;
 	const Type a = static_cast<Type>(993./880.);
-	const Type b = static_cast<Type>(89./880.); 
+	const Type b = static_cast<Type>(89./880.);
 
 	return tanh( (a + b * x * x) * x );
 }

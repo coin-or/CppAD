@@ -6,7 +6,7 @@
 CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-15 Bradley M. Bell
 
 CppAD is distributed under multiple licenses. This distribution is under
-the terms of the 
+the terms of the
                     Eclipse Public License Version 1.0.
 
 A copy of this license is included in the COPYING file of this distribution.
@@ -21,8 +21,8 @@ CppAD hashing utility.
 
 /*!
 \def CPPAD_HASH_TABLE_SIZE
-the codes retruned by hash_code are between zero and CPPAD_HASH_TABLE_SIZE 
-minus one. 
+the codes retruned by hash_code are between zero and CPPAD_HASH_TABLE_SIZE
+minus one.
 */
 # define CPPAD_HASH_TABLE_SIZE 10000
 
@@ -43,13 +43,13 @@ is a hash code that is between zero and CPPAD_HASH_TABLE_SIZE - 1.
 
 \par Checked Assertions
 \li \c std::numeric_limits<unsigned short>::max() >= CPPAD_HASH_TABLE_SIZE
-\li \c sizeof(value) is even 
+\li \c sizeof(value) is even
 \li \c sizeof(unsigned short)  == 2
 */
 
 template <class Value>
 unsigned short hash_code(const Value& value)
-{	CPPAD_ASSERT_UNKNOWN( 
+{	CPPAD_ASSERT_UNKNOWN(
 		std::numeric_limits<unsigned short>::max()
 		>=
 		CPPAD_HASH_TABLE_SIZE
@@ -83,7 +83,7 @@ AbsOp, AcosOp, AsinOp, AsinhOp, AtanOp, CosOp, CoshOp
 ExpOp, LogOp, SinOp, SinhOp, SqrtOp, TanOp, TanhOp
 
 \li binary operators where first argument is a parameter:
-AddpvOp, DivpvOp, MulpvOp, PowpvOp, SubpvOp, 
+AddpvOp, DivpvOp, MulpvOp, PowpvOp, SubpvOp,
 
 \li binary operators where second argument is a parameter:
 DivvpOp, PowvpOp, SubvpOp
@@ -113,9 +113,9 @@ is a hash code that is between zero and CPPAD_HASH_TABLE_SIZE - 1.
 
 \par Checked Assertions
 \c op must be one of the operators specified above. In addition,
-\li \c std::numeric_limits<unsigned short>::max() >= CPPAD_HASH_TABLE_SIZE 
-\li \c sizeof(size_t) is even 
-\li \c sizeof(Base) is even 
+\li \c std::numeric_limits<unsigned short>::max() >= CPPAD_HASH_TABLE_SIZE
+\li \c sizeof(size_t) is even
+\li \c sizeof(Base) is even
 \li \c sizeof(unsigned short)  == 2
 \li \c size_t(op) < size_t(NumberOp) <= CPPAD_HASH_TABLE_SIZE
 \li if the j-th argument for this operation is a parameter, arg[j] < npar.
@@ -123,11 +123,11 @@ is a hash code that is between zero and CPPAD_HASH_TABLE_SIZE - 1.
 
 template <class Base>
 unsigned short hash_code(
-	OpCode        op      , 
-	const addr_t* arg     , 
-	size_t npar           , 
+	OpCode        op      ,
+	const addr_t* arg     ,
+	size_t npar           ,
 	const Base* par       )
-{	CPPAD_ASSERT_UNKNOWN( 
+{	CPPAD_ASSERT_UNKNOWN(
 		std::numeric_limits<unsigned short>::max()
 		>=
 		CPPAD_HASH_TABLE_SIZE

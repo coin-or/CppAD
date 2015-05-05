@@ -3,7 +3,7 @@
 # CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-15 Bradley M. Bell
 #
 # CppAD is distributed under multiple licenses. This distribution is under
-# the terms of the 
+# the terms of the
 #                     Eclipse Public License Version 1.0.
 #
 # A copy of this license is included in the COPYING file of this distribution.
@@ -12,7 +12,7 @@
 #
 BUILT_SOURCES = $(top_srcdir)/cppad/configure.hpp
 $(top_srcdir)/cppad/configure.hpp: cppad/configure.hpp
-	cp cppad/configure.hpp $(top_srcdir)/cppad/configure.hpp 
+	cp cppad/configure.hpp $(top_srcdir)/cppad/configure.hpp
 #
 if CppAD_POSTFIX
 postfix_dir  = $(POSTFIX_DIR)
@@ -24,24 +24,24 @@ endif
 if CppAD_ADOLC
 SPEED_ADOLC_TESTS   = speed/adolc
 else
-SPEED_ADOLC_TESTS   = 
+SPEED_ADOLC_TESTS   =
 endif
 #
 # Did user specify a value for FADBAD_DIR in configure command line
 if CppAD_FADBAD
 SPEED_FADBAD_TESTS  = speed/fadbad
 else
-SPEED_FADBAD_TESTS  = 
+SPEED_FADBAD_TESTS  =
 endif
 #
 # Did user specify a value for SACADO_DIR in configure command line
 if CppAD_SACADO
 SPEED_SACADO_TESTS  = speed/sacado
 else
-SPEED_SACADO_TESTS  = 
+SPEED_SACADO_TESTS  =
 endif
 #
-# Did user specify a value for IPOPT_DIR in configure command line 
+# Did user specify a value for IPOPT_DIR in configure command line
 if CppAD_IPOPT
 IPOPT_TESTS = \
 	example/ipopt_solve \
@@ -51,7 +51,7 @@ IPOPT_TESTS = \
 #
 IPOPT_DIRS = \
 	cppad_ipopt/src \
-	$(IPOPT_TESTS) 
+	$(IPOPT_TESTS)
 #
 IPOPT_HEADER = \
 	cppad_ipopt/src/cppad_ipopt_nlp.hpp
@@ -297,7 +297,7 @@ nobase_myinclude_HEADERS =  \
 	cppad/time_test.hpp \
 	cppad/track_new_del.hpp \
 	cppad/vector.hpp
-# End nobase_myinclude_HEADERS (check_makefile.sh uses this comment) 
+# End nobase_myinclude_HEADERS (check_makefile.sh uses this comment)
 # ---------------------------------------------------------------
 #
 # No objects or executables are required to install CppAD.
@@ -313,7 +313,7 @@ SUBDIRS =  \
 	print_for \
 	multi_thread \
 	multi_thread/test_multi \
-	test_more 
+	test_more
 #
 # note that bin/gpl_license.sh is deleted by dist-hook
 EXTRA_DIST = \
@@ -353,7 +353,7 @@ EXTRA_DIST = \
 	multi_thread/CMakeLists.txt \
 	multi_thread/openmp/CMakeLists.txt \
 	multi_thread/pthread/CMakeLists.txt \
-	print_for/CMakeLists.txt 
+	print_for/CMakeLists.txt
 
 test_directory_list = \
 	$(IPOPT_TESTS) \
@@ -366,10 +366,10 @@ test_directory_list = \
 	multi_thread \
 	multi_thread/test_multi \
 	print_for \
-	test_more 
+	test_more
 
-test: all 
-	rm -f test.log 
+test: all
+	rm -f test.log
 	touch test.log
 	echo "#! /bin/sh -e"                               >  test.sh
 	for dir in $(test_directory_list) ; do (                        \

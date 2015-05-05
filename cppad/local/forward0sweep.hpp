@@ -6,7 +6,7 @@
 CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-15 Bradley M. Bell
 
 CppAD is distributed under multiple licenses. This distribution is under
-the terms of the 
+the terms of the
                     Eclipse Public License Version 1.0.
 
 A copy of this license is included in the COPYING file of this distribution.
@@ -30,7 +30,7 @@ otherwise, it respolves to
 \code
 	user_ok = user_atom->forward
 \endcode
-This maco is undefined at the end of this file to facillitate is 
+This maco is undefined at the end of this file to facillitate is
 use with a different definition in other files.
 */
 # ifdef NDEBUG
@@ -41,7 +41,7 @@ use with a different definition in other files.
 
 /*!
 \def CPPAD_FORWARD0SWEEP_TRACE
-This value is either zero or one. 
+This value is either zero or one.
 Zero is the normal operational value.
 If it is one, a trace of every forward0sweep computation is printed.
 (Note that forward0sweep is not used if CPPAD_USE_FORWARD0SWEEP is zero).
@@ -85,7 +85,7 @@ where \f$ n \f$ is the number of independent variables and
 The object play is effectly constant.
 The exception to this is that while palying back the tape
 the object play holds information about the current location
-with in the tape and this changes during palyback. 
+with in the tape and this changes during palyback.
 
 \param J
 Is the number of columns in the coefficient matrix taylor.
@@ -98,27 +98,27 @@ This must be greater than or equal one.
 \b Input:
 For i = 1 , ... , n,
 <code>taylor [i * J + 0]</code>
-variable with index j on the tape 
+variable with index j on the tape
 (these are the independent variables).
 \n
 \n
-\b Output: 
+\b Output:
 For i = n + 1, ... , numvar - 1,
 <code>taylor [i * J + 0]</code>
-is the zero order Taylor coefficient for the variable with 
+is the zero order Taylor coefficient for the variable with
 index i on the tape.
 
 \param cskip_op
 Is a vector with size play->num_op_rec().
 The input value of the elements does not matter.
-Upon return, if cskip_op[i] is true, the operator index i 
-does not affect any of the dependent variable 
+Upon return, if cskip_op[i] is true, the operator index i
+does not affect any of the dependent variable
 (given the value of the independent variables).
 
 \param var_by_load_op
 Is a vector with size play->num_load_op_rec().
 The input value of the elements does not matter.
-Upon return, 
+Upon return,
 it is the variable index corresponding the result for each load operator.
 In the case where the index is zero,
 the load operator results in a parameter (not a variable).
@@ -131,13 +131,13 @@ zero order foward mode.
 \param compare_change_number
 If compare_change_count is zero, this value is set to zero.
 Otherwise, the return value is the number of comparision operations
-that have a different result from when the information in 
+that have a different result from when the information in
 play was recorded.
 
 \param compare_change_op_index
 If compare_change_count is zero, this value is set to zero.
 Otherwise it is the operator index (see forward_next) for the count-th
-comparision operation that has a different result from when the information in 
+comparision operation that has a different result from when the information in
 play was recorded.
 */
 
@@ -172,7 +172,7 @@ void forward0sweep(
 	// index for current instruction
 	size_t i_op;
 
-	// next variables 
+	// next variables
 	size_t i_var;
 
 	// operation argument indices
@@ -209,8 +209,8 @@ void forward0sweep(
 	// work space used by UserOp.
 	vector<bool> user_vx;        // empty vecotor
 	vector<bool> user_vy;        // empty vecotor
-	vector<Base> user_tx;        // argument vector Taylor coefficients 
-	vector<Base> user_ty;        // result vector Taylor coefficients 
+	vector<Base> user_tx;        // argument vector Taylor coefficients
+	vector<Base> user_ty;        // result vector Taylor coefficients
 	size_t user_index = 0;       // indentifier for this atomic operation
 	size_t user_id    = 0;       // user identifier for this call to operator
 	size_t user_i     = 0;       // index in result vector
@@ -247,9 +247,9 @@ void forward0sweep(
 	*/
 
 # if CPPAD_FORWARD0SWEEP_TRACE
-	// variable indices for results vector 
+	// variable indices for results vector
 	// (done differently for order zero).
-	vector<size_t> user_iy;      
+	vector<size_t> user_iy;
 # endif
 
 	// skip the BeginOp at the beginning of the recording
@@ -263,8 +263,8 @@ void forward0sweep(
 	{
 		// this op
 		play->forward_next(op, arg, i_op, i_var);
-		CPPAD_ASSERT_UNKNOWN( (i_op > n)  | (op == InvOp) );  
-		CPPAD_ASSERT_UNKNOWN( (i_op <= n) | (op != InvOp) );  
+		CPPAD_ASSERT_UNKNOWN( (i_op > n)  | (op == InvOp) );
+		CPPAD_ASSERT_UNKNOWN( (i_op <= n) | (op != InvOp) );
 		CPPAD_ASSERT_UNKNOWN( i_op < play->num_op_rec() );
 		CPPAD_ASSERT_ARG_BEFORE_RESULT(op, arg, i_var);
 
@@ -331,7 +331,7 @@ void forward0sweep(
 			// -------------------------------------------------
 
 			case CExpOp:
-			// Use the general case with d == 0 
+			// Use the general case with d == 0
 			// (could create an optimzied verison for this case)
 			forward_cond_op_0(
 				i_var, arg, num_par, parameter, J, taylor
@@ -449,10 +449,10 @@ void forward0sweep(
 			case LdpOp:
 			forward_load_p_op_0(
 				play,
-				i_var, 
-				arg, 
-				parameter, 
-				J, 
+				i_var,
+				arg,
+				parameter,
+				J,
 				taylor,
 				isvar_by_ind.data(),
 				index_by_ind.data(),
@@ -464,10 +464,10 @@ void forward0sweep(
 			case LdvOp:
 			forward_load_v_op_0(
 				play,
-				i_var, 
-				arg, 
-				parameter, 
-				J, 
+				i_var,
+				arg,
+				parameter,
+				J,
 				taylor,
 				isvar_by_ind.data(),
 				index_by_ind.data(),
@@ -647,10 +647,10 @@ void forward0sweep(
 
 			case StppOp:
 			forward_store_pp_op_0(
-				i_var, 
-				arg, 
-				num_par, 
-				J, 
+				i_var,
+				arg,
+				num_par,
+				J,
 				taylor,
 				isvar_by_ind.data(),
 				index_by_ind.data()
@@ -660,10 +660,10 @@ void forward0sweep(
 
 			case StpvOp:
 			forward_store_pv_op_0(
-				i_var, 
-				arg, 
-				num_par, 
-				J, 
+				i_var,
+				arg,
+				num_par,
+				J,
 				taylor,
 				isvar_by_ind.data(),
 				index_by_ind.data()
@@ -673,10 +673,10 @@ void forward0sweep(
 
 			case StvpOp:
 			forward_store_vp_op_0(
-				i_var, 
-				arg, 
-				num_par, 
-				J, 
+				i_var,
+				arg,
+				num_par,
+				J,
 				taylor,
 				isvar_by_ind.data(),
 				index_by_ind.data()
@@ -686,10 +686,10 @@ void forward0sweep(
 
 			case StvvOp:
 			forward_store_vv_op_0(
-				i_var, 
-				arg, 
-				num_par, 
-				J, 
+				i_var,
+				arg,
+				num_par,
+				J,
 				taylor,
 				isvar_by_ind.data(),
 				index_by_ind.data()
@@ -740,7 +740,7 @@ void forward0sweep(
 				user_atom  = atomic_base<Base>::class_object(user_index);
 # ifndef NDEBUG
 				if( user_atom == CPPAD_NULL )
-				{	std::string msg = 
+				{	std::string msg =
 						atomic_base<Base>::class_name(user_index)
 						+ ": atomic_base function has been deleted";
 					CPPAD_ASSERT_KNOWN(false, msg.c_str() );
@@ -766,7 +766,7 @@ void forward0sweep(
 				CPPAD_ASSERT_UNKNOWN( user_m     == size_t(arg[3]) );
 # ifndef NDEBUG
 				if( ! user_ok )
-				{	std::string msg = 
+				{	std::string msg =
 						atomic_base<Base>::class_name(user_index)
 						+ ": atomic_base.forward: returned false";
 					CPPAD_ASSERT_KNOWN(false, msg.c_str() );
@@ -789,7 +789,7 @@ void forward0sweep(
 			if( user_j == user_n )
 			{	// call users function for this operation
 				user_atom->set_id(user_id);
-				CPPAD_ATOMIC_CALL(p, q, 
+				CPPAD_ATOMIC_CALL(p, q,
 					user_vx, user_vy, user_tx, user_ty
 				);
 				user_state = user_ret;
@@ -805,7 +805,7 @@ void forward0sweep(
 			if( user_j == user_n )
 			{	// call users function for this operation
 				user_atom->set_id(user_id);
-				CPPAD_ATOMIC_CALL(p, q, 
+				CPPAD_ATOMIC_CALL(p, q,
 					user_vx, user_vy, user_tx, user_ty
 				);
 				user_state = user_ret;
@@ -850,19 +850,19 @@ void forward0sweep(
 			for(size_t i = 0; i < user_m; i++) if( user_iy[i] > 0 )
 			{	size_t i_tmp   = (i_op + i) - user_m;
 				printOp(
-					std::cout, 
+					std::cout,
 					play,
 					i_tmp,
 					user_iy[i],
-					UsrrvOp, 
+					UsrrvOp,
 					CPPAD_NULL
 				);
 				Base* Z_tmp = taylor + user_iy[i] * J;
 				printOpResult(
-					std::cout, 
-					d + 1, 
+					std::cout,
+					d + 1,
 					Z_tmp,
-					0, 
+					0,
 					(Base *) CPPAD_NULL
 				);
 				std::cout << std::endl;
@@ -877,18 +877,18 @@ void forward0sweep(
 		if( op != UsrrvOp )
 		{
 			printOp(
-				std::cout, 
+				std::cout,
 				play,
 				i_op,
 				i_var,
-				op, 
+				op,
 				arg_tmp
 			);
 			if( NumRes(op) > 0 ) printOpResult(
-				std::cout, 
-				d + 1, 
-				Z_tmp, 
-				0, 
+				std::cout,
+				d + 1,
+				Z_tmp,
+				0,
 				(Base *) CPPAD_NULL
 			);
 			std::cout << std::endl;

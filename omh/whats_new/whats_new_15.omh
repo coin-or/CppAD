@@ -50,7 +50,7 @@ The purpose of this section is to
 assist you in learning about changes between various versions of CppAD.
 
 $head 05-05$$
-Add the inverse hyperbolic sine function $cref asinh$$. 
+Add the inverse hyperbolic sine function $cref asinh$$.
 If you are defining your own base type,
 note that $cref/asinh/base_std_math/asinh/$$
 was added to the base type requirements.

@@ -158,7 +158,7 @@ int main(void)
 "
 )
 FOREACH(c11_function erf asinh)
-	STRING(REPLACE "c11_function" ${c11_function} source "${source_template}" ) 
+	STRING(REPLACE "c11_function" ${c11_function} source "${source_template}" )
 	check_source_runs("${source}" cppad_compiler_has_${c11_function} )
 ENDFOREACH(c11_function erf asinh)
 # -----------------------------------------------------------------------------

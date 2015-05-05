@@ -6,7 +6,7 @@
 CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-15 Bradley M. Bell
 
 CppAD is distributed under multiple licenses. This distribution is under
-the terms of the 
+the terms of the
                     Eclipse Public License Version 1.0.
 
 A copy of this license is included in the COPYING file of this distribution.
@@ -30,7 +30,7 @@ otherwise, it respolves to
 \code
 	user_ok = user_atom->forward
 \endcode
-This macro is undefined at the end of this file to facillitate its 
+This macro is undefined at the end of this file to facillitate its
 use with a different definition in other files.
 */
 # ifdef NDEBUG
@@ -41,7 +41,7 @@ use with a different definition in other files.
 
 /*!
 \def CPPAD_FORWARD2SWEEP_TRACE
-This value is either zero or one. 
+This value is either zero or one.
 Zero is the normal operational value.
 If it is one, a trace of every forward2sweep computation is printed.
 */
@@ -84,7 +84,7 @@ where \f$ n \f$ is the number of independent variables and
 The object play is effectly constant.
 The exception to this is that while palying back the tape
 the object play holds information about the current location
-with in the tape and this changes during palyback. 
+with in the tape and this changes during palyback.
 
 \param J
 Is the number of columns in the coefficient matrix taylor.
@@ -95,30 +95,30 @@ This must be greater than or equal one.
 \b Input:
 For <code>i = 1 , ... , numvar-1</code>,
 <code>taylor[ (J-1)*r*i + i + 0 ]</code>
-is the zero order Taylor coefficient corresponding to 
+is the zero order Taylor coefficient corresponding to
 the i-th variable and all directions.
 For <code>i = 1 , ... , numvar-1</code>,
 For <code>k = 1 , ... , q-1</code>,
 <code>ell = 0 , ... , r-1</code>,
 <code>taylor[ (J-1)*r*i + i + (k-1)*r + ell + 1 ]</code>
-is the k-th order Taylor coefficient corresponding to 
+is the k-th order Taylor coefficient corresponding to
 the i-th variabel and ell-th direction.
 \n
 \n
 \b Input:
-For <code>i = 1 , ... , n</code>, 
+For <code>i = 1 , ... , n</code>,
 <code>ell = 0 , ... , r-1</code>,
 <code>taylor[ (J-1)*r*i + i + (q-1)*r + ell + 1 ]</code>
-is the q-th order Taylor coefficient corresponding to 
+is the q-th order Taylor coefficient corresponding to
 the i-th variable and ell-th direction
 (these are the independent varaibles).
 \n
 \n
-\b Output: 
-For <code>i = n+1 , ... , numvar-1</code>, 
+\b Output:
+For <code>i = n+1 , ... , numvar-1</code>,
 <code>ell = 0 , ... , r-1</code>,
 <code>taylor[ (J-1)*r*i + i + (q-1)*r + ell + 1 ]</code>
-is the q-th order Taylor coefficient corresponding to 
+is the q-th order Taylor coefficient corresponding to
 the i-th variable and ell-th direction.
 
 \param cskip_op
@@ -162,7 +162,7 @@ void forward2sweep(
 	// index for current instruction
 	size_t i_op;
 
-	// next variables 
+	// next variables
 	size_t i_var;
 
 	// operation argument indices
@@ -171,9 +171,9 @@ void forward2sweep(
 	// work space used by UserOp.
 	vector<bool> user_vx;        // empty vecotor
 	vector<bool> user_vy;        // empty vecotor
-	vector<Base> user_tx_one;    // argument vector Taylor coefficients 
+	vector<Base> user_tx_one;    // argument vector Taylor coefficients
 	vector<Base> user_tx_all;
-	vector<Base> user_ty_one;    // result vector Taylor coefficients 
+	vector<Base> user_ty_one;    // result vector Taylor coefficients
 	vector<Base> user_ty_all;
 	size_t user_index = 0;       // indentifier for this atomic operation
 	size_t user_id    = 0;       // user identifier for this call to operator
@@ -206,9 +206,9 @@ void forward2sweep(
 	// (not needed for order zero)
 	const size_t user_q1 = q+1;
 
-	// variable indices for results vector 
+	// variable indices for results vector
 	// (done differently for order zero).
-	vector<size_t> user_iy;      
+	vector<size_t> user_iy;
 
 	// skip the BeginOp at the beginning of the recording
 	play->forward_start(op, arg, i_op, i_var);
@@ -222,15 +222,15 @@ void forward2sweep(
 	{
 		// this op
 		play->forward_next(op, arg, i_op, i_var);
-		CPPAD_ASSERT_UNKNOWN( (i_op > n)  | (op == InvOp) );  
-		CPPAD_ASSERT_UNKNOWN( (i_op <= n) | (op != InvOp) );  
+		CPPAD_ASSERT_UNKNOWN( (i_op > n)  | (op == InvOp) );
+		CPPAD_ASSERT_UNKNOWN( (i_op <= n) | (op != InvOp) );
 		CPPAD_ASSERT_UNKNOWN( i_op < play->num_op_rec() );
 		CPPAD_ASSERT_ARG_BEFORE_RESULT(op, arg, i_var);
 
 		// check if we are skipping this operation
 		while( cskip_op[i_op] )
 		{	if( op == CSumOp )
-			{	// CSumOp has a variable number of arguments 
+			{	// CSumOp has a variable number of arguments
 				play->forward_csum(op, arg, i_op, i_var);
 			}
 			CPPAD_ASSERT_UNKNOWN( op != CSkipOp );
@@ -418,7 +418,7 @@ void forward2sweep(
 			case ParOp:
 			k = i_var*(J-1)*r + i_var + (q-1)*r + 1;
 			for(ell = 0; ell < r; ell++)
-				taylor[k + ell] = Base(0); 
+				taylor[k + ell] = Base(0);
 			break;
 			// -------------------------------------------------
 
@@ -521,7 +521,7 @@ void forward2sweep(
 				user_atom  = atomic_base<Base>::class_object(user_index);
 # ifndef NDEBUG
 				if( user_atom == CPPAD_NULL )
-				{	std::string msg = 
+				{	std::string msg =
 						atomic_base<Base>::class_name(user_index)
 						+ ": atomic_base function has been deleted";
 					CPPAD_ASSERT_KNOWN(false, msg.c_str() );
@@ -580,15 +580,15 @@ void forward2sweep(
 					);
 # ifndef NDEBUG
 					if( ! user_ok )
-					{	std::string msg = 
+					{	std::string msg =
 							atomic_base<Base>::class_name(user_index)
 							+ ": atomic_base.forward: returned false";
 						CPPAD_ASSERT_KNOWN(false, msg.c_str() );
 					}
 # endif
-					for(i = 0; i < user_m; i++) 
+					for(i = 0; i < user_m; i++)
 					{	if( user_iy[i] > 0 )
-						{	size_t i_taylor = user_iy[i]*((J-1)*r+1); 
+						{	size_t i_taylor = user_iy[i]*((J-1)*r+1);
 							size_t q_taylor = i_taylor + (q-1)*r+1+ell;
 							size_t q_one    = i * user_q1 + q;
 							taylor[q_taylor] = user_ty_one[q_one];
@@ -625,7 +625,7 @@ void forward2sweep(
 			user_tx_all[user_j*(q*r+1)+0] = taylor[arg[0]*((J-1)*r+1)+0];
 			for(ell = 0; ell < r; ell++)
 			{	for(k = 1; k < user_q1; k++)
-				{	user_tx_all[user_j*(q*r+1) + (k-1)*r+1+ell] = 
+				{	user_tx_all[user_j*(q*r+1) + (k-1)*r+1+ell] =
 						taylor[arg[0]*((J-1)*r+1) + (k-1)*r+1+ell];
 				}
 			}
@@ -656,7 +656,7 @@ void forward2sweep(
 			user_ty_all[user_i*(q*r+1)+0] = taylor[i_var*((J-1)*r+1)+0];
 			for(ell = 0; ell < r; ell++)
 			{	for(k = 1; k < user_q1; k++)
-				{	user_ty_all[user_i*(q*r+1) + (k-1)*r+1+ell] = 
+				{	user_ty_all[user_i*(q*r+1) + (k-1)*r+1+ell] =
 						taylor[i_var*((J-1)*r+1) + (k-1)*r+1+ell];
 				}
 			}
@@ -677,11 +677,11 @@ void forward2sweep(
 			for(i = 0; i < user_m; i++) if( user_iy[i] > 0 )
 			{	size_t i_tmp   = (i_op + i) - user_m;
 				printOp(
-					std::cout, 
+					std::cout,
 					play,
 					i_tmp,
 					user_iy[i],
-					UsrrvOp, 
+					UsrrvOp,
 					CPPAD_NULL
 				);
 				Base* Z_tmp = taylor + user_iy[i]*((J-1) * r + 1);
@@ -691,10 +691,10 @@ void forward2sweep(
 						for(size_t p_tmp = 1; p_tmp <= q; p_tmp++)
 							Z_vec[p_tmp] = Z_tmp[(p_tmp-1)*r+ell+1];
 						printOpResult(
-							std::cout, 
-							q + 1, 
+							std::cout,
+							q + 1,
 							Z_vec.data(),
-							0, 
+							0,
 							(Base *) CPPAD_NULL
 						);
 					}
@@ -709,11 +709,11 @@ void forward2sweep(
 			arg_tmp = arg - arg[-1] - 7;
 		if( op != UsrrvOp )
 		{	printOp(
-				std::cout, 
+				std::cout,
 				play,
 				i_op,
 				i_var,
-				op, 
+				op,
 				arg_tmp
 			);
 			Base* Z_tmp = CPPAD_NULL;
@@ -728,10 +728,10 @@ void forward2sweep(
 					for(size_t p_tmp = 1; p_tmp <= q; p_tmp++)
 						Z_vec[p_tmp] = Z_tmp[ (p_tmp-1)*r + ell + 1];
 					printOpResult(
-						std::cout, 
-						q + 1, 
+						std::cout,
+						q + 1,
 						Z_vec.data(),
-						0, 
+						0,
 						(Base *) CPPAD_NULL
 					);
 				}

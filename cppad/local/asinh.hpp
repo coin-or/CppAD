@@ -6,7 +6,7 @@
 CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-15 Bradley M. Bell
 
 CppAD is distributed under multiple licenses. This distribution is under
-the terms of the 
+the terms of the
                     Eclipse Public License Version 1.0.
 
 A copy of this license is included in the COPYING file of this distribution.
@@ -57,7 +57,7 @@ CppAD uses the compiler's version of $code asinh$$
 and it corresponds to an $cref/atomic/glossary/Operation/Atomic/$$ operation.
 
 $head Other$$
-If the function $codei%std::asinh(double %x%)%$$ is not defined, 
+If the function $codei%std::asinh(double %x%)%$$ is not defined,
 CppAD uses the representation
 $latex \[
 \R{asinh} (x) = \log \left( x + \sqrt{ 1 + x^2 } \right)
@@ -70,7 +70,7 @@ $children%
 %$$
 The file
 $cref asinh.cpp$$
-contains an example and test of this function.   
+contains an example and test of this function.
 It returns true if it succeeds and false otherwise.
 
 $end
@@ -80,7 +80,7 @@ $end
 # if ! CPPAD_COMPILER_HAS_ASINH
 
 // BEGIN CppAD namespace
-namespace CppAD {   
+namespace CppAD {
 
 template <class Type>
 Type asinh_template(const Type &x)

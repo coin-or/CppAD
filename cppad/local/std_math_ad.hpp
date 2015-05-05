@@ -6,7 +6,7 @@
 CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-15 Bradley M. Bell
 
 CppAD is distributed under multiple licenses. This distribution is under
-the terms of the 
+the terms of the
                     Eclipse Public License Version 1.0.
 
 A copy of this license is included in the COPYING file of this distribution.
@@ -58,8 +58,8 @@ $icode%y% = %fun%(%x%)%$$
 
 
 $head Purpose$$
-Evaluates the one argument standard math function 
-$icode fun$$ where its argument is an 
+Evaluates the one argument standard math function
+$icode fun$$ where its argument is an
 $cref/AD of/glossary/AD of Base/$$ $icode Base$$ object.
 
 $head x$$
@@ -81,12 +81,12 @@ Most of these functions are AD of $icode Base$$
 $cref/atomic operations/glossary/Operation/Atomic/$$.
 In all cases,
 The AD of $icode Base$$
-operation sequence used to calculate $icode y$$ is 
+operation sequence used to calculate $icode y$$ is
 $cref/independent/glossary/Operation/Independent/$$
 of $icode x$$.
 
-$head fun$$ 
-A definition of $icode fun$$ is included 
+$head fun$$
+A definition of $icode fun$$ is included
 for each of the following functions:
 $code acos$$,
 $code asin$$,
@@ -106,7 +106,7 @@ $code tanh$$.
 
 $head Examples$$
 The following files
-contain examples and tests of these functions.   
+contain examples and tests of these functions.
 Each test returns true if it succeeds and false otherwise.
 $children%
 	example/acos.cpp%
@@ -143,8 +143,8 @@ $tend
 
 $head Derivatives$$
 Each of these functions satisfy a standard math function differential equation.
-Calculating derivatives using this differential equation 
-is discussed for 
+Calculating derivatives using this differential equation
+is discussed for
 both $cref/forward/ForwardTheory/Standard Math Functions/$$
 and $cref/reverse/ReverseTheory/Standard Math Functions/$$ mode.
 The exact form of the differential equation
@@ -214,7 +214,7 @@ $subhead sin$$
 $latex \[
 \begin{array}{lcr}
         \D{[ \sin (x) ]}{x} & = & \cos (x) \\
-        \D{[ \cos (x) ]}{x} & = & - \sin (x) 
+        \D{[ \cos (x) ]}{x} & = & - \sin (x)
 \end{array}
 \] $$
 
@@ -262,14 +262,14 @@ Defines function Name with argument type AD<Base> and tape operation Op
 
 The macro defines the function x.Name() where x has type AD<Base>.
 It then uses this funciton to define Name(x) where x has type
-AD<Base> or VecAD_reference<Base>. 
-	
+AD<Base> or VecAD_reference<Base>.
+
 If x is a variable, the tape unary operator Op is used
 to record the operation and the result is identified as correspoding
-to this operation; i.e., Name(x).taddr_ idendifies the operation and 
+to this operation; i.e., Name(x).taddr_ idendifies the operation and
 Name(x).tape_id_ identifies the tape.
 
-This macro is used to define AD<Base> versions of 
+This macro is used to define AD<Base> versions of
 acos, asin, atan, cos, cosh, exp, fabs, log, sin, sinh, sqrt, tan, tanh.
 */
 
@@ -358,7 +358,7 @@ namespace CppAD {
 	Compute the log of base 10 of x where  has type AD<Base>
 
 	\tparam Base
-	is the base type (different from base for log) 
+	is the base type (different from base for log)
 	for this AD type, see base_require.
 
 	\param x
@@ -377,4 +377,4 @@ namespace CppAD {
 
 # undef CPPAD_STANDARD_MATH_UNARY_AD
 
-# endif 
+# endif

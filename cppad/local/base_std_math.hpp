@@ -6,14 +6,14 @@
 CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-15 Bradley M. Bell
 
 CppAD is distributed under multiple licenses. This distribution is under
-the terms of the 
+the terms of the
                     Eclipse Public License Version 1.0.
 
 A copy of this license is included in the COPYING file of this distribution.
 Please visit http://www.coin-or.org/CppAD/ for information on other licenses.
 -------------------------------------------------------------------------- */
 
-/* 
+/*
 $begin base_std_math$$
 $spell
 	asinh
@@ -43,14 +43,14 @@ $head Purpose$$
 These definitions are required for the user's code to use the type
 $codei%AD<%Base%>%$$:
 
-$head Unary Standard Math$$ 
+$head Unary Standard Math$$
 $index math, base unary$$
 $index base, unary math$$
 $index unary, base math$$
 The type $icode Base$$ must support the following functions
 unary standard math functions (in the CppAD namespace):
 $table
-$bold Syntax$$ $cnext $bold Result$$ 
+$bold Syntax$$ $cnext $bold Result$$
 $rnext
 $icode%y% = abs(%x%)%$$  $cnext absolute value     $rnext
 $icode%y% = acos(%x%)%$$ $cnext inverse cosine     $rnext
@@ -64,7 +64,7 @@ $icode%y% = log(%x%)%$$  $cnext natural logarithm  $rnext
 $icode%y% = sin(%x%)%$$  $cnext sine               $rnext
 $icode%y% = sinh(%x%)%$$ $cnext hyperbolic sine    $rnext
 $icode%y% = sqrt(%x%)%$$ $cnext square root        $rnext
-$icode%y% = tan(%x%)%$$  $cnext tangent           
+$icode%y% = tan(%x%)%$$  $cnext tangent
 $tend
 where the arguments and return value have the prototypes
 $codei%
@@ -87,7 +87,7 @@ $codei%
 %$$
 This macro uses the functions $codei%std::%Fun%$$ which
 must be defined and have the same prototype as $codei%CppAD::%Fun%$$.
-For example, 
+For example,
 $cref/float/base_float.hpp/Unary Standard Math/$$.
 
 $head asinh$$
@@ -164,7 +164,7 @@ $cref/base_alloc/base_alloc.hpp/pow/$$.
 
 $head isnan$$
 $index isnan, base type$$
-$index base, isnan$$ 
+$index base, isnan$$
 If $icode Base$$ defines the $code isnan$$ function,
 you may also have to provide a definition in the CppAD namespace
 (to avoid a function ambiguity).

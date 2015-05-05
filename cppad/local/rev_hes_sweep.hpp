@@ -6,7 +6,7 @@
 CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-15 Bradley M. Bell
 
 CppAD is distributed under multiple licenses. This distribution is under
-the terms of the 
+the terms of the
                     Eclipse Public License Version 1.0.
 
 A copy of this license is included in the COPYING file of this distribution.
@@ -21,7 +21,7 @@ Compute Reverse mode Hessian sparsity patterns.
 
 /*!
 \def CPPAD_REV_HES_SWEEP_TRACE
-This value is either zero or one. 
+This value is either zero or one.
 Zero is the normal operational value.
 If it is one, a trace of every rev_hes_sweep computation is printed.
 */
@@ -30,12 +30,12 @@ If it is one, a trace of every rev_hes_sweep computation is printed.
 /*!
 Given the forward Jacobian sparsity pattern for all the variables,
 and the reverse Jacobian sparsity pattern for the dependent variables,
-RevHesSweep computes the Hessian sparsity pattern for all the independent 
+RevHesSweep computes the Hessian sparsity pattern for all the independent
 variables.
 
 \tparam Base
 base type for the operator; i.e., this operation sequence was recorded
-using AD< \a Base > and computations by this routine are done using type 
+using AD< \a Base > and computations by this routine are done using type
 \a Base.
 
 \tparam Vector_set
@@ -48,7 +48,7 @@ is the number of independent variables on the tape.
 \param numvar
 is the total number of variables on the tape; i.e.,
 \a play->num_var_rec().
-This is also the number of rows in the entire sparsity pattern 
+This is also the number of rows in the entire sparsity pattern
 \a rev_hes_sparse.
 
 \param play
@@ -65,17 +65,17 @@ the object \a play holds information about the currentl location
 with in the tape and this changes during playback.
 
 \param for_jac_sparse
-For i = 0 , ... , \a numvar - 1, 
+For i = 0 , ... , \a numvar - 1,
 (for all the variables on the tape),
 the forward Jacobian sparsity pattern for the variable with index i
 corresponds to the set with index i in \a for_jac_sparse.
 
 \param RevJac
 \b Input:
-For i = 0, ... , \a numvar - 1 
+For i = 0, ... , \a numvar - 1
 the if the variable with index i on the tape is an dependent variable and
 included in the Hessian, \a RevJac[ i ] is equal to true,
-otherwise it is equal to false. 
+otherwise it is equal to false.
 \n
 \n
 \b Output: The values in \a RevJac upon return are not specified; i.e.,
@@ -86,14 +86,14 @@ The reverse Hessian sparsity pattern for the variable with index i
 corresponds to the set with index i in \a rev_hes_sparse.
 \n
 \n
-\b Input: For i = 0 , ... , \a numvar - 1  
+\b Input: For i = 0 , ... , \a numvar - 1
 the reverse Hessian sparsity pattern for the variable with index i is empty.
 \n
 \n
 \b Output: For j = 1 , ... , \a n,
-the reverse Hessian sparsity pattern for the independent dependent variable 
+the reverse Hessian sparsity pattern for the independent dependent variable
 with index (j-1) is given by the set with index j
-in \a rev_hes_sparse. 
+in \a rev_hes_sparse.
 The values in the rest of \a rev_hes_sparse are not specified; i.e.,
 they are used for temporary work space.
 */
@@ -130,12 +130,12 @@ void RevHesSweep(
 	CPPAD_ASSERT_UNKNOWN( for_jac_sparse.end() == limit );
 
 	// check number of sets match
-	CPPAD_ASSERT_UNKNOWN( 
+	CPPAD_ASSERT_UNKNOWN(
 		for_jac_sparse.n_set() == rev_hes_sparse.n_set()
 	);
 
 	// vecad_sparsity contains a sparsity pattern for each VecAD object.
-	// vecad_ind maps a VecAD index (beginning of the VecAD object) 
+	// vecad_ind maps a VecAD index (beginning of the VecAD object)
 	// to the index for the corresponding set in vecad_sparsity.
 	size_t num_vecad_ind   = play->num_vec_ind_rec();
 	size_t num_vecad_vec   = play->num_vecad_vec_rec();
@@ -152,13 +152,13 @@ void RevHesSweep(
 		{	// length of this VecAD
 			length   = play->GetVecInd(j);
 			// set vecad_ind to proper index for this VecAD
-			vecad_ind[j] = i; 
+			vecad_ind[j] = i;
 			// make all other values for this vector invalid
 			for(k = 1; k <= length; k++)
 				vecad_ind[j+k] = num_vecad_vec;
 			// start of next VecAD
 			j       += length + 1;
-			// initialize this vector's reverse jacobian value 
+			// initialize this vector's reverse jacobian value
 			vecad_jac[i] = false;
 		}
 		CPPAD_ASSERT_UNKNOWN( j == play->num_vec_ind_rec() );
@@ -613,7 +613,7 @@ void RevHesSweep(
 				user_atom  = atomic_base<Base>::class_object(user_index);
 # ifndef NDEBUG
 				if( user_atom == CPPAD_NULL )
-				{	std::string msg = 
+				{	std::string msg =
 						atomic_base<Base>::class_name(user_index)
 						+ ": atomic_base function has been deleted";
 					CPPAD_ASSERT_KNOWN(false, msg.c_str() );
@@ -693,7 +693,7 @@ void RevHesSweep(
 						user_s, user_t, user_q, set_r, set_u, set_v
 				);
 				if( ! user_ok )
-				{	std::string msg = 
+				{	std::string msg =
 						atomic_base<Base>::class_name(user_index)
 						+ ": atomic_base.rev_sparse_hes: returned false";
 					CPPAD_ASSERT_KNOWN(false, msg.c_str() );
@@ -813,20 +813,20 @@ void RevHesSweep(
 			j = rev_hes_sparse.next_element();
 		}
 		printOp(
-			std::cout, 
+			std::cout,
 			play,
 			i_op,
 			i_var,
-			op, 
+			op,
 			arg
 		);
 		// should also print RevJac[i_var], but printOpResult does not
 		// yet allow for this
 		if( NumRes(op) > 0 && op != BeginOp ) printOpResult(
-			std::cout, 
-			1, 
-			&zf_value, 
-			1, 
+			std::cout,
+			1,
+			&zf_value,
+			1,
 			&zh_value
 		);
 		std::cout << std::endl;

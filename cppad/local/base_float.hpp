@@ -55,11 +55,11 @@ $cref/ordered type/base_cond_exp/CondExpTemplate/Ordered Type/$$.
 Hence its $code CondExpOp$$ function is defined by
 $codep */
 namespace CppAD {
-	inline float CondExpOp( 
+	inline float CondExpOp(
 		enum CompareOp     cop          ,
 		const float&       left         ,
-		const float&       right        , 
-		const float&       exp_if_true  , 
+		const float&       right        ,
+		const float&       exp_if_true  ,
 		const float&       exp_if_false )
 	{	return CondExpTemplate(cop, left, right, exp_if_true, exp_if_false);
 	}
@@ -155,7 +155,7 @@ namespace CppAD {
 # endif
 }
 /* $$
-The absolute value function is special because its $code std$$ name is 
+The absolute value function is special because its $code std$$ name is
 $code fabs$$
 $codep */
 namespace CppAD {
@@ -178,7 +178,7 @@ namespace CppAD {
 	}
 }
 /* $$
- 
+
 $head pow $$
 The following defines a $code CppAD::pow$$ function that
 is required to use $code AD<float>$$:
@@ -209,7 +209,7 @@ namespace CppAD {
 		{	return std::numeric_limits<float>::max(); }
 	};
 	// deprecated machine epsilon
-	template <> 
+	template <>
 	inline float epsilon<float>(void)
 	{	return numeric_limits<float>::epsilon(); }
 }

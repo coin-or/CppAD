@@ -661,14 +661,14 @@ void RevJacSweep(
 			// where one of the sets is not in var_sparsity.
 			if( user_bool )
 			{	for(j = 0; j < user_q; j++)
-					if( bool_s[ user_j * user_q + j ] )	
-						var_sparsity.add_element(arg[0], j);	
+					if( bool_s[ user_j * user_q + j ] )
+						var_sparsity.add_element(arg[0], j);
 			}
 			else
 			{	set_itr = set_s[user_j].begin();
 				set_end = set_s[user_j].end();
 				while( set_itr != set_end )
-					var_sparsity.add_element(arg[0], *set_itr++);	
+					var_sparsity.add_element(arg[0], *set_itr++);
 			}
 			if( user_j == 0 )
 				user_state = user_start;

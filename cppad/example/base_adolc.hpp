@@ -5,7 +5,7 @@
 CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-15 Bradley M. Bell
 
 CppAD is distributed under multiple licenses. This distribution is under
-the terms of the 
+the terms of the
                     Eclipse Public License Version 1.0.
 
 A copy of this license is included in the COPYING file of this distribution.
@@ -56,7 +56,7 @@ $$
 
 $index Adolc, adouble as Base$$
 $index Base, Adolc's adouble$$
-$index adouble, as Base$$ 
+$index adouble, as Base$$
 
 $section Enable use of AD<Base> where Base is Adolc's adouble Type$$
 
@@ -96,7 +96,7 @@ $codei%
 %$$
 This enables one to include conditionals in the recording of
 $code adouble$$ operations and later evaluation for different
-values of the independent variables 
+values of the independent variables
 (in the same spirit as the CppAD $cref CondExp$$ function).
 $codep */
 namespace CppAD {
@@ -143,8 +143,8 @@ namespace CppAD {
 /* $$
 
 $head EqualOpSeq$$
-The Adolc user interface does not specify a way to determine if 
-two $code adouble$$ variables correspond to the same operations sequence. 
+The Adolc user interface does not specify a way to determine if
+two $code adouble$$ variables correspond to the same operations sequence.
 Make $code EqualOpSeq$$ an error if it gets used:
 $codep */
 namespace CppAD {
@@ -160,8 +160,8 @@ namespace CppAD {
 /* $$
 
 $head Identical$$
-The Adolc user interface does not specify a way to determine if an 
-$code adouble$$ depends on the independent variables. 
+The Adolc user interface does not specify a way to determine if an
+$code adouble$$ depends on the independent variables.
 To be safe (but slow) return $code false$$ in all the cases below.
 $codep */
 namespace CppAD {
@@ -199,7 +199,7 @@ namespace CppAD {
 /* $$
 
 $head Unary Standard Math$$
-The following $cref/required/base_require/$$ functions 
+The following $cref/required/base_require/$$ functions
 are defined by the Adolc package for the $code adouble$$ base case:
 $pre
 $$
@@ -225,7 +225,7 @@ $codep */
 namespace CppAD {
 # if CPPAD_COMPILER_HAS_ASINH
 	inline adouble asinh(const adouble& x)
-	{	CPPAD_ASSERT_KNOWN( 
+	{	CPPAD_ASSERT_KNOWN(
 			false,
 			"erf: adolc does not support the inverse hyperbolic sine function"
 		);
@@ -233,7 +233,7 @@ namespace CppAD {
 	}
 # endif
 }
-/* $$ 
+/* $$
 
 $head erf$$
 If the error function is supported by the compiler,
@@ -244,7 +244,7 @@ $codep */
 namespace CppAD {
 # if CPPAD_COMPILER_HAS_ERF
 	inline adouble erf(const adouble& x)
-	{	CPPAD_ASSERT_KNOWN( 
+	{	CPPAD_ASSERT_KNOWN(
 			false,
 			"erf: adolc does not support the error function"
 		);
@@ -252,12 +252,12 @@ namespace CppAD {
 	}
 # endif
 }
-/* $$ 
+/* $$
 
 
 
 $head sign$$
-This $cref/required/base_require/$$ function is defined using the 
+This $cref/required/base_require/$$ function is defined using the
 $code codassign$$ function so that its $code adouble$$ operation sequence
 does not depend on the value of $icode x$$.
 $codep */
@@ -275,7 +275,7 @@ namespace CppAD {
 /* $$
 
 $head abs$$
-This $cref/required/base_require/$$ function uses the adolc $code fabs$$ 
+This $cref/required/base_require/$$ function uses the adolc $code fabs$$
 function:
 $codep */
 namespace CppAD {
@@ -285,7 +285,7 @@ namespace CppAD {
 /* $$
 
 $head pow$$
-This $cref/required/base_require/$$ function 
+This $cref/required/base_require/$$ function
 is defined by the Adolc package for the $code adouble$$ base case.
 
 $head limits$$
