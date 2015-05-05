@@ -48,7 +48,7 @@ fi
 cmd="$cmd
 	-o test_one.exe
 	$cxxflags
-	-std=c++11
+	-g
 	-DCPPAD_ADOLC_TEST
 	-DCPPAD_OPENMP_TEST
 	-DCPPAD_MAX_NUM_THREADS=1
