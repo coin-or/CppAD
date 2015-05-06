@@ -90,32 +90,22 @@ must be defined and have the same prototype as $codei%CppAD::%Fun%$$.
 For example,
 $cref/float/base_float.hpp/Unary Standard Math/$$.
 
-$head asinh$$
-If the inverse hyperbolic sine function is supported by the compiler,
-$cref/CPPAD_COMPILER_HAS_ASINH/asinh/CPPAD_COMPILER_HAS_ASINH/$$
-is one,
+$head erf, asinh$$
+The following preprocessor symbols are one (true) and zero (false)
+if the corresponding function is supported by the compiler.
+$table
+$icode%fun%   %$$ $cnext  $icode symbol$$                $rnext
+$code erf$$       $cnext  $code CPPAD_COMPILER_HAS_ERF$$ $rnext
+$code asin$$      $cnext  $code CPPAD_COMPILER_HAS_ASIN$$
+$tend
+If the corresponding symbol is true,
 the type $icode Base$$ must support the syntax
 $codei%
-	%y% = CppAD::asinh(%x%)
+	%y% = CppAD::%fun%(%x%)
 %$$
 where $icode x$$ and $icode y$$ have the same prototype as above.
 For example, see
-$cref/base_alloc/base_alloc.hpp/asinh/$$.
-
-$head erf$$
-$index erf, base require$$
-$index base, erf require$$
-$index require, base erf$$
-If the error function is supported by the compiler,
-$cref/CPPAD_COMPILER_HAS_ERF/erf/Method/CPPAD_COMPILER_HAS_ERF/$$
-is one,
-the type $icode Base$$ must support the syntax
-$codei%
-	%y% = CppAD::erf(%x%)
-%$$
-where $icode x$$ and $icode y$$ have the same prototype as above.
-For example, see
-$cref/base_alloc/base_alloc.hpp/erf/$$.
+$cref/base_alloc/base_alloc.hpp/erf, asinh/$$.
 
 $head sign$$
 $index sign, base require$$

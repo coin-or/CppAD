@@ -301,23 +301,16 @@ namespace CppAD {
 }
 /* $$
 
-$head asinh$$
-The following defines the $code CppAD::asinh$$ function that
-is required th use $code AD<Base_alloc>$$:
-$codep */
-# if CPPAD_COMPILER_HAS_ASINH
-	inline base_alloc asinh(const base_alloc& x)
-	{	return std::asinh(*x.ptrdbl_); }
-# endif
-/* $$
-
-$head erf$$
-The following defines the $code CppAD::erf$$ function that
-is required th use $code AD<Base_alloc>$$:
+$head erf, asinh$$
+The following defines the
+$cref/erf, asinh/base_std_math/erf, asinh/$$ functions
+required by $code AD<base_alloc>$$:
 $codep */
 # if CPPAD_COMPILER_HAS_ERF
-	inline base_alloc erf(const base_alloc& x)
-	{	return std::erf(*x.ptrdbl_); }
+	BASE_ALLOC_STD_MATH(erf)
+# endif
+# if CPPAD_COMPILER_HAS_ASINH
+	BASE_ALLOC_STD_MATH(asinh)
 # endif
 /* $$
 

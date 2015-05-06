@@ -216,45 +216,32 @@ $code sinh$$,
 $code sqrt$$,
 $code tan$$.
 
-$head asinh$$
-If the inverse hyperbolic sine function is supported by the compiler,
-it must also be supported by a $icode Base$$ type;
-see $cref/asinh/base_std_math/asinh/$$.
-The adolc package does not support this function:
+$head erf, asin$$
+If the
+$cref/erf, asinh/base_std_math/erf, asinh/$$,
+functions are supported by the compiler,
+they must also be supported by a $icode Base$$ type;
+The adolc package does not support these functions so make
+their use an error:
 $codep */
 namespace CppAD {
-# if CPPAD_COMPILER_HAS_ASINH
-	inline adouble asinh(const adouble& x)
-	{	CPPAD_ASSERT_KNOWN(
-			false,
-			"erf: adolc does not support the inverse hyperbolic sine function"
-		);
-		return 0;
-	}
-# endif
-}
-/* $$
-
-$head erf$$
-If the error function is supported by the compiler,
-it must also be supported by a $icode Base$$ type;
-see $cref/erf/base_std_math/erf/$$.
-The adolc package does not support this function:
-$codep */
-namespace CppAD {
+# define CPPAD_BASE_ADOLC_NO_SUPPORT(fun)                         \
+    inline adouble fun(const adouble& x)                          \
+    {   CPPAD_ASSERT_KNOWN(                                       \
+            false,                                                \
+            #fun ": adolc does not support this function"         \
+        );                                                        \
+        return 0.0;                                               \
+    }
 # if CPPAD_COMPILER_HAS_ERF
-	inline adouble erf(const adouble& x)
-	{	CPPAD_ASSERT_KNOWN(
-			false,
-			"erf: adolc does not support the error function"
-		);
-		return 0;
-	}
+	CPPAD_BASE_ADOLC_NO_SUPPORT(erf)
 # endif
+# if CPPAD_COMPILER_HAS_ASINH
+	CPPAD_BASE_ADOLC_NO_SUPPORT(asinh)
+# endif
+# undef CPPAD_BASE_ADOLC_NO_SUPPORT
 }
 /* $$
-
-
 
 $head sign$$
 This $cref/required/base_require/$$ function is defined using the
