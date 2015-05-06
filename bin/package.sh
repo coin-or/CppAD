@@ -4,7 +4,7 @@
 # CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-15 Bradley M. Bell
 #
 # CppAD is distributed under multiple licenses. This distribution is under
-# the terms of the 
+# the terms of the
 #                     Eclipse Public License Version 1.0.
 #
 # A copy of this license is included in the COPYING file of this distribution.
@@ -61,23 +61,13 @@ echo_log_eval bin/version.sh copy
 # ----------------------------------------------------------------------------
 # Run automated checking of file names in original source directory
 # (check_include_omh.sh uses files built by cmake)
-list="
-	check_copyright.sh
-	check_define.sh
-	check_example.sh
-	check_if.sh
-	check_include_def.sh
-	check_include_file.sh
-	check_include_omh.sh
-	check_makefile.sh
-	check_op_code.sh
-	check_replace.sh
-	check_svn_id.sh
-	check_verbatim.sh
-"
-for check in $list 
+list=`ls bin/check_* | sed \
+	-e '/check_all.sh/d' \
+	-e '/check_jenkins.sh/d' \
+	-e '/check_svn_dist.sh/d'`
+for check in $list
 do
-	echo_log_eval bin/$check
+	echo_log_eval $check
 done
 # ----------------------------------------------------------------------------
 # Check for doxygen errors
@@ -99,40 +89,7 @@ done
 echo_log_eval mkdir -p $package_dir
 # -----------------------------------------------------------------------------
 # Source file that are coppied to the package directory
-file_list=`find . \
-	\( -name '*.ac' \) -or \
-	\( -name '*.am' \) -or \
-	\( -name '*.c' \) -or \
-	\( -name '*.cmake' \) -or \
-	\( -name '*.cpp' \) -or \
-	\( -name '*.h' \) -or \
-	\( -name '*.hpp' \) -or \
-	\( -name '*.html' \) -or \
-	\( -name '*.in' \) -or \
-	\( -name '*.omh' \) -or \
-	\( -name '*.pc' \) -or \
-	\( -name '*.py' \) -or \
-	\( -name '*.sed' \) -or \
-	\( -name '*.sh' \) -or \
-	\( -name '*.txt' \) | sed \
-		-e '/\/new\//d' \
-		-e '/\.\/build\//d' \
-		-e '/bug\/build\//d' \
-		-e '/\/junk\.[a-z]*$/d' \
-		-e '/\/temp\.[a-z]*$/d' \
-		-e 's|^\./||'`
-other_files="
-	AUTHORS 
-	ChangeLog 
-	configure 
-	config.guess
-	config.sub
-	COPYING 
-	depcomp
-	INSTALL 
-	NEWS 
-	README 
-"
+file_list=`git ls-files`
 #
 # Copy the files, creating sub-directories when necessary
 echo_log_eval echo "copy files to $package_dir"
@@ -149,11 +106,11 @@ do
 	log_eval cp $file $package_dir/$file
 done
 echo_log_eval echo "remove certain files from $package_dir"
-for file in $remove_list 
+for file in $remove_list
 do
 	if [ -e $package_dir/$file ]
 	then
-		echo_log_eval rm $package_dir/$file 
+		echo_log_eval rm $package_dir/$file
 	fi
 done
 # ----------------------------------------------------------------------------
@@ -163,7 +120,7 @@ echo_log_eval cd $package_dir
 # Only include the *.xml verison of the documentation in distribution
 # So remove the table at the top (but save the original doc.omh file).
 if ! grep < doc.omh > /dev/null \
-	'This comment is used to remove the table below' 
+	'This comment is used to remove the table below'
 then
 	echo "Missing comment expected in doc.omh"
 	exit 1
