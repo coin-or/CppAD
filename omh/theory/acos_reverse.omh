@@ -70,26 +70,27 @@ b^{(j)} & = &
 		- \sum_{k=1}^{j-1} k b^{(k)} b^{(j-k)}
 	\right)
 \\
-z^{(j)} & = & - \frac{1}{j} \frac{1}{ b^{(0)} }
+z^{(j)} & = & \frac{1}{j} \frac{1}{ b^{(0)} }
 \left(
-	j x^{(j)}
+	\mp j x^{(j)}
 	- \sum_{k=1}^{j-1} k z^{(k)}  b^{(j-k)}
 \right)
 \end{array}
 \] $$
 
-If $latex j = 0$$, we have the relation
+If $latex j = 0$$, we note that
+$latex F^{(1)} ( x^{(0)} ) =  \mp 1 / b^{(0)}$$ and hence
 
 $latex \[
 \begin{array}{rcl}
 \D{H}{ x^{(j)} } & = &
-\D{G}{ x^{(0)} }
+\D{G}{ x^{(j)} }
 + \D{G}{ z^{(j)} } \D{ z^{(j)} }{ x^{(0)} }
 + \D{G}{ b^{(j)} } \D{ b^{(j)} }{ q^{(0)} } \D{ q^{(0)} }{ x^{(0)} }
 \\
 & = &
 \D{G}{ x^{(j)} }
-- \D{G}{ z^{(j)} } \frac{1}{ b^{(0)} }
+\mp \D{G}{ z^{(j)} } \frac{1}{ b^{(0)} }
 \mp \D{G}{ b^{(j)} } \frac{ x^{(0)} }{ b^{(0)} }
 \end{array}
 \] $$
@@ -124,7 +125,7 @@ $latex \[
 \\
 & = &
 \D{G}{ x^{(j)} }
-- \D{G}{ z^{(j)} } \frac{1}{ b^{(0)} }
+\mp \D{G}{ z^{(j)} } \frac{1}{ b^{(0)} }
 \mp \D{G}{ b^{(j)} } \frac{ x^{(0)} }{ b^{(0)} }
 \\
 \D{H}{ b^{(j - k)} } & = &

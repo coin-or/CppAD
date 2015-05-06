@@ -78,12 +78,12 @@ z^{(j)} & = & \frac{1}{j} \frac{1}{ b^{(0)} }
 \end{array}
 \] $$
 
-If $latex j = 0$$, we have the relation
-
+If $latex j = 0$$, we note that
+$latex F^{(1)} ( x^{(0)} ) =  1 / b^{(0)}$$ and hence
 $latex \[
 \begin{array}{rcl}
 \D{H}{ x^{(j)} } & = &
-\D{G}{ x^{(0)} }
+\D{G}{ x^{(j)} }
 + \D{G}{ z^{(j)} } \D{ z^{(j)} }{ x^{(0)} }
 + \D{G}{ b^{(j)} } \D{ b^{(j)} }{ q^{(0)} } \D{ q^{(0)} }{ x^{(0)} }
 \\
