@@ -48,7 +48,7 @@ operand is a parameter and the right operand is a variable.
 // alphabetical order is checked by bin/check_op_code.sh
 enum OpCode {
 	AbsOp,    //  abs(variable)
-	AcosOp,   // asin(variable)
+	AcosOp,   // acos(variable)
 	AddpvOp,  //      parameter  + variable
 	AddvvOp,  //      variable   + variable
 	AsinOp,   // asin(variable)
@@ -157,8 +157,8 @@ For example, for the first three OpCode enum values we have
 \verbatim
 OpCode   j   NumArgTable[j]  Meaning
 AbsOp    0                1  index of variable we are taking absolute value of
-AcosOp   1                1  index of variable we are taking cosine of
-AddpvOp  1                2  indices of parameter and variable we are adding
+AcosOp   1                1  index of variable we are taking acosh of
+AddpvOp  2                2  indices of parameter and variable we are adding
 \endverbatim
 Note that the meaning of the arguments depends on the operator.
 */
