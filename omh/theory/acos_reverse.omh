@@ -14,58 +14,54 @@ Please visit http://www.coin-or.org/CppAD/ for information on other licenses.
 
 $begin acos_reverse$$
 $spell
+	acosh
 	acos
 	Taylor
-	Arccosine
 $$
 
-$index acos, reverse theory$$
-$index theory, acos reverse$$
-$index reverse, acos theory$$
-
-$section Arccosine Function Reverse Mode Theory$$
+$section Inverse Cosine and Hyperbolic Cosine Reverse Mode Theory$$
+$mindex acos, acosh$$
 
 
 We use the reverse theory
-$xref%
-	ReverseTheory%
-	Standard Math Functions%
-	standard math function
+$cref%standard math function
+	%ReverseTheory
+	%Standard Math Functions
 %$$
 definition for the functions $latex H$$ and $latex G$$.
-In addition,
-
-we use $latex q$$ and $latex b$$
-for the $th p$$ order Taylor coefficient
-row vectors corresponding to functions
+In addition, we use the forward mode notation in
+$cref acos_forward$$ for
 $latex \[
 \begin{array}{rcl}
-	Q(t) & = & 1 - X(t) * X(t) \\
+	Q(t) & = & \mp ( X(t) * X(t) - 1 ) \\
 	B(t) & = & \sqrt{ Q(t) }
 \end{array}
 \] $$
+We use $latex q$$ and $latex b$$
+for the $th p$$ order Taylor coefficient
+row vectors corresponding to these functions
 and replace $latex z^{(j)}$$ by
 $latex \[
 	( z^{(j)} , b^{(j)} )
 \] $$
 in the definition for $latex G$$ and $latex H$$.
-The forward mode formulas for the
+The zero order forward mode formulas for the
 $cref/acos/acos_forward/$$
 function are
 $latex \[
 \begin{array}{rcl}
-	q^{(0)}  & = & 1 - x^{(0)} x^{(0)} \\
-	b^{(j)}  & = & \sqrt{ q^{(0)} }    \\
-	z^{(j)}  & = & \arccos ( x^{(0)} )
+	q^{(0)}  & = & \mp ( x^{(0)} x^{(0)} - 1) \\
+	b^{(0)}  & = & \sqrt{ q^{(0)} }    \\
+	z^{(0)}  & = & F ( x^{(0)} )
 \end{array}
 \] $$
-
-for the case $latex j = 0$$, and for $latex j > 0$$,
-
+where $latex F(x) = \R{acos} (x)$$ for $latex -$$
+and $latex F(x) = \R{acosh} (x) $$ for $latex +$$.
+For orders $latex j$$ greater than zero we have
 $latex \[
 \begin{array}{rcl}
 q^{(j)} & = &
-	- \sum_{k=0}^j x^{(k)} x^{(j-k)}
+	\mp \sum_{k=0}^j x^{(k)} x^{(j-k)}
 \\
 b^{(j)} & = &
 	\frac{1}{j} \frac{1}{ b^{(0)} }
@@ -77,7 +73,7 @@ b^{(j)} & = &
 z^{(j)} & = & - \frac{1}{j} \frac{1}{ b^{(0)} }
 \left(
 	j x^{(j)}
-	+ \sum_{k=1}^{j-1} k z^{(k)}  b^{(j-k)}
+	- \sum_{k=1}^{j-1} k z^{(k)}  b^{(j-k)}
 \right)
 \end{array}
 \] $$
@@ -94,7 +90,7 @@ $latex \[
 & = &
 \D{G}{ x^{(j)} }
 - \D{G}{ z^{(j)} } \frac{1}{ b^{(0)} }
-- \D{G}{ b^{(j)} } \frac{ x^{(0)} }{ b^{(0)} }
+\mp \D{G}{ b^{(j)} } \frac{ x^{(0)} }{ b^{(0)} }
 \end{array}
 \] $$
 
@@ -119,7 +115,7 @@ $latex \[
 \\
 & = &
 \D{G}{ x^{(0)} }
-- \D{G}{ b^{(j)} } \frac{ x^{(j)} }{ b^{(0)} }
+\mp \D{G}{ b^{(j)} } \frac{ x^{(j)} }{ b^{(0)} }
 \\
 \D{H}{ x^{(j)} } & = &
 \D{G}{ x^{(j)} }
@@ -129,7 +125,7 @@ $latex \[
 & = &
 \D{G}{ x^{(j)} }
 - \D{G}{ z^{(j)} } \frac{1}{ b^{(0)} }
-- \D{G}{ b^{(j)} } \frac{ x^{(0)} }{ b^{(0)} }
+\mp \D{G}{ b^{(j)} } \frac{ x^{(0)} }{ b^{(0)} }
 \\
 \D{H}{ b^{(j - k)} } & = &
 \D{G}{ b^{(j - k)} }
@@ -148,7 +144,7 @@ $latex \[
 \\
 & = &
 \D{G}{ x^{(k)} }
-- \D{G}{ b^{(j)} } \frac{ x^{(j-k)} }{ b^{(0)} }
+\mp \D{G}{ b^{(j)} } \frac{ x^{(j-k)} }{ b^{(0)} }
 \\
 \D{H}{ z^{(k)} } & = &
 \D{G}{ z^{(k)} }

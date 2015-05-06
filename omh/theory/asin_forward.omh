@@ -16,22 +16,21 @@ $begin asin_forward$$
 $spell
 	asinh
 	asin
-	Arcsine
 	Taylor
 $$
 
-$section Arc Sine and Hyperbolic Sine Forward Taylor Polynomial Theory$$
+$section Inverse Sine and Hyperbolic Sine Forward Mode Theory$$
 $mindex asin, asinh$$
 
 $head Derivatives$$
 $latex \[
 \begin{array}{rcl}
-\R{arcsin}^{(1)} (x)  & = & 1 / \sqrt{ 1 - x * x }
+\R{asin}^{(1)} (x)  & = & 1 / \sqrt{ 1 - x * x }
 \\
-\R{arcsinh}^{(1)} (x) & = & 1 / \sqrt{ 1 + x * x }
+\R{asinh}^{(1)} (x) & = & 1 / \sqrt{ 1 + x * x }
 \end{array}
 \] $$
-If $latex F(x)$$ is $latex \R{arcsin} (x) $$ or $latex \R{arcsinh} (x)$$
+If $latex F(x)$$ is $latex \R{asin} (x) $$ or $latex \R{asinh} (x)$$
 the corresponding derivative satisfies the equation
 $latex \[
 	\sqrt{ 1 \mp x * x } * F^{(1)} (x) - 0 * F (u)  = 1

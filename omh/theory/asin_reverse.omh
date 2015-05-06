@@ -14,23 +14,19 @@ Please visit http://www.coin-or.org/CppAD/ for information on other licenses.
 
 $begin asin_reverse$$
 $spell
+	asinh
 	asin
 	Taylor
-	Arcsine
 $$
 
-$index asin, reverse theory$$
-$index theory, asin reverse$$
-$index reverse, asin theory$$
-
-$section Arc Sine and Hyperbolic Sine Reverse Mode Theory$$
+$section Inverse Sine and Hyperbolic Sine Reverse Mode Theory$$
+$mindex asin, asinh$$
 
 
 We use the reverse theory
-$xref%
-	ReverseTheory%
-	Standard Math Functions%
-	standard math function
+$cref%standard math function
+	%ReverseTheory
+	%Standard Math Functions
 %$$
 definition for the functions $latex H$$ and $latex G$$.
 In addition, we use the forward mode notation in
@@ -59,8 +55,8 @@ $latex \[
 	z^{(0)}  & = & F( x^{(0)} )
 \end{array}
 \] $$
-where $latex F(x) = \R{arcsin} (x)$$ for $latex -$$
-and $latex F(x) = \R{arcsinh} (x) $$ for $latex +$$.
+where $latex F(x) = \R{asin} (x)$$ for $latex -$$
+and $latex F(x) = \R{asinh} (x) $$ for $latex +$$.
 For the orders $latex j$$ greater than zero we have
 $latex \[
 \begin{array}{rcl}

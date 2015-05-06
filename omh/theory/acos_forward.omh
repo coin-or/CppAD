@@ -20,18 +20,18 @@ $spell
 	Taylor
 $$
 
-$section Arc Cosine and Hyperbolic Cosine Forward Taylor Polynomial Theory$$
+$section Inverse Cosine and Hyperbolic Cosine Forward Mode Theory$$
 $mindex acos, acosh$$
 
 $head Derivatives$$
 $latex \[
 \begin{array}{rcl}
-\R{arccos}^{(1)} (x)  & = & - 1 / \sqrt{ 1 - x * x }
+\R{acos}^{(1)} (x)  & = & - 1 / \sqrt{ 1 - x * x }
 \\
-\R{arccosh}^{(1)} (x) & = & + 1 / \sqrt{ x * x - 1}
+\R{acosh}^{(1)} (x) & = & + 1 / \sqrt{ x * x - 1}
 \end{array}
 \] $$
-If $latex F(x)$$ is $latex \R{arccos} (x)$$ or $latex \R{arccosh} (x)$$
+If $latex F(x)$$ is $latex \R{acos} (x)$$ or $latex \R{acosh} (x)$$
 the corresponding derivative satisfies the equation
 $latex \[
 	\sqrt{ \mp ( x * x - 1 ) } * F^{(1)} (x) - 0 * F (u)  = \mp 1
