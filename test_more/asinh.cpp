@@ -19,30 +19,30 @@ bool asinh(void)
 	using CppAD::NearEqual;
 
 	// 10 times machine epsilon
-	double eps = 10. * std::numeric_limits<double>::epsilon();
+	double eps = 50. * std::numeric_limits<double>::epsilon();
 
 	// domain space vector
 	size_t n  = 1;
 	double x0 = 0.5;
-	CPPAD_TESTVECTOR(AD<double>) x(n);
-	x[0]      = x0;
+	CPPAD_TESTVECTOR(AD<double>) ax(n);
+	ax[0]     = x0;
 
 	// declare independent variables and start tape recording
-	CppAD::Independent(x);
+	CppAD::Independent(ax);
 
 	// a temporary value
-	AD<double> sinh_of_x0 = CppAD::sinh(x[0]);
+	AD<double> sinh_of_x0 = CppAD::sinh(ax[0]);
 
 	// range space vector
 	size_t m = 1;
-	CPPAD_TESTVECTOR(AD<double>) y(m);
-	y[0] = CppAD::asinh(sinh_of_x0);
+	CPPAD_TESTVECTOR(AD<double>) ay(m);
+	ay[0] = CppAD::asinh(sinh_of_x0);
 
 	// create f: x -> y and stop tape recording
-	CppAD::ADFun<double> f(x, y);
+	CppAD::ADFun<double> f(ax, ay);
 
 	// check value
-	ok &= NearEqual(y[0] , x0,  eps, eps);
+	ok &= NearEqual(ay[0] , x0,  eps, eps);
 
 	// forward computation of first partial w.r.t. x[0]
 	CPPAD_TESTVECTOR(double) dx(n);
@@ -51,21 +51,21 @@ bool asinh(void)
 	dy    = f.Forward(1, dx);
 	ok   &= NearEqual(dy[0], 1., eps, eps);
 
-	// forward computation of second partial w.r.t. x[0]
-	CPPAD_TESTVECTOR(double) ddx(n);
-	CPPAD_TESTVECTOR(double) ddy(m);
-	ddx[0] = 0.;
-	ddy   = f.Forward(2, ddx);
-	ok   &= NearEqual(ddy[0], 0., eps, eps);
-
+	// forward computation of higher order partials w.r.t. x[0]
+	size_t n_order = 5;
+	for(size_t order = 2; order < n_order; order++)
+	{	dx[0] = 0.;
+		dy    = f.Forward(order, dx);
+		ok   &= NearEqual(dy[0], 0., eps, eps);
+	}
 	// reverse computation of derivatives
 	CPPAD_TESTVECTOR(double)  w(m);
-	CPPAD_TESTVECTOR(double) dw(3 * n);
+	CPPAD_TESTVECTOR(double) dw(n_order * n);
 	w[0]  = 1.;
-	dw    = f.Reverse(3, w);
+	dw    = f.Reverse(n_order, w);
 	ok   &= NearEqual(dw[0], 1., eps, eps);
-	ok   &= NearEqual(dw[1], 0., eps, eps);
-	ok   &= NearEqual(dw[2], 0., eps, eps);
+	for(size_t order = 1; order < n_order; order++)
+		ok   &= NearEqual(dw[order * n + 0], 0., eps, eps);
 
 	return ok;
 }
