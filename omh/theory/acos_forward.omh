@@ -110,7 +110,7 @@ z^{(j+1)} & = & \frac{1}{j+1} \frac{1}{ b^{(0)} }
 \\
 z^{(j+1)} & = & - \frac{1}{j+1} \frac{1}{ b^{(0)} }
 \left(
-	(j+1) x^{(j+1)}
+	\pm (j+1) x^{(j+1)}
 	+ \sum_{k=1}^j k z^{(k)}  b^{(j+1-k)}
 \right)
 \end{array}
