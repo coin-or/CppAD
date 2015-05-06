@@ -368,7 +368,7 @@ void forward1sweep(
 
 # if CPPAD_COMPILER_HAS_ASINH
 			case AsinhOp:
-			// sqrt(1 + x * x), asin(x)
+			// sqrt(1 + x * x), asinh(x)
 			CPPAD_ASSERT_UNKNOWN( i_var < numvar  );
 			forward_asinh_op(p, q, i_var, arg[0], J, taylor);
 			break;
