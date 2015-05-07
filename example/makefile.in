@@ -102,12 +102,12 @@ am__libeigen_a_SOURCES_DIST = eigen_det.cpp eigen_array.cpp
 @CppAD_EIGEN_DIR_TRUE@@CppAD_HAVE_AR_TRUE@	libeigen_a-eigen_array.$(OBJEXT)
 libeigen_a_OBJECTS = $(am_libeigen_a_OBJECTS)
 am__example_SOURCES_DIST = mul_level_adolc.cpp mul_level_adolc_ode.cpp \
-	example.cpp abort_recording.cpp abs.cpp acos.cpp add.cpp \
-	add_eq.cpp ad_assign.cpp ad_ctor.cpp ad_fun.cpp ad_in_c.cpp \
-	ad_input.cpp ad_output.cpp asin.cpp asinh.cpp atan.cpp \
-	atan2.cpp base_alloc.hpp base_require.cpp bender_quad.cpp \
-	bool_fun.cpp capacity_order.cpp change_const.cpp \
-	check_for_nan.cpp check_numeric_type.cpp \
+	example.cpp abort_recording.cpp abs.cpp acos.cpp acosh.cpp \
+	add.cpp add_eq.cpp ad_assign.cpp ad_ctor.cpp ad_fun.cpp \
+	ad_in_c.cpp ad_input.cpp ad_output.cpp asin.cpp asinh.cpp \
+	atan.cpp atan2.cpp base_alloc.hpp base_require.cpp \
+	bender_quad.cpp bool_fun.cpp capacity_order.cpp \
+	change_const.cpp check_for_nan.cpp check_numeric_type.cpp \
 	check_simple_vector.cpp compare.cpp compare_change.cpp \
 	complex_poly.cpp cond_exp.cpp conj_grad.cpp cos.cpp cosh.cpp \
 	cppad_vector.cpp div.cpp div_eq.cpp equal_op_seq.cpp erf.cpp \
@@ -139,10 +139,10 @@ am__example_SOURCES_DIST = mul_level_adolc.cpp mul_level_adolc_ode.cpp \
 @CppAD_ADOLC_TRUE@	mul_level_adolc_ode.$(OBJEXT)
 am_example_OBJECTS = $(am__objects_1) example.$(OBJEXT) \
 	abort_recording.$(OBJEXT) abs.$(OBJEXT) acos.$(OBJEXT) \
-	add.$(OBJEXT) add_eq.$(OBJEXT) ad_assign.$(OBJEXT) \
-	ad_ctor.$(OBJEXT) ad_fun.$(OBJEXT) ad_in_c.$(OBJEXT) \
-	ad_input.$(OBJEXT) ad_output.$(OBJEXT) asin.$(OBJEXT) \
-	asinh.$(OBJEXT) atan.$(OBJEXT) atan2.$(OBJEXT) \
+	acosh.$(OBJEXT) add.$(OBJEXT) add_eq.$(OBJEXT) \
+	ad_assign.$(OBJEXT) ad_ctor.$(OBJEXT) ad_fun.$(OBJEXT) \
+	ad_in_c.$(OBJEXT) ad_input.$(OBJEXT) ad_output.$(OBJEXT) \
+	asin.$(OBJEXT) asinh.$(OBJEXT) atan.$(OBJEXT) atan2.$(OBJEXT) \
 	base_require.$(OBJEXT) bender_quad.$(OBJEXT) \
 	bool_fun.$(OBJEXT) capacity_order.$(OBJEXT) \
 	change_const.$(OBJEXT) check_for_nan.$(OBJEXT) \
@@ -496,6 +496,7 @@ example_SOURCES = \
 	abort_recording.cpp \
 	abs.cpp \
 	acos.cpp \
+	acosh.cpp \
 	add.cpp \
 	add_eq.cpp \
 	ad_assign.cpp \
@@ -683,6 +684,7 @@ distclean-compile:
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/abort_recording.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/abs.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/acos.Po@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/acosh.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/ad_assign.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/ad_ctor.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/ad_fun.Po@am__quote@

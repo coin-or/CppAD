@@ -102,13 +102,14 @@ am__libeigen_a_SOURCES_DIST = cppad_eigen.cpp
 @CppAD_EIGEN_DIR_TRUE@	libeigen_a-cppad_eigen.$(OBJEXT)
 libeigen_a_OBJECTS = $(am_libeigen_a_OBJECTS)
 am__test_more_SOURCES_DIST = base_adolc.cpp ipopt_solve.cpp \
-	alloc_openmp.cpp test_more.cpp abs.cpp acos.cpp adfun_copy.cpp \
-	asin.cpp asinh.cpp assign.cpp add.cpp add_eq.cpp add_zero.cpp \
-	atan.cpp atan2.cpp base_alloc.cpp check_simple_vector.cpp \
-	checkpoint.cpp compare.cpp compare_change.cpp cond_exp.cpp \
-	cond_exp_ad.cpp cond_exp_rev.cpp copy.cpp cos.cpp cosh.cpp \
-	dbl_epsilon.cpp div.cpp div_eq.cpp div_zero_one.cpp erf.cpp \
-	exp.cpp extern_value.cpp extern_value.hpp for_hess.cpp \
+	alloc_openmp.cpp test_more.cpp abs.cpp acos.cpp acosh.cpp \
+	adfun_copy.cpp asin.cpp asinh.cpp assign.cpp add.cpp \
+	add_eq.cpp add_zero.cpp atan.cpp atan2.cpp base_alloc.cpp \
+	check_simple_vector.cpp checkpoint.cpp compare.cpp \
+	compare_change.cpp cond_exp.cpp cond_exp_ad.cpp \
+	cond_exp_rev.cpp copy.cpp cos.cpp cosh.cpp dbl_epsilon.cpp \
+	div.cpp div_eq.cpp div_zero_one.cpp erf.cpp exp.cpp \
+	extern_value.cpp extern_value.hpp for_hess.cpp \
 	for_sparse_jac.cpp forward.cpp forward_dir.cpp \
 	forward_order.cpp from_base.cpp fun_check.cpp jacobian.cpp \
 	limits.cpp log.cpp log10.cpp mul.cpp mul_eq.cpp mul_level.cpp \
@@ -126,8 +127,8 @@ am__test_more_SOURCES_DIST = base_adolc.cpp ipopt_solve.cpp \
 @CppAD_OPENMP_TRUE@am__objects_3 = alloc_openmp.$(OBJEXT)
 am_test_more_OBJECTS = $(am__objects_1) $(am__objects_2) \
 	$(am__objects_3) test_more.$(OBJEXT) abs.$(OBJEXT) \
-	acos.$(OBJEXT) adfun_copy.$(OBJEXT) asin.$(OBJEXT) \
-	asinh.$(OBJEXT) assign.$(OBJEXT) add.$(OBJEXT) \
+	acos.$(OBJEXT) acosh.$(OBJEXT) adfun_copy.$(OBJEXT) \
+	asin.$(OBJEXT) asinh.$(OBJEXT) assign.$(OBJEXT) add.$(OBJEXT) \
 	add_eq.$(OBJEXT) add_zero.$(OBJEXT) atan.$(OBJEXT) \
 	atan2.$(OBJEXT) base_alloc.$(OBJEXT) \
 	check_simple_vector.$(OBJEXT) checkpoint.$(OBJEXT) \
@@ -476,6 +477,7 @@ test_more_SOURCES = \
 	test_more.cpp \
 	abs.cpp \
 	acos.cpp \
+	acosh.cpp \
 	adfun_copy.cpp \
 	asin.cpp \
 	asinh.cpp \
@@ -615,6 +617,7 @@ distclean-compile:
 
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/abs.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/acos.Po@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/acosh.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/add.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/add_eq.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/add_zero.Po@am__quote@
