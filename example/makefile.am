@@ -82,6 +82,7 @@ example_SOURCES   = \
 	abort_recording.cpp \
 	abs.cpp \
 	acos.cpp \
+	acosh.cpp \
 	add.cpp \
 	add_eq.cpp \
 	ad_assign.cpp \

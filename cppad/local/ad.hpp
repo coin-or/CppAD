@@ -211,6 +211,9 @@ public:
 # if CPPAD_COMPILER_HAS_ERF
 	inline AD erf(void) const;
 # endif
+# if CPPAD_COMPILER_HAS_ACOSH
+	inline AD acosh(void) const;
+# endif
 
 	// ----------------------------------------------------------
 	// static public member functions

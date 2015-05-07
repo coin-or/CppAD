@@ -16,6 +16,7 @@ Please visit http://www.coin-or.org/CppAD/ for information on other licenses.
 /*
 $begin base_std_math$$
 $spell
+	acosh
 	asinh
 	inline
 	fabs
@@ -90,13 +91,14 @@ must be defined and have the same prototype as $codei%CppAD::%Fun%$$.
 For example,
 $cref/float/base_float.hpp/Unary Standard Math/$$.
 
-$head erf, asinh$$
+$head erf, asinh, acosh$$
 The following preprocessor symbols are one (true) and zero (false)
 if the corresponding function is supported by the compiler.
 $table
 $icode%fun%   %$$ $cnext  $icode symbol$$                $rnext
 $code erf$$       $cnext  $code CPPAD_COMPILER_HAS_ERF$$ $rnext
-$code asin$$      $cnext  $code CPPAD_COMPILER_HAS_ASIN$$
+$code asinh$$     $cnext  $code CPPAD_COMPILER_HAS_ASINH$$
+$code acosh$$     $cnext  $code CPPAD_COMPILER_HAS_ACOSH$$
 $tend
 If the corresponding symbol is true,
 the type $icode Base$$ must support the syntax
@@ -105,7 +107,7 @@ $codei%
 %$$
 where $icode x$$ and $icode y$$ have the same prototype as above.
 For example, see
-$cref/base_alloc/base_alloc.hpp/erf, asinh/$$.
+$cref/base_alloc/base_alloc.hpp/erf, asinh, acosh/$$.
 
 $head sign$$
 $index sign, base require$$

@@ -308,6 +308,17 @@ void ReverseSweep(
 			break;
 			// --------------------------------------------------
 
+# if CPPAD_COMPILER_HAS_ACOSH
+			case AcoshOp:
+			// sqrt(x * x - 1), acosh(x)
+			CPPAD_ASSERT_UNKNOWN( i_var < numvar );
+			reverse_acosh_op(
+				d, i_var, arg[0], J, Taylor, K, Partial
+			);
+			break;
+# endif
+			// --------------------------------------------------
+
 			case AddvvOp:
 			reverse_addvv_op(
 				d, i_var, arg, parameter, J, Taylor, K, Partial

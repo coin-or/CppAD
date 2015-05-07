@@ -12,14 +12,14 @@ Please visit http://www.coin-or.org/CppAD/ for information on other licenses.
 
 # include <cppad/cppad.hpp>
 
-bool asinh(void)
+bool acosh(void)
 {	bool ok = true;
 
 	using CppAD::AD;
 	using CppAD::NearEqual;
 
 	// 10 times machine epsilon
-	double eps = 10. * std::numeric_limits<double>::epsilon();
+	double eps = 200. * std::numeric_limits<double>::epsilon();
 
 	// domain space vector
 	size_t n  = 1;
@@ -31,12 +31,12 @@ bool asinh(void)
 	CppAD::Independent(ax);
 
 	// a temporary value
-	AD<double> sinh_of_x0 = CppAD::sinh(ax[0]);
+	AD<double> cosh_of_x0 = CppAD::cosh(ax[0]);
 
 	// range space vector
 	size_t m = 1;
 	CPPAD_TESTVECTOR(AD<double>) ay(m);
-	ay[0] = CppAD::asinh(sinh_of_x0);
+	ay[0] = CppAD::acosh(cosh_of_x0);
 
 	// create f: x -> y and stop tape recording
 	CppAD::ADFun<double> f(ax, ay);

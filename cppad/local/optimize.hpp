@@ -1545,6 +1545,7 @@ void optimize_run(
 			// One variable corresponding to arg[0]
 			case AbsOp:
 			case AcosOp:
+			case AcoshOp:
 			case AsinOp:
 			case AsinhOp:
 			case AtanOp:
@@ -2309,6 +2310,7 @@ void optimize_run(
 			// Unary operator where operand is arg[0]
 			case AbsOp:
 			case AcosOp:
+			case AcoshOp:
 			case AsinOp:
 			case AsinhOp:
 			case AtanOp:

@@ -14,6 +14,7 @@ Please visit http://www.coin-or.org/CppAD/ for information on other licenses.
 /*
 $begin base_adolc.hpp$$
 $spell
+	acosh
 	asinh
 	erf
 	ifndef
@@ -218,7 +219,7 @@ $code tan$$.
 
 $head erf, asin$$
 If the
-$cref/erf, asinh/base_std_math/erf, asinh/$$,
+$cref/erf, asinh, acosh/base_std_math/erf, asinh, acosh/$$,
 functions are supported by the compiler,
 they must also be supported by a $icode Base$$ type;
 The adolc package does not support these functions so make
@@ -235,6 +236,9 @@ namespace CppAD {
     }
 # if CPPAD_COMPILER_HAS_ERF
 	CPPAD_BASE_ADOLC_NO_SUPPORT(erf)
+# endif
+# if CPPAD_COMPILER_HAS_ACOSH
+	CPPAD_BASE_ADOLC_NO_SUPPORT(acosh)
 # endif
 # if CPPAD_COMPILER_HAS_ASINH
 	CPPAD_BASE_ADOLC_NO_SUPPORT(asinh)

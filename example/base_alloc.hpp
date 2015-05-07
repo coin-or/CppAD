@@ -14,6 +14,7 @@ Please visit http://www.coin-or.org/CppAD/ for information on other licenses.
 /*
 $begin base_alloc.hpp$$
 $spell
+	acosh
 	asinh
 	Rel
 	Lt Le Eq Ge Gt
@@ -301,13 +302,16 @@ namespace CppAD {
 }
 /* $$
 
-$head erf, asinh$$
+$head erf, asinh, acosh$$
 The following defines the
-$cref/erf, asinh/base_std_math/erf, asinh/$$ functions
+$cref/erf, asinh, acosh/base_std_math/erf, asinh, acosh/$$ functions
 required by $code AD<base_alloc>$$:
 $codep */
 # if CPPAD_COMPILER_HAS_ERF
 	BASE_ALLOC_STD_MATH(erf)
+# endif
+# if CPPAD_COMPILER_HAS_ACOSH
+	BASE_ALLOC_STD_MATH(acosh)
 # endif
 # if CPPAD_COMPILER_HAS_ASINH
 	BASE_ALLOC_STD_MATH(asinh)

@@ -16,6 +16,7 @@ Please visit http://www.coin-or.org/CppAD/ for information on other licenses.
 -------------------------------------------------------------------------------
 $begin std_math_ad$$
 $spell
+	acosh
 	Vec
 	std
 	atan
@@ -316,6 +317,9 @@ namespace CppAD {
 
 # if CPPAD_COMPILER_HAS_ASINH
      CPPAD_STANDARD_MATH_UNARY_AD(asinh, AsinhOp)
+# endif
+# if CPPAD_COMPILER_HAS_ACOSH
+     CPPAD_STANDARD_MATH_UNARY_AD(acosh, AcoshOp)
 # endif
 
 # if CPPAD_COMPILER_HAS_ERF

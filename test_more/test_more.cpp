@@ -19,6 +19,7 @@ Please visit http://www.coin-or.org/CppAD/ for information on other licenses.
 // prototype external compiled tests (this line expected by bin/new_test.sh)
 extern bool abs(void);
 extern bool acos(void);
+extern bool acosh(void);
 extern bool adfun_copy(void);
 extern bool Add(void);
 extern bool AddEq(void);
@@ -135,6 +136,7 @@ int main(void)
 	// run external compiled tests (this line expected by bin/new_test.sh)
 	ok &= Run( abs,             "abs"            );
 	ok &= Run( acos,            "acos"           );
+	ok &= Run( acosh,           "acosh"          );
 	ok &= Run( adfun_copy,      "adfun_copy"     );
 	ok &= Run( Add,             "Add"            );
 	ok &= Run( AddEq,           "AddEq"          );

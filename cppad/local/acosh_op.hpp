@@ -1,7 +1,7 @@
 /* $Id$ */
-# ifndef CPPAD_ASINH_OP_INCLUDED
-# define CPPAD_ASINH_OP_INCLUDED
-# if CPPAD_COMPILER_HAS_ASINH
+# ifndef CPPAD_ACOSH_OP_INCLUDED
+# define CPPAD_ACOSH_OP_INCLUDED
+# if CPPAD_COMPILER_HAS_ACOSH
 
 /* --------------------------------------------------------------------------
 CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-15 Bradley M. Bell
@@ -17,21 +17,21 @@ Please visit http://www.coin-or.org/CppAD/ for information on other licenses.
 
 namespace CppAD { // BEGIN_CPPAD_NAMESPACE
 /*!
-\file asinh_op.hpp
-Forward and reverse mode calculations for z = asinh(x).
+\file acosh_op.hpp
+Forward and reverse mode calculations for z = acosh(x).
 */
 
 
 /*!
-Compute forward mode Taylor coefficient for result of op = AsinhOp.
+Compute forward mode Taylor coefficient for result of op = AcoshOp.
 
 The C++ source code corresponding to this operation is
 \verbatim
-	z = asinh(x)
+	z = acosh(x)
 \endverbatim
 The auxillary result is
 \verbatim
-	y = sqrt(1 + x * x)
+	y = sqrt(x * x - 1)
 \endverbatim
 The value of y, and its derivatives, are computed along with the value
 and derivatives of z.
@@ -39,7 +39,7 @@ and derivatives of z.
 \copydetails forward_unary2_op
 */
 template <class Base>
-inline void forward_asinh_op(
+inline void forward_acosh_op(
 	size_t p           ,
 	size_t q           ,
 	size_t i_z         ,
@@ -48,8 +48,8 @@ inline void forward_asinh_op(
 	Base*  taylor      )
 {
 	// check assumptions
-	CPPAD_ASSERT_UNKNOWN( NumArg(AsinhOp) == 1 );
-	CPPAD_ASSERT_UNKNOWN( NumRes(AsinhOp) == 2 );
+	CPPAD_ASSERT_UNKNOWN( NumArg(AcoshOp) == 1 );
+	CPPAD_ASSERT_UNKNOWN( NumRes(AcoshOp) == 2 );
 	CPPAD_ASSERT_UNKNOWN( q < cap_order );
 	CPPAD_ASSERT_UNKNOWN( p <= q );
 
@@ -61,8 +61,8 @@ inline void forward_asinh_op(
 	size_t k;
 	Base uj;
 	if( p == 0 )
-	{	z[0] = asinh( x[0] );
-		uj   = Base(1) + x[0] * x[0];
+	{	z[0] = acosh( x[0] );
+		uj   = x[0] * x[0] - Base(1);
 		b[0] = sqrt( uj );
 		p++;
 	}
@@ -87,15 +87,15 @@ inline void forward_asinh_op(
 	}
 }
 /*!
-Multiple directions forward mode Taylor coefficient for op = AsinhOp.
+Multiple directions forward mode Taylor coefficient for op = AcoshOp.
 
 The C++ source code corresponding to this operation is
 \verbatim
-	z = asinh(x)
+	z = acosh(x)
 \endverbatim
 The auxillary result is
 \verbatim
-	y = sqrt(1 + x * x)
+	y = sqrt(x * x - 1)
 \endverbatim
 The value of y, and its derivatives, are computed along with the value
 and derivatives of z.
@@ -103,7 +103,7 @@ and derivatives of z.
 \copydetails forward_unary2_op_dir
 */
 template <class Base>
-inline void forward_asinh_op_dir(
+inline void forward_acosh_op_dir(
 	size_t q           ,
 	size_t r           ,
 	size_t i_z         ,
@@ -112,8 +112,8 @@ inline void forward_asinh_op_dir(
 	Base*  taylor      )
 {
 	// check assumptions
-	CPPAD_ASSERT_UNKNOWN( NumArg(AcosOp) == 1 );
-	CPPAD_ASSERT_UNKNOWN( NumRes(AcosOp) == 2 );
+	CPPAD_ASSERT_UNKNOWN( NumArg(AcoshOp) == 1 );
+	CPPAD_ASSERT_UNKNOWN( NumRes(AcoshOp) == 2 );
 	CPPAD_ASSERT_UNKNOWN( 0 < q );
 	CPPAD_ASSERT_UNKNOWN( q < cap_order );
 
@@ -126,7 +126,7 @@ inline void forward_asinh_op_dir(
 	size_t k, ell;
 	size_t m = (q-1) * r + 1;
 	for(ell = 0; ell < r; ell ++)
-	{	Base uq = 2.0 * x[m + ell] * x[0];
+	{	Base uq = - 2.0 * x[m + ell] * x[0];
 		for(k = 1; k < q; k++)
 			uq += x[(k-1)*r+1+ell] * x[(q-k-1)*r+1+ell];
 		b[m+ell] = Base(0);
@@ -135,36 +135,36 @@ inline void forward_asinh_op_dir(
 		{	b[m+ell] += Base(k) * b[(k-1)*r+1+ell] * b[(q-k-1)*r+1+ell];
 			z[m+ell] += Base(k) * z[(k-1)*r+1+ell] * b[(q-k-1)*r+1+ell];
 		}
-		b[m+ell] = ( uq / Base(2) - b[m+ell] / Base(q) ) / b[0];
+		b[m+ell] =  ( uq / Base(2) - b[m+ell] / Base(q) ) / b[0];
 		z[m+ell] = ( x[m+ell]     - z[m+ell] / Base(q) ) / b[0];
 	}
 }
 
 /*!
-Compute zero order forward mode Taylor coefficient for result of op = AsinhOp.
+Compute zero order forward mode Taylor coefficient for result of op = AcoshOp.
 
 The C++ source code corresponding to this operation is
 \verbatim
-	z = asinh(x)
+	z = acosh(x)
 \endverbatim
 The auxillary result is
 \verbatim
-	y = sqrt( 1 + x * x )
+	y = sqrt( x * x - 1 )
 \endverbatim
 The value of y is computed along with the value of z.
 
 \copydetails forward_unary2_op_0
 */
 template <class Base>
-inline void forward_asinh_op_0(
+inline void forward_acosh_op_0(
 	size_t i_z         ,
 	size_t i_x         ,
 	size_t cap_order   ,
 	Base*  taylor      )
 {
 	// check assumptions
-	CPPAD_ASSERT_UNKNOWN( NumArg(AsinhOp) == 1 );
-	CPPAD_ASSERT_UNKNOWN( NumRes(AsinhOp) == 2 );
+	CPPAD_ASSERT_UNKNOWN( NumArg(AcoshOp) == 1 );
+	CPPAD_ASSERT_UNKNOWN( NumRes(AcoshOp) == 2 );
 	CPPAD_ASSERT_UNKNOWN( 0 < cap_order );
 
 	// Taylor coefficients corresponding to argument and result
@@ -172,19 +172,19 @@ inline void forward_asinh_op_0(
 	Base* z = taylor + i_z * cap_order;
 	Base* b = z      -       cap_order; // called y in documentation
 
-	z[0] = asinh( x[0] );
-	b[0] = sqrt( Base(1) + x[0] * x[0] );
+	z[0] = acosh( x[0] );
+	b[0] = sqrt( x[0] * x[0] - Base(1) );
 }
 /*!
-Compute reverse mode partial derivatives for result of op = AsinhOp.
+Compute reverse mode partial derivatives for result of op = AcoshOp.
 
 The C++ source code corresponding to this operation is
 \verbatim
-	z = asinh(x)
+	z = acosh(x)
 \endverbatim
 The auxillary result is
 \verbatim
-	y = sqrt( 1 + x * x )
+	y = sqrt( x * x - 1 )
 \endverbatim
 The value of y is computed along with the value of z.
 
@@ -192,7 +192,7 @@ The value of y is computed along with the value of z.
 */
 
 template <class Base>
-inline void reverse_asinh_op(
+inline void reverse_acosh_op(
 	size_t      d            ,
 	size_t      i_z          ,
 	size_t      i_x          ,
@@ -202,8 +202,8 @@ inline void reverse_asinh_op(
 	Base*       partial      )
 {
 	// check assumptions
-	CPPAD_ASSERT_UNKNOWN( NumArg(AsinhOp) == 1 );
-	CPPAD_ASSERT_UNKNOWN( NumRes(AsinhOp) == 2 );
+	CPPAD_ASSERT_UNKNOWN( NumArg(AcoshOp) == 1 );
+	CPPAD_ASSERT_UNKNOWN( NumRes(AcoshOp) == 2 );
 	CPPAD_ASSERT_UNKNOWN( d < cap_order );
 	CPPAD_ASSERT_UNKNOWN( d < nc_partial );
 

@@ -66,6 +66,7 @@ ADD_EXECUTABLE(test_more EXCLUDE_FROM_ALL test_more.cpp
 	${ipopt_sources}
 	abs.cpp
 	acos.cpp
+	acosh.cpp
 	adfun_copy.cpp
 	asin.cpp
 	asinh.cpp

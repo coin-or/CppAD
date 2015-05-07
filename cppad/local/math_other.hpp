@@ -27,6 +27,7 @@ $section Other AD Math Functions$$
 $childtable%
 	cppad/local/abs.hpp%
 	cppad/local/asinh.hpp%
+	cppad/local/acosh.hpp%
 	cppad/local/sign.hpp%
 	cppad/local/atan2.hpp%
 	cppad/local/erf.hpp%
@@ -39,6 +40,7 @@ $end
 
 # include <cppad/local/abs.hpp>
 # include <cppad/local/asinh.hpp>
+# include <cppad/local/acosh.hpp>
 # include <cppad/local/sign.hpp>
 # include <cppad/local/atan2.hpp>
 # include <cppad/local/erf.hpp>

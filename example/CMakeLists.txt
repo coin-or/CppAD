@@ -76,6 +76,7 @@ ADD_EXECUTABLE(example EXCLUDE_FROM_ALL example.cpp
 	abort_recording.cpp
 	abs.cpp
 	acos.cpp
+	acosh.cpp
 	add.cpp
 	add_eq.cpp
 	ad_assign.cpp

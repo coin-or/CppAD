@@ -125,6 +125,8 @@ nobase_myinclude_HEADERS =  \
 	cppad/local/abs.hpp \
 	cppad/local/abs_op.hpp \
 	cppad/local/acos_op.hpp \
+	cppad/local/acosh.hpp \
+	cppad/local/acosh_op.hpp \
 	cppad/local/ad_assign.hpp \
 	cppad/local/ad_binary.hpp \
 	cppad/local/ad_ctor.hpp \

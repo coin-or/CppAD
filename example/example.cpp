@@ -49,6 +49,7 @@ extern bool ad_assign(void);
 extern bool ad_ctor(void);
 extern bool abs(void);
 extern bool acos(void);
+extern bool acosh(void);
 extern bool Add(void);
 extern bool AddEq(void);
 extern bool ad_fun(void);
@@ -213,6 +214,7 @@ int main(void)
 	ok &= Run( ad_ctor,           "ad_ctor"          );
 	ok &= Run( abs,               "abs"              );
 	ok &= Run( acos,              "acos"             );
+	ok &= Run( acosh,             "acosh"            );
 	ok &= Run( Add,               "Add"              );
 	ok &= Run( AddEq,             "AddEq"            );
 	ok &= Run( ad_fun,            "ad_fun"           );

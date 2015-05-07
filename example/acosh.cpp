@@ -10,9 +10,26 @@ A copy of this license is included in the COPYING file of this distribution.
 Please visit http://www.coin-or.org/CppAD/ for information on other licenses.
 -------------------------------------------------------------------------- */
 
+/*
+$begin acosh.cpp$$
+$spell
+	cosh
+	acosh
+$$
+
+$section The AD acosh Function: Example and Test$$
+
+$code
+$verbatim%example/acosh.cpp%0%// BEGIN C++%// END C++%1%$$
+$$
+
+$end
+*/
+// BEGIN C++
+
 # include <cppad/cppad.hpp>
 
-bool asinh(void)
+bool acosh(void)
 {	bool ok = true;
 
 	using CppAD::AD;
@@ -24,25 +41,25 @@ bool asinh(void)
 	// domain space vector
 	size_t n  = 1;
 	double x0 = 0.5;
-	CPPAD_TESTVECTOR(AD<double>) ax(n);
-	ax[0]     = x0;
+	CPPAD_TESTVECTOR(AD<double>) x(n);
+	x[0]      = x0;
 
 	// declare independent variables and start tape recording
-	CppAD::Independent(ax);
+	CppAD::Independent(x);
 
 	// a temporary value
-	AD<double> sinh_of_x0 = CppAD::sinh(ax[0]);
+	AD<double> cosh_of_x0 = CppAD::cosh(x[0]);
 
 	// range space vector
 	size_t m = 1;
-	CPPAD_TESTVECTOR(AD<double>) ay(m);
-	ay[0] = CppAD::asinh(sinh_of_x0);
+	CPPAD_TESTVECTOR(AD<double>) y(m);
+	y[0] = CppAD::acosh(cosh_of_x0);
 
 	// create f: x -> y and stop tape recording
-	CppAD::ADFun<double> f(ax, ay);
+	CppAD::ADFun<double> f(x, y);
 
 	// check value
-	ok &= NearEqual(ay[0] , x0,  eps, eps);
+	ok &= NearEqual(y[0] , x0,  eps, eps);
 
 	// forward computation of first partial w.r.t. x[0]
 	CPPAD_TESTVECTOR(double) dx(n);
@@ -51,21 +68,19 @@ bool asinh(void)
 	dy    = f.Forward(1, dx);
 	ok   &= NearEqual(dy[0], 1., eps, eps);
 
-	// forward computation of higher order partials w.r.t. x[0]
-	size_t n_order = 5;
-	for(size_t order = 2; order < n_order; order++)
-	{	dx[0] = 0.;
-		dy    = f.Forward(order, dx);
-		ok   &= NearEqual(dy[0], 0., eps, eps);
-	}
-	// reverse computation of derivatives
+	// reverse computation of derivative of y[0]
 	CPPAD_TESTVECTOR(double)  w(m);
-	CPPAD_TESTVECTOR(double) dw(n_order * n);
+	CPPAD_TESTVECTOR(double) dw(n);
 	w[0]  = 1.;
-	dw    = f.Reverse(n_order, w);
+	dw    = f.Reverse(1, w);
 	ok   &= NearEqual(dw[0], 1., eps, eps);
-	for(size_t order = 1; order < n_order; order++)
-		ok   &= NearEqual(dw[order * n + 0], 0., eps, eps);
+
+	// use a VecAD<Base>::reference object with acosh
+	CppAD::VecAD<double> v(1);
+	AD<double> zero(0);
+	v[zero] = cosh_of_x0;
+	AD<double> result = CppAD::acosh(v[zero]);
+	ok     &= NearEqual(result, x0, eps, eps);
 
 	return ok;
 }

@@ -359,6 +359,15 @@ void forward1sweep(
 			break;
 			// -------------------------------------------------
 
+# if CPPAD_COMPILER_HAS_ACOSH
+			case AcoshOp:
+			// sqrt(x * x - 1), acosh(x)
+			CPPAD_ASSERT_UNKNOWN( i_var < numvar  );
+			forward_acosh_op(p, q, i_var, arg[0], J, taylor);
+			break;
+# endif
+			// -------------------------------------------------
+
 			case AsinOp:
 			// sqrt(1 - x * x), asin(x)
 			CPPAD_ASSERT_UNKNOWN( i_var < numvar  );

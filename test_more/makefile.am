@@ -91,6 +91,7 @@ test_more_SOURCES  = \
 	test_more.cpp \
 	abs.cpp \
 	acos.cpp \
+	acosh.cpp \
 	adfun_copy.cpp \
 	asin.cpp \
 	asinh.cpp \
