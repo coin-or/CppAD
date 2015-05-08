@@ -209,7 +209,7 @@ $rref ExpForward$$
 $rref LogForward$$
 $rref SqrtForward$$
 $rref SinCosForward$$
-$rref AtanForward$$
+$rref atan_forward$$
 $rref asin_forward$$
 $rref acos_forward$$
 $tend

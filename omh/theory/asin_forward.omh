@@ -50,9 +50,8 @@ $latex A [ X (t) ] $$,
 $latex B [ X (t) ]$$,
 $latex D [ X (t) ] $$,
 and $latex F [ X(t) ] $$ respectively.
-$pre
 
-$$
+$head Taylor Coefficients Recursion$$
 We define $latex Q(x) = 1 \mp x * x$$
 and let $latex q$$ be the corresponding Taylor coefficients for
 $latex Q[ X(t) ]$$.
