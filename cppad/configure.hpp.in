@@ -72,18 +72,18 @@ C++11: Does compiler support std::erf(double)
 
 # if __cplusplus >= 201100
 /*!
-\def CPPAD_COMPILER_HAS_ACOSH
-C++11: Does compiler support std::acosh(double)
-*/
-# define CPPAD_COMPILER_HAS_ACOSH @cppad_compiler_has_acosh@
-# endif
-
-# if __cplusplus >= 201100
-/*!
 \def CPPAD_COMPILER_HAS_ASINH
 C++11: Does compiler support std::asinh(double)
 */
 # define CPPAD_COMPILER_HAS_ASINH @cppad_compiler_has_asinh@
+# endif
+
+# if __cplusplus >= 201100
+/*!
+\def CPPAD_COMPILER_HAS_ACOSH
+C++11: Does compiler support std::acosh(double)
+*/
+# define CPPAD_COMPILER_HAS_ACOSH @cppad_compiler_has_acosh@
 # endif
 
 # if __cplusplus >= 201100

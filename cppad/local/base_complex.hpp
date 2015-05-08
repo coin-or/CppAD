@@ -167,18 +167,6 @@ namespace CppAD {
 }
 /* $$
 
-$head erf$$
-Complex types do not support the error function
-(use CPPAD_USER_MACRO define above).
-$codep */
-# if CPPAD_COMPILER_HAS_ERF
-namespace CppAD {
-	CPPAD_USER_MACRO(erf)
-}
-# endif
-/* $$
-
-
 $head Integer$$
 The implementation of this function must agree
 with the CppAD user specifications for complex arguments to the
@@ -245,6 +233,9 @@ namespace CppAD {
 	CPPAD_USER_MACRO(asin)
 	CPPAD_USER_MACRO(atan)
 	CPPAD_USER_MACRO(sign)
+# if CPPAD_COMPILER_HAS_ERF
+	CPPAD_USER_MACRO(erf)
+# endif
 # if CPPAD_COMPILER_HAS_ASINH
 	CPPAD_USER_MACRO(asinh)
 # endif

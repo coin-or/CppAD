@@ -147,14 +147,14 @@ namespace CppAD {
 	CPPAD_STANDARD_MATH_UNARY(double, sqrt)
 	CPPAD_STANDARD_MATH_UNARY(double, tan)
 	CPPAD_STANDARD_MATH_UNARY(double, tanh)
+# if CPPAD_COMPILER_HAS_ERF
+	CPPAD_STANDARD_MATH_UNARY(double, erf)
+# endif
 # if CPPAD_COMPILER_HAS_ASINH
 	CPPAD_STANDARD_MATH_UNARY(double, asinh)
 # endif
 # if CPPAD_COMPILER_HAS_ACOSH
 	CPPAD_STANDARD_MATH_UNARY(double, acosh)
-# endif
-# if CPPAD_COMPILER_HAS_ERF
-	CPPAD_STANDARD_MATH_UNARY(double, erf)
 # endif
 }
 /* $$

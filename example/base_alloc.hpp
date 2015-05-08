@@ -310,11 +310,11 @@ $codep */
 # if CPPAD_COMPILER_HAS_ERF
 	BASE_ALLOC_STD_MATH(erf)
 # endif
-# if CPPAD_COMPILER_HAS_ACOSH
-	BASE_ALLOC_STD_MATH(acosh)
-# endif
 # if CPPAD_COMPILER_HAS_ASINH
 	BASE_ALLOC_STD_MATH(asinh)
+# endif
+# if CPPAD_COMPILER_HAS_ACOSH
+	BASE_ALLOC_STD_MATH(acosh)
 # endif
 /* $$
 

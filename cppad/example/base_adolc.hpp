@@ -217,7 +217,7 @@ $code sinh$$,
 $code sqrt$$,
 $code tan$$.
 
-$head erf, asin$$
+$head erf, asinh, acosh$$
 If the
 $cref/erf, asinh, acosh/base_std_math/erf, asinh, acosh/$$,
 functions are supported by the compiler,
@@ -237,11 +237,11 @@ namespace CppAD {
 # if CPPAD_COMPILER_HAS_ERF
 	CPPAD_BASE_ADOLC_NO_SUPPORT(erf)
 # endif
-# if CPPAD_COMPILER_HAS_ACOSH
-	CPPAD_BASE_ADOLC_NO_SUPPORT(acosh)
-# endif
 # if CPPAD_COMPILER_HAS_ASINH
 	CPPAD_BASE_ADOLC_NO_SUPPORT(asinh)
+# endif
+# if CPPAD_COMPILER_HAS_ACOSH
+	CPPAD_BASE_ADOLC_NO_SUPPORT(acosh)
 # endif
 # undef CPPAD_BASE_ADOLC_NO_SUPPORT
 }
