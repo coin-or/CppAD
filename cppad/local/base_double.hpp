@@ -17,6 +17,7 @@ Please visit http://www.coin-or.org/CppAD/ for information on other licenses.
 /*
 $begin base_double.hpp$$
 $spell
+	atanh
 	acosh
 	asinh
 	erf
@@ -155,6 +156,9 @@ namespace CppAD {
 # endif
 # if CPPAD_COMPILER_HAS_ACOSH
 	CPPAD_STANDARD_MATH_UNARY(double, acosh)
+# endif
+# if CPPAD_COMPILER_HAS_ATANH
+	CPPAD_STANDARD_MATH_UNARY(double, atanh)
 # endif
 }
 /* $$

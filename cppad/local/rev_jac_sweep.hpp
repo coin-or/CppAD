@@ -282,6 +282,17 @@ void RevJacSweep(
 			break;
 			// -------------------------------------------------
 
+# if CPPAD_COMPILER_HAS_ATANH
+			case AtanhOp:
+			// 1 - x * x, atanh(x)
+			CPPAD_ASSERT_NARG_NRES(op, 1, 2);
+			reverse_sparse_jacobian_unary_op(
+				i_var, arg[0], var_sparsity
+			);
+			break;
+# endif
+			// -------------------------------------------------
+
 			case BeginOp:
 			CPPAD_ASSERT_NARG_NRES(op, 1, 1);
 			more_operators = false;

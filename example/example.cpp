@@ -59,6 +59,7 @@ extern bool ad_output(void);
 extern bool asin(void);
 extern bool asinh(void);
 extern bool atan(void);
+extern bool atanh(void);
 extern bool atan2(void);
 extern bool base_require(void);
 extern bool BenderQuad(void);
@@ -224,6 +225,7 @@ int main(void)
 	ok &= Run( asin,              "asin"             );
 	ok &= Run( asinh,             "asinh"            );
 	ok &= Run( atan,              "atan"             );
+	ok &= Run( atanh,             "atanh"            );
 	ok &= Run( atan2,             "atan2"            );
 	ok &= Run( BenderQuad,        "BenderQuad"       );
 	ok &= Run( BoolFun,           "BoolFun"          );

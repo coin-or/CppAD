@@ -29,6 +29,7 @@ extern bool asin(void);
 extern bool asinh(void);
 extern bool assign(void);
 extern bool atan(void);
+extern bool atanh(void);
 extern bool atan2(void);
 extern bool base_adolc(void);
 extern bool base_alloc_test(void);
@@ -145,6 +146,7 @@ int main(void)
 	ok &= Run( asinh,           "asinh"          );
 	ok &= Run( assign,          "assign"         );
 	ok &= Run( atan,            "atan"           );
+	ok &= Run( atanh,           "atanh"          );
 	ok &= Run( atan2,           "atan2"          );
 	ok &= Run( check_simple_vector, "check_simple_vector" );
 	ok &= Run( checkpoint,      "checkpoint"     );

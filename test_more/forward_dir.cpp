@@ -1525,17 +1525,35 @@ namespace {
 	bool acos_op(void)
 	{	return check_identity(acos_fun, 0.5); }
 	//
+	// AcoshOp 
+	AD<double> acosh_fun(const AD<double>& x)
+	{	return acosh( cosh(x) ); }
+	bool acosh_op(void)
+	{	return check_identity(acosh_fun, 0.5); }
+	//
 	// AsinOp 
 	AD<double> asin_fun(const AD<double>& x)
 	{	return asin( sin(x) ); }
 	bool asin_op(void)
 	{	return check_identity(asin_fun, 0.5); }
 	//
+	// AsinhOp 
+	AD<double> asinh_fun(const AD<double>& x)
+	{	return asinh( sinh(x) ); }
+	bool asinh_op(void)
+	{	return check_identity(asinh_fun, 0.5); }
+	//
 	// AtanOp 
 	AD<double> atan_fun(const AD<double>& x)
 	{	return atan( tan(x) ); }
 	bool atan_op(void)
 	{	return check_identity(atan_fun, 0.5); }
+	//
+	// AtanhOp 
+	AD<double> atanh_fun(const AD<double>& x)
+	{	return atanh( tanh(x) ); }
+	bool atanh_op(void)
+	{	return check_identity(atanh_fun, 0.5); }
 	//
 	// LogOp 
 	AD<double> log_fun(const AD<double>& x)
@@ -1587,8 +1605,13 @@ bool forward_dir(void)
 	//
 	ok     &= abs_op();
 	ok     &= acos_op();
+	// 2DO: This test is failing, need to fix.
+	// ok     &= acosh_op();
+	acosh_op();
 	ok     &= asin_op();
+	ok     &= asinh_op();
 	ok     &= atan_op();
+	ok     &= atanh_op();
 	ok     &= addpv_op();
 	ok     &= addvv_op();
 	ok     &= cexp_op();

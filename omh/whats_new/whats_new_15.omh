@@ -13,6 +13,7 @@ Please visit http://www.coin-or.org/CppAD/ for information on other licenses.
 $begin whats_new_15$$
 $dollar @$$
 $spell
+	atanh
 	acosh
 	asinh
 	src
@@ -50,16 +51,22 @@ This section contains a list of the changes to CppAD during 2015
 The purpose of this section is to
 assist you in learning about changes between various versions of CppAD.
 
+$head 05-08$$
+Add the inverse hyperbolic sine function $cref atanh$$.
+If you are defining your own base type,
+note that $cref/atanh/base_std_math/erf, asinh, acosh, atanh/$$
+was added to the base type requirements.
+
 $head 05-07$$
 Add the inverse hyperbolic sine function $cref acosh$$.
 If you are defining your own base type,
-note that $cref/acosh/base_std_math/erf, asinh, acosh/$$
+note that $cref/acosh/base_std_math/erf, asinh, acosh, atanh/$$
 was added to the base type requirements.
 
 $head 05-05$$
 Add the inverse hyperbolic sine function $cref asinh$$.
 If you are defining your own base type,
-note that $cref/asinh/base_std_math/erf, asinh, acosh/$$
+note that $cref/asinh/base_std_math/erf, asinh, acosh, atanh/$$
 was added to the base type requirements.
 
 $head 04-18$$

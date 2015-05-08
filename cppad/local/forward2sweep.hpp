@@ -300,6 +300,15 @@ void forward2sweep(
 			break;
 			// -------------------------------------------------
 
+# if CPPAD_COMPILER_HAS_ATANH
+			case AtanhOp:
+			// 1 - x * x, atanh(x)
+			CPPAD_ASSERT_UNKNOWN( i_var < numvar  );
+			forward_atanh_op_dir(q, r, i_var, arg[0], J, taylor);
+			break;
+# endif
+			// -------------------------------------------------
+
 			case CExpOp:
 			forward_cond_op_dir(
 				q, r, i_var, arg, num_par, parameter, J, taylor

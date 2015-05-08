@@ -75,6 +75,7 @@ ADD_EXECUTABLE(test_more EXCLUDE_FROM_ALL test_more.cpp
 	add_eq.cpp
 	add_zero.cpp
 	atan.cpp
+	atanh.cpp
 	atan2.cpp
 	base_alloc.cpp
 	check_simple_vector.cpp

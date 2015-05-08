@@ -25,6 +25,7 @@ Please visit http://www.coin-or.org/CppAD/ for information on other licenses.
 # include <cppad/local/asin_op.hpp>
 # include <cppad/local/asinh_op.hpp>
 # include <cppad/local/atan_op.hpp>
+# include <cppad/local/atanh_op.hpp>
 # include <cppad/local/comp_op.hpp>
 # include <cppad/local/cond_op.hpp>
 # include <cppad/local/cos_op.hpp>

@@ -214,6 +214,9 @@ public:
 # if CPPAD_COMPILER_HAS_ACOSH
 	inline AD acosh(void) const;
 # endif
+# if CPPAD_COMPILER_HAS_ATANH
+	inline AD atanh(void) const;
+# endif
 
 	// ----------------------------------------------------------
 	// static public member functions

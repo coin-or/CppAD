@@ -293,6 +293,17 @@ void RevHesSweep(
 			break;
 			// -------------------------------------------------
 
+# if CPPAD_COMPILER_HAS_ATANH
+			case AtanhOp:
+			// 1 - x * x, atanh(x)
+			CPPAD_ASSERT_NARG_NRES(op, 1, 2)
+			reverse_sparse_hessian_nonlinear_unary_op(
+			i_var, arg[0], RevJac, for_jac_sparse, rev_hes_sparse
+			);
+			break;
+# endif
+			// -------------------------------------------------
+
 			case BeginOp:
 			CPPAD_ASSERT_NARG_NRES(op, 1, 1)
 			more_operators = false;

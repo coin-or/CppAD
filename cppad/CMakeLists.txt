@@ -148,6 +148,7 @@ check_source_runs("${source}" cppad_has_cstdint_8_to_64)
 # cppad_compiler_has_erf
 # cppad_compiler_has_asinh
 # cppad_compiler_has_acosh
+# cppad_compiler_has_atanh
 #
 SET(source_template "
 # include <cmath>
@@ -157,7 +158,7 @@ int main(void)
 }
 "
 )
-FOREACH(c11_function erf asinh acosh)
+FOREACH(c11_function erf asinh acosh atanh)
 	STRING(REPLACE "c11_function" ${c11_function} source "${source_template}" )
 	# really only checking if program compiles
 	check_source_runs("${source}" cppad_compiler_has_${c11_function} )

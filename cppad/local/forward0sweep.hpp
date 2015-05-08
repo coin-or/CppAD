@@ -341,6 +341,15 @@ void forward0sweep(
 			break;
 			// -------------------------------------------------
 
+# if CPPAD_COMPILER_HAS_ATANH
+			case AtanhOp:
+			// 1 - x * x, atanh(x)
+			CPPAD_ASSERT_UNKNOWN( i_var < numvar  );
+			forward_atanh_op_0(i_var, arg[0], J, taylor);
+			break;
+# endif
+			// -------------------------------------------------
+
 			case CExpOp:
 			// Use the general case with d == 0
 			// (could create an optimzied verison for this case)

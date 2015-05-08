@@ -79,7 +79,7 @@ If it is not one of the following operartors, the operator is not
 hash coded and zero is returned:
 
 \li unary operators:
-AbsOp, AcosOp, AcoshOp, AsinOp, AsinhOp, AtanOp, CosOp, CoshOp
+AbsOp, AcosOp, AcoshOp, AsinOp, AsinhOp, AtanOp, AtanhOp, CosOp, CoshOp
 ExpOp, LogOp, SinOp, SinhOp, SqrtOp, TanOp, TanhOp
 
 \li binary operators where first argument is a parameter:
@@ -217,6 +217,7 @@ unsigned short hash_code(
 		case AsinOp:
 		case AsinhOp:
 		case AtanOp:
+		case AtanhOp:
 		case CosOp:
 		case CoshOp:
 		case ErfOp:

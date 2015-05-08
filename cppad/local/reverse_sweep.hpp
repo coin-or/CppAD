@@ -363,6 +363,17 @@ void ReverseSweep(
 			break;
 			// -------------------------------------------------
 
+# if CPPAD_COMPILER_HAS_ATANH
+			case AtanhOp:
+			// 1 - x * x, atanh(x)
+			CPPAD_ASSERT_UNKNOWN( i_var < numvar );
+			reverse_atanh_op(
+				d, i_var, arg[0], J, Taylor, K, Partial
+			);
+			break;
+# endif
+			// -------------------------------------------------
+
 			case BeginOp:
 			CPPAD_ASSERT_NARG_NRES(op, 1, 1);
 			more_operators = false;

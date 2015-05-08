@@ -88,6 +88,14 @@ C++11: Does compiler support std::acosh(double)
 
 # if __cplusplus >= 201100
 /*!
+\def CPPAD_COMPILER_HAS_ATANH
+C++11: Does compiler support std::atanh(double)
+*/
+# define CPPAD_COMPILER_HAS_ATANH @cppad_compiler_has_atanh@
+# endif
+
+# if __cplusplus >= 201100
+/*!
 \def CPPAD_HAS_HIGH_RESOLUTION_CLOCK
 C++11: Does compiler support std::chrono::high_resolution_clock
 */
