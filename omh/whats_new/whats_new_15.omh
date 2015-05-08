@@ -52,10 +52,16 @@ The purpose of this section is to
 assist you in learning about changes between various versions of CppAD.
 
 $head 05-08$$
+$list number$$
 Add the inverse hyperbolic sine function $cref atanh$$.
 If you are defining your own base type,
 note that $cref/atanh/base_std_math/erf, asinh, acosh, atanh/$$
 was added to the base type requirements.
+$lnext
+Fix a bug in the implementation of the $code acosh$$
+multiple direction forward mode $cref forward_dir$$
+(when compiler has $cref/acosh/acosh/CPPAD_COMPILER_HAS_ACOSH/$$).
+$lend
 
 $head 05-07$$
 Add the inverse hyperbolic sine function $cref acosh$$.

@@ -666,6 +666,8 @@ cppad_size_t_not_unsigned_int
 EGREP
 GREP
 CPP
+cppad_compiler_has_atanh
+cppad_compiler_has_acosh
 cppad_compiler_has_asinh
 cppad_compiler_has_erf
 cppad_has_cstdint_8_to_64
@@ -5477,6 +5479,10 @@ cppad_has_cstdint_8_to_64=0
 cppad_compiler_has_erf=0
 
 cppad_compiler_has_asinh=0
+
+cppad_compiler_has_acosh=0
+
+cppad_compiler_has_atanh=0
 
 
 ac_ext=c

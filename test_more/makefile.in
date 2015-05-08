@@ -104,9 +104,9 @@ libeigen_a_OBJECTS = $(am_libeigen_a_OBJECTS)
 am__test_more_SOURCES_DIST = base_adolc.cpp ipopt_solve.cpp \
 	alloc_openmp.cpp test_more.cpp abs.cpp acos.cpp acosh.cpp \
 	adfun_copy.cpp asin.cpp asinh.cpp assign.cpp add.cpp \
-	add_eq.cpp add_zero.cpp atan.cpp atan2.cpp base_alloc.cpp \
-	check_simple_vector.cpp checkpoint.cpp compare.cpp \
-	compare_change.cpp cond_exp.cpp cond_exp_ad.cpp \
+	add_eq.cpp add_zero.cpp atan.cpp atanh.cpp atan2.cpp \
+	base_alloc.cpp check_simple_vector.cpp checkpoint.cpp \
+	compare.cpp compare_change.cpp cond_exp.cpp cond_exp_ad.cpp \
 	cond_exp_rev.cpp copy.cpp cos.cpp cosh.cpp dbl_epsilon.cpp \
 	div.cpp div_eq.cpp div_zero_one.cpp erf.cpp exp.cpp \
 	extern_value.cpp extern_value.hpp for_hess.cpp \
@@ -130,7 +130,7 @@ am_test_more_OBJECTS = $(am__objects_1) $(am__objects_2) \
 	acos.$(OBJEXT) acosh.$(OBJEXT) adfun_copy.$(OBJEXT) \
 	asin.$(OBJEXT) asinh.$(OBJEXT) assign.$(OBJEXT) add.$(OBJEXT) \
 	add_eq.$(OBJEXT) add_zero.$(OBJEXT) atan.$(OBJEXT) \
-	atan2.$(OBJEXT) base_alloc.$(OBJEXT) \
+	atanh.$(OBJEXT) atan2.$(OBJEXT) base_alloc.$(OBJEXT) \
 	check_simple_vector.$(OBJEXT) checkpoint.$(OBJEXT) \
 	compare.$(OBJEXT) compare_change.$(OBJEXT) cond_exp.$(OBJEXT) \
 	cond_exp_ad.$(OBJEXT) cond_exp_rev.$(OBJEXT) copy.$(OBJEXT) \
@@ -351,7 +351,9 @@ build_vendor = @build_vendor@
 builddir = @builddir@
 cppad_SOURCE_DIR = @cppad_SOURCE_DIR@
 cppad_boostvector = @cppad_boostvector@
+cppad_compiler_has_acosh = @cppad_compiler_has_acosh@
 cppad_compiler_has_asinh = @cppad_compiler_has_asinh@
+cppad_compiler_has_atanh = @cppad_compiler_has_atanh@
 cppad_compiler_has_erf = @cppad_compiler_has_erf@
 cppad_cppadvector = @cppad_cppadvector@
 cppad_description = @cppad_description@
@@ -486,6 +488,7 @@ test_more_SOURCES = \
 	add_eq.cpp \
 	add_zero.cpp \
 	atan.cpp \
+	atanh.cpp \
 	atan2.cpp \
 	base_alloc.cpp \
 	check_simple_vector.cpp \
@@ -628,6 +631,7 @@ distclean-compile:
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/assign.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/atan.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/atan2.Po@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/atanh.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/base_adolc.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/base_alloc.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/check_simple_vector.Po@am__quote@

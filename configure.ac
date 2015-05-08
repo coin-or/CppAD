@@ -493,6 +493,8 @@ AC_SUBST(cppad_has_rvalue, 0)
 AC_SUBST(cppad_has_cstdint_8_to_64, 0)
 AC_SUBST(cppad_compiler_has_erf, 0)
 AC_SUBST(cppad_compiler_has_asinh, 0)
+AC_SUBST(cppad_compiler_has_acosh, 0)
+AC_SUBST(cppad_compiler_has_atanh, 0)
 
 dnl Determine if size_t has same size as unsigned int
 AC_CHECK_SIZEOF([size_t])

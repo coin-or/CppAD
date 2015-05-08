@@ -126,7 +126,7 @@ inline void forward_acosh_op_dir(
 	size_t k, ell;
 	size_t m = (q-1) * r + 1;
 	for(ell = 0; ell < r; ell ++)
-	{	Base uq = - 2.0 * x[m + ell] * x[0];
+	{	Base uq = 2.0 * x[m + ell] * x[0];
 		for(k = 1; k < q; k++)
 			uq += x[(k-1)*r+1+ell] * x[(q-k-1)*r+1+ell];
 		b[m+ell] = Base(0);

@@ -334,7 +334,9 @@ build_vendor = @build_vendor@
 builddir = @builddir@
 cppad_SOURCE_DIR = @cppad_SOURCE_DIR@
 cppad_boostvector = @cppad_boostvector@
+cppad_compiler_has_acosh = @cppad_compiler_has_acosh@
 cppad_compiler_has_asinh = @cppad_compiler_has_asinh@
+cppad_compiler_has_atanh = @cppad_compiler_has_atanh@
 cppad_compiler_has_erf = @cppad_compiler_has_erf@
 cppad_cppadvector = @cppad_cppadvector@
 cppad_description = @cppad_description@
@@ -524,6 +526,8 @@ nobase_myinclude_HEADERS = \
 	cppad/local/asinh_op.hpp \
 	cppad/local/atan2.hpp \
 	cppad/local/atan_op.hpp \
+	cppad/local/atanh.hpp \
+	cppad/local/atanh_op.hpp \
 	cppad/local/atomic_base.hpp \
 	cppad/local/base_complex.hpp \
 	cppad/local/base_cond_exp.hpp \

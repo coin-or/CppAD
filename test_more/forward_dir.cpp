@@ -1605,9 +1605,7 @@ bool forward_dir(void)
 	//
 	ok     &= abs_op();
 	ok     &= acos_op();
-	// 2DO: This test is failing, need to fix.
-	// ok     &= acosh_op();
-	acosh_op();
+	ok     &= acosh_op();
 	ok     &= asin_op();
 	ok     &= asinh_op();
 	ok     &= atan_op();
