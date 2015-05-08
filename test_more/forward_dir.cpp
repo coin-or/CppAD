@@ -3,7 +3,7 @@
 CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-15 Bradley M. Bell
 
 CppAD is distributed under multiple licenses. This distribution is under
-the terms of the 
+the terms of the
                     Eclipse Public License Version 1.0.
 
 A copy of this license is included in the COPYING file of this distribution.
@@ -20,31 +20,31 @@ namespace {
 	using CppAD::AD;
 	using CppAD::NearEqual;
 	// ---------------------------------------------------------------------
-	// Used the check that fun is an idenity funciton 
-	typedef AD<double> (*adfun)(const AD<double>&); 
+	// Used the check that fun is an idenity funciton
+	typedef AD<double> (*adfun)(const AD<double>&);
 	bool check_identity(adfun identity, double argument)
 	{
 		bool ok = true;
 		double eps = 10. * std::numeric_limits<double>::epsilon();
 		size_t j;
 
-	
+
 		// domain space vector
 		size_t n = 1;
 		CPPAD_TESTVECTOR(AD<double>) ax(n);
 		ax[0] = argument;
-	
+
 		// declare independent variables and starting recording
 		CppAD::Independent(ax);
-	
+
 		// range space vector
 		size_t m = 1;
 		CPPAD_TESTVECTOR(AD<double>) ay(m);
 		ay[0] = identity(ax[0]);
-	
+
 		// create f: x -> y and stop tape recording
 		CppAD::ADFun<double> f(ax, ay);
-	
+
 		// first order Taylor coefficients
 		size_t r = 2, ell;
 		CPPAD_TESTVECTOR(double) x1(r*n), y1;
@@ -54,7 +54,7 @@ namespace {
 		}
 		y1  = f.Forward(1, r, x1);
 		ok &= y1.size() == r*m;
-		
+
 		// secondorder Taylor coefficients
 		CPPAD_TESTVECTOR(double) x2(r*n), y2;
 		for(ell = 0; ell < r; ell++)
@@ -63,13 +63,13 @@ namespace {
 		}
 		y2  = f.Forward(2, r, x2);
 		ok &= y2.size() == r*m;
-		// 
+		//
 		// Y_0  (t)    = F[X_0(t)] = X_0(t)
 		//             =  0.5 + 1t + 2t^2
 		double y_1_0   = 1.0;
 		double y_2_0   = 2.0;
-		// 
-		// Y_1  (t)    = F[X_1(t)] = X_1(t) 
+		//
+		// Y_1  (t)    = F[X_1(t)] = X_1(t)
 		//             =  0.5 + 2t + 3t^2
 		double y_1_1   = 2.0;
 		double y_2_1   = 3.0;
@@ -82,29 +82,29 @@ namespace {
 		return ok;
 	}
 	// ---------------------------------------------------------------------
-	// AbsOp 
+	// AbsOp
 	bool abs_op(void)
 	{	bool ok = true;
 		double eps = 10. * std::numeric_limits<double>::epsilon();
 		size_t j;
-	
+
 		// domain space vector
 		size_t n = 2;
 		CPPAD_TESTVECTOR(AD<double>) ax(n);
-		ax[0] = 0.5; 
+		ax[0] = 0.5;
 		ax[1] = -1.0;
-	
+
 		// declare independent variables and starting recording
 		CppAD::Independent(ax);
-	
+
 		// range space vector
 		size_t m = 1;
 		CPPAD_TESTVECTOR(AD<double>) ay(m);
 		ay[0] = abs( ax[0] ) + abs( 2.0 * ax[1] );
-	
+
 		// create f: x -> y and stop tape recording
 		CppAD::ADFun<double> f(ax, ay);
-	
+
 		// first order Taylor coefficients
 		size_t r = 2, ell;
 		CPPAD_TESTVECTOR(double) x1(r*n), y1;
@@ -114,7 +114,7 @@ namespace {
 		}
 		y1  = f.Forward(1, r, x1);
 		ok &= y1.size() == r*m;
-		
+
 		// secondorder Taylor coefficients
 		CPPAD_TESTVECTOR(double) x2(r*n), y2;
 		for(ell = 0; ell < r; ell++)
@@ -123,13 +123,13 @@ namespace {
 		}
 		y2  = f.Forward(2, r, x2);
 		ok &= y2.size() == r*m;
-		// 
-		// Y_0  (t)    = F[X_0(t)] 
+		//
+		// Y_0  (t)    = F[X_0(t)]
 		//             = abs(0.5 + 1t + 2t^2) + abs( 2*(-1.0 + 2t + 3t^2 ) )
 		double y_1_0   = -3.0;
 		double y_2_0   = -4.0;
-		// 
-		// Y_1  (t)    = F[X_1(t)] 
+		//
+		// Y_1  (t)    = F[X_1(t)]
 		//             = abs(0.5 + 2t + 3t^2) + abs( 2*(-1.0 + 3t + 4t^2 ) )
 		double y_1_1   = -4.0;
 		double y_2_1   = -5.0;
@@ -142,28 +142,28 @@ namespace {
 		return ok;
 	}
 	// ---------------------------------------------------------------------
-	// AddpvOp 
+	// AddpvOp
 	bool addpv_op(void)
 	{	bool ok = true;
 		double eps = 10. * std::numeric_limits<double>::epsilon();
 		size_t j;
-	
+
 		// domain space vector
 		size_t n = 1;
 		CPPAD_TESTVECTOR(AD<double>) ax(n);
-		ax[0] = 0.5; 
-	
+		ax[0] = 0.5;
+
 		// declare independent variables and starting recording
 		CppAD::Independent(ax);
-	
+
 		// range space vector
 		size_t m = 1;
 		CPPAD_TESTVECTOR(AD<double>) ay(m);
 		ay[0] = 2.0 + ax[0];
-	
+
 		// create f: x -> y and stop tape recording
 		CppAD::ADFun<double> f(ax, ay);
-	
+
 		// first order Taylor coefficients
 		size_t r = 2, ell;
 		CPPAD_TESTVECTOR(double) x1(r*n), y1;
@@ -173,7 +173,7 @@ namespace {
 		}
 		y1  = f.Forward(1, r, x1);
 		ok &= y1.size() == r*m;
-		
+
 		// secondorder Taylor coefficients
 		CPPAD_TESTVECTOR(double) x2(r*n), y2;
 		for(ell = 0; ell < r; ell++)
@@ -182,13 +182,13 @@ namespace {
 		}
 		y2  = f.Forward(2, r, x2);
 		ok &= y2.size() == r*m;
-		// 
-		// Y_0 (t)     = F[X_0(t)] 
+		//
+		// Y_0 (t)     = F[X_0(t)]
 		//             =  2.0 + (0.5 + 1t + 3t^2)
 		double y_1_0   = 1.0;
 		double y_2_0   = 3.0;
-		// 
-		// Y_1 (t)     = F[X_1(t)] 
+		//
+		// Y_1 (t)     = F[X_1(t)]
 		//             =  2.0 + (0.5 + 2t + 4t^2)
 		double y_1_1   = 2.0;
 		double y_2_1   = 4.0;
@@ -201,29 +201,29 @@ namespace {
 		return ok;
 	}
 	// ---------------------------------------------------------------------
-	// AddvvOp 
+	// AddvvOp
 	bool addvv_op(void)
 	{	bool ok = true;
 		double eps = 10. * std::numeric_limits<double>::epsilon();
 		size_t j;
-	
+
 		// domain space vector
 		size_t n = 2;
 		CPPAD_TESTVECTOR(AD<double>) ax(n);
-		ax[0] = 0.5; 
+		ax[0] = 0.5;
 		ax[1] = 2.0;
-	
+
 		// declare independent variables and starting recording
 		CppAD::Independent(ax);
-	
+
 		// range space vector
 		size_t m = 1;
 		CPPAD_TESTVECTOR(AD<double>) ay(m);
 		ay[0] = ax[0] + ax[1];
-	
+
 		// create f: x -> y and stop tape recording
 		CppAD::ADFun<double> f(ax, ay);
-	
+
 		// first order Taylor coefficients
 		size_t r = 2, ell;
 		CPPAD_TESTVECTOR(double) x1(r*n), y1;
@@ -233,7 +233,7 @@ namespace {
 		}
 		y1  = f.Forward(1, r, x1);
 		ok &= y1.size() == r*m;
-		
+
 		// secondorder Taylor coefficients
 		CPPAD_TESTVECTOR(double) x2(r*n), y2;
 		for(ell = 0; ell < r; ell++)
@@ -242,13 +242,13 @@ namespace {
 		}
 		y2  = f.Forward(2, r, x2);
 		ok &= y2.size() == r*m;
-		// 
-		// Y_0 (t)     = F[X_0(t)] 
+		//
+		// Y_0 (t)     = F[X_0(t)]
 		//             =  (0.5 + 1t + 2t^2) + (2.0 + 2t + 3t^2)
 		double y_1_0   = 1.0 + 2.0;
 		double y_2_0   = 2.0 + 3.0;
-		// 
-		// Y_1 (t)     = F[X_1(t)] 
+		//
+		// Y_1 (t)     = F[X_1(t)]
 		//             =  (2.0 + 2t + 3t^2) + (2.0 + 3t + 4t^2)
 		double y_1_1   = 2.0 + 3.0;
 		double y_2_1   = 3.0 + 4.0;
@@ -261,29 +261,29 @@ namespace {
 		return ok;
 	}
 	// ---------------------------------------------------------------------
-	// CosOp 
+	// CosOp
 	bool cos_op(void)
 	{	bool ok = true;
 		double eps = 10. * std::numeric_limits<double>::epsilon();
 		size_t j;
 
-	
+
 		// domain space vector
 		size_t n = 1;
 		CPPAD_TESTVECTOR(AD<double>) ax(n);
-		ax[0] = 0.5; 
-	
+		ax[0] = 0.5;
+
 		// declare independent variables and starting recording
 		CppAD::Independent(ax);
-	
+
 		// range space vector
 		size_t m = 1;
 		CPPAD_TESTVECTOR(AD<double>) ay(m);
 		ay[0] = cos( ax[0] );
-	
+
 		// create f: x -> y and stop tape recording
 		CppAD::ADFun<double> f(ax, ay);
-	
+
 		// first order Taylor coefficients
 		size_t r = 2, ell;
 		CPPAD_TESTVECTOR(double) x1(r*n), y1;
@@ -293,7 +293,7 @@ namespace {
 		}
 		y1  = f.Forward(1, r, x1);
 		ok &= y1.size() == r*m;
-		
+
 		// secondorder Taylor coefficients
 		CPPAD_TESTVECTOR(double) x2(r*n), y2;
 		for(ell = 0; ell < r; ell++)
@@ -302,14 +302,14 @@ namespace {
 		}
 		y2  = f.Forward(2, r, x2);
 		ok &= y2.size() == r*m;
-		// 
-		// Y_0  (t)    = F[X_0(t)] 
+		//
+		// Y_0  (t)    = F[X_0(t)]
 		//             =  cos( 0.5 + 1t + 2t^2 )
 		// Y_0' (t)    = -sin( 0.5 + 1t + 2t^2) * (1 + 4t)
 		double y_1_0   = - sin(0.5);
 		double y_2_0   = - ( cos(0.5) + 4.0 * sin(0.5) ) / 2.0;
-		// 
-		// Y_1  (t)    = F[X_1(t)] 
+		//
+		// Y_1  (t)    = F[X_1(t)]
 		//             =  cos( 0.5 + 2t + 3t^2 )
 		// Y_1' (t)    = -sin( 0.5 + 2t + 3t^2) * (2 + 6t)
 		double y_1_1   = - sin(0.5) * 2.0;
@@ -323,29 +323,29 @@ namespace {
 		return ok;
 	}
 	// ---------------------------------------------------------------------
-	// CoshOp 
+	// CoshOp
 	bool cosh_op(void)
 	{	bool ok = true;
 		double eps = 10. * std::numeric_limits<double>::epsilon();
 		size_t j;
 
-	
+
 		// domain space vector
 		size_t n = 1;
 		CPPAD_TESTVECTOR(AD<double>) ax(n);
-		ax[0] = 0.5; 
-	
+		ax[0] = 0.5;
+
 		// declare independent variables and starting recording
 		CppAD::Independent(ax);
-	
+
 		// range space vector
 		size_t m = 1;
 		CPPAD_TESTVECTOR(AD<double>) ay(m);
 		ay[0] = cosh( ax[0] );
-	
+
 		// create f: x -> y and stop tape recording
 		CppAD::ADFun<double> f(ax, ay);
-	
+
 		// first order Taylor coefficients
 		size_t r = 2, ell;
 		CPPAD_TESTVECTOR(double) x1(r*n), y1;
@@ -355,7 +355,7 @@ namespace {
 		}
 		y1  = f.Forward(1, r, x1);
 		ok &= y1.size() == r*m;
-		
+
 		// secondorder Taylor coefficients
 		CPPAD_TESTVECTOR(double) x2(r*n), y2;
 		for(ell = 0; ell < r; ell++)
@@ -364,14 +364,14 @@ namespace {
 		}
 		y2  = f.Forward(2, r, x2);
 		ok &= y2.size() == r*m;
-		// 
-		// Y_0  (t)    = F[X_0(t)] 
+		//
+		// Y_0  (t)    = F[X_0(t)]
 		//             = cosh( 0.5 + 1t + 2t^2 )
 		// Y_0' (t)    = sinh( 0.5 + 1t + 2t^2) * (1 + 4t)
 		double y_1_0   = sinh(0.5);
 		double y_2_0   = ( sinh(0.5) * 4.0 + cosh(0.5) ) / 2.0;
-		// 
-		// Y_1  (t)    = F[X_1(t)] 
+		//
+		// Y_1  (t)    = F[X_1(t)]
 		//             = cosh( 0.5 + 2t + 3t^2 )
 		// Y_1' (t)    = sinh( 0.5 + 2t + 3t^2) * (2 + 6t)
 		double y_1_1   = sinh(0.5) * 2.0;
@@ -390,16 +390,16 @@ namespace {
 	{	bool ok = true;
 		double eps = 10. * std::numeric_limits<double>::epsilon();
 		size_t j;
-	
+
 		// domain space vector
 		size_t n = 4;
 		CPPAD_TESTVECTOR(AD<double>) ax(n);
 		for(j = 0; j < n; j++)
 			ax[j] = double(j);
-	
+
 		// declare independent variables and starting recording
 		CppAD::Independent(ax);
-	
+
 		// range space vector
 		size_t m = 2;
 		CPPAD_TESTVECTOR(AD<double>) ay(m);
@@ -408,7 +408,7 @@ namespace {
 
 		// create f: x -> y and stop tape recording
 		CppAD::ADFun<double> f(ax, ay);
-	
+
 		// first order Taylor coefficients
 		size_t r = 2, ell;
 		CPPAD_TESTVECTOR(double) x1(r*n), y1;
@@ -418,7 +418,7 @@ namespace {
 		}
 		y1  = f.Forward(1, r, x1);
 		ok &= y1.size() == r*m;
-		
+
 		// secondorder Taylor coefficients
 		CPPAD_TESTVECTOR(double) x2(r*n), y2;
 		for(ell = 0; ell < r; ell++)
@@ -427,22 +427,22 @@ namespace {
 		}
 		y2  = f.Forward(2, r, x2);
 		ok &= y2.size() == r*m;
-		// 
+		//
 		// Y0_0 (t)     = X2_0(t)
 		//             =  2.0 + 3t + 4t^2
 		double y0_1_0  = 3.0;
 		double y0_2_0  = 4.0;
-		// 
+		//
 		// Y1_0 (t)     = X3_0(t)
 		//             =  3.0 + 4t + 5t^2
 		double y1_1_0  = 4.0;
 		double y1_2_0  = 5.0;
-		// 
+		//
 		// Y0_1 (t)     = X2_1(t)
 		//             =  2.0 + 4t + 5t^2
 		double y0_1_1  = 4.0;
 		double y0_2_1  = 5.0;
-		// 
+		//
 		// Y1_1 (t)     = X3_0(t)
 		//             =  3.0 + 5t + 6t^2
 		double y1_1_1  = 5.0;
@@ -462,40 +462,40 @@ namespace {
 	}
 
 	// ---------------------------------------------------------------------
-	// CSumOp 
+	// CSumOp
 	bool csum_op(void)
 	{	bool ok = true;
 		double eps = 10. * std::numeric_limits<double>::epsilon();
 		size_t j;
-	
+
 		// domain space vector
 		size_t n = 3;
 		CPPAD_TESTVECTOR(AD<double>) ax(n);
 		for(j = 0; j < n; j++)
 			ax[j] = double(j);
-	
+
 		// declare independent variables and starting recording
 		CppAD::Independent(ax);
-	
+
 		// range space vector
 		size_t m = 1;
 		CPPAD_TESTVECTOR(AD<double>) ay(m);
 		ay[0] = 0.0;
 		for(j = 0; j < n; j++)
 			ay[0] += ax[j];
-	
+
 		// create f: x -> y and stop tape recording
 		CppAD::ADFun<double> f(ax, ay);
 
 		// optmize the tape so converts summation to on CSumOp operator
 		f.optimize();
 
-		// zero order 
+		// zero order
 		CPPAD_TESTVECTOR(double) x0(n);
 		for(j = 0; j < n; j++)
 			x0[j] = double(j);
 		f.Forward(0, x0);
-	
+
 		// first order Taylor coefficients
 		size_t r = 2, ell;
 		CPPAD_TESTVECTOR(double) x1(r*n), y1;
@@ -505,7 +505,7 @@ namespace {
 		}
 		y1  = f.Forward(1, r, x1);
 		ok &= y1.size() == r*m;
-		
+
 		// secondorder Taylor coefficients
 		CPPAD_TESTVECTOR(double) x2(r*n), y2;
 		for(ell = 0; ell < r; ell++)
@@ -514,7 +514,7 @@ namespace {
 		}
 		y2  = f.Forward(2, r, x2);
 		ok &= y2.size() == r*m;
-		// 
+		//
 		double check = 0.0;
 		for(j = 0; j < n; j++)
 			check += x1[ r * j + 0];
@@ -548,20 +548,20 @@ namespace {
 	{	bool ok = true;
 		double eps = 10. * std::numeric_limits<double>::epsilon();
 		size_t j;
-	
+
 		// domain space vector
 		size_t n = 1;
 		CPPAD_TESTVECTOR(AD<double>) ax(n);
-		ax[0] = 0.5; 
-	
+		ax[0] = 0.5;
+
 		// declare independent variables and starting recording
 		CppAD::Independent(ax);
-	
+
 		// range space vector
 		size_t m = 1;
 		CPPAD_TESTVECTOR(AD<double>) ay(m);
 		ay[0] = round_off( ax[0] ) + ax[0];
-	
+
 		// create f: x -> y and stop tape recording
 		CppAD::ADFun<double> f(ax, ay);
 
@@ -570,8 +570,8 @@ namespace {
 		x0[0] = 2.2;
 		y0  = f.Forward(0, x0);
 		ok &= y0.size() == m;
-		ok &= NearEqual(y0[0], round_off(x0[0]) + x0[0], eps, eps); 
-	
+		ok &= NearEqual(y0[0], round_off(x0[0]) + x0[0], eps, eps);
+
 		// first order Taylor coefficients
 		size_t r = 2, ell;
 		CPPAD_TESTVECTOR(double) x1(r*n), y1;
@@ -581,7 +581,7 @@ namespace {
 		}
 		y1  = f.Forward(1, r, x1);
 		ok &= y1.size() == r*m;
-		
+
 		// secondorder Taylor coefficients
 		CPPAD_TESTVECTOR(double) x2(r*n), y2;
 		for(ell = 0; ell < r; ell++)
@@ -590,15 +590,15 @@ namespace {
 		}
 		y2  = f.Forward(2, r, x2);
 		ok &= y2.size() == r*m;
-		// 
-		// 
-		// Y_0 (t)     = F[X_0(t)] 
-		//             =  2.0 + (2.2 + 1t + 2t^2) 
+		//
+		//
+		// Y_0 (t)     = F[X_0(t)]
+		//             =  2.0 + (2.2 + 1t + 2t^2)
 		double y_1_0   = 1.0;
 		double y_2_0   = 2.0;
-		// 
-		// Y_1 (t)     = F[X_1(t)] 
-		//             =  2.0 + (2.2 + 2t + 3t^2) 
+		//
+		// Y_1 (t)     = F[X_1(t)]
+		//             =  2.0 + (2.2 + 2t + 3t^2)
 		double y_1_1   = 2.0;
 		double y_2_1   = 3.0;
 		//
@@ -615,15 +615,15 @@ namespace {
 	{	bool ok = true;
 		double eps = 10. * std::numeric_limits<double>::epsilon();
 		size_t j;
-	
+
 		// domain space vector
 		size_t n = 1;
 		CPPAD_TESTVECTOR(AD<double>) ax(n);
-		ax[0] = 0.5; 
-	
+		ax[0] = 0.5;
+
 		// declare independent variables and starting recording
 		CppAD::Independent(ax);
-	
+
 		// range space vector
 		size_t m = 1;
 		CPPAD_TESTVECTOR(AD<double>) ay(m);
@@ -631,7 +631,7 @@ namespace {
 
 		// create f: x -> y and stop tape recording
 		CppAD::ADFun<double> f(ax, ay);
-	
+
 		// first order Taylor coefficients
 		size_t r = 2, ell;
 		CPPAD_TESTVECTOR(double) x1(r*n), y1;
@@ -641,7 +641,7 @@ namespace {
 		}
 		y1  = f.Forward(1, r, x1);
 		ok &= y1.size() == r*m;
-		
+
 		// secondorder Taylor coefficients
 		CPPAD_TESTVECTOR(double) x2(r*n), y2;
 		for(ell = 0; ell < r; ell++)
@@ -650,13 +650,13 @@ namespace {
 		}
 		y2  = f.Forward(2, r, x2);
 		ok &= y2.size() == r*m;
-		// 
-		// Y_0 (t)     = F[X_0(t)] 
+		//
+		// Y_0 (t)     = F[X_0(t)]
 		//             = 2.0 * (0.5 + 1t + 2t^2)
 		double y_1_0   = 2.0;
 		double y_2_0   = 4.0;
-		// 
-		// Y_1 (t)     = F[X_1(t)] 
+		//
+		// Y_1 (t)     = F[X_1(t)]
 		//             = 2.0 * (0.5 + 2t + 3t^2)/2.0
 		double y_1_1   = 4.0;
 		double y_2_1   = 6.0;
@@ -669,20 +669,20 @@ namespace {
 		return ok;
 	}
 	// ---------------------------------------------------------------------
-	// DivvpOp 
+	// DivvpOp
 	bool divvp_op(void)
 	{	bool ok = true;
 		double eps = 10. * std::numeric_limits<double>::epsilon();
 		size_t j;
-	
+
 		// domain space vector
 		size_t n = 1;
 		CPPAD_TESTVECTOR(AD<double>) ax(n);
-		ax[0] = 0.5; 
-	
+		ax[0] = 0.5;
+
 		// declare independent variables and starting recording
 		CppAD::Independent(ax);
-	
+
 		// range space vector
 		size_t m = 1;
 		CPPAD_TESTVECTOR(AD<double>) ay(m);
@@ -690,7 +690,7 @@ namespace {
 
 		// create f: x -> y and stop tape recording
 		CppAD::ADFun<double> f(ax, ay);
-	
+
 		// first order Taylor coefficients
 		size_t r = 2, ell;
 		CPPAD_TESTVECTOR(double) x1(r*n), y1;
@@ -700,7 +700,7 @@ namespace {
 		}
 		y1  = f.Forward(1, r, x1);
 		ok &= y1.size() == r*m;
-		
+
 		// secondorder Taylor coefficients
 		CPPAD_TESTVECTOR(double) x2(r*n), y2;
 		for(ell = 0; ell < r; ell++)
@@ -709,13 +709,13 @@ namespace {
 		}
 		y2  = f.Forward(2, r, x2);
 		ok &= y2.size() == r*m;
-		// 
-		// Y_0 (t)     = F[X_0(t)] 
+		//
+		// Y_0 (t)     = F[X_0(t)]
 		//             =  (0.5 + 1t + 3t^2)/2.0
 		double y_1_0   = 1.0 / 2.0;
 		double y_2_0   = 3.0 / 2.0;
-		// 
-		// Y_1 (t)     = F[X_1(t)] 
+		//
+		// Y_1 (t)     = F[X_1(t)]
 		//             =  (0.5 + 2t + 4t^2)/2.0
 		double y_1_1   = 2.0 / 2.0;
 		double y_2_1   = 4.0 / 2.0;
@@ -728,28 +728,28 @@ namespace {
 		return ok;
 	}
 	// ---------------------------------------------------------------------
-	// ExpOp 
+	// ExpOp
 	bool exp_op(void)
 	{	bool ok = true;
 		double eps = 10. * std::numeric_limits<double>::epsilon();
 		size_t j;
-	
+
 		// domain space vector
 		size_t n = 1;
 		CPPAD_TESTVECTOR(AD<double>) ax(n);
-		ax[0] = 0.5; 
-	
+		ax[0] = 0.5;
+
 		// declare independent variables and starting recording
 		CppAD::Independent(ax);
-	
+
 		// range space vector
 		size_t m = 1;
 		CPPAD_TESTVECTOR(AD<double>) ay(m);
 		ay[0] = exp( ax[0] );
-	
+
 		// create f: x -> y and stop tape recording
 		CppAD::ADFun<double> f(ax, ay);
-	
+
 		// first order Taylor coefficients
 		size_t r = 2, ell;
 		CPPAD_TESTVECTOR(double) x1(r*n), y1;
@@ -759,7 +759,7 @@ namespace {
 		}
 		y1  = f.Forward(1, r, x1);
 		ok &= y1.size() == r*m;
-		
+
 		// secondorder Taylor coefficients
 		CPPAD_TESTVECTOR(double) x2(r*n), y2;
 		for(ell = 0; ell < r; ell++)
@@ -768,14 +768,14 @@ namespace {
 		}
 		y2  = f.Forward(2, r, x2);
 		ok &= y2.size() == r*m;
-		// 
-		// Y_0  (t)    = F[X_0(t)] 
+		//
+		// Y_0  (t)    = F[X_0(t)]
 		//             =  exp(0.5 + 1t + 2t^2)
 		// Y_0' (t)    =  exp(0.5 + 1t + 2t^2)*(1 + 4t)
 		double y_1_0   = exp(0.5);
 		double y_2_0   = ( exp(0.5)*4.0 + exp(0.5) ) / 2.0;
-		// 
-		// Y_1  (t)    = F[X_1(t)] 
+		//
+		// Y_1  (t)    = F[X_1(t)]
 		//             =  exp(0.5 + 2t + 3t^2)
 		// Y_1' (t)    =  exp(0.5 + 2t + 3t^2)*(2 + 6t)
 		double y_1_1   = exp(0.5)*2.0;
@@ -794,13 +794,13 @@ namespace {
 	{	bool ok = true;
 		double eps = 10. * std::numeric_limits<double>::epsilon();
 		size_t j;
-	
+
 		// domain space vector
 		size_t n = 2;
 		CPPAD_TESTVECTOR(AD<double>) ax(n);
-		ax[0] = 0.0; 
+		ax[0] = 0.0;
 		ax[1] = 1.0;
-	
+
 		// declare independent variables and starting recording
 		CppAD::Independent(ax);
 
@@ -809,13 +809,13 @@ namespace {
 		avec[ AD<double>(0) ]    = ax[0];  // store a variable
 		avec[ AD<double>(1) ]    = ax[1];  // store a variable
 		avec[ AD<double>(2) ]    = 5.0;    // store a parameter
-	
-		// range space vector 
+
+		// range space vector
 		size_t m = 2;
 		CPPAD_TESTVECTOR(AD<double>) ay(m);
 		ay[0] = avec[ AD<double>(0) ];     // load using parameter index
 		ay[1] = avec[ ax[0] ];             // load using variable index
-	
+
 		// create f: x -> y and stop tape recording
 		CppAD::ADFun<double> f(ax, ay);
 
@@ -828,7 +828,7 @@ namespace {
 		// y[0] = avec[0] = x[0]
 		ok &= y0[0] == x0[0];
 		// y[1] = avec[ x[0] ] = avec[2] = 5.0
-		ok &= y0[1] == 5.0; 
+		ok &= y0[1] == 5.0;
 
 		// first order Taylor coefficients
 		size_t r = 2, ell;
@@ -839,7 +839,7 @@ namespace {
 		}
 		y1  = f.Forward(1, r, x1);
 		ok &= y1.size() == r*m;
-		
+
 		// secondorder Taylor coefficients
 		CPPAD_TESTVECTOR(double) x2(r*n), y2;
 		for(ell = 0; ell < r; ell++)
@@ -848,19 +848,19 @@ namespace {
 		}
 		y2  = f.Forward(2, r, x2);
 		ok &= y2.size() == r*m;
-		// 
+		//
 		// Y0_0 (t)    = 2.0 + 1t + 2t^2
 		double y0_1_0  = 1.0;
 		double y0_2_0  = 2.0;
-		// 
+		//
 		// Y1_0 (t)    = 5.0
 		double y1_1_0  = 0.0;
 		double y1_2_0  = 0.0;
-		// 
+		//
 		// Y0_1 (t)    = 2.0 + 2t + 3t^2
 		double y0_1_1  = 2.0;
 		double y0_2_1  = 3.0;
-		// 
+		//
 		// Y1_1 (t)    = 5.0
 		double y1_1_1  = 0.0;
 		double y1_2_1  = 0.0;
@@ -877,30 +877,30 @@ namespace {
 		//
 		return ok;
 	}
-	
+
 	// ---------------------------------------------------------------------
-	// MulpvOp 
+	// MulpvOp
 	bool mulpv_op(void)
 	{	bool ok = true;
 		double eps = 10. * std::numeric_limits<double>::epsilon();
 		size_t j;
-	
+
 		// domain space vector
 		size_t n = 1;
 		CPPAD_TESTVECTOR(AD<double>) ax(n);
-		ax[0] = 0.5; 
-	
+		ax[0] = 0.5;
+
 		// declare independent variables and starting recording
 		CppAD::Independent(ax);
-	
+
 		// range space vector
 		size_t m = 1;
 		CPPAD_TESTVECTOR(AD<double>) ay(m);
 		ay[0] = 2.0 * ax[0];
-	
+
 		// create f: x -> y and stop tape recording
 		CppAD::ADFun<double> f(ax, ay);
-	
+
 		// first order Taylor coefficients
 		size_t r = 2, ell;
 		CPPAD_TESTVECTOR(double) x1(r*n), y1;
@@ -910,7 +910,7 @@ namespace {
 		}
 		y1  = f.Forward(1, r, x1);
 		ok &= y1.size() == r*m;
-		
+
 		// secondorder Taylor coefficients
 		CPPAD_TESTVECTOR(double) x2(r*n), y2;
 		for(ell = 0; ell < r; ell++)
@@ -919,13 +919,13 @@ namespace {
 		}
 		y2  = f.Forward(2, r, x2);
 		ok &= y2.size() == r*m;
-		// 
-		// Y_0 (t)     = F[X_0(t)] 
+		//
+		// Y_0 (t)     = F[X_0(t)]
 		//             =  2.0 * (0.5 + 1t + 3t^2)
 		double y_1_0   = 2.0 * 1.0;
 		double y_2_0   = 2.0 * 3.0;
-		// 
-		// Y_1 (t)     = F[X_1(t)] 
+		//
+		// Y_1 (t)     = F[X_1(t)]
 		//             =  2.0 * (0.5 + 2t + 4t^2)
 		double y_1_1   = 2.0 * 2.0;
 		double y_2_1   = 2.0 * 4.0;
@@ -991,25 +991,25 @@ namespace {
 	{	bool ok = true;
 		double eps = 10. * std::numeric_limits<double>::epsilon();
 		size_t j;
-	
+
 		// domain space vector
 		size_t n = 2;
 		CPPAD_TESTVECTOR(AD<double>) ax(n);
-		ax[0] = 0.5; 
+		ax[0] = 0.5;
 		ax[1] = 2.0;
-	
+
 		// declare independent variables and starting recording
 		CppAD::Independent(ax);
-	
+
 		// range space vector
 		size_t m = 2;
 		CPPAD_TESTVECTOR(AD<double>) ay(m);
 		ay[0] = log( pow( exp(ax[0]) , ax[1] ) ) / ax[1] ;
 		ay[1] = log( pow( exp(ax[0]) , ax[1] ) ) / ax[0] ;
-	
+
 		// create f: x -> y and stop tape recording
 		CppAD::ADFun<double> f(ax, ay);
-	
+
 		// first order Taylor coefficients
 		size_t r = 2, ell;
 		CPPAD_TESTVECTOR(double) x1(r*n), y1;
@@ -1019,7 +1019,7 @@ namespace {
 		}
 		y1  = f.Forward(1, r, x1);
 		ok &= y1.size() == r*m;
-		
+
 		// secondorder Taylor coefficients
 		CPPAD_TESTVECTOR(double) x2(r*n), y2;
 		for(ell = 0; ell < r; ell++)
@@ -1028,19 +1028,19 @@ namespace {
 		}
 		y2  = f.Forward(2, r, x2);
 		ok &= y2.size() == r*m;
-		// 
+		//
 		// Y0_0 (t)    = 0.5 + 1t + 2t^2
 		double y0_1_0  = 1.0;
 		double y0_2_0  = 2.0;
-		// 
+		//
 		// Y0_1 (t)    = 0.5 + 2t + 3t^2
 		double y0_1_1  = 2.0;
 		double y0_2_1  = 3.0;
-		// 
+		//
 		// Y1_0 (t)    = 2.0 + 2t + 3t^2
 		double y1_1_0  = 2.0;
 		double y1_2_0  = 3.0;
-		// 
+		//
 		// Y1_1 (t)    = 2.0 + 3t + 4t^2
 		double y1_1_1  = 3.0;
 		double y1_2_1  = 4.0;
@@ -1063,20 +1063,20 @@ namespace {
 	{	bool ok = true;
 		double eps = 10. * std::numeric_limits<double>::epsilon();
 		size_t j;
-	
+
 		// domain space vector
 		size_t n = 1;
 		CPPAD_TESTVECTOR(AD<double>) ax(n);
-		ax[0] = 0.5; 
-	
+		ax[0] = 0.5;
+
 		// declare independent variables and starting recording
 		CppAD::Independent(ax);
-	
+
 		// range space vector
 		size_t m = 1;
 		CPPAD_TESTVECTOR(AD<double>) ay(m);
 		ay[0] = sign( ax[0] ) * ax[0];
-	
+
 		// create f: x -> y and stop tape recording
 		CppAD::ADFun<double> f(ax, ay);
 
@@ -1085,8 +1085,8 @@ namespace {
 		x0[0] = -3.0;
 		y0  = f.Forward(0, x0);
 		ok &= y0.size() == m;
-		ok &= NearEqual(y0[0], CppAD::abs(x0[0]), eps, eps); 
-	
+		ok &= NearEqual(y0[0], CppAD::abs(x0[0]), eps, eps);
+
 		// first order Taylor coefficients
 		size_t r = 2, ell;
 		CPPAD_TESTVECTOR(double) x1(r*n), y1;
@@ -1096,7 +1096,7 @@ namespace {
 		}
 		y1  = f.Forward(1, r, x1);
 		ok &= y1.size() == r*m;
-		
+
 		// secondorder Taylor coefficients
 		CPPAD_TESTVECTOR(double) x2(r*n), y2;
 		for(ell = 0; ell < r; ell++)
@@ -1105,15 +1105,15 @@ namespace {
 		}
 		y2  = f.Forward(2, r, x2);
 		ok &= y2.size() == r*m;
-		// 
-		// 
-		// Y_0 (t)     = F[X_0(t)] 
-		//             =  -(-3.0 + 1t + 2t^2) 
+		//
+		//
+		// Y_0 (t)     = F[X_0(t)]
+		//             =  -(-3.0 + 1t + 2t^2)
 		double y_1_0   = -1.0;
 		double y_2_0   = -2.0;
-		// 
-		// Y_1 (t)     = F[X_1(t)] 
-		//             =  -(-3.0 + 2t + 3t^2) 
+		//
+		// Y_1 (t)     = F[X_1(t)]
+		//             =  -(-3.0 + 2t + 3t^2)
 		double y_1_1   = -2.0;
 		double y_2_1   = -3.0;
 		//
@@ -1126,29 +1126,29 @@ namespace {
 	}
 
 	// ---------------------------------------------------------------------
-	// SinOp 
+	// SinOp
 	bool sin_op(void)
 	{	bool ok = true;
 		double eps = 10. * std::numeric_limits<double>::epsilon();
 		size_t j;
 
-	
+
 		// domain space vector
 		size_t n = 1;
 		CPPAD_TESTVECTOR(AD<double>) ax(n);
-		ax[0] = 0.5; 
-	
+		ax[0] = 0.5;
+
 		// declare independent variables and starting recording
 		CppAD::Independent(ax);
-	
+
 		// range space vector
 		size_t m = 1;
 		CPPAD_TESTVECTOR(AD<double>) ay(m);
 		ay[0] = sin( ax[0] );
-	
+
 		// create f: x -> y and stop tape recording
 		CppAD::ADFun<double> f(ax, ay);
-	
+
 		// first order Taylor coefficients
 		size_t r = 2, ell;
 		CPPAD_TESTVECTOR(double) x1(r*n), y1;
@@ -1158,7 +1158,7 @@ namespace {
 		}
 		y1  = f.Forward(1, r, x1);
 		ok &= y1.size() == r*m;
-		
+
 		// secondorder Taylor coefficients
 		CPPAD_TESTVECTOR(double) x2(r*n), y2;
 		for(ell = 0; ell < r; ell++)
@@ -1167,14 +1167,14 @@ namespace {
 		}
 		y2  = f.Forward(2, r, x2);
 		ok &= y2.size() == r*m;
-		// 
-		// Y_0  (t)    = F[X_0(t)] 
+		//
+		// Y_0  (t)    = F[X_0(t)]
 		//             = sin( 0.5 + 1t + 2t^2 )
 		// Y_0' (t)    = cos( 0.5 + 1t + 2t^2) * (1 + 4t)
 		double y_1_0   = cos(0.5);
 		double y_2_0   = ( cos(0.5) * 4.0 - sin(0.5) ) / 2.0;
-		// 
-		// Y_1  (t)    = F[X_1(t)] 
+		//
+		// Y_1  (t)    = F[X_1(t)]
 		//             = sin( 0.5 + 2t + 3t^2 )
 		// Y_1' (t)    = cos( 0.5 + 2t + 3t^2) * (2 + 6t)
 		double y_1_1   = cos(0.5) * 2.0;
@@ -1188,29 +1188,29 @@ namespace {
 		return ok;
 	}
 	// ---------------------------------------------------------------------
-	// SinhOp 
+	// SinhOp
 	bool sinh_op(void)
 	{	bool ok = true;
 		double eps = 10. * std::numeric_limits<double>::epsilon();
 		size_t j;
 
-	
+
 		// domain space vector
 		size_t n = 1;
 		CPPAD_TESTVECTOR(AD<double>) ax(n);
-		ax[0] = 0.5; 
-	
+		ax[0] = 0.5;
+
 		// declare independent variables and starting recording
 		CppAD::Independent(ax);
-	
+
 		// range space vector
 		size_t m = 1;
 		CPPAD_TESTVECTOR(AD<double>) ay(m);
 		ay[0] = sinh( ax[0] );
-	
+
 		// create f: x -> y and stop tape recording
 		CppAD::ADFun<double> f(ax, ay);
-	
+
 		// first order Taylor coefficients
 		size_t r = 2, ell;
 		CPPAD_TESTVECTOR(double) x1(r*n), y1;
@@ -1220,7 +1220,7 @@ namespace {
 		}
 		y1  = f.Forward(1, r, x1);
 		ok &= y1.size() == r*m;
-		
+
 		// secondorder Taylor coefficients
 		CPPAD_TESTVECTOR(double) x2(r*n), y2;
 		for(ell = 0; ell < r; ell++)
@@ -1229,14 +1229,14 @@ namespace {
 		}
 		y2  = f.Forward(2, r, x2);
 		ok &= y2.size() == r*m;
-		// 
-		// Y_0  (t)    = F[X_0(t)] 
+		//
+		// Y_0  (t)    = F[X_0(t)]
 		//             = sinh( 0.5 + 1t + 2t^2 )
 		// Y_0' (t)    = cosh( 0.5 + 1t + 2t^2) * (1 + 4t)
 		double y_1_0   = cosh(0.5);
 		double y_2_0   = ( cosh(0.5) * 4.0 + sinh(0.5) ) / 2.0;
-		// 
-		// Y_1  (t)    = F[X_1(t)] 
+		//
+		// Y_1  (t)    = F[X_1(t)]
 		//             = sinh( 0.5 + 2t + 3t^2 )
 		// Y_1' (t)    = cosh( 0.5 + 2t + 3t^2) * (2 + 6t)
 		double y_1_1   = cosh(0.5) * 2.0;
@@ -1250,28 +1250,28 @@ namespace {
 		return ok;
 	}
 	// ---------------------------------------------------------------------
-	// SubpvOp 
+	// SubpvOp
 	bool subpv_op(void)
 	{	bool ok = true;
 		double eps = 10. * std::numeric_limits<double>::epsilon();
 		size_t j;
-	
+
 		// domain space vector
 		size_t n = 1;
 		CPPAD_TESTVECTOR(AD<double>) ax(n);
-		ax[0] = 0.5; 
-	
+		ax[0] = 0.5;
+
 		// declare independent variables and starting recording
 		CppAD::Independent(ax);
-	
+
 		// range space vector
 		size_t m = 1;
 		CPPAD_TESTVECTOR(AD<double>) ay(m);
 		ay[0] = 2.0 - ax[0];
-	
+
 		// create f: x -> y and stop tape recording
 		CppAD::ADFun<double> f(ax, ay);
-	
+
 		// first order Taylor coefficients
 		size_t r = 2, ell;
 		CPPAD_TESTVECTOR(double) x1(r*n), y1;
@@ -1281,7 +1281,7 @@ namespace {
 		}
 		y1  = f.Forward(1, r, x1);
 		ok &= y1.size() == r*m;
-		
+
 		// secondorder Taylor coefficients
 		CPPAD_TESTVECTOR(double) x2(r*n), y2;
 		for(ell = 0; ell < r; ell++)
@@ -1290,13 +1290,13 @@ namespace {
 		}
 		y2  = f.Forward(2, r, x2);
 		ok &= y2.size() == r*m;
-		// 
-		// Y_0 (t)     = F[X_0(t)] 
+		//
+		// Y_0 (t)     = F[X_0(t)]
 		//             =  2.0 - (0.5 + 1t + 3t^2)/2.0
 		double y_1_0   = - 1.0;
 		double y_2_0   = - 3.0;
-		// 
-		// Y_1 (t)     = F[X_1(t)] 
+		//
+		// Y_1 (t)     = F[X_1(t)]
 		//             =  3.0 - (0.5 + 2t + 4t^2)/2.0
 		double y_1_1   = - 2.0;
 		double y_2_1   = - 4.0;
@@ -1309,29 +1309,29 @@ namespace {
 		return ok;
 	}
 	// ---------------------------------------------------------------------
-	// SubvvOp 
+	// SubvvOp
 	bool subvv_op(void)
 	{	bool ok = true;
 		double eps = 10. * std::numeric_limits<double>::epsilon();
 		size_t j;
-	
+
 		// domain space vector
 		size_t n = 2;
 		CPPAD_TESTVECTOR(AD<double>) ax(n);
-		ax[0] = 0.5; 
+		ax[0] = 0.5;
 		ax[1] = 2.0;
-	
+
 		// declare independent variables and starting recording
 		CppAD::Independent(ax);
-	
+
 		// range space vector
 		size_t m = 1;
 		CPPAD_TESTVECTOR(AD<double>) ay(m);
 		ay[0] = ax[0] - 2.0 * ax[1];
-	
+
 		// create f: x -> y and stop tape recording
 		CppAD::ADFun<double> f(ax, ay);
-	
+
 		// first order Taylor coefficients
 		size_t r = 2, ell;
 		CPPAD_TESTVECTOR(double) x1(r*n), y1;
@@ -1341,7 +1341,7 @@ namespace {
 		}
 		y1  = f.Forward(1, r, x1);
 		ok &= y1.size() == r*m;
-		
+
 		// secondorder Taylor coefficients
 		CPPAD_TESTVECTOR(double) x2(r*n), y2;
 		for(ell = 0; ell < r; ell++)
@@ -1350,13 +1350,13 @@ namespace {
 		}
 		y2  = f.Forward(2, r, x2);
 		ok &= y2.size() == r*m;
-		// 
-		// Y_0 (t)     = F[X_0(t)] 
+		//
+		// Y_0 (t)     = F[X_0(t)]
 		//             =  (0.5 + 1t + 2t^2) - 2.0 * (2.0 + 2t + 3t^2)
 		double y_1_0   = 1.0 - 4.0;
 		double y_2_0   = 2.0 - 6.0;
-		// 
-		// Y_1 (t)     = F[X_1(t)] 
+		//
+		// Y_1 (t)     = F[X_1(t)]
 		//             =  (2.0 + 2t + 3t^2) - 2.0 * (2.0 + 3t + 4t^2)
 		double y_1_1   = 2.0 - 6.0;
 		double y_2_1   = 3.0 - 8.0;
@@ -1369,28 +1369,28 @@ namespace {
 		return ok;
 	}
 	// ---------------------------------------------------------------------
-	// TanOp 
+	// TanOp
 	bool tan_op(void)
 	{	bool ok = true;
 		double eps = 10. * std::numeric_limits<double>::epsilon();
 		size_t j;
-	
+
 		// domain space vector
 		size_t n = 1;
 		CPPAD_TESTVECTOR(AD<double>) ax(n);
-		ax[0] = 0.5; 
-	
+		ax[0] = 0.5;
+
 		// declare independent variables and starting recording
 		CppAD::Independent(ax);
-	
+
 		// range space vector
 		size_t m = 1;
 		CPPAD_TESTVECTOR(AD<double>) ay(m);
 		ay[0] = tan( ax[0] );
-	
+
 		// create f: x -> y and stop tape recording
 		CppAD::ADFun<double> f(ax, ay);
-	
+
 		// first order Taylor coefficients
 		size_t r = 2, ell;
 		CPPAD_TESTVECTOR(double) x1(r*n), y1;
@@ -1400,7 +1400,7 @@ namespace {
 		}
 		y1  = f.Forward(1, r, x1);
 		ok &= y1.size() == r*m;
-		
+
 		// secondorder Taylor coefficients
 		CPPAD_TESTVECTOR(double) x2(r*n), y2;
 		for(ell = 0; ell < r; ell++)
@@ -1409,16 +1409,16 @@ namespace {
 		}
 		y2  = f.Forward(2, r, x2);
 		ok &= y2.size() == r*m;
-		// 
-		// Y_0  (t)    = F[X_0(t)] 
+		//
+		// Y_0  (t)    = F[X_0(t)]
 		//             =  tan(0.5 + 1t + 2t^2)
 		// Y_0' (t)    =  cos(0.5 + 1t + 2t^2)^(-2)*(1 + 4t)
 		// Y_0''(0)    = 2*cos(0.5)^(-3)*sin(0.5) + 4*cos(0.5)^(-2)
 		double sec_sq  = 1.0 / ( cos(0.5) * cos(0.5) );
 		double y_1_0   = sec_sq;
 		double y_2_0   = (2.0 * tan(0.5) + 4.0) * sec_sq / 2.0;
-		// 
-		// Y_1  (t)    = F[X_1(t)] 
+		//
+		// Y_1  (t)    = F[X_1(t)]
 		//             = tan(0.5 + 2t + 3t^2)
 		// Y_1' (t)    = cos(0.5 + 2t + 3t^2)^(-2)*(2 + 6t)
 		// Y_1''(0)    = 2*cos(0.5)^(-3)*sin(0.5)*2*2 + 6*cos(0.5)^(-2)
@@ -1433,7 +1433,7 @@ namespace {
 		return ok;
 	}
 	// ---------------------------------------------------------------------
-	// Usr*Op  
+	// Usr*Op
 	typedef CPPAD_TESTVECTOR(AD<double>) avector;
 	void usr_algo(const avector& x, avector& z)
 	{	z[0] = ( x[0] + x[1] ) / 2.0;
@@ -1449,7 +1449,7 @@ namespace {
 		// define checkpoint function
 		size_t n = 2;
 		avector ax(n), az(3);
-		ax[0] = 0.5; 
+		ax[0] = 0.5;
 		ax[1] = 2.0;
 		CppAD::checkpoint<double> usr_check("usr_check", usr_algo, ax, az);
 
@@ -1458,7 +1458,7 @@ namespace {
 
 		// record checkpoint function
 		usr_check(ax, az);
-	
+
 		// range space vector
 		size_t m = 2;
 		avector ay(m);
@@ -1467,7 +1467,7 @@ namespace {
 
 		// create f: x -> y and stop tape recording
 		CppAD::ADFun<double> f(ax, ay);
-	
+
 		// first order Taylor coefficients
 		size_t r = 2, ell;
 		CPPAD_TESTVECTOR(double) x1(r*n), y1;
@@ -1477,7 +1477,7 @@ namespace {
 		}
 		y1  = f.Forward(1, r, x1);
 		ok &= y1.size() == r*m;
-		
+
 		// secondorder Taylor coefficients
 		CPPAD_TESTVECTOR(double) x2(r*n), y2;
 		for(ell = 0; ell < r; ell++)
@@ -1486,19 +1486,19 @@ namespace {
 		}
 		y2  = f.Forward(2, r, x2);
 		ok &= y2.size() == r*m;
-		// 
+		//
 		// Y0_0 (t)    = 0.5 + 1t + 2t^2
 		double y0_1_0  = 1.0;
 		double y0_2_0  = 2.0;
-		// 
+		//
 		// Y0_1 (t)    = 0.5 + 2t + 3t^2
 		double y0_1_1  = 2.0;
 		double y0_2_1  = 3.0;
-		// 
+		//
 		// Y1_0 (t)    = 2.0 + 2t + 3t^2
 		double y1_1_0  = 2.0;
 		double y1_2_0  = 3.0;
-		// 
+		//
 		// Y1_1 (t)    = 2.0 + 3t + 4t^2
 		double y1_1_1  = 3.0;
 		double y1_2_1  = 4.0;
@@ -1519,43 +1519,43 @@ namespace {
 	// Inverse functions assume the following already tested:
 	// CosOp, SinOp, TanOp, ExpOp, MulvvOp, DivvpOp, AddpvOp
 	//
-	// AcosOp 
+	// AcosOp
 	AD<double> acos_fun(const AD<double>& x)
 	{	return acos( cos(x) ); }
 	bool acos_op(void)
 	{	return check_identity(acos_fun, 0.5); }
 	//
-	// AcoshOp 
+	// AcoshOp
 	AD<double> acosh_fun(const AD<double>& x)
 	{	return acosh( cosh(x) ); }
 	bool acosh_op(void)
 	{	return check_identity(acosh_fun, 0.5); }
 	//
-	// AsinOp 
+	// AsinOp
 	AD<double> asin_fun(const AD<double>& x)
 	{	return asin( sin(x) ); }
 	bool asin_op(void)
 	{	return check_identity(asin_fun, 0.5); }
 	//
-	// AsinhOp 
+	// AsinhOp
 	AD<double> asinh_fun(const AD<double>& x)
 	{	return asinh( sinh(x) ); }
 	bool asinh_op(void)
 	{	return check_identity(asinh_fun, 0.5); }
 	//
-	// AtanOp 
+	// AtanOp
 	AD<double> atan_fun(const AD<double>& x)
 	{	return atan( tan(x) ); }
 	bool atan_op(void)
 	{	return check_identity(atan_fun, 0.5); }
 	//
-	// AtanhOp 
+	// AtanhOp
 	AD<double> atanh_fun(const AD<double>& x)
 	{	return atanh( tanh(x) ); }
 	bool atanh_op(void)
 	{	return check_identity(atanh_fun, 0.5); }
 	//
-	// LogOp 
+	// LogOp
 	AD<double> log_fun(const AD<double>& x)
 	{	return log( exp(x) ); }
 	bool log_op(void)
