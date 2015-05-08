@@ -86,7 +86,7 @@ extern bool eigen_det(void);
 extern bool EqualOpSeq(void);
 extern bool Erf(void);
 extern bool ErrorHandler(void);
-extern bool Exp(void);
+extern bool exp(void);
 extern bool ForOne(void);
 extern bool ForTwo(void);
 extern bool ForSparseJac(void);
@@ -247,7 +247,7 @@ int main(void)
 	ok &= Run( EqualOpSeq,        "EqualOpSeq"       );
 	ok &= Run( Erf,               "Erf"              );
 	ok &= Run( ErrorHandler,      "ErrorHandler"     );
-	ok &= Run( Exp,               "Exp"              );
+	ok &= Run( exp,               "exp"              );
 	ok &= Run( ForOne,            "ForOne"           );
 	ok &= Run( ForTwo,            "ForTwo"           );
 	ok &= Run( Forward,           "Forward"          );
