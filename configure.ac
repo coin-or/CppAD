@@ -482,10 +482,10 @@ if test "$AR" != "ar"; then
 	)
 fi
 
-dnl test_one.sh.in uses cxx_flags
-## AC_SUBST(cppad_cxx_flags, "-g -O0")
+dnl test_one.sh.in uses cppad_cxx_flags and cppad_has_colpack
+AC_SUBST(cppad_cxx_flags, "-g -O0")
 
-dnl auto-tools version does not support ColPack coloring
+dnl auto-tools version does not use ../cppad/local/cppad_colpack.cpp
 AC_SUBST(cppad_has_colpack, 0)
 
 dnl auto-tools version cannot use c++11 compiler
@@ -497,8 +497,8 @@ AC_SUBST(cppad_compiler_has_erf, 0)
 AC_SUBST(cppad_compiler_has_asinh, 0)
 AC_SUBST(cppad_compiler_has_acosh, 0)
 AC_SUBST(cppad_compiler_has_atanh, 0)
-## AC_SUBST(cppad_compiler_has_expm1, 0)
-## AC_SUBST(cppad_has_high_resolution_clock, 0)
+AC_SUBST(cppad_compiler_has_expm1, 0)
+AC_SUBST(cppad_has_high_resolution_clock, 0)
 
 dnl Determine if size_t has same size as unsigned int
 AC_CHECK_SIZEOF([size_t])

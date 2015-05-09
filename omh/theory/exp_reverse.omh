@@ -28,7 +28,7 @@ $cref%standard math function
 	%Standard Math Functions
 %$$
 definition for the functions $latex H$$ and $latex G$$.
-The zero order forward mode formulas for the
+The zero order forward mode formula for the
 $cref/exponential/exp_forward/$$ is
 $latex \[
 	z^{(0)}  =  F ( x^{(0)} )
