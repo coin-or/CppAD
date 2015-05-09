@@ -103,6 +103,7 @@ ADD_EXECUTABLE(example EXCLUDE_FROM_ALL example.cpp
 	compare_change.cpp
 	complex_poly.cpp
 	cond_exp.cpp
+	expm1.cpp
 	conj_grad.cpp
 	cos.cpp
 	cosh.cpp
@@ -113,6 +114,7 @@ ADD_EXECUTABLE(example EXCLUDE_FROM_ALL example.cpp
 	erf.cpp
 	error_handler.cpp
 	exp.cpp
+	expm1.cpp
 	for_one.cpp
 	for_two.cpp
 	forward.cpp

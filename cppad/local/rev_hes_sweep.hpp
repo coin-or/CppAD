@@ -402,6 +402,16 @@ void RevHesSweep(
 			break;
 			// -------------------------------------------------
 
+# if CPPAD_COMPILER_HAS_EXPM1
+			case Expm1Op:
+			CPPAD_ASSERT_NARG_NRES(op, 1, 1)
+			reverse_sparse_hessian_nonlinear_unary_op(
+			i_var, arg[0], RevJac, for_jac_sparse, rev_hes_sparse
+			);
+			break;
+# endif
+			// -------------------------------------------------
+
 			case InvOp:
 			CPPAD_ASSERT_NARG_NRES(op, 0, 1)
 			// Z is already defined

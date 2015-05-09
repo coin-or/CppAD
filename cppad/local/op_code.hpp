@@ -96,6 +96,7 @@ enum OpCode {
 	EqvvOp,   //  variable   == variable
 	ErfOp,    //  erf(variable)
 	ExpOp,    //  exp(variable)
+	Expm1Op,   // atanh(variable)
 	InvOp,    //                             independent variable
 	LdpOp,    //    z[parameter]
 	LdvOp,    //    z[variable]
@@ -193,6 +194,7 @@ inline size_t NumArg( OpCode op)
 		2, // EqvvOp
 		3, // ErfOp
 		1, // ExpOp
+		1, // Expm1Op
 		0, // InvOp
 		3, // LdpOp
 		3, // LdvOp
@@ -296,6 +298,7 @@ inline size_t NumRes(OpCode op)
 		0, // EqvvOp
 		5, // ErfOp
 		1, // ExpOp
+		1, // Expm1Op
 		1, // InvOp
 		1, // LdpOp
 		1, // LdvOp
@@ -382,6 +385,7 @@ inline const char* OpName(OpCode op)
 		"Eqvv"  ,
 		"Erf"   ,
 		"Exp"   ,
+		"Expm1" ,
 		"Inv"   ,
 		"Ldp"   ,
 		"Ldv"   ,
@@ -699,6 +703,7 @@ void printOp(
 		case CosOp:
 		case CoshOp:
 		case ExpOp:
+		case Expm1Op:
 		case LogOp:
 		case SignOp:
 		case SinOp:
@@ -881,6 +886,7 @@ inline void assert_arg_before_result(
 		// 1 argument , 1 result
 		case AbsOp:
 		case ExpOp:
+		case Expm1Op:
 		case LogOp:
 		case ParOp:
 		case SignOp:

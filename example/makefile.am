@@ -109,6 +109,7 @@ example_SOURCES   = \
 	compare_change.cpp \
 	complex_poly.cpp \
 	cond_exp.cpp \
+	expm1.cpp \
 	conj_grad.cpp \
 	cos.cpp \
 	cosh.cpp \
@@ -119,6 +120,7 @@ example_SOURCES   = \
 	erf.cpp \
 	error_handler.cpp \
 	exp.cpp \
+	expm1.cpp \
 	for_one.cpp \
 	for_two.cpp \
 	forward.cpp \

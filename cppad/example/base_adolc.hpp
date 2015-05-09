@@ -14,6 +14,7 @@ Please visit http://www.coin-or.org/CppAD/ for information on other licenses.
 /*
 $begin base_adolc.hpp$$
 $spell
+	expm1
 	atanh
 	acosh
 	asinh
@@ -218,11 +219,11 @@ $code sinh$$,
 $code sqrt$$,
 $code tan$$.
 
-$head erf, asinh, acosh, atanh$$
+$head erf, asinh, acosh, atanh, expm1$$
 If the
-$cref/erf, asinh, acosh, atanh
+$cref/erf, asinh, acosh, atanh, expm1
 	/base_std_math
-	/erf, asinh, acosh, atanh
+	/erf, asinh, acosh, atanh, expm1
 /$$,
 functions are supported by the compiler,
 they must also be supported by a $icode Base$$ type;
@@ -249,6 +250,9 @@ namespace CppAD {
 # endif
 # if CPPAD_COMPILER_HAS_ATANH
 	CPPAD_BASE_ADOLC_NO_SUPPORT(atanh)
+# endif
+# if CPPAD_COMPILER_HAS_EXPM1
+	CPPAD_BASE_ADOLC_NO_SUPPORT(expm1)
 # endif
 # undef CPPAD_BASE_ADOLC_NO_SUPPORT
 }

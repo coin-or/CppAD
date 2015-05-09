@@ -50,6 +50,7 @@ extern bool DivEq(void);
 extern bool DivZeroOne(void);
 extern bool erf(void);
 extern bool Exp(void);
+extern bool expm1(void);
 extern bool ForHess(void);
 extern bool for_sparse_jac(void);
 extern bool Forward(void);
@@ -164,6 +165,7 @@ int main(void)
 	ok &= Run( DivZeroOne,      "DivZeroOne"     );
 	ok &= Run( erf,             "erf"            );
 	ok &= Run( Exp,             "Exp"            );
+	ok &= Run( expm1,           "expm1"          );
 	ok &= Run( ForHess,         "ForHess"        );
 	ok &= Run( for_sparse_jac,  "for_sparse_jac" );
 	ok &= Run( Forward,         "Forward"        );

@@ -87,6 +87,7 @@ extern bool EqualOpSeq(void);
 extern bool Erf(void);
 extern bool ErrorHandler(void);
 extern bool exp(void);
+extern bool expm1(void);
 extern bool ForOne(void);
 extern bool ForTwo(void);
 extern bool ForSparseJac(void);
@@ -248,6 +249,7 @@ int main(void)
 	ok &= Run( Erf,               "Erf"              );
 	ok &= Run( ErrorHandler,      "ErrorHandler"     );
 	ok &= Run( exp,               "exp"              );
+	ok &= Run( expm1,             "expm1"            );
 	ok &= Run( ForOne,            "ForOne"           );
 	ok &= Run( ForTwo,            "ForTwo"           );
 	ok &= Run( Forward,           "Forward"          );

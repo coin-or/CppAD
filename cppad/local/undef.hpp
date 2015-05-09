@@ -29,6 +29,7 @@ Preprecessor definitions that presist after cppad/cppad.hpp is included:
 # undef CPPAD_COMPILER_HAS_ASINH  in user api
 # undef CPPAD_COMPILER_HAS_ACOSH  in user api
 # undef CPPAD_COMPILER_HAS_ATANH  in user api
+# undef CPPAD_COMPILER_HAS_EXPM1  in user api
 # undef CPPAD_DISCRETE_FUNCTION   in user api
 # undef CPPAD_EIGENVECTOR         in user api
 # undef CPPAD_INTERNAL_SPARSE_SET in user api

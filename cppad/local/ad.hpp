@@ -217,6 +217,9 @@ public:
 # if CPPAD_COMPILER_HAS_ATANH
 	inline AD atanh(void) const;
 # endif
+# if CPPAD_COMPILER_HAS_EXPM1
+	inline AD expm1(void) const;
+# endif
 
 	// ----------------------------------------------------------
 	// static public member functions

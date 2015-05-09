@@ -80,7 +80,7 @@ hash coded and zero is returned:
 
 \li unary operators:
 AbsOp, AcosOp, AcoshOp, AsinOp, AsinhOp, AtanOp, AtanhOp, CosOp, CoshOp
-ExpOp, LogOp, SinOp, SinhOp, SqrtOp, TanOp, TanhOp
+ExpOp, Expm1Op, LogOp, SinOp, SinhOp, SqrtOp, TanOp, TanhOp
 
 \li binary operators where first argument is a parameter:
 AddpvOp, DivpvOp, MulpvOp, PowpvOp, SubpvOp,
@@ -222,6 +222,7 @@ unsigned short hash_code(
 		case CoshOp:
 		case ErfOp:
 		case ExpOp:
+		case Expm1Op:
 		case LogOp:
 		case SignOp:
 		case SinOp:

@@ -17,6 +17,7 @@ Please visit http://www.coin-or.org/CppAD/ for information on other licenses.
 /*
 $begin base_float.hpp$$
 $spell
+	expm1
 	atanh
 	acosh
 	asinh
@@ -160,6 +161,9 @@ namespace CppAD {
 # endif
 # if CPPAD_COMPILER_HAS_ATANH
 	CPPAD_STANDARD_MATH_UNARY(float, atanh)
+# endif
+# if CPPAD_COMPILER_HAS_EXPM1
+	CPPAD_STANDARD_MATH_UNARY(float, expm1)
 # endif
 }
 /* $$

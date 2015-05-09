@@ -30,6 +30,7 @@ $childtable%
 	cppad/local/asinh.hpp%
 	cppad/local/acosh.hpp%
 	cppad/local/atanh.hpp%
+	cppad/local/expm1.hpp%
 	cppad/local/sign.hpp%
 	cppad/local/atan2.hpp%
 	cppad/local/pow.hpp%
@@ -44,6 +45,7 @@ $end
 # include <cppad/local/asinh.hpp>
 # include <cppad/local/acosh.hpp>
 # include <cppad/local/atanh.hpp>
+# include <cppad/local/expm1.hpp>
 # include <cppad/local/sign.hpp>
 # include <cppad/local/atan2.hpp>
 # include <cppad/local/pow.hpp>

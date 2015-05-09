@@ -480,6 +480,15 @@ void ReverseSweep(
 			break;
 			// --------------------------------------------------
 
+# if CPPAD_COMPILER_HAS_EXPM1
+			case Expm1Op:
+			reverse_expm1_op(
+				d, i_var, arg[0], J, Taylor, K, Partial
+			);
+			break;
+# endif
+			// --------------------------------------------------
+
 			case InvOp:
 			break;
 			// --------------------------------------------------

@@ -21,6 +21,7 @@ Please visit http://www.coin-or.org/CppAD/ for information on other licenses.
 /*
 $begin base_complex.hpp$$
 $spell
+	expm1
 	atanh
 	acosh
 	asinh
@@ -245,6 +246,9 @@ namespace CppAD {
 # endif
 # if CPPAD_COMPILER_HAS_ATANH
 	CPPAD_USER_MACRO(atanh)
+# endif
+# if CPPAD_COMPILER_HAS_EXPM1
+	CPPAD_USER_MACRO(expm1)
 # endif
 }
 /* $$

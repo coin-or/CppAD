@@ -380,6 +380,16 @@ void ForJacSweep(
 			break;
 			// -------------------------------------------------
 
+# if CPPAD_COMPILER_HAS_EXPM1
+			case Expm1Op:
+			CPPAD_ASSERT_NARG_NRES(op, 1, 1);
+			forward_sparse_jacobian_unary_op(
+				i_var, arg[0], var_sparsity
+			);
+			break;
+# endif
+			// -------------------------------------------------
+
 			case InvOp:
 			CPPAD_ASSERT_NARG_NRES(op, 0, 1);
 			// sparsity pattern is already defined

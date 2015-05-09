@@ -509,6 +509,13 @@ void forward1sweep(
 			break;
 			// ---------------------------------------------------
 
+# if CPPAD_COMPILER_HAS_EXPM1
+			case Expm1Op:
+			forward_expm1_op(p, q, i_var, arg[0], J, taylor);
+			break;
+# endif
+			// ---------------------------------------------------
+
 			case InvOp:
 			CPPAD_ASSERT_NARG_NRES(op, 0, 1);
 			break;

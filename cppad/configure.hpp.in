@@ -96,6 +96,14 @@ C++11: Does compiler support std::atanh(double)
 
 # if __cplusplus >= 201100
 /*!
+\def CPPAD_COMPILER_HAS_EXPM1
+C++11: Does compiler support std::expm1(double)
+*/
+# define CPPAD_COMPILER_HAS_EXPM1 @cppad_compiler_has_expm1@
+# endif
+
+# if __cplusplus >= 201100
+/*!
 \def CPPAD_HAS_HIGH_RESOLUTION_CLOCK
 C++11: Does compiler support std::chrono::high_resolution_clock
 */
