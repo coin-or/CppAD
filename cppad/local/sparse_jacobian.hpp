@@ -393,8 +393,8 @@ size_t ADFun<Base>::SparseJacobianFor(
 
 	// number of components of Jacobian that are required
 	size_t K = size_t(jac.size());
-	CPPAD_ASSERT_UNKNOWN( row.size() == K );
-	CPPAD_ASSERT_UNKNOWN( col.size() == K );
+	CPPAD_ASSERT_UNKNOWN( size_t( row.size() ) == K );
+	CPPAD_ASSERT_UNKNOWN( size_t( col.size() ) == K );
 
 	// Point at which we are evaluating the Jacobian
 	Forward(0, x);
@@ -590,8 +590,8 @@ size_t ADFun<Base>::SparseJacobianRev(
 
 	// number of components of Jacobian that are required
 	size_t K = size_t(jac.size());
-	CPPAD_ASSERT_UNKNOWN( row.size() == K );
-	CPPAD_ASSERT_UNKNOWN( col.size() == K );
+	CPPAD_ASSERT_UNKNOWN( size_t( size_t( row.size() ) ) == K );
+	CPPAD_ASSERT_UNKNOWN( size_t( size_t( col.size() ) ) == K );
 
 	// Point at which we are evaluating the Jacobian
 	Forward(0, x);

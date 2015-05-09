@@ -114,8 +114,8 @@ void color_general_cppad(
 	size_t m = pattern.n_set();
 	size_t n = pattern.end();
 
-	CPPAD_ASSERT_UNKNOWN( col.size()   == K );
-	CPPAD_ASSERT_UNKNOWN( color.size() == m );
+	CPPAD_ASSERT_UNKNOWN( size_t( col.size() )   == K );
+	CPPAD_ASSERT_UNKNOWN( size_t( color.size() ) == m );
 
 	// We define the set of rows, columns, and pairs that appear
 	// by the set ( row[k], col[k] ) for k = 0, ... , K-1.

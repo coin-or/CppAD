@@ -5466,6 +5466,7 @@ $as_echo "$as_me: WARNING: cannot build any libraries because ar is missing; e.g
 	" >&2;}
 fi
 
+## AC_SUBST(cppad_cxx_flags, "-g -O0")
 
 cppad_has_colpack=0
 
@@ -5484,6 +5485,8 @@ cppad_compiler_has_acosh=0
 
 cppad_compiler_has_atanh=0
 
+## AC_SUBST(cppad_compiler_has_expm1, 0)
+## AC_SUBST(cppad_has_high_resolution_clock, 0)
 
 ac_ext=c
 ac_cpp='$CPP $CPPFLAGS'

@@ -567,6 +567,8 @@ nobase_myinclude_HEADERS = \
 	cppad/local/erf.hpp \
 	cppad/local/erf_op.hpp \
 	cppad/local/exp_op.hpp \
+	cppad/local/expm1.hpp \
+	cppad/local/expm1_op.hpp \
 	cppad/local/for_jac_sweep.hpp \
 	cppad/local/for_one.hpp \
 	cppad/local/for_sparse_jac.hpp \

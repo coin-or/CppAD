@@ -1,6 +1,6 @@
 /* $Id$ */
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-14 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-15 Bradley M. Bell
 
 CppAD is distributed under multiple licenses. This distribution is under
 the terms of the 
@@ -65,7 +65,7 @@ bool forward_order(void)
 	// X(t) =   x^0 + x^1 * t + x^2 * t^2
 	//      = [ 3 + t, 4 ]   
 	yq  = f.Forward(q, xq);
-	ok &= yq.size() == m*q1;
+	ok &= size_t( yq.size() ) == m*q1;
 	// Y(t) = F[X(t)] 
 	//      = (3 + t) * (3 + t) * 4
 	//      = y^0 + y^1 * t + y^2 * t^2 + o(t^3)

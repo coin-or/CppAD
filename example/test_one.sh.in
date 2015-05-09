@@ -56,7 +56,8 @@ cmd="$cmd
 	-fopenmp
 	-lboost_thread
 	-lpthread
-	-std=c++11 -DCPPAD_ADOLC_EXAMPLES -DCPPAD_EIGEN_EXAMPLES
+	-DCPPAD_ADOLC_EXAMPLES
+	-DCPPAD_EIGEN_EXAMPLES
 	-I..
 "
 if [ -e @adolc_prefix@/include ]

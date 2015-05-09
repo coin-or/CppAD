@@ -58,7 +58,7 @@ $head Taylor Coefficients Recursion$$
 For orders $latex j = 0 , 1, \ldots$$,
 $latex \[
 \begin{array}{rcl}
-z^{(0)} & = & \exp ( x^{(0)} )
+z^{(0)} & = & F ( x^{(0)} )
 \\
 e^{(0)} & = & d^{(0)} + z^{(0)}
 \\

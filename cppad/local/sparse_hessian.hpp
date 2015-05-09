@@ -426,8 +426,8 @@ size_t ADFun<Base>::SparseHessianCompute(
 
 	// number of components of Hessian that are required
 	size_t K = hes.size();
-	CPPAD_ASSERT_UNKNOWN( user_row.size() == K );
-	CPPAD_ASSERT_UNKNOWN( user_col.size() == K );
+	CPPAD_ASSERT_UNKNOWN( size_t( user_row.size() ) == K );
+	CPPAD_ASSERT_UNKNOWN( size_t( user_col.size() ) == K );
 
 	CPPAD_ASSERT_UNKNOWN( size_t(x.size()) == n );
 	CPPAD_ASSERT_UNKNOWN( color.size() == 0 || color.size() == n );

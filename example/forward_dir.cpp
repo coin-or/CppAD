@@ -1,6 +1,6 @@
 /* $Id$ */
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-14 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-15 Bradley M. Bell
 
 CppAD is distributed under multiple licenses. This distribution is under
 the terms of the 
@@ -63,7 +63,7 @@ bool forward_dir(void)
 	for(j = 0; j < n; j++)
 		x0[j] = double(j+1);
 	y0          = f.Forward(0, x0);
-	ok         &= y0.size() == m;
+	ok         &= size_t( y0.size() ) == m;
 	double y_0  = 1.*2.*3.; 
 	ok         &= NearEqual(y0[0], y_0, eps, eps);
 
@@ -75,7 +75,7 @@ bool forward_dir(void)
 			x1[ r * j + ell ] = double(j + 1 + ell);
 	}
 	y1  = f.Forward(1, r, x1);
-	ok &= y1.size() == r*m;
+	ok &= size_t( y1.size() ) == r*m;
 	
 	// secondorder Taylor coefficients
 	CPPAD_TESTVECTOR(double) x2(r*n), y2;
@@ -84,7 +84,7 @@ bool forward_dir(void)
 			x2[ r * j + ell ] = 0.0;
 	}
 	y2  = f.Forward(2, r, x2);
-	ok &= y2.size() == r*m;
+	ok &= size_t( y2.size() ) == r*m;
 	// 
 	// Y_0 (t)     = F[X_0(t)] 
 	//             =  (1 + 1t)(2 + 2t)(3 + 3t) 

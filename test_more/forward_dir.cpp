@@ -53,7 +53,7 @@ namespace {
 				x1[ r * j + ell ] = double(j + ell + 1);
 		}
 		y1  = f.Forward(1, r, x1);
-		ok &= y1.size() == r*m;
+		ok &= size_t( y1.size() ) == r*m;
 
 		// secondorder Taylor coefficients
 		CPPAD_TESTVECTOR(double) x2(r*n), y2;
@@ -62,7 +62,7 @@ namespace {
 				x2[ r * j + ell ] = double(j + ell + 2);
 		}
 		y2  = f.Forward(2, r, x2);
-		ok &= y2.size() == r*m;
+		ok &= size_t( y2.size() ) == r*m;
 		//
 		// Y_0  (t)    = F[X_0(t)] = X_0(t)
 		//             =  0.5 + 1t + 2t^2
@@ -113,7 +113,7 @@ namespace {
 				x1[ r * j + ell ] = double(j + ell + 1);
 		}
 		y1  = f.Forward(1, r, x1);
-		ok &= y1.size() == r*m;
+		ok &= size_t( y1.size() ) == r*m;
 
 		// secondorder Taylor coefficients
 		CPPAD_TESTVECTOR(double) x2(r*n), y2;
@@ -122,7 +122,7 @@ namespace {
 				x2[ r * j + ell ] = double(j + ell + 2);
 		}
 		y2  = f.Forward(2, r, x2);
-		ok &= y2.size() == r*m;
+		ok &= size_t( y2.size() ) == r*m;
 		//
 		// Y_0  (t)    = F[X_0(t)]
 		//             = abs(0.5 + 1t + 2t^2) + abs( 2*(-1.0 + 2t + 3t^2 ) )
@@ -172,7 +172,7 @@ namespace {
 				x1[ r * j + ell ] = double(j + ell + 1);
 		}
 		y1  = f.Forward(1, r, x1);
-		ok &= y1.size() == r*m;
+		ok &= size_t( y1.size() ) == r*m;
 
 		// secondorder Taylor coefficients
 		CPPAD_TESTVECTOR(double) x2(r*n), y2;
@@ -181,7 +181,7 @@ namespace {
 				x2[ r * j + ell ] = double(j + ell + 3);
 		}
 		y2  = f.Forward(2, r, x2);
-		ok &= y2.size() == r*m;
+		ok &= size_t( y2.size() ) == r*m;
 		//
 		// Y_0 (t)     = F[X_0(t)]
 		//             =  2.0 + (0.5 + 1t + 3t^2)
@@ -232,7 +232,7 @@ namespace {
 				x1[ r * j + ell ] = double(j + ell + 1);
 		}
 		y1  = f.Forward(1, r, x1);
-		ok &= y1.size() == r*m;
+		ok &= size_t( y1.size() ) == r*m;
 
 		// secondorder Taylor coefficients
 		CPPAD_TESTVECTOR(double) x2(r*n), y2;
@@ -241,7 +241,7 @@ namespace {
 				x2[ r * j + ell ] = double(j + ell + 2);
 		}
 		y2  = f.Forward(2, r, x2);
-		ok &= y2.size() == r*m;
+		ok &= size_t( y2.size() ) == r*m;
 		//
 		// Y_0 (t)     = F[X_0(t)]
 		//             =  (0.5 + 1t + 2t^2) + (2.0 + 2t + 3t^2)
@@ -292,7 +292,7 @@ namespace {
 				x1[ r * j + ell ] = double(j + ell + 1);
 		}
 		y1  = f.Forward(1, r, x1);
-		ok &= y1.size() == r*m;
+		ok &= size_t( y1.size() ) == r*m;
 
 		// secondorder Taylor coefficients
 		CPPAD_TESTVECTOR(double) x2(r*n), y2;
@@ -301,7 +301,7 @@ namespace {
 				x2[ r * j + ell ] = double(j + ell + 2);
 		}
 		y2  = f.Forward(2, r, x2);
-		ok &= y2.size() == r*m;
+		ok &= size_t( y2.size() ) == r*m;
 		//
 		// Y_0  (t)    = F[X_0(t)]
 		//             =  cos( 0.5 + 1t + 2t^2 )
@@ -354,7 +354,7 @@ namespace {
 				x1[ r * j + ell ] = double(j + ell + 1);
 		}
 		y1  = f.Forward(1, r, x1);
-		ok &= y1.size() == r*m;
+		ok &= size_t( y1.size() ) == r*m;
 
 		// secondorder Taylor coefficients
 		CPPAD_TESTVECTOR(double) x2(r*n), y2;
@@ -363,7 +363,7 @@ namespace {
 				x2[ r * j + ell ] = double(j + ell + 2);
 		}
 		y2  = f.Forward(2, r, x2);
-		ok &= y2.size() == r*m;
+		ok &= size_t( y2.size() ) == r*m;
 		//
 		// Y_0  (t)    = F[X_0(t)]
 		//             = cosh( 0.5 + 1t + 2t^2 )
@@ -417,7 +417,7 @@ namespace {
 				x1[ r * j + ell ] = double(j + ell + 1);
 		}
 		y1  = f.Forward(1, r, x1);
-		ok &= y1.size() == r*m;
+		ok &= size_t( y1.size() ) == r*m;
 
 		// secondorder Taylor coefficients
 		CPPAD_TESTVECTOR(double) x2(r*n), y2;
@@ -426,7 +426,7 @@ namespace {
 				x2[ r * j + ell ] = double(j + ell + 2);
 		}
 		y2  = f.Forward(2, r, x2);
-		ok &= y2.size() == r*m;
+		ok &= size_t( y2.size() ) == r*m;
 		//
 		// Y0_0 (t)     = X2_0(t)
 		//             =  2.0 + 3t + 4t^2
@@ -504,7 +504,7 @@ namespace {
 				x1[ r * j + ell ] = double(j + ell + 1);
 		}
 		y1  = f.Forward(1, r, x1);
-		ok &= y1.size() == r*m;
+		ok &= size_t( y1.size() ) == r*m;
 
 		// secondorder Taylor coefficients
 		CPPAD_TESTVECTOR(double) x2(r*n), y2;
@@ -513,7 +513,7 @@ namespace {
 				x2[ r * j + ell ] = double(j + ell + 3);
 		}
 		y2  = f.Forward(2, r, x2);
-		ok &= y2.size() == r*m;
+		ok &= size_t( y2.size() ) == r*m;
 		//
 		double check = 0.0;
 		for(j = 0; j < n; j++)
@@ -569,7 +569,7 @@ namespace {
 		CPPAD_TESTVECTOR(double) x0(n), y0;
 		x0[0] = 2.2;
 		y0  = f.Forward(0, x0);
-		ok &= y0.size() == m;
+		ok &= size_t( y0.size() ) == m;
 		ok &= NearEqual(y0[0], round_off(x0[0]) + x0[0], eps, eps);
 
 		// first order Taylor coefficients
@@ -580,7 +580,7 @@ namespace {
 				x1[ r * j + ell ] = double(j + ell + 1);
 		}
 		y1  = f.Forward(1, r, x1);
-		ok &= y1.size() == r*m;
+		ok &= size_t( y1.size() ) == r*m;
 
 		// secondorder Taylor coefficients
 		CPPAD_TESTVECTOR(double) x2(r*n), y2;
@@ -589,7 +589,7 @@ namespace {
 				x2[ r * j + ell ] = double(j + ell + 2);
 		}
 		y2  = f.Forward(2, r, x2);
-		ok &= y2.size() == r*m;
+		ok &= size_t( y2.size() ) == r*m;
 		//
 		//
 		// Y_0 (t)     = F[X_0(t)]
@@ -640,7 +640,7 @@ namespace {
 				x1[ r * j + ell ] = double(j + ell + 1);
 		}
 		y1  = f.Forward(1, r, x1);
-		ok &= y1.size() == r*m;
+		ok &= size_t( y1.size() ) == r*m;
 
 		// secondorder Taylor coefficients
 		CPPAD_TESTVECTOR(double) x2(r*n), y2;
@@ -649,7 +649,7 @@ namespace {
 				x2[ r * j + ell ] = double(j + ell + 2);
 		}
 		y2  = f.Forward(2, r, x2);
-		ok &= y2.size() == r*m;
+		ok &= size_t( y2.size() ) == r*m;
 		//
 		// Y_0 (t)     = F[X_0(t)]
 		//             = 2.0 * (0.5 + 1t + 2t^2)
@@ -699,7 +699,7 @@ namespace {
 				x1[ r * j + ell ] = double(j + ell + 1);
 		}
 		y1  = f.Forward(1, r, x1);
-		ok &= y1.size() == r*m;
+		ok &= size_t( y1.size() ) == r*m;
 
 		// secondorder Taylor coefficients
 		CPPAD_TESTVECTOR(double) x2(r*n), y2;
@@ -708,7 +708,7 @@ namespace {
 				x2[ r * j + ell ] = double(j + ell + 3);
 		}
 		y2  = f.Forward(2, r, x2);
-		ok &= y2.size() == r*m;
+		ok &= size_t( y2.size() ) == r*m;
 		//
 		// Y_0 (t)     = F[X_0(t)]
 		//             =  (0.5 + 1t + 3t^2)/2.0
@@ -758,7 +758,7 @@ namespace {
 				x1[ r * j + ell ] = double(j + ell + 1);
 		}
 		y1  = f.Forward(1, r, x1);
-		ok &= y1.size() == r*m;
+		ok &= size_t( y1.size() ) == r*m;
 
 		// secondorder Taylor coefficients
 		CPPAD_TESTVECTOR(double) x2(r*n), y2;
@@ -767,7 +767,7 @@ namespace {
 				x2[ r * j + ell ] = double(j + ell + 2);
 		}
 		y2  = f.Forward(2, r, x2);
-		ok &= y2.size() == r*m;
+		ok &= size_t( y2.size() ) == r*m;
 		//
 		// Y_0  (t)    = F[X_0(t)]
 		//             =  exp(0.5 + 1t + 2t^2)
@@ -824,7 +824,7 @@ namespace {
 		x0[0] = 2;
 		x0[1] = 3;
 		y0  = f.Forward(0, x0);
-		ok &= y0.size() == m;
+		ok &= size_t( y0.size() ) == m;
 		// y[0] = avec[0] = x[0]
 		ok &= y0[0] == x0[0];
 		// y[1] = avec[ x[0] ] = avec[2] = 5.0
@@ -838,7 +838,7 @@ namespace {
 				x1[ r * j + ell ] = double(j + ell + 1);
 		}
 		y1  = f.Forward(1, r, x1);
-		ok &= y1.size() == r*m;
+		ok &= size_t( y1.size() ) == r*m;
 
 		// secondorder Taylor coefficients
 		CPPAD_TESTVECTOR(double) x2(r*n), y2;
@@ -847,7 +847,7 @@ namespace {
 				x2[ r * j + ell ] = double(j + ell + 2);
 		}
 		y2  = f.Forward(2, r, x2);
-		ok &= y2.size() == r*m;
+		ok &= size_t( y2.size() ) == r*m;
 		//
 		// Y0_0 (t)    = 2.0 + 1t + 2t^2
 		double y0_1_0  = 1.0;
@@ -909,7 +909,7 @@ namespace {
 				x1[ r * j + ell ] = double(j + ell + 1);
 		}
 		y1  = f.Forward(1, r, x1);
-		ok &= y1.size() == r*m;
+		ok &= size_t( y1.size() ) == r*m;
 
 		// secondorder Taylor coefficients
 		CPPAD_TESTVECTOR(double) x2(r*n), y2;
@@ -918,7 +918,7 @@ namespace {
 				x2[ r * j + ell ] = double(j + ell + 3);
 		}
 		y2  = f.Forward(2, r, x2);
-		ok &= y2.size() == r*m;
+		ok &= size_t( y2.size() ) == r*m;
 		//
 		// Y_0 (t)     = F[X_0(t)]
 		//             =  2.0 * (0.5 + 1t + 3t^2)
@@ -967,7 +967,7 @@ namespace {
 				x1[ r * j + ell ] = double(j + ell + 1);
 		}
 		y1  = f.Forward(1, r, x1);
-		ok &= y1.size() == r*m;
+		ok &= size_t( y1.size() ) == r*m;
 
 		// secondorder Taylor coefficients
 		CPPAD_TESTVECTOR(double) x2(r*n), y2;
@@ -976,7 +976,7 @@ namespace {
 				x2[ r * j + ell ] = double(j + ell + 2);
 		}
 		y2  = f.Forward(2, r, x2);
-		ok &= y2.size() == r*m;
+		ok &= size_t( y2.size() ) == r*m;
 		//
 		// Y_0  (t)    = 0.0
 		for(ell = 0; ell < r; ell++)
@@ -1018,7 +1018,7 @@ namespace {
 				x1[ r * j + ell ] = double(j + ell + 1);
 		}
 		y1  = f.Forward(1, r, x1);
-		ok &= y1.size() == r*m;
+		ok &= size_t( y1.size() ) == r*m;
 
 		// secondorder Taylor coefficients
 		CPPAD_TESTVECTOR(double) x2(r*n), y2;
@@ -1027,7 +1027,7 @@ namespace {
 				x2[ r * j + ell ] = double(j + ell + 2);
 		}
 		y2  = f.Forward(2, r, x2);
-		ok &= y2.size() == r*m;
+		ok &= size_t( y2.size() ) == r*m;
 		//
 		// Y0_0 (t)    = 0.5 + 1t + 2t^2
 		double y0_1_0  = 1.0;
@@ -1084,7 +1084,7 @@ namespace {
 		CPPAD_TESTVECTOR(double) x0(n), y0;
 		x0[0] = -3.0;
 		y0  = f.Forward(0, x0);
-		ok &= y0.size() == m;
+		ok &= size_t( y0.size() ) == m;
 		ok &= NearEqual(y0[0], CppAD::abs(x0[0]), eps, eps);
 
 		// first order Taylor coefficients
@@ -1095,7 +1095,7 @@ namespace {
 				x1[ r * j + ell ] = double(j + ell + 1);
 		}
 		y1  = f.Forward(1, r, x1);
-		ok &= y1.size() == r*m;
+		ok &= size_t( y1.size() ) == r*m;
 
 		// secondorder Taylor coefficients
 		CPPAD_TESTVECTOR(double) x2(r*n), y2;
@@ -1104,7 +1104,7 @@ namespace {
 				x2[ r * j + ell ] = double(j + ell + 2);
 		}
 		y2  = f.Forward(2, r, x2);
-		ok &= y2.size() == r*m;
+		ok &= size_t( y2.size() ) == r*m;
 		//
 		//
 		// Y_0 (t)     = F[X_0(t)]
@@ -1157,7 +1157,7 @@ namespace {
 				x1[ r * j + ell ] = double(j + ell + 1);
 		}
 		y1  = f.Forward(1, r, x1);
-		ok &= y1.size() == r*m;
+		ok &= size_t( y1.size() ) == r*m;
 
 		// secondorder Taylor coefficients
 		CPPAD_TESTVECTOR(double) x2(r*n), y2;
@@ -1166,7 +1166,7 @@ namespace {
 				x2[ r * j + ell ] = double(j + ell + 2);
 		}
 		y2  = f.Forward(2, r, x2);
-		ok &= y2.size() == r*m;
+		ok &= size_t( y2.size() ) == r*m;
 		//
 		// Y_0  (t)    = F[X_0(t)]
 		//             = sin( 0.5 + 1t + 2t^2 )
@@ -1219,7 +1219,7 @@ namespace {
 				x1[ r * j + ell ] = double(j + ell + 1);
 		}
 		y1  = f.Forward(1, r, x1);
-		ok &= y1.size() == r*m;
+		ok &= size_t( y1.size() ) == r*m;
 
 		// secondorder Taylor coefficients
 		CPPAD_TESTVECTOR(double) x2(r*n), y2;
@@ -1228,7 +1228,7 @@ namespace {
 				x2[ r * j + ell ] = double(j + ell + 2);
 		}
 		y2  = f.Forward(2, r, x2);
-		ok &= y2.size() == r*m;
+		ok &= size_t( y2.size() ) == r*m;
 		//
 		// Y_0  (t)    = F[X_0(t)]
 		//             = sinh( 0.5 + 1t + 2t^2 )
@@ -1280,7 +1280,7 @@ namespace {
 				x1[ r * j + ell ] = double(j + ell + 1);
 		}
 		y1  = f.Forward(1, r, x1);
-		ok &= y1.size() == r*m;
+		ok &= size_t( y1.size() ) == r*m;
 
 		// secondorder Taylor coefficients
 		CPPAD_TESTVECTOR(double) x2(r*n), y2;
@@ -1289,7 +1289,7 @@ namespace {
 				x2[ r * j + ell ] = double(j + ell + 3);
 		}
 		y2  = f.Forward(2, r, x2);
-		ok &= y2.size() == r*m;
+		ok &= size_t( y2.size() ) == r*m;
 		//
 		// Y_0 (t)     = F[X_0(t)]
 		//             =  2.0 - (0.5 + 1t + 3t^2)/2.0
@@ -1340,7 +1340,7 @@ namespace {
 				x1[ r * j + ell ] = double(j + ell + 1);
 		}
 		y1  = f.Forward(1, r, x1);
-		ok &= y1.size() == r*m;
+		ok &= size_t( y1.size() ) == r*m;
 
 		// secondorder Taylor coefficients
 		CPPAD_TESTVECTOR(double) x2(r*n), y2;
@@ -1349,7 +1349,7 @@ namespace {
 				x2[ r * j + ell ] = double(j + ell + 2);
 		}
 		y2  = f.Forward(2, r, x2);
-		ok &= y2.size() == r*m;
+		ok &= size_t( y2.size() ) == r*m;
 		//
 		// Y_0 (t)     = F[X_0(t)]
 		//             =  (0.5 + 1t + 2t^2) - 2.0 * (2.0 + 2t + 3t^2)
@@ -1399,7 +1399,7 @@ namespace {
 				x1[ r * j + ell ] = double(j + ell + 1);
 		}
 		y1  = f.Forward(1, r, x1);
-		ok &= y1.size() == r*m;
+		ok &= size_t( y1.size() ) == r*m;
 
 		// secondorder Taylor coefficients
 		CPPAD_TESTVECTOR(double) x2(r*n), y2;
@@ -1408,7 +1408,7 @@ namespace {
 				x2[ r * j + ell ] = double(j + ell + 2);
 		}
 		y2  = f.Forward(2, r, x2);
-		ok &= y2.size() == r*m;
+		ok &= size_t( y2.size() ) == r*m;
 		//
 		// Y_0  (t)    = F[X_0(t)]
 		//             =  tan(0.5 + 1t + 2t^2)
@@ -1476,7 +1476,7 @@ namespace {
 				x1[ r * j + ell ] = double(j + ell + 1);
 		}
 		y1  = f.Forward(1, r, x1);
-		ok &= y1.size() == r*m;
+		ok &= size_t( y1.size() ) == r*m;
 
 		// secondorder Taylor coefficients
 		CPPAD_TESTVECTOR(double) x2(r*n), y2;
@@ -1485,7 +1485,7 @@ namespace {
 				x2[ r * j + ell ] = double(j + ell + 2);
 		}
 		y2  = f.Forward(2, r, x2);
-		ok &= y2.size() == r*m;
+		ok &= size_t( y2.size() ) == r*m;
 		//
 		// Y0_0 (t)    = 0.5 + 1t + 2t^2
 		double y0_1_0  = 1.0;
