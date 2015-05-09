@@ -3,7 +3,7 @@
 CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-15 Bradley M. Bell
 
 CppAD is distributed under multiple licenses. This distribution is under
-the terms of the 
+the terms of the
                     Eclipse Public License Version 1.0.
 
 A copy of this license is included in the COPYING file of this distribution.
@@ -40,7 +40,7 @@ bool forward_dir(void)
 	// domain space vector
 	size_t n = 3;
 	CPPAD_TESTVECTOR(AD<double>) ax(n);
-	ax[0] = 0.; 
+	ax[0] = 0.;
 	ax[1] = 1.;
 	ax[2] = 2.;
 
@@ -64,7 +64,7 @@ bool forward_dir(void)
 		x0[j] = double(j+1);
 	y0          = f.Forward(0, x0);
 	ok         &= size_t( y0.size() ) == m;
-	double y_0  = 1.*2.*3.; 
+	double y_0  = 1.*2.*3.;
 	ok         &= NearEqual(y0[0], y_0, eps, eps);
 
 	// first order Taylor coefficients
@@ -76,7 +76,7 @@ bool forward_dir(void)
 	}
 	y1  = f.Forward(1, r, x1);
 	ok &= size_t( y1.size() ) == r*m;
-	
+
 	// secondorder Taylor coefficients
 	CPPAD_TESTVECTOR(double) x2(r*n), y2;
 	for(ell = 0; ell < r; ell++)
@@ -85,14 +85,14 @@ bool forward_dir(void)
 	}
 	y2  = f.Forward(2, r, x2);
 	ok &= size_t( y2.size() ) == r*m;
-	// 
-	// Y_0 (t)     = F[X_0(t)] 
-	//             =  (1 + 1t)(2 + 2t)(3 + 3t) 
+	//
+	// Y_0 (t)     = F[X_0(t)]
+	//             =  (1 + 1t)(2 + 2t)(3 + 3t)
 	double y_1_0   = 1.*2.*3. + 2.*1.*3. + 3.*1.*2.;
 	double y_2_0   = 1.*2.*3. + 2.*1.*3. + 3.*1.*2.;
-	// 
-	// Y_1 (t)     = F[X_1(t)] 
-	//             =  (1 + 2t)(2 + 3t)(3 + 4t) 
+	//
+	// Y_1 (t)     = F[X_1(t)]
+	//             =  (1 + 2t)(2 + 3t)(3 + 4t)
 	double y_1_1   = 2.*2.*3. + 3.*1.*3. + 4.*1.*2.;
 	double y_2_1   = 1.*3.*4. + 2.*2.*4. + 3.*2.*3.;
 	//
@@ -101,10 +101,10 @@ bool forward_dir(void)
 	ok  &= NearEqual(y2[0] , y_2_0, eps, eps);
 	ok  &= NearEqual(y2[1] , y_2_1, eps, eps);
 	//
-	// check number of orders 
+	// check number of orders
 	ok   &= f.size_order() == 3;
 	//
-	// check number of directions 
+	// check number of directions
 	ok   &= f.size_direction() == 2;
 	//
 	return ok;

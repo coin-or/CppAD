@@ -3,7 +3,7 @@
 CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-15 Bradley M. Bell
 
 CppAD is distributed under multiple licenses. This distribution is under
-the terms of the 
+the terms of the
                     Eclipse Public License Version 1.0.
 
 A copy of this license is included in the COPYING file of this distribution.
@@ -39,7 +39,7 @@ bool forward_order(void)
 	// domain space vector
 	size_t n = 2;
 	CPPAD_TESTVECTOR(AD<double>) ax(n);
-	ax[0] = 0.; 
+	ax[0] = 0.;
 	ax[1] = 1.;
 
 	// declare independent variables and starting recording
@@ -63,10 +63,10 @@ bool forward_order(void)
 	xq[q1*0 + 1] = 1.;    xq[q1*1 + 1] = 0.; // x^1 (order one)
 	xq[q1*0 + 2] = 0.;    xq[q1*1 + 2] = 0.; // x^2 (order two)
 	// X(t) =   x^0 + x^1 * t + x^2 * t^2
-	//      = [ 3 + t, 4 ]   
+	//      = [ 3 + t, 4 ]
 	yq  = f.Forward(q, xq);
 	ok &= size_t( yq.size() ) == m*q1;
-	// Y(t) = F[X(t)] 
+	// Y(t) = F[X(t)]
 	//      = (3 + t) * (3 + t) * 4
 	//      = y^0 + y^1 * t + y^2 * t^2 + o(t^3)
 	//
