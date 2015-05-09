@@ -82,7 +82,8 @@ $rref a11c_openmp.cpp$$
 $rref a11c_pthread.cpp$$
 $rref abort_recording.cpp$$
 $rref Abs.cpp$$
-$rref Acos.cpp$$
+$rref acos.cpp$$
+$rref acosh.cpp$$
 $rref add.cpp$$
 $rref AddEq.cpp$$
 $rref ad_assign.cpp$$
@@ -91,10 +92,13 @@ $rref ad_fun.cpp$$
 $rref ad_in_c.cpp$$
 $rref ad_input.cpp$$
 $rref ad_output.cpp$$
-$rref Asin.cpp$$
+$rref asin.cpp$$
+$rref asinh.cpp$$
+$rref atanh.cpp$$
 $rref atan2.cpp$$
 $rref atan.cpp$$
 $rref atomic_get_started.cpp$$
+$rref atomic_hes_sparse.cpp$$
 $rref atomic_matrix_mul.hpp$$
 $rref atomic_mat_mul.cpp$$
 $cref atomic_norm_sq.cpp$$
@@ -121,6 +125,7 @@ $rref cond_exp.cpp$$
 $rref conj_grad.cpp$$
 $rref cos.cpp$$
 $rref cosh.cpp$$
+$rref cppad_eigen.hpp$$
 $rref cppad_vector.cpp$$
 $rref det_by_lu.cpp$$
 $rref det_by_minor.cpp$$
@@ -129,6 +134,8 @@ $rref div.cpp$$
 $rref div_eq.cpp$$
 $rref eigen_array.cpp$$
 $rref eigen_det.cpp$$
+$rref eigen_plugin.hpp$$
+$rref elapsed_seconds.cpp$$
 $rref equal_op_seq.cpp$$
 $rref erf.cpp$$
 $rref error_handler.cpp$$
@@ -171,6 +178,7 @@ $rref lu_invert.cpp$$
 $rref lu_ratio.cpp$$
 $rref lu_solve.cpp$$
 $rref lu_vec_ad_ok.cpp$$
+$rref mat_sum_sq.cpp$$
 $rref mul.cpp$$
 $rref mul_eq.cpp$$
 $rref mul_level_adolc.cpp$$
@@ -226,6 +234,7 @@ $rref sparse_hes_fun.cpp$$
 $rref sparse_hessian.cpp$$
 $rref sparse_jac_fun.cpp$$
 $rref sparse_jacobian.cpp$$
+$rref speed_example.cpp$$
 $rref speed_program.cpp$$
 $rref speed_test.cpp$$
 $rref sqrt.cpp$$
@@ -243,6 +252,7 @@ $rref team_pthread.cpp$$
 $rref team_thread.hpp$$
 $rref thread_alloc.cpp$$
 $rref thread_test.cpp$$
+$rref time_test.cpp$$
 $rref unary_minus.cpp$$
 $rref unary_plus.cpp$$
 $rref old_mat_mul.cpp$$

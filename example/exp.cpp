@@ -55,7 +55,7 @@ bool exp(void)
 
 	// check value
 	double check = std::exp(x0);
-	ok &= NearEqual(ay[0] , check,  eps, eps);
+	ok &= NearEqual(ay[0], check,  eps, eps);
 
 	// forward computation of first partial w.r.t. x[0]
 	CPPAD_TESTVECTOR(double) dx(n);

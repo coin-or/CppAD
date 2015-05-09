@@ -1,7 +1,7 @@
 #! /bin/bash -e
 # $Id$
 # -----------------------------------------------------------------------------
-# CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-14 Bradley M. Bell
+# CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-15 Bradley M. Bell
 #
 # CppAD is distributed under multiple licenses. This distribution is under
 # the terms of the
@@ -17,12 +17,14 @@ then
 fi
 # -----------------------------------------------------------------------------
 echo "Checking that all examples are in omh/example_list.omh"
-echo "-------------------------------------------------------" 
-file_list=`bin/list_files.sh | \
-	sed -n -e '/example\//p' -e '/multi_thread\//p'`
+echo "-------------------------------------------------------"
+file_list=`git ls-files | sed -n \
+	-e '/cppad_ipopt/d' \
+	-e '/example\//p' \
+	-e '/multi_thread\//p'`
 #
 sed < omh/example_list.omh > bin/check_example.$$ \
-	-n -e '/\$begin ListAllExamples\$\$/,/\$end/p' 
+	-n -e '/\$begin ListAllExamples\$\$/,/\$end/p'
 ok="yes"
 for file in $file_list
 do
@@ -37,7 +39,7 @@ do
 	fi
 done
 rm bin/check_example.$$
-echo "-------------------------------------------------------" 
+echo "-------------------------------------------------------"
 if [ "$ok" = "yes" ]
 then
 	echo "Ok: nothing is between the two dashed lines above"
