@@ -162,7 +162,7 @@ FOREACH(c11_function erf asinh acosh atanh)
 	STRING(REPLACE "c11_function" ${c11_function} source "${source_template}" )
 	# really only checking if program compiles
 	check_source_runs("${source}" cppad_compiler_has_${c11_function} )
-ENDFOREACH(c11_function erf acosh asinh)
+ENDFOREACH(c11_function)
 # -----------------------------------------------------------------------------
 # cppad_has_high_resolution_clock
 #
