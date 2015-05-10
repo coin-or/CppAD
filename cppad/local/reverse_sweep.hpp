@@ -308,7 +308,7 @@ void ReverseSweep(
 			break;
 			// --------------------------------------------------
 
-# if CPPAD_COMPILER_HAS_ACOSH
+# if CPPAD_USE_CPLUSPLUS_2011
 			case AcoshOp:
 			// sqrt(x * x - 1), acosh(x)
 			CPPAD_ASSERT_UNKNOWN( i_var < numvar );
@@ -343,7 +343,7 @@ void ReverseSweep(
 			break;
 			// --------------------------------------------------
 
-# if CPPAD_COMPILER_HAS_ASINH
+# if CPPAD_USE_CPLUSPLUS_2011
 			case AsinhOp:
 			// sqrt(1 + x * x), asinh(x)
 			CPPAD_ASSERT_UNKNOWN( i_var < numvar );
@@ -363,7 +363,7 @@ void ReverseSweep(
 			break;
 			// -------------------------------------------------
 
-# if CPPAD_COMPILER_HAS_ATANH
+# if CPPAD_USE_CPLUSPLUS_2011
 			case AtanhOp:
 			// 1 - x * x, atanh(x)
 			CPPAD_ASSERT_UNKNOWN( i_var < numvar );
@@ -464,7 +464,7 @@ void ReverseSweep(
 			break;
 			// --------------------------------------------------
 
-# if CPPAD_COMPILER_HAS_ERF
+# if CPPAD_USE_CPLUSPLUS_2011
 			case ErfOp:
 			reverse_erf_op(
 				d, i_var, arg, parameter, J, Taylor, K, Partial
@@ -480,7 +480,7 @@ void ReverseSweep(
 			break;
 			// --------------------------------------------------
 
-# if CPPAD_COMPILER_HAS_EXPM1
+# if CPPAD_USE_CPLUSPLUS_2011
 			case Expm1Op:
 			reverse_expm1_op(
 				d, i_var, arg[0], J, Taylor, K, Partial
@@ -527,7 +527,7 @@ void ReverseSweep(
 			break;
 			// --------------------------------------------------
 
-# if CPPAD_COMPILER_HAS_LOG1P
+# if CPPAD_USE_CPLUSPLUS_2011
 			case Log1pOp:
 			reverse_log1p_op(
 				d, i_var, arg[0], J, Taylor, K, Partial

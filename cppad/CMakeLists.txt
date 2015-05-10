@@ -107,6 +107,8 @@ ENDIF( cppad_eigenvector )
 
 # =============================================================================
 # Begin C++11 features
+#
+SET(cppad_cplusplus_201100_ok 1)
 # -----------------------------------------------------------------------------
 # cppad_has_rvalue
 #
@@ -119,6 +121,9 @@ int main(void)
 }"
 )
 check_source_runs("${source}" cppad_has_rvalue)
+IF( NOT cppad_has_rvalue )
+	SET(cppad_cplusplus_201100_ok 0)
+ENDIF( NOT cppad_has_rvalue )
 # -----------------------------------------------------------------------------
 # cppad_has_nullptr
 #
@@ -129,6 +134,9 @@ int main(void)
 }"
 )
 check_source_runs("${source}" cppad_has_nullptr)
+IF( NOT cppad_has_nullptr )
+	SET(cppad_cplusplus_201100_ok 0)
+ENDIF( NOT cppad_has_nullptr )
 # -----------------------------------------------------------------------------
 # cppad_has_cstdint_8_to_64
 #
@@ -144,6 +152,9 @@ int main(void)
 "
 )
 check_source_runs("${source}" cppad_has_cstdint_8_to_64)
+IF( NOT cppad_has_cstdint_8_to_64 )
+	SET(cppad_cplusplus_201100_ok 0)
+ENDIF( NOT cppad_has_cstdint_8_to_64 )
 # -----------------------------------------------------------------------------
 # cppad_compiler_has_erf
 # cppad_compiler_has_asinh
@@ -163,6 +174,9 @@ FOREACH(c11_function erf asinh acosh atanh expm1 log1p)
 	STRING(REPLACE "c11_function" ${c11_function} source "${source_template}" )
 	# really only checking if program compiles
 	check_source_runs("${source}" cppad_compiler_has_${c11_function} )
+	IF( NOT cppad_compiler_has_${c11_function} )
+		SET(cppad_cplusplus_201100_ok 0)
+	ENDIF( NOT cppad_compiler_has_${c11_function} )
 ENDFOREACH(c11_function)
 # -----------------------------------------------------------------------------
 # cppad_has_high_resolution_clock
@@ -182,8 +196,13 @@ int main(void)
 "
 )
 check_source_runs("${source}" cppad_has_high_resolution_clock)
+IF( NOT cppad_has_high_resolution_clock )
+	SET(cppad_cplusplus_201100_ok 0)
+ENDIF( NOT cppad_has_high_resolution_clock )
 # =============================================================================
 # End C++11 features
+#
+MESSAGE(STATUS "cppad_cplusplus_201100_ok = ${cppad_cplusplus_201100_ok}")
 # -----------------------------------------------------------------------------
 # cppad_has_gettimeofday
 #

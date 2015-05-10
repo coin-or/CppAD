@@ -62,8 +62,8 @@ of $icode x$$.
 
 $head Method$$
 
-$subhead CPPAD_COMPILER_HAS_ERF$$
-$index CPPAD_COMPILER_HAS_ERF$$
+$subhead CPPAD_USE_CPLUSPLUS_2011$$
+$index CPPAD_USE_CPLUSPLUS_2011$$
 This preprocessor symbol is one if
 the function $codei%std::erf(double %x%)%$$ is defined the in the
 include file $code <cmath>$$.
@@ -97,7 +97,7 @@ $end
 -------------------------------------------------------------------------------
 */
 # include <cppad/configure.hpp>
-# if ! CPPAD_COMPILER_HAS_ERF
+# if ! CPPAD_USE_CPLUSPLUS_2011
 
 // BEGIN CppAD namespace
 namespace CppAD {
@@ -128,5 +128,5 @@ inline AD<Base> erf(const VecAD_reference<Base> &x)
 
 } // END CppAD namespace
 
-# endif // CPPAD_COMPILER_HAS_ERF
+# endif // CPPAD_USE_CPLUSPLUS_2011
 # endif // CPPAD_ERF_INCLUDED

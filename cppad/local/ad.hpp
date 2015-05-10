@@ -205,22 +205,12 @@ public:
 	inline AD sqrt(void) const;
 	inline AD tan(void) const;
 	inline AD tanh(void) const;
-# if CPPAD_COMPILER_HAS_ERF
+# if CPPAD_USE_CPLUSPLUS_2011
 	inline AD erf(void) const;
-# endif
-# if CPPAD_COMPILER_HAS_ASINH
 	inline AD asinh(void) const;
-# endif
-# if CPPAD_COMPILER_HAS_ACOSH
 	inline AD acosh(void) const;
-# endif
-# if CPPAD_COMPILER_HAS_ATANH
 	inline AD atanh(void) const;
-# endif
-# if CPPAD_COMPILER_HAS_EXPM1
 	inline AD expm1(void) const;
-# endif
-# if CPPAD_COMPILER_HAS_LOG1P
 	inline AD log1p(void) const;
 # endif
 

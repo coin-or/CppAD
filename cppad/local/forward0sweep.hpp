@@ -309,7 +309,7 @@ void forward0sweep(
 			break;
 			// -------------------------------------------------
 
-# if CPPAD_COMPILER_HAS_ACOSH
+# if CPPAD_USE_CPLUSPLUS_2011
 			case AcoshOp:
 			// sqrt(x * x - 1), acosh(x)
 			CPPAD_ASSERT_UNKNOWN( i_var < numvar  );
@@ -325,7 +325,7 @@ void forward0sweep(
 			break;
 			// -------------------------------------------------
 
-# if CPPAD_COMPILER_HAS_ASINH
+# if CPPAD_USE_CPLUSPLUS_2011
 			case AsinhOp:
 			// sqrt(1 + x * x), asinh(x)
 			CPPAD_ASSERT_UNKNOWN( i_var < numvar  );
@@ -341,7 +341,7 @@ void forward0sweep(
 			break;
 			// -------------------------------------------------
 
-# if CPPAD_COMPILER_HAS_ATANH
+# if CPPAD_USE_CPLUSPLUS_2011
 			case AtanhOp:
 			// 1 - x * x, atanh(x)
 			CPPAD_ASSERT_UNKNOWN( i_var < numvar  );
@@ -447,9 +447,9 @@ void forward0sweep(
 			break;
 			// -------------------------------------------------
 
-# if CPPAD_COMPILER_HAS_ERF
+# if CPPAD_USE_CPLUSPLUS_2011
 			case ErfOp:
-			CPPAD_ASSERT_UNKNOWN( CPPAD_COMPILER_HAS_ERF );
+			CPPAD_ASSERT_UNKNOWN( CPPAD_USE_CPLUSPLUS_2011 );
 			// 2DO: implement zero order version of this function
 			forward_erf_op_0(i_var, arg, parameter, J, taylor);
 			break;
@@ -461,7 +461,7 @@ void forward0sweep(
 			break;
 			// -------------------------------------------------
 
-# if CPPAD_COMPILER_HAS_EXPM1
+# if CPPAD_USE_CPLUSPLUS_2011
 			case Expm1Op:
 			forward_expm1_op_0(i_var, arg[0], J, taylor);
 			break;
@@ -544,7 +544,7 @@ void forward0sweep(
 			break;
 			// -------------------------------------------------
 
-# if CPPAD_COMPILER_HAS_LOG1P
+# if CPPAD_USE_CPLUSPLUS_2011
 			case Log1pOp:
 			forward_log1p_op_0(i_var, arg[0], J, taylor);
 			break;

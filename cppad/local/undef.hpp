@@ -25,12 +25,7 @@ Preprecessor definitions that presist after cppad/cppad.hpp is included:
 
 # undef CPPAD_BOOL_BINARY         in user api
 # undef CPPAD_BOOL_UNARY          in user api
-# undef CPPAD_COMPILER_HAS_ERF    in user api
-# undef CPPAD_COMPILER_HAS_ASINH  in user api
-# undef CPPAD_COMPILER_HAS_ACOSH  in user api
-# undef CPPAD_COMPILER_HAS_ATANH  in user api
-# undef CPPAD_COMPILER_HAS_EXPM1  in user api
-# undef CPPAD_COMPILER_HAS_LOG1P  in user api
+# undef CPPAD_USE_CPLUSPLUS_2011  in user api
 # undef CPPAD_DISCRETE_FUNCTION   in user api
 # undef CPPAD_EIGENVECTOR         in user api
 # undef CPPAD_INTERNAL_SPARSE_SET in user api
@@ -75,11 +70,7 @@ Preprecessor definitions that presist after cppad/cppad.hpp is included:
 # undef CPPAD_FOLD_BOOL_VALUED_BINARY_OPERATOR
 # undef CPPAD_FOR_JAC_SWEEP_TRACE
 # undef CPPAD_HAS_COLPACK
-# undef CPPAD_HAS_CSTDINT_8_TO_64
-# undef CPPAD_HAS_RVALUE
-# undef CPPAD_HAS_HIGH_RESOLUTION_CLOCK
 # undef CPPAD_HAS_GETTIMEOFDAY
-# undef CPPAD_HAS_NULLPTR
 # undef CPPAD_INLINE_FRIEND_TEMPLATE_FUNCTION
 # undef CPPAD_MAX_NUM_CAPACITY
 # undef CPPAD_MIN_DOUBLE_CAPACITY

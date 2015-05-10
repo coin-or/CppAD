@@ -239,22 +239,12 @@ namespace CppAD {
         );                                                        \
         return 0.0;                                               \
     }
-# if CPPAD_COMPILER_HAS_ERF
+# if CPPAD_USE_CPLUSPLUS_2011
 	CPPAD_BASE_ADOLC_NO_SUPPORT(erf)
-# endif
-# if CPPAD_COMPILER_HAS_ASINH
 	CPPAD_BASE_ADOLC_NO_SUPPORT(asinh)
-# endif
-# if CPPAD_COMPILER_HAS_ACOSH
 	CPPAD_BASE_ADOLC_NO_SUPPORT(acosh)
-# endif
-# if CPPAD_COMPILER_HAS_ATANH
 	CPPAD_BASE_ADOLC_NO_SUPPORT(atanh)
-# endif
-# if CPPAD_COMPILER_HAS_EXPM1
 	CPPAD_BASE_ADOLC_NO_SUPPORT(expm1)
-# endif
-# if CPPAD_COMPILER_HAS_LOG1P
 	CPPAD_BASE_ADOLC_NO_SUPPORT(log1p)
 # endif
 # undef CPPAD_BASE_ADOLC_NO_SUPPORT

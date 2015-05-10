@@ -47,7 +47,7 @@ $codei%
 %$$
 
 
-$head CPPAD_COMPILER_HAS_ACOSH$$
+$head CPPAD_USE_CPLUSPLUS_2011$$
 This preprocessor symbol is one if
 the function $codei%std::acosh(double %x%)%$$ is defined the in the
 include file $code <cmath>$$.
@@ -77,7 +77,7 @@ $end
 -------------------------------------------------------------------------------
 */
 # include <cppad/configure.hpp>
-# if ! CPPAD_COMPILER_HAS_ACOSH
+# if ! CPPAD_USE_CPLUSPLUS_2011
 
 // BEGIN CppAD namespace
 namespace CppAD {
@@ -104,5 +104,5 @@ inline AD<Base> acosh(const VecAD_reference<Base> &x)
 
 } // END CppAD namespace
 
-# endif // CPPAD_COMPILER_HAS_ACOSH
+# endif // CPPAD_USE_CPLUSPLUS_2011
 # endif // CPPAD_ACOSH_INCLUDED

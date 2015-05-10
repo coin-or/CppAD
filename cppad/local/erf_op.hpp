@@ -1,7 +1,7 @@
 /* $Id$ */
 # ifndef CPPAD_ERF_OP_INCLUDED
 # define CPPAD_ERF_OP_INCLUDED
-# if CPPAD_COMPILER_HAS_ERF
+# if CPPAD_USE_CPLUSPLUS_2011
 
 /* --------------------------------------------------------------------------
 CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-15 Bradley M. Bell
@@ -425,5 +425,5 @@ inline void reverse_erf_op(
 
 
 } // END_CPPAD_NAMESPACE
-# endif // CPPAD_COMPILER_HAS_ERF
+# endif // CPPAD_USE_CPLUSPLUS_2011
 # endif // CPPAD_ERF_OP_INCLUDED

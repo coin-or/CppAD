@@ -38,84 +38,16 @@ $end
 Replacement for config.h so that all preprocessor symbols begin with CPPAD_
 */
 
-# if __cplusplus >= 201100
 /*!
-\def CPPAD_HAS_RVALUE
-C++11: Does compiler cupport rvalues; i.e., values with move semantics
+\def CPPAD_USE_CPLUSPLUS_2011
+Should CppAD use C++11 features. This will be true if the current
+compiler flags request C++11 features and the install procedure
+determined that all the necessary features are avaiable.
 */
-# define CPPAD_HAS_RVALUE @cppad_has_rvalue@
-# endif
-
 # if __cplusplus >= 201100
-/*!
-def CPPAD_HAS_NULLPTR
-C++11: Does compiler support the null-pointer constant nullptr
-*/
-# define CPPAD_HAS_NULLPTR @cppad_has_nullptr@
-# endif
-
-# if __cplusplus >= 201100
-/*!
-\def CPPAD_HAS_CSTDINT_8_TO_64
-C++11: Does compiler support the types uint_8, uint_16, uint_32, and uint_64
-*/
-# define CPPAD_HAS_CSTDINT_8_TO_64 @cppad_has_cstdint_8_to_64@
-# endif
-
-# if __cplusplus >= 201100
-/*!
-\def CPPAD_COMPILER_HAS_ERF
-C++11: Does compiler support std::erf(double)
-*/
-# define CPPAD_COMPILER_HAS_ERF @cppad_compiler_has_erf@
-# endif
-
-# if __cplusplus >= 201100
-/*!
-\def CPPAD_COMPILER_HAS_ASINH
-C++11: Does compiler support std::asinh(double)
-*/
-# define CPPAD_COMPILER_HAS_ASINH @cppad_compiler_has_asinh@
-# endif
-
-# if __cplusplus >= 201100
-/*!
-\def CPPAD_COMPILER_HAS_ACOSH
-C++11: Does compiler support std::acosh(double)
-*/
-# define CPPAD_COMPILER_HAS_ACOSH @cppad_compiler_has_acosh@
-# endif
-
-# if __cplusplus >= 201100
-/*!
-\def CPPAD_COMPILER_HAS_ATANH
-C++11: Does compiler support std::atanh(double)
-*/
-# define CPPAD_COMPILER_HAS_ATANH @cppad_compiler_has_atanh@
-# endif
-
-# if __cplusplus >= 201100
-/*!
-\def CPPAD_COMPILER_HAS_EXPM1
-C++11: Does compiler support std::expm1(double)
-*/
-# define CPPAD_COMPILER_HAS_EXPM1 @cppad_compiler_has_expm1@
-# endif
-
-# if __cplusplus >= 201100
-/*!
-\def CPPAD_COMPILER_HAS_LOG1P
-C++11: Does compiler support std::log1p(double)
-*/
-# define CPPAD_COMPILER_HAS_LOG1P @cppad_compiler_has_log1p@
-# endif
-
-# if __cplusplus >= 201100
-/*!
-\def CPPAD_HAS_HIGH_RESOLUTION_CLOCK
-C++11: Does compiler support std::chrono::high_resolution_clock
-*/
-# define CPPAD_HAS_HIGH_RESOLUTION_CLOCK @cppad_has_high_resolution_clock@
+# define CPPAD_USE_CPLUSPLUS_2011 @cppad_cplusplus_201100_ok@
+# else
+# define CPPAD_USE_CPLUSPLUS_2011 0
 # endif
 
 /*!

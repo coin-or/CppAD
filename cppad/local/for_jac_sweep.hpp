@@ -231,7 +231,7 @@ void ForJacSweep(
 			break;
 			// -------------------------------------------------
 
-# if CPPAD_COMPILER_HAS_ACOSH
+# if CPPAD_USE_CPLUSPLUS_2011
 			case AcoshOp:
 			// sqrt(x * x - 1), acosh(x)
 			CPPAD_ASSERT_NARG_NRES(op, 1, 2);
@@ -251,7 +251,7 @@ void ForJacSweep(
 			break;
 			// -------------------------------------------------
 
-# if CPPAD_COMPILER_HAS_ASINH
+# if CPPAD_USE_CPLUSPLUS_2011
 			case AsinhOp:
 			// sqrt(1 + x * x), asinh(x)
 			CPPAD_ASSERT_NARG_NRES(op, 1, 2);
@@ -271,7 +271,7 @@ void ForJacSweep(
 			break;
 			// -------------------------------------------------
 
-# if CPPAD_COMPILER_HAS_ATANH
+# if CPPAD_USE_CPLUSPLUS_2011
 			case AtanhOp:
 			// 1 - x * x, atanh(x)
 			CPPAD_ASSERT_NARG_NRES(op, 1, 2);
@@ -380,7 +380,7 @@ void ForJacSweep(
 			break;
 			// -------------------------------------------------
 
-# if CPPAD_COMPILER_HAS_EXPM1
+# if CPPAD_USE_CPLUSPLUS_2011
 			case Expm1Op:
 			CPPAD_ASSERT_NARG_NRES(op, 1, 1);
 			forward_sparse_jacobian_unary_op(
@@ -444,7 +444,7 @@ void ForJacSweep(
 			break;
 			// -------------------------------------------------
 
-# if CPPAD_COMPILER_HAS_LOG1P
+# if CPPAD_USE_CPLUSPLUS_2011
 			case Log1pOp:
 			CPPAD_ASSERT_NARG_NRES(op, 1, 1);
 			forward_sparse_jacobian_unary_op(

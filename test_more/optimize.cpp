@@ -572,7 +572,7 @@ namespace {
 	bool depend_four(void)
 	{	// erf function is a special case for optimize
 		bool ok = true;
-# if CPPAD_COMPILER_HAS_ERF
+# if CPPAD_USE_CPLUSPLUS_2011
 		using CppAD::AD;
 		using CppAD::vector;
 

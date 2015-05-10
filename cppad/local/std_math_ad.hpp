@@ -315,23 +315,15 @@ namespace CppAD {
      CPPAD_STANDARD_MATH_UNARY_AD(tan, TanOp)
      CPPAD_STANDARD_MATH_UNARY_AD(tanh, TanhOp)
 
-# if CPPAD_COMPILER_HAS_ASINH
+# if CPPAD_USE_CPLUSPLUS_2011
      CPPAD_STANDARD_MATH_UNARY_AD(asinh, AsinhOp)
-# endif
-# if CPPAD_COMPILER_HAS_ACOSH
      CPPAD_STANDARD_MATH_UNARY_AD(acosh, AcoshOp)
-# endif
-# if CPPAD_COMPILER_HAS_ATANH
      CPPAD_STANDARD_MATH_UNARY_AD(atanh, AtanhOp)
-# endif
-# if CPPAD_COMPILER_HAS_EXPM1
      CPPAD_STANDARD_MATH_UNARY_AD(expm1, Expm1Op)
-# endif
-# if CPPAD_COMPILER_HAS_LOG1P
      CPPAD_STANDARD_MATH_UNARY_AD(log1p, Log1pOp)
 # endif
 
-# if CPPAD_COMPILER_HAS_ERF
+# if CPPAD_USE_CPLUSPLUS_2011
 	// Error function is a special case
 	template <class Base>
 	inline AD<Base> erf(const AD<Base> &x)

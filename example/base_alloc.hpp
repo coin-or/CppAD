@@ -312,22 +312,12 @@ $cref/erf, asinh, acosh, atanh, expm1, log1p
 /$$ functions
 required by $code AD<base_alloc>$$:
 $codep */
-# if CPPAD_COMPILER_HAS_ERF
+# if CPPAD_USE_CPLUSPLUS_2011
 	BASE_ALLOC_STD_MATH(erf)
-# endif
-# if CPPAD_COMPILER_HAS_ASINH
 	BASE_ALLOC_STD_MATH(asinh)
-# endif
-# if CPPAD_COMPILER_HAS_ACOSH
 	BASE_ALLOC_STD_MATH(acosh)
-# endif
-# if CPPAD_COMPILER_HAS_ATANH
 	BASE_ALLOC_STD_MATH(atanh)
-# endif
-# if CPPAD_COMPILER_HAS_EXPM1
 	BASE_ALLOC_STD_MATH(expm1)
-# endif
-# if CPPAD_COMPILER_HAS_LOG1P
 	BASE_ALLOC_STD_MATH(log1p)
 # endif
 /* $$

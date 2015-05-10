@@ -47,7 +47,7 @@ $codei%
 %$$
 
 
-$head CPPAD_COMPILER_HAS_LOG1P$$
+$head CPPAD_USE_CPLUSPLUS_2011$$
 This preprocessor symbol is one if
 the function $codei%std::log1p(double %x%)%$$ is defined the in the
 include file $code <cmath>$$.
@@ -60,7 +60,7 @@ $head Other$$
 If the function $codei%std::log1p(double %x%)%$$ is not defined,
 CppAD uses the representation
 $latex \[
-\R{log1p} (x) = log(1 + x)
+\R{log1p} (x) = \log(1 + x)
 \] $$
 to compute this function.
 
@@ -77,7 +77,7 @@ $end
 -------------------------------------------------------------------------------
 */
 # include <cppad/configure.hpp>
-# if ! CPPAD_COMPILER_HAS_LOG1P
+# if ! CPPAD_USE_CPLUSPLUS_2011
 
 // BEGIN CppAD namespace
 namespace CppAD {
@@ -104,5 +104,5 @@ inline AD<Base> log1p(const VecAD_reference<Base> &x)
 
 } // END CppAD namespace
 
-# endif // CPPAD_COMPILER_HAS_LOG1P
+# endif // CPPAD_USE_CPLUSPLUS_2011
 # endif // CPPAD_LOG1P_INCLUDED

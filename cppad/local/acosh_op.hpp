@@ -1,7 +1,7 @@
 /* $Id$ */
 # ifndef CPPAD_ACOSH_OP_INCLUDED
 # define CPPAD_ACOSH_OP_INCLUDED
-# if CPPAD_COMPILER_HAS_ACOSH
+# if CPPAD_USE_CPLUSPLUS_2011
 
 /* --------------------------------------------------------------------------
 CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-15 Bradley M. Bell

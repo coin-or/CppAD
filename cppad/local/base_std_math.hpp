@@ -98,12 +98,12 @@ The following preprocessor symbols are one (true) and zero (false)
 if the corresponding function is supported by the compiler.
 $table
 $icode%fun%   %$$ $cnext  $icode symbol$$                $rnext
-$code erf$$       $cnext  $code CPPAD_COMPILER_HAS_ERF$$ $rnext
-$code asinh$$     $cnext  $code CPPAD_COMPILER_HAS_ASINH$$ $rnext
-$code acosh$$     $cnext  $code CPPAD_COMPILER_HAS_ACOSH$$ $rnext
-$code atanh$$     $cnext  $code CPPAD_COMPILER_HAS_ATANH$$ $rnext
-$code expm1$$     $cnext  $code CPPAD_COMPILER_HAS_EXPM1$$ $rnext
-$code log1p$$     $cnext  $code CPPAD_COMPILER_HAS_LOG1P$$
+$code erf$$       $cnext  $code CPPAD_USE_CPLUSPLUS_2011$$ $rnext
+$code asinh$$     $cnext  $code CPPAD_USE_CPLUSPLUS_2011$$ $rnext
+$code acosh$$     $cnext  $code CPPAD_USE_CPLUSPLUS_2011$$ $rnext
+$code atanh$$     $cnext  $code CPPAD_USE_CPLUSPLUS_2011$$ $rnext
+$code expm1$$     $cnext  $code CPPAD_USE_CPLUSPLUS_2011$$ $rnext
+$code log1p$$     $cnext  $code CPPAD_USE_CPLUSPLUS_2011$$
 $tend
 If the corresponding symbol is true,
 the type $icode Base$$ must support the syntax

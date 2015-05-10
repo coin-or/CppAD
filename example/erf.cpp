@@ -1,9 +1,9 @@
 /* $Id$ */
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-12 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-15 Bradley M. Bell
 
 CppAD is distributed under multiple licenses. This distribution is under
-the terms of the 
+the terms of the
                     Eclipse Public License Version 1.0.
 
 A copy of this license is included in the COPYING file of this distribution.
@@ -51,18 +51,18 @@ bool Erf(void)
 	// declare independent variables and start tape recording
 	CppAD::Independent(ax);
 
-	// range space vector 
+	// range space vector
 	size_t m = 1;
 	CPPAD_TESTVECTOR(AD<double>) ay(m);
 	ay[0] = CppAD::erf(ax[0]);
 
 	// create f: x -> y and stop tape recording
-	CppAD::ADFun<double> f(ax, ay); 
+	CppAD::ADFun<double> f(ax, ay);
 
-	// check relative erorr 
+	// check relative erorr
 	double erf_x0 = 0.52050;
 	ok &= NearEqual(ay[0] , erf_x0,  0.,    4e-4);
-# if CPPAD_COMPILER_HAS_ERF
+# if CPPAD_USE_CPLUSPLUS_2011
 	ok &= NearEqual(ay[0] , erf_x0,  0.,    1e-5);
 # endif
 
@@ -77,7 +77,7 @@ bool Erf(void)
 	dx[0] = 1.;
 	dy    = f.Forward(1, dx);
 	ok   &= NearEqual(dy[0], check,  0.,  1e-3);
-# if CPPAD_COMPILER_HAS_ERF
+# if CPPAD_USE_CPLUSPLUS_2011
 	ok   &= NearEqual(dy[0], check,  0.,  eps);
 # endif
 
@@ -87,7 +87,7 @@ bool Erf(void)
 	w[0]  = 1.;
 	dw    = f.Reverse(1, w);
 	ok   &= NearEqual(dw[0], check,  0., 1e-1);
-# if CPPAD_COMPILER_HAS_ERF
+# if CPPAD_USE_CPLUSPLUS_2011
 	ok   &= NearEqual(dw[0], check,  0., eps);
 # endif
 
