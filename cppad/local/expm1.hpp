@@ -17,7 +17,7 @@ Please visit http://www.coin-or.org/CppAD/ for information on other licenses.
 -------------------------------------------------------------------------------
 $begin expm1$$
 
-$section The Inverse Hyperbolic Sine Function$$
+$section The Exponential Function Minus One$$
 $spell
 	exp
 	expm1
@@ -34,7 +34,7 @@ $icode%y% = expm1(%x%)%$$
 
 
 $head Description$$
-Returns the value of the inverse hyperbolic sine function which is defined
+Returns the value of the exponential function minus one which is defined
 by $icode%y% == exp(%x%) - 1%$$.
 
 
@@ -62,7 +62,7 @@ $head Other$$
 If the function $codei%std::expm1(double %x%)%$$ is not defined,
 CppAD uses the representation
 $latex \[
-\R{expm1} (x) = exp(x) - 1
+\R{expm1} (x) = \exp(x) - 1
 \] $$
 to compute this function.
 
