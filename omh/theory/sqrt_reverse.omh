@@ -1,9 +1,9 @@
 $Id$
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-14 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-15 Bradley M. Bell
 
 CppAD is distributed under multiple licenses. This distribution is under
-the terms of the 
+the terms of the
                     Eclipse Public License Version 1.0.
 
 A copy of this license is included in the COPYING file of this distribution.
@@ -16,11 +16,8 @@ $spell
 	Taylor
 $$
 
-$index sqrt, reverse theory$$
-$index theory, sqrt reverse$$
-$index reverse, sqrt theory$$
-
 $section Square Root Function Reverse Mode Theory$$
+$index sqrt$$
 
 
 We use the reverse theory
@@ -32,27 +29,27 @@ $xref%
 definition for the functions $latex H$$ and $latex G$$.
 
 The forward mode formulas for the
-$cref/square root/SqrtForward/$$
+$cref/square root/sqrt_forward/$$
 function are
 $latex \[
-	z^{(j)}  =  \sqrt { x^{(0)} } 
+	z^{(j)}  =  \sqrt { x^{(0)} }
 \] $$
 
 for the case $latex j = 0$$, and for $latex j > 0$$,
 
 $latex \[
-z^{(j)}  =  \frac{1}{j} \frac{1}{ z^{(0)} } 
+z^{(j)}  =  \frac{1}{j} \frac{1}{ z^{(0)} }
 \left(
 	\frac{j}{2} x^{(j) }
-	- \sum_{\ell=1}^{j-1} \ell z^{(\ell)} z^{(j-\ell)}  
+	- \sum_{\ell=1}^{j-1} \ell z^{(\ell)} z^{(j-\ell)}
 \right)
-\] $$ 
+\] $$
 
 If $latex j = 0$$, we have the relation
 
 $latex \[
 \begin{array}{rcl}
-\D{H}{ x^{(j)} } & = & 
+\D{H}{ x^{(j)} } & = &
 \D{G}{ x^{(j)} }  + \D{G}{ z^{(j)} } \D{ z^{(j)} }{ x^{(0)} }
 \\
 & = &
@@ -64,20 +61,20 @@ If $latex j > 0$$, then for $latex k = 1, \ldots , j-1$$
 
 $latex \[
 \begin{array}{rcl}
-\D{H}{ z^{(0)} } & = & 
-\D{G}{ z^{(0)} }  + \D{G} { z^{(j)} } \D{ z^{(j)} }{ z^{(0)} } 
+\D{H}{ z^{(0)} } & = &
+\D{G}{ z^{(0)} }  + \D{G} { z^{(j)} } \D{ z^{(j)} }{ z^{(0)} }
 \\
 & = &
-\D{G}{ z^{(0)} }  - 
+\D{G}{ z^{(0)} }  -
 \D{G}{ z^{(j)} }  \frac{ z^{(j)} }{ z^{(0)} }
 \\
-\D{H}{ x^{(j)} } & = & 
+\D{H}{ x^{(j)} } & = &
 \D{G}{ x^{(j)} }  + \D{G}{ z^{(j)} } \D{ z^{(j)} }{ x^{(j)} }
 \\
 & = &
-\D{G}{ x^{(j)} }  + \D{G}{ z^{(j)} } \frac{1}{ 2 z^{(0)} } 
+\D{G}{ x^{(j)} }  + \D{G}{ z^{(j)} } \frac{1}{ 2 z^{(0)} }
 \\
-\D{H}{ z^{(k)} } & = & 
+\D{H}{ z^{(k)} } & = &
 \D{G}{ z^{(k)} }  + \D{G}{ z^{(j)} } \D{ z^{(j)} }{ z^{(k)} }
 \\
 & = &

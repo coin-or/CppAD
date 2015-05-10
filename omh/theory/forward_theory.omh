@@ -207,8 +207,8 @@ $subhead Cases that Apply Recursion Above$$
 $table
 $rref exp_forward$$
 $rref log_forward$$
-$rref SqrtForward$$
-$rref SinCosForward$$
+$rref sqrt_forward$$
+$rref sin_cos_forward$$
 $rref atan_forward$$
 $rref asin_forward$$
 $rref acos_forward$$
