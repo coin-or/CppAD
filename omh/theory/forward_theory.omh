@@ -206,7 +206,7 @@ $children%
 $subhead Cases that Apply Recursion Above$$
 $table
 $rref exp_forward$$
-$rref LogForward$$
+$rref log_forward$$
 $rref SqrtForward$$
 $rref SinCosForward$$
 $rref atan_forward$$

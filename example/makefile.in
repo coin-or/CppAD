@@ -109,9 +109,9 @@ am__example_SOURCES_DIST = mul_level_adolc.cpp mul_level_adolc_ode.cpp \
 	bender_quad.cpp bool_fun.cpp capacity_order.cpp \
 	change_const.cpp check_for_nan.cpp check_numeric_type.cpp \
 	check_simple_vector.cpp compare.cpp compare_change.cpp \
-	complex_poly.cpp cond_exp.cpp expm1.cpp conj_grad.cpp cos.cpp \
-	cosh.cpp cppad_vector.cpp div.cpp div_eq.cpp equal_op_seq.cpp \
-	erf.cpp error_handler.cpp exp.cpp for_one.cpp for_two.cpp \
+	complex_poly.cpp cond_exp.cpp conj_grad.cpp cos.cpp cosh.cpp \
+	cppad_vector.cpp div.cpp div_eq.cpp equal_op_seq.cpp erf.cpp \
+	error_handler.cpp exp.cpp expm1.cpp for_one.cpp for_two.cpp \
 	forward.cpp forward_dir.cpp forward_order.cpp \
 	for_sparse_jac.cpp fun_assign.cpp fun_check.cpp \
 	hes_lagrangian.cpp hes_lu_det.cpp hes_minor_det.cpp \
@@ -149,12 +149,12 @@ am_example_OBJECTS = $(am__objects_1) example.$(OBJEXT) \
 	change_const.$(OBJEXT) check_for_nan.$(OBJEXT) \
 	check_numeric_type.$(OBJEXT) check_simple_vector.$(OBJEXT) \
 	compare.$(OBJEXT) compare_change.$(OBJEXT) \
-	complex_poly.$(OBJEXT) cond_exp.$(OBJEXT) expm1.$(OBJEXT) \
-	conj_grad.$(OBJEXT) cos.$(OBJEXT) cosh.$(OBJEXT) \
-	cppad_vector.$(OBJEXT) div.$(OBJEXT) div_eq.$(OBJEXT) \
-	equal_op_seq.$(OBJEXT) erf.$(OBJEXT) error_handler.$(OBJEXT) \
-	exp.$(OBJEXT) expm1.$(OBJEXT) for_one.$(OBJEXT) \
-	for_two.$(OBJEXT) forward.$(OBJEXT) forward_dir.$(OBJEXT) \
+	complex_poly.$(OBJEXT) cond_exp.$(OBJEXT) conj_grad.$(OBJEXT) \
+	cos.$(OBJEXT) cosh.$(OBJEXT) cppad_vector.$(OBJEXT) \
+	div.$(OBJEXT) div_eq.$(OBJEXT) equal_op_seq.$(OBJEXT) \
+	erf.$(OBJEXT) error_handler.$(OBJEXT) exp.$(OBJEXT) \
+	expm1.$(OBJEXT) for_one.$(OBJEXT) for_two.$(OBJEXT) \
+	forward.$(OBJEXT) forward_dir.$(OBJEXT) \
 	forward_order.$(OBJEXT) for_sparse_jac.$(OBJEXT) \
 	fun_assign.$(OBJEXT) fun_check.$(OBJEXT) \
 	hes_lagrangian.$(OBJEXT) hes_lu_det.$(OBJEXT) \
@@ -530,7 +530,6 @@ example_SOURCES = \
 	compare_change.cpp \
 	complex_poly.cpp \
 	cond_exp.cpp \
-	expm1.cpp \
 	conj_grad.cpp \
 	cos.cpp \
 	cosh.cpp \

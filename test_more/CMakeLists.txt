@@ -83,7 +83,6 @@ ADD_EXECUTABLE(test_more EXCLUDE_FROM_ALL test_more.cpp
 	compare.cpp
 	compare_change.cpp
 	cond_exp.cpp
-	expm1.cpp
 	cond_exp_ad.cpp
 	cond_exp_rev.cpp
 	copy.cpp
