@@ -304,11 +304,11 @@ namespace CppAD {
 }
 /* $$
 
-$head erf, asinh, acosh, atanh, expm1$$
+$head erf, asinh, acosh, atanh, expm1, log1p$$
 The following defines the
-$cref/erf, asinh, acosh, atanh, expm1
+$cref/erf, asinh, acosh, atanh, expm1, log1p
 	/base_std_math
-	/erf, asinh, acosh, atanh, expm1
+	/erf, asinh, acosh, atanh, expm1, log1p
 /$$ functions
 required by $code AD<base_alloc>$$:
 $codep */
@@ -326,6 +326,9 @@ $codep */
 # endif
 # if CPPAD_COMPILER_HAS_EXPM1
 	BASE_ALLOC_STD_MATH(expm1)
+# endif
+# if CPPAD_COMPILER_HAS_LOG1P
+	BASE_ALLOC_STD_MATH(log1p)
 # endif
 /* $$
 

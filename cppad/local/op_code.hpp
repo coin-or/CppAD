@@ -104,6 +104,7 @@ enum OpCode {
 	LevpOp,   //  variable  <= parameter
 	LevvOp,   //  variable  <= variable
 	LogOp,    //  log(variable)
+	Log1pOp,   // log1p(variable)
 	LtpvOp,   //  parameter < variable
 	LtvpOp,   //  variable  < parameter
 	LtvvOp,   //  variable  < variable
@@ -202,6 +203,7 @@ inline size_t NumArg( OpCode op)
 		2, // LevpOp
 		2, // LevvOp
 		1, // LogOp
+		1, // Log1pOp
 		2, // LtpvOp
 		2, // LtvpOp
 		2, // LtvvOp
@@ -306,6 +308,7 @@ inline size_t NumRes(OpCode op)
 		0, // LevpOp
 		0, // LevvOp
 		1, // LogOp
+		1, // Log1pOp
 		0, // LtpvOp
 		0, // LtvpOp
 		0, // LtvvOp
@@ -393,6 +396,7 @@ inline const char* OpName(OpCode op)
 		"Levp"  ,
 		"Levv"  ,
 		"Log"   ,
+		"Log1p" ,
 		"Ltpv"  ,
 		"Ltvp"  ,
 		"Ltvv"  ,
@@ -705,6 +709,7 @@ void printOp(
 		case ExpOp:
 		case Expm1Op:
 		case LogOp:
+		case Log1pOp:
 		case SignOp:
 		case SinOp:
 		case SinhOp:
@@ -888,6 +893,7 @@ inline void assert_arg_before_result(
 		case ExpOp:
 		case Expm1Op:
 		case LogOp:
+		case Log1pOp:
 		case ParOp:
 		case SignOp:
 		case SqrtOp:

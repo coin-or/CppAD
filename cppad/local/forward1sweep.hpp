@@ -640,6 +640,13 @@ void forward1sweep(
 			break;
 			// -------------------------------------------------
 
+# if CPPAD_COMPILER_HAS_LOG1P
+			case Log1pOp:
+			forward_log1p_op(p, q, i_var, arg[0], J, taylor);
+			break;
+# endif
+			// -------------------------------------------------
+
 			case LtpvOp:
 			if( ( p == 0 ) & ( compare_change_count > 0 ) )
 			{	forward_ltpv_op_0(

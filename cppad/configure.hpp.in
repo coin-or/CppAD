@@ -104,6 +104,14 @@ C++11: Does compiler support std::expm1(double)
 
 # if __cplusplus >= 201100
 /*!
+\def CPPAD_COMPILER_HAS_LOG1P
+C++11: Does compiler support std::log1p(double)
+*/
+# define CPPAD_COMPILER_HAS_LOG1P @cppad_compiler_has_log1p@
+# endif
+
+# if __cplusplus >= 201100
+/*!
 \def CPPAD_HAS_HIGH_RESOLUTION_CLOCK
 C++11: Does compiler support std::chrono::high_resolution_clock
 */

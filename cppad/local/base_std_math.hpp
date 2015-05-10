@@ -93,7 +93,7 @@ must be defined and have the same prototype as $codei%CppAD::%Fun%$$.
 For example,
 $cref/float/base_float.hpp/Unary Standard Math/$$.
 
-$head erf, asinh, acosh, atanh, expm1$$
+$head erf, asinh, acosh, atanh, expm1, log1p$$
 The following preprocessor symbols are one (true) and zero (false)
 if the corresponding function is supported by the compiler.
 $table
@@ -103,6 +103,7 @@ $code asinh$$     $cnext  $code CPPAD_COMPILER_HAS_ASINH$$ $rnext
 $code acosh$$     $cnext  $code CPPAD_COMPILER_HAS_ACOSH$$ $rnext
 $code atanh$$     $cnext  $code CPPAD_COMPILER_HAS_ATANH$$ $rnext
 $code expm1$$     $cnext  $code CPPAD_COMPILER_HAS_EXPM1$$ $rnext
+$code log1p$$     $cnext  $code CPPAD_COMPILER_HAS_LOG1P$$
 $tend
 If the corresponding symbol is true,
 the type $icode Base$$ must support the syntax
@@ -111,7 +112,7 @@ $codei%
 %$$
 where $icode x$$ and $icode y$$ have the same prototype as above.
 For example, see
-$cref/base_alloc/base_alloc.hpp/erf, asinh, acosh, atanh, expm1/$$.
+$cref/base_alloc/base_alloc.hpp/erf, asinh, acosh, atanh, expm1, log1p/$$.
 
 $head sign$$
 $index sign, base require$$

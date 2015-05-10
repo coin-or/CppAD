@@ -527,6 +527,15 @@ void ReverseSweep(
 			break;
 			// --------------------------------------------------
 
+# if CPPAD_COMPILER_HAS_LOG1P
+			case Log1pOp:
+			reverse_log1p_op(
+				d, i_var, arg[0], J, Taylor, K, Partial
+			);
+			break;
+# endif
+			// --------------------------------------------------
+
 			case MulvvOp:
 			reverse_mulvv_op(
 				d, i_var, arg, parameter, J, Taylor, K, Partial

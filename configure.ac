@@ -498,6 +498,7 @@ AC_SUBST(cppad_compiler_has_asinh, 0)
 AC_SUBST(cppad_compiler_has_acosh, 0)
 AC_SUBST(cppad_compiler_has_atanh, 0)
 AC_SUBST(cppad_compiler_has_expm1, 0)
+AC_SUBST(cppad_compiler_has_log1p, 0)
 AC_SUBST(cppad_has_high_resolution_clock, 0)
 
 dnl Determine if size_t has same size as unsigned int

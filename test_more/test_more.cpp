@@ -63,6 +63,7 @@ extern bool jacobian(void);
 extern bool limits(void);
 extern bool log(void);
 extern bool log10(void);
+extern bool log1p(void);
 extern bool Mul(void);
 extern bool mul_level(void);
 extern bool MulEq(void);
@@ -177,6 +178,7 @@ int main(void)
 	ok &= Run( limits,          "limits"         );
 	ok &= Run( log,             "log"            );
 	ok &= Run( log10,           "log10"          );
+	ok &= Run( log1p,           "log1p"          );
 	ok &= Run( Mul,             "Mul"            );
 	ok &= Run( mul_level,       "mul_level"      );
 	ok &= Run( MulEq,           "MulEq"          );

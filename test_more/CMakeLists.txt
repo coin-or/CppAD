@@ -106,6 +106,7 @@ ADD_EXECUTABLE(test_more EXCLUDE_FROM_ALL test_more.cpp
 	jacobian.cpp
 	limits.cpp
 	log.cpp
+	log1p.cpp
 	log10.cpp
 	mul.cpp
 	mul_eq.cpp

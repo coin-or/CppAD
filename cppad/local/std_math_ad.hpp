@@ -327,6 +327,9 @@ namespace CppAD {
 # if CPPAD_COMPILER_HAS_EXPM1
      CPPAD_STANDARD_MATH_UNARY_AD(expm1, Expm1Op)
 # endif
+# if CPPAD_COMPILER_HAS_LOG1P
+     CPPAD_STANDARD_MATH_UNARY_AD(log1p, Log1pOp)
+# endif
 
 # if CPPAD_COMPILER_HAS_ERF
 	// Error function is a special case

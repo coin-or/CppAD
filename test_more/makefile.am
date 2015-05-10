@@ -132,6 +132,7 @@ test_more_SOURCES  = \
 	jacobian.cpp \
 	limits.cpp \
 	log.cpp \
+	log1p.cpp \
 	log10.cpp \
 	mul.cpp \
 	mul_eq.cpp \

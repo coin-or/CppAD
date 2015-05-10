@@ -250,6 +250,9 @@ namespace CppAD {
 # if CPPAD_COMPILER_HAS_EXPM1
 	CPPAD_USER_MACRO(expm1)
 # endif
+# if CPPAD_COMPILER_HAS_LOG1P
+	CPPAD_USER_MACRO(log1p)
+# endif
 }
 /* $$
 

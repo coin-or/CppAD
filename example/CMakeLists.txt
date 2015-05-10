@@ -138,6 +138,7 @@ ADD_EXECUTABLE(example EXCLUDE_FROM_ALL example.cpp
 	jacobian.cpp
 	limits.cpp
 	log.cpp
+	log1p.cpp
 	log10.cpp
 	lu_factor.cpp
 	lu_invert.cpp

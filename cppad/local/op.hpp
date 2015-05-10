@@ -39,6 +39,7 @@ Please visit http://www.coin-or.org/CppAD/ for information on other licenses.
 # include <cppad/local/expm1_op.hpp>
 # include <cppad/local/load_op.hpp>
 # include <cppad/local/log_op.hpp>
+# include <cppad/local/log1p_op.hpp>
 # include <cppad/local/mul_op.hpp>
 # include <cppad/local/parameter_op.hpp>
 # include <cppad/local/pow_op.hpp>

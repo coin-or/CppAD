@@ -1557,6 +1557,7 @@ void optimize_run(
 			case ExpOp:
 			case Expm1Op:
 			case LogOp:
+			case Log1pOp:
 			case PowvpOp:
 			case SignOp:
 			case SinOp:
@@ -2323,6 +2324,7 @@ void optimize_run(
 			case ExpOp:
 			case Expm1Op:
 			case LogOp:
+			case Log1pOp:
 			case SignOp:
 			case SinOp:
 			case SinhOp:

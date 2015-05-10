@@ -444,6 +444,16 @@ void ForJacSweep(
 			break;
 			// -------------------------------------------------
 
+# if CPPAD_COMPILER_HAS_LOG1P
+			case Log1pOp:
+			CPPAD_ASSERT_NARG_NRES(op, 1, 1);
+			forward_sparse_jacobian_unary_op(
+				i_var, arg[0], var_sparsity
+			);
+			break;
+# endif
+			// -------------------------------------------------
+
 			case MulvvOp:
 			CPPAD_ASSERT_NARG_NRES(op, 2, 1);
 			forward_sparse_jacobian_binary_op(

@@ -165,6 +165,9 @@ namespace CppAD {
 # if CPPAD_COMPILER_HAS_EXPM1
 	CPPAD_STANDARD_MATH_UNARY(float, expm1)
 # endif
+# if CPPAD_COMPILER_HAS_LOG1P
+	CPPAD_STANDARD_MATH_UNARY(float, log1p)
+# endif
 }
 /* $$
 The absolute value function is special because its $code std$$ name is

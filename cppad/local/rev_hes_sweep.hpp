@@ -470,6 +470,16 @@ void RevHesSweep(
 			break;
 			// -------------------------------------------------
 
+# if CPPAD_COMPILER_HAS_LOG1P
+			case Log1pOp:
+			CPPAD_ASSERT_NARG_NRES(op, 1, 1)
+			reverse_sparse_hessian_nonlinear_unary_op(
+			i_var, arg[0], RevJac, for_jac_sparse, rev_hes_sparse
+			);
+			break;
+# endif
+			// -------------------------------------------------
+
 			case MulvvOp:
 			CPPAD_ASSERT_NARG_NRES(op, 2, 1)
 			reverse_sparse_hessian_mul_op(

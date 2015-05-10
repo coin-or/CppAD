@@ -113,6 +113,7 @@ extern bool Jacobian(void);
 extern bool limits(void);
 extern bool log(void);
 extern bool log10(void);
+extern bool log1p(void);
 extern bool LuFactor(void);
 extern bool LuInvert(void);
 extern bool LuRatio(void);
@@ -275,6 +276,7 @@ int main(void)
 	ok &= Run( limits,            "limits"           );
 	ok &= Run( log,               "log"              );
 	ok &= Run( log10,             "log10"            );
+	ok &= Run( log1p,             "log1p"            );
 	ok &= Run( LuFactor,          "LuFactor"         );
 	ok &= Run( LuInvert,          "LuInvert"         );
 	ok &= Run( LuRatio,           "LuRatio"          );

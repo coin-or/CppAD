@@ -219,11 +219,11 @@ $code sinh$$,
 $code sqrt$$,
 $code tan$$.
 
-$head erf, asinh, acosh, atanh, expm1$$
+$head erf, asinh, acosh, atanh, expm1, log1p$$
 If the
-$cref/erf, asinh, acosh, atanh, expm1
+$cref/erf, asinh, acosh, atanh, expm1, log1p
 	/base_std_math
-	/erf, asinh, acosh, atanh, expm1
+	/erf, asinh, acosh, atanh, expm1, log1p
 /$$,
 functions are supported by the compiler,
 they must also be supported by a $icode Base$$ type;
@@ -253,6 +253,9 @@ namespace CppAD {
 # endif
 # if CPPAD_COMPILER_HAS_EXPM1
 	CPPAD_BASE_ADOLC_NO_SUPPORT(expm1)
+# endif
+# if CPPAD_COMPILER_HAS_LOG1P
+	CPPAD_BASE_ADOLC_NO_SUPPORT(log1p)
 # endif
 # undef CPPAD_BASE_ADOLC_NO_SUPPORT
 }

@@ -431,6 +431,13 @@ void forward2sweep(
 			break;
 			// ---------------------------------------------------
 
+# if CPPAD_COMPILER_HAS_LOG1P
+			case Log1pOp:
+			forward_log1p_op_dir(q, r, i_var, arg[0], J, taylor);
+			break;
+# endif
+			// ---------------------------------------------------
+
 			case MulvvOp:
 			forward_mulvv_op_dir(q, r, i_var, arg, parameter, J, taylor);
 			break;
