@@ -258,6 +258,7 @@ cppad_compiler_has_asinh = @cppad_compiler_has_asinh@
 cppad_compiler_has_atanh = @cppad_compiler_has_atanh@
 cppad_compiler_has_erf = @cppad_compiler_has_erf@
 cppad_compiler_has_expm1 = @cppad_compiler_has_expm1@
+cppad_compiler_has_log1p = @cppad_compiler_has_log1p@
 cppad_cppadvector = @cppad_cppadvector@
 cppad_cxx_flags = @cppad_cxx_flags@
 cppad_description = @cppad_description@

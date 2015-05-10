@@ -339,6 +339,7 @@ cppad_compiler_has_asinh = @cppad_compiler_has_asinh@
 cppad_compiler_has_atanh = @cppad_compiler_has_atanh@
 cppad_compiler_has_erf = @cppad_compiler_has_erf@
 cppad_compiler_has_expm1 = @cppad_compiler_has_expm1@
+cppad_compiler_has_log1p = @cppad_compiler_has_log1p@
 cppad_cppadvector = @cppad_cppadvector@
 cppad_cxx_flags = @cppad_cxx_flags@
 cppad_description = @cppad_description@
@@ -592,6 +593,8 @@ nobase_myinclude_HEADERS = \
 	cppad/local/limits.hpp \
 	cppad/local/load_op.hpp \
 	cppad/local/log_op.hpp \
+	cppad/local/log1p.hpp \
+	cppad/local/log1p_op.hpp \
 	cppad/local/lu_ratio.hpp \
 	cppad/local/math_other.hpp \
 	cppad/local/mul_eq.hpp \

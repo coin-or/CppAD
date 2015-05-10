@@ -667,6 +667,7 @@ EGREP
 GREP
 CPP
 cppad_has_high_resolution_clock
+cppad_compiler_has_log1p
 cppad_compiler_has_expm1
 cppad_compiler_has_atanh
 cppad_compiler_has_acosh
@@ -5490,6 +5491,8 @@ cppad_compiler_has_acosh=0
 cppad_compiler_has_atanh=0
 
 cppad_compiler_has_expm1=0
+
+cppad_compiler_has_log1p=0
 
 cppad_has_high_resolution_clock=0
 
