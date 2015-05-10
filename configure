@@ -667,12 +667,7 @@ EGREP
 GREP
 CPP
 cppad_has_high_resolution_clock
-cppad_compiler_has_log1p
-cppad_compiler_has_expm1
-cppad_compiler_has_atanh
-cppad_compiler_has_acosh
-cppad_compiler_has_asinh
-cppad_compiler_has_erf
+cppad_use_cplusplus_2011
 cppad_has_cstdint_8_to_64
 cppad_has_rvalue
 cppad_has_nullptr
@@ -5482,17 +5477,7 @@ cppad_has_rvalue=0
 
 cppad_has_cstdint_8_to_64=0
 
-cppad_compiler_has_erf=0
-
-cppad_compiler_has_asinh=0
-
-cppad_compiler_has_acosh=0
-
-cppad_compiler_has_atanh=0
-
-cppad_compiler_has_expm1=0
-
-cppad_compiler_has_log1p=0
+cppad_use_cplusplus_2011=0
 
 cppad_has_high_resolution_clock=0
 

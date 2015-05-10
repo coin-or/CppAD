@@ -55,10 +55,20 @@ The purpose of this section is to
 assist you in learning about changes between various versions of CppAD.
 
 $head 05-10$$
+$list number$$
 Add the exponential minus one function $cref log1p$$.
 If you are defining your own base type,
 note that $cref/log1p/base_std_math/erf, asinh, acosh, atanh, expm1, log1p/$$
 was added to the base type requirements.
+$lnext
+Use the single preprocessor flag
+$code CPPAD_USE_CPLUSPLUS_2011$$ to signal that the functions
+$cref/erf, asinh, acosh, atanh, expm1, log1p
+	/base_std_math
+	/erf, asinh, acosh, atanh, expm1, log1p
+/$$
+are part of the base type requirements.
+$lend
 
 $head 05-09$$
 $list number$$
