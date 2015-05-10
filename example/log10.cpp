@@ -1,9 +1,9 @@
 /* $Id$ */
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-12 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-15 Bradley M. Bell
 
 CppAD is distributed under multiple licenses. This distribution is under
-the terms of the 
+the terms of the
                     Eclipse Public License Version 1.0.
 
 A copy of this license is included in the COPYING file of this distribution.
@@ -32,7 +32,7 @@ $end
 
 # include <cppad/cppad.hpp>
 
-bool Log10(void)
+bool log10(void)
 {	bool ok = true;
 
 	using CppAD::AD;
@@ -49,17 +49,17 @@ bool Log10(void)
 
 	// ten raised to the x0 power
 	AD<double> ten = 10.;
-	AD<double> pow_10_x0 = CppAD::pow(ten, x[0]); 
+	AD<double> pow_10_x0 = CppAD::pow(ten, x[0]);
 
-	// range space vector 
+	// range space vector
 	size_t m = 1;
 	CPPAD_TESTVECTOR(AD<double>) y(m);
 	y[0] = CppAD::log10(pow_10_x0);
 
 	// create f: x -> y and stop tape recording
-	CppAD::ADFun<double> f(x, y); 
+	CppAD::ADFun<double> f(x, y);
 
-	// check value 
+	// check value
 	ok &= NearEqual(y[0] , x0,  1e-10 , 1e-10);
 
 	// forward computation of first partial w.r.t. x[0]
