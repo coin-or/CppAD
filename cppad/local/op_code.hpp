@@ -96,7 +96,7 @@ enum OpCode {
 	EqvvOp,   //  variable   == variable
 	ErfOp,    //  erf(variable)
 	ExpOp,    //  exp(variable)
-	Expm1Op,   // atanh(variable)
+	Expm1Op,   // expm1(variable)
 	InvOp,    //                             independent variable
 	LdpOp,    //    z[parameter]
 	LdvOp,    //    z[variable]
