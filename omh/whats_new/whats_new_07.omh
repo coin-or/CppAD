@@ -1,6 +1,6 @@
 $Id$
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-14 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-15 Bradley M. Bell
 
 CppAD is distributed under multiple licenses. This distribution is under
 the terms of the 
@@ -667,11 +667,11 @@ $cref/exp_eps_for2/exp_eps_for2/Return Value/$$.
 $pre
 
 $$
-The summation index in $cref SqrtReverse$$ was changed from
+The summation index in $cref sqrt_reverse$$ was changed from
 $latex k$$ to $latex \ell$$ to make partial differentiation
 with respect to $latex z^{(k)}$$ easier to understand.
 In addition, a sign error was corrected near the end of 
-$cref SqrtReverse$$.
+$cref sqrt_reverse$$.
 $pre
 
 $$

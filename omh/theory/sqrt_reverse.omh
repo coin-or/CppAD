@@ -10,7 +10,7 @@ A copy of this license is included in the COPYING file of this distribution.
 Please visit http://www.coin-or.org/CppAD/ for information on other licenses.
 -------------------------------------------------------------------------- */
 
-$begin SqrtReverse$$
+$begin sqrt_reverse$$
 $spell
 	sqrt
 	Taylor
@@ -21,10 +21,9 @@ $index sqrt$$
 
 
 We use the reverse theory
-$xref%
-	ReverseTheory%
-	Standard Math Functions%
-	standard math function
+$cref%standard math function
+	%ReverseTheory
+	%Standard Math Functions
 %$$
 definition for the functions $latex H$$ and $latex G$$.
 
