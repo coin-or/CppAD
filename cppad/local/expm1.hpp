@@ -16,11 +16,8 @@ Please visit http://www.coin-or.org/CppAD/ for information on other licenses.
 /*
 -------------------------------------------------------------------------------
 $begin expm1$$
-
-$section The Exponential Function Minus One$$
 $spell
 	exp
-	expm1
 	expm1
 	const
 	Vec
@@ -28,38 +25,28 @@ $spell
 	cmath
 	CppAD
 $$
+$section The Exponential Function Minus One: expm1$$
 
 $head Syntax$$
 $icode%y% = expm1(%x%)%$$
-
 
 $head Description$$
 Returns the value of the exponential function minus one which is defined
 by $icode%y% == exp(%x%) - 1%$$.
 
-
-$head x$$
-The argument $icode x$$, and the result $icode y$$
-have one of the following paris of prototypes:
-$codei%
-	const float%%                  &%x%,     float%%    %y%
-	const double%%                 &%x%,     double%%   %y%
-	const AD<%Base%>               &%x%,     AD<%Base%> %y%
-	const VecAD<%Base%>::reference &%x%,     AD<%Base%> %y%
-%$$
-
+$head x, y$$
+See the $cref/possible types/unary_standard_math/Possible Types/$$
+for a unary standard math function.
 
 $head CPPAD_USE_CPLUSPLUS_2011$$
-This preprocessor symbol is one if
-the function $codei%std::expm1(double %x%)%$$ is defined the in the
-include file $code <cmath>$$.
-Otherwise this preprocessor symbol is zero.
-If this preprocessor symbols is one,
-CppAD uses the compiler's version of $code expm1$$
-and it corresponds to an $cref/atomic/glossary/Operation/Atomic/$$ operation.
 
-$head Other$$
-If the function $codei%std::expm1(double %x%)%$$ is not defined,
+$subhead true$$
+If this preprocessor symbol is true ($code 1$$),
+and $icode x$$ is an AD type,
+this is an $cref/atomic operation/glossary/Operation/Atomic/$$.
+
+$subhead false$$
+If this preprocessor symbol is false ($code 0$$),
 CppAD uses the representation
 $latex \[
 \R{expm1} (x) = \exp(x) - 1

@@ -16,26 +16,19 @@ Please visit http://www.coin-or.org/CppAD/ for information on other licenses.
 /*
 -------------------------------------------------------------------------------
 $begin erf$$
-
-$section The AD Error Function$$
 $spell
-	std
-	cmath
-	Vedder
-	Cpp
-	namespace
-	Vec
 	erf
 	const
+	Vec
+	std
+	cmath
+	CppAD
+	Vedder
 $$
-
-$index erf, AD function$$
-$index error, AD function$$
-$index function, error AD$$
+$section The Error Function$$
 
 $head Syntax$$
 $icode%y% = erf(%x%)%$$
-
 
 $head Description$$
 Returns the value of the error function which is defined by
@@ -43,37 +36,19 @@ $latex \[
 {\rm erf} (x) = \frac{2}{ \sqrt{\pi} } \int_0^x \exp( - t * t ) \; {\bf d} t
 \] $$
 
-$head x$$
-The argument $icode x$$, and the result $icode y$$
-have one of the following paris of prototypes:
-$codei%
-	const float%%                  &%x%,     float%%    %y%
-	const double%%                 &%x%,     double%%   %y%
-	const AD<%Base%>               &%x%,     AD<%Base%> %y%
-	const VecAD<%Base%>::reference &%x%,     AD<%Base%> %y%
-%$$
+$head x, y$$
+See the $cref/possible types/unary_standard_math/Possible Types/$$
+for a unary standard math function.
 
+$head CPPAD_USE_CPLUSPLUS_2011$$
 
-$head Operation Sequence$$
-The AD of $icode Base$$
-operation sequence used to calculate $icode y$$ is
-$cref/independent/glossary/Operation/Independent/$$
-of $icode x$$.
+$subhead true$$
+If this preprocessor symbol is true ($code 1$$),
+and $icode x$$ is an AD type,
+this is an $cref/atomic operation/glossary/Operation/Atomic/$$.
 
-$head Method$$
-
-$subhead CPPAD_USE_CPLUSPLUS_2011$$
-$index CPPAD_USE_CPLUSPLUS_2011$$
-This preprocessor symbol is one if
-the function $codei%std::erf(double %x%)%$$ is defined the in the
-include file $code <cmath>$$.
-Otherwise this preprocessor symbol is zero.
-If this preprocessor symbols is one,
-CppAD uses the compiler's version of $code erf$$
-and it corresponds to an $cref/atomic/glossary/Operation/Atomic/$$ operation.
-
-$subhead Other$$
-If the function $codei%std::erf(double %x%)%$$ is not defined,
+$subhead false$$
+If this preprocessor symbol is false ($code 0$$),
 CppAD uses a fast approximation (few numerical operations)
 with relative error bound $latex 4 \times 10^{-4}$$; see
 Vedder, J.D.,

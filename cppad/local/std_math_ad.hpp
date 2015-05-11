@@ -13,6 +13,73 @@ A copy of this license is included in the COPYING file of this distribution.
 Please visit http://www.coin-or.org/CppAD/ for information on other licenses.
 -------------------------------------------------------------------------- */
 /*
+$begin asin$$
+$spell
+	asin
+$$
+
+$section Inverse Sine Function: asin$$
+
+$head Syntax$$
+$icode%y% = asin(%x%)%$$
+
+$head x, y$$
+See the $cref/possible types/unary_standard_math/Possible Types/$$
+for a unary standard math function.
+
+$head Atomic$$
+This is an $cref/atomic operation/glossary/Operation/Atomic/$$.
+
+$head Derivative$$
+$latex \[
+\begin{array}{lcr}
+	\R{asin}^{(1)} (x) & = & (1 - x * x)^{-1/2}
+\end{array}
+\] $$
+
+$head Example$$
+$children%
+	example/asin.cpp
+%$$
+The file
+$cref asin.cpp$$
+contains an example and test of this function.
+It returns true if it succeeds and false otherwise.
+
+$end
+-------------------------------------------------------------------------------
+$begin log10$$
+$spell
+	CppAD
+$$
+
+$section The Base 10 Logarithm Function: log10$$
+
+$head Syntax$$
+$icode%y% = log10(%x%)%$$
+
+$head x, y$$
+See the $cref/possible types/unary_standard_math/Possible Types/$$
+for a unary standard math function.
+
+$head Method$$
+CppAD uses the representation
+$latex \[
+\begin{array}{lcr}
+        {\rm log10} (x) & = & \log(x) / \log(10)
+\end{array}
+\] $$
+
+$head Example$$
+$children%
+	example/log10.cpp
+%$$
+The file
+$cref log10.cpp$$
+contains an example and test of this function.
+It returns true if it succeeds and false otherwise.
+
+$end
 -------------------------------------------------------------------------------
 $begin std_math_ad$$
 $spell
@@ -22,7 +89,6 @@ $spell
 	atan
 	const
 	acos
-	asin
 	atan
 	cos
 	exp
@@ -32,25 +98,6 @@ $spell
 	namespace
 	tanh
 $$
-
-$index standard, AD math unary$$
-$index math, AD unary$$
-$index unary, AD math$$
-
-$index acos, AD$$
-$index asin, AD$$
-$index atan, AD$$
-$index cos, AD$$
-$index cosh, AD$$
-$index exp, AD$$
-$index fabs, AD$$
-$index log, AD$$
-$index log10, AD$$
-$index sin, AD$$
-$index sinh, AD$$
-$index sqrt, AD$$
-$index tan, AD$$
-$index tanh, AD$$
 
 $section AD Standard Math Unary Functions$$
 
@@ -90,14 +137,12 @@ $head fun$$
 A definition of $icode fun$$ is included
 for each of the following functions:
 $code acos$$,
-$code asin$$,
 $code atan$$,
 $code cos$$,
 $code cosh$$,
 $code exp$$,
 $code fabs$$,
 $code log$$,
-$code log10$$,
 $code sin$$,
 $code sinh$$,
 $code sqrt$$,
@@ -111,13 +156,11 @@ contain examples and tests of these functions.
 Each test returns true if it succeeds and false otherwise.
 $children%
 	example/acos.cpp%
-	example/asin.cpp%
 	example/atan.cpp%
 	example/cos.cpp%
 	example/cosh.cpp%
 	example/exp.cpp%
 	example/log.cpp%
-	example/log10.cpp%
 	example/sin.cpp%
 	example/sinh.cpp%
 	example/sqrt.cpp%
@@ -133,7 +176,6 @@ $rref cos.cpp$$
 $rref cosh.cpp$$
 $rref exp.cpp$$
 $rref log.cpp$$
-$rref log10.cpp$$
 $rref sin.cpp$$
 $rref sinh.cpp$$
 $rref sqrt.cpp$$
@@ -158,12 +200,6 @@ $latex \[
 \end{array}
 \] $$
 
-$subhead asin$$
-$latex \[
-\begin{array}{lcr}
-	\D{[ {\rm asin} (x) ]}{x} & = & (1 - x * x)^{-1/2}
-\end{array}
-\] $$
 
 $subhead atan$$
 $latex \[
@@ -199,15 +235,6 @@ $subhead log$$
 $latex \[
 \begin{array}{lcr}
         \D{[ \log (x) ]}{x} & = & \frac{1}{x}
-\end{array}
-\] $$
-
-$subhead log10$$
-This function is special in that it's derivatives are calculated
-using the relation
-$latex \[
-\begin{array}{lcr}
-        {\rm log10} (x) & = & \log(x) / \log(10)
 \end{array}
 \] $$
 

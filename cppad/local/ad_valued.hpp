@@ -26,7 +26,6 @@ $section AD Valued Operations and Functions$$
 $comment atomic.omh includes atomic_base.omh which atomic_base.hpp$$
 $childtable%
 	cppad/local/arithmetic.hpp%
-	cppad/local/std_math_ad.hpp%
 	cppad/local/standard_math.hpp%
 	cppad/local/cond_exp.hpp%
 	cppad/local/discrete.hpp%
@@ -40,9 +39,8 @@ $end
 // CondExp.h and CondExp.h is not sufficently declared in Declare.h
 
 # include <cppad/local/arithmetic.hpp>
-# include <cppad/local/std_math_ad.hpp>
-# include <cppad/local/cond_exp.hpp>
 # include <cppad/local/standard_math.hpp>
+# include <cppad/local/cond_exp.hpp>
 # include <cppad/local/discrete.hpp>
 # include <cppad/local/atomic_base.hpp>
 # include <cppad/local/checkpoint.hpp>

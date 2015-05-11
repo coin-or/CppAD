@@ -16,49 +16,37 @@ Please visit http://www.coin-or.org/CppAD/ for information on other licenses.
 /*
 -------------------------------------------------------------------------------
 $begin atanh$$
-
-$section The Inverse Hyperbolic Tangent Function$$
 $spell
-	tanh
 	atanh
 	const
 	Vec
 	std
 	cmath
 	CppAD
+	tanh
 $$
+$section The Inverse Hyperbolic Tangent Function: atanh$$
 
 $head Syntax$$
 $icode%y% = atanh(%x%)%$$
 
-
 $head Description$$
-Returns the value of the inverse hyperbolic tangent function which is defined
-by $icode%x% == tanh(%y%)%$$.
+The inverse hyperbolic tangent function is defined by
+$icode%x% == tanh(%y%)%$$.
 
-
-$head x$$
-The argument $icode x$$, and the result $icode y$$
-have one of the following paris of prototypes:
-$codei%
-	const float%%                  &%x%,     float%%    %y%
-	const double%%                 &%x%,     double%%   %y%
-	const AD<%Base%>               &%x%,     AD<%Base%> %y%
-	const VecAD<%Base%>::reference &%x%,     AD<%Base%> %y%
-%$$
-
+$head x, y$$
+See the $cref/possible types/unary_standard_math/Possible Types/$$
+for a unary standard math function.
 
 $head CPPAD_USE_CPLUSPLUS_2011$$
-This preprocessor symbol is one if
-the function $codei%std::atanh(double %x%)%$$ is defined the in the
-include file $code <cmath>$$.
-Otherwise this preprocessor symbol is zero.
-If this preprocessor symbols is one,
-CppAD uses the compiler's version of $code atanh$$
-and it corresponds to an $cref/atomic/glossary/Operation/Atomic/$$ operation.
 
-$head Other$$
-If the function $codei%std::atanh(double %x%)%$$ is not defined,
+$subhead true$$
+If this preprocessor symbol is true ($code 1$$),
+and $icode x$$ is an AD type,
+this is an $cref/atomic operation/glossary/Operation/Atomic/$$.
+
+$subhead false$$
+If this preprocessor symbol is false ($code 0$$),
 CppAD uses the representation
 $latex \[
 \R{atanh} (x) = \frac{1}{2} \log \left( \frac{1 + x}{1 - x} \right)

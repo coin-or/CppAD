@@ -35,34 +35,18 @@ $icode%y% = abs(%x%)
 %$$
 $icode%y% = fabs(%x%)%$$
 
+$head x, y$$
+See the $cref/possible types/unary_standard_math/Possible Types/$$
+for a unary standard math function.
 
-$head Purpose$$
-Evaluates the absolute value function.
-
-$head x$$
-The argument $icode x$$ has one of the following prototypes
-$codei%
-	const AD<%Base%>               &%x%
-	const VecAD<%Base%>::reference &%x%
-%$$
-
-$head y$$
-The result $icode y$$ has prototype
-$codei%
-	AD<%Base%> %y%
-%$$
-
-
-$head Operation Sequence$$
-This is an AD of $icode Base$$
-$cref/atomic operation/glossary/Operation/Atomic/$$
-and hence is part of the current
-AD of $icode Base$$
-$cref/operation sequence/glossary/Operation/Sequence/$$.
+$head Atomic$$
+In the case where $icode x$$ is an AD type,
+this is an $cref/atomic operation/glossary/Operation/Atomic/$$.
 
 $head Complex Types$$
-The function $code abs$$ is not defined for the AD type sequences
-above $code std::complex<float>$$ or $code std::complex<double>$$
+The functions $code abs$$ and $icode fabs$$
+are not defined for the base types
+$code std::complex<float>$$ or $code std::complex<double>$$
 because the complex $code abs$$ function is not complex differentiable
 (see $cref/complex types faq/Faq/Complex Types/$$).
 

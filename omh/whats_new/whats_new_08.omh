@@ -1,9 +1,9 @@
 $Id$
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-13 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-15 Bradley M. Bell
 
 CppAD is distributed under multiple licenses. This distribution is under
-the terms of the 
+the terms of the
                     Eclipse Public License Version 1.0.
 
 A copy of this license is included in the COPYING file of this distribution.
@@ -54,12 +54,12 @@ assist you in learning about changes between various versions of CppAD.
 $head 12-19$$
 In the documentation for $cref pow_int$$ change the integer exponent
 from $codei%int %y%$$ to $codei%const int &%y%$$.
-In the implementation for $cref pow$$ make the integer base case 
+In the implementation for $cref pow$$ make the integer base case
 agree with the documentation; i.e., change
 from $codei%int %x%$$ to $codei%const int &%x%$$.
 
 $head 12-14$$
-Added another test of $cref mul_level$$ calculations (in the 
+Added another test of $cref mul_level$$ calculations (in the
 $code test_more$$ directory).
 
 $head 12-04$$
@@ -69,12 +69,12 @@ provided in the section $cref/ipopt_cppad_ode/ipopt_nlp_ode/$$.
 $head 11-22$$
 The CppAD interface to the Ipopt nonlinear programming solver
 $cref cppad_ipopt_nlp$$
-has been moved from $code example/ipopt_cppad_nlp$$ to 
+has been moved from $code example/ipopt_cppad_nlp$$ to
 $code ipopt_cppad/ipopt_cppad_nlp$$.
 
 $head 11-21$$
 The Microsoft's Visual C++ Version 9.0 generates a warning of the form
-$codei warning C4396:%...%$$ 
+$codei warning C4396:%...%$$
 for every template function that is declared as a both a friend and inline
 (it thinks it is only doing this for specializations of template functions).
 The warnings are no longer generated because
@@ -84,7 +84,7 @@ empty code when a Microsoft Visual C++ is used.
 
 $head 11-20$$
 $index erf$$
-The function $codei%tanh(%x%)%$$ was added to the 
+The function $codei%tanh(%x%)%$$ was added to the
 $cref std_math_ad$$ functions.
 The $code abs$$ and $code erf$$ functions were removed from the
 $cref/Base requirements/base_require/$$.
@@ -96,10 +96,10 @@ $$
 Visual Studio Version 9.0 could not handle the large number of static
 constants in the CppAD $cref erf$$ function.
 This function was changed to a simpler representation
-that is much faster and that 
+that is much faster and that
 is differentiable at all points (not defined differently on subregions).
-The down side to this is that the new version 
-is not as accurate (see $cref/method/erf/Method/$$).
+The down side to this is that the new version
+is not as accurate.
 
 $head 10-27$$
 Change prototypes for $code ipopt_cppad/ipopt_cppad_ode$$ helper routines
@@ -109,7 +109,7 @@ $head 10-17$$
 Major improvements to the $code ipopt_cppad/ipopt_cppad_ode$$ example.
 
 $head 10-16$$
-Minor improvement to description of optimization argument in 
+Minor improvement to description of optimization argument in
 $code ipopt_cppad/ipopt_cppad_ode$$.
 
 $head 09-30$$
@@ -117,7 +117,7 @@ Add or modify some wish list entries; see
 $code cppad_ipopt_nlp$$ (since removed),
 multiple argument forward (completed with $cref forward_dir$$),
 and sparsity patterns
-($cref/sparsity patterns/glossary/Sparsity Pattern/$$ has been fulfilled). 
+($cref/sparsity patterns/glossary/Sparsity Pattern/$$ has been fulfilled).
 
 
 $head 09-26$$
@@ -161,10 +161,10 @@ $pre
 
 $$
 In $cref/ipopt_cppad_nlp/cppad_ipopt_nlp/$$,
-combined $icode%fg_info%->domain_index()%$$ and 
+combined $icode%fg_info%->domain_index()%$$ and
 $icode%fg_info%->range_index()%$$ into a single function called
 $icode%fg_info%->index()%$$.
-Also added more error checking (if $code NDEBUG$$ is not defined). 
+Also added more error checking (if $code NDEBUG$$ is not defined).
 
 $head 09-09$$
 Fixed an indexing bug in $cref/ipopt_cppad_nlp/cppad_ipopt_nlp/$$.
@@ -179,13 +179,13 @@ This is more versatile that the single summation representation.
 $head 09-06$$
 Checked in a major change to $cref/ipopt_cppad_nlp/cppad_ipopt_nlp/$$
 whereby the object and constraints can be expressed as the
-sum of simpler functions. 
+sum of simpler functions.
 This is the first step in what will eventually be a more versatile
 representation.
 
 $head 09-05$$
 Fix bug in $cref/ipopt_cppad_nlp/cppad_ipopt_nlp/$$ (not recording the function
-at the proper location. Here is the difference that occurred 
+at the proper location. Here is the difference that occurred
 multiple places in the $code ipopt_cppad/ipopt_cppad_nlp.cpp$$ source:
 $codep
 	for(j = 0; j < n_; j++)
@@ -216,14 +216,14 @@ that motivated the change).
 
 $head 08-29$$
 The $code push_vector$$ member function was missing from the
-$cref/vectorBool/Cppad_vector/vectorBool/$$ class. 
+$cref/vectorBool/Cppad_vector/vectorBool/$$ class.
 This has been fixed.
 In addition, it seems that for some cases (or compilers)
 the assignment
 $codei%
 	%x%[%i%] = %y%[%j%]
 %$$
-did not work properly when both $icode x$$ and $icode y$$ 
+did not work properly when both $icode x$$ and $icode y$$
 had type $code vectorBool$$.
 This has been fixed.
 $pre
@@ -244,11 +244,11 @@ This makes it easy to accumulate multiple scalars and
 $cref/simple vectors/SimpleVector/$$ into one large $code CppAD::vector$$.
 
 $head 08-08$$
-There was an indexing bug in the 
+There was an indexing bug in the
 $cref/ipopt_cppad_nlp/cppad_ipopt_nlp/$$ example
 that affected the $icode retape$$ equal to $code false$$ case.
 This has been fixed.
-In addition, the missing 
+In addition, the missing
 $icode retape$$ documentation was added.
 
 $head 07-02$$
@@ -257,7 +257,7 @@ extras libraries that are necessary for linking the ipopt example.
 
 $head 06-18$$
 Add specifications for the Ipopt class $cref/ipopt_cppad_nlp/cppad_ipopt_nlp/$$.
-This is only an example class it may change with future 
+This is only an example class it may change with future
 versions of CppAD.
 
 $head 06-15$$
@@ -296,7 +296,7 @@ $cref link_det_minor$$, $cref link_poly$$, and $cref link_ode$$
 pass this flag along to the speed test implementations
 (because the corresponding tests have a fixed operation sequence).
 If this flag is false, a test implementation is allowed to just tape
-the operation sequence once and reuse it. 
+the operation sequence once and reuse it.
 The following tests use this flag:
 $cref adolc_det_minor.cpp$$,
 $cref cppad_det_minor.cpp$$,
@@ -313,11 +313,11 @@ but does not test out as faster under cygwin g++ (GCC) 3.4.4.
 
 
 $head 04-20$$
-Added the $cref ode_evaluate$$ speed test utility in 
+Added the $cref ode_evaluate$$ speed test utility in
 preparation for having ode speed tests.
-Created ode speed test for the $code cppad$$ and $code double$$ 
+Created ode speed test for the $code cppad$$ and $code double$$
 cases; see $cref speed_main$$.
-In addition, 
+In addition,
 added the examples $cref ode_evaluate.cpp$$ and $cref sparse_hessian.cpp$$.
 $pre
 
@@ -325,31 +325,31 @@ $$
 Changed the $cref speed_main$$ routines defined for each package
 from $codei%compute_%name%$$ to $codei%link_%name%$$.
 For example, in $code speed/cppad/det_minor.cpp$$,
-the function name 
+the function name
 $code compute_det_minor$$ was changed to $code link_det_minor$$.
 
 
 $head 04-18$$
 Fix a problem in the $cref link_poly$$ correctness test.
-Also add $cref double_sparse_hessian.cpp$$ to the set 
+Also add $cref double_sparse_hessian.cpp$$ to the set
 speed and correctness tests (now available).
 
 
 $head 04-10$$
-Change all the 
+Change all the
 $cref/Adolc speed/speed_adolc/$$ examples to use
 $cref TrackNewDel$$ instead of using $code new$$ and $code delete$$
 directly.
 This makes it easy to check for memory allocation errors and leaks
 (when $code NDEBUG$$ is not defined).
-Also include in documentation sub functions that indicate 
+Also include in documentation sub functions that indicate
 the $code sparse_hessian$$ speed test is not available for
 $cref double_sparse_hessian.cpp$$,
 $cref fadbad_sparse_hessian.cpp$$, and
 $cref sacado_sparse_hessian.cpp$$.
 
 $head 04-06$$
-The following $cref/wish list/WishList/$$ 
+The following $cref/wish list/WishList/$$
 entry has been completed and removed from the list:
 "Change private member variables names
 (not part of the user interface)
@@ -361,11 +361,11 @@ $cref/main/speed_main/$$ program with gcc 4.3.
 
 $head 03-27$$
 Corrected $cref cppad_sparse_hessian.cpp$$
-so that it uses the sparse case when 
+so that it uses the sparse case when
 $code USE_CPPAD_SPARSE_HESSIAN$$ is $code 1$$.
 Also added a wish list sparsity pattern entry
 (the $cref/sparsity pattern/glossary/Sparsity Pattern/$$ entry
-has been fulfilled). 
+has been fulfilled).
 $pre
 
 $$
@@ -373,7 +373,7 @@ Change the name of $code speedtest.cpp$$ to $cref speed_program.cpp$$.
 
 
 $head 02-05$$
-Change windows install instructions 
+Change windows install instructions
 to use Unix formatted files (so only two instead of
 four tarballs are necessary for each version).
 The Microsoft project files for
@@ -381,7 +381,7 @@ $code speed/cppad$$, $code speed/double$$, and $code speed/example$$
 were missing. This has also been fixed.
 
 $head 02-03$$
-There was an ambiguity problem 
+There was an ambiguity problem
 (detected by g++ 4.3) with the following operations
 $codei%
 	%x% %op% %y%
@@ -389,20 +389,20 @@ $codei%
 where $icode x$$ and $icode y$$ were $code AD<double>$$ and
 $icode op$$ was a member operator of that class.
 This has been fixed by making all such member functions friends
-instead of members of $code AD<double>$$. 
+instead of members of $code AD<double>$$.
 $pre
 
 $$
 Remove computed assignment entry from wish list
 (it was fixed on $cref/2007-05-26/whats_new_07/05-26/$$).
-Add 
+Add
 $cref/expression hashing/WishList/Optimization/Expression Hashing/$$
 to the wish list.
 Add Library and Scripting Languages to the wish list
 (this has since been fulfilled by the example $cref ad_in_c.cpp$$).
 
 $head 01-26$$
-The $cref LuFactor$$ routine gave a misleading error message 
+The $cref LuFactor$$ routine gave a misleading error message
 when the input matrix had not a number or infinity in it.
 This has been fixed.
 
@@ -415,7 +415,7 @@ A sparse Hessian case was added to the $cref speed$$ tests; see
 $cref/sparse_hessian/link_sparse_hessian/$$.
 
 $head 01-20$$
-CppAD can now be installed using $code yum$$ on 
+CppAD can now be installed using $code yum$$ on
 $code Fedora$$ operating systems.
 
 
