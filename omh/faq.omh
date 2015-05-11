@@ -1,6 +1,6 @@
 $Id$
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-14 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-15 Bradley M. Bell
 
 CppAD is distributed under multiple licenses. This distribution is under
 the terms of the 
@@ -143,24 +143,6 @@ $pre
 
 $$
 Yes (see $cref forward_zero$$). 
-
-$head Math Functions$$
-$index math, functions$$
-$index function, math$$
-Are there plans to add more math functions to CppAD ?
-$pre
-
-$$
-Yes. The $cref std_math_ad$$ and $cref MathOther$$ section contains
-a list of the math functions included so far.
-Contact the mailing list 
-$href%
-	http://list.coin-or.org/mailman/listinfo/cppad%
-	cppad@list.coin-or.org
-%$$
-if you need a math function that is has not yet been included.
-
-
 
 $head Matrix Inverse$$
 $index inverse, matrix$$

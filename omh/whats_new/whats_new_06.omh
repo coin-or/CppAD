@@ -1,6 +1,6 @@
 $Id$
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-14 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-15 Bradley M. Bell
 
 CppAD is distributed under multiple licenses. This distribution is under
 the terms of the 
@@ -1037,7 +1037,7 @@ how an $cref ADFun$$ object is related to the C++ algorithm.
 
 $head 03-10$$
 The math functions that are not under $cref std_math_ad$$ have
-been grouped under $cref MathOther$$.
+been grouped under $code MathOther$$.
 $pre
 
 $$

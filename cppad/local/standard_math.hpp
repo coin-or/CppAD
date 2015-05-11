@@ -1,6 +1,6 @@
 /* $Id$ */
-# ifndef CPPAD_MATH_OTHER_INCLUDED
-# define CPPAD_MATH_OTHER_INCLUDED
+# ifndef CPPAD_STANDARD_MATH_INCLUDED
+# define CPPAD_STANDARD_MATH_INCLUDED
 
 /* --------------------------------------------------------------------------
 CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-15 Bradley M. Bell
@@ -14,42 +14,36 @@ Please visit http://www.coin-or.org/CppAD/ for information on other licenses.
 -------------------------------------------------------------------------- */
 
 /*
-$begin MathOther$$
-$spell
-	atan
-$$
-$index other, AD math$$
-$index math, AD other$$
-$index AD, other math$$
+$begin standard_math$$
 
-$section Other AD Math Functions$$
+$section The Standard Math Functions$$
 
 $childtable%
 	cppad/local/abs.hpp%
-	cppad/local/erf.hpp%
-	cppad/local/asinh.hpp%
 	cppad/local/acosh.hpp%
-	cppad/local/atanh.hpp%
-	cppad/local/expm1.hpp%
-	cppad/local/log1p.hpp%
-	cppad/local/sign.hpp%
+	cppad/local/asinh.hpp%
 	cppad/local/atan2.hpp%
+	cppad/local/atanh.hpp%
+	cppad/local/erf.hpp%
+	cppad/local/expm1.hpp%
+	cppad/local/limits.hpp%
+	cppad/local/log1p.hpp%
 	cppad/local/pow.hpp%
-	cppad/local/limits.hpp
+	cppad/local/sign.hpp
 %$$
 
 $end
 */
 
 # include <cppad/local/abs.hpp>
-# include <cppad/local/erf.hpp>
-# include <cppad/local/asinh.hpp>
 # include <cppad/local/acosh.hpp>
+# include <cppad/local/asinh.hpp>
+# include <cppad/local/atan2.hpp>
 # include <cppad/local/atanh.hpp>
+# include <cppad/local/erf.hpp>
 # include <cppad/local/expm1.hpp>
 # include <cppad/local/log1p.hpp>
-# include <cppad/local/sign.hpp>
-# include <cppad/local/atan2.hpp>
 # include <cppad/local/pow.hpp>
+# include <cppad/local/sign.hpp>
 
 # endif

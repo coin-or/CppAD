@@ -3,7 +3,7 @@
 # define CPPAD_ABS_INCLUDED
 
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-12 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-15 Bradley M. Bell
 
 CppAD is distributed under multiple licenses. This distribution is under
 the terms of the 
@@ -28,12 +28,7 @@ $spell
 	abs
 $$
 
-$index abs, AD$$
-$index fabs, AD$$
-$index absolute, AD value$$
-$index value, AD absolute$$
-
-$section AD Absolute Value Function$$
+$section AD Absolute Value Functions: abs, fabs$$
 
 $head Syntax$$
 $icode%y% = abs(%x%)
@@ -82,8 +77,7 @@ $latex \[
 	-1 & {\rm if} \; x < 0
 \end{array} \right.
 \] $$
-This used to be different; 
-see $cref/old derivative/abs/Old Derivative/$$ below.
+The result for $icode%x% == 0%$$ used to be a directional derivative.
 
 $head Example$$
 $children%
@@ -93,49 +87,6 @@ The file
 $cref abs.cpp$$
 contains an example and test of this function.   
 It returns true if it succeeds and false otherwise.
-
-$head Old Derivative$$
-The derivative of the absolute value function is one for 
-$latex x > 0$$ and minus one for $latex x < 0$$.
-CppAD used to compute its directional derivative
-what $latex x = 0$$.
-$pre
-
-$$
-The function corresponding to the argument $icode x$$ 
-and the result $icode y$$ are represented
-by their Taylor coefficients; i.e.,
-$latex \[
-\begin{array}{rcl}
-	X(t) & = & x^{(0)} (t) + x^{(1)} t + \cdots + x^{(p)} t^p
-	\\
-	Y(t) & = & y^{(0)} (t) + y^{(1)} t + \cdots + y^{(p)} t^p
-\end{array}
-\] $$
-Note that $latex x^{(0)} = X(0)$$ is the value of $icode x$$ and
-$latex y^{(0)} = Y(0)$$ is the value of $icode y$$.
-In the equations above, the order $latex p$$ is specified
-by a call to $cref Forward$$ or $cref Reverse$$ as follows:
-$codei%
-	%f%.Forward(%p%, %dx%)
-	%f%.Reverse(%p%+1, %w%)
-%$$
-If all of the Taylor coefficients of $latex X(t)$$ are zero,
-we define $latex k = p$$.
-Otherwise, we define $latex k$$ to be the minimal index such that 
-$latex x^{(k)} \neq 0$$.
-Note that if $latex x \neq 0$$, $latex k = 0$$.
-The Taylor coefficient representation of $latex Y(t)$$
-(and hence it's derivatives) are computed as
-$latex \[
-y^{(\ell)}
-=
-\left\{ \begin{array}{ll} 
-	 x^{(\ell)}   & {\rm if} \; x^{(k)} > 0         \\
-	 0                    & {\rm if} \; x^{(k)} = 0 \\
-	- x^{(\ell)}  & {\rm if} \; x^{(k)} < 0
-\end{array} \right.
-\] $$
 
 $end
 -------------------------------------------------------------------------------

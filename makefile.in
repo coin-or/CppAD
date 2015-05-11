@@ -591,7 +591,6 @@ nobase_myinclude_HEADERS = \
 	cppad/local/log1p.hpp \
 	cppad/local/log1p_op.hpp \
 	cppad/local/lu_ratio.hpp \
-	cppad/local/math_other.hpp \
 	cppad/local/mul_eq.hpp \
 	cppad/local/mul.hpp \
 	cppad/local/mul_op.hpp \
@@ -636,6 +635,7 @@ nobase_myinclude_HEADERS = \
 	cppad/local/sparse_set.hpp \
 	cppad/local/sparse_unary_op.hpp \
 	cppad/local/sqrt_op.hpp \
+	cppad/local/standard_math.hpp \
 	cppad/local/std_math_ad.hpp \
 	cppad/local/std_set.hpp \
 	cppad/local/store_op.hpp \
