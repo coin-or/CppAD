@@ -54,6 +54,9 @@ This section contains a list of the changes to CppAD during 2015
 The purpose of this section is to
 assist you in learning about changes between various versions of CppAD.
 
+$head 05-11$$
+Reorganize the $cref unary_standard_math$$ documentation.
+
 $head 05-10$$
 $list number$$
 Add the exponential minus one function $cref log1p$$.
