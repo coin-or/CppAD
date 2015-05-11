@@ -3,7 +3,7 @@ $Id$
 CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-15 Bradley M. Bell
 
 CppAD is distributed under multiple licenses. This distribution is under
-the terms of the 
+the terms of the
                     Eclipse Public License Version 1.0.
 
 A copy of this license is included in the COPYING file of this distribution.
@@ -45,7 +45,7 @@ $$
 $section Changes and Additions to CppAD During 2003$$
 
 $head Introduction$$
-This section contains a list of the changes plus for 
+This section contains a list of the changes plus for
 (in reverse order by date).
 The purpose of this section is to
 assist you in learning about changes between various versions.
@@ -54,16 +54,16 @@ $head 12-24$$
 Some references to $code double$$ should have been references
 to the $cref/base type/glossary/Base Type/$$
 (in reverse mode and in the $code Grad/$$ and $code Hess$$ functions).
-This has been fixed. 
+This has been fixed.
 
 $head 12-22$$
 The preprocessor symbol $code WIN32$$ was being used to determine
 if one was using Microsoft's C++ compiler.
-This symbol is predefined by the 
+This symbol is predefined by the
 $href%http://www.mingw.org%MinGW%$$ version of the GNU C++ compiler
 and hence CppAD had errors during installation using MinGW.
 This has been fixed by using the preprocessor symbol
-$code _MSC_VER$$ to determine if 
+$code _MSC_VER$$ to determine if
 one is using the Microsoft C++ compiler.
 
 
@@ -91,7 +91,7 @@ $codei%
 		size_t %TapeName%.Erase(void)
 		TapeState %TapeName%.State(void) const
 		size_t %TapeName%.Order(void) const
-		size_t %TapeName%.Required(void) const 
+		size_t %TapeName%.Required(void) const
 		bool Parameter(CppADvector< AD<%Base%> > &%u%)
 		%TapeName%.Forward(%indvar%)
 		%TapeName%.Reverse(%var%)
@@ -107,7 +107,7 @@ The change on $cref/12-01/whats_new_03/12-01/$$ make the taping process simpler
 if one does not directly access
 $code CppADCreateTape$$.
 The $cref/examples/example/$$ were changed to not use
-$icode TapeName$$. 
+$icode TapeName$$.
 The following examples were skipped because
 they document the functions that access $icode TapeName$$:
 $code DefFun.cpp$$,
@@ -117,9 +117,9 @@ $code Rev.cpp$$, and
 $code rev_two.cpp$$.
 
 $head 12-05$$
-There was a bug in 
-$icode%f%.Rev%$$ and 
-$icode%f%.RevTwo%$$ and 
+There was a bug in
+$icode%f%.Rev%$$ and
+$icode%f%.RevTwo%$$ and
 when two dependent variables were always equal and shared
 the same location in the tape.
 This has been fixed.
@@ -127,7 +127,7 @@ $pre
 
 $$
 The ODE Example was changed to tape the solution
-(and not use $code OdeOne$$ or $code OdeTwo$$). 
+(and not use $code OdeOne$$ or $code OdeTwo$$).
 This is simpler to use and
 the resulting speed tests gave much faster results.
 
@@ -137,7 +137,7 @@ $codei%
 	void Independent(const CppADvector<%Base%> &%x%)
 %$$
 which will declare the independent variables and begin recording
-$codei%AD<%Base%>%$$ operations 
+$codei%AD<%Base%>%$$ operations
 (see $cref Independent$$).
 The $cref ADFun$$ constructor was modified so that it
 stops the recording and erases that tape as well as creates the
@@ -150,13 +150,13 @@ Add $code StiffZero$$ to set of ODE solvers.
 
 
 $head 11-20$$
-The $code AbsGeq$$ and $code LeqZero$$ in 
+The $code AbsGeq$$ and $code LeqZero$$ in
 $cref LuSolve$$ were changed to template functions so they could have
 default definitions in the case where the $code <=$$ and $code >=$$
 operators are defined.
 This made the $code double$$ and $code AD<double>$$ use of
 $code LuSolve$$ simpler because the user need not worry about these functions.
-On the other hand, it made the $code std::complex$$ 
+On the other hand, it made the $code std::complex$$
 and $code AD<std::complex>$$ use of
 $code LuSolve$$ more complex.
 $pre
@@ -164,15 +164,15 @@ $pre
 $$
 The member function names for the
 $icode fun$$ argument to ODE were changed from
-$icode%fun%.f%$$ to 
-$icode%fun%.Ode%$$ 
+$icode%fun%.f%$$ to
+$icode%fun%.Ode%$$
 and from
-$icode%fun%.g%$$ to 
-$icode%fun%.Ode_ini%$$.  
+$icode%fun%.g%$$ to
+$icode%fun%.Ode_ini%$$.
 
 
-$head 11-16$$ 
-The 
+$head 11-16$$
+The
 $cref/table of contents/_contents/$$ was reorganized
 to provide a better grouping of the documentation.
 $pre
@@ -180,12 +180,12 @@ $pre
 $$
 The $cref LuSolve$$ utility is now part of the distribution
 and not just an example; i.e.,
-it is automatically included by 
+it is automatically included by
 $code cppad.hpp$$.
 
 
 $head 11-15$$
-The 
+The
 ODE solver was modified so that it can
 be used with any type (not just an AD type.
 This was useful for the speed testing.
@@ -194,15 +194,15 @@ steps should be before starting the tape.
 $pre
 
 $$
-The template argument $icode Type$$ was changed to 
-$icode Base$$ where ever it was the 
+The template argument $icode Type$$ was changed to
+$icode Base$$ where ever it was the
 $cref/base type/glossary/Base Type/$$ of an AD class.
 
 
 $head 11-14$$
-An 
+An
 $code speed_cppad/OdeSpeed.cpp/$$ test was added
-and some changes were made to the 
+and some changes were made to the
 ODE interface in order to make it faster.
 The most significant change was in the specifications for
 the ODE function object $icode fun$$.
@@ -221,7 +221,7 @@ with a vector template class of your choosing during the
 $cref Install$$ procedure.
 
 $head 11-06$$
-The documentation for 
+The documentation for
 $cref/taping derivative calculations/mul_level/$$ was improved
 as well as the corresponding example.
 In order to make this simpler,
@@ -230,7 +230,7 @@ the example tape name $code DoubleTape$$ was changed to $code ADdoubleTape$$
 
 $head 11-04$$
 The ODE utility was changed from an example to
-part of the distribution. 
+part of the distribution.
 In addition, it was extended so that it now supports taping the
 solution of the differential equations (case $icode order$$ equal zero)
 or solving the extended set of differential equations
@@ -242,7 +242,7 @@ values is also allowed.
 
 
 $head 11-02$$
-It is now legal to differentiate a 
+It is now legal to differentiate a
 $cref/parameter/glossary/Parameter/$$
 with respect to an
 $cref/independent variable/glossary/Tape/Independent Variable/$$
@@ -252,7 +252,7 @@ $code Reverse$$,
 $code Partial$$,
 $code ReverseTwo$$, and
 $code PartialTwo$$
-functions. 
+functions.
 
 $head 10-21$$
 All the $code CppAD$$ include files,
@@ -263,12 +263,12 @@ except $code cppad.hpp$$ were moved into an $code include$$ subdirectory.
 $head 10-16$$
 The $cref ADFun$$ template class was added so that one can save
 a tape recording and use it as a differentiable function.
-The $code ADFun$$ functions supports directional derivatives in both 
-$cref Forward$$ and $cref Reverse$$ mode where as the 
+The $code ADFun$$ functions supports directional derivatives in both
+$cref Forward$$ and $cref Reverse$$ mode where as the
 tape only supports partial derivatives.
 
 $head 10-14$$
-The $code sqrt$$ function was added to the 
+The $code sqrt$$ function was added to the
 $cref unary_standard_math$$ functions.
 In addition, a definition of the power function for the types
 $code float$$ and $code double$$
@@ -280,7 +280,7 @@ The $cref Value$$ function was changed so that it can
 be called when the tape is in the Empty state.
 
 $head 10-10$$
-The $code atan$$ function was added to the 
+The $code atan$$ function was added to the
 $cref unary_standard_math$$ functions.
 
 $head 10-06$$
@@ -295,15 +295,15 @@ $codei%
 	%z% = %zero% + %x%        %z% =  %one% * %x%
 	%z% = %x% - %zero%        %z% =  %x% / %one%
 %$$
-Furthermore, in the following cases, the result 
+Furthermore, in the following cases, the result
 $icode z$$ is a parameter (equal to zero)
 and need not be recorded in the tape:
 $codei%
 	%z% = %x% * %zero%        %z% =  %zero% / %x%
 	%z% = %zero% * %x%
 %$$
-The 
-$cref/arithmetic operators/Arithmetic/$$ were 
+The
+$cref/arithmetic operators/Arithmetic/$$ were
 all checked to make sure they did not add to the tape
 in these special cases.
 The total record count for the program in the Example directory
@@ -323,15 +323,15 @@ $pre
 
 $$
 The function $icode%TapeName%.Total%$$ was added
-to make it easy to track how many tape records are used by 
+to make it easy to track how many tape records are used by
 the test suite.
 This will help with future optimization of the CppAD recording process.
 $pre
 
 $$
-There was a bug 
+There was a bug
 (found by $href%mailto:magister@u.washington.edu%Mike Dodds%$$)
-in the error checking of the 
+in the error checking of the
 $icode/TapeName/.Erase/$$ function.
 If $code Erase$$ was called twice in a row,
 and $code NDEBUG$$ was false during compilation,
@@ -340,14 +340,14 @@ This has been fixed.
 
 
 $head 09-30$$
-A process of changing the tape from storing partial derivatives to 
-storing operators has been started. 
+A process of changing the tape from storing partial derivatives to
+storing operators has been started.
 This will make the tape smaller and it will enable the computation
-of higher derivatives with out having to tape the tape 
+of higher derivatives with out having to tape the tape
 (see $cref mul_level$$).
 The Add, Subtract, Multiply and Divide operators have been converted.
 The user defined functions are presenting some difficulties,
-so this process has not yet been completed. 
+so this process has not yet been completed.
 $pre
 
 $$
@@ -358,12 +358,12 @@ before other of the independent variables on the tape.
 These other independent variable partials were not initialized
 to zero before the reverse calculation and hence had what ever
 value was left by the previous mode calculation.
-This has been fixed and the 
+This has been fixed and the
 $code Eq.cpp$$ example has been changed to test for this case.
 $pre
 
 $$
-The following tape functions were changed to be declared 
+The following tape functions were changed to be declared
 $code const$$ because they do not modify the tape in any way:
 $code State$$,
 $code Order$$,
@@ -378,20 +378,20 @@ instead of function pointers.
 
 
 $head 09-19$$
-The higher order constructors (in standard valarray) were removed from the 
+The higher order constructors (in standard valarray) were removed from the
 ODE example in order to avoid memory allocation of temporaries
 (and hence increase speed).
-In addition, the function objects in the 
+In addition, the function objects in the
 ODE examples were changed to be $code const$$.
 
 $head 09-18$$
-An ordinary differential equation solver was added. 
+An ordinary differential equation solver was added.
 In addition,
 the extended system to differentiate the solution was included.
 
 $head 09-15$$
 The linked list of AD variables was not being maintained correctly
-by the AD destructor. 
+by the AD destructor.
 This was fixed by have the destructor use $code RemoveFromVarList$$
 to remove variables from the list.
 ($code RemoveFromVarList$$ is a private AD member function
@@ -399,27 +399,27 @@ not visible to the user.)
 
 $head 09-14$$
 There is a new Faq question about evaluating derivatives at multiple
-values for the 
+values for the
 $cref/independent variables/Faq/Independent Variables/$$.
 
 $head 09-13$$
 An example that uses
-$code AD< AD<double> >$$ 
+$code AD< AD<double> >$$
 to compute higher derivatives was added.
 $pre
 
 $$
-The name $code GaussEliminate$$ was changed to 
+The name $code GaussEliminate$$ was changed to
 $cref LuSolve$$ to better reflect the solution method.
 
 $head 09-06$$
-Changed the 
+Changed the
 $cref get_started.cpp$$ and $cref complex_poly.cpp$$ examples
-so they use a template function with both base type and AD type arguments. 
-(The resulting code is simpler and a good use of templates.) 
+so they use a template function with both base type and AD type arguments.
+(The resulting code is simpler and a good use of templates.)
 
 $head 09-05$$
-A $cref/getting started/get_started.cpp/$$ 
+A $cref/getting started/get_started.cpp/$$
 example was added and the organization
 of the $cref/Examples/example/$$ was changed.
 
@@ -431,9 +431,9 @@ $pre
 
 $$
 The 03-09-03 distribution did not have the proper date
-attached to it. 
+attached to it.
 The distribution script has been changed so that attaching
-the proper date is automated 
+the proper date is automated
 (i.e., this should not happen again).
 $pre
 
@@ -441,9 +441,9 @@ $$
 A $tref faq$$ section was started.
 
 $head 09-03$$
-Added the 
+Added the
 $cref Value$$ function which returns
-the $cref/base type/glossary/Base Type/$$ value 
+the $cref/base type/glossary/Base Type/$$ value
 corresponding to an AD object.
 
 $head 08-23$$
@@ -455,14 +455,14 @@ of floating point operations corresponding to evaluation of the determinant.
 The following results correspond to the speed test
 of DetLu on a 9 by 9 matrix:
 $table
-$bold Version$$ 
+$bold Version$$
 	$cnext $bold double Rate$$
 	$cnext $bold AD<double> Rate$$
-	$cnext $bold Gradient Rate$$ 
+	$cnext $bold Gradient Rate$$
 	$cnext $bold Hessian Rate$$
-	$cnext $bold Tape Length$$ 
+	$cnext $bold Tape Length$$
 $rnext
-03-08-20 
+03-08-20
 	$cnext 8,524
 	$cnext 5,278
 	$cnext 4,260
@@ -478,7 +478,7 @@ $rnext
 $tend
 
 $head 08-22$$
-The 
+The
 $cref/unary minus/UnaryMinus/$$ operator was added to the AD operations.
 
 
@@ -488,9 +488,9 @@ examples were extended to include the complex case.
 $pre
 
 $$
-The 
+The
 $cref LuSolve$$
-routine what changed to use 
+routine what changed to use
 $codei%std::vector<%Base%> &%$$ arguments in place of
 $icode%Base% *%$$ arguments.
 This removes the need to use $code new$$ and $code delete$$
@@ -508,14 +508,14 @@ the high speeds.
 The following results correspond to the speed test
 of DetLu on a 9 by 9 matrix:
 $table
-$bold Version$$ 
+$bold Version$$
 	$cnext $bold double Rate$$
 	$cnext $bold AD<double> Rate$$
-	$cnext $bold Gradient Rate$$ 
+	$cnext $bold Gradient Rate$$
 	$cnext $bold Hessian Rate$$
-	$cnext $bold Tape Length$$ 
+	$cnext $bold Tape Length$$
 $rnext
-03-08-16 
+03-08-16
 	$cnext 9,509
 	$cnext 5,565
 	$cnext 3,587
@@ -538,41 +538,41 @@ so that CppAD can check for tape overflow
 even in the $code NDEBUG$$ preprocessor flag is defined.
 
 $head 08-16$$
-The 
-$cref LuSolve$$ routine was extended to 
+The
+$cref LuSolve$$ routine was extended to
 handle complex arguments.
 Because the complex absolute value function is nowhere differentiable,
-this required the allowing for user defined 
+this required the allowing for user defined
 $cref/boolean valued functions with AD arguments/BoolFun/$$.
 The examples
 $cref lu_solve.cpp$$
-and 
+and
 $code GradLu.cpp$$
 were converted to a complex case.
 
 
 $head 08-11$$
-The routine $cref LuSolve$$ was made more efficient 
-so that it is more useful as a tool for 
+The routine $cref LuSolve$$ was made more efficient
+so that it is more useful as a tool for
 differentiating linear algebra calculations.
 The following results correspond to the speed test
 of DetLu on a 9 by 9 matrix:
 $table
-$bold Version$$ 
+$bold Version$$
 	$cnext $bold double Rate$$
 	$cnext $bold AD<double> Rate$$
-	$cnext $bold Gradient Rate$$ 
+	$cnext $bold Gradient Rate$$
 	$cnext $bold Hessian Rate$$
-	$cnext $bold Tape Length$$ 
+	$cnext $bold Tape Length$$
 $rnext
-03-08-10 
+03-08-10
 	$cnext 49,201
 	$cnext 7,787
 	$cnext 2,655
 	$cnext 1,809
 	$cnext 824
 $rnext
-03-08-11 
+03-08-11
 	$cnext 35,178
 	$cnext 12,681
 	$cnext 4,521
@@ -608,17 +608,17 @@ were modified to reduce the amount of information
 in the tape (where possible).
 
 $head 08-06$$
-During Lu factorization, certain elements of the matrix 
+During Lu factorization, certain elements of the matrix
 are know to be zero or one and do not depend on the variables.
-The $cref/multiplication/ad_binary/$$ operator was modified to take 
+The $cref/multiplication/ad_binary/$$ operator was modified to take
 advantage of this fact.
-This reduced the size of the tape and increased the speed 
-for the calculation of the gradient and Hessian for 
+This reduced the size of the tape and increased the speed
+for the calculation of the gradient and Hessian for
 the Lu determinant test of a 5 by 5 matrix as follows:
 $table
-$bold Version$$ 
-	$cnext $bold Tape Length$$ 
-	$cnext $bold Gradient Rate$$ 
+$bold Version$$
+	$cnext $bold Tape Length$$
+	$cnext $bold Gradient Rate$$
 	$cnext $bold Hessian Rate$$
 $rnext
 03-08-05 $cnext 176  $cnext 11,362 $cnext 1,149 $rnext
@@ -643,7 +643,7 @@ $codei%
 $head 08-03$$
 The
 $code Grad$$ and $code Hess$$ functions were modified
-to handel the case where the function does not depend on 
+to handel the case where the function does not depend on
 the independent variables.
 $pre
 
@@ -651,14 +651,14 @@ $$
 The
 $cref LuSolve$$ example was added to show how
 on can differentiate linear algebra calculations.
-In addition, it was used to add another set of 
+In addition, it was used to add another set of
 $cref/speed tests/speed_cppad/$$.
 $pre
 
 $$
 The standard Math functions were added both
 as examples of defining atomic operations and to support
-mathematical operations for the $code AD<double>$$ case. 
+mathematical operations for the $code AD<double>$$ case.
 $pre
 
 $$
@@ -667,7 +667,7 @@ template class for output to streams.
 
 
 $head 08-01$$
-The 
+The
 $cref/computed assignment/Arithmetic/$$ operators were added
 to the $code AD$$ template class.
 $pre
@@ -691,31 +691,31 @@ $codei%
 i.e., multiple assignments.
 
 $head 07-29$$
-If the 
-$cref/AD copy constructor/ad_ctor/$$ constructor or 
+If the
+$cref/AD copy constructor/ad_ctor/$$ constructor or
 $cref/assignment/ad_assign/$$ operator
 used an
 $cref/independent variable/glossary/Tape/Independent Variable/$$
 for its source value,
 the result was also an independent variable.
 This has been fixed so that the result is
-a dependent variable in these cases. 
+a dependent variable in these cases.
 
 $head 07-26$$
 The $codei%AD<%Base%>%$$ data structure
 was changed to include a doubly linked list of variables.
 This enabled  the
-$cref/AD copy constructor/ad_ctor/$$ constructor and 
+$cref/AD copy constructor/ad_ctor/$$ constructor and
 $cref/assignment/ad_assign/$$ operator
 to create multiple references to
 the same place in the tape.
-This reduced the size of the tape and increased the speed 
-for the calculation of the gradient and Hessian for 
+This reduced the size of the tape and increased the speed
+for the calculation of the gradient and Hessian for
 the determinant of a 5 by 5 matrix as follows:
 $table
-$bold Version$$ 
-	$cnext $bold Tape Length$$ 
-	$cnext $bold Gradient Rate$$ 
+$bold Version$$
+	$cnext $bold Tape Length$$
+	$cnext $bold Gradient Rate$$
 	$cnext $bold Hessian Rate$$
 $rnext
 03-07-22 $cnext 1668 $cnext 1,363 $cnext 53 $rnext
@@ -724,11 +724,11 @@ $tend
 
 
 $head 07-22$$
-The facility was added so that the user can define 
+The facility was added so that the user can define
 binary functions
 together with their derivatives.
 (This facility has been removed because it is better to define
-binary functions using AD variables.) 
+binary functions using AD variables.)
 $pre
 
 $$
@@ -739,14 +739,14 @@ was changed to $code /I ..$$ (as it should have been).
 
 
 $head 07-20$$
-The facility was added so that the user can define 
+The facility was added so that the user can define
 unary functions,
 together with their derivatives.
 For example, the standard math functions such as
 $cref/exp/exp.cpp/$$
 are good candidates for such definitions.
 (This feature has been replaced by and the standard math functions
-are now part of the AD types, see $cref AD$$.) 
+are now part of the AD types, see $cref AD$$.)
 $pre
 
 $$
@@ -756,7 +756,7 @@ $cref/installation/Install/$$ was released.
 $head 07-18$$
 Computing the determinant of a minor of a matrix
 $cref det_of_minor$$
-was documented as a realistic example using CppAD. 
+was documented as a realistic example using CppAD.
 
 
 $head 07-16$$
@@ -765,7 +765,7 @@ with the installation on other machines.
 $pre
 
 $$
-Compiled and ran the tests under Microsoft Windows. 
+Compiled and ran the tests under Microsoft Windows.
 (The Windows release should not take much more work.)
 
 $head 07-14$$
@@ -773,6 +773,6 @@ First Alpha release of CppAD
 and is being released under the
 $cref/Gnu Public License/License/$$.
 It is intended for use by a Unix system.
-A Microsoft release is intended in the near future.  
+A Microsoft release is intended in the near future.
 
 $end
