@@ -81,16 +81,22 @@ The possible values for $icode fun$$ are
 $table
 $icode  fun$$ $pre  $$ $cnext Description        $rnext
 $cref abs$$            $cnext $title abs$$       $rnext
+$cref acos$$           $cnext $title acos$$      $rnext
 $cref acosh$$          $cnext $title acosh$$     $rnext
 $cref asin$$           $cnext $title asin$$      $rnext
 $cref asinh$$          $cnext $title asinh$$     $rnext
-$cref atanh$$          $cnext $title asinh$$     $rnext
+$cref atan$$           $cnext $title atan$$      $rnext
+$cref atanh$$          $cnext $title atanh$$     $rnext
+$cref cos$$            $cnext $title cos$$       $rnext
+$cref cosh$$           $cnext $title cosh$$      $rnext
 $cref erf$$            $cnext $title erf$$       $rnext
 $cref expm1$$          $cnext $title expm1$$     $rnext
 $cref/fabs/abs/$$      $cnext $title abs$$       $rnext
 $cref log10$$          $cnext $title log10$$     $rnext
 $cref log1p$$          $cnext $title log1p$$     $rnext
 $cref sign$$           $cnext $title sign$$      $rnext
+$cref sin$$            $cnext $title sin$$       $rnext
+$cref sinh$$           $cnext $title sinh$$      $rnext
 $tend
 
 $end

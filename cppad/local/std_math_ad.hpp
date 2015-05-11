@@ -13,6 +13,42 @@ A copy of this license is included in the COPYING file of this distribution.
 Please visit http://www.coin-or.org/CppAD/ for information on other licenses.
 -------------------------------------------------------------------------- */
 /*
+-------------------------------------------------------------------------------
+$begin acos$$
+$spell
+	acos
+$$
+
+$section Inverse Sine Function: acos$$
+
+$head Syntax$$
+$icode%y% = acos(%x%)%$$
+
+$head x, y$$
+See the $cref/possible types/unary_standard_math/Possible Types/$$
+for a unary standard math function.
+
+$head Atomic$$
+This is an $cref/atomic operation/glossary/Operation/Atomic/$$.
+
+$head Derivative$$
+$latex \[
+\begin{array}{lcr}
+	\R{acos}^{(1)} (x) & = & - (1 - x * x)^{-1/2}
+\end{array}
+\] $$
+
+$head Example$$
+$children%
+	example/acos.cpp
+%$$
+The file
+$cref acos.cpp$$
+contains an example and test of this function.
+It returns true if it succeeds and false otherwise.
+
+$end
+-------------------------------------------------------------------------------
 $begin asin$$
 $spell
 	asin
@@ -43,6 +79,111 @@ $children%
 %$$
 The file
 $cref asin.cpp$$
+contains an example and test of this function.
+It returns true if it succeeds and false otherwise.
+
+$end
+-------------------------------------------------------------------------------
+$begin atan$$
+$spell
+	atan
+$$
+
+$section Inverse Tangent Function: atan$$
+
+$head Syntax$$
+$icode%y% = atan(%x%)%$$
+
+$head x, y$$
+See the $cref/possible types/unary_standard_math/Possible Types/$$
+for a unary standard math function.
+
+$head Atomic$$
+This is an $cref/atomic operation/glossary/Operation/Atomic/$$.
+
+$head Derivative$$
+$latex \[
+\begin{array}{lcr}
+	\R{atan}^{(1)} (x) & = & \frac{1}{1 + x^2}
+\end{array}
+\] $$
+
+$head Example$$
+$children%
+	example/atan.cpp
+%$$
+The file
+$cref atan.cpp$$
+contains an example and test of this function.
+It returns true if it succeeds and false otherwise.
+
+$end
+-------------------------------------------------------------------------------
+$begin cos$$
+$spell
+	cos
+$$
+
+$section The Cosine Function: cos$$
+
+$head Syntax$$
+$icode%y% = cos(%x%)%$$
+
+$head x, y$$
+See the $cref/possible types/unary_standard_math/Possible Types/$$
+for a unary standard math function.
+
+$head Atomic$$
+This is an $cref/atomic operation/glossary/Operation/Atomic/$$.
+
+$head Derivative$$
+$latex \[
+\begin{array}{lcr}
+	\R{cos}^{(1)} (x) & = & - \sin(x)
+\end{array}
+\] $$
+
+$head Example$$
+$children%
+	example/cos.cpp
+%$$
+The file
+$cref cos.cpp$$
+contains an example and test of this function.
+It returns true if it succeeds and false otherwise.
+
+$end
+-------------------------------------------------------------------------------
+$begin cosh$$
+$spell
+	cosh
+$$
+
+$section The Hyperbolic Cosine Function: cosh$$
+
+$head Syntax$$
+$icode%y% = cosh(%x%)%$$
+
+$head x, y$$
+See the $cref/possible types/unary_standard_math/Possible Types/$$
+for a unary standard math function.
+
+$head Atomic$$
+This is an $cref/atomic operation/glossary/Operation/Atomic/$$.
+
+$head Derivative$$
+$latex \[
+\begin{array}{lcr}
+	\R{cosh}^{(1)} (x) & = &  \sinh(x)
+\end{array}
+\] $$
+
+$head Example$$
+$children%
+	example/cosh.cpp
+%$$
+The file
+$cref cosh.cpp$$
 contains an example and test of this function.
 It returns true if it succeeds and false otherwise.
 
@@ -81,16 +222,81 @@ It returns true if it succeeds and false otherwise.
 
 $end
 -------------------------------------------------------------------------------
+$begin sin$$
+$spell
+	sin
+$$
+
+$section The Sine Function: sin$$
+
+$head Syntax$$
+$icode%y% = sin(%x%)%$$
+
+$head x, y$$
+See the $cref/possible types/unary_standard_math/Possible Types/$$
+for a unary standard math function.
+
+$head Atomic$$
+This is an $cref/atomic operation/glossary/Operation/Atomic/$$.
+
+$head Derivative$$
+$latex \[
+\begin{array}{lcr}
+	\R{sin}^{(1)} (x) & = &  \cos(x)
+\end{array}
+\] $$
+
+$head Example$$
+$children%
+	example/sin.cpp
+%$$
+The file
+$cref sin.cpp$$
+contains an example and test of this function.
+It returns true if it succeeds and false otherwise.
+
+$end
+-------------------------------------------------------------------------------
+$begin sinh$$
+$spell
+	sinh
+$$
+
+$section The Hyperbolic Sine Function: sinh$$
+
+$head Syntax$$
+$icode%y% = sinh(%x%)%$$
+
+$head x, y$$
+See the $cref/possible types/unary_standard_math/Possible Types/$$
+for a unary standard math function.
+
+$head Atomic$$
+This is an $cref/atomic operation/glossary/Operation/Atomic/$$.
+
+$head Derivative$$
+$latex \[
+\begin{array}{lcr}
+	\R{sinh}^{(1)} (x) & = &  \cosh(x)
+\end{array}
+\] $$
+
+$head Example$$
+$children%
+	example/sinh.cpp
+%$$
+The file
+$cref sinh.cpp$$
+contains an example and test of this function.
+It returns true if it succeeds and false otherwise.
+
+$end
+-------------------------------------------------------------------------------
 $begin std_math_ad$$
 $spell
-	expm1
 	Vec
 	std
-	atan
 	const
-	acos
-	atan
-	cos
 	exp
 	fabs
 	sqrt
@@ -136,15 +342,9 @@ of $icode x$$.
 $head fun$$
 A definition of $icode fun$$ is included
 for each of the following functions:
-$code acos$$,
-$code atan$$,
-$code cos$$,
-$code cosh$$,
 $code exp$$,
 $code fabs$$,
 $code log$$,
-$code sin$$,
-$code sinh$$,
 $code sqrt$$,
 $code tan$$,
 $code tanh$$.
@@ -155,14 +355,8 @@ The following files
 contain examples and tests of these functions.
 Each test returns true if it succeeds and false otherwise.
 $children%
-	example/acos.cpp%
-	example/atan.cpp%
-	example/cos.cpp%
-	example/cosh.cpp%
 	example/exp.cpp%
 	example/log.cpp%
-	example/sin.cpp%
-	example/sinh.cpp%
 	example/sqrt.cpp%
 	example/tan.cpp%
 	example/tanh.cpp
@@ -171,13 +365,8 @@ $table
 $rref abs.cpp$$
 $rref Acos.cpp$$
 $rref Asin.cpp$$
-$rref atan.cpp$$
-$rref cos.cpp$$
-$rref cosh.cpp$$
 $rref exp.cpp$$
 $rref log.cpp$$
-$rref sin.cpp$$
-$rref sinh.cpp$$
 $rref sqrt.cpp$$
 $rref tan.cpp$$
 $rref tanh.cpp$$
@@ -193,37 +382,6 @@ and $cref/reverse/ReverseTheory/Standard Math Functions/$$ mode.
 The exact form of the differential equation
 for each of these functions is listed below:
 
-$subhead acos$$
-$latex \[
-\begin{array}{lcr}
-	\D{[ {\rm acos} (x) ]}{x} & = & - (1 - x * x)^{-1/2}
-\end{array}
-\] $$
-
-
-$subhead atan$$
-$latex \[
-\begin{array}{lcr}
-        \D{[ {\rm atan} (x) ]}{x} & = & \frac{1}{1 + x^2}
-\end{array}
-\] $$
-
-$subhead cos$$
-$latex \[
-\begin{array}{lcr}
-        \D{[ \cos (x) ]}{x} & = & - \sin (x)  \\
-        \D{[ \sin (x) ]}{x} & = & \cos (x)
-\end{array}
-\] $$
-
-$subhead cosh$$
-$latex \[
-\begin{array}{lcr}
-        \D{[ \cosh (x) ]}{x} & = & \sinh (x)  \\
-        \D{[ \sin (x) ]}{x}  & = & \cosh (x)
-\end{array}
-\] $$
-
 $subhead exp$$
 $latex \[
 \begin{array}{lcr}
@@ -238,21 +396,6 @@ $latex \[
 \end{array}
 \] $$
 
-$subhead sin$$
-$latex \[
-\begin{array}{lcr}
-        \D{[ \sin (x) ]}{x} & = & \cos (x) \\
-        \D{[ \cos (x) ]}{x} & = & - \sin (x)
-\end{array}
-\] $$
-
-$subhead sinh$$
-$latex \[
-\begin{array}{lcr}
-        \D{[ \sinh (x) ]}{x} & = & \cosh (x)   \\
-        \D{[ \cosh (x) ]}{x} & = & \sinh (x)
-\end{array}
-\] $$
 
 $subhead sqrt$$
 $latex \[
