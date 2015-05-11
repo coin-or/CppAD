@@ -1,6 +1,6 @@
 $Id$
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-12 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-15 Bradley M. Bell
 
 CppAD is distributed under multiple licenses. This distribution is under
 the terms of the 
@@ -558,7 +558,7 @@ The $cref value.cpp$$ example has been improved and the old example
 has been moved into the $code TestMore$$ directory.
 
 $head 08-13$$
-The $cref/AD standard math unary functions/std_math_ad/$$
+The $cref unary_standard_math$$ functions
 $code sinh$$, and $code cosh$$ have been added. 
 In addition, more correctness testing 
 has been added for the $code sin$$ and $code cos$$ functions.
@@ -583,7 +583,7 @@ The old $code CondExp$$ function has been deprecated.
 
 $head 07-21$$
 Remove unnecessary no-op that was left in tape for the 
-$cref/AD standard math unary functions/std_math_ad/$$
+$cref unary_standard_math$$ functions
 $code acos$$, $code asin$$, $code atan$$, $code cos$$.
 $pre
 

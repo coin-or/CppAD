@@ -63,17 +63,16 @@ $codei%
 	AD<%Base%> %y%
 %$$
 
-$children%
-	cppad/local/abs.hpp%
-	cppad/local/acosh.hpp%
-	cppad/local/asinh.hpp%
-	cppad/local/atanh.hpp%
-	cppad/local/erf.hpp%
-	cppad/local/expm1.hpp%
-	cppad/local/limits.hpp%
-	cppad/local/log1p.hpp%
-	cppad/local/sign.hpp%
-	cppad/local/std_math_ad.hpp
+$children%cppad/local/std_math_ad.hpp
+	%cppad/local/abs.hpp
+	%cppad/local/acosh.hpp
+	%cppad/local/asinh.hpp
+	%cppad/local/atanh.hpp
+	%cppad/local/erf.hpp
+	%cppad/local/expm1.hpp
+	%cppad/local/limits.hpp
+	%cppad/local/log1p.hpp
+	%cppad/local/sign.hpp
 %$$
 
 $head fun$$
@@ -90,13 +89,18 @@ $cref atanh$$          $cnext $title atanh$$     $rnext
 $cref cos$$            $cnext $title cos$$       $rnext
 $cref cosh$$           $cnext $title cosh$$      $rnext
 $cref erf$$            $cnext $title erf$$       $rnext
+$cref exp$$            $cnext $title exp$$       $rnext
 $cref expm1$$          $cnext $title expm1$$     $rnext
 $cref/fabs/abs/$$      $cnext $title abs$$       $rnext
 $cref log10$$          $cnext $title log10$$     $rnext
 $cref log1p$$          $cnext $title log1p$$     $rnext
+$cref log$$            $cnext $title log$$       $rnext
 $cref sign$$           $cnext $title sign$$      $rnext
 $cref sin$$            $cnext $title sin$$       $rnext
 $cref sinh$$           $cnext $title sinh$$      $rnext
+$cref sqrt$$           $cnext $title sqrt$$      $rnext
+$cref tan$$            $cnext $title tan$$       $rnext
+$cref tanh$$           $cnext $title tanh$$
 $tend
 
 $end

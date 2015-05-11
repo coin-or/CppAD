@@ -946,7 +946,7 @@ $cref UnaryPlus$$,
 $cref UnaryMinus$$,
 $cref ad_binary$$,
 $cref compute_assign$$, and
-$cref std_math_ad$$
+$cref unary_standard_math$$
 
 
 $head 03-27$$
@@ -1036,7 +1036,7 @@ how an $cref ADFun$$ object is related to the C++ algorithm.
 
 
 $head 03-10$$
-The math functions that are not under $cref std_math_ad$$ have
+The math functions that are not under $cref unary_standard_math$$ have
 been grouped under $code MathOther$$.
 $pre
 
@@ -1068,7 +1068,7 @@ $cref atan.cpp$$ have been improved.
 $head 03-05$$
 The AD standard math unary functions documentation
 has been grouped together with improved documentation
-in $cref std_math_ad$$.
+in $cref unary_standard_math$$.
 
 $head 02-28$$
 The $cref ad_output$$ and $cref Abs$$

@@ -107,7 +107,7 @@ Add the $codei%DESTDIR=%directory%$$ option on the
 $cref/make install/auto_tools/make install/$$ command line.
 
 $head 11-29$$
-The $cref std_math_ad$$ function $code sqrt$$ did not link properly
+The $cref unary_standard_math$$ function $code sqrt$$ did not link properly
 when $icode Base$$ was $code AD<double>$$.
 This has been fixed.
 
@@ -574,7 +574,7 @@ $pre
 
 $$
 Fix the description of the $code tan$$ function in
-$cref std_math_ad$$.
+$cref unary_standard_math$$.
 
 
 $head 06-14$$

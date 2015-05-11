@@ -189,6 +189,75 @@ It returns true if it succeeds and false otherwise.
 
 $end
 -------------------------------------------------------------------------------
+$begin exp$$
+$spell
+	exp
+$$
+
+$section The Exponential Function: exp$$
+
+$head Syntax$$
+$icode%y% = exp(%x%)%$$
+
+$head x, y$$
+See the $cref/possible types/unary_standard_math/Possible Types/$$
+for a unary standard math function.
+
+$head Atomic$$
+This is an $cref/atomic operation/glossary/Operation/Atomic/$$.
+
+$head Derivative$$
+$latex \[
+\begin{array}{lcr}
+	\R{exp}^{(1)} (x) & = &  \exp(x)
+\end{array}
+\] $$
+
+$head Example$$
+$children%
+	example/exp.cpp
+%$$
+The file
+$cref exp.cpp$$
+contains an example and test of this function.
+It returns true if it succeeds and false otherwise.
+
+$end
+-------------------------------------------------------------------------------
+$begin log$$
+$spell
+$$
+
+$section The Exponential Function: log$$
+
+$head Syntax$$
+$icode%y% = log(%x%)%$$
+
+$head x, y$$
+See the $cref/possible types/unary_standard_math/Possible Types/$$
+for a unary standard math function.
+
+$head Atomic$$
+This is an $cref/atomic operation/glossary/Operation/Atomic/$$.
+
+$head Derivative$$
+$latex \[
+\begin{array}{lcr}
+	\R{log}^{(1)} (x) & = &  \frac{1}{x}
+\end{array}
+\] $$
+
+$head Example$$
+$children%
+	example/log.cpp
+%$$
+The file
+$cref log.cpp$$
+contains an example and test of this function.
+It returns true if it succeeds and false otherwise.
+
+$end
+-------------------------------------------------------------------------------
 $begin log10$$
 $spell
 	CppAD
@@ -292,131 +361,108 @@ It returns true if it succeeds and false otherwise.
 
 $end
 -------------------------------------------------------------------------------
-$begin std_math_ad$$
+$begin sqrt$$
 $spell
-	Vec
-	std
-	const
-	exp
-	fabs
 	sqrt
-	CppAD
-	namespace
+$$
+
+$section The Square Root Function: sqrt$$
+
+$head Syntax$$
+$icode%y% = sqrt(%x%)%$$
+
+$head x, y$$
+See the $cref/possible types/unary_standard_math/Possible Types/$$
+for a unary standard math function.
+
+$head Atomic$$
+This is an $cref/atomic operation/glossary/Operation/Atomic/$$.
+
+$head Derivative$$
+$latex \[
+\begin{array}{lcr}
+	\R{sqrt}^{(1)} (x) & = &  \frac{1}{2 \R{sqrt} (x) }
+\end{array}
+\] $$
+
+$head Example$$
+$children%
+	example/sqrt.cpp
+%$$
+The file
+$cref sqrt.cpp$$
+contains an example and test of this function.
+It returns true if it succeeds and false otherwise.
+
+$end
+-------------------------------------------------------------------------------
+$begin tan$$
+$spell
+	tan
+$$
+
+$section The Tangent Function: tan$$
+
+$head Syntax$$
+$icode%y% = tan(%x%)%$$
+
+$head x, y$$
+See the $cref/possible types/unary_standard_math/Possible Types/$$
+for a unary standard math function.
+
+$head Atomic$$
+This is an $cref/atomic operation/glossary/Operation/Atomic/$$.
+
+$head Derivative$$
+$latex \[
+\begin{array}{lcr}
+	\R{tan}^{(1)} (x) & = &  1 + \tan (x)^2
+\end{array}
+\] $$
+
+$head Example$$
+$children%
+	example/tan.cpp
+%$$
+The file
+$cref tan.cpp$$
+contains an example and test of this function.
+It returns true if it succeeds and false otherwise.
+
+$end
+-------------------------------------------------------------------------------
+$begin tanh$$
+$spell
 	tanh
 $$
 
-$section AD Standard Math Unary Functions$$
+$section The Hyperbolic Tangent Function: tanh$$
 
 $head Syntax$$
-$icode%y% = %fun%(%x%)%$$
+$icode%y% = tanh(%x%)%$$
 
+$head x, y$$
+See the $cref/possible types/unary_standard_math/Possible Types/$$
+for a unary standard math function.
 
-$head Purpose$$
-Evaluates the one argument standard math function
-$icode fun$$ where its argument is an
-$cref/AD of/glossary/AD of Base/$$ $icode Base$$ object.
+$head Atomic$$
+This is an $cref/atomic operation/glossary/Operation/Atomic/$$.
 
-$head x$$
-The argument $icode x$$ has one of the following prototypes
-$codei%
-	const AD<%Base%>               &%x%
-	const VecAD<%Base%>::reference &%x%
-%$$
+$head Derivative$$
+$latex \[
+\begin{array}{lcr}
+	\R{tanh}^{(1)} (x) & = &  1 - \tanh (x)^2
+\end{array}
+\] $$
 
-$head y$$
-The result $icode y$$ has prototype
-$codei%
-	AD<%Base%> %y%
-%$$
-
-
-$head Operation Sequence$$
-Most of these functions are AD of $icode Base$$
-$cref/atomic operations/glossary/Operation/Atomic/$$.
-In all cases,
-The AD of $icode Base$$
-operation sequence used to calculate $icode y$$ is
-$cref/independent/glossary/Operation/Independent/$$
-of $icode x$$.
-
-$head fun$$
-A definition of $icode fun$$ is included
-for each of the following functions:
-$code exp$$,
-$code fabs$$,
-$code log$$,
-$code sqrt$$,
-$code tan$$,
-$code tanh$$.
-
-
-$head Examples$$
-The following files
-contain examples and tests of these functions.
-Each test returns true if it succeeds and false otherwise.
+$head Example$$
 $children%
-	example/exp.cpp%
-	example/log.cpp%
-	example/sqrt.cpp%
-	example/tan.cpp%
 	example/tanh.cpp
 %$$
-$table
-$rref abs.cpp$$
-$rref Acos.cpp$$
-$rref Asin.cpp$$
-$rref exp.cpp$$
-$rref log.cpp$$
-$rref sqrt.cpp$$
-$rref tan.cpp$$
-$rref tanh.cpp$$
-$tend
-
-
-$head Derivatives$$
-Each of these functions satisfy a standard math function differential equation.
-Calculating derivatives using this differential equation
-is discussed for
-both $cref/forward/ForwardTheory/Standard Math Functions/$$
-and $cref/reverse/ReverseTheory/Standard Math Functions/$$ mode.
-The exact form of the differential equation
-for each of these functions is listed below:
-
-$subhead exp$$
-$latex \[
-\begin{array}{lcr}
-        \D{[ \exp (x) ]}{x} & = & \exp (x)
-\end{array}
-\] $$
-
-$subhead log$$
-$latex \[
-\begin{array}{lcr}
-        \D{[ \log (x) ]}{x} & = & \frac{1}{x}
-\end{array}
-\] $$
-
-
-$subhead sqrt$$
-$latex \[
-\begin{array}{lcr}
-        \D{[ {\rm sqrt} (x) ]}{x} & = & \frac{1}{2 {\rm sqrt} (x) }
-\end{array}
-\] $$
-
-$subhead tan$$
-$latex \[
-\begin{array}{lcr}
-        \D{[ \tan (x) ]}{x} & = & 1 + \tan (x)^2
-\end{array}
-\] $$
-
-$subhead tanh$$
-$latex \[
-\begin{array}{lcr}
-        \D{[ \tanh (x) ]}{x} & = & 1 - \tanh (x)^2
-\end{array}
-\] $$
+The file
+$cref tanh.cpp$$
+contains an example and test of this function.
+It returns true if it succeeds and false otherwise.
 
 $end
 -------------------------------------------------------------------------------

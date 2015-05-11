@@ -85,7 +85,7 @@ empty code when a Microsoft Visual C++ is used.
 $head 11-20$$
 $index erf$$
 The function $codei%tanh(%x%)%$$ was added to the
-$cref std_math_ad$$ functions.
+$cref unary_standard_math$$ functions.
 The $code abs$$ and $code erf$$ functions were removed from the
 $cref/Base requirements/base_require/$$.
 The restrictions about the Base class were removed from

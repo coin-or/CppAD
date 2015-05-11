@@ -1,6 +1,6 @@
 $Id$
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-14 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-15 Bradley M. Bell
 
 CppAD is distributed under multiple licenses. This distribution is under
 the terms of the 
@@ -467,12 +467,12 @@ The $cref/atan2/atan2/$$ function was added.
 
 $head 06-03$$
 The $code asin$$ and $code acos$$ 
-$cref/AD standard math unary functions/std_math_ad/$$ were added.
+$cref unary_standard_math$$ functions were added.
 $pre
 
 $$
 There was a bug the reverse mode theory and calculation of 
-derivatives of $cref/sqrt/std_math_ad/$$ for fourth and higher orders. 
+derivatives of $cref sqrt$$ for fourth and higher orders. 
 This has been fixed.
 In addition,
 the following examples have been changed
@@ -487,7 +487,7 @@ $cref/sqrt/sqrt.cpp/$$.
 
 
 $head 06-01$$
-There was a bug in the $cref/atan/std_math_ad/$$ function 
+There was a bug in the $cref atan$$ function 
 $cref/forward mode/Forward/$$ calculations for Taylor coefficient
 orders greater than two.
 This has been fixed.
@@ -635,7 +635,7 @@ $cref/conditional expressions/CondExp/$$ were mistakenly left out.
 This has been fixed.
 
 $head 04-29$$
-The unary functions, such as $cref/sin/std_math_ad/$$ and $cref/cos/std_math_ad/$$,
+The unary functions, such as $cref sin$$ and $cref cos$$,
 were not defined for elements of an $cref VecAD$$ vector.
 This has been fixed.
 
@@ -666,7 +666,7 @@ and an increase in the speed for $cref VecAD$$ operations.
 $pre
 
 $$
-The $cref/log10/std_math_ad/$$ function was added.
+The $cref log10$$ function was added.
 
 
 $head 04-22$$
