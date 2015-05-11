@@ -63,7 +63,7 @@ $codei%
 	AD<%Base%> %y%
 %$$
 
-$children%cppad/local/std_math_ad.hpp
+$children%cppad/local/std_math_98.hpp
 	%cppad/local/abs.hpp
 	%cppad/local/acosh.hpp
 	%cppad/local/asinh.hpp

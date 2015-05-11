@@ -1,6 +1,6 @@
 /* $Id$ */
-# ifndef CPPAD_STD_MATH_AD_INCLUDED
-# define CPPAD_STD_MATH_AD_INCLUDED
+# ifndef CPPAD_STD_MATH_98_INCLUDED
+# define CPPAD_STD_MATH_98_INCLUDED
 
 /* --------------------------------------------------------------------------
 CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-15 Bradley M. Bell
@@ -469,7 +469,7 @@ $end
 */
 
 /*!
-\file std_math_ad.hpp
+\file std_math_98.hpp
 Define AD<Base> standard math functions (using their Base versions)
 */
 
