@@ -3,7 +3,7 @@ $Id$
 CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-15 Bradley M. Bell
 
 CppAD is distributed under multiple licenses. This distribution is under
-the terms of the 
+the terms of the
                     Eclipse Public License Version 1.0.
 
 A copy of this license is included in the COPYING file of this distribution.
@@ -63,20 +63,20 @@ some feature that perhaps you interpreting as a bug
 If this does not solve your problem, continue
 to the next step.
 $lnext
-The second step is to check the 
-$cref whats_new$$ messages from the date 
+The second step is to check the
+$cref whats_new$$ messages from the date
 of the release that you are using to the current date.
 If the bug has been mentioned and fixed,
 then $cref install$$ the current version of CppAD.
 If this does not solve your problem, continue
 to the next step.
 $lnext
-Create a simple as possible demonstration of the bug; 
-see the file $code bug/template.sh$$ for a template that you can 
+Create a simple as possible demonstration of the bug;
+see the file $code bug/template.sh$$ for a template that you can
 edit for that purpose.
 The smaller the program, the better the bug report.
 $lnext
-Send an e-mail message to the mailing list 
+Send an e-mail message to the mailing list
 $href%
 	http://list.coin-or.org/mailman/listinfo/cppad%
 	cppad@list.coin-or.org
@@ -88,7 +88,7 @@ $lend
 $head CompareChange$$
 $index CompareChange$$
 $index NDEBUG$$
-If you attempt to use the 
+If you attempt to use the
 $cref CompareChange$$
 function when $code NDEBUG$$ is true,
 you will get an error message stating that
@@ -109,11 +109,11 @@ Thus one would prefer to use
 $codei%
 	std::complex< AD<%Base%> >
 %$$
-On the other hand, the C++ standard only specifies 
-$codei%std::complex<%Type%>%$$ where $icode Type$$ is 
+On the other hand, the C++ standard only specifies
+$codei%std::complex<%Type%>%$$ where $icode Type$$ is
 $code float$$, $code double$$, or $code lone double$$.
-The effect of instantiating the template complex for any other type 
-is unspecified. 
+The effect of instantiating the template complex for any other type
+is unspecified.
 
 $head Exceptions$$
 $index test, exception$$
@@ -137,35 +137,35 @@ $index independent variable$$
 $index tape, avoid$$
 $index record, avoid$$
 $index speed, avoid taping$$
-Is it possible to evaluate the same tape recording with different values 
+Is it possible to evaluate the same tape recording with different values
 for the independent variables ?
 $pre
 
 $$
-Yes (see $cref forward_zero$$). 
+Yes (see $cref forward_zero$$).
 
 $head Matrix Inverse$$
 $index inverse, matrix$$
 $index matrix, inverse$$
 Is it possible to differentiate (with respect to the matrix elements)
-the computation of the inverse of a matrix 
-where the computation of the inverse uses pivoting ? 
+the computation of the inverse of a matrix
+where the computation of the inverse uses pivoting ?
 $pre
 
 $$
 The example routine $cref LuSolve$$ can be used to do this
 because the inverse is a special case of the solution of linear equations.
-The examples 
+The examples
 $cref jac_lu_det.cpp$$ and $cref hes_lu_det.cpp$$
-use LuSolve to compute derivatives of the 
+use LuSolve to compute derivatives of the
 determinant with respect to the components of the matrix.
 
 $head Mode: Forward or Reverse$$
 $index forward$$
 $index reverse$$
 $index mode$$
-When evaluating derivatives, 
-one always has a choice between 
+When evaluating derivatives,
+one always has a choice between
 forward and reverse mode.
 How does one decide which mode to use ?
 $pre
@@ -173,14 +173,14 @@ $pre
 $$
 In general, the best mode depends on the number of domain and range
 components in the function that your are differentiating.
-Each call to $cref Forward$$ computes the derivative of all 
+Each call to $cref Forward$$ computes the derivative of all
 the range directions with respect to one domain direction.
-Each call to $cref Reverse$$ computes the derivative of one 
+Each call to $cref Reverse$$ computes the derivative of one
 range direction with respect to all the domain directions.
-The times required for (speed of) 
-calls $code Forward$$ and $code Reverse$$ are about equal.  
-The $cref/Parameter/seq_property/Parameter/$$ 
-function can be used to quickly determine that 
+The times required for (speed of)
+calls $code Forward$$ and $code Reverse$$ are about equal.
+The $cref/Parameter/seq_property/Parameter/$$
+function can be used to quickly determine that
 some range directions have derivative zero.
 
 
@@ -198,7 +198,7 @@ the CppAD $cref testvector$$ class ?
 $pre
 
 $$
-The preprocessor symbol 
+The preprocessor symbol
 $small $cref/CPPAD_TESTVECTOR/testvector/$$ $$
 determines which
 $cref SimpleVector$$ template class is used for extensive testing.
@@ -216,7 +216,7 @@ Why do I have trouble when the following command
 $codep
 	using namespace CppAD
 $$
-is at the global level 
+is at the global level
 (not within a function or some other limited scope).
 $pre
 
@@ -241,10 +241,10 @@ and with the preprocessor symbol $code NDEBUG$$ defined.
 (The $cref speed_cppad$$ tests do this.)
 Note that defining $code NDEBUG$$
 will turn off all of the error checking and reporting that
-is done using $cref ErrorHandler$$. 
+is done using $cref ErrorHandler$$.
 
 $subhead Optimize$$
-It is also possible that preforming a tape 
+It is also possible that preforming a tape
 $cref/optimization/optimize/$$ will improve the speed of evaluation
 more than the time required for the optimization.
 
@@ -266,7 +266,7 @@ CppAD uses memory to store a different tape for recording operations
 for each $codei%AD<%Base%>%$$ type that is used.
 If you have a very large number calculations that are recorded
 on a tape, the tape will keep growing to hold the necessary information.
-Eventually, virtual memory may be used to store the tape 
+Eventually, virtual memory may be used to store the tape
 and the calculations may slow down because of necessary disk access.
 
 

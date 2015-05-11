@@ -6,7 +6,7 @@
 CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-15 Bradley M. Bell
 
 CppAD is distributed under multiple licenses. This distribution is under
-the terms of the 
+the terms of the
                     Eclipse Public License Version 1.0.
 
 A copy of this license is included in the COPYING file of this distribution.
@@ -70,7 +70,7 @@ $head Derivative$$
 CppAD defines the derivative of the $code abs$$ function is
 the $cref sign$$ function; i.e.,
 $latex \[
-{\rm abs}^{(1)} ( x ) = {\rm sign} (x ) = 
+{\rm abs}^{(1)} ( x ) = {\rm sign} (x ) =
 \left\{ \begin{array}{rl}
 	+1 & {\rm if} \; x > 0 \\
 	0  & {\rm if} \; x = 0 \\
@@ -85,7 +85,7 @@ $children%
 %$$
 The file
 $cref abs.cpp$$
-contains an example and test of this function.   
+contains an example and test of this function.
 It returns true if it succeeds and false otherwise.
 
 $end
@@ -97,12 +97,12 @@ namespace CppAD {
 
 template <class Base>
 AD<Base> AD<Base>::Abs (void) const
-{ 
+{
 	AD<Base> result;
 	result.value_ = abs(value_);
 	CPPAD_ASSERT_UNKNOWN( Parameter(result) );
 
-	if( Variable(*this) ) 
+	if( Variable(*this) )
 	{	// add this operation to the tape
 		CPPAD_ASSERT_UNKNOWN( NumRes(AbsOp) == 1 );
 		CPPAD_ASSERT_UNKNOWN( NumArg(AbsOp) == 1 );
@@ -128,4 +128,4 @@ inline AD<Base> abs(const VecAD_reference<Base> &x)
 
 } // END CppAD namespace
 
-# endif 
+# endif

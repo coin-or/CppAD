@@ -6,7 +6,7 @@
 CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-15 Bradley M. Bell
 
 CppAD is distributed under multiple licenses. This distribution is under
-the terms of the 
+the terms of the
                     Eclipse Public License Version 1.0.
 
 A copy of this license is included in the COPYING file of this distribution.
@@ -36,7 +36,7 @@ $childtable%
 $end
 */
 
-// include MathOther.h after CondExp.h because some MathOther.h routines use 
+// include MathOther.h after CondExp.h because some MathOther.h routines use
 // CondExp.h and CondExp.h is not sufficently declared in Declare.h
 
 # include <cppad/local/arithmetic.hpp>
