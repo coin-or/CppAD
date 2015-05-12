@@ -57,7 +57,13 @@ s|/usr/include/boost/numeric/ublas/||g
 s|CppAD::AD<double> *|AD|g
 s|<matrix<AD>, basic_unit_lower<> >|<matrix_AD_ulower>|g
 s|<matrix<AD>, basic_upper<> >|<matrix_AD_upper>|g
+s|scalar_minus<AD, AD>|scalar_minus_AD|g
 s|triangular_adaptor<\\([^<>]*\\)>|triangular_\\1|g
+s|triangular_matrix_AD_ulower|AD_ulower|g
+s|triangular_matrix_AD_upper|AD_upper|g
+s|matrix_matrix_prod<AD_ulower, AD_upper, AD> *|AD_prod_ulower_upper|g
+s|<AD_ulower, AD_upper, AD_prod_ulower_upper> *|<AD_prod_ulower_upper>|g
+s|matrix_matrix_binary<AD_prod_ulower_upper>|AD_prod_ulower_upper|g
 EOF
 	echo "sed -f $name.sed $name.log > ../$name.log"
 	sed -f $name.sed $name.log > ../$name.log
