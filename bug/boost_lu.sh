@@ -42,14 +42,34 @@ cd build
 echo "$0"
 name=`echo $0 | sed -e 's|.*/||' -e 's|\..*||'`
 mv ../bug.$$ $name.cpp
-echo "g++ -I../.. --std=c++11 -g $name.cpp -o $name"
-g++ -I../.. --std=c++11 -g $name.cpp -o $name
+echo "g++ -I../.. --std=c++11 -g $name.cpp -o $name >& $name.log"
+if ! g++ -I../.. --std=c++11 -g $name.cpp -o $name >& $name.log
+then
+	cat << EOF > $name.sed
+s|\\[|&\\n|g
+s|\\]|&\\n|g
+s|[‘{}]|&\\n|g
+s|[a-zA-Z0-9_]* *=|\\n&|g
+#
+s|boost::numeric::ublas::||g
+s|/usr/include/boost/numeric/ublas/||g
+#
+s|CppAD::AD<double> *|AD|g
+s|<matrix<AD>, basic_unit_lower<> >|<matrix_AD_ulower>|g
+s|<matrix<AD>, basic_upper<> >|<matrix_AD_upper>|g
+s|triangular_adaptor<\\([^<>]*\\)>|triangular_\\1|g
+EOF
+	echo "sed -f $name.sed $name.log > ../$name.log"
+	sed -f $name.sed $name.log > ../$name.log
+	echo "$name.sh: Compliation Error: see $name.log"
+	exit 1
+fi
 #
 echo "./$name"
 if ! ./$name
 then
 	echo
-	echo "$name.sh: Error"
+	echo "$name.sh: Execution Error"
 	exit 1
 fi
 echo
