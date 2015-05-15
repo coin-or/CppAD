@@ -21,8 +21,68 @@ gcc-4.9.2. Here is the gist of the message:
 EOF
 cat << EOF > bug.$$
 #include <cppad/cppad.hpp>
-#include <boost/numeric/ublas/lu.hpp>
 
+# define NUMERIC_LIMITS_FUN(name)                  \
+	static CppAD::AD<double> name(void)            \
+	{	return static_cast< CppAD::AD<double> > (  \
+			std::numeric_limits<double>::name()    \
+		);                                         \
+	}
+
+# define NUMERIC_LIMITS_BOOL(name)                 \
+	static const bool name =                       \
+		std::numeric_limits<double>::name;
+
+# define NUMERIC_LIMITS_INT(name)                 \
+	static const int name =                       \
+		std::numeric_limits<double>::name;
+
+
+
+namespace std {
+	/// Specialization of numeric_limits< CppAD::AD<double> >
+	template <>
+	class numeric_limits< CppAD::AD<double> > {
+	public:
+		// has_denorm
+		static const float_denorm_style has_denorm =
+			std::numeric_limits<double>::has_denorm;
+		// round_style
+		static const float_round_style round_style =
+			std::numeric_limits<double>::round_style;
+
+		// bool
+		NUMERIC_LIMITS_BOOL(is_specialized);
+		NUMERIC_LIMITS_BOOL(is_signed);
+		NUMERIC_LIMITS_BOOL(is_integer);
+		NUMERIC_LIMITS_BOOL(is_exact);
+		NUMERIC_LIMITS_BOOL(has_infinity);
+		NUMERIC_LIMITS_BOOL(has_quiet_NaN);
+		NUMERIC_LIMITS_BOOL(has_signaling_NaN);
+		NUMERIC_LIMITS_BOOL(has_denorm_loss);
+		NUMERIC_LIMITS_BOOL(is_iec559);
+		NUMERIC_LIMITS_BOOL(is_bounded);
+		NUMERIC_LIMITS_BOOL(is_modulo);
+		NUMERIC_LIMITS_BOOL(traps);
+		NUMERIC_LIMITS_BOOL(tinyness_before);
+
+		// int
+		NUMERIC_LIMITS_INT(digits);
+		NUMERIC_LIMITS_INT(digits10);
+		NUMERIC_LIMITS_INT(radix);
+		NUMERIC_LIMITS_INT(min_exponent);
+		NUMERIC_LIMITS_INT(min_exponent10);
+		NUMERIC_LIMITS_INT(max_exponent);
+		NUMERIC_LIMITS_INT(max_exponent10);
+
+		/// functions
+		NUMERIC_LIMITS_FUN( epsilon)
+		NUMERIC_LIMITS_FUN( min    )
+		NUMERIC_LIMITS_FUN( max    )
+	};
+}
+
+#include <boost/numeric/ublas/lu.hpp>
 int main() {
     typedef CppAD::AD<double> T;
     boost::numeric::ublas::matrix<T> a(5,5);
