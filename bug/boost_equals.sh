@@ -24,12 +24,17 @@ cat << EOF > bug.$$
 # include <boost/numeric/ublas/lu.hpp>
 int main() {
     typedef CppAD::AD<double> T;
-	using boost::numeric::ublas::detail::equals;
+	using boost::numeric::ublas::norm_inf;
 
     boost::numeric::ublas::matrix<T> a(5,5);
 	T epsilon  = static_cast<T>( std::numeric_limits<double>::epsilon() );
 	T min_norm = static_cast<T>( std::numeric_limits<double>::min() );
-	std::cout << "equals = " << equals(a, a, epsilon, min_norm) << std::endl;
+	T norm     = norm_inf(a);
+	bool equals = norm < epsilon;
+	std::cout << "equals = " << equals << std::endl;
+	//
+	// using boost::numeric::ublas::detail::equals;
+	// std::cout << "equals = " << equals(a, a, epsilon, min_norm) << std::endl;
     return 0;
 }
 EOF

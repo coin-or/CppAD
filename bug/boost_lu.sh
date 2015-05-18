@@ -18,6 +18,18 @@ gcc-4.9.2. Here is the gist of the message:
 	... snip ...
 		return norm_inf (e1 - e2) < epsilon *
                                    ^
+The folowing change to
+	/usr/include/boost/numeric/ublas/detail/matrix_assing.hpp
+seems to fix the problem:
+
+Old Text:
+	        return norm_inf (e1 - e2) < epsilon *
+               std::max<S> (std::max<S> (norm_inf (e1), norm_inf (e2)), min_norm);
+New Test:
+    S norm_1    = norm_inf(e1);
+    S norm_2    = norm_inf(e2);
+    S norm_diff = norm_inf(e1 - e2);
+    return norm_diff < epsilon * std::max( std::max<S>(norm_1, norm_2) , min_norm );
 EOF
 cat << EOF > bug.$$
 #include <cppad/cppad.hpp>
