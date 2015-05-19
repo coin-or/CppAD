@@ -11,50 +11,60 @@
 # Please visit http://www.coin-or.org/CppAD/ for information on other licenses.
 # -----------------------------------------------------------------------------
 cat << EOF
-The skip during reverse mode should check that the multiplier is identically
-zero. Here is an example that demonstrates why.
+f(x) = x[0] / x[1] if (x[0] > 0 and x[1] >= x[0]) else 1.0
 EOF
 cat << EOF > bug.$$
 #include <cppad/cppad.hpp>
 int main(void) {
 	bool ok = true;
-    using namespace CppAD;
-
+    using CppAD::vector;
 	double eps = 10. * std::numeric_limits<double>::epsilon();
 
-    typedef AD<double> adouble;
-    typedef AD<adouble> a2double;
+    typedef CppAD::AD<double>   a1double;
+    typedef CppAD::AD<a1double> a2double;
 
-    // This works (does not generate a nan)
-    // std::vector<double> x{-1.0, -1.0};
+    // value during taping
+	vector<double> x(2);
+	x[0] = 0.0;
+	x[1] = 0.0;
+	// works for this case
+	// x[1] = 5.0;
 
-    // This fails
-    std::vector<double> x{0.0, 0.0};
-
-    std::vector<a2double> a2x(x.size());
-    for (size_t i = 0; i < a2x.size(); i++) {
-        a2x[i] = adouble(x[i]);
-    }
+    vector<a2double> a2x(x.size());
+    for (size_t i = 0; i < a2x.size(); i++)
+        a2x[i] = a2double(x[i]);
     Independent(a2x);
 
-    std::vector<a2double> a2y(1);
-    a2y[0] = CondExpGt(a2x[0], a2double(1.0), a2x[0] / a2x[1], a2double(0.0));
+	a2double a2zero = a2double(0.0);
+	a2double a2one  = a2double(1.0);
+	a2double temp_1 = CondExpGt(a2x[1], a2x[0], a2x[0] / a2x[1], a2one);
+	a2double temp_2 = CondExpGt(a2x[0], a2zero, temp_1, a2one);
 
-    ADFun<adouble> f1;
+    vector<a2double> a2y(1);
+    a2y[0] = temp_2;
+
+    CppAD::ADFun<a1double> f1;
     f1.Dependent(a2x, a2y);
 
-    std::vector<adouble> ax{adouble(x[0]), adouble(x[1])};
-    Independent(ax);
+    vector<a1double> a1x(x.size());
+    for (size_t i = 0; i < a1x.size(); i++)
+        a1x[i] = a1double(x[i]);
+    Independent(a1x);
 
-    std::vector<adouble> ay = f1.Jacobian(ax);
+    vector<a1double> a1z = f1.Jacobian(a1x);
 
-    CppAD::ADFun<double> f2;
-    f2.Dependent(ax, ay);
+    CppAD::ADFun<double> f;
+    f.Dependent(a1x, a1z);
 
-    x = {2, 1};
+    // now check result using doubles
+	// for a case where f(x) = x[0] / x[1];
+	x[0] = 1.0;
+	x[1] = 2.0;
 
-    std::vector<double> y = f2.Forward(0, x);
-    ok &= CppAD::NearEqual(y[0], 1.0/ x[1], eps, eps);
+    vector<double> z = f.Forward(0, x);
+	std::cout << "z = " << z << std::endl;
+    ok &= CppAD::NearEqual(z[0], 1.0/x[1], eps, eps);
+    ok &= CppAD::NearEqual(z[1], - x[0]/(x[1]*x[1]), eps, eps);
 
 	if( ! ok )
 		return 1;
