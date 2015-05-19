@@ -19,7 +19,7 @@ gcc-4.9.2. Here is the gist of the message:
 		return norm_inf (e1 - e2) < epsilon *
                                    ^
 The folowing change to
-	/usr/include/boost/numeric/ublas/detail/matrix_assing.hpp
+	/usr/include/boost/numeric/ublas/detail/matrix_assign.hpp
 seems to fix the problem:
 
 Old Text:
