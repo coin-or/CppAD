@@ -32,7 +32,7 @@ cat << EOF > bin/doxyfile.$$
 ALWAYS_DETAILED_SEC     = YES
 BUILTIN_STL_SUPPORT     = YES
 ENABLE_PREPROCESSING    = YES
-EXPAND_ONLY_PREDEF      = YES
+MACRO_EXPANSION         = YES
 EXTRACT_ALL             = YES
 EXTRACT_LOCAL_CLASSES   = YES
 EXTRACT_PRIVATE         = YES
@@ -55,7 +55,7 @@ LATEX_BATCHMODE         = YES
 MACRO_EXPANSION         = YES
 MULTILINE_CPP_IS_BRIEF  = YES
 OUTPUT_DIRECTORY        = $output_directory
-PREDEFINED              = "__cplusplus=201103"
+PREDEFINED              = "__cplusplus=201103" "CPPAD_USE_CPLUSPLUS_2011=1"
 PROJECT_NAME            = "CppAD: A C++ Algorithmic Differentiation Package"
 PROJECT_NUMBER          = $version
 QT_AUTOBRIEF            = YES

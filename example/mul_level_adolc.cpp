@@ -1,6 +1,6 @@
 /* $Id$ */
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-12 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-15 Bradley M. Bell
 
 CppAD is distributed under multiple licenses. This distribution is under
 the terms of the
@@ -16,6 +16,7 @@ $spell
 	AdolcDir
 	adouble
 	Vec
+	zdouble
 $$
 
 $section Using Adolc with Multiple Levels of Taping: Example and Test$$
@@ -25,7 +26,7 @@ $index Adolc, multiple level$$
 
 $head Purpose$$
 In this example, we use $code AD< adouble> >$$ (level two taping),
-the compute values of the function $latex f : \B{R}^n \rightarrow \B{R}$$ where 
+the compute values of the function $latex f : \B{R}^n \rightarrow \B{R}$$ where
 $latex \[
 	f(x) = \frac{1}{2} \left( x_0^2 + \cdots + x_{n-1}^2 \right)
 \] $$
@@ -46,19 +47,28 @@ $latex \[
 	\frac{d}{dx} \left[ f^{(1)} (x) * v \right] = f^{(2)} (x) * v
 \] $$
 The example $cref mul_level.cpp$$ computes the same values using
-$code AD< AD<double> >$$ and $code AD<double>$$.
+$code AD< AD<zdouble> >$$ and $code AD<zdouble>$$.
 
 $head Memory Management$$
-Adolc uses raw memory arrays that depend on the number of 
+Adolc uses raw memory arrays that depend on the number of
 dependent and independent variables.
-The memory management utility $cref omp_alloc$$ 
+The memory management utility $cref thread_alloc$$
 is used to manage this memory allocation.
 
 $head Configuration Requirement$$
 This example will be compiled and tested provided that
-the value $cref ipopt_prefix$$ is specified on the 
+the value $cref adolc_prefix$$ is specified on the
 $cref cmake$$ command line.
 
+$head Absolute Zero$$
+Note that $code adouble$$ does not have an
+$cref/absolute zero/zdouble/Absolute Zero/$$.
+Hence if you use $cref/conditional expressions/CondExp/$$
+with the type $code AD<adouble>$$ you cannot also use
+$cref/reverse mode/reverse/$$; see
+$cref/zdouble CppAD motivation/zdouble/Motivation/CppAD/$$.
+
+$head Source$$
 $code
 $verbatim%example/mul_level_adolc.cpp%0%// BEGIN C++%// END C++%1%$$
 $$
@@ -70,16 +80,16 @@ $end
 # include <adolc/taping.h>
 # include <adolc/interfaces.h>
 
-// adouble definitions not in Adolc distribution and 
+// adouble definitions not in Adolc distribution and
 // required in order to use CppAD::AD<adouble>
 # include <cppad/example/base_adolc.hpp>
 
 # include <cppad/cppad.hpp>
 
-namespace { 
+namespace {
 	// f(x) = |x|^2 / 2 = .5 * ( x[0]^2 + ... + x[n-1]^2 )
 	template <class Type>
-	Type f(CPPAD_TESTVECTOR(Type) &x)
+	Type f(const CPPAD_TESTVECTOR(Type)& x)
 	{	Type sum;
 
 		sum  = 0.;
@@ -88,57 +98,60 @@ namespace {
 			sum += x[i] * x[i];
 
 		return .5 * sum;
-	} 
+	}
 }
 
-bool mul_level_adolc(void) 
+bool mul_level_adolc(void)
 {	bool ok = true;                // initialize test result
-	using CppAD::omp_alloc;        // The CppAD memory allocator
+	using CppAD::thread_alloc;        // The CppAD memory allocator
 
-	typedef adouble             ADdouble;  // for first level of taping
-	typedef CppAD::AD<ADdouble> ADDdouble; // for second level of taping
+	typedef adouble           a1type;  // for first level of taping
+	typedef CppAD::AD<a1type> a2type; // for second level of taping
 	size_t n = 5;                          // number independent variables
 	size_t j;
 
-	CPPAD_TESTVECTOR(double)       x(n);
-	CPPAD_TESTVECTOR(ADdouble)   a_x(n);
-	CPPAD_TESTVECTOR(ADDdouble) aa_x(n);
+	// 10 times machine epsilon
+	double eps = 10. * std::numeric_limits<double>::epsilon();
+
+	CPPAD_TESTVECTOR(double) x(n);
+	CPPAD_TESTVECTOR(a1type) a1x(n);
+	CPPAD_TESTVECTOR(a2type) a2x(n);
 
 	// Values for the independent variables while taping the function f(x)
 	for(j = 0; j < n; j++)
-		aa_x[j] = double(j);
+		a2x[j] = double(j);
 	// Declare the independent variable for taping f(x)
-	CppAD::Independent(aa_x); 
+	CppAD::Independent(a2x);
 
 	// Use AD<adouble> to tape the evaluation of f(x)
-	CPPAD_TESTVECTOR(ADDdouble) aa_f(1); 
-	aa_f[0] = f(aa_x); 
+	CPPAD_TESTVECTOR(a2type) a2y(1);
+	a2y[0] = f(a2x);
 
-	// Declare a_F as the corresponding ADFun<adouble> function f(x)
+	// Declare a1f as the corresponding ADFun<adouble> function f(x)
 	// (make sure we do not run zero order forward during constructor)
-	CppAD::ADFun<ADdouble> a_F;
-	a_F.Dependent(aa_x, aa_f);
+	CppAD::ADFun<a1type> a1f;
+	a1f.Dependent(a2x, a2y);
 
 	// Value of the independent variables whitle taping f'(x) * v
-	int tag = 0; 
+	int tag = 0;
 	int keep = 1;
 	trace_on(tag, keep);
 	for(j = 0; j < n; j++)
-		a_x[j] <<= double(j);
+		a1x[j] <<= double(j);
 
 	// set the argument value x for computing f'(x) * v
-	a_F.Forward(0, a_x);
+	a1f.Forward(0, a1x);
 
 	// compute f'(x) * v
-	CPPAD_TESTVECTOR(ADdouble) a_v(n);
-	CPPAD_TESTVECTOR(ADdouble) a_df(1);
+	CPPAD_TESTVECTOR(a1type) a1v(n);
+	CPPAD_TESTVECTOR(a1type) a1df(1);
 	for(j = 0; j < n; j++)
-		a_v[j] = double(n - j);
-	a_df = a_F.Forward(1, a_v); 
+		a1v[j] = double(n - j);
+	a1df = a1f.Forward(1, a1v);
 
 	// declare Adolc function corresponding to f'(x) * v
-	double df; 
-	a_df[0] >>= df;
+	double df;
+	a1df[0] >>= df;
 	trace_off();
 
 	// compute the d/dx of f'(x) * v = f''(x) * v
@@ -146,21 +159,22 @@ bool mul_level_adolc(void)
 
 	// w = new double[capacity] where capacity >= m
 	size_t capacity;
-	double* w  = omp_alloc::create_array<double>(m, capacity);
-	// w = new double[capacity] where capacity >= n
-	double* dw = omp_alloc::create_array<double>(n, capacity);
+	double* w  = thread_alloc::create_array<double>(m, capacity);
+
+	// dw = new double[capacity] where capacity >= n
+	double* dw = thread_alloc::create_array<double>(n, capacity);
 
 	w[0]  = 1.;
 	fos_reverse(tag, int(m), int(n), w, dw);
 
 	for(j = 0; j < n; j++)
-	{	double vj = a_v[j].value();
-		ok &= CppAD::NearEqual(dw[j], vj, 1e-10, 1e-10);
+	{	double vj = a1v[j].value();
+		ok &= CppAD::NearEqual(dw[j], vj, eps, eps);
 	}
 
 	// make memory avaialble for other use by this thread
-	omp_alloc::delete_array(w);
-	omp_alloc::delete_array(dw);
+	thread_alloc::delete_array(w);
+	thread_alloc::delete_array(dw);
 	return ok;
 }
 // END C++

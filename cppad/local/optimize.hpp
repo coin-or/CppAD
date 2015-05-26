@@ -2998,7 +2998,7 @@ void ADFun<Base>::optimize(const std::string& options)
 		check = Forward(0, x);
 
 		// check results
-		Base eps = 10. * epsilon<Base>();
+		Base eps = 10. * CppAD::numeric_limits<Base>::epsilon();
 		for(i = 0; i < m; i++) CPPAD_ASSERT_KNOWN(
 			abs_geq( eps * max_taylor , check[i] - y[i] ) ,
 			"Error during check of f.optimize()."

@@ -13,6 +13,8 @@ Please visit http://www.coin-or.org/CppAD/ for information on other licenses.
 $begin whats_new_15$$
 $dollar @$$
 $spell
+	adolc
+	zdouble
 	expm1
 	eigen
 	expm1
@@ -44,6 +46,7 @@ $spell
 	aeps
 	CondExpGt
 	hasnan
+	Adolc
 $$
 
 $section CppAD Changes and Additions During 2015$$
@@ -53,6 +56,35 @@ This section contains a list of the changes to CppAD during 2015
 (in reverse order by date).
 The purpose of this section is to
 assist you in learning about changes between various versions of CppAD.
+
+$head 05-26$$
+There was a problem with using
+$cref/conditional expressions/CondExp/$$ and $cref/reverse mode/reverse/$$
+with $cref/multiple levels of AD/mul_level/$$.
+
+$list number$$
+The problem above has been fixed by adding the base type $code zdouble$$, see
+$cref/CppAD motivation/zdouble/Motivation/CppAD/$$ for this new type.
+$lnext
+The sections
+$cref mul_level$$,
+$cref change_param.cpp$$,
+$cref mul_level.cpp$$,
+and $cref mul_level_ode.cpp$$ were changed to use $cref zdouble$$.
+$lnext
+The $cref/adolc/adolc_prefix/$$ multi-level examples
+$cref mul_level_adolc.cpp$$ and $cref mul_level_adolc_ode.cpp$$
+were changed to mention the limitations because Adolc does not have an
+$cref/absolute zero/zdouble/Absolute Zero/$$.
+$lnext
+The example above were also changed so that AD variable names that
+indicated the level of AD for the variable.
+$lnext
+The base type requirements were modified to include mention of
+$cref/absolute zero/base_require/Absolute Zero/$$.
+In addition, the base type requirements
+$cref/warning/base_require/Warning/$$ is now more informative.
+$lend
 
 $head 05-11$$
 Reorganize the $cref unary_standard_math$$ documentation.

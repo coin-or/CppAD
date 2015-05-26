@@ -1,7 +1,7 @@
 #! /bin/bash -e
 # $Id$
 # -----------------------------------------------------------------------------
-# CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-14 Bradley M. Bell
+# CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-15 Bradley M. Bell
 #
 # CppAD is distributed under multiple licenses. This distribution is under
 # the terms of the
@@ -17,16 +17,16 @@ then
 fi
 # -----------------------------------------------------------------------------
 # Make sure that OMhelp verbatim commands referr to same file as command
-echo "Checking that OMhelp verbatim commands include from file they appear in." 
+echo "Checking that OMhelp verbatim commands include from file they appear in."
 echo "----------------------------------------------------------------------"
 list=`bin/list_files.sh .c .cpp .hpp .omh .txt .am`
 different="no"
-for file in $list 
+for file in $list
 do
 	line=`sed -n -e '/$verbatim[^a-z]/p' $file`
 	if [ "$line" != '' ]
 	then
-		reference=`echo $line | sed -e 's|$verbatim%\([^%]*\)%.*|\1|'` 
+		reference=`echo $line | sed -e 's|$verbatim%\([^%]*\)%.*|\1|'`
 		#
 		file_root=`echo $file | sed \
 			-e 's|.*/||' -e 's|_hpp\.omh||' -e 's|\.[^.]*$||'`
@@ -43,6 +43,10 @@ do
 				ok='true'
 			fi
 			if [ "$file_root" == 'license' ] && [ "$ref_root" == 'epl-v10' ]
+			then
+				ok='true'
+			fi
+			if [ "$file_root"=='base_require' ] && [ "$ref_root"=='zdouble' ]
 			then
 				ok='true'
 			fi

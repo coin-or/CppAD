@@ -43,24 +43,23 @@ $spell
 	CondExp
 $$
 
-$index Base, require$$
-$index require, Base type$$
-$index type, Base require$$
-
-$section AD<Base> Requirements for Base Type$$
+$section AD<Base> Requirements for a CppAD Base Type$$
 
 $head Syntax$$
-$code include <cppad/base_require.hpp>$$
-
-$head Warning$$
-This is a preliminary version of these specifications
-and it is subject to change in future versions of CppAD.
+$code # include <cppad/base_require.hpp>$$
 
 $head Purpose$$
-This section lists the requirements that the type
+This section lists the requirements for the type
 $icode Base$$ so that the type $codei%AD<%Base%>%$$ can be used.
 
-$subhead Standard Base Types$$
+$head Warning$$
+Defining a CppAD $icode Base$$ type is an advanced use of CppAD.
+This part of the CppAD API changes with time. The most common change
+is adding more requirements.
+Search for mention `base type' in the
+current $cref whats_new$$ section for these changes.
+
+$head Standard Base Types$$
 In the case where $icode Base$$ is
 $code float$$,
 $code double$$,
@@ -81,9 +80,6 @@ The type $icode Base$$ must support all the operations for a
 $cref NumericType$$.
 
 $head Output Operator$$
-$index output, base operator$$
-$index base, output operator$$
-$index operator, base output$$
 The type $icode Base$$ must support the syntax
 $codei%
 	%os% << %x%
@@ -94,9 +90,6 @@ For example, see
 $cref/base_alloc/base_alloc.hpp/Output Operator/$$.
 
 $head Integer$$
-$index Integer, base require$$
-$index base, Integer require$$
-$index require, base Integer$$
 The type $icode Base$$ must support the syntax
 $codei%
 	%i% = CppAD::Integer(%x%)
@@ -123,6 +116,26 @@ namespace CppAD {
 For example, see
 $cref/base_float/base_float.hpp/Integer/$$ and
 $cref/base_alloc/base_alloc.hpp/Integer/$$.
+
+$head Absolute Zero$$
+If this base type will be used with
+$cref/multiple levels of AD/mul_level/$$;
+e.g. $codei%AD< AD<%Base%> >%$$,
+and $cref/reverse mode/reverse/$$ calculations will be recorded,
+the type $icode Base$$ must have an
+$cref/absolute zero/zdouble/Absolute Zero/$$.
+
+$subhead Nan$$
+If the type $icode Base$$ has an absolute zero,
+the CppAD $cref nan$$ template function must be specialized
+because it assumes that zero divided by zero is $code nan$$.
+For example, here is the specialization defined by $cref zdouble$$
+$codei%
+namespace CppAD {%$$
+$code
+$verbatim%cppad/local/zdouble.hpp%4%// BEGIN nan%// END nan%$$
+$$
+$codei }$$
 
 $childtable%
 	omh/base_require/base_member.omh%

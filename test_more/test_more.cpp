@@ -67,6 +67,7 @@ extern bool log1p(void);
 extern bool Mul(void);
 extern bool mul_level(void);
 extern bool MulEq(void);
+extern bool mul_zdouble(void);
 extern bool MulZeroOne(void);
 extern bool NearEqualExt(void);
 extern bool Neg(void);
@@ -182,6 +183,7 @@ int main(void)
 	ok &= Run( Mul,             "Mul"            );
 	ok &= Run( mul_level,       "mul_level"      );
 	ok &= Run( MulEq,           "MulEq"          );
+	ok &= Run( mul_zdouble,     "mul_zdouble"    );
 	ok &= Run( MulZeroOne,      "MulZeroOne"     );
 	ok &= Run( NearEqualExt,    "NearEqualExt"   );
 	ok &= Run( Neg,             "Neg"            );

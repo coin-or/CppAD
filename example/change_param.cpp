@@ -1,9 +1,9 @@
 /* $Id$ */
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-12 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-15 Bradley M. Bell
 
 CppAD is distributed under multiple licenses. This distribution is under
-the terms of the 
+the terms of the
                     Eclipse Public License Version 1.0.
 
 A copy of this license is included in the COPYING file of this distribution.
@@ -13,7 +13,7 @@ Please visit http://www.coin-or.org/CppAD/ for information on other licenses.
 # include <cppad/cppad.hpp>
 
 /*
-$begin change_const.cpp$$
+$begin change_param.cpp$$
 $spell
 	Jacobian
 $$
@@ -29,9 +29,9 @@ In this example we use two levels of taping so that a derivative
 can have constant parameters that can be changed. To be specific,
 we consider the function $latex f : \B{R}^2 \rightarrow \B{R}^2$$
 $latex \[
-f(x) = p \left( \begin{array}{c} 
+f(x) = p \left( \begin{array}{c}
 	\sin( x_0 ) \\
-	\sin( x_1 ) 
+	\sin( x_1 )
 \end{array} \right)
 \]$$
 were $latex p \in \B{R}$$ is a parameter.
@@ -51,11 +51,12 @@ $end
 
 */
 
-bool change_const(void) 
-{	bool ok = true;                          // initialize test result
+bool change_param(void)
+{	bool ok = true;                     // initialize test result
 
-	typedef CppAD::AD<double>    A1_double;  // for first level of taping
-	typedef CppAD::AD<A1_double> A2_double;  // for second level of taping
+	using CppAD::zdouble;               // double with an absolute zero
+	typedef CppAD::AD<zdouble> a1type;  // for first level of taping
+	typedef CppAD::AD<a1type>  a2type;  // for second level of taping
 
 	size_t nu = 3;       // number components in u
 	size_t nx = 2;       // number components in x
@@ -66,65 +67,66 @@ bool change_const(void)
 	size_t j;
 
 	// declare first level of independent variables
-	CPPAD_TESTVECTOR(A1_double) a1_u(nu); 
+	// (Start taping now so can record dependency of a1f on a1p.)
+	CPPAD_TESTVECTOR(a1type) a1u(nu);
 	for(j = 0; j < nu; j++)
-		a1_u[j] = 0.;
-	CppAD::Independent(a1_u); 
+		a1u[j] = 0.;
+	CppAD::Independent(a1u);
 
 	// parameter in computation of Jacobian
-	A1_double a1_p = a1_u[2];
+	a1type a1p = a1u[2];
 
 	// declare second level of independent variables
-	CPPAD_TESTVECTOR(A2_double) a2_x(nx); 
+	CPPAD_TESTVECTOR(a2type) a2x(nx);
 	for(j = 0; j < nx; j++)
-		a2_x[j] = 0.;
-	CppAD::Independent(a2_x); 
+		a2x[j] = 0.;
+	CppAD::Independent(a2x);
 
 	// compute dependent variables at second level
-	CPPAD_TESTVECTOR(A2_double) a2_y(ny);
-	a2_y[0] = sin( a2_x[0] ) * a1_p;
-	a2_y[1] = sin( a2_x[1] ) * a1_p;
+	CPPAD_TESTVECTOR(a2type) a2y(ny);
+	a2y[0] = sin( a2x[0] ) * a1p;
+	a2y[1] = sin( a2x[1] ) * a1p;
 
 	// declare function object that computes values at the first level
 	// (make sure we do not run zero order forward during constructor)
-	CppAD::ADFun<A1_double> a1_f;
-	a1_f.Dependent(a2_x, a2_y); 
+	CppAD::ADFun<a1type> a1f;
+	a1f.Dependent(a2x, a2y);
 
-	// compute the Jacobian of a1_f at a1_u[0], a1_u[1]
-	CPPAD_TESTVECTOR(A1_double) a1_x(nx);
-	a1_x[0] = a1_u[0];
-	a1_x[1] = a1_u[1];
-	CPPAD_TESTVECTOR(A1_double) a1_J(nJ);
-	a1_J = a1_f.Jacobian( a1_x );
-	
+	// compute the Jacobian of a1f at a1u[0], a1u[1]
+	CPPAD_TESTVECTOR(a1type) a1x(nx);
+	a1x[0] = a1u[0];
+	a1x[1] = a1u[1];
+	CPPAD_TESTVECTOR(a1type) a1J(nJ);
+	a1J = a1f.Jacobian( a1x );
+
 	// declare function object that maps u = (x, p) to Jacobian of f
 	// (make sure we do not run zero order forward during constructor)
-	CppAD::ADFun<double> g;
-	g.Dependent(a1_u, a1_J);
+	CppAD::ADFun<zdouble> g;
+	g.Dependent(a1u, a1J);
 
-	// remove extra variables used during the reconding of a1_f, 
+	// remove extra variables used during the reconding of a1f,
 	// but not needed any more.
 	g.optimize();
 
 	// compute the Jacobian of f using zero order forward
-	// sweep with double values
-	CPPAD_TESTVECTOR(double) J(nJ), u(nu);
+	// sweep with zdouble values
+	CPPAD_TESTVECTOR(zdouble) J(nJ), u(nu);
 	for(j = 0; j < nu; j++)
-		u[j] = double(j+1);
+		u[j] = zdouble(j+1);
 	J = g.Forward(0, u);
 
 	// accuracy for tests
-	double eps = 100. * CppAD::numeric_limits<double>::epsilon();
+	zdouble eps = 100. * CppAD::numeric_limits<zdouble>::epsilon();
 
 	// y[0] = sin( x[0] ) * p
 	// y[1] = sin( x[1] ) * p
-	CPPAD_TESTVECTOR(double) x(nx);
-	x[0]     = u[0];
-	x[1]     = u[1];
-	double p = u[2];
+	CPPAD_TESTVECTOR(zdouble) x(nx);
+	x[0]      = u[0];
+	x[1]      = u[1];
+	zdouble p = u[2];
 
 	// J[0] = partial y[0] w.r.t x[0] = cos( x[0] ) * p
-	double check = cos( x[0] ) * p;
+	zdouble check = cos( x[0] ) * p;
 	ok   &= fabs( check - J[0] ) <= eps;
 
 	// J[1] = partial y[0] w.r.t x[1] = 0.;

@@ -18,42 +18,43 @@ cat << EOF > bug.$$
 int main(void) {
 	bool ok = true;
     using CppAD::vector;
-	double eps = 10. * std::numeric_limits<double>::epsilon();
+	using CppAD::zdouble;
+	zdouble eps = 10. * std::numeric_limits<double>::epsilon();
 
-    typedef CppAD::AD<double>   a1double;
-    typedef CppAD::AD<a1double> a2double;
+    typedef CppAD::AD<zdouble>   a1zdouble;
+    typedef CppAD::AD<a1zdouble> a2zdouble;
 
     // value during taping
-	vector<double> x(2);
+	vector<zdouble> x(2);
 	x[0] = 0.0;
 	x[1] = 0.0;
 	// works for this case
 	// x[1] = 5.0;
 
-    vector<a2double> a2x(x.size());
+    vector<a2zdouble> a2x(x.size());
     for (size_t i = 0; i < a2x.size(); i++)
-        a2x[i] = a2double(x[i]);
+        a2x[i] = a2zdouble(x[i]);
     Independent(a2x);
 
-	a2double a2zero = a2double(0.0);
-	a2double a2one  = a2double(1.0);
-	a2double temp_1 = CondExpGt(a2x[1], a2x[0], a2x[0] / a2x[1], a2one);
-	a2double temp_2 = CondExpGt(a2x[0], a2zero, temp_1, a2one);
+	a2zdouble a2zero = a2zdouble(0.0);
+	a2zdouble a2one  = a2zdouble(1.0);
+	a2zdouble temp_1 = CondExpGt(a2x[1], a2x[0], a2x[0] / a2x[1], a2one);
+	a2zdouble temp_2 = CondExpGt(a2x[0], a2zero, temp_1, a2one);
 
-    vector<a2double> a2y(1);
+    vector<a2zdouble> a2y(1);
     a2y[0] = temp_2;
 
-    CppAD::ADFun<a1double> f1;
+    CppAD::ADFun<a1zdouble> f1;
     f1.Dependent(a2x, a2y);
 
-    vector<a1double> a1x(x.size());
+    vector<a1zdouble> a1x(x.size());
     for (size_t i = 0; i < a1x.size(); i++)
-        a1x[i] = a1double(x[i]);
+        a1x[i] = a1zdouble(x[i]);
     Independent(a1x);
 
-    vector<a1double> a1z = f1.Jacobian(a1x);
+    vector<a1zdouble> a1z = f1.Jacobian(a1x);
 
-    CppAD::ADFun<double> f;
+    CppAD::ADFun<zdouble> f;
     f.Dependent(a1x, a1z);
 
     // now check result using doubles
@@ -61,7 +62,7 @@ int main(void) {
 	x[0] = 1.0;
 	x[1] = 2.0;
 
-    vector<double> z = f.Forward(0, x);
+    vector<zdouble> z = f.Forward(0, x);
 	std::cout << "z = " << z << std::endl;
     ok &= CppAD::NearEqual(z[0], 1.0/x[1], eps, eps);
     ok &= CppAD::NearEqual(z[1], - x[0]/(x[1]*x[1]), eps, eps);

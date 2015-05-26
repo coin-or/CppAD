@@ -107,7 +107,7 @@ am__example_SOURCES_DIST = mul_level_adolc.cpp mul_level_adolc_ode.cpp \
 	ad_in_c.cpp ad_input.cpp ad_output.cpp asin.cpp asinh.cpp \
 	atan.cpp atanh.cpp atan2.cpp base_alloc.hpp base_require.cpp \
 	bender_quad.cpp bool_fun.cpp capacity_order.cpp \
-	change_const.cpp check_for_nan.cpp check_numeric_type.cpp \
+	change_param.cpp check_for_nan.cpp check_numeric_type.cpp \
 	check_simple_vector.cpp compare.cpp compare_change.cpp \
 	complex_poly.cpp cond_exp.cpp conj_grad.cpp cos.cpp cosh.cpp \
 	cppad_vector.cpp div.cpp div_eq.cpp equal_op_seq.cpp erf.cpp \
@@ -135,7 +135,7 @@ am__example_SOURCES_DIST = mul_level_adolc.cpp mul_level_adolc_ode.cpp \
 	sqrt.cpp stack_machine.cpp sub.cpp sub_eq.cpp \
 	sub_sparse_hes.cpp tan.cpp tanh.cpp tape_index.cpp \
 	thread_alloc.cpp unary_minus.cpp unary_plus.cpp value.cpp \
-	var2par.cpp vec_ad.cpp vector_bool.cpp
+	var2par.cpp vec_ad.cpp vector_bool.cpp zdouble.cpp
 @CppAD_ADOLC_TRUE@am__objects_1 = mul_level_adolc.$(OBJEXT) \
 @CppAD_ADOLC_TRUE@	mul_level_adolc_ode.$(OBJEXT)
 am_example_OBJECTS = $(am__objects_1) example.$(OBJEXT) \
@@ -146,7 +146,7 @@ am_example_OBJECTS = $(am__objects_1) example.$(OBJEXT) \
 	asin.$(OBJEXT) asinh.$(OBJEXT) atan.$(OBJEXT) atanh.$(OBJEXT) \
 	atan2.$(OBJEXT) base_require.$(OBJEXT) bender_quad.$(OBJEXT) \
 	bool_fun.$(OBJEXT) capacity_order.$(OBJEXT) \
-	change_const.$(OBJEXT) check_for_nan.$(OBJEXT) \
+	change_param.$(OBJEXT) check_for_nan.$(OBJEXT) \
 	check_numeric_type.$(OBJEXT) check_simple_vector.$(OBJEXT) \
 	compare.$(OBJEXT) compare_change.$(OBJEXT) \
 	complex_poly.$(OBJEXT) cond_exp.$(OBJEXT) conj_grad.$(OBJEXT) \
@@ -188,7 +188,8 @@ am_example_OBJECTS = $(am__objects_1) example.$(OBJEXT) \
 	sub_sparse_hes.$(OBJEXT) tan.$(OBJEXT) tanh.$(OBJEXT) \
 	tape_index.$(OBJEXT) thread_alloc.$(OBJEXT) \
 	unary_minus.$(OBJEXT) unary_plus.$(OBJEXT) value.$(OBJEXT) \
-	var2par.$(OBJEXT) vec_ad.$(OBJEXT) vector_bool.$(OBJEXT)
+	var2par.$(OBJEXT) vec_ad.$(OBJEXT) vector_bool.$(OBJEXT) \
+	zdouble.$(OBJEXT)
 example_OBJECTS = $(am_example_OBJECTS)
 example_LDADD = $(LDADD)
 am__DEPENDENCIES_1 =
@@ -518,7 +519,7 @@ example_SOURCES = \
 	bender_quad.cpp \
 	bool_fun.cpp \
 	capacity_order.cpp \
-	change_const.cpp \
+	change_param.cpp \
 	check_for_nan.cpp \
 	check_numeric_type.cpp \
 	check_simple_vector.cpp \
@@ -627,7 +628,8 @@ example_SOURCES = \
 	value.cpp \
 	var2par.cpp \
 	vec_ad.cpp  \
-	vector_bool.cpp
+	vector_bool.cpp \
+	zdouble.cpp
 
 all: all-am
 
@@ -708,7 +710,7 @@ distclean-compile:
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/bender_quad.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/bool_fun.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/capacity_order.Po@am__quote@
-@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/change_const.Po@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/change_param.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/check_for_nan.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/check_numeric_type.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/check_simple_vector.Po@am__quote@
@@ -822,6 +824,7 @@ distclean-compile:
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/var2par.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/vec_ad.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/vector_bool.Po@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/zdouble.Po@am__quote@
 
 .cpp.o:
 @am__fastdepCXX_TRUE@	$(AM_V_CXX)depbase=`echo $@ | sed 's|[^/]*$$|$(DEPDIR)/&|;s|\.o$$||'`;\

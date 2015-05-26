@@ -3,10 +3,10 @@
 # define CPPAD_NEAR_EQUAL_INCLUDED
 
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-12 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-15 Bradley M. Bell
 
 CppAD is distributed under multiple licenses. This distribution is under
-the terms of the 
+the terms of the
                     Eclipse Public License Version 1.0.
 
 A copy of this license is included in the COPYING file of this distribution.
@@ -51,19 +51,19 @@ if $icode x$$ and $icode y$$ are nearly equal,
 and false otherwise.
 
 $head x$$
-The argument $icode x$$ 
+The argument $icode x$$
 has one of the following possible prototypes
 $codei%
 	const %Type%               &%x%,
-	const std::complex<%Type%> &%x%, 
+	const std::complex<%Type%> &%x%,
 %$$
 
 $head y$$
-The argument $icode y$$ 
+The argument $icode y$$
 has one of the following possible prototypes
 $codei%
 	const %Type%               &%y%,
-	const std::complex<%Type%> &%y%, 
+	const std::complex<%Type%> &%y%,
 %$$
 
 $head r$$
@@ -74,7 +74,7 @@ $codei%
 It must be greater than or equal to zero.
 The relative error condition is defined as:
 $latex \[
-	| x - y | \leq r ( |x| + |y| ) 
+	| x - y | \leq r ( |x| + |y| )
 \] $$
 
 $head a$$
@@ -93,9 +93,9 @@ The return value $icode b$$ has prototype
 $codei%
 	bool %b%
 %$$
-If either $icode x$$ or $icode y$$ is infinite or not a number, 
+If either $icode x$$ or $icode y$$ is infinite or not a number,
 the return value is false.
-Otherwise, if either the relative or absolute error 
+Otherwise, if either the relative or absolute error
 condition (defined above) is satisfied, the return value is true.
 Otherwise, the return value is false.
 
@@ -107,15 +107,15 @@ an error message if this is not the case.
 In addition, the following operations must be defined objects
 $icode a$$ and $icode b$$ of type $icode Type$$:
 $table
-$bold Operation$$     $cnext 
+$bold Operation$$     $cnext
 	$bold Description$$ $rnext
-$icode%a% <= %b%$$  $cnext 
+$icode%a% <= %b%$$  $cnext
 	less that or equal operator (returns a $code bool$$ object)
 $tend
 
 $head Include Files$$
 The file $code cppad/near_equal.hpp$$ is included by $code cppad/cppad.hpp$$
-but it can also be included separately with out the rest of 
+but it can also be included separately with out the rest of
 the $code CppAD$$ routines.
 
 $head Example$$
@@ -160,16 +160,15 @@ template <class Type>
 bool near_equal_isfinite(
 	const Type &z1, const Type &z2, const Type &x , const Type &y)
 {	Type infinity = Type(1) / z1;
-	Type nan      = z1      / z2;
 
 	// handle bug where some compilers return true for nan == nan
-	bool xNan = ( x != x || x == nan );
-	bool yNan = ( y != y || y == nan );
+	bool xNan = x != x;
+	bool yNan = y != y;
 
 	// infinite cases
 	bool xInf = (x == infinity   || x == - infinity);
 	bool yInf = (x == infinity   || x == - infinity);
-	
+
 	return ! (xNan | yNan | xInf | yInf);
 }
 
@@ -215,9 +214,9 @@ bool NearEqual(const Type &x, const Type &y, const Type &r, const Type &a)
 
 template <class Type>
 bool NearEqual(
-	const std::complex<Type> &x , 
-	const std::complex<Type> &y , 
-	const              Type  &r , 
+	const std::complex<Type> &x ,
+	const std::complex<Type> &y ,
+	const              Type  &r ,
 	const              Type  & a )
 {
 	CheckNumericType<Type>();
@@ -254,9 +253,9 @@ bool NearEqual(
 
 template <class Type>
 bool NearEqual(
-	const std::complex<Type> &x , 
-	const              Type  &y , 
-	const              Type  &r , 
+	const std::complex<Type> &x ,
+	const              Type  &y ,
+	const              Type  &r ,
 	const              Type  & a )
 {
 	return NearEqual(x, std::complex<Type>(y, Type(0)), r, a);
@@ -264,9 +263,9 @@ bool NearEqual(
 
 template <class Type>
 bool NearEqual(
-	const              Type  &x , 
-	const std::complex<Type> &y , 
-	const              Type  &r , 
+	const              Type  &x ,
+	const std::complex<Type> &y ,
+	const              Type  &r ,
 	const              Type  & a )
 {
 	return NearEqual(std::complex<Type>(x, Type(0)), y, r, a);

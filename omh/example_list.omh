@@ -111,7 +111,7 @@ $rref base_require.cpp$$
 $rref bender_quad.cpp$$
 $rref bool_fun.cpp$$
 $rref capacity_order.cpp$$
-$rref change_const.cpp$$
+$rref change_param.cpp$$
 $rref check_for_nan.cpp$$
 $rref check_numeric_type.cpp$$
 $rref check_simple_vector.cpp$$
@@ -267,6 +267,7 @@ $rref value.cpp$$
 $rref var2par.cpp$$
 $rref vec_ad.cpp$$
 $rref vector_bool.cpp$$
+$rref zdouble.cpp$$
 $tend
 
 $end
