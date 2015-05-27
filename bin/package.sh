@@ -89,7 +89,7 @@ done
 echo_log_eval mkdir -p $package_dir
 # -----------------------------------------------------------------------------
 # Source file that are coppied to the package directory
-file_list=`git ls-files`
+file_list=`bin/list_files.sh`
 #
 # Copy the files, creating sub-directories when necessary
 echo_log_eval echo "copy files to $package_dir"

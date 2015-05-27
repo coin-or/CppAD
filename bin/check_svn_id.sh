@@ -1,7 +1,7 @@
 #! /bin/bash -e
 # $Id$
 # -----------------------------------------------------------------------------
-# CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-14 Bradley M. Bell
+# CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-15 Bradley M. Bell
 #
 # CppAD is distributed under multiple licenses. This distribution is under
 # the terms of the
@@ -19,14 +19,21 @@ fi
 echo "Checking for \$Id.*\$ in beginning of source code"
 echo "-------------------------------------------------------" 
 ok="yes"
-list=`bin/list_files.sh .hpp .cpp .omh .sh .in .am .txt | sed \
+list=`bin/list_files.sh | sed -n \
 	-e '/^gpl-3.0.txt$/d' \
 	-e '/^epl-v10.txt$/d' \
 	-e '/cppad\/local\/config.h.in$/d' \
 	-e '/^makefile.in$/d' \
 	-e '/^svn_commit.sh$/d' \
 	-e '/^git_commit.sh$/d' \
-	-e '/\/makefile.in$/d' `
+	-e '/\/makefile.in$/d'  \
+	-e '/\.hpp$/p' \
+	-e '/\.cpp$/p' \
+	-e '/\.omh$/p' \
+	-e '/\.txt$/p' \
+	-e '/\.sh$/p'  \
+	-e '/\.in$/p'  \
+	-e '/\.am$/p'`
 #
 for file in $list
 do

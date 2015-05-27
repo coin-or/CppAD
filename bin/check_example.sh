@@ -18,7 +18,7 @@ fi
 # -----------------------------------------------------------------------------
 echo "Checking that all examples are in omh/example_list.omh"
 echo "-------------------------------------------------------"
-file_list=`git ls-files | sed -n \
+file_list=`bin/list_files.sh | sed -n \
 	-e '/cppad_ipopt/d' \
 	-e '/example\//p' \
 	-e '/multi_thread\//p'`

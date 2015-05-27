@@ -1,7 +1,7 @@
 #! /bin/bash -e
 # $Id$
 # -----------------------------------------------------------------------------
-# CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-14 Bradley M. Bell
+# CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-15 Bradley M. Bell
 #
 # CppAD is distributed under multiple licenses. This distribution is under
 # the terms of the
@@ -25,7 +25,9 @@ then
 	echo "bin/check_include_file.sh: unexpected bin/check_include_file.1.$$"
 	exit 1
 fi
-list=`bin/list_files.sh .cpp .hpp`
+list=`bin/list_files.sh | sed -n \
+	-e '/\.cpp$/p' \
+	-e '/\.hpp$/p'`
 for file in $list
 do
 	sed -n -e '/^# *include *<cppad\//p' $file \
@@ -41,7 +43,7 @@ cat bin/check_include_file.1.$$ | \
 #	cppad/example/eigen_plugin.hpp
 # All other files should. 
 # The file cppad/configure.hpp may not yet be created.
-bin/list_files.sh .hpp | sed -n -e '/cppad\//p' | \
+bin/list_files.sh | sed -n -e '/cppad\/.*\.hpp$/p' | \
 	sed \
 		-e '1,1s|^|cppad/configure.hpp\n|' \
 		-e '/cppad\/local\/prototype_op.hpp/d' \

@@ -15,6 +15,12 @@ then
 	echo "bin/check_copyright.sh: must be executed from its parent directory"
 	exit 1
 fi
+if [ ! -e .git ]
+then
+	echo 'This is not a git repository so cannot check copyright.'
+	echo 'check_copyright.sh: skipped'
+	exit 0
+fi
 list=`git status | sed -n \
         -e '/^[#\t ]*deleted:/p' \
         -e '/^[#\t ]*modified:/p' \

@@ -19,7 +19,13 @@ fi
 # Make sure that OMhelp verbatim commands referr to same file as command
 echo "Checking that OMhelp verbatim commands include from file they appear in."
 echo "----------------------------------------------------------------------"
-list=`bin/list_files.sh .c .cpp .hpp .omh .txt .am`
+list=`bin/list_files.sh | sed -n \
+	-e '/\.c$/p' \
+	-e '/\.cpp$/p' \
+	-e '/\.hpp$/p' \
+	-e '/\.omh$/p' \
+	-e '/\.txt$/p' \
+	-e '/\.am$/p'`
 different="no"
 for file in $list
 do

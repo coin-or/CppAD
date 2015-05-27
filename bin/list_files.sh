@@ -1,7 +1,7 @@
 #! /bin/bash -e
 # $Id$
 # -----------------------------------------------------------------------------
-# CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-14 Bradley M. Bell
+# CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-15 Bradley M. Bell
 #
 # CppAD is distributed under multiple licenses. This distribution is under
 # the terms of the 
@@ -15,29 +15,12 @@ then
 	echo "bin/list_files.sh: must be executed from its parent directory"
 	exit 1
 fi
-#
-if [ "$1" == '' ]
+if [ -e .git ]
 then
-cat << EOF
-usage: list_files.sh ext_1 [ ext_2 ... ]
-
-lists files with the specified extensions excluding those of the form:
-*/new/*, build/*, doc/*, doxydoc/*, */test_one.cpp, /junk\$ext, */temp\$ext
-
-where \$ext takes the values ext_1, ext_2, ...
-File and directory names do not begin with './'.
-EOF
+	git ls-files
+elif [ -e .svn ]
+then
+	svn list --recursive | sed -e '/\/$/d'
+else
+	echo 'cannot find ./.git or ./.svn'
 fi
-for ext in $*
-do
-	# should change '.' to '[.]' before executing sed comand below
-	find . -name "*$ext" | sed \
-		-e '/[/]new[/]/d' \
-		-e '/build[/]/d' \
-		-e '/doc[/]/d' \
-		-e '/doxydoc[/]/d' \
-		-e '/[/]test_one.cpp$/d' \
-		-e "/[/]junk$ext"'$/d' \
-		-e "/[/]temp$ext"'$/d' \
-		-e 's|^[.]/||'
-done
