@@ -17,7 +17,7 @@ then
 fi
 # -----------------------------------------------------------------------------
 echo "Checking include files listed in makefile.am"
-echo "-------------------------------------------------------" 
+echo "-------------------------------------------------------"
 bin/list_files.sh .h .hpp | sed -n \
 	-e '/^cppad\/config\.h$/d' \
 	-e '/cppad\/.*\.h$/p' \
@@ -43,7 +43,7 @@ else
 	ok="no"
 fi
 rm check_makefile.*.$$
-echo "-------------------------------------------------------" 
+echo "-------------------------------------------------------"
 if [ "$ok" = "no" ]
 then
 	echo "Error: nothing should be between the two dashed lines above"
@@ -51,14 +51,14 @@ then
 fi
 # -----------------------------------------------------------------------------
 echo "Checking debugging flags in all makefile.am files."
-echo "-------------------------------------------------------" 
+echo "-------------------------------------------------------"
 list=`find . -name makefile.am | \
 	sed -e '/\/build\//d' -e'/\/work\//d' -e 's|\./||'`
 ok="yes"
 for file in $list
 do
 	case $file in
-		( makefile.am | work/* | svn_dist/* ) 
+		( makefile.am | work/* | svn_dist/* )
 		;;
 
 		(multi_thread/makefile.am)
@@ -132,7 +132,7 @@ do
 		;;
 	esac
 done
-echo "-------------------------------------------------------" 
+echo "-------------------------------------------------------"
 if [ "$ok" = "yes" ]
 then
 	echo "Ok: nothing is between the two dashed lines above"

@@ -43,7 +43,7 @@ do
 		-e '/$childtable%/,/%$\$/p' \
 		-e '/$children%/,/%$\$/p' \
 		-e '/$contents%/,/%$\$/p' \
-		-e '/$verbatim%/p' 
+		-e '/$verbatim%/p'
 done
 sed < bin/check_include_omh.2.$$ > bin/check_include_omh.3.$$ \
 	-e 's/$childtable//' \

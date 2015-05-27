@@ -19,7 +19,7 @@ fi
 # CppAD uses preprocessor '# if 0' comment blocks for temporary changes
 # that will to be removed before testing for check in.
 echo "Checking for '# if 0' and '# if NDEBUG' commands in source code"
-echo "-------------------------------------------------------" 
+echo "-------------------------------------------------------"
 ok="yes"
 list=`bin/list_files.sh | sed -n \
 	-e '/\.cpp$/p' \
@@ -40,7 +40,7 @@ do
 		ok="no"
 	fi
 done
-echo "-------------------------------------------------------" 
+echo "-------------------------------------------------------"
 if [ "$ok" = "no" ]
 then
 	echo 'bin/check_if.sh: Error'

@@ -17,7 +17,7 @@ then
 fi
 # -----------------------------------------------------------------------------
 echo "Checking for \$Id.*\$ in beginning of source code"
-echo "-------------------------------------------------------" 
+echo "-------------------------------------------------------"
 ok="yes"
 list=`bin/list_files.sh | sed -n \
 	-e '/^gpl-3.0.txt$/d' \
@@ -43,7 +43,7 @@ do
 		ok="no"
 	fi
 done
-echo "-------------------------------------------------------" 
+echo "-------------------------------------------------------"
 if [ "$ok" = "no" ]
 then
 	echo "Error: nothing should be between the two dashed lines above"
