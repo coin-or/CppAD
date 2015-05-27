@@ -135,6 +135,7 @@ test_more_SOURCES  = \
 	log1p.cpp \
 	log10.cpp \
 	mul.cpp \
+	mul_cskip.cpp \
 	mul_eq.cpp \
 	mul_level.cpp \
 	mul_zdouble.cpp \

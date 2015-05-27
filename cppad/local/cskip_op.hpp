@@ -22,10 +22,17 @@ Zero order forward mode set which operations to skip.
 /*!
 Zero order forward mode execution of op = CSkipOp.
 
+\par Parameters and Variables
+The terms parameter and variable depend on if we are referring to its
+AD<Base> or Base value.
+We use Base parameter and Base variable to refer to the
+correspond Base value.
+We use AD<Base> parameter and AD<Base> variable to refer to the
+correspond AD<Base> value.
+
 \tparam Base
 base type for the operator; i.e., this operation was recorded
-using AD< \a Base > and computations by this routine are done using type
-\a Base.
+using AD<Base> and computations by this routine are done using type Base.
 
 \param i_z
 variable index corresponding to the result of the previous operation.
@@ -53,12 +60,14 @@ Note that arg[0] cannot be equal to CompareNe.
 \n
 \a arg[1] & 1
 \n
-If this is zero, left is a a parameter. Otherwise it is a variable.
+If this is zero, left is an AD<Base> parameter.
+Otherwise it is an AD<Base> variable.
 \n
 \n
 \a arg[1] & 2
 \n
-If this is zero, right is a parameter. Otherwise it is a variable.
+If this is zero, right is an AD<Base> parameter.
+Otherwise it is an AD<Base> variable.
 \n
 \a arg[2]
 is the index corresponding to left in comparision.
@@ -74,29 +83,31 @@ is the number of operations to skip if the comparision result is false.
 \n
 <tt>arg[5+i]</tt>
 for <tt>i = 1 , ... , arg[4]</tt> are the operations to skip if the
-comparision result is true.
+comparision result is true and both left and right are
+identically Base parameters.
 \n
 <tt>arg[5+arg[4]+i]</tt>
 for <tt>i = 1 , ... , arg[5]</tt> are the operations to skip if the
-comparision result is false.
+comparision result is false and both left and right are
+identically Base parameters.
 
 \param num_par [in]
-is the total number of values in the vector \a parameter.
+is the total number of values in the vector parameter.
 
 \param parameter [in]
-If left is a parameter,
+If left is an AD<Base> parameter,
 <code>parameter [ arg[2] ]</code> is its value.
-If right is a parameter,
+If right is an AD<Base> parameter,
 <code>parameter [ arg[3] ]</code> is its value.
 
 \param cap_order [in]
 number of columns in the matrix containing the Taylor coefficients.
 
 \param taylor [in]
-If left is a variable,
+If left is an AD<Base> variable,
 <code>taylor [ arg[2] * cap_order + 0 ]</code>
 is the zeroth order Taylor coefficient corresponding to left.
-If right is a variable,
+If right is an AD<Base> variable,
 <code>taylor [ arg[3] * cap_order + 0 ]</code>
 is the zeroth order Taylor coefficient corresponding to right.
 
@@ -123,25 +134,23 @@ inline void forward_cskip_op_0(
 	{	// If varialbe arg[2] <= i_z, it has already been computed,
 		// but it will be skipped for higher orders.
 		left = taylor[ arg[2] * cap_order + 0 ];
-		CPPAD_ASSERT_UNKNOWN( IdenticalPar(left) );
 	}
 	else
 	{	CPPAD_ASSERT_UNKNOWN( size_t(arg[2]) < num_par );
 		left = parameter[ arg[2] ];
-		CPPAD_ASSERT_UNKNOWN( IdenticalPar(left) );
 	}
 	if( arg[1] & 2 )
 	{	// If varialbe arg[3] <= i_z, it has already been computed,
 		// but it will be skipped for higher orders.
 		right = taylor[ arg[3] * cap_order + 0 ];
-		CPPAD_ASSERT_UNKNOWN( IdenticalPar(right) );
 	}
 	else
 	{	CPPAD_ASSERT_UNKNOWN( size_t(arg[3]) < num_par );
 		right = parameter[ arg[3] ];
-		CPPAD_ASSERT_UNKNOWN( IdenticalPar(right) );
 	}
-
+	bool ok_to_skip = IdenticalPar(left) & IdenticalPar(right);
+	if( ! ok_to_skip )
+		return;
 
 	// initialize to avoid compiler warning
 	bool true_case = false;

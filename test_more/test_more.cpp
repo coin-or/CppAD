@@ -66,6 +66,7 @@ extern bool log10(void);
 extern bool log1p(void);
 extern bool Mul(void);
 extern bool mul_level(void);
+extern bool mul_cskip(void);
 extern bool MulEq(void);
 extern bool mul_zdouble(void);
 extern bool MulZeroOne(void);
@@ -182,6 +183,7 @@ int main(void)
 	ok &= Run( log1p,           "log1p"          );
 	ok &= Run( Mul,             "Mul"            );
 	ok &= Run( mul_level,       "mul_level"      );
+	ok &= Run( mul_cskip,       "Mul_cskip"      );
 	ok &= Run( MulEq,           "MulEq"          );
 	ok &= Run( mul_zdouble,     "mul_zdouble"    );
 	ok &= Run( MulZeroOne,      "MulZeroOne"     );

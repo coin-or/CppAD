@@ -109,6 +109,7 @@ ADD_EXECUTABLE(test_more EXCLUDE_FROM_ALL test_more.cpp
 	log1p.cpp
 	log10.cpp
 	mul.cpp
+	mul_cskip.cpp
 	mul_eq.cpp
 	mul_level.cpp
 	mul_zdouble.cpp
