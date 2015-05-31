@@ -3,7 +3,7 @@ $Id$
 CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-15 Bradley M. Bell
 
 CppAD is distributed under multiple licenses. This distribution is under
-the terms of the 
+the terms of the
                     Eclipse Public License Version 1.0.
 
 A copy of this license is included in the COPYING file of this distribution.
@@ -94,9 +94,9 @@ $index CppAD$$
 $index version, CppAD$$
 
 $comment bin/version assumes that : follows cppad version number here$$
-$section 
+$section
 cppad-20150601: A Package for Differentiation of C++ Algorithms
-$$ 
+$$
 
 $comment This comment is used to remove the table below$$
 $table
@@ -128,21 +128,21 @@ We refer to the
 step by step conversion from an algorithm that computes function values
 to an algorithm that computes derivative values
 as $italic Algorithmic Differentiation$$
-(often referred to as $italic Automatic Differentiation$$.) 
+(often referred to as $italic Automatic Differentiation$$.)
 Given a C++ algorithm that computes function values,
 CppAD generates an algorithm that computes its derivative values.
 A brief introduction to Algorithmic Differentiation can be found in
 $href%http://en.wikipedia.org/wiki/Automatic_differentiation%wikipedia%$$.
-The web site 
+The web site
 $href%http://www.autodiff.org%autodiff.org%$$
 is dedicated to research about, and promoting the use of, AD.
 
 $list number$$
 $href%http://www.coin-or.org/CppAD/%CppAD%$$
 uses operator overloading to compute derivatives of algorithms defined in C++.
-It is distributed by the 
+It is distributed by the
 $href%http://www.coin-or.org/foundation.html%COIN-OR Foundation%$$
-with the Eclipse Public License 
+with the Eclipse Public License
 $href%http://www.opensource.org/licenses/EPL-1.0%EPL-1.0%$$
 or the GNU General Public License
 $href%http://www.opensource.org/licenses/AGPL-3.0%GPL-3.0%$$.
@@ -153,16 +153,16 @@ Extensive user and developer documentation is included.
 $lnext
 An AD of $italic Base$$
 $xref/glossary/Operation/Sequence/operation sequence/1/$$
-is stored as an 
-$xref/ADFun//AD function object/$$ 
+is stored as an
+$xref/ADFun//AD function object/$$
 which can evaluate function values and derivatives.
-Arbitrary order 
+Arbitrary order
 $xref/Forward//forward/$$ and $xref/Reverse//reverse/$$
 mode derivative calculations
 can be preformed on the operation sequence.
 Logical comparisons can be included in an operation sequence
 using AD $xref/CondExp//conditional expressions/$$.
-Evaluation of user defined unary 
+Evaluation of user defined unary
 $xref/Discrete//discrete functions/$$ can also be included
 in the sequence of operations; i.e.,
 functions that depend on the
@@ -192,10 +192,10 @@ $lnext
 Includes a C++ $xref/library/$$ that is useful
 for general operator overloaded numerical method.
 Allows for replacement of the
-$cref/testvector/$$ 
-template vector class which is used for extensive testing; 
+$cref/testvector/$$
+template vector class which is used for extensive testing;
 for example, you can do your testing with the
-$href%http://www.boost.org/libs/numeric/ublas/doc/index.htm%uBlas%$$ 
+$href%http://www.boost.org/libs/numeric/ublas/doc/index.htm%uBlas%$$
 template vector class.
 
 $lnext
@@ -213,7 +213,7 @@ The file
 $xref/get_started.cpp/$$
 contains an example and test of using CppAD to compute
 the derivative of a polynomial.
-There are many other 
+There are many other
 $xref/Example//examples/$$.
 
 $head Include File$$
@@ -236,23 +236,23 @@ $head Namespace$$
 $index CppAD, namespace$$
 $index namespace, CppAD$$
 All of the functions and objects defined by CppAD are in the
-$code CppAD$$ namespace; for example, you can access the $xref/AD/$$ types as 
+$code CppAD$$ namespace; for example, you can access the $xref/AD/$$ types as
 $syntax%
 	size_t n = 2;
 	CppAD::vector< CppAD::AD<%Base%> > %x%(%n%)
-%$$ 
-You can abbreviate access to one object or function a $code using$$ 
+%$$
+You can abbreviate access to one object or function a $code using$$
 command of the form
 $syntax%
 	using CppAD::AD
 	CppAD::vector< AD<%Base%> > %x%(%n%)
-%$$ 
-You can abbreviate access to all CppAD objects and functions 
+%$$
+You can abbreviate access to all CppAD objects and functions
 with a command of the form
 $syntax%
 	using namespace CppAD
 	vector< AD<%Base%> > %x%(%n%)
-%$$ 
+%$$
 If you include other namespaces in a similar manner,
 this can cause naming conflicts.
 

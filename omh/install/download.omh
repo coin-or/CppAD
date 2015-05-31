@@ -3,7 +3,7 @@ $Id$
 CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-15 Bradley M. Bell
 
 CppAD is distributed under multiple licenses. This distribution is under
-the terms of the 
+the terms of the
                     Eclipse Public License Version 1.0.
 
 A copy of this license is included in the COPYING file of this distribution.
@@ -51,7 +51,7 @@ code to use it.
 This section discusses how to download the different versions of CppAD.
 
 $head Distribution Directory$$
-We refer to the CppAD source directory created by the download instruction 
+We refer to the CppAD source directory created by the download instruction
 below as the distribution directory.
 To be specific, the distribution directory contains the file
 $code cppad/cppad.hpp$$.
@@ -60,22 +60,22 @@ $head Compressed Archives$$
 These files have been archived using $code tar$$ and compressed using
 $code gzip$$:
 $table
-$bold version$$ $pre  $$ $cnext $bold license$$ $pre  $$ $cnext $bold link$$ 
+$bold version$$ $pre  $$ $cnext $bold license$$ $pre  $$ $cnext $bold link$$
 $rnext
 current  $cnext EPL $cnext $href%
 http://www.coin-or.org/download/source/CppAD/cppad-20150601.epl.tgz%
-cppad-20150601.epl.tgz%$$ 
+cppad-20150601.epl.tgz%$$
 $rnext
 current  $cnext GPL $cnext $href%
 http://www.coin-or.org/download/source/CppAD/cppad-20150601.gpl.tgz%
 cppad-20150601.gpl.tgz%$$
 $rnext
-old      $cnext Both $cnext 
+old      $cnext Both $cnext
 $href%http://www.coin-or.org/download/source/CppAD/%CppAD download page%$$
 $tend
 
 $subhead Current Version$$
-The current versions listed above correspond to the subversion 
+The current versions listed above correspond to the subversion
 $href%https://projects.coin-or.org/CppAD/browser/trunk%trunk%$$
 and the git
 $href%https://github.com/bradbell/cppad%master%$$.
@@ -89,18 +89,18 @@ These file have the form
 $codei%
 	cppad-%yyyymmdd%.%rel%.%lic%.tgz
 %$$
-The license code $icode lic$$ 
+The license code $icode lic$$
 is $code gpl$$, $code epl$$ or $code cpl$$ where
 $code gpl$$ denotes the GNU General Public License,
 $code epl$$ denotes the Eclipse Public License, and
-$code cpl$$ denotes the Common Public License 
+$code cpl$$ denotes the Common Public License
 (not being used for new versions).
-The version number $icode yyyymmdd$$ 
+The version number $icode yyyymmdd$$
 is the date at which the features
 of the program were frozen where
-$icode yyyy$$ is the year, $icode mm$$ is the month, and $icode dd$$ 
+$icode yyyy$$ is the year, $icode mm$$ is the month, and $icode dd$$
 is the day.
-The release number $icode rel$$ 
+The release number $icode rel$$
 corresponds to a bug fix index where
 higher numbers corresponding to more bug fixes.
 
@@ -113,7 +113,7 @@ The monthly versions have the form
 $codei%
 	cppad-%yyyy%0101.%lic%.tgz
 %$$
-where the license code $icode lic$$ 
+where the license code $icode lic$$
 is $code gpl$$ or $code epl$$
 and $icode yyyy$$ is the current year.
 
@@ -132,9 +132,9 @@ $codei%
 %$$
 
 $subhead Windows File Extraction$$
-If you know how to extract the distribution directory from 
+If you know how to extract the distribution directory from
 the tar file, just do so. Otherwise, below is one way you can do it.
-(Note that if $code 7z.exe$$, $code cmake.exe$$, and $code nmake.exe$$ are you 
+(Note that if $code 7z.exe$$, $code cmake.exe$$, and $code nmake.exe$$ are you
 your execution path, you will not need to specify their paths below.)
 
 $list number$$
@@ -170,7 +170,7 @@ $lend
 $subhead Install Instructions$$
 The instructions on the web correspond to the current version of CppAD.
 If you are using an old version of CppAD
-You should follow the install instructions in 
+You should follow the install instructions in
 the $code doc$$ subdirectory of the distribution directory.
 
 
@@ -179,14 +179,14 @@ $head Subversion$$
 $subhead Limitations$$
 This download procedure has the following limitations:
 $list number$$
-The $href%http://subversion.tigris.org/%subversion%$$ 
+The $href%http://subversion.tigris.org/%subversion%$$
 program must be installed on your system.
 $lnext
 No documentation is included by this download procedure,
 though it can be build from the source code; see
 $cref/install instructions/download/Subversion/Install Instructions/$$ below.
 $lnext
-Only the 
+Only the
 $href%http://opensource.org/licenses/EPL-1.0%EPL licensed%$$
 version of CppAD can be obtained by this download procedure
 (some old versions correspond to CPL instead of EPL).
@@ -201,16 +201,16 @@ To see if this has been done correctly, check for the following file:
 $codei%
 	%dir%/cppad/cppad.hpp
 %$$
-We refer to your directory choice $icode dir$$ above 
+We refer to your directory choice $icode dir$$ above
 as the distribution directory.
 
 $subhead Stable Versions$$
 Subversion downloads are available for a set of stable versions
 (after the specified date, only bug fixes get applied).
 The following link will list the available $icode dir$$ values
-corresponding to 
+corresponding to
 $href%https://projects.coin-or.org/CppAD/browser/stable% stable versions%$$.
-The following command will download a 
+The following command will download a
 stable version of the CppAD source code:
 $codei%
 	svn export https://projects.coin-or.org/svn/CppAD/stable/%dir% %dir%
@@ -219,18 +219,18 @@ To see if this has been done correctly, check for the following file:
 $codei%
 	%dir%/cppad/cppad.hpp
 %$$
-Note that it will correspond to the most recent release for this stable 
+Note that it will correspond to the most recent release for this stable
 version.
 
 $subhead Release Versions$$
 Subversion downloads are available for a set of release versions
 (no changes are applied).
 The following link will list the available $icode dir$$ values
-corresponding to 
+corresponding to
 $href%https://projects.coin-or.org/CppAD/browser/releases%
-	release versions 
+	release versions
 %$$.
-The following command will download a 
+The following command will download a
 release version of the CppAD source code:
 $codei%
 	svn export https://projects.coin-or.org/svn/CppAD/releases/%dir% %dir%
@@ -251,12 +251,12 @@ $codep
 	which omhelp
 $$
 shows it is in your path.
-Once you have done this, 
+Once you have done this,
 in the distribution directory execute the following command:
 $codei%
 	./build.sh omhelp
 %$$
-You will then be able to follow the install instructions in 
+You will then be able to follow the install instructions in
 the $code doc$$ subdirectory of the distribution directory.
 
 
