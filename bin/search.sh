@@ -23,6 +23,6 @@ then
 fi
 pattern="$1"
 # -----------------------------------------------------------------------------
-list=`bin/list_files | sed \
+list=`bin/list_files.sh | sed \
 	-e '/^configure$/d' -e '/^makefile.in$/d' -e '/\/makefile.in$/d'`
 grep -l "$pattern" $list
