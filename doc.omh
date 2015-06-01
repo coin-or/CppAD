@@ -68,6 +68,7 @@ $hiliteseq%
       %.%Reverse%(%           Reverse
 %$$
 $spell
+	Jax
 	cppad.hpp
 	cppad
 	namespaces
