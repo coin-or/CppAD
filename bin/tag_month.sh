@@ -17,49 +17,77 @@ then
 fi
 svn_repository="https://projects.coin-or.org/svn/CppAD"
 # --------------------------------------------------------------------------
-dd=`date +%d`
-if [ "$dd" != '01' ]
+# make sure that master is currently checked out
+git_branch=`git branch | sed -e '/^\*/! d' -e 's|^\* *||'`
+if [ "$git_branch" != 'master' ]
 then
-	echo 'tag_month.sh: Must be run on the first day of the month'
+	echo 'tag_month.sh: master is not currently checkout out'
 	exit 1
 fi
-svn_yyyymmdd=`svn log $svn_repository/trunk --limit 1 | grep '^r[0-9]* *|' | \
+# --------------------------------------------------------------------------
+# make sure that version is consistent and all changes are checked in
+bin/version.sh copy > /dev/null
+git_status=`git status -s`
+if [ "$git_status" != '' ]
+then
+	echo 'tag_month.sh: master has changes that are not checked in'
+	exit 1
+fi
+# --------------------------------------------------------------------------
+# check that version corresponds to first of a month
+dd=`bin/version.sh get | sed -e 's|......\([0-9][0-9]\)|\1|' `
+if [ "$dd" != '01' ]
+then
+	echo 'tag_month.sh: verison does not correspond to first day of a month'
+	exit 1
+fi
+# --------------------------------------------------------------------------
+# date of last change to svn repository
+svn_date=`svn log $svn_repository/trunk --limit 1 | grep '^r[0-9]* *|' | \
 	sed -e 's/^[^|]*|[^|]*| *\([0-9-]*\).*/\1/' -e 's|-||g'`
+# --------------------------------------------------------------------------
+# get and check hash codes
 #
+local_hash=`git show-ref master | sed -e '/\/origin\//d' -e 's| refs.*||'`
+remote_hash=`git show-ref master | sed -e '/\/origin\//! d' -e 's| refs.*||'`
 svn_hash=`svn log $svn_repository/trunk --limit 1 | \
 	grep 'end *hash *code:' | sed -e 's|end *hash *code: *||'`
 #
-yyyy=`date +%Y`
-svn_yyyy=`echo $svn_yyyymmdd | sed -e 's|^\(....\).*|\1|'`
-if [ "$yyyy" != "$svn_yyyy" ]
+if [ "$local_hash" != "$remote_hash" ]
 then
-	echo 'tag_month.sh: last change in svn trunk is for a different year.'
-	echo "yyyy = $yyyy, svn_yyyy = $svn_yyyy"
+	echo "tag_month.sh: master changes haven't been pushed to git repository"
+	echo "local_hash  = $local_hash"
+	echo "remote_hash = $remote_hash"
 	exit 1
 fi
-mm=`date +%m`
-svn_mm=`echo $svn_yyyymmdd | sed -e 's|^....\(..\).*|\1|'`
-if [ "$svn_mm" -ge "$mm" ]
+if [ "$remote_hash" != "$svn_hash" ]
 then
-	echo 'tag_month.sh: svn trunk has changes on or after this month.'
-	echo "mm = $mm, svn_mm = $svn_mm"
+	echo "tag_month.sh: master changes haven't been pushed to svn repository"
+	echo "remote_hash = $remote_hash"
+	echo "svn_hash    = $svn_hash"
 	exit 1
 fi
-monthly_version="$yyyy$mm$dd"
 # -----------------------------------------------------------------------------
-# tag this version of the repository
-if git tag --list | grep "$monthly_version"
+# If this version has already been tagged, delete the tag
+version=`bin/version.sh get`
+if git tag --list | grep "$version"
 then
-	git tag -d $monthly_version
-	git push --delete origin $monthly_version
+	read -p "Delete preious tag for version $version [y/n] ?" response
+	if [ "$response" != 'y' ]
+	then
+		echo 'tag_month.sh: aborting because tag already exists'
+		exit 1
+	fi
+	git tag -d $version
+	git push --delete origin $version
 fi
 #
 echo "git tag -a \\"
-echo "-m \"corresponds $svn_repository/trunk on $monthly_version\" \\"
-echo "$monthly_version $svn_hash"
+echo "-m \"Last changes copied to $svn_repository/trunk on $svn_date\" \\"
+echo "$version $svn_hash"
 git tag -a \
-	-m "corresponds $svn_repository/trunk on $monthly_version" \
-	$monthly_version $svn_hash
+	-m "Last changes copied to $svn_repository/trunk on $svn_date" \
+	$version $svn_hash
 #
-echo "git push origin $monthly_version"
-git push origin $monthly_version
+echo "git push origin $version"
+git push origin $version
