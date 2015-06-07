@@ -3,7 +3,7 @@ $Id$
 CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-15 Bradley M. Bell
 
 CppAD is distributed under multiple licenses. This distribution is under
-the terms of the 
+the terms of the
                     Eclipse Public License Version 1.0.
 
 A copy of this license is included in the COPYING file of this distribution.
@@ -79,7 +79,7 @@ $codei%
 %$$
 and was failing to compile with the $code clang$$ complier.
 This example has been removed because it is not consistent with the
-C++ standard; see 
+C++ standard; see
 $cref/complex FAQ/faq/Complex Types/$$.
 
 
@@ -102,9 +102,9 @@ This has been fixed.
 $lend
 
 $head 12-27$$
-More work on the bug in 
-$cref/optimizing/CondExp/Optimize/$$ 
-conditional expressions. 
+More work on the bug in
+$cref/optimizing/CondExp/Optimize/$$
+conditional expressions.
 
 $head 12-26$$
 A minimal example for computing cross terms in atomic operation
@@ -112,11 +112,11 @@ Hessian sparsity patterns $cref atomic_hes_sparse.cpp$$ was added.
 
 $head 12-25$$
 More work on the bug in
-$cref/optimizing/CondExp/Optimize/$$ 
-conditional expressions. 
+$cref/optimizing/CondExp/Optimize/$$
+conditional expressions.
 
 $head 12-23$$
-The c++11 standard includes the error function $cref erf$$ in 
+The c++11 standard includes the error function $cref erf$$ in
 $code cmath$$.
 If the c++ compiler has the error function defined in $code cmath$$,
 the complier version of the error function is used and it corresponds to an
@@ -128,9 +128,9 @@ Fix typo in tangent reverse mode theory for
 $cref/Positive Orders/tan_reverse/Positive Orders Z(t)/$$.
 
 $head 12-22$$
-There was a bug related to 
-$cref/optimizing/CondExp/Optimize/$$ 
-conditional expressions. 
+There was a bug related to
+$cref/optimizing/CondExp/Optimize/$$
+conditional expressions.
 This has been fixed.
 
 $head 12-17$$
@@ -153,10 +153,10 @@ a new version of the $code omhelp$$ documentation tool.
 
 $head 11-27$$
 $list number$$
-Add alignment to the 
+Add alignment to the
 $cref/get_memory/ta_get_memory/Alignment/$$ and
 $cref/create_array/ta_create_array/Alignment/$$ specifications
-and 
+and
 $cref/thread_alloc example/thread_alloc.cpp/$$.
 $lnext
 Advance the deprecated $cref/unix install/auto_tools/$$ utilities to
@@ -170,7 +170,7 @@ Using old instead of new operator indices.
 $lnext
 Not properly following dependence back through atomic operations.
 $lnext
-Aborting during forward order zero, when skipping computation for a variable 
+Aborting during forward order zero, when skipping computation for a variable
 that was already completed (the skip is still useful for higher orders
 and for reverse mode).
 $lnext
@@ -182,20 +182,20 @@ of argument operations; i.e., conditional skip and cumulative summation.
 $lend
 
 $head 09-27$$
-Fix a bug that occurred when 
+Fix a bug that occurred when
 $cref/f.optimize/optimize/$$ was used with a function $icode f$$
 that contained calls to user defined $cref atomic$$ operations
 and $cref/conditional expressions/CondExp/$$.
 
 $head 09-25$$
-Fix a bug that occurred when 
+Fix a bug that occurred when
 $cref/f.optimize/optimize/$$ was used with a function $icode f$$
 that contained $cref discrete$$ functions.
 
 $head 09-21$$
-Fix a typo in documentation for 
+Fix a typo in documentation for
 $cref/any order reverse/reverse_any/$$.
-To be specific, $latex x^{(k)}$$ was changed to be $latex u^{(k)}$$. 
+To be specific, $latex x^{(k)}$$ was changed to be $latex u^{(k)}$$.
 
 $head 05-28$$
 $list number$$
@@ -216,7 +216,7 @@ In addition, the specified directory was changed from an include
 directory to data directory
 ($code cppad_colpack.cpp$$ is not an include file).
 $lnext
-If $cref colpack_prefix$$  was specified, the CppAD 
+If $cref colpack_prefix$$  was specified, the CppAD
 $cref pkgconfig$$ file was missing some information.
 This has been fixed.
 $lend
@@ -253,11 +253,11 @@ $lend
 
 $head 05-20$$
 $list number$$
-Move $code speed/adolc/alloc_mat.hpp$$ to 
+Move $code speed/adolc/alloc_mat.hpp$$ to
 $code speed/adolc/adolc_alloc_mat.hpp$$ so it has the
 same name is its $code # ifndef$$ command.
 $lnext
-Fix $code # ifndef$$ command in 
+Fix $code # ifndef$$ command in
 $code cppad/ipopt/solve_callback.hpp$$.
 $lnext
 Add $code # ifndef$$ command to $code test_more/extern_value.hpp$$.
@@ -265,7 +265,7 @@ $lend
 
 
 $head 05-19$$
-In the files 
+In the files
 $code cppad/local/asin_op.hpp$$ and $code cppad/local/acos_op.hpp$$
 there were assignments of the form $code uj = 0.$$ where $code u_j$$
 has type $cref/Base/glossary/Base Type/$$.
@@ -274,29 +274,29 @@ have been converted to $code uj = Base(0)$$.
 
 
 $head 05-16$$
-There was a mistake in printing the arguments for 
+There was a mistake in printing the arguments for
 $code CSumOp$$ and $code CSkipOp$$ when using the undocumented
-$code TRACE$$ option during forward mode (available in files of the form 
+$code TRACE$$ option during forward mode (available in files of the form
 $codei%cppad/local/%*%sweep.hpp/%$$).
 This has been fixed.
 
 $head 05-14$$
 $list number$$
-There were some global variables in the file 
+There were some global variables in the file
 $code cppad/local/op_code.hpp$$ that might have caused multiple definitions
-during link time for CppAD applications. 
+during link time for CppAD applications.
 These variables have been changed to be local so that this cannot happen.
 $lnext
-There was a mistaken assert that the number of arguments for the 
+There was a mistaken assert that the number of arguments for the
 $code BeginOp$$ was zero that caused an abort when using the undocumented
-$code TRACE$$ option available in files of the form 
+$code TRACE$$ option available in files of the form
 $codei%cppad/local/%*%sweep.hpp/%$$.
 This has been fixed.
 $lend
 
 $head 03-18$$
 $list number$$
-The 
+The
 $cref/size_taylor/FunDeprecated/size_taylor/$$
 and
 $cref/capacity_taylor/FunDeprecated/capacity_taylor/$$
@@ -304,14 +304,14 @@ functions were deprecated;
 use $cref size_order$$ and $cref capacity_order$$ instead.
 $lnext
 The documentation for $cref forward$$ and the examples
-$cref forward.cpp$$, $cref forward_order.cpp$$, have been improved. 
+$cref forward.cpp$$, $cref forward_order.cpp$$, have been improved.
 To be more specific, $cref forward_order$$ now references the special
 cases $cref forward_zero$$, $cref forward_one$$ and the new case
 $cref forward_two$$.
 $lend
 
 $head 03-17$$
-The 
+The
 $cref/move semantics/CppAD_vector/Assignment/Move Semantics/$$
 version of the $code CppAD::vector$$ assignment statement
 was not checking vector sizes.
@@ -324,24 +324,24 @@ $head 03-09$$
 The documentation links
 $code forwardzero$$, $code forwardone$$, and $code forwardany$$
 have been changed to
-$cref forward_zero$$, $cref forward_one$$, 
+$cref forward_zero$$, $cref forward_one$$,
 and $cref forward_order$$ respectively.
 This may affect links from other web pages to the CppAD documentation.
 
 $head 03-05$$
-The names $icode p$$ and $icode q$$ in the 
+The names $icode p$$ and $icode q$$ in the
 $cref/forward/forward_order/$$,
 $cref/reverse/reverse_any/$$,
-$cref atomic_forward$$, and 
+$cref atomic_forward$$, and
 $cref atomic_reverse$$ functions
-were reverse so that $icode%p% <= %q%$$. 
+were reverse so that $icode%p% <= %q%$$.
 This is only a notational change to make the arguments easier to remember.
 
 $head 03-02$$
 $list number$$
 In the output for the speed
 $cref/correct/speed_main/test/correct/$$ test,
-mention which tests are not available. 
+mention which tests are not available.
 Note that the set of available tests can depend on the
 $cref/list of options/speed_main/option_list/$$.
 $lnext
@@ -351,7 +351,7 @@ mention that it is equal to the number of colors determined by the
 $cref/color_method/sparse_jacobian/work/color_method/$$.
 $lnext
 The $cref speed_cppad$$ tests were simplified by removing the printing
-of auxillary information related to the 
+of auxillary information related to the
 $cref/optimize/speed_main/option_list/optimize/$$ option.
 Future auxillary information will be passed back in a manner similar to
 $cref/n_sweep/link_sparse_jacobian/n_sweep/$$ for the sparse jacobian test.
@@ -362,7 +362,7 @@ $lend
 
 $head 03-01$$
 $list number$$
-Change the prototype for $icode row$$ and $icode col$$ in the 
+Change the prototype for $icode row$$ and $icode col$$ in the
 $cref link_sparse_jacobian$$ speed test to be $code const$$; i.e.,
 they are not changed.
 $lnext
@@ -377,13 +377,13 @@ $code CppAD::vector$$ template class.
 
 $head 02-27$$
 The CppAD developer documentation for the subdirectory
-$code cppad/ipopt$$ was not being built by the command 
-$code bin/run_doxygen.sh$$. 
+$code cppad/ipopt$$ was not being built by the command
+$code bin/run_doxygen.sh$$.
 This has been fixed.
 
 $head 02-26$$
 $list number$$
-The 
+The
 $cref/adolc/speed_adolc/$$ and
 $cref/cppad/speed_cppad/$$ sparse jacobian speed tests now print out
 $cref/n_sweep/sparse_jacobian/n_sweep/$$.
@@ -400,10 +400,10 @@ $lend
 $head 02-23$$
 The $cref/color_method/sparse_jacobian/work/color_method/$$
 option was added to the sparse Jacobian calculations.
-This enables one to use $cref/ColPack/colpack_prefix/$$ 
+This enables one to use $cref/ColPack/colpack_prefix/$$
 do color the rows or columns.
-The speed test $cref/colpack/speed_main/Sparsity Options/colpack/$$ option 
-was also added (but not yet implemented for 
+The speed test $cref/colpack/speed_main/Sparsity Options/colpack/$$ option
+was also added (but not yet implemented for
 $cref/sparse_hessian/link_sparse_hessian/$$ speed tests).
 
 
@@ -414,7 +414,7 @@ $icode%threading%_test%$$ to $codei%multi_thread_%threading%$$
 where $icode threading$$ is $code openmp$$, $code pthread$$ or $code bthread$$.
 
 $head 02-17$$
-Fix ambiguous call to $cref/isnan/nan/isnan/$$ 
+Fix ambiguous call to $cref/isnan/nan/isnan/$$
 during MS Visual Studio 2012 compilation.
 
 $head 02-15$$
@@ -422,10 +422,10 @@ $list number$$
 The $cref/boolsparsity/speed_main/Sparsity Options/boolsparsity/$$ option
 was added to the $cref speed_main$$ program.
 $lnext
-The $code retape$$ option what changed to 
+The $code retape$$ option what changed to
 $cref/onetape/speed_main/option_list/onetape/$$ so that the default
 is to retape (option not present).
-This was done because 
+This was done because
 $cref/fadbad/fadbad_prefix/$$ and
 $cref/sacado/sacado_prefix/$$ always retape.
 $lnext
@@ -433,7 +433,7 @@ The documentation, and example source code, for all the speed
 $cref/options/speed_main/option_list/$$ was improved
 (made clearer).
 $lnext
-Improve the success rate for 
+Improve the success rate for
 $cref speed_test.cpp$$ and $cref time_test.cpp$$.
 $lend
 
@@ -451,7 +451,7 @@ $codei%
 	-D cppad_documentation=%yes_or_no%
 %$$
 which has been removed.
-	
+
 $head 01-21$$
 The destination directory for the
 cppad documentation
