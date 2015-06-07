@@ -1,6 +1,6 @@
 $Id$
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-14 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-15 Bradley M. Bell
 
 CppAD is distributed under multiple licenses. This distribution is under
 the terms of the 
@@ -243,9 +243,9 @@ $codep
 	cppad_sparse_jacobian_size = [ 100, 400, 900, 1600, 2500 ]
 	cppad_sparse_jacobian_rate = [ 6389, 954.26, 314.04, 180.06, 56.95 ]
 $$
-Due to the success of this change, other
-$cref/multiple direction/WishList/Multiple Directions/$$ items
-were added to the wish list.
+Due to the success of this change,
+$code multiple direction$$ items were added to the wish list
+(they were later removed).
 $lnext
 Improve the  forward mode tracing of arguments to,
 and results from, user defined $cref atomic$$ operations.

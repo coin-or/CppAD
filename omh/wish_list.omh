@@ -12,7 +12,6 @@ Please visit http://www.coin-or.org/CppAD/ for information on other licenses.
 $begin WishList$$
 $spell
 	Recomputation
-	expm
 	jacobian
 	nz
 	RevSparseJac
@@ -34,27 +33,45 @@ $spell
 	CppAD
 	Atan
 	cppad
-	atanh
-	asinh
-	acosh
+	mul
+	div
+	instantiate
+	instantiation
 $$
 
 $section The CppAD Wish List$$
-$index wish list$$
-$index new, features$$
-$index features, new$$
 
-$head Standard Math Functions$$
-The following functions are part of the C++11 standard math library
-and could be added to CppAD:
-$code atanh$$, $code acosh$$, $code expm1$$, $code log1p$$
+$head Absolute Zero$$
+Currently, one must use the $cref zdouble$$ class for
+$cref mul_level$$ AD that uses $cref/conditional expressions/CondExp/$$
+and $cref reverse$$ mode.
+Perhaps it would be better to use special functions; e.g.,
+$code abs_zero_mul$$ and $code abs_zero_div$$,
+so that not all multiplies and divides would need to check for zero
+(in the multiple level AD with conditional expressions and reverse mode case).
 
-$subhead atan2$$
+$head Numeric Limits$$
+Define a specialization for
+$codei%
+	std::numeric_limits< CppAD::AD<%Base%> >
+%$$
+This seems to be OK according to the following paragraph from Section
+17.6.4.2.1 of the C++11 standard (Document number N3336)
+`A program may explicitly instantiate a template defined in the
+standard library only if the declaration depends on the name of a
+user-defined type and the instantiation meets the
+standard library requirements for the original template.'
+
+$head Machine Epsilon in Examples$$
+Use a multiple of $code std::numeric_limits<double>::epsilon()$$ instead
+$code 1e-10$$ for a small number in correctness checks; e.g.,
+see $cref sqrt.cpp$$.
+
+$head atan2$$
 The $cref/atan2/Atan2/$$ function could be made faster by adding
 a special operator for it.
 
 $head Adolc$$
-$index adolc$$
 Create a documentation page that shows how to convert Adolc commands to
 CppAD commands.
 
@@ -63,7 +80,6 @@ See the $cref/problem/BenderQuad/Problem/$$ with the
 current $code BenderQuad$$ specifications.
 
 $head Checkpointing$$
-$index checkpoint$$
 It would be more flexible to also have a
 $cref/checkpoint constructor/checkpoint/constructor/$$
 that passed in an $cref ADFun$$ object instead of a algorithm.
@@ -115,13 +131,11 @@ An $cref atomic_option$$ should be added so this is only
 done when the optimizer is using the sparsity pattern for this purpose.
 
 $head Forward Mode Recomputation$$
-$index forward$$
 If the results of $cref forward_order$$ have already been computed and are still
 stored in the $cref ADFun$$ object (see $cref size_order$$),
 then they do not need to be recomputed and the results can just be returned.
 
 $head Iterator Interface$$
-$index iterator$$
 All of the CppAD simple vector interfaces should also have an
 iterator version for the following reasons:
 $list number$$
@@ -141,32 +155,8 @@ One could build a CppAD library for use with the type $code AD<double>$$.
 This would speed up compilation for the most common usage where
 the $icode Base$$ type is $code double$$.
 
-$head Multiple Directions$$
-$index speed, forward$$
-$index forward, speed$$
-$list number$$
-Extend the $cref forward_dir$$ routine so they can do multiple orders
-as well as multiple directions at the same time.
-$lnext
-Extend the $cref atomic$$ functions so they can use multiple directions
-and multiple orders at the same time
-(currently they compute one direction and one order at a time).
-$lnext
-Extend the $cref Reverse$$ routines so they can handle one reverse direction
-for multiple forward directions, or multiple reverse directions for
-one forward direction.
-$lend
-
-$head Numeric Limits$$
-$index testing, machine epsilon$$
-$index machine epsilon, testing$$
-Use a multiple of $code std::numeric_limits<double>::epsilon()$$ instead
-$code 1e-10$$ for a small number in correctness checks; e.g.,
-see $cref tan.cpp$$.
 
 $head Operation Sequence$$
-$index sequence, operation$$
-$index operation, sequence$$
 It is possible to detect if the
 AD of $icode Base$$
 $cref/operation sequence/glossary/Operation/Sequence/$$
@@ -176,8 +166,6 @@ This could be returned as an extra
 $cref seq_property$$.
 
 $head Optimization$$
-$index optimize, tape$$
-$index tape, optimize$$
 
 $subhead Comparison Changes$$
 The comparison operators used to not be taped when
@@ -211,7 +199,7 @@ not need to compute the requested derivative of the original expression.
 
 $head Preprocessor Symbols$$
 $index preprocessor$$
-Make sure all the user API preprocessor symbols are list in
+Make sure all the user API preprocessor symbols are listed in
 the $cref preprocessor$$ section.
 
 $head Software Guidelines$$
