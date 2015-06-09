@@ -58,6 +58,9 @@ This section contains a list of the changes to CppAD during 2015
 The purpose of this section is to
 assist you in learning about changes between various versions of CppAD.
 
+$head 06-09$$
+Add $cref/abort_op_index/WishList/abort_op_index/$$ to the wish list.
+
 $head 06-07$$
 Add $cref/absolute zero/WishList/Absolute Zero/$$
 and $cref/numeric_limits/WishList/Numeric Limits/$$ items to the wish list.

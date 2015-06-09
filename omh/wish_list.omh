@@ -11,6 +11,7 @@ Please visit http://www.coin-or.org/CppAD/ for information on other licenses.
 -------------------------------------------------------------------------- */
 $begin WishList$$
 $spell
+	op
 	Recomputation
 	jacobian
 	nz
@@ -40,6 +41,17 @@ $spell
 $$
 
 $section The CppAD Wish List$$
+
+$head abort_op_index$$
+When a known error is detected during $cref forward$$ or $cref reverse$$ mode,
+include the operator index in the output error message. (For example,
+when taking the derivative of the square root function at zero.)
+The syntax
+$codei%
+	Independent(%x%, %abort_op_index%)
+%$$
+could then be used to find the corresponding user source code; see
+$cref/abort_op_index/Independent/abort_op_index/$$.
 
 $head Absolute Zero$$
 Currently, one must use the $cref zdouble$$ class for
