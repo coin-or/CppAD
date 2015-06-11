@@ -3,7 +3,7 @@
 # define CPPAD_VECTOR_INCLUDED
 
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-14 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-15 Bradley M. Bell
 
 CppAD is distributed under multiple licenses. This distribution is under
 the terms of the 
@@ -443,7 +443,7 @@ public:
 			data_[i] = x.data_[i];
 		return *this;
 	}
-# if CPPAD_HAS_RVALUE
+# if CPPAD_USE_CPLUSPLUS_2011
 	/// vector assignment operator with move semantics
 	inline vector& operator=(
 		/// right hand size of the assingment operation
@@ -729,7 +729,7 @@ public:
 			data_[i] = v.data_[i];
 		return *this;
 	}
-# if CPPAD_HAS_RVALUE
+# if CPPAD_USE_CPLUSPLUS_2011
 	/// vector assignment operator with move semantics
 	inline vectorBool& operator=(
 		/// right hand size of the assingment operation

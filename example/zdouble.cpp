@@ -36,13 +36,14 @@ namespace {
 		typedef CppAD::AD<a1type> a2type;
 
 		// value during taping
-		CPPAD_TESTVECTOR(Base) x(2);
+		size_t n = 2;
+		CPPAD_TESTVECTOR(Base) x(n);
 		x[0] = 0.0;
 		x[1] = 0.0;
 
 		// declare independent variable
-		CPPAD_TESTVECTOR(a2type) a2x(x.size());
-		for (size_t j = 0; j < a2x.size(); j++)
+		CPPAD_TESTVECTOR(a2type) a2x(n);
+		for (size_t j = 0; j < n; j++)
 			a2x[j] = a2type( a1type(x[j]) );
 		Independent(a2x);
 
@@ -60,14 +61,15 @@ namespace {
 		a2type f_x = CondExpGt(a2x[0], a2zero, h_x, a2one);
 
 		// define the function f(x)
-		CPPAD_TESTVECTOR(a2type) a2y(1);
+		size_t m = 1;
+		CPPAD_TESTVECTOR(a2type) a2y(m);
 		a2y[0] = f_x;
 		CppAD::ADFun<a1type> af1;
 		af1.Dependent(a2x, a2y);
 
 		// Define function g(x) = gradient of f(x)
-		CPPAD_TESTVECTOR(a1type) a1x(x.size()), a1z(1), a1w(1);
-		for (size_t j = 0; j < a1x.size(); j++)
+		CPPAD_TESTVECTOR(a1type) a1x(n), a1z(n), a1w(m);
+		for (size_t j = 0; j < n; j++)
 			a1x[j] = a1type(x[j]);
 		a1w[0] = a1type(1.0);
 		Independent(a1x);

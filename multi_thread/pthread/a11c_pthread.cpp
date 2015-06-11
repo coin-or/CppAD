@@ -1,6 +1,6 @@
 /* $Id$ */
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-13 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-15 Bradley M. Bell
 
 CppAD is distributed under multiple licenses. This distribution is under
 the terms of the 
@@ -43,7 +43,7 @@ $end
 
 // define CPPAD_NULPTR
 # include <cppad/configure.hpp>
-# if CPPAD_HAS_NULLPTR
+# if CPPAD_USE_CPLUSPLUS_2011
 # define CPPAD_NULL nullptr
 # else
 # define CPPAD_NULL 0

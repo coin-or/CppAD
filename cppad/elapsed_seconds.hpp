@@ -81,7 +81,7 @@ $end
 // needed before one can use CPPAD_ASSERT_FIRST_CALL_NOT_PARALLEL
 # include <cppad/thread_alloc.hpp>
 
-# if CPPAD_HAS_HIGH_RESOLUTION_CLOCK
+# if CPPAD_USE_CPLUSPLUS_2011
 # include <chrono>
 # elif _MSC_VER
 extern double microsoft_timer(void);
@@ -114,7 +114,7 @@ The number of seconds since the first call to \c elapsed_seconds.
 */
 inline double elapsed_seconds(void)
 // --------------------------------------------------------------------------
-# if CPPAD_HAS_HIGH_RESOLUTION_CLOCK
+# if CPPAD_USE_CPLUSPLUS_2011
 {	CPPAD_ASSERT_FIRST_CALL_NOT_PARALLEL;
 	static bool first_ = true;
 	static std::chrono::time_point<std::chrono::high_resolution_clock> start_;
@@ -152,7 +152,7 @@ inline double elapsed_seconds(void)
 	return diff;
 }
 // --------------------------------------------------------------------------
-# else // Not CPPAD_HAS_HIGH_RESOLUTION_CLOCK or CPPAD_HAS_GETTIMEOFDAY
+# else // Not CPPAD_USE_CPLUSPLUS_2011 or CPPAD_HAS_GETTIMEOFDAY
 {	CPPAD_ASSERT_FIRST_CALL_NOT_PARALLEL;
 	static bool    first_ = true;
 	static double  tic_;
