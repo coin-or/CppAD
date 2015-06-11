@@ -6,7 +6,7 @@
 CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-15 Bradley M. Bell
 
 CppAD is distributed under multiple licenses. This distribution is under
-the terms of the 
+the terms of the
                     Eclipse Public License Version 1.0.
 
 A copy of this license is included in the COPYING file of this distribution.
@@ -48,7 +48,7 @@ it has the features listed below:
 
 $head Include$$
 The file $code cppad/vector.hpp$$ is included by $code cppad/cppad.hpp$$
-but it can also be included separately with out the rest of the 
+but it can also be included separately with out the rest of the
 CppAD include files.
 
 $head capacity$$
@@ -66,7 +66,7 @@ $codei%
 
 $head Assignment$$
 $index assignment, CppAD vector$$
-If $icode x$$ and $icode y$$ are 
+If $icode x$$ and $icode y$$ are
 $codei%CppAD::vector<%Scalar%>%$$ objects,
 $codei%
 	%y% = %x%
@@ -176,9 +176,9 @@ will output the value $icode e$$ to the standard
 output stream $icode os$$.
 
 $head resize$$
-The call $icode%x%.resize(%n%)%$$ set the size of $icode x$$ equal to 
-$icode n$$. 
-If $icode%n% <= %x%.capacity()%$$, 
+The call $icode%x%.resize(%n%)%$$ set the size of $icode x$$ equal to
+$icode n$$.
+If $icode%n% <= %x%.capacity()%$$,
 no memory is freed or allocated and the capacity of $icode x$$ does not change.
 
 $head clear$$
@@ -197,24 +197,24 @@ $codei%
 %$$
 returns a pointer to a $icode Scalar$$ object such that for
 $codei%0 <= %i% < %x%.size()%$$,
-$icode%x%[%i%]%$$ and $icode%x%.data()[%i%]%$$ 
+$icode%x%[%i%]%$$ and $icode%x%.data()[%i%]%$$
 are the same $icode Scalar$$ object.
 If $icode x$$ is $code const$$, the pointer is $code const$$.
 If $icode%x%.capacity()%$$ is zero, the value of the pointer is not defined.
-The pointer may no longer be valid after the following operations on 
+The pointer may no longer be valid after the following operations on
 $icode x$$:
 its destructor,
 $code clear$$,
-$code resize$$, 
+$code resize$$,
 $code push_back$$,
 $code push_vector$$,
-assignment to another vector when original size of $icode x$$ is zero. 
+assignment to another vector when original size of $icode x$$ is zero.
 
 $head vectorBool$$
 $index vectorBool$$
 The file $code <cppad/vector.hpp>$$ also defines the class
 $code CppAD::vectorBool$$.
-This has the same specifications as $code CppAD::vector<bool>$$ 
+This has the same specifications as $code CppAD::vector<bool>$$
 with the following exceptions:
 
 $subhead Memory$$
@@ -228,12 +228,12 @@ $code vectorBool$$.
 
 $subhead Output$$
 The $code CppAD::vectorBool$$ output operator
-prints each boolean value as 
+prints each boolean value as
 a $code 0$$ for false,
-a $code 1$$ for true, 
+a $code 1$$ for true,
 and does not print any other output; i.e.,
 the vector is written a long sequence of zeros and ones with no
-surrounding $code {$$, $code }$$ and with no separating commas or spaces. 
+surrounding $code {$$, $code }$$ and with no separating commas or spaces.
 
 $subhead Element Type$$
 If $icode x$$ has type $code vectorBool$$
@@ -250,7 +250,7 @@ $codei%
 %$$
 
 $lnext
-$icode elementType$$ supports the assignment operator $code =$$ where the 
+$icode elementType$$ supports the assignment operator $code =$$ where the
 right hand side is a $code bool$$ or an $icode elementType$$ object; e.g.,
 if $icode y$$ has type $code bool$$, the following syntax is supported:
 $codei%
@@ -259,7 +259,7 @@ $codei%
 
 $lnext
 The result of an assignment to an $icode elementType$$
-also has type $icode elementType$$. 
+also has type $icode elementType$$.
 Thus, if $icode z$$ has type $code bool$$, the following syntax is supported:
 $codei%
 	%z% = %x%[%i%] = %y%
@@ -269,15 +269,15 @@ $lend
 $head Memory and Parallel Mode$$
 $index thread_alloc, vector$$
 $index vector, thread_alloc$$
-These vectors use the multi-threaded fast memory allocator 
+These vectors use the multi-threaded fast memory allocator
 $cref thread_alloc$$:
 
 $list number$$
 The routine $cref/parallel_setup/ta_parallel_setup/$$ must
-be called before these vectors can be used 
+be called before these vectors can be used
 $cref/in parallel/ta_in_parallel/$$.
 $lnext
-Using these vectors affects the amount of memory 
+Using these vectors affects the amount of memory
 $cref/in_use/ta_inuse/$$ and $cref/available/ta_available/$$.
 $lnext
 Calling $cref/clear/CppAD_vector/clear/$$,
@@ -315,7 +315,7 @@ $end
 
 $end
 
------------------------------------------------------------------------- 
+------------------------------------------------------------------------
 */
 
 # include <cstddef>
@@ -342,7 +342,7 @@ private:
 	size_t capacity_;
 	/// number of Type elements currently in this vector
 	size_t length_;
-	/// pointer to the first type elements 
+	/// pointer to the first type elements
 	/// (not defined and should not be used when capacity_ = 0)
 	Type   * data_;
 public:
@@ -350,7 +350,7 @@ public:
 	typedef Type value_type;
 
 	/// default constructor sets capacity_ = length_ = data_ = 0
-	inline vector(void) 
+	inline vector(void)
 	: capacity_(0), length_(0), data_(CPPAD_NULL)
 	{ }
 	/// sizing constructor
@@ -360,7 +360,7 @@ public:
 	) : capacity_(0), length_(n), data_(CPPAD_NULL)
 	{	if( length_ > 0 )
 		{	// set capacity and data
-			data_ = thread_alloc::create_array<Type>(length_, capacity_); 
+			data_ = thread_alloc::create_array<Type>(length_, capacity_);
 		}
 	}
 	/// copy constructor
@@ -369,8 +369,8 @@ public:
 		const vector& x
 	) : capacity_(0), length_(x.length_), data_(CPPAD_NULL)
 	{	if( length_ > 0 )
-		{	// set capacity and data	
-			data_ = thread_alloc::create_array<Type>(length_, capacity_); 
+		{	// set capacity and data
+			data_ = thread_alloc::create_array<Type>(length_, capacity_);
 
 			// copy values using assignment operator
 			size_t i;
@@ -381,7 +381,7 @@ public:
 	/// destructor
 	~vector(void)
 	{	if( capacity_ > 0 )
-			thread_alloc::delete_array(data_); 
+			thread_alloc::delete_array(data_);
 	}
 
 	/// maximum number of elements current allocation can store
@@ -416,7 +416,7 @@ public:
 		data_ = thread_alloc::create_array<Type>(length_, capacity_);
 	}
 
-	/// free memory and set number of elements to zero 
+	/// free memory and set number of elements to zero
 	inline void clear(void)
 	{	length_ = 0;
 		// check if there is old memory to be freed
@@ -476,7 +476,7 @@ public:
 			i < length_,
 			"vector: index greater than or equal vector size"
 		);
-		return data_[i]; 
+		return data_[i];
 	}
 	/// constant element access; i.e., we cannot change this element value
 	const Type& operator[](
@@ -487,7 +487,7 @@ public:
 			i < length_,
 			"vector: index greater than or equal vector size"
 		);
-		return data_[i]; 
+		return data_[i];
 	}
 	/// add an element to the back of this vector
 	void push_back(
@@ -549,7 +549,7 @@ public:
 template <class Type>
 inline std::ostream& operator << (
 	/// stream to write the vector to
-	std::ostream&              os  , 
+	std::ostream&              os  ,
 	/// vector that is output
 	const CppAD::vector<Type>& vec )
 {	size_t i = 0;
@@ -557,7 +557,7 @@ inline std::ostream& operator << (
 
 	os << "{ ";
 	while(i < n)
-	{	os << vec[i++]; 
+	{	os << vec[i++];
 		if( i < n )
 			os << ", ";
 	}
@@ -582,7 +582,7 @@ public:
 	/// constructor from member values
 	vectorBoolElement(
 		/// unit for this element
-		UnitType* unit , 
+		UnitType* unit ,
 		/// mask for this element
 		UnitType mask  )
 	: unit_(unit) , mask_(mask)
@@ -605,14 +605,14 @@ public:
 			*unit_ |= mask_;
 		else	*unit_ &= ~mask_;
 		return *this;
-	} 
+	}
 	/// assignment of this element to another element
 	vectorBoolElement& operator=(const vectorBoolElement& e)
 	{	if( *(e.unit_) & e.mask_ )
 			*unit_ |= mask_;
 		else	*unit_ &= ~mask_;
 		return *this;
-	} 
+	}
 };
 
 class vectorBool {
@@ -620,7 +620,7 @@ class vectorBool {
 	typedef size_t UnitType;
 private:
 	/// number of bits packed into each UnitType value in data_
-	static const size_t bit_per_unit_ 
+	static const size_t bit_per_unit_
 		= std::numeric_limits<UnitType>::digits;
 	/// number of UnitType values in data_
 	size_t    n_unit_;
@@ -666,7 +666,7 @@ public:
 			data_ = thread_alloc::create_array<UnitType>(min_unit, n_unit_);
 
 			// copy values using UnitType assignment operator
-			CPPAD_ASSERT_UNKNOWN( min_unit <= v.n_unit_ ); 
+			CPPAD_ASSERT_UNKNOWN( min_unit <= v.n_unit_ );
 			size_t i;
 			for(i = 0; i < min_unit; i++)
 				data_[i] = v.data_[i];
@@ -796,7 +796,7 @@ public:
 			data_ = thread_alloc::create_array<UnitType>(n_unit_+1, n_unit_);
 			// copy old data values
 			for(i = 0; i < old_n_unit; i++)
-				data_[i] = old_data[i]; 
+				data_[i] = old_data[i];
 			// free old data
 			if( old_n_unit > 0 )
 				thread_alloc::delete_array(old_data);
@@ -835,7 +835,7 @@ public:
 			data_ = thread_alloc::create_array<UnitType>(min_unit, n_unit_);
 			// copy old data values
 			for(i = 0; i < old_n_unit; i++)
-				data_[i] = old_data[i]; 
+				data_[i] = old_data[i];
 			// free old data
 			if( old_n_unit > 0 )
 				thread_alloc::delete_array(old_data);
@@ -860,14 +860,14 @@ public:
 /// output a vector
 inline std::ostream& operator << (
 	/// steam to write the vector to
-	std::ostream&      os  , 
+	std::ostream&      os  ,
 	/// vector that is output
 	const vectorBool&  v   )
 {	size_t i = 0;
 	size_t n = v.size();
 
 	while(i < n)
-		os << v[i++]; 
+		os << v[i++];
 	return os;
 }
 

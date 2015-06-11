@@ -3,7 +3,7 @@
 CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-15 Bradley M. Bell
 
 CppAD is distributed under multiple licenses. This distribution is under
-the terms of the 
+the terms of the
                     Eclipse Public License Version 1.0.
 
 A copy of this license is included in the COPYING file of this distribution.
@@ -62,7 +62,7 @@ namespace {
 	{	int i;
 		// for some reason this function is missing on some systems
 		// assert( pthread_is_multithreaded_np() > 0 );
-		for(i = 1; i < n; i++) 
+		for(i = 1; i < n; i++)
 			b[i] = (a[i] + a[i-1]) / 2.0;
 		return;
 	}
@@ -127,7 +127,7 @@ bool a11c(void)
 	// check the result
 	float eps = 100. * std::numeric_limits<float>::epsilon();
 	for(i = 1; i < n ; i++)
-		ok &= std::fabs( (2. * b[i] - a[i] - a[i-1]) / b[i] ) <= eps; 
+		ok &= std::fabs( (2. * b[i] - a[i] - a[i-1]) / b[i] ) <= eps;
 
 	delete [] a;
 	delete [] b;
