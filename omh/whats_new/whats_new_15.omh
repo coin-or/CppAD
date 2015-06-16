@@ -60,6 +60,7 @@ The purpose of this section is to
 assist you in learning about changes between various versions of CppAD.
 
 $head 06-16$$
+$list number$$
 There were some
 $cref/unknown/cppad_assert/Unknown/$$ asserts
 when the sparsity pattern $icode p$$ in
@@ -68,6 +69,14 @@ $cref/sparse_hessian/sparse_hessian/p/$$ was not properly dimensioned.
 These have been changed to
 $cref/known/cppad_assert/Known/$$ asserts to give better
 error reporting.
+$lnext
+In the special case where sparse Hessian $cref/work/sparse_hessian/work/$$ or
+sparse Jacobian $cref/work/sparse_hessian/work/$$ was specified and the
+set of elements to be computed was empty, the work vector is empty after
+the call (and it appears to need to be calculated on subsequent calls).
+This resulted in a bug when the sparsity pattern was not provided
+on subsequent calls (and has been fixed).
+$lend
 
 $head 06-11$$
 $list number$$

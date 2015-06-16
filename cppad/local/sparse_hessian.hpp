@@ -604,8 +604,9 @@ size_t ADFun<Base>::SparseHessian(
 	sparse_hessian_work&  work )
 {
 	size_t n    = Domain();
+	size_t K    = hes.size();
 # ifndef NDEBUG
-	size_t k, K = hes.size();
+	size_t k;
 	CPPAD_ASSERT_KNOWN(
 		size_t(x.size()) == n ,
 		"SparseHessian: size of x not equal domain dimension for f."
@@ -634,6 +635,11 @@ size_t ADFun<Base>::SparseHessian(
 			"SparseHessian: invalid value in work."
 	);
 # endif
+	// check for case where there is nothing to compute
+	size_t n_sweep = 0;
+	if( K == 0 )
+		return n_sweep;
+
 	typedef typename VectorSet::value_type Set_type;
 	typedef typename internal_sparsity<Set_type>::pattern_type Pattern_type;
 	Pattern_type s;
@@ -641,7 +647,7 @@ size_t ADFun<Base>::SparseHessian(
 	{	bool transpose = false;
 		sparsity_user2internal(s, p, n, n, transpose);
 	}
-	size_t n_sweep = SparseHessianCompute(x, w, s, row, col, hes, work);
+	n_sweep = SparseHessianCompute(x, w, s, row, col, hes, work);
 	return n_sweep;
 }
 /*!

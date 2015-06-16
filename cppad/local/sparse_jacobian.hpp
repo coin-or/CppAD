@@ -738,8 +738,9 @@ size_t ADFun<Base>::SparseJacobianForward(
 {
 	size_t n = Domain();
 	size_t m = Range();
+	size_t K = jac.size();
 # ifndef NDEBUG
-	size_t k, K = jac.size();
+	size_t k;
 	CPPAD_ASSERT_KNOWN(
 		size_t(x.size()) == n ,
 		"SparseJacobianForward: size of x not equal domain dimension for f."
@@ -769,6 +770,10 @@ size_t ADFun<Base>::SparseJacobianForward(
 			"SparseJacobianForward: invalid value in work."
 	);
 # endif
+	// check for case where there is nothing to compute
+	size_t n_sweep = 0;
+	if( K == 0 )
+		return n_sweep;
 
 	typedef typename VectorSet::value_type Set_type;
 	typedef typename internal_sparsity<Set_type>::pattern_type Pattern_type;
@@ -777,7 +782,7 @@ size_t ADFun<Base>::SparseJacobianForward(
 	{	bool transpose = true;
 		sparsity_user2internal(s_transpose, p, m, n, transpose);
 	}
-	size_t n_sweep = SparseJacobianFor(x, s_transpose, row, col, jac, work);
+	n_sweep = SparseJacobianFor(x, s_transpose, row, col, jac, work);
 	return n_sweep;
 }
 /*!
@@ -846,8 +851,9 @@ size_t ADFun<Base>::SparseJacobianReverse(
 {
 	size_t m = Range();
 	size_t n = Domain();
+	size_t K = jac.size();
 # ifndef NDEBUG
-	size_t k, K = jac.size();
+	size_t k;
 	CPPAD_ASSERT_KNOWN(
 		size_t(x.size()) == n ,
 		"SparseJacobianReverse: size of x not equal domain dimension for f."
@@ -877,6 +883,10 @@ size_t ADFun<Base>::SparseJacobianReverse(
 			"SparseJacobianReverse: invalid value in work."
 	);
 # endif
+	// check for case where there is nothing to compute
+	size_t n_sweep = 0;
+	if( K == 0 )
+		return n_sweep;
 
 	typedef typename VectorSet::value_type Set_type;
 	typedef typename internal_sparsity<Set_type>::pattern_type Pattern_type;
@@ -885,7 +895,7 @@ size_t ADFun<Base>::SparseJacobianReverse(
 	{	bool transpose = false;
 		sparsity_user2internal(s, p, m, n, transpose);
 	}
-	size_t n_sweep = SparseJacobianRev(x, s, row, col, jac, work);
+	n_sweep = SparseJacobianRev(x, s, row, col, jac, work);
 	return n_sweep;
 }
 /*!
