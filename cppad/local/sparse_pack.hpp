@@ -3,7 +3,7 @@
 # define CPPAD_SPARSE_PACK_INCLUDED
 
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-14 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-15 Bradley M. Bell
 
 CppAD is distributed under multiple licenses. This distribution is under
 the terms of the 
@@ -380,13 +380,13 @@ void sparsity_user2internal(
 	size_t             n_row     ,
 	size_t             n_col     ,
 	bool               transpose )
-{	CPPAD_ASSERT_UNKNOWN( n_row * n_col == size_t(user.size()) );
+{
 	size_t i, j;
 
 	CPPAD_ASSERT_KNOWN(
 		size_t( user.size() ) == n_row * n_col,
-		"Size of this vector of bools sparsity pattern is not equal product "
-		"of the domain and range dimensions for corresponding function."
+		"Size of this vector of bools sparsity pattern is not equal\n"
+		"product of domain and range dimensions for corresponding function."
 	);
 
 	// transposed pattern case

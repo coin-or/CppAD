@@ -3,7 +3,7 @@
 # define CPPAD_CPPAD_ASSERT_INCLUDED
 
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-14 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-15 Bradley M. Bell
 
 CppAD is distributed under multiple licenses. This distribution is under
 the terms of the 
@@ -56,14 +56,14 @@ The CppAD user should not uses these macros.
 You can however write your own macros that do not begin with $code CPPAD$$
 and that call the $cref/CppAD error handler/ErrorHandler/$$.
 
-$subhead Known$$
+$head Known$$
 $index CPPAD_ASSERT_KNOWN$$
 The $code CPPAD_ASSERT_KNOWN$$ macro is used to check for an error
 with a known cause.
 For example, many CppAD routines uses these macros
 to make sure their arguments conform to their specifications.
 
-$subhead Unknown$$
+$head Unknown$$
 $index CPPAD_ASSERT_UNKNOWN$$
 The $code CPPAD_ASSERT_UNKNOWN$$ macro is used to check that the 
 CppAD internal data structures conform as expected.

@@ -13,6 +13,7 @@ Please visit http://www.coin-or.org/CppAD/ for information on other licenses.
 $begin whats_new_15$$
 $dollar @$$
 $spell
+	dimensioned
 	cskip_op
 	adolc
 	zdouble
@@ -57,6 +58,30 @@ This section contains a list of the changes to CppAD during 2015
 (in reverse order by date).
 The purpose of this section is to
 assist you in learning about changes between various versions of CppAD.
+
+$head 06-16$$
+There were some
+$cref/unknown/cppad_assert/Unknown/$$ asserts
+when the sparsity pattern $icode p$$ in
+$cref/sparse_jacobian/sparse_jacobian/p/$$ and
+$cref/sparse_hessian/sparse_hessian/p/$$ was not properly dimensioned.
+These have been changed to
+$cref/known/cppad_assert/Known/$$ asserts to give better
+error reporting.
+
+$head 06-11$$
+$list number$$
+Some C++11 features were not being taken advantage of after the change on
+$cref/05-10/whats_new_15/05-10/$$. To be specific, move semantics,
+the high resolution clock, and null pointers.
+This has been fixed.
+$lnext
+In the example $cref zdouble.cpp$$, the vector $code a1z$$ was not
+properly dimensioned.
+This has been fixed and the dimensions of all the variables have been
+clarified.
+$lend
+
 
 $head 06-09$$
 Add $cref/abort_op_index/WishList/abort_op_index/$$ to the wish list.

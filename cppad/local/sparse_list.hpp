@@ -506,11 +506,10 @@ void sparsity_user2internal(
 	size_t                  n_row     ,
 	size_t                  n_col     ,
 	bool                    transpose )
-{	CPPAD_ASSERT_UNKNOWN( n_row == size_t(user.size()) );
-
+{
 	CPPAD_ASSERT_KNOWN(
 		size_t( user.size() ) == n_row,
-		"Size of this vector of lists sparsity pattern is not equal "
+		"Size of this vector of sets sparsity pattern is not equal\n"
 		"the range dimension for the corresponding function."
 	);
 
@@ -524,7 +523,12 @@ void sparsity_user2internal(
 		{	itr = user[i].begin();
 			while(itr != user[i].end())
 			{	j = *itr++;
-				CPPAD_ASSERT_UNKNOWN( j < n_col );
+				CPPAD_ASSERT_KNOWN(
+					j < n_col,
+					"An element in this vector of sets sparsity pattern "
+					"is greater than or equal\n"
+					"the domain dimension for the corresponding function."
+				);
 				internal.add_element(j, i);
 			}
 		}
