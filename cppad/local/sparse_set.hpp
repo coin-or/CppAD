@@ -6,7 +6,7 @@
 CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-15 Bradley M. Bell
 
 CppAD is distributed under multiple licenses. This distribution is under
-the terms of the 
+the terms of the
                     Eclipse Public License Version 1.0.
 
 A copy of this license is included in the COPYING file of this distribution.
@@ -32,7 +32,7 @@ class sparse_set {
 private:
 	/// type used for each set in the vector sets
 	typedef std::set<size_t> Set;
-	/// Number of sets that we are representing 
+	/// Number of sets that we are representing
 	/// (set by constructor and resize).
 	size_t n_set_;
 	/// Possible elements in each set are 0, 1, ..., end_ - 1
@@ -50,32 +50,32 @@ public:
 	// -----------------------------------------------------------------
 	/*! Default constructor (no sets)
 	*/
-	sparse_set(void) : 
-	n_set_(0)                     , 
-	end_(0)                       , 
+	sparse_set(void) :
+	n_set_(0)                     ,
+	end_(0)                       ,
 	next_index_(0)
 	{ }
 	// -----------------------------------------------------------------
 	/*! Make use of copy constructor an error
- 
+
 	\param v
 	vector that we are attempting to make a copy of.
  	*/
 	sparse_set(const sparse_set& v)
-	{	// Error: 
+	{	// Error:
 		// Probably a sparse_set argument has been passed by value
-		CPPAD_ASSERT_UNKNOWN(false); 
+		CPPAD_ASSERT_UNKNOWN(false);
 	}
 	// -----------------------------------------------------------------
-	/*! Destructor 
+	/*! Destructor
 	*/
 	~sparse_set(void)
-	{ } 
+	{ }
 	// -----------------------------------------------------------------
 	/*! Change number of sets, set end, and initialize all sets as empty
 
 
-	If \c n_set_in is zero, any memory currently allocated for this object 
+	If \c n_set_in is zero, any memory currently allocated for this object
 	is freed. Otherwise, new memory may be allocated for the sets (if needed).
 
 	\param n_set_in
@@ -84,7 +84,7 @@ public:
 	\param end_in
 	is the maximum element plus one (the minimum element is 0).
 	*/
-	void resize(size_t n_set_in, size_t end_in) 
+	void resize(size_t n_set_in, size_t end_in)
 	{	n_set_          = n_set_in;
 		end_            = end_in;
 		if( n_set_ == 0 )
@@ -145,7 +145,7 @@ public:
 	}
 	// -----------------------------------------------------------------
 	/*! Begin retrieving elements from one of the sets.
-	
+
 	\param index
 	is the index for the set that is going to be retrieved.
 	The elements of the set are retrieved in increasing order.
@@ -157,13 +157,13 @@ public:
 	{	// initialize element to search for in this set
 		CPPAD_ASSERT_UNKNOWN( index < n_set_ );
 		next_index_       = index;
-		next_element_     = data_[index].begin(); 
+		next_element_     = data_[index].begin();
 
 		return;
 	}
 	// -----------------------------------------------------------------
 	/*! Get the next element from the current retrieval set.
-	
+
 	\return
 	is the next element in the set with index
 	specified by the previous call to \c begin.
@@ -196,7 +196,7 @@ public:
 	is the index (in this \c sparse_set object) of the set being assinged.
 
 	\param other_value
-	is the index (in the other \c sparse_set object) of the 
+	is the index (in the other \c sparse_set object) of the
 	that we are using as the value to assign to the target set.
 
 	\param other
@@ -208,8 +208,8 @@ public:
 	\li other_value  < other.n_set_
 	*/
 	void assignment(
-		size_t               this_target  , 
-		size_t               other_value  , 
+		size_t               this_target  ,
+		size_t               other_value  ,
 		const sparse_set&   other        )
 	{	CPPAD_ASSERT_UNKNOWN( this_target  <   n_set_        );
 		CPPAD_ASSERT_UNKNOWN( other_value  <   other.n_set_  );
@@ -224,12 +224,12 @@ public:
 	is the index (in this \c sparse_set object) of the set being assinged.
 
 	\param this_left
-	is the index (in this \c sparse_set object) of the 
+	is the index (in this \c sparse_set object) of the
 	left operand for the union operation.
 	It is OK for \a this_target and \a this_left to be the same value.
 
 	\param other_right
-	is the index (in the other \c sparse_set object) of the 
+	is the index (in the other \c sparse_set object) of the
 	right operand for the union operation.
 	It is OK for \a this_target and \a other_right to be the same value.
 
@@ -243,9 +243,9 @@ public:
 	\li other_right <  other.n_set_
 	*/
 	void binary_union(
-		size_t                  this_target  , 
-		size_t                  this_left    , 
-		size_t                  other_right  , 
+		size_t                  this_target  ,
+		size_t                  this_left    ,
+		size_t                  other_right  ,
 		const sparse_set&      other        )
 	{	CPPAD_ASSERT_UNKNOWN( this_target < n_set_         );
 		CPPAD_ASSERT_UNKNOWN( this_left   < n_set_         );
@@ -264,11 +264,11 @@ public:
 
 		// move results to the target set with out copying elements
 		data_[this_target].swap(temp);
-		
+
 	}
 	// -----------------------------------------------------------------
 	/*! Sum over all sets of the number of elements
- 
+
 	/return
 	The the total number of elements
  	*/
@@ -281,15 +281,15 @@ public:
 	}
 	// -----------------------------------------------------------------
 	/*! Fetch n_set for vector of sets object.
-	
+
 	\return
 	Number of from sets for this vector of sets object
 	*/
 	size_t n_set(void) const
 	{	return n_set_; }
 	// -----------------------------------------------------------------
-	/*! Fetch end for this vector of sets object. 
-	
+	/*! Fetch end for this vector of sets object.
+
 	\return
 	is the maximum element value plus one (the minimum element value is 0).
 	*/
@@ -297,7 +297,7 @@ public:
 	{	return end_; }
 };
 
-/*! 
+/*!
 Copy a user vector of sets sparsity pattern to an internal sparse_set object.
 
 \tparam VectorSet
@@ -321,12 +321,12 @@ number of columns in the sparsity pattern in \c user
 
 \param transpose
 if true, the sparsity pattern in \c internal is the transpose
-of the one in \c user. 
+of the one in \c user.
 Otherwise it is the same sparsity pattern.
 */
 template<class VectorSet>
 void sparsity_user2internal(
-	sparse_set&             internal  , 
+	sparse_set&             internal  ,
 	const VectorSet&        user      ,
 	size_t                  n_row     ,
 	size_t                  n_col     ,

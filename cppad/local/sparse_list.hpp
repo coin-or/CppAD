@@ -6,7 +6,7 @@
 CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-15 Bradley M. Bell
 
 CppAD is distributed under multiple licenses. This distribution is under
-the terms of the 
+the terms of the
                     Eclipse Public License Version 1.0.
 
 A copy of this license is included in the COPYING file of this distribution.
@@ -74,10 +74,10 @@ private:
 	}
 	// -----------------------------------------------------------------
 	/// Private member functions that does garbage collection.
-	void collect_garbage(void) 
+	void collect_garbage(void)
 	{	CPPAD_ASSERT_UNKNOWN( 2 * data_not_used_ > data_.size() );
 		//
-		CPPAD_ASSERT_UNKNOWN( 
+		CPPAD_ASSERT_UNKNOWN(
 			number_elements() + n_set_ + data_not_used_ == data_.size()
 		);
 
@@ -90,7 +90,7 @@ private:
 			//
 			size_t value    = data_[next].value;
 			while( value < end_ )
-			{	data_tmp_[next_tmp].value = value;	
+			{	data_tmp_[next_tmp].value = value;
 				// data_tmp_[next_tmp].next  = data_tmp_.extend(1);
 				// does not seem to work ?
 				size_t index_tmp         = data_tmp_.extend(1);
@@ -103,7 +103,7 @@ private:
 			}
 			data_tmp_[next_tmp].value = end_;
 		}
-		CPPAD_ASSERT_UNKNOWN( 
+		CPPAD_ASSERT_UNKNOWN(
 			data_tmp_.size() + data_not_used_ == data_.size()
 		);
 
@@ -117,31 +117,31 @@ public:
 	// -----------------------------------------------------------------
 	/*! Default constructor (no sets)
 	*/
-	sparse_list(void) : 
-	n_set_(0)                 , 
+	sparse_list(void) :
+	n_set_(0)                 ,
 	end_(0)                   ,
 	data_not_used_(0)
 	{	next_pair_.value = end_; }
 	// -----------------------------------------------------------------
 	/*! Using copy constructor is a programing (not user) error
- 
+
 	\param v
 	vector that we are attempting to make a copy of.
  	*/
 	sparse_list(const sparse_list& v)
-	{	// Error: 
+	{	// Error:
 		// Probably a sparse_list argument has been passed by value
-		CPPAD_ASSERT_UNKNOWN(false); 
+		CPPAD_ASSERT_UNKNOWN(false);
 	}
 	// -----------------------------------------------------------------
-	/*! Destructor 
+	/*! Destructor
 	*/
 	~sparse_list(void)
-	{ } 
+	{ }
 	// -----------------------------------------------------------------
 	/*! Change number of sets, end marker, and initialize all sets as empty
 
-	If \c n_set_in is zero, any memory currently allocated for this object 
+	If \c n_set_in is zero, any memory currently allocated for this object
 	is freed. Otherwise, new memory may be allocated for the sets (if needed).
 
 	\param n_set_in
@@ -150,7 +150,7 @@ public:
 	\param end_in
 	is the maximum element plus one (the minimum element is 0).
 	*/
-	void resize(size_t n_set_in, size_t end_in) 
+	void resize(size_t n_set_in, size_t end_in)
 	{	n_set_                 = n_set_in;
 		end_                   = end_in;
 		next_pair_.value       = end_in;
@@ -194,17 +194,17 @@ public:
 			return;
 		}
 
-		// search list for place to insert 
+		// search list for place to insert
 		size_t  previous = index;
 		size_t  current  = data_[previous].next;
 		value            = data_[current].value;
 		while( value < element )
 		{	previous = current;
 			current = data_[previous].next;
-			value   = data_[current].value; 
+			value   = data_[current].value;
 		}
 		if( element != value )
-		{	CPPAD_ASSERT_UNKNOWN( element < value ); 
+		{	CPPAD_ASSERT_UNKNOWN( element < value );
 			size_t insert         = data_.extend(1);
 			//
 			data_[insert].next    = data_[previous].next;
@@ -240,7 +240,7 @@ public:
 	}
 	// -----------------------------------------------------------------
 	/*! Begin retrieving elements from one of the sets.
-	
+
 	\param index
 	is the index for the set that is going to be retrieved.
 	The elements of the set are retrieved in increasing order.
@@ -252,13 +252,13 @@ public:
 	void begin(size_t index)
 	{	// initialize element to search for in this set
 		CPPAD_ASSERT_UNKNOWN( index < n_set_ );
-		next_pair_  = data_[index]; 
+		next_pair_  = data_[index];
 
 		return;
 	}
 	// -----------------------------------------------------------------
 	/*! Get the next element from the current retrieval set.
-	
+
 	\return
 	is the next element in the set with index
 	specified by the previous call to \c begin.
@@ -309,7 +309,7 @@ public:
 	is the index (in this \c sparse_list object) of the set being assinged.
 
 	\param other_source
-	is the index (in the other \c sparse_list object) of the 
+	is the index (in the other \c sparse_list object) of the
 	that we are using as the value to assign to the target set.
 
 	\param other
@@ -324,8 +324,8 @@ public:
 	\li other_index  < other.n_set_
 	*/
 	void assignment(
-		size_t               this_target  , 
-		size_t               other_source , 
+		size_t               this_target  ,
+		size_t               other_source ,
 		const sparse_list&   other        )
 	{	CPPAD_ASSERT_UNKNOWN( this_target  <   n_set_        );
 		CPPAD_ASSERT_UNKNOWN( other_source <   other.n_set_  );
@@ -333,7 +333,7 @@ public:
 
 		// check if we are assigning a set to itself
 		if( (this == &other) & (this_target == other_source) )
-			return; 
+			return;
 
 		// number of elements that will be deleted by this operation
 		size_t number_delete = number_elements(this_target);
@@ -364,12 +364,12 @@ public:
 	is the index (in this \c sparse_list object) of the set being assinged.
 
 	\param this_left
-	is the index (in this \c sparse_list object) of the 
+	is the index (in this \c sparse_list object) of the
 	left operand for the union operation.
 	It is OK for \a this_target and \a this_left to be the same value.
 
 	\param other_right
-	is the index (in the other \c sparse_list object) of the 
+	is the index (in the other \c sparse_list object) of the
 	right operand for the union operation.
 	It is OK for \a this_target and \a other_right to be the same value.
 
@@ -383,11 +383,11 @@ public:
 	\li other_right <  other.n_set_
 	*/
 	void binary_union(
-		size_t                  this_target  , 
-		size_t                  this_left    , 
-		size_t                  other_right  , 
+		size_t                  this_target  ,
+		size_t                  this_left    ,
+		size_t                  other_right  ,
 		const sparse_list&      other        )
-	{	
+	{
 		CPPAD_ASSERT_UNKNOWN( this_target < n_set_         );
 		CPPAD_ASSERT_UNKNOWN( this_left   < n_set_         );
 		CPPAD_ASSERT_UNKNOWN( other_right < other.n_set_   );
@@ -439,7 +439,7 @@ public:
 	}
 	// -----------------------------------------------------------------
 	/*! Sum over all sets of the number of elements
- 
+
 	/return
 	The the total number of elements
  	*/
@@ -447,20 +447,20 @@ public:
 	{	size_t i, count;
 		count = 0;
 		for(i = 0; i < n_set_; i++)
-			count += number_elements(i);	
+			count += number_elements(i);
 		return count;
 	}
 	// -----------------------------------------------------------------
 	/*! Fetch n_set for vector of sets object.
-	
+
 	\return
 	Number of from sets for this vector of sets object
 	*/
 	size_t n_set(void) const
 	{	return n_set_; }
 	// -----------------------------------------------------------------
-	/*! Fetch end for this vector of sets object. 
-	
+	/*! Fetch end for this vector of sets object.
+
 	\return
 	is the maximum element value plus one (the minimum element value is 0).
 	*/
@@ -472,7 +472,7 @@ public:
 template <> inline bool is_pod<sparse_list::pair_size_t>(void)
 {	return true; }
 
-/*! 
+/*!
 Copy a user vector of sets sparsity pattern to an internal sparse_list object.
 
 \tparam VectorSet
@@ -496,12 +496,12 @@ number of columns in the sparsity pattern in \c user
 
 \param transpose
 if true, the sparsity pattern in \c internal is the transpose
-of the one in \c user. 
+of the one in \c user.
 Otherwise it is the same sparsity pattern.
 */
 template<class VectorSet>
 void sparsity_user2internal(
-	sparse_list&            internal  , 
+	sparse_list&            internal  ,
 	const VectorSet&        user      ,
 	size_t                  n_row     ,
 	size_t                  n_col     ,
