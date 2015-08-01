@@ -59,6 +59,11 @@ This section contains a list of the changes to CppAD during 2015
 The purpose of this section is to
 assist you in learning about changes between various versions of CppAD.
 
+$head 07-31$$
+Added the $cref sparse_sub_hes.cpp$$ example,
+a way to compute the sparsity for a subset of variables without
+using $cref/multiple levels of AD/mul_level/$$.
+
 $head 06-16$$
 $list number$$
 There were some
@@ -251,7 +256,7 @@ The corresponding reverse mode calculation,
 at $code x[0] = 0.0$$, would result in
 $codep
 	Error detected by false result for
-    	! ( hasnan(value) && check_for_nan_ )
+	! ( hasnan(value) && check_for_nan_ )
 $$
 This has been fixed so that only the conditional expression case that is used
 affects the reverse mode results.

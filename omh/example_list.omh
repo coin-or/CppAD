@@ -237,6 +237,7 @@ $rref sparse_hes_fun.cpp$$
 $rref sparse_hessian.cpp$$
 $rref sparse_jac_fun.cpp$$
 $rref sparse_jacobian.cpp$$
+$rref sparse_sub_hes.cpp$$
 $rref speed_example.cpp$$
 $rref speed_program.cpp$$
 $rref speed_test.cpp$$

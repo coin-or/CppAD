@@ -281,7 +281,8 @@ and the other coefficients are unspecified.
 
 $children%
 	example/sparse_hessian.cpp%
-	example/sub_sparse_hes.cpp
+	example/sub_sparse_hes.cpp%
+	example/sparse_sub_hes.cpp
 %$$
 
 $head Example$$
@@ -291,11 +292,11 @@ is examples and tests of $code sparse_hessian$$.
 It return $code true$$, if it succeeds and $code false$$ otherwise.
 
 $head Subset Hessian$$
-The routine
-$cref sub_sparse_hes.cpp$$
-is examples and test for computing a sparse Hessian
+The routines
+$cref sub_sparse_hes.cpp$$ and $cref sparse_sub_hes.cpp$$
+are examples and tests that compute a sparse Hessian
 for a subset of the variables.
-It return $code true$$, if it succeeds and $code false$$ otherwise.
+They return $code true$$, if they succeed and $code false$$ otherwise.
 
 $end
 -----------------------------------------------------------------------------
