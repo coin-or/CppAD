@@ -155,7 +155,7 @@ For example, see
 $cref/base_complex/base_complex.hpp/isnan/$$.
 
 
-$head limits$$
+$head numeric_limits$$
 $index numeric_limits$$
 The $cref/numeric_limits/limits/$$ functions
 $codei%

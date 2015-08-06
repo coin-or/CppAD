@@ -2,10 +2,10 @@
 # ifndef CPPAD_LIMITS_INCLUDED
 # define CPPAD_LIMITS_INCLUDED
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-14 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-15 Bradley M. Bell
 
 CppAD is distributed under multiple licenses. This distribution is under
-the terms of the 
+the terms of the
                     Eclipse Public License Version 1.0.
 
 A copy of this license is included in the COPYING file of this distribution.
@@ -58,7 +58,7 @@ ISO/IEC 14882:1998(E).
 $head Float$$
 These functions are defined for all $codei%AD<%Base%>%$$,
 and for all corresponding $icode Base$$ types;
-see $icode Base$$ type $cref/limits/base_std_math/limits/$$.
+see $icode Base$$ type $cref/numeric_limits/base_std_math/numeric_limits/$$.
 
 $head eps$$
 The result $icode eps$$ is equal to machine epsilon and has prototype
@@ -72,10 +72,10 @@ $codei%
 %$$
 where all the values, and calculations, are done with the precision
 corresponding to $icode Float$$.
-	
+
 
 $head min$$
-The result $icode min$$ is equal to 
+The result $icode min$$ is equal to
 the minimum positive normalized value and has prototype
 $codei%
 	%Float% %min%
@@ -89,7 +89,7 @@ where all the values, and calculations, are done with the precision
 corresponding to $icode Float$$.
 
 $head max$$
-The result $icode max$$ is equal to 
+The result $icode max$$ is equal to
 the maximum finite value and has prototype
 $codei%
 	%Float% %max%
@@ -110,7 +110,7 @@ The file
 $cref limits.cpp$$
 contains an example and test of these functions.
 
-$end 
+$end
 ------------------------------------------------------------------------------
 */
 # include <iostream>

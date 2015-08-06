@@ -24,5 +24,8 @@ fi
 pattern="$1"
 # -----------------------------------------------------------------------------
 list=`bin/list_files.sh | sed \
-	-e '/^configure$/d' -e '/^makefile.in$/d' -e '/\/makefile.in$/d'`
+	-e '/^configure$/d' \
+	-e '/^makefile.in$/d' \
+	-e '/\/makefile.in$/d' \
+	-e '/^compile/d'`
 grep -l "$pattern" $list

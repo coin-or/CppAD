@@ -114,6 +114,23 @@ namespace {
 		return ok;
 	}
 	// ----------------------------------------------------------------------
+	bool check_numeric_limits(void)
+	{	bool ok = true;
+		//
+		double   double_eps  = std::numeric_limits<double>::epsilon();
+		zdouble  zdouble_eps = CppAD::numeric_limits<zdouble>::epsilon();
+		ok &= double_eps == zdouble_eps;
+		//
+		double   double_min  = std::numeric_limits<double>::min();
+		zdouble  zdouble_min = CppAD::numeric_limits<zdouble>::min();
+		ok &= double_min == zdouble_min;
+		//
+		double   double_max  = std::numeric_limits<double>::max();
+		zdouble  zdouble_max = CppAD::numeric_limits<zdouble>::max();
+		ok &= double_max == zdouble_max;
+		//
+		return ok;
+	}
 
 }
 
@@ -122,6 +139,7 @@ bool mul_zdouble(void)
 
 	ok &= check_div();
 	ok &= check_mul();
+	ok &= check_numeric_limits();
 
 	return ok;
 }

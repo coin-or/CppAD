@@ -59,6 +59,12 @@ This section contains a list of the changes to CppAD during 2015
 The purpose of this section is to
 assist you in learning about changes between various versions of CppAD.
 
+$head 08-06$$
+The $cref zdouble$$
+$cref/numeric_limits/base_std_math/numeric_limits/$$
+were not being computed properly.
+This has been fixed.
+
 $head 07-31$$
 Added the $cref sparse_sub_hes.cpp$$ example,
 a way to compute the sparsity for a subset of variables without

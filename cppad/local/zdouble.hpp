@@ -520,13 +520,13 @@ class numeric_limits<zdouble> {
 public:
 	// machine epsilon
 	static zdouble epsilon(void)
-	{	return std::numeric_limits<zdouble>::epsilon(); }
+	{	return std::numeric_limits<double>::epsilon(); }
 	// minimum positive normalized value
 	static zdouble min(void)
-	{	return std::numeric_limits<zdouble>::min(); }
+	{	return std::numeric_limits<double>::min(); }
 	// maximum finite value
 	static zdouble max(void)
-	{	return std::numeric_limits<zdouble>::max(); }
+	{	return std::numeric_limits<double>::max(); }
 };
 
 } // CPPAD_END_NAMESPACE

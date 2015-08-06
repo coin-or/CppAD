@@ -150,7 +150,7 @@ ENDIF( sacado_prefix )
 # -----------------------------------------------------------------------------
 # cppad_cxx_flags_eigen
 STRING(REGEX REPLACE
-	"(.*)-Wshadow(.*)"         "\\1-Wno-shadow\\2"
+	"(.*)-Wshadow(.*)"         "\\1-Wno-shadow -Wno-deprecated-declarations\\2"
 	cppad_cxx_flags_eigen "${cppad_cxx_flags}"
 )
 IF( eigen_prefix )
