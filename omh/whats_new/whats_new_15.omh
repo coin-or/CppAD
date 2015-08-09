@@ -49,6 +49,7 @@ $spell
 	CondExpGt
 	hasnan
 	Adolc
+	resize
 $$
 
 $section CppAD Changes and Additions During 2015$$
@@ -58,6 +59,12 @@ This section contains a list of the changes to CppAD during 2015
 (in reverse order by date).
 The purpose of this section is to
 assist you in learning about changes between various versions of CppAD.
+
+$head 08-09$$
+Add the preservation of data to the specifications of a $code CppAD::vector$$
+during a $cref/resize/CppAD_vector/resize/$$ when the
+capacity of the vector does not change.
+In addition, added and example of this to $cref cppad_vector.cpp$$.
 
 $head 08-06$$
 The $cref zdouble$$

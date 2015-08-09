@@ -179,7 +179,11 @@ $head resize$$
 The call $icode%x%.resize(%n%)%$$ set the size of $icode x$$ equal to
 $icode n$$.
 If $icode%n% <= %x%.capacity()%$$,
-no memory is freed or allocated and the capacity of $icode x$$ does not change.
+no memory is freed or allocated, the capacity of $icode x$$ does not change,
+and the data in $icode x$$ is preserved.
+If $icode%n% > %x%.capacity()%$$,
+new memory is allocated and the data in $icode x$$ is lost
+(not copied to the new memory location).
 
 $head clear$$
 All memory allocated for the vector is freed
