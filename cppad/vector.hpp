@@ -348,7 +348,10 @@ private:
 	size_t length_;
 	/// pointer to the first type elements
 	/// (not defined and should not be used when capacity_ = 0)
-	Type   * data_;
+	Type*  data_;
+	/// delete data pointer
+	void delete_data(Type* data)
+	{	thread_alloc::delete_array(data); }
 public:
 	/// type of the elements in the vector
 	typedef Type value_type;
@@ -361,31 +364,24 @@ public:
 	inline vector(
 		/// number of elements in this vector
 		size_t n
-	) : capacity_(0), length_(n), data_(CPPAD_NULL)
-	{	if( length_ > 0 )
-		{	// set capacity and data
-			data_ = thread_alloc::create_array<Type>(length_, capacity_);
-		}
-	}
+	) : capacity_(0), length_(0), data_(CPPAD_NULL)
+	{	resize(n); }
+
 	/// copy constructor
 	inline vector(
 		/// the *this vector will be a copy of \c x
 		const vector& x
-	) : capacity_(0), length_(x.length_), data_(CPPAD_NULL)
-	{	if( length_ > 0 )
-		{	// set capacity and data
-			data_ = thread_alloc::create_array<Type>(length_, capacity_);
+	) : capacity_(0), length_(0), data_(CPPAD_NULL)
+	{	resize(x.length_);
 
-			// copy values using assignment operator
-			size_t i;
-			for(i = 0; i < length_; i++)
+		// copy the data
+		for(size_t i = 0; i < length_; i++)
 				data_[i] = x.data_[i];
-		}
 	}
 	/// destructor
 	~vector(void)
 	{	if( capacity_ > 0 )
-			thread_alloc::delete_array(data_);
+			delete_data(data_);
 	}
 
 	/// maximum number of elements current allocation can store
@@ -410,12 +406,15 @@ public:
 		size_t n
 	)
 	{	length_ = n;
+
 		// check if we can use current memory
 		if( capacity_ >= length_ )
 			return;
+
 		// check if there is old memory to be freed
 		if( capacity_ > 0 )
-			thread_alloc::delete_array(data_);
+			delete_data(data_);
+
 		// get new memory and set capacity
 		data_ = thread_alloc::create_array<Type>(length_, capacity_);
 	}
@@ -425,7 +424,7 @@ public:
 	{	length_ = 0;
 		// check if there is old memory to be freed
 		if( capacity_ > 0 )
-			thread_alloc::delete_array(data_);
+			delete_data(data_);
 		capacity_ = 0;
 	}
 
@@ -498,22 +497,36 @@ public:
 		/// value of the element
 		const Type& s
 	)
-	{	CPPAD_ASSERT_UNKNOWN( length_ <= capacity_ );
-		if( length_ + 1 > capacity_ )
-		{	// store old capacity and data values
-			size_t old_capacity = capacity_;
-			Type*  old_data     = data_;
-			// set new capacity and data values
-			data_ = thread_alloc::create_array<Type>(length_ + 1, capacity_);
-			// copy old data values
-			size_t i;
-			for(i = 0; i < length_; i++)
-				data_[i] = old_data[i];
-			// free old data
-			if( old_capacity > 0 )
-				thread_alloc::delete_array(old_data);
+	{	// case where no allocation is necessary
+		if( length_ + 1 <= capacity_ )
+		{	data_[length_++] = s;
+			return;
 		}
-		data_[length_++] = s;
+		CPPAD_ASSERT_UNKNOWN( length_ == capacity_ );
+
+		// store old length, capacity and data
+		size_t old_length   = length_;
+		size_t old_capacity = capacity_;
+		Type*  old_data     = data_;
+
+		// set the new length, capacity and data
+		length_   = 0;
+		capacity_ = 0;
+		resize(old_length + 1);
+
+		// copy old data values
+		for(size_t i = 0; i < old_length; i++)
+			data_[i] = old_data[i];
+
+		// put the new element in the vector
+		CPPAD_ASSERT_UNKNOWN( old_length + 1 <= capacity_ );
+		data_[old_length] = s;
+
+		// free old data
+		if( old_capacity > 0 )
+			delete_data(old_data);
+
+		CPPAD_ASSERT_UNKNOWN( old_length + 1 == length_ );
 		CPPAD_ASSERT_UNKNOWN( length_ <= capacity_ );
 	}
 
@@ -527,24 +540,39 @@ public:
 		const Vector& v
 	)
 	{	CheckSimpleVector<Type, Vector>();
-		CPPAD_ASSERT_UNKNOWN( length_ <= capacity_ );
 		size_t m = v.size();
-		size_t i;
-		if( length_ + m > capacity_ )
-		{	// store old capacity and data values
-			size_t old_capacity = capacity_;
-			Type*  old_data     = data_;
-			// set new capacity and data values
-			data_ = thread_alloc::create_array<Type>(length_ + m, capacity_);
-			// copy old data values
-			for(i = 0; i < length_; i++)
-				data_[i] = old_data[i];
-			// free old data
-			if( old_capacity > 0 )
-				thread_alloc::delete_array(old_data);
+
+		// case where no allcoation is necessary
+		if( length_ + m <= capacity_ )
+		{	for(size_t i = 0; i < m; i++)
+				data_[length_++] = v[i];
+			return;
 		}
-		for(i = 0; i < m; i++)
-			data_[length_++] = v[i];
+
+		// store old length, capacity and data
+		size_t old_length   = length_;
+		size_t old_capacity = capacity_;
+		Type*  old_data     = data_;
+
+		// set new length, capacity and data
+		length_   = 0;
+		capacity_ = 0;
+		resize(old_length + m);
+
+		// copy old data values
+		for(size_t i = 0; i < old_length; i++)
+			data_[i] = old_data[i];
+
+		// put the new elements in the vector
+		CPPAD_ASSERT_UNKNOWN( old_length + m <= capacity_ );
+		for(size_t i = 0; i < m; i++)
+			data_[old_length + i] = v[i];
+
+		// free old data
+		if( old_capacity > 0 )
+			delete_data(old_data);
+
+		CPPAD_ASSERT_UNKNOWN( old_length + m  == length_ );
 		CPPAD_ASSERT_UNKNOWN( length_ <= capacity_ );
 	}
 };
