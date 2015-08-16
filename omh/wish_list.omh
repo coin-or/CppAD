@@ -42,6 +42,30 @@ $$
 
 $section The CppAD Wish List$$
 
+$head checkpoint$$
+It would be more flexible to also have a
+$cref/checkpoint constructor/checkpoint/constructor/$$
+that passed in an $cref ADFun$$ object instead of a algorithm.
+Perhaps the syntax would be
+$codei%
+	checkpoint %afun%(%name%, %ad_fun%)
+%$$
+$list number$$
+An extra flag could determine if a separate copy of $icode ad_fun$$
+was made or if a pointer was used.
+Note that if a pointer is used, it becomes invalid when the destructor
+for $icode ad_fun$$ is called.
+$lnext
+There should be an option to hold onto sparsity patterns so they
+do not need to be recalculated for every use of the checkpoint function.
+$lnext
+There should be some examples and tests for both speed and memory use
+that demonstrate that checkpointing is useful.
+$lnext
+See the $cref/sparsity/WishList/Conditional Expressions/Sparsity/$$
+wish list item under conditional expressions.
+$lend
+
 $head abort_op_index$$
 When a known error is detected during $cref forward$$ or $cref reverse$$ mode,
 include the operator index in the output error message. (For example,
@@ -90,19 +114,6 @@ CppAD commands.
 $head BenderQuad$$
 See the $cref/problem/BenderQuad/Problem/$$ with the
 current $code BenderQuad$$ specifications.
-
-$head Checkpointing$$
-It would be more flexible to also have a
-$cref/checkpoint constructor/checkpoint/constructor/$$
-that passed in an $cref ADFun$$ object instead of a algorithm.
-Perhaps the syntax would be
-$codei%
-	checkpoint %afun%(%name%, %ad_fun%, %copy%)
-%$$
-where $icode copy$$ would determine if a separate copy of $icode ad_fun$$
-was made or if a pointer was used.
-Note that if a pointer is used, it becomes invalid when the destructor
-for $icode ad_fun$$ is called.
 
 $head Conditional Expressions$$
 
