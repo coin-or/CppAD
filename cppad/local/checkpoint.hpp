@@ -22,6 +22,8 @@ defining checkpoint functions.
 /*
 $begin checkpoint$$
 $spell
+	sv
+	var
 	cppad.hpp
 	CppAD
 	checkpoint
@@ -37,6 +39,7 @@ $index checkpoint, function$$
 
 $head Syntax$$
 $codei%checkpoint<%Base%> %atom_fun%(%name%, %algo%, %ax%, %ay%)
+%sv% = atom_fun%.size_var()
 %atom_fun%.option(%option_value%)
 %algo%(%ax%, %ay%)
 %atom_fun%(%ax%, %ay%)
@@ -112,6 +115,15 @@ Its input size must be equal to $icode m$$ and does not change.
 The input values of its elements do not matter.
 Upon return, it is an $codei%AD<%Base%>%$$ version of
 $latex y = f(x)$$.
+
+$head size_var$$
+This $code size_var$$ member function return value has prototype
+$codei%
+	size_t %sv%
+%$$
+It is the $cref/size_var/seq_property/size_var/$$ for the
+$codei%ADFun<%Base%>%$$ object is used to store the operation sequence
+corresponding to $icode algo$$.
 
 $head option$$
 The $code option$$ syntax can be used to set the type of sparsity
@@ -207,6 +219,11 @@ public:
 		// 2DO: add a debugging mode that checks for changes and aborts
 		f_.compare_change_count(0);
 	}
+	/*!
+	Implement the user call to <tt>atom_fun.size_var()</tt>.
+	*/
+	size_t size_var(void)
+	{	return f_.size_var(); }
 	/*!
 	Implement the user call to <tt>atom_fun(ax, ay)</tt>.
 

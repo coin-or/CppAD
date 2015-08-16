@@ -61,11 +61,16 @@ The purpose of this section is to
 assist you in learning about changes between various versions of CppAD.
 
 $head 08-16$$
+$list number$$
 Improve the documentation for checkpoint functions.
 To be specific, change the $cref/syntax/checkpoint/Syntax/$$ to use
 the name $icode atom_fun$$.
 In addition, include the fact that $icode atom_fun$$ must not
 be destructed for as along as the corresponding atomic operations are used.
+$lnext
+Add the $cref/size_var/checkpoint/size_var/$$ function
+to the checkpoint objects.
+$lend
 
 
 $head 08-09$$
