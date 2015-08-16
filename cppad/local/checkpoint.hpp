@@ -6,7 +6,7 @@
 CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-15 Bradley M. Bell
 
 CppAD is distributed under multiple licenses. This distribution is under
-the terms of the 
+the terms of the
                     Eclipse Public License Version 1.0.
 
 A copy of this license is included in the COPYING file of this distribution.
@@ -43,7 +43,7 @@ $codei%checkpoint<%Base%> %atom_fun%(%name%, %algo%, %ax%, %ay%)
 checkpoint<%Base%>::clear()%$$
 
 $head Purpose$$
-You can reduce the size of the tape and memory required for AD by 
+You can reduce the size of the tape and memory required for AD by
 checkpointing functions of the form $latex y = f(x)$$ where
 $latex f : B^n \rightarrow B^m$$.
 
@@ -54,7 +54,7 @@ It implements all the $code atomic_base$$
 $cref/virtual functions/atomic_base/Virtual Functions/$$
 and hence its source code $code cppad/local/checkpoint.hpp$$
 provides an example implementation of $cref atomic_base$$.
-The difference is that $code checkpoint.hpp$$ uses AD 
+The difference is that $code checkpoint.hpp$$ uses AD
 instead of user provided derivatives.
 
 $head constructor$$
@@ -65,14 +65,14 @@ $codei%
 $list number$$
 This constructor cannot be called in $cref/parallel/ta_in_parallel/$$ mode.
 $lnext
-You cannot currently be recording 
+You cannot currently be recording
 $codei%AD<%Base%>%$$ operations when the constructor is called.
 $lnext
 This object $icode atom_fun$$ must not be destructed for as long
 as any $code CppAD::ADFun<%Base%>$$ object use this atomic operation.
 $lnext
 This class is implemented as a derived class of
-$cref/atomic_base/atomic_ctor/atomic_base/$$ and hence 
+$cref/atomic_base/atomic_ctor/atomic_base/$$ and hence
 some of its error message will refer to $code atomic_base$$.
 $lend
 
@@ -99,8 +99,8 @@ $codei%
 	const %ADVector%& %ax%
 %$$
 and size must be equal to $icode n$$.
-It specifies vector $latex x \in B^n$$ 
-at which an $codei%AD<%Base%>%$$ version of 
+It specifies vector $latex x \in B^n$$
+at which an $codei%AD<%Base%>%$$ version of
 $latex y = f(x)$$ is to be evaluated.
 
 $head ay$$
@@ -110,7 +110,7 @@ $codei%
 %$$
 Its input size must be equal to $icode m$$ and does not change.
 The input values of its elements do not matter.
-Upon return, it is an $codei%AD<%Base%>%$$ version of 
+Upon return, it is an $codei%AD<%Base%>%$$ version of
 $latex y = f(x)$$.
 
 $head option$$
@@ -124,21 +124,21 @@ The type of $icode algo$$ is arbitrary, except for the fact that
 the syntax
 $codei%
 	%algo%(%ax%, %ay%)
-%$$ 
+%$$
 must evaluate the function $latex y = f(x)$$ using
 $codei%AD<%Base%>%$$ operations.
-In addition, we assume that the 
+In addition, we assume that the
 $cref/operation sequence/glossary/Operation/Sequence/$$
 does not depend on the value of $icode ax$$.
 
 $head atom_fun$$
 Given $icode ax$$ it computes the corresponding value of $icode ay$$
-using the operation sequence corresponding to $icode algo$$. 
+using the operation sequence corresponding to $icode algo$$.
 If $codei%AD<%Base%>%$$ operations are being recorded,
 it enters the computation as single operation in the recording
 see $cref/start recording/Independent/Start Recording/$$.
 (Currently each use of $icode atom_fun$$ actually corresponds to
-$icode%m%+%n%+2%$$ operations and creates $icode m$$ new variables, 
+$icode%m%+%n%+2%$$ operations and creates $icode m$$ new variables,
 but this is not part of the CppAD specifications and my change.)
 
 $head clear$$
@@ -146,7 +146,7 @@ The $code atomic_base$$ class holds onto static work space in order to
 increase speed by avoiding system memory allocation calls.
 This call makes to work space $cref/available/ta_available/$$ to
 for other uses by the same thread.
-This should be called when you are done using the 
+This should be called when you are done using the
 user atomic functions for a specific value of $icode Base$$.
 
 $subhead Restriction$$
@@ -169,7 +169,7 @@ private:
 	ADFun<Base> f_;
 public:
 	/*!
- 	Constructor of a checkpoint object
+	Constructor of a checkpoint object
 
 	\param name [in]
 	is the user's name for the AD version of this atomic operation.
@@ -185,7 +185,7 @@ public:
 	function value at specified argument value.
 	*/
 	template <class Algo, class ADVector>
-	checkpoint(const char* name, 
+	checkpoint(const char* name,
 		Algo& algo, const ADVector& ax, ADVector& ay)
 	: atomic_base<Base>(name)
 	{	CheckSimpleVector< CppAD::AD<Base> , ADVector>();
@@ -193,9 +193,9 @@ public:
 		// make a copy of ax because Independent modifies AD information
 		ADVector x_tmp(ax);
 		// delcare x_tmp as the independent variables
-	 	Independent(x_tmp);
+		Independent(x_tmp);
 		// record mapping from x_tmp to ay
-		algo(x_tmp, ay); 
+		algo(x_tmp, ay);
 		// create function f_ : x -> y
 		f_.Dependent(ay);
 		// suppress checking for nan in f_ results
@@ -209,17 +209,17 @@ public:
 	}
 	/*!
 	Implement the user call to <tt>atom_fun(ax, ay)</tt>.
-	
+
 	\tparam ADVector
 	A simple vector class with elements of type <code>AD<Base></code>.
-	
+
 	\param id
 	optional parameter which must be zero if present.
-	
+
 	\param ax
 	is the argument vector for this call,
 	<tt>ax.size()</tt> determines the number of arguments.
-	
+
 	\param ay
 	is the result vector for this call,
 	<tt>ay.size()</tt> determines the number of results.
@@ -233,15 +233,15 @@ public:
 		this->atomic_base<Base>::operator()(ax, ay, id);
 	}
 	/*!
- 	Link from user_atomic to forward mode 
+	Link from user_atomic to forward mode
 
 	\copydetails atomic_base::forward
- 	*/
+	*/
 	virtual bool forward(
 		size_t                    p ,
 		size_t                    q ,
-		const vector<bool>&      vx , 
-		      vector<bool>&      vy , 
+		const vector<bool>&      vx ,
+		      vector<bool>&      vy ,
 		const vector<Base>&      tx ,
 		      vector<Base>&      ty )
 	{
@@ -250,7 +250,7 @@ public:
 		CPPAD_ASSERT_UNKNOWN( ty.size() % (q+1) == 0 );
 		size_t n = tx.size() / (q+1);
 		size_t m = ty.size() / (q+1);
-		bool ok  = true;	
+		bool ok  = true;
 		size_t i, j;
 
 		// 2DO: test both forward and reverse vy information
@@ -290,10 +290,10 @@ public:
 		return ok;
 	}
 	/*!
- 	Link from user_atomic to reverse mode 
+	Link from user_atomic to reverse mode
 
 	\copydetails atomic_base::reverse
- 	*/
+	*/
 	virtual bool reverse(
 		size_t                    q  ,
 		const vector<Base>&       tx ,
@@ -304,7 +304,7 @@ public:
 		CPPAD_ASSERT_UNKNOWN( f_.size_var() > 0 );
 		CPPAD_ASSERT_UNKNOWN( tx.size() % (q+1) == 0 );
 		CPPAD_ASSERT_UNKNOWN( ty.size() % (q+1) == 0 );
-		bool ok  = true;	
+		bool ok  = true;
 
 		// put proper forward mode coefficients in f_
 # ifdef NDEBUG
@@ -335,10 +335,10 @@ public:
 		return ok;
 	}
 	/*!
- 	Link from user_atomic to forward sparse Jacobian 
+	Link from user_atomic to forward sparse Jacobian
 
 	\copydetails atomic_base::for_sparse_jac
- 	*/
+	*/
 	virtual bool for_sparse_jac(
 		size_t                                  q  ,
 		const vector< std::set<size_t> >&       r  ,
@@ -350,14 +350,14 @@ public:
 		// no longer need the forward mode sparsity pattern
 		// (have to reconstruct them every time)
 		f_.size_forward_set(0);
-		
-		return ok; 
+
+		return ok;
 	}
 	/*!
- 	Link from user_atomic to forward sparse Jacobian 
+	Link from user_atomic to forward sparse Jacobian
 
 	\copydetails atomic_base::for_sparse_jac
- 	*/
+	*/
 	virtual bool for_sparse_jac(
 		size_t                                  q  ,
 		const vector<bool>&                     r  ,
@@ -369,14 +369,14 @@ public:
 		// no longer need the forward mode sparsity pattern
 		// (have to reconstruct them every time)
 		f_.size_forward_bool(0);
-		
-		return ok; 
+
+		return ok;
 	}
 	/*!
- 	Link from user_atomic to forward sparse Jacobian 
+	Link from user_atomic to forward sparse Jacobian
 
 	\copydetails atomic_base::rev_sparse_jac
- 	*/
+	*/
 	virtual bool rev_sparse_jac(
 		size_t                                  q  ,
 		const vector< std::set<size_t> >&       rt ,
@@ -391,13 +391,13 @@ public:
 		bool nz_compare = true;
 		st = f_.RevSparseJac(q, rt, transpose, nz_compare);
 
-		return ok; 
+		return ok;
 	}
 	/*!
- 	Link from user_atomic to forward sparse Jacobian 
+	Link from user_atomic to forward sparse Jacobian
 
 	\copydetails atomic_base::rev_sparse_jac
- 	*/
+	*/
 	virtual bool rev_sparse_jac(
 		size_t                                  q  ,
 		const vector<bool>&                     rt ,
@@ -412,13 +412,13 @@ public:
 		// necessary when optimizer calls this member function.
 		st = f_.RevSparseJac(q, rt, transpose, nz_compare);
 
-		return ok; 
+		return ok;
 	}
 	/*!
- 	Link from user_atomic to forward sparse Jacobian 
+	Link from user_atomic to forward sparse Jacobian
 
 	\copydetails atomic_base::rev_sparse_hes
- 	*/
+	*/
 	virtual bool rev_sparse_hes(
 		const vector<bool>&                     vx ,
 		const vector<bool>&                     s  ,
@@ -443,10 +443,10 @@ public:
 			CPPAD_ASSERT_UNKNOWN( vx[j] || ! t[j] )
 # endif
 
-		// V(x) = f'(x)^T * g''(y) * f'(x) * R  +  g'(y) * f''(x) * R 
+		// V(x) = f'(x)^T * g''(y) * f'(x) * R  +  g'(y) * f''(x) * R
 		// U(x) = g''(y) * f'(x) * R
 		// S(x) = g'(y)
-		
+
 		// compute sparsity pattern for A(x) = f'(x)^T * U(x)
 		vector< std::set<size_t> > a(n);
 		a = f_.RevSparseJac(q, u, transpose);
@@ -480,10 +480,10 @@ public:
 		return ok;
 	}
 	/*!
- 	Link from user_atomic to forward sparse Jacobian 
+	Link from user_atomic to forward sparse Jacobian
 
 	\copydetails atomic_base::rev_sparse_hes
- 	*/
+	*/
 	virtual bool rev_sparse_hes(
 		const vector<bool>&                     vx ,
 		const vector<bool>&                     s  ,
@@ -509,7 +509,7 @@ public:
 			CPPAD_ASSERT_UNKNOWN( vx[j] || ! t[j] )
 # endif
 
-		// V(x) = f'(x)^T * g''(y) * f'(x) * R  +  g'(y) * f''(x) * R 
+		// V(x) = f'(x)^T * g''(y) * f'(x) * R  +  g'(y) * f''(x) * R
 		// U(x) = g''(y) * f'(x) * R
 		// S(x) = g'(y)
 

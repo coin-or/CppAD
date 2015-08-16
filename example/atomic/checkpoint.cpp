@@ -3,7 +3,7 @@
 CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-15 Bradley M. Bell
 
 CppAD is distributed under multiple licenses. This distribution is under
-the terms of the 
+the terms of the
                     Eclipse Public License Version 1.0.
 
 A copy of this license is included in the COPYING file of this distribution.
@@ -20,27 +20,27 @@ $$
 $section Simple Checkpointing: Example and Test$$
 
 $head Purpose$$
-Break a large computation into pieces and only store values at the 
+Break a large computation into pieces and only store values at the
 interface of the pieces.
-In actual applications, there may be many functions, but 
+In actual applications, there may be many functions, but
 for this example there are only two.
-The functions 
-$latex F : \B{R}^2 \rightarrow \B{R}^2$$ 
+The functions
+$latex F : \B{R}^2 \rightarrow \B{R}^2$$
 and
-$latex G : \B{R}^2 \rightarrow \B{R}^2$$ 
+$latex G : \B{R}^2 \rightarrow \B{R}^2$$
 defined by
 $latex \[
-	F(x) = \left( \begin{array}{c} 
+	F(x) = \left( \begin{array}{c}
 		x_0 \cdot x_0 \cdot x_0 \cdot x_0 \cdot x_0
 		\\
 		x_1 \cdot x_1 \cdot x_1 \cdot x_1 \cdot x_1
-	\end{array} \right) 
+	\end{array} \right)
 	\; , \;
-	G(y) = \left( \begin{array}{c} 
-		y_0 + y_0 + y_0 
-		\\ 
-		y_1 + y_1 + y_1 
-	\end{array} \right) 
+	G(y) = \left( \begin{array}{c}
+		y_0 + y_0 + y_0
+		\\
+		y_1 + y_1 + y_1
+	\end{array} \right)
 \] $$
 
 $code
@@ -90,8 +90,8 @@ bool checkpoint(void)
 	ADVector ax(n), ay(n), az(m);
 	for(j = 0; j < n; j++)
 		ax[j] = double(j);
-	checkpoint<double> atom_f("atom_f", f_algo, ax, ay); 
-	checkpoint<double> atom_g("atom_g", g_algo, ay, az); 
+	checkpoint<double> atom_f("atom_f", f_algo, ax, ay);
+	checkpoint<double> atom_g("atom_g", g_algo, ay, az);
 
 	// Record a version of z = g[f(x)] without checkpointing
 	Independent(ax);
@@ -158,17 +158,17 @@ bool checkpoint(void)
 	r_yes = check_yes.RevSparseJac(m, s);
 	for(i = 0; i < m; i++)
 		ok &= s_not[i] == s_yes[i];
-	
+
 
 	// compare reverse mode Hessian sparsity patterns
-	CppAD::vector< std::set<size_t> > s_one(1), h_not(n), h_yes(n); 
+	CppAD::vector< std::set<size_t> > s_one(1), h_not(n), h_yes(n);
 	for(i = 0; i < m; i++)
 		s_one[0].insert(i);
 	h_not = check_not.RevSparseHes(n, s_one);
 	h_yes = check_yes.RevSparseHes(n, s_one);
 	for(i = 0; i < n; i++)
 		ok &= h_not[i] == h_yes[i];
-	
+
 	return ok;
 }
 // END C++

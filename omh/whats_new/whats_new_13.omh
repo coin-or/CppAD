@@ -3,7 +3,7 @@ $Id$
 CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-15 Bradley M. Bell
 
 CppAD is distributed under multiple licenses. This distribution is under
-the terms of the 
+the terms of the
                     Eclipse Public License Version 1.0.
 
 A copy of this license is included in the COPYING file of this distribution.
@@ -64,7 +64,7 @@ assist you in learning about changes between various versions of CppAD.
 
 $head 12-29$$
 $list number$$
-The include file 
+The include file
 $cref cppad_eigen.hpp$$ now automatically includes $code cppad.hpp$$.
 $lnext
 There was a problem with this automation
@@ -80,11 +80,11 @@ $lend
 $head 12-27$$
 The constructor from an arbitrary type to $codei%AD<%Base%>%$$ was
 implicit, but there was no specification to this effect.
-The caused problems when using CppAD with 
+The caused problems when using CppAD with
 $cref/eigen 3.2/eigen_prefix/$$ (scheduled to be fixed in 3.3).
-The default for this constructor has been changed to be 
+The default for this constructor has been changed to be
 $cref/explicit/ad_ctor/x/explicit/$$.
-In addition, other 
+In addition, other
 $cref/implicit/ad_ctor/x/implicit/$$ constructors
 are now listed in the documentation.
 $pre
@@ -120,7 +120,7 @@ This has been fixed.
 
 $head 11-27$$
 $list number$$
-Fix bug when using $cref optimize$$ with an $cref ADFun$$ object containing 
+Fix bug when using $cref optimize$$ with an $cref ADFun$$ object containing
 the $cref sign$$ function.
 $lnext
 Add $cref atomic_norm_sq.cpp$$, an atomic function example
@@ -131,7 +131,7 @@ $head 11-13$$
 It used to be that one had to define the $code std::set$$ version of
 $cref atomic_rev_sparse_jac$$ for each atomic function that was
 part of an $cref ADFun$$ object that was $cref/optimized/optimize/$$.
-Now the current 
+Now the current
 $cref/atomic_sparsity/atomic_option/atomic_sparsity/$$ setting is used
 to determine if the $code bool$$ or $code std::set$$ version of
 $code rev_sparse_jac$$ is used by the optimization process.
@@ -144,7 +144,7 @@ with $cref atomic_base$$ functions that have not defined
 $cref/rev_sparse_jac/optimize/Atomic Functions/rev_sparse_jac/$$.
 
 $head 10-29$$
-The $cref/optimization/CondExp/Optimize/$$ 
+The $cref/optimization/CondExp/Optimize/$$
 now handles nested conditional expressions.
 For example, give the code
 $codep
@@ -162,8 +162,8 @@ $head 10-23$$
 $list number$$
 Fix a bug in the optimization of calls to $cref atomic$$ functions.
 This bug existed before recent change to optimizing conditional expressions.
-This required adding the 
-$cref/nz_compare/RevSparseJac/nz_compare/$$ argument to the 
+This required adding the
+$cref/nz_compare/RevSparseJac/nz_compare/$$ argument to the
 reverse Jacobian sparsity pattern calculation.
 For further details; see sparsity heading under conditional expressions in the
 $cref/whish list/WishList/Conditional Expressions/Sparsity/$$.
@@ -197,7 +197,7 @@ $cref/vectorBool/CppAD_vector/vectorBool/$$ was improved.
 $head 10-14$$
 The script $cref get_adolc.sh$$ was added
 (for downloading and installing
-$href%https://projects.coin-or.org/ADOL-C%ADOL-C%$$) in the 
+$href%https://projects.coin-or.org/ADOL-C%ADOL-C%$$) in the
 $code build$$ directory.
 Note that this local install of Adolc requires ColPack; see
 $cref get_colpack.sh$$.
@@ -205,7 +205,7 @@ In addition, the requirement that ColPack and Adolc are installed
 with the same prefix was added.
 
 $head 10-13$$
-Make sure that all of the 
+Make sure that all of the
 $cref/preprocessor symbols/cppad/Preprocessor Symbols/$$,
 that are not part of the CppAD API, are undefined when the
 $code <cppad/cppad.hpp>$$ file concludes.
@@ -221,7 +221,7 @@ $cref/get_sacado.sh/get_sacado.sh/Reuse/$$.
 $lnext
 Fix following $code g++$$ error on OSX system:
 $codep
-error: no match for 'operator|=' (operand types are 
+error: no match for 'operator|=' (operand types are
 'std::vector<bool>::reference {aka std::_Bit_reference}' and 'bool')
     Check[i * n + j] |= F2[i * n + k] & r[ k * n + j];
                      ^
@@ -234,7 +234,7 @@ Add lines for $cref atomic_base$$ function documentation
 to both the definition and use of each operation.
 This required adding sub-headings in the example usages
 corresponding to the function documentation sections.
-For example; see 
+For example; see
 $cref/atomic forward examples/atomic_forward/Examples/$$.
 $lnext
 Improve the documentation for $cref atomic_base_clear$$
@@ -246,9 +246,9 @@ $lend
 $head 09-19$$
 Add links from the $cref atomic_base$$ functions documentation
 to the corresponding examples.
-This required adding headings in the examples that 
-correspond to the function documentation sections. 
-For example; see 
+This required adding headings in the examples that
+correspond to the function documentation sections.
+For example; see
 $cref/atomic forward examples/atomic_forward/Examples/$$.
 
 $head 09-18$$
@@ -267,7 +267,7 @@ $cref/CppAD::vector::resize/CppAD_vector/resize/$$ made on
 $cref/2012-07-30/whats_new_12/07-30/$$
 $lnext
 There was a bug during the
-$cref/checking for nan/check_for_nan/$$ during 
+$cref/checking for nan/check_for_nan/$$ during
 $cref reverse$$ mode.
 This has been fixed.
 $lnext
@@ -287,7 +287,7 @@ There was a bug in the cumulative sum operator
 (which is used by $cref optimize$$ )
 for $cref Forward$$ orders greater than zero.
 This was detected by the $cref checkpoint$$ tests
-when $code optimize$$ was used to make the 
+when $code optimize$$ was used to make the
 checkpoint functions faster.
 The bug has been fixed and the checkpoint functions now use
 optimize (and hence should be faster).
@@ -298,11 +298,11 @@ The ability to turn on and off checking for $cref nan$$ in
 $cref Forward$$ mode results has been added; see $cref check_for_nan$$.
 $lnext
 Use this option to remove the need to handel $code nan$$ as a special
-case in $cref checkpoint$$ functions that 
+case in $cref checkpoint$$ functions that
 $cref/atomic functions/optimize/Atomic Functions/$$ in within
 another function is optimized.
 $lnext
-Check $cref/reverse/reverse_any/$$  mode results when 
+Check $cref/reverse/reverse_any/$$  mode results when
 $cref check_for_nan$$ is true.
 (It used to be the case that only $cref/forward/forward_order/$$ results
 were checked for $code nan$$.)
@@ -331,9 +331,9 @@ constructor.
 
 $head 05-28$$
 Remove $icode ok$$ return flag from
-$cref/checkpoint algo/checkpoint/algo/$$ 
+$cref/checkpoint algo/checkpoint/algo/$$
 and
-$cref/checkpoint atom_fun/checkpoint/atom_fun/$$. 
+$cref/checkpoint atom_fun/checkpoint/atom_fun/$$.
 
 $head 05-21$$
 $list number$$
@@ -367,7 +367,7 @@ old checkpoint example.
 The old checkpointing example is now the $cref reverse_any.cpp$$ example.
 $lnext
 Fix bug in $cref RevSparseJac$$ for case when $cref/q/RevSparseJac/q/$$
-was not equal to $icode m$$ (range dimension) and sparsity pattern was a 
+was not equal to $icode m$$ (range dimension) and sparsity pattern was a
 vector of $code bool$$.
 $lnext
 Add the $cref/transpose/RevSparseJac/transpose/$$ option to
@@ -379,11 +379,11 @@ The sparse hessian example in $cref old_reciprocal.cpp$$ was not
 being run. This has been fixed.
 
 $head 05-11$$
-The $cref/old_atomic examples/old_atomic/Example/$$ 
+The $cref/old_atomic examples/old_atomic/Example/$$
 names were all changed to begin with $code user$$.
 
 $head 05-04$$
-The option to compute 
+The option to compute
 $cref/multiple orders/forward_order/xq/Multiple Orders/$$ was added.
 The $cref old_usead_2.cpp$$ example shows the need for this.
 The problem is that a new atomic function interface needs to be designed
@@ -393,11 +393,11 @@ Multiple order forward mode is the first step in this direction.
 $head 04-28$$
 $list number$$
 The scripts $cref get_eigen.sh$$ and $cref get_sacado.sh$$ were added.
-If you are using Unix, and you do not have 
+If you are using Unix, and you do not have
 $href%http://eigen.tuxfamily.org%Eigen%$$ or
-$href%http://trilinos.sandia.gov/packages/sacado%Sacado%$$ 
-installed on your system, you can use the corresponding script 
-to download and install a local copy for use when testing CppAD. 
+$href%http://trilinos.sandia.gov/packages/sacado%Sacado%$$
+installed on your system, you can use the corresponding script
+to download and install a local copy for use when testing CppAD.
 $lnext
 The code $codei%std::cout << %X%$$,
 would generate a compile error when $icode X$$ was an Eigen matrix
@@ -414,22 +414,22 @@ $codep
 	template<typename Scalar, bool IsInteger>
 	struct significant_decimals_default_impl
 $$
-because the original template requires definition of a implicit conversion 
+because the original template requires definition of a implicit conversion
 from the scalar type to an $code int$$ and this is dangerous for AD types
 (note that $cref Integer$$ is used for explicit conversions).
 
 
 $head 04-26$$
 $list number$$
-The example $cref old_usead_2.cpp$$ was completed. 
+The example $cref old_usead_2.cpp$$ was completed.
 This is a more realistic, but also more complicated, example of
 using AD to computed derivatives inside an atomic function.
 $lnext
 The script $cref get_fadbad.sh$$ has been added.
-If you are using Unix, and you do not have 
+If you are using Unix, and you do not have
 $href%http://www.fadbad.com%FADBAD%$$
-installed on your system, you can use this script 
-to download and install a local copy for use when testing CppAD. 
+installed on your system, you can use this script
+to download and install a local copy for use when testing CppAD.
 $lend
 
 $end
@@ -439,10 +439,10 @@ The example $cref old_usead_1.cpp$$ was added.
 
 $head 04-16$$
 The script $cref get_ipopt.sh$$ has been added.
-If you are using Unix, and you do not have 
-$href%http://www.coin-or.org/projects/Ipopt.xml%Ipopt%$$  
-installed on your system, you can use this script 
-to download and install a local copy for use when testing CppAD. 
+If you are using Unix, and you do not have
+$href%http://www.coin-or.org/projects/Ipopt.xml%Ipopt%$$
+installed on your system, you can use this script
+to download and install a local copy for use when testing CppAD.
 
 $head 04-14$$
 The following program,
@@ -456,7 +456,7 @@ $codep
 		return 0;
 	}
 $$
-It now generates the following message, 
+It now generates the following message,
 (when compiled without $cref/NDEBUG/faq/Speed/NDEBUG/$$)"
 $codep
 	get_memory(min_bytes, cap_bytes): min_bytes is too large
@@ -476,7 +476,7 @@ to be during sequential execution and it has been removed from the
 multi-threading $cref/initialization/multi_thread/Initialization/$$ list.
 
 $head 03-01$$
-Remove the $cref cmake$$ $code cppad_c11_flag$$ and instead 
+Remove the $cref cmake$$ $code cppad_c11_flag$$ and instead
 automatically detect if the compiler supports specific c++11 features.
 
 $head 02-27$$
@@ -505,7 +505,7 @@ $list number$$
 The $cref limits$$ documentation was corrected an improved.
 $lnext
 The $cref limits.cpp$$ example was simplified and restricted to just testing
-for $code AD<double>$$. 
+for $code AD<double>$$.
 $lnext
 Testing for types other than $code AD<double>$$
 was moved to $code test_more/limits.cpp$$.
@@ -515,8 +515,8 @@ $lend
 
 $head 01-05$$
 $list number$$
-The $cref limits.cpp$$ example was failing on some machines 
-because they were using guard digits during calculations. 
+The $cref limits.cpp$$ example was failing on some machines
+because they were using guard digits during calculations.
 This has been fixed by using vectors instead of scalars
 for storing values.
 $lnext
@@ -529,7 +529,7 @@ $lend
 $head 01-02$$
 $list number$$
 A new stable version of CppAD, for 2013, was created
-and its first release $code cppad-20130000.0$$ is available 
+and its first release $code cppad-20130000.0$$ is available
 for download at
 $pre
 	$$
@@ -543,7 +543,7 @@ When compiling with $cref/NDEBUG/Faq/Speed/NDEBUG/$$ defined,
 the following warning could be generated:
 $codei%
 %...%rev_sparse_jac.hpp:315:9: warning: unused variable 'm' [-Wunused-variable]
-%$$ 
+%$$
 This has been fixed.
 
 
