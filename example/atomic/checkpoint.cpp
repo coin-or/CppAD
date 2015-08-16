@@ -1,6 +1,6 @@
 /* $Id$ */
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-14 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-15 Bradley M. Bell
 
 CppAD is distributed under multiple licenses. This distribution is under
 the terms of the 
@@ -18,10 +18,6 @@ $spell
 $$
 
 $section Simple Checkpointing: Example and Test$$
-
-$index checkpoint, example$$
-$index example, checkpoint$$
-$index test, checkpoint$$
 
 $head Purpose$$
 Break a large computation into pieces and only store values at the 
@@ -94,8 +90,8 @@ bool checkpoint(void)
 	ADVector ax(n), ay(n), az(m);
 	for(j = 0; j < n; j++)
 		ax[j] = double(j);
-	checkpoint<double> f_check("f_check", f_algo, ax, ay); 
-	checkpoint<double> g_check("g_check", g_algo, ay, az); 
+	checkpoint<double> atom_f("atom_f", f_algo, ax, ay); 
+	checkpoint<double> atom_g("atom_g", g_algo, ay, az); 
 
 	// Record a version of z = g[f(x)] without checkpointing
 	Independent(ax);
@@ -105,8 +101,8 @@ bool checkpoint(void)
 
 	// Record a version of z = g[f(x)] with checkpointing
 	Independent(ax);
-	f_check(ax, ay);
-	g_check(ay, az);
+	atom_f(ax, ay);
+	atom_g(ay, az);
 	ADFun<double> check_yes(ax, az);
 
 	// checkpointing should use fewer operations
@@ -142,8 +138,8 @@ bool checkpoint(void)
 	}
 
 	// mix sparsity so test both cases
-	f_check.option( CppAD::atomic_base<double>::bool_sparsity_enum );
-	g_check.option( CppAD::atomic_base<double>::set_sparsity_enum );
+	atom_f.option( CppAD::atomic_base<double>::bool_sparsity_enum );
+	atom_g.option( CppAD::atomic_base<double>::set_sparsity_enum );
 
 	// compare forward mode Jacobian sparsity patterns
 	CppAD::vector< std::set<size_t> > r(n), s_not(m), s_yes(m);

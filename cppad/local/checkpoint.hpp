@@ -27,7 +27,7 @@ $spell
 	checkpoint
 	checkpointing
 	algo
-	afun
+	atom_fun
 	const
 $$
 
@@ -36,10 +36,10 @@ $index function, checkpoint$$
 $index checkpoint, function$$
 
 $head Syntax$$
-$codei%checkpoint<%Base%> %afun%(%name%, %algo%, %ax%, %ay%)
-%afun%.option(%option_value%)
+$codei%checkpoint<%Base%> %atom_fun%(%name%, %algo%, %ax%, %ay%)
+%atom_fun%.option(%option_value%)
 %algo%(%ax%, %ay%)
-%afun%(%ax%, %ay%)
+%atom_fun%(%ax%, %ay%)
 checkpoint<%Base%>::clear()%$$
 
 $head Purpose$$
@@ -58,16 +58,23 @@ The difference is that $code checkpoint.hpp$$ uses AD
 instead of user provided derivatives.
 
 $head constructor$$
-The constructor 
+The syntax for the checkpoint constructor is
 $codei%
-	checkpoint<%Base%> %afun%(%name%, %algo%, %ax%, %ay%)
+	checkpoint<%Base%> %atom_fun%(%name%, %algo%, %ax%, %ay%)
 %$$
-cannot be called in $cref/parallel/ta_in_parallel/$$ mode.
-In addition, you cannot currently be recording 
+$list number$$
+This constructor cannot be called in $cref/parallel/ta_in_parallel/$$ mode.
+$lnext
+You cannot currently be recording 
 $codei%AD<%Base%>%$$ operations when the constructor is called.
+$lnext
+This object $icode atom_fun$$ must not be destructed for as long
+as any $code CppAD::ADFun<%Base%>$$ object use this atomic operation.
+$lnext
 This class is implemented as a derived class of
 $cref/atomic_base/atomic_ctor/atomic_base/$$ and hence 
 some of its error message will refer to $code atomic_base$$.
+$lend
 
 $head Base$$
 The type $icode Base$$ specifies the base type for AD operations.
@@ -83,8 +90,8 @@ $codei%
 	const char* %name%
 %$$
 It is the name used for error reporting.
-The suggested value for $icode name$$ is $icode afun$$; i.e.,
-the same name as used for the function.
+The suggested value for $icode name$$ is $icode atom_fun$$; i.e.,
+the same name as used for the object being constructed.
 
 $head ax$$
 This argument has prototype
@@ -108,7 +115,7 @@ $latex y = f(x)$$.
 
 $head option$$
 The $code option$$ syntax can be used to set the type of sparsity
-pattern used by $icode afun$$.
+pattern used by $icode atom_fun$$.
 This is an $codei%atomic_base<%Base%>%$$ function and its documentation
 can be found at $cref atomic_option$$.
 
@@ -124,13 +131,13 @@ In addition, we assume that the
 $cref/operation sequence/glossary/Operation/Sequence/$$
 does not depend on the value of $icode ax$$.
 
-$head afun$$
+$head atom_fun$$
 Given $icode ax$$ it computes the corresponding value of $icode ay$$
 using the operation sequence corresponding to $icode algo$$. 
 If $codei%AD<%Base%>%$$ operations are being recorded,
 it enters the computation as single operation in the recording
 see $cref/start recording/Independent/Start Recording/$$.
-(Currently each use of $icode afun$$ actually corresponds to
+(Currently each use of $icode atom_fun$$ actually corresponds to
 $icode%m%+%n%+2%$$ operations and creates $icode m$$ new variables, 
 but this is not part of the CppAD specifications and my change.)
 
@@ -201,7 +208,7 @@ public:
 		f_.compare_change_count(0);
 	}
 	/*!
-	Implement the user call to <tt>afun(ax, ay)</tt>.
+	Implement the user call to <tt>atom_fun(ax, ay)</tt>.
 	
 	\tparam ADVector
 	A simple vector class with elements of type <code>AD<Base></code>.
@@ -221,7 +228,7 @@ public:
 	void operator()(const ADVector& ax, ADVector& ay, size_t id = 0)
 	{	CPPAD_ASSERT_KNOWN(
 			id == 0,
-			"checkpoint: id is non-zero in afun(ax, ay, id)"
+			"checkpoint: id is non-zero in atom_fun(ax, ay, id)"
 		);
 		this->atomic_base<Base>::operator()(ax, ay, id);
 	}

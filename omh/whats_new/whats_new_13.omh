@@ -1,6 +1,6 @@
 $Id$
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-14 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-15 Bradley M. Bell
 
 CppAD is distributed under multiple licenses. This distribution is under
 the terms of the 
@@ -333,7 +333,7 @@ $head 05-28$$
 Remove $icode ok$$ return flag from
 $cref/checkpoint algo/checkpoint/algo/$$ 
 and
-$cref/checkpoint afun/checkpoint/afun/$$. 
+$cref/checkpoint atom_fun/checkpoint/atom_fun/$$. 
 
 $head 05-21$$
 $list number$$
