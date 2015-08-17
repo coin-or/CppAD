@@ -60,6 +60,11 @@ This section contains a list of the changes to CppAD during 2015
 The purpose of this section is to
 assist you in learning about changes between various versions of CppAD.
 
+$head 08-17$$
+Fix a warning (introduced on 08-11) where the $code CppAD::vector$$
+$cref/data/CppAD_vector/data/$$ function was being shadowed by
+a local variable.
+
 $head 08-16$$
 $list number$$
 Improve the documentation for checkpoint functions.

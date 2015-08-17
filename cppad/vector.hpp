@@ -350,8 +350,8 @@ private:
 	/// (not defined and should not be used when capacity_ = 0)
 	Type*  data_;
 	/// delete data pointer
-	void delete_data(Type* data)
-	{	thread_alloc::delete_array(data); }
+	void delete_data(Type* data_ptr)
+	{	thread_alloc::delete_array(data_ptr); }
 public:
 	/// type of the elements in the vector
 	typedef Type value_type;
