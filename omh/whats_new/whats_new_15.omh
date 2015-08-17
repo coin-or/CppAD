@@ -61,9 +61,16 @@ The purpose of this section is to
 assist you in learning about changes between various versions of CppAD.
 
 $head 08-17$$
+$list number$$
 Fix a warning (introduced on 08-11) where the $code CppAD::vector$$
 $cref/data/CppAD_vector/data/$$ function was being shadowed by
 a local variable.
+$lnext
+The source code control for CppAD has a link to $code compile$$,
+instead of real file.
+This sometimes caused problems with the
+deprecated $cref auto_tools$$ install procedure and has been fixed.
+$lend
 
 $head 08-16$$
 $list number$$
