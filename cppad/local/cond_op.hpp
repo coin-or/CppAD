@@ -980,19 +980,12 @@ inline void forward_sparse_jacobian_cond_op(
 	CPPAD_ASSERT_UNKNOWN( NumArg(CExpOp) == 6 );
 	CPPAD_ASSERT_UNKNOWN( NumRes(CExpOp) == 1 );
 	CPPAD_ASSERT_UNKNOWN( arg[1] != 0 );
-
 # ifndef NDEBUG
-	if( arg[1] & 1 )
-	{
-	}
-	else
-	{	CPPAD_ASSERT_UNKNOWN( size_t(arg[2]) < num_par );
-	}
-	if( arg[1] & 2 )
-	{
-	}
-	else
-	{	CPPAD_ASSERT_UNKNOWN( size_t(arg[3]) < num_par );
+	size_t k = 1;
+	for( size_t j = 0; j < 4; j++)
+	{	if( ! ( arg[1] & k ) )
+			CPPAD_ASSERT_UNKNOWN( size_t(arg[2+j]) < num_par );
+		k *= 2;
 	}
 # endif
 	if( arg[1] & 4 )
@@ -1139,25 +1132,12 @@ inline void reverse_sparse_jacobian_cond_op(
 	CPPAD_ASSERT_UNKNOWN( NumArg(CExpOp) == 6 );
 	CPPAD_ASSERT_UNKNOWN( NumRes(CExpOp) == 1 );
 	CPPAD_ASSERT_UNKNOWN( arg[1] != 0 );
-
 # ifndef NDEBUG
-	if( arg[1] & 1 )
-	{
-	}
-	else
-	{	CPPAD_ASSERT_UNKNOWN( size_t(arg[2]) < num_par );
-	}
-	if( arg[1] & 2 )
-	{
-	}
-	else
-	{	CPPAD_ASSERT_UNKNOWN( size_t(arg[3]) < num_par );
-	}
-	if( ! ( arg[1] & 4 ) )
-	{	CPPAD_ASSERT_UNKNOWN( size_t(arg[4]) < num_par );
-	}
-	if( ! ( arg[1] & 8 ) )
-	{	CPPAD_ASSERT_UNKNOWN( size_t(arg[5]) < num_par );
+	size_t k = 1;
+	for( size_t j = 0; j < 4; j++)
+	{	if( ! ( arg[1] & k ) )
+			CPPAD_ASSERT_UNKNOWN( size_t(arg[2+j]) < num_par );
+		k *= 2;
 	}
 # endif
 	if( dependency )
@@ -1318,36 +1298,21 @@ inline void reverse_sparse_hessian_cond_op(
 	CPPAD_ASSERT_UNKNOWN( NumArg(CExpOp) == 6 );
 	CPPAD_ASSERT_UNKNOWN( NumRes(CExpOp) == 1 );
 	CPPAD_ASSERT_UNKNOWN( arg[1] != 0 );
-
 # ifndef NDEBUG
-	if( arg[1] & 1 )
-	{
-	}
-	else
-	{	CPPAD_ASSERT_UNKNOWN( size_t(arg[2]) < num_par );
-	}
-	if( arg[1] & 2 )
-	{
-	}
-	else
-	{	CPPAD_ASSERT_UNKNOWN( size_t(arg[3]) < num_par );
-	}
-	if( ! ( arg[1] & 4 ) )
-	{	CPPAD_ASSERT_UNKNOWN( size_t(arg[4]) < num_par );
-	}
-	if( ! ( arg[1] & 8 ) )
-	{	CPPAD_ASSERT_UNKNOWN( size_t(arg[5]) < num_par );
+	size_t k = 1;
+	for( size_t j = 0; j < 4; j++)
+	{	if( ! ( arg[1] & k ) )
+			CPPAD_ASSERT_UNKNOWN( size_t(arg[2+j]) < num_par );
+		k *= 2;
 	}
 # endif
 	if( arg[1] & 4 )
 	{
-
 		hes_sparsity.binary_union(arg[4], arg[4], i_z, hes_sparsity);
 		jac_reverse[ arg[4] ] |= jac_reverse[i_z];
 	}
 	if( arg[1] & 8 )
 	{
-
 		hes_sparsity.binary_union(arg[5], arg[5], i_z, hes_sparsity);
 		jac_reverse[ arg[5] ] |= jac_reverse[i_z];
 	}
