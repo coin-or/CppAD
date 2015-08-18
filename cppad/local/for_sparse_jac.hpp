@@ -24,6 +24,8 @@ $spell
 	Bool
 	proportional
 	VecAD
+	CondExpRel
+	optimizer
 $$
 
 $section Jacobian Sparsity Pattern: Forward Mode$$
@@ -124,6 +126,23 @@ $codei%
 	bool %transpose%
 %$$
 The default value $code false$$ is used when $icode transpose$$ is not present.
+
+$head dependency$$
+The argument $icode dependency$$ has prototype
+$codei%
+	bool %dependency%
+%$$
+If $icode dependency$$ is true,
+the derivatives with respect to left and right of the
+$cref CondExp$$ below are considered to be non-zero:
+$codei%
+	%CondExp%Rel%(%left%, %right%, %if_true%, %if_false%)
+%$$
+This is used by the
+$cref/optimizer/optimize/$$ with $cref checkpoint$$ functions
+to obtain the correct dependency relations.
+The default value $icode%dependency% = false%$$ is used when
+$icode dependency$$ is not present.
 
 
 $head r$$
@@ -233,6 +252,14 @@ is a simple vector class with elements of type \c bool.
 \param transpose
 are the sparsity patterns transposed.
 
+\param dependency
+Are the derivatives with respect to left and right of the expression below
+considered to be non-zero:
+\code
+    CondExpRel(left, right, if_true, if_false)
+\endcode
+This is used by the optimizer to obtain the correct dependency relations.
+
 \param q
 is the number of columns in the matrix \f$ R \f$.
 
@@ -276,6 +303,7 @@ tape (given the sparsity pattern for the independent variables is \f$ R \f$).
 template <class Base, class VectorSet>
 void ForSparseJacBool(
 	bool                   transpose        ,
+	bool                   dependency       ,
 	size_t                 q                ,
 	const VectorSet&       r                ,
 	VectorSet&             s                ,
@@ -324,6 +352,7 @@ void ForSparseJacBool(
 
 	// evaluate the sparsity patterns
 	ForJacSweep(
+		dependency,
 		n,
 		total_num_var,
 		&play,
@@ -373,6 +402,9 @@ is a simple vector class with elements of type \c std::set<size_t>.
 \param transpose
 see \c SparseJacBool.
 
+\param dependency
+see \c SparseJacBool.
+
 \param q
 see \c SparseJacBool.
 
@@ -401,6 +433,7 @@ see \c SparseJacBool.
 template <class Base, class VectorSet>
 void ForSparseJacSet(
 	bool                        transpose        ,
+	bool                        dependency       ,
 	size_t                      q                ,
 	const VectorSet&            r                ,
 	VectorSet&                  s                ,
@@ -474,6 +507,7 @@ void ForSparseJacSet(
 	}
 	// evaluate the sparsity patterns
 	ForJacSweep(
+		dependency,
 		n,
 		total_num_var,
 		&play,
@@ -511,13 +545,16 @@ is a \c bool value. This argument is used to dispatch to the proper source
 code depending on the value of \c VectorSet::value_type.
 
 \param transpose
-See \c ForSparseJac(q, r).
+See \c ForSparseJac(q, r, transpose, dependency).
+
+\param dependency
+See \c ForSparseJac(q, r, transpose, dependency).
 
 \param q
-See \c ForSparseJac(q, r).
+See \c ForSparseJac(q, r, transpose, dependency).
 
 \param r
-See \c ForSparseJac(q, r).
+See \c ForSparseJac(q, r, transpose, dependency).
 
 \param s
 is the return value for the corresponding call to \c ForSparseJac(q, r).
@@ -528,6 +565,7 @@ template <class VectorSet>
 void ADFun<Base>::ForSparseJacCase(
 	bool                set_type      ,
 	bool                transpose     ,
+	bool                dependency    ,
 	size_t              q             ,
 	const VectorSet&    r             ,
 	VectorSet&          s             )
@@ -542,6 +580,7 @@ void ADFun<Base>::ForSparseJacCase(
 	// store results in s and for_jac_sparse_pack_
 	ForSparseJacBool(
 		transpose        ,
+		dependency       ,
 		q                ,
 		r                ,
 		s                ,
@@ -566,13 +605,16 @@ This argument is used to dispatch to the proper source
 code depending on the value of \c VectorSet::value_type.
 
 \param transpose
-See \c ForSparseJac(q, r).
+See \c ForSparseJac(q, r, transpose, dependency).
+
+\param dependency
+See \c ForSparseJac(q, r, transpose, dependency).
 
 \param q
-See \c ForSparseJac(q, r).
+See \c ForSparseJac(q, r, transpose, dependency).
 
 \param r
-See \c ForSparseJac(q, r).
+See \c ForSparseJac(q, r, transpose, dependency).
 
 \param s
 is the return value for the corresponding call to \c ForSparseJac(q, r).
@@ -582,6 +624,7 @@ template <class VectorSet>
 void ADFun<Base>::ForSparseJacCase(
 	const std::set<size_t>&    set_type      ,
 	bool                       transpose     ,
+	bool                       dependency    ,
 	size_t                     q             ,
 	const VectorSet&           r             ,
 	VectorSet&                 s             )
@@ -600,6 +643,7 @@ void ADFun<Base>::ForSparseJacCase(
 	// store results in r and for_jac_sparse_pack_
 	CppAD::ForSparseJacSet(
 		transpose        ,
+		dependency       ,
 		q                ,
 		r                ,
 		s                ,
@@ -617,7 +661,7 @@ User API for Jacobian sparsity patterns using forward mode.
 
 The C++ source code corresponding to this operation is
 \verbatim
-	s = f.ForSparseJac(q, r)
+	s = f.ForSparseJac(q, r, transpose, dependency)
 \endverbatim
 
 \tparam Base
@@ -635,6 +679,14 @@ is a sparsity pattern for the matrix \f$ R \f$.
 
 \param transpose
 are sparsity patterns for \f$ R \f$ and \f$ S(x) \f$ transposed.
+
+\param dependency
+Are the derivatives with respect to left and right of the expression below
+considered to be non-zero:
+\code
+	CondExpRel(left, right, if_true, if_false)
+\endcode
+This is used by the optimizer to obtain the correct dependency relations.
 
 \return
 The value of \c transpose is false (true),
@@ -682,7 +734,8 @@ template <class VectorSet>
 VectorSet ADFun<Base>::ForSparseJac(
 	size_t             q             ,
 	const VectorSet&   r             ,
-	bool               transpose     )
+	bool               transpose     ,
+	bool               dependency    )
 {	VectorSet s;
 	typedef typename VectorSet::value_type Set_type;
 
@@ -693,6 +746,7 @@ VectorSet ADFun<Base>::ForSparseJac(
 	ForSparseJacCase(
 		Set_type()  ,
 		transpose   ,
+		dependency  ,
 		q           ,
 		r           ,
 		s

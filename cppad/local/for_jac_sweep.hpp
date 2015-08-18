@@ -62,6 +62,14 @@ using AD< \a Base > and computations by this routine are done using type
 is the type used for vectors of sets. It can be either
 \c sparse_pack, \c sparse_set, or \c sparse_list.
 
+\param dependency
+Are the derivatives with respect to left and right of the expression below
+considered to be non-zero:
+\code
+	CondExpRel(left, right, if_true, if_false)
+\endcode
+This is used by the optimizer to obtain the correct dependency relations.
+
 \param n
 is the number of independent variables on the tape.
 
@@ -99,6 +107,7 @@ corresponds to the set with index i in \a var_sparsity.
 
 template <class Base, class Vector_set>
 void ForJacSweep(
+	bool                  dependency   ,
 	size_t                n            ,
 	size_t                numvar       ,
 	player<Base>*         play         ,
@@ -303,7 +312,7 @@ void ForJacSweep(
 
 			case CExpOp:
 			forward_sparse_jacobian_cond_op(
-				i_var, arg, num_par, var_sparsity
+				dependency, i_var, arg, num_par, var_sparsity
 			);
 			break;
 			// --------------------------------------------------

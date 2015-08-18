@@ -62,6 +62,10 @@ assist you in learning about changes between various versions of CppAD.
 
 $head 08-17$$
 $list number$$
+Do some optimization of the
+$cref checkpoint$$ feature so that sparsity patterns are
+stored and not recalculated.
+$lnext
 Fix a warning (introduced on 08-11) where the $code CppAD::vector$$
 $cref/data/CppAD_vector/data/$$ function was being shadowed by
 a local variable.

@@ -179,6 +179,12 @@ template <class Base>
 class checkpoint : public atomic_base<Base> {
 private:
 	ADFun<Base> f_;
+	//
+	// sparsity for f(x)^{(1)} (set by constructor)
+	vector< std::set<size_t> > entire_jac_sparse_;
+	//
+	// sparsity for sum_i f_i(x)^{(2)}
+	vector< std::set<size_t> > entire_hes_sparse_;
 public:
 	/*!
 	Constructor of a checkpoint object
@@ -218,6 +224,35 @@ public:
 		// now disable checking of comparison opertaions
 		// 2DO: add a debugging mode that checks for changes and aborts
 		f_.compare_change_count(0);
+		//
+		// set sparsity for entire Jacobian once and for all
+		assert( entire_jac_sparse_.size() == 0 );
+		bool transpose  = false;
+		bool dependency = true;
+		size_t n = f_.Domain();
+		size_t m = f_.Range();
+		// It is not clear if forward or reverse is best in sparse case,
+		// so use the best choice for the dense case (which this may be).
+		if( n <= m )
+		{	vector< std::set<size_t> > identity(n);
+			for(size_t j = 0; j < n; j++)
+				identity[j].insert(j);
+			entire_jac_sparse_ = f_.ForSparseJac(
+				n, identity, transpose, dependency
+			);
+			// drop the forward sparsity results from f_
+			f_.size_forward_set(0);
+		}
+		else
+		{	vector< std::set<size_t> > identity(m);
+			for(size_t i = 0; i < m; i++)
+				identity[i].insert(i);
+			entire_jac_sparse_ = f_.RevSparseJac(
+				m, identity, transpose, dependency
+			);
+		}
+		CPPAD_ASSERT_UNKNOWN( f_.size_forward_set() == 0 );
+		CPPAD_ASSERT_UNKNOWN( f_.size_forward_bool() == 0 );
 	}
 	/*!
 	Implement the user call to <tt>atom_fun.size_var()</tt>.
@@ -272,24 +307,13 @@ public:
 
 		// 2DO: test both forward and reverse vy information
 		if( vx.size() > 0 )
-		{	//Compute Jacobian sparsity pattern.
-			vector< std::set<size_t> > s(m);
-			if( n <= m )
-			{	vector< std::set<size_t> > r(n);
-				for(j = 0; j < n; j++)
-					r[j].insert(j);
-				s = f_.ForSparseJac(n, r);
-			}
-			else
-			{	vector< std::set<size_t> > r(m);
-				for(i = 0; i < m; i++)
-					r[i].insert(i);
-				s = f_.RevSparseJac(m, r);
-			}
-			std::set<size_t>::const_iterator itr;
+		{	// Compute Jacobian sparsity pattern.
+			assert( entire_jac_sparse_.size() > 0 );
 			for(i = 0; i < m; i++)
 			{	vy[i] = false;
-				for(itr = s[i].begin(); itr != s[i].end(); itr++)
+				std::set<size_t>::const_iterator itr;
+				const std::set<size_t>& s_i( entire_jac_sparse_[i] );
+				for(itr = s_i.begin(); itr != s_i.end(); itr++)
 				{	j = *itr;
 					assert( j < n );
 					// y[i] depends on the value of x[j]
@@ -301,6 +325,7 @@ public:
 
 		// no longer need the Taylor coefficients in f_
 		// (have to reconstruct them every time)
+		// Hold onto sparsity pattern because it is always good.
 		size_t c = 0;
 		size_t r = 0;
 		f_.capacity_order(c, r);
@@ -352,7 +377,7 @@ public:
 		return ok;
 	}
 	/*!
-	Link from user_atomic to forward sparse Jacobian
+	Link from user_atomic to forward sparse Jacobian sets
 
 	\copydetails atomic_base::for_sparse_jac
 	*/
@@ -360,18 +385,37 @@ public:
 		size_t                                  q  ,
 		const vector< std::set<size_t> >&       r  ,
 		      vector< std::set<size_t> >&       s  )
-	{
-		bool ok = true;
-		s = f_.ForSparseJac(q, r);
+	{	assert( entire_jac_sparse_.size() != 0 );
+		assert( r.size() == f_.Domain() );
+		assert( s.size() == f_.Range() );
 
-		// no longer need the forward mode sparsity pattern
-		// (have to reconstruct them every time)
-		f_.size_forward_set(0);
+		bool ok = true;
+		size_t m = f_.Range();
+		for(size_t i = 0; i < m; i++)
+			s[i].clear();
+
+		// sparsity for  s = entire_jac_sparse_ * r
+		for(size_t i = 0; i < m; i++)
+		{	// compute row i of the return pattern
+			std::set<size_t>::const_iterator itr_i;
+			const std::set<size_t>& jac_i( entire_jac_sparse_[i] );
+			for(itr_i = jac_i.begin(); itr_i != jac_i.end(); itr_i++)
+			{	size_t j = *itr_i;
+				assert( j < f_.Domain() );
+				std::set<size_t>::const_iterator itr_j;
+				const std::set<size_t>& r_j( r[j] );
+				for(itr_j = r_j.begin(); itr_j != r_j.end(); itr_j++)
+				{	size_t k = *itr_j;
+					assert( k < q );
+					s[i].insert(k);
+				}
+			}
+		}
 
 		return ok;
 	}
 	/*!
-	Link from user_atomic to forward sparse Jacobian
+	Link from user_atomic to forward sparse Jacobian bools
 
 	\copydetails atomic_base::for_sparse_jac
 	*/
@@ -379,18 +423,32 @@ public:
 		size_t                                  q  ,
 		const vector<bool>&                     r  ,
 		      vector<bool>&                     s  )
-	{
+	{	assert( r.size() == f_.Domain() * q );
+		assert( s.size() == f_.Range() * q );
 		bool ok = true;
-		s = f_.ForSparseJac(q, r);
+		size_t m = f_.Range();
+		for(size_t i = 0; i < m; i++)
+		{	for(size_t k = 0; k < q; k++)
+				s[i * q + k] = false;
+		}
 
-		// no longer need the forward mode sparsity pattern
-		// (have to reconstruct them every time)
-		f_.size_forward_bool(0);
+		// sparsity for  s = entire_jac_sparse_ * r
+		for(size_t i = 0; i < m; i++)
+		{	// compute row i of the return pattern
+			std::set<size_t>::const_iterator itr_i;
+			const std::set<size_t>& jac_i( entire_jac_sparse_[i] );
+			for(itr_i = jac_i.begin(); itr_i != jac_i.end(); itr_i++)
+			{	size_t j = *itr_i;
+				assert( j < f_.Domain() );
+				for(size_t k = 0; k < q; k++)
+					s[i * q + k] |= r[j * q + k ];
+			}
+		}
 
 		return ok;
 	}
 	/*!
-	Link from user_atomic to forward sparse Jacobian
+	Link from user_atomic to reverse Jacobian sets
 
 	\copydetails atomic_base::rev_sparse_jac
 	*/
@@ -398,20 +456,37 @@ public:
 		size_t                                  q  ,
 		const vector< std::set<size_t> >&       rt ,
 		      vector< std::set<size_t> >&       st )
-	{
+	{	assert( rt.size() == f_.Range() );
+		assert( st.size() == f_.Domain() );
 		bool ok  = true;
+		//
+		size_t n = f_.Domain();
+		for(size_t j = 0; j < n; j++)
+			st[j].clear();
 
-		// compute rt
-		// 2DO: remove need for dependency all the time. It is only really
-		// necessary when optimizer calls this member function.
-		bool transpose = true;
-		bool dependency = true;
-		st = f_.RevSparseJac(q, rt, transpose, dependency);
+		// sparsity for  s = r * entire_jac_sparse_
+		// s^T = entire_jac_sparse_^T * r^T
+		for(size_t k = 0; k < q; k++)
+		{	// compute row k of the return pattern s
+			std::set<size_t>::const_iterator itr_k;
+			const std::set<size_t>& r_k( rt[k] );
+			for(itr_k = r_k.begin(); itr_k != r_k.end(); itr_k++)
+			{	size_t i = *itr_k;
+				assert( i < f_.Range() );
+				std::set<size_t>::const_iterator itr_i;
+				const std::set<size_t>& jac_i( entire_jac_sparse_[i] );
+				for(itr_i = jac_i.begin(); itr_i != jac_i.end(); itr_i++)
+				{	size_t j = *itr_i;
+					assert( j < n );
+					st[j].insert(k);
+				}
+			}
+		}
 
 		return ok;
 	}
 	/*!
-	Link from user_atomic to forward sparse Jacobian
+	Link from user_atomic to reverse sparse Jacobian sets
 
 	\copydetails atomic_base::rev_sparse_jac
 	*/
@@ -419,20 +494,38 @@ public:
 		size_t                                  q  ,
 		const vector<bool>&                     rt ,
 		      vector<bool>&                     st )
-	{
+	{	assert( rt.size() == f_.Range() * q );
+		assert( st.size() == f_.Domain() * q );
 		bool ok  = true;
+		//
+		size_t n = f_.Domain();
+		size_t m = f_.Range();
+		for(size_t j = 0; j < n; j++)
+		{	for(size_t k = 0; k < q; k++)
+				st[j * q + k] = false;
+		}
 
-		// compute rt
-		bool transpose  = true;
-		bool dependency = true;
-		// 2DO: remove need for dependency all the time. It is only really
-		// necessary when optimizer calls this member function.
-		st = f_.RevSparseJac(q, rt, transpose, dependency);
+		// sparsity for  s = r * entire_jac_sparse_
+		// s^T = entire_jac_sparse_^T * r^T
+		for(size_t k = 0; k < q; k++)
+		{	// compute row k of the return pattern s
+			for(size_t i = 0; i < m; i++)
+			{	if( rt[i * q + k] )
+				{	std::set<size_t>::const_iterator itr_i;
+					const std::set<size_t>& jac_i( entire_jac_sparse_[i] );
+					for(itr_i = jac_i.begin(); itr_i != jac_i.end(); itr_i++)
+					{	size_t j = *itr_i;
+						assert( j < n );
+						st[j * q + k ] = true;
+					}
+				}
+			}
+		}
 
 		return ok;
 	}
 	/*!
-	Link from user_atomic to forward sparse Jacobian
+	Link from user_atomic to reverse sparse Hessian sets
 
 	\copydetails atomic_base::rev_sparse_hes
 	*/
@@ -444,14 +537,40 @@ public:
 		const vector< std::set<size_t> >&       r  ,
 		const vector< std::set<size_t> >&       u  ,
 		      vector< std::set<size_t> >&       v  )
-	{	size_t n       = v.size();
-		size_t m       = u.size();
-		CPPAD_ASSERT_UNKNOWN( r.size() == v.size() );
-		CPPAD_ASSERT_UNKNOWN( s.size() == m );
-		CPPAD_ASSERT_UNKNOWN( t.size() == n );
+	{	size_t n = f_.Domain();
+		size_t m = f_.Range();
+		CPPAD_ASSERT_UNKNOWN( vx.size() == n );
+		CPPAD_ASSERT_UNKNOWN(  s.size() == m );
+		CPPAD_ASSERT_UNKNOWN(  t.size() == n );
+		CPPAD_ASSERT_UNKNOWN(  r.size() == n );
+		CPPAD_ASSERT_UNKNOWN(  u.size() == m );
+		CPPAD_ASSERT_UNKNOWN(  v.size() == n );
+		//
 		bool ok        = true;
-		bool transpose = true;
-		std::set<size_t>::const_iterator itr;
+
+		// make sure entire_hes_sparse_ is set
+		if( entire_hes_sparse_.size() == 0 )
+		{
+			// set version of sparsity for vector of all ones
+			vector< std::set<size_t> > all_one(1);
+			CPPAD_ASSERT_UNKNOWN( all_one[0].empty() );
+			for(size_t i = 0; i < m; i++)
+				all_one[0].insert(i);
+
+			// set version of sparsity for n by n idendity matrix
+			vector< std::set<size_t> > identity(n);
+			for(size_t j = 0; j < n; j++)
+				identity[j].insert(j);
+
+			// compute sparsity pattern for H(x) = sum_i f_i(x)^{(2)}
+			bool transpose  = false;
+			bool dependency = false;
+			f_.ForSparseJac(n, identity, transpose, dependency);
+			entire_hes_sparse_ = f_.RevSparseHes(n, all_one, transpose);
+
+			// drop the forward sparsity results from f_
+			f_.size_forward_set(0);
+		}
 
 		// compute sparsity pattern for T(x) = S(x) * f'(x)
 		t = f_.RevSparseJac(1, s);
@@ -465,24 +584,31 @@ public:
 		// S(x) = g'(y)
 
 		// compute sparsity pattern for A(x) = f'(x)^T * U(x)
+		bool transpose = true;
 		vector< std::set<size_t> > a(n);
 		a = f_.RevSparseJac(q, u, transpose);
 
-		// set version of s
-		vector< std::set<size_t> > set_s(1);
-		CPPAD_ASSERT_UNKNOWN( set_s[0].empty() );
-		size_t i;
-		for(i = 0; i < m; i++)
-			if( s[i] )
-				set_s[0].insert(i);
-
-		// compute sparsity pattern for H(x) = (S(x) * F)''(x) * R
-		// (store it in v)
-		f_.ForSparseJac(q, r);
-		v = f_.RevSparseHes(q, set_s, transpose);
-
+		// Need sparsity pattern for H(x) = (S(x) * f(x))''(x) * R,
+		// but use less efficient sparsity for  f(x)''(x) * R so that
+		// entire_hes_sparse_ can be used every time this is needed.
+		for(size_t i = 0; i < n; i++)
+		{	v[i].clear();
+			std::set<size_t>::const_iterator itr_i;
+			const std::set<size_t>& hes_i( entire_hes_sparse_[i] );
+			for(itr_i = hes_i.begin(); itr_i != hes_i.end(); itr_i++)
+			{	size_t j = *itr_i;
+				assert( j < n );
+				std::set<size_t>::const_iterator itr_j;
+				const std::set<size_t>& r_j( r[j] );
+				for(itr_j = r_j.begin(); itr_j != r_j.end(); itr_j++)
+				{	size_t k = *itr_j;
+					v[i].insert(k);
+				}
+			}
+		}
 		// compute sparsity pattern for V(x) = A(x) + H(x)
-		for(i = 0; i < n; i++)
+		std::set<size_t>::const_iterator itr;
+		for(size_t i = 0; i < n; i++)
 		{	for(itr = a[i].begin(); itr != a[i].end(); itr++)
 			{	size_t j = *itr;
 				CPPAD_ASSERT_UNKNOWN( j < q );
@@ -490,14 +616,10 @@ public:
 			}
 		}
 
-		// no longer need the forward mode sparsity pattern
-		// (have to reconstruct them every time)
-		f_.size_forward_set(0);
-
 		return ok;
 	}
 	/*!
-	Link from user_atomic to forward sparse Jacobian
+	Link from user_atomic to reverse sparse Hessian  bools
 
 	\copydetails atomic_base::rev_sparse_hes
 	*/
@@ -509,20 +631,45 @@ public:
 		const vector<bool>&                     r  ,
 		const vector<bool>&                     u  ,
 		      vector<bool>&                     v  )
-	{
-		CPPAD_ASSERT_UNKNOWN( r.size() == v.size() );
-		CPPAD_ASSERT_UNKNOWN( s.size() == u.size() / q );
-		CPPAD_ASSERT_UNKNOWN( t.size() == v.size() / q );
-		size_t n       = t.size();
+	{	size_t n = f_.Domain();
+		size_t m = f_.Range();
+		CPPAD_ASSERT_UNKNOWN( vx.size() == n );
+		CPPAD_ASSERT_UNKNOWN(  s.size() == m );
+		CPPAD_ASSERT_UNKNOWN(  t.size() == n );
+		CPPAD_ASSERT_UNKNOWN(  r.size() == n * q );
+		CPPAD_ASSERT_UNKNOWN(  u.size() == m * q );
+		CPPAD_ASSERT_UNKNOWN(  v.size() == n * q );
+		//
 		bool ok        = true;
-		bool transpose = true;
-		std::set<size_t>::const_iterator itr;
-		size_t i, j;
+
+		// make sure entire_hes_sparse_ is set
+		if( entire_hes_sparse_.size() == 0 )
+		{
+			// set version of sparsity for vector of all ones
+			vector< std::set<size_t> > all_one(1);
+			CPPAD_ASSERT_UNKNOWN( all_one[0].empty() );
+			for(size_t i = 0; i < m; i++)
+				all_one[0].insert(i);
+
+			// set version of sparsity for n by n idendity matrix
+			vector< std::set<size_t> > identity(n);
+			for(size_t j = 0; j < n; j++)
+				identity[j].insert(j);
+
+			// compute sparsity pattern for H(x) = sum_i f_i(x)^{(2)}
+			bool transpose  = false;
+			bool dependency = false;
+			f_.ForSparseJac(n, identity, transpose, dependency);
+			entire_hes_sparse_ = f_.RevSparseHes(n, all_one, transpose);
+
+			// drop the forward sparsity results from f_
+			f_.size_forward_set(0);
+		}
 
 		// compute sparsity pattern for T(x) = S(x) * f'(x)
 		t = f_.RevSparseJac(1, s);
 # ifndef NDEBUG
-		for(j = 0; j < n; j++)
+		for(size_t j = 0; j < n; j++)
 			CPPAD_ASSERT_UNKNOWN( vx[j] || ! t[j] )
 # endif
 
@@ -531,23 +678,31 @@ public:
 		// S(x) = g'(y)
 
 		// compute sparsity pattern for A(x) = f'(x)^T * U(x)
+		bool transpose = true;
 		vector<bool> a(n * q);
 		a = f_.RevSparseJac(q, u, transpose);
 
-		// compute sparsity pattern for H(x) =(S(x) * F)''(x) * R
-		// (store it in v)
-		f_.ForSparseJac(q, r);
-		v = f_.RevSparseHes(q, s, transpose);
-
-		// compute sparsity pattern for V(x) = A(x) + H(x)
-		for(i = 0; i < n; i++)
-		{	for(j = 0; j < q; j++)
-				v[ i * q + j ] |= a[ i * q + j];
+		// Need sparsity pattern for H(x) = (S(x) * f(x))''(x) * R,
+		// but use less efficient sparsity for  f(x)''(x) * R so that
+		// entire_hes_sparse_ can be used every time this is needed.
+		for(size_t i = 0; i < n; i++)
+		{	for(size_t k = 0; k < q; k++)
+				v[i * q + k] = false;
+			std::set<size_t>::const_iterator itr_i;
+			const std::set<size_t>& hes_i( entire_hes_sparse_[i] );
+			for(itr_i = hes_i.begin(); itr_i != hes_i.end(); itr_i++)
+			{	size_t j = *itr_i;
+				assert( j < n );
+				for(size_t k = 0; k < q; k++)
+					v[i * q + k] |= r[ j * q + k ];
+			}
 		}
 
-		// no longer need the forward mode sparsity pattern
-		// (have to reconstruct them every time)
-		f_.size_forward_set(0);
+		// compute sparsity pattern for V(x) = A(x) + H(x)
+		for(size_t i = 0; i < n; i++)
+		{	for(size_t k = 0; k < q; k++)
+				v[ i * q + k ] |= a[ i * q + k];
+		}
 
 		return ok;
 	}

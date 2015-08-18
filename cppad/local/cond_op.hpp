@@ -950,6 +950,14 @@ is the total number of values in the vector \a parameter.
 \li For j = 0, 1, 2, 3 if y_j is a parameter, arg[2+j] < num_par.
 <!-- end sparse_conditional_exp_op -->
 
+\param dependency
+Are the derivatives with respect to left and right of the expression below
+considered to be non-zero:
+\code
+	CondExpRel(left, right, if_true, if_false)
+\endcode
+This is used by the optimizer to obtain the correct dependency relations.
+
 \param sparsity
 \b Input:
 if y_2 is a variable, the set with index t is
@@ -971,6 +979,7 @@ depends on.
 */
 template <class Vector_set>
 inline void forward_sparse_jacobian_cond_op(
+	bool               dependency    ,
 	size_t             i_z           ,
 	const addr_t*      arg           ,
 	size_t             num_par       ,
@@ -988,28 +997,17 @@ inline void forward_sparse_jacobian_cond_op(
 		k *= 2;
 	}
 # endif
+	sparsity.clear(i_z);
+	if( dependency )
+	{	if( arg[1] & 1 )
+			sparsity.binary_union(i_z, i_z, arg[2], sparsity);
+		if( arg[1] & 2 )
+			sparsity.binary_union(i_z, i_z, arg[3], sparsity);
+	}
 	if( arg[1] & 4 )
-	{
-		if( arg[1] & 8 )
-		{
-			sparsity.binary_union(i_z, arg[4], arg[5], sparsity);
-		}
-		else
-		{	CPPAD_ASSERT_UNKNOWN( size_t(arg[5]) < num_par );
-			sparsity.assignment(i_z, arg[4], sparsity);
-		}
-	}
-	else
-	{	CPPAD_ASSERT_UNKNOWN( size_t(arg[4]) < num_par );
-		if( arg[1] & 8 )
-		{
-			sparsity.assignment(i_z, arg[5], sparsity);
-		}
-		else
-		{	CPPAD_ASSERT_UNKNOWN( size_t(arg[5]) < num_par );
-			sparsity.clear(i_z);
-		}
-	}
+		sparsity.binary_union(i_z, i_z, arg[4], sparsity);
+	if( arg[1] & 8 )
+		sparsity.binary_union(i_z, i_z, arg[5], sparsity);
 	return;
 }
 
@@ -1142,23 +1140,15 @@ inline void reverse_sparse_jacobian_cond_op(
 # endif
 	if( dependency )
 	{	if( arg[1] & 1 )
-		{
 			sparsity.binary_union(arg[2], arg[2], i_z, sparsity);
-		}
 		if( arg[1] & 2 )
-		{
 			sparsity.binary_union(arg[3], arg[3], i_z, sparsity);
-		}
 	}
 	// --------------------------------------------------------------------
 	if( arg[1] & 4 )
-	{
 		sparsity.binary_union(arg[4], arg[4], i_z, sparsity);
-	}
 	if( arg[1] & 8 )
-	{
 		sparsity.binary_union(arg[5], arg[5], i_z, sparsity);
-	}
 	return;
 }
 
