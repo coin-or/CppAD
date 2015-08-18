@@ -402,11 +402,11 @@ public:
 		bool ok  = true;
 
 		// compute rt
-		// 2DO: remove need for nz_compare all the time. It is only really
+		// 2DO: remove need for dependency all the time. It is only really
 		// necessary when optimizer calls this member function.
 		bool transpose = true;
-		bool nz_compare = true;
-		st = f_.RevSparseJac(q, rt, transpose, nz_compare);
+		bool dependency = true;
+		st = f_.RevSparseJac(q, rt, transpose, dependency);
 
 		return ok;
 	}
@@ -424,10 +424,10 @@ public:
 
 		// compute rt
 		bool transpose  = true;
-		bool nz_compare = true;
-		// 2DO: remove need for nz_compare all the time. It is only really
+		bool dependency = true;
+		// 2DO: remove need for dependency all the time. It is only really
 		// necessary when optimizer calls this member function.
-		st = f_.RevSparseJac(q, rt, transpose, nz_compare);
+		st = f_.RevSparseJac(q, rt, transpose, dependency);
 
 		return ok;
 	}

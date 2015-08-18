@@ -175,7 +175,7 @@ private:
 	void RevSparseJacCase(
 		bool               set_type  ,
 		bool               transpose ,
-		bool               nz_compare,
+		bool               dependency,
 		size_t             p         ,
 		const VectorSet&   s         ,
 		VectorSet&         r
@@ -186,7 +186,7 @@ private:
 	void RevSparseJacCase(
 		const std::set<size_t>&  set_type  ,
 		bool                     transpose ,
-		bool                     nz_compare,
+		bool                     dependency,
 		size_t                   p         ,
 		const VectorSet&         s         ,
 		VectorSet&               r
@@ -314,7 +314,7 @@ public:
 	template <typename VectorSet>
 	VectorSet RevSparseJac(
 		size_t q, const VectorSet &s, bool transpose = false,
-		bool nz_compare = false
+		bool dependency = false
 	);
 	// reverse mode Hessian sparsity
 	// (see doxygen documentation in rev_sparse_hes.hpp)

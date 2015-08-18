@@ -60,7 +60,7 @@ using AD< \a Base > and computations by this routine are done using type
 is the type used for vectors of sets. It can be either
 \c sparse_pack, \c sparse_set, or \c sparse_list.
 
-\param nz_compare
+\param dependency
 Are the derivatives with respect to left and right of the expression below
 considered to be non-zero:
 \code
@@ -110,7 +110,7 @@ is given by the set with index index j in \a var_sparsity.
 
 template <class Base, class Vector_set>
 void RevJacSweep(
-	bool                  nz_compare,
+	bool                  dependency,
 	size_t                n,
 	size_t                numvar,
 	player<Base>         *play,
@@ -320,7 +320,7 @@ void RevJacSweep(
 
 			case CExpOp:
 			reverse_sparse_jacobian_cond_op(
-				nz_compare, i_var, arg, num_par, var_sparsity
+				dependency, i_var, arg, num_par, var_sparsity
 			);
 			break;
 			// ---------------------------------------------------

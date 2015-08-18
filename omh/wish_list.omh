@@ -147,7 +147,7 @@ with respect to $icode left$$ and $icode right$$ always evaluates to zero,
 the value of $icode z$$ does depend on the value of $icode left$$ and
 $icode right$$.
 The $cref checkpoint$$ functions use the value true for
-$cref/nz_compare/RevSparseJac/nz_compare/$$ when computing
+$cref/dependency/RevSparseJac/dependency/$$ when computing
 reverse jacobian sparsity patterns.
 This enables the optimizer to properly track the dependencies.
 An $cref atomic_option$$ should be added so this is only

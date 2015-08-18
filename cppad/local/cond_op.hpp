@@ -2,7 +2,7 @@
 # ifndef CPPAD_COND_OP_INCLUDED
 # define CPPAD_COND_OP_INCLUDED
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-14 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-15 Bradley M. Bell
 
 CppAD is distributed under multiple licenses. This distribution is under
 the terms of the 
@@ -1098,7 +1098,7 @@ is the total number of values in the vector \a parameter.
 \li For j = 0, 1, 2, 3 if y_j is a parameter, arg[2+j] < num_par.
 <!-- end sparse_conditional_exp_op -->
 
-\param nz_compare
+\param dependency
 Are the derivatives with respect to left and right of the expression below
 considered to be non-zero:
 \code
@@ -1129,7 +1129,7 @@ On input and output, this pattern corresponds to the function G.
 */
 template <class Vector_set>
 inline void reverse_sparse_jacobian_cond_op(
-	bool                nz_compare    ,
+	bool                dependency    ,
 	size_t              i_z           ,
 	const addr_t*       arg           , 
 	size_t              num_par       ,
@@ -1160,7 +1160,7 @@ inline void reverse_sparse_jacobian_cond_op(
 	{	CPPAD_ASSERT_UNKNOWN( size_t(arg[5]) < num_par );
 	}
 # endif
-	if( nz_compare )
+	if( dependency )
 	{	if( arg[1] & 1 )
 		{
 			sparsity.binary_union(arg[2], arg[2], i_z, sparsity);
