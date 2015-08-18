@@ -510,7 +510,7 @@ void RevJacSweep(
 			// -------------------------------------------------
 
 			case PriOp:
- 			CPPAD_ASSERT_NARG_NRES(op, 5, 0);
+			CPPAD_ASSERT_NARG_NRES(op, 5, 0);
 			break;
 			// -------------------------------------------------
 
