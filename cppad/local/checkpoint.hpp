@@ -300,7 +300,9 @@ public:
 		CPPAD_ASSERT_UNKNOWN( f_.size_var() > 0 );
 		CPPAD_ASSERT_UNKNOWN( tx.size() % (q+1) == 0 );
 		CPPAD_ASSERT_UNKNOWN( ty.size() % (q+1) == 0 );
+# ifndef NDEBUG
 		size_t n = tx.size() / (q+1);
+# endif
 		size_t m = ty.size() / (q+1);
 		bool ok  = true;
 		size_t i, j;
