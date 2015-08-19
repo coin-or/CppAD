@@ -38,7 +38,7 @@ $index pattern, forward Jacobian$$
 $head Syntax$$
 $icode%s% = %f%.ForSparseJac(%q%, %r%)
 %$$
-$icode%s% = %f%.ForSparseJac(%q%, %r%, %transpose%)%$$
+$icode%s% = %f%.ForSparseJac(%q%, %r%, %transpose%, %dependency%)%$$
 
 $head Purpose$$
 We use $latex F : B^n \rightarrow B^m$$ to denote the
@@ -138,12 +138,12 @@ $cref CondExp$$ below are considered to be non-zero:
 $codei%
 	%CondExp%Rel%(%left%, %right%, %if_true%, %if_false%)
 %$$
-This is used by the
-$cref/optimizer/optimize/$$ with $cref checkpoint$$ functions
-to obtain the correct dependency relations.
+This is useful for determining the dependency relations
+between the independent and dependent variables. It is used with this purpose
+by the $cref/optimizer/optimize/$$ when dealing with
+$cref checkpoint$$ and user defined $cref/atomic/atomic_base/$$ functions.
 The default value $icode%dependency% = false%$$ is used when
 $icode dependency$$ is not present.
-
 
 $head r$$
 The argument $icode r$$ has prototype
