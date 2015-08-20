@@ -53,7 +53,7 @@ sed < bin/check_include_omh.2.$$ > bin/check_include_omh.3.$$ \
 	-e 's/%//' \
 	-e 's/$\$//' \
 	-e '/^ *$/d' \
-	-e 's/^[ 	]*//' \
+	-e 's/^[	]*//' \
 	-e 's|\\|/|g'
 #
 different="no"

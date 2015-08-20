@@ -3,7 +3,7 @@
 CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-15 Bradley M. Bell
 
 CppAD is distributed under multiple licenses. This distribution is under
-the terms of the 
+the terms of the
                     Eclipse Public License Version 1.0.
 
 A copy of this license is included in the COPYING file of this distribution.
@@ -23,7 +23,7 @@ $head See Also$$
 $cref sparse_sub_hes.cpp$$, $cref sub_sparse_hes.cpp$$.
 
 $head ForSparseJac$$
-The routine $cref ForSparseJac$$ is used to compute the 
+The routine $cref ForSparseJac$$ is used to compute the
 sparsity for both the full Jacobian (see $icode s$$)
 and a subset of the Jacobian (see $icode s2$$).
 
@@ -83,7 +83,7 @@ bool sparsity_sub(void)
 	}
 	s2 = f.ForSparseJac(n2, r2);
 
-	// evaluate the sparsity for the subset of Hessian of 
+	// evaluate the sparsity for the subset of Hessian of
 	// f_0 + ... + f_{m-1} where first partial has only first n/2 components
 	vectorBool h2(n2 * n);
 	h2 = f.RevSparseHes(n2, t);
@@ -91,13 +91,13 @@ bool sparsity_sub(void)
 	// check sparsity pattern for Jacobian
 	for(size_t i = 0; i < m; i++)
 	{	for(size_t j = 0; j < n2; j++)
-			ok &= s2[i * n2 + j] == s[i * n + j]; 
+			ok &= s2[i * n2 + j] == s[i * n + j];
 	}
 
 	// check sparsity pattern for Hessian
 	for(size_t i = 0; i < n2; i++)
 	{	for(size_t j = 0; j < n; j++)
-			ok &= h2[i * n + j] == h[i * n + j]; 
+			ok &= h2[i * n + j] == h[i * n + j];
 	}
 	return ok;
 }
