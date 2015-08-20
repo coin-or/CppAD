@@ -165,6 +165,7 @@ extern bool Sinh(void);
 extern bool sparse_hessian(void);
 extern bool sparse_jacobian(void);
 extern bool sparse_sub_hes(void);
+extern bool sparsity_sub(void);
 extern bool Sqrt(void);
 extern bool StackMachine(void);
 extern bool Sub(void);
@@ -327,6 +328,7 @@ int main(void)
 	ok &= Run( sparse_hessian,    "sparse_hessian"   );
 	ok &= Run( sparse_jacobian,   "sparse_jacobian"  );
 	ok &= Run( sparse_sub_hes,    "sparse_sub_hes"   );
+	ok &= Run( sparsity_sub,      "sparsity_sub"     );
 	ok &= Run( Sqrt,              "Sqrt"             );
 	ok &= Run( StackMachine,      "StackMachine"     );
 	ok &= Run( Sub,               "Sub"              );

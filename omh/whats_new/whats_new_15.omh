@@ -60,6 +60,11 @@ This section contains a list of the changes to CppAD during 2015
 The purpose of this section is to
 assist you in learning about changes between various versions of CppAD.
 
+$head 08-20$$
+Added an example that computes the sparsity pattern for a subset
+of the $cref/Jacobian/sparsity_sub.cpp/ForSparseJac/$$ and a subset
+of the $cref/Hessian/sparsity_sub.cpp/RevSparseHes/$$.
+
 $head 08-17$$
 $list number$$
 Do some optimization of the

@@ -73,7 +73,8 @@ done
 echo "-------------------------------------------------------------------"
 if [ $different = "yes" ]
 then
-	echo "Error: nothing should be between the two dashed lines above"
+	echo "Error: nothing should be between the two dashed lines above."
+	echo 'Perhaps this file is not and has not yet been added to repository ?'
 	exit 1
 else
 	echo "Ok: nothing is between the two dashed lines above"

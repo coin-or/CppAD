@@ -22,7 +22,7 @@ to compute the Hessian for a subset of the variables
 without having to compute the sparsity pattern for the entire function.
 
 $head See Also$$
-$cref sparse_sub_hes.cpp$$
+$cref sparse_sub_hes.cpp$$, $cref sparsity_sub.cpp$$,
 
 $head Function$$
 We consider the function

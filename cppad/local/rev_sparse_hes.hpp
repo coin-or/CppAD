@@ -3,7 +3,7 @@
 # define CPPAD_REV_SPARSE_HES_INCLUDED
 
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-14 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-15 Bradley M. Bell
 
 CppAD is distributed under multiple licenses. This distribution is under
 the terms of the 
@@ -27,14 +27,10 @@ $spell
 	Dep
 	proportional
 	var
+	cpp
 $$
 
 $section Hessian Sparsity Pattern: Reverse Mode$$ 
-
-$index RevSparseHes$$
-$index reverse, sparse Hessian$$
-$index sparse, reverse Hessian$$
-$index pattern, reverse Hessian$$
 
 $head Syntax$$
 $icode%h% = %f%.RevSparseHes(%q%, %s%)
@@ -179,11 +175,16 @@ $latex F_k^{(2)} (x) \in \B{R}^{n \times n}$$.
 $head Example$$
 $children%
 	example/rev_sparse_hes.cpp
+	%example/sparsity_sub.cpp
 %$$
 The file
 $cref rev_sparse_hes.cpp$$
 contains an example and test of this operation.
 It returns true if it succeeds and false otherwise.
+The file
+$cref/sparsity_sub.cpp/sparsity_sub.cpp/RevSparseHes/$$
+contains an example and test of using $code RevSparseHes$$
+to compute the sparsity pattern for a subset of the Hessian.
 
 $end
 -----------------------------------------------------------------------------

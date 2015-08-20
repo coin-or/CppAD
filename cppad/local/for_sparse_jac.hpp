@@ -26,14 +26,10 @@ $spell
 	VecAD
 	CondExpRel
 	optimizer
+	cpp
 $$
 
 $section Jacobian Sparsity Pattern: Forward Mode$$
-
-$index ForSparseJac$$
-$index forward, sparsity Jacobian$$
-$index sparsity, forward Jacobian$$
-$index pattern, forward Jacobian$$
 
 $head Syntax$$
 $icode%s% = %f%.ForSparseJac(%q%, %r%)
@@ -221,6 +217,10 @@ The file
 $cref for_sparse_jac.cpp$$
 contains an example and test of this operation.
 It returns true if it succeeds and false otherwise.
+The file
+$cref/sparsity_sub.cpp/sparsity_sub.cpp/ForSparseJac/$$
+contains an example and test of using $code ForSparseJac$$
+to compute the sparsity pattern for a subset of the Jacobian.
 
 $end
 -----------------------------------------------------------------------------
