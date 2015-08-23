@@ -190,7 +190,8 @@ namespace CppAD { // BEGIN_CPPAD_NAMESPACE
 Reverse mode Jacobian sparsity patterns.
 */
 
-// -------------------------------------------------------------------------
+// =========================================================================
+// RevSparseJacBool
 /*!
 Calculate Jacobian vector of bools sparsity patterns using reverse mode.
 
@@ -336,6 +337,8 @@ void RevSparseJacBool(
 		}
 	}
 }
+// =========================================================================
+// RevSparseJacSet
 /*!
 Calculate Jacobian vector of sets sparsity patterns using reverse mode.
 
@@ -479,7 +482,8 @@ void RevSparseJacSet(
 		}
 	}
 }
-// --------------------------------------------------------------------------
+// =========================================================================
+// RevSparseJacCase
 
 /*!
 Private helper function for \c RevSparseJac(q, r, transpose).
@@ -591,7 +595,8 @@ void ADFun<Base>::RevSparseJacCase(
 		play_
 	);
 }
-// --------------------------------------------------------------------------
+// =========================================================================
+// RevSparseJac
 /*!
 User API for Jacobian sparsity patterns using reverse mode.
 

@@ -182,11 +182,72 @@ class checkpoint : public atomic_base<Base> {
 private:
 	ADFun<Base> f_;
 	//
-	// sparsity for f(x)^{(1)} (set by constructor)
+	/// sparsity for f(x)^{(1)} (set by constructor)
 	vector< std::set<size_t> > entire_jac_sparse_;
 	//
-	// sparsity for sum_i f_i(x)^{(2)}
+	/// set entire_jac_sparse_
+	void set_entire_jac_sparse(void)
+	{	assert( entire_jac_sparse_.size() == 0 );
+		bool transpose  = false;
+		bool dependency = true;
+		size_t n = f_.Domain();
+		size_t m = f_.Range();
+		// It is not clear if forward or reverse is best in sparse case,
+		// so use the best choice for the dense case (which this may be).
+		if( n <= m )
+		{	vector< std::set<size_t> > identity(n);
+			for(size_t j = 0; j < n; j++)
+				identity[j].insert(j);
+			entire_jac_sparse_ = f_.ForSparseJac(
+				n, identity, transpose, dependency
+			);
+			// drop the forward sparsity results from f_
+			f_.size_forward_set(0);
+		}
+		else
+		{	vector< std::set<size_t> > identity(m);
+			for(size_t i = 0; i < m; i++)
+				identity[i].insert(i);
+			entire_jac_sparse_ = f_.RevSparseJac(
+				m, identity, transpose, dependency
+			);
+		}
+		CPPAD_ASSERT_UNKNOWN( f_.size_forward_set() == 0 );
+		CPPAD_ASSERT_UNKNOWN( f_.size_forward_bool() == 0 );
+	}
+	//
+	/// sparsity for sum_i f_i(x)^{(2)}
 	CPPAD_INTERNAL_SPARSE_SET  entire_hes_sparse_;
+	//
+	/// set entire_hes_sparse_
+	void set_entire_hes_sparse(void)
+	{	assert( entire_hes_sparse_.n_set() == 0 );
+		size_t n = f_.Domain();
+		size_t m = f_.Range();
+		//
+		// set version of sparsity for vector of all ones
+		vector<bool> all_one(m);
+		for(size_t i = 0; i < m; i++)
+			all_one[i] = true;
+
+		// set version of sparsity for n by n idendity matrix
+		vector< std::set<size_t> > identity(n);
+		for(size_t j = 0; j < n; j++)
+			identity[j].insert(j);
+
+		// compute sparsity pattern for H(x) = sum_i f_i(x)^{(2)}
+		bool transpose  = false;
+		bool dependency = false;
+		f_.ForSparseJac(n, identity, transpose, dependency);
+		f_.RevSparseHesCheckpoint(
+			n, all_one, transpose, entire_hes_sparse_
+		);
+		CPPAD_ASSERT_UNKNOWN( entire_hes_sparse_.n_set() == n );
+		CPPAD_ASSERT_UNKNOWN( entire_hes_sparse_.end()   == n );
+		//
+		// drop the forward sparsity results from f_
+		f_.size_forward_set(0);
+	}
 public:
 	/*!
 	Constructor of a checkpoint object
@@ -228,33 +289,7 @@ public:
 		f_.compare_change_count(0);
 		//
 		// set sparsity for entire Jacobian once and for all
-		assert( entire_jac_sparse_.size() == 0 );
-		bool transpose  = false;
-		bool dependency = true;
-		size_t n = f_.Domain();
-		size_t m = f_.Range();
-		// It is not clear if forward or reverse is best in sparse case,
-		// so use the best choice for the dense case (which this may be).
-		if( n <= m )
-		{	vector< std::set<size_t> > identity(n);
-			for(size_t j = 0; j < n; j++)
-				identity[j].insert(j);
-			entire_jac_sparse_ = f_.ForSparseJac(
-				n, identity, transpose, dependency
-			);
-			// drop the forward sparsity results from f_
-			f_.size_forward_set(0);
-		}
-		else
-		{	vector< std::set<size_t> > identity(m);
-			for(size_t i = 0; i < m; i++)
-				identity[i].insert(i);
-			entire_jac_sparse_ = f_.RevSparseJac(
-				m, identity, transpose, dependency
-			);
-		}
-		CPPAD_ASSERT_UNKNOWN( f_.size_forward_set() == 0 );
-		CPPAD_ASSERT_UNKNOWN( f_.size_forward_bool() == 0 );
+		set_entire_jac_sparse();
 	}
 	/*!
 	Implement the user call to <tt>atom_fun.size_var()</tt>.
@@ -554,30 +589,7 @@ public:
 
 		// make sure entire_hes_sparse_ has been set
 		if( entire_hes_sparse_.n_set() == 0 )
-		{
-			// set version of sparsity for vector of all ones
-			vector<bool> all_one(m);
-			for(size_t i = 0; i < m; i++)
-				all_one[i] = true;
-
-			// set version of sparsity for n by n idendity matrix
-			vector< std::set<size_t> > identity(n);
-			for(size_t j = 0; j < n; j++)
-				identity[j].insert(j);
-
-			// compute sparsity pattern for H(x) = sum_i f_i(x)^{(2)}
-			bool transpose  = false;
-			bool dependency = false;
-			f_.ForSparseJac(n, identity, transpose, dependency);
-			f_.RevSparseHesCheckpoint(
-				n, all_one, transpose, entire_hes_sparse_
-			);
-			CPPAD_ASSERT_UNKNOWN( entire_hes_sparse_.n_set() == n );
-			CPPAD_ASSERT_UNKNOWN( entire_hes_sparse_.end()   == n );
-			//
-			// drop the forward sparsity results from f_
-			f_.size_forward_set(0);
-		}
+			set_entire_hes_sparse();
 
 		// compute sparsity pattern for T(x) = S(x) * f'(x)
 		t = f_.RevSparseJac(1, s);
@@ -650,30 +662,7 @@ public:
 
 		// make sure entire_hes_sparse_ has been set
 		if( entire_hes_sparse_.n_set() == 0 )
-		{
-			// set version of sparsity for vector of all ones
-			vector<bool> all_one(m);
-			for(size_t i = 0; i < m; i++)
-				all_one[i] = true;
-
-			// set version of sparsity for n by n idendity matrix
-			vector< std::set<size_t> > identity(n);
-			for(size_t j = 0; j < n; j++)
-				identity[j].insert(j);
-
-			// compute sparsity pattern for H(x) = sum_i f_i(x)^{(2)}
-			bool transpose  = false;
-			bool dependency = false;
-			f_.ForSparseJac(n, identity, transpose, dependency);
-			f_.RevSparseHesCheckpoint(
-				n, all_one, transpose, entire_hes_sparse_
-			);
-			CPPAD_ASSERT_UNKNOWN( entire_hes_sparse_.n_set() == n );
-			CPPAD_ASSERT_UNKNOWN( entire_hes_sparse_.end()   == n );
-			//
-			// drop the forward sparsity results from f_
-			f_.size_forward_set(0);
-		}
+			set_entire_hes_sparse();
 
 		// compute sparsity pattern for T(x) = S(x) * f'(x)
 		t = f_.RevSparseJac(1, s);
