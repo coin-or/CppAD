@@ -12,6 +12,8 @@ the terms of the
 A copy of this license is included in the COPYING file of this distribution.
 Please visit http://www.coin-or.org/CppAD/ for information on other licenses.
 -------------------------------------------------------------------------- */
+# include <cppad/local/sparse_set.hpp>
+# include <cppad/local/sparse_list.hpp>
 
 namespace CppAD { // BEGIN_CPPAD_NAMESPACE
 /*!
@@ -184,7 +186,7 @@ private:
 	vector< std::set<size_t> > entire_jac_sparse_;
 	//
 	// sparsity for sum_i f_i(x)^{(2)}
-	vector< std::set<size_t> > entire_hes_sparse_;
+	CPPAD_INTERNAL_SPARSE_SET  entire_hes_sparse_;
 public:
 	/*!
 	Constructor of a checkpoint object
@@ -550,14 +552,13 @@ public:
 		//
 		bool ok        = true;
 
-		// make sure entire_hes_sparse_ is set
-		if( entire_hes_sparse_.size() == 0 )
+		// make sure entire_hes_sparse_ has been set
+		if( entire_hes_sparse_.n_set() == 0 )
 		{
 			// set version of sparsity for vector of all ones
-			vector< std::set<size_t> > all_one(1);
-			CPPAD_ASSERT_UNKNOWN( all_one[0].empty() );
+			vector<bool> all_one(m);
 			for(size_t i = 0; i < m; i++)
-				all_one[0].insert(i);
+				all_one[i] = true;
 
 			// set version of sparsity for n by n idendity matrix
 			vector< std::set<size_t> > identity(n);
@@ -568,8 +569,12 @@ public:
 			bool transpose  = false;
 			bool dependency = false;
 			f_.ForSparseJac(n, identity, transpose, dependency);
-			entire_hes_sparse_ = f_.RevSparseHes(n, all_one, transpose);
-
+			f_.RevSparseHesCheckpoint(
+				n, all_one, transpose, entire_hes_sparse_
+			);
+			CPPAD_ASSERT_UNKNOWN( entire_hes_sparse_.n_set() == n );
+			CPPAD_ASSERT_UNKNOWN( entire_hes_sparse_.end()   == n );
+			//
 			// drop the forward sparsity results from f_
 			f_.size_forward_set(0);
 		}
@@ -595,17 +600,16 @@ public:
 		// entire_hes_sparse_ can be used every time this is needed.
 		for(size_t i = 0; i < n; i++)
 		{	v[i].clear();
-			std::set<size_t>::const_iterator itr_i;
-			const std::set<size_t>& hes_i( entire_hes_sparse_[i] );
-			for(itr_i = hes_i.begin(); itr_i != hes_i.end(); itr_i++)
-			{	size_t j = *itr_i;
-				assert( j < n );
-				std::set<size_t>::const_iterator itr_j;
+			entire_hes_sparse_.begin(i);
+			size_t j = entire_hes_sparse_.next_element();
+			while( j < n )
+			{	std::set<size_t>::const_iterator itr_j;
 				const std::set<size_t>& r_j( r[j] );
 				for(itr_j = r_j.begin(); itr_j != r_j.end(); itr_j++)
 				{	size_t k = *itr_j;
 					v[i].insert(k);
 				}
+				j = entire_hes_sparse_.next_element();
 			}
 		}
 		// compute sparsity pattern for V(x) = A(x) + H(x)
@@ -644,14 +648,13 @@ public:
 		//
 		bool ok        = true;
 
-		// make sure entire_hes_sparse_ is set
-		if( entire_hes_sparse_.size() == 0 )
+		// make sure entire_hes_sparse_ has been set
+		if( entire_hes_sparse_.n_set() == 0 )
 		{
 			// set version of sparsity for vector of all ones
-			vector< std::set<size_t> > all_one(1);
-			CPPAD_ASSERT_UNKNOWN( all_one[0].empty() );
+			vector<bool> all_one(m);
 			for(size_t i = 0; i < m; i++)
-				all_one[0].insert(i);
+				all_one[i] = true;
 
 			// set version of sparsity for n by n idendity matrix
 			vector< std::set<size_t> > identity(n);
@@ -662,8 +665,12 @@ public:
 			bool transpose  = false;
 			bool dependency = false;
 			f_.ForSparseJac(n, identity, transpose, dependency);
-			entire_hes_sparse_ = f_.RevSparseHes(n, all_one, transpose);
-
+			f_.RevSparseHesCheckpoint(
+				n, all_one, transpose, entire_hes_sparse_
+			);
+			CPPAD_ASSERT_UNKNOWN( entire_hes_sparse_.n_set() == n );
+			CPPAD_ASSERT_UNKNOWN( entire_hes_sparse_.end()   == n );
+			//
 			// drop the forward sparsity results from f_
 			f_.size_forward_set(0);
 		}
@@ -690,13 +697,12 @@ public:
 		for(size_t i = 0; i < n; i++)
 		{	for(size_t k = 0; k < q; k++)
 				v[i * q + k] = false;
-			std::set<size_t>::const_iterator itr_i;
-			const std::set<size_t>& hes_i( entire_hes_sparse_[i] );
-			for(itr_i = hes_i.begin(); itr_i != hes_i.end(); itr_i++)
-			{	size_t j = *itr_i;
-				assert( j < n );
-				for(size_t k = 0; k < q; k++)
+			entire_hes_sparse_.begin(i);
+			size_t j = entire_hes_sparse_.next_element();
+			while( j < n )
+			{	for(size_t k = 0; k < q; k++)
 					v[i * q + k] |= r[ j * q + k ];
+				j = entire_hes_sparse_.next_element();
 			}
 		}
 

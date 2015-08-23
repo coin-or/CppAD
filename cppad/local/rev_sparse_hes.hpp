@@ -199,6 +199,8 @@ namespace CppAD { // BEGIN_CPPAD_NAMESPACE
 Reverse mode Hessian sparsity patterns.
 */
 
+// ===========================================================================
+// RevSparseHesBool
 /*!
 Calculate Hessian sparsity patterns using reverse mode.
 
@@ -354,6 +356,8 @@ void RevSparseHesBool(
 	return;
 }
 
+// ===========================================================================
+// RevSparseHesSet
 /*!
 Calculate Hessian sparsity patterns using reverse mode.
 
@@ -514,7 +518,8 @@ void RevSparseHesSet(
 	return;
 }
 
-
+// ===========================================================================
+// RevSparseHes
 
 /*!
 User API for Hessian sparsity patterns using reverse mode.
@@ -586,7 +591,8 @@ VectorSet ADFun<Base>::RevSparseHes(
 
 	return h;
 }
-
+// ===========================================================================
+// RevSparseHesCase
 /*!
 Private helper function for RevSparseHes(q, s).
 
@@ -641,7 +647,6 @@ void ADFun<Base>::RevSparseHesCase(
 		for_jac_sparse_pack_
 	);
 }
-
 /*!
 Private helper function for RevSparseHes(q, s).
 
@@ -698,6 +703,111 @@ void ADFun<Base>::RevSparseHesCase(
 		play_                    ,
 		for_jac_sparse_set_
 	);
+}
+// ===========================================================================
+// RevSparseHesCheckpoint
+/*!
+Hessian sparsity patterns calculation used by checkpoint functions.
+
+\tparam Base
+is the base type for this recording.
+
+\param transpose
+is true (false) h is equal to \f$ H(x) \f$ (\f$ H(x)^T \f$)
+where
+\f[
+	H(x) = R^T (S * F)^{(2)} (x)
+\f]
+where \f$ F \f$ is the function corresponding to the operation sequence
+and \f$ x \f$ is any argument value.
+
+\param q
+is the value of q in the by the previous call of the form
+\verbatim
+	f.ForSparseJac(q, r)
+\endverbatim
+The value r in this call is a sparsity pattern for the matrix \f$ R \f$.
+
+\param s
+is a vector with size m that specifies the sparsity pattern
+for the vector \f$ S \f$,
+where m is the number of dependent variables
+corresponding to the operation sequence stored in play_.
+
+\param h
+The input size and elements of h do not matter.
+On output, h is the sparsity pattern for the matrix \f$ H(x) \f$
+or \f$ H(x)^T \f$ depending on transpose.
+
+\par Assumptions
+The forward jacobian sparsity pattern must be currently stored
+in this ADFUN object.
+*/
+template <class Base>
+void ADFun<Base>::RevSparseHesCheckpoint(
+	size_t                        q         ,
+	vector<bool>&                 s         ,
+	bool                          transpose ,
+	CPPAD_INTERNAL_SPARSE_SET&    h         )
+{	size_t n = Domain();
+	size_t m = Range();
+
+	// checkpoint functions should get this right
+	CPPAD_ASSERT_UNKNOWN( for_jac_sparse_pack_.n_set() == 0 );
+	CPPAD_ASSERT_UNKNOWN( for_jac_sparse_set_.n_set() == num_var_tape_ );
+	CPPAD_ASSERT_UNKNOWN( for_jac_sparse_set_.end()   == q );
+	CPPAD_ASSERT_UNKNOWN( s.size()                    == m );
+
+	// Array that holds the reverse Jacobiain dependcy flags.
+	// Initialize as true for dependent variables, flase for others.
+	pod_vector<bool> RevJac;
+	RevJac.extend(num_var_tape_);
+	for(size_t i = 0; i < num_var_tape_; i++)
+		RevJac[i] = false;
+	for(size_t i = 0; i < m; i++)
+	{	CPPAD_ASSERT_UNKNOWN( dep_taddr_[i] < num_var_tape_ )
+		RevJac[ dep_taddr_[i] ] = s[i];
+	}
+
+	// holds reverse Hessian sparsity pattern for all variables
+	CPPAD_INTERNAL_SPARSE_SET rev_hes_sparsity;
+	rev_hes_sparsity.resize(num_var_tape_, q);
+
+	// compute Hessian sparsity pattern for all variables
+	RevHesSweep(
+		n,
+		num_var_tape_,
+		&play_,
+		for_jac_sparse_set_,
+		RevJac.data(),
+		rev_hes_sparsity
+	);
+
+	// dimension the return value
+	if( transpose )
+		h.resize(n, q);
+	else
+		h.resize(q, n);
+
+	// j is index corresponding to reverse mode partial
+	for(size_t j = 0; j < n; j++)
+	{	CPPAD_ASSERT_UNKNOWN( ind_taddr_[j] < num_var_tape_ );
+
+		// ind_taddr_[j] is operator taddr for j-th independent variable
+		CPPAD_ASSERT_UNKNOWN( ind_taddr_[j] == j + 1 );
+		CPPAD_ASSERT_UNKNOWN( play_.GetOp( ind_taddr_[j] ) == InvOp );
+
+		// extract the result from rev_hes_sparsity
+		CPPAD_ASSERT_UNKNOWN( rev_hes_sparsity.end() == q );
+		rev_hes_sparsity.begin(j + 1);
+		size_t i = rev_hes_sparsity.next_element();
+		while( i < q )
+		{	if( transpose )
+				h.add_element(j,  i);
+			else	h.add_element(i, j);
+			i = rev_hes_sparsity.next_element();
+		}
+	}
 }
 
 } // END_CPPAD_NAMESPACE
