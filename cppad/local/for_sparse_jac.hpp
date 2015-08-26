@@ -754,6 +754,129 @@ VectorSet ADFun<Base>::ForSparseJac(
 
 	return s;
 }
+// ===========================================================================
+// ForSparseJacCheckpoint
+/*!
+Forward mode Jacobian sparsity calculation used by checkpoint functions.
+
+\tparam Base
+is the base type for this recording.
+
+\param transpose
+is true (false) s is equal to \f$ S(x) \f$ (\f$ S(x)^T \f$)
+where
+\f[
+	S(x) = F^{(1)} (x) * R
+\f]
+where \f$ F \f$ is the function corresponding to the operation sequence
+and \f$ x \f$ is any argument value.
+
+\param q
+is the number of columns in the matrix \f$ R \f$.
+
+\param r
+is a sparsity pattern for the matrix \f$ R \f$.
+
+\param transpose
+are the sparsity patterns for \f$ R \f$ and \f$ S(x) \f$ transposed.
+
+\param dependency
+Are the derivatives with respect to left and right of the expression below
+considered to be non-zero:
+\code
+	CondExpRel(left, right, if_true, if_false)
+\endcode
+This is used by the optimizer to obtain the correct dependency relations.
+
+\param s
+The input size and elements of s do not matter.
+On output, s is the sparsity pattern for the matrix \f$ S(x) \f$
+or \f$ S(x)^T \f$ depending on transpose.
+*/
+template <class Base>
+void ADFun<Base>::ForSparseJacCheckpoint(
+	size_t                        q          ,
+	CPPAD_INTERNAL_SPARSE_SET&    r          ,
+	bool                          transpose  ,
+	bool                          dependency ,
+	CPPAD_INTERNAL_SPARSE_SET&    s          )
+{	size_t n = Domain();
+	size_t m = Range();
+
+# ifndef NDEBUG
+	if( transpose )
+	{	CPPAD_ASSERT_UNKNOWN( r.n_set() == q );
+		CPPAD_ASSERT_UNKNOWN( r.end()   == n );
+	}
+	else
+	{	CPPAD_ASSERT_UNKNOWN( r.n_set() == n );
+		CPPAD_ASSERT_UNKNOWN( r.end()   == q );
+	}
+	for(size_t j = 0; j < n; j++)
+	{	CPPAD_ASSERT_UNKNOWN( ind_taddr_[j] == (j+1) );
+		CPPAD_ASSERT_UNKNOWN( play_.GetOp( ind_taddr_[j] ) == InvOp );
+	}
+# endif
+
+	// holds reverse Jacobian sparsity pattern for all variables
+	CPPAD_INTERNAL_SPARSE_SET var_sparsity;
+	var_sparsity.resize(num_var_tape_, q);
+
+	// set sparsity pattern for dependent variables
+	if( transpose )
+	{	for(size_t i = 0; i < q; i++)
+		{	r.begin(i);
+			size_t j = r.next_element();
+			while( j < n )
+			{	var_sparsity.add_element( ind_taddr_[j], i );
+				j = r.next_element();
+			}
+		}
+	}
+	else
+	{	for(size_t j = 0; j < n; j++)
+		{	r.begin(j);
+			size_t i = r.next_element();
+			while( i < q )
+			{	var_sparsity.add_element( ind_taddr_[j], i );
+				i = r.next_element();
+			}
+		}
+	}
+
+	// evaluate the sparsity pattern for all variables
+	ForJacSweep(
+		dependency,
+		n,
+		num_var_tape_,
+		&play_,
+		var_sparsity
+	);
+
+	// dimension the return value
+	if( transpose )
+		s.resize(q, m);
+	else
+		s.resize(m, q);
+
+	// return values corresponding to dependent variables
+	for(size_t i = 0; i < m; i++)
+	{	CPPAD_ASSERT_UNKNOWN( dep_taddr_[i] < num_var_tape_ );
+
+		// extract the result from var_sparsity
+		CPPAD_ASSERT_UNKNOWN( var_sparsity.end() == q );
+		var_sparsity.begin( dep_taddr_[i] );
+		size_t j = var_sparsity.next_element();
+		while( j < q )
+		{	if( transpose )
+				s.add_element(j, i);
+			else
+				s.add_element(i, j);
+			j  = var_sparsity.next_element();
+		}
+	}
+
+}
 
 
 } // END_CPPAD_NAMESPACE

@@ -60,6 +60,11 @@ This section contains a list of the changes to CppAD during 2015
 The purpose of this section is to
 assist you in learning about changes between various versions of CppAD.
 
+$head 08-25$$
+Reduce the amount of memory required for $cref checkpoint$$ functions
+(since sparsity patterns are now being held so they do not need to be
+recalculated).
+
 $head 08-20$$
 Added an example that computes the sparsity pattern for a subset
 of the $cref/Jacobian/sparsity_sub.cpp/ForSparseJac/$$ and a subset
