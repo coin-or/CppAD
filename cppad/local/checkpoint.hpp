@@ -507,17 +507,21 @@ public:
 
 		// sparsity for  s = r * entire_jac_sparse_
 		// s^T = entire_jac_sparse_^T * r^T
-		for(size_t k = 0; k < q; k++)
-		{	// compute row k of the return pattern s
-			std::set<size_t>::const_iterator itr_k;
-			const std::set<size_t>& r_k( rt[k] );
-			for(itr_k = r_k.begin(); itr_k != r_k.end(); itr_k++)
-			{	size_t i = *itr_k;
-				assert( i < m );
+		for(size_t i = 0; i < m; i++)
+		{	// i is the row index in r^T
+			std::set<size_t>::const_iterator itr_i;
+			const std::set<size_t>& r_i( rt[i] );
+			for(itr_i = r_i.begin(); itr_i != r_i.end(); itr_i++)
+			{	// k is the column index in r^T
+				size_t k = *itr_i;
+				assert( k < q );
+				//
+				// i is column index in entire_sparse_jac^T
 				entire_jac_sparse_.begin(i);
 				size_t j = entire_jac_sparse_.next_element();
 				while( j < n )
-				{	st[j].insert(k);
+				{	// j is row index in entire_sparse_jac^T
+					st[j].insert(k);
 					j = entire_jac_sparse_.next_element();
 				}
 			}

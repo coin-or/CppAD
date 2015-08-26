@@ -1,6 +1,6 @@
 /* $Id$ */
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-13 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-15 Bradley M. Bell
 
 CppAD is distributed under multiple licenses. This distribution is under
 the terms of the
@@ -134,12 +134,47 @@ namespace {
 		checkpoint<double>::clear();
 		return ok;
 	}
+
+	bool h_algo(const ADVector& ax, ADVector& ay)
+	{	ay[0] = ax[0];
+		ay[1] = ax[1] + ax[2];
+		return true;
+	}
+	bool test_two(void)
+	{	bool ok = true;
+		using CppAD::checkpoint;
+		using CppAD::ADFun;
+		using CppAD::NearEqual;
+
+		// checkpoint version of H(x)
+		size_t m = 2;
+		size_t n = 3;
+		ADVector ax(n), ay(m);
+		for(size_t j = 0; j < n; j++)
+			ax[j] = double(j);
+		checkpoint<double> h_check("h_check", h_algo, ax, ay);
+
+		// record function using h_check
+		Independent(ax);
+		h_check(ax, ay);
+		ADFun<double> h(ax, ay);
+
+		// compute sparsity pattern h_1(x) = x[1] + x[2]
+		CppAD::vector< std::set<size_t> > r(1), s(1);
+		r[0].insert(1);
+		s = h.RevSparseJac(1, r);
+
+		// check result
+		ok &= s[0] == std::set<size_t>{1, 2};
+
+		return ok;
+	}
 }
 
 bool checkpoint(void)
 {	bool ok = true;
 	ok  &= test_one();
-
+	ok  &= test_two();
 	return ok;
 }
 // END C++
