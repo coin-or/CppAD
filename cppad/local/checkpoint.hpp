@@ -345,11 +345,20 @@ public:
 		CPPAD_ASSERT_UNKNOWN( m == ty.size() / (q+1) );
 		bool ok  = true;
 		//
-		// repeat it every time forward zero is used.
+		if( vx.size() == 0 )
+		{	// during user forward mode
+			if( entire_jac_sparse_.n_set() == 0 )
+				entire_jac_sparse_.resize(0,0);
+			if( entire_hes_sparse_.n_set() == 0 )
+				entire_hes_sparse_.resize(0,0);
+		}
 		if( vx.size() > 0 )
-		{	// Compute Jacobian sparsity pattern.
+		{	// during user recording using this checkpoint function
+			if( entire_jac_sparse_.n_set() == 0 )
+				set_entire_jac_sparse();
 			assert( entire_jac_sparse_.n_set() == m );
 			assert( entire_jac_sparse_.end()   == n );
+			//
 			for(size_t i = 0; i < m; i++)
 			{	vy[i] = false;
 				entire_jac_sparse_.begin(i);
@@ -425,13 +434,17 @@ public:
 		size_t                                  q  ,
 		const vector< std::set<size_t> >&       r  ,
 		      vector< std::set<size_t> >&       s  )
-	{	assert( entire_jac_sparse_.n_set() != 0 );
-		assert( r.size() == f_.Domain() );
-		assert( s.size() == f_.Range() );
-
-		bool ok = true;
+	{	// during user sparsity calculations
 		size_t m = f_.Range();
 		size_t n = f_.Domain();
+		if( entire_jac_sparse_.n_set() == 0 )
+			set_entire_jac_sparse();
+		assert( entire_jac_sparse_.n_set() == m );
+		assert( entire_jac_sparse_.end()   == n );
+		assert( r.size() == n );
+		assert( s.size() == m );
+
+		bool ok = true;
 		for(size_t i = 0; i < m; i++)
 			s[i].clear();
 
@@ -463,16 +476,21 @@ public:
 		size_t                                  q  ,
 		const vector<bool>&                     r  ,
 		      vector<bool>&                     s  )
-	{	assert( r.size() == f_.Domain() * q );
-		assert( s.size() == f_.Range() * q );
-		bool ok = true;
+	{	// during user sparsity calculations
 		size_t m = f_.Range();
 		size_t n = f_.Domain();
+		if( entire_jac_sparse_.n_set() == 0 )
+			set_entire_jac_sparse();
+		assert( entire_jac_sparse_.n_set() == m );
+		assert( entire_jac_sparse_.end()   == n );
+		assert( r.size() == n * q );
+		assert( s.size() == m * q );
+		//
+		bool ok = true;
 		for(size_t i = 0; i < m; i++)
 		{	for(size_t k = 0; k < q; k++)
 				s[i * q + k] = false;
 		}
-
 		// sparsity for  s = entire_jac_sparse_ * r
 		for(size_t i = 0; i < m; i++)
 		{	// compute row i of the return pattern
@@ -496,15 +514,21 @@ public:
 		size_t                                  q  ,
 		const vector< std::set<size_t> >&       rt ,
 		      vector< std::set<size_t> >&       st )
-	{	assert( rt.size() == f_.Range() );
-		assert( st.size() == f_.Domain() );
-		bool ok  = true;
-		//
+	{	// during user sparsity calculations
 		size_t m = f_.Range();
 		size_t n = f_.Domain();
+		if( entire_jac_sparse_.n_set() == 0 )
+			set_entire_jac_sparse();
+		assert( entire_jac_sparse_.n_set() == m );
+		assert( entire_jac_sparse_.end()   == n );
+		assert( rt.size() == m );
+		assert( st.size() == n );
+		//
+		bool ok  = true;
+		//
 		for(size_t j = 0; j < n; j++)
 			st[j].clear();
-
+		//
 		// sparsity for  s = r * entire_jac_sparse_
 		// s^T = entire_jac_sparse_^T * r^T
 		for(size_t i = 0; i < m; i++)
@@ -538,17 +562,22 @@ public:
 		size_t                                  q  ,
 		const vector<bool>&                     rt ,
 		      vector<bool>&                     st )
-	{	assert( rt.size() == f_.Range() * q );
-		assert( st.size() == f_.Domain() * q );
+	{	// during user sparsity calculations
+		size_t m = f_.Range();
+		size_t n = f_.Domain();
+		if( entire_jac_sparse_.n_set() == 0 )
+			set_entire_jac_sparse();
+		assert( entire_jac_sparse_.n_set() == m );
+		assert( entire_jac_sparse_.end()   == n );
+		assert( rt.size() == m * q );
+		assert( st.size() == n * q );
 		bool ok  = true;
 		//
-		size_t n = f_.Domain();
-		size_t m = f_.Range();
 		for(size_t j = 0; j < n; j++)
 		{	for(size_t k = 0; k < q; k++)
 				st[j * q + k] = false;
 		}
-
+		//
 		// sparsity for  s = r * entire_jac_sparse_
 		// s^T = entire_jac_sparse_^T * r^T
 		for(size_t k = 0; k < q; k++)
