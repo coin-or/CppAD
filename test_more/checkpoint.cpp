@@ -159,13 +159,20 @@ namespace {
 		h_check(ax, ay);
 		ADFun<double> h(ax, ay);
 
-		// compute sparsity pattern h_1(x) = x[1] + x[2]
-		CppAD::vector< std::set<size_t> > r(1), s(1);
-		r[0].insert(1);
-		s = h.RevSparseJac(1, r);
+		for(size_t k = 0; k < 2; k++)
+		{	if( k == 0 )
+				h_check.option(CppAD::atomic_base<double>::bool_sparsity_enum);
+			else
+				h_check.option(CppAD::atomic_base<double>::set_sparsity_enum);
 
-		// check result
-		ok &= s[0] == std::set<size_t>{1, 2};
+			// compute sparsity pattern h_1(x) = x[1] + x[2]
+			CppAD::vector< std::set<size_t> > r(1), s(1);
+			r[0].insert(1);
+			s = h.RevSparseJac(1, r);
+
+			// check result
+			ok &= s[0] == std::set<size_t>{1, 2};
+		}
 
 		return ok;
 	}

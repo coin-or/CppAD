@@ -41,7 +41,7 @@ $index checkpoint, function$$
 
 $head Syntax$$
 $codei%checkpoint<%Base%> %atom_fun%(%name%, %algo%, %ax%, %ay%)
-%sv% = atom_fun%.size_var()
+%sv% = %atom_fun%.size_var()
 %atom_fun%.option(%option_value%)
 %algo%(%ax%, %ay%)
 %atom_fun%(%ax%, %ay%)
@@ -74,7 +74,7 @@ You cannot currently be recording
 $codei%AD<%Base%>%$$ operations when the constructor is called.
 $lnext
 This object $icode atom_fun$$ must not be destructed for as long
-as any $code CppAD::ADFun<%Base%>$$ object use this atomic operation.
+as any $codei%ADFun<%Base%>%$$ object uses its atomic operation.
 $lnext
 This class is implemented as a derived class of
 $cref/atomic_base/atomic_ctor/atomic_base/$$ and hence
@@ -391,7 +391,10 @@ public:
 		const vector<Base>&       ty ,
 		      vector<Base>&       px ,
 		const vector<Base>&       py )
-	{
+	{	size_t n = f_.Domain();
+		size_t m = f_.Range();
+		CPPAD_ASSERT_UNKNOWN( n == tx.size() / (q+1) );
+		CPPAD_ASSERT_UNKNOWN( m == ty.size() / (q+1) );
 		CPPAD_ASSERT_UNKNOWN( f_.size_var() > 0 );
 		CPPAD_ASSERT_UNKNOWN( tx.size() % (q+1) == 0 );
 		CPPAD_ASSERT_UNKNOWN( ty.size() % (q+1) == 0 );
@@ -401,8 +404,6 @@ public:
 # ifdef NDEBUG
 		f_.Forward(q, tx);
 # else
-		size_t n = tx.size() / (q+1);
-		size_t m = ty.size() / (q+1);
 		CPPAD_ASSERT_UNKNOWN( px.size() == n * (q+1) );
 		CPPAD_ASSERT_UNKNOWN( py.size() == m * (q+1) );
 		size_t i, j, k;
@@ -580,11 +581,13 @@ public:
 		//
 		// sparsity for  s = r * entire_jac_sparse_
 		// s^T = entire_jac_sparse_^T * r^T
-		for(size_t k = 0; k < q; k++)
-		{	// compute row k of the return pattern s
-			for(size_t i = 0; i < m; i++)
-			{	if( rt[i * q + k] )
-				{	entire_jac_sparse_.begin(i);
+		for(size_t i = 0; i < m; i++)
+		{	// i is the row index in r^T
+			for(size_t k = 0; k < q; k++)
+			{	// k is column index in r^T
+				if( rt[i * q + k] )
+				{	// i is column index in entire_sparse_jac^T
+					entire_jac_sparse_.begin(i);
 					size_t j = entire_jac_sparse_.next_element();
 					while( j < n )
 					{	st[j * q + k ] = true;

@@ -60,6 +60,11 @@ This section contains a list of the changes to CppAD during 2015
 The purpose of this section is to
 assist you in learning about changes between various versions of CppAD.
 
+$head 08-28$$
+Free $cref checkpoint$$ function sparsity patters during
+$cref forward$$ operations that use its atomic operation.
+(They kept between sparsity calculations because they do not change.)
+
 $head 08-26$$
 Fix a bug in $cref RevSparseJac$$ when used to compute sparsity pattern
 for a subset of the rows in a $cref checkpoint$$ function.
