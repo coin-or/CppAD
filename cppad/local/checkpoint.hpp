@@ -299,7 +299,7 @@ private:
 		size_t m = f_.Range();
 		//
 		// set version of sparsity for vector of all ones
-		vector<bool> all_one(m);
+		vectorBool all_one(m);
 		for(size_t i = 0; i < m; i++)
 			all_one[i] = true;
 
@@ -732,8 +732,13 @@ public:
 		bool ok        = true;
 
 		// make sure hes_sparse_set_ has been set
+		if( hes_sparse_bool_.size() != 0 )
+			hes_sparse_bool_.clear();
 		if( hes_sparse_set_.n_set() == 0 )
 			set_hes_sparse_set();
+		CPPAD_ASSERT_UNKNOWN( hes_sparse_bool_.size() == 0 );
+		CPPAD_ASSERT_UNKNOWN( hes_sparse_set_.n_set() == n );
+		CPPAD_ASSERT_UNKNOWN( hes_sparse_set_.end()   == n );
 
 		// compute sparsity pattern for T(x) = S(x) * f'(x)
 		t = f_.RevSparseJac(1, s);
@@ -747,6 +752,7 @@ public:
 		// S(x) = g'(y)
 
 		// compute sparsity pattern for A(x) = f'(x)^T * U(x)
+		// 2DO: change a to use INTERNAL_SPARSE_SET
 		bool transpose = true;
 		vector< std::set<size_t> > a(n);
 		a = f_.RevSparseJac(q, u, transpose);
@@ -804,9 +810,14 @@ public:
 		//
 		bool ok        = true;
 
-		// make sure hes_sparse_set_ has been set
-		if( hes_sparse_set_.n_set() == 0 )
-			set_hes_sparse_set();
+		// make sure hes_sparse_bool_ has been set
+		if( hes_sparse_bool_.size() == 0 )
+			set_hes_sparse_bool();
+		if( hes_sparse_set_.n_set() != 0 )
+			hes_sparse_set_.resize(0, 0);
+		CPPAD_ASSERT_UNKNOWN( hes_sparse_bool_.size() == n * n );
+		CPPAD_ASSERT_UNKNOWN( hes_sparse_set_.n_set() == 0 );
+
 
 		// compute sparsity pattern for T(x) = S(x) * f'(x)
 		t = f_.RevSparseJac(1, s);
@@ -820,6 +831,7 @@ public:
 		// S(x) = g'(y)
 
 		// compute sparsity pattern for A(x) = f'(x)^T * U(x)
+		// 2DO: change a to use vectorBool
 		bool transpose = true;
 		vector<bool> a(n * q);
 		a = f_.RevSparseJac(q, u, transpose);
@@ -830,12 +842,11 @@ public:
 		for(size_t i = 0; i < n; i++)
 		{	for(size_t k = 0; k < q; k++)
 				v[i * q + k] = false;
-			hes_sparse_set_.begin(i);
-			size_t j = hes_sparse_set_.next_element();
-			while( j < n )
-			{	for(size_t k = 0; k < q; k++)
-					v[i * q + k] |= r[ j * q + k ];
-				j = hes_sparse_set_.next_element();
+			for(size_t j = 0; j < n; j++)
+			{	if( hes_sparse_bool_[i * n + j] )
+				{	for(size_t k = 0; k < q; k++)
+						v[i * q + k] |= r[ j * q + k ];
+				}
 			}
 		}
 
@@ -844,7 +855,6 @@ public:
 		{	for(size_t k = 0; k < q; k++)
 				v[ i * q + k ] |= a[ i * q + k];
 		}
-
 		return ok;
 	}
 };
