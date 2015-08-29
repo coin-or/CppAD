@@ -184,14 +184,14 @@ private:
 	ADFun<Base> f_;
 	//
 	/// sparsity for f(x)^{(1)}
-	CPPAD_INTERNAL_SPARSE_SET  entire_jac_sparse_;
+	CPPAD_INTERNAL_SPARSE_SET  jac_sparse_set_;
 	//
 	/// sparsity for sum_i f_i(x)^{(2)}
-	CPPAD_INTERNAL_SPARSE_SET  entire_hes_sparse_;
+	CPPAD_INTERNAL_SPARSE_SET  hes_sparse_set_;
 	//
-	/// set entire_jac_sparse_
-	void set_entire_jac_sparse(void)
-	{	assert( entire_jac_sparse_.n_set() == 0 );
+	/// set jac_sparse_set_
+	void set_jac_sparse_set(void)
+	{	assert( jac_sparse_set_.n_set() == 0 );
 		bool transpose  = false;
 		bool dependency = true;
 		size_t n = f_.Domain();
@@ -204,9 +204,8 @@ private:
 			for(size_t j = 0; j < n; j++)
 				identity.add_element(j, j);
 			f_.ForSparseJacCheckpoint(
-				n, identity, transpose, dependency, entire_jac_sparse_
+				n, identity, transpose, dependency, jac_sparse_set_
 			);
-			f_.size_forward_set(0);
 		}
 		else
 		{	CPPAD_INTERNAL_SPARSE_SET identity;
@@ -214,16 +213,17 @@ private:
 			for(size_t i = 0; i < m; i++)
 				identity.add_element(i, i);
 			f_.RevSparseJacCheckpoint(
-				m, identity, transpose, dependency, entire_jac_sparse_
+				m, identity, transpose, dependency, jac_sparse_set_
 			);
 		}
+		f_.size_forward_set(0);
 		CPPAD_ASSERT_UNKNOWN( f_.size_forward_set() == 0 );
 		CPPAD_ASSERT_UNKNOWN( f_.size_forward_bool() == 0 );
 	}
 	//
-	/// set entire_hes_sparse_
-	void set_entire_hes_sparse(void)
-	{	assert( entire_hes_sparse_.n_set() == 0 );
+	/// set hes_sparse_set_
+	void set_hes_sparse_set(void)
+	{	assert( hes_sparse_set_.n_set() == 0 );
 		size_t n = f_.Domain();
 		size_t m = f_.Range();
 		//
@@ -242,10 +242,10 @@ private:
 		bool dependency = false;
 		f_.ForSparseJac(n, identity, transpose, dependency);
 		f_.RevSparseHesCheckpoint(
-			n, all_one, transpose, entire_hes_sparse_
+			n, all_one, transpose, hes_sparse_set_
 		);
-		CPPAD_ASSERT_UNKNOWN( entire_hes_sparse_.n_set() == n );
-		CPPAD_ASSERT_UNKNOWN( entire_hes_sparse_.end()   == n );
+		CPPAD_ASSERT_UNKNOWN( hes_sparse_set_.n_set() == n );
+		CPPAD_ASSERT_UNKNOWN( hes_sparse_set_.end()   == n );
 		//
 		// drop the forward sparsity results from f_
 		f_.size_forward_set(0);
@@ -291,7 +291,7 @@ public:
 		f_.compare_change_count(0);
 		//
 		// set sparsity for entire Jacobian once and for all
-		set_entire_jac_sparse();
+		set_jac_sparse_set();
 	}
 	/*!
 	Implement the user call to <tt>atom_fun.size_var()</tt>.
@@ -347,26 +347,26 @@ public:
 		//
 		if( vx.size() == 0 )
 		{	// during user forward mode
-			if( entire_jac_sparse_.n_set() == 0 )
-				entire_jac_sparse_.resize(0,0);
-			if( entire_hes_sparse_.n_set() == 0 )
-				entire_hes_sparse_.resize(0,0);
+			if( jac_sparse_set_.n_set() == 0 )
+				jac_sparse_set_.resize(0,0);
+			if( hes_sparse_set_.n_set() == 0 )
+				hes_sparse_set_.resize(0,0);
 		}
 		if( vx.size() > 0 )
 		{	// during user recording using this checkpoint function
-			if( entire_jac_sparse_.n_set() == 0 )
-				set_entire_jac_sparse();
-			assert( entire_jac_sparse_.n_set() == m );
-			assert( entire_jac_sparse_.end()   == n );
+			if( jac_sparse_set_.n_set() == 0 )
+				set_jac_sparse_set();
+			assert( jac_sparse_set_.n_set() == m );
+			assert( jac_sparse_set_.end()   == n );
 			//
 			for(size_t i = 0; i < m; i++)
 			{	vy[i] = false;
-				entire_jac_sparse_.begin(i);
-				size_t j = entire_jac_sparse_.next_element();
+				jac_sparse_set_.begin(i);
+				size_t j = jac_sparse_set_.next_element();
 				while(j < n )
 				{	// y[i] depends on the value of x[j]
 					vy[i] |= vx[j];
-					j = entire_jac_sparse_.next_element();
+					j = jac_sparse_set_.next_element();
 				}
 			}
 		}
@@ -438,10 +438,10 @@ public:
 	{	// during user sparsity calculations
 		size_t m = f_.Range();
 		size_t n = f_.Domain();
-		if( entire_jac_sparse_.n_set() == 0 )
-			set_entire_jac_sparse();
-		assert( entire_jac_sparse_.n_set() == m );
-		assert( entire_jac_sparse_.end()   == n );
+		if( jac_sparse_set_.n_set() == 0 )
+			set_jac_sparse_set();
+		assert( jac_sparse_set_.n_set() == m );
+		assert( jac_sparse_set_.end()   == n );
 		assert( r.size() == n );
 		assert( s.size() == m );
 
@@ -449,11 +449,11 @@ public:
 		for(size_t i = 0; i < m; i++)
 			s[i].clear();
 
-		// sparsity for  s = entire_jac_sparse_ * r
+		// sparsity for  s = jac_sparse_set_ * r
 		for(size_t i = 0; i < m; i++)
 		{	// compute row i of the return pattern
-			entire_jac_sparse_.begin(i);
-			size_t j = entire_jac_sparse_.next_element();
+			jac_sparse_set_.begin(i);
+			size_t j = jac_sparse_set_.next_element();
 			while(j < n )
 			{	std::set<size_t>::const_iterator itr_j;
 				const std::set<size_t>& r_j( r[j] );
@@ -462,7 +462,7 @@ public:
 					assert( k < q );
 					s[i].insert(k);
 				}
-				j = entire_jac_sparse_.next_element();
+				j = jac_sparse_set_.next_element();
 			}
 		}
 
@@ -480,10 +480,10 @@ public:
 	{	// during user sparsity calculations
 		size_t m = f_.Range();
 		size_t n = f_.Domain();
-		if( entire_jac_sparse_.n_set() == 0 )
-			set_entire_jac_sparse();
-		assert( entire_jac_sparse_.n_set() == m );
-		assert( entire_jac_sparse_.end()   == n );
+		if( jac_sparse_set_.n_set() == 0 )
+			set_jac_sparse_set();
+		assert( jac_sparse_set_.n_set() == m );
+		assert( jac_sparse_set_.end()   == n );
 		assert( r.size() == n * q );
 		assert( s.size() == m * q );
 		//
@@ -492,15 +492,15 @@ public:
 		{	for(size_t k = 0; k < q; k++)
 				s[i * q + k] = false;
 		}
-		// sparsity for  s = entire_jac_sparse_ * r
+		// sparsity for  s = jac_sparse_set_ * r
 		for(size_t i = 0; i < m; i++)
 		{	// compute row i of the return pattern
-			entire_jac_sparse_.begin(i);
-			size_t j = entire_jac_sparse_.next_element();
+			jac_sparse_set_.begin(i);
+			size_t j = jac_sparse_set_.next_element();
 			while(j < n )
 			{	for(size_t k = 0; k < q; k++)
 					s[i * q + k] |= r[j * q + k ];
-				j = entire_jac_sparse_.next_element();
+				j = jac_sparse_set_.next_element();
 			}
 		}
 
@@ -518,10 +518,10 @@ public:
 	{	// during user sparsity calculations
 		size_t m = f_.Range();
 		size_t n = f_.Domain();
-		if( entire_jac_sparse_.n_set() == 0 )
-			set_entire_jac_sparse();
-		assert( entire_jac_sparse_.n_set() == m );
-		assert( entire_jac_sparse_.end()   == n );
+		if( jac_sparse_set_.n_set() == 0 )
+			set_jac_sparse_set();
+		assert( jac_sparse_set_.n_set() == m );
+		assert( jac_sparse_set_.end()   == n );
 		assert( rt.size() == m );
 		assert( st.size() == n );
 		//
@@ -530,8 +530,8 @@ public:
 		for(size_t j = 0; j < n; j++)
 			st[j].clear();
 		//
-		// sparsity for  s = r * entire_jac_sparse_
-		// s^T = entire_jac_sparse_^T * r^T
+		// sparsity for  s = r * jac_sparse_set_
+		// s^T = jac_sparse_set_^T * r^T
 		for(size_t i = 0; i < m; i++)
 		{	// i is the row index in r^T
 			std::set<size_t>::const_iterator itr_i;
@@ -541,13 +541,13 @@ public:
 				size_t k = *itr_i;
 				assert( k < q );
 				//
-				// i is column index in entire_sparse_jac^T
-				entire_jac_sparse_.begin(i);
-				size_t j = entire_jac_sparse_.next_element();
+				// i is column index in jac_sparse_set^T
+				jac_sparse_set_.begin(i);
+				size_t j = jac_sparse_set_.next_element();
 				while( j < n )
-				{	// j is row index in entire_sparse_jac^T
+				{	// j is row index in jac_sparse_set^T
 					st[j].insert(k);
-					j = entire_jac_sparse_.next_element();
+					j = jac_sparse_set_.next_element();
 				}
 			}
 		}
@@ -566,10 +566,10 @@ public:
 	{	// during user sparsity calculations
 		size_t m = f_.Range();
 		size_t n = f_.Domain();
-		if( entire_jac_sparse_.n_set() == 0 )
-			set_entire_jac_sparse();
-		assert( entire_jac_sparse_.n_set() == m );
-		assert( entire_jac_sparse_.end()   == n );
+		if( jac_sparse_set_.n_set() == 0 )
+			set_jac_sparse_set();
+		assert( jac_sparse_set_.n_set() == m );
+		assert( jac_sparse_set_.end()   == n );
 		assert( rt.size() == m * q );
 		assert( st.size() == n * q );
 		bool ok  = true;
@@ -579,19 +579,19 @@ public:
 				st[j * q + k] = false;
 		}
 		//
-		// sparsity for  s = r * entire_jac_sparse_
-		// s^T = entire_jac_sparse_^T * r^T
+		// sparsity for  s = r * jac_sparse_set_
+		// s^T = jac_sparse_set_^T * r^T
 		for(size_t i = 0; i < m; i++)
 		{	// i is the row index in r^T
 			for(size_t k = 0; k < q; k++)
 			{	// k is column index in r^T
 				if( rt[i * q + k] )
-				{	// i is column index in entire_sparse_jac^T
-					entire_jac_sparse_.begin(i);
-					size_t j = entire_jac_sparse_.next_element();
+				{	// i is column index in jac_sparse_set^T
+					jac_sparse_set_.begin(i);
+					size_t j = jac_sparse_set_.next_element();
 					while( j < n )
 					{	st[j * q + k ] = true;
-						j = entire_jac_sparse_.next_element();
+						j = jac_sparse_set_.next_element();
 					}
 				}
 			}
@@ -623,9 +623,9 @@ public:
 		//
 		bool ok        = true;
 
-		// make sure entire_hes_sparse_ has been set
-		if( entire_hes_sparse_.n_set() == 0 )
-			set_entire_hes_sparse();
+		// make sure hes_sparse_set_ has been set
+		if( hes_sparse_set_.n_set() == 0 )
+			set_hes_sparse_set();
 
 		// compute sparsity pattern for T(x) = S(x) * f'(x)
 		t = f_.RevSparseJac(1, s);
@@ -645,11 +645,11 @@ public:
 
 		// Need sparsity pattern for H(x) = (S(x) * f(x))''(x) * R,
 		// but use less efficient sparsity for  f(x)''(x) * R so that
-		// entire_hes_sparse_ can be used every time this is needed.
+		// hes_sparse_set_ can be used every time this is needed.
 		for(size_t i = 0; i < n; i++)
 		{	v[i].clear();
-			entire_hes_sparse_.begin(i);
-			size_t j = entire_hes_sparse_.next_element();
+			hes_sparse_set_.begin(i);
+			size_t j = hes_sparse_set_.next_element();
 			while( j < n )
 			{	std::set<size_t>::const_iterator itr_j;
 				const std::set<size_t>& r_j( r[j] );
@@ -657,7 +657,7 @@ public:
 				{	size_t k = *itr_j;
 					v[i].insert(k);
 				}
-				j = entire_hes_sparse_.next_element();
+				j = hes_sparse_set_.next_element();
 			}
 		}
 		// compute sparsity pattern for V(x) = A(x) + H(x)
@@ -696,9 +696,9 @@ public:
 		//
 		bool ok        = true;
 
-		// make sure entire_hes_sparse_ has been set
-		if( entire_hes_sparse_.n_set() == 0 )
-			set_entire_hes_sparse();
+		// make sure hes_sparse_set_ has been set
+		if( hes_sparse_set_.n_set() == 0 )
+			set_hes_sparse_set();
 
 		// compute sparsity pattern for T(x) = S(x) * f'(x)
 		t = f_.RevSparseJac(1, s);
@@ -718,16 +718,16 @@ public:
 
 		// Need sparsity pattern for H(x) = (S(x) * f(x))''(x) * R,
 		// but use less efficient sparsity for  f(x)''(x) * R so that
-		// entire_hes_sparse_ can be used every time this is needed.
+		// hes_sparse_set_ can be used every time this is needed.
 		for(size_t i = 0; i < n; i++)
 		{	for(size_t k = 0; k < q; k++)
 				v[i * q + k] = false;
-			entire_hes_sparse_.begin(i);
-			size_t j = entire_hes_sparse_.next_element();
+			hes_sparse_set_.begin(i);
+			size_t j = hes_sparse_set_.next_element();
 			while( j < n )
 			{	for(size_t k = 0; k < q; k++)
 					v[i * q + k] |= r[ j * q + k ];
-				j = entire_hes_sparse_.next_element();
+				j = hes_sparse_set_.next_element();
 			}
 		}
 
