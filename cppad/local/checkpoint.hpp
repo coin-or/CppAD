@@ -192,6 +192,9 @@ private:
 	CPPAD_INTERNAL_SPARSE_SET  hes_sparse_set_;
 	vectorBool                 hes_sparse_bool_;
 	// ------------------------------------------------------------------------
+	typename atomic_base<Base>::option_enum sparsity(void)
+	{	return static_cast< atomic_base<Base>* >(this)->sparsity(); }
+	// ------------------------------------------------------------------------
 	/// set jac_sparse_set_
 	void set_jac_sparse_set(void)
 	{	assert( jac_sparse_set_.n_set() == 0 );
@@ -224,7 +227,7 @@ private:
 		CPPAD_ASSERT_UNKNOWN( f_.size_forward_bool() == 0 );
 	}
 	/// set jac_sparse_bool_
-	void set_jac_sparse_bool_(void)
+	void set_jac_sparse_bool(void)
 	{	assert( jac_sparse_bool_.size() == 0 );
 		bool transpose  = false;
 		bool dependency = true;
@@ -241,10 +244,10 @@ private:
 			jac_sparse_bool_ = f_.ForSparseJac(
 				n, identity, transpose, dependency
 			);
-			f_.size_forward_set(0);
+			f_.size_forward_bool(0);
 		}
 		else
-		{	vectorBool identity(m * n);
+		{	vectorBool identity(m * m);
 			for(size_t j = 0; j < m; j++)
 			{	for(size_t i = 0; i < m; i++)
 					identity[ i * m + j ] = (i == j);
@@ -290,7 +293,7 @@ private:
 		f_.size_forward_set(0);
 	}
 	/// set hes_sparse_bool_
-	void set_hes_sparse_bool_(void)
+	void set_hes_sparse_bool(void)
 	{	assert( hes_sparse_bool_.size() == 0 );
 		size_t n = f_.Domain();
 		size_t m = f_.Range();
@@ -428,20 +431,41 @@ public:
 				hes_sparse_bool_.clear();
 		}
 		if( vx.size() > 0 )
-		{	// during user recording using this checkpoint function
-			if( jac_sparse_set_.n_set() == 0 )
-				set_jac_sparse_set();
-			assert( jac_sparse_set_.n_set() == m );
-			assert( jac_sparse_set_.end()   == n );
-			//
-			for(size_t i = 0; i < m; i++)
-			{	vy[i] = false;
-				jac_sparse_set_.begin(i);
-				size_t j = jac_sparse_set_.next_element();
-				while(j < n )
-				{	// y[i] depends on the value of x[j]
-					vy[i] |= vx[j];
-					j = jac_sparse_set_.next_element();
+		{	// need Jacobian sparsity pattern to determine variable relation
+			// during user recording using checkpoint functions
+			if( sparsity() == atomic_base<Base>::set_sparsity_enum )
+			{	if( jac_sparse_set_.n_set() == 0 )
+					set_jac_sparse_set();
+				assert( jac_sparse_set_.n_set() == m );
+				assert( jac_sparse_set_.end()   == n );
+				//
+				for(size_t i = 0; i < m; i++)
+				{	vy[i] = false;
+					jac_sparse_set_.begin(i);
+					size_t j = jac_sparse_set_.next_element();
+					while(j < n )
+					{	// y[i] depends on the value of x[j]
+						vy[i] |= vx[j];
+						j = jac_sparse_set_.next_element();
+					}
+				}
+			}
+			else
+			{	if( jac_sparse_set_.n_set() != 0 )
+					jac_sparse_set_.resize(0, 0);
+				if( jac_sparse_bool_.size() == 0 )
+					set_jac_sparse_bool();
+				assert( jac_sparse_set_.n_set() == 0 );
+				assert( jac_sparse_bool_.size() == m * n );
+				//
+				for(size_t i = 0; i < m; i++)
+				{	vy[i] = false;
+					for(size_t j = 0; j < n; j++)
+					{	if( jac_sparse_bool_[ i * n + j ] )
+						{	// y[i] depends on the value of x[j]
+							vy[i] |= vx[j];
+						}
+					}
 				}
 			}
 		}

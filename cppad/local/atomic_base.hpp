@@ -194,7 +194,7 @@ name used for error reporting
 */
 atomic_base( const std::string&  name) :
 index_( class_object().size() )     ,
-sparsity_( set_sparsity_enum )
+sparsity_( bool_sparsity_enum )
 {	CPPAD_ASSERT_KNOWN(
 		! thread_alloc::in_parallel() ,
 		"atomic_base: constructor cannot be called in parallel mode."
