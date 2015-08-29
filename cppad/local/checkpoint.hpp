@@ -186,11 +186,11 @@ private:
 	//
 	/// sparsity for entire Jacobian f(x)^{(1)} does not change so can cache it
 	CPPAD_INTERNAL_SPARSE_SET  jac_sparse_set_;
-	sparse_pack                jac_sparse_bool_;
+	vectorBool                 jac_sparse_bool_;
 	//
 	/// sparsity for sum_i f_i(x)^{(2)} does not change so can cache it
 	CPPAD_INTERNAL_SPARSE_SET  hes_sparse_set_;
-	sparse_pack                hes_sparse_bool_;
+	vectorBool                 hes_sparse_bool_;
 	// ------------------------------------------------------------------------
 	/// set jac_sparse_set_
 	void set_jac_sparse_set(void)
@@ -225,7 +225,7 @@ private:
 	}
 	/// set jac_sparse_bool_
 	void set_jac_sparse_bool_(void)
-	{	assert( jac_sparse_bool_.n_set() == 0 );
+	{	assert( jac_sparse_bool_.size() == 0 );
 		bool transpose  = false;
 		bool dependency = true;
 		size_t n = f_.Domain();
@@ -291,7 +291,7 @@ private:
 	}
 	/// set hes_sparse_bool_
 	void set_hes_sparse_bool_(void)
-	{	assert( hes_sparse_bool_.n_set() == 0 );
+	{	assert( hes_sparse_bool_.size() == 0 );
 		size_t n = f_.Domain();
 		size_t m = f_.Range();
 		//
@@ -312,8 +312,7 @@ private:
 		bool dependency = false;
 		f_.ForSparseJac(n, identity, transpose, dependency);
 		hes_sparse_bool_ = f_.RevSparseHes(n, all_one, transpose);
-		CPPAD_ASSERT_UNKNOWN( hes_sparse_bool_.n_set() == n );
-		CPPAD_ASSERT_UNKNOWN( hes_sparse_bool_.end()   == n );
+		CPPAD_ASSERT_UNKNOWN( hes_sparse_bool_.size() == n * n );
 		//
 		// drop the forward sparsity results from f_
 		f_.size_forward_bool(0);
@@ -360,9 +359,6 @@ public:
 		// now disable checking of comparison opertaions
 		// 2DO: add a debugging mode that checks for changes and aborts
 		f_.compare_change_count(0);
-		//
-		// set sparsity for entire Jacobian once and for all
-		set_jac_sparse_set();
 	}
 	// ------------------------------------------------------------------------
 	/*!
@@ -421,10 +417,15 @@ public:
 		//
 		if( vx.size() == 0 )
 		{	// during user forward mode
-			if( jac_sparse_set_.n_set() == 0 )
+			if( jac_sparse_set_.n_set() != 0 )
 				jac_sparse_set_.resize(0,0);
-			if( hes_sparse_set_.n_set() == 0 )
+			if( jac_sparse_bool_.size() != 0 )
+				jac_sparse_bool_.clear();
+			//
+			if( hes_sparse_set_.n_set() != 0 )
 				hes_sparse_set_.resize(0,0);
+			if( hes_sparse_bool_.size() != 0 )
+				hes_sparse_bool_.clear();
 		}
 		if( vx.size() > 0 )
 		{	// during user recording using this checkpoint function
