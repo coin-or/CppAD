@@ -539,8 +539,11 @@ public:
 	{	// during user sparsity calculations
 		size_t m = f_.Range();
 		size_t n = f_.Domain();
+		if( jac_sparse_bool_.size() != 0 )
+			jac_sparse_bool_.clear();
 		if( jac_sparse_set_.n_set() == 0 )
 			set_jac_sparse_set();
+		CPPAD_ASSERT_UNKNOWN( jac_sparse_bool_.size() == 0 );
 		CPPAD_ASSERT_UNKNOWN( jac_sparse_set_.n_set() == m );
 		CPPAD_ASSERT_UNKNOWN( jac_sparse_set_.end()   == n );
 		CPPAD_ASSERT_UNKNOWN( r.size() == n );
@@ -581,10 +584,12 @@ public:
 	{	// during user sparsity calculations
 		size_t m = f_.Range();
 		size_t n = f_.Domain();
-		if( jac_sparse_set_.n_set() == 0 )
-			set_jac_sparse_set();
-		CPPAD_ASSERT_UNKNOWN( jac_sparse_set_.n_set() == m );
-		CPPAD_ASSERT_UNKNOWN( jac_sparse_set_.end()   == n );
+		if( jac_sparse_bool_.size() == 0 )
+			set_jac_sparse_bool();
+		if( jac_sparse_set_.n_set() != 0 )
+			jac_sparse_set_.resize(0, 0);
+		CPPAD_ASSERT_UNKNOWN( jac_sparse_bool_.size() == m * n );
+		CPPAD_ASSERT_UNKNOWN( jac_sparse_set_.n_set() == 0 );
 		CPPAD_ASSERT_UNKNOWN( r.size() == n * q );
 		CPPAD_ASSERT_UNKNOWN( s.size() == m * q );
 		//
@@ -593,18 +598,16 @@ public:
 		{	for(size_t k = 0; k < q; k++)
 				s[i * q + k] = false;
 		}
-		// sparsity for  s = jac_sparse_set_ * r
+		// sparsity for  s = jac_sparse_bool_ * r
 		for(size_t i = 0; i < m; i++)
 		{	// compute row i of the return pattern
-			jac_sparse_set_.begin(i);
-			size_t j = jac_sparse_set_.next_element();
-			while(j < n )
-			{	for(size_t k = 0; k < q; k++)
-					s[i * q + k] |= r[j * q + k ];
-				j = jac_sparse_set_.next_element();
+			for(size_t j = 0; j < n; j++)
+			{	if( jac_sparse_bool_[ i * n + j] )
+				{	for(size_t k = 0; k < q; k++)
+						s[i * q + k] |= r[j * q + k ];
+				}
 			}
 		}
-
 		return ok;
 	}
 	// ------------------------------------------------------------------------
