@@ -197,7 +197,7 @@ private:
 	// ------------------------------------------------------------------------
 	/// set jac_sparse_set_
 	void set_jac_sparse_set(void)
-	{	assert( jac_sparse_set_.n_set() == 0 );
+	{	CPPAD_ASSERT_UNKNOWN( jac_sparse_set_.n_set() == 0 );
 		bool transpose  = false;
 		bool dependency = true;
 		size_t n = f_.Domain();
@@ -228,7 +228,7 @@ private:
 	}
 	/// set jac_sparse_bool_
 	void set_jac_sparse_bool(void)
-	{	assert( jac_sparse_bool_.size() == 0 );
+	{	CPPAD_ASSERT_UNKNOWN( jac_sparse_bool_.size() == 0 );
 		bool transpose  = false;
 		bool dependency = true;
 		size_t n = f_.Domain();
@@ -262,7 +262,7 @@ private:
 	// ------------------------------------------------------------------------
 	/// set hes_sparse_set_
 	void set_hes_sparse_set(void)
-	{	assert( hes_sparse_set_.n_set() == 0 );
+	{	CPPAD_ASSERT_UNKNOWN( hes_sparse_set_.n_set() == 0 );
 		size_t n = f_.Domain();
 		size_t m = f_.Range();
 		//
@@ -294,7 +294,7 @@ private:
 	}
 	/// set hes_sparse_bool_
 	void set_hes_sparse_bool(void)
-	{	assert( hes_sparse_bool_.size() == 0 );
+	{	CPPAD_ASSERT_UNKNOWN( hes_sparse_bool_.size() == 0 );
 		size_t n = f_.Domain();
 		size_t m = f_.Range();
 		//
@@ -436,8 +436,8 @@ public:
 			if( sparsity() == atomic_base<Base>::set_sparsity_enum )
 			{	if( jac_sparse_set_.n_set() == 0 )
 					set_jac_sparse_set();
-				assert( jac_sparse_set_.n_set() == m );
-				assert( jac_sparse_set_.end()   == n );
+				CPPAD_ASSERT_UNKNOWN( jac_sparse_set_.n_set() == m );
+				CPPAD_ASSERT_UNKNOWN( jac_sparse_set_.end()   == n );
 				//
 				for(size_t i = 0; i < m; i++)
 				{	vy[i] = false;
@@ -455,8 +455,8 @@ public:
 					jac_sparse_set_.resize(0, 0);
 				if( jac_sparse_bool_.size() == 0 )
 					set_jac_sparse_bool();
-				assert( jac_sparse_set_.n_set() == 0 );
-				assert( jac_sparse_bool_.size() == m * n );
+				CPPAD_ASSERT_UNKNOWN( jac_sparse_set_.n_set() == 0 );
+				CPPAD_ASSERT_UNKNOWN( jac_sparse_bool_.size() == m * n );
 				//
 				for(size_t i = 0; i < m; i++)
 				{	vy[i] = false;
@@ -541,10 +541,10 @@ public:
 		size_t n = f_.Domain();
 		if( jac_sparse_set_.n_set() == 0 )
 			set_jac_sparse_set();
-		assert( jac_sparse_set_.n_set() == m );
-		assert( jac_sparse_set_.end()   == n );
-		assert( r.size() == n );
-		assert( s.size() == m );
+		CPPAD_ASSERT_UNKNOWN( jac_sparse_set_.n_set() == m );
+		CPPAD_ASSERT_UNKNOWN( jac_sparse_set_.end()   == n );
+		CPPAD_ASSERT_UNKNOWN( r.size() == n );
+		CPPAD_ASSERT_UNKNOWN( s.size() == m );
 
 		bool ok = true;
 		for(size_t i = 0; i < m; i++)
@@ -560,7 +560,7 @@ public:
 				const std::set<size_t>& r_j( r[j] );
 				for(itr_j = r_j.begin(); itr_j != r_j.end(); itr_j++)
 				{	size_t k = *itr_j;
-					assert( k < q );
+					CPPAD_ASSERT_UNKNOWN( k < q );
 					s[i].insert(k);
 				}
 				j = jac_sparse_set_.next_element();
@@ -583,10 +583,10 @@ public:
 		size_t n = f_.Domain();
 		if( jac_sparse_set_.n_set() == 0 )
 			set_jac_sparse_set();
-		assert( jac_sparse_set_.n_set() == m );
-		assert( jac_sparse_set_.end()   == n );
-		assert( r.size() == n * q );
-		assert( s.size() == m * q );
+		CPPAD_ASSERT_UNKNOWN( jac_sparse_set_.n_set() == m );
+		CPPAD_ASSERT_UNKNOWN( jac_sparse_set_.end()   == n );
+		CPPAD_ASSERT_UNKNOWN( r.size() == n * q );
+		CPPAD_ASSERT_UNKNOWN( s.size() == m * q );
 		//
 		bool ok = true;
 		for(size_t i = 0; i < m; i++)
@@ -622,10 +622,10 @@ public:
 		size_t n = f_.Domain();
 		if( jac_sparse_set_.n_set() == 0 )
 			set_jac_sparse_set();
-		assert( jac_sparse_set_.n_set() == m );
-		assert( jac_sparse_set_.end()   == n );
-		assert( rt.size() == m );
-		assert( st.size() == n );
+		CPPAD_ASSERT_UNKNOWN( jac_sparse_set_.n_set() == m );
+		CPPAD_ASSERT_UNKNOWN( jac_sparse_set_.end()   == n );
+		CPPAD_ASSERT_UNKNOWN( rt.size() == m );
+		CPPAD_ASSERT_UNKNOWN( st.size() == n );
 		//
 		bool ok  = true;
 		//
@@ -641,7 +641,7 @@ public:
 			for(itr_i = r_i.begin(); itr_i != r_i.end(); itr_i++)
 			{	// k is the column index in r^T
 				size_t k = *itr_i;
-				assert( k < q );
+				CPPAD_ASSERT_UNKNOWN( k < q );
 				//
 				// i is column index in jac_sparse_set^T
 				jac_sparse_set_.begin(i);
@@ -670,10 +670,10 @@ public:
 		size_t n = f_.Domain();
 		if( jac_sparse_set_.n_set() == 0 )
 			set_jac_sparse_set();
-		assert( jac_sparse_set_.n_set() == m );
-		assert( jac_sparse_set_.end()   == n );
-		assert( rt.size() == m * q );
-		assert( st.size() == n * q );
+		CPPAD_ASSERT_UNKNOWN( jac_sparse_set_.n_set() == m );
+		CPPAD_ASSERT_UNKNOWN( jac_sparse_set_.end()   == n );
+		CPPAD_ASSERT_UNKNOWN( rt.size() == m * q );
+		CPPAD_ASSERT_UNKNOWN( st.size() == n * q );
 		bool ok  = true;
 		//
 		for(size_t j = 0; j < n; j++)

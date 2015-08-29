@@ -60,6 +60,10 @@ This section contains a list of the changes to CppAD during 2015
 The purpose of this section is to
 assist you in learning about changes between various versions of CppAD.
 
+$head 08-29$$
+Some asserts in the $cref checkpoint$$ implementation were not using
+the CppAD $cref ErrorHandler$$. This has been fixed.
+
 $head 08-28$$
 Free $cref checkpoint$$ function sparsity patters during
 $cref forward$$ operations that use its atomic operation.
