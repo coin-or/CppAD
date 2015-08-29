@@ -792,6 +792,30 @@ This is used by the optimizer to obtain the correct dependency relations.
 The input size and elements of s do not matter.
 On output, s is the sparsity pattern for the matrix \f$ S(x) \f$
 or \f$ S(x)^T \f$ depending on transpose.
+
+\par Side Effects
+If \c VectorSet::value_type is \c bool,
+the forward sparsity pattern for all of the variables on the
+tape is stored in \c for_jac_sparse_pack__.
+In this case
+\verbatim
+	for_jac_sparse_pack_.n_set() == num_var_tape_
+	for_jac_sparse_pack_.end() == q
+	for_jac_sparse_set_.n_set()  == 0
+	for_jac_sparse_set_.end()  == 0
+\endverbatim
+\n
+\n
+If \c VectorSet::value_type is \c std::set<size_t>,
+the forward sparsity pattern for all of the variables on the
+tape is stored in \c for_jac_sparse_set__.
+In this case
+\verbatim
+	for_jac_sparse_set_.n_set()   == num_var_tape_
+	for_jac_sparse_set_.end()   == q
+	for_jac_sparse_pack_.n_set()  == 0
+	for_jac_sparse_pack_.end()  == 0
+\endverbatim
 */
 template <class Base>
 void ADFun<Base>::ForSparseJacCheckpoint(
@@ -818,9 +842,12 @@ void ADFun<Base>::ForSparseJacCheckpoint(
 	}
 # endif
 
-	// holds reverse Jacobian sparsity pattern for all variables
-	CPPAD_INTERNAL_SPARSE_SET var_sparsity;
-	var_sparsity.resize(num_var_tape_, q);
+	// free all memory currently in sparsity patterns
+	for_jac_sparse_pack_.resize(0, 0);
+	for_jac_sparse_set_.resize(0, 0);
+
+	// allocate new sparsity pattern
+	for_jac_sparse_set_.resize(num_var_tape_, q);
 
 	// set sparsity pattern for dependent variables
 	if( transpose )
@@ -828,7 +855,7 @@ void ADFun<Base>::ForSparseJacCheckpoint(
 		{	r.begin(i);
 			size_t j = r.next_element();
 			while( j < n )
-			{	var_sparsity.add_element( ind_taddr_[j], i );
+			{	for_jac_sparse_set_.add_element( ind_taddr_[j], i );
 				j = r.next_element();
 			}
 		}
@@ -838,7 +865,7 @@ void ADFun<Base>::ForSparseJacCheckpoint(
 		{	r.begin(j);
 			size_t i = r.next_element();
 			while( i < q )
-			{	var_sparsity.add_element( ind_taddr_[j], i );
+			{	for_jac_sparse_set_.add_element( ind_taddr_[j], i );
 				i = r.next_element();
 			}
 		}
@@ -850,7 +877,7 @@ void ADFun<Base>::ForSparseJacCheckpoint(
 		n,
 		num_var_tape_,
 		&play_,
-		var_sparsity
+		for_jac_sparse_set_
 	);
 
 	// dimension the return value
@@ -863,16 +890,16 @@ void ADFun<Base>::ForSparseJacCheckpoint(
 	for(size_t i = 0; i < m; i++)
 	{	CPPAD_ASSERT_UNKNOWN( dep_taddr_[i] < num_var_tape_ );
 
-		// extract the result from var_sparsity
-		CPPAD_ASSERT_UNKNOWN( var_sparsity.end() == q );
-		var_sparsity.begin( dep_taddr_[i] );
-		size_t j = var_sparsity.next_element();
+		// extract the result from for_jac_sparse_set_
+		CPPAD_ASSERT_UNKNOWN( for_jac_sparse_set_.end() == q );
+		for_jac_sparse_set_.begin( dep_taddr_[i] );
+		size_t j = for_jac_sparse_set_.next_element();
 		while( j < q )
 		{	if( transpose )
 				s.add_element(j, i);
 			else
 				s.add_element(i, j);
-			j  = var_sparsity.next_element();
+			j  = for_jac_sparse_set_.next_element();
 		}
 	}
 

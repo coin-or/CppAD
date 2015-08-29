@@ -269,14 +269,17 @@ private:
 			all_one[i] = true;
 
 		// set version of sparsity for n by n idendity matrix
-		vector< std::set<size_t> > identity(n);
+		CPPAD_INTERNAL_SPARSE_SET identity;
+		identity.resize(n, n);
 		for(size_t j = 0; j < n; j++)
-			identity[j].insert(j);
+			identity.add_element(j, j);
 
 		// compute sparsity pattern for H(x) = sum_i f_i(x)^{(2)}
 		bool transpose  = false;
 		bool dependency = false;
-		f_.ForSparseJac(n, identity, transpose, dependency);
+		f_.ForSparseJacCheckpoint(
+			n, identity, transpose, dependency, jac_sparse_set_
+		);
 		f_.RevSparseHesCheckpoint(
 			n, all_one, transpose, hes_sparse_set_
 		);
