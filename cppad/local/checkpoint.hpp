@@ -14,6 +14,7 @@ Please visit http://www.coin-or.org/CppAD/ for information on other licenses.
 -------------------------------------------------------------------------- */
 # include <cppad/local/sparse_set.hpp>
 # include <cppad/local/sparse_list.hpp>
+# include <cppad/local/sparse_pack.hpp>
 
 namespace CppAD { // BEGIN_CPPAD_NAMESPACE
 /*!
@@ -183,12 +184,14 @@ class checkpoint : public atomic_base<Base> {
 private:
 	ADFun<Base> f_;
 	//
-	/// sparsity for f(x)^{(1)}
+	/// sparsity for entire Jacobian f(x)^{(1)} does not change so can cache it
 	CPPAD_INTERNAL_SPARSE_SET  jac_sparse_set_;
+	sparse_pack                jac_sparse_bool_;
 	//
-	/// sparsity for sum_i f_i(x)^{(2)}
+	/// sparsity for sum_i f_i(x)^{(2)} does not change so can cache it
 	CPPAD_INTERNAL_SPARSE_SET  hes_sparse_set_;
-	//
+	sparse_pack                hes_sparse_bool_;
+	// ------------------------------------------------------------------------
 	/// set jac_sparse_set_
 	void set_jac_sparse_set(void)
 	{	assert( jac_sparse_set_.n_set() == 0 );
@@ -206,6 +209,7 @@ private:
 			f_.ForSparseJacCheckpoint(
 				n, identity, transpose, dependency, jac_sparse_set_
 			);
+			f_.size_forward_set(0);
 		}
 		else
 		{	CPPAD_INTERNAL_SPARSE_SET identity;
@@ -216,11 +220,43 @@ private:
 				m, identity, transpose, dependency, jac_sparse_set_
 			);
 		}
-		f_.size_forward_set(0);
 		CPPAD_ASSERT_UNKNOWN( f_.size_forward_set() == 0 );
 		CPPAD_ASSERT_UNKNOWN( f_.size_forward_bool() == 0 );
 	}
-	//
+	/// set jac_sparse_bool_
+	void set_jac_sparse_bool_(void)
+	{	assert( jac_sparse_bool_.n_set() == 0 );
+		bool transpose  = false;
+		bool dependency = true;
+		size_t n = f_.Domain();
+		size_t m = f_.Range();
+		// Use the choice for forward / reverse that results in smaller
+		// size for the sparsity pattern of all variables in the tape.
+		if( n <= m )
+		{	vectorBool identity(n * n);
+			for(size_t j = 0; j < n; j++)
+			{	for(size_t i = 0; i < n; i++)
+					identity[ i * n + j ] = (i == j);
+			}
+			jac_sparse_bool_ = f_.ForSparseJac(
+				n, identity, transpose, dependency
+			);
+			f_.size_forward_set(0);
+		}
+		else
+		{	vectorBool identity(m * n);
+			for(size_t j = 0; j < m; j++)
+			{	for(size_t i = 0; i < m; i++)
+					identity[ i * m + j ] = (i == j);
+			}
+			jac_sparse_bool_ = f_.RevSparseJac(
+				m, identity, transpose, dependency
+			);
+		}
+		CPPAD_ASSERT_UNKNOWN( f_.size_forward_bool() == 0 );
+		CPPAD_ASSERT_UNKNOWN( f_.size_forward_set() == 0 );
+	}
+	// ------------------------------------------------------------------------
 	/// set hes_sparse_set_
 	void set_hes_sparse_set(void)
 	{	assert( hes_sparse_set_.n_set() == 0 );
@@ -250,7 +286,39 @@ private:
 		// drop the forward sparsity results from f_
 		f_.size_forward_set(0);
 	}
+	/// set hes_sparse_bool_
+	void set_hes_sparse_bool_(void)
+	{	assert( hes_sparse_bool_.n_set() == 0 );
+		size_t n = f_.Domain();
+		size_t m = f_.Range();
+		//
+		// set version of sparsity for vector of all ones
+		vector<bool> all_one(m);
+		for(size_t i = 0; i < m; i++)
+			all_one[i] = true;
+
+		// set version of sparsity for n by n idendity matrix
+		vectorBool identity(n * n);
+		for(size_t j = 0; j < n; j++)
+		{	for(size_t i = 0; i < n; i++)
+				identity[ i * n + j ] = (i == j);
+		}
+
+		// compute sparsity pattern for H(x) = sum_i f_i(x)^{(2)}
+		bool transpose  = false;
+		bool dependency = false;
+		f_.ForSparseJac(n, identity, transpose, dependency);
+		hes_sparse_bool_ = f_.RevSparseHes(n, all_one, transpose);
+		CPPAD_ASSERT_UNKNOWN( hes_sparse_bool_.n_set() == n );
+		CPPAD_ASSERT_UNKNOWN( hes_sparse_bool_.end()   == n );
+		//
+		// drop the forward sparsity results from f_
+		f_.size_forward_bool(0);
+		CPPAD_ASSERT_UNKNOWN( f_.size_forward_bool() == 0 );
+		CPPAD_ASSERT_UNKNOWN( f_.size_forward_set() == 0 );
+	}
 public:
+	// ------------------------------------------------------------------------
 	/*!
 	Constructor of a checkpoint object
 
@@ -293,11 +361,13 @@ public:
 		// set sparsity for entire Jacobian once and for all
 		set_jac_sparse_set();
 	}
+	// ------------------------------------------------------------------------
 	/*!
 	Implement the user call to <tt>atom_fun.size_var()</tt>.
 	*/
 	size_t size_var(void)
 	{	return f_.size_var(); }
+	// ------------------------------------------------------------------------
 	/*!
 	Implement the user call to <tt>atom_fun(ax, ay)</tt>.
 
@@ -323,6 +393,7 @@ public:
 		);
 		this->atomic_base<Base>::operator()(ax, ay, id);
 	}
+	// ------------------------------------------------------------------------
 	/*!
 	Link from user_atomic to forward mode
 
@@ -380,6 +451,7 @@ public:
 		f_.capacity_order(c, r);
 		return ok;
 	}
+	// ------------------------------------------------------------------------
 	/*!
 	Link from user_atomic to reverse mode
 
@@ -426,6 +498,7 @@ public:
 		f_.capacity_order(c, r);
 		return ok;
 	}
+	// ------------------------------------------------------------------------
 	/*!
 	Link from user_atomic to forward sparse Jacobian sets
 
@@ -506,6 +579,7 @@ public:
 
 		return ok;
 	}
+	// ------------------------------------------------------------------------
 	/*!
 	Link from user_atomic to reverse Jacobian sets
 
@@ -599,6 +673,7 @@ public:
 
 		return ok;
 	}
+	// ------------------------------------------------------------------------
 	/*!
 	Link from user_atomic to reverse sparse Hessian sets
 
