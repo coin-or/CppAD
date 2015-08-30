@@ -62,11 +62,8 @@ This section contains a list of the changes to CppAD during 2015
 The purpose of this section is to
 assist you in learning about changes between various versions of CppAD.
 
-$head 08-29$$
+$head 08-30$$
 $list number$$
-Some asserts in the $cref checkpoint$$ implementation were not using
-the CppAD $cref ErrorHandler$$. This has been fixed.
-$lnext
 The $cref/sparsity/atomic_ctor/atomic_base/sparsity/$$
 argument was added to the $code atomic_base$$ constructor and the
 $cref/checkpoint/checkpoint/sparsity/$$ constructor.
@@ -74,6 +71,10 @@ $lnext
 Make $cref atomic_norm_sq.cpp$$ an example with no set sparsity
 and $cref atomic_reciprocal.cpp$$ an example with no bool sparsity.
 $lend
+
+$head 08-29$$
+Some asserts in the $cref checkpoint$$ implementation were not using
+the CppAD $cref ErrorHandler$$. This has been fixed.
 
 $head 08-28$$
 Free $cref checkpoint$$ function sparsity patters during

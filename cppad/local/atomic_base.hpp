@@ -203,6 +203,10 @@ Constructor
 
 \param name
 name used for error reporting
+
+\param sparsity [in]
+what type of sparsity patterns are computed by this function,
+bool_sparsity_enum or set_sparsity_enum. Default value is unspecified.
 */
 atomic_base(
 		const std::string&     name,

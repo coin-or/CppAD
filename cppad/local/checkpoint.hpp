@@ -357,6 +357,10 @@ public:
 
 	\param ay [out]
 	function value at specified argument value.
+
+	\param sparsity [in]
+	what type of sparsity patterns are computed by this function,
+	bool_sparsity_enum or set_sparsity_enum. Default value is unspecified.
 	*/
 	template <class Algo, class ADVector>
 	checkpoint(
