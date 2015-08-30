@@ -51,6 +51,7 @@ $spell
 	hasnan
 	Adolc
 	resize
+	bool
 $$
 
 $section CppAD Changes and Additions During 2015$$
@@ -67,8 +68,10 @@ Some asserts in the $cref checkpoint$$ implementation were not using
 the CppAD $cref ErrorHandler$$. This has been fixed.
 $lnext
 The $cref/sparsity/atomic_ctor/atomic_base/sparsity/$$
-argument was added to the $code atomic_base$$ constructor
-and the $cref atomic_option$$ function was deprecated.
+argument was added to the $code atomic_base$$ constructor.
+$lnext
+Make $cref atomic_norm_sq.cpp$$ an example with no set sparsity
+and $cref atomic_reciprocal.cpp$$ an example with no bool sparsity.
 $lend
 
 $head 08-28$$

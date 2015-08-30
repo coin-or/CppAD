@@ -159,6 +159,11 @@ $code atomic_base<%Base%>::bool_sparsity_enum$$ or
 $code atomic_base<%Base%>::set_sparsity_enum$$.
 There is a unspecified default value for $icode sparsity$$ if it is not
 included in the constructor.
+If the sparsity for this object is always bool (set),
+only the bool (set) versions of 
+$cref atomic_for_sparse_jac$$,
+$cref atomic_rev_sparse_jac$$, and
+$cref atomic_rev_sparse_hes$$ need to be implemented.
 
 $head Examples$$
 
@@ -246,29 +251,13 @@ $section Set Atomic Function Options$$
 
 $head Syntax$$
 $icode%afun%.option(%option_value%)%$$
-
-$head Deprecated 20150829$$
-Specifying the atomic sparsity pattern type
-using this routine has been deprecated.
-Use the $code atomic_base$$ constructor
-$cref/sparsity/atomic_ctor/atomic_base/sparsity/$$
-argument instead.
+These settings do not apply to individual $icode afun$$ calls,
+but rather all subsequent uses of the corresponding atomic operation
+in an $cref ADFun$$ object.
 
 $head atomic_sparsity$$
-$index atomic_sparsity$$
-$index sparsity, atomic$$
-You can used this option to set the type used for
-$icode afun$$ sparsity patterns.
-This does not apply individual calls to $icode afun$$,
-but rather all its uses between when the sparsity pattern is set and when
-it is changed.
-If neither the $code set_sparsity_enum$$ or
-$code bool_sparsity_enum$$ option is set,
-the type for $icode atomic_sparsity$$ is one of the two choices below
-(and otherwise unspecified).
 
 $subhead bool_sparsity_enum$$
-$index bool_sparsity_enum$$
 If $icode option_value$$ is $codei%atomic_base<%Base%>::bool_sparsity_enum%$$,
 then the type used by $icode afun$$ for
 $cref/sparsity patterns/glossary/Sparsity Pattern/$$,
@@ -281,7 +270,6 @@ for a matrix $latex R \in B^{p \times q}$$:
 $icode%r%.size() == %p% * %q%$$.
 
 $subhead set_sparsity_enum$$
-$index set_sparsity_enum$$
 If $icode option_value$$ is $icode%atomic_base<%Base%>::set_sparsity_enum%$$,
 then the type used by $icode afun$$ for
 $cref/sparsity patterns/glossary/Sparsity Pattern/$$,

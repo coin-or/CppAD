@@ -1,6 +1,6 @@
 // $Id$
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-14 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-15 Bradley M. Bell
 
 CppAD is distributed under multiple licenses. This distribution is under
 the terms of the 
@@ -16,14 +16,7 @@ $spell
 	Tanh
 $$
 
-$section Tan and Tanh as User Atomic Operations: Example and Test$$
-
-$index tan, old_atomic$$
-$index user, atomic tan$$
-$index atomic, tan$$
-$index test, old_atomic$$
-$index old_atomic, example$$
-$index example, old_atomic$$
+$section Old Tan and Tanh as User Atomic Operations: Example and Test$$
 
 $head Deprecated$$
 This example has not deprecated;

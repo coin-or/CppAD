@@ -1,6 +1,6 @@
 // $Id$
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-13 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-15 Bradley M. Bell
 
 CppAD is distributed under multiple licenses. This distribution is under
 the terms of the 
@@ -16,13 +16,7 @@ $spell
 	mul
 $$
 
-$section Matrix Multiply as a User Atomic Operation: Example and Test$$
-
-$index old_atomic, example$$
-$index old_atomic, test$$
-$index matrix, atomic example$$
-$index old_mat_mul, example$$
-$index old_mat_mul, test$$
+$section Old Matrix Multiply as a User Atomic Operation: Example and Test$$
 
 $head Deprecated$$
 This example has been deprecated; 

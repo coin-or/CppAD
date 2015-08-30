@@ -1,6 +1,6 @@
 // $Id$
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-14 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-15 Bradley M. Bell
 
 CppAD is distributed under multiple licenses. This distribution is under
 the terms of the 
@@ -14,9 +14,6 @@ Please visit http://www.coin-or.org/CppAD/ for information on other licenses.
 $begin atomic_get_started.cpp$$
 
 $section Getting Started with Atomic Operations: Example and Test$$
-$index get_started, atomic operation$$
-$index atomic, get_started $$
-$index operation, atomic get_started$$
 
 $head Purpose$$
 This example demonstrates the minimal amount of information
@@ -37,6 +34,7 @@ $codep */
 	public:
 	// constructor (could use const char* for name)
 	atomic_get_started(const std::string& name) : 
+	// this example does not use any sparsity patterns
 	CppAD::atomic_base<double>(name)
 	{ }
 	private:
