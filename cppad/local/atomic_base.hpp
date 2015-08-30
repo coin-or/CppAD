@@ -28,7 +28,11 @@ template <class Base>
 class atomic_base {
 // ===================================================================
 public:
-	enum option_enum { bool_sparsity_enum, set_sparsity_enum};
+	enum option_enum {
+		pack_sparsity_enum   ,
+		bool_sparsity_enum   ,
+		set_sparsity_enum    ,
+	};
 private:
 	// ------------------------------------------------------
 	// constants
@@ -154,16 +158,22 @@ This $code atomic_base$$ constructor argument has prototype
 $codei%
 	atomic_base<%Base%>::option_enum %sparsity%
 %$$
-and its value is either
-$code atomic_base<%Base%>::bool_sparsity_enum$$ or
-$code atomic_base<%Base%>::set_sparsity_enum$$.
-There is a unspecified default value for $icode sparsity$$ if it is not
-included in the constructor.
-If the sparsity for this object is always bool (set),
-only the bool (set) versions of
-$cref atomic_for_sparse_jac$$,
-$cref atomic_rev_sparse_jac$$, and
-$cref atomic_rev_sparse_hes$$ need to be implemented.
+The current $icode sparsity$$ for an $code atomic_base$$ object
+determines which type of sparsity patterns it uses
+and its value is one of the following:
+$table
+$icode sparsity$$   $cnext sparsity patterns $rnext
+$codei%atomic_base<%Base%>::pack_sparsity_enum%$$ $pre  $$ $cnext
+	$cref/vectorBool/CppAD_vector/vectorBool/$$
+$rnext
+$codei%atomic_base<%Base%>::bool_sparsity_enum%$$ $pre  $$ $cnext
+	$cref/vector/CppAD_vector/$$$code <bool>$$
+$rnext
+$codei%atomic_base<%Base%>::set_sparsity_enum%$$ $pre  $$ $cnext
+	$cref/vector/CppAD_vector/$$$code <std::set<std::size_t> >$$
+$tend
+There is a default value for $icode sparsity$$ if it is not
+included in the constructor (which may be either the bool or set option).
 
 $head Examples$$
 
@@ -206,7 +216,8 @@ name used for error reporting
 
 \param sparsity [in]
 what type of sparsity patterns are computed by this function,
-bool_sparsity_enum or set_sparsity_enum. Default value is unspecified.
+bool_sparsity_enum or set_sparsity_enum. Default value is
+bool sparsity patterns.
 */
 atomic_base(
 		const std::string&     name,
@@ -261,6 +272,18 @@ in an $cref ADFun$$ object.
 
 $head atomic_sparsity$$
 
+$subhead pack_sparsity_enum$$
+If $icode option_value$$ is $codei%atomic_base<%Base%>::pack_sparsity_enum%$$,
+then the type used by $icode afun$$ for
+$cref/sparsity patterns/glossary/Sparsity Pattern/$$,
+(after the option is set) will be
+$codei%
+	typedef CppAD::vectorBool %atomic_sparsity%
+%$$
+If $icode r$$ is a sparsity pattern
+for a matrix $latex R \in B^{p \times q}$$:
+$icode%r%.size() == %p% * %q%$$.
+
 $subhead bool_sparsity_enum$$
 If $icode option_value$$ is $codei%atomic_base<%Base%>::bool_sparsity_enum%$$,
 then the type used by $icode afun$$ for
@@ -290,7 +313,8 @@ $end
 */
 void option(enum option_enum option_value)
 {	switch( option_value )
-	{	case bool_sparsity_enum:
+	{	case pack_sparsity_enum:
+		case bool_sparsity_enum:
 		case set_sparsity_enum:
 		sparsity_ = option_value;
 		break;
@@ -1100,6 +1124,11 @@ virtual bool for_sparse_jac(
 	const vector<bool>&                     r  ,
 	      vector<bool>&                     s  )
 {	return false; }
+virtual bool for_sparse_jac(
+	size_t                                  q  ,
+	const vectorBool&                       r  ,
+	      vectorBool&                       s  )
+{	return false; }
 /*
 -------------------------------------- ---------------------------------------
 $begin atomic_rev_sparse_jac$$
@@ -1220,6 +1249,11 @@ virtual bool rev_sparse_jac(
 	size_t                                  q  ,
 	const vector<bool>&                     rt ,
 	      vector<bool>&                     st )
+{	return false; }
+virtual bool rev_sparse_jac(
+	size_t                                  q  ,
+	const vectorBool&                       rt ,
+	      vectorBool&                       st )
 {	return false; }
 /*
 -------------------------------------- ---------------------------------------
@@ -1437,6 +1471,15 @@ virtual bool rev_sparse_hes(
 	const vector<bool>&                     r  ,
 	const vector<bool>&                     u  ,
 	      vector<bool>&                     v  )
+{	return false; }
+virtual bool rev_sparse_hes(
+	const vector<bool>&                     vx ,
+	const vector<bool>&                     s  ,
+	      vector<bool>&                     t  ,
+	size_t                                  q  ,
+	const vectorBool&                       r  ,
+	const vectorBool&                       u  ,
+	      vectorBool&                       v  )
 {	return false; }
 /*
 ------------------------------------------------------------------------------
