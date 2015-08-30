@@ -34,6 +34,8 @@ $spell
 	algo
 	atom_fun
 	const
+	enum
+	bool
 $$
 
 $section Checkpointing Functions$$
@@ -41,7 +43,7 @@ $index function, checkpoint$$
 $index checkpoint, function$$
 
 $head Syntax$$
-$codei%checkpoint<%Base%> %atom_fun%(%name%, %algo%, %ax%, %ay%)
+$codei%checkpoint<%Base%> %atom_fun%(%name%, %algo%, %ax%, %ay%, %sparsity%)
 %sv% = %atom_fun%.size_var()
 %atom_fun%.option(%option_value%)
 %algo%(%ax%, %ay%)
@@ -119,6 +121,18 @@ The input values of its elements do not matter.
 Upon return, it is an $codei%AD<%Base%>%$$ version of
 $latex y = f(x)$$.
 
+$head sparsity$$
+This argument has prototype
+$codei%
+	atomic_base<%Base%>::option_enum %sparsity%
+%$$
+It specifies $cref/sparsity/atomic_ctor/atomic_base/sparsity/$$
+in the $code atomic_base$$ constructor and must be either
+$codei%atomic_base<%Base%>::bool_sparsity_enum%$$, or
+$codei%atomic_base<%Base%>::set_sparsity_enum%$$.
+This argument is optional and its default value is unspecified.
+
+
 $head size_var$$
 This $code size_var$$ member function return value has prototype
 $codei%
@@ -182,6 +196,10 @@ template <class Base>
 class checkpoint : public atomic_base<Base> {
 // ---------------------------------------------------------------------------
 private:
+	/// same as option_enum in base class
+	typedef typename atomic_base<Base>::option_enum option_enum;
+	//
+	/// AD function corresponding to this checkpoint object
 	ADFun<Base> f_;
 	//
 	/// sparsity for entire Jacobian f(x)^{(1)} does not change so can cache it
@@ -192,7 +210,7 @@ private:
 	CPPAD_INTERNAL_SPARSE_SET  hes_sparse_set_;
 	vectorBool                 hes_sparse_bool_;
 	// ------------------------------------------------------------------------
-	typename atomic_base<Base>::option_enum sparsity(void)
+	option_enum sparsity(void)
 	{	return static_cast< atomic_base<Base>* >(this)->sparsity(); }
 	// ------------------------------------------------------------------------
 	/// set jac_sparse_set_
@@ -341,9 +359,14 @@ public:
 	function value at specified argument value.
 	*/
 	template <class Algo, class ADVector>
-	checkpoint(const char* name,
-		Algo& algo, const ADVector& ax, ADVector& ay)
-	: atomic_base<Base>(name)
+	checkpoint(
+		const char*                    name     ,
+		Algo&                          algo     ,
+		const ADVector&                ax       ,
+		ADVector&                      ay       ,
+		option_enum                    sparsity =
+				atomic_base<Base>::bool_sparsity_enum
+	) : atomic_base<Base>(name, sparsity)
 	{	CheckSimpleVector< CppAD::AD<Base> , ADVector>();
 
 		// make a copy of ax because Independent modifies AD information
