@@ -13,6 +13,7 @@ Please visit http://www.coin-or.org/CppAD/ for information on other licenses.
 $begin whats_new_15$$
 $dollar @$$
 $spell
+	ctor
 	dimensioned
 	cskip_op
 	adolc
@@ -61,8 +62,14 @@ The purpose of this section is to
 assist you in learning about changes between various versions of CppAD.
 
 $head 08-29$$
+$list number$$
 Some asserts in the $cref checkpoint$$ implementation were not using
 the CppAD $cref ErrorHandler$$. This has been fixed.
+$lnext
+The $cref/sparsity/atomic_ctor/atomic_base/sparsity/$$
+argument was added to the $code atomic_base$$ constructor
+and the $cref atomic_option$$ function was deprecated.
+$lend
 
 $head 08-28$$
 Free $cref checkpoint$$ function sparsity patters during

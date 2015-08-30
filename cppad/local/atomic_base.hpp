@@ -80,6 +80,7 @@ public:
 /*
 $begin atomic_ctor$$
 $spell
+	enum
 	sq
 	std
 	afun
@@ -92,14 +93,11 @@ $spell
 $$
 
 $section Atomic Function Constructor$$
-$index constructor, atomic function$$
-$index atomic, function constructor$$
-$index function, atomic constructor$$
 
 $head Syntax$$
 $icode%atomic_user afun%(%ctor_arg_list%)
 %$$
-$codei%atomic_base<%Base%>(%name%)
+$codei%atomic_base<%Base%>(%name%, %sparsity%)
 %$$
 
 $head atomic_user$$
@@ -121,7 +119,7 @@ It should be declared as follows:
 $codei%
 	class %atomic_user% : public CppAD::atomic_base<%Base%> {
 	public:
-		%atomic_user%(%ctor_arg_list%) : atomic_base<%Base%>(%name%)
+		%atomic_user%(%ctor_arg_list%) : atomic_base<%Base%>(%name%, %sparsity%)
 	%...%
 	};
 %$$
@@ -143,15 +141,24 @@ The template parameter determines the
 $icode Base$$ type for this $codei%AD<%Base%>%$$ atomic operation.
 
 $subhead name$$
-This $icode atomic_base$$ constructor argument has either of the
-following prototypes
+This $code atomic_base$$ constructor argument has the following prototype
 $codei%
-	const char*        %name%
 	const std::string& %name%
 %$$
 It is the name for this atomic function and is used for error reporting.
 The suggested value for $icode name$$ is $icode afun$$ or $icode atomic_user$$,
 i.e., the name of the corresponding atomic object or class.
+
+$subhead sparsity$$
+This $code atomic_base$$ constructor argument has prototype
+$codei%
+	atomic_base<%Base%>::option_enum %sparsity%
+%$$
+and its value is either 
+$code atomic_base<%Base%>::bool_sparsity_enum$$ or 
+$code atomic_base<%Base%>::set_sparsity_enum$$.
+There is a unspecified default value for $icode sparsity$$ if it is not
+included in the constructor.
 
 $head Examples$$
 
@@ -192,9 +199,12 @@ Constructor
 \param name
 name used for error reporting
 */
-atomic_base( const std::string&  name) :
+atomic_base(
+		const std::string&     name, 
+		option_enum            sparsity = bool_sparsity_enum
+) :
 index_( class_object().size() )     ,
-sparsity_( bool_sparsity_enum )
+sparsity_( sparsity )
 {	CPPAD_ASSERT_KNOWN(
 		! thread_alloc::in_parallel() ,
 		"atomic_base: constructor cannot be called in parallel mode."
@@ -233,11 +243,16 @@ $spell
 $$
 
 $section Set Atomic Function Options$$
-$index atomic, options$$
-$index options, atomic$$
 
 $head Syntax$$
 $icode%afun%.option(%option_value%)%$$
+
+$head Deprecated 20150829$$
+Specifying the atomic sparsity pattern type
+using this routine has been deprecated.
+Use the $code atomic_base$$ constructor 
+$cref/sparsity/atomic_ctor/atomic_base/sparsity/$$
+argument instead.
 
 $head atomic_sparsity$$
 $index atomic_sparsity$$
@@ -482,7 +497,7 @@ void operator()(
 		tape->Rec_.PutArg(index_, id, n, m);
 		tape->Rec_.PutOp(UserOp);
 
-		// Now put n operators, one for each element of arugment vector
+		// Now put n operators, one for each element of argument vector
 		CPPAD_ASSERT_UNKNOWN( NumRes(UsravOp) == 0 );
 		CPPAD_ASSERT_UNKNOWN( NumRes(UsrapOp) == 0 );
 		CPPAD_ASSERT_UNKNOWN( NumArg(UsravOp) == 1 );
@@ -494,7 +509,7 @@ void operator()(
 				tape->Rec_.PutOp(UsravOp);
 			}
 			else
-			{	// information for an arugment that is parameter
+			{	// information for an argument that is parameter
 				addr_t par = tape->Rec_.PutPar(ax[j].value_);
 				tape->Rec_.PutArg(par);
 				tape->Rec_.PutOp(UsrapOp);
