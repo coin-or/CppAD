@@ -154,8 +154,8 @@ This $code atomic_base$$ constructor argument has prototype
 $codei%
 	atomic_base<%Base%>::option_enum %sparsity%
 %$$
-and its value is either 
-$code atomic_base<%Base%>::bool_sparsity_enum$$ or 
+and its value is either
+$code atomic_base<%Base%>::bool_sparsity_enum$$ or
 $code atomic_base<%Base%>::set_sparsity_enum$$.
 There is a unspecified default value for $icode sparsity$$ if it is not
 included in the constructor.
@@ -200,7 +200,7 @@ Constructor
 name used for error reporting
 */
 atomic_base(
-		const std::string&     name, 
+		const std::string&     name,
 		option_enum            sparsity = bool_sparsity_enum
 ) :
 index_( class_object().size() )     ,
@@ -250,7 +250,7 @@ $icode%afun%.option(%option_value%)%$$
 $head Deprecated 20150829$$
 Specifying the atomic sparsity pattern type
 using this routine has been deprecated.
-Use the $code atomic_base$$ constructor 
+Use the $code atomic_base$$ constructor
 $cref/sparsity/atomic_ctor/atomic_base/sparsity/$$
 argument instead.
 

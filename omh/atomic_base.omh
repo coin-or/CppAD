@@ -3,7 +3,7 @@
 CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-15 Bradley M. Bell
 
 CppAD is distributed under multiple licenses. This distribution is under
-the terms of the 
+the terms of the
                     Eclipse Public License Version 1.0.
 
 A copy of this license is included in the COPYING file of this distribution.
@@ -49,16 +49,16 @@ $codei%
 atomic_base<%Base%>::clear()%$$
 
 $head Purpose$$
-In some cases, the user knows how to compute derivatives of a function 
+In some cases, the user knows how to compute derivatives of a function
 $latex \[
-	y = f(x) \; {\rm where} \; f : B^n \rightarrow B^m 
+	y = f(x) \; {\rm where} \; f : B^n \rightarrow B^m
 \] $$
-more efficiently than by coding it using $codei%AD<%Base%>%$$ 
+more efficiently than by coding it using $codei%AD<%Base%>%$$
 $cref/atomic/glossary/Operation/Atomic/$$ operations
 and letting CppAD do the rest.
 In this case $codei%atomic_base%<%Base%>%$$ can use
 the user code for $latex f(x)$$, and its derivatives,
-as $codei%AD<%Base%>%$$ atomic operations. 
+as $codei%AD<%Base%>%$$ atomic operations.
 
 $head Virtual Functions$$
 User defined derivatives are implemented by defining the
@@ -70,11 +70,11 @@ $cref/rev_sparse_jac/atomic_rev_sparse_jac/$$, and
 $cref/rev_sparse_hes/atomic_rev_sparse_hes/$$.
 These virtual functions have a default implementation
 that returns $icode%ok% == false%$$.
-The $code forward$$ function, 
+The $code forward$$ function,
 for the case $icode%q% == 0%$$, must be implemented.
 Otherwise, only those functions
-required by the your calculations need to be implemented. 
-For example, 
+required by the your calculations need to be implemented.
+For example,
 $icode forward$$ for the case $icode%q% == 2%$$ can just return
 $icode%ok% == false%$$ unless you require
 forward mode calculation of second derivatives.

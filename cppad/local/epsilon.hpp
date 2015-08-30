@@ -5,7 +5,7 @@
 CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-15 Bradley M. Bell
 
 CppAD is distributed under multiple licenses. This distribution is under
-the terms of the 
+the terms of the
                     Eclipse Public License Version 1.0.
 
 A copy of this license is included in the COPYING file of this distribution.
@@ -48,7 +48,7 @@ $codei%
 	%Float% eps
 %$$
 
-$end 
+$end
 ------------------------------------------------------------------------------
 */
 
@@ -57,7 +57,7 @@ namespace CppAD {
 	template <class ADtype>
 	inline ADtype epsilon(void)
 	{	typedef typename ADtype::value_type value_type;
-		return ADtype ( epsilon<value_type>() ); 
+		return ADtype ( epsilon<value_type>() );
 	}
 
 }
