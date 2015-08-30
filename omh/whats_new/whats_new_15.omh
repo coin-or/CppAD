@@ -70,6 +70,9 @@ $cref/checkpoint/checkpoint/sparsity/$$ constructor.
 $lnext
 Make $cref atomic_norm_sq.cpp$$ an example with no set sparsity
 and $cref atomic_reciprocal.cpp$$ an example with no bool sparsity.
+$lnext
+Improve discussion of $code Independent$$ and
+$cref/parallel mode/Independent/Parallel Mode/$$.
 $lend
 
 $head 08-29$$

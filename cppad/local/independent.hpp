@@ -27,11 +27,6 @@ $spell
 	typename
 $$
 
-$index Independent$$
-$index start, recording$$
-$index recording, start$$
-$index variable, independent$$
-
 $section Declare Independent Variables and Start Recording$$
 
 $head Syntax$$
@@ -84,7 +79,6 @@ and is the number of independent variables for this
 AD operation sequence.
 
 $head abort_op_index$$
-$index abort_op_index$$
 It specifies the operator index at which the execution is be aborted 
 by calling the CppAD $cref/error handler/ErrorHandler/$$.
 When this error handler leads to an assert, the user
@@ -102,19 +96,18 @@ The routine $cref CheckSimpleVector$$ will generate an error message
 if this is not the case.
 
 $head Parallel Mode$$
-$index parallel, Independent$$
-$index Independent, parallel$$
-The call to $code Independent$$,
-and the corresponding call to
+Each thread can have one, and only one, active recording.
+A call to $code Independent$$ starts the recording for the current thread.
+The recording must be stopped by a corresponding call to
 $codei%
 	ADFun<%Base%> %f%( %x%, %y%)
 %$$
-or 
+or
 $codei%
 	%f%.Dependent( %x%, %y%)
 %$$
-or $cref abort_recording$$,
-must be preformed by the same thread; i.e.,
+or $cref abort_recording$$
+preformed by the same thread; i.e.,
 $cref/thread_alloc::thread_num/ta_thread_num/$$ must be the same.
 
 $head Example$$
