@@ -3,7 +3,7 @@
 CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-15 Bradley M. Bell
 
 CppAD is distributed under multiple licenses. This distribution is under
-the terms of the 
+the terms of the
                     Eclipse Public License Version 1.0.
 
 A copy of this license is included in the COPYING file of this distribution.
@@ -33,7 +33,7 @@ $head Constructor$$
 $codep */
 	public:
 	// constructor (could use const char* for name)
-	atomic_get_started(const std::string& name) : 
+	atomic_get_started(const std::string& name) :
 	// this example does not use any sparsity patterns
 	CppAD::atomic_base<double>(name)
 	{ }
@@ -106,11 +106,11 @@ $codep */
 	// declare independent variables and start tape recording
 	CppAD::Independent(ax);
 
-	// range space vector 
+	// range space vector
 	size_t m = 1;
 	vector< AD<double> > ay(m);
 
-	// call user function and store get_started(x) in au[0] 
+	// call user function and store get_started(x) in au[0]
 	vector< AD<double> > au(m);
 	afun(ax, au);        // u = 1 / x
 
@@ -123,7 +123,7 @@ $codep */
 /* $$
 $subhead forward$$
 $codep */
-	// check function value 
+	// check function value
 	double check = x0;
 	ok &= NearEqual( Value(ay[0]) , check,  eps, eps);
 

@@ -3,7 +3,7 @@
 CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-15 Bradley M. Bell
 
 CppAD is distributed under multiple licenses. This distribution is under
-the terms of the 
+the terms of the
                     Eclipse Public License Version 1.0.
 
 A copy of this license is included in the COPYING file of this distribution.
@@ -19,7 +19,7 @@ $$
 $section Old Matrix Multiply as a User Atomic Operation: Example and Test$$
 
 $head Deprecated$$
-This example has been deprecated; 
+This example has been deprecated;
 see $cref atomic_mat_mul.cpp$$.
 
 $children%
@@ -46,8 +46,8 @@ bool old_mat_mul(void)
 	size_t nr_result = 2;
 	size_t n_middle  = 2;
 	size_t nc_result = 2;
-	
-	// declare the AD<double> vectors ax and ay and X 
+
+	// declare the AD<double> vectors ax and ay and X
 	size_t n = nr_result * n_middle + n_middle * nc_result;
 	size_t m = nr_result * nc_result;
 	CppAD::vector< AD<double> > X(4), ax(n), ay(m);
@@ -65,7 +65,7 @@ bool old_mat_mul(void)
 	// right matrix
 	ax[4]  = X[2];  // right[0,0]  = x[2] = 3
 	ax[5]  = 7.;    // right[0,1]  = 7
-	ax[6]  = X[3];  // right[1,0]  = x[3] = 4 
+	ax[6]  = X[3];  // right[1,0]  = x[3] = 4
 	ax[7]  = 8.;    // right[1,1]  = 8
 	/*
 	[ x0 , x1 ] * [ x2 , 7 ] = [ x0*x2 + x1*x3 , x0*7 + x1*8 ]
@@ -79,7 +79,7 @@ bool old_mat_mul(void)
 	info.n_middle  = n_middle;
 	info.nc_result = nc_result;
 	// info.vx gets set by forward during call to mat_mul below
-	assert( info.vx.size() == 0 ); 
+	assert( info.vx.size() == 0 );
 	size_t id      = info_.size();
 	info_.push_back(info);
 
@@ -108,11 +108,11 @@ bool old_mat_mul(void)
 	ok &= y[3] == 5. * 7.     + 6. * 8.;
 
 	//----------------------------------------------------------------------
-	// Test first order forward mode evaluation of g'(x) * [1, 2, 3, 4]^T 
+	// Test first order forward mode evaluation of g'(x) * [1, 2, 3, 4]^T
 	// g'(x) = [ x2, x3, x0, x1 ]
 	//         [ 7 ,  8,  0, 0  ]
 	//         [ 0 ,  0,  5, 6  ]
-	//         [ 0 ,  0,  0, 0  ] 
+	//         [ 0 ,  0,  0, 0  ]
 	CppAD::vector<double> dx( X.size() ), dy(m);
 	for(j = 0; j <  X.size() ; j++)
 		dx[j] = j + 1;
@@ -123,7 +123,7 @@ bool old_mat_mul(void)
 	ok &= dy[3] == 1. * 0.   + 2. * 0.   + 3. * 0.   + 4. * 0.;
 
 	//----------------------------------------------------------------------
-	// Test second order forward mode 
+	// Test second order forward mode
 	// g_0^2 (x) = [ 0, 0, 1, 0 ], g_0^2 (x) * [1] = [3]
 	//             [ 0, 0, 0, 1 ]              [2]   [4]
 	//             [ 1, 0, 0, 0 ]              [3]   [1]
@@ -133,14 +133,14 @@ bool old_mat_mul(void)
 		ddx[j] = 0.;
 	ddy = G.Forward(2, ddx);
 	// [1, 2, 3, 4] * g_0^2 (x) * [1, 2, 3, 4]^T = 1*3 + 2*4 + 3*1 + 4*2
-	ok &= 2. * ddy[0] == 1. * 3. + 2. * 4. + 3. * 1. + 4. * 2.; 
+	ok &= 2. * ddy[0] == 1. * 3. + 2. * 4. + 3. * 1. + 4. * 2.;
 	// for i > 0, [1, 2, 3, 4] * g_i^2 (x) * [1, 2, 3, 4]^T = 0
 	ok &= ddy[1] == 0.;
 	ok &= ddy[2] == 0.;
 	ok &= ddy[3] == 0.;
 
 	//----------------------------------------------------------------------
-	// Test second order reverse mode 
+	// Test second order reverse mode
 	CppAD::vector<double> w(m), dw(2 *  X.size() );
 	for(i = 0; i < m; i++)
 		w[i] = 0.;
@@ -189,7 +189,7 @@ bool old_mat_mul(void)
 	}
 	// s[3] == {}
 	ok &= s[3].empty();
-	
+
 	//----------------------------------------------------------------------
 	// Test reverse Jacobian sparsity pattern
 	/*
@@ -240,7 +240,7 @@ bool old_mat_mul(void)
 	size_t check[] = {2, 3, 0, 1};
 	for(j = 0; j <  X.size() ; j++)
 	{	// h[j] = { check[j] }
-		for(i = 0; i < n; i++) 
+		for(i = 0; i < n; i++)
 		{	if( i == check[j] )
 				ok &= h[j].find(i) != h[j].end();
 			else	ok &= h[j].find(i) == h[j].end();
@@ -252,12 +252,12 @@ bool old_mat_mul(void)
 	h = G.RevSparseHes(X.size() , t);
 	for(j = 0; j <  X.size() ; j++)
 	{	// h[j] = { }
-		for(i = 0; i < X.size(); i++) 
+		for(i = 0; i < X.size(); i++)
 			ok &= h[j].find(i) == h[j].end();
 	}
 
 	// --------------------------------------------------------------------
-	// Free temporary work space. (If there are future calls to 
+	// Free temporary work space. (If there are future calls to
 	// old_mat_mul they would create new temporary work space.)
 	CppAD::user_atomic<double>::clear();
 	info_.clear();

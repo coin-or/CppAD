@@ -3,7 +3,7 @@
 CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-15 Bradley M. Bell
 
 CppAD is distributed under multiple licenses. This distribution is under
-the terms of the 
+the terms of the
                     Eclipse Public License Version 1.0.
 
 A copy of this license is included in the COPYING file of this distribution.
@@ -51,7 +51,7 @@ $head Constructor $$
 $codep */
 	public:
 	// constructor (could use const char* for name)
-	atomic_reciprocal(const std::string& name) : 
+	atomic_reciprocal(const std::string& name) :
 	// this exmaple uses set sparsity patterns
 	CppAD::atomic_base<double>(name, atomic_base<double>::set_sparsity_enum)
 	{ }
@@ -97,7 +97,7 @@ $codep */
 		// y^1 = f'( x^0 ) x^1
 		double fp = - f / tx[0];
 		if( p <= 1 )
-			ty[1] = fp * tx[1]; 
+			ty[1] = fp * tx[1];
 		if( q <= 1 )
 			return ok;
 
@@ -126,12 +126,12 @@ $codep */
 		const vector<double>&    py
 	)
 	{	size_t n = tx.size() / (q + 1);
-		size_t m = ty.size() / (q + 1);	
+		size_t m = ty.size() / (q + 1);
 		assert( px.size() == n * (q + 1) );
 		assert( py.size() == m * (q + 1) );
 		assert( n == 1 );
 		assert( m == 1 );
-		bool ok = q <= 2;	
+		bool ok = q <= 2;
 
 		double f, fp, fpp, fppp;
 		switch(q)
@@ -167,7 +167,7 @@ $codep */
 			fppp   = - 3.0 * fpp / tx[0];
 			px[2]  = py[2] * fp;
 			px[1]  = py[2] * fpp * tx[1];
-			px[0]  = py[2] * tx[1] * fppp * tx[1] / 2.0 + fpp * tx[2]; 
+			px[0]  = py[2] * tx[1] * fppp * tx[1] / 2.0 + fpp * tx[2];
 			// reverse: F^1 ( tx ) = y^1 = f'( x^0 ) x^1
 			px[1] += py[1] * fp;
 			px[0] += py[1] * fpp * tx[1];
@@ -189,7 +189,7 @@ $codep */
 		size_t                                p ,
 		const vector< std::set<size_t> >&     r ,
 		      vector< std::set<size_t> >&     s )
-	{	// This function needed if using f.ForSparseJac 
+	{	// This function needed if using f.ForSparseJac
 		size_t n = r.size();
 		size_t m = s.size();
 		assert( n == 1 );
@@ -198,7 +198,7 @@ $codep */
 		// sparsity for S(x) = f'(x) * R is same as sparsity for R
 		s[0] = r[0];
 
-		return true; 
+		return true;
 	}
 /* $$
 $head rev_sparse_jac$$
@@ -217,7 +217,7 @@ $codep */
 		// sparsity for S(x)^T = f'(x)^T * R^T is same as sparsity for R^T
 		st[0] = rt[0];
 
-		return true; 
+		return true;
 	}
 /* $$
 $head rev_sparse_hes$$
@@ -246,11 +246,11 @@ $codep */
 
 		// sparsity for T(x) = S(x) * f'(x) is same as sparsity for S
 		t[0] = s[0];
-	
-		// V(x) = f'(x)^T * g''(y) * f'(x) * R  +  g'(y) * f''(x) * R 
+
+		// V(x) = f'(x)^T * g''(y) * f'(x) * R  +  g'(y) * f''(x) * R
 		// U(x) = g''(y) * f'(x) * R
 		// S(x) = g'(y)
-		
+
 		// back propagate the sparsity for U, note f'(x) may be non-zero;
 		v[0] = u[0];
 
@@ -295,11 +295,11 @@ $codep */
 	// declare independent variables and start tape recording
 	CppAD::Independent(ax);
 
-	// range space vector 
+	// range space vector
 	size_t m = 1;
 	vector< AD<double> > ay(m);
 
-	// call user function and store reciprocal(x) in au[0] 
+	// call user function and store reciprocal(x) in au[0]
 	vector< AD<double> > au(m);
 	afun(ax, au);        // u = 1 / x
 
@@ -312,7 +312,7 @@ $codep */
 /* $$
 $subhead forward$$
 $codep */
-	// check function value 
+	// check function value
 	double check = x0;
 	ok &= NearEqual( Value(ay[0]) , check,  eps, eps);
 
@@ -340,7 +340,7 @@ $codep */
 /* $$
 $subhead reverse$$
 $codep */
-	// third order reverse mode 
+	// third order reverse mode
 	q     = 3;
 	vector<double> w(m), dw(n * q);
 	w[0]  = 1.;
@@ -359,7 +359,7 @@ $codep */
 	r1[0] = true;          // compute sparsity pattern for x[0]
 	//
 	s1    = f.ForSparseJac(p, r1);
-	ok  &= s1[0] == true;  // f[0] depends on x[0]  
+	ok  &= s1[0] == true;  // f[0] depends on x[0]
 /* $$
 $subhead rev_sparse_jac$$
 $codep */
@@ -369,11 +369,11 @@ $codep */
 	s2[0] = true;          // compute sparsity pattern for f[0]
 	//
 	r2    = f.RevSparseJac(q, s2);
-	ok  &= r2[0] == true;  // f[0] depends on x[0]  
+	ok  &= r2[0] == true;  // f[0] depends on x[0]
 /* $$
 $subhead rev_sparse_hes$$
 $codep */
-	// Hessian sparsity (using previous ForSparseJac call) 
+	// Hessian sparsity (using previous ForSparseJac call)
 	CppAD::vectorBool s3(m), h(p * n);
 	s3[0] = true;        // compute sparsity pattern for f[0]
 	//

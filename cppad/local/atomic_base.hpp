@@ -160,7 +160,7 @@ $code atomic_base<%Base%>::set_sparsity_enum$$.
 There is a unspecified default value for $icode sparsity$$ if it is not
 included in the constructor.
 If the sparsity for this object is always bool (set),
-only the bool (set) versions of 
+only the bool (set) versions of
 $cref atomic_for_sparse_jac$$,
 $cref atomic_rev_sparse_jac$$, and
 $cref atomic_rev_sparse_hes$$ need to be implemented.

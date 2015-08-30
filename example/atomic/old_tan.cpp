@@ -3,7 +3,7 @@
 CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-15 Bradley M. Bell
 
 CppAD is distributed under multiple licenses. This distribution is under
-the terms of the 
+the terms of the
                     Eclipse Public License Version 1.0.
 
 A copy of this license is included in the COPYING file of this distribution.
@@ -36,7 +36,7 @@ $end
 // BEGIN C++
 # include <cppad/cppad.hpp>
 
-namespace { // Begin empty namespace 
+namespace { // Begin empty namespace
 	using CppAD::vector;
 
 	// a utility to compute the union of two sets.
@@ -82,7 +82,7 @@ namespace { // Begin empty namespace
 		if( vx.size() > 0 )
 		{	assert( vx.size() >= n );
 			assert( vzy.size() >= m );
-			
+
 			// now setvzy
 			vzy[0] = vx[0];
 			vzy[1] = vx[0];
@@ -103,7 +103,7 @@ namespace { // Begin empty namespace
 				j_inv = - j_inv;
 
 			// z^{(j)} = x^{(j)} +- sum_{k=1}^j k x^{(k)} y^{(j-k)} / j
-			tzy[j] = tx[j];  
+			tzy[j] = tx[j];
 			for(k = 1; k <= j; k++)
 				tzy[j] += tx[k] * tzy[n_order + j-k] * k * j_inv;
 
@@ -112,7 +112,7 @@ namespace { // Begin empty namespace
 			for(k = 0; k <= j; k++)
 				tzy[n_order + j] += tzy[k] * tzy[j-k];
 		}
-			
+
 		// All orders are implemented and there are no possible errors
 		return true;
 	}
@@ -156,15 +156,15 @@ namespace { // Begin empty namespace
 			// H_{x^{(k)}} += delta(j-k) +- H_{z^{(j)} y^{(j-k)} * k / j
 			px[j] += qzy[j];
 			for(k = 1; k <= j; k++)
-				px[k] += qzy[j] * tzy[n_order + j-k] * k * j_inv;  
+				px[k] += qzy[j] * tzy[n_order + j-k] * k * j_inv;
 
 			// H_{y^{j-k)} += +- H_{z^{(j)} x^{(k)} * k / j
 			for(k = 1; k <= j; k++)
-				qzy[n_order + j-k] += qzy[j] * tx[k] * k * j_inv;  
+				qzy[n_order + j-k] += qzy[j] * tx[k] * k * j_inv;
 
-			// H_{z^{(k)}} += H_{y^{(j-1)}} * z^{(j-k-1)} * 2. 
+			// H_{z^{(k)}} += H_{y^{(j-1)}} * z^{(j-k-1)} * 2.
 			for(k = 0; k < j; k++)
-				qzy[k] += qzy[n_order + j-1] * tzy[j-k-1] * 2.f; 
+				qzy[k] += qzy[n_order + j-1] * tzy[j-k-1] * 2.f;
 		}
 
 		// eliminate order zero
@@ -173,12 +173,12 @@ namespace { // Begin empty namespace
 		else
 			px[0] += qzy[0] * (1.f - tzy[n_order + 0]);
 
-		return true; 
+		return true;
 	}
 	// ----------------------------------------------------------------------
 	// forward Jacobian sparsity routine called by CppAD
 	bool old_tan_for_jac_sparse(
-		size_t                               id ,             
+		size_t                               id ,
 		size_t                                n ,
 		size_t                                m ,
 		size_t                                p ,
@@ -200,7 +200,7 @@ namespace { // Begin empty namespace
 	// ----------------------------------------------------------------------
 	// reverse Jacobian sparsity routine called by CppAD
 	bool old_tan_rev_jac_sparse(
-		size_t                               id ,             
+		size_t                               id ,
 		size_t                                n ,
 		size_t                                m ,
 		size_t                                p ,
@@ -214,14 +214,14 @@ namespace { // Begin empty namespace
 		assert( s.size() >= m );
 
 		// note that, if the users code only uses z, and not y,
-		// we could just set r[0] = s[0]	
+		// we could just set r[0] = s[0]
 		my_union(r[0], s[0], s[1]);
-		return true; 
+		return true;
 	}
 	// ----------------------------------------------------------------------
 	// reverse Hessian sparsity routine called by CppAD
 	bool old_tan_rev_hes_sparse(
-		size_t                               id ,             
+		size_t                               id ,
 		size_t                                n ,
 		size_t                                m ,
 		size_t                                p ,
@@ -257,14 +257,14 @@ namespace { // Begin empty namespace
 	// ---------------------------------------------------------------------
 	// Declare the AD<float> routine old_tan(id, ax, ay)
 	CPPAD_USER_ATOMIC(
-		old_tan                 , 
+		old_tan                 ,
 		CppAD::vector           ,
-		float                   , 
-		old_tan_forward         , 
+		float                   ,
+		old_tan_forward         ,
 		old_tan_reverse         ,
 		old_tan_for_jac_sparse  ,
 		old_tan_rev_jac_sparse  ,
-		old_tan_rev_hes_sparse  
+		old_tan_rev_hes_sparse
 	)
 } // End empty namespace
 
@@ -283,7 +283,7 @@ bool old_tan(void)
 	// declare independent variables and start tape recording
 	CppAD::Independent(ax);
 
-	// range space vector 
+	// range space vector
 	size_t m = 3;
 	CppAD::vector< AD<float> > af(m);
 
@@ -305,13 +305,13 @@ bool old_tan(void)
 	CppAD::vector< AD<float> > one(1);
 	one[0] = 1.;
 	old_tan(id, one, az);
-	af[2] = az[0]; 
+	af[2] = az[0];
 
 	// create f: x -> f and stop tape recording
 	CppAD::ADFun<float> F;
-	F.Dependent(ax, af); 
+	F.Dependent(ax, af);
 
-	// check function value 
+	// check function value
 	float tan = std::tan(x0);
 	ok &= NearEqual(af[0] , tan,  eps, eps);
 	float tanh = std::tanh(x0);
@@ -336,10 +336,10 @@ bool old_tan(void)
 	w[2]  = 0.;
 	dw    = F.Reverse(1, w);
 
-	// tan'(x)   = 1 + tan(x)  * tan(x) 
-	// tanh'(x)  = 1 - tanh(x) * tanh(x) 
-	float tanp  = 1.f + tan * tan; 
-	float tanhp = 1.f - tanh * tanh; 
+	// tan'(x)   = 1 + tan(x)  * tan(x)
+	// tanh'(x)  = 1 - tanh(x) * tanh(x)
+	float tanp  = 1.f + tan * tan;
+	float tanhp = 1.f - tanh * tanh;
 	ok   &= NearEqual(df[0], tanp, eps, eps);
 	ok   &= NearEqual(df[1], tanhp, eps, eps);
 	ok   &= NearEqual(dw[0], w[0]*tanp + w[1]*tanhp, eps, eps);
@@ -353,8 +353,8 @@ bool old_tan(void)
 	CppAD::vector<float> ddw(2);
 	ddw   = F.Reverse(2, w);
 
-	// tan''(x)   = 2 *  tan(x) * tan'(x) 
-	// tanh''(x)  = - 2 * tanh(x) * tanh'(x) 
+	// tan''(x)   = 2 *  tan(x) * tan'(x)
+	// tanh''(x)  = - 2 * tanh(x) * tanh'(x)
 	// Note that second order Taylor coefficient for u half the
 	// corresponding second derivative.
 	float two    = 2;
@@ -411,10 +411,10 @@ bool old_tan(void)
 	df    = F.Forward(1, dx);
 	tanhp = 0.;
 	ok   &= NearEqual(df[1], tanhp, eps, eps);
- 
+
 	// --------------------------------------------------------------------
-	// Free all temporary work space associated with old_atomic objects. 
-	// (If there are future calls to user atomic functions, they will 
+	// Free all temporary work space associated with old_atomic objects.
+	// (If there are future calls to user atomic functions, they will
 	// create new temporary work space.)
 	CppAD::user_atomic<float>::clear();
 
