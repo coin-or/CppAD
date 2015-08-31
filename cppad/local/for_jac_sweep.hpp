@@ -169,6 +169,9 @@ void ForJacSweep(
 	vector<bool>       bool_r;   // bool sparsity pattern for the argument x
 	vector<bool>       bool_s;   // bool sparisty pattern for the result y
 	//
+	vectorBool         pack_r;   // pack sparsity pattern for the argument x
+	vectorBool         pack_s;   // pack sparisty pattern for the result y
+	//
 	const size_t user_q = limit; // maximum element plus one
 	size_t user_index = 0;       // indentifier for this atomic operation
 	size_t user_id    = 0;       // user identifier for this call to operator
@@ -178,7 +181,9 @@ void ForJacSweep(
 	size_t user_n     = 0;       // size of arugment vector
 	//
 	atomic_base<Base>* user_atom = CPPAD_NULL; // user's atomic op calculator
-	bool               user_bool = false;      // use bool or set sparsity ?
+	bool               user_pack = false;      // sparsity pattern type is pack
+	bool               user_bool = false;      // sparsity pattern type is bool
+	bool               user_set  = false;      // sparsity pattern type is set
 # ifndef NDEBUG
 	bool               user_ok   = false;      // atomic op return value
 # endif
@@ -644,8 +649,22 @@ void ForJacSweep(
 					CPPAD_ASSERT_KNOWN(false, msg.c_str() );
 				}
 # endif
+				user_pack  = user_atom->sparsity() ==
+							atomic_base<Base>::pack_sparsity_enum;
 				user_bool  = user_atom->sparsity() ==
 							atomic_base<Base>::bool_sparsity_enum;
+				user_set   = user_atom->sparsity() ==
+							atomic_base<Base>::set_sparsity_enum;
+				CPPAD_ASSERT_UNKNOWN( user_pack || user_bool || user_set );
+				if( user_pack )
+				{	if( pack_r.size() != user_n * user_q )
+						pack_r.resize( user_n * user_q );
+					if( pack_s.size() != user_m * user_q )
+						pack_s.resize( user_m * user_q );
+					for(i = 0; i < user_n; i++)
+						for(j = 0; j < user_q; j++)
+							pack_r[ i * user_q + j] = false;
+				}
 				if( user_bool )
 				{	if( bool_r.size() != user_n * user_q )
 						bool_r.resize( user_n * user_q );
@@ -655,7 +674,7 @@ void ForJacSweep(
 						for(j = 0; j < user_q; j++)
 							bool_r[ i * user_q + j] = false;
 				}
-				else
+				if( user_set)
 				{	if(set_r.size() != user_n )
 						set_r.resize(user_n);
 					if(set_s.size() != user_m )
@@ -677,7 +696,13 @@ void ForJacSweep(
 				if( ! user_ok )
 				{	std::string msg =
 						atomic_base<Base>::class_name(user_index)
-						+ ": atomic_base.for_sparse_jac: returned false";
+						+ ": atomic_base.for_sparse_jac: returned false\n";
+					if( user_pack )
+						msg += "sparsity = pack_sparsity_enum";
+					if( user_bool )
+						msg += "sparsity = bool_sparsity_enum";
+					if( user_set )
+						msg += "sparsity = set_sparsity_enum";
 					CPPAD_ASSERT_KNOWN(false, msg.c_str() );
 				}
 # endif
@@ -695,14 +720,12 @@ void ForJacSweep(
 			if( user_j == user_n )
 			{	// call users function for this operation
 				user_atom->set_id(user_id);
+				if( user_pack )
+					CPPAD_ATOMIC_CALL( user_q, pack_r, pack_s);
 				if( user_bool )
-					CPPAD_ATOMIC_CALL(
-						user_q, bool_r, bool_s
-				);
-				else
-					CPPAD_ATOMIC_CALL(
-						user_q, set_r, set_s
-				);
+					CPPAD_ATOMIC_CALL( user_q, bool_r, bool_s);
+				if( user_set )
+					CPPAD_ATOMIC_CALL( user_q, set_r, set_s);
 				user_state = user_ret;
 			}
 			break;
@@ -716,9 +739,11 @@ void ForJacSweep(
 			var_sparsity.begin(arg[0]);
 			i = var_sparsity.next_element();
 			while( i < user_q )
-			{	if( user_bool )
+			{	if( user_pack )
+					pack_r[user_j * user_q + i] = true;
+				if( user_bool )
 					bool_r[user_j * user_q + i] = true;
-				else
+				if( user_set )
 					set_r[user_j].insert(i);
 				i = var_sparsity.next_element();
 			}
@@ -726,14 +751,12 @@ void ForJacSweep(
 			if( user_j == user_n )
 			{	// call users function for this operation
 				user_atom->set_id(user_id);
+				if( user_pack )
+					CPPAD_ATOMIC_CALL( user_q, pack_r, pack_s);
 				if( user_bool )
-					CPPAD_ATOMIC_CALL(
-						user_q, bool_r, bool_s
-				);
-				else
-					CPPAD_ATOMIC_CALL(
-						user_q, set_r, set_s
-				);
+					CPPAD_ATOMIC_CALL( user_q, bool_r, bool_s);
+				if( user_set )
+					CPPAD_ATOMIC_CALL( user_q, set_r, set_s);
 				user_state = user_ret;
 			}
 			break;
@@ -753,12 +776,17 @@ void ForJacSweep(
 			CPPAD_ASSERT_UNKNOWN( user_i < user_m );
 			// It might be faster if we add set union to var_sparsity
 			// where one of the sets is not in var_sparsity
+			if( user_pack )
+			{	for(j = 0; j < user_q; j++)
+					if( pack_s[ user_i * user_q + j ] )
+						var_sparsity.add_element(i_var, j);
+			}
 			if( user_bool )
 			{	for(j = 0; j < user_q; j++)
 					if( bool_s[ user_i * user_q + j ] )
 						var_sparsity.add_element(i_var, j);
 			}
-			else
+			if( user_set )
 			{	set_itr = set_s[user_i].begin();
 				set_end = set_s[user_i].end();
 				while( set_itr != set_end )

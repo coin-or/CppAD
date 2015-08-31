@@ -177,6 +177,10 @@ void RevHesSweep(
 	vector<bool>       bool_u;   // bool reverse Hessian sparsity for y
 	vector<bool>       bool_v;   // bool reverse Hessian sparsity for x
 	//
+	vectorBool         pack_r;   // pack forward Jacobian sparsity for x
+	vectorBool         pack_u;   // pack reverse Hessian sparsity for y
+	vectorBool         pack_v;   // pack reverse Hessian sparsity for x
+	//
 	vector<bool>       user_vx;  // which components of x are variables
 	vector<bool>       user_s;   // reverse Jacobian sparsity for y
 	vector<bool>       user_t;   // reverse Jacobian sparsity for x
@@ -189,7 +193,9 @@ void RevHesSweep(
 	size_t user_n     = 0;       // size of arugment vector
 	//
 	atomic_base<Base>* user_atom = CPPAD_NULL; // user's atomic op calculator
-	bool               user_bool = false;      // use bool or set sparsity ?
+	bool               user_pack = false;      // sparsity pattern type is pack
+	bool               user_bool = false;      // sparsity pattern type is bool
+	bool               user_set  = false;      // sparsity pattern type is set
 # ifndef NDEBUG
 	bool               user_ok   = false;      // atomic op return value
 # endif
@@ -663,8 +669,13 @@ void RevHesSweep(
 					CPPAD_ASSERT_KNOWN(false, msg.c_str() );
 				}
 # endif
+				user_pack  = user_atom->sparsity() ==
+							atomic_base<Base>::pack_sparsity_enum;
 				user_bool  = user_atom->sparsity() ==
 							atomic_base<Base>::bool_sparsity_enum;
+				user_set   = user_atom->sparsity() ==
+							atomic_base<Base>::set_sparsity_enum;
+				CPPAD_ASSERT_UNKNOWN( user_pack || user_bool || user_set );
 				user_ix.resize(user_n);
 				user_vx.resize(user_n);
 				user_s.resize(user_m);
@@ -675,6 +686,24 @@ void RevHesSweep(
 					user_s[i] = false;
 				for(i = 0; i < user_n; i++)
 					user_t[i] = false;
+				if( user_pack )
+				{	pack_r.resize(user_n * user_q);
+					pack_u.resize(user_m * user_q);
+					pack_v.resize(user_n * user_q);
+					// simpler to initialize all patterns as empty
+					for(i = 0; i < user_m; i++)
+					{
+						for(j = 0; j < user_q; j++)
+							pack_u[ i * user_q + j] = false;
+					}
+					for(i = 0; i < user_n; i++)
+					{
+						for(j = 0; j < user_q; j++)
+						{	pack_r[ i * user_q + j] = false;
+							pack_v[ i * user_q + j] = false;
+						}
+					}
+				}
 				if( user_bool )
 				{	bool_r.resize(user_n * user_q);
 					bool_u.resize(user_m * user_q);
@@ -693,7 +722,7 @@ void RevHesSweep(
 						}
 					}
 				}
-				else
+				if( user_set )
 				{	set_r.resize(user_n);
 					set_u.resize(user_m);
 					set_v.resize(user_n);
@@ -719,27 +748,41 @@ void RevHesSweep(
 				// call users function for this operation
 				user_atom->set_id(user_id);
 # ifdef NDEBUG
-			 	if( user_bool )
+				if( user_pack )
+					user_atom->rev_sparse_hes(user_vx,
+						user_s, user_t, user_q, pack_r, pack_u, pack_v
+				);
+				if( user_bool )
 					user_atom->rev_sparse_hes(user_vx,
 						user_s, user_t, user_q, bool_r, bool_u, bool_v
 				);
-				else
+				if( user_set )
 					user_atom->rev_sparse_hes(user_vx,
 						user_s, user_t, user_q, set_r, set_u, set_v
 				);
 # else
-			 	if( user_bool )
+				if( user_pack )
+					user_ok = user_atom->rev_sparse_hes(user_vx,
+						user_s, user_t, user_q, pack_r, pack_u, pack_v
+				);
+				if( user_bool )
 					user_ok = user_atom->rev_sparse_hes(user_vx,
 						user_s, user_t, user_q, bool_r, bool_u, bool_v
 				);
-				else
+				if( user_set )
 					user_ok = user_atom->rev_sparse_hes(user_vx,
 						user_s, user_t, user_q, set_r, set_u, set_v
 				);
 				if( ! user_ok )
 				{	std::string msg =
 						atomic_base<Base>::class_name(user_index)
-						+ ": atomic_base.rev_sparse_hes: returned false";
+						+ ": atomic_base.rev_sparse_hes: returned false\n";
+					if( user_pack )
+						msg += "sparsity = pack_sparsity_enum";
+					if( user_bool )
+						msg += "sparsity = bool_sparsity_enum";
+					if( user_set )
+						msg += "sparsity = set_sparsity_enum";
 					CPPAD_ASSERT_KNOWN(false, msg.c_str() );
 				}
 # endif
@@ -748,13 +791,19 @@ void RevHesSweep(
 					size_t  i_x = user_ix[i];
 					if( user_t[i] )
 						RevJac[i_x] = true;
+					if( user_pack )
+					{
+						for(j = 0; j < user_q; j++)
+							if( pack_v[ i * user_q + j ] )
+								rev_hes_sparse.add_element(i_x, j);
+					}
 					if( user_bool )
 					{
 						for(j = 0; j < user_q; j++)
 							if( bool_v[ i * user_q + j ] )
 								rev_hes_sparse.add_element(i_x, j);
 					}
-					else
+					if( user_set )
 					{
 						set_itr = set_v[i].begin();
 						set_end = set_v[i].end();
@@ -791,9 +840,11 @@ void RevHesSweep(
 			for_jac_sparse.begin(arg[0]);
 			i = for_jac_sparse.next_element();
 			while( i < user_q )
-			{	if( user_bool )
+			{	if( user_pack )
+					pack_r[ user_j * user_q + i ] = true;
+				if( user_bool )
 					bool_r[ user_j * user_q + i ] = true;
-				else
+				if( user_set )
 					set_r[user_j].insert(i);
 				i = for_jac_sparse.next_element();
 			}
@@ -824,7 +875,9 @@ void RevHesSweep(
 			rev_hes_sparse.begin(i_var);
 			j = rev_hes_sparse.next_element();
 			while( j < user_q )
-			{	if( user_bool )
+			{	if( user_pack )
+					pack_u[user_i * user_q + j] = true;
+				if( user_bool )
 					bool_u[user_i * user_q + j] = true;
 				else
 					set_u[user_i].insert(j);
