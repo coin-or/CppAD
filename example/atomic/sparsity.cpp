@@ -18,7 +18,7 @@ $$
 $section Atomic Sparsity Patterns: Example and Test$$
 
 $head function$$
-For this example, the atomic function 
+For this example, the atomic function
 $latex f : \B{R}^3 \rightarrow \B{R}^2$$ is defined by
 $latex \[
 f( x_0, x_1 , x_2 ) = \left( \begin{array}{rcl}

@@ -3,7 +3,7 @@
 CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-15 Bradley M. Bell
 
 CppAD is distributed under multiple licenses. This distribution is under
-the terms of the 
+the terms of the
                     Eclipse Public License Version 1.0.
 
 A copy of this license is included in the COPYING file of this distribution.
@@ -35,7 +35,7 @@ $nospell
 $head Start Class Definition$$
 $codep */
 # include <cppad/cppad.hpp>
-namespace { // Begin empty namespace 
+namespace { // Begin empty namespace
 using CppAD::vector;
 //
 // a utility to compute the union of two sets.
@@ -62,7 +62,7 @@ $codep */
 	const bool hyperbolic_; // is this hyperbolic tangent
 	public:
 	// constructor
-	atomic_tangent(const char* name, bool hyperbolic) 
+	atomic_tangent(const char* name, bool hyperbolic)
 	: CppAD::atomic_base<float>(name),
 	hyperbolic_(hyperbolic)
 	{ }
@@ -102,7 +102,7 @@ $codep */
 
 			// y^{(0)} = z^{(0)} * z^{(0)}
 			tzy[q1 + 0] = tzy[0] * tzy[0];
-		
+
 			p++;
 		}
 		for(j = p; j <= q; j++)
@@ -111,7 +111,7 @@ $codep */
 				j_inv = - j_inv;
 
 			// z^{(j)} = x^{(j)} +- sum_{k=1}^j k x^{(k)} y^{(j-k)} / j
-			tzy[j] = tx[j];  
+			tzy[j] = tx[j];
 			for(k = 1; k <= j; k++)
 				tzy[j] += tx[k] * tzy[q1 + j-k] * k * j_inv;
 
@@ -137,7 +137,7 @@ $codep */
 	)
 	{	size_t q1 = q + 1;
 		size_t n  = tx.size()  / q1;
-		size_t m  = tzy.size() / q1;	
+		size_t m  = tzy.size() / q1;
 		assert( px.size()  == n * q1 );
 		assert( pzy.size() == m * q1 );
 		assert( n == 1 );
@@ -161,15 +161,15 @@ $codep */
 			// H_{x^{(k)}} += delta(j-k) +- H_{z^{(j)} y^{(j-k)} * k / j
 			px[j] += qzy[j];
 			for(k = 1; k <= j; k++)
-				px[k] += qzy[j] * tzy[q1 + j-k] * k * j_inv;  
+				px[k] += qzy[j] * tzy[q1 + j-k] * k * j_inv;
 
 			// H_{y^{j-k)} += +- H_{z^{(j)} x^{(k)} * k / j
 			for(k = 1; k <= j; k++)
-				qzy[q1 + j-k] += qzy[j] * tx[k] * k * j_inv;  
+				qzy[q1 + j-k] += qzy[j] * tx[k] * k * j_inv;
 
-			// H_{z^{(k)}} += H_{y^{(j-1)}} * z^{(j-k-1)} * 2. 
+			// H_{z^{(k)}} += H_{y^{(j-1)}} * z^{(j-k-1)} * 2.
 			for(k = 0; k < j; k++)
-				qzy[k] += qzy[q1 + j-1] * tzy[j-k-1] * 2.f; 
+				qzy[k] += qzy[q1 + j-1] * tzy[j-k-1] * 2.f;
 		}
 
 		// eliminate order zero
@@ -178,7 +178,7 @@ $codep */
 		else
 			px[0] += qzy[0] * (1.f + tzy[q1 + 0]);
 
-		return true; 
+		return true;
 	}
 /* $$
 $head for_sparse_jac$$
@@ -234,7 +234,7 @@ $codep */
 		for(size_t j = 0; j < p; j++)
 			st[j] = rt[0 * p + j] | rt[1 * p + j];
 
-		return true; 
+		return true;
 	}
 	// reverse Jacobian sparsity routine called by CppAD
 	virtual bool rev_sparse_jac(
@@ -248,7 +248,7 @@ $codep */
 
 		// sparsity for S(x)^T = f'(x)^T * R^T
 		my_union(st[0], rt[0], rt[1]);
-		return true; 
+		return true;
 	}
 /* $$
 $head rev_sparse_hes$$
@@ -274,14 +274,14 @@ $codep */
 		// There are no cross term second derivatives for this case,
 		// so it is not necessary to vx.
 
-		// sparsity for T(x) = S(x) * f'(x) 
+		// sparsity for T(x) = S(x) * f'(x)
 		t[0] =  s[0] | s[1];
 
-		// V(x) = f'(x)^T * g''(y) * f'(x) * R  +  g'(y) * f''(x) * R 
+		// V(x) = f'(x)^T * g''(y) * f'(x) * R  +  g'(y) * f''(x) * R
 		// U(x) = g''(y) * f'(x) * R
 		// S(x) = g'(y)
-		
-		// back propagate the sparsity for U, note both components 
+
+		// back propagate the sparsity for U, note both components
 		// of f'(x) may be non-zero;
 		size_t j;
 		for(j = 0; j < p; j++)
@@ -316,14 +316,14 @@ $codep */
 		// There are no cross term second derivatives for this case,
 		// so it is not necessary to vx.
 
-		// sparsity for T(x) = S(x) * f'(x) 
+		// sparsity for T(x) = S(x) * f'(x)
 		t[0] =  s[0] | s[1];
 
-		// V(x) = f'(x)^T * g''(y) * f'(x) * R  +  g'(y) * f''(x) * R 
+		// V(x) = f'(x)^T * g''(y) * f'(x) * R  +  g'(y) * f''(x) * R
 		// U(x) = g''(y) * f'(x) * R
 		// S(x) = g'(y)
-		
-		// back propagate the sparsity for U, note both components 
+
+		// back propagate the sparsity for U, note both components
 		// of f'(x) may be non-zero;
 		my_union(v[0], u[0], u[1]);
 
@@ -366,7 +366,7 @@ $codep */
 	// declare independent variables and start tape recording
 	CppAD::Independent(ax);
 
-	// range space vector 
+	// range space vector
 	size_t m = 3;
 	CppAD::vector< AD<float> > af(m);
 
@@ -386,15 +386,15 @@ $codep */
 	CppAD::vector< AD<float> > one(1);
 	one[0] = 1.;
 	my_tanh(one, az);
-	af[2] = az[0]; 
+	af[2] = az[0];
 
 	// create f: x -> f and stop tape recording
 	CppAD::ADFun<float> F;
-	F.Dependent(ax, af); 
+	F.Dependent(ax, af);
 /* $$
 $subhead forward$$
 $codep */
-	// check function value 
+	// check function value
 	float tan = std::tan(x0);
 	ok &= NearEqual(af[0] , tan,  eps, eps);
 	float tanh = std::tanh(x0);
@@ -421,10 +421,10 @@ $codep */
 	w[2]  = 0.;
 	dw    = F.Reverse(1, w);
 
-	// tan'(x)   = 1 + tan(x)  * tan(x) 
-	// tanh'(x)  = 1 - tanh(x) * tanh(x) 
-	float tanp  = 1.f + tan * tan; 
-	float tanhp = 1.f - tanh * tanh; 
+	// tan'(x)   = 1 + tan(x)  * tan(x)
+	// tanh'(x)  = 1 - tanh(x) * tanh(x)
+	float tanp  = 1.f + tan * tan;
+	float tanhp = 1.f - tanh * tanh;
 	ok   &= NearEqual(df[0], tanp, eps, eps);
 	ok   &= NearEqual(df[1], tanhp, eps, eps);
 	ok   &= NearEqual(dw[0], w[0]*tanp + w[1]*tanhp, eps, eps);
@@ -438,8 +438,8 @@ $codep */
 	CppAD::vector<float> ddw(2);
 	ddw   = F.Reverse(2, w);
 
-	// tan''(x)   = 2 *  tan(x) * tan'(x) 
-	// tanh''(x)  = - 2 * tanh(x) * tanh'(x) 
+	// tan''(x)   = 2 *  tan(x) * tan'(x)
+	// tanh''(x)  = - 2 * tanh(x) * tanh'(x)
 	// Note that second order Taylor coefficient for u half the
 	// corresponding second derivative.
 	float two    = 2;
@@ -504,7 +504,7 @@ $codep */
 	df    = F.Forward(1, dx);
 	tanhp = 0.;
 	ok   &= NearEqual(df[1], tanhp, eps, eps);
- 
+
 	return ok;
 }
 /* $$
