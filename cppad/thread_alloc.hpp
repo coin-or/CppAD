@@ -3,7 +3,7 @@
 # define CPPAD_THREAD_ALLOC_INCLUDED
 
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-14 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-15 Bradley M. Bell
 
 CppAD is distributed under multiple licenses. This distribution is under
 the terms of the 
@@ -713,7 +713,6 @@ $codei%
 	size_t %thread%
 %$$
 and is the currently executing thread number.
-If $code _OPENMP$$ is not defined, $icode thread$$ is zero.
 
 $head Example$$
 $cref thread_alloc.cpp$$
