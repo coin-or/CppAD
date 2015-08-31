@@ -80,6 +80,7 @@ $childtable%
 	example/atomic/get_started.cpp%
 	example/atomic/norm_sq.cpp%
 	example/atomic/reciprocal.cpp%
+	example/atomic/sparsity.cpp%
 	example/atomic/tangent.cpp%
 	example/atomic/hes_sparse.cpp%
 	example/atomic/mat_mul.cpp

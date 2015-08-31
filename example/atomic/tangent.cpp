@@ -1,6 +1,6 @@
 // $Id$
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-14 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-15 Bradley M. Bell
 
 CppAD is distributed under multiple licenses. This distribution is under
 the terms of the 
@@ -14,6 +14,7 @@ Please visit http://www.coin-or.org/CppAD/ for information on other licenses.
 $begin atomic_tangent.cpp$$
 $spell
 	Tanh
+	bool
 $$
 
 $section Tan and Tanh as User Atomic Operations: Example and Test$$
@@ -25,6 +26,9 @@ $head Theory$$
 The code below uses the $cref tan_forward$$ and $cref tan_reverse$$
 to implement the tangent and hyperbolic tangent
 functions as user atomic operations.
+
+$head sparsity$$
+This atomic operation can use both set and bool sparsity patterns.
 
 $nospell
 

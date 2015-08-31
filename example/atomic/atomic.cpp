@@ -1,6 +1,6 @@
 /* $Id$ */
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-13 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-15 Bradley M. Bell
 
 CppAD is distributed under multiple licenses. This distribution is under
 the terms of the 
@@ -26,6 +26,7 @@ extern bool hes_sparse(void);
 extern bool mat_mul(void);
 extern bool norm_sq(void);
 extern bool reciprocal(void);
+extern bool sparsity(void);
 extern bool tangent(void);
 extern bool old_mat_mul(void);
 extern bool old_reciprocal(void);
@@ -65,6 +66,7 @@ int main(void)
 	ok &= Run( mat_mul,             "mat_mul"        );
 	ok &= Run( norm_sq,             "norm_sq"        );
 	ok &= Run( reciprocal,          "reciprocal"     );
+	ok &= Run( sparsity,            "sparsity"       );
 	ok &= Run( tangent,             "tangent"        );
 	ok &= Run( old_mat_mul,         "old_mat_mul"    );
 	ok &= Run( old_reciprocal,      "old_reciprocal" );

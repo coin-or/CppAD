@@ -99,9 +99,10 @@ CONFIG_CLEAN_FILES =
 CONFIG_CLEAN_VPATH_FILES =
 am_atomic_OBJECTS = atomic.$(OBJEXT) checkpoint.$(OBJEXT) \
 	get_started.$(OBJEXT) hes_sparse.$(OBJEXT) mat_mul.$(OBJEXT) \
-	norm_sq.$(OBJEXT) reciprocal.$(OBJEXT) tangent.$(OBJEXT) \
-	old_mat_mul.$(OBJEXT) old_reciprocal.$(OBJEXT) \
-	old_tan.$(OBJEXT) old_usead_1.$(OBJEXT) old_usead_2.$(OBJEXT)
+	norm_sq.$(OBJEXT) reciprocal.$(OBJEXT) sparsity.$(OBJEXT) \
+	tangent.$(OBJEXT) old_mat_mul.$(OBJEXT) \
+	old_reciprocal.$(OBJEXT) old_tan.$(OBJEXT) \
+	old_usead_1.$(OBJEXT) old_usead_2.$(OBJEXT)
 atomic_OBJECTS = $(am_atomic_OBJECTS)
 atomic_LDADD = $(LDADD)
 AM_V_P = $(am__v_P_@AM_V@)
@@ -364,13 +365,14 @@ atomic_SOURCES = \
 	mat_mul.cpp \
 	norm_sq.cpp \
 	reciprocal.cpp \
+	sparsity.cpp \
 	tangent.cpp \
 	old_mat_mul.hpp \
 	old_mat_mul.cpp \
 	old_reciprocal.cpp \
 	old_tan.cpp \
 	old_usead_1.cpp \
-	old_usead_2.cpp 
+	old_usead_2.cpp
 
 all: all-am
 
@@ -431,6 +433,7 @@ distclean-compile:
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/old_usead_1.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/old_usead_2.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/reciprocal.Po@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/sparsity.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/tangent.Po@am__quote@
 
 .cpp.o:

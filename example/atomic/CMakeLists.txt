@@ -1,6 +1,6 @@
 # $Id$
 # -----------------------------------------------------------------------------
-# CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-13 Bradley M. Bell
+# CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-15 Bradley M. Bell
 #
 # CppAD is distributed under multiple licenses. This distribution is under
 # the terms of the 
@@ -24,6 +24,7 @@ ADD_EXECUTABLE(example_atomic EXCLUDE_FROM_ALL
 	mat_mul.cpp
 	norm_sq.cpp
 	reciprocal.cpp
+	sparsity.cpp
 	tangent.cpp
 	old_reciprocal.cpp
 	old_mat_mul.cpp

@@ -12,6 +12,9 @@ Please visit http://www.coin-or.org/CppAD/ for information on other licenses.
 
 /*
 $begin atomic_reciprocal.cpp$$
+$spell
+	enum
+$$
 
 $section Reciprocal as an Atomic Operation: Example and Test$$
 
@@ -20,6 +23,10 @@ This example demonstrates using $cref atomic_base$$
 to define the operation
 $latex f : \B{R}^n \rightarrow \B{R}^m$$ where
 $latex n = 1$$, $latex m = 1$$, and $latex f(x) = 1 / x$$.
+
+$head sparsity$$
+$index set_sparsity_enum$$
+This example only uses set sparsity patterns.
 
 $nospell
 
@@ -52,7 +59,7 @@ $codep */
 	public:
 	// constructor (could use const char* for name)
 	atomic_reciprocal(const std::string& name) :
-	// this exmaple uses set sparsity patterns
+	// this exmaple only uses set sparsity patterns
 	CppAD::atomic_base<double>(name, atomic_base<double>::set_sparsity_enum)
 	{ }
 	private:

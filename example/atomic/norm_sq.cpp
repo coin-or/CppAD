@@ -14,9 +14,11 @@ Please visit http://www.coin-or.org/CppAD/ for information on other licenses.
 $begin atomic_norm_sq.cpp$$
 $spell
 	sq
+	bool
+	enum
 $$
 
-$section Euclidean Norm Squared: Example and Test$$
+$section Atomic Euclidean Norm Squared: Example and Test$$
 
 $head Theory$$
 This example demonstrates using $cref atomic_base$$
@@ -26,6 +28,10 @@ $latex n = 2$$, $latex m = 1$$, where
 $latex \[
 	f(x) =  x_0^2 + x_1^2
 \] $$
+
+$head sparsity$$
+$index bool_sparsity_enum$$
+This example only uses bool sparsity patterns.
 
 $nospell
 
@@ -42,7 +48,7 @@ $codep */
 	public:
 	// constructor (could use const char* for name)
 	atomic_norm_sq(const std::string& name) :
-	// this example uses boolean sparsity patterns
+	// this example only uses boolean sparsity patterns
 	CppAD::atomic_base<double>(name, atomic_base<double>::bool_sparsity_enum)
 	{ }
 	private:

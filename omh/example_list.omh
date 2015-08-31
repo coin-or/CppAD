@@ -103,6 +103,7 @@ $rref atomic_matrix_mul.hpp$$
 $rref atomic_mat_mul.cpp$$
 $cref atomic_norm_sq.cpp$$
 $cref atomic_reciprocal.cpp$$
+$cref atomic_sparsity.cpp$$
 $cref atomic_tangent.cpp$$
 $rref base_adolc.hpp$$
 $rref base_alloc.hpp$$
