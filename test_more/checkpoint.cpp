@@ -159,10 +159,12 @@ namespace {
 		h_check(ax, ay);
 		ADFun<double> h(ax, ay);
 
-		for(size_t k = 0; k < 2; k++)
+		for(size_t k = 0; k < 3; k++)
 		{	if( k == 0 )
+				h_check.option(CppAD::atomic_base<double>::pack_sparsity_enum);
+			if( k == 1 )
 				h_check.option(CppAD::atomic_base<double>::bool_sparsity_enum);
-			else
+			if( k == 2 )
 				h_check.option(CppAD::atomic_base<double>::set_sparsity_enum);
 
 			// compute sparsity pattern h_1(x) = x[1] + x[2]

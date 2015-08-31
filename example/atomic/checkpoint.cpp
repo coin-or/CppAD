@@ -90,8 +90,9 @@ bool checkpoint(void)
 	ADVector ax(n), ay(n), az(m);
 	for(j = 0; j < n; j++)
 		ax[j] = double(j);
+	// could also use bool_sparsity_enum or set_sparsity_enum
 	CppAD::atomic_base<double>::option_enum sparsity =
-		CppAD::atomic_base<double>::bool_sparsity_enum;
+		CppAD::atomic_base<double>::pack_sparsity_enum;
 	checkpoint<double> atom_f("atom_f", f_algo, ax, ay, sparsity);
 	checkpoint<double> atom_g("atom_g", g_algo, ay, az, sparsity);
 

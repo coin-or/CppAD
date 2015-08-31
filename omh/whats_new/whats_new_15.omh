@@ -52,6 +52,7 @@ $spell
 	Adolc
 	resize
 	bool
+	alloc
 $$
 
 $section CppAD Changes and Additions During 2015$$
@@ -64,13 +65,16 @@ assist you in learning about changes between various versions of CppAD.
 
 $head 08-31$$
 $list number$$
-First version that supports the
+Add the
 $cref/pack/atomic_option/atomic_sparsity/pack_sparsity_enum/$$
-sparsity option for user atomic operations.
+sparsity option for $cref atomic_base$$ operations.
+$lnext
+Add the pack sparsity option to
+$cref/checkpoint/checkpoint/sparsity/$$ functions.
 $lnext
 Added the $cref atomic_sparsity.cpp$$ example.
 $lnext
-Rmove mention of OpenMP from $cref/thread_alloc::thread_num/ta_thread_num/$$
+Remove mention of OpenMP from $cref/thread_alloc::thread_num/ta_thread_num/$$
 ($cref thread_alloc$$ never was OpenMP specific).
 $lend
 
