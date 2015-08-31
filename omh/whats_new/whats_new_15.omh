@@ -64,7 +64,7 @@ assist you in learning about changes between various versions of CppAD.
 
 $head 08-31$$
 $list number$$
-First version that supports the 
+First version that supports the
 $cref/pack/atomic_option/atomic_sparsity/pack_sparsity_enum/$$
 sparsity option for user atomic operations.
 $lnext
