@@ -79,6 +79,7 @@ extern bool conj_grad(void);
 extern bool Cos(void);
 extern bool Cosh(void);
 extern bool CppAD_vector(void);
+extern bool dependency(void);
 extern bool Div(void);
 extern bool DivEq(void);
 extern bool eigen_array(void);
@@ -247,6 +248,7 @@ int main(void)
 	ok &= Run( Cos,               "Cos"              );
 	ok &= Run( Cosh,              "Cosh"             );
 	ok &= Run( CppAD_vector,      "CppAD_vector"     );
+	ok &= Run( dependency,        "dependency"       );
 	ok &= Run( Div,               "Div"              );
 	ok &= Run( DivEq,             "DivEq"            );
 	ok &= Run( EqualOpSeq,        "EqualOpSeq"       );

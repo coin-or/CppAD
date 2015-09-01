@@ -89,17 +89,8 @@ $codei%
 	bool %dependency%
 %$$
 If $icode dependency$$ is true,
-the derivatives with respect to left and right of the
-$cref CondExp$$ below are considered to be non-zero:
-$codei%
-	%CondExp%Rel%(%left%, %right%, %if_true%, %if_false%)
-%$$
-This is useful for determining the dependency relations
-between the independent and dependent variables. It is used with this purpose
-by the $cref/optimizer/optimize/$$ when dealing with
-$cref checkpoint$$ and user defined $cref/atomic/atomic_base/$$ functions.
-The default value $icode%dependency% = false%$$ is used when
-$icode dependency$$ is not present.
+the $cref/dependency pattern/dependency.cpp/Dependency Pattern/$$
+(instead of sparsity pattern) is computed.
 
 $head r$$
 The argument $icode s$$ has prototype

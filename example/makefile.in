@@ -119,18 +119,18 @@ am__example_SOURCES_DIST = mul_level_adolc.cpp mul_level_adolc_ode.cpp \
 	change_param.cpp check_for_nan.cpp check_numeric_type.cpp \
 	check_simple_vector.cpp compare.cpp compare_change.cpp \
 	complex_poly.cpp cond_exp.cpp conj_grad.cpp cos.cpp cosh.cpp \
-	cppad_vector.cpp div.cpp div_eq.cpp equal_op_seq.cpp erf.cpp \
-	error_handler.cpp exp.cpp expm1.cpp for_one.cpp for_two.cpp \
-	forward.cpp forward_dir.cpp forward_order.cpp \
-	for_sparse_jac.cpp fun_assign.cpp fun_check.cpp \
-	hes_lagrangian.cpp hes_lu_det.cpp hes_minor_det.cpp \
-	hessian.cpp hes_times_dir.cpp independent.cpp index_sort.cpp \
-	integer.cpp interface2c.cpp interp_onetape.cpp \
-	interp_retape.cpp jac_lu_det.cpp jac_minor_det.cpp \
-	jacobian.cpp limits.cpp log.cpp log1p.cpp log10.cpp \
-	lu_factor.cpp lu_invert.cpp lu_ratio.cpp lu_solve.cpp \
-	lu_vec_ad.cpp lu_vec_ad.hpp lu_vec_ad_ok.cpp mul.cpp \
-	mul_eq.cpp mul_level.cpp mul_level_ode.cpp nan.cpp \
+	cppad_vector.cpp dependency.cpp div.cpp div_eq.cpp \
+	equal_op_seq.cpp erf.cpp error_handler.cpp exp.cpp expm1.cpp \
+	for_one.cpp for_two.cpp forward.cpp forward_dir.cpp \
+	forward_order.cpp for_sparse_jac.cpp fun_assign.cpp \
+	fun_check.cpp hes_lagrangian.cpp hes_lu_det.cpp \
+	hes_minor_det.cpp hessian.cpp hes_times_dir.cpp \
+	independent.cpp index_sort.cpp integer.cpp interface2c.cpp \
+	interp_onetape.cpp interp_retape.cpp jac_lu_det.cpp \
+	jac_minor_det.cpp jacobian.cpp limits.cpp log.cpp log1p.cpp \
+	log10.cpp lu_factor.cpp lu_invert.cpp lu_ratio.cpp \
+	lu_solve.cpp lu_vec_ad.cpp lu_vec_ad.hpp lu_vec_ad_ok.cpp \
+	mul.cpp mul_eq.cpp mul_level.cpp mul_level_ode.cpp nan.cpp \
 	near_equal.cpp near_equal_ext.cpp number_skip.cpp \
 	numeric_type.cpp ode_err_control.cpp ode_err_maxabs.cpp \
 	ode_gear.cpp ode_gear_control.cpp ode_stiff.cpp ode_taylor.cpp \
@@ -160,10 +160,10 @@ am_example_OBJECTS = $(am__objects_1) example.$(OBJEXT) \
 	compare.$(OBJEXT) compare_change.$(OBJEXT) \
 	complex_poly.$(OBJEXT) cond_exp.$(OBJEXT) conj_grad.$(OBJEXT) \
 	cos.$(OBJEXT) cosh.$(OBJEXT) cppad_vector.$(OBJEXT) \
-	div.$(OBJEXT) div_eq.$(OBJEXT) equal_op_seq.$(OBJEXT) \
-	erf.$(OBJEXT) error_handler.$(OBJEXT) exp.$(OBJEXT) \
-	expm1.$(OBJEXT) for_one.$(OBJEXT) for_two.$(OBJEXT) \
-	forward.$(OBJEXT) forward_dir.$(OBJEXT) \
+	dependency.$(OBJEXT) div.$(OBJEXT) div_eq.$(OBJEXT) \
+	equal_op_seq.$(OBJEXT) erf.$(OBJEXT) error_handler.$(OBJEXT) \
+	exp.$(OBJEXT) expm1.$(OBJEXT) for_one.$(OBJEXT) \
+	for_two.$(OBJEXT) forward.$(OBJEXT) forward_dir.$(OBJEXT) \
 	forward_order.$(OBJEXT) for_sparse_jac.$(OBJEXT) \
 	fun_assign.$(OBJEXT) fun_check.$(OBJEXT) \
 	hes_lagrangian.$(OBJEXT) hes_lu_det.$(OBJEXT) \
@@ -542,6 +542,7 @@ example_SOURCES = \
 	cos.cpp \
 	cosh.cpp \
 	cppad_vector.cpp \
+	dependency.cpp \
 	div.cpp \
 	div_eq.cpp \
 	equal_op_seq.cpp \
@@ -734,6 +735,7 @@ distclean-compile:
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/cos.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/cosh.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/cppad_vector.Po@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/dependency.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/div.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/div_eq.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/equal_op_seq.Po@am__quote@

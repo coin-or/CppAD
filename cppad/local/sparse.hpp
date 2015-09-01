@@ -3,10 +3,10 @@
 # define CPPAD_SPARSE_INCLUDED
 
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-06 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-15 Bradley M. Bell
 
 CppAD is distributed under multiple licenses. This distribution is under
-the terms of the 
+the terms of the
                     Eclipse Public License Version 1.0.
 
 A copy of this license is included in the COPYING file of this distribution.
@@ -26,6 +26,7 @@ $section Calculating Sparsity Patterns$$
 $childtable%
 	cppad/local/for_sparse_jac.hpp%
 	cppad/local/rev_sparse_jac.hpp%
+	example/dependency.cpp%
 	cppad/local/rev_sparse_hes.hpp
 %$$
 

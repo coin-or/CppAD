@@ -129,6 +129,7 @@ $rref cos.cpp$$
 $rref cosh.cpp$$
 $rref cppad_eigen.hpp$$
 $rref cppad_vector.cpp$$
+$rref dependency.cpp$$
 $rref det_by_lu.cpp$$
 $rref det_by_minor.cpp$$
 $rref det_of_minor.cpp$$

@@ -44,14 +44,8 @@ $$
 $section The CppAD Wish List$$
 
 $head checkpoint$$
-$list number$$
 There should be some examples and tests for both speed and memory use
 that demonstrate that checkpointing is useful.
-$lnext
-There should be an option to use a
-$cref/vectorBool/CppAD_vector/vectorBool/$$ interface
-for the atomic sparsity calculations.
-$lend
 
 $head abort_op_index$$
 When a known error is detected during $cref forward$$ or $cref reverse$$ mode,

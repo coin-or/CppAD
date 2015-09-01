@@ -521,7 +521,8 @@ void ForJacSweep(
 
 			case SignOp:
 			CPPAD_ASSERT_NARG_NRES(op, 1, 1);
-			forward_sparse_jacobian_unary_op(
+			// derivative is identically zero but dependency is not
+			if( dependency ) forward_sparse_jacobian_unary_op(
 				i_var, arg[0], var_sparsity
 			);
 			break;

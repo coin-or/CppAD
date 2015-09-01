@@ -27,7 +27,7 @@ $icode%y% = sign(%x%)%$$
 $head Description$$
 Evaluates the $code sign$$ function which is defined by
 $latex \[
-{\rm sign} (x ) =
+{\rm sign} (x) =
 \left\{ \begin{array}{rl}
 	+1 & {\rm if} \; x > 0 \\
 	0  & {\rm if} \; x = 0 \\
@@ -48,7 +48,7 @@ argument values $icode x$$.
 The correct mathematical derivative is different and
 is given by
 $latex \[
-	{\rm sign}{(1)} (x) =  2 \delta (x)
+	{\rm sign}^{(1)} (x) =  2 \delta (x)
 \] $$
 where $latex \delta (x)$$ is the Dirac Delta function.
 

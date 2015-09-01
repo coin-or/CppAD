@@ -107,6 +107,7 @@ ADD_EXECUTABLE(example EXCLUDE_FROM_ALL example.cpp
 	cos.cpp
 	cosh.cpp
 	cppad_vector.cpp
+	dependency.cpp
 	div.cpp
 	div_eq.cpp
 	equal_op_seq.cpp

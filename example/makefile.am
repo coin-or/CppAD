@@ -113,6 +113,7 @@ example_SOURCES   = \
 	cos.cpp \
 	cosh.cpp \
 	cppad_vector.cpp \
+	dependency.cpp \
 	div.cpp \
 	div_eq.cpp \
 	equal_op_seq.cpp \

@@ -173,7 +173,10 @@ namespace {
 			s = h.RevSparseJac(1, r);
 
 			// check result
-			ok &= s[0] == std::set<size_t>{1, 2};
+			std::set<size_t> check;
+			check.insert(1);
+			check.insert(2);
+			ok &= s[0] == check;
 		}
 
 		return ok;
