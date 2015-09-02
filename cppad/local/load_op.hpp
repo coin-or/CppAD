@@ -153,8 +153,8 @@ is the type used for vectors of sets. It can be either
 \c sparse_pack, \c sparse_set, or \c sparse_list.
 
 \param op
-is the code corresponding to this operator; i.e., LdpOp or LdvOp
-(only used for error checking).
+is the code corresponding to this operator;
+i.e., LdpOp or LdvOp.
 
 \param i_z
 is the AD variable index corresponding to the variable z; i.e.,
@@ -533,9 +533,13 @@ inline void reverse_load_op(
 Forward mode sparsity operations for LdpOp and LdvOp
 
 \copydetails sparse_load_op
+
+\param dependency
+is this a dependency (or sparsity) calculation.
 */
 template <class Vector_set>
 inline void forward_sparse_load_op(
+	bool               dependency     ,
 	OpCode             op             ,
 	size_t             i_z            ,
 	const addr_t*      arg            , 
@@ -552,6 +556,8 @@ inline void forward_sparse_load_op(
 	CPPAD_ASSERT_UNKNOWN( i_v < vecad_sparsity.n_set() );
 
 	var_sparsity.assignment(i_z, i_v, vecad_sparsity);
+	if( dependency & (op == LdvOp) )
+		var_sparsity.binary_union(i_z, i_z, arg[1], var_sparsity);
 
 	return;
 }
@@ -561,9 +567,13 @@ inline void forward_sparse_load_op(
 Reverse mode Jacobian sparsity operations for LdpOp and LdvOp
 
 \copydetails sparse_load_op
+
+\param dependency
+is this a dependency (or sparsity) calculation.
 */
 template <class Vector_set>
 inline void reverse_sparse_jacobian_load_op(
+	bool               dependency     ,
 	OpCode             op             ,
 	size_t             i_z            ,
 	const addr_t*      arg            , 
@@ -580,6 +590,8 @@ inline void reverse_sparse_jacobian_load_op(
 	CPPAD_ASSERT_UNKNOWN( i_v < vecad_sparsity.n_set() );
 
 	vecad_sparsity.binary_union(i_v, i_v, i_z, var_sparsity);
+	if( dependency & (op == LdvOp) )
+		var_sparsity.binary_union(arg[1], arg[1], i_z, var_sparsity);
 
 	return;
 }
@@ -607,8 +619,8 @@ is the type used for vectors of sets. It can be either
 \c sparse_pack, \c sparse_set, or \c sparse_list.
 
 \param op
-is the code corresponding to this operator; i.e., LdpOp or LdvOp
-(only used for error checking).
+is the code corresponding to this operator;
+i.e., LdpOp or LdvOp.
 
 \param i_z
 is the AD variable index corresponding to the variable z; i.e.,

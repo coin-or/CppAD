@@ -417,6 +417,7 @@ void ForJacSweep(
 
 			case LdpOp:
 			forward_sparse_load_op(
+				dependency,
 				op,
 				i_var,
 				arg,
@@ -430,6 +431,7 @@ void ForJacSweep(
 
 			case LdvOp:
 			forward_sparse_load_op(
+				dependency,
 				op,
 				i_var,
 				arg,
@@ -563,12 +565,14 @@ void ForJacSweep(
 
 			case StppOp:
 			CPPAD_ASSERT_NARG_NRES(op, 3, 0);
-			// storing a parameter does not affect vector sparsity
+			// if both arguments are parameters does not affect sparsity
+			// or dependency
 			break;
 			// -------------------------------------------------
 
 			case StpvOp:
 			forward_sparse_store_op(
+				dependency,
 				op,
 				arg,
 				num_vecad_ind,
@@ -581,12 +585,21 @@ void ForJacSweep(
 
 			case StvpOp:
 			CPPAD_ASSERT_NARG_NRES(op, 3, 0);
-			// storing a parameter does not affect vector sparsity
+			forward_sparse_store_op(
+				dependency,
+				op,
+				arg,
+				num_vecad_ind,
+				vecad_ind.data(),
+				var_sparsity,
+				vecad_sparsity
+			);
 			break;
 			// -------------------------------------------------
 
 			case StvvOp:
 			forward_sparse_store_op(
+				dependency,
 				op,
 				arg,
 				num_vecad_ind,

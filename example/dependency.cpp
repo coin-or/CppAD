@@ -68,8 +68,13 @@ bool dependency(void)
 	using CppAD::AD;
 	using CppAD::NearEqual;
 
+	// VecAD object for use later
+	CppAD::VecAD<double> vec_ad(2);
+	vec_ad[0] = 0.0;
+	vec_ad[1] = 1.0;
+
 	// domain space vector
-	size_t n  = 4;
+	size_t n  = 5;
 	CPPAD_TESTVECTOR(AD<double>) ax(n);
 	for(size_t j = 0; j < n; j++)
 		ax[j] = AD<double>(j + 1);
@@ -88,6 +93,7 @@ bool dependency(void)
 	ay[m1-1] = CondExpLe( ax[1], azero, azero, aone);
 	ay[m1-2] = CondExpLe( azero, ax[2], azero, aone);
 	ay[m1-3] = heavyside( ax[3] );
+	ay[m1-4] = vec_ad[ ax[4] - AD<double>(4.0) ];
 
 	// create f: x -> y and stop tape recording
 	CppAD::ADFun<double> f(ax, ay);
@@ -117,7 +123,7 @@ bool dependency(void)
 
 	// -----------------------------------------------------------
 	// RevSparseJac and set dependency
-	CPPAD_TESTVECTOR( std::set<size_t> ) eye_set(m), depend_set(m);
+	CppAD::vector<    std::set<size_t> > eye_set(m), depend_set(m);
 	for(size_t i = 0; i < m; i++)
 	{	ok &= eye_set[i].empty();
 		eye_set[i].insert(i);

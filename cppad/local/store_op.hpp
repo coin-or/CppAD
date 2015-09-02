@@ -3,7 +3,7 @@
 # define CPPAD_STORE_OP_INCLUDED
 
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-14 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-15 Bradley M. Bell
 
 CppAD is distributed under multiple licenses. This distribution is under
 the terms of the 
@@ -141,8 +141,8 @@ is the type used for vectors of sets. It can be either
 \c sparse_pack, \c sparse_set, or \c sparse_list.
 
 \param op
-is the code corresponding to this operator; i.e., StpvOp or StvvOp
-(only used for error checking).
+is the code corresponding to this operator;
+i.e., StpvOp, StvpOp, or StvvOp.
 
 \param arg
 \n
@@ -325,9 +325,13 @@ inline void forward_store_vv_op_0(
 Forward mode sparsity operations for StpvOp and StvvOp
 
 \copydetails sparse_store_op
+
+\param dependency
+is this a dependency (or sparsity) calculation.
 */
 template <class Vector_set>
 inline void forward_sparse_store_op(
+	bool                dependency     ,
 	OpCode              op             ,
 	const addr_t*       arg            , 
 	size_t              num_combined   ,
@@ -343,13 +347,17 @@ inline void forward_sparse_store_op(
 	CPPAD_ASSERT_UNKNOWN( i_v < vecad_sparsity.n_set() );
 	CPPAD_ASSERT_UNKNOWN( size_t(arg[2]) < var_sparsity.n_set() );
 
-	vecad_sparsity.binary_union(i_v, i_v, arg[2], var_sparsity);
+	if( dependency & ( (op == StvvOp) | (op == StvpOp) ) )
+		vecad_sparsity.binary_union(i_v, i_v, arg[1], var_sparsity);
+
+	if( (op == StpvOp) | (op == StvvOp ) )
+		vecad_sparsity.binary_union(i_v, i_v, arg[2], var_sparsity);
 
 	return;
 }
 
 /*!
-Reverse mode sparsity operations for StpvOp and StvvOp
+Reverse mode sparsity operations for StpvOp, StvpOp, and StvvOp
 
 This routine is given the sparsity patterns for
 G(v[x], y , w , u ... ) and it uses them to compute the 
@@ -376,8 +384,8 @@ is the type used for vectors of sets. It can be either
 \c sparse_pack, \c sparse_set, or \c sparse_list.
 
 \param op
-is the code corresponding to this operator; i.e., StpvOp or StvvOp
-(only used for error checking).
+is the code corresponding to this operator;
+i.e., StpvOp, StvpOp, or StvvOp.
 
 \param arg
 \n
@@ -425,9 +433,13 @@ to the sparsity pattern for the vector v.
 \li \a arg[2] < \a var_sparsity.n_set()
 \li i_v       < \a vecad_sparsity.n_set()
 <!-- end sparse_store_op -->
+
+\param dependency
+is this a dependency (or sparsity) calculation.
 */
 template <class Vector_set>
 inline void reverse_sparse_jacobian_store_op(
+	bool               dependency      ,
 	OpCode             op              ,
 	const addr_t*      arg             , 
 	size_t             num_combined    ,
@@ -443,7 +455,10 @@ inline void reverse_sparse_jacobian_store_op(
 	CPPAD_ASSERT_UNKNOWN( i_v < vecad_sparsity.n_set() );
 	CPPAD_ASSERT_UNKNOWN( size_t(arg[2]) < var_sparsity.n_set() );
 
-	var_sparsity.binary_union(arg[2], arg[2], i_v, vecad_sparsity);
+	if( dependency & ( (op == StvpOp) | (op == StvvOp) ) )
+		var_sparsity.binary_union(arg[1], arg[1], i_v, vecad_sparsity);
+	if( (op == StpvOp) | (op == StvvOp) )
+		var_sparsity.binary_union(arg[2], arg[2], i_v, vecad_sparsity);
 
 	return;
 }
@@ -476,8 +491,8 @@ is the type used for vectors of sets. It can be either
 \c sparse_pack, \c sparse_set, or \c sparse_list.
 
 \param op
-is the code corresponding to this operator; i.e., StpvOp or StvvOp
-(only used for error checking).
+is the code corresponding to this operator;
+i.e., StpvOp, StvpOp, or StvvOp.
 
 \param arg
 \n

@@ -63,13 +63,13 @@ This section contains a list of the changes to CppAD during 2015
 The purpose of this section is to
 assist you in learning about changes between various versions of CppAD.
 
-$head 09-01$$
+$head 09-02$$
 The $cref/dependency pattern/dependency.cpp/Dependency Pattern/$$
 was not being computed correctly for the
-$cref sign$$ and $cref Discrete$$ functions.
+$cref sign$$, $cref Discrete$$, and $cref VecAD$$ operations.
 This has been fixed.
 (It could have caused problems using $cref optimize$$ with an $cref ADFun$$
-that used the $code sign$$ and discrete functions.).
+that used any of these operations.)
 
 $head 08-31$$
 $list number$$
