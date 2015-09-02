@@ -342,7 +342,12 @@ void ForJacSweep(
 
 			case DisOp:
 			CPPAD_ASSERT_NARG_NRES(op, 2, 1);
-			var_sparsity.clear(i_var);
+			// derivative is identically zero but dependency is not
+			if( dependency ) forward_sparse_jacobian_unary_op(
+				i_var, arg[1], var_sparsity
+			);
+			else
+				var_sparsity.clear(i_var);
 			break;
 			// -------------------------------------------------
 
@@ -525,6 +530,8 @@ void ForJacSweep(
 			if( dependency ) forward_sparse_jacobian_unary_op(
 				i_var, arg[0], var_sparsity
 			);
+			else
+				var_sparsity.clear(i_var);
 			break;
 			// -------------------------------------------------
 

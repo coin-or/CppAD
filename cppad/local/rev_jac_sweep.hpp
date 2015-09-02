@@ -350,7 +350,10 @@ void RevJacSweep(
 
 			case DisOp:
 			CPPAD_ASSERT_NARG_NRES(op, 2, 1);
-			// derivative is identically zero
+			// derivative is identically zero but dependency is not
+			if( dependency ) reverse_sparse_jacobian_unary_op(
+				i_var, arg[1], var_sparsity
+			);
 			break;
 			// -------------------------------------------------
 

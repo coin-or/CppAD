@@ -54,6 +54,14 @@ $end
 */
 // BEGIN C++
 # include <cppad/cppad.hpp>
+namespace {
+	double heavyside(const double& x)
+	{	if( x <= 0.0 )
+			return 0.0;
+		return 1.0;
+	}
+	CPPAD_DISCRETE_FUNCTION(double, heavyside)
+}
 
 bool dependency(void)
 {	bool ok = true;
@@ -61,7 +69,7 @@ bool dependency(void)
 	using CppAD::NearEqual;
 
 	// domain space vector
-	size_t n  = 3;
+	size_t n  = 4;
 	CPPAD_TESTVECTOR(AD<double>) ax(n);
 	for(size_t j = 0; j < n; j++)
 		ax[j] = AD<double>(j + 1);
@@ -79,6 +87,7 @@ bool dependency(void)
 	ay[m1-0] = sign( ax[0] );
 	ay[m1-1] = CondExpLe( ax[1], azero, azero, aone);
 	ay[m1-2] = CondExpLe( azero, ax[2], azero, aone);
+	ay[m1-3] = heavyside( ax[3] );
 
 	// create f: x -> y and stop tape recording
 	CppAD::ADFun<double> f(ax, ay);
