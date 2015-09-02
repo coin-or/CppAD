@@ -19,21 +19,40 @@ namespace CppAD { // BEGIN_CPPAD_NAMESPACE
 \file load_op.hpp
 Setting a variable so that it corresponds to current value of a VecAD element.
 */
-
-/*!
-Shared documentation for zero order forward mode implementation of
-op = LdpOp or LdvOp (not called).
-
+/*
+==============================================================================
+<!-- define preamble -->
 The C++ source code corresponding to this operation is
 \verbatim
-	z = v[x]
+	v[x] = y
 \endverbatim
-where v is a VecAD<Base> vector and x is an AD<Base> index.
+where v is a VecAD<Base> vector, x is an AD<Base> object,
+and y is AD<Base> or Base objects.
 We define the index corresponding to v[x] by
 \verbatim
 	i_v_x = index_by_ind[ arg[0] + i_vec ]
 \endverbatim
 where i_vec is defined under the heading arg[1] below:
+<!-- end preamble -->
+==============================================================================
+*/
+/*!
+Shared documentation for zero order forward mode implementation of
+op = LdpOp or LdvOp (not called).
+
+<!-- replace preamble -->
+The C++ source code corresponding to this operation is
+\verbatim
+	v[x] = y
+\endverbatim
+where v is a VecAD<Base> vector, x is an AD<Base> object,
+and y is AD<Base> or Base objects.
+We define the index corresponding to v[x] by
+\verbatim
+	i_v_x = index_by_ind[ arg[0] + i_vec ]
+\endverbatim
+where i_vec is defined under the heading arg[1] below:
+<!-- end preamble -->
 
 \tparam Base
 base type for the operator; i.e., this operation was recorded
@@ -141,12 +160,19 @@ inline void forward_load_op_0(
 Shared documentation for sparsity operations corresponding to
 op = LdpOp or LdvOp (not called).
 
-<!-- define sparse_load_op -->
+<!-- replace preamble -->
 The C++ source code corresponding to this operation is
 \verbatim
-	z = v[x]
+	v[x] = y
 \endverbatim
-where v is a VecAD<Base> vector and x is an AD<Base> index.
+where v is a VecAD<Base> vector, x is an AD<Base> object,
+and y is AD<Base> or Base objects.
+We define the index corresponding to v[x] by
+\verbatim
+	i_v_x = index_by_ind[ arg[0] + i_vec ]
+\endverbatim
+where i_vec is defined under the heading arg[1] below:
+<!-- end preamble -->
 
 \tparam Vector_set
 is the type used for vectors of sets. It can be either
@@ -197,7 +223,6 @@ the sparsity pattern for z is added to the sparsity pattern for v.
 \li 0         <  \a arg[0]
 \li \a arg[0] < \a num_combined
 \li i_v       < \a vecad_sparsity.n_set()
-<!-- end sparse_load_op -->
 */
 template <class Vector_set>
 inline void sparse_load_op(
@@ -304,11 +329,20 @@ inline void forward_load_v_op_0(
 /*!
 Forward mode, except for zero order, for op = LdpOp or op = LdvOp
 
+
+<!-- replace preamble -->
 The C++ source code corresponding to this operation is
 \verbatim
-	z = v[x]
+	v[x] = y
 \endverbatim
-where v is a VecAD<Base> vector and x is an AD<Base> or Base index.
+where v is a VecAD<Base> vector, x is an AD<Base> object,
+and y is AD<Base> or Base objects.
+We define the index corresponding to v[x] by
+\verbatim
+	i_v_x = index_by_ind[ arg[0] + i_vec ]
+\endverbatim
+where i_vec is defined under the heading arg[1] below:
+<!-- end preamble -->
 
 \tparam Base
 base type for the operator; i.e., this operation was recorded
@@ -423,11 +457,19 @@ inline void forward_load_op(
 /*!
 Reverse mode for op = LdpOp or LdvOp.
 
+<!-- replace preamble -->
 The C++ source code corresponding to this operation is
 \verbatim
-	z = y[x]
+	v[x] = y
 \endverbatim
-where y is a VecAD<Base> vector and x is an AD<Base> or Base index.
+where v is a VecAD<Base> vector, x is an AD<Base> object,
+and y is AD<Base> or Base objects.
+We define the index corresponding to v[x] by
+\verbatim
+	i_v_x = index_by_ind[ arg[0] + i_vec ]
+\endverbatim
+where i_vec is defined under the heading arg[1] below:
+<!-- end preamble -->
 
 This routine is given the partial derivatives of a function
 G(z , y[x] , w , u ... )
@@ -532,10 +574,10 @@ inline void reverse_load_op(
 /*!
 Forward mode sparsity operations for LdpOp and LdvOp
 
-\copydetails sparse_load_op
-
 \param dependency
 is this a dependency (or sparsity) calculation.
+
+\copydetails sparse_load_op
 */
 template <class Vector_set>
 inline void forward_sparse_load_op(
@@ -566,10 +608,10 @@ inline void forward_sparse_load_op(
 /*!
 Reverse mode Jacobian sparsity operations for LdpOp and LdvOp
 
-\copydetails sparse_load_op
-
 \param dependency
 is this a dependency (or sparsity) calculation.
+
+\copydetails sparse_load_op
 */
 template <class Vector_set>
 inline void reverse_sparse_jacobian_load_op(
@@ -600,70 +642,7 @@ inline void reverse_sparse_jacobian_load_op(
 /*!
 Reverse mode Hessian sparsity operations for LdpOp and LdvOp
 
-This routine is given the sparsity patterns for
-G(z , v[x] , w , u ... )
-and it uses them to compute the sparsity patterns for
-\verbatim
-	H( v[x] , w , u , ... ) = G[ z( v[x] ) , v[x] , w , u , ... ]
-\endverbatim
-
-<!-- replace sparse_load_op -->
-The C++ source code corresponding to this operation is
-\verbatim
-	z = v[x]
-\endverbatim
-where v is a VecAD<Base> vector and x is an AD<Base> index.
-
-\tparam Vector_set
-is the type used for vectors of sets. It can be either
-\c sparse_pack, \c sparse_set, or \c sparse_list.
-
-\param op
-is the code corresponding to this operator;
-i.e., LdpOp or LdvOp.
-
-\param i_z
-is the AD variable index corresponding to the variable z; i.e.,
-the set with index \a i_z in \a var_sparsity is the sparsity pattern
-correpsonding to z.
-
-\param arg
-\n
-\a arg[0]
-is the offset corresponding to this VecAD vector in the VecAD combined array.
-
-\param num_combined
-is the total number of elements in the VecAD combinded array.
-
-\param combined
-is the VecAD combined array.
-\n
-\n
-\a combined[ \a arg[0] - 1 ]
-is the index of the set corresponding to the vector v  in \a vecad_sparsity.
-We use the notation i_v for this value; i.e.,
-\verbatim
-	i_v = combined[ \a arg[0] - 1 ]
-\endverbatim
-
-\param var_sparsity
-The set with index \a i_z in \a var_sparsity is the sparsity pattern for z.
-This is an output for forward mode operations,
-and an input for reverse mode operations.
-
-\param vecad_sparsity
-The set with index \a i_v is the sparsity pattern for the vector v.
-This is an input for forward mode operations.
-For reverse mode operations,
-the sparsity pattern for z is added to the sparsity pattern for v.
-
-\par Checked Assertions
-\li NumArg(op) == 3
-\li NumRes(op) == 1
-\li 0         <  \a arg[0]
-\li \a arg[0] < \a num_combined
-\li i_v       < \a vecad_sparsity.n_set()
-<!-- end sparse_load_op -->
+\copydetails sparse_load_op
 
 \param var_jacobian
 \a var_jacobian[i_z]

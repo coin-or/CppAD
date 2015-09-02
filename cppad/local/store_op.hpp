@@ -18,10 +18,9 @@ namespace CppAD { // BEGIN_CPPAD_NAMESPACE
 \file store_op.hpp
 Changing the current value of a VecAD element.
 */
-/*!
-Shared documentation for zero order forward implementation of
-op = StppOp, StpvOp, StvpOp, or StvvOp (not called).
-
+/*
+==============================================================================
+<!-- define preamble -->
 The C++ source code corresponding to this operation is
 \verbatim
 	v[x] = y
@@ -33,6 +32,26 @@ We define the index corresponding to v[x] by
 	i_v_x = index_by_ind[ arg[0] + i_vec ]
 \endverbatim
 where i_vec is defined under the heading arg[1] below:
+<!-- end preamble -->
+==============================================================================
+*/
+/*!
+Shared documentation for zero order forward implementation of
+op = StppOp, StpvOp, StvpOp, or StvvOp (not called).
+
+<!-- replace preamble -->
+The C++ source code corresponding to this operation is
+\verbatim
+	v[x] = y
+\endverbatim
+where v is a VecAD<Base> vector, x is an AD<Base> object,
+and y is AD<Base> or Base objects.
+We define the index corresponding to v[x] by
+\verbatim
+	i_v_x = index_by_ind[ arg[0] + i_vec ]
+\endverbatim
+where i_vec is defined under the heading arg[1] below:
+<!-- end preamble -->
 
 \tparam Base
 base type for the operator; i.e., this operation was recorded
@@ -123,19 +142,6 @@ inline void forward_store_op_0(
 Shared documnetation for sparsity operations corresponding to
 op = StpvOp or StvvOp (not called).
 
-<!-- define sparse_store_op -->
-The C++ source code corresponding to this operation is
-\verbatim
-	v[x] = y
-\endverbatim
-where v is a VecAD<Base> vector, x is an AD<Base> object,
-and y is AD<Base> or Base objects.
-We define the index corresponding to v[x] by
-\verbatim
-	i_v_x = combined[ arg[0] + i_vec ]
-\endverbatim
-where i_vec is defined under the heading \a arg[1] below:
-
 \tparam Vector_set
 is the type used for vectors of sets. It can be either
 \c sparse_pack, \c sparse_set, or \c sparse_list.
@@ -189,7 +195,6 @@ to the sparsity pattern for the vector v.
 \li \a arg[0] < \a num_combined
 \li \a arg[2] < \a var_sparsity.n_set()
 \li i_v       < \a vecad_sparsity.n_set()
-<!-- end sparse_store_op -->
 */
 template <class Vector_set>
 inline void sparse_store_op(
@@ -324,10 +329,24 @@ inline void forward_store_vv_op_0(
 /*!
 Forward mode sparsity operations for StpvOp and StvvOp
 
-\copydetails sparse_store_op
+<!-- replace preamble -->
+The C++ source code corresponding to this operation is
+\verbatim
+	v[x] = y
+\endverbatim
+where v is a VecAD<Base> vector, x is an AD<Base> object,
+and y is AD<Base> or Base objects.
+We define the index corresponding to v[x] by
+\verbatim
+	i_v_x = index_by_ind[ arg[0] + i_vec ]
+\endverbatim
+where i_vec is defined under the heading arg[1] below:
+<!-- end preamble -->
 
 \param dependency
 is this a dependency (or sparsity) calculation.
+
+\copydetails sparse_store_op
 */
 template <class Vector_set>
 inline void forward_sparse_store_op(
@@ -359,14 +378,7 @@ inline void forward_sparse_store_op(
 /*!
 Reverse mode sparsity operations for StpvOp, StvpOp, and StvvOp
 
-This routine is given the sparsity patterns for
-G(v[x], y , w , u ... ) and it uses them to compute the
-sparsity patterns for
-\verbatim
-	H(y , w , u , ... ) = G[ v[x], y , w , u , ... ]
-\endverbatim
-
-<!-- replace sparse_store_op -->
+<!-- replace preamble -->
 The C++ source code corresponding to this operation is
 \verbatim
 	v[x] = y
@@ -375,67 +387,22 @@ where v is a VecAD<Base> vector, x is an AD<Base> object,
 and y is AD<Base> or Base objects.
 We define the index corresponding to v[x] by
 \verbatim
-	i_v_x = combined[ arg[0] + i_vec ]
+	i_v_x = index_by_ind[ arg[0] + i_vec ]
 \endverbatim
-where i_vec is defined under the heading \a arg[1] below:
+where i_vec is defined under the heading arg[1] below:
+<!-- end preamble -->
 
-\tparam Vector_set
-is the type used for vectors of sets. It can be either
-\c sparse_pack, \c sparse_set, or \c sparse_list.
-
-\param op
-is the code corresponding to this operator;
-i.e., StpvOp, StvpOp, or StvvOp.
-
-\param arg
-\n
-\a arg[0]
-is the offset corresponding to this VecAD vector in the combined array.
-\n
-\n
-\a arg[2]
-\n
-The set with index \a arg[2] in \a var_sparsity
-is the sparsity pattern corresponding to y.
-(Note that \a arg[2] > 0 because y is a variable.)
-
-\param num_combined
-is the total number of elements in the VecAD address array.
-
-\param combined
-\a combined [ arg[0] - 1 ]
-is the index of the set in \a vecad_sparsity corresponding
-to the sparsity pattern for the vector v.
-We use the notation i_v below which is defined by
+This routine is given the sparsity patterns for
+G(v[x], y , w , u ... ) and it uses them to compute the
+sparsity patterns for
 \verbatim
-	i_v = combined[ \a arg[0] - 1 ]
+	H(y , w , u , ... ) = G[ v[x], y , w , u , ... ]
 \endverbatim
-
-\param var_sparsity
-The set  with index \a arg[2] in \a var_sparsity
-is the sparsity pattern for y.
-This is an input for forward mode operations.
-For reverse mode operations:
-The sparsity pattern for v is added to the spartisy pattern for y.
-
-\param vecad_sparsity
-The set with index \a i_v in \a vecad_sparsity
-is the sparsity pattern for v.
-This is an input for reverse mode operations.
-For forward mode operations, the sparsity pattern for y is added
-to the sparsity pattern for the vector v.
-
-\par Checked Assertions
-\li NumArg(op) == 3
-\li NumRes(op) == 0
-\li 0 <  \a arg[0]
-\li \a arg[0] < \a num_combined
-\li \a arg[2] < \a var_sparsity.n_set()
-\li i_v       < \a vecad_sparsity.n_set()
-<!-- end sparse_store_op -->
 
 \param dependency
 is this a dependency (or sparsity) calculation.
+
+\copydetails sparse_store_op
 */
 template <class Vector_set>
 inline void reverse_sparse_jacobian_store_op(
@@ -466,14 +433,7 @@ inline void reverse_sparse_jacobian_store_op(
 /*!
 Reverse mode sparsity operations for StpvOp and StvvOp
 
-This routine is given the sparsity patterns for
-G(v[x], y , w , u ... )
-and it uses them to compute the sparsity patterns for
-\verbatim
-	H(y , w , u , ... ) = G[ v[x], y , w , u , ... ]
-\endverbatim
-
-<!-- replace sparse_store_op -->
+<!-- replace preamble -->
 The C++ source code corresponding to this operation is
 \verbatim
 	v[x] = y
@@ -482,64 +442,19 @@ where v is a VecAD<Base> vector, x is an AD<Base> object,
 and y is AD<Base> or Base objects.
 We define the index corresponding to v[x] by
 \verbatim
-	i_v_x = combined[ arg[0] + i_vec ]
+	i_v_x = index_by_ind[ arg[0] + i_vec ]
 \endverbatim
-where i_vec is defined under the heading \a arg[1] below:
+where i_vec is defined under the heading arg[1] below:
+<!-- end preamble -->
 
-\tparam Vector_set
-is the type used for vectors of sets. It can be either
-\c sparse_pack, \c sparse_set, or \c sparse_list.
-
-\param op
-is the code corresponding to this operator;
-i.e., StpvOp, StvpOp, or StvvOp.
-
-\param arg
-\n
-\a arg[0]
-is the offset corresponding to this VecAD vector in the combined array.
-\n
-\n
-\a arg[2]
-\n
-The set with index \a arg[2] in \a var_sparsity
-is the sparsity pattern corresponding to y.
-(Note that \a arg[2] > 0 because y is a variable.)
-
-\param num_combined
-is the total number of elements in the VecAD address array.
-
-\param combined
-\a combined [ arg[0] - 1 ]
-is the index of the set in \a vecad_sparsity corresponding
-to the sparsity pattern for the vector v.
-We use the notation i_v below which is defined by
+This routine is given the sparsity patterns for
+G(v[x], y , w , u ... )
+and it uses them to compute the sparsity patterns for
 \verbatim
-	i_v = combined[ \a arg[0] - 1 ]
+	H(y , w , u , ... ) = G[ v[x], y , w , u , ... ]
 \endverbatim
 
-\param var_sparsity
-The set  with index \a arg[2] in \a var_sparsity
-is the sparsity pattern for y.
-This is an input for forward mode operations.
-For reverse mode operations:
-The sparsity pattern for v is added to the spartisy pattern for y.
-
-\param vecad_sparsity
-The set with index \a i_v in \a vecad_sparsity
-is the sparsity pattern for v.
-This is an input for reverse mode operations.
-For forward mode operations, the sparsity pattern for y is added
-to the sparsity pattern for the vector v.
-
-\par Checked Assertions
-\li NumArg(op) == 3
-\li NumRes(op) == 0
-\li 0 <  \a arg[0]
-\li \a arg[0] < \a num_combined
-\li \a arg[2] < \a var_sparsity.n_set()
-\li i_v       < \a vecad_sparsity.n_set()
-<!-- end sparse_store_op -->
+\copydetails sparse_store_op
 
 \param var_jacobian
 \a var_jacobian[ \a arg[2] ]
