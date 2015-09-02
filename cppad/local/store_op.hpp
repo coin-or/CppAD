@@ -6,7 +6,7 @@
 CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-15 Bradley M. Bell
 
 CppAD is distributed under multiple licenses. This distribution is under
-the terms of the 
+the terms of the
                     Eclipse Public License Version 1.0.
 
 A copy of this license is included in the COPYING file of this distribution.
@@ -19,7 +19,7 @@ namespace CppAD { // BEGIN_CPPAD_NAMESPACE
 Changing the current value of a VecAD element.
 */
 /*!
-Shared documentation for zero order forward implementation of 
+Shared documentation for zero order forward implementation of
 op = StppOp, StpvOp, StvpOp, or StvvOp (not called).
 
 The C++ source code corresponding to this operation is
@@ -27,7 +27,7 @@ The C++ source code corresponding to this operation is
 	v[x] = y
 \endverbatim
 where v is a VecAD<Base> vector, x is an AD<Base> object,
-and y is AD<Base> or Base objects. 
+and y is AD<Base> or Base objects.
 We define the index corresponding to v[x] by
 \verbatim
 	i_v_x = index_by_ind[ arg[0] + i_vec ]
@@ -46,13 +46,13 @@ is the index corresponding to the previous variable on the tape
 \n
 arg[0]
 \n
-is the offset of this VecAD vector relative to the beginning 
+is the offset of this VecAD vector relative to the beginning
 of the isvar_by_ind and index_by_ind arrays.
 \n
-\n 
-arg[1] 
 \n
-If this is a StppOp or StpvOp operation (if x is a parameter), 
+arg[1]
+\n
+If this is a StppOp or StpvOp operation (if x is a parameter),
 i_vec is defined by
 \verbatim
 	i_vec = arg[1]
@@ -82,9 +82,9 @@ In StvpOp and StvvOp cases, <code><taylor[ arg[1] * cap_order + 0 ]</code>
 is used to compute the index in the definition of i_vec above.
 
 \param isvar_by_ind
-If y is a varable (StpvOp and StvvOp cases), 
+If y is a varable (StpvOp and StvvOp cases),
 <code>isvar_by_ind[ arg[0] + i_vec ] </code> is set to true.
-Otherwise y is a paraemter (StppOp and StvpOp cases) and 
+Otherwise y is a paraemter (StppOp and StvpOp cases) and
 <code>isvar_by_ind[ arg[0] + i_vec ] </code> is set to false.
 
 \param index_by_ind
@@ -96,11 +96,11 @@ is set equal to arg[2].
 \par Check User Errors
 \li Check that the index is with in range; i.e.
 <code>i_vec < index_by_ind[ arg[0] - 1 ]</code>
-Note that, if x is a parameter, 
+Note that, if x is a parameter,
 the corresponding vector index and it does not change.
 In this case, the error above should be detected during tape recording.
 
-\par Checked Assertions 
+\par Checked Assertions
 \li NumArg(op) == 3
 \li NumRes(op) == 0
 \li 0 <  arg[0]
@@ -109,7 +109,7 @@ In this case, the error above should be detected during tape recording.
 template <class Base>
 inline void forward_store_op_0(
 	size_t         i_z         ,
-	const addr_t*  arg         , 
+	const addr_t*  arg         ,
 	size_t         num_par     ,
 	size_t         cap_order   ,
 	Base*          taylor      ,
@@ -120,7 +120,7 @@ inline void forward_store_op_0(
 	CPPAD_ASSERT_UNKNOWN( false );
 }
 /*!
-Shared documnetation for sparsity operations corresponding to 
+Shared documnetation for sparsity operations corresponding to
 op = StpvOp or StvvOp (not called).
 
 <!-- define sparse_store_op -->
@@ -129,7 +129,7 @@ The C++ source code corresponding to this operation is
 	v[x] = y
 \endverbatim
 where v is a VecAD<Base> vector, x is an AD<Base> object,
-and y is AD<Base> or Base objects. 
+and y is AD<Base> or Base objects.
 We define the index corresponding to v[x] by
 \verbatim
 	i_v_x = combined[ arg[0] + i_vec ]
@@ -149,12 +149,12 @@ i.e., StpvOp, StvpOp, or StvvOp.
 \a arg[0]
 is the offset corresponding to this VecAD vector in the combined array.
 \n
-\n 
+\n
 \a arg[2]
 \n
-The set with index \a arg[2] in \a var_sparsity 
+The set with index \a arg[2] in \a var_sparsity
 is the sparsity pattern corresponding to y.
-(Note that \a arg[2] > 0 because y is a variable.) 
+(Note that \a arg[2] > 0 because y is a variable.)
 
 \param num_combined
 is the total number of elements in the VecAD address array.
@@ -169,20 +169,20 @@ We use the notation i_v below which is defined by
 \endverbatim
 
 \param var_sparsity
-The set  with index \a arg[2] in \a var_sparsity 
+The set  with index \a arg[2] in \a var_sparsity
 is the sparsity pattern for y.
 This is an input for forward mode operations.
 For reverse mode operations:
 The sparsity pattern for v is added to the spartisy pattern for y.
 
 \param vecad_sparsity
-The set with index \a i_v in \a vecad_sparsity 
+The set with index \a i_v in \a vecad_sparsity
 is the sparsity pattern for v.
 This is an input for reverse mode operations.
 For forward mode operations, the sparsity pattern for y is added
 to the sparsity pattern for the vector v.
 
-\par Checked Assertions 
+\par Checked Assertions
 \li NumArg(op) == 3
 \li NumRes(op) == 0
 \li 0 <  \a arg[0]
@@ -194,7 +194,7 @@ to the sparsity pattern for the vector v.
 template <class Vector_set>
 inline void sparse_store_op(
 	OpCode         op             ,
-	const addr_t*  arg            , 
+	const addr_t*  arg            ,
 	size_t         num_combined   ,
 	const size_t*  combined       ,
 	Vector_set&    var_sparsity   ,
@@ -213,7 +213,7 @@ Zero order forward mode implementation of op = StppOp.
 template <class Base>
 inline void forward_store_pp_op_0(
 	size_t         i_z         ,
-	const addr_t*  arg         , 
+	const addr_t*  arg         ,
 	size_t         num_par     ,
 	size_t         cap_order   ,
 	Base*          taylor      ,
@@ -221,7 +221,7 @@ inline void forward_store_pp_op_0(
 	size_t*        index_by_ind   )
 {	size_t i_vec = arg[1];
 
-	// Because the index is a parameter, this indexing error should be 
+	// Because the index is a parameter, this indexing error should be
 	// caught and reported to the user when the tape is recording.
 	CPPAD_ASSERT_UNKNOWN( i_vec < index_by_ind[ arg[0] - 1 ] );
 
@@ -242,7 +242,7 @@ Zero order forward mode implementation of op = StpvOp.
 template <class Base>
 inline void forward_store_pv_op_0(
 	size_t         i_z         ,
-	const addr_t*  arg         , 
+	const addr_t*  arg         ,
 	size_t         num_par     ,
 	size_t         cap_order   ,
 	Base*          taylor      ,
@@ -250,7 +250,7 @@ inline void forward_store_pv_op_0(
 	size_t*        index_by_ind   )
 {	size_t i_vec = arg[1];
 
-	// Because the index is a parameter, this indexing error should be 
+	// Because the index is a parameter, this indexing error should be
 	// caught and reported to the user when the tape is recording.
 	CPPAD_ASSERT_UNKNOWN( i_vec < index_by_ind[ arg[0] - 1 ] );
 
@@ -270,15 +270,15 @@ Zero order forward mode implementation of op = StvpOp.
 template <class Base>
 inline void forward_store_vp_op_0(
 	size_t         i_z         ,
-	const addr_t*  arg         , 
+	const addr_t*  arg         ,
 	size_t         num_par     ,
 	size_t         cap_order   ,
 	Base*          taylor      ,
 	bool*          isvar_by_ind   ,
 	size_t*        index_by_ind   )
-{	
+{
 	size_t i_vec = Integer( taylor[ arg[1] * cap_order + 0 ] );
-	CPPAD_ASSERT_KNOWN( 
+	CPPAD_ASSERT_KNOWN(
 		i_vec < index_by_ind[ arg[0] - 1 ] ,
 		"VecAD: index during zero order forward sweep is out of range"
 	);
@@ -300,15 +300,15 @@ Zero order forward mode implementation of op = StvvOp.
 template <class Base>
 inline void forward_store_vv_op_0(
 	size_t         i_z         ,
-	const addr_t*  arg         , 
+	const addr_t*  arg         ,
 	size_t         num_par     ,
 	size_t         cap_order   ,
 	Base*          taylor      ,
 	bool*          isvar_by_ind   ,
 	size_t*        index_by_ind   )
-{	
+{
 	size_t i_vec = Integer( taylor[ arg[1] * cap_order + 0 ] );
-	CPPAD_ASSERT_KNOWN( 
+	CPPAD_ASSERT_KNOWN(
 		i_vec < index_by_ind[ arg[0] - 1 ] ,
 		"VecAD: index during zero order forward sweep is out of range"
 	);
@@ -333,7 +333,7 @@ template <class Vector_set>
 inline void forward_sparse_store_op(
 	bool                dependency     ,
 	OpCode              op             ,
-	const addr_t*       arg            , 
+	const addr_t*       arg            ,
 	size_t              num_combined   ,
 	const size_t*       combined       ,
 	Vector_set&         var_sparsity   ,
@@ -360,8 +360,8 @@ inline void forward_sparse_store_op(
 Reverse mode sparsity operations for StpvOp, StvpOp, and StvvOp
 
 This routine is given the sparsity patterns for
-G(v[x], y , w , u ... ) and it uses them to compute the 
-sparsity patterns for  
+G(v[x], y , w , u ... ) and it uses them to compute the
+sparsity patterns for
 \verbatim
 	H(y , w , u , ... ) = G[ v[x], y , w , u , ... ]
 \endverbatim
@@ -372,7 +372,7 @@ The C++ source code corresponding to this operation is
 	v[x] = y
 \endverbatim
 where v is a VecAD<Base> vector, x is an AD<Base> object,
-and y is AD<Base> or Base objects. 
+and y is AD<Base> or Base objects.
 We define the index corresponding to v[x] by
 \verbatim
 	i_v_x = combined[ arg[0] + i_vec ]
@@ -392,12 +392,12 @@ i.e., StpvOp, StvpOp, or StvvOp.
 \a arg[0]
 is the offset corresponding to this VecAD vector in the combined array.
 \n
-\n 
+\n
 \a arg[2]
 \n
-The set with index \a arg[2] in \a var_sparsity 
+The set with index \a arg[2] in \a var_sparsity
 is the sparsity pattern corresponding to y.
-(Note that \a arg[2] > 0 because y is a variable.) 
+(Note that \a arg[2] > 0 because y is a variable.)
 
 \param num_combined
 is the total number of elements in the VecAD address array.
@@ -412,20 +412,20 @@ We use the notation i_v below which is defined by
 \endverbatim
 
 \param var_sparsity
-The set  with index \a arg[2] in \a var_sparsity 
+The set  with index \a arg[2] in \a var_sparsity
 is the sparsity pattern for y.
 This is an input for forward mode operations.
 For reverse mode operations:
 The sparsity pattern for v is added to the spartisy pattern for y.
 
 \param vecad_sparsity
-The set with index \a i_v in \a vecad_sparsity 
+The set with index \a i_v in \a vecad_sparsity
 is the sparsity pattern for v.
 This is an input for reverse mode operations.
 For forward mode operations, the sparsity pattern for y is added
 to the sparsity pattern for the vector v.
 
-\par Checked Assertions 
+\par Checked Assertions
 \li NumArg(op) == 3
 \li NumRes(op) == 0
 \li 0 <  \a arg[0]
@@ -441,7 +441,7 @@ template <class Vector_set>
 inline void reverse_sparse_jacobian_store_op(
 	bool               dependency      ,
 	OpCode             op              ,
-	const addr_t*      arg             , 
+	const addr_t*      arg             ,
 	size_t             num_combined    ,
 	const size_t*      combined        ,
 	Vector_set&        var_sparsity    ,
@@ -468,7 +468,7 @@ Reverse mode sparsity operations for StpvOp and StvvOp
 
 This routine is given the sparsity patterns for
 G(v[x], y , w , u ... )
-and it uses them to compute the sparsity patterns for 
+and it uses them to compute the sparsity patterns for
 \verbatim
 	H(y , w , u , ... ) = G[ v[x], y , w , u , ... ]
 \endverbatim
@@ -479,7 +479,7 @@ The C++ source code corresponding to this operation is
 	v[x] = y
 \endverbatim
 where v is a VecAD<Base> vector, x is an AD<Base> object,
-and y is AD<Base> or Base objects. 
+and y is AD<Base> or Base objects.
 We define the index corresponding to v[x] by
 \verbatim
 	i_v_x = combined[ arg[0] + i_vec ]
@@ -499,12 +499,12 @@ i.e., StpvOp, StvpOp, or StvvOp.
 \a arg[0]
 is the offset corresponding to this VecAD vector in the combined array.
 \n
-\n 
+\n
 \a arg[2]
 \n
-The set with index \a arg[2] in \a var_sparsity 
+The set with index \a arg[2] in \a var_sparsity
 is the sparsity pattern corresponding to y.
-(Note that \a arg[2] > 0 because y is a variable.) 
+(Note that \a arg[2] > 0 because y is a variable.)
 
 \param num_combined
 is the total number of elements in the VecAD address array.
@@ -519,20 +519,20 @@ We use the notation i_v below which is defined by
 \endverbatim
 
 \param var_sparsity
-The set  with index \a arg[2] in \a var_sparsity 
+The set  with index \a arg[2] in \a var_sparsity
 is the sparsity pattern for y.
 This is an input for forward mode operations.
 For reverse mode operations:
 The sparsity pattern for v is added to the spartisy pattern for y.
 
 \param vecad_sparsity
-The set with index \a i_v in \a vecad_sparsity 
+The set with index \a i_v in \a vecad_sparsity
 is the sparsity pattern for v.
 This is an input for reverse mode operations.
 For forward mode operations, the sparsity pattern for y is added
 to the sparsity pattern for the vector v.
 
-\par Checked Assertions 
+\par Checked Assertions
 \li NumArg(op) == 3
 \li NumRes(op) == 0
 \li 0 <  \a arg[0]
@@ -542,13 +542,13 @@ to the sparsity pattern for the vector v.
 <!-- end sparse_store_op -->
 
 \param var_jacobian
-\a var_jacobian[ \a arg[2] ] 
-is false (true) if the Jacobian of G with respect to y is always zero 
+\a var_jacobian[ \a arg[2] ]
+is false (true) if the Jacobian of G with respect to y is always zero
 (may be non-zero).
 
 \param vecad_jacobian
-\a vecad_jacobian[i_v] 
-is false (true) if the Jacobian with respect to x is always zero 
+\a vecad_jacobian[i_v]
+is false (true) if the Jacobian with respect to x is always zero
 (may be non-zero).
 On input, it corresponds to the function G,
 and on output it corresponds to the function H.
@@ -556,7 +556,7 @@ and on output it corresponds to the function H.
 template <class Vector_set>
 inline void reverse_sparse_hessian_store_op(
 	OpCode             op           ,
-	const addr_t*      arg          , 
+	const addr_t*      arg          ,
 	size_t             num_combined ,
 	const size_t*      combined     ,
 	Vector_set&        var_sparsity ,
