@@ -73,6 +73,9 @@ that used the $code sign$$ and discrete functions.).
 
 $head 08-31$$
 $list number$$
+Mention the fact that using checkpoint functions can make
+$cref/recordings faster/checkpoint/Purpose/Faster Recording/$$.
+$lnext
 Add the
 $cref/pack/atomic_option/atomic_sparsity/pack_sparsity_enum/$$
 sparsity option for $cref atomic_base$$ operations.

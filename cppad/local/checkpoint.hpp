@@ -39,8 +39,6 @@ $spell
 $$
 
 $section Checkpointing Functions$$
-$index function, checkpoint$$
-$index checkpoint, function$$
 
 $head Syntax$$
 $codei%checkpoint<%Base%> %atom_fun%(%name%, %algo%, %ax%, %ay%, %sparsity%)
@@ -51,13 +49,19 @@ $codei%checkpoint<%Base%> %atom_fun%(%name%, %algo%, %ax%, %ay%, %sparsity%)
 checkpoint<%Base%>::clear()%$$
 
 $head Purpose$$
+
+$subhead Reduce Memory$$
 You can reduce the size of the tape and memory required for AD by
 checkpointing functions of the form $latex y = f(x)$$ where
 $latex f : B^n \rightarrow B^m$$.
-It may also reduce the time to make a recording at different
-independent variable values.
-(The checkpoint recording can not depend on independent variables but the
-recording that uses it may.)
+The $cref/operation sequence/glossary/Operation/Sequence/$$
+representing $latex f(x)$$ cannot depend on the value of $latex x$$.
+
+$subhead Faster Recording$$
+It may also reduce the time to make a recording the same function
+for different values of the independent variable.
+Note that the operation sequence for a recording that uses $latex f(x)$$
+may depend on its independent variables.
 
 $head Method$$
 The $code checkpoint$$ class is derived from $code atomic_base$$
