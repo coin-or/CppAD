@@ -63,13 +63,20 @@ This section contains a list of the changes to CppAD during 2015
 The purpose of this section is to
 assist you in learning about changes between various versions of CppAD.
 
+$head 09-03$$
+There was a bug in the $cref/vectorBool/CppAD_vector/vectorBool/$$
+$cref/assignment/CppAD_vector/Assignment/$$.
+To be specific,
+it not allow a size zero vector to be assigned using a vector any other size.
+This has been fixed.
+
 $head 09-02$$
 The $cref/dependency pattern/dependency.cpp/Dependency Pattern/$$
 was not being computed correctly for the
 $cref sign$$, $cref Discrete$$, and $cref VecAD$$ operations.
 This has been fixed.
-(It could have caused problems using $cref optimize$$ with an $cref ADFun$$
-that used any of these operations.)
+This could have caused problems using
+$cref checkpoint$$ functions that used any of these operations.
 
 $head 08-31$$
 $list number$$

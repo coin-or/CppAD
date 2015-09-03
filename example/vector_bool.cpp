@@ -1,9 +1,9 @@
 /* $Id$ */
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-12 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-15 Bradley M. Bell
 
 CppAD is distributed under multiple licenses. This distribution is under
-the terms of the 
+the terms of the
                     Eclipse Public License Version 1.0.
 
 A copy of this license is included in the COPYING file of this distribution.
@@ -42,7 +42,7 @@ bool vectorBool(void)
 {	bool ok = true;
 	using CppAD::vectorBool;
 
-	vectorBool x;          // default constructor 
+	vectorBool x;          // default constructor
 	ok &= (x.size() == 0);
 
 	x.resize(2);             // resize and set element assignment to bool
@@ -60,7 +60,13 @@ bool vectorBool(void)
 	x[0] = true;           // modify, assignment changes x
 	ok &= (x[0] == true);
 
-	x = y = z;              // vector assignment
+	// resize x to zero and check that vector assignment works for both
+	// size zero and mathching sizes
+	x.resize(0);
+	ok &= (x.size() == 0);
+	ok &= (y.size() == z.size());
+	//
+	x = y = z;
 	ok &= ( (x[0] == false) && (x[1] == true) );
 	ok &= ( (y[0] == false) && (y[1] == true) );
 	ok &= ( (z[0] == false) && (z[1] == true) );

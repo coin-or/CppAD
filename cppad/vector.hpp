@@ -434,8 +434,8 @@ public:
 		const vector& x
 	)
 	{	size_t i;
-		// If original lenght is zero, then resize
-		// otherwise a length mismatch is an error.
+		// If original lenght is zero, then resize it.
+		// Otherwise a length mismatch is an error.
 		if( length_ == 0 )
 			resize( x.length_ );
 		CPPAD_ASSERT_KNOWN(
@@ -750,6 +750,10 @@ public:
 		const vectorBool& v
 	)
 	{	size_t i;
+		// If original lenght is zero, then resize it.
+		// Otherwise a length mismatch is an error.
+		if( length_ == 0 )
+			resize( v.length_ );
 		CPPAD_ASSERT_KNOWN(
 			length_ == v.length_ ,
 			"vectorBool: size miss match in assignment operation"
@@ -767,7 +771,11 @@ public:
 		/// right hand size of the assingment operation
 		vectorBool&& x
 	)
-	{	if( this != &x )
+	{	CPPAD_ASSERT_KNOWN(
+			length_ == x.length_ || (length_ == 0),
+			"vectorBool: size miss match in assignment operation"
+		);
+		if( this != &x )
 		{	clear();
 			//
 			length_   = x.length_;
