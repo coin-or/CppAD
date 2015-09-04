@@ -64,11 +64,19 @@ The purpose of this section is to
 assist you in learning about changes between various versions of CppAD.
 
 $head 09-03$$
+$list number$$
 There was a bug in the $cref/vectorBool/CppAD_vector/vectorBool/$$
 $cref/assignment/CppAD_vector/Assignment/$$.
 To be specific,
 it not allow a size zero vector to be assigned using a vector any other size.
 This has been fixed.
+$lnext
+The addition of the
+$cref/pack/atomic_option/atomic_sparsity/pack_sparsity_enum/$$ option
+on 08-31 introduced a bug in the calculation of $cref RevSparseHes$$.
+The $cref checkpoint.cpp$$ example was changed to demonstrate this
+problem and the bug was fixed.
+$lend
 
 $head 09-02$$
 The $cref/dependency pattern/dependency.cpp/Dependency Pattern/$$

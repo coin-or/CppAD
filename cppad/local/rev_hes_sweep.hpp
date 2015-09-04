@@ -879,7 +879,7 @@ void RevHesSweep(
 					pack_u[user_i * user_q + j] = true;
 				if( user_bool )
 					bool_u[user_i * user_q + j] = true;
-				else
+				if( user_set )
 					set_u[user_i].insert(j);
 				j = rev_hes_sparse.next_element();
 			}
