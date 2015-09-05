@@ -1,7 +1,7 @@
 #! /bin/bash -e
 # $Id$
 # -----------------------------------------------------------------------------
-# CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-13 Bradley M. Bell
+# CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-15 Bradley M. Bell
 #
 # CppAD is distributed under multiple licenses. This distribution is under
 # the terms of the 
@@ -97,7 +97,7 @@ if which autoconf >& /dev/null
 then
 	echo_eval rm aclocal.m4 ltmain.sh
 	echo_eval libtoolize
-	echo_eval autoreconf --force
+	echo_eval autoreconf --install --force
 fi
 # -----------------------------------------------------------------------------
 #

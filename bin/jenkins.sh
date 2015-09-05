@@ -1,7 +1,7 @@
 #! /bin/bash -e
 # $Id$
 # -----------------------------------------------------------------------------
-# CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-13 Bradley M. Bell
+# CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-15 Bradley M. Bell
 #
 # CppAD is distributed under multiple licenses. This distribution is under
 # the terms of the
@@ -118,6 +118,11 @@ then
 	export PATH="$trunk_dir/build/prefix/bin:$PATH"
 else
 	export LD_LIBRARY_PATH="$trunk_dir/build/prefix/$libdir"
+fi
+# -----------------------------------------------------------------------
+if which autoconf >& /dev/null
+then
+	echo_eval autoreconf --install --force
 fi
 # -----------------------------------------------------------------------
 # Use trunk_dir/../build to build and test CppAD (no reuse)

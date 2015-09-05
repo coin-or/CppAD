@@ -1,7 +1,7 @@
 #! /bin/bash -e
 # $Id$
 # -----------------------------------------------------------------------------
-# CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-14 Bradley M. Bell
+# CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-15 Bradley M. Bell
 #
 # CppAD is distributed under multiple licenses. This distribution is under
 # the terms of the 
@@ -109,12 +109,7 @@ system=`uname | tr [A-Z] [a-z] | sed -e 's|\([a-z][a-z]*\).*|\1|'`
 # -----------------------------------------------------------------------------
 if which autoconf >& /dev/null
 then
-	ac_version=`autoconf --version | sed -n -e '/^autoconf/p' | \
-		sed -e 's|[^0-9]*\([0-9.]*\)[.]\([0-9]*\).*|\1 * 100 + \2|' | bc`
-	if [ "$ac_version" -ge 267 ]
-	then
-		echo_eval autoreconf -f -i
-	fi
+	echo_eval autoreconf --install --force
 fi
 # -----------------------------------------------------------------------------
 if [ ! -e build ]
