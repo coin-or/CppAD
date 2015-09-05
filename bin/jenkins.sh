@@ -120,11 +120,6 @@ else
 	export LD_LIBRARY_PATH="$trunk_dir/build/prefix/$libdir"
 fi
 # -----------------------------------------------------------------------
-if which autoconf >& /dev/null
-then
-	echo_eval autoreconf --install --force
-fi
-# -----------------------------------------------------------------------
 # Use trunk_dir/../build to build and test CppAD (no reuse)
 echo_eval cd build
 echo_eval rm -rf auto_tools
