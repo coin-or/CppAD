@@ -31,7 +31,7 @@ public:
 	enum option_enum {
 		pack_sparsity_enum   ,
 		bool_sparsity_enum   ,
-		set_sparsity_enum    ,
+		set_sparsity_enum
 	};
 private:
 	// ------------------------------------------------------
