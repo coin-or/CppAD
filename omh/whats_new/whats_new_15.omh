@@ -516,7 +516,7 @@ $codei%
 %$$
 and was not even defined when $code NDEBUG$$ was defined.
 There was a resulting speed effect for this; see the wish list
-$cref/compare change/WishList/Optimization/Comparison Changes/$$ entry.
+$cref/compare change/WishList/Comparison Changes and Optimization/$$ entry.
 
 $lnext
 The date when some features where deprecated has been added to the

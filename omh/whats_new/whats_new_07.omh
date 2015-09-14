@@ -900,8 +900,9 @@ $$
 This has been fixed.
 
 $subhead 02-17$$
-An entry about $cref/optimizing/WishList/Optimization/$$ the operation
-sequence in an $cref/ADFun/FunConstruct/$$ object was added.
+An entry about optimizing the operation
+sequence in an $cref/ADFun/FunConstruct/$$ object was added to the
+$cref WishList$$.
 $pre
 
 $$

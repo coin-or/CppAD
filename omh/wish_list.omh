@@ -84,21 +84,11 @@ Use a multiple of $code std::numeric_limits<double>::epsilon()$$ instead
 $code 1e-10$$ for a small number in correctness checks; e.g.,
 see $cref sqrt.cpp$$.
 
-$head atan2$$
-The $cref/atan2/Atan2/$$ function could be made faster by adding
-a special operator for it.
-
 $head Adolc$$
 Create a documentation page that shows how to convert Adolc commands to
 CppAD commands.
 
-$head BenderQuad$$
-See the $cref/problem/BenderQuad/Problem/$$ with the
-current $code BenderQuad$$ specifications.
-
-$head Conditional Expressions$$
-
-$subhead Nesting$$
+$head Optimizing Nested Conditional Expressions$$
 If one $cref/optimizes/optimize/$$ the code
 $codep
 	x = CondExpLt(left_x, right_x, true_x, false_x)
@@ -132,10 +122,7 @@ repeatedly calculated
 (because an iterator for the result container would be passed in).
 $lend
 
-$head Library$$
-$index compile, speed AD<double>$$
-$index speed, compile AD<double>$$
-$index AD<double>, compile speed$$
+$head Compilation Speed$$
 One could build a CppAD library for use with the type $code AD<double>$$.
 This would speed up compilation for the most common usage where
 the $icode Base$$ type is $code double$$.
@@ -150,9 +137,7 @@ $cref/independent variable/glossary/Tape/Independent Variable/$$ values.
 This could be returned as an extra
 $cref seq_property$$.
 
-$head Optimization$$
-
-$subhead Comparison Changes$$
+$head Comparison Changes and Optimization$$
 The comparison operators used to not be taped when
 $cref/NDEBUG/Faq/Speed/NDEBUG/$$ was defined.
 They are now taped so that the $cref compare_change$$ interface
@@ -161,35 +146,11 @@ This caused a significant slow down in the
 $cref cppad_det_lu.cpp$$ speed test (with no options specified).
 Perhaps there should be an option to skip the comparison taping.
 
-$subhead Expression Hashing$$
-During expression sequence $cref/optimization/optimize/$$,
-hash codes are used to detect expressions that have already
-been computed.
-Perhaps this should be done during the original forward mode recording.
-
-$subhead Variable Pairs$$
-Suppose that $icode x$$ is a variable
-and $codei%sin(%x%)%$$ is used in an expression.
-The extra expression $codei%cos(%x%)%$$ is also computed
-during a $cref Forward$$ calculation.
-This is because the derivative of the original expression
-is expressed in terms of the values of the other expression.
-In general,
-the representation of the derivative of an expression to order $icode p$$
-may include the derivative of another expression to order $icode%p%-1%$$.
-In our example, if only the value $codei%sin(%x%)%$$
-is requested, it is not necessary to compute $codei%cos(%x%)%$$.
-We should remove the computation of extra expressions derivatives that are
-not need to compute the requested derivative of the original expression.
-
 $head Preprocessor Symbols$$
-$index preprocessor$$
 Make sure all the user API preprocessor symbols are listed in
 the $cref preprocessor$$ section.
 
 $head Software Guidelines$$
-
-$subhead Boost$$
 The following is a list of some software guidelines taken from
 $href%http://www.boost.org/development/requirements.html#Guidelines%boost%$$.
 These guidelines are not followed by the current CppAD source code,
@@ -219,9 +180,6 @@ Automatic conversion to actual spaces should be easy.
 $lend
 
 $head Tracing$$
-$index operation, sequence tracing$$
-$index sequence, operation tracing$$
-$index tracing, operation sequence$$
 Add tracing the operation sequence to the user API and documentation.
 Tracing the operation sequence is currently done by changing the CppAD
 source code. Use the command
@@ -229,5 +187,15 @@ $codep
 	grep '^# *define *CPPAD_.*_TRACE' cppad/local/*.hpp
 $$
 to find all the possible tracing flags.
+
+
+$head atan2$$
+The $cref/atan2/Atan2/$$ function could be made faster by adding
+a special operator for it.
+
+
+$head BenderQuad$$
+See the $cref/problem/BenderQuad/Problem/$$ with the
+current $code BenderQuad$$ specifications.
 
 $end

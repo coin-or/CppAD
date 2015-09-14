@@ -129,7 +129,10 @@ are not computed.
 This optimization is done for the rest of zero order forward mode
 as well as forward and reverse derivatives calculations.
 There is one exception to this optimization; see
-$cref/wish list/WishList/Conditional Expressions/$$.
+$cref/optimizing nested conditional expressions
+	/WishList
+	/Optimizing Nested Conditional Expressions
+/$$.
 
 $head Deprecate 2005-08-07$$
 Previous versions of CppAD used 

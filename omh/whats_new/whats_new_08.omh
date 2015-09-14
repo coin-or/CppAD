@@ -395,9 +395,8 @@ $pre
 $$
 Remove computed assignment entry from wish list
 (it was fixed on $cref/2007-05-26/whats_new_07/05-26/$$).
-Add
-$cref/expression hashing/WishList/Optimization/Expression Hashing/$$
-to the wish list.
+Add an expression hashing entry to the $cref WishList$$
+(it has since been removed).
 Add Library and Scripting Languages to the wish list
 (this has since been fulfilled by the example $cref ad_in_c.cpp$$).
 

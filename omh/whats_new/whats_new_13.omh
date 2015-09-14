@@ -156,7 +156,7 @@ only two of the conditional expressions will be evaluated
 (one will be skipped depending on the result of $code left_z == right_z$$).
 For more details, see
 $cref/nesting conditional expressions/
-WishList/Conditional Expressions/Nesting/$$
+WishList/Optimizing Nested Conditional Expressions/$$.
 
 $head 10-23$$
 $list number$$
