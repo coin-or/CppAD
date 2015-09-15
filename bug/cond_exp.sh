@@ -23,7 +23,7 @@ namespace {
 	bool test_float(void)
 	{
 		bool ok = true;
-	    using CppAD::vector;
+		using CppAD::vector;
 		Float eps = Float( 10. * std::numeric_limits<double>::epsilon() );
 
 		typedef CppAD::AD<Float>   a1float;
@@ -33,37 +33,37 @@ namespace {
 		// create a1f = f(x)
 		vector<a2float> a2x(1), a2y(1);
 		a2x[0] = a2float( 5.0 );
-	    Independent(a2x);
+		Independent(a2x);
 
 		a2float a2zero = a2float(0.0);
 		a2float a2one  = a2float(1.0);
 		a2y[0]  = CondExpGt(a2x[0], a2zero, a2one / a2x[0], a2zero);
 
-	    CppAD::ADFun<a1float> a1f;
-	    a1f.Dependent(a2x, a2y);
+		CppAD::ADFun<a1float> a1f;
+		a1f.Dependent(a2x, a2y);
 		// --------------------------------------------------------------------
 		// create g = f'(x)
 		vector<a1float> a1x(1), a1dy(1), a1w(1);
 		a1x[0] = 2.0;
 		a1w[0] = 1.0;
-	    Independent(a1x);
+		Independent(a1x);
 
 		a1f.Forward(0, a1x);
 		a1dy   = a1f.Reverse(1, a1w);
 
-	    CppAD::ADFun<Float> g;
-	    g.Dependent(a1x, a1dy);
+		CppAD::ADFun<Float> g;
+		g.Dependent(a1x, a1dy);
 		// --------------------------------------------------------------------
 		// check g where f(x) = 1 / x
 		vector<Float> x(1), y(1);
 		x[0] = 2.0;
 		y    = g.Forward(0, x);
-	    ok  &= CppAD::NearEqual(y[0], - Float(1.0) / (x[0] * x[0]), eps, eps);
+		ok  &= CppAD::NearEqual(y[0], - Float(1.0) / (x[0] * x[0]), eps, eps);
 		// --------------------------------------------------------------------
 		// check g at edge case where 1 / x is infinity
 		x[0] = 0.0;
 		y    = g.Forward(0, x);
-	    ok  &= CppAD::NearEqual(y[0], Float(0.0), eps, eps);
+		ok  &= CppAD::NearEqual(y[0], Float(0.0), eps, eps);
 		// --------------------------------------------------------------------
 		return ok;
 	}
