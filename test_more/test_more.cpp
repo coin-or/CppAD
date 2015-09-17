@@ -66,6 +66,7 @@ extern bool log10(void);
 extern bool log1p(void);
 extern bool Mul(void);
 extern bool mul_level(void);
+extern bool mul_cond(void);
 extern bool mul_cskip(void);
 extern bool MulEq(void);
 extern bool mul_zdouble(void);

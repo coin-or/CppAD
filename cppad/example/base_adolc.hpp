@@ -145,6 +145,14 @@ namespace CppAD {
 }
 /* $$
 
+$head CondExpRel$$
+The $cref/CPPAD_COND_EXP_REL/base_cond_exp/CondExpRel/$$ macro invocation
+$codep */
+namespace CppAD {
+	CPPAD_COND_EXP_REL(adouble)
+}
+/* $$
+
 $head EqualOpSeq$$
 The Adolc user interface does not specify a way to determine if
 two $code adouble$$ variables correspond to the same operations sequence.
