@@ -1689,9 +1689,9 @@ namespace {
 	Type my_max(const CppAD::vector<Type>& arg)
 	{	Type res = arg[0];
 		for(size_t j = 0;j < arg.size(); j++)
-    		res = CondExpGt(res, arg[j], res, arg[j]);
+		res = CondExpGt(res, arg[j], res, arg[j]);
 		return res;
-  	}
+	}
 	bool cond_exp_reverse(void)
 	{	bool ok = true;
 		size_t n = 3;

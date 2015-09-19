@@ -3,7 +3,7 @@
 CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-15 Bradley M. Bell
 
 CppAD is distributed under multiple licenses. This distribution is under
-the terms of the 
+the terms of the
                     Eclipse Public License Version 1.0.
 
 A copy of this license is included in the COPYING file of this distribution.
@@ -64,14 +64,14 @@ bool a11c(void)
 
 	int n_thread = NUMBER_THREADS;   // number of threads in parallel regions
 	omp_set_dynamic(0);              // off dynamic thread adjust
-	omp_set_num_threads(n_thread);   // set the number of threads 
+	omp_set_num_threads(n_thread);   // set the number of threads
 
 	a1(n, a, b);
 
 	// check the result
 	float eps = float(100) * std::numeric_limits<float>::epsilon();
 	for(i = 1; i < n ; i++)
-		ok &= std::fabs( (float(2) * b[i] - a[i] - a[i-1]) / b[i] ) <= eps; 
+		ok &= std::fabs( (float(2) * b[i] - a[i] - a[i-1]) / b[i] ) <= eps;
 
 	delete [] a;
 	delete [] b;
