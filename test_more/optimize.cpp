@@ -28,7 +28,7 @@ namespace {
 	//
 	// ----------------------------------------------------------------
 	// Test nested conditional expressions.
-	int nested_cond_exp(void)
+	bool nested_cond_exp(void)
 	{	bool ok = true;
 		using CppAD::AD;
 		using CppAD::vector;

@@ -1,9 +1,9 @@
 /* $Id$ */
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-13 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-15 Bradley M. Bell
 
 CppAD is distributed under multiple licenses. This distribution is under
-the terms of the 
+the terms of the
                     Eclipse Public License Version 1.0.
 
 A copy of this license is included in the COPYING file of this distribution.
@@ -25,18 +25,6 @@ $$
 
 $end
 */
-
-// these definitions will be erased when nan.hpp is included
-# ifdef nan
-# else
-# define nan(z)   Error_if_this_symbol_gets_used
-# endif
-# ifdef isnan
-# else
-# define isnan(z) Error_if_this_symbol_gets_used
-# endif
-
-
 
 // BEGIN C++
 # include <cppad/nan.hpp>

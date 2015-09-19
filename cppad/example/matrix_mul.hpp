@@ -3,10 +3,10 @@
 # define CPPAD_MATRIX_MUL_INCLUDED
 
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-13 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-15 Bradley M. Bell
 
 CppAD is distributed under multiple licenses. This distribution is under
-the terms of the 
+the terms of the
                     Eclipse Public License Version 1.0.
 
 A copy of this license is included in the COPYING file of this distribution.
@@ -46,7 +46,7 @@ void my_union(
 	result.swap(temp);
 }
 //
-// matrix result = left * right 
+// matrix result = left * right
 class matrix_mul : public CppAD::atomic_base<double> {
 /* $$
 $head Constructor$$
@@ -72,9 +72,9 @@ $codep */
 	nr_result_(nr_result) ,
 	n_middle_(n_middle)    ,
 	nc_result_(nc_result) ,
-	n_( nr_result * n_middle + n_middle * nc_result ) 
+	n_( nr_result * n_middle + n_middle * nc_result )
 # ifndef NDEBUG
-	, m_( n_middle * nc_result ) 
+	, m_( n_middle * nc_result )
 # endif
 	{ }
 	private:
@@ -86,7 +86,7 @@ $codep */
 		size_t i  , // left matrix row index
 		size_t j  , // left matrix column index
 		size_t k  , // Taylor coeffocient order
-		size_t nk ) // number of Taylor coefficients in tx 
+		size_t nk ) // number of Taylor coefficients in tx
 	{	assert( i < nr_result_ );
 		assert( j < n_middle_ );
 		return (i * n_middle_ + j) * nk + k;
@@ -99,11 +99,11 @@ $codep */
 		size_t i  , // right matrix row index
 		size_t j  , // right matrix column index
 		size_t k  , // Taylor coeffocient order
-		size_t nk ) // number of Taylor coefficients in tx 
+		size_t nk ) // number of Taylor coefficients in tx
 	{	assert( i < n_middle_  );
 		assert( j < nc_result_ );
 		size_t offset = nr_result_ * n_middle_;
-		return (offset + i * nc_result_ + j) * nk + k; 
+		return (offset + i * nc_result_ + j) * nk + k;
 	}
 /* $$
 $head Result Element Index$$
@@ -127,7 +127,7 @@ $codep */
 		size_t                 k_left  , // order for left coefficients
 		size_t                 k_right , // order for right coefficients
 		const vector<double>&  tx      , // domain space Taylor coefficients
-		      vector<double>&  ty      ) // range space Taylor coefficients 
+		      vector<double>&  ty      ) // range space Taylor coefficients
 	{	size_t nk       = tx.size() / n_;
 		assert( nk == ty.size() / m_ );
 		//
@@ -156,9 +156,9 @@ $codep */
 		size_t                 k_left  , // order for left coefficients
 		size_t                 k_right , // order for right coefficients
 		const vector<double>&  tx      , // domain space Taylor coefficients
-		const vector<double>&  ty      , // range space Taylor coefficients 
+		const vector<double>&  ty      , // range space Taylor coefficients
 		      vector<double>&  px      , // partials w.r.t. tx
-		const vector<double>&  py      ) // partials w.r.t. ty 
+		const vector<double>&  py      ) // partials w.r.t. ty
 	{	size_t nk       = tx.size() / n_;
 		assert( nk == ty.size() / m_ );
 		assert( tx.size() == px.size() );
@@ -214,7 +214,7 @@ $codep */
 						bool  nz_right = vx[i_right]|(tx[i_right] != 0.);
 						// if not multiplying by the constant zero
 						if( nz_left & nz_right )
-								var |= vx[i_left] | vx[i_right];
+								var |= bool(vx[i_left]) | bool(vx[i_right]);
 					}
 					size_t i_result = result(i, j, k, nk);
 					vy[i_result] = var;
@@ -290,13 +290,14 @@ $codep */
 		{	for(size_t j = 0; j < nc_result_; j++)
 			{	size_t i_result = result(i, j, k, nk);
 				for(p = 0; p < q; p++)
-					s[i_result * q + p] = false; 
+					s[i_result * q + p] = false;
 				for(size_t ell = 0; ell < n_middle_; ell++)
 				{	size_t i_left  = left(i, ell, k, nk);
 					size_t i_right = right(ell, j, k, nk);
 					for(p = 0; p < q; p++)
-					{	s[i_result * q + p] |= r[i_left * q + p ]; 
-						s[i_result * q + p] |= r[i_right * q + p ]; 
+					{	// cast avoids Microsoft warning (should not be needed)
+						s[i_result * q + p] |= bool( r[i_left * q + p ] );
+						s[i_result * q + p] |= bool( r[i_right * q + p ] );
 					}
 				}
 			}
@@ -356,8 +357,8 @@ $codep */
 				{	size_t i_left  = left(i, ell, k, nk);
 					size_t i_right = right(ell, j, k, nk);
 					for(p = 0; p < q; p++)
-					{	st[i_left * q + p] |= rt[i_result * q + p];
-						st[i_right* q + p] |= rt[i_result * q + p];
+					{	st[i_left * q + p] |= bool( rt[i_result * q + p] );
+						st[i_right* q + p] |= bool( rt[i_result * q + p] );
 					}
 				}
 			}
@@ -405,7 +406,7 @@ $codep */
 		const vector< std::set<size_t> >&     r ,
 		const vector< std::set<size_t> >&     u ,
 		      vector< std::set<size_t> >&     v )
-	{	size_t n = vx.size();	
+	{	size_t n = vx.size();
 		assert( t.size() == n );
 		assert( r.size() == n );
 		assert( v.size() == n );
@@ -431,10 +432,10 @@ $codep */
 					//
 					// Compute sparsity for T(x) = S(x) * f'(x).
 					// We need not use vx with f'(x) back propagation.
-					t[i_left]  |= s[i_result];
-					t[i_right] |= s[i_result];
+					t[i_left]  |= bool( s[i_result] );
+					t[i_right] |= bool( s[i_result] );
 
-					// V(x) = f'(x)^T * U(x) +  S(x) * f''(x) * R 
+					// V(x) = f'(x)^T * U(x) +  S(x) * f''(x) * R
 					// U(x) = g''(y) * f'(x) * R
 					// S(x) = g'(y)
 
@@ -489,26 +490,26 @@ $codep */
 					//
 					// Compute sparsity for T(x) = S(x) * f'(x).
 					// We so not need to use vx with f'(x) propagation.
-					t[i_left]  |= s[i_result];
-					t[i_right] |= s[i_result];
+					t[i_left]  |= bool( s[i_result] );
+					t[i_right] |= bool( s[i_result] );
 
-					// V(x) = f'(x)^T * U(x) +  S(x) * f''(x) * R 
+					// V(x) = f'(x)^T * U(x) +  S(x) * f''(x) * R
 					// U(x) = g''(y) * f'(x) * R
 					// S(x) = g'(y)
 
 					// back propagate f'(x)^T * U(x)
 					// (no need to use vx with f'(x) propogation)
 					for(p = 0; p < q; p++)
-					{	v[ i_left  * q + p] |= u[ i_result * q + p];
-						v[ i_right * q + p] |= u[ i_result * q + p];
+					{	v[ i_left  * q + p] |= bool( u[ i_result * q + p] );
+						v[ i_right * q + p] |= bool( u[ i_result * q + p] );
 					}
 
 					// back propagate S(x) * f''(x) * R
 					// (here is where we must check for cross terms)
 					if( s[i_result] & vx[i_left] & vx[i_right] )
 					{	for(p = 0; p < q; p++)
-						{	v[i_left * q + p]  |= r[i_right * q + p];
-							v[i_right * q + p] |= r[i_left * q + p];
+						{	v[i_left * q + p]  |= bool( r[i_right * q + p] );
+							v[i_right * q + p] |= bool( r[i_left * q + p] );
 						}
 					}
 				}

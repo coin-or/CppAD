@@ -641,7 +641,8 @@ public:
 					size_t j = jac_sparse_set_.next_element();
 					while(j < n )
 					{	// y[i] depends on the value of x[j]
-						vy[i] |= vx[j];
+						// cast avoid Microsoft warning (should not be needed)
+						vy[i] |= static_cast<bool>( vx[j] );
 						j = jac_sparse_set_.next_element();
 					}
 				}
@@ -659,7 +660,8 @@ public:
 					for(size_t j = 0; j < n; j++)
 					{	if( jac_sparse_bool_[ i * n + j ] )
 						{	// y[i] depends on the value of x[j]
-							vy[i] |= vx[j];
+							// cast avoid Microsoft warning
+							vy[i] |= static_cast<bool>( vx[j] );
 						}
 					}
 				}

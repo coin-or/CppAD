@@ -1,6 +1,6 @@
 /* $Id$ */
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-12 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-15 Bradley M. Bell
 
 CppAD is distributed under multiple licenses. This distribution is under
 the terms of the 
@@ -69,9 +69,9 @@ bool a11c(void)
 	a1(n, a, b);
 
 	// check the result
-	float eps = 100. * std::numeric_limits<float>::epsilon();
+	float eps = float(100) * std::numeric_limits<float>::epsilon();
 	for(i = 1; i < n ; i++)
-		ok &= std::fabs( (2. * b[i] - a[i] - a[i-1]) / b[i] ) <= eps; 
+		ok &= std::fabs( (float(2) * b[i] - a[i] - a[i-1]) / b[i] ) <= eps; 
 
 	delete [] a;
 	delete [] b;
