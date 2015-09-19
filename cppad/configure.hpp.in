@@ -44,11 +44,15 @@ Should CppAD use C++11 features. This will be true if the current
 compiler flags request C++11 features and the install procedure
 determined that all the necessary features are avaiable.
 */
-# if __cplusplus >= 201100
-# define CPPAD_USE_CPLUSPLUS_2011 @cppad_cplusplus_201100_ok@
-# else
-# define CPPAD_USE_CPLUSPLUS_2011 0
-# endif
+# if     _MSC_VER
+# define    CPPAD_USE_CPLUSPLUS_2011 @cppad_cplusplus_201100_ok@
+# else   //
+# if         __cplusplus >= 201100
+# define         CPPAD_USE_CPLUSPLUS_2011 @cppad_cplusplus_201100_ok@
+# else       //
+# define         CPPAD_USE_CPLUSPLUS_2011 0
+# endif      //
+# endif //
 
 /*!
 \def CPPAD_PACKAGE_STRING

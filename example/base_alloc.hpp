@@ -355,13 +355,13 @@ namespace CppAD {
 	public:
 		// machine epsilon
 		static base_alloc epsilon(void)
-		{	return std::numeric_limits<base_alloc>::epsilon(); }
+		{	return base_alloc( std::numeric_limits<double>::epsilon() ); }
 		// minimum positive normalized value
 		static base_alloc min(void)
-		{	return std::numeric_limits<base_alloc>::min(); }
+		{	return base_alloc( std::numeric_limits<double>::min() ); }
 		// maximum finite value
 		static base_alloc max(void)
-		{	return std::numeric_limits<base_alloc>::max(); }
+		{	return base_alloc( std::numeric_limits<double>::max() ); }
 	};
 	// deprecated machine epsilon
 	template <>

@@ -3,7 +3,7 @@
 # define CPPAD_TIME_TEST_INCLUDED
 
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-14 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-15 Bradley M. Bell
 
 CppAD is distributed under multiple licenses. This distribution is under
 the terms of the 
@@ -139,6 +139,7 @@ $end
 -----------------------------------------------------------------------
 */
 
+# include <algorithm>
 # include <cstddef>
 # include <cmath>
 # include <cppad/elapsed_seconds.hpp>
