@@ -6,7 +6,7 @@
 CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-15 Bradley M. Bell
 
 CppAD is distributed under multiple licenses. This distribution is under
-the terms of the 
+the terms of the
                     Eclipse Public License Version 1.0.
 
 A copy of this license is included in the COPYING file of this distribution.
@@ -52,31 +52,31 @@ It is important to separate small calculation units
 and test them individually.
 This way individual changes can be tested in the context of the
 routine that they are in.
-On many machines, accurate timing of a very short execution 
+On many machines, accurate timing of a very short execution
 sequences is not possible.
 In addition,
 there may be set up and tear down time for a test that
 we do not really want included in the timing.
 For this reason $code time_test$$
-automatically determines how many times to 
+automatically determines how many times to
 repeat the section of the test that we wish to time.
 
 $head Include$$
-The file $code cppad/time_test.hpp$$ defines the 
+The file $code cppad/time_test.hpp$$ defines the
 $code time_test$$ function.
 This file is included by $code cppad/cppad.hpp$$
-and it can also be included separately with out the rest of 
+and it can also be included separately with out the rest of
 the $code CppAD$$ routines.
 
 $head test$$
 The $code time_test$$ argument $icode test$$ is a function,
 or function object.
-In the case where $icode test_size$$ is not present, 
+In the case where $icode test_size$$ is not present,
 $icode test$$ supports the syntax
 $codei%
 	%test%(%repeat%)
 %$$
-In the case where $icode test_size$$ is present, 
+In the case where $icode test_size$$ is present,
 $icode test$$ supports the syntax
 $codei%
 	%test%(%size%, %repeat%)
@@ -119,7 +119,7 @@ $head time$$
 The return value $icode time$$ has prototype
 $codei%
 	double %time%
-%$$ 
+%$$
 and is the number of wall clock seconds that it took
 to execute $icode test$$ divided by the value used for $icode repeat$$.
 
@@ -158,7 +158,7 @@ Preform one wall clock execution timing test.
 
 \tparam Test
 Either the type <code>void (*)(size_t)</code> or a function object
-type that supports the same syntax. 
+type that supports the same syntax.
 
 \param test
 The function, or function object, that supports the operation
@@ -193,11 +193,11 @@ Preform one wall clock execution timing test.
 
 \tparam Test
 Either the type <code>void (*)(size_t, size_t)</code> or a function object
-type that supports the same syntax. 
+type that supports the same syntax.
 
 \param test
 The function, or function object, that supports the operation
-<code>test(size, repeat)</code> where 
+<code>test(size, repeat)</code> where
 \c is the size for this test and
 \c repeat is the number of times
 to repeat the tests operaiton that is being timed.
