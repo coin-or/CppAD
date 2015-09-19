@@ -3,7 +3,7 @@
 # define CPPAD_OMP_ALLOC_INCLUDED
 
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-13 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-15 Bradley M. Bell
 
 CppAD is distributed under multiple licenses. This distribution is under
 the terms of the 
@@ -132,7 +132,7 @@ $end
 	static bool in_parallel(void)
 	{
 # ifdef _OPENMP
-		return static_cast<bool>( omp_in_parallel() );
+		return omp_in_parallel() != 0;
 # else
 		return false;
 # endif

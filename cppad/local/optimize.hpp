@@ -179,7 +179,7 @@ public:
 	/// If this is true (false) this connection is only for the case where
 	/// the comparision in the conditional expression is true (false)
 	bool compare(void) const
-	{	return bool(pack_ % 2); }
+	{	return pack_ % 2 != 0; }
 
 	/// This is the index of the conditional expression (in cksip_info)
 	/// for this connection

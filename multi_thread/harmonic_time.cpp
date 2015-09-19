@@ -1,6 +1,6 @@
 /* $Id$ */
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-12 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-15 Bradley M. Bell
 
 CppAD is distributed under multiple licenses. This distribution is under
 the terms of the 
@@ -111,6 +111,7 @@ $end
 # include <vector>
 # include <iostream>
 # include <cstdlib>
+# include <algorithm>
 
 // Note there is no mention of parallel mode in the documentation for
 // speed_test (so it is safe to use without special consideration).
