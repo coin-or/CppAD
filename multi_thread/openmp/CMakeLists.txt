@@ -1,6 +1,6 @@
 # $Id$
 # -----------------------------------------------------------------------------
-# CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-14 Bradley M. Bell
+# CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-15 Bradley M. Bell
 #
 # CppAD is distributed under multiple licenses. This distribution is under
 # the terms of the 
@@ -27,6 +27,7 @@ ADD_DEFINITIONS( ${OpenMP_CXX_FLAGS} )
 #                 source1 source2 ... sourceN
 # )
 ADD_EXECUTABLE(multi_thread_openmp EXCLUDE_FROM_ALL ../thread_test.cpp 
+	../../speed/src/microsoft_timer.cpp
 	../multi_newton_time.cpp
 	../multi_newton.cpp
 	../multi_newton_work.cpp

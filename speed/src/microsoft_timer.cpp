@@ -1,6 +1,6 @@
 /* $Id$ */
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-14 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-15 Bradley M. Bell
 
 CppAD is distributed under multiple licenses. This distribution is under
 the terms of the 
@@ -14,6 +14,7 @@ $begin microsoft_timer$$
 $spell
 	Microsoft
 	cpp
+	src
 $$
 
 $section Microsoft Version of Elapsed Number of Seconds$$
@@ -35,7 +36,7 @@ number of seconds since the first call to $code microsoft_timer$$.
 
 $head Linking$$
 The source code for this routine is located in 
-$code speed/microsoft_timer.cpp$$.
+$code speed/src/microsoft_timer.cpp$$.
 The preprocessor symbol $code _MSC_VER$$ must
 be defined, or this routine is not compiled.
 
