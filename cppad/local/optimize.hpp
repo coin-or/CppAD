@@ -2634,7 +2634,7 @@ void optimize_run(
 			tape[i_var].new_op  = rec->num_op_rec();
 			tape[i_var].new_var = rec->PutOp(op);
 			break;
- 			// ---------------------------------------------------
+			// ---------------------------------------------------
 			// Operations with one argument that is a parameter
 			case ParOp:
 			CPPAD_ASSERT_NARG_NRES(op, 1, 1);

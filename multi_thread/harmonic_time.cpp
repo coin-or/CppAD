@@ -3,7 +3,7 @@
 CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-15 Bradley M. Bell
 
 CppAD is distributed under multiple licenses. This distribution is under
-the terms of the 
+the terms of the
                     Eclipse Public License Version 1.0.
 
 A copy of this license is included in the COPYING file of this distribution.
@@ -36,8 +36,8 @@ $head Syntax$$
 $icode%ok% = harmonic_time(%time_out%, %num_threads%, %mega_sum%)%$$
 
 $head Purpose$$
-Runs a correctness and timing test for a multi-threaded 
-computation of the summation that defines the harmonic series 
+Runs a correctness and timing test for a multi-threaded
+computation of the summation that defines the harmonic series
 $latex \[
 	1 + 1/2 + 1/3 + ... + 1/n
 \] $$
@@ -60,13 +60,13 @@ $codei%
 %$$
 The input value of the argument does not matter.
 Upon return it is the number of wall clock seconds required for
-to compute the 
+to compute the
 $cref/summation/harmonic_time.cpp/Purpose/$$.
 
 $head test_time$$
 Is the minimum amount of wall clock time that the test should take.
 The number of repeats for the test will be increased until this time
-is reached. 
+is reached.
 The reported $icode time_out$$ is the total wall clock time divided by the
 number of repeats.
 
@@ -79,12 +79,12 @@ It specifies the number of threads that are available for this test.
 If it is zero, the test is run without the multi-threading environment and
 $codei%
 	1 == CppAD::thread_alloc::num_threads()
-%$$ 
+%$$
 when $code harmonic_time$$ is called.
 If it is non-zero, the test is run with the multi-threading and
 $codei%
 	%num_threads% = CppAD::thread_alloc::num_threads()
-%$$ 
+%$$
 when $code harmonic_time$$ is called.
 
 $head mega_sum$$
@@ -93,9 +93,9 @@ $codei%
 	size_t& %mega_sum%
 %$$
 and is greater than zero.
-The value $latex n$$ in the 
+The value $latex n$$ in the
 $cref/summation/harmonic_time.cpp/Purpose/$$.
-is equal to $latex 10^6$$ times $icode mega_sum$$. 
+is equal to $latex 10^6$$ times $icode mega_sum$$.
 
 $head Source$$
 $code
@@ -135,7 +135,7 @@ namespace { // empty namespace
 			exit(1);
 		}
 		size_t num_sum = mega_sum_ * 1000000;
-		bool ok = harmonic(sum_, num_sum, num_threads_); 
+		bool ok = harmonic(sum_, num_sum, num_threads_);
 		if( ! ok )
 		{	std::cerr << "harmonic: error" << std::endl;
 			exit(1);
@@ -174,7 +174,7 @@ bool harmonic_time(
 	size_t i     = mega_sum_ * 1000000;
 	double check = 0.;
 	while(i)
-		check += 1. / double(i--); 
+		check += 1. / double(i--);
 	ok &= std::fabs(sum_ - check) <= eps;
 
 	return ok;
