@@ -3,16 +3,16 @@
 # CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-15 Bradley M. Bell
 #
 # CppAD is distributed under multiple licenses. This distribution is under
-# the terms of the 
+# the terms of the
 #                     Eclipse Public License Version 1.0.
 #
 # A copy of this license is included in the COPYING file of this distribution.
 # Please visit http://www.coin-or.org/CppAD/ for information on other licenses.
 # -----------------------------------------------------------------------------
-# Build the multi_thread/pthread directory tests 
+# Build the multi_thread/pthread directory tests
 # Inherit environment from ../CMakeList.txt
 
-# Specifies build type for this directory. Possible values are 
+# Specifies build type for this directory. Possible values are
 # empty, Debug, Release, RelWithDebInfo and MinSizeRel
 SET(CMAKE_BUILD_TYPE DEBUG)
 
@@ -22,7 +22,7 @@ INCLUDE_DIRECTORIES( ${CMAKE_CURRENT_SOURCE_DIR}/.. )
 # add_executable(<name> [WIN32] [MACOSX_BUNDLE] [EXCLUDE_FROM_ALL]
 #                 source1 source2 ... sourceN
 # )
-ADD_EXECUTABLE(multi_thread_pthread EXCLUDE_FROM_ALL ../thread_test.cpp 
+ADD_EXECUTABLE(multi_thread_pthread EXCLUDE_FROM_ALL ../thread_test.cpp
 	../../speed/src/microsoft_timer.cpp
 	../multi_newton_time.cpp
 	../multi_newton.cpp
@@ -47,7 +47,7 @@ LINK_DIRECTORIES( ${pthread_lib_path} )
 TARGET_LINK_LIBRARIES(multi_thread_pthread ${pthread_lib})
 
 # Add the check_multi_thread_pthread target
-ADD_CUSTOM_TARGET(check_multi_thread_pthread 
-	multi_thread_pthread simple_ad 
+ADD_CUSTOM_TARGET(check_multi_thread_pthread
+	multi_thread_pthread simple_ad
 	DEPENDS multi_thread_pthread
 )

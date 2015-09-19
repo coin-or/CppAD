@@ -3,7 +3,7 @@
 CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-15 Bradley M. Bell
 
 CppAD is distributed under multiple licenses. This distribution is under
-the terms of the 
+the terms of the
                     Eclipse Public License Version 1.0.
 
 A copy of this license is included in the COPYING file of this distribution.
@@ -25,17 +25,17 @@ $icode%s% = microsoft_timer()%$$
 
 $head Purpose$$
 This routine is accurate to within .02 seconds
-(see $cref elapsed_seconds$$ which uses this routine when 
+(see $cref elapsed_seconds$$ which uses this routine when
 the preprocessor symbol $code _MSC_VER$$ is defined).
 It does not necessary work for time intervals that are greater than a day.
 It uses $code ::GetSystemTime$$ for timing.
 
 $head s$$
-is a $code double$$ equal to the 
+is a $code double$$ equal to the
 number of seconds since the first call to $code microsoft_timer$$.
 
 $head Linking$$
-The source code for this routine is located in 
+The source code for this routine is located in
 $code speed/src/microsoft_timer.cpp$$.
 The preprocessor symbol $code _MSC_VER$$ must
 be defined, or this routine is not compiled.
