@@ -47,7 +47,7 @@ namespace {
 	# pragma omp parallel for
 		for(i = 1; i < n; i++) /* i is private by default */
 		{	assert( omp_get_num_threads() == NUMBER_THREADS );
-			b[i] = (a[i] + a[i-1]) / 2.0;
+			b[i] = (a[i] + a[i-1]) / float(2);
 		}
 	}
 	// End of Example A.1.1.1c of OpenMP 2.5 standard document ---------------

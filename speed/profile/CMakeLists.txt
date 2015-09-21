@@ -1,6 +1,6 @@
 # $Id$
 # -----------------------------------------------------------------------------
-# CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-14 Bradley M. Bell
+# CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-15 Bradley M. Bell
 #
 # CppAD is distributed under multiple licenses. This distribution is under
 # the terms of the 
@@ -16,10 +16,10 @@
 # Adds flags to the compiler command line for sources in the current directory 
 # and below. This command can be used to add any flags, but it was originally 
 # intended to add preprocessor definitions. 
-ADD_DEFINITIONS("-DCPPAD_PROFILE_SPEED -pg")
+ADD_DEFINITIONS("-DCPPAD_PROFILE_SPEED ${cppad_profile_flag}")
 
 # Extra flags used by the linker when creating an executable. 
-SET(CMAKE_EXE_LINKER_FLAGS "-pg")
+SET(CMAKE_EXE_LINKER_FLAGS ${cppad_profile_flag})
 
 # Local include directories to search (not in package_prefix/includdir)
 INCLUDE_DIRECTORIES( ${CMAKE_CURRENT_SOURCE_DIR}/../src )

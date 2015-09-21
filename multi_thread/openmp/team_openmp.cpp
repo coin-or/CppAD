@@ -1,6 +1,6 @@
 // $Id$
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-12 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-15 Bradley M. Bell
 
 CppAD is distributed under multiple licenses. This distribution is under
 the terms of the 
@@ -41,7 +41,7 @@ namespace {
 
 	// used to inform CppAD when we are in parallel execution mode
 	bool in_parallel(void)
-	{	return static_cast<bool> ( omp_in_parallel() ); }
+	{	return omp_in_parallel() != 0; }
 
 	// used to inform CppAD of the current thread number
 	size_t thread_num(void)

@@ -1,7 +1,7 @@
 #! /bin/bash -e
 # $Id$
 # -----------------------------------------------------------------------------
-# CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-14 Bradley M. Bell
+# CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-15 Bradley M. Bell
 #
 # CppAD is distributed under multiple licenses. This distribution is under
 # the terms of the
@@ -102,13 +102,11 @@ done
 if [ "$debug_speed" == 'yes' ]
 then
 	sed -e 's|^SET(CMAKE_BUILD_TYPE .*|SET(CMAKE_BUILD_TYPE DEBUG)|' \
-		-i  speed/CMakeLists.txt
-elif [ "$profile_speed" == 'yes' ]
-then
-	sed -e 's|^SET(CMAKE_BUILD_TYPE .*|SET(CMAKE_BUILD_TYPE MinSizeRel)|' \
+	    -e 's|^# SET(CMAKE_CXX_FLAGS_DEBUG|SET(CMAKE_CXX_FLAGS_DEBUG|' \
 		-i  speed/CMakeLists.txt
 else
 	sed -e 's|^SET(CMAKE_BUILD_TYPE .*|SET(CMAKE_BUILD_TYPE RELEASE)|' \
+	    -e 's|^SET(CMAKE_CXX_FLAGS_DEBUG|# SET(CMAKE_CXX_FLAGS_DEBUG|' \
 		-i speed/CMakeLists.txt
 fi
 # ---------------------------------------------------------------------------
@@ -197,6 +195,12 @@ if [ "$clang" == 'yes' ]
 then
 	cmake_args="$cmake_args -D CMAKE_C_COMPILER=clang"
 	cmake_args="$cmake_args -D CMAKE_CXX_COMPILER=clang++"
+fi
+#
+# profile
+if [ "$profile_speed" == 'yes' ]
+then
+	cmake_args="$cmake_args -D cppad_profile_flag=-pg"
 fi
 #
 # simple options

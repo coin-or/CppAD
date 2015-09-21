@@ -111,6 +111,7 @@ cmake %%                                                                     \
     -D sacado_prefix=%sacado_prefix%                                         \
     \
     -D cppad_cxx_flags=%cppad_cxx_flags%                                     \
+    -D cppad_profile_flag=%cppad_profile_flag%                               \
     \
     -D cppad_testvector=%cppad_testvector%                                   \
     -D cppad_max_num_threads=%cppad_max_num_threads%                         \
@@ -271,7 +272,15 @@ $$
 $subhead C++11$$
 In order for the compiler to take advantage of features that are new in C++11,
 the $icode cppad_cxx_flags$$ must enable these features.
-The compiler may still be used with a flag that disables the new features.
+The compiler may still be used with a flag that disables the new features
+(unless it is a Microsoft compiler; i.e., $code _MSC_VER$$ is defined).
+
+$head cppad_profile_flag$$
+$index profile$$
+This specifies an addition compiler and link flag that is used
+for $cref/profiling/speed_main/package/profile/$$ the speed tests.
+A profile version of the speed test is only build when this argument
+is present.
 
 $subhead Eigen and Fadbad$$
 The packages
