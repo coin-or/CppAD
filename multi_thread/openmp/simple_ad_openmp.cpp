@@ -3,7 +3,7 @@
 CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-15 Bradley M. Bell
 
 CppAD is distributed under multiple licenses. This distribution is under
-the terms of the 
+the terms of the
                     Eclipse Public License Version 1.0.
 
 A copy of this license is included in the COPYING file of this distribution.
@@ -24,7 +24,7 @@ $index AD, simple openmp$$
 $index simple, openmp AD$$
 
 $head Purpose$$
-This example demonstrates how CppAD can be used in a 
+This example demonstrates how CppAD can be used in a
 OpenMP multi-threading environment.
 
 $head Source Code$$
@@ -74,7 +74,7 @@ namespace {
 	bool run_all_workers(size_t num_threads, problem_specific* info_all[])
 	{	bool ok = true;
 
-		// initialize thread_all_ 
+		// initialize thread_all_
 		int thread_num, int_num_threads = int(num_threads);
 		for(thread_num = 0; thread_num < int_num_threads; thread_num++)
 		{	// initialize as false to make sure gets called for all threads
@@ -128,9 +128,9 @@ namespace {
 		ax[0] = info->x;
 		Independent(ax);
 		ay[0] = sqrt( ax[0] * ax[0] );
-		CppAD::ADFun<double> f(ax, ay); 
+		CppAD::ADFun<double> f(ax, ay);
 
-		// Check function value corresponds to the identity 
+		// Check function value corresponds to the identity
 		double eps = 10. * CppAD::numeric_limits<double>::epsilon();
 		ok        &= NearEqual(ay[0], ax[0], eps, eps);
 
@@ -151,8 +151,8 @@ bool simple_ad(void)
 	// (using thread_alloc in sequential mode)
 	size_t thread_num;
 	for(thread_num = 0; thread_num < num_threads; thread_num++)
-	{	ok &= thread_alloc::inuse(thread_num) == 0; 
-		ok &= thread_alloc::available(thread_num) == 0; 
+	{	ok &= thread_alloc::inuse(thread_num) == 0;
+		ok &= thread_alloc::available(thread_num) == 0;
 	}
 
 	// initialize info_all
@@ -175,9 +175,9 @@ bool simple_ad(void)
 		void* v_ptr = static_cast<void*>( info_all[thread_num] );
 		thread_alloc::return_memory( v_ptr );
 		// check that there is no longer any memory inuse by this thread
-		ok &= thread_alloc::inuse(thread_num) == 0; 
+		ok &= thread_alloc::inuse(thread_num) == 0;
 		// return all memory being held for future use by this thread
-		thread_alloc::free_available(thread_num); 
+		thread_alloc::free_available(thread_num);
 	}
 
 	return ok;

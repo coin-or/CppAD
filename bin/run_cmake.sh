@@ -186,7 +186,7 @@ fi
 cppad_cxx_flags="-Wall -pedantic-errors -std=$standard"
 if [ "$testvector" != 'eigen' ]
 then
- 	cppad_cxx_flags="$cppad_cxx_flags -Wshadow"
+	cppad_cxx_flags="$cppad_cxx_flags -Wshadow"
 fi
 cmake_args="$cmake_args -D cppad_cxx_flags='$cppad_cxx_flags'"
 #
