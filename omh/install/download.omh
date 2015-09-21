@@ -176,8 +176,8 @@ $codei%
 %$$
 $lnext
 The commands below are optional.
-They run the CppAD tests using the default $cref cmake$$ settings 
-(except for the $cref/generator/cmake/generator/$$ option) 
+They run the CppAD tests using the default $cref cmake$$ settings
+(except for the $cref/generator/cmake/generator/$$ option)
 $codei%
 	mkdir build
 	cd build
