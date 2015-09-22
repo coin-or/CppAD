@@ -151,18 +151,18 @@ $href%http://www.microsoft.com/en-us/download/confirmation.aspx?id=44914
 %$$
 $lnext
 In a command window, execute the following commands:
-$codei%
-	set PATH=%path_to_7_zip%;%PATH%
-	set PATH=%path_to_cmake%;%PATH%
-	set VCDIR=%path_to_vcdir%;%PATH%
+$codei|
+	set PATH=|path_to_7_zip|;%PATH%
+	set PATH=|path_to_cmake|;%PATH%
+	set VCDIR=|path_to_vcdir|;%PATH%
 	call "%VCDIR%\vcvarsall.bat" x86
-%$$
+|$$
 For example, on one machine these paths had the following values:
-$codei%
-	%path_to_7_zip%=C:\Program Files\7-zip
-	%path_to_cmake%=C:\Program Files (x86)\CMake\bin
-	%path_to_vcdir%=C:\Program Files (x86)\Microsoft Visual Studio 14.0\VC
-%$$
+$codei|
+	|path_to_7_zip|=C:\Program Files\7-zip
+	|path_to_cmake|=C:\Program Files (x86)\CMake\bin
+	|path_to_vcdir|=C:\Program Files (x86)\Microsoft Visual Studio 14.0\VC
+|$$
 $lnext
 Use the following commands to extract the distribution from the tarball:
 $codei%
