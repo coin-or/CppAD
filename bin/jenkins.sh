@@ -73,7 +73,7 @@ then
 	# this comand cleans out the previous install for all externals
 	echo_eval rm -rf build/prefix
 	# -------------------------------------------------------------------
-	if [ "$redo_extrnal" == 'build' ]
+	if [ "$redo_external" == 'build' ]
 	then
 		# This command causes a new download, and compile for all externals
 		echo_eval rm -rf build/external
