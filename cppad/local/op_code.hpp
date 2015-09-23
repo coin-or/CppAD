@@ -49,13 +49,13 @@ operand is a parameter and the right operand is a variable.
 enum OpCode {
 	AbsOp,    //  abs(variable)
 	AcosOp,   // acos(variable)
-	AcoshOp,   // acosh(variable)
+	AcoshOp,  // acosh(variable)
 	AddpvOp,  //      parameter  + variable
 	AddvvOp,  //      variable   + variable
 	AsinOp,   // asin(variable)
 	AsinhOp,  // asinh(variable)
 	AtanOp,   // atan(variable)
-	AtanhOp,   // atanh(variable)
+	AtanhOp,  // atanh(variable)
 	BeginOp,  // used to mark the beginning of the tape
 	CExpOp,   // CondExpRel(left, right, trueCase, falseCase)
 	// arg[0]     = the Rel operator: Lt, Le, Eq, Ge, Gt, or Ne
@@ -583,12 +583,12 @@ void printOp(
 		else	printOpField(os, " pr=", play->GetPar(ind[3]), ncol);
 		if( size_t(ind[4]) < 3 )
 		{	for(i = 0; i < size_t(ind[4]); i++)
-			 	printOpField(os, " ot=", ind[6+i], ncol);
+				printOpField(os, " ot=", ind[6+i], ncol);
 		}
 		else
 		{	printOpField(os, "\n\tot=", ind[6+0], ncol);
 			for(i = 1; i < size_t(ind[4]); i++)
-			 	printOpField(os, " ot=", ind[6+i], ncol);
+				printOpField(os, " ot=", ind[6+i], ncol);
 		}
 		if( size_t(ind[5]) < 3 )
 		{	for(i = 0; i < size_t(ind[5]); i++)
@@ -661,9 +661,9 @@ void printOp(
 
 		case AddvvOp:
 		case DivvvOp:
+		case EqvvOp:
 		case LevvOp:
 		case LtvvOp:
-		case EqvvOp:
 		case NevvOp:
 		case MulvvOp:
 		case PowvvOp:
@@ -674,14 +674,14 @@ void printOp(
 		break;
 
 		case AddpvOp:
+		case EqpvOp:
+		case DivpvOp:
 		case LepvOp:
 		case LtpvOp:
-		case EqpvOp:
 		case NepvOp:
 		case SubpvOp:
 		case MulpvOp:
 		case PowpvOp:
-		case DivpvOp:
 		CPPAD_ASSERT_UNKNOWN( NumArg(op) == 2 );
 		printOpField(os, " pl=", play->GetPar(ind[0]), ncol);
 		printOpField(os, " vr=", ind[1], ncol);
