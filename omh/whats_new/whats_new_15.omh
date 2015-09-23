@@ -56,6 +56,9 @@ $spell
 	adouble
 	gmtime
 	asctime
+	ipopt
+	fadbad
+	sacado
 $$
 
 $section CppAD Changes and Additions During 2015$$
@@ -65,6 +68,19 @@ This section contains a list of the changes to CppAD during 2015
 (in reverse order by date).
 The purpose of this section is to
 assist you in learning about changes between various versions of CppAD.
+
+$head 09-23$$
+CppAD can optionally test its use with the external packages
+$cref/eigen/get_eigen.sh/$$,
+$cref/ipopt/get_ipopt.sh/$$, and
+$cref/colpack/get_colpack.sh/$$.
+In addition, it can compare its $cref speed$$ with the external AD packages
+$cref/adolc/get_adolc.sh/$$,
+$cref/fadbad/get_fadbad.sh/$$, and
+$cref/sacado/get_sacado.sh/$$.
+The scripts that download and install a local copy of these external packages
+have been modified to automatically skip installation
+when it has already been done.
 
 $head 09-21$$
 Improve discussion of
