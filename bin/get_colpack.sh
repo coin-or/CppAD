@@ -63,7 +63,14 @@ echo_eval() {
 echo 'Download colpack to build/external and install it to build/prefix'
 version='1.0.9'
 web_page='http://cscapes.cs.purdue.edu/download/ColPack'
-prefix=`pwd`'/build/prefix'
+cppad_dir=`pwd`
+prefix="$cppad_dir/build/prefix"
+installed_flag="build/external/colpack-${version}.installed"
+if [ -e "$installed_flag" ]
+then
+	echo "$installed_flag exists: Skipping get_colpack.sh"
+	exit 0
+fi
 # --------------------------------------------------------------------------
 if [ -e /usr/lib64 ]
 then
@@ -113,4 +120,5 @@ echo_eval ./configure \
 #
 echo_eval make install
 # -----------------------------------------------------------------------------
+echo_eval touch $cppad_dir/$installed_flag
 echo "get_colpack: OK"

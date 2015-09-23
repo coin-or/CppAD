@@ -15,17 +15,11 @@ then
 	echo "bin/jenkins.sh: must be executed from its parent directory"
 	exit 1
 fi
-if [ "$1" != 'none' ] && [ "$1" != 'build' ] && [ "$1" != 'install' ]
+if [ "$1" != '' ] 
 then
-	echo 'bin/junk.sh: redo_external'
-	echo 'where redo_external is one of: build, install, none'
-	echo
-	echo 'build:   download build and install all the externals'
-	echo 'install: reuse as much of previous build as possible'
-	echo 'none:    uses the previous install (fastest option)'
+	echo 'bin/junk.sh no longer has any arguments'
 	exit 1
 fi
-redo_external="$1"
 # -----------------------------------------------------------------------------
 # distribution directory corresponding to this version of CppAD
 trunk_dir=`pwd`
@@ -66,52 +60,37 @@ fi
 # -----------------------------------------------------------------------
 g++ --version
 # -----------------------------------------------------------------------
-# Build and install external packages
-if [ "$redo_external" != 'none' ]
-then
-	# -------------------------------------------------------------------
-	# this comand cleans out the previous install for all externals
-	echo_eval rm -rf build/prefix
-	# -------------------------------------------------------------------
-	if [ "$redo_external" == 'build' ]
-	then
-		# This command causes a new download, and compile for all externals
-		echo_eval rm -rf build/external
-	fi
-	# -------------------------------------------------------------------
-	# Running bin/get_fadbad.sh will install include files in
-	#	$trunk_dir/build/prefix/include/FADBAD++
-	log_eval bin/get_fadbad.sh
-	# -------------------------------------------------------------------
-	# Running bin/get_eigen.sh will install include files in
-	#	$trunk_dir/build/prefix/include/Eigen
-	log_eval bin/get_eigen.sh
-	# -------------------------------------------------------------------
-	# Running bin/get_ipopt.sh will install include files in
-	#	$trunk_dir/build/prefix/include/coin
-	# and library files in
-	#	$trunk_dir/build/prefix/$libdir
-	# where $libdir is 'lib64' if /usr/lib64 exists and 'lib' otherwise.
-	log_eval bin/get_ipopt.sh
-	# -------------------------------------------------------------------
-	# Running bin/get_sacado.sh will install include files in
-	#	$trunk_dir/build/prefix/include
-	# and library files in
-	#	$trunk_dir/build/prefix/$libdir
-	log_eval bin/get_sacado.sh
-	# -------------------------------------------------------------------
-	# Running bin/get_colpack.sh will install library files in
-	#	$trunk_dir/build/prefix/$libdir
-	log_eval bin/get_colpack.sh
-	# -------------------------------------------------------------------
-	# Running bin/get_acolc.sh will install include files in
-	#	$trunk_dir/build/prefix/include/adolc
-	# and library files in
-	#	$trunk_dir/build/prefix/$libdir
-	log_eval bin/get_adolc.sh
-	# -------------------------------------------------------------------
-fi
-# -----------------------------------------------------------------------
+# Running bin/get_fadbad.sh ensures its include files are in
+#	$trunk_dir/build/prefix/include/FADBAD++
+log_eval bin/get_fadbad.sh
+# -------------------------------------------------------------------
+# Running bin/get_eigen.sh ensures its include files are in
+#	$trunk_dir/build/prefix/include/Eigen
+log_eval bin/get_eigen.sh
+# -------------------------------------------------------------------
+# Running bin/get_ipopt.sh ensures its include files are in
+#	$trunk_dir/build/prefix/include/coin
+# and library files in
+#	$trunk_dir/build/prefix/$libdir
+# where $libdir is 'lib64' if /usr/lib64 exists and 'lib' otherwise.
+log_eval bin/get_ipopt.sh
+# -------------------------------------------------------------------
+# Running bin/get_sacado.sh ensures its include files are in
+#	$trunk_dir/build/prefix/include
+# and library files in
+#	$trunk_dir/build/prefix/$libdir
+log_eval bin/get_sacado.sh
+# -------------------------------------------------------------------
+# Running bin/get_colpack.sh ensures its library files are in
+#	$trunk_dir/build/prefix/$libdir
+log_eval bin/get_colpack.sh
+# -------------------------------------------------------------------
+# Running bin/get_acolc.sh ensures its include files are in
+#	$trunk_dir/build/prefix/include/adolc
+# and library files in
+#	$trunk_dir/build/prefix/$libdir
+log_eval bin/get_adolc.sh
+# -------------------------------------------------------------------
 system_name=`uname | sed -e 's|\(......\).*|\1|'`
 if [ "$system_name" == 'CYGWIN' ]
 then

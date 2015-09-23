@@ -64,9 +64,17 @@ echo_eval() {
 }
 # -----------------------------------------------------------------------------
 echo 'Download sacado to build/external and install it to build/prefix'
-version="trilinos-11.12.1-Source"
+version="11.12.1"
+trilinos_dir="trilinos-$version-Source"
 web_page="http://trilinos.org/oldsite/download/files"
-prefix=`pwd`'/build/prefix'
+cppad_dir=`pwd`
+prefix="$cppad_dir/build/prefix"
+installed_flag="build/external/trilinos-${version}.installed"
+if [ -e "$installed_flag" ]
+then
+	echo "$installed_flag exists: Skipping get_sacado.sh"
+	exit 0
+fi
 # -----------------------------------------------------------------------------
 # determine which version of cmake to use
 cmake --version |  sed -n \
@@ -124,20 +132,20 @@ fi
 echo_eval cd build/external
 # -----------------------------------------------------------------------------
 # create the trilions source directory and change into it
-if [ ! -e "$version.tar.gz" ]
+if [ ! -e "$trilinos_dir.tar.gz" ]
 then
-	echo_eval wget --no-check-certificate $web_page/$version.tar.gz
+	echo_eval wget --no-check-certificate $web_page/$trilinos_dir.tar.gz
 fi
 for package in Sacado Teuchos Trilinois
 do
 	echo_eval rm -rf $prefix/include/$package*
 done
-if [ ! -e "$version" ]
+if [ ! -e "$trilinos_dir" ]
 then
-	echo_eval tar -xzf $version.tar.gz
+	echo_eval tar -xzf $trilinos_dir.tar.gz
 	# ------------------------------------------------------------------------
 	# patch the cmake/tribits/modules/FindPythonInterp.cmake file
-	file="$version/cmake/tribits/modules/FindPythonInterp.cmake"
+	file="$trilinos_dir/cmake/tribits/modules/FindPythonInterp.cmake"
 	line='[HKEY_LOCAL_MACHINE\\\\SOFTWARE\\\\Python\\\\PythonCore\\\\2.8\\\\'
 	line="${line}InstallPath]"
 	if [ -e "$file" ]
@@ -150,7 +158,7 @@ then
 	fi
 	# ------------------------------------------------------------------------
 fi
-echo_eval cd $version
+echo_eval cd $trilinos_dir
 # -----------------------------------------------------------------------------
 # change into build sub-directory
 if [ ! -e build ]
@@ -159,7 +167,7 @@ then
 fi
 echo_eval cd build
 # -----------------------------------------------------------------------------
-# cmake command
+# cmake command and install
 if [ "$coin_lapack_blas" == 'yes' ]
 then
 	echo_eval $cmake_program \
@@ -183,5 +191,6 @@ else
 		../
 fi
 echo_eval make install
-#
+# -----------------------------------------------------------------------------
+echo_eval touch $cppad_dir/$installed_flag
 echo "get_sacado.sh: OK"

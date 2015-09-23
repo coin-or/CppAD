@@ -1,7 +1,7 @@
 #! /bin/bash -e
 # $Id$
 # -----------------------------------------------------------------------------
-# CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-14 Bradley M. Bell
+# CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-15 Bradley M. Bell
 #
 # CppAD is distributed under multiple licenses. This distribution is under
 # the terms of the
@@ -34,6 +34,7 @@ fi
 sed -n -e '/NumArgTable\[\]/,/^[ \t]*};/p' cppad/local/op_code.hpp | \
 	sed \
 		-e '/NumArgTable\[\]/d' \
+		-e '/NumberOp.*not used/d' \
 		-e '/^[ \t]*};/d' \
 		-e 's|^[ \t]*[0-9],* *// *||' \
 		-e 's|Op.*||' \
@@ -51,7 +52,7 @@ sed -n -e '/NumResTable\[\]/,/^[ \t]*};/p' cppad/local/op_code.hpp | \
 	sed \
 		-e '/NumResTable\[\]/d' \
 		-e '/^[ \t]*};/d' \
-		-e '/Last entry not used/d' \
+		-e '/NumberOp.*not used/d' \
 		-e 's|^[ \t]*[0-9],* *// *||' \
 		-e 's|Op.*||' \
 		> bin/op_code.4.$$
@@ -68,6 +69,7 @@ fi
 sed -n -e '/const char \*OpNameTable\[\]/,/^[ \t]*};/p' cppad/local/op_code.hpp | \
 	sed \
 		-e '/OpNameTable\[\]/d' \
+		-e '/"Number".*not used/d' \
 		-e '/^[ \t]*};/d' \
 		-e 's|^[ \t]*"||' \
 		-e 's|".*||' \

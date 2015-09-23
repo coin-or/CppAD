@@ -1,7 +1,7 @@
 #! /bin/bash -e
 # $Id$
 # -----------------------------------------------------------------------------
-# CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-13 Bradley M. Bell
+# CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-15 Bradley M. Bell
 #
 # CppAD is distributed under multiple licenses. This distribution is under
 # the terms of the 
@@ -58,7 +58,14 @@ echo_eval() {
 echo 'Download fadbad to build/external and install it to build/prefix'
 version='2.1'
 web_page='http://www.fadbad.com/download'
-prefix=`pwd`'/build/prefix'
+cppad_dir=`pwd`
+prefix="$cppad_dir/build/prefix"
+installed_flag="build/external/fadbad-${version}.installed"
+if [ -e "$installed_flag" ]
+then
+	echo "$installed_flag exists: Skipping get_fadbad.sh"
+	exit 0
+fi
 # -----------------------------------------------------------------------------
 if [ ! -d build/external ]
 then
@@ -84,5 +91,6 @@ then
 	echo_eval rm -r "$prefix/include/FADBAD++"
 fi
 echo_eval cp -r FADBAD++ "$prefix/include/FADBAD++"
-#
+# -----------------------------------------------------------------------------
+echo_eval touch $cppad_dir/$installed_flag
 echo "get_fadbad.sh: OK"

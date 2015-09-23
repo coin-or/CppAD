@@ -1,7 +1,7 @@
 #! /bin/bash -e
 # $Id$
 # -----------------------------------------------------------------------------
-# CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-13 Bradley M. Bell
+# CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-15 Bradley M. Bell
 #
 # CppAD is distributed under multiple licenses. This distribution is under
 # the terms of the 
@@ -65,7 +65,14 @@ echo_eval() {
 echo 'Download ipopt to build/external and install it to build/prefix'
 version='3.11.9'
 web_page='http://www.coin-or.org/download/source/Ipopt'
-prefix=`pwd`'/build/prefix'
+cppad_dir=`pwd`
+prefix="$cppad_dir/build/prefix"
+installed_flag="build/external/ipopt-${version}.installed"
+if [ -e "$installed_flag" ]
+then
+	echo "$installed_flag exists: Skipping get_ipopt.sh"
+	exit 0
+fi
 # -----------------------------------------------------------------------------
 if [ ! -d build/external ]
 then
@@ -115,7 +122,7 @@ echo_eval ./configure \
 	--enable-debug \
 	--prefix="$prefix" \
 	--libdir="$prefix/$libdir" 
-# -----------------------------------------------------------------------------
 echo_eval make install 
-#
+# -----------------------------------------------------------------------------
+echo_eval touch $cppad_dir/$installed_flag
 echo "get_ipopt.sh: OK"

@@ -1,7 +1,7 @@
 #! /bin/bash -e
 # $Id$
 # -----------------------------------------------------------------------------
-# CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-13 Bradley M. Bell
+# CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-15 Bradley M. Bell
 #
 # CppAD is distributed under multiple licenses. This distribution is under
 # the terms of the 
@@ -65,7 +65,14 @@ echo_eval() {
 echo 'Download eigen to build/external and install it to build/prefix'
 version='3.2.0'
 web_page='https://bitbucket.org/eigen/eigen/get'
-prefix=`pwd`'/build/prefix'
+cppad_dir=`pwd`
+prefix="$cppad_dir/build/prefix"
+installed_flag="build/external/eigen-${version}.installed"
+if [ -e "$installed_flag" ]
+then
+	echo "$installed_flag exists: Skipping get_eigen.sh"
+	exit 0
+fi
 # -----------------------------------------------------------------------------
 # determine which version of cmake to use
 cmake --version |  sed -n \
@@ -123,7 +130,6 @@ then
 	echo_eval mv $git_name eigen-$version
 fi
 # -----------------------------------------------------------------------------
-#
 echo_eval cd eigen-$version
 if [ ! -e build ]
 then
@@ -133,5 +139,6 @@ echo_eval cd build
 echo_eval $cmake_program .. -DCMAKE_INSTALL_PREFIX=$prefix
 echo_eval make install
 echo_eval ln -s $prefix/include/eigen3/Eigen $prefix/include/Eigen
-#
+# -----------------------------------------------------------------------------
+echo_eval touch $cppad_dir/$installed_flag
 echo "get_eigen.sh: OK"

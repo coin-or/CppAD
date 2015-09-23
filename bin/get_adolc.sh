@@ -71,7 +71,14 @@ echo 'Download adolc to build/external and install it to build/prefix'
 #	http://list.coin-or.org/pipermail/adol-c/2014-December/001023.html
 version='2.4.1'
 web_page="http://www.coin-or.org/download/source/ADOL-C"
-prefix=`pwd`'/build/prefix'
+cppad_dir=`pwd`
+prefix="$cppad_dir/build/prefix"
+installed_flag="build/external/adolc-${version}.installed"
+if [ -e "$installed_flag" ]
+then
+	echo "$installed_flag exists: Skipping get_adolc.sh"
+	exit 0
+fi
 # --------------------------------------------------------------------------
 if [ -e /usr/lib64 ]
 then
@@ -126,4 +133,5 @@ fi
 echo_eval ../configure $flags
 echo_eval make install
 # -----------------------------------------------------------------------------
+echo_eval touch $cppad_dir/$installed_flag
 echo "get_adolc: OK"

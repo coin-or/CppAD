@@ -88,46 +88,46 @@ enum OpCode {
 	// arg[3+arg[0]] -> arg[2+arg[0]+arg[1]] = index for minus variables
 	// arg[3+arg[0]+arg[1]] = arg[0] + arg[1]
 	DisOp,    //  discrete::eval(index, variable)
-	DivpvOp,  //      parameter  / variable
-	DivvpOp,  //      variable   / parameter
-	DivvvOp,  //      variable   / variable
+	DivpvOp,  //  parameter  / variable
+	DivvpOp,  //  variable   / parameter
+	DivvvOp,  //  variable   / variable
 	EndOp,    //  used to mark the end of the tape
 	EqpvOp,   //  parameter  == variable
 	EqvvOp,   //  variable   == variable
 	ErfOp,    //  erf(variable)
 	ExpOp,    //  exp(variable)
-	Expm1Op,   // expm1(variable)
-	InvOp,    //                             independent variable
-	LdpOp,    //    z[parameter]
-	LdvOp,    //    z[variable]
+	Expm1Op,  //  expm1(variable)
+	InvOp,    //  independent variable
+	LdpOp,    //  z[parameter]
+	LdvOp,    //  z[variable]
 	LepvOp,   //  parameter <= variable
 	LevpOp,   //  variable  <= parameter
 	LevvOp,   //  variable  <= variable
 	LogOp,    //  log(variable)
-	Log1pOp,   // log1p(variable)
+	Log1pOp,  //  log1p(variable)
 	LtpvOp,   //  parameter < variable
 	LtvpOp,   //  variable  < parameter
 	LtvvOp,   //  variable  < variable
-	MulpvOp,  //      parameter  * variable
-	MulvvOp,  //      variable   * variable
+	MulpvOp,  //  parameter  * variable
+	MulvvOp,  //  variable   * variable
 	NepvOp,   //  parameter  != variable
 	NevvOp,   //  variable   != variable
-	ParOp,    //      parameter
+	ParOp,    //  parameter
 	PowpvOp,  //  pow(parameter,   variable)
 	PowvpOp,  //  pow(variable,    parameter)
 	PowvvOp,  //  pow(variable,    variable)
 	PriOp,    //  PrintFor(text, parameter or variable, parameter or variable)
-	SignOp,   // sign(variable)
+	SignOp,   //  sign(variable)
 	SinOp,    //  sin(variable)
-	SinhOp,   // sinh(variable)
-	SqrtOp,   // sqrt(variable)
-	StppOp,   //    z[parameter] = parameter
-	StpvOp,   //    z[parameter] = variable
-	StvpOp,   //    z[variable]  = parameter
-	StvvOp,   //    z[variable]  = variable
-	SubpvOp,  //      parameter  - variable
-	SubvpOp,  //      variable   - parameter
-	SubvvOp,  //      variable   - variable
+	SinhOp,   //  sinh(variable)
+	SqrtOp,   //  sqrt(variable)
+	StppOp,   //  z[parameter] = parameter
+	StpvOp,   //  z[parameter] = variable
+	StvpOp,   //  z[variable]  = parameter
+	StvvOp,   //  z[variable]  = variable
+	SubpvOp,  //  parameter  - variable
+	SubvpOp,  //  variable   - parameter
+	SubvvOp,  //  variable   - variable
 	TanOp,    //  tan(variable)
 	TanhOp,   //  tan(variable)
 	// user atomic operation codes
@@ -233,13 +233,14 @@ inline size_t NumArg( OpCode op)
 		1, // UsrapOp
 		1, // UsravOp
 		1, // UsrrpOp
-		0  // UsrrvOp
+		0, // UsrrvOp
+		0  // NumberOp not used
 	};
 # ifndef NDEBUG
 	// only do these checks once to save time
 	static bool first = true;
 	if( first )
-	{	CPPAD_ASSERT_UNKNOWN( size_t(NumberOp) ==
+	{	CPPAD_ASSERT_UNKNOWN( size_t(NumberOp) + 1 ==
 			sizeof(NumArgTable) / sizeof(NumArgTable[0])
 		);
 		CPPAD_ASSERT_UNKNOWN( size_t(NumberOp) <=
@@ -339,11 +340,11 @@ inline size_t NumRes(OpCode op)
 		0, // UsravOp
 		0, // UsrrpOp
 		1, // UsrrvOp
-		0  // Last entry not used: avoids g++ 4.3.2 warn when pycppad builds
+		0  // NumberOp not used and avoids g++ 4.3.2 warn when pycppad builds
 	};
 	// check ensuring conversion to size_t is as expected
-	CPPAD_ASSERT_UNKNOWN( size_t(NumberOp) ==
-		sizeof(NumResTable) / sizeof(NumResTable[0]) - 1
+	CPPAD_ASSERT_UNKNOWN( size_t(NumberOp) + 1 ==
+		sizeof(NumResTable) / sizeof(NumResTable[0])
 	);
 	// this test ensures that all indices are within the table
 	CPPAD_ASSERT_UNKNOWN( size_t(op) < size_t(NumberOp) );
@@ -370,7 +371,7 @@ inline const char* OpName(OpCode op)
 		"Addpv" ,
 		"Addvv" ,
 		"Asin"  ,
-		"Asinh"  ,
+		"Asinh" ,
 		"Atan"  ,
 		"Atanh" ,
 		"Begin" ,
@@ -426,7 +427,8 @@ inline const char* OpName(OpCode op)
 		"Usrap" ,
 		"Usrav" ,
 		"Usrrp" ,
-		"Usrrv"
+		"Usrrv" ,
+		"Number"  // not used
 	};
 	// check ensuring conversion to size_t is as expected
 	CPPAD_ASSERT_UNKNOWN(
