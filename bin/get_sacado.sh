@@ -4,7 +4,7 @@
 # CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-15 Bradley M. Bell
 #
 # CppAD is distributed under multiple licenses. This distribution is under
-# the terms of the 
+# the terms of the
 #                     Eclipse Public License Version 1.0.
 #
 # A copy of this license is included in the COPYING file of this distribution.
@@ -21,18 +21,18 @@
 # $section Download and Install Sacado in Build Directory$$
 # $index sacado, download and install$$
 # $index download, install sacado$$
-# $index install, sacado$$ 
+# $index install, sacado$$
 #
 # $head Syntax$$
 # $code bin/get_sacado.sh$$
 #
 # $head Purpose$$
-# If you are using Unix, this command will download and install 
+# If you are using Unix, this command will download and install
 # $href%http://trilinos.sandia.gov/packages/sacado%Sacado%$$ in the
 # CppAD $code build$$ directory.
 #
 # $head Distribution Directory$$
-# This command must be executed in the 
+# This command must be executed in the
 # $cref/distribution directory/download/Distribution Directory/$$.
 #
 # $head External Directory$$
@@ -128,10 +128,10 @@ if [ ! -e "$version.tar.gz" ]
 then
 	echo_eval wget --no-check-certificate $web_page/$version.tar.gz
 fi
-for package in Sacado Teuchos Trilinois 
+for package in Sacado Teuchos Trilinois
 do
 	echo_eval rm -rf $prefix/include/$package*
-done 
+done
 if [ ! -e "$version" ]
 then
 	echo_eval tar -xzf $version.tar.gz
