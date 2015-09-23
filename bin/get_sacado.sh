@@ -1,7 +1,7 @@
 #! /bin/bash -e
 # $Id$
 # -----------------------------------------------------------------------------
-# CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-13 Bradley M. Bell
+# CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-15 Bradley M. Bell
 #
 # CppAD is distributed under multiple licenses. This distribution is under
 # the terms of the 
@@ -97,6 +97,7 @@ then
 	exit 1
 fi
 # -----------------------------------------------------------------------------
+# libdir
 if [ -e /usr/lib64 ]
 then
 	libdir='lib64'
@@ -115,12 +116,14 @@ then
 fi
 echo "coin_lapack_blas=$coin_lapack_blas"
 # -----------------------------------------------------------------------------
+# change into build/external directory
 if [ ! -d build/external ]
 then
 	echo_eval mkdir -p build/external
 fi
 echo_eval cd build/external
 # -----------------------------------------------------------------------------
+# create the trilions source directory and change into it
 if [ ! -e "$version.tar.gz" ]
 then
 	echo_eval wget --no-check-certificate $web_page/$version.tar.gz
@@ -132,14 +135,31 @@ done
 if [ ! -e "$version" ]
 then
 	echo_eval tar -xzf $version.tar.gz
+	# ------------------------------------------------------------------------
+	# patch the cmake/tribits/modules/FindPythonInterp.cmake file
+	file="$version/cmake/tribits/modules/FindPythonInterp.cmake"
+	line='[HKEY_LOCAL_MACHINE\\\\SOFTWARE\\\\Python\\\\PythonCore\\\\2.8\\\\'
+	line="${line}InstallPath]"
+	if [ -e "$file" ]
+	then
+		echo "patch $file"
+		sed \
+			-e 's|NAMES \(python2.7 python2.6\)|NAMES python2.8 \1|' \
+			-e "s|^\( *\)\[HKEY_LOCAL_MACHINE.*2\.7.*|\1$line\n&|" \
+			-i $file
+	fi
+	# ------------------------------------------------------------------------
 fi
-#
 echo_eval cd $version
+# -----------------------------------------------------------------------------
+# change into build sub-directory
 if [ ! -e build ]
 then
 	echo_eval mkdir build
 fi
 echo_eval cd build
+# -----------------------------------------------------------------------------
+# cmake command
 if [ "$coin_lapack_blas" == 'yes' ]
 then
 	echo_eval $cmake_program \
