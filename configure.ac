@@ -369,7 +369,7 @@ AC_ARG_VAR(MAX_NUM_THREADS,
 )
 if test "$MAX_NUM_THREADS" != "" ; then
 	AC_MSG_RESULT([$MAX_NUM_THREADS])
-  	if test "$MAX_NUM_THREADS" -lt "4" ; then
+	if test "$MAX_NUM_THREADS" -lt "4" ; then
 		AC_MSG_ERROR(
 			[ MAX_NUM_THREADS=$MAX_NUM_THREADS is less than 4 ]
 		)
@@ -408,7 +408,7 @@ if test "$addr_t" == "unsigned short int" ; then
 	ok="yes"
 fi
 if test "$ok" == "no" ; then
-  	AC_MSG_ERROR(
+	AC_MSG_ERROR(
 		[$addr_t is not a valid choice for TAPE_ADDR_TYPE]
 	)
 fi
@@ -440,7 +440,7 @@ if test "$tape_id_t" == "unsigned short int" ; then
 	ok="yes"
 fi
 if test "$ok" == "no" ; then
-  	AC_MSG_ERROR(
+	AC_MSG_ERROR(
 		[$tape_id_t is not a valid choice for TAPE_ID_TYPE]
 	)
 fi

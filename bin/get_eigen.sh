@@ -4,7 +4,7 @@
 # CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-15 Bradley M. Bell
 #
 # CppAD is distributed under multiple licenses. This distribution is under
-# the terms of the 
+# the terms of the
 #                     Eclipse Public License Version 1.0.
 #
 # A copy of this license is included in the COPYING file of this distribution.
@@ -20,18 +20,18 @@
 # $section Download and Install Eigen in Build Directory$$
 # $index eigen, download and install$$
 # $index download, install eigen$$
-# $index install, eigen$$ 
+# $index install, eigen$$
 #
 # $head Syntax$$
 # $code bin/get_eigen.sh$$
 #
 # $head Purpose$$
-# If you are using Unix, this command will download and install 
+# If you are using Unix, this command will download and install
 # $href%http://eigen.tuxfamily.org%Eigen%$$ in the
 # CppAD $code build$$ directory.
 #
 # $head Distribution Directory$$
-# This command must be executed in the 
+# This command must be executed in the
 # $cref/distribution directory/download/Distribution Directory/$$.
 #
 # $head External Directory$$

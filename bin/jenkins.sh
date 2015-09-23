@@ -15,7 +15,7 @@ then
 	echo "bin/jenkins.sh: must be executed from its parent directory"
 	exit 1
 fi
-if [ "$1" != '' ] 
+if [ "$1" != '' ]
 then
 	echo 'bin/junk.sh no longer has any arguments'
 	exit 1

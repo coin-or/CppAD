@@ -4904,7 +4904,7 @@ $as_echo_n "checking MAX_NUM_THREADS... " >&6; }
 if test "$MAX_NUM_THREADS" != "" ; then
 	{ $as_echo "$as_me:${as_lineno-$LINENO}: result: $MAX_NUM_THREADS" >&5
 $as_echo "$MAX_NUM_THREADS" >&6; }
-  	if test "$MAX_NUM_THREADS" -lt "4" ; then
+	if test "$MAX_NUM_THREADS" -lt "4" ; then
 		as_fn_error $? " MAX_NUM_THREADS=$MAX_NUM_THREADS is less than 4
 		" "$LINENO" 5
 	fi
@@ -4947,7 +4947,7 @@ if test "$addr_t" == "unsigned short int" ; then
 	ok="yes"
 fi
 if test "$ok" == "no" ; then
-  	as_fn_error $? "$addr_t is not a valid choice for TAPE_ADDR_TYPE
+	as_fn_error $? "$addr_t is not a valid choice for TAPE_ADDR_TYPE
 	" "$LINENO" 5
 fi
 
@@ -4981,7 +4981,7 @@ if test "$tape_id_t" == "unsigned short int" ; then
 	ok="yes"
 fi
 if test "$ok" == "no" ; then
-  	as_fn_error $? "$tape_id_t is not a valid choice for TAPE_ID_TYPE
+	as_fn_error $? "$tape_id_t is not a valid choice for TAPE_ID_TYPE
 	" "$LINENO" 5
 fi
 { $as_echo "$as_me:${as_lineno-$LINENO}: ********** End Checking Command Line arguments ***************" >&5
