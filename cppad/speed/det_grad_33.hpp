@@ -6,7 +6,7 @@
 CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-15 Bradley M. Bell
 
 CppAD is distributed under multiple licenses. This distribution is under
-the terms of the 
+the terms of the
                     Eclipse Public License Version 1.0.
 
 A copy of this license is included in the COPYING file of this distribution.
@@ -24,7 +24,7 @@ $spell
 	bool
 $$
 
-$section Check Gradient of Determinant of 3 by 3 matrix$$ 
+$section Check Gradient of Determinant of 3 by 3 matrix$$
 
 $index det_grad_33$$
 $index determinant, check correct$$
@@ -37,15 +37,15 @@ $codei%# include <cppad/speed/det_grad_33.hpp>
 $icode%ok% = det_grad_33(%x%, %g%)%$$
 
 $head Purpose$$
-This routine can be used to check a method for computing the 
+This routine can be used to check a method for computing the
 gradient of the determinant of a matrix.
 
 $head Inclusion$$
 The template function $code det_grad_33$$ is defined in the $code CppAD$$
-namespace by including 
-the file $code cppad/speed/det_grad_33.hpp$$ 
+namespace by including
+the file $code cppad/speed/det_grad_33.hpp$$
 (relative to the CppAD distribution directory).
-It is only intended for example and testing purposes, 
+It is only intended for example and testing purposes,
 so it is not automatically included by
 $cref/cppad.hpp/cppad/$$.
 
@@ -71,7 +71,7 @@ $latex \[
 \] $$
 
 $head Vector$$
-If $icode y$$ is a $icode Vector$$ object, 
+If $icode y$$ is a $icode Vector$$ object,
 it must support the syntax
 $codei%
 	%y%[%i%]
@@ -86,7 +86,7 @@ The return value $icode ok$$ has prototype
 $codei%
 	bool %ok%
 %$$
-It is true, if the gradient $icode g$$ 
+It is true, if the gradient $icode g$$
 passes the test and false otherwise.
 
 $children%
@@ -94,7 +94,7 @@ $children%
 %$$
 
 $head Source Code$$
-The file 
+The file
 $cref det_grad_33.hpp$$
 contains the source code for this template function.
 
@@ -110,7 +110,7 @@ template <class Vector>
 	{	bool ok = true;
 		typedef typename Vector::value_type Float;
 		Float eps = 10. * Float( std::numeric_limits<double>::epsilon() );
-	
+
 		// use expansion by minors to compute the derivative by hand
 		double check[9];
 		check[0] = + ( x[4] * x[8] - x[5] * x[7] );
@@ -123,11 +123,11 @@ template <class Vector>
 		//
 		check[6] = + ( x[1] * x[5] - x[2] * x[4] );
 		check[7] = - ( x[0] * x[5] - x[2] * x[3] );
-		check[8] = + ( x[0] * x[4] - x[1] * x[3] ); 
+		check[8] = + ( x[0] * x[4] - x[1] * x[3] );
 		//
 		for(size_t i = 0; i < 3 * 3; i++)
 			ok &= CppAD::NearEqual(check[i], g[i], eps, eps);
-		
+
 		return ok;
 	}
 }

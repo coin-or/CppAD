@@ -3,7 +3,7 @@
 CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-15 Bradley M. Bell
 
 CppAD is distributed under multiple licenses. This distribution is under
-the terms of the 
+the terms of the
                     Eclipse Public License Version 1.0.
 
 A copy of this license is included in the COPYING file of this distribution.
@@ -63,7 +63,7 @@ bool omp_alloc_bytes(void)
 	size_t cap_bytes(0), i, j, k;
 	for(i = 0; i < n_outter; i++)
 	{	// Do not use CppAD::vector here because its use of omp_alloc
-		// complicates the inuse and avaialble results.	
+		// complicates the inuse and avaialble results.
 		std::vector<void*> v_ptr(n_inner);
 		for( j = 0; j < n_inner; j++)
 		{	// allocate enough memory for min_size_t size_t objects
@@ -93,7 +93,7 @@ bool omp_alloc_bytes(void)
 	// return all the available memory to the system
 	omp_alloc::free_available(thread);
 	ok &= ! CppAD::memory_leak();
-	
+
 	return ok;
 }
 
@@ -109,7 +109,7 @@ public:
 bool omp_alloc_array(void)
 {	bool ok = true;
 	using CppAD::omp_alloc;
-	size_t i; 
+	size_t i;
 
 	// check initial memory values
 	size_t thread = omp_alloc::get_thread_num();
@@ -120,7 +120,7 @@ bool omp_alloc_array(void)
 	// initial allocation of an array
 	size_t  size_min  = 3;
 	size_t  size_one;
-	my_char *array_one  = 
+	my_char *array_one  =
 		omp_alloc::create_array<my_char>(size_min, size_one);
 
 	// check the values and change them to null 'x'
@@ -131,7 +131,7 @@ bool omp_alloc_array(void)
 
 	// now create a longer array
 	size_t size_two;
-	my_char *array_two = 
+	my_char *array_two =
 		omp_alloc::create_array<my_char>(2 * size_min, size_two);
 
 	// check the values in array one
@@ -148,7 +148,7 @@ bool omp_alloc_array(void)
 	ok   &= omp_alloc::inuse(thread) - check < sizeof(my_char);
 	ok   &= omp_alloc::available(thread) == 0;
 
-	// delete the arrays 
+	// delete the arrays
 	omp_alloc::delete_array(array_one);
 	omp_alloc::delete_array(array_two);
 	ok   &= omp_alloc::inuse(thread) == static_inuse;
@@ -174,16 +174,16 @@ bool omp_alloc(void)
 	// so that omp_alloc holds onto memory
 	CppAD::omp_alloc::set_max_num_threads(2);
 	ok  &= omp_alloc::get_max_num_threads() == 2;
-	ok  &= ! CppAD::memory_leak();  
+	ok  &= ! CppAD::memory_leak();
 
 	// now use memory allocator in state where it holds onto memory
 	ok   &= omp_alloc_bytes();
 	ok   &= omp_alloc_array();
 
 	// check that the tests have not held onto memory
-	ok  &= ! CppAD::memory_leak();  
+	ok  &= ! CppAD::memory_leak();
 
-	// set the maximum number of threads back to one 
+	// set the maximum number of threads back to one
 	// so that omp_alloc no longer holds onto memory
 	CppAD::omp_alloc::set_max_num_threads(1);
 

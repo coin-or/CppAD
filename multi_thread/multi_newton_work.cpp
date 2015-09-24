@@ -3,7 +3,7 @@
 CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-15 Bradley M. Bell
 
 CppAD is distributed under multiple licenses. This distribution is under
-the terms of the 
+the terms of the
                     Eclipse Public License Version 1.0.
 
 A copy of this license is included in the COPYING file of this distribution.
@@ -16,7 +16,7 @@ $spell
 $$
 $index multi_newton_work$$
 
-$section Multi-threading Newton Method Utility Routines$$ 
+$section Multi-threading Newton Method Utility Routines$$
 $spell
 	Cpp
 	xlow
@@ -57,14 +57,14 @@ $codei%
 	void %fun% (double %x%, double& %f%, double& %df%)
 %$$
 This argument must evaluate the function $latex f(x)$$,
-and its derivative $latex f^{(1)} (x)$$, 
+and its derivative $latex f^{(1)} (x)$$,
 using the syntax
 $codei%
 	%fun%(%x%, %f%, %df%)
 %$$
 where the arguments have the prototypes
 $codei%
-	double    %x% 
+	double    %x%
 	double&   %f%
 	double&   %df%
 %$$.
@@ -76,7 +76,7 @@ The argument $icode num_sub$$ has prototype
 $codei%
 	size_t %num_sub%
 %$$
-It specifies the number of sub-intervals; i.e., $latex n$$ 
+It specifies the number of sub-intervals; i.e., $latex n$$
 in to split the calculation into.
 
 $head xlow$$
@@ -120,12 +120,12 @@ If it is zero, the test is run without multi-threading.
 $head multi_newton_worker$$
 Calling this function does the computation for one thread.
 Following a call to $code multi_newton_setup$$,
-this function should be called by each of the $icode num_threads$$ threads. 
+this function should be called by each of the $icode num_threads$$ threads.
 
 $head multi_newton_combine$$
 After the $icode num_threads$$ threads have completed their
 calls to $code multi_newton_worker$$,
-this function call will combine the results and return the final 
+this function call will combine the results and return the final
 set of approximate zeros for $latex f(x)$$.
 
 $subhead xout$$
@@ -138,8 +138,8 @@ Upon return from $code multi_newton_combine$$,
 the size of $icode xout$$ is less than or equal $latex n$$ and
 $codei%
 	| %f%( %xout%[%i%] ) | <= %epsilon%
-%$$ 
-for each valid index $icode i$$. 
+%$$
+for each valid index $icode i$$.
 In addition, the elements of $icode xout$$ are in ascending order and
 $codei%
 	%xout%[i+1] - %xout%[%i%] >=  0.5 * (%xup% - %xlow%) / %num_sub%
@@ -185,12 +185,12 @@ namespace {
 		// beginning of interval (worker input)
 		double xlow;
 		// end of interval (worker input)
-		double xup; 
+		double xup;
 		// vector of zero candidates (worker output)
 		// after call to multi_newton_setup:   x.size() == 0
 		// after call to multi_newton_work:    x.size() is number of zeros
 		// after call to multi_newton_combine: x.size() == 0
-		vector<double> x;  
+		vector<double> x;
 		// false if an error occurs, true otherwise (worker output)
 		bool   ok;
 	} work_one_t;
@@ -254,9 +254,9 @@ void multi_newton_worker(void)
 			if( fabs(fcur) <= epsilon_ )
 				more_itr = false;
 			if( (xcur == xlow_i ) & (fcur * dfcur > 0.) )
-				more_itr = false; 
+				more_itr = false;
 			if( (xcur == xup_i)   & (fcur * dfcur < 0.) )
-				more_itr = false; 
+				more_itr = false;
 
 			// next Newton iterate
 			if( more_itr )
@@ -269,13 +269,13 @@ void multi_newton_worker(void)
 			}
 		}
 		if( fabs( fcur ) <= epsilon_ )
-		{	// check for case where xcur is lower bound for this 
+		{	// check for case where xcur is lower bound for this
 			// sub-interval and upper bound for previous sub-interval
 			if( fabs(xcur - xlast) >= sub_length_ )
 			{	x.push_back( xcur );
 				xlast = xcur;
 				flast = fcur;
-			} 
+			}
 			else if( fabs(fcur) < fabs(flast) )
 			{	x[ x.size() - 1] = xcur;
 				xlast            = xcur;
@@ -289,7 +289,7 @@ void multi_newton_worker(void)
 // setup the work up for multiple threads
 bool multi_newton_setup(
 	void (fun)(double x, double& f, double& df) ,
-	size_t num_sub                              , 
+	size_t num_sub                              ,
 	double xlow                                 ,
 	double xup                                  ,
 	double epsilon                              ,
@@ -313,7 +313,7 @@ bool multi_newton_setup(
 	sub_length_ = (xup - xlow) / double(num_sub);
 
 	// determine values that are specific to each thread
-	size_t num_min   = num_sub / num_threads; // minimum num_sub 
+	size_t num_min   = num_sub / num_threads; // minimum num_sub
 	size_t num_more  = num_sub % num_threads; // number that have one more
 	size_t sum_num   = 0;  // sum with respect to thread of num_sub
 	size_t thread_num, num_sub_thread;
@@ -341,7 +341,7 @@ bool multi_newton_setup(
 		// when thread_num == 0, xlow_thread == xlow
 		double xlow_thread = xlow + sum_num * sub_length_;
 
-		// when thread_num == num_threads - 1, xup_thread = xup 
+		// when thread_num == num_threads - 1, xup_thread = xup
 		double xup_thread = xlow + (sum_num + num_sub_thread) * sub_length_;
 		if( thread_num == num_threads - 1 )
 			xup_thread = xup;
@@ -362,7 +362,7 @@ bool multi_newton_setup(
 	return ok;
 }
 // -----------------------------------------------------------------------
-// get the result of the work 
+// get the result of the work
 bool multi_newton_combine(CppAD::vector<double>& xout)
 {	// number of threads in the calculation
 	size_t num_threads  = std::max(num_threads_, size_t(1));
@@ -372,8 +372,8 @@ bool multi_newton_combine(CppAD::vector<double>& xout)
 	bool   ok = true;
 	size_t thread_num;
 
-	// initialize as more that sub_lenght_ / 2 from any possible solution 
-	double xlast = - sub_length_; 
+	// initialize as more that sub_lenght_ / 2 from any possible solution
+	double xlast = - sub_length_;
 	for(thread_num = 0; thread_num < num_threads; thread_num++)
 	{	vector<double>& x = work_all_[thread_num]->x;
 
@@ -381,7 +381,7 @@ bool multi_newton_combine(CppAD::vector<double>& xout)
 		for(i = 0; i < x.size(); i++)
 		{	// check for case where this point is lower limit for this
 			// thread and upper limit for previous thread
-			if( fabs(x[i] - xlast) >= sub_length_ )  
+			if( fabs(x[i] - xlast) >= sub_length_ )
 			{	xout.push_back( x[i] );
 				xlast = x[i];
 			}
@@ -405,14 +405,14 @@ bool multi_newton_combine(CppAD::vector<double>& xout)
 # if USE_THREAD_ALLOC_FOR_WORK_ALL
 		// call the destructor for CppAD::vector destructor
 		work_all_[thread_num]->x.~vector<double>();
-		// delete the raw memory allocation 
+		// delete the raw memory allocation
 		void* v_ptr = static_cast<void*>( work_all_[thread_num] );
 		thread_alloc::return_memory( v_ptr );
 # else
 		delete work_all_[thread_num];
 # endif
 		// Note that xout corresponds to memroy that is inuse by master
-		// (so we can only chech have freed all their memory). 
+		// (so we can only chech have freed all their memory).
 		if( thread_num > 0 )
 		{	// check that there is no longer any memory inuse by this thread
 			ok &= thread_alloc::inuse(thread_num) == 0;

@@ -3,7 +3,7 @@
 CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-15 Bradley M. Bell
 
 CppAD is distributed under multiple licenses. This distribution is under
-the terms of the 
+the terms of the
                     Eclipse Public License Version 1.0.
 
 A copy of this license is included in the COPYING file of this distribution.
@@ -38,7 +38,7 @@ namespace {
 		const size_t degree;
 	public:
 		// constructor
-		Fun(size_t degree_) : degree(degree_) 
+		Fun(size_t degree_) : degree(degree_)
 		{ }
 
 		// function F(x) = x^degree
@@ -68,14 +68,14 @@ namespace {
 		Float e;
 		size_t p;
 
-		// int_a^b F(x) dx = 
-		//	[ b^(degree+1) - a^(degree+1) ] / (degree+1) 
+		// int_a^b F(x) dx =
+		//	[ b^(degree+1) - a^(degree+1) ] / (degree+1)
 		Float bpow(1);
 		Float apow(1);
 		for(i = 0; i <= degree; i++)
 		{	bpow *= b;
 			apow *= a;
-		}  
+		}
 		Float check = (bpow - apow) / Float(degree+1);
 
 		// step size corresponding to r
@@ -91,7 +91,7 @@ namespace {
 			r = CppAD::RombergOne(F, a, b, n, p, e);
 
 			ok  &= e < (degree+1) * spow;
-			ok  &= CppAD::NearEqual(check, r, Float(0.), e);	
+			ok  &= CppAD::NearEqual(check, r, Float(0.), e);
 		}
 
 		return ok;
