@@ -3,7 +3,7 @@
 CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-15 Bradley M. Bell
 
 CppAD is distributed under multiple licenses. This distribution is under
-the terms of the 
+the terms of the
                     Eclipse Public License Version 1.0.
 
 A copy of this license is included in the COPYING file of this distribution.
@@ -25,11 +25,11 @@ $index atomic, AD inside$$
 $index checkpoint$$
 
 $head Deprecated$$
-This example has been deprecated because it is easier to use the 
+This example has been deprecated because it is easier to use the
 $cref checkpoint$$ class instead.
 
 $head Purpose$$
-Consider the case where an inner function is used repeatedly in the 
+Consider the case where an inner function is used repeatedly in the
 definition of an outer function.
 In this case, it may reduce the number of variables
 $cref/size_var/seq_property/size_var/$$,
@@ -44,7 +44,7 @@ $end
 // BEGIN C++
 # include <cppad/cppad.hpp>
 
-namespace { // Begin empty namespace 
+namespace { // Begin empty namespace
 	using CppAD::AD;
 	using CppAD::ADFun;
 	using CppAD::vector;
@@ -54,8 +54,8 @@ namespace { // Begin empty namespace
 	class Fun {
 	public:
 		void Ode(
-			const AD<double>           &t, 
-			const vector< AD<double> > &z, 
+			const AD<double>           &t,
+			const vector< AD<double> > &z,
 			vector< AD<double> >       &f)
 		{	assert( z.size() == 2 );
 			assert( f.size() == 2 );
@@ -71,7 +71,7 @@ namespace { // Begin empty namespace
 	{	size_t n = 3, m = 2;
 		vector< AD<double> > x(n), zi(m), y(m), e(m);
 		// The value of x does not matter because the operation sequence
-		// does not depend on x. 
+		// does not depend on x.
 		x[0]  = 0.0;  // initial value z_0 (t) at t = ti
 		x[1]  = 0.0;  // initial value z_1 (t) at t = ti
 		x[2]  = 0.1;  // final time for this integration
@@ -86,7 +86,7 @@ namespace { // Begin empty namespace
 		r_ptr_        = new ADFun<double>(x, y);
 	}
 	void destroy_r(void)
-	{	delete r_ptr_; 
+	{	delete r_ptr_;
 		r_ptr_ = CPPAD_NULL;
 	}
 
@@ -106,7 +106,7 @@ namespace { // Begin empty namespace
 		assert( n == 3 );
 		assert( m == 2 );
 		assert( k == 0 || vx.size() == 0 );
-		bool ok = true;	
+		bool ok = true;
 		vector<double> xp(n), yp(m);
 		size_t i, j;
 
@@ -167,10 +167,10 @@ namespace { // Begin empty namespace
 	{	assert( id == 0 );
 		assert( n == 3 );
 		assert( m == 2 );
-		bool ok = true;	
+		bool ok = true;
 		vector<double> xp(n), w( (k+1) * m ), dw( (k+1) * n );
 
-		// make sure r_ has proper forward mode coefficients 
+		// make sure r_ has proper forward mode coefficients
 		size_t i, j, q;
 		for(q = 0; q <= k; q++)
 		{	for(j = 0; j < n; j++)
@@ -202,7 +202,7 @@ namespace { // Begin empty namespace
 	// ----------------------------------------------------------------------
 	// forward Jacobian sparsity routine called by CppAD
 	bool solve_ode_for_jac_sparse(
-		size_t                               id ,             
+		size_t                               id ,
 		size_t                                n ,
 		size_t                                m ,
 		size_t                                p ,
@@ -223,13 +223,13 @@ namespace { // Begin empty namespace
 		// no longer need the forward mode sparsity pattern
 		// (have to reconstruct them every time)
 		r_ptr_->size_forward_set(0);
-		
-		return ok; 
+
+		return ok;
 	}
 	// ----------------------------------------------------------------------
 	// reverse Jacobian sparsity routine called by CppAD
 	bool solve_ode_rev_jac_sparse(
-		size_t                               id ,             
+		size_t                               id ,
 		size_t                                n ,
 		size_t                                m ,
 		size_t                                p ,
@@ -257,12 +257,12 @@ namespace { // Begin empty namespace
 		{	for(itr = R[i].begin(); itr != R[i].end(); itr++)
 				r[*itr].insert(i);
 		}
-		return ok; 
+		return ok;
 	}
 	// ----------------------------------------------------------------------
 	// reverse Hessian sparsity routine called by CppAD
 	bool solve_ode_rev_hes_sparse(
-		size_t                               id ,             
+		size_t                               id ,
 		size_t                                n ,
 		size_t                                m ,
 		size_t                                p ,
@@ -321,14 +321,14 @@ namespace { // Begin empty namespace
 	// ---------------------------------------------------------------------
 	// Declare the AD<double> routine solve_ode(id, ax, ay)
 	CPPAD_USER_ATOMIC(
-		solve_ode                 , 
+		solve_ode                 ,
 		CppAD::vector             ,
-		double                    , 
-		solve_ode_forward         , 
+		double                    ,
+		solve_ode_forward         ,
 		solve_ode_reverse         ,
 		solve_ode_for_jac_sparse  ,
 		solve_ode_rev_jac_sparse  ,
-		solve_ode_rev_hes_sparse  
+		solve_ode_rev_hes_sparse
 	)
 } // End empty namespace
 
@@ -356,7 +356,7 @@ bool old_usead_2(void)
 	ax[2]         = dt;
 	for(size_t i_step = 0; i_step < M; i_step++)
 	{	size_t id = 0;               // not used
-		solve_ode(id, ax, ay); 
+		solve_ode(id, ax, ay);
 		ax[0] = ay[0];
 		ax[1] = ay[1];
 	}
@@ -366,7 +366,7 @@ bool old_usead_2(void)
 	// y_1(t) = u_1 + u_0 * t + t^2 / 2   = u_1 + u_0 * u_2 + u_2^2 / 2
 	// where t = u_2
 	ADFun<double> f;
-	f.Dependent(au, ay); 
+	f.Dependent(au, ay);
 
 	// --------------------------------------------------------------------
 	// Check forward mode results
@@ -434,13 +434,13 @@ bool old_usead_2(void)
 	// --------------------------------------------------------------------
 	// forward mode sparsity pattern for the Jacobian
 	// f_u = [   1, 0,   1 ]
-	//       [ u_2, 1, u_2 ] 
+	//       [ u_2, 1, u_2 ]
 	size_t i, j, p = n;
 	CppAD::vectorBool r(n * p), s(m * p);
 	// r = identity sparsity pattern
 	for(i = 0; i < n; i++)
 		for(j = 0; j < p; j++)
-			r[i*n +j] = (i == j); 
+			r[i*n +j] = (i == j);
 	s   = f.ForSparseJac(p, r);
 	ok &= s[ 0 * p + 0] == true;
 	ok &= s[ 0 * p + 1] == false;
@@ -456,7 +456,7 @@ bool old_usead_2(void)
 	// s = identity sparsity pattern
 	for(i = 0; i < q; i++)
 		for(j = 0; j < m; j++)
-			s[i*m +j] = (i == j); 
+			s[i*m +j] = (i == j);
 	r   = f.RevSparseJac(q, s);
 	ok &= r[ 0 * n + 0] == true;
 	ok &= r[ 0 * n + 1] == false;
@@ -485,12 +485,12 @@ bool old_usead_2(void)
 	ok &= h[2 * n + 0] == true;
 	ok &= h[2 * n + 1] == false;
 	ok &= h[2 * n + 2] == true;
-	
+
 	// --------------------------------------------------------------------
 	destroy_r();
 
-	// Free all temporary work space associated with old_atomic objects. 
-	// (If there are future calls to user atomic functions, they will 
+	// Free all temporary work space associated with old_atomic objects.
+	// (If there are future calls to user atomic functions, they will
 	// create new temporary work space.)
 	CppAD::user_atomic<double>::clear();
 
