@@ -23,15 +23,15 @@ namespace {
 	typedef vector<a2type> (*a2fun)(const vector<a2type>& a2x);
 	//
 	zdouble eps    = 10. * std::numeric_limits<double>::epsilon();
-	size_t  n      = 2;
-	size_t  m      = 1;
+	size_t  n_     = 2;
+	size_t  m_     = 1;
 	//
 	void record(a2fun fun, ADFun<zdouble>& g)
-	{	vector<zdouble>  x(n);
-		vector<a1type> a1x(n), a1w(m), a1z(m * n);
-		vector<a2type> a2x(n), a2y(m);
+	{	vector<zdouble>  x(n_);
+		vector<a1type> a1x(n_), a1w(m_), a1z(m_ * n_);
+		vector<a2type> a2x(n_), a2y(m_);
 		//
-		for(size_t j = 0; j < n; j++)
+		for(size_t j = 0; j < n_; j++)
 		{	x[j]   = 0.0;
 			a1x[j] = a1type( x[j] );
 			a2x[j] = a2type( a1x[j] );
@@ -52,7 +52,7 @@ namespace {
 	}
 	// ----------------------------------------------------------------------
 	vector<a2type> div(const vector<a2type>& a2x)
-	{	vector<a2type> a2y(1);
+	{	vector<a2type> a2y(m_);
 		a2type a2zero = a2type(0.0);
 		a2type a2four = a2type(4.0);
 		a2y[0]  = CondExpGt(a2x[1], a2zero, a2x[0] / a2x[1], a2zero);
@@ -64,7 +64,7 @@ namespace {
 		// record division operations
 		ADFun<zdouble> g;
 		record(div, g);
-		vector<zdouble>  x(n), z(n);
+		vector<zdouble>  x(n_), z(n_);
 		// check result where x[1] <= 0.0 (would be nan without absoute zero)
 		x[0] = 0.0;
 		x[1] = 0.0;
@@ -83,7 +83,7 @@ namespace {
 	}
 	// ----------------------------------------------------------------------
 	vector<a2type> mul(const vector<a2type>& a2x)
-	{	vector<a2type> a2y(1);
+	{	vector<a2type> a2y(m_);
 		a2type a2zero = a2type(0.0);
 		a2type a2four = a2type(4.0);
 		a2y[0]  = CondExpLt(a2x[0], a2four, a2x[0] * a2x[1], a2zero);
@@ -96,7 +96,7 @@ namespace {
 		// record multiplication operations
 		ADFun<zdouble> g;
 		record(mul, g);
-		vector<zdouble>  x(n), z(n);
+		vector<zdouble>  x(n_), z(n_);
 		// check result where x[0] > 4 (would be nan without absoute zero)
 		ok &= std::numeric_limits<double>::has_infinity;
 		x[0] = std::numeric_limits<double>::infinity();

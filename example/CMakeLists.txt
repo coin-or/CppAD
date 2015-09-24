@@ -16,9 +16,6 @@
 # empty, Debug, Release, RelWithDebInfo and MinSizeRel
 SET(CMAKE_BUILD_TYPE DEBUG)
 
-# modify CMAKE_CXX_FLAGS corresponding to this build type
-modify_cmake_cxx_flags("example")
-
 # initialize check_depends
 SET(check_depends example)
 

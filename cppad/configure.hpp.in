@@ -35,20 +35,23 @@ Replacement for config.h so that all preprocessor symbols begin with CPPAD_
 */
 
 /*!
-\defgroup Disable Some Microsoft Compiler Warnings
+\def CPPAD_DISABLE_SOME_MICROSOFT_COMPILER_WARNINGS
+This macro is only used to document the pragmas that disables the
+follow warnings:
 
-\li 4100
+\li C4100
 unreferenced formal parameter.
-\li 4127
+\li C4127
 conditional expression is constant.
-\{
 */
+# define CPPAD_DISABLE_SOME_MICROSOFT_COMPILER_WARNINGS 1
 # if _MSC_VER
 # pragma warning( disable : 4100 )
 # pragma warning( disable : 4127 )
 # endif
-/*! \}
+# undef CPPAD_DISABLE_SOME_MICROSOFT_COMPILER_WARNINGS
 
+/*!
 \def CPPAD_USE_CPLUSPLUS_2011
 Should CppAD use C++11 features. This will be true if the current
 compiler flags request C++11 features and the install procedure

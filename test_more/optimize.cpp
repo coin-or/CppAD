@@ -17,10 +17,10 @@ Please visit http://www.coin-or.org/CppAD/ for information on other licenses.
 
 namespace {
 	// include conditional skip optimization
-	bool conditional_skip;
+	bool conditional_skip_;
 
 	// accuracy for almost equal checks
-	double eps = 10. * std::numeric_limits<double>::epsilon();
+	double eps_ = 10. * std::numeric_limits<double>::epsilon();
 	using CppAD::NearEqual;
 
 	// note this enum type is not part of the API (but its values are)
@@ -53,7 +53,7 @@ namespace {
 		CppAD::ADFun<double> f(ax, ay);
 
 		// now optimize the operation sequence
-		if( conditional_skip )
+		if( conditional_skip_ )
 			f.optimize();
 		else
 			f.optimize("no_conditional_skip");
@@ -124,7 +124,7 @@ namespace {
 
 		// now optimize the operation sequence
 		j_check.option( atomic_sparsity_option );
-		if( conditional_skip )
+		if( conditional_skip_ )
 			f.optimize();
 		else
 			f.optimize("no_conditional_skip");
@@ -196,7 +196,7 @@ namespace {
 		ok  &= f.number_skip() == 0;
 
 		// now optimize the operation sequence
-		if( conditional_skip )
+		if( conditional_skip_ )
 			f.optimize();
 		else
 			f.optimize("no_conditional_skip");
@@ -260,7 +260,7 @@ namespace {
 
 		// now optimize the operation sequence
 		g_check.option( atomic_sparsity_option );
-		if( conditional_skip )
+		if( conditional_skip_ )
 			f.optimize();
 		else
 			f.optimize("no_conditional_skip");
@@ -307,7 +307,7 @@ namespace {
 
 		// now optimize f so that the calculation of au[1] is removed
 		g_check.option( atomic_sparsity_option );
-		if( conditional_skip )
+		if( conditional_skip_ )
 			f.optimize();
 		else
 			f.optimize("no_conditional_skip");
@@ -333,7 +333,7 @@ namespace {
 	(const Vector& x, Vector& y, size_t& original, size_t& opt)
 	{	typedef typename Vector::value_type Scalar;
 		Scalar not_used;
-		Scalar one(1), two(2), three(3), four(4);
+		Scalar one(1), two(2), three(3);
 
 		// independent variable and phantom at beginning
 		original = 1 + x.size();
@@ -417,13 +417,13 @@ namespace {
 		y = F.Forward(0, x);
 		depend_fun(x, check, original, opt);
 		for(i = 0; i < m; i++)
-			ok &= NearEqual(y[i], check[i], eps, eps);
+			ok &= NearEqual(y[i], check[i], eps_, eps_);
 
 		// Check size before optimization
 		ok &= F.size_var() == original;
 
 		// Optimize the operation sequence
-		if( conditional_skip )
+		if( conditional_skip_ )
 			F.optimize();
 		else
 			F.optimize("no_conditional_skip");
@@ -435,7 +435,7 @@ namespace {
 		// (should have already been checked if NDEBUG not defined)
 		y = F.Forward(0, x);
 		for(i = 0; i < m; i++)
-			ok &= NearEqual(y[i], check[i], eps, eps);
+			ok &= NearEqual(y[i], check[i], eps_, eps_);
 
 		return ok;
 	}
@@ -501,7 +501,7 @@ namespace {
 			else	ok &= (y[i] == x[1]);
 		}
 
-		if( conditional_skip )
+		if( conditional_skip_ )
 			F.optimize();
 		else
 			F.optimize("no_conditional_skip");
@@ -539,7 +539,7 @@ namespace {
 		Y[2] = pow(X[0], X[1]);
 
 		CppAD::ADFun<double> F(X, Y);
-		if( conditional_skip )
+		if( conditional_skip_ )
 			F.optimize();
 		else
 			F.optimize("no_conditional_skip");
@@ -559,13 +559,13 @@ namespace {
 		dw = F.Reverse(1, w);
 
 		double check = x[1] * pow( x[0], x[1] - 1. );
-		ok &= NearEqual( dw[0], check, eps, eps );
+		ok &= NearEqual( dw[0], check, eps_, eps_ );
 
 		check = log( x[0] ) * pow( x[0], x[1] );
-		ok &= NearEqual( dw[1], check, eps, eps );
+		ok &= NearEqual( dw[1], check, eps_, eps_ );
 
 		check = 0.;
-		ok &= NearEqual( dw[2], check, eps, eps );
+		ok &= NearEqual( dw[2], check, eps_, eps_ );
 
 		return ok;
 	}
@@ -590,13 +590,13 @@ namespace {
 
 		vector<double> y_original     = F.Forward(0, x);
 		size_t         size_original  = F.size_var();
-		if( conditional_skip )
+		if( conditional_skip_ )
 			F.optimize();
 		else
 			F.optimize("no_conditional_skip");
 		ok &= F.size_var() + 5 == size_original;
 		vector<double> y = F.Forward(0, x);
-		ok &=  NearEqual(y[0], y_original[0], eps, eps);
+		ok &=  NearEqual(y[0], y_original[0], eps_, eps_);
 # endif
 		return ok;
 	}
@@ -705,13 +705,13 @@ namespace {
 		y = F.Forward(0, x);
 		duplicate_fun(x, check, original, opt);
 		for(i = 0; i < m; i++)
-			ok &= NearEqual(y[i], check[i], eps, eps);
+			ok &= NearEqual(y[i], check[i], eps_, eps_);
 
 		// Check size before optimization
 		ok &= F.size_var() == (n + 1 + original);
 
 		// Optimize the operation sequence
-		if( conditional_skip )
+		if( conditional_skip_ )
 			F.optimize();
 		else
 			F.optimize("no_conditional_skip");
@@ -723,7 +723,7 @@ namespace {
 		// (should have already been checked if NDEBUG not defined)
 		y = F.Forward(0, x);
 		for(i = 0; i < m; i++)
-			ok &= NearEqual(y[i], check[i], eps, eps);
+			ok &= NearEqual(y[i], check[i], eps_, eps_);
 
 		return ok;
 	}
@@ -780,7 +780,7 @@ namespace {
 		for(i = 0; i < m; i++)
 			ok &= ( y[i] == Value( Y[i] ) );
 
-		if( conditional_skip )
+		if( conditional_skip_ )
 			F.optimize();
 		else
 			F.optimize("no_conditional_skip");
@@ -847,7 +847,7 @@ namespace {
 		for(i = 0; i < m; i++)
 			ok &= ( y[i] == Value( Y[i] ) );
 
-		if( conditional_skip )
+		if( conditional_skip_ )
 			F.optimize();
 		else
 			F.optimize("no_conditional_skip");
@@ -903,7 +903,7 @@ namespace {
 		y   = F.Forward(0, x);
 		ok &= ( y[0] == Value( Y[0] ) );
 
-		if( conditional_skip )
+		if( conditional_skip_ )
 			F.optimize();
 		else
 			F.optimize("no_conditional_skip");
@@ -969,7 +969,7 @@ namespace {
 		for(i = 0; i < m; i++)
 			ok &= ( y[i] == Value( Y[i] ) );
 
-		if( conditional_skip )
+		if( conditional_skip_ )
 			F.optimize();
 		else
 			F.optimize("no_conditional_skip");
@@ -1003,7 +1003,7 @@ namespace {
 		ADFun<double> F(X, Y);
 
 		// now optimize the operation sequence
-		if( conditional_skip )
+		if( conditional_skip_ )
 			F.optimize();
 		else
 			F.optimize("no_conditional_skip");
@@ -1014,7 +1014,7 @@ namespace {
 		x0[0]    = 3.;
 		x0[1]    = 4.;
 		y0       = F.Forward(0, x0);
-		ok      &= NearEqual(y0[0] , x0[0]+x0[0]+x0[1], eps, eps);
+		ok      &= NearEqual(y0[0] , x0[0]+x0[0]+x0[1], eps_, eps_);
 
 		// evaluate derivative of F in X[0] direction
 		CppAD::vector<double> x1( F.Domain() );
@@ -1022,7 +1022,7 @@ namespace {
 		x1[0]    = 1.;
 		x1[1]    = 0.;
 		y1       = F.Forward(1, x1);
-		ok      &= NearEqual(y1[0] , x1[0]+x1[0]+x1[1], eps, eps);
+		ok      &= NearEqual(y1[0] , x1[0]+x1[0]+x1[1], eps_, eps_);
 
 		// evaluate second derivative of F in X[0] direction
 		CppAD::vector<double> x2( F.Domain() );
@@ -1031,7 +1031,7 @@ namespace {
 		x2[1]       = 0.;
 		y2          = F.Forward(2, x2);
 		double F_00 = 2. * y2[0];
-		ok         &= NearEqual(F_00, 0., eps, eps);
+		ok         &= NearEqual(F_00, 0., eps_, eps_);
 
 		return ok;
 	}
@@ -1055,7 +1055,7 @@ namespace {
 		ADFun<double> F(X, Y);
 
 		// now optimize the operation sequence
-		if( conditional_skip )
+		if( conditional_skip_ )
 			F.optimize();
 		else
 			F.optimize("no_conditional_skip");
@@ -1066,15 +1066,15 @@ namespace {
 		x0[0]    = 3.;
 		x0[1]    = 4.;
 		y0       = F.Forward(0, x0);
-		ok      &= NearEqual(y0[0] , x0[0]-x0[0]+x0[1], eps, eps);
+		ok      &= NearEqual(y0[0] , x0[0]-x0[0]+x0[1], eps_, eps_);
 
 		// evaluate derivative of F
 		CppAD::vector<double> dF( F.Domain() );
 		CppAD::vector<double> w( F.Range() );
 		w[0]    = 1.;
 		dF      = F.Reverse(1, w);
-		ok     &= NearEqual(dF[0] , 0., eps, eps);
-		ok     &= NearEqual(dF[1] , 1., eps, eps);
+		ok     &= NearEqual(dF[0] , 0., eps_, eps_);
+		ok     &= NearEqual(dF[1] , 1., eps_, eps_);
 
 		return ok;
 	}
@@ -1134,7 +1134,7 @@ namespace {
 
 		// create function object F : X -> Y
 		ADFun<double> F(X, Y);
-		if( conditional_skip )
+		if( conditional_skip_ )
 			F.optimize();
 		else
 			F.optimize("no_conditional_skip");
@@ -1215,7 +1215,7 @@ namespace {
 
 		// create function object F : X -> Y
 		ADFun<double> F(X, Y);
-		if( conditional_skip )
+		if( conditional_skip_ )
 			F.optimize();
 		else
 			F.optimize("no_conditional_skip");
@@ -1275,7 +1275,7 @@ namespace {
 
 		// create function object F : X -> Y
 		CppAD::ADFun<double> F(X, Y);
-		if( conditional_skip )
+		if( conditional_skip_ )
 			F.optimize();
 		else
 			F.optimize("no_conditional_skip");
@@ -1324,7 +1324,7 @@ namespace {
 		Y[3] = CondExpLt(zero,  one,  two,  X[3] + .5);
 
 		CppAD::ADFun<double> f(X, Y);
-		if( conditional_skip )
+		if( conditional_skip_ )
 			f.optimize();
 		else
 			f.optimize("no_conditional_skip");
@@ -1366,7 +1366,7 @@ namespace {
 		Y[0] = CondExpLt(X[0],  zero,  true_case, false_case);
 
 		CppAD::ADFun<double> f(X, Y);
-		if( conditional_skip )
+		if( conditional_skip_ )
 			f.optimize();
 		else
 			f.optimize("no_conditional_skip");
@@ -1374,12 +1374,12 @@ namespace {
 		CppAD::vector<double> x(n), y(m), w(m), dw(n);
 		x[0] = 1.0;
 		y    = f.Forward(0, x);
-		ok &= NearEqual(y[0], false_case, eps, eps);
+		ok &= NearEqual(y[0], false_case, eps_, eps_);
 
 		w[0] = 1.0;
 		dw   = f.Reverse(1, w);
 		// derivative of cos is minus sin
-		ok &= NearEqual(dw[0], - true_case, eps, eps);
+		ok &= NearEqual(dw[0], - true_case, eps_, eps_);
 
 		return ok;
 	}
@@ -1551,7 +1551,7 @@ namespace {
 
 		// Used to fail assert in optimize that forward mode results
 		// are identically equal
-		if( conditional_skip )
+		if( conditional_skip_ )
 			f.optimize();
 		else
 			f.optimize("no_conditional_skip");
@@ -1573,7 +1573,7 @@ namespace {
 		CppAD::ADFun<double> f(ax, ay);
 
 		size_t size_before = f.size_var();
-		if( conditional_skip )
+		if( conditional_skip_ )
 			f.optimize();
 		else
 			f.optimize("no_conditional_skip");
@@ -1627,7 +1627,7 @@ namespace {
 		x[0]      = 1.0;
 		x[1]      = 2.0;
 		y_before  = f.Forward(0, x);
-		if( conditional_skip )
+		if( conditional_skip_ )
 			f.optimize();
 		else
 			f.optimize("no_conditional_skip");
@@ -1671,7 +1671,7 @@ namespace {
 		dx[0]     = 2.0;
 		dx[1]     = 2.0;
 		dy_before = f.Forward(1, dx);
-		if( conditional_skip )
+		if( conditional_skip_ )
 			f.optimize();
 		else
 			f.optimize("no_conditional_skip");
@@ -1705,7 +1705,7 @@ namespace {
 		ay[0] = my_max(ax) + my_max(ax);
 		CppAD::ADFun<double> f(ax, ay);
 
-		if( conditional_skip )
+		if( conditional_skip_ )
 			f.optimize();
 		else
 			f.optimize("no_conditional_skip");
@@ -1746,7 +1746,7 @@ namespace {
 		// a unary expression
 		ay[2]  = CppAD::CondExpGe(ax[0], three, exp(ax[0]), exp(ax[0]) );
 		CppAD::ADFun<double> f(ax, ay);
-		if( conditional_skip )
+		if( conditional_skip_ )
 			f.optimize();
 		else
 			f.optimize("no_conditional_skip");
@@ -1775,7 +1775,7 @@ namespace {
 bool optimize(void)
 {	bool ok = true;
 	atomic_sparsity_option = CppAD::atomic_base<double>::bool_sparsity_enum;
-	conditional_skip       = true;
+	conditional_skip_      = true;
 
 	// atomic sparsity loop
 	for(size_t i = 0; i < 2; i++)
@@ -1832,7 +1832,7 @@ bool optimize(void)
 		// check case where an expresion needed by both true and false case
 		ok     &=  cond_exp_both_true_and_false();
 		//
-		conditional_skip = false;
+		conditional_skip_ = false;
 	}
 	//
 	CppAD::user_atomic<double>::clear();

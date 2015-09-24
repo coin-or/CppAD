@@ -67,9 +67,6 @@ INCLUDE(cmake/sources_libs_define.cmake)
 #
 # check_source_runs(source variable)
 INCLUDE(cmake/check_source_runs.cmake)
-#
-# modify CMAKE_CXX_FLAGS according to value of cppad_cxx_flags
-INCLUDE(cmake/modify_cmake_cxx_flags.cmake)
 # =============================================================================
 # command line arguments
 # =============================================================================
@@ -173,6 +170,13 @@ STRING(REGEX REPLACE
 IF( fadbad_prefix )
 	MESSAGE(STATUS "cppad_cxx_flags_fadbad = ${cppad_cxx_flags_fadbad}")
 ENDIF( fadbad_prefix )
+# -----------------------------------------------------------------------------
+# CMAKE_CXX_FLAGS
+# remove Visual Studio C++ warning level if specified in cppad_cxx_flags
+IF ( cppad_cxx_flags MATCHES "/W[0-9]" )
+	STRING( REGEX REPLACE "/W[0-9]" "" CMAKE_CXX_FLAGS ${CMAKE_CXX_FLAGS} )
+ENDIF ( cppad_cxx_flags MATCHES "/W[0-9]" )
+MESSAGE(STATUS "CMAKE_CXX_FLAGS = ${CMAKE_CXX_FLAGS}")
 # -----------------------------------------------------------------------------
 # set cppad_abs_${middle_name} for middle_name equal to:
 #	includedir, liddir, datadir, docdir
