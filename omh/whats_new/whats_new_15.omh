@@ -59,6 +59,7 @@ $spell
 	ipopt
 	fadbad
 	sacado
+	unreferenced
 $$
 
 $section CppAD Changes and Additions During 2015$$
@@ -68,6 +69,14 @@ This section contains a list of the changes to CppAD during 2015
 (in reverse order by date).
 The purpose of this section is to
 assist you in learning about changes between various versions of CppAD.
+
+$head 09-24$$
+Fix some Visual Studio 2013 C++ level four $code /W4$$ warnings
+(previous warnings were are level 3).
+In addition, disable warning
+$code 4100$$ unreferenced formal parameter,
+and warning
+$code 4127$$ conditional expression is constant.
 
 $head 09-23$$
 CppAD can optionally test its use with the external packages

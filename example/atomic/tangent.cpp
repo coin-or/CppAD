@@ -291,7 +291,9 @@ $codep */
 		// (note sparsty for f''(x) * R same as for R)
 		if( s[0] | s[1] )
 		{	for(j = 0; j < p; j++)
-				v[j] |= r[j];
+			{	// Visual Studio 2013 generates warning without bool below
+				v[j] |= bool( r[j] );
+			}
 		}
 
 		return true;

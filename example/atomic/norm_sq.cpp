@@ -161,7 +161,9 @@ $codep */
 		for(size_t j = 0; j < p; j++)
 		{	s[j] = false;
 			for(size_t i = 0; i < n; i++)
-				s[j] |= r[i * p + j];
+			{	// Visual Studio 2013 generates warning without bool below
+				s[j] |= bool( r[i * p + j] );
+			}
 		}
 		return true;
 	}
@@ -231,7 +233,9 @@ $codep */
 		if( s[0] )
 		{	for(j = 0; j < p; j++)
 				for(size_t i = 0; i < n; i++)
-					v[ i * p + j] |= r[ i * p + j];
+				{	// Visual Studio 2013 generates warning without bool below
+					v[ i * p + j] |= bool( r[ i * p + j] );
+				}
 		}
 
 		return true;

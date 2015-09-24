@@ -1,6 +1,6 @@
 // $Id$
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-14 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-15 Bradley M. Bell
 
 CppAD is distributed under multiple licenses. This distribution is under
 the terms of the 
@@ -125,7 +125,8 @@ namespace { // Begin empty namespace
 				{	j = *itr;
 					assert( j < n );
 					// y[i] depends on the value of x[j]
-					vy[i] |= vx[j];
+					// Visual Studio 2013 generates warning without bool below
+					vy[i] |= bool( vx[j] );
 				}
 			}
 		}

@@ -67,6 +67,9 @@ INCLUDE(cmake/sources_libs_define.cmake)
 #
 # check_source_runs(source variable)
 INCLUDE(cmake/check_source_runs.cmake)
+#
+# modify CMAKE_CXX_FLAGS according to value of cppad_cxx_flags
+INCLUDE(cmake/modify_cmake_cxx_flags.cmake)
 # =============================================================================
 # command line arguments
 # =============================================================================
