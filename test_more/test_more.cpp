@@ -74,6 +74,7 @@ extern bool MulZeroOne(void);
 extern bool NearEqualExt(void);
 extern bool Neg(void);
 extern bool ode_err_control(void);
+extern bool omp_alloc(void);
 extern bool optimize(void);
 extern bool parameter(void);
 extern bool Poly(void);
@@ -191,6 +192,7 @@ int main(void)
 	ok &= Run( NearEqualExt,    "NearEqualExt"   );
 	ok &= Run( Neg,             "Neg"            );
 	ok &= Run( ode_err_control, "ode_err_control");
+	ok &= Run( omp_alloc,       "omp_alloc"      );
 	ok &= Run( optimize,        "optimize"       );
 	ok &= Run( parameter,       "parameter"      );
 	ok &= Run( Poly,            "Poly"           );

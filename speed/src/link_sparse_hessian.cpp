@@ -295,7 +295,6 @@ bool available_sparse_hessian(void)
 
 	size_t n_sweep;
 	return link_sparse_hessian(n, repeat, row, col, x, hessian, n_sweep);
-	exit(0);
 }
 /*!
 Does final sparse Hessian value pass correctness test.

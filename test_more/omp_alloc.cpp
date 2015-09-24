@@ -1,6 +1,6 @@
 /* $Id$ */
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-12 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-15 Bradley M. Bell
 
 CppAD is distributed under multiple licenses. This distribution is under
 the terms of the 
@@ -28,7 +28,7 @@ This example is only intended to help convert calls to $cref omp_alloc$$
 to calls to $cref thread_alloc$$.
 
 $code
-$verbatim%example/omp_alloc.cpp%0%// BEGIN C++%// END C++%1%$$
+$verbatim%test_more/omp_alloc.cpp%0%// BEGIN C++%// END C++%1%$$
 $$
 
 $end
@@ -60,7 +60,7 @@ bool omp_alloc_bytes(void)
 	size_t min_bytes  = min_size_t * sizeof(size_t);
 	size_t n_outter   = 10;
 	size_t n_inner    = 5;
-	size_t cap_bytes, i, j, k;
+	size_t cap_bytes(0), i, j, k;
 	for(i = 0; i < n_outter; i++)
 	{	// Do not use CppAD::vector here because its use of omp_alloc
 		// complicates the inuse and avaialble results.	

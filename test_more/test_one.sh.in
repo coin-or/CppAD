@@ -49,10 +49,9 @@ cmd="$cmd
 	-o test_one.exe
 	$cxxflags
 	-g
+	-fopenmp
 	-DCPPAD_ADOLC_TEST
 	-DCPPAD_OPENMP_TEST
-	-DCPPAD_MAX_NUM_THREADS=1
-	@OPENMP_FLAGS@
 	-I..
 "
 if [ -e @adolc_prefix@/include ]

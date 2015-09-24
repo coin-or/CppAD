@@ -1416,6 +1416,9 @@ void optimize_run(
 	player<Base>*                play      ,
 	recorder<Base>*              rec       )
 {
+	// nan with type Base
+	Base base_nan = Base( std::numeric_limits<double>::quiet_NaN() );
+
 	// temporary indices
 	size_t i, j, k;
 
@@ -2783,7 +2786,7 @@ void optimize_run(
 				else
 				{	// This argument does not affect the result and
 					// has been optimized out so use nan in its place.
-					new_arg[0] = rec->PutPar( nan(Base(0)) );
+					new_arg[0] = rec->PutPar( base_nan );
 					rec->PutArg(new_arg[0]);
 					rec->PutOp(UsrapOp);
 				}

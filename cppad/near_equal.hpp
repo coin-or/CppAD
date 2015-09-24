@@ -149,17 +149,17 @@ $end
 
 */
 
+# include <limits>
 # include <complex>
 # include <cppad/local/cppad_assert.hpp>
 # include <cppad/check_numeric_type.hpp>
 
 namespace CppAD { // Begin CppAD namespace
 
-// determine if both x and y are finite values (z1 and z2 are zero).
+// determine if both x and y are finite values
 template <class Type>
-bool near_equal_isfinite(
-	const Type &z1, const Type &z2, const Type &x , const Type &y)
-{	Type infinity = Type(1) / z1;
+bool near_equal_isfinite(const Type &x , const Type &y)
+{	Type infinity = Type( std::numeric_limits<double>::infinity() );
 
 	// handle bug where some compilers return true for nan == nan
 	bool xNan = x != x;
@@ -188,7 +188,7 @@ bool NearEqual(const Type &x, const Type &y, const Type &r, const Type &a)
 	);
 
 	// check for special cases
-	if( ! CppAD::near_equal_isfinite(zero, zero, x, y) )
+	if( ! CppAD::near_equal_isfinite(x, y) )
 		return false;
 
 	Type ax = x;
@@ -232,9 +232,9 @@ bool NearEqual(
 	);
 
 	// check for special cases
-	if( ! CppAD::near_equal_isfinite(zero, zero, x.real(), x.imag()) )
+	if( ! CppAD::near_equal_isfinite(x.real(), x.imag()) )
 		return false;
-	if( ! CppAD::near_equal_isfinite(zero, zero, y.real(), y.imag()) )
+	if( ! CppAD::near_equal_isfinite(y.real(), y.imag()) )
 		return false;
 
 	std::complex<Type> d = x - y;

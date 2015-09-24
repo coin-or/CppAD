@@ -1,6 +1,6 @@
 /* $Id$ */
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-12 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-15 Bradley M. Bell
 
 CppAD is distributed under multiple licenses. This distribution is under
 the terms of the 
@@ -245,7 +245,8 @@ void multi_newton_worker(void)
 		// Newton iterations
 		bool more_itr = true;
 		size_t itr    = 0;
-		double fcur, dfcur;
+		// initialize these values to avoid MSC C++ warning
+		double fcur=0.0, dfcur=0.0;
 		while( more_itr )
 		{	fun_(xcur, fcur, dfcur);
 

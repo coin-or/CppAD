@@ -3,7 +3,7 @@
 # define CPPAD_DET_GRAD_33_INCLUDED
 
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-12 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-15 Bradley M. Bell
 
 CppAD is distributed under multiple licenses. This distribution is under
 the terms of the 
@@ -102,11 +102,14 @@ $end
 ------------------------------------------------------------------------------
 */
 // BEGIN C++
+# include <limits>
 # include <cppad/near_equal.hpp>
 namespace CppAD {
 template <class Vector>
 	bool det_grad_33(const Vector &x, const Vector &g)
 	{	bool ok = true;
+		typedef typename Vector::value_type Float;
+		Float eps = 10. * Float( std::numeric_limits<double>::epsilon() );
 	
 		// use expansion by minors to compute the derivative by hand
 		double check[9];
@@ -122,9 +125,8 @@ template <class Vector>
 		check[7] = - ( x[0] * x[5] - x[2] * x[3] );
 		check[8] = + ( x[0] * x[4] - x[1] * x[3] ); 
 		//
-		size_t i;
-		for(i = 0; i < 3 * 3; i++)
-			ok &= CppAD::NearEqual(check[i], g[i], 1e-10, 1e-10);
+		for(size_t i = 0; i < 3 * 3; i++)
+			ok &= CppAD::NearEqual(check[i], g[i], eps, eps);
 		
 		return ok;
 	}

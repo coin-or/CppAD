@@ -143,6 +143,7 @@ test_more_SOURCES  = \
 	near_equal_ext.cpp \
 	neg.cpp \
 	ode_err_control.cpp \
+	omp_alloc.cpp \
 	optimize.cpp \
 	parameter.cpp \
 	poly.cpp \

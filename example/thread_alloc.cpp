@@ -1,6 +1,6 @@
 /* $Id$ */
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-12 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-15 Bradley M. Bell
 
 CppAD is distributed under multiple licenses. This distribution is under
 the terms of the 
@@ -59,12 +59,13 @@ bool raw_allocate(void)
 	size_t min_bytes  = min_size_t * sizeof(size_t);
 	size_t n_outter   = 10;
 	size_t n_inner    = 5;
-	size_t cap_bytes, i, j, k;
-	for(i = 0; i < n_outter; i++)
+	for(size_t i = 0; i < n_outter; i++)
 	{	// Do not use CppAD::vector here because its use of thread_alloc
 		// complicates the inuse and avaialble results.	
 		std::vector<void*> v_ptr(n_inner);
-		for( j = 0; j < n_inner; j++)
+		// cap_bytes will be set by get_memory
+		size_t cap_bytes = 0; // set here to avoid MSC warning
+		for(size_t j = 0; j < n_inner; j++)
 		{	// allocate enough memory for min_size_t size_t objects
 			v_ptr[j]    = thread_alloc::get_memory(min_bytes, cap_bytes);
 			size_t* ptr = reinterpret_cast<size_t*>(v_ptr[j]);
@@ -72,10 +73,10 @@ bool raw_allocate(void)
 			size_t  cap_size_t = cap_bytes / sizeof(size_t);
 			ok                &= min_size_t <= cap_size_t;
 			// use placement new to call the size_t copy constructor
-			for(k = 0; k < cap_size_t; k++)
+			for(size_t k = 0; k < cap_size_t; k++)
 				new(ptr + k) size_t(i + j + k);
 			// check that the constructor worked
-			for(k = 0; k < cap_size_t; k++)
+			for(size_t k = 0; k < cap_size_t; k++)
 				ok &= ptr[k] == (i + j + k);
 		}
 		// check that n_inner * cap_bytes are inuse and none are available
@@ -83,7 +84,7 @@ bool raw_allocate(void)
 		ok &= thread_alloc::inuse(thread) == n_inner*cap_bytes + static_inuse;
 		ok &= thread_alloc::available(thread) == 0;
 		// return the memrory to thread_alloc
-		for(j = 0; j < n_inner; j++)
+		for(size_t j = 0; j < n_inner; j++)
 			thread_alloc::return_memory(v_ptr[j]);
 		// check that now n_inner * cap_bytes are now available
 		// and none are in use

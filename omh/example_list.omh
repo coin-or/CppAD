@@ -206,7 +206,6 @@ $rref ode_gear.cpp$$
 $rref ode_stiff.cpp$$
 $rref ode_taylor.cpp$$
 $rref old_reciprocal.cpp$$
-$rref omp_alloc.cpp$$
 $rref optimize.cpp$$
 $rref opt_val_hes.cpp$$
 $rref par_var.cpp$$
