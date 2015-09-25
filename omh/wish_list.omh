@@ -43,6 +43,25 @@ $$
 
 $section The CppAD Wish List$$
 
+$head Numeric Limits$$
+Define a specialization for
+$codei%
+	std::numeric_limits< CppAD::AD<%Base%> >
+%$$
+
+$subhead Rationale$$
+This seems to be OK according to the following paragraph from Section
+17.6.4.2.1 of the C++11 standard (Document number N3336)
+`A program may explicitly instantiate a template defined in the
+standard library only if the declaration depends on the name of a
+user-defined type and the instantiation meets the
+standard library requirements for the original template.'
+
+$subhead nan$$
+Once this is done, the $cref nan$$ function should can be deprecated 
+because it generates compiler warnings about dividing by zero.
+
+
 $head Optimize Atomic Operations$$
 Use the current $cref atomic_option$$ setting to determine
 which type of sparsity patterns to use for
@@ -74,18 +93,6 @@ Perhaps it would be better to use special functions; e.g.,
 $code abs_zero_mul$$ and $code abs_zero_div$$,
 so that not all multiplies and divides would need to check for zero
 (in the multiple level AD with conditional expressions and reverse mode case).
-
-$head Numeric Limits$$
-Define a specialization for
-$codei%
-	std::numeric_limits< CppAD::AD<%Base%> >
-%$$
-This seems to be OK according to the following paragraph from Section
-17.6.4.2.1 of the C++11 standard (Document number N3336)
-`A program may explicitly instantiate a template defined in the
-standard library only if the declaration depends on the name of a
-user-defined type and the instantiation meets the
-standard library requirements for the original template.'
 
 $head Machine Epsilon in Examples$$
 Use a multiple of $code std::numeric_limits<double>::epsilon()$$ instead

@@ -3,7 +3,7 @@
 # define CPPAD_POW_INCLUDED
 
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-13 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-15 Bradley M. Bell
 
 CppAD is distributed under multiple licenses. This distribution is under
 the terms of the 
@@ -154,7 +154,7 @@ pow(const AD<Base>& x, const AD<Base>& y)
 		{	// result = 0^variable 
 		}
 		else
-		{	// result = variable^parameter 
+		{	// result = parameter^variable
 			CPPAD_ASSERT_UNKNOWN( NumRes(PowpvOp) == 3 );
 			CPPAD_ASSERT_UNKNOWN( NumArg(PowpvOp) == 2 );
 

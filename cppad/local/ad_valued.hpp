@@ -40,6 +40,7 @@ $end
 
 # include <cppad/local/arithmetic.hpp>
 # include <cppad/local/standard_math.hpp>
+# include <cppad/local/azmul.hpp>
 # include <cppad/local/cond_exp.hpp>
 # include <cppad/local/discrete.hpp>
 # include <cppad/local/atomic_base.hpp>

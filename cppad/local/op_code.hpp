@@ -141,6 +141,7 @@ enum OpCode {
 	UsrrpOp,  // this user atomic result is a parameter
 	UsrrvOp,  // this user atomic result is a variable
 	ZmulpvOp, // azmul(parameter, variable)
+	ZmulvpOp, // azmul(variabe,  parameter)
 	ZmulvvOp, // azmul(variable, variable)
 	NumberOp  // number of operator codes (not an operator)
 };
@@ -237,6 +238,7 @@ inline size_t NumArg( OpCode op)
 		1, // UsrrpOp
 		0, // UsrrvOp
 		2, // ZmulpvOp
+		2, // ZmulvpOp
 		2, // ZmulvvOp
 		0  // NumberOp not used
 	};
@@ -345,6 +347,7 @@ inline size_t NumRes(OpCode op)
 		0, // UsrrpOp
 		1, // UsrrvOp
 		1, // ZmulpvOp
+		1, // ZmulvpOp
 		1, // ZmulvvOp
 		0  // NumberOp not used and avoids g++ 4.3.2 warn when pycppad builds
 	};
@@ -435,6 +438,7 @@ inline const char* OpName(OpCode op)
 		"Usrrp" ,
 		"Usrrv" ,
 		"Zmulpv",
+		"Zmulvp",
 		"Zmulvv",
 		"Number"  // not used
 	};
@@ -704,6 +708,7 @@ void printOp(
 		case LtvpOp:
 		case PowvpOp:
 		case SubvpOp:
+		case ZmulvpOp:
 		CPPAD_ASSERT_UNKNOWN( NumArg(op) == 2 );
 		printOpField(os, " vl=", ind[0], ncol);
 		printOpField(os, " pr=", play->GetPar(ind[1]), ncol);
@@ -967,6 +972,7 @@ inline void assert_arg_before_result(
 		// 2 arguments (first variables), 1 results
 		case DivvpOp:
 		case SubvpOp:
+		case ZmulvpOp:
 		CPPAD_ASSERT_UNKNOWN( size_t(arg[0]) < result );
 		break;
 
