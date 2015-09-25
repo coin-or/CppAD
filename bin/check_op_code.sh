@@ -18,9 +18,12 @@ fi
 echo "bin/check_op_code.sh: checking that op codes are in alphabetical order:"
 # ---------------------------------------------------------------------------
 # check enum list of codes are in alphabetical order
-sed -n -e '/^enum/,/^\tNumberOp$/p' cppad/local/op_code.hpp | \
-	sed -e '/^enum/d' -e '/^\tNumberOp$/d' \
-		-e 's/^[	]*//' -e 's/Op[, ].*//' -e '/^\/\//d' > bin/op_code.1.$$
+sed -n -e '/^enum/,/^\tNumberOp  /p' cppad/local/op_code.hpp | sed \
+	-e '/^enum/d' \
+	-e '/^\tNumberOp  /d' \
+	-e 's/^[	]*//' \
+	-e 's/Op[, ].*//' \
+	-e '/^\/\//d' > bin/op_code.1.$$
 #
 sort --ignore-case bin/op_code.1.$$ > bin/op_code.2.$$
 if ! diff bin/op_code.1.$$ bin/op_code.2.$$

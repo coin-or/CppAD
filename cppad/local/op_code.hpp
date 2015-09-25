@@ -47,11 +47,11 @@ operand is a parameter and the right operand is a variable.
 */
 // alphabetical order is checked by bin/check_op_code.sh
 enum OpCode {
-	AbsOp,    //  abs(variable)
+	AbsOp,    // abs(variable)
 	AcosOp,   // acos(variable)
 	AcoshOp,  // acosh(variable)
-	AddpvOp,  //      parameter  + variable
-	AddvvOp,  //      variable   + variable
+	AddpvOp,  // parameter  + variable
+	AddvvOp,  // variable   + variable
 	AsinOp,   // asin(variable)
 	AsinhOp,  // asinh(variable)
 	AtanOp,   // atan(variable)
@@ -67,7 +67,7 @@ enum OpCode {
 	// arg[3]     = index correspoding to right
 	// arg[4]     = index correspoding to trueCase
 	// arg[5]     = index correspoding to falseCase
-	CosOp,    //  cos(variable)
+	CosOp,    // cos(variable)
 	CoshOp,   // cosh(variable)
 	CSkipOp,  // Conditional skip
 	// arg[0]     = the Rel operator: Lt, Le, Eq, Ge, Gt, or Ne
@@ -87,60 +87,62 @@ enum OpCode {
 	// arg[3] -> arg[2+arg[0]] = index for positive variables
 	// arg[3+arg[0]] -> arg[2+arg[0]+arg[1]] = index for minus variables
 	// arg[3+arg[0]+arg[1]] = arg[0] + arg[1]
-	DisOp,    //  discrete::eval(index, variable)
-	DivpvOp,  //  parameter  / variable
-	DivvpOp,  //  variable   / parameter
-	DivvvOp,  //  variable   / variable
-	EndOp,    //  used to mark the end of the tape
-	EqpvOp,   //  parameter  == variable
-	EqvvOp,   //  variable   == variable
-	ErfOp,    //  erf(variable)
-	ExpOp,    //  exp(variable)
-	Expm1Op,  //  expm1(variable)
-	InvOp,    //  independent variable
-	LdpOp,    //  z[parameter]
-	LdvOp,    //  z[variable]
-	LepvOp,   //  parameter <= variable
-	LevpOp,   //  variable  <= parameter
-	LevvOp,   //  variable  <= variable
-	LogOp,    //  log(variable)
-	Log1pOp,  //  log1p(variable)
-	LtpvOp,   //  parameter < variable
-	LtvpOp,   //  variable  < parameter
-	LtvvOp,   //  variable  < variable
-	MulpvOp,  //  parameter  * variable
-	MulvvOp,  //  variable   * variable
-	NepvOp,   //  parameter  != variable
-	NevvOp,   //  variable   != variable
-	ParOp,    //  parameter
-	PowpvOp,  //  pow(parameter,   variable)
-	PowvpOp,  //  pow(variable,    parameter)
-	PowvvOp,  //  pow(variable,    variable)
-	PriOp,    //  PrintFor(text, parameter or variable, parameter or variable)
-	SignOp,   //  sign(variable)
-	SinOp,    //  sin(variable)
-	SinhOp,   //  sinh(variable)
-	SqrtOp,   //  sqrt(variable)
-	StppOp,   //  z[parameter] = parameter
-	StpvOp,   //  z[parameter] = variable
-	StvpOp,   //  z[variable]  = parameter
-	StvvOp,   //  z[variable]  = variable
-	SubpvOp,  //  parameter  - variable
-	SubvpOp,  //  variable   - parameter
-	SubvvOp,  //  variable   - variable
-	TanOp,    //  tan(variable)
-	TanhOp,   //  tan(variable)
+	DisOp,    // discrete::eval(index, variable)
+	DivpvOp,  // parameter  / variable
+	DivvpOp,  // variable   / parameter
+	DivvvOp,  // variable   / variable
+	EndOp,    // used to mark the end of the tape
+	EqpvOp,   // parameter  == variable
+	EqvvOp,   // variable   == variable
+	ErfOp,    // erf(variable)
+	ExpOp,    // exp(variable)
+	Expm1Op,  // expm1(variable)
+	InvOp,    // independent variable
+	LdpOp,    // z[parameter]
+	LdvOp,    // z[variable]
+	LepvOp,   // parameter <= variable
+	LevpOp,   // variable  <= parameter
+	LevvOp,   // variable  <= variable
+	LogOp,    // log(variable)
+	Log1pOp,  // log1p(variable)
+	LtpvOp,   // parameter < variable
+	LtvpOp,   // variable  < parameter
+	LtvvOp,   // variable  < variable
+	MulpvOp,  // parameter  * variable
+	MulvvOp,  // variable   * variable
+	NepvOp,   // parameter  != variable
+	NevvOp,   // variable   != variable
+	ParOp,    // parameter
+	PowpvOp,  // pow(parameter,   variable)
+	PowvpOp,  // pow(variable,    parameter)
+	PowvvOp,  // pow(variable,    variable)
+	PriOp,    // PrintFor(text, parameter or variable, parameter or variable)
+	SignOp,   // sign(variable)
+	SinOp,    // sin(variable)
+	SinhOp,   // sinh(variable)
+	SqrtOp,   // sqrt(variable)
+	StppOp,   // z[parameter] = parameter
+	StpvOp,   // z[parameter] = variable
+	StvpOp,   // z[variable]  = parameter
+	StvvOp,   // z[variable]  = variable
+	SubpvOp,  // parameter  - variable
+	SubvpOp,  // variable   - parameter
+	SubvvOp,  // variable   - variable
+	TanOp,    // tan(variable)
+	TanhOp,   // tan(variable)
 	// user atomic operation codes
-	UserOp,   //  start of a user atomic operaiton
+	UserOp,   // start of a user atomic operaiton
 	// arg[0] = index of the operation if atomic_base<Base> class
 	// arg[1] = extra information passed trough by deprecated old atomic class
 	// arg[2] = number of arguments to this atomic function
 	// arg[3] = number of results for this atomic function
-	UsrapOp,  //  this user atomic argument is a parameter
-	UsravOp,  //  this user atomic argument is a variable
-	UsrrpOp,  //  this user atomic result is a parameter
-	UsrrvOp,  //  this user atomic result is a variable
-	NumberOp
+	UsrapOp,  // this user atomic argument is a parameter
+	UsravOp,  // this user atomic argument is a variable
+	UsrrpOp,  // this user atomic result is a parameter
+	UsrrvOp,  // this user atomic result is a variable
+	ZmulpvOp, // azmul(parameter, variable)
+	ZmulvvOp, // azmul(variable, variable)
+	NumberOp  // number of operator codes (not an operator)
 };
 // Note that bin/check_op_code.sh assumes the pattern '^\tNumberOp$' occurs
 // at the end of this list and only at the end of this list.
@@ -234,6 +236,8 @@ inline size_t NumArg( OpCode op)
 		1, // UsravOp
 		1, // UsrrpOp
 		0, // UsrrvOp
+		2, // ZmulpvOp
+		2, // ZmulvvOp
 		0  // NumberOp not used
 	};
 # ifndef NDEBUG
@@ -340,6 +344,8 @@ inline size_t NumRes(OpCode op)
 		0, // UsravOp
 		0, // UsrrpOp
 		1, // UsrrvOp
+		1, // ZmulpvOp
+		1, // ZmulvvOp
 		0  // NumberOp not used and avoids g++ 4.3.2 warn when pycppad builds
 	};
 	// check ensuring conversion to size_t is as expected
@@ -428,6 +434,8 @@ inline const char* OpName(OpCode op)
 		"Usrav" ,
 		"Usrrp" ,
 		"Usrrv" ,
+		"Zmulpv",
+		"Zmulvv",
 		"Number"  // not used
 	};
 	// check ensuring conversion to size_t is as expected
@@ -670,6 +678,7 @@ void printOp(
 		case MulvvOp:
 		case PowvvOp:
 		case SubvvOp:
+		case ZmulvvOp:
 		CPPAD_ASSERT_UNKNOWN( NumArg(op) == 2 );
 		printOpField(os, " vl=", ind[0], ncol);
 		printOpField(os, " vr=", ind[1], ncol);
@@ -684,6 +693,7 @@ void printOp(
 		case SubpvOp:
 		case MulpvOp:
 		case PowpvOp:
+		case ZmulpvOp:
 		CPPAD_ASSERT_UNKNOWN( NumArg(op) == 2 );
 		printOpField(os, " pl=", play->GetPar(ind[0]), ncol);
 		printOpField(os, " vr=", ind[1], ncol);
@@ -949,6 +959,7 @@ inline void assert_arg_before_result(
 		case DivvvOp:
 		case MulvvOp:
 		case SubvvOp:
+		case ZmulvvOp:
 		CPPAD_ASSERT_UNKNOWN( size_t(arg[0]) < result );
 		CPPAD_ASSERT_UNKNOWN( size_t(arg[1]) < result );
 		break;
@@ -965,6 +976,7 @@ inline void assert_arg_before_result(
 		case DivpvOp:
 		case MulpvOp:
 		case SubpvOp:
+		case ZmulpvOp:
 		CPPAD_ASSERT_UNKNOWN( size_t(arg[1]) < result );
 		break;
 
