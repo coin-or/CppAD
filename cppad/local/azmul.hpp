@@ -6,7 +6,7 @@
 CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-15 Bradley M. Bell
 
 CppAD is distributed under multiple licenses. This distribution is under
-the terms of the 
+the terms of the
                     Eclipse Public License Version 1.0.
 
 A copy of this license is included in the COPYING file of this distribution.
@@ -33,7 +33,7 @@ z = \left\{ \begin{array}{ll}
 \end{array} \right.
 \] $$
 Note if $icode x$$ is zero and $icode y$$ is infinity,
-ieee multiplication would result in not a number whereas 
+ieee multiplication would result in not a number whereas
 $icode z$$ would be zero.
 
 $head Base$$
@@ -117,7 +117,7 @@ azmul(const AD<Base>& x, const AD<Base>& y)
 			result.make_variable(x.tape_id_, x.taddr_);
 		}
 		else
-		{	// result = zmul(variable, parameter) 
+		{	// result = zmul(variable, parameter)
 			CPPAD_ASSERT_UNKNOWN( NumRes(ZmulvpOp) == 1 );
 			CPPAD_ASSERT_UNKNOWN( NumArg(ZmulvpOp) == 2 );
 
@@ -134,7 +134,7 @@ azmul(const AD<Base>& x, const AD<Base>& y)
 	}
 	else if( var_y )
 	{	if( IdenticalZero(x.value_) )
-		{	// result = 0 * variable 
+		{	// result = 0 * variable
 		}
 		else if( IdenticalOne( x.value_ ) )
 		{	// result = 1 * variable
@@ -167,8 +167,8 @@ template <class Base> AD<Base>
 azmul(const AD<Base>& x, const VecAD_reference<Base>& y)
 {	return azmul(x, y.ADBase()); }
 
-template <class Base> AD<Base> 
-azmul(const VecAD_reference<Base>& x, const VecAD_reference<Base>& y) 
+template <class Base> AD<Base>
+azmul(const VecAD_reference<Base>& x, const VecAD_reference<Base>& y)
 {	return azmul(x.ADBase(), y.ADBase()); }
 
 template <class Base> AD<Base>

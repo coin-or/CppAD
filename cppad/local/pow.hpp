@@ -6,7 +6,7 @@
 CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-15 Bradley M. Bell
 
 CppAD is distributed under multiple licenses. This distribution is under
-the terms of the 
+the terms of the
                     Eclipse Public License Version 1.0.
 
 A copy of this license is included in the COPYING file of this distribution.
@@ -43,9 +43,9 @@ $latex \[
 This version of the $code pow$$ function may use
 logarithms and exponentiation to compute derivatives.
 This will not work if $icode x$$ is less than or equal zero.
-If the value of $icode y$$ is an integer, 
-the $cref pow_int$$ function is used to compute this value 
-using only multiplication (and division if $icode y$$ is negative). 
+If the value of $icode y$$ is an integer,
+the $cref pow_int$$ function is used to compute this value
+using only multiplication (and division if $icode y$$ is negative).
 (This will work even if $icode x$$ is less than or equal zero.)
 
 $head x$$
@@ -85,7 +85,7 @@ $children%
 %$$
 The file
 $cref pow.cpp$$
-is an examples and tests of this function.   
+is an examples and tests of this function.
 It returns true if it succeeds and false otherwise.
 
 $end
@@ -94,9 +94,9 @@ $end
 
 //  BEGIN CppAD namespace
 namespace CppAD {
- 
+
 // case where x and y are AD<Base> -----------------------------------------
-template <class Base> AD<Base> 
+template <class Base> AD<Base>
 pow(const AD<Base>& x, const AD<Base>& y)
 {
 	// compute the Base part
@@ -134,7 +134,7 @@ pow(const AD<Base>& x, const AD<Base>& y)
 		{	// result = variable^0
 		}
 		else
-		{	// result = variable^parameter 
+		{	// result = variable^parameter
 			CPPAD_ASSERT_UNKNOWN( NumRes(PowvpOp) == 3 );
 			CPPAD_ASSERT_UNKNOWN( NumArg(PowvpOp) == 2 );
 
@@ -151,7 +151,7 @@ pow(const AD<Base>& x, const AD<Base>& y)
 	}
 	else if( var_y )
 	{	if( IdenticalZero(x.value_) )
-		{	// result = 0^variable 
+		{	// result = 0^variable
 		}
 		else
 		{	// result = parameter^variable
@@ -180,8 +180,8 @@ template <class Base> AD<Base>
 pow(const AD<Base>& x, const VecAD_reference<Base>& y)
 {	return pow(x, y.ADBase()); }
 
-template <class Base> AD<Base> 
-pow(const VecAD_reference<Base>& x, const VecAD_reference<Base>& y) 
+template <class Base> AD<Base>
+pow(const VecAD_reference<Base>& x, const VecAD_reference<Base>& y)
 {	return pow(x.ADBase(), y.ADBase()); }
 
 template <class Base> AD<Base>
@@ -243,7 +243,7 @@ pow(const VecAD_reference<double>& x, const double& y)
 {	return pow(x.ADBase(), AD<double>(y)); }
 
 // =========================================================================
-// Fold operations for the cases where x is an int, 
+// Fold operations for the cases where x is an int,
 // but let cppad/pow_int.hpp handle the cases where y is an int.
 // -------------------------------------------------------------------------
 template <class Base> AD<Base> pow
@@ -256,4 +256,4 @@ template <class Base> AD<Base> pow
 
 } // END CppAD namespace
 
-# endif 
+# endif

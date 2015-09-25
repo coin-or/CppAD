@@ -58,7 +58,7 @@ user-defined type and the instantiation meets the
 standard library requirements for the original template.'
 
 $subhead nan$$
-Once this is done, the $cref nan$$ function should can be deprecated 
+Once this is done, the $cref nan$$ function should can be deprecated
 because it generates compiler warnings about dividing by zero.
 
 
