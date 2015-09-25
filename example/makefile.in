@@ -134,9 +134,9 @@ am__example_SOURCES_DIST = mul_level_adolc.cpp mul_level_adolc_ode.cpp \
 	near_equal.cpp near_equal_ext.cpp number_skip.cpp \
 	numeric_type.cpp ode_err_control.cpp ode_err_maxabs.cpp \
 	ode_gear.cpp ode_gear_control.cpp ode_stiff.cpp ode_taylor.cpp \
-	omp_alloc.cpp opt_val_hes.cpp optimize.cpp par_var.cpp \
-	poly.cpp pow.cpp pow_int.cpp print_for.cpp reverse_any.cpp \
-	reverse_one.cpp reverse_three.cpp reverse_two.cpp rev_one.cpp \
+	opt_val_hes.cpp optimize.cpp par_var.cpp poly.cpp pow.cpp \
+	pow_int.cpp print_for.cpp reverse_any.cpp reverse_one.cpp \
+	reverse_three.cpp reverse_two.cpp rev_one.cpp \
 	rev_sparse_hes.cpp rev_sparse_jac.cpp rev_two.cpp \
 	romberg_mul.cpp romberg_one.cpp rosen_34.cpp runge45_1.cpp \
 	runge45_2.cpp seq_property.cpp simple_vector.cpp sign.cpp \
@@ -181,17 +181,17 @@ am_example_OBJECTS = $(am__objects_1) example.$(OBJEXT) \
 	number_skip.$(OBJEXT) numeric_type.$(OBJEXT) \
 	ode_err_control.$(OBJEXT) ode_err_maxabs.$(OBJEXT) \
 	ode_gear.$(OBJEXT) ode_gear_control.$(OBJEXT) \
-	ode_stiff.$(OBJEXT) ode_taylor.$(OBJEXT) omp_alloc.$(OBJEXT) \
-	opt_val_hes.$(OBJEXT) optimize.$(OBJEXT) par_var.$(OBJEXT) \
-	poly.$(OBJEXT) pow.$(OBJEXT) pow_int.$(OBJEXT) \
-	print_for.$(OBJEXT) reverse_any.$(OBJEXT) \
-	reverse_one.$(OBJEXT) reverse_three.$(OBJEXT) \
-	reverse_two.$(OBJEXT) rev_one.$(OBJEXT) \
-	rev_sparse_hes.$(OBJEXT) rev_sparse_jac.$(OBJEXT) \
-	rev_two.$(OBJEXT) romberg_mul.$(OBJEXT) romberg_one.$(OBJEXT) \
-	rosen_34.$(OBJEXT) runge45_1.$(OBJEXT) runge45_2.$(OBJEXT) \
-	seq_property.$(OBJEXT) simple_vector.$(OBJEXT) sign.$(OBJEXT) \
-	sin.$(OBJEXT) sinh.$(OBJEXT) sparse_hessian.$(OBJEXT) \
+	ode_stiff.$(OBJEXT) ode_taylor.$(OBJEXT) opt_val_hes.$(OBJEXT) \
+	optimize.$(OBJEXT) par_var.$(OBJEXT) poly.$(OBJEXT) \
+	pow.$(OBJEXT) pow_int.$(OBJEXT) print_for.$(OBJEXT) \
+	reverse_any.$(OBJEXT) reverse_one.$(OBJEXT) \
+	reverse_three.$(OBJEXT) reverse_two.$(OBJEXT) \
+	rev_one.$(OBJEXT) rev_sparse_hes.$(OBJEXT) \
+	rev_sparse_jac.$(OBJEXT) rev_two.$(OBJEXT) \
+	romberg_mul.$(OBJEXT) romberg_one.$(OBJEXT) rosen_34.$(OBJEXT) \
+	runge45_1.$(OBJEXT) runge45_2.$(OBJEXT) seq_property.$(OBJEXT) \
+	simple_vector.$(OBJEXT) sign.$(OBJEXT) sin.$(OBJEXT) \
+	sinh.$(OBJEXT) sparse_hessian.$(OBJEXT) \
 	sparse_jacobian.$(OBJEXT) sparse_sub_hes.$(OBJEXT) \
 	sparsity_sub.$(OBJEXT) sqrt.$(OBJEXT) stack_machine.$(OBJEXT) \
 	sub.$(OBJEXT) sub_eq.$(OBJEXT) sub_sparse_hes.$(OBJEXT) \
@@ -598,7 +598,6 @@ example_SOURCES = \
 	ode_gear_control.cpp\
 	ode_stiff.cpp \
 	ode_taylor.cpp \
-	omp_alloc.cpp \
 	opt_val_hes.cpp \
 	optimize.cpp \
 	par_var.cpp \
@@ -795,7 +794,6 @@ distclean-compile:
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/ode_gear_control.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/ode_stiff.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/ode_taylor.Po@am__quote@
-@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/omp_alloc.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/opt_val_hes.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/optimize.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/par_var.Po@am__quote@
