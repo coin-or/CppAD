@@ -15,6 +15,10 @@ Please visit http://www.coin-or.org/CppAD/ for information on other licenses.
 /*
 $begin azmul$$
 $spell
+	azmul
+	const
+	namespace
+	Vec
 $$
 
 $section Absolute Zero Multiplication$$
@@ -70,6 +74,8 @@ then the result $icode z$$ has prototype
 $codei%
 	AD<%Base%> %z%
 %$$
+
+$end
 */
 
 namespace CppAD { // BEGIN_CPPAD_NAMESPACE

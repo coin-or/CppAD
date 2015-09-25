@@ -116,12 +116,13 @@ $end
 # include <cppad/local/sign.hpp>
 
 /*
-$begin binary_standard_math$$
+$begin binary_math$$
 
-$section The Binary Standard Math Functions$$
+$section The Binary Math Functions$$
 
 $childtable%cppad/local/atan2.hpp
 	%cppad/local/pow.hpp
+	%cppad/local/azmul.hpp
 %$$
 
 $end

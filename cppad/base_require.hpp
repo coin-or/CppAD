@@ -16,6 +16,7 @@ Please visit http://www.coin-or.org/CppAD/ for information on other licenses.
 /*
 $begin base_require$$
 $spell
+	azmul
 	ostream
 	alloc
 	eps
@@ -117,25 +118,23 @@ For example, see
 $cref/base_float/base_float.hpp/Integer/$$ and
 $cref/base_alloc/base_alloc.hpp/Integer/$$.
 
-$head Absolute Zero$$
-If this base type will be used with
-$cref/multiple levels of AD/mul_level/$$;
-e.g. $codei%AD< AD<%Base%> >%$$,
-and $cref/reverse mode/reverse/$$ calculations will be recorded,
-the type $icode Base$$ must have an
-$cref/absolute zero/zdouble/Absolute Zero/$$.
-
-$subhead Nan$$
-If the type $icode Base$$ has an absolute zero,
-the CppAD $cref nan$$ template function must be specialized
-because it assumes that zero divided by zero is $code nan$$.
-For example, here is the specialization defined by $cref zdouble$$
+$head Absolute Zero, azmul$$
+The type $code Base$$ must support the syntax
 $codei%
-namespace CppAD {%$$
-$code
-$verbatim%cppad/local/zdouble.hpp%4%// BEGIN nan%// END nan%$$
-$$
-$codei }$$
+	%z% = azmul(%x%, %y%)
+%$$
+where see; $cref azmul$$.
+It should suffice to define the function
+$codei%
+namespace CppAD {
+	inline %Base% azmul(const %Base%& x, const %Base%& y)
+	{	Base zero(0.0);
+		if( %x% == zero )
+			return zero;
+		return x * y;
+	}
+}
+%$$
 
 $childtable%
 	omh/base_require/base_member.omh%

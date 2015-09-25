@@ -338,7 +338,7 @@ The example above were also changed so that AD variable names that
 indicated the level of AD for the variable.
 $lnext
 The base type requirements were modified to include mention of
-$cref/absolute zero/base_require/Absolute Zero/$$.
+$cref/absolute zero/base_require/Absolute Zero, azmul/$$.
 In addition, the base type requirements
 $cref/warning/base_require/Warning/$$ is now more informative.
 $lend
