@@ -59,6 +59,10 @@ class AD {
 	friend AD pow <Base>
 		(const AD<Base> &x, const AD<Base> &y);
 
+	// azmul function
+	friend AD azmul <Base>
+		(const AD<Base> &x, const AD<Base> &y);
+
 	// order determining functions, see ordered.hpp
 	friend bool GreaterThanZero   <Base> (const AD<Base> &x);
 	friend bool GreaterThanOrZero <Base> (const AD<Base> &x);

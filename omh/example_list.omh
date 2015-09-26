@@ -105,6 +105,7 @@ $cref atomic_norm_sq.cpp$$
 $cref atomic_reciprocal.cpp$$
 $cref atomic_sparsity.cpp$$
 $cref atomic_tangent.cpp$$
+$cref azmul.cpp$$
 $rref base_adolc.hpp$$
 $rref base_alloc.hpp$$
 $rref base_complex.hpp$$

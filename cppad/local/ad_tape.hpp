@@ -54,6 +54,9 @@ class ADTape {
 	// pow
 	friend AD<Base> pow <Base>
 		(const AD<Base> &x, const AD<Base> &y);
+	// azmul
+	friend AD<Base> azmul <Base>
+		(const AD<Base> &x, const AD<Base> &y);
 	// Parameter
 	friend bool Parameter     <Base> 
 		(const AD<Base> &u);

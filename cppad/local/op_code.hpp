@@ -444,7 +444,7 @@ inline const char* OpName(OpCode op)
 	};
 	// check ensuring conversion to size_t is as expected
 	CPPAD_ASSERT_UNKNOWN(
-		size_t(NumberOp) == sizeof(OpNameTable)/sizeof(OpNameTable[0])
+		size_t(NumberOp) + 1 == sizeof(OpNameTable)/sizeof(OpNameTable[0])
 	);
 	// this test ensures that all indices are within the table
 	CPPAD_ASSERT_UNKNOWN( size_t(op) < size_t(NumberOp) );

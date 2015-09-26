@@ -35,7 +35,7 @@ and the argument \a parameter is not used.
 */
 
 template <class Base>
-inline void forward_zmulvv_op_op(
+inline void forward_zmulvv_op(
 	size_t        p           ,
 	size_t        q           ,
 	size_t        i_z         ,
@@ -77,7 +77,7 @@ and the argument \a parameter is not used.
 */
 
 template <class Base>
-inline void forward_zmulvv_op_op_dir(
+inline void forward_zmulvv_op_dir(
 	size_t        q           ,
 	size_t        r           ,
 	size_t        i_z         ,
@@ -122,7 +122,7 @@ and the argument \a parameter is not used.
 */
 
 template <class Base>
-inline void forward_zmulvv_op_op_0(
+inline void forward_zmulvv_op_0(
 	size_t        i_z         ,
 	const addr_t* arg         ,
 	const Base*   parameter   ,
@@ -156,7 +156,7 @@ and the argument \a parameter is not used.
 */
 
 template <class Base>
-inline void reverse_zmulvv_op_op(
+inline void reverse_zmulvv_op(
 	size_t        d           ,
 	size_t        i_z         ,
 	const addr_t* arg         ,

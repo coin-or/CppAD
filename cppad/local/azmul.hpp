@@ -23,6 +23,10 @@ $$
 
 $section Absolute Zero Multiplication$$
 
+$head Under Construction$$
+This user API to this operator is under construction
+and not yet working.
+
 $head Syntax$$
 $icode%z% = azmul(%x%, %y%)%$$
 
@@ -74,6 +78,15 @@ then the result $icode z$$ has prototype
 $codei%
 	AD<%Base%> %z%
 %$$
+
+$head Example$$
+$children%
+	example/azmul.cpp
+%$$
+The file
+$cref azmul.cpp$$
+is an examples and tests of this function.
+It returns true if it succeeds and false otherwise.
 
 $end
 */

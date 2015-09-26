@@ -104,6 +104,10 @@ namespace CppAD {
 	template <class Base> AD<Base> pow (
 		const AD<Base> &x, const AD<Base> &y);
 
+	// azmul
+	template <class Base> AD<Base> azmul (
+		const AD<Base> &x, const AD<Base> &y);
+
 	// NearEqual
 	template <class Base> bool NearEqual(
 	const AD<Base> &x, const AD<Base> &y, const Base &r, const Base &a);

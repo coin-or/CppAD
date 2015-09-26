@@ -538,6 +538,7 @@ nobase_myinclude_HEADERS = \
 	cppad/local/atanh.hpp \
 	cppad/local/atanh_op.hpp \
 	cppad/local/atomic_base.hpp \
+	cppad/local/azmul.hpp \
 	cppad/local/base_complex.hpp \
 	cppad/local/base_cond_exp.hpp \
 	cppad/local/base_double.hpp \
@@ -666,6 +667,7 @@ nobase_myinclude_HEADERS = \
 	cppad/local/var2par.hpp \
 	cppad/local/vec_ad.hpp \
 	cppad/local/zdouble.hpp \
+	cppad/local/zmul_op.hpp \
 	cppad/lu_factor.hpp \
 	cppad/lu_invert.hpp \
 	cppad/lu_solve.hpp \

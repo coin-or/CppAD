@@ -96,6 +96,7 @@ example_SOURCES   = \
 	atan.cpp \
 	atanh.cpp \
 	atan2.cpp \
+	azmul.cpp \
 	base_alloc.hpp \
 	base_require.cpp \
 	bender_quad.cpp \

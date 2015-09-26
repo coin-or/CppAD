@@ -1,6 +1,6 @@
 /* $Id$ */
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-12 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-15 Bradley M. Bell
 
 CppAD is distributed under multiple licenses. This distribution is under
 the terms of the 
@@ -17,10 +17,6 @@ $$
 
 $section The AD Power Function: Example and Test$$
 
-$index pow, AD example$$
-$index example, AD pow$$
-$index test, AD pow$$
-
 $code
 $verbatim%example/pow.cpp%0%// BEGIN C++%// END C++%1%$$
 $$
@@ -32,38 +28,39 @@ $end
 # include <cppad/cppad.hpp>
 # include <cmath>
 
-bool Pow(void)
+bool pow(void)
 {	bool ok = true;
 
 	using CppAD::AD;
 	using CppAD::NearEqual;
+	double eps = 10. * std::numeric_limits<double>::epsilon();
 
 	// domain space vector
 	size_t n  = 2;
 	double x = 0.5;
 	double y = 2.;
-	CPPAD_TESTVECTOR(AD<double>) XY(n);
-	XY[0]      = x;
-	XY[1]      = y;
+	CPPAD_TESTVECTOR(AD<double>) axy(n);
+	axy[0]      = x;
+	axy[1]      = y;
 
 	// declare independent variables and start tape recording
-	CppAD::Independent(XY);
+	CppAD::Independent(axy);
 
 	// range space vector 
 	size_t m = 3;
-	CPPAD_TESTVECTOR(AD<double>) Z(m);
-	Z[0] = CppAD::pow(XY[0], XY[1]);  // pow(variable, variable)
-	Z[1] = CppAD::pow(XY[0], y);      // pow(variable, parameter)
-	Z[2] = CppAD::pow(x,     XY[1]);  // pow(parameter, variable)
+	CPPAD_TESTVECTOR(AD<double>) az(m);
+	az[0] = CppAD::pow(axy[0], axy[1]); // pow(variable, variable)
+	az[1] = CppAD::pow(axy[0], y);      // pow(variable, parameter)
+	az[2] = CppAD::pow(x,     axy[1]);  // pow(parameter, variable)
 
-	// create f: XY -> Z and stop tape recording
-	CppAD::ADFun<double> f(XY, Z); 
+	// create f: axy -> az and stop tape recording
+	CppAD::ADFun<double> f(axy, az); 
 
 	// check value 
 	double check = std::pow(x, y);
 	size_t i;
 	for(i = 0; i < m; i++)
-		ok &= NearEqual(Z[i] , check,  1e-10 , 1e-10);
+		ok &= NearEqual(az[i] , check,  eps, eps);
 
 	// forward computation of first partial w.r.t. x
 	CPPAD_TESTVECTOR(double) dxy(n);
@@ -72,18 +69,18 @@ bool Pow(void)
 	dxy[1] = 0.;
 	dz    = f.Forward(1, dxy);
 	check = y * std::pow(x, y-1.);
-	ok   &= NearEqual(dz[0], check, 1e-10, 1e-10);
-	ok   &= NearEqual(dz[1], check, 1e-10, 1e-10);
-	ok   &= NearEqual(dz[2],    0., 1e-10, 1e-10);
+	ok   &= NearEqual(dz[0], check, eps, eps);
+	ok   &= NearEqual(dz[1], check, eps, eps);
+	ok   &= NearEqual(dz[2],    0., eps, eps);
 
 	// forward computation of first partial w.r.t. y
 	dxy[0] = 0.;
 	dxy[1] = 1.;
 	dz    = f.Forward(1, dxy);
 	check = std::log(x) * std::pow(x, y);
-	ok   &= NearEqual(dz[0], check, 1e-10, 1e-10);
-	ok   &= NearEqual(dz[1],    0., 1e-10, 1e-10);
-	ok   &= NearEqual(dz[2], check, 1e-10, 1e-10);
+	ok   &= NearEqual(dz[0], check, eps, eps);
+	ok   &= NearEqual(dz[1],    0., eps, eps);
+	ok   &= NearEqual(dz[2], check, eps, eps);
 
 	// reverse computation of derivative of z[0] + z[1] + z[2]
 	CPPAD_TESTVECTOR(double)  w(m);
@@ -93,18 +90,18 @@ bool Pow(void)
 	w[2]  = 1.;
 	dw    = f.Reverse(1, w);
 	check = y * std::pow(x, y-1.);
-	ok   &= NearEqual(dw[0], 2. * check, 1e-10, 1e-10);
+	ok   &= NearEqual(dw[0], 2. * check, eps, eps);
 	check = std::log(x) * std::pow(x, y);
-	ok   &= NearEqual(dw[1], 2. * check, 1e-10, 1e-10);
+	ok   &= NearEqual(dw[1], 2. * check, eps, eps);
 
 	// use a VecAD<Base>::reference object with pow
 	CppAD::VecAD<double> v(2);
 	AD<double> zero(0);
 	AD<double> one(1);
-	v[zero]           = XY[0];
-	v[one]            = XY[1];
+	v[zero]           = axy[0];
+	v[one]            = axy[1];
 	AD<double> result = CppAD::pow(v[zero], v[one]);
-	ok               &= NearEqual(result, Z[0], 1e-10, 1e-10);
+	ok               &= NearEqual(result, az[0], eps, eps);
 
 	return ok;
 }

@@ -587,14 +587,14 @@ void forward0sweep(
 			break;
 			// -------------------------------------------------
 
-			case MulvvOp:
-			forward_mulvv_op_0(i_var, arg, parameter, J, taylor);
-			break;
-			// -------------------------------------------------
-
 			case MulpvOp:
 			CPPAD_ASSERT_UNKNOWN( size_t(arg[0]) < num_par );
 			forward_mulpv_op_0(i_var, arg, parameter, J, taylor);
+			break;
+			// -------------------------------------------------
+
+			case MulvvOp:
+			forward_mulvv_op_0(i_var, arg, parameter, J, taylor);
 			break;
 			// -------------------------------------------------
 
@@ -868,6 +868,23 @@ void forward0sweep(
 			taylor[ i_var * J + 0 ] = user_ty[user_i++];
 			if( user_i == user_m )
 				user_state = user_end;
+			break;
+			// -------------------------------------------------
+
+			case ZmulpvOp:
+			CPPAD_ASSERT_UNKNOWN( size_t(arg[0]) < num_par );
+			forward_zmulpv_op_0(i_var, arg, parameter, J, taylor);
+			break;
+			// -------------------------------------------------
+
+			case ZmulvpOp:
+			CPPAD_ASSERT_UNKNOWN( size_t(arg[1]) < num_par );
+			forward_zmulvp_op_0(i_var, arg, parameter, J, taylor);
+			break;
+			// -------------------------------------------------
+
+			case ZmulvvOp:
+			forward_zmulvv_op_0(i_var, arg, parameter, J, taylor);
 			break;
 			// -------------------------------------------------
 
