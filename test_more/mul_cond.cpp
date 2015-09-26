@@ -33,17 +33,18 @@ bool mul_cond(void)
 	// --------------------------------------------------------------------
 	// create a1f = f(x)
 	size_t n = 1;
-	size_t m = 2;
-	size_t i;
+	size_t m = 3;
 	vector<a2double> a2x(n), a2y(m);
 	a2x[0] = a2double( 5.0 );
 	Independent(a2x);
 	//
-	i = 0;
+	size_t i = 0;
 	// div
 	a2y[i++]  = CondExpGt(a2x[0], a2zero, a2one / a2x[0], a2zero);
-	// acosh
-	a2y[i++]  = CondExpGt(a2x[0], a2zero, acosh( a2x[0] ), a2zero);
+	// abs
+	a2y[i++]  = CondExpGt(a2x[0], a2zero, abs( a2y[0] ), a2zero);
+	// add
+	a2y[i++]  = CondExpGt(a2x[0], a2zero, a2y[0] + a2y[0], a2zero);
 	//
 	CppAD::ADFun<a1double> a1f;
 	a1f.Dependent(a2x, a2y);
@@ -56,8 +57,10 @@ bool mul_cond(void)
 	i = 0;
 	// div
 	a1y[i++]  = CondExpGt(a1x[0], a1zero, a1one / a1x[0], a1zero);
-	// acosh
-	a1y[i++]  = CondExpGt(a1x[0], a1zero, acosh( a1x[0] ), a1zero);
+	// abs
+	a1y[i++]  = CondExpGt(a1x[0], a1zero, abs( a1y[0] ), a1zero);
+	// add
+	a1y[i++]  = CondExpGt(a1x[0], a1zero, a1y[0] + a1y[0], a1zero);
 	//
 	CppAD::ADFun<double> h;
 	h.Dependent(a1x, a1y);
@@ -77,7 +80,7 @@ bool mul_cond(void)
 		a1dy[i] = dyi_dx[0];
 		a1w[i] = 0.0;
 	}
-	CppAD::ADFun<double> g;
+	CppAD::ADFun<double> g; // g uses reverse mode derivatives
 	g.Dependent(a1x, a1dy);
 	// --------------------------------------------------------------------
 	// check case where x[0] > 0
@@ -85,7 +88,7 @@ bool mul_cond(void)
 	x[0]  = 2.0;
 	dx[0] = 1.0;
 	h.Forward(0, x);
-	dh   = h.Forward(1, dx);
+	dh   = h.Forward(1, dx); // dh uses forward mode derivatives
 	dg   = g.Forward(0, x);
 	for(i = 0; i < m; i++)
 		ok  &= NearEqual(dg[i], dh[i], eps, eps);

@@ -70,6 +70,10 @@ This section contains a list of the changes to CppAD during 2015
 The purpose of this section is to
 assist you in learning about changes between various versions of CppAD.
 
+$head 09-26$$
+The $cref zdouble$$ class has been deprecated.
+Use the $cref azmul$$ function instead (when you need an absolute zero).
+
 $head 09-25$$
 Add the
 $cref/absolute zero multiplication/base_require/Absolute Zero, azmul/$$

@@ -735,6 +735,7 @@ inline addr_t binary_match(
 		case DivpvOp:
 		case PowpvOp:
 		case SubpvOp:
+		case ZmulpvOp:
 		// arg[0]
 		parameter[0] = true;
 		new_arg[0]   = arg[0];
@@ -749,6 +750,7 @@ inline addr_t binary_match(
 		case DivvpOp:
 		case PowvpOp:
 		case SubvpOp:
+		case ZmulvpOp:
 		// arg[0]
 		parameter[0] = false;
 		new_arg[0]   = tape[arg[0]].new_var;
@@ -765,6 +767,7 @@ inline addr_t binary_match(
 		case DivvvOp:
 		case PowvvOp:
 		case SubvvOp:
+		case ZmulvvOp:
 		// arg[0]
 		parameter[0] = false;
 		new_arg[0]   = tape[arg[0]].new_var;
@@ -895,7 +898,7 @@ is the object that will record the operations.
 
 \param op
 is the operator that we are recording which must be one of the following:
-AddpvOp, DivpvOp, MulpvOp, PowvpOp, SubpvOp.
+AddpvOp, DivpvOp, MulpvOp, PowpvOp, SubpvOp, ZmulpvOp.
 
 \param arg
 is the vector of arguments for this operator.
@@ -921,6 +924,7 @@ struct_size_pair record_pv(
 		case MulpvOp:
 		case PowpvOp:
 		case SubpvOp:
+		case ZmulpvOp:
 		break;
 
 		default:
@@ -997,7 +1001,7 @@ is the object that will record the operations.
 
 \param op
 is the operator that we are recording which must be one of the following:
-DivvpOp, PowvpOp, SubvpOp.
+DivvpOp, PowvpOp, SubvpOp, ZmulvpOp.
 
 \param arg
 is the vector of arguments for this operator.
@@ -1021,6 +1025,7 @@ struct_size_pair record_vp(
 	{	case DivvpOp:
 		case PowvpOp:
 		case SubvpOp:
+		case ZmulvpOp:
 		break;
 
 		default:
@@ -1096,7 +1101,7 @@ is the object that will record the operations.
 
 \param op
 is the operator that we are recording which must be one of the following:
-AddvvOp, DivvvOp, MulvvOp, PowvpOp, SubvvOp.
+AddvvOp, DivvvOp, MulvvOp, PowvvOp, SubvvOp, ZmulvvOp.
 
 \param arg
 is the vector of arguments for this operator.
@@ -1122,6 +1127,7 @@ struct_size_pair record_vv(
 		case MulvvOp:
 		case PowvvOp:
 		case SubvvOp:
+		case ZmulvvOp:
 		break;
 
 		default:
@@ -1568,6 +1574,7 @@ void optimize_run(
 			case SqrtOp:
 			case TanOp:
 			case TanhOp:
+			case ZmulvpOp:
 			switch( connect_type )
 			{	case not_connected:
 				break;
@@ -1602,6 +1609,7 @@ void optimize_run(
 			case DivpvOp:
 			case MulpvOp:
 			case PowpvOp:
+			case ZmulpvOp:
 			switch( connect_type )
 			{	case not_connected:
 				break;
@@ -1750,6 +1758,7 @@ void optimize_run(
 			case DivvvOp:
 			case MulvvOp:
 			case PowvvOp:
+			case ZmulvvOp:
 			for(i = 0; i < 2; i++) switch( connect_type )
 			{	case not_connected:
 				break;
@@ -2389,6 +2398,7 @@ void optimize_run(
 			}
 			case DivvpOp:
 			case PowvpOp:
+			case ZmulvpOp:
 			match_var = binary_match(
 				tape                ,  // inputs
 				i_var               ,
@@ -2471,6 +2481,7 @@ void optimize_run(
 			case DivpvOp:
 			case MulpvOp:
 			case PowpvOp:
+			case ZmulpvOp:
 			match_var = binary_match(
 				tape                ,  // inputs
 				i_var               ,
@@ -2525,6 +2536,7 @@ void optimize_run(
 			case DivvvOp:
 			case MulvvOp:
 			case PowvvOp:
+			case ZmulvvOp:
 			match_var = binary_match(
 				tape                ,  // inputs
 				i_var               ,

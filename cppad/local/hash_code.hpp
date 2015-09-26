@@ -83,16 +83,16 @@ AbsOp, AcosOp, AcoshOp, AsinOp, AsinhOp, AtanOp, AtanhOp, CosOp, CoshOp
 ExpOp, Expm1Op, LogOp, Log1pOp, SinOp, SinhOp, SqrtOp, TanOp, TanhOp
 
 \li binary operators where first argument is a parameter:
-AddpvOp, DivpvOp, MulpvOp, PowpvOp, SubpvOp,
+AddpvOp, DivpvOp, MulpvOp, PowpvOp, SubpvOp, ZmulpvOp
 
 \li binary operators where second argument is a parameter:
-DivvpOp, PowvpOp, SubvpOp
+DivvpOp, PowvpOp, SubvpOp, Zmulvp
 
 \li binary operators where first is an index and second is a variable:
 DisOp
 
 \li binary operators where both arguments are variables:
-AddvvOp, DivvvOp, MulvvOp, PowvvOp, SubvvOp
+AddvvOp, DivvvOp, MulvvOp, PowvvOp, SubvvOp, ZmulvvOp
 
 \param arg
 is a vector of length \c NumArg(op) or 2 (which ever is smaller),
@@ -167,6 +167,7 @@ unsigned short hash_code(
 		case MulpvOp:
 		case PowpvOp:
 		case SubpvOp:
+		case ZmulpvOp:
 		CPPAD_ASSERT_UNKNOWN( NumArg(op) == 2 );
 		v = reinterpret_cast<const unsigned short*>(par + arg[0]);
 		i = short_base;
@@ -188,6 +189,7 @@ unsigned short hash_code(
 		case MulvvOp:
 		case PowvvOp:
 		case SubvvOp:
+		case ZmulvvOp:
 		CPPAD_ASSERT_UNKNOWN( NumArg(op) == 2 );
 		v = reinterpret_cast<const unsigned short*>(arg + 0);
 		i = 2 * short_addr_t;
@@ -199,6 +201,7 @@ unsigned short hash_code(
 		case DivvpOp:
 		case PowvpOp:
 		case SubvpOp:
+		case ZmulvpOp:
 		CPPAD_ASSERT_UNKNOWN( NumArg(op) == 2 );
 		v = reinterpret_cast<const unsigned short*>(arg + 0);
 		i = short_addr_t;

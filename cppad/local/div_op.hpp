@@ -189,16 +189,9 @@ inline void reverse_divvv_op(
 	Base* py = partial + arg[1] * nc_partial;
 	Base* pz = partial + i_z    * nc_partial;
 
-	// If pz is zero, make sure this operation has no effect
-	// (zero times infinity or nan would be non-zero).
-	bool skip(true);
-	for(size_t i_d = 0; i_d <= d; i_d++)
-		skip &= IdenticalZero(pz[i_d]);
-	if( skip )
-		return;
-
 	// Using CondExp, it can make sense to divide by zero
 	// so do not make it an error.
+	Base inv_y0 = Base(1) / y[0];
 
 	size_t k;
 	// number of indices to access
@@ -206,14 +199,14 @@ inline void reverse_divvv_op(
 	while(j)
 	{	--j;
 		// scale partial w.r.t. z[j]
-		pz[j] /= y[0];
+		pz[j] = azmul(pz[j], inv_y0);
 
 		px[j] += pz[j];
 		for(k = 1; k <= j; k++)
-		{	pz[j-k] -= pz[j] * y[k];
-			py[k]   -= pz[j] * z[j-k];
+		{	pz[j-k] -= azmul(pz[j], y[k]  );
+			py[k]   -= azmul(pz[j], z[j-k]);
 		}
-		py[0] -= pz[j] * z[j];
+		py[0] -= azmul(pz[j], z[j]);
 	}
 }
 
@@ -386,16 +379,9 @@ inline void reverse_divpv_op(
 	Base* py = partial + arg[1] * nc_partial;
 	Base* pz = partial + i_z    * nc_partial;
 
-	// If pz is zero, make sure this operation has no effect
-	// (zero times infinity or nan would be non-zero).
-	bool skip(true);
-	for(size_t i_d = 0; i_d <= d; i_d++)
-		skip &= IdenticalZero(pz[i_d]);
-	if( skip )
-		return;
-
 	// Using CondExp, it can make sense to divide by zero so do not
 	// make it an error.
+	Base inv_y0 = Base(1) / y[0];
 
 	size_t k;
 	// number of indices to access
@@ -403,13 +389,13 @@ inline void reverse_divpv_op(
 	while(j)
 	{	--j;
 		// scale partial w.r.t z[j]
-		pz[j] /= y[0];
+		pz[j] = azmul(pz[j], inv_y0);
 
 		for(k = 1; k <= j; k++)
-		{	pz[j-k] -= pz[j] * y[k];
-			py[k]   -= pz[j] * z[j-k];
+		{	pz[j-k] -= azmul(pz[j], y[k]  );
+			py[k]   -= azmul(pz[j], z[j-k] );
 		}
-		py[0] -= pz[j] * z[j];
+		py[0] -= azmul(pz[j], z[j]);
 	}
 }
 
@@ -575,12 +561,13 @@ inline void reverse_divvp_op(
 
 	// Using CondExp, it can make sense to divide by zero
 	// so do not make it an error.
+	Base inv_y = Base(1) / y;
 
 	// number of indices to access
 	size_t j = d + 1;
 	while(j)
 	{	--j;
-		px[j] += pz[j] / y;
+		px[j] += azmul(pz[j], inv_y);
 	}
 }
 

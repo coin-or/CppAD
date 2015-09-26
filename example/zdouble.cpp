@@ -74,16 +74,8 @@ namespace {
 		a1w[0] = a1type(1.0);
 		Independent(a1x);
 		af1.Forward(0, a1x);
-		if( is_double )
-		{	// if Base is double, this would generate an assert
-			af1.check_for_nan(false);
-		}
 		a1z = af1.Reverse(1, a1w);
 		CppAD::ADFun<Base> g;
-		if( is_double )
-		{	// if Base is double, this would generate an assert
-				g.check_for_nan(false);
-		}
 		g.Dependent(a1x, a1z);
 
 		// check result for a case where f(x) = 0.0;
@@ -91,12 +83,8 @@ namespace {
 		x[0] = 0.0;
 		x[1] = 0.0;
 		z    = g.Forward(0, x);
-		if( is_double )
-			ok &= CppAD::isnan(z[1]);
-		else
-		{	ok &= z[0] == 0.0;
-			ok &= z[1] == 0.0;
-		}
+		ok &= z[0] == 0.0;
+		ok &= z[1] == 0.0;
 
 		// check result for a case where f(x) = 1.0;
 		x[0] = 1.0;
@@ -111,9 +99,6 @@ namespace {
 		z    = g.Forward(0, x);
 		ok &= CppAD::NearEqual(z[0], 1.0/x[1], eps, eps);
 		ok &= CppAD::NearEqual(z[1], - x[0]/(x[1]*x[1]), eps, eps);
-
-		// check that nan works
-		ok &= CppAD::isnan( CppAD::nan( Base(0.0) ) );
 
 		return ok;
 	}

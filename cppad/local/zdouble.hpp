@@ -22,6 +22,9 @@ $spell
 $$
 $section zdouble: An AD Base Type With Absolute Zero$$
 
+$head Deprecated 2015-09-26$$
+Use the function $cref azmul$$ instead.
+
 $head Absolute Zero$$
 The $code zdouble$$ class acts like the $code double$$ type
 with the added property that zero times any value is zero.
