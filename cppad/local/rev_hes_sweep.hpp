@@ -486,18 +486,18 @@ void RevHesSweep(
 # endif
 			// -------------------------------------------------
 
-			case MulvvOp:
-			CPPAD_ASSERT_NARG_NRES(op, 2, 1)
-			reverse_sparse_hessian_mul_op(
-			i_var, arg, RevJac, for_jac_sparse, rev_hes_sparse
-			);
-			break;
-			// -------------------------------------------------
-
 			case MulpvOp:
 			CPPAD_ASSERT_NARG_NRES(op, 2, 1)
 			reverse_sparse_hessian_linear_unary_op(
 			i_var, arg[1], RevJac, for_jac_sparse, rev_hes_sparse
+			);
+			break;
+			// -------------------------------------------------
+
+			case MulvvOp:
+			CPPAD_ASSERT_NARG_NRES(op, 2, 1)
+			reverse_sparse_hessian_mul_op(
+			i_var, arg, RevJac, for_jac_sparse, rev_hes_sparse
 			);
 			break;
 			// -------------------------------------------------
@@ -885,6 +885,30 @@ void RevHesSweep(
 			}
 			if( user_i == 0 )
 				user_state = user_arg;
+			break;
+			// -------------------------------------------------
+
+			case ZmulpvOp:
+			CPPAD_ASSERT_NARG_NRES(op, 2, 1)
+			reverse_sparse_hessian_linear_unary_op(
+			i_var, arg[1], RevJac, for_jac_sparse, rev_hes_sparse
+			);
+			break;
+			// -------------------------------------------------
+
+			case ZmulvpOp:
+			CPPAD_ASSERT_NARG_NRES(op, 2, 1)
+			reverse_sparse_hessian_linear_unary_op(
+			i_var, arg[0], RevJac, for_jac_sparse, rev_hes_sparse
+			);
+			break;
+			// -------------------------------------------------
+
+			case ZmulvvOp:
+			CPPAD_ASSERT_NARG_NRES(op, 2, 1)
+			reverse_sparse_hessian_mul_op(
+			i_var, arg, RevJac, for_jac_sparse, rev_hes_sparse
+			);
 			break;
 
 			// -------------------------------------------------

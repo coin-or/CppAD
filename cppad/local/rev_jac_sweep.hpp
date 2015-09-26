@@ -474,18 +474,18 @@ void RevJacSweep(
 # endif
 			// -------------------------------------------------
 
-			case MulvvOp:
-			CPPAD_ASSERT_NARG_NRES(op, 2, 1);
-			reverse_sparse_jacobian_binary_op(
-				i_var, arg, var_sparsity
-			);
-			break;
-			// -------------------------------------------------
-
 			case MulpvOp:
 			CPPAD_ASSERT_NARG_NRES(op, 2, 1);
 			reverse_sparse_jacobian_unary_op(
 				i_var, arg[1], var_sparsity
+			);
+			break;
+			// -------------------------------------------------
+
+			case MulvvOp:
+			CPPAD_ASSERT_NARG_NRES(op, 2, 1);
+			reverse_sparse_jacobian_binary_op(
+				i_var, arg, var_sparsity
 			);
 			break;
 			// -------------------------------------------------
@@ -815,6 +815,30 @@ void RevJacSweep(
 					CPPAD_ATOMIC_CALL( user_q, set_r, set_s);
 				user_state = user_arg;
 			}
+			break;
+			// -------------------------------------------------
+
+			case ZmulpvOp:
+			CPPAD_ASSERT_NARG_NRES(op, 2, 1);
+			reverse_sparse_jacobian_unary_op(
+				i_var, arg[1], var_sparsity
+			);
+			break;
+			// -------------------------------------------------
+
+			case ZmulvpOp:
+			CPPAD_ASSERT_NARG_NRES(op, 2, 1);
+			reverse_sparse_jacobian_unary_op(
+				i_var, arg[0], var_sparsity
+			);
+			break;
+			// -------------------------------------------------
+
+			case ZmulvvOp:
+			CPPAD_ASSERT_NARG_NRES(op, 2, 1);
+			reverse_sparse_jacobian_binary_op(
+				i_var, arg, var_sparsity
+			);
 			break;
 			// -------------------------------------------------
 
