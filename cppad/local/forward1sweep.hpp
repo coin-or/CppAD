@@ -327,7 +327,7 @@ void forward1sweep(
 			CPPAD_ASSERT_UNKNOWN( op != CSkipOp );
 			// if( op == CSkipOp )
 			// {	// CSkip has a variable number of arguments
-			// 	play->forward_cskip(op, arg, i_op, i_var);
+			//	play->forward_cskip(op, arg, i_op, i_var);
 			// }
 			play->forward_next(op, arg, i_op, i_var);
 			CPPAD_ASSERT_UNKNOWN( i_op < play->num_op_rec() );
@@ -679,14 +679,14 @@ void forward1sweep(
 			break;
 			// -------------------------------------------------
 
-			case MulvvOp:
-			forward_mulvv_op(p, q, i_var, arg, parameter, J, taylor);
-			break;
-			// -------------------------------------------------
-
 			case MulpvOp:
 			CPPAD_ASSERT_UNKNOWN( size_t(arg[0]) < num_par );
 			forward_mulpv_op(p, q, i_var, arg, parameter, J, taylor);
+			break;
+			// -------------------------------------------------
+
+			case MulvvOp:
+			forward_mulvv_op(p, q, i_var, arg, parameter, J, taylor);
 			break;
 			// -------------------------------------------------
 
@@ -977,6 +977,23 @@ void forward1sweep(
 			user_i++;
 			if( user_i == user_m )
 				user_state = user_end;
+			break;
+			// -------------------------------------------------
+
+			case ZmulpvOp:
+			CPPAD_ASSERT_UNKNOWN( size_t(arg[0]) < num_par );
+			forward_zmulpv_op(p, q, i_var, arg, parameter, J, taylor);
+			break;
+			// -------------------------------------------------
+
+			case ZmulvpOp:
+			CPPAD_ASSERT_UNKNOWN( size_t(arg[1]) < num_par );
+			forward_zmulvp_op(p, q, i_var, arg, parameter, J, taylor);
+			break;
+			// -------------------------------------------------
+
+			case ZmulvvOp:
+			forward_zmulvv_op(p, q, i_var, arg, parameter, J, taylor);
 			break;
 			// -------------------------------------------------
 

@@ -29,49 +29,63 @@ bool azmul(void)
 	size_t m = 3;
 
 	// double level
-	CPPAD_TESTVECTOR(double) x(n), y(n);
+	CPPAD_TESTVECTOR(double) x(n), z(n);
 	x[0] = 3.0;
 	x[1] = 4.0;
 
-	// a1 level
-	CPPAD_TESTVECTOR(a1double) a1x(n), a1y(m);
+	// start a1 level recording
+	CPPAD_TESTVECTOR(a1double) a1x(n), a1dx(n), a1y(m), a1z(m);
 	for(size_t j = 0; j < n; j++)
 		a1x[j] = x[j];
 	CppAD::Independent(a1x);
 
-	// a2 level
+	// start a2 level recording
 	CPPAD_TESTVECTOR(a2double) a2x(n), a2y(m);
 	for(size_t j = 0; j < n; j++)
 		a2x[j] = a1x[j];
 	CppAD::Independent(a2x);
 
-	// a2 recording
+	// y
 	a2y[0] = CppAD::azmul(a2x[0], a2x[1]); // azmul(variable, variable)
 	a2y[1] = CppAD::azmul(a1x[0], a2x[1]); // azmul(parameter, variable)
 	a2y[2] = CppAD::azmul(a2x[0], a1x[1]); // azmul(variable, parameter)
 
-	// create a1f: x -> y and stop a2 recording
+	// create f: x -> y and stop a2 recording
 	CppAD::ADFun<a1double> a1f;
 	a1f.Dependent(a2x, a2y);
 
-	// a1 recording
-	a1y = a1f.Forward(0, a1x);            // azmul(variable, variable) only
+	// check y
+	a1y = a1f.Forward(0, a1x);  // azmul(variable, variable) only
+	for(size_t i = 0; i < m; i++)
+		ok &= NearEqual(a1y[i] , x[0] * x[1],  eps, eps);
 
-	// create f: x -> y and stop a1 recording
-	CppAD::ADFun<double> f;
-	f.Dependent(a1x, a1y);
+	for(size_t j = 0; j < n; j++)
+		a1dx[j] = a1double(1.0);
+	a1z = a1f.Forward(1, a1dx);
+
+	// create g: x -> z and stop a1 recording
+	CppAD::ADFun<double> g;
+	g.Dependent(a1x, a1z);
 
 	// check value when x[0] is not zero
-	y = f.Forward(0, x);
-	for(size_t i = 0; i < m; i++)
-		ok &= NearEqual(y[i] , x[0] * x[1],  eps, eps);
+	z = g.Forward(0, x);
+
+	// z_0 = d_lambda [ ( x[0] + lambda ) * ( x[1] + lambda ) ]
+	ok &= NearEqual(z[0] , x[0] + x[1],  eps, eps);
+
+	// z_1 = d_lambda [ x[0] * ( x[1] + lambda ) ]
+	ok &= NearEqual(z[1] , x[0],  eps, eps);
+
+	// z_2 = d_lambda [ ( x[0] + lambda ) * x[1] ]
+	ok &= NearEqual(z[2] , x[1],  eps, eps);
 
 	// check value x[0] is zero and x[1] is infinity
 	x[0] = 0.0;
 	x[1] = inf;
-	y    = f.Forward(0, x);
-	for(size_t i = 0; i < m; i++)
-		ok &= y[i] ==  0.0;
+	z    = g.Forward(0, x);
+	ok  &= z[0] == inf;
+	ok  &= z[1] == 0.0;
+	ok  &= z[2] == inf;
 
 	return ok;
 }
