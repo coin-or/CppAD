@@ -101,7 +101,7 @@ inline void forward_zmulvv_op_dir(
 	size_t k, ell, m;
 	for(ell = 0; ell < r; ell++)
 	{	m = (q-1)*r + ell + 1;
-		z[m] = azmul(x[0], y[m]) + x[m] * y[0];
+		z[m] = azmul(x[0], y[m]) + azmul(x[m],  y[0]);
 		for(k = 1; k < q; k++)
 			z[m] += azmul(x[(q-k-1)*r + ell + 1], y[(k-1)*r + ell + 1]);
 	}

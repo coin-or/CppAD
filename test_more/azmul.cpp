@@ -163,12 +163,105 @@ namespace {
 
 		return ok;
 	}
+	bool test_forward_dir(void)
+	{	bool ok = true;
+
+		using CppAD::AD;
+		using CppAD::NearEqual;
+		double inf = std::numeric_limits<double>::infinity();
+		double eps = 10. * std::numeric_limits<double>::epsilon();
+
+		typedef AD<double>    a1double;
+		typedef AD<a1double>  a2double;
+
+		// domain space vector
+		size_t n = 2;
+		size_t m = 3;
+		size_t r = 2;
+
+		// double level
+		CPPAD_TESTVECTOR(double) x(n), z(n);
+		x[0] = 3.0;
+		x[1] = 4.0;
+
+		// start a1 level recording
+		CPPAD_TESTVECTOR(a1double) a1x(n), a1dx(r * n), a1y(m), a1z(r * m);
+		for(size_t j = 0; j < n; j++)
+			a1x[j] = x[j];
+		CppAD::Independent(a1x);
+
+		// start a2 level recording
+		CPPAD_TESTVECTOR(a2double) a2x(n), a2y(m);
+		for(size_t j = 0; j < n; j++)
+			a2x[j] = a1x[j];
+		CppAD::Independent(a2x);
+
+		// y
+		a2y[0] = CppAD::azmul(a2x[0], a2x[1]); // azmul(variable, variable)
+		a2y[1] = CppAD::azmul(a1x[0], a2x[1]); // azmul(parameter, variable)
+		a2y[2] = CppAD::azmul(a2x[0], a1x[1]); // azmul(variable, parameter)
+
+		// create f: x -> y and stop a2 recording
+		CppAD::ADFun<a1double> a1f;
+		a1f.Dependent(a2x, a2y);
+
+		// check y
+		a1y = a1f.Forward(0, a1x);  // azmul(variable, variable) only
+		for(size_t i = 0; i < m; i++)
+			ok &= NearEqual(a1y[i] , x[0] * x[1],  eps, eps);
+
+		for(size_t j = 0; j < n; j++)
+		{	for(size_t ell = 0; ell < r; ell++)
+				a1dx[r * j + ell] = a1double(1.0 + ell);
+		}
+		a1z = a1f.Forward(1, r, a1dx);
+
+
+		// create g: x -> z and stop a1 recording
+		CppAD::ADFun<double> g;
+		g.Dependent(a1x, a1z);
+
+		// check value when x[0] is not zero
+		z = g.Forward(0, x);
+
+		// z_00 = d_lambda [ ( x[0] + lambda ) * ( x[1] + lambda ) ]
+		ok &= NearEqual(z[r * 0 + 0] , x[0] + x[1],  eps, eps);
+
+		// z_01 = d_lambda [ ( x[0] + 2 * lambda ) * ( x[1] + 2 * lambda ) ]
+		ok &= NearEqual(z[r * 0 + 1] , 2.0*(x[0] + x[1]),  eps, eps);
+
+		// z_10 = d_lambda [ x[0] * ( x[1] + lambda ) ]
+		ok &= NearEqual(z[r * 1 + 0] , x[0],  eps, eps);
+
+		// z_11 = d_lambda [ x[0] * ( x[1] + 2 * lambda ) ]
+		ok &= NearEqual(z[r * 1 + 1] , 2.0 * x[0],  eps, eps);
+
+		// z_20 = d_lambda [ ( x[0] + lambda ) * x[1] ]
+		ok &= NearEqual(z[r * 2 + 0] , x[1],  eps, eps);
+
+		// z_21 = d_lambda [ ( x[0] + 2 * lambda ) * x[1] ]
+		ok &= NearEqual(z[r * 2 + 1] , 2.0 * x[1],  eps, eps);
+
+		// check value x[0] is zero and x[1] is infinity
+		x[0] = 0.0;
+		x[1] = inf;
+		z    = g.Forward(0, x);
+		ok  &= z[r * 0 + 0] == inf;
+		ok  &= z[r * 0 + 1] == inf;
+		ok  &= z[r * 1 + 0] == 0.0;
+		ok  &= z[r * 1 + 1] == 0.0;
+		ok  &= z[r * 2 + 0] == inf;
+		ok  &= z[r * 2 + 1] == inf;
+
+		return ok;
+	}
 }
 bool azmul(void)
 {	bool ok = true;
 
 	ok &= test_forward();
 	ok &= test_reverse();
+	ok &= test_forward_dir();
 
 	return ok;
 }
