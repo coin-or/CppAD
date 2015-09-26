@@ -33,20 +33,30 @@ bool mul_cond_rev(void)
 	// --------------------------------------------------------------------
 	// create a1f = f(x)
 	size_t n = 1;
+# if CPPAD_USE_CPLUSPLUS_2011
+	size_t m = 5;
+# else
 	size_t m = 4;
+# endif
 	vector<a2double> a2x(n), a2y(m);
 	a2x[0] = a2double( 5.0 );
 	Independent(a2x);
 	//
 	size_t i = 0;
+	a2double a2tmp;
 	// div
 	a2y[i++]  = CondExpGt(a2x[0], a2zero, a2one / a2x[0], a2zero);
 	// abs
 	a2y[i++]  = CondExpGt(a2x[0], a2zero, abs( a2y[0] ), a2zero);
 	// add
 	a2y[i++]  = CondExpGt(a2x[0], a2zero, a2y[0] + a2y[0], a2zero);
+	// acos
+	a2tmp     = a2one / (a2x[0] + a2double(0.5));
+	a2y[i++]  = CondExpGt(a2x[0], a2zero, acos(a2tmp), a2zero);
+# if CPPAD_USE_CPLUSPLUS_2011
 	// acosh
 	a2y[i++]  = CondExpGt(a2x[0], a2zero, acosh( a2x[0] ), a2zero);
+# endif
 	//
 	CppAD::ADFun<a1double> a1f;
 	a1f.Dependent(a2x, a2y);
@@ -57,14 +67,20 @@ bool mul_cond_rev(void)
 	//
 	Independent(a1x);
 	i = 0;
+	a1double a1tmp;
 	// div
 	a1y[i++]  = CondExpGt(a1x[0], a1zero, a1one / a1x[0], a1zero);
 	// abs
 	a1y[i++]  = CondExpGt(a1x[0], a1zero, abs( a1y[0] ), a1zero);
 	// add
 	a1y[i++]  = CondExpGt(a1x[0], a1zero, a1y[0] + a1y[0], a1zero);
+	// acos
+	a1tmp     = a1one / (a1x[0] + a1double(0.5));
+	a1y[i++]  = CondExpGt(a1x[0], a1zero, acos(a1tmp), a1zero);
+# if CPPAD_USE_CPLUSPLUS_2011
 	// acosh
 	a1y[i++]  = CondExpGt(a1x[0], a1zero, acosh( a1x[0] ), a1zero);
+# endif
 	//
 	CppAD::ADFun<double> h;
 	h.Dependent(a1x, a1y);
