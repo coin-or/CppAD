@@ -15,7 +15,7 @@ Test of multi-level conditional expressions reverse mode
 
 # include <cppad/cppad.hpp>
 
-bool mul_cond(void)
+bool mul_cond_rev(void)
 {
 	bool ok = true;
 	using CppAD::vector;

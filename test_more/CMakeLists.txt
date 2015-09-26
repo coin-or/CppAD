@@ -113,6 +113,7 @@ ADD_EXECUTABLE(test_more EXCLUDE_FROM_ALL test_more.cpp
 	mul_cskip.cpp
 	mul_eq.cpp
 	mul_level.cpp
+	mul_cond_rev.cpp
 	mul_zdouble.cpp
 	mul_zero_one.cpp
 	near_equal_ext.cpp
