@@ -253,7 +253,7 @@ void ReverseSweep(
 			CPPAD_ASSERT_UNKNOWN( op != CSkipOp );
 			// if( op == CSkipOp )
 			// {	// CSkip has a variable number of arguments
-			// 	play->reverse_cskip(op, arg, i_op, i_var);
+			//	play->reverse_cskip(op, arg, i_op, i_var);
 			// }
 			CPPAD_ASSERT_UNKNOWN( i_op < play->num_op_rec() );
 			play->reverse_next(op, arg, i_op, i_var);
@@ -536,16 +536,16 @@ void ReverseSweep(
 # endif
 			// --------------------------------------------------
 
-			case MulvvOp:
-			reverse_mulvv_op(
+			case MulpvOp:
+			CPPAD_ASSERT_UNKNOWN( size_t(arg[0]) < num_par );
+			reverse_mulpv_op(
 				d, i_var, arg, parameter, J, Taylor, K, Partial
 			);
 			break;
 			// --------------------------------------------------
 
-			case MulpvOp:
-			CPPAD_ASSERT_UNKNOWN( size_t(arg[0]) < num_par );
-			reverse_mulpv_op(
+			case MulvvOp:
+			reverse_mulvv_op(
 				d, i_var, arg, parameter, J, Taylor, K, Partial
 			);
 			break;
@@ -792,6 +792,29 @@ void ReverseSweep(
 				user_state = user_arg;
 			break;
 			// ------------------------------------------------------------
+
+			case ZmulpvOp:
+			CPPAD_ASSERT_UNKNOWN( size_t(arg[0]) < num_par );
+			reverse_zmulpv_op(
+				d, i_var, arg, parameter, J, Taylor, K, Partial
+			);
+			break;
+			// --------------------------------------------------
+
+			case ZmulvpOp:
+			CPPAD_ASSERT_UNKNOWN( size_t(arg[0]) < num_par );
+			reverse_zmulvp_op(
+				d, i_var, arg, parameter, J, Taylor, K, Partial
+			);
+			break;
+			// --------------------------------------------------
+
+			case ZmulvvOp:
+			reverse_zmulvv_op(
+				d, i_var, arg, parameter, J, Taylor, K, Partial
+			);
+			break;
+			// --------------------------------------------------
 
 			default:
 			CPPAD_ASSERT_UNKNOWN(false);
