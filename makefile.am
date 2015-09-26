@@ -276,6 +276,7 @@ nobase_myinclude_HEADERS =  \
 	cppad/local/var2par.hpp \
 	cppad/local/vec_ad.hpp \
 	cppad/local/zdouble.hpp \
+	cppad/local/zmul_op.hpp \
 	cppad/lu_factor.hpp \
 	cppad/lu_invert.hpp \
 	cppad/lu_solve.hpp \
