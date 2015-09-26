@@ -6,7 +6,7 @@
 CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-15 Bradley M. Bell
 
 CppAD is distributed under multiple licenses. This distribution is under
-the terms of the 
+the terms of the
                     Eclipse Public License Version 1.0.
 
 A copy of this license is included in the COPYING file of this distribution.
@@ -40,16 +40,16 @@ class ADTape {
 	friend void PrintFor <Base> (
 		const AD<Base>&    flag   ,
 		const char*        before ,
-		const AD<Base>&    var    , 
+		const AD<Base>&    var    ,
 		const char*        after
 	);
 	// CondExpOp
 	friend AD<Base> CondExpOp <Base> (
 		enum CompareOp  cop          ,
-		const AD<Base> &left         , 
-		const AD<Base> &right        , 
-		const AD<Base> &trueCase     , 
-		const AD<Base> &falseCase 
+		const AD<Base> &left         ,
+		const AD<Base> &right        ,
+		const AD<Base> &trueCase     ,
+		const AD<Base> &falseCase
 	);
 	// pow
 	friend AD<Base> pow <Base>
@@ -58,10 +58,10 @@ class ADTape {
 	friend AD<Base> azmul <Base>
 		(const AD<Base> &x, const AD<Base> &y);
 	// Parameter
-	friend bool Parameter     <Base> 
+	friend bool Parameter     <Base>
 		(const AD<Base> &u);
 	// Variable
-	friend bool Variable      <Base> 
+	friend bool Variable      <Base>
 		(const AD<Base> &u);
 	// operators -----------------------------------------------------------
 	// arithematic binary operators
@@ -94,9 +94,9 @@ private:
 	// ----------------------------------------------------------------------
 	// private data
 	/*!
-	Unique identifier for this tape.  It is always greater than 
-	CPPAD_MAX_NUM_THREADS, and different for every tape (even ones that have 
-	been deleted). In addition, id_ % CPPAD_MAX_NUM_THREADS is the thread 
+	Unique identifier for this tape.  It is always greater than
+	CPPAD_MAX_NUM_THREADS, and different for every tape (even ones that have
+	been deleted). In addition, id_ % CPPAD_MAX_NUM_THREADS is the thread
 	number for this tape. Set by Independent and effectively const
 	*/
 	tape_id_t                    id_;
@@ -110,7 +110,7 @@ private:
 	//
 	// add a parameter to the tape
 	size_t RecordParOp(const Base &x);
-	
+
 	// see CondExp.h
 	void RecordCondExp(
 		enum CompareOp  cop           ,
@@ -150,7 +150,7 @@ when it is one of the dependent variabes.
 \param z
 value of the parameter that we are placing in the tape.
 
-\return 
+\return
 variable index (for this recording) correpsonding to the parameter.
 
 \par 2DO
@@ -189,7 +189,7 @@ The value for this vector index is the length of the vector.
 There are \c length indices following for this vector.
 The values for these vector indices are the corresponding
 parameter indices in the tape for the initial value of the corresponding
-vec_ad element.  
+vec_ad element.
 
 \par 2DO
 All these operates are preformed in \c Rec_, so we should
@@ -204,13 +204,13 @@ size_t ADTape<Base>::AddVec(size_t length, const pod_vector<Base>& data)
 	// store the length in VecInd
 	size_t start = Rec_.PutVecInd(length);
 
-	// store indices of the values in VecInd 
+	// store indices of the values in VecInd
 	for(i = 0; i < length; i++)
 	{
 		value_index = Rec_.PutPar( data[i] );
 		Rec_.PutVecInd( value_index );
 	}
- 
+
 	// return the taddr of the length (where the vector starts)
 	return start;
 }

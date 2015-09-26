@@ -3,7 +3,7 @@
 CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-15 Bradley M. Bell
 
 CppAD is distributed under multiple licenses. This distribution is under
-the terms of the 
+the terms of the
                     Eclipse Public License Version 1.0.
 
 A copy of this license is included in the COPYING file of this distribution.
@@ -47,7 +47,7 @@ bool azmul(void)
 	// declare independent variables and start tape recording
 	CppAD::Independent(axy);
 
-	// range space vector 
+	// range space vector
 	size_t m = 5;
 	CPPAD_TESTVECTOR(AD<double>) az(m);
 	az[0] = CppAD::azmul(axy[0], axy[1]); // azmul(variable, variable)
@@ -57,7 +57,7 @@ bool azmul(void)
 	az[4] = CppAD::azmul(4.0, axy[1]);    // azmul(parameter=4.0, variable)
 
 	// create f: axy -> az and stop tape recording
-	CppAD::ADFun<double> f(axy, az); 
+	CppAD::ADFun<double> f(axy, az);
 
 	// check value when x is not zero
 	ok &= NearEqual(az[0] , x * y,  eps, eps);

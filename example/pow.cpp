@@ -3,7 +3,7 @@
 CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-15 Bradley M. Bell
 
 CppAD is distributed under multiple licenses. This distribution is under
-the terms of the 
+the terms of the
                     Eclipse Public License Version 1.0.
 
 A copy of this license is included in the COPYING file of this distribution.
@@ -46,7 +46,7 @@ bool pow(void)
 	// declare independent variables and start tape recording
 	CppAD::Independent(axy);
 
-	// range space vector 
+	// range space vector
 	size_t m = 3;
 	CPPAD_TESTVECTOR(AD<double>) az(m);
 	az[0] = CppAD::pow(axy[0], axy[1]); // pow(variable, variable)
@@ -54,9 +54,9 @@ bool pow(void)
 	az[2] = CppAD::pow(x,     axy[1]);  // pow(parameter, variable)
 
 	// create f: axy -> az and stop tape recording
-	CppAD::ADFun<double> f(axy, az); 
+	CppAD::ADFun<double> f(axy, az);
 
-	// check value 
+	// check value
 	double check = std::pow(x, y);
 	size_t i;
 	for(i = 0; i < m; i++)
