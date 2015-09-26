@@ -70,6 +70,18 @@ This section contains a list of the changes to CppAD during 2015
 The purpose of this section is to
 assist you in learning about changes between various versions of CppAD.
 
+$head 09-25$$
+Add the
+$cref/absolute zero multiplication/base_require/Absolute Zero, azmul/$$
+requirement for user defined base types.
+This will eventually make it possible to combine
+$cref/conditional expression/CondExp/$$,
+$cref/multiple levels/mul_level/$$,
+$cref/reverse/Reverse/$$, and
+a base type that has standard ieee multiplication; e.g., $code double$$.
+In other words, not all multiplications will need to have an
+absolute zero (as is the case with the $cref zdouble$$ base class.
+
 $head 09-24$$
 Fix some Visual Studio 2013 C++ level four $code /W4$$ warnings
 (previous warnings were are level 3).

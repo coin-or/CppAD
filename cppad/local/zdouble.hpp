@@ -441,6 +441,10 @@ inline std::ostream& operator << (std::ostream &os, const zdouble& z)
 inline int Integer(const zdouble& x)
 {	return static_cast<int>(x.dbl_); }
 
+/// Base type requirement: azmul
+inline zdouble azmul(const zdouble& x, const zdouble& y)
+{	return x * y; }
+
 /// Base type requirement: Ordered
 inline bool GreaterThanZero(const zdouble& x)
 {	return x > 0.0; }
