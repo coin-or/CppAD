@@ -33,7 +33,7 @@ bool mul_cond_rev(void)
 	// --------------------------------------------------------------------
 	// create a1f = f(x)
 	size_t n = 1;
-	size_t m = 3;
+	size_t m = 4;
 	vector<a2double> a2x(n), a2y(m);
 	a2x[0] = a2double( 5.0 );
 	Independent(a2x);
@@ -45,6 +45,8 @@ bool mul_cond_rev(void)
 	a2y[i++]  = CondExpGt(a2x[0], a2zero, abs( a2y[0] ), a2zero);
 	// add
 	a2y[i++]  = CondExpGt(a2x[0], a2zero, a2y[0] + a2y[0], a2zero);
+	// acosh
+	a2y[i++]  = CondExpGt(a2x[0], a2zero, acosh( a2x[0] ), a2zero);
 	//
 	CppAD::ADFun<a1double> a1f;
 	a1f.Dependent(a2x, a2y);
@@ -61,6 +63,8 @@ bool mul_cond_rev(void)
 	a1y[i++]  = CondExpGt(a1x[0], a1zero, abs( a1y[0] ), a1zero);
 	// add
 	a1y[i++]  = CondExpGt(a1x[0], a1zero, a1y[0] + a1y[0], a1zero);
+	// acosh
+	a1y[i++]  = CondExpGt(a1x[0], a1zero, acosh( a1x[0] ), a1zero);
 	//
 	CppAD::ADFun<double> h;
 	h.Dependent(a1x, a1y);
