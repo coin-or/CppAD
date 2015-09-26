@@ -124,17 +124,22 @@ $codei%
 	%z% = azmul(%x%, %y%)
 %$$
 where see; $cref azmul$$.
-It should suffice to define the function
+The following preprocessor macro invocation suffice
 $codei%
 namespace CppAD {
-	inline %Base% azmul(const %Base%& x, const %Base%& y)
-	{	Base zero(0.0);
-		if( %x% == zero )
-			return zero;
-		return x * y;
-	}
+	CPPAD_AZMUL(%Base%)
 }
 %$$
+where the macro is defined by
+$codep */
+# define CPPAD_AZMUL(Base) \
+    inline Base azmul(const Base& x, const Base& y) \
+    {   Base zero(0.0);   \
+        if( x == zero ) \
+            return zero;  \
+        return x * y;     \
+    }
+/* $$
 
 $childtable%
 	omh/base_require/base_member.omh%

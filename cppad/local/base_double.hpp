@@ -17,6 +17,7 @@ Please visit http://www.coin-or.org/CppAD/ for information on other licenses.
 /*
 $begin base_double.hpp$$
 $spell
+	azmul
 	expm1
 	atanh
 	acosh
@@ -110,6 +111,13 @@ $codep */
 namespace CppAD {
 	inline int Integer(const double& x)
 	{	return static_cast<int>(x); }
+}
+/* $$
+
+$head azmul$$
+$codep */
+namespace CppAD {
+	CPPAD_AZMUL( double )
 }
 /* $$
 

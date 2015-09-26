@@ -14,6 +14,7 @@ Please visit http://www.coin-or.org/CppAD/ for information on other licenses.
 /*
 $begin base_alloc.hpp$$
 $spell
+	azmul
 	expm1
 	atanh
 	acosh
@@ -245,6 +246,13 @@ $codep */
 namespace CppAD {
 	inline int Integer(const base_alloc& x)
 	{	return static_cast<int>(*x.ptrdbl_); }
+}
+/* $$
+
+$head azmul$$
+$codep */
+namespace CppAD {
+	CPPAD_AZMUL( base_alloc )
 }
 /* $$
 

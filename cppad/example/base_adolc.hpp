@@ -14,6 +14,7 @@ Please visit http://www.coin-or.org/CppAD/ for information on other licenses.
 /*
 $begin base_adolc.hpp$$
 $spell
+	azmul
 	expm1
 	atanh
 	acosh
@@ -191,6 +192,13 @@ $head Integer$$
 $codep */
 	inline int Integer(const adouble &x)
 	{    return static_cast<int>( x.getValue() ); }
+/* $$
+
+$head azmul$$
+$codep */
+namespace CppAD {
+	CPPAD_AZMUL( adouble )
+}
 /* $$
 
 $head Ordered$$
