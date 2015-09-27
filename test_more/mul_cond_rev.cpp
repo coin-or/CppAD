@@ -33,9 +33,9 @@ bool mul_cond_rev(void)
 	// --------------------------------------------------------------------
 	// create a1f = f(x)
 	size_t n = 1;
-	size_t m = 10;
+	size_t m = 11;
 # if CPPAD_USE_CPLUSPLUS_2011
-	m += 5;
+	m += 6;
 # endif
 	vector<a2double> a2x(n), a2y(m);
 	a2x[0] = a2double( 5.0 );
@@ -74,6 +74,8 @@ bool mul_cond_rev(void)
 	a2y[i++]  = CondExpGt(a2x[0], a2zero, exp(a2nan_var), a2zero);
 	// log
 	a2y[i++]  = CondExpGt(a2x[0], a2zero, log(a2x[0]), a2zero);
+	// mul
+	a2y[i++]  = CondExpGt(a2x[0], a2zero, a2x[0] * a2inf_var, a2zero);
 # if CPPAD_USE_CPLUSPLUS_2011
 	// acosh
 	a2y[i++]  = CondExpGt(a2x[0], a2zero, acosh( a2x[0] ), a2zero);
@@ -85,6 +87,8 @@ bool mul_cond_rev(void)
 	a2y[i++]  = CondExpGt(a2x[0], a2zero, erf( a2nan_var ), a2zero);
 	// expm1
 	a2y[i++]  = CondExpGt(a2x[0], a2zero, expm1(a2nan_var), a2zero);
+	// log1p
+	a2y[i++]  = CondExpGt(a2x[0], a2zero, log1p(- a2one_var ), a2zero);
 # endif
 	ok &= i == m;
 	CppAD::ADFun<a1double> a1f;
@@ -120,6 +124,8 @@ bool mul_cond_rev(void)
 	a1y[i++]  = CondExpGt(a1x[0], a1zero, exp(a1nan_var), a1zero);
 	// log
 	a1y[i++]  = CondExpGt(a1x[0], a1zero, log(a1x[0]), a1zero);
+	// mul
+	a1y[i++]  = CondExpGt(a1x[0], a1zero, a1x[0] * a1inf_var, a1zero);
 # if CPPAD_USE_CPLUSPLUS_2011
 	// acosh
 	a1y[i++]  = CondExpGt(a1x[0], a1zero, acosh( a1x[0] ), a1zero);
@@ -131,6 +137,8 @@ bool mul_cond_rev(void)
 	a1y[i++]  = CondExpGt(a1x[0], a1zero, erf( a1nan_var ), a1zero);
 	// expm1
 	a1y[i++]  = CondExpGt(a1x[0], a1zero, expm1(a1nan_var), a1zero);
+	// log1p
+	a1y[i++]  = CondExpGt(a1x[0], a1zero, log1p(- a1one_var ), a1zero);
 # endif
 	ok &= i == m;
 	CppAD::ADFun<double> h;

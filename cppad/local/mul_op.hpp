@@ -181,13 +181,6 @@ inline void reverse_mulvv_op(
 	Base* py = partial + arg[1] * nc_partial;
 	Base* pz = partial + i_z    * nc_partial;
 
-	// If pz is zero, make sure this operation has no effect
-	// (zero times infinity or nan would be non-zero).
-	bool skip(true);
-	for(size_t i_d = 0; i_d <= d; i_d++)
-		skip &= IdenticalZero(pz[i_d]);
-	if( skip )
-		return;
 
 	// number of indices to access
 	size_t j = d + 1;
@@ -196,8 +189,8 @@ inline void reverse_mulvv_op(
 	{	--j;
 		for(k = 0; k <= j; k++)
 		{
-			px[j-k] += pz[j] * y[k];
-			py[k]   += pz[j] * x[j-k];
+			px[j-k] += azmul(pz[j], y[k]);
+			py[k]   += azmul(pz[j], x[j-k]);
 		}
 	}
 }
@@ -358,7 +351,7 @@ inline void reverse_mulpv_op(
 	size_t j = d + 1;
 	while(j)
 	{	--j;
-		py[j] += pz[j] * x;
+		py[j] += azmul(pz[j], x);
 	}
 }
 
