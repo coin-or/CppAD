@@ -35,7 +35,7 @@ bool mul_cond_rev(void)
 	size_t n = 1;
 	size_t m = 6;
 # if CPPAD_USE_CPLUSPLUS_2011
-	m += 2;
+	m += 3;
 # endif
 	vector<a2double> a2x(n), a2y(m);
 	a2x[0] = a2double( 5.0 );
@@ -47,27 +47,32 @@ bool mul_cond_rev(void)
 	a2double a2switch  = a2one / (a2x[0] + a2double(0.5));
 	// variable that is infinity when x[0] is zero
 	// and a normal number when x[0] is 1.0 or greater
-	a2double a2inf     = a2one / a2x[0];
+	a2double a2inf_var = a2one / a2x[0];
 	// variable that is nan when x[0] is zero
 	// and a normal number when x[0] is 1.0 or greater
-	a2double a2nan     = ( a2one / a2inf ) / a2x[0];
+	a2double a2nan_var = ( a2one / a2inf_var ) / a2x[0];
+	// variable that is one when x[0] is zero
+	// and less then one when x[0] is 1.0 or greater
+	a2double a2one_var = a2one / ( a2one + a2x[0] );
 	// div
-	a2y[i++]  = CondExpGt(a2x[0], a2zero, a2inf, a2zero);
+	a2y[i++]  = CondExpGt(a2x[0], a2zero, a2nan_var, a2zero);
 	// abs
 	a2y[i++]  = CondExpGt(a2x[0], a2zero, abs( a2y[0] ), a2zero);
 	// add
-	a2y[i++]  = CondExpGt(a2x[0], a2zero, a2inf + a2inf, a2zero);
+	a2y[i++]  = CondExpGt(a2x[0], a2zero, a2nan_var + a2nan_var, a2zero);
 	// acos
 	a2y[i++]  = CondExpGt(a2x[0], a2zero, acos(a2switch), a2zero);
 	// asin
 	a2y[i++]  = CondExpGt(a2x[0], a2zero, asin(a2switch), a2zero);
 	// atan
-	a2y[i++]  = CondExpGt(a2x[0], a2zero, atan(a2nan), a2zero);
+	a2y[i++]  = CondExpGt(a2x[0], a2zero, atan(a2nan_var), a2zero);
 # if CPPAD_USE_CPLUSPLUS_2011
 	// acosh
 	a2y[i++]  = CondExpGt(a2x[0], a2zero, acosh( a2x[0] ), a2zero);
 	// asinh
-	a2y[i++]  = CondExpGt(a2x[0], a2zero, asinh( a2nan ), a2zero);
+	a2y[i++]  = CondExpGt(a2x[0], a2zero, asinh( a2nan_var ), a2zero);
+	// atanh
+	a2y[i++]  = CondExpGt(a2x[0], a2zero, atanh( a2one_var ), a2zero);
 # endif
 	CppAD::ADFun<a1double> a1f;
 	a1f.Dependent(a2x, a2y);
@@ -79,25 +84,28 @@ bool mul_cond_rev(void)
 	Independent(a1x);
 	i = 0;
 	a1double a1switch  = a1one / (a1x[0] + a1double(0.5));
-	a1double a1inf     = a1one / a1x[0];
-	a1double a1nan     = ( a1one / a1inf ) / a1x[0];
+	a1double a1inf_var = a1one / a1x[0];
+	a1double a1nan_var = ( a1one / a1inf_var ) / a1x[0];
+	a1double a1one_var = a1one / ( a1one + a1x[0] );
 	// div
-	a1y[i++]  = CondExpGt(a1x[0], a1zero, a1inf, a1zero);
+	a1y[i++]  = CondExpGt(a1x[0], a1zero, a1nan_var, a1zero);
 	// abs
 	a1y[i++]  = CondExpGt(a1x[0], a1zero, abs( a1y[0] ), a1zero);
 	// add
-	a1y[i++]  = CondExpGt(a1x[0], a1zero, a1inf + a1inf, a1zero);
+	a1y[i++]  = CondExpGt(a1x[0], a1zero, a1nan_var + a1nan_var, a1zero);
 	// acos
 	a1y[i++]  = CondExpGt(a1x[0], a1zero, acos(a1switch), a1zero);
 	// asin
 	a1y[i++]  = CondExpGt(a1x[0], a1zero, asin(a1switch), a1zero);
 	// atan
-	a1y[i++]  = CondExpGt(a1x[0], a1zero, atan(a1nan), a1zero);
+	a1y[i++]  = CondExpGt(a1x[0], a1zero, atan(a1nan_var), a1zero);
 # if CPPAD_USE_CPLUSPLUS_2011
 	// acosh
 	a1y[i++]  = CondExpGt(a1x[0], a1zero, acosh( a1x[0] ), a1zero);
 	// asinh
-	a1y[i++]  = CondExpGt(a1x[0], a1zero, asinh( a1nan ), a1zero);
+	a1y[i++]  = CondExpGt(a1x[0], a1zero, asinh( a1nan_var ), a1zero);
+	// atanh
+	a1y[i++]  = CondExpGt(a1x[0], a1zero, atanh( a1one_var ), a1zero);
 # endif
 	CppAD::ADFun<double> h;
 	h.Dependent(a1x, a1y);
