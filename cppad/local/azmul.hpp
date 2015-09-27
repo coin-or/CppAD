@@ -23,10 +23,6 @@ $$
 
 $section Absolute Zero Multiplication$$
 
-$head Under Construction$$
-This user API to this operator is under construction
-and not yet working.
-
 $head Syntax$$
 $icode%z% = azmul(%x%, %y%)%$$
 

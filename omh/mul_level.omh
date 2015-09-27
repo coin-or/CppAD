@@ -12,7 +12,6 @@ Please visit http://www.coin-or.org/CppAD/ for information on other licenses.
 
 $begin mul_level$$
 $spell
-	zdouble
 	Taylor
 	fout
 	const
@@ -38,7 +37,7 @@ these function values are not recorded by the tape corresponding to
 $codei%AD<%Base%>%$$ operations.
 
 $head Motivation$$
-Suppose that you uses derivatives of one or more inner functions
+Suppose that you use derivatives of one or more inner functions
 as part of the operations
 needed to compute an outer function.
 For example,
@@ -54,84 +53,84 @@ This can be accomplished in the following way:
 $list number$$
 The function defining the
 differential equation could be calculated using the class
-$codei AD< AD<zdouble> >$$; see $cref zdouble$$.
+$codei AD< AD<double> >$$.
 
 $lnext
 The operations during the calculation of Taylor's method
-could be done using the $codei AD<zdouble>$$ class.
+could be done using the $codei AD<double>$$ class.
 
 $lnext
 Derivatives of the solution of the differential equation
-could then be calculated using the $cref zdouble$$ class.
+could then be calculated using the $code double$$ class.
 
 $lend
 
 $head Procedure$$
 
-$subhead Double Record AD< AD<zdouble> >$$
+$subhead First Start AD<double>$$
 If some of the $cref/parameters/glossary/Parameter/$$
-in the $codei AD< AD<zdouble> >$$ recording depend on the
+in the $codei AD< AD<double> >$$ recording depend on the
 $cref/variables/glossary/Variable/$$
-in the $codei AD<zdouble>$$ recording,
+in the $codei AD<double>$$ recording,
 we must first declaring these variables; i.e.,
 $codei%
 	Independent(%a1x%)
 %$$
 where $icode a1x$$ is
-a $cref SimpleVector$$ with elements of type $codei AD<zdouble>$$.
+a $cref SimpleVector$$ with elements of type $codei AD<double>$$.
 This will start recording a new tape of
-operations performed using $codei AD<zdouble>$$ class objects.
+operations performed using $codei AD<double>$$ class objects.
 
-$subhead Start AD< AD<zdouble> > Recording$$
+$subhead Start AD< AD<double> > Recording$$
 The next step is to declare the independent variables using
 $codei%
 	Independent(%a2x%)
 %$$
 where $icode a2x$$ is
 a $cref SimpleVector$$ with elements of type
-$codei AD< AD<zdouble> >$$.
+$codei AD< AD<double> >$$.
 This will start recording a new tape of
-operations performed using $codei AD< AD<zdouble> >$$ class objects.
+operations performed using $codei AD< AD<double> >$$ class objects.
 
 $subhead Inner Function$$
 The next step is to calculation the inner function
-using $codei AD< AD<zdouble> >$$ class objects.
+using $codei AD< AD<double> >$$ class objects.
 We then stop the recording using
 $codei%
 	%a1f%.Dependent(%a2x%, %a2y%)
 %$$
 where $icode a2y$$ is
 a $cref SimpleVector$$ with elements of type
-$codei AD< AD<zdouble> >$$
-and $icode a1f$$ is an $codei%ADFun< AD<zdouble> >%$$ object.
+$codei AD< AD<double> >$$
+and $icode a1f$$ is an $codei%ADFun< AD<double> >%$$ object.
 
-$subhead Single Record AD< AD<zdouble> >$$
+$subhead Second Start AD< AD<double> >$$
 If none of the $cref/parameters/glossary/Parameter/$$
-in the $codei AD< AD<zdouble> >$$ recording depend on the
+in the $codei AD< AD<double> >$$ recording depend on the
 $cref/variables/glossary/Variable/$$
-in the $codei AD<zdouble>$$ recording,
+in the $codei AD<double>$$ recording,
 it is preferred to delay declaring these variables to this point; i.e.,
 $codei%
 	Independent(%a1x%)
 %$$
 where $icode a1x$$ is
-a $cref SimpleVector$$ with elements of type $codei AD<zdouble>$$.
+a $cref SimpleVector$$ with elements of type $codei AD<double>$$.
 This will start recording a new tape of
-operations performed using $codei AD<zdouble>$$ class objects.
+operations performed using $codei AD<double>$$ class objects.
 
 $subhead Outer Function$$
 The next step is to calculation the outer function
-using $codei AD<zdouble>$$ class objects.
+using $codei AD<double>$$ class objects.
 Note that derivatives of the inner function can be included
 in the calculation of the outer function using $icode a1f$$.
-We then stop the recording of $codei AD<zdouble>$$ operations using
+We then stop the recording of $codei AD<double>$$ operations using
 $codei%
 	%g%.Dependent(%a1x%, %a1y%)
 %$$
 where $icode a1y$$ is
 a $cref SimpleVector$$ with elements of type
-$codei AD<zdouble>$$
-and $icode g$$ is an $codei%ADFun<zdouble>%$$ object.
+$codei AD<double>$$
+and $icode g$$ is an $codei%ADFun<double>%$$ object.
 
 $subhead Derivatives of Outer Function$$
 The AD function object $icode g$$ can then be used to calculate
