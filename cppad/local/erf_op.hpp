@@ -388,12 +388,12 @@ inline void reverse_erf_op(
 	while(j)
 	{	pz_4[j] /= Base(j);
 		for(size_t k = 1; k <= j; k++)
-		{	px[k]     += pz_4[j] * z_3[j-k] * Base(k);
-			pz_3[j-k] += pz_4[j] * x[k] * Base(k);
+		{	px[k]     += azmul(pz_4[j], z_3[j-k]) * Base(k);
+			pz_3[j-k] += azmul(pz_4[j], x[k]) * Base(k);
 		}
 		j--;
 	}
-	px[0] += pz_4[0] * z_3[0];
+	px[0] += azmul(pz_4[0], z_3[0]);
 
 	// z_3 = (2 / sqrt(pi)) * exp( - x * x )
 	addr[0] = arg[2];  // 2 / sqrt(pi)

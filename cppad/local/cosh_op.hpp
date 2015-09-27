@@ -211,13 +211,6 @@ inline void reverse_cosh_op(
 	const Base* s  = c  - cap_order; // called y in documentation
 	Base* ps       = pc - nc_partial;
 
-	// If pc is zero, make sure this operation has no effect
-	// (zero times infinity or nan would be non-zero).
-	bool skip(true);
-	for(size_t i_d = 0; i_d <= d; i_d++)
-		skip &= IdenticalZero(pc[i_d]);
-	if( skip )
-		return;
 
 	// rest of this routine is identical for the following cases:
 	// reverse_sin_op, reverse_cos_op, reverse_sinh_op, reverse_cosh_op.
@@ -229,17 +222,17 @@ inline void reverse_cosh_op(
 		pc[j]   /= Base(j);
 		for(k = 1; k <= j; k++)
 		{
-			px[k]   += ps[j] * Base(k) * c[j-k];
-			px[k]   += pc[j] * Base(k) * s[j-k];
+			px[k]   += Base(k) * azmul(ps[j], c[j-k]);
+			px[k]   += Base(k) * azmul(pc[j], s[j-k]);
 
-			ps[j-k] += pc[j] * Base(k) * x[k];
-			pc[j-k] += ps[j] * Base(k) * x[k];
+			ps[j-k] += Base(k) * azmul(pc[j], x[k]);
+			pc[j-k] += Base(k) * azmul(ps[j], x[k]);
 
 		}
 		--j;
 	}
-	px[0] += ps[0] * c[0];
-	px[0] += pc[0] * s[0];
+	px[0] += azmul(ps[0], c[0]);
+	px[0] += azmul(pc[0], s[0]);
 }
 
 } // END_CPPAD_NAMESPACE
