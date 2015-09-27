@@ -33,10 +33,8 @@ bool mul_cond_rev(void)
 	// --------------------------------------------------------------------
 	// create a1f = f(x)
 	size_t n = 1;
-	size_t m = 17;
-# if CPPAD_USE_CPLUSPLUS_2011
-	m += 6;
-# endif
+	size_t m = 25;
+	//
 	vector<a2double> a2x(n), a2y(m);
 	a2x[0] = a2double( 5.0 );
 	Independent(a2x);
@@ -88,7 +86,13 @@ bool mul_cond_rev(void)
 	a2y[i++]  = CondExpGt(a2x[0], a2zero, a2inf_var - a2nan_var, a2zero);
 	// tan
 	a2y[i++]  = CondExpGt(a2x[0], a2zero, tan(a2nan_var), a2zero);
-# if CPPAD_USE_CPLUSPLUS_2011
+	// tanh
+	a2y[i++]  = CondExpGt(a2x[0], a2zero, tanh(a2nan_var), a2zero);
+	// azmul
+	a2y[i++]  = CondExpGt(a2x[0], a2zero, azmul(a2x[0], a2inf_var), a2zero);
+	//
+	// Operations that are C+11 atomic
+	//
 	// acosh
 	a2y[i++]  = CondExpGt(a2x[0], a2zero, acosh( a2x[0] ), a2zero);
 	// asinh
@@ -101,7 +105,7 @@ bool mul_cond_rev(void)
 	a2y[i++]  = CondExpGt(a2x[0], a2zero, expm1(a2nan_var), a2zero);
 	// log1p
 	a2y[i++]  = CondExpGt(a2x[0], a2zero, log1p(- a2one_var ), a2zero);
-# endif
+	//
 	ok &= i == m;
 	CppAD::ADFun<a1double> a1f;
 	a1f.Dependent(a2x, a2y);
@@ -150,7 +154,13 @@ bool mul_cond_rev(void)
 	a1y[i++]  = CondExpGt(a1x[0], a1zero, a1inf_var - a1nan_var, a1zero);
 	// tan
 	a1y[i++]  = CondExpGt(a1x[0], a1zero, tan(a1nan_var), a1zero);
-# if CPPAD_USE_CPLUSPLUS_2011
+	// tanh
+	a1y[i++]  = CondExpGt(a1x[0], a1zero, tanh(a1nan_var), a1zero);
+	// azmul
+	a1y[i++]  = CondExpGt(a1x[0], a1zero, azmul(a1x[0], a1inf_var), a1zero);
+	//
+	// Operations that are C+11 atomic
+	//
 	// acosh
 	a1y[i++]  = CondExpGt(a1x[0], a1zero, acosh( a1x[0] ), a1zero);
 	// asinh
@@ -163,7 +173,7 @@ bool mul_cond_rev(void)
 	a1y[i++]  = CondExpGt(a1x[0], a1zero, expm1(a1nan_var), a1zero);
 	// log1p
 	a1y[i++]  = CondExpGt(a1x[0], a1zero, log1p(- a1one_var ), a1zero);
-# endif
+	//
 	ok &= i == m;
 	CppAD::ADFun<double> h;
 	h.Dependent(a1x, a1y);
