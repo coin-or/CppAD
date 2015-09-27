@@ -177,32 +177,26 @@ inline void reverse_log_op(
 	const Base* z  = taylor  + i_z * cap_order;
 	Base* pz       = partial + i_z * nc_partial;
 
-	// If pz is zero, make sure this operation has no effect
-	// (zero times infinity or nan would be non-zero).
-	bool skip(true);
-	for(size_t i_d = 0; i_d <= d; i_d++)
-		skip &= IdenticalZero(pz[i_d]);
-	if( skip )
-		return;
+	Base inv_x0 = Base(1) / x[0];
 
 	j = d;
 	while(j)
 	{	// scale partial w.r.t z[j]
-		pz[j]   /= x[0];
+		pz[j]   = azmul(pz[j]   , inv_x0);
 
-		px[0]   -= pz[j] * z[j];
+		px[0]   -= azmul(pz[j], z[j]);
 		px[j]   += pz[j];
 
 		// further scale partial w.r.t. z[j]
 		pz[j]   /= Base(j);
 
 		for(k = 1; k < j; k++)
-		{	pz[k]   -= pz[j] * Base(k) * x[j-k];
-			px[j-k] -= pz[j] * Base(k) * z[k];
+		{	pz[k]   -= Base(k) * azmul(pz[j], x[j-k]);
+			px[j-k] -= Base(k) * azmul(pz[j], z[k]);
 		}
 		--j;
 	}
-	px[0] += pz[0] / x[0];
+	px[0] += azmul(pz[0], inv_x0);
 }
 
 } // END_CPPAD_NAMESPACE

@@ -188,12 +188,12 @@ inline void reverse_expm1_op(
 		pz[j] /= Base(j);
 
 		for(k = 1; k <= j; k++)
-		{	px[k]   += pz[j] * Base(k) * z[j-k];
-			pz[j-k] += pz[j] * Base(k) * x[k];
+		{	px[k]   += Base(k) * azmul(pz[j], z[j-k]);
+			pz[j-k] += Base(k) * azmul(pz[j], x[k]);
 		}
 		--j;
 	}
-	px[0] += pz[0] + pz[0] * z[0];
+	px[0] += pz[0] + azmul(pz[0], z[0]);
 }
 
 } // END_CPPAD_NAMESPACE
