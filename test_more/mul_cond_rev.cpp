@@ -33,7 +33,7 @@ bool mul_cond_rev(void)
 	// --------------------------------------------------------------------
 	// create a1f = f(x)
 	size_t n = 1;
-	size_t m = 11;
+	size_t m = 14;
 # if CPPAD_USE_CPLUSPLUS_2011
 	m += 6;
 # endif
@@ -76,6 +76,12 @@ bool mul_cond_rev(void)
 	a2y[i++]  = CondExpGt(a2x[0], a2zero, log(a2x[0]), a2zero);
 	// mul
 	a2y[i++]  = CondExpGt(a2x[0], a2zero, a2x[0] * a2inf_var, a2zero);
+	// pow
+	a2y[i++]  = CondExpGt(a2x[0], a2zero, pow(a2inf_var, a2x[0]), a2zero);
+	// sin
+	a2y[i++]  = CondExpGt(a2x[0], a2zero, sin(a2nan_var), a2zero);
+	// sinh
+	a2y[i++]  = CondExpGt(a2x[0], a2zero, sinh(a2nan_var), a2zero);
 # if CPPAD_USE_CPLUSPLUS_2011
 	// acosh
 	a2y[i++]  = CondExpGt(a2x[0], a2zero, acosh( a2x[0] ), a2zero);
@@ -126,6 +132,12 @@ bool mul_cond_rev(void)
 	a1y[i++]  = CondExpGt(a1x[0], a1zero, log(a1x[0]), a1zero);
 	// mul
 	a1y[i++]  = CondExpGt(a1x[0], a1zero, a1x[0] * a1inf_var, a1zero);
+	// pow
+	a1y[i++]  = CondExpGt(a1x[0], a1zero, pow(a1inf_var, a1x[0]), a1zero);
+	// sin
+	a1y[i++]  = CondExpGt(a1x[0], a1zero, sin(a1nan_var), a1zero);
+	// sinh
+	a1y[i++]  = CondExpGt(a1x[0], a1zero, sinh(a1nan_var), a1zero);
 # if CPPAD_USE_CPLUSPLUS_2011
 	// acosh
 	a1y[i++]  = CondExpGt(a1x[0], a1zero, acosh( a1x[0] ), a1zero);
