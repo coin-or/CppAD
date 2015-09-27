@@ -57,10 +57,6 @@ inline void forward_sqrt_op(
 	}
 	for(size_t j = p; j <= q; j++)
 	{
-		CPPAD_ASSERT_KNOWN(
-			x[0] != Base(0),
-			"Forward: attempt to take derivatve of square root of zero"
-		)
 		z[j] = Base(0);
 		for(k = 1; k < j; k++)
 			z[j] -= Base(k) * z[k] * z[j-k];
@@ -177,18 +173,8 @@ inline void reverse_sqrt_op(
 	const Base* z  = taylor  + i_z * cap_order;
 	Base* pz       = partial + i_z * nc_partial;
 
-	// If pz is zero, make sure this operation has no effect
-	// (zero times infinity or nan would be non-zero).
-	bool skip(true);
-	for(size_t i_d = 0; i_d <= d; i_d++)
-		skip &= IdenticalZero(pz[i_d]);
-	if( skip )
-		return;
 
-	CPPAD_ASSERT_KNOWN(
-		z[0] != Base(0),
-		"Reverse: attempt to take derivatve of square root of zero"
-	)
+	Base inv_z0 = Base(1) / z[0];
 
 	// number of indices to access
 	size_t j = d;
@@ -197,15 +183,15 @@ inline void reverse_sqrt_op(
 	{
 
 		// scale partial w.r.t. z[j]
-		pz[j]   /= z[0];
+		pz[j]    = azmul(pz[j], inv_z0);
 
-		pz[0]   -= pz[j] * z[j];
+		pz[0]   -= azmul(pz[j], z[j]);
 		px[j]   += pz[j] / Base(2);
 		for(k = 1; k < j; k++)
-			pz[k]   -= pz[j] * z[j-k];
+			pz[k]   -= azmul(pz[j], z[j-k]);
 		--j;
 	}
-	px[0] += pz[0] / (Base(2) * z[0]);
+	px[0] += azmul(pz[0], inv_z0) / Base(2);
 }
 
 } // END_CPPAD_NAMESPACE
