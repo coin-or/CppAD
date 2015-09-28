@@ -95,10 +95,6 @@ inline void forward_sqrt_op_dir(
 	size_t num_taylor_per_var = (cap_order-1) * r + 1;
 	Base* z = taylor + i_z * num_taylor_per_var;
 	Base* x = taylor + i_x * num_taylor_per_var;
-	CPPAD_ASSERT_KNOWN(
-		x[0] != Base(0),
-		"Forward: attempt to take derivatve of square root of zero"
-	)
 
 	size_t m = (q-1) * r + 1;
 	for(size_t ell = 0; ell < r; ell++)

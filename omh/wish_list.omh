@@ -65,26 +65,6 @@ $head checkpoint$$
 There should be some examples and tests for both speed and memory use
 that demonstrate that checkpointing is useful.
 
-$head abort_op_index$$
-When a known error is detected during $cref forward$$ or $cref reverse$$ mode,
-include the operator index in the output error message. (For example,
-when taking the derivative of the square root function at zero.)
-The syntax
-$codei%
-	Independent(%x%, %abort_op_index%)
-%$$
-could then be used to find the corresponding user source code; see
-$cref/abort_op_index/Independent/abort_op_index/$$.
-
-$head Absolute Zero$$
-Currently, one must use the $cref zdouble$$ class for
-$cref mul_level$$ AD that uses $cref/conditional expressions/CondExp/$$
-and $cref reverse$$ mode.
-Perhaps it would be better to use special functions; e.g.,
-$code abs_zero_mul$$ and $code abs_zero_div$$,
-so that not all multiplies and divides would need to check for zero
-(in the multiple level AD with conditional expressions and reverse mode case).
-
 $head Machine Epsilon in Examples$$
 Use a multiple of $code std::numeric_limits<double>::epsilon()$$ instead
 $code 1e-10$$ for a small number in correctness checks; e.g.,

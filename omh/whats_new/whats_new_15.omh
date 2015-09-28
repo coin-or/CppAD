@@ -72,6 +72,7 @@ The purpose of this section is to
 assist you in learning about changes between various versions of CppAD.
 
 $head 09-28$$
+$list number$$
 Use the current $cref atomic_option$$ setting to determine
 which type of sparsity patterns to use for
 $cref/dependency/dependency.cpp/$$ calculations during
@@ -81,6 +82,13 @@ $cref/bool_sparsity_enum/atomic_option/atomic_sparsity/bool_sparsity_enum/$$
 was used when
 $cref/pack_sparsity_enum/atomic_option/atomic_sparsity/pack_sparsity_enum/$$
 was specified.
+$lnext
+It is not longer an error to take the derivative of the square root function,
+because the result may be the part of a
+$cref/conditional expression/CondExp/$$ that is not used.
+$lnext
+Update the $cref WishList$$ section.
+$lend
 
 
 $head 09-27$$
@@ -323,11 +331,17 @@ $lend
 
 
 $head 06-09$$
-Add $cref/abort_op_index/WishList/abort_op_index/$$ to the wish list.
+Add an $cref/abort_op_index/Independent/abort_op_index/$$
+item to the wish list. It has since been removed
+(domain errors may not affect the results due to
+$cref/conditional expressions/CondExp/$$).
+
 
 $head 06-07$$
-Add $cref/absolute zero/WishList/Absolute Zero/$$
+Add
+$cref/absolute zero/base_require/Absolute Zero, azmul/$$
 and $cref/numeric_limits/WishList/Numeric Limits/$$ items to the wish list.
+(The absolute zero item has been completed.)
 Remove the multiple directions with list item.
 
 $head 05-26$$
