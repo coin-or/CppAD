@@ -24,7 +24,7 @@ namespace {
 	using CppAD::NearEqual;
 
 	// note this enum type is not part of the API (but its values are)
-	CppAD::atomic_base<double>::option_enum atomic_sparsity_option;
+	CppAD::atomic_base<double>::option_enum atomic_sparsity_option_;
 	//
 	// ----------------------------------------------------------------
 	// Test nested conditional expressions.
@@ -123,7 +123,7 @@ namespace {
 
 
 		// now optimize the operation sequence
-		j_check.option( atomic_sparsity_option );
+		j_check.option( atomic_sparsity_option_ );
 		if( conditional_skip_ )
 			f.optimize();
 		else
@@ -191,8 +191,8 @@ namespace {
 		ok  &= y[0] == x[0] + x[1];
 
 		// before optimize
-		k_check.option( atomic_sparsity_option );
-		h_check.option( atomic_sparsity_option );
+		k_check.option( atomic_sparsity_option_ );
+		h_check.option( atomic_sparsity_option_ );
 		ok  &= f.number_skip() == 0;
 
 		// now optimize the operation sequence
@@ -259,7 +259,7 @@ namespace {
 		size_t n_before = f.size_var();
 
 		// now optimize the operation sequence
-		g_check.option( atomic_sparsity_option );
+		g_check.option( atomic_sparsity_option_ );
 		if( conditional_skip_ )
 			f.optimize();
 		else
@@ -306,7 +306,7 @@ namespace {
 		size_t n_before = f.size_var();
 
 		// now optimize f so that the calculation of au[1] is removed
-		g_check.option( atomic_sparsity_option );
+		g_check.option( atomic_sparsity_option_ );
 		if( conditional_skip_ )
 			f.optimize();
 		else
@@ -1774,12 +1774,21 @@ namespace {
 
 bool optimize(void)
 {	bool ok = true;
-	atomic_sparsity_option = CppAD::atomic_base<double>::bool_sparsity_enum;
-	conditional_skip_      = true;
+	conditional_skip_       = true;
+	atomic_sparsity_option_ = CppAD::atomic_base<double>::bool_sparsity_enum;
 
 	// atomic sparsity loop
-	for(size_t i = 0; i < 2; i++)
-	{	// check conditional expression sparsity pattern
+	for(size_t i = 0; i < 3; i++)
+	{	if( i == 0 ) atomic_sparsity_option_ =
+			CppAD::atomic_base<double>::pack_sparsity_enum;
+		else if( i == 1 ) atomic_sparsity_option_ =
+			CppAD::atomic_base<double>::bool_sparsity_enum;
+		else if( i == 2 ) atomic_sparsity_option_ =
+			CppAD::atomic_base<double>::set_sparsity_enum;
+		else
+			ok &= false;
+		//
+		// check conditional expression sparsity pattern
 		// (used to optimize calls to atomic functions).
 		ok     &= atomic_cond_exp_sparsity();
 		// check optimizing out entire atomic function
@@ -1787,13 +1796,13 @@ bool optimize(void)
 		// check optimizing out atomic arguments
 		ok     &= atomic_no_used();
 		ok     &= atomic_arguments();
-		atomic_sparsity_option =
-			CppAD::atomic_base<double>::set_sparsity_enum;
 	}
 
 	// conditional skip loop
 	for(size_t i = 0; i < 2; i++)
-	{	// check nested conditional expressions
+	{	conditional_skip_ = i == 0;
+		//
+		// check nested conditional expressions
 		ok     &= nested_cond_exp();
 		// check reverse dependency analysis optimization
 		ok     &= depend_one();
@@ -1831,8 +1840,6 @@ bool optimize(void)
 		ok     &= cond_exp_reverse();
 		// check case where an expresion needed by both true and false case
 		ok     &=  cond_exp_both_true_and_false();
-		//
-		conditional_skip_ = false;
 	}
 	//
 	CppAD::user_atomic<double>::clear();

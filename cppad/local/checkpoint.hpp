@@ -529,7 +529,8 @@ public:
 
 	\param sparsity [in]
 	what type of sparsity patterns are computed by this function,
-	bool_sparsity_enum or set_sparsity_enum. Default value is unspecified.
+	pack_sparsity_enum bool_sparsity_enum, or set_sparsity_enum.
+	The default value is unspecified.
 	*/
 	template <class Algo, class ADVector>
 	checkpoint(
@@ -538,7 +539,7 @@ public:
 		const ADVector&                ax       ,
 		ADVector&                      ay       ,
 		option_enum                    sparsity =
-				atomic_base<Base>::bool_sparsity_enum
+				atomic_base<Base>::pack_sparsity_enum
 	) : atomic_base<Base>(name, sparsity)
 	{	CheckSimpleVector< CppAD::AD<Base> , ADVector>();
 
