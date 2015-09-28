@@ -16,6 +16,7 @@ Please visit http://www.coin-or.org/CppAD/ for information on other licenses.
 /*
 $begin optimize$$
 $spell
+	enum
 	jac
 	bool
 	Taylor
@@ -95,10 +96,11 @@ $latex v = g(u)$$:
 $subhead rev_sparse_jac$$
 The $cref atomic_rev_sparse_jac$$ function is be used to determine
 which components of $icode u$$ affect the dependent variables of $icode f$$.
-The current setting of the
-$cref/atomic_sparsity/atomic_option/atomic_sparsity/$$ pattern for each
-atomic function is used to determine if the $code bool$$ or
-$code std::set<size_t>$$ version of $cref atomic_rev_sparse_jac$$ is used.
+For each atomic operation, the current
+$cref/atomic_sparsity/atomic_option/atomic_sparsity/$$ setting is used
+to determine if $code pack_sparsity_enum$$, $code bool_sparsity_enum$$,
+or $code set_sparsity_enum$$ is used to determine dependency relations
+between argument and result variables.
 
 $subhead nan$$
 If $icode%u%[%i%]%$$ does not affect the value of

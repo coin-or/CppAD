@@ -61,15 +61,6 @@ $subhead nan$$
 Once this is done, the $cref nan$$ function should can be deprecated
 because it generates compiler warnings about dividing by zero.
 
-
-$head Optimize Atomic Operations$$
-Use the current $cref atomic_option$$ setting to determine
-which type of sparsity patterns to use for
-$cref/dependency/dependency.cpp/$$ calculations during
-$cref optimize$$ procedure.
-In addition, use forward mode, instead of reverse, when it is more efficient
-for the dependency calculations.
-
 $head checkpoint$$
 There should be some examples and tests for both speed and memory use
 that demonstrate that checkpointing is useful.

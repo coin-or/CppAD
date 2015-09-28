@@ -271,6 +271,9 @@ but rather all subsequent uses of the corresponding atomic operation
 in an $cref ADFun$$ object.
 
 $head atomic_sparsity$$
+Note that, if you use $cref optimize$$, these sparsity patterns are used
+to determine the $cref/dependency/dependency.cpp/$$ relationship between
+argument and result variables.
 
 $subhead pack_sparsity_enum$$
 If $icode option_value$$ is $codei%atomic_base<%Base%>::pack_sparsity_enum%$$,

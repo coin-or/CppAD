@@ -13,6 +13,7 @@ Please visit http://www.coin-or.org/CppAD/ for information on other licenses.
 $begin whats_new_15$$
 $dollar @$$
 $spell
+	enum
 	ctor
 	dimensioned
 	cskip_op
@@ -69,6 +70,18 @@ This section contains a list of the changes to CppAD during 2015
 (in reverse order by date).
 The purpose of this section is to
 assist you in learning about changes between various versions of CppAD.
+
+$head 09-28$$
+Use the current $cref atomic_option$$ setting to determine
+which type of sparsity patterns to use for
+$cref/dependency/dependency.cpp/$$ calculations during
+$cref optimize$$ procedure.
+It used to be that the
+$cref/bool_sparsity_enum/atomic_option/atomic_sparsity/bool_sparsity_enum/$$
+was used when
+$cref/pack_sparsity_enum/atomic_option/atomic_sparsity/pack_sparsity_enum/$$
+was specified.
+
 
 $head 09-27$$
 $list number$$
