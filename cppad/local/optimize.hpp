@@ -1497,10 +1497,15 @@ void optimize_run(
 
 	// work space used by UserOp.
 	typedef std::set<size_t> size_set;
+	//
 	vector<size_set> user_r_set;   // set sparsity pattern for result
 	vector<size_set> user_s_set;   // set sparisty pattern for argument
+	//
 	vector<bool>     user_r_bool;  // bool sparsity pattern for result
 	vector<bool>     user_s_bool;  // bool sparisty pattern for argument
+	//
+	vectorBool       user_r_pack;  // pack sparsity pattern for result
+	vectorBool       user_s_pack;  // pack sparisty pattern for argument
 	//
 	size_t user_q     = 0;       // column dimension for sparsity patterns
 	size_t user_index = 0;       // indentifier for this user_atomic operation
@@ -1511,7 +1516,9 @@ void optimize_run(
 	size_t user_n     = 0;       // size of arugment vector
 	//
 	atomic_base<Base>* user_atom = CPPAD_NULL; // current user atomic function
-	bool               user_set  = true;       // use set sparsity (or bool)
+	bool               user_pack = false;      // sparsity pattern type is pack
+	bool               user_bool = false;      // sparsity pattern type is bool
+	bool               user_set  = false;      // sparsity pattern type is set
 
 	// next expected operator in a UserOp sequence
 	enum { user_start, user_arg, user_ret, user_end } user_state;
@@ -1933,19 +1940,50 @@ void optimize_run(
 				user_m     = arg[3];
 				user_q     = 1;
 				user_atom  = atomic_base<Base>::class_object(user_index);
+				if( user_atom == CPPAD_NULL )
+				{	std::string msg =
+						atomic_base<Base>::class_name(user_index)
+						+ ": atomic_base function has been deleted";
+					CPPAD_ASSERT_KNOWN(false, msg.c_str() );
+				}
+				user_pack  = user_atom->sparsity() ==
+							atomic_base<Base>::pack_sparsity_enum;
+				user_bool  = user_atom->sparsity() ==
+							atomic_base<Base>::bool_sparsity_enum;
+				user_set   = user_atom->sparsity() ==
+							atomic_base<Base>::set_sparsity_enum;
+				CPPAD_ASSERT_UNKNOWN( user_pack || user_bool || user_set );
+
 				user_set   = user_atom->sparsity() ==
 					atomic_base<Base>::set_sparsity_enum;
 				//
-				if(user_s_set.size() != user_n )
-					user_s_set.resize(user_n);
-				if(user_r_set.size() != user_m )
-					user_r_set.resize(user_m);
-				//
 				// Note user_q is 1, but use it for clarity of code
-				if(user_s_bool.size() != user_n * user_q )
-					user_s_bool.resize(user_n * user_q);
-				if(user_r_bool.size() != user_m * user_q )
-					user_r_bool.resize(user_m * user_q);
+				if( user_pack )
+				{	if( user_r_pack.size() != user_m * user_q )
+						user_r_pack.resize( user_m * user_q );
+					if( user_s_pack.size() != user_n * user_q )
+						user_s_pack.resize( user_n * user_q );
+					for(i = 0; i < user_m; i++)
+						for(j = 0; j < user_q; j++)
+							user_r_pack[ i * user_q + j] = false;
+				}
+				if( user_bool )
+				{	if( user_r_bool.size() != user_m * user_q )
+						user_r_bool.resize( user_m * user_q );
+					if( user_s_bool.size() != user_n * user_q )
+						user_s_bool.resize( user_n * user_q );
+					for(i = 0; i < user_m; i++)
+						for(j = 0; j < user_q; j++)
+							user_r_bool[ i * user_q + j] = false;
+				}
+				if( user_set )
+				{	if(user_s_set.size() != user_n )
+						user_s_set.resize(user_n);
+					if(user_r_set.size() != user_m )
+						user_r_set.resize(user_m);
+						for(i = 0; i < user_m; i++)
+							user_r_set[i].clear();
+				}
 				//
 				user_j     = user_n;
 				user_i     = user_m;
@@ -1995,8 +2033,13 @@ void optimize_run(
 					tape[arg[0]].connect_type =
 						user_info[user_curr].connect_type;
 			}
-			else
+			if( user_bool )
 			{	if( user_s_bool[user_j] )
+					tape[arg[0]].connect_type =
+						user_info[user_curr].connect_type;
+			}
+			if( user_pack )
+			{	if( user_s_pack[user_j] )
 					tape[arg[0]].connect_type =
 						user_info[user_curr].connect_type;
 			}
@@ -2009,8 +2052,6 @@ void optimize_run(
 			CPPAD_ASSERT_UNKNOWN( user_state == user_ret );
 			CPPAD_ASSERT_UNKNOWN( 0 < user_i && user_i <= user_m );
 			--user_i;
-			user_r_set[user_i].clear();
-			user_r_bool[user_i] = false;
 			switch( connect_type )
 			{	case not_connected:
 				break;
@@ -2019,8 +2060,12 @@ void optimize_run(
 				case sum_connected:
 				case csum_connected:
 				user_info[user_curr].connect_type = yes_connected;
-				user_r_set[user_i].insert(0);
-				user_r_bool[user_i] = true;
+				if( user_set )
+					user_r_set[user_i].insert(0);
+				if( user_bool )
+					user_r_bool[user_i] = true;
+				if( user_pack )
+					user_r_pack[user_i] = true;
 				break;
 
 				case cexp_connected:
@@ -2035,8 +2080,12 @@ void optimize_run(
 						user_info[user_curr].connect_type = yes_connected;
 				}
 				else	user_info[user_curr].connect_type = yes_connected;
-				user_r_set[user_i].insert(0);
-				user_r_bool[user_i] = true;
+				if( user_set )
+					user_r_set[user_i].insert(0);
+				if( user_bool )
+					user_r_bool[user_i] = true;
+				if( user_pack )
+					user_r_pack[user_i] = true;
 				break;
 
 				default:
@@ -2053,30 +2102,22 @@ void optimize_run(
 				CPPAD_ASSERT_UNKNOWN( NumArg(op) == 1 );
 				CPPAD_ASSERT_UNKNOWN( size_t(arg[0]) < num_par );
 				--user_i;
-				user_r_set[user_i].clear();
-				user_r_bool[user_i] = false;
 			}
 			if( user_i == 0 )
 			{	// call users function for this operation
 				user_atom->set_id(user_id);
-# ifdef NDEBUG
-				if( user_set )
-				{	user_atom->
-						rev_sparse_jac(user_q, user_r_set, user_s_set);
-				}
-				else
-				{	user_atom->
-						rev_sparse_jac(user_q, user_r_bool, user_s_bool);
-				}
-# else
-				bool flag;
+				bool flag = false;
 				if( user_set )
 				{	flag = user_atom->
 						rev_sparse_jac(user_q, user_r_set, user_s_set);
 				}
-				else
+				if( user_bool )
 				{	flag = user_atom->
 						rev_sparse_jac(user_q, user_r_bool, user_s_bool);
+				}
+				if( user_pack )
+				{	flag = user_atom->
+						rev_sparse_jac(user_q, user_r_pack, user_s_pack);
 				}
 				if( ! flag )
 				{	std::string s =
@@ -2086,13 +2127,15 @@ void optimize_run(
 					s += "\nCurrent atomic_sparsity is set to";
 					//
 					if( user_set )
-						s += " std::set\nand std::set";
-					else	s += " bool\nand bool";
+						s += "set_sparsity_enum.\n";
+					if( user_bool )
+						s += "bool_sparsity_enum.\n";
+					if( user_pack )
+						s += "pack_sparsity_enum.\n";
 					//
-					s += " version of rev_sparse_jac returned false";
+					s += "This version of rev_sparse_jac returned false";
 					CPPAD_ASSERT_KNOWN(false, s.c_str() );
 				}
-# endif
 				user_state = user_arg;
 			}
 			break;
