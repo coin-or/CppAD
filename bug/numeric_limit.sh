@@ -19,10 +19,10 @@ cat << EOF > bug.$$
 
 # if CPPAD_USE_CPLUSPLUS_2011
 # define CPPAD_NUMERIC_LIMIT_VAL(type, name ) \\
-	static constexpr bool name = numeric_limits<Base>::name;
+	static constexpr type name = numeric_limits<Base>::name;
 # else
 # define CPPAD_NUMERIC_LIMIT_VAL(type, name ) \\
-	static const bool name = numeric_limits<Base>::name;
+	static const type name = numeric_limits<Base>::name;
 # endif
 
 # if CPPAD_USE_CPLUSPLUS_2011
