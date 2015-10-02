@@ -61,6 +61,7 @@ $spell
 	fadbad
 	sacado
 	unreferenced
+	azmul
 $$
 
 $section CppAD Changes and Additions During 2015$$
@@ -70,6 +71,10 @@ This section contains a list of the changes to CppAD during 2015
 (in reverse order by date).
 The purpose of this section is to
 assist you in learning about changes between various versions of CppAD.
+
+$head 10-02$$
+There was a bug in $code test_more/azmul.cpp$$ whereby the vector
+$code z$$ had the wrong dimension (in two places). This has been fixed.
 
 $head 09-28$$
 $list number$$
@@ -103,7 +108,7 @@ Use the $cref azmul$$ function for absolute zero (when it is needed).
 $lend
 
 $head 09-25$$
-Warning:
+New base type requirement:
 $cref/absolute zero multiplication/base_require/Absolute Zero, azmul/$$
 is now required for user defined base types.
 This makes it possible to combine

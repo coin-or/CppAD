@@ -43,6 +43,17 @@ $$
 
 $section The CppAD Wish List$$
 
+$head Organize Include Directory$$
+$list number$$
+Remove the deprecated $code cppad/*.h$$ files.
+$lnext
+Move the cppad general purpose include files to
+$code cppad/general/*.hpp$$; e.g.,
+$code cppad/runge_45.hpp$$ would move to $code cppad/general/runge_45.hpp$$.
+$lnext
+Move $code cppad/local$$ to $code cppad/core$$.
+$lend
+
 $head Numeric Limits$$
 Define a specialization for
 $codei%

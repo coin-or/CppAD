@@ -30,7 +30,7 @@ namespace {
 		size_t m = 3;
 
 		// double level
-		CPPAD_TESTVECTOR(double) x(n), z(n);
+		CPPAD_TESTVECTOR(double) x(n), z(m);
 		x[0] = 3.0;
 		x[1] = 4.0;
 
@@ -180,7 +180,7 @@ namespace {
 		size_t r = 2;
 
 		// double level
-		CPPAD_TESTVECTOR(double) x(n), z(n);
+		CPPAD_TESTVECTOR(double) x(n), z(r * m);
 		x[0] = 3.0;
 		x[1] = 4.0;
 
