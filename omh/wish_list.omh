@@ -39,6 +39,7 @@ $spell
 	instantiate
 	instantiation
 	Bool
+	runge
 $$
 
 $section The CppAD Wish List$$
