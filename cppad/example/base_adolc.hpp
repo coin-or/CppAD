@@ -319,9 +319,6 @@ namespace CppAD {
 		static adouble max(void)
 		{	return adouble( std::numeric_limits<float>::max() ); }
 	};
-	// deprecated machine epsilon
-	template <> inline adouble epsilon<adouble>(void)
-	{	return numeric_limits<adouble>::epsilon(); }
 }
 /* $$
 $end

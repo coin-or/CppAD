@@ -221,10 +221,6 @@ namespace CppAD {
 		static double max(void)
 		{	return std::numeric_limits<double>::max(); }
 	};
-	// deprecated machine epsilon
-	template <>
-	inline double epsilon<double>(void)
-	{	return numeric_limits<double>::epsilon(); }
 }
 /* $$
 $end

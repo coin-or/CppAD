@@ -167,16 +167,6 @@ must return machine epsilon,
 minimum positive normalize value,
 and maximum finite value for the type $icode Base$$.
 
-$subhead epsilon$$
-The deprecated function $cref epsilon$$ function
-must also be included. It can be implemented using
-$codei%
-namespace CppAD {
-	template <> inline %Base% epsilon<%Base%>(void)
-	{	return numeric_limits<%Base%>::epsilon(); }
-}
-%$$
-
 $end
 -------------------------------------------------------------------------------
 */

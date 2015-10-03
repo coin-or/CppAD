@@ -53,11 +53,11 @@ $head Purpose$$
 This section lists the requirements for the type
 $icode Base$$ so that the type $codei%AD<%Base%>%$$ can be used.
 
-$head Warning$$
+$head API Warning$$
 Defining a CppAD $icode Base$$ type is an advanced use of CppAD.
 This part of the CppAD API changes with time. The most common change
 is adding more requirements.
-Search for mention `base type' in the
+Search for $code base_require$$ in the
 current $cref whats_new$$ section for these changes.
 
 $head Standard Base Types$$
@@ -119,12 +119,13 @@ $cref/base_float/base_float.hpp/Integer/$$ and
 $cref/base_alloc/base_alloc.hpp/Integer/$$.
 
 $head Absolute Zero, azmul$$
-The type $code Base$$ must support the syntax
+The type $icode Base$$ must support the syntax
 $codei%
 	%z% = azmul(%x%, %y%)
 %$$
-where see; $cref azmul$$.
+see; $cref azmul$$.
 The following preprocessor macro invocation suffice
+(for most $icode Base$$ types):
 $codei%
 namespace CppAD {
 	CPPAD_AZMUL(%Base%)

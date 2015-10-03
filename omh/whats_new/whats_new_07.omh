@@ -479,25 +479,24 @@ $head 07-22$$
 Minor improvements to the $cref mul_level_adolc_ode.cpp$$ example.
 
 $head 07-21$$
+$list number$$
 The $code openmp/run.sh$$ example programs
 $code example_a11c.cpp$$,
 $code openmp_newton_example.cpp$$, and
 $code sum_i_inv.cpp$$
 have been changed so that they run on more systems
 (are C++ standard compliant).
-$pre
-
-$$
+$lnext
+$cref base_require$$:
 The $code IdenticalEqual$$ function,
 in the $cref base_require$$ specification,
 was changed to $code IdenticalEqualPar$$
-(note the $cref/warning/base_require/Warning/$$ in the
+(note the $cref/API warning/base_require/API Warning/$$ in the
 $icode Base$$ requirement specifications).
-$pre
-
-$$
+$lnext
 Implementation of the $cref/base requirements/base_require/$$ for complex types
 were moved into the $cref base_complex.hpp$$ example.
+$lend
 
 
 

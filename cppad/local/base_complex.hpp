@@ -292,10 +292,6 @@ namespace CppAD {
 			return std::complex<double>(max, 0.0);
 		}
 	};
-	// deprecated machine epsilon
-	template <>
-	inline std::complex<double> epsilon< std::complex<double> > (void)
-	{	return numeric_limits< std::complex<double> >::epsilon(); }
 }
 /* $$
 $end

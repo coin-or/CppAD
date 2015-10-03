@@ -221,10 +221,6 @@ namespace CppAD {
 		static float max(void)
 		{	return std::numeric_limits<float>::max(); }
 	};
-	// deprecated machine epsilon
-	template <>
-	inline float epsilon<float>(void)
-	{	return numeric_limits<float>::epsilon(); }
 }
 /* $$
 $end

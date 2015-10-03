@@ -54,11 +54,9 @@ $end
 
 namespace CppAD {
 
-	template <class ADtype>
-	inline ADtype epsilon(void)
-	{	typedef typename ADtype::value_type value_type;
-		return ADtype ( epsilon<value_type>() );
-	}
+	template <class Type>
+	inline Type epsilon(void)
+	{	return Type ( numeric_limits<Type>::epsilon() ); }
 
 }
 # endif
