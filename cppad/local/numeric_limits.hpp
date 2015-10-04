@@ -1,6 +1,6 @@
 /* $Id$ */
-# ifndef CPPAD_LIMITS_INCLUDED
-# define CPPAD_LIMITS_INCLUDED
+# ifndef CPPAD_NUMERIC_LIMITS_INCLUDED
+# define CPPAD_NUMERIC_LIMITS_INCLUDED
 /* --------------------------------------------------------------------------
 CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-15 Bradley M. Bell
 
@@ -14,7 +14,7 @@ Please visit http://www.coin-or.org/CppAD/ for information on other licenses.
 
 /*
 ------------------------------------------------------------------------------
-$begin limits$$
+$begin numeric_limits$$
 $spell
 	std
 	eps
@@ -123,7 +123,7 @@ $end
 
 namespace CppAD { // BEGIN_CPPAD_NAMESPACE
 /*!
-\file limits.hpp
+\file numeric_limits.hpp
 File that defines CppAD numeric_limits for AD types
 */
 

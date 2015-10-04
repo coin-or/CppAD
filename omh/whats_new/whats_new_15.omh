@@ -80,7 +80,7 @@ $cref/CPPAD_NUMERIC_LIMITS/base_limits/CPPAD_NUMERIC_LIMITS/$$
 to aid in setting the numeric limits for a user defined $icode Base$$ class.
 $lnext
 Move documentation for $cref zdouble$$ to $cref deprecated$$ section
-and documentation for $cref limits$$ to $cref ADValued$$.
+and documentation for $cref numeric_limits$$ to $cref ADValued$$.
 $lend
 
 $head 10-03$$

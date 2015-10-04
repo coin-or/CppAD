@@ -29,7 +29,7 @@ $section Machine Epsilon For AD Types$$
 
 $head Deprecated 2012-06-17$$
 This routine has been deprecated.
-You should use the $cref/numeric_limits/limits/$$ $code epsilon$$ instead.
+You should use the $cref numeric_limits$$ $code epsilon$$ instead.
 
 $head Syntax$$
 $icode%eps% = epsilon<%Float%>()%$$

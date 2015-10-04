@@ -167,7 +167,7 @@ $end
 # include <cppad/local/base_limits.hpp>
 
 // must define template class numeric_limits before the base cases
-# include <cppad/local/limits.hpp>
+# include <cppad/local/numeric_limits.hpp>
 # include <cppad/local/epsilon.hpp> // deprecated
 
 // base cases that come with CppAD

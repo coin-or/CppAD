@@ -445,7 +445,7 @@ $lend
 $subhead 08-09$$
 $list number$$
 $cref base_require$$:
-Add $cref/epsilon/limits/epsilon/$$ to the
+Add $cref/epsilon/numeric_limits/epsilon/$$ to the
 $icode Base$$ type requirements.
 $lnext
 Extend $code epsilon$$ to AD types.

@@ -206,7 +206,6 @@ nobase_myinclude_HEADERS =  \
 	cppad/local/independent.hpp \
 	cppad/local/integer.hpp \
 	cppad/local/jacobian.hpp \
-	cppad/local/limits.hpp \
 	cppad/local/load_op.hpp \
 	cppad/local/log_op.hpp \
 	cppad/local/log1p.hpp \
@@ -216,6 +215,7 @@ nobase_myinclude_HEADERS =  \
 	cppad/local/mul.hpp \
 	cppad/local/mul_op.hpp \
 	cppad/local/near_equal_ext.hpp \
+	cppad/local/numeric_limits.hpp \
 	cppad/local/num_skip.hpp \
 	cppad/local/omp_max_thread.hpp \
 	cppad/local/op_code.hpp \

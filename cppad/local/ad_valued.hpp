@@ -29,7 +29,7 @@ $childtable%
 	cppad/local/standard_math.hpp%
 	cppad/local/cond_exp.hpp%
 	cppad/local/discrete.hpp%
-	cppad/local/limits.hpp%
+	cppad/local/numeric_limits.hpp%
 	omh/atomic.omh
 %$$
 

@@ -519,12 +519,12 @@ $lend
 
 $head 06-17$$
 $list number$$
-Move $cref epsilon$$ to $cref/numeric_limits/limits/$$
+Move $cref epsilon$$ to $cref numeric_limits$$
 and add the functions $code min$$ and $code max$$
 in $icode%CppAD::numeric_limits<%Type%>%$$.
 $lnext
 Convert use of the deprecated $cref epsilon$$ in examples
-to use of $cref/numeric_limits/limits/$$ $code epsilon$$.
+to use of $code numeric_limits$$ $cref/epsilon/numeric_limits/epsilon/$$.
 $lnext
 Complete $cref cppad_eigen.hpp$$ interface to
 $code lowest$$ and $code highest$$ functions for
