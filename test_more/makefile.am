@@ -131,7 +131,7 @@ test_more_SOURCES  = \
 	from_base.cpp \
 	fun_check.cpp \
 	jacobian.cpp \
-	limits.cpp \
+	num_limits.cpp \
 	log.cpp \
 	log1p.cpp \
 	log10.cpp \

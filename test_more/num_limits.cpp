@@ -11,7 +11,7 @@ Please visit http://www.coin-or.org/CppAD/ for information on other licenses.
 -------------------------------------------------------------------------- */
 
 /*
-old limits.cpp example / test
+old num_limits.cpp example / test
 $spell
 $$
 
@@ -31,7 +31,7 @@ so that the complier does not set the correspdong code and optimize
 it out.
 
 $code
-$verbatim%example/limits.cpp%0%// BEGIN C++%// END C++%1%$$
+$verbatim%example/num_limits.cpp%0%// BEGIN C++%// END C++%1%$$
 $$
 
 $end
@@ -125,7 +125,7 @@ namespace {
 	}
 }
 
-bool limits(void)
+bool num_limits(void)
 {	bool ok = true;
 	using CppAD::AD;
 

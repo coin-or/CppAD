@@ -175,7 +175,7 @@ $rref ipopt_solve_retape.cpp$$
 $rref jac_lu_det.cpp$$
 $rref jac_minor_det.cpp$$
 $rref jacobian.cpp$$
-$rref limits.cpp$$
+$rref num_limits.cpp$$
 $rref log10.cpp$$
 $rref log.cpp$$
 $rref log1p.cpp$$

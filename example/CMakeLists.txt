@@ -138,7 +138,7 @@ ADD_EXECUTABLE(example EXCLUDE_FROM_ALL example.cpp
 	jac_lu_det.cpp
 	jac_minor_det.cpp
 	jacobian.cpp
-	limits.cpp
+	num_limits.cpp
 	log.cpp
 	log1p.cpp
 	log10.cpp

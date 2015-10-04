@@ -315,7 +315,7 @@ In addition, documentation about using $code optimize$$
 with $cref/atomic functions/optimize/Atomic Functions/$$ has been added.
 
 $head 08-06$$
-Fix a case where the test $code test_more/limits.cpp$$ failed because
+Fix a case where the test $code test_more/num_limits.cpp$$ failed because
 $codep
 	double inf   = std::numeric_limits<double>::infinity();
 	double check = std::complex<double>(inf) / std::complex<float>(1.)
@@ -478,7 +478,7 @@ Remove the $cref cmake$$ $code cppad_c11_flag$$ and instead
 automatically detect if the compiler supports specific c++11 features.
 
 $head 02-27$$
-The test $cref limits.cpp$$ was failing during testing of Fedora-19; see
+The test $cref num_limits.cpp$$ was failing during testing of Fedora-19; see
 $href%https://bugzilla.redhat.com/show_bug.cgi?id=913929% Bug 913929%$$.
 This has been fixed.
 
@@ -502,18 +502,18 @@ $head 01-06$$
 $list number$$
 The $cref limits$$ documentation was corrected an improved.
 $lnext
-The $cref limits.cpp$$ example was simplified and restricted to just testing
+The $cref num_limits.cpp$$ example was simplified and restricted to just testing
 for $code AD<double>$$.
 $lnext
 Testing for types other than $code AD<double>$$
-was moved to $code test_more/limits.cpp$$.
-In addition, $code test_more/limits.cpp$$ was modified to avoid the
+was moved to $code test_more/num_limits.cpp$$.
+In addition, $code test_more/num_limits.cpp$$ was modified to avoid the
 use of guard digits (and hence test failure) on more machines.
 $lend
 
 $head 01-05$$
 $list number$$
-The $cref limits.cpp$$ example was failing on some machines
+The $cref num_limits.cpp$$ example was failing on some machines
 because they were using guard digits during calculations.
 This has been fixed by using vectors instead of scalars
 for storing values.

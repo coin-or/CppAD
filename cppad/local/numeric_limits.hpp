@@ -63,7 +63,7 @@ The result $icode eps$$ is equal to machine epsilon and has prototype
 $codei%
 	%Float% %eps%
 %$$
-The file $cref limits.cpp$$
+The file $cref num_limits.cpp$$
 tests the value $icode eps$$ by checking that the following are true
 $codei%
 	1 != 1 + %eps%
@@ -79,7 +79,7 @@ the minimum positive normalized value and has prototype
 $codei%
 	%Float% %min%
 %$$
-The file $cref limits.cpp$$
+The file $cref num_limits.cpp$$
 tests the value $icode min$$ by checking that the following are true
 $codei%
 	abs( ((%min% / 100) * 100) / %min% - 1 ) > 3 * %eps%
@@ -94,7 +94,7 @@ the maximum finite value and has prototype
 $codei%
 	%Float% %max%
 %$$
-The file $cref limits.cpp$$
+The file $cref num_limits.cpp$$
 tests the value $icode max$$ by checking that the following are true
 $codei%
 	abs( ((%max% * 100) / 100) / %max% - 1 ) > 3 * %eps%
@@ -105,10 +105,10 @@ corresponding to $icode Float$$.
 
 $head Example$$
 $children%
-	example/limits.cpp
+	example/num_limits.cpp
 %$$
 The file
-$cref limits.cpp$$
+$cref num_limits.cpp$$
 contains an example and test of these functions.
 
 $end
