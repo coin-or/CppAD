@@ -57,6 +57,8 @@ template <> class numeric_limits<Base>\
 	{	return static_cast<Base>( std::numeric_limits<Other>::max() ); }\
 	static Base epsilon(void) \
 	{	return static_cast<Base>( std::numeric_limits<Other>::epsilon() ); }\
+	static Base quiet_NaN(void) \
+	{	return static_cast<Base>( std::numeric_limits<Other>::quiet_NaN() ); }\
 };
 /* $$
 $end

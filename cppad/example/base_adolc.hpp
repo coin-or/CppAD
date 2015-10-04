@@ -299,10 +299,9 @@ $head pow$$
 This $cref/required/base_require/$$ function
 is defined by the Adolc package for the $code adouble$$ base case.
 
-$head limits$$
-The following defines the numeric limits functions
-$code epsilon$$, $code min$$, and $code max$$ for the type
-$code adouble$$.
+$head numeric_limits$$
+The following defines the CppAD $cref numeric_limits$$
+for the type $code adouble$$:
 $codep */
 namespace CppAD {
 	CPPAD_NUMERIC_LIMITS(double, adouble)

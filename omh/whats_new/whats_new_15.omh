@@ -79,6 +79,10 @@ Add the macro
 $cref/CPPAD_NUMERIC_LIMITS/base_limits/CPPAD_NUMERIC_LIMITS/$$
 to aid in setting the numeric limits for a user defined $icode Base$$ class.
 $lnext
+$cref base_require$$:
+Add the $cref/quiet_NaN/numeric_limits/quiet_NaN/$$ to the set of
+$cref base_limits$$.
+$lnext
 Move documentation for $cref zdouble$$ to $cref deprecated$$ section
 and documentation for $cref numeric_limits$$ to $cref ADValued$$.
 $lend
@@ -176,7 +180,7 @@ $lend
 
 $head 09-19$$
 $list number$$
-There was a bug in the $cref/numeric_limits/base_alloc.hpp/limits/$$
+There was a bug in the $cref/numeric_limits/base_alloc.hpp/numeric_limits/$$
 section of the example user defined base type.
 This has been fixed.
 $lnext

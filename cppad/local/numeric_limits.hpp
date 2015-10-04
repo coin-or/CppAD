@@ -32,15 +32,16 @@ $icode%min% = numeric_limits<%Float%>::min()
 %$$
 $icode%max% = numeric_limits<%Float%>::max()
 %$$
+$icode%nan% = numeric_limits<%Float%>::quiet_NaN()
+%$$
 
-$head Purpose$$
-Obtain the value of some of the C++ standard numeric limits
-using the CppAD namespace version of $code numeric_limits$$.
-These are all functions and have the prototype
+$head CppAD::numeric_limits$$
+These functions and have the prototype
 $codei%
 	static %Float% CppAD::numeric_limits<%Float%>::%fun%(%void%)
 %$$
-where $icode fun$$ is $code epsilon$$, $code min$$, or $code max$$.
+where $icode fun$$ is
+$code epsilon$$, $code min$$, $code max$$, and $code quiet_NaN$$.
 
 $head std::numeric_limits$$
 CppAD does not use a specialization of $code std::numeric_limits$$
@@ -72,7 +73,6 @@ $codei%
 where all the values, and calculations, are done with the precision
 corresponding to $icode Float$$.
 
-
 $head min$$
 The result $icode min$$ is equal to
 the minimum positive normalized value and has prototype
@@ -83,7 +83,7 @@ The file $cref num_limits.cpp$$
 tests the value $icode min$$ by checking that the following are true
 $codei%
 	abs( ((%min% / 100) * 100) / %min% - 1 ) > 3 * %eps%
-	abs( ((%min% * 100) / (100 * (1 - %eps%)) / %min% - 1 ) < 3 * %eps%
+	abs( ((%min% * 100) / 100) / %min% - 1 ) < 3 * %eps%
 %$$
 where all the values, and calculations, are done with the precision
 corresponding to $icode Float$$.
@@ -98,10 +98,22 @@ The file $cref num_limits.cpp$$
 tests the value $icode max$$ by checking that the following are true
 $codei%
 	abs( ((%max% * 100) / 100) / %max% - 1 ) > 3 * %eps%
-	abs( ((%max% / 100) * (100 * (1 - %eps%)) / %max% - 1 ) < 3 * %eps%
+	abs( ((%max% / 100) * 100) / %max% - 1 ) < 3 * %eps%
 %$$
 where all the values, and calculations, are done with the precision
 corresponding to $icode Float$$.
+
+$head quiet_NaN$$
+The result $icode nan$$ is not a number and has prototype
+$codei%
+	%Float% %nan%
+%$$
+The file $cref num_limits.cpp$$
+tests the value $icode nan$$ by checking that the following is true
+$codei%
+	%nan% != %nan%
+%$$
+
 
 $head Example$$
 $children%
@@ -155,6 +167,14 @@ public:
 		);
 		return Float(0);
 	}
+	/// not a number
+	static Float quiet_NaN(void)
+	{	CPPAD_ASSERT_KNOWN(
+		false,
+		"numeric_limits<Float>::quiet_NaN() is not specialized for this Float"
+		);
+		return Float(0);
+	}
 };
 
 /// Partial specialization that defines limits for for all AD types
@@ -170,6 +190,9 @@ public:
 	/// maximum finite value
 	static AD<Base> max(void)
 	{	return AD<Base>( numeric_limits<Base>::max() ); }
+	/// note a number
+	static AD<Base> quiet_NaN(void)
+	{	return AD<Base>( numeric_limits<Base>::quiet_NaN() ); }
 };
 
 } // END_CPPAD_NAMESPACE

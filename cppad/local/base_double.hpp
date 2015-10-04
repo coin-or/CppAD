@@ -201,10 +201,9 @@ namespace CppAD {
 }
 /*$$
 
-$head limits$$
-The following defines the numeric limits functions
-$code epsilon$$, $code min$$, and $code max$$ for the type
-$code double$$.
+$head numeric_limits$$
+The following defines the CppAD $cref numeric_limits$$
+for the type $code <double$$:
 $codep */
 namespace CppAD {
 	CPPAD_NUMERIC_LIMITS(double, double)

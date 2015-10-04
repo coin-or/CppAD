@@ -355,10 +355,9 @@ namespace CppAD {
 }
 /* $$
 
-$head limits$$
-The following defines the numeric limits functions
-$code epsilon$$, $code min$$, and $code max$$ for the type
-$code base_alloc$$.
+$head numeric_limits$$
+The following defines the CppAD $cref numeric_limits$$
+for the type $code base_alloc$$:
 $codep */
 namespace CppAD {
 	CPPAD_NUMERIC_LIMITS(double, base_alloc)

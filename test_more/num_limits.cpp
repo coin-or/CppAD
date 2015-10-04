@@ -123,6 +123,19 @@ namespace {
 		ok        &= ! abs_geq(tmp.get() / max2.get() - one.get(), eps3.get() );
 		return ok;
 	}
+	// -----------------------------------------------------------------
+	template <class Type>
+	bool check_quiet_NaN(void)
+	{	bool ok    = true;
+		typedef extern_value<Type> value;
+		value nan( CppAD::numeric_limits<Type>::quiet_NaN() );
+		value same( nan.get() );
+		//
+		ok &= nan.get() != same.get();
+		ok &= ! (nan.get() == same.get() );
+		//
+		return ok;
+	}
 }
 
 bool num_limits(void)
@@ -167,6 +180,18 @@ bool num_limits(void)
 	ok &= check_max< AD<double> >();
 	ok &= check_max< AD< std::complex<float> > >();
 	ok &= check_max< AD< std::complex<double> > >();
+	// -------------------------------------------------------------------
+	// quiet_NaN for Base types defined by CppAD
+	ok &= check_quiet_NaN<float>();
+	ok &= check_quiet_NaN<double>();
+	ok &= check_quiet_NaN< std::complex<float> >();
+	ok &= check_quiet_NaN< std::complex<double> >();
+
+	// quiet_NaN for some AD types.
+	ok &= check_quiet_NaN< AD<float> >();
+	ok &= check_quiet_NaN< AD<double> >();
+	ok &= check_quiet_NaN< AD< std::complex<float> > >();
+	ok &= check_quiet_NaN< AD< std::complex<double> > >();
 
 	return ok;
 }

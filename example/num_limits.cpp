@@ -60,11 +60,11 @@ namespace {
 		Float min   = CppAD::numeric_limits<Float>::min();
 		Float eps   = CppAD::numeric_limits<Float>::epsilon();
 		//
-		Float match = (min / 100. ) * 100.;
-		ok         &= abs(match/min - 1.0) > 3.0 * eps;
+		Float match = (min / 100.) * 100.;
+		ok         &= abs(match / min - 1.0)  > 3.0 * eps;
 		//
-		match       = (min * 100.) / (100. * (1.0 - eps));
-		ok         &= abs(match / min - 1.0) < 3.0 * eps;
+		match       = (min * 100.) / 100.;
+		ok         &= abs(match / min - 1.0)  < 3.0 * eps;
 		return ok;
 	}
 	// -----------------------------------------------------------------
@@ -76,8 +76,15 @@ namespace {
 		Float match = (max * 100.) / 100.;
 		ok         &= abs(match / max - 1.0) > 3.0 * eps;
 		//
-		match       = (max / 100. ) * (100. * (1.0 - eps));
-		ok         &= abs(match/max - 1.0) < 3.0 * eps;
+		match       = (max / 100.) * 100.;
+		ok         &= abs(match / max - 1.0) < 3.0 * eps;
+		return ok;
+	}
+	// -----------------------------------------------------------------
+	bool check_nan(void)
+	{	bool ok     = true;
+		Float nan   = CppAD::numeric_limits<Float>::quiet_NaN();
+		ok         &= nan != nan;
 		return ok;
 	}
 }
@@ -86,8 +93,9 @@ bool num_limits(void)
 {	bool ok = true;
 
 	ok &= check_epsilon();
-	ok &= check_max();
 	ok &= check_min();
+	ok &= check_max();
+	ok &= check_nan();
 
 	return ok;
 }
