@@ -28,7 +28,8 @@ $childtable%
 	cppad/local/epsilon.hpp%
 	cppad/local/test_vector.hpp%
 	cppad_ipopt/src/cppad_ipopt_nlp.hpp%
-	cppad/local/old_atomic.hpp
+	cppad/local/old_atomic.hpp%
+	cppad/local/zdouble.hpp
 %$$
 
 $table

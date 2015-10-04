@@ -70,7 +70,6 @@ $children%cppad/local/std_math_98.hpp
 	%cppad/local/atanh.hpp
 	%cppad/local/erf.hpp
 	%cppad/local/expm1.hpp
-	%cppad/local/limits.hpp
 	%cppad/local/log1p.hpp
 	%cppad/local/sign.hpp
 %$$

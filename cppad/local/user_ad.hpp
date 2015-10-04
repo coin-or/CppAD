@@ -56,8 +56,7 @@ $childtable%
 	cppad/local/ad_valued.hpp%
 	cppad/local/bool_valued.hpp%
 	cppad/local/vec_ad.hpp%
-	cppad/base_require.hpp%
-	cppad/local/zdouble.hpp
+	cppad/base_require.hpp
 %$$
 
 $end

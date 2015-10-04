@@ -38,7 +38,7 @@ Obtain the value of some of the C++ standard numeric limits
 using the CppAD namespace version of $code numeric_limits$$.
 These are all functions and have the prototype
 $codei%
-	%Float% CppAD::numeric_limits<%Float%>::%fun%(%void%)
+	static %Float% CppAD::numeric_limits<%Float%>::%fun%(%void%)
 %$$
 where $icode fun$$ is $code epsilon$$, $code min$$, or $code max$$.
 

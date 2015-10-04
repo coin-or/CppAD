@@ -175,4 +175,7 @@ $end
 # include <cppad/local/base_double.hpp>
 # include <cppad/local/base_complex.hpp>
 
+// deprecated base type
+# include <cppad/local/zdouble.hpp>
+
 # endif

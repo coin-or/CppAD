@@ -73,10 +73,15 @@ The purpose of this section is to
 assist you in learning about changes between various versions of CppAD.
 
 $head 10-04$$
+$list number$$
 $cref base_require$$:
 Add the macro
 $cref/CPPAD_NUMERIC_LIMITS/base_limits/CPPAD_NUMERIC_LIMITS/$$
 to aid in setting the numeric limits for a user defined $icode Base$$ class.
+$lnext
+Move documentation for $cref zdouble$$ to $cref deprecated$$ section
+and documentation for $cref limits$$ to $cref ADValued$$.
+$lend
 
 $head 10-03$$
 $cref base_require$$:
