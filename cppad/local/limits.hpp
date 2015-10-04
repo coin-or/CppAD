@@ -22,12 +22,6 @@ $spell
 	namespace
 	const
 $$
-$index limits, AD$$
-$index AD, limits$$
-$index epsilon, AD$$
-$index limit, max$$
-$index limit, min$$
-$index limit, epsilon$$
 
 $section Numeric Limits For an AD and Base Types$$
 
@@ -44,28 +38,33 @@ Obtain the value of some of the C++ standard numeric limits
 using the CppAD namespace version of $code numeric_limits$$.
 These are all functions and have the prototype
 $codei%
-	%Float% numeric_limits<%Float%>::%fun%(%void%)
+	%Float% CppAD::numeric_limits<%Float%>::%fun%(%void%)
 %$$
 where $icode fun$$ is $code epsilon$$, $code min$$, or $code max$$.
-$pre
 
-$$
-Note that C++ standard specifies that Non-fundamental standard
-types, such as $codei%std::complex<%T%>%$$ shall not have specializations
+$head std::numeric_limits$$
+CppAD does not use a specialization of $code std::numeric_limits$$
+because this would be to restrictive.
+The C++ standard specifies that Non-fundamental standard
+types, such as
+$cref/std::complex<double>/base_complex.hpp/$$ shall not have specializations
 of $code std::numeric_limits$$; see Section 18.2 of
 ISO/IEC 14882:1998(E).
+In addition, since C++11, a only literal types can have a specialization
+of $code std::numeric_limits$$.
 
 $head Float$$
 These functions are defined for all $codei%AD<%Base%>%$$,
 and for all corresponding $icode Base$$ types;
-see $icode Base$$ type $cref/numeric_limits/base_std_math/numeric_limits/$$.
+see $icode Base$$ type $cref base_limits$$.
 
-$head eps$$
+$head epsilon$$
 The result $icode eps$$ is equal to machine epsilon and has prototype
 $codei%
 	%Float% %eps%
 %$$
-CppAD tests the value $icode eps$$ by checking that the following are true
+The file $cref limits.cpp$$
+tests the value $icode eps$$ by checking that the following are true
 $codei%
 	1 != 1 + %eps%
 	1 == 1 + %eps% / 2
@@ -80,7 +79,8 @@ the minimum positive normalized value and has prototype
 $codei%
 	%Float% %min%
 %$$
-CppAD tests the value $icode min$$ by checking that the following are true
+The file $cref limits.cpp$$
+tests the value $icode min$$ by checking that the following are true
 $codei%
 	abs( ((%min% / 100) * 100) / %min% - 1 ) > 3 * %eps%
 	abs( ((%min% * 100) / (100 * (1 - %eps%)) / %min% - 1 ) < 3 * %eps%
@@ -94,7 +94,8 @@ the maximum finite value and has prototype
 $codei%
 	%Float% %max%
 %$$
-CppAD tests the value $icode max$$ by checking that the following are true
+The file $cref limits.cpp$$
+tests the value $icode max$$ by checking that the following are true
 $codei%
 	abs( ((%max% * 100) / 100) / %max% - 1 ) > 3 * %eps%
 	abs( ((%max% / 100) * (100 * (1 - %eps%)) / %max% - 1 ) < 3 * %eps%

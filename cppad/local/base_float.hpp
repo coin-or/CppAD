@@ -208,19 +208,7 @@ $code epsilon$$, $code min$$, and $code max$$ for the type
 $code float$$:
 $codep */
 namespace CppAD {
-	template <>
-	class numeric_limits<float> {
-	public:
-		// machine epsilon
-		static float epsilon(void)
-		{	return std::numeric_limits<float>::epsilon(); }
-		// minimum positive normalized value
-		static float min(void)
-		{	return std::numeric_limits<float>::min(); }
-		// maximum finite value
-		static float max(void)
-		{	return std::numeric_limits<float>::max(); }
-	};
+	CPPAD_NUMERIC_LIMITS(float, float)
 }
 /* $$
 $end

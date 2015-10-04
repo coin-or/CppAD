@@ -270,28 +270,9 @@ $head limits$$
 The following defines the numeric limits functions
 $code epsilon$$, $code min$$, and $code max$$ for the type
 $code std::complex<double>$$.
-It also defines the deprecated $code epsilon$$ function:
 $codep */
 namespace CppAD {
-	template <>
-	class numeric_limits< std::complex<double> > {
-	public:
-		// machine epsilon
-		static  std::complex<double> epsilon(void)
-		{	double eps = std::numeric_limits<double>::epsilon();
-			return std::complex<double>(eps, 0.0);
-		}
-		// minimum positive normalized value
-		static  std::complex<double> min(void)
-		{	double min = std::numeric_limits<double>::min();
-			return std::complex<double>(min, 0.0);
-		}
-		// maximum finite value
-		static  std::complex<double> max(void)
-		{	double max = std::numeric_limits<double>::max();
-			return std::complex<double>(max, 0.0);
-		}
-	};
+	CPPAD_NUMERIC_LIMITS(double, std::complex<double>)
 }
 /* $$
 $end

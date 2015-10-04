@@ -155,18 +155,6 @@ For example, see
 $cref/base_complex/base_complex.hpp/isnan/$$.
 
 
-$head numeric_limits$$
-$index numeric_limits$$
-The $cref/numeric_limits/limits/$$ functions
-$codei%
-	%Base% CppAD::numeric_limits<%Base%>::epsilon()
-	%Base% CppAD::numeric_limits<%Base%>::min()
-	%Base% CppAD::numeric_limits<%Base%>::max()
-%$$
-must return machine epsilon,
-minimum positive normalize value,
-and maximum finite value for the type $icode Base$$.
-
 $end
 -------------------------------------------------------------------------------
 */

@@ -205,22 +205,9 @@ $head limits$$
 The following defines the numeric limits functions
 $code epsilon$$, $code min$$, and $code max$$ for the type
 $code double$$.
-It also defines the deprecated $code epsilon$$ function:
 $codep */
 namespace CppAD {
-	template <>
-	class numeric_limits<double> {
-	public:
-		// machine epsilon
-		static double epsilon(void)
-		{	return std::numeric_limits<double>::epsilon(); }
-		// minimum positive normalized value
-		static double min(void)
-		{	return std::numeric_limits<double>::min(); }
-		// maximum finite value
-		static double max(void)
-		{	return std::numeric_limits<double>::max(); }
-	};
+	CPPAD_NUMERIC_LIMITS(double, double)
 }
 /* $$
 $end

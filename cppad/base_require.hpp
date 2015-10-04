@@ -124,7 +124,7 @@ $codei%
 	%z% = azmul(%x%, %y%)
 %$$
 see; $cref azmul$$.
-The following preprocessor macro invocation suffice
+The following preprocessor macro invocation suffices
 (for most $icode Base$$ types):
 $codei%
 namespace CppAD {
@@ -148,6 +148,7 @@ $childtable%
 	omh/base_require/base_identical.omh%
 	omh/base_require/base_ordered.omh%
 	cppad/local/base_std_math.hpp%
+	cppad/local/base_limits.hpp%
 	omh/base_require/base_example.omh
 %$$
 
@@ -163,6 +164,7 @@ $end
 // grouping documentation by feature
 # include <cppad/local/base_cond_exp.hpp>
 # include <cppad/local/base_std_math.hpp>
+# include <cppad/local/base_limits.hpp>
 
 // must define template class numeric_limits before the base cases
 # include <cppad/local/limits.hpp>

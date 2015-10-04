@@ -25,16 +25,17 @@ Preprecessor definitions that presist after cppad/cppad.hpp is included:
 
 # undef CPPAD_BOOL_BINARY         in user api
 # undef CPPAD_BOOL_UNARY          in user api
-# undef CPPAD_USE_CPLUSPLUS_2011  in user api
 # undef CPPAD_DISCRETE_FUNCTION   in user api
 # undef CPPAD_EIGENVECTOR         in user api
 # undef CPPAD_INTERNAL_SPARSE_SET in user api
 # undef CPPAD_MAX_NUM_THREADS     in user api
+# undef CPPAD_NUMERIC_LIMITS      in user api
 # undef CPPAD_NULL                in user api
 # undef CPPAD_PACKAGE_STRING      in user api
 # undef CPPAD_TAPE_ADDR_TYPE      in user api
 # undef CPPAD_TAPE_ID_TYPE        in user api
 # undef CPPAD_TESTVECTOR          in user api
+# undef CPPAD_USE_CPLUSPLUS_2011  in user api
 
 # undef CPPAD_TRACK_COUNT    in deprecated api
 # undef CPPAD_TRACK_DEL_VEC  in deprecated api

@@ -543,6 +543,7 @@ nobase_myinclude_HEADERS = \
 	cppad/local/base_cond_exp.hpp \
 	cppad/local/base_double.hpp \
 	cppad/local/base_float.hpp \
+	cppad/local/base_limits.hpp \
 	cppad/local/base_std_math.hpp \
 	cppad/local/bender_quad.hpp \
 	cppad/local/bool_fun.hpp \

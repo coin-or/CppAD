@@ -303,22 +303,9 @@ $head limits$$
 The following defines the numeric limits functions
 $code epsilon$$, $code min$$, and $code max$$ for the type
 $code adouble$$.
-It also defines the deprecated $code epsilon$$ function:
 $codep */
 namespace CppAD {
-	template <>
-	class numeric_limits<adouble> {
-	public:
-		// machine epsilon
-		static adouble epsilon(void)
-		{	return adouble( std::numeric_limits<double>::epsilon() ); }
-		// minimum positive normalized value
-		static adouble min(void)
-		{	return adouble( std::numeric_limits<float>::min() ); }
-		// maximum finite value
-		static adouble max(void)
-		{	return adouble( std::numeric_limits<float>::max() ); }
-	};
+	CPPAD_NUMERIC_LIMITS(double, adouble)
 }
 /* $$
 $end

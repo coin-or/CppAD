@@ -356,25 +356,12 @@ namespace CppAD {
 /* $$
 
 $head limits$$
+The following defines the numeric limits functions
+$code epsilon$$, $code min$$, and $code max$$ for the type
+$code base_alloc$$.
 $codep */
 namespace CppAD {
-	template <>
-	class numeric_limits<base_alloc> {
-	public:
-		// machine epsilon
-		static base_alloc epsilon(void)
-		{	return base_alloc( std::numeric_limits<double>::epsilon() ); }
-		// minimum positive normalized value
-		static base_alloc min(void)
-		{	return base_alloc( std::numeric_limits<double>::min() ); }
-		// maximum finite value
-		static base_alloc max(void)
-		{	return base_alloc( std::numeric_limits<double>::max() ); }
-	};
-	// deprecated machine epsilon
-	template <>
-	inline base_alloc epsilon<base_alloc>(void)
-	{	return numeric_limits<base_alloc>::epsilon(); }
+	CPPAD_NUMERIC_LIMITS(double, base_alloc)
 }
 /* $$
 
