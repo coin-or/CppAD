@@ -1,6 +1,6 @@
 /* $Id$ */
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-13 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-15 Bradley M. Bell
 
 CppAD is distributed under multiple licenses. This distribution is under
 the terms of the 
@@ -14,9 +14,6 @@ Please visit http://www.coin-or.org/CppAD/ for information on other licenses.
 $begin check_for_nan.cpp$$
 
 $section ADFun Checking For Nan: Example and Test$$
-$index check_for_nan, example$$
-$index example, check_for_nan$$
-$index test, check_for_nan$$
 
 $code
 $verbatim%example/check_for_nan.cpp%0%// BEGIN C++%// END C++%1%$$
@@ -55,7 +52,7 @@ bool check_for_nan(void)
 
 	CPPAD_TESTVECTOR(double) x(2), y(2);
 	x[0] = 2.0;
-	x[1] = CppAD::nan(0.0);
+	x[1] = CppAD::numeric_limits<double>::quiet_NaN();
 
 	// use try / catch because this causes an exception
 	// (assuming that NDEBUG is not defined)

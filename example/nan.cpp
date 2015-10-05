@@ -29,13 +29,14 @@ $end
 // BEGIN C++
 # include <cppad/nan.hpp>
 # include <vector>
+# include <limits>
 
 bool nan(void)
 {	bool ok = true;
 
 	// get a nan
 	double double_zero = 0.;
-	double double_nan = CppAD::nan(double_zero);
+	double double_nan = std::numeric_limits<double>::quiet_NaN();
 
 	// create a simple vector with no nans
 	std::vector<double> v(2);

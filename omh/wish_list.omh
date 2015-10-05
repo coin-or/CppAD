@@ -55,24 +55,6 @@ $lnext
 Move $code cppad/local$$ to $code cppad/core$$.
 $lend
 
-$head Numeric Limits$$
-Define a specialization for
-$codei%
-	std::numeric_limits< CppAD::AD<%Base%> >
-%$$
-
-$subhead Rationale$$
-This seems to be OK according to the following paragraph from Section
-17.6.4.2.1 of the C++11 standard (Document number N3336)
-`A program may explicitly instantiate a template defined in the
-standard library only if the declaration depends on the name of a
-user-defined type and the instantiation meets the
-standard library requirements for the original template.'
-
-$subhead nan$$
-Once this is done, the $cref nan$$ function should can be deprecated
-because it generates compiler warnings about dividing by zero.
-
 $head checkpoint$$
 There should be some examples and tests for both speed and memory use
 that demonstrate that checkpointing is useful.

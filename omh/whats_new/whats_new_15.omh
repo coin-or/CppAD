@@ -80,8 +80,15 @@ $cref/CPPAD_NUMERIC_LIMITS/base_limits/CPPAD_NUMERIC_LIMITS/$$
 to aid in setting the numeric limits for a user defined $icode Base$$ class.
 $lnext
 $cref base_require$$:
-Add the $cref/quiet_NaN/numeric_limits/quiet_NaN/$$ to the set of
-$cref base_limits$$.
+The $cref/quiet_NaN/numeric_limits/quiet_NaN/$$ function has been added
+to the CppAD $code numeric_limits$$.
+Note the reason for not using
+$cref/std::numeric_limits/numeric_limits/std::numeric_limits/$$.
+$lnext
+The $cref/nan(zero)/nan/nan(zero)/$$ function computes a $code nan$$ by
+dividing zero by zero which results in a warning when using some compilers.
+This function has been deprecated and the corresponding 
+$cref WishList$$ item has been removed.
 $lnext
 Move documentation for $cref zdouble$$ to $cref deprecated$$ section
 and documentation for $cref numeric_limits$$ to $cref ADValued$$.
@@ -363,10 +370,10 @@ $cref/conditional expressions/CondExp/$$).
 
 
 $head 06-07$$
-Add
-$cref/absolute zero/base_require/Absolute Zero, azmul/$$
-and $cref/numeric_limits/WishList/Numeric Limits/$$ items to the wish list.
-(The absolute zero item has been completed.)
+Add a $cref/absolute zero/base_require/Absolute Zero, azmul/$$ item
+and a $cref numeric_limits$$ item to the wish list.
+The absolute zero item has been completed and the 
+numeric limit item was modified on implementation.
 Remove the multiple directions with list item.
 
 $head 05-26$$

@@ -3,7 +3,7 @@
 # define CPPAD_NAN_INCLUDED
 
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-14 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-15 Bradley M. Bell
 
 CppAD is distributed under multiple licenses. This distribution is under
 the terms of the 
@@ -26,14 +26,8 @@ $$
 
 $section Obtain Nan or Determine if a Value is Nan$$
 
-$index isnan$$
-$index hasnan$$
-$index nan$$
-
 $head Syntax$$
 $codei%# include <cppad/nan.hpp>
-%$$
-$icode%s% = nan(%z%)
 %$$
 $icode%b% = isnan(%s%)
 %$$
@@ -53,32 +47,10 @@ but it can also be included separately with out the rest of
 the $code CppAD$$ routines.
 
 $subhead Macros$$
-$index macro, nan$$
-$index macro,  isnan$$
-$index nan, macro$$
-$index isnan, macro$$
 Some C++ compilers use preprocessor symbols called $code nan$$ 
 and $code isnan$$.
 These preprocessor symbols will no longer be defined after 
 this file is included. 
-
-$head nan$$
-This routine returns a $code nan$$ with the same type as $icode z$$.
-
-$subhead z$$
-The argument $icode z$$ has prototype
-$codei%
-	const %Scalar% &%z% 
-%$$
-and its value is zero
-(see $cref/Scalar/nan/Scalar/$$ for the definition of $icode Scalar$$).
-
-$subhead s$$
-The return value $icode s$$ has prototype
-$codei%
-	%Scalar% %s%
-%$$
-It is the value $code nan$$ for this floating point type.
 
 $head isnan$$
 This routine determines if a scalar value is $code nan$$.
@@ -113,6 +85,32 @@ $codei%
 	bool %b%
 %$$
 It is true if the vector $icode v$$ has a $code nan$$.
+
+
+$head nan(zero)$$
+
+$subhead Deprecated 2015-10-04$$
+This routine has been deprecated, use CppAD numeric limits
+$cref/quiet_NaN/numeric_limits/quiet_NaN/$$ in its place.
+
+$subhead Syntax$$
+$icode%s% = nan(%z%)
+%$$
+
+$subhead z$$
+The argument $icode z$$ has prototype
+$codei%
+	const %Scalar% &%z% 
+%$$
+and its value is zero
+(see $cref/Scalar/nan/Scalar/$$ for the definition of $icode Scalar$$).
+
+$subhead s$$
+The return value $icode s$$ has prototype
+$codei%
+	%Scalar% %s%
+%$$
+It is the value $code nan$$ for this floating point type.
 
 $head Scalar$$
 The type $icode Scalar$$ must support the following operations;
@@ -169,11 +167,6 @@ $end
 namespace CppAD { // BEGIN CppAD namespace
 
 template <class Scalar>
-inline Scalar nan(const Scalar &zero)
-{	return zero / zero;
-}
-
-template <class Scalar>
 inline bool isnan(const Scalar &s)
 {	return (s != s);
 }
@@ -189,6 +182,11 @@ bool hasnan(const Vector &v)
 	while(i--)
 		found_nan |= CppAD::isnan(v[i]);
 	return found_nan;
+}
+
+template <class Scalar>
+inline Scalar nan(const Scalar &zero)
+{	return zero / zero;
 }
 
 } // End CppAD namespace

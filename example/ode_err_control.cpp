@@ -1,6 +1,6 @@
 /* $Id$ */
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-12 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-15 Bradley M. Bell
 
 CppAD is distributed under multiple licenses. This distribution is under
 the terms of the 
@@ -57,13 +57,13 @@ $end
 */
 // BEGIN C++
 
+# include <limits>                      // for quiet_NaN
 # include <cstddef>                     // for size_t
 # include <cmath>                       // for exp
 # include <cppad/ode_err_control.hpp>   // CppAD::OdeErrControl
 # include <cppad/near_equal.hpp>        // CppAD::NearEqual
 # include <cppad/vector.hpp>            // CppAD::vector
 # include <cppad/runge_45.hpp>          // CppAD::Runge45
-# include <cppad/nan.hpp>               // for nan
 
 namespace {
 	// --------------------------------------------------------------
@@ -84,7 +84,7 @@ namespace {
 			f[1] = 1. / x[0];	
 			// case where ODE does not make sense
 			if( x[0] < 0. )
-				f[1] = CppAD::nan(0.);
+				f[1] = std::numeric_limits<double>::quiet_NaN();
 		}
 
 	};

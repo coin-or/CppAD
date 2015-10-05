@@ -39,8 +39,9 @@ $rnext
 $cref/CppADCreateDiscrete/Discrete/CppADCreateDiscrete Deprecated 2007-07-28/$$  $cnext
 	$title Discrete$$
 $rnext
-$cref auto_tools$$                               $cnext
-	$title auto_tools$$
+$cref auto_tools$$   $cnext $title auto_tools$$
+$rnext
+$cref/nan(zero)/nan/nan(zero)/$$ $cnext $codei%nan(%zero%)%$$
 $tend
 
 
