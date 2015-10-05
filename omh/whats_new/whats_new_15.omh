@@ -87,7 +87,7 @@ $cref/std::numeric_limits/numeric_limits/std::numeric_limits/$$.
 $lnext
 The $cref/nan(zero)/nan/nan(zero)/$$ function computes a $code nan$$ by
 dividing zero by zero which results in a warning when using some compilers.
-This function has been deprecated and the corresponding 
+This function has been deprecated and the corresponding
 $cref WishList$$ item has been removed.
 $lnext
 Move documentation for $cref zdouble$$ to $cref deprecated$$ section
@@ -372,7 +372,7 @@ $cref/conditional expressions/CondExp/$$).
 $head 06-07$$
 Add a $cref/absolute zero/base_require/Absolute Zero, azmul/$$ item
 and a $cref numeric_limits$$ item to the wish list.
-The absolute zero item has been completed and the 
+The absolute zero item has been completed and the
 numeric limit item was modified on implementation.
 Remove the multiple directions with list item.
 

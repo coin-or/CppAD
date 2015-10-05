@@ -3,7 +3,7 @@
 CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-15 Bradley M. Bell
 
 CppAD is distributed under multiple licenses. This distribution is under
-the terms of the 
+the terms of the
                     Eclipse Public License Version 1.0.
 
 A copy of this license is included in the COPYING file of this distribution.
@@ -68,14 +68,14 @@ bool check_for_nan(void)
 	}
 	catch(std::string msg)
 	{	ok &= msg == "myhandler";
-	} 
+	}
 
 	// now do calculation without an exception
 	f.check_for_nan(false);
 	y = f.Forward(0, x);
 	ok &= y[0] == x[0];
-	ok &= CppAD::isnan( y[1] ); 
-	
+	ok &= CppAD::isnan( y[1] );
+
 	return ok;
 }
 

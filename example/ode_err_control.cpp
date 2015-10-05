@@ -3,7 +3,7 @@
 CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-15 Bradley M. Bell
 
 CppAD is distributed under multiple licenses. This distribution is under
-the terms of the 
+the terms of the
                     Eclipse Public License Version 1.0.
 
 A copy of this license is included in the COPYING file of this distribution.
@@ -21,7 +21,7 @@ $index OdeErrControl, example$$
 $index example, OdeErrControl$$
 $index test, OdeErrControl$$
 
-Define 
+Define
 $latex X : \B{R} \rightarrow \B{R}^2$$ by
 $latex \[
 \begin{array}{rcl}
@@ -45,7 +45,7 @@ Note that $latex X_0 (t) > 0$$ for all $latex t$$ and that the
 ODE goes through a singularity between $latex X_0 (t) > 0$$
 and $latex X_0 (t) < 0$$.
 If $latex X_0 (t) < 0$$,
-we return $code nan$$ in order to inform 
+we return $code nan$$ in order to inform
 $code OdeErrControl$$ that its is taking to large a step.
 
 
@@ -73,15 +73,15 @@ namespace {
 	public:
 		// constructor
 		Fun(double alpha) : alpha_(alpha)
-		{ } 
+		{ }
 
 		// set f = x'(t)
 		void Ode(
-			const double                &t, 
-			const CppAD::vector<double> &x, 
+			const double                &t,
+			const CppAD::vector<double> &x,
 			CppAD::vector<double>       &f)
 		{	f[0] = - alpha_ * x[0];
-			f[1] = 1. / x[0];	
+			f[1] = 1. / x[0];
 			// case where ODE does not make sense
 			if( x[0] < 0. )
 				f[1] = std::numeric_limits<double>::quiet_NaN();
@@ -98,8 +98,8 @@ namespace {
 		Method(double alpha) : F(alpha)
 		{ }
 		void step(
-			double ta, 
-			double tb, 
+			double ta,
+			double tb,
 			CppAD::vector<double> &xa ,
 			CppAD::vector<double> &xb ,
 			CppAD::vector<double> &eb )
@@ -138,7 +138,7 @@ bool OdeErrControl(void)
 	CppAD::vector<double> maxabs(2);
 	size_t nstep;
 
-	
+
 	xf = OdeErrControl(method,
 		ti, tf, xi, smin, smax, scur, eabs, erel, ef, maxabs, nstep);
 

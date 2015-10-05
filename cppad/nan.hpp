@@ -6,7 +6,7 @@
 CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-15 Bradley M. Bell
 
 CppAD is distributed under multiple licenses. This distribution is under
-the terms of the 
+the terms of the
                     Eclipse Public License Version 1.0.
 
 A copy of this license is included in the COPYING file of this distribution.
@@ -35,22 +35,22 @@ $icode%b% = hasnan(%v%)%$$
 
 $head Purpose$$
 It obtain and check for the value not a number $code nan$$.
-The IEEE standard specifies that a floating point value $icode a$$ 
+The IEEE standard specifies that a floating point value $icode a$$
 is $code nan$$ if and only if the following returns true
 $codei%
 	%a% != %a%
-%$$ 
+%$$
 
 $head Include$$
 The file $code cppad/nan.hpp$$ is included by $code cppad/cppad.hpp$$
-but it can also be included separately with out the rest of 
+but it can also be included separately with out the rest of
 the $code CppAD$$ routines.
 
 $subhead Macros$$
-Some C++ compilers use preprocessor symbols called $code nan$$ 
+Some C++ compilers use preprocessor symbols called $code nan$$
 and $code isnan$$.
-These preprocessor symbols will no longer be defined after 
-this file is included. 
+These preprocessor symbols will no longer be defined after
+this file is included.
 
 $head isnan$$
 This routine determines if a scalar value is $code nan$$.
@@ -69,7 +69,7 @@ $codei%
 It is true if the value $icode s$$ is $code nan$$.
 
 $head hasnan$$
-This routine determines if a 
+This routine determines if a
 $cref SimpleVector$$ has an element that is $code nan$$.
 
 $subhead v$$
@@ -100,7 +100,7 @@ $icode%s% = nan(%z%)
 $subhead z$$
 The argument $icode z$$ has prototype
 $codei%
-	const %Scalar% &%z% 
+	const %Scalar% &%z%
 %$$
 and its value is zero
 (see $cref/Scalar/nan/Scalar/$$ for the definition of $icode Scalar$$).
