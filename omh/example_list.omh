@@ -271,7 +271,6 @@ $rref value.cpp$$
 $rref var2par.cpp$$
 $rref vec_ad.cpp$$
 $rref vector_bool.cpp$$
-$rref zdouble.cpp$$
 $tend
 
 $end

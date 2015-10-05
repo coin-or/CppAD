@@ -21,8 +21,6 @@ $$
 $section Computing a Jacobian With Constants that Change$$
 $index multiple, AD level$$
 $index level, multiple AD$$
-$index constant, that change$$
-$index change, constant$$
 
 $head Purpose$$
 In this example we use two levels of taping so that a derivative
@@ -54,8 +52,7 @@ $end
 bool change_param(void)
 {	bool ok = true;                     // initialize test result
 
-	using CppAD::zdouble;               // double with an absolute zero
-	typedef CppAD::AD<zdouble> a1type;  // for first level of taping
+	typedef CppAD::AD<double> a1type;   // for first level of taping
 	typedef CppAD::AD<a1type>  a2type;  // for second level of taping
 
 	size_t nu = 3;       // number components in u
@@ -101,7 +98,7 @@ bool change_param(void)
 
 	// declare function object that maps u = (x, p) to Jacobian of f
 	// (make sure we do not run zero order forward during constructor)
-	CppAD::ADFun<zdouble> g;
+	CppAD::ADFun<double> g;
 	g.Dependent(a1u, a1J);
 
 	// remove extra variables used during the reconding of a1f,
@@ -109,24 +106,24 @@ bool change_param(void)
 	g.optimize();
 
 	// compute the Jacobian of f using zero order forward
-	// sweep with zdouble values
-	CPPAD_TESTVECTOR(zdouble) J(nJ), u(nu);
+	// sweep with double values
+	CPPAD_TESTVECTOR(double) J(nJ), u(nu);
 	for(j = 0; j < nu; j++)
-		u[j] = zdouble(j+1);
+		u[j] = double(j+1);
 	J = g.Forward(0, u);
 
 	// accuracy for tests
-	zdouble eps = 100. * CppAD::numeric_limits<zdouble>::epsilon();
+	double eps = 100. * CppAD::numeric_limits<double>::epsilon();
 
 	// y[0] = sin( x[0] ) * p
 	// y[1] = sin( x[1] ) * p
-	CPPAD_TESTVECTOR(zdouble) x(nx);
+	CPPAD_TESTVECTOR(double) x(nx);
 	x[0]      = u[0];
 	x[1]      = u[1];
-	zdouble p = u[2];
+	double p  = u[2];
 
 	// J[0] = partial y[0] w.r.t x[0] = cos( x[0] ) * p
-	zdouble check = cos( x[0] ) * p;
+	double check = cos( x[0] ) * p;
 	ok   &= fabs( check - J[0] ) <= eps;
 
 	// J[1] = partial y[0] w.r.t x[1] = 0.;

@@ -121,9 +121,8 @@ $head Base Type Requirements$$
 The type $code zdouble$$ satisfies all of the CppAD
 $cref/base type requirements/base_require/$$.
 
-
 $children%
-	example/zdouble.cpp
+	test_more/zdouble.cpp
 %$$
 $head Example$$
 The file $cref zdouble.cpp$$

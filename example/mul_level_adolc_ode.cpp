@@ -21,7 +21,6 @@ $spell
 	AdolcDir
 	adouble
 	Vec
-	zdouble
 $$
 
 $section Taylor's Ode Solver: A Multi-Level Adolc Example and Test$$
@@ -37,18 +36,9 @@ to take derivatives during the solution of the differential equation.
 These derivatives are used in the application
 of Taylor's method to the solution of the ODE.
 The example $cref mul_level_ode.cpp$$ computes the same values using
-$code AD<zdouble>$$ and $code AD< AD<zdouble> >$$.
+$code AD<double>$$ and $code AD< AD<double> >$$.
 The example $cref ode_taylor.cpp$$ is a simpler applications
 of Taylor's method for solving an ODE.
-
-$head Absolute Zero$$
-Note that $code adouble$$ does not have an
-$cref/absolute zero/zdouble/Absolute Zero/$$.
-Hence if you use $cref/conditional expressions/CondExp/$$
-with the type $code AD<adouble>$$ you cannot also use
-$cref/reverse mode/reverse/$$; see
-$cref/zdouble CppAD motivation/zdouble/Motivation/CppAD/$$.
-
 
 $head ODE$$
 For this example the ODE's are defined by the function

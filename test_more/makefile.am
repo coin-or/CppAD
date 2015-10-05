@@ -177,7 +177,8 @@ test_more_SOURCES  = \
 	value.cpp \
 	vec_ad.cpp \
 	vec_ad_par.cpp \
-	vec_unary.cpp
+	vec_unary.cpp \
+	zdouble.cpp
 
 test: check
 	./test_more

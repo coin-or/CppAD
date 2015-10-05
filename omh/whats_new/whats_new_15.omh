@@ -92,6 +92,9 @@ $cref WishList$$ item has been removed.
 $lnext
 Move documentation for $cref zdouble$$ to $cref deprecated$$ section
 and documentation for $cref numeric_limits$$ to $cref ADValued$$.
+$lnext
+Remove all uses of, and references to,
+$cref zdouble$$ from the $cref/examples/Example/$$.
 $lend
 
 $head 10-03$$

@@ -16,13 +16,9 @@ $spell
 	AdolcDir
 	adouble
 	Vec
-	zdouble
 $$
 
 $section Using Adolc with Multiple Levels of Taping: Example and Test$$
-$index multiple, Adolc$$
-$index level, multiple Adolc$$
-$index Adolc, multiple level$$
 
 $head Purpose$$
 In this example, we use $code AD< adouble> >$$ (level two taping),
@@ -47,7 +43,7 @@ $latex \[
 	\frac{d}{dx} \left[ f^{(1)} (x) * v \right] = f^{(2)} (x) * v
 \] $$
 The example $cref mul_level.cpp$$ computes the same values using
-$code AD< AD<zdouble> >$$ and $code AD<zdouble>$$.
+$code AD< AD<double> >$$ and $code AD<double>$$.
 
 $head Memory Management$$
 Adolc uses raw memory arrays that depend on the number of
@@ -59,14 +55,6 @@ $head Configuration Requirement$$
 This example will be compiled and tested provided that
 the value $cref adolc_prefix$$ is specified on the
 $cref cmake$$ command line.
-
-$head Absolute Zero$$
-Note that $code adouble$$ does not have an
-$cref/absolute zero/zdouble/Absolute Zero/$$.
-Hence if you use $cref/conditional expressions/CondExp/$$
-with the type $code AD<adouble>$$ you cannot also use
-$cref/reverse mode/reverse/$$; see
-$cref/zdouble CppAD motivation/zdouble/Motivation/CppAD/$$.
 
 $head Source$$
 $code

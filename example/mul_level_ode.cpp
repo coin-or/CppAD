@@ -13,7 +13,6 @@ Please visit http://www.coin-or.org/CppAD/ for information on other licenses.
 /*
 $begin mul_level_ode.cpp$$
 $spell
-	zdouble
 	Taylor
 	Cpp
 	const
@@ -27,10 +26,10 @@ $section Taylor's Ode Solver: A Multi-Level AD Example and Test$$
 $head Purpose$$
 This is a realistic example using
 two levels of AD; see $cref mul_level$$.
-The first level uses $code AD<zdouble>$$ to tape the solution of an
+The first level uses $code AD<double>$$ to tape the solution of an
 ordinary differential equation.
 This solution is then differentiated with respect to a parameter vector.
-The second level uses $code AD< AD<zdouble> >$$
+The second level uses $code AD< AD<double> >$$
 to take derivatives during the solution of the differential equation.
 These derivatives are used in the application
 of Taylor's method to the solution of the ODE.
@@ -157,8 +156,7 @@ $end
 // =========================================================================
 // define types for each level
 namespace { // BEGIN empty namespace
-using CppAD::zdouble;
-typedef CppAD::AD<zdouble>  a1type;
+typedef CppAD::AD<double>   a1type;
 typedef CppAD::AD<a1type>   a2type;
 
 // -------------------------------------------------------------------------
@@ -254,7 +252,7 @@ CPPAD_TESTVECTOR(a1type) taylor_ode(
 // by the routine taylor_ode.
 bool mul_level_ode(void)
 {	bool ok = true;
-	zdouble eps = 100. * std::numeric_limits<double>::epsilon();
+	double eps = 100. * std::numeric_limits<double>::epsilon();
 
 	// number of components in differential equation
 	size_t n = 4;
@@ -263,7 +261,7 @@ bool mul_level_ode(void)
 	size_t i, j;
 
 	// parameter vector in both double and a1type
-	CPPAD_TESTVECTOR(zdouble) x(n);
+	CPPAD_TESTVECTOR(double)  x(n);
 	CPPAD_TESTVECTOR(a1type)  a1x(n);
 	for(i = 0; i < n; i++)
 		a1x[i] = x[i] = double(i + 1);
@@ -275,7 +273,7 @@ bool mul_level_ode(void)
 	Ode G(a1x);                // function that defines the ODE
 	size_t   order = n;      // order of Taylor's method used
 	size_t   nstep = 2;      // number of steps to take
-	a1type   a1dt  = zdouble(1.);     // Delta t for each step
+	a1type   a1dt  = double(1.);     // Delta t for each step
 	// value of y(t, x) at the initial time
 	CPPAD_TESTVECTOR(a1type) a1y_ini(n);
 	for(i = 0; i < n; i++)
@@ -286,27 +284,27 @@ bool mul_level_ode(void)
  	a1y_final = taylor_ode(G, order, nstep, a1dt, a1y_ini);
 
 	// define differentiable fucntion object f : x -> y_final
-	// that computes its derivatives in zdouble
-	CppAD::ADFun<zdouble> f(a1x, a1y_final);
+	// that computes its derivatives in double
+	CppAD::ADFun<double> f(a1x, a1y_final);
 
 	// check function values
-	zdouble check = 1.;
-	zdouble t     = nstep * Value(a1dt);
+	double check = 1.;
+	double t     = nstep * Value(a1dt);
 	for(i = 0; i < n; i++)
-	{	check *= x[i] * t / zdouble(i + 1);
+	{	check *= x[i] * t / double(i + 1);
 		ok &= CppAD::NearEqual(Value(a1y_final[i]), check, eps, eps);
 	}
 
 	// evaluate the Jacobian of h at a
-	CPPAD_TESTVECTOR(zdouble) jac ( f.Jacobian(x) );
+	CPPAD_TESTVECTOR(double) jac ( f.Jacobian(x) );
 	// There appears to be a bug in g++ version 4.4.2 becasue it generates
 	// a warning for the equivalent form
-	// CPPAD_TESTVECTOR(zdouble) jac = f.Jacobian(x);
+	// CPPAD_TESTVECTOR(double) jac = f.Jacobian(x);
 
 	// check Jacobian
 	for(i = 0; i < n; i++)
 	{	for(j = 0; j < n; j++)
-		{	zdouble jac_ij = jac[i * n + j];
+		{	double jac_ij = jac[i * n + j];
 			if( i < j )
 				check = 0.;
 			else	check = Value( a1y_final[i] ) / x[j];

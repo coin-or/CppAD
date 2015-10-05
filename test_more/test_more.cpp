@@ -108,6 +108,7 @@ extern bool Value(void);
 extern bool VecAD(void);
 extern bool VecADPar(void);
 extern bool VecUnary(void);
+extern bool zdouble(void);
 
 namespace {
 	// function that runs one test
@@ -227,6 +228,7 @@ int main(void)
 	ok &= Run( VecAD,           "VecAD"          );
 	ok &= Run( VecADPar,        "VecADPar"       );
 	ok &= Run( VecUnary,        "VecUnary"       );
+	ok &= Run( zdouble,         "zdouble"        );
 # ifdef CPPAD_ADOLC_TEST
 	ok &= Run( base_adolc,      "base_adolc"     );
 # endif

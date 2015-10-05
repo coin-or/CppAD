@@ -208,7 +208,6 @@ ADD_EXECUTABLE(example EXCLUDE_FROM_ALL example.cpp
 	var2par.cpp
 	vec_ad.cpp
 	vector_bool.cpp
-	zdouble.cpp
 )
 
 # Compiler flags for cppad source

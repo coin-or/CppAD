@@ -182,7 +182,6 @@ extern bool Value(void);
 extern bool Var2Par(void);
 extern bool vec_ad(void);
 extern bool vectorBool(void);
-extern bool zdouble(void);
 
 namespace {
 	// function that runs one test
@@ -346,7 +345,6 @@ int main(void)
 	ok &= Run( Var2Par,           "Var2Par"          );
 	ok &= Run( vec_ad,            "vec_ad"           );
 	ok &= Run( vectorBool,        "vectorBool"       );
-	ok &= Run( zdouble,           "zdouble"          );
 # ifdef CPPAD_ADOLC_EXAMPLES
 	ok &= Run( mul_level_adolc,      "mul_level_adolc"     );
 	ok &= Run( mul_level_adolc_ode,  "mul_level_adolc_ode" );

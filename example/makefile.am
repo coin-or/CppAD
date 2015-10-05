@@ -213,8 +213,7 @@ example_SOURCES   = \
 	value.cpp \
 	var2par.cpp \
 	vec_ad.cpp  \
-	vector_bool.cpp \
-	zdouble.cpp
+	vector_bool.cpp
 
 test: check
 	./example
