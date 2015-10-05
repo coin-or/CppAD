@@ -281,7 +281,7 @@ bool mul_level_ode(void)
 
 	// integrate the differential equation
 	CPPAD_TESTVECTOR(a1type) a1y_final(n);
- 	a1y_final = taylor_ode(G, order, nstep, a1dt, a1y_ini);
+	a1y_final = taylor_ode(G, order, nstep, a1dt, a1y_ini);
 
 	// define differentiable fucntion object f : x -> y_final
 	// that computes its derivatives in double
