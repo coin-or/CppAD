@@ -6,7 +6,7 @@
 CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-15 Bradley M. Bell
 
 CppAD is distributed under multiple licenses. This distribution is under
-the terms of the 
+the terms of the
                     Eclipse Public License Version 1.0.
 
 A copy of this license is included in the COPYING file of this distribution.
@@ -63,18 +63,18 @@ $codei%
 %$$
 
 $head Example$$
-The file $cref old_mat_mul.cpp$$ contains an example use of 
+The file $cref old_mat_mul.cpp$$ contains an example use of
 $code old_mat_mul.hpp$$.
 It returns true if it succeeds and false otherwise.
 
 $head Begin Source$$
 $codep */
 # include <cppad/cppad.hpp>      // Include CppAD definitions
-namespace {                      // Begin empty namespace 
-	using CppAD::vector;        // Let vector denote CppAD::vector 
+namespace {                      // Begin empty namespace
+	using CppAD::vector;        // Let vector denote CppAD::vector
 /* $$
 
-$head Extra Call Information$$ 
+$head Extra Call Information$$
 $codep */
 	// Information we will attach to each mat_mul call
 	struct call_info {
@@ -98,8 +98,8 @@ $codep */
 
 	// get the information corresponding to this call
 	void get_info(size_t id, size_t k, size_t n, size_t m)
-	{	n_order_   = k + 1;	
-		nr_result_ = info_[id].nr_result; 
+	{	n_order_   = k + 1;
+		nr_result_ = info_[id].nr_result;
 		n_middle_  = info_[id].n_middle;
 		nc_result_ = info_[id].nc_result;
 		vx_        = &(info_[id].vx);
@@ -110,21 +110,21 @@ $codep */
 
 /* $$
 $head Matrix Indexing$$
-$codep */ 
-	// Convert left matrix index pair and order to a single argument index 
+$codep */
+	// Convert left matrix index pair and order to a single argument index
 	size_t left(size_t i, size_t j, size_t ell)
 	{	assert( i < nr_result_ );
 		assert( j < n_middle_ );
 		return (i * n_middle_ + j) * n_order_ + ell;
 	}
-	// Convert right matrix index pair and order to a single argument index 
+	// Convert right matrix index pair and order to a single argument index
 	size_t right(size_t i, size_t j, size_t ell)
 	{	assert( i < n_middle_ );
 		assert( j < nc_result_ );
 		size_t offset = nr_result_ * n_middle_;
 		return (offset + i * nc_result_ + j) * n_order_ + ell;
 	}
-	// Convert result matrix index pair and order to a single result index 
+	// Convert result matrix index pair and order to a single result index
 	size_t result(size_t i, size_t j, size_t ell)
 	{	assert( i < nr_result_ );
 		assert( j < nc_result_ );
@@ -136,12 +136,12 @@ $head One Matrix Multiply$$
 Forward mode matrix multiply left times right and sum into result:
 $codep */
 	void multiply_and_sum(
-		size_t                order_left , 
-		size_t                order_right, 
+		size_t                order_left ,
+		size_t                order_right,
 		const vector<double>&         tx ,
-		vector<double>&               ty ) 
+		vector<double>&               ty )
 	{	size_t i, j;
-		size_t order_result = order_left + order_right; 
+		size_t order_result = order_left + order_right;
 		for(i = 0; i < nr_result_; i++)
 		{	for(j = 0; j < nc_result_; j++)
 			{	double sum = 0.;
@@ -163,14 +163,14 @@ $head Reverse Partials One Order$$
 Compute reverse mode partials for one order and sum into px:
 $codep */
 	void reverse_multiply(
-		size_t                order_left , 
-		size_t                order_right, 
+		size_t                order_left ,
+		size_t                order_right,
 		const vector<double>&         tx ,
 		const vector<double>&         ty ,
 		vector<double>&               px ,
-		const vector<double>&         py ) 
+		const vector<double>&         py )
 	{	size_t i, j;
-		size_t order_result = order_left + order_right; 
+		size_t order_result = order_left + order_right;
 		for(i = 0; i < nr_result_; i++)
 		{	for(j = 0; j < nc_result_; j++)
 			{	size_t middle, im_left, mj_right, ij_result;
@@ -232,7 +232,7 @@ $codep */
 			for(j = 0; j < n; j++)
 				info_[id].vx[j] = vx[j];
 			assert( vx_->size() == n );
-			
+
 			// now compute vy
 			for(i = 0; i < nr_result_; i++)
 			{	for(j = 0; j < nc_result_; j++)
@@ -301,7 +301,7 @@ $codep */
 	// ----------------------------------------------------------------------
 	// forward Jacobian sparsity routine called by CppAD
 	bool mat_mul_for_jac_sparse(
-		size_t                               id ,             
+		size_t                               id ,
 		size_t                                n ,
 		size_t                                m ,
 		size_t                                p ,
@@ -310,7 +310,7 @@ $codep */
 	{	size_t i, j, k, im_left, middle, mj_right, ij_result;
 		k = 0;
 		get_info(id, k, n, m);
-	
+
 		for(i = 0; i < nr_result_; i++)
 		{	for(j = 0; j < nc_result_; j++)
 			{	ij_result = result(i, j, k);
@@ -332,7 +332,7 @@ $codep */
 	// ----------------------------------------------------------------------
 	// reverse Jacobian sparsity routine called by CppAD
 	bool mat_mul_rev_jac_sparse(
-		size_t                               id ,             
+		size_t                               id ,
 		size_t                                n ,
 		size_t                                m ,
 		size_t                                p ,
@@ -341,7 +341,7 @@ $codep */
 	{	size_t i, j, k, im_left, middle, mj_right, ij_result;
 		k = 0;
 		get_info(id, k, n, m);
-	
+
 		for(j = 0; j < n; j++)
 			r[j].clear();
 
@@ -365,7 +365,7 @@ $codep */
 	// ----------------------------------------------------------------------
 	// reverse Hessian sparsity routine called by CppAD
 	bool mat_mul_rev_hes_sparse(
-		size_t                               id ,             
+		size_t                               id ,
 		size_t                                n ,
 		size_t                                m ,
 		size_t                                p ,
@@ -377,9 +377,9 @@ $codep */
 	{	size_t i, j, k, im_left, middle, mj_right, ij_result;
 		k = 0;
 		get_info(id, k, n, m);
-	
+
 		for(j = 0; j < n; j++)
-		{	t[j] = false;	
+		{	t[j] = false;
 			v[j].clear();
 		}
 
@@ -399,7 +399,7 @@ $codep */
 					// t[im_left]  |= s[ij_result];
 					// t[mj_right] |= s[ij_result];
 
-					// back propagate Hessian sparsity 
+					// back propagate Hessian sparsity
 					// v[im_left]  = union( v[im_left],  u[ij_result] )
 					// v[mj_right] = union( v[mj_right], u[ij_result] )
 					my_union(v[im_left],  v[im_left],  u[ij_result] );
@@ -407,7 +407,7 @@ $codep */
 
 					// Check for case where the (i,j) result element
 					// is in reverse Jacobian and both left and right
-					// operands in multiplication are variables 
+					// operands in multiplication are variables
 					if(s[ij_result] & (*vx_)[im_left] & (*vx_)[mj_right])
 					{	// v[im_left] = union( v[im_left], r[mj_right] )
 						my_union(v[im_left], v[im_left], r[mj_right] );
@@ -428,14 +428,14 @@ and end empty namespace
 instead of $code CppAD::vector$$):
 $codep */
 	CPPAD_USER_ATOMIC(
-		mat_mul                 , 
+		mat_mul                 ,
 		CppAD::vector           ,
-		double                  , 
-		mat_mul_forward         , 
+		double                  ,
+		mat_mul_forward         ,
 		mat_mul_reverse         ,
 		mat_mul_for_jac_sparse  ,
 		mat_mul_rev_jac_sparse  ,
-		mat_mul_rev_hes_sparse  
+		mat_mul_rev_hes_sparse
 	)
 } // End empty namespace
 /* $$

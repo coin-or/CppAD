@@ -3,7 +3,7 @@
 CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-15 Bradley M. Bell
 
 CppAD is distributed under multiple licenses. This distribution is under
-the terms of the 
+the terms of the
                     Eclipse Public License Version 1.0.
 
 A copy of this license is included in the COPYING file of this distribution.
@@ -24,22 +24,22 @@ $index atomic, AD inside$$
 $index checkpoint$$
 
 $head Deprecated$$
-This example has been deprecated because it is easier to use the 
+This example has been deprecated because it is easier to use the
 $cref checkpoint$$ class instead.
 
 $head Purpose$$
-Consider the case where an inner function is used repeatedly in the 
+Consider the case where an inner function is used repeatedly in the
 definition of an outer function.
 In this case, it may reduce the number of variables
 $cref/size_var/seq_property/size_var/$$,
 and hence the required memory.
 
 $head Simple Case$$
-This example is the same as $cref old_reciprocal.cpp$$, except that it 
-uses AD to compute the 
+This example is the same as $cref old_reciprocal.cpp$$, except that it
+uses AD to compute the
 derivatives needed by an atomic function.
 This is a simple example of an inner function, and hence not really
-useful for the purpose above; 
+useful for the purpose above;
 see $cref old_usead_2.cpp$$ for a more complete example.
 
 $code
@@ -51,7 +51,7 @@ $end
 // BEGIN C++
 # include <cppad/cppad.hpp>
 
-namespace { // Begin empty namespace 
+namespace { // Begin empty namespace
 	using CppAD::AD;
 	using CppAD::ADFun;
 	using CppAD::vector;
@@ -67,7 +67,7 @@ namespace { // Begin empty namespace
 		r_ptr_ = new ADFun<double>(ax, ay);
 	}
 	void destroy_r(void)
-	{	delete r_ptr_; 
+	{	delete r_ptr_;
 		r_ptr_ = CPPAD_NULL;
 	}
 
@@ -87,7 +87,7 @@ namespace { // Begin empty namespace
 		assert( n == 1 );
 		assert( m == 1 );
 		assert( k == 0 || vx.size() == 0 );
-		bool ok = true;	
+		bool ok = true;
 		vector<double> x_q(1), y_q(1);
 
 		// check for special case
@@ -120,10 +120,10 @@ namespace { // Begin empty namespace
 	{	assert( id == 0 );
 		assert( n == 1 );
 		assert( m == 1 );
-		bool ok = true;	
+		bool ok = true;
 		vector<double> x_q(1), w(k+1), dw(k+1);
 
-		// make sure r_ has proper forward mode coefficients 
+		// make sure r_ has proper forward mode coefficients
 		size_t q;
 		for(q = 0; q <= k; q++)
 		{	x_q[0] = tx[q];
@@ -146,7 +146,7 @@ namespace { // Begin empty namespace
 	// ----------------------------------------------------------------------
 	// forward Jacobian sparsity routine called by CppAD
 	bool reciprocal_for_jac_sparse(
-		size_t                               id ,             
+		size_t                               id ,
 		size_t                                n ,
 		size_t                                m ,
 		size_t                                p ,
@@ -162,12 +162,12 @@ namespace { // Begin empty namespace
 		S = r_ptr_->ForSparseJac(p, R);
 		s[0] = S[0];
 
-		return ok; 
+		return ok;
 	}
 	// ----------------------------------------------------------------------
 	// reverse Jacobian sparsity routine called by CppAD
 	bool reciprocal_rev_jac_sparse(
-		size_t                               id ,             
+		size_t                               id ,
 		size_t                                n ,
 		size_t                                m ,
 		size_t                                p ,
@@ -187,12 +187,12 @@ namespace { // Begin empty namespace
 		for(q = 0; q < p; q++)
 			r[q] = R[q];
 
-		return ok; 
+		return ok;
 	}
 	// ----------------------------------------------------------------------
 	// reverse Hessian sparsity routine called by CppAD
 	bool reciprocal_rev_hes_sparse(
-		size_t                               id ,             
+		size_t                               id ,
 		size_t                                n ,
 		size_t                                m ,
 		size_t                                p ,
@@ -207,7 +207,7 @@ namespace { // Begin empty namespace
 		assert( m == 1 );
 		bool ok = true;
 
-		// compute sparsity pattern for T(x) = S(x) * f'(x) 
+		// compute sparsity pattern for T(x) = S(x) * f'(x)
 		vector<bool> T(1), S(1);
 		S[0]   = s[0];
 		T      = r_ptr_->RevSparseJac(1, S);
@@ -243,14 +243,14 @@ namespace { // Begin empty namespace
 	// ---------------------------------------------------------------------
 	// Declare the AD<double> routine reciprocal(id, ax, ay)
 	CPPAD_USER_ATOMIC(
-		reciprocal                 , 
+		reciprocal                 ,
 		CppAD::vector              ,
-		double                     , 
-		reciprocal_forward         , 
+		double                     ,
+		reciprocal_forward         ,
 		reciprocal_reverse         ,
 		reciprocal_for_jac_sparse  ,
 		reciprocal_rev_jac_sparse  ,
-		reciprocal_rev_hes_sparse  
+		reciprocal_rev_hes_sparse
 	)
 } // End empty namespace
 
@@ -275,16 +275,16 @@ bool old_usead_1(void)
 	// declare independent variables and start tape recording
 	CppAD::Independent(ax);
 
-	// range space vector 
+	// range space vector
 	size_t m = 1;
 	vector< AD<double> > ay(m);
 
-	// call user function and store reciprocal(x) in au[0] 
+	// call user function and store reciprocal(x) in au[0]
 	vector< AD<double> > au(m);
 	size_t id = 0;           // not used
 	reciprocal(id, ax, au);	// u = 1 / x
 
-	// call user function and store reciprocal(u) in ay[0] 
+	// call user function and store reciprocal(u) in ay[0]
 	reciprocal(id, au, ay);	// y = 1 / u = x
 
 	// create f: x -> y and stop tape recording
@@ -294,7 +294,7 @@ bool old_usead_1(void)
 	// --------------------------------------------------------------------
 	// Check function value results
 	//
-	// check function value 
+	// check function value
 	double check = x0;
 	ok &= NearEqual( Value(ay[0]) , check,  eps, eps);
 
@@ -323,7 +323,7 @@ bool old_usead_1(void)
 	// --------------------------------------------------------------------
 	// Check reverse mode results
 	//
-	// third order reverse mode 
+	// third order reverse mode
 	q     = 3;
 	vector<double> w(m), dw(n * q);
 	w[0]  = 1.;
@@ -340,7 +340,7 @@ bool old_usead_1(void)
 	CppAD::vectorBool r1(n * p), s1(m * p);
 	r1[0] = true;          // compute sparsity pattern for x[0]
 	s1    = f.ForSparseJac(p, r1);
-	ok  &= s1[0] == true;  // f[0] depends on x[0]  
+	ok  &= s1[0] == true;  // f[0] depends on x[0]
 
 	// --------------------------------------------------------------------
 	// reverse mode sparstiy pattern
@@ -348,10 +348,10 @@ bool old_usead_1(void)
 	CppAD::vectorBool s2(q * m), r2(q * n);
 	s2[0] = true;          // compute sparsity pattern for f[0]
 	r2    = f.RevSparseJac(q, s2);
-	ok  &= r2[0] == true;  // f[0] depends on x[0]  
+	ok  &= r2[0] == true;  // f[0] depends on x[0]
 
 	// --------------------------------------------------------------------
-	// Hessian sparsity (using previous ForSparseJac call) 
+	// Hessian sparsity (using previous ForSparseJac call)
 	CppAD::vectorBool s3(m), h(p * n);
 	s3[0] = true;        // compute sparsity pattern for f[0]
 	h     = f.RevSparseJac(p, s3);
@@ -362,8 +362,8 @@ bool old_usead_1(void)
 	destroy_r();
 
 	// -----------------------------------------------------------------
-	// Free all temporary work space associated with old_atomic objects. 
-	// (If there are future calls to user atomic functions, they will 
+	// Free all temporary work space associated with old_atomic objects.
+	// (If there are future calls to user atomic functions, they will
 	// create new temporary work space.)
 	CppAD::user_atomic<double>::clear();
 
