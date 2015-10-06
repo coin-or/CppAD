@@ -18,12 +18,12 @@ fi
 # ---------------------------------------------------------------------------
 echo 'Check user API preprocessor define symbols'
 echo '-----------------------------------------------------------------------'
-file_list=`bin/search.sh 'head CPPAD'`
+file_list=`bin/search.sh 'head CPPAD' | sed -e '/bin\/check_user_def.sh/d'`
 symbol_list=''
 for file in $file_list
 do
 	symbol=`sed -n -e '/$head CPPAD/p' -e '/$subhead CPPAD/p' $file | sed \
-		-e 's/^.*head \(CPPAD[A-Z0-9_]*\).*/\1/'`
+		-e 's/^.*head \(CPPAD[a-zA-Z0-9_]*\).*/\1/'`
 	symbol_list="$symbol_list $symbol:$file"
 done
 for symbol_file in $symbol_list
