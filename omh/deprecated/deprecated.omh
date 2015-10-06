@@ -33,7 +33,7 @@ $childtable%
 %$$
 
 $table
-$cref/CppADCreateUnaryBool/BoolFun/Deprecated/$$  $cnext
+$cref/CppADCreateUnaryBool/BoolFun/Deprecated 2007-07-31/$$  $cnext
 	$title BoolFun$$
 $rnext
 $cref/CppADCreateDiscrete/Discrete/CppADCreateDiscrete Deprecated 2007-07-28/$$  $cnext

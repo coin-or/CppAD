@@ -3,7 +3,7 @@
 # define CPPAD_BOOL_FUN_INCLUDED
 
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-14 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-15 Bradley M. Bell
 
 CppAD is distributed under multiple licenses. This distribution is under
 the terms of the 
@@ -145,7 +145,7 @@ $cref bool_fun.cpp$$
 contains an example and test of these operations.
 It returns true if it succeeds and false otherwise.
 
-$head Deprecated$$
+$head Deprecated 2007-07-31$$
 The preprocessor symbols $code CppADCreateUnaryBool$$ 
 and $code CppADCreateBinaryBool$$ are defined to be the same as
 $code CPPAD_BOOL_UNARY$$ and $code CPPAD_BOOL_BINARY$$ respectively

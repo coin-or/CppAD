@@ -3,7 +3,7 @@
 # define CPPAD_OMP_MAX_THREAD_INCLUDED
 
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-11 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-15 Bradley M. Bell
 
 CppAD is distributed under multiple licenses. This distribution is under
 the terms of the 
@@ -24,7 +24,7 @@ $$
 
 $section OpenMP Parallel Setup$$
 
-$head Deprecated$$
+$head Deprecated 2011-06-23$$
 $index depreciated, omp_max_thread$$
 $index omp_max_thread, depreciated$$
 Use $cref/thread_alloc::parallel_setup/ta_parallel_setup/$$ 

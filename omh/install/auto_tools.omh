@@ -321,7 +321,7 @@ $index ctor, implicit or explicit$$
 $index implicit, ctor$$
 $index explicit, ctor$$
 If this configure argument is present, there is a 
-$cref/deprecated/ad_ctor/x/deprecated/$$
+$cref/deprecated/ad_ctor/x/deprecated 2013-12-31/$$
 implicit type constructor (type conversion)
 from any type to $codei%AD<%Base%>%$$.
 Otherwise this constructor is 

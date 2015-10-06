@@ -3,7 +3,7 @@
 # define CPPAD_MEMORY_LEAK_INCLUDED
 
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-14 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-15 Bradley M. Bell
 
 CppAD is distributed under multiple licenses. This distribution is under
 the terms of the 
@@ -28,7 +28,7 @@ $index leak, memory$$
 $index check, memory leak$$
 $index static, memory leak check$$
 
-$head Deprecated$$
+$head Deprecated 2012-04-06$$
 $index deprecated, memory leak$$
 This routine has been deprecated.
 You should instead use the routine $cref ta_free_all$$.

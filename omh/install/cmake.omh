@@ -386,7 +386,7 @@ $index implicit, ctor$$
 $index explicit, ctor$$
 The default value for $icode cppad_implicit_ctor_from_any_type$$ is $code NO$$.
 If it is $code YES$$, there is a
-$cref/deprecated/ad_ctor/x/deprecated/$$
+$cref/deprecated/ad_ctor/x/deprecated 2013-12-31/$$
 implicit type constructor (type conversion)
 from any type to $codei%AD<%Base%>%$$.
 Otherwise this constructor is

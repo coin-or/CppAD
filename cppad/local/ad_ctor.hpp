@@ -61,7 +61,7 @@ $codei%
 for any type that has an explicit constructor of the form
 $icode%Base%(%x%)%$$.
 
-$subhead deprecated$$
+$subhead deprecated 2013-12-31$$
 $index deprecated, constructor$$
 $index constructor, deprecated$$
 If you set
