@@ -72,6 +72,19 @@ This section contains a list of the changes to CppAD during 2015
 The purpose of this section is to
 assist you in learning about changes between various versions of CppAD.
 
+$head 10-06$$
+Add
+$cref/CPPAD_USE_CPLUSPLUS_2011
+	/preprocessor
+	/Documented Here
+	/CPPAD_USE_CPLUSPLUS_2011
+/$$,
+$code CPPAD_NUMERIC_LIMITS$$, and
+$code CPPAD_STANDARD_MATH_UNARY$$, to
+the $cref preprocessor$$ section.
+In addition, remove checking that all user API preprocessor symbols
+are in this section form the $cref WishList$$.
+
 $head 10-04$$
 $list number$$
 $cref base_require$$:

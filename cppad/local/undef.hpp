@@ -32,6 +32,7 @@ Preprecessor definitions that presist after cppad/cppad.hpp is included:
 # undef CPPAD_NUMERIC_LIMITS      in user api
 # undef CPPAD_NULL                in user api
 # undef CPPAD_PACKAGE_STRING      in user api
+# undef CPPAD_STANDARD_MATH_UNARY in user api
 # undef CPPAD_TAPE_ADDR_TYPE      in user api
 # undef CPPAD_TAPE_ID_TYPE        in user api
 # undef CPPAD_TESTVECTOR          in user api
@@ -81,7 +82,6 @@ Preprecessor definitions that presist after cppad/cppad.hpp is included:
 # undef CPPAD_REV_HES_SWEEP_TRACE
 # undef CPPAD_REV_JAC_SWEEP_TRACE
 # undef CPPAD_SIZE_T_NOT_UNSIGNED_INT
-# undef CPPAD_STANDARD_MATH_UNARY
 # undef CPPAD_STANDARD_MATH_UNARY_AD
 # undef CPPAD_STDVECTOR
 # undef CPPAD_TRACE_CAPACITY

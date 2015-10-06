@@ -126,10 +126,6 @@ This caused a significant slow down in the
 $cref cppad_det_lu.cpp$$ speed test (with no options specified).
 Perhaps there should be an option to skip the comparison taping.
 
-$head Preprocessor Symbols$$
-Make sure all the user API preprocessor symbols are listed in
-the $cref preprocessor$$ section.
-
 $head Software Guidelines$$
 The following is a list of some software guidelines taken from
 $href%http://www.boost.org/development/requirements.html#Guidelines%boost%$$.
