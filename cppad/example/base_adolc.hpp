@@ -58,9 +58,6 @@ $spell
 	sqrt
 $$
 
-$index Adolc, adouble as Base$$
-$index Base, Adolc's adouble$$
-$index adouble, as Base$$
 
 $section Enable use of AD<Base> where Base is Adolc's adouble Type$$
 

@@ -22,8 +22,6 @@ $spell
 	namespace
 	const
 $$
-$index AD, epsilon$$
-$index epsilon, AD$$
 
 $section Machine Epsilon For AD Types$$
 

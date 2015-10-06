@@ -46,9 +46,6 @@ $spell
 	const
 $$
 
-$index float, Base$$
-$index Base, float$$
-$index float, Base$$
 
 $section Enable use of AD<Base> where Base is float$$
 

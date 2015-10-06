@@ -24,8 +24,8 @@ $spell
 $$
 
 $section AD Objects$$
+$mindex require$$
 
-$index AD, object$$
 
 $head Purpose$$
 The sections listed below describe the operations
@@ -39,7 +39,6 @@ can be used to evaluate the corresponding
 function and derivative values.
 
 $head Base Type Requirements$$
-$index Base, require$$
 The $icode Base$$ requirements are provided by the CppAD package
 for the following base types:
 $code float$$,

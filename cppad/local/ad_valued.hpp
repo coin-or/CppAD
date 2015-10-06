@@ -18,8 +18,6 @@ $begin ADValued$$
 $spell
 $$
 
-$index operation, AD valued$$
-$index function, AD valued$$
 
 $section AD Valued Operations and Functions$$
 

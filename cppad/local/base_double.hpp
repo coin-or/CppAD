@@ -46,9 +46,6 @@ $spell
 	const
 $$
 
-$index double, Base$$
-$index Base, double$$
-$index double, Base$$
 
 $section Enable use of AD<Base> where Base is double$$
 

@@ -54,9 +54,6 @@ $spell
 	bool
 $$
 
-$index complex, double Base$$
-$index Base, double complex$$
-$index double, complex Base$$
 
 $section Enable use of AD<Base> where Base is std::complex<double>$$
 

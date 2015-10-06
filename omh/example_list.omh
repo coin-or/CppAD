@@ -17,11 +17,9 @@ $spell
 	Cpp
 $$
 
-$index example, general$$
-$index general, example$$
-$index realistic, example$$
 
 $section General Examples$$
+$mindex realistic$$
 
 $head Description$$
 Most of the examples in CppAD are part of the documentation

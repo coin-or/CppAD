@@ -17,9 +17,6 @@ $$
 
 $section OdeErrControl: Example and Test$$
 
-$index OdeErrControl, example$$
-$index example, OdeErrControl$$
-$index test, OdeErrControl$$
 
 Define
 $latex X : \B{R} \rightarrow \B{R}^2$$ by

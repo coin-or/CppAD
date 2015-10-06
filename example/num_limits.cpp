@@ -16,9 +16,6 @@ $spell
 $$
 
 $section Numeric Limits: Example and Test$$
-$index limits$$
-$index example, limits$$
-$index test, limits$$
 
 $code
 $verbatim%example/num_limits.cpp%0%// BEGIN C++%// END C++%1%$$

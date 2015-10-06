@@ -15,9 +15,6 @@ $begin nan.cpp$$
 
 $section nan: Example and Test$$
 
-$index nan, example$$
-$index example, nan$$
-$index test, nan$$
 
 $code
 $verbatim%example/nan.cpp%0%// BEGIN C++%// END C++%1%$$
