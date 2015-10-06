@@ -61,6 +61,11 @@ CONFIGURE_FILE(
 #                 source1 source2 ... sourceN
 # )
 ADD_EXECUTABLE(test_more EXCLUDE_FROM_ALL test_more.cpp
+	old_usead_2.cpp
+	old_usead_1.cpp
+	old_tan.cpp
+	old_reciprocal.cpp
+	old_mat_mul.cpp
 	${adolc_sources}
 	${colpack_sources}
 	${ipopt_sources}

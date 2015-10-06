@@ -36,7 +36,7 @@ $cref/size_var/seq_property/size_var/$$,
 and hence the required memory.
 
 $code
-$verbatim%example/atomic/old_usead_2.cpp%0%// BEGIN C++%// END C++%1%$$
+$verbatim%test_more/old_usead_2.cpp%0%// BEGIN C++%// END C++%1%$$
 $$
 
 $end

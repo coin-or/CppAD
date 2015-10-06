@@ -28,7 +28,7 @@ to implement the tangent ($icode%id% == 0%$$) and hyperbolic tangent
 ($icode%id% == 1%$$) functions as user atomic operations.
 
 $code
-$verbatim%example/atomic/old_tan.cpp%0%// BEGIN C++%// END C++%1%$$
+$verbatim%test_more/old_tan.cpp%0%// BEGIN C++%// END C++%1%$$
 $$
 
 $end

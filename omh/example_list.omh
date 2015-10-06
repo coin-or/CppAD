@@ -204,7 +204,6 @@ $rref ode_gear_control.cpp$$
 $rref ode_gear.cpp$$
 $rref ode_stiff.cpp$$
 $rref ode_taylor.cpp$$
-$rref old_reciprocal.cpp$$
 $rref optimize.cpp$$
 $rref opt_val_hes.cpp$$
 $rref par_var.cpp$$
@@ -260,11 +259,7 @@ $rref thread_test.cpp$$
 $rref time_test.cpp$$
 $rref unary_minus.cpp$$
 $rref unary_plus.cpp$$
-$rref old_mat_mul.cpp$$
 $rref old_mat_mul.hpp$$
-$rref old_usead_1.cpp$$
-$rref old_usead_2.cpp$$
-$rref old_tan.cpp$$
 $rref value.cpp$$
 $rref var2par.cpp$$
 $rref vec_ad.cpp$$

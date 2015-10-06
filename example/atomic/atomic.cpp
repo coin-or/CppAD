@@ -28,11 +28,6 @@ extern bool norm_sq(void);
 extern bool reciprocal(void);
 extern bool sparsity(void);
 extern bool tangent(void);
-extern bool old_mat_mul(void);
-extern bool old_reciprocal(void);
-extern bool old_tan(void);
-extern bool old_usead_1(void);
-extern bool old_usead_2(void);
 
 namespace {
 	// function that runs one test
@@ -68,11 +63,6 @@ int main(void)
 	ok &= Run( reciprocal,          "reciprocal"     );
 	ok &= Run( sparsity,            "sparsity"       );
 	ok &= Run( tangent,             "tangent"        );
-	ok &= Run( old_mat_mul,         "old_mat_mul"    );
-	ok &= Run( old_reciprocal,      "old_reciprocal" );
-	ok &= Run( old_tan,             "old_tan"        );
-	ok &= Run( old_usead_1,         "old_usead_1"    );
-	ok &= Run( old_usead_2,         "old_usead_2"    );
 
 	// check for errors
 	using std::cout;

@@ -2,7 +2,7 @@
 # ifndef CPPAD_OLD_ATOMIC_INCLUDED
 # define CPPAD_OLD_ATOMIC_INCLUDED
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-14 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-15 Bradley M. Bell
 
 CppAD is distributed under multiple licenses. This distribution is under
 the terms of the 
@@ -708,11 +708,11 @@ The user atomic $code clear$$ routine cannot be called
 while in $cref/parallel/ta_in_parallel/$$ execution mode.
 
 $children%
-	example/atomic/old_reciprocal.cpp%
-	example/atomic/old_usead_1.cpp%
-	example/atomic/old_usead_2.cpp%
-	example/atomic/old_tan.cpp%
-	example/atomic/old_mat_mul.cpp
+	test_more/old_reciprocal.cpp%
+	test_more/old_usead_1.cpp%
+	test_more/old_usead_2.cpp%
+	test_more/old_tan.cpp%
+	test_more/old_mat_mul.cpp
 %$$
 $head Example$$
 

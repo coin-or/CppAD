@@ -23,13 +23,13 @@ This example has been deprecated;
 see $cref atomic_mat_mul.cpp$$.
 
 $children%
-	example/atomic/old_mat_mul.hpp
+	test_more/old_mat_mul.hpp
 %$$
 $head Include File$$
 This routine uses the include file $cref old_mat_mul.hpp$$.
 
 $code
-$verbatim%example/atomic/old_mat_mul.cpp%0%// BEGIN C++%// END C++%1%$$
+$verbatim%test_more/old_mat_mul.cpp%0%// BEGIN C++%// END C++%1%$$
 $$
 
 $end

@@ -34,11 +34,6 @@ atomic_SOURCES   = \
 	sparsity.cpp \
 	tangent.cpp \
 	old_mat_mul.hpp \
-	old_mat_mul.cpp \
-	old_reciprocal.cpp \
-	old_tan.cpp \
-	old_usead_1.cpp \
-	old_usead_2.cpp
 
 test: check
 	./atomic
