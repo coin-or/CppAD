@@ -14,6 +14,9 @@ import sys
 import os
 import re
 # -----------------------------------------------------------------------------
+# list of words that should be excluded from mindex comamnds
+exclude_list = ['as', 'in', 'of']
+# -----------------------------------------------------------------------------
 def split_words(string) :
 	pattern = '[^A-Za-z_]'
 	replace = ' '
@@ -37,6 +40,7 @@ if not os.path.exists(file_name) :
 f_in      = open(file_name, 'r')
 file_data = f_in.read()
 f_in.close()
+f_out     = open(file_name, 'w')
 # -----------------------------------------------------------------------------
 # some useful patterns
 begin_pattern   = re.compile('[$]begin ([^$]*)[$][$]')
@@ -65,7 +69,7 @@ while len(file_rest) > 0 :
 	# start of this section
 	next_begin = begin_pattern.search(file_rest)
 	if next_begin == None :
-		sys.stdout.write( file_rest )
+		f_out.write( file_rest )
 		file_rest = str()
 	else :
 		# end of this section
@@ -93,8 +97,14 @@ while len(file_rest) > 0 :
 						auto_list.append( word.lower() )
 		#
 		# list of index words not in automatically generated list
-		section_rest = section_data
-		index_list   = list()
+		section_rest  = section_data
+		index_list    = list()
+		exclude_list += auto_list
+		for word in auto_list :
+			if word.endswith('s') :
+				exclude_list.append( word[: -1] )
+			else :
+				exclude_list.append( word + 's' )
 		while len(section_rest) > 0 :
 			next_index = index_pattern.search(section_rest)
 			if next_index == None :
@@ -103,22 +113,23 @@ while len(file_rest) > 0 :
 				section_rest = section_rest[ next_index.end() : ]
 				for word in split_words( next_index.group(2) ) :
 					word_lower = word.lower()
-					if not ( word_lower in auto_list ) :
-						index_list.append(word_lower)
-						auto_list.append(word_lower)
+					if not ( word_lower in exclude_list ) :
+						index_list.append(word)
+						exclude_list.append(word_lower)
 		#
 		# write out data to the end of section command
 		section_cmd  = section_pattern.search(section_data)
 		data = remove_index_cmd( section_data[ : section_cmd.end() ] )
-		sys.stdout.write( data )
+		f_out.write( data )
 		if len(index_list) > 0 :
 			index_cmd = '$mindex'
 			for word in index_list :
 				index_cmd += ' ' + word
 			index_cmd += '$$'
-			sys.stdout.write( '\n' + index_cmd )
+			f_out.write( '\n' + index_cmd )
 		data = remove_index_cmd( section_data[ section_cmd.end() : ] )
-		sys.stdout.write( data )
+		f_out.write( data )
 # -----------------------------------------------------------------------------
+f_out.close()
+print('reduce_index.py OK: ' + file_name )
 sys.exit(0)
-
