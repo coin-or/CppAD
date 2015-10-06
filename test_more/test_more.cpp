@@ -17,11 +17,6 @@ Please visit http://www.coin-or.org/CppAD/ for information on other licenses.
 # include <cppad/thread_alloc.hpp>
 
 // prototype external compiled tests (this line expected by bin/new_test.sh)
-extern bool old_mat_mul(void);
-extern bool old_reciprocal(void);
-extern bool old_tan(void);
-extern bool old_usead_1(void);
-extern bool old_usead_2(void);
 extern bool abs(void);
 extern bool acos(void);
 extern bool acosh(void);
@@ -80,6 +75,11 @@ extern bool NearEqualExt(void);
 extern bool Neg(void);
 extern bool num_limits(void);
 extern bool ode_err_control(void);
+extern bool old_mat_mul(void);
+extern bool old_reciprocal(void);
+extern bool old_tan(void);
+extern bool old_usead_1(void);
+extern bool old_usead_2(void);
 extern bool omp_alloc(void);
 extern bool optimize(void);
 extern bool parameter(void);
@@ -148,11 +148,6 @@ int main(void)
 	// This line is used by test_one.sh
 
 	// run external compiled tests (this line expected by bin/new_test.sh)
-	ok &= Run( old_mat_mul,    "old_mat_mul"     );
-	ok &= Run( old_reciprocal,    "old_reciprocal"     );
-	ok &= Run( old_tan,    "old_tan"     );
-	ok &= Run( old_usead_1,    "old_usead_1"     );
-	ok &= Run( old_usead_2,    "old_usead_2"     );
 	ok &= Run( abs,             "abs"            );
 	ok &= Run( acos,            "acos"           );
 	ok &= Run( acosh,           "acosh"          );
@@ -204,8 +199,13 @@ int main(void)
 	ok &= Run( MulZeroOne,      "MulZeroOne"     );
 	ok &= Run( NearEqualExt,    "NearEqualExt"   );
 	ok &= Run( Neg,             "Neg"            );
-	ok &= Run( num_limits,        "num_limits"       );
+	ok &= Run( num_limits,      "num_limits"     );
 	ok &= Run( ode_err_control, "ode_err_control");
+	ok &= Run( old_mat_mul,     "old_mat_mul"    );
+	ok &= Run( old_reciprocal,  "old_reciprocal" );
+	ok &= Run( old_tan,         "old_tan"        );
+	ok &= Run( old_usead_1,     "old_usead_1"    );
+	ok &= Run( old_usead_2,     "old_usead_2"    );
 	ok &= Run( omp_alloc,       "omp_alloc"      );
 	ok &= Run( optimize,        "optimize"       );
 	ok &= Run( parameter,       "parameter"      );

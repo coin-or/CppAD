@@ -73,6 +73,7 @@ The purpose of this section is to
 assist you in learning about changes between various versions of CppAD.
 
 $head 10-06$$
+$list number$$
 Add
 $cref/CPPAD_USE_CPLUSPLUS_2011
 	/preprocessor
@@ -84,6 +85,11 @@ $code CPPAD_STANDARD_MATH_UNARY$$, to
 the $cref preprocessor$$ section.
 In addition, remove checking that all user API preprocessor symbols
 are in this section form the $cref WishList$$.
+$lnext
+Alphabetize and make some corrections to
+$cref/list of examples/ListAllExamples/$$.
+$lend
+
 
 $head 10-04$$
 $list number$$
