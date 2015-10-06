@@ -6,7 +6,7 @@
 CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-15 Bradley M. Bell
 
 CppAD is distributed under multiple licenses. This distribution is under
-the terms of the 
+the terms of the
                     Eclipse Public License Version 1.0.
 
 A copy of this license is included in the COPYING file of this distribution.
@@ -27,7 +27,7 @@ $section OpenMP Parallel Setup$$
 $head Deprecated 2011-06-23$$
 $index depreciated, omp_max_thread$$
 $index omp_max_thread, depreciated$$
-Use $cref/thread_alloc::parallel_setup/ta_parallel_setup/$$ 
+Use $cref/thread_alloc::parallel_setup/ta_parallel_setup/$$
 to set the number of threads.
 
 $head Syntax$$
@@ -35,14 +35,14 @@ $codei%AD<%Base%>::omp_max_thread(%number%)
 %$$
 
 $head Purpose$$
-By default, for each $codei%AD<%Base%>%$$ class there is only one 
+By default, for each $codei%AD<%Base%>%$$ class there is only one
 tape that records $cref/AD of Base/glossary/AD of Base/$$ operations.
 This tape is a global variable and hence it cannot be used
-by multiple OpenMP threads at the same time. 
-The $code omp_max_thread$$ function is used to set the 
+by multiple OpenMP threads at the same time.
+The $code omp_max_thread$$ function is used to set the
 maximum number of OpenMP threads that can be active.
-In this case, there is a different tape corresponding to each 
-$codei%AD<%Base%>%$$ class and thread pair. 
+In this case, there is a different tape corresponding to each
+$codei%AD<%Base%>%$$ class and thread pair.
 
 $head number$$
 The argument $icode number$$ has prototype
@@ -54,18 +54,18 @@ OpenMp threads that will be active at one time.
 
 
 $head Independent$$
-Each call to $cref/Independent(x)/Independent/$$ 
+Each call to $cref/Independent(x)/Independent/$$
 creates a new $cref/active/glossary/Tape/Active/$$ tape.
-All of the operations with the corresponding variables 
+All of the operations with the corresponding variables
 must be preformed by the same OpenMP thread.
-This includes the corresponding call to 
-$cref/f.Dependent(x,y)/Dependent/$$ or the 
+This includes the corresponding call to
+$cref/f.Dependent(x,y)/Dependent/$$ or the
 $cref/ADFun f(x, y)/FunConstruct/Sequence Constructor/$$
 during which the tape stops recording and the variables
 become parameters.
 
 $head Restriction$$
-No tapes can be 
+No tapes can be
 $cref/active/glossary/Tape/Active/$$ when this function is called.
 
 $end

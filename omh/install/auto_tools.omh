@@ -3,7 +3,7 @@ $Id$
 CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-15 Bradley M. Bell
 
 CppAD is distributed under multiple licenses. This distribution is under
-the terms of the 
+the terms of the
                     Eclipse Public License Version 1.0.
 
 A copy of this license is included in the COPYING file of this distribution.
@@ -82,7 +82,7 @@ $section Auto Tools Unix Test and Installation$$
 $head Deprecated 2012-12-26$$
 These install instructions have been deprecated and no improvements
 have been added since 2012.
-For example, this install procedure will not detect any of the 
+For example, this install procedure will not detect any of the
 $code c++11$$ extensions.
 You should use the $cref cmake$$ instructions to install CppAD.
 
@@ -91,7 +91,7 @@ You must first obtain a copy of the CppAD distribution directory
 using the $cref download$$ instructions.
 The install instructions below correspond to the
 $cref/current version/download/Compressed Archives/Current Version/$$
-which has distribution directory $code cppad-20121230$$. 
+which has distribution directory $code cppad-20121230$$.
 
 $head Work Directory$$
 Create the directory $code cppad-20121230/build$$,
@@ -104,7 +104,7 @@ $codei%
 ./configure                                  \
 	--prefix=%prefix_dir%                     \
 	--with-Documentation                    \
-	--with-%test%vector                       \  
+	--with-%test%vector                       \
 	--with-sparse_%option%                    \
 	--with-implicit_ctor                    \
 	MAX_NUM_THREADS=%max_num_threads%         \
@@ -130,8 +130,8 @@ CppAD has some object libraries that are used for its correctness tests.
 (Currently, none of these libraries get installed.)
 You can build these libraries by executing the command
 $codei%
-	make 
-%$$ 
+	make
+%$$
 in the build directory.
 
 $subhead Examples and Tests$$
@@ -150,38 +150,38 @@ $pre
 $$
 The following links describe how to build and run subsets of these tests:
 $table
-$cref/get_started/get_started.cpp/Running/$$  
-	$cnext $title get_started.cpp$$ 
+$cref/get_started/get_started.cpp/Running/$$
+	$cnext $title get_started.cpp$$
 $rnext
-$cref/exp_apx_main/exp_apx_main.cpp/Running Tests/$$  
-	$cnext $title exp_apx_main.cpp$$ 
+$cref/exp_apx_main/exp_apx_main.cpp/Running Tests/$$
+	$cnext $title exp_apx_main.cpp$$
 $rnext
-$cref/example/example.cpp/Running Tests/$$  
-	$cnext $title example.cpp$$ 
+$cref/example/example.cpp/Running Tests/$$
+	$cnext $title example.cpp$$
 $rnext
-$cref/print_for_cout/print_for_cout.cpp/Running/$$  
-	$cnext $title print_for_cout.cpp$$ 
+$cref/print_for_cout/print_for_cout.cpp/Running/$$
+	$cnext $title print_for_cout.cpp$$
 $rnext
-$cref/speed_example/speed_example.cpp/Running Tests/$$  
-	$cnext $title speed_example.cpp$$ 
+$cref/speed_example/speed_example.cpp/Running Tests/$$
+	$cnext $title speed_example.cpp$$
 $rnext
-$cref/speed_double/speed_double/Running Tests/$$  
-	$cnext $title speed_double$$ 
+$cref/speed_double/speed_double/Running Tests/$$
+	$cnext $title speed_double$$
 $rnext
-$cref/speed_adolc/speed_adolc/Running Tests/$$  
-	$cnext $title speed_adolc$$ 
+$cref/speed_adolc/speed_adolc/Running Tests/$$
+	$cnext $title speed_adolc$$
 $rnext
-$cref/speed_cppad/speed_cppad/Running Tests/$$  
-	$cnext $title speed_cppad$$ 
+$cref/speed_cppad/speed_cppad/Running Tests/$$
+	$cnext $title speed_cppad$$
 $rnext
-$cref/speed_fadbad/speed_fadbad/Running Tests/$$  
-	$cnext $title speed_fadbad$$ 
+$cref/speed_fadbad/speed_fadbad/Running Tests/$$
+	$cnext $title speed_fadbad$$
 $rnext
-$cref/speed_sacado/speed_sacado/Running Tests/$$  
-	$cnext $title speed_sacado$$ 
+$cref/speed_sacado/speed_sacado/Running Tests/$$
+	$cnext $title speed_sacado$$
 $tend
 In addition,
-you can run a large subset of correctness tests 
+you can run a large subset of correctness tests
 (that are not intended to be examples)
 by executing the following commands starting in the build directory:
 $codei%
@@ -200,7 +200,7 @@ $codei%
 	cd speed/profile
 	make test
 %$$
-After executing $code make test$$, you can run a profile speed test 
+After executing $code make test$$, you can run a profile speed test
 by executing the command $code ./profile$$;
 see $cref speed_main$$ for the meaning of the command line
 options to this program.
@@ -211,23 +211,23 @@ After you have run a profiling speed test,
 you can then obtain the profiling results with
 $codei%
 	gprof -b profile
-%$$ 
-If you are using a windows operating system with Cygwin or MinGW, 
+%$$
+If you are using a windows operating system with Cygwin or MinGW,
 you may have to replace $code profile$$ by $code profile.exe$$
 in the $code gprof$$ command above; i.e.,
 $codep
 	gprof -b profile.exe
 $$
-In C++, template parameters and argument types become part of a 
+In C++, template parameters and argument types become part of a
 routines's name.
-This can make the $code gprof$$ output hard to read 
+This can make the $code gprof$$ output hard to read
 (the routine names can be very long).
-You can remove the template parameters and argument types from the 
+You can remove the template parameters and argument types from the
 routine names by executing the following command
 $codep
 	gprof -b profile | sed -f gprof.sed
 $$
-If you are using a windows operating system with Cygwin or MinGW, 
+If you are using a windows operating system with Cygwin or MinGW,
 you would need to use
 $codep
 	gprof -b profile.exe | sed -f gprof.sed
@@ -238,14 +238,14 @@ $index configure, prefix directory$$
 $index prefix, configure directory$$
 $index directory, configure prefix$$
 The default value for prefix directory is $code ^HOME$$
-i.e., by default the CppAD include files 
+i.e., by default the CppAD include files
 will $cref/install/auto_tools/make install/$$ below $code ^HOME$$.
 If you want to install elsewhere, you will have to use this option.
 As an example of using the $codei%--prefix=%prefix_dir%$$ option,
 if you specify
 $codep
 	./configure --prefix=/usr/local
-$$ 
+$$
 the CppAD include files will be installed in the directory
 $codei%
 	/usr/local/include/cppad
@@ -265,7 +265,7 @@ $codei%
 	%prefix_dir%/share/doc/%postfix_dir%/cppad-20121230
 %$$
 (see $cref/postfix_dir/auto_tools/postfix_dir/$$).
-The top of the CppAD HTML documentation tree 
+The top of the CppAD HTML documentation tree
 (with mathematics displayed as LaTex command) will be located at
 $codei%
 	%prefix_dir%/share/doc/%postfix_dir%/cppad-20121230/cppad.htm
@@ -291,13 +291,13 @@ $codep
 	--with-boostvector
 	--with-eigenvector
 $$
-the corresponding of the following template classes is used 
+the corresponding of the following template classes is used
 $codei%
 	std::vector<%Scalar%>
 	boost::numeric::ublas::vector<%Scalar%>
 	Eigen::matrix<%Scalar%, Eigen::Dynamic, 1>
 %$$
-See also, 
+See also,
 $cref/boost_dir/auto_tools/boost_dir/$$
 and
 $cref/eigen_dir/auto_tools/eigen_dir/$$.
@@ -309,8 +309,8 @@ $index internal, sparse vector sets$$
 $index sets, internal sparse vector$$
 There are two options for the preprocessor symbol
 $code CPPAD_INTERNAL_SPARSE_SET$$.
-If $code --with-sparse_set$$ 
-($code --with-sparse_list$$) is specified, 
+If $code --with-sparse_set$$
+($code --with-sparse_list$$) is specified,
 this symbol is $code sparse_set$$ ($code sparse_list$$).
 This should affect the speed and memory required by the
 $cref sparse_jacobian$$, $cref sparse_hessian$$, and the
@@ -320,11 +320,11 @@ $head --with-implicit_ctor$$
 $index ctor, implicit or explicit$$
 $index implicit, ctor$$
 $index explicit, ctor$$
-If this configure argument is present, there is a 
+If this configure argument is present, there is a
 $cref/deprecated/ad_ctor/x/deprecated 2013-12-31/$$
 implicit type constructor (type conversion)
 from any type to $codei%AD<%Base%>%$$.
-Otherwise this constructor is 
+Otherwise this constructor is
 $cref/explicit/ad_ctor/x/explicit/$$.
 
 
@@ -358,14 +358,14 @@ $index flags, OpenMP compile$$
 If the command line argument $icode OpenmpFlags$$ is present,
 it specifies the necessary flags so that the compiler will
 properly interpret OpenMP directives.
-For example, when using the GNU $code g++$$ compiler, 
+For example, when using the GNU $code g++$$ compiler,
 the following setting includes the OpenMP tests:
 $codei%
 	OPENMP_FLAGS=-fopenmp
 %$$
 If you specify configure command,
 the CppAD OpenMP correctness and speed tests will be built; see
-$cref/threading/thread_test.cpp/Running Tests/threading/$$ 
+$cref/threading/thread_test.cpp/Running Tests/threading/$$
 multi-threading tests.
 
 $head postfix_dir$$
@@ -378,8 +378,8 @@ As an example of using the $codei%POSTFIX_DIR=%postfix_dir%$$ option,
 if you specify
 $codep
 	./configure --prefix=/usr/local POSTFIX_DIR=coin
-$$ 
-the CppAD include files will be 
+$$
+the CppAD include files will be
 $cref/installed/auto_tools/make install/$$ in the directory
 $codei%
 	/usr/local/include/coin/cppad
@@ -392,23 +392,23 @@ $codei%
 
 $head adolc_dir$$
 $index Adolc, unix$$
-If you have 
+If you have
 $href%https://projects.coin-or.org/ADOL-C%ADOL-C%$$
-installed on your system, you can 
-specify a value for $icode adolc_dir$$ in the 
+installed on your system, you can
+specify a value for $icode adolc_dir$$ in the
 $cref/configure/auto_tools/Configure/$$ command line.
 The value of $icode adolc_dir$$ must be such that
 $codei%
 	%adolc_dir%/include/adolc/adouble.h
 %$$
 is a valid way to reference $code adouble.h$$.
-In this case, you can run the Adolc speed correctness tests 
+In this case, you can run the Adolc speed correctness tests
 by executing the following commands starting in the build directory:
 $codei%
 	cd speed/adolc
 	make test
 %$$
-After executing $code make test$$, you can run an Adolc speed tests 
+After executing $code make test$$, you can run an Adolc speed tests
 by executing the command $code ./adolc$$;
 see $cref speed_main$$ for the meaning of the command line
 options to this program.
@@ -419,7 +419,7 @@ $codei%
 %$$
 
 $subhead Linux$$
-If you are using Linux, 
+If you are using Linux,
 you will have to add $icode%adolc_dir%/lib%$$ to $code LD_LIBRARY_PATH$$.
 For example, if you use the $code bash$$ shell to run your programs,
 you could include
@@ -430,7 +430,7 @@ $codei%
 in your $code ^HOME/.bash_profile$$ file.
 
 $subhead Cygwin$$
-If you are using Cygwin, 
+If you are using Cygwin,
 you will have to add to following lines to the file
 $code .bash_profile$$ in your home directory:
 $codei%
@@ -440,7 +440,7 @@ $codei%
 in order for Adolc to run properly.
 If $icode adolc_dir$$ begins with a disk specification,
 you must use the Cygwin format for the disk specification.
-For example, 
+For example,
 if $code d:/adolc_base$$ is the proper directory,
 $code /cygdrive/d/adolc_base$$ should be used for $icode adolc_dir$$.
 
@@ -463,7 +463,7 @@ $head eigen_dir$$
 $index Eigen, unix$$
 If you have
 $href%http://eigen.tuxfamily.org%Eigen%$$
-installed on your system, you can 
+installed on your system, you can
 specify a value for $icode eigen_dir$$.
 It must be such that
 $codei%
@@ -481,7 +481,7 @@ $href%
 	http://www.fadbad.com/%
 	Fadbad 2.1
 %$$
-installed on your system, you can 
+installed on your system, you can
 specify a value for $icode fadbad_dir$$.
 It must be such that
 $codei%
@@ -494,7 +494,7 @@ $codei%
 	cd speed/fadbad
 	make test
 %$$
-After executing $code make test$$, you can run a Fadbad speed tests 
+After executing $code make test$$, you can run a Fadbad speed tests
 by executing the command $code ./fadbad$$;
 see $cref speed_main$$ for the meaning of the command line
 options to this program.
@@ -506,7 +506,7 @@ $href%
 	http://www.coin-or.org/projects/Ipopt.xml%
 	Ipopt
 %$$
-installed on your system, you can 
+installed on your system, you can
 specify a value for $icode ipopt_dir$$.
 It must be such that
 $codei%
@@ -539,7 +539,7 @@ $href%
 	http://trilinos.sandia.gov/packages/sacado/%
 	Sacado
 %$$
-installed on your system, you can 
+installed on your system, you can
 specify a value for $icode sacado_dir$$.
 It must be such that
 $codei%
@@ -552,7 +552,7 @@ $codei%
 	cd speed/sacado
 	make test
 %$$
-After executing $code make test$$, you can run a Sacado speed tests 
+After executing $code make test$$, you can run a Sacado speed tests
 by executing the command $code ./sacado$$;
 see $cref speed_main$$ for the meaning of the command line
 options to this program.
@@ -607,10 +607,10 @@ you can install CppAD into easy to use directories by executing the command
 $codep
 	make install
 $$
-This will install CppAD in the location specified by 
+This will install CppAD in the location specified by
 $cref/prefix_dir/auto_tools/prefix_dir/$$.
 You must have permission to write in the $icode prefix_dir$$
-directory to execute this command. 
+directory to execute this command.
 You may optionally specify a destination directory for the install; i.e.,
 $codei%
 	make install DESTDIR=%DestinationDirectory%

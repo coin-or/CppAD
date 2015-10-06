@@ -6,7 +6,7 @@
 CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-15 Bradley M. Bell
 
 CppAD is distributed under multiple licenses. This distribution is under
-the terms of the 
+the terms of the
                     Eclipse Public License Version 1.0.
 
 A copy of this license is included in the COPYING file of this distribution.
@@ -39,7 +39,7 @@ $icode%flag% = %memory_leak()
 $icode%flag% = %memory_leak(%add_static%)%$$
 
 $head Purpose$$
-This routine checks that the are no memory leaks 
+This routine checks that the are no memory leaks
 caused by improper use of $cref thread_alloc$$ memory allocator.
 The deprecated memory allocator $cref TrackNewDel$$ is also checked.
 Memory errors in the deprecated $cref omp_alloc$$ allocator are
@@ -59,7 +59,7 @@ and its default value is zero.
 Static variables hold onto memory forever.
 If the argument $icode add_static$$ is present (and non-zero),
 $code memory_leak$$ adds this amount of memory to the
-$cref/inuse/ta_inuse/$$ sum that corresponds to 
+$cref/inuse/ta_inuse/$$ sum that corresponds to
 static variables in the program.
 A call with $icode add_static$$ should be make after
 a routine that has static variables which
@@ -96,12 +96,12 @@ there should not be any memory
 $cref/available/ta_available/$$ or $cref omp_available$$ for any thread;
 i.e., it all has been returned to the system.
 If there is memory still available for any thread,
-$code memory_leak$$ returns false. 
+$code memory_leak$$ returns false.
 
 $head TRACK_COUNT$$
 It is assumed that, when $code memory_leak$$ is called,
 $cref/TrackCount/TrackNewDel/TrackCount/$$ will return a zero value.
-If it returns a non-zero value, 
+If it returns a non-zero value,
 $code memory_leak$$ returns false.
 
 $head Error Message$$
@@ -124,7 +124,7 @@ File that implements a memory check at end of a CppAD program
 */
 
 /*!
-Function that checks 
+Function that checks
 allocator \c thread_alloc for misuse that results in memory leaks.
 Deprecated routines in track_new_del.hpp and omp_alloc.hpp are also checked.
 
@@ -168,7 +168,7 @@ inline bool memory_leak(size_t add_static = 0)
 	if( add_static != 0 )
 	{	thread_zero_static_inuse += add_static;
 		return false;
-	} 
+	}
 	bool leak                 = false;
 	size_t thread             = 0;
 

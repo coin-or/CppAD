@@ -6,7 +6,7 @@
 CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-15 Bradley M. Bell
 
 CppAD is distributed under multiple licenses. This distribution is under
-the terms of the 
+the terms of the
                     Eclipse Public License Version 1.0.
 
 A copy of this license is included in the COPYING file of this distribution.
@@ -61,7 +61,7 @@ $codei%
 %$$
 It is the value at which the user provided version of $icode unary_name$$
 is to be evaluated.
-It is also used for the first argument to the 
+It is also used for the first argument to the
 user provided version of $icode binary_name$$.
 
 $head x$$
@@ -71,7 +71,7 @@ $codei%
 %$$
 It is the value at which the CppAD provided version of $icode unary_name$$
 is to be evaluated.
-It is also used for the first argument to the 
+It is also used for the first argument to the
 CppAD provided version of $icode binary_name$$.
 
 $head b$$
@@ -88,7 +88,7 @@ $codei%
 %$$
 defines the version of $icode unary_name$$ with a $codei%AD<%Base%>%$$
 argument.
-This can with in a namespace 
+This can with in a namespace
 (not the $code CppAD$$ namespace)
 but must be outside of any routine.
 
@@ -124,7 +124,7 @@ $codei%
 %$$
 defines the version of $icode binary_name$$ with $codei%AD<%Base%>%$$
 arguments.
-This can with in a namespace 
+This can with in a namespace
 (not the $code CppAD$$ namespace)
 but must be outside of any routine.
 
@@ -146,7 +146,7 @@ contains an example and test of these operations.
 It returns true if it succeeds and false otherwise.
 
 $head Deprecated 2007-07-31$$
-The preprocessor symbols $code CppADCreateUnaryBool$$ 
+The preprocessor symbols $code CppADCreateUnaryBool$$
 and $code CppADCreateBinaryBool$$ are defined to be the same as
 $code CPPAD_BOOL_UNARY$$ and $code CPPAD_BOOL_BINARY$$ respectively
 (but their use is deprecated).
@@ -161,7 +161,7 @@ Routines and macros that implement functions from AD<Base> to bool.
 */
 
 /*!
-Macro that defines a unary function <tt>bool F(AD<Base> x)</tt> 
+Macro that defines a unary function <tt>bool F(AD<Base> x)</tt>
 using <tt>bool F(Base x)</tt>.
 
 \param Base
@@ -195,13 +195,13 @@ template <class Base>
 inline bool AD<Base>::UnaryBool(
 	bool FunName(const Base &x),
 	const AD<Base> &x
-) 
+)
 {
 	return FunName(x.value_);
 }
 
 /*!
-Macro that defines a binary function <tt>bool F(AD<Base> x, AD<Base> y)</tt> 
+Macro that defines a binary function <tt>bool F(AD<Base> x, AD<Base> y)</tt>
 using <tt>bool F(Base x, Base y)</tt>.
 
 \param Base
@@ -240,7 +240,7 @@ template <class Base>
 inline bool AD<Base>::BinaryBool(
 	bool FunName(const Base &x, const Base &y),
 	const AD<Base> &x, const AD<Base> &y
-) 
+)
 {
 	return FunName(x.value_, y.value_);
 }
