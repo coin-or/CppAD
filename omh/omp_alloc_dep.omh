@@ -3,7 +3,7 @@
 CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-15 Bradley M. Bell
 
 CppAD is distributed under multiple licenses. This distribution is under
-the terms of the 
+the terms of the
                     Eclipse Public License Version 1.0.
 
 A copy of this license is included in the COPYING file of this distribution.
@@ -32,7 +32,7 @@ $head Syntax$$
 $codei%flag% = omp_alloc::efficient(%v_ptr%, %num_bytes%)%$$
 
 $head Purpose$$
-Check if memory that is currently in use is an efficient 
+Check if memory that is currently in use is an efficient
 allocation for a specified number of bytes.
 
 $head v_ptr$$
@@ -48,7 +48,7 @@ This argument has prototype
 $codei%
 	size_t %num_bytes%
 %$$
-It specifies the number of bytes of the memory allocated by $icode v_ptr$$ 
+It specifies the number of bytes of the memory allocated by $icode v_ptr$$
 that we want to use.
 
 $head flag$$
@@ -56,8 +56,8 @@ The return value has prototype
 $codei%
 	bool %flag%
 %$$
-It is true, 
-a call to $code get_memory$$ with 
+It is true,
+a call to $code get_memory$$ with
 $cref/min_bytes/get_memory/min_bytes/$$
 equal to $icode num_bytes$$ would result in a value for
 $cref/cap_bytes/get_memory/cap_bytes/$$ that is the same as when $code v_ptr$$
@@ -68,13 +68,13 @@ bytes of information.
 $head Thread$$
 Either the $cref/current thread/get_thread_num/$$ must be the same as during
 the corresponding call to $cref get_memory$$,
-or the current execution mode must be sequential 
+or the current execution mode must be sequential
 (not $cref/parallel/in_parallel/$$).
 
 $head NDEBUG$$
 If $code NDEBUG$$ is defined, $icode v_ptr$$ is not checked (this is faster).
 Otherwise, a list of in use pointers is searched to make sure
-that $icode v_ptr$$ is in the list. 
+that $icode v_ptr$$ is in the list.
 
 $end
 -------------------------------------------------------------------------------
@@ -112,12 +112,12 @@ $head number$$
 The argument $icode number$$ has prototype
 $codei%
 	size_t %number%
-%$$ 
-It must be greater than zero and specifies the maximum number of 
+%$$
+It must be greater than zero and specifies the maximum number of
 OpenMP threads that will be active at one time.
 
 $head Restrictions$$
-This function must be called before the program enters 
+This function must be called before the program enters
 $cref/parallel/in_parallel/$$ execution mode.
 
 $end
