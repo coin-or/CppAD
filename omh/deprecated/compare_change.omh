@@ -15,11 +15,8 @@ $spell
 $$
 
 $section Comparison Changes During Zero Order Forward Mode$$
+$mindex ADFun CompareChange$$
 
-$index ADFun, CompareChange$$
-$index CompareChange, ADFun$$
-$index zero, order forward$$
-$index forward, zero order$$
 
 $head Syntax$$
 $icode%c% = %f%.CompareChange()%$$

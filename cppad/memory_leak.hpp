@@ -23,13 +23,9 @@ $spell
 $$
 
 $section Memory Leak Detection$$
-$index memory_leak$$
-$index leak, memory$$
-$index check, memory leak$$
-$index static, memory leak check$$
+$mindex memory_leak check static$$
 
 $head Deprecated 2012-04-06$$
-$index deprecated, memory leak$$
 This routine has been deprecated.
 You should instead use the routine $cref ta_free_all$$.
 

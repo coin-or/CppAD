@@ -45,14 +45,8 @@ $$
 
 
 $section Define Matrix Multiply as a User Atomic Operation$$
+$mindex old_mat_mul old_atomic test$$
 
-$index old_mat_mul, define$$
-$index matrix, multiply$$
-$index multiply, matrix$$
-$index old_atomic, test$$
-$index test, old_atomic$$
-$index old_atomic, example$$
-$index example, old_atomic$$
 
 $head Syntax$$
 This file is located in the $code example$$ directory.

@@ -15,7 +15,7 @@ import os
 import re
 # -----------------------------------------------------------------------------
 # list of words that should be excluded from mindex comamnds
-exclude_list = ['as', 'in', 'of']
+exclude_list = ['as', 'in', 'of', 'or', 'to']
 # -----------------------------------------------------------------------------
 def split_words(string) :
 	pattern = '[^A-Za-z_]'

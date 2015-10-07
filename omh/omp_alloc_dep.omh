@@ -19,10 +19,7 @@ $spell
 $$
 
 $section Check If A Memory Allocation is Efficient for Another Use$$
-$index efficient, omp_alloc$$
-$index omp_alloc, efficient$$
-$index memory, reuse$$
-$index reuse, memory$$
+$mindex omp_alloc reuse$$
 
 $head Deprecated 2011-07-29$$
 This function has been deprecated because speed tests seem to indicate
@@ -86,15 +83,9 @@ $spell
 	omp_alloc
 $$
 $section Set Maximum Number of Threads for omp_alloc Allocator$$
+$mindex max_num_threads parallel OpenMP initialize$$
 
-$index max_num_threads, omp_alloc$$
-$index omp_alloc, max_num_threads$$
-$index parallel, max_num_threads$$
-$index threads, number of$$
 
-$index OpenMP, initialize memory$$
-$index memory, initialize OpenMP$$
-$index initialize, OpenMP memory$$
 
 $head Removed$$
 This function has been removed from the CppAD API.

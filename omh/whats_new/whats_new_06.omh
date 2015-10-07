@@ -64,6 +64,7 @@ $spell
 $$
 
 $section Changes and Additions to CppAD During 2006$$
+$mindex aclocal$$
 
 
 $head Introduction$$
@@ -1161,7 +1162,6 @@ Remove unnecessary reference to parameter and variable
 in  documentation for $cref Independent$$.
 
 $head 01-08$$
-$index aclocal$$
 The aclocal program is part of the automake and autoconf system.
 It often generates warnings of the form:
 $codei%

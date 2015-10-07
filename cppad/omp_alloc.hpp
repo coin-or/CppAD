@@ -32,8 +32,6 @@ $$
 $section Set and Get Maximum Number of Threads for omp_alloc Allocator$$
 
 $head Deprecated 2011-08-31$$
-$index set_max_num_threads, omp_alloc$$
-$index get_max_num_threads, omp_alloc$$
 Use the functions $cref/thread_alloc::parallel_setup/ta_parallel_setup/$$
 and $cref/thread_alloc:num_threads/ta_num_threads/$$ instead.
 
@@ -95,14 +93,13 @@ $end
 $begin omp_in_parallel$$
 
 $section Is The Current Execution in OpenMP Parallel Mode$$
+$mindex in_parallel$$
 $spell
 	omp_alloc
 	bool
 $$
 
 $head Deprecated 2011-08-31$$
-$index in_parallel, omp_alloc$$
-$index omp_alloc, in_parallel$$
 Use the function $cref/thread_alloc::in_parallel/ta_in_parallel/$$ instead.
 
 $head Syntax$$
@@ -148,10 +145,9 @@ $spell
 $$
 
 $section Get the Current OpenMP Thread Number$$
+$mindex get_thread_num$$
 
 $head Deprecated 2011-08-31$$
-$index get_thread_num, omp_alloc$$
-$index omp_alloc, get_thread_num$$
 Use the function $cref/thread_alloc::thread_num/ta_thread_num/$$ instead.
 
 $head Syntax$$
@@ -195,8 +191,6 @@ $$
 $section Get At Least A Specified Amount of Memory$$
 
 $head Deprecated 2011-08-31$$
-$index get_thread_num, omp_alloc$$
-$index omp_alloc, get_thread_num$$
 Use the function $cref/thread_alloc::get_memory/ta_get_memory/$$ instead.
 
 $head Syntax$$
@@ -277,10 +271,9 @@ $spell
 $$
 
 $section Return Memory to omp_alloc$$
+$mindex return_memory$$
 
 $head Deprecated 2011-08-31$$
-$index return_memory, omp_alloc$$
-$index omp_alloc, return_memory$$
 Use the function $cref/thread_alloc::return_memory/ta_return_memory/$$ instead.
 
 $head Syntax$$
@@ -341,10 +334,9 @@ $spell
 $$
 
 $section Free Memory Currently Available for Quick Use by a Thread$$
+$mindex free_available$$
 
 $head Deprecated 2011-08-31$$
-$index free_available, omp_alloc$$
-$index omp_alloc, free_available$$
 Use the function $cref/thread_alloc::free_available/ta_free_available/$$
 instead.
 
@@ -388,10 +380,9 @@ $spell
 $$
 
 $section Amount of Memory a Thread is Currently Using$$
+$mindex inuse$$
 
 $head Deprecated 2011-08-31$$
-$index inuse, omp_alloc$$
-$index omp_alloc, inuse$$
 
 $head Syntax$$
 $icode%num_bytes% = omp_alloc::inuse(%thread%)%$$
@@ -448,8 +439,6 @@ $$
 $section Amount of Memory Available for Quick Use by a Thread$$
 
 $head Deprecated 2011-08-31$$
-$index available, omp_alloc$$
-$index omp_alloc, available$$
 Use the function $cref/thread_alloc::available/ta_available/$$ instead.
 
 $head Syntax$$
@@ -497,10 +486,9 @@ $spell
 $$
 
 $section Allocate Memory and Create A Raw Array$$
+$mindex create_array$$
 
 $head Deprecated 2011-08-31$$
-$index create_array, omp_alloc$$
-$index omp_alloc, create_array$$
 Use the function $cref/thread_alloc::create_array/ta_create_array/$$ instead.
 
 $head Syntax$$
@@ -590,10 +578,9 @@ $spell
 $$
 
 $section Return A Raw Array to The Available Memory for a Thread$$
+$mindex delete_array$$
 
 $head Deprecated 2011-08-31$$
-$index delete_array, omp_alloc$$
-$index omp_alloc, delete_array$$
 Use the function $cref/thread_alloc::delete_array/ta_delete_array/$$ instead.
 
 $head Syntax$$
@@ -665,8 +652,6 @@ $$
 $section Check If A Memory Allocation is Efficient for Another Use$$
 
 $head Removed$$
-$index efficient, omp_alloc$$
-$index omp_alloc, efficient$$
 This function has been removed because speed tests seem to indicate
 it is just as fast, or faster, to free and then reallocate the memory.
 
@@ -728,10 +713,9 @@ $spell
 	omp_alloc
 $$
 $section Set Maximum Number of Threads for omp_alloc Allocator$$
+$mindex max_num_threads$$
 
 $head Removed$$
-$index max_num_threads, omp_alloc$$
-$index omp_alloc, max_num_threads$$
 This function has been removed from the CppAD API.
 Use the function $cref/thread_alloc::parallel_setup/ta_parallel_setup/$$
 in its place.

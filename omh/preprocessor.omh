@@ -18,9 +18,7 @@ $spell
 $$
 
 $section CppAD API Preprocessor Symbols$$
-$index preprocessor, CPPAD_ symbol$$
-$index symbol, preprocessor CPPAD_$$
-$index CPPAD_, preprocessor symbol$$
+$mindex CPPAD_ NULL pointer$$
 
 $head Purpose$$
 The CppAD include files define preprocessor symbols all of which begin
@@ -33,8 +31,6 @@ are part of the CppAD Application Interface (API).
 $head Documented Here$$
 
 $subhead CPPAD_NULL$$
-$index NULL, pointer$$
-$index CPPAD_NULL$$
 Is a null pointer used by CppAD,
 instead of just using the value zero which was often done in C++98,
 which has been replaced by the value $code nullptr$$ in C++11.

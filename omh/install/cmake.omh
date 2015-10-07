@@ -57,13 +57,10 @@ $spell
 $$
 
 $section Using CMake to Configure CppAD$$
-$index cmake, configure cppad$$
-$index configure, cppad$$
-$index cppad, cmake configure$$
+$mindex makefile install prefix postfix include directories lib datadir documentation package compile flags profile maximum number threads sparsity internal structure vector sets memory usage tape ctor implicit explicit$$
 
 
 $head The CMake Program$$
-$index cmake$$
 The
 $href%http://www.cmake.org/cmake/help/install.html%cmake%$$
 program enables one to create a single set of scripts,
@@ -73,9 +70,6 @@ Apple operating systems.
 For example, one can use it to automatically generate Microsoft project files.
 
 $head CMake Command$$
-$index cmake, command$$
-$index configure, cppad$$
-$index cppad, configure$$
 The command below assumes that $code cmake$$ is in your execution
 path with version greater than or equal 2.8.
 If not, you can put the path to the version of $code cmake$$
@@ -124,8 +118,6 @@ cmake %%                                                                     \
 %$$
 
 $head generator$$
-$index makefile, generator$$
-$index generator, makefile$$
 The CMake program is capable of generating different kinds of files.
 Below is a table with a few of the possible files
 $table
@@ -138,8 +130,6 @@ $href%http://www.cmake.org/cmake/help/cmake2.6docs.html#section_Generators%
 generators%$$ documentation.
 
 $head cmake_install_prefix$$
-$index install, prefix$$
-$index prefix, install$$
 This is the top level absolute path below which
 all of the CppAD files are installed by the command
 $codei%
@@ -156,8 +146,6 @@ $codei%
 The default value for $icode cmake_install_prefix$$ is $code /usr$$.
 
 $head cmake_install_postfix$$
-$index install, postfix$$
-$index postfix, install$$
 This is the bottom level relative path below which
 all of the CppAD files are installed.
 For example,
@@ -173,8 +161,6 @@ there is no bottom level relative directory for the installed files.
 
 
 $head cmake_install_includedirs$$
-$index install, include directories$$
-$index include, install directories$$
 This is one directory, or a list of directories separated
 by spaces or by semi-colons.
 This first entry in the list is the middle level relative path below which
@@ -192,8 +178,6 @@ The default value for this directory list is $code include$$.
 
 
 $head cmake_install_libdirs$$
-$index install, lib directories$$
-$index lib, install directories$$
 This is one directory, or a list of directories separated
 by spaces or by semi-colons.
 This first entry in the list is the middle level relative path below which
@@ -211,8 +195,6 @@ $codei%
 The default value for this directory list is $code lib$$.
 
 $head cmake_install_datadir$$
-$index install, datadir$$
-$index datadir, install$$
 This is the middle level relative path below which
 the CppAD data files are installed.
 For example,
@@ -226,8 +208,6 @@ $codei%
 The default value for $icode cmake_install_datadir$$ is $code share$$.
 
 $head cmake_install_docdir$$
-$index install, documentation$$
-$index documentation, install$$
 This is the middle level relative path below which
 the CppAD documentation files are installed.
 For example,
@@ -242,8 +222,6 @@ There is no default value for $icode cmake_install_docdir$$.
 If it is not specified, the documentation files are not installed.
 
 $head package_prefix$$
-$index package, prefix$$
-$index prefix, package$$
 Each of these packages corresponds to optional CppAD examples,
 that can be compiled and tested if the corresponding prefix is provided:
 $table
@@ -256,9 +234,6 @@ $rref sacado_prefix$$
 $tend
 
 $head cppad_cxx_flags$$
-$index c++, compile flags$$
-$index compile, c++ flags$$
-$index flags, c++ compile$$
 This specifies the addition compiler flags,
 besides the debug and release flags,
 that are used when compiling the CppAD examples and tests.
@@ -276,7 +251,6 @@ The compiler may still be used with a flag that disables the new features
 (unless it is a Microsoft compiler; i.e., $code _MSC_VER$$ is defined).
 
 $head cppad_profile_flag$$
-$index profile$$
 This specifies an addition compiler and link flag that is used
 for $cref/profiling/speed_main/package/profile/$$ the speed tests.
 A profile version of the speed test is only build when this argument
@@ -293,8 +267,6 @@ $head cppad_testvector$$
 See $tref cppad_testvector$$.
 
 $head cppad_max_num_threads$$
-$index maximum, number threads$$
-$index threads, maximum number$$
 The value $icode cppad_max_num_threads$$
 must be greater than or equal to four; i.e.,
 $icode%max_num_threads% >= 4%$$.
@@ -305,8 +277,6 @@ the default value for the preprocessor symbol
 $cref/CPPAD_MAX_NUM_THREADS/multi_thread/CPPAD_MAX_NUM_THREADS/$$.
 
 $head cppad_sparse_list$$
-$index sparsity, internal structure$$
-$index sparsity, vector of sets$$
 There are two possible values for this option, $code YES$$ and $code NO$$.
 This affect the internal data structure used to store a
 $cref/sparsity pattern/glossary/Sparsity Pattern/$$ when the
@@ -321,9 +291,6 @@ $cref/sparse drivers/sparse/$$
 The default value for $icode cppad_sparse_list$$ is $code YES$$
 
 $head cppad_tape_id_type$$
-$index memory, usage$$
-$index memory, tape$$
-$index tape, memory$$
 The type $icode cppad_tape_id_type$$
 is used for identifying different tapes.
 The valid values for this type are
@@ -349,9 +316,6 @@ $code uint32_t$$,
 $code uint64_t$$.
 
 $head cppad_tape_addr_type$$
-$index memory, usage$$
-$index memory, tape$$
-$index tape, memory$$
 The type $icode cppad_tape_addr_type$$
 is used for address in the AD recordings (tapes).
 The valid values for this argument are
@@ -381,9 +345,6 @@ $code uint32_t$$,
 $code uint64_t$$.
 
 $head cppad_implicit_ctor_from_any_type$$
-$index ctor, implicit or explicit$$
-$index implicit, ctor$$
-$index explicit, ctor$$
 The default value for $icode cppad_implicit_ctor_from_any_type$$ is $code NO$$.
 If it is $code YES$$, there is a
 $cref/deprecated/ad_ctor/x/Deprecated 2013-12-31/$$

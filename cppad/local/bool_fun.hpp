@@ -22,12 +22,9 @@ $spell
 	const
 $$
 
-$index bool, AD function$$
-$index function, AD bool$$
-$index unary, AD bool$$
-$index binary, AD bool$$
 
 $section AD Boolean Functions$$
+$mindex bool CPPAD_BOOL_UNARY CPPAD_BOOL_BINARY$$
 
 $head Syntax$$
 $codei%CPPAD_BOOL_UNARY(%Base%, %unary_name%)
@@ -81,7 +78,6 @@ $codei%
 %$$
 
 $head Create Unary$$
-$index CPPAD_BOOL_UNARY$$
 The preprocessor macro invocation
 $codei%
 	CPPAD_BOOL_UNARY(%Base%, %unary_name%)
@@ -117,7 +113,6 @@ It is the second argument to
 the CppAD provided version of $icode binary_name$$.
 
 $head Create Binary$$
-$index CPPAD_BOOL_BINARY$$
 The preprocessor macro invocation
 $codei%
 	CPPAD_BOOL_BINARY(%Base%, %binary_name%)

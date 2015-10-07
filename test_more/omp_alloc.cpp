@@ -17,11 +17,8 @@ $spell
 $$
 
 $section OpenMP Memory Allocator: Example and Test$$
+$mindex allocation multi thread$$
 
-$index openmp, memory allocation$$
-$index multi-thread, memory allocation$$
-$index example, memory allocation$$
-$index test, memory allocation$$
 
 $head Deprecated 2011-08-31$$
 This example is only intended to help convert calls to $cref omp_alloc$$

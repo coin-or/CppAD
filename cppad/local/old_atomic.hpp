@@ -34,11 +34,7 @@ $spell
 $$
 
 $section User Defined Atomic AD Functions$$
-$index CPPAD_USER_ATOMIC$$
-$index atomic, user function$$
-$index user, atomic function$$
-$index operation, user atomic$$
-$index function, user atomic$$
+$mindex operation old_atomic$$
 
 $head Deprecated 2013-05-27$$
 Using $code CPPAD_USER_ATOMIC$$ has been deprecated.
@@ -106,7 +102,6 @@ $icode forward$$ for the case $icode%k% == 2%$$ until you require
 forward mode calculation of second derivatives.
 
 $head CPPAD_USER_ATOMIC$$
-$index CPPAD_USER_ATOMIC$$
 The macro
 $codei%
 CPPAD_USER_ATOMIC(%afun%, %Tvector%, %Base%,
@@ -283,8 +278,6 @@ is specified by $cref/m/old_atomic/m/$$ $codei%= %ay%.size()%$$,
 which must be greater than zero.
 
 $subhead Parallel Mode$$
-$index parallel, old_atomic$$
-$index old_atomic, parallel$$
 The first call to
 $codei%
 	%afun%(%id%, %ax%, %ay%)
