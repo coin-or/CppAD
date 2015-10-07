@@ -88,6 +88,11 @@ are in this section form the $cref WishList$$.
 $lnext
 Alphabetize and make some corrections to
 $cref/list of examples/ListAllExamples/$$.
+$lnext
+The documentation for some of the $cref deprecated$$ features
+was missing the date when they were deprecated.
+This has been fixed; e.g., see
+$cref/Deprecated 2012-12-26/auto_tools/Deprecated 2012-12-26/$$.
 $lend
 
 

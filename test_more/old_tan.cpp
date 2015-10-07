@@ -18,7 +18,7 @@ $$
 
 $section Old Tan and Tanh as User Atomic Operations: Example and Test$$
 
-$head Deprecated$$
+$head Deprecated 2013-05-27$$
 This example has not deprecated;
 see $cref atomic_tangent.cpp$$ instead.
 

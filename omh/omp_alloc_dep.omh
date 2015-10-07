@@ -1,6 +1,6 @@
 /* $Id$ */
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-13 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-15 Bradley M. Bell
 
 CppAD is distributed under multiple licenses. This distribution is under
 the terms of the 
@@ -24,7 +24,7 @@ $index omp_alloc, efficient$$
 $index memory, reuse$$
 $index reuse, memory$$
 
-$head Deprecated$$
+$head Deprecated 2011-07-29$$
 This function has been deprecated because speed tests seem to indicate
 it is just as fast, or faster, to free and then reallocate the memory.
 

@@ -23,7 +23,7 @@ $index multi-thread, memory allocation$$
 $index example, memory allocation$$
 $index test, memory allocation$$
 
-$head Deprecated$$
+$head Deprecated 2011-08-31$$
 This example is only intended to help convert calls to $cref omp_alloc$$
 to calls to $cref thread_alloc$$.
 

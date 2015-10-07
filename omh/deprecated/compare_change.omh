@@ -28,7 +28,7 @@ $$
 $bold See Also$$
 $cref FunCheck$$
 
-$head Deprecated 20150120$$
+$head Deprecated 2015-01-20$$
 This routine has been deprecated, use $cref compare_change$$
 instead.
 

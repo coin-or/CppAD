@@ -40,11 +40,11 @@ $index user, atomic function$$
 $index operation, user atomic$$
 $index function, user atomic$$
 
-$head Syntax$$
+$head Deprecated 2013-05-27$$
 Using $code CPPAD_USER_ATOMIC$$ has been deprecated.
 Use $cref atomic_base$$ instead.
 
-$subhead Define Function$$
+$head Syntax Function$$
 $codei%CPPAD_USER_ATOMIC(%afun%, %Tvector%, %Base%,
 	%forward%, %reverse%, %for_jac_sparse%, %rev_jac_sparse%, %rev_hes_sparse%
 )
