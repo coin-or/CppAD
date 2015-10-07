@@ -25,8 +25,8 @@ $$
 $section OpenMP Parallel Setup$$
 
 $head Deprecated 2011-06-23$$
-$index depreciated, omp_max_thread$$
-$index omp_max_thread, depreciated$$
+$index deprecated, omp_max_thread$$
+$index omp_max_thread, deprecated$$
 Use $cref/thread_alloc::parallel_setup/ta_parallel_setup/$$
 to set the number of threads.
 

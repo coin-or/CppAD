@@ -1177,7 +1177,7 @@ Change CppAD error handler from using the macros defined in
 $code cppad/CppADError.h$$ to using a class defined in
 $cref%cppad/error_handler.hpp%ErrorHandler%$$.
 The macros $code CppADUnknownError$$ and $code CppADUsageError$$
-have been depreciated (they are temporarily still available in the
+have been deprecated (they are temporarily still available in the
 file $code cppad/local/CppADError.h$$).
 
 $head 01-02$$
