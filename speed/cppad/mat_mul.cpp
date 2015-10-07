@@ -3,7 +3,7 @@
 CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-15 Bradley M. Bell
 
 CppAD is distributed under multiple licenses. This distribution is under
-the terms of the 
+the terms of the
                     Eclipse Public License Version 1.0.
 
 A copy of this license is included in the COPYING file of this distribution.
@@ -27,16 +27,13 @@ $spell
 	CppAD
 	dz
 	typedef
+	boolsparsity
+	enum
 $$
 
-$section CppAD Speed: Matrix Multiplication$$
+$section CppAD Speed, Matrix Multiplication$$
+$mindex link_mat_mul multiply$$
 
-$index link_mat_mul, cppad$$
-$index cppad, link_mat_mul$$
-$index speed, cppad$$
-$index cppad, speed$$
-$index matrix, speed cppad$$
-$index multiply, speed cppad$$
 
 $head Specifications$$
 See $cref link_mat_mul$$.
@@ -51,11 +48,11 @@ $codep */
 
 // Note that CppAD uses global_memory at the main program level
 extern bool
-	global_onetape, global_atomic, global_optimize;
+	global_onetape, global_atomic, global_optimize, global_boolsparsity;
 
 bool link_mat_mul(
-	size_t                           size     , 
-	size_t                           repeat   , 
+	size_t                           size     ,
+	size_t                           repeat   ,
 	CppAD::vector<double>&           x        ,
 	CppAD::vector<double>&           z        ,
 	CppAD::vector<double>&           dz
@@ -63,8 +60,8 @@ bool link_mat_mul(
 {
 	// -----------------------------------------------------
 	// setup
-	typedef CppAD::AD<double>           ADScalar; 
-	typedef CppAD::vector<ADScalar>     ADVector; 
+	typedef CppAD::AD<double>           ADScalar;
+	typedef CppAD::vector<ADScalar>     ADVector;
 
 	size_t j;               // temporary index
 	size_t m = 1;           // number of dependent variables
@@ -73,8 +70,8 @@ bool link_mat_mul(
 	ADVector   Y(n);        // Store product matrix
 	ADVector   Z(m);        // AD range space vector
 	CppAD::ADFun<double> f; // AD function object
-	
-	// vectors of reverse mode weights 
+
+	// vectors of reverse mode weights
 	CppAD::vector<double> w(1);
 	w[0] = 1.;
 
@@ -84,7 +81,11 @@ bool link_mat_mul(
 	size_t n_middle  = size;
 	size_t nc_result = size;
 	matrix_mul atom_mul(nr_result, n_middle, nc_result);
-
+	//
+	if( global_boolsparsity )
+		atom_mul.option( CppAD::atomic_base<double>::pack_sparsity_enum );
+	else
+		atom_mul.option( CppAD::atomic_base<double>::set_sparsity_enum );
 	// ------------------------------------------------------
 	if( ! global_onetape ) while(repeat--)
 	{	// get the next matrix
@@ -108,7 +109,7 @@ bool link_mat_mul(
 			Z[0] = 0.;
 			for(j = 0; j < n; j++)
 				Z[0] += ay[j];
-		} 
+		}
 		// create function object f : X -> Z
 		f.Dependent(X, Z);
 
@@ -144,8 +145,8 @@ bool link_mat_mul(
 			Z[0] = 0.;
 			for(j = 0; j < n; j++)
 				Z[0] += ay[j];
-		} 
-	
+		}
+
 		// create function object f : X -> Z
 		f.Dependent(X, Z);
 
@@ -165,7 +166,7 @@ bool link_mat_mul(
 		}
 	}
 	// --------------------------------------------------------------------
-	// Free temporary work space. (If there are future calls to 
+	// Free temporary work space. (If there are future calls to
 	// mat_mul they would create new temporary work space.)
 	CppAD::user_atomic<double>::clear();
 
