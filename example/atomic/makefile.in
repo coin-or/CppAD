@@ -100,9 +100,7 @@ CONFIG_CLEAN_VPATH_FILES =
 am_atomic_OBJECTS = atomic.$(OBJEXT) checkpoint.$(OBJEXT) \
 	get_started.$(OBJEXT) hes_sparse.$(OBJEXT) mat_mul.$(OBJEXT) \
 	norm_sq.$(OBJEXT) reciprocal.$(OBJEXT) sparsity.$(OBJEXT) \
-	tangent.$(OBJEXT) old_mat_mul.$(OBJEXT) \
-	old_reciprocal.$(OBJEXT) old_tan.$(OBJEXT) \
-	old_usead_1.$(OBJEXT) old_usead_2.$(OBJEXT)
+	tangent.$(OBJEXT)
 atomic_OBJECTS = $(am_atomic_OBJECTS)
 atomic_LDADD = $(LDADD)
 AM_V_P = $(am__v_P_@AM_V@)
@@ -134,18 +132,6 @@ AM_V_CXXLD = $(am__v_CXXLD_@AM_V@)
 am__v_CXXLD_ = $(am__v_CXXLD_@AM_DEFAULT_V@)
 am__v_CXXLD_0 = @echo "  CXXLD   " $@;
 am__v_CXXLD_1 = 
-COMPILE = $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) \
-	$(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS)
-AM_V_CC = $(am__v_CC_@AM_V@)
-am__v_CC_ = $(am__v_CC_@AM_DEFAULT_V@)
-am__v_CC_0 = @echo "  CC      " $@;
-am__v_CC_1 = 
-CCLD = $(CC)
-LINK = $(CCLD) $(AM_CFLAGS) $(CFLAGS) $(AM_LDFLAGS) $(LDFLAGS) -o $@
-AM_V_CCLD = $(am__v_CCLD_@AM_V@)
-am__v_CCLD_ = $(am__v_CCLD_@AM_DEFAULT_V@)
-am__v_CCLD_0 = @echo "  CCLD    " $@;
-am__v_CCLD_1 = 
 SOURCES = $(atomic_SOURCES)
 DIST_SOURCES = $(atomic_SOURCES)
 am__can_run_installinfo = \
@@ -366,13 +352,7 @@ atomic_SOURCES = \
 	norm_sq.cpp \
 	reciprocal.cpp \
 	sparsity.cpp \
-	tangent.cpp \
-	old_mat_mul.hpp \
-	old_mat_mul.cpp \
-	old_reciprocal.cpp \
-	old_tan.cpp \
-	old_usead_1.cpp \
-	old_usead_2.cpp
+	tangent.cpp
 
 all: all-am
 
@@ -427,11 +407,6 @@ distclean-compile:
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/hes_sparse.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/mat_mul.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/norm_sq.Po@am__quote@
-@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/old_mat_mul.Po@am__quote@
-@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/old_reciprocal.Po@am__quote@
-@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/old_tan.Po@am__quote@
-@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/old_usead_1.Po@am__quote@
-@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/old_usead_2.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/reciprocal.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/sparsity.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/tangent.Po@am__quote@

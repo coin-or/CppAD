@@ -85,11 +85,6 @@ AM_LDFLAGS        = $(OPENMP_FLAGS)
 LDADD             = $(ADOLC_LIB) $(IPOPT_LIB) $(EIGEN_LIB) $(OPENMP_FLAGS)
 #
 test_more_SOURCES  = \
-	old_usead_2.cpp \
-	old_usead_1.cpp \
-	old_tan.cpp \
-	old_reciprocal.cpp \
-	old_mat_mul.cpp \
 	$(ADOLC_SRC_FILES) \
 	$(IPOPT_SRC_FILES) \
 	$(OPENMP_SRC_FILES) \
@@ -150,6 +145,12 @@ test_more_SOURCES  = \
 	near_equal_ext.cpp \
 	neg.cpp \
 	ode_err_control.cpp \
+	old_usead_2.cpp \
+	old_usead_1.cpp \
+	old_tan.cpp \
+	old_reciprocal.cpp \
+	old_mat_mul.cpp \
+	old_mat_mul.hpp \
 	omp_alloc.cpp \
 	optimize.cpp \
 	parameter.cpp \

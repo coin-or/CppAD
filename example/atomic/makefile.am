@@ -32,8 +32,7 @@ atomic_SOURCES   = \
 	norm_sq.cpp \
 	reciprocal.cpp \
 	sparsity.cpp \
-	tangent.cpp \
-	old_mat_mul.hpp \
+	tangent.cpp
 
 test: check
 	./atomic
