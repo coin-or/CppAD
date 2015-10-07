@@ -10,6 +10,12 @@
 # A copy of this license is included in the COPYING file of this distribution.
 # Please visit http://www.coin-or.org/CppAD/ for information on other licenses.
 # -----------------------------------------------------------------------------
+if [ ! -e ../cppad/configure.hpp ]
+then
+	echo 'numeric_limits.sh: must first run bin/run_cmake.sh'
+	echo 'from parent directory.'
+	exit 1
+fi
 cat << EOF
 This is not a bug, but rather a test of specialization of numeric_limits
 for AD types.
@@ -17,80 +23,91 @@ EOF
 cat << EOF > bug.$$
 # include <cppad/cppad.hpp>
 
-# if CPPAD_USE_CPLUSPLUS_2011
-# define CPPAD_NUMERIC_LIMIT_VAL(type, name ) \\
-	static constexpr type name = numeric_limits<Base>::name;
-# else
-# define CPPAD_NUMERIC_LIMIT_VAL(type, name ) \\
-	static const type name = numeric_limits<Base>::name;
-# endif
-
-# if CPPAD_USE_CPLUSPLUS_2011
-# define CPPAD_NUMERIC_LIMIT_FUN(name) \\
-	static constexpr CppAD::AD<Base> name(void) \\
-	{	return numeric_limits<Base>::name(); }
-# else
-# define CPPAD_NUMERIC_LIMIT_FUN(name) \\
-	static CppAD::AD<Base> name(void) \\
-	{	return numeric_limits<Base>::name(); }
-# endif
-
-namespace std {
-	template <class Base> class numeric_limits< CppAD::AD<Base> >
-	{
-	public:
-		// bool
-		CPPAD_NUMERIC_LIMIT_VAL(bool, is_specialized)
-		CPPAD_NUMERIC_LIMIT_VAL(bool, is_signed)
-		CPPAD_NUMERIC_LIMIT_VAL(bool, is_integer)
-		CPPAD_NUMERIC_LIMIT_VAL(bool, is_exact)
-		CPPAD_NUMERIC_LIMIT_VAL(bool, has_infinity)
-		CPPAD_NUMERIC_LIMIT_VAL(bool, has_quiet_NaN)
-		CPPAD_NUMERIC_LIMIT_VAL(bool, has_signaling_NaN)
-		CPPAD_NUMERIC_LIMIT_VAL(bool, has_denorm_loss)
-		CPPAD_NUMERIC_LIMIT_VAL(bool, is_iec559)
-		CPPAD_NUMERIC_LIMIT_VAL(bool, is_bounded)
-		CPPAD_NUMERIC_LIMIT_VAL(bool, is_modulo)
-		CPPAD_NUMERIC_LIMIT_VAL(bool, traps)
-		CPPAD_NUMERIC_LIMIT_VAL(bool, tinyness_before)
-		// int
-		CPPAD_NUMERIC_LIMIT_VAL(int, digits)
-		CPPAD_NUMERIC_LIMIT_VAL(int, digits10)
-		CPPAD_NUMERIC_LIMIT_VAL(int, radix)
-		CPPAD_NUMERIC_LIMIT_VAL(int, min_exponent)
-		CPPAD_NUMERIC_LIMIT_VAL(int, min_exponent10)
-		CPPAD_NUMERIC_LIMIT_VAL(int, max_exponent)
-		CPPAD_NUMERIC_LIMIT_VAL(int, max_exponent10)
-		// function
-		CPPAD_NUMERIC_LIMIT_FUN(min)
-		CPPAD_NUMERIC_LIMIT_FUN(max)
-		CPPAD_NUMERIC_LIMIT_FUN(epsilon)
-		CPPAD_NUMERIC_LIMIT_FUN(round_error)
-		CPPAD_NUMERIC_LIMIT_FUN(infinity)
-		CPPAD_NUMERIC_LIMIT_FUN(quiet_NaN)
-		CPPAD_NUMERIC_LIMIT_FUN(signaling_NaN)
-		CPPAD_NUMERIC_LIMIT_FUN(denorm_min)
-		// other
-		CPPAD_NUMERIC_LIMIT_VAL(float_denorm_style, has_denorm)
-		CPPAD_NUMERIC_LIMIT_VAL(float_round_style, round_style)
-# if CPPAD_USE_CPLUSPLUS_2011
-		CPPAD_NUMERIC_LIMIT_VAL(int, max_digits10)
-		CPPAD_NUMERIC_LIMIT_FUN(lowest)
-# endif
-	};
+/*!
+\\def CPPAD_STD_NUMERIC_LIMITS(Other, Base)
+This macro defines the specialization std::numeric_limits<Base>
+to have the same values and functions as the existing specialization
+std::numeric_limits<Other>.
+*/
+# define CPPAD_STD_NUMERIC_LIMITS(Other, Base) \\
+namespace std {\\
+	template <> class numeric_limits<Base>\\
+	{\\
+	public:\\
+	static const bool is_specialized =\\
+		numeric_limits<Other>::is_specialized;\\
+	static const bool is_signed =\\
+		numeric_limits<Other>::is_signed;\\
+	static const bool is_integer =\\
+		numeric_limits<Other>::is_integer;\\
+	static const bool is_exact =\\
+		numeric_limits<Other>::is_exact;\\
+	static const bool has_infinity =\\
+		numeric_limits<Other>::has_infinity;\\
+	static const bool has_quiet_NaN =\\
+		numeric_limits<Other>::has_quiet_NaN;\\
+	static const bool has_signaling_NaN =\\
+		numeric_limits<Other>::has_signaling_NaN;\\
+	static const bool has_denorm_loss =\\
+		numeric_limits<Other>::has_denorm_loss;\\
+	static const bool is_iec559 =\\
+		numeric_limits<Other>::is_iec559;\\
+	static const bool is_bounded =\\
+		numeric_limits<Other>::is_bounded;\\
+	static const bool is_modulo =\\
+		numeric_limits<Other>::is_modulo;\\
+	static const bool traps =\\
+		numeric_limits<Other>::traps;\\
+	static const bool tinyness_before =\\
+		numeric_limits<Other>::tinyness_before;\\
+	static const int digits =\\
+		numeric_limits<Other>::digits;\\
+	static const int digits10 =\\
+		numeric_limits<Other>::digits10;\\
+	static const int radix =\\
+		numeric_limits<Other>::radix;\\
+	static const int min_exponent =\\
+		numeric_limits<Other>::min_exponent;\\
+	static const int min_exponent10 =\\
+		numeric_limits<Other>::min_exponent10;\\
+	static const int max_exponent =\\
+		numeric_limits<Other>::max_exponent;\\
+	static const int max_exponent10 =\\
+		numeric_limits<Other>::max_exponent10;\\
+	static const Base min(void)\\
+	{	return static_cast<Base>( numeric_limits<Other>::min() ); }\\
+	static const Base max(void)\\
+	{	return static_cast<Base>( numeric_limits<Other>::max() ); }\\
+	static const Base epsilon(void)\\
+	{	return static_cast<Base>( numeric_limits<Other>::epsilon() ); }\\
+	static const Base round_error(void)\\
+	{	return static_cast<Base>( numeric_limits<Other>::round_error() ); }\\
+	static const Base infinity(void)\\
+	{	return static_cast<Base>( numeric_limits<Other>::infinity() ); }\\
+	static const Base quiet_NaN(void)\\
+	{	return static_cast<Base>( numeric_limits<Other>::quiet_NaN() ); }\\
+	static const Base signaling_NaN(void)\\
+	{	return static_cast<Base>( numeric_limits<Other>::signaling_NaN() ); }\\
+	static const Base denorm_min(void)\\
+	{	return static_cast<Base>( numeric_limits<Other>::denorm_min() ); }\\
+	static const float_denorm_style has_denorm =\\
+		numeric_limits<Other>::has_denorm;\\
+	static const float_round_style round_style =\\
+		numeric_limits<Other>::round_style;\\
+	};\\
 }
+CPPAD_STD_NUMERIC_LIMITS(double, CppAD::AD<double>)
 
-# define PRINT_VAL(name) \
-cout << #name << " = " << std::numeric_limits< AD<double> >::name << endl;
+# define PRINT_VAL(name) \\
+std::cout << #name << " = " \\
+<< std::numeric_limits< CppAD::AD<double> >::name << std::endl;
 
-# define PRINT_FUN(name) \
-cout << #name << " = " << std::numeric_limits< AD<double> >::name() << endl;
+# define PRINT_FUN(name) \\
+std::cout << #name << " = " \\
+<< std::numeric_limits< CppAD::AD<double> >::name() << std::endl;
 
 int main(void)
 {	bool ok = true;
-	using std::cout;
-	using std::endl;
-	using CppAD::AD;
 	//
 	PRINT_VAL(is_specialized)
 	PRINT_VAL(is_signed)
@@ -125,10 +142,9 @@ int main(void)
 	// other
 	PRINT_VAL(has_denorm)
 	PRINT_VAL(round_style)
-# if CPPAD_USE_CPLUSPLUS_2011
-	PRINT_VAL(max_digits10)
-	PRINT_FUN(lowest)
-# endif
+	// C++11 only
+	// PRINT_VAL(max_digits10)
+	// PRINT_FUN(lowest)
 	//
 	if( ok )
 		return 0;
