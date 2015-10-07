@@ -15,10 +15,10 @@ import os
 import re
 # -----------------------------------------------------------------------------
 # list of words that should be excluded from mindex comamnds
-exclude_list = ['as', 'in', 'of', 'or', 'to']
+exclude_list = 'a an and as at by for in of or to'.split()
 # -----------------------------------------------------------------------------
 def split_words(string) :
-	pattern = '[^A-Za-z_]'
+	pattern = '(\s|,)'
 	replace = ' '
 	string  = re.sub(pattern, replace, string)
 	return string.split()
