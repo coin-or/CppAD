@@ -802,7 +802,7 @@ void ReverseSweep(
 			// --------------------------------------------------
 
 			case ZmulvpOp:
-			CPPAD_ASSERT_UNKNOWN( size_t(arg[0]) < num_par );
+			CPPAD_ASSERT_UNKNOWN( size_t(arg[1]) < num_par );
 			reverse_zmulvp_op(
 				d, i_var, arg, parameter, J, Taylor, K, Partial
 			);
