@@ -62,7 +62,6 @@ $spell
 	sacado
 	unreferenced
 	azmul
-	arg
 $$
 
 $section CppAD Changes and Additions During 2015$$
@@ -73,16 +72,9 @@ This section contains a list of the changes to CppAD during 2015
 The purpose of this section is to
 assist you in learning about changes between various versions of CppAD.
 
-$head 10-14$$
-There was a bug in implementation of $cref azmul$$
-that could result in the error message
-$codei%
-	Error detected by false result for
-	size_t(arg[0]) < num_par
-	at line 805 in the file %...%/cppad/reverse_sweep.hpp
-%$$
-This has been fixed.
-
+$head 10-16$$
+Add a $cref/PrintFor optimization/WishList/PrintFor Optimization/$$
+item to the wish list.
 
 $head 10-06$$
 $list number$$
