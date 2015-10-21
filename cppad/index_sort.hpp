@@ -3,7 +3,7 @@
 # define CPPAD_INDEX_SORT_INCLUDED
 
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-14 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-15 Bradley M. Bell
 
 CppAD is distributed under multiple licenses. This distribution is under
 the terms of the 
@@ -42,17 +42,18 @@ operation.
 $head ind$$
 The argument $icode ind$$ has prototype 
 $codei%
-	const %VectorSize%& %ind%
+	%VectorSize%& %ind%
 %$$
 where $icode VectorSize$$ is 
 a $cref SimpleVector$$ class with elements of type $code size_t$$.
 The routine $cref CheckSimpleVector$$ will generate an error message
 if this is not the case.
+
+$subhead Input$$
 The size of $icode ind$$ must be the same as the size of $icode keys$$
 and the value of its input elements does not matter.
-$pre
 
-$$
+$subhead Return$$
 Upon return, $icode ind$$ is a permutation of the set of indices
 that yields increasing order for $icode keys$$.
 In other words, for all $icode%i% != %j%$$,
