@@ -74,6 +74,13 @@ This section contains a list of the changes to CppAD during 2015
 The purpose of this section is to
 assist you in learning about changes between various versions of CppAD.
 
+$head 11-06$$
+It is often difficult to determine what cause a $code nan$$ result
+during an operation with an $cref ADFun$$ object.
+The new feature
+$cref/get_check_for_nan/check_for_nan/get_check_for_nan/$$ was
+added to make this easier.
+
 $head 10-21$$
 There was a mistake in the documentation for $cref index_sort$$,
 the argument $cref/ind/index_sort/ind/$$ is not $code const$$.

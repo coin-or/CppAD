@@ -1,9 +1,9 @@
 /* $Id$ */
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-12 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-15 Bradley M. Bell
 
 CppAD is distributed under multiple licenses. This distribution is under
-the terms of the 
+the terms of the
                     Eclipse Public License Version 1.0.
 
 A copy of this license is included in the COPYING file of this distribution.
@@ -24,9 +24,9 @@ bool ForwardCases(void)
 
 	using namespace CppAD;
 
-	// independent variable vector 
+	// independent variable vector
 	CPPAD_TESTVECTOR(AD<double>) X(2);
-	X[0] = 0.; 
+	X[0] = 0.;
 	X[1] = 1.;
 	Independent(X);
 
@@ -37,7 +37,7 @@ bool ForwardCases(void)
 	// create function object F : X -> Y
 	ADFun<double> F(X, Y);
 
-	// use zero order to evaluate F[ (3, 4) ] 
+	// use zero order to evaluate F[ (3, 4) ]
 	VectorDouble x0( F.Domain() );
 	VectorDouble y0( F.Range() );
 	x0[0]    = 3.;
@@ -93,7 +93,7 @@ bool ForwardOlder(void)
 
 	using namespace CppAD;
 
-	// independent variable vector 
+	// independent variable vector
 	CPPAD_TESTVECTOR(AD<double>) U(3);
 	U[0] = 0.; U[1] = 1.; U[2] = 2.;
 	Independent(U);
@@ -107,7 +107,7 @@ bool ForwardOlder(void)
 		prod *= U[i];
 	}
 
-	// dependent variable vector 
+	// dependent variable vector
 	CPPAD_TESTVECTOR(AD<double>) V(2);
 	V[0] = sum;
 	V[1] = prod;
@@ -145,9 +145,9 @@ bool ForwardOlder(void)
 	g1[0] = u0[1]*u0[2]; g1[1] = u0[0]*u0[2]; g1[2] = u0[0]*u0[1];
 
 	// compare values
-	ok &= NearEqual(v1[0] , 
+	ok &= NearEqual(v1[0] ,
 		g0[0]*u1[0] + g0[1]*u1[1] + g0[2]*u1[2] , 1e-10, 1e-10);
-	ok &= NearEqual(v1[1] , 
+	ok &= NearEqual(v1[1] ,
 		g1[0]*u1[0] + g1[1]*u1[1] + g1[2]*u1[2] , 1e-10, 1e-10);
 
 	// use ADFun object to evaluate ------------------------------------
@@ -155,7 +155,7 @@ bool ForwardOlder(void)
 	CPPAD_TESTVECTOR(double) u2( f.Domain() );
 	CPPAD_TESTVECTOR(double) v2( f.Range() );
 	p     = 2;
-	u2[0] = .5; u2[1] = .4; u2[2] = .3;  
+	u2[0] = .5; u2[1] = .4; u2[2] = .3;
 	v2    = f.Forward(p, u2);
 
 	// direct evaluation of Hessian of second components of f
@@ -166,13 +166,13 @@ bool ForwardOlder(void)
 	H1[6] = u0[1]; H1[7] = u0[0]; H1[8] =    0.;
 
 	// compare values
-	ok &= NearEqual(v2[0] , 
+	ok &= NearEqual(v2[0] ,
 		g0[0]*u2[0] + g0[1]*u2[1] + g0[2]*u2[2] , 1e-10, 1e-10);
 
 	size_t j;
 	double v2_1 = 0.;
 	for(i = 0; i < 3; i++)
-	{	v2_1 += g1[i] * u2[i];	 
+	{	v2_1 += g1[i] * u2[i];
 		for(j = 0; j < 3; j++)
 			v2_1 += .5 * u1[i] * H1[i * 3 + j] * u1[j];
 	}
@@ -189,11 +189,12 @@ void my_error_handler(
 	const char *exp      ,
 	const char *msg      )
 {	// error hander must not return, so throw an exception
-	throw std::string(msg);
+	std::string message = msg;
+	throw message;
 }
 
 bool forward_nan(void)
-{	
+{
 
 	using CppAD::vector;
 	using CppAD::AD;
@@ -218,13 +219,15 @@ bool forward_nan(void)
 		y    = f.Forward(0, x);
 	}
 	catch( std::string msg )
-	{	// check that the message contains "nan"
-		ok = msg.find("nan") != std::string::npos;
+	{	// check that the message contains
+		// "vector_size = " and "file_name = "
+		ok = msg.find("vector_size = ") != std::string::npos;
+		ok = msg.find("file_name = ") != std::string::npos;
 	}
 
 	return ok;
 }
-} // END empty namespace 
+} // END empty namespace
 
 # include <vector>
 # include <valarray>

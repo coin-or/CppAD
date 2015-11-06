@@ -185,4 +185,10 @@ header files.  If it is not yet defined,
 # define CPPAD_MAX_NUM_THREADS @cppad_max_num_threads@
 # endif
 
+/*!
+\def CPPAD_HAS_MKSTEMP
+It true, mkstemp works in C++ on this system.
+*/
+# define CPPAD_HAS_MKSTEMP @cppad_has_mkstemp@
+
 # endif

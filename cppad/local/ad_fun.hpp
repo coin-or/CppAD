@@ -51,7 +51,7 @@ $childtable%
 	cppad/local/drivers.hpp%
 	cppad/local/fun_check.hpp%
 	cppad/local/optimize.hpp%
-	omh/check_for_nan.omh
+	cppad/local/check_for_nan.hpp
 %$$
 
 $end

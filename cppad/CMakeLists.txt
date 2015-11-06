@@ -278,7 +278,22 @@ IF( NOT cppad_max_num_threads_is_integer_ge_4 )
 	"cppad_max_num_threads is not an integer greater than or equal 4"
 	)
 ENDIF( NOT cppad_max_num_threads_is_integer_ge_4 )
-
+# -----------------------------------------------------------------------------
+# cppad_has_mkstemp
+#
+SET(CMAKE_REQUIRED_INCLUDES  "")
+SET(CMAKE_REQUIRED_LIBRARIES "")
+SET(CMAKE_REQUIRED_FLAGS     )
+SET(source "
+# include <stdlib.h>
+int main(void)
+{
+	char pattern[] = \"/tmp/fileXXXXXX\";
+	int fd = mkstemp(pattern);
+	return 0;
+}
+" )
+CHECK_CXX_SOURCE_RUNS("${source}" cppad_has_mkstemp )
 # -----------------------------------------------------------------------------
 # Copy a file to another location and modify its contents.
 # configure_file(InputFile OutputFile [COPYONLY] [ESCAPE_QUOTES] [@ONLY])

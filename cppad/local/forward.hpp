@@ -6,7 +6,7 @@
 CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-15 Bradley M. Bell
 
 CppAD is distributed under multiple licenses. This distribution is under
-the terms of the 
+the terms of the
                     Eclipse Public License Version 1.0.
 
 A copy of this license is included in the COPYING file of this distribution.
@@ -16,6 +16,7 @@ Please visit http://www.coin-or.org/CppAD/ for information on other licenses.
 // documened after Forward but included here so easy to see
 # include <cppad/local/capacity_order.hpp>
 # include <cppad/local/num_skip.hpp>
+# include <cppad/local/check_for_nan.hpp>
 
 namespace CppAD { // BEGIN_CPPAD_NAMESPACE
 /*!
@@ -34,14 +35,14 @@ recording of operations used the type AD<Base>.
 is a Simple Vector class with eleements of type Base.
 
 \param q
-is the hightest order for this forward mode computation; i.e., 
+is the hightest order for this forward mode computation; i.e.,
 after this calculation there will be <code>q+1</code>
 Taylor coefficients per variable.
 
 \param xq
 contains Taylor coefficients for the independent variables.
 The size of xq must either be n or <code>(q+1)*n</code>,
-We define <code>p = q + 1 - xq.size()/n</code>. 
+We define <code>p = q + 1 - xq.size()/n</code>.
 For <code>j = 0 , ... , n-1</code>,
 <code>k = p, ... , q</code>, are
 <code>xq[ (q+1-p)*j + k - p ]</code>
@@ -55,7 +56,7 @@ contains Taylor coefficients for the dependent variables.
 The size of the return value y is <code>m*(q+1-p)</code>.
 For <code>i = 0, ... , m-1</code>,
 <code>k = p, ..., q</code>,
-<code>y[(q+1-p)*i + (k-p)]</code> 
+<code>y[(q+1-p)*i + (k-p)]</code>
 is the k-th order coefficient for the i-th dependent variable.
 
 \par taylor_
@@ -69,15 +70,15 @@ Note that for
 <code>taylor_[ C*i + k ]</code>
 is the k-th order cofficent,
 for the i-th varaible on the tape.
-(The first independent variable has index one on the tape 
+(The first independent variable has index one on the tape
 and there is no variable with index zero.)
 */
 
 template <typename Base>
 template <typename VectorBase>
 VectorBase ADFun<Base>::Forward(
-	size_t              q         , 
-	const VectorBase&   xq        , 
+	size_t              q         ,
+	const VectorBase&   xq        ,
 	      std::ostream& s         )
 {	// temporary indices
 	size_t i, j, k;
@@ -104,7 +105,7 @@ VectorBase ADFun<Base>::Forward(
 		q <= num_order_taylor_ || p == 0,
 		"Forward(q, xq): Number of Taylor coefficient orders stored in this"
 		" ADFun\nis less than q and xq.size() != n*(q+1)."
-	);  
+	);
 	CPPAD_ASSERT_KNOWN(
 		p <= 1 || num_direction_taylor_ == 1,
 		"Forward(q, xq): computing order q >= 2"
@@ -148,7 +149,7 @@ VectorBase ADFun<Base>::Forward(
 	CPPAD_ASSERT_UNKNOWN( load_op_.size()  == play_.num_load_op_rec() );
 	if( q == 0 )
 	{	forward0sweep(s, true,
-			n, num_var_tape_, &play_, C, 
+			n, num_var_tape_, &play_, C,
 			taylor_.data(), cskip_op_.data(), load_op_,
 			compare_change_count_,
 			compare_change_number_,
@@ -156,8 +157,8 @@ VectorBase ADFun<Base>::Forward(
 		);
 	}
 	else
-	{	forward1sweep(s, true, p, q, 
-			n, num_var_tape_, &play_, C, 
+	{	forward1sweep(s, true, p, q,
+			n, num_var_tape_, &play_, C,
 			taylor_.data(), cskip_op_.data(), load_op_,
 			compare_change_count_,
 			compare_change_number_,
@@ -176,10 +177,10 @@ VectorBase ADFun<Base>::Forward(
 	}
 	else
 	{	yq.resize(m * (q+1) );
-		for(i = 0; i < m; i++)	
+		for(i = 0; i < m; i++)
 		{	for(k = 0; k <= q; k++)
-				yq[ (q+1) * i + k] = 
-					taylor_[ C * dep_taddr_[i] + k ]; 
+				yq[ (q+1) * i + k] =
+					taylor_[ C * dep_taddr_[i] + k ];
 		}
 	}
 # ifndef NDEBUG
@@ -190,11 +191,32 @@ VectorBase ADFun<Base>::Forward(
 			{	// Visual Studio 2012, CppAD required in front of isnan ?
 				ok &= ! CppAD::isnan( yq[ (q+1) * i + 0 ] );
 			}
-		} 
+		}
+		if( ! ok )
+		{	CppAD::vector<Base> x0(n);
+			for(j = 0; j < n; j++)
+				x0[j] = taylor_[ C * ind_taddr_[j] + 0 ];
+			std::string  file_name;
+			put_check_for_nan(x0, file_name);
+			std::stringstream ss;
+			ss <<
+			"yq = f.Forward(q, xq): a zero order Taylor coefficient is nan.\n"
+			"Corresponding independent variables vector was written "
+			"to binary a file.\n"
+			"vector_size = " << n << "\n" <<
+			"file_name = " << file_name << "\n";
+			const char* msg = ss.str().c_str();
+			ErrorHandler::Call(
+				true,
+				__LINE__,
+				__FILE__,
+				"! CppAD::isnan( yq[ (q+1) * i + 0 ] )",
+				msg
+			);
+		}
 		CPPAD_ASSERT_KNOWN(ok,
-			"yq = f.Forward(q, xq): has a zero order Taylor coefficient "
 			"with the value nan."
-		);  
+		);
 		if( 0 < q )
 		{	for(i = 0; i < m; i++)
 			{	for(k = p; k <= q; k++)
@@ -243,7 +265,7 @@ call to Forward where \c q was equal to one.
 contains Taylor coefficients for the independent variables.
 The size of xq must either be <code>r*n</code>,
 For <code>j = 0 , ... , n-1</code>,
-<code>ell = 0, ... , r-1</code>, 
+<code>ell = 0, ... , r-1</code>,
 <code>xq[ ( r*j + ell ]</code>
 is the q-th order coefficient for the j-th independent variable
 and the ell-th direction.
@@ -252,8 +274,8 @@ and the ell-th direction.
 contains Taylor coefficients for the dependent variables.
 The size of the return value \c y is <code>r*m</code>.
 For <code>i = 0, ... , m-1</code>,
-<code>ell = 0, ... , r-1</code>, 
-<code>y[ r*i + ell ]</code> 
+<code>ell = 0, ... , r-1</code>,
+<code>y[ r*i + ell ]</code>
 is the q-th order coefficient for the i-th dependent variable
 and the ell-th direction.
 
@@ -273,15 +295,15 @@ For <code>i = 1 , ..., N-1</code>,
 <code>taylor_[ (C-1)*r*i + i + (k-1)*r + ell + 1 ]</code>
 is the k-th order cofficent,
 for the i-th varaible, and ell-th direction.
-(The first independent variable has index one on the tape 
+(The first independent variable has index one on the tape
 and there is no variable with index zero.)
 */
 
 template <typename Base>
 template <typename VectorBase>
 VectorBase ADFun<Base>::Forward(
-	size_t              q         , 
-	size_t              r         , 
+	size_t              q         ,
+	size_t              r         ,
 	const VectorBase&   xq        )
 {	// temporary indices
 	size_t i, j, ell;
@@ -304,13 +326,13 @@ VectorBase ADFun<Base>::Forward(
 		q <= num_order_taylor_ ,
 		"Forward(q, r, xq): Number of Taylor coefficient orders stored in"
 		" this ADFun is less than q"
-	);  
+	);
 	CPPAD_ASSERT_KNOWN(
 		q == 1 || num_direction_taylor_ == r ,
 		"Forward(q, r, xq): q > 1 and number of Taylor directions r"
 		" is not same as previous Forward(1, r, xq)"
 	);
-		
+
 	// does taylor_ need more orders or new number of directions
 	if( cap_order_taylor_ <= q || num_direction_taylor_ != r )
 	{	if( num_direction_taylor_ != r )
@@ -342,14 +364,14 @@ VectorBase ADFun<Base>::Forward(
 	CPPAD_ASSERT_UNKNOWN( cskip_op_.size() == play_.num_op_rec() );
 	CPPAD_ASSERT_UNKNOWN( load_op_.size()  == play_.num_load_op_rec() );
 	forward2sweep(
-		q, 
-		r, 
-		n, 
-		num_var_tape_, 
-		&play_, 
-		c, 
-		taylor_.data(), 
-		cskip_op_.data(), 
+		q,
+		r,
+		n,
+		num_var_tape_,
+		&play_,
+		c,
+		taylor_.data(),
+		cskip_op_.data(),
 		load_op_
 	);
 

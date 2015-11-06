@@ -159,6 +159,7 @@ nobase_myinclude_HEADERS =  \
 	cppad/local/bool_valued.hpp \
 	cppad/local/capacity_order.hpp \
 	cppad/local/checkpoint.hpp \
+	cppad/local/check_for_nan.hpp \
 	cppad/local/color_general.hpp \
 	cppad/local/color_symmetric.hpp \
 	cppad/local/compare.hpp \
