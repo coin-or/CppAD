@@ -492,6 +492,9 @@ AC_SUBST(cppad_cxx_flags, "-g -O0")
 dnl auto-tools version does not use ../cppad/local/cppad_colpack.cpp
 AC_SUBST(cppad_has_colpack, 0)
 
+dnl auto-tools version will assumes mkstemp is available.
+AC_SUBST(cppad_has_mkstemp, 1)
+
 dnl auto-tools version cannot use c++11 compiler
 dnl so supress corresponding features
 AC_SUBST(cppad_has_nullptr, 0)

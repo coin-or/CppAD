@@ -671,6 +671,7 @@ cppad_use_cplusplus_2011
 cppad_has_cstdint_8_to_64
 cppad_has_rvalue
 cppad_has_nullptr
+cppad_has_mkstemp
 cppad_has_colpack
 cppad_cxx_flags
 CppAD_HAVE_AR_FALSE
@@ -6201,6 +6202,9 @@ cppad_cxx_flags="-g -O0"
 
 
 cppad_has_colpack=0
+
+
+cppad_has_mkstemp=1
 
 
 cppad_has_nullptr=0

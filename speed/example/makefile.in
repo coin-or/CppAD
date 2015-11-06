@@ -287,6 +287,7 @@ cppad_has_colpack = @cppad_has_colpack@
 cppad_has_cstdint_8_to_64 = @cppad_has_cstdint_8_to_64@
 cppad_has_gettimeofday = @cppad_has_gettimeofday@
 cppad_has_high_resolution_clock = @cppad_has_high_resolution_clock@
+cppad_has_mkstemp = @cppad_has_mkstemp@
 cppad_has_nullptr = @cppad_has_nullptr@
 cppad_has_rvalue = @cppad_has_rvalue@
 cppad_implicit_ctor_from_any_type = @cppad_implicit_ctor_from_any_type@
