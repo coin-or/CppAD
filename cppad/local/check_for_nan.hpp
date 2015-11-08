@@ -68,7 +68,7 @@ $head Debugging$$
 If this error is detected during zero order forward mode,
 the values of the independent variables that resulted in the $code nan$$
 are written to a temporary binary file.
-This is so that you are run the original source code with those values
+This is so that you can run the original source code with those values
 to see what is causing the $code nan$$.
 
 $subhead vector_size$$
