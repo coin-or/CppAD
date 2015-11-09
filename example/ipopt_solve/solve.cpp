@@ -3,7 +3,7 @@
 CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-15 Bradley M. Bell
 
 CppAD is distributed under multiple licenses. This distribution is under
-the terms of the 
+the terms of the
                     Eclipse Public License Version 1.0.
 
 A copy of this license is included in the COPYING file of this distribution.
@@ -57,7 +57,7 @@ int main(void)
 	ok &= Run( get_started,         "get_started"  );
 	ok &= Run( ode_inverse,         "ode_inverse"  );
 	ok &= Run( retape,              "retape"       );
-	
+
 	// check for errors
 	using std::cout;
 	using std::endl;

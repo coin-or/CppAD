@@ -3,7 +3,7 @@
 CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-15 Bradley M. Bell
 
 CppAD is distributed under multiple licenses. This distribution is under
-the terms of the 
+the terms of the
                     Eclipse Public License Version 1.0.
 
 A copy of this license is included in the COPYING file of this distribution.
@@ -48,28 +48,28 @@ namespace {
 		return ret;
 	}
 	bool check_jac(const vectorBool& pattern, size_t n)
-	{	bool ok = true;	
+	{	bool ok = true;
 		for(size_t i = 0; i < n; i++)
 		{	size_t k = (i + 1) % n;
 			for(size_t j = 0; j < n; j++)
-			{	bool non_zero = (i == j) || (j == k); 
+			{	bool non_zero = (i == j) || (j == k);
 				ok &= pattern[ i * n + j] == non_zero;
 			}
-		} 
+		}
 		for(size_t j = 0; j < n; j++)
 			ok &= pattern[ n * n + j] == false;
 		return ok;
 	}
 	bool check_hes(const vectorBool& pattern, size_t n)
-	{	bool ok = true;	
+	{	bool ok = true;
 		for(size_t i = 0; i < n; i++)
 		{	size_t k1 = (i + 1) % n;
 			size_t k2 = (n + i - 1) % n;
 			for(size_t j = 0; j < n; j++)
-			{	bool non_zero = (i == j) || (j == k1) || (j == k2); 
+			{	bool non_zero = (i == j) || (j == k1) || (j == k2);
 				ok &= pattern[ i * n + j] == non_zero;
 			}
-		} 
+		}
 		return ok;
 	}
 	bool for_sparse_jac(ADFun<double>& f)
@@ -83,7 +83,7 @@ namespace {
 		size_t n_loop = (n - 1) / n_col + 1;
 		for(size_t i_loop = 0; i_loop < n_loop; i_loop++)
 		{	size_t j_col = i_loop * n_col;
-	
+
 			for(size_t i = 0; i < n; i++)
 			{	for(size_t j = 0; j < n_col; j++)
 					r[i * n_col + j] = (i == j_col + j);
@@ -110,7 +110,7 @@ namespace {
 		size_t n_loop = (m - 1) / n_row + 1;
 		for(size_t i_loop = 0; i_loop < n_loop; i_loop++)
 		{	size_t i_row = i_loop * n_row;
-	
+
 			for(size_t i = 0; i < n_row; i++)
 			{	for(size_t j = 0; j < m; j++)
 					r[i * m + j] = (i_row + i == j);
@@ -142,7 +142,7 @@ namespace {
 		size_t n_loop = (n - 1) / n_col + 1;
 		for(size_t i_loop = 0; i_loop < n_loop; i_loop++)
 		{	size_t j_col = i_loop * n_col;
-	
+
 			for(size_t i = 0; i < n; i++)
 			{	for(size_t j = 0; j < n_col; j++)
 					r[i * n_col + j] = (i == j_col + j);
