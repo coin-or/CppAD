@@ -63,6 +63,7 @@ extern bool azmul(void);
 extern bool base_require(void);
 extern bool BenderQuad(void);
 extern bool BoolFun(void);
+extern bool bool_sparsity(void);
 extern bool capacity_order(void);
 extern bool change_param(void);
 extern bool check_for_nan(void);
@@ -233,6 +234,7 @@ int main(void)
 	ok &= Run( azmul,             "azmul"            );
 	ok &= Run( BenderQuad,        "BenderQuad"       );
 	ok &= Run( BoolFun,           "BoolFun"          );
+	ok &= Run( bool_sparsity,     "bool_sparsity"    );
 	ok &= Run( capacity_order,    "capacity_order"   );
 	ok &= Run( change_param,      "change_param"     );
 	ok &= Run( check_for_nan,     "check_for_nan"    );

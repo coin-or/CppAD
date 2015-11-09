@@ -2,7 +2,7 @@
 # ifndef CPPAD_SOLVE_CALLBACK_INCLUDED
 # define CPPAD_SOLVE_CALLBACK_INCLUDED
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-14 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-15 Bradley M. Bell
 
 CppAD is distributed under multiple licenses. This distribution is under
 the terms of the 
@@ -101,7 +101,7 @@ private:
 	/// Sparsity pattern for Jacobian of [f(x), g(x) ].
 	/// If sparse is true, this pattern set by constructor and does not change.
 	/// Otherwise this vector has size zero.
-	CppAD::vector< std::set<size_t> > pattern_jac_;
+	CppAD::vectorBool               pattern_jac_;
 	/// Row indices of [f(x), g(x)] for Jacobian of g(x) in row order.
 	/// (Set by constructor and not changed.)
 	CppAD::vector<size_t>           row_jac_;
@@ -120,7 +120,7 @@ private:
 	/// \f[ L(x) = \sigma \sum_i f_i (x) + \sum_i \lambda_i  g_i (x) \f]
 	/// If sparse is true, this pattern set by constructor and does not change.
 	/// Otherwise this vector has size zero.
-	CppAD::vector< std::set<size_t> > pattern_hes_;
+	CppAD::vectorBool               pattern_hes_;
 	/// Row indices of Hessian lower left triangle in row order.
 	/// (Set by constructor and not changed.)
 	CppAD::vector<size_t>           row_hes_;
@@ -271,65 +271,143 @@ public:
 		}
 		if( sparse_forward_ | sparse_reverse_ ) 
 		{	CPPAD_ASSERT_UNKNOWN( ! retape );	
+			size_t m = nf_ + ng_;
+			//
 			// -----------------------------------------------------------
 			// Jacobian
-			pattern_jac_.resize(nf_ + ng_);
-			if( nx_ <= nf_ + ng_ )
+			pattern_jac_.resize( m * nx_ );
+			if( nx_ <= m )
 			{	// use forward mode to compute sparsity
-				CppAD::vector< std::set<size_t> > r(nx_);
-				for(i = 0; i < nx_; i++)
-				{	CPPAD_ASSERT_UNKNOWN( r[i].empty() );
-					r[i].insert(i);
+
+				// number of bits that are packed into one unit in vectorBool
+				size_t n_column = vectorBool::bit_per_unit();
+		
+				// sparsity patterns for current columns
+				vectorBool r(nx_ * n_column), s(m * n_column);
+			
+				// compute the sparsity pattern n_column columns at a time
+				size_t n_loop = (nx_ - 1) / n_column + 1;
+				for(size_t i_loop = 0; i_loop < n_loop; i_loop++)
+				{	// starting column index for this iteration
+					size_t i_column = i_loop * n_column;
+			
+					// pattern that picks out the appropriate columns
+					for(i = 0; i < nx_; i++)
+					{	for(j = 0; j < n_column; j++)
+							r[i * n_column + j] = (i == i_column + j);
+					}
+					s = adfun_.ForSparseJac(n_column, r);
+			
+					// fill in the corresponding columns of total_sparsity
+					for(i = 0; i < m; i++)
+					{	for(j = 0; j < n_column; j++)
+						{	if( i_column + j < nx_ )
+								pattern_jac_[i * nx_ + i_column + j] = 
+									s[i * n_column + j];
+						}
+					}
 				}
-				pattern_jac_ = adfun_.ForSparseJac(nx_, r);
 			}
 			else
 			{	// use reverse mode to compute sparsity
-				size_t m = nf_ + ng_;
-				CppAD::vector< std::set<size_t> > s(m);
+
+				// number of bits that are packed into one unit in vectorBool
+				size_t n_row = vectorBool::bit_per_unit();
+		
+				// sparsity patterns for current rows
+				vectorBool r(n_row * m), s(n_row * nx_);
+			
+				// compute the sparsity pattern n_row row at a time
+				size_t n_loop = (m - 1) / n_row + 1;
+				for(size_t i_loop = 0; i_loop < n_loop; i_loop++)
+				{	// starting row index for this iteration
+					size_t i_row = i_loop * n_row;
+			
+					// pattern that picks out the appropriate rows
+					for(i = 0; i < n_row; i++)
+					{	for(j = 0; j < m; j++)
+							r[i * m + j] = (i_row + i ==  j);
+					}
+					s = adfun_.RevSparseJac(n_row, r);
+
+					// fill in correspoding rows of total sparsity
+					for(i = 0; i < n_row; i++)
+					{	for(j = 0; j < nx_; j++)
+							if( i_row + i < m )
+								pattern_jac_[ (i_row + i) * nx_ + j ] =
+									s[ i  * nx_ + j];
+					}
+				}
+			}
+			/*
+			{	// use reverse mode to compute sparsity
+				CppAD::vectorBool s(m * m);
 				for(i = 0; i < m; i++)
-				{	CPPAD_ASSERT_UNKNOWN( s[i].empty() );
-					s[i].insert(i);
+				{	for(j = 0; j < m; j++)
+						s[i * m + j] = (i == j);
 				}
 				pattern_jac_ = adfun_.RevSparseJac(m, s);
 			}
+			*/
 			// Set row and column indices in Jacoian of [f(x), g(x)]
 			// for Jacobian of g(x). These indices are in row major order.
-			std::set<size_t>:: const_iterator itr, end;
 			for(i = nf_; i < nfg; i++)
-			{	itr = pattern_jac_[i].begin();
-				end = pattern_jac_[i].end();
-				while( itr != end )
-				{	j = *itr++;
-					row_jac_.push_back(i);
-					col_jac_.push_back(j);
+			{	for(j = 0; j < nx_; j++)
+				{	if( pattern_jac_[ i * nx_ + j ] )
+					{	row_jac_.push_back(i);
+						col_jac_.push_back(j);
+					}
 				}
 			}
+			// Set row and column indices in Jacoian of [f(x), g(x)]
+			// for Jacobian of g(x). These indices are in row major order.
 			// -----------------------------------------------------------
 			// Hessian
-			pattern_hes_.resize(nx_);
-			CppAD::vector< std::set<size_t> > r(nx_);
-			for(i = 0; i < nx_; i++)
-			{	CPPAD_ASSERT_UNKNOWN( r[i].empty() );
-				r[i].insert(i);
+			pattern_hes_.resize(nx_ * nx_);
+
+			// number of bits that are packed into one unit in vectorBool
+			size_t n_column = vectorBool::bit_per_unit();
+		
+			// sparsity patterns for current columns
+			vectorBool r(nx_ * n_column), h(nx_ * n_column);
+		
+			// sparsity pattern for range space of function
+			vectorBool s(m);
+			for(i = 0; i < m; i++)
+				s[i] = true;
+		
+			// compute the sparsity pattern n_column columns at a time
+			size_t n_loop = (nx_ - 1) / n_column + 1;
+			for(size_t i_loop = 0; i_loop < n_loop; i_loop++)
+			{	// starting column index for this iteration
+				size_t i_column = i_loop * n_column;
+		
+				// pattern that picks out the appropriate columns
+				for(i = 0; i < nx_; i++)
+				{	for(j = 0; j < n_column; j++)
+						r[i * n_column + j] = (i == i_column + j);
+				}
+				adfun_.ForSparseJac(n_column, r);
+		
+				// sparsity pattern corresponding to paritls w.r.t. (theta, u)
+				// of partial w.r.t. the selected columns
+				bool transpose = true;
+				h = adfun_.RevSparseHes(n_column, s, transpose);
+		
+				// fill in the corresponding columns of total_sparsity
+				for(i = 0; i < nx_; i++)
+				{	for(j = 0; j < n_column; j++)
+					{	if( i_column + j < nx_ )
+							pattern_hes_[i * nx_ + i_column + j] = 
+								h[i * n_column + j];
+					}
+				}
 			}
-			// forward Jacobian sparsity for fg
-			adfun_.ForSparseJac(nx_, r);
-
-			// The Lagragian can use any of the components of f(x), g(x)
-			CppAD::vector< std::set<size_t> > s(1);
-			CPPAD_ASSERT_UNKNOWN( s[0].empty() );
-			for(i = 0; i < nf_ + ng_; i++)
-				s[0].insert(i);
-			pattern_hes_ = adfun_.RevSparseHes(nx_, s);
-
 			// Set row and column indices for Lower triangle of Hessian 
 			// of Lagragian.  These indices are in row major order.
 			for(i = 0; i < nx_; i++)
-			{	itr = pattern_hes_[i].begin();
-				end = pattern_hes_[i].end();
-				while( itr != end )
-				{	j = *itr++;
+			{	for(j = 0; j < nx_; j++)
+				{	if( pattern_hes_[ i * nx_ + j ] )
 					if( j <= i )
 					{	row_hes_.push_back(i);
 						col_hes_.push_back(j);

@@ -1,6 +1,6 @@
 # $Id$
 # -----------------------------------------------------------------------------
-# CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-14 Bradley M. Bell
+# CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-15 Bradley M. Bell
 #
 # CppAD is distributed under multiple licenses. This distribution is under
 # the terms of the 
@@ -28,6 +28,13 @@ ELSE ( colpack_prefix )
 	SET(colpack_sources "")
 	SET(colpack_libs "")
 ENDIF ( colpack_prefix )
+
+# Copy a file to another location and modify its contents.
+# configure_file(InputFile OutputFile [COPYONLY] [ESCAPE_QUOTES] [@ONLY])
+CONFIGURE_FILE(
+	${CMAKE_CURRENT_SOURCE_DIR}/test_one.sh.in
+	${CMAKE_CURRENT_SOURCE_DIR}/test_one.sh
+)
 
 #
 ADD_EXECUTABLE(example_ipopt_solve EXCLUDE_FROM_ALL 

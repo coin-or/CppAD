@@ -110,6 +110,7 @@ $rref base_complex.hpp$$
 $rref base_require.cpp$$
 $rref bender_quad.cpp$$
 $rref bool_fun.cpp$$
+$rref bool_sparsity.cpp$$
 $rref capacity_order.cpp$$
 $rref change_param.cpp$$
 $rref checkpoint.cpp$$

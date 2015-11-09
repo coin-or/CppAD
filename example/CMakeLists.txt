@@ -95,6 +95,7 @@ ADD_EXECUTABLE(example EXCLUDE_FROM_ALL example.cpp
 	base_require.cpp
 	bender_quad.cpp
 	bool_fun.cpp
+	bool_sparsity.cpp
 	capacity_order.cpp
 	change_param.cpp
 	check_for_nan.cpp

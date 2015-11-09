@@ -1,0 +1,87 @@
+#! /bin/bash -e
+# $Id$
+# -----------------------------------------------------------------------------
+# CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-15 Bradley M. Bell
+#
+# CppAD is distributed under multiple licenses. This distribution is under
+# the terms of the
+#                     Eclipse Public License Version 1.0.
+#
+# A copy of this license is included in the COPYING file of this distribution.
+# Please visit http://www.coin-or.org/CppAD/ for information on other licenses.
+# -----------------------------------------------------------------------------
+# Run one of the tests
+if [ "$1" = "" ]
+then
+	echo "usage: test_one.sh file [extra]"
+	echo "file is the *.cpp file name with extension"
+	echo "and extra is extra options for g++ command"
+	exit 1
+fi
+if [ ! -e "$1" ]
+then
+	echo "Cannot find the file $1"
+	exit 1
+fi
+# determine the function name
+fun=`grep "^bool *[a-zA-Z0-9_]* *( *void *)" $1 | tail -1 | \
+	sed -e "s/^bool *\([a-zA-Z0-9_]*\) *( *void *)/\1/"`
+#
+if [ -e test_one.exe ]
+then
+	rm test_one.exe
+fi
+if [ -e test_one.cpp ]
+then
+	rm test_one.cpp
+fi
+sed < solve.cpp > test_one.cpp \
+-e '/ok *\&= *Run( /d' \
+-e "s/.*This line is used by test_one.sh.*/	ok \&= Run( $fun, \"$fun\");/"
+#
+cxxflags='@cppad_cxx_flags@'
+if echo "$fun" | grep 'eigen' > /dev/null
+then
+	cxxflags=`echo "$cxxflags" | sed -e 's|-Wshadow||'`
+fi
+cmd="g++ test_one.cpp $*"
+if [ -e @colpack_prefix@/include ]
+then
+	cmd="$cmd ../../cppad/local/cppad_colpack.cpp"
+fi
+cmd="$cmd
+	-o test_one.exe
+	$cxxflags
+	-g
+	-fopenmp
+	-lboost_thread
+	-lpthread
+	-I../..
+"
+if [ -e @colpack_prefix@/include ]
+then
+	cmd="$cmd -I@colpack_prefix@/include"
+fi
+if [ -e @ipopt_prefix@/include ]
+then
+	cmd="$cmd -I@ipopt_prefix@/include"
+	ipopt_libs=`pkg-config --libs ipopt`
+	cmd="$cmd $ipopt_libs"
+fi
+for lib in lib lib64
+do
+	if [ -e @colpack_prefix@/$lib ]
+	then
+		cmd="$cmd -L@colpack_prefix@/$lib -lColPack"
+		export LD_LIBRARY_PATH="$LD_LIBRARY_PATH:@colpack_prefix@/$lib"
+	fi
+done
+echo $cmd
+$cmd
+#
+echo "./test_one.exe"
+if ! ./test_one.exe
+then
+	exit 1
+fi
+exit 0

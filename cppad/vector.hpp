@@ -226,6 +226,17 @@ The class $code vectorBool$$ conserves on memory
 (on the other hand, $code CppAD::vector<bool>$$ is expected to be faster
 than $code vectorBool$$).
 
+$subhead bit_per_unit$$
+The static function call
+$codei%
+	%s% = vectorBool::bit_per_unit()
+%$$
+returns the $code size_t$$ value $icode s$$
+which is equal to the number of boolean values (bits) that are
+packed into one operational unit.
+For example, a logical $code or$$
+acts on this many boolean values with one operation.
+
 $subhead data$$
 The $cref/data/CppAD_vector/data/$$ function is not supported by
 $code vectorBool$$.
@@ -672,6 +683,10 @@ public:
 	/// type corresponding to the elements of this vector
 	/// (note that non-const elements actually use vectorBoolElement)
 	typedef bool value_type;
+
+	// static member function
+	static size_t bit_per_unit(void)
+	{	return bit_per_unit_; }
 
 	/// default constructor (sets all member data to zero)
 	inline vectorBool(void) : n_unit_(0), length_(0), data_(CPPAD_NULL)

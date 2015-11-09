@@ -64,6 +64,7 @@ $spell
 	sacado
 	unreferenced
 	azmul
+	retape
 $$
 
 $section CppAD Changes and Additions During 2015$$
@@ -73,6 +74,26 @@ This section contains a list of the changes to CppAD during 2015
 (in reverse order by date).
 The purpose of this section is to
 assist you in learning about changes between various versions of CppAD.
+
+$head 11-08$$
+$list number$$
+Fixed a bug in the $cref RevSparseJac$$ routine.
+To be specific, the argument $cref/r/RevSparseJac/r/$$
+was transposed from what the documentation said.
+(This has no effect in the usual case where $icode r$$ is the identity.)
+$lnext
+Added the $cref bool_sparsity.cpp$$ examples which show how
+to conserve memory when computing sparsity patterns.
+$lnext
+Modified the $cref ipopt_solve$$ procedure to take
+advantage of the memory conserving sparsity pattern calculations
+when $cref/retape/ipopt_solve/options/Retape/$$ is false.
+$lnext
+Added the $cref/bit_per_unit/CppAD_vector/vectorBool/bit_per_unit/$$
+function to the $code vectorBool$$ class.
+(This aids the memory conservation mentioned above.)
+$lend
+
 
 $head 11-06$$
 It is often difficult to determine what cause a $code nan$$ result
