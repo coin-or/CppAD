@@ -31,7 +31,7 @@ so that the complier does not set the correspdong code and optimize
 it out.
 
 $code
-$verbatim%example/num_limits.cpp%0%// BEGIN C++%// END C++%1%$$
+old verbatim%example/num_limits.cpp%0%// BEGIN C++%// END C++%1%$$
 $$
 
 $end

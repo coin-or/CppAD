@@ -16,14 +16,14 @@ $spell
 	Bool
 $$
 
-$section Using vectorBool Sparsity Patterns: Example and Test$$
-
-$code
-$verbatim%example/rev_sparse_hes.cpp%0%// BEGIN C++%// END C++%1%$$
-$$
+$section Using vectorBool Sparsity To Conserve Memory: Example and Test$$
 
 $head Purpose$$
 This example show how to conserve memory when computing sparsity patterns.
+
+$code
+$verbatim%example/bool_sparsity.cpp%0%// BEGIN C++%// END C++%1%$$
+$$
 
 $end
 */
@@ -36,6 +36,7 @@ namespace {
 	using CppAD::AD;
 	using CppAD::ADFun;
 
+	// function f(x) that we are computing sparsity patterns for
 	template <class Float>
 	vector<Float> fun(const vector<Float>& x)
 	{	size_t n  = x.size();
@@ -47,6 +48,7 @@ namespace {
 		ret[n] = 0.0;
 		return ret;
 	}
+	// check sparsity pattern for f(x)
 	bool check_jac(const vectorBool& pattern, size_t n)
 	{	bool ok = true;
 		for(size_t i = 0; i < n; i++)
@@ -60,6 +62,7 @@ namespace {
 			ok &= pattern[ n * n + j] == false;
 		return ok;
 	}
+	// check sparsity pattern for the Hessian of sum_i f_i(x)
 	bool check_hes(const vectorBool& pattern, size_t n)
 	{	bool ok = true;
 		for(size_t i = 0; i < n; i++)
@@ -72,11 +75,13 @@ namespace {
 		}
 		return ok;
 	}
+	// compute sparsity for Jacobian of f(x) using forward mode
 	bool for_sparse_jac(ADFun<double>& f)
 	{	bool ok = true;
 		size_t n = f.Domain();
 		size_t m = f.Range();
 		//
+		// number of columns of the sparsity patter to compute at a time
 		size_t n_col = vectorBool::bit_per_unit();
 		vectorBool pattern(m * n), s(m * n_col), r(n * n_col);
 		//
@@ -99,11 +104,13 @@ namespace {
 		//
 		return ok;
 	}
+	// compute sparsity for Jacobian of f(x) using reverse mode
 	bool rev_sparse_jac(ADFun<double>& f)
 	{	bool ok = true;
 		size_t n = f.Domain();
 		size_t m = f.Range();
 		//
+		// number of rows of the sparsity patter to compute at a time
 		size_t n_row = vectorBool::bit_per_unit();
 		vectorBool pattern(m * n), s(n_row * n), r(n_row * m);
 		//
@@ -126,11 +133,13 @@ namespace {
 		//
 		return ok;
 	}
+	// compute sparsity for Hessian of sum_i f_i (x)
 	bool rev_sparse_hes(ADFun<double>& f)
 	{	bool ok = true;
 		size_t n = f.Domain();
 		size_t m = f.Range();
 		//
+		// number of columns of the sparsity patter to compute at a time
 		size_t n_col = vectorBool::bit_per_unit();
 		vectorBool pattern(n * n), r(n * n_col), h(n * n_col);
 
@@ -163,9 +172,11 @@ namespace {
 		return ok;
 	}
 }
+// driver for all of the cases above
 bool bool_sparsity(void)
 {	bool ok = true;
 	//
+	// record the funcion
 	size_t n = 100;
 	size_t m = n + 1;
 	vector< AD<double> > x(n), y(m);
@@ -175,6 +186,7 @@ bool bool_sparsity(void)
 	y = fun(x);
 	ADFun<double> f(x, y);
 	//
+	// run the three example / tests
 	ok &= for_sparse_jac(f);
 	ok &= rev_sparse_jac(f);
 	ok &= rev_sparse_hes(f);

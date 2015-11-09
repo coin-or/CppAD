@@ -15,54 +15,70 @@ then
 	echo "bin/check_verbatim.sh: must be executed from its parent directory"
 	exit 1
 fi
+cat << EOF > junk.sed
+/\$verbatim[^a-z]/! b skip
+N
+s/^#[ \\t]//
+s/^[ \\t]//
+s/\\n#[ \\t]//
+s/\\n[ \\t]//
+s/\$verbatim%//
+s/%.*//
+p
+: skip
+EOF
+special_case='
+bin/check_include_omh.sh
+bin/check_verbatim.sh
+bin/package.sh
+cppad/local/cond_exp.hpp
+introduction/exp_apx/exp_2.omh
+introduction/exp_apx/exp_eps.omh
+omh/license.omh
+'
 # -----------------------------------------------------------------------------
 # Make sure that OMhelp verbatim commands referr to same file as command
 echo "Checking that OMhelp verbatim commands include from file they appear in."
 echo "----------------------------------------------------------------------"
-list=`bin/list_files.sh | sed -n \
-	-e '/\.c$/p' \
-	-e '/\.cpp$/p' \
-	-e '/\.hpp$/p' \
-	-e '/\.omh$/p' \
-	-e '/\.txt$/p' \
-	-e '/\.am$/p'`
+list=`git ls-files`
 different="no"
 for file in $list
 do
-	line=`sed -n -e '/$verbatim[^a-z]/p' $file`
-	if [ "$line" != '' ]
-	then
-		reference=`echo $line | sed -e 's|$verbatim%\([^%]*\)%.*|\1|'`
-		#
-		file_root=`echo $file | sed \
-			-e 's|.*/||' -e 's|_hpp\.omh||' -e 's|\.[^.]*$||'`
-		#
-		ref_root=`echo $reference | sed \
-			-e 's|.*/||' -e 's|\.[^.]*$||'`
-		#
-		if [ "$file_root" != "$ref_root" ]
+	ok='no'
+	for name in $special_case
+	do
+		if [ "$file" == "$name" ]
 		then
-			# special cases
-			ok='false'
-			if [ "$file_root" == 'cond_exp' ] && [ "$ref_root" == 'atan2' ]
-			then
-				ok='true'
-			fi
-			if [ "$file_root" == 'license' ] && [ "$ref_root" == 'epl-v10' ]
-			then
-				ok='true'
-			fi
-			if [ "$file_root"=='base_require' ] && [ "$ref_root"=='zdouble' ]
-			then
-				ok='true'
-			fi
-			#
-			if [ "$ok" == 'false' ]
-			then
-				echo "\$verbatim in $file references $reference"
-				different="yes"
-			fi
+			ok='yes'
 		fi
+	done
+	#
+	reference=`sed -n -f junk.sed $file`
+	if [ "$reference" == '' ] || [ "$reference" == "$file" ]
+	then
+		ok='yes'
+	fi
+	#
+	ext=`echo $file | sed -e 's|.*\.||'`
+	if [ "$ext" == 'omh' ]
+	then
+		file_root=`echo $file | sed -e 's|.*/||' -e 's|_hpp\.omh|.hpp|'`
+		ref_root=`echo $reference | sed -e 's|.*/||'`
+		if [ "$file_root" == "$ref_root" ]
+		then
+			ok='yes'
+		fi
+		file_root=`echo $file | sed -e 's|.*/||' -e 's|\.omh|.hpp|'`
+		if [ "$file_root" == "$ref_root" ]
+		then
+			ok='yes'
+		fi
+	fi
+	#
+	if [ "$ok" == 'no' ]
+	then
+		echo "\$verbatim in $file references $reference"
+		different="yes"
 	fi
 done
 echo "-------------------------------------------------------------------"
@@ -71,6 +87,6 @@ then
 	echo "Error: nothing should be between the two dashed lines above"
 	exit 1
 else
-	echo "Ok: nothing is between the two dashed lines above"
+	echo "OK: nothing is between the two dashed lines above"
 	exit 0
 fi

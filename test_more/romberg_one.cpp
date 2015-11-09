@@ -23,7 +23,7 @@ $index example, Romberg$$
 $index test, Romberg$$
 
 $code
-$verbatim%example/romberg_one.cpp%0%// BEGIN C++%// END C++%1%$$
+old verbatim%example/romberg_one.cpp%0%// BEGIN C++%// END C++%1%$$
 $$
 
 $end
