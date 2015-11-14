@@ -488,9 +488,15 @@ ADFun<Base>::ADFun(const VectorAD &x, const VectorAD &y)
 		    << "Difference               = " 
 		    <<  y[i].value_ -  taylor_[dep_taddr_[i]]  << endl
 		;
+		// buf.str() returns a string object with a copy of the current 
+		// contents in the stream buffer.
+		std::string msg_str       = buf.str();
+		// msg_str.c_str() returns a pointer to the c-string 
+		// representation of the string object's value. 
+		const char* msg_char_star = msg_str.c_str();
 		CPPAD_ASSERT_KNOWN(
 			0,
-			buf.str().c_str()
+			msg_char_star
 		);
 	}
 # endif

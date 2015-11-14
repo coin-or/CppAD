@@ -1018,7 +1018,13 @@ $end
 			oss << "capacity = " << capacity << endl;
 			oss << "See CPPAD_TRACE_THREAD & CPPAD_TRACE_CAPACITY in";
 			oss << endl << "# include <cppad/thread_alloc.hpp>" << endl;
-			CPPAD_ASSERT_KNOWN(false, oss.str().c_str()	);
+			// oss.str() returns a string object with a copy of the current 
+			// contents in the stream buffer.
+			std::string msg_str       = oss.str();
+			// msg_str.c_str() returns a pointer to the c-string 
+			// representation of the string object's value. 
+			const char* msg_char_star = msg_str.c_str();
+			CPPAD_ASSERT_KNOWN(false, msg_char_star );
 		}
 
 		// trace option

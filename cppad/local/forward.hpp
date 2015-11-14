@@ -205,13 +205,18 @@ VectorBase ADFun<Base>::Forward(
 			"to binary a file.\n"
 			"vector_size = " << n << "\n" <<
 			"file_name = " << file_name << "\n";
-			const char* msg = ss.str().c_str();
+			// ss.str() returns a string object with a copy of the current 
+			// contents in the stream buffer.
+			std::string msg_str       = ss.str();
+			// msg_str.c_str() returns a pointer to the c-string 
+			// representation of the string object's value. 
+			const char* msg_char_star = msg_str.c_str();
 			ErrorHandler::Call(
 				true,
 				__LINE__,
 				__FILE__,
 				"! CppAD::isnan( yq[ (q+1) * i + 0 ] )",
-				msg
+				msg_char_star
 			);
 		}
 		CPPAD_ASSERT_KNOWN(ok,
