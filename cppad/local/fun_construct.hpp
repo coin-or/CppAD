@@ -6,7 +6,7 @@
 CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-15 Bradley M. Bell
 
 CppAD is distributed under multiple licenses. This distribution is under
-the terms of the 
+the terms of the
                     Eclipse Public License Version 1.0.
 
 A copy of this license is included in the COPYING file of this distribution.
@@ -14,7 +14,7 @@ Please visit http://www.coin-or.org/CppAD/ for information on other licenses.
 -------------------------------------------------------------------------- */
 /*
 $begin FunConstruct$$
-$spell 
+$spell
 	alloc
 	num
 	Jac
@@ -46,7 +46,7 @@ $icode%g% = %f%
 
 
 $head Purpose$$
-The $codei%AD<%Base%>%$$ object $icode f$$ can 
+The $codei%AD<%Base%>%$$ object $icode f$$ can
 store an AD of $icode Base$$
 $cref/operation sequence/glossary/Operation/Sequence/$$.
 It can then be used to calculate derivatives of the corresponding
@@ -68,7 +68,7 @@ between calling
 $codei%
 	Independent(%x%)
 %$$
-and 
+and
 $codei%
 	ADFun<%Base%> %f%(%x%, %y%)
 %$$
@@ -83,7 +83,7 @@ to $icode y$$ are stored in the ADFun object $icode f$$.
 
 $head VectorAD$$
 The type $icode VectorAD$$ must be a $cref SimpleVector$$ class with
-$cref/elements of type/SimpleVector/Elements of Specified Type/$$ 
+$cref/elements of type/SimpleVector/Elements of Specified Type/$$
 $codei%AD<%Base%>%$$.
 The routine $cref CheckSimpleVector$$ will generate an error message
 if this is not the case.
@@ -92,11 +92,11 @@ $head Default Constructor$$
 $index default, ADFun constructor$$
 $index ADFun, default constructor$$
 $index constructor, ADFun constructor$$
-The default constructor 
+The default constructor
 $codei%
 	ADFun<%Base%> %f%
 %$$
-creates an 
+creates an
 $codei%AD<%Base%>%$$ object with no corresponding operation sequence; i.e.,
 $codei%
 	%f%.size_var()
@@ -107,7 +107,7 @@ $head Sequence Constructor$$
 $index sequence, ADFun constructor$$
 $index ADFun, sequence constructor$$
 $index constructor, ADFun sequence$$
-The sequence constructor 
+The sequence constructor
 $codei%
 	ADFun<%Base%> %f%(%x%, %y%)
 %$$
@@ -118,7 +118,7 @@ $codei%
 	Independent(%x%)
 %$$
 and stores the corresponding operation sequence in the object $icode f$$.
-It then stores the zero order Taylor coefficients 
+It then stores the zero order Taylor coefficients
 (corresponding to the value of $icode x$$) in $icode f$$.
 This is equivalent to the following steps using the default constructor:
 
@@ -134,7 +134,7 @@ $codei%
 %$$
 (see $cref Dependent$$).
 $lnext
-Calculate the zero order Taylor coefficients for all 
+Calculate the zero order Taylor coefficients for all
 the variables in the operation sequence using
 $codei%
 	%f%.Forward(%p%, %x_p%)
@@ -173,8 +173,8 @@ All of information (state) stored in $icode f$$ is copied to $icode g$$
 and any information originally in $icode g$$ is lost.
 
 $subhead Taylor Coefficients$$
-The Taylor coefficient information currently stored in $icode f$$ 
-(computed by $cref/f.Forward/Forward/$$) is 
+The Taylor coefficient information currently stored in $icode f$$
+(computed by $cref/f.Forward/Forward/$$) is
 copied to $icode g$$.
 Hence, directly after this operation
 $codei%
@@ -182,8 +182,8 @@ $codei%
 %$$
 
 $subhead Sparsity Patterns$$
-The forward Jacobian sparsity pattern currently stored in $icode f$$ 
-(computed by $cref/f.ForSparseJac/ForSparseJac/$$) is 
+The forward Jacobian sparsity pattern currently stored in $icode f$$
+(computed by $cref/f.ForSparseJac/ForSparseJac/$$) is
 copied to $icode g$$.
 Hence, directly after this operation
 $codei%
@@ -199,7 +199,7 @@ and the corresponding call to
 $codei%
 	ADFun<%Base%> %f%( %x%, %y%)
 %$$
-or 
+or
 $codei%
 	%f%.Dependent( %x%, %y%)
 %$$
@@ -211,13 +211,13 @@ $head Example$$
 
 $subhead Sequence Constructor$$
 The file
-$cref independent.cpp$$ 
+$cref independent.cpp$$
 contains an example and test of the sequence constructor.
 It returns true if it succeeds and false otherwise.
 
 $subhead Default Constructor$$
 The files
-$cref fun_check.cpp$$ 
+$cref fun_check.cpp$$
 and
 $cref hes_lagrangian.cpp$$
 contain an examples and tests using the default constructor.
@@ -227,7 +227,7 @@ $children%
 	example/fun_assign.cpp
 %$$
 $subhead Assignment Operator$$
-The file 
+The file
 $cref fun_assign.cpp$$
 contains an example and test of the $codei%ADFun<%Base%>%$$
 assignment operator.
@@ -250,7 +250,7 @@ The C++ syntax for this operation is
 \verbatim
 	ADFun<Base> f
 \endverbatim
-An empty ADFun object is created. 
+An empty ADFun object is created.
 The Dependent member function,
 or the ADFun<Base> assingment operator,
 can then be used to put an operation sequence in this ADFun object.
@@ -260,13 +260,13 @@ is the base for the recording that can be stored in this ADFun object;
 i.e., operation sequences that were recorded using the type \c AD<Base>.
 */
 template <typename Base>
-ADFun<Base>::ADFun(void) : 
+ADFun<Base>::ADFun(void) :
 has_been_optimized_(false),
 check_for_nan_(true) ,
 compare_change_count_(1),
 compare_change_number_(0),
 compare_change_op_index_(0),
-num_var_tape_(0) 
+num_var_tape_(0)
 { }
 
 /*!
@@ -277,7 +277,7 @@ The C++ syntax for this operation is
 	g = f
 \endverbatim
 where \c g and \c f are ADFun<Base> ADFun objects.
-A copy of the the operation sequence currently stored in \c f 
+A copy of the the operation sequence currently stored in \c f
 is placed in this ADFun object (called \c g above).
 Any information currently stored in this ADFun object is lost.
 
@@ -295,7 +295,7 @@ void ADFun<Base>::operator=(const ADFun<Base>& f)
 	size_t i;
 
 	// go through member variables in ad_fun.hpp order
-	// 
+	//
 	// size_t objects
 	has_been_optimized_        = f.has_been_optimized_;
 	check_for_nan_             = f.check_for_nan_;
@@ -390,7 +390,7 @@ and if NDEBUG is not defined the resulting values for the
 depenedent variables are checked against the values in \a y.
 Thus, the zero order Taylor coefficients
 corresponding to the value of the \a x vector
-are stored in this ADFun object. 
+are stored in this ADFun object.
 */
 template <typename Base>
 template <typename VectorAD>
@@ -474,25 +474,25 @@ ADFun<Base>::ADFun(const VectorAD &x, const VectorAD &y)
 
 # ifndef NDEBUG
 	// on MS Visual Studio 2012, CppAD required in front of isnan ?
-	for(i = 0; i < m; i++) 
+	for(i = 0; i < m; i++)
 	if( taylor_[dep_taddr_[i]] != y[i].value_ || CppAD::isnan( y[i].value_ ) )
 	{	using std::endl;
 		std::ostringstream buf;
 		buf << "A dependent variable value is not equal to "
 		    << "its tape evaluation value," << endl
 		    << "perhaps it is nan." << endl
-		    << "Dependent variable value = " 
+		    << "Dependent variable value = "
 		    <<  y[i].value_ << endl
-		    << "Tape evaluation value    = " 
+		    << "Tape evaluation value    = "
 		    <<  taylor_[dep_taddr_[i]]  << endl
-		    << "Difference               = " 
+		    << "Difference               = "
 		    <<  y[i].value_ -  taylor_[dep_taddr_[i]]  << endl
 		;
-		// buf.str() returns a string object with a copy of the current 
+		// buf.str() returns a string object with a copy of the current
 		// contents in the stream buffer.
 		std::string msg_str       = buf.str();
-		// msg_str.c_str() returns a pointer to the c-string 
-		// representation of the string object's value. 
+		// msg_str.c_str() returns a pointer to the c-string
+		// representation of the string object's value.
 		const char* msg_char_star = msg_str.c_str();
 		CPPAD_ASSERT_KNOWN(
 			0,
