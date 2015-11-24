@@ -75,6 +75,18 @@ This section contains a list of the changes to CppAD during 2015
 The purpose of this section is to
 assist you in learning about changes between various versions of CppAD.
 
+$head 11-24$$
+$list number$$
+The $code check_for_nan$$ output now includes the first dependent
+variable 
+$cref/index/check_for_nan/Error Message/index/$$
+that is $code nan$$ in its error message.
+$lnext
+Change the 
+$cref/deprecated include/include_deprecated/$$ reference $code pow_int.h$$
+to $code pow_int.hpp$$ in $cref pow_int$$.
+$lend
+
 $head 11-14$$
 There was a bug in the new
 $cref/get_check_for_nan/check_for_nan/get_check_for_nan/$$

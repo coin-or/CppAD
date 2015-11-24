@@ -120,6 +120,10 @@ CppAD/Poly.h               $pre  $$ $cnext cppad/poly.hpp
 	$pre  $$ $cnext $cref Poly$$
 $rnext
 
+CppAD/PowInt.h             $pre  $$ $cnext cppad/pow_int.hpp
+	$pre  $$ $cnext $cref pow_int$$
+$rnext
+
 CppAD/RombergMul.h         $pre  $$ $cnext cppad/romberg_mul.hpp
 	$pre  $$ $cnext $cref RombergMul$$
 $rnext

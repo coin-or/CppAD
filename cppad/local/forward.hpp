@@ -186,14 +186,21 @@ VectorBase ADFun<Base>::Forward(
 # ifndef NDEBUG
 	if( check_for_nan_ )
 	{	bool ok = true;
+		size_t index = m;
 		if( p == 0 )
 		{	for(i = 0; i < m; i++)
 			{	// Visual Studio 2012, CppAD required in front of isnan ?
-				ok &= ! CppAD::isnan( yq[ (q+1) * i + 0 ] );
+				if( CppAD::isnan( yq[ (q+1) * i + 0 ] ) )
+				{	ok    = false;
+					if( index == m )
+						index = i;
+				}
 			}
 		}
 		if( ! ok )
-		{	CppAD::vector<Base> x0(n);
+		{	CPPAD_ASSERT_UNKNOWN( index < m );
+			//
+			CppAD::vector<Base> x0(n);
 			for(j = 0; j < n; j++)
 				x0[j] = taylor_[ C * ind_taddr_[j] + 0 ];
 			std::string  file_name;
@@ -204,7 +211,8 @@ VectorBase ADFun<Base>::Forward(
 			"Corresponding independent variables vector was written "
 			"to binary a file.\n"
 			"vector_size = " << n << "\n" <<
-			"file_name = " << file_name << "\n";
+			"file_name = " << file_name << "\n" <<
+			"index = " << index << "\n";
 			// ss.str() returns a string object with a copy of the current
 			// contents in the stream buffer.
 			std::string msg_str       = ss.str();
@@ -215,7 +223,7 @@ VectorBase ADFun<Base>::Forward(
 				true,
 				__LINE__,
 				__FILE__,
-				"! CppAD::isnan( yq[ (q+1) * i + 0 ] )",
+				"if( CppAD::isnan( yq[ (q+1) * index + 0 ] )",
 				msg_char_star
 			);
 		}

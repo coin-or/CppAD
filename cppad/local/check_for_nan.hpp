@@ -32,8 +32,8 @@ $icode%b% = %f%.check_for_nan()
 $codei%get_check_for_nan(%vec%, %file%)
 %$$
 
-$head Purpose$$
-If $code NDEBUG$$ is not defined and
+$head Debugging$$
+If $code NDEBUG$$ is not defined, and
 the result of a $cref/forward/forward_order/$$ or $cref/reverse/reverse_any/$$
 calculation contains a  $cref nan$$,
 CppAD can halt with an error message.
@@ -64,7 +64,7 @@ The value for this setting after construction of $icode f$$) is true.
 The value of this setting is not affected by calling
 $cref Dependent$$ for this function object.
 
-$head Debugging$$
+$head Error Message$$
 If this error is detected during zero order forward mode,
 the values of the independent variables that resulted in the $code nan$$
 are written to a temporary binary file.
@@ -85,6 +85,12 @@ $code '\n'$$.
 The value of $icode file_name$$ is the name of the temporary file
 that contains the dependent variable values.
 
+$subhead index$$
+The error message will contain the text
+$codei%index = %index%$$ followed by the newline character $code '\n'$$.
+The value of $icode index$$ is the lowest dependent variable index
+that has the value $code nan$$.
+
 $head get_check_for_nan$$
 This routine can be used to get the independent variable
 values that result in a $code nan$$.
@@ -95,7 +101,7 @@ $codei%
 	CppAD::vector<%Base%>& %vec%
 %$$
 It size must be equal to the corresponding value of
-$cref/vector_size/check_for_nan/Debugging/vector_size/$$
+$cref/vector_size/check_for_nan/Error Message/vector_size/$$
 in the corresponding error message.
 The input value of its elements does not matter.
 Upon return, it will contain the values for the independent variables,
@@ -111,9 +117,8 @@ $codei%
 	const std::string& %file%
 %$$
 It must be the value of
-$cref/file_name/check_for_nan/Debugging/file_name/$$
+$cref/file_name/check_for_nan/Error Message/file_name/$$
 in the corresponding error message.
-
 
 $head Example$$
 $children%

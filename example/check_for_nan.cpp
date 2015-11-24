@@ -72,14 +72,24 @@ bool check_for_nan(void)
 # endif
 	}
 	catch(std::string msg)
-	{	// check size of the independent variable vector
+	{
+		// get and check size of the independent variable vector
 		string pattern = "vector_size = ";
 		size_t start   = msg.find(pattern) + pattern.size();
 		string number;
 		for(size_t i = start; msg[i] != '\n'; i++)
 			number += msg[i];
-		size_t vec_size = std::atoi(number.c_str());
-		ok &= vec_size == 2;
+		size_t vector_size = std::atoi(number.c_str());
+		ok &= vector_size == 2;
+
+		// get and check first dependent varialbe index that is nan
+		pattern = "index = ";
+		start   = msg.find(pattern) + pattern.size();
+		number  = "";
+		for(size_t i = start; msg[i] != '\n'; i++)
+			number += msg[i];
+		size_t index = std::atoi(number.c_str());
+		ok &= index == 1;
 
 		// get the name of the file
 		pattern = "file_name = ";
@@ -88,10 +98,10 @@ bool check_for_nan(void)
 		for(size_t i = start; msg[i] != '\n'; i++)
 			file_name += msg[i];
 
-		// get the independent variable vector that resulted in the nan
-		CppAD::vector<double> vec(vec_size);
+		// get and check independent variable vector that resulted in the nan
+		CppAD::vector<double> vec(vector_size);
 		CppAD::get_check_for_nan(vec, file_name);
-		for(size_t i = 0; i < vec_size; i++)
+		for(size_t i = 0; i < vector_size; i++)
 			ok &= vec[i] == x[i];
 	}
 
