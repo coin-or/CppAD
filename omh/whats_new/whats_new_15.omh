@@ -78,11 +78,11 @@ assist you in learning about changes between various versions of CppAD.
 $head 11-24$$
 $list number$$
 The $code check_for_nan$$ output now includes the first dependent
-variable 
+variable
 $cref/index/check_for_nan/Error Message/index/$$
 that is $code nan$$ in its error message.
 $lnext
-Change the 
+Change the
 $cref/deprecated include/include_deprecated/$$ reference $code pow_int.h$$
 to $code pow_int.hpp$$ in $cref pow_int$$.
 $lend
