@@ -9,12 +9,20 @@
 # A copy of this license is included in the COPYING file of this distribution.
 # Please visit http://www.coin-or.org/CppAD/ for information on other licenses.
 # -----------------------------------------------------------------------------
-# This file is used with pkg-config to include CppAD before it is installed.
+# Build and install the cppad_lib shared library
 
-Name:         cppad
-Description:  @cppad_description@
-Version:      @cppad_version@
-URL:          @cppad_url@
-Cflags:       -I@cppad_SOURCE_DIR@
-Libs:         -L@cppad_BINARY_DIR@/lib -lcppad_lib
-Requires:
+#  add_library(<name> [STATIC | SHARED | MODULE] [EXCLUDE_FROM_ALL]
+#	source1 source2 ... sourceN)
+# )
+ADD_LIBRARY( cppad_lib SHARED 
+	cppad_colpack.cpp
+)
+
+# Add extra compiler flags
+add_cppad_cxx_flags( cppad_lib )
+
+# install(TARGETS myExe mySharedLib myStaticLib
+#	RUNTIME DESTINATION bin
+#	LIBRARY DESTINATION lib
+#	ARCHIVE DESTINATION lib/static)
+INSTALL(TARGETS cppad_lib DESTINATION ${cppad_abs_libdir})

@@ -48,26 +48,15 @@ $codei%
 %$$
 is a valid way to reference to the include file $code ColPackHeaders.h$$.
 
-$head cppad_colpack.cpp$$
-$index cppad_colpack.cpp$$
+$head cppad_lib$$
 The ColPack header files has a
 $codei%
 	using namespace std
 %$$
 at the global level.
 For this reason, CppAD does not include these files.
-It is therefore necessary to compile and link the short file
-$codei%
-	%prefix%/%dir%/cppad/cppad_colpack.cpp
-%$$
-where $icode dir$$ is the
-$cref/cmake_install_datadir/cmake/cmake_install_datadir/$$ and
-where $icode prefix$$ is such that $code cppad.hpp$$ was installed in
-$codei%
-	%prefix%/include/cppad/cppad.hpp
-%$$
-Hopefully, future versions of ColPack will not have this problem
-and it will no longer be necessary to do this.
+It is therefore necessary to link the object library $code cppad_lib$$
+when using ColPack.
 
 $children%example/colpack_jac.cpp
 	%example/colpack_hes.cpp

@@ -1,6 +1,6 @@
 # $Id$
 # -----------------------------------------------------------------------------
-# CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-14 Bradley M. Bell
+# CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-15 Bradley M. Bell
 #
 # CppAD is distributed under multiple licenses. This distribution is under
 # the terms of the 
@@ -11,10 +11,6 @@
 # -----------------------------------------------------------------------------
 # Build the cppad_ipopt/* directory tests 
 # Inherit environment from ../CMakeList.txt
-
-# colpack_prefix
-SET(sources ../../cppad/local/cppad_colpack.cpp)
-sources_libs_define(colpack "${sources}" ColPack "")
 
 # Initialize list of tests as empty
 SET(check_depends "")

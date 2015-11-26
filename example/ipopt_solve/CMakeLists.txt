@@ -18,17 +18,6 @@ SET(CMAKE_BUILD_TYPE DEBUG)
 # Local link directories to search, as determined by pkg-config for ipopt
 LINK_DIRECTORIES( ${ipopt_LIBRARY_DIRS} )
 
-# colpack_prefix
-IF ( colpack_prefix )
-	# Extra source files if we are including colpack
-	SET(colpack_sources ../../cppad/local/cppad_colpack.cpp)
-	# add colpack to list of libraries
-	SET(colpack_libs "ColPack")
-ELSE ( colpack_prefix )
-	SET(colpack_sources "")
-	SET(colpack_libs "")
-ENDIF ( colpack_prefix )
-
 # Copy a file to another location and modify its contents.
 # configure_file(InputFile OutputFile [COPYONLY] [ESCAPE_QUOTES] [@ONLY])
 CONFIGURE_FILE(
@@ -42,7 +31,6 @@ ADD_EXECUTABLE(example_ipopt_solve EXCLUDE_FROM_ALL
 	get_started.cpp
 	ode_inverse.cpp
 	retape.cpp
-	${colpack_sources}
 )
 
 # Extra compiler flags
@@ -50,7 +38,11 @@ add_cppad_cxx_flags( example_ipopt_solve )
 
 # libraries to be linked into the specified target,
 # as determined by pkg-config for ipopt
-TARGET_LINK_LIBRARIES(example_ipopt_solve ${ipopt_LIBRARIES} ${colpack_libs})
+TARGET_LINK_LIBRARIES(example_ipopt_solve 
+	cppad_lib
+	${ipopt_LIBRARIES} 
+	${colpack_libs}
+)
 
 # Add the check_example_ipopt_solve target
 ADD_CUSTOM_TARGET(check_example_ipopt_solve

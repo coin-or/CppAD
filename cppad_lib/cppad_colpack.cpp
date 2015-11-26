@@ -11,10 +11,13 @@ Please visit http://www.coin-or.org/CppAD/ for information on other licenses.
 -------------------------------------------------------------------------- */
 
 # include <vector>
+# include <cppad/configure.hpp>
 # include <cppad/vector.hpp>
 # include <ColPack/ColPackHeaders.h>
 
-namespace CppAD { // BEGIN_CPPAD_NAMESPACE
+namespace CppAD {       // BEGIN_CPPAD_NAMESPACE
+# if CPPAD_HAS_COLPACK  // Requires Colpack library
+
 /*!
 \file cppad_colpack.cpp
 The CppAD interface to the Colpack coloring algorithms.
@@ -199,4 +202,6 @@ void cppad_colpack_symmetric(
 # endif
 	return;
 }
+
+# endif
 } // END_CPPAD_NAMESPACE

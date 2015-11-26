@@ -133,12 +133,14 @@ optional_package(ipopt_prefix "ipopt install prefix")
 # sacado_prefix
 optional_package(sacado_prefix "sacado install prefix")
 # -----------------------------------------------------------------------------
-# cppad_has_colpack
+# cppad_has_colpack, colpack_libs
 #
 IF( colpack_prefix )
 	SET(cppad_has_colpack 1)
+	SET( colpack_libs "ColPack" )
 ELSE( colpack_prefix )
 	SET(cppad_has_colpack 0)
+	SET( colpack_libs "" )
 ENDIF( colpack_prefix )
 # =============================================================================
 # automated system configuration
@@ -276,6 +278,7 @@ SET(check_depends "")
 #
 ADD_SUBDIRECTORY(cppad)
 ADD_SUBDIRECTORY(pkgconfig)
+ADD_SUBDIRECTORY(cppad_lib)
 #
 ADD_SUBDIRECTORY(compare_c)
 add_to_list(check_depends check_compare_c)
@@ -332,12 +335,6 @@ INSTALL(
 	DESTINATION ${cppad_abs_includedir}/cppad
 	FILES_MATCHING PATTERN "*.hpp"
 )
-IF( colpack_prefix )
-	INSTALL(
-		FILES "cppad/local/cppad_colpack.cpp"
-		DESTINATION ${cppad_abs_datadir}/cppad
-	)
-ENDIF( colpack_prefix )
 #
 # During install copy doc direcrory to cppad_abs_docdir/cppad
 IF ( cmake_install_docdir )

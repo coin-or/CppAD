@@ -24,10 +24,6 @@ SET(CMAKE_BUILD_TYPE DEBUG)
 SET(sources base_adolc.cpp)
 sources_libs_define(adolc "${sources}" adolc ADOLC_TEST)
 
-# colpack_prefix
-SET(sources ../cppad/local/cppad_colpack.cpp)
-sources_libs_define(colpack "${sources}" ColPack COLPACK_TEST)
-
 # ipopt_prefix
 SET(sources ipopt_solve.cpp)
 sources_libs_define(ipopt "${sources}" "${ipopt_LIBRARIES}" IPOPT_TEST)
@@ -67,7 +63,6 @@ ADD_EXECUTABLE(test_more EXCLUDE_FROM_ALL test_more.cpp
 	old_reciprocal.cpp
 	old_mat_mul.cpp
 	${adolc_sources}
-	${colpack_sources}
 	${ipopt_sources}
 	abs.cpp
 	acos.cpp
@@ -165,10 +160,11 @@ add_cppad_cxx_flags(test_more)
 
 # List of libraries to be linked into the specified target
 TARGET_LINK_LIBRARIES(test_more
-	${colpack_libs}
+	cppad_lib
 	${adolc_libs}
 	${ipopt_libs}
 	${eigen_libs}
+	${colpack_libs}
 )
 
 # Add the check_test_more target

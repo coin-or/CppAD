@@ -41,13 +41,11 @@ then
 	cxxflags=`echo "$cxxflags" | sed -e 's|-Wshadow||'`
 fi
 cmd="g++ test_one.cpp $*"
-if [ -e @colpack_prefix@/include ]
-then
-	cmd="$cmd ../cppad/local/cppad_colpack.cpp"
-fi
 cmd="$cmd
 	-o test_one.exe
 	$cxxflags
+	-L @cppad_BINARY_DIR@/cppad_lib
+	-lcppad_lib
 	-g
 	-fopenmp
 	-DCPPAD_ADOLC_TEST
@@ -87,6 +85,7 @@ do
 		cmd="$cmd $cflags $libs"
 	fi
 done
+export LD_LIBRARY_PATH="$LD_LIBRARY_PATH:@cppad_BINARY_DIR@/cppad_lib"
 echo $cmd
 $cmd
 echo "./test_one.exe"

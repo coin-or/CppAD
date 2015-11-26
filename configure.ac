@@ -486,10 +486,10 @@ if test "$have_ar" = 'no'; then
 	)
 fi
 
-dnl test_one.sh.in uses cppad_cxx_flags and cppad_has_colpack
+dnl test_one.sh.in settings for cppad_cxx_flags
 AC_SUBST(cppad_cxx_flags, "-g -O0")
 
-dnl auto-tools version does not use ../cppad/local/cppad_colpack.cpp
+dnl auto-tools version does not colpack
 AC_SUBST(cppad_has_colpack, 0)
 
 dnl auto-tools version will assumes mkstemp is available.

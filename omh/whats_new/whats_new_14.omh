@@ -210,11 +210,11 @@ $lend
 
 $head 05-27$$
 $list number$$
-The $cref/cppad_colpack.cpp/colpack_prefix/cppad_colpack.cpp/$$
+The $code cppad_colpack.cpp$$
 file was not being copied to the specified directory.
 In addition, the specified directory was changed from an include
-directory to data directory
-($code cppad_colpack.cpp$$ is not an include file).
+directory to data directory because
+$code cppad_colpack.cpp$$ is not an include file.
 $lnext
 If $cref colpack_prefix$$  was specified, the CppAD
 $cref pkgconfig$$ file was missing some information.

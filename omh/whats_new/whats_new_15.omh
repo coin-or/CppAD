@@ -13,6 +13,7 @@ Please visit http://www.coin-or.org/CppAD/ for information on other licenses.
 $begin whats_new_15$$
 $dollar @$$
 $spell
+	lcppad
 	ind
 	const
 	enum
@@ -74,6 +75,27 @@ This section contains a list of the changes to CppAD during 2015
 (in reverse order by date).
 The purpose of this section is to
 assist you in learning about changes between various versions of CppAD.
+
+$head 11-25$$
+$list number$$
+CppAD now installs the object library
+$codep
+	-lcppad_lib
+$$
+to be included when linking.
+Currently, it is only required when 
+$cref colpack_prefix$$ is specified on the 
+$cref/cmake command/cmake/CMake Command/$$.
+$lnext
+It is no longer necessary to compile and link the file
+$codep
+	cppad_colpack.cpp
+$$ 
+when $cref colpack_prefix$$
+is specified during the install process; see
+$cref/cmake command/cmake/CMake Command/$$.
+(It is included in $code cppad_lib$$).
+$lend
 
 $head 11-24$$
 $list number$$

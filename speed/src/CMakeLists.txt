@@ -27,7 +27,6 @@ ADD_LIBRARY(speed_src STATIC EXCLUDE_FROM_ALL
 	link_sparse_hessian.cpp
 	link_sparse_jacobian.cpp
 	microsoft_timer.cpp
-	${colpack_sources}
 )
 
 # Compiler flags for cppad source

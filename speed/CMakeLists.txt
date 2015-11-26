@@ -19,10 +19,6 @@
 # Possible values are DEBUG, RELEASE, RelWithDebInfo and MinSizeRel
 SET(CMAKE_BUILD_TYPE RELEASE)
 
-# colpack_prefix
-SET(sources ../../cppad/local/cppad_colpack.cpp)
-sources_libs_define(colpack "${sources}" ColPack COLPACK_SPEED)
-
 # Initialize list of tests as empty
 SET(check_depends "")
 
