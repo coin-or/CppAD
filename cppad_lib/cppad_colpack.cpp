@@ -3,7 +3,7 @@
 CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-15 Bradley M. Bell
 
 CppAD is distributed under multiple licenses. This distribution is under
-the terms of the 
+the terms of the
                     Eclipse Public License Version 1.0.
 
 A copy of this license is included in the COPYING file of this distribution.
@@ -62,7 +62,7 @@ void cppad_colpack_general(
 			n
 	);
 
-	// row ordered Partial-Distance-Two-Coloring of the bipartite graph 
+	// row ordered Partial-Distance-Two-Coloring of the bipartite graph
 	graph.PartialDistanceTwoColoring(
 		"SMALLEST_LAST", "ROW_PARTIAL_DISTANCE_TWO"
 	);
@@ -78,7 +78,7 @@ void cppad_colpack_general(
 		color[i] = m;
 	for(k = 0; k < size_t(n_seed_row); k++)
 	{	for(i = 0; i < m; i++)
-		{	if( seed_matrix[k][i] != 0.0 ) 
+		{	if( seed_matrix[k][i] != 0.0 )
 			{	// check that no row appears twice in the coloring
 				CPPAD_ASSERT_UNKNOWN( color[i] == m );
 				color[i] = k;
@@ -126,7 +126,7 @@ is the number of rows (and columns) in the matrix.
 \param adolc_pattern
 is a vector with adolc_pattern.size() == m.
 For i = 0 , ... , m-1, and for k = 1, ... ,adolc_pattern[i][0],
-the entry with index (i, adolc_pattern[i][k]) is 
+the entry with index (i, adolc_pattern[i][k]) is
 in the sparsity pattern for the symmetric matrix.
 */
 void cppad_colpack_symmetric(
@@ -159,7 +159,7 @@ void cppad_colpack_symmetric(
 		color[i] = m;
 	for(i = 0; i < m; i++)
 	{	for(size_t k = 0; k < size_t(n_seed_col); k++)
-		{	if( seed_matrix[i][k] != 0.0 ) 
+		{	if( seed_matrix[i][k] != 0.0 )
 			{	CPPAD_ASSERT_UNKNOWN( color[i] == m );
 				color[i] = k;
 			}
@@ -171,7 +171,7 @@ void cppad_colpack_symmetric(
 	size_t i1, i2, j1, j2, k1, k2, nz1, nz2;
 	for(i1 = 0; i1 < m; i1++)
 	{	nz1 = size_t(adolc_pattern[i1][0]);
-		for(k1 = 1; k1 <= nz1; k1++)	
+		for(k1 = 1; k1 <= nz1; k1++)
 		{	j1 = adolc_pattern[i1][k1];
 
 			// check of a forward on color[i1] followed by a reverse
@@ -180,7 +180,7 @@ void cppad_colpack_symmetric(
 			for(i2 = 0; i2 < m; i2++) if( i1 != i2 && color[i1] == color[i2] )
 			{	nz2 = adolc_pattern[i2][0];
 				for(k2 = 1; k2 <= nz2; k2++)
-				{	j2 = adolc_pattern[i2][k2];	
+				{	j2 = adolc_pattern[i2][k2];
 					color_i1_ok &= (j1 != j2);
 				}
 			}
@@ -191,7 +191,7 @@ void cppad_colpack_symmetric(
 			for(j2 = 0; j2 < m; j2++) if( j1 != j2 && color[j1] == color[j2] )
 			{	nz2 = adolc_pattern[j2][0];
 				for(k2 = 1; k2 <= nz2; k2++)
-				{	i2 = adolc_pattern[j2][k2];	
+				{	i2 = adolc_pattern[j2][k2];
 					color_j1_ok &= (i1 != i2);
 				}
 			}

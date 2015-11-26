@@ -3,16 +3,16 @@
 # CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-15 Bradley M. Bell
 #
 # CppAD is distributed under multiple licenses. This distribution is under
-# the terms of the 
+# the terms of the
 #                     Eclipse Public License Version 1.0.
 #
 # A copy of this license is included in the COPYING file of this distribution.
 # Please visit http://www.coin-or.org/CppAD/ for information on other licenses.
 # -----------------------------------------------------------------------------
-# Build the cppad_ipopt/test directory tests 
+# Build the cppad_ipopt/test directory tests
 # Inherit environment from ../CMakeList.txt
 
-# Specifies build type for this directory. Possible values are 
+# Specifies build type for this directory. Possible values are
 # empty, Debug, Release, RelWithDebInfo and MinSizeRel
 SET(CMAKE_BUILD_TYPE DEBUG)
 
@@ -34,11 +34,11 @@ ADD_EXECUTABLE(cppad_ipopt_test EXCLUDE_FROM_ALL test_more.cpp
 add_cppad_cxx_flags(cppad_ipopt_test)
 
 # List of libraries to be linked into the specified target
-TARGET_LINK_LIBRARIES(cppad_ipopt_test 
-	cppad_ipopt 
+TARGET_LINK_LIBRARIES(cppad_ipopt_test
+	cppad_ipopt
 	cppad_lib
-	${ipopt_LIBRARIES} 
-	${colpack_libs} 
+	${ipopt_LIBRARIES}
+	${colpack_libs}
 )
 
 # Add the check_cppad_ipopt_test target

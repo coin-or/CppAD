@@ -3,7 +3,7 @@
 # CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-15 Bradley M. Bell
 #
 # CppAD is distributed under multiple licenses. This distribution is under
-# the terms of the 
+# the terms of the
 #                     Eclipse Public License Version 1.0.
 #
 # A copy of this license is included in the COPYING file of this distribution.
@@ -12,19 +12,19 @@
 # Build the cppad_ipopt/src library
 # Inherit environment from ../CMakeList.txt
 
-# Specifies build type for this directory. Possible values are 
+# Specifies build type for this directory. Possible values are
 # empty, Debug, Release, RelWithDebInfo and MinSizeRel
 SET(CMAKE_BUILD_TYPE DEBUG)
 
 #  add_library(<name> [STATIC | SHARED | MODULE] [EXCLUDE_FROM_ALL]
 #	source1 source2 ... sourceN)
 # )
-ADD_LIBRARY(cppad_ipopt 
+ADD_LIBRARY(cppad_ipopt
 	cppad_ipopt_nlp.cpp
 	hes_fg_map.cpp
 	jac_g_map.cpp
 	sparse_map2vec.cpp
-	vec_fun_pattern.cpp 
+	vec_fun_pattern.cpp
 )
 
 # Add extra compiler flags
