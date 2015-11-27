@@ -191,4 +191,22 @@ It true, mkstemp works in C++ on this system.
 */
 # define CPPAD_HAS_MKSTEMP @cppad_has_mkstemp@
 
+// ---------------------------------------------------------------------------
+// defines that only depend on values above
+// ---------------------------------------------------------------------------
+/*!
+\def CPPAD_NULL
+This preprocessor symbol is used for a null pointer.
+
+If it is not yet defined,
+it is defined when cppad/local/define.hpp is included.
+*/
+# ifndef CPPAD_NULL
+# if CPPAD_USE_CPLUSPLUS_2011
+# define CPPAD_NULL     nullptr
+# else
+# define CPPAD_NULL     0
+# endif
+# endif
+
 # endif

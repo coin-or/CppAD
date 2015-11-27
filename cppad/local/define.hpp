@@ -58,21 +58,6 @@ This macro is defined as empty for Microsoft compilers.
 # endif
 
 /*!
-\def CPPAD_NULL
-This preprocessor symbol is used for a null pointer.
-
-If it is not yet defined,
-it is defined when cppad/local/define.hpp is included.
-*/
-# ifndef CPPAD_NULL
-# if CPPAD_USE_CPLUSPLUS_2011
-# define CPPAD_NULL     nullptr
-# else
-# define CPPAD_NULL     0
-# endif
-# endif
-
-/*!
 \def CPPAD_FOLD_ASSIGNMENT_OPERATOR(Op)
 Declares automatic coercion for certain AD assignment operations.
 

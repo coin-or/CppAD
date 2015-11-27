@@ -27,10 +27,11 @@ Please visit http://www.coin-or.org/CppAD/ for information on other licenses.
 
 # include <cppad/local/cppad_assert.hpp>
 # include <cppad/local/define.hpp>
+# include <cppad/local/set_get_in_parallel.hpp>
 namespace CppAD { // BEGIN_CPPAD_NAMESPACE
 /*!
 \file thread_alloc.hpp
-File used to define the CppAD multi-threading allocaor class
+File used to define the CppAD multi-threading allocator class
 */
 
 /*!
@@ -362,42 +363,6 @@ private:
 		return number_user;
 	}
 	/*!
-	Set and call the routine that determine if we are in parallel
-	execution mode.
-
-	\return
-	value retuned by most recent setting for \a parallel_new.
-	If \a set is true,
-	or the most recent setting is \c CPPAD_NULL (its initial value),
-	the return value is false.
-	Otherwise the function corresponding to the most recent setting
-	is called and its value returned by \c set_get_in_parallel.
-
-	\param parallel_new [in]
-	If \a set is false, \a parallel_new it is not used.
-	Otherwise, the current value of \c parallel_new becomes the
-	most recent setting for in_parallel.
-
-	\param set
-	If \a set is true, then \a parallel_new is becomes the most
-	recent setting for this \c set_get_in_parallel.
-	*/
-	static bool set_get_in_parallel(
-		bool (*parallel_new)(void) ,
-		bool set = false           )
-	{	static bool (*parallel_user)(void) = CPPAD_NULL;
-
-		if( set )
-		{	parallel_user = parallel_new;
-			return false;
-		}
-
-		if( parallel_user == CPPAD_NULL )
-			return false;
-
-		return parallel_user();
-	}
-	/*!
 	Set and call the routine that determine the current thread number.
 
 	\return
@@ -560,7 +525,8 @@ $end
 		if( num_threads == 1 )
 		{	bool set = true;
 			set_get_num_threads(num_threads);
-			set_get_in_parallel(CPPAD_NULL, set);
+			// emphasize that this routine is outside thread_alloc class
+			CppAD::set_get_in_parallel(CPPAD_NULL, set);
 			set_get_thread_num(CPPAD_NULL, set);
 			return;
 		}
@@ -599,7 +565,8 @@ $end
 		if( num_threads > 1 )
 		{	bool set = true;
 			set_get_num_threads(num_threads);
-			set_get_in_parallel(in_parallel, set);
+			// emphasize that this routine is outside thread_alloc class
+			CppAD::set_get_in_parallel(in_parallel, set);
 			set_get_thread_num(thread_num, set);
 		}
 	}
@@ -683,7 +650,9 @@ $end
 	/// Are we in a parallel execution state; i.e., is it possible that
 	/// other threads are currently executing.
 	static bool in_parallel(void)
-	{	return set_get_in_parallel(0); }
+	{	// emphasize that this routine is outside thread_alloc class
+		return CppAD::set_get_in_parallel(0);
+	}
 /* -----------------------------------------------------------------------
 $begin ta_thread_num$$
 $spell

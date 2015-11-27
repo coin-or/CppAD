@@ -2,10 +2,10 @@
 # ifndef CPPAD_ERROR_HANDLER_INCLUDED
 # define CPPAD_ERROR_HANDLER_INCLUDED
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-12 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-15 Bradley M. Bell
 
 CppAD is distributed under multiple licenses. This distribution is under
-the terms of the 
+the terms of the
                     Eclipse Public License Version 1.0.
 
 A copy of this license is included in the COPYING file of this distribution.
@@ -52,7 +52,7 @@ $head Call$$
 When $code ErrorHandler::Call$$ is called,
 the current CppAD error handler is used to report an error.
 This starts out as a default error handler and can be replaced
-using the $code ErrorHandler$$ constructor. 
+using the $code ErrorHandler$$ constructor.
 
 $head info$$
 The object $icode info$$ is used to store information
@@ -63,7 +63,7 @@ This is done when the destructor for $icode info$$ is called.
 $head handler$$
 The argument $icode handler$$ has prototype
 $codei%
-	void (*%handler%) 
+	void (*%handler%)
 		(bool, int, const char *, const char *, const char *);
 %$$
 When an error is detected,
@@ -86,7 +86,7 @@ The $icode handler$$ argument $icode line$$ has prototype
 $codei%
 	int %line%
 %$$
-It reports the source code line number where the error is detected. 
+It reports the source code line number where the error is detected.
 
 $head file$$
 The $icode handler$$ argument $icode file$$ has prototype
@@ -94,7 +94,7 @@ $codei%
 	const char *%file%
 %$$
 and is a $code '\0'$$ terminated character vector.
-It reports the source code file where the error is detected. 
+It reports the source code file where the error is detected.
 
 $head exp$$
 The $icode handler$$ argument $icode exp$$ has prototype
@@ -102,7 +102,7 @@ $codei%
 	const char *%exp%
 %$$
 and is a $code '\0'$$ terminated character vector.
-It is a source code boolean expression that should have been true, 
+It is a source code boolean expression that should have been true,
 but is false,
 and thereby causes this call to $icode handler$$.
 
@@ -130,24 +130,10 @@ $end
 
 # include <iostream>
 
-# ifdef _OPENMP
-# include <omp.h>
-# endif
-
 # include <cppad/configure.hpp>
-# include <cppad/local/cppad_assert.hpp>
+# include <cppad/local/set_get_in_parallel.hpp>
 # include <cassert>
 # include <cstdlib>
-
-// Cannot use the CPPAD_ASSERT_* macros here because they inturn use the
-// error handler. So this code generates a raw assert.
-# ifdef _OPENMP
-# include <omp.h>
-# define CPPAD_ASSERT_NOT_PARALLEL \
-		assert( ! omp_in_parallel() );
-# else
-# define CPPAD_ASSERT_NOT_PARALLEL
-# endif
 
 namespace CppAD { // BEGIN CppAD namespace
 
@@ -155,27 +141,42 @@ class ErrorHandler {
 	template <class Base>
 	friend void parallel_ad(void);
 public:
-	typedef void (*Handler) 
+	typedef void (*Handler)
 		(bool, int, const char *, const char *, const char *);
 
-
-	// construct an handler
+	// construct a new handler
 	ErrorHandler(Handler handler) : previous( Current() )
-	{	CPPAD_ASSERT_NOT_PARALLEL;
+	{	if( set_get_in_parallel(0) )
+		{	bool known       = true;
+			int  line        = __LINE__;
+			const char* file = __FILE__;
+			const char* exp  = "! set_get_in_parallel(0)";
+			const char* msg  =
+				"Using ErrorHandler constructor in parallel mode.";
+			Call(known, line, file, exp, msg);
+		}
 		Current() = handler;
 	}
 
 	// destructor for an error handler
 	~ErrorHandler(void)
-	{	CPPAD_ASSERT_NOT_PARALLEL;
+	{	if( set_get_in_parallel(0) )
+		{	bool known       = true;
+			int  line        = __LINE__;
+			const char* file = __FILE__;
+			const char* exp  = "! set_get_in_parallel(0)";
+			const char* msg  =
+				"Using ErrorHandler destructor in parallel mode.";
+			Call(known, line, file, exp, msg);
+		}
 		Current() = previous;
 	}
-	
+
 	// report an error
 	static void Call(
-		bool        known, 
-		int         line , 
-		const char *file , 
+		bool        known,
+		int         line ,
+		const char *file ,
 		const char *exp  ,
 		const char *msg  )
 	{	Handler handler = Current();
@@ -187,9 +188,9 @@ private:
 
 	// The default error handler
 	static void Default(
-		bool        known, 
-		int         line , 
-		const char *file , 
+		bool        known,
+		int         line ,
+		const char *file ,
 		const char *exp  ,
 		const char *msg  )
 	{	using std::cerr;
@@ -215,18 +216,19 @@ private:
 
 	// current error handler
 	static Handler &Current(void)
-	{
-# ifndef NDEBUG
-# ifdef _OPENMP
-		// This assert would be a CppAD error (not user error)
-		static bool first_call = true;
-		if( first_call )
-		{	assert( ! omp_in_parallel() );
-			first_call = false; 
-		}
-# endif
-# endif
+	{	static bool first_call = true;
 		static Handler current = Default;
+		if( first_call )
+		{	if( set_get_in_parallel(0) )
+			{	bool known       = false;
+				int  line        = __LINE__;
+				const char* file = __FILE__;
+				const char* exp  = "";
+				const char* msg  = "";
+				Call(known, line, file, exp, msg);
+			}
+			first_call = false;
+		}
 		return current;
 	}
 };

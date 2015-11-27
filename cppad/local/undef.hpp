@@ -60,7 +60,6 @@ Preprecessor definitions that presist after cppad/cppad.hpp is included:
 */
 // Preprecessor definitions that do not presist
 # undef CPPAD_ASSERT_NARG_NRES
-# undef CPPAD_ASSERT_NOT_PARALLEL
 # undef CPPAD_ASSERT_ARG_BEFORE_RESULT
 # undef CPPAD_AZMUL
 # undef CPPAD_BOOSTVECTOR
