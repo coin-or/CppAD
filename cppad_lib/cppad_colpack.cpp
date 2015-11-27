@@ -9,14 +9,14 @@ the terms of the
 A copy of this license is included in the COPYING file of this distribution.
 Please visit http://www.coin-or.org/CppAD/ for information on other licenses.
 -------------------------------------------------------------------------- */
-
 # include <vector>
-# include <cppad/configure.hpp>
 # include <cppad/vector.hpp>
+# include <cppad/configure.hpp>
+
+# if CPPAD_HAS_COLPACK
 # include <ColPack/ColPackHeaders.h>
 
 namespace CppAD {       // BEGIN_CPPAD_NAMESPACE
-# if CPPAD_HAS_COLPACK  // Requires Colpack library
 
 /*!
 \file cppad_colpack.cpp
@@ -203,5 +203,5 @@ void cppad_colpack_symmetric(
 	return;
 }
 
-# endif
 } // END_CPPAD_NAMESPACE
+# endif
