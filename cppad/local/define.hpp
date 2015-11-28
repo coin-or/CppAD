@@ -18,6 +18,7 @@ Please visit http://www.coin-or.org/CppAD/ for information on other licenses.
 Define processor symbols and macros that are used by CppAD.
 */
 
+// ----------------------------------------------------------------------------
 /*!
 \def CPPAD_OP_CODE_TYPE
 Is the type used to store enum OpCode values. If not the same as OpCode, then
@@ -32,6 +33,7 @@ in pod_vector.hpp.
 # define CPPAD_OP_CODE_TYPE unsigned char
 
 
+// ----------------------------------------------------------------------------
 /*!
 \def CPPAD_INLINE_FRIEND_TEMPLATE_FUNCTION
 A version of the inline command that works with MC compiler.
@@ -57,6 +59,24 @@ This macro is defined as empty for Microsoft compilers.
 # define CPPAD_INLINE_FRIEND_TEMPLATE_FUNCTION inline
 # endif
 
+// ----------------------------------------------------------------------------
+/*!
+\def CPPAD_LIB_EXPORT
+Special macro for exporting windows DLL symbols; see
+https://cmake.org/Wiki/BuildingWinDLL
+*/
+# ifdef  _MSC_VER
+# ifdef  cppad_lib_EXPORTS
+# define CPPAD_LIB_EXPORT __declspec(dllexport)
+# else
+# define CPPAD_LIB_EXPORT __declspec(dllimport)
+# endif  // cppad_lib_EXPORTS
+# else   // _MSC_VER
+# define CPPAD_LIB_EXPORT
+# endif
+
+
+// ============================================================================
 /*!
 \def CPPAD_FOLD_ASSIGNMENT_OPERATOR(Op)
 Declares automatic coercion for certain AD assignment operations.

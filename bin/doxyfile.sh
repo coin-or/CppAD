@@ -49,6 +49,7 @@ INPUT                   = \
 	./cppad \
 	./cppad/local \
 	./cppad/ipopt \
+	./cppad_lib \
 	./cppad_ipopt/src \
 	./speed/src
 LATEX_BATCHMODE         = YES

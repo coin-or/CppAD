@@ -191,6 +191,12 @@ It true, mkstemp works in C++ on this system.
 */
 # define CPPAD_HAS_MKSTEMP @cppad_has_mkstemp@
 
+/*!
+\def CPPAD_HAS_TMPNAM_S
+It true, tmpnam_s works in C++ on this system.
+*/
+# define CPPAD_HAS_TMPNAM_S @cppad_has_tmpnam_s@
+
 // ---------------------------------------------------------------------------
 // defines that only depend on values above
 // ---------------------------------------------------------------------------

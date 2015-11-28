@@ -248,7 +248,7 @@ int main(void)
 	ENDIF( ${cmake_var}_is_unsigned STREQUAL 0  )
 ENDFOREACH( cmake_var )
 # -----------------------------------------------------------------------------
-# cppad_max_num_threads
+# check that cppad_max_num_threads is >= 4
 #
 SET(CMAKE_REQUIRED_INCLUDES  "")
 SET(CMAKE_REQUIRED_LIBRARIES "")
@@ -272,6 +272,7 @@ int main(void)
 	return 0;
 }
 " )
+# Using CHECK_CXX_SOURCE_RUNS directly (instead of check_source_runs).
 CHECK_CXX_SOURCE_RUNS("${source}" cppad_max_num_threads_is_integer_ge_4)
 IF( NOT cppad_max_num_threads_is_integer_ge_4 )
 	MESSAGE(FATAL_ERROR
@@ -281,9 +282,6 @@ ENDIF( NOT cppad_max_num_threads_is_integer_ge_4 )
 # -----------------------------------------------------------------------------
 # cppad_has_mkstemp
 #
-SET(CMAKE_REQUIRED_INCLUDES  "")
-SET(CMAKE_REQUIRED_LIBRARIES "")
-SET(CMAKE_REQUIRED_FLAGS     )
 SET(source "
 # include <stdlib.h>
 int main(void)
@@ -293,7 +291,20 @@ int main(void)
 	return 0;
 }
 " )
-CHECK_CXX_SOURCE_RUNS("${source}" cppad_has_mkstemp )
+check_source_runs("${source}" cppad_has_mkstemp )
+# -----------------------------------------------------------------------------
+# cppad_has_tmpname_s
+#
+SET(source "
+# include <stdio.h>
+int main(void)
+{	char filename[L_tmpnam_s ];
+	if( tmpnam_s(filename, L_tmpnam_s ) != 0 )
+		return 1;
+	return 0;
+}
+" )
+check_source_runs("${source}" cppad_has_tmpnam_s )
 # -----------------------------------------------------------------------------
 # Copy a file to another location and modify its contents.
 # configure_file(InputFile OutputFile [COPYONLY] [ESCAPE_QUOTES] [@ONLY])

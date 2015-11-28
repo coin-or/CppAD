@@ -12,8 +12,15 @@ Please visit http://www.coin-or.org/CppAD/ for information on other licenses.
 # include <vector>
 # include <cppad/vector.hpp>
 # include <cppad/configure.hpp>
+# include <cppad/local/define.hpp>
+# include <cppad/local/cppad_assert.hpp>
 
-# if CPPAD_HAS_COLPACK
+# if CPPAD_HAS_COLPACK == 0
+namespace CppAD {
+	CPPAD_LIB_EXPORT void this_routine_should_never_get_called(void)
+	{	CPPAD_ASSERT_UNKNOWN(false); }
+}
+# else // CPPAD_HAS_COLPACK
 # include <ColPack/ColPackHeaders.h>
 
 namespace CppAD {       // BEGIN_CPPAD_NAMESPACE
@@ -45,7 +52,7 @@ the entry with index (i, adolc_pattern[i][k]) is a non-zero
 in the sparsity pattern for the matrix.
 */
 // ----------------------------------------------------------------------
-void cppad_colpack_general(
+CPPAD_LIB_EXPORT void cppad_colpack_general(
 	CppAD::vector<size_t>&               color         ,
 	size_t                               m             ,
 	size_t                               n             ,
@@ -129,7 +136,7 @@ For i = 0 , ... , m-1, and for k = 1, ... ,adolc_pattern[i][0],
 the entry with index (i, adolc_pattern[i][k]) is
 in the sparsity pattern for the symmetric matrix.
 */
-void cppad_colpack_symmetric(
+CPPAD_LIB_EXPORT void cppad_colpack_symmetric(
 	CppAD::vector<size_t>&               color         ,
 	size_t                               m             ,
 	const CppAD::vector<unsigned int*>&  adolc_pattern )
@@ -204,4 +211,5 @@ void cppad_colpack_symmetric(
 }
 
 } // END_CPPAD_NAMESPACE
-# endif
+
+# endif // CPPAD_HAS_COLPACK

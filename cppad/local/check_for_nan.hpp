@@ -135,8 +135,17 @@ $end
 # include <cppad/vector.hpp>
 # include <cppad/configure.hpp>
 # include <fstream>
+
+# if CPPAD_HAS_MKSTEMP
 # include <stdlib.h>
-# include <unistd.h>
+# else
+# if CPPAD_HAS_TMPNAM_S
+# include <stdio.h>
+# else
+# include <stdlib.h>
+# endif
+# endif
+
 
 namespace CppAD { // BEGIN_CPPAD_NAMESPACE
 
@@ -152,7 +161,18 @@ void put_check_for_nan(const CppAD::vector<Base>& vec, std::string& file_name)
 	write(fd, char_ptr, char_size);
 	close(fd);
 # else
-	file_name = tmpnam( CPPAD_NULL );
+# if CPPAD_HAS_TMPNAM_S
+		std::vector<char> name(L_tmpnam_s);
+		if( tmpnam_s( name.data(), L_tmpnam_s ) != 0 )
+		{	CPPAD_ASSERT_KNOWN(
+				false,
+				"Cannot create a temporary file name"
+			);
+		}
+		file_name = name.data();
+# else
+		file_name = tmpnam( CPPAD_NULL );
+# endif
 	std::fstream file_out(file_name.c_str(), std::ios::out|std::ios::binary );
 	file_out.write(char_ptr, char_size);
 	file_out.close();
