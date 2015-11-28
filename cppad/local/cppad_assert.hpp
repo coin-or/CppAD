@@ -121,7 +121,7 @@ In addition, it will print the specified error message \a msg.
 	CppAD::ErrorHandler::Call(              \
 		true       ,                    \
 		__LINE__   ,                    \
- 		__FILE__   ,                    \
+		__FILE__   ,                    \
 		#exp       ,                    \
 		msg        );                   \
 }
@@ -147,7 +147,7 @@ which this expected result occurred.
 	CppAD::ErrorHandler::Call(              \
 		false      ,                    \
 		__LINE__   ,                    \
- 		__FILE__   ,                    \
+		__FILE__   ,                    \
 		#exp       ,                    \
 		""         );                   \
 }
