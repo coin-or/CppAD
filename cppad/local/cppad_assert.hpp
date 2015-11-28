@@ -100,11 +100,6 @@ $end
 # include <iostream>
 # include <cppad/error_handler.hpp>
 
-# ifdef _OPENMP
-# include <omp.h>
-# endif
-
-
 /*!
 \def CPPAD_ASSERT_KNOWN(exp, msg)
 Check that \a exp is true, if not print \a msg and terminate execution.
