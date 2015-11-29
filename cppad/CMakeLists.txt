@@ -284,6 +284,7 @@ ENDIF( NOT cppad_max_num_threads_is_integer_ge_4 )
 #
 SET(source "
 # include <stdlib.h>
+# include <unistd.h>
 int main(void)
 {
 	char pattern[] = \"/tmp/fileXXXXXX\";
