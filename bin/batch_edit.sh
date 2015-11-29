@@ -1,5 +1,5 @@
 #! /bin/bash -e
-# $Id:$
+# $Id$
 # -----------------------------------------------------------------------------
 # CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-15 Bradley M. Bell
 #
@@ -15,11 +15,26 @@ then
 	echo "bin/batch_edit.sh: must be executed from its parent directory"
 	exit 1
 fi
+# -----------------------------------------------------------------------------
+# 1. With a few exceptions, move cppad/*.hpp to cppad/utility/*.hpp
+# 2. Remove index commands that became redundant when the words in
+#    section, head, and subhead commands were automatically indexed.
+# 3. Change include gaurd from CPPAD_<NAME>_INCLUDED to CPPAD_<NAME>_HPP
+# 4. Make the source code control $Id$ commands more uniform.
+# -----------------------------------------------------------------------------
 #
 git reset --hard
-cp bin/new/reduce_index.py bin/reduce_index.py
-cp bin/new/doxyfile.sh bin/doxyfile.sh
-cp bin/new/batch_edit.sh bin/batch_edit.sh
+list='
+add_copyright.sh
+reduce_index.py
+doxyfile.sh
+batch_edit.sh
+'
+for file in $list
+do
+	echo_eval cp bin/new/$file bin/$file
+done
+chmod +x bin/batch_edit.sh
 #
 if [ ! -e cppad/utility ]
 then
@@ -65,10 +80,9 @@ s|mindex log log1p|mindex log1p|
 s|# *ifndef *CPPAD_\\([A-Z0-9_]*\\)_INCLUDED|# ifndef CPPAD_\\1_HPP|
 s|# *define *CPPAD_\\([A-Z0-9_]*\\)_INCLUDED|# define CPPAD_\\1_HPP|
 #
-/^# \\$Id\\$\\\$/d
-/^# \\$Id:\\$\\\$/d
-/^\\/\\/ \\$Id\\$\\\$/d
-/^\\/\\* \\$Id\\$ \\*\\/\\\$/d
+s|^# \$Id[^\$]*\$\$|# \$Id\$|
+s|^// \$Id[^\$]*\$\$|// \$Id\$|
+s|^/\\* *\$Id[^\$]*\$ *\\*/\$|// \$Id\$|
 EOF
 list=`git ls-files | sed -n \
 	-e '/\.omh$/p'  \
