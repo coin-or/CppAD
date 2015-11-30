@@ -36,9 +36,8 @@ $section Run One Speed Test and Return Results$$
 $mindex speed_test$$
 
 $head Syntax$$
-$code%# include <cppad/utility.hpp>$$
-$pre
-$$
+$codei%# include <cppad/utility.hpp>
+%$$
 $icode%rate_vec% = speed_test(%test%, %size_vec%, %time_min%)%$$
 
 $head Purpose$$
@@ -209,9 +208,8 @@ $mindex SpeedTest$$
 
 $head Syntax$$
 
-$code%# include <cppad/utility.hpp>$$
-$pre
-$$
+$codei%# include <cppad/utility.hpp>
+%$$
 $codei%SpeedTest(%Test%, %first%, %inc%, %last%)%$$
 
 

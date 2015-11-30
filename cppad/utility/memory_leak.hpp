@@ -15,6 +15,7 @@ Please visit http://www.coin-or.org/CppAD/ for information on other licenses.
 /*
 $begin memory_leak$$
 $spell
+	cppad
 	num
 	alloc
 	hpp
@@ -30,6 +31,8 @@ This routine has been deprecated.
 You should instead use the routine $cref ta_free_all$$.
 
 $head Syntax$$
+$codei%# include <cppad/utility.hpp>
+%$$
 $icode%flag% = %memory_leak()
 %$$
 $icode%flag% = %memory_leak(%add_static%)%$$

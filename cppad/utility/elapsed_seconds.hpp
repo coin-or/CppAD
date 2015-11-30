@@ -16,6 +16,7 @@ Please visit http://www.coin-or.org/CppAD/ for information on other licenses.
 /*
 $begin elapsed_seconds$$
 $spell
+	cppad.hpp
 	Microsoft
 	gettimeofday
 	std
@@ -27,6 +28,8 @@ $mindex elapsed_seconds time$$
 
 
 $head Syntax$$
+$codei%# include <cppad/utility.hpp>
+%$$
 $icode%s% = elapsed_seconds()%$$
 
 $head Purpose$$

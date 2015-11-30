@@ -24,6 +24,7 @@ public:
 /*
 $begin omp_max_num_threads$$
 $spell
+	cppad.hpp
 	inv
 	CppAD
 	num
@@ -36,6 +37,8 @@ Use the functions $cref/thread_alloc::parallel_setup/ta_parallel_setup/$$
 and $cref/thread_alloc:num_threads/ta_num_threads/$$ instead.
 
 $head Syntax$$
+$codei%# include <cppad/utility.hpp>
+%$$
 $codei%omp_alloc::set_max_num_threads(%number%)
 %$$
 $icode%number% = omp_alloc::get_max_num_threads()
@@ -95,6 +98,7 @@ $begin omp_in_parallel$$
 $section Is The Current Execution in OpenMP Parallel Mode$$
 $mindex in_parallel$$
 $spell
+	cppad.hpp
 	omp_alloc
 	bool
 $$
@@ -103,6 +107,8 @@ $head Deprecated 2011-08-31$$
 Use the function $cref/thread_alloc::in_parallel/ta_in_parallel/$$ instead.
 
 $head Syntax$$
+$codei%# include <cppad/utility.hpp>
+%$$
 $icode%flag% = omp_alloc::in_parallel()%$$
 
 $head Purpose$$
@@ -138,6 +144,7 @@ $end
 /* -----------------------------------------------------------------------
 $begin omp_get_thread_num$$
 $spell
+	cppad.hpp
 	CppAD
 	num
 	omp_alloc
@@ -151,6 +158,8 @@ $head Deprecated 2011-08-31$$
 Use the function $cref/thread_alloc::thread_num/ta_thread_num/$$ instead.
 
 $head Syntax$$
+$codei%# include <cppad/utility.hpp>
+%$$
 $icode%thread% = omp_alloc::get_thread_num()%$$
 
 $head Purpose$$
@@ -183,6 +192,7 @@ $end
 /* -----------------------------------------------------------------------
 $begin omp_get_memory$$
 $spell
+	cppad.hpp
 	num
 	ptr
 	omp_alloc
@@ -194,6 +204,8 @@ $head Deprecated 2011-08-31$$
 Use the function $cref/thread_alloc::get_memory/ta_get_memory/$$ instead.
 
 $head Syntax$$
+$codei%# include <cppad/utility.hpp>
+%$$
 $icode%v_ptr% = omp_alloc::get_memory(%min_bytes%, %cap_bytes%)%$$
 
 $head Purpose$$
@@ -266,6 +278,7 @@ $end
 /* -----------------------------------------------------------------------
 $begin omp_return_memory$$
 $spell
+	cppad.hpp
 	ptr
 	omp_alloc
 $$
@@ -277,6 +290,8 @@ $head Deprecated 2011-08-31$$
 Use the function $cref/thread_alloc::return_memory/ta_return_memory/$$ instead.
 
 $head Syntax$$
+$codei%# include <cppad/utility.hpp>
+%$$
 $codei%omp_alloc::return_memory(%v_ptr%)%$$
 
 $head Purpose$$
@@ -330,6 +345,7 @@ $end
 /* -----------------------------------------------------------------------
 $begin omp_free_available$$
 $spell
+	cppad.hpp
 	omp_alloc
 $$
 
@@ -341,6 +357,8 @@ Use the function $cref/thread_alloc::free_available/ta_free_available/$$
 instead.
 
 $head Syntax$$
+$codei%# include <cppad/utility.hpp>
+%$$
 $codei%omp_alloc::free_available(%thread%)%$$
 
 $head Purpose$$
@@ -374,6 +392,7 @@ $end
 /* -----------------------------------------------------------------------
 $begin omp_inuse$$
 $spell
+	cppad.hpp
 	num
 	inuse
 	omp_alloc
@@ -385,6 +404,8 @@ $mindex inuse$$
 $head Deprecated 2011-08-31$$
 
 $head Syntax$$
+$codei%# include <cppad/utility.hpp>
+%$$
 $icode%num_bytes% = omp_alloc::inuse(%thread%)%$$
 Use the function $cref/thread_alloc::inuse/ta_inuse/$$ instead.
 
@@ -432,6 +453,7 @@ $end
 /* -----------------------------------------------------------------------
 $begin omp_available$$
 $spell
+	cppad.hpp
 	num
 	omp_alloc
 $$
@@ -442,6 +464,8 @@ $head Deprecated 2011-08-31$$
 Use the function $cref/thread_alloc::available/ta_available/$$ instead.
 
 $head Syntax$$
+$codei%# include <cppad/utility.hpp>
+%$$
 $icode%num_bytes% = omp_alloc::available(%thread%)%$$
 
 $head Purpose$$
@@ -481,6 +505,7 @@ $end
 /* -----------------------------------------------------------------------
 $begin omp_create_array$$
 $spell
+	cppad.hpp
 	omp_alloc
 	sizeof
 $$
@@ -492,6 +517,8 @@ $head Deprecated 2011-08-31$$
 Use the function $cref/thread_alloc::create_array/ta_create_array/$$ instead.
 
 $head Syntax$$
+$codei%# include <cppad/utility.hpp>
+%$$
 $icode%array% = omp_alloc::create_array<%Type%>(%size_min%, %size_out%)%$$.
 
 $head Purpose$$
@@ -573,6 +600,7 @@ $end
 /* -----------------------------------------------------------------------
 $begin omp_delete_array$$
 $spell
+	cppad.hpp
 	omp_alloc
 	sizeof
 $$
@@ -584,6 +612,8 @@ $head Deprecated 2011-08-31$$
 Use the function $cref/thread_alloc::delete_array/ta_delete_array/$$ instead.
 
 $head Syntax$$
+$codei%# include <cppad/utility.hpp>
+%$$
 $codei%omp_alloc::delete_array(%array%)%$$.
 
 $head Purpose$$
@@ -642,6 +672,7 @@ $end
 /* --------------------------------------------------------------------------
 $begin omp_efficient$$
 $spell
+	cppad.hpp
 	omp_alloc
 	ptr
 	num
@@ -656,6 +687,8 @@ This function has been removed because speed tests seem to indicate
 it is just as fast, or faster, to free and then reallocate the memory.
 
 $head Syntax$$
+$codei%# include <cppad/utility.hpp>
+%$$
 $icode%flag% = omp_alloc::efficient(%v_ptr%, %num_bytes%)%$$
 
 $head Purpose$$
@@ -707,6 +740,7 @@ $end
 ---------------------------------------------------------------------------
 $begin old_max_num_threads$$
 $spell
+	cppad.hpp
 	inv
 	CppAD
 	num
@@ -721,6 +755,8 @@ Use the function $cref/thread_alloc::parallel_setup/ta_parallel_setup/$$
 in its place.
 
 $head Syntax$$
+$codei%# include <cppad/utility.hpp>
+%$$
 $codei%omp_alloc::max_num_threads(%number%)%$$
 
 $head Purpose$$

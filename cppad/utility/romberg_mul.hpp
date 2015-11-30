@@ -27,9 +27,8 @@ $mindex integrate multi dimensional dimension$$
 
 
 $head Syntax$$
-$code%# include <cppad/utility.hpp>$$
-$pre
-$$
+$codei%# include <cppad/utility.hpp>
+%$$
 $codei%RombergMul<%Fun%, %SizeVector%, %FloatVector%, %m%> %R%$$
 $pre
 $$

@@ -37,9 +37,8 @@ $mindex LuFactor linear equation solve$$
 $pre
 $$
 
-$head Syntax$$ $code%# include <cppad/utility.hpp>$$
-$pre
-$$
+$head Syntax$$ $codei%# include <cppad/utility.hpp>
+%$$
 $icode%sign% = LuFactor(%ip%, %jp%, %LU%)%$$
 
 

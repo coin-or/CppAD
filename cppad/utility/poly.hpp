@@ -32,9 +32,8 @@ $section Evaluate a Polynomial or its Derivative$$
 $mindex Poly template$$
 
 $head Syntax$$
-$code%# include <cppad/utility.hpp>$$
-$pre
-$$
+$codei%# include <cppad/utility.hpp>
+%$$
 $icode%p% = Poly(%k%, %a%, %z%)%$$
 
 

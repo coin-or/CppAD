@@ -26,6 +26,8 @@ $section Replacing the CppAD Error Handler$$
 $mindex replace assert exception ErrorHandler$$
 
 $head Syntax$$
+$codei%# include <cppad/utility.hpp>
+%$$
 $codei%ErrorHandler %info%(%handler%)
 %$$
 $codei%ErrorHandler::Call(%known%, %line%, %file%, %exp%, %msg%)

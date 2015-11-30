@@ -26,8 +26,9 @@ $mindex index_sort$$
 
 
 $head Syntax$$
-$codei%# include <cppad/near_equal.hpp>
-index_sort(%keys%, %ind%)%$$
+$codei%# include <cppad/utility.hpp>
+%$$
+$codei%index_sort(%keys%, %ind%)%$$
 
 $head keys$$
 The argument $icode keys$$ has prototype

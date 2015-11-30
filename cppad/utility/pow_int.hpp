@@ -28,9 +28,8 @@ $section The Integer Power Function$$
 $mindex pow exponent$$
 
 $head Syntax$$
-$code%# include <cppad/utility.hpp>$$
-$pre
-$$
+$codei%# include <cppad/utility.hpp>
+%$$
 $icode%z% = pow(%x%, %y%)%$$
 
 $head See Also$$

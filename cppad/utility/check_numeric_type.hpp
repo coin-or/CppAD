@@ -25,9 +25,8 @@ $mindex numeric CheckNumericType$$
 
 
 $head Syntax$$
-$code%# include <cppad/utility.hpp>$$
-$pre
-$$
+$codei%# include <cppad/utility.hpp>
+%$$
 $codei%CheckNumericType<%NumericType%>()%$$
 
 

@@ -44,9 +44,8 @@ $section An Error Controller for ODE Solvers$$
 $mindex OdeErrControl differential equation$$
 
 $head Syntax$$
-$code%# include <cppad/utility.hpp>$$
-$pre
-$$
+$codei%# include <cppad/utility.hpp>
+%$$
 $icode%xf% = OdeErrControl(%method%, %ti%, %tf%, %xi%,
 	%smin%, %smax%, %scur%, %eabs%, %erel%, %ef% , %maxabs%, %nstep% )%$$
 
