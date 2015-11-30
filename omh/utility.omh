@@ -10,14 +10,15 @@ A copy of this license is included in the COPYING file of this distribution.
 Please visit http://www.coin-or.org/CppAD/ for information on other licenses.
 -------------------------------------------------------------------------- */
 
-$begin library$$
+$begin utility$$
 $spell
 	CppAD
 	namespace
+	alloc
 $$
 
 
-$section The CppAD General Purpose Library$$
+$section Some General Purpose Utilities$$
 
 $children%
 	cppad/utility/error_handler.hpp%
@@ -52,14 +53,7 @@ $children%
 	cppad/local/lu_ratio.hpp
 %$$
 
-$head Error Handler$$
-All of the routines in the CppAD namespace use the following
-general purpose error handler:
-$table
-$rref ErrorHandler$$
-$tend
-
-$head Testing Utilities$$
+$head Testing$$
 The routines listed below support numerical correctness and speed testing:
 $table
 $rref NearEqual$$
@@ -80,7 +74,7 @@ $rref CheckSimpleVector$$
 $tend
 
 
-$head CppAD Numerical Template Library$$
+$head General Numerical Routines$$
 The routines listed below are general purpose numerical routines
 written with the floating point type a C++ template parameter.
 This enables them to be used with algorithmic differentiation types,
@@ -99,22 +93,39 @@ $rref OdeGear$$
 $rref OdeGearControl$$
 $tend
 
-$head General Purpose Utilities$$
-The classes and routines below are of general use
-(not necessarily AD related).
-$table
-$rref CppAD_vector$$
-$rref thread_alloc$$
-$rref index_sort$$
-$tend
-
-$head Numerical AD Library$$
+$head CppAD Numerical$$
 The routines listed below are numerical routines that are specially
 designed to work with CppAD in particular.
 $table
 $rref BenderQuad$$
 $rref opt_val_hes$$
 $rref LuRatio$$
+$tend
+
+$head Miscellaneous$$
+
+$subhead Error Handler$$
+All of the routines in the CppAD namespace use the following
+general purpose error handler:
+$table
+$rref ErrorHandler$$
+$tend
+
+$subhead CppAD::vector$$
+A simple implementation of a template vector class
+(that is easy to view in a C++ debugger):
+$table
+$rref CppAD_vector$$
+$tend
+
+$subhead thread_alloc$$
+$table
+$rref thread_alloc$$
+$tend
+
+$subhead index_sort$$
+$table
+$rref index_sort$$
 $tend
 
 $end

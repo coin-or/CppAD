@@ -185,7 +185,7 @@ are included.
 
 
 $lnext
-Includes a C++ $xref/library/$$ that is useful
+Includes a set of C++ $cref/utilities/utility/$$ that are useful
 for general operator overloaded numerical method.
 Allows for replacement of the
 $cref/testvector/$$
@@ -253,7 +253,7 @@ $childtable%
 	cppad/local/ad_fun.hpp%
 	omh/preprocessor.omh%
 	omh/multi_thread.omh%
-	omh/library.omh%
+	omh/utility.omh%
 	cppad/ipopt/solve.hpp%
 	omh/example.omh%
 	omh/speed/speed.omh%

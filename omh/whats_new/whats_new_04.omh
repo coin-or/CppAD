@@ -237,7 +237,7 @@ Links to the ADOLC and FADBAD download pages were added
 to the $cref/unix installation/auto_tools/$$ instructions.
 
 $head 09-29$$
-The include files for the $cref library$$ are now included
+The include files for the $cref/utilities/utility/$$ are now included
 by the root file $code cppad/cppad.hpp$$.
 They can still be included individually with out the rest of
 the CppAD package.
@@ -407,7 +407,7 @@ extensions of the $cref NearEqual$$ routine to $code AD$$ types.
 $head 07-07$$
 The $code double$$ and $code std::complex<double>$$
 cases for the $cref NearEqual$$ routine arguments
-has been moved to the general purpose $cref library$$.
+has been moved to the general purpose $cref/utilities/utility/$$.
 
 $head 07-03$$
 The CppAD error macros names

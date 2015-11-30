@@ -189,7 +189,7 @@ $head 12-08$$
 Split out $cref LuFactor$$ with the $icode ratio$$ argument
 to a separate function called $cref LuRatio$$.
 This needed to be done because $cref LuRatio$$ is more restrictive
-and should not be part of the general template $cref library$$.
+and should not be part of the general template $cref/utilities/utility/$$.
 
 $head 12-07$$
 Improve $cref CheckSimpleVector$$ so that it tests element assignment.
@@ -462,11 +462,11 @@ This gives the user more control over the location where CppAD is installed.
 $head 09-24$$
 The stiff Ode routines,
 $cref OdeGear$$ and $cref OdeGearControl$$,
-were added to the $cref library$$.
+were added to the $cref/utilities/utility/$$.
 A comparison various Ode solvers on a stiff problem
 $cref ode_stiff.cpp$$ was added.
 In addition, $code OdeGear$$ and $code OdeGearControl$$
-were added to the $cref library$$ and the library was
+were added to the $cref/utilities/utility/$$ and the library was
 reorganized.
 
 $head 09-20$$
@@ -531,7 +531,7 @@ in CppAD error macros has been improved.
 $head 08-24$$
 Changed $code Romberg$$ to $cref RombergOne$$ and added $cref RombergMul$$.
 In addition, added missing entries to $cref ListAllExamples$$
-and reorganized $cref library$$.
+and reorganized $cref/utilities/utility/$$.
 
 $head 08-20$$
 Backed out addition of $code Romberg$$ integration routine
@@ -675,7 +675,7 @@ $$
 The previous version of the
 routine $cref OdeErrControl$$ was mistakenly in the global namespace.
 It has been moved to the $code CppAD$$ namespace
-(where all the other $cref library$$ routines are).
+(where all the other $cref/utilities/utility/$$ routines are).
 $pre
 
 $$

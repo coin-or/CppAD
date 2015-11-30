@@ -669,7 +669,7 @@ $code retape$$ speed test option
 during sparse Hessian speed tests.
 
 $head 05-29$$
-Add $cref index_sort$$ to the general purpose template $cref library$$
+Add $cref index_sort$$ to the general purpose template $cref/utilities/utility/$$
 so that it can be used by the implementations of
 $cref link_sparse_jacobian$$ and $cref link_sparse_hessian$$.
 

@@ -397,7 +397,7 @@ $subhead 08-23$$
 Beginning steps in replacing $cref omp_alloc$$ by $cref thread_alloc$$:
 $list number$$
 Replace $cref omp_alloc$$ by $cref thread_alloc$$
-in the $cref library$$.
+in the $cref/utilities/utility/$$.
 $lnext
 move $cref omp_alloc$$ to the deprecated section of the
 documentation.
