@@ -15,10 +15,19 @@ $spell
 	CppAD
 	namespace
 	alloc
+	cppad.hpp
 $$
 
 
 $section Some General Purpose Utilities$$
+These routines can be included separate from the rest of CppAD using
+$codep
+	# include <cppad/utility.hpp>
+$$
+They will also be included, along with the rest of CppAD, using
+$codep
+	# include <cppad/cppad.hpp>
+$$
 
 $children%
 	cppad/utility/error_handler.hpp%
@@ -46,11 +55,7 @@ $children%
 
 	cppad/utility/vector.hpp%
 	omh/thread_alloc.omh%
-	cppad/utility/index_sort.hpp%
-
-	cppad/local/bender_quad.hpp%
-	cppad/local/opt_val_hes.hpp%
-	cppad/local/lu_ratio.hpp
+	cppad/utility/index_sort.hpp
 %$$
 
 $head Testing$$
@@ -93,15 +98,6 @@ $rref OdeGear$$
 $rref OdeGearControl$$
 $tend
 
-$head CppAD Numerical$$
-The routines listed below are numerical routines that are specially
-designed to work with CppAD in particular.
-$table
-$rref BenderQuad$$
-$rref opt_val_hes$$
-$rref LuRatio$$
-$tend
-
 $head Miscellaneous$$
 
 $subhead Error Handler$$
@@ -111,19 +107,19 @@ $table
 $rref ErrorHandler$$
 $tend
 
-$subhead CppAD::vector$$
+$subhead Simple Vector Template Class$$
 A simple implementation of a template vector class
 (that is easy to view in a C++ debugger):
 $table
 $rref CppAD_vector$$
 $tend
 
-$subhead thread_alloc$$
+$subhead Multi-Threading Memory Allocation$$
 $table
 $rref thread_alloc$$
 $tend
 
-$subhead index_sort$$
+$subhead Sorting Indices$$
 $table
 $rref index_sort$$
 $tend

@@ -76,6 +76,24 @@ This section contains a list of the changes to CppAD during 2015
 The purpose of this section is to
 assist you in learning about changes between various versions of CppAD.
 
+$head 11-30$$
+$list number$$
+The $code library$$ section has been moved to the
+$cref/utilities/utility/$$ section.
+In addition, the corresponding source code files in $code cppad$$
+have been moved to $code cppad/utility$$.
+$lnext
+The include commands for the utilities have been changed from
+particular files for each utility,
+$codep
+	# include <cppad/utility.hpp>
+$$
+i.e., the same command for all the utilities.
+$lnext
+The $cref numeric_ad$$ routines where moved from the $code library$$
+the a separate documentation section.
+$lend
+
 $head 11-25$$
 $list number$$
 CppAD now installs the object library
