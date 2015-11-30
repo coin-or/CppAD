@@ -122,7 +122,7 @@ cmake_args='-U .+'
 if [ "$verbose" == 'yes' ]
 then
 	# echo each command that make executes
-	cmake_args="$cmake_args  -D CMAKE_VERBOSE_MAKEFILE=1"
+	cmake_args="$cmake_args  -D CMAKE_VERBOSE_MAKEFILE=YES"
 fi
 # -----------------------------------------------------------------------------
 # cppad_prefix

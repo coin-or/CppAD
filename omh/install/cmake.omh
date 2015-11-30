@@ -119,9 +119,9 @@ cmake %%                                                                     \
 %$$
 
 $head cmake_verbose_makefile$$
-This value should be either $code 0$$ or $code 1$$.
-The default value, when it is not present, is zero.
-If it is $code 1$$, then the output of the $code make$$ commands
+This value should be either $code YES$$ or $code NO$$.
+The default value, when it is not present, is $code NO$$.
+If it is $code YES$$, then the output of the $code make$$ commands
 will include all of the files and flags used to run the compiler
 and linker. This can be useful for seeing how to compile and link
 your own applications.
