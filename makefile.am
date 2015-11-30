@@ -76,6 +76,7 @@ SPEED_DIRS = \
 	speed/src \
 	$(SPEED_TESTS)
 else
+	SPEED_TESTS =
 	SPEED_DIRS =
 endif
 # ---------------------------------------------------------------------------
@@ -85,8 +86,7 @@ myinclude_HEADERS = \
 	$(IPOPT_HEADER)
 #
 nobase_myinclude_HEADERS =  \
-	\
-	cppad/utility.hpp
+	cppad/utility.hpp \
 	cppad/base_require.hpp \
 	cppad/utility/check_numeric_type.hpp \
 	cppad/utility/check_simple_vector.hpp \

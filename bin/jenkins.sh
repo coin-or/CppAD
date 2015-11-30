@@ -99,7 +99,7 @@ else
 	export LD_LIBRARY_PATH="$trunk_dir/build/prefix/$libdir"
 fi
 # -----------------------------------------------------------------------
-# Use trunk_dir/../build to build and test CppAD (no reuse)
+# Use trunk_dir/build/auto_tools to build and test CppAD (no reuse)
 echo_eval cd build
 echo_eval rm -rf auto_tools
 echo_eval mkdir auto_tools
