@@ -1,9 +1,9 @@
-/* $Id$ */
+// $Id$
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-14 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-15 Bradley M. Bell
 
 CppAD is distributed under multiple licenses. This distribution is under
-the terms of the 
+the terms of the
                     Eclipse Public License Version 1.0.
 
 A copy of this license is included in the COPYING file of this distribution.
@@ -19,10 +19,8 @@ $spell
 $$
 
 $section Correctness Tests For Exponential Approximation in Introduction$$
+$mindex exp_apx main run$$
 
-$index exp_apx, main test$$
-$index run, exp_apx test$$
-$index test, exp_apx main$$
 
 $head Running Tests$$
 To build this program and run its correctness tests see $cref cmake_check$$.
@@ -60,7 +58,7 @@ namespace {
 	static size_t Run_error_count = 0;
 	bool Run(bool TestOk(void), std::string name)
 	{	bool ok               = true;
-		std::streamsize width =  20;         
+		std::streamsize width =  20;
 		std::cout.width( width );
 		std::cout.setf( std::ios_base::left );
 		std::cout << name.c_str();
@@ -84,7 +82,7 @@ int main(void)
 {	bool ok = true;
 	using namespace std;
 
-	// This comment is used by OneTest 
+	// This comment is used by OneTest
 
 	// external compiled tests
 	ok &= Run( exp_2,           "exp_2"          );

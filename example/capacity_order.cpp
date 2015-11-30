@@ -1,9 +1,9 @@
-/* $Id$ */
+// $Id$
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-14 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-15 Bradley M. Bell
 
 CppAD is distributed under multiple licenses. This distribution is under
-the terms of the 
+the terms of the
                     Eclipse Public License Version 1.0.
 
 A copy of this license is included in the COPYING file of this distribution.
@@ -17,9 +17,8 @@ $spell
 $$
 
 $section Controlling Taylor Coefficient Memory Allocation: Example and Test$$
+$mindex capacity_order$$
 
-$index capacity_order, example$$
-$index example, capacity_order$$
 
 $code
 $verbatim%example/capacity_order.cpp%0%// BEGIN C++%// END C++%1%$$
@@ -29,33 +28,33 @@ $end
 */
 // BEGIN C++
 # include <cppad/cppad.hpp>
-	
+
 namespace {
 	bool test(void)
 	{	bool ok = true;
 		using CppAD::AD;
 		using CppAD::NearEqual;
 		using CppAD::thread_alloc;
-	
+
 		// domain space vector
 		size_t n(1), m(1);
 		CPPAD_TESTVECTOR(AD<double>) ax(n), ay(n);
-	
+
 		// declare independent variables and start tape recording
 		ax[0]  = 1.0;
 		CppAD::Independent(ax);
-	
-		// Set y = x^3, use enough variables so more that the minimal amount 
+
+		// Set y = x^3, use enough variables so more that the minimal amount
 		// of memory is allocated for Taylor coefficients
 		ay[0] = 0.;
 		for( size_t i = 0; i < 10; i++)
 			ay[0] += ax[0] * ax[0] * ax[0];
 		ay[0] = ay[0] / 10.;
-	
+
 		// create f: x -> y and stop tape recording
 		// (without running zero order forward mode).
 		CppAD::ADFun<double> f;
-		f.Dependent(ax, ay); 
+		f.Dependent(ax, ay);
 
 		// check that this is master thread
 		size_t thread = thread_alloc::thread_num();
@@ -74,27 +73,27 @@ namespace {
 		y    = f.Forward(0, x);
 		double eps = 10. * CppAD::numeric_limits<double>::epsilon();
 		ok  &= NearEqual(y[0], x[0] * x[0] * x[0], eps, eps);
-	
+
 		// forward computation of partials w.r.t. x
 		CPPAD_TESTVECTOR(double) dx(n), dy(m);
 		dx[0] = 1.;
 		dy    = f.Forward(1, dx);
 		ok   &= NearEqual(dy[0], 3. * x[0] * x[0], eps, eps);
-	
+
 		// Suppose we no longer need the first order Taylor coefficients.
 		inuse = thread_alloc::inuse(thread);
 		f.capacity_order(1); // just keep zero order coefficients
 		ok   &= thread_alloc::inuse(thread) < inuse;
-	
+
 		// Suppose we no longer need the zero order Taylor coefficients
 		// (could have done this first and not used f.capacity_order(1)).
 		inuse = thread_alloc::inuse(thread);
 		f.capacity_order(0);
 		ok   &= thread_alloc::inuse(thread) < inuse;
-	
+
 		// turn off memory holding
 		thread_alloc::hold_memory(false);
-	
+
 		return ok;
 	}
 }
@@ -113,8 +112,8 @@ bool capacity_order(void)
 	// check that the amount of memroy inuse has not changed
 	ok &= thread_alloc::inuse(thread) == inuse;
 
-	// Test above uses hold_memory, so return available memory 
-	thread_alloc::free_available(thread); 
+	// Test above uses hold_memory, so return available memory
+	thread_alloc::free_available(thread);
 
 	return ok;
 }

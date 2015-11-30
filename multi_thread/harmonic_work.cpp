@@ -1,9 +1,9 @@
-/* $Id$ */
+// $Id$
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-12 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-15 Bradley M. Bell
 
 CppAD is distributed under multiple licenses. This distribution is under
-the terms of the 
+the terms of the
                     Eclipse Public License Version 1.0.
 
 A copy of this license is included in the COPYING file of this distribution.
@@ -15,16 +15,10 @@ $spell
 	inv
 	num
 $$
-$index harmonic_work$$
 
-$section Multi-threading Sum of 1/i Utility Routines$$ 
+$section Multi-threading Sum of 1/i Utility Routines$$
+$mindex harmonic_work setup worker combine$$
 
-$index harmonic_setup$$
-$index harmonic_worker$$
-$index harmonic_combine$$
-$index setup, harmonic$$
-$index worker, harmonic$$
-$index combine, harmonic$$
 
 
 $head Syntax$$
@@ -66,7 +60,7 @@ of the multi_threading system.
 $head harmonic_worker$$
 Calling this function does the computation for one thread.
 Following a call to $code harmonic_setup$$,
-this function should be called by each of the $icode num_threads$$ threads. 
+this function should be called by each of the $icode num_threads$$ threads.
 
 $head harmonic_combine$$
 After the $icode num_threads$$ threads have completed their
@@ -122,7 +116,7 @@ void harmonic_worker(void)
 	size_t i = stop;
 	while( i > start )
 	{	i--;
-		sum += 1. / double(i);	
+		sum += 1. / double(i);
 	}
 
 	work_all_[thread_num]->sum = sum;
@@ -150,7 +144,7 @@ bool harmonic_setup(size_t num_sum, size_t num_threads)
 			work_all_[0]->start = 1;
 		else
 		{	size_t index  = (num_sum * thread_num) / num_threads;
-			work_all_[thread_num-1]->stop = index; 
+			work_all_[thread_num-1]->stop = index;
 			work_all_[thread_num]->start  = index;
 		}
 	}
@@ -158,7 +152,7 @@ bool harmonic_setup(size_t num_sum, size_t num_threads)
 	return ok;
 }
 // -----------------------------------------------------------------------
-// get the result of the work 
+// get the result of the work
 bool harmonic_combine(double& sum)
 {	// sum = 1/num_sum + 1/(num_sum-1) + ... + 1
 	bool ok            = true;
@@ -172,7 +166,7 @@ bool harmonic_combine(double& sum)
 		ok  &= work_all_[thread_num]->ok;
 		// add this threads contribution to the sum
 		sum += work_all_[thread_num]->sum;
-		// delete problem specific information 
+		// delete problem specific information
 		void* v_ptr = static_cast<void*>( work_all_[thread_num] );
 		thread_alloc::return_memory( v_ptr );
 		// check that there is no longer any memory inuse by this thread

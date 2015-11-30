@@ -1,6 +1,6 @@
-/* $Id$ */
-# ifndef CPPAD_SPARSE_INCLUDED
-# define CPPAD_SPARSE_INCLUDED
+// $Id$
+# ifndef CPPAD_SPARSE_HPP
+# define CPPAD_SPARSE_HPP
 
 /* --------------------------------------------------------------------------
 CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-15 Bradley M. Bell
@@ -18,8 +18,6 @@ $begin Sparse$$
 $spell
 $$
 
-$index sparsity, pattern$$
-$index pattern, sparsity$$
 
 $section Calculating Sparsity Patterns$$
 

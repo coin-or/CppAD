@@ -1,4 +1,4 @@
-/* $Id$ */
+// $Id$
 /* --------------------------------------------------------------------------
 CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-15 Bradley M. Bell
 
@@ -14,12 +14,8 @@ Please visit http://www.coin-or.org/CppAD/ for information on other licenses.
 $begin optimize.cpp$$
 
 $section ADFun Operation Sequence Optimization: Example and Test$$
+$mindex optimize$$
 
-$index optimize, operation sequence$$
-$index operation, optimize sequence$$
-$index sequence, optimize operation$$
-$index test, optimize$$
-$index example, optimize$$
 
 $code
 $verbatim%example/optimize.cpp%0%// BEGIN C++%// END C++%1%$$
@@ -42,7 +38,7 @@ namespace {
 		// beginning of operation sequence.
 		n_opt = 1 + x.size();
 
-	 	// Create a variable that is is only used in the comparision operation
+		// Create a variable that is is only used in the comparision operation
 		// (was optimized out until 2015-01-12).
 		Float a = 1. / x[0];
 		n_var += 1;

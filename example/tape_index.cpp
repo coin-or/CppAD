@@ -1,9 +1,9 @@
-/* $Id$ */
+// $Id$
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-12 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-15 Bradley M. Bell
 
 CppAD is distributed under multiple licenses. This distribution is under
-the terms of the 
+the terms of the
                     Eclipse Public License Version 1.0.
 
 A copy of this license is included in the COPYING file of this distribution.
@@ -14,10 +14,8 @@ Please visit http://www.coin-or.org/CppAD/ for information on other licenses.
 $begin tape_index.cpp$$
 
 $section Taping Array Index Operation: Example and Test$$
+$mindex tape operation$$
 
-$index array, tape index operation$$
-$index index, tape array operation$$
-$index tape, array index operation$$
 
 $code
 $verbatim%example/tape_index.cpp%0%// BEGIN C++%// END C++%1%$$
@@ -74,8 +72,8 @@ bool TapeIndex(void)
 
 	// vectors for arguments to the function object f
 	CPPAD_TESTVECTOR(double) x(n);   // argument values
-	CPPAD_TESTVECTOR(double) y(m);   // function values 
-	CPPAD_TESTVECTOR(double) w(m);   // function weights 
+	CPPAD_TESTVECTOR(double) y(m);   // function values
+	CPPAD_TESTVECTOR(double) w(m);   // function weights
 	CPPAD_TESTVECTOR(double) dw(n);  // derivative of weighted function
 
 	// check function value
@@ -90,7 +88,7 @@ bool TapeIndex(void)
 	y    = f.Forward(0, x);
 	ok  &= y[0] == x[1] * Array(x[0]);
 
-	// evaluate derivaitve of y[0] 
+	// evaluate derivaitve of y[0]
 	w[0] = 1.;
 	dw   = f.Reverse(1, w);
 	ok   &= dw[0] == 0.;              // partial w.r.t array index

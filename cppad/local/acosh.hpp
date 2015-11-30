@@ -1,6 +1,6 @@
-// $Id:$
-# ifndef CPPAD_ACOSH_INCLUDED
-# define CPPAD_ACOSH_INCLUDED
+// $Id$
+# ifndef CPPAD_ACOSH_HPP
+# define CPPAD_ACOSH_HPP
 
 /* --------------------------------------------------------------------------
 CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-15 Bradley M. Bell

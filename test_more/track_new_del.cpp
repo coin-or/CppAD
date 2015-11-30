@@ -1,9 +1,9 @@
-/* $Id$ */
+// $Id$
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-13 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-15 Bradley M. Bell
 
 CppAD is distributed under multiple licenses. This distribution is under
-the terms of the 
+the terms of the
                     Eclipse Public License Version 1.0.
 
 A copy of this license is included in the COPYING file of this distribution.
@@ -14,14 +14,9 @@ Please visit http://www.coin-or.org/CppAD/ for information on other licenses.
 $begin TrackNewDel.cpp$$
 
 $section Tracking Use of New and Delete: Example and Test$$
+$mindex delete$$
 
-$index new, example$$
-$index example, new$$
-$index test, new$$
 
-$index delete, example$$
-$index example, delete$$
-$index test, delete$$
 
 $code
 $verbatim%test_more/track_new_del.cpp%0%// BEGIN C++%// END C++%1%$$
@@ -31,7 +26,7 @@ $end
 */
 // BEGIN C++
 
-# include <cppad/track_new_del.hpp>
+# include <cppad/utility/track_new_del.hpp>
 
 bool track_new_del(void)
 {	bool ok = true;
@@ -53,13 +48,13 @@ bool track_new_del(void)
 	// extend the buffer to be lenght 10
 	newlen = 10;
 	ptr    = CPPAD_TRACK_EXTEND(newlen, ncopy, ptr);
-		
+
 	// copy data into the new part of the array
 	for(i = ncopy; i < newlen; i++)
 		ptr[i] = double(i);
 
 	// check the values in the array
- 	for(i = 0; i < newlen; i++)
+	for(i = 0; i < newlen; i++)
 		ok &= (ptr[i] == double(i));
 
 	// free the memory allocated since previous call to TrackCount

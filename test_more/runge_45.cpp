@@ -1,9 +1,9 @@
-/* $Id$ */
+// $Id$
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-12 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-15 Bradley M. Bell
 
 CppAD is distributed under multiple licenses. This distribution is under
-the terms of the 
+the terms of the
                     Eclipse Public License Version 1.0.
 
 A copy of this license is included in the COPYING file of this distribution.
@@ -26,19 +26,19 @@ namespace { // BEGIN Empty namespace
 			w = w_;
 		}
 		void Ode(
-			const CppAD::AD<double>                      &t, 
-			const CPPAD_TESTVECTOR(CppAD::AD<double>) &x, 
-			CPPAD_TESTVECTOR(CppAD::AD<double>)       &f) 
+			const CppAD::AD<double>                      &t,
+			const CPPAD_TESTVECTOR(CppAD::AD<double>) &x,
+			CPPAD_TESTVECTOR(CppAD::AD<double>)       &f)
 		{
 			using CppAD::exp;
-	
+
 			size_t n = x.size();
-	
+
 			size_t i;
 			f[0]  = 0.;
 			for(i = 1; i < n-1; i++)
 				f[i] = w[i] * x[i-1];
-	
+
 			f[n-1] = x[0] * x[1];
 		}
 	private:
@@ -117,7 +117,7 @@ bool Runge45(void)
 		{	// check partial of x[i] w.r.t w[j]
 			if (j == 0 )
 				ok &= NearEqual(q[j], x[i], 1e-14, 1e-14);
-			else if( j <= i  ) 
+			else if( j <= i  )
 				ok &= NearEqual(
 					q[j], x[i]/w[j], 1e-14, 1e-14);
 			else	ok &= NearEqual(q[j], 0., 1e-14, 1e-14);
@@ -135,7 +135,7 @@ bool Runge45(void)
 	{	// check partial of x[n-1] w.r.t w[j]
 		if (j == 0 )
 			ok &= NearEqual(q[j], 2.*x[i], 1e-14, 1e-14);
-		else if( j == 1  ) 
+		else if( j == 1  )
 			ok &= NearEqual(
 				q[j], x[i]/w[1], 1e-14, 1e-14);
 		else	ok &= NearEqual(q[j], 0., 1e-14, 1e-14);

@@ -1,4 +1,4 @@
-/* $Id$ */
+// $Id$
 /* --------------------------------------------------------------------------
 CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-15 Bradley M. Bell
 
@@ -57,10 +57,10 @@ $end
 # include <limits>                      // for quiet_NaN
 # include <cstddef>                     // for size_t
 # include <cmath>                       // for exp
-# include <cppad/ode_err_control.hpp>   // CppAD::OdeErrControl
-# include <cppad/near_equal.hpp>        // CppAD::NearEqual
-# include <cppad/vector.hpp>            // CppAD::vector
-# include <cppad/runge_45.hpp>          // CppAD::Runge45
+# include <cppad/utility/ode_err_control.hpp>   // CppAD::OdeErrControl
+# include <cppad/utility/near_equal.hpp>        // CppAD::NearEqual
+# include <cppad/utility/vector.hpp>            // CppAD::vector
+# include <cppad/utility/runge_45.hpp>          // CppAD::Runge45
 
 namespace {
 	// --------------------------------------------------------------

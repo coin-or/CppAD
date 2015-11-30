@@ -1,9 +1,9 @@
-/* $Id$ */
+// $Id$
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-12 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-15 Bradley M. Bell
 
 CppAD is distributed under multiple licenses. This distribution is under
-the terms of the 
+the terms of the
                     Eclipse Public License Version 1.0.
 
 A copy of this license is included in the COPYING file of this distribution.
@@ -53,7 +53,7 @@ int main(void)
 	ok &= Run( multiple_solution,   "multiple_solution"  );
 	ok &= Run( retape_k1_l1,        "retape_k1_l1"       );
 	ok &= Run( retape_k1_l2,        "retape_k1_l2"       );
-	
+
 	// check for errors
 	using std::cout;
 	using std::endl;

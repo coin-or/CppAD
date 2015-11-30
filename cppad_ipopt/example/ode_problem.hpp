@@ -1,11 +1,11 @@
-/* $Id$ */
-# ifndef CPPAD_ODE_PROBLEM_INCLUDED
-# define CPPAD_ODE_PROBLEM_INCLUDED
+// $Id$
+# ifndef CPPAD_ODE_PROBLEM_HPP
+# define CPPAD_ODE_PROBLEM_HPP
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-12 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-15 Bradley M. Bell
 
 CppAD is distributed under multiple licenses. This distribution is under
-the terms of the 
+the terms of the
                     Eclipse Public License Version 1.0.
 
 A copy of this license is included in the COPYING file of this distribution.
@@ -21,10 +21,9 @@ $spell
 $$
 
 $section ODE Inverse Problem Definitions: Source Code$$
+$mindex example$$
 
-$index ode, inverse example$$
-$index inverse, ode example$$
-$index example, ode inverse$$ 
+
 
 $code
 $verbatim%cppad_ipopt/example/ode_problem.hpp%0%// BEGIN C++%// END C++%1%$$
@@ -50,7 +49,7 @@ namespace {
 	}
 
 	// time points were we have data (no data at first point)
-	double s[] = { 0.0,        0.5,        1.0,        1.5,        2.0 }; 
+	double s[] = { 0.0,        0.5,        1.0,        1.5,        2.0 };
 	// Simulated data for case with no noise (first point is not used)
 	double z[] = { 0.0,  y_one(0.5), y_one(1.0), y_one(1.5), y_one(2.0) };
 	// Number of measurement values
@@ -67,9 +66,9 @@ namespace {
 	{	Vector F(Ny);
 		// y_0 (t) = a[0]*exp(-a[1] * t)
 		F[0] = a[0];
-		// y_1 (t) = 
+		// y_1 (t) =
 		// a[0]*a[1]*(exp(-a[2] * t) - exp(-a[1] * t))/(a[1] - a[2])
-		F[1] = 0.; 
+		F[1] = 0.;
 		return F;
 	}
 	// G(y, a) =  \partial_t y(t, a); i.e. the differential equation
@@ -78,19 +77,19 @@ namespace {
 	Vector eval_G(const Vector &y , const Vector &a)
 	{	Vector G(Ny);
 		// y_0 (t) = a[0]*exp(-a[1] * t)
-		G[0] = -a[1] * y[0];  
-		// y_1 (t) = 
+		G[0] = -a[1] * y[0];
+		// y_1 (t) =
 		// a[0]*a[1]*(exp(-a[2] * t) - exp(-a[1] * t))/(a[1] - a[2])
-		G[1] = +a[1] * y[0] - a[2] * y[1]; 
+		G[1] = +a[1] * y[0] - a[2] * y[1];
 		return G;
-	} 
+	}
 	// H(i, y, a) = contribution to objective at i-th data point
 	// (for this particular example)
 	template <class Scalar, class Vector>
 	Scalar eval_H(size_t i, const Vector &y, const Vector &a)
 	{	// This particular H is for a case where y_1 (t) is measured
 		Scalar diff = z[i] - y[1];
-	 	return diff * diff;
+		return diff * diff;
 	}
 	// function used to count the number of calls to eval_r
 	size_t count_eval_r(void)

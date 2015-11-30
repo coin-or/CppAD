@@ -1,6 +1,6 @@
-/* $Id$ */
-# ifndef CPPAD_COLOR_GENERAL_INCLUDED
-# define CPPAD_COLOR_GENERAL_INCLUDED
+// $Id$
+# ifndef CPPAD_COLOR_GENERAL_HPP
+# define CPPAD_COLOR_GENERAL_HPP
 
 /* --------------------------------------------------------------------------
 CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-15 Bradley M. Bell

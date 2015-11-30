@@ -1,9 +1,9 @@
 // $Id$
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-12 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-15 Bradley M. Bell
 
 CppAD is distributed under multiple licenses. This distribution is under
-the terms of the 
+the terms of the
                     Eclipse Public License Version 1.0.
 
 A copy of this license is included in the COPYING file of this distribution.
@@ -18,14 +18,11 @@ $spell
 $$
 
 $section A Simple Boost Threading AD: Example and Test$$
+$mindex thread AD$$
 
-$index boost, simple thread AD$$
-$index AD, simple boost thread$$
-$index simple, boost thread AD$$
-$index thread, simple boost AD$$
 
 $head Purpose$$
-This example demonstrates how CppAD can be used in a 
+This example demonstrates how CppAD can be used in a
 boost multi-threading environment.
 
 $head Source Code$$
@@ -144,13 +141,13 @@ namespace {
 
 		// inform CppAD that we now may be in parallel execution mode
 		sequential_execution_ = false;
-	
+
 		// This master thread is already running, we need to create
 		// num_threads - 1 more threads
 		thread_all_[0].bthread = CPPAD_NULL;
 		for(thread_num = 1; thread_num < num_threads; thread_num++)
 		{	// Create the thread with thread number equal to thread_num
-			thread_all_[thread_num].bthread = 
+			thread_all_[thread_num].bthread =
 				new boost::thread(run_one_worker, thread_num);
 		}
 
@@ -159,7 +156,7 @@ namespace {
 		ok &= thread_num == 0;
 		ok &= worker(thread_num, thread_all_[thread_num].info);
 
-		// now wait for the other threads to finish 
+		// now wait for the other threads to finish
 		for(thread_num = 1; thread_num < num_threads; thread_num++)
 		{	thread_all_[thread_num].bthread->join();
 			delete thread_all_[thread_num].bthread;
@@ -181,7 +178,7 @@ namespace {
 		return ok;
 	}
 	// =====================================================================
-	// End of General purpose code 
+	// End of General purpose code
 	// =====================================================================
 	// function that does the work for one thread
 	bool worker(size_t thread_num, problem_specific* info)
@@ -192,9 +189,9 @@ namespace {
 		ax[0] = info->x;
 		Independent(ax);
 		ay[0] = sqrt( ax[0] * ax[0] );
-		CppAD::ADFun<double> f(ax, ay); 
+		CppAD::ADFun<double> f(ax, ay);
 
-		// Check function value corresponds to the identity 
+		// Check function value corresponds to the identity
 		double eps = 10. * CppAD::numeric_limits<double>::epsilon();
 		ok        &= CppAD::NearEqual(ay[0], ax[0], eps, eps);
 
@@ -215,8 +212,8 @@ bool simple_ad(void)
 	// (using thread_alloc in sequential mode)
 	size_t thread_num;
 	for(thread_num = 0; thread_num < num_threads; thread_num++)
-	{	ok &= thread_alloc::inuse(thread_num) == 0; 
-		ok &= thread_alloc::available(thread_num) == 0; 
+	{	ok &= thread_alloc::inuse(thread_num) == 0;
+		ok &= thread_alloc::available(thread_num) == 0;
 	}
 
 	// initialize info_all
@@ -239,9 +236,9 @@ bool simple_ad(void)
 		void* v_ptr = static_cast<void*>( info_all[thread_num] );
 		thread_alloc::return_memory( v_ptr );
 		// check that there is no longer any memory inuse by this thread
-		ok &= thread_alloc::inuse(thread_num) == 0; 
+		ok &= thread_alloc::inuse(thread_num) == 0;
 		// return all memory being held for future use by this thread
-		thread_alloc::free_available(thread_num); 
+		thread_alloc::free_available(thread_num);
 	}
 
 	return ok;

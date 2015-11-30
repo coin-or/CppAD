@@ -1,6 +1,6 @@
-/* $Id$ */
-# ifndef CPPAD_FORWARD1SWEEP_INCLUDED
-# define CPPAD_FORWARD1SWEEP_INCLUDED
+// $Id$
+# ifndef CPPAD_FORWARD1SWEEP_HPP
+# define CPPAD_FORWARD1SWEEP_HPP
 
 /* --------------------------------------------------------------------------
 CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-15 Bradley M. Bell

@@ -1,9 +1,9 @@
-/* $Id$ */
+// $Id$
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-07 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-15 Bradley M. Bell
 
 CppAD is distributed under multiple licenses. This distribution is under
-the terms of the 
+the terms of the
                     Eclipse Public License Version 1.0.
 
 A copy of this license is included in the COPYING file of this distribution.
@@ -12,10 +12,10 @@ Please visit http://www.coin-or.org/CppAD/ for information on other licenses.
 
 # include <cstddef>                    // for size_t
 # include <cmath>                      // for exp
-# include <cppad/ode_err_control.hpp>  // CppAD::OdeErrControl
-# include <cppad/near_equal.hpp>       // CppAD::NearEqual
-# include <cppad/vector.hpp>           // CppAD::vector
-# include <cppad/runge_45.hpp>         // CppAD::Runge45
+# include <cppad/utility/ode_err_control.hpp>  // CppAD::OdeErrControl
+# include <cppad/utility/near_equal.hpp>       // CppAD::NearEqual
+# include <cppad/utility/vector.hpp>           // CppAD::vector
+# include <cppad/utility/runge_45.hpp>         // CppAD::Runge45
 
 /* -------------------------------------------------------------------------
 Test relative error with zero initial conditions.
@@ -30,13 +30,13 @@ namespace {
 	public:
 		// constructor
 		Fun_one(size_t n_) : n(n_)
-		{ } 
+		{ }
 
 		// given x(0) = 0
 		// solution is x_i (t) = t^(i+1)
 		void Ode(
-			const double                &t, 
-			const CppAD::vector<double> &x, 
+			const double                &t,
+			const CppAD::vector<double> &x,
 			CppAD::vector<double>       &f)
 		{	size_t i;
 			f[0] = 1.;
@@ -54,8 +54,8 @@ namespace {
 		Method_one(size_t n_) : F(n_)
 		{ }
 		void step(
-			double ta, 
-			double tb, 
+			double ta,
+			double tb,
 			CppAD::vector<double> &xa ,
 			CppAD::vector<double> &xb ,
 			CppAD::vector<double> &eb )
@@ -70,8 +70,8 @@ bool OdeErrControl_one(void)
 {	bool   ok = true;     // initial return value
 
 	// Runge45 should yield exact results for x_i (t) = t^(i+1), i < 4
-	size_t  n = 6;        
-	
+	size_t  n = 6;
+
 	// construct method for n component solution
 	Method_one method(n);
 
@@ -96,7 +96,7 @@ bool OdeErrControl_one(void)
 
 	CppAD::vector<double> ef(n);
 	CppAD::vector<double> xf(n);
-	
+
 	xf = OdeErrControl(method,
 		ti, tf, xi, smin, smax, scur, eabs, erel, ef);
 
@@ -111,7 +111,7 @@ bool OdeErrControl_one(void)
 
 /*
 Old example now just a test
-Define 
+Define
 $latex X : \B{R} \rightarrow \B{R}^2$$ by
 $latex \[
 \begin{array}{rcl}
@@ -123,7 +123,7 @@ It follows that $latex X_0 (0) = 1$$, $latex X_1 (0) = 0$$ and
 $latex \[
 \begin{array}{rcl}
 	X_0^{(1)} (t) & = & - w_0 X_0 (t)  \\
-	X_1^{(1)} (t) & = & + w_0 X_0 (t) - w_1 X_1 (t) 
+	X_1^{(1)} (t) & = & + w_0 X_0 (t) - w_1 X_1 (t)
 \end{array}
 \] $$
 */
@@ -136,15 +136,15 @@ namespace {
 	public:
 		// constructor
 		Fun_two(const CppAD::vector<double> &w_) : w(w_)
-		{ } 
+		{ }
 
 		// set f = x'(t)
 		void Ode(
-			const double                &t, 
-			const CppAD::vector<double> &x, 
+			const double                &t,
+			const CppAD::vector<double> &x,
 			CppAD::vector<double>       &f)
 		{	f[0] = - w[0] * x[0];
-			f[1] = + w[0] * x[0] - w[1] * x[1];	
+			f[1] = + w[0] * x[0] - w[1] * x[1];
 		}
 	};
 
@@ -157,8 +157,8 @@ namespace {
 		Method_two(const CppAD::vector<double> &w_) : F(w_)
 		{ }
 		void step(
-			double ta, 
-			double tb, 
+			double ta,
+			double tb,
 			CppAD::vector<double> &xa ,
 			CppAD::vector<double> &xb ,
 			CppAD::vector<double> &eb )
@@ -199,7 +199,7 @@ bool OdeErrControl_two(void)
 	CppAD::vector<double> maxabs(2);
 	size_t nstep;
 
-	
+
 	xf = OdeErrControl(method,
 		ti, tf, xi, smin, smax, scur, eabs, erel, ef, maxabs, nstep);
 
@@ -214,7 +214,7 @@ bool OdeErrControl_two(void)
 	return ok;
 }
 /*
-Define 
+Define
 $latex X : \B{R} \rightarrow \B{R}^2$$ by
 $latex \[
 \begin{array}{rcl}
@@ -229,19 +229,19 @@ $latex \[
 \begin{array}{rcl}
 X_0 (t) & = &  \exp ( \alpha t^2 )  \\
 X_1 (t) & = &  \int_0^t \exp( - \alpha s^2 ) {\bf d} s \\
-& = &  
+& = &
 \frac{1}{ \sqrt{\alpha} \int_0^{\sqrt{\alpha} t} \exp( - r^2 ) {\bf d} r
 \\
 & = & \frac{\sqrt{\pi}}{ 2 \sqrt{\alpha} {\rm erf} ( \sqrt{\alpha} t )
 \end{array}
 \] $$
 If $latex X_0 (t) < 0$$,
-we return $code nan$$ in order to inform 
+we return $code nan$$ in order to inform
 $code OdeErrControl$$ that its is taking to large a step.
 
 */
 
-# include <cppad/rosen_34.hpp>          // CppAD::Rosen34
+# include <cppad/utility/rosen_34.hpp>          // CppAD::Rosen34
 # include <cppad/cppad.hpp>
 
 namespace {
@@ -253,15 +253,15 @@ namespace {
 	public:
 		// constructor
 		Fun_three(double alpha) : alpha_(alpha), was_negative_(false)
-		{ } 
+		{ }
 
 		// set f = x'(t)
 		void Ode(
-			const double                &t, 
-			const CppAD::vector<double> &x, 
+			const double                &t,
+			const CppAD::vector<double> &x,
 			CppAD::vector<double>       &f)
 		{	f[0] = 2. * alpha_ * t * x[0];
-			f[1] = 1. / x[0];	
+			f[1] = 1. / x[0];
 			// case where ODE does not make sense
 			if( x[0] < 0. || x[1] < 0. )
 			{	was_negative_ = true;
@@ -270,12 +270,12 @@ namespace {
 		}
 		// set f_t = df / dt
 		void Ode_ind(
-			const double                &t, 
-			const CppAD::vector<double> &x, 
+			const double                &t,
+			const CppAD::vector<double> &x,
 			CppAD::vector<double>       &f_t)
 		{
 			f_t[0] =  2. * alpha_ * x[0];
-			f_t[1] = 0.;	
+			f_t[1] = 0.;
 			if( x[0] < 0. || x[1] < 0. )
 			{	was_negative_ = true;
 				f_t[0] = CppAD::nan(0.);
@@ -283,8 +283,8 @@ namespace {
 		}
 		// set f_x = df / dx
 		void Ode_dep(
-			const double                &t, 
-			const CppAD::vector<double> &x, 
+			const double                &t,
+			const CppAD::vector<double> &x,
 			CppAD::vector<double>       &f_x)
 		{	double x0_sq = x[0] * x[0];
 			f_x[0 * 2 + 0] = 2. * alpha_ * t;   // f0 w.r.t. x0
@@ -310,8 +310,8 @@ namespace {
 		Method_three(double alpha) : F(alpha)
 		{ }
 		void step(
-			double ta, 
-			double tb, 
+			double ta,
+			double tb,
 			CppAD::vector<double> &xa ,
 			CppAD::vector<double> &xb ,
 			CppAD::vector<double> &eb )
@@ -350,7 +350,7 @@ bool OdeErrControl_three(void)
 	CppAD::vector<double> maxabs(2);
 	size_t nstep;
 
-	
+
 	xf = OdeErrControl(method,
 		ti, tf, xi, smin, smax, scur, eabs, erel, ef, maxabs, nstep);
 
@@ -378,13 +378,13 @@ namespace {
 	public:
 		// constructor
 		Fun_four(size_t n_) : n(n_)
-		{ } 
+		{ }
 
 		// given x(0) = 0
 		// solution is x_i (t) = t^(i+1)
 		void Ode(
-			const double                &t, 
-			const CppAD::vector<double> &x, 
+			const double                &t,
+			const CppAD::vector<double> &x,
 			CppAD::vector<double>       &f)
 		{	size_t i;
 			f[0] = CppAD::nan(0.);
@@ -402,8 +402,8 @@ namespace {
 		Method_four(size_t n_) : F(n_)
 		{ }
 		void step(
-			double ta, 
-			double tb, 
+			double ta,
+			double tb,
 			CppAD::vector<double> &xa ,
 			CppAD::vector<double> &xb ,
 			CppAD::vector<double> &eb )
@@ -416,9 +416,9 @@ namespace {
 
 bool OdeErrControl_four(void)
 {	bool   ok = true;     // initial return value
-	
+
 	// construct method for n component solution
-	size_t  n = 6;        
+	size_t  n = 6;
 	Method_four method(n);
 
 	// inputs to OdeErrControl
@@ -443,7 +443,7 @@ bool OdeErrControl_four(void)
 	// outputs from OdeErrControl
 	CppAD::vector<double> ef(n);
 	CppAD::vector<double> xf(n);
-	
+
 	xf = OdeErrControl(method,
 		ti, tf, xi, smin, smax, scur, eabs, erel, ef);
 

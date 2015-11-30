@@ -1,9 +1,9 @@
-/* $Id$ */
+// $Id$
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-14 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-15 Bradley M. Bell
 
 CppAD is distributed under multiple licenses. This distribution is under
-the terms of the 
+the terms of the
                     Eclipse Public License Version 1.0.
 
 A copy of this license is included in the COPYING file of this distribution.
@@ -18,18 +18,10 @@ $spell
 $$
 
 $section ADFun Check and Re-Tape: Example and Test$$
+$mindex FunCheck Dependent$$
 
-$index FunCheck, example$$
-$index example, FunCheck$$
-$index test, FunCheck$$
 
-$index ADFun, example$$
-$index example, ADFun$$
-$index test, ADFun$$
 
-$index Dependent, example$$
-$index example, Dependent$$
-$index test, Dependent$$
 
 $code
 $verbatim%example/fun_check.cpp%0%// BEGIN C++%// END C++%1%$$
@@ -56,12 +48,12 @@ public:
 		size_t i;
 		for(i = 0; i < n; i++)
 		{	// This operaiton sequence depends on x
-			if( x[i] >= 0 ) 
+			if( x[i] >= 0 )
 				y[i] = exp(x[i]);
 			else	y[i] = exp(-x[i]);
 		}
 		return y;
-	}	
+	}
 };
 // template function FunCheckCases<Vector, ADVector> in empty namespace
 template <class Vector, class ADVector>
@@ -98,13 +90,13 @@ bool FunCheckCases(void)
 	// create function object to use with double
 	Fun<double, Vector> g(n);
 
-	// function values should agree when the independent variable 
+	// function values should agree when the independent variable
 	// values are the same as during recording
 	Vector x(n);
 	size_t j;
 	for(j = 0; j < n; j++)
 		x[j] = Value(X[j]);
-	double r = 1e-10; 
+	double r = 1e-10;
 	double a = 1e-10;
 	ok      &= FunCheck(f, g, x, a, r);
 
@@ -129,7 +121,7 @@ bool FunCheckCases(void)
 
 	return ok;
 }
-} // End empty namespace 
+} // End empty namespace
 # include <vector>
 # include <valarray>
 bool FunCheck(void)
@@ -141,7 +133,7 @@ bool FunCheck(void)
 	typedef std::valarray<double>                Vector3;
 	typedef std::valarray< CppAD::AD<double> > ADVector3;
 	// Run with Vector and ADVector equal to three different cases
-	// all of which are Simple Vectors with elements of type 
+	// all of which are Simple Vectors with elements of type
 	// double and AD<double> respectively.
 	ok &= FunCheckCases< Vector1, ADVector2 >();
 	ok &= FunCheckCases< Vector2, ADVector3 >();

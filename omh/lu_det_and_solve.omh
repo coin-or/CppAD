@@ -1,9 +1,9 @@
 $Id$
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-06 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-15 Bradley M. Bell
 
 CppAD is distributed under multiple licenses. This distribution is under
-the terms of the 
+the terms of the
                     Eclipse Public License Version 1.0.
 
 A copy of this license is included in the COPYING file of this distribution.
@@ -12,21 +12,15 @@ Please visit http://www.coin-or.org/CppAD/ for information on other licenses.
 
 $begin LuDetAndSolve$$
 
-$index matrix, factor$$
-$index matrix, determinant$$
-$index matrix, linear equation$$
 
-$index factor, matrix$$
-$index determinant$$
-$index linear, equation$$
-$index equation, linear$$
 
 $section Compute Determinants and Solve Equations by LU Factorization$$
+$mindex matrix factor linear$$
 
 $childtable%
-	cppad/lu_solve.hpp%
-	cppad/lu_factor.hpp%
-	cppad/lu_invert.hpp
+	cppad/utility/lu_solve.hpp%
+	cppad/utility/lu_factor.hpp%
+	cppad/utility/lu_invert.hpp
 %$$
 
 $end

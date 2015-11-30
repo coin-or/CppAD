@@ -1,9 +1,9 @@
 $Id$
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-12 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-15 Bradley M. Bell
 
 CppAD is distributed under multiple licenses. This distribution is under
-the terms of the 
+the terms of the
                     Eclipse Public License Version 1.0.
 
 A copy of this license is included in the COPYING file of this distribution.
@@ -16,40 +16,36 @@ $spell
 	namespace
 $$
 
-$index numerical, C++ template library$$
-$index template, numerical C++ library$$
-$index C++, numerical template library$$
-$index library, numerical C++ template$$
 
 $section The CppAD General Purpose Library$$
 
 $children%
-	cppad/error_handler.hpp%
+	cppad/utility/error_handler.hpp%
 
-	cppad/near_equal.hpp%
-	cppad/speed_test.hpp%
-	cppad/time_test.hpp%
+	cppad/utility/near_equal.hpp%
+	cppad/utility/speed_test.hpp%
+	cppad/utility/time_test.hpp%
 
 	omh/numeric_type.omh%
-	cppad/check_numeric_type.hpp%
+	cppad/utility/check_numeric_type.hpp%
 	omh/simple_vector.omh%
-	cppad/check_simple_vector.hpp%
+	cppad/utility/check_simple_vector.hpp%
 
-	cppad/nan.hpp%
-	cppad/pow_int.hpp%
-	cppad/poly.hpp%
+	cppad/utility/nan.hpp%
+	cppad/utility/pow_int.hpp%
+	cppad/utility/poly.hpp%
 	omh/lu_det_and_solve.omh%
-	cppad/romberg_one.hpp%
-	cppad/romberg_mul.hpp%
-	cppad/runge_45.hpp%
-	cppad/rosen_34.hpp%
-	cppad/ode_err_control.hpp%
-	cppad/ode_gear.hpp%
-	cppad/ode_gear_control.hpp%
+	cppad/utility/romberg_one.hpp%
+	cppad/utility/romberg_mul.hpp%
+	cppad/utility/runge_45.hpp%
+	cppad/utility/rosen_34.hpp%
+	cppad/utility/ode_err_control.hpp%
+	cppad/utility/ode_gear.hpp%
+	cppad/utility/ode_gear_control.hpp%
 
-	cppad/vector.hpp%
+	cppad/utility/vector.hpp%
 	omh/thread_alloc.omh%
-	cppad/index_sort.hpp%
+	cppad/utility/index_sort.hpp%
 
 	cppad/local/bender_quad.hpp%
 	cppad/local/opt_val_hes.hpp%
@@ -57,7 +53,7 @@ $children%
 %$$
 
 $head Error Handler$$
-All of the routines in the CppAD namespace use the following 
+All of the routines in the CppAD namespace use the following
 general purpose error handler:
 $table
 $rref ErrorHandler$$
@@ -73,7 +69,6 @@ $rref SpeedTest$$
 $tend
 
 $head C++ Concepts$$
-$index concept, C++$$
 We refer to a the set of classes that satisfy certain conditions
 as a C++ concept.
 The following concepts are used by the CppAD Template library:
@@ -89,7 +84,7 @@ $head CppAD Numerical Template Library$$
 The routines listed below are general purpose numerical routines
 written with the floating point type a C++ template parameter.
 This enables them to be used with algorithmic differentiation types,
-as well as for other purposes. 
+as well as for other purposes.
 $table
 $rref nan$$
 $rref pow_int$$
@@ -105,7 +100,7 @@ $rref OdeGearControl$$
 $tend
 
 $head General Purpose Utilities$$
-The classes and routines below are of general use 
+The classes and routines below are of general use
 (not necessarily AD related).
 $table
 $rref CppAD_vector$$

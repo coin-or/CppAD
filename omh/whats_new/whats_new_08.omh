@@ -43,6 +43,7 @@ $spell
 $$
 
 $section Changes and Additions to CppAD During 2008$$
+$mindex erf ipopt_cppad_nlp$$
 
 
 $head Introduction$$
@@ -83,7 +84,6 @@ empty code when a Microsoft Visual C++ is used.
 
 
 $head 11-20$$
-$index erf$$
 The function $codei%tanh(%x%)%$$ was added to the
 $cref unary_standard_math$$ functions.
 The $code abs$$ and $code erf$$ functions were removed from the
@@ -229,7 +229,6 @@ This has been fixed.
 $pre
 
 $$
-$index ipopt_cppad_nlp$$
 The $cref/ipopt_cppad_nlp/cppad_ipopt_nlp/$$ example has been extended
 so that it allows for both scalar and vector evaluation of the
 objective and constraints; see the argument $icode fg_vector$$ in

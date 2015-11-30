@@ -1,6 +1,6 @@
-/* $Id$ */
-# ifndef CPPAD_BASE_ALLOC_INCLUDED
-# define CPPAD_BASE_ALLOC_INCLUDED
+// $Id$
+# ifndef CPPAD_BASE_ALLOC_HPP
+# define CPPAD_BASE_ALLOC_HPP
 /* --------------------------------------------------------------------------
 CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-15 Bradley M. Bell
 
@@ -62,7 +62,7 @@ This file uses some of the definitions in $cref base_require$$
 and $cref thread_alloc$$.
 $codep */
 # include <cppad/base_require.hpp>
-# include <cppad/thread_alloc.hpp>
+# include <cppad/utility/thread_alloc.hpp>
 /* $$
 
 $head Computed Assignment Macro$$

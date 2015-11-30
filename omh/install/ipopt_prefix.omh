@@ -1,9 +1,9 @@
-/* $Id$ */
+// $Id$
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-13 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-15 Bradley M. Bell
 
 CppAD is distributed under multiple licenses. This distribution is under
-the terms of the 
+the terms of the
                     Eclipse Public License Version 1.0.
 
 A copy of this license is included in the COPYING file of this distribution.
@@ -21,21 +21,18 @@ $spell
 $$
 
 $section Including the cppad_ipopt Library and Tests$$
-$index ipopt, cppad library$$
-$index library, cppad_ipopt$$
+$mindex ipopt cppad prefix get$$
 
 $head Purpose$$
-Includes the $cref cppad_ipopt_nlp$$  
+Includes the $cref cppad_ipopt_nlp$$
 example and tests as well as installing the $code cppad_ipopt$$ library
-during the $code make install$$ step. 
+during the $code make install$$ step.
 
 
 $head ipopt_prefix$$
-$index ipopt, prefix$$
-$index prefix, ipopt$$
 If you have
 $href%http://www.coin-or.org/projects/Ipopt.xml%Ipopt%$$
-installed on your system, you can 
+installed on your system, you can
 specify the value for $icode ipopt_prefix$$ on the
 $cref cmake$$ command line.
 The value of $icode ipopt_prefix$$ must be such that,
@@ -44,14 +41,12 @@ $cref/cmake_install_includedirs/cmake/cmake_install_includedirs/$$,
 $codei%
 	%ipopt_prefix%/%dir%/coin/IpIpoptApplication.hpp
 %$$
-is a valid way to reference to the include file 
+is a valid way to reference to the include file
 $code IpIpoptApplication.hpp$$.
 
 $head Examples and Tests$$
-$index example, ipopt$$
-$index ipopt, example$$
 If you include $icode ipopt_prefix$$ on the $cref cmake$$ command line,
-you will be able to run the Ipopt examples and tests 
+you will be able to run the Ipopt examples and tests
 by executing the following commands starting in the
 $cref/distribution directory/download/Distribution Directory/$$:
 $codei%
@@ -63,8 +58,6 @@ $children%
 	bin/get_ipopt.sh
 %$$
 $head get_ipopt$$
-$index get, ipopt$$
-$index ipopt, get$$
 If you are using Unix, you can download and install
 a copy of Ipopt using $cref get_ipopt.sh$$.
 The corresponding $icode ipopt_prefix$$ would be

@@ -1,6 +1,6 @@
 // $Id$
-# ifndef CPPAD_CHECK_FOR_NAN_INCLUDED
-# define CPPAD_CHECK_FOR_NAN_INCLUDED
+# ifndef CPPAD_CHECK_FOR_NAN_HPP
+# define CPPAD_CHECK_FOR_NAN_HPP
 
 /* --------------------------------------------------------------------------
 CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-15 Bradley M. Bell
@@ -132,7 +132,7 @@ It returns true if it succeeds and false otherwise.
 $end
 */
 
-# include <cppad/vector.hpp>
+# include <cppad/utility/vector.hpp>
 # include <cppad/configure.hpp>
 # include <fstream>
 

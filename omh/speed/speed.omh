@@ -1,9 +1,9 @@
 $Id$
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-14 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-15 Bradley M. Bell
 
 CppAD is distributed under multiple licenses. This distribution is under
-the terms of the 
+the terms of the
                     Eclipse Public License Version 1.0.
 
 A copy of this license is included in the COPYING file of this distribution.
@@ -23,13 +23,11 @@ $spell
 	sln
 $$
 
-$index speed, test$$
-$index test, speed$$
 
 $section Speed Test an Operator Overloading AD Package$$
 
 $head Purpose$$
-CppAD has a set of speed tests that are used to determine if 
+CppAD has a set of speed tests that are used to determine if
 certain changes improve its execution speed.
 These tests can also be used to compare the AD packages
 $href%

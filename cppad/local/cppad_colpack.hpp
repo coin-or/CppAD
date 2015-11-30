@@ -1,16 +1,16 @@
-/* $Id$ */
+// $Id$
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-14 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-15 Bradley M. Bell
 
 CppAD is distributed under multiple licenses. This distribution is under
-the terms of the 
+the terms of the
                     Eclipse Public License Version 1.0.
 
 A copy of this license is included in the COPYING file of this distribution.
 Please visit http://www.coin-or.org/CppAD/ for information on other licenses.
 -------------------------------------------------------------------------- */
-# ifndef CPPAD_CPPAD_COLPACK_INCLUDED
-# define CPPAD_CPPAD_COLPACK_INCLUDED
+# ifndef CPPAD_CPPAD_COLPACK_HPP
+# define CPPAD_CPPAD_COLPACK_HPP
 # if CPPAD_HAS_COLPACK
 
 namespace CppAD { // BEGIN_CPPAD_NAMESPACE
@@ -22,7 +22,7 @@ External interface to Colpack routines used by cppad.
 /*!
 Link from CppAD to ColPack used for general sparse matrices.
 
-This CppAD library routine is necessary because 
+This CppAD library routine is necessary because
 <code>ColPack/ColPackHeaders.h</code> has a
 <code>using namespace std</code> at the global level.
 
@@ -36,7 +36,7 @@ is the nubmer of columns in the sparse matrix.
 This vector has size \c m,
 <code>adolc_pattern[i][0]</code> is the number of non-zeros in row \c i.
 For <code>j = 1 , ... , adolc_sparsity[i]<code>,
-<code>adolc_pattern[i][j]</code> is the column index (base zero) for the 
+<code>adolc_pattern[i][j]</code> is the column index (base zero) for the
 non-zeros in row \c i.
 
 \param color [out]
@@ -45,7 +45,7 @@ The input value of its elements does not matter.
 Upon return, it is a coloring for the rows of the sparse matrix.
 \n
 \n
-If for some \c i, <code>color[i] == m</code>, then 
+If for some \c i, <code>color[i] == m</code>, then
 <code>adolc_pattern[i][0] == 0</code>.
 Otherwise, <code>color[i] < m</code>.
 \n
@@ -70,7 +70,7 @@ extern void cppad_colpack_general(
 Link from CppAD to ColPack used for symmetric sparse matrices
 (not yet used or tested).
 
-This CppAD library routine is necessary because 
+This CppAD library routine is necessary because
 <code>ColPack/ColPackHeaders.h</code> has a
 <code>using namespace std</code> at the global level.
 
@@ -81,7 +81,7 @@ is the nubmer of rows and columns in the symmetric sparse matrix.
 This vector has size \c n,
 <code>adolc_pattern[i][0]</code> is the number of non-zeros in row \c i.
 For <code>j = 1 , ... , adolc_sparsity[i]<code>,
-<code>adolc_pattern[i][j]</code> is the column index (base zero) for the 
+<code>adolc_pattern[i][j]</code> is the column index (base zero) for the
 non-zeros in row \c i.
 
 \param color [out]

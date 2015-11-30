@@ -20,7 +20,7 @@ $spell
 $$
 
 $section Exponential Function Forward Mode Theory$$
-$mindex exp, expm1$$
+$mindex exp expm1$$
 
 $head Derivatives$$
 If $latex F(x)$$ is $latex \R{exp} (x)$$ or $latex \R{expm1} (x)$$

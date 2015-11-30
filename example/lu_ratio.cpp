@@ -1,9 +1,9 @@
-/* $Id$ */
+// $Id$
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-12 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-15 Bradley M. Bell
 
 CppAD is distributed under multiple licenses. This distribution is under
-the terms of the 
+the terms of the
                     Eclipse Public License Version 1.0.
 
 A copy of this license is included in the COPYING file of this distribution.
@@ -19,9 +19,8 @@ $spell
 $$
 
 $section LuRatio: Example and Test$$
+$mindex LuRatio$$
 
-$index example, LuRatio$$
-$index test, LuRatio$$
 
 $code
 $verbatim%example/lu_ratio.cpp%0%// BEGIN C++%// END C++%1%$$
@@ -39,9 +38,9 @@ namespace { // Begin empty namespace
 
 CppAD::ADFun<double> *NewFactor(
 	size_t                           n ,
-	const CPPAD_TESTVECTOR(double) &x , 
+	const CPPAD_TESTVECTOR(double) &x ,
 	bool                           &ok ,
-	CPPAD_TESTVECTOR(size_t)      &ip , 
+	CPPAD_TESTVECTOR(size_t)      &ip ,
 	CPPAD_TESTVECTOR(size_t)      &jp )
 {	using CppAD::AD;
 	using CppAD::ADFun;
@@ -82,7 +81,7 @@ CppAD::ADFun<double> *NewFactor(
 			}
 		}
 	}
-	return FunPtr; 
+	return FunPtr;
 }
 bool CheckLuFactor(
 	size_t                           n  ,
@@ -90,7 +89,7 @@ bool CheckLuFactor(
 	const CPPAD_TESTVECTOR(double) &y  ,
 	const CPPAD_TESTVECTOR(size_t) &ip ,
 	const CPPAD_TESTVECTOR(size_t) &jp )
-{	bool     ok = true;	
+{	bool     ok = true;
 
 	double  sum;                          // element of L * U
 	double  pij;                          // element of permuted x
@@ -121,7 +120,7 @@ bool CheckLuFactor(
 			U[i * n + j] = y[ ip[i] * n + jp[j] ];
 	}
 
-	// Compute L * U 
+	// Compute L * U
 	for(i = 0; i < n; i++)
 	{	for(j = 0; j < n; j++)
 		{	// compute element (i,j) entry in L * U
@@ -142,7 +141,7 @@ bool CheckLuFactor(
 bool LuRatio(void)
 {	bool  ok = true;
 
-	size_t  n = 2; // number rows in A 
+	size_t  n = 2; // number rows in A
 	double  ratio;
 
 	// values for independent and dependent variables
@@ -175,7 +174,7 @@ bool LuRatio(void)
 	// check to see if we need to refactor matrix
 	ok &= (ratio > 10.);
 	if( ratio > 10. )
-	{	delete FunPtr; // to avoid a memory leak	
+	{	delete FunPtr; // to avoid a memory leak
 		FunPtr = NewFactor(n, x, ok, ip, jp);
 	}
 

@@ -1,9 +1,9 @@
-/* $Id$ */
+// $Id$
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-13 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-15 Bradley M. Bell
 
 CppAD is distributed under multiple licenses. This distribution is under
-the terms of the 
+the terms of the
                     Eclipse Public License Version 1.0.
 
 A copy of this license is included in the COPYING file of this distribution.
@@ -12,7 +12,7 @@ Please visit http://www.coin-or.org/CppAD/ for information on other licenses.
 
 
 # include <cppad/cppad.hpp>
- 
+
 namespace { // Begin empty namespace
 
 bool case_one()
@@ -20,7 +20,7 @@ bool case_one()
 	using namespace CppAD;
 
 	// dimension of the domain space
-	size_t n = 10; 
+	size_t n = 10;
 
 	// dimension of the range space
 	size_t m = 2;
@@ -33,7 +33,7 @@ bool case_one()
 	for(j = 0; j < n * n; j++)
 		Check[j] = false;
 
-	// independent variable vector 
+	// independent variable vector
 	CPPAD_TESTVECTOR(AD<double>) X(n);
 	for(j = 0; j < n; j++)
 		X[j] = AD<double>(j);
@@ -54,7 +54,7 @@ bool case_one()
 	sum += CondExpLt(X[1], X[2], sin(X[6]), cos(X[7]) );
 	Check[6 * n + 6] = true;
 	Check[7 * n + 7] = true;
-	
+
 	// pow(variable, variable)
 	sum += pow(X[8], X[9]);
 	Check[8 * n + 8] = Check[8 * n + 9] = true;
@@ -82,7 +82,7 @@ bool case_one()
 	// compute sparsity pattern for Jacobian of F(U(x))
 	F.ForSparseJac(n, Px);
 
-	// compute sparsity pattern for Hessian of F_0 ( U(x) ) 
+	// compute sparsity pattern for Hessian of F_0 ( U(x) )
 	CPPAD_TESTVECTOR(bool) Py(m);
 	Py[0] = true;
 	Py[1] = false;
@@ -109,7 +109,7 @@ bool case_one()
 	// compute sparsity pattern for Jacobian of F(U(x))
 	F.ForSparseJac(n, Sx);
 
-	// compute sparsity pattern for Hessian of F_0 ( U(x) ) 
+	// compute sparsity pattern for Hessian of F_0 ( U(x) )
 	CPPAD_TESTVECTOR(std::set<size_t>) Sy(1);
 	Sy[0].insert(0);
 	CPPAD_TESTVECTOR(std::set<size_t>) Sxx(n);
@@ -142,7 +142,7 @@ bool case_two()
 	using namespace CppAD;
 
 	// dimension of the domain space
-	size_t n = 4; 
+	size_t n = 4;
 
 	// dimension of the range space
 	size_t m = 1;
@@ -155,14 +155,14 @@ bool case_two()
 	for(j = 0; j < n * n; j++)
 		Check[j] = false;
 
-	// independent variable vector 
+	// independent variable vector
 	CPPAD_TESTVECTOR(AD<double>) X(n);
 	for(j = 0; j < n; j++)
 		X[j] = AD<double>(j);
 	Independent(X);
 
 	// Test the case where dependent variable is a non-linear function
-	// of the result of a conditional expression. 
+	// of the result of a conditional expression.
 	CPPAD_TESTVECTOR(AD<double>) Y(m);
 	Y[0] = CondExpLt(X[0], X[1], X[2], X[3]);
 	Y[0] = cos(Y[0]) + X[0] + X[1];
@@ -173,7 +173,7 @@ bool case_two()
 	// inefficiency of the conditional expression operator).
 	Check[2 * n + 2] = Check[ 2 * n + 3 ] = true;
 	Check[3 * n + 2] = Check[ 3 * n + 3 ] = true;
-	
+
 	// create function object F : X -> Y
 	ADFun<double> F(X, Y);
 
@@ -189,7 +189,7 @@ bool case_two()
 	// compute sparsity pattern for Jacobian of F(U(x))
 	F.ForSparseJac(n, Px);
 
-	// compute sparsity pattern for Hessian of F_0 ( U(x) ) 
+	// compute sparsity pattern for Hessian of F_0 ( U(x) )
 	CPPAD_TESTVECTOR(bool) Py(m);
 	Py[0] = true;
 	CPPAD_TESTVECTOR(bool) Pxx(n * n);
@@ -208,7 +208,7 @@ bool case_two()
 	// compute sparsity pattern for Jacobian of F(U(x))
 	F.ForSparseJac(n, Sx);
 
-	// compute sparsity pattern for Hessian of F_0 ( U(x) ) 
+	// compute sparsity pattern for Hessian of F_0 ( U(x) )
 	CPPAD_TESTVECTOR(std::set<size_t>) Sy(1);
 	Sy[0].insert(0);
 	CPPAD_TESTVECTOR(std::set<size_t>) Sxx(n);
@@ -230,9 +230,9 @@ bool case_three()
 	using CppAD::AD;
 
 	// domain space vector
-	size_t n = 1; 
+	size_t n = 1;
 	CPPAD_TESTVECTOR(AD<double>) X(n);
-	X[0] = 0.; 
+	X[0] = 0.;
 
 	// declare independent variables and start recording
 	CppAD::Independent(X);
@@ -281,7 +281,7 @@ bool case_three()
 	// compute sparsity pattern for Jacobian of F(U(x))
 	f.ForSparseJac(n, Sx);
 
-	// compute sparsity pattern for Hessian of F_0 ( U(x) ) 
+	// compute sparsity pattern for Hessian of F_0 ( U(x) )
 	CPPAD_TESTVECTOR(std::set<size_t>) Sy(1);
 	Sy[0].insert(0);
 	CPPAD_TESTVECTOR(std::set<size_t>) Sxx(n);
@@ -299,7 +299,7 @@ bool case_four()
 	using namespace CppAD;
 
 	// dimension of the domain space
-	size_t n = 3; 
+	size_t n = 3;
 
 	// dimension of the range space
 	size_t m = 1;
@@ -310,9 +310,9 @@ bool case_four()
 	for(k = 0; k < n-1; k++)
 		Z[k] = 0.;
 
-	// independent variable vector 
+	// independent variable vector
 	CPPAD_TESTVECTOR(AD<double>) X(n);
-	X[0] = 0.; 
+	X[0] = 0.;
 	X[1] = 1.;
 	X[2] = 2.;
 	Independent(X);
@@ -320,7 +320,7 @@ bool case_four()
 	// VecAD vector z depends on both x[1] and x[2]
 	// (component indices do not matter because they can change).
 	Z[ X[0] ] = X[1] * X[2];
-	Z[ X[1] ] = 0.; 
+	Z[ X[1] ] = 0.;
 
 	// dependent variable vector
 	CPPAD_TESTVECTOR(AD<double>) Y(m);
@@ -366,7 +366,7 @@ bool case_four()
 	for(i = 0; i < n; i++)
 	{	for(j = 0; j < n; j++)
 			ok &= (h[i * n + j] == Check[i * n + j]);
-	}	
+	}
 
 	// ------------------------------------------------------------------
 	// sparsity pattern for the identity function U(x) = x
@@ -377,7 +377,7 @@ bool case_four()
 	// compute sparsity pattern for Jacobian of F(U(x))
 	F.ForSparseJac(n, Sx);
 
-	// compute sparsity pattern for Hessian of F_0 ( U(x) ) 
+	// compute sparsity pattern for Hessian of F_0 ( U(x) )
 	CPPAD_TESTVECTOR(std::set<size_t>) Sy(1);
 	Sy[0].insert(0);
 	CPPAD_TESTVECTOR(std::set<size_t>) Sxx(n);
@@ -400,7 +400,7 @@ bool case_five(void)
 	size_t i, j, k;
 
 	size_t n = 2;
-	CPPAD_TESTVECTOR(AD<double>) X(n); 
+	CPPAD_TESTVECTOR(AD<double>) X(n);
 	X[0] = 1.;
 	X[1] = 2.;
 	CppAD::Independent(X);
@@ -422,7 +422,7 @@ bool case_five(void)
 	// compute sparsity pattern for Jacobian of F(U(x))
 	F.ForSparseJac(n, Px);
 
-	// compute sparsity pattern for Hessian of F_k ( U(x) ) 
+	// compute sparsity pattern for Hessian of F_k ( U(x) )
 	CPPAD_TESTVECTOR(bool) Py(m);
 	CPPAD_TESTVECTOR(bool) Pxx(n * n);
 	for(k = 0; k < m; k++)
@@ -445,14 +445,14 @@ bool case_six()
 	using namespace CppAD;
 
 	// dimension of the domain space
-	size_t n = 3; 
+	size_t n = 3;
 
 	// dimension of the range space
 	size_t m = 1;
 
-	// independent variable vector 
+	// independent variable vector
 	CPPAD_TESTVECTOR(AD<double>) X(n);
-	X[0] = 0.; 
+	X[0] = 0.;
 	X[1] = 1.;
 	X[2] = 2.;
 	Independent(X);
@@ -512,7 +512,7 @@ bool case_six()
 	for(i = 0; i < n; i++)
 	{	for(j = 0; j < n; j++)
 			ok &= (h[i * n + j] == Check[i * n + j]);
-	}	
+	}
 
 	// compute the reverse Hessian sparsity pattern for R^T * F^2
 	transpose = false;
@@ -522,7 +522,7 @@ bool case_six()
 	for(i = 0; i < n; i++)
 	{	for(j = 0; j < n; j++)
 			ok &= (h[j * n + i] == Check[i * n + j]);
-	}	
+	}
 
 	return ok;
 }

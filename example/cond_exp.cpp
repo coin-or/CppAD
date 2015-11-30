@@ -1,4 +1,4 @@
-/* $Id$ */
+// $Id$
 /* --------------------------------------------------------------------------
 CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-15 Bradley M. Bell
 
@@ -19,10 +19,8 @@ $spell
 $$
 
 $section Conditional Expressions: Example and Test$$
+$mindex CondExp$$
 
-$index CondExp$$
-$index example, CondExp$$
-$index test, CondExp$$
 
 $head Description$$
 Use $code CondExp$$ to compute

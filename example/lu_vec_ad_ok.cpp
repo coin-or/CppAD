@@ -1,9 +1,9 @@
-/* $Id$ */
+// $Id$
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-13 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-15 Bradley M. Bell
 
 CppAD is distributed under multiple licenses. This distribution is under
-the terms of the 
+the terms of the
                     Eclipse Public License Version 1.0.
 
 A copy of this license is included in the COPYING file of this distribution.
@@ -19,10 +19,8 @@ $spell
 $$
 
 $section Lu Factor and Solve With Recorded Pivoting: Example and Test$$
+$mindex record pivot$$
 
-$index Lu, record pivot$$
-$index example, Lu record pivot$$
-$index test, Lu record pivot$$
 
 $code
 $verbatim%example/lu_vec_ad_ok.cpp%0%// BEGIN C++%// END C++%1%$$
@@ -88,7 +86,7 @@ bool LuVecADOk(void)
 	for(j = 0; j < n; j++)
 		for(k = 0; k < m; k++)
 			Rhs[ j * m + k ] = rhs[ j * m + k ];
-		
+
 	// Declare independent variables
 	Independent(A);
 
@@ -130,16 +128,16 @@ bool LuVecADOk(void)
 			ok &= NearEqual( rhs[i * m + k], sum, 1e-10, 1e-10 );
 		}
 	}
- 
- 	CPPAD_TESTVECTOR(double) y2(1 + n * m);
- 	CPPAD_TESTVECTOR(double) A2(n * n);
- 	for(i = 0; i < n * n; i++)
- 		A[i] = A2[i] = a2[i];
 
- 
- 	y2          = f.Forward(0, A2);
- 	determinant = Det(A);
- 	ok &= NearEqual(y2[ n * m], Value(determinant), 1e-10, 1e-10);
+	CPPAD_TESTVECTOR(double) y2(1 + n * m);
+	CPPAD_TESTVECTOR(double) A2(n * n);
+	for(i = 0; i < n * n; i++)
+		A[i] = A2[i] = a2[i];
+
+
+	y2          = f.Forward(0, A2);
+	determinant = Det(A);
+	ok &= NearEqual(y2[ n * m], Value(determinant), 1e-10, 1e-10);
 
 	// Check solution of Rhs = A2 * Result
 	for(k = 0; k < m; k++)

@@ -1,9 +1,9 @@
-/* $Id$ */
+// $Id$
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-13 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-15 Bradley M. Bell
 
 CppAD is distributed under multiple licenses. This distribution is under
-the terms of the 
+the terms of the
                     Eclipse Public License Version 1.0.
 
 A copy of this license is included in the COPYING file of this distribution.
@@ -21,33 +21,10 @@ $spell
 $$
 
 $section ADFun Sequence Properties: Example and Test$$
+$mindex Domain Range Parameter size_var size_par size_op_arg size_VecAD$$
 
-$index Domain, ADFun$$
-$index Range, ADFun$$
-$index Parameter, ADFun$$
-$index size_var, ADFun$$
-$index size_par, ADFun$$
-$index size_op, ADFun$$
-$index size_op_arg, ADFun$$
-$index size_VecAD, ADFun$$
 
-$index example, Domain$$
-$index example, Range$$
-$index example, Parameter$$
-$index example, size_var$$
-$index example, size_par$$
-$index example, size_op$$
-$index example, size_op_arg$$
-$index example, size_VecAD$$
 
-$index test, Domain$$
-$index test, Range$$
-$index test, Parameter$$
-$index test, size_var$$
-$index test, size_par$$
-$index test, size_op$$
-$index test, size_op_arg$$
-$index test, size_VecAD$$
 
 $code
 $verbatim%example/seq_property.cpp%0%// BEGIN C++%// END C++%1%$$
@@ -96,14 +73,14 @@ bool seq_property(void)
 	x[1]     = 1.;
 
 	// declare independent variables and start tape recording
-	CppAD::Independent(x); 
+	CppAD::Independent(x);
 	nvar    += n;
 	nop     += n;
 
 	// a computation that adds to the operation sequence
 	AD<double> I = 0;
-	v[I]         = x[0]; 
-	nvecad      +=   3;  // one for vector, two for its elements 
+	v[I]         = x[0];
+	nvecad      +=   3;  // one for vector, two for its elements
 	npar        +=   2;  // need parameters 0 and 1 for initial v
 	nop         +=   1;  // operator for storing in a VecAD object
 	narg        +=   3;  // the three arguments are v, I, and x[0]
@@ -113,7 +90,7 @@ bool seq_property(void)
 	AD<double> w = x[1];  // use same variable as x[1]
 
 	// a computation that adds to the operation sequence
-	w      = w * (u + w); 
+	w      = w * (u + w);
 	nop   += 2;   // requires two new operators, an add and a multiply
 	nvar  += 2;   // each operator results in its own variable
 	narg  += 4;   // each operator has two arguments
@@ -123,7 +100,7 @@ bool seq_property(void)
 	CPPAD_TESTVECTOR(AD<double>) y(m);
 
 	// operations that do not add to the operation sequence
-	y[0]   = 1.;  // re-use the parameter 1   
+	y[0]   = 1.;  // re-use the parameter 1
 	y[1]   = u;   // use same variable as u
 
 	// a computation that adds to the operation sequence
@@ -134,7 +111,7 @@ bool seq_property(void)
 	narg  += 2;   // operator has two arguments
 
 	// create f: x -> y and stop tape recording
-	CppAD::ADFun<double> f(x, y); 
+	CppAD::ADFun<double> f(x, y);
 	nop   += 1;   // special operator for y[0] becasue it is a parameter
 	nvar  += 1;   // special variable for y[0] because it is a parameter
 	narg  += 1;   // identifies which parameter corresponds to y[0]

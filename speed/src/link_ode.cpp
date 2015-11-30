@@ -1,9 +1,9 @@
-/* $Id$ */
+// $Id$
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-12 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-15 Bradley M. Bell
 
 CppAD is distributed under multiple licenses. This distribution is under
-the terms of the 
+the terms of the
                     Eclipse Public License Version 1.0.
 
 A copy of this license is included in the COPYING file of this distribution.
@@ -19,12 +19,9 @@ $spell
 	CppAD
 $$
 
-$index link_ode$$
-$index ode, speed test$$
-$index speed, test ode$$
-$index test, ode speed$$
 
 $section Speed Testing the Jacobian of Ode Solution$$
+$mindex link_ode test$$
 
 $head Prototype$$
 $codei%extern bool link_ode(
@@ -46,7 +43,7 @@ The same template routine $cref ode_evaluate$$ is used
 by th different AD packages.
 
 $head f$$
-The function 
+The function
 $latex f : \B{R}^n \rightarrow \B{R}^n$$ that is defined and computed by
 evaluating $cref ode_evaluate$$ with a call of the form
 $codei%
@@ -63,13 +60,13 @@ the corresponding return value for $code link_ode$$
 should be $code false$$.
 
 $head size$$
-The argument $icode size$$ 
+The argument $icode size$$
 is the number of variables in the ordinary differential equations
 which is also equal to $latex n$$.
 
 $head repeat$$
 The argument $icode repeat$$ is the number of times the
-Jacobian is computed. 
+Jacobian is computed.
 
 $head x$$
 The argument $icode x$$ is a vector with $latex n$$ elements.
@@ -81,7 +78,7 @@ The value of this vector must change with each repetition.
 
 $head jacobian$$
 The argument $icode jacobian$$ is a vector with $latex n^2$$ elements.
-The input value of its elements does not matter. 
+The input value of its elements does not matter.
 The output value of its elements is the Jacobian of the function $latex f(x)$$
 that corresponds to output value of $icode x$$.
 To be more specific, for
@@ -96,12 +93,12 @@ only the first $latex n$$ element of $icode jacobian$$
 are modified and they are to the function value
 $latex f(x)$$ corresponding to the output value of $icode x$$.
 
-$end 
+$end
 -----------------------------------------------------------------------------
 */
-# include <cppad/vector.hpp>
+# include <cppad/utility/vector.hpp>
 # include <cppad/speed/ode_evaluate.hpp>
-# include <cppad/near_equal.hpp>
+# include <cppad/utility/near_equal.hpp>
 
 extern bool link_ode(
 	size_t                     size       ,

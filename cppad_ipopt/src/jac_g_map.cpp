@@ -1,9 +1,9 @@
-/* $Id$ */
+// $Id$
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-14 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-15 Bradley M. Bell
 
 CppAD is distributed under multiple licenses. This distribution is under
-the terms of the 
+the terms of the
                     Eclipse Public License Version 1.0.
 
 A copy of this license is included in the COPYING file of this distribution.
@@ -17,14 +17,14 @@ namespace cppad_ipopt {
 /*!
 \{
 \file jac_g_map.cpp
-\brief Creates a mapping between two representations for Jacobian of g. 
+\brief Creates a mapping between two representations for Jacobian of g.
 */
 
 
 /*!
 Create mapping from CppAD to Ipopt sparse representations of Jacobian of g.
 
-The functions 
+The functions
 \f$ f : {\bf R}^n \rightarrow {\bf R} \f$ and
 \f$ g : {\bf R}^n \rightarrow {\bf R}^m \f$ are defined by
 the \ref Users_Representation.
@@ -32,13 +32,13 @@ the \ref Users_Representation.
 \param fg_info
 For <tt>k = 0 , ... , K-1</tt>,
 for <tt>ell = 0 , ... , L[k]</tt>,
-the function call 
+the function call
 \verbatim
-	fg_info->index(k, ell, I, J);	
+	fg_info->index(k, ell, I, J);
 \endverbatim
-is made by \c jac_g_map. 
+is made by \c jac_g_map.
 The values \c k and \c ell are inputs.
-The input size of \c I ( \c J ) 
+The input size of \c I ( \c J )
 is greater than or equal <tt>p[k] ( q[k] )</tt>
 and this size is not changed.
 The input values of the elements of \c I and \c J are not specified.
@@ -60,7 +60,7 @@ is the dimension of the domain space for \f$ f(x) \f$ and \f$ g(x) \f$;
 i.e., \f$ x \in {\bf R}^n \f$.
 
 \param K
-is the number of functions \f$ r_k ( u ) \f$ used for the representation of 
+is the number of functions \f$ r_k ( u ) \f$ used for the representation of
 \f$ f(x) \f$ and \f$ g(x) \f$.
 
 \param L
@@ -84,7 +84,7 @@ is dimension of the domain space for \f$ r_k (u) \f$; i.e.,
 \param pattern_jac_r
 is a vector with size \c K.
 For <tt>k = 0 , ... , K-1, pattern_jac_r[k]</tt>
-is a CppAD sparsity pattern for the Jacobian of the function 
+is a CppAD sparsity pattern for the Jacobian of the function
 \f$ r_k : {\bf R}^{q(k)} \rightarrow {\bf R}^{p(k)} \f$.
 As such, <tt>pattern_jac_r[k].size() == p[k] * q[k]</tt>.
 
@@ -100,14 +100,14 @@ The size of \c J is not changed.
 
 \param index_jac_g:
 On input, this is empty; i.e., <tt>index_jac_g.size() == 0</tt>.
-On output, it is the index mapping from \f$ (i, j) \f$ in the Jacobian of 
+On output, it is the index mapping from \f$ (i, j) \f$ in the Jacobian of
 \f$ g(x) \f$ to the corresponding index value used by Ipopt to represent
 the Jacobian.
 Furthermore, if <tt>index_jac_g[i].find(j) == index_jac_g[i].end()</tt>,
 then the \f$ (i, j)\f$ entry in the Jacobian of \f$ g(x) \f$ is always zero.
 */
 void jac_g_map(
-	cppad_ipopt_fg_info*  fg_info                                  , 
+	cppad_ipopt_fg_info*  fg_info                                  ,
 	size_t                                          m              ,
 	size_t                                          n              ,
 	size_t                                          K              ,
@@ -137,7 +137,7 @@ void jac_g_map(
 	// (use standard set representation because can be huge).
 	CppAD::vector< std::set<size_t> > pattern_jac_g(m);
 	for(k = 0; k < K; k++) for(ell = 0; ell < L[k]; ell++)
-	{	fg_info->index(k, ell, I, J);	
+	{	fg_info->index(k, ell, I, J);
 		for(i = 0; i < p[k]; i++) if( I[i] != 0 )
 		{	for(j = 0; j < q[k]; j++)
 			{	ij  = i * q[k] + j;
@@ -147,14 +147,14 @@ void jac_g_map(
 		}
 	}
 
-	// Now compute the mapping from (i, j) in the Jacobian of g to the 
+	// Now compute the mapping from (i, j) in the Jacobian of g to the
 	// corresponding index value used by Ipopt to represent the Jacobian.
 	CPPAD_ASSERT_UNKNOWN( index_jac_g.size() == 0 );
 	index_jac_g.resize(m);
 	std::set<size_t>::const_iterator itr;
 	ell = 0;
 	for(i = 0; i < m; i++)
-	{	for(	itr = pattern_jac_g[i].begin(); 
+	{	for(	itr = pattern_jac_g[i].begin();
 			itr != pattern_jac_g[i].end(); itr++)
 		{
 			index_jac_g[i][*itr] = ell++;

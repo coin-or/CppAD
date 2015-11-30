@@ -1,12 +1,12 @@
-/* $Id$ */
-# ifndef CPPAD_DIV_EQ_INCLUDED
-# define CPPAD_DIV_EQ_INCLUDED
+// $Id$
+# ifndef CPPAD_DIV_EQ_HPP
+# define CPPAD_DIV_EQ_HPP
 
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-12 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-15 Bradley M. Bell
 
 CppAD is distributed under multiple licenses. This distribution is under
-the terms of the 
+the terms of the
                     Eclipse Public License Version 1.0.
 
 A copy of this license is included in the COPYING file of this distribution.
@@ -51,7 +51,7 @@ AD<Base>& AD<Base>::operator /= (const AD<Base> &right)
 		else if( IdenticalOne( right.value_ ) )
 		{	// this = variable * 1
 		}
-		else 
+		else
 		{	// this = variable / parameter
 			CPPAD_ASSERT_UNKNOWN( NumRes(DivvpOp) == 1 );
 			CPPAD_ASSERT_UNKNOWN( NumArg(DivvpOp) == 2 );
@@ -90,4 +90,4 @@ CPPAD_FOLD_ASSIGNMENT_OPERATOR(/=)
 
 } // END CppAD namespace
 
-# endif 
+# endif

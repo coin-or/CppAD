@@ -1,4 +1,4 @@
-/* $Id$ */
+// $Id$
 /* --------------------------------------------------------------------------
 CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-15 Bradley M. Bell
 
@@ -22,9 +22,9 @@ $childtable%
 	omh/deprecated/fun_deprecated.omh%
 	omh/deprecated/compare_change.omh%
 	cppad/local/omp_max_thread.hpp%
-	cppad/track_new_del.hpp%
+	cppad/utility/track_new_del.hpp%
 	omh/deprecated/omp_alloc.omh%
-	cppad/memory_leak.hpp%
+	cppad/utility/memory_leak.hpp%
 	cppad/local/epsilon.hpp%
 	cppad/local/test_vector.hpp%
 	cppad_ipopt/src/cppad_ipopt_nlp.hpp%

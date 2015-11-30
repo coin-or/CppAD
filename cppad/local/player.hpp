@@ -1,12 +1,12 @@
-/* $Id$ */
-# ifndef CPPAD_PLAYER_INCLUDED
-# define CPPAD_PLAYER_INCLUDED
+// $Id$
+# ifndef CPPAD_PLAYER_HPP
+# define CPPAD_PLAYER_HPP
 
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-14 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-15 Bradley M. Bell
 
 CppAD is distributed under multiple licenses. This distribution is under
-the terms of the 
+the terms of the
                     Eclipse Public License Version 1.0.
 
 A copy of this license is included in the COPYING file of this distribution.
@@ -61,7 +61,7 @@ private:
 // --------------- Functions used to create and maniplate a recording -------
 public:
 	/// Default constructor
-	player(void) : 
+	player(void) :
 	num_var_rec_(0)                                      ,
 	num_load_op_rec_(0)                                      ,
 	op_rec_( std::numeric_limits<addr_t>::max() )        ,
@@ -76,21 +76,21 @@ public:
 	{ }
 
 	// ===============================================================
-	/*!  
- 	Moving an operation sequence from a recorder to a player
- 
+	/*!
+	Moving an operation sequence from a recorder to a player
+
 	\param rec
-	the object that was used to record the operation sequence.  After this 
+	the object that was used to record the operation sequence.  After this
 	operation, the state of the recording is no longer defined. For example,
 	the \c pod_vector member variables in \c this have been swapped with
 	\c rec .
- 	*/
+	*/
 	void get(recorder<Base>& rec)
 	{	size_t i;
 
 		// just set size_t values
 		num_var_rec_        = rec.num_var_rec_;
-		num_load_op_rec_    = rec.num_load_op_rec_; 
+		num_load_op_rec_    = rec.num_load_op_rec_;
 
 		// op_rec_
 		op_rec_.swap(rec.op_rec_);
@@ -117,14 +117,14 @@ public:
 		CPPAD_ASSERT_UNKNOWN( i == vecad_ind_rec_.size() );
 	}
 	// ===============================================================
-	/*!  
- 	Copying an operation sequence from one player to another
- 
+	/*!
+	Copying an operation sequence from one player to another
+
 	\param play
 	the object that contains the operatoion sequence to copy.
- 	*/
+	*/
 	void operator=(const player& play)
-	{	
+	{
 		num_var_rec_        = play.num_var_rec_;
 		num_load_op_rec_    = play.num_load_op_rec_;
 		op_rec_             = play.op_rec_;
@@ -138,7 +138,7 @@ public:
 
 	/// Erase all information in an operation sequence player.
 	void Erase(void)
-	{	
+	{
 		num_var_rec_       = 0;
 		num_load_op_rec_   = 0;
 		num_vecad_vec_rec_ = 0;
@@ -151,11 +151,11 @@ public:
 	}
 
 public:
-	/*! 
-	\brief 
+	/*!
+	\brief
 	Old method of fetching an operator from the recording.
 
-	\return 
+	\return
 	the i-th operator in the recording.
 
 	\param i
@@ -164,11 +164,11 @@ public:
 	OpCode GetOp (size_t i) const
 	{	return OpCode(op_rec_[i]); }
 
-	/*! 
-	\brief 
+	/*!
+	\brief
 	Fetch a VecAD index from the recording.
 
-	\return 
+	\return
 	the i-th VecAD index in the recording.
 
 	\param i
@@ -177,11 +177,11 @@ public:
 	size_t GetVecInd (size_t i) const
 	{	return vecad_ind_rec_[i]; }
 
-	/*! 
-	\brief 
+	/*!
+	\brief
 	Fetch a parameter from the recording.
 
-	\return 
+	\return
 	the i-th parameter in the recording.
 
 	\param i
@@ -190,26 +190,26 @@ public:
 	Base GetPar(size_t i) const
 	{	return par_rec_[i]; }
 
-	/*! 
-	\brief 
+	/*!
+	\brief
 	Fetch entire parameter vector from the recording.
 
-	\return 
+	\return
 	the entire parameter vector.
 
 	*/
 	const Base* GetPar(void) const
 	{	return par_rec_.data(); }
 
-	/*! 
-	\brief 
+	/*!
+	\brief
 	Fetch a '\\0' terminated string from the recording.
 
-	\return 
+	\return
 	the beginning of the string.
 
 	\param i
-	the index where the string begins. 
+	the index where the string begins.
 	*/
 	const char *GetTxt(size_t i) const
 	{	CPPAD_ASSERT_UNKNOWN(i < text_rec_.size() );
@@ -249,9 +249,9 @@ public:
 	{	return text_rec_.size(); }
 
 	/// Fetch a rough measure of amount of memory used to store recording
-	/// (just lengths, not capacities). 
+	/// (just lengths, not capacities).
 	size_t Memory(void) const
-	{	return op_rec_.size()        * sizeof(OpCode) 
+	{	return op_rec_.size()        * sizeof(OpCode)
 		     + op_arg_rec_.size()    * sizeof(addr_t)
 		     + par_rec_.size()       * sizeof(Base)
 		     + text_rec_.size()      * sizeof(char)
@@ -267,7 +267,7 @@ private:
 	/// Index in recording corresponding to current operator
 	size_t    op_index_;
 
-	/// Current offset of the argument indices in op_arg_rec_ 
+	/// Current offset of the argument indices in op_arg_rec_
 	const addr_t*   op_arg_;
 
 	/// Index for primary (last) variable corresponding to current operator
@@ -301,7 +301,7 @@ public:
 	void forward_start(
 	OpCode& op, const addr_t*& op_arg, size_t& op_index, size_t& var_index)
 	{
-		op        = op_          = OpCode( op_rec_[0] ); 
+		op        = op_          = OpCode( op_rec_[0] );
 		op_arg    = op_arg_      = op_arg_rec_.data();
 		op_index  = op_index_    = 0;
 		var_index = var_index_   = 0;
@@ -316,36 +316,36 @@ public:
 	Fetch the next operator during a forward sweep.
 
 	Use forward_start to initialize to the first operator; i.e.,
-	the BeginOp at the beginning of the recording. 
+	the BeginOp at the beginning of the recording.
 	We use the notation forward_routine to denote the set
 	forward_start, forward_next, forward_csum, forward_cskip.
 
 	\param op [in,out]
-	The input value of \c op must be its output value from the 
+	The input value of \c op must be its output value from the
 	previous call to a forward_routine.
 	Its output value is the next operator in the recording.
 	For speed, \c forward_next does not check for the special cases
-	where  <tt>op == CSumOp</tt> or <tt>op == CSkipOp</tt>. In these cases, 
-	the other return values from \c forward_next must be corrected by a call 
+	where  <tt>op == CSumOp</tt> or <tt>op == CSkipOp</tt>. In these cases,
+	the other return values from \c forward_next must be corrected by a call
 	to \c forward_csum or \c forward_cskip respectively.
 
 	\param op_arg [in,out]
 	The input value of \c op_arg must be its output value form the
-	previous call to a forward routine. 
+	previous call to a forward routine.
 	Its output value is the
 	beginning of the vector of argument indices for this operation.
 
 	\param op_index [in,out]
 	The input value of \c op_index must be its output value form the
-	previous call to a forward routine. 
-	Its output value is the index of the next operator in the recording. 
+	previous call to a forward routine.
+	Its output value is the index of the next operator in the recording.
 	Thus the ouput value following the previous call to forward_start is one.
 	In addition,
-	the output value increases by one with each call to forward_next. 
+	the output value increases by one with each call to forward_next.
 
 	\param var_index [in,out]
 	The input value of \c var_index must be its output value form the
-	previous call to a forward routine. 
+	previous call to a forward routine.
 	Its output value is the
 	index of the primary (last) result corresponding to the operator op.
 	*/
@@ -358,10 +358,10 @@ public:
 		CPPAD_ASSERT_UNKNOWN( op_index  == op_index_ );
 		CPPAD_ASSERT_UNKNOWN( var_index == var_index_ );
 
-		// index for the next operator 
+		// index for the next operator
 		op_index    = ++op_index_;
 
-		// first argument for next operator 
+		// first argument for next operator
 		op_arg      = op_arg_    += NumArg(op_);
 
 		// next operator
@@ -369,11 +369,11 @@ public:
 
 		// index for last result for next operator
 		var_index   = var_index_ += NumRes(op);
-		
+
 
 		CPPAD_ASSERT_UNKNOWN( op_arg_rec_.data() <= op_arg_ );
-		CPPAD_ASSERT_UNKNOWN( 
-			op_arg_ + NumArg(op) <= op_arg_rec_.data() + op_arg_rec_.size() 
+		CPPAD_ASSERT_UNKNOWN(
+			op_arg_ + NumArg(op) <= op_arg_rec_.data() + op_arg_rec_.size()
 		);
 		CPPAD_ASSERT_UNKNOWN( var_index_  < num_var_rec_ );
 	}
@@ -385,7 +385,7 @@ public:
 	call to \c forward_next and must be \c CSumOp. It is not modified.
 
 	\param op_arg [in,out]
-	The input value of \c op_arg must be the return value from the 
+	The input value of \c op_arg must be the return value from the
 	previous call to \c forward_next. Its output value is the
 	beginning of the vector of argument indices for the next operation.
 
@@ -415,13 +415,13 @@ public:
 		The only thing that really needs fixing is op_arg_.
 		Actual number of arugments for this operator is
 			op_arg[0] + op_arg[1] + 4.
- 		We must change op_arg_ so that when you add NumArg(CSumOp)
+		We must change op_arg_ so that when you add NumArg(CSumOp)
 		you get first argument for next operator in sequence.
 		*/
 		op_arg = op_arg_   += op_arg[0] + op_arg[1] + 4;
 
 		CPPAD_ASSERT_UNKNOWN( op_arg_rec_.data() <= op_arg_ );
-		CPPAD_ASSERT_UNKNOWN( 
+		CPPAD_ASSERT_UNKNOWN(
 			op_arg_ + NumArg(op) <= op_arg_rec_.data() + op_arg_rec_.size()
 		);
 		CPPAD_ASSERT_UNKNOWN( var_index_  < num_var_rec_ );
@@ -434,7 +434,7 @@ public:
 	call to \c forward_next and must be \c CSkipOp. It is not modified.
 
 	\param op_arg [in,out]
-	The input value of \c op_arg must be the return value from the 
+	The input value of \c op_arg must be the return value from the
 	previous call to \c forward_next. Its output value is the
 	beginning of the vector of argument indices for the next operation.
 
@@ -464,13 +464,13 @@ public:
 		The only thing that really needs fixing is op_arg_.
 		Actual number of arugments for this operator is
 			7 + op_arg[4] + op_arg[5]
- 		We must change op_arg_ so that when you add NumArg(CSkipOp)
+		We must change op_arg_ so that when you add NumArg(CSkipOp)
 		you get first argument for next operator in sequence.
 		*/
 		op_arg  = op_arg_  += 7 + op_arg[4] + op_arg[5];
 
 		CPPAD_ASSERT_UNKNOWN( op_arg_rec_.data() <= op_arg_ );
-		CPPAD_ASSERT_UNKNOWN( 
+		CPPAD_ASSERT_UNKNOWN(
 			op_arg_ + NumArg(op) <= op_arg_rec_.data() + op_arg_rec_.size()
 		);
 		CPPAD_ASSERT_UNKNOWN( var_index_  < num_var_rec_ );
@@ -504,7 +504,7 @@ public:
 	OpCode& op, const addr_t*& op_arg, size_t& op_index, size_t& var_index)
 	{
 		op_arg      = op_arg_     = op_arg_rec_.data() + op_arg_rec_.size();
-		op_index    = op_index_   = op_rec_.size() - 1; 
+		op_index    = op_index_   = op_rec_.size() - 1;
 		var_index   = var_index_  = num_var_rec_ - 1;
 		op          = op_         = OpCode( op_rec_[ op_index_ ] );
 		CPPAD_ASSERT_UNKNOWN( op_ == EndOp );
@@ -516,43 +516,43 @@ public:
 	Fetch the next operator during a reverse sweep.
 
 	Use reverse_start to initialize to reverse play back.
-	The first call to reverse_next (after reverse_start) will give the 
+	The first call to reverse_next (after reverse_start) will give the
 	last operator in the recording.
 	We use the notation reverse_routine to denote the set
 	reverse_start, reverse_next, reverse_csum, reverse_cskip.
 
 	\param op [in,out]
-	The input value of \c op must be its output value from the 
+	The input value of \c op must be its output value from the
 	previous call to a reverse_routine.
 	Its output value is the next operator in the recording (in reverse order).
 	The last operator sets op equal to EndOp.
 
 	\param op_arg [in,out]
-	The input value of \c op_arg must be its output value from the 
+	The input value of \c op_arg must be its output value from the
 	previous call to a reverse_routine.
 	Its output value is the
 	beginning of the vector of argument indices for this operation.
-	The last operator sets op_arg equal to the beginning of the 
+	The last operator sets op_arg equal to the beginning of the
 	argument indices for the entire recording.
 	For speed, \c reverse_next does not check for the special cases
 	<tt>op == CSumOp</tt> or <tt>op == CSkipOp</tt>. In these cases, the other
-	return values from \c reverse_next must be corrected by a call to 
+	return values from \c reverse_next must be corrected by a call to
 	\c reverse_csum or \c reverse_cskip respectively.
 
 
 	\param op_index [in,out]
-	The input value of \c op_index must be its output value from the 
+	The input value of \c op_index must be its output value from the
 	previous call to a reverse_routine.
 	Its output value
 	is the index of this operator in the recording. Thus the output
-	value following the previous call to reverse_start is equal to 
+	value following the previous call to reverse_start is equal to
 	the number of variables in the recording minus one.
 	In addition, the output value decreases by one with each call to
 	reverse_next.
 	The last operator sets op_index equal to 0.
 
 	\param var_index [in,out]
-	The input value of \c var_index must be its output value from the 
+	The input value of \c var_index must be its output value from the
 	previous call to a reverse_routine.
 	Its output value is the
 	index of the primary (last) result corresponding to the operator op.
@@ -580,8 +580,8 @@ public:
 		// first argument for next operator
 		op_arg      = op_arg_    -= NumArg(op);
 		CPPAD_ASSERT_UNKNOWN( op_arg_rec_.data() <= op_arg_ );
-		CPPAD_ASSERT_UNKNOWN( 
-			op_arg_ + NumArg(op) <= op_arg_rec_.data() + op_arg_rec_.size() 
+		CPPAD_ASSERT_UNKNOWN(
+			op_arg_ + NumArg(op) <= op_arg_rec_.data() + op_arg_rec_.size()
 		);
 	}
 	/*!
@@ -592,7 +592,7 @@ public:
 	call to \c reverse_next and must be \c CSumOp. It is not modified.
 
 	\param op_arg [in,out]
-	The input value of \c op_arg must be the return value from the 
+	The input value of \c op_arg must be the return value from the
 	previous call to \c reverse_next. Its output value is the
 	beginning of the vector of argument indices for this operation.
 
@@ -601,7 +601,7 @@ public:
 	previous call to \c reverse_next. It is not modified.
 
 	\param var_index [in]
-	The input value of \c var_index must be the return value from the 
+	The input value of \c var_index must be the return value from the
 	previous call to \c reverse_next. It is not modified.
 	*/
 
@@ -617,7 +617,7 @@ public:
 		CPPAD_ASSERT_UNKNOWN( op == CSumOp );
 		CPPAD_ASSERT_UNKNOWN( NumArg(CSumOp) == 0 );
 		/*
-		The variables that need fixing are op_arg_ and op_arg. Currently, 
+		The variables that need fixing are op_arg_ and op_arg. Currently,
 		op_arg points to the last argument for the previous operator.
 		*/
 		// last argument for this csum operation
@@ -643,7 +643,7 @@ public:
 	call to \c reverse_next and must be \c CSkipOp. It is not modified.
 
 	\param op_arg [in,out]
-	The input value of \c op_arg must be the return value from the 
+	The input value of \c op_arg must be the return value from the
 	previous call to \c reverse_next. Its output value is the
 	beginning of the vector of argument indices for this operation.
 
@@ -652,7 +652,7 @@ public:
 	previous call to \c reverse_next. It is not modified.
 
 	\param var_index [in]
-	The input value of \c var_index must be the return value from the 
+	The input value of \c var_index must be the return value from the
 	previous call to \c reverse_next. It is not modified.
 	*/
 
@@ -668,7 +668,7 @@ public:
 		CPPAD_ASSERT_UNKNOWN( op == CSkipOp );
 		CPPAD_ASSERT_UNKNOWN( NumArg(CSkipOp) == 0 );
 		/*
-		The variables that need fixing are op_arg_ and op_arg. Currently, 
+		The variables that need fixing are op_arg_ and op_arg. Currently,
 		op_arg points to the last arugment for the previous operator.
 		*/
 		// last argument for this cskip operation

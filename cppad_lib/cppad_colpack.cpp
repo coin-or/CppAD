@@ -1,4 +1,4 @@
-/* $Id$ */
+// $Id$
 /* --------------------------------------------------------------------------
 CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-15 Bradley M. Bell
 
@@ -10,7 +10,7 @@ A copy of this license is included in the COPYING file of this distribution.
 Please visit http://www.coin-or.org/CppAD/ for information on other licenses.
 -------------------------------------------------------------------------- */
 # include <vector>
-# include <cppad/vector.hpp>
+# include <cppad/utility/vector.hpp>
 # include <cppad/configure.hpp>
 # include <cppad/local/define.hpp>
 # include <cppad/local/cppad_assert.hpp>

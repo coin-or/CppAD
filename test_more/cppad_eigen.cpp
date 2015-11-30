@@ -1,9 +1,9 @@
-/* $Id$ */
+// $Id$
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-13 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-15 Bradley M. Bell
 
 CppAD is distributed under multiple licenses. This distribution is under
-the terms of the 
+the terms of the
                     Eclipse Public License Version 1.0.
 
 A copy of this license is included in the COPYING file of this distribution.
@@ -32,13 +32,13 @@ bool cppad_eigen(void)
 	ok &= traits::AddCost                == 2;
 	ok &= traits::MulCost                == 2;
 
-	ok &= traits::epsilon() == 
+	ok &= traits::epsilon() ==
 		std::numeric_limits<double>::epsilon();
-	ok &= traits::dummy_precision() == 
+	ok &= traits::dummy_precision() ==
 		100.* std::numeric_limits<double>::epsilon();
-	ok &= traits::highest() == 
+	ok &= traits::highest() ==
 		std::numeric_limits<double>::max();
-	ok &= traits::lowest() == 
+	ok &= traits::lowest() ==
 		std::numeric_limits<double>::min();
 
 	AD<double> x = 2.0;
@@ -48,14 +48,14 @@ bool cppad_eigen(void)
 	ok  &= abs2(x)  == 4.0;
 
 	// Outputing a matrix used to fail before partial specialization of
-	// struct significant_decimals_default_impl in cppad_eigen.hpp. 
+	// struct significant_decimals_default_impl in cppad_eigen.hpp.
 	Matrix< AD<double>, 1, 1> X;
 	X(0, 0) = AD<double>(1);
 	std::stringstream stream_out;
 	stream_out << X;
 	ok &= "1" == stream_out.str();
 
-# if ! CPPAD_IMPLICIT_CTOR_FROM_ANY_TYPE 
+# if ! CPPAD_IMPLICIT_CTOR_FROM_ANY_TYPE
 	// multiplying three matrices together used to cause warning
 	// before making ctor from arbitrary type to AD<Base> explicit.
 	typedef CppAD::AD<double> AScalar;
@@ -63,9 +63,9 @@ bool cppad_eigen(void)
 	A(0,0) = 1.0;
 	B(0,0) = 2.0;
 	C(0,0) = 3.0;
-	D      = A * B * C; 
+	D      = A * B * C;
 	ok    &= D(0,0) == 6.0 ;
 # endif
-	
+
 	return ok;
 }

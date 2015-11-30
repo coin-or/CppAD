@@ -1,6 +1,6 @@
 // $Id$
-# ifndef CPPAD_SET_GET_IN_PARALLEL_INCLUDED
-# define CPPAD_SET_GET_IN_PARALLEL_INCLUDED
+# ifndef CPPAD_SET_GET_IN_PARALLEL_HPP
+# define CPPAD_SET_GET_IN_PARALLEL_HPP
 
 /* --------------------------------------------------------------------------
 CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-15 Bradley M. Bell

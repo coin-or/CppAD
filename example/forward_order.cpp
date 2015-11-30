@@ -1,4 +1,4 @@
-/* $Id$ */
+// $Id$
 /* --------------------------------------------------------------------------
 CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-15 Bradley M. Bell
 
@@ -17,9 +17,6 @@ $spell
 $$
 
 $section Forward Mode: Example and Test of Multiple Orders$$
-$index forward, multiple orders$$
-$index multiple, forward orders$$
-$index order, multiple forward$$
 
 $code
 $verbatim%example/forward_order.cpp%0%// BEGIN C++%// END C++%1%$$

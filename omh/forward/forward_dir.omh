@@ -1,9 +1,9 @@
-/* $Id$ */
+// $Id$
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-14 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-15 Bradley M. Bell
 
 CppAD is distributed under multiple licenses. This distribution is under
-the terms of the 
+the terms of the
                     Eclipse Public License Version 1.0.
 
 A copy of this license is included in the COPYING file of this distribution.
@@ -22,24 +22,20 @@ $spell
 	ostream
 $$
 
-$section Multiple Directions Forward Mode$$ 
+$section Multiple Directions Forward Mode$$
 
-$index forward, mode$$
-$index mode, forward$$
-$index direction, multiple$$
-$index multiple, direction$$
 
 $head Syntax$$
-$icode%yq% = %f%.Forward(%q%, %r%, %xq%) 
+$icode%yq% = %f%.Forward(%q%, %r%, %xq%)
 %$$
 
 $head Purpose$$
 We use $latex F : B^n \rightarrow B^m$$ to denote the
 $cref/AD function/glossary/AD Function/$$ corresponding to $icode f$$.
 Given a function $latex X : B \rightarrow B^n$$,
-defined by its 
+defined by its
 $cref/Taylor coefficients/glossary/Taylor Coefficient/$$,
-forward mode computes the Taylor coefficients for the function 
+forward mode computes the Taylor coefficients for the function
 $latex \[
 	Y (t) = F [ X(t) ]
 \]$$
@@ -75,7 +71,7 @@ $codei%
 It specifies the order of Taylor Coefficient that we are calculating
 and must be greater than zero.
 The zero order coefficients can only have one direction computed
-and stored in $icode f$$ so use $cref forward_zero$$ 
+and stored in $icode f$$ so use $cref forward_zero$$
 to compute the zero order coefficients.
 
 $head r$$
@@ -97,14 +93,14 @@ and its size must be $icode%n%*%r%$$
 (see $cref/Vector/forward_dir/Vector/$$ below).
 For $latex \ell = 0 , \ldots , r-1$$,
 $latex j = 0 , \ldots , n-1$$,
-the $th j$$ component of the $th q$$ order Taylor coefficient 
+the $th j$$ component of the $th q$$ order Taylor coefficient
 for $latex X_\ell (t)$$ is defined by
 $pre
 	$$ $latex x_j^{(q),\ell} = $$ $icode%xq%[ %r% * %j% + %ell% ]%$$
 
 $head Zero Order$$
 For $latex j = 0 , \ldots , n-1$$,
-the $th j$$ component of the zero order Taylor coefficient 
+the $th j$$ component of the zero order Taylor coefficient
 for $latex X_\ell (t)$$ is defined by
 $pre
 	$$ $latex x_j^{(0)} = $$ $icode%xk%[ %j% ]%$$
@@ -118,7 +114,7 @@ $head Non-Zero Lower Orders$$
 For $latex \ell = 0 , \ldots , r-1$$,
 $latex j = 0 , \ldots , n-1$$,
 $latex k = 1, \ldots , q-1$$,
-the $th j$$ component of the $th k$$ order Taylor coefficient 
+the $th j$$ component of the $th k$$ order Taylor coefficient
 for $latex X_\ell (t)$$ is defined by
 $pre
 	$$ $latex x_j^{(k),\ell} = $$ $icode%xk%[ %r% * %j% + %ell% ]%$$
@@ -134,14 +130,14 @@ $latex X_\ell : B \rightarrow B^n$$ is defined using
 the Taylor coefficients $latex x^{(k),\ell} \in B^n$$:
 $latex \[
 X_\ell (t) = x^{(0)}  + x^{(1),\ell} * t^1 + \cdots +  x^{(q),\ell} t^q
-\] $$ 
+\] $$
 Note that the $th k$$ derivative of $latex X_\ell (t)$$ is related to
-its Taylor coefficients by 
+its Taylor coefficients by
 $latex \[
 \begin{array}{rcl}
 	x^{(0)}       & = & X_\ell (0)
 	\\
-	x^{(k), \ell} & = & \frac{1}{k !} X_\ell^{(k)} (0) 
+	x^{(k), \ell} & = & \frac{1}{k !} X_\ell^{(k)} (0)
 \end{array}
 \] $$
 for $latex k = 1 , \ldots , q$$.
@@ -151,20 +147,20 @@ For $latex \ell = 0 , \ldots , r-1$$, the function
 $latex Y_\ell : B \rightarrow B^m$$  is defined by
 $latex Y_\ell (t) = F[ X_\ell (t) ] $$.
 We use $latex y^{(0)}$$ for the zero order coefficient
-and $latex y^{(k),\ell} \in B^m$$ to denote the 
+and $latex y^{(k),\ell} \in B^m$$ to denote the
 hight order coefficients; i.e.,
 $latex \[
-Y_\ell (t) = y^{(0)} + y^{(1),\ell} * t^1 + \cdots + y^{(q),\ell} * t^q 
+Y_\ell (t) = y^{(0)} + y^{(1),\ell} * t^1 + \cdots + y^{(q),\ell} * t^q
 + o( t^q )
-\] $$ 
+\] $$
 where $latex o( t^q ) * t^{-q} \rightarrow 0$$ as $latex t \rightarrow 0$$.
 Note that the $th k$$ derivative of $latex Y_\ell (t)$$ is related to
-its Taylor coefficients by 
+its Taylor coefficients by
 $latex \[
 \begin{array}{rcl}
 	y^{(0)}       & = & Y_\ell (0)
 	\\
-	y^{(k), \ell} & = & \frac{1}{k !} Y_\ell^{(k)} (0) 
+	y^{(k), \ell} & = & \frac{1}{k !} Y_\ell^{(k)} (0)
 \end{array}
 \] $$
 for $latex k = 1 , \ldots , q$$.
@@ -178,7 +174,7 @@ and its size is $icode%m%*%r%$$
 (see $cref/Vector/forward_dir/Vector/$$ below).
 For $latex \ell = 0 , \ldots , r-1$$,
 $latex i = 0 , \ldots , m-1$$,
-the $th i$$ component of the $th q$$ order Taylor coefficient 
+the $th i$$ component of the $th q$$ order Taylor coefficient
 for $latex Y_\ell (t)$$ is given by
 $pre
 	$$ $latex y_i^{(q),\ell} = $$ $icode%yq%[ %r% * %i% + %ell% ]%$$

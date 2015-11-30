@@ -1,6 +1,6 @@
-/* $Id$ */
-# ifndef CPPAD_OLD_ATOMIC_INCLUDED
-# define CPPAD_OLD_ATOMIC_INCLUDED
+// $Id$
+# ifndef CPPAD_OLD_ATOMIC_HPP
+# define CPPAD_OLD_ATOMIC_HPP
 /* --------------------------------------------------------------------------
 CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-15 Bradley M. Bell
 
@@ -736,7 +736,7 @@ $end
 # include <cppad/local/cppad_assert.hpp>
 
 // needed before one can use CPPAD_ASSERT_FIRST_CALL_NOT_PARALLEL
-# include <cppad/thread_alloc.hpp>
+# include <cppad/utility/thread_alloc.hpp>
 
 namespace CppAD { // BEGIN_CPPAD_NAMESPACE
 /*!

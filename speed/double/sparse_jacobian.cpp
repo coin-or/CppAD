@@ -1,9 +1,9 @@
-/* $Id$ */
+// $Id$
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-14 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-15 Bradley M. Bell
 
 CppAD is distributed under multiple licenses. This distribution is under
-the terms of the 
+the terms of the
                     Eclipse Public License Version 1.0.
 
 A copy of this license is included in the COPYING file of this distribution.
@@ -29,13 +29,8 @@ $spell
 $$
 
 $section Double Speed: Sparse Jacobian$$
+$mindex link_sparse_jacobian speed$$
 
-$index link_sparse_jacobian, double$$
-$index double, link_sparse_jacobian$$
-$index speed, double$$
-$index double, speed$$
-$index sparse, speed double$$
-$index jacobian, speed double$$
 
 $head Specifications$$
 See $cref link_sparse_jacobian$$.
@@ -43,7 +38,7 @@ See $cref link_sparse_jacobian$$.
 $head Implementation$$
 
 $codep */
-# include <cppad/vector.hpp>
+# include <cppad/utility/vector.hpp>
 # include <cppad/speed/uniform_01.hpp>
 # include <cppad/speed/sparse_jac_fun.hpp>
 
@@ -52,8 +47,8 @@ extern bool
 	global_onetape, global_atomic, global_optimize, global_boolsparsity;
 
 bool link_sparse_jacobian(
-	size_t                           size     , 
-	size_t                           repeat   , 
+	size_t                           size     ,
+	size_t                           repeat   ,
 	size_t                           m        ,
 	const CppAD::vector<size_t>&     row      ,
 	const CppAD::vector<size_t>&     col      ,
@@ -75,7 +70,7 @@ bool link_sparse_jacobian(
 	while(repeat--)
 	{	// choose a value for x
 		CppAD::uniform_01(n, x);
-	
+
 		// computation of the function
 		CppAD::sparse_jac_fun<double>(m, n, x, row, col, order, yp);
 	}

@@ -1,9 +1,9 @@
-/* $Id$ */
+// $Id$
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-12 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-15 Bradley M. Bell
 
 CppAD is distributed under multiple licenses. This distribution is under
-the terms of the 
+the terms of the
                     Eclipse Public License Version 1.0.
 
 A copy of this license is included in the COPYING file of this distribution.
@@ -48,9 +48,9 @@ bool VecADTestOne(void)
 
 	// check array values (while not taping)
 	for(i = 0; i < n; i++)
-		ok &= ( V[i] == 2. * double(n - i) ); 
+		ok &= ( V[i] == 2. * double(n - i) );
 
-	// independent variable 
+	// independent variable
 	CPPAD_TESTVECTOR(AD<double>) X(1);
 	X[0] = double(n - 1);
 	Independent(X);
@@ -86,32 +86,32 @@ bool VecADTestOne(void)
 		x[0] = double(i);
 		z    = f.Forward(0, x);
 		vx   = double(n - i);
-		ok  &= NearEqual(z[0], sin(x[0]) * vx, 1e-10, 1e-10); 
+		ok  &= NearEqual(z[0], sin(x[0]) * vx, 1e-10, 1e-10);
 
 		// note that derivative of v[x] w.r.t. x is zero
 		dx[0] = 1.;
 		dz    = f.Forward(1, dx);
-		ok   &= NearEqual(dz[0], cos(x[0]) * vx, 1e-10, 1e-10); 
+		ok   &= NearEqual(dz[0], cos(x[0]) * vx, 1e-10, 1e-10);
 
 		// reverse mode calculation of same value
 		dz[0] = 1.;
 		dx    = f.Reverse(1, dz);
-		ok   &= NearEqual(dx[0], cos(x[0]) * vx, 1e-10, 1e-10); 
+		ok   &= NearEqual(dx[0], cos(x[0]) * vx, 1e-10, 1e-10);
 	}
 
 
 	return ok;
 }
 
-// create the discrete function AD<double> Floor(const AD<double> &X) 
+// create the discrete function AD<double> Floor(const AD<double> &X)
 double Floor(const double &x)
-{	return std::floor(x); }	
+{	return std::floor(x); }
 CPPAD_DISCRETE_FUNCTION(double, Floor)
 
 bool VecADTestTwo(void)
 {	bool ok = true;
 	using namespace CppAD;
-	
+
 	double pi    = 4. * CppAD::atan(1.);
 	size_t nx    = 10;                       // number of x grid point
 	double xLow  = 0;                        // minimum value for x
@@ -123,12 +123,12 @@ bool VecADTestTwo(void)
 	VecAD<double> Data(nx);
 	size_t i;
 	for(i = 0; i < nx; i++)
-	{	xCur = xLow + double(i) * xStep; 
+	{	xCur = xLow + double(i) * xStep;
 		// use size_t indexing of Data while not taping
-		Data[i] = CppAD::sin(xCur); 
+		Data[i] = CppAD::sin(xCur);
 	}
 
-	// declare independent variable 
+	// declare independent variable
 	CPPAD_TESTVECTOR(AD<double>) X(1);
 	X[0] = 2.;
 	Independent(X);
@@ -174,7 +174,7 @@ bool VecADTestTwo(void)
 
 # include <limits>
 bool SecondOrderReverse(void)
-{	// Bradley M. Bell 2009-07-06 
+{	// Bradley M. Bell 2009-07-06
 	// Reverse mode for LdpOp was only modifying the highest order partial
 	// This test demonstrated the bug
 	bool ok = true;
@@ -198,7 +198,7 @@ bool SecondOrderReverse(void)
 	// The LdvOp instruction corresponds to the index being a variable.
 	AD<double> one = X[0] - 1; // one in a variable here
 	Z[one]  = X[0] + 1.;
-	
+
 
 	// Compute a function where the second order partial for y
 	// depends on the first order partials for z
@@ -225,11 +225,11 @@ bool SecondOrderReverse(void)
 
 	// check first derivative in dw
 	double check = 2. * (Value( X[0] ) + 1.);
-	ok &= NearEqual(dw[0], check, eps, eps); 
+	ok &= NearEqual(dw[0], check, eps, eps);
 
 	// check second derivative in dw
 	check = 2.;
-	ok &= NearEqual(dw[1], check, eps, eps); 
+	ok &= NearEqual(dw[1], check, eps, eps);
 
 	// Test LdvOp
 	// second order reverse (test exp_if_true case)
@@ -240,11 +240,11 @@ bool SecondOrderReverse(void)
 
 	// check first derivative in dw
 	check = 2. * (Value( X[0] ) + 1.);
-	ok &= NearEqual(dw[0], check, eps, eps); 
+	ok &= NearEqual(dw[0], check, eps, eps);
 
 	// check second derivative in dw
 	check = 2.;
-	ok &= NearEqual(dw[1], check, eps, eps); 
+	ok &= NearEqual(dw[1], check, eps, eps);
 
 	return ok;
 }
@@ -254,7 +254,7 @@ bool SecondOrderReverse(void)
 bool VecAD(void)
 {	bool ok = true;
 	ok &= VecADTestOne();
-	ok &= VecADTestTwo(); 
+	ok &= VecADTestTwo();
 	ok &= SecondOrderReverse();
 	return ok;
 }

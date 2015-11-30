@@ -1,9 +1,9 @@
 $Id$
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-14 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-15 Bradley M. Bell
 
 CppAD is distributed under multiple licenses. This distribution is under
-the terms of the 
+the terms of the
                     Eclipse Public License Version 1.0.
 
 A copy of this license is included in the COPYING file of this distribution.
@@ -51,7 +51,7 @@ $latex \[
 where $latex x^{(j)}$$ is the $th j$$ column of $latex x \in B^{n \times p}$$.
 The theorem below implies that
 $latex \[
-	\D{ W_j }{ x^{(i)} } (x) = \D{ W_{j-i} }{ x^{(0)} } (x) 
+	\D{ W_j }{ x^{(i)} } (x) = \D{ W_{j-i} }{ x^{(0)} } (x)
 \] $$
 A $cref/general reverse sweep/reverse_any/$$ calculates the values
 $latex \[
@@ -66,7 +66,7 @@ $latex \[
 $head Theorem$$
 Suppose that $latex F : B^n \rightarrow B^m$$ is a $latex p$$ times
 continuously differentiable function.
-Define the functions 
+Define the functions
 $latex Z : B \times B^{n \times p} \rightarrow B^n$$,
 $latex Y : B \times B^{n \times p }\rightarrow B^m$$,
 and
@@ -77,10 +77,10 @@ $latex \[
 	\\
 	Y(t, x)  & = & F [ Z(t, x) ]
 	\\
-	y^{(j)} (x) & = & \frac{1}{j !} \Dpow{j}{t} Y(0, x) 
+	y^{(j)} (x) & = & \frac{1}{j !} \Dpow{j}{t} Y(0, x)
 \end{array}
 \] $$
-where $latex x^{(j)}$$ denotes the $th j$$ column of 
+where $latex x^{(j)}$$ denotes the $th j$$ column of
 $latex x \in B^{n \times p}$$.
 It follows that
 for all $latex i, j$$ such that $latex i \leq j < p$$,
@@ -96,35 +96,35 @@ If follows from the definitions that
 $latex \[
 \begin{array}{rclr}
 \D{ y^{(j)} }{ x^{(i)} } (x)
-& = & 
-\frac{1}{j ! } \D{ }{ x^{(i)} } 
+& = &
+\frac{1}{j ! } \D{ }{ x^{(i)} }
 	\left[ \Dpow{j}{t} (F \circ  Z) (t, x)  \right]_{t=0}
 \\
 & = &
-\frac{1}{j ! } \left[ \Dpow{j}{t} 
-	\D{ }{ x^{(i)} } (F \circ  Z) (t, x) 
+\frac{1}{j ! } \left[ \Dpow{j}{t}
+	\D{ }{ x^{(i)} } (F \circ  Z) (t, x)
 \right]_{t=0}
 \\
 & = &
-\frac{1}{j ! } \left\{ 
-	\Dpow{j}{t} \left[ t^i ( F^{(1)} \circ Z ) (t, x) \right] 
+\frac{1}{j ! } \left\{
+	\Dpow{j}{t} \left[ t^i ( F^{(1)} \circ Z ) (t, x) \right]
 \right\}_{t=0}
 \end{array}
 \] $$
-For $latex k > i$$, the $th k$$ 
+For $latex k > i$$, the $th k$$
 partial of $latex t^i$$ with respect to $latex t$$ is zero.
 Thus, the partial with respect to $latex t$$ is given by
 $latex \[
 \begin{array}{rcl}
-\Dpow{j}{t} \left[ t^i ( F^{(1)} \circ Z ) (t, x) \right] 
+\Dpow{j}{t} \left[ t^i ( F^{(1)} \circ Z ) (t, x) \right]
 & = &
-\sum_{k=0}^i 
+\sum_{k=0}^i
 \left( \begin{array}{c} j \\ k \end{array} \right)
-\frac{ i ! }{ (i - k) ! } t^{i-k} \; 
+\frac{ i ! }{ (i - k) ! } t^{i-k} \;
 \Dpow{j-k}{t} ( F^{(1)} \circ Z ) (t, x)
 \\
-\left\{ 
-	\Dpow{j}{t} \left[ t^i ( F^{(1)} \circ Z ) (t, x) \right] 
+\left\{
+	\Dpow{j}{t} \left[ t^i ( F^{(1)} \circ Z ) (t, x) \right]
 \right\}_{t=0}
 & = &
 \left( \begin{array}{c} j \\ i \end{array} \right)
@@ -135,7 +135,7 @@ i ! \Dpow{j-i}{t} ( F^{(1)} \circ Z ) (t, x)
 \Dpow{j-i}{t} ( F^{(1)} \circ Z ) (t, x)
 \\
 \D{ y^{(j)} }{ x^{(i)} } (x)
-& = & 
+& = &
 \frac{ 1 }{ (j - i) ! }
 \Dpow{j-i}{t} ( F^{(1)} \circ Z ) (t, x)
 \end{array}

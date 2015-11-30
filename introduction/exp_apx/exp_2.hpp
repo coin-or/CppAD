@@ -1,12 +1,12 @@
-/* $Id$ */
-# ifndef CPPAD_EXP_2_INCLUDED
-# define CPPAD_EXP_2_INCLUDED
+// $Id$
+# ifndef CPPAD_EXP_2_HPP
+# define CPPAD_EXP_2_HPP
 
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-12 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-15 Bradley M. Bell
 
 CppAD is distributed under multiple licenses. This distribution is under
-the terms of the 
+the terms of the
                     Eclipse Public License Version 1.0.
 
 A copy of this license is included in the COPYING file of this distribution.
@@ -25,11 +25,8 @@ $spell
 $$
 
 $section Second Order Exponential Approximation$$
+$mindex exp_2 example algorithm$$
 
-$index exp_2$$
-$index example, algorithm$$
-$index algorithm, example$$
-$index exp, example$$
 
 $head Syntax$$
 $codei%# include "exp_2.hpp"%$$
@@ -39,23 +36,23 @@ $icode%y% = exp_2(%x%)%$$
 
 
 $head Purpose$$
-This is a simple example algorithm that is used to demonstrate 
+This is a simple example algorithm that is used to demonstrate
 Algorithmic Differentiation
 (see $cref exp_eps$$ for a more complex example).
 
 $head Mathematical Form$$
 The exponential function can be defined by
 $latex \[
-	\exp (x) = 1 + x^1 / 1 ! + x^2 / 2 ! + \cdots 
+	\exp (x) = 1 + x^1 / 1 ! + x^2 / 2 ! + \cdots
 \] $$
 The second order approximation for the exponential function is
 $latex \[
-{\rm exp\_2} (x) =  1 + x + x^2 / 2 
+{\rm exp\_2} (x) =  1 + x + x^2 / 2
 \] $$
 
 
 $head include$$
-The include command in the syntax is relative to 
+The include command in the syntax is relative to
 $codei%
 	cppad-%yyyymmdd%/introduction/exp_apx
 %$$
@@ -69,7 +66,7 @@ $codei%
 	const %Type% &%x%
 %$$
 (see $icode Type$$ below).
-It specifies the point at which to evaluate the 
+It specifies the point at which to evaluate the
 approximation for the second order exponential approximation.
 
 $head y$$
@@ -77,23 +74,23 @@ The result $icode y$$ has prototype
 $codei%
 	%Type% %y%
 %$$
-It is the value of the exponential function 
+It is the value of the exponential function
 approximation defined above.
 
 $head Type$$
 If $icode u$$ and $icode v$$ are $icode Type$$ objects and $icode i$$
-is an $code int$$: 
+is an $code int$$:
 
 $table
 $bold Operation$$  $cnext $bold Result Type$$ $cnext $bold Description$$
 $rnext
-$icode%Type%(%i%)%$$ 
+$icode%Type%(%i%)%$$
 	$cnext $icode Type$$
-	$cnext construct object with value equal to $icode i$$ 
+	$cnext construct object with value equal to $icode i$$
 $rnext
-$icode%Type u %=% v%$$ 
+$icode%Type u %=% v%$$
 	$cnext $icode Type$$
-	$cnext construct $icode u$$ with value equal to $icode v$$ 
+	$cnext construct $icode u$$ with value equal to $icode v$$
 $rnext
 $icode%u% * %v%$$
 	$cnext $icode Type$$
@@ -119,19 +116,19 @@ The file $cref exp_2.hpp$$
 contains a C++ implementation of this function.
 
 $head Test$$
-The file $cref exp_2.cpp$$ 
+The file $cref exp_2.cpp$$
 contains a test of this implementation.
 It returns true for success and false for failure.
 
 
 $head Exercises$$
 $list number$$
-Suppose that we make the call 
+Suppose that we make the call
 $codep
 	double x = .1;
 	double y = exp_2(x);
 $$
-What is the value assigned to 
+What is the value assigned to
 $code v1$$, $code v2$$, ... ,$code v5$$ in $cref exp_2.hpp$$ ?
 $lnext
 Extend the routine $code exp_2.hpp$$ to
@@ -157,11 +154,11 @@ $end
 */
 // BEGIN C++
 template <class Type>
-Type exp_2(const Type &x) 
+Type exp_2(const Type &x)
 {       Type v1  = x;                // v1 = x
         Type v2  = Type(1) + v1;     // v2 = 1 + x
         Type v3  = v1 * v1;          // v3 = x^2
-        Type v4  = v3 / Type(2);     // v4 = x^2 / 2 
+        Type v4  = v3 / Type(2);     // v4 = x^2 / 2
         Type v5  = v2 + v4;          // v5 = 1 + x + x^2 / 2
         return v5;                   // exp_2(x) = 1 + x + x^2 / 2
 }

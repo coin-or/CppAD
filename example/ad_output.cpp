@@ -1,9 +1,9 @@
-/* $Id$ */
+// $Id$
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-12 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-15 Bradley M. Bell
 
 CppAD is distributed under multiple licenses. This distribution is under
-the terms of the 
+the terms of the
                     Eclipse Public License Version 1.0.
 
 A copy of this license is included in the COPYING file of this distribution.
@@ -18,11 +18,8 @@ $spell
 $$
 
 $section AD Output Operator: Example and Test$$
+$mindex <<$$
 
-$index <<, AD example$$
-$index output, AD example$$
-$index example, AD output$$
-$index test, AD output$$
 
 $code
 $verbatim%example/ad_output.cpp%0%// BEGIN C++%// END C++%1%$$
@@ -41,7 +38,7 @@ $end
 namespace {
 	template <class S>
 	void set_ostream(S &os)
-	{	os 
+	{	os
 		<< std::setprecision(4) // 4 digits of precision
 		<< std::setw(6)         // 6 characters per field
 		<< std::setfill(' ')    // fill with spaces
@@ -65,7 +62,7 @@ bool ad_output(void)
 	CppAD::VecAD<double> v(1);
 	CppAD::AD<double> zero(0);
 	v[zero]   = exp(1.);                  // 2.7182818285
-	set_ostream(stream); 
+	set_ostream(stream);
 	stream << v[zero];
 
 	// convert output from stream to string

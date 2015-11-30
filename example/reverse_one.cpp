@@ -1,9 +1,9 @@
-/* $Id$ */
+// $Id$
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-12 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-15 Bradley M. Bell
 
 CppAD is distributed under multiple licenses. This distribution is under
-the terms of the 
+the terms of the
                     Eclipse Public License Version 1.0.
 
 A copy of this license is included in the COPYING file of this distribution.
@@ -18,9 +18,6 @@ $$
 
 $section First Order Reverse Mode: Example and Test$$
 
-$index reverse, first order$$
-$index example, first order reverse$$
-$index test, first order reverse$$
 
 $code
 $verbatim%example/reverse_one.cpp%0%// BEGIN C++%// END C++%1%$$
@@ -32,7 +29,7 @@ $end
 # include <cppad/cppad.hpp>
 namespace { // ----------------------------------------------------------
 // define the template function reverse_one_cases<Vector> in empty namespace
-template <typename Vector> 
+template <typename Vector>
 bool reverse_one_cases(void)
 {	bool ok = true;
 	using CppAD::AD;
@@ -41,7 +38,7 @@ bool reverse_one_cases(void)
 	// domain space vector
 	size_t n = 2;
 	CPPAD_TESTVECTOR(AD<double>) X(n);
-	X[0] = 0.; 
+	X[0] = 0.;
 	X[1] = 1.;
 
 	// declare independent variables and start recording
@@ -80,7 +77,7 @@ bool reverse_one_cases(void)
 
 	return ok;
 }
-} // End empty namespace 
+} // End empty namespace
 # include <vector>
 # include <valarray>
 bool reverse_one(void)

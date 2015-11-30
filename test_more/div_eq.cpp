@@ -1,9 +1,9 @@
-/* $Id$ */
+// $Id$
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-12 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-15 Bradley M. Bell
 
 CppAD is distributed under multiple licenses. This distribution is under
-the terms of the 
+the terms of the
                     Eclipse Public License Version 1.0.
 
 A copy of this license is included in the COPYING file of this distribution.
@@ -40,14 +40,14 @@ bool DivEqTestOne(void)
 	AD<double> one  = 1.;
 
 	// dependent variable values
-	Z[x] = U[s];   
+	Z[x] = U[s];
 	Z[y] = U[t];
 	Z[x] /= U[t]; // AD<double> *= AD<double>
 	Z[y] /= 5.;   // AD<double> *= double
 	zero /= Z[y]; // divide into a parameter equal to zero
 	Z[y] /= one;  // divide by a parameter equal to one
 	Z[y] /= 1.;   // divide by a double equal to one
-	
+
 	// check that zero is still a parameter
 	// (must do this before creating f because it erases the tape)
 	ok &= Parameter(zero);
@@ -58,9 +58,9 @@ bool DivEqTestOne(void)
 	CPPAD_TESTVECTOR(double) w( f.Range() );
 
 	// check that none of the components of f are parameters
- 	size_t i;
- 	for(i = 0; i < f.Range(); i++)
- 		ok &= ! f.Parameter(i);
+	size_t i;
+	for(i = 0; i < f.Range(); i++)
+		ok &= ! f.Parameter(i);
 
 	// check functin values
 	ok &= NearEqual(Z[x] , 3. / 2. , 1e-10, 1e-10);
@@ -77,7 +77,7 @@ bool DivEqTestOne(void)
 	CPPAD_TESTVECTOR(double) r( f.Domain() * 2 );
 	w[x] = 1.;
 	w[y] = 0.;
-	r    = f.Reverse(2, w);	
+	r    = f.Reverse(2, w);
 	ok &= NearEqual(r[2 * s + 1]                 // d^2 x / (dt ds)
 		 , - 1. / (U[t] * U[t])     , 1e-10 , 1e-10 );
 	ok &= NearEqual(r[2 * t + 1]                 // d^2 x / (dt dt)
@@ -94,22 +94,22 @@ bool DivEqTestTwo(void)
 	// independent variable vector
 	double u0 = .5;
 	CPPAD_TESTVECTOR(AD<double>) U(1);
-	U[0]      = u0; 
+	U[0]      = u0;
 	Independent(U);
 
-	// dependent variable vector 
+	// dependent variable vector
 	CPPAD_TESTVECTOR(AD<double>) Z(1);
 	Z[0] = U[0] * U[0]; // initial value
 	Z[0] /= 2;          // AD<double> /= int
 	Z[0] /= 4.;         // AD<double> /= double
-	Z[0] /= U[0];       // AD<double> /= AD<double> 
+	Z[0] /= U[0];       // AD<double> /= AD<double>
 
 	// create f: U -> Z and vectors used for derivative calculations
-	ADFun<double> f(U, Z); 
+	ADFun<double> f(U, Z);
 	CPPAD_TESTVECTOR(double) v(1);
 	CPPAD_TESTVECTOR(double) w(1);
 
-	// check value 
+	// check value
 	ok &= NearEqual(Z[0] , u0*u0/(2*4*u0),  1e-10 , 1e-10);
 
 	// forward computation of partials w.r.t. u
@@ -120,14 +120,14 @@ bool DivEqTestTwo(void)
 	v[0]         = 1.;
 	for(j = 1; j < p; j++)
 	{	jfac *= j;
-		w     = f.Forward(j, v);	
+		w     = f.Forward(j, v);
 		ok &= NearEqual(jfac*w[0], value, 1e-10 , 1e-10); // d^jz/du^j
 		v[0]  = 0.;
 		value = 0.;
 	}
 
 	// reverse computation of partials of Taylor coefficients
-	CPPAD_TESTVECTOR(double) r(p); 
+	CPPAD_TESTVECTOR(double) r(p);
 	w[0]  = 1.;
 	r     = f.Reverse(p, w);
 	jfac  = 1.;
@@ -146,6 +146,6 @@ bool DivEqTestTwo(void)
 bool DivEq(void)
 {	bool ok = true;
 	ok &= DivEqTestOne();
-	ok &= DivEqTestTwo(); 
+	ok &= DivEqTestTwo();
 	return ok;
 }

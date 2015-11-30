@@ -1,12 +1,12 @@
-/* $Id$ */
-# ifndef CPPAD_SIGN_OP_INCLUDED
-# define CPPAD_SIGN_OP_INCLUDED
+// $Id$
+# ifndef CPPAD_SIGN_OP_HPP
+# define CPPAD_SIGN_OP_HPP
 
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-14 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-15 Bradley M. Bell
 
 CppAD is distributed under multiple licenses. This distribution is under
-the terms of the 
+the terms of the
                     Eclipse Public License Version 1.0.
 
 A copy of this license is included in the COPYING file of this distribution.
@@ -36,7 +36,7 @@ inline void forward_sign_op(
 	size_t q           ,
 	size_t i_z         ,
 	size_t i_x         ,
-	size_t cap_order   , 
+	size_t cap_order   ,
 	Base*  taylor      )
 {
 	// check assumptions
@@ -72,7 +72,7 @@ inline void forward_sign_op_dir(
 	size_t r           ,
 	size_t i_z         ,
 	size_t i_x         ,
-	size_t cap_order   , 
+	size_t cap_order   ,
 	Base*  taylor      )
 {
 	// check assumptions
@@ -104,7 +104,7 @@ template <class Base>
 inline void forward_sign_op_0(
 	size_t i_z         ,
 	size_t i_x         ,
-	size_t cap_order   , 
+	size_t cap_order   ,
 	Base*  taylor      )
 {
 
@@ -135,11 +135,11 @@ inline void reverse_sign_op(
 	size_t      d            ,
 	size_t      i_z          ,
 	size_t      i_x          ,
-	size_t      cap_order    , 
+	size_t      cap_order    ,
 	const Base* taylor       ,
 	size_t      nc_partial   ,
 	Base*       partial      )
-{	
+{
 	// check assumptions
 	CPPAD_ASSERT_UNKNOWN( NumArg(SignOp) == 1 );
 	CPPAD_ASSERT_UNKNOWN( NumRes(SignOp) == 1 );

@@ -1,9 +1,9 @@
-/* $Id$ */
+// $Id$
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-12 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-15 Bradley M. Bell
 
 CppAD is distributed under multiple licenses. This distribution is under
-the terms of the 
+the terms of the
                     Eclipse Public License Version 1.0.
 
 A copy of this license is included in the COPYING file of this distribution.
@@ -12,14 +12,11 @@ Please visit http://www.coin-or.org/CppAD/ for information on other licenses.
 /*
 $begin interface2c.cpp$$
 $spell
-	
+
 $$
 
 $section Interfacing to C: Example and Test$$
-$index C, interface to$$
-$index interface, to C$$
-$index difference, central$$
-$index central difference$$
+$mindex C interface difference central$$
 
 $code
 $verbatim%example/interface2c.cpp%0%// BEGIN C++%// END C++%1%$$
@@ -38,31 +35,31 @@ Compute the value of a sum of Gaussians defined by a and evaluated at x
 where the floating point type is a template parameter
 */
 template <class Float>
-Float sumGauss(const Float &x, const CppAD::vector<Float> &a)   
-{ 
+Float sumGauss(const Float &x, const CppAD::vector<Float> &a)
+{
 	// number of components in a
 	size_t na = a.size();
 
 	// number of Gaussians
 	size_t n = na / 3;
 
-	// check the restricitons on na 
+	// check the restricitons on na
 	assert( na == n * 3 );
 
 	// declare temporaries used inside of loop
 	Float ex, arg;
 
 	// initialize sum
-  	Float y = 0.; 
+	Float y = 0.;
 
 	// loop with respect to Gaussians
 	size_t i;
 	for(i = 0; i < n; i++)
 	{
-		arg =   (x - a[3*i+1]) / a[3*i+2]; 
-		ex  =   exp(-arg * arg); 
-		y  +=   a[3*i] * ex; 
-	} 
+		arg =   (x - a[3*i+1]) / a[3*i+2];
+		ex  =   exp(-arg * arg);
+		y  +=   a[3*i] * ex;
+	}
 	return y;
 }
 /*
@@ -71,8 +68,8 @@ Create a C function interface that computes both
 and its derivative with respect to the parameter vector a.
 */
 extern "C"
-void sumGauss(float x, float a[], float *y, float dyda[], size_t na)   
-{	// Note that any simple vector could replace CppAD::vector; 
+void sumGauss(float x, float a[], float *y, float dyda[], size_t na)
+{	// Note that any simple vector could replace CppAD::vector;
 	// for example, std::vector, std::valarray
 
 	// check the restrictions on na
@@ -86,12 +83,12 @@ void sumGauss(float x, float a[], float *y, float dyda[], size_t na)
 	CppAD::vector<float>   acopy(na);  // used for derivative calculations
 
 	// vector for the dependent variables (there is only one)
-	CppAD::vector<ADfloat> Y(1); 
+	CppAD::vector<ADfloat> Y(1);
 
 	// copy the independent variables from C vector to CppAD vectors
 	size_t i;
 	for(i = 0; i < na; i++)
- 		A[i] = acopy[i] = a[i];
+		A[i] = acopy[i] = a[i];
 
 	// declare that A is the independent variable vector
 	CppAD::Independent(A);
@@ -99,14 +96,14 @@ void sumGauss(float x, float a[], float *y, float dyda[], size_t na)
 	// value of x as an ADfloat object
 	ADfloat X = x;
 
-	// Evaluate template version of sumGauss with ADfloat as the template 
+	// Evaluate template version of sumGauss with ADfloat as the template
 	// parameter. Set the independent variable to the resulting value
-	Y[0] = sumGauss(X, A); 
+	Y[0] = sumGauss(X, A);
 
 	// create the AD function object F : A -> Y
 	CppAD::ADFun<float> F(A, Y);
 
-	// use Value to convert Y[0] to float and return y = F(a)  
+	// use Value to convert Y[0] to float and return y = F(a)
 	*y = CppAD::Value(Y[0]);
 
 	// evaluate the derivative F'(a)
@@ -131,7 +128,7 @@ bool NearEqual(float x, float y, float r, float a)
 bool Interface2C(void)
 {	// This routine is intentionally coded as if it were a C routine
 	// except for the fact that it uses the predefined type bool.
-	bool ok = true; 
+	bool ok = true;
 
 	// declare variables
 	float x, a[6], y, dyda[6], tmp[6];
@@ -157,7 +154,7 @@ bool Interface2C(void)
 	{	// local variables
 		float small, ai, yp, ym, dy_da;
 
-		// We assume that the type float has at least 7 digits of 
+		// We assume that the type float has at least 7 digits of
 		// precision, so we choose small to be about pow(10., -7./2.).
 		small  = (float) 3e-4;
 
@@ -178,7 +175,7 @@ bool Interface2C(void)
 		// restore this component of a
 		a[i]  = ai;
 
-		ok   &= NearEqual(dyda[i], dy_da, small, small); 
+		ok   &= NearEqual(dyda[i], dy_da, small, small);
 	}
 	return ok;
 }

@@ -1,6 +1,6 @@
-/* $Id$ */
-# ifndef CPPAD_AD_FUN_INCLUDED
-# define CPPAD_AD_FUN_INCLUDED
+// $Id$
+# ifndef CPPAD_AD_FUN_HPP
+# define CPPAD_AD_FUN_HPP
 
 /* --------------------------------------------------------------------------
 CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-15 Bradley M. Bell
@@ -31,8 +31,6 @@ $$
 
 $section ADFun Objects$$
 
-$index ADFun, object$$
-$index object, ADFun$$
 
 $head Purpose$$
 An AD of $icode Base$$

@@ -1,9 +1,9 @@
-/* $Id: sparse_hessian.cpp 3136 2014-03-02 11:54:07Z bradbell $ */
+// $Id$
 /* --------------------------------------------------------------------------
 CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-15 Bradley M. Bell
 
 CppAD is distributed under multiple licenses. This distribution is under
-the terms of the 
+the terms of the
                     Eclipse Public License Version 1.0.
 
 A copy of this license is included in the COPYING file of this distribution.
@@ -23,13 +23,8 @@ $spell
 $$
 
 $section Double Speed: Sparse Hessian$$
+$mindex link_sparse_hessian speed$$
 
-$index link_sparse_hessian, double$$
-$index double, link_sparse_hessian$$
-$index speed, double$$
-$index double, speed$$
-$index sparse, speed double$$
-$index hessian, speed double$$
 
 $head Specifications$$
 See $cref link_sparse_hessian$$.
@@ -37,7 +32,7 @@ See $cref link_sparse_hessian$$.
 $head Implementation$$
 
 $codep */
-# include <cppad/vector.hpp>
+# include <cppad/utility/vector.hpp>
 # include <cppad/speed/uniform_01.hpp>
 # include <cppad/speed/sparse_hes_fun.hpp>
 
@@ -46,8 +41,8 @@ extern bool
 	global_onetape, global_atomic, global_optimize, global_boolsparsity;
 
 bool link_sparse_hessian(
-	size_t                           size     , 
-	size_t                           repeat   , 
+	size_t                           size     ,
+	size_t                           repeat   ,
 	const CppAD::vector<size_t>&     row      ,
 	const CppAD::vector<size_t>&     col      ,
 	CppAD::vector<double>&           x        ,
@@ -61,12 +56,12 @@ bool link_sparse_hessian(
 	using CppAD::vector;
 	size_t order = 0;          // derivative order corresponding to function
 	size_t n     = size;       // argument space dimension
-	size_t m     = 1;          // range space dimension 
+	size_t m     = 1;          // range space dimension
 	vector<double> y(m);       // function value
 
 	// choose a value for x
 	CppAD::uniform_01(n, x);
-	
+
 	// ------------------------------------------------------
 
 	while(repeat--)

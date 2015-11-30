@@ -1,9 +1,9 @@
-/* $Id$ */
+// $Id$
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-12 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-15 Bradley M. Bell
 
 CppAD is distributed under multiple licenses. This distribution is under
-the terms of the 
+the terms of the
                     Eclipse Public License Version 1.0.
 
 A copy of this license is included in the COPYING file of this distribution.
@@ -19,9 +19,6 @@ $$
 
 $section Third Order Reverse Mode: Example and Test$$
 
-$index reverse, third order$$
-$index example, reverse third order$$
-$index test, reverse third order$$
 
 $head Taylor Coefficients$$
 $latex \[
@@ -34,7 +31,7 @@ $latex \[
 \end{array}
 \] $$
 Thus, we need to be careful to properly account for the fact that
-$latex X^{(2)} (0) = 2 x^{(2)}$$ 
+$latex X^{(2)} (0) = 2 x^{(2)}$$
 (and similarly $latex Y^{(2)} (0) = 2 y^{(2)}$$).
 
 $code
@@ -47,7 +44,7 @@ $end
 # include <cppad/cppad.hpp>
 namespace { // ----------------------------------------------------------
 // define the template function cases<Vector> in empty namespace
-template <typename Vector> 
+template <typename Vector>
 bool cases(void)
 {	bool ok    = true;
 	double eps = 10. * CppAD::numeric_limits<double>::epsilon();
@@ -57,7 +54,7 @@ bool cases(void)
 	// domain space vector
 	size_t n = 2;
 	CPPAD_TESTVECTOR(AD<double>) X(n);
-	X[0] = 0.; 
+	X[0] = 0.;
 	X[1] = 1.;
 
 	// declare independent variables and start recording
@@ -71,18 +68,18 @@ bool cases(void)
 	// create f : X -> Y and stop recording
 	CppAD::ADFun<double> f(X, Y);
 
-	// define x^0 and compute y^0 using user zero order forward 
+	// define x^0 and compute y^0 using user zero order forward
 	Vector x0(n), y0(m);
 	x0[0]    = 2.;
 	x0[1]    = 3.;
 	y0       = f.Forward(0, x0);
 
-	// y^0 = F(x^0) 
+	// y^0 = F(x^0)
 	double check;
 	check    =  x0[0] * x0[1];
 	ok      &= NearEqual(y0[0] , check, eps, eps);
 
-	// define x^1 and compute y^1 using first order forward mode 
+	// define x^1 and compute y^1 using first order forward mode
 	Vector x1(n), y1(m);
 	x1[0] = 4.;
 	x1[1] = 5.;
@@ -129,16 +126,16 @@ bool cases(void)
 	ok   &= NearEqual(dw[1*p+1], check, eps, eps);
 
 	// check partial w.r.t x^2_0 of W(x)
-	check = 3. * x0[1]; 
+	check = 3. * x0[1];
 	ok   &= NearEqual(dw[0*p+2], check, eps, eps);
 
 	// check partial w.r.t x^2_1 of W(x)
-	check = 3. * x0[0]; 
+	check = 3. * x0[0];
 	ok   &= NearEqual(dw[1*p+2], check, eps, eps);
 
 	return ok;
 }
-} // End empty namespace 
+} // End empty namespace
 # include <vector>
 # include <valarray>
 bool reverse_three(void)

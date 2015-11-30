@@ -1,9 +1,9 @@
-/* $Id$ */
+// $Id$
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-12 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-15 Bradley M. Bell
 
 CppAD is distributed under multiple licenses. This distribution is under
-the terms of the 
+the terms of the
                     Eclipse Public License Version 1.0.
 
 A copy of this license is included in the COPYING file of this distribution.
@@ -18,9 +18,6 @@ $$
 
 $section First Order Derivative Driver: Example and Test$$
 
-$index derivative, example$$
-$index example, derivative$$
-$index test, derivative$$
 
 $code
 $verbatim%example/rev_one.cpp%0%// BEGIN C++%// END C++%1%$$
@@ -65,25 +62,25 @@ bool RevOneCases()
 	x[0] = 2.;
 	x[1] = 1.;
 
-	// compute and check derivative of y[0] 
+	// compute and check derivative of y[0]
 	Vector dw(n);
 	dw  = f.RevOne(x, 0);
 	ok &= NearEqual(dw[0],      exp(x[1]), 1e-10, 1e-10 ); // w.r.t x[0]
 	ok &= NearEqual(dw[1], x[0]*exp(x[1]), 1e-10, 1e-10 ); // w.r.t x[1]
 
-	// compute and check derivative of y[1] 
+	// compute and check derivative of y[1]
 	dw  = f.RevOne(x, 1);
 	ok &= NearEqual(dw[0],      sin(x[1]), 1e-10, 1e-10 );
 	ok &= NearEqual(dw[1], x[0]*cos(x[1]), 1e-10, 1e-10 );
 
-	// compute and check derivative of y[2] 
+	// compute and check derivative of y[2]
 	dw  = f.RevOne(x, 2);
 	ok &= NearEqual(dw[0],        cos(x[1]), 1e-10, 1e-10 );
 	ok &= NearEqual(dw[1], - x[0]*sin(x[1]), 1e-10, 1e-10 );
 
 	return ok;
 }
-} // End empty namespace 
+} // End empty namespace
 # include <vector>
 # include <valarray>
 bool RevOne(void)

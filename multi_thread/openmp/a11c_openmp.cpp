@@ -1,4 +1,4 @@
-/* $Id$ */
+// $Id$
 /* --------------------------------------------------------------------------
 CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-15 Bradley M. Bell
 
@@ -16,12 +16,9 @@ $spell
 	CppAD
 	const
 $$
-$index OpenMP, example A.1.1c$$
-$index example, OpenMP A.1.1c$$
-$index A.1.1c, OpenMP example$$
-$index thread, OpenMP example$$
 
 $section A Simple OpenMP Example and Test$$
+$mindex A.1.1c thread$$
 
 $head Purpose$$
 This example just demonstrates OpenMP and does not use CppAD at all.

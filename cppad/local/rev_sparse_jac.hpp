@@ -1,6 +1,6 @@
-/* $Id$ */
-# ifndef CPPAD_REV_SPARSE_JAC_INCLUDED
-# define CPPAD_REV_SPARSE_JAC_INCLUDED
+// $Id$
+# ifndef CPPAD_REV_SPARSE_JAC_HPP
+# define CPPAD_REV_SPARSE_JAC_HPP
 
 /* --------------------------------------------------------------------------
 CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-15 Bradley M. Bell
@@ -31,11 +31,8 @@ $spell
 $$
 
 $section Jacobian Sparsity Pattern: Reverse Mode$$
+$mindex RevSparseJac sparse$$
 
-$index RevSparseJac$$
-$index reverse, sparse Jacobian$$
-$index sparse, reverse Jacobian$$
-$index pattern, reverse Jacobian$$
 
 $head Syntax$$
 $icode%s% = %f%.RevSparseJac(%q%, %r%)

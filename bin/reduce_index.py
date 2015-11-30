@@ -45,7 +45,7 @@ f_out     = open(file_name, 'w')
 # some useful patterns
 begin_pattern   = re.compile('[$]begin ([^$]*)[$][$]')
 end_pattern     = re.compile('[$]end')
-section_pattern = re.compile('[$](section) ([^$]*)[$][$]')
+section_pattern = re.compile('[$](section)\s([^$]*)[$][$]')
 index_pattern   = re.compile('[$][mc]{0,1}(index) ([^$]*)[$][$]')
 cmd_pattern     = re.compile('[$]([a-z]*) ([^$]*)[$][$]')
 # -----------------------------------------------------------------------------
@@ -116,14 +116,25 @@ while len(file_rest) > 0 :
 					if not ( word_lower in exclude_list ) :
 						index_list.append(word)
 						exclude_list.append(word_lower)
+		# keep words that are not in start of other words
+		keep_index = list()
+		for word_1 in index_list :
+			ok_1 = True
+			for word_2 in index_list :
+				if word_2.startswith(word_1 + '_') :
+					ok_1 = False
+				if word_2.endswith('_' + word_1) :
+					ok_1 = False
+			if ok_1 :
+				keep_index.append(word_1)
 		#
 		# write out data to the end of section command
 		section_cmd  = section_pattern.search(section_data)
 		data = remove_index_cmd( section_data[ : section_cmd.end() ] )
 		f_out.write( data )
-		if len(index_list) > 0 :
+		if len(keep_index) > 0 :
 			index_cmd = '$mindex'
-			for word in index_list :
+			for word in keep_index :
 				index_cmd += ' ' + word
 			index_cmd += '$$'
 			f_out.write( '\n' + index_cmd )

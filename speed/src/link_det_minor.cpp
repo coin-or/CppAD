@@ -1,9 +1,9 @@
-/* $Id$ */
+// $Id$
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-12 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-15 Bradley M. Bell
 
 CppAD is distributed under multiple licenses. This distribution is under
-the terms of the 
+the terms of the
                     Eclipse Public License Version 1.0.
 
 A copy of this license is included in the COPYING file of this distribution.
@@ -18,26 +18,23 @@ $spell
 	CppAD
 $$
 
-$index link_det_minor$$
-$index det_minor, speed test$$
-$index speed, test det_minor$$
-$index test, det_minor speed$$
 
 $section Speed Testing Gradient of Determinant by Minor Expansion$$
+$mindex link_det_minor test$$
 
 $head Prototype$$
 $codei%extern bool link_det_minor(
-	size_t                 %size%      , 
-	size_t                 %repeat%    , 
+	size_t                 %size%      ,
+	size_t                 %repeat%    ,
 	CppAD::vector<double> &%matrix%    ,
-	CppAD::vector<double> &%gradient% 
+	CppAD::vector<double> &%gradient%
 );
 %$$
 
 $head Purpose$$
 Each $cref/package/speed_main/package/$$
 must define a version of this routine as specified below.
-This is used by the $cref speed_main$$ program 
+This is used by the $cref speed_main$$ program
 to run the corresponding speed and correctness tests.
 
 $head Method$$
@@ -47,7 +44,7 @@ is used by the different AD packages.
 $head Return Value$$
 If this speed test is not yet
 supported by a particular $icode package$$,
-the corresponding return value for $code link_det_minor$$ 
+the corresponding return value for $code link_det_minor$$
 should be $code false$$.
 
 $head size$$
@@ -59,37 +56,37 @@ The argument $icode repeat$$ is the number of different matrices
 that the gradient (or determinant) is computed for.
 
 $head matrix$$
-The argument $icode matrix$$ is a vector with 
+The argument $icode matrix$$ is a vector with
 $icode%size%*%size%$$ elements.
-The input value of its elements does not matter. 
+The input value of its elements does not matter.
 The output value of its elements is the last matrix that the
 gradient (or determinant) is computed for.
 
 $head gradient$$
-The argument $icode gradient$$ is a vector with 
+The argument $icode gradient$$ is a vector with
 $icode%size%*%size%$$ elements.
-The input value of its elements does not matter. 
+The input value of its elements does not matter.
 The output value of its elements is the gradient of the
 determinant of $icode matrix$$ with respect to its elements.
 
 $subhead double$$
-In the case where $icode package$$ is $code double$$, 
-only the first element of $icode gradient$$ is used and it is actually 
+In the case where $icode package$$ is $code double$$,
+only the first element of $icode gradient$$ is used and it is actually
 the determinant value (the gradient value is not computed).
 
-$end 
+$end
 -----------------------------------------------------------------------------
 */
 
-# include <cppad/vector.hpp>
+# include <cppad/utility/vector.hpp>
 # include <cppad/speed/det_grad_33.hpp>
 # include <cppad/speed/det_33.hpp>
 
 extern bool link_det_minor(
-	size_t                     size      , 
-	size_t                     repeat    , 
+	size_t                     size      ,
+	size_t                     repeat    ,
 	CppAD::vector<double>      &matrix   ,
-	CppAD::vector<double>      &gradient 
+	CppAD::vector<double>      &gradient
 );
 
 bool available_det_minor(void)

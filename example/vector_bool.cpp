@@ -1,4 +1,4 @@
-/* $Id$ */
+// $Id$
 /* --------------------------------------------------------------------------
 CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-15 Bradley M. Bell
 
@@ -18,12 +18,8 @@ $spell
 $$
 
 $section CppAD::vectorBool Class: Example and Test$$
+$mindex bool vectorBool CppAD$$
 
-$index bool, CppAD::vector$$
-$index vectorBool, CppAD$$
-$index CppAD::vectorBool, example$$
-$index example, CppAD::vectorBool$$
-$index test, CppAD::vectorBool$$
 
 $code
 $verbatim%example/vector_bool.cpp%0%// BEGIN C++%// END C++%1%$$
@@ -33,8 +29,8 @@ $end
 */
 // BEGIN C++
 
-# include <cppad/vector.hpp>
-# include <cppad/check_simple_vector.hpp>
+# include <cppad/utility/vector.hpp>
+# include <cppad/utility/check_simple_vector.hpp>
 # include <sstream> // sstream and string are used to test output operation
 # include <string>
 

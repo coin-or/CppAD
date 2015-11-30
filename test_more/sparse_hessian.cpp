@@ -1,9 +1,9 @@
-/* $Id$ */
+// $Id$
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-12 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-15 Bradley M. Bell
 
 CppAD is distributed under multiple licenses. This distribution is under
-the terms of the 
+the terms of the
                     Eclipse Public License Version 1.0.
 
 A copy of this license is included in the COPYING file of this distribution.
@@ -38,8 +38,8 @@ bool rc_tridiagonal(void)
 		check[ell] = 0.0;
 
 	for(i = 0; i < m; i++)
-	{	AD<double> diff = a_x[i+1] - a_x[i];	
-		a_y[i] = 0.5 * diff * diff / double(i+2); 
+	{	AD<double> diff = a_x[i+1] - a_x[i];
+		a_y[i] = 0.5 * diff * diff / double(i+2);
 		w[i] = double(i+1);
 		ell         = i * n + i;
 		check[ell] += w[i] / double(i+2);
@@ -53,7 +53,7 @@ bool rc_tridiagonal(void)
 
 	// create f: x -> y
 	CppAD::ADFun<double> f(a_x, a_y);
-		 
+
 	// determine the sparsity pattern p for Hessian of w^T f
 	typedef CppAD::vector< std::set<size_t> > VectorSet;
 	VectorSet p_r(n);
@@ -81,7 +81,7 @@ bool rc_tridiagonal(void)
 			c[k] = i+1;
 			k++;
 		}
-	} 
+	}
 	ok &= k == K;
 
 	// test computing sparse Hessian
@@ -99,7 +99,7 @@ bool rc_tridiagonal(void)
 }
 
 
-template <class VectorBase, class VectorBool> 
+template <class VectorBase, class VectorBool>
 bool bool_case()
 {	bool ok = true;
 	using CppAD::AD;
@@ -127,7 +127,7 @@ bool bool_case()
 	for(i = 0; i < n; i++)
 		x[i] = double(i);
 
-	// second derivative of y[1] 
+	// second derivative of y[1]
 	VectorBase w(m);
 	w[0] = 1.;
 	VectorBase h( n * n );
@@ -165,7 +165,7 @@ bool bool_case()
 
 	return ok;
 }
-template <class VectorBase, class VectorSet> 
+template <class VectorBase, class VectorSet>
 bool set_case()
 {	bool ok = true;
 	using CppAD::AD;
@@ -193,7 +193,7 @@ bool set_case()
 	for(i = 0; i < n; i++)
 		x[i] = double(i);
 
-	// second derivative of y[1] 
+	// second derivative of y[1]
 	VectorBase w(m);
 	w[0] = 1.;
 	VectorBase h( n * n );
@@ -229,7 +229,7 @@ bool set_case()
 
 	return ok;
 }
-} // End empty namespace 
+} // End empty namespace
 # include <vector>
 # include <valarray>
 bool sparse_hessian(void)

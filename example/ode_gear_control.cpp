@@ -1,9 +1,9 @@
-/* $Id$ */
+// $Id$
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-12 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-15 Bradley M. Bell
 
 CppAD is distributed under multiple licenses. This distribution is under
-the terms of the 
+the terms of the
                     Eclipse Public License Version 1.0.
 
 A copy of this license is included in the COPYING file of this distribution.
@@ -17,12 +17,10 @@ $spell
 $$
 
 $section OdeGearControl: Example and Test$$
+$mindex OdeGearControl$$
 
-$index OdeGearControl, example$$
-$index example, OdeGearControl$$
-$index test, OdeGearControl$$
 
-Define 
+Define
 $latex X : \B{R} \rightarrow \B{R}^2$$ by
 $latex \[
 \begin{array}{rcl}
@@ -34,7 +32,7 @@ It follows that $latex X_0 (0) = 1$$, $latex X_1 (0) = 0$$ and
 $latex \[
 \begin{array}{rcl}
 	X_0^{(1)} (t) & = & - w_0 X_0 (t)  \\
-	X_1^{(1)} (t) & = & + w_0 X_0 (t) - w_1 X_1 (t) 
+	X_1^{(1)} (t) & = & + w_0 X_0 (t) - w_1 X_1 (t)
 \end{array}
 \] $$
 The example tests OdeGearControl using the relations above:
@@ -48,7 +46,7 @@ $end
 // BEGIN C++
 
 # include <cppad/cppad.hpp>
-# include <cppad/ode_gear_control.hpp>   // CppAD::OdeGearControl
+# include <cppad/utility/ode_gear_control.hpp>   // CppAD::OdeGearControl
 
 namespace {
 	// --------------------------------------------------------------
@@ -58,25 +56,25 @@ namespace {
 	public:
 		// constructor
 		Fun(const CPPAD_TESTVECTOR(double) &w_) : w(w_)
-		{ } 
+		{ }
 
 		// set f = x'(t)
 		template <typename Scalar>
 		void Ode(
-			const Scalar                    &t, 
-			const CPPAD_TESTVECTOR(Scalar) &x, 
+			const Scalar                    &t,
+			const CPPAD_TESTVECTOR(Scalar) &x,
 			CPPAD_TESTVECTOR(Scalar)       &f)
 		{	f[0] = - w[0] * x[0];
-			f[1] = + w[0] * x[0] - w[1] * x[1];	
+			f[1] = + w[0] * x[0] - w[1] * x[1];
 		}
 
 		void Ode_dep(
-			const double                    &t, 
-			const CPPAD_TESTVECTOR(double) &x, 
+			const double                    &t,
+			const CPPAD_TESTVECTOR(double) &x,
 			CPPAD_TESTVECTOR(double)       &f_x)
 		{	using namespace CppAD;
 
-			size_t n  = x.size();	
+			size_t n  = x.size();
 			CPPAD_TESTVECTOR(AD<double>) T(1);
 			CPPAD_TESTVECTOR(AD<double>) X(n);
 			CPPAD_TESTVECTOR(AD<double>) F(n);
@@ -142,7 +140,7 @@ bool OdeGearControl(void)
 	double smax = 1.;
 	double sini = 1e-10;
 	double erel = 0.;
-	
+
 	xf = CppAD::OdeGearControl(F, M,
 		ti, tf, xi, smin, smax, sini, eabs, erel, ef, maxabs, nstep);
 

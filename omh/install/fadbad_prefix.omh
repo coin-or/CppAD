@@ -1,9 +1,9 @@
-/* $Id$ */
+// $Id$
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-13 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-15 Bradley M. Bell
 
 CppAD is distributed under multiple licenses. This distribution is under
-the terms of the 
+the terms of the
                     Eclipse Public License Version 1.0.
 
 A copy of this license is included in the COPYING file of this distribution.
@@ -21,8 +21,7 @@ $spell
 $$
 
 $section Including the FADBAD Speed Tests$$
-$index fadbad, speed$$
-$index speed, fadbad$$
+$mindex prefix get$$
 
 $head Purpose$$
 CppAD includes speed comparisons for the AD package
@@ -31,9 +30,7 @@ $cref speed_fadbad$$.
 
 
 $head fadbad_prefix$$
-$index fadbad, prefix$$
-$index prefix, fadbad$$
-If FADBAD is installed on your system, you can 
+If FADBAD is installed on your system, you can
 specify a value for its install $icode fadbad_prefix$$ on the
 $cref cmake$$ command line.
 The value of $icode fadbad_prefix$$ must be such that,
@@ -42,20 +39,18 @@ $cref/cmake_install_includedirs/cmake/cmake_install_includedirs/$$,
 $codei%
 	%fadbad_prefix%/%dir%/FADBAD++/badiff.h
 %$$
-is a valid way to reference to the include file $code badiff.h$$; 
+is a valid way to reference to the include file $code badiff.h$$;
 
 $head Speed Tests$$
-$index speed, fadbad$$
-$index fadbad, speed$$
 If you include $icode fadbad_prefix$$ on the $cref cmake$$ command line,
-you will be able to run the FADBAD speed correctness tests 
+you will be able to run the FADBAD speed correctness tests
 by executing the following commands starting in the
 $cref/distribution directory/download/Distribution Directory/$$:
 $codei%
 	cd build/speed/fadbad
 	make check_speed_fadbad
 %$$
-After executing $code make check$$, you can run a specific FADBAD speed test 
+After executing $code make check$$, you can run a specific FADBAD speed test
 by executing the command $code ./speed_fadbad$$;
 see $cref speed_main$$ for the meaning of the command line
 options to this program.
@@ -64,8 +59,6 @@ $children%
 	bin/get_fadbad.sh
 %$$
 $head get_fadbad$$
-$index get, fadbad$$
-$index fadbad, get$$
 If you are using Unix, you can download and install
 a copy of Fadbad using $cref get_fadbad.sh$$.
 The corresponding $icode fadbad_prefix$$ would be

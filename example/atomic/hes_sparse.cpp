@@ -1,9 +1,9 @@
 // $Id$
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-14 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-15 Bradley M. Bell
 
 CppAD is distributed under multiple licenses. This distribution is under
-the terms of the 
+the terms of the
                     Eclipse Public License Version 1.0.
 
 A copy of this license is included in the COPYING file of this distribution.
@@ -13,10 +13,7 @@ Please visit http://www.coin-or.org/CppAD/ for information on other licenses.
 $begin atomic_hes_sparse.cpp$$
 
 $section Atomic Operation Hessian Sparsity: Example and Test$$
-$index hessian, atomic operation sparsity$$
-$index atomic, hessian sparsity $$
-$index operation, atomic hessian sparsity$$
-$index sparsity, atomic hessian$$
+$mindex sparsity$$
 
 $head Purpose$$
 This example demonstrates calculation of the Hessian sparsity pattern
@@ -52,7 +49,7 @@ $head Constructor $$
 $codep */
 	public:
 	// constructor (could use const char* for name)
-	atomic_hes_sparse(const std::string& name) : 
+	atomic_hes_sparse(const std::string& name) :
 	CppAD::atomic_base<double>(name)
 	{ }
 	private:
@@ -103,7 +100,7 @@ $codep */
 		size_t                                p ,
 		const vector< std::set<size_t> >&     r ,
 		      vector< std::set<size_t> >&     s )
-	{	// This function needed if using f.ForSparseJac 
+	{	// This function needed if using f.ForSparseJac
 		// with afun.option( CppAD::atomic_base<double>::set_sparsity_enum )
 		size_t n = r.size();
 		size_t m = s.size();
@@ -114,7 +111,7 @@ $codep */
 		s[0] = r[0];
 		my_union(s[1], r[0], r[1]);
 
-		return true; 
+		return true;
 	}
 /* $$
 $head rev_sparse_hes$$
@@ -142,24 +139,24 @@ $codep */
 		// There are no cross term second derivatives for this case,
 		// so it is not necessary to vx.
 
-		// sparsity for T(x) = S(x) * f'(x) 
+		// sparsity for T(x) = S(x) * f'(x)
 		t[0] = s[0];
 		t[1] = s[0] || s[1];
-	
-		// V(x) = f'(x)^T * g''(y) * f'(x) * R  +  g'(y) * f''(x) * R 
+
+		// V(x) = f'(x)^T * g''(y) * f'(x) * R  +  g'(y) * f''(x) * R
 		// U(x) = g''(y) * f'(x) * R
 		// S(x) = g'(y)
-		
+
 		// back propagate the sparsity for U,
 		// note both components of f'(x) may be non-zero;
 		v[0] = u[0];
 		my_union(v[1], u[0], u[1]);
 
 		// include forward Jacobian sparsity in Hessian sparsity
-		// f_0''(x) * R 
+		// f_0''(x) * R
 		if( s[0] )
 			my_union(v[0], v[0], r[0] );
-		// f_1''(x) * R 
+		// f_1''(x) * R
 		if( s[1] )
 		{	my_union(v[1], v[1], r[0] );
 			my_union(v[0], v[0], r[1] );
@@ -187,16 +184,16 @@ bool use_atomic_hes_sparse(bool x_1_variable)
 	double x0_0 = 0.75, x0_1 = 2.00;
 	vector< AD<double> > au(n);
 	au[0] = x0_0;
-	au[1] = x0_1; 
+	au[1] = x0_1;
 
 	// declare independent variables and start tape recording
 	CppAD::Independent(au);
 
-	// range space vector 
+	// range space vector
 	size_t m = 2;
 	vector< AD<double> > ay(m);
 
-	// call user function 
+	// call user function
 	vector< AD<double> > ax(n);
 	ax[0] = au[0];
 	if( x_1_variable )
@@ -209,7 +206,7 @@ bool use_atomic_hes_sparse(bool x_1_variable)
 	CppAD::ADFun<double> f;
 	f.Dependent (au, ay);  // f(u) = y
 	//
-	// check function value 
+	// check function value
 	double check_y0_0 = x0_0 * x0_0;
 	double check_y0_1 = x0_0 * x0_1;
 	ok &= NearEqual( Value(ay[0]) , check_y0_0,  eps, eps);
@@ -232,11 +229,11 @@ bool use_atomic_hes_sparse(bool x_1_variable)
 	r[1].insert(1);
 	jac_s = f.ForSparseJac(n, r);
 	check_s[0].insert(0);
-	ok &= jac_s[0] == check_s[0];   
+	ok &= jac_s[0] == check_s[0];
 	check_s[1].insert(0);
 	if( x_1_variable )
 		check_s[1].insert(1);
-	ok &= jac_s[1] == check_s[1];   
+	ok &= jac_s[1] == check_s[1];
 
 	// reverse sparse Hessian
 	vector< std::set<size_t> > h(2), check_h(2), hes_s(1);

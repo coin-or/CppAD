@@ -1,12 +1,12 @@
-/* $Id$ */
-# ifndef CPPAD_DET_OF_MINOR_INCLUDED
-# define CPPAD_DET_OF_MINOR_INCLUDED
+// $Id$
+# ifndef CPPAD_DET_OF_MINOR_HPP
+# define CPPAD_DET_OF_MINOR_HPP
 
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-13 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-15 Bradley M. Bell
 
 CppAD is distributed under multiple licenses. This distribution is under
-the terms of the 
+the terms of the
                     Eclipse Public License Version 1.0.
 
 A copy of this license is included in the COPYING file of this distribution.
@@ -24,25 +24,22 @@ $spell
 	namespace
 $$
 
-$index det_of_minor$$
-$index determinant, matrix minor$$
-$index matrix, minor determinant$$
-$index minor, matrix determinant$$
 
 $section Determinant of a Minor$$
+$mindex det_of_minor matrix$$
 
 $head Syntax$$
 $codei%# include <cppad/speed/det_of_minor.hpp>
-%$$ 
-$icode%d% = det_of_minor(%a%, %m%, %n%, %r%, %c%)%$$ 
+%$$
+$icode%d% = det_of_minor(%a%, %m%, %n%, %r%, %c%)%$$
 
 
 $head Inclusion$$
 The template function $code det_of_minor$$ is defined in the $code CppAD$$
-namespace by including 
-the file $code cppad/speed/det_of_minor.hpp$$ 
+namespace by including
+the file $code cppad/speed/det_of_minor.hpp$$
 (relative to the CppAD distribution directory).
-It is only intended for example and testing purposes, 
+It is only intended for example and testing purposes,
 so it is not automatically included by
 $cref/cppad.hpp/cppad/$$.
 
@@ -50,13 +47,13 @@ $head Purpose$$
 This template function
 returns the determinant of a minor of the matrix $latex A$$
 using expansion by minors.
-The elements of the $latex n \times n$$ minor $latex M$$ 
+The elements of the $latex n \times n$$ minor $latex M$$
 of the matrix $latex A$$ are defined,
 for $latex i = 0 , \ldots , n-1$$ and $latex j = 0 , \ldots , n-1$$, by
 $latex \[
 	M_{i,j} = A_{R(i), C(j)}
 \]$$
-where the functions 
+where the functions
 $latex R(i)$$ is defined by the $cref/argument r/det_of_minor/r/$$ and
 $latex C(j)$$ is defined by the $cref/argument c/det_of_minor/c/$$.
 $pre
@@ -66,7 +63,7 @@ This template function
 is for example and testing purposes only.
 Expansion by minors is chosen as an example because it uses
 a lot of floating point operations yet does not require much source code
-(on the order of $icode m$$ factorial floating point operations and 
+(on the order of $icode m$$ factorial floating point operations and
 about 70 lines of source code including comments).
 This is not an efficient method for computing a determinant;
 for example, using an LU factorization would be better.
@@ -79,7 +76,7 @@ will return the determinant of $latex A$$:
 $list number$$
 $latex n = m$$.
 $lnext
-for $latex i = 0 , \ldots , m-1$$, $latex r[i] = i+1$$, 
+for $latex i = 0 , \ldots , m-1$$, $latex r[i] = i+1$$,
 and $latex r[m] = 0$$.
 $lnext
 for $latex j = 0 , \ldots , m-1$$, $latex c[j] = j+1$$,
@@ -90,7 +87,7 @@ $head a$$
 The argument $icode a$$ has prototype
 $codei%
 	const std::vector<%Scalar%>& %a%
-%$$ 
+%$$
 and is a vector with size $latex m * m$$
 (see description of $cref/Scalar/det_of_minor/Scalar/$$ below).
 The elements of the $latex m \times m$$ matrix $latex A$$ are defined,
@@ -119,10 +116,10 @@ $codei%
 	std::vector<size_t>& %r%
 %$$
 and is a vector with $latex m + 1$$ elements.
-This vector defines the function $latex R(i)$$ 
+This vector defines the function $latex R(i)$$
 which specifies the rows of the minor $latex M$$.
-To be specific, the function $latex R(i)$$ 
-for $latex i = 0, \ldots , n-1$$ is defined by 
+To be specific, the function $latex R(i)$$
+for $latex i = 0, \ldots , n-1$$ is defined by
 $latex \[
 \begin{array}{rcl}
 	R(0)   & = & r[m]
@@ -132,7 +129,7 @@ $latex \[
 \] $$
 All the elements of $icode r$$ must have value
 less than or equal $icode m$$.
-The elements of vector $icode r$$ are modified during the computation, 
+The elements of vector $icode r$$ are modified during the computation,
 and restored to their original value before the return from
 $code det_of_minor$$.
 
@@ -142,10 +139,10 @@ $codei%
 	std::vector<size_t>& %c%
 %$$
 and is a vector with $latex m + 1$$ elements
-This vector defines the function $latex C(i)$$ 
+This vector defines the function $latex C(i)$$
 which specifies the rows of the minor $latex M$$.
-To be specific, the function $latex C(i)$$ 
-for $latex j = 0, \ldots , n-1$$ is defined by 
+To be specific, the function $latex C(i)$$
+for $latex j = 0, \ldots , n-1$$ is defined by
 $latex \[
 \begin{array}{rcl}
 	C(0)   & = & c[m]
@@ -155,7 +152,7 @@ $latex \[
 \] $$
 All the elements of $icode c$$ must have value
 less than or equal $icode m$$.
-The elements of vector $icode c$$ are modified during the computation, 
+The elements of vector $icode c$$ are modified during the computation,
 and restored to their original value before the return from
 $code det_of_minor$$.
 
@@ -171,7 +168,7 @@ If $icode x$$ and $icode y$$ are objects of type $icode Scalar$$
 and $icode i$$ is an object of type $code int$$,
 the $icode Scalar$$ must support the following operations:
 $table
-$bold Syntax$$ 
+$bold Syntax$$
 	$cnext $bold Description$$
 	$cnext $bold Result Type$$
 $rnext
@@ -204,13 +201,13 @@ $children%
 
 $head Example$$
 The file
-$cref det_of_minor.cpp$$ 
+$cref det_of_minor.cpp$$
 contains an example and test of $code det_of_minor.hpp$$.
 It returns true if it succeeds and false otherwise.
 
 $head Source Code$$
 The file
-$cref det_of_minor.hpp$$ 
+$cref det_of_minor.hpp$$
 contains the source for this template function.
 
 
@@ -219,14 +216,14 @@ $end
 */
 // BEGIN C++
 namespace CppAD { // BEGIN CppAD namespace
-template <class Scalar> 
-Scalar det_of_minor( 
-	const std::vector<Scalar>& a  , 
-	size_t                     m  , 
-	size_t                     n  , 
-	std::vector<size_t>&       r  , 
+template <class Scalar>
+Scalar det_of_minor(
+	const std::vector<Scalar>& a  ,
+	size_t                     m  ,
+	size_t                     n  ,
+	std::vector<size_t>&       r  ,
 	std::vector<size_t>&       c  )
-{	
+{
 	const size_t R0 = r[m]; // R(0)
 	size_t       Cj = c[m]; // C(j)    (case j = 0)
 	size_t       Cj1 = m;   // C(j-1)  (case j = 0)
@@ -265,7 +262,7 @@ Scalar det_of_minor(
 		// advance to next column of M
 		Cj1 = Cj;
 		Cj  = c[Cj];
-		s   = - s;		
+		s   = - s;
 	}
 
 	// restore row zero to the minor representation for M

@@ -1,9 +1,9 @@
-/* $Id$ */
+// $Id$
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-12 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-15 Bradley M. Bell
 
 CppAD is distributed under multiple licenses. This distribution is under
-the terms of the 
+the terms of the
                     Eclipse Public License Version 1.0.
 
 A copy of this license is included in the COPYING file of this distribution.
@@ -17,10 +17,8 @@ $spell
 $$
 
 $section Second Order Reverse ModeExample and Test$$
+$mindex example$$
 
-$index reverse, second order$$
-$index example, second order reverse$$
-$index test, second order reverse$$
 
 $code
 $verbatim%example/reverse_two.cpp%0%// BEGIN C++%// END C++%1%$$
@@ -32,7 +30,7 @@ $end
 # include <cppad/cppad.hpp>
 namespace { // ----------------------------------------------------------
 // define the template function reverse_two_cases<Vector> in empty namespace
-template <typename Vector> 
+template <typename Vector>
 bool reverse_two_cases(void)
 {	bool ok = true;
 	using CppAD::AD;
@@ -41,7 +39,7 @@ bool reverse_two_cases(void)
 	// domain space vector
 	size_t n = 2;
 	CPPAD_TESTVECTOR(AD<double>) X(n);
-	X[0] = 0.; 
+	X[0] = 0.;
 	X[1] = 1.;
 
 	// declare independent variables and start recording
@@ -84,13 +82,13 @@ bool reverse_two_cases(void)
 
 	// check derivative of f^{(1)} (x) * dx
 	check = 2.*x[1]*dx[1] + 2.*x[0]*dx[1];
-	ok   &= NearEqual(dw[0*2+1] , check, 1e-10, 1e-10); 
+	ok   &= NearEqual(dw[0*2+1] , check, 1e-10, 1e-10);
 	check = 2.*x[0]*dx[1];
-	ok   &= NearEqual(dw[1*2+1] , check, 1e-10, 1e-10); 
+	ok   &= NearEqual(dw[1*2+1] , check, 1e-10, 1e-10);
 
 	return ok;
 }
-} // End empty namespace 
+} // End empty namespace
 # include <vector>
 # include <valarray>
 bool reverse_two(void)

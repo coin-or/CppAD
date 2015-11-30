@@ -1,9 +1,9 @@
-/* $Id$ */
+// $Id$
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-14 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-15 Bradley M. Bell
 
 CppAD is distributed under multiple licenses. This distribution is under
-the terms of the 
+the terms of the
                     Eclipse Public License Version 1.0.
 
 A copy of this license is included in the COPYING file of this distribution.
@@ -31,13 +31,9 @@ $spell
 $$
 
 $section Fadbad Speed: Ode$$
+$mindex link_ode speed$$
 
 
-$index link_ode, fadbad$$
-$index fadbad, link_ode$$
-$index speed, fadbad$$
-$index fadbad, speed$$
-$index ode, speed fadbad$$
 
 $head Specifications$$
 See $cref link_ode$$.
@@ -48,7 +44,7 @@ $codep */
 # include <FADBAD++/fadiff.h>
 # include <algorithm>
 # include <cassert>
-# include <cppad/vector.hpp>
+# include <cppad/utility/vector.hpp>
 # include <cppad/speed/uniform_01.hpp>
 # include <cppad/speed/ode_evaluate.hpp>
 
@@ -89,7 +85,7 @@ bool link_ode(
 
 	// -------------------------------------------------------------
 	while(repeat--)
-	{ 	// choose next x value
+	{	// choose next x value
 		CppAD::uniform_01(n, x);
 		for(j = 0; j < n; j++)
 		{	// set value of x[j]

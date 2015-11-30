@@ -1,6 +1,6 @@
-/* $Id$ */
-# ifndef CPPAD_VAR2PAR_INCLUDED
-# define CPPAD_VAR2PAR_INCLUDED
+// $Id$
+# ifndef CPPAD_VAR2PAR_HPP
+# define CPPAD_VAR2PAR_HPP
 
 /* --------------------------------------------------------------------------
 CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-15 Bradley M. Bell
@@ -22,12 +22,9 @@ $spell
 	const
 $$
 
-$index Var2Par$$
-$index variable, convert to parameter$$
-$index parameter, convert from variable$$
-$index value_, obtain during taping$$
 
 $section Convert an AD Variable to a Parameter$$
+$mindex Var2Par from value_ obtain during taping$$
 
 $head Syntax$$
 $icode%y% = Var2Par(%x%)%$$

@@ -1,9 +1,9 @@
-/* $Id$ */
+// $Id$
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-12 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-15 Bradley M. Bell
 
 CppAD is distributed under multiple licenses. This distribution is under
-the terms of the 
+the terms of the
                     Eclipse Public License Version 1.0.
 
 A copy of this license is included in the COPYING file of this distribution.
@@ -20,11 +20,6 @@ $$
 
 $section LuSolve With Complex Arguments: Example and Test$$
 
-$index complex, LuSolve$$
-$index example, LuSolve$$
-$index test, LuSolve$$
-$index example, complex$$
-$index test, complex$$
 
 $code
 $verbatim%example/lu_solve.cpp%0%// BEGIN C++%// END C++%1%$$
@@ -35,9 +30,9 @@ $end
 
 // BEGIN C++
 
-# include <cppad/lu_solve.hpp>       // for CppAD::LuSolve
-# include <cppad/near_equal.hpp>     // for CppAD::NearEqual
-# include <cppad/vector.hpp>  // for CppAD::vector
+# include <cppad/utility/lu_solve.hpp>       // for CppAD::LuSolve
+# include <cppad/utility/near_equal.hpp>     // for CppAD::NearEqual
+# include <cppad/utility/vector.hpp>  // for CppAD::vector
 # include <complex>               // for std::complex
 
 typedef std::complex<double> Complex;    // define the Complex type
@@ -65,8 +60,8 @@ bool LuSolve(void)
 	for(j = 0; j < n; j++)
 		for(k = 0; k < m; k++)
 			S[ j * m + k ] = Complex(j, j + k);
-		
-	// set B = A * S 
+
+	// set B = A * S
 	size_t ik;
 	Complex sum;
 	for(k = 0; k < m; k++)

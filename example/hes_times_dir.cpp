@@ -1,9 +1,9 @@
-/* $Id$ */
+// $Id$
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-12 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-15 Bradley M. Bell
 
 CppAD is distributed under multiple licenses. This distribution is under
-the terms of the 
+the terms of the
                     Eclipse Public License Version 1.0.
 
 A copy of this license is included in the COPYING file of this distribution.
@@ -16,8 +16,7 @@ $spell
 $$
 
 $section Hessian Times Direction: Example and Test$$
-$index Hessian, times direction$$
-$index direction, times Hessian$$
+$mindex direction$$
 
 $code
 $verbatim%example/hes_times_dir.cpp%0%// BEGIN C++%// END C++%1%$$
@@ -40,7 +39,7 @@ namespace { // put this function in the empty namespace
 		while(i--)
 			sum += x[i] * x[i];
 		return sum;
-	} 
+	}
 }
 
 bool HesTimesDir(void)
@@ -51,10 +50,10 @@ bool HesTimesDir(void)
 	using CppAD::NearEqual;
 
 	// domain space vector
-	size_t n = 5; 
+	size_t n = 5;
 	CPPAD_TESTVECTOR(AD<double>)  X(n);
 	for(j = 0; j < n; j++)
-		X[j] = AD<double>(j); 
+		X[j] = AD<double>(j);
 
 	// declare independent variables and start recording
 	CppAD::Independent(X);
@@ -79,7 +78,7 @@ bool HesTimesDir(void)
 	CPPAD_TESTVECTOR(double) ddw(2 * n);
 	w[0] = 1.;
 	ddw  = f.Reverse(2, w);
-	
+
 	// F(x)        = x[0]^2 + x[1]^2 + ... + x[n-1]^2
 	// F''(x)      = 2 * Identity_Matrix
 	// F''(x) * dx = 2 * dx

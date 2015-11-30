@@ -1,9 +1,9 @@
-/* $Id$ */
+// $Id$
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-13 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-15 Bradley M. Bell
 
 CppAD is distributed under multiple licenses. This distribution is under
-the terms of the 
+the terms of the
                     Eclipse Public License Version 1.0.
 
 A copy of this license is included in the COPYING file of this distribution.
@@ -19,21 +19,15 @@ $spell
 $$
 
 $section Using CppAD in a Multi-Threading Environment$$
-$index parallel, mode$$
-$index execution, parallel$$
-$index mode, parallel$$
-$index multi-threading$$
+$mindex mode execution maximum number$$
 
 $head Purpose$$
-Extra steps and care must be taken to use CppAD 
-in $cref/parallel/ta_in_parallel/$$ execution mode. 
+Extra steps and care must be taken to use CppAD
+in $cref/parallel/ta_in_parallel/$$ execution mode.
 This section collects this information in one place.
 
 $head CPPAD_MAX_NUM_THREADS$$
-$index maximum, number of threads$$
-$index threads, maximum number of$$
-$index CPPAD_MAX_NUM_THREADS$$
-The value $code CPPAD_MAX_NUM_THREADS$$ is an absolute maximum for 
+The value $code CPPAD_MAX_NUM_THREADS$$ is an absolute maximum for
 the number of threads that CppAD should support.
 If this preprocessor symbol is defined
 before including any CppAD header files,
@@ -47,7 +41,7 @@ defining it before including the CppAD header files.
 
 $head parallel_setup$$
 Using any of the following routines in a multi-threading environment
-requires that $cref/thread_alloc::parallel_setup/ta_parallel_setup/$$ 
+requires that $cref/thread_alloc::parallel_setup/ta_parallel_setup/$$
 has been completed:
 $cref/CppAD::vector/CppAD_vector/Memory and Parallel Mode/$$,
 $cref/CheckSimpleVector/CheckSimpleVector/Parallel Mode/$$,
@@ -57,12 +51,12 @@ $cref parallel_ad$$.
 $head hold_memory$$
 Memory allocation should be much faster after calling
 $code hold_memory$$ with
-$cref/value/ta_hold_memory/value/$$ equal to true. 
+$cref/value/ta_hold_memory/value/$$ equal to true.
 This may even be true if there is only one thread.
 
 $head Parallel AD$$
 One must first call
-$cref/thread_alloc::parallel_setup/ta_parallel_setup/$$ 
+$cref/thread_alloc::parallel_setup/ta_parallel_setup/$$
 and then call $cref parallel_ad$$ before using $code AD$$ types
 in $cref/parallel/ta_in_parallel/$$ execution mode.
 

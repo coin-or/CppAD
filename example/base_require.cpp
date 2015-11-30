@@ -1,6 +1,6 @@
-/* $Id$ */
+// $Id$
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-13 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-15 Bradley M. Bell
 
 CppAD is distributed under multiple licenses. This distribution is under
 the terms of the
@@ -16,11 +16,8 @@ $spell
 $$
 
 $section Using a User Defined AD Base Type: Example and Test$$
+$mindex type$$
 
-$index base, type example$$
-$index type, base example$$
-$index example, base type$$
-$index test, base type$$
 
 $code
 $verbatim%example/base_require.cpp%0%// BEGIN C++%// END C++%1%$$
@@ -57,7 +54,7 @@ bool base_require(void)
 
 	// check function value f(x) = x^2
 	CPPAD_TESTVECTOR(base_alloc) x(n), y(m);
-	base_alloc eps = 
+	base_alloc eps =
 		base_alloc(100.) * CppAD::numeric_limits<base_alloc>::epsilon();
 	x[0] = base_alloc(3.);
 	y    = f.Forward(0, x);

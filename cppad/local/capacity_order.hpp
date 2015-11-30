@@ -1,12 +1,12 @@
-/* $Id$ */
-# ifndef CPPAD_CAPACITY_ORDER_INCLUDED
-# define CPPAD_CAPACITY_ORDER_INCLUDED
+// $Id$
+# ifndef CPPAD_CAPACITY_ORDER_HPP
+# define CPPAD_CAPACITY_ORDER_HPP
 
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-14 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-15 Bradley M. Bell
 
 CppAD is distributed under multiple licenses. This distribution is under
-the terms of the 
+the terms of the
                     Eclipse Public License Version 1.0.
 
 A copy of this license is included in the COPYING file of this distribution.
@@ -22,13 +22,9 @@ $spell
 	yq
 $$
 
-$index Forward, capacity$$
-$index capacity_order$$
-$index capacity, Forward$$
-$index control, memory$$
-$index memory, control$$
 
 $section Controlling Taylor Coefficients Memory Allocation$$
+$mindex Forward capacity_order control$$
 
 $head Syntax$$
 $icode%f%.capacity_order(%c%)%$$
@@ -38,18 +34,18 @@ $cref seq_property$$
 
 $head Purpose$$
 The Taylor coefficients calculated by $cref Forward$$ mode calculations
-are retained in an $cref ADFun$$ object for subsequent use during 
+are retained in an $cref ADFun$$ object for subsequent use during
 $cref Reverse$$ mode and higher order Forward mode calculations.
 For example, a call to $cref/Forward/forward_order/$$ with the syntax
 $codei%
         %yq% = %f%.Forward(%q%, %xq%)
 %$$
 where $icode%q% > 0%$$ and  $code%xq%.size() == %f%.Domain()%$$,
-uses the lower order Taylor coefficients and 
+uses the lower order Taylor coefficients and
 computes the $th q$$ order Taylor coefficients for all
 the variables in the operation sequence corresponding to $icode f$$.
-The $code capacity_order$$ operation allows you to control that 
-amount of memory that is retained by an AD function object 
+The $code capacity_order$$ operation allows you to control that
+amount of memory that is retained by an AD function object
 (to hold $code Forward$$ results for subsequent calculations).
 
 $head f$$
@@ -63,11 +59,11 @@ The argument $icode c$$ has prototype
 $codei%
 	size_t %c%
 %$$
-It specifies the number of Taylor coefficient orders that are allocated 
+It specifies the number of Taylor coefficient orders that are allocated
 in the AD operation sequence corresponding to $icode f$$.
 
 $subhead Pre-Allocating Memory$$
-If you plan to make calls to $code Forward$$ with the maximum value of 
+If you plan to make calls to $code Forward$$ with the maximum value of
 $icode q$$ equal to $icode Q$$,
 it should be faster to pre-allocate memory for these calls using
 $codei%
@@ -80,28 +76,28 @@ $pre
 
 $$
 Note that each call to $cref Dependent$$ frees the old memory
-connected to the function object and sets the corresponding 
+connected to the function object and sets the corresponding
 taylor capacity to zero.
 
 $subhead Freeing Memory$$
 If you no longer need the Taylor coefficients of order $icode q$$
-and higher (that are stored in $icode f$$), 
+and higher (that are stored in $icode f$$),
 you can reduce the memory allocated to $icode f$$ using
 $codei%
 	%f%.capacity_order(%c%)
 %$$
 with $icode c$$ equal to $icode q$$.
-Note that, if $cref ta_hold_memory$$ is true, this memory is not actually 
-returned to the system, but rather held for future use by the same thread. 
+Note that, if $cref ta_hold_memory$$ is true, this memory is not actually
+returned to the system, but rather held for future use by the same thread.
 
 $head Original State$$
 If $icode f$$ is $cref/constructed/FunConstruct/$$ with the syntax
 $codei%
 	ADFun<%Base%> %f%(%x%, %y%)
 %$$,
-there is an implicit call to $cref forward_zero$$ with $icode xq$$ equal to 
+there is an implicit call to $cref forward_zero$$ with $icode xq$$ equal to
 the value of the
-$cref/independent variables/glossary/Tape/Independent Variable/$$ 
+$cref/independent variables/glossary/Tape/Independent Variable/$$
 when the AD operation sequence was recorded.
 This corresponds to $icode%c% == 1%$$.
 
@@ -109,7 +105,7 @@ $children%
 	example/capacity_order.cpp
 %$$
 $head Example$$
-The file 
+The file
 $cref capacity_order.cpp$$
 contains an example and test of these operations.
 It returns true if it succeeds and false otherwise.
@@ -142,7 +138,7 @@ In addition, taylor_.free() is called.
 \param r
 is the number of directions to allocate memory for.
 If <code>c == 1</code> then \c r must also be one.
-In all cases, it must hold that 
+In all cases, it must hold that
 <code>
 	r == num_direction_taylor_ || num_order_taylor <= 1
 </code>
@@ -162,7 +158,7 @@ void ADFun<Base>::capacity_order(size_t c, size_t r)
 {	// temporary indices
 	size_t i, k, ell;
 
-	if( (c == cap_order_taylor_) & (r == num_direction_taylor_) ) 
+	if( (c == cap_order_taylor_) & (r == num_direction_taylor_) )
 		return;
 
 	if( c == 0 )
@@ -174,8 +170,8 @@ void ADFun<Base>::capacity_order(size_t c, size_t r)
 		return;
 	}
 	CPPAD_ASSERT_UNKNOWN(r==num_direction_taylor_ || num_order_taylor_<=1);
-	
-	// Allocate new taylor with requested number of orders and directions  
+
+	// Allocate new taylor with requested number of orders and directions
 	size_t new_len   = ( (c-1)*r + 1 ) * num_var_tape_;
 	pod_vector<Base> new_taylor;
 	new_taylor.extend(new_len);
@@ -227,7 +223,7 @@ recording of operations used the type AD<Base>.
 
 \param c
 is the number of orders to allocate memory for.
-If <code>c == 0</code>, 
+If <code>c == 0</code>,
 num_order_taylor_, cap_order_taylor_, and num_direction_taylor_
 are all set to zero.
 In addition, taylor_.free() is called.
@@ -259,6 +255,6 @@ void ADFun<Base>::capacity_order(size_t c)
 }
 
 } // END CppAD namespace
-	
+
 
 # endif

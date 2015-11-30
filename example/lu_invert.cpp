@@ -1,9 +1,9 @@
-/* $Id$ */
+// $Id$
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-12 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-15 Bradley M. Bell
 
 CppAD is distributed under multiple licenses. This distribution is under
-the terms of the 
+the terms of the
                     Eclipse Public License Version 1.0.
 
 A copy of this license is included in the COPYING file of this distribution.
@@ -19,9 +19,8 @@ $spell
 $$
 
 $section LuInvert: Example and Test$$
+$mindex LuInvert$$
 
-$index example, LuInvert$$
-$index test, LuInvert$$
 
 $code
 $verbatim%example/lu_invert.cpp%0%// BEGIN C++%// END C++%1%$$
@@ -33,9 +32,9 @@ $end
 
 // BEGIN C++
 # include <cstdlib>               // for rand function
-# include <cppad/lu_invert.hpp>      // for CppAD::LuInvert
-# include <cppad/near_equal.hpp>     // for CppAD::NearEqual
-# include <cppad/vector.hpp>  // for CppAD::vector
+# include <cppad/utility/lu_invert.hpp>      // for CppAD::LuInvert
+# include <cppad/utility/near_equal.hpp>     // for CppAD::NearEqual
+# include <cppad/utility/vector.hpp>  // for CppAD::vector
 
 bool LuInvert(void)
 {	bool  ok = true;
@@ -45,18 +44,18 @@ bool LuInvert(void)
 	using std::srand;
 # endif
 
-	size_t  n = 7;                        // number rows in A 
+	size_t  n = 7;                        // number rows in A
 	size_t  m = 3;                        // number columns in B
 	double  rand_max = double(RAND_MAX);  // maximum rand value
 	double  sum;                          // element of L * U
 	size_t  i, j, k;                      // temporary indices
 
 	// dimension matrices
-	CppAD::vector<double> 
+	CppAD::vector<double>
 		A(n*n), X(n*m), B(n*m), LU(n*n), L(n*n), U(n*n);
 
 	// seed the random number generator
-	srand(123); 
+	srand(123);
 
 	// pivot vectors
 	CppAD::vector<size_t> ip(n);
@@ -78,7 +77,7 @@ bool LuInvert(void)
 	// chose U, a random upper triangular matrix with ones on diagonal
 	for(i = 0; i < n; i++)
 	{	for(j = 0; j < i; j++)
-			U [i * n + j]  = 0.; 
+			U [i * n + j]  = 0.;
 		U[ i * n + i ] = 1.;
 		for(j = i+1; j < n; j++)
 			U [i * n + j]  = rand() / rand_max;
@@ -95,7 +94,7 @@ bool LuInvert(void)
 		for(j = i+1; j < n; j++)
 			LU [ ip[i] * n + jp[j] ]  = U[i * n + j];
 	}
-	// set A to a permuted version of L * U 
+	// set A to a permuted version of L * U
 	for(i = 0; i < n; i++)
 	{	for(j = 0; j < n; j++)
 		{	// compute (i,j) entry in permuted matrix

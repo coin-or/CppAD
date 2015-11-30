@@ -1,6 +1,6 @@
 // $Id$
-# ifndef CPPAD_SPARSE_SET_INCLUDED
-# define CPPAD_SPARSE_SET_INCLUDED
+# ifndef CPPAD_SPARSE_SET_HPP
+# define CPPAD_SPARSE_SET_HPP
 
 /* --------------------------------------------------------------------------
 CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-15 Bradley M. Bell
@@ -60,7 +60,7 @@ public:
 
 	\param v
 	vector that we are attempting to make a copy of.
- 	*/
+	*/
 	sparse_set(const sparse_set& v)
 	{	// Error:
 		// Probably a sparse_set argument has been passed by value
@@ -271,7 +271,7 @@ public:
 
 	/return
 	The the total number of elements
- 	*/
+	*/
 	size_t number_elements(void) const
 	{	size_t i, count;
 		count = 0;

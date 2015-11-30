@@ -1,9 +1,9 @@
-/* $Id$ */
+// $Id$
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-14 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-15 Bradley M. Bell
 
 CppAD is distributed under multiple licenses. This distribution is under
-the terms of the 
+the terms of the
                     Eclipse Public License Version 1.0.
 
 A copy of this license is included in the COPYING file of this distribution.
@@ -18,10 +18,8 @@ $spell
 $$
 
 $section Using ColPack: Example and Test$$
+$mindex colpack jacobian sparse$$
 
-$index example, colpack jacobian$$
-$index test, colpack jacobian$$
-$index sparse, colpack jacobian$$
 
 $code
 $verbatim%example/colpack_jac.cpp%0%// BEGIN C++%// END C++%1%$$
@@ -75,7 +73,7 @@ bool colpack_jac(void)
 	check[4] = 0.; check[5] = 0.; check[6]  = 1.; check[7]  = 1.;
 	check[8] = 1.; check[9] = 1.; check[10] = 1.; check[11] = x[3];
 
-	// Normally one would use f.ForSparseJac or f.RevSparseJac to compute 
+	// Normally one would use f.ForSparseJac or f.RevSparseJac to compute
 	// sparsity pattern, but for this example we extract it from check.
 	std::vector< std::set<size_t> >  p(m);
 
@@ -90,7 +88,7 @@ bool colpack_jac(void)
 				p[i].insert(j);
 			}
 		}
-	} 
+	}
 	size_t K = row.size();
 	d_vector jac(K);
 

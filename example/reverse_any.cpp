@@ -1,9 +1,9 @@
-/* $Id$ */
+// $Id$
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-14 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-15 Bradley M. Bell
 
 CppAD is distributed under multiple licenses. This distribution is under
-the terms of the 
+the terms of the
                     Eclipse Public License Version 1.0.
 
 A copy of this license is included in the COPYING file of this distribution.
@@ -18,24 +18,21 @@ $$
 
 $section Reverse Mode General Case: Example and Test$$
 
-$index reverse, example$$
-$index example, reverse$$
-$index test, reverse$$
 
 $head Purpose$$
-Break a large computation into pieces and only store values at the 
+Break a large computation into pieces and only store values at the
 interface of the pieces (this is much easier to do using $cref checkpoint$$).
-In actual applications, there may be many functions, but 
+In actual applications, there may be many functions, but
 for this example there are only two.
-The functions 
-$latex F : \B{R}^2 \rightarrow \B{R}^2$$ 
+The functions
+$latex F : \B{R}^2 \rightarrow \B{R}^2$$
 and
-$latex G : \B{R}^2 \rightarrow \B{R}^2$$ 
+$latex G : \B{R}^2 \rightarrow \B{R}^2$$
 defined by
 $latex \[
-	F(x) = \left( \begin{array}{c} x_0 x_1   \\ x_1 - x_0 \end{array} \right) 
+	F(x) = \left( \begin{array}{c} x_0 x_1   \\ x_1 - x_0 \end{array} \right)
 	\; , \;
-	G(y) = \left( \begin{array}{c} y_0 - y_1 \\ y_1  y_0   \end{array} \right) 
+	G(y) = \left( \begin{array}{c} y_0 - y_1 \\ y_1  y_0   \end{array} \right)
 \] $$
 
 $head Processing Steps$$
@@ -44,21 +41,21 @@ $latex H : \B{R}^2 \rightarrow \B{R}$$
 is defined by
 $latex \[
 \begin{array}{rcl}
-	H(x) 
-	& = & G_0 [ F(x) ] + G_1 [ F(x)  ] 
+	H(x)
+	& = & G_0 [ F(x) ] + G_1 [ F(x)  ]
 	\\
-	& = & x_0 x_1 - ( x_1 - x_0 ) + x_0 x_1 ( x_1 - x_0 ) 
+	& = & x_0 x_1 - ( x_1 - x_0 ) + x_0 x_1 ( x_1 - x_0 )
 	\\
 	& = & x_0 x_1 ( 1 - x_0 + x_1 ) - x_1 + x_0
 \end{array}
-\] $$ 
-Given the zero and first order Taylor coefficients 
+\] $$
+Given the zero and first order Taylor coefficients
 $latex x^{(0)} $$ and $latex x^{(1)}$$,
 we use $latex X(t)$$, $latex Y(t)$$ and $latex Z(t)$$
 for the corresponding functions; i.e.,
 $latex \[
 \begin{array}{rcl}
-	X(t) & = & x^{(0)} + x^{(1)} t 
+	X(t) & = & x^{(0)} + x^{(1)} t
 	\\
 	Y(t) & = & F[X(t)] = y^{(0)} + y^{(1)} t  + O(t^2)
 	\\
@@ -72,15 +69,15 @@ $latex \[
 Here are the processing steps:
 
 $list number$$
-Use forward mode on $latex F(x)$$ to compute 
+Use forward mode on $latex F(x)$$ to compute
 $latex y^{(0)}$$ and $latex y^{(1)}$$.
 $lnext
 Free some, or all, of the memory corresponding to $latex F(x)$$.
 $lnext
-Use forward mode on $latex G(y)$$ to compute 
-$latex z^{(0)}$$ and $latex z^{(1)}$$ 
+Use forward mode on $latex G(y)$$ to compute
+$latex z^{(0)}$$ and $latex z^{(1)}$$
 $lnext
-Use reverse mode on $latex G(y)$$ to compute the derivative of 
+Use reverse mode on $latex G(y)$$ to compute the derivative of
 $latex h^{(1)}$$ with respect to
 $latex y^{(0)}$$ and $latex y^{(1)}$$.
 $lnext
@@ -146,7 +143,7 @@ namespace {
 namespace {
 	bool reverse_any_case(bool free_all)
 	{	bool ok = true;
-     	double eps = 10. * CppAD::numeric_limits<double>::epsilon();
+	double eps = 10. * CppAD::numeric_limits<double>::epsilon();
 
 		using CppAD::AD;
 		using CppAD::NearEqual;
@@ -177,7 +174,7 @@ namespace {
 		y1 = f.Forward(1, x1);
 		if( free_all )
 			f = empty;
-		else	
+		else
 		{	// free all the Taylor coefficients stored in f
 			f.capacity_order(0);
 		}
@@ -204,7 +201,7 @@ namespace {
 		check    += x0[0] * x1[1] * (1. - x0[0] + x0[1]);
 		double h1 = z1[0] + z1[1];
 		ok       &= NearEqual(h1, check, eps, eps);
-	
+
 		// compute the derivative with respect to y^0 and y^0 of h^1
 		size_t p = 2;
 		CPPAD_TESTVECTOR(double) w(n*p), dw(n*p);
@@ -216,7 +213,7 @@ namespace {
 
 		// We are done using g, so we can free its memory.
 		g = empty;
-		// We need to use f next. 
+		// We need to use f next.
 		if( free_all )
 		{	// we must again record the operation sequence for F(x)
 			CppAD::Independent(X);
@@ -231,7 +228,7 @@ namespace {
 		// compute the derivative with respect to x^0 and x^0 of
 		//	h^1 = z_0^1 + z_1^1
 		CPPAD_TESTVECTOR(double) dv(n*p);
-		dv   = f.Reverse(p, dw); 
+		dv   = f.Reverse(p, dw);
 
 		// check partial of h^1 w.r.t x^0_0
 		check  = x0[1] * (- x1[0] + x1[1]);
@@ -241,7 +238,7 @@ namespace {
 
 		// check partial of h^1 w.r.t x^0_1
 		check  = x0[0] * (- x1[0] + x1[1]);
-		check += x1[0] * (1. - x0[0] + x0[1]) + x1[0] * x0[1]; 
+		check += x1[0] * (1. - x0[0] + x0[1]) + x1[0] * x0[1];
 		check += x0[0] * x1[1];
 		ok    &= NearEqual(dv[1*p+0], check, eps, eps);
 

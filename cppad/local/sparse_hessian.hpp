@@ -1,6 +1,6 @@
-/* $Id$ */
-# ifndef CPPAD_SPARSE_HESSIAN_INCLUDED
-# define CPPAD_SPARSE_HESSIAN_INCLUDED
+// $Id$
+# ifndef CPPAD_SPARSE_HESSIAN_HPP
+# define CPPAD_SPARSE_HESSIAN_HPP
 
 /* --------------------------------------------------------------------------
 CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-15 Bradley M. Bell
@@ -31,8 +31,7 @@ $spell
 $$
 
 $section Sparse Hessian: Easy Driver$$
-$index SparseHessian$$
-$index hessian, sparse$$
+$mindex SparseHessian$$
 
 $head Syntax$$
 $icode%hes% = %f%.SparseHessian(%x%, %w%)

@@ -1,6 +1,6 @@
-/* $Id$ */
-# ifndef CPPAD_POW_INCLUDED
-# define CPPAD_POW_INCLUDED
+// $Id$
+# ifndef CPPAD_POW_HPP
+# define CPPAD_POW_HPP
 
 /* --------------------------------------------------------------------------
 CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-15 Bradley M. Bell
@@ -23,10 +23,9 @@ $spell
 	const
 $$
 
-$index pow, AD$$
-$index exponent, AD function$$
 
 $section The AD Power Function$$
+$mindex pow exponent$$
 
 $head Syntax$$
 $icode%z% = pow(%x%, %y%)%$$

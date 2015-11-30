@@ -1,6 +1,6 @@
-/* $Id$ */
-# ifndef CPPAD_FOR_SPARSE_JAC_INCLUDED
-# define CPPAD_FOR_SPARSE_JAC_INCLUDED
+// $Id$
+# ifndef CPPAD_FOR_SPARSE_JAC_HPP
+# define CPPAD_FOR_SPARSE_JAC_HPP
 
 /* --------------------------------------------------------------------------
 CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-15 Bradley M. Bell

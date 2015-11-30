@@ -1,9 +1,9 @@
-/* $Id$ */
+// $Id$
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-12 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-15 Bradley M. Bell
 
 CppAD is distributed under multiple licenses. This distribution is under
-the terms of the 
+the terms of the
                     Eclipse Public License Version 1.0.
 
 A copy of this license is included in the COPYING file of this distribution.
@@ -19,30 +19,26 @@ $$
 
 $section Differentiate Conjugate Gradient Algorithm: Example and Test$$
 
-$index gradient, conjugate$$
-$index conjugate, gradient$$
-$index example, conjugate gradient$$
-$index test, conjugate gradient$$
 
 $head Purpose$$
 The conjugate gradient algorithm is sparse linear solver and
-a good example where checkpointing can be applied (for each iteration). 
-This example is a preliminary version of a new library routine 
+a good example where checkpointing can be applied (for each iteration).
+This example is a preliminary version of a new library routine
 for the conjugate gradient algorithm.
 
 $head Algorithm$$
 Given a positive definite matrix $latex A \in \B{R}^{n \times n}$$,
 a vector $latex b \in \B{R}^n$$,
 and tolerance $latex \varepsilon$$,
-the conjugate gradient algorithm finds an $latex x \in \B{R}^n$$ 
+the conjugate gradient algorithm finds an $latex x \in \B{R}^n$$
 such that $latex \| A x - b \|^2 / n \leq \varepsilon^2$$
 (or it terminates at a specified maximum number of iterations).
 
 $list number$$
-Input: 
+Input:
 $pre
 $$
-The matrix $latex A \in \B{R}^{n \times n}$$, 
+The matrix $latex A \in \B{R}^{n \times n}$$,
 the vector $latex b \in \B{R}^n$$,
 a tolerance $latex \varepsilon \geq 0$$,
 a maximum number of iterations $latex m$$,
@@ -63,7 +59,7 @@ Convergence Check:
 $pre
 $$
 if $latex k = m$$ or $latex \sqrt{ s_k / n } < \varepsilon $$,
-return $latex k$$ as the number of iterations and $latex x^k$$ 
+return $latex k$$ as the number of iterations and $latex x^k$$
 as the approximate solution.
 
 $lnext
@@ -87,7 +83,7 @@ $$
 $latex d^{k+1} = - g^k + ( s_{k+1} / s_k ) d^k$$.
 
 $lnext
-Iterate: 
+Iterate:
 $pre
 $$
 $latex k = k + 1$$,
@@ -108,7 +104,7 @@ $end
 namespace { // Begin empty namespace
 	using CppAD::AD;
 
-	// A simple matrix multiply c = a * b , where a has n columns 
+	// A simple matrix multiply c = a * b , where a has n columns
 	// and b has n rows. This should be changed to a function so that
 	// it can efficiently handle the case were A is large and sparse.
 	template <class Vector> // a simple vector class
@@ -179,7 +175,7 @@ namespace { // Begin empty namespace
 			// mu = s / d^T * A * d
 			mu = s_previous / dAd[0];
 
-			// g = g + mu * A * d 
+			// g = g + mu * A * d
 			for(i = 0; i < n; i++)
 			{	x[i] = x[i] + mu * d[i];
 				g[i] = g[i] + mu * Ad[i];
@@ -211,7 +207,7 @@ bool conj_grad(void)
 	size_t i, j;
 
 
-	// size of the vectors  
+	// size of the vectors
 	size_t n  = 40;
 	vector<double> D(n * n), Dt(n * n), A(n * n), x(n), b(n), c(n);
 	vector< AD<double> > a_A(n * n), a_x(n), a_b(n);
@@ -283,7 +279,7 @@ bool conj_grad(void)
 		db[j] = 0.;
 	db[0] = 1.;
 
-	// check db = A * dx 
+	// check db = A * dx
 	delta = 5. * delta;
 	dx = f.Forward(1, db);
 	mat_mul(n, A, dx, c);

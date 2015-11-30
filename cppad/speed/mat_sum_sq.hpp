@@ -1,12 +1,12 @@
-/* $Id$ */
-# ifndef CPPAD_MAT_SUM_SQ_INCLUDED
-# define CPPAD_MAT_SUM_SQ_INCLUDED
+// $Id$
+# ifndef CPPAD_MAT_SUM_SQ_HPP
+# define CPPAD_MAT_SUM_SQ_HPP
 
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-12 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-15 Bradley M. Bell
 
 CppAD is distributed under multiple licenses. This distribution is under
-the terms of the 
+the terms of the
                     Eclipse Public License Version 1.0.
 
 A copy of this license is included in the COPYING file of this distribution.
@@ -24,11 +24,7 @@ $spell
 $$
 
 $section Sum Elements of a Matrix Times Itself$$
-$index mat_sum_sq$$
-$index matrix, multiply speed test$$
-$index speed, matrix multiply test$$
-$index multiply, matrix speed test$$
-$index test, matrix multiply speed$$
+$mindex mat_sum_sq multiply speed test$$
 
 $head Syntax$$
 $codei%# include <cppad/speed/mat_sum_sq.hpp>
@@ -49,10 +45,10 @@ see $cref link_mat_mul$$.
 
 $head Inclusion$$
 The template function $code mat_sum_sq$$ is defined in the $code CppAD$$
-namespace by including 
-the file $code cppad/speed/mat_sum_sq.hpp$$ 
+namespace by including
+the file $code cppad/speed/mat_sum_sq.hpp$$
 (relative to the CppAD distribution directory).
-It is only intended for example and testing purposes, 
+It is only intended for example and testing purposes,
 so it is not automatically included by
 $cref/cppad.hpp/cppad/$$.
 
@@ -110,7 +106,7 @@ $head Vector$$
 The type $icode Vector$$ is any
 $cref SimpleVector$$, or it can be a raw pointer to the vector elements.
 The element type must support
-addition, multiplication, and assignment to both its own type 
+addition, multiplication, and assignment to both its own type
 and to a double value.
 
 $children%
@@ -121,13 +117,13 @@ $children%
 
 $head Example$$
 The file
-$cref mat_sum_sq.cpp$$ 
+$cref mat_sum_sq.cpp$$
 contains an example and test of $code mat_sum_sq.hpp$$.
 It returns true if it succeeds and false otherwise.
 
 $head Source Code$$
 The file
-$cref mat_sum_sq.hpp$$ 
+$cref mat_sum_sq.hpp$$
 contains the source for this template function.
 
 $end

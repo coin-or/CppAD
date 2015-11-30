@@ -1,9 +1,9 @@
-/* $Id$ */
+// $Id$
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-14 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-15 Bradley M. Bell
 
 CppAD is distributed under multiple licenses. This distribution is under
-the terms of the 
+the terms of the
                     Eclipse Public License Version 1.0.
 
 A copy of this license is included in the COPYING file of this distribution.
@@ -17,9 +17,6 @@ $spell
 $$
 
 $section Forward Mode: Example and Test$$
-$index Forward$$
-$index example, Forward$$
-$index test, Forward$$
 
 $code
 $verbatim%example/forward.cpp%0%// BEGIN C++%// END C++%1%$$
@@ -32,7 +29,7 @@ $end
 # include <cppad/cppad.hpp>
 namespace { // --------------------------------------------------------
 // define the template function ForwardCases<Vector> in empty namespace
-template <class Vector> 
+template <class Vector>
 bool ForwardCases(void)
 {	bool ok = true;
 	using CppAD::AD;
@@ -42,7 +39,7 @@ bool ForwardCases(void)
 	// domain space vector
 	size_t n = 2;
 	CPPAD_TESTVECTOR(AD<double>) ax(n);
-	ax[0] = 0.; 
+	ax[0] = 0.;
 	ax[1] = 1.;
 
 	// declare independent variables and starting recording
@@ -91,7 +88,7 @@ bool ForwardCases(void)
 
 	return ok;
 }
-} // End empty namespace 
+} // End empty namespace
 # include <vector>
 # include <valarray>
 bool Forward(void)

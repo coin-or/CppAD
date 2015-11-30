@@ -1,6 +1,6 @@
-/* $Id$ */
-# ifndef CPPAD_REV_SPARSE_HES_INCLUDED
-# define CPPAD_REV_SPARSE_HES_INCLUDED
+// $Id$
+# ifndef CPPAD_REV_SPARSE_HES_HPP
+# define CPPAD_REV_SPARSE_HES_HPP
 
 /* --------------------------------------------------------------------------
 CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-15 Bradley M. Bell

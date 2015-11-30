@@ -1,9 +1,9 @@
 // $Id$
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-12 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-15 Bradley M. Bell
 
 CppAD is distributed under multiple licenses. This distribution is under
-the terms of the 
+the terms of the
                     Eclipse Public License Version 1.0.
 
 A copy of this license is included in the COPYING file of this distribution.
@@ -18,13 +18,11 @@ $spell
 $$
 
 $section A Simple pthread AD: Example and Test$$
+$mindex AD$$
 
-$index pthread, simple AD$$
-$index AD, simple pthread$$
-$index simple, pthread AD$$
 
 $head Purpose$$
-This example demonstrates how CppAD can be used in a 
+This example demonstrates how CppAD can be used in a
 pthread multi-threading environment.
 
 $head Source Code$$
@@ -53,7 +51,7 @@ namespace {
 	// =====================================================================
 	using CppAD::thread_alloc;
 	// ------------------------------------------------------------------
-	// key for accessing thread specific information 
+	// key for accessing thread specific information
 	pthread_key_t thread_specific_key_;
 
 	// no need to destroy thread specific information
@@ -71,7 +69,7 @@ namespace {
 	// used to inform CppAD of current thread number thread_number()
 	size_t thread_number(void)
 	{	// get thread specific information
-		void*   thread_num_vptr = pthread_getspecific(thread_specific_key_);	
+		void*   thread_num_vptr = pthread_getspecific(thread_specific_key_);
 		size_t* thread_num_ptr  = static_cast<size_t*>(thread_num_vptr);
 		size_t  thread_num      = *thread_num_ptr;
 		return thread_num;
@@ -103,7 +101,7 @@ namespace {
 		ok &= thread_num != 0;
 
 		// This is not the master thread, so thread specific infromation
-		// has not yet been set. We use it to inform other routines 
+		// has not yet been set. We use it to inform other routines
 		// of this threads number.
 		// We must do this before calling thread_alloc::thread_num().
 		int rc = pthread_setspecific(
@@ -150,7 +148,7 @@ namespace {
 		// create a key for thread specific information
 		rc = pthread_key_create(
 			&thread_specific_key_, thread_specific_destructor
-		); 
+		);
 		ok &= (rc == 0);
 
 		// set thread specific information for this (master thread)
@@ -171,7 +169,7 @@ namespace {
 
 		// inform CppAD that we now may be in parallel execution mode
 		sequential_execution_ = false;
-	
+
 		// structure used to create the threads
 		pthread_t       pthread_id;
 		// default for pthread_attr_setdetachstate is PTHREAD_CREATE_JOINABLE
@@ -199,7 +197,7 @@ namespace {
 		ok &= thread_num == 0;
 		ok &= worker(thread_num, thread_all_[thread_num].info);
 
-		// now wait for the other threads to finish 
+		// now wait for the other threads to finish
 		for(thread_num = 1; thread_num < num_threads; thread_num++)
 		{	void* no_status = CPPAD_NULL;
 			rc      = pthread_join(
@@ -226,7 +224,7 @@ namespace {
 		return ok;
 	}
 	// =====================================================================
-	// End of General purpose code 
+	// End of General purpose code
 	// =====================================================================
 	// function that does the work for one thread
 	bool worker(size_t thread_num, problem_specific* info)
@@ -237,9 +235,9 @@ namespace {
 		ax[0] = info->x;
 		Independent(ax);
 		ay[0] = sqrt( ax[0] * ax[0] );
-		CppAD::ADFun<double> f(ax, ay); 
+		CppAD::ADFun<double> f(ax, ay);
 
-		// Check function value corresponds to the identity 
+		// Check function value corresponds to the identity
 		double eps = 10. * CppAD::numeric_limits<double>::epsilon();
 		ok        &= CppAD::NearEqual(ay[0], ax[0], eps, eps);
 
@@ -260,8 +258,8 @@ bool simple_ad(void)
 	// (using thread_alloc in sequential mode)
 	size_t thread_num;
 	for(thread_num = 0; thread_num < num_threads; thread_num++)
-	{	ok &= thread_alloc::inuse(thread_num) == 0; 
-		ok &= thread_alloc::available(thread_num) == 0; 
+	{	ok &= thread_alloc::inuse(thread_num) == 0;
+		ok &= thread_alloc::available(thread_num) == 0;
 	}
 
 	// initialize info_all
@@ -284,9 +282,9 @@ bool simple_ad(void)
 		void* v_ptr = static_cast<void*>( info_all[thread_num] );
 		thread_alloc::return_memory( v_ptr );
 		// check that there is no longer any memory inuse by this thread
-		ok &= thread_alloc::inuse(thread_num) == 0; 
+		ok &= thread_alloc::inuse(thread_num) == 0;
 		// return all memory being held for future use by this thread
-		thread_alloc::free_available(thread_num); 
+		thread_alloc::free_available(thread_num);
 	}
 
 	return ok;

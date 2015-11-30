@@ -1,9 +1,9 @@
 $Id$
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-12 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-15 Bradley M. Bell
 
 CppAD is distributed under multiple licenses. This distribution is under
-the terms of the 
+the terms of the
                     Eclipse Public License Version 1.0.
 
 A copy of this license is included in the COPYING file of this distribution.
@@ -25,13 +25,12 @@ $spell
 $$
 
 $section Examples$$
-$index example$$
 
 
 $head Introduction$$
 This section organizes the information related to the CppAD examples.
 Each CppAD operation has its own specific example,
-for example $cref add.cpp$$ is an example for 
+for example $cref add.cpp$$ is an example for
 $cref/addition/ad_binary/$$.
 Some of the examples are of a more general nature
 (not connected of a specific feature of CppAD).
@@ -39,16 +38,16 @@ In addition, there are some utility functions that are used
 by the examples.
 
 $head Running Examples$$
-The 
+The
 $cref/installation instructions/Install/$$
 show how the examples can be run on your system.
 
 
 $head The CppAD Test Vector Template Class$$
-Many of the examples use the 
-$small $cref/CPPAD_TESTVECTOR/testvector/$$ $$ preprocessor symbol 
+Many of the examples use the
+$small $cref/CPPAD_TESTVECTOR/testvector/$$ $$ preprocessor symbol
 to determine which $cref SimpleVector$$ template class is used with
-the examples. 
+the examples.
 
 
 $contents%

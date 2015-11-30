@@ -1,9 +1,9 @@
-/* $Id$ */
+// $Id$
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-14 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-15 Bradley M. Bell
 
 CppAD is distributed under multiple licenses. This distribution is under
-the terms of the 
+the terms of the
                     Eclipse Public License Version 1.0.
 
 A copy of this license is included in the COPYING file of this distribution.
@@ -24,18 +24,13 @@ $spell
 $$
 
 $section CppAD Speed: Matrix Multiplication (Double Version)$$
+$mindex speed multiply link_mat_mul$$
 
-$index cppad, speed matrix multiply$$
-$index speed, cppad matrix multiply$$
-$index matrix, multiply speed cppad$$
-$index multiply, matrix speed cppad$$
 
 $head Specifications$$
 See $cref link_mat_mul$$.
 
 $head Implementation$$
-$index cppad, link_mat_mul$$
-$index link_mat_mul, cppad$$
 $codep */
 # include <cppad/cppad.hpp>
 # include <cppad/speed/mat_sum_sq.hpp>
@@ -46,8 +41,8 @@ extern bool
 	global_onetape, global_atomic, global_optimize;
 
 bool link_mat_mul(
-	size_t                           size     , 
-	size_t                           repeat   , 
+	size_t                           size     ,
+	size_t                           repeat   ,
 	CppAD::vector<double>&           x        ,
 	CppAD::vector<double>&           z        ,
 	CppAD::vector<double>&           dz
@@ -65,7 +60,7 @@ bool link_mat_mul(
 
 		// do computation
 		mat_sum_sq(size, x, y, z);
-	
+
 	}
 	return true;
 }

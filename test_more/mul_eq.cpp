@@ -1,9 +1,9 @@
-/* $Id$ */
+// $Id$
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-12 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-15 Bradley M. Bell
 
 CppAD is distributed under multiple licenses. This distribution is under
-the terms of the 
+the terms of the
                     Eclipse Public License Version 1.0.
 
 A copy of this license is included in the COPYING file of this distribution.
@@ -87,22 +87,22 @@ bool MulEqTestTwo(void)
 	// independent variable vector
 	double u0 = .5;
 	CPPAD_TESTVECTOR(AD<double>) U(1);
-	U[0]      = u0; 
+	U[0]      = u0;
 	Independent(U);
 
-	// dependent variable vector 
+	// dependent variable vector
 	CPPAD_TESTVECTOR(AD<double>) Z(1);
 	Z[0] = U[0];       // initial value
 	Z[0] *= 2;         // AD<double> *= int
 	Z[0] *= 4.;        // AD<double> *= double
-	Z[0] *= U[0];      // AD<double> *= AD<double> 
+	Z[0] *= U[0];      // AD<double> *= AD<double>
 
 	// create f: U -> Z and vectors used for derivative calculations
-	ADFun<double> f(U, Z); 
+	ADFun<double> f(U, Z);
 	CPPAD_TESTVECTOR(double) v(1);
 	CPPAD_TESTVECTOR(double) w(1);
 
-	// check value 
+	// check value
 	ok &= NearEqual(Z[0] , u0*2*4*u0,  1e-10 , 1e-10);
 
 	// forward computation of partials w.r.t. u
@@ -119,13 +119,13 @@ bool MulEqTestTwo(void)
 		else	value = 0.;
 
 		jfac *= j;
-		w     = f.Forward(j, v);	
+		w     = f.Forward(j, v);
 		ok &= NearEqual(jfac*w[0], value, 1e-10 , 1e-10); // d^jz/du^j
 		v[0]  = 0.;
 	}
 
 	// reverse computation of partials of Taylor coefficients
-	CPPAD_TESTVECTOR(double) r(p); 
+	CPPAD_TESTVECTOR(double) r(p);
 	w[0]  = 1.;
 	r     = f.Reverse(p, w);
 	jfac  = 1.;
@@ -149,6 +149,6 @@ bool MulEqTestTwo(void)
 bool MulEq(void)
 {	bool ok = true;
 	ok &= MulEqTestOne();
-	ok &= MulEqTestTwo(); 
+	ok &= MulEqTestTwo();
 	return ok;
 }

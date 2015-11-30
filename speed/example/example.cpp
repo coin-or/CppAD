@@ -1,9 +1,9 @@
-/* $Id$ */
+// $Id$
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-14 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-15 Bradley M. Bell
 
 CppAD is distributed under multiple licenses. This distribution is under
-the terms of the 
+the terms of the
                     Eclipse Public License Version 1.0.
 
 A copy of this license is included in the COPYING file of this distribution.
@@ -15,12 +15,10 @@ $begin speed_example.cpp$$
 $spell
 $$
 
-$index speed, example program$$
-$index program, speed example$$
-$index example, speed program$$
 
 
 $section Run the Speed Examples$$
+$mindex program$$
 
 $head Running Tests$$
 To build this program and run its correctness tests see $cref cmake_check$$.
@@ -60,7 +58,7 @@ namespace {
 	size_t n_exception = sizeof(exception_list) / sizeof(exception_list[0]);
 	bool Run(bool TestOk(void), std::string name)
 	{	bool ok               = true;
-		std::streamsize width =  20;         
+		std::streamsize width =  20;
 		std::cout.width( width );
 		std::cout.setf( std::ios_base::left );
 		std::cout << name;

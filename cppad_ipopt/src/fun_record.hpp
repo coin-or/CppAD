@@ -1,11 +1,11 @@
-/* $Id$ */
-# ifndef CPPAD_FUN_RECORD_INCLUDED
-# define CPPAD_FUN_RECORD_INCLUDED
+// $Id$
+# ifndef CPPAD_FUN_RECORD_HPP
+# define CPPAD_FUN_RECORD_HPP
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-14 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-15 Bradley M. Bell
 
 CppAD is distributed under multiple licenses. This distribution is under
-the terms of the 
+the terms of the
                     Eclipse Public License Version 1.0.
 
 A copy of this license is included in the COPYING file of this distribution.
@@ -19,7 +19,7 @@ namespace cppad_ipopt {
 /*!
 \{
 \file fun_record.hpp
-\brief Records operation sequence for r_k (u) 
+\brief Records operation sequence for r_k (u)
 */
 
 /*!
@@ -27,7 +27,7 @@ Records operation sequence for \f$ r_k (u) \f$ at \f$u = [ J \circ n ] (x)\f$.
 
 \tparam NumVector
 is the type of the argumen \c x. It can either be
-<tt>Ipopt::Number*</tt> or 
+<tt>Ipopt::Number*</tt> or
 <tt>CppAD::vector<Ipopt::Number></tt>; i.e., <tt>NumberVector</tt>.
 
 \param fg_info
@@ -35,12 +35,12 @@ Given a value \f$ u \in {\bf R}^{q[k]} \f$,
 \c fg_info returns the value \f$ r_k (u) \in {\bf R}^{p[k]} \f$.
 using the syntax
 \verbatim
-	fg_info->eval_r(k, u);	
+	fg_info->eval_r(k, u);
 \endverbatim
 No other use is made of \c fg_info.
 
 \param k
-is a value less that \c K specifying 
+is a value less that \c K specifying
 the index value for \c k in the evaluation <tt>eval_r</tt>.
 
 \param p
@@ -55,7 +55,7 @@ the index value for \c k in the evaluation <tt>eval_r</tt>.
 is the lenght of the vector \c x.
 
 \param x
-the length of \c x is equal to \c n and the point 
+the length of \c x is equal to \c n and the point
 \f[
 	u = [ J \circ n ] (x)
 \f]
@@ -63,10 +63,10 @@ is the point at which the operation sequence for \f$ r_k \f$ is recorded.
 
 \param J
 is a vector with lenght <tt>q[k]</tt> that projects from \f$ {\bf R}^n \f$
-to \f$ {\bf R}^{q[k]} \f$ 
+to \f$ {\bf R}^{q[k]} \f$
 by selecting an ordered subset of the possible indices
 \f$ \{ 0 , \ldots , n-1 \} \f$.
-Hence, <tt>0 <= J[j] < n</tt> for <tt>j = 0 , ... , q[k]-1</tt>. 
+Hence, <tt>0 <= J[j] < n</tt> for <tt>j = 0 , ... , q[k]-1</tt>.
 
 \param r_fun
 is the vector of AD function objects which has size size greater than \c k.
@@ -77,7 +77,7 @@ at the value of \f$ u \f$ specified by \c x and \c J.
 */
 
 template <class NumVector>
-void fun_record( 
+void fun_record(
 	cppad_ipopt_fg_info*                              fg_info ,
 	size_t                                            k       ,
 	const SizeVector&                                 p       ,
@@ -91,7 +91,7 @@ void fun_record(
 	// extract u from x
 	ADVector u(q[k]);
 	for(j = 0; j < q[k]; j++)
-	{	// when NDEBUG is not defined, this error should be caught 
+	{	// when NDEBUG is not defined, this error should be caught
 		// during the cppad_ipopt_nlp constructor.
 		CPPAD_ASSERT_UNKNOWN( J[j] < n );
 		u[j] = x[ J[j] ];
@@ -106,7 +106,7 @@ void fun_record(
 	"cppad_ipopt_nlp: eval_r return value size not equal to p[k]."
 	);
 
-	// stop the recording and store operation sequence in 
+	// stop the recording and store operation sequence in
 	r_fun[k].Dependent(u, r_k);
 }
 // ---------------------------------------------------------------------------

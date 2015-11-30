@@ -1,4 +1,4 @@
-/* $Id$ */
+// $Id$
 /* --------------------------------------------------------------------------
 CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-15 Bradley M. Bell
 
@@ -19,9 +19,6 @@ $$
 
 $section The AD log Function: Example and Test$$
 
-$index log, AD example$$
-$index example, AD log$$
-$index test, AD log$$
 
 $code
 $verbatim%example/log.cpp%0%// BEGIN C++%// END C++%1%$$

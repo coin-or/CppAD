@@ -1,9 +1,9 @@
-/* $Id$ */
+// $Id$
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-12 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-15 Bradley M. Bell
 
 CppAD is distributed under multiple licenses. This distribution is under
-the terms of the 
+the terms of the
                     Eclipse Public License Version 1.0.
 
 A copy of this license is included in the COPYING file of this distribution.
@@ -45,7 +45,7 @@ bool MulTestOne(void)
 	// assign the dependent variables
 	Z[x] = U[s] * U[t];   // AD<double> * AD<double>
 	Z[y] = Z[x] * 4.;     // AD<double> *    double
-	Z[z] = 4.   * Z[y];   //    double  * AD<double> 
+	Z[z] = 4.   * Z[y];   //    double  * AD<double>
 	Z[u] =  one * Z[z];   // multiplication by parameter equal to one
 	Z[v] = zero * Z[z];   // multiplication by parameter equal to zero
 
@@ -71,7 +71,7 @@ bool MulTestOne(void)
 	q[s] = 1.;
 	q[t] = 0.;
 	r    = f.Forward(1, q);
-	ok &= ( r[x] == U[t] );           // dx/ds      
+	ok &= ( r[x] == U[t] );           // dx/ds
 	ok &= ( r[y] == U[t] * 4. );      // dy/ds
 	ok &= ( r[z] == 4. * U[t] * 4. ); // dz/ds
 	ok &= ( r[u] == r[z] );           // du/ds
@@ -106,19 +106,19 @@ bool MulTestTwo(void)
 
 	AD<double> a = U[0] * 1.; // AD<double> * double
 	AD<double> b = a  * 2;    // AD<double> * int
-	AD<double> c = 3. * b;    // double     * AD<double> 
-	AD<double> d = 4  * c;    // int        * AD<double> 
+	AD<double> c = 3. * b;    // double     * AD<double>
+	AD<double> d = 4  * c;    // int        * AD<double>
 
-	// dependent variable vector 
+	// dependent variable vector
 	CPPAD_TESTVECTOR(AD<double>) Z(1);
 	Z[0] = U[0] * d;          // AD<double> * AD<double>
 
 	// create f: U -> Z and vectors used for derivative calculations
-	ADFun<double> f(U, Z); 
+	ADFun<double> f(U, Z);
 	CPPAD_TESTVECTOR(double) v(1);
 	CPPAD_TESTVECTOR(double) w(1);
 
-	// check value 
+	// check value
 	ok &= NearEqual(Value(Z[0]) , u0*4*3*2*u0,  1e-10 , 1e-10);
 
 	// forward computation of partials w.r.t. u
@@ -135,13 +135,13 @@ bool MulTestTwo(void)
 		else	value = 0.;
 
 		jfac *= j;
-		w     = f.Forward(j, v);	
+		w     = f.Forward(j, v);
 		ok &= NearEqual(jfac*w[0], value, 1e-10 , 1e-10); // d^jz/du^j
 		v[0]  = 0.;
 	}
 
 	// reverse computation of partials of Taylor coefficients
-	CPPAD_TESTVECTOR(double) r(p); 
+	CPPAD_TESTVECTOR(double) r(p);
 	w[0]  = 1.;
 	r     = f.Reverse(p, w);
 	jfac  = 1.;
@@ -165,6 +165,6 @@ bool MulTestTwo(void)
 bool Mul(void)
 {	bool ok = true;
 	ok &= MulTestOne();
-	ok &= MulTestTwo(); 
+	ok &= MulTestTwo();
 	return ok;
 }

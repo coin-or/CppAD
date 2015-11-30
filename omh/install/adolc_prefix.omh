@@ -1,9 +1,9 @@
-/* $Id$ */
+// $Id$
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-13 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-15 Bradley M. Bell
 
 CppAD is distributed under multiple licenses. This distribution is under
-the terms of the 
+the terms of the
                     Eclipse Public License Version 1.0.
 
 A copy of this license is included in the COPYING file of this distribution.
@@ -26,9 +26,7 @@ $spell
 $$
 
 $section Including the ADOL-C Examples and Tests$$
-$index adolc, example$$
-$index example, adolc$$
-$index test, adolc$$
+$mindex adolc prefix get$$
 
 $head Purpose$$
 CppAD includes examples and tests that can use the AD package
@@ -36,17 +34,15 @@ $href%https://projects.coin-or.org/ADOL-C%ADOL-C%$$.
 The includes speed comparison with other AD packages; see
 $cref speed_adolc$$.
 It also includes examples that combine ADOL-C with
-CppAD; see 
+CppAD; see
 $table
 $rref base_adolc.hpp$$
-$rref mul_level_adolc.cpp$$ 
+$rref mul_level_adolc.cpp$$
 $rref mul_level_adolc_ode.cpp$$
 $tend
 
 $head adolc_prefix$$
-$index adolc, prefix$$
-$index prefix, adolc$$
-If ADOL-C is installed on your system, you can 
+If ADOL-C is installed on your system, you can
 specify a value for its install $icode adolc_prefix$$ on the
 $cref cmake$$ command line.
 The value of $icode adolc_prefix$$ must be such that,
@@ -55,7 +51,7 @@ $cref/cmake_install_includedirs/cmake/cmake_install_includedirs/$$,
 $codei%
 	%adolc_prefix%/%dir%/adolc/adouble.h
 %$$
-is a valid way to reference to the include file $code adouble.h$$; 
+is a valid way to reference to the include file $code adouble.h$$;
 Note that CppAD assumes ADOL-C has been configured with
 its sparse matrix computations enabled; i.e, using
 $codei%
@@ -66,8 +62,6 @@ with the same prefix as ACOL-C; see
 $cref get_colpack.sh$$.
 
 $head Examples$$
-$index adolc, examples$$
-$index examples, adolc$$
 If you include $icode adolc_prefix$$ on the $cref cmake$$ command line,
 you will be able to run the ADOL-C examples listed above
 by executing the following commands starting in the
@@ -82,27 +76,23 @@ $code mul_level_adolc$$ and $code mul_level_adolc_ode$$
 have passed their correctness check.
 
 $head Speed Tests$$
-$index adolc, speed$$
-$index speed, adolc$$
 If you include $icode adolc_prefix$$ on the $cref cmake$$ command line,
-you will be able to run the ADOL-C speed correctness tests 
+you will be able to run the ADOL-C speed correctness tests
 by executing the following commands starting in the
 $cref/distribution directory/download/Distribution Directory/$$:
 $codei%
 	cd build/speed/adolc
 	make check_speed_adolc
 %$$
-After executing $code make check_speed_adolc$$, 
-you can run a specific ADOL-C speed tests 
+After executing $code make check_speed_adolc$$,
+you can run a specific ADOL-C speed tests
 by executing the command $code ./speed_adolc$$;
 see $cref speed_main$$ for the meaning of the command line
 options to this program.
 
 $head Unix$$
-$index adolc, unix$$
-$index unix, adolc$$
-If you are using Unix, 
-you may have to add 
+If you are using Unix,
+you may have to add
 $icode adolc_prefix$$ to $code LD_LIBRARY_PATH$$.
 For example, if you use the $code bash$$ shell to run your programs,
 you could include
@@ -113,9 +103,7 @@ $codei%
 in your $code @HOME/.bashrc$$ file.
 
 $head Cygwin$$
-$index adolc, cygwin$$
-$index cygwin, adolc$$
-If you are using Cygwin, 
+If you are using Cygwin,
 you may have to add to following lines to the file
 $code .bashrc$$ in your home directory:
 $codei%
@@ -125,7 +113,7 @@ $codei%
 in order for ADOL-C to run properly.
 If $icode adolc_prefix$$ begins with a disk specification,
 you must use the Cygwin format for the disk specification.
-For example, 
+For example,
 if $code d:/adolc_base$$ is the proper directory,
 $code /cygdrive/d/adolc_base$$ should be used for $icode adolc_prefix$$.
 
@@ -133,8 +121,6 @@ $children%
 	bin/get_adolc.sh
 %$$
 $head get_adolc$$
-$index get, adolc$$
-$index adolc, get$$
 If you are using Unix, you can download and install
 a copy of Adolc using $cref get_adolc.sh$$.
 The corresponding $icode adolc_prefix$$ would be

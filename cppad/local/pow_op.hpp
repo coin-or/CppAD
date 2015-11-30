@@ -1,12 +1,12 @@
-/* $Id$ */
-# ifndef CPPAD_POW_OP_INCLUDED
-# define CPPAD_POW_OP_INCLUDED
+// $Id$
+# ifndef CPPAD_POW_OP_HPP
+# define CPPAD_POW_OP_HPP
 
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-14 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-15 Bradley M. Bell
 
 CppAD is distributed under multiple licenses. This distribution is under
-the terms of the 
+the terms of the
                     Eclipse Public License Version 1.0.
 
 A copy of this license is included in the COPYING file of this distribution.
@@ -32,8 +32,8 @@ and the argument \a parameter is not used.
 
 template <class Base>
 inline void forward_powvv_op(
-	size_t        p           , 
-	size_t        q           , 
+	size_t        p           ,
+	size_t        q           ,
 	size_t        i_z         ,
 	const addr_t* arg         ,
 	const Base*   parameter   ,
@@ -87,8 +87,8 @@ this operations is for the case where x is a variable and y is a parameter.
 
 template <class Base>
 inline void forward_powvv_op_dir(
-	size_t        q           , 
-	size_t        r           , 
+	size_t        q           ,
+	size_t        r           ,
 	size_t        i_z         ,
 	const addr_t* arg         ,
 	const Base*   parameter   ,
@@ -174,7 +174,7 @@ and the argument \a parameter is not used.
 
 template <class Base>
 inline void reverse_powvv_op(
-	size_t        d           , 
+	size_t        d           ,
 	size_t        i_z         ,
 	const addr_t* arg         ,
 	const Base*   parameter   ,
@@ -227,8 +227,8 @@ this operations is for the case where x is a parameter and y is a variable.
 
 template <class Base>
 inline void forward_powpv_op(
-	size_t        p           , 
-	size_t        q           , 
+	size_t        p           ,
+	size_t        q           ,
 	size_t        i_z         ,
 	const addr_t* arg         ,
 	const Base*   parameter   ,
@@ -259,11 +259,11 @@ inline void forward_powpv_op(
 	// z_1 = z_0 * y
 	addr_t adr[2];
 	// offset of z_i in taylor (as if it were a parameter); i.e., log(x)
-	adr[0] = i_z * cap_order; 
+	adr[0] = i_z * cap_order;
 	// offset of y in taylor (as a variable)
 	adr[1] = arg[1];
 
-	// Trick: use taylor both for the parameter vector and variable values 
+	// Trick: use taylor both for the parameter vector and variable values
 	forward_mulpv_op(p, q, i_z+1, adr, taylor, cap_order, taylor);
 
 	// z_2 = exp(z_1)
@@ -292,14 +292,14 @@ this operations is for the case where x is a parameter and y is a variable.
 
 template <class Base>
 inline void forward_powpv_op_dir(
-	size_t        q           , 
-	size_t        r           , 
+	size_t        q           ,
+	size_t        r           ,
 	size_t        i_z         ,
 	const addr_t* arg         ,
 	const Base*   parameter   ,
 	size_t        cap_order   ,
 	Base*         taylor      )
-{	
+{
 	// convert from final result to first result
 	i_z -= 2; // 2 = NumRes(PowpvOp) - 1;
 
@@ -325,7 +325,7 @@ inline void forward_powpv_op_dir(
 	// ofset of y in taylor (as a variable)
 	adr[1] = arg[1];
 
-	// Trick: use taylor both for the parameter vector and variable values 
+	// Trick: use taylor both for the parameter vector and variable values
 	forward_mulpv_op_dir(q, r, i_z+1, adr, taylor, cap_order, taylor);
 
 	// z_2 = exp(z_1)
@@ -394,7 +394,7 @@ this operations is for the case where x is a parameter and y is a variable.
 
 template <class Base>
 inline void reverse_powpv_op(
-	size_t        d           , 
+	size_t        d           ,
 	size_t        i_z         ,
 	const addr_t* arg         ,
 	const Base*   parameter   ,
@@ -419,7 +419,7 @@ inline void reverse_powpv_op(
 
 	// z_1 = z_0 * y
 	addr_t adr[2];
-	adr[0] = i_z * cap_order; // offset of z_0[0] in taylor 
+	adr[0] = i_z * cap_order; // offset of z_0[0] in taylor
 	adr[1] = arg[1];          // index of y in taylor and partial
 	// use taylor both for parameter and variable values
 	reverse_mulpv_op(
@@ -446,8 +446,8 @@ this operations is for the case where x is a variable and y is a parameter.
 
 template <class Base>
 inline void forward_powvp_op(
-	size_t        p           , 
-	size_t        q           , 
+	size_t        p           ,
+	size_t        q           ,
 	size_t        i_z         ,
 	const addr_t* arg         ,
 	const Base*   parameter   ,
@@ -499,8 +499,8 @@ this operations is for the case where x is a variable and y is a parameter.
 
 template <class Base>
 inline void forward_powvp_op_dir(
-	size_t        q           , 
-	size_t        r           , 
+	size_t        q           ,
+	size_t        r           ,
 	size_t        i_z         ,
 	const addr_t* arg         ,
 	const Base*   parameter   ,
@@ -592,7 +592,7 @@ this operations is for the case where x is a variable and y is a parameter.
 
 template <class Base>
 inline void reverse_powvp_op(
-	size_t        d           , 
+	size_t        d           ,
 	size_t        i_z         ,
 	const addr_t* arg         ,
 	const Base*   parameter   ,

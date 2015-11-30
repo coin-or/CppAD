@@ -1,6 +1,6 @@
-/* $Id$ */
-# ifndef CPPAD_ACOSH_OP_INCLUDED
-# define CPPAD_ACOSH_OP_INCLUDED
+// $Id$
+# ifndef CPPAD_ACOSH_OP_HPP
+# define CPPAD_ACOSH_OP_HPP
 # if CPPAD_USE_CPLUSPLUS_2011
 
 /* --------------------------------------------------------------------------

@@ -1,9 +1,9 @@
 $Id$
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-12 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-15 Bradley M. Bell
 
 CppAD is distributed under multiple licenses. This distribution is under
-the terms of the 
+the terms of the
                     Eclipse Public License Version 1.0.
 
 A copy of this license is included in the COPYING file of this distribution.
@@ -18,24 +18,21 @@ $spell
 	valarray
 $$
 
-$index numeric, type$$
-$index type, numeric$$
 
 $section Definition of a Numeric Type$$
+$mindex int$$
 
 $head Type Requirements$$
 A $icode NumericType$$ is any type
 that satisfies the requirements below.
 The following is a list of some numeric types:
-$code int$$, $code float$$, $code double$$, 
+$code int$$, $code float$$, $code double$$,
 $code AD<double>$$, $code AD< AD<double> >$$.
 The routine $cref CheckNumericType$$ can be used to check
 that a type satisfies these conditions.
 
 $head Default Constructor$$
-$index default, numeric constructor$$
-$index constructor, numeric$$
-The syntax 
+The syntax
 $codei%
 	%NumericType% %x%;
 %$$
@@ -43,10 +40,8 @@ creates a $icode NumericType$$ object
 with an unspecified value.
 
 $head Constructor From Integer$$
-$index int, numeric constructor$$
-$index constructor, numeric$$
 If $icode i$$ is an $code int$$,
-the syntax 
+the syntax
 $codei%
 	%NumericType% %x%(%i%);
 %$$
@@ -54,10 +49,8 @@ creates a $icode NumericType$$ object with a value
 equal to $icode i$$ where $icode i$$ can be $code const$$.
 
 $head Copy Constructor$$
-$index copy, numeric constructor$$
-$index constructor, numeric copy$$
 If $icode x$$ is a $icode NumericType$$ object
-the syntax 
+the syntax
 $codei%
 	%NumericType% %y%(%x%);
 %$$
@@ -85,7 +78,7 @@ Suppose $icode x$$, $icode y$$ and $icode z$$
 $icode NumericType$$ objects where
 $icode x$$ and $icode y$$ may be $code const$$.
 In the result type column,
-$icode NumericType$$ can be replaced by any type that can 
+$icode NumericType$$ can be replaced by any type that can
 be used just like a $icode NumericType$$ object.
 $table
 $bold Operation$$     $cnext $bold Description$$               $cnext
@@ -109,7 +102,7 @@ $icode%z% -= %y%$$  $cnext computed assignment subtraction    $cnext
 $icode%z% *= %y%$$  $cnext computed assignment multiplication $cnext
 	unspecified          $rnext
 $icode%z% /= %y%$$  $cnext computed assignment division       $cnext
-	unspecified      
+	unspecified
 $tend
 
 $head Example$$
@@ -123,13 +116,12 @@ It returns true if it succeeds and false otherwise.
 (It is easy to modify to test additional numeric types.)
 
 $head Exercise$$
-$index exercise, numeric type$$
 
 $list number$$
 List three operators that are not supported by every
 numeric type but that are supported by the numeric types
-$code int$$, 
-$code float$$, 
+$code int$$,
+$code float$$,
 $code double$$.
 
 $lnext

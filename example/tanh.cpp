@@ -1,9 +1,9 @@
-/* $Id$ */
+// $Id$
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-12 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-15 Bradley M. Bell
 
 CppAD is distributed under multiple licenses. This distribution is under
-the terms of the 
+the terms of the
                     Eclipse Public License Version 1.0.
 
 A copy of this license is included in the COPYING file of this distribution.
@@ -18,9 +18,6 @@ $$
 
 $section The AD tanh Function: Example and Test$$
 
-$index tanh, example$$
-$index example, tanh$$
-$index test, tanh$$
 
 $code
 $verbatim%example/tanh.cpp%0%// BEGIN C++%// END C++%1%$$
@@ -50,15 +47,15 @@ bool Tanh(void)
 	// declare independent variables and start tape recording
 	CppAD::Independent(x);
 
-	// range space vector 
+	// range space vector
 	size_t m = 1;
 	CPPAD_TESTVECTOR(AD<double>) y(m);
 	y[0] = CppAD::tanh(x[0]);
 
 	// create f: x -> y and stop tape recording
-	CppAD::ADFun<double> f(x, y); 
+	CppAD::ADFun<double> f(x, y);
 
-	// check value 
+	// check value
 	double check = std::tanh(x0);
 	ok &= NearEqual(y[0] , check,  eps, eps);
 
@@ -67,7 +64,7 @@ bool Tanh(void)
 	CPPAD_TESTVECTOR(double) dy(m);
 	dx[0] = 1.;
 	dy    = f.Forward(1, dx);
-	check = 1. - std::tanh(x0) * std::tanh(x0); 
+	check = 1. - std::tanh(x0) * std::tanh(x0);
 	ok   &= NearEqual(dy[0], check, eps, eps);
 
 	// reverse computation of derivative of y[0]

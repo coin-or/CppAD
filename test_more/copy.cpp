@@ -1,9 +1,9 @@
-/* $Id$ */
+// $Id$
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-12 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-15 Bradley M. Bell
 
 CppAD is distributed under multiple licenses. This distribution is under
-the terms of the 
+the terms of the
                     Eclipse Public License Version 1.0.
 
 A copy of this license is included in the COPYING file of this distribution.
@@ -30,10 +30,10 @@ bool copy_older(void)
 	Independent(U);
 
 	// create an AD<double> that does not depend on s
-	AD<double> t = 3.;   
+	AD<double> t = 3.;
 
-	// use copy constructor 
-	AD<double> x(U[is]);    
+	// use copy constructor
+	AD<double> x(U[is]);
 	AD<double> y(t);
 
 	// check which are parameters
@@ -51,10 +51,10 @@ bool copy_older(void)
 	ADFun<double> f(U, Z);
 	CPPAD_TESTVECTOR(double) v( f.Domain() );
 	CPPAD_TESTVECTOR(double) w( f.Range() );
- 
- 	// check parameters flags
- 	ok &= ! f.Parameter(ix);
- 	ok &=   f.Parameter(iy);
+
+	// check parameters flags
+	ok &= ! f.Parameter(ix);
+	ok &=   f.Parameter(iy);
 
 	// check function values
 	ok &= ( Z[ix] == 2. );
@@ -82,10 +82,10 @@ bool copy_ad(void)
 	CppAD::Independent(x);
 
 	// create an AD<double> that does not depend on x
-	AD<double> b = 3.;   
+	AD<double> b = 3.;
 
-	// use copy constructor 
-	AD<double> u(x[0]);    
+	// use copy constructor
+	AD<double> u(x[0]);
 	AD<double> v = b;
 
 	// check which are parameters
@@ -102,10 +102,10 @@ bool copy_ad(void)
 	CppAD::ADFun<double> f(x, y);
 	CPPAD_TESTVECTOR(double) dx(n);
 	CPPAD_TESTVECTOR(double) dy(m);
- 
- 	// check parameters flags
- 	ok &= ! f.Parameter(0);
- 	ok &=   f.Parameter(1);
+
+	// check parameters flags
+	ok &= ! f.Parameter(0);
+	ok &=   f.Parameter(1);
 
 	// check function values
 	ok &= ( y[0] == 2. );
@@ -123,14 +123,14 @@ bool copy_base(void)
 {	bool ok = true;    // initialize test result flag
 	using CppAD::AD;   // so can use AD in place of CppAD::AD
 
-	// construct directly from Base where Base is double 
-	AD<double> x(1.); 
+	// construct directly from Base where Base is double
+	AD<double> x(1.);
 
 	// construct from a type that converts to Base where Base is double
 	AD<double> y = 2;
 
 	// construct from a type that converts to Base where Base = AD<double>
-	AD< AD<double> > z(3); 
+	AD< AD<double> > z(3);
 
 	// check that resulting objects are parameters
 	ok &= Parameter(x);
@@ -163,7 +163,7 @@ bool default_ctor(void)
 	ok &= Parameter(y);
 
 	// assign them values
-	x = 3.; 
+	x = 3.;
 	y = 4.;
 
 	// just check a simple operation

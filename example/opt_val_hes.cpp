@@ -1,9 +1,9 @@
-/* $Id$ */
+// $Id$
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-12 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-15 Bradley M. Bell
 
 CppAD is distributed under multiple licenses. This distribution is under
-the terms of the 
+the terms of the
                     Eclipse Public License Version 1.0.
 
 A copy of this license is included in the COPYING file of this distribution.
@@ -17,10 +17,8 @@ $spell
 $$
 
 $section opt_val_hes: Example and Test$$
+$mindex opt_val_hes$$
 
-$index opt_val_hes, example$$
-$index example, opt_val_hes$$
-$index test, opt_val_hes$$
 
 Fix $latex z \in \B{R}^\ell$$ and define the functions
 $latex S_k : \B{R} \times \B{R} \rightarrow \B{R}^\ell$$ by and
@@ -31,27 +29,27 @@ S_k (x, y) & = & \frac{1}{2} [ y * \sin ( x * t_k ) - z_k ]^2
 \\
 F(x, y)    & = &  \sum_{k=0}^{\ell-1} S_k (x, y)
 \end{array}
-\] $$ 
+\] $$
 It follows that
 $latex \[
 \begin{array}{rcl}
-\partial_y F(x, y) 
-& = & 
+\partial_y F(x, y)
+& = &
 \sum_{k=0}^{\ell-1} [ y * \sin ( x * t_k ) - z_k ] \sin( x * t_k )
 \\
 \partial_y \partial_y F(x, y)
-& = & 
+& = &
 \sum_{k=0}^{\ell-1} \sin ( x t_k )^2
 \end{array}
 \] $$
-Furthermore if we define $latex Y(x)$$ 
+Furthermore if we define $latex Y(x)$$
 as solving the equation $latex \partial F[ x, Y(x) ] = 0 $$ we have
 $latex \[
 \begin{array}{rcl}
 0 & = &
 \sum_{k=0}^{\ell-1} [ Y(x) * \sin ( x * t_k ) - z_k ] \sin( x * t_k )
 \\
-Y(x) \sum_{k=0}^{\ell-1} \sin ( x * t_k )^2  
+Y(x) \sum_{k=0}^{\ell-1} \sin ( x * t_k )^2
 - \sum_{k=0}^{\ell-1} \sin ( x * t_k ) z_k
 \\
 Y(x) & = & \frac{
@@ -83,7 +81,7 @@ namespace {
 		const BaseVector t_;    // measurement times
 		const BaseVector z_;    // measurement values
 	public:
-		typedef ADVector ad_vector; 
+		typedef ADVector ad_vector;
 		// constructor
 		Fun(const BaseVector &t, const BaseVector &z)
 		: t_(t) , z_(z)
@@ -106,7 +104,7 @@ namespace {
 
 			AD<double> residual = y[0] * sin( x[0] * t_[k] ) - z_[k];
 			sy_k[0] = residual * sin( x[0] * t_[k] );
-			
+
 			return sy_k;
 		}
 	};
@@ -118,7 +116,7 @@ namespace {
 		size_t k;
 		for(k = 0; k < size_t(t.size()); k++)
 		{	numerator   += sin( x[0] * t[k] ) * z[k];
-			denominator += sin( x[0] * t[k] ) * sin( x[0] * t[k] ); 	
+			denominator += sin( x[0] * t[k] ) * sin( x[0] * t[k] );
 		}
 		AD<double> y = numerator / denominator;
 
@@ -159,10 +157,10 @@ bool opt_val_hes(void)
 		z[k] = y[0] * sin( x[0] * t[k] );     // data without noise
 	}
 
-	// construct the function object 
+	// construct the function object
 	Fun fun(t, z);
 
-	// evaluate the Jacobian and Hessian 
+	// evaluate the Jacobian and Hessian
 	BaseVector jac(n), hes(n * n);
 	int signdet = CppAD::opt_val_hes(x, y, fun, jac, hes);
 

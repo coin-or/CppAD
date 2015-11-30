@@ -1,11 +1,11 @@
-/* $Id$ */
-# ifndef  CPPAD_HES_FG_MAP_INCLUDED
-# define  CPPAD_HES_FG_MAP_INCLUDED
+// $Id$
+# ifndef CPPAD_HES_FG_MAP_HPP
+# define CPPAD_HES_FG_MAP_HPP
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-12 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-15 Bradley M. Bell
 
 CppAD is distributed under multiple licenses. This distribution is under
-the terms of the 
+the terms of the
                     Eclipse Public License Version 1.0.
 
 A copy of this license is included in the COPYING file of this distribution.
@@ -24,7 +24,7 @@ namespace cppad_ipopt {
 
 
 extern void hes_fg_map(
-	cppad_ipopt_fg_info*  fg_info                                  , 
+	cppad_ipopt_fg_info*  fg_info                                  ,
 	size_t                                          m              ,
 	size_t                                          n              ,
 	size_t                                          K              ,
@@ -34,7 +34,7 @@ extern void hes_fg_map(
 	const CppAD::vector<CppAD::vectorBool>&         pattern_hes_r  ,
 	CppAD::vector<size_t>&                          I              ,
 	CppAD::vector<size_t>&                          J              ,
-	CppAD::vector< std::map<size_t,size_t> >&       index_hes_fg    
+	CppAD::vector< std::map<size_t,size_t> >&       index_hes_fg
 );
 
 // ---------------------------------------------------------------------------

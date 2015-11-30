@@ -34,7 +34,7 @@ do
 	done
 	if [ "$cmd" == 'define' ]
 	then
-		sed -e '/_INCLUDED$/d' -i tmp.$$
+		sed -e '/_HPP$/d' -i tmp.$$
 	fi
 	sort -u tmp.$$ > $cmd.$$
 	rm tmp.$$

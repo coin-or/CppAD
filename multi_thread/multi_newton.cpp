@@ -1,9 +1,9 @@
-/* $Id$ */
+// $Id$
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-12 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-15 Bradley M. Bell
 
 CppAD is distributed under multiple licenses. This distribution is under
-the terms of the 
+the terms of the
                     Eclipse Public License Version 1.0.
 
 A copy of this license is included in the COPYING file of this distribution.
@@ -23,29 +23,27 @@ $spell
 	df
 $$
 
-$index multi_newton, threading$$
-$index thread, multi_newton$$
-$index newton, multi-threading$$
 
 $section A Multi-Threaded Newton's Method$$
+$mindex multi_newton threading thread multi-threading$$
 
 $head Syntax$$
-$icode%ok% = %multi_newton(%xout%, 
+$icode%ok% = %multi_newton(%xout%,
 	%fun%, %num_sub%, %xlow%, %xup%, %epsilon%, %max_itr%, %num_threads%
 )%$$
 
 $head Purpose$$
-Multi-threaded determination of the argument values $latex x$$, 
-in the interval $latex [a, b]$$ (where $latex a < b$$), 
+Multi-threaded determination of the argument values $latex x$$,
+in the interval $latex [a, b]$$ (where $latex a < b$$),
 such that $latex f(x) = 0$$.
 
 $head Method$$
-For $latex i = 0 , \ldots , n$$,  
+For $latex i = 0 , \ldots , n$$,
 we define the $th i$$ grid point $latex g_i$$ by
 $latex \[
 	g_i = a \frac{n - i}{n} +  b \frac{i}{n}
 \] $$
-For $latex i = 0 , \ldots , n-1$$,  
+For $latex i = 0 , \ldots , n-1$$,
 we define the $th i$$ sub-interval of $latex [a, b]$$ by
 $latex \[
 	I_i = [ g_i , g_{i+1} ]
@@ -69,11 +67,11 @@ $codei%
 %$$
 The input size and value of the elements of $icode xout$$ do not matter.
 Upon return from $code multi_newton$$,
-the size of $icode xout$$ is less than or equal 
+the size of $icode xout$$ is less than or equal
 the number of sub-intervals $latex n$$ and
 $latex \[
 	| f( xout[i] ) | \leq epsilon
-\] $$ 
+\] $$
 for each valid index $codei%0% <= %i% < %xout%.size()%$$.
 Two $latex x$$ solutions are considered equal (and joined as one) if
 the absolute difference between the solutions is less than
@@ -85,14 +83,14 @@ $codei%
 	void %fun% (double %x%, double& %f%, double& %df%)
 %$$
 This function must evaluate $latex f(x)$$,
-and its derivative $latex f^{(1)} (x)$$, 
+and its derivative $latex f^{(1)} (x)$$,
 using the syntax
 $codei%
 	%fun%(%x%, %f%, %df%)
 %$$
 where the arguments to $icode fun$$ have the prototypes
 $codei%
-	double    %x% 
+	double    %x%
 	double&   %f%
 	double&   %df%
 %$$.
@@ -158,21 +156,21 @@ $end
 ---------------------------------------------------------------------------
 */
 // BEGIN C++
-// general purpose multi-threading interface 
+// general purpose multi-threading interface
 # include "team_thread.hpp"
 // special utilities for the multi_newton problem
 # include "multi_newton_work.hpp"
 
 bool multi_newton(
-	CppAD::vector<double> &xout                , 
-	void fun(double x, double& f, double& df)  , 
-	size_t num_sub                             , 
-	double xlow                                , 
-	double xup                                 , 
-	double epsilon                             , 
+	CppAD::vector<double> &xout                ,
+	void fun(double x, double& f, double& df)  ,
+	size_t num_sub                             ,
+	double xlow                                ,
+	double xup                                 ,
+	double epsilon                             ,
 	size_t max_itr                             ,
 	size_t num_threads                         )
-{	
+{
 	bool ok = true;
 	using CppAD::AD;
 	using CppAD::vector;

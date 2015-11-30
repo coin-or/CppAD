@@ -1,9 +1,9 @@
 // $Id$
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-12 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-15 Bradley M. Bell
 
 CppAD is distributed under multiple licenses. This distribution is under
-the terms of the 
+the terms of the
                     Eclipse Public License Version 1.0.
 
 A copy of this license is included in the COPYING file of this distribution.
@@ -17,16 +17,14 @@ $spell
 $$
 
 $section Using a Team of AD Threads: Example and Test$$
+$mindex thread$$
 
-$index thread, team example AD$$
-$index AD, example team$$
-$index example, team AD$$
 
 $head Purpose$$
 This example demonstrates how use a team threads with CppAD.
 
 $head thread_team$$
-The following three implementations of the 
+The following three implementations of the
 $cref team_thread.hpp$$ specifications are included:
 $table
 $rref team_openmp.cpp$$
@@ -73,9 +71,9 @@ namespace {
 		ax[0] = work_all_[thread_num]->x;
 		Independent(ax);
 		ay[0] = sqrt( ax[0] * ax[0] );
-		CppAD::ADFun<double> f(ax, ay); 
+		CppAD::ADFun<double> f(ax, ay);
 
-		// Check function value corresponds to the identity 
+		// Check function value corresponds to the identity
 		double eps = 10. * CppAD::numeric_limits<double>::epsilon();
 		ok        &= NearEqual(ay[0], ax[0], eps, eps);
 
@@ -100,8 +98,8 @@ bool team_example(void)
 	// (using thread_alloc in sequential mode)
 	size_t thread_num;
 	for(thread_num = 0; thread_num < num_threads; thread_num++)
-	{	ok &= thread_alloc::inuse(thread_num) == 0; 
-		ok &= thread_alloc::available(thread_num) == 0; 
+	{	ok &= thread_alloc::inuse(thread_num) == 0;
+		ok &= thread_alloc::available(thread_num) == 0;
 	}
 
 	// initialize work_all_
@@ -112,7 +110,7 @@ bool team_example(void)
 		work_all_[thread_num]     = static_cast<work_one_t*>(v_ptr);
 		// incase this thread's worker does not get called
 		work_all_[thread_num]->ok = false;
-		// parameter that defines the work for this thread 
+		// parameter that defines the work for this thread
 		work_all_[thread_num]->x  = double(thread_num) + 1.;
 	}
 
@@ -125,7 +123,7 @@ bool team_example(void)
 	while(thread_num--)
 	{	// check that this thread was ok with the work it did
 		ok &= work_all_[thread_num]->ok;
-		// delete problem specific information 
+		// delete problem specific information
 		void* v_ptr = static_cast<void*>( work_all_[thread_num] );
 		thread_alloc::return_memory( v_ptr );
 		// check that there is no longer any memory inuse by this thread

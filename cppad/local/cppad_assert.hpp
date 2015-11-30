@@ -1,6 +1,6 @@
-/* $Id$ */
-# ifndef CPPAD_CPPAD_ASSERT_INCLUDED
-# define CPPAD_CPPAD_ASSERT_INCLUDED
+// $Id$
+# ifndef CPPAD_CPPAD_ASSERT_HPP
+# define CPPAD_CPPAD_ASSERT_HPP
 
 /* --------------------------------------------------------------------------
 CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-15 Bradley M. Bell
@@ -28,11 +28,9 @@ $spell
 	bool
 $$
 
-$index assert, error macro $$
-$index error, assert macro$$
-$index macro, error assert$$
 
 $section CppAD Assertions During Execution$$
+$mindex assert macro CPPAD_ASSERT_KNOWN CPPAD_ASSERT_UNKNOWN$$
 
 $head Syntax$$
 $codei%CPPAD_ASSERT_KNOWN(%exp%, %msg%)
@@ -46,7 +44,6 @@ They are documented here because they correspond to the C++
 source code that the error is reported at.
 
 $head NDEBUG$$
-$index NDEBUG$$
 If the preprocessor symbol
 $cref/NDEBUG/Faq/Speed/NDEBUG/$$ is defined,
 these macros do nothing; i.e., they are optimized out.
@@ -57,14 +54,12 @@ You can however write your own macros that do not begin with $code CPPAD$$
 and that call the $cref/CppAD error handler/ErrorHandler/$$.
 
 $head Known$$
-$index CPPAD_ASSERT_KNOWN$$
 The $code CPPAD_ASSERT_KNOWN$$ macro is used to check for an error
 with a known cause.
 For example, many CppAD routines uses these macros
 to make sure their arguments conform to their specifications.
 
 $head Unknown$$
-$index CPPAD_ASSERT_UNKNOWN$$
 The $code CPPAD_ASSERT_UNKNOWN$$ macro is used to check that the
 CppAD internal data structures conform as expected.
 If this is not the case, CppAD does not know why the error has
@@ -98,7 +93,7 @@ $end
 
 # include <cassert>
 # include <iostream>
-# include <cppad/error_handler.hpp>
+# include <cppad/utility/error_handler.hpp>
 
 /*!
 \def CPPAD_ASSERT_KNOWN(exp, msg)

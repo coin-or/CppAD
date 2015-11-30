@@ -1,9 +1,9 @@
-/* $Id$ */
+// $Id$
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-13 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-15 Bradley M. Bell
 
 CppAD is distributed under multiple licenses. This distribution is under
-the terms of the 
+the terms of the
                     Eclipse Public License Version 1.0.
 
 A copy of this license is included in the COPYING file of this distribution.
@@ -20,10 +20,9 @@ $spell
 	IpoptDir
 	CppAD
 $$
-$index retape, ipopt_solve$$
-$index ipopt_solve, retape$$
 
 $section Nonlinear Programming Retaping: Example and Test$$
+$mindex retape ipopt_solve$$
 
 $head Purpose$$
 This example program demonstrates a case were the $code ipopt::solve$$
@@ -60,13 +59,13 @@ namespace {
 		}
 	};
 }
-	
+
 bool retape(void)
 {	bool ok = true;
 	typedef CPPAD_TESTVECTOR( double ) Dvector;
 
 	// number of independent variables (domain dimension for f and g)
-	size_t nx = 1;  
+	size_t nx = 1;
 	// number of constraints (range dimension for g)
 	size_t ng = 0;
 	// initial value, lower and upper limits, for the independent variables
@@ -80,22 +79,22 @@ bool retape(void)
 	// object that computes objective and constraints
 	FG_eval fg_eval;
 
-	// options 
+	// options
 	std::string options;
 	// retape operation sequence for each new x
 	options += "Retape  true\n";
 	// turn off any printing
-	options += "Integer print_level   0\n"; 
+	options += "Integer print_level   0\n";
 	options += "String  sb          yes\n";
 	// maximum number of iterations
 	options += "Integer max_iter      10\n";
 	// approximate accuracy in first order necessary conditions;
-	// see Mathematical Programming, Volume 106, Number 1, 
+	// see Mathematical Programming, Volume 106, Number 1,
 	// Pages 25-57, Equation (6)
 	options += "Numeric tol           1e-9\n";
 	// derivative testing
 	options += "String  derivative_test            second-order\n";
-	// maximum amount of random pertubation; e.g., 
+	// maximum amount of random pertubation; e.g.,
 	// when evaluation finite diff
 	options += "Numeric point_perturbation_radius  0.\n";
 
@@ -107,8 +106,8 @@ bool retape(void)
 		options, xi, xl, xu, gl, gu, fg_eval, solution
 	);
 	//
- 	// Check some of the solution values
- 	//
+	// Check some of the solution values
+	//
 	ok &= solution.status == CppAD::ipopt::solve_result<Dvector>::success;
 	double rel_tol    = 1e-6;  // relative tolerance
 	double abs_tol    = 1e-6;  // absolute tolerance

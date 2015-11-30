@@ -1,9 +1,9 @@
-/* $Id$ */
+// $Id$
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-13 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-15 Bradley M. Bell
 
 CppAD is distributed under multiple licenses. This distribution is under
-the terms of the 
+the terms of the
                     Eclipse Public License Version 1.0.
 
 A copy of this license is included in the COPYING file of this distribution.
@@ -18,11 +18,9 @@ $spell
 	IpoptDir
 	CppAD
 $$
-$index example, nonlinear, programming$$
-$index programming, nonlinear example$$
-$index ipopt, AD example$$
 
 $section Nonlinear Programming Using CppAD and Ipopt: Example and Test$$
+$mindex ipopt AD$$
 
 $head Purpose$$
 This example program demonstrates how to use $cref ipopt_solve$$ to
@@ -35,7 +33,7 @@ $latex \[
 \\
                         &  x_1^2 + x_2^2 + x_3^2 + x_4^2 = 40
 \\
-                        &  1 \leq x_1, x_2, x_3, x_4 \leq 5  
+                        &  1 \leq x_1, x_2, x_3, x_4 \leq 5
 \end{array}
 \] $$
 
@@ -63,7 +61,7 @@ namespace {
 		{	assert( fg.size() == 3 );
 			assert( x.size()  == 4 );
 
-			// Fortran style indexing 
+			// Fortran style indexing
 			AD<double> x1 = x[0];
 			AD<double> x2 = x[1];
 			AD<double> x3 = x[2];
@@ -79,14 +77,14 @@ namespace {
 		}
 	};
 }
-	
+
 bool get_started(void)
 {	bool ok = true;
 	size_t i;
 	typedef CPPAD_TESTVECTOR( double ) Dvector;
 
 	// number of independent variables (domain dimension for f and g)
-	size_t nx = 4;  
+	size_t nx = 4;
 	// number of constraints (range dimension for g)
 	size_t ng = 2;
 	// initial value of the independent variables
@@ -104,25 +102,25 @@ bool get_started(void)
 	// lower and upper limits for g
 	Dvector gl(ng), gu(ng);
 	gl[0] = 25.0;     gu[0] = 1.0e19;
-  	gl[1] = 40.0;     gu[1] = 40.0;
+	gl[1] = 40.0;     gu[1] = 40.0;
 
 	// object that computes objective and constraints
 	FG_eval fg_eval;
 
-	// options 
+	// options
 	std::string options;
 	// turn off any printing
-	options += "Integer print_level  0\n"; 
+	options += "Integer print_level  0\n";
 	options += "String  sb           yes\n";
 	// maximum number of iterations
 	options += "Integer max_iter     10\n";
 	// approximate accuracy in first order necessary conditions;
-	// see Mathematical Programming, Volume 106, Number 1, 
+	// see Mathematical Programming, Volume 106, Number 1,
 	// Pages 25-57, Equation (6)
 	options += "Numeric tol          1e-6\n";
 	// derivative testing
 	options += "String  derivative_test            second-order\n";
-	// maximum amount of random pertubation; e.g., 
+	// maximum amount of random pertubation; e.g.,
 	// when evaluation finite diff
 	options += "Numeric point_perturbation_radius  0.\n";
 
@@ -134,8 +132,8 @@ bool get_started(void)
 		options, xi, xl, xu, gl, gu, fg_eval, solution
 	);
 	//
- 	// Check some of the solution values
- 	//
+	// Check some of the solution values
+	//
 	ok &= solution.status == CppAD::ipopt::solve_result<Dvector>::success;
 	//
 	double check_x[]  = { 1.000000, 4.743000, 3.82115, 1.379408 };

@@ -1,6 +1,6 @@
-/* $Id$ */
-# ifndef CPPAD_FUN_CONSTRUCT_INCLUDED
-# define CPPAD_FUN_CONSTRUCT_INCLUDED
+// $Id$
+# ifndef CPPAD_FUN_CONSTRUCT_HPP
+# define CPPAD_FUN_CONSTRUCT_HPP
 
 /* --------------------------------------------------------------------------
 CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-15 Bradley M. Bell
@@ -30,11 +30,8 @@ $spell
 $$
 
 $section Construct an ADFun Object and Stop Recording$$
+$mindex tape$$
 
-$index ADFun, construct$$
-$index construct, ADFun$$
-$index tape, stop recording$$
-$index recording, stop tape$$
 
 $head Syntax$$
 $codei%ADFun<%Base%> %f%, %g%
@@ -89,9 +86,6 @@ The routine $cref CheckSimpleVector$$ will generate an error message
 if this is not the case.
 
 $head Default Constructor$$
-$index default, ADFun constructor$$
-$index ADFun, default constructor$$
-$index constructor, ADFun constructor$$
 The default constructor
 $codei%
 	ADFun<%Base%> %f%
@@ -104,9 +98,6 @@ $codei%
 returns the value zero (see $cref/size_var/seq_property/size_var/$$).
 
 $head Sequence Constructor$$
-$index sequence, ADFun constructor$$
-$index ADFun, sequence constructor$$
-$index constructor, ADFun sequence$$
 The sequence constructor
 $codei%
 	ADFun<%Base%> %f%(%x%, %y%)
@@ -145,9 +136,6 @@ equal to the corresponding elements of $icode x$$
 $lend
 
 $head Copy Constructor$$
-$index copy, ADFun constructor$$
-$index ADFun, copy constructor$$
-$index constructor, ADFun copy$$
 It is an error to attempt to use the $codei%ADFun<%Base%>%$$ copy constructor;
 i.e., the following syntax is not allowed:
 $codei%
@@ -158,9 +146,6 @@ Use its $cref/default constructor/FunConstruct/Default Constructor/$$ instead
 and its assignment operator.
 
 $head Assignment Operator$$
-$index ADFun, assignment operator$$
-$index assignment, ADFun operator$$
-$index operator, ADFun assignment$$
 The $codei%ADFun<%Base%>%$$ assignment operation
 $codei%
 	%g% = %f%
@@ -192,8 +177,6 @@ $codei%
 %$$
 
 $head Parallel Mode$$
-$index parallel, ADFun$$
-$index ADFun, parallel$$
 The call to $code Independent$$,
 and the corresponding call to
 $codei%

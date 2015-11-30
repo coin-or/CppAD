@@ -1,9 +1,9 @@
 // $Id$
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-14 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-15 Bradley M. Bell
 
 CppAD is distributed under multiple licenses. This distribution is under
-the terms of the 
+the terms of the
                     Eclipse Public License Version 1.0.
 
 A copy of this license is included in the COPYING file of this distribution.
@@ -26,18 +26,16 @@ $spell
 $$
 
 $section CppAD pkg-config Files$$
-$index pkg-config, files$$
-$index files, pkg-config$$
-$index pc, pkg-config$$
+$mindex pc$$
 
 $head Purpose$$
-The $code pkg-config$$ package helps with the use of installed libraries; 
+The $code pkg-config$$ package helps with the use of installed libraries;
 see its
 $href%http://people.freedesktop.org/~dbn/pkg-config-guide.html%guide%$$
 for more information.
 
 $head Usage$$
-The necessary flags for compiling code that includes CppAD can 
+The necessary flags for compiling code that includes CppAD can
 be obtained with the command
 $codep
 	pkg-config --cflags cppad
@@ -82,7 +80,7 @@ $icode Requires$$ $cnext
 $tend
 
 $head CppAD Configuration Files$$
-In the table below, 
+In the table below,
 $icode builddir$$ is the build directory; i.e., the directory where
 the CppAD
 $cref/cmake command/cmake/CMake Command/$$ is executed.
@@ -92,13 +90,13 @@ The directory $icode datadir$$ is the value of
 $cref/cmake_install_datadir/cmake/cmake_install_datadir/$$.
 The following configuration files contain the information above
 $table
-$icode File$$             $cnext 
+$icode File$$             $cnext
 	$icode Description$$ $rnext
-$icode%prefix%/%datadir%/pkgconfig/cppad.pc%$$              $cnext 
-	for use after $cref/make install/install/Instructions/Step 4: Install/$$ 
+$icode%prefix%/%datadir%/pkgconfig/cppad.pc%$$              $cnext
+	for use after $cref/make install/install/Instructions/Step 4: Install/$$
 $rnext
-$icode%builddir%/pkgconfig/cppad-uninstalled.pc%$$       $cnext 
-	for testing before $code make install$$                      
+$icode%builddir%/pkgconfig/cppad-uninstalled.pc%$$       $cnext
+	for testing before $code make install$$
 $tend
 
 $end

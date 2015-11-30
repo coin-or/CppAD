@@ -1,9 +1,9 @@
-/* $Id$ */
+// $Id$
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-12 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-15 Bradley M. Bell
 
 CppAD is distributed under multiple licenses. This distribution is under
-the terms of the 
+the terms of the
                     Eclipse Public License Version 1.0.
 
 A copy of this license is included in the COPYING file of this distribution.
@@ -13,7 +13,7 @@ Please visit http://www.coin-or.org/CppAD/ for information on other licenses.
 // modified version of test that used to be in ../print_for/print_for.cpp
 # include <cppad/cppad.hpp>
 
-namespace { 
+namespace {
 	using std::endl;
 	using CppAD::AD;
 
@@ -26,7 +26,7 @@ namespace {
 		PrintFor(y, "check_log: y == ", y , " which is <= 0\n");
 
 		return log(y);
-	} 
+	}
 }
 
 bool print_for(void)
@@ -46,13 +46,13 @@ bool print_for(void)
 	CppAD::VecAD<double> av(1);
 	AD<double> Zero(0);
 	av[Zero] = 0.;
-	PrintFor("v[0] = ", av[Zero]); 
+	PrintFor("v[0] = ", av[Zero]);
 	string_check += "v[0] = 0"; // v[0] == 0 during Forward(0, x)
 
 	// Print a newline to separate this from previous output,
 	// then print an AD<double> object that is a variable.
-	PrintFor("\nv[0] + x[0] = ", av[0] + ax[0]); 
-	string_check += "\nv[0] + x[0] = 2"; // x[0] == 2 during Forward(0, x) 
+	PrintFor("\nv[0] + x[0] = ", av[0] + ax[0]);
+	string_check += "\nv[0] + x[0] = 2"; // x[0] == 2 during Forward(0, x)
 
 	// A conditional print that will not generate output when x[0] = 2.
 	PrintFor(ax[0], "\n  2. + x[0] = ",   2. + ax[0], "\n");
@@ -66,20 +66,20 @@ bool print_for(void)
 	AD<double> log_var = check_log(var);
 	string_check += "check_log: y == 0 which is <= 0\n";
 
-	// dependent variable vector 
+	// dependent variable vector
 	size_t m = 2;
 	CPPAD_TESTVECTOR(AD<double>) ay(m);
 	ay[0] = av[Zero] + ax[0];
 
 	// define f: x -> y and stop tape recording
-	CppAD::ADFun<double> f(ax, ay); 
+	CppAD::ADFun<double> f(ax, ay);
 
-	// zero order forward with x[0] = 2 
+	// zero order forward with x[0] = 2
 	CPPAD_TESTVECTOR(double) x(n);
 	x[0] = 2.;
-	f.Forward(0, x, stream_out);	
+	f.Forward(0, x, stream_out);
 
 	std::string string_out = stream_out.str();
-	ok &= string_out == string_check; 
+	ok &= string_out == string_check;
 	return ok;
 }

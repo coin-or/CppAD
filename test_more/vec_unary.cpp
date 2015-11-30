@@ -1,9 +1,9 @@
-/* $Id$ */
+// $Id$
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-12 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-15 Bradley M. Bell
 
 CppAD is distributed under multiple licenses. This distribution is under
-the terms of the 
+the terms of the
                     Eclipse Public License Version 1.0.
 
 A copy of this license is included in the COPYING file of this distribution.
@@ -18,7 +18,7 @@ Test the use of VecADelem with unary operators
 
 
 bool VecUnary(void)
-{	
+{
 	using namespace CppAD;
 	using CppAD::abs;
 	using CppAD::sin;
@@ -44,38 +44,38 @@ bool VecUnary(void)
 	AD<double> j;
 
 	j    = 0.;
-	Y[j] = X[0]; 
+	Y[j] = X[0];
 	Z[0] = -Y[j];
 
 	j    = 1.;
-	Y[j] = X[1]; 
+	Y[j] = X[1];
 	Z[1] = sin( Y[j] );
 
 	j    = 2.;
-	Y[j] = X[2]; 
+	Y[j] = X[2];
 	Z[2] = abs( Y[j] );
 
 	j    = 3.;
-	Y[j] = X[3]; 
+	Y[j] = X[3];
 	Z[3] = atan( Y[j] );
 
 	j    = 4.;
-	Y[j] = X[4]; 
+	Y[j] = X[4];
 	Z[4] = cos( Y[j] );
 
 	j    = 5.;
-	Y[j] = X[5]; 
+	Y[j] = X[5];
 	Z[5] = exp( Y[j] );
 
 	j    = 6.;
-	Y[j] = X[6]; 
+	Y[j] = X[6];
 	Z[6] = log( Y[j] );
 
 	j    = 7.;
-	Y[j] = X[7]; 
+	Y[j] = X[7];
 	Z[7] = sqrt( Y[j] );
 
-	
+
 	ADFun<double> f(X, Z);
 	CPPAD_TESTVECTOR(double) x(n);
 	CPPAD_TESTVECTOR(double) z(n);

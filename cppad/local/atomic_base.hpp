@@ -1,6 +1,6 @@
-/* $Id$ */
-# ifndef CPPAD_ATOMIC_BASE_INCLUDED
-# define CPPAD_ATOMIC_BASE_INCLUDED
+// $Id$
+# ifndef CPPAD_ATOMIC_BASE_HPP
+# define CPPAD_ATOMIC_BASE_HPP
 
 /* --------------------------------------------------------------------------
 CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-15 Bradley M. Bell
@@ -16,7 +16,7 @@ Please visit http://www.coin-or.org/CppAD/ for information on other licenses.
 # include <set>
 # include <cppad/local/cppad_assert.hpp>
 // needed before one can use CPPAD_ASSERT_FIRST_CALL_NOT_PARALLEL
-# include <cppad/thread_alloc.hpp>
+# include <cppad/utility/thread_alloc.hpp>
 
 namespace CppAD { // BEGIN_CPPAD_NAMESPACE
 /*!
@@ -343,7 +343,6 @@ $spell
 $$
 
 $section Using AD Version of Atomic Function$$
-$index atomic, use function$$
 
 $head Syntax$$
 $icode%afun%(%ax%, %ay%)%$$
@@ -576,9 +575,7 @@ $spell
 $$
 
 $section Atomic Forward Mode$$
-$index atomic, forward callback$$
-$index forward, atomic callback$$
-$index forward, atomic virtual$$
+$mindex callback virtual$$
 
 
 $head Syntax$$
@@ -809,9 +806,6 @@ $spell
 $$
 
 $section Atomic Reverse Mode$$
-$index atomic, reverse callback$$
-$index reverse, atomic callback$$
-$index reverse, atomic virtual$$
 $spell
 	bool
 $$
@@ -1025,9 +1019,6 @@ $spell
 $$
 
 $section Atomic Forward Jacobian Sparsity Patterns$$
-$index atomic, for_sparse_jac callback$$
-$index for_sparse_jac, atomic callback$$
-$index for_sparse_jac, atomic virtual$$
 
 $head Syntax$$
 $icode%ok% = %afun%.for_sparse_jac(%q%, %r%, %s%)%$$
@@ -1150,9 +1141,6 @@ $spell
 $$
 
 $section Atomic Reverse Jacobian Sparsity Patterns$$
-$index atomic, rev_sparse_jac callback$$
-$index rev_sparse_jac, atomic callback$$
-$index rev_sparse_jac, atomic virtual$$
 
 $head Syntax$$
 $icode%ok% = %afun%.rev_sparse_jac(%q%, %rt%, %st%)%$$
@@ -1276,9 +1264,6 @@ $spell
 $$
 
 $section Atomic Reverse Hessian Sparsity Patterns$$
-$index atomic, rev_sparse_hes callback$$
-$index rev_sparse_hes, atomic callback$$
-$index rev_sparse_hes, atomic virtual$$
 
 $head Syntax$$
 $icode%ok% = %afun%.rev_sparse_hes(%vx%, %s%, %t%, %q%, %r%, %u%, %v%)%$$
@@ -1493,10 +1478,7 @@ $spell
 $$
 
 $section Free Static Variables$$
-$index free, atomic static$$
-$index atomic, free static$$
-$index static, free atomic$$
-$index clear, atomic static$$
+$mindex clear$$
 
 $head Syntax$$
 $codei%atomic_base<%Base%>::clear()%$$

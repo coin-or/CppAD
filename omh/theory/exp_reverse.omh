@@ -20,7 +20,7 @@ $spell
 $$
 
 $section Exponential Function Reverse Mode Theory$$
-$mindex exp, expm1$$
+$mindex exp expm1$$
 
 We use the reverse theory
 $cref%standard math function

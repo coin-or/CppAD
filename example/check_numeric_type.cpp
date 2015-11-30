@@ -1,9 +1,9 @@
-/* $Id$ */
+// $Id$
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-12 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-15 Bradley M. Bell
 
 CppAD is distributed under multiple licenses. This distribution is under
-the terms of the 
+the terms of the
                     Eclipse Public License Version 1.0.
 
 A copy of this license is included in the COPYING file of this distribution.
@@ -14,9 +14,7 @@ Please visit http://www.coin-or.org/CppAD/ for information on other licenses.
 $begin check_numeric_type.cpp$$
 
 $section The CheckNumericType Function: Example and Test$$
-$index CheckNumericType$$
-$index example, check NumericType$$
-$index test, check NumericType$$
+$mindex check NumericType$$
 
 $code
 $verbatim%example/check_numeric_type.cpp%0%// BEGIN C++%// END C++%1%$$
@@ -26,12 +24,12 @@ $end
 */
 // BEGIN C++
 
-# include <cppad/check_numeric_type.hpp>
-# include <cppad/near_equal.hpp>
+# include <cppad/utility/check_numeric_type.hpp>
+# include <cppad/utility/near_equal.hpp>
 
 
-// Chosing a value between 1 and 10 selects a numeric class properity to be 
-// omitted and result in an error message being generated 
+// Chosing a value between 1 and 10 selects a numeric class properity to be
+// omitted and result in an error message being generated
 # define CppADMyTypeOmit 0
 
 namespace { // Empty namespace
@@ -41,10 +39,10 @@ namespace { // Empty namespace
 	private:
 		double d;
 	public:
-		// constructor from void 
+		// constructor from void
 		MyType(void) : d(0.)
 		{ }
-		// constructor from an int 
+		// constructor from an int
 		MyType(int d_) : d(d_)
 		{ }
 		// copy constuctor
@@ -61,7 +59,7 @@ namespace { // Empty namespace
 		MyType operator + (void) const
 		{	MyType x;
 			x.d =  d;
-			return x; 
+			return x;
 		}
 # endif
 # if CppADMyTypeOmit != 2
@@ -69,7 +67,7 @@ namespace { // Empty namespace
 		MyType operator - (void) const
 		{	MyType x;
 			x.d = - d;
-			return x; 
+			return x;
 		}
 # endif
 # if CppADMyTypeOmit != 3
@@ -77,7 +75,7 @@ namespace { // Empty namespace
 		MyType operator + (const MyType &x) const
 		{	MyType y;
 			y.d = d + x.d ;
-			return y; 
+			return y;
 		}
 # endif
 # if CppADMyTypeOmit != 4
@@ -85,7 +83,7 @@ namespace { // Empty namespace
 		MyType operator - (const MyType &x) const
 		{	MyType y;
 			y.d = d - x.d ;
-			return y; 
+			return y;
 		}
 # endif
 # if CppADMyTypeOmit != 5
@@ -93,7 +91,7 @@ namespace { // Empty namespace
 		MyType operator * (const MyType &x) const
 		{	MyType y;
 			y.d = d * x.d ;
-			return y; 
+			return y;
 		}
 # endif
 # if CppADMyTypeOmit != 6
@@ -101,7 +99,7 @@ namespace { // Empty namespace
 		MyType operator / (const MyType &x) const
 		{	MyType y;
 			y.d = d / x.d ;
-			return y; 
+			return y;
 		}
 # endif
 # if CppADMyTypeOmit != 7
@@ -127,9 +125,9 @@ namespace { // Empty namespace
 	};
 	// -------------------------------------------------------------------
 	/*
-	Solve: A[0] * x[0] + A[1] * x[1] = b[0] 
-	       A[2] * x[0] + A[3] * x[1] = b[1] 
-	*/ 
+	Solve: A[0] * x[0] + A[1] * x[1] = b[0]
+	       A[2] * x[0] + A[3] * x[1] = b[1]
+	*/
 	template <class NumericType>
 	void Solve(NumericType *A, NumericType *x, NumericType *b)
 	{
@@ -173,7 +171,7 @@ bool CheckNumericType(void)
 	A[0] = MyType(1); A[1] = MyType(2);
 	A[2] = MyType(3); A[3] = MyType(4);
 
-	MyType b[2]; 
+	MyType b[2];
 	b[0] = MyType(1);
 	b[1] = MyType(2);
 

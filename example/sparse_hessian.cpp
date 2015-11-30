@@ -1,4 +1,4 @@
-/* $Id$ */
+// $Id$
 /* --------------------------------------------------------------------------
 CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-15 Bradley M. Bell
 
@@ -18,11 +18,8 @@ $spell
 $$
 
 $section Sparse Hessian: Example and Test$$
+$mindex Hessian spare$$
 
-$index Hessian, sparse$$
-$index example, sparse Hessian$$
-$index test, sparse Hessian$$
-$index spare, Hessian example$$
 
 $code
 $verbatim%example/sparse_hessian.cpp%0%// BEGIN C++%// END C++%1%$$

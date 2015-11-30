@@ -15,9 +15,6 @@ $spell
 	openmp
 $$
 
-$index openmp, AD team$$
-$index AD, openmp team$$
-$index team, AD openmp$$
 
 $section OpenMP Implementation of a Team of AD Threads$$
 See $cref team_thread.hpp$$ for this routines specifications.

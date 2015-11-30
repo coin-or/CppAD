@@ -1,9 +1,9 @@
-/* $Id$ */
+// $Id$
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-14 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-15 Bradley M. Bell
 
 CppAD is distributed under multiple licenses. This distribution is under
-the terms of the 
+the terms of the
                     Eclipse Public License Version 1.0.
 
 A copy of this license is included in the COPYING file of this distribution.
@@ -25,13 +25,9 @@ $spell
 	yq
 $$
 
-$section Multiple Order Forward Mode$$ 
+$section Multiple Order Forward Mode$$
+$mindex any$$
 
-$index forward, mode$$
-$index mode, forward$$
-$index order, any$$
-$index order, multiple$$
-$index multiple, order$$
 
 $head Syntax$$
 $icode%yq% = %f%.Forward(%q%, %xq% )
@@ -44,9 +40,9 @@ $head Purpose$$
 We use $latex F : B^n \rightarrow B^m$$ to denote the
 $cref/AD function/glossary/AD Function/$$ corresponding to $icode f$$.
 Given a function $latex X : B \rightarrow B^n$$,
-defined by its 
+defined by its
 $cref/Taylor coefficients/glossary/Taylor Coefficient/$$,
-forward mode computes the Taylor coefficients for the function 
+forward mode computes the Taylor coefficients for the function
 $latex \[
 	Y (t) = F [ X(t) ]
 \]$$
@@ -109,7 +105,7 @@ $codei%
 (see $cref/Vector/forward_order/Vector/$$ below).
 As above, we use $icode n$$ to denote the dimension of the
 $cref/domain/seq_property/Domain/$$ space for $icode f$$.
-The size of $icode xq$$ must be either $icode n$$ or 
+The size of $icode xq$$ must be either $icode n$$ or
 $icode%n%*(%q%+1)%$$.
 After this call we will have
 $codei%
@@ -118,12 +114,12 @@ $codei%
 
 $subhead One Order$$
 If $icode%xq%.size() == %n%$$,
-the $th q$$ order Taylor coefficient for $latex X(t)$$ 
+the $th q$$ order Taylor coefficient for $latex X(t)$$
 is defined by
 $pre
 	$$ $latex x^{(q)} = $$ $icode xq$$.
 For $latex k = 0 , \ldots , q-1$$,
-the Taylor coefficient $latex x^{(k)}$$ 
+the Taylor coefficient $latex x^{(k)}$$
 is defined by $icode xk$$ in the previous call to
 $codei%
 	%f%.Forward(%k%, %xk%)
@@ -133,7 +129,7 @@ $subhead Multiple Orders$$
 If $icode%xq%.size() == %n%*(%q%+1)%$$,
 For $latex k = 0 , \ldots , q$$,
 $latex j = 0 , \ldots , n-1$$,
-the $th j$$ component of the $th k$$ order Taylor coefficient 
+the $th j$$ component of the $th k$$ order Taylor coefficient
 for $latex X(t)$$ is defined by
 $pre
 	$$ $latex x_j^{(k)} = $$ $icode%%xq%[ (%q%+1) * %j% + %k% ]%$$
@@ -160,29 +156,29 @@ The function
 $latex X : B \rightarrow B^n$$ is defined using
 the Taylor coefficients $latex x^{(k)} \in B^n$$:
 $latex \[
-	X(t) = x^{(0)} * t^0 + x^{(1)} * t^1 + \cdots + x^{(q)} * t^q 
-\] $$ 
+	X(t) = x^{(0)} * t^0 + x^{(1)} * t^1 + \cdots + x^{(q)} * t^q
+\] $$
 Note that for $latex k = 0 , \ldots , q$$,
-the $th k$$ derivative of $latex X(t)$$ is related to the 
+the $th k$$ derivative of $latex X(t)$$ is related to the
 Taylor coefficients by the equation
 $latex \[
-	x^{(k)} = \frac{1}{k !} X^{(k)} (0) 
+	x^{(k)} = \frac{1}{k !} X^{(k)} (0)
 \] $$
 
 $head Y(t)$$
 The function
 $latex Y : B \rightarrow B^m$$ is defined by
 $latex Y(t) = F[ X(t) ] $$.
-We use $latex y^{(k)} \in B^m$$ 
+We use $latex y^{(k)} \in B^m$$
 to denote the $th k$$ order Taylor coefficient of $latex Y(t)$$; i.e.,
 $latex \[
-	Y(t) = y^{(0)} * t^0 + y^{(1)} * t^1 + \cdots + y^{(q)} * t^q + o( t^q ) 
-\] $$ 
+	Y(t) = y^{(0)} * t^0 + y^{(1)} * t^1 + \cdots + y^{(q)} * t^q + o( t^q )
+\] $$
 where $latex o( t^q ) * t^{-q} \rightarrow 0$$ as $latex t \rightarrow 0$$.
-Note that $latex y^{(k)}$$ is related to 
+Note that $latex y^{(k)}$$ is related to
 the $th k$$ derivative of $latex Y(t)$$ by the equation
 $latex \[
-	y^{(k)} = \frac{1}{k !} Y^{(k)} (0) 
+	y^{(k)} = \frac{1}{k !} Y^{(k)} (0)
 \] $$
 
 $head yq$$
@@ -195,8 +191,8 @@ $codei%
 $subhead One Order$$
 If $icode%xq%.size() == %n%$$,
 the vector $icode yq$$ has size $icode m$$.
-The $th q$$ order Taylor coefficient for $latex Y(t)$$ 
-is returned as 
+The $th q$$ order Taylor coefficient for $latex Y(t)$$
+is returned as
 $codei%
 	%yq%$$ $latex = y^{(q)}$$.
 
@@ -205,10 +201,10 @@ If $icode%xq%.size() == %n%*(%q%+1)%$$,
 the vector $icode yq$$ has size $icode%m%*(%q%+1)%$$.
 For $latex k = 0 , \ldots , q$$,
 for $latex i = 0 , \ldots , m-1$$,
-the $th i$$ component of the $th k$$ order Taylor coefficient 
+the $th i$$ component of the $th k$$ order Taylor coefficient
 for $latex Y(t)$$ is returned as
 $codei%
-	%yq%[ (%q%+1) * %i% + %k% ]%$$ $latex = y_i^{(k)}$$ 
+	%yq%[ (%q%+1) * %i% + %k% ]%$$ $latex = y_i^{(k)}$$
 
 $head Vector$$
 The type $icode Vector$$ must be a $cref SimpleVector$$ class with
@@ -218,22 +214,22 @@ The routine $cref CheckSimpleVector$$ will generate an error message
 if this is not the case.
 
 $head Zero Order$$
-The case where 
+The case where
 $latex q = 0$$ and $icode%xq%.size() == %n%$$,
 corresponds to the zero order
-$cref/special case/forward_zero/Special Case/$$. 
+$cref/special case/forward_zero/Special Case/$$.
 
 $head First Order$$
-The case where 
+The case where
 $latex q = 1$$ and $icode%xq%.size() == %n%$$,
 corresponds to the first order
-$cref/special case/forward_one/Special Case/$$. 
+$cref/special case/forward_one/Special Case/$$.
 
 $head Second Order$$
-The case where 
+The case where
 $latex q = 2$$ and $icode%xq%.size() == %n%$$,
 corresponds to the second order
-$cref/special case/forward_two/Special Case/$$. 
+$cref/special case/forward_two/Special Case/$$.
 
 $children%
 	example/forward.cpp%

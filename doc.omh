@@ -87,17 +87,13 @@ $spell
 	initializes
 $$
 
-$index AD$$,
-$index algorithmic differentiation$$
-$index automatic differentiation$$
-$index C++, algorithm derivative$$
-$index CppAD$$
-$index version, CppAD$$
+,
 
 $comment bin/version assumes that : follows cppad version number here$$
 $section
 cppad-20150601: A Package for Differentiation of C++ Algorithms
 $$
+$mindex AD algorithmic differentiation automatic C++ algorithm derivative CppAD version cppad.hpp$$
 
 $comment This comment is used to remove the table below$$
 $table
@@ -124,7 +120,6 @@ $head Syntax$$
 $code # include <cppad/cppad.hpp>$$
 
 $head Introduction$$
-$index introduction$$
 We refer to the
 step by step conversion from an algorithm that computes function values
 to an algorithm that computes derivative values
@@ -218,8 +213,6 @@ There are many other
 $xref/Example//examples/$$.
 
 $head Include File$$
-$index include, cppad.hpp$$
-$index cppad.hpp, include$$
 The following include directive
 $syntax%
 	# include <cppad/cppad.hpp>
@@ -227,15 +220,10 @@ $syntax%
 includes the CppAD package for the rest of the current compilation unit.
 
 $head Preprocessor Symbols$$
-$index symbol, preprocessor CppAD$$
-$index preprocessor, symbol CppAD$$
-$index CppAD, preprocessor symbol$$
 All the $cref preprocessor$$ symbols used by CppAD begin with eight
 $code CppAD$$ or $code CPPAD_$$.
 
 $head Namespace$$
-$index CppAD, namespace$$
-$index namespace, CppAD$$
 All of the functions and objects defined by CppAD are in the
 $code CppAD$$ namespace; for example, you can access the $xref/AD/$$ types as
 $syntax%

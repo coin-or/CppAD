@@ -1,9 +1,9 @@
 $Id$
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-12 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-15 Bradley M. Bell
 
 CppAD is distributed under multiple licenses. This distribution is under
-the terms of the 
+the terms of the
                     Eclipse Public License Version 1.0.
 
 A copy of this license is included in the COPYING file of this distribution.
@@ -20,12 +20,9 @@ $spell
 	Resize
 $$
 
-$index vector, simple$$
-$index simple, vector$$
-$index class, simple vector$$
-$index template, simple vector class$$
 
 $section Definition of a Simple Vector$$
+$mindex value_type [] NDEBUG$$
 
 $head Template Class Requirements$$
 A simple vector template class $icode SimpleVector$$,
@@ -34,10 +31,10 @@ that satisfies the requirements below.
 The following is a list of some simple vector template classes:
 $table
 $bold Name$$ $cnext $bold Documentation$$   $rnext
-$code std::vector$$      $cnext Section 16.3 of 
+$code std::vector$$      $cnext Section 16.3 of
 $cref/The C++ Programming Language/Bib/The C++ Programming Language/$$
 $rnext
-$code std::valarray$$    $cnext Section 22.4 of  
+$code std::valarray$$    $cnext Section 22.4 of
 $cref/The C++ Programming Language/Bib/The C++ Programming Language/$$
 $rnext
 $code CppAD::vector$$    $cnext $tref CppAD_vector$$
@@ -53,9 +50,7 @@ The routine $cref CheckSimpleVector$$ can be used to check
 that a class is a simple vector class with a specified element type.
 
 $head Default Constructor$$
-$index default, vector constructor$$
-$index constructor, vector default$$
-The syntax 
+The syntax
 $codei%
 	%SimpleVector%<%Scalar%> %x%;
 %$$
@@ -64,9 +59,7 @@ that can later contain elements of the specified type
 (see $cref/resize/SimpleVector/Resize/$$ below).
 
 $head Sizing Constructor$$
-$index size, vector constructor$$
-$index constructor, size vector$$
-If $icode n$$ has type $code size_t$$, 
+If $icode n$$ has type $code size_t$$,
 $codei%
 	%SimpleVector%<%Scalar%> %x%(%n%)
 %$$
@@ -74,8 +67,6 @@ creates a vector $icode x$$ with $icode n$$ elements
 each of the specified type.
 
 $head Copy Constructor$$
-$index copy, vector constructor$$
-$index constructor, copy vector$$
 If $icode x$$ is a $icode%SimpleVector%<%Scalar%>%$$ object,
 $codei%
 	%SimpleVector%<%Scalar%> %y%(%x%)
@@ -91,22 +82,19 @@ The argument $icode x$$ is passed by reference
 and may be $code const$$.
 
 $head Element Constructor and Destructor$$
-$index constructor, element$$
-$index destructor, element$$
 The default constructor for type $icode Scalar$$ is called
 for every element in a vector when the vector element is created.
 The $icode Scalar$$ destructor is called when it is removed
 from the vector (this includes when the vector is destroyed).
 
 $head Assignment$$
-$index assignment, vector$$
-If $icode x$$ and $icode y$$ are 
+If $icode x$$ and $icode y$$ are
 $icode%SimpleVector%<%Scalar%>%$$ objects,
 $codei%
 	%y% = %x%
 %$$
 uses the $icode Scalar$$ assignment operator ( $code =$$ )
-to set each element of $icode y$$ equal to 
+to set each element of $icode y$$ equal to
 the corresponding element of $icode x$$.
 This is a `deep assignment' in that the values of the elements
 of $icode x$$ and $icode y$$ can be set independently after the assignment.
@@ -125,7 +113,6 @@ $codei%
 would not be valid.
 
 $head Size$$
-$index size, vector$$
 If $icode x$$ is a $icode%SimpleVector%<%Scalar%>%$$ object
 and $code n$$ has type $code size_t$$,
 $codei%
@@ -135,7 +122,6 @@ sets $icode n$$ to the number of elements in the vector $icode x$$.
 The object $icode x$$ may be $code const$$.
 
 $head Resize$$
-$index resize, vector$$
 If $icode x$$ is a $icode%SimpleVector%<%Scalar%>%$$ object
 and $code n$$ has type $code size_t$$,
 $codei%
@@ -149,7 +135,6 @@ any values previously stored in $icode x$$ are lost.
 (The object $icode x$$ can not be $code const$$.)
 
 $head Value Type$$
-$index value_type, vector$$
 If $icode Vector$$ is any simple vector class,
 the syntax
 $codei%
@@ -162,7 +147,6 @@ $codei%
 is equal to $icode Scalar$$.
 
 $head Element Access$$
-$index [], vector$$
 If $icode x$$ is a $icode%SimpleVector%<%Scalar%>%$$ object
 and $icode i$$ has type $code size_t$$,
 $codei%
@@ -206,7 +190,6 @@ It returns true if it succeeds and false otherwise.
 (It is easy to modify to test additional simple vector template classes.)
 
 $head Exercise$$
-$index exercise, simple vector$$
 $list number$$
 If $icode Vector$$ is a simple vector template class,
 the following code may not be valid:
@@ -218,8 +201,7 @@ Create and run a program that executes the code segment
 above where $icode Vector$$ is each of the following cases:
 $code std::vector$$,
 $code CppAD::vector$$.
-$index NDEBUG$$
-Do this both where the compiler option 
+Do this both where the compiler option
 $code -DNDEBUG$$ is and is not present on the compilation command line.
 $lnext
 If $icode Vector$$ is a simple vector template class,
@@ -235,7 +217,7 @@ Create and run a program that executes the code segment
 above where $icode Vector$$ is each of the following cases:
 $code std::valarray$$,
 $code CppAD::vector$$.
-Do this both where the compiler option 
+Do this both where the compiler option
 $code -DNDEBUG$$ is and is not present on the compilation command line.
 $lend
 

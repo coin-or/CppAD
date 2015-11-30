@@ -1,9 +1,9 @@
-/* $Id$ */
+// $Id$
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-14 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-15 Bradley M. Bell
 
 CppAD is distributed under multiple licenses. This distribution is under
-the terms of the 
+the terms of the
                     Eclipse Public License Version 1.0.
 
 A copy of this license is included in the COPYING file of this distribution.
@@ -29,18 +29,14 @@ $spell
 $$
 
 $section Getting Started Using CppAD to Compute Derivatives$$
-$index getting, started$$
-$index started, getting$$
-$index simple, example$$
-$index example, simple$$
-$index start, using CppAD$$
+$mindex simple example start$$
 
 $head Purpose$$
-Demonstrate the use of CppAD by computing the derivative 
+Demonstrate the use of CppAD by computing the derivative
 of a simple example function.
 
 $head Function$$
-The example function $latex f : \B{R} \rightarrow \B{R}$$ is defined by 
+The example function $latex f : \B{R} \rightarrow \B{R}$$ is defined by
 $latex \[
       f(x) = a_0 + a_1 * x^1 + \cdots + a_{k-1} * x^{k-1}
 \] $$
@@ -49,15 +45,15 @@ where $icode a$$ is a fixed vector of length $icode k$$.
 $head Derivative$$
 The derivative of $latex f(x)$$ is given by
 $latex \[
-      f' (x) = a_1 + 2 * a_2 * x +  \cdots + (k-1) * a_{k-1} * x^{k-2} 
+      f' (x) = a_1 + 2 * a_2 * x +  \cdots + (k-1) * a_{k-1} * x^{k-2}
 \] $$
 
 $head Value$$
 For the particular case in this example,
-$latex k$$ is equal to 5, 
-$latex a = (1, 1, 1, 1, 1)$$, and 
+$latex k$$ is equal to 5,
+$latex a = (1, 1, 1, 1, 1)$$, and
 $latex x = 3$$.
-If follows that 
+If follows that
 $latex \[
       f' ( 3 ) = 1 + 2 * 3 + 3 * 3^2 + 4 * 3^3 = 142
 \] $$
@@ -72,7 +68,7 @@ Modify the program below to accomplish the following tasks
 using CppAD:
 $list number$$
 Compute and print the derivative of $latex f(x) = 1 + x + x^2 + x^3 + x^4$$
-at the point $latex x = 2$$. 
+at the point $latex x = 2$$.
 $lnext
 Compute and print the derivative of $latex f(x) = 1 + x + x^2 / 2$$
 at the point $latex x = .5$$.
@@ -84,11 +80,11 @@ $lend
 
 $head Program$$
 $codep */
-#include <iostream>      // standard input/output 
+#include <iostream>      // standard input/output
 #include <vector>        // standard vector
 #include <cppad/cppad.hpp> // the CppAD package http://www.coin-or.org/CppAD/
 
-namespace { 
+namespace {
       // define y(x) = Poly(a, x) in the empty namespace
       template <class Type>
       Type Poly(const std::vector<double> &a, const Type &x)

@@ -1,12 +1,12 @@
-/* $Id$ */
-# ifndef CPPAD_ODE_SIMPLE_INCLUDED
-# define CPPAD_ODE_SIMPLE_INCLUDED
+// $Id$
+# ifndef CPPAD_ODE_SIMPLE_HPP
+# define CPPAD_ODE_SIMPLE_HPP
 
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-12 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-15 Bradley M. Bell
 
 CppAD is distributed under multiple licenses. This distribution is under
-the terms of the 
+the terms of the
                     Eclipse Public License Version 1.0.
 
 A copy of this license is included in the COPYING file of this distribution.
@@ -22,11 +22,8 @@ $spell
 $$
 
 $section ODE Fitting Using Simple Representation$$
+$mindex cppad_ipopt_nlp example source$$
 
-$index cppad_ipopt_nlp, ode example source$$
-$index ode, cppad_ipopt_nlp example source$$
-$index example, cppad_ipopt_nlp ode source$$
-$index source, cppad_ipopt_nlp ode example$$
 
 $code
 $verbatim%cppad_ipopt/example/ode_simple.hpp%0%// BEGIN C++%// END C++%1%$$
@@ -103,7 +100,7 @@ namespace {
 				Number dt = T / Number( N_[k+1] );
 				for(j = 0; j < N_[k+1]; j++)
 				{	size_t Index = (j + S_[k]) * Ny;
-				 	// y(t) at end of last step
+					// y(t) at end of last step
 					ym = y;
 					// G(y, a) at end of last step
 					Gm = G;

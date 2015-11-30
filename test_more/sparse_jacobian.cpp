@@ -1,9 +1,9 @@
-/* $Id$ */
+// $Id$
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-14 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-15 Bradley M. Bell
 
 CppAD is distributed under multiple licenses. This distribution is under
-the terms of the 
+the terms of the
                     Eclipse Public License Version 1.0.
 
 A copy of this license is included in the COPYING file of this distribution.
@@ -77,12 +77,12 @@ bool rc_tridiagonal(void)
 	for(i = 0; i < n; i++)
 	{	r[k] = i;
 		c[k] = i;
-		k++;	
+		k++;
 		if( i < n-1 )
 		{	r[k] = i;
 			c[k] = i+1;
 			k++;
-		} 
+		}
 	}
 	ok &= K == k;
 
@@ -90,21 +90,21 @@ bool rc_tridiagonal(void)
 	size_t n_sweep = f.SparseJacobianForward(x, p, r, c, jac, work);
 	ok &= n_sweep == 3;
 	for(k = 0; k < K; k++)
-	{ 	ell = r[k] * n + c[k];
+	{	ell = r[k] * n + c[k];
 		ok &=  NearEqual(check[ell], jac[k], eps, eps);
 	}
 	work.clear();
 	n_sweep = f.SparseJacobianReverse(x, p, r, c, jac, work);
 	ok &= n_sweep == 3;
 	for(k = 0; k < K; k++)
-	{ 	ell = r[k] * n + c[k];
+	{	ell = r[k] * n + c[k];
 		ok &=  NearEqual(check[ell], jac[k], eps, eps);
 	}
 
 	return ok;
 }
 
-template <class VectorBase, class VectorSet> 
+template <class VectorBase, class VectorSet>
 bool rc_set(void)
 {	bool ok = true;
 	using CppAD::AD;
@@ -135,7 +135,7 @@ bool rc_set(void)
 	for(j = 0; j < n; j++)
 		x[j] = double(j);
 
-	// Jacobian of y 
+	// Jacobian of y
 	/*
 	      [ 1 2 0 0    ]
 	jac = [ 0 0 3 4    ]
@@ -152,7 +152,7 @@ bool rc_set(void)
 		s[i].insert(i);
 	p   = f.RevSparseJac(m, s);
 
-	// Use forward mode to compute columns 0 and 2 
+	// Use forward mode to compute columns 0 and 2
 	// (make sure order of rows and columns does not matter)
 	CPPAD_TESTVECTOR(size_t) r(3), c(3);
 	VectorBase jac(3);
@@ -162,12 +162,12 @@ bool rc_set(void)
 	CppAD::sparse_jacobian_work work;
 	size_t n_sweep = f.SparseJacobianForward(x, p, r, c, jac, work);
 	for(k = 0; k < 3; k++)
-	{ 	ell = r[k] * n + c[k];
+	{	ell = r[k] * n + c[k];
 		ok &=  NearEqual(check[ell], jac[k], eps, eps);
 	}
 	ok &= (n_sweep == 1);
 
-	// Use reverse mode to compute rows 0 and 1 
+	// Use reverse mode to compute rows 0 and 1
 	// (make sure order of rows and columns does not matter)
 	r.resize(4), c.resize(4); jac.resize(4);
 	r[0] = 0; c[0] = 0;
@@ -177,14 +177,14 @@ bool rc_set(void)
 	work.clear();
 	n_sweep = f.SparseJacobianReverse(x, p, r, c, jac, work);
 	for(k = 0; k < 4; k++)
-	{ 	ell = r[k] * n + c[k];
+	{	ell = r[k] * n + c[k];
 		ok &=  NearEqual(check[ell], jac[k], eps, eps);
 	}
 	ok &= (n_sweep == 1);
 
 	return ok;
 }
-template <class VectorBase, class VectorBool> 
+template <class VectorBase, class VectorBool>
 bool rc_bool(void)
 {	bool ok = true;
 	using CppAD::AD;
@@ -215,7 +215,7 @@ bool rc_bool(void)
 	for(j = 0; j < n; j++)
 		x[j] = double(j);
 
-	// Jacobian of y 
+	// Jacobian of y
 	/*
 	      [ 1 2 0 0    ]
 	jac = [ 0 0 3 4    ]
@@ -230,7 +230,7 @@ bool rc_bool(void)
 	s[4] = false;  s[5] = false;  s[6] = true;    s[7] = true;
 	s[8] = true;   s[9] = true;  s[10] = false;  s[11] = true;
 
-	// Use forward mode to compute columns 0 and 2 
+	// Use forward mode to compute columns 0 and 2
 	// (make sure order of rows and columns does not matter)
 	CPPAD_TESTVECTOR(size_t) r(3), c(3);
 	VectorBase jac(3);
@@ -240,12 +240,12 @@ bool rc_bool(void)
 	CppAD::sparse_jacobian_work work;
 	size_t n_sweep = f.SparseJacobianForward(x, s, r, c, jac, work);
 	for(k = 0; k < 3; k++)
-	{ 	ell = r[k] * n + c[k];
+	{	ell = r[k] * n + c[k];
 		ok &=  NearEqual(check[ell], jac[k], eps, eps);
 	}
 	ok &= (n_sweep == 1);
 
-	// Use reverse mode to compute rows 0 and 1 
+	// Use reverse mode to compute rows 0 and 1
 	// (make sure order of rows and columns does not matter)
 	r.resize(4), c.resize(4); jac.resize(4);
 	r[0] = 0; c[0] = 0;
@@ -255,7 +255,7 @@ bool rc_bool(void)
 	work.clear();
 	n_sweep = f.SparseJacobianReverse(x, s, r, c, jac, work);
 	for(k = 0; k < 4; k++)
-	{ 	ell = r[k] * n + c[k];
+	{	ell = r[k] * n + c[k];
 		ok &=  NearEqual(check[ell], jac[k], eps, eps);
 	}
 	ok &= (n_sweep == 1);
@@ -264,7 +264,7 @@ bool rc_bool(void)
 }
 
 
-template <class VectorBase, class VectorBool> 
+template <class VectorBase, class VectorBool>
 bool reverse_bool(void)
 {	bool ok = true;
 	using CppAD::AD;
@@ -325,7 +325,7 @@ bool reverse_bool(void)
 	return ok;
 }
 
-template <class VectorBase, class VectorSet> 
+template <class VectorBase, class VectorSet>
 bool reverse_set(void)
 {	bool ok = true;
 	using CppAD::AD;
@@ -382,7 +382,7 @@ bool reverse_set(void)
 	return ok;
 }
 
-template <class VectorBase, class VectorBool> 
+template <class VectorBase, class VectorBool>
 bool forward_bool(void)
 {	bool ok = true;
 	using CppAD::AD;
@@ -423,9 +423,9 @@ bool forward_bool(void)
 	      [ 0 1 x_2 ]
 	*/
 	VectorBase check(m * n);
-	check[0] = 1.; check[1]  = 0.; check[2]  = 1.; 
+	check[0] = 1.; check[1]  = 0.; check[2]  = 1.;
 	check[3] = 1.; check[4]  = 0.; check[5]  = 1.;
-	check[6] = 0.; check[7]  = 1.; check[8]  = 1.; 
+	check[6] = 0.; check[7]  = 1.; check[8]  = 1.;
 	check[9] = 0.; check[10] = 1.; check[11] = x[2];
 	for(k = 0; k < 12; k++)
 		ok &=  NearEqual(check[k], jac[k], 1e-10, 1e-10 );
@@ -446,7 +446,7 @@ bool forward_bool(void)
 	return ok;
 }
 
-template <class VectorBase, class VectorSet> 
+template <class VectorBase, class VectorSet>
 bool forward_set(void)
 {	bool ok = true;
 	using CppAD::AD;
@@ -487,9 +487,9 @@ bool forward_set(void)
 	      [ 0 1 x_2 ]
 	*/
 	VectorBase check(m * n);
-	check[0] = 1.; check[1]  = 0.; check[2]  = 1.; 
+	check[0] = 1.; check[1]  = 0.; check[2]  = 1.;
 	check[3] = 1.; check[4]  = 0.; check[5]  = 1.;
-	check[6] = 0.; check[7]  = 1.; check[8]  = 1.; 
+	check[6] = 0.; check[7]  = 1.; check[8]  = 1.;
 	check[9] = 0.; check[10] = 1.; check[11] = x[2];
 	for(k = 0; k < 12; k++)
 		ok &=  NearEqual(check[k], jac[k], 1e-10, 1e-10 );
@@ -512,7 +512,7 @@ bool multiple_of_n_bit(void)
 	using CppAD::vector;
 	size_t i, j;
 
-	// should be the same as the corresponding typedef in 
+	// should be the same as the corresponding typedef in
 	// cppad/local/sparse_pack.hpp
 	typedef size_t Pack;
 
@@ -549,7 +549,7 @@ bool multiple_of_n_bit(void)
 
 	return ok;
 }
-} // End empty namespace 
+} // End empty namespace
 # include <vector>
 # include <valarray>
 bool sparse_jacobian(void)

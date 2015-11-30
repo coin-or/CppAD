@@ -1,9 +1,9 @@
-/* $Id$ */
+// $Id$
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-08 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-15 Bradley M. Bell
 
 CppAD is distributed under multiple licenses. This distribution is under
-the terms of the 
+the terms of the
                     Eclipse Public License Version 1.0.
 
 A copy of this license is included in the COPYING file of this distribution.
@@ -26,11 +26,9 @@ $spell
 	cpp
 $$
 
-$index SpeedTest, example$$
-$index example, SpeedTest$$
-$index test, speed$$
 
 $section Example Use of SpeedTest$$
+$mindex test speed$$
 
 $head Running This Program$$
 On a Unix system that includes the $code g++$$ compiler,
@@ -43,7 +41,7 @@ $$
 
 $head Program$$
 $codep */
-# include <cppad/speed_test.hpp>
+# include <cppad/utility/speed_test.hpp>
 
 std::string Test(size_t size, size_t repeat)
 {	// setup
@@ -81,7 +79,7 @@ int main(void)
 /* $$
 
 $head Output$$
-Executing of the program above generated the following output 
+Executing of the program above generated the following output
 (the rates will be different for each particular system):
 $codep
 	double: c[*] = a[*] + b[*]

@@ -1,9 +1,9 @@
-/* $Id$ */
+// $Id$
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-14 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-15 Bradley M. Bell
 
 CppAD is distributed under multiple licenses. This distribution is under
-the terms of the 
+the terms of the
                     Eclipse Public License Version 1.0.
 
 A copy of this license is included in the COPYING file of this distribution.
@@ -36,7 +36,7 @@ namespace cppad_ipopt {
 */
 
 
-/*! 
+/*!
 Constructor for the \ref Nonlinear_Programming_Problem.
 
 \param n
@@ -60,8 +60,8 @@ lower limit for g(x) (size m).
 \param g_u
 upper limit for g(x) (size m).
 
-\param fg_info 
-pointer to base class version of derived class object used to get 
+\param fg_info
+pointer to base class version of derived class object used to get
 information about the user's representation for f(x) and g(x).
 (The object pointed to must not be deleted before this cppad_ipopt_nlp object).
 
@@ -81,16 +81,16 @@ not be changed:
 \endverbatim
 In addition, the function calls <tt>fg_info->set_n(n)</tt>
 and <tt>fg_info->set_m(m)</tt> are used to set the values of \c n
-and \c m in \c fg_info. 
+and \c m in \c fg_info.
 
 \par Variables
 The following arrays have fixed size which is set during this constructor:
 
 \li \c tape_ok_ has size \c K_. It is initialized as true for indices
-\c k such that <tt>retape[k]</tt> is false.  
+\c k such that <tt>retape[k]</tt> is false.
 
 \li \c r_fun_ has size \c K_. It is initilaize with the default
-\c ADFun constructor. Then, for indices \c k such that 
+\c ADFun constructor. Then, for indices \c k such that
 <tt>retape[k]</tt> is false, the operation sequence corresponding
 to \f$ r_k (u) \f$ is stored in <tt>r_fun_[k]</tt>.
 
@@ -107,7 +107,7 @@ certain of the assumptions about the function calls of the form
 are checked to make sure they hold.
 */
 cppad_ipopt_nlp::cppad_ipopt_nlp(
-	size_t n                         , 
+	size_t n                         ,
 	size_t m                         ,
 	const NumberVector    &x_i       ,
 	const NumberVector    &x_l       ,
@@ -165,16 +165,16 @@ cppad_ipopt_nlp::cppad_ipopt_nlp(
 			I_[i] = m+1; // an invalid range index
 		for( j = 0; j < q_[k]; j++)
 			J_[j] = n; // an invalid domain index
-		fg_info_->index(k, ell, I_, J_);	
+		fg_info_->index(k, ell, I_, J_);
 		for( i = 0; i < p_[k]; i++) if( I_[i] > m )
-		{	std::cerr << "k=" << k << ", ell=" << ell 
+		{	std::cerr << "k=" << k << ", ell=" << ell
 			<< ", I[" << i << "]=" << I_[i] << std::endl;
-		 	CPPAD_ASSERT_KNOWN( I_[i] <= m,
+			CPPAD_ASSERT_KNOWN( I_[i] <= m,
 			"cppad_ipopt_nlp: invalid value in index vector I"
 			);
 		}
 		for( j = 0; j < q_[k]; j++) if( J_[j] >= n )
-		{	std::cerr << "k=" << k << ", ell=" << ell 
+		{	std::cerr << "k=" << k << ", ell=" << ell
 			<< ", J[" << j << "]=" << J_[j] << std::endl;
 			CPPAD_ASSERT_KNOWN( J_[j] < n,
 			"cppad_ipopt_nlp: invalid value in index vector J"
@@ -186,7 +186,7 @@ cppad_ipopt_nlp::cppad_ipopt_nlp(
 	for(k = 0; k < K_; k++)
 	{	tape_ok_[k] = false;
 		if( ! retape_[k] )
-		{	// Operation sequence does not depend on value 
+		{	// Operation sequence does not depend on value
 			// of u so record it once here in the constructor.
 			fg_info_->index(k, 0, I_, J_);
 			fun_record(
@@ -208,7 +208,7 @@ cppad_ipopt_nlp::cppad_ipopt_nlp(
 
 	// compute a sparsity patterns for each r_k (u)
 	vec_fun_pattern(
-		K_, p_, q_, retape_, r_fun_,      // inputs 
+		K_, p_, q_, retape_, r_fun_,      // inputs
 		pattern_jac_r_, pattern_hes_r_    // outputs
 	);
 
@@ -225,8 +225,8 @@ cppad_ipopt_nlp::cppad_ipopt_nlp(
 		I_, J_,                                             // work
 		index_hes_fg_                                       // outputs
 	);
-	
-	// Compute Ipopt sparsity structure for Jacobian of g 
+
+	// Compute Ipopt sparsity structure for Jacobian of g
 	sparse_map2vec(
 		index_jac_g_,                         // inputs
 		nnz_jac_g_, iRow_jac_g_, jCol_jac_g_  // outputs
@@ -270,7 +270,7 @@ bool cppad_ipopt_nlp::get_nlp_info(Index& n, Index& m, Index& nnz_jac_g,
 	nnz_jac_g = nnz_jac_g_;
 	nnz_h_lag = nnz_h_lag_;
 
-  	// use the fortran index style for row/col entries
+	// use the fortran index style for row/col entries
 	index_style = C_STYLE;
 
 	return true;
@@ -312,7 +312,7 @@ On output, it is a copy of the upper bound for \f$ g(x) \f$; i.e, \c g_u_.
 bool cppad_ipopt_nlp::get_bounds_info(Index n, Number* x_l, Number* x_u,
                             Index m, Number* g_l, Number* g_u)
 {	size_t i, j;
-	// here, the n and m we gave IPOPT in get_nlp_info are passed back 
+	// here, the n and m we gave IPOPT in get_nlp_info are passed back
 	CPPAD_ASSERT_UNKNOWN(size_t(n) == n_);
 	CPPAD_ASSERT_UNKNOWN(size_t(m) == m_);
 
@@ -325,7 +325,7 @@ bool cppad_ipopt_nlp::get_bounds_info(Index n, Number* x_l, Number* x_u,
 	{	g_l[i] = g_l_[i];
 		g_u[i] = g_u_[i];
 	}
-	
+
 	return true;
 }
 
@@ -392,7 +392,7 @@ is a vector of size \c n containing the point at which to evaluate
 the function f(x).
 
 \param[in] new_x
-is false if the previous call to any one of the 
+is false if the previous call to any one of the
 \ref Deprecated_Evaluation_Methods used the same value for \c x.
 
 \param[out] obj_value
@@ -402,9 +402,9 @@ is the value of the objective f(x) at this value of \c x.
 The return value is always true; see \ref Deprecated_Evaluation_Methods.
 
 \par Efficiency
-This routine could be more efficient 
+This routine could be more efficient
 (for certain when when L[k] > 1 and retape[k] is true)
-if the users also provided a version 
+if the users also provided a version
 of the function <tt>fg_info->eval_r(k, u)</tt> where \c u was of type
 \c NumberVector.
 */
@@ -420,7 +420,7 @@ bool cppad_ipopt_nlp::eval_f(
 	obj_value = 0.;
 
 	// update tape_ok_ flag
-	for(k = 0; k < K_; k++) 
+	for(k = 0; k < K_; k++)
 	{	if( retape_[k] && (new_x || L_[k] > 1) )
 			tape_ok_[k] = false;
 	}
@@ -478,13 +478,13 @@ has a vector of size \c n containing the point at which to evaluate
 the gradient of f(x).
 
 \param[in] new_x
-is false if the previous call to any one of the 
+is false if the previous call to any one of the
 \ref Deprecated_Evaluation_Methods used the same value for \c x.
 
 \param[out] grad_f
 is a vector of size \c n.
 The input value of its elements does not matter.
-The output value of its elements is the gradient of f(x) 
+The output value of its elements is the gradient of f(x)
 at this value of.
 
 \return
@@ -502,7 +502,7 @@ bool cppad_ipopt_nlp::eval_grad_f(
 		grad_f[j] = 0.;
 
 	// update tape_ok_ flag
-	for(k = 0; k < K_; k++) 
+	for(k = 0; k < K_; k++)
 	{	if( retape_[k] && (new_x || L_[k] > 1) )
 			tape_ok_[k] = false;
 	}
@@ -571,7 +571,7 @@ has a vector of size \c n containing the point at which to evaluate
 the constraint function g(x).
 
 \param[in] new_x
-is false if the previous call to any one of the 
+is false if the previous call to any one of the
 \ref Deprecated_Evaluation_Methods used the same value for \c x.
 
 \param[in] m
@@ -580,7 +580,7 @@ is the dimension of the range space for g(x); i.e., must be equal to \c m_.
 \param[out] g
 is a vector of size \c m.
 The input value of its elements does not matter.
-The output value of its elements is 
+The output value of its elements is
 the value of the function g(x) at this value of \c x.
 
 \return
@@ -598,7 +598,7 @@ bool cppad_ipopt_nlp::eval_g(
 		g[i] = 0.;
 
 	// update tape_ok_ flag
-	for(k = 0; k < K_; k++) 
+	for(k = 0; k < K_; k++)
 	{	if( retape_[k] && (new_x || L_[k] > 1) )
 			tape_ok_[k] = false;
 	}
@@ -660,7 +660,7 @@ if \c values is not \c NULL,
 the gradient of g(x).
 
 \param[in] new_x
-is false if the previous call to any one of the 
+is false if the previous call to any one of the
 \ref Deprecated_Evaluation_Methods used the same value for \c x.
 
 \param[in] m
@@ -675,9 +675,9 @@ if \c values is not \c NULL, \c iRow is not defined.
 if \c values is \c NULL, \c iRow
 is a vector with size \c nele_jac.
 The input value of its elements does not matter.
-On output, 
-For <tt>k = 0 , ... , nele_jac-1, iRow[k]</tt> is the 
-base zero row index for the 
+On output,
+For <tt>k = 0 , ... , nele_jac-1, iRow[k]</tt> is the
+base zero row index for the
 k-th possibly non-zero entry in the Jacobian of g(x).
 
 \param jCol
@@ -685,18 +685,18 @@ if \c values is not \c NULL, \c jCol is not defined.
 if \c values is \c NULL, \c jCol
 is a vector with size \c nele_jac.
 The input value of its elements does not matter.
-On output, 
-For <tt>k = 0 , ... , nele_jac-1, jCol[k]</tt> is the 
-base zero column index for the 
+On output,
+For <tt>k = 0 , ... , nele_jac-1, jCol[k]</tt> is the
+base zero column index for the
 k-th possibly non-zero entry in the Jacobian of g(x).
 
 \param values
 if \c values is not \c NULL, \c values
 is a vector with size \c nele_jac.
 The input value of its elements does not matter.
-On output, 
-For <tt>k = 0 , ... , nele_jac-1, values[k]</tt> is the 
-value for the 
+On output,
+For <tt>k = 0 , ... , nele_jac-1, values[k]</tt> is the
+value for the
 k-th possibly non-zero entry in the Jacobian of g(x).
 
 \return
@@ -713,7 +713,7 @@ bool cppad_ipopt_nlp::eval_jac_g(Index n, const Number* x, bool new_x,
 	std::map<size_t,size_t>::iterator index_ij;
 
 
-	if (values == NULL) 
+	if (values == NULL)
 	{	for(k = 0; k < nnz_jac_g_; k++)
 		{	iRow[k] = iRow_jac_g_[k];
 			jCol[k] = jCol_jac_g_[k];
@@ -727,7 +727,7 @@ bool cppad_ipopt_nlp::eval_jac_g(Index n, const Number* x, bool new_x,
 		values[l] = 0.;
 
 	// update tape_ok_ flag
-	for(k = 0; k < K_; k++) 
+	for(k = 0; k < K_; k++)
 	{	if( retape_[k] && (new_x || L_[k] > 1) )
 			tape_ok_[k] = false;
 	}
@@ -779,7 +779,7 @@ bool cppad_ipopt_nlp::eval_jac_g(Index n, const Number* x, bool new_x,
 	);
 # endif
 
-  	return true;
+	return true;
 }
 
 /*!
@@ -788,7 +788,7 @@ Evaluate the Hessian of the Lagragian
 \section Deprecated_Hessian_of_the_Lagragian The Hessian of the Lagragian
 The Hessian of the Lagragian is defined as
 \f[
-H(x, \sigma, \lambda ) 
+H(x, \sigma, \lambda )
 =
 \sigma \nabla^2 f(x) + \sum_{i=0}^{m-1} \lambda_i \nabla^2 g(x)_i
 \f]
@@ -802,7 +802,7 @@ is a vector of size \c n containing the point at which to evaluate
 the Hessian of the Lagrangian.
 
 \param[in] new_x
-is false if the previous call to any one of the 
+is false if the previous call to any one of the
 \ref Deprecated_Evaluation_Methods used the same value for \c x.
 
 \param[in] obj_factor
@@ -831,9 +831,9 @@ if \c values is not \c NULL, \c iRow is not defined.
 if \c values is \c NULL, \c iRow
 is a vector with size \c nele_jac.
 The input value of its elements does not matter.
-On output, 
-For <tt>k = 0 , ... , nele_jac-1, iRow[k]</tt> is the 
-base zero row index for the 
+On output,
+For <tt>k = 0 , ... , nele_jac-1, iRow[k]</tt> is the
+base zero row index for the
 k-th possibly non-zero entry in the Hessian of the Lagragian.
 
 \param jCol
@@ -841,18 +841,18 @@ if \c values is not \c NULL, \c jCol is not defined.
 if \c values is \c NULL, \c jCol
 is a vector with size \c nele_jac.
 The input value of its elements does not matter.
-On output, 
-For <tt>k = 0 , ... , nele_jac-1, jCol[k]</tt> is the 
-base zero column index for the 
+On output,
+For <tt>k = 0 , ... , nele_jac-1, jCol[k]</tt> is the
+base zero column index for the
 k-th possibly non-zero entry in the Hessian of the Lagragian.
 
 \param values
 if \c values is not \c NULL, it
 is a vector with size \c nele_jac.
 The input value of its elements does not matter.
-On output, 
-For <tt>k = 0 , ... , nele_jac-1, values[k]</tt> is the 
-value for the 
+On output,
+For <tt>k = 0 , ... , nele_jac-1, values[k]</tt> is the
+value for the
 k-th possibly non-zero entry in the Hessian of the Lagragian.
 
 \return
@@ -868,7 +868,7 @@ bool cppad_ipopt_nlp::eval_h(Index n, const Number* x, bool new_x,
 	size_t i, j, k, ell, l;
 	std::map<size_t,size_t>::iterator index_ij;
 
-	if (values == NULL) 
+	if (values == NULL)
 	{	for(k = 0; k < nnz_h_lag_; k++)
 		{	iRow[k] = iRow_h_lag_[k];
 			jCol[k] = jCol_h_lag_[k];
@@ -882,7 +882,7 @@ bool cppad_ipopt_nlp::eval_h(Index n, const Number* x, bool new_x,
 		values[l] = 0.;
 
 	// update tape_ok_ flag
-	for(k = 0; k < K_; k++) 
+	for(k = 0; k < K_; k++)
 	{	if( retape_[k] && (new_x || L_[k] > 1) )
 			tape_ok_[k] = false;
 	}
@@ -929,8 +929,8 @@ bool cppad_ipopt_nlp::eval_h(Index n, const Number* x, bool new_x,
 			else	r_hes = r_fun_[k].SparseHessian(
 					u, w, pattern_hes_r_[k]
 			);
-			for(i = 0; i < q_[k]; i++) for(j = 0; j < q_[k]; j++) 
-			if( J_[j] <= J_[i] ) 
+			for(i = 0; i < q_[k]; i++) for(j = 0; j < q_[k]; j++)
+			if( J_[j] <= J_[i] )
 			{	index_ij = index_hes_fg_[J_[i]].find(J_[j]);
 				if( index_ij != index_hes_fg_[J_[i]].end() )
 				{	l          = index_ij->second;
@@ -957,7 +957,7 @@ Pass solution information from Ipopt to users solution structure.
 
 \param[in] status
 is value that the Ipopt solution status
-which gets mapped to a correponding value for 
+which gets mapped to a correponding value for
 \n
 <tt>solution_->status</tt>.
 
@@ -1021,12 +1021,12 @@ is used to set output values (see documentation above).
 */
 void cppad_ipopt_nlp::finalize_solution(
 	Ipopt::SolverReturn               status    ,
-	Index                             n         , 
-	const Number*                     x         , 
-	const Number*                     z_L       , 
+	Index                             n         ,
+	const Number*                     x         ,
+	const Number*                     z_L       ,
 	const Number*                     z_U       ,
-	Index                             m         , 
-	const Number*                     g         , 
+	Index                             m         ,
+	const Number*                     g         ,
 	const Number*                     lambda    ,
 	Number                            obj_value ,
 	const Ipopt::IpoptData*           ip_data   ,
@@ -1040,62 +1040,62 @@ void cppad_ipopt_nlp::finalize_solution(
 	switch(status)
 	{	// convert status from Ipopt enum to cppad_ipopt_solution enum
 		case Ipopt::SUCCESS:
-		solution_->status = 
+		solution_->status =
 			cppad_ipopt_solution::success;
 		break;
 
 		case Ipopt::MAXITER_EXCEEDED:
-		solution_->status = 
+		solution_->status =
 			cppad_ipopt_solution::maxiter_exceeded;
 		break;
 
 		case Ipopt::STOP_AT_TINY_STEP:
-		solution_->status = 
+		solution_->status =
 			cppad_ipopt_solution::stop_at_tiny_step;
 		break;
 
 		case Ipopt::STOP_AT_ACCEPTABLE_POINT:
-		solution_->status = 
+		solution_->status =
 			cppad_ipopt_solution::stop_at_acceptable_point;
 		break;
 
 		case Ipopt::LOCAL_INFEASIBILITY:
-		solution_->status = 
+		solution_->status =
 			cppad_ipopt_solution::local_infeasibility;
 		break;
 
 		case Ipopt::USER_REQUESTED_STOP:
-		solution_->status = 
+		solution_->status =
 			cppad_ipopt_solution::user_requested_stop;
 		break;
 
 		case Ipopt::DIVERGING_ITERATES:
-		solution_->status = 
+		solution_->status =
 			cppad_ipopt_solution::diverging_iterates;
 		break;
 
 		case Ipopt::RESTORATION_FAILURE:
-		solution_->status = 
+		solution_->status =
 			cppad_ipopt_solution::restoration_failure;
 		break;
 
 		case Ipopt::ERROR_IN_STEP_COMPUTATION:
-		solution_->status = 
+		solution_->status =
 			cppad_ipopt_solution::error_in_step_computation;
 		break;
 
 		case Ipopt::INVALID_NUMBER_DETECTED:
-		solution_->status = 
+		solution_->status =
 			cppad_ipopt_solution::invalid_number_detected;
 		break;
 
 		case Ipopt::INTERNAL_ERROR:
-		solution_->status = 
+		solution_->status =
 			cppad_ipopt_solution::internal_error;
 		break;
 
 		default:
-		solution_->status = 
+		solution_->status =
 			cppad_ipopt_solution::unknown;
 	}
 
@@ -1121,14 +1121,14 @@ void cppad_ipopt_nlp::finalize_solution(
 // (trying to figure out a problem with Ipopt-3.9.1 and dismod4).
 bool cppad_ipopt_nlp::intermediate_callback(
 	Ipopt::AlgorithmMode              mode,
-	Index                             iter, 
+	Index                             iter,
 	Number                            obj_value,
-	Number                            inf_pr, 
+	Number                            inf_pr,
 	Number                            inf_du,
-	Number                            mu, 
+	Number                            mu,
 	Number                            d_norm,
 	Number                            regularization_size,
-	Number                            alpha_du, 
+	Number                            alpha_du,
 	Number                            alpha_pr,
 	Index                             ls_trials,
 	const Ipopt::IpoptData*           ip_data,

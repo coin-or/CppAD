@@ -1,4 +1,4 @@
-/* $Id$ */
+// $Id$
 /* --------------------------------------------------------------------------
 CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-15 Bradley M. Bell
 
@@ -25,8 +25,7 @@ $spell
 $$
 
 $section Including the ColPack Sparsity Calculations$$
-$index colpack, sparsity$$
-$index sparsity, colpack$$
+$mindex prefix get$$
 
 $head Purpose$$
 If you specify a $icode colpack_prefix$$ on the
@@ -35,8 +34,6 @@ the CppAD $cref sparse_jacobian$$ calculations use the
 $href%http://cscapes.cs.purdue.edu/dox/ColPack/html%ColPack%$$ package.
 
 $head colpack_prefix$$
-$index colpack, prefix$$
-$index prefix, colpack$$
 If ColPack is installed on your system, you can
 specify a value for its install $icode colpack_prefix$$ on the
 $cref cmake$$ command line.
@@ -69,8 +66,6 @@ sparse Jacobians (Hessians).
 It returns true, if it succeeds and false otherwise.
 
 $head get_colpack$$
-$index get, colpack$$
-$index colpack, get$$
 If you are using Unix, you can download and install
 a copy of ColPack using $cref get_colpack.sh$$.
 The corresponding $icode colpack_prefix$$ would be

@@ -24,11 +24,9 @@ $spell
 $$
 
 $section Base Type Requirements for Identically Equal Comparisons$$
+$mindex require$$
 
 $head EqualOpSeq$$
-$index EqualOpSeq, base require$$
-$index base, EqualOpSeq require$$
-$index require, base EqualOpSeq$$
 If function $cref EqualOpSeq$$ is used with
 arguments of type $codei%AD<%Base%>%$$,
 the type $icode Base$$ must support the syntax
@@ -75,9 +73,6 @@ For example, see
 $cref/adolc EqualOpSeq/base_adolc.hpp/EqualOpSeq/$$.
 
 $head Identical$$
-$index identical, base require$$
-$index base, identical require$$
-$index require, base identical$$
 
 $subhead IdenticalPar$$
 A $icode Base$$ is a $cref/parameter/glossary/Parameter/$$
@@ -126,8 +121,8 @@ $icode%b% = IdenticalOne(%u%)%$$ $pre  $$
 $rnext
 $icode%b% = IdenticalEqualPar(%u%, %v%)%$$ $pre  $$
 	$cnext $icode u$$ equals $icode v$$,
- 	$codei%IdenticalPar(%u%)%$$ and
- 	$codei%IdenticalPar(%v%)%$$
+	$codei%IdenticalPar(%u%)%$$ and
+	$codei%IdenticalPar(%v%)%$$
 $tend
 
 $subhead Examples$$

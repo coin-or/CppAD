@@ -1,9 +1,9 @@
 $Id$
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-12 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-15 Bradley M. Bell
 
 CppAD is distributed under multiple licenses. This distribution is under
-the terms of the 
+the terms of the
                     Eclipse Public License Version 1.0.
 
 A copy of this license is included in the COPYING file of this distribution.
@@ -26,6 +26,7 @@ $spell
 $$
 
 $section Glossary$$
+$mindex efficient$$
 
 
 
@@ -34,36 +35,34 @@ Given an $cref ADFun$$ object $icode f$$
 there is a corresponding
 AD of $icode Base$$ $cref/operation sequence/glossary/Operation/Sequence/$$.
 This operation sequence
-defines a function 
+defines a function
 $latex F : B^n \rightarrow B^m $$
 where $icode B$$ is the space corresponding to objects of type $icode Base$$,
 $icode n$$ is the size of the $cref/domain/seq_property/Domain/$$ space, and
 $icode m$$ is the size of the $cref/range/seq_property/Range/$$ space.
-We refer to $latex F$$ as the AD function corresponding to 
+We refer to $latex F$$ as the AD function corresponding to
 the operation sequence stored in the object $icode f$$.
 (See the $cref/FunCheck discussion/FunCheck/Discussion/$$ for
 possible differences between $latex F(x)$$ and the algorithm that defined
 the operation sequence.)
 
 $head AD of Base$$
-An object is called an AD of $icode Base$$ object its type is 
-either $codei%AD<%Base%>%$$ 
-(see the default and copy $cref/constructors/ad_ctor/$$ 
+An object is called an AD of $icode Base$$ object its type is
+either $codei%AD<%Base%>%$$
+(see the default and copy $cref/constructors/ad_ctor/$$
 or $codei%VecAD<%Base%>::reference%$$ (see $cref VecAD$$)
 for some $icode Base$$ type.
 
 $head AD Levels Above Base$$
-$index level, AD$$
-$index AD, level$$
-If $icode Base$$ is a type, 
-the AD levels above $icode Base$$ 
+If $icode Base$$ is a type,
+the AD levels above $icode Base$$
 is the following sequence of types:
 $codei%
 	AD<%Base%> %,% AD< AD<%Base%> > %,% AD< AD< AD<%Base%> > > %,% %...%
 %$$
 
 $head Base Function$$
-A function $latex f : B \rightarrow B$$ 
+A function $latex f : B \rightarrow B$$
 is referred to as a $icode Base$$ function,
 if $icode Base$$ is a C++ type that represent elements of
 the domain and range space of $icode f$$; i.e. elements of $latex B$$.
@@ -90,7 +89,7 @@ has a $icode Type$$ result and is not made up of other
 more basic operations.
 
 $subhead Sequence$$
-A sequence of atomic $icode Type$$ operations 
+A sequence of atomic $icode Type$$ operations
 is called a $icode Type$$ operation sequence.
 A sequence of atomic $cref/AD of Base/glossary/AD of Base/$$ operations
 is referred to as an AD of $icode Base$$ operation sequence.
@@ -99,7 +98,7 @@ when it is not necessary to specify the base type.
 
 $subhead Dependent$$
 Suppose that $icode x$$ and $icode y$$ are $icode Type$$ objects and
-the result of 
+the result of
 $codei%
 	%x% < %y%
 %$$
@@ -108,7 +107,7 @@ If one executes the following code
 $codei%
 	if( %x% < %y% )
 		%y% = cos(%x%);
-	else	%y% = sin(%x%); 
+	else	%y% = sin(%x%);
 %$$
 the choice above depends on the value of $icode x$$ and $icode y$$
 and the two choices result in a different $icode Type$$ operation sequence.
@@ -126,32 +125,29 @@ $codei%
 		%y% += %x%[%i%];
 %$$
 does not depend on the value of $icode x$$ or $icode y$$.
-In this case, we say that the $icode Type$$ operation sequence 
+In this case, we say that the $icode Type$$ operation sequence
 is independent of $icode y$$ and the elements of $icode x$$.
 
 $head Parameter$$
 All $icode Base$$ objects are parameters.
 An $codei%AD<%Base%>%$$ object $icode u$$ is currently a parameter if
-its value does not depend on the value of 
+its value does not depend on the value of
 an $cref Independent$$ variable vector for an
 $cref/active tape/glossary/Tape/Active/$$.
-If $icode u$$ is a parameter, the function 
+If $icode u$$ is a parameter, the function
 $cref/Parameter(u)/ParVar/$$ returns true
 and $cref/Variable(u)/ParVar/$$ returns false.
 
 $head Sparsity Pattern$$
-$index sparsity, pattern$$
-$index pattern, sparsity$$
-$index efficient, sparsity$$
 CppAD describes a sparse matrix as a vector of sets with each
-vector component corresponding to a row 
+vector component corresponding to a row
 and the elements of the set corresponding to the possibly non-zero columns.
 A vector of $code bool$$
 can represent a vector of sets using one bit per element.
 (Some vectors of $code bool$$ use one byte per element but
 $cref/vectorBool/CppAD_vector/vectorBool/$$ is an example class that
 uses one bit per element.)
-The problem is that this representation uses one bit for both the elements 
+The problem is that this representation uses one bit for both the elements
 that are there and the ones that are not.
 $pre
 
@@ -160,25 +156,25 @@ A vector of $code std::set<size_t>$$ does not
 represent the elements that are not present,
 but it uses about three $code size_t$$ values
 for each element that is present.
-For example, if $code size_t$$ uses 32 bits, 
+For example, if $code size_t$$ uses 32 bits,
 a vector of $code std::set<size_t>$$ uses
-about 100 bits for each element that is present in the 
+about 100 bits for each element that is present in the
 vector of sets.
-Thus, a vector of $code std::set<size_t>$$ should be more efficient for 
+Thus, a vector of $code std::set<size_t>$$ should be more efficient for
 very sparse matrix representations.
 
 $subhead Vector of Boolean$$
-Given a matrix 
+Given a matrix
 $latex A \in B^{m \times n}$$,
-a vector of $code bool$$ $latex B$$ of length $latex m \times n$$ 
-is a sparsity pattern for $latex A$$ if 
+a vector of $code bool$$ $latex B$$ of length $latex m \times n$$
+is a sparsity pattern for $latex A$$ if
 for $latex i = 0, \ldots , m-1$$ and $latex j = 0 , \ldots n-1$$,
 $latex \[
-A_{i,j} \neq 0  
-\; \Rightarrow \; 
+A_{i,j} \neq 0
+\; \Rightarrow \;
 B_{i * n + j} = {\rm true}
 \] $$
-Given two sparsity patterns $latex B$$ and $icode C$$ 
+Given two sparsity patterns $latex B$$ and $icode C$$
 for a matrix $icode A$$, we say that $icode B$$ is more efficient than
 $icode C$$ if $icode B$$ has fewer true elements than $icode C$$.
 For example, if $latex A$$ is the identity matrix,
@@ -188,16 +184,16 @@ $latex \[
 defines an efficient sparsity pattern for $latex A$$.
 
 $subhead Vector of Sets$$
-Given a matrix 
+Given a matrix
 $latex A \in B^{m \times n}$$,
-a vector of sets $latex S$$ of length $latex m$$ is a 
-sparsity pattern for $latex A$$ if 
-for $latex i = 0, \ldots , m-1$$ 
+a vector of sets $latex S$$ of length $latex m$$ is a
+sparsity pattern for $latex A$$ if
+for $latex i = 0, \ldots , m-1$$
 $latex \[
-A_{i,j} \neq 0  
-\; \Rightarrow \; j \in S_i 
+A_{i,j} \neq 0
+\; \Rightarrow \; j \in S_i
 \] $$
-Given two sparsity patterns $latex S$$ and $icode T$$ 
+Given two sparsity patterns $latex S$$ and $icode T$$
 for a matrix $icode A$$, we say that $icode S$$ is more efficient than
 $icode T$$ if $icode S$$ has fewer elements than $icode T$$.
 For example, if $latex A$$ is the identity matrix,
@@ -209,7 +205,7 @@ defines an efficient sparsity pattern for $latex A$$.
 $head Tape$$
 
 $subhead Active$$
-A new tape is created and becomes active 
+A new tape is created and becomes active
 after each call of the form (see $cref Independent$$)
 $codei%
 	Independent(%x%)
@@ -232,36 +228,36 @@ $codei%
 After such a transfer, the tape becomes inactive.
 
 $subhead Independent Variable$$
-While the tape is active, we refer to the elements of $icode x$$ 
+While the tape is active, we refer to the elements of $icode x$$
 as the independent variables for the tape.
 When the tape becomes inactive,
-the corresponding objects become 
+the corresponding objects become
 $cref/parameters/glossary/Parameter/$$.
 
 $subhead Dependent Variables$$
 While the tape is active, we use the term dependent variables for the tape
 for any objects whose value depends on the independent variables for the tape.
 When the tape becomes inactive,
-the corresponding objects become 
+the corresponding objects become
 $cref/parameters/glossary/Parameter/$$.
 
- 
+
 $head Taylor Coefficient$$
-Suppose $latex X : B \rightarrow B^n$$ is a 
+Suppose $latex X : B \rightarrow B^n$$ is a
 is $latex p$$ times continuously differentiable function
 in some neighborhood of zero.
-For $latex k = 0 , \ldots , p$$, 
-we use the column vector $latex x^{(k)} \in B^n$$ for the $th k$$ order 
-Taylor coefficient corresponding to $latex X$$ 
+For $latex k = 0 , \ldots , p$$,
+we use the column vector $latex x^{(k)} \in B^n$$ for the $th k$$ order
+Taylor coefficient corresponding to $latex X$$
 which is defined by
 $latex \[
 	x^{(k)} = \frac{1}{k !} \Dpow{k}{t} X(0)
 \] $$
-It follows that 
+It follows that
 $latex \[
 	X(t) = x^{(0)} + x^{(1)} t + \cdots + x^{(p)} t^p  + R(t)
 \]$$
-where the remainder $latex R(t)$$ divided by $latex t^p$$ 
+where the remainder $latex R(t)$$ divided by $latex t^p$$
 converges to zero and $latex t$$ goes to zero.
 
 
@@ -270,8 +266,8 @@ An $codei%AD<%Base%>%$$ object $icode u$$ is a variable if
 its value depends on an independent variable vector for
 a currently $cref/active tape/glossary/Tape/Active/$$.
 If $icode u$$ is a variable,
-$cref/Variable(u)/ParVar/$$ returns true and 
-$cref/Parameter(u)/ParVar/$$ returns false. 
+$cref/Variable(u)/ParVar/$$ returns true and
+$cref/Parameter(u)/ParVar/$$ returns false.
 For example,
 directly after the code sequence
 $codei%
@@ -290,7 +286,7 @@ $icode u$$  is currently a $cref/parameter/glossary/Parameter/$$
 $pre
 
 $$
-Note that we often drop the word currently and 
+Note that we often drop the word currently and
 just refer to an $codei%AD<%Base%>%$$ object as a variable
 or parameter.
 

@@ -1,4 +1,4 @@
-/* $Id$ */
+// $Id$
 /* --------------------------------------------------------------------------
 CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-15 Bradley M. Bell
 
@@ -31,8 +31,8 @@ $$
 $end
 */
 // BEGIN C++
-# include <cppad/omp_alloc.hpp>
-# include <cppad/memory_leak.hpp>
+# include <cppad/utility/omp_alloc.hpp>
+# include <cppad/utility/memory_leak.hpp>
 # include <vector>
 
 namespace { // Begin empty namespace

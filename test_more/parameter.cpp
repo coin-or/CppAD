@@ -1,9 +1,9 @@
-/* $Id$ */
+// $Id$
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-12 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-15 Bradley M. Bell
 
 CppAD is distributed under multiple licenses. This distribution is under
-the terms of the 
+the terms of the
                     Eclipse Public License Version 1.0.
 
 A copy of this license is included in the COPYING file of this distribution.
@@ -31,21 +31,21 @@ bool test(void)
 	size_t j, n = n_parameter * n_repeat;
 	CPPAD_TESTVECTOR(AD<Float>) ax(n);
 	for(j = 0; j < n; j++)
-		ax[j] = Float(j); 
+		ax[j] = Float(j);
 	Independent(ax);
 
 	// dependent variable vector and indices
 	size_t i, m = n;
 	CPPAD_TESTVECTOR(AD<Float>) ay(m);
 	for(i = 0; i < m; i++)
-	{	// must avoid Float(k) = 0 because it would get optimized out	
-		size_t k = (i % n_parameter); 
+	{	// must avoid Float(k) = 0 because it would get optimized out
+		size_t k = (i % n_parameter);
 		k        = k * k * 10 + 1;
 		j        = i;
 		ay[i] = ax[j] + Float(k);
 	}
 
-	// create f: ax -> ay 
+	// create f: ax -> ay
 	ADFun<Float> f(ax, ay);
 
 	ok = f.size_par() == n_parameter;
@@ -58,6 +58,6 @@ bool test(void)
 bool parameter(void)
 {	bool ok = true;
 	ok &= test<double>();
-	ok &= test<float>(); 
+	ok &= test<float>();
 	return ok;
 }

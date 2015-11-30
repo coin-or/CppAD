@@ -1,9 +1,9 @@
-/* $Id$ */
+// $Id$
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-12 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-15 Bradley M. Bell
 
 CppAD is distributed under multiple licenses. This distribution is under
-the terms of the 
+the terms of the
                     Eclipse Public License Version 1.0.
 
 A copy of this license is included in the COPYING file of this distribution.
@@ -14,11 +14,9 @@ $begin ode_evaluate.cpp$$
 $spell
 $$
 
-$index ode_evaluate, example$$
-$index example, ode_evaluate$$
-$index test, ode_evaluate$$
 
 $section ode_evaluate: Example and test$$
+$mindex ode_evaluate$$
 
 $code
 $verbatim%speed/example/ode_evaluate.cpp%0%// BEGIN C++%// END C++%1%$$
@@ -69,7 +67,7 @@ bool ode_evaluate(void)
 	size_t k;
 	for(k = 0; k < n * n; k++)
 		ok &= NearEqual(ym[k], dy[k] , 1e-7, 1e-7);
- 
+
 	return ok;
 }
 // END C++

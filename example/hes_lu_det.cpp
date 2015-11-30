@@ -1,9 +1,9 @@
-/* $Id$ */
+// $Id$
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-12 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-15 Bradley M. Bell
 
 CppAD is distributed under multiple licenses. This distribution is under
-the terms of the 
+the terms of the
                     Eclipse Public License Version 1.0.
 
 A copy of this license is included in the COPYING file of this distribution.
@@ -18,11 +18,6 @@ $spell
 $$
 
 $section Gradient of Determinant Using LU Factorization: Example and Test$$
-$mindex gradient LU$$
-$index example, gradient$$
-$index test, gradient$$
-$index example, LU$$
-$index test, LU$$
 
 $code
 $verbatim%example/hes_lu_det.cpp%0%// BEGIN C++%// END C++%1%$$
@@ -79,7 +74,7 @@ bool HesLuDet(void)
 	*/
 	Complex zero(0., 0.);
 	Complex one(1., 0.);
-	Complex Htrue[]  = { 
+	Complex Htrue[]  = {
 		zero, zero, zero,  one,
 		zero, zero, -one, zero,
 		zero, -one, zero, zero,

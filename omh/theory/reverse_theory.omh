@@ -1,9 +1,9 @@
 $Id$
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-14 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-15 Bradley M. Bell
 
 CppAD is distributed under multiple licenses. This distribution is under
-the terms of the 
+the terms of the
                     Eclipse Public License Version 1.0.
 
 A copy of this license is included in the COPYING file of this distribution.
@@ -19,34 +19,34 @@ $$
 $section The Theory of Reverse Mode$$
 
 $head Taylor Notation$$
-In Taylor notation, each variable corresponds to 
+In Taylor notation, each variable corresponds to
 a function of a single argument which we denote by $icode t$$
 (see Section 10.2 of
 $cref/Evaluating Derivatives/Bib/Evaluating Derivatives/$$).
 Here and below
-$latex X(t)$$, $latex Y(t)$$, and $icode Z(t)$$ are scalar valued functions 
+$latex X(t)$$, $latex Y(t)$$, and $icode Z(t)$$ are scalar valued functions
 and the corresponding $th p$$ order Taylor coefficients row vectors are
 $latex x$$, $latex y$$ and $latex z$$; i.e.,
 $latex \[
 \begin{array}{lcr}
 X(t) & = & x^{(0)} + x^{(1)} * t + \cdots + x^{(p)} * t^p + O( t^{p+1} ) \\
 Y(t) & = & y^{(0)} + y^{(1)} * t + \cdots + y^{(p)} * t^p + O( t^{p+1} ) \\
-Z(t) & = & z^{(0)} + z^{(1)} * t + \cdots + z^{(p)} * t^p + O( t^{p+1} ) 
+Z(t) & = & z^{(0)} + z^{(1)} * t + \cdots + z^{(p)} * t^p + O( t^{p+1} )
 \end{array}
 \] $$
 For the purposes of this discussion,
 we are given the $th p$$ order Taylor coefficient row vectors
 $latex x$$, $latex y$$, and  $latex z$$.
-In addition, we are given the partial derivatives of a scalar valued function  
+In addition, we are given the partial derivatives of a scalar valued function
 $latex \[
 	G ( z^{(j)} , \ldots , z^{(0)}, x, y)
 \] $$
 We need to compute the partial derivatives of the scalar valued function
 $latex \[
-	H ( z^{(j-1)} , \ldots , z^{(0)}, x, y)  = 
+	H ( z^{(j-1)} , \ldots , z^{(0)}, x, y)  =
 	G ( z^{(j)}, z^{(j-1)} , \ldots , z^{(0)}, x , y )
 \] $$
-where $latex z^{(j)}$$ is expressed as a function of the 
+where $latex z^{(j)}$$ is expressed as a function of the
 $th j-1$$ order Taylor coefficient row
 vector for $latex Z$$ and the vectors $latex x$$, $latex y$$; i.e.,
 $latex z^{(j)}$$ above is a shorthand for
@@ -73,10 +73,10 @@ $latex \[
 \D{G}{ x^{(k)} }  + \D{G}{ z^{(k)} } \\
 \\
 \D{H}{ y^{(k)} } & = &
-\D{G}{ y^{(k)} }  + \D{G}{ z^{(k)} } 
+\D{G}{ y^{(k)} }  + \D{G}{ z^{(k)} }
 \\
-\D{H}{ z^{(l)} } & = & \D{G}{ z^{(l)} }  
-\end{array} 
+\D{H}{ z^{(l)} } & = & \D{G}{ z^{(l)} }
+\end{array}
 \] $$
 
 $subhead Subtraction$$
@@ -92,8 +92,8 @@ $latex \[
 \D{G}{ x^{(k)} }  - \D{G}{ z^{(k)} } \\
 \\
 \D{H}{ y^{(k)} } & = &
-\D{G}{ y^{(k)} }  - \D{G}{ z^{(k)} } 
-\end{array} 
+\D{G}{ y^{(k)} }  - \D{G}{ z^{(k)} }
+\end{array}
 \] $$
 
 $subhead Multiplication$$
@@ -108,29 +108,29 @@ $latex \[
 \begin{array}{rcl}
 \D{H}{ x^{(j-k)} } & = &
 \D{G}{ x^{(j-k)} }  +
-\sum_{k=0}^j \D{G}{ z^{(j)} } y^{(k)}  
+\sum_{k=0}^j \D{G}{ z^{(j)} } y^{(k)}
 \\
 \D{H}{ y^{(k)} } & = &
 \D{G}{ y^{(k)} }  +
-\sum_{k=0}^j \D{G}{ z^{(j)} } x^{(j-k)}  
-\end{array} 
+\sum_{k=0}^j \D{G}{ z^{(j)} } x^{(j-k)}
+\end{array}
 \] $$
 
 $subhead Division$$
 The forward mode formula for
 $cref/division/ForwardTheory/Binary Operators/Division/$$ is
 $latex \[
-z^{(j)} = 
-\frac{1}{y^{(0)}} 
-\left( 
-	x^{(j)} - \sum_{k=1}^j z^{(j-k)} y^{(k)} 
+z^{(j)} =
+\frac{1}{y^{(0)}}
+\left(
+	x^{(j)} - \sum_{k=1}^j z^{(j-k)} y^{(k)}
 \right)
 \] $$
 If follows that for $latex k = 1 , \ldots , j$$
 $latex \[
 \begin{array}{rcl}
 \D{H}{ x^{(j)} } & = &
-\D{G}{ x^{(j)} }  + \D{G}{ z^{(j)} } \frac{1}{y^{(0)}} 
+\D{G}{ x^{(j)} }  + \D{G}{ z^{(j)} } \frac{1}{y^{(0)}}
 \\
 \D{H}{ z^{(j-k)} } & = &
 \D{G}{ z^{(j-k)} }  - \D{G}{ z^{(j)} } \frac{1}{y^{(0)}} y^{(k)}
@@ -139,9 +139,9 @@ $latex \[
 \D{G}{ y^{(k)} }  - \D{G}{ z^{(j)} } \frac{1}{y^{(0)}} z^{(j-k)}
 \\
 \D{H}{ y^{(0)} } & = &
-\D{G}{ y^{(0)} }  - \D{G}{ z^{(j)} } \frac{1}{y^{(0)}} \frac{1}{y^{(0)}} 
-\left( 
-	x^{(j)} - \sum_{k=1}^j z^{(j-k)} y^{(k)} 
+\D{G}{ y^{(0)} }  - \D{G}{ z^{(j)} } \frac{1}{y^{(0)}} \frac{1}{y^{(0)}}
+\left(
+	x^{(j)} - \sum_{k=1}^j z^{(j-k)} y^{(k)}
 \right)
 \\
 & = &
@@ -151,16 +151,16 @@ $latex \[
 
 $head Standard Math Functions$$
 The standard math functions have only one argument.
-Hence we are given the partial derivatives of a scalar valued function  
+Hence we are given the partial derivatives of a scalar valued function
 $latex \[
 	G ( z^{(j)} , \ldots , z^{(0)}, x)
 \] $$
 We need to compute the partial derivatives of the scalar valued function
 $latex \[
-	H ( z^{(j-1)} , \ldots , z^{(0)}, x)  = 
+	H ( z^{(j-1)} , \ldots , z^{(0)}, x)  =
 	G ( z^{(j)}, z^{(j-1)} , \ldots , z^{(0)}, x)
 \] $$
-where $latex z^{(j)}$$ is expressed as a function of the 
+where $latex z^{(j)}$$ is expressed as a function of the
 $th j-1$$ order Taylor coefficient row
 vector for $latex Z$$ and the vector $latex x$$; i.e.,
 $latex z^{(j)}$$ above is a shorthand for

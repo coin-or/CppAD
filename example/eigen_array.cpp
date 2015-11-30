@@ -1,9 +1,9 @@
-/* $Id$ */
+// $Id$
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-13 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-15 Bradley M. Bell
 
 CppAD is distributed under multiple licenses. This distribution is under
-the terms of the 
+the terms of the
                     Eclipse Public License Version 1.0.
 
 A copy of this license is included in the COPYING file of this distribution.
@@ -17,11 +17,8 @@ $spell
 $$
 
 $section Using Eigen Arrays: Example and Test$$
+$mindex array$$
 
-$index array, eigen example$$
-$index eigen, array example$$
-$index example, eigen array$$
-$index test, eigen array$$
 
 $code
 $verbatim%example/eigen_array.cpp%0%// BEGIN C++%// END C++%1%$$
@@ -56,10 +53,10 @@ bool eigen_array(void)
 	CppAD::Independent(a_x);
 
 	// evaluate a component wise function
-	a_y = a_x.array() + sin(a_x.array()); 
-	
+	a_y = a_x.array() + sin(a_x.array());
+
 	// create f: x -> y and stop tape recording
-	CppAD::ADFun<double> f(a_x, a_y); 
+	CppAD::ADFun<double> f(a_x, a_y);
 
 	// compute the derivative of y w.r.t x using CppAD
 	CPPAD_TESTVECTOR(double) x(n);

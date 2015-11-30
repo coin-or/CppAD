@@ -85,39 +85,20 @@ myinclude_HEADERS = \
 	$(IPOPT_HEADER)
 #
 nobase_myinclude_HEADERS =  \
-	cppad/CheckNumericType.h \
-	cppad/CheckSimpleVector.h \
-	cppad/CppAD.h \
-	cppad/CppAD_vector.h \
-	cppad/ErrorHandler.h \
-	cppad/LuFactor.h \
-	cppad/LuInvert.h \
-	cppad/LuSolve.h \
-	cppad/NearEqual.h \
-	cppad/OdeErrControl.h \
-	cppad/OdeGearControl.h \
-	cppad/OdeGear.h \
-	cppad/Poly.h \
-	cppad/PowInt.h \
-	cppad/RombergMul.h \
-	cppad/RombergOne.h \
-	cppad/Rosen34.h \
-	cppad/Runge45.h \
-	cppad/SpeedTest.h \
-	cppad/TrackNewDel.h \
 	\
+	cppad/utility.hpp
 	cppad/base_require.hpp \
-	cppad/check_numeric_type.hpp \
-	cppad/check_simple_vector.hpp \
+	cppad/utility/check_numeric_type.hpp \
+	cppad/utility/check_simple_vector.hpp \
 	cppad/configure.hpp \
 	cppad/cppad.hpp \
-	cppad/elapsed_seconds.hpp \
+	cppad/utility/elapsed_seconds.hpp \
 	cppad/example/base_adolc.hpp \
 	cppad/example/cppad_eigen.hpp \
 	cppad/example/eigen_plugin.hpp \
 	cppad/example/matrix_mul.hpp \
-	cppad/error_handler.hpp \
-	cppad/index_sort.hpp \
+	cppad/utility/error_handler.hpp \
+	cppad/utility/index_sort.hpp \
 	cppad/ipopt/solve.hpp \
 	cppad/ipopt/solve_callback.hpp \
 	cppad/ipopt/solve_result.hpp \
@@ -280,22 +261,22 @@ nobase_myinclude_HEADERS =  \
 	cppad/local/vec_ad.hpp \
 	cppad/local/zdouble.hpp \
 	cppad/local/zmul_op.hpp \
-	cppad/lu_factor.hpp \
-	cppad/lu_invert.hpp \
-	cppad/lu_solve.hpp \
-	cppad/memory_leak.hpp \
-	cppad/nan.hpp \
-	cppad/near_equal.hpp \
-	cppad/ode_err_control.hpp \
-	cppad/ode_gear_control.hpp \
-	cppad/ode_gear.hpp \
-	cppad/omp_alloc.hpp \
-	cppad/poly.hpp \
-	cppad/pow_int.hpp \
-	cppad/romberg_mul.hpp \
-	cppad/romberg_one.hpp \
-	cppad/rosen_34.hpp \
-	cppad/runge_45.hpp \
+	cppad/utility/lu_factor.hpp \
+	cppad/utility/lu_invert.hpp \
+	cppad/utility/lu_solve.hpp \
+	cppad/utility/memory_leak.hpp \
+	cppad/utility/nan.hpp \
+	cppad/utility/near_equal.hpp \
+	cppad/utility/ode_err_control.hpp \
+	cppad/utility/ode_gear_control.hpp \
+	cppad/utility/ode_gear.hpp \
+	cppad/utility/omp_alloc.hpp \
+	cppad/utility/poly.hpp \
+	cppad/utility/pow_int.hpp \
+	cppad/utility/romberg_mul.hpp \
+	cppad/utility/romberg_one.hpp \
+	cppad/utility/rosen_34.hpp \
+	cppad/utility/runge_45.hpp \
 	cppad/speed/det_33.hpp \
 	cppad/speed/det_by_lu.hpp \
 	cppad/speed/det_by_minor.hpp \
@@ -305,12 +286,12 @@ nobase_myinclude_HEADERS =  \
 	cppad/speed/ode_evaluate.hpp \
 	cppad/speed/sparse_hes_fun.hpp \
 	cppad/speed/sparse_jac_fun.hpp \
-	cppad/speed_test.hpp \
+	cppad/utility/speed_test.hpp \
 	cppad/speed/uniform_01.hpp \
-	cppad/thread_alloc.hpp \
-	cppad/time_test.hpp \
-	cppad/track_new_del.hpp \
-	cppad/vector.hpp
+	cppad/utility/thread_alloc.hpp \
+	cppad/utility/time_test.hpp \
+	cppad/utility/track_new_del.hpp \
+	cppad/utility/vector.hpp
 # End nobase_myinclude_HEADERS (check_makefile.sh uses this comment)
 # ---------------------------------------------------------------
 #

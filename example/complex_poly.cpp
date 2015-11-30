@@ -1,9 +1,9 @@
-/* $Id$ */
+// $Id$
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-12 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-15 Bradley M. Bell
 
 CppAD is distributed under multiple licenses. This distribution is under
-the terms of the 
+the terms of the
                     Eclipse Public License Version 1.0.
 
 A copy of this license is included in the COPYING file of this distribution.
@@ -17,11 +17,8 @@ $spell
 $$
 
 $section Complex Polynomial: Example and Test$$
+$mindex polynomial$$
 
-$index complex, polynomial$$
-$index polynomial, complex$$
-$index example, complex polynomial$$
-$index test, complex polynomial$$
 
 $head Poly$$
 Select this link to view specifications for $cref Poly$$:
@@ -43,11 +40,11 @@ bool complex_poly(void)
 
 	using CppAD::AD;
 	using CppAD::Poly;
-	typedef std::complex<double> Complex; 
+	typedef std::complex<double> Complex;
 
 	// polynomial coefficients
 	CPPAD_TESTVECTOR( Complex )     a   (deg + 1); // coefficients for p(z)
-	CPPAD_TESTVECTOR(AD<Complex>) A   (deg + 1); 
+	CPPAD_TESTVECTOR(AD<Complex>) A   (deg + 1);
 	size_t i;
 	for(i = 0; i <= deg; i++)
 		A[i] = a[i] = Complex(i, i);
@@ -55,7 +52,7 @@ bool complex_poly(void)
 	// independent variable vector
 	CPPAD_TESTVECTOR(AD<Complex>) Z(1);
 	Complex z = Complex(1., 2.);
- 	Z[0]      = z;
+	Z[0]      = z;
 	Independent(Z);
 
 	// dependent variable vector and indices

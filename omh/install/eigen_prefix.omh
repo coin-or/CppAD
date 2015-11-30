@@ -1,9 +1,9 @@
-/* $Id$ */
+// $Id$
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-13 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-15 Bradley M. Bell
 
 CppAD is distributed under multiple licenses. This distribution is under
-the terms of the 
+the terms of the
                     Eclipse Public License Version 1.0.
 
 A copy of this license is included in the COPYING file of this distribution.
@@ -24,12 +24,10 @@ $spell
 $$
 
 $section Including the Eigen Examples and Tests$$
-$index eigen, example$$
-$index example, eigen$$
-$index test, eigen$$
+$mindex prefix get$$
 
 $head Purpose$$
-CppAD can include the following examples and tests that 
+CppAD can include the following examples and tests that
 use the linear algebra package $href%http://eigen.tuxfamily.org%Eigen%$$:
 $table
 $rref cppad_eigen.hpp$$
@@ -39,9 +37,7 @@ $tend
 
 
 $head eigen_prefix$$
-$index eigen, prefix$$
-$index prefix, eigen$$
-If Eigen is installed on your system, you can 
+If Eigen is installed on your system, you can
 specify a value for its install $icode eigen_prefix$$ on the
 $cref cmake$$ command line.
 The value of $icode eigen_prefix$$ must be such that,
@@ -53,8 +49,6 @@ $codei%
 is a valid way to reference to the include file $code Core$$;
 
 $head Examples$$
-$index example, eigen$$
-$index eigen, example$$
 If you include $icode eigen_prefix$$ on the $cref cmake$$ command line,
 you will be able to run the Eigen examples list above
 by executing the following commands starting in the
@@ -71,21 +65,17 @@ have passed their correctness check.
 options to this program.
 
 $head Test Vector$$
-$index vector, eigen$$
-$index eigen, vector$$
 If you have specified $icode eigen_prefix$$ you can choose
 $codei%
 	-D cppad_testvector=eigen
 %$$
 on the $cref/cmake command/cmake/CMake Command/$$ line.
-This we set the CppAD $cref testvector$$ to use Eigen vectors. 
+This we set the CppAD $cref testvector$$ to use Eigen vectors.
 
 $children%
 	bin/get_eigen.sh
 %$$
 $head get_eigen$$
-$index get, eigen$$
-$index eigen, get$$
 If you are using Unix, you can download and install
 a copy of Eigen using $cref get_eigen.sh$$.
 The corresponding $icode eigen_prefix$$ would be

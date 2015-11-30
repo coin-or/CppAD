@@ -52,9 +52,9 @@ Please visit http://www.coin-or.org/CppAD/ for information on other licenses.
 EOF
 	;;
 
-	cmake)
+	cmake | txt)
 	cat << EOF  > bin/add_copyright.$$
-# \$Id:\$
+# \$Id\$
 # -----------------------------------------------------------------------------
 # CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-15 Bradley M. Bell
 #
@@ -71,7 +71,7 @@ EOF
 	sh)
 	cat << EOF  > bin/add_copyright.$$
 #! /bin/bash -e
-# \$Id:\$
+# \$Id\$
 # -----------------------------------------------------------------------------
 # CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-15 Bradley M. Bell
 #

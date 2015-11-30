@@ -1,9 +1,9 @@
-/* $Id$ */
+// $Id$
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-14 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-15 Bradley M. Bell
 
 CppAD is distributed under multiple licenses. This distribution is under
-the terms of the 
+the terms of the
                     Eclipse Public License Version 1.0.
 
 A copy of this license is included in the COPYING file of this distribution.
@@ -27,13 +27,8 @@ $spell
 $$
 
 $section Fadbad Speed: Gradient of Determinant by Minor Expansion$$
+$mindex link_det_minor speed$$
 
-$index link_det_minor, fadbad$$
-$index fadbad, link_det_minor$$
-$index speed, fadbad$$
-$index fadbad, speed$$
-$index minor, speed fadbad$$
-$index determinant, speed fadbad$$
 
 $head Specifications$$
 See $cref link_det_minor$$.
@@ -44,36 +39,36 @@ $codep */
 # include <FADBAD++/badiff.h>
 # include <cppad/speed/det_by_minor.hpp>
 # include <cppad/speed/uniform_01.hpp>
-# include <cppad/vector.hpp>
+# include <cppad/utility/vector.hpp>
 
 // list of possible options
 extern bool global_memory, global_onetape, global_atomic, global_optimize;
 
 bool link_det_minor(
-	size_t                     size     , 
-	size_t                     repeat   , 
+	size_t                     size     ,
+	size_t                     repeat   ,
 	CppAD::vector<double>     &matrix   ,
 	CppAD::vector<double>     &gradient )
 {
 	// speed test global option values
 	if( global_atomic )
-		return false; 
+		return false;
 	if( global_memory || global_onetape || global_optimize )
-		return false; 
+		return false;
 	// -----------------------------------------------------
 	// setup
 
 	// object for computing determinant
-	typedef fadbad::B<double>       ADScalar; 
-	typedef CppAD::vector<ADScalar> ADVector; 
+	typedef fadbad::B<double>       ADScalar;
+	typedef CppAD::vector<ADScalar> ADVector;
 	CppAD::det_by_minor<ADScalar>   Det(size);
 
 	size_t i;                // temporary index
 	size_t m = 1;            // number of dependent variables
 	size_t n = size * size;  // number of independent variables
 	ADScalar   detA;         // AD value of the determinant
-	ADVector   A(n);         // AD version of matrix 
-	
+	ADVector   A(n);         // AD version of matrix
+
 	// ------------------------------------------------------
 	while(repeat--)
        {	// get the next matrix

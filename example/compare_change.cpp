@@ -1,9 +1,9 @@
-/* $Id$ */
+// $Id$
 /* --------------------------------------------------------------------------
 CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-15 Bradley M. Bell
 
 CppAD is distributed under multiple licenses. This distribution is under
-the terms of the 
+the terms of the
                     Eclipse Public License Version 1.0.
 
 A copy of this license is included in the COPYING file of this distribution.
@@ -17,13 +17,8 @@ $spell
 $$
 
 $section CompareChange and Re-Tape: Example and Test$$
+$mindex compare change re-tape$$
 
-$index compare, change$$
-$index example, CompareChange$$
-$index test, CompareChange$$
-$index re-tape, example$$
-$index example, re-tape$$
-$index test, re-tape$$
 
 $code
 $verbatim%example/compare_change.cpp%0%// BEGIN C++%// END C++%1%$$
@@ -39,8 +34,8 @@ namespace { // put this function in the empty namespace
 	template <typename Type>
 	Type Minimum(const Type &x, const Type &y)
 	{	// Use a comparision to compute the min(x, y)
-		// (note that CondExp would never require retaping). 
-		if( x < y )  
+		// (note that CondExp would never require retaping).
+		if( x < y )
 			return x;
 		return y;
 	}
@@ -97,7 +92,7 @@ bool compare_change(void)
 	// as during taping; i.e., x[0] < x[1].
 	CPPAD_TESTVECTOR(double) x(n), y(m);
 	x[0] = 2.;
-	x[1] = 3.;  
+	x[1] = 3.;
 	y    = f.Forward(0, x);
 	ok  &= (y[0] == x[0]);
 	ok  &= (y[0] == Minimum(x[0], x[1]));
@@ -111,8 +106,8 @@ bool compare_change(void)
 	y    = f.Forward(0, x);
 	ok  &= (y[0] == x[0]);
 	ok  &= (y[0] != Minimum(x[0], x[1]));
-	ok  &= (f.compare_change_number() == 1); 
-	ok  &= (f.compare_change_op_index() > 0 ); 
+	ok  &= (f.compare_change_number() == 1);
+	ok  &= (f.compare_change_op_index() > 0 );
 	size_t op_index = f.compare_change_op_index();
 
 	// Local block during which default CppAD error handler is replaced.
@@ -122,7 +117,7 @@ bool compare_change(void)
 	bool missed_error = true;
 	{	CppAD::ErrorHandler local_error_handler(error_handler);
 
-		std::string check_msg = 
+		std::string check_msg =
 			"Operator index equals abort_op_index in Independent";
 		try {
 			// determine the operation index where the change occurred
@@ -152,8 +147,8 @@ bool compare_change(void)
 	y    = f.Forward(0, x);
 	ok  &= (y[0] == x[0]);
 	ok  &= (y[0] != Minimum(x[0], x[1]));
-	ok  &= (f.compare_change_number()   == 0); 
-	ok  &= (f.compare_change_op_index() == 0); 
+	ok  &= (f.compare_change_number()   == 0);
+	ok  &= (f.compare_change_op_index() == 0);
 
 	// now demonstrate that compare_change_number works for an optimized
 	// tape (note that compare_change_op_index is always zero after optimize)
@@ -162,8 +157,8 @@ bool compare_change(void)
 	y    = f.Forward(0, x);
 	ok  &= (y[0] == x[0]);
 	ok  &= (y[0] != Minimum(x[0], x[1]));
-	ok  &= (f.compare_change_number()   == 1); 
-	ok  &= (f.compare_change_op_index() == 0); 
+	ok  &= (f.compare_change_number()   == 1);
+	ok  &= (f.compare_change_op_index() == 0);
 
 	// now retape to get the a tape that agrees with the algorithm
 	ax[0] = x[0];
@@ -174,8 +169,8 @@ bool compare_change(void)
 	y    = f.Forward(0, x);
 	ok  &= (y[0] == x[1]);
 	ok  &= (y[0] == Minimum(x[0], x[1]));
-	ok  &= (f.compare_change_number()   == 0); 
-	ok  &= (f.compare_change_op_index() == 0); 
+	ok  &= (f.compare_change_number()   == 0);
+	ok  &= (f.compare_change_op_index() == 0);
 
 	return ok;
 }

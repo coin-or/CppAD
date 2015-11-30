@@ -16,11 +16,8 @@ $spell
 $$
 
 $section Comparison Changes Between Taping and Zero Order Forward$$
+$mindex ADFun compare_change$$
 
-$index ADFun, compare_change$$
-$index compare_change, ADFun$$
-$index zero, order forward$$
-$index forward, zero order$$
 
 $head Syntax$$
 $icode%f%.compare_change_count(%count%)
@@ -82,7 +79,7 @@ This is the default value used if $icode count$$ is not specified.
 
 $subhead Speed$$
 The special case where $icode count == 0$$, should be faster because
-the comparisons are not checked during 
+the comparisons are not checked during
 $codei%
 	%f%.Forward(0, %x%)
 %$$
@@ -92,10 +89,10 @@ The return value $icode number$$ has prototype
 $codei%
 	size_t %number%
 %$$
-If $icode count$$ is non-zero, 
+If $icode count$$ is non-zero,
 $icode number$$ is the number of
 $codei%AD<%Base%>%$$ $cref/comparison/Compare/$$ operations,
-corresponding to the previous call to 
+corresponding to the previous call to
 $codei%
 	%f%.Forward(0, %x%)
 %$$

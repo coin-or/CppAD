@@ -1,6 +1,6 @@
-/* $Id$ */
-# ifndef CPPAD_ASINH_OP_INCLUDED
-# define CPPAD_ASINH_OP_INCLUDED
+// $Id$
+# ifndef CPPAD_ASINH_OP_HPP
+# define CPPAD_ASINH_OP_HPP
 # if CPPAD_USE_CPLUSPLUS_2011
 
 /* --------------------------------------------------------------------------

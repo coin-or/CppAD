@@ -1,12 +1,12 @@
-/* $Id$ */
-# ifndef CPPAD_REVERSE_INCLUDED
-# define CPPAD_REVERSE_INCLUDED
+// $Id$
+# ifndef CPPAD_REVERSE_HPP
+# define CPPAD_REVERSE_HPP
 
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-14 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-15 Bradley M. Bell
 
 CppAD is distributed under multiple licenses. This distribution is under
-the terms of the 
+the terms of the
                     Eclipse Public License Version 1.0.
 
 A copy of this license is included in the COPYING file of this distribution.
@@ -26,28 +26,28 @@ Compute derivatives using reverse mode.
 /*!
 Use reverse mode to compute derivative of forward mode Taylor coefficients.
 
-The function 
-\f$ X : {\rm R} \times {\rm R}^{n \times q} \rightarrow {\rm R} \f$ 
+The function
+\f$ X : {\rm R} \times {\rm R}^{n \times q} \rightarrow {\rm R} \f$
 is defined by
 \f[
 X(t , u) = \sum_{k=0}^{q-1} u^{(k)} t^k
 \f]
-The function 
-\f$ Y : {\rm R} \times {\rm R}^{n \times q} \rightarrow {\rm R} \f$ 
+The function
+\f$ Y : {\rm R} \times {\rm R}^{n \times q} \rightarrow {\rm R} \f$
 is defined by
 \f[
 Y(t , u) = F[ X(t, u) ]
 \f]
-The function 
+The function
 \f$ W : {\rm R}^{n \times q} \rightarrow {\rm R} \f$ is defined by
 \f[
-W(u) = \sum_{k=0}^{q-1} ( w^{(k)} )^{\rm T} 
+W(u) = \sum_{k=0}^{q-1} ( w^{(k)} )^{\rm T}
 \frac{1}{k !} \frac{ \partial^k } { t^k } Y(0, u)
 \f]
 
 \tparam Base
 base type for the operator; i.e., this operation sequence was recorded
-using AD< \a Base > and computations by this routine are done using type 
+using AD< \a Base > and computations by this routine are done using type
 \a Base.
 
 \tparam VectorBase
@@ -79,7 +79,7 @@ w_i^{(k)} = \left\{ \begin{array}{ll}
 Is a vector \f$ dw \f$ such that
 for \f$ j = 0 , \ldots , n-1 \f$ and
 \f$ k = 0 , \ldots , q-1 \f$
-\f[ 
+\f[
 	dw[ j * q + k ] = W^{(1)} ( x )_{j,k}
 \f]
 where the matrix \f$ x \f$ is the value for \f$ u \f$
@@ -89,7 +89,7 @@ for the independent variables as specified by previous calls to Forward.
 */
 template <typename Base>
 template <typename VectorBase>
-VectorBase ADFun<Base>::Reverse(size_t q, const VectorBase &w) 
+VectorBase ADFun<Base>::Reverse(size_t q, const VectorBase &w)
 {	// constants
 	const Base zero(0);
 
@@ -106,8 +106,8 @@ VectorBase ADFun<Base>::Reverse(size_t q, const VectorBase &w)
 	Partial.extend(num_var_tape_  * q);
 
 	// update maximum memory requirement
-	// memoryMax = std::max( memoryMax, 
-	// 	Memory() + num_var_tape_  * q * sizeof(Base)
+	// memoryMax = std::max( memoryMax,
+	//	Memory() + num_var_tape_  * q * sizeof(Base)
 	// );
 
 	// check VectorBase is Simple Vector class with Base type elements
@@ -121,12 +121,12 @@ VectorBase ADFun<Base>::Reverse(size_t q, const VectorBase &w)
 	CPPAD_ASSERT_KNOWN(
 		q > 0,
 		"The first argument to Reverse must be greater than zero."
-	);  
+	);
 	CPPAD_ASSERT_KNOWN(
 		num_order_taylor_ >= q,
 		"Less that q taylor_ coefficients are currently stored"
 		" in this ADFun object."
-	);  
+	);
 	// special case where multiple forward directions have been computed,
 	// but we are only using the one direction zero order results
 	if( (q == 1) & (num_direction_taylor_ > 1) )
@@ -179,15 +179,15 @@ VectorBase ADFun<Base>::Reverse(size_t q, const VectorBase &w)
 	for(j = 0; j < n; j++)
 	{	CPPAD_ASSERT_UNKNOWN( ind_taddr_[j] < num_var_tape_  );
 
-		// independent variable taddr equals its operator taddr 
+		// independent variable taddr equals its operator taddr
 		CPPAD_ASSERT_UNKNOWN( play_.GetOp( ind_taddr_[j] ) == InvOp );
 
-		// by the Reverse Identity Theorem 
+		// by the Reverse Identity Theorem
 		// partial of y^{(k)} w.r.t. u^{(0)} is equal to
 		// partial of y^{(q-1)} w.r.t. u^{(q - 1 - k)}
 		if( size_t(w.size()) == m )
 		{	for(k = 0; k < q; k++)
-				value[j * q + k ] = 
+				value[j * q + k ] =
 					Partial[ind_taddr_[j] * q + q - 1 - k];
 		}
 		else
@@ -203,7 +203,7 @@ VectorBase ADFun<Base>::Reverse(size_t q, const VectorBase &w)
 
 	return value;
 }
-	
+
 
 } // END_CPPAD_NAMESPACE
 # endif

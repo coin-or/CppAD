@@ -1,6 +1,6 @@
-/* $Id$ */
-# ifndef CPPAD_BASE_COMPLEX_INCLUDED
-# define CPPAD_BASE_COMPLEX_INCLUDED
+// $Id$
+# ifndef CPPAD_BASE_COMPLEX_HPP
+# define CPPAD_BASE_COMPLEX_HPP
 /* --------------------------------------------------------------------------
 CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-15 Bradley M. Bell
 
@@ -16,7 +16,7 @@ Please visit http://www.coin-or.org/CppAD/ for information on other licenses.
 # include <complex>
 
 // needed before one can use CPPAD_ASSERT_FIRST_CALL_NOT_PARALLEL
-# include <cppad/thread_alloc.hpp>
+# include <cppad/utility/thread_alloc.hpp>
 
 /*
 $begin base_complex.hpp$$

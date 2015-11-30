@@ -1,9 +1,9 @@
-/* $Id$ */
+// $Id$
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-12 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-15 Bradley M. Bell
 
 CppAD is distributed under multiple licenses. This distribution is under
-the terms of the 
+the terms of the
                     Eclipse Public License Version 1.0.
 
 A copy of this license is included in the COPYING file of this distribution.
@@ -18,14 +18,10 @@ $spell
 $$
 
 $section OdeErrControl: Example and Test Using Maxabs Argument$$
+$mindex OdeErrControl$$
 
-$index OdeErrControl, example$$
-$index OdeErrControl, maxabs$$
-$index example, OdeErrControl$$
-$index test, OdeErrControl$$
-$index maxabs, OdeErrControl$$
 
-Define 
+Define
 $latex X : \B{R} \rightarrow \B{R}^2$$ by
 $latex \[
 \begin{array}{rcl}
@@ -37,7 +33,7 @@ It follows that $latex X_0 (0) = 1$$, $latex X_1 (0) = 0$$ and
 $latex \[
 \begin{array}{rcl}
 	X_0^{(1)} (t) & = & - w_0 X_0 (t)  \\
-	X_1^{(1)} (t) & = & + w_0 X_0 (t) - w_1 X_1 (t) 
+	X_1^{(1)} (t) & = & + w_0 X_0 (t) - w_1 X_1 (t)
 \end{array}
 \] $$
 Note that $latex X_1 (0)$$ is zero an if $latex w_0 t$$ is large,
@@ -54,10 +50,10 @@ $end
 
 # include <cstddef>              // for size_t
 # include <cmath>                // for exp
-# include <cppad/ode_err_control.hpp>   // CppAD::OdeErrControl
-# include <cppad/near_equal.hpp>    // CppAD::NearEqual
-# include <cppad/vector.hpp> // CppAD::vector
-# include <cppad/runge_45.hpp>      // CppAD::Runge45
+# include <cppad/utility/ode_err_control.hpp>   // CppAD::OdeErrControl
+# include <cppad/utility/near_equal.hpp>    // CppAD::NearEqual
+# include <cppad/utility/vector.hpp> // CppAD::vector
+# include <cppad/utility/runge_45.hpp>      // CppAD::Runge45
 
 namespace {
 	// --------------------------------------------------------------
@@ -67,15 +63,15 @@ namespace {
 	public:
 		// constructor
 		Fun(const CppAD::vector<double> &w_) : w(w_)
-		{ } 
+		{ }
 
 		// set f = x'(t)
 		void Ode(
-			const double                &t, 
-			const CppAD::vector<double> &x, 
+			const double                &t,
+			const CppAD::vector<double> &x,
 			CppAD::vector<double>       &f)
 		{	f[0] = - w[0] * x[0];
-			f[1] = + w[0] * x[0] - w[1] * x[1];	
+			f[1] = + w[0] * x[0] - w[1] * x[1];
 		}
 	};
 
@@ -88,8 +84,8 @@ namespace {
 		Method(const CppAD::vector<double> &w_) : F(w_)
 		{ }
 		void step(
-			double ta, 
-			double tb, 
+			double ta,
+			double tb,
 			CppAD::vector<double> &xa ,
 			CppAD::vector<double> &xb ,
 			CppAD::vector<double> &eb )
@@ -126,7 +122,7 @@ bool OdeErrMaxabs(void)
 	double smax = 1.;
 	double scur = .5;
 	double erel = 1e-4;
-	
+
 	bool accurate = false;
 	while( ! accurate )
 	{	xf = OdeErrControl(method,
@@ -137,7 +133,7 @@ bool OdeErrMaxabs(void)
 			accurate &= ef[i] <= erel * maxabs[i];
 		if( ! accurate )
 			smin = smin / 2;
-	} 
+	}
 
 	double x0 = exp(-w[0]*tf);
 	ok &= CppAD::NearEqual(x0, xf[0], erel, 0.);

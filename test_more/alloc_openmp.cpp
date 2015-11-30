@@ -1,9 +1,9 @@
-/* $Id$ */
+// $Id$
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-12 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-15 Bradley M. Bell
 
 CppAD is distributed under multiple licenses. This distribution is under
-the terms of the 
+the terms of the
                     Eclipse Public License Version 1.0.
 
 A copy of this license is included in the COPYING file of this distribution.
@@ -47,21 +47,21 @@ namespace {
 // Test routine called by the master thread (thread_num = 0).
 bool alloc_openmp(void)
 {	bool ok = true;
-	
+
 	int num_threads = NUMBER_THREADS;
 
 	// call setup for using thread_alloc in parallel mode.
 	thread_alloc::parallel_setup(
 		size_t(num_threads), in_parallel, thread_number
 	);
-	
+
 	// Execute the worker function in parallel
 	int thread_num;
 # pragma omp parallel for
 	for(thread_num = 0; thread_num < num_threads; thread_num++)
 		worker();
 // end omp parallel for
-	
+
 	// now inform CppAD that there is only one thread
 	thread_alloc::parallel_setup(1, CPPAD_NULL, CPPAD_NULL);
 
@@ -69,7 +69,7 @@ bool alloc_openmp(void)
 	{	// check calculations by this thread in parallel model
 		ok &= thread_all_[thread_num].x[0] == static_cast<double>(thread_num);
 
-		// test having master thread (thread number zero) 
+		// test having master thread (thread number zero)
 		// free memory that was allocated by thread number thread_num.
 		thread_all_[thread_num].x.clear();
 	}

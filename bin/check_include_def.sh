@@ -21,8 +21,8 @@ echo "Also make sure same ifndef not used by two different files."
 echo "-------------------------------------------------------------------"
 list=`bin/list_files.sh | sed -n -e '/\.hpp$/p'`
 #
-grep '^# *ifndef *CPPAD_[0-9a-zA-Z_]*_INCLUDED$' $list \
-	| sed -e 's|.*# *ifndef *CPPAD_\([0-9a-zA-Z_]*\)_INCLUDED$|\1.HPP|' \
+grep '^# *ifndef *CPPAD_[0-9a-zA-Z_]*_HPP$' $list \
+	| sed -e 's|.*# *ifndef *CPPAD_\([0-9a-zA-Z_]*\)_HPP$|\1.HPP|' \
 	| tr [a-zA-Z] [A-Za-z] \
 	| sort \
 	> bin/check_include_def.1.$$

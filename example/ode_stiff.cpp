@@ -1,9 +1,9 @@
-/* $Id$ */
+// $Id$
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-12 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-15 Bradley M. Bell
 
 CppAD is distributed under multiple licenses. This distribution is under
-the terms of the 
+the terms of the
                     Eclipse Public License Version 1.0.
 
 A copy of this license is included in the COPYING file of this distribution.
@@ -17,13 +17,10 @@ $spell
 $$
 
 $section A Stiff Ode: Example and Test$$
+$mindex ode$$
 
-$index stiff, ode$$
-$index ode, stiff$$
-$index example, stiff ode$$
-$index test, stiff ode$$
 
-Define 
+Define
 $latex x : \B{R} \rightarrow \B{R}^2$$ by
 $latex \[
 \begin{array}{rcl}
@@ -32,13 +29,13 @@ $latex \[
 	x_0^\prime (t) & = & - a_0 x_0 (t) \\
 	x_1^\prime (t) & = & + a_0 x_0 (t) - a_1 x_1 (t)
 \end{array}
-\] $$ 
-If $latex a_0 \gg a_1 > 0$$, this is a stiff Ode and 
+\] $$
+If $latex a_0 \gg a_1 > 0$$, this is a stiff Ode and
 the analytic solution is
 $latex \[
 \begin{array}{rcl}
 x_0 (t)    & = & \exp( - a_0 t ) \\
-x_1 (t)    & = & a_0 [ \exp( - a_1 t ) - \exp( - a_0 t ) ] / ( a_0 - a_1 ) 
+x_1 (t)    & = & a_0 [ \exp( - a_1 t ) - \exp( - a_0 t ) ] / ( a_0 - a_1 )
 \end{array}
 \] $$
 The example tests Rosen34 using the relations above:
@@ -51,7 +48,7 @@ $end
 */
 // BEGIN C++
 
-# include <cppad/cppad.hpp> 
+# include <cppad/cppad.hpp>
 
 // To print the comparision, change the 0 to 1 on the next line.
 # define CPPAD_ODE_STIFF_PRINT 0
@@ -65,28 +62,28 @@ namespace {
 		// constructor
 		Fun(const CPPAD_TESTVECTOR(double)& a_) : a(a_)
 		{ }
-		// compute f(t, x) 
+		// compute f(t, x)
 		void Ode(
-			const double                    &t, 
-			const CPPAD_TESTVECTOR(double) &x, 
+			const double                    &t,
+			const CPPAD_TESTVECTOR(double) &x,
 			CPPAD_TESTVECTOR(double)       &f)
 		{	f[0]  = - a[0] * x[0];
-			f[1]  = + a[0] * x[0] - a[1] * x[1]; 
+			f[1]  = + a[0] * x[0] - a[1] * x[1];
 		}
-		// compute partial of f(t, x) w.r.t. t 
+		// compute partial of f(t, x) w.r.t. t
 		void Ode_ind(
-			const double                    &t, 
-			const CPPAD_TESTVECTOR(double) &x, 
+			const double                    &t,
+			const CPPAD_TESTVECTOR(double) &x,
 			CPPAD_TESTVECTOR(double)       &f_t)
 		{	f_t[0] = 0.;
 			f_t[1] = 0.;
 		}
-		// compute partial of f(t, x) w.r.t. x 
+		// compute partial of f(t, x) w.r.t. x
 		void Ode_dep(
-			const double                    &t, 
-			const CPPAD_TESTVECTOR(double) &x, 
+			const double                    &t,
+			const CPPAD_TESTVECTOR(double) &x,
 			CPPAD_TESTVECTOR(double)       &f_x)
-		{	f_x[0] = -a[0];  
+		{	f_x[0] = -a[0];
 			f_x[1] = 0.;
 			f_x[2] = +a[0];
 			f_x[3] = -a[1];
@@ -101,8 +98,8 @@ namespace {
 		RungeMethod(const CPPAD_TESTVECTOR(double) &a_) : F(a_)
 		{ }
 		void step(
-			double                     ta , 
-			double                     tb , 
+			double                     ta ,
+			double                     tb ,
 			CPPAD_TESTVECTOR(double) &xa ,
 			CPPAD_TESTVECTOR(double) &xb ,
 			CPPAD_TESTVECTOR(double) &eb )
@@ -119,8 +116,8 @@ namespace {
 		RosenMethod(const CPPAD_TESTVECTOR(double) &a_) : F(a_)
 		{ }
 		void step(
-			double                     ta , 
-			double                     tb , 
+			double                     ta ,
+			double                     tb ,
 			CPPAD_TESTVECTOR(double) &xa ,
 			CPPAD_TESTVECTOR(double) &xb ,
 			CPPAD_TESTVECTOR(double) &eb )
@@ -156,7 +153,7 @@ bool OdeStiff(void)
 
 	size_t k;
 	for(k = 0; k < 3; k++)
-	{	
+	{
 		size_t M    = 5;
 		double ti   = 0.;
 		double tf   = 1.;
@@ -167,11 +164,11 @@ bool OdeStiff(void)
 		double erel = 0.;
 
 		if( k == 0 )
-		{	xf = CppAD::OdeErrControl(rosen, ti, tf, 
+		{	xf = CppAD::OdeErrControl(rosen, ti, tf,
 			xi, smin, smax, scur, eabs, erel, ef, maxabs, nstep);
 		}
 		else if( k == 1 )
-		{	xf = CppAD::OdeErrControl(runge, ti, tf, 
+		{	xf = CppAD::OdeErrControl(runge, ti, tf,
 			xi, smin, smax, scur, eabs, erel, ef, maxabs, nstep);
 		}
 		else if( k == 2 )
@@ -182,7 +179,7 @@ bool OdeStiff(void)
 		ok &= CppAD::NearEqual(x0, xf[0], 0., eabs[0]);
 		ok &= CppAD::NearEqual(0., ef[0], 0., eabs[0]);
 
-		double x1 = a[0] * 
+		double x1 = a[0] *
 			(exp(-a[1]*tf) - exp(-a[0]*tf))/(a[0] - a[1]);
 		ok &= CppAD::NearEqual(x1, xf[1], 0., eabs[1]);
 		ok &= CppAD::NearEqual(0., ef[1], 0., eabs[0]);

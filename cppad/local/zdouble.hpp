@@ -1,6 +1,6 @@
-/* $Id$ */
-# ifndef CPPAD_ZDOUBLE_INCLUDED
-# define CPPAD_ZDOUBLE_INCLUDED
+// $Id$
+# ifndef CPPAD_ZDOUBLE_HPP
+# define CPPAD_ZDOUBLE_HPP
 /* --------------------------------------------------------------------------
 CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-15 Bradley M. Bell
 
@@ -132,7 +132,7 @@ It returns true if it succeeds and false otherwise.
 $end
 */
 # include <cppad/base_require.hpp>
-# include <cppad/nan.hpp>
+# include <cppad/utility/nan.hpp>
 
 /*!
 \file zdouble.hpp

@@ -1,9 +1,9 @@
 # $Id$
 # -----------------------------------------------------------------------------
-# CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-12 Bradley M. Bell
+# CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-15 Bradley M. Bell
 #
 # CppAD is distributed under multiple licenses. This distribution is under
-# the terms of the 
+# the terms of the
 #                     Eclipse Public License Version 1.0.
 #
 # A copy of this license is included in the COPYING file of this distribution.
@@ -19,7 +19,7 @@ EXTRA_DIST        =  \
 	exp_2.omh \
 	exp_eps.omh
 #
-check_PROGRAMS    = exp_apx 
+check_PROGRAMS    = exp_apx
 #
 AM_CPPFLAGS       = -I. -I$(top_srcdir) $(BOOST_INCLUDE) $(EIGEN_INCLUDE)
 AM_CXXFLAGS       = -g $(CXX_FLAGS)

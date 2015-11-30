@@ -1,10 +1,10 @@
 $Id$
 // BEGIN SHORT COPYRIGHT
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-06 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-15 Bradley M. Bell
 
 CppAD is distributed under multiple licenses. This distribution is under
-the terms of the 
+the terms of the
                     Eclipse Public License Version 1.0.
 
 A copy of this license is included in the COPYING file of this distribution.
@@ -18,20 +18,18 @@ $spell
 	Taylor
 $$
 
-$index sin, forward theory$$
-$index theory, sin forward$$
-$index forward, sin theory$$
 
 $section Sine Function Forward Taylor Polynomial Theory$$
+$mindex sin$$
 
-If $latex F(x) = \sin(x) $$ 
+If $latex F(x) = \sin(x) $$
 $latex \[
 	1 * F^{(1)} (x) - 0 * F (x)  = \cos(x)
 \] $$
 and in the
 $xref/
-	ForwardTheory/ 
-	Standard Math Functions/ 
+	ForwardTheory/
+	Standard Math Functions/
 	Differential Equation/
 	standard math function differential equation/
 	1
@@ -40,10 +38,10 @@ $latex A(x) = 0$$,
 $latex B(x) = 1$$,
 and $latex D(x) = \cos(x)$$.
 We use $latex a$$, $latex b$$, $latex d$$, $latex c$$
-and $latex z$$ to denote the 
+and $latex z$$ to denote the
 Taylor coefficients for
-$latex A [ X (t) ] $$, 
-$latex B [ X (t) ]$$, 
+$latex A [ X (t) ] $$,
+$latex B [ X (t) ]$$,
 $latex D [ X (t) ] $$,
 $latex \cos [ X(t) ]$$,
 and $latex F [ X(t) ] $$ respectively.
@@ -60,28 +58,28 @@ $latex \[
 \begin{array}{rcl}
 z^{(0)} & = & \sin ( x^{(0)} )
 \\
-e^{(j)} 
+e^{(j)}
 & = & d^{(j)} + \sum_{k=0}^{j} a^{(j-k)} * z^{(k)}
 \\
 & = & c^{(j)}
 \\
-z^{(j+1)} & = & \frac{1}{j+1} \frac{1}{ b^{(0)} } 
+z^{(j+1)} & = & \frac{1}{j+1} \frac{1}{ b^{(0)} }
 \left(
-	\sum_{k=1}^{j+1} k x^{(k)} e^{(j+1-k)} 
-	- \sum_{k=1}^j k z^{(k)}  b^{(j+1-k)} 
+	\sum_{k=1}^{j+1} k x^{(k)} e^{(j+1-k)}
+	- \sum_{k=1}^j k z^{(k)}  b^{(j+1-k)}
 \right)
 \\
-& = & \frac{1}{j+1} 
-	\sum_{k=1}^{j+1} k x^{(k)} c^{(j+1-k)} 
+& = & \frac{1}{j+1}
+	\sum_{k=1}^{j+1} k x^{(k)} c^{(j+1-k)}
 \end{array}
-\] $$ 
+\] $$
 Using $latex s$$ for the Taylor coefficients of $latex \sin[ X(t) ]$$
 the order $latex j+1$$ coefficient can be generated using the
 lower order coefficients for $latex \sin[ X(t) ]$$ and $latex \cos[ X(t) ]$$
 by the following formula:
 $latex \[
-s^{(j+1)} = \frac{1}{j+1} 
-	\sum_{k=1}^{j+1} k x^{(k)} c^{(j+1-k)} 
+s^{(j+1)} = \frac{1}{j+1}
+	\sum_{k=1}^{j+1} k x^{(k)} c^{(j+1-k)}
 \] $$
 
 $end

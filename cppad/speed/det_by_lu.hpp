@@ -1,12 +1,12 @@
-/* $Id$ */
-# ifndef CPPAD_DET_BY_LU_INCLUDED
-# define CPPAD_DET_BY_LU_INCLUDED
+// $Id$
+# ifndef CPPAD_DET_BY_LU_HPP
+# define CPPAD_DET_BY_LU_HPP
 
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-12 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-15 Bradley M. Bell
 
 CppAD is distributed under multiple licenses. This distribution is under
-the terms of the 
+the terms of the
                     Eclipse Public License Version 1.0.
 
 A copy of this license is included in the COPYING file of this distribution.
@@ -28,11 +28,8 @@ $spell
 $$
 
 $section Determinant Using Expansion by Lu Factorization$$
+$mindex det_by_lu factor$$
 
-$index det_by_lu$$
-$index determinant, lu factor$$
-$index lu, factor determinant$$
-$index factor, lu determinant$$
 
 $head Syntax$$
 $codei%# include <cppad/speed/det_by_lu.hpp>
@@ -44,10 +41,10 @@ $icode%d% = %det%(%a%)
 
 $head Inclusion$$
 The template class $code det_by_lu$$ is defined in the $code CppAD$$
-namespace by including 
+namespace by including
 the file $code cppad/speed/det_by_lu.hpp$$
 (relative to the CppAD distribution directory).
-It is only intended for example and testing purposes, 
+It is only intended for example and testing purposes,
 so it is not automatically included by
 $cref/cppad.hpp/cppad/$$.
 
@@ -56,7 +53,7 @@ The syntax
 $codei%
 	det_by_lu<%Scalar%> %det%(%n%)
 %$$
-constructs the object $icode det$$ which can be used for 
+constructs the object $icode det$$ which can be used for
 evaluating the determinant of $icode n$$ by $icode n$$ matrices
 using LU factorization.
 
@@ -98,7 +95,7 @@ $codei%
 %$$
 
 $head Vector$$
-If $icode y$$ is a $icode Vector$$ object, 
+If $icode y$$ is a $icode Vector$$ object,
 it must support the syntax
 $codei%
 	%y%[%i%]
@@ -116,13 +113,13 @@ $children%
 
 $head Example$$
 The file
-$cref det_by_lu.cpp$$ 
+$cref det_by_lu.cpp$$
 contains an example and test of $code det_by_lu.hpp$$.
 It returns true if it succeeds and false otherwise.
 
 $head Source Code$$
 The file
-$cref det_by_lu.hpp$$ 
+$cref det_by_lu.hpp$$
 contains the source for this template function.
 
 
@@ -136,7 +133,7 @@ $end
 // BEGIN CppAD namespace
 namespace CppAD {
 
-// The AD complex case is used by examples by not used by speed tests 
+// The AD complex case is used by examples by not used by speed tests
 // Must define a specializatgion of LeqZero,AbsGeq for the ADComplex case
 typedef std::complex<double>     Complex;
 typedef CppAD::AD<Complex>     ADComplex;
@@ -168,13 +165,13 @@ public:
 		// copy matrix so it is not overwritten
 		for(i = 0; i < n_ * n_; i++)
 			A_[i] = x[i];
- 
+
 		// comput log determinant
 		signdet = CppAD::LuSolve(
 			n_, m_, A_, B_, X_, logdet);
 
 /*
-		// Do not do this for speed test because it makes floating 
+		// Do not do this for speed test because it makes floating
 		// point operation sequence very simple.
 		if( signdet == 0 )
 			det = 0;
@@ -182,7 +179,7 @@ public:
 */
 
 		// convert to determinant
-		det     = Scalar( signdet ) * exp( logdet ); 
+		det     = Scalar( signdet ) * exp( logdet );
 
 # ifdef FADBAD
 		// Fadbad requires tempories to be set to constants

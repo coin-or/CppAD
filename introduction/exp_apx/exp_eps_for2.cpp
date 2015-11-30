@@ -1,9 +1,9 @@
-/* $Id$ */
+// $Id$
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-09 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-15 Bradley M. Bell
 
 CppAD is distributed under multiple licenses. This distribution is under
-the terms of the 
+the terms of the
                     Eclipse Public License Version 1.0.
 
 A copy of this license is included in the COPYING file of this distribution.
@@ -21,10 +21,8 @@ $spell
 $$
 
 $section exp_eps: Verify Second Order Forward Sweep$$
+$mindex first exp_2$$
 
-$index first, order exp_2$$
-$index order, first exp_2$$
-$index exp_2, first order$$
 
 $codep */
 # include <cmath>                     // for fabs function
@@ -51,7 +49,7 @@ bool exp_eps_for2(void)
 	ok    &= std::fabs( v2[4] - 0. ) <= 1e-10;
 
 	v2[5] = v2[3] * v0[1] + 2. * v1[3] * v1[1]       // v5 = v3 * v1
-	      + v0[3] * v2[1];           
+	      + v0[3] * v2[1];
 	ok    &= std::fabs( v2[5] - 2. ) <= 1e-10;
 
 	v2[6] = v2[5] / 2.;                              // v6 = v5 / 2

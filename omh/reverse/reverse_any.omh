@@ -1,9 +1,9 @@
-/* $Id$ */
+// $Id$
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-14 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-15 Bradley M. Bell
 
 CppAD is distributed under multiple licenses. This distribution is under
-the terms of the 
+the terms of the
                     Eclipse Public License Version 1.0.
 
 A copy of this license is included in the COPYING file of this distribution.
@@ -24,13 +24,10 @@ $spell
 	Taylor
 $$
 
-$section Any Order Reverse Mode$$ 
+$section Any Order Reverse Mode$$
+$mindex derivative$$
 
 
-$index reverse, any order mode$$
-$index any, order reverse mode$$
-$index mode, any order reverse$$
-$index derivative, reverse mode$$
 
 $head Syntax$$
 $icode%dw% = %f%.Reverse(%q%, %w%)%$$
@@ -42,7 +39,7 @@ $cref/AD function/glossary/AD Function/$$ corresponding to $icode f$$.
 Reverse mode computes the derivative of the $cref Forward$$ mode
 $cref/Taylor coefficients/glossary/Taylor Coefficient/$$
 with respect to the domain variable $latex x$$.
-To be specific, it computes the derivative 
+To be specific, it computes the derivative
 $latex W^{(1)} (u)$$ at $latex u = x$$
 which is specified by the following notation:
 
@@ -50,14 +47,14 @@ $head Notation$$
 
 $subhead u^(k)$$
 For $latex k = 0, \ldots , q-1$$,
-the vector $latex u^{(k)} \in B^n$$ is defined as the value of 
+the vector $latex u^{(k)} \in B^n$$ is defined as the value of
 $icode x_k$$ in the previous calls of the form
 $codei%
 	%f%.Forward(%k%, %x_k%)
-%$$ 
+%$$
 If there is no previous call with $latex k = 0$$,
-$latex u^{(0)}$$ is the value of the independent variables when the 
-corresponding 
+$latex u^{(0)}$$ is the value of the independent variables when the
+corresponding
 AD of $icode Base$$
 $cref/operation sequence/glossary/Operation/Sequence/$$ was recorded.
 
@@ -66,13 +63,13 @@ $subhead X(t, u)$$
 The function
 $latex X : B \times B^{n \times q} \rightarrow B^n$$ is defined by
 $latex \[
-	X ( t , u ) = u^{(0)} + u^{(1)} * t + \cdots + u^{(q-1)} * t^{q-1} 
-\] $$ 
+	X ( t , u ) = u^{(0)} + u^{(1)} * t + \cdots + u^{(q-1)} * t^{q-1}
+\] $$
 Note that for $latex k = 0 , \ldots , q-1$$,
-$latex u^{(k)}$$ is related to the $th k$$ partial of $latex X(t, u)$$ 
+$latex u^{(k)}$$ is related to the $th k$$ partial of $latex X(t, u)$$
 with respect to $latex t$$ by
 $latex \[
-	u^{(k)} = \frac{1}{k !} \Dpow{k}{t} X(0, u) 
+	u^{(k)} = \frac{1}{k !} \Dpow{k}{t} X(0, u)
 \] $$
 
 $subhead Y(t, u)$$
@@ -133,10 +130,10 @@ $codei%
 	const %Vector% &%w%
 %$$
 (see $cref/Vector/reverse_any/Vector/$$ below)
-and its size 
-must be equal to $icode m$$ or $icode%m% * %q%$$, 
+and its size
+must be equal to $icode m$$ or $icode%m% * %q%$$,
 It specifies the weighting vector $icode w$$
-in the definition of 
+in the definition of
 $cref/W(u)/reverse_any/Notation/W(u)/$$.
 
 
@@ -150,34 +147,34 @@ It is a vector with size $latex n \times q$$.
 For $latex j = 0, \ldots, n-1$$ and $latex k = 0 , \ldots , q-1$$
 If the argument $icode w$$ has size $icode%m% * %q%$$,
 $latex \[
-	dw[ j * q + k ] = W^{(1)} ( x )_{j,k} 
+	dw[ j * q + k ] = W^{(1)} ( x )_{j,k}
 \] $$
-where $latex u = x$$ is value of the Taylor coefficients where the 
+where $latex u = x$$ is value of the Taylor coefficients where the
 derivative is evaluated.
 $pre
 
 $$
 If the argument $icode w$$ has size $icode m$$,
 $latex \[
-	dw[ j * q + q - k - 1 ] = W^{(1)} ( x )_{j,k} 
+	dw[ j * q + q - k - 1 ] = W^{(1)} ( x )_{j,k}
 \] $$
-where $latex u = x$$ is value of the Taylor coefficients where the 
+where $latex u = x$$ is value of the Taylor coefficients where the
 derivative is evaluated.
 Note the reverse order in which the order indices are stored.
 This is an unfortunate consequence of keeping $code Reverse$$ backward
 compatible.
 
 $head First Order$$
-We consider the case where 
+We consider the case where
 $icode%q% = 1%$$ and $icode%w%.size() == %m%$$.
 In this case
 $latex \[
 \begin{array}{rcl}
 W(u) & = & w_0 Y_0 (0, u) + \cdots + w_m Y_m (0, u)
-\\ 
+\\
 W(u) & = & w_0 F_0 [ X(0, u) ] + \cdots + w_m F_m [ X(0, u) ]
-\\ 
-W^{(1)} (x) & = & 
+\\
+W^{(1)} (x) & = &
 	w_0 F_0^{(1)} ( x^{(0)} ) + \cdots + w_m F_m^{(1)} ( x^{(0)} )
 \end{array}
 \] $$
@@ -185,35 +182,35 @@ This is the same as the result documented in $cref reverse_one$$.
 
 
 $head Second Order$$
-We consider the case where 
+We consider the case where
 $icode%q% = 2%$$ and $icode%w%.size() == %m%$$.
 In this case
 $latex \[
 \begin{array}{rcl}
 W(u) & = & w_0 \partial_t Y_0 (0, u) + \cdots + w_m \partial_t Y_m (0, u)
-\\ 
+\\
 W(u) & = &
 	w_0 \partial_t \{ F_0 [ X(t, u) ] \}_{t = 0}
-	 + \cdots + 
+	 + \cdots +
 	w_m \partial_t \{ F_m [ X(t, u) ] \}_{t = 0}
-\\ 
+\\
 W(u) & = &
-	w_0 F_0^{(1)} ( u^{(0)} ) u^{(1)} 
-	 + \cdots + 
-	w_0 F_m^{(1)} ( u^{(0)} ) u^{(1)} 
+	w_0 F_0^{(1)} ( u^{(0)} ) u^{(1)}
+	 + \cdots +
+	w_0 F_m^{(1)} ( u^{(0)} ) u^{(1)}
 \\
 \partial_{u(0)} W(x) & = &
-	w_0 (  x^{(1)} )^\R{T} F_0^{(2)} ( x^{(0)} ) 
-	+ \cdots + 
-	w_m (  x^{(1)} )^\R{T} F_m^{(2)} ( x^{(0)} ) 
+	w_0 (  x^{(1)} )^\R{T} F_0^{(2)} ( x^{(0)} )
+	+ \cdots +
+	w_m (  x^{(1)} )^\R{T} F_m^{(2)} ( x^{(0)} )
 \\
 \partial_{u(1)} W(x) & = &
-	w_0 F_0^{(1)} ( x^{(0)} ) 
-	+ \cdots + 
-	w_m F_m^{(1)} ( x^{(0)} ) 
+	w_0 F_0^{(1)} ( x^{(0)} )
+	+ \cdots +
+	w_m F_m^{(1)} ( x^{(0)} )
 \end{array}
 \] $$
-where $latex \partial{u(0)} $$ 
+where $latex \partial{u(0)} $$
 denotes partial with respect to $latex u^{(0)}$$.
 These are the same as the result documented in $cref reverse_two$$.
 

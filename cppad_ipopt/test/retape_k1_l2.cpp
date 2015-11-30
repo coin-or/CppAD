@@ -1,9 +1,9 @@
-/* $Id$ */
+// $Id$
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-13 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-15 Bradley M. Bell
 
 CppAD is distributed under multiple licenses. This distribution is under
-the terms of the 
+the terms of the
                     Eclipse Public License Version 1.0.
 
 A copy of this license is included in the COPYING file of this distribution.
@@ -56,13 +56,13 @@ public:
 	}
 };
 } // end empty namespace
-	
+
 bool retape_k1_l2(void)
 {	bool ok = true;
 	size_t j;
 
 	// number of independent variables (domain dimension for f and g)
-	size_t n = 2;  
+	size_t n = 2;
 	// no constraints (range dimension for g)
 	size_t m = 0;
 	// initial value of the independent variables
@@ -82,7 +82,7 @@ bool retape_k1_l2(void)
 
 	// object in derived class
 	FG_info my_fg_info;
-	cppad_ipopt_fg_info *fg_info = &my_fg_info;  
+	cppad_ipopt_fg_info *fg_info = &my_fg_info;
 
 	// create the Ipopt interface
 	cppad_ipopt_solution solution;
@@ -102,7 +102,7 @@ bool retape_k1_l2(void)
 	app->Options()->SetIntegerValue("max_iter", 10);
 
 	// approximate accuracy in first order necessary conditions;
-	// see Mathematical Programming, Volume 106, Number 1, 
+	// see Mathematical Programming, Volume 106, Number 1,
 	// Pages 25-57, Equation (6)
 	app->Options()->SetNumericValue("tol", 1e-9);
 
@@ -119,8 +119,8 @@ bool retape_k1_l2(void)
 	ok    &= status == Ipopt::Solve_Succeeded;
 
 	/*
- 	Check the solution values
- 	*/
+	Check the solution values
+	*/
 	ok &= solution.status == cppad_ipopt_solution::success;
 	//
 	double rel_tol     = 1e-6;  // relative tolerance

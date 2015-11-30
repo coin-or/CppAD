@@ -1,6 +1,6 @@
-/* $Id$ */
-# ifndef CPPAD_OPTIMIZE_INCLUDED
-# define CPPAD_OPTIMIZE_INCLUDED
+// $Id$
+# ifndef CPPAD_OPTIMIZE_HPP
+# define CPPAD_OPTIMIZE_HPP
 
 /* --------------------------------------------------------------------------
 CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-15 Bradley M. Bell
@@ -28,13 +28,8 @@ $spell
 $$
 
 $section Optimize an ADFun Object Tape$$
+$mindex sequence operations speed memory NDEBUG$$
 
-$index optimize$$
-$index tape, optimize$$
-$index sequence, optimize operations$$
-$index operations, optimize sequence$$
-$index speed, optimize$$
-$index memory, optimize$$
 
 $head Syntax$$
 $icode%f%.optimize()%$$
@@ -109,7 +104,6 @@ the value of $icode%u%[%i%]%$$ is set to $cref nan$$.
 
 
 $head Checking Optimization$$
-$index NDEBUG$$
 If $cref/NDEBUG/Faq/Speed/NDEBUG/$$ is not defined,
 and $cref/f.size_order()/size_order/$$ is greater than zero,
 a $cref forward_zero$$ calculation is done using the optimized version

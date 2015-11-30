@@ -1,9 +1,9 @@
-/* $Id$ */
+// $Id$
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-13 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-15 Bradley M. Bell
 
 CppAD is distributed under multiple licenses. This distribution is under
-the terms of the 
+the terms of the
                     Eclipse Public License Version 1.0.
 
 A copy of this license is included in the COPYING file of this distribution.
@@ -15,15 +15,15 @@ Please visit http://www.coin-or.org/CppAD/ for information on other licenses.
 
 # define INSTANTIATE(Type) template class extern_value< Type >
 
-template <class Type> 
+template <class Type>
 extern_value<Type>::extern_value(Type value)
 {	value_ = value; }
 
-template <class Type> 
+template <class Type>
 void extern_value<Type>::set(Type value)
 {	value_ = value; }
 
-template <class Type> 
+template <class Type>
 Type extern_value<Type>::get(void)
 {	return value_; }
 

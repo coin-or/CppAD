@@ -1,9 +1,9 @@
-/* $Id$ */
+// $Id$
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-12 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-15 Bradley M. Bell
 
 CppAD is distributed under multiple licenses. This distribution is under
-the terms of the 
+the terms of the
                     Eclipse Public License Version 1.0.
 
 A copy of this license is included in the COPYING file of this distribution.
@@ -17,9 +17,6 @@ $spell
 $$
 
 $section Print During Zero Order Forward Mode: Example and Test$$
-$index print, zero order forward$$
-$index zero, order forward print$$
-$index forward, zero order print$$
 
 $code
 $verbatim%example/print_for.cpp%0%// BEGIN C++%// END C++%1%$$
@@ -30,7 +27,7 @@ $end
 // BEGIN C++
 # include <cppad/cppad.hpp>
 
-namespace { 
+namespace {
 	using std::endl;
 	using CppAD::AD;
 
@@ -44,7 +41,7 @@ namespace {
 		PrintFor(y, "check_log: y == ", y , " which is <= 0\n");
 
 		return log(y);
-	} 
+	}
 }
 
 bool print_for(void)
@@ -63,18 +60,18 @@ bool print_for(void)
 	AD<double> log_var = check_log(var, stream_out);
 	ok &= stream_out.str() == "";
 
-	// dependent variable vector 
+	// dependent variable vector
 	size_t m = 1;
 	CPPAD_TESTVECTOR(AD<double>) ay(m);
 	ay[0]    = log_var;
 
 	// define f: x -> y and stop tape recording
-	CppAD::ADFun<double> f(ax, ay); 
+	CppAD::ADFun<double> f(ax, ay);
 
-	// zero order forward with x[0] = 2 
+	// zero order forward with x[0] = 2
 	CPPAD_TESTVECTOR(double) x(n);
 	x[0] = 2.;
-	f.Forward(0, x, stream_out);	
+	f.Forward(0, x, stream_out);
 
 	std::string string_out = stream_out.str();
 	ok &= stream_out.str() == "check_log: y == 0 which is <= 0\n";

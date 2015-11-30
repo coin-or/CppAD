@@ -1,9 +1,9 @@
-/* $Id$ */
+// $Id$
 /* --------------------------------------------------------------------------
 CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-15 Bradley M. Bell
 
 CppAD is distributed under multiple licenses. This distribution is under
-the terms of the 
+the terms of the
                     Eclipse Public License Version 1.0.
 
 A copy of this license is included in the COPYING file of this distribution.
@@ -37,13 +37,8 @@ $spell
 $$
 
 $section CppAD Speed: Sparse Jacobian$$
+$mindex link_sparse_jacobian speed$$
 
-$index link_sparse_jacobian, cppad$$
-$index cppad, link_sparse_jacobian$$
-$index speed, cppad$$
-$index cppad, speed$$
-$index sparse, speed cppad$$
-$index jacobian, speed cppad$$
 
 $head Specifications$$
 See $cref link_sparse_jacobian$$.
@@ -87,8 +82,8 @@ namespace {
 }
 
 bool link_sparse_jacobian(
-	size_t                           size     , 
-	size_t                           repeat   , 
+	size_t                           size     ,
+	size_t                           repeat   ,
 	size_t                           m        ,
 	const CppAD::vector<size_t>&     row      ,
 	const CppAD::vector<size_t>&     col      ,
@@ -109,7 +104,7 @@ bool link_sparse_jacobian(
 	typedef CppAD::vector<ADScalar>     ADVector;
 
 	size_t j;
-	size_t order = 0;         // derivative order corresponding to function 
+	size_t order = 0;         // derivative order corresponding to function
 	size_t n     = size;      // number of independent variables
 	ADVector   a_x(n);        // AD domain space vector
 	ADVector   a_y(m);        // AD range space vector y = g(x)
@@ -121,15 +116,15 @@ bool link_sparse_jacobian(
 
 	// ------------------------------------------------------
 	if( ! global_onetape ) while(repeat--)
-	{	// choose a value for x 
+	{	// choose a value for x
 		CppAD::uniform_01(n, x);
 		for(j = 0; j < n; j++)
 			a_x[j] = x[j];
 
 		// declare independent variables
-		Independent(a_x);	
+		Independent(a_x);
 
-		// AD computation of f (x) 
+		// AD computation of f (x)
 		CppAD::sparse_jac_fun<ADScalar>(m, n, a_x, row, col, order, a_y);
 
 		// create function object f : X -> Y
@@ -163,15 +158,15 @@ bool link_sparse_jacobian(
 		);
 	}
 	else
-	{	// choose a value for x 
+	{	// choose a value for x
 		CppAD::uniform_01(n, x);
 		for(j = 0; j < n; j++)
 			a_x[j] = x[j];
 
 		// declare independent variables
-		Independent(a_x);	
+		Independent(a_x);
 
-		// AD computation of f (x) 
+		// AD computation of f (x)
 		CppAD::sparse_jac_fun<ADScalar>(m, n, a_x, row, col, order, a_y);
 
 		// create function object f : X -> Y
@@ -196,7 +191,7 @@ bool link_sparse_jacobian(
 			work.color_method = "colpack";
 # endif
 		while(repeat--)
-		{	// choose a value for x 
+		{	// choose a value for x
 			CppAD::uniform_01(n, x);
 
 			// calculate the Jacobian at this x

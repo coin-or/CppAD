@@ -3,14 +3,14 @@ $Id$
 CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-15 Bradley M. Bell
 
 CppAD is distributed under multiple licenses. This distribution is under
-the terms of the 
+the terms of the
                     Eclipse Public License Version 1.0.
 
 A copy of this license is included in the COPYING file of this distribution.
 Please visit http://www.coin-or.org/CppAD/ for information on other licenses.
 -------------------------------------------------------------------------- */
 $begin FunDeprecated$$
-$spell 
+$spell
 	bool
 	VecAD
 	CppAD
@@ -47,14 +47,12 @@ i.e., they are no longer approved of and may be removed from some future
 version of CppAD.
 
 $head Dependent$$
-$index ADFun, Dependent$$
-$index Dependent, ADFun$$
 A recording of and AD of $icode Base$$
 $cref/operation sequence/glossary/Operation/Sequence/$$
 is started by a call of the form
 $codei%
 	Independent(%x%)
-%$$ 
+%$$
 If there is only one such recording at the current time,
 you can use $icode%f%.Dependent(%y%)%$$ in place of
 $codei%
@@ -65,43 +63,39 @@ See $cref Dependent$$ for a description of this operation.
 $subhead Deprecated 2007-08-07$$
 This syntax was deprecated when CppAD was extended to allow
 for more than one $codei%AD<%Base%>%$$ recording to be
-active at one time. 
+active at one time.
 This was necessary to allow for multiple threading applications.
 
 $head Order$$
-$index ADFun, Order$$
-$index Order, ADFun$$
-The result $icode o$$ has prototype 
+The result $icode o$$ has prototype
 $codei%
 	size_t %o%
 %$$
 and is the order of the previous forward operation
 using the function $icode f$$.
-This is the highest order of the 
+This is the highest order of the
 $cref/Taylor coefficients/glossary/Taylor Coefficient/$$
 that are currently stored in $icode f$$.
 
 $subhead Deprecated 2006-03-31$$
 Zero order corresponds to function values being stored in $icode f$$.
 In the future, we would like to be able to erase the function
-values so that $icode f$$ uses less memory. 
+values so that $icode f$$ uses less memory.
 In this case, the return value of $code Order$$ would not make sense.
-Use $cref size_order$$ to obtain 
+Use $cref size_order$$ to obtain
 the number of Taylor coefficients currently stored
-in the ADFun object $icode f$$ 
+in the ADFun object $icode f$$
 (which is equal to the order plus one).
 
 
 $head Memory$$
-$index ADFun, Memory$$
-$index Memory, ADFun$$
-The result 
+The result
 $codei%
 	size_t %m%
 %$$
 and is the number of memory units ($code sizeof$$) required for the
 information currently stored in $icode f$$.
-This memory is returned to the system when the destructor for 
+This memory is returned to the system when the destructor for
 $icode f$$ is called.
 
 $subhead Deprecated 2006-03-31$$
@@ -114,8 +108,6 @@ when it no longer needs the values stored in that memory.
 Thus the $code Memory$$ function is no longer well defined.
 
 $head Size$$
-$index ADFun, Size$$
-$index Size, ADFun$$
 The result $icode s$$ has prototype
 $codei%
 	size_t %s%
@@ -130,12 +122,10 @@ $subhead Deprecated 2006-04-03$$
 There are other sizes attached to an ADFun object, for example,
 the number of operations in the sequence.
 In order to avoid confusion with these other sizes,
-use $cref/size_var/seq_property/size_var/$$ to obtain 
+use $cref/size_var/seq_property/size_var/$$ to obtain
 the number of variables in the operation sequence.
 
 $head taylor_size$$
-$index ADFun, taylor_size$$
-$index taylor_size, ADFun$$
 The result $icode t$$ has prototype
 $codei%
 	size_t %t%
@@ -147,8 +137,6 @@ $subhead Deprecated 2006-06-17$$
 This function has been replaced by $cref size_order$$.
 
 $head use_VecAD$$
-$index ADFun, use_VecAD$$
-$index use_VecAD, ADFun$$
 The result $icode u$$ has prototype
 $codei%
 	bool %u%
@@ -156,7 +144,7 @@ $codei%
 If it is true, the
 AD of $icode Base$$
 $cref/operation sequence/glossary/Operation/Sequence/$$
-stored in $icode f$$ contains 
+stored in $icode f$$ contains
 $cref/VecAD/VecAD/VecAD<Base>::reference/$$ operands.
 Otherwise $icode u$$ is false.
 
@@ -167,8 +155,6 @@ $codei%
 %$$
 
 $head size_taylor$$
-$index ADFun, size_taylor$$
-$index size_taylor, ADFun$$
 The result $icode v$$ has prototype
 $codei%
 	size_t %v%
@@ -180,8 +166,6 @@ $subhead Deprecated 2014-03-18$$
 This function has been replaced by $cref size_order$$.
 
 $head capacity_taylor$$
-$index ADFun, capacity_taylor$$
-$index capacity_taylor, ADFun$$
 The result $icode w$$ has prototype
 $codei%
 	size_t %w%

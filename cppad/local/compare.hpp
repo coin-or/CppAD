@@ -1,6 +1,6 @@
-/* $Id$ */
-# ifndef CPPAD_COMPARE_INCLUDED
-# define CPPAD_COMPARE_INCLUDED
+// $Id$
+# ifndef CPPAD_COMPARE_HPP
+# define CPPAD_COMPARE_HPP
 
 /* --------------------------------------------------------------------------
 CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-15 Bradley M. Bell
@@ -23,19 +23,10 @@ $spell
 	const
 $$
 
-$index binary, AD compare operator$$
-$index AD, binary compare operator$$
-$index compare, AD binary operator$$
-$index operator, AD binary compare$$
 
-$index <, AD operator$$
-$index <=, AD operator$$
-$index >, AD operator$$
-$index >=, AD operator$$
-$index ==, AD operator$$
-$index !=, AD operator$$
 
 $section AD Binary Comparison Operators$$
+$mindex compare < <= > >= == !=$$
 
 
 $head Syntax$$
@@ -136,7 +127,7 @@ namespace CppAD {
 template <class Base>
 CPPAD_INLINE_FRIEND_TEMPLATE_FUNCTION
 bool operator < (const AD<Base> &left , const AD<Base> &right)
-{ 	bool result    =  (left.value_ < right.value_);
+{	bool result    =  (left.value_ < right.value_);
 	bool var_left  = Variable(left);
 	bool var_right = Variable(right);
 
@@ -187,7 +178,7 @@ CPPAD_FOLD_BOOL_VALUED_BINARY_OPERATOR(<)
 template <class Base>
 CPPAD_INLINE_FRIEND_TEMPLATE_FUNCTION
 bool operator <= (const AD<Base> &left , const AD<Base> &right)
-{ 	bool result    =  (left.value_ <= right.value_);
+{	bool result    =  (left.value_ <= right.value_);
 	bool var_left  = Variable(left);
 	bool var_right = Variable(right);
 
@@ -238,7 +229,7 @@ CPPAD_FOLD_BOOL_VALUED_BINARY_OPERATOR(<=)
 template <class Base>
 CPPAD_INLINE_FRIEND_TEMPLATE_FUNCTION
 bool operator > (const AD<Base> &left , const AD<Base> &right)
-{ 	bool result    =  (left.value_ > right.value_);
+{	bool result    =  (left.value_ > right.value_);
 	bool var_left  = Variable(left);
 	bool var_right = Variable(right);
 
@@ -289,7 +280,7 @@ CPPAD_FOLD_BOOL_VALUED_BINARY_OPERATOR(>)
 template <class Base>
 CPPAD_INLINE_FRIEND_TEMPLATE_FUNCTION
 bool operator >= (const AD<Base> &left , const AD<Base> &right)
-{ 	bool result    =  (left.value_ >= right.value_);
+{	bool result    =  (left.value_ >= right.value_);
 	bool var_left  = Variable(left);
 	bool var_right = Variable(right);
 
@@ -340,7 +331,7 @@ CPPAD_FOLD_BOOL_VALUED_BINARY_OPERATOR(>=)
 template <class Base>
 CPPAD_INLINE_FRIEND_TEMPLATE_FUNCTION
 bool operator == (const AD<Base> &left , const AD<Base> &right)
-{ 	bool result    =  (left.value_ == right.value_);
+{	bool result    =  (left.value_ == right.value_);
 	bool var_left  = Variable(left);
 	bool var_right = Variable(right);
 
@@ -382,7 +373,7 @@ CPPAD_FOLD_BOOL_VALUED_BINARY_OPERATOR(==)
 template <class Base>
 CPPAD_INLINE_FRIEND_TEMPLATE_FUNCTION
 bool operator != (const AD<Base> &left , const AD<Base> &right)
-{ 	bool result    =  (left.value_ != right.value_);
+{	bool result    =  (left.value_ != right.value_);
 	bool var_left  = Variable(left);
 	bool var_right = Variable(right);
 

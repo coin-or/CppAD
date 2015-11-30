@@ -1,9 +1,9 @@
-/* $Id$ */
+// $Id$
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-12 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-15 Bradley M. Bell
 
 CppAD is distributed under multiple licenses. This distribution is under
-the terms of the 
+the terms of the
                     Eclipse Public License Version 1.0.
 
 A copy of this license is included in the COPYING file of this distribution.
@@ -17,16 +17,14 @@ $spell
 $$
 
 $section Rosen34: Example and Test$$
+$mindex Rosen34$$
 
-$index Rosen34, example$$
-$index example, Rosen34$$
-$index test, Rosen34$$
 
-Define 
+Define
 $latex X : \B{R} \rightarrow \B{R}^n$$ by
 $latex \[
 	X_i (t) =  t^{i+1}
-\] $$ 
+\] $$
 for $latex i = 1 , \ldots , n-1$$.
 It follows that
 $latex \[
@@ -52,16 +50,16 @@ namespace {
 	class Fun {
 	public:
 		// constructor
-		Fun(bool use_x_) : use_x(use_x_) 
+		Fun(bool use_x_) : use_x(use_x_)
 		{ }
 
 		// compute f(t, x) both for double and AD<double>
 		template <typename Scalar>
 		void Ode(
-			const Scalar                    &t, 
-			const CPPAD_TESTVECTOR(Scalar) &x, 
+			const Scalar                    &t,
+			const CPPAD_TESTVECTOR(Scalar) &x,
 			CPPAD_TESTVECTOR(Scalar)       &f)
-		{	size_t n  = x.size();	
+		{	size_t n  = x.size();
 			Scalar ti(1);
 			f[0]   = Scalar(1);
 			size_t i;
@@ -77,12 +75,12 @@ namespace {
 
 		// compute partial of f(t, x) w.r.t. t using AD
 		void Ode_ind(
-			const double                    &t, 
-			const CPPAD_TESTVECTOR(double) &x, 
+			const double                    &t,
+			const CPPAD_TESTVECTOR(double) &x,
 			CPPAD_TESTVECTOR(double)       &f_t)
 		{	using namespace CppAD;
 
-			size_t n  = x.size();	
+			size_t n  = x.size();
 			CPPAD_TESTVECTOR(AD<double>) T(1);
 			CPPAD_TESTVECTOR(AD<double>) X(n);
 			CPPAD_TESTVECTOR(AD<double>) F(n);
@@ -110,12 +108,12 @@ namespace {
 
 		// compute partial of f(t, x) w.r.t. x using AD
 		void Ode_dep(
-			const double                    &t, 
-			const CPPAD_TESTVECTOR(double) &x, 
+			const double                    &t,
+			const CPPAD_TESTVECTOR(double) &x,
 			CPPAD_TESTVECTOR(double)       &f_x)
 		{	using namespace CppAD;
 
-			size_t n  = x.size();	
+			size_t n  = x.size();
 			CPPAD_TESTVECTOR(AD<double>) T(1);
 			CPPAD_TESTVECTOR(AD<double>) X(n);
 			CPPAD_TESTVECTOR(AD<double>) F(n);
@@ -162,20 +160,20 @@ bool Rosen34(void)
 	size_t  n = 4;      // number components in X(t) and order of method
 	size_t  M = 2;      // number of Rosen34 steps in [ti, tf]
 	double ti = 0.;     // initial time
-	double tf = 2.;     // final time 
+	double tf = 2.;     // final time
 
 	// xi = X(0)
-	CPPAD_TESTVECTOR(double) xi(n); 
+	CPPAD_TESTVECTOR(double) xi(n);
 	for(i = 0; i <n; i++)
 		xi[i] = 0.;
 
 	size_t use_x;
 	for( use_x = 0; use_x < 2; use_x++)
 	{	// function object depends on value of use_x
-		Fun F(use_x > 0); 
+		Fun F(use_x > 0);
 
 		// compute Rosen34 approximation for X(tf)
-		CPPAD_TESTVECTOR(double) xf(n), e(n); 
+		CPPAD_TESTVECTOR(double) xf(n), e(n);
 		xf = CppAD::Rosen34(F, M, ti, tf, xi, e);
 
 		double check = tf;

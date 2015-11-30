@@ -18,7 +18,7 @@ $spell
 $$
 
 $section Logarithm Function Reverse Mode Theory$$
-$mindex log, log1p$$
+$mindex log1p$$
 
 We use the reverse theory
 $cref%standard math function

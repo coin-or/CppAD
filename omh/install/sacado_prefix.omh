@@ -1,9 +1,9 @@
-/* $Id$ */
+// $Id$
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-13 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-15 Bradley M. Bell
 
 CppAD is distributed under multiple licenses. This distribution is under
-the terms of the 
+the terms of the
                     Eclipse Public License Version 1.0.
 
 A copy of this license is included in the COPYING file of this distribution.
@@ -21,8 +21,7 @@ $spell
 $$
 
 $section Including the Sacado Speed Tests$$
-$index sacado, speed$$
-$index speed, sacado$$
+$mindex prefix get$$
 
 $head Purpose$$
 CppAD includes speed comparisons for the AD package
@@ -31,9 +30,7 @@ $cref speed_sacado$$.
 
 
 $head sacado_prefix$$
-$index sacado, prefix$$
-$index prefix, sacado$$
-If Sacado is installed on your system, you can 
+If Sacado is installed on your system, you can
 specify a value for its install $icode sacado_prefix$$ on the
 $cref cmake$$ command line.
 The value of $icode sacado_prefix$$ must be such that,
@@ -42,21 +39,19 @@ $cref/cmake_install_includedirs/cmake/cmake_install_includedirs/$$,
 $codei%
 	%sacado_prefix%/%dir%/Sacado.hpp
 %$$
-is a valid way to reference to the include file $code Sacado.hpp$$; 
+is a valid way to reference to the include file $code Sacado.hpp$$;
 
 $head Speed Tests$$
-$index speed, sacado$$
-$index sacado, speed$$
 If you include $icode sacado_prefix$$ on the $cref cmake$$ command line,
-you will be able to run the Sacado speed correctness tests 
+you will be able to run the Sacado speed correctness tests
 by executing the following commands starting in the
 $cref/distribution directory/download/Distribution Directory/$$:
 $codei%
 	cd build/speed/sacado
 	make check_speed_sacado
 %$$
-After executing $code make check_speed_sacado$$, 
-you can run a specific Sacado speed test 
+After executing $code make check_speed_sacado$$,
+you can run a specific Sacado speed test
 by executing the command $code ./speed_sacado$$;
 see $cref speed_main$$ for the meaning of the command line
 options to this program.
@@ -65,8 +60,6 @@ $children%
 	bin/get_sacado.sh
 %$$
 $head get_sacado$$
-$index get, sacado$$
-$index sacado, get$$
 If you are using Unix, you can download and install
 a copy of Sacado using $cref get_sacado.sh$$.
 The corresponding $icode sacado_prefix$$ would be

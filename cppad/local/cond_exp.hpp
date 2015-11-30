@@ -1,6 +1,6 @@
-/* $Id$ */
-# ifndef CPPAD_COND_EXP_INCLUDED
-# define CPPAD_COND_EXP_INCLUDED
+// $Id$
+# ifndef CPPAD_COND_EXP_HPP
+# define CPPAD_COND_EXP_HPP
 
 /* --------------------------------------------------------------------------
 CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-15 Bradley M. Bell
@@ -35,11 +35,9 @@ $spell
 	Gt
 $$
 
-$index conditional, expression$$
-$index expression, conditional$$
-$index assign, conditional$$
 
 $section AD Conditional Expressions$$
+$mindex assign$$
 
 $head Syntax$$
 $icode%result% = CondExp%Rel%(%left%, %right%, %if_true%, %if_false%)%$$

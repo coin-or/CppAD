@@ -1,9 +1,9 @@
-/* $Id$ */
+// $Id$
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-14 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-15 Bradley M. Bell
 
 CppAD is distributed under multiple licenses. This distribution is under
-the terms of the 
+the terms of the
                     Eclipse Public License Version 1.0.
 
 A copy of this license is included in the COPYING file of this distribution.
@@ -12,16 +12,13 @@ Please visit http://www.coin-or.org/CppAD/ for information on other licenses.
 $begin reverse_one$$
 
 $section First Order Reverse Mode$$
-$spell 
+$mindex derivative$$
+$spell
 	taylor
 	const
 	dw
 $$
 
-$index reverse, first order mode$$
-$index first, order reverse mode$$
-$index mode, first order reverse$$
-$index derivative, reverse mode$$
 
 $head Syntax$$
 $icode%dw% = %f%.Reverse(1, %w%)%$$
@@ -33,13 +30,13 @@ $cref/AD function/glossary/AD Function/$$ corresponding to $icode f$$.
 The function $latex W : B^n \rightarrow B$$ is defined by
 $latex \[
 	W(x) = w_0 * F_0 ( x ) + \cdots + w_{m-1} * F_{m-1} (x)
-\] $$ 
-The result of this operation is the derivative 
+\] $$
+The result of this operation is the derivative
 $latex dw = W^{(1)} (x)$$; i.e.,
 $latex \[
 	dw = w_0 * F_0^{(1)} ( x ) + \cdots + w_{m-1} * F_{m-1}^{(1)} (x)
 \] $$
-Note that if $latex w$$ is the $th i$$ 
+Note that if $latex w$$ is the $th i$$
 $cref/elementary vector/glossary/Elementary Vector/$$,
 $latex dw = F_i^{(1)} (x)$$.
 
@@ -62,7 +59,7 @@ $codei%
 	%f%.Forward(0, %x%)
 %$$
 If there is no previous call with the first argument zero,
-the value of the $cref/independent/Independent/$$ variables 
+the value of the $cref/independent/Independent/$$ variables
 during the recording of the AD sequence of operations is used
 for $icode x$$.
 
@@ -72,7 +69,7 @@ $codei%
 	const %Vector% &%w%
 %$$
 (see $cref/Vector/reverse_one/Vector/$$ below)
-and its size 
+and its size
 must be equal to $icode m$$, the dimension of the
 $cref/range/seq_property/Range/$$ space for $icode f$$.
 
@@ -83,7 +80,7 @@ $codei%
 %$$
 (see $cref/Vector/reverse_one/Vector/$$ below)
 and its value is the derivative $latex W^{(1)} (x)$$.
-The size of $icode dw$$ 
+The size of $icode dw$$
 is equal to $icode n$$, the dimension of the
 $cref/domain/seq_property/Domain/$$ space for $icode f$$.
 

@@ -1,9 +1,9 @@
-/* $Id$ */
+// $Id$
 /* --------------------------------------------------------------------------
 CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-15 Bradley M. Bell
 
 CppAD is distributed under multiple licenses. This distribution is under
-the terms of the 
+the terms of the
                     Eclipse Public License Version 1.0.
 
 A copy of this license is included in the COPYING file of this distribution.
@@ -18,10 +18,8 @@ $spell
 $$
 
 $section Using ColPack: Example and Test$$
+$mindex colpack hessian sparse$$
 
-$index example, colpack hessian$$
-$index test, colpack hessian$$
-$index sparse, colpack hessian$$
 
 $code
 $verbatim%example/colpack_hes.cpp%0%// BEGIN C++%// END C++%1%$$
@@ -89,9 +87,9 @@ bool colpack_hes(void)
 		{	size_t index = i * n + j;
 			check[index] = 0.0;
 			if( i == 0 && 1 <= j )
-				check[index] += x[j];	
+				check[index] += x[j];
 			if( 1 <= i && j == 0 )
-				check[index] += x[i];	
+				check[index] += x[i];
 			if( i == j )
 			{	check[index] += 2.0 * x[i];
 				if( i != 0 )
@@ -99,7 +97,7 @@ bool colpack_hes(void)
 			}
 		}
 	}
-	// Normally one would use f.RevSparseHes to compute 
+	// Normally one would use f.RevSparseHes to compute
 	// sparsity pattern, but for this example we extract it from check.
 	std::vector< std::set<size_t> >  p(n);
 	i_vector row, col;
@@ -117,7 +115,7 @@ bool colpack_hes(void)
 				}
 			}
 		}
-	} 
+	}
 	size_t K = row.size();
 	d_vector hes(K);
 

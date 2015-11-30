@@ -1,9 +1,9 @@
-/* $Id$ */
+// $Id$
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-12 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-15 Bradley M. Bell
 
 CppAD is distributed under multiple licenses. This distribution is under
-the terms of the 
+the terms of the
                     Eclipse Public License Version 1.0.
 
 A copy of this license is included in the COPYING file of this distribution.
@@ -35,7 +35,7 @@ bool Neg(void)
 	size_t x = 0;
 
 	// dependent variable values
-	Z[x] = - U[t];   //  - AD<double> 
+	Z[x] = - U[t];   //  - AD<double>
 
 	// create f: U -> Z and vectors used for derivative calculations
 	ADFun<double> f(U, Z);
@@ -63,7 +63,7 @@ bool Neg(void)
 	r    = f.Reverse(2, w);
 	ok &= ( r[2 * s + 1] == 0. );  // d^2 x / (ds ds)
 	ok &= ( r[2 * t + 1] == 0. );  // d^2 x / (ds dt)
-	 
+
 	return ok;
 }
 // END C++

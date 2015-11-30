@@ -1,9 +1,9 @@
-/* $Id$ */
+// $Id$
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-12 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-15 Bradley M. Bell
 
 CppAD is distributed under multiple licenses. This distribution is under
-the terms of the 
+the terms of the
                     Eclipse Public License Version 1.0.
 
 A copy of this license is included in the COPYING file of this distribution.
@@ -17,11 +17,8 @@ $spell
 $$
 
 $section Subset of Second Order Partials: Example and Test$$
+$mindex partial$$
 
-$index second, partial$$
-$index partial, second$$
-$index example, second partial$$
-$index test, second partial$$
 
 $code
 $verbatim%example/for_two.cpp%0%// BEGIN C++%// END C++%1%$$
@@ -34,7 +31,7 @@ $end
 namespace { // -----------------------------------------------------
 // define the template function in empty namespace
 // bool ForTwoCases<VectorBase, VectorSize_t>(void)
-template <class VectorBase, class VectorSize_t> 
+template <class VectorBase, class VectorSize_t>
 bool ForTwoCases()
 {	bool ok = true;
 	using CppAD::AD;
@@ -70,7 +67,7 @@ bool ForTwoCases()
 	x[0] = 2.;
 	x[1] = 1.;
 
-	// set j and k to compute specific second partials of y 
+	// set j and k to compute specific second partials of y
 	size_t p = 2;
 	VectorSize_t j(p);
 	VectorSize_t k(p);
@@ -80,11 +77,11 @@ bool ForTwoCases()
 	// compute the second partials
 	VectorBase ddy(m * p);
 	ddy = f.ForTwo(x, j, k);
-	/* 
+	/*
 	partial of y w.r.t x[0] is
 	[ 2 * x[0] * exp(x[1]) ]
 	[ 2 * x[0] * sin(x[1]) ]
-	[ 2 * x[0] * cos(x[1]) ] 
+	[ 2 * x[0] * cos(x[1]) ]
 	*/
 	// second partial of y w.r.t x[0] and x[1]
 	ok &=  NearEqual( 2.*exp(x[1]), ddy[0*p+0], 1e-10, 1e-10 );
@@ -98,7 +95,7 @@ bool ForTwoCases()
 
 	return ok;
 }
-} // End empty namespace 
+} // End empty namespace
 # include <vector>
 # include <valarray>
 bool ForTwo(void)

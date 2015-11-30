@@ -1,9 +1,9 @@
-/* $Id$ */
+// $Id$
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-12 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-15 Bradley M. Bell
 
 CppAD is distributed under multiple licenses. This distribution is under
-the terms of the 
+the terms of the
                     Eclipse Public License Version 1.0.
 
 A copy of this license is included in the COPYING file of this distribution.
@@ -19,18 +19,15 @@ $spell
 	alloc
 	openmp
 $$
-$index multi_newton_time$$.
-$index multi_thread, Newton AD speed$$
-$index thread, multi_newton AD speed$$
-$index AD, speed multi_thread Newton$$
-$index newton, multi_thread AD speed$$
+.
 
 $section Timing Test of Multi-Threaded Newton Method$$
+$mindex multi_newton_time multi_thread AD speed$$
 
 $head Syntax$$
-$icode%ok% = multi_newton_time(%time_out%, %num_threads%, 
+$icode%ok% = multi_newton_time(%time_out%, %num_threads%,
 	%num_zero%, %num_sub%, %num_sum%, %use_ad%
-)%$$ 
+)%$$
 
 $head Purpose$$
 Runs correctness and timing test for a multi-threaded Newton method.
@@ -56,13 +53,13 @@ $codei%
 	double& %time_out%
 %$$
 The input value of the argument does not matter.
-Upon return it is the number of wall clock seconds required for 
+Upon return it is the number of wall clock seconds required for
 the multi-threaded Newton method can compute all the zeros.
 
 $head test_time$$
 Is the minimum amount of wall clock time that the test should take.
 The number of repeats for the test will be increased until this time
-is reached. 
+is reached.
 The reported $icode time_out$$ is the total wall clock time divided by the
 number of repeats.
 
@@ -71,9 +68,9 @@ This argument has prototype
 $codei%
 	size_t %num_threads%
 %$$
-It specifies the number of threads that 
+It specifies the number of threads that
 are available for this test.
-If it is zero, the test is run without multi-threading and 
+If it is zero, the test is run without multi-threading and
 $codei%
 	1 == CppAD::thread_alloc::num_threads()
 %$$
@@ -91,7 +88,7 @@ $codei%
 %$$
 and it must be greater than one.
 It specifies the actual number of zeros in the test function
-$latex \sin(x)$$. 
+$latex \sin(x)$$.
 To be specific, $code multi_newton_time$$ will attempt to determine
 all of the values of $latex x$$ for which $latex \sin(x) = 0 $$ and
 $latex x$$ is in the interval
@@ -129,13 +126,13 @@ $codei%
 %$$
 If $icode use_ad$$ is $code true$$,
 then derivatives will be computed using CppAD.
-Note that this derivative computation includes 
+Note that this derivative computation includes
 re-taping the function for each
 value of $latex x$$ (even though re-taping is not necessary).
 $pre
 
 $$
-If $icode use_ad$$ is $code false$$, 
+If $icode use_ad$$ is $code false$$,
 derivatives will be computed using a hand coded routine.
 
 $head Source$$
@@ -147,15 +144,15 @@ $end
 */
 // BEGIN C++
 # include <cppad/cppad.hpp>
-# include <cppad/time_test.hpp>
+# include <cppad/utility/time_test.hpp>
 # include <cmath>
 # include <cstring>
 # include "multi_newton.hpp"
 
-namespace { // empty namespace 
+namespace { // empty namespace
 
 	// values correspond to arguments in previous call to multi_newton_time
-	size_t num_threads_;// value passed to multi_newton_time 
+	size_t num_threads_;// value passed to multi_newton_time
 	size_t num_zero_;   // number of zeros of f(x) in the total interval
 	size_t num_sub_;    // number of sub-intervals to split calculation into
 	size_t num_sum_;    // larger values make f(x) take longer to calculate
@@ -192,7 +189,7 @@ namespace { // empty namespace
 	void fun_ad(double x, double& f, double& df)
 	{	// use CppAD::vector because it uses fast multi-threaded memory alloc
 		using CppAD::vector;
-		using CppAD::AD;	
+		using CppAD::AD;
 		vector< AD<double> > X(1), Y(1);
 		X[0] = x;
 		CppAD::Independent(X);
@@ -204,10 +201,10 @@ namespace { // empty namespace
 		f     = Value( Y[0] );
 		df    = dy[0];
 		return;
-	} 
+	}
 
 	// evaulate the function and its derivative
-	void fun_no(double x, double& f, double& df) 
+	void fun_no(double x, double& f, double& df)
 	{	f  = f_eval(x);
 		df = df_direct(x);
 		return;
@@ -220,13 +217,13 @@ namespace { // empty namespace
 		{	std::cerr << "multi_newton_time: num_zero == 0" << std::endl;
 			exit(1);
 		}
-		double pi      = 4. * std::atan(1.); 
+		double pi      = 4. * std::atan(1.);
 		double xlow    = 0.;
 		double xup     = (num_zero_ - 1) * pi;
-		double eps     = 
+		double eps     =
 			xup * 100. * CppAD::numeric_limits<double>::epsilon();
 		size_t max_itr = 20;
-	
+
 		bool ok = multi_newton(
 			xout_       ,
 			fun_        ,
@@ -235,7 +232,7 @@ namespace { // empty namespace
 			xup         ,
 			eps         ,
 			max_itr     ,
-			num_threads_ 
+			num_threads_
 		);
 		if( ! ok )
 		{	std::cerr << "multi_newton: error" << std::endl;
@@ -258,10 +255,10 @@ bool multi_newton_time(
 	double  test_time     ,
 	size_t  num_threads   ,
 	size_t  num_zero      ,
-	size_t  num_sub       , 
+	size_t  num_sub       ,
 	size_t  num_sum       ,
 	bool    use_ad
-) 
+)
 {	bool ok = true;
 	using CppAD::thread_alloc;
 
@@ -283,7 +280,7 @@ bool multi_newton_time(
 	time_out = CppAD::time_test(test_repeat, test_time);
 
 	// Call test_once for a correctness check
-	double pi      = 4. * std::atan(1.); 
+	double pi      = 4. * std::atan(1.);
 	double xup     = (num_zero_ - 1) * pi;
 	double eps     = xup * 100. * CppAD::numeric_limits<double>::epsilon();
 	ok        &= (xout_.size() == num_zero);

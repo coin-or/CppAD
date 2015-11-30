@@ -1,9 +1,9 @@
-/* $Id$ */
+// $Id$
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-12 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-15 Bradley M. Bell
 
 CppAD is distributed under multiple licenses. This distribution is under
-the terms of the 
+the terms of the
                     Eclipse Public License Version 1.0.
 
 A copy of this license is included in the COPYING file of this distribution.
@@ -22,14 +22,9 @@ $spell
 	Cpp
 $$
 
-$index LuVecAD$$
-$index Lu, linear equation$$
-$index determinant, Lu$$
-$index solve, linear equation$$
-$index equation, solve linear$$
-$index linear, solve equation$$
 
 $section Lu Factor and Solve with Recorded Pivoting$$
+$mindex LuVecAD linear equation determinant$$
 
 $pre
 $$
@@ -66,7 +61,7 @@ $pre
 $$
 It is often the case that
 $code LuSolve$$ is faster than $code LuVecAD$$ when $code LuSolve$$
-uses a simple vector class with 
+uses a simple vector class with
 $cref/elements of type double/SimpleVector/Elements of Specified Type/$$,
 but the corresponding $cref ADFun$$ objects have a fixed
 set of pivoting operations.
@@ -84,13 +79,13 @@ $latex \[
 (The length of $latex A$$ must be equal to $latex  n * m $$.)
 
 $head n$$
-is the number of rows in 
+is the number of rows in
 $icode Matrix$$,
 $icode Rhs$$,
 and $icode Result$$.
 
 $head m$$
-is the number of columns in 
+is the number of columns in
 $icode Rhs$$
 and $icode Result$$.
 It is ok for $icode m$$ to be zero which is reasonable when
@@ -99,7 +94,7 @@ you are only interested in the determinant of $icode Matrix$$.
 
 $head Matrix$$
 On input, this is an
-$latex n \times n$$ matrix containing the variable coefficients for 
+$latex n \times n$$ matrix containing the variable coefficients for
 the equation we wish to solve.
 On output, the elements of $icode Matrix$$ have been overwritten
 and are not specified.
@@ -122,7 +117,7 @@ If $icode m$$ is zero, $icode Result$$ is not used.
 
 $head logdet$$
 On input, the value of $icode logdet$$ does not matter.
-On output, it has been set to the 
+On output, it has been set to the
 log of the determinant of $icode Matrix$$ (but not quite).
 To be more specific,
 if $icode signdet$$ is the value returned by $code LuVecAD$$,
@@ -196,8 +191,8 @@ AD<double> LuVecAD(
 	// singular matrix
 	Type  singular = 0.;
 
-	// some constants 
-	Type M(m); 
+	// some constants
+	Type M(m);
 	Type N(n);
 	Type One(1);
 	Type Zero(0);
@@ -220,7 +215,7 @@ AD<double> LuVecAD(
 
 	for(p = 0; p < N; p += 1.)
 	{
-		// determine row and column corresponding to element of 
+		// determine row and column corresponding to element of
 		// maximum absolute value in remaining part of Matrix
 		imax = N;
 		jmax = N;
@@ -245,7 +240,7 @@ AD<double> LuVecAD(
 		}
 		assert( (imax < N) & (jmax < N) );
 
-	
+
 		// switch rows so max absolute element is in row p
 		index    = ip[p];
 		ip[p]    = ip[imax];
@@ -261,7 +256,7 @@ AD<double> LuVecAD(
 
 		// if imax != p, switch sign of determinant
 		signdet  = CondExpEq(jmax, p, signdet,  -signdet);
-	
+
 		// pivot using the max absolute element
 		itmp    = ip[p] * N;
 		index   = itmp + jp[p];
@@ -276,7 +271,7 @@ AD<double> LuVecAD(
 		signdet  = CondExpGe(pivot, Zero, signdet, - signdet);
 
 		/*
-		Reduce by the elementary transformations that maps 
+		Reduce by the elementary transformations that maps
 		Matrix( ip[p], jp[p] ) to one and Matrix( ip[i], jp[p] )
 		to zero for i = p + 1., ... , n-1
 		*/
@@ -309,12 +304,12 @@ AD<double> LuVecAD(
 			for(j = p + 1.; j < N; j += 1.)
 			{	index = itmp + jp[j];
 				jndex = jtmp + jp[j];
-				Matrix[ index ] = Matrix[ index ] 
+				Matrix[ index ] = Matrix[ index ]
 					        - etmp * Matrix[ jndex ];
 			}
 
 			itmp = ip[i] * M;
-			jtmp = ip[p] * M; 
+			jtmp = ip[p] * M;
 			for(k = 0; k < M; k += 1.)
 			{
 				index = itmp + k;
@@ -343,7 +338,7 @@ AD<double> LuVecAD(
 			{
 				index = ip[i] * M + k;
 				jndex = ip[i] * N + jp[p];
-				Rhs[ index ] = Rhs[ index ] 
+				Rhs[ index ] = Rhs[ index ]
 				             - etmp * Matrix[ jndex ];
 			}
 		}

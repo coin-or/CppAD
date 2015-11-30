@@ -1,9 +1,9 @@
-/* $Id$ */
+// $Id$
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-12 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-15 Bradley M. Bell
 
 CppAD is distributed under multiple licenses. This distribution is under
-the terms of the 
+the terms of the
                     Eclipse Public License Version 1.0.
 
 A copy of this license is included in the COPYING file of this distribution.
@@ -34,7 +34,7 @@ bool PowTestOne(void)
 	// declare independent variables and start tape recording
 	CppAD::Independent(XY);
 
-	// range space vector 
+	// range space vector
 	size_t m = 3;
 	CPPAD_TESTVECTOR(AD<double>) Z(m);
 	Z[0] = CppAD::pow(XY[0], XY[1]);  // pow(variable, variable)
@@ -42,9 +42,9 @@ bool PowTestOne(void)
 	Z[2] = CppAD::pow(x,     XY[1]);  // pow(parameter, variable)
 
 	// create f: XY -> Z and stop tape recording
-	CppAD::ADFun<double> f(XY, Z); 
+	CppAD::ADFun<double> f(XY, Z);
 
-	// check value 
+	// check value
 	double check = std::pow(x, y);
 	size_t i;
 	for(i = 0; i < m; i++)
@@ -152,19 +152,19 @@ bool PowTestTwo(void)
 	w = f.Forward(1, v);
 	ok &= ( w[y] == U[s] * u * Z[y] );               // dy/dt
 
-	// forward computation of second Taylor coefficient w.r.t. t 
+	// forward computation of second Taylor coefficient w.r.t. t
 	v[t] = 1.;
 	w    = f.Forward(1, v);
 	v[t] = 0.;
 	CPPAD_TESTVECTOR(double) f_tt = f.Forward(2, v);
 
-	// forward computation of second Taylor coefficient w.r.t. s 
+	// forward computation of second Taylor coefficient w.r.t. s
 	v[s] = 1.;
 	w    = f.Forward(1, v);
 	v[s] = 0.;
 	CPPAD_TESTVECTOR(double) f_ss = f.Forward(2, v);
 
-	// second Taylor coefficient w.r.t. direction r = (s,t) 
+	// second Taylor coefficient w.r.t. direction r = (s,t)
 	v[s] = 1.;
 	v[t] = 1.;
 	w    = f.Forward(1, v);
@@ -174,12 +174,12 @@ bool PowTestTwo(void)
 
 	// check second order partial of y
 	ok &= NearEqual(
-		f_rr[y] - f_ss[y] - f_tt[y], 
-		(1. + U[s]) * u * Z[y] + 
+		f_rr[y] - f_ss[y] - f_tt[y],
+		(1. + U[s]) * u * Z[y] +
 			(1. + U[s]) * U[t] * u * U[s] * u * Z[y],
 		1e-10 ,
-		1e-10 
-	); 
+		1e-10
+	);
 
 	return ok;
 }
@@ -198,7 +198,7 @@ bool PowTestThree(void)
 	// declare independent variables and start tape recording
 	CppAD::Independent(x);
 
-	// range space vector 
+	// range space vector
 	size_t m = 4;
 	CPPAD_TESTVECTOR(AD<double>) y(m);
 
@@ -209,7 +209,7 @@ bool PowTestThree(void)
 	y[3] = pow(1., x[0]);
 
 	// create f: x -> y and stop tape recording
-	CppAD::ADFun<double> f(x, y); 
+	CppAD::ADFun<double> f(x, y);
 
 	// check function values
 	ok  &= (Value(y[0]) == 1.);
@@ -227,7 +227,7 @@ bool PowTestThree(void)
 	ok   &= NearEqual(dy[2], 1., 1e-10, 1e-10);
 	ok   &= (dy[3] == 0.);
 
-	// reverse mode computation of derivative of y[0]+y[1]+y[2]+y[3] 
+	// reverse mode computation of derivative of y[0]+y[1]+y[2]+y[3]
 	CPPAD_TESTVECTOR(double)  w(m);
 	CPPAD_TESTVECTOR(double) dw(n);
 	w[0] = 1.;
@@ -237,7 +237,7 @@ bool PowTestThree(void)
 	dw   = f.Reverse(1, w);
 	ok  &= NearEqual(dw[0], 1., 1e-10, 1e-10);
 
-	return ok;	
+	return ok;
 }
 
 bool PowTestFour(void)
@@ -255,18 +255,18 @@ bool PowTestFour(void)
 	// declare independent variables and start tape recording
 	CppAD::Independent(x);
 
-	// range space vector 
+	// range space vector
 	size_t m = 5;
 	CPPAD_TESTVECTOR(AD<double>) y(m);
 
 	// some special cases (skip zero raised to a negative power)
 	y[0] = pow(1., x[0]);
 	size_t i;
-	for(i = 1; i < m; i++) 
+	for(i = 1; i < m; i++)
 		y[i] = pow(x[0], i-1);   // pow(AD<double>, int)
 
 	// create f: x -> y and stop tape recording
-	CppAD::ADFun<double> f(x, y); 
+	CppAD::ADFun<double> f(x, y);
 
 	ok  &= (Value(y[0]) == 1.);
 	double check;
@@ -298,7 +298,7 @@ bool PowTestFour(void)
 	dw   = f.Reverse(1, w);
 	ok  &= NearEqual(dw[0], sum, 1e-10, 1e-10);
 
-	return ok;	
+	return ok;
 }
 bool PowTestFive(void)
 {	bool ok = true;
@@ -315,7 +315,7 @@ bool PowTestFive(void)
 	// declare independent variables and start tape recording
 	CppAD::Independent(x);
 
-	// range space vector 
+	// range space vector
 	size_t m = 1;
 	CPPAD_TESTVECTOR(AD<double>) y(m);
 
@@ -324,7 +324,7 @@ bool PowTestFive(void)
 	y[0] = pow(x[0], int(e)); // use pow(AD<double>, int)
 
 	// create f: x -> y and stop tape recording
-	CppAD::ADFun<double> f(x, y); 
+	CppAD::ADFun<double> f(x, y);
 
 	// check function value
 	ok  &= (Value(y[0]) == pow(x0, e) );
@@ -337,7 +337,7 @@ bool PowTestFive(void)
 	dy    = f.Forward(1, dx);
 	ok   &= NearEqual(dy[0], d1, 1e-10, 1e-10);
 
-	// reverse mode computation of second partials 
+	// reverse mode computation of second partials
 	// x.r.t. x[1],x[0]  and x[1], x[1]
 	double d2 = e * (e-1) * pow(x0, (e-2));
 	CPPAD_TESTVECTOR(double)   w(m);
@@ -347,7 +347,7 @@ bool PowTestFive(void)
 	ok  &= NearEqual(ddw[0], d1, 1e-10, 1e-10);
 	ok  &= NearEqual(ddw[1], d2, 1e-10, 1e-10);
 
-	return ok;	
+	return ok;
 }
 bool PowTestSix(void)
 {	bool ok = true;
@@ -368,16 +368,16 @@ bool PowTestSix(void)
 	// declare independent variables and start tape recording
 	CppAD::Independent(X);
 
-	// range space vector 
+	// range space vector
 	size_t m = 1;
 	CPPAD_TESTVECTOR(AD< AD<double> >) Y(m);
 
 	// case of AD< AD<double> > raised to a double power
 	double e = 2.5;
-	Y[0] = pow(X[0], e); 
+	Y[0] = pow(X[0], e);
 
 	// create F: X -> Y and stop tape recording
-	CppAD::ADFun< AD<double> > F(X, Y); 
+	CppAD::ADFun< AD<double> > F(X, Y);
 
 	// check function value
 	ok  &= (Value( Value(Y[0]) ) == pow(x0, e) );
@@ -390,7 +390,7 @@ bool PowTestSix(void)
 	dy    = F.Forward(1, dx);
 	ok   &= NearEqual(dy[0], d1, 1e-10, 1e-10);
 
-	// reverse mode computation of second partials 
+	// reverse mode computation of second partials
 	// x.r.t. x[1],x[0]  and x[1], x[1]
 	double d2 = e * (e-1) * pow(x0, (e-2));
 	CPPAD_TESTVECTOR(AD<double>)   w(m);
@@ -400,11 +400,11 @@ bool PowTestSix(void)
 	ok  &= NearEqual(ddw[0], d1, 1e-10, 1e-10);
 	ok  &= NearEqual(ddw[1], d2, 1e-10, 1e-10);
 
-	return ok;	
+	return ok;
 }
 
 } // END empty namespace
- 
+
 bool Pow(void)
 {	bool ok = true;
 	ok     &= PowTestOne();

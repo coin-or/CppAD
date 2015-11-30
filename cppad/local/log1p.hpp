@@ -1,6 +1,6 @@
-// $Id:$
-# ifndef CPPAD_LOG1P_INCLUDED
-# define CPPAD_LOG1P_INCLUDED
+// $Id$
+# ifndef CPPAD_LOG1P_HPP
+# define CPPAD_LOG1P_HPP
 
 /* --------------------------------------------------------------------------
 CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-15 Bradley M. Bell

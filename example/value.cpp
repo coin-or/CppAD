@@ -1,9 +1,9 @@
-/* $Id$ */
+// $Id$
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-12 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-15 Bradley M. Bell
 
 CppAD is distributed under multiple licenses. This distribution is under
-the terms of the 
+the terms of the
                     Eclipse Public License Version 1.0.
 
 A copy of this license is included in the COPYING file of this distribution.
@@ -18,11 +18,8 @@ $spell
 $$
 
 $section Convert From AD to its Base Type: Example and Test$$
+$mindex Value record$$
 
-$index Value$$
-$index example, Value$$
-$index test, Value$$
-$index record, example$$
 
 $code
 $verbatim%example/value.cpp%0%// BEGIN C++%// END C++%1%$$
@@ -52,7 +49,7 @@ bool Value(void)
 	// declare independent variables and start tape recording
 	CppAD::Independent(x);
 
-	// range space vector 
+	// range space vector
 	size_t m = 1;
 	CPPAD_TESTVECTOR(AD<double>) y(m);
 	y[0] = - x[1];

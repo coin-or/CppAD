@@ -1,9 +1,9 @@
-/* $Id$ */
+// $Id$
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-12 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-15 Bradley M. Bell
 
 CppAD is distributed under multiple licenses. This distribution is under
-the terms of the 
+the terms of the
                     Eclipse Public License Version 1.0.
 
 A copy of this license is included in the COPYING file of this distribution.
@@ -14,9 +14,7 @@ Please visit http://www.coin-or.org/CppAD/ for information on other licenses.
 $begin check_simple_vector.cpp$$
 
 $section The CheckSimpleVector Function: Example and Test$$
-$index CheckSimpleVector$$
-$index example, check SimpleVector$$
-$index test, check SimpleVector$$
+$mindex check SimpleVector$$
 
 $code
 $verbatim%example/check_simple_vector.cpp%0%// BEGIN C++%// END C++%1%$$
@@ -26,13 +24,13 @@ $end
 */
 // BEGIN C++
 
-# include <cppad/vector.hpp>
-# include <cppad/check_simple_vector.hpp>
+# include <cppad/utility/vector.hpp>
+# include <cppad/utility/check_simple_vector.hpp>
 # include <iostream>
 
 
-// Chosing a value between 1 and 9 selects a simple vector properity to be 
-// omitted and result in an error message being generated 
+// Chosing a value between 1 and 9 selects a simple vector properity to be
+// omitted and result in an error message being generated
 # define CppADMyVectorOmit 0
 
 // -------------------------------------------------------------------------
@@ -52,10 +50,10 @@ public:
 	// conversion to Scalar
 	operator Scalar() const
 	{	return *element; }
-}; 
-	 
+};
 
-// example simple vector class 
+
+// example simple vector class
 template <class Scalar>
 class MyVector {
 private:
@@ -77,7 +75,7 @@ public:
 	inline MyVector(size_t n) : length(n)
 	{	if( length == 0 )
 			data = 0;
-		else	data = new Scalar[length]; 
+		else	data = new Scalar[length];
 	}
 # endif
 # if CppADMyVectorOmit != 4
@@ -86,13 +84,13 @@ public:
 	{	size_t i;
 		if( length == 0 )
 			data = 0;
-		else	data = new Scalar[length]; 
+		else	data = new Scalar[length];
 
 		for(i = 0; i < length; i++)
 			data[i] = x.data[i];
 	}
 # endif
-# if CppADMyVectorOmit != 4 
+# if CppADMyVectorOmit != 4
 # if CppADMyVectorOmit != 7
 	// destructor (it is not safe to delete the pointer in cases 4 and 7)
 	~MyVector(void)
@@ -138,24 +136,24 @@ public:
 // -------------------------------------------------------------------------
 
 /*
-Compute r = a * v, where a is a scalar with same type as the elements of 
-the Simple Vector v. This routine uses the CheckSimpleVector function to ensure that 
+Compute r = a * v, where a is a scalar with same type as the elements of
+the Simple Vector v. This routine uses the CheckSimpleVector function to ensure that
 the types agree.
-*/ 
+*/
 namespace { // Empty namespace
 	template <class Scalar, class Vector>
 	Vector Sscal(const Scalar &a, const Vector &v)
 	{
-		// invoke CheckSimpleVector function 
+		// invoke CheckSimpleVector function
 		CppAD::CheckSimpleVector<Scalar, Vector>();
-	
+
 		size_t n = v.size();
 		Vector r(n);
-	
+
 		size_t i;
 		for(i = 0; i < n; i++)
 			r[i] = a * v[i];
-	
+
 		return r;
 	}
 }

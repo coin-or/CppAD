@@ -1,9 +1,9 @@
-/* $Id$ */
+// $Id$
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-12 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-15 Bradley M. Bell
 
 CppAD is distributed under multiple licenses. This distribution is under
-the terms of the 
+the terms of the
                     Eclipse Public License Version 1.0.
 
 A copy of this license is included in the COPYING file of this distribution.
@@ -17,16 +17,14 @@ $spell
 $$
 
 $section Runge45: Example and Test$$
+$mindex Runge45$$
 
-$index Runge45, example$$
-$index example, Runge45$$
-$index test, Runge45$$
 
-Define 
+Define
 $latex X : \B{R} \rightarrow \B{R}^n$$ by
 $latex \[
 	X_i (t) =  t^{i+1}
-\] $$ 
+\] $$
 for $latex i = 1 , \ldots , n-1$$.
 It follows that
 $latex \[
@@ -47,27 +45,27 @@ $end
 // BEGIN C++
 
 # include <cstddef>                 // for size_t
-# include <cppad/near_equal.hpp>    // for CppAD::NearEqual
-# include <cppad/vector.hpp>        // for CppAD::vector
-# include <cppad/runge_45.hpp>      // for CppAD::Runge45
+# include <cppad/utility/near_equal.hpp>    // for CppAD::NearEqual
+# include <cppad/utility/vector.hpp>        // for CppAD::vector
+# include <cppad/utility/runge_45.hpp>      // for CppAD::Runge45
 
 // Runge45 requires fabs to be defined (not std::fabs)
-// <cppad/cppad.hpp> defines this for doubles, but runge_45.hpp does not. 
+// <cppad/cppad.hpp> defines this for doubles, but runge_45.hpp does not.
 # include <math.h>      // for fabs without std in front
 
 namespace {
 	class Fun {
 	public:
 		// constructor
-		Fun(bool use_x_) : use_x(use_x_) 
+		Fun(bool use_x_) : use_x(use_x_)
 		{ }
 
 		// set f = x'(t)
 		void Ode(
-			const double                &t, 
-			const CppAD::vector<double> &x, 
+			const double                &t,
+			const CppAD::vector<double> &x,
 			CppAD::vector<double>       &f)
-		{	size_t n  = x.size();	
+		{	size_t n  = x.size();
 			double ti = 1.;
 			f[0]      = 1.;
 			size_t i;
@@ -91,20 +89,20 @@ bool runge_45_1(void)
 	size_t  n = 5;      // number components in X(t) and order of method
 	size_t  M = 2;      // number of Runge45 steps in [ti, tf]
 	double ti = 0.;     // initial time
-	double tf = 2.;     // final time 
+	double tf = 2.;     // final time
 
 	// xi = X(0)
-	CppAD::vector<double> xi(n); 
+	CppAD::vector<double> xi(n);
 	for(i = 0; i <n; i++)
 		xi[i] = 0.;
 
 	size_t use_x;
 	for( use_x = 0; use_x < 2; use_x++)
 	{	// function object depends on value of use_x
-		Fun F(use_x > 0); 
+		Fun F(use_x > 0);
 
 		// compute Runge45 approximation for X(tf)
-		CppAD::vector<double> xf(n), e(n); 
+		CppAD::vector<double> xf(n), e(n);
 		xf = CppAD::Runge45(F, M, ti, tf, xi, e);
 
 		double check = tf;

@@ -1,9 +1,9 @@
-/* $Id$ */
+// $Id$
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-12 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-15 Bradley M. Bell
 
 CppAD is distributed under multiple licenses. This distribution is under
-the terms of the 
+the terms of the
                     Eclipse Public License Version 1.0.
 
 A copy of this license is included in the COPYING file of this distribution.
@@ -42,11 +42,11 @@ bool Poly(void)
 	Z[0]     = 3.;                        // value of independent variable
 	Independent(Z);                       // declare independent variable
 
-	// dependent variables 
+	// dependent variables
 	CPPAD_TESTVECTOR(AD<double>) P(1); // one dependent variable
 	P[0]     = Poly(0, A, Z[0]);    // value of polynomial at Z[0]
 
-	// define f : Z -> P as a function mapping independent to dependent 
+	// define f : Z -> P as a function mapping independent to dependent
 	ADFun<double> f(Z, P);          // ADFun corresponding to polynomial
 
 	// compute derivative of polynomial

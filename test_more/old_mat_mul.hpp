@@ -1,6 +1,6 @@
 // $Id$
-# ifndef CPPAD_OLD_MAT_MUL_INCLUDED
-# define CPPAD_OLD_MAT_MUL_INCLUDED
+# ifndef CPPAD_OLD_MAT_MUL_HPP
+# define CPPAD_OLD_MAT_MUL_HPP
 
 /* --------------------------------------------------------------------------
 CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-15 Bradley M. Bell

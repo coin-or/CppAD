@@ -1,9 +1,9 @@
-/* $Id$ */
+// $Id$
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-12 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-15 Bradley M. Bell
 
 CppAD is distributed under multiple licenses. This distribution is under
-the terms of the 
+the terms of the
                     Eclipse Public License Version 1.0.
 
 A copy of this license is included in the COPYING file of this distribution.
@@ -15,10 +15,8 @@ $spell
 $$
 
 $section Example Differentiating a Stack Machine Interpreter$$
+$mindex test$$
 
-$index interpreter, example$$
-$index example, interpreter$$
-$index test, interpreter$$
 
 $code
 $verbatim%example/stack_machine.cpp%0%// BEGIN C++%// END C++%1%$$
@@ -37,7 +35,7 @@ $end
 
 # include <cppad/cppad.hpp>
 
-namespace { 
+namespace {
 // Begin empty namespace ------------------------------------------------
 
 bool is_number( const std::string &s )
@@ -56,7 +54,7 @@ bool is_variable( const std::string &s )
 	return variable;
 }
 
-void StackMachine( 
+void StackMachine(
 	std::stack< std::string >          &token_stack  ,
 	CppAD::vector< CppAD::AD<double> > &variable     )
 {	using std::string;
@@ -81,7 +79,7 @@ void StackMachine(
 		{	value_one = variable[ size_t(s[0]) - size_t('a') ];
 			value_stack.push( value_one );
 		}
-		else if( is_binary(s) ) 
+		else if( is_binary(s) )
 		{	assert( value_stack.size() >= 2 );
 			value_one = value_stack.top();
 			value_stack.pop();
@@ -111,7 +109,7 @@ void StackMachine(
 			}
 		}
 		else if( s[0] == '=' )
-		{	assert( value_stack.size() >= 1 ); 	
+		{	assert( value_stack.size() >= 1 );
 			assert( token_stack.size() >= 1 );
 			//
 			s = token_stack.top();
@@ -163,7 +161,7 @@ bool StackMachine(void)
 
 	// declare independent variables and start tape recording
 	CppAD::Independent(X);
-		
+
 	// x[0] corresponds to a in the stack machine
 	vector< AD<double> > variable(26);
 	variable[0] = X[0];
@@ -177,8 +175,8 @@ bool StackMachine(void)
 	Y[0] = variable[1];   // b = a + 1
 	Y[1] = variable[2];   // c = (a + 1) * 2
 	Y[2] = variable[3];   // d = (a + 1) * 2 - 3
-	Y[3] = variable[4];   // e = ( (a + 1) * 2 - 3 ) / 4 
-	
+	Y[3] = variable[4];   // e = ( (a + 1) * 2 - 3 ) / 4
+
 	// create f : X -> Y and stop tape recording
 	CppAD::ADFun<double> f(X, Y);
 

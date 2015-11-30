@@ -1,6 +1,6 @@
-/* $Id$ */
-# ifndef CPPAD_SPARSE_JACOBIAN_INCLUDED
-# define CPPAD_SPARSE_JACOBIAN_INCLUDED
+// $Id$
+# ifndef CPPAD_SPARSE_JACOBIAN_HPP
+# define CPPAD_SPARSE_JACOBIAN_HPP
 
 /* --------------------------------------------------------------------------
 CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-15 Bradley M. Bell
@@ -37,8 +37,7 @@ $spell
 $$
 
 $section Sparse Jacobian: Easy Driver$$
-$index SparseJacobian$$
-$index jacobian, sparse$$
+$mindex SparseJacobian$$
 
 $head Syntax$$
 $icode%jac% = %f%.SparseJacobian(%x%)

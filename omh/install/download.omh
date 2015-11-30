@@ -46,8 +46,6 @@ $$
 $dollar @$$
 
 $section Download The CppAD Source Code$$
-$index download, cppad$$
-$index cppad, download$$
 
 $head Purpose$$
 CppAD is an include file library and you therefore need the source

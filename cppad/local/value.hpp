@@ -1,6 +1,6 @@
-/* $Id$ */
-# ifndef CPPAD_VALUE_INCLUDED
-# define CPPAD_VALUE_INCLUDED
+// $Id$
+# ifndef CPPAD_VALUE_HPP
+# define CPPAD_VALUE_HPP
 
 /* --------------------------------------------------------------------------
 CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-15 Bradley M. Bell
@@ -19,13 +19,10 @@ $spell
 	const
 $$
 
-$index Value$$
 
-$index Base, from AD$$
-$index AD, convert to Base$$
-$index convert, AD to Base$$
 
 $section Convert From an AD Type to its Base Type$$
+$mindex Value$$
 
 $head Syntax$$
 $icode%b% = Value(%x%)%$$

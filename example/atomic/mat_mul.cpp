@@ -1,9 +1,9 @@
 // $Id$
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-13 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-15 Bradley M. Bell
 
 CppAD is distributed under multiple licenses. This distribution is under
-the terms of the 
+the terms of the
                     Eclipse Public License Version 1.0.
 
 A copy of this license is included in the COPYING file of this distribution.
@@ -17,9 +17,7 @@ $spell
 $$
 
 $section User Atomic Matrix Multiply: Example and Test$$
-$index atomic, matrix multiply example$$
-$index matrix, atomic multiply example$$
-$index multiply, matrix atomic$$
+$mindex multiply$$
 
 $children%
 	cppad/example/matrix_mul.hpp
@@ -107,11 +105,11 @@ $codep */
 	ok &= y[3] == 5. * 7.     + 6. * 8.;
 
 	//----------------------------------------------------------------------
-	// Test first order forward mode evaluation of g'(x) * [1, 2, 3, 4]^T 
+	// Test first order forward mode evaluation of g'(x) * [1, 2, 3, 4]^T
 	// g'(x) = [ x2, x3, x0, x1 ]
 	//         [ 7 ,  8,  0, 0  ]
 	//         [ 0 ,  0,  5, 6  ]
-	//         [ 0 ,  0,  0, 0  ] 
+	//         [ 0 ,  0,  0, 0  ]
 	CppAD::vector<double> dx(n), dy(m);
 	for(j = 0; j <  n; j++)
 		dx[j] = j + 1;
@@ -122,7 +120,7 @@ $codep */
 	ok &= dy[3] == 1. * 0.   + 2. * 0.   + 3. * 0.   + 4. * 0.;
 
 	//----------------------------------------------------------------------
-	// Test second order forward mode 
+	// Test second order forward mode
 	// g_0^2 (x) = [ 0, 0, 1, 0 ], g_0^2 (x) * [1] = [3]
 	//             [ 0, 0, 0, 1 ]              [2]   [4]
 	//             [ 1, 0, 0, 0 ]              [3]   [1]
@@ -133,7 +131,7 @@ $codep */
 	ddy = g.Forward(2, ddx);
 
 	// [1, 2, 3, 4] * g_0^2 (x) * [1, 2, 3, 4]^T = 1*3 + 2*4 + 3*1 + 4*2
-	ok &= 2. * ddy[0] == 1. * 3. + 2. * 4. + 3. * 1. + 4. * 2.; 
+	ok &= 2. * ddy[0] == 1. * 3. + 2. * 4. + 3. * 1. + 4. * 2.;
 
 	// for i > 0, [1, 2, 3, 4] * g_i^2 (x) * [1, 2, 3, 4]^T = 0
 	ok &= ddy[1] == 0.;
@@ -142,7 +140,7 @@ $codep */
 /* $$
 $subhead reverse$$
 $codep */
-	// Test second order reverse mode 
+	// Test second order reverse mode
 	CppAD::vector<double> w(m), dw(2 * n);
 	for(i = 0; i < m; i++)
 		w[i] = 0.;
@@ -246,7 +244,7 @@ $codep */
 	size_t check[] = {2, 3, 0, 1};
 	for(j = 0; j <  n; j++)
 	{	// h[j] = { check[j] }
-		for(i = 0; i < n; i++) 
+		for(i = 0; i < n; i++)
 		{	if( i == check[j] )
 				ok &= h[j].find(i) != h[j].end();
 			else	ok &= h[j].find(i) == h[j].end();
@@ -258,14 +256,14 @@ $codep */
 	h = g.RevSparseHes(n, t);
 	for(j = 0; j <  n; j++)
 	{	// h[j] = { }
-		for(i = 0; i < n; i++) 
+		for(i = 0; i < n; i++)
 			ok &= h[j].find(i) == h[j].end();
 	}
 
 	//-----------------------------------------------------------------
 	} // end for(size_t sparse_index  ...
 	//-----------------------------------------------------------------
-	
+
 	return ok;
 }
 /* $$

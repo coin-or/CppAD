@@ -1,9 +1,9 @@
 # $Id$
 # -----------------------------------------------------------------------------
-# CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-12 Bradley M. Bell
+# CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-15 Bradley M. Bell
 #
 # CppAD is distributed under multiple licenses. This distribution is under
-# the terms of the 
+# the terms of the
 #                     Eclipse Public License Version 1.0.
 #
 # A copy of this license is included in the COPYING file of this distribution.
@@ -17,7 +17,7 @@ DEFS          =
 EXTRA_DIST = test.sh.in
 #
 check_PROGRAMS    = speed
-# 
+#
 # BEGIN OPTIMIZE
 AM_CXXFLAGS       = -O2 -DNDEBUG $(CXX_FLAGS)
 # END OPTIMIZE
@@ -38,10 +38,10 @@ LDADD             = \
                     $(FCLIBS) \
                     $(PTHREAD_LIB) \
                     $(DL_LIB)
-AM_LDFLAGS        = -L../src 
+AM_LDFLAGS        = -L../src
 #
 # Cannot use ../src/libcppad_ipopt.a becasue it is compiled for debugging
-# so build an optimized version here to use here. 
+# so build an optimized version here to use here.
 speed_SOURCES   = \
 	speed.cpp \
 	../src/cppad_ipopt_nlp.cpp \
@@ -50,7 +50,7 @@ speed_SOURCES   = \
 	../src/jac_g_map.cpp \
 	../src/sparse_map2vec.cpp \
 	../src/vec_fun_pattern.cpp \
-	ode_speed.cpp 
+	ode_speed.cpp
 
 test: check
 	./test.sh

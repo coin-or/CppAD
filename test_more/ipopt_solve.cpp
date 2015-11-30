@@ -1,9 +1,9 @@
-/* $Id$ */
+// $Id$
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-13 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-15 Bradley M. Bell
 
 CppAD is distributed under multiple licenses. This distribution is under
-the terms of the 
+the terms of the
                     Eclipse Public License Version 1.0.
 
 A copy of this license is included in the COPYING file of this distribution.
@@ -26,7 +26,7 @@ namespace {
 		{	assert( fg.size() == 3 );
 			assert( x.size()  == 4 );
 
-			// Fortran style indexing 
+			// Fortran style indexing
 			AD<double> x1 = x[0];
 			AD<double> x2 = x[1];
 			AD<double> x3 = x[2];
@@ -42,14 +42,14 @@ namespace {
 		}
 	};
 }
-	
+
 bool ipopt_solve(void)
 {	bool ok = true;
 	size_t i, j;
 	typedef CPPAD_TESTVECTOR( double ) Dvector;
 
 	// number of independent variables (domain dimension for f and g)
-	size_t nx = 4;  
+	size_t nx = 4;
 	// number of constraints (range dimension for g)
 	size_t ng = 2;
 	// initial value of the independent variables
@@ -67,25 +67,25 @@ bool ipopt_solve(void)
 	// lower and upper limits for g
 	Dvector gl(ng), gu(ng);
 	gl[0] = 25.0;     gu[0] = 1.0e19;
-  	gl[1] = 40.0;     gu[1] = 40.0;
+	gl[1] = 40.0;     gu[1] = 40.0;
 
 	// object that computes objective and constraints
 	FG_eval fg_eval;
 
-	// options 
+	// options
 	std::string base_options;
 	// turn off any printing
-	base_options += "Integer print_level  0\n"; 
+	base_options += "Integer print_level  0\n";
 	base_options += "String  sb         yes\n";
 	// maximum number of iterations
 	base_options += "Integer max_iter     10\n";
 	// approximate accuracy in first order necessary conditions;
-	// see Mathematical Programming, Volume 106, Number 1, 
+	// see Mathematical Programming, Volume 106, Number 1,
 	// Pages 25-57, Equation (6)
 	base_options += "Numeric tol          1e-6\n";
 	// derivative testing
 	base_options += "String  derivative_test            second-order\n";
-	// maximum amount of random pertubation; e.g., 
+	// maximum amount of random pertubation; e.g.,
 	// when evaluation finite diff
 	base_options += "Numeric point_perturbation_radius  0.\n";
 
@@ -112,7 +112,7 @@ bool ipopt_solve(void)
 		);
 		ok &= solution.status==CppAD::ipopt::solve_result<Dvector>::success;
 		//
- 		// Check some of the solution values
+		// Check some of the solution values
 		for(j = 0; j < nx; j++)
 		{	ok &= CppAD::NearEqual(
 				check_x[j],  solution.x[j],   rel_tol, abs_tol

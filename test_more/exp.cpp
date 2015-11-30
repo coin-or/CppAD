@@ -1,9 +1,9 @@
-/* $Id$ */
+// $Id$
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-12 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-15 Bradley M. Bell
 
 CppAD is distributed under multiple licenses. This distribution is under
-the terms of the 
+the terms of the
                     Eclipse Public License Version 1.0.
 
 A copy of this license is included in the COPYING file of this distribution.
@@ -59,17 +59,17 @@ bool ExpTestOne(void)
 	v    = f.Reverse(1,w);
 	ok &= NearEqual(v[s], Z[y] * Z[x],     1e-10 , 1e-10); // dy/ds
 
-	// forward computation of second partials w.r.t s 
+	// forward computation of second partials w.r.t s
 	v[s] = 1.;
 	w    = f.Forward(1, v);
 	v[s] = 0.;
 	w    = f.Forward(2, v);
 	ok &= NearEqual(       // d^2 y / (ds ds)
-		2. * w[y] , 
+		2. * w[y] ,
 		Z[y] * Z[x] * Z[x] + Z[y] * Z[x],
 		1e-10 ,
-		1e-10 
-	); 
+		1e-10
+	);
 
 	// reverse computation of second partials of y
 	CPPAD_TESTVECTOR(double) r( f.Domain() * 2 );
@@ -77,11 +77,11 @@ bool ExpTestOne(void)
 	w[y] = 1.;
 	r    = f.Reverse(2, w);
 	ok &= NearEqual(      // d^2 y / (ds ds)
-		r[2 * s + 1] , 
+		r[2 * s + 1] ,
 		Z[y] * Z[x] * Z[x] + Z[y] * Z[x],
 		1e-10 ,
-		1e-10 
-	); 
+		1e-10
+	);
 
 	return ok;
 }
@@ -96,16 +96,16 @@ bool ExpTestTwo(void)
 	U[0]     = 1.;
 	Independent(U);
 
-	// dependent variable vector 
+	// dependent variable vector
 	CPPAD_TESTVECTOR(AD<double>) Z(1);
-	Z[0] = exp(U[0]); 
+	Z[0] = exp(U[0]);
 
 	// create f: U -> Z and vectors used for derivative calculations
-	ADFun<double> f(U, Z); 
+	ADFun<double> f(U, Z);
 	CPPAD_TESTVECTOR(double) v(1);
 	CPPAD_TESTVECTOR(double) w(1);
 
-	// check value 
+	// check value
 	double exp_u = exp( Value(U[0]) );
 	ok &= NearEqual(exp_u, Value(Z[0]),  1e-10 , 1e-10);
 
@@ -115,14 +115,14 @@ bool ExpTestTwo(void)
 	double jfac  = 1.;
 	v[0]         = 1.;
 	for(j = 1; j < p; j++)
-	{	w     = f.Forward(j, v);	
+	{	w     = f.Forward(j, v);
 		jfac *= j;
 		ok &= NearEqual(jfac*w[0], exp_u, 1e-10 , 1e-10); // d^jz/du^j
 		v[0]  = 0.;
 	}
 
 	// reverse computation of partials of Taylor coefficients
-	CPPAD_TESTVECTOR(double) r(p); 
+	CPPAD_TESTVECTOR(double) r(p);
 	w[0]  = 1.;
 	r     = f.Reverse(p, w);
 	jfac  = 1.;
@@ -139,6 +139,6 @@ bool ExpTestTwo(void)
 bool Exp(void)
 {	bool ok = true;
 	ok &= ExpTestOne();
-	ok &= ExpTestTwo(); 
+	ok &= ExpTestTwo();
 	return ok;
 }

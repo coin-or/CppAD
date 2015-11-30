@@ -1,9 +1,9 @@
-/* $Id$ */
+// $Id$
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-14 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-15 Bradley M. Bell
 
 CppAD is distributed under multiple licenses. This distribution is under
-the terms of the 
+the terms of the
                     Eclipse Public License Version 1.0.
 
 A copy of this license is included in the COPYING file of this distribution.
@@ -25,11 +25,9 @@ $spell
 	cpp
 $$
 
-$index time_test, example$$
-$index example, time_test$$
-$index test, time$$
 
 $section time_test: Example and test$$
+$mindex time_test$$
 
 $code
 $verbatim%speed/example/time_test.cpp%0%// BEGIN C++%// END C++%1%$$
@@ -38,8 +36,8 @@ $$
 $end
 */
 // BEGIN C++
-# include <cppad/time_test.hpp>
-# include <cppad/vector.hpp>
+# include <cppad/utility/time_test.hpp>
+# include <cppad/utility/vector.hpp>
 
 namespace { // empty namespace
 	using CppAD::vector;
@@ -75,7 +73,7 @@ bool time_test(void)
 {	bool ok = true;
 
 	// minimum amount of time to run test
-	double time_min = 0.5; 
+	double time_min = 0.5;
 
 	// size of first test case
 	size_ = 20;
@@ -94,7 +92,7 @@ bool time_test(void)
 	ok             &= (std::fabs(rel_diff) <= .1);
 	if( ! ok )
 		std::cout << std::endl << "rel_diff = " << rel_diff  << std::endl;
- 
+
 	a.clear();
 	b.clear();
 	c.clear();

@@ -1,9 +1,9 @@
-/* $Id$ */
+// $Id$
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-12 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-15 Bradley M. Bell
 
 CppAD is distributed under multiple licenses. This distribution is under
-the terms of the 
+the terms of the
                     Eclipse Public License Version 1.0.
 
 A copy of this license is included in the COPYING file of this distribution.
@@ -17,16 +17,14 @@ $spell
 $$
 
 $section OdeGear: Example and Test$$
+$mindex OdeGear$$
 
-$index OdeGear, example$$
-$index example, OdeGear$$
-$index test, OdeGear$$
 
-Define 
+Define
 $latex x : \B{R} \rightarrow \B{R}^n$$ by
 $latex \[
 	x_i (t) =  t^{i+1}
-\] $$ 
+\] $$
 for $latex i = 1 , \ldots , n-1$$.
 It follows that
 $latex \[
@@ -46,23 +44,23 @@ $end
 */
 // BEGIN C++
 
-# include <cppad/ode_gear.hpp>
+# include <cppad/utility/ode_gear.hpp>
 # include <cppad/cppad.hpp>        // For automatic differentiation
 
 namespace {
 	class Fun {
 	public:
 		// constructor
-		Fun(bool use_x_) : use_x(use_x_) 
+		Fun(bool use_x_) : use_x(use_x_)
 		{ }
 
 		// compute f(t, x) both for double and AD<double>
 		template <typename Scalar>
 		void Ode(
-			const Scalar                    &t, 
-			const CPPAD_TESTVECTOR(Scalar) &x, 
+			const Scalar                    &t,
+			const CPPAD_TESTVECTOR(Scalar) &x,
 			CPPAD_TESTVECTOR(Scalar)       &f)
-		{	size_t n  = x.size();	
+		{	size_t n  = x.size();
 			Scalar ti(1);
 			f[0]   = Scalar(1);
 			size_t i;
@@ -77,12 +75,12 @@ namespace {
 		}
 
 		void Ode_dep(
-			const double                    &t, 
-			const CPPAD_TESTVECTOR(double) &x, 
+			const double                    &t,
+			const CPPAD_TESTVECTOR(double) &x,
 			CPPAD_TESTVECTOR(double)       &f_x)
 		{	using namespace CppAD;
 
-			size_t n  = x.size();	
+			size_t n  = x.size();
 			CPPAD_TESTVECTOR(AD<double>) T(1);
 			CPPAD_TESTVECTOR(AD<double>) X(n);
 			CPPAD_TESTVECTOR(AD<double>) F(n);
@@ -130,7 +128,7 @@ bool OdeGear(void)
 	size_t  n = m;  // number of components in x(t)
 
 	// vector of times
-	CPPAD_TESTVECTOR(double) T(m+1); 
+	CPPAD_TESTVECTOR(double) T(m+1);
 	double step = .1;
 	T[0]        = 0.;
 	for(j = 1; j <= m; j++)
@@ -138,7 +136,7 @@ bool OdeGear(void)
 		step = 2. * step;
 	}
 
-	// initial values for x( T[m-j] ) 
+	// initial values for x( T[m-j] )
 	CPPAD_TESTVECTOR(double) X((m+1) * n);
 	for(j = 0; j < m; j++)
 	{	double ti = T[j];
@@ -154,7 +152,7 @@ bool OdeGear(void)
 	size_t use_x;
 	for( use_x = 0; use_x < 2; use_x++)
 	{	// function object depends on value of use_x
-		Fun F(use_x > 0); 
+		Fun F(use_x > 0);
 
 		// compute OdeGear approximation for x( T[m] )
 		CppAD::OdeGear(F, m, n, T, X, e);

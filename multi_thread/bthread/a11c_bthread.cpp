@@ -1,9 +1,9 @@
-/* $Id$ */
+// $Id$
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-12 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-15 Bradley M. Bell
 
 CppAD is distributed under multiple licenses. This distribution is under
-the terms of the 
+the terms of the
                     Eclipse Public License Version 1.0.
 
 A copy of this license is included in the COPYING file of this distribution.
@@ -18,12 +18,9 @@ $spell
 	CppAD
 	const
 $$
-$index boost thread, example A.1.1c$$
-$index example, boost thread A.1.1c$$
-$index A.1.1c, boost thread example$$
-$index thread, boost example$$
 
 $section A Simple Boost Thread Example and Test$$
+$mindex A.1.1c$$
 
 $head Purpose$$
 This example just demonstrates Boost threads and does not use CppAD at all.
@@ -60,11 +57,11 @@ namespace { // Begin empty namespace
 		{	int i;
 			// for some reason this function is missing on some systems
 			// assert( bthread_is_multithreaded_np() > 0 );
-			for(i = 1; i < n; i++) 
+			for(i = 1; i < n; i++)
 				b[i] = (a[i] + a[i-1]) / 2.0;
 			return;
 		}
-		// End of Example A.1.1.1c of OpenMP 2.5 standard document 
+		// End of Example A.1.1.1c of OpenMP 2.5 standard document
 		void operator()()
 		{	a1(n_, a_, b_); }
 	};
@@ -95,13 +92,13 @@ bool a11c(void)
 	float*  b_tmp = b;
 	worker[0].setup(n_tmp, a_tmp, b_tmp);
 	for(j = 1; j < number_threads; j++)
-	{	n_tmp = n + 1;	
+	{	n_tmp = n + 1;
 		a_tmp = a_tmp + n - 1;
 		b_tmp = b_tmp + n - 1;
 		if( j == (number_threads - 1) )
 			n_tmp = n_total - j * n + 1;
 
-		worker[j].setup(n_tmp, a_tmp, b_tmp);	
+		worker[j].setup(n_tmp, a_tmp, b_tmp);
 
 		// create this thread
 		bthread[j] = new boost::thread(worker[j]);
@@ -112,14 +109,14 @@ bool a11c(void)
 
 	// wait for other threads to finish
 	for(j = 1; j < number_threads; j++)
-	{	bthread[j]->join();	
+	{	bthread[j]->join();
 		delete bthread[j];
 	}
 
 	// check the result
 	float eps = 100. * std::numeric_limits<float>::epsilon();
 	for(i = 1; i < n ; i++)
-		ok &= std::fabs( (2. * b[i] - a[i] - a[i-1]) / b[i] ) <= eps; 
+		ok &= std::fabs( (2. * b[i] - a[i] - a[i-1]) / b[i] ) <= eps;
 
 	delete [] a;
 	delete [] b;

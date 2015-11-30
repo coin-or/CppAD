@@ -1,9 +1,9 @@
 $Id$
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-07 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-15 Bradley M. Bell
 
 CppAD is distributed under multiple licenses. This distribution is under
-the terms of the 
+the terms of the
                     Eclipse Public License Version 1.0.
 
 A copy of this license is included in the COPYING file of this distribution.
@@ -18,49 +18,46 @@ $spell
 $$
 
 
-$index introduction, AD$$
-$index AD, introduction$$
-$index Algorithmic Differentiation, introduction$$
-$index Automatic Differentiation, introduction$$
 
 $section An Introduction by Example to Algorithmic Differentiation$$
+$mindex AD Automatic$$
 
 $head Purpose$$
 This is an introduction by example
 to Algorithmic Differentiation.
 Its purpose is to aid in understand what AD calculates,
 how the calculations are preformed,
-and the amount of computation and memory required 
+and the amount of computation and memory required
 for a forward or reverse sweep.
 
 
 $head Preface$$
 
 $subhead Algorithmic Differentiation$$
-Algorithmic Differentiation 
+Algorithmic Differentiation
 (often referred to as Automatic Differentiation or just AD)
-uses the software representation 
+uses the software representation
 of a function to obtain an efficient method for calculating its derivatives.
-These derivatives can be of arbitrary order and are analytic in nature 
+These derivatives can be of arbitrary order and are analytic in nature
 (do not have any truncation error).
 
 $subhead Forward Mode$$
-A forward mode sweep computes 
+A forward mode sweep computes
 the partial derivative of all the dependent variables with respect
-to one independent variable (or independent variable direction). 
+to one independent variable (or independent variable direction).
 
 $subhead Reverse Mode$$
-A reverse mode sweep computes 
+A reverse mode sweep computes
 the derivative of one dependent variable
-(or one dependent variable direction) 
+(or one dependent variable direction)
 with respect to all the independent variables.
 
 $subhead Operation Count$$
-The number of floating point operations for either a 
+The number of floating point operations for either a
 forward or reverse mode sweep
-is a small multiple of the number required to evaluate the original function. 
+is a small multiple of the number required to evaluate the original function.
 Thus, using reverse mode,
-you can evaluate the derivative of a scalar valued function 
+you can evaluate the derivative of a scalar valued function
 with respect to thousands of variables in a small multiple of the
 work to evaluate the original function.
 
@@ -75,12 +72,12 @@ the derivative of the determinant
 
 $head Outline$$
 $list Alpha$$
-Demonstrate the use of CppAD to calculate derivatives of a 
+Demonstrate the use of CppAD to calculate derivatives of a
 polynomial: $cref get_started.cpp$$.
 
 $lnext
 Present two algorithms that approximate the exponential function.
-The first algorithm $cref exp_2.hpp$$ is simpler and does not 
+The first algorithm $cref exp_2.hpp$$ is simpler and does not
 include any logical variables or loops.
 The second algorithm $cref exp_eps.hpp$$ includes
 logical operations and a $code while$$ loop.
@@ -101,7 +98,7 @@ $lnext
 Compute a reverse sweep derivative of the operation sequence
 ($cref exp_2_rev1$$ and $cref exp_eps_rev1$$).
 $lnext
-Use CppAD to compute both a forward and reverse sweep 
+Use CppAD to compute both a forward and reverse sweep
 of the operation sequence
 ($cref exp_2_cppad$$ and $cref exp_eps_cppad$$).
 $lend
@@ -113,14 +110,14 @@ and $cref exp_eps$$ presentation.
 $lend
 
 $head Reference$$
-An in-depth review of AD theory and methods can be found in 
+An in-depth review of AD theory and methods can be found in
 the book
-$icode 
+$icode
 Evaluating Derivatives:
 Principles and Techniques of Algorithmic Differentiation
 $$,
 Andreas Griewank,
-SIAM Frontiers in Applied Mathematics, 
+SIAM Frontiers in Applied Mathematics,
 2000.
 
 $childtable%

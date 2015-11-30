@@ -1,9 +1,9 @@
-/* $Id$ */
+// $Id$
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-12 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-15 Bradley M. Bell
 
 CppAD is distributed under multiple licenses. This distribution is under
-the terms of the 
+the terms of the
                     Eclipse Public License Version 1.0.
 
 A copy of this license is included in the COPYING file of this distribution.
@@ -20,7 +20,7 @@ typedef CppAD::AD<double>      ADdouble;
 typedef CppAD::AD< ADdouble > ADDdouble;
 
 bool VecADPar(void)
-{	
+{
 	using namespace CppAD;
 
 	bool ok = true;
@@ -37,7 +37,7 @@ bool VecADPar(void)
 	VecAD< ADdouble > v(2);
 	ADDdouble zero(0);
 	ADDdouble one(1);
-	v[zero] = x[0]; // these two parameter values are equal, 
+	v[zero] = x[0]; // these two parameter values are equal,
 	v[one]  = x[1]; // but they are not identically equal
 
 	CPPAD_TESTVECTOR( ADDdouble ) z(1);

@@ -1,9 +1,9 @@
-/* $Id$ */
+// $Id$
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-12 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-15 Bradley M. Bell
 
 CppAD is distributed under multiple licenses. This distribution is under
-the terms of the 
+the terms of the
                     Eclipse Public License Version 1.0.
 
 A copy of this license is included in the COPYING file of this distribution.
@@ -16,12 +16,8 @@ $spell
 $$
 
 $section Abort Current Recording: Example and Test$$
+$mindex recording$$
 
-$index abort, example$$
-$index example, abort$$
-$index test, abort$$
-$index recording, abort$$
-$index abort, recording$$
 
 $code
 $verbatim%example/abort_recording.cpp%0%// BEGIN C++%// END C++%1%$$
@@ -40,7 +36,7 @@ bool abort_recording(void)
 
 	using CppAD::AD;
 
-	try 
+	try
 	{	// domain space vector
 		size_t n = 1;
 		CPPAD_TESTVECTOR(AD<double>) x(n);
@@ -61,23 +57,23 @@ bool abort_recording(void)
 		AD<double>::abort_recording();
 	}
 	/*
- 	Now make sure that we can start another recording
+	Now make sure that we can start another recording
 	*/
 
 	// declare independent variables and start tape recording
 	size_t n  = 1;
 	double x0 = 0.5;
 	CPPAD_TESTVECTOR(AD<double>) x(n);
-	x[0]      = x0; 
+	x[0]      = x0;
 	CppAD::Independent(x);
 
-	// range space vector 
+	// range space vector
 	size_t m = 1;
 	CPPAD_TESTVECTOR(AD<double>) y(m);
 	y[0] = 2 * x[0];
 
 	// create f: x -> y and stop tape recording
-	CppAD::ADFun<double> f(x, y); 
+	CppAD::ADFun<double> f(x, y);
 
 	// forward computation of partials w.r.t. x[0]
 	CPPAD_TESTVECTOR(double) dx(n);

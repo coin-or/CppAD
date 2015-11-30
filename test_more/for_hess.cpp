@@ -1,9 +1,9 @@
-/* $Id$ */
+// $Id$
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-12 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-15 Bradley M. Bell
 
 CppAD is distributed under multiple licenses. This distribution is under
-the terms of the 
+the terms of the
                     Eclipse Public License Version 1.0.
 
 A copy of this license is included in the COPYING file of this distribution.
@@ -38,12 +38,12 @@ bool ForHess(void)
 	// define the function
 	CPPAD_TESTVECTOR(AD<double>) Y(2);
 	Y[0] = U[0] * exp( U[1] );
-	Y[1] = U[1] * sin( U[2] ); 
+	Y[1] = U[1] * sin( U[2] );
 
 	// create the function y = F(u)
 	ADFun<double> F(U, Y);
 
-	// formulas for the upper triangle of Hessian of F_0 
+	// formulas for the upper triangle of Hessian of F_0
 	CPPAD_TESTVECTOR(double) H0(9);
 	H0[0] = 0.;                    // d^2 y[0] / d_u[0] d_u[0]
 	H0[1] = exp( u0[1] );          // d^2 y[0] / d_u[0] d_u[1]
@@ -87,7 +87,7 @@ bool ForHess(void)
 			F.Forward(1, u1);
 			CPPAD_TESTVECTOR(double) Cij = F.Forward(2, u2);
 
-			// diagonal of Hessian in j-th coordinate direction 
+			// diagonal of Hessian in j-th coordinate direction
 			u1[i] = 0.;
 			F.Forward(1, u1);
 			CPPAD_TESTVECTOR(double) Dj = F.Forward(2, u2);

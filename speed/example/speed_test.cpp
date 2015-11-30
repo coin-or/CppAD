@@ -1,9 +1,9 @@
-/* $Id$ */
+// $Id$
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-14 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-15 Bradley M. Bell
 
 CppAD is distributed under multiple licenses. This distribution is under
-the terms of the 
+the terms of the
                     Eclipse Public License Version 1.0.
 
 A copy of this license is included in the COPYING file of this distribution.
@@ -25,11 +25,9 @@ $spell
 	cpp
 $$
 
-$index speed_test, example$$
-$index example, speed_test$$
-$index test, speed$$
 
 $section speed_test: Example and test$$
+$mindex speed_test$$
 
 $code
 $verbatim%speed/example/speed_test.cpp%0%// BEGIN C++%// END C++%1%$$
@@ -38,8 +36,8 @@ $$
 $end
 */
 // BEGIN C++
-# include <cppad/speed_test.hpp>
-# include <cppad/vector.hpp>
+# include <cppad/utility/speed_test.hpp>
+# include <cppad/utility/vector.hpp>
 
 namespace { // empty namespace
 	using CppAD::vector;
@@ -91,7 +89,7 @@ bool speed_test(void)
 	ok             &= (std::fabs(rel_diff) <= .1);
 	if( ! ok )
 		std::cout << std::endl << "rel_diff = " << rel_diff << std::endl;
- 
+
 	a.clear();
 	b.clear();
 	c.clear();

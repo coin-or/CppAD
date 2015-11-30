@@ -1,11 +1,11 @@
-/* $Id$ */
-# ifndef  CPPAD_VEC_FUN_PATTERN_INCLUDED
-# define  CPPAD_VEC_FUN_PATTERN_INCLUDED
+// $Id$
+# ifndef CPPAD_VEC_FUN_PATTERN_HPP
+# define CPPAD_VEC_FUN_PATTERN_HPP
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-12 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-15 Bradley M. Bell
 
 CppAD is distributed under multiple licenses. This distribution is under
-the terms of the 
+the terms of the
                     Eclipse Public License Version 1.0.
 
 A copy of this license is included in the COPYING file of this distribution.
@@ -29,7 +29,7 @@ extern void vec_fun_pattern(
 	const CppAD::vectorBool&                        retape         ,
 	CppAD::vector< CppAD::ADFun<Ipopt::Number> >&   r_fun          ,
 	CppAD::vector<CppAD::vectorBool>&               pattern_jac_r  ,
-	CppAD::vector<CppAD::vectorBool>&               pattern_hes_r  
+	CppAD::vector<CppAD::vectorBool>&               pattern_hes_r
 );
 
 // ---------------------------------------------------------------------------

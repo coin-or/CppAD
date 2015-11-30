@@ -1,9 +1,9 @@
-/* $Id$ */
+// $Id$
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-12 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-15 Bradley M. Bell
 
 CppAD is distributed under multiple licenses. This distribution is under
-the terms of the 
+the terms of the
                     Eclipse Public License Version 1.0.
 
 A copy of this license is included in the COPYING file of this distribution.
@@ -19,9 +19,6 @@ $$
 
 $section AD Unary Plus Operator: Example and Test$$
 
-$index unary plus, example$$
-$index example, unary plus$$
-$index test, unary plus$$
 
 $code
 $verbatim%example/unary_plus.cpp%0%// BEGIN C++%// END C++%1%$$
@@ -46,7 +43,7 @@ bool UnaryPlus(void)
 	// declare independent variables and start tape recording
 	CppAD::Independent(x);
 
-	// range space vector 
+	// range space vector
 	size_t m = 1;
 	CPPAD_TESTVECTOR(AD<double>) y(m);
 	y[0] = + x[0];
@@ -78,7 +75,7 @@ bool UnaryPlus(void)
 	v[zero] = x[0];
 	AD<double> result = + v[zero];
 	ok     &= (result == y[0]);
-	 
+
 	return ok;
 }
 // END C++

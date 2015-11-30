@@ -1,4 +1,4 @@
-/* $Id$ */
+// $Id$
 /* --------------------------------------------------------------------------
 CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-15 Bradley M. Bell
 
@@ -23,14 +23,10 @@ $spell
 	CppAD
 	parallelize
 $$
-$index harmonic_time$$
-$index summation, multi_thread speed$$
-$index multi_thread, summation speed$$
-$index speed, multi_thread summation$$
-$index time, multi_thread summation$$
 
 
 $section Timing Test of Multi-Threaded Summation of 1/i$$
+$mindex harmonic_time multi_thread speed$$
 
 $head Syntax$$
 $icode%ok% = harmonic_time(%time_out%, %num_threads%, %mega_sum%)%$$
@@ -115,7 +111,7 @@ $end
 
 // Note there is no mention of parallel mode in the documentation for
 // speed_test (so it is safe to use without special consideration).
-# include <cppad/time_test.hpp>
+# include <cppad/utility/time_test.hpp>
 # include "harmonic.hpp"
 
 namespace { // empty namespace

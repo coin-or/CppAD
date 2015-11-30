@@ -1,9 +1,9 @@
-/* $Id$ */
+// $Id$
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-12 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-15 Bradley M. Bell
 
 CppAD is distributed under multiple licenses. This distribution is under
-the terms of the 
+the terms of the
                     Eclipse Public License Version 1.0.
 
 A copy of this license is included in the COPYING file of this distribution.
@@ -17,10 +17,8 @@ $spell
 $$
 
 $section AD Constructors: Example and Test$$
+$mindex constructor object$$
 
-$index constructor, AD object$$
-$index example, constructor AD object$$
-$index test, constructor AD object$$
 
 $code
 $verbatim%example/ad_ctor.cpp%0%// BEGIN C++%// END C++%1%$$
@@ -41,7 +39,7 @@ bool ad_ctor(void)
 	ok &= a == 0.;
 
 	// constructor from base type
-	AD<double> b(1.);   
+	AD<double> b(1.);
 	ok &= b == 1.;
 
 	// constructor from another type that converts to the base type
@@ -49,7 +47,7 @@ bool ad_ctor(void)
 	ok &= c == 2.;
 
 	// constructor from AD<Base>
-	AD<double> d(c);    
+	AD<double> d(c);
 	ok &= d == 2.;
 
 	// constructor from a VecAD<Base> element

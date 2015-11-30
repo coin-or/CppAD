@@ -1,12 +1,12 @@
-/* $Id$ */
-# ifndef CPPAD_CONVERT_INCLUDED
-# define CPPAD_CONVERT_INCLUDED
+// $Id$
+# ifndef CPPAD_CONVERT_HPP
+# define CPPAD_CONVERT_HPP
 
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-12 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-15 Bradley M. Bell
 
 CppAD is distributed under multiple licenses. This distribution is under
-the terms of the 
+the terms of the
                     Eclipse Public License Version 1.0.
 
 A copy of this license is included in the COPYING file of this distribution.
@@ -18,10 +18,9 @@ $begin Convert$$
 $spell
 $$
 
-$index convert, from AD$$
-$index AD, convert from$$
 
 $section Conversion and I/O of AD Objects$$
+$mindex convert from$$
 
 $children%
 	cppad/local/value.hpp%
@@ -37,7 +36,7 @@ $rref ad_output$$
 $rref PrintFor$$
 $rref Var2Par$$
 $tend
-	
+
 
 $end
 */

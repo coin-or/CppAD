@@ -1,12 +1,12 @@
-/* $Id$ */
-# ifndef CPPAD_SPARSE_PATTERN_INCLUDED
-# define CPPAD_SPARSE_PATTERN_INCLUDED
+// $Id$
+# ifndef CPPAD_SPARSE_PATTERN_HPP
+# define CPPAD_SPARSE_PATTERN_HPP
 
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-14 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-15 Bradley M. Bell
 
 CppAD is distributed under multiple licenses. This distribution is under
-the terms of the 
+the terms of the
                     Eclipse Public License Version 1.0.
 
 A copy of this license is included in the COPYING file of this distribution.
@@ -40,19 +40,19 @@ template <class Element_type> struct internal_sparsity;
 /*!
 Specilization for \c bool elements.
 */
-template <> 
-struct internal_sparsity<bool> 
+template <>
+struct internal_sparsity<bool>
 {
 	typedef sparse_pack pattern_type;
 };
 /*!
 Specilization for <code>std::set<size_t></code> elements.
 */
-template <> 
-struct internal_sparsity< std::set<size_t> > 
+template <>
+struct internal_sparsity< std::set<size_t> >
 {
 	typedef CPPAD_INTERNAL_SPARSE_SET pattern_type;
-}; 
+};
 
 } // END_CPPAD_NAMESPACE
 

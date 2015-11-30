@@ -49,8 +49,9 @@ INPUT                   = \
 	./cppad \
 	./cppad/local \
 	./cppad/ipopt \
-	./cppad_lib \
 	./cppad_ipopt/src \
+	./cppad_lib \
+	./cppad/utility \
 	./speed/src
 LATEX_BATCHMODE         = YES
 MACRO_EXPANSION         = YES

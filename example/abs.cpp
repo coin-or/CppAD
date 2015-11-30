@@ -1,9 +1,9 @@
-/* $Id$ */
+// $Id$
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-12 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-15 Bradley M. Bell
 
 CppAD is distributed under multiple licenses. This distribution is under
-the terms of the 
+the terms of the
                     Eclipse Public License Version 1.0.
 
 A copy of this license is included in the COPYING file of this distribution.
@@ -18,13 +18,8 @@ $spell
 $$
 
 $section AD Absolute Value Function: Example and Test$$
+$mindex abs fabs$$
 
-$index abs, example$$
-$index fabs, example$$
-$index example, abs$$
-$index example, fabs$$
-$index test, abs$$
-$index test, fabs$$
 
 $code
 $verbatim%example/abs.cpp%0%// BEGIN C++%// END C++%1%$$
@@ -97,19 +92,19 @@ bool abs(void)
 	ok  &= (dy[4] ==   0.   ); // used to be (dy[1] == - dx[0]);
 	ok  &= (dy[5] == + dx[0]);
 
-	// reverse computation of derivative of y[0] 
+	// reverse computation of derivative of y[0]
 	p    = 1;
 	CPPAD_TESTVECTOR(double)  w(m), dw(n);
 	w[0] = 1.; w[1] = 0.; w[2] = 0.; w[3] = 0.; w[4] = 0.; w[5] = 0.;
 	dw   = f.Reverse(p, w);
 	ok  &= (dw[0] == -1.);
 
-	// reverse computation of derivative of y[1] 
+	// reverse computation of derivative of y[1]
 	w[0] = 0.; w[1] = 1.;
 	dw   = f.Reverse(p, w);
 	ok  &= (dw[0] == 0.);
 
-	// reverse computation of derivative of y[5] 
+	// reverse computation of derivative of y[5]
 	w[1] = 0.; w[5] = 1.;
 	dw   = f.Reverse(p, w);
 	ok  &= (dw[0] == 1.);

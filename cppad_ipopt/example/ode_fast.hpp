@@ -1,11 +1,11 @@
-/* $Id$ */
-# ifndef CPPAD_ODE_FAST_INCLUDED
-# define CPPAD_ODE_FAST_INCLUDED
+// $Id$
+# ifndef CPPAD_ODE_FAST_HPP
+# define CPPAD_ODE_FAST_HPP
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-12 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-15 Bradley M. Bell
 
 CppAD is distributed under multiple licenses. This distribution is under
-the terms of the 
+the terms of the
                     Eclipse Public License Version 1.0.
 
 A copy of this license is included in the COPYING file of this distribution.
@@ -18,11 +18,8 @@ $spell
 $$
 
 $section ODE Fitting Using Fast Representation$$
+$mindex cppad_ipopt_nlp example source$$
 
-$index cppad_ipopt_nlp, ode example source$$
-$index ode, cppad_ipopt_nlp example source$$
-$index example, cppad_ipopt_nlp ode source$$
-$index source, cppad_ipopt_nlp ode example$$
 
 $code
 $verbatim%cppad_ipopt/example/ode_fast.hpp%0%// BEGIN C++%// END C++%1%$$
@@ -67,7 +64,7 @@ namespace {
 			if( k < Nz )
 			{	// used for measurement with index k+1
 				ADVector r(1); // return value is a scalar
-				// u is [y( s[k+1] ) , a] 
+				// u is [y( s[k+1] ) , a]
 				for(j = 0; j < Ny; j++)
 					y[j] = u[j];
 				for(j = 0; j < Na; j++)
@@ -78,24 +75,24 @@ namespace {
 			// initial condition ---------------------------------
 			if( k == Nz )
 			{	ADVector r(Ny), F(Ny);
-				// u is [y(t), a] at t = 0 
+				// u is [y(t), a] at t = 0
 				for(j = 0; j < Ny; j++)
 					y[j] = u[j];
 				for(j = 0; j < Na; j++)
 					a[j] = u[Ny + j];
 				F    = eval_F(a);
 				for(j = 0; j < Ny; j++)
-					r[j]   = y[j] - F[j]; 
+					r[j]   = y[j] - F[j];
 				return  r;
 			}
 			// trapezoidal approximation -------------------------
 			ADVector ym(Ny), G(Ny), Gm(Ny), r(Ny);
-			// r^k for k = Nz+1, ... , 2*Nz 
+			// r^k for k = Nz+1, ... , 2*Nz
 			// interval between data samples
 			Number T = s[k-Nz] - s[k-Nz-1];
 			// integration step size
 			Number dt = T / Number( N_[k-Nz] );
-			// u = [ y(t[i-1], a) , y(t[i], a), a ) 
+			// u = [ y(t[i-1], a) , y(t[i], a), a )
 			for(j = 0; j < Ny; j++)
 			{	ym[j] = u[j];
 				y[j]  = u[Ny + j];
@@ -124,7 +121,7 @@ namespace {
 		size_t range_size(size_t k)
 		{	if( k < Nz )
 				return 1;
-			return Ny; 
+			return Ny;
 		}
 		// number of terms that use this value of k
 		size_t number_terms(size_t k)
@@ -139,17 +136,17 @@ namespace {
 			size_t ny_inx = (S_[Nz] + 1) * Ny;
 			// objective function -------------------------------
 			if( k < Nz )
-			{	// index in fg corresponding to objective	
+			{	// index in fg corresponding to objective
 				I[0] = 0;
 				// u = [ y(t, a) , a ]
-				// The first Ny components of u is y(t) at 
-				// 	t = s[k+1] = t[S_[k+1]]
+				// The first Ny components of u is y(t) at
+				//	t = s[k+1] = t[S_[k+1]]
 				// x indices corresponding to this value of y
 				for(j = 0; j < Ny; j++)
 					J[j] = S_[k + 1] * Ny + j;
 				// components of x correspondig to a
 				for(j = 0; j < Na; j++)
-					J[Ny + j] = ny_inx + j; 
+					J[Ny + j] = ny_inx + j;
 				return;
 			}
 			// initial conditions --------------------------------
@@ -161,7 +158,7 @@ namespace {
 				// x indices corresponding to this value of y
 				for(j = 0; j < Ny; j++)
 					J[j] = j;
-				// following that, u contains the vector a 
+				// following that, u contains the vector a
 				for(j = 0; j < Na; j++)
 					J[Ny + j] = ny_inx + j;
 				return;
@@ -169,7 +166,7 @@ namespace {
 			// trapoziodal approximation -------------------------
 			// index of first grid point in this approximation
 			i = S_[k - Nz - 1]  + ell;
-			// There are Ny difference equations for each time 
+			// There are Ny difference equations for each time
 			// point.  Add one for the objective function, and Ny
 			// for the initial value constraints.
 			for(j = 0; j < Ny; j++)
@@ -181,7 +178,7 @@ namespace {
 			}
 			for(j = 0; j < Na; j++)
 				J[2 * Ny + j] = ny_inx + j; // a indices
-		} 
+		}
 	};
 
 }

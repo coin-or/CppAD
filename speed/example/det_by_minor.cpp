@@ -1,9 +1,9 @@
-/* $Id$ */
+// $Id$
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-12 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-15 Bradley M. Bell
 
 CppAD is distributed under multiple licenses. This distribution is under
-the terms of the 
+the terms of the
                     Eclipse Public License Version 1.0.
 
 A copy of this license is included in the COPYING file of this distribution.
@@ -17,9 +17,7 @@ $spell
 $$
 
 $section Determinant Using Expansion by Minors: Example and Test$$
-$index determinant, by minors$$
-$index example, determinant by minors$$
-$index test, determinant by minors$$
+$mindex minors$$
 
 $code
 $verbatim%speed/example/det_by_minor.cpp%0%// BEGIN C++%// END C++%1%$$

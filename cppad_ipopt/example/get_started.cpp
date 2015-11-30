@@ -1,9 +1,9 @@
-/* $Id$ */
+// $Id$
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-13 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-15 Bradley M. Bell
 
 CppAD is distributed under multiple licenses. This distribution is under
-the terms of the 
+the terms of the
                     Eclipse Public License Version 1.0.
 
 A copy of this license is included in the COPYING file of this distribution.
@@ -18,14 +18,12 @@ $spell
 	IpoptDir
 	CppAD
 $$
-$index example, nonlinear, programming$$
-$index programming, nonlinear example$$
-$index ipopt, AD example$$
 
 $section Nonlinear Programming Using CppAD and Ipopt: Example and Test$$
+$mindex ipopt AD$$
 
 $head Purpose$$
-This example program demonstrates how to use the class cppad_ipopt_nlp to 
+This example program demonstrates how to use the class cppad_ipopt_nlp to
 solve the example problem in the Ipopt documentation; i.e., the problem
 $latex \[
 \begin{array}{lc}
@@ -35,15 +33,15 @@ $latex \[
 \\
                         &  x_1^2 + x_2^2 + x_3^2 + x_4^2 = 40
 \\
-                        &  1 \leq x_1, x_2, x_3, x_4 \leq 5  
+                        &  1 \leq x_1, x_2, x_3, x_4 \leq 5
 \end{array}
 \] $$
 
 
 $head Configuration Requirement$$
 This example will be compiled and tested provided that
-a value for $icode ipopt_prefix$$ 
-is specified on the $cref cmake$$ command line. 
+a value for $icode ipopt_prefix$$
+is specified on the $cref cmake$$ command line.
 
 $code
 $verbatim%cppad_ipopt/example/get_started.cpp%0%// BEGIN C++%// END C++%1%$$
@@ -72,7 +70,7 @@ namespace {
 		ADVector eval_r(size_t k, const ADVector&  x)
 		{	ADVector fg(3);
 
-			// Fortran style indexing 
+			// Fortran style indexing
 			ADNumber x1 = x[0];
 			ADNumber x2 = x[1];
 			ADNumber x3 = x[2];
@@ -89,14 +87,14 @@ namespace {
 		{	return retape_; }
 	};
 }
-	
+
 bool ipopt_get_started(void)
 {	bool ok = true;
 	size_t j;
 
 
 	// number of independent variables (domain dimension for f and g)
-	size_t n = 4;  
+	size_t n = 4;
 	// number of constraints (range dimension for g)
 	size_t m = 2;
 	// initial value of the independent variables
@@ -116,12 +114,12 @@ bool ipopt_get_started(void)
 	NumberVector g_l(m);
 	NumberVector g_u(m);
 	g_l[0] = 25.0;     g_u[0] = 1.0e19;
-  	g_l[1] = 40.0;     g_u[1] = 40.0;
+	g_l[1] = 40.0;     g_u[1] = 40.0;
 
 	size_t icase;
 	for(icase = 0; icase <= 1; icase++)
 	{	// Should cppad_ipopt_nlp retape the operation sequence for
-		// every new x. Can test both true and false cases because 
+		// every new x. Can test both true and false cases because
 		// the operation sequence does not depend on x (for this case).
 		bool retape = icase != 0;
 
@@ -146,7 +144,7 @@ bool ipopt_get_started(void)
 		app->Options()->SetIntegerValue("max_iter", 10);
 
 		// approximate accuracy in first order necessary conditions;
-		// see Mathematical Programming, Volume 106, Number 1, 
+		// see Mathematical Programming, Volume 106, Number 1,
 		// Pages 25-57, Equation (6)
 		app->Options()->SetNumericValue("tol", 1e-9);
 
@@ -166,8 +164,8 @@ bool ipopt_get_started(void)
 		ok    &= status == Ipopt::Solve_Succeeded;
 
 		/*
- 		Check some of the solution values
- 		*/
+		Check some of the solution values
+		*/
 		ok &= solution.status == cppad_ipopt_solution::success;
 		//
 		double check_x[]   = { 1.000000, 4.743000, 3.82115, 1.379408 };

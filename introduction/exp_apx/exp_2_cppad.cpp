@@ -1,9 +1,9 @@
-/* $Id$ */
+// $Id$
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-07 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-15 Bradley M. Bell
 
 CppAD is distributed under multiple licenses. This distribution is under
-the terms of the 
+the terms of the
                     Eclipse Public License Version 1.0.
 
 A copy of this license is included in the COPYING file of this distribution.
@@ -39,7 +39,7 @@ $head Purpose$$
 Use CppAD forward and reverse modes to compute the
 partial derivative with respect to $latex x$$,
 at the point $latex x = .5$$,
-of the function 
+of the function
 $codei%
 	exp_2(%x%)
 %$$
@@ -49,8 +49,8 @@ $head Exercises$$
 $list number$$
 Create and test a modified version of the routine below that computes
 the same order derivatives with respect to $latex x$$,
-at the point $latex x = .1$$ 
-of the function 
+at the point $latex x = .1$$
+of the function
 $codei%
 	exp_2(%x%)
 %$$
@@ -58,7 +58,7 @@ $lnext
 Create a routine called
 $codei%
 	exp_3(%x%)
-%$$ 
+%$$
 that evaluates the function
 $latex \[
 	f(x) = 1 + x^2 / 2 + x^3 / 6
@@ -69,7 +69,7 @@ at the point $latex x = .5$$.
 $lend
 $codep */
 
-# include <cppad/cppad.hpp>  // http://www.coin-or.org/CppAD/ 
+# include <cppad/cppad.hpp>  // http://www.coin-or.org/CppAD/
 # include "exp_2.hpp"        // second order exponential approximation
 bool exp_2_cppad(void)
 {	bool ok = true;
@@ -87,7 +87,7 @@ bool exp_2_cppad(void)
 
 	// evaluate our exponential approximation
 	AD<double> x   = X[0];
-	AD<double> apx = exp_2(x);  
+	AD<double> apx = exp_2(x);
 
 	// range space vector
 	size_t m = 1;  // dimension of the range space
@@ -95,7 +95,7 @@ bool exp_2_cppad(void)
 	Y[0] = apx;    // variable that represents only range space component
 
 	// Create f: X -> Y corresponding to this operation sequence
-	// and stop recording. This also executes a zero order forward 
+	// and stop recording. This also executes a zero order forward
 	// sweep using values in X for x.
 	CppAD::ADFun<double> f(X, Y);
 
@@ -118,11 +118,11 @@ bool exp_2_cppad(void)
 
 	// second order forward sweep that computes
 	// second partial of exp_2(x) with respect to x
-	vector<double> x2(n);     // second order Taylor coefficients 
-	vector<double> y2(m);  
+	vector<double> x2(n);     // second order Taylor coefficients
+	vector<double> y2(m);
 	x2[0] = 0.;               // evaluate second partial .w.r.t. x
 	y2    = f.Forward(2, x2);
-	check = 0.5 * 1.;         // Taylor coef is 1/2 second derivative 
+	check = 0.5 * 1.;         // Taylor coef is 1/2 second derivative
 	ok   &= NearEqual(y2[0], check, 1e-10, 1e-10);
 
 	// second order reverse sweep that computes

@@ -1,9 +1,9 @@
-/* $Id$ */
+// $Id$
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-13 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-15 Bradley M. Bell
 
 CppAD is distributed under multiple licenses. This distribution is under
-the terms of the 
+the terms of the
                     Eclipse Public License Version 1.0.
 
 A copy of this license is included in the COPYING file of this distribution.
@@ -48,7 +48,7 @@ Please visit http://www.coin-or.org/CppAD/ for information on other licenses.
 	Check[index * n + 1] = true;   \
 	Check[index * n + 2] = false;  \
 	index++;
- 
+
 
 # define CheckBinaryFun(Fun)           \
 	Y[index] = Fun( X[0] , 2.);    \
@@ -74,14 +74,14 @@ bool case_one()
 	using namespace CppAD;
 
 	// dimension of the domain space
-	size_t n = 3; 
+	size_t n = 3;
 
 	// dimension of the range space
 	size_t m = (4 + 11 + 1) * 3 + 4;
 
-	// independent variable vector 
+	// independent variable vector
 	CPPAD_TESTVECTOR(AD<double>) X(n);
-	X[0] = .1; 
+	X[0] = .1;
 	X[1] = .2;
 	X[2] = .3;
 	Independent(X);
@@ -166,7 +166,7 @@ bool case_one()
 	for(i = 0; i < m; i++)
 	{	for(j = 0; j < n; j++)
 			ok &= (Px[i * n + j] == Check[i * n + j]);
-	}	
+	}
 	// --------------------------------------------------------
 	// dependency matrix for the identity function U(y) = y
 	CPPAD_TESTVECTOR(std::set<size_t>) Sy(m);
@@ -185,9 +185,9 @@ bool case_one()
 	for(i = 0; i < m; i++)
 	{	for(j = 0; j < n; j++)
 		{	found = Sx[i].find(j) != Sx[i].end();
-		 	ok    &= (found == Check[i * n + j]);
+			ok    &= (found == Check[i * n + j]);
 		}
-	}	
+	}
 
 	return ok;
 }
@@ -197,7 +197,7 @@ bool case_two()
 	using namespace CppAD;
 
 	// dimension of the domain space
-	size_t n = 3; 
+	size_t n = 3;
 
 	// dimension of the range space
 	size_t m = 3;
@@ -208,16 +208,16 @@ bool case_two()
 	for(k = 0; k < n-1; k++)
 		Z[k] = 0.;
 
-	// independent variable vector 
+	// independent variable vector
 	CPPAD_TESTVECTOR(AD<double>) X(n);
-	X[0] = 0.; 
+	X[0] = 0.;
 	X[1] = 1.;
 	X[2] = 2.;
 	Independent(X);
 
 	// VecAD vector is going to depend on X[1] and X[2]
 	Z[ X[0] ] = X[1];
-	Z[ X[1] ] = X[2]; 
+	Z[ X[1] ] = X[2];
 
 	// dependent variable vector
 	CPPAD_TESTVECTOR(AD<double>) Y(m);
@@ -273,7 +273,7 @@ bool case_two()
 	for(i = 0; i < m; i++)
 	{	for(j = 0; j < n; j++)
 			ok &= (Px[i * n + j] == Check[i * n + j]);
-	}	
+	}
 	// --------------------------------------------------------
 	// dependency matrix for the identity function U(y) = y
 	CPPAD_TESTVECTOR(std::set<size_t>) Sy(m);
@@ -292,9 +292,9 @@ bool case_two()
 	for(i = 0; i < m; i++)
 	{	for(j = 0; j < n; j++)
 		{	found = Sx[i].find(j) != Sx[i].end();
-		 	ok    &= (found == Check[i * n + j]);
+			ok    &= (found == Check[i * n + j]);
 		}
-	}	
+	}
 
 	return ok;
 }
@@ -304,14 +304,14 @@ bool case_three()
 	using namespace CppAD;
 
 	// dimension of the domain space
-	size_t n = 2; 
+	size_t n = 2;
 
 	// dimension of the range space
 	size_t m = 3;
 
-	// independent variable vector 
+	// independent variable vector
 	CPPAD_TESTVECTOR(AD<double>) X(n);
-	X[0] = 2.; 
+	X[0] = 2.;
 	X[1] = 3.;
 	Independent(X);
 
@@ -365,10 +365,10 @@ bool case_three()
 	for(i = 0; i < m; i++)
 	{	for(j = 0; j < n; j++)
 			ok &= (Px[i * n + j] == Check[i * n + j]);
-	}	
+	}
 
 	// ---------------------------------------------------------
-	// dependency matrix for the identity function 
+	// dependency matrix for the identity function
 	CPPAD_TESTVECTOR(std::set<size_t>) Sy(m);
 	for(i = 0; i < m; i++)
 	{	assert( Sy[i].empty() );
@@ -386,7 +386,7 @@ bool case_three()
 		{	found = Sx[i].find(j) != Sx[i].end();
 			ok &= (found == Check[i * n + j]);
 		}
-	}	
+	}
 
 	return ok;
 }
@@ -394,19 +394,19 @@ bool case_three()
 
 // case where s is not identity matrix
 bool case_four()
-{	
+{
 	bool ok = true;
 	using namespace CppAD;
 
 	// dimension of the domain space
-	size_t n = 2; 
+	size_t n = 2;
 
 	// dimension of the range space
 	size_t m = n;
 
-	// independent and variable vectors 
+	// independent and variable vectors
 	CPPAD_TESTVECTOR(AD<double>) ax(n), ay(m);
-	ax[0] = 2.; 
+	ax[0] = 2.;
 	ax[1] = 3.;
 	Independent(ax);
 	ay[0] = ax[1];
@@ -434,14 +434,14 @@ bool case_five()
 	using namespace CppAD;
 
 	// dimension of the domain space
-	size_t n = 2; 
+	size_t n = 2;
 
 	// dimension of the range space
 	size_t m = 3;
 
-	// independent variable vector 
+	// independent variable vector
 	CPPAD_TESTVECTOR(AD<double>) X(n);
-	X[0] = 2.; 
+	X[0] = 2.;
 	X[1] = 3.;
 	Independent(X);
 
@@ -496,10 +496,10 @@ bool case_five()
 	for(i = 0; i < m; i++)
 	{	for(j = 0; j < n; j++)
 			ok &= (Px[j * m + i] == Check[i * n + j]);
-	}	
+	}
 
 	// ---------------------------------------------------------
-	// dependency matrix for the identity function 
+	// dependency matrix for the identity function
 	CPPAD_TESTVECTOR(std::set<size_t>) Sy(m);
 	for(i = 0; i < m; i++)
 	{	assert( Sy[i].empty() );
@@ -517,7 +517,7 @@ bool case_five()
 		{	found = Sx[j].find(i) != Sx[j].end();
 			ok &= (found == Check[i * n + j]);
 		}
-	}	
+	}
 
 	return ok;
 }

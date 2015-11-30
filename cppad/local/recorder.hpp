@@ -1,11 +1,11 @@
-/* $Id$ */
-# ifndef CPPAD_RECORDER_INCLUDED
-# define CPPAD_RECORDER_INCLUDED
+// $Id$
+# ifndef CPPAD_RECORDER_HPP
+# define CPPAD_RECORDER_HPP
 /* --------------------------------------------------------------------------
 CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-15 Bradley M. Bell
 
 CppAD is distributed under multiple licenses. This distribution is under
-the terms of the 
+the terms of the
                     Eclipse Public License Version 1.0.
 
 A copy of this license is included in the COPYING file of this distribution.
@@ -64,7 +64,7 @@ private:
 // ---------------------- Public Functions -----------------------------------
 public:
 	/// Default constructor
-	recorder(void) : 
+	recorder(void) :
 	thread_offset_( thread_alloc::thread_num() * CPPAD_HASH_TABLE_SIZE ) ,
 	num_var_rec_(0)                                      ,
 	num_load_op_rec_(0)                                  ,
@@ -92,7 +92,7 @@ public:
 	/*!
 	Frees all information in recording.
 
-	Frees the operation sequence store in this recording 
+	Frees the operation sequence store in this recording
 	(the operation sequence is empty after this operation).
 	The buffers used to store the current recording are returned
 	to the system (so as to conserve on memory).
@@ -115,13 +115,13 @@ public:
 	/// Find or add a parameter to the current vector of parameters.
 	inline size_t PutPar(const Base &par);
 	/// Put one operation argument index in the recording
-	inline void PutArg(addr_t arg0); 
+	inline void PutArg(addr_t arg0);
 	/// Put two operation argument index in the recording
-	inline void PutArg(addr_t arg0, addr_t arg1); 
+	inline void PutArg(addr_t arg0, addr_t arg1);
 	/// Put three operation argument index in the recording
-	inline void PutArg(addr_t arg0, addr_t arg1, addr_t arg2); 
+	inline void PutArg(addr_t arg0, addr_t arg1, addr_t arg2);
 	/// Put four operation argument index in the recording
-	inline void PutArg(addr_t arg0, addr_t arg1, addr_t arg2, addr_t arg3); 
+	inline void PutArg(addr_t arg0, addr_t arg1, addr_t arg2, addr_t arg3);
 	/// Put five operation argument index in the recording
 	inline void PutArg(addr_t arg0, addr_t arg1, addr_t arg2, addr_t arg3,
 		addr_t arg4);
@@ -150,9 +150,9 @@ public:
 	size_t num_op_rec(void) const
 	{	return  op_rec_.size(); }
 
-	/// Approximate amount of memory used by the recording 
+	/// Approximate amount of memory used by the recording
 	size_t Memory(void) const
-	{	return op_rec_.capacity()        * sizeof(CPPAD_OP_CODE_TYPE) 
+	{	return op_rec_.capacity()        * sizeof(CPPAD_OP_CODE_TYPE)
 		     + vecad_ind_rec_.capacity() * sizeof(size_t)
 		     + op_arg_rec_.capacity()    * sizeof(addr_t)
 		     + par_rec_.capacity()       * sizeof(Base)
@@ -164,7 +164,7 @@ public:
 Put next operator in the operation sequence.
 
 This sets the op code for the next operation in this recording.
-This call must be followed by putting the corresponding 
+This call must be followed by putting the corresponding
 \verbatim
 	NumArg(op)
 \endverbatim
@@ -175,8 +175,8 @@ Is the op code corresponding to the the operation that is being
 recorded (which must not be LdpOp or LdvOp).
 
 \return
-The return value is the index of the primary (last) variable 
-corresponding to the result of this operation. 
+The return value is the index of the primary (last) variable
+corresponding to the result of this operation.
 The number of variables corresponding to the operation is given by
 \verbatim
 	NumRes(op)
@@ -209,7 +209,7 @@ inline size_t recorder<Base>::PutOp(OpCode op)
 Put next LdpOp or LdvOp operator in operation sequence (special cases).
 
 This sets the op code for the next operation in this recording.
-This call must be followed by putting the corresponding 
+This call must be followed by putting the corresponding
 \verbatim
 	NumArg(op)
 \endverbatim
@@ -220,8 +220,8 @@ Is the op code corresponding to the the operation that is being
 recorded (which must be LdpOp or LdvOp).
 
 \return
-The return value is the index of the primary (last) variable 
-corresponding to the result of this operation. 
+The return value is the index of the primary (last) variable
+corresponding to the result of this operation.
 The number of variables corresponding to the operation is given by
 \verbatim
 	NumRes(op)
@@ -234,7 +234,7 @@ This index starts at zero after the default constructor
 and after each call to Erase.
 
 \par num_load_op_rec()
-The return value for <code>num_load_op_rec()</code> 
+The return value for <code>num_load_op_rec()</code>
 increases by one after each call to this function
 (and starts at zero after the default constructor or Erase).
 */
@@ -304,10 +304,10 @@ size_t recorder<Base>::PutPar(const Base &par)
 	size_t          i;
 	size_t          code;
 
-	CPPAD_ASSERT_UNKNOWN( 
+	CPPAD_ASSERT_UNKNOWN(
 		thread_offset_ / CPPAD_HASH_TABLE_SIZE
-		== 
-		thread_alloc::thread_num() 
+		==
+		thread_alloc::thread_num()
 	);
 
 	// get hash code for this value
@@ -318,7 +318,7 @@ size_t recorder<Base>::PutPar(const Base &par)
 	i = hash_table[code + thread_offset_];
 	if( i < par_rec_.size() && IdenticalEqualPar(par_rec_[i], par) )
 			return i;
-	
+
 	// place a new value in the table
 	i           = par_rec_.extend(1);
 	par_rec_[i] = par;
@@ -346,7 +346,7 @@ The following syntax
 places the values passed to PutArg at the current end of the
 operation argument indices for the recording.
 \a arg0 comes before \a arg1, etc.
-The proper number of operation argument indices 
+The proper number of operation argument indices
 corresponding to the operation code op is given by
 \verbatim
 	NumArg(op)
@@ -365,11 +365,11 @@ Put one operation argument index in the recording
 \param arg0
 The operation argument index
 
-\copydetails prototype_put_arg 
+\copydetails prototype_put_arg
 */
 template <class Base>
 inline void recorder<Base>::PutArg(addr_t arg0)
-{ 
+{
 	size_t i       = op_arg_rec_.extend(1);
 	op_arg_rec_[i] =  static_cast<addr_t>( arg0 );
 	CPPAD_ASSERT_UNKNOWN( op_arg_rec_.size() == i + 1 );
@@ -383,11 +383,11 @@ First operation argument index.
 \param arg1
 Second operation argument index.
 
-\copydetails prototype_put_arg 
+\copydetails prototype_put_arg
 */
 template <class Base>
 inline void recorder<Base>::PutArg(addr_t arg0, addr_t arg1)
-{ 
+{
 	size_t i         = op_arg_rec_.extend(2);
 	op_arg_rec_[i++] =  static_cast<addr_t>( arg0 );
 	op_arg_rec_[i]   =  static_cast<addr_t>( arg1 );
@@ -405,11 +405,11 @@ Second operation argument index.
 \param arg2
 Third operation argument index.
 
-\copydetails prototype_put_arg 
+\copydetails prototype_put_arg
 */
 template <class Base>
 inline void recorder<Base>::PutArg(addr_t arg0, addr_t arg1, addr_t arg2)
-{ 
+{
 	size_t i         = op_arg_rec_.extend(3);
 	op_arg_rec_[i++] =  static_cast<addr_t>( arg0 );
 	op_arg_rec_[i++] =  static_cast<addr_t>( arg1 );
@@ -431,12 +431,12 @@ Third operation argument index.
 \param arg3
 Fourth operation argument index.
 
-\copydetails prototype_put_arg 
+\copydetails prototype_put_arg
 */
 template <class Base>
 inline void recorder<Base>::PutArg(addr_t arg0, addr_t arg1, addr_t arg2,
 	addr_t arg3)
-{ 
+{
 	size_t i         = op_arg_rec_.extend(4);
 	op_arg_rec_[i++] =  static_cast<addr_t>( arg0 );
 	op_arg_rec_[i++] =  static_cast<addr_t>( arg1 );
@@ -463,12 +463,12 @@ Fourth operation argument index.
 \param arg4
 Fifth operation argument index.
 
-\copydetails prototype_put_arg 
+\copydetails prototype_put_arg
 */
 template <class Base>
 inline void recorder<Base>::PutArg(addr_t arg0, addr_t arg1, addr_t arg2,
 	addr_t arg3, addr_t arg4)
-{ 
+{
 	size_t i         = op_arg_rec_.extend(5);
 	op_arg_rec_[i++] =  static_cast<addr_t>( arg0 );
 	op_arg_rec_[i++] =  static_cast<addr_t>( arg1 );
@@ -499,12 +499,12 @@ Fifth operation argument index.
 \param arg5
 Sixth operation argument index.
 
-\copydetails prototype_put_arg 
+\copydetails prototype_put_arg
 */
 template <class Base>
-inline void recorder<Base>::PutArg(addr_t arg0, addr_t arg1, addr_t arg2, 
+inline void recorder<Base>::PutArg(addr_t arg0, addr_t arg1, addr_t arg2,
 	addr_t arg3, addr_t arg4, addr_t arg5)
-{ 
+{
 	size_t i         = op_arg_rec_.extend(6);
 	op_arg_rec_[i++] =  static_cast<addr_t>( arg0 );
 	op_arg_rec_[i++] =  static_cast<addr_t>( arg1 );
@@ -527,7 +527,7 @@ first of the arguments being reserved.
 */
 template <class Base>
 inline size_t recorder<Base>::ReserveArg(size_t n_arg)
-{ 
+{
 	size_t i = op_arg_rec_.extend(n_arg);
 	CPPAD_ASSERT_UNKNOWN( op_arg_rec_.size() == i + n_arg );
 	return i;
@@ -535,7 +535,7 @@ inline size_t recorder<Base>::ReserveArg(size_t n_arg)
 
 /*!
 \brief
-Replace an argument value in the recording 
+Replace an argument value in the recording
 (intended to fill in reserved values).
 
 \param i_arg
@@ -567,12 +567,12 @@ inline size_t recorder<Base>::PutTxt(const char *text)
 	size_t n = 0;
 	while( text[n] != '\0' )
 		n++;
-	CPPAD_ASSERT_UNKNOWN( n <= 1000 ); 
+	CPPAD_ASSERT_UNKNOWN( n <= 1000 );
 	n++;
 	CPPAD_ASSERT_UNKNOWN( text[n-1] == '\0' );
 
 	// copy text including terminating '\0'
-	size_t i = text_rec_.extend(n); 
+	size_t i = text_rec_.extend(n);
 	size_t j;
 	for(j = 0; j < n; j++)
 		text_rec_[i + j] = text[j];

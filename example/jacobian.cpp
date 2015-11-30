@@ -1,9 +1,9 @@
-/* $Id$ */
+// $Id$
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-12 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-15 Bradley M. Bell
 
 CppAD is distributed under multiple licenses. This distribution is under
-the terms of the 
+the terms of the
                     Eclipse Public License Version 1.0.
 
 A copy of this license is included in the COPYING file of this distribution.
@@ -18,10 +18,8 @@ $spell
 $$
 
 $section Jacobian: Example and Test$$
+$mindex Jacobian$$
 
-$index Jacobian$$
-$index example, Jacobian$$
-$index test, Jacobian$$
 
 $code
 $verbatim%example/jacobian.cpp%0%// BEGIN C++%// END C++%1%$$
@@ -34,7 +32,7 @@ $end
 # include <cppad/cppad.hpp>
 namespace { // ---------------------------------------------------------
 // define the template function JacobianCases<Vector> in empty namespace
-template <typename Vector> 
+template <typename Vector>
 bool JacobianCases()
 {	bool ok = true;
 	using CppAD::AD;
@@ -89,7 +87,7 @@ bool JacobianCases()
 
 	return ok;
 }
-} // End empty namespace 
+} // End empty namespace
 # include <vector>
 # include <valarray>
 bool Jacobian(void)

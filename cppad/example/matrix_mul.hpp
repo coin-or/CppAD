@@ -1,6 +1,6 @@
 // $Id$
-# ifndef CPPAD_MATRIX_MUL_INCLUDED
-# define CPPAD_MATRIX_MUL_INCLUDED
+# ifndef CPPAD_MATRIX_MUL_HPP
+# define CPPAD_MATRIX_MUL_HPP
 
 /* --------------------------------------------------------------------------
 CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-15 Bradley M. Bell
@@ -19,9 +19,6 @@ $spell
 $$
 
 $section Matrix Multiply as an Atomic Operation$$
-$index multiply, matrix atomic operation$$
-$index atomic, matrix multiply operation$$
-$index matrix, multiply atomic operation$$
 
 $nospell
 

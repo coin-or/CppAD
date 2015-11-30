@@ -1,6 +1,6 @@
-/* $Id$ */
-# ifndef CPPAD_SPARSE_LIST_INCLUDED
-# define CPPAD_SPARSE_LIST_INCLUDED
+// $Id$
+# ifndef CPPAD_SPARSE_LIST_HPP
+# define CPPAD_SPARSE_LIST_HPP
 
 /* --------------------------------------------------------------------------
 CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-15 Bradley M. Bell
@@ -127,7 +127,7 @@ public:
 
 	\param v
 	vector that we are attempting to make a copy of.
- 	*/
+	*/
 	sparse_list(const sparse_list& v)
 	{	// Error:
 		// Probably a sparse_list argument has been passed by value
@@ -442,7 +442,7 @@ public:
 
 	/return
 	The the total number of elements
- 	*/
+	*/
 	size_t number_elements(void) const
 	{	size_t i, count;
 		count = 0;

@@ -1,9 +1,9 @@
-/* $Id$ */
+// $Id$
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-12 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-15 Bradley M. Bell
 
 CppAD is distributed under multiple licenses. This distribution is under
-the terms of the 
+the terms of the
                     Eclipse Public License Version 1.0.
 
 A copy of this license is included in the COPYING file of this distribution.
@@ -21,9 +21,6 @@ $spell
 $$
 
 $section Choosing the CppAD Test Vector Template Class$$
-$index cppad, test vector$$
-$index test, cppad vector$$
-$index vector, cppad test$$
 
 $head Purpose$$
 The value $icode cppad_testvector$$
@@ -31,26 +28,20 @@ in the $cref/cmake command/cmake/CMake Command/$$ must be one of the
 following:
 $code boost$$, $code cppad$$, $code eigen$$, or $code std$$.
 It specifies which type of vector is corresponds to the template class
-$cref/CPPAD_TESTVECTOR/testvector/$$ 
+$cref/CPPAD_TESTVECTOR/testvector/$$
 which is used for many of the CppAD examples and tests.
 
 $head std$$
-$index std, vector$$
-$index vector, std$$
 If $icode%cppad_testvector%$$ is $icode std$$,
 the $code std::vector$$ template class is used to define
 $code CPPAD_TESTVECTOR$$.
 
 $head cppad$$
-$index cppad, vector$$
-$index vector, cppad$$
 If $icode%cppad_testvector%$$ is $icode cppad$$,
 the $cref cppad_vector$$ template class is used to define
 $code CPPAD_TESTVECTOR$$.
 
 $head boost$$
-$index boost, vector$$
-$index vector, boost$$
 If $icode%cppad_testvector%$$ is $icode boost$$,
 $href%
 	http://www.boost.org/doc/libs/1_52_0/libs/numeric/ublas/doc/vector.htm%
@@ -66,13 +57,11 @@ $href%
 module must be able to automatically figure out where Boost is installed.
 
 $head eigen$$
-$index eigen, vector$$
-$index vector, eigen$$
 If $icode%cppad_testvector%$$ is $icode eigen$$,
 one of the eigen template classes is used to define
 $code CPPAD_TESTVECTOR$$.
 In this case,
-$cref eigen_prefix$$ must be specified on the $code cmake$$ command line. 
+$cref eigen_prefix$$ must be specified on the $code cmake$$ command line.
 
 
 $end

@@ -1,4 +1,4 @@
-/* $Id$ */
+// $Id$
 /* --------------------------------------------------------------------------
 CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-15 Bradley M. Bell
 
@@ -12,16 +12,13 @@ Please visit http://www.coin-or.org/CppAD/ for information on other licenses.
 $begin omp_alloc$$
 $spell
 	openmp
-	cppad/omp_alloc.hpp
+	cppad/utility/omp_alloc.hpp
 	CppAD
 $$
 
 $section A Quick OpenMP Memory Allocator Used by CppAD$$
+$mindex multi-threading allocation$$
 
-$index multi-threading, memory allocation$$
-$index openmp, memory allocation$$
-$index memory, multi-threading allocation$$
-$index allocation, multi-threading$$
 
 $head Syntax$$
 $code # include <cppad/omp_alloc.hpp>$$
@@ -46,7 +43,7 @@ $head Deprecated 2011-08-23$$
 Use $cref thread_alloc$$ instead.
 
 $childtable%
-	cppad/omp_alloc.hpp%
+	cppad/utility/omp_alloc.hpp%
 	test_more/omp_alloc.cpp
 %$$
 

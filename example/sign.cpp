@@ -1,9 +1,9 @@
-/* $Id$ */
+// $Id$
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-12 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-15 Bradley M. Bell
 
 CppAD is distributed under multiple licenses. This distribution is under
-the terms of the 
+the terms of the
                     Eclipse Public License Version 1.0.
 
 A copy of this license is included in the COPYING file of this distribution.
@@ -17,9 +17,6 @@ $$
 
 $section Sign Function: Example and Test$$
 
-$index sign, example$$
-$index example, sign$$
-$index test, sign$$
 
 $code
 $verbatim%example/sign.cpp%0%// BEGIN C++%// END C++%1%$$
@@ -52,7 +49,7 @@ bool sign(void)
 	// use f(x) to evaluate the sign function and its derivatives
 	CPPAD_TESTVECTOR(double) x(n), y(m), dx(n), dy(m), w(m), dw(n);
 	dx[0] = 1.;
-	w[0] = 1.; 
+	w[0] = 1.;
 	//
 	x[0]  = 2.;
 	y     = f.Forward(0, x);

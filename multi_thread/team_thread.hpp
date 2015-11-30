@@ -1,17 +1,17 @@
-/* $Id$ */
-# ifndef CPPAD_TEAM_THREAD_INCLUDED
-# define CPPAD_TEAM_THREAD_INCLUDED
+// $Id$
+# ifndef CPPAD_TEAM_THREAD_HPP
+# define CPPAD_TEAM_THREAD_HPP
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-13 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-15 Bradley M. Bell
 
 CppAD is distributed under multiple licenses. This distribution is under
-the terms of the 
+the terms of the
                     Eclipse Public License Version 1.0.
 
 A copy of this license is included in the COPYING file of this distribution.
 Please visit http://www.coin-or.org/CppAD/ for information on other licenses.
 -------------------------------------------------------------------------- */
-/* 
+/*
 $begin team_thread.hpp$$
 $spell
 	pthreads
@@ -27,9 +27,6 @@ $spell
 $$
 $section Specifications for A Team of AD Threads$$
 
-$index thread, AD team$$
-$index AD, thread team$$
-$index team, AD threads$$
 
 $head Syntax$$
 $codei%include "team_thread.hpp"
@@ -56,7 +53,7 @@ when the master thread is the only thread that is running
 ($cref/in_parallel/ta_in_parallel/$$ must be false).
 
 $head team_create$$
-The argument 
+The argument
 $icode%num_threads% > 0%$$ has type $code size_t$$
 and specifies the number of threads in this team.
 This initializes both $code AD<double>$$ and $code team_work$$
@@ -72,7 +69,7 @@ The argument $icode worker$$ has type
 $codei%bool %worker%(void)%$$.
 Each call to $code team_work$$ runs $icode num_threads$$ versions
 of $icode worker$$ with the corresponding value of
-$cref/thread_num/ta_thread_num/$$ 
+$cref/thread_num/ta_thread_num/$$
 between zero and $icode%num_threads% - 1%$$ and
 different for each thread,
 
@@ -88,7 +85,7 @@ This routines returns a name that identifies this thread_team.
 The return value has prototype
 $codei%
 	const char* %name%
-%$$ 
+%$$
 and is a statically allocated $code '\0'$$ terminated C string.
 
 $head ok$$
@@ -116,7 +113,7 @@ $rref team_pthread.cpp$$
 $tend
 
 $head Speed Test of Implementation$$
-Speed tests of using CppAD with the team implementations above 
+Speed tests of using CppAD with the team implementations above
 can be found in:
 $table
 $rref harmonic.cpp$$

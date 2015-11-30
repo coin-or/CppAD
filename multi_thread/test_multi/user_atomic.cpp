@@ -1,9 +1,9 @@
-/* $Id$ */
+// $Id$
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-12 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-15 Bradley M. Bell
 
 CppAD is distributed under multiple licenses. This distribution is under
-the terms of the 
+the terms of the
                     Eclipse Public License Version 1.0.
 
 A copy of this license is included in the COPYING file of this distribution.
@@ -28,37 +28,37 @@ namespace {
 	size_t thread_number(void)
 	{	return static_cast<size_t>( omp_get_thread_num() ); }
 # endif
-	
+
 	// y[0] = x[0] + x[1]
 	bool user_atomic_forward(
 		size_t                         id ,
-		size_t                          k , 
+		size_t                          k ,
 		size_t                          n ,
 		size_t                          m ,
 		const CppAD::vector<bool>&     vx ,
 		CppAD::vector<bool>&           vy ,
-		const CppAD::vector<double>&   tx , 
+		const CppAD::vector<double>&   tx ,
 		CppAD::vector<double>&         ty )
 	{	assert(n >= 3 && m == 2);
-		if( k > 0 ) 
+		if( k > 0 )
 			return false;
 
 		ty[0] = tx[0] + tx[1];
 		ty[1] = tx[1] + tx[2];
-		
+
 		if( vy.size() > 0 )
 		{	vy[0] = (vx[0] | vx[1]);
 			vy[1] = (vx[1] | vx[2]);
 		}
-		return true; 
+		return true;
 	}
 
 	bool user_atomic_reverse(
 		size_t                         id ,
-		size_t                          k , 
-		size_t                          n , 
-		size_t                          m , 
-		const CppAD::vector<double>&   tx , 
+		size_t                          k ,
+		size_t                          n ,
+		size_t                          m ,
+		const CppAD::vector<double>&   tx ,
 		const CppAD::vector<double>&   ty ,
 		CppAD::vector<double>&         px ,
 		const CppAD::vector<double>&   py )
@@ -102,7 +102,7 @@ namespace {
 		user_atomic_reverse        ,
 		user_atomic_for_jac_sparse ,
 		user_atomic_rev_jac_sparse ,
-		user_atomic_rev_hes_sparse 
+		user_atomic_rev_hes_sparse
 	)
 
 	bool user_atomic(int call_index)
@@ -117,14 +117,14 @@ namespace {
 		for(j = 0; j < n; j++)
 			ax[j] = AD<double>(j + 1);
 		CppAD::Independent(ax);
-	
+
 		// use user atomic function
 		size_t id = 0;
 		my_user_atomic(id, ax, ay);
-	
+
 		// create function
 		CppAD::ADFun<double> g(ax, ay);
-	
+
 		// now use the tape with the user atomic function
 		vector<double> x(n), y(m);
 		for(j = 0; j < n; j++)
@@ -134,7 +134,7 @@ namespace {
 		ok &= (y[0] == x[0] + x[1]);
 		// y[1] = x[1] + x[2]
 		ok &= (y[0] == x[0] + x[1]);
-	
+
 		return ok;
 	}
 }
@@ -182,8 +182,8 @@ bool user_atomic_openmp(void)
 		ok &= ok_all[call_index];
 
 	// --------------------------------------------------------------------
-	// Free all temporary work space associated with user_atomic objects. 
-	// (If there are future calls to user atomic functions, they will 
+	// Free all temporary work space associated with user_atomic objects.
+	// (If there are future calls to user atomic functions, they will
 	// create new temporary work space.)
 	CppAD::user_atomic<double>::clear();
 

@@ -1,4 +1,4 @@
-/* $Id$ */
+// $Id$
 /* --------------------------------------------------------------------------
 CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-15 Bradley M. Bell
 
@@ -19,9 +19,6 @@ $$
 
 $section The AD atan Function: Example and Test$$
 
-$index atan, AD example$$
-$index example, AD atan$$
-$index test, AD atan$$
 
 $code
 $verbatim%example/atan.cpp%0%// BEGIN C++%// END C++%1%$$

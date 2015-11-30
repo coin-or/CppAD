@@ -1,12 +1,12 @@
-/* $Id$ */
-# ifndef CPPAD_DISCRETE_OP_INCLUDED
-# define CPPAD_DISCRETE_OP_INCLUDED
+// $Id$
+# ifndef CPPAD_DISCRETE_OP_HPP
+# define CPPAD_DISCRETE_OP_HPP
 
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-14 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-15 Bradley M. Bell
 
 CppAD is distributed under multiple licenses. This distribution is under
-the terms of the 
+the terms of the
                     Eclipse Public License Version 1.0.
 
 A copy of this license is included in the COPYING file of this distribution.
@@ -33,7 +33,7 @@ calculated as zero).
 
 \tparam Base
 base type for the operator; i.e., this operation was recorded
-using AD< \a Base > and computations by this routine are done using type 
+using AD< \a Base > and computations by this routine are done using type
 \a Base .
 
 \param p
@@ -43,17 +43,17 @@ is the lowest order Taylor coefficient that will be calculated.
 is the highest order Taylor coefficient that will be calculated.
 
 \param r
-is the number of directions, for each order, 
+is the number of directions, for each order,
 that will be calculated (except for order zero wich only has one direction).
 
 \param i_z
-variable index corresponding to the result for this operation; 
-i.e. the row index in \a taylor corresponding to z. 
+variable index corresponding to the result for this operation;
+i.e. the row index in \a taylor corresponding to z.
 
 \param arg
 \a arg[0]
 \n
-is the index, in the order of the discrete functions defined by the user, 
+is the index, in the order of the discrete functions defined by the user,
 for this discrete function.
 \n
 \n
@@ -75,7 +75,7 @@ is the zero order Taylor coefficient corresponding to x.
 \n
 \b Output: if <code>p == 0</code>
 <code>taylor [ i_z * tpv + 0 ]</code>
-is the zero order Taylor coefficient corresponding to z. 
+is the zero order Taylor coefficient corresponding to z.
 For k = max(p, 1), ... , q,
 <code>taylor [ i_z * tpv + (k-1)*r + 1 + ell ]</code>
 is the k-th order Taylor coefficient corresponding to z
@@ -94,9 +94,9 @@ inline void forward_dis_op(
 	size_t        r           ,
 	size_t        i_z         ,
 	const addr_t* arg         ,
-	size_t        cap_order   , 
+	size_t        cap_order   ,
 	Base*         taylor      )
-{	
+{
 	// check assumptions
 	CPPAD_ASSERT_UNKNOWN( NumArg(DisOp) == 2 );
 	CPPAD_ASSERT_UNKNOWN( NumRes(DisOp) == 1 );

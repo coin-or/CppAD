@@ -1,4 +1,4 @@
-/* $Id$ */
+// $Id$
 /* --------------------------------------------------------------------------
 CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-15 Bradley M. Bell
 
@@ -24,7 +24,7 @@ $end
 */
 
 // BEGIN C++
-# include <cppad/nan.hpp>
+# include <cppad/utility/nan.hpp>
 # include <vector>
 # include <limits>
 

@@ -1,9 +1,9 @@
-/* $Id$ */
+// $Id$
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-13 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-15 Bradley M. Bell
 
 CppAD is distributed under multiple licenses. This distribution is under
-the terms of the 
+the terms of the
                     Eclipse Public License Version 1.0.
 
 A copy of this license is included in the COPYING file of this distribution.
@@ -22,7 +22,7 @@ bool reverse_one(void)
 
 	using namespace CppAD;
 
-	// independent variable vector 
+	// independent variable vector
 	CPPAD_TESTVECTOR(AD<double>) U(3);
 	U[0] = 0.; U[1] = 1.; U[2] = 2.;
 	Independent(U);
@@ -36,7 +36,7 @@ bool reverse_one(void)
 		Prod *= U[i];
 	}
 
-	// dependent variable vector 
+	// dependent variable vector
 	CPPAD_TESTVECTOR(AD<double>) V(2);
 	V[0] = Sum;
 	V[1] = Prod;
@@ -61,7 +61,7 @@ bool reverse_one(void)
 
 	// compare values
 	for(i = 0; i < 3; i++)
-	{	ok &= NearEqual(r1[i] , 
+	{	ok &= NearEqual(r1[i] ,
 			v[0] * g0[i] + v[1] * g1[i], 1e-10, 1e-10);
 	}
 
@@ -85,16 +85,16 @@ bool reverse_one(void)
 
 	// check derivative of the zero order term
 	for(i = 0; i < 3; i++)
-	{	ok &= NearEqual(r2[p * i + 0] , 
+	{	ok &= NearEqual(r2[p * i + 0] ,
 			v[0] * g0[i] + v[1] * g1[i], 1e-10, 1e-10);
 	}
 
 	/*
-	The j-th component of the first order term is 
+	The j-th component of the first order term is
 		d/dt z_j(0, u0, u1) = f_j^{(1)} (u0) * u1
 	We use ei to denote the vector with its i-th component one and all
 	the other components zero. The partial derivative of the j-th
-	component of the first order term with respect u0[i] is 
+	component of the first order term with respect u0[i] is
 		ei * f_j^{(2)} ( u0 ) * u1
 	*/
 
@@ -121,7 +121,7 @@ bool reverse_one(void)
 }
 
 // define the template function reverse_any_cases<Vector> in empty namespace
-template <typename Vector> 
+template <typename Vector>
 bool reverse_any_cases(void)
 {	bool ok = true;
 	using CppAD::AD;
@@ -130,7 +130,7 @@ bool reverse_any_cases(void)
 	// domain space vector
 	size_t n = 3;
 	CPPAD_TESTVECTOR(AD<double>) X(n);
-	X[0] = 0.; 
+	X[0] = 0.;
 	X[1] = 1.;
 	X[2] = 2.;
 
@@ -218,22 +218,22 @@ $index test, general reverse$$
 
 $index composition, example$$
 $index example, composition$$
-$index test, composition$$ 
+$index test, composition$$
 
 $head Purpose$$
-Break a derivative computation into pieces and only store values at the 
+Break a derivative computation into pieces and only store values at the
 interface of the pieces.
-In actual applications, there may be many functions, but 
+In actual applications, there may be many functions, but
 for this example there are only two.
-The functions 
-$latex F : \B{R}^2 \rightarrow \B{R}^2$$ 
+The functions
+$latex F : \B{R}^2 \rightarrow \B{R}^2$$
 and
-$latex G : \B{R}^2 \rightarrow \B{R}^2$$ 
+$latex G : \B{R}^2 \rightarrow \B{R}^2$$
 defined by
 $latex \[
-	F(x) = \left( \begin{array}{c} x_0 x_1   \\ x_1 - x_0 \end{array} \right) 
+	F(x) = \left( \begin{array}{c} x_0 x_1   \\ x_1 - x_0 \end{array} \right)
 	\; , \;
-	G(y) = \left( \begin{array}{c} y_0 - y_1 \\ y_1  y_0   \end{array} \right) 
+	G(y) = \left( \begin{array}{c} y_0 - y_1 \\ y_1  y_0   \end{array} \right)
 \] $$
 Another difference is that in actual applications,
 the memory corresponding to function objects not currently being used
@@ -245,21 +245,21 @@ $latex H : \B{R}^2 \rightarrow \B{R}$$
 is defined by
 $latex \[
 \begin{array}{rcl}
-	H(x) 
-	& = & G_0 [ F(x) ] + G_1 [ F(x)  ] 
+	H(x)
+	& = & G_0 [ F(x) ] + G_1 [ F(x)  ]
 	\\
-	& = & x_0 x_1 - ( x_1 - x_0 ) + x_0 x_1 ( x_1 - x_0 ) 
+	& = & x_0 x_1 - ( x_1 - x_0 ) + x_0 x_1 ( x_1 - x_0 )
 	\\
 	& = & x_0 x_1 ( 1 - x_0 + x_1 ) - x_1 + x_0
 \end{array}
-\] $$ 
-Given the zero and first order Taylor coefficients 
+\] $$
+Given the zero and first order Taylor coefficients
 $latex x^{(0)} $$ and $latex x^{(1)}$$,
 we use $latex X(t)$$, $latex Y(t)$$ and $latex Z(t)$$
 for the corresponding functions; i.e.,
 $latex \[
 \begin{array}{rcl}
-	X(t) & = & x^{(0)} + x^{(1)} t 
+	X(t) & = & x^{(0)} + x^{(1)} t
 	\\
 	Y(t) & = & F[X(t)] = y^{(0)} + y^{(1)} t  + O(t^2)
 	\\
@@ -272,13 +272,13 @@ $latex \[
 \] $$
 Here are the processing steps:
 $list number$$
-Use forward mode on $latex F(x)$$ to compute 
-$latex y^{(0)}$$ and $latex y^{(1)}$$ 
+Use forward mode on $latex F(x)$$ to compute
+$latex y^{(0)}$$ and $latex y^{(1)}$$
 $lnext
-Use forward mode on $latex G(y)$$ to compute 
-$latex z^{(0)}$$ and $latex z^{(1)}$$ 
+Use forward mode on $latex G(y)$$ to compute
+$latex z^{(0)}$$ and $latex z^{(1)}$$
 $lnext
-Use reverse mode on $latex G(y)$$ to compute the derivative of 
+Use reverse mode on $latex G(y)$$ to compute the derivative of
 $latex h^{(k)}$$ with respect to
 $latex y^{(0)}$$ and $latex y^{(1)}$$.
 $lnext
@@ -388,13 +388,13 @@ bool reverse_mul(void)
 	w[0*p+0] = 1.; // coefficient for z^0_0
 	w[1*p+0] = 1.; // coefficient for z^0_1
 	w[0*p+1] = 0.; // coefficient for z^1_0
-	w[1*p+1] = 0.; // coefficient for z^1_1 
+	w[1*p+1] = 0.; // coefficient for z^1_1
 	dw       = g.Reverse(p, w);
 
-	// dv^0 = dw^0 * \partial_x^0 y^0 (x) + dw^1 * \partial_x^0 y^1 (x)  
-	// dv^1 = dw^0 * \partial_x^1 y^0 (x) + dw^1 * \partial_x^1 y^1 (x)  
+	// dv^0 = dw^0 * \partial_x^0 y^0 (x) + dw^1 * \partial_x^0 y^1 (x)
+	// dv^1 = dw^0 * \partial_x^1 y^0 (x) + dw^1 * \partial_x^1 y^1 (x)
 	CPPAD_TESTVECTOR(double) dv(n*p);
-	dv   = f.Reverse(p, dw); 
+	dv   = f.Reverse(p, dw);
 
 	// check partial of h^0 w.r.t x^0_0
 	check  = x0[1] * (1. - x0[0] + x0[1]) + 1.;
@@ -417,12 +417,12 @@ bool reverse_mul(void)
 	w[0*p+0] = 0.; // coefficient for z^0_0
 	w[1*p+0] = 0.; // coefficient for z^0_1
 	w[0*p+1] = 1.; // coefficient for z^1_0
-	w[1*p+1] = 1.; // coefficient for z^1_1 
+	w[1*p+1] = 1.; // coefficient for z^1_1
 	dw       = g.Reverse(p, w);
 
-	// dv^0 = dw^0 * \partial_x^0 y^0 (x) + dw^1 * \partial_x^0 y^1 (x)  
-	// dv^1 = dw^0 * \partial_x^1 y^0 (x) + dw^1 * \partial_x^1 y^1 (x)  
-	dv   = f.Reverse(p, dw); 
+	// dv^0 = dw^0 * \partial_x^0 y^0 (x) + dw^1 * \partial_x^0 y^1 (x)
+	// dv^1 = dw^0 * \partial_x^1 y^0 (x) + dw^1 * \partial_x^1 y^1 (x)
+	dv   = f.Reverse(p, dw);
 
 	// check partial of h^1 w.r.t x^0_0
 	check  = x0[1] * (- x1[0] + x1[1]);
@@ -432,7 +432,7 @@ bool reverse_mul(void)
 
 	// check partial of h^1 w.r.t x^0_1
 	check  = x0[0] * (- x1[0] + x1[1]);
-	check += x1[0] * (1. - x0[0] + x0[1]) + x1[0] * x0[1]; 
+	check += x1[0] * (1. - x0[0] + x0[1]) + x1[0] * x0[1];
 	check += x0[0] * x1[1];
 	ok    &= NearEqual(dv[1*p+0], check, eps, eps);
 
@@ -451,7 +451,7 @@ bool reverse_mul(void)
 	return ok;
 }
 // ----------------------------------------------------------------------------
-} // End empty namespace 
+} // End empty namespace
 
 # include <vector>
 # include <valarray>

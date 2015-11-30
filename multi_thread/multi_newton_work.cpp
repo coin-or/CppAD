@@ -1,4 +1,4 @@
-/* $Id$ */
+// $Id$
 /* --------------------------------------------------------------------------
 CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-15 Bradley M. Bell
 
@@ -14,9 +14,9 @@ $begin multi_newton_work.cpp$$
 $spell
 	num
 $$
-$index multi_newton_work$$
 
 $section Multi-threading Newton Method Utility Routines$$
+$mindex multi_newton_work setup worker combine$$
 $spell
 	Cpp
 	xlow
@@ -27,12 +27,6 @@ $spell
 	df
 $$
 
-$index multi_newton_setup$$
-$index multi_newton_worker$$
-$index multi_newton_combine$$
-$index setup, multi_newton$$
-$index worker, multi_newton$$
-$index combine, multi_newton$$
 
 $head Syntax$$
 $icode%ok% = multi_newton_setup(

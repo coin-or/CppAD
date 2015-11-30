@@ -1,6 +1,6 @@
 // $Id$
-# ifndef CPPAD_SPARSE_PACK_INCLUDED
-# define CPPAD_SPARSE_PACK_INCLUDED
+# ifndef CPPAD_SPARSE_PACK_HPP
+# define CPPAD_SPARSE_PACK_HPP
 
 /* --------------------------------------------------------------------------
 CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-15 Bradley M. Bell
@@ -65,7 +65,7 @@ public:
 
 	\param v
 	vector that we are attempting to make a copy of.
- 	*/
+	*/
 	sparse_pack(const sparse_pack& v)
 	{	// Error:
 		// Probably a sparse_pack argument has been passed by value
@@ -324,7 +324,7 @@ public:
 
 	\return
 	The amount of memory in units of type unsigned char memory.
- 	*/
+	*/
 	size_t memory(void) const
 	{	return n_set_ * n_pack_ * sizeof(Pack);
 	}

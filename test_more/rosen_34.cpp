@@ -1,9 +1,9 @@
-/* $Id$ */
+// $Id$
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-12 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-15 Bradley M. Bell
 
 CppAD is distributed under multiple licenses. This distribution is under
-the terms of the 
+the terms of the
                     Eclipse Public License Version 1.0.
 
 A copy of this license is included in the COPYING file of this distribution.
@@ -23,7 +23,7 @@ Old OdeImplicit example now used just for valiadation testing of Rosen34
 /*
 Case where
 x[0](0) = 1, x[0]'(t) = - w[0] * x[0](t)
-x[1](0) = 1, x[1]'(t) = - w[1] * x[1](t) 
+x[1](0) = 1, x[1]'(t) = - w[1] * x[1](t)
 x[2](0) = 0, x[2]'(t) =   w[2] * t
 
 x[0](t) = exp( - w[0] * t )
@@ -39,38 +39,38 @@ namespace {  // BEGIN Empty namespace
 			w = w_;
 		}
 		void Ode(
-			const CppAD::AD<double>                      &t, 
-			const CPPAD_TESTVECTOR(CppAD::AD<double>) &x, 
-			CPPAD_TESTVECTOR(CppAD::AD<double>)       &f) 
+			const CppAD::AD<double>                      &t,
+			const CPPAD_TESTVECTOR(CppAD::AD<double>) &x,
+			CPPAD_TESTVECTOR(CppAD::AD<double>)       &f)
 		{
 			f[0] = - w[0] * x[0];
 			f[1] = - w[1] * x[1];
 			f[2] =   w[2] * t;
-	
+
 		}
-	
+
 		void Ode_ind(
-			const CppAD::AD<double>                      &t, 
-			const CPPAD_TESTVECTOR(CppAD::AD<double>) &x, 
-			CPPAD_TESTVECTOR(CppAD::AD<double>)       &f_t) 
+			const CppAD::AD<double>                      &t,
+			const CPPAD_TESTVECTOR(CppAD::AD<double>) &x,
+			CPPAD_TESTVECTOR(CppAD::AD<double>)       &f_t)
 		{
 			f_t[0] = 0.;
 			f_t[1] = 0.;
 			f_t[2] = w[2];
-	
+
 		}
-	
+
 		void Ode_dep(
-			const CppAD::AD<double>                      &t, 
-			const CPPAD_TESTVECTOR(CppAD::AD<double>) &x, 
-			CPPAD_TESTVECTOR(CppAD::AD<double>)       &f_x) 
+			const CppAD::AD<double>                      &t,
+			const CPPAD_TESTVECTOR(CppAD::AD<double>) &x,
+			CPPAD_TESTVECTOR(CppAD::AD<double>)       &f_x)
 		{
 			f_x[0] = - w[0];    f_x[1] = 0.;      f_x[2] = 0.;
 			f_x[3] = 0.;        f_x[4] = - w[1];  f_x[5] = 0.;
 			f_x[6] = 0.;        f_x[7] = 0.;      f_x[8] = 0.;
-	
+
 		}
-	
+
 	private:
 		CPPAD_TESTVECTOR(CppAD::AD<double>) w;
 	};
@@ -96,13 +96,13 @@ bool Rosen34(void)
 
 	// construct the function object using the independent variables
 	TestFun  fun(w);
-	
+
 	// initial value of x
 	CPPAD_TESTVECTOR(AD<double>) xini(3);
 	xini[0] = 1.;
 	xini[1] = 1.;
 	xini[2] = 0.;
-	
+
 
 	// integrate the differential equation
 	x  = Rosen34(fun, nstep, t0, t1, xini);

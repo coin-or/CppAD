@@ -1,9 +1,9 @@
-/* $Id$ */
+// $Id$
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-12 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-15 Bradley M. Bell
 
 CppAD is distributed under multiple licenses. This distribution is under
-the terms of the 
+the terms of the
                     Eclipse Public License Version 1.0.
 
 A copy of this license is included in the COPYING file of this distribution.
@@ -18,11 +18,8 @@ $spell
 $$
 
 $section Interpolation With Out Retaping: Example and Test$$
+$mindex interpolate tape retape$$
 
-$index interpolate, example$$
-$index interpolate, test$$
-$index tape, interpolate$$
-$index retape, interpolate$$
 
 $head See Also$$
 $cref interp_retape.cpp$$
@@ -59,7 +56,7 @@ namespace {
 
 	size_t Index(const double &x)
 	{	// determine the index j such that x is between
-		// ArgumentValue[j] and ArgumentValue[j+1] 
+		// ArgumentValue[j] and ArgumentValue[j+1]
 		static size_t j = 0;
 		while ( x < ArgumentValue[j] && j > 0 )
 			j--;
@@ -106,7 +103,7 @@ bool interp_onetape(void)
 	CppAD::Independent(X);
 
 	// evaluate piecewise linear interpolant at X[0]
-	AD<double> A = Argument(X[0]); 
+	AD<double> A = Argument(X[0]);
 	AD<double> F = Function(X[0]);
 	AD<double> S = Slope(X[0]);
 	AD<double> I = F + (X[0] - A) * S;
@@ -121,29 +118,29 @@ bool interp_onetape(void)
 
 	// vectors for arguments to the function object f
 	CPPAD_TESTVECTOR(double) x(n);   // argument values
-	CPPAD_TESTVECTOR(double) y(m);   // function values 
+	CPPAD_TESTVECTOR(double) y(m);   // function values
 	CPPAD_TESTVECTOR(double) dx(n);  // differentials in x space
 	CPPAD_TESTVECTOR(double) dy(m);  // differentials in y space
 
-	// to check function value we use the fact that X[0] is between 
+	// to check function value we use the fact that X[0] is between
 	// ArgumentValue[1] and ArgumentValue[2]
 	x[0]          = Value(X[0]);
 	double delta  = ArgumentValue[2] - ArgumentValue[1];
 	double check  = FunctionValue[2] * (x[0] - ArgumentValue[1]) / delta
-	              + FunctionValue[1] * (ArgumentValue[2] - x[0]) / delta; 
+	              + FunctionValue[1] * (ArgumentValue[2] - x[0]) / delta;
 	ok  &= NearEqual(Y[0], check, 1e-10, 1e-10);
 
 	// evaluate f where x has different value
 	x[0]   = .7 * ArgumentValue[2] + .3 * ArgumentValue[3];
 	y      = f.Forward(0, x);
 
-	// check function value 
+	// check function value
 	delta  = ArgumentValue[3] - ArgumentValue[2];
 	check  = FunctionValue[3] * (x[0] - ArgumentValue[2]) / delta
-	              + FunctionValue[2] * (ArgumentValue[3] - x[0]) / delta; 
+	              + FunctionValue[2] * (ArgumentValue[3] - x[0]) / delta;
 	ok  &= NearEqual(y[0], check, 1e-10, 1e-10);
 
-	// evaluate partials w.r.t. x[0] 
+	// evaluate partials w.r.t. x[0]
 	dx[0] = 1.;
 	dy    = f.Forward(1, dx);
 

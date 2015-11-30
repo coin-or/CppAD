@@ -1,11 +1,11 @@
-/* $Id$ */
-# ifndef CPPAD_CPPAD_EIGEN_INCLUDED
-# define CPPAD_CPPAD_EIGEN_INCLUDED
+// $Id$
+# ifndef CPPAD_CPPAD_EIGEN_HPP
+# define CPPAD_CPPAD_EIGEN_HPP
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-13 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-15 Bradley M. Bell
 
 CppAD is distributed under multiple licenses. This distribution is under
-the terms of the 
+the terms of the
                     Eclipse Public License Version 1.0.
 
 A copy of this license is included in the COPYING file of this distribution.
@@ -51,22 +51,22 @@ $children%
 %$$
 
 $head Purpose$$
-Enables the use of the 
+Enables the use of the
 $href%http://eigen.tuxfamily.org%eigen%$$
 linear algebra package with the type $icode%AD<%Base%>%$$.
 
 $head Example$$
-The files $cref eigen_array.cpp$$ and $cref eigen_det.cpp$$ 
+The files $cref eigen_array.cpp$$ and $cref eigen_det.cpp$$
 contain an example and test of this include file.
 It returns true if it succeeds and false otherwise.
 
 $head Include Files$$
 The file $code cppad_eigen.hpp$$ includes both
-$code <cppad/cppad.hpp>$$ and $code <Eigen/Core>$$. 
+$code <cppad/cppad.hpp>$$ and $code <Eigen/Core>$$.
 In addition,
-The file $cref eigen_plugin.hpp$$ 
+The file $cref eigen_plugin.hpp$$
 is used to define $code value_type$$
-in the Eigen matrix class definition so its vectors are 
+in the Eigen matrix class definition so its vectors are
 $cref/simple vectors/SimpleVector/$$.
 $codep */
 # define EIGEN_MATRIXBASE_PLUGIN <cppad/example/eigen_plugin.hpp>
@@ -109,8 +109,8 @@ namespace Eigen {
 		// relaxed version of machine epsilon for comparison of different
 		// operations that should result in the same value
 		static CppAD::AD<Base> dummy_precision(void)
-		{	return 100. * 
-				CppAD::numeric_limits< CppAD::AD<Base> >::epsilon(); 
+		{	return 100. *
+				CppAD::numeric_limits< CppAD::AD<Base> >::epsilon();
 		}
 
 		// minimum normalized positive value
@@ -142,23 +142,23 @@ namespace CppAD {
 		{	return x * x; }
 }
 
-namespace Eigen { 
+namespace Eigen {
 	namespace internal {
 
-		template<class Base> 
+		template<class Base>
 		struct significant_decimals_default_impl< CppAD::AD<Base>, false>
 		{	typedef CppAD::AD<Base> Scalar;
 
-  			typedef typename NumTraits<Scalar>::Real RealScalar;
-  			static inline int run()
-  			{	Scalar neg_log_eps = - log(
+			typedef typename NumTraits<Scalar>::Real RealScalar;
+			static inline int run()
+			{	Scalar neg_log_eps = - log(
 					NumTraits<RealScalar>::epsilon()
 				);
 				int ceil_neg_log_eps = Integer( neg_log_eps );
 				if( Scalar(ceil_neg_log_eps) < neg_log_eps )
 					ceil_neg_log_eps++;
 				return ceil_neg_log_eps;
-  			}
+			}
 		};
 	}
 }

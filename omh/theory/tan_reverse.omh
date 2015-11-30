@@ -1,9 +1,9 @@
 $Id$
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-14 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-15 Bradley M. Bell
 
 CppAD is distributed under multiple licenses. This distribution is under
-the terms of the 
+the terms of the
                     Eclipse Public License Version 1.0.
 
 A copy of this license is included in the COPYING file of this distribution.
@@ -15,11 +15,9 @@ $spell
 	Taylor
 $$
 
-$index tan, reverse theory$$
-$index theory, tan reverse$$
-$index reverse, tan theory$$
 
 $section Tangent and Hyperbolic Tangent Reverse Mode Theory$$
+$mindex tan$$
 
 $head Notation$$
 We use the reverse theory
@@ -33,17 +31,17 @@ For $latex j > 0$$, the forward mode coefficients are given by
 $latex \[
 y^{(j-1)} = \sum_{k=0}^{j-1} z^{(k)} z^{(j-k-1)}
 \] $$
-Fix $latex j > 0$$ and suppose that $latex H$$ is the same as $latex G$$ 
-except that $latex y^{(j-1)}$$ is replaced as a function of the Taylor 
+Fix $latex j > 0$$ and suppose that $latex H$$ is the same as $latex G$$
+except that $latex y^{(j-1)}$$ is replaced as a function of the Taylor
 coefficients for $latex Z(t)$$.
 To be specific, for $latex k = 0 , \ldots , j-1$$,
 $latex \[
 \begin{array}{rcl}
-\D{H}{ z^{(k)} }  
-& = & 
+\D{H}{ z^{(k)} }
+& = &
 \D{G}{ z^{(k)} } + \D{G}{ y^{(j-1)} } \D{ y^{(j-1)} }{ z^{(k)} }
 \\
-& = & 
+& = &
 \D{G}{ z^{(k)} } + \D{G}{ y^{(j-1)} } 2 z^{(j-k-1)}
 \end{array}
 \] $$
@@ -52,7 +50,7 @@ $latex \[
 $head Positive Orders Z(t)$$
 For order $latex j > 0$$,
 suppose that $latex H$$ is the same as $latex G$$ except that
-$latex z^{(j)}$$ is expressed as a function of 
+$latex z^{(j)}$$ is expressed as a function of
 the coefficients for $latex X(t)$$, and the
 lower order Taylor coefficients for $latex Y(t)$$, $latex Z(t)$$.
 $latex \[
@@ -64,29 +62,29 @@ For $latex k = 1 , \ldots , j$$,
 the partial of $latex H$$ with respect to $latex x^{(k)}$$ is given by
 $latex \[
 \begin{array}{rcl}
-\D{H}{ x^{(k)} } & = & 
+\D{H}{ x^{(k)} } & = &
 \D{G}{ x^{(k)} } + \D{G}{ z^{(j)} } \D{ z^{(j)} }{ x^{(k)} }
 \\
 & = &
-\D{G}{ x^{(k)} } + 
+\D{G}{ x^{(k)} } +
 \D{G}{ z^{(j)} }
 \left[ \delta ( j - k ) \pm \frac{k}{j} y^{(j-k)} \right]
 \end{array}
-\] $$ 
+\] $$
 where $latex \delta ( j - k )$$ is one if $latex j = k$$ and zero
 otherwise.
-For $latex k = 1 , \ldots ,  j$$ 
+For $latex k = 1 , \ldots ,  j$$
 The partial of $latex H$$ with respect to $latex y^{j-k}$$,
 is given by
 $latex \[
 \begin{array}{rcl}
-\D{H}{ y^{(j-k)} } & = & 
+\D{H}{ y^{(j-k)} } & = &
 \D{G}{ y^{(j-k)} } + \D{G}{ z^{(j)} } \D{ z^{(j)} }{ y^{(j-k)} }
 \\
 & = &
 \D{G}{ y^{(j-k)} } \pm \D{G}{ z^{(j)} }\frac{k}{j} x^{k}
 \end{array}
-\] $$ 
+\] $$
 
 
 $head Order Zero Z(t)$$
@@ -104,8 +102,8 @@ for $latex X(t)$$.
 In this case,
 $latex \[
 \begin{array}{rcl}
-\D{H}{ x^{(0)} }  
-& = & 
+\D{H}{ x^{(0)} }
+& = &
 \D{G}{ x^{(0)} }
 + \D{G}{ z^{(0)} } \D{ z^{(0)} }{ x^{(0)} }
 \\

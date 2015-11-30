@@ -1,9 +1,9 @@
-/* $Id$ */
+// $Id$
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-13 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-15 Bradley M. Bell
 
 CppAD is distributed under multiple licenses. This distribution is under
-the terms of the 
+the terms of the
                     Eclipse Public License Version 1.0.
 
 A copy of this license is included in the COPYING file of this distribution.
@@ -21,11 +21,8 @@ $spell
 $$
 
 $section Reverse Mode Hessian Sparsity: Example and Test$$
+$mindex RevSparseHes sparsity$$
 
-$index RevSparseHes$$
-$index example, sparsity Hessian$$
-$index test, sparsity Hessian$$
-$index sparsity, Hessian$$
 
 $code
 $verbatim%example/rev_sparse_hes.cpp%0%// BEGIN C++%// END C++%1%$$
@@ -57,9 +54,9 @@ bool BoolCases(void)
 	using CppAD::AD;
 
 	// domain space vector
-	size_t n = 3; 
+	size_t n = 3;
 	CPPAD_TESTVECTOR(AD<double>) X(n);
-	X[0] = 0.; 
+	X[0] = 0.;
 	X[1] = 1.;
 	X[2] = 2.;
 
@@ -96,7 +93,7 @@ bool BoolCases(void)
 
 	// check values
 	for(i = 0; i < n; i++)
-		for(j = 0; j < n; j++) 
+		for(j = 0; j < n; j++)
 			ok &= (h[ i * n + j ] == check_f0[ i * n + j ] );
 
 	// compute sparsity pattern for H(x) = F_1^{(2)} (x)
@@ -107,7 +104,7 @@ bool BoolCases(void)
 
 	// check values
 	for(i = 0; i < n; i++)
-		for(j = 0; j < n; j++) 
+		for(j = 0; j < n; j++)
 			ok &= (h[ i * n + j ] == check_f1[ i * n + j ] );
 
 	// call that transposed the result
@@ -116,7 +113,7 @@ bool BoolCases(void)
 
 	// This h is symmetric, because R is symmetric, not really testing here
 	for(i = 0; i < n; i++)
-		for(j = 0; j < n; j++) 
+		for(j = 0; j < n; j++)
 			ok &= (h[ j * n + i ] == check_f1[ i * n + j ] );
 
 	return ok;
@@ -128,9 +125,9 @@ bool SetCases(void)
 	using CppAD::AD;
 
 	// domain space vector
-	size_t n = 3; 
+	size_t n = 3;
 	CPPAD_TESTVECTOR(AD<double>) X(n);
-	X[0] = 0.; 
+	X[0] = 0.;
 	X[1] = 1.;
 	X[2] = 2.;
 
@@ -212,18 +209,18 @@ bool RevSparseHes(void)
 	// all of which are Simple Vectors with elements of type bool.
 	ok &= BoolCases< CppAD::vector  <bool> >();
 	ok &= BoolCases< CppAD::vectorBool     >();
-	ok &= BoolCases< std::vector    <bool> >(); 
-	ok &= BoolCases< std::valarray  <bool> >(); 
+	ok &= BoolCases< std::vector    <bool> >();
+	ok &= BoolCases< std::valarray  <bool> >();
 
-	// Run with Vector equal to two different cases both of which are 
+	// Run with Vector equal to two different cases both of which are
 	// Simple Vectors with elements of type std::set<size_t>
 	typedef std::set<size_t> set;
 	ok &= SetCases< CppAD::vector  <set> >();
-	ok &= SetCases< std::vector    <set> >(); 
+	ok &= SetCases< std::vector    <set> >();
 
 	// Do not use valarray because its element access in the const case
 	// returns a copy instead of a reference
-	// ok &= SetCases< std::valarray  <set> >(); 
+	// ok &= SetCases< std::valarray  <set> >();
 
 	return ok;
 }

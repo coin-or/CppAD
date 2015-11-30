@@ -1,9 +1,9 @@
-/* $Id$ */
+// $Id$
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-12 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-15 Bradley M. Bell
 
 CppAD is distributed under multiple licenses. This distribution is under
-the terms of the 
+the terms of the
                     Eclipse Public License Version 1.0.
 
 A copy of this license is included in the COPYING file of this distribution.
@@ -19,12 +19,8 @@ $$
 
 $comment ! NOTE the title states that this example is used two places !$$
 $section Hessian of Lagrangian and  ADFun Default Constructor: Example and Test$$
+$mindex HesLagrangian constructor$$
 
-$index HesLagrangian$$
-$index example, Hessian of Lagrangian$$
-$index test, Hessian of Lagrangian$$
-$index example, ADFun default constructor$$
-$index test, ADFun default constructor$$
 
 $code
 $verbatim%example/hes_lagrangian.cpp%0%// BEGIN C++%// END C++%1%$$
@@ -49,7 +45,7 @@ namespace {
 		AD<double> y0 = xyz[3];
 		AD<double> y1 = xyz[4];
 		AD<double> z  = xyz[5];
-	
+
 		// compute objective function
 		AD<double> f = x0 * x0;
 		// compute constraint functions
@@ -57,9 +53,9 @@ namespace {
 		AD<double> g1 = log( x0 * x2 );
 		// compute the Lagragian
 		AD<double> L = y0 * g0 + y1 * g1 + z * f;
-	
+
 		return L;
-	
+
 	}
 	CppAD::vector< CppAD::AD<double> > fg(
 		const CppAD::vector< CppAD::AD<double> > &x )
@@ -75,7 +71,7 @@ namespace {
 		return fg;
 	}
 	bool CheckHessian(
-	CppAD::vector<double> H , 
+	CppAD::vector<double> H ,
 	double x0, double x1, double x2, double y0, double y1, double z )
 	{	using CppAD::NearEqual;
 		bool ok  = true;
@@ -85,12 +81,12 @@ namespace {
 		L   =    z*x0*x0 + y0*(1 + 2*x1 + 3*x2) + y1*log(x0*x2)
 
 		L_0 = 2 * z * x0 + y1 / x0
-		L_1 = y0 * 2 
-		L_2 = y0 * 3 + y1 / x2 
+		L_1 = y0 * 2
+		L_2 = y0 * 3 + y1 / x2
 		*/
 		// L_00 = 2 * z - y1 / ( x0 * x0 )
 		double check = 2. * z - y1 / (x0 * x0);
-		ok &= NearEqual(H[0 * n + 0], check, 1e-10, 1e-10); 
+		ok &= NearEqual(H[0 * n + 0], check, 1e-10, 1e-10);
 		// L_01 = L_10 = 0
 		ok &= NearEqual(H[0 * n + 1], 0., 1e-10, 1e-10);
 		ok &= NearEqual(H[1 * n + 0], 0., 1e-10, 1e-10);
@@ -142,8 +138,8 @@ namespace {
 		CppAD::ADFun<double> K;
 		K.Dependent(L);
 
-		// Operation sequence corresponding to K does depends on 
-		// value of y0, y1, and z. Must redo calculations above when 
+		// Operation sequence corresponding to K does depends on
+		// value of y0, y1, and z. Must redo calculations above when
 		// y0, y1, or z changes.
 
 		// declare independent variable vector and Hessian
@@ -158,7 +154,7 @@ namespace {
 		H = K.Hessian(x, 0);
 
 		// check this Hessian calculation
-		return CheckHessian(H, x0, x1, x2, y0, y1, z); 
+		return CheckHessian(H, x0, x1, x2, y0, y1, z);
 	}
 	bool Usefg()
 	{	using CppAD::AD;
@@ -186,10 +182,10 @@ namespace {
 		CppAD::ADFun<double> K;
 		K.Dependent(FG);
 
-		// Operation sequence corresponding to K does not depend on 
-		// value of x0, x1, x2, y0, y1, or z. 
+		// Operation sequence corresponding to K does not depend on
+		// value of x0, x1, x2, y0, y1, or z.
 
-		// forward and reverse mode arguments and results 
+		// forward and reverse mode arguments and results
 		vector<double> x(n);
 		vector<double> H( n * n );
 		vector<double>  dx(n);
@@ -224,7 +220,7 @@ namespace {
 		}
 
 		// check this Hessian calculation
-		return CheckHessian(H, x0, x1, x2, y0, y1, z); 
+		return CheckHessian(H, x0, x1, x2, y0, y1, z);
 	}
 }
 

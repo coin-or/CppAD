@@ -1,9 +1,9 @@
-/* $Id$ */
+// $Id$
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-12 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-15 Bradley M. Bell
 
 CppAD is distributed under multiple licenses. This distribution is under
-the terms of the 
+the terms of the
                     Eclipse Public License Version 1.0.
 
 A copy of this license is included in the COPYING file of this distribution.
@@ -14,11 +14,8 @@ Please visit http://www.coin-or.org/CppAD/ for information on other licenses.
 $begin index_sort.cpp$$
 
 $section Index Sort: Example and Test$$
+$mindex index_sort$$
 
-$index index_sort, example$$
-$index sort, index example$$
-$index index, sort example$$
-$index test, index_sort$$
 
 $code
 $verbatim%example/index_sort.cpp%0%// BEGIN C++%// END C++%1%$$
@@ -27,8 +24,8 @@ $$
 $end
 */
 // BEGIN C++
-# include <cppad/index_sort.hpp>
-# include <cppad/vector.hpp>
+# include <cppad/utility/index_sort.hpp>
+# include <cppad/utility/vector.hpp>
 # include <valarray>
 # include <vector>
 
@@ -61,27 +58,27 @@ namespace{
 		size_t first[]  =  { 4, 4, 3, 3, 2, 2, 1, 1};
 		size_t second[] = { 0, 1, 0, 1, 0, 1, 0, 1};
 		size_t size     = sizeof(first) / sizeof(first[0]);
-	
+
 		VectorKey keys(size);
 		for(i = 0; i < size; i++)
 			keys[i] = Key(first[i], second[i]);
-	
+
 		VectorSize ind(size);
 		CppAD::index_sort(keys, ind);
-	
+
 		// check that all the indices are different
 		for(i = 0; i < size; i++)
 		{	for(j = 0; j < size; j++)
 				ok &= (i == j) | (ind[i] != ind[j]);
 		}
-		
+
 		// check for increasing order
 		for(i = 0; i < size-1; i++)
 		{	if( first[ ind[i] ] == first[ ind[i+1] ] )
 				ok &= second[ ind[i] ] <= second[ ind[i+1] ];
 			else	ok &= first[ ind[i] ] < first[ ind[i+1] ];
-		} 
-	
+		}
+
 		return ok;
 	}
 }

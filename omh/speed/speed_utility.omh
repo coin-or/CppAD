@@ -1,9 +1,9 @@
 $Id$
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-14 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-15 Bradley M. Bell
 
 CppAD is distributed under multiple licenses. This distribution is under
-the terms of the 
+the terms of the
                     Eclipse Public License Version 1.0.
 
 A copy of this license is included in the COPYING file of this distribution.
@@ -14,8 +14,6 @@ $begin speed_utility$$
 
 $section Speed Testing Utilities$$
 
-$index speed, utility$$
-$index utility, speed$$
 
 $children%
 	cppad/speed/det_by_lu.hpp%
@@ -47,7 +45,7 @@ $rref ode_evaluate$$
 $rref sparse_jac_fun$$
 $rref sparse_hes_fun$$
 $rref uniform_01$$
-$tend 
+$tend
 
 $head Library Routines$$
 $table

@@ -1,9 +1,9 @@
-/* $Id$ */
+// $Id$
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-13 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-15 Bradley M. Bell
 
 CppAD is distributed under multiple licenses. This distribution is under
-the terms of the 
+the terms of the
                     Eclipse Public License Version 1.0.
 
 A copy of this license is included in the COPYING file of this distribution.
@@ -30,7 +30,7 @@ public:
 		// f(x)
 		if( x[0] >= 1. )
 			fg[0] = .5 * (x[0] * x[0] + x[1] * x[1]);
-		else	fg[0] = x[0] + .5 * x[1] * x[1]; 
+		else	fg[0] = x[0] + .5 * x[1] * x[1];
 		// g (x)
 		fg[1] = x[0];
 
@@ -38,7 +38,7 @@ public:
 	}
 	bool retape(size_t k)
 	{	return true; }
-}; 
+};
 } // end of empty namespace
 
 bool retape_k1_l1(void)
@@ -47,7 +47,7 @@ bool retape_k1_l1(void)
 
 
 	// number of independent variables (domain dimension for f and g)
-	size_t n = 2;  
+	size_t n = 2;
 	// number of constraints (range dimension for g)
 	size_t m = 1;
 	// initial value of the independent variables
@@ -67,7 +67,7 @@ bool retape_k1_l1(void)
 
 	// object in derived class
 	FG_retape fg_retape;
-	cppad_ipopt_fg_info *fg_info = &fg_retape;  
+	cppad_ipopt_fg_info *fg_info = &fg_retape;
 
 	// create the Ipopt interface
 	cppad_ipopt_solution solution;
@@ -87,7 +87,7 @@ bool retape_k1_l1(void)
 	app->Options()->SetIntegerValue("max_iter", 10);
 
 	// approximate accuracy in first order necessary conditions;
-	// see Mathematical Programming, Volume 106, Number 1, 
+	// see Mathematical Programming, Volume 106, Number 1,
 	// Pages 25-57, Equation (6)
 	app->Options()->SetNumericValue("tol", 1e-9);
 
@@ -104,8 +104,8 @@ bool retape_k1_l1(void)
 	ok    &= status == Ipopt::Solve_Succeeded;
 
 	/*
- 	Check some of the solution values
- 	*/
+	Check some of the solution values
+	*/
 	ok &= solution.status == cppad_ipopt_solution::success;
 	//
 	double check_x[]   = { -1., 0. };

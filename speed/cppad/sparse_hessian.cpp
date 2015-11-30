@@ -1,9 +1,9 @@
-/* $Id: sparse_hessian.cpp 3552 2015-01-03 12:41:46Z bradbell $ */
+// $Id$
 /* --------------------------------------------------------------------------
 CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-15 Bradley M. Bell
 
 CppAD is distributed under multiple licenses. This distribution is under
-the terms of the 
+the terms of the
                     Eclipse Public License Version 1.0.
 
 A copy of this license is included in the COPYING file of this distribution.
@@ -36,13 +36,8 @@ $spell
 $$
 
 $section CppAD Speed: Sparse Hessian$$
+$mindex link_sparse_hessian speed$$
 
-$index link_sparse_hessian, cppad$$
-$index cppad, link_sparse_hessian$$
-$index speed, cppad$$
-$index cppad, speed$$
-$index sparse, speed cppad$$
-$index hessian, speed cppad$$
 
 $head Specifications$$
 See $cref link_sparse_hessian$$.
@@ -56,7 +51,7 @@ $codep */
 
 // Note that CppAD uses global_memory at the main program level
 extern bool
-	global_onetape, global_colpack, 
+	global_onetape, global_colpack,
 	global_atomic, global_optimize, global_boolsparsity;
 
 namespace {
@@ -100,8 +95,8 @@ namespace {
 }
 
 bool link_sparse_hessian(
-	size_t                           size     , 
-	size_t                           repeat   , 
+	size_t                           size     ,
+	size_t                           repeat   ,
 	const CppAD::vector<size_t>&     row      ,
 	const CppAD::vector<size_t>&     col      ,
 	CppAD::vector<double>&           x        ,
@@ -139,13 +134,13 @@ bool link_sparse_hessian(
 
 	// ------------------------------------------------------
 	if( ! global_onetape ) while(repeat--)
-	{	// choose a value for x 
+	{	// choose a value for x
 		CppAD::uniform_01(n, x);
 		for(j = 0; j < n; j++)
 			a_x[j] = x[j];
 
 		// declare independent variables
-		Independent(a_x);	
+		Independent(a_x);
 
 		// AD computation of f(x)
 		CppAD::sparse_hes_fun<ADScalar>(n, a_x, row, col, order, a_y);
@@ -180,13 +175,13 @@ bool link_sparse_hessian(
 		);
 	}
 	else
-	{	// choose a value for x 
+	{	// choose a value for x
 		CppAD::uniform_01(n, x);
 		for(j = 0; j < n; j++)
 			a_x[j] = x[j];
 
 		// declare independent variables
-		Independent(a_x);	
+		Independent(a_x);
 
 		// AD computation of f(x)
 		CppAD::sparse_hes_fun<ADScalar>(n, a_x, row, col, order, a_y);

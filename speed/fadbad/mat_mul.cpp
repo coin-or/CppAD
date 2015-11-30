@@ -1,9 +1,9 @@
-/* $Id$ */
+// $Id$
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-14 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-15 Bradley M. Bell
 
 CppAD is distributed under multiple licenses. This distribution is under
-the terms of the 
+the terms of the
                     Eclipse Public License Version 1.0.
 
 A copy of this license is included in the COPYING file of this distribution.
@@ -27,13 +27,8 @@ $spell
 $$
 
 $section Fadbad Speed: Matrix Multiplication$$
+$mindex link_mat_mul speed multiply$$
 
-$index link_mat_mul, fadbad$$
-$index fadbad, link_mat_mul$$
-$index speed, fadbad$$
-$index fadbad, speed$$
-$index matrix, speed fadbad$$
-$index multiply, speed fadbad$$
 
 $head Specifications$$
 See $cref link_mat_mul$$.
@@ -44,14 +39,14 @@ $codep */
 # include <FADBAD++/badiff.h>
 # include <cppad/speed/mat_sum_sq.hpp>
 # include <cppad/speed/uniform_01.hpp>
-# include <cppad/vector.hpp>
+# include <cppad/utility/vector.hpp>
 
 // list of possible options
 extern bool global_memory, global_onetape, global_atomic, global_optimize;
 
 bool link_mat_mul(
-	size_t                           size     , 
-	size_t                           repeat   , 
+	size_t                           size     ,
+	size_t                           repeat   ,
 	CppAD::vector<double>&           x        ,
 	CppAD::vector<double>&           z        ,
 	CppAD::vector<double>&           dz       )
@@ -66,8 +61,8 @@ bool link_mat_mul(
 	// setup
 
 	// object for computing determinant
-	typedef fadbad::B<double>       ADScalar; 
-	typedef CppAD::vector<ADScalar> ADVector; 
+	typedef fadbad::B<double>       ADScalar;
+	typedef CppAD::vector<ADScalar> ADVector;
 
 	size_t j;                // temporary index
 	size_t m = 1;            // number of dependent variables
@@ -75,7 +70,7 @@ bool link_mat_mul(
 	ADVector   X(n);         // AD domain space vector
 	ADVector   Y(n);         // Store product matrix
 	ADVector   Z(m);         // AD range space vector
-	
+
 	// ------------------------------------------------------
 	while(repeat--)
 	{	// get the next matrix

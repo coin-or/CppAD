@@ -1,9 +1,9 @@
-/* $Id$ */
+// $Id$
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-12 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-15 Bradley M. Bell
 
 CppAD is distributed under multiple licenses. This distribution is under
-the terms of the 
+the terms of the
                     Eclipse Public License Version 1.0.
 
 A copy of this license is included in the COPYING file of this distribution.
@@ -18,14 +18,14 @@ bool sparse_vec_ad(void)
 	using namespace CppAD;
 
 	// dimension of the domain space
-	size_t n = 3; 
+	size_t n = 3;
 
 	size_t i, j;
 
-	// independent variable vector 
+	// independent variable vector
 	CPPAD_TESTVECTOR(AD<double>) X(n);
 	for(j = 0; j < n; j++)
-		X[j] = AD<double>(j); 
+		X[j] = AD<double>(j);
 	Independent(X);
 
 	// dependent variable vector
@@ -61,7 +61,7 @@ bool sparse_vec_ad(void)
 	{	for(i = 0; i < m; i++)
 			Check[ i * m + j ] = (j <= i);
 	}
-	
+
 	// create function object F : X -> Y
 	ADFun<double> F(X, Y);
 
@@ -80,7 +80,7 @@ bool sparse_vec_ad(void)
 	for(i = 0; i < m; i++)
 	{	for(j = 0; j < n; j++)
 			ok &= (Px[i * m + j] == Check[i * m + j]);
-	}	
+	}
 
 	// evaluate the dependency matrix for F(Identity(x))
 	CPPAD_TESTVECTOR( bool ) Py(m * n);
@@ -90,9 +90,9 @@ bool sparse_vec_ad(void)
 	for(i = 0; i < m; i++)
 	{	for(j = 0; j < n; j++)
 			ok &= (Py[i * m + j] == Check[i * m + j]);
-	}	
+	}
 
-	// test sparsity pattern for Hessian of F_2 ( Identity(x) ) 
+	// test sparsity pattern for Hessian of F_2 ( Identity(x) )
 	CPPAD_TESTVECTOR(bool) Hy(m);
 	for(i = 0; i < m; i++)
 		Hy[i] = false;
@@ -104,7 +104,7 @@ bool sparse_vec_ad(void)
 			ok &= (Pxx[i * n + j] == false );
 	}
 
-	// test sparsity pattern for Hessian of F_1 ( Identity(x) ) 
+	// test sparsity pattern for Hessian of F_1 ( Identity(x) )
 	for(i = 0; i < m; i++)
 		Hy[i] = false;
 	Hy[1] = true;

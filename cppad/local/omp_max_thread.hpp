@@ -1,6 +1,6 @@
-/* $Id$ */
-# ifndef CPPAD_OMP_MAX_THREAD_INCLUDED
-# define CPPAD_OMP_MAX_THREAD_INCLUDED
+// $Id$
+# ifndef CPPAD_OMP_MAX_THREAD_HPP
+# define CPPAD_OMP_MAX_THREAD_HPP
 
 /* --------------------------------------------------------------------------
 CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-15 Bradley M. Bell

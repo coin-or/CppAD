@@ -19,6 +19,7 @@ $spell
 $$
 
 $section Atomic Euclidean Norm Squared: Example and Test$$
+$mindex bool_sparsity_enum$$
 
 $head Theory$$
 This example demonstrates using $cref atomic_base$$
@@ -30,7 +31,6 @@ $latex \[
 \] $$
 
 $head sparsity$$
-$index bool_sparsity_enum$$
 This example only uses bool sparsity patterns.
 
 $nospell

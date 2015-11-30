@@ -1,9 +1,9 @@
-/* $Id$ */
+// $Id$
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-12 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-15 Bradley M. Bell
 
 CppAD is distributed under multiple licenses. This distribution is under
-the terms of the 
+the terms of the
                     Eclipse Public License Version 1.0.
 
 A copy of this license is included in the COPYING file of this distribution.
@@ -17,10 +17,6 @@ $$
 
 $section Simple Vector Template Class: Example and Test$$
 
-$index vector, simple$$
-$index simple, vector example$$
-$index example, simple vector$$
-$index test, simple vector$$
 
 $code
 $verbatim%example/simple_vector.cpp%0%// BEGIN C++%// END C++%1%$$
@@ -34,8 +30,8 @@ $end
 
 # include <vector>                     // std::vector
 # include <valarray>                   // std::valarray
-# include <cppad/vector.hpp>       // CppAD::vector
-# include <cppad/check_simple_vector.hpp>  // CppAD::CheckSimpleVector
+# include <cppad/utility/vector.hpp>       // CppAD::vector
+# include <cppad/utility/check_simple_vector.hpp>  // CppAD::CheckSimpleVector
 namespace {
 	template <typename Vector>
 	bool Ok(void)
@@ -50,12 +46,12 @@ namespace {
 		ok &= (y.size() == 2);      // size for an vector with elements
 
 		// non-const access to the elements of y
-		size_t i;                   
+		size_t i;
 		for(i = 0; i < 2; i++)
-			y[i] = Scalar(i); 
+			y[i] = Scalar(i);
 
 		const Vector z(y);          // copy constructor
-		x.resize(2);                // resize 
+		x.resize(2);                // resize
 		x = z;                      // vector assignment
 
 		// use the const access to the elements of x
@@ -76,8 +72,8 @@ bool SimpleVector (void)
 	ok &= Ok< std::valarray<float> >();
 	ok &= Ok< CppAD::vector<int> >();
 # ifndef _MSC_VER
-	// Avoid Microsoft following compiler warning:  'size_t' : 
-	// forcing value to bool 'true' or 'false' (performance warning) 
+	// Avoid Microsoft following compiler warning:  'size_t' :
+	// forcing value to bool 'true' or 'false' (performance warning)
 	ok &= Ok< std::vector<bool> >();
 	ok &= Ok< CppAD::vector<bool> >();
 # endif

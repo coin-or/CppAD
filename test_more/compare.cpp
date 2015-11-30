@@ -1,9 +1,9 @@
-/* $Id$ */
+// $Id$
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-06 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-15 Bradley M. Bell
 
 CppAD is distributed under multiple licenses. This distribution is under
-the terms of the 
+the terms of the
                     Eclipse Public License Version 1.0.
 
 A copy of this license is included in the COPYING file of this distribution.
@@ -15,53 +15,53 @@ Check comparison operators between AD< AD<Base> > and Base, int
 */
 # include <cppad/cppad.hpp>
 
-namespace { 
+namespace {
 	template <class Type>
 	bool Compare(void)
 	{	bool ok = true;
 		using CppAD::AD;
-	
+
 		Type      middle = 4;
 		AD<double> three = 3;
 		AD<double> four  = 4;
 		AD<double> five  = 5;
-	
+
 		// AD<double> > Type
-		ok &= ! (three  >  middle);   
-		ok &= ! (four   >  middle);   
-		ok &=   (five   >  middle);   
-		// Type > AD<double> 
-		ok &=   (middle >  three );   
-		ok &= ! (middle >  four  );   
-		ok &= ! (middle >  five  );   
-	
+		ok &= ! (three  >  middle);
+		ok &= ! (four   >  middle);
+		ok &=   (five   >  middle);
+		// Type > AD<double>
+		ok &=   (middle >  three );
+		ok &= ! (middle >  four  );
+		ok &= ! (middle >  five  );
+
 		// AD<double> >= Type
-		ok &= ! (three  >= middle);   
-		ok &=   (four   >= middle);   
-		ok &=   (five   >= middle);   
-		// Type > AD<double> 
-		ok &=   (middle >= three );   
-		ok &=   (middle >= four  );   
-		ok &= ! (middle >= five  );   
-	
+		ok &= ! (three  >= middle);
+		ok &=   (four   >= middle);
+		ok &=   (five   >= middle);
+		// Type > AD<double>
+		ok &=   (middle >= three );
+		ok &=   (middle >= four  );
+		ok &= ! (middle >= five  );
+
 		// AD<double> < Type
-		ok &=   (three  <  middle);   
-		ok &= ! (four   <  middle);   
-		ok &= ! (five   <  middle);   
-		// Type > AD<double> 
-		ok &= ! (middle <  three );   
-		ok &= ! (middle <  four  );   
-		ok &=   (middle <  five  );   
-	
+		ok &=   (three  <  middle);
+		ok &= ! (four   <  middle);
+		ok &= ! (five   <  middle);
+		// Type > AD<double>
+		ok &= ! (middle <  three );
+		ok &= ! (middle <  four  );
+		ok &=   (middle <  five  );
+
 		// AD<double> <= Type
-		ok &=   (three  <= middle);   
-		ok &=   (four   <= middle);   
-		ok &= ! (five   <= middle);   
-		// Type > AD<double> 
-		ok &= ! (middle <= three );   
-		ok &=   (middle <= four  );   
-		ok &=   (middle <= five  );   
-	
+		ok &=   (three  <= middle);
+		ok &=   (four   <= middle);
+		ok &= ! (five   <= middle);
+		// Type > AD<double>
+		ok &= ! (middle <= three );
+		ok &=   (middle <= four  );
+		ok &=   (middle <= five  );
+
 		return ok;
 	}
 }

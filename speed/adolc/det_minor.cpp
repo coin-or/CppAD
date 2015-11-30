@@ -1,9 +1,9 @@
-/* $Id$ */
+// $Id$
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-14 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-15 Bradley M. Bell
 
 CppAD is distributed under multiple licenses. This distribution is under
-the terms of the 
+the terms of the
                     Eclipse Public License Version 1.0.
 
 A copy of this license is included in the COPYING file of this distribution.
@@ -31,13 +31,8 @@ $spell
 $$
 
 $section Adolc Speed: Gradient of Determinant by Minor Expansion$$
+$mindex link_det_minor speed$$
 
-$index link_det_minor, adolc$$
-$index adolc, link_det_minor$$
-$index speed, adolc$$
-$index adolc, speed$$
-$index minor, speed adolc$$
-$index determinant, speed adolc$$
 
 $head Specifications$$
 See $cref link_det_minor$$.
@@ -45,7 +40,7 @@ See $cref link_det_minor$$.
 $head Implementation$$
 $codep */
 # include <adolc/adolc.h>
-# include <cppad/vector.hpp>
+# include <cppad/utility/vector.hpp>
 # include <cppad/speed/det_by_minor.hpp>
 # include <cppad/speed/uniform_01.hpp>
 
@@ -53,16 +48,16 @@ $codep */
 extern bool global_memory, global_onetape, global_atomic, global_optimize;
 
 bool link_det_minor(
-	size_t                     size     , 
-	size_t                     repeat   , 
+	size_t                     size     ,
+	size_t                     repeat   ,
 	CppAD::vector<double>     &matrix   ,
 	CppAD::vector<double>     &gradient )
 {
 	// speed test global option values
 	if( global_atomic )
-		return false; 
+		return false;
 	if( global_memory || global_optimize )
-		return false; 
+		return false;
 	// -----------------------------------------------------
 	// setup
 	typedef adouble    ADScalar;
@@ -86,8 +81,8 @@ bool link_det_minor(
 
 	// AD version of matrix
 	ADVector A   = thread_alloc::create_array<ADScalar>(size_t(n), capacity);
-	
-	// vectors of reverse mode weights 
+
+	// vectors of reverse mode weights
 	double* u    = thread_alloc::create_array<double>(size_t(m), capacity);
 	u[0] = 1.;
 
@@ -103,7 +98,7 @@ bool link_det_minor(
 		CppAD::uniform_01(n, mat);
 
 		// declare independent variables
-		int keep = 1; // keep forward mode results 
+		int keep = 1; // keep forward mode results
 		trace_on(tag, keep);
 		for(j = 0; j < n; j++)
 			A[j] <<= mat[j];
@@ -142,7 +137,7 @@ bool link_det_minor(
 
 			// evaluate the determinant at the new matrix value
 			keep = 1; // keep this forward mode result
-			zos_forward(tag, m, n, keep, mat, &f); 
+			zos_forward(tag, m, n, keep, mat, &f);
 
 			// evaluate and return gradient using reverse mode
 			fos_reverse(tag, m, n, u, grad);

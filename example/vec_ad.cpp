@@ -1,9 +1,9 @@
-/* $Id$ */
+// $Id$
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-12 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-15 Bradley M. Bell
 
 CppAD is distributed under multiple licenses. This distribution is under
-the terms of the 
+the terms of the
                     Eclipse Public License Version 1.0.
 
 A copy of this license is included in the COPYING file of this distribution.
@@ -19,11 +19,8 @@ $spell
 $$
 
 $section AD Vectors that Record Index Operations: Example and Test$$
+$mindex VecAD vec_ad.cpp$$
 
-$index VecAD$$
-$index example, VecAD$$
-$index test, VecAD$$
-$index vec_ad.cpp$$
 
 $code
 $verbatim%example/vec_ad.cpp%0%// BEGIN C++%// END C++%1%$$
@@ -37,23 +34,23 @@ $end
 # include <cassert>
 
 namespace {
-	// return the vector x that solves the following linear system 
+	// return the vector x that solves the following linear system
 	//	a[0] * x[0] + a[1] * x[1] = b[0]
 	//	a[2] * x[0] + a[3] * x[1] = b[1]
 	// in a way that will record pivot operations on the AD<double> tape
 	typedef CPPAD_TESTVECTOR(CppAD::AD<double>) Vector;
 	Vector Solve(const Vector &a , const Vector &b)
 	{	using namespace CppAD;
-		assert(a.size() == 4 && b.size() == 2);	
+		assert(a.size() == 4 && b.size() == 2);
 
 		// copy the vector b into the VecAD object B
-		VecAD<double> B(2); 
+		VecAD<double> B(2);
 		AD<double>    u;
 		for(u = 0; u < 2; u += 1.)
 			B[u] = b[ Integer(u) ];
 
 		// copy the matrix a into the VecAD object A
-		VecAD<double> A(4); 
+		VecAD<double> A(4);
 		for(u = 0; u < 4; u += 1.)
 			A[u] = a [ Integer(u) ];
 
@@ -88,7 +85,7 @@ namespace {
 
 bool vec_ad(void)
 {	bool ok = true;
-	
+
 	using CppAD::AD;
 	using CppAD::NearEqual;
 
@@ -97,8 +94,8 @@ bool vec_ad(void)
 	CPPAD_TESTVECTOR(double)       x(n);
 	CPPAD_TESTVECTOR(AD<double>) X(n);
 	// 2 * identity matrix (rmax in Solve will be 0)
-	X[0] = x[0] = 2.; X[1] = x[1] = 0.;  
-	X[2] = x[2] = 0.; X[3] = x[3] = 2.; 
+	X[0] = x[0] = 2.; X[1] = x[1] = 0.;
+	X[2] = x[2] = 0.; X[3] = x[3] = 2.;
 
 	// declare independent variables and start tape recording
 	CppAD::Independent(X);
@@ -115,18 +112,18 @@ bool vec_ad(void)
 	Y = Solve(X, B);
 
 	// create f: X -> Y and stop tape recording
-	CppAD::ADFun<double> f(X, Y); 
+	CppAD::ADFun<double> f(X, Y);
 
 	// By Cramer's rule:
 	// y[0] = [ b[0] * x[3] - x[1] * b[1] ] / [ x[0] * x[3] - x[1] * x[2] ]
 	// y[1] = [ x[0] * b[1] - b[0] * x[2] ] / [ x[0] * x[3] - x[1] * x[2] ]
-	
+
 	double den   = x[0] * x[3] - x[1] * x[2];
 	double dsq   = den * den;
 	double num0  = b[0] * x[3] - x[1] * b[1];
 	double num1  = x[0] * b[1] - b[0] * x[2];
 
-	// check value 
+	// check value
 	ok &= NearEqual(Y[0] , num0 / den,  1e-10 , 1e-10);
 	ok &= NearEqual(Y[1] , num1 / den,  1e-10 , 1e-10);
 
@@ -155,7 +152,7 @@ bool vec_ad(void)
 	y    = f.Forward(0, x);
 	ok &= NearEqual(y[0] , num0 / den,  1e-10 , 1e-10);
 	ok &= NearEqual(y[1] , num1 / den,  1e-10 , 1e-10);
-	
+
 	// forward computation of partials w.r.t. x[1]
 	dx[0] = 0.; dx[1] = 1.;
 	dx[2] = 0.; dx[3] = 0.;

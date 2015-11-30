@@ -1,4 +1,4 @@
-/* $Id$ */
+// $Id$
 /* --------------------------------------------------------------------------
 CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-15 Bradley M. Bell
 
@@ -19,9 +19,6 @@ $$
 
 $section The AD erf Function: Example and Test$$
 
-$index erf, example$$
-$index example, erf$$
-$index test, erf$$
 
 $code
 $verbatim%example/erf.cpp%0%// BEGIN C++%// END C++%1%$$

@@ -1,9 +1,9 @@
-/* $Id$ */
+// $Id$
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-12 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-15 Bradley M. Bell
 
 CppAD is distributed under multiple licenses. This distribution is under
-the terms of the 
+the terms of the
                     Eclipse Public License Version 1.0.
 
 A copy of this license is included in the COPYING file of this distribution.
@@ -17,17 +17,9 @@ $spell
 $$
 
 $section AD Binary Comparison Operators: Example and Test$$
+$mindex compare < <= > >= == !=$$
 
-$index compare, AD example$$
-$index example, AD compare$$
-$index test, AD compare$$
 
-$index <, example$$
-$index <=, example$$
-$index >, example$$
-$index >=, example$$
-$index ==, example$$
-$index !=, example$$
 
 $code
 $verbatim%example/compare.cpp%0%// BEGIN C++%// END C++%1%$$
@@ -48,8 +40,8 @@ bool Compare(void)
 	double x0 = 0.5;
 	double x1 = 1.5;
 	CPPAD_TESTVECTOR(AD<double>) x(n);
-	x[0]      = x0; 
-	x[1]      = x1; 
+	x[0]      = x0;
+	x[1]      = x1;
 	CppAD::Independent(x);
 
 	// some binary comparision operations
@@ -61,27 +53,27 @@ bool Compare(void)
 		p *= x[0];  // values in x choose this case
 	else	p *= x[1];
 	if( x[0] >  x[1] )
-		p *= x[0]; 
+		p *= x[0];
 	else	p *= x[1];  // values in x choose this case
 	if( x[0] >= x[1] )
-		p *= x[0]; 
+		p *= x[0];
 	else	p *= x[1];  // values in x choose this case
 	if( x[0] == x[1] )
-		p *= x[0]; 
+		p *= x[0];
 	else	p *= x[1];  // values in x choose this case
 	if( x[0] != x[1] )
 		p *= x[0];  // values in x choose this case
-	else	p *= x[1]; 
+	else	p *= x[1];
 
-	// dependent variable vector 
+	// dependent variable vector
 	size_t m = 1;
 	CPPAD_TESTVECTOR(AD<double>) y(m);
 	y[0] = p;
 
 	// create f: x -> y and stop tape recording
-	CppAD::ADFun<double> f(x, y); 
+	CppAD::ADFun<double> f(x, y);
 
-	// check value 
+	// check value
 	ok &= NearEqual(y[0] , x0*x0*x1*x1*x1*x0,  1e-10 , 1e-10);
 
 	// forward computation of partials w.r.t. x[0]

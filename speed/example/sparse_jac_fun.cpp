@@ -1,9 +1,9 @@
-/* $Id$ */
+// $Id$
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-12 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-15 Bradley M. Bell
 
 CppAD is distributed under multiple licenses. This distribution is under
-the terms of the 
+the terms of the
                     Eclipse Public License Version 1.0.
 
 A copy of this license is included in the COPYING file of this distribution.
@@ -15,11 +15,9 @@ $spell
 	jac
 $$
 
-$index sparse_jac_fun, example$$
-$index example, sparse_jac_fun$$
-$index test, sparse_jac_fun$$
 
 $section sparse_jac_fun: Example and test$$
+$mindex sparse_jac_fun$$
 
 $code
 $verbatim%speed/example/sparse_jac_fun.cpp%0%// BEGIN C++%// END C++%1%$$
@@ -76,7 +74,7 @@ bool sparse_jac_fun(void)
 	for(k = 0; k < K; k++)
 	{	size_t index = row[k] * n + col[k];
 		ok &= NearEqual(jac[index], yp[k] , eps, eps);
- 	}
+	}
 	return ok;
 }
 // END C++

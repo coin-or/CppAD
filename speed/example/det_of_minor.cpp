@@ -1,9 +1,9 @@
-/* $Id$ */
+// $Id$
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-12 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-15 Bradley M. Bell
 
 CppAD is distributed under multiple licenses. This distribution is under
-the terms of the 
+the terms of the
                     Eclipse Public License Version 1.0.
 
 A copy of this license is included in the COPYING file of this distribution.
@@ -18,10 +18,8 @@ $spell
 $$
 
 $section Determinant of a Minor: Example and Test$$
+$mindex det_of_minor$$
 
-$index det_of_minor, example$$
-$index example, det_of_minor$$
-$index test, det_of_minor$$
 
 $code
 $verbatim%speed/example/det_of_minor.cpp%0%// BEGIN C++%// END C++%1%$$
@@ -46,13 +44,13 @@ bool det_of_minor()
 	for(i= 0; i < m; i++)
 	{	r[i] = i+1;
 		c[i] = i+1;
-	}	
+	}
 	r[m] = 0;
 	c[m] = 0;
 	// values in the matrix A
 	double  data[] = {
-		1., 2., 3., 
-		3., 2., 1., 
+		1., 2., 3.,
+		3., 2., 1.,
 		2., 1., 2.
 	};
 	// construct vector a with the values of the matrix A
@@ -68,7 +66,7 @@ bool det_of_minor()
 	// minor where row 0 and column 1 are removed
 	r[m] = 1;  // skip row index 0 by starting at row index 1
 	c[0] = 2;  // skip column index 1 by pointing from index 0 to index 2
-	// evaluate determinant of the minor 
+	// evaluate determinant of the minor
 	n   = m - 1; // dimension of the minor
 	det = CppAD::det_of_minor(a, m, m-1, r, c);
 

@@ -1,6 +1,6 @@
 // $Id$
-# ifndef CPPAD_COLOR_SYMMETRIC_INCLUDED
-# define CPPAD_COLOR_SYMMETRIC_INCLUDED
+# ifndef CPPAD_COLOR_SYMMETRIC_HPP
+# define CPPAD_COLOR_SYMMETRIC_HPP
 
 # include <cppad/configure.hpp>
 
@@ -8,7 +8,7 @@
 CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-15 Bradley M. Bell
 
 CppAD is distributed under multiple licenses. This distribution is under
-the terms of the 
+the terms of the
                     Eclipse Public License Version 1.0.
 
 A copy of this license is included in the COPYING file of this distribution.
@@ -20,7 +20,7 @@ Coloring algorithm for a symmetric sparse matrix.
 */
 // --------------------------------------------------------------------------
 /*!
-CppAD algorithm for determining which rows of a symmetric sparse matrix can be 
+CppAD algorithm for determining which rows of a symmetric sparse matrix can be
 computed together.
 
 \tparam VectorSize
@@ -50,20 +50,20 @@ internal data.
 <code>m = pattern.n_set()</code>
 \n
 sets m to the number of rows (and columns) in the sparse matrix.
-All of the row indices are less than this value. 
+All of the row indices are less than this value.
 \n
 <code>n = pattern.end()</code>
 \n
 sets n to the number of columns in the sparse matrix
 (which must be equal to the number of rows).
-All of the column indices are less than this value. 
+All of the column indices are less than this value.
 \n
 <code>pattern.begin(i)</code>
 instructs the iterator facility to start iterating over
 columns in the i-th row of the sparsity pattern.
 \n
 <code>j = pattern.next_element()</code>
-Sets j to the next possibly non-zero column 
+Sets j to the next possibly non-zero column
 in the row specified by the previous call to <code>pattern.begin</code>.
 If there are no more such columns, the value
 <code>pattern.end()</code> is returned.
@@ -101,7 +101,7 @@ row[k] == i (for the return value of row).
 \n
 \n
 Fix any (i, j) in the sparsity pattern.
-Suppose that there is a row index i1 with 
+Suppose that there is a row index i1 with
 i1 != i, color[i1] == color[i] and (i1, j) is in the sparsity pattern.
 If follows that for all j1 with
 j1 != j and color[j1] == color[j],
@@ -173,7 +173,7 @@ void color_symmetric_cppad(
 			forbidden[c2] = false;
 
 		// -----------------------------------------------------
-		// Forbid grouping with rows that would destroy results that are 
+		// Forbid grouping with rows that would destroy results that are
 		// needed for this row.
 		itr1 = pair_needed[i1].begin();
 		while( itr1 != pair_needed[i1].end() )
@@ -232,7 +232,7 @@ void color_symmetric_cppad(
 		}
 	}
 
-	// determine which sparsity entries need to be reflected 
+	// determine which sparsity entries need to be reflected
 	for(k1 = 0; k1 < row.size(); k1++)
 	{	i1   = row[k1];
 		j1   = col[k1];
@@ -251,7 +251,7 @@ void color_symmetric_cppad(
 
 // --------------------------------------------------------------------------
 /*!
-Colpack algorithm for determining which rows of a symmetric sparse matrix 
+Colpack algorithm for determining which rows of a symmetric sparse matrix
 can be computed together.
 
 \copydetails color_symmetric_cppad
@@ -267,7 +267,7 @@ void color_symmetric_colpack(
 	CPPAD_ASSERT_UNKNOWN(false);
 	return;
 # else
-	size_t i, j, k;	
+	size_t i, j, k;
 	size_t m = pattern.n_set();
 	CPPAD_ASSERT_UNKNOWN( m == pattern.end() );
 	CPPAD_ASSERT_UNKNOWN( row.size() == col.size() );
@@ -309,7 +309,7 @@ void color_symmetric_colpack(
 	// ColPack/ColPackHeaders.h has as 'using namespace std' at global level.
 	cppad_colpack_symmetric(color, m, adolc_pattern);
 
-	// determine which sparsity entries need to be reflected 
+	// determine which sparsity entries need to be reflected
 	size_t i1, i2, j1, j2, k1, k2;
 	for(k1 = 0; k1 < row.size(); k1++)
 	{	i1 = row[k1];
@@ -317,7 +317,7 @@ void color_symmetric_colpack(
 		bool reflect = false;
 		for(i2 = 0; i2 < m; i2++) if( (i1 != i2) & (color[i1]==color[i2]) )
 		{	for(k2 = 1; k2 <= adolc_pattern[i2][0]; k2++)
-			{	j2 = adolc_pattern[i2][k2];	
+			{	j2 = adolc_pattern[i2][k2];
 				reflect |= (j1 == j2);
 			}
 		}

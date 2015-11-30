@@ -1,9 +1,9 @@
-/* $Id$ */
+// $Id$
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-13 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-15 Bradley M. Bell
 
 CppAD is distributed under multiple licenses. This distribution is under
-the terms of the 
+the terms of the
                     Eclipse Public License Version 1.0.
 
 A copy of this license is included in the COPYING file of this distribution.
@@ -42,7 +42,7 @@ public:
 	size_t domain_size(size_t k)
 	{	size_t q;
 		switch(k)
-		{	case 0:  q = 1;  break;  
+		{	case 0:  q = 1;  break;
 			default: assert(0);
 		}
 		return q;
@@ -81,7 +81,7 @@ public:
 	{
 		assert( u.size() == 1 );
 		ADVector r(1);
-		r[0] = u[0] ; 
+		r[0] = u[0] ;
 		return r;
 	}
 };
@@ -93,7 +93,7 @@ bool multiple_solution(void)
 	// number of independent variables (domain dimension for f and g)
 	size_t n = 2;
 	// number of constraints (range dimension for g)
-	size_t m = 2; 
+	size_t m = 2;
 	// initial value of the independent variables
 	NumberVector x_i(n);
 	NumberVector x_l(n);

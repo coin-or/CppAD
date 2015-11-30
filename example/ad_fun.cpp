@@ -1,9 +1,9 @@
-/* $Id$ */
+// $Id$
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-12 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-15 Bradley M. Bell
 
 CppAD is distributed under multiple licenses. This distribution is under
-the terms of the 
+the terms of the
                     Eclipse Public License Version 1.0.
 
 A copy of this license is included in the COPYING file of this distribution.
@@ -16,10 +16,8 @@ $spell
 $$
 
 $section Creating Your Own Interface to an ADFun Object$$
+$mindex example test$$
 
-$index ADFun, example$$
-$index example, ADFun$$
-$index test, ADFun$$
 
 $code
 $verbatim%example/ad_fun.cpp%0%// BEGIN C++%// END C++%1%$$
@@ -36,37 +34,37 @@ namespace {
 	// This class is an example of a different interface to an AD function object
 	template <class Base>
 	class my_ad_fun {
-	
+
 	private:
 		CppAD::ADFun<Base> f;
-	
+
 	public:
 		// default constructor
 		my_ad_fun(void)
 		{ }
-	
+
 		// destructor
 		~ my_ad_fun(void)
 		{ }
-	
+
 		// Construct an my_ad_fun object with an operation sequence.
-		// This is the same as for ADFun<Base> except that no zero 
-		// order forward sweep is done. Note Hessian and Jacobian do 
-		// their own zero order forward mode sweep. 
+		// This is the same as for ADFun<Base> except that no zero
+		// order forward sweep is done. Note Hessian and Jacobian do
+		// their own zero order forward mode sweep.
 		template <class ADvector>
 		my_ad_fun(const ADvector& x, const ADvector& y)
 		{	f.Dependent(x, y); }
-	
+
 		// same as ADFun<Base>::Jacobian
 		template <class VectorBase>
-		VectorBase jacobian(const VectorBase& x) 
+		VectorBase jacobian(const VectorBase& x)
 		{	return f.Jacobian(x); }
 
 		// same as ADFun<Base>::Hessian
 	        template <typename VectorBase>
 		VectorBase hessian(const VectorBase &x, const VectorBase &w)
 		{	return f.Hessian(x, w); }
-	}; 
+	};
 
 } // End empty namespace
 

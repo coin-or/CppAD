@@ -1,9 +1,9 @@
-/* $Id$ */
+// $Id$
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-14 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-15 Bradley M. Bell
 
 CppAD is distributed under multiple licenses. This distribution is under
-the terms of the 
+the terms of the
                     Eclipse Public License Version 1.0.
 
 A copy of this license is included in the COPYING file of this distribution.
@@ -45,14 +45,14 @@ bool general(void)
 
 	// a temporary values
 	AD<double> x = cos(U[0]);
-	AD<double> y = sin(U[0]); 
+	AD<double> y = sin(U[0]);
 
-	// dependent variable vector 
+	// dependent variable vector
 	CPPAD_TESTVECTOR(AD<double>) Z(1);
-	Z[0] = atan2(y, x); 
+	Z[0] = atan2(y, x);
 
 	// create f: U -> Z and vectors used for derivative calculations
-	ADFun<double> f(U, Z); 
+	ADFun<double> f(U, Z);
 	CPPAD_TESTVECTOR(double) v(1);
 	CPPAD_TESTVECTOR(double) w(1);
 
@@ -82,14 +82,14 @@ bool general(void)
 	v[0]         = 1.;
 	for(j = 1; j < p; j++)
 	{	jfac *= j;
-		w     = f.Forward(j, v);	
+		w     = f.Forward(j, v);
 		ok &= NearEqual(jfac*w[0], value, 1e-10 , 1e-10); // d^jz/du^j
 		v[0]  = 0.;
 		value = 0.;
 	}
 
 	// reverse computation of partials of Taylor coefficients
-	CPPAD_TESTVECTOR(double) r(p); 
+	CPPAD_TESTVECTOR(double) r(p);
 	w[0]  = 1.;
 	r     = f.Reverse(p, w);
 	jfac  = 1.;

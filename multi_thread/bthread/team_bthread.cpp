@@ -1,25 +1,23 @@
 // $Id$
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-13 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-15 Bradley M. Bell
 
 CppAD is distributed under multiple licenses. This distribution is under
-the terms of the 
+the terms of the
                     Eclipse Public License Version 1.0.
 
 A copy of this license is included in the COPYING file of this distribution.
 Please visit http://www.coin-or.org/CppAD/ for information on other licenses.
 -------------------------------------------------------------------------- */
-/* 
+/*
 $begin team_bthread.cpp$$
 $spell
 	bthread
 $$
 
-$index bthread, AD team$$
-$index AD, bthread team$$
-$index team, AD bthread$$
 
 $section Boost Thread Implementation of a Team of AD Threads$$
+$mindex bthread$$
 See $cref team_thread.hpp$$ for this routines specifications.
 
 $code
@@ -38,9 +36,9 @@ namespace {
 	using CppAD::thread_alloc;
 
 	// number of threads in the team
-	size_t num_threads_ = 1; 
+	size_t num_threads_ = 1;
 
-	// no need to cleanup up thread specific data 
+	// no need to cleanup up thread specific data
 	void cleanup(size_t*)
 	{	return; }
 
@@ -160,9 +158,9 @@ bool team_create(size_t num_threads)
 	num_threads_ = num_threads;
 
 	// initialize two barriers, one for work done, one for new job ready
-	wait_for_work_ = new boost::barrier(num_threads); 
-	wait_for_job_  = new boost::barrier(num_threads); 
-	
+	wait_for_work_ = new boost::barrier(num_threads);
+	wait_for_job_  = new boost::barrier(num_threads);
+
 	// initial job for the threads
 	thread_job_           = init_enum;
 	if( num_threads > 1 )
@@ -172,7 +170,7 @@ bool team_create(size_t num_threads)
 	// num_threads - 1 more threads
 	for(thread_num = 1; thread_num < num_threads; thread_num++)
 	{	// Create the thread with thread number equal to thread_num
-		thread_all_[thread_num].bthread = 
+		thread_all_[thread_num].bthread =
 			new boost::thread(thread_work, thread_num);
 	}
 
@@ -197,7 +195,7 @@ bool team_work(void worker(void))
 	// set the new job that other threads are waiting for
 	thread_job_ = work_enum;
 
-	// Enter parallel exectuion when master thread calls wait_for_job_ 
+	// Enter parallel exectuion when master thread calls wait_for_job_
 	if( num_threads_ > 1 )
 		sequential_execution_ = false;
 	wait_for_job_->wait();
@@ -228,7 +226,7 @@ bool team_destroy(void)
 	// set the new job that other threads are waiting for
 	thread_job_ = join_enum;
 
-	// enter parallel exectuion soon as master thread completes wait_for_job_ 
+	// enter parallel exectuion soon as master thread completes wait_for_job_
 	if( num_threads_ > 1 )
 			sequential_execution_ = false;
 	wait_for_job_->wait();
@@ -241,7 +239,7 @@ bool team_destroy(void)
 		delete thread_all_[thread_num].bthread;
 		thread_all_[thread_num].bthread = CPPAD_NULL;
 	}
-	// now we are down to just the master thread (thread zero) 
+	// now we are down to just the master thread (thread zero)
 	sequential_execution_ = true;
 
 	// destroy wait_for_work_

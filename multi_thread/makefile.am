@@ -1,9 +1,9 @@
 # $Id$
 # -----------------------------------------------------------------------------
-# CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-12 Bradley M. Bell
+# CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-15 Bradley M. Bell
 #
 # CppAD is distributed under multiple licenses. This distribution is under
-# the terms of the 
+# the terms of the
 #                     Eclipse Public License Version 1.0.
 #
 # A copy of this license is included in the COPYING file of this distribution.
@@ -17,7 +17,7 @@ DEFS          =
 if CppAD_OPENMP
 OPENMP_TEST = openmp_test
 else
-OPENMP_TEST = 
+OPENMP_TEST =
 endif
 #
 if CppAD_BTHREAD
@@ -28,21 +28,21 @@ BOOST_LIB     = -L$(BOOST_DIR)/lib
 endif
 else
 # BTHREAD_LIB empty in this case
-BTHREAD_TEST = 
-BOOST_LIB     = 
+BTHREAD_TEST =
+BOOST_LIB     =
 endif
 #
 if CppAD_PTHREAD
 PTHREAD_TEST = pthread_test
 else
-PTHREAD_TEST = 
+PTHREAD_TEST =
 endif
 #
-check_PROGRAMS    = $(OPENMP_TEST) $(BTHREAD_TEST) $(PTHREAD_TEST) 
+check_PROGRAMS    = $(OPENMP_TEST) $(BTHREAD_TEST) $(PTHREAD_TEST)
 #
 if CppAD_MS_COMPILER
-# AM_CXXFLAGS     = -EHsc -g $(CXX_FLAGS) 
-AM_CXXFLAGS       = -EHsc -DNDEBUG -O2 $(CXX_FLAGS) 
+# AM_CXXFLAGS     = -EHsc -g $(CXX_FLAGS)
+AM_CXXFLAGS       = -EHsc -DNDEBUG -O2 $(CXX_FLAGS)
 else
 # AM_CXXFLAGS     = -g $(CXX_FLAGS)
 AM_CXXFLAGS       = -DNDEBUG -O2 $(CXX_FLAGS)
@@ -68,7 +68,7 @@ SHARED_SRC = \
 	team_example.cpp        team_example.hpp \
 	harmonic_time.cpp      harmonic_time.hpp \
 	harmonic.cpp           harmonic.hpp \
-	harmonic_work.cpp      harmonic_work.hpp 
+	harmonic_work.cpp      harmonic_work.hpp
 #
 bthread_test_SOURCES = \
 	$(SHARED_SRC) \
@@ -80,13 +80,13 @@ openmp_test_SOURCES = \
 	$(SHARED_SRC) \
 	openmp/team_openmp.cpp \
 	openmp/a11c_openmp.cpp  \
-	openmp/simple_ad_openmp.cpp 
+	openmp/simple_ad_openmp.cpp
 #
 pthread_test_SOURCES = \
 	$(SHARED_SRC) \
 	pthread/team_pthread.cpp \
 	pthread/a11c_pthread.cpp  \
-	pthread/simple_ad_pthread.cpp 
+	pthread/simple_ad_pthread.cpp
 #
 dist_noinst_SCRIPTS = test.sh
 #

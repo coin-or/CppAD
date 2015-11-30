@@ -1,12 +1,12 @@
-/* $Id$ */
-# ifndef CPPAD_DET_33_INCLUDED
-# define CPPAD_DET_33_INCLUDED
+// $Id$
+# ifndef CPPAD_DET_33_HPP
+# define CPPAD_DET_33_HPP
 
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-12 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-15 Bradley M. Bell
 
 CppAD is distributed under multiple licenses. This distribution is under
-the terms of the 
+the terms of the
                     Eclipse Public License Version 1.0.
 
 A copy of this license is included in the COPYING file of this distribution.
@@ -24,12 +24,9 @@ $spell
 	bool
 $$
 
-$section Check Determinant of 3 by 3 matrix$$ 
+$section Check Determinant of 3 by 3 matrix$$
+$mindex det_33 correct$$
 
-$index det_33$$
-$index determinant, check correct$$
-$index correct, determinant check$$
-$index check, determinant correct$$
 
 $head Syntax$$
 $codei%# include <cppad/speed/det_33.hpp>
@@ -42,10 +39,10 @@ the determinant of a matrix.
 
 $head Inclusion$$
 The template function $code det_33$$ is defined in the $code CppAD$$
-namespace by including 
-the file $code cppad/speed/det_33.hpp$$ 
+namespace by including
+the file $code cppad/speed/det_33.hpp$$
 (relative to the CppAD distribution directory).
-It is only intended for example and testing purposes, 
+It is only intended for example and testing purposes,
 so it is not automatically included by
 $cref/cppad.hpp/cppad/$$.
 
@@ -67,7 +64,7 @@ $codei%
 It is tested to see if $icode%d%[0]%$$ it is equal to $latex \det ( X )$$.
 
 $head Vector$$
-If $icode y$$ is a $icode Vector$$ object, 
+If $icode y$$ is a $icode Vector$$ object,
 it must support the syntax
 $codei%
 	%y%[%i%]
@@ -83,7 +80,7 @@ The return value $icode ok$$ has prototype
 $codei%
 	bool %ok%
 %$$
-It is true, if the determinant $icode%d%[0]%$$ 
+It is true, if the determinant $icode%d%[0]%$$
 passes the test and false otherwise.
 
 $children%
@@ -91,7 +88,7 @@ $children%
 %$$
 
 $head Source Code$$
-The file 
+The file
 $cref det_33.hpp$$
 contains the source code for this template function.
 
@@ -99,12 +96,12 @@ $end
 ------------------------------------------------------------------------------
 */
 // BEGIN C++
-# include <cppad/near_equal.hpp>
+# include <cppad/utility/near_equal.hpp>
 namespace CppAD {
 template <class Vector>
 	bool det_33(const Vector &x, const Vector &d)
 	{	bool ok = true;
-	
+
 		// use expansion by minors to compute the determinant by hand
 		double check = 0.;
 		check += x[0] * ( x[4] * x[8] - x[5] * x[7] );
@@ -112,7 +109,7 @@ template <class Vector>
 		check += x[2] * ( x[3] * x[7] - x[4] * x[6] );
 
 		ok &= CppAD::NearEqual(check, d[0], 1e-10, 1e-10);
-		
+
 		return ok;
 	}
 }

@@ -1,9 +1,9 @@
-/* $Id$ */
+// $Id$
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-13 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-15 Bradley M. Bell
 
 CppAD is distributed under multiple licenses. This distribution is under
-the terms of the 
+the terms of the
                     Eclipse Public License Version 1.0.
 
 A copy of this license is included in the COPYING file of this distribution.
@@ -15,7 +15,7 @@ Please visit http://www.coin-or.org/CppAD/ for information on other licenses.
 # include <adolc/adouble.h>
 # include <adolc/taping.h>
 # include <adolc/interfaces.h>
-// adouble definitions not in Adolc distribution and 
+// adouble definitions not in Adolc distribution and
 // required in order to use CppAD::AD<adouble>
 # include <cppad/example/base_adolc.hpp>
 # endif
@@ -25,7 +25,7 @@ Please visit http://www.coin-or.org/CppAD/ for information on other licenses.
 
 namespace { // BEGIN empty namespace
 
-bool One(void) 
+bool One(void)
 {	bool ok = true;                          // initialize test result
 	using CppAD::NearEqual;
 	double eps = 10. * std::numeric_limits<double>::epsilon();
@@ -94,13 +94,13 @@ Type f_Two(CPPAD_TESTVECTOR(Type) &x)
 		sum += x[i] * x[i];
 
 	// check computed assignment AD< AD<double> > -= int
-	sum -= 1; 
+	sum -= 1;
 
-	// check double * AD< AD<double> > 
+	// check double * AD< AD<double> >
 	return .5 * sum;
-} 
+}
 
-bool Two(void) 
+bool Two(void)
 {	bool ok = true;                          // initialize test result
 
 	typedef CppAD::AD<double>   ADdouble;    // for one level of taping
@@ -127,7 +127,7 @@ bool Two(void)
 	// declare inner function (corresponding to ADDdouble calculation)
 	CppAD::ADFun<ADdouble> a_F(aa_x, aa_f);
 
-	// compute f'(x) 
+	// compute f'(x)
 	size_t p = 1;                        // order of derivative of a_F
 	CPPAD_TESTVECTOR(ADdouble) a_w(1);  // weight vector for a_F
 	CPPAD_TESTVECTOR(ADdouble) a_df(n); // value of derivative
@@ -155,7 +155,7 @@ bool Two(void)
 
 # ifdef CPPAD_ADOLC_TEST
 
-bool adolc(void) 
+bool adolc(void)
 {	bool ok = true;                   // initialize test result
 
 	typedef adouble      ADdouble;         // for first level of taping
@@ -186,14 +186,14 @@ bool adolc(void)
 	// declare inner function (corresponding to ADDdouble calculation)
 	CppAD::ADFun<ADdouble> a_F(aa_x, aa_f);
 
-	// compute f'(x) 
+	// compute f'(x)
 	size_t p = 1;                        // order of derivative of a_F
 	CPPAD_TESTVECTOR(ADdouble) a_w(1);  // weight vector for a_F
 	CPPAD_TESTVECTOR(ADdouble) a_df(n); // value of derivative
 	a_w[0] = 1;                          // weighted function same as a_F
 	a_df   = a_F.Reverse(p, a_w);        // gradient of f
 
-	// declare outter function 
+	// declare outter function
 	// (corresponding to the tape of adouble operations)
 	double df_j;
 	for(j = 0; j < n; j++)
@@ -251,7 +251,7 @@ bool std_math(void)
 	ay = af.Forward(0, ax);
 	ADFun<double> g(ax, ay);
 
-	// evaluate h(x) = g(x) 
+	// evaluate h(x) = g(x)
 	x[0] = 1.;
 	y = g.Forward(0, x);
 

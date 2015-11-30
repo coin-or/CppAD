@@ -27,13 +27,10 @@ $spell
 	Lu
 $$
 
-$index FAQ$$
 $section Frequently Asked Questions and Answers$$
+$mindex FAQ operator reporting ErrorHandler avoid record taping mode CPPAD_TESTVECTOR standard math function storage$$
 
 $head Assignment and Independent$$
-$index assignment, operator$$
-$index operator, assignment$$
-$index independent$$
 Why does the code sequence
 $codei%
 	Independent(%u%);
@@ -51,7 +48,6 @@ Thus in the first case, $icode v$$ is a variable
 and in the second case it is a parameter.
 
 $head Bugs$$
-$index bugs, reporting$$
 What should I do if I suspect that there is a bug in CppAD ?
 $pre
 
@@ -86,8 +82,6 @@ Attaching your program that demonstrates the bug.
 $lend
 
 $head CompareChange$$
-$index CompareChange$$
-$index NDEBUG$$
 If you attempt to use the
 $cref CompareChange$$
 function when $code NDEBUG$$ is true,
@@ -96,7 +90,6 @@ $code CompareChange$$ is not a member of the
 $cref ADFun$$ template class.
 
 $head Complex Types$$
-$index complex, faq$$
 Which of the following complex types is better:
 $codei%
 	AD< std::complex<%Base%> >
@@ -116,9 +109,6 @@ The effect of instantiating the template complex for any other type
 is unspecified.
 
 $head Exceptions$$
-$index test, exception$$
-$index exception, test$$
-$index ErrorHandler$$
 Why, in all the examples, do you pass back a boolean variable instead
 of throwing an exception ?
 $pre
@@ -133,10 +123,6 @@ to signal exceptions.
 Specifications for redefining this action are provided.
 
 $head Independent Variables$$
-$index independent variable$$
-$index tape, avoid$$
-$index record, avoid$$
-$index speed, avoid taping$$
 Is it possible to evaluate the same tape recording with different values
 for the independent variables ?
 $pre
@@ -145,8 +131,6 @@ $$
 Yes (see $cref forward_zero$$).
 
 $head Matrix Inverse$$
-$index inverse, matrix$$
-$index matrix, inverse$$
 Is it possible to differentiate (with respect to the matrix elements)
 the computation of the inverse of a matrix
 where the computation of the inverse uses pivoting ?
@@ -161,9 +145,6 @@ use LuSolve to compute derivatives of the
 determinant with respect to the components of the matrix.
 
 $head Mode: Forward or Reverse$$
-$index forward$$
-$index reverse$$
-$index mode$$
 When evaluating derivatives,
 one always has a choice between
 forward and reverse mode.
@@ -186,13 +167,9 @@ some range directions have derivative zero.
 
 
 $head Namespace$$
-$index namespace$$
 
 
 $subhead Test Vector Preprocessor Symbol$$
-$index CPPAD_TESTVECTOR$$
-$index preprocessor, symbols$$
-$index symbols, preprocessor$$
 Why do you use $code CPPAD_TESTVECTOR$$ instead of a namespace for
 the CppAD $cref testvector$$ class ?
 $pre
@@ -209,9 +186,6 @@ by CppAD begin with either $code CPPAD$$
 (some old deprecated symbols begin with $code CppAD$$).
 
 $subhead Using$$
-$index standard, math function$$
-$index math, standard function$$
-$index using, namespace$$
 Why do I have trouble when the following command
 $codep
 	using namespace CppAD
@@ -231,8 +205,6 @@ or some other limited scope,
 in order to shadow these improper global definitions.
 
 $head Speed$$
-$index speed$$
-$index NDEBUG$$
 How do I get the best speed performance out of CppAD ?
 
 $subhead NDEBUG$$
@@ -254,10 +226,6 @@ by calling $code hold_memory$$ with
 $cref/value/ta_hold_memory/value/$$ equal to true.
 
 $head Tape Storage: Disk or Memory$$
-$index storage, tape$$
-$index tape, storage$$
-$index memory, tape$$
-$index disk, tape$$
 Does CppAD store the tape on disk or in memory ?
 $pre
 

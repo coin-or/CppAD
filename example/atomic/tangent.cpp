@@ -18,9 +18,7 @@ $spell
 $$
 
 $section Tan and Tanh as User Atomic Operations: Example and Test$$
-$index tangent, atomic operation$$
-$index atomic, tangent operation$$
-$index tan, atomic operation$$
+$mindex tangent operation$$
 
 $head Theory$$
 The code below uses the $cref tan_forward$$ and $cref tan_reverse$$

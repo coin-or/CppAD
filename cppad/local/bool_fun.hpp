@@ -1,6 +1,6 @@
-/* $Id$ */
-# ifndef CPPAD_BOOL_FUN_INCLUDED
-# define CPPAD_BOOL_FUN_INCLUDED
+// $Id$
+# ifndef CPPAD_BOOL_FUN_HPP
+# define CPPAD_BOOL_FUN_HPP
 
 /* --------------------------------------------------------------------------
 CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-15 Bradley M. Bell

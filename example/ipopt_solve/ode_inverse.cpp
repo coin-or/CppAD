@@ -1,9 +1,9 @@
-/* $Id$ */
+// $Id$
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-13 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-15 Bradley M. Bell
 
 CppAD is distributed under multiple licenses. This distribution is under
-the terms of the 
+the terms of the
                     Eclipse Public License Version 1.0.
 
 A copy of this license is included in the COPYING file of this distribution.
@@ -15,9 +15,8 @@ $spell
 $$
 
 $section ODE Inverse Problem Definitions: Source Code$$
-$index ode, inverse example$$
-$index inverse, ode example$$
-$index example, ode inverse$$ 
+$mindex example$$
+
 
 $head Purpose$$
 This example demonstrates how to invert for parameters
@@ -27,19 +26,19 @@ $head Forward Problem$$
 We consider the following ordinary differential equation:
 $latex \[
 \begin{array}{rcl}
-	\partial_t y_0 ( t , a ) & = & - a_1 * y_0 (t, a )  
+	\partial_t y_0 ( t , a ) & = & - a_1 * y_0 (t, a )
 	\\
 	\partial_t y_1 (t , a )  & = & + a_1 * y_0 (t, a ) - a_2 * y_1 (t, a )
 \end{array}
 \] $$
 with the initial conditions
 $latex \[
-	y_0 (0 , a) = ( a_0 , 0 )^\R{T} 
+	y_0 (0 , a) = ( a_0 , 0 )^\R{T}
 \] $$
-Our forward problem is stated as follows: 
+Our forward problem is stated as follows:
 Given $latex a \in \B{R}^3$$
-determine the value of $latex y ( t , a ) $$, 
-for $latex t \in R$$, that solves the initial value problem above. 
+determine the value of $latex y ( t , a ) $$,
+for $latex t \in R$$, that solves the initial value problem above.
 
 $head Measurements$$
 Suppose we are also given measurement times $latex s \in \B{R}^5$$
@@ -48,7 +47,7 @@ and for $latex i = 0, \ldots, 3$$, we model $latex z_i$$ by
 $latex \[
 	z_i = y_1 ( s_{i+1} , a) + e_i
 \] $$
-where $latex e_{i-1} \sim {\bf N} (0 , \sigma^2 )$$ 
+where $latex e_{i-1} \sim {\bf N} (0 , \sigma^2 )$$
 is the measurement noise,
 and $latex \sigma > 0$$ is the standard deviation of the noise.
 
@@ -59,29 +58,29 @@ $latex \[
 \begin{array}{rcl}
 	y_0 (t , a) & = & a_0 * \exp( - a_1 * t )
 	\\
-	y_1 (t , a) & = & 
+	y_1 (t , a) & = &
 	a_0 * a_1 * \frac{\exp( - a_2 * t ) - \exp( -a_1 * t )}{ a_1 - a_2 }
 \end{array}
 \] $$
 
 $subhead Simulation Parameter Values$$
 $table
-$latex \bar{a}_0 = 1$$ $pre $$ $cnext 
-	initial value of $latex y_0 (t, a)$$ 
+$latex \bar{a}_0 = 1$$ $pre $$ $cnext
+	initial value of $latex y_0 (t, a)$$
 $rnext
-$latex \bar{a}_1 = 2$$ $pre $$ $cnext 
+$latex \bar{a}_1 = 2$$ $pre $$ $cnext
 	transfer rate from compartment zero to compartment one
 $rnext
-$latex \bar{a}_2 = 1$$ $pre $$ $cnext 
+$latex \bar{a}_2 = 1$$ $pre $$ $cnext
 	transfer rate from compartment one to outside world
 $rnext
-$latex \sigma = 0$$ $pre $$ $cnext 
+$latex \sigma = 0$$ $pre $$ $cnext
 	standard deviation of measurement noise
 $rnext
 $latex e_i = 0$$ $pre $$ $cnext
 	simulated measurement noise, $latex i = 1 , \ldots , Nz$$
 $rnext
-$latex s_i = i * .5$$ $pre $$ $cnext 
+$latex s_i = i * .5$$ $pre $$ $cnext
 	time corresponding to the $th i$$ measurement,
 	$latex i = 0 , \ldots , 3$$
 $tend
@@ -90,11 +89,11 @@ $subhead Simulated Measurement Values$$
 The simulated measurement values are given by the equation
 $latex \[
 \begin{array}{rcl}
-z_i 
+z_i
 & = &  e_i + y_1 ( s_{i+1} , \bar{a} )
 \\
-& = & 
-\bar{a}_0 * \bar{a}_1 * 
+& = &
+\bar{a}_0 * \bar{a}_1 *
 	\frac{\exp( - \bar{a}_2 * s_i ) - \exp( -\bar{a}_1 * s_i )}
 		{ \bar{a}_1 - \bar{a}_2 }
 \end{array}
@@ -107,8 +106,8 @@ The maximum likelihood estimate for $latex a$$ given $latex z$$
 solves the following optimization problem
 $latex \[
 \begin{array}{rcl}
-{\rm minimize} \; 
-	& \sum_{i=0}^3 ( z_i - y_1 ( s_{i+1} , a ) )^2 
+{\rm minimize} \;
+	& \sum_{i=0}^3 ( z_i - y_1 ( s_{i+1} , a ) )^2
 	& \;{\rm w.r.t} \; a \in \B{R}^3
 \end{array}
 \] $$
@@ -117,10 +116,10 @@ $head Trapezoidal Approximation$$
 We are given a number of approximation points per measurement interval
 $latex np$$ and define the time grid $latex t \in \B{R}^{4 \cdot np + 1}$$
 as follows:
-$latex t_0 = s_0$$ and 
+$latex t_0 = s_0$$ and
 for $latex i = 0 , 1 , 2, 3$$, $latex j = 1 , \ldots , np$$
 $latex \[
-	t_{i \cdot np + j} = s_i + (s_{i+1} - s{i}) \frac{i}{np} 
+	t_{i \cdot np + j} = s_i + (s_{i+1} - s{i}) \frac{i}{np}
 \] $$
 We note that for $latex i = 1 , \ldots , 4$$,
 $latex t_{i \cdot np} = s_i$$.
@@ -141,33 +140,33 @@ $latex \[
 \] $$
 
 $head Solution Method$$
-We use constraints to embed the 
+We use constraints to embed the
 forward problem in the inverse problem.
 To be specific, we solve the optimization problem
 $latex \[
 \begin{array}{rcl}
-{\rm minimize} 
+{\rm minimize}
 & \sum_{i=0}^3 ( z_i - y_1^{(i+1) \cdot np} )^2
-& \; {\rm w.r.t} \; a \in \B{R}^3 
+& \; {\rm w.r.t} \; a \in \B{R}^3
 	\; y^0 \in \B{R}^2 , \ldots , y^{3 \cdot np -1} \in \B{R}^2
 \\
 {\rm subject \; to}
 	0 = y^0 - ( a_0 , 0 )^\R{T}
 	\\
-	& 0 = y^k  -  y^{k-1} - 
+	& 0 = y^k  -  y^{k-1} -
 	\frac{G( y^k , a ) + G( y^{k-1} , a ) }{2}  (t_k - t_{k-1})
 	& \; {\rm for} \; k = 1 , \ldots , 4 \cdot np
 \end{array}
 \] $$
-The code below we using the notation 
+The code below we using the notation
 $latex x \in \B{3 + (4 \cdot np + 1) \cdot 2}$$ defined by
 $latex \[
-	x = \left( 
-		a_0, a_1, a_2 , 
-		y_0^0, y_1^0, 
-		\ldots , 
-		y_0^{4 \cdot np}, y_1^{4 \cdots np} 
-	\right)  
+	x = \left(
+		a_0, a_1, a_2 ,
+		y_0^0, y_1^0,
+		\ldots ,
+		y_0^{4 \cdot np}, y_1^{4 \cdots np}
+	\right)
 \] $$
 
 $head Source$$
@@ -189,7 +188,7 @@ namespace {
 	// value of a during simulation a[0], a[1], a[2]
 	double a_[] =                   {2.0,  1.0, 0.5};
 	// number of components in a
-	size_t na_ = sizeof(a_) / sizeof(a_[0]);     
+	size_t na_ = sizeof(a_) / sizeof(a_[0]);
 
 	// function used to simulate data
 	double yone(double t)
@@ -198,7 +197,7 @@ namespace {
 	}
 
 	// time points were we have data (no data at first point)
-	double s_[] = {0.0,   0.5,        1.0,          1.5,         2.0 }; 
+	double s_[] = {0.0,   0.5,        1.0,          1.5,         2.0 };
 
 	// Simulated data for case with no noise (first point is not used)
 	double z_[] = {yone(s_[1]), yone(s_[2]), yone(s_[3]), yone(s_[4])};
@@ -231,7 +230,7 @@ namespace {
 				AD<double> y_1 = x[na_ + 2 * k + 1];
 				AD<double> dif = z_[i] - y_1;
 				fg[0]         += dif * dif;
-			}  
+			}
 
 			// constraint corresponding to initial value y(0, a)
 			// Note that this constraint is invariant with size of dt
@@ -241,7 +240,7 @@ namespace {
 			// constraints corresponding to trapozoidal approximation
 			for(i = 0; i < nz_; i++)
 			{	// spacing between grid point
-				double dt = (s_[i+1] - s_[i]) / static_cast<double>(np_); 
+				double dt = (s_[i+1] - s_[i]) / static_cast<double>(np_);
 				for(j = 1; j <= np_; j++)
 				{	k = i * np_ + j;
 					// compute derivative at y^k
@@ -265,7 +264,7 @@ namespace {
 					fg[2 + 2*k ] /= dt;
 				}
 			}
-		}	
+		}
 	};
 }
 bool ode_inverse(void)
@@ -296,18 +295,18 @@ bool ode_inverse(void)
 	// object defining both f(x) and g(x)
 	FG_eval fg_eval;
 
-	// options 
+	// options
 	std::string options;
 	// Use sparse matrices for calculation of Jacobians and Hessians
 	// with forward mode for Jacobian (seems to be faster for this case).
 	options += "Sparse  true        forward\n";
 	// turn off any printing
-	options += "Integer print_level 0\n"; 
+	options += "Integer print_level 0\n";
 	options += "String  sb        yes\n";
 	// maximum number of iterations
 	options += "Integer max_iter    30\n";
 	// approximate accuracy in first order necessary conditions;
-	// see Mathematical Programming, Volume 106, Number 1, 
+	// see Mathematical Programming, Volume 106, Number 1,
 	// Pages 25-57, Equation (6)
 	options += "Numeric tol         1e-6\n";
 
@@ -319,8 +318,8 @@ bool ode_inverse(void)
 		options, xi, xl, xu, gl, gu, fg_eval, solution
 	);
 	//
- 	// Check some of the solution values
- 	//
+	// Check some of the solution values
+	//
 	ok &= solution.status == CppAD::ipopt::solve_result<Dvector>::success;
 	//
 	double rel_tol    = 1e-4;  // relative tolerance

@@ -1,9 +1,9 @@
-/* $Id$ */
+// $Id$
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-12 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-15 Bradley M. Bell
 
 CppAD is distributed under multiple licenses. This distribution is under
-the terms of the 
+the terms of the
                     Eclipse Public License Version 1.0.
 
 A copy of this license is included in the COPYING file of this distribution.
@@ -17,9 +17,6 @@ $begin independent.cpp$$
 $comment ! NOTE the title states that this example is used two places !$$
 $section Independent and ADFun Constructor: Example and Test$$
 
-$index Independent, example$$
-$index example, Independent$$
-$index test, Independent$$
 
 $code
 $verbatim%example/independent.cpp%0%// BEGIN C++%// END C++%1%$$
@@ -44,7 +41,7 @@ bool Test(void)
 	X[0] = 0.;
 	X[1] = 1.;
 
-	// declare independent variables and start recording 
+	// declare independent variables and start recording
 	// use the template parameter VectorAD for the vector type
 	CppAD::Independent(X);
 
@@ -59,9 +56,9 @@ bool Test(void)
 
 	// create f: X -> Y and stop tape recording
 	// use the template parameter VectorAD for the vector type
-	CppAD::ADFun<double> f(X, Y); 
+	CppAD::ADFun<double> f(X, Y);
 
-	// check value 
+	// check value
 	ok &= NearEqual(Y[0] , 1.,  1e-10 , 1e-10);
 	ok &= NearEqual(Y[1] , 0.,  1e-10 , 1e-10);
 

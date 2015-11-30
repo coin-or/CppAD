@@ -1,9 +1,9 @@
-/* $Id$ */
+// $Id$
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-14 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-15 Bradley M. Bell
 
 CppAD is distributed under multiple licenses. This distribution is under
-the terms of the 
+the terms of the
                     Eclipse Public License Version 1.0.
 
 A copy of this license is included in the COPYING file of this distribution.
@@ -35,12 +35,8 @@ $spell
 $$
 
 $section Fadbad Speed: Second Derivative of a Polynomial$$
+$mindex link_poly speed$$
 
-$index link_poly, fadbad$$
-$index fadbad, link_poly$$
-$index speed, fadbad$$
-$index fadbad, speed$$
-$index polynomial, speed fadbad$$
 
 $head Specifications$$
 See $cref link_poly$$.
@@ -48,8 +44,8 @@ See $cref link_poly$$.
 $head Implementation$$
 
 $codep */
-# include <cppad/vector.hpp>
-# include <cppad/poly.hpp>
+# include <cppad/utility/vector.hpp>
+# include <cppad/utility/poly.hpp>
 # include <cppad/speed/uniform_01.hpp>
 # include <FADBAD++/tadiff.h>
 
@@ -57,11 +53,11 @@ $codep */
 extern bool global_memory, global_onetape, global_atomic, global_optimize;
 
 bool link_poly(
-	size_t                     size     , 
-	size_t                     repeat   , 
+	size_t                     size     ,
+	size_t                     repeat   ,
 	CppAD::vector<double>     &a        ,  // coefficients of polynomial
 	CppAD::vector<double>     &z        ,  // polynomial argument value
-	CppAD::vector<double>     &ddp      )  // second derivative w.r.t z  
+	CppAD::vector<double>     &ddp      )  // second derivative w.r.t z
 {
 	if( global_atomic )
 		return false;
@@ -69,7 +65,7 @@ bool link_poly(
 		return false;
 	// -----------------------------------------------------
 	// setup
-	size_t i;             // temporary index     
+	size_t i;             // temporary index
 	fadbad::T<double>  Z; // domain space AD value
 	fadbad::T<double>  P; // range space AD value
 

@@ -1,9 +1,9 @@
-/* $Id$ */
+// $Id$
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-14 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-15 Bradley M. Bell
 
 CppAD is distributed under multiple licenses. This distribution is under
-the terms of the 
+the terms of the
                     Eclipse Public License Version 1.0.
 
 A copy of this license is included in the COPYING file of this distribution.
@@ -67,7 +67,7 @@ is a vector with size \c K.
 On input, For <tt>k = 0 , ... , K-1, pattern_jac_r[k]</tt>
 is a vector of length p[k] * q[k]
 and the value of its elements does not matter.
-On output it is a CppAD sparsity pattern for the Jacobian of 
+On output it is a CppAD sparsity pattern for the Jacobian of
 \f$ r_k (u) \f$.
 
 \param pattern_hes_r
@@ -75,7 +75,7 @@ is a vector with size \c K.
 On input, For <tt>k = 0 , ... , K-1, pattern_hes_r[k]</tt>
 is a vector of length q[k] * q[k]
 and the value of its elements does not matter.
-On output it is a CppAD sparsity pattern for the Hessian of 
+On output it is a CppAD sparsity pattern for the Hessian of
 \f$ R : {\bf R}^{q[k]} \rightarrow {\bf R} \f$ which is defined by
 \f[
 	R(u) = \sum_{i=0}^{p[k]-1} r_k (u)_i
@@ -108,14 +108,14 @@ void vec_fun_pattern(
 		if( retape[k] )
 		{	for(i = 0; i < p[k]; i++)
 			{	for(j = 0; j < q[k]; j++)
-					pattern_jac_r[k][i*q[k] + j] = true; 
+					pattern_jac_r[k][i*q[k] + j] = true;
 			}
 			for(i = 0; i < q[k]; i++)
 			{	for(j = 0; j < q[k]; j++)
-					pattern_hes_r[k][i*q[k] + j] = true; 
+					pattern_hes_r[k][i*q[k] + j] = true;
 			}
 		}
-		else 
+		else
 		{	// check assumptions about r_k
 			CPPAD_ASSERT_UNKNOWN( r_fun[k].Range() == p[k] );
 			CPPAD_ASSERT_UNKNOWN( r_fun[k].Domain() == q[k] );
@@ -123,11 +123,11 @@ void vec_fun_pattern(
 			// pattern for the identity matrix
 			CppAD::vectorBool pattern_domain(q[k] * q[k]);
 			for(i = 0; i < q[k]; i++)
-			{	for(j = 0; j < q[k]; j++) 
+			{	for(j = 0; j < q[k]; j++)
 					pattern_domain[i*q[k] + j] = (i == j);
 			}
 			// use forward mode to compute Jacobian sparsity
-			pattern_jac_r[k] = 
+			pattern_jac_r[k] =
 				r_fun[k].ForSparseJac(q[k], pattern_domain);
 			// user reverse mode to compute Hessian sparsity
 			CppAD::vectorBool pattern_ones(p[k]);

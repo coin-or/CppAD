@@ -1,4 +1,4 @@
-/* $Id: link_sparse_hessian.cpp 3223 2014-03-19 15:13:26Z bradbell $ */
+// $Id$
 /* --------------------------------------------------------------------------
 CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-15 Bradley M. Bell
 
@@ -20,12 +20,9 @@ $spell
 	colpack
 $$
 
-$index link_sparse_hessian$$
-$index sparse, speed test$$
-$index speed, test sparse$$
-$index test, sparse speed$$
 
 $section Speed Testing Sparse Hessian$$
+$mindex link_sparse_hessian test$$
 
 $head Prototype$$
 $codei%extern bool link_sparse_hessian(
@@ -137,11 +134,11 @@ the value of $latex f(x)$$ (derivatives are not computed).
 $end
 -----------------------------------------------------------------------------
 */
-# include <cppad/vector.hpp>
-# include <cppad/near_equal.hpp>
+# include <cppad/utility/vector.hpp>
+# include <cppad/utility/near_equal.hpp>
 # include <cppad/speed/sparse_hes_fun.hpp>
 # include <cppad/speed/uniform_01.hpp>
-# include <cppad/index_sort.hpp>
+# include <cppad/utility/index_sort.hpp>
 
 /*!
 \{

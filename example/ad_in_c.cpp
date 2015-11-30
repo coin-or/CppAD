@@ -1,9 +1,9 @@
-/* $Id$ */
+// $Id$
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-12 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-15 Bradley M. Bell
 
 CppAD is distributed under multiple licenses. This distribution is under
-the terms of the 
+the terms of the
                     Eclipse Public License Version 1.0.
 
 A copy of this license is included in the COPYING file of this distribution.
@@ -17,16 +17,9 @@ $spell
 $$
 
 $section Example and Test Linking CppAD to Languages Other than C++$$
+$mindex C AD algorithmic differentiation automatic link$$
 
-$index C, AD$$
-$index C, algorithmic differentiation$$
-$index algorithmic, C differentiation$$
-$index automatic, C differentiation$$
-$index example, C AD$$
-$index test, C AD$$
 
-$index link, CppAD to language$$
-$index language, link CppAD$$
 
 $code
 $verbatim%example/ad_in_c.cpp%0%// BEGIN C++%// END C++%1%$$
@@ -54,18 +47,18 @@ void debug_print(const char *label, double d)
 }
 */
 
-// type in C corresponding to an AD<double> object 
+// type in C corresponding to an AD<double> object
 typedef struct { void*  p_void; } cad;
 
-// type in C corresponding to a an ADFun<double> 
+// type in C corresponding to a an ADFun<double>
 typedef struct { void* p_void; } cad_fun;
 
 // type in C corresponding to a C AD binary operator
 typedef enum { op_add, op_sub, op_mul, op_div } cad_binary_op;
 
 // type in C corresponding to a C AD unary operator
-typedef enum { 
-	op_abs, op_acos, op_asin, op_atan, op_cos, op_cosh, 
+typedef enum {
+	op_abs, op_acos, op_asin, op_atan, op_cos, op_cosh,
 	op_exp, op_log,  op_sin,  op_sinh, op_sqrt
 } cad_unary_op;
 
@@ -79,7 +72,7 @@ using CppAD::NearEqual;
 void cad2vector(size_t n, cad* p_cad, vector< AD<double> >& v)
 {	assert( n == v.size() );
 	for(size_t j = 0; j < n; j++)
-	{	AD<double>* p_ad = 
+	{	AD<double>* p_ad =
 			reinterpret_cast< AD<double>* > (p_cad[j].p_void);
 		v[j] = *p_ad;
 	}
@@ -88,7 +81,7 @@ void cad2vector(size_t n, cad* p_cad, vector< AD<double> >& v)
 void vector2cad(size_t n, vector< AD<double> >& v, cad* p_cad)
 {	assert( n == v.size() );
 	for(size_t j = 0; j < n; j++)
-	{	AD<double>* p_ad = 
+	{	AD<double>* p_ad =
 			reinterpret_cast< AD<double>* > (p_cad[j].p_void);
 		*p_ad = v[j];
 	}
@@ -142,12 +135,12 @@ bool cad_near_equal(double x, double y)
 // create a C++ AD object
 // value is the value that the C++ AD object will have
 // p_cad->p_void: on input is 0, on output points to C++ AD object
-extern "C" 
+extern "C"
 void cad_new_ad(cad *p_cad, double value)
 {	// make sure pointer is not currently allocated
 	assert( p_cad->p_void == 0 );
 
-	AD<double>* p_ad   = new AD<double>(value); 
+	AD<double>* p_ad   = new AD<double>(value);
 	p_cad->p_void      = reinterpret_cast<void*>(p_ad);
 
 	// put in list of allocate pointers
@@ -157,7 +150,7 @@ void cad_new_ad(cad *p_cad, double value)
 // delete a C++ AD object
 // p_cad->value: not used
 // p_cad->p_void: on input points to C++ AD object, on output is 0
-extern "C" 
+extern "C"
 void cad_del_ad(cad* p_cad)
 {	// make sure that p_cad has been allocated
 	pop_allocated( p_cad->p_void );
@@ -178,7 +171,7 @@ double cad_value(cad* p_cad)
 
 // preform a C AD unary operation
 extern "C"
-void cad_unary(cad_unary_op op, cad* p_operand, cad* p_result) 
+void cad_unary(cad_unary_op op, cad* p_operand, cad* p_result)
 {	AD<double> *operand, *result;
 	result  = reinterpret_cast< AD<double>* > (p_result->p_void);
 	operand = reinterpret_cast< AD<double>* > (p_operand->p_void);
@@ -197,7 +190,7 @@ void cad_unary(cad_unary_op op, cad* p_operand, cad* p_result)
 		break;
 
 		case op_atan:
-		*result = atan( *operand ); 
+		*result = atan( *operand );
 		break;
 
 		case op_cos:
@@ -240,14 +233,14 @@ void cad_unary(cad_unary_op op, cad* p_operand, cad* p_result)
 // perform a C AD binary operation
 extern "C"
 void cad_binary(cad_binary_op op, cad* p_left, cad* p_right, cad* p_result)
-{	AD<double> *result, *left, *right; 
+{	AD<double> *result, *left, *right;
 	result = reinterpret_cast< AD<double>* > (p_result->p_void);
 	left   = reinterpret_cast< AD<double>* > (p_left->p_void);
 	right  = reinterpret_cast< AD<double>* > (p_right->p_void);
 	assert( result != 0 );
 	assert( left != 0 );
 	assert( right != 0 );
-	
+
 	switch(op)
 	{	case op_add:
 		*result         = *left + (*right);
@@ -293,7 +286,7 @@ cad_fun cad_new_fun(size_t n, size_t m, cad* px_cad, cad* py_cad)
 	cad2vector(m, py_cad, y);
 	p_adfun->Dependent(x, y);
 
-	fun.p_void = reinterpret_cast<void*>( p_adfun ); 
+	fun.p_void = reinterpret_cast<void*>( p_adfun );
 
 	// put in list of allocate pointers
 	push_allocated( fun.p_void );
@@ -307,7 +300,7 @@ void cad_del_fun(cad_fun *fun)
 {	// make sure this pointer has been allocated
 	pop_allocated( fun->p_void );
 
-	ADFun<double>* p_adfun 
+	ADFun<double>* p_adfun
 		= reinterpret_cast< ADFun<double>* > (fun->p_void);
 	delete p_adfun;
 
@@ -317,11 +310,11 @@ void cad_del_fun(cad_fun *fun)
 
 // evaluate the Jacobian corresponding to a function object
 extern "C"
-void cad_jacobian(cad_fun fun, 
+void cad_jacobian(cad_fun fun,
 	size_t n, size_t m, double* px, double* pjac )
 {	assert( fun.p_void != 0 );
 
-	ADFun<double>* p_adfun = 
+	ADFun<double>* p_adfun =
 		reinterpret_cast< ADFun<double>* >(fun.p_void);
 	vector<double> x(n), jac(n * m);
 
@@ -332,11 +325,11 @@ void cad_jacobian(cad_fun fun,
 
 // forward mode
 extern "C"
-void cad_forward(cad_fun fun, 
+void cad_forward(cad_fun fun,
 	size_t order, size_t n, size_t m, double* px, double* py )
 {	assert( fun.p_void != 0 );
 
-	ADFun<double>* p_adfun = 
+	ADFun<double>* p_adfun =
 		reinterpret_cast< ADFun<double>* >(fun.p_void);
 	vector<double> x(n), y(m);
 
@@ -384,7 +377,7 @@ bool ad_in_c(void)
 		cad_new_ad(Y + i, value);
 	}
 
-	// declare X as the independent variable vector 
+	// declare X as the independent variable vector
 	cad_independent(n, X);
 
 	// y[0] = x[0] + x[1]
@@ -412,8 +405,8 @@ bool ad_in_c(void)
 	cad asin_sin_x0 = { 0 };  // initialize p_void as zero
 	cad_new_ad( &asin_sin_x0, 0.);
 	cad_unary(op_asin, &sin_x0, &asin_sin_x0);
-	ok &= cad_near_equal( 
-		cad_value(&asin_sin_x0), 
+	ok &= cad_near_equal(
+		cad_value(&asin_sin_x0),
 		asin( cad_value(&sin_x0) )
 	);
 
@@ -422,7 +415,7 @@ bool ad_in_c(void)
 		cad_value(Y+4),
 		cad_value(&sin_x0) + cad_value(&asin_sin_x0)
 	);
-	
+
 	// declare y as the dependent variable vector and stop recording
 	// and store function object in f
 	cad_fun f = cad_new_fun(n, m, X, Y);
@@ -463,7 +456,7 @@ bool ad_in_c(void)
 	double y[M];
 	x[0] = .5;
 	x[1] = 1.;
-	cad_forward(f, order, n, m, x, y); 
+	cad_forward(f, order, n, m, x, y);
 
 	// check the function values
 	ok &= cad_near_equal(y[0] , x[0] + x[1] );
@@ -477,7 +470,7 @@ bool ad_in_c(void)
 	cad_del_ad( &sin_x0 );
 	cad_del_ad( &asin_sin_x0 );
 	for(j = 0; j < n; j++)
-		cad_del_ad(X + j); 
+		cad_del_ad(X + j);
 	for(i = 0; i < m; i++)
 		cad_del_ad(Y + i);
 

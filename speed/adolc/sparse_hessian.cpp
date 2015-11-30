@@ -1,9 +1,9 @@
-/* $Id: sparse_hessian.cpp 3136 2014-03-02 11:54:07Z bradbell $ */
+// $Id$
 /* --------------------------------------------------------------------------
 CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-15 Bradley M. Bell
 
 CppAD is distributed under multiple licenses. This distribution is under
-the terms of the 
+the terms of the
                     Eclipse Public License Version 1.0.
 
 A copy of this license is included in the COPYING file of this distribution.
@@ -16,7 +16,7 @@ $spell
 	boolsparsity
 	onetape
 	hess
-	int 
+	int
 	nnz
 	cind
 	const
@@ -34,13 +34,8 @@ $spell
 $$
 
 $section Adolc Speed: Sparse Hessian$$
+$mindex link_sparse_hessian speed$$
 
-$index link_sparse_hessian, adolc$$
-$index adolc, link_sparse_hessian$$
-$index speed, adolc$$
-$index adolc, speed$$
-$index sparse, speed adolc$$
-$index hessian, speed adolc$$
 
 $head Specifications$$
 See $cref link_sparse_hessian$$.
@@ -50,9 +45,9 @@ $head Implementation$$
 $codep */
 # include <adolc/adolc.h>
 # include <adolc/adolc_sparse.h>
-# include <cppad/vector.hpp>
+# include <cppad/utility/vector.hpp>
 # include <cppad/speed/uniform_01.hpp>
-# include <cppad/thread_alloc.hpp>
+# include <cppad/utility/thread_alloc.hpp>
 # include <cppad/speed/sparse_hes_fun.hpp>
 
 // list of possible options
@@ -60,8 +55,8 @@ extern bool global_memory, global_onetape, global_atomic, global_optimize;
 extern bool global_colpack, global_boolsparsity;
 
 bool link_sparse_hessian(
-	size_t                           size     , 
-	size_t                           repeat   , 
+	size_t                           size     ,
+	size_t                           repeat   ,
 	const CppAD::vector<size_t>&     row      ,
 	const CppAD::vector<size_t>&     col      ,
 	CppAD::vector<double>&           x_return ,
@@ -69,7 +64,7 @@ bool link_sparse_hessian(
 	size_t&                          n_sweep )
 {
 	if( global_atomic || (! global_colpack) )
-		return false; 
+		return false;
 	if( global_memory || global_optimize || global_boolsparsity )
 		return false;
 	// -----------------------------------------------------
@@ -95,9 +90,9 @@ bool link_sparse_hessian(
 	ADVector a_x = thread_alloc::create_array<ADScalar>(n, capacity);
 	// AD range space vector
 	ADVector a_y = thread_alloc::create_array<ADScalar>(m, capacity);
-	// double argument value 
+	// double argument value
 	DblVector x = thread_alloc::create_array<double>(n, capacity);
-	// double function value 
+	// double function value
 	double f;
 
 	// options that control sparse_hess
@@ -117,15 +112,15 @@ bool link_sparse_hessian(
 		CppAD::uniform_01(n, x);
 
 		// declare independent variables
-		int keep = 0; // keep forward mode results 
+		int keep = 0; // keep forward mode results
 		trace_on(tag, keep);
 		for(j = 0; j < n; j++)
 			a_x[j] <<= x[j];
 
-		// AD computation of f (x) 
+		// AD computation of f (x)
 		CppAD::sparse_hes_fun<ADScalar>(n, a_x, row, col, order, a_y);
 
-		// create function object f : x -> y 
+		// create function object f : x -> y
 		a_y[0] >>= f;
 		trace_off();
 
@@ -162,12 +157,12 @@ bool link_sparse_hessian(
 		CppAD::uniform_01(n, x);
 
 		// declare independent variables
-		int keep = 0; // keep forward mode results 
+		int keep = 0; // keep forward mode results
 		trace_on(tag, keep);
 		for(j = 0; j < n; j++)
 			a_x[j] <<= x[j];
 
-		// AD computation of f (x) 
+		// AD computation of f (x)
 		CppAD::sparse_hes_fun<ADScalar>(n, a_x, row, col, order, a_y);
 
 		// create function object f : x -> y
@@ -202,7 +197,7 @@ bool link_sparse_hessian(
 		free(values);
 	}
 	// --------------------------------------------------------------------
-	// return argument 
+	// return argument
 	for(j = 0; j < n; j++)
 		x_return[j] = x[j];
 

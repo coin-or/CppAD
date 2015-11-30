@@ -17,6 +17,7 @@ $spell
 $$
 
 $section Reciprocal as an Atomic Operation: Example and Test$$
+$mindex set_sparsity_enum$$
 
 $head Theory$$
 This example demonstrates using $cref atomic_base$$
@@ -25,7 +26,6 @@ $latex f : \B{R}^n \rightarrow \B{R}^m$$ where
 $latex n = 1$$, $latex m = 1$$, and $latex f(x) = 1 / x$$.
 
 $head sparsity$$
-$index set_sparsity_enum$$
 This example only uses set sparsity patterns.
 
 $nospell

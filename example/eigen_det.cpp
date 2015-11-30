@@ -1,9 +1,9 @@
-/* $Id$ */
+// $Id$
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-12 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-15 Bradley M. Bell
 
 CppAD is distributed under multiple licenses. This distribution is under
-the terms of the 
+the terms of the
                     Eclipse Public License Version 1.0.
 
 A copy of this license is included in the COPYING file of this distribution.
@@ -17,11 +17,8 @@ $spell
 $$
 
 $section Using Eigen To Compute Determinant: Example and Test$$
+$mindex determinant$$
 
-$index determinant, eigen example$$
-$index eigen, determinant example$$
-$index example, eigen determinant$$
-$index test, eigen determinant$$
 
 $code
 $verbatim%example/eigen_det.cpp%0%// BEGIN C++%// END C++%1%$$
@@ -57,7 +54,7 @@ bool eigen_det(void)
 	// set and declare independent variables and start tape recording
 	for(i = 0; i < size; i++)
 	{	for(j = 0; j < size; j++)
-		{	// lower triangular matrix 
+		{	// lower triangular matrix
 			a_x[i * size + j] = x[i * size + j] = 0.0;
 			if( j <= i )
 				a_x[i * size + j] = x[i * size + j] = double(1 + i + j);
@@ -80,11 +77,11 @@ bool eigen_det(void)
 	a_y[0] = log( a_X.determinant() );
 
 	// create f: x -> y and stop tape recording
-	CppAD::ADFun<double> f(a_x, a_y); 
+	CppAD::ADFun<double> f(a_x, a_y);
 
-	// check function value 
+	// check function value
 	double eps = 100. * CppAD::numeric_limits<double>::epsilon();
-	CppAD::det_by_minor<double> det(size); 
+	CppAD::det_by_minor<double> det(size);
 	ok &= NearEqual(Value(a_y[0]) , log(det(x)), eps, eps);
 
 	// compute the derivative of y w.r.t x using CppAD

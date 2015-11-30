@@ -279,6 +279,7 @@ SET(check_depends "")
 ADD_SUBDIRECTORY(cppad)
 ADD_SUBDIRECTORY(pkgconfig)
 ADD_SUBDIRECTORY(cppad_lib)
+ADD_SUBDIRECTORY(cppad/utility)
 #
 ADD_SUBDIRECTORY(compare_c)
 add_to_list(check_depends check_compare_c)
@@ -326,12 +327,11 @@ ADD_CUSTOM_TARGET(check DEPENDS ${check_depends})
 # During install copy all the cppad include files to
 # ${cppad_abs_includedir}/cppad
 INSTALL(
-	DIRECTORY "cppad/"
+	DIRECTORY "${CMAKE_BINARY_DIR}/cppad/utility/"
 	DESTINATION ${cppad_abs_includedir}/cppad
-	FILES_MATCHING PATTERN "*.h"
 )
 INSTALL(
-	DIRECTORY "cppad/"
+	DIRECTORY "${CMAKE_SOURCE_DIR}/cppad/"
 	DESTINATION ${cppad_abs_includedir}/cppad
 	FILES_MATCHING PATTERN "*.hpp"
 )

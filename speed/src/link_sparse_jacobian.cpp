@@ -1,9 +1,9 @@
-/* $Id: link_sparse_jacobian.cpp 3311 2014-05-28 16:21:08Z bradbell $ */
+// $Id$
 /* --------------------------------------------------------------------------
 CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-15 Bradley M. Bell
 
 CppAD is distributed under multiple licenses. This distribution is under
-the terms of the 
+the terms of the
                     Eclipse Public License Version 1.0.
 
 A copy of this license is included in the COPYING file of this distribution.
@@ -21,12 +21,9 @@ $spell
 	Jacobian
 $$
 
-$index link_sparse_jacobian$$
-$index sparse, speed test$$
-$index speed, test sparse$$
-$index test, sparse speed$$
 
 $section Speed Testing Sparse Jacobian$$
+$mindex link_sparse_jacobian test$$
 
 $head Prototype$$
 $codei%extern bool link_sparse_jacobian(
@@ -34,7 +31,7 @@ $codei%extern bool link_sparse_jacobian(
 	size_t                       %repeat%    ,
 	size_t                       %m%         ,
 	const CppAD::vector<size_t>& %row%       ,
-	const CppAD::vector<size_t>& %col%       , 
+	const CppAD::vector<size_t>& %col%       ,
 	      CppAD::vector<double>& %x%         ,
 	      CppAD::vector<double>& %jacobian%  ,
 	      size_t&                %n_sweep%
@@ -44,7 +41,7 @@ $codei%extern bool link_sparse_jacobian(
 $head Method$$
 Given a range space dimension $icode m$$
 the row index vector $latex row$$, and column index vector $latex col$$,
-a corresponding function $latex f : \B{R}^n \rightarrow \B{R}^m $$ 
+a corresponding function $latex f : \B{R}^n \rightarrow \B{R}^m $$
 is defined by $cref sparse_jac_fun$$.
 The non-zero entries in the Jacobian of this function have the form
 $latex \[
@@ -89,7 +86,7 @@ $codei%
 %$$
 and its size is $latex n$$; i.e., $icode%x%.size() == %size%$$.
 The input value of the elements of $icode x$$ does not matter.
-On output, it has been set to the 
+On output, it has been set to the
 argument value for which the function,
 or its derivative, is being evaluated and placed in $icode jacobian$$.
 The value of this vector need not change with each repetition.
@@ -100,7 +97,7 @@ $codei%
         CppAD::vector<double>& %jacobian%
 %$$
 and its size is $icode K$$.
-The input value of its elements does not matter. 
+The input value of its elements does not matter.
 The output value of its elements is the Jacobian of the function $latex f(x)$$.
 To be more specific, for
 $latex k = 0 , \ldots , K - 1$$,
@@ -112,25 +109,25 @@ $head n_sweep$$
 The input value of $icode n_sweep$$ does not matter. On output,
 it is the value $cref/n_sweep/sparse_jacobian/n_sweep/$$ corresponding
 to the evaluation of $icode jacobian$$.
-This is also the number of colors corresponding to the 
+This is also the number of colors corresponding to the
 $cref/coloring method/sparse_jacobian/work/color_method/$$,
 which can be set to $cref/colpack/speed_main/Sparsity Options/colpack/$$,
 and is otherwise $code cppad$$.
 
 $subhead double$$
 In the case where $icode package$$ is $code double$$,
-only the first $latex m$$ 
+only the first $latex m$$
 elements of $icode jacobian$$ are used and they are set to
 the value of $latex f(x)$$.
 
-$end 
+$end
 -----------------------------------------------------------------------------
 */
-# include <cppad/vector.hpp>
-# include <cppad/near_equal.hpp>
+# include <cppad/utility/vector.hpp>
+# include <cppad/utility/near_equal.hpp>
 # include <cppad/speed/sparse_jac_fun.hpp>
 # include <cppad/speed/uniform_01.hpp>
-# include <cppad/index_sort.hpp>
+# include <cppad/utility/index_sort.hpp>
 
 /*!
 \{
@@ -141,7 +138,7 @@ namespace {
 	using CppAD::vector;
 
 	/*!
- 	Class used by choose_row_col to determine order of row and column indices
+	Class used by choose_row_col to determine order of row and column indices
 	*/
 	class Key {
 	public:
@@ -153,19 +150,19 @@ namespace {
 		Key(void)
 		{ }
 		/*!
- 		Construct from a value for row and col
+		Construct from a value for row and col
 
 		\param row
 		row value for this key
 
 		\param col
 		column value for this key
- 		*/
+		*/
 		Key(size_t row, size_t col)
 		: row_(row), col_(col)
 		{ }
 		/*!
- 		Compare this key with another key using < operator
+		Compare this key with another key using < operator
 
 		\param other
 		the other key.
@@ -197,7 +194,7 @@ namespace {
 	void choose_row_col(
 		size_t          n   ,
 		size_t          m   ,
-		vector<size_t>& row , 
+		vector<size_t>& row ,
 		vector<size_t>& col )
 	{	size_t r, c, k, K = 5 * std::max(m, n);
 
@@ -264,8 +261,8 @@ is a vector of size \c n containing
 the argument at which the Jacobian was evaluated during the last repetition.
 
 \param jacobian [out]
-is a vector with size <code>row.size()</code> 
-containing the value of the Jacobian of f(x) 
+is a vector with size <code>row.size()</code>
+containing the value of the Jacobian of f(x)
 corresponding to the last repetition.
 
 \param n_sweep [out]
@@ -282,7 +279,7 @@ extern bool link_sparse_jacobian(
 	size_t                            repeat    ,
 	size_t                            m         ,
 	const CppAD::vector<size_t>&      row       ,
-	const CppAD::vector<size_t>&      col       , 
+	const CppAD::vector<size_t>&      col       ,
 	      CppAD::vector<double>&      x         ,
 	      CppAD::vector<double>&      jacobian  ,
 	      size_t&                     n_sweep
@@ -298,7 +295,7 @@ bool available_sparse_jacobian(void)
 {	size_t n      = 10;
 	size_t m      = 2 * n;
 	size_t repeat = 1;
-	vector<size_t> row, col; 
+	vector<size_t> row, col;
 	choose_row_col(n, m, row, col);
 
 	vector<double> x(n);
@@ -345,7 +342,7 @@ bool correct_sparse_jacobian(bool is_package_double)
 
 		return ok;
 	}
-    // check f'(x) 
+    // check f'(x)
 	size_t order = 1;
 	vector<double> check(K);
 	CppAD::sparse_jac_fun<double>(m, n, x, row, col, order, check);
@@ -368,7 +365,7 @@ void speed_sparse_jacobian(size_t size, size_t repeat)
 	static size_t previous_size = 0;
 	static vector<size_t> row, col;
 
-	size_t n   = size;	
+	size_t n   = size;
 	size_t m   = 2 * n;
 	if( size != previous_size)
 	{	choose_row_col(n, m, row, col);
@@ -396,7 +393,7 @@ Upon return, it is the value \c n_sweep retruned by the corresponding
 call to \c link_sparse_jacobian.
 */
 void info_sparse_jacobian(size_t size, size_t& n_sweep)
-{	size_t n      = size;	
+{	size_t n      = size;
 	size_t m      = 2 * n;
 	size_t repeat = 1;
 	vector<size_t> row, col;

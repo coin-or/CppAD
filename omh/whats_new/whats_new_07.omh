@@ -843,8 +843,8 @@ $subhead 03-28$$
 The conditional include commands were missing on some include files;
 for example
 $codep
-	# ifndef CPPAD_BENDER_QUAD_INCLUDED
-	# define CPPAD_BENDER_QUAD_INCLUDED
+	# ifndef CPPAD_BENDER_QUAD_HPP
+	# define CPPAD_BENDER_QUAD_HPP
 $$
 was missing at the beginning of the $cref BenderQuad$$ include file.
 This has been fixed.

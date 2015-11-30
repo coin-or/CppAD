@@ -1,9 +1,9 @@
-/* $Id$ */
+// $Id$
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-12 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-15 Bradley M. Bell
 
 CppAD is distributed under multiple licenses. This distribution is under
-the terms of the 
+the terms of the
                     Eclipse Public License Version 1.0.
 
 A copy of this license is included in the COPYING file of this distribution.
@@ -17,44 +17,42 @@ $spell
 $$
 
 $section BenderQuad: Example and Test$$
+$mindex BenderQuad$$
 
-$index BenderQuad, example$$
-$index example, BenderQuad$$
-$index test, BenderQuad$$
 
-Define 
+Define
 $latex F : \B{R} \times \B{R} \rightarrow \B{R}$$ by
 $latex \[
-F(x, y) 
-= 
+F(x, y)
+=
 \frac{1}{2} \sum_{i=1}^N [ y * \sin ( x * t_i ) - z_i ]^2
-\] $$ 
+\] $$
 where $latex z \in \B{R}^N$$ is a fixed vector.
 It follows that
 $latex \[
 \begin{array}{rcl}
-\partial_y F(x, y) 
-& = & 
+\partial_y F(x, y)
+& = &
 \sum_{i=1}^N [ y * \sin ( x * t_i ) - z_i ] \sin( x * t_i )
 \\
 \partial_y \partial_y F(x, y)
-& = & 
+& = &
 \sum_{i=1}^N \sin ( x t_i )^2
 \end{array}
 \] $$
-Furthermore if we define $latex Y(x)$$ 
+Furthermore if we define $latex Y(x)$$
 as the argmin of $latex F(x, y)$$ with respect to $latex y$$,
 $latex \[
 \begin{array}{rcl}
-Y(x) 
+Y(x)
 & = &
-y - [ \partial_y \partial_y F(x, y) ]^{-1} \partial_y F[x,  y] 
+y - [ \partial_y \partial_y F(x, y) ]^{-1} \partial_y F[x,  y]
 \\
 & = &
-\left. 
-	\sum_{i=1}^N z_i \sin ( x t_i ) 
-		\right/ 
-			\sum_{i=1}^N z_i \sin ( x * t_i )^2 
+\left.
+	\sum_{i=1}^N z_i \sin ( x t_i )
+		\right/
+			\sum_{i=1}^N z_i \sin ( x * t_i )^2
 \end{array}
 \] $$
 
@@ -114,11 +112,11 @@ namespace {
 			}
 			return fy;
 		}
-		// Fun.dy(x, y, h) = - H_y (x,y)^{-1} * h 
+		// Fun.dy(x, y, h) = - H_y (x,y)^{-1} * h
 		//                 = - F_yy (x, y)^{-1} * h
 		ADvector dy(
-			const BAvector &x , 
-			const BAvector &y , 
+			const BAvector &x ,
+			const BAvector &y ,
 			const ADvector &H )
 		{	size_t i;
 			size_t N = size_t(z_.size());
@@ -143,7 +141,7 @@ namespace {
 		size_t k;
 		for(k = 0; k < size_t(t.size()); k++)
 		{	numerator   += sin( x[0] * t[k] ) * z[k];
-			denominator += sin( x[0] * t[k] ) * sin( x[0] * t[k] ); 	
+			denominator += sin( x[0] * t[k] ) * sin( x[0] * t[k] );
 		}
 		AD<double> y = numerator / denominator;
 
@@ -184,7 +182,7 @@ bool BenderQuad(void)
 		z[i] = y[0] * sin( x[0] * t[i] );   // data without noise
 	}
 
-	// construct the function object 
+	// construct the function object
 	Fun fun(t, z);
 
 	// evaluate the G(x), G'(x) and G''(x)

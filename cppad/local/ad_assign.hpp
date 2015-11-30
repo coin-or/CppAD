@@ -1,6 +1,6 @@
-/* $Id$ */
-# ifndef CPPAD_AD_ASSIGN_INCLUDED
-# define CPPAD_AD_ASSIGN_INCLUDED
+// $Id$
+# ifndef CPPAD_AD_ASSIGN_HPP
+# define CPPAD_AD_ASSIGN_HPP
 
 /* --------------------------------------------------------------------------
 CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-15 Bradley M. Bell
@@ -22,13 +22,9 @@ $spell
 	const
 $$
 
-$index assignment, AD$$
-$index AD, assignment$$
-$index assign, to AD$$
-$index Base, assign to AD$$
-$index VecAD, assign to AD$$
 
 $section AD Assignment Operator$$
+$mindex assign Base VecAD$$
 
 $head Syntax$$
 $icode%y% = %x%$$

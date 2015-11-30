@@ -1,12 +1,12 @@
-/* $Id$ */
-# ifndef CPPAD_DET_BY_MINOR_INCLUDED
-# define CPPAD_DET_BY_MINOR_INCLUDED
+// $Id$
+# ifndef CPPAD_DET_BY_MINOR_HPP
+# define CPPAD_DET_BY_MINOR_HPP
 
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-12 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-15 Bradley M. Bell
 
 CppAD is distributed under multiple licenses. This distribution is under
-the terms of the 
+the terms of the
                     Eclipse Public License Version 1.0.
 
 A copy of this license is included in the COPYING file of this distribution.
@@ -26,9 +26,6 @@ $$
 
 $section Determinant Using Expansion by Minors$$
 
-$index determinant, minor expansion$$
-$index minor, expansion determinant$$
-$index expansion, minor determinant$$
 
 
 $head Syntax$$
@@ -41,10 +38,10 @@ $icode%d% = %det%(%a%)
 
 $head Inclusion$$
 The template class $code det_by_minor$$ is defined in the $code CppAD$$
-namespace by including 
+namespace by including
 the file $code cppad/speed/det_by_minor.hpp$$
 (relative to the CppAD distribution directory).
-It is only intended for example and testing purposes, 
+It is only intended for example and testing purposes,
 so it is not automatically included by
 $cref/cppad.hpp/cppad/$$.
 
@@ -53,7 +50,7 @@ The syntax
 $codei%
 	det_by_minor<%Scalar%> %det%(%n%)
 %$$
-constructs the object $icode det$$ which can be used for 
+constructs the object $icode det$$ which can be used for
 evaluating the determinant of $icode n$$ by $icode n$$ matrices
 using expansion by minors.
 
@@ -95,7 +92,7 @@ $codei%
 It is equal to the determinant of $latex A$$.
 
 $head Vector$$
-If $icode y$$ is a $icode Vector$$ object, 
+If $icode y$$ is a $icode Vector$$ object,
 it must support the syntax
 $codei%
 	%y%[%i%]
@@ -113,13 +110,13 @@ $children%
 
 $head Example$$
 The file
-$cref det_by_minor.cpp$$ 
+$cref det_by_minor.cpp$$
 contains an example and test of $code det_by_minor.hpp$$.
 It returns true if it succeeds and false otherwise.
 
 $head Source Code$$
 The file
-$cref det_by_minor.hpp$$ 
+$cref det_by_minor.hpp$$
 contains the source for this template function.
 
 
@@ -163,7 +160,7 @@ public:
 	{	size_t i = m_ * m_;
 		while(i--)
 			a_[i] = x[i];
-		return det_of_minor(a_, m_, m_, r_, c_); 
+		return det_of_minor(a_, m_, m_, r_, c_);
 	}
 
 };

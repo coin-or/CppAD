@@ -1,9 +1,9 @@
-/* $Id$ */
+// $Id$
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-14 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-15 Bradley M. Bell
 
 CppAD is distributed under multiple licenses. This distribution is under
-the terms of the 
+the terms of the
                     Eclipse Public License Version 1.0.
 
 A copy of this license is included in the COPYING file of this distribution.
@@ -12,16 +12,13 @@ Please visit http://www.coin-or.org/CppAD/ for information on other licenses.
 $begin reverse_two$$
 
 $section Second Order Reverse Mode$$
-$spell 
+$mindex derivative$$
+$spell
 	taylor
 	const
 	dw
 $$
 
-$index reverse, second order mode$$
-$index second, order reverse mode$$
-$index mode, second order reverse$$
-$index derivative, reverse mode$$
 
 $head Syntax$$
 $icode%dw% = %f%.Reverse(2, %w%)%$$
@@ -35,41 +32,41 @@ with respect to the domain variable $latex x$$.
 
 $head x^(k)$$
 For $latex k = 0, 1$$,
-the vector $latex x^{(k)} \in B^n$$ is defined as the value of 
+the vector $latex x^{(k)} \in B^n$$ is defined as the value of
 $icode x_k$$ in the previous call (counting this call) of the form
 $codei%
 	%f%.Forward(%k%, %x_k%)
-%$$ 
+%$$
 If there is no previous call with $latex k = 0$$,
-$latex x^{(0)}$$ is the value of the independent variables when the 
-corresponding 
+$latex x^{(0)}$$ is the value of the independent variables when the
+corresponding
 AD of $icode Base$$
 $cref/operation sequence/glossary/Operation/Sequence/$$ was recorded.
 
 
 $head W$$
-The functions 
-$latex W_0 : B^n \rightarrow B$$ and 
-$latex W_1 : B^n \rightarrow B$$ 
+The functions
+$latex W_0 : B^n \rightarrow B$$ and
+$latex W_1 : B^n \rightarrow B$$
 are defined by
 $latex \[
 \begin{array}{rcl}
 W_0 ( u ) & = & w_0 * F_0 ( u ) + \cdots + w_{m-1} * F_{m-1} (u)
 \\
-W_1 ( u ) & = & 
-w_0 * F_0^{(1)} ( u ) * x^{(1)} 
+W_1 ( u ) & = &
+w_0 * F_0^{(1)} ( u ) * x^{(1)}
 	+ \cdots + w_{m-1} * F_{m-1}^{(1)} (u) * x^{(1)}
 \end{array}
-\] $$ 
-This operation computes the derivatives 
+\] $$
+This operation computes the derivatives
 $latex \[
 \begin{array}{rcl}
-W_0^{(1)} (u) & = & 
+W_0^{(1)} (u) & = &
 	w_0 * F_0^{(1)} ( u ) + \cdots + w_{m-1} * F_{m-1}^{(1)} (u)
 \\
-W_1^{(1)} (u) & = & 
-	w_0 * \left( x^{(1)} \right)^\R{T} * F_0^{(2)} ( u ) 
-	+ \cdots + 
+W_1^{(1)} (u) & = &
+	w_0 * \left( x^{(1)} \right)^\R{T} * F_0^{(2)} ( u )
+	+ \cdots +
 	w_{m-1} * \left( x^{(1)} \right)^\R{T} F_{m-1}^{(2)} (u)
 \end{array}
 \] $$
@@ -92,7 +89,7 @@ $codei%
 	const %Vector% &%w%
 %$$
 (see $cref/Vector/reverse_two/Vector/$$ below)
-and its size 
+and its size
 must be equal to $icode m$$, the dimension of the
 $cref/range/seq_property/Range/$$ space for $icode f$$.
 
@@ -104,20 +101,20 @@ $codei%
 (see $cref/Vector/reverse_two/Vector/$$ below).
 It contains both the derivative
 $latex W^{(1)} (x)$$ and the derivative $latex U^{(1)} (x)$$.
-The size of $icode dw$$ 
-is equal to $latex n \times 2$$, 
+The size of $icode dw$$
+is equal to $latex n \times 2$$,
 where $latex n$$ is the dimension of the
 $cref/domain/seq_property/Domain/$$ space for $icode f$$.
 
 $subhead First Order Partials$$
 For $latex j = 0 , \ldots , n - 1$$,
 $latex \[
-dw [ j * 2 + 0 ] 
-=  
-\D{ W_0 }{ u_j } \left( x^{(0)} \right) 
+dw [ j * 2 + 0 ]
+=
+\D{ W_0 }{ u_j } \left( x^{(0)} \right)
 =
 w_0 * \D{ F_0 }{ u_j } \left( x^{(0)} \right)
-+ \cdots + 
++ \cdots +
 w_{m-1} * \D{ F_{m-1} }{ u_j } \left( x^{(0)} \right)
 \] $$
 This part of $icode dw$$ contains the same values as are returned
@@ -126,13 +123,13 @@ by $cref reverse_one$$.
 $subhead Second Order Partials$$
 For $latex j = 0 , \ldots , n - 1$$,
 $latex \[
-dw [ j * 2 + 1 ] 
-= 
-\D{ W_1 }{ u_j } \left( x^{(0)} \right) 
+dw [ j * 2 + 1 ]
+=
+\D{ W_1 }{ u_j } \left( x^{(0)} \right)
 =
 \sum_{\ell=0}^{n-1} x_\ell^{(1)} \left[
 w_0 * \DD{ F_0 }{ u_\ell }{ u_j } \left( x^{(0)} \right)
-+ \cdots + 
++ \cdots +
 w_{m-1} * \DD{ F_{m-1} }{ u_\ell }{ u_j } \left( x^{(0)} \right)
 \right]
 \] $$
@@ -147,14 +144,14 @@ if this is not the case.
 
 
 $head Hessian Times Direction$$
-Suppose that $latex w$$ is the $th i$$ elementary vector. 
+Suppose that $latex w$$ is the $th i$$ elementary vector.
 It follows that for $latex j = 0, \ldots, n-1$$
 $latex \[
 \begin{array}{rcl}
-dw[ j * 2 + 1 ] 
-& = & 
-w_i \sum_{\ell=0}^{n-1} 
-\DD{F_i}{ u_j }{ u_\ell } \left( x^{(0)} \right) x_\ell^{(1)} 
+dw[ j * 2 + 1 ]
+& = &
+w_i \sum_{\ell=0}^{n-1}
+\DD{F_i}{ u_j }{ u_\ell } \left( x^{(0)} \right) x_\ell^{(1)}
 \\
 & = &
 \left[ F_i^{(2)} \left( x^{(0)} \right) * x^{(1)} \right]_j
@@ -163,7 +160,7 @@ w_i \sum_{\ell=0}^{n-1}
 Thus the vector $latex ( dw[1], dw[3], \ldots , dw[ n * q - 1 ] )$$
 is equal to the Hessian of $latex F_i (x)$$ times the direction
 $latex x^{(1)}$$.
-In the special case where 
+In the special case where
 $latex x^{(1)}$$ is the $th l$$
 $cref/elementary vector/glossary/Elementary Vector/$$,
 $latex \[

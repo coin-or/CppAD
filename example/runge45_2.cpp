@@ -1,9 +1,9 @@
-/* $Id$ */
+// $Id$
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-12 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-15 Bradley M. Bell
 
 CppAD is distributed under multiple licenses. This distribution is under
-the terms of the 
+the terms of the
                     Eclipse Public License Version 1.0.
 
 A copy of this license is included in the COPYING file of this distribution.
@@ -17,16 +17,14 @@ $spell
 $$
 
 $section Runge45: Example and Test$$
+$mindex Runge45$$
 
-$index Runge45, example$$
-$index example, Runge45$$
-$index test, Runge45$$
 
-Define 
+Define
 $latex X : \B{R} \times \B{R} \rightarrow \B{R}^n$$ by
 $latex \[
 	X_j (b, t) =  b \left( \sum_{k=0}^j t^k / k ! \right)
-\] $$ 
+\] $$
 for $latex j = 0 , \ldots , n-1$$.
 It follows that
 $latex \[
@@ -40,7 +38,7 @@ X_j  (b, 0)   & = & b                                                     \\
 \end{array}
 \] $$
 For a fixed $latex t_f$$,
-we can use $cref Runge45$$ to define 
+we can use $cref Runge45$$ to define
 $latex f : \B{R} \rightarrow \B{R}^n$$ as an approximation for
 $latex f(b) = X(b, t_f )$$.
 We can then compute $latex f^{(1)} (b)$$ which is an approximation for
@@ -66,15 +64,15 @@ namespace {
 	class Fun {
 	public:
 		// constructor
-		Fun(void) 
+		Fun(void)
 		{ }
 
 		// set return value to X'(t)
 		void Ode(
-			const Scalar                    &t, 
-			const CPPAD_TESTVECTOR(Scalar) &x, 
+			const Scalar                    &t,
+			const CPPAD_TESTVECTOR(Scalar) &x,
 			CPPAD_TESTVECTOR(Scalar)       &f)
-		{	size_t n  = x.size();	
+		{	size_t n  = x.size();
 			f[0]      = 0.;
 			for(size_t k = 1; k < n; k++)
 				f[k] = x[k-1];
@@ -92,7 +90,7 @@ bool runge_45_2(void)
 	size_t     n = 5;   // number components in X(t) and order of method
 	size_t     M = 2;   // number of Runge45 steps in [ti, tf]
 	Scalar ad_ti = 0.;  // initial time
-	Scalar ad_tf = 2.;  // final time 
+	Scalar ad_tf = 2.;  // final time
 
 	// value of independent variable at which to record operations
 	CPPAD_TESTVECTOR(Scalar) ad_b(1);
@@ -100,17 +98,17 @@ bool runge_45_2(void)
 
 	// declare b to be the independent variable
 	Independent(ad_b);
-	
+
 	// object to evaluate ODE
-	Fun<Scalar> ad_F; 
+	Fun<Scalar> ad_F;
 
 	// xi = X(0)
-	CPPAD_TESTVECTOR(Scalar) ad_xi(n); 
+	CPPAD_TESTVECTOR(Scalar) ad_xi(n);
 	for(j = 0; j < n; j++)
 		ad_xi[j] = ad_b[0];
 
 	// compute Runge45 approximation for X(tf)
-	CPPAD_TESTVECTOR(Scalar) ad_xf(n), ad_e(n); 
+	CPPAD_TESTVECTOR(Scalar) ad_xf(n), ad_e(n);
 	ad_xf = CppAD::Runge45(ad_F, M, ad_ti, ad_tf, ad_xi, ad_e);
 
 	// stop recording and use it to create f : b -> xf
@@ -147,7 +145,7 @@ bool runge_45_2(void)
 		term *= tf;
 		term /= double(j+1);
 	}
-	
+
 	return ok;
 }
 

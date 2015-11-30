@@ -1,16 +1,16 @@
-/* $Id$ */
+// $Id$
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-14 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-15 Bradley M. Bell
 
 CppAD is distributed under multiple licenses. This distribution is under
-the terms of the 
+the terms of the
                     Eclipse Public License Version 1.0.
 
 A copy of this license is included in the COPYING file of this distribution.
 Please visit http://www.coin-or.org/CppAD/ for information on other licenses.
 -------------------------------------------------------------------------- */
 # include <cstring>
-# include <cppad/vector.hpp>
+# include <cppad/utility/vector.hpp>
 
 /*
 $begin adolc_sparse_jacobian.cpp$$
@@ -35,13 +35,8 @@ $spell
 $$
 
 $section adolc Speed: Sparse Jacobian$$
+$mindex link_sparse_jacobian speed$$
 
-$index link_sparse_jacobian, adolc$$
-$index adolc, link_sparse_jacobian$$
-$index speed, adolc$$
-$index adolc, speed$$
-$index sparse, speed adolc$$
-$index jacobian, speed adolc$$
 
 $head Specifications$$
 See $cref link_sparse_jacobian$$.
@@ -51,7 +46,7 @@ $head Implementation$$
 $codep */
 # include <adolc/adolc.h>
 # include <adolc/adolc_sparse.h>
-# include <cppad/vector.hpp>
+# include <cppad/utility/vector.hpp>
 # include <cppad/speed/uniform_01.hpp>
 # include <cppad/speed/sparse_jac_fun.hpp>
 
@@ -60,8 +55,8 @@ extern bool global_memory, global_onetape, global_atomic, global_optimize;
 extern bool global_colpack, global_boolsparsity;
 
 bool link_sparse_jacobian(
-	size_t                           size     , 
-	size_t                           repeat   , 
+	size_t                           size     ,
+	size_t                           repeat   ,
 	size_t                           m        ,
 	const CppAD::vector<size_t>&     row      ,
 	const CppAD::vector<size_t>&     col      ,
@@ -70,9 +65,9 @@ bool link_sparse_jacobian(
 	      size_t&                    n_sweep  )
 {
 	if( global_atomic || (! global_colpack) )
-		return false; 
+		return false;
 	if( global_memory || global_optimize )
-		return false; 
+		return false;
 	// -----------------------------------------------------
 	// setup
 	typedef unsigned int*    SizeVector;
@@ -99,7 +94,7 @@ bool link_sparse_jacobian(
 	// function value in double
 	DblVector y = thread_alloc::create_array<double>(m, capacity);
 
-	
+
 	// options that control sparse_jac
 	int        options[4];
 	extern bool global_boolsparsity;
@@ -121,12 +116,12 @@ bool link_sparse_jacobian(
 	CppAD::uniform_01(n, x);
 
 	// declare independent variables
-	int keep = 0; // keep forward mode results 
+	int keep = 0; // keep forward mode results
 	trace_on(tag, keep);
 	for(j = 0; j < n; j++)
 		a_x[j] <<= x[j];
 
-	// AD computation of f (x) 
+	// AD computation of f (x)
 	CppAD::sparse_jac_fun<ADScalar>(m, n, a_x, row, col, order, a_y);
 
 	// create function object f : x -> y
@@ -137,7 +132,7 @@ bool link_sparse_jacobian(
 	// Retrieve n_sweep using undocumented feature of sparsedrivers.cpp
 	int same_pattern = 0;
 	options[2]       = -1;
-	n_sweep = sparse_jac(tag, int(m), int(n), 
+	n_sweep = sparse_jac(tag, int(m), int(n),
 		same_pattern, x, &nnz, &rind, &cind, &values, options
 	);
 	options[2]       = 0;
@@ -151,10 +146,10 @@ bool link_sparse_jacobian(
 		for(j = 0; j < n; j++)
 			a_x[j] <<= x[j];
 
-		// AD computation of f (x) 
+		// AD computation of f (x)
 		CppAD::sparse_jac_fun<ADScalar>(m, n, a_x, row, col, order, a_y);
 
-		// create function object f : x -> y 
+		// create function object f : x -> y
 		for(i = 0; i < m; i++)
 			a_y[i] >>= y[i];
 		trace_off();
@@ -166,7 +161,7 @@ bool link_sparse_jacobian(
 		rind   = CPPAD_NULL;
 		cind   = CPPAD_NULL;
 		values = CPPAD_NULL;
-		sparse_jac(tag, int(m), int(n), 
+		sparse_jac(tag, int(m), int(n),
 			same_pattern, x, &nnz, &rind, &cind, &values, options
 		);
 		// only needed last time through loop
@@ -193,7 +188,7 @@ bool link_sparse_jacobian(
 			CppAD::uniform_01(n, x);
 
 			// calculate the jacobian at this x
-			sparse_jac(tag, int(m), int(n), 
+			sparse_jac(tag, int(m), int(n),
 				same_pattern, x, &nnz, &rind, &cind, &values, options
 			);
 			same_pattern = 1;
@@ -214,7 +209,7 @@ bool link_sparse_jacobian(
 		free(values);
 	}
 	// --------------------------------------------------------------------
-	// return argument 
+	// return argument
 	for(j = 0; j < n; j++)
 		x_return[j] = x[j];
 

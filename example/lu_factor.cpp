@@ -1,9 +1,9 @@
-/* $Id$ */
+// $Id$
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-12 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-15 Bradley M. Bell
 
 CppAD is distributed under multiple licenses. This distribution is under
-the terms of the 
+the terms of the
                     Eclipse Public License Version 1.0.
 
 A copy of this license is included in the COPYING file of this distribution.
@@ -19,9 +19,8 @@ $spell
 $$
 
 $section LuFactor: Example and Test$$
+$mindex LuFactor$$
 
-$index example, LuFactor$$
-$index test, LuFactor$$
 
 $code
 $verbatim%example/lu_factor.cpp%0%// BEGIN C++%// END C++%1%$$
@@ -32,9 +31,9 @@ $end
 
 // BEGIN C++
 # include <cstdlib>               // for rand function
-# include <cppad/lu_factor.hpp>      // for CppAD::LuFactor
-# include <cppad/near_equal.hpp>     // for CppAD::NearEqual
-# include <cppad/vector.hpp>  // for CppAD::vector
+# include <cppad/utility/lu_factor.hpp>      // for CppAD::LuFactor
+# include <cppad/utility/near_equal.hpp>     // for CppAD::NearEqual
+# include <cppad/utility/vector.hpp>  // for CppAD::vector
 
 bool LuFactor(void)
 {	bool  ok = true;
@@ -44,7 +43,7 @@ bool LuFactor(void)
 	using std::srand;
 # endif
 
-	size_t  n = 5;                        // number rows in A 
+	size_t  n = 5;                        // number rows in A
 	double  rand_max = double(RAND_MAX);  // maximum rand value
 	double  sum;                          // element of L * U
 	double  pij;                          // element of permuted A
@@ -77,7 +76,7 @@ bool LuFactor(void)
 			}
 		}
 	}
-	
+
 	// Extract L from LU
 	for(i = 0; i < n; i++)
 	{	// elements along and below the diagonal
@@ -87,7 +86,7 @@ bool LuFactor(void)
 		for(j = i+1; j < n; j++)
 			L[i * n + j] = 0.;
 	}
-	
+
 	// Extract U from LU
 	for(i = 0; i < n; i++)
 	{	// elements below the diagonal
@@ -100,7 +99,7 @@ bool LuFactor(void)
 			U[i * n + j] = LU[ ip[i] * n + jp[j] ];
 	}
 
-	// Compute L * U 
+	// Compute L * U
 	for(i = 0; i < n; i++)
 	{	for(j = 0; j < n; j++)
 		{	// compute element (i,j) entry in L * U

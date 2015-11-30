@@ -1,9 +1,9 @@
-/* $Id$ */
+// $Id$
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-12 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-15 Bradley M. Bell
 
 CppAD is distributed under multiple licenses. This distribution is under
-the terms of the 
+the terms of the
                     Eclipse Public License Version 1.0.
 
 A copy of this license is included in the COPYING file of this distribution.
@@ -17,10 +17,7 @@ $spell
 $$
 
 $section Replacing The CppAD Error Handler: Example and Test$$
-$index error, handler$$
-$index handler, error$$
-$index example, error handler$$
-$index test, error handler$$
+$mindex handler$$
 
 $code
 $verbatim%example/error_handler.cpp%0%// BEGIN C++%// END C++%1%$$
@@ -30,7 +27,7 @@ $end
 */
 // BEGIN C++
 
-# include <cppad/error_handler.hpp>
+# include <cppad/utility/error_handler.hpp>
 # include <cstring>
 
 namespace {
@@ -61,7 +58,7 @@ bool ErrorHandler(void)
 	try {
 		// set the static variable Line to next source code line
 		lineMinusFive = __LINE__;
- 
+
 		// can call myhandler anywhere that ErrorHandler is defined
 		ErrorHandler::Call(
 			true     , // reason for the error is known
@@ -69,7 +66,7 @@ bool ErrorHandler(void)
 			__FILE__ , // current source code file name
 			"1 > 0"  , // an intentional error condition
 			"Testing ErrorHandler"     // reason for error
-		); 
+		);
 	}
 	catch ( int line )
 	{	// check value of the line number that was passed to handler

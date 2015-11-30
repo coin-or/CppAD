@@ -1,4 +1,4 @@
-/* $Id$ */
+// $Id$
 /* --------------------------------------------------------------------------
 CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-15 Bradley M. Bell
 
@@ -39,7 +39,7 @@ $end
 # include <string>
 
 // memory utility
-# include <cppad/thread_alloc.hpp>
+# include <cppad/utility/thread_alloc.hpp>
 
 // prototype external compiled tests (this line expected by bin/new_test.sh)
 extern bool abort_recording(void);

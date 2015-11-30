@@ -1,9 +1,9 @@
 $Id$
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-14 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-15 Bradley M. Bell
 
 CppAD is distributed under multiple licenses. This distribution is under
-the terms of the 
+the terms of the
                     Eclipse Public License Version 1.0.
 
 A copy of this license is included in the COPYING file of this distribution.
@@ -11,7 +11,7 @@ Please visit http://www.coin-or.org/CppAD/ for information on other licenses.
 -------------------------------------------------------------------------- */
 
 $begin seq_property$$
-$spell 
+$spell
 	inuse
 	Addr
 	CppAD
@@ -57,7 +57,7 @@ $head Purpose$$
 The operations above return properties of the
 AD of $icode Base$$
 $cref/operation sequence/glossary/Operation/Sequence/$$
-stored in the ADFun object $icode f$$. 
+stored in the ADFun object $icode f$$.
 (If there is no operation sequence stored in $icode f$$,
 $code size_var$$ returns zero.)
 
@@ -69,8 +69,6 @@ $codei%
 (see $codei%ADFun<%Base%>%$$ $cref/constructor/FunConstruct/$$).
 
 $head Domain$$
-$index ADFun, Domain$$
-$index Domain, ADFun$$
 The result $icode n$$ has prototype
 $codei%
 	size_t %n%
@@ -80,13 +78,11 @@ This is equal to the size of the vector $icode x$$ in the call
 $codei%
 	Independent(%x%)
 %$$
-that starting recording the operation sequence 
+that starting recording the operation sequence
 currently stored in $icode f$$
-(see $cref FunConstruct$$ and $cref Dependent$$). 
+(see $cref FunConstruct$$ and $cref Dependent$$).
 
 $head Range$$
-$index ADFun, Range$$
-$index Range, ADFun$$
 The result $icode m$$ has prototype
 $codei%
 	size_t %m%
@@ -101,11 +97,9 @@ $codei%
 	%f%.Dependent(%y%)
 %$$
 depending on which stored the operation sequence currently in $icode f$$
-(see $cref FunConstruct$$ and $cref Dependent$$). 
+(see $cref FunConstruct$$ and $cref Dependent$$).
 
 $head Parameter$$
-$index ADFun, Parameter$$
-$index Parameter, ADFun$$
 The argument $icode i$$ has prototype
 $codei%
 	size_t %i%
@@ -126,8 +120,6 @@ $latex \[
 for $latex j = 0 , \ldots , n-1$$ and all $latex x \in B^n$$.
 
 $head size_var$$
-$index ADFun, size_var$$
-$index size_var, ADFun$$
 The result $icode s$$ has prototype
 $codei%
 	size_t %s%
@@ -137,7 +129,7 @@ one for a phantom variable with tape address zero,
 one for each component of the range that is a parameter.
 The amount of work and memory necessary for computing function values
 and derivatives using $icode f$$ is roughly proportional to $icode s$$.
-(The function call $cref/f.size_order()/size_order/$$ 
+(The function call $cref/f.size_order()/size_order/$$
 returns the number of Taylor coefficient orders, per variable,direction,
 currently stored in $icode f$$.)
 $pre
@@ -148,8 +140,6 @@ $code size_var$$ returns zero
 (see $cref/default constructor/FunConstruct/Default Constructor/$$).
 
 $head size_par$$
-$index ADFun, size_par$$
-$index size_par, ADFun$$
 The result $icode s$$ has prototype
 $codei%
 	size_t %s%
@@ -157,8 +147,8 @@ $codei%
 and is the number of parameters in the operation sequence.
 Parameters differ from variables in that only values
 (and not derivatives) need to be stored for each parameter.
-These parameters are considered part of the operation 
-sequence, as opposed to the Taylor coefficients which are 
+These parameters are considered part of the operation
+sequence, as opposed to the Taylor coefficients which are
 considered extra data in the function object $icode f$$.
 Note that one $icode Base$$ value is required for each parameter.
 
@@ -167,13 +157,13 @@ The result $icode s$$ has prototype
 $codei%
 	size_t %s%
 %$$
-and is the number of operations in the operation sequence. 
+and is the number of operations in the operation sequence.
 Some operators, like comparison operators,
 do not correspond to a variable.
 Other operators, like the sine operator,
 correspond to two variables.
-Thus, this value will be different from 
-$cref/size_var/seq_property/size_var/$$. 
+Thus, this value will be different from
+$cref/size_var/seq_property/size_var/$$.
 Note that one $code enum$$ value is required for each operator.
 
 $head size_op_arg$$
@@ -185,7 +175,7 @@ and is the total number of operator arguments in the operation sequence.
 For example, Binary operators (e.g. addition) have two arguments.
 Note that one integer index is stored in the operation sequence
 for each argument.
-Also note that, as of 2013-10-20, there is an extra 
+Also note that, as of 2013-10-20, there is an extra
 phantom argument with index 0 that is not used.
 
 $head size_text$$
@@ -197,15 +187,13 @@ and is the total characters used in the $cref PrintFor$$ commands
 in this operation sequence.
 
 $head size_VecAD$$
-$index ADFun, size_VecAD$$
-$index size_VecAD, ADFun$$
 The result $icode s$$ has prototype
 $codei%
 	size_t %s%
 %$$
 and is the number of $cref VecAD$$ vectors,
 plus the number of elements in the vectors.
-Only $code VecAD$$ vectors that depend on the 
+Only $code VecAD$$ vectors that depend on the
 independent variables are stored in the operation sequence.
 
 $head size_op_seq$$
@@ -234,7 +222,7 @@ $children%
 	example/seq_property.cpp
 %$$
 The file
-$cref seq_property.cpp$$ 
+$cref seq_property.cpp$$
 contains an example and test of these operations.
 It returns true if it succeeds and false otherwise.
 

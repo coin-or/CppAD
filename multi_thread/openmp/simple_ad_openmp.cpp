@@ -18,10 +18,8 @@ $spell
 $$
 
 $section A Simple OpenMP AD: Example and Test$$
+$mindex AD$$
 
-$index openmp, simple AD$$
-$index AD, simple openmp$$
-$index simple, openmp AD$$
 
 $head Purpose$$
 This example demonstrates how CppAD can be used in a

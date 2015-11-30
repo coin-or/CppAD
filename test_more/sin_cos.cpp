@@ -1,9 +1,9 @@
-/* $Id$ */
+// $Id$
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-12 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-15 Bradley M. Bell
 
 CppAD is distributed under multiple licenses. This distribution is under
-the terms of the 
+the terms of the
                     Eclipse Public License Version 1.0.
 
 A copy of this license is included in the COPYING file of this distribution.
@@ -34,18 +34,18 @@ bool Sin(void)
 	X[1]     = y;
 	Independent(X);
 
-	// dependent variable vector 
+	// dependent variable vector
 	CPPAD_TESTVECTOR(AD<double>) Z(1);
 	AD<double> U = X[0] * X[1];
-	Z[0] = sin( U ); 
+	Z[0] = sin( U );
 
 	// create f: X -> Z and vectors used for derivative calculations
 	// f(x, y) = sin(x, y)
-	ADFun<double> f(X, Z); 
+	ADFun<double> f(X, Z);
 	CPPAD_TESTVECTOR(double) v( 2 );
 	CPPAD_TESTVECTOR(double) w( 1 );
 
-	// check value 
+	// check value
 	double sin_u = sin( Value(U) );
 	double cos_u = cos( Value(U) );
 
@@ -59,7 +59,7 @@ bool Sin(void)
 	v[1]         = 0;   // differential w.r.t. y
 	double yj    = 1;   // y^j
 	for(j = 1; j < p; j++)
-	{	w      = f.Forward(j, v);	
+	{	w      = f.Forward(j, v);
 
 		// compute j-th power of y
 		yj *= y ;
@@ -77,13 +77,13 @@ bool Sin(void)
 		jfac *= j;
 
 		// check j-th derivative of z w.r.t x
-		ok &= NearEqual(jfac*w[0], sinj * yj, 1e-10 , 1e-10); 
+		ok &= NearEqual(jfac*w[0], sinj * yj, 1e-10 , 1e-10);
 
 		v[0]  = 0.;
 	}
 
 	// reverse computation of partials of Taylor coefficients
-	CPPAD_TESTVECTOR(double) r( 2 * p); 
+	CPPAD_TESTVECTOR(double) r( 2 * p);
 	w[0]  = 1.;
 	r     = f.Reverse(p, w);
 	jfac  = 1.;
@@ -131,18 +131,18 @@ bool Cos(void)
 	X[1]     = y;
 	Independent(X);
 
-	// dependent variable vector 
+	// dependent variable vector
 	CPPAD_TESTVECTOR(AD<double>) Z(1);
 	AD<double> U = X[0] * X[1];
-	Z[0] = cos( U ); 
+	Z[0] = cos( U );
 
 	// create f: X -> Z and vectors used for derivative calculations
 	// f(x, y) = cos(x, y)
-	ADFun<double> f(X, Z); 
+	ADFun<double> f(X, Z);
 	CPPAD_TESTVECTOR(double) v( 2 );
 	CPPAD_TESTVECTOR(double) w( 1 );
 
-	// check value 
+	// check value
 	double sin_u = sin( Value(U) );
 	double cos_u = cos( Value(U) );
 
@@ -156,7 +156,7 @@ bool Cos(void)
 	v[1]         = 0;   // differential w.r.t. y
 	double yj    = 1;   // y^j
 	for(j = 1; j < p; j++)
-	{	w      = f.Forward(j, v);	
+	{	w      = f.Forward(j, v);
 
 		// compute j-th power of y
 		yj *= y ;
@@ -174,13 +174,13 @@ bool Cos(void)
 		jfac *= j;
 
 		// check j-th derivative of z w.r.t x
-		ok &= NearEqual(jfac*w[0], cosj * yj, 1e-10 , 1e-10); 
+		ok &= NearEqual(jfac*w[0], cosj * yj, 1e-10 , 1e-10);
 
 		v[0]  = 0.;
 	}
 
 	// reverse computation of partials of Taylor coefficients
-	CPPAD_TESTVECTOR(double) r( 2 * p); 
+	CPPAD_TESTVECTOR(double) r( 2 * p);
 	w[0]  = 1.;
 	r     = f.Reverse(p, w);
 	jfac  = 1.;
@@ -228,18 +228,18 @@ bool Cosh(void)
 	X[1]     = y;
 	Independent(X);
 
-	// dependent variable vector 
+	// dependent variable vector
 	CPPAD_TESTVECTOR(AD<double>) Z(1);
 	AD<double> U = X[0] * X[1];
-	Z[0] = cosh( U ); 
+	Z[0] = cosh( U );
 
 	// create f: X -> Z and vectors used for derivative calculations
 	// f(x, y) = cosh(x, y)
-	ADFun<double> f(X, Z); 
+	ADFun<double> f(X, Z);
 	CPPAD_TESTVECTOR(double) v( 2 );
 	CPPAD_TESTVECTOR(double) w( 1 );
 
-	// check value 
+	// check value
 	double sinh_u = sinh( Value(U) );
 	double cosh_u = cosh( Value(U) );
 
@@ -253,7 +253,7 @@ bool Cosh(void)
 	v[1]         = 0;   // differential w.r.t. y
 	double yj    = 1;   // y^j
 	for(j = 1; j < p; j++)
-	{	w      = f.Forward(j, v);	
+	{	w      = f.Forward(j, v);
 
 		// compute j-th power of y
 		yj *= y ;
@@ -267,13 +267,13 @@ bool Cosh(void)
 		jfac *= j;
 
 		// check j-th derivative of z w.r.t x
-		ok &= NearEqual(jfac*w[0], coshj * yj, 1e-10 , 1e-10); 
+		ok &= NearEqual(jfac*w[0], coshj * yj, 1e-10 , 1e-10);
 
 		v[0]  = 0.;
 	}
 
 	// reverse computation of partials of Taylor coefficients
-	CPPAD_TESTVECTOR(double) r( 2 * p); 
+	CPPAD_TESTVECTOR(double) r( 2 * p);
 	w[0]  = 1.;
 	r     = f.Reverse(p, w);
 	jfac  = 1.;
@@ -317,18 +317,18 @@ bool Sinh(void)
 	X[1]     = y;
 	Independent(X);
 
-	// dependent variable vector 
+	// dependent variable vector
 	CPPAD_TESTVECTOR(AD<double>) Z(1);
 	AD<double> U = X[0] * X[1];
-	Z[0] = sinh( U ); 
+	Z[0] = sinh( U );
 
 	// create f: X -> Z and vectors used for derivative calculations
 	// f(x, y) = sinh(x, y)
-	ADFun<double> f(X, Z); 
+	ADFun<double> f(X, Z);
 	CPPAD_TESTVECTOR(double) v( 2 );
 	CPPAD_TESTVECTOR(double) w( 1 );
 
-	// check value 
+	// check value
 	double sinh_u = sinh( Value(U) );
 	double cosh_u = cosh( Value(U) );
 
@@ -342,7 +342,7 @@ bool Sinh(void)
 	v[1]         = 0;   // differential w.r.t. y
 	double yj    = 1;   // y^j
 	for(j = 1; j < p; j++)
-	{	w      = f.Forward(j, v);	
+	{	w      = f.Forward(j, v);
 
 		// compute j-th power of y
 		yj *= y ;
@@ -356,13 +356,13 @@ bool Sinh(void)
 		jfac *= j;
 
 		// check j-th derivative of z w.r.t x
-		ok &= NearEqual(jfac*w[0], sinhj * yj, 1e-10 , 1e-10); 
+		ok &= NearEqual(jfac*w[0], sinhj * yj, 1e-10 , 1e-10);
 
 		v[0]  = 0.;
 	}
 
 	// reverse computation of partials of Taylor coefficients
-	CPPAD_TESTVECTOR(double) r( 2 * p); 
+	CPPAD_TESTVECTOR(double) r( 2 * p);
 	w[0]  = 1.;
 	r     = f.Reverse(p, w);
 	jfac  = 1.;
@@ -397,4 +397,4 @@ bool SinCos(void)
 {	bool ok = Sin() & Cos() & Cosh() & Sinh();
 	return ok;
 }
-	
+

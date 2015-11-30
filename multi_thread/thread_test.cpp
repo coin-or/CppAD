@@ -1,9 +1,9 @@
-/* $Id$ */
+// $Id$
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-14 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-15 Bradley M. Bell
 
 CppAD is distributed under multiple licenses. This distribution is under
-the terms of the 
+the terms of the
                     Eclipse Public License Version 1.0.
 
 A copy of this license is included in the COPYING file of this distribution.
@@ -23,14 +23,10 @@ $spell
 	openmp
 	bthread
 $$
-$index thread_test, example$$
-$index thread_test, speed$$
-$index speed, thread_test$$
-$index example, thread_test$$
-$index thread, multi example$$
 
 
 $section Run Multi-Threading Examples and Speed Tests$$
+$mindex thread_test multi openmp pthread bthread$$
 
 $head Syntax$$
 $codei%./multi_thread_%threading% a11c
@@ -39,7 +35,7 @@ $codei%./multi_thread_%threading% a11c
 ./multi_thread_%threading% harmonic %test_time% %max_threads% %mega_sum%
 ./multi_thread_%threading% multi_newton %test_time% %max_threads% \
 	%num_zero% %num_sub% %num_sum% %use_ad%
-%$$ 
+%$$
 
 $head Running Tests$$
 You can build this program and run the default version of its test
@@ -52,24 +48,21 @@ After this operation you can run the syntax above
 for the different valid values of $icode threading$$:
 
 $subhead threading$$
-$index openmp, run tests$$
-$index pthread, run tests$$
-$index bthread, run tests$$
-If the $cref cmake$$ command output indicates that 
+If the $cref cmake$$ command output indicates that
 $code openmp$$ is supported by your system,
 you can execute the syntax above with
 $icode threading$$ equal to $code openmp$$.
 $pre
 
 $$
-If the $cref cmake$$ command output indicates that 
+If the $cref cmake$$ command output indicates that
 $code pthreads$$ with barriers is supported by your system,
 you can execute the syntax above with
 $icode threading$$ equal to $code pthread$$.
 $pre
 
 $$
-If the $cref cmake$$ command output indicates that 
+If the $cref cmake$$ command output indicates that
 $code boost$$ threads is supported is by your system,
 you can execute the syntax above with
 $icode threading$$ equal to $code bthread$$.
@@ -95,37 +88,37 @@ $children%
 %$$
 
 $head a11c$$
-The examples 
+The examples
 $cref a11c_openmp.cpp$$,
 $cref a11c_bthread.cpp$$, and
 $cref a11c_pthread.cpp$$
-demonstrate simple multi-threading, 
+demonstrate simple multi-threading,
 without algorithmic differentiation.
 
 $head simple_ad$$
-The examples 
+The examples
 $cref simple_ad_openmp.cpp$$,
 $cref simple_ad_bthread.cpp$$,
 and
 $cref simple_ad_pthread.cpp$$
-demonstrate simple multi-threading, 
+demonstrate simple multi-threading,
 with algorithmic differentiation, using
 OpenMP, boost threads and pthreads respectively.
 
 $head team_example$$
 The $cref team_example.cpp$$ routine
 demonstrates simple multi-threading with algorithmic differentiation
-and using a $cref/team of threads/team_thread.hpp/$$. 
+and using a $cref/team of threads/team_thread.hpp/$$.
 
 $head harmonic$$
 The $cref harmonic_time.cpp$$ routine
-preforms a timing test for a multi-threading 
+preforms a timing test for a multi-threading
 example without algorithmic differentiation using a team of threads.
 
 $subhead test_time$$
 Is the minimum amount of wall clock time that the test should take.
 The number of repeats for the test will be increased until this time
-is reached. 
+is reached.
 The reported time is the total wall clock time divided by the
 number of repeats.
 
@@ -139,19 +132,19 @@ $codei%
 The value of zero corresponds to not using the multi-threading system.
 
 $subhead mega_sum$$
-The command line argument $icode mega_sum$$ 
+The command line argument $icode mega_sum$$
 is an integer greater than or equal one and has the same meaning as in
 $cref/harmonic_time.cpp/harmonic_time.cpp/mega_sum/$$.
 
 $head multi_newton$$
 The $cref multi_newton_time.cpp$$ routine
-preforms a timing test for a multi-threading 
+preforms a timing test for a multi-threading
 example with algorithmic differentiation using a team of threads.
 
 $subhead test_time$$
 Is the minimum amount of wall clock time that the test should take.
 The number of repeats for the test will be increased until this time
-is reached. 
+is reached.
 The reported time is the total wall clock time divided by the
 number of repeats.
 
@@ -165,22 +158,22 @@ $codei%
 The value of zero corresponds to not using the multi-threading system.
 
 $subhead num_zero$$
-The command line argument $icode num_zero$$ 
+The command line argument $icode num_zero$$
 is an integer greater than or equal two and has the same meaning as in
 $cref/multi_newton_time.cpp/multi_newton_time.cpp/num_zero/$$.
 
 $subhead num_sub$$
-The command line argument $icode num_sub$$ 
+The command line argument $icode num_sub$$
 is an integer greater than or equal one and has the same meaning as in
 $cref/multi_newton_time.cpp/multi_newton_time.cpp/num_sub/$$.
 
 $subhead num_sum$$
-The command line argument $icode num_sum$$ 
+The command line argument $icode num_sum$$
 is an integer greater than or equal one and has the same meaning as in
 $cref/multi_newton_time.cpp/multi_newton_time.cpp/num_sum/$$.
 
 $subhead use_ad$$
-The command line argument $icode use_ad$$ is either 
+The command line argument $icode use_ad$$ is either
 $code true$$ or $code false$$ and has the same meaning as in
 $cref/multi_newton_time.cpp/multi_newton_time.cpp/use_ad/$$.
 
@@ -216,8 +209,8 @@ extern bool simple_ad(void);
 
 namespace {
 	size_t arg2size_t(
-		const char* arg       , 
-		int limit             , 
+		const char* arg       ,
+		int limit             ,
 		const char* error_msg )
 	{	int i = std::atoi(arg);
 		if( i >= limit )
@@ -227,8 +220,8 @@ namespace {
 		exit(1);
 	}
 	double arg2double(
-		const char* arg       , 
-		double limit          , 
+		const char* arg       ,
+		double limit          ,
 		const char* error_msg )
 	{	double d = std::atof(arg);
 		if( d >= limit )
@@ -246,7 +239,7 @@ int main(int argc, char *argv[])
 	using std::endl;
 
 	// commnd line usage message
-	const char* usage = 
+	const char* usage =
 	"./<thread>_test a11c\n"
 	"./<thread>_test simple_ad\n"
 	"./<thread>_test team_example\n"
@@ -265,12 +258,12 @@ int main(int argc, char *argv[])
 	const char* gmt = std::asctime( std::gmtime( &rawtime ) );
 	size_t len = size_t( std::strlen(gmt) );
 	cout << "gmtime        = '";
-	for(size_t i = 0; i < len; i++) 
+	for(size_t i = 0; i < len; i++)
 		if( gmt[i] != '\n' ) cout << gmt[i];
 	cout << "';" << endl;
 
 	// CppAD version number
-	cout << "cppad_version = '" << CPPAD_PACKAGE_STRING << "';" << endl; 
+	cout << "cppad_version = '" << CPPAD_PACKAGE_STRING << "';" << endl;
 
 	// put the team name in the output file
 	cout << "team_name     = '" << team_name() << "';" << endl;
@@ -293,12 +286,12 @@ int main(int argc, char *argv[])
 	if( run_a11c || run_simple_ad || run_team_example )
 		ok = (argc == 2);
 	else if( run_harmonic )
-		ok = (argc == 5);  
+		ok = (argc == 5);
 	else if( run_multi_newton )
 		ok = (argc == 8);
 	if( ! ok )
-	{	std::cerr << "test_name     = " << test_name << endl;	
-		std::cerr << "argc          = " << argc      << endl;	
+	{	std::cerr << "test_name     = " << test_name << endl;
+		std::cerr << "argc          = " << argc      << endl;
 		std::cerr << usage << endl;
 		exit(1);
 	}
@@ -320,20 +313,20 @@ int main(int argc, char *argv[])
 		return ! ok;
 	}
 
-	// test_time 
-	double test_time = arg2double( *++argv, 0., 
+	// test_time
+	double test_time = arg2double( *++argv, 0.,
 		"run: test_time is less than zero"
 	);
 
-	// max_threads 
-	size_t max_threads = arg2size_t( *++argv, 0, 
+	// max_threads
+	size_t max_threads = arg2size_t( *++argv, 0,
 		"run: max_threads is less than zero"
 	);
 
 	size_t mega_sum = 0; // assignment to avoid compiler warning
 	if( run_harmonic )
 	{	// mega_sum
-		mega_sum = arg2size_t( *++argv, 1, 
+		mega_sum = arg2size_t( *++argv, 1,
 			"run: mega_sum is less than one"
 		);
 	}
@@ -349,8 +342,8 @@ int main(int argc, char *argv[])
 		num_sub = arg2size_t( *++argv, 1,
 			"run: num_sub is less than one"
 		);
-       
-		// num_sum 
+
+		// num_sum
 		num_sum = arg2size_t( *++argv, 1,
 			"run: num_sum is less than one"
 		);
@@ -383,7 +376,7 @@ int main(int argc, char *argv[])
 		inuse_this_thread = thread_alloc::inuse(0);
 
 		// run the requested test
-		if( run_harmonic ) ok &= 
+		if( run_harmonic ) ok &=
 			harmonic_time(time_out, test_time, num_threads, mega_sum);
 		else
 		{	ok &= run_multi_newton;

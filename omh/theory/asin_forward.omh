@@ -20,7 +20,7 @@ $spell
 $$
 
 $section Inverse Sine and Hyperbolic Sine Forward Mode Theory$$
-$mindex asin, asinh$$
+$mindex asin asinh$$
 
 $head Derivatives$$
 $latex \[

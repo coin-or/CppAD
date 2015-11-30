@@ -1,9 +1,9 @@
-/* $Id$ */
+// $Id$
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-13 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-15 Bradley M. Bell
 
 CppAD is distributed under multiple licenses. This distribution is under
-the terms of the 
+the terms of the
                     Eclipse Public License Version 1.0.
 
 A copy of this license is included in the COPYING file of this distribution.
@@ -75,14 +75,14 @@ bool case_one()
 	using namespace CppAD;
 
 	// dimension of the domain space
-	size_t n = 3; 
+	size_t n = 3;
 
 	// dimension of the range space
 	size_t m = (4 + 11 + 1) * 3 + 4;
 
-	// independent variable vector 
+	// independent variable vector
 	CPPAD_TESTVECTOR(AD<double>) X(n);
-	X[0] = .1; 
+	X[0] = .1;
 	X[1] = .2;
 	X[2] = .3;
 	Independent(X);
@@ -166,7 +166,7 @@ bool case_one()
 	for(i = 0; i < m; i++)
 	{	for(j = 0; j < n; j++)
 			ok &= (Py[i * n + j] == Check[i * n + j]);
-	}	
+	}
 
 	// ---------------------------------------------------------
 	// dependency matrix for the identity function W(x) = x
@@ -187,7 +187,7 @@ bool case_one()
 		{	found = Sy[i].find(j) != Sy[i].end();
 			ok &= (found == Check[i * n + j]);
 		}
-	}	
+	}
 
 	return ok;
 }
@@ -197,7 +197,7 @@ bool case_two()
 	using namespace CppAD;
 
 	// dimension of the domain space
-	size_t n = 3; 
+	size_t n = 3;
 
 	// dimension of the range space
 	size_t m = 3;
@@ -208,16 +208,16 @@ bool case_two()
 	for(k = 0; k < n-1; k++)
 		Z[k] = 0.;
 
-	// independent variable vector 
+	// independent variable vector
 	CPPAD_TESTVECTOR(AD<double>) X(n);
-	X[0] = 0.; 
+	X[0] = 0.;
 	X[1] = 1.;
 	X[2] = 2.;
 	Independent(X);
 
 	// VecAD vector is going to depend on X[1] and X[2]
 	Z[ X[0] ] = X[1];
-	Z[ X[1] ] = X[2]; 
+	Z[ X[1] ] = X[2];
 
 	// dependent variable vector
 	CPPAD_TESTVECTOR(AD<double>) Y(m);
@@ -274,7 +274,7 @@ bool case_two()
 	for(i = 0; i < m; i++)
 	{	for(j = 0; j < n; j++)
 			ok &= (Py[i * n + j] == Check[i * n + j]);
-	}	
+	}
 
 	// ---------------------------------------------------------
 	// dependency matrix for the identity function W(x) = x
@@ -295,7 +295,7 @@ bool case_two()
 		{	found = Sy[i].find(j) != Sy[i].end();
 			ok &= (found == Check[i * n + j]);
 		}
-	}	
+	}
 
 	return ok;
 }
@@ -305,14 +305,14 @@ bool case_three()
 	using namespace CppAD;
 
 	// dimension of the domain space
-	size_t n = 2; 
+	size_t n = 2;
 
 	// dimension of the range space
 	size_t m = 3;
 
-	// independent variable vector 
+	// independent variable vector
 	CPPAD_TESTVECTOR(AD<double>) X(n);
-	X[0] = 2.; 
+	X[0] = 2.;
 	X[1] = 3.;
 	Independent(X);
 
@@ -367,10 +367,10 @@ bool case_three()
 	for(i = 0; i < m; i++)
 	{	for(j = 0; j < n; j++)
 			ok &= (Py[i * n + j] == Check[i * n + j]);
-	}	
+	}
 
 	// ---------------------------------------------------------
-	// dependency matrix for the identity function 
+	// dependency matrix for the identity function
 	CPPAD_TESTVECTOR(std::set<size_t>) Sx(n);
 	for(i = 0; i < n; i++)
 	{	assert( Sx[i].empty() );
@@ -388,7 +388,7 @@ bool case_three()
 		{	found = Sy[i].find(j) != Sy[i].end();
 			ok &= (found == Check[i * n + j]);
 		}
-	}	
+	}
 
 	return ok;
 }
@@ -398,14 +398,14 @@ bool case_four()
 	using namespace CppAD;
 
 	// dimension of the domain space
-	size_t n = 2; 
+	size_t n = 2;
 
 	// dimension of the range space
 	size_t m = 3;
 
-	// independent variable vector 
+	// independent variable vector
 	CPPAD_TESTVECTOR(AD<double>) X(n);
-	X[0] = 2.; 
+	X[0] = 2.;
 	X[1] = 3.;
 	Independent(X);
 
@@ -461,10 +461,10 @@ bool case_four()
 	for(i = 0; i < m; i++)
 	{	for(j = 0; j < n; j++)
 			ok &= (Py[j * m + i] == Check[i * n + j]);
-	}	
+	}
 
 	// ---------------------------------------------------------
-	// dependency matrix for the identity function 
+	// dependency matrix for the identity function
 	CPPAD_TESTVECTOR(std::set<size_t>) Sx(n);
 	for(i = 0; i < n; i++)
 	{	assert( Sx[i].empty() );
@@ -482,7 +482,7 @@ bool case_four()
 		{	found = Sy[j].find(i) != Sy[j].end();
 			ok &= (found == Check[i * n + j]);
 		}
-	}	
+	}
 
 	return ok;
 }

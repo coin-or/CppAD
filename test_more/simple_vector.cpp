@@ -1,9 +1,9 @@
-/* $Id$ */
+// $Id$
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-12 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-15 Bradley M. Bell
 
 CppAD is distributed under multiple licenses. This distribution is under
-the terms of the 
+the terms of the
                     Eclipse Public License Version 1.0.
 
 A copy of this license is included in the COPYING file of this distribution.
@@ -26,7 +26,7 @@ Old simple vector example now used just for validation testing
 // # define MySimpleVector std::valarray
 
 // Assuming CppAD (http://www.seanet.com/~bradbell/cppad) is installed
-# include <cppad/vector.hpp>
+# include <cppad/utility/vector.hpp>
 # define MySimpleVector CppAD::vector
 
 // Assuming Boost (http://www.boost.org) is installed
@@ -44,7 +44,7 @@ public:
 	// assignment operator
 	MyInt& operator=(const MyInt &x)
 	{	value = x.value;
-		count++; 
+		count++;
 		return *this;
 	}
 	// equality operator
@@ -57,7 +57,7 @@ public:
 	{	return count; }
 private:
 	size_t count;  // count number of assignments
-	int    value;  // value of this object 
+	int    value;  // value of this object
 };
 
 // Test of a Simple Vector template class
@@ -66,7 +66,7 @@ bool SimpleVector(void)
 	typedef MySimpleVector<MyInt> vector;    // class we are testing
 	typedef vector::value_type myInt;        // type of elements
 
-	vector x;                // default constructor 
+	vector x;                // default constructor
 	ok &= (x.size() == 0);
 
 	x.resize(2);             // resize and set element assignment
@@ -81,7 +81,7 @@ bool SimpleVector(void)
 	ok &= (z.size() == 2);
 	ok &= ( (z[0] == myInt(0)) && (z[1] == myInt(1)) );
 
-	// check that vector assignment 
+	// check that vector assignment
 	x[0] = 2;                      // modify so that assignment changes x
 	size_t x0count = x[0].Count(); // store initial counts
 	size_t y1count = y[1].Count();

@@ -1,9 +1,9 @@
-/* $Id$ */
+// $Id$
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-13 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-15 Bradley M. Bell
 
 CppAD is distributed under multiple licenses. This distribution is under
-the terms of the 
+the terms of the
                     Eclipse Public License Version 1.0.
 
 A copy of this license is included in the COPYING file of this distribution.
@@ -17,8 +17,8 @@ using namespace cppad_ipopt;
 
 // ---------------------------------------------------------------------------
 /*
-This solve the same problem as 
-../cppad_ipopt/cppad_ipopt_simple.cpp (repository revision 
+This solve the same problem as
+../cppad_ipopt/cppad_ipopt_simple.cpp (repository revision
 1276) in a convoluted way in order to test the representation code.
 */
 class FG_K_gt_one : public cppad_ipopt_fg_info
@@ -35,7 +35,7 @@ public:
 	ADVector eval_r(size_t k, const ADVector&  u)
 	{
 
-		// Fortran style indexing 
+		// Fortran style indexing
 		ADNumber x1 = u[3];
 		ADNumber x2 = u[2];
 		ADNumber x3 = u[1];
@@ -72,7 +72,7 @@ public:
 			I[0] = 0;
 		else
 		{	I[0] = 1;
-			I[1] = 2; 
+			I[1] = 2;
 		}
 		// reverse the order of the variables in u from that in x
 		for(size_t j = 0; j < 4; j++)
@@ -80,14 +80,14 @@ public:
 	}
 };
 } // end empty namespace
-	
+
 bool k_gt_one(void)
 {	bool ok = true;
 	size_t j;
 
 
 	// number of independent variables (domain dimension for f and g)
-	size_t n = 4;  
+	size_t n = 4;
 	// number of constraints (range dimension for g)
 	size_t m = 2;
 	// initial value of the independent variables
@@ -107,7 +107,7 @@ bool k_gt_one(void)
 	NumberVector g_l(m);
 	NumberVector g_u(m);
 	g_l[0] = 25.0;     g_u[0] = 1.0e19;
-  	g_l[1] = 40.0;     g_u[1] = 40.0;
+	g_l[1] = 40.0;     g_u[1] = 40.0;
 
 	// known solution to check against
 	double check_x[]   = { 1.000000, 4.743000, 3.82115, 1.379408 };
@@ -115,7 +115,7 @@ bool k_gt_one(void)
 	size_t icase;
 	for(icase = 0; icase <= 1; icase++)
 	{	// Should cppad_ipopt_nlp retape the operation sequence for
-		// every new x. Can test both true and false cases because 
+		// every new x. Can test both true and false cases because
 		// the operation sequence does not depend on x (for this case).
 		bool retape = bool(icase);
 
@@ -127,7 +127,7 @@ bool k_gt_one(void)
 
 		// object in derived class
 		FG_K_gt_one my_fg_info(retape);
-		cppad_ipopt_fg_info *fg_info = &my_fg_info;  
+		cppad_ipopt_fg_info *fg_info = &my_fg_info;
 
 		// create the Ipopt interface
 		cppad_ipopt_solution solution;
@@ -147,7 +147,7 @@ bool k_gt_one(void)
 		app->Options()->SetIntegerValue("max_iter", 10);
 
 		// approximate accuracy in first order necessary conditions;
-		// see Mathematical Programming, Volume 106, Number 1, 
+		// see Mathematical Programming, Volume 106, Number 1,
 		// Pages 25-57, Equation (6)
 		app->Options()->SetNumericValue("tol", 1e-9);
 
@@ -164,8 +164,8 @@ bool k_gt_one(void)
 		ok    &= status == Ipopt::Solve_Succeeded;
 
 		/*
- 		Check some of the solution values
- 		*/
+		Check some of the solution values
+		*/
 		ok &= solution.status == cppad_ipopt_solution::success;
 		//
 		double check_z_l[] = { 1.087871, 0.,       0.,      0.       };

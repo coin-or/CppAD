@@ -1,9 +1,9 @@
-/* $Id$ */
+// $Id$
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-12 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-15 Bradley M. Bell
 
 CppAD is distributed under multiple licenses. This distribution is under
-the terms of the 
+the terms of the
                     Eclipse Public License Version 1.0.
 
 A copy of this license is included in the COPYING file of this distribution.
@@ -17,9 +17,7 @@ $spell
 $$
 
 $section Adolc Test Utility: Allocate and Free Memory For a Matrix$$
-$index adolc_alloc_mat$$
-$index alloc, adolc$$
-$index matrix, adolc$$
+$mindex adolc_alloc_mat alloc$$
 
 $head Syntax$$
 $codei%mat% = adolc_alloc_mat(%m%, %n%)
@@ -39,7 +37,7 @@ Is the number of columns in the matrix.
 
 $head mat$$
 Is the matrix.
-To be specific, 
+To be specific,
 between a call to $code adolc_alloc_mat$$,
 and the corresponding call to $code adolc_free_mat$$,
 for $icode%i% = 0 , %...% , %m%-1%$$
@@ -49,7 +47,7 @@ and column $icode j$$.
 
 $end
 */
-# include <cppad/thread_alloc.hpp>
+# include <cppad/utility/thread_alloc.hpp>
 
 double** adolc_alloc_mat(size_t m, size_t n)
 {	using CppAD::thread_alloc;
@@ -59,7 +57,7 @@ double** adolc_alloc_mat(size_t m, size_t n)
 
 	for(size_t i = 0; i < m; i++)
 		mat[i] = vec + i * n;
-	
+
 	return mat;
 }
 void adolc_free_mat(double** mat)

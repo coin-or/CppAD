@@ -1,6 +1,6 @@
-/* $Id$ */
-# ifndef CPPAD_DET_GRAD_33_INCLUDED
-# define CPPAD_DET_GRAD_33_INCLUDED
+// $Id$
+# ifndef CPPAD_DET_GRAD_33_HPP
+# define CPPAD_DET_GRAD_33_HPP
 
 /* --------------------------------------------------------------------------
 CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-15 Bradley M. Bell
@@ -25,11 +25,8 @@ $spell
 $$
 
 $section Check Gradient of Determinant of 3 by 3 matrix$$
+$mindex det_grad_33 correct$$
 
-$index det_grad_33$$
-$index determinant, check correct$$
-$index correct, determinant check$$
-$index check, determinant correct$$
 
 $head Syntax$$
 $codei%# include <cppad/speed/det_grad_33.hpp>
@@ -103,7 +100,7 @@ $end
 */
 // BEGIN C++
 # include <limits>
-# include <cppad/near_equal.hpp>
+# include <cppad/utility/near_equal.hpp>
 namespace CppAD {
 template <class Vector>
 	bool det_grad_33(const Vector &x, const Vector &g)

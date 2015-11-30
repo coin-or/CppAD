@@ -1,12 +1,12 @@
-/* $Id$ */
-# ifndef CPPAD_ODE_EVALUATE_INCLUDED
-# define CPPAD_ODE_EVALUATE_INCLUDED
+// $Id$
+# ifndef CPPAD_ODE_EVALUATE_HPP
+# define CPPAD_ODE_EVALUATE_HPP
 
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-13 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-15 Bradley M. Bell
 
 CppAD is distributed under multiple licenses. This distribution is under
-the terms of the 
+the terms of the
                     Eclipse Public License Version 1.0.
 
 A copy of this license is included in the COPYING file of this distribution.
@@ -23,16 +23,15 @@ $spell
 	const
 	Cpp
 	cppad
-	hpp	
+	hpp
 	fp
 	namespace
 	exp
 $$
 
 $section Evaluate a Function Defined in Terms of an ODE$$
+$mindex ode_evaluate$$
 
-$index ode_evaluate, function$$
-$index function, ode_evaluate$$
 
 $head Syntax$$
 $codei%# include <cppad/speed/ode_evaluate.hpp>
@@ -41,7 +40,7 @@ $codei%ode_evaluate(%x%, %p%, %fp%)%$$
 
 $head Purpose$$
 This routine evaluates a function $latex f : \B{R}^n \rightarrow \B{R}^n$$
-defined by 
+defined by
 $latex \[
 	f(x) = y(x, 1)
 \] $$
@@ -57,11 +56,11 @@ where $latex g : \B{R}^n \times \B{R} \rightarrow \B{R}^n$$
 is an unspecified function.
 
 $head Inclusion$$
-The template function $code ode_evaluate$$ 
-is defined in the $code CppAD$$ namespace by including 
-the file $code cppad/speed/ode_evaluate.hpp$$ 
+The template function $code ode_evaluate$$
+is defined in the $code CppAD$$ namespace by including
+the file $code cppad/speed/ode_evaluate.hpp$$
 (relative to the CppAD distribution directory).
-It is only intended for example and testing purposes, 
+It is only intended for example and testing purposes,
 so it is not automatically included by
 $cref/cppad.hpp/cppad/$$.
 
@@ -69,10 +68,10 @@ $head Float$$
 
 $subhead Operation Sequence$$
 The type $icode Float$$ must be a $cref NumericType$$.
-The $icode Float$$ 
+The $icode Float$$
 $cref/operation sequence/glossary/Operation/Sequence/$$
 for this routine does not depend on the value of the argument $icode x$$,
-hence it does not need to be retaped for each value of $latex x$$. 
+hence it does not need to be retaped for each value of $latex x$$.
 
 $subhead fabs$$
 If $icode y$$ and $icode z$$ are $icode Float$$ objects, the syntax
@@ -80,7 +79,7 @@ $codei%
 	%y% = fabs(%z%)
 %$$
 must be supported. Note that it does not matter if the operation
-sequence for $code fabs$$ depends on $icode z$$ because the 
+sequence for $code fabs$$ depends on $icode z$$ because the
 corresponding results are not actually used by $code ode_evaluate$$;
 see $code fabs$$ in $cref/Runge45/Runge45/Scalar/fabs/$$.
 
@@ -100,7 +99,7 @@ $codei%
 %$$
 
 $subhead p == 0$$
-In this case a numerical method is used to solve the ode 
+In this case a numerical method is used to solve the ode
 and obtain an accurate approximation for $latex y(x, 1)$$.
 This numerical method has a fixed
 that does not depend on $icode x$$.
@@ -121,7 +120,7 @@ If $icode p$$ is zero, $icode fp$$ has size equal to $latex n$$
 and contains the value of $latex y(x, 1)$$.
 
 $subhead Gradient$$
-If $icode p$$ is one, $icode fp$$ has size equal to $icode n^2$$ 
+If $icode p$$ is one, $icode fp$$ has size equal to $icode n^2$$
 and for $latex i = 0 , \ldots and n-1$$, $latex j = 0 , \ldots , n-1$$
 $latex \[
 	\D{y[i]}{x[j]} (x, 1) = fp [ i \cdot n + j ]
@@ -140,34 +139,34 @@ It returns true if it succeeds and false otherwise.
 
 
 $head Source Code$$
-The file 
+The file
 $cref ode_evaluate.hpp$$
 contains the source code for this template function.
 
 $end
 */
 // BEGIN C++
-# include <cppad/vector.hpp>
-# include <cppad/ode_err_control.hpp>
-# include <cppad/runge_45.hpp>
+# include <cppad/utility/vector.hpp>
+# include <cppad/utility/ode_err_control.hpp>
+# include <cppad/utility/runge_45.hpp>
 
-namespace CppAD { 
+namespace CppAD {
 
 	template <class Float>
 	class ode_evaluate_fun {
 	public:
-		// Given that y_i (0) = x_i, 
+		// Given that y_i (0) = x_i,
 		// the following y_i (t) satisfy the ODE below:
 		// y_0 (t) = x[0]
-		// y_1 (t) = x[1] + x[0] * t 
+		// y_1 (t) = x[1] + x[0] * t
 		// y_2 (t) = x[2] + x[1] * t + x[0] * t^2/2
 		// y_3 (t) = x[3] + x[2] * t + x[1] * t^2/2 + x[0] * t^3 / 3!
 		// ...
 		void Ode(
-			const Float&                    t, 
-			const CppAD::vector<Float>&     y, 
+			const Float&                    t,
+			const CppAD::vector<Float>&     y,
 			CppAD::vector<Float>&           f)
-		{	size_t n  = y.size();	
+		{	size_t n  = y.size();
 			f[0]      = 0.;
 			for(size_t k = 1; k < n; k++)
 				f[k] = y[k-1];
@@ -176,8 +175,8 @@ namespace CppAD {
 	//
 	template <class Float>
 	void ode_evaluate(
-		const CppAD::vector<Float>& x  , 
-		size_t                      p  , 
+		const CppAD::vector<Float>& x  ,
+		size_t                      p  ,
 		CppAD::vector<Float>&       fp )
 	{	using CppAD::vector;
 		typedef vector<Float> VectorFloat;
@@ -186,7 +185,7 @@ namespace CppAD {
 		CPPAD_ASSERT_KNOWN( p == 0 || p == 1,
 			"ode_evaluate: p is not zero or one"
 		);
-		CPPAD_ASSERT_KNOWN( 
+		CPPAD_ASSERT_KNOWN(
 			((p==0) & (fp.size()==n)) || ((p==1) & (fp.size()==n*n)),
 			"ode_evaluate: the size of fp is not correct"
 		);
@@ -208,7 +207,7 @@ namespace CppAD {
 			// final value for y(x, t); i.e., y(x, 1)
 			// (is a reference to fp)
 			VectorFloat& yf = fp;
-			
+
 			// Use fourth order Runge-Kutta to solve ODE
 			yf = CppAD::Runge45(F, M, ti, tf, yi);
 
@@ -216,7 +215,7 @@ namespace CppAD {
 		}
 		/* Compute derivaitve of y(x, 1) w.r.t x
 		y_0 (x, t) = x[0]
-		y_1 (x, t) = x[1] + x[0] * t 
+		y_1 (x, t) = x[1] + x[0] * t
 		y_2 (x, t) = x[2] + x[1] * t + x[0] * t^2/2
 		y_3 (x, t) = x[3] + x[2] * t + x[1] * t^2/2 + x[0] * t^3 / 3!
 		...
@@ -229,7 +228,7 @@ namespace CppAD {
 		size_t factorial = 1;
 		for(k = 0; k < n; k++)
 		{	if( k > 1 )
-				factorial *= k; 
+				factorial *= k;
 			for(i = k; i < n; i++)
 			{	// partial w.r.t x[i-k] of x[i-k] * t^k / k!
 				j = i - k;

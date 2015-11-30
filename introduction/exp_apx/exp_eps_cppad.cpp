@@ -1,9 +1,9 @@
-/* $Id$ */
+// $Id$
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-07 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-15 Bradley M. Bell
 
 CppAD is distributed under multiple licenses. This distribution is under
-the terms of the 
+the terms of the
                     Eclipse Public License Version 1.0.
 
 A copy of this license is included in the COPYING file of this distribution.
@@ -40,7 +40,7 @@ $head Purpose$$
 Use CppAD forward and reverse modes to compute the
 partial derivative with respect to $latex x$$,
 at the point $latex x = .5$$ and $latex \varepsilon = .2$$,
-of the function 
+of the function
 $codei%
 	exp_eps(%x%, %epsilon%)
 %$$
@@ -51,7 +51,7 @@ $list number$$
 Create and test a modified version of the routine below that computes
 the same order derivatives with respect to $latex x$$,
 at the point $latex x = .1$$ and $latex \varepsilon = .2$$,
-of the function 
+of the function
 $codei%
 	exp_eps(%x%, %epsilon%)
 %$$
@@ -59,7 +59,7 @@ $lnext
 Create and test a modified version of the routine below that computes
 partial derivative with respect to $latex x$$,
 at the point $latex x = .1$$ and $latex \varepsilon = .2$$,
-of the function corresponding to the operation sequence 
+of the function corresponding to the operation sequence
 for $latex x = .5$$ and $latex \varepsilon = .2$$.
 Hint: you could define a vector u with two components and use
 $codei%
@@ -70,7 +70,7 @@ form the point where the operation sequence corresponding to
 $icode f$$ was recorded.
 $lend
 $codep */
-# include <cppad/cppad.hpp>  // http://www.coin-or.org/CppAD/ 
+# include <cppad/cppad.hpp>  // http://www.coin-or.org/CppAD/
 # include "exp_eps.hpp"      // our example exponential function approximation
 bool exp_eps_cppad(void)
 {	bool ok = true;
@@ -90,7 +90,7 @@ bool exp_eps_cppad(void)
 	// evaluate our exponential approximation
 	AD<double> x       = U[0];
 	AD<double> epsilon = U[1];
-	AD<double> apx = exp_eps(x, epsilon);  
+	AD<double> apx = exp_eps(x, epsilon);
 
 	// range space vector
 	size_t m = 1;  // dimension of the range space
@@ -98,7 +98,7 @@ bool exp_eps_cppad(void)
 	Y[0] = apx;    // variable that represents only range space component
 
 	// Create f: U -> Y corresponding to this operation sequence
-	// and stop recording. This also executes a zero order forward 
+	// and stop recording. This also executes a zero order forward
 	// mode sweep using values in U for x and e.
 	CppAD::ADFun<double> f(U, Y);
 
@@ -114,7 +114,7 @@ bool exp_eps_cppad(void)
 	// first order reverse mode sweep that computes the derivative
 	vector<double>  w(m);     // weights for components of the range
 	vector<double> dw(n);     // derivative of the weighted function
-	w[0] = 1.;                // there is only one weight 
+	w[0] = 1.;                // there is only one weight
 	dw   = f.Reverse(1, w);   // derivative of w[0] * exp_eps(x, epsilon)
 	check = 1.5;              // partial w.r.t. x
 	ok   &= NearEqual(dw[0], check, 1e-10, 1e-10);

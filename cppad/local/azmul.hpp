@@ -1,6 +1,6 @@
-/* $Id$ */
-# ifndef CPPAD_AZMUL_INCLUDED
-# define CPPAD_AZMUL_INCLUDED
+// $Id$
+# ifndef CPPAD_AZMUL_HPP
+# define CPPAD_AZMUL_HPP
 
 /* --------------------------------------------------------------------------
 CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-15 Bradley M. Bell

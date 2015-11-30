@@ -1,9 +1,9 @@
-/* $Id$ */
+// $Id$
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-12 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-15 Bradley M. Bell
 
 CppAD is distributed under multiple licenses. This distribution is under
-the terms of the 
+the terms of the
                     Eclipse Public License Version 1.0.
 
 A copy of this license is included in the COPYING file of this distribution.
@@ -17,10 +17,8 @@ $spell
 $$
 
 $section Sum of the Elements of the Square of a Matrix: Example and Test$$
+$mindex mat_sum_sq$$
 
-$index mat_sum_sq, example$$
-$index example, mat_sum_sq$$
-$index test, mat_sum_sq$$
 
 $code
 $verbatim%speed/example/mat_sum_sq.cpp%0%// BEGIN C++%// END C++%1%$$
@@ -31,7 +29,7 @@ $end
 // BEGIN C++
 # include <vector>
 # include <cstddef>
-# include <cppad/vector.hpp>
+# include <cppad/utility/vector.hpp>
 # include <cppad/speed/mat_sum_sq.hpp>
 
 bool mat_sum_sq()
@@ -53,24 +51,24 @@ bool mat_sum_sq()
 
 	// check y_00
 	check = x_00 * x_00 + x_01 * x_10;
-	ok   &= (check == y[0]); 
+	ok   &= (check == y[0]);
 
 	// check y_01
 	check = x_00 * x_01 + x_01 * x_11;
-	ok   &= (check == y[1]); 
+	ok   &= (check == y[1]);
 
 	// check y_10
 	check = x_10 * x_00 + x_11 * x_10;
-	ok   &= (check == y[2]); 
+	ok   &= (check == y[2]);
 
 	// check y_11
 	check = x_10 * x_01 + x_11 * x_11;
-	ok   &= (check == y[3]); 
-	
+	ok   &= (check == y[3]);
+
 	// check z
 	check = y[0] + y[1] + y[2] + y[3];
-	ok   &= (check == z[0]); 
-	
+	ok   &= (check == z[0]);
+
 	return ok;
 }
 // END C++

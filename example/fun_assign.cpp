@@ -1,9 +1,9 @@
-/* $Id$ */
+// $Id$
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-14 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-15 Bradley M. Bell
 
 CppAD is distributed under multiple licenses. This distribution is under
-the terms of the 
+the terms of the
                     Eclipse Public License Version 1.0.
 
 A copy of this license is included in the COPYING file of this distribution.
@@ -14,10 +14,8 @@ Please visit http://www.coin-or.org/CppAD/ for information on other licenses.
 $begin fun_assign.cpp$$
 
 $section ADFun Assignment: Example and Test$$
+$mindex assignment$$
 
-$index ADFun, assignment example$$
-$index example, ADFun assignment$$
-$index assignment, ADFun example$$
 
 $code
 $verbatim%example/fun_assign.cpp%0%// BEGIN C++%// END C++%1%$$
@@ -50,7 +48,7 @@ bool fun_assign(void)
 	// declare independent variables and start tape recording
 	CppAD::Independent(x);
 
-	// range space vector 
+	// range space vector
 	size_t m = 2;
 	CPPAD_TESTVECTOR(AD<double>) y(m);
 	y[0] = x[0] + x[0] * x[1];
@@ -65,7 +63,7 @@ bool fun_assign(void)
 		r[j].insert(j);
 
 	// Store forward mode sparsity pattern in f
-	f.ForSparseJac(n, r); 
+	f.ForSparseJac(n, r);
 
 	// make a copy in g
 	g = f;
@@ -82,8 +80,8 @@ bool fun_assign(void)
 		dx[i] = 0.;
 	dx[1] = 1;
 	dy    = g.Forward(1, dx);
-	ok &= NearEqual(dy[0], x[0], eps, eps); // partial y[0] w.r.t x[1] 
-	ok &= NearEqual(dy[1], x[2], eps, eps); // partial y[1] w.r.t x[1] 
+	ok &= NearEqual(dy[0], x[0], eps, eps); // partial y[0] w.r.t x[1]
+	ok &= NearEqual(dy[1], x[2], eps, eps); // partial y[1] w.r.t x[1]
 
 	// Use forward Jacobian sparsity pattern from f to calculate
 	// Hessian sparsity pattern using g.
@@ -91,18 +89,18 @@ bool fun_assign(void)
 	s[0].insert(0); // Compute sparsity pattern for Hessian of y[0]
 	h =  f.RevSparseHes(n, s);
 
-	// check sparsity pattern for Hessian of y[0] = x[0] + x[0] * x[1] 
-	ok  &= ( h[0].find(0) == h[0].end() ); // zero     w.r.t x[0], x[0] 
-	ok  &= ( h[0].find(1) != h[0].end() ); // non-zero w.r.t x[0], x[1] 
-	ok  &= ( h[0].find(2) == h[0].end() ); // zero     w.r.t x[0], x[2] 
+	// check sparsity pattern for Hessian of y[0] = x[0] + x[0] * x[1]
+	ok  &= ( h[0].find(0) == h[0].end() ); // zero     w.r.t x[0], x[0]
+	ok  &= ( h[0].find(1) != h[0].end() ); // non-zero w.r.t x[0], x[1]
+	ok  &= ( h[0].find(2) == h[0].end() ); // zero     w.r.t x[0], x[2]
 
-	ok  &= ( h[1].find(0) != h[1].end() ); // non-zero w.r.t x[1], x[0] 
-	ok  &= ( h[1].find(1) == h[1].end() ); // zero     w.r.t x[1], x[1] 
-	ok  &= ( h[1].find(2) == h[1].end() ); // zero     w.r.t x[1], x[2] 
+	ok  &= ( h[1].find(0) != h[1].end() ); // non-zero w.r.t x[1], x[0]
+	ok  &= ( h[1].find(1) == h[1].end() ); // zero     w.r.t x[1], x[1]
+	ok  &= ( h[1].find(2) == h[1].end() ); // zero     w.r.t x[1], x[2]
 
-	ok  &= ( h[2].find(0) == h[2].end() ); // zero     w.r.t x[2], x[0] 
-	ok  &= ( h[2].find(1) == h[2].end() ); // zero     w.r.t x[2], x[1] 
-	ok  &= ( h[2].find(2) == h[2].end() ); // zero     w.r.t x[2], x[2] 
+	ok  &= ( h[2].find(0) == h[2].end() ); // zero     w.r.t x[2], x[0]
+	ok  &= ( h[2].find(1) == h[2].end() ); // zero     w.r.t x[2], x[1]
+	ok  &= ( h[2].find(2) == h[2].end() ); // zero     w.r.t x[2], x[2]
 
 	return ok;
 }

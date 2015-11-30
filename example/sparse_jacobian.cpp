@@ -1,4 +1,4 @@
-/* $Id$ */
+// $Id$
 /* --------------------------------------------------------------------------
 CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-15 Bradley M. Bell
 
@@ -18,11 +18,8 @@ $spell
 $$
 
 $section Sparse Jacobian: Example and Test$$
+$mindex Jacobian spare$$
 
-$index Jacobian, sparse$$
-$index example, sparse Jacobian$$
-$index test, sparse Jacobian$$
-$index spare, Jacobian example$$
 
 $code
 $verbatim%example/sparse_jacobian.cpp%0%// BEGIN C++%// END C++%1%$$

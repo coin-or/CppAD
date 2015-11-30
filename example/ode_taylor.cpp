@@ -1,9 +1,9 @@
-/* $Id$ */
+// $Id$
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-12 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-15 Bradley M. Bell
 
 CppAD is distributed under multiple licenses. This distribution is under
-the terms of the 
+the terms of the
                     Eclipse Public License Version 1.0.
 
 A copy of this license is included in the COPYING file of this distribution.
@@ -22,39 +22,36 @@ $spell
 $$
 
 $section Taylor's Ode Solver: An Example and Test$$
-$index ODE, Taylor$$
-$index Taylor, ODE$$
-$index example, ODE$$
-$index test, ODE$$
+$mindex Taylor$$
 
 $head Purpose$$
 This example solves an ordinary differential equation using Taylor's method;
 i.e.,
 $latex \[
-	Z(t + \Delta t) 
-	\approx 
-	Z^{(0)} (t) + 
-	\frac{ Z^{(1)} (t) }{ 1 !} \Delta t + \cdots + 
+	Z(t + \Delta t)
+	\approx
+	Z^{(0)} (t) +
+	\frac{ Z^{(1)} (t) }{ 1 !} \Delta t + \cdots +
 	\frac{ Z^{(p)} (t) }{ p !} ( \Delta t )^p )
 \] $$
 
 $head ODE$$
 The ODE is defined by the function
 $latex h : \B{R}^n \rightarrow \B{R}^n$$,
-which for this example is given by 
+which for this example is given by
 $latex \[
-	Z^{(1)} (t) = H[ Z(t) ] = 
+	Z^{(1)} (t) = H[ Z(t) ] =
 	\left( \begin{array}{c}
 			1                       \\
 			Z_1 (t)                 \\
 			\vdots                  \\
-			Z_{n-1} (t)                  
+			Z_{n-1} (t)
 	\end{array} \right)
 \] $$
 and the initial condition is $latex z(0) = 0$$.
 
 $head ODE Solution$$
-The solution for this example can be calculated by 
+The solution for this example can be calculated by
 starting with the first row and then using the solution
 for the first row to solve the second and so on.
 Doing this we obtain
@@ -76,8 +73,8 @@ $latex \[
 we note that
 $latex \[
 \begin{array}{rcl}
-Z^{(1)} (t) 
-& = & 
+Z^{(1)} (t)
+& = &
 H( z^{(0)} + z^{(1)} t + \cdots + z^{(K)} t^K ) + O( t^{K+1} )
 \\
 & = &
@@ -118,7 +115,7 @@ namespace { // BEGIN empty namespace
 		CPPAD_TESTVECTOR( AD<double> ) y(n);
 		y[0] = 1;
 		for(size_t k = 1; k < n; k++)
-			y[k] = Z[k-1]; 
+			y[k] = Z[k-1];
 		return y;
 	}
 
@@ -127,7 +124,7 @@ namespace { // BEGIN empty namespace
 // -------------------------------------------------------------------------
 // Example that uses Taylor's method to solve ordinary differential equaitons
 bool ode_taylor(void)
-{	// initialize the return value as true	
+{	// initialize the return value as true
 	bool ok = true;
 
 	// some temporary indices
@@ -144,7 +141,7 @@ bool ode_taylor(void)
 	// initialize the solution vector at time zero
 	CPPAD_TESTVECTOR( double ) z(n);
 	for(j = 0; j < n; j++)
-		z[j] = 0.0; 
+		z[j] = 0.0;
 
 	size_t order   = n;   // order of the Taylor method
 	size_t n_step  = 4;   // number of time steps
@@ -160,7 +157,7 @@ bool ode_taylor(void)
 		for(k = 0; k < order; k++)
 		{	// evaluate k-th order Taylor coefficient of H
 			hk = H.Forward(k, zk);
- 
+
 			for(j = 0; j < n; j++)
 			{	// convert to (k+1)-Taylor coefficient for z
 				zk[j] = hk[j] / double(k + 1);
@@ -174,7 +171,7 @@ bool ode_taylor(void)
 		}
 	}
 
-	// check solution of the ODE, 
+	// check solution of the ODE,
 	// Taylor's method should have no truncation error for this case
 	double eps   = 100. * std::numeric_limits<double>::epsilon();
 	double check = 1.;

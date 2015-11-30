@@ -1,12 +1,12 @@
-/* $Id$ */
-# ifndef CPPAD_JACOBIAN_INCLUDED
-# define CPPAD_JACOBIAN_INCLUDED
+// $Id$
+# ifndef CPPAD_JACOBIAN_HPP
+# define CPPAD_JACOBIAN_HPP
 
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-14 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-15 Bradley M. Bell
 
 CppAD is distributed under multiple licenses. This distribution is under
-the terms of the 
+the terms of the
                     Eclipse Public License Version 1.0.
 
 A copy of this license is included in the COPYING file of this distribution.
@@ -24,11 +24,9 @@ $spell
 	const
 $$
 
-$index Jacobian, driver$$
-$index first, derivative$$
-$index driver, Jacobian$$
 
 $section Jacobian: Driver Routine$$
+$mindex Jacobian first derivative$$
 
 $head Syntax$$
 $icode%jac% = %f%.Jacobian(%x%)%$$
@@ -57,7 +55,7 @@ $codei%
 	const %Vector% &%x%
 %$$
 (see $cref/Vector/Jacobian/Vector/$$ below)
-and its size 
+and its size
 must be equal to $icode n$$, the dimension of the
 $cref/domain/seq_property/Domain/$$ space for $icode f$$.
 It specifies
@@ -74,7 +72,7 @@ $cref/domain/seq_property/Domain/$$
 and
 $cref/range/seq_property/Range/$$
 dimensions for $icode f$$.
-For $latex i = 0 , \ldots , m - 1 $$ 
+For $latex i = 0 , \ldots , m - 1 $$
 and $latex j = 0 , \ldots , n - 1$$
 $latex \[.
 	jac[ i * n + j ] = \D{ F_i }{ x_j } ( x )
@@ -93,7 +91,7 @@ This will use order zero Forward mode and either
 order one Forward or order one Reverse to compute the Jacobian
 (depending on which it estimates will require less work).
 After each call to $cref Forward$$,
-the object $icode f$$ contains the corresponding 
+the object $icode f$$ contains the corresponding
 $cref/Taylor coefficients/glossary/Taylor Coefficient/$$.
 After a call to $code Jacobian$$,
 the zero order Taylor coefficients correspond to
@@ -104,7 +102,7 @@ $head Example$$
 $children%
 	example/jacobian.cpp
 %$$
-The routine 
+The routine
 $cref/Jacobian/jacobian.cpp/$$ is both an example and test.
 It returns $code true$$, if it succeeds and $code false$$ otherwise.
 
@@ -136,7 +134,7 @@ void JacobianFor(ADFun<Base> &f, const Vector &x, Vector &jac)
 	// initialize all the components
 	for(j = 0; j < n; j++)
 		u[j] = Base(0);
-	
+
 	// loop through the different coordinate directions
 	for(j = 0; j < n; j++)
 	{	// set u to the j-th coordinate direction
@@ -171,7 +169,7 @@ void JacobianRev(ADFun<Base> &f, const Vector &x, Vector &jac)
 	// initialize all the components
 	for(i = 0; i < m; i++)
 		v[i] = Base(0);
-	
+
 	// loop through the different coordinate directions
 	for(i = 0; i < m; i++)
 	{	if( f.Parameter(i) )
@@ -180,7 +178,7 @@ void JacobianRev(ADFun<Base> &f, const Vector &x, Vector &jac)
 				jac[ i * n + j ] = Base(0);
 		}
 		else
-		{ 
+		{
 			// set v to the i-th coordinate direction
 			v[i] = Base(1);
 
@@ -207,13 +205,13 @@ Vector ADFun<Base>::Jacobian(const Vector &x)
 	CPPAD_ASSERT_KNOWN(
 		size_t(x.size()) == n,
 		"Jacobian: length of x not equal domain dimension for F"
-	); 
+	);
 
 	// point at which we are evaluating the Jacobian
 	Forward(0, x);
 
 	// work factor for forward mode
-	size_t workForward = n; 
+	size_t workForward = n;
 
 	// work factor for reverse mode
 	size_t workReverse = 0;

@@ -1,11 +1,11 @@
-/* $Id$ */
-# ifndef CPPAD_ODE_RUN_INCLUDED
-# define CPPAD_ODE_RUN_INCLUDED
+// $Id$
+# ifndef CPPAD_ODE_RUN_HPP
+# define CPPAD_ODE_RUN_HPP
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-13 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-15 Bradley M. Bell
 
 CppAD is distributed under multiple licenses. This distribution is under
-the terms of the 
+the terms of the
                     Eclipse Public License Version 1.0.
 
 A copy of this license is included in the COPYING file of this distribution.
@@ -48,14 +48,14 @@ void ipopt_ode_case(
 	S[0] = 0;
 	for(i = 1; i <= Nz; i++)
 		S[i] = S[i-1] + N[i];
-	
+
 	// number of components of x corresponding to values for y
 	size_t ny_inx = (S[Nz] + 1) * Ny;
 	// number of constraints (range dimension of g)
 	size_t m      = ny_inx;
 	// number of components in x (domain dimension for f and g)
 	size_t n      = ny_inx + Na;
-	// the argument vector for the optimization is 
+	// the argument vector for the optimization is
 	// y(t) at t[0] , ... , t[S[Nz]] , followed by a
 	NumberVector x_i(n), x_l(n), x_u(n);
 	for(j = 0; j < ny_inx; j++)
@@ -96,7 +96,7 @@ void ipopt_ode_case(
 	app->Options()->SetIntegerValue("max_iter", 30);
 
 	// approximate accuracy in first order necessary conditions;
-	// see Mathematical Programming, Volume 106, Number 1, 
+	// see Mathematical Programming, Volume 106, Number 1,
 	// Pages 25-57, Equation (6)
 	app->Options()->SetNumericValue("tol", 1e-9);
 

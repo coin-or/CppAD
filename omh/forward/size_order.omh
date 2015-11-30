@@ -1,9 +1,9 @@
-/* $Id$ */
+// $Id$
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-14 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-15 Bradley M. Bell
 
 CppAD is distributed under multiple licenses. This distribution is under
-the terms of the 
+the terms of the
                     Eclipse Public License Version 1.0.
 
 A copy of this license is included in the COPYING file of this distribution.
@@ -26,8 +26,8 @@ $cref seq_property$$
 
 $head Purpose$$
 Determine the number of Taylor coefficient orders, per variable,direction,
-currently calculated and stored in the ADFun object $icode f$$. 
-See the discussion under 
+currently calculated and stored in the ADFun object $icode f$$.
+See the discussion under
 $cref/Constructor/size_order/Constructor/$$,
 $cref/Forward/size_order/Forward/$$, and
 $cref/capacity_order/size_order/capacity_order/$$
@@ -45,7 +45,7 @@ The result $icode s$$ has prototype
 $codei%
 	size_t %s%
 %$$
-and is the number of Taylor coefficient orders, 
+and is the number of Taylor coefficient orders,
 per variable,direction in the AD operation sequence,
 currently calculated and stored in the ADFun object $icode f$$.
 
@@ -64,10 +64,10 @@ After a call to $cref/Forward/forward_order/$$ with the syntax
 $codei%
         %f%.Forward(%q%, %x_q%)
 %$$
-the value of $icode s$$ returned by $code size_order$$ 
+the value of $icode s$$ returned by $code size_order$$
 would be $latex q + 1$$.
 The call to $code Forward$$ above
-uses the lower order Taylor coefficients to compute and store 
+uses the lower order Taylor coefficients to compute and store
 the $th q$$ order Taylor coefficients for all
 the variables in the operation sequence corresponding to $icode f$$.
 Thus there are $latex q + 1$$ (order zero through $icode q$$)
@@ -77,7 +77,7 @@ using the $cref/size_var/seq_property/size_var/$$ function.)
 
 $head capacity_order$$
 If the number of Taylor coefficient orders
-currently stored in $icode f$$ is less than or equal $icode c$$, 
+currently stored in $icode f$$ is less than or equal $icode c$$,
 a call to $cref capacity_order$$ with the syntax
 $codei%
 	%f%.capacity_order(%c%)
@@ -86,7 +86,7 @@ does not affect the value $icode s$$ returned by $code size_order$$.
 Otherwise,
 the value $icode s$$ returned by $code size_order$$
 is equal to $icode c$$
-(only Taylor coefficients of order zero through $latex c-1$$ 
+(only Taylor coefficients of order zero through $latex c-1$$
 have been retained).
 
 $head Example$$

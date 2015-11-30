@@ -1,6 +1,6 @@
-/* $Id$ */
-# ifndef CPPAD_REVERSE_SWEEP_INCLUDED
-# define CPPAD_REVERSE_SWEEP_INCLUDED
+// $Id$
+# ifndef CPPAD_REVERSE_SWEEP_HPP
+# define CPPAD_REVERSE_SWEEP_HPP
 
 /* --------------------------------------------------------------------------
 CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-15 Bradley M. Bell

@@ -1,6 +1,6 @@
 // $Id$
-# ifndef CPPAD_BASE_REQUIRE_INCLUDED
-# define CPPAD_BASE_REQUIRE_INCLUDED
+# ifndef CPPAD_BASE_REQUIRE_HPP
+# define CPPAD_BASE_REQUIRE_HPP
 
 /* --------------------------------------------------------------------------
 CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-15 Bradley M. Bell
@@ -156,7 +156,7 @@ $end
 */
 
 // definitions that must come before base implementations
-# include <cppad/error_handler.hpp>
+# include <cppad/utility/error_handler.hpp>
 # include <cppad/local/define.hpp>
 # include <cppad/local/cppad_assert.hpp>
 # include <cppad/local/declare_ad.hpp>

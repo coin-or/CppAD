@@ -20,7 +20,7 @@ $spell
 $$
 
 $section Square Root Function Forward Mode Theory$$
-$index sqrt$$
+$mindex sqrt$$
 
 If $latex F(x) = \sqrt{x} $$
 $latex \[

@@ -1,9 +1,9 @@
-/* $Id$ */
+// $Id$
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-12 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-15 Bradley M. Bell
 
 CppAD is distributed under multiple licenses. This distribution is under
-the terms of the 
+the terms of the
                     Eclipse Public License Version 1.0.
 
 A copy of this license is included in the COPYING file of this distribution.
@@ -17,19 +17,16 @@ $spell
 	num
 	bool
 $$
-$index harmonic$$
-$index multi_thread, harmonic$$
-$index harmonic, multi_thread$$
-$index thread, multi harmonic$$
 
 
 $section Multi-Threaded Implementation of Summation of 1/i$$
+$mindex harmonic multi_thread$$
 
 $head Syntax$$
 $icode%ok% = harmonic(%sum%, %num_sum%, %num_threads%)%$$
 
 $head Summation$$
-Multi-threaded computation of the summation that defines the harmonic series 
+Multi-threaded computation of the summation that defines the harmonic series
 $latex \[
 	s = 1 + 1/2 + 1/3 + ... + 1/n
 \] $$
