@@ -23,6 +23,7 @@ fi
 # 4. Make the source code control $Id$ commands more uniform.
 # 5. Remove invisible white space
 # 6. Create utility.hpp (includes entire utilty directory)
+# 7. cppad/utility/CMakeLists.txt create deprecated include file links
 # -----------------------------------------------------------------------------
 # bash function that echos and executes a command
 echo_eval() {
@@ -61,16 +62,6 @@ do
 	echo_eval cp bin/new/$file bin/$file
 done
 chmod +x bin/batch_edit.sh
-# ---------------------------------------------------------------------------
-# cppad/*.h files (long ago deprecated)
-list=`ls cppad/*.h | sed -e 's|cppad/||'`
-for file in $list
-do
-	echo_eval git mv cppad/$file cppad/utility/$file
-cat << EOF >> junk.sed
-s|^\\tcppad/$file |\\tcppad/utility/$file |
-EOF
-done
 # ---------------------------------------------------------------------------
 # cppad/*.hpp files, move to utility drectory
 # except for cppad.hpp, configure.hpp, configure.hpp.in
@@ -121,8 +112,6 @@ list=`git ls-files | sed -n \
 	-e '/\.hpp\.in$/p'  \
 	-e '/\.cpp$/p'  \
 	-e '/makefile.am$/p'  \
-	-e '/\.h$/p'  \
-	-e '/\.c$/p'  \
 `
 for file in $list
 do
@@ -177,3 +166,44 @@ do
 	-e 's|^# *include *<cppad/utility/[a-z_]*\.hpp>]*>|# include <cppad/utility.hpp>|' \
 	-i $file
 done
+# ----------------------------------------------------------------------------
+# create cppad/utility/CMakeLists.txt and delete cppad/*.h
+#
+cmake_file='cppad/utility/CMakeLists.txt'
+touch $cmake_file
+bin/add_copyright.sh $cmake_file
+echo "FOREACH(old_include_file" >> $cmake_file
+#
+list=`git ls-files cppad/utility/*.hpp`
+for file in $list
+do
+	name=`echo $file | sed -e 's|cppad/utility/||'`
+	echo "	$name"  >> $cmake_file
+done
+#
+list=`git ls-files cppad/*.h`
+for file in $list
+do
+	name=`echo $file | sed -e 's|cppad/||'`
+	echo "	$name"  >> $cmake_file
+	git rm $file
+done
+cat << EOF >> $cmake_file
+)
+	FILE(WRITE
+		\${CMAKE_BINARY_DIR}/cppad/utility/\${old_include_file} 
+		"# include <cppad/utility.hpp>\\n"
+	)
+ENDFOREACH(old_include_file)
+EOF
+git add $cmake_file
+#
+git checkout CMakeLists.txt
+sed \
+	-e 's|ADD_SUBDIRECTORY(cppad_lib)|&\nADD_SUBDIRECTORY(cppad/utility)|' \
+	-e '329s|cppad/|${CMAKE_BINARY_DIR}/cppad/utility/|' \
+	-e '331,331d' \
+	-e '334s|cppad/|${CMAKE_SOURCE_DIR}/cppad/|' \
+	-i CMakeLists.txt
+sed -e '/\tcppad\/.*\.h \\/d' -i makefile.am
+# ----------------------------------------------------------------------------
