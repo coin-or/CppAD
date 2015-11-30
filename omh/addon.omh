@@ -1,0 +1,64 @@
+// $Id$
+/* --------------------------------------------------------------------------
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-15 Bradley M. Bell
+
+CppAD is distributed under multiple licenses. This distribution is under
+the terms of the
+                    Eclipse Public License Version 1.0.
+
+A copy of this license is included in the COPYING file of this distribution.
+Please visit http://www.coin-or.org/CppAD/ for information on other licenses.
+-------------------------------------------------------------------------- */
+$begin addon$$
+$spell
+	CppAD
+	cppad.hpp
+	ons
+	namespace
+	cg
+$$
+
+
+$section CppAD Add-ons$$
+
+$head Name$$
+Each CppAD add-on has a name which we denote by $icode name$$ below:
+
+$table
+$icode name$$  $pre  $$ $cnext Description
+$rnext
+$href%https://github.com/joaoleal/CppADCodeGen/%cg%$$ $cnext
+	C++ Source Code Generation of CppAD Derivative Calculations
+$tend
+
+$head Include Files$$
+If $icode include$$ is the directory where the include files are installed,
+the file
+$codei%
+	%include%/cppad/%name%.hpp
+%$$
+and the directory
+$codei%
+	%include%/cppad/%name%
+%$$
+are reserved for use by the $icode name$$ add-on.
+
+$head Preprocessor Symbols$$
+C++ preprocessor symbols that begin with
+$codei%
+	CPPAD_%NAME%_
+%$$
+where $icode NAME$$ is a upper-case version of $icode name$$,
+are reserved for use by the $icode name$$ add-on.
+
+$head Namespace$$
+The C++ namespace
+$codei%
+	CppAD::%name%
+%$$
+is reserved for use by the $icode name$$ add-on.
+
+
+$end
+
+

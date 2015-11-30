@@ -26,6 +26,7 @@ $childtable%
 	omh/deprecated/deprecated.omh%
 	compare_c/CMakeLists.txt%
 	omh/numeric_ad.omh%
+	omh/addon.omh%
 	omh/license.omh
 %$$
 
