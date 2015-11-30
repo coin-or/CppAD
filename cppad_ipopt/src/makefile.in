@@ -243,10 +243,10 @@ CYGPATH_W = @CYGPATH_W@
 
 # $Id$
 # -----------------------------------------------------------------------------
-# CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-12 Bradley M. Bell
+# CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-15 Bradley M. Bell
 #
 # CppAD is distributed under multiple licenses. This distribution is under
-# the terms of the 
+# the terms of the
 #                     Eclipse Public License Version 1.0.
 #
 # A copy of this license is included in the COPYING file of this distribution.
@@ -389,7 +389,7 @@ top_builddir = @top_builddir@
 top_srcdir = @top_srcdir@
 #
 #
-AM_CXXFLAGS = -g $(CXX_FLAGS) 
+AM_CXXFLAGS = -g $(CXX_FLAGS)
 #
 AM_CPPFLAGS = \
 	-I. \
@@ -412,7 +412,7 @@ AM_CPPFLAGS = \
 @CppAD_IPOPT_TRUE@	sparse_map2vec.cpp \
 @CppAD_IPOPT_TRUE@	sparse_map2vec.hpp \
 @CppAD_IPOPT_TRUE@	vec_fun_pattern.cpp  \
-@CppAD_IPOPT_TRUE@	vec_fun_pattern.hpp 
+@CppAD_IPOPT_TRUE@	vec_fun_pattern.hpp
 
 all: all-am
 

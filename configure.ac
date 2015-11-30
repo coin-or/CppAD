@@ -547,8 +547,8 @@ fi
 
 
 
-dnl Have configure check source directory to see if cppad/CppAD.h is there
-AC_CONFIG_SRCDIR(cppad/CppAD.h)
+dnl Have configure check source directory to see if cppad/cppad.hpp is there
+AC_CONFIG_SRCDIR(cppad/cppad.hpp)
 
 dnl AC_PROG_CP outputs CPP as command to run C preprocessor
 AC_PROG_CPP

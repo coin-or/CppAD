@@ -89,6 +89,9 @@ $codep
 	# include <cppad/utility.hpp>
 $$
 i.e., the same command for all the utilities.
+If you are using the deprecated $cref auto_tools$$ install procedure,
+you will have to change to this new convention
+(it does not provide a backward compatible option).
 $lnext
 The $cref numeric_ad$$ routines where moved from the $code library$$
 the a separate documentation section.

@@ -622,7 +622,7 @@ ac_includes_default="\
 # include <unistd.h>
 #endif"
 
-ac_unique_file="cppad/CppAD.h"
+ac_unique_file="cppad/cppad.hpp"
 ac_subst_vars='am__EXEEXT_FALSE
 am__EXEEXT_TRUE
 LTLIBOBJS

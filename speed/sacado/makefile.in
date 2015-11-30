@@ -327,10 +327,10 @@ top_srcdir = @top_srcdir@
 
 # $Id$
 # -----------------------------------------------------------------------------
-# CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-14 Bradley M. Bell
+# CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-15 Bradley M. Bell
 #
 # CppAD is distributed under multiple licenses. This distribution is under
-# the terms of the 
+# the terms of the
 #                     Eclipse Public License Version 1.0.
 #
 # A copy of this license is included in the COPYING file of this distribution.
@@ -349,7 +349,7 @@ AM_CPPFLAGS = \
 #
 # BEGIN OPTIMIZE
 AM_CXXFLAGS = -O2 -DNDEBUG -DCPPAD_SACADO_SPEED \
- 	-DRAD_EQ_ALIAS -DRAD_AUTO_AD_Const $(CXX_FLAGS)
+	-DRAD_EQ_ALIAS -DRAD_AUTO_AD_Const $(CXX_FLAGS)
 
 # END OPTIMIZE
 #
@@ -653,7 +653,7 @@ main.cpp:
 	cp $(srcdir)/../main.cpp main.cpp
 
 test: check
-	./speed_sacado correct 123 
+	./speed_sacado correct 123
 
 # Tell versions [3.59,3.63) of GNU make to not export all variables.
 # Otherwise a system limit (for SysV at least) may be exceeded.
