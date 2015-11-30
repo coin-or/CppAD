@@ -183,11 +183,11 @@ $lnext
 The $cref cmake$$ installation was putting the $code cppad.pc$$
 $cref pkgconfig$$ file in
 $codei%
-	cmake_install_prefix%/cmake_install_datadir%/cppad.pc
+	cppad_prefix%/cmake_install_datadir%/cppad.pc
 %$$
 This has been fixed and is now
 $codei%
-	cmake_install_prefix%/cmake_install_datadir%/pkgconfig/cppad.pc
+	cppad_prefix%/cmake_install_datadir%/pkgconfig/cppad.pc
 %$$
 $lnext
 The $cref pkgconfig$$ documentation has been improved.

@@ -12,7 +12,7 @@
 # -----------------------------------------------------------------------------
 cat << EOF
 This is not a bug but rather a test of installing with
-	cmake_install_prefix=$HOME/prefix
+	cppad_prefix=$HOME/prefix
 EOF
 cat << EOF > bug.$$
 # include <cppad/cppad.hpp>

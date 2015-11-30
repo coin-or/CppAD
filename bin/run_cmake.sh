@@ -125,8 +125,8 @@ then
 	cmake_args="$cmake_args  -D CMAKE_VERBOSE_MAKEFILE=1"
 fi
 # -----------------------------------------------------------------------------
-# cmake_install_prefix
-cmake_args="$cmake_args  -D cmake_install_prefix=$HOME/prefix/cppad"
+# cppad_prefix
+cmake_args="$cmake_args  -D cppad_prefix=$HOME/prefix/cppad"
 #
 # cmake_install_includedirs
 if [ -d '/usr/include' ]

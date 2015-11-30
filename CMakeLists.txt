@@ -90,18 +90,28 @@ command_line_arg(cmake_install_libdirs lib STRING
 	"directories, below prefix, where cmake installs library files"
 )
 # -----------------------------------------------------------------------------
-# cmake_install_prefix
-command_line_arg(cmake_install_prefix /usr PATH
+# cppad_prefix
+command_line_arg(cppad_prefix /usr PATH
 	"cppad install prefix"
 )
-SET(CMAKE_INSTALL_PREFIX "${cmake_install_prefix}"
-	CACHE PATH "value copied from cmake_install_prefix" FORCE
+SET(CMAKE_INSTALL_PREFIX "${cppad_prefix}"
+	CACHE PATH "value copied from cppad_prefix" FORCE
 )
+IF( cmake_install_prefix )
+	MESSAGE(FATAL_ERROR
+		"cmake_install_prefix has been changed to cppad_prefix"
+	)
+ENDIF( cmake_install_prefix )
 # -----------------------------------------------------------------------------
-# cmake_install_postfix
-command_line_arg(cmake_install_postfix NOTFOUND STRING
+# cppad_postfix
+command_line_arg(cppad_postfix NOTFOUND STRING
 	"cppad install postfix"
 )
+IF( cmake_install_postfix )
+	MESSAGE(FATAL_ERROR
+		"cmake_install_postfix has been changed to cppad_postfix"
+	)
+ENDIF( cmake_install_postfix )
 # -----------------------------------------------------------------------------
 # cppad_cxx_flags
 command_line_arg(cppad_cxx_flags NOTFOUND STRING
@@ -191,12 +201,12 @@ FOREACH(middle_names includedirs libdirs datadir docdir)
 		ENDIF( NOT middle_value )
 	ENDFOREACH(dir ${cmake_install_${middle_names}})
 	#
-	SET(tmp "${cmake_install_prefix}/${middle_value}" )
-	IF ( cmake_install_postfix )
-		SET(cppad_abs_${middle_name} ${tmp}/${cmake_install_postfix})
-	ELSE ( cmake_install_postfix )
+	SET(tmp "${cppad_prefix}/${middle_value}" )
+	IF ( cppad_postfix )
+		SET(cppad_abs_${middle_name} ${tmp}/${cppad_postfix})
+	ELSE ( cppad_postfix )
 		SET(cppad_abs_${middle_name} ${tmp})
-	ENDIF ( cmake_install_postfix )
+	ENDIF ( cppad_postfix )
 ENDFOREACH(middle_names includedirs libdirs datadir docdir)
 # -----------------------------------------------------------------------------
 # boost_prefix

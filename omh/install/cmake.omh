@@ -86,11 +86,11 @@ change into the $code build$$  directory,
 and execute the following command:
 $codei%
 cmake %%                                                                     \
-	-D CMAKE_VERBOSE_MAKEFILE=%cmake_verbose_makefile%                       \
+    -D CMAKE_VERBOSE_MAKEFILE=%cmake_verbose_makefile%                       \
     -G %generator%                                                           \
 	\
-    -D cmake_install_prefix=%cmake_install_prefix%                           \
-    -D cmake_install_postfix=%cmake_install_postfix%                         \
+    -D cppad_prefix=%cppad_prefix%                                           \
+    -D cppad_postfix=%cppad_postfix%                                         \
 	\
     -D cmake_install_includedirs=%cmake_install_includedirs%                 \
     -D cmake_install_libdirs=%cmake_install_libdirs%                         \
@@ -138,34 +138,34 @@ Other generator choices are available; see the cmake
 $href%http://www.cmake.org/cmake/help/cmake2.6docs.html#section_Generators%
 generators%$$ documentation.
 
-$head cmake_install_prefix$$
+$head cppad_prefix$$
 This is the top level absolute path below which
 all of the CppAD files are installed by the command
 $codei%
 	make install
 %$$
 For example,
-if $icode cmake_install_prefix$$ is $code /usr$$,
+if $icode cppad_prefix$$ is $code /usr$$,
 $icode cmake_install_includedirs$$ is $code include$$, and
-$icode cmake_install_postfix$$ is not specified,
+$icode cppad_postfix$$ is not specified,
 the file $code cppad.hpp$$ is installed in the location
 $codei%
 	/usr/include/cppad/cppad.hpp
 %$$
-The default value for $icode cmake_install_prefix$$ is $code /usr$$.
+The default value for $icode cppad_prefix$$ is $code /usr$$.
 
-$head cmake_install_postfix$$
+$head cppad_postfix$$
 This is the bottom level relative path below which
 all of the CppAD files are installed.
 For example,
-if $icode cmake_install_prefix$$ is $code /usr$$,
+if $icode cppad_prefix$$ is $code /usr$$,
 $icode cmake_install_includedirs$$ is $code include$$, and
-$icode cmake_install_postfix$$ is $code coin$$,
+$icode cppad_postfix$$ is $code coin$$,
 the file $code cppad.hpp$$ is installed in the location
 $codei%
 	/usr/include/coin/cppad/cppad.hpp
 %$$
-The default value for $icode cmake_install_postfix$$ is empty; i.e,
+The default value for $icode cppad_postfix$$ is empty; i.e,
 there is no bottom level relative directory for the installed files.
 
 
@@ -176,9 +176,9 @@ This first entry in the list is the middle level relative path below which
 the CppAD include files are installed.
 The entire list is used for searching for include files.
 For example,
-if $icode cmake_install_prefix$$ is $code /usr$$,
+if $icode cppad_prefix$$ is $code /usr$$,
 $icode cmake_install_includedirs$$ is $code include$$, and
-$icode cmake_install_postfix$$ is not specified,
+$icode cppad_postfix$$ is not specified,
 the file $code cppad.hpp$$ is installed in the location
 $codei%
 	/usr/include/cppad/cppad.hpp
@@ -193,9 +193,9 @@ This first entry in the list is the middle level relative path below which
 the CppAD library files are installed.
 The entire list is used for searching for library files.
 For example,
-if $icode cmake_install_prefix$$ is $code /usr$$,
+if $icode cppad_prefix$$ is $code /usr$$,
 $icode cmake_install_libdirs$$ is $code lib$$,
-$icode cmake_install_postfix$$ is not specified,
+$icode cppad_postfix$$ is not specified,
 and $icode ipopt_prefix$$ is specified,
 the file $code libcppad_ipopt.a$$ is installed in the location
 $codei%
@@ -207,9 +207,9 @@ $head cmake_install_datadir$$
 This is the middle level relative path below which
 the CppAD data files are installed.
 For example,
-if $icode cmake_install_prefix$$ is $code /usr$$,
+if $icode cppad_prefix$$ is $code /usr$$,
 $icode cmake_install_datadir$$ is $code share$$, and
-$icode cmake_install_postfix$$ is not specified,
+$icode cppad_postfix$$ is not specified,
 the $cref pkgconfig$$ file $code cppad.pc$$ is installed in the location
 $codei%
 	/usr/share/pkgconfig/cppad.pc
@@ -220,9 +220,9 @@ $head cmake_install_docdir$$
 This is the middle level relative path below which
 the CppAD documentation files are installed.
 For example,
-if $icode cmake_install_prefix$$ is $code /usr$$,
+if $icode cppad_prefix$$ is $code /usr$$,
 $icode cmake_install_docdir$$ is $code share/doc$$, and
-$icode cmake_install_postfix$$ is not specified,
+$icode cppad_postfix$$ is not specified,
 the file $code cppad.xml$$ is installed in the location
 $codei%
 	/usr/share/doc/cppad/cppad.xml

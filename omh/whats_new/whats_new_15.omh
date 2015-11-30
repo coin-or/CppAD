@@ -95,6 +95,11 @@ you will have to change to this new convention
 $lnext
 The $cref numeric_ad$$ routines where moved from the $code library$$
 the a separate documentation section.
+$lnext
+Change $code cmake_install_prefix$$ to
+$cref/cppad_prefix/cmake/cppad_prefix/$$ and
+Change $code cmake_install_postfix$$ to
+$cref/cppad_postfix/cmake/cppad_postfix/$$.
 $lend
 
 $head 11-25$$
