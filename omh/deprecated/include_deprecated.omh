@@ -27,6 +27,15 @@ $$
 
 $section Deprecated Include Files$$
 
+$head Deprecated 2015-11-30$$
+The $cref utility$$ individual include files; e.g.,
+$codep
+	# include <cppad/runge_45.hpp>
+$$
+You should instead use
+$codep
+	# include <cppad/utility.hpp>
+$$
 
 $head Deprecated 2006-12-17$$
 The following is a list of deprecated include file names

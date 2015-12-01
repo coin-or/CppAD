@@ -217,7 +217,6 @@ else
 fi
 #
 # simple options
-cmake_args="$cmake_args -D cppad_deprecated=NO"
 cmake_args="$cmake_args -D cppad_testvector=$testvector"
 cmake_args="$cmake_args -D cppad_tape_id_type='int32_t'"
 cmake_args="$cmake_args -D cppad_tape_addr_type=int32_t"

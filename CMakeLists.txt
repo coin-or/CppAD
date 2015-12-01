@@ -337,10 +337,6 @@ ADD_CUSTOM_TARGET(check DEPENDS ${check_depends})
 # During install copy all the cppad include files to
 # ${cppad_abs_includedir}/cppad
 INSTALL(
-	DIRECTORY "${CMAKE_BINARY_DIR}/cppad/utility/"
-	DESTINATION ${cppad_abs_includedir}/cppad
-)
-INSTALL(
 	DIRECTORY "${CMAKE_SOURCE_DIR}/cppad/"
 	DESTINATION ${cppad_abs_includedir}/cppad
 	FILES_MATCHING PATTERN "*.hpp"
@@ -350,3 +346,11 @@ INSTALL(
 IF ( cmake_install_docdir )
 	INSTALL( DIRECTORY "doc/" DESTINATION ${cppad_abs_docdir}/cppad )
 ENDIF ( cmake_install_docdir )
+#
+IF( ${cppad_deprecated} )
+	# During install copy deprecated include files
+	INSTALL(
+		DIRECTORY "${CMAKE_BINARY_DIR}/cppad/utility/"
+		DESTINATION ${cppad_abs_includedir}/cppad
+	)
+ENDIF( ${cppad_deprecated} )

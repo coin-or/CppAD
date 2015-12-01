@@ -13,6 +13,7 @@ Please visit http://www.coin-or.org/CppAD/ for information on other licenses.
 $begin whats_new_15$$
 $dollar @$$
 $spell
+	runge
 	lcppad
 	ind
 	const
@@ -83,15 +84,16 @@ $cref/utilities/utility/$$ section.
 In addition, the corresponding source code files in $code cppad$$
 have been moved to $code cppad/utility$$.
 $lnext
-The include commands for the utilities have been changed from
-particular files for each utility,
+The individual $cref utility$$ include files have been deprecated; see
+$cref include_deprecated$$.
+For example,
+$codep
+	# include <cppad/runge_45.hpp>
+$$
+You should us the utility include instead; i.e.,
 $codep
 	# include <cppad/utility.hpp>
 $$
-i.e., the same command for all the utilities.
-If you are using the deprecated $cref auto_tools$$ install procedure,
-you will have to change to this new convention
-(it does not provide a backward compatible option).
 $lnext
 The $cref numeric_ad$$ routines where moved from the $code library$$
 the a separate documentation section.

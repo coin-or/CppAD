@@ -53,7 +53,7 @@ command_line_arg(cppad_deprecated NO BOOL
 	"implicit (instead of explicit) conversion from any type to AD<Base>"
 )
 # -----------------------------------------------------------------------------
-# cppad_explicit_ctor
+# cppad_deprecated
 IF( cppad_deprecated )
 	SET(cppad_deprecated 1)
 ELSE( cppad_deprecated )
