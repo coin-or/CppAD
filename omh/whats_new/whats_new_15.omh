@@ -105,7 +105,7 @@ $cref/cppad_postfix/cmake/cppad_postfix/$$.
 $lnext
 Change $code cppad_implicit_ctor_from_any_type$$ to
 $cref/cppad_deprecated/cmake/cppad_deprecated/$$ and
-changes is specifications to refer to all deprecated features.
+change its specifications to refer to all deprecated features.
 $lend
 
 $head 11-25$$

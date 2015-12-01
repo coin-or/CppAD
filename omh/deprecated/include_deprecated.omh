@@ -28,7 +28,7 @@ $$
 $section Deprecated Include Files$$
 
 $head Deprecated 2015-11-30$$
-The $cref utility$$ individual include files; e.g.,
+The $cref utility$$ individual include files have been deprecated; e.g.,
 $codep
 	# include <cppad/runge_45.hpp>
 $$
