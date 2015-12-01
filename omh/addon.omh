@@ -16,19 +16,28 @@ $spell
 	ons
 	namespace
 	cg
+	pycppad
 $$
 
 
 $section CppAD Add-ons$$
 
 $head Name$$
-Each CppAD add-on has a name which we denote by $icode name$$ below:
+Each CppAD add-on has a short name which we denote by $icode name$$ below,
+a longer name $icode longer$$ and a $icode description$$:
 
 $table
-$icode name$$  $pre  $$ $cnext Description
+$icode name$$  $pre  $$ $cnext
+$icode longer$$ $pre  $$ $cnext
+$icode description$$
 $rnext
 $href%https://github.com/joaoleal/CppADCodeGen/%cg%$$ $cnext
+	$code CppADCodeGen$$ $cnext
 	C++ Source Code Generation of CppAD Derivative Calculations
+$rnext
+$href%http://www.seanet.com/~bradbell/pycppad/pycppad.htm%py%$$ $cnext
+	$code pycppad$$ $cnext
+	A Python Interface to CppAD
 $tend
 
 $head Include Files$$
