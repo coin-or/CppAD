@@ -87,12 +87,12 @@ either sparse_set or sparse_list).
 # define CPPAD_INTERNAL_SPARSE_SET @cppad_internal_sparse_set@
 
 /*!
-\def CPPAD_IMPLICIT_CTOR_FROM_ANY_TYPE
+\def CPPAD_DEPRECATED
 If this symbol is one, an implicit constor of AD<Base> is defined
 where the argument has any type.
 Otherwise this constructor is explicit.
 */
-# define CPPAD_IMPLICIT_CTOR_FROM_ANY_TYPE @cppad_implicit_ctor_from_any_type@
+# define CPPAD_DEPRECATED @cppad_deprecated@
 
 /*!
 \def CPPAD_BOOSTVECTOR

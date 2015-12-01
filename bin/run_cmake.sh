@@ -25,6 +25,7 @@ echo_eval() {
 verbose='no'
 standard='c++11'
 debug_speed='no'
+deprecated='no'
 profile_speed='no'
 clang='no'
 no_colpack='no'
@@ -42,6 +43,7 @@ usage: bin/run_cmake.sh: \\
 	[--verbose] \\
 	[--c++98] \\
 	[--debug_speed] \\
+	[--deprecated] \\
 	[--profile_speed] \\
 	[--clang ] \\
 	[--no_colpack] \\
@@ -64,6 +66,9 @@ EOF
 	then
 		debug_speed='yes'
 		profile_speed='no'
+	elif [ "$1" == '--deprecated' ]
+	then
+		deprecated='yes'
 	elif [ "$1" == '--profile_speed' ]
 	then
 		profile_speed='yes'
@@ -203,8 +208,16 @@ then
 	cmake_args="$cmake_args -D cppad_profile_flag=-pg"
 fi
 #
+# deprecated
+if [ "$deprecated" == 'yes' ]
+then
+	cmake_args="$cmake_args -D cppad_deprecated=YES"
+else
+	cmake_args="$cmake_args -D cppad_deprecated=NO"
+fi
+#
 # simple options
-cmake_args="$cmake_args -D cppad_implicit_ctor_from_any_type=NO"
+cmake_args="$cmake_args -D cppad_deprecated=NO"
 cmake_args="$cmake_args -D cppad_testvector=$testvector"
 cmake_args="$cmake_args -D cppad_tape_id_type='int32_t'"
 cmake_args="$cmake_args -D cppad_tape_addr_type=int32_t"

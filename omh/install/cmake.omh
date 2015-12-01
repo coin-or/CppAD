@@ -113,7 +113,7 @@ cmake %%                                                                     \
     -D cppad_sparse_list=%cppad_sparse_list%                                 \
     -D cppad_tape_id_type=%cppad_tape_id_type%                               \
     -D cppad_tape_addr_type=%cppad_tape_addr_type%                           \
-    -D cppad_implicit_ctor_from_any_type=%cppad_implicit_ctor_from_any_type% \
+    -D cppad_deprecated=%cppad_deprecated% \
     \
     ..
 %$$
@@ -353,15 +353,14 @@ $code uint16_t$$,
 $code uint32_t$$,
 $code uint64_t$$.
 
-$head cppad_implicit_ctor_from_any_type$$
-The default value for $icode cppad_implicit_ctor_from_any_type$$ is $code NO$$.
-If it is $code YES$$, there is a
-$cref/deprecated/ad_ctor/x/Deprecated 2013-12-31/$$
-implicit type constructor (type conversion)
-from any type to $codei%AD<%Base%>%$$.
-Otherwise this constructor is
-$cref/explicit/ad_ctor/x/explicit/$$.
-
+$head cppad_deprecated$$
+The default value for $icode cppad_deprecated$$ is $code NO$$.
+If it is $code YES$$, then all the CppAD
+$cref deprecated$$ features are included in the
+$cref/installation/install/Instructions/Step 4: Installation/$$.
+Otherwise, some of the deprecated features
+may be excluded from the installation.
+(The intention here is to exclude more deprecated features as time marches on.)
 
 $children%
 	omh/install/adolc_prefix.omh%

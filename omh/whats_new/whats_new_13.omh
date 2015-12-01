@@ -99,10 +99,7 @@ $codei%
 	AD<%Base%>( %y% )
 %$$
 A deprecated alternative is to make this constructor implicit using the
-$cref/cppad_implicit_ctor_from_any_type
-	/cmake
-	/cppad_implicit_ctor_from_any_type
-/$$
+$cref/cppad_deprecated/cmake/cppad_deprecated/$$
 option during the install procedure.
 
 $head 12-26$$

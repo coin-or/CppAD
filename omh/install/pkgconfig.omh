@@ -93,7 +93,8 @@ $table
 $icode File$$             $cnext
 	$icode Description$$ $rnext
 $icode%prefix%/%datadir%/pkgconfig/cppad.pc%$$              $cnext
-	for use after $cref/make install/install/Instructions/Step 4: Install/$$
+	for use after
+	$cref/make install/install/Instructions/Step 4: Installation/$$
 $rnext
 $icode%builddir%/pkgconfig/cppad-uninstalled.pc%$$       $cnext
 	for testing before $code make install$$

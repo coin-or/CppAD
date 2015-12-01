@@ -35,7 +35,7 @@ $subhead Step 3: Check$$
 Use the $cref cmake_check$$ instructions to check the
 CppAD examples and tests.
 
-$subhead Step 4: Install$$
+$subhead Step 4: Installation$$
 Use the command
 $codep
 	make install

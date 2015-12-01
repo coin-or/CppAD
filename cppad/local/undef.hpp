@@ -55,7 +55,7 @@ Preprecessor definitions that presist after cppad/cppad.hpp is included:
 # undef CppADvector           deprecated version of CPPAD_TEST_VECTOR
 
 // for conditional testing when implicit conversion is not present
-# undef CPPAD_IMPLICIT_CTOR_FROM_ANY_TYPE
+# undef CPPAD_DEPRECATED
 -----------------------------------------------------------------------------
 */
 // Preprecessor definitions that do not presist

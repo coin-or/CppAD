@@ -225,9 +225,9 @@ AC_ARG_WITH(implicit_ctor,
 )
 AC_MSG_RESULT([$implicit_ctor])
 if test "$implicit_ctor" = "yes" ; then
-	AC_SUBST(cppad_implicit_ctor_from_any_type, "1")
+	AC_SUBST(cppad_deprecated, "1")
 else
-	AC_SUBST(cppad_implicit_ctor_from_any_type, "0")
+	AC_SUBST(cppad_deprecated, "0")
 fi
 
 dnl The postfix directiory corresponding to CppAD ------------------------
