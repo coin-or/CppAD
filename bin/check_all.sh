@@ -54,6 +54,18 @@ next_program() {
 	program=`echo "$program_list" | sed -e 's| *\([^ ]*\).*|\1|'`
 }
 # ---------------------------------------------------------------------------
+list="
+	$HOME/prefix/cppad
+	build
+"
+for name in $list
+do
+	if [ -e "$name" ]
+	then
+		echo_log_eval rm -r $name
+	fi
+done
+# ---------------------------------------------------------------------------
 # Create package to run test in
 echo "bin/package.sh"
 bin/package.sh
@@ -75,17 +87,6 @@ echo_log_eval rm -r cppad-$version
 echo_log_eval tar -xzf $tarball
 echo_log_eval cd cppad-$version
 # -----------------------------------------------------------------------------
-list="
-	$HOME/prefix/cppad
-	build
-"
-for name in $list
-do
-	if [ -e "$name" ]
-	then
-		echo_log_eval rm -r $name
-	fi
-done
 random_zero_one=`expr $RANDOM % 2`
 if [ "$random_zero_one" == '0' ]
 then
