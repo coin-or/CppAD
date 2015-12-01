@@ -383,16 +383,23 @@ dist-hook:
 	rm $(distdir)/doc/error.wrd
 	rm $(distdir)/bin/gpl_license.sh
 #
-if CppAD_DOCUMENTATION
 doc_postfix = $(DESTDIR)$(datadir)/doc/$(postfix_dir)
 doc_package = $(DESTDIR)$(datadir)/doc/$(postfix_dir)/$(PACKAGE)-$(VERSION)
+inc_postfix = $(DESTDIR)/$(myincludedir)
 install-data-hook:
+if CppAD_DOCUMENTATION
 	if [ ! -e $(doc_postfix) ] ; then mkdir -p $(doc_postfix) ; fi
 	if [ -e $(doc_package) ] ; then rm -rf $(doc_package) ; fi
 	cp -a $(top_srcdir)/doc $(doc_package)
 	chmod -R a-w $(doc_package)
 	chmod -R u+w $(doc_package)
 	chmod -R a+r $(doc_package)
+endif
+if CppAD_DEPRECATED
+	cp -a $(top_srcdir)/cppad/deprecated/* $(inc_postfix)/cppad
+	chmod -R a-w $(inc_postfix)/cppad
+	chmod -R u+w $(inc_postfix)/cppad
+	chmod -R a+r $(inc_postfix)/cppad
 endif
 #
 pkgconfigdir = $(datadir)/pkgconfig

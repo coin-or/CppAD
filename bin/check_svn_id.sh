@@ -37,10 +37,15 @@ list=`bin/list_files.sh | sed -n \
 #
 for file in $list
 do
-	if ! head -2 $file | grep '$Id.*\$' > /dev/null
+	# deprecated link files have just one line
+	lines=`cat $file | wc -l`
+	if [ "$lines" != 1 ]
 	then
-		echo "$file does not have '\$Id.*\$' in first two lines"
-		ok="no"
+		if ! head -2 $file | grep '$Id.*\$' > /dev/null
+		then
+			echo "$file does not have '\$Id.*\$' in first two lines"
+			ok="no"
+		fi
 	fi
 done
 echo "-------------------------------------------------------"

@@ -77,6 +77,13 @@ This section contains a list of the changes to CppAD during 2015
 The purpose of this section is to
 assist you in learning about changes between various versions of CppAD.
 
+$head 12-01$$
+Fix problem with $cref auto_tools$$ install handling of the
+deprecated files.
+This included changing the auto-tools
+$code --with-implicit_ctor$$ option to
+$cref/--with-deprecated/auto_tools/--with-deprecated/$$.
+
 $head 11-30$$
 $list number$$
 The $code library$$ section has been moved to the

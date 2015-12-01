@@ -100,11 +100,11 @@ $head Configure$$
 Execute the following command in the build directory:
 $codei%
 ./configure                                  \
-	--prefix=%prefix_dir%                     \
-	--with-Documentation                    \
-	--with-%test%vector                       \
-	--with-sparse_%option%                    \
-	--with-implicit_ctor                    \
+	--prefix=%prefix_dir%                    \
+	--with-Documentation                     \
+	--with-%test%vector                      \
+	--with-sparse_%option%                   \
+	--with-deprecated                        \
 	MAX_NUM_THREADS=%max_num_threads%         \
 	CXX_FLAGS=%cxx_flags%                     \
 	OPENMP_FLAGS=%openmp_flags%               \
@@ -298,14 +298,10 @@ This should affect the speed and memory required by the
 $cref sparse_jacobian$$, $cref sparse_hessian$$, and the
 $cref/sparse drivers/sparse/$$.
 
-$head --with-implicit_ctor$$
-If this configure argument is present, there is a
-$cref/deprecated/ad_ctor/x/Deprecated 2013-12-31/$$
-implicit type constructor (type conversion)
-from any type to $codei%AD<%Base%>%$$.
-Otherwise this constructor is
-$cref/explicit/ad_ctor/x/explicit/$$.
-
+$head --with-deprecated$$
+If this configure argument is present, then all the
+$cref deprecated$$ features are included in the install.
+Otherwise, they are not included.
 
 $head max_num_threads$$
 this specifies the value for the default value for the preprocessor symbol

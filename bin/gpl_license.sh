@@ -90,9 +90,9 @@ list=`find . \
 	\( -name '*.c'   \) -or \
 	\( -name '*.cpp' \) -or \
 	\( -name '*.hpp' \) -or \
+	\( -name '*.h' \)   -or \
 	\( -name '*.in'  \) -or \
 	\( -name '*.omh' \) -or \
-	\( -name '*.pc' \)  -or \
 	\( -name '*.py' \)  -or \
 	\( -name '*.sh' \)  -or \
 	\( -name '*.txt'  \)`
@@ -135,11 +135,9 @@ do
 	if ! grep "GNU General Public License Version 3" $archive_name/$file \
 		> /dev/null
 	then
-		if \
-		[ "$name" != 'config.h.in' ]   && \
-		[ "$name" != 'colpack.sh' ]    && \
-		[ "$name" != 'svn_commit.sh' ] && \
-		[ "$name" != 'git_commit.sh' ]
+		# one line (deprecaed) files do not have copyright.
+		lines=`cat $archive_name/$file | wc -l`
+		if [ "$lines" != '1' ] && [ "$name" != 'colpack.sh' ]
 		then
 			echo "Cannot change EPL to GPL for $archive_name/$file"
 			exit 1

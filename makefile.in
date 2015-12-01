@@ -346,6 +346,7 @@ cppad_SOURCE_DIR = @cppad_SOURCE_DIR@
 cppad_boostvector = @cppad_boostvector@
 cppad_cppadvector = @cppad_cppadvector@
 cppad_cxx_flags = @cppad_cxx_flags@
+cppad_deprecated = @cppad_deprecated@
 cppad_description = @cppad_description@
 cppad_eigenvector = @cppad_eigenvector@
 cppad_has_colpack = @cppad_has_colpack@
@@ -355,7 +356,6 @@ cppad_has_high_resolution_clock = @cppad_has_high_resolution_clock@
 cppad_has_mkstemp = @cppad_has_mkstemp@
 cppad_has_nullptr = @cppad_has_nullptr@
 cppad_has_rvalue = @cppad_has_rvalue@
-cppad_implicit_ctor_from_any_type = @cppad_implicit_ctor_from_any_type@
 cppad_internal_sparse_set = @cppad_internal_sparse_set@
 cppad_max_num_threads = @cppad_max_num_threads@
 cppad_pkgconfig_cflags = @cppad_pkgconfig_cflags@
@@ -757,8 +757,9 @@ test_directory_list = \
 	test_more
 
 #
-@CppAD_DOCUMENTATION_TRUE@doc_postfix = $(DESTDIR)$(datadir)/doc/$(postfix_dir)
-@CppAD_DOCUMENTATION_TRUE@doc_package = $(DESTDIR)$(datadir)/doc/$(postfix_dir)/$(PACKAGE)-$(VERSION)
+doc_postfix = $(DESTDIR)$(datadir)/doc/$(postfix_dir)
+doc_package = $(DESTDIR)$(datadir)/doc/$(postfix_dir)/$(PACKAGE)-$(VERSION)
+inc_postfix = $(DESTDIR)/$(myincludedir)
 #
 pkgconfigdir = $(datadir)/pkgconfig
 pkgconfig_DATA = pkgconfig/cppad.pc
@@ -1210,7 +1211,6 @@ maintainer-clean-generic:
 	@echo "This command is intended for maintainers to use"
 	@echo "it deletes files that may require special tools to rebuild."
 	-test -z "$(BUILT_SOURCES)" || rm -f $(BUILT_SOURCES)
-@CppAD_DOCUMENTATION_FALSE@install-data-hook:
 clean: clean-recursive
 
 clean-am: clean-generic mostlyclean-am
@@ -1309,7 +1309,7 @@ uninstall-am: uninstall-myincludeHEADERS \
 
 $(top_srcdir)/cppad/configure.hpp: cppad/configure.hpp
 	cp cppad/configure.hpp $(top_srcdir)/cppad/configure.hpp
-@CppAD_HAVE_AR_FALSE@	SPEED_TESTS = 
+@CppAD_HAVE_AR_FALSE@	SPEED_TESTS =
 @CppAD_HAVE_AR_FALSE@	SPEED_DIRS =
 
 test: all
@@ -1331,13 +1331,17 @@ dist-hook:
 	rm -rf `find . -name .svn`
 	rm $(distdir)/doc/error.wrd
 	rm $(distdir)/bin/gpl_license.sh
-@CppAD_DOCUMENTATION_TRUE@install-data-hook:
+install-data-hook:
 @CppAD_DOCUMENTATION_TRUE@	if [ ! -e $(doc_postfix) ] ; then mkdir -p $(doc_postfix) ; fi
 @CppAD_DOCUMENTATION_TRUE@	if [ -e $(doc_package) ] ; then rm -rf $(doc_package) ; fi
 @CppAD_DOCUMENTATION_TRUE@	cp -a $(top_srcdir)/doc $(doc_package)
 @CppAD_DOCUMENTATION_TRUE@	chmod -R a-w $(doc_package)
 @CppAD_DOCUMENTATION_TRUE@	chmod -R u+w $(doc_package)
 @CppAD_DOCUMENTATION_TRUE@	chmod -R a+r $(doc_package)
+@CppAD_DEPRECATED_TRUE@	cp -a $(top_srcdir)/cppad/deprecated/* $(inc_postfix)/cppad
+@CppAD_DEPRECATED_TRUE@	chmod -R a-w $(inc_postfix)/cppad
+@CppAD_DEPRECATED_TRUE@	chmod -R u+w $(inc_postfix)/cppad
+@CppAD_DEPRECATED_TRUE@	chmod -R a+r $(inc_postfix)/cppad
 
 # Tell versions [3.59,3.63) of GNU make to not export all variables.
 # Otherwise a system limit (for SysV at least) may be exceeded.

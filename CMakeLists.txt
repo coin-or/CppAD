@@ -289,7 +289,6 @@ SET(check_depends "")
 ADD_SUBDIRECTORY(cppad)
 ADD_SUBDIRECTORY(pkgconfig)
 ADD_SUBDIRECTORY(cppad_lib)
-ADD_SUBDIRECTORY(cppad/utility)
 #
 ADD_SUBDIRECTORY(compare_c)
 add_to_list(check_depends check_compare_c)
@@ -350,7 +349,7 @@ ENDIF ( cmake_install_docdir )
 IF( ${cppad_deprecated} )
 	# During install copy deprecated include files
 	INSTALL(
-		DIRECTORY "${CMAKE_BINARY_DIR}/cppad/utility/"
+		DIRECTORY "${CMAKE_SOURCE_DIR}/cppad/deprecated/"
 		DESTINATION ${cppad_abs_includedir}/cppad
 	)
 ENDIF( ${cppad_deprecated} )

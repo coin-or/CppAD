@@ -213,18 +213,19 @@ else
 fi
 
 
-dnl Are we including an implicit constructor from any type -----------
-AC_MSG_CHECKING([--with-implicit_ctor])
-AC_ARG_WITH(implicit_ctor,
+dnl Are we including deprecated features in the install-----------
+AC_MSG_CHECKING([--with-deprecated])
+AC_ARG_WITH(deprecated,
 	AC_HELP_STRING(
-		[--with-implicit_ctor],
+		[--with-deprecated],
 		[include an implicit AD<Base> constructor from any type]
 	),
-	[implicit_ctor="yes"],
-	[implicit_ctor="no"]
+	[deprecated="yes"],
+	[deprecated="no"]
 )
-AC_MSG_RESULT([$implicit_ctor])
-if test "$implicit_ctor" = "yes" ; then
+AC_MSG_RESULT([$deprecated])
+AM_CONDITIONAL(CppAD_DEPRECATED, test "$deprecated" = 'yes' )
+if test "$deprecated" = "yes" ; then
 	AC_SUBST(cppad_deprecated, "1")
 else
 	AC_SUBST(cppad_deprecated, "0")

@@ -47,7 +47,8 @@ bin/list_files.sh | sed -n -e '/cppad\/.*\.hpp$/p' | \
 	sed \
 		-e '1,1s|^|cppad/configure.hpp\n|' \
 		-e '/cppad\/local\/prototype_op.hpp/d' \
-		-e '/cppad\/example\/eigen_plugin.hpp/d' | \
+		-e '/cppad\/example\/eigen_plugin.hpp/d'  \
+		-e '/cppad\/deprecated\//d' | \
 	sort -u > bin/check_include_file.3.$$
 #
 if diff bin/check_include_file.2.$$ bin/check_include_file.3.$$

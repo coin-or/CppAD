@@ -74,7 +74,8 @@ $lnext
 There was a problem with deprecated $cref auto_tools$$
 (created when optional implicit constructor from any type was added).
 This has been fixed by adding the
-$cref/--with-implicit_ctor/auto_tools/--with-implicit_ctor/$$ option.
+$code --with-implicit_ctor$$ option
+(later changed to $cref/--with-deprecated/auto_tools/--with-deprecated/$$).
 $lend
 
 $head 12-27$$

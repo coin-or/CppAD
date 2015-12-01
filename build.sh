@@ -1,7 +1,7 @@
 #! /bin/bash -e
 # $Id$
 # -----------------------------------------------------------------------------
-# CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-14 Bradley M. Bell
+# CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-15 Bradley M. Bell
 #
 # CppAD is distributed under multiple licenses. This distribution is under
 # the terms of the
@@ -91,11 +91,11 @@ then
 	#
 	# check that autoconf and automake output are in original version
 	makefile_in=`sed configure.ac \
-        	-n \
-        	-e '/END AC_CONFIG_FILES/,$d' \
-        	-e '1,/AC_CONFIG_FILES/d' \
-        	-e 's|/makefile$|&.in|' \
-        	-e '/\/makefile.in/p'`
+	-n \
+	-e '/END AC_CONFIG_FILES/,$d' \
+	-e '1,/AC_CONFIG_FILES/d' \
+	-e 's|/makefile$|&.in|' \
+	-e '/\/makefile.in/p'`
 	auto_output="
 		depcomp
 		install-sh
@@ -136,7 +136,7 @@ then
 	# echo "libtoolize -c -f -i"
 	# if ! libtoolize -c -f -i
 	# then
-	# 	exit 1
+	#	exit 1
 	# fi
 	#
 	echo "autoconf"
@@ -227,7 +227,7 @@ $dir_list \\
 CXX_FLAGS=\"$cxx_flags\" \\
 $special_types OPENMP_FLAGS=-fopenmp \\
 --with-sparse_list --with-Documentation \\
---with-implicit_ctor
+--with-deprecated
 EOF
 	#
 	../configure > $log_dir/$log_file \
@@ -235,7 +235,7 @@ EOF
 		CXX_FLAGS="$cxx_flags" \
 		$special_types OPENMP_FLAGS=-fopenmp \
 		--with-sparse_list --with-Documentation \
-		--with-implicit_ctor
+		--with-deprecated
 	#
 	for file in $configure_file_list
 	do
@@ -273,7 +273,7 @@ then
 	if ! bin/run_omhelp.sh xml
 	then
 		echo "mv doc.omh.save doc.omh"
-	      	mv doc.omh.save doc.omh
+		mv doc.omh.save doc.omh
 		exit 1
 	fi
 	#

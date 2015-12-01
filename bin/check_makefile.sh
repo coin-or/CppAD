@@ -19,7 +19,7 @@ fi
 echo "Checking include files listed in makefile.am"
 echo "-------------------------------------------------------"
 bin/list_files.sh .h .hpp | sed -n \
-	-e '/^cppad\/config\.h$/d' \
+	-e '/^cppad\/deprecated\//d' \
 	-e '/cppad\/.*\.h$/p' \
 	-e '/cppad\/.*\.hpp$/p' \
 	> check_makefile.1.$$

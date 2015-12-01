@@ -723,7 +723,9 @@ ADOLC_DIR
 CppAD_POSTFIX_FALSE
 CppAD_POSTFIX_TRUE
 POSTFIX_DIR
-cppad_implicit_ctor_from_any_type
+cppad_deprecated
+CppAD_DEPRECATED_FALSE
+CppAD_DEPRECATED_TRUE
 cppad_internal_sparse_set
 cppad_eigenvector
 cppad_boostvector
@@ -837,7 +839,7 @@ with_boostvector
 with_eigenvector
 with_sparse_set
 with_sparse_list
-with_implicit_ctor
+with_deprecated
 '
       ac_precious_vars='build_alias
 host_alias
@@ -1510,7 +1512,7 @@ Optional Packages:
   --with-eigenvector      default is no
   --with-sparse_set       default is not specified
   --with-sparse_list      default is not specified
-  --with-implicit_ctor    include an implicit AD<Base> constructor from any
+  --with-deprecated       include an implicit AD<Base> constructor from any
                           type
 
 Some influential environment variables:
@@ -4687,24 +4689,32 @@ else
 fi
 
 
-{ $as_echo "$as_me:${as_lineno-$LINENO}: checking --with-implicit_ctor" >&5
-$as_echo_n "checking --with-implicit_ctor... " >&6; }
+{ $as_echo "$as_me:${as_lineno-$LINENO}: checking --with-deprecated" >&5
+$as_echo_n "checking --with-deprecated... " >&6; }
 
-# Check whether --with-implicit_ctor was given.
-if test "${with_implicit_ctor+set}" = set; then :
-  withval=$with_implicit_ctor; implicit_ctor="yes"
+# Check whether --with-deprecated was given.
+if test "${with_deprecated+set}" = set; then :
+  withval=$with_deprecated; deprecated="yes"
 else
-  implicit_ctor="no"
+  deprecated="no"
 
 fi
 
-{ $as_echo "$as_me:${as_lineno-$LINENO}: result: $implicit_ctor" >&5
-$as_echo "$implicit_ctor" >&6; }
-if test "$implicit_ctor" = "yes" ; then
-	cppad_implicit_ctor_from_any_type="1"
+{ $as_echo "$as_me:${as_lineno-$LINENO}: result: $deprecated" >&5
+$as_echo "$deprecated" >&6; }
+ if test "$deprecated" = 'yes' ; then
+  CppAD_DEPRECATED_TRUE=
+  CppAD_DEPRECATED_FALSE='#'
+else
+  CppAD_DEPRECATED_TRUE='#'
+  CppAD_DEPRECATED_FALSE=
+fi
+
+if test "$deprecated" = "yes" ; then
+	cppad_deprecated="1"
 
 else
-	cppad_implicit_ctor_from_any_type="0"
+	cppad_deprecated="0"
 
 fi
 
@@ -8109,6 +8119,10 @@ Usually this means the macro was only invoked conditionally." "$LINENO" 5
 fi
 if test -z "${CppAD_DOCUMENTATION_TRUE}" && test -z "${CppAD_DOCUMENTATION_FALSE}"; then
   as_fn_error $? "conditional \"CppAD_DOCUMENTATION\" was never defined.
+Usually this means the macro was only invoked conditionally." "$LINENO" 5
+fi
+if test -z "${CppAD_DEPRECATED_TRUE}" && test -z "${CppAD_DEPRECATED_FALSE}"; then
+  as_fn_error $? "conditional \"CppAD_DEPRECATED\" was never defined.
 Usually this means the macro was only invoked conditionally." "$LINENO" 5
 fi
 if test -z "${CppAD_POSTFIX_TRUE}" && test -z "${CppAD_POSTFIX_FALSE}"; then
