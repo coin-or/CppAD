@@ -11,6 +11,7 @@ Please visit http://www.coin-or.org/CppAD/ for information on other licenses.
 -------------------------------------------------------------------------- */
 $begin addon$$
 $spell
+	adcomp
 	CppAD
 	cppad.hpp
 	ons
@@ -38,6 +39,10 @@ $rnext
 $href%http://www.seanet.com/~bradbell/pycppad/pycppad.htm%py%$$ $cnext
 	$code pycppad$$ $cnext
 	A Python Interface to CppAD
+$rnext
+$href%https://github.com/kaskr/adcomp%tmb%$$ $cnext
+	$code adcomp$$ $cnext
+	An R Interface to CppAD with Random Effects Modeling Utilities
 $tend
 
 $head Include Files$$
