@@ -27,7 +27,7 @@ $mindex integrate Romberg$$
 
 
 $head Syntax$$
-$codei%# include <cppad/utility.hpp>
+$codei%# include <cppad/utility/romberg_one.hpp>
 %$$
 $icode%r% = RombergOne(%F%, %a%, %b%, %n%, %e%)%$$
 

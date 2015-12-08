@@ -31,7 +31,7 @@ This routine has been deprecated.
 You should instead use the routine $cref ta_free_all$$.
 
 $head Syntax$$
-$codei%# include <cppad/utility.hpp>
+$codei%# include <cppad/utility/memory_leak.hpp>
 %$$
 $icode%flag% = %memory_leak()
 %$$

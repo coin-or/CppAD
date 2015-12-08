@@ -40,7 +40,7 @@ $mindex LuSolve Lu$$
 $pre
 $$
 
-$head Syntax$$ $codei%# include <cppad/utility.hpp>
+$head Syntax$$ $codei%# include <cppad/utility/lu_solve.hpp>
 %$$
 $icode%signdet% = LuSolve(%n%, %m%, %A%, %B%, %X%, %logdet%)%$$
 

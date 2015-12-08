@@ -27,7 +27,7 @@ $$
 $section Obtain Nan or Determine if a Value is Nan$$
 
 $head Syntax$$
-$codei%# include <cppad/utility.hpp>
+$codei%# include <cppad/utility/nan.hpp>
 %$$
 $icode%b% = isnan(%s%)
 %$$

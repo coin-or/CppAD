@@ -34,7 +34,7 @@ $mindex NearEqual near absolute difference relative$$
 
 $head Syntax$$
 
-$codei%# include <cppad/utility.hpp>
+$codei%# include <cppad/utility/near_equal.hpp>
 %$$
 $icode%b% = NearEqual(%x%, %y%, %r%, %a%)%$$
 

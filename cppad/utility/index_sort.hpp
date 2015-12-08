@@ -26,7 +26,7 @@ $mindex index_sort$$
 
 
 $head Syntax$$
-$codei%# include <cppad/utility.hpp>
+$codei%# include <cppad/utility/index_sort.hpp>
 %$$
 $codei%index_sort(%keys%, %ind%)%$$
 

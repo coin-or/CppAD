@@ -26,7 +26,7 @@ $mindex CheckSimpleVector$$
 
 
 $head Syntax$$
-$codei%# include <cppad/utility.hpp>
+$codei%# include <cppad/utility/check_simple_vector.hpp>
 %$$
 $codei%CheckSimpleVector<%Scalar%, %Vector%>()%$$
 $pre

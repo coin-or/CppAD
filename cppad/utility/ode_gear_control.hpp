@@ -42,7 +42,7 @@ $section An Error Controller for Gear's Ode Solvers$$
 $mindex OdeGearControl Gear differential equation$$
 
 $head Syntax$$
-$codei%# include <cppad/utility.hpp>
+$codei%# include <cppad/utility/ode_gear_control.hpp>
 %$$
 $icode%xf% = OdeGearControl(%F%, %M%, %ti%, %tf%, %xi%,
 	%smin%, %smax%, %sini%, %eabs%, %erel%, %ef% , %maxabs%, %nstep% )%$$

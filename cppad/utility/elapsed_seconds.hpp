@@ -28,7 +28,7 @@ $mindex elapsed_seconds time$$
 
 
 $head Syntax$$
-$codei%# include <cppad/utility.hpp>
+$codei%# include <cppad/utility/elapsed_seconds.hpp>
 %$$
 $icode%s% = elapsed_seconds()%$$
 

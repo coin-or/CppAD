@@ -35,7 +35,7 @@ $mindex LuInvert linear$$
 $pre
 $$
 
-$head Syntax$$ $codei%# include <cppad/utility.hpp>
+$head Syntax$$ $codei%# include <cppad/utility/lu_invert.hpp>
 %$$
 $codei%LuInvert(%ip%, %jp%, %LU%, %X%)%$$
 

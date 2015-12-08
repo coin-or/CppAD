@@ -36,7 +36,7 @@ $section The CppAD::vector Template Class$$
 $mindex vector CppAD [] push thread_alloc$$
 
 $head Syntax$$
-$code%# include <cppad/utility.hpp>$$
+$code%# include <cppad/utility/vector.hpp>$$
 
 $head Description$$
 The include file $code cppad/vector.hpp$$ defines the

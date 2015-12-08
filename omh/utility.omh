@@ -20,7 +20,12 @@ $$
 
 
 $section Some General Purpose Utilities$$
-These routines can be included separate from the rest of CppAD using
+These routines can be include individually; for example,
+$codep
+	# include <cppad/utility/vector.hpp>
+$$
+only includes the definitions necessary for the $code CppAD::vector$$ class.
+They can also be included as a group, separate from the rest of CppAD, using
 $codep
 	# include <cppad/utility.hpp>
 $$

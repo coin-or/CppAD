@@ -35,7 +35,7 @@ You should use the $cref thread_alloc$$ memory allocator instead
 properly in multi-threading environment).
 
 $head Syntax$$
-$codei%# include <cppad/utility.hpp>
+$codei%# include <cppad/utility/track_new_del.hpp>
 %$$
 $icode%newptr% = TrackNewVec(%file%, %line%, %newlen%, %oldptr%)
 %$$

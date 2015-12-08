@@ -36,7 +36,7 @@ $section Determine Amount of Time to Execute a Test$$
 $mindex time_test speed$$
 
 $head Syntax$$
-$codei%# include <cppad/utility.hpp>
+$codei%# include <cppad/utility/time_test.hpp>
 %$$
 $icode%time% = time_test(%test%, %time_min%)%$$
 $icode%time% = time_test(%test%, %time_min%, %test_size%)%$$

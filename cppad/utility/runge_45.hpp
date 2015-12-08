@@ -36,7 +36,7 @@ $section An Embedded 4th and 5th Order Runge-Kutta ODE Solver$$
 $mindex Runge45 Runge Kutta solve differential equation$$
 
 $head Syntax$$
-$codei%# include <cppad/utility.hpp>
+$codei%# include <cppad/utility/runge_45.hpp>
 %$$
 $icode%xf% = Runge45(%F%, %M%, %ti%, %tf%, %xi%)
 %$$
