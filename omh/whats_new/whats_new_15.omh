@@ -13,6 +13,7 @@ Please visit http://www.coin-or.org/CppAD/ for information on other licenses.
 $begin whats_new_15$$
 $dollar @$$
 $spell
+	addon
 	runge
 	lcppad
 	ind
@@ -76,6 +77,10 @@ This section contains a list of the changes to CppAD during 2015
 (in reverse order by date).
 The purpose of this section is to
 assist you in learning about changes between various versions of CppAD.
+
+$head 12-08$$
+A convention was included for addon
+$cref/library files/addon/Library Files/$$.
 
 $head 12-01$$
 Fix problem with $cref auto_tools$$ install handling of the

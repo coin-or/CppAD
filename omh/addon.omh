@@ -11,6 +11,11 @@ Please visit http://www.coin-or.org/CppAD/ for information on other licenses.
 -------------------------------------------------------------------------- */
 $begin addon$$
 $spell
+	Addons
+	addon
+	libdir
+	includedir
+	libcppad
 	adcomp
 	CppAD
 	cppad.hpp
@@ -21,10 +26,10 @@ $spell
 $$
 
 
-$section CppAD Add-ons$$
+$section CppAD Addons$$
 
 $head Name$$
-Each CppAD add-on has a short name which we denote by $icode name$$ below,
+Each CppAD addon has a short name which we denote by $icode name$$ below,
 a longer name $icode longer$$ and a $icode description$$:
 
 $table
@@ -46,16 +51,26 @@ $href%https://github.com/kaskr/adcomp%tmb%$$ $cnext
 $tend
 
 $head Include Files$$
-If $icode include$$ is the directory where the include files are installed,
+If $icode includedir$$ is the directory where the include files are installed,
 the file
 $codei%
-	%include%/cppad/%name%.hpp
+	%includedir%/cppad/%name%.hpp
 %$$
 and the directory
 $codei%
-	%include%/cppad/%name%
+	%includedir%/cppad/%name%
 %$$
-are reserved for use by the $icode name$$ add-on.
+are reserved for use by the $icode name$$ addon.
+
+$head Library Files$$
+If $icode libdir$$ is the directory where CppAD library files are installed,
+files with the name
+$codei%
+	%libdir%/libcppad_%name%.%ext%
+	%libdir%/libcppad_%name%_%anything%.%ext%
+%$$
+where $icode anything$$ and $icode ext$$ are arbitrary,
+are reserved for use by the $icode name$$ addon.
 
 $head Preprocessor Symbols$$
 C++ preprocessor symbols that begin with
@@ -63,14 +78,14 @@ $codei%
 	CPPAD_%NAME%_
 %$$
 where $icode NAME$$ is a upper-case version of $icode name$$,
-are reserved for use by the $icode name$$ add-on.
+are reserved for use by the $icode name$$ addon.
 
 $head Namespace$$
 The C++ namespace
 $codei%
 	CppAD::%name%
 %$$
-is reserved for use by the $icode name$$ add-on.
+is reserved for use by the $icode name$$ addon.
 
 
 $end
