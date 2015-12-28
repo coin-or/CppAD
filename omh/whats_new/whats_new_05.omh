@@ -158,11 +158,11 @@ $$
 Move $code lib/SpeedTest.cpp$$ to $code cppad/speed_test.hpp$$.
 This was the last change necessary in order to remove the CppAD library,
 so remove all commands related to building and linking $code CppADlib.a$$.
-The corresponding entry has been removed from the $cref WishList$$.
+The corresponding entry has been removed from the $cref wish_list$$.
 $pre
 
 $$
-One of the entries in the $cref WishList$$ corresponded to the
+One of the entries in the $cref wish_list$$ corresponded to the
 $cref Integer$$ function.
 It has also been removed (because it is already implemented).
 
@@ -592,7 +592,7 @@ Improve the index entries in the documentation that corresponds
 to the $code cppad/local$$ directory source code.
 
 $head 07-19$$
-The $cref WishList$$ and $code Bugs$$ information
+The $cref wish_list$$ and $code Bugs$$ information
 were moved out of this section and into their own separate sections
 (the Bugs section has been removed; see the $code bug$$ subdirectory
 instead).
@@ -602,7 +602,7 @@ $$
 A discussion of
 $cref/VecAD speed and memory/VecAD/Speed and Memory/$$ was added
 as well as an entry in the
-$cref WishList$$ to make it more efficient.
+$cref wish_list$$ to make it more efficient.
 
 
 $head 07-15$$

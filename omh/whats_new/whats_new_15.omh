@@ -82,13 +82,13 @@ $head 12-28$$
 $list number$$
 Add the $cref to_string$$ utility.
 $lnext
-The $cref WishList$$ item to reorganize the include directory was completed
-with the moving of the utilities to $code cppad/utility$$ on
-$cref/11-30/whats_new_15/11-30/$$.
-This item has been removed.
+A $cref/Base requirements/wish_list/Base Requirements/$$ item
+was added to the wish list.
 $lnext
-A wish list item to use template specialization, instead of functions,
-in base type requirements was added.
+The $cref wish_list$$ item to
+reorganize the include directory has been removed.
+It was completed when the utilities was moved to $code cppad/utility$$; see
+$cref/11-30/whats_new_15/11-30/$$.
 $lend
 
 $head 12-08$$
@@ -211,7 +211,7 @@ There was a mistake in the documentation for $cref index_sort$$,
 the argument $cref/ind/index_sort/ind/$$ is not $code const$$.
 
 $head 10-16$$
-Add a $cref/PrintFor optimization/WishList/PrintFor Optimization/$$
+Add a $cref/PrintFor optimization/wish_list/PrintFor Optimization/$$
 item to the wish list.
 
 $head 10-06$$
@@ -226,7 +226,7 @@ $code CPPAD_NUMERIC_LIMITS$$, and
 $code CPPAD_STANDARD_MATH_UNARY$$, to
 the $cref preprocessor$$ section.
 In addition, remove checking that all user API preprocessor symbols
-are in this section form the $cref WishList$$.
+are in this section form the $cref wish_list$$.
 $lnext
 Alphabetize and make some corrections to
 $cref/list of examples/ListAllExamples/$$.
@@ -254,7 +254,7 @@ $lnext
 The $cref/nan(zero)/nan/nan(zero)/$$ function computes a $code nan$$ by
 dividing zero by zero which results in a warning when using some compilers.
 This function has been deprecated and the corresponding
-$cref WishList$$ item has been removed.
+$cref wish_list$$ item has been removed.
 $lnext
 Move documentation for $cref zdouble$$ to $cref deprecated$$ section
 and documentation for $cref numeric_limits$$ to $cref ADValued$$.
@@ -288,7 +288,7 @@ It is not longer an error to take the derivative of the square root function,
 because the result may be the part of a
 $cref/conditional expression/CondExp/$$ that is not used.
 $lnext
-Update the $cref WishList$$ section.
+Update the $cref wish_list$$ section.
 $lend
 
 
@@ -839,7 +839,7 @@ $codei%
 %$$
 and was not even defined when $code NDEBUG$$ was defined.
 There was a resulting speed effect for this; see the wish list
-$cref/compare change/WishList/Comparison Changes and Optimization/$$ entry.
+$cref/compare change/wish_list/Comparison Changes and Optimization/$$ entry.
 
 $lnext
 The date when some features where deprecated has been added to the

@@ -128,7 +128,7 @@ This optimization is done for the rest of zero order forward mode
 as well as forward and reverse derivatives calculations.
 There is one exception to this optimization; see
 $cref/optimizing nested conditional expressions
-	/WishList
+	/wish_list
 	/Optimizing Nested Conditional Expressions
 /$$.
 

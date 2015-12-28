@@ -223,7 +223,7 @@ $lend
 
 
 $head 11-28$$
-Update the $cref WishList$$:
+Update the $cref wish_list$$:
 $list number$$
 Remove Microsoft compiler warning item that has been fixed.
 $lnext
@@ -247,7 +247,7 @@ Add new $code cppad_ipopt_sum$$ item to the wish list.
 (This has been removed because $cref/checkpointing/checkpoint/$$
 can now be used for this purpose.)
 $lnext
-Add new $code old_atomic$$ $cref WishList$$ item (since removed).
+Add new $code old_atomic$$ $cref wish_list$$ item (since removed).
 
 $lend
 

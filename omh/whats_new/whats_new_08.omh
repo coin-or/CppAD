@@ -348,7 +348,7 @@ $cref fadbad_sparse_hessian.cpp$$, and
 $cref sacado_sparse_hessian.cpp$$.
 
 $head 04-06$$
-The following $cref/wish list/WishList/$$
+The following $cref/wish list/wish_list/$$
 entry has been completed and removed from the list:
 "Change private member variables names
 (not part of the user interface)
@@ -394,7 +394,7 @@ $pre
 $$
 Remove computed assignment entry from wish list
 (it was fixed on $cref/2007-05-26/whats_new_07/05-26/$$).
-Add an expression hashing entry to the $cref WishList$$
+Add an expression hashing entry to the $cref wish_list$$
 (it has since been removed).
 Add Library and Scripting Languages to the wish list
 (this has since been fulfilled by the example $cref ad_in_c.cpp$$).

@@ -909,7 +909,7 @@ $head 02-06$$
 The use can now define complex $cref/atomic/old_atomic/$$ operations
 and store them in a CppAD $cref ADFun$$ object.
 This item has been remove from the
-$cref/wish list/WishList/$$.
+$cref/wish list/wish_list/$$.
 $pre
 
 $$

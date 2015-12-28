@@ -286,7 +286,7 @@ subdirectory is where one builds the $cref/ipopt_cppad_nlp/cppad_ipopt_nlp/$$ ex
 
 $head 01-04$$
 The following items have been fulfilled and
-hence were removed for the $cref WishList$$:
+hence were removed for the $cref wish_list$$:
 $list number$$
 If an exception occurs before the call to the corresponding
 $cref ADFun$$ constructor or $cref Dependent$$,

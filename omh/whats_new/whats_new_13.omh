@@ -153,8 +153,10 @@ $$
 only two of the conditional expressions will be evaluated
 (one will be skipped depending on the result of $code left_z == right_z$$).
 For more details, see
-$cref/nesting conditional expressions/
-WishList/Optimizing Nested Conditional Expressions/$$.
+$cref/nesting conditional expressions
+	/wish_list
+	/Optimizing Nested Conditional Expressions
+/$$.
 
 $head 10-23$$
 $list number$$
@@ -184,7 +186,7 @@ of the conditional expressions there is.
 $lend
 
 $head 10-16$$
-Fix bug in $cref/Tracing/WishList/Tracing/$$ $cref atomic$$ functions.
+Fix bug in $cref/Tracing/wish_list/Tracing/$$ $cref atomic$$ functions.
 
 $head 10-15$$
 The documentation for the class

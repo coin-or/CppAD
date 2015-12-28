@@ -286,7 +286,7 @@ $head 12-03$$
 The include file directory $code CppAD$$ was changed to be all
 lower case; i.e., $code cppad$$.
 If you are using a Unix system, see $cref include_deprecated$$.
-This completes the following $cref WishList$$ items (which were removed):
+This completes the following $cref wish_list$$ items (which were removed):
 
 $list number$$
 File and directory names should only contain lowercase letters,
@@ -350,7 +350,7 @@ referenced $code doc$$. This has been fixed.
 
 $head 11-23$$
 A Version Numbering entry was added to the
-$cref WishList$$ (this was completed on $cref/11-30/whats_new_06/11-30/$$).
+$cref wish_list$$ (this was completed on $cref/11-30/whats_new_06/11-30/$$).
 
 $head 11-18$$
 The example routine that computes determinants using expansion
@@ -566,7 +566,7 @@ $head 06-19$$
 The changes listed under 06-17 and 06-18 were made in the branches/ADFun branch
 of the CppAD subversion repository. They did not get merged into the trunk
 and become part of the distribution until 06-19. This accomplished the
-following goal, which was removed from the $cref WishList$$:
+following goal, which was removed from the $cref wish_list$$:
 $pre
 
 $$
@@ -708,7 +708,7 @@ were changed to the FunCheck discussion.
 $pre
 
 $$
-An operation sequence entry was added to the $cref WishList$$.
+An operation sequence entry was added to the $cref wish_list$$.
 
 $head 04-18$$
 The new definitions for
@@ -1151,7 +1151,7 @@ leak detection by $cref/TrackCount/TrackNewDel/TrackCount/$$.
 
 $head 01-20$$
 Add
-$cref/software guidelines/WishList/Software Guidelines/$$
+$cref/software guidelines/wish_list/Software Guidelines/$$
 to the wish list.
 
 $head 01-18$$
