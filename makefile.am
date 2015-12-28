@@ -199,6 +199,7 @@ nobase_myinclude_HEADERS =  \
 	cppad/local/near_equal_ext.hpp \
 	cppad/local/numeric_limits.hpp \
 	cppad/local/num_skip.hpp \
+	cppad/local/old_atomic.hpp \
 	cppad/local/omp_max_thread.hpp \
 	cppad/local/op_code.hpp \
 	cppad/local/op.hpp \
@@ -251,11 +252,11 @@ nobase_myinclude_HEADERS =  \
 	cppad/local/tape_link.hpp \
 	cppad/local/test_vector.hpp \
 	cppad/local/testvector.hpp \
+	cppad/local/to_string.hpp \
 	cppad/local/unary_minus.hpp \
 	cppad/local/unary_plus.hpp \
 	cppad/local/undef.hpp \
 	cppad/local/user_ad.hpp \
-	cppad/local/old_atomic.hpp \
 	cppad/local/value.hpp \
 	cppad/local/var2par.hpp \
 	cppad/local/vec_ad.hpp \

@@ -144,8 +144,9 @@ am__example_SOURCES_DIST = mul_level_adolc.cpp mul_level_adolc_ode.cpp \
 	sin.cpp sinh.cpp sparse_hessian.cpp sparse_jacobian.cpp \
 	sparse_sub_hes.cpp sparsity_sub.cpp sqrt.cpp stack_machine.cpp \
 	sub.cpp sub_eq.cpp sub_sparse_hes.cpp tan.cpp tanh.cpp \
-	tape_index.cpp thread_alloc.cpp unary_minus.cpp unary_plus.cpp \
-	value.cpp var2par.cpp vec_ad.cpp vector_bool.cpp
+	tape_index.cpp thread_alloc.cpp to_string.cpp unary_minus.cpp \
+	unary_plus.cpp value.cpp var2par.cpp vec_ad.cpp \
+	vector_bool.cpp
 @CppAD_ADOLC_TRUE@am__objects_1 = mul_level_adolc.$(OBJEXT) \
 @CppAD_ADOLC_TRUE@	mul_level_adolc_ode.$(OBJEXT)
 am_example_OBJECTS = $(am__objects_1) example.$(OBJEXT) \
@@ -198,9 +199,9 @@ am_example_OBJECTS = $(am__objects_1) example.$(OBJEXT) \
 	sparsity_sub.$(OBJEXT) sqrt.$(OBJEXT) stack_machine.$(OBJEXT) \
 	sub.$(OBJEXT) sub_eq.$(OBJEXT) sub_sparse_hes.$(OBJEXT) \
 	tan.$(OBJEXT) tanh.$(OBJEXT) tape_index.$(OBJEXT) \
-	thread_alloc.$(OBJEXT) unary_minus.$(OBJEXT) \
-	unary_plus.$(OBJEXT) value.$(OBJEXT) var2par.$(OBJEXT) \
-	vec_ad.$(OBJEXT) vector_bool.$(OBJEXT)
+	thread_alloc.$(OBJEXT) to_string.$(OBJEXT) \
+	unary_minus.$(OBJEXT) unary_plus.$(OBJEXT) value.$(OBJEXT) \
+	var2par.$(OBJEXT) vec_ad.$(OBJEXT) vector_bool.$(OBJEXT)
 example_OBJECTS = $(am_example_OBJECTS)
 example_LDADD = $(LDADD)
 am__DEPENDENCIES_1 =
@@ -641,6 +642,7 @@ example_SOURCES = \
 	tanh.cpp \
 	tape_index.cpp \
 	thread_alloc.cpp \
+	to_string.cpp \
 	unary_minus.cpp \
 	unary_plus.cpp \
 	value.cpp \
@@ -838,6 +840,7 @@ distclean-compile:
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/tanh.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/tape_index.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/thread_alloc.Po@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/to_string.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/unary_minus.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/unary_plus.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/value.Po@am__quote@

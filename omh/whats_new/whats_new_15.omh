@@ -78,6 +78,9 @@ This section contains a list of the changes to CppAD during 2015
 The purpose of this section is to
 assist you in learning about changes between various versions of CppAD.
 
+$head 12-27$$
+Add the $cref to_string$$ utility.
+
 $head 12-08$$
 $list number$$
 A convention was included for addon

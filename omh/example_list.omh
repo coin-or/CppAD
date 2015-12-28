@@ -258,6 +258,7 @@ $rref team_thread.hpp$$
 $rref thread_alloc.cpp$$
 $rref thread_test.cpp$$
 $rref time_test.cpp$$
+$rref to_string.cpp$$
 $rref unary_minus.cpp$$
 $rref unary_plus.cpp$$
 $rref value.cpp$$

@@ -67,6 +67,7 @@ Please visit http://www.coin-or.org/CppAD/ for information on other licenses.
 # include <cppad/local/lu_ratio.hpp>
 # include <cppad/local/bender_quad.hpp>
 # include <cppad/local/opt_val_hes.hpp>
+# include <cppad/local/to_string.hpp>
 
 // undo definitions in Define.h
 # include <cppad/local/undef.hpp>

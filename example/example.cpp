@@ -175,6 +175,7 @@ extern bool Tan(void);
 extern bool Tanh(void);
 extern bool TapeIndex(void);
 extern bool thread_alloc(void);
+extern bool to_string(void);
 extern bool UnaryMinus(void);
 extern bool UnaryPlus(void);
 extern bool Value(void);
@@ -339,6 +340,7 @@ int main(void)
 	ok &= Run( Tanh,              "Tanh"             );
 	ok &= Run( TapeIndex,         "TapeIndex"        );
 	ok &= Run( thread_alloc,      "thread_alloc"     );
+	ok &= Run( to_string,         "to_string"        );
 	ok &= Run( UnaryMinus,        "UnaryMinus"       );
 	ok &= Run( UnaryPlus,         "UnaryPlus"        );
 	ok &= Run( Value,             "Value"            );

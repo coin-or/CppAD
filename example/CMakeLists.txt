@@ -201,6 +201,7 @@ ADD_EXECUTABLE(example EXCLUDE_FROM_ALL example.cpp
 	tanh.cpp
 	tape_index.cpp
 	thread_alloc.cpp
+	to_string.cpp
 	unary_minus.cpp
 	unary_plus.cpp
 	value.cpp
