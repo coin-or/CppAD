@@ -53,9 +53,9 @@ either $codei%AD<%Base%>%$$
 or $codei%VecAD<%Base%>::reference%$$ (see $cref VecAD$$)
 for some $icode Base$$ type.
 
-$head AD Levels Above Base$$
+$head AD Type Above Base$$
 If $icode Base$$ is a type,
-the AD levels above $icode Base$$
+an AD type above $icode Base$$
 is the following sequence of types:
 $codei%
 	AD<%Base%> %,% AD< AD<%Base%> > %,% AD< AD< AD<%Base%> > > %,% %...%
