@@ -34,7 +34,7 @@ namespace {
 		while( s[index] != ')' )
 			imag += s[index++];
 		//
-		Base check    = std::atof( real.c_str() );
+		Float check   = std::atof( real.c_str() );
 		ok           &= std::fabs( check - pi ) <= 2.0 * eps;
 		//
 		check         = std::atof( imag.c_str() );

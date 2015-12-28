@@ -32,14 +32,14 @@ except that it works for AD and Base types and the format may be different.
 $head value$$
 The argument $icode value$$ has prototype
 $codei%
-	const %Type%& %value%
+	const AD<%Base%>& %value%
+	const %Base%&     %value%
+	const %Integer%&  %value%
 %$$
-where $icode value$$ is the value being converted to a string.
-The corresponding $icode Type$$ must support the operation
-$codei%
-	%os% << %value%
-%$$
-where $icode os$$ in a $code std::ostringstream$$.
+where $icode Base$$ is a type that supports the
+$cref base_to_string$$ type requirement and
+$icode Integer$$ is any of the integer fundamental types; e.g.
+$code short int$$ and $code unsigned long$$.
 
 $head s$$
 The return value has prototype
@@ -48,10 +48,12 @@ $codei%
 %$$
 and contains a representation of the specified $icode value$$.
 
-$head Format$$
+$head AD Types$$
+If $icode value$$ is and $codei%AD<%Base%>%$$ object,
+the representation used is the same as for $icode Base$$.
 
 $head Floating Point Types$$
-If $icode Type$$ is
+If $icode value$$ is a
 $code float$$,
 $code double$$,
 $code std::complex<float>$$, or
@@ -59,9 +61,10 @@ $code std::complex<double>$$,
 enough digits are used in the representation so that
 the result is accurate to withing round off error.
 
-$head AD Types$$
-If $icode Type$$ is $codei%AD<%Base%>%$$,
-the representation used is the same as for $icode Base$$.
+$head Integer Types$$
+If $icode value$$ is and $codei Integer$$ object,
+the representation is equivalent to $codei%os% << %value%$$
+where $icode os$$ is an $code std::ostringstream$$.
 
 $children%
 	example/to_string.cpp
@@ -73,8 +76,16 @@ It returns true if it succeeds and false otherwise.
 
 $end
 */
-
 # include <cppad/local/ad.hpp>
+
+# define CPPAD_INSTANTIATE_TO_STRING_INTEGER(Type) \
+template <> struct to_string_struct<Type>\
+{	std::string operator()(const Type& value) \
+	{	std::stringstream os;\
+		os << value;\
+		return os.str();\
+	}\
+};
 
 namespace CppAD {
 
@@ -87,6 +98,21 @@ namespace CppAD {
 			return ts( Value( Var2Par( value ) ) ); }
 	};
 
+	// instantiation for the fundamental types
+	CPPAD_INSTANTIATE_TO_STRING_INTEGER(signed short)
+	CPPAD_INSTANTIATE_TO_STRING_INTEGER(unsigned short)
+	//
+	CPPAD_INSTANTIATE_TO_STRING_INTEGER(signed int)
+	CPPAD_INSTANTIATE_TO_STRING_INTEGER(unsigned int)
+	//
+	CPPAD_INSTANTIATE_TO_STRING_INTEGER(signed long)
+	CPPAD_INSTANTIATE_TO_STRING_INTEGER(unsigned long)
+	//
+# if CPPAD_USE_CPLUSPLUS_2011
+	CPPAD_INSTANTIATE_TO_STRING_INTEGER(signed long long)
+	CPPAD_INSTANTIATE_TO_STRING_INTEGER(unsigned long long)
+# endif
+
 	// link from function to function object in structure
 	template<class Type>
 	std::string to_string(const Type& value)
@@ -95,4 +121,5 @@ namespace CppAD {
 	}
 }
 
+# undef CPPAD_INSTANTIATE_TO_STRING_INTEGER
 # endif

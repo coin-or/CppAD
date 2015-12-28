@@ -4,7 +4,7 @@
 # CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-15 Bradley M. Bell
 #
 # CppAD is distributed under multiple licenses. This distribution is under
-# the terms of the 
+# the terms of the
 #                     Eclipse Public License Version 1.0.
 #
 # A copy of this license is included in the COPYING file of this distribution.
@@ -53,7 +53,7 @@ else
 	exit 1
 fi
 # -----------------------------------------------------------------------------
-# Source code files that are changing 
+# Source code files that are changing
 new_cppad=`cd cppad/new ; ls`
 new_local=`cd cppad/local/new ; ls`
 if [ "$new_cppad" == "" ] && [ "$new_local" == "" ]
@@ -149,3 +149,6 @@ sed -n -e 's|_rate|_rate_new|' -e '/_rate_/p' \
 #
 echo "cat run.out | sort -u"
 cat run.out | sort -u
+# ----------------------------------------------------------------------------
+echo "$0: OK"
+exit 0

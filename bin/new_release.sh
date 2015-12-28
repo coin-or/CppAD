@@ -1,7 +1,7 @@
 #! /bin/bash -e
 # $Id$
 # -----------------------------------------------------------------------------
-# CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-13 Bradley M. Bell
+# CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-15 Bradley M. Bell
 #
 # CppAD is distributed under multiple licenses. This distribution is under
 # the terms of the
@@ -106,7 +106,7 @@ if [ ! -e build ]
 then
 	echo_eval mkdir -p build
 fi
-echo_eval cd build 
+echo_eval cd build
 echo_eval svn checkout $svn_repository/conf conf
 #
 echo_eval cd conf
@@ -119,3 +119,6 @@ sed -i projDesc.xml \
 #
 echo "Use the command the following command to finish the process"
 echo "	svn commit -m \"$msg\" build/conf/projDesc.xml"
+# ----------------------------------------------------------------------------
+echo "$0: OK"
+exit 0

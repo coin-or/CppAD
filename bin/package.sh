@@ -156,3 +156,6 @@ then
 	fi
 	echo_log_eval bin/gpl_license.sh cppad-$version build build
 fi
+# ----------------------------------------------------------------------------
+echo "$0: OK"
+exit 0

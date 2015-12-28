@@ -29,3 +29,6 @@ list=`bin/list_files.sh | sed \
 	-e '/\/makefile.in$/d' \
 	-e '/^compile/d'`
 grep -l "$pattern" $list
+# ----------------------------------------------------------------------------
+echo "$0: OK"
+exit 0

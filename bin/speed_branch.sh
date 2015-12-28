@@ -4,7 +4,7 @@
 # CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-15 Bradley M. Bell
 #
 # CppAD is distributed under multiple licenses. This distribution is under
-# the terms of the 
+# the terms of the
 #                     Eclipse Public License Version 1.0.
 #
 # A copy of this license is included in the COPYING file of this distribution.
@@ -79,3 +79,6 @@ done
 echo "	one=$branch_one , two=$branch_two"
 bin/speed_diff.sh \
 	$dir/$branch_one.$option_list.out $dir/$branch_two.$option_list.out
+# ----------------------------------------------------------------------------
+echo "$0: OK"
+exit 0

@@ -91,7 +91,7 @@ then
 	echo 'Use the following command to fix this'
 	echo '	bin/push_git2svn.py trunk'
 	exit 1
-fi  
+fi
 # -----------------------------------------------------------------------------
 echo_eval git checkout master
 git_branch_name=`echo $svn_branch_path | sed -e 's|^branches/||'`
@@ -106,3 +106,6 @@ end   hash code: $hash_origin
 EOF
 echo_eval svn copy --file new_branch.log \
 	$svn_repository/trunk $svn_repository/$svn_branch_path
+# ----------------------------------------------------------------------------
+echo "$0: OK"
+exit 0

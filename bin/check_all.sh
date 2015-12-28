@@ -83,7 +83,7 @@ else
 	choice=`echo $RANDOM % 2 | bc`
 	tarball="${list[$choice]}"
 fi
-echo_log_eval rm -r cppad-$version
+echo_log_eval rm -rf cppad-$version
 echo_log_eval tar -xzf $tarball
 echo_log_eval cd cppad-$version
 # -----------------------------------------------------------------------------
@@ -178,6 +178,6 @@ then
 	echo_log_eval echo "check_all.sh: skip = $skip"
 	exit 1
 fi
-#
-echo_log_eval echo 'check_all.sh: OK'
+# ----------------------------------------------------------------------------
+echo "$0: OK"
 exit 0

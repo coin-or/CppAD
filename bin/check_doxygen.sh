@@ -41,6 +41,7 @@ fi
 list=`head doxygen.err`
 if [ "$list" == "" ]
 then
+	echo "$O: OK"
 	exit 0
 fi
 echo bin/"check_doxygen.sh: Doxygen errors or warnings; see doxygen.err"
@@ -48,4 +49,5 @@ if [ "$USER" != "bradbell" ]
 then
 	exit 0
 fi
+echo "$O: Error"
 exit 1

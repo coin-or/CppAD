@@ -112,3 +112,6 @@ echo "mv $file_name ~/trash"
 #
 echo "mv bin/add_copyright.$$ $file_name"
       mv bin/add_copyright.$$ $file_name
+# ----------------------------------------------------------------------------
+echo "$0: OK"
+exit 0

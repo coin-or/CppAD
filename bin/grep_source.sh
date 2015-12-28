@@ -1,7 +1,7 @@
 #! /bin/bash -e
 # \$Id:\$
 # -----------------------------------------------------------------------------
-# CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-11 Bradley M. Bell
+# CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-15 Bradley M. Bell
 #
 # CppAD is distributed under multiple licenses. This distribution is under
 # the terms of the
@@ -34,7 +34,7 @@ list=`find . \
        \( -name '*.sh' \)      | \
 	sed -e 's|\./||' -e '/^work\//d' -e '/^svn_dist\//d' `
 #
-list="$list 
+list="$list
 	configure.ac
 "
 if [ "$1" == "-i" ]
@@ -54,3 +54,6 @@ do
 		grep $flag "$pattern" $file
 	fi
 done
+# ----------------------------------------------------------------------------
+echo "$0: OK"
+exit 0

@@ -1,7 +1,7 @@
 #! /bin/bash -e
 # $Id$
 # -----------------------------------------------------------------------------
-# CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-13 Bradley M. Bell
+# CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-15 Bradley M. Bell
 #
 # CppAD is distributed under multiple licenses. This distribution is under
 # the terms of the
@@ -38,9 +38,9 @@ repository="https://projects.coin-or.org/svn/CppAD"
 rep_trunk="$repository/trunk"
 rep_stable="$repository/stable/$stable_version"
 # -----------------------------------------------------------------------------
-if [ "$copy_from_trunk" = "redo" ] 
+if [ "$copy_from_trunk" = "redo" ]
 then
-	# delete old stable copy 
+	# delete old stable copy
 	msg="Replacing old stable/$stable_version."
 	echo "svn delete $rep_stable -m \"$msg\""
 	svn delete $rep_stable -m "$msg"
@@ -63,18 +63,18 @@ if ! grep "fetch *= *$fetch" .git/config > /dev/null
 then
 	sed -e "s|^\turl *=.*|&\n\tfetch = $fetch|" -i .git/config
 fi
-# 
+#
 # fetch the branch
 echo_eval git svn fetch
 # -----------------------------------------------------------------------------
 # checkout the new stable version
-if git branch | grep "$stable_version" 
+if git branch | grep "$stable_version"
 then
 	git checkout $stable_version
 else
 	echo_eval git checkout -b $stable_version svn/stable/$stable_version
 fi
-# make sure that bin/new_stable.sh corresponds to current master version 
+# make sure that bin/new_stable.sh corresponds to current master version
 # (may not be same as version in repository that was copied).
 echo_eval git show master:bin/new_stable.sh > bin/new_stable.sh
 #
@@ -93,21 +93,23 @@ sed -i bin/new_release.sh \
 echo "automatic editing: $stable_version/build.sh"
 sed -i build.sh -e 's/^version_type=.*/version_type="stable"/'
 #
-# Set download documentation to use web version of corresponding release 
+# Set download documentation to use web version of corresponding release
 echo "automatic editing of omh/install/download.omh"
 dir="http://www.coin-or.org/download/source/CppAD"
 sed -i omh/install/download.omh \
-	-e "s|cppad-$release_version.[eg]pl.tgz|\n$dir/&%\n&|" 
+	-e "s|cppad-$release_version.[eg]pl.tgz|\n$dir/&%\n&|"
 #
 # Instructions --------------------------------------------------------------
 cat << EOF
-1: Review differences using git. If you find problems, fix both 
+1: Review differences using git. If you find problems, fix both
    master and $new_stable versions of bin/new_stable.sh.
 3: Run the following commands:
 	bin/check_all.sh
-4: If errors occur, fix both master and $new_stable version of 
+4: If errors occur, fix both master and $new_stable version of
    bin/new_stable.sh and goto 3.
 5: Run the script
-      bin/new_release.sh	
+      bin/new_release.sh
 EOF
+# ----------------------------------------------------------------------------
+echo "$0: OK"
 exit 0

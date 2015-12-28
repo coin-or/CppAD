@@ -224,4 +224,6 @@ cmake_args="$cmake_args -D cppad_max_num_threads=48"
 #
 echo_eval cmake $cmake_args ..
 #
+# ----------------------------------------------------------------------------
+echo "$0: OK"
 exit 0

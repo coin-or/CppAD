@@ -127,7 +127,7 @@ done
 sed -e 's|_INCLUDED|_HPP|' -i bin/check_define.sh
 sed -e 's|_INCLUDED|_HPP|' -i bin/check_include_def.sh
 # ----------------------------------------------------------------------------
-# create utility.hpp and 
+# create utility.hpp and
 # change examples to use utility.hpp instead if individual include files
 list=`ls cppad/utility/*.hpp`
 for file in $list
@@ -191,7 +191,7 @@ done
 cat << EOF >> $cmake_file
 )
 	FILE(WRITE
-		\${CMAKE_BINARY_DIR}/cppad/utility/\${old_include_file} 
+		\${CMAKE_BINARY_DIR}/cppad/utility/\${old_include_file}
 		"# include <cppad/utility.hpp>\\n"
 	)
 ENDFOREACH(old_include_file)
@@ -207,3 +207,5 @@ sed \
 	-i CMakeLists.txt
 sed -e '/\tcppad\/.*\.h \\/d' -i makefile.am
 # ----------------------------------------------------------------------------
+echo "$0: OK"
+exit 0

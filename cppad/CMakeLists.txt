@@ -110,6 +110,19 @@ ENDIF( cppad_eigenvector )
 #
 SET(cppad_cplusplus_201100_ok 1)
 # -----------------------------------------------------------------------------
+# cppad_has_signed_long_long
+#
+SET(source "
+int main(void)
+{	signed long long value = 0;
+	return int(value);
+}"
+)
+check_source_runs("${source}" cppad_has_signed_long_long )
+IF( NOT cppad_has_signed_long_long )
+	SET(cppad_cplusplus_201100_ok 0)
+ENDIF( NOT cppad_has_signed_long_long )
+# -----------------------------------------------------------------------------
 # cppad_has_rvalue
 #
 SET(source "

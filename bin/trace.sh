@@ -1,10 +1,10 @@
 #! /bin/bash -e
 # $Id$
 # -----------------------------------------------------------------------------
-# CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-14 Bradley M. Bell
+# CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-15 Bradley M. Bell
 #
 # CppAD is distributed under multiple licenses. This distribution is under
-# the terms of the 
+# the terms of the
 #                     Eclipse Public License Version 1.0.
 #
 # A copy of this license is included in the COPYING file of this distribution.
@@ -20,11 +20,11 @@ option="$2"
 file="cppad/local/$name.hpp"
 #
 ok='yes'
-if [ "$option" != '0' ] && [ "$option" != '1' ] 
+if [ "$option" != '0' ] && [ "$option" != '1' ]
 then
 	ok='no'
 fi
-echo "grep '_TRACE [01]' $file" 
+echo "grep '_TRACE [01]' $file"
 if ! grep '_TRACE [01]' $file > /dev/null
 then
 	ok='no'
@@ -42,4 +42,6 @@ new=`grep '_TRACE [01]' $file`
 echo "old: $old"
 echo "new: $new"
 #
+# ----------------------------------------------------------------------------
+echo "$0: OK"
 exit 0

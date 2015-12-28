@@ -23,4 +23,8 @@ then
 	svn list --recursive | sed -e '/\/$/d'
 else
 	echo 'cannot find ./.git or ./.svn'
+	exit 1
 fi
+# ----------------------------------------------------------------------------
+echo "$0: OK"
+exit 0

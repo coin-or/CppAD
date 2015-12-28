@@ -91,3 +91,6 @@ git tag -a \
 #
 echo "git push origin $version"
 git push origin $version
+# ----------------------------------------------------------------------------
+echo "$0: OK"
+exit 0

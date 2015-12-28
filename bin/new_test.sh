@@ -1,7 +1,7 @@
 #! /bin/bash -e
 # $Id$
 # -----------------------------------------------------------------------------
-# CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-12 Bradley M. Bell
+# CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-15 Bradley M. Bell
 #
 # CppAD is distributed under multiple licenses. This distribution is under
 # the terms of the
@@ -31,10 +31,10 @@ dir=`echo $file_path | sed -e 's|/[^/]*||'`
 file=`echo $file_path | sed -e 's|.*/||'`
 #
 echo "cd $dir"
-cd $dir 
+cd $dir
 #
 # extract the program that runs all tests and name of this new test
-program=`sed -n -e '/_SOURCES/p' makefile.am | 
+program=`sed -n -e '/_SOURCES/p' makefile.am |
 	sed -e 's|^\t*\(.*\)_SOURCE.*|\1|'`
 name=`grep '^bool *[a-zA-Z0-9_]*( *void *)' $file | tail -1 | \
 	sed -e 's|^bool *\([a-zA-Z0-9_]*\)( *void *)|\1|'`
@@ -96,3 +96,6 @@ sed -i -f new_test.sed $project
 echo
 echo "Should hand edit to sort new entries in following files:"
 echo "$change_list"
+# ----------------------------------------------------------------------------
+echo "$0: OK"
+exit 0

@@ -68,5 +68,6 @@ then
 	exit 1
 fi
 rm check_copyright.*.$$
-echo 'check_copyright.sh: OK'
+# ----------------------------------------------------------------------------
+echo "$0: OK"
 exit 0

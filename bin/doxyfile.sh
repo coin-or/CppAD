@@ -92,3 +92,6 @@ sed -f bin/doxyfile.$$ -i doxyfile
 #
 echo "rm bin/doxyfile.$$"
 rm bin/doxyfile.$$
+# ----------------------------------------------------------------------------
+echo "$0: OK"
+exit 0

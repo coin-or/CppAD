@@ -1,10 +1,10 @@
 #! /bin/bash -e
 # $Id$
 # -----------------------------------------------------------------------------
-# CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-12 Bradley M. Bell
+# CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-15 Bradley M. Bell
 #
 # CppAD is distributed under multiple licenses. This distribution is under
-# the terms of the 
+# the terms of the
 #                     Eclipse Public License Version 1.0.
 #
 # A copy of this license is included in the COPYING file of this distribution.
@@ -93,8 +93,8 @@ esac
 file='cppad/configure.hpp'
 text="# define CPPAD_PACKAGE_STRING"
 svn revert $file
-echo "sed -i $file -e \"s|^$text.*|\1 \"cppad-$version\"|\"" 
-sed -i $file -e "s|^\($text\) .*|\1 \"cppad-$version\"|" 
+echo "sed -i $file -e \"s|^$text.*|\1 \"cppad-$version\"|\""
+sed -i $file -e "s|^\($text\) .*|\1 \"cppad-$version\"|"
 #
 echo "mkdir work ; cd work"
 mkdir work ; cd work
@@ -108,9 +108,12 @@ do
 	read -p "options: " options
 	echo "../configure $options"
 	read -p "Is this ok [y/n] ?" response
-done 
+done
 echo "../configure $options"
 ../configure $options
 #
 echo "cd multi_thread ; make test"
 cd multi_thread ; make test
+# ----------------------------------------------------------------------------
+echo "$0: OK"
+exit 0

@@ -2,9 +2,9 @@
 # $Id$
 if [ "$1" != 'forward' ] && [ "$1" != 'reverse' ]
 then
- 	echo 'usage: ./colpack.sh option'
- 	echo 'where option is "forward" or "reverse"'
- 	exit 1
+	echo 'usage: ./colpack.sh option'
+	echo 'where option is "forward" or "reverse"'
+	exit 1
 fi
 if [ "$1" == 'forward' ]
 then
@@ -25,7 +25,7 @@ then
 fi
 echo 'create: build/colpack/colpack.cpp'
 cat<< EOF > build/colpack/colpack.cpp
-// Example using BipartiteGraphPartialColoringInterface 
+// Example using BipartiteGraphPartialColoringInterface
 // to generate the seed matrix for Jacobian
 
 #include "ColPackHeaders.h"
@@ -34,7 +34,7 @@ int main()
 {	size_t i, j, k;
 
 	using std::cout;
-	using std::endl;	
+	using std::endl;
 
 	//* 32x9 matrix
 	size_t       i_RowCount          = 32;
@@ -104,14 +104,14 @@ int main()
 	}
 
 
-	// Step 1: Read the sparsity pattern of the given Jacobian matrix 
+	// Step 1: Read the sparsity pattern of the given Jacobian matrix
 	// (adolc format) and create the corresponding bipartite graph
 	ColPack::BipartiteGraphPartialColoringInterface g(
 			SRC_MEM_ADOLC, JP.data(), i_RowCount, i_ColumnCount
 	);
 	g.PrintBipartiteGraph();
 
-	// Step 2: Do Partial-Distance-Two-Coloring 
+	// Step 2: Do Partial-Distance-Two-Coloring
 	// of the bipartite graph with the specified ordering
 	g.PartialDistanceTwoColoring(
 		"SMALLEST_LAST", "$color_variant"
@@ -122,7 +122,7 @@ int main()
 	// Step 3: From the coloring information, create and return seed matrix
 	int ip1_SeedRowCount;
 	int ip1_SeedColumnCount;
-	double** RSeed = 
+	double** RSeed =
 		g.GetSeedMatrix(&ip1_SeedRowCount, &ip1_SeedColumnCount);
 	int rows = ip1_SeedRowCount;
 	int cols = ip1_SeedColumnCount;
@@ -150,3 +150,6 @@ echo_eval g++ colpack.cpp \
 	-o colpack
 #
 echo_eval valgrind --leak-check=yes ./colpack
+# ----------------------------------------------------------------------------
+echo "$0: OK"
+exit 0

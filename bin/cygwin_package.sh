@@ -1,7 +1,7 @@
 #! /bin/bash -e
 # $Id$
 # -----------------------------------------------------------------------------
-# CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-11 Bradley M. Bell
+# CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-15 Bradley M. Bell
 #
 # CppAD is distributed under multiple licenses. This distribution is under
 # the terms of the
@@ -16,7 +16,7 @@ then
 	exit 1
 fi
 # -----------------------------------------------------------------------------
-# experimental script for cygwin packaging of CppAD 
+# experimental script for cygwin packaging of CppAD
 #
 # version and release number
 #
@@ -33,7 +33,7 @@ fi
 #
 # determine the most recent version in the Download directory
 #
-version=`ls /cygdrive/c/Download/cppad-20*.gpl.tgz | 
+version=`ls /cygdrive/c/Download/cppad-20*.gpl.tgz |
 	sed -n -e 's|.*/||' -e 's|cppad-||' -e 's|.gpl.tgz||' -e '$,$p'`
 if [ "$version" == 20061208 ]
 then
@@ -50,7 +50,7 @@ then
 	exit 1
 fi
 #
-# extract the gpl version of the distribution 
+# extract the gpl version of the distribution
 #
 file="/cygdrive/c/Download/cppad-$version.gpl.tgz"
 if [ ! -e $file ]
@@ -109,10 +109,10 @@ category: Math
 sdesc: "C++ algorithmic differentiation by operator overloading"
 #
 ldesc: "C++ algorithmic differentiation by operator overloading.
-Forward and reverse mode as well as derivatives of arbitrary order 
+Forward and reverse mode as well as derivatives of arbitrary order
 are supported. See the documentation for this version
     ( /usr/share/doc/cppad-$version-$release/cppad.htm )
-or the CppAD home page 
+or the CppAD home page
     ( http://http://www.coin-or.org/CppAD/ )
 for more details."
 EOF
@@ -169,10 +169,10 @@ Contains a list of changes and additions to CppAD in reverse order by date.
 
 DOC/(installunix.xml or installunix.htm)
 Contains documentation for the configure options which can be used to build
-the examples and tests for CppAD (using the source distribution). 
+the examples and tests for CppAD (using the source distribution).
 EOF
 #
-# change configure.ac 
+# change configure.ac
 #
 echo "Begin: modify configure.ac and files that depend on it."
 echo "sed < cppad-$version-$release/configure.ac > configure.ac \\"
@@ -191,7 +191,7 @@ then
 	exit 1
 fi
 if ! cd cppad-$version-$release
-then 
+then
 	exit 1
 fi
 if ! aclocal
@@ -225,7 +225,7 @@ echo "End: modify configure.ac and files that depend on it."
 # create the cppad-$version.patch file
 #
 diff -N -r -u -p \
-	../cppad-$version cppad-$version-$release > cppad-$version.patch 
+	../cppad-$version cppad-$version-$release > cppad-$version.patch
 #
 # create the cppad-$version-$release/CYGWIN-PATCHES sub-directory
 #
@@ -234,7 +234,7 @@ if ! mkdir cppad-$version-$release/CYGWIN-PATCHES
 then
 	exit 1
 fi
-if ! cp $readme_file cppad-$version-$release/CYGWIN-PATCHES/cppad.README 
+if ! cp $readme_file cppad-$version-$release/CYGWIN-PATCHES/cppad.README
 then
 	exit 1
 fi
@@ -255,7 +255,7 @@ then
 	exit 1
 fi
 echo "bzip2 -z -f cppad-$version-$release-src.tar"
-if ! bzip2 -z -f cppad-$version-$release-src.tar 
+if ! bzip2 -z -f cppad-$version-$release-src.tar
 then
 	exit 1
 fi
@@ -312,7 +312,7 @@ then
 	exit 1
 fi
 echo "bzip2 -z -f cppad-$version-$release.tar"
-if ! bzip2 -z -f cppad-$version-$release.tar 
+if ! bzip2 -z -f cppad-$version-$release.tar
 then
 	exit 1
 fi
@@ -374,7 +374,7 @@ then
 fi
 echo "cd ../.."
 if ! cd ../..
-then 
+then
 	exit 1
 fi
 dir="test_src/cppad-$version-$release/introduction/get_started"
@@ -406,7 +406,7 @@ ext_list="
 	htm
 	xml
 "
-for file in $file_list 
+for file in $file_list
 do
 	for ext in $ext_list
 	do
@@ -417,7 +417,7 @@ do
 			exit 1
 		fi
 	done
-done 
+done
 echo "End: test if source install"
 #
 # Test binary install --------------------------------------------------------
@@ -502,7 +502,7 @@ ext_list="
 	htm
 	xml
 "
-for file in $file_list 
+for file in $file_list
 do
 	for ext in $ext_list
 	do
@@ -513,11 +513,11 @@ do
 			exit 1
 		fi
 	done
-done 
+done
 echo "End: test if binary install"
 #
 # Clean up ------------------------------------------------------------------
-# 
+#
 echo "cd .."
 if ! cd ..
 then
@@ -544,7 +544,7 @@ then
 	exit 1
 fi
 #
+# ----------------------------------------------------------------------------
 # Done
-#
 echo bin/"cygwin_package.sh: passed all its tests"
 exit 0

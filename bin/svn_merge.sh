@@ -1,7 +1,7 @@
 #! /bin/bash -e
 # $Id$
 # -----------------------------------------------------------------------------
-# CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-14 Bradley M. Bell
+# CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-15 Bradley M. Bell
 #
 # CppAD is distributed under multiple licenses. This distribution is under
 # the terms of the
@@ -31,7 +31,7 @@ dry_run=''
 # accept='--accept theirs-full'
 # accept=''
 accept='--accept theirs-full'
-# 
+#
 # Location of the repository
 repository='https://projects.coin-or.org/svn/CppAD'
 #
@@ -40,14 +40,14 @@ from_branch='branches/forward_dir'
 #
 # Version of the repository corresponding to from_branch just before changes
 Start=3219
-# 
+#
 # Version of the repository corresponding to from_branch after the changes
 End=3300
 #
 # the svn merge command
 cmd="svn merge $accept $dry_run -r $Start:$End $repository/$from_branch"
 echo "$cmd"
-eval $cmd 
+eval $cmd
 #
 # restore original version of this file
 mv bin/svn_merge.sh.$$ bin/svn_merge.sh
@@ -55,3 +55,6 @@ mv bin/svn_merge.sh.$$ bin/svn_merge.sh
 # get the current status
 echo "svn status > svn_merge.log"
 svn status > svn_merge.log
+# ----------------------------------------------------------------------------
+echo "$0: OK"
+exit 0

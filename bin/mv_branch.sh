@@ -89,7 +89,7 @@ then
 fi
 # -----------------------------------------------------------------------------
 # make sure repsitories are in sync
-echo_eval git fetch github 
+echo_eval git fetch github
 echo "git show-ref --hash $old_branch_name | head -1"
 git show-ref --hash $old_branch_name | head -1
 echo_eval git show-ref --hash github/$old_branch_name
@@ -131,3 +131,6 @@ pause
 # move the svn fetch infromation
 svn_remote_dir=".git/svn/refs/remotes/svn"
 echo_eval mv $dir/$old_branch_path $dir/$new_branch_path
+# ----------------------------------------------------------------------------
+echo "$0: OK"
+exit 0

@@ -1,10 +1,10 @@
 #! /bin/bash -e
 # $Id$
 # -----------------------------------------------------------------------------
-# CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-13 Bradley M. Bell
+# CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-15 Bradley M. Bell
 #
 # CppAD is distributed under multiple licenses. This distribution is under
-# the terms of the 
+# the terms of the
 #                     Eclipse Public License Version 1.0.
 #
 # A copy of this license is included in the COPYING file of this distribution.
@@ -59,7 +59,7 @@ echo '# top directory only' >> .gitignore
 for name in $top_dir_list
 do
 	echo "$name" | sed -e 's|^./||' -e 's|@|*|g' >> .gitignore
-done 
+done
 echo '# all directories' >> .gitignore
 for name in $all_dir_list
 do
@@ -77,6 +77,6 @@ do
 		echo "$dir/$name.*" | sed -e 's|^./||' -e 's|@|*|g' >> .gitignore
 	done
 done
-#
+# ----------------------------------------------------------------------------
 echo 'git_ignore.sh: OK'
-exit 0 
+exit 0
