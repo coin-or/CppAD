@@ -25,6 +25,7 @@ $mindex convert from$$
 $children%
 	cppad/local/value.hpp%
 	cppad/local/integer.hpp%
+	cppad/local/to_string.hpp%
 	cppad/local/ad_io.hpp%
 	cppad/local/print_for.hpp%
 	cppad/local/var2par.hpp

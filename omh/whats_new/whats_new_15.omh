@@ -78,8 +78,18 @@ This section contains a list of the changes to CppAD during 2015
 The purpose of this section is to
 assist you in learning about changes between various versions of CppAD.
 
-$head 12-27$$
+$head 12-28$$
+$list number$$
 Add the $cref to_string$$ utility.
+$lnext
+The $cref WishList$$ item to reorganize the include directory was completed
+with the moving of the utilities to $code cppad/utility$$ on
+$cref/11-30/whats_new_15/11-30/$$.
+This item has been removed.
+$lnext
+A wish list item to use template specialization, instead of functions,
+in base type requirements was added.
+$lend
 
 $head 12-08$$
 $list number$$

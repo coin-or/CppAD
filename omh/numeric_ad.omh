@@ -19,14 +19,13 @@ $$
 
 
 $section Some Numerical AD Utilities$$
-The routines listed below are numerical routines that are specially
+The routines listed below are numerical utilities that are
 designed to work with CppAD in particular.
 
 $childtable%
 	cppad/local/bender_quad.hpp%
 	cppad/local/opt_val_hes.hpp%
-	cppad/local/lu_ratio.hpp%
-	cppad/local/to_string.hpp
+	cppad/local/lu_ratio.hpp
 %$$
 
 $end
