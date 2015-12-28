@@ -44,6 +44,7 @@ $end
 
 # include <cppad/local/value.hpp>
 # include <cppad/local/integer.hpp>
+# include <cppad/local/to_string.hpp>
 # include <cppad/local/ad_io.hpp>
 # include <cppad/local/print_for.hpp>
 # include <cppad/local/var2par.hpp>

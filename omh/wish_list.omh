@@ -48,7 +48,7 @@ $head Base Requirements$$
 Change the $cref/Base requirements/base_require/$$ to use template
 specialization instead of functions so that there is a default value
 for each function. The default would result in a
-$cref/known/cppad_assert/Known/$$ if the operation is used and not
+$cref/known/cppad_assert/Known/$$ assert when the operation is used and not
 defined by the base class.
 An example of this type of template specialization can be found in
 the implementation of $cref to_string$$.
