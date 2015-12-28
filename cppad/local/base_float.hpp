@@ -206,6 +206,15 @@ $codep */
 namespace CppAD {
 	CPPAD_NUMERIC_LIMITS(float, float)
 }
+/*$$
+
+$head to_string$$
+The following defines the CppAD $cref to_string$$
+for the type $code float$$:
+$codep */
+namespace CppAD {
+	CPPAD_TO_STRING(float)
+}
 /* $$
 $end
 */

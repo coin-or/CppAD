@@ -270,6 +270,15 @@ $codep */
 namespace CppAD {
 	CPPAD_NUMERIC_LIMITS(double, std::complex<double>)
 }
+/*$$
+
+$head to_string$$
+The following defines the function CppAD $cref to_string$$
+for the type $code std::complex<double>$$:
+$codep */
+namespace CppAD {
+	CPPAD_TO_STRING(std::complex<double>)
+}
 /* $$
 $end
 */
@@ -363,6 +372,8 @@ namespace CppAD {
 	{	return std::pow(x, y); }
 	// numeric_limits -------------------------------------------------
 	CPPAD_NUMERIC_LIMITS(float, std::complex<float>)
+	// to_string -------------------------------------------------
+	CPPAD_TO_STRING(std::complex<float>)
 }
 
 // undefine macros only used by this file

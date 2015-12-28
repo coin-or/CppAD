@@ -20,14 +20,14 @@ $spell
 	ostringstream
 $$
 
-$section Convert Any Type to String$$
+$section Convert An AD or Base Type to String$$
 
 $head Syntax$$
 $icode%s% = to_string(%value%)%$$.
 
 $head Purpose$$
 This routine is similar to the C++11 routine $code std::to_string$$
-except that it works for more types and the format may be different.
+except that it works for AD and Base types and the format may be different.
 
 $head value$$
 The argument $icode value$$ has prototype
@@ -51,7 +51,11 @@ and contains a representation of the specified $icode value$$.
 $head Format$$
 
 $head Floating Point Types$$
-If $icode Type$$ is $code float$$ or $code double$$,
+If $icode Type$$ is
+$code float$$,
+$code double$$,
+$code std::complex<float>$$, or
+$code std::complex<double>$$,
 enough digits are used in the representation so that
 the result is accurate to withing round off error.
 
@@ -74,17 +78,8 @@ $end
 
 namespace CppAD {
 
-	// general implementation
-	template <class Type>
-	struct to_string_struct
-	{	std::string operator()(const Type& value)
-		{	std::ostringstream os;
-			os << value;
-			return os.str();
-		}
-	};
-
-	// partial specialzation for AD<Base> types
+	// Default implementation is in base_to_string.hpp.
+	// Partial specialzation for AD<Base> types
 	template<class Base>
 	struct to_string_struct< CppAD::AD<Base> >
 	{	std::string operator()(const CppAD::AD<Base>& value)
@@ -92,36 +87,11 @@ namespace CppAD {
 			return ts( Value( Var2Par( value ) ) ); }
 	};
 
-	// specialization for float
-	template <>
-	struct to_string_struct<float>
-	{	std::string operator()(const float& value)
-		{	std::stringstream os;
-			float epsilon  = std::numeric_limits<float>::epsilon();
-			size_t n_digits = 1 - std::log10( epsilon );
-			os << std::setprecision(n_digits);
-			os << value;
-			return os.str();
-		}
-	};
-
-	// specialization for double
-	template <>
-	struct to_string_struct<double>
-	{	std::string operator()(const double& value)
-		{	std::stringstream os;
-			double epsilon  = std::numeric_limits<double>::epsilon();
-			size_t n_digits = 1 - std::log10( epsilon );
-			os << std::setprecision(n_digits);
-			os << value;
-			return os.str();
-		}
-	};
-
+	// link from function to function object in structure
 	template<class Type>
 	std::string to_string(const Type& value)
-	{	to_string_struct<Type> ts;
-		return ts(value);
+	{	to_string_struct<Type> to_s;
+		return to_s(value);
 	}
 }
 

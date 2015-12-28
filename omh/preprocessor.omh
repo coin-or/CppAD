@@ -63,6 +63,8 @@ $rnext
 $cref/CPPAD_TAPE_ID_TYPE/cmake/cppad_tape_id_type/$$
 $rnext
 $cref/CPPAD_TESTVECTOR/testvector/$$
+$rnext
+$cref/CPPAD_TO_STRING/base_to_string/CPPAD_TO_STRING/$$
 $tend
 
 $head Deprecated$$

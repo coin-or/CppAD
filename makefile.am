@@ -135,6 +135,7 @@ nobase_myinclude_HEADERS =  \
 	cppad/local/base_float.hpp \
 	cppad/local/base_limits.hpp \
 	cppad/local/base_std_math.hpp \
+	cppad/local/base_to_string.hpp \
 	cppad/local/bender_quad.hpp \
 	cppad/local/bool_fun.hpp \
 	cppad/local/bool_valued.hpp \

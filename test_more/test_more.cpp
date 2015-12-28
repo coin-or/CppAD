@@ -107,6 +107,7 @@ extern bool Sub(void);
 extern bool SubEq(void);
 extern bool SubZero(void);
 extern bool tan(void);
+extern bool to_string(void);
 extern bool test_vector(void);
 extern bool track_new_del(void);
 extern bool Value(void);
@@ -233,6 +234,7 @@ int main(void)
 	ok &= Run( SubEq,           "SubEq"          );
 	ok &= Run( SubZero,         "SubZero"        );
 	ok &= Run( tan,             "tan"            );
+	ok &= Run( to_string,       "to_string"      );
 	ok &= Run( track_new_del,   "track_new_del"  );
 	ok &= Run( Value,           "Value"          );
 	ok &= Run( VecAD,           "VecAD"          );

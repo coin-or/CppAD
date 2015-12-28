@@ -36,6 +36,7 @@ Preprecessor definitions that presist after cppad/cppad.hpp is included:
 # undef CPPAD_TAPE_ADDR_TYPE      in user api
 # undef CPPAD_TAPE_ID_TYPE        in user api
 # undef CPPAD_TESTVECTOR          in user api
+# undef CPPAD_TO_STRING           in user api
 # undef CPPAD_USE_CPLUSPLUS_2011  in user api
 
 # undef CPPAD_TRACK_COUNT    in deprecated api

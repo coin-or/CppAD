@@ -147,6 +147,7 @@ ADD_EXECUTABLE(test_more EXCLUDE_FROM_ALL test_more.cpp
 	sub_zero.cpp
 	tan.cpp
 	test_vector.cpp
+	to_string.cpp
 	track_new_del.cpp
 	value.cpp
 	vec_ad.cpp

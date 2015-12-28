@@ -149,6 +149,7 @@ $childtable%
 	omh/base_require/base_ordered.omh%
 	cppad/local/base_std_math.hpp%
 	cppad/local/base_limits.hpp%
+	cppad/local/base_to_string.hpp%
 	omh/base_require/base_example.omh
 %$$
 
@@ -165,6 +166,7 @@ $end
 # include <cppad/local/base_cond_exp.hpp>
 # include <cppad/local/base_std_math.hpp>
 # include <cppad/local/base_limits.hpp>
+# include <cppad/local/base_to_string.hpp>
 
 // must define template class numeric_limits before the base cases
 # include <cppad/local/numeric_limits.hpp>

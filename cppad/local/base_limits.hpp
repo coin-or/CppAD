@@ -34,7 +34,7 @@ $codei%std::numeric_limits<%Base%>%$$
 would require that $icode Base$$ be a literal type.
 
 $head CPPAD_NUMERIC_LIMITS$$
-In most cases, this macro can be used to the specialization where
+In most cases, this macro can be used to define the specialization where
 the numeric limits for the type $icode Base$$
 are the same as the standard numeric limits for the type $icode Other$$.
 For most $icode Base$$ types,

@@ -82,6 +82,8 @@ $head 12-28$$
 $list number$$
 Add the $cref to_string$$ utility.
 $lnext
+Add $cref base_to_string$$ to the Base type requirements.
+$lnext
 A $cref/Base requirements/wish_list/Base Requirements/$$ item
 was added to the wish list.
 $lnext

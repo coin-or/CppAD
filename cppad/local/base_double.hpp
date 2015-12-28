@@ -200,10 +200,19 @@ namespace CppAD {
 
 $head numeric_limits$$
 The following defines the CppAD $cref numeric_limits$$
-for the type $code <double$$:
+for the type $code double$$:
 $codep */
 namespace CppAD {
 	CPPAD_NUMERIC_LIMITS(double, double)
+}
+/*$$
+
+$head to_string$$
+The following defines the CppAD $cref to_string$$
+for the type $code double$$:
+$codep */
+namespace CppAD {
+	CPPAD_TO_STRING(double)
 }
 /* $$
 $end
