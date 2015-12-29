@@ -453,7 +453,7 @@ void TrackDelVec(
 	if( E == CPPAD_NULL || E->ptr != vptr ) TrackError(
 		"TrackDelVec", file, line,
 		"Invalid value for the argument oldptr.\n"
-		"Possible linking of debug and NDEBUG compliations of CppAD."
+		"Possible linking of debug and NDEBUG compilations of CppAD."
 	);
 
 # if CPPAD_TRACK_DEBUG

@@ -120,6 +120,10 @@ then
 	echo_eval mkdir build
 fi
 echo_eval cd build
+if [ -e CMakeCache.txt ]
+then
+	echo_eval rm CMakeCache.txt
+fi
 # ---------------------------------------------------------------------------
 # clean all variables in cmake cache
 cmake_args='-U .+'

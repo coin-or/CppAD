@@ -118,6 +118,7 @@ nobase_myinclude_HEADERS =  \
 	cppad/local/ad_fun.hpp \
 	cppad/local/ad.hpp \
 	cppad/local/ad_tape.hpp \
+	cppad/local/ad_to_string.hpp \
 	cppad/local/ad_valued.hpp \
 	cppad/local/arithmetic.hpp \
 	cppad/local/asin_op.hpp \
@@ -253,7 +254,6 @@ nobase_myinclude_HEADERS =  \
 	cppad/local/tape_link.hpp \
 	cppad/local/test_vector.hpp \
 	cppad/local/testvector.hpp \
-	cppad/local/to_string.hpp \
 	cppad/local/unary_minus.hpp \
 	cppad/local/unary_plus.hpp \
 	cppad/local/undef.hpp \
@@ -279,6 +279,7 @@ nobase_myinclude_HEADERS =  \
 	cppad/utility/romberg_one.hpp \
 	cppad/utility/rosen_34.hpp \
 	cppad/utility/runge_45.hpp \
+	cppad/utility/to_string.hpp \
 	cppad/speed/det_33.hpp \
 	cppad/speed/det_by_lu.hpp \
 	cppad/speed/det_by_minor.hpp \

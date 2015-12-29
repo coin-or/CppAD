@@ -35,6 +35,7 @@ Please visit http://www.coin-or.org/CppAD/ for information on other licenses.
 # include <cppad/utility/speed_test.hpp>
 # include <cppad/utility/thread_alloc.hpp>
 # include <cppad/utility/time_test.hpp>
+# include <cppad/utility/to_string.hpp>
 # include <cppad/utility/track_new_del.hpp>
 # include <cppad/utility/vector.hpp>
 # endif

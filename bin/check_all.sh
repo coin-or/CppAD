@@ -65,6 +65,8 @@ do
 		echo_log_eval rm -r $name
 	fi
 done
+random_zero_one=`expr $RANDOM % 2`
+echo "random_zero_one = $random_zero_one"
 # ---------------------------------------------------------------------------
 # Create package to run test in
 echo "bin/package.sh"
@@ -80,14 +82,12 @@ then
 	tarball="${list[0]}"
 	skip="$skip other_tarball"
 else
-	choice=`echo $RANDOM % 2 | bc`
-	tarball="${list[$choice]}"
+	tarball="${list[$random_zero_one]}"
 fi
 echo_log_eval rm -rf cppad-$version
 echo_log_eval tar -xzf $tarball
 echo_log_eval cd cppad-$version
 # -----------------------------------------------------------------------------
-random_zero_one=`expr $RANDOM % 2`
 if [ "$random_zero_one" == '0' ]
 then
 	echo_log_eval bin/run_cmake.sh --boost_vector

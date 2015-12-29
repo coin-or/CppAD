@@ -60,7 +60,8 @@ $children%
 
 	cppad/utility/vector.hpp%
 	omh/thread_alloc.omh%
-	cppad/utility/index_sort.hpp
+	cppad/utility/index_sort.hpp%
+	cppad/utility/to_string.hpp
 %$$
 
 $head Testing$$
@@ -127,6 +128,11 @@ $tend
 $subhead Sorting Indices$$
 $table
 $rref index_sort$$
+$tend
+
+$subhead to_string$$
+$table
+$rref to_string$$
 $tend
 
 $end

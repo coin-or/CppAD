@@ -78,6 +78,15 @@ This section contains a list of the changes to CppAD during 2015
 The purpose of this section is to
 assist you in learning about changes between various versions of CppAD.
 
+$head 12-29$$
+Separate $cref to_string$$ from $cref ad_to_string$$ so that it
+can be used without the rest of CppAD; i.e.,
+by including
+$codei%
+	# include <cppad/utility/to_string.hpp>
+%$$
+
+
 $head 12-28$$
 $list number$$
 Add the $cref to_string$$ utility.

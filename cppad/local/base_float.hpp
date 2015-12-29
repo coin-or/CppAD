@@ -17,6 +17,8 @@ Please visit http://www.coin-or.org/CppAD/ for information on other licenses.
 /*
 $begin base_float.hpp$$
 $spell
+	cppad
+	hpp
 	azmul
 	expm1
 	atanh
@@ -209,13 +211,12 @@ namespace CppAD {
 /*$$
 
 $head to_string$$
-The following defines the CppAD $cref to_string$$
-for the type $code float$$:
-$codep */
-namespace CppAD {
-	CPPAD_TO_STRING(float)
-}
-/* $$
+There is no need to define $code to_string$$ for $code float$$
+because it is defined by including $code cppad/utility/to_string.hpp$$;
+see $cref to_string$$.
+See $cref/base_complex.hpp/base_complex.hpp/to_string/$$ for an example where
+it is necessary to define $code to_string$$ for a $icode Base$$ type.
+
 $end
 */
 
