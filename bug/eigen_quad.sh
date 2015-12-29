@@ -61,18 +61,17 @@ int main()
 	a_Q << 1, 2, 3, 4;
 
 	Independent(a_x);
-	AD<double> dd = 2.0;
-	a_VectorXd a_y = (a_x.transpose() * a_Q * a_x) / dd;
-
+	AD<double> a_two = 2.0;
+	a_VectorXd a_y = (a_x.transpose() * a_Q * a_x) / a_two;
 
 	// create f: x -> y and stop tape recording
 	ADFun<double> f(a_x, a_y);
 
-	VectorXd jac     = f.Jacobian(x);
-    a_MatrixXd check = a_x.transpose() * a_Q;
+	VectorXd jac           = f.Jacobian(x);
+	a_MatrixXd a_check_jac = a_x.transpose() * a_Q;
 
 
-	std::cout << "True f'(x)  = " << check << std::endl;
+	std::cout << "True f'(x)  = " << a_check_jac << std::endl;
 	std::cout << "CppAD f'(x) = " << jac.transpose() << std::endl;
 
 	return 0;
