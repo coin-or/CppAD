@@ -17,8 +17,12 @@ echo_eval() {
 }
 # -----------------------------------------------
 cat << EOF
-Function f(x)   = x^T * Q * x / 2
-         f'(x)  = x^T * Q
+Function:
+f(x)   = x^T * Q * x / 2
+
+Note that the derivative of f(x) is given by:
+f'(x)  = [ x^T * Q +  (Q * x)^T ] / 2
+       = x^T * (Q * Q^T) / 2
 EOF
 # -----------------------------------------------
 if [ ! -e build ]
@@ -68,7 +72,7 @@ int main()
 	ADFun<double> f(a_x, a_y);
 
 	VectorXd jac           = f.Jacobian(x);
-	a_MatrixXd a_check_jac = a_x.transpose() * a_Q;
+	a_MatrixXd a_check_jac = a_x.transpose() * (a_Q + a_Q.transpose()) / a_two;
 
 
 	std::cout << "True f'(x)  = " << a_check_jac << std::endl;
