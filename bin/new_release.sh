@@ -10,7 +10,7 @@
 # A copy of this license is included in the COPYING file of this distribution.
 # Please visit http://www.coin-or.org/CppAD/ for information on other licenses.
 # -----------------------------------------------------------------------------
-if [ ! -e "bin/new_release.sh" ]
+if [ "$0" != 'bin/junk.sh' ]
 then
 	echo "bin/new_release.sh: must be executed from its parent directory"
 	exit 1
@@ -21,22 +21,9 @@ echo_eval() {
 	eval $*
 }
 # -----------------------------------------------------------------------------
-svn_repository="https://projects.coin-or.org/svn/CppAD"
-stable_version="20150000"
-release='4'
-release_version="$stable_version.$release"
-# -----------------------------------------------------------------------------
-# Check release version
-if svn list $svn_repository/releases | grep "$release_version" > /dev/null
-then
-	echo bin/"new_release.sh: Release number $release_version already exists."
-	echo "You must first change the assigment"
-	echo "	release=$release"
-	echo "in file bin/new_release.sh to a higher release number."
-	exit 1
-fi
-# -----------------------------------------------------------------------------
-echo_eval git checkout stable/$stable_version
+svn_repo="https://projects.coin-or.org/svn/CppAD"
+stable_version="20160000"
+release='0'
 # -----------------------------------------------------------------------------
 # check that local branch is up to date
 list=`git status -s`
@@ -46,60 +33,129 @@ then
 	exit 1
 fi
 # -----------------------------------------------------------------------------
-# check that remote branch agrees with local branch
-local_hash=`git show-ref stable/$stable_version | \
-	grep "refs/heads/stable/$stable_version" | \
-	sed -e "s| *refs/heads/stable/$stable_version||"`
-remote_hash=`git show-ref stable/$stable_version | \
-	grep "refs/remotes/origin/stable/$stable_version" | \
-	sed -e "s| *refs/remotes/origin/stable/$stable_version||"`
+# Make sure local, remote and svn hash codes agree for this stable branch
+stable_branch=stable/$stable_version
+#
+# local hash code
+local_hash=`git show-ref $stable_branch | \
+	grep "refs/heads/$stable_branch" | \
+	sed -e "s| *refs/heads/$stable_branch||"`
+#
+# remote hash code
+remote_hash=`git show-ref $stable_branch | \
+	grep "refs/remotes/origin/$stable_branch" | \
+	sed -e "s| *refs/remotes/origin/$stable_branch||"`
+#
+# svn hash code
+svn_hash=''
+if svn info $svn_repo/$stable_branch >& /dev/null
+then
+	svn_hash=`svn log $svn_repo/$stable_branch --limit 100 | \
+		grep 'end *hash *code:' | head -1 | sed -e 's|end *hash *code: *||'`
+fi
+#
+if [ "$local_hash" == '' ] && [ "$remote_hash" == '' ]
+then
+	echo "new_release.sh: $stable_branch does not exist"
+	echo "Check that master local and remote are the same and then ?"
+	echo "	git checkout master"
+	echo "	git checkout -b $stable_branch master"
+	exit 1
+fi
+if [ "$local_hash" == '' ] && [ "$remote_hash" != '' ]
+then
+	echo "new_release.sh: local $stable_branch does not exist."
+	echo "	git checkout -b $stable_branch origin/$stable_branch"
+	exit 1
+fi
+#
+if [ "$remote_hash" == '' ]
+then
+	echo "new_release.sh: $stable_branch does not exist ?"
+	echo "	git push origin $stable_branch"
+	exit 1
+fi
+if [ "$svn_hash" == '' ]
+then
+	echo "new_release.sh: svn $stable_branch does not exist."
+	echo "Make sure master and $stable_branch have same hash code,"
+	echo 'then follow instructions below for push and then svn copy ?'
+	echo '	bin/push_git2svn.py trunk'
+	echo "	svn copy $svn_repo/trunk \\"
+	echo "		$svn_repo/$stable_branch"
+	echo "log message: Create $stable_branch from trunk at revision ?"
+	exit 1
+fi
+#
+# check local == remote
 if [ "$local_hash" != "$remote_hash" ]
 then
-	echo_eval git show-ref stable/$stable_version
-	echo 'new_release.sh: exiting because local and remote branch differ'
+	echo 'new_release.sh: local and remote differ for this branch'
+	echo "local  $stable_branch: $local_hash"
+	echo "remote $stable_branch: $remote_hash"
 	exit 1
+fi
+#
+# check remote == svn
+if [ "$svn_hash" != "$remote_hash" ]
+then
+	echo 'new_release.sh: remote and svn differ for this branch'
+	echo "remote $stable_branch: $remote_hash"
+	echo "svn    $stable_branch: $svn_hash"
+	echo 'Execute the following command ?'
+	echo "	bin/push_git2svn.py $stable_branch"
+	exit 1
+fi
+# -----------------------------------------------------------------------------
+# Check that release version does not already exist
+#
+if svn list $svn_repo/releases | grep "$stable_version.$release"
+then
+	echo "$svn_repo/releases/$stable_version.$release"
+	echo 'already exists. Change the assignment'
+	echo "	release=$release"
+	echo 'in bin/new_release.sh to a higher release number ?'
+	exit 1
+fi
+#
+if git tag --list | grep "$stable_version.$release"
+then
+	echo 'This git reference tag already exists. Delete old version ?'
+	echo "	git tag -d $stable_version.$release"
+	echo "	git push --delete origin $stable_version.$release"
+	exit 1
+fi
+# -----------------------------------------------------------------------------
+# checkout the stable branch
+branch=`git branch | grep '^\*' | sed -e 's|^\* *||'`
+if [ "$branch" != "$stable_branch" ]
+then
+	echo_eval git checkout $stable_branch
 fi
 # -----------------------------------------------------------------------------
 check_one=`bin/version.sh get`
-echo_eval git checkout doc.omh
-check_two=`grep "cppad-$stable_version" doc.omh \
+check_two=`grep "cppad-$stable_version\.$release" doc.omh \
 	| sed -e 's|cppad-\([0-9.]*\):.*|\1|'`
-if [ "$check_one" != "$release_version" ] || [ "$check_one" != "$check_two" ]
+if [ "$check_one" != "$check_two" ]
 then
-	echo 'bin/new_release.sh:'
-	echo 'Set new version number with following commands:'
-	echo "	bin/version.sh set $release_version"
+	echo 'bin/new_release.sh: version number is not correct ?'
+	echo "	bin/version.sh set $stable_version.$release"
 	echo '	bin/version.sh copy'
 	echo 'Then test and then commit the changes.'
-fi
-# -----------------------------------------------------------------------------
-svn_hash=`svn log $svn_repository/stable/$stable_version --stop-on-copy | \
-	grep 'end *hash *code:' | head -1 | sed -e 's|end *hash *code: *||'`
-if [ "$svn_hash" != "$remote_hash" ]
-then
-	echo "svn hash code = $svn_hash"
-	echo "git hash code = $remote_hash"
-	echo 'Then execute the following command:'
-	echo "	bin/push_git2svn.py stable/$stable_version"
 	exit 1
 fi
 # -----------------------------------------------------------------------------
-# tag this version of the repository
-if git tag --list | grep "$release_version"
-then
-	git tag -d $release_version
-	git push --delete origin $release_version
-fi
+# tag this release
 #
-git tag -a \
-	-m "corresponds $svn_repository/releases/$release_version" \
-	$release_version
+echo_eval git tag -a \
+	-m \"corresponds $svn_repo/releases/$stable_version.$release\" \
+	$stable_version.$release
 #
-git push origin $release_version
+echo_eval git push origin $stable_version.$release
 # -----------------------------------------------------------------------------
-msg="Creating releases/$release_version"
-rep_stable="$svn_repository/stable/$stable_version"
-rep_release="$svn_repository/releases/$release_version"
+msg="Creating releases/$stable_version.$release"
+rep_stable="$svn_repo/$stable_branch"
+rep_release="$svn_repo/releases/$stable_version.$release"
 echo_eval svn copy $rep_stable $rep_release -m \"$msg\"
 # -----------------------------------------------------------------------------
 if [ ! -e build ]
@@ -107,15 +163,15 @@ then
 	echo_eval mkdir -p build
 fi
 echo_eval cd build
-echo_eval svn checkout $svn_repository/conf conf
+echo_eval svn checkout $svn_repo/conf conf
 #
 echo_eval cd conf
 #
 msg="Update stable and release numbers in projDesc.xml"
 echo 'Settting stable and advance release in build/conf/projDesc.xml.'
 sed -i projDesc.xml \
-	-e "/^ *<stable/,/^ *<\/stable/s/[0-9]\{8\}/$stable_version/" \
-	-e "/^ *<release/,/^ *<\/release/s/[0-9]\{8\}\.[0-9]*/$release_version/"
+-e "/^ *<stable/,/^ *<\/stable/s/[0-9]\{8\}/$stable_version/" \
+-e "/^ *<release/,/^ *<\/release/s/[0-9]\{8\}\.[0-9]*/$stable_version.$release/"
 #
 echo "Use the command the following command to finish the process"
 echo "	svn commit -m \"$msg\" build/conf/projDesc.xml"
