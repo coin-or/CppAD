@@ -47,6 +47,7 @@ then
 	rm check_all.log
 fi
 top_srcdir=`pwd`
+echo "top_srcdir = $top_srcdir"
 # ---------------------------------------------------------------------------
 # circular shift program list and set program to first entry in list
 next_program() {
