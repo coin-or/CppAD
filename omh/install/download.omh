@@ -16,11 +16,7 @@ $spell
 	vcdir
 	vcvarsall
 	Microsoft
-	tarball
 	yyyy
-	mm
-	dd
-	tarballs
 	mkdir
 	cmake
 	nmake
@@ -32,7 +28,7 @@ $spell
 	dir
 	exe
 	gpl
-	xvzf
+	xzf
 	CppAD
 	cppad
 	gzip
@@ -42,6 +38,9 @@ $spell
 	epl
 	tgz
 	hpp
+	github
+	git git
+	htm
 $$
 $dollar @$$
 
@@ -60,7 +59,39 @@ $code cppad/cppad.hpp$$.
 
 $head Compressed Archives$$
 These files have been archived using $code tar$$ and compressed using
-$code gzip$$:
+$code gzip$$.
+We use $icode version$$ to denote the year, month, and day,
+corresponding to a version of the CppAD API.
+For example $code 20160101$$ corresponds to January 1, 2016.
+We use $icode rel$$ to denote the release number.
+Higher release numbers corresponding to more bug fixes.
+We use $icode lic$$ to denote the licence corresponding to a compressed
+archive which can be either $code epl$$ or $code gpl$$
+($code gpl$$ denotes the GNU General Public License and
+$code epl$$ denotes the Eclipse Public License).
+The compressed archives names have one of the following formats:
+$codei%
+	cppad-%version%.%rel%.%lic%.tgz
+	cppad-%version%.%rel%.tgz
+	cppad-%version%.%lic%.tgz
+%$$
+In Unix, you can extract these compressed archives using $code tar$$.
+For example,
+$codei%
+	tar -xzf cppad-%version%.%rel%.%lic%.tgz
+%$$
+No matter what the format of the name, the corresponding distribution
+directory is $codei%cppad-%version%$$.
+To see that the extraction has been done correctly,
+check for the following file:
+$codei%
+	cppad-%version%/cppad/cppad.hpp
+%$$
+
+
+$head Current Version$$
+
+$subhead Compressed Archives$$
 $table
 $bold version$$ $pre  $$ $cnext $bold license$$ $pre  $$ $cnext $bold link$$
 $rnext
@@ -71,44 +102,49 @@ $rnext
 current  $cnext GPL $cnext $href%
 http://www.coin-or.org/download/source/CppAD/cppad-20150601.gpl.tgz%
 cppad-20150601.gpl.tgz%$$
-$rnext
-old      $cnext Both $cnext
-$href%http://www.coin-or.org/download/source/CppAD/%CppAD download page%$$
 $tend
 
-$subhead Current Version$$
-The current versions listed above correspond to the subversion
-$href%https://projects.coin-or.org/CppAD/browser/trunk%trunk%$$
-and the git
-$href%https://github.com/bradbell/cppad%master%$$.
-These tarballs only last for a few days.
-
-$subhead Release Versions$$
-Release versions of the compressed tar files are available on the
-$href%http://www.coin-or.org/download/source/CppAD/%CppAD download page%$$.
-This includes all the releases going back to 2007.
-These file have the form
+$subhead Subversion$$
+The archives above correspond to the current subversion
+$href%https://projects.coin-or.org/CppAD/browser/trunk%trunk%$$.
+You can obtain a subversion copy of the current version using the command
 $codei%
-	cppad-%yyyymmdd%.%rel%.%lic%.tgz
+	svn checkout https://projects.coin-or.org/svn/CppAD/trunk cppad.svn/trunk
 %$$
-The license code $icode lic$$
-is $code gpl$$, $code epl$$ or $code cpl$$ where
-$code gpl$$ denotes the GNU General Public License,
-$code epl$$ denotes the Eclipse Public License, and
-$code cpl$$ denotes the Common Public License
-(not being used for new versions).
-The version number $icode yyyymmdd$$
-is the date at which the features
-of the program were frozen where
-$icode yyyy$$ is the year, $icode mm$$ is the month, and $icode dd$$
-is the day.
-The release number $icode rel$$
-corresponds to a bug fix index where
-higher numbers corresponding to more bug fixes.
+This procedure requires that
+the $href%http://subversion.tigris.org/%subversion%$$ program
+is installed on your system.
 
-$subhead Monthly Versions$$
+$subhead Git$$
+The archives above correspond to the current git
+$href%https://github.com/bradbell/cppad%master%$$.
+You can a git clone of the current version using the command
+$codei%
+    git clone https://github.com/coin-or/CppAD.git cppad.git
+%$$
+This procedure requires that
+the $href|https://en.wikipedia.org/wiki/Git_%28software%29|git|$$
+is installed on your system.
+
+
+$head Release Versions$$
+Release versions have the $icode rel$$ field in the compressed archive name.
+The release version on the
+$href%http://www.coin-or.org/download/source/CppAD/%Coin download page%$$
+have the format
+$codei%
+	cppad-%version%.%rel%.%lic%.tgz
+%$$
+The release versions on the
+$href%https://github.com/coin-or/CppAD/releases%github download page%$$
+have the format
+$codei%
+	cppad-%version%.%rel%.tgz
+%$$
+
+$head Monthly Versions$$
 Monthly versions of the compressed tar files are available on the
-$href%http://www.coin-or.org/download/source/CppAD/%CppAD download page%$$.
+$href%http://www.coin-or.org/download/source/CppAD/%Coin download page%$$.
 These are kept until the end of the current year,
 when the next release is created.
 The monthly versions have the form
@@ -119,21 +155,22 @@ where the license code $icode lic$$
 is $code gpl$$ or $code epl$$
 and $icode yyyy$$ is the current year.
 
-$subhead Unix File Extraction$$
-On unix, you can use the command
+$head Daily Versions$$
+You can use the git version of the repository to obtain the version
+corresponding to a specific day as follows:
 $codei%
-	tar -xvzf cppad-%version%.%lic%.tgz
+	git clone https://github.com/coin-or/CppAD.git cppad.git
+	cd cppad.git
+	git checkout --quiet %hash_id%
 %$$
-where $icode version$$ either refers to the current version,
-or one of the release versions.
-This will decompress and extract the CppAD into
-the distribution directory $codei%cppad-%version%$$.
-To see if this has been done correctly, check for the following file:
-$codei%
-	cppad-%version%/cppad/cppad.hpp
-%$$
+where $icode hash_id$$ is the SHA-1 hash code for the version
+of the repository for the day of interest.
+Note that a list of these $icode hash_id$$ values can be found at the
+CppAD github
+$href%https://github.com/coin-or/CppAD/commits/master%commits/master%$$.
+page.
 
-$subhead Windows File Extraction and Testing$$
+$head Windows File Extraction and Testing$$
 If you know how to extract the distribution directory from
 the tar file, just do so. Otherwise, below is one way you can do it.
 (Note that if $code 7z.exe$$, $code cmake.exe$$, and $code nmake.exe$$ are you
@@ -162,7 +199,8 @@ $codei|
 	|path_to_vcdir|=C:\Program Files (x86)\Microsoft Visual Studio 14.0\VC
 |$$
 $lnext
-Use the following commands to extract the distribution from the tarball:
+Use the following commands to extract the distribution from the
+compressed archive:
 $codei%
 	7z x cppad-%version%.%lic%.tgz
 	7z x cppad-%version%.%lic%.tar
@@ -191,75 +229,27 @@ If you are using an old version of CppAD
 You should follow the install instructions in
 the $code doc$$ subdirectory of the distribution directory.
 
-
-$head Subversion$$
+$head Repository Methods$$
+The following instructions pertain to using
+$cref/subversion/download/Current Version/Subversion/$$ or
+$cref/git/download/Current Version/Git/$$,
+or one of the
+$href%https://github.com/coin-or/CppAD/releases%github%$$
+$cref/release versions/download/Release Versions/$$.
 
 $subhead Limitations$$
-This download procedure has the following limitations:
 $list number$$
-The $href%http://subversion.tigris.org/%subversion%$$
-program must be installed on your system.
-$lnext
 No documentation is included by this download procedure,
-though it can be build from the source code; see
-$cref/install instructions/download/Subversion/Install Instructions/$$ below.
+though it can be built from the source code; see
+$cref/documentation/download/Repository Methods/Documentation/$$ below.
 $lnext
 Only the
 $href%http://opensource.org/licenses/EPL-1.0%EPL licensed%$$
-version of CppAD can be obtained by this download procedure
-(some old versions correspond to CPL instead of EPL).
+version of CppAD can be obtained by these download procedures.
 $lend
 
-$subhead Current Version$$
-To obtain current version of CppAD, execute the following commands
-$codei%
-	svn export https://projects.coin-or.org/svn/CppAD/trunk %dir%
-%$$
-To see if this has been done correctly, check for the following file:
-$codei%
-	%dir%/cppad/cppad.hpp
-%$$
-We refer to your directory choice $icode dir$$ above
-as the distribution directory.
-
-$subhead Stable Versions$$
-Subversion downloads are available for a set of stable versions
-(after the specified date, only bug fixes get applied).
-The following link will list the available $icode dir$$ values
-corresponding to
-$href%https://projects.coin-or.org/CppAD/browser/stable% stable versions%$$.
-The following command will download a
-stable version of the CppAD source code:
-$codei%
-	svn export https://projects.coin-or.org/svn/CppAD/stable/%dir% %dir%
-%$$
-To see if this has been done correctly, check for the following file:
-$codei%
-	%dir%/cppad/cppad.hpp
-%$$
-Note that it will correspond to the most recent release for this stable
-version.
-
-$subhead Release Versions$$
-Subversion downloads are available for a set of release versions
-(no changes are applied).
-The following link will list the available $icode dir$$ values
-corresponding to
-$href%https://projects.coin-or.org/CppAD/browser/releases%
-	release versions
-%$$.
-The following command will download a
-release version of the CppAD source code:
-$codei%
-	svn export https://projects.coin-or.org/svn/CppAD/releases/%dir% %dir%
-%$$
-To see if this has been done correctly, check for the following file:
-$codei%
-	%dir%/cppad/cppad.hpp
-%$$
-
-$subhead Install Instructions$$
-If you are using subversion to download an old version of CppAD,
+$subhead Documentation$$
+If you are using one of these download procedures,
 you will have to build the documentation to get the corresponding install
 instructions.
 The documentation for CppAD is built from the source code files using
@@ -272,7 +262,7 @@ shows it is in your path.
 Once you have done this,
 in the distribution directory execute the following command:
 $codei%
-	./build.sh omhelp
+	bin/run_omhelp.sh htm
 %$$
 You will then be able to follow the install instructions in
 the $code doc$$ subdirectory of the distribution directory.

@@ -89,7 +89,7 @@ $head Distribution Directory$$
 You must first obtain a copy of the CppAD distribution directory
 using the $cref download$$ instructions.
 The install instructions below correspond to the
-$cref/current version/download/Compressed Archives/Current Version/$$
+$cref/current version/download/Current Version/$$
 which has distribution directory $code cppad-20121230$$.
 
 $head Work Directory$$

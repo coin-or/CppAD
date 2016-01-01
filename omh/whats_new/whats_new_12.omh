@@ -254,10 +254,10 @@ $lend
 $head 11-21$$
 $list number$$
 Fix the version number in link to the
-$cref/current download files/download/Compressed Archives/Current Version/$$.
+$cref/current download files/download/Current Version/$$.
 $lnext
 Change the
-$cref/subversion/download/Subversion/$$ download instructions to use
+$code subversion$$ download instructions to use
 the $code export$$ instead of $code checkout$$ command.
 This avoids downloading the source code control files.
 $lend

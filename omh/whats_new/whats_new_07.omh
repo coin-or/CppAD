@@ -196,8 +196,7 @@ This has been fixed.
 
 $head 11-02$$
 The instructions for downloading the current version using
-$cref/subversion/download/Subversion/$$
-have changed.
+$code subversion$$ have changed.
 The user should now directly edit the file
 $codep
 	trunk/configure
@@ -248,7 +247,7 @@ The makefiles in the distribution have been changed so that
 one can run configure from a directory other than the distribution directory.
 
 $head 10-27$$
-A $cref/subversion/download/Subversion/$$ method
+A $code subversion$$ method
 for downloading CppAD has been added.
 $pre
 
@@ -262,7 +261,7 @@ $pre
 
 $$
 Extend the
-$cref/subversion/download/Subversion/$$
+$code subversion$$
 methods to include a full installation and old versions.
 
 $head 10-23$$

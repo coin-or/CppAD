@@ -931,9 +931,7 @@ $head 02-01$$
 The subversion
 install instructions were brought up to date.
 They have since been replaced by just separate
-$cref/subversion download/download/Subversion/$$
-instructions.
-
+$code subversion$$ instructions.
 
 $head 01-19$$
 The directory where the $cref pkgconfig$$ file $code cppad.pc$$
