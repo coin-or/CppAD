@@ -85,10 +85,8 @@ def print_system(cmd) :
 	return output
 
 id_pattern    = re.compile(r'^.*\$Id.*$',      re.MULTILINE)
-white_pattern = re.compile(r'[ \t]+$',         re.MULTILINE)
 def ignore_data(data) :
 	data = re.sub(id_pattern,    '', data)
-	data = re.sub(white_pattern, '', data)
 	return data
 # -----------------------------------------------------------------------------
 # determine git_branch_name
