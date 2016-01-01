@@ -1,7 +1,7 @@
 #! /bin/bash -e
 # $Id$
 # -----------------------------------------------------------------------------
-# CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-15 Bradley M. Bell
+# CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-16 Bradley M. Bell
 #
 # CppAD is distributed under multiple licenses. This distribution is under
 # the terms of the
@@ -32,8 +32,8 @@ list=`git status | sed -n \
                 sort -u`
 cat << EOF > check_copyright.1.$$
 # Change copyright second year to current year
-s/Copyright (C) \\([0-9]*\\)-[0-9][0-9] Bradley M. Bell/Copyright (C) \\1-15 Bradley M. Bell/
-s/Copyright (C) \\([0-9]*\\)-20[0-9][0-9] Bradley M. Bell/Copyright (C) \\1-15 Bradley M. Bell/
+s/Copyright (C) \\([0-9]*\\)-[0-9][0-9] Bradley M. Bell/Copyright (C) \\1-16 Bradley M. Bell/
+s/Copyright (C) \\([0-9]*\\)-20[0-9][0-9] Bradley M. Bell/Copyright (C) \\1-16 Bradley M. Bell/
 EOF
 ok=true
 for file in $list
