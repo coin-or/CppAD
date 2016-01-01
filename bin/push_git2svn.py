@@ -1,7 +1,7 @@
 #! /bin/python
 # $Id
 # -----------------------------------------------------------------------------
-# CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-15 Bradley M. Bell
+# CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-16 Bradley M. Bell
 #
 # CppAD is distributed under multiple licenses. This distribution is under
 # the terms of the
@@ -86,11 +86,9 @@ def print_system(cmd) :
 
 id_pattern    = re.compile(r'^.*\$Id.*$',      re.MULTILINE)
 white_pattern = re.compile(r'[ \t]+$',         re.MULTILINE)
-date_pattern  = re.compile(r'2003-[0-9][0-9]', re.MULTILINE)
 def ignore_data(data) :
 	data = re.sub(id_pattern,    '', data)
 	data = re.sub(white_pattern, '', data)
-	data = re.sub(date_pattern,  '', data)
 	return data
 # -----------------------------------------------------------------------------
 # determine git_branch_name
