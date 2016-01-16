@@ -1,7 +1,7 @@
 #! /bin/bash -e
 # $Id$
 # -----------------------------------------------------------------------------
-# CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-15 Bradley M. Bell
+# CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-16 Bradley M. Bell
 #
 # CppAD is distributed under multiple licenses. This distribution is under
 # the terms of the
@@ -19,7 +19,7 @@ fi
 echo "Checking for \$Id.*\$ in beginning of source code"
 echo "-------------------------------------------------------"
 ok="yes"
-list=`bin/list_files.sh | sed -n \
+list=`bin/ls_files.sh | sed -n \
 	-e '/^gpl-3.0.txt$/d' \
 	-e '/^epl-v10.txt$/d' \
 	-e '/cppad\/local\/config.h.in$/d' \

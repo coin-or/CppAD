@@ -1,7 +1,7 @@
 #! /bin/bash -e
 # $Id$
 # -----------------------------------------------------------------------------
-# CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-15 Bradley M. Bell
+# CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-16 Bradley M. Bell
 #
 # CppAD is distributed under multiple licenses. This distribution is under
 # the terms of the
@@ -40,7 +40,7 @@ omh/license.omh
 # Make sure that OMhelp verbatim commands referr to same file as command
 echo "Checking that OMhelp verbatim commands include from file they appear in."
 echo "----------------------------------------------------------------------"
-list=`bin/list_files.sh`
+list=`bin/ls_files.sh`
 different="no"
 for file in $list
 do

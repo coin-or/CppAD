@@ -1,7 +1,7 @@
 #! /bin/bash -e
 # $Id$
 # -----------------------------------------------------------------------------
-# CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-15 Bradley M. Bell
+# CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-16 Bradley M. Bell
 #
 # CppAD is distributed under multiple licenses. This distribution is under
 # the terms of the
@@ -18,7 +18,7 @@ fi
 # -----------------------------------------------------------------------------
 echo "Checking include files listed in makefile.am"
 echo "-------------------------------------------------------"
-bin/list_files.sh .h .hpp | sed -n \
+bin/ls_files.sh .h .hpp | sed -n \
 	-e '/^cppad\/deprecated\//d' \
 	-e '/cppad\/.*\.h$/p' \
 	-e '/cppad\/.*\.hpp$/p' \

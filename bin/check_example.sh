@@ -1,7 +1,7 @@
 #! /bin/bash -e
 # $Id$
 # -----------------------------------------------------------------------------
-# CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-15 Bradley M. Bell
+# CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-16 Bradley M. Bell
 #
 # CppAD is distributed under multiple licenses. This distribution is under
 # the terms of the
@@ -18,7 +18,7 @@ fi
 # -----------------------------------------------------------------------------
 echo "Checking that all examples are in omh/example_list.omh"
 echo "-------------------------------------------------------"
-file_list=`bin/list_files.sh | sed -n \
+file_list=`bin/ls_files.sh | sed -n \
 	-e '/cppad_ipopt/d' \
 	-e '/example\//p' \
 	-e '/multi_thread\//p'`

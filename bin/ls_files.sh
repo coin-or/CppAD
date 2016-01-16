@@ -1,7 +1,7 @@
 #! /bin/bash -e
 # $Id$
 # -----------------------------------------------------------------------------
-# CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-15 Bradley M. Bell
+# CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-16 Bradley M. Bell
 #
 # CppAD is distributed under multiple licenses. This distribution is under
 # the terms of the
@@ -12,9 +12,9 @@
 # -----------------------------------------------------------------------------
 # list files in repository (not deleted)
 # -----------------------------------------------------------------------------
-if [ $0 != "bin/list_files.sh" ]
+if [ $0 != "bin/ls_files.sh" ]
 then
-	echo "bin/list_files.sh: must be executed from its parent directory"
+	echo "bin/ls_files.sh: must be executed from its parent directory"
 	exit 1
 fi
 # -----------------------------------------------------------------------------

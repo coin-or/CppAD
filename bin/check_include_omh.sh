@@ -1,7 +1,7 @@
 #! /bin/bash -e
 # $Id$
 # -----------------------------------------------------------------------------
-# CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-15 Bradley M. Bell
+# CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-16 Bradley M. Bell
 #
 # CppAD is distributed under multiple licenses. This distribution is under
 # the terms of the
@@ -20,7 +20,7 @@ fi
 echo "Checking difference between OMhelp include directives and file names."
 echo "----------------------------------------------------------------------"
 # super list of file names that are referenced by omhelp commands
-bin/list_files.sh | sed -n \
+bin/ls_files.sh | sed -n \
 	-e '/\.c$/p' \
 	-e '/\.cpp$/p' \
 	-e '/\.hpp$/p' \

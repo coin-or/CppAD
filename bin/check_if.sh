@@ -1,7 +1,7 @@
 #! /bin/bash -e
 # $Id$
 # -----------------------------------------------------------------------------
-# CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-15 Bradley M. Bell
+# CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-16 Bradley M. Bell
 #
 # CppAD is distributed under multiple licenses. This distribution is under
 # the terms of the
@@ -21,7 +21,7 @@ fi
 echo "Checking for '# if 0' and '# if NDEBUG' commands in source code"
 echo "-------------------------------------------------------"
 ok="yes"
-list=`bin/list_files.sh | sed -n \
+list=`bin/ls_files.sh | sed -n \
 	-e '/\.cpp$/p' \
 	-e '/\.hpp$/p' \
 	-e '/\.hpp.in$/p'`
