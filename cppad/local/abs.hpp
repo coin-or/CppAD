@@ -3,7 +3,7 @@
 # define CPPAD_ABS_HPP
 
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-15 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-16 Bradley M. Bell
 
 CppAD is distributed under multiple licenses. This distribution is under
 the terms of the
@@ -80,7 +80,7 @@ $end
 namespace CppAD {
 
 template <class Base>
-AD<Base> AD<Base>::Abs (void) const
+AD<Base> AD<Base>::abs_me (void) const
 {
 	AD<Base> result;
 	result.value_ = abs(value_);
@@ -104,11 +104,11 @@ AD<Base> AD<Base>::Abs (void) const
 
 template <class Base>
 inline AD<Base> abs(const AD<Base> &x)
-{	return x.Abs(); }
+{	return x.abs_me(); }
 
 template <class Base>
 inline AD<Base> abs(const VecAD_reference<Base> &x)
-{	return abs( x.ADBase() ); }
+{	return x.ADBase().abs_me(); }
 
 } // END CppAD namespace
 

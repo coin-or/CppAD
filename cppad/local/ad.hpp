@@ -3,7 +3,7 @@
 # define CPPAD_AD_HPP
 
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-15 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-16 Bradley M. Bell
 
 CppAD is distributed under multiple licenses. This distribution is under
 the terms of the
@@ -194,7 +194,7 @@ public:
 	{ }
 
 	// interface so these functions need not be friends
-	inline AD Abs(void) const;
+	inline AD abs_me(void) const;
 	inline AD acos(void) const;
 	inline AD asin(void) const;
 	inline AD atan(void) const;
@@ -204,7 +204,7 @@ public:
 	inline AD fabs(void) const;
 	inline AD log(void) const;
 	inline AD sin(void) const;
-	inline AD Sign(void) const;
+	inline AD sign_me(void) const;
 	inline AD sinh(void) const;
 	inline AD sqrt(void) const;
 	inline AD tan(void) const;

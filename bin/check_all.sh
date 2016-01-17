@@ -1,7 +1,7 @@
 #! /bin/bash -e
 # $Id$
 # -----------------------------------------------------------------------------
-# CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-15 Bradley M. Bell
+# CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-16 Bradley M. Bell
 #
 # CppAD is distributed under multiple licenses. This distribution is under
 # the terms of the
@@ -48,6 +48,8 @@ then
 fi
 top_srcdir=`pwd`
 echo "top_srcdir = $top_srcdir"
+random_zero_one=`expr $RANDOM % 2`
+echo "random_zero_one = $random_zero_one"
 # ---------------------------------------------------------------------------
 # circular shift program list and set program to first entry in list
 next_program() {
@@ -55,19 +57,10 @@ next_program() {
 	program=`echo "$program_list" | sed -e 's| *\([^ ]*\).*|\1|'`
 }
 # ---------------------------------------------------------------------------
-list="
-	$HOME/prefix/cppad
-	build
-"
-for name in $list
-do
-	if [ -e "$name" ]
-	then
-		echo_log_eval rm -r $name
-	fi
-done
-random_zero_one=`expr $RANDOM % 2`
-echo "random_zero_one = $random_zero_one"
+if [ -e "$HOME/prefix/cppad" ]
+then
+	echo_log_eval rm -r $HOME/prefix/cppad
+fi
 # ---------------------------------------------------------------------------
 # Create package to run test in
 echo "bin/package.sh"

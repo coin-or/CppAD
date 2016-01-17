@@ -3,7 +3,7 @@
 # define CPPAD_SIGN_HPP
 
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-15 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-16 Bradley M. Bell
 
 CppAD is distributed under multiple licenses. This distribution is under
 the terms of the
@@ -69,7 +69,7 @@ $end
 namespace CppAD {
 
 template <class Base>
-AD<Base> AD<Base>::Sign (void) const
+AD<Base> AD<Base>::sign_me (void) const
 {
 	AD<Base> result;
 	result.value_ = sign(value_);
@@ -93,11 +93,11 @@ AD<Base> AD<Base>::Sign (void) const
 
 template <class Base>
 inline AD<Base> sign(const AD<Base> &x)
-{	return x.Sign(); }
+{	return x.sign_me(); }
 
 template <class Base>
 inline AD<Base> sign(const VecAD_reference<Base> &x)
-{	return sign( x.ADBase() ); }
+{	return x.ADBase().sign_me(); }
 
 } // END CppAD namespace
 
