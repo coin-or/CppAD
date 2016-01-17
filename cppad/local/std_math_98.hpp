@@ -3,7 +3,7 @@
 # define CPPAD_STD_MATH_98_HPP
 
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-15 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-16 Bradley M. Bell
 
 CppAD is distributed under multiple licenses. This distribution is under
 the terms of the
@@ -493,9 +493,9 @@ acos, asin, atan, cos, cosh, exp, fabs, log, sin, sinh, sqrt, tan, tanh.
 # define CPPAD_STANDARD_MATH_UNARY_AD(Name, Op)                   \
     template <class Base>                                         \
     inline AD<Base> Name(const AD<Base> &x)                       \
-    {   return x.Name(); }                                        \
+    {   return x.Name##_me(); }                                   \
     template <class Base>                                         \
-    inline AD<Base> AD<Base>::Name (void) const                   \
+    inline AD<Base> AD<Base>::Name##_me (void) const              \
     {                                                             \
         AD<Base> result;                                          \
         result.value_ = CppAD::Name(value_);                      \
@@ -512,7 +512,7 @@ acos, asin, atan, cos, cosh, exp, fabs, log, sin, sinh, sqrt, tan, tanh.
     }                                                             \
     template <class Base>                                         \
     inline AD<Base> Name(const VecAD_reference<Base> &x)          \
-    {   return Name( x.ADBase() ); }
+    {   return x.ADBase().Name##_me(); }
 
 //  BEGIN CppAD namespace
 namespace CppAD {
@@ -543,9 +543,9 @@ namespace CppAD {
 	// Error function is a special case
 	template <class Base>
 	inline AD<Base> erf(const AD<Base> &x)
-	{	return x.erf(); }
+	{	return x.erf_me(); }
 	template <class Base>
-	inline AD<Base> AD<Base>::erf (void) const
+	inline AD<Base> AD<Base>::erf_me (void) const
 	{
 		AD<Base> result;
 		result.value_ = CppAD::erf(value_);
@@ -572,7 +572,7 @@ namespace CppAD {
 	}
 	template <class Base>
 	inline AD<Base> erf(const VecAD_reference<Base> &x)
-	{	return erf( x.ADBase() ); }
+	{	return x.ADBase().erf_me(); }
 # endif
 
      /*!

@@ -48,7 +48,13 @@ then
 fi
 top_srcdir=`pwd`
 echo "top_srcdir = $top_srcdir"
-random_zero_one=`expr $RANDOM % 2`
+#
+if ! random_zero_one=`expr $RANDOM % 2`
+then
+	# expr exit status is 1 when the expression result is zero
+	# supress shell exit in this case
+	:
+fi
 echo "random_zero_one = $random_zero_one"
 # ---------------------------------------------------------------------------
 # circular shift program list and set program to first entry in list
