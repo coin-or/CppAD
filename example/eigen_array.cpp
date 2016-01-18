@@ -1,6 +1,6 @@
 // $Id$
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-15 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-16 Bradley M. Bell
 
 CppAD is distributed under multiple licenses. This distribution is under
 the terms of the
@@ -53,7 +53,7 @@ bool eigen_array(void)
 	CppAD::Independent(a_x);
 
 	// evaluate a component wise function
-	a_y = a_x.array() + sin(a_x.array());
+	a_y = a_x.array() + a_x.array().sin();
 
 	// create f: x -> y and stop tape recording
 	CppAD::ADFun<double> f(a_x, a_y);

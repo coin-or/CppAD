@@ -1,6 +1,6 @@
 # $Id$
 # -----------------------------------------------------------------------------
-# CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-15 Bradley M. Bell
+# CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-16 Bradley M. Bell
 #
 # CppAD is distributed under multiple licenses. This distribution is under
 # the terms of the
@@ -12,11 +12,9 @@
 # Build the speed/* directory tests
 # Inherit environment from ../CMakeList.txt
 
-# CppAD developers use DEBUG for debugging speed tests.
-# SET(CMAKE_CXX_FLAGS_DEBUG "-O0 -DNDEBUG")
-
 # Specify build type for this directory and all its subdirectories.
 # Possible values are DEBUG, RELEASE, RelWithDebInfo and MinSizeRel
+# CppAD developers can use DEBUG for debugging speed tests.
 SET(CMAKE_BUILD_TYPE RELEASE)
 
 # Initialize list of tests as empty

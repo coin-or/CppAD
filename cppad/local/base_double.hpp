@@ -2,7 +2,7 @@
 # ifndef CPPAD_BASE_DOUBLE_HPP
 # define CPPAD_BASE_DOUBLE_HPP
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-15 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-16 Bradley M. Bell
 
 CppAD is distributed under multiple licenses. This distribution is under
 the terms of the
@@ -17,6 +17,7 @@ Please visit http://www.coin-or.org/CppAD/ for information on other licenses.
 /*
 $begin base_double.hpp$$
 $spell
+	namespaces
 	cppad
 	hpp
 	azmul
@@ -138,31 +139,35 @@ namespace CppAD {
 /* $$
 
 $head Unary Standard Math$$
-The following macro invocations define the unary standard math functions
-required to use $code AD<double>$$:
+The following macro invocations import the $code double$$ versions of
+the unary standard math functions into the $code CppAD$$ namespace.
+Importing avoids ambiguity errors when using both the
+$code CppAD$$ and $code std$$ namespaces.
+Note this also defines the $cref/float/base_float.hpp/Unary Standard Math/$$
+versions of these functions.
 $codep */
 namespace CppAD {
-	CPPAD_STANDARD_MATH_UNARY(double, acos)
-	CPPAD_STANDARD_MATH_UNARY(double, asin)
-	CPPAD_STANDARD_MATH_UNARY(double, atan)
-	CPPAD_STANDARD_MATH_UNARY(double, cos)
-	CPPAD_STANDARD_MATH_UNARY(double, cosh)
-	CPPAD_STANDARD_MATH_UNARY(double, exp)
-	CPPAD_STANDARD_MATH_UNARY(double, fabs)
-	CPPAD_STANDARD_MATH_UNARY(double, log)
-	CPPAD_STANDARD_MATH_UNARY(double, log10)
-	CPPAD_STANDARD_MATH_UNARY(double, sin)
-	CPPAD_STANDARD_MATH_UNARY(double, sinh)
-	CPPAD_STANDARD_MATH_UNARY(double, sqrt)
-	CPPAD_STANDARD_MATH_UNARY(double, tan)
-	CPPAD_STANDARD_MATH_UNARY(double, tanh)
+	using std::acos;
+	using std::asin;
+	using std::atan;
+	using std::cos;
+	using std::cosh;
+	using std::exp;
+	using std::fabs;
+	using std::log;
+	using std::log10;
+	using std::sin;
+	using std::sinh;
+	using std::sqrt;
+	using std::tan;
+	using std::tanh;
 # if CPPAD_USE_CPLUSPLUS_2011
-	CPPAD_STANDARD_MATH_UNARY(double, erf)
-	CPPAD_STANDARD_MATH_UNARY(double, asinh)
-	CPPAD_STANDARD_MATH_UNARY(double, acosh)
-	CPPAD_STANDARD_MATH_UNARY(double, atanh)
-	CPPAD_STANDARD_MATH_UNARY(double, expm1)
-	CPPAD_STANDARD_MATH_UNARY(double, log1p)
+	using std::erf;
+	using std::asinh;
+	using std::acosh;
+	using std::atanh;
+	using std::expm1;
+	using std::log1p;
 # endif
 }
 /* $$
@@ -190,13 +195,15 @@ namespace CppAD {
 }
 /* $$
 
-$head pow $$
+$head pow$$
 The following defines a $code CppAD::pow$$ function that
-is required to use $code AD<double>$$:
+is required to use $code AD<double>$$.
+As with the unary standard math functions,
+this has the exact same signature as $code std::pow$$,
+so use it instead of defining another function.
 $codep */
 namespace CppAD {
-	inline double pow(const double& x, const double& y)
-	{ return std::pow(x, y); }
+	using std::pow;
 }
 /*$$
 
