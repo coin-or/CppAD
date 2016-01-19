@@ -1,0 +1,49 @@
+$Id$
+/* --------------------------------------------------------------------------
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-16 Bradley M. Bell
+
+CppAD is distributed under multiple licenses. This distribution is under
+the terms of the
+                    Eclipse Public License Version 1.0.
+
+A copy of this license is included in the COPYING file of this distribution.
+Please visit http://www.coin-or.org/CppAD/ for information on other licenses.
+-------------------------------------------------------------------------- */
+
+$begin whats_new_16$$
+$spell
+	CppAD
+	Eigen
+	std
+	namespace
+$$
+
+$section Changes and Additions to CppAD During 2016$$
+
+$head Introduction$$
+The sections listed below contain a list of the changes to CppAD
+in reverse order by date.
+The purpose of these sections is to
+assist you in learning about changes between various versions of CppAD.
+
+$head 01-18$$
+$list number$$
+Fix ambiguity between $code CppAD::sin$$ and $code std::sin$$,
+and other standard math functions,
+when using
+$codep
+	using namespace std;
+	using namespace CppAD;
+$$
+This is OK for simple programs, but not generally recommended.
+See $code double$$ version of base class definitions for
+$cref/Unary Standard Math/base_double.hpp/Unary Standard Math/$$
+for more details.
+$lnext
+Change Eigen array example
+$cref eigen_array.cpp$$
+to use member function version of $code sin$$ function
+(as per Eigen's array class documentation).
+$lend
+
+$end

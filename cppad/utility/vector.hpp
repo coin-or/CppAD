@@ -3,7 +3,7 @@
 # define CPPAD_VECTOR_HPP
 
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-15 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-16 Bradley M. Bell
 
 CppAD is distributed under multiple licenses. This distribution is under
 the terms of the
@@ -101,7 +101,7 @@ but rather pointers are transferred.
 
 $head Element Access$$
 If $icode x$$ is a $codei%CppAD::vector<%Scalar%>%$$ object
-and $code i$$ has type $code size_t$$,
+and $icode i$$ has type $code size_t$$,
 $codei%
 	%x%[%i%]
 %$$

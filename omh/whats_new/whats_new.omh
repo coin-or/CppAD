@@ -27,6 +27,7 @@ The purpose of these sections is to
 assist you in learning about changes between various versions of CppAD.
 
 $children%
+	omh/whats_new/whats_new_16.omh%
 	omh/whats_new/whats_new_15.omh%
 	omh/whats_new/whats_new_14.omh%
 	omh/whats_new/whats_new_13.omh%
@@ -43,9 +44,10 @@ $children%
 %$$
 
 $head This Year$$
-$cref whats_new_15$$
+$cref whats_new_16$$
 
 $head Previous Years$$
+$cref whats_new_15$$
 $cref whats_new_14$$
 $cref whats_new_13$$
 $cref whats_new_12$$
@@ -58,25 +60,5 @@ $cref whats_new_06$$,
 $cref whats_new_05$$,
 $cref whats_new_04$$,
 $cref whats_new_03$$.
-
-$head 01-18$$
-$list number$$
-Fix ambiguity between $code CppAD::sin$$ and $code std::sin$$,
-and other standard math functions,
-when using
-$codep
-	using namespace std;
-	using namespace CppAD;
-$$
-This is OK for simple programs, but not generally recommended.
-See $code double$$ version of base class definitions for
-$cref/Unary Standard Math/base_double.hpp/Unary Standard Math/$$
-for more details.
-$lnext
-Change Eigen array example
-$cref eigen_array.cpp$$
-to use member function version of $code sin$$ function
-(as per Eigen's array class documentation).
-$lend
 
 $end
