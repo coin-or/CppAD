@@ -2,7 +2,7 @@
 # ifndef CPPAD_BASE_ALLOC_HPP
 # define CPPAD_BASE_ALLOC_HPP
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-15 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-16 Bradley M. Bell
 
 CppAD is distributed under multiple licenses. This distribution is under
 the terms of the
@@ -364,6 +364,35 @@ namespace CppAD {
 }
 /* $$
 
+$head to_string$$
+The following defines the CppAD $cref to_string$$ function
+for the type $code base_alloc$$:
+$codep */
+namespace CppAD {
+	CPPAD_TO_STRING(base_alloc)
+}
+/* $$
+
+$head hash_code$$
+The $cref/default/base_hash/Default/$$ hashing function does
+not work well for this case because two different pointers can
+have the same value.
+$codep */
+namespace CppAD {
+	inline unsigned short hash_code(const base_alloc& x)
+	{	unsigned short code = 0;
+		if( *x.ptrdbl_ == 0.0 )
+			return code;
+		double log_x = log( abs( *x.ptrdbl_ ) );
+		// assume log( std::numeric_limits<double>::max() ) is near 700
+		code = static_cast<unsigned short>(
+			(CPPAD_HASH_TABLE_SIZE / 700 + 1) * log_x
+		);
+		code = code % CPPAD_HASH_TABLE_SIZE;
+		return code;
+	}
+}
+/* $$
 $end
 */
 # endif

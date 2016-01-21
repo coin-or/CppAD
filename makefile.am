@@ -1,6 +1,6 @@
 # $Id$
 # -----------------------------------------------------------------------------
-# CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-15 Bradley M. Bell
+# CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-16 Bradley M. Bell
 #
 # CppAD is distributed under multiple licenses. This distribution is under
 # the terms of the
@@ -134,6 +134,7 @@ nobase_myinclude_HEADERS =  \
 	cppad/local/base_cond_exp.hpp \
 	cppad/local/base_double.hpp \
 	cppad/local/base_float.hpp \
+	cppad/local/base_hash.hpp \
 	cppad/local/base_limits.hpp \
 	cppad/local/base_std_math.hpp \
 	cppad/local/base_to_string.hpp \

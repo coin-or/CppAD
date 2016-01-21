@@ -3,7 +3,7 @@
 # define CPPAD_HASH_CODE_HPP
 
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-15 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-16 Bradley M. Bell
 
 CppAD is distributed under multiple licenses. This distribution is under
 the terms of the
@@ -12,19 +12,13 @@ the terms of the
 A copy of this license is included in the COPYING file of this distribution.
 Please visit http://www.coin-or.org/CppAD/ for information on other licenses.
 -------------------------------------------------------------------------- */
+# include <cppad/local/base_hash.hpp>
 
 namespace CppAD { // BEGIN_CPPAD_NAMESPACE
 /*!
 \file hash_code.hpp
 CppAD hashing utility.
 */
-
-/*!
-\def CPPAD_HASH_TABLE_SIZE
-the codes retruned by hash_code are between zero and CPPAD_HASH_TABLE_SIZE
-minus one.
-*/
-# define CPPAD_HASH_TABLE_SIZE 10000
 
 /*!
 General purpose hash code for an arbitrary value.

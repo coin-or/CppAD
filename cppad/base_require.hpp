@@ -3,7 +3,7 @@
 # define CPPAD_BASE_REQUIRE_HPP
 
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-15 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-16 Bradley M. Bell
 
 CppAD is distributed under multiple licenses. This distribution is under
 the terms of the
@@ -150,6 +150,7 @@ $childtable%
 	cppad/local/base_std_math.hpp%
 	cppad/local/base_limits.hpp%
 	cppad/local/base_to_string.hpp%
+	cppad/local/base_hash.hpp%
 	omh/base_require/base_example.omh
 %$$
 
@@ -167,6 +168,7 @@ $end
 # include <cppad/local/base_std_math.hpp>
 # include <cppad/local/base_limits.hpp>
 # include <cppad/local/base_to_string.hpp>
+# include <cppad/local/base_hash.hpp>
 
 // must define template class numeric_limits before the base cases
 # include <cppad/local/numeric_limits.hpp>

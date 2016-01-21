@@ -16,32 +16,50 @@ then
 	exit 1
 fi
 # -----------------------------------------------------------------------------
-echo "Difference between '# define' names and '# undef' names"
+echo "Check '# define' versus '# undef' names and check for addon names"
 echo '-----------------------------------------------------------------------'
-list=`bin/ls_files.sh | sed -n \
+cmd_list='define undef'
+add_on_list='CG PY TMB MIXED'
+file_list=`bin/ls_files.sh | sed -n \
 	-e '/^cppad\/.*\.hpp$/p' \
 	-e '/^cppad\/.*\.hpp\.in$/p'`
 #
-for cmd in define undef
+add_on_error='false'
+for file in $file_list
 do
-	for file in $list
+	for cmd in $cmd_list
 	do
 		if [ ! -e $file.in ]
 		then
 			sed -n -e "/^# *$cmd /p" $file | \
 				sed -e "s/^# *$cmd  *\([A-Za-z0-9_]*\).*/\1/" >> tmp.$$
 		fi
+		if [ "$cmd" == 'define' ]
+		then
+			sed -e '/_HPP$/d' -i tmp.$$
+		fi
+		sort -u tmp.$$ > $cmd.$$
+		rm tmp.$$
 	done
-	if [ "$cmd" == 'define' ]
-	then
-		sed -e '/_HPP$/d' -i tmp.$$
-	fi
-	sort -u tmp.$$ > $cmd.$$
-	rm tmp.$$
+	for add_on in $add_on_list
+	do
+		if grep "CPPAD_${add_on}_" $file
+		then
+			add_on_error='true'
+		fi
+	done
 done
+if [ "$add_on_error" == 'true' ]
+then
+echo '-----------------------------------------------------------------------'
+	echo 'check_define.sh: Error: add_on preprocessor symbol found'
+	rm undef.$$
+	rm define.$$
+	exit 1
+fi
 if ! diff define.$$ undef.$$
 then
-	echo "check_define.sh: exiting because defines and undefs do not match"
+	echo 'check_define.sh: Error: defines and undefs do not match'
 	rm undef.$$
 	rm define.$$
 	exit 1

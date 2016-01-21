@@ -12,6 +12,11 @@ Please visit http://www.coin-or.org/CppAD/ for information on other licenses.
 
 $begin whats_new_16$$
 $spell
+	alloc
+	hpp
+	valgrind
+	uninitialized
+	adouble
 	CppAD
 	Eigen
 	std
@@ -25,6 +30,22 @@ The sections listed below contain a list of the changes to CppAD
 in reverse order by date.
 The purpose of these sections is to
 assist you in learning about changes between various versions of CppAD.
+
+$head 01-20$$
+$list number$$
+Fix a $code valgrind$$ warning about use of uninitialized memory
+when using the $cref/adouble/base_adolc.hpp/$$ base type.
+This required an optional $cref base_hash$$ function and the special
+$cref/adouble hash_code/base_adolc.hpp/hash_code/$$ implementation.
+$lnext
+The $code adouble$$ $cref to_string$$ functions
+required a special implementation; see
+$cref/adouble to_string/base_adolc.hpp/to_string/$$.
+$lnext
+Add the $cref/to_string/base_alloc.hpp/to_string/$$ and
+$cref/hash_code/base_alloc.hpp/hash_code/$$ examples
+to the $code base_alloc.hpp$$ example.
+$lend
 
 $head 01-18$$
 $list number$$
