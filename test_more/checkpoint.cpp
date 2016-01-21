@@ -1,6 +1,6 @@
 // $Id$
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-15 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-16 Bradley M. Bell
 
 CppAD is distributed under multiple licenses. This distribution is under
 the terms of the
@@ -82,6 +82,10 @@ namespace {
 
 		// compare reverse mode results
 		CPPAD_TESTVECTOR(double) w(m*(p+1)), dw_not(n*(p+1)), dw_yes(n*(p+1));
+		for(i = 0; i < m; i++)
+		{	for(k = 0; k <= p; k++)
+				w[ i * (p+1) + k ] = 2.0 / (p + 1 - k );
+		}
 		dw_not = check_not.Reverse(p+1, w);
 		dw_yes = check_yes.Reverse(p+1, w);
 		for(j = 0; j < n; j++)
