@@ -179,7 +179,7 @@ new memory is allocated and the data in $icode x$$ is lost
 $head clear$$
 All memory allocated for the vector is freed
 and both its size and capacity are set to zero.
-The can be useful when using very large vectors
+This can be useful when using very large vectors
 and when checking for memory leaks (and there are global vectors)
 see the $cref/memory/CppAD_vector/Memory and Parallel Mode/$$ discussion.
 
