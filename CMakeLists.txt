@@ -120,7 +120,7 @@ command_line_arg(cppad_cxx_flags NOTFOUND STRING
 # -----------------------------------------------------------------------------
 # cppad_profile_flag
 command_line_arg(cppad_profile_flag NOTFOUND STRING
-	"compile flag used to compoile and link a profile version of a program"
+	"compile flag used to compile and link a profile version of a program"
 )
 # -----------------------------------------------------------------------------
 # External package prefixes
