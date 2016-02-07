@@ -1,6 +1,6 @@
 # $Id$
 # -----------------------------------------------------------------------------
-# CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-15 Bradley M. Bell
+# CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-16 Bradley M. Bell
 #
 # CppAD is distributed under multiple licenses. This distribution is under
 # the terms of the
@@ -39,7 +39,7 @@ add_cppad_cxx_flags( example_ipopt_solve )
 # libraries to be linked into the specified target,
 # as determined by pkg-config for ipopt
 TARGET_LINK_LIBRARIES(example_ipopt_solve
-	cppad_lib
+	${cppad_lib}
 	${ipopt_LIBRARIES}
 	${colpack_libs}
 )

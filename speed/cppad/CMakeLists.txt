@@ -1,6 +1,6 @@
 # $Id$
 # -----------------------------------------------------------------------------
-# CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-15 Bradley M. Bell
+# CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-16 Bradley M. Bell
 #
 # CppAD is distributed under multiple licenses. This distribution is under
 # the terms of the
@@ -40,7 +40,7 @@ add_cppad_cxx_flags( speed_cppad )
 # List of libraries to be linked into the specified target
 TARGET_LINK_LIBRARIES(speed_cppad
 	speed_src
-	cppad_lib
+	${cppad_lib}
 	${colpack_libs}
 )
 

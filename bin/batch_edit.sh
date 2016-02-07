@@ -14,15 +14,16 @@ move_sed='s|list_files.sh|ls_files.sh|'
 move_list='
 '
 cat << EOF > junk.sed
-s|inline AD Abs(void) const;|inline AD abs_me(void) const;|
-s|AD<Base> AD<Base>::Abs (void) const|AD<Base> AD<Base>::abs_me (void) const|
-s|return x.Abs();|return x.abs_me();|
-s|return abs( *x.ADBase() *);|return x.ADBase().abs_me();|
+s|^# cppad_has_colpack, colpack_libs|&, cppad_lib|
+s|^\\tSET( colpack_libs "ColPack" )|&\\
+	SET( cppad_lib "cppad_lib" )|
+s|^\\tSET( colpack_libs "" )|&\\
+	SET( cppad_lib "" )|
+s|^\\tcppad_lib\$|\\t\${cppad_lib}|
 #
-s|inline AD Sign(void) const;|inline AD sign_me(void) const;|
-s|AD<Base> AD<Base>::Sign (void) const|AD<Base> AD<Base>::sign_me (void) const|
-s|return x.Sign();|return x.sign_me();|
-s|return sign( *x.ADBase() *);|return x.ADBase().sign_me();|
+s|^ADD_SUBDIRECTORY(cppad_lib)|IF( colpack_prefix )\\
+	&\\
+ENDIF( colpack_prefix)|
 EOF
 # -----------------------------------------------------------------------------
 if [ $0 != "bin/batch_edit.sh" ]
