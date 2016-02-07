@@ -45,7 +45,7 @@ add_cppad_cxx_flags( cppad_ipopt_speed )
 TARGET_LINK_LIBRARIES(
 	cppad_ipopt_speed
 	cppad_ipopt
-	cppad_lib
+	${cppad_lib}
 	${ipopt_LIBRARIES}
 	${colpack_libs}
 )

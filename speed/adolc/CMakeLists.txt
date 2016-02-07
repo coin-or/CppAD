@@ -48,7 +48,7 @@ add_cppad_cxx_flags( speed_adolc )
 # List of libraries to be linked into the specified target
 TARGET_LINK_LIBRARIES(speed_adolc
 	speed_src
-	cppad_lib
+	${cppad_lib}
 	adolc
 	${colpack_libs}
 )

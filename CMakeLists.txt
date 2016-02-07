@@ -143,14 +143,16 @@ optional_package(ipopt_prefix "ipopt install prefix")
 # sacado_prefix
 optional_package(sacado_prefix "sacado install prefix")
 # -----------------------------------------------------------------------------
-# cppad_has_colpack, colpack_libs
+# cppad_has_colpack, colpack_libs, cppad_lib
 #
 IF( colpack_prefix )
 	SET(cppad_has_colpack 1)
 	SET( colpack_libs "ColPack" )
+	SET( cppad_lib "cppad_lib" )
 ELSE( colpack_prefix )
 	SET(cppad_has_colpack 0)
 	SET( colpack_libs "" )
+	SET( cppad_lib "" )
 ENDIF( colpack_prefix )
 # =============================================================================
 # automated system configuration
@@ -288,7 +290,9 @@ SET(check_depends "")
 #
 ADD_SUBDIRECTORY(cppad)
 ADD_SUBDIRECTORY(pkgconfig)
-ADD_SUBDIRECTORY(cppad_lib)
+IF( colpack_prefix )
+	ADD_SUBDIRECTORY(cppad_lib)
+ENDIF( colpack_prefix)
 #
 ADD_SUBDIRECTORY(compare_c)
 add_to_list(check_depends check_compare_c)

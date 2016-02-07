@@ -51,7 +51,7 @@ add_cppad_cxx_flags( speed_profile )
 # profile builds it own copy of src/speed library (see ADD_EXECUTABLE above)
 # TARGET_LINK_LIBRARIES(speed_profile speed_src )
 TARGET_LINK_LIBRARIES(speed_profile
-	cppad_lib
+	${cppad_lib}
 	${colpack_libs}
 )
 

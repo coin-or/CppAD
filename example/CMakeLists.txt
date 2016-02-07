@@ -215,7 +215,7 @@ add_cppad_cxx_flags(example)
 
 # List of libraries to be linked into the specified target
 TARGET_LINK_LIBRARIES(example
-	cppad_lib
+	${cppad_lib}
 	${adolc_libs}
 	${colpack_libs}
 	${eigen_libs}

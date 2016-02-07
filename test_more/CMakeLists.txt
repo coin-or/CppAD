@@ -161,7 +161,7 @@ add_cppad_cxx_flags(test_more)
 
 # List of libraries to be linked into the specified target
 TARGET_LINK_LIBRARIES(test_more
-	cppad_lib
+	${cppad_lib}
 	${adolc_libs}
 	${ipopt_libs}
 	${eigen_libs}

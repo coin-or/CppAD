@@ -36,7 +36,7 @@ add_cppad_cxx_flags(cppad_ipopt_test)
 # List of libraries to be linked into the specified target
 TARGET_LINK_LIBRARIES(cppad_ipopt_test
 	cppad_ipopt
-	cppad_lib
+	${cppad_lib}
 	${ipopt_LIBRARIES}
 	${colpack_libs}
 )
