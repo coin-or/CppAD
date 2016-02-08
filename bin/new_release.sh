@@ -1,7 +1,7 @@
 #! /bin/bash -e
 # $Id$
 # -----------------------------------------------------------------------------
-# CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-15 Bradley M. Bell
+# CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-16 Bradley M. Bell
 #
 # CppAD is distributed under multiple licenses. This distribution is under
 # the terms of the
@@ -10,7 +10,7 @@
 # A copy of this license is included in the COPYING file of this distribution.
 # Please visit http://www.coin-or.org/CppAD/ for information on other licenses.
 # -----------------------------------------------------------------------------
-if [ "$0" != 'bin/junk.sh' ]
+if [ "$0" != 'bin/new_release.sh' ]
 then
 	echo "bin/new_release.sh: must be executed from its parent directory"
 	exit 1
@@ -23,13 +23,12 @@ echo_eval() {
 # -----------------------------------------------------------------------------
 svn_repo="https://projects.coin-or.org/svn/CppAD"
 stable_version="20160000"
-release='0'
+release='1'
 # -----------------------------------------------------------------------------
-# check that local branch is up to date
-list=`git status -s`
-if [ "$list" != '' ]
+branch=`git branch | grep '^\*'`
+if [ "$branch" != '* master' ]
 then
-	echo "new_release.sh: 'git status -s' is not empty"
+	echo 'new_release.sh: must use master branch version of new_release.sh'
 	exit 1
 fi
 # -----------------------------------------------------------------------------
@@ -126,6 +125,15 @@ then
 	exit 1
 fi
 # -----------------------------------------------------------------------------
+# Make sure master branch does not have uncomitted changes
+# before checking out stable branch
+list=`git status -s`
+if [ "$list" != '' ]
+then
+	echo "new_release.sh: 'git status -s' is not empty (for master branch)"
+	exit 1
+fi
+# -----------------------------------------------------------------------------
 # checkout the stable branch
 branch=`git branch | grep '^\*' | sed -e 's|^\* *||'`
 if [ "$branch" != "$stable_branch" ]
@@ -141,7 +149,26 @@ then
 	echo 'bin/new_release.sh: version number is not correct ?'
 	echo "	bin/version.sh set $stable_version.$release"
 	echo '	bin/version.sh copy'
-	echo 'Then test and then commit the changes.'
+	echo 'Then commit the changes.'
+	exit 1
+fi
+# -----------------------------------------------------------------------------
+# make sure that autotools version of makfiles is up to current version
+echo_eval "./build.sh automake"
+list=`git status -s`
+if [ "$list" != '' ]
+then
+	echo "new_release.sh: 'git status -s' is not empty"
+	echo 'stable branch auto-tools install not up to current version'
+	echo 'commit the local changes.'
+	exit 1
+fi
+# -----------------------------------------------------------------------------
+read -p 'All checks have passed. More testing or commit release [t/c] ?' \
+	response
+if [ "response" != 'c' ]
+then
+	echo 'Exiting for more testing of stable branch'
 	exit 1
 fi
 # -----------------------------------------------------------------------------
