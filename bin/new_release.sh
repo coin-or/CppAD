@@ -31,7 +31,9 @@ then
 	echo 'new_release.sh: must use master branch version of new_release.sh'
 	exit 1
 fi
-# -----------------------------------------------------------------------------
+# =============================================================================
+# master branch
+# =============================================================================
 # Make sure local, remote and svn hash codes agree for this stable branch
 stable_branch=stable/$stable_version
 #
@@ -133,7 +135,9 @@ then
 	echo "new_release.sh: 'git status -s' is not empty (for master branch)"
 	exit 1
 fi
-# -----------------------------------------------------------------------------
+# =============================================================================
+# stable branch
+# =============================================================================
 # checkout the stable branch
 branch=`git branch | grep '^\*' | sed -e 's|^\* *||'`
 if [ "$branch" != "$stable_branch" ]
@@ -166,7 +170,7 @@ fi
 # -----------------------------------------------------------------------------
 read -p 'All checks have passed. More testing or commit release [t/c] ?' \
 	response
-if [ "response" != 'c' ]
+if [ "$response" != 'c' ]
 then
 	echo 'Exiting for more testing of stable branch'
 	exit 1
@@ -202,6 +206,9 @@ sed -i projDesc.xml \
 #
 echo "Use the command the following command to finish the process"
 echo "	svn commit -m \"$msg\" build/conf/projDesc.xml"
-# ----------------------------------------------------------------------------
+# =============================================================================
+# master branch
+# =============================================================================
+git checkout master
 echo "$0: OK"
 exit 0
