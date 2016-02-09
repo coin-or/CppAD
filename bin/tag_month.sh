@@ -1,7 +1,7 @@
 #! /bin/bash -e
 # $Id:$
 # -----------------------------------------------------------------------------
-# CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-15 Bradley M. Bell
+# CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-16 Bradley M. Bell
 #
 # CppAD is distributed under multiple licenses. This distribution is under
 # the terms of the
@@ -26,7 +26,9 @@ then
 fi
 # --------------------------------------------------------------------------
 # make sure that version is consistent and all changes are checked in
-bin/version.sh copy > /dev/null
+bin/version.sh check
+# --------------------------------------------------------------------------
+# make sure repo is up to date
 git_status=`git status -s`
 if [ "$git_status" != '' ]
 then

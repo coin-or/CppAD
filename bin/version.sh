@@ -1,7 +1,7 @@
 #! /bin/bash -e
 # $Id$
 # -----------------------------------------------------------------------------
-# CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-15 Bradley M. Bell
+# CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-16 Bradley M. Bell
 #
 # CppAD is distributed under multiple licenses. This distribution is under
 # the terms of the
@@ -15,13 +15,15 @@ then
 	echo 'bin/version.sh: must be executed from its parent directory'
 	exit 1
 fi
-if [ "$1" != 'get' ] && [ "$1" != 'set' ] && [ "$1" != 'copy' ]
+if [ "$1" != 'get' ] && [ "$1" != 'set' ] && [ "$1" != 'check' ]
 then
-	echo 'usage: bin/version.sh (get | set | copy) [version]'
-	echo 'get:  Gets the current version number from CMakeLists.txt.'
-	echo 'set:  Sets CMakeLists.txt version number to version.'
-	echo '      If version is not present, uses current yyyymmdd.'
-	echo 'copy: Copies version number from CMakeLists.txt to other files.'
+	echo 'usage: bin/version.sh (get | set | check) [version]'
+	echo 'get:   Gets the current version number from CMakeLists.txt.'
+	echo 'set:   Sets CMakeLists.txt version number to version.'
+	echo '       If version is not present, uses current yyyymmdd.'
+	echo 'check: Checks that the version version number in CMakeLists.txt'
+	echo '       is the same as in other files. If not, changes the other'
+	echo '       files and exits with an error message'
 	exit 1
 fi
 echo_eval() {
@@ -47,7 +49,7 @@ then
 	fi
 	echo_eval rm CMakeLists.txt.old
 	#
-	echo 'bin/version.sh set: OK'
+	echo 'version.sh set: OK'
 	exit 0
 fi
 # -----------------------------------------------------------------------------
@@ -56,7 +58,7 @@ version=`grep '^SET *( *cppad_version ' CMakeLists.txt | \
 	sed -e 's|^SET *( *cppad_version *"\([0-9.]\{8\}[0-9.]*\)" *)|\1|'`
 if ! (echo $version | grep '[0-9]\{8\}') > /dev/null
 then
-	echo 'bin/version.sh: Cannot find verison number in CMakeLists.txt'
+	echo 'version.sh: Cannot find verison number in CMakeLists.txt'
 	exit 1
 fi
 if [ "$1" == 'get' ]
@@ -69,17 +71,14 @@ fi
 yyyy_mm_dd=`echo $version | sed \
 	-e 's|\([0-9]\{4\}\)0000|\10101|' \
 	-e 's|\(....\)\(..\)\(..\).*|\1-\2-\3|'`
-echo 'sed -i.old AUTHORS ...'
 sed  \
 	-e "s/, [0-9]\{4\}-[0-9]\{2\}-[0-9]\{2\} *,/, $yyyy_mm_dd,/" \
 	-i.old AUTHORS
 #
-echo 'sed -i.old configure.ac ...'
 sed  \
 	-e "s/(\[cppad\], *\[[0-9]\{8\}[.0-9]*\] *,/([cppad], [$version],/"  \
 	-i.old configure.ac
 #
-echo 'sed -i.old configure ...'
 sed \
 	-e "s/cppad [0-9]\{8\}[.0-9]*/cppad $version/g" \
 	-e "s/VERSION='[0-9]\{8\}[.0-9]*'/VERSION='$version'/g" \
@@ -106,15 +105,26 @@ list="
 	configure.ac
 	configure
 "
+ok='yes'
 for name in $list
 do
-	echo '-------------------------------------------------------------'
-	echo "diff $name.old $name"
-	if diff $name.old $name
+	if ! diff $name.old $name > /dev/null
 	then
-		echo '	no difference was found'
+		echo '-------------------------------------------------------------'
+		echo "diff $name.old $name"
+		if diff $name.old $name
+		then
+			echo 'version.sh check: program error'
+			exit 1
+		fi
+		ok='no'
 	fi
-	#
-	echo_eval rm $name.old
+	rm $name.old
 done
-echo 'bin/version.sh copy: OK'
+if [ "$ok" != 'yes' ]
+then
+	echo 'version.sh check: Found and fixed differences'
+	exit 1
+fi
+echo 'version.sh check: OK'
+exit 0

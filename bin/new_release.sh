@@ -152,7 +152,7 @@ if [ "$check_one" != "$check_two" ]
 then
 	echo 'bin/new_release.sh: version number is not correct ?'
 	echo "	bin/version.sh set $stable_version.$release"
-	echo '	bin/version.sh copy'
+	echo '	bin/version.sh check'
 	echo 'Then commit the changes.'
 	exit 1
 fi
