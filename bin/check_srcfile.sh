@@ -10,26 +10,25 @@
 # A copy of this license is included in the COPYING file of this distribution.
 # Please visit http://www.coin-or.org/CppAD/ for information on other licenses.
 # -----------------------------------------------------------------------------
-if [ ! -e "bin/check_verbatim.sh" ]
+if [ ! -e "bin/check_srcfile.sh" ]
 then
-	echo "bin/check_verbatim.sh: must be executed from its parent directory"
+	echo "bin/check_srcfile.sh: must be executed from its parent directory"
 	exit 1
 fi
 cat << EOF > junk.sed
-/\$verbatim[^a-z]/! b skip
+/\$srcfile[^a-z]/! b skip
 N
 s/^#[ \\t]//
 s/^[ \\t]//
 s/\\n#[ \\t]//
 s/\\n[ \\t]//
-s/\$verbatim%//
+s/\$srcfile%//
 s/%.*//
 p
 : skip
 EOF
 special_case='
-bin/check_include_omh.sh
-bin/check_verbatim.sh
+bin/check_srcfile.sh
 bin/package.sh
 cppad/local/cond_exp.hpp
 introduction/exp_apx/exp_2.omh
@@ -38,8 +37,8 @@ omh/license.omh
 bin/batch_edit.sh
 '
 # -----------------------------------------------------------------------------
-# Make sure that OMhelp verbatim commands referr to same file as command
-echo "Checking that OMhelp verbatim commands include from file they appear in."
+# Make sure that OMhelp srcfile commands refer to same file as command
+echo "Checking that OMhelp srcfile commands include from file they appear in."
 echo "----------------------------------------------------------------------"
 list=`bin/ls_files.sh`
 different="no"
@@ -78,7 +77,7 @@ do
 	#
 	if [ "$ok" == 'no' ]
 	then
-		echo "\$verbatim in $file references $reference"
+		echo "\$srcfile in $file references $reference"
 		different="yes"
 	fi
 done

@@ -60,7 +60,6 @@ echo_log_eval bin/version.sh get
 echo_log_eval bin/version.sh copy
 # ----------------------------------------------------------------------------
 # Run automated checks for the form bin/check_*.sh with a few exceptions.
-# Note that check_include_omh.sh uses files built by cmake.
 list=`ls bin/check_* | sed \
 	-e '/check_all.sh/d' \
 	-e '/check_jenkins.sh/d' \
