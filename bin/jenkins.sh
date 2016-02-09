@@ -1,7 +1,7 @@
 #! /bin/bash -e
-# $Id$
+# $Id: jenkins.sh 3758 2015-11-30 15:29:22Z bradbell $
 # -----------------------------------------------------------------------------
-# CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-15 Bradley M. Bell
+# CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-16 Bradley M. Bell
 #
 # CppAD is distributed under multiple licenses. This distribution is under
 # the terms of the
@@ -17,7 +17,7 @@ then
 fi
 if [ "$1" != '' ]
 then
-	echo 'bin/junk.sh no longer has any arguments'
+	echo 'bin/jenkins.sh no longer has any arguments'
 	exit 1
 fi
 # -----------------------------------------------------------------------------

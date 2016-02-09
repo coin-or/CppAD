@@ -1,7 +1,7 @@
 #! /bin/bash -e
-# $Id$
+# $Id: check_jenkins.sh 3768 2015-12-28 18:58:35Z bradbell $
 # -----------------------------------------------------------------------------
-# CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-15 Bradley M. Bell
+# CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-16 Bradley M. Bell
 #
 # CppAD is distributed under multiple licenses. This distribution is under
 # the terms of the
@@ -36,8 +36,7 @@ fi
 echo_eval cd jenkins
 echo_eval svn update
 # ----------------------------------------------------------------------------
-redo_external='install'
-echo_eval bin/jenkins.sh $redo_external
+echo_eval bin/jenkins.sh
 # ----------------------------------------------------------------------------
 echo "$0: OK"
 exit 0
