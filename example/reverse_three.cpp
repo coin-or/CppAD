@@ -1,6 +1,6 @@
 // $Id$
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-15 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-16 Bradley M. Bell
 
 CppAD is distributed under multiple licenses. This distribution is under
 the terms of the
@@ -35,7 +35,7 @@ $latex X^{(2)} (0) = 2 x^{(2)}$$
 (and similarly $latex Y^{(2)} (0) = 2 y^{(2)}$$).
 
 $code
-$verbatim%example/reverse_three.cpp%0%// BEGIN C++%// END C++%1%$$
+$srcfile%example/reverse_three.cpp%0%// BEGIN C++%// END C++%1%$$
 $$
 
 $end

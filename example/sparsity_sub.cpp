@@ -1,6 +1,6 @@
 // $Id$
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-15 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-16 Bradley M. Bell
 
 CppAD is distributed under multiple licenses. This distribution is under
 the terms of the
@@ -33,7 +33,7 @@ sparsity for both the full Hessian (see $icode h$$)
 and a subset of the Hessian (see $icode h2$$).
 
 $code
-$verbatim%example/sparsity_sub.cpp%0%// BEGIN C++%// END C++%1%$$
+$srcfile%example/sparsity_sub.cpp%0%// BEGIN C++%// END C++%1%$$
 $$
 
 $end

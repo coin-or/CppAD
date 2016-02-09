@@ -1,6 +1,6 @@
 // $Id$
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-15 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-16 Bradley M. Bell
 
 CppAD is distributed under multiple licenses. This distribution is under
 the terms of the
@@ -69,7 +69,7 @@ to run zero order forward mode at a point different
 form the point where the operation sequence corresponding to
 $icode f$$ was recorded.
 $lend
-$codep */
+$srccode%cpp% */
 # include <cppad/cppad.hpp>  // http://www.coin-or.org/CppAD/
 # include "exp_eps.hpp"      // our example exponential function approximation
 bool exp_eps_cppad(void)
@@ -140,6 +140,6 @@ bool exp_eps_cppad(void)
 
 	return ok;
 }
-/* $$
+/* %$$
 $end
 */

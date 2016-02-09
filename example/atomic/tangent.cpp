@@ -1,6 +1,6 @@
 // $Id$
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-15 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-16 Bradley M. Bell
 
 CppAD is distributed under multiple licenses. This distribution is under
 the terms of the
@@ -31,7 +31,7 @@ This atomic operation can use both set and bool sparsity patterns.
 $nospell
 
 $head Start Class Definition$$
-$codep */
+$srccode%cpp% */
 # include <cppad/cppad.hpp>
 namespace { // Begin empty namespace
 using CppAD::vector;
@@ -53,9 +53,9 @@ void my_union(
 }
 //
 class atomic_tangent : public CppAD::atomic_base<float> {
-/* $$
+/* %$$
 $head Constructor $$
-$codep */
+$srccode%cpp% */
 	private:
 	const bool hyperbolic_; // is this hyperbolic tangent
 	public:
@@ -65,9 +65,9 @@ $codep */
 	hyperbolic_(hyperbolic)
 	{ }
 	private:
-/* $$
+/* %$$
 $head forward$$
-$codep */
+$srccode%cpp% */
 	// forward mode routine called by CppAD
 	bool forward(
 		size_t                    p ,
@@ -122,9 +122,9 @@ $codep */
 		// All orders are implemented and there are no possible errors
 		return true;
 	}
-/* $$
+/* %$$
 $head reverse$$
-$codep */
+$srccode%cpp% */
 	// reverse mode routine called by CppAD
 	virtual bool reverse(
 		size_t                    q ,
@@ -178,9 +178,9 @@ $codep */
 
 		return true;
 	}
-/* $$
+/* %$$
 $head for_sparse_jac$$
-$codep */
+$srccode%cpp% */
 	// forward Jacobian sparsity routine called by CppAD
 	virtual bool for_sparse_jac(
 		size_t                                p ,
@@ -215,9 +215,9 @@ $codep */
 
 		return true;
 	}
-/* $$
+/* %$$
 $head rev_sparse_jac$$
-$codep */
+$srccode%cpp% */
 	// reverse Jacobian sparsity routine called by CppAD
 	virtual bool rev_sparse_jac(
 		size_t                                p ,
@@ -248,9 +248,9 @@ $codep */
 		my_union(st[0], rt[0], rt[1]);
 		return true;
 	}
-/* $$
+/* %$$
 $head rev_sparse_hes$$
-$codep */
+$srccode%cpp% */
 	// reverse Hessian sparsity routine called by CppAD
 	virtual bool rev_sparse_hes(
 		const vector<bool>&                   vx,
@@ -334,29 +334,29 @@ $codep */
 
 		return true;
 	}
-/* $$
+/* %$$
 $head End Class Definition$$
-$codep */
+$srccode%cpp% */
 }; // End of atomic_tangent class
 }  // End empty namespace
 
-/* $$
+/* %$$
 $head Use Atomic Function$$
-$codep */
+$srccode%cpp% */
 bool tangent(void)
 {	bool ok = true;
 	using CppAD::AD;
 	using CppAD::NearEqual;
 	float eps = 10.f * CppAD::numeric_limits<float>::epsilon();
-/* $$
+/* %$$
 $subhead Constructor$$
-$codep */
+$srccode%cpp% */
 	// --------------------------------------------------------------------
 	// Creater a tan and tanh object
 	atomic_tangent my_tan("my_tan", false), my_tanh("my_tanh", true);
-/* $$
+/* %$$
 $subhead Recording$$
-$codep */
+$srccode%cpp% */
 	// domain space vector
 	size_t n  = 1;
 	float  x0 = 0.5;
@@ -391,9 +391,9 @@ $codep */
 	// create f: x -> f and stop tape recording
 	CppAD::ADFun<float> F;
 	F.Dependent(ax, af);
-/* $$
+/* %$$
 $subhead forward$$
-$codep */
+$srccode%cpp% */
 	// check function value
 	float tan = std::tan(x0);
 	ok &= NearEqual(af[0] , tan,  eps, eps);
@@ -411,9 +411,9 @@ $codep */
 	CppAD::vector<float> dx(n), df(m);
 	dx[0] = 1.;
 	df    = F.Forward(1, dx);
-/* $$
+/* %$$
 $subhead reverse$$
-$codep */
+$srccode%cpp% */
 	// compute derivative of tan - tanh using reverse mode
 	CppAD::vector<float> w(m), dw(n);
 	w[0]  = 1.;
@@ -449,9 +449,9 @@ $codep */
 	ok   &= NearEqual(two * ddf[1], tanhpp, eps, eps);
 	ok   &= NearEqual(ddw[0], w[0]*tanp  + w[1]*tanhp , eps, eps);
 	ok   &= NearEqual(ddw[1], w[0]*tanpp + w[1]*tanhpp, eps, eps);
-/* $$
+/* %$$
 $subhead for_sparse_jac$$
-$codep */
+$srccode%cpp% */
 	// Forward mode computation of sparsity pattern for F.
 	size_t p = n;
 	// user vectorBool because m and n are small
@@ -461,9 +461,9 @@ $codep */
 	ok  &= (s1[0] == true);  // f[0] depends on x[0]
 	ok  &= (s1[1] == true);  // f[1] depends on x[0]
 	ok  &= (s1[2] == false); // f[2] does not depend on x[0]
-/* $$
+/* %$$
 $subhead rev_sparse_jac$$
-$codep */
+$srccode%cpp% */
 	// Reverse mode computation of sparsity pattern for F.
 	size_t q = m;
 	CppAD::vectorBool s2(q * m), r2(q * n);
@@ -477,9 +477,9 @@ $codep */
 	ok  &= (r2[0] == true);  // f[0] depends on x[0]
 	ok  &= (r2[1] == true);  // f[1] depends on x[0]
 	ok  &= (r2[2] == false); // f[2] does not depend on x[0]
-/* $$
+/* %$$
 $subhead rev_sparse_hes$$
-$codep */
+$srccode%cpp% */
 	// Hessian sparsity for f[0]
 	CppAD::vectorBool s3(m), h(p * n);
 	s3[0] = true;
@@ -493,9 +493,9 @@ $codep */
 	s3[2] = true;
 	h    = F.RevSparseHes(p, s3);
 	ok  &= (h[0] == false);  // Hessian is zero
-/* $$
+/* %$$
 $subhead Large x Values$$
-$codep */
+$srccode%cpp% */
 	// check tanh results for a large value of x
 	x[0]  = std::numeric_limits<float>::max() / two;
 	f     = F.Forward(0, x);
@@ -507,7 +507,7 @@ $codep */
 
 	return ok;
 }
-/* $$
+/* %$$
 $$ $comment end nospell$$
 $end
 */

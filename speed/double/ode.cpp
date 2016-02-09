@@ -1,6 +1,6 @@
 // $Id$
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-15 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-16 Bradley M. Bell
 
 CppAD is distributed under multiple licenses. This distribution is under
 the terms of the
@@ -33,7 +33,7 @@ See $cref link_ode$$.
 
 $head Implementation$$
 
-$codep */
+$srccode%cpp% */
 # include <cstring>
 # include <cppad/utility/vector.hpp>
 # include <cppad/speed/ode_evaluate.hpp>
@@ -74,6 +74,6 @@ bool link_ode(
 		jacobian[i] = f[i];
 	return true;
 }
-/* $$
+/* %$$
 $end
 */

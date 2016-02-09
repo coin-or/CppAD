@@ -1,6 +1,6 @@
 // $Id$
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-15 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-16 Bradley M. Bell
 
 CppAD is distributed under multiple licenses. This distribution is under
 the terms of the
@@ -143,7 +143,7 @@ which in turn gives the value for $latex  y^{(k+1)} y ( t , x)$$.
 
 $head Source$$
 $code
-$verbatim%example/mul_level_ode.cpp%0%// BEGIN C++%// END C++%1%$$
+$srcfile%example/mul_level_ode.cpp%0%// BEGIN C++%// END C++%1%$$
 $$
 
 $end

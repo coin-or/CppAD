@@ -2,7 +2,7 @@
 # ifndef CPPAD_TEAM_THREAD_HPP
 # define CPPAD_TEAM_THREAD_HPP
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-15 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-16 Bradley M. Bell
 
 CppAD is distributed under multiple licenses. This distribution is under
 the terms of the
@@ -121,14 +121,14 @@ $rref multi_newton.cpp$$
 $tend
 
 $head Source$$
-$codep */
+$srccode%cpp% */
 # include <cstddef> // for size_t
 
 extern bool team_create(size_t num_threads);
 extern bool team_work(void worker(void));
 extern bool team_destroy(void);
 extern const char* team_name(void);
-/* $$
+/* %$$
 $end
 */
 

@@ -1,6 +1,6 @@
 // $Id$
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-15 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-16 Bradley M. Bell
 
 CppAD is distributed under multiple licenses. This distribution is under
 the terms of the
@@ -24,7 +24,7 @@ $mindex RevSparseJac sparsity$$
 
 
 $code
-$verbatim%example/rev_sparse_jac.cpp%0%// BEGIN C++%// END C++%1%$$
+$srcfile%example/rev_sparse_jac.cpp%0%// BEGIN C++%// END C++%1%$$
 $$
 
 $end

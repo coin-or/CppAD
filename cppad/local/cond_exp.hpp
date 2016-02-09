@@ -3,7 +3,7 @@
 # define CPPAD_COND_EXP_HPP
 
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-15 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-16 Bradley M. Bell
 
 CppAD is distributed under multiple licenses. This distribution is under
 the terms of the
@@ -167,7 +167,7 @@ The following implementation of the
 AD $cref atan2$$ function is a more complex
 example of using conditional expressions:
 $code
-$verbatim%cppad/local/atan2.hpp%0%BEGIN CondExp%// END CondExp%$$
+$srcfile%cppad/local/atan2.hpp%0%BEGIN CondExp%// END CondExp%$$
 $$
 
 

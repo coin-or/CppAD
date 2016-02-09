@@ -132,7 +132,7 @@ namespace CppAD {
 }
 %$$
 where the macro is defined by
-$codep */
+$srccode%cpp% */
 # define CPPAD_AZMUL(Base) \
     inline Base azmul(const Base& x, const Base& y) \
     {   Base zero(0.0);   \
@@ -140,7 +140,7 @@ $codep */
             return zero;  \
         return x * y;     \
     }
-/* $$
+/* %$$
 
 $childtable%
 	omh/base_require/base_member.omh%

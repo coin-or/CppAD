@@ -1,6 +1,6 @@
 // $Id$
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-15 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-16 Bradley M. Bell
 
 CppAD is distributed under multiple licenses. This distribution is under
 the terms of the
@@ -33,16 +33,16 @@ This example only uses pack sparsity patterns.
 $nospell
 
 $head Start Class Definition$$
-$codep */
+$srccode%cpp% */
 # include <cppad/cppad.hpp>
 namespace {                 // isolate items below to this file
 using CppAD::vector;        // abbreviate as vector
 using CppAD::vectorBool;    // abbreviate as vectorBool
 //
 class atomic_sparsity : public CppAD::atomic_base<double> {
-/* $$
+/* %$$
 $head Constructor $$
-$codep */
+$srccode%cpp% */
 	public:
 	// constructor
 	atomic_sparsity(const std::string& name) :
@@ -50,9 +50,9 @@ $codep */
 	CppAD::atomic_base<double>(name, pack_sparsity_enum )
 	{ }
 	private:
-/* $$
+/* %$$
 $head forward$$
-$codep */
+$srccode%cpp% */
 	// forward
 	virtual bool forward(
 		size_t                    p ,
@@ -87,9 +87,9 @@ $codep */
 		}
 		return ok;
 	}
-/* $$
+/* %$$
 $head for_sparse_jac$$
-$codep */
+$srccode%cpp% */
 	// for_sparse_jac
 	virtual bool for_sparse_jac(
 		size_t                          p ,
@@ -109,9 +109,9 @@ $codep */
 		}
 		return true;
 	}
-/* $$
+/* %$$
 $head rev_sparse_jac$$
-$codep */
+$srccode%cpp% */
 	virtual bool rev_sparse_jac(
 		size_t                                p  ,
 		const vectorBool&                     rt ,
@@ -132,9 +132,9 @@ $codep */
 		}
 		return true;
 	}
-/* $$
+/* %$$
 $head rev_sparse_hes$$
-$codep */
+$srccode%cpp% */
 	virtual bool rev_sparse_hes(
 		const vector<bool>&                   vx,
 		const vector<bool>&                   s ,
@@ -184,28 +184,28 @@ $codep */
 		}
 		return true;
 	}
-/* $$
+/* %$$
 $head End Class Definition$$
-$codep */
+$srccode%cpp% */
 }; // End of atomic_sparsity class
 }  // End empty namespace
 
-/* $$
+/* %$$
 $head Use Atomic Function$$
-$codep */
+$srccode%cpp% */
 bool sparsity(void)
 {	bool ok = true;
 	using CppAD::AD;
 	using CppAD::NearEqual;
 	double eps = 10. * std::numeric_limits<double>::epsilon();
-/* $$
+/* %$$
 $subhead Constructor$$
-$codep */
+$srccode%cpp% */
 	// Create the atomic get_started object
 	atomic_sparsity afun("atomic_sparsity");
-/* $$
+/* %$$
 $subhead Recording$$
-$codep */
+$srccode%cpp% */
 	size_t n = 3;
 	size_t m = 2;
 	vector< AD<double> > ax(n), ay(m);
@@ -226,9 +226,9 @@ $codep */
 	ok &= NearEqual(ay[0] , ax[2],  eps, eps);
 	ok &= NearEqual(ay[1] , ax[0] * ax[1],  eps, eps);
 
-/* $$
+/* %$$
 $subhead forsparse_jac and rev_sparse_jac$$
-$codep */
+$srccode%cpp% */
 	for(size_t dir = 0; dir < 2; dir++)
 	{	size_t ell;
 		if( dir == 0 )
@@ -257,9 +257,9 @@ $codep */
 		ok  &= s[1 * n + 1] == true;
 		ok  &= s[1 * n + 2] == false;
 	}
-/* $$
+/* %$$
 $subhead rev_sparse_hes$$
-$codep */
+$srccode%cpp% */
 	vectorBool s(m), h(n * n);
 	s[0] = true;
 	s[1] = true;
@@ -275,7 +275,7 @@ $codep */
 	//
 	return ok;
 }
-/* $$
+/* %$$
 $$ $comment end nospell$$
 $end
 */

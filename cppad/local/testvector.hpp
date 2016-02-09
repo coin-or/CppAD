@@ -3,7 +3,7 @@
 # define CPPAD_TESTVECTOR_HPP
 
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-15 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-16 Bradley M. Bell
 
 CppAD is distributed under multiple licenses. This distribution is under
 the terms of the
@@ -53,11 +53,11 @@ you specify $cref cppad_testvector$$ to be $code cppad$$,
 $code CPPAD_CPPADVECTOR$$ will be true.
 In this case,
 $code CPPAD_TESTVECTOR$$ is defined by the following source code:
-$codep */
+$srccode%cpp% */
 # if CPPAD_CPPADVECTOR
 # define CPPAD_TESTVECTOR(Scalar) CppAD::vector< Scalar >
 # endif
-/* $$
+/* %$$
 In this case CppAD will use its own vector for
 many of its examples and tests.
 
@@ -67,12 +67,12 @@ you specify $icode cppad_testvector$$ to be $code std$$,
 $code CPPAD_STDVECTOR$$ will be true.
 In this case,
 $code CPPAD_TESTVECTOR$$ is defined by the following source code:
-$codep */
+$srccode%cpp% */
 # if CPPAD_STDVECTOR
 # include <vector>
 # define CPPAD_TESTVECTOR(Scalar) std::vector< Scalar >
 # endif
-/* $$
+/* %$$
 In this case CppAD will use standard vector for
 many of its examples and tests.
 
@@ -82,12 +82,12 @@ you specify $icode cppad_testvector$$ to be $code boost$$,
 $code CPPAD_BOOSTVECTOR$$ will be true.
 In this case,
 $code CPPAD_TESTVECTOR$$ is defined by the following source code:
-$codep */
+$srccode%cpp% */
 # if CPPAD_BOOSTVECTOR
 # include <boost/numeric/ublas/vector.hpp>
 # define CPPAD_TESTVECTOR(Scalar) boost::numeric::ublas::vector< Scalar >
 # endif
-/* $$
+/* %$$
 In this case CppAD will use this boost vector for
 many of its examples and tests.
 
@@ -97,12 +97,12 @@ you specify $icode cppad_testvector$$ to be $code eigen$$,
 $code CPPAD_EIGENVECTOR$$ will be true.
 In this case,
 $code CPPAD_TESTVECTOR$$ is defined by the following source code:
-$codep */
+$srccode%cpp% */
 # if CPPAD_EIGENVECTOR
 # include <cppad/example/cppad_eigen.hpp>
 # define CPPAD_TESTVECTOR(Scalar) Eigen::Matrix< Scalar , Eigen::Dynamic, 1>
 # endif
-/* $$
+/* %$$
 In this case CppAD will use the Eigen vector
 for many of its examples and tests.
 

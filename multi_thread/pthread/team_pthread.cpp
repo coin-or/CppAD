@@ -1,6 +1,6 @@
 // $Id$
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-15 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-16 Bradley M. Bell
 
 CppAD is distributed under multiple licenses. This distribution is under
 the terms of the
@@ -30,11 +30,11 @@ the corresponding routine.
 To be specific, destructors for the vectors are not called
 and a memory leaks result.
 Set the following preprocessor symbol to 1 to demonstrate this bug:
-$codep */
+$srccode%cpp% */
 # define DEMONSTRATE_BUG_IN_CYGWIN 0
-/* $$
+/* %$$
 $code
-$verbatim%multi_thread/pthread/team_pthread.cpp%0%// BEGIN C++%// END C++%1%$$
+$srcfile%multi_thread/pthread/team_pthread.cpp%0%// BEGIN C++%// END C++%1%$$
 $$
 
 $end

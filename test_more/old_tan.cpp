@@ -1,6 +1,6 @@
 // $Id$
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-15 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-16 Bradley M. Bell
 
 CppAD is distributed under multiple licenses. This distribution is under
 the terms of the
@@ -28,7 +28,7 @@ to implement the tangent ($icode%id% == 0%$$) and hyperbolic tangent
 ($icode%id% == 1%$$) functions as user atomic operations.
 
 $code
-$verbatim%test_more/old_tan.cpp%0%// BEGIN C++%// END C++%1%$$
+$srcfile%test_more/old_tan.cpp%0%// BEGIN C++%// END C++%1%$$
 $$
 
 $end

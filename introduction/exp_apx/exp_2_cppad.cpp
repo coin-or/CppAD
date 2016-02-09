@@ -1,6 +1,6 @@
 // $Id$
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-15 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-16 Bradley M. Bell
 
 CppAD is distributed under multiple licenses. This distribution is under
 the terms of the
@@ -67,7 +67,7 @@ Test a modified version of the routine below that computes
 the derivative of $latex f(x)$$
 at the point $latex x = .5$$.
 $lend
-$codep */
+$srccode%cpp% */
 
 # include <cppad/cppad.hpp>  // http://www.coin-or.org/CppAD/
 # include "exp_2.hpp"        // second order exponential approximation
@@ -135,6 +135,6 @@ bool exp_2_cppad(void)
 	return ok;
 }
 
-/* $$
+/* %$$
 $end
 */

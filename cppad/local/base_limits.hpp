@@ -3,7 +3,7 @@
 # define CPPAD_BASE_LIMITS_HPP
 
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-15 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-16 Bradley M. Bell
 
 CppAD is distributed under multiple licenses. This distribution is under
 the terms of the
@@ -46,7 +46,7 @@ $codei%
 	}
 %$$
 where the macro is defined by
-$codep */
+$srccode%cpp% */
 # define CPPAD_NUMERIC_LIMITS(Other, Base) \
 template <> class numeric_limits<Base>\
 {\
@@ -60,7 +60,7 @@ template <> class numeric_limits<Base>\
 	static Base quiet_NaN(void) \
 	{	return static_cast<Base>( std::numeric_limits<Other>::quiet_NaN() ); }\
 };
-/* $$
+/* %$$
 $end
 */
 

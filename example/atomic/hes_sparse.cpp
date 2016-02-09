@@ -1,6 +1,6 @@
 // $Id$
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-15 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-16 Bradley M. Bell
 
 CppAD is distributed under multiple licenses. This distribution is under
 the terms of the
@@ -22,7 +22,7 @@ for an atomic operation.
 $nospell
 
 $head Start  Class Definition$$
-$codep */
+$srccode%cpp% */
 # include <cppad/cppad.hpp>
 namespace {          // isolate items below to this file
 using CppAD::vector; // abbreviate as vector
@@ -44,18 +44,18 @@ void my_union(
 }
 //
 class atomic_hes_sparse : public CppAD::atomic_base<double> {
-/* $$
+/* %$$
 $head Constructor $$
-$codep */
+$srccode%cpp% */
 	public:
 	// constructor (could use const char* for name)
 	atomic_hes_sparse(const std::string& name) :
 	CppAD::atomic_base<double>(name)
 	{ }
 	private:
-/* $$
+/* %$$
 $head forward$$
-$codep */
+$srccode%cpp% */
 	// forward mode routine called by CppAD
 	virtual bool forward(
 		size_t                    p ,
@@ -92,9 +92,9 @@ $codep */
 		}
 		return ok;
 	}
-/* $$
+/* %$$
 $head for_sparse_jac$$
-$codep */
+$srccode%cpp% */
 	// forward Jacobian set sparsity routine called by CppAD
 	virtual bool for_sparse_jac(
 		size_t                                p ,
@@ -113,9 +113,9 @@ $codep */
 
 		return true;
 	}
-/* $$
+/* %$$
 $head rev_sparse_hes$$
-$codep */
+$srccode%cpp% */
 	// reverse Hessian set sparsity routine called by CppAD
 	virtual bool rev_sparse_hes(
 		const vector<bool>&                   vx,
@@ -165,9 +165,9 @@ $codep */
 	}
 }; // End of atomic_hes_sparse class
 
-/* $$
+/* %$$
 $head Use Atomic Function$$
-$codep */
+$srccode%cpp% */
 bool use_atomic_hes_sparse(bool x_1_variable)
 {	bool ok = true;
 	using CppAD::AD;
@@ -251,9 +251,9 @@ bool use_atomic_hes_sparse(bool x_1_variable)
 	return ok;
 }
 }  // End empty namespace
-/* $$
+/* %$$
 $head Test with x_1 Both a Variable and a Parameter$$
-$codep */
+$srccode%cpp% */
 bool hes_sparse(void)
 {	bool ok = true;
 	// test with x_1 a variable
@@ -262,7 +262,7 @@ bool hes_sparse(void)
 	ok     &= use_atomic_hes_sparse(false);
 	return ok;
 }
-/* $$
+/* %$$
 $$ $comment end nospell$$
 $end
 */

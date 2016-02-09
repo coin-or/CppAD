@@ -1,6 +1,6 @@
 // $Id$
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-15 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-16 Bradley M. Bell
 
 CppAD is distributed under multiple licenses. This distribution is under
 the terms of the
@@ -37,7 +37,7 @@ we need to handle the case $latex x_j = 0$$
 in a special way to avoid multiplying zero by infinity.
 
 $code
-$verbatim%example/cond_exp.cpp%0%// BEGIN C++%// END C++%1%$$
+$srcfile%example/cond_exp.cpp%0%// BEGIN C++%// END C++%1%$$
 $$
 
 $end

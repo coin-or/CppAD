@@ -1,6 +1,6 @@
 // $Id$
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-15 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-16 Bradley M. Bell
 
 CppAD is distributed under multiple licenses. This distribution is under
 the terms of the
@@ -29,7 +29,7 @@ $head Include File$$
 This routine uses the include file $cref old_mat_mul.hpp$$.
 
 $code
-$verbatim%test_more/old_mat_mul.cpp%0%// BEGIN C++%// END C++%1%$$
+$srcfile%test_more/old_mat_mul.cpp%0%// BEGIN C++%// END C++%1%$$
 $$
 
 $end

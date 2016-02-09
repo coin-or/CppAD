@@ -1,6 +1,6 @@
 // $Id$
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-15 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-16 Bradley M. Bell
 
 CppAD is distributed under multiple licenses. This distribution is under
 the terms of the
@@ -19,7 +19,7 @@ $section Interfacing to C: Example and Test$$
 $mindex C interface difference central$$
 
 $code
-$verbatim%example/interface2c.cpp%0%// BEGIN C++%// END C++%1%$$
+$srcfile%example/interface2c.cpp%0%// BEGIN C++%// END C++%1%$$
 $$
 
 $end

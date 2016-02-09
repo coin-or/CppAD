@@ -1,6 +1,6 @@
 // $Id$
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-15 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-16 Bradley M. Bell
 
 CppAD is distributed under multiple licenses. This distribution is under
 the terms of the
@@ -24,7 +24,7 @@ $section exp_eps: Verify Second Order Forward Sweep$$
 $mindex first exp_2$$
 
 
-$codep */
+$srccode%cpp% */
 # include <cmath>                     // for fabs function
 extern bool exp_eps_for0(double *v0); // computes zero order forward sweep
 extern bool exp_eps_for1(double *v1); // computes first order forward sweep
@@ -60,6 +60,6 @@ bool exp_eps_for2(void)
 
 	return ok;
 }
-/* $$
+/* %$$
 $end
 */

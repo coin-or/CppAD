@@ -1,6 +1,6 @@
 // $Id$
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-15 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-16 Bradley M. Bell
 
 CppAD is distributed under multiple licenses. This distribution is under
 the terms of the
@@ -27,7 +27,7 @@ This example just demonstrates pthreads and does not use CppAD at all.
 
 $head Source Code$$
 $code
-$verbatim%multi_thread/pthread/a11c_pthread.cpp%0%// BEGIN C++%// END C++%1%$$
+$srcfile%multi_thread/pthread/a11c_pthread.cpp%0%// BEGIN C++%// END C++%1%$$
 $$
 $end
 ----------------------------------------------------------------------------

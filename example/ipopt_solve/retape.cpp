@@ -1,6 +1,6 @@
 // $Id$
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-15 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-16 Bradley M. Bell
 
 CppAD is distributed under multiple licenses. This distribution is under
 the terms of the
@@ -29,7 +29,7 @@ This example program demonstrates a case were the $code ipopt::solve$$
 argument $cref/retape/ipopt_solve/options/Retape/$$ should be true.
 
 $code
-$verbatim%example/ipopt_solve/retape.cpp%0%// BEGIN C++%// END C++%1%$$
+$srcfile%example/ipopt_solve/retape.cpp%0%// BEGIN C++%// END C++%1%$$
 $$
 
 $end

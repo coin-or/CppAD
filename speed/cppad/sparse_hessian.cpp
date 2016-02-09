@@ -1,6 +1,6 @@
 // $Id$
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-15 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-16 Bradley M. Bell
 
 CppAD is distributed under multiple licenses. This distribution is under
 the terms of the
@@ -44,7 +44,7 @@ See $cref link_sparse_hessian$$.
 
 $head Implementation$$
 
-$codep */
+$srccode%cpp% */
 # include <cppad/cppad.hpp>
 # include <cppad/speed/uniform_01.hpp>
 # include <cppad/speed/sparse_hes_fun.hpp>
@@ -222,6 +222,6 @@ bool link_sparse_hessian(
 	}
 	return true;
 }
-/* $$
+/* %$$
 $end
 */

@@ -1,6 +1,6 @@
 // $Id$
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-15 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-16 Bradley M. Bell
 
 CppAD is distributed under multiple licenses. This distribution is under
 the terms of the
@@ -21,7 +21,7 @@ $mindex number_skip optimize conditional expression condition$$
 
 
 $code
-$verbatim%example/number_skip.cpp%0%// BEGIN C++%// END C++%1%$$
+$srcfile%example/number_skip.cpp%0%// BEGIN C++%// END C++%1%$$
 $$
 
 $end

@@ -1,6 +1,6 @@
 // $Id$
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-15 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-16 Bradley M. Bell
 
 CppAD is distributed under multiple licenses. This distribution is under
 the terms of the
@@ -37,7 +37,7 @@ $head Specifications$$
 See $cref link_det_lu$$.
 
 $head Implementation$$
-$codep */
+$srccode%cpp% */
 # include <adolc/adolc.h>
 
 # include <cppad/speed/det_by_lu.hpp>
@@ -131,6 +131,6 @@ bool link_det_lu(
 
 	return true;
 }
-/* $$
+/* %$$
 $end
 */

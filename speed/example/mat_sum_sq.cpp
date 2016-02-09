@@ -1,6 +1,6 @@
 // $Id$
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-15 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-16 Bradley M. Bell
 
 CppAD is distributed under multiple licenses. This distribution is under
 the terms of the
@@ -21,7 +21,7 @@ $mindex mat_sum_sq$$
 
 
 $code
-$verbatim%speed/example/mat_sum_sq.cpp%0%// BEGIN C++%// END C++%1%$$
+$srcfile%speed/example/mat_sum_sq.cpp%0%// BEGIN C++%// END C++%1%$$
 $$
 
 $end

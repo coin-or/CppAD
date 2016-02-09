@@ -1,6 +1,6 @@
 // $Id$
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-15 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-16 Bradley M. Bell
 
 CppAD is distributed under multiple licenses. This distribution is under
 the terms of the
@@ -21,7 +21,7 @@ $section Determinant Using Lu Factorization: Example and Test$$
 $mindex minors$$
 
 $code
-$verbatim%speed/example/det_by_lu.cpp%0%// BEGIN C++%// END C++%1%$$
+$srcfile%speed/example/det_by_lu.cpp%0%// BEGIN C++%// END C++%1%$$
 $$
 
 $end

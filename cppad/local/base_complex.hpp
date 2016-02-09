@@ -2,7 +2,7 @@
 # ifndef CPPAD_BASE_COMPLEX_HPP
 # define CPPAD_BASE_COMPLEX_HPP
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-15 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-16 Bradley M. Bell
 
 CppAD is distributed under multiple licenses. This distribution is under
 the terms of the
@@ -69,20 +69,20 @@ This file is included before $code <cppad/cppad.hpp>$$
 so it is necessary to define the error handler
 in addition to including
 $cref/base_require.hpp/base_require/Include Order/$$
-$codep */
+$srccode%cpp% */
 # include <limits>
 # include <complex>
 # include <cppad/base_require.hpp>
 # include <cppad/local/cppad_assert.hpp>
 
-/* $$
+/* %$$
 
 $head CondExpOp$$
 The type $code std::complex<double>$$ does not supports the
 $code <$$, $code <=$$, $code ==$$, $code >=$$, and $code >$$ operators; see
 $cref/not ordered/base_cond_exp/CondExpTemplate/Not Ordered/$$.
 Hence its $code CondExpOp$$ function is defined by
-$codep */
+$srccode%cpp% */
 namespace CppAD {
 	inline std::complex<double> CondExpOp(
 		enum CppAD::CompareOp      cop        ,
@@ -98,15 +98,15 @@ namespace CppAD {
 		return std::complex<double>(0);
 	}
 }
-/* $$
+/* %$$
 
 $head CondExpRel$$
 The $cref/CPPAD_COND_EXP_REL/base_cond_exp/CondExpRel/$$ macro invocation
-$codep */
+$srccode%cpp% */
 namespace CppAD {
 	CPPAD_COND_EXP_REL( std::complex<double> )
 }
-/* $$
+/* %$$
 used $code CondExpOp$$ above to
 define $codei%CondExp%Rel%$$ for $code std::complex<double>$$ arguments
 and $icode%Rel%$$ equal to
@@ -115,7 +115,7 @@ $code Lt$$, $code Le$$, $code Eq$$, $code Ge$$, and $code Gt$$.
 $head EqualOpSeq$$
 Complex numbers do not carry operation sequence information.
 Thus they are equal in this sense if and only if there values are equal.
-$codep */
+$srccode%cpp% */
 namespace CppAD {
 	inline bool EqualOpSeq(
 		const std::complex<double> &x ,
@@ -123,12 +123,12 @@ namespace CppAD {
 	{	return x == y;
 	}
 }
-/* $$
+/* %$$
 
 $head Identical$$
 Complex numbers do not carry operation sequence information.
 Thus they are all parameters so the identical functions just check values.
-$codep */
+$srccode%cpp% */
 namespace CppAD {
 	inline bool IdenticalPar(const std::complex<double> &x)
 	{	return true; }
@@ -140,11 +140,11 @@ namespace CppAD {
 		const std::complex<double> &x, const std::complex<double> &y)
 	{	return (x == y); }
 }
-/* $$
+/* %$$
 
 $head Ordered$$
 Complex types do not support comparison operators,
-$codep */
+$srccode%cpp% */
 # undef  CPPAD_USER_MACRO
 # define CPPAD_USER_MACRO(Fun)                                     \
 inline bool Fun(const std::complex<double>& x)                     \
@@ -165,25 +165,25 @@ namespace CppAD {
 		const std::complex<double>& y )
 	{	return std::abs(x) >= std::abs(y); }
 }
-/* $$
+/* %$$
 
 $head Integer$$
 The implementation of this function must agree
 with the CppAD user specifications for complex arguments to the
 $cref/Integer/Integer/x/Complex Types/$$ function:
-$codep */
+$srccode%cpp% */
 namespace CppAD {
 	inline int Integer(const std::complex<double> &x)
 	{	return static_cast<int>( x.real() ); }
 }
-/* $$
+/* %$$
 
 $head azmul$$
-$codep */
+$srccode%cpp% */
 namespace CppAD {
 	CPPAD_AZMUL( std::complex<double> )
 }
-/* $$
+/* %$$
 
 $head isnan$$
 The gcc 4.1.1 complier defines the function
@@ -195,19 +195,19 @@ This causes an ambiguity between the function above and the CppAD
 $cref/isnan/nan/$$ template function.
 We avoid this ambiguity by defining a non-template version of
 this function in the CppAD namespace.
-$codep */
+$srccode%cpp% */
 namespace CppAD {
 	inline bool isnan(const std::complex<double>& z)
 	{	return (z != z);
 	}
 }
-/* $$
+/* %$$
 
 $head Valid Unary Math$$
 The following macro invocations define the standard unary
 math functions that are valid with complex arguments and are
 required to use $code AD< std::complex<double> >$$.
-$codep */
+$srccode%cpp% */
 namespace CppAD {
 	CPPAD_STANDARD_MATH_UNARY(std::complex<double>, cos)
 	CPPAD_STANDARD_MATH_UNARY(std::complex<double>, cosh)
@@ -217,13 +217,13 @@ namespace CppAD {
 	CPPAD_STANDARD_MATH_UNARY(std::complex<double>, sinh)
 	CPPAD_STANDARD_MATH_UNARY(std::complex<double>, sqrt)
 }
-/* $$
+/* %$$
 
 $head Invalid Unary Math$$
 The following macro definition and invocations define the standard unary
 math functions that are invalid with complex arguments and are
 required to use $code AD< std::complex<double> >$$.
-$codep */
+$srccode%cpp% */
 # undef  CPPAD_USER_MACRO
 # define CPPAD_USER_MACRO(Fun)                                     \
 inline std::complex<double> Fun(const std::complex<double>& x)     \
@@ -249,37 +249,37 @@ namespace CppAD {
 	CPPAD_USER_MACRO(log1p)
 # endif
 }
-/* $$
+/* %$$
 
 $head pow $$
 The following defines a $code CppAD::pow$$ function that
 is required to use $code AD< std::complex<double> >$$:
-$codep */
+$srccode%cpp% */
 namespace CppAD {
 	inline std::complex<double> pow(
 		const std::complex<double> &x ,
 		const std::complex<double> &y )
 	{	return std::pow(x, y); }
 }
-/*$$
+/* %$$
 
 $head numeric_limits$$
 The following defines the CppAD $cref numeric_limits$$
 for the type $code std::complex<double>$$:
-$codep */
+$srccode%cpp% */
 namespace CppAD {
 	CPPAD_NUMERIC_LIMITS(double, std::complex<double>)
 }
-/*$$
+/* %$$
 
 $head to_string$$
 The following defines the function CppAD $cref to_string$$
 for the type $code std::complex<double>$$:
-$codep */
+$srccode%cpp% */
 namespace CppAD {
 	CPPAD_TO_STRING(std::complex<double>)
 }
-/* $$
+/* %$$
 $end
 */
 # undef  CPPAD_USER_MACRO_ONE

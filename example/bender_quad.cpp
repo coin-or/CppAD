@@ -1,6 +1,6 @@
 // $Id$
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-15 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-16 Bradley M. Bell
 
 CppAD is distributed under multiple licenses. This distribution is under
 the terms of the
@@ -59,7 +59,7 @@ y - [ \partial_y \partial_y F(x, y) ]^{-1} \partial_y F[x,  y]
 
 
 $code
-$verbatim%example/bender_quad.cpp%0%// BEGIN C++%// END C++%1%$$
+$srcfile%example/bender_quad.cpp%0%// BEGIN C++%// END C++%1%$$
 $$
 
 $end

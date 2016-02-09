@@ -3,7 +3,7 @@
 # define CPPAD_BASE_TO_STRING_HPP
 
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-15 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-16 Bradley M. Bell
 
 CppAD is distributed under multiple licenses. This distribution is under
 the terms of the
@@ -45,7 +45,7 @@ Note that the $code CPPAD_TO_STRING$$ macro assumes that the
 $cref base_limits$$ and $cref base_std_math$$ have already been defined
 for this type.
 This macro is defined as follows:
-$codep */
+$srccode%cpp% */
 # define CPPAD_TO_STRING(Base) \
 template <> struct to_string_struct<Base>\
 {	std::string operator()(const Base& value) \
@@ -58,7 +58,7 @@ template <> struct to_string_struct<Base>\
 		return os.str();\
 	}\
 };
-/* $$
+/* %$$
 $end
 ------------------------------------------------------------------------------
 */

@@ -10,20 +10,28 @@
 # A copy of this license is included in the COPYING file of this distribution.
 # Please visit http://www.coin-or.org/CppAD/ for information on other licenses.
 # -----------------------------------------------------------------------------
-move_sed='s|list_files.sh|ls_files.sh|'
+revert_list='
+'
 move_list='
 '
-cat << EOF > junk.sed
-s|^# cppad_has_colpack, colpack_libs|&, cppad_lib|
-s|^\\tSET( colpack_libs "ColPack" )|&\\
-	SET( cppad_lib "cppad_lib" )|
-s|^\\tSET( colpack_libs "" )|&\\
-	SET( cppad_lib "" )|
-s|^\\tcppad_lib\$|\\t\${cppad_lib}|
+move_sed='s|list_files.sh|ls_files.sh|'
 #
-s|^ADD_SUBDIRECTORY(cppad_lib)|IF( colpack_prefix )\\
-	&\\
-ENDIF( colpack_prefix)|
+cat << EOF > junk.sed
+#
+/\$codep [*]\//! b two
+: one
+N
+/\/[*] *\$\\\$/! b one
+s|\$codep [*]/|\$srccode%cpp% */|
+s|/[*] *\$\\\$|/* %\$\$|
+#
+: two
+/\$verbatim/! b end
+/\$\\\$/! N
+/\$\\\$/! b two
+/\.[ch]pp%/s|\$verbatim|\$srcfile|
+#
+: end
 EOF
 # -----------------------------------------------------------------------------
 if [ $0 != "bin/batch_edit.sh" ]
@@ -40,7 +48,6 @@ echo_eval() {
 # -----------------------------------------------------------------------------
 cp bin/batch_edit.sh $HOME/trash/batch_edit.sh
 git reset --hard
-cp $HOME/trash/batch_edit.sh bin/batch_edit.sh
 # ---------------------------------------------------------------------------
 list_all=`bin/ls_files.sh`
 for file in $list_all
@@ -63,5 +70,11 @@ then
 	echo_eval git_new.sh from
 fi
 # ----------------------------------------------------------------------------
+for file in $revert_list
+do
+	echo_eval git checkout $file
+done
+# ----------------------------------------------------------------------------
+cp $HOME/trash/batch_edit.sh bin/batch_edit.sh
 echo "$0: OK"
 exit 0

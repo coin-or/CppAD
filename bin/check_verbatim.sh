@@ -35,6 +35,7 @@ cppad/local/cond_exp.hpp
 introduction/exp_apx/exp_2.omh
 introduction/exp_apx/exp_eps.omh
 omh/license.omh
+bin/batch_edit.sh
 '
 # -----------------------------------------------------------------------------
 # Make sure that OMhelp verbatim commands referr to same file as command

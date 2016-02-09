@@ -1,6 +1,6 @@
 // $Id$
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-15 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-16 Bradley M. Bell
 
 CppAD is distributed under multiple licenses. This distribution is under
 the terms of the
@@ -45,7 +45,7 @@ See $cref link_poly$$.
 $head Implementation$$
 
 
-$codep */
+$srccode%cpp% */
 # include <cppad/utility/vector.hpp>
 # include <cppad/utility/poly.hpp>
 # include <cppad/speed/uniform_01.hpp>
@@ -103,6 +103,6 @@ bool link_poly(
 	// ------------------------------------------------------
 	return true;
 }
-/* $$
+/* %$$
 $end
 */

@@ -1,6 +1,6 @@
 // $Id$
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-15 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-16 Bradley M. Bell
 
 CppAD is distributed under multiple licenses. This distribution is under
 the terms of the
@@ -24,7 +24,7 @@ $latex f : \B{R}^n \rightarrow \B{R}^m$$ where
 $latex n = 1$$, $latex m = 1$$, and $latex f(x) = 1 / x$$.
 
 $code
-$verbatim%test_more/old_reciprocal.cpp%0%// BEGIN C++%// END C++%1%$$
+$srcfile%test_more/old_reciprocal.cpp%0%// BEGIN C++%// END C++%1%$$
 $$
 
 $end

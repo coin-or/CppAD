@@ -1,6 +1,6 @@
 // $Id$
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-15 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-16 Bradley M. Bell
 
 CppAD is distributed under multiple licenses. This distribution is under
 the terms of the
@@ -68,7 +68,7 @@ $childtable%
 
 $head Source$$
 $code
-$verbatim%multi_thread/harmonic.cpp%0%// BEGIN C++%// END C++%1%$$
+$srcfile%multi_thread/harmonic.cpp%0%// BEGIN C++%// END C++%1%$$
 $$
 
 $end

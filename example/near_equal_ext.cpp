@@ -1,6 +1,6 @@
 // $Id$
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-15 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-16 Bradley M. Bell
 
 CppAD is distributed under multiple licenses. This distribution is under
 the terms of the
@@ -22,7 +22,7 @@ $section Compare AD with Base Objects: Example and Test$$
 $mindex NearEqualExt$$
 
 $code
-$verbatim%example/near_equal_ext.cpp%0%// BEGIN C++%// END C++%1%$$
+$srcfile%example/near_equal_ext.cpp%0%// BEGIN C++%// END C++%1%$$
 $$
 
 $end

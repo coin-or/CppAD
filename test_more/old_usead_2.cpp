@@ -1,6 +1,6 @@
 // $Id$
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-15 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-16 Bradley M. Bell
 
 CppAD is distributed under multiple licenses. This distribution is under
 the terms of the
@@ -33,7 +33,7 @@ $cref/size_var/seq_property/size_var/$$,
 and hence the required memory.
 
 $code
-$verbatim%test_more/old_usead_2.cpp%0%// BEGIN C++%// END C++%1%$$
+$srcfile%test_more/old_usead_2.cpp%0%// BEGIN C++%// END C++%1%$$
 $$
 
 $end

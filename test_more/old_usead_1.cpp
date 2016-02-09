@@ -1,6 +1,6 @@
 // $Id$
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-15 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-16 Bradley M. Bell
 
 CppAD is distributed under multiple licenses. This distribution is under
 the terms of the
@@ -40,7 +40,7 @@ useful for the purpose above;
 see $cref old_usead_2.cpp$$ for a more complete example.
 
 $code
-$verbatim%test_more/old_usead_1.cpp%0%// BEGIN C++%// END C++%1%$$
+$srcfile%test_more/old_usead_1.cpp%0%// BEGIN C++%// END C++%1%$$
 $$
 
 $end

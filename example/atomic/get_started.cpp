@@ -1,6 +1,6 @@
 // $Id$
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-15 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-16 Bradley M. Bell
 
 CppAD is distributed under multiple licenses. This distribution is under
 the terms of the
@@ -22,15 +22,15 @@ necessary for a $cref atomic_base$$ operation.
 $nospell
 
 $head Start Class Definition$$
-$codep */
+$srccode%cpp% */
 # include <cppad/cppad.hpp>
 namespace {          // isolate items below to this file
 using CppAD::vector; // abbreviate as vector
 class atomic_get_started : public CppAD::atomic_base<double> {
-/* $$
+/* %$$
 
 $head Constructor$$
-$codep */
+$srccode%cpp% */
 	public:
 	// constructor (could use const char* for name)
 	atomic_get_started(const std::string& name) :
@@ -38,9 +38,9 @@ $codep */
 	CppAD::atomic_base<double>(name)
 	{ }
 	private:
-/* $$
+/* %$$
 $head forward$$
-$codep */
+$srccode%cpp% */
 	// forward mode routine called by CppAD
 	virtual bool forward(
 		size_t                    p ,
@@ -73,28 +73,28 @@ $codep */
 			ty[0] = f;
 		return ok;
 	}
-/* $$
+/* %$$
 $head End Class Definition$$
-$codep */
+$srccode%cpp% */
 }; // End of atomic_get_started class
 }  // End empty namespace
 
-/* $$
+/* %$$
 $head Use Atomic Function$$
-$codep */
+$srccode%cpp% */
 bool get_started(void)
 {	bool ok = true;
 	using CppAD::AD;
 	using CppAD::NearEqual;
 	double eps = 10. * CppAD::numeric_limits<double>::epsilon();
-/* $$
+/* %$$
 $subhead Constructor$$
-$codep */
+$srccode%cpp% */
 	// Create the atomic get_started object
 	atomic_get_started afun("atomic_get_started");
-/* $$
+/* %$$
 $subhead Recording$$
-$codep */
+$srccode%cpp% */
 	// Create the function f(x)
 	//
 	// domain space vector
@@ -120,9 +120,9 @@ $codep */
 	// create f: x -> y and stop tape recording
 	CppAD::ADFun<double> f;
 	f.Dependent (ax, ay);  // f(x) = x
-/* $$
+/* %$$
 $subhead forward$$
-$codep */
+$srccode%cpp% */
 	// check function value
 	double check = x0;
 	ok &= NearEqual( Value(ay[0]) , check,  eps, eps);
@@ -137,7 +137,7 @@ $codep */
 
 	return ok;
 }
-/* $$
+/* %$$
 $$ $comment end nospell$$
 $end
 */

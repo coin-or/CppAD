@@ -1,10 +1,10 @@
 /* $Id: */
 
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-12 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-16 Bradley M. Bell
 
 CppAD is distributed under multiple licenses. This distribution is under
-the terms of the 
+the terms of the
                     Eclipse Public License Version 1.0.
 
 A copy of this license is included in the COPYING file of this distribution.
@@ -22,7 +22,7 @@ Please visit http://www.coin-or.org/CppAD/ for information on other licenses.
 # define bool int
 # define true 1
 # define false 0
-# endif 
+# endif
 
 /*
 -------------------------------------------------------------------------------
@@ -35,18 +35,18 @@ $$
 $section Determinant of a Minor$$
 
 $head Syntax$$
-$icode%d% = det_of_minor(%a%, %m%, %n%, %r%, %c%)%$$ 
+$icode%d% = det_of_minor(%a%, %m%, %n%, %r%, %c%)%$$
 
 $head Purpose$$
 returns the determinant of a minor of the matrix $latex A$$
 using expansion by minors.
-The elements of the $latex n \times n$$ minor $latex M$$ 
+The elements of the $latex n \times n$$ minor $latex M$$
 of the matrix $latex A$$ are defined,
 for $latex i = 0 , \ldots , n-1$$ and $latex j = 0 , \ldots , n-1$$, by
 $latex \[
 	M_{i,j} = A_{R(i), C(j)}
 \]$$
-where the functions 
+where the functions
 $latex R(i)$$ is defined by the $cref/argument r/det_of_minor/r/$$ and
 $latex C(j)$$ is defined by the $cref/argument c/det_of_minor/c/$$.
 $pre
@@ -56,7 +56,7 @@ This function
 is for example and testing purposes only.
 Expansion by minors is chosen as an example because it uses
 a lot of floating point operations yet does not require much source code
-(on the order of $icode m$$ factorial floating point operations and 
+(on the order of $icode m$$ factorial floating point operations and
 about 70 lines of source code including comments).
 This is not an efficient method for computing a determinant;
 for example, using an LU factorization would be better.
@@ -69,7 +69,7 @@ will return the determinant of $latex A$$:
 $list number$$
 $latex n = m$$.
 $lnext
-for $latex i = 0 , \ldots , m-1$$, $latex r[i] = i+1$$, 
+for $latex i = 0 , \ldots , m-1$$, $latex r[i] = i+1$$,
 and $latex r[m] = 0$$.
 $lnext
 for $latex j = 0 , \ldots , m-1$$, $latex c[j] = j+1$$,
@@ -80,7 +80,7 @@ $head a$$
 The argument $icode a$$ has prototype
 $codei%
 	const double* %a%
-%$$ 
+%$$
 and is a vector with size $latex m * m$$.
 The elements of the $latex m \times m$$ matrix $latex A$$ are defined,
 for $latex i = 0 , \ldots , m-1$$ and $latex j = 0 , \ldots , m-1$$, by
@@ -108,10 +108,10 @@ $codei%
 	size_t* %r%
 %$$
 and is a vector with $latex m + 1$$ elements.
-This vector defines the function $latex R(i)$$ 
+This vector defines the function $latex R(i)$$
 which specifies the rows of the minor $latex M$$.
-To be specific, the function $latex R(i)$$ 
-for $latex i = 0, \ldots , n-1$$ is defined by 
+To be specific, the function $latex R(i)$$
+for $latex i = 0, \ldots , n-1$$ is defined by
 $latex \[
 \begin{array}{rcl}
 	R(0)   & = & r[m]
@@ -121,7 +121,7 @@ $latex \[
 \] $$
 All the elements of $icode r$$ must have value
 less than or equal $icode m$$.
-The elements of vector $icode r$$ are modified during the computation, 
+The elements of vector $icode r$$ are modified during the computation,
 and restored to their original value before the return from
 $code det_of_minor$$.
 
@@ -131,10 +131,10 @@ $codei%
 	size_t* %c%
 %$$
 and is a vector with $latex m + 1$$ elements
-This vector defines the function $latex C(i)$$ 
+This vector defines the function $latex C(i)$$
 which specifies the rows of the minor $latex M$$.
-To be specific, the function $latex C(i)$$ 
-for $latex j = 0, \ldots , n-1$$ is defined by 
+To be specific, the function $latex C(i)$$
+for $latex j = 0, \ldots , n-1$$ is defined by
 $latex \[
 \begin{array}{rcl}
 	C(0)   & = & c[m]
@@ -144,7 +144,7 @@ $latex \[
 \] $$
 All the elements of $icode c$$ must have value
 less than or equal $icode m$$.
-The elements of vector $icode c$$ are modified during the computation, 
+The elements of vector $icode c$$ are modified during the computation,
 and restored to their original value before the return from
 $code det_of_minor$$.
 
@@ -159,17 +159,17 @@ $spell
 	Cj
 $$
 $head Source Code$$
-$codep */
-double det_of_minor( 
-	const double*        a  , 
-	size_t               m  , 
-	size_t               n  , 
-	size_t*              r  , 
+$srccode%cpp% */
+double det_of_minor(
+	const double*        a  ,
+	size_t               m  ,
+	size_t               n  ,
+	size_t*              r  ,
 	size_t*              c  )
 {	size_t R0, Cj, Cj1, j;
 	double detM, M0j, detS;
 	int s;
-	
+
 	R0 = r[m]; /* R(0) */
 	Cj = c[m]; /* C(j)    (case j = 0) */
 	Cj1 = m;   /* C(j-1)  (case j = 0) */
@@ -208,7 +208,7 @@ double det_of_minor(
 		/* advance to neat column of M */
 		Cj1 = Cj;
 		Cj  = c[Cj];
-		s   = - s;		
+		s   = - s;
 	}
 
 	/* restore row zero to the minor representation for M */
@@ -217,7 +217,7 @@ double det_of_minor(
 	/* return the determinant of the minor M */
 	return detM;
 }
-/* $$
+/* %$$
 $end
 -------------------------------------------------------------------------------
 $begin det_by_minor_c$$
@@ -229,12 +229,12 @@ $$
 $section Compute Determinant using Expansion by Minors$$
 
 $head Syntax$$
-$icode%d% = det_by_minor(%a%, %n%)%$$ 
+$icode%d% = det_by_minor(%a%, %n%)%$$
 
 $head Purpose$$
 returns the determinant of the matrix $latex A$$
 using expansion by minors.
-The elements of the $latex n \times n$$ minor $latex M$$ 
+The elements of the $latex n \times n$$ minor $latex M$$
 of the matrix $latex A$$ are defined,
 for $latex i = 0 , \ldots , n-1$$ and $latex j = 0 , \ldots , n-1$$, by
 $latex \[
@@ -245,7 +245,7 @@ $head a$$
 The argument $icode a$$ has prototype
 $codei%
 	const double* %a%
-%$$ 
+%$$
 and is a vector with size $latex m * m$$.
 The elements of the $latex m \times m$$ matrix $latex A$$ are defined,
 for $latex i = 0 , \ldots , m-1$$ and $latex j = 0 , \ldots , m-1$$, by
@@ -270,7 +270,7 @@ $spell
 	sizeof
 $$
 $head Source Code$$
-$codep */
+$srccode%cpp% */
 double det_by_minor(double* a, size_t m)
 {	size_t *r, *c, i;
 	double value;
@@ -292,12 +292,12 @@ double det_by_minor(double* a, size_t m)
 	free(c);
 	return value;
 }
-/* $$ 
+/* %$$
 $end
 --------------------------------------------------------------------------
 $begin uniform_01_c$$
 
-$section Simulate a [0,1] Uniform Random Variate$$ 
+$section Simulate a [0,1] Uniform Random Variate$$
 
 $head Syntax$$
 $codei%random_seed(%seed%)
@@ -340,7 +340,7 @@ $spell
 	srand
 $$
 $head Source Code$$
-$codep */
+$srccode%cpp% */
 void random_seed(size_t seed)
 {	srand(seed); }
 void uniform_01(unsigned n, double* a)
@@ -348,7 +348,7 @@ void uniform_01(unsigned n, double* a)
 	while(n--)
 		a[n] = rand() * factor;
 }
-/* $$
+/* %$$
 $end
 ------------------------------------------------------------------------------
 $begin correct_det_by_minor_c$$
@@ -378,7 +378,7 @@ $spell
 	fabs
 $$
 $head Source Code$$
-$codep */
+$srccode%cpp% */
 bool correct_det_by_minor(void)
 {	double a[9], det, check;
 
@@ -387,7 +387,7 @@ bool correct_det_by_minor(void)
 
 	/* compute determinant using expansion by minors */
 	det = det_by_minor(a, 3);
-	
+
 	/* use expansion by minors to hand code the determinant  */
 	check = 0.;
 	check += a[0] * ( a[4] * a[8] - a[5] * a[7] );
@@ -398,7 +398,7 @@ bool correct_det_by_minor(void)
 		return true;
 	return false;
 }
-/* $$
+/* %$$
 $end
 ------------------------------------------------------------------------------
 $begin repeat_det_by_minor_c$$
@@ -436,7 +436,7 @@ $spell
 	sizeof
 $$
 $head Source Code$$
-$codep */
+$srccode%cpp% */
 void repeat_det_by_minor(size_t repeat, size_t size)
 {	double *a;
 	a = (double*) malloc( (size * size) * sizeof(double) );
@@ -445,11 +445,11 @@ void repeat_det_by_minor(size_t repeat, size_t size)
 	{	uniform_01(size * size, a);
 		det_by_minor(a, size);
 	}
-	
+
 	free(a);
 	return;
 }
-/* $$
+/* %$$
 $end
 ------------------------------------------------------------------------------
 $begin elapsed_seconds_c$$
@@ -468,7 +468,7 @@ This routine is accurate to within .02 seconds
 It does not necessary work for time intervals that are greater than a day.
 
 $head s$$
-is a $code double$$ equal to the 
+is a $code double$$ equal to the
 number of seconds since the first call to $code elapsed_seconds$$.
 
 $spell
@@ -484,7 +484,7 @@ $spell
 	timeval
 $$
 $head Source Code$$
-$codep */
+$srccode%cpp% */
 # if _MSC_VER
 // ---------------------------------------------------------------------------
 // Microsoft version of timer
@@ -523,7 +523,7 @@ double elapsed_seconds(void)
 {	double sec, usec, diff;
 
 	static bool first_ = true;
-	static struct timeval tv_first;		
+	static struct timeval tv_first;
 	struct timeval        tv;
 	if( first_ )
 	{	gettimeofday(&tv_first, NULL);
@@ -540,7 +540,7 @@ double elapsed_seconds(void)
 	return diff;
 }
 # endif
-/* $$
+/* %$$
 $end
 -----------------------------------------------------------------------------
 $begin time_det_by_minor_c$$
@@ -578,7 +578,7 @@ $head time$$
 The return value $icode time$$ has prototype
 $codei%
 	double %time%
-%$$ 
+%$$
 and is the number of wall clock seconds that it took for
 $code det_by_minor$$ to compute its determinant
 (plus overhead which includes choosing a random matrix).
@@ -592,7 +592,7 @@ $spell
 	det
 $$
 $head Source Code$$
-$codep */
+$srccode%cpp% */
 double time_det_by_minor(size_t size, double time_min)
 {	size_t repeat;
 	double s0, s1, time;
@@ -610,7 +610,7 @@ double time_det_by_minor(size_t size, double time_min)
 	time = (s1 - s0) / (double) repeat;
 	return time;
 }
-/* $$
+/* %$$
 $end
 ------------------------------------------------------------------------------
 $begin main_compare_c$$
@@ -628,7 +628,7 @@ $spell
 	det
 $$
 $head Source Code$$
-$codep */
+$srccode|cpp| */
 int main(void)
 {	bool flag;
 	size_t i;
@@ -653,6 +653,6 @@ int main(void)
 		return 0;
 	return 1;
 }
-/* $$
+/* |$$
 $end
 */

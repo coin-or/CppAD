@@ -21,7 +21,7 @@ $mindex array$$
 
 
 $code
-$verbatim%example/eigen_array.cpp%0%// BEGIN C++%// END C++%1%$$
+$srcfile%example/eigen_array.cpp%0%// BEGIN C++%// END C++%1%$$
 $$
 
 $end

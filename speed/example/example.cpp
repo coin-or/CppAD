@@ -1,6 +1,6 @@
 // $Id$
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-15 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-16 Bradley M. Bell
 
 CppAD is distributed under multiple licenses. This distribution is under
 the terms of the
@@ -25,7 +25,7 @@ To build this program and run its correctness tests see $cref cmake_check$$.
 
 
 $code
-$verbatim%speed/example/example.cpp%0%// BEGIN C++%// END C++%1%$$
+$srcfile%speed/example/example.cpp%0%// BEGIN C++%// END C++%1%$$
 $$
 
 $end

@@ -1,6 +1,6 @@
 // $Id$
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-15 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-16 Bradley M. Bell
 
 CppAD is distributed under multiple licenses. This distribution is under
 the terms of the
@@ -36,15 +36,15 @@ This example only uses bool sparsity patterns.
 $nospell
 
 $head Start Class Definition$$
-$codep */
+$srccode%cpp% */
 # include <cppad/cppad.hpp>
 namespace {           // isolate items below to this file
 using CppAD::vector;  // abbreviate as vector
 //
 class atomic_norm_sq : public CppAD::atomic_base<double> {
-/* $$
+/* %$$
 $head Constructor $$
-$codep */
+$srccode%cpp% */
 	public:
 	// constructor (could use const char* for name)
 	atomic_norm_sq(const std::string& name) :
@@ -52,9 +52,9 @@ $codep */
 	CppAD::atomic_base<double>(name, atomic_base<double>::bool_sparsity_enum)
 	{ }
 	private:
-/* $$
+/* %$$
 $head forward$$
-$codep */
+$srccode%cpp% */
 	// forward mode routine called by CppAD
 	virtual bool forward(
 		size_t                    p ,
@@ -105,9 +105,9 @@ $codep */
 		assert( ! ok );
 		return ok;
 	}
-/* $$
+/* %$$
 $head reverse$$
-$codep */
+$srccode%cpp% */
 	// reverse mode routine called by CppAD
 	virtual bool reverse(
 		size_t                    q ,
@@ -142,9 +142,9 @@ $codep */
 		}
 		return ok;
 	}
-/* $$
+/* %$$
 $head for_sparse_jac$$
-$codep */
+$srccode%cpp% */
 	// forward Jacobian bool sparsity routine called by CppAD
 	virtual bool for_sparse_jac(
 		size_t                                p ,
@@ -167,9 +167,9 @@ $codep */
 		}
 		return true;
 	}
-/* $$
+/* %$$
 $head rev_sparse_jac$$
-$codep */
+$srccode%cpp% */
 	// reverse Jacobian bool sparsity routine called by CppAD
 	virtual bool rev_sparse_jac(
 		size_t                                p  ,
@@ -189,9 +189,9 @@ $codep */
 
 		return true;
 	}
-/* $$
+/* %$$
 $head rev_sparse_hes$$
-$codep */
+$srccode%cpp% */
 	// reverse Hessian bool sparsity routine called by CppAD
 	virtual bool rev_sparse_hes(
 		const vector<bool>&                   vx,
@@ -240,29 +240,29 @@ $codep */
 
 		return true;
 	}
-/* $$
+/* %$$
 $head End Class Definition$$
-$codep */
+$srccode%cpp% */
 }; // End of atomic_norm_sq class
 }  // End empty namespace
 
-/* $$
+/* %$$
 $head Use Atomic Function$$
-$codep */
+$srccode%cpp% */
 bool norm_sq(void)
 {	bool ok = true;
 	using CppAD::AD;
 	using CppAD::NearEqual;
 	double eps = 10. * CppAD::numeric_limits<double>::epsilon();
-/* $$
+/* %$$
 $subhead Constructor$$
-$codep */
+$srccode%cpp% */
 	// --------------------------------------------------------------------
 	// Create the atomic reciprocal object
 	atomic_norm_sq afun("atomic_norm_sq");
-/* $$
+/* %$$
 $subhead Recording$$
-$codep */
+$srccode%cpp% */
 	// Create the function f(x)
 	//
 	// domain space vector
@@ -286,9 +286,9 @@ $codep */
 	// create f: x -> y and stop tape recording
 	CppAD::ADFun<double> f;
 	f.Dependent (ax, ay);
-/* $$
+/* %$$
 $subhead forward$$
-$codep */
+$srccode%cpp% */
 	// check function value
 	double check = x0 * x0 + x1 * x1;
 	ok &= NearEqual( Value(ay[0]) , check,  eps, eps);
@@ -310,9 +310,9 @@ $codep */
 	check  = 2.0 * x0 * x_q[0] + 2.0 * x1 * x_q[1];
 	ok &= NearEqual(y_q[0] , check,  eps, eps);
 
-/* $$
+/* %$$
 $subhead reverse$$
-$codep */
+$srccode%cpp% */
 	// first order reverse mode
 	q     = 1;
 	vector<double> w(m), dw(n * q);
@@ -322,9 +322,9 @@ $codep */
 	ok &= NearEqual(dw[0] , check,  eps, eps);
 	check = 2.0 * x1;
 	ok &= NearEqual(dw[1] , check,  eps, eps);
-/* $$
+/* %$$
 $subhead for_sparse_jac$$
-$codep */
+$srccode%cpp% */
 	// forward mode sparstiy pattern
 	size_t p = n;
 	CppAD::vectorBool r1(n * p), s1(m * p);
@@ -334,9 +334,9 @@ $codep */
 	s1    = f.ForSparseJac(p, r1);
 	ok  &= s1[0] == true;  // f[0] depends on x[0]
 	ok  &= s1[1] == true;  // f[0] depends on x[1]
-/* $$
+/* %$$
 $subhead rev_sparse_jac$$
-$codep */
+$srccode%cpp% */
 	// reverse mode sparstiy pattern
 	q = m;
 	CppAD::vectorBool s2(q * m), r2(q * n);
@@ -345,9 +345,9 @@ $codep */
 	r2    = f.RevSparseJac(q, s2);
 	ok  &= r2[0] == true;  // f[0] depends on x[0]
 	ok  &= r2[1] == true;  // f[0] depends on x[1]
-/* $$
+/* %$$
 $subhead rev_sparse_hes$$
-$codep */
+$srccode%cpp% */
 	// Hessian sparsity (using previous ForSparseJac call)
 	CppAD::vectorBool s3(m), h(p * n);
 	s3[0] = true;        // compute sparsity pattern for f[0]
@@ -360,7 +360,7 @@ $codep */
 	//
 	return ok;
 }
-/* $$
+/* %$$
 $$ $comment end nospell$$
 $end
 */

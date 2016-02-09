@@ -1,6 +1,6 @@
 // $Id$
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-15 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-16 Bradley M. Bell
 
 CppAD is distributed under multiple licenses. This distribution is under
 the terms of the
@@ -113,7 +113,7 @@ where $latex \partial_{x(0)}$$ denotes the partial with respect
 to $latex x^{(0)}$$.
 
 $code
-$verbatim%example/reverse_any.cpp%0%// BEGIN C++%// END C++%1%$$
+$srcfile%example/reverse_any.cpp%0%// BEGIN C++%// END C++%1%$$
 $$
 
 

@@ -2,7 +2,7 @@
 # ifndef CPPAD_CPPAD_EIGEN_HPP
 # define CPPAD_CPPAD_EIGEN_HPP
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-15 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-16 Bradley M. Bell
 
 CppAD is distributed under multiple licenses. This distribution is under
 the terms of the
@@ -68,15 +68,15 @@ The file $cref eigen_plugin.hpp$$
 is used to define $code value_type$$
 in the Eigen matrix class definition so its vectors are
 $cref/simple vectors/SimpleVector/$$.
-$codep */
+$srccode%cpp% */
 # define EIGEN_MATRIXBASE_PLUGIN <cppad/example/eigen_plugin.hpp>
 # include <Eigen/Core>
 # include <cppad/cppad.hpp>
-/* $$
+/* %$$
 $head Eigen NumTraits$$
 Eigen needs the following definitions to work properly
 with $codei%AD<%Base%>%$$ scalars:
-$codep */
+$srccode%cpp% */
 namespace Eigen {
 	template <class Base> struct NumTraits< CppAD::AD<Base> >
 	{	// type that corresponds to the real part of an AD<Base> value
@@ -123,11 +123,11 @@ namespace Eigen {
 
 	};
 }
-/* $$
+/* %$$
 $head CppAD Namespace$$
 Eigen also needs the following definitions to work properly
 with $codei%AD<%Base%>%$$ scalars:
-$codep */
+$srccode%cpp% */
 namespace CppAD {
 		// functions that return references
 		template <class Base> const AD<Base>& conj(const AD<Base>& x)
@@ -162,7 +162,7 @@ namespace Eigen {
 		};
 	}
 }
-/* $$
+/* %$$
 $end
 */
 # endif
