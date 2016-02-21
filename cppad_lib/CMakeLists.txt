@@ -14,11 +14,23 @@
 # string(REGEX REPLACE <regular_expression>
 #        <replace_expression> <output variable>
 #        <input> [<input>...])
+#
+# (year - 2000) dot (remove leading 0 from mmdd) dot (release)
+# Note that the dot (release) is optional
+# Also name that when mmdd is 0000 get (year - 2000) dot dot (release)
 STRING(REGEX REPLACE
-	"([0-9][0-9][0-9][0-9])([0-9]*)[.]([0-9]*)"
-	"\\1.\\2.\\3"
+	"20([0-9][0-9])0*([0-9]*)([.]?[0-9]*)"
+	"\\1.\\2\\3"
 	soversion
 	${cppad_version}
+)
+# In case where mmdd is 0000, dot (release) is present. Convert to
+# (year - 2000) dot 0 dot (release)
+STRING(REGEX REPLACE
+	"([.][.])"
+	".0."
+	soversion
+	${soversion}
 )
 MESSAGE(STATUS "soversion=${soversion}")
 #
