@@ -170,7 +170,9 @@ private:
 	*/
 	void collect_garbage(void)
 	{	CPPAD_ASSERT_UNKNOWN( data_not_used_ > data_.size() / 2 );
+# ifndef NDEBUG
 		check_data_not_used();
+# endif
 		//
 		// number of sets including empty ones
 		size_t n_set  = start_.size();
@@ -275,7 +277,6 @@ private:
 		CPPAD_ASSERT_UNKNOWN( data_[start].value == ref_count );
 		data_[start].value--;
 		//
-		check_data_not_used();
 	}
 	// -----------------------------------------------------------------
 	/*! Using copy constructor is a programing (not user) error
@@ -424,7 +425,6 @@ public:
 		data_[previous].next  = insert;
 		data_[insert].value   = element;
 		//
-		check_data_not_used();
 	}
 	// -----------------------------------------------------------------
 	/*! Begin retrieving elements from one of the sets.
@@ -506,7 +506,6 @@ public:
 				collect_garbage();
 		}
 		//
-		check_data_not_used();
 	}
 	// -----------------------------------------------------------------
 	/*! Assign one set equal to another set.
@@ -532,7 +531,6 @@ public:
 	{	CPPAD_ASSERT_UNKNOWN( this_target  <   start_.size()        );
 		CPPAD_ASSERT_UNKNOWN( other_source <   other.start_.size()  );
 		CPPAD_ASSERT_UNKNOWN( end_        == other.end_   );
-		check_data_not_used();
 
 		// check if we are assigning a set to itself
 		if( (this == &other) & (this_target == other_source) )
@@ -593,7 +591,6 @@ public:
 		if( data_not_used_ > data_.size() / 2 )
 			collect_garbage();
 		//
-		check_data_not_used();
 	}
 	// -----------------------------------------------------------------
 	/*! Assign a set equal to the union of two other sets.
@@ -715,7 +712,6 @@ public:
 		if( data_not_used_ > data_.size() / 2 )
 			collect_garbage();
 		//
-		check_data_not_used();
 	}
 	// -----------------------------------------------------------------
 	/*! Fetch n_set for vector of sets object.
