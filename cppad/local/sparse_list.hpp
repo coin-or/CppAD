@@ -3,7 +3,7 @@
 # define CPPAD_SPARSE_LIST_HPP
 
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-15 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-16 Bradley M. Bell
 
 CppAD is distributed under multiple licenses. This distribution is under
 the terms of the
@@ -18,7 +18,8 @@ Please visit http://www.coin-or.org/CppAD/ for information on other licenses.
 namespace CppAD { // BEGIN_CPPAD_NAMESPACE
 /*!
 \file sparse_list.hpp
-Vector of sets of positive integers stored as singly linked lists.
+Vector of sets of positive integers stored as singly linked lists
+in with the element values strictly increasing.
 */
 
 /*!
@@ -27,216 +28,403 @@ linked list.
 */
 class sparse_list {
 public:
-	/// type used for each set in the vector of sets
-	/// (note that next is index in data_ for next element in this set).
-	struct pair_size_t { size_t value; size_t next; };
+	/// type used for each entry in a singly linked list.
+	struct pair_size_t {
+		/// For the first entry in each list, this is the reference count.
+		/// For the other entries in the list this is an element of the set.
+		size_t value;
+
+		/// This is the index in data_ of the next entry in the list.
+		/// If there are no more entries in the list, this value is zero.
+		/// (The first entry in data_ is not used.)
+		size_t next;
+	};
 private:
 	// -----------------------------------------------------------------
-	/// Number of sets that we are representing
-	/// (set by constructor and resize).
-	size_t n_set_;
-
 	/// Possible elements in each set are 0, 1, ..., end_ - 1;
 	size_t end_;
 
-	/// The data for all the elements in all the sets
-	CppAD::pod_vector<pair_size_t> data_;
-
-	/// next element
+	/// This index is used as an iterator for one list and points to the
+	/// next pair for the list.
 	pair_size_t next_pair_;
 
-	/// number of elements in data_ that are no longer being used.
+	/// number of elements in data_ that have been allocated
+	/// and are no longer being used.
 	size_t data_not_used_;
 
-	/// temporary data vector used for garbage collection
-	CppAD::pod_vector<pair_size_t> data_tmp_;
+	/*!
+	The number of elements in this vector is the number of sets,
+	which is also the number of singly linked lists.
+
+	\li
+	If the i-th set has no elements, start_[i] is zero.
+
+	\li
+	If the i-th set is non-empty, start_[i] is the index in data_
+	for the first entry in the i-th singly linked list for this set.
+	In this case and data_[ start_[i] ].value is the reference count
+	for this list and data_[ start_[i] ].next is not zero becasue there
+	is at least one entry in this list.
+	*/
+	CppAD::pod_vector<size_t> start_;
+
+	/// The data for all the singly linked lists.
+	CppAD::pod_vector<pair_size_t> data_;
+
 	// -----------------------------------------------------------------
-	/*! Private member function that counts number of elements in a set.
+	/*!
+	Private member functiont that counts references to sets.
 
 	\param index
-	is the index of the set we are counting.
+	is the index of the set that we are counting the references to.
 
-	\par Checked Assertions
-	\li index < n_set_
+	\return
+	if the set is empty, the return value is empty.
+	Otherwise it is the number of sets that share the same linked list
+	*/
+	size_t reference_count(size_t index) const
+	{	size_t ret = start_[index];
+		if( ret != 0 )
+		{	CPPAD_ASSERT_UNKNOWN( data_[ret].value != 0 );
+			CPPAD_ASSERT_UNKNOWN( data_[ret].next != 0 );
+			ret = data_[ret].value;
+		}
+		return ret;
+	}
+	// -----------------------------------------------------------------
+	/*!
+	Private member function that counts number of elements in a set.
+
+	\param index
+	is the index in start_ of the set we are counting the elements of.
 	*/
 	size_t number_elements(size_t index) const
-	{	CPPAD_ASSERT_UNKNOWN(index < n_set_ );
+	{	CPPAD_ASSERT_UNKNOWN(index < start_.size() );
 
 		size_t count   = 0;
-		size_t i       = index;
-		size_t value = data_[i].value;
-		while( value < end_ )
-		{	count++;
-			i     = data_[i].next;
-			value = data_[i].value;
+		size_t start   = start_[index];
+
+		// check if the set is empty
+		if( start == 0 )
+			return count;
+		CPPAD_ASSERT_UNKNOWN( reference_count(index) > 0 );
+
+		// advance to the first element in the set
+		size_t next    = data_[start].next;
+		while( next != 0 )
+		{	CPPAD_ASSERT_UNKNOWN( data_[next].value < end_ );
+			count++;
+			next  = data_[next].next;
 		}
+		CPPAD_ASSERT_UNKNOWN( count > 0 );
 		return count;
 	}
 	// -----------------------------------------------------------------
-	/// Private member functions that does garbage collection.
-	void collect_garbage(void)
-	{	CPPAD_ASSERT_UNKNOWN( 2 * data_not_used_ > data_.size() );
+	/*!
+	Private member function that checks the number of data elements not used
+	*/
+	void check_data_not_used(void)
+	{	// number of sets
+		size_t n_set = start_.size();
 		//
-		CPPAD_ASSERT_UNKNOWN(
-			number_elements() + n_set_ + data_not_used_ == data_.size()
-		);
+		// save the reference counters
+		pod_vector<size_t> ref_count;
+		ref_count.extend(n_set);
+		for(size_t i = 0; i < n_set; i++)
+			ref_count[i] = reference_count(i);
 
-		// copy the sets to a temporary data vector
-		data_tmp_.erase();
-		data_tmp_.extend(n_set_);
-		for(size_t i = 0; i < n_set_; i++)
-		{	size_t next     = i;
-			size_t next_tmp = i;
-			//
-			size_t value    = data_[next].value;
-			while( value < end_ )
-			{	data_tmp_[next_tmp].value = value;
-				// data_tmp_[next_tmp].next  = data_tmp_.extend(1);
-				// does not seem to work ?
-				size_t index_tmp         = data_tmp_.extend(1);
-				data_tmp_[next_tmp].next = index_tmp;
-				//
-				next                     = data_[next].next;
-				next_tmp                 = data_tmp_[next_tmp].next;
-				//
-				value                    = data_[next].value;
+		// count the number of entries in the singly linked lists
+		size_t number_list_entries = 0;
+		for(size_t i = 0; i < start_.size(); i++)
+		{	size_t start = start_[i];
+			if( start != 0 )
+			{	CPPAD_ASSERT_UNKNOWN( data_[start].value > 0 );
+				// decrement the reference counter
+				data_[start].value--;
+				// copy the list when we hit zero
+				if( data_[start].value == 0 )
+				{	// This should be the last reference to this linked list.
+					// Restore reference count
+					data_[start].value = ref_count[i];
+					// count number of entries in this list
+					// (is one more than number in set)
+					number_list_entries += number_elements(i) + 1;
+				}
 			}
-			data_tmp_[next_tmp].value = end_;
 		}
 		CPPAD_ASSERT_UNKNOWN(
-			data_tmp_.size() + data_not_used_ == data_.size()
+			number_list_entries + data_not_used_ == data_.size()
 		);
+		return;
+	}
+	// -----------------------------------------------------------------
+	/*!
+	Private member functions that does garbage collection.
+
+	This routine should be called when the number entries in data_
+	that are not being used is greater that data_.size() / 2.
+
+	Note that the size of data_ should equal the number of entries
+	in the singly linked lists plust the number of entries in data_
+	that are not being used. (Note that data_[0] never gets used.)
+	*/
+	void collect_garbage(void)
+	{	CPPAD_ASSERT_UNKNOWN( data_not_used_ > data_.size() / 2 );
+		check_data_not_used();
+		//
+		// number of sets including empty ones
+		size_t n_set  = start_.size();
+		//
+		// copy the sets to a temporary data vector
+		pod_vector<pair_size_t> data_tmp;
+		data_tmp.extend(1); // data_tmp[0] will not be used
+		//
+		pod_vector<size_t> start_tmp;
+		start_tmp.extend(n_set);
+		for(size_t i = 0; i < n_set; i++)
+		{	size_t start    = start_[i];
+			if( start == 0 )
+				start_tmp[i] = 0;
+			else
+			{	// check if this linked list has already been copied
+				if( data_[start].next == 0 )
+				{	// starting address in data_tmp has been stored here
+					start_tmp[i] = data_[start].value;
+				}
+				else
+				{	size_t count              = data_[start].value;
+					size_t next               = data_[start].next;
+					//
+					size_t tmp_start          = data_tmp.extend(2);
+					size_t next_tmp           = tmp_start + 1;
+					start_tmp[i]              = tmp_start;
+					data_tmp[tmp_start].value = count;
+					data_tmp[tmp_start].next  = next_tmp;
+					//
+					CPPAD_ASSERT_UNKNOWN( next != 0 );
+					while( next != 0 )
+					{	CPPAD_ASSERT_UNKNOWN( data_[next].value < end_ );
+						data_tmp[next_tmp].value = data_[next].value;
+						//
+						next                      = data_[next].next;
+						if( next == 0 )
+							data_tmp[next_tmp].next = 0;
+						else
+						{	// data_tmp[next_tmp].next  = data_tmp.extend(1);
+							// does not seem to work ?
+							size_t tmp               = data_tmp.extend(1);
+							data_tmp[next_tmp].next  = tmp;
+							next_tmp                 = tmp;
+						}
+					}
+					// store the starting address here
+					data_[start].value = tmp_start;
+					// flag that indicates this link list already copied
+					data_[start].next = 0;
+				}
+			}
+		}
 
 		// swap the tmp and old data vectors
-		data_.swap(data_tmp_);
+		start_.swap(start_tmp);
+		data_.swap(data_tmp);
 
-		// all of the elements are used in this new version of data_
-		data_not_used_ = 0;
+		// all of the elements, except the first, are used
+		data_not_used_ = 1;
+	}
+	// -----------------------------------------------------------------
+	/*!
+	Make a separate copy of the shared list
+
+	\param index
+	is the index, in the vector of sets, for this list.
+	*/
+	void separate_copy(size_t index)
+	{	size_t ref_count = reference_count(index);
+		if( ref_count <= 1 )
+			return;
+		//
+		size_t start = start_[index];
+		size_t next  = data_[start].next;
+		size_t value = data_[next].value;
+		//
+		size_t copy_cur       = data_.extend(2);
+		size_t copy_next      = copy_cur + 1;
+		start_[index]         = copy_cur;
+		data_[copy_cur].value = 1;
+		data_[copy_cur].next  = copy_next;
+		copy_cur              = copy_next;
+		//
+		CPPAD_ASSERT_UNKNOWN( value < end_ );
+		while( value < end_ )
+		{	data_[copy_cur].value   = value;
+			//
+			next       = data_[next].next;
+			if( next == 0 )
+			{	value = end_;
+				data_[copy_cur].next = 0;
+			}
+			else
+			{	value  = data_[next].value;
+				data_[copy_cur].next = data_.extend(1);
+			}
+		}
+		CPPAD_ASSERT_UNKNOWN( next == 0 );
+		//
+		// decrement reference count
+		CPPAD_ASSERT_UNKNOWN( data_[start].value == ref_count );
+		data_[start].value--;
+		//
+		check_data_not_used();
+	}
+	// -----------------------------------------------------------------
+	/*! Using copy constructor is a programing (not user) error
+
+	\param v
+	vector of sets that we are attempting to make a copy of.
+	*/
+	sparse_list(const sparse_list& v)
+	{	// Error: Probably a sparse_list argument has been passed by value
+		CPPAD_ASSERT_UNKNOWN(false);
 	}
 public:
 	// -----------------------------------------------------------------
 	/*! Default constructor (no sets)
 	*/
 	sparse_list(void) :
-	n_set_(0)                 ,
 	end_(0)                   ,
 	data_not_used_(0)
-	{	next_pair_.value = end_; }
+	{	next_pair_.next = 0; }
 	// -----------------------------------------------------------------
-	/*! Using copy constructor is a programing (not user) error
-
-	\param v
-	vector that we are attempting to make a copy of.
-	*/
-	sparse_list(const sparse_list& v)
-	{	// Error:
-		// Probably a sparse_list argument has been passed by value
-		CPPAD_ASSERT_UNKNOWN(false);
-	}
-	// -----------------------------------------------------------------
-	/*! Destructor
-	*/
+	/// Destructor
 	~sparse_list(void)
 	{ }
 	// -----------------------------------------------------------------
-	/*! Change number of sets, end marker, and initialize all sets as empty
-
-	If \c n_set_in is zero, any memory currently allocated for this object
-	is freed. Otherwise, new memory may be allocated for the sets (if needed).
+	/*!
+	Start a new vector of sets.
 
 	\param n_set_in
 	is the number of sets in this vector of sets.
+	\li
+	If n_set_in is zero, any memory currently allocated for this object
+	is freed. Otherwise, new memory may be allocated for the sets (if needed).
+	\li
+	If n_set_in is non-zero, a vector of n_set_in is created and all
+	the sets are initilaized as empty.
 
 	\param end_in
 	is the maximum element plus one (the minimum element is 0).
 	*/
 	void resize(size_t n_set_in, size_t end_in)
-	{	n_set_                 = n_set_in;
-		end_                   = end_in;
-		next_pair_.value       = end_in;
-		data_not_used_         = 0;
-		if( n_set_in == 0 )
-		{	// free all memory connected with this object
+	{	if( n_set_in == 0 )
+		{	// restore object to start after constructor
+			// (no memory allocated for this object)
 			data_.free();
+			start_.free();
+			data_not_used_  = 0;
+			end_            = 0;
+			//
+			next_pair_.next = 0;
 			return;
 		}
-		// now start a new vector with empty sets
+		end_                   = end_in;
+		next_pair_.next        = 0;
+		//
+		start_.erase();
+		start_.extend(n_set_in);
+		for(size_t i = 0; i < n_set_in; i++)
+			start_[i] = 0;
+		//
 		data_.erase();
-		data_.extend(n_set_);
-		for(size_t i = 0; i < n_set_; i++)
-			data_[i].value = end_;
+		data_.extend(1); // first element is not used
+		data_not_used_  = 1;
 	}
 	// -----------------------------------------------------------------
-	/*! Add one element to a set.
+	/*!
+	check an element is in a set.
+
+	\param index
+	is the index for this set in the vector of sets.
+
+	\param element
+	is the element we are checking to see if it is in the set.
+	*/
+	bool is_element(size_t index, size_t element)
+	{	CPPAD_ASSERT_UNKNOWN( index   < start_.size() );
+		CPPAD_ASSERT_UNKNOWN( element < end_ );
+		//
+		size_t start = start_[index];
+		if( start == 0 )
+			return false;
+		//
+		CPPAD_ASSERT_UNKNOWN( data_[start].value > 0 );
+		CPPAD_ASSERT_UNKNOWN( data_[start].next > 0 );
+		//
+		size_t next  = data_[start].next;
+		size_t value = data_[next].value;
+		while( value < element )
+		{	next  = data_[next].next;
+			if( next == 0 )
+				value = end_;
+			else
+				value = data_[next].value;
+		}
+		return element == value;
+	}
+	// -----------------------------------------------------------------
+	/*!
+	Add one element to a set.
 
 	\param index
 	is the index for this set in the vector of sets.
 
 	\param element
 	is the element we are adding to the set.
-
-	\par Checked Assertions
-	\li index    < n_set_
-	\li element  < end_
 	*/
 	void add_element(size_t index, size_t element)
-	{	CPPAD_ASSERT_UNKNOWN( index   < n_set_ );
+	{	CPPAD_ASSERT_UNKNOWN( index   < start_.size() );
 		CPPAD_ASSERT_UNKNOWN( element < end_ );
 
-		size_t value = data_[index].value;
+		// check if element is already in the set
+		if( is_element(index, element) )
+			return;
 
-		// case of inserting at beginning
-		if( element < value )
-		{	size_t insert       = data_.extend(1);
-			data_[insert]       = data_[index];
-			data_[index].value  = element;
-			data_[index].next   = insert;
+		// check for case where starting set is empty
+		size_t start = start_[index];
+		if( start == 0 )
+		{	start         = data_.extend(2);
+			start_[index] = start;
+			size_t next   = start + 1;
+			data_[start].value = 1; // reference count
+			data_[start].next  = next;
+			data_[next].value  = element;
+			data_[next].next   = 0;
 			return;
 		}
-
-		// search list for place to insert
-		size_t  previous = index;
-		size_t  current  = data_[previous].next;
-		value            = data_[current].value;
+		// make sure that we have a separate copy of this set
+		separate_copy(index);
+		//
+		CPPAD_ASSERT_UNKNOWN( reference_count(index) == 1 );
+		size_t previous = start_[index];
+		size_t next     = data_[start].next;
+		size_t value    = data_[next].value;
+		CPPAD_ASSERT_UNKNOWN( value < end_ );
 		while( value < element )
-		{	previous = current;
-			current = data_[previous].next;
-			value   = data_[current].value;
+		{	previous = next;
+			next     = data_[next].next;
+			if( next == 0 )
+				value = end_;
+			else
+				value = data_[next].value;
 		}
-		if( element != value )
-		{	CPPAD_ASSERT_UNKNOWN( element < value );
-			size_t insert         = data_.extend(1);
-			//
-			data_[insert].next    = data_[previous].next;
-			data_[previous].next  = insert;
-			data_[insert].value   = element;
-		}
-	}
-	// -----------------------------------------------------------------
-	/*! Is an element in a set.
-
-	\param index
-	is the index for this set in the vector of sets.
-
-	\param element
-	is the element we are checking to see if it is in set.
-
-	\par Checked Assertions
-	\li index    < n_set_
-	\li element  < end_
-	*/
-	bool is_element(size_t index, size_t element)
-	{	CPPAD_ASSERT_UNKNOWN( index   < n_set_ );
-		CPPAD_ASSERT_UNKNOWN( element < end_ );
-
-		size_t i     = index;
-		size_t value = data_[i].value;
-		while( value < element )
-		{	i     = data_[i].next;
-			value = data_[i].value;
-		}
-
-		return element == value;
+		CPPAD_ASSERT_UNKNOWN( element < value )
+		//
+		size_t insert         = data_.extend(1);
+		data_[insert].next    = next;
+		data_[previous].next  = insert;
+		data_[insert].value   = element;
+		//
+		check_data_not_used();
 	}
 	// -----------------------------------------------------------------
 	/*! Begin retrieving elements from one of the sets.
@@ -244,34 +432,38 @@ public:
 	\param index
 	is the index for the set that is going to be retrieved.
 	The elements of the set are retrieved in increasing order.
-
-	\par Checked Assertions
-	\li index  < n_set_
-
 	*/
 	void begin(size_t index)
 	{	// initialize element to search for in this set
-		CPPAD_ASSERT_UNKNOWN( index < n_set_ );
-		next_pair_  = data_[index];
-
+		CPPAD_ASSERT_UNKNOWN( index < start_.size() );
+		size_t start = start_[index];
+		if( start == 0 )
+			next_pair_.next = 0;
+		else
+		{	CPPAD_ASSERT_UNKNOWN( reference_count(index) > 0 );
+			next_pair_.next  = data_[start].next;
+		}
 		return;
 	}
 	// -----------------------------------------------------------------
-	/*! Get the next element from the current retrieval set.
+	/*!
+	Get the next element from the current retrieval set.
 
 	\return
 	is the next element in the set with index
-	specified by the previous call to \c begin.
-	If no such element exists, \c this->end() is returned.
+	specified by the previous call to begin.
+	If no such element exists, this->end() is returned.
 
 	\par Assumption
-	There is no call to \c add_element or \c binary_union
-	since the previvious \c begin
+	There is no call to add_element or binary_union
+	since the previvious begin
 	*/
 	size_t next_element(void)
-	{	size_t element = next_pair_.value;
-		if( element != end_ )
-			next_pair_ = data_[next_pair_.next];
+	{	if( next_pair_.next == 0 )
+			return end_;
+
+		next_pair_     = data_[next_pair_.next];
+		size_t element = next_pair_.value;
 
 		return element;
 	}
@@ -282,105 +474,146 @@ public:
 	is the index of the set we are setting to the empty set.
 
 	\par data_not_used_
-	increments this value by number of elements lost.
-
-	\par Checked Assertions
-	\li target < n_set_
+	increments this value by number of data_ elements that are lost
+	(unlinked) by this operation.
 	*/
 	void clear(size_t target)
-	{	CPPAD_ASSERT_UNKNOWN( target < n_set_ );
+	{	CPPAD_ASSERT_UNKNOWN( target < start_.size() );
 
-		// number of elements that will be deleted by this operation
-		size_t number_delete = number_elements(target);
+		// number of references to this set
+		size_t ref_count = reference_count(target);
 
-		// delete the elements from the set
-		data_[target].value = end_;
+		// case by reference count
+		if( ref_count > 1  )
+		{	// just remove this reference
+			size_t start   = start_[target];
+			start_[target] = 0;
+			CPPAD_ASSERT_UNKNOWN( data_[start].value == ref_count );
+			data_[start].value--;
+		}
+		else if( ref_count == 1 )
+		{
+			// number of data_ elements that will be lost by this operation
+			size_t number_delete = number_elements(target) + 1;
 
-		// adjust data_not_used_
-		data_not_used_ += number_delete;
+			// delete the elements from the set
+			start_[target] = 0;
 
-		if( 2 * data_not_used_ > data_.size() )
-			collect_garbage();
+			// adjust data_not_used_
+			data_not_used_ += number_delete;
+
+			if( data_not_used_ > data_.size() / 2 )
+				collect_garbage();
+		}
+		//
+		check_data_not_used();
 	}
 	// -----------------------------------------------------------------
 	/*! Assign one set equal to another set.
 
 	\param this_target
-	is the index (in this \c sparse_list object) of the set being assinged.
+	is the index in this sparse_list object of the set being assinged.
 
 	\param other_source
-	is the index (in the other \c sparse_list object) of the
-	that we are using as the value to assign to the target set.
+	is the index in the other \c sparse_list object of the
+	set that we are using as the value to assign to the target set.
 
 	\param other
-	is the other \c sparse_list object (which may be the same as this
-	\c sparse_list object).
+	is the other sparse_list object (which may be the same as this
+	sparse_list object). This must have the same value for end_.
 
 	\par data_not_used_
 	increments this value by number of elements lost.
-
-	\par Checked Assertions
-	\li this_target  < n_set_
-	\li other_index  < other.n_set_
 	*/
 	void assignment(
 		size_t               this_target  ,
 		size_t               other_source ,
 		const sparse_list&   other        )
-	{	CPPAD_ASSERT_UNKNOWN( this_target  <   n_set_        );
-		CPPAD_ASSERT_UNKNOWN( other_source <   other.n_set_  );
-		CPPAD_ASSERT_UNKNOWN( end_        == other.end()   );
+	{	CPPAD_ASSERT_UNKNOWN( this_target  <   start_.size()        );
+		CPPAD_ASSERT_UNKNOWN( other_source <   other.start_.size()  );
+		CPPAD_ASSERT_UNKNOWN( end_        == other.end_   );
+		check_data_not_used();
 
 		// check if we are assigning a set to itself
 		if( (this == &other) & (this_target == other_source) )
 			return;
 
-		// number of elements that will be deleted by this operation
-		size_t number_delete = number_elements(this_target);
-
-		size_t this_index        = this_target;
-		size_t other_index       = other_source;
-		size_t value             = other.data_[other_index].value;
-		while( value != end_ )
-		{	size_t next             = data_.extend(1);
-			data_[this_index].value = value;
-			data_[this_index].next  = next;
-			this_index              = next;
-			other_index             = other.data_[other_index].next;
-			value                   = other.data_[other_index].value;
+		// number of list elements that will be deleted by this operation
+		size_t number_delete = 0;
+		size_t ref_count     = reference_count(this_target);
+		size_t start         = start_[this_target];
+		if( ref_count == 1 )
+			number_delete = number_elements(this_target) + 1;
+		else if (ref_count > 1 )
+		{	// decrement reference counter
+			CPPAD_ASSERT_UNKNOWN( data_[start].value > 1 )
+			data_[start].value--;
 		}
-		data_[this_index].value = end_;
+
+		// If this and other are the same, use another reference to same list
+		size_t other_start = other.start_[other_source];
+		if( this == &other )
+		{	start_[this_target] = other_start;
+			if( other_start != 0 )
+			{	data_[other_start].value++; // increment reference count
+				CPPAD_ASSERT_UNKNOWN( data_[other_start].value > 1 );
+			}
+		}
+		else if( other_start  == 0 )
+		{	// the target list is empty
+			start_[this_target] = 0;
+		}
+		else
+		{	// make a copy of the other list in this sparse_list
+			size_t this_start = data_.extend(2);
+			size_t this_next  = this_start + 1;
+			start_[this_target]     = this_start;
+			data_[this_start].value = 1; // reference count
+			data_[this_start].next  = this_next;
+			//
+			size_t next  = other.data_[other_start].next;
+			CPPAD_ASSERT_UNKNOWN( next != 0 );
+			while( next != 0 )
+			{	data_[this_next].value = other.data_[next].value;
+				next                   = other.data_[next].next;
+				if( next == 0 )
+					data_[this_next].next = 0;
+				else
+				{	size_t tmp = data_.extend(1);
+					data_[this_next].next = tmp;
+					this_next             = tmp;
+				}
+			}
+		}
 
 		// adjust data_not_used_
 		data_not_used_ += number_delete;
 
-		if( 2 * data_not_used_ > data_.size() )
+		// check if time for garbage collection
+		if( data_not_used_ > data_.size() / 2 )
 			collect_garbage();
+		//
+		check_data_not_used();
 	}
 	// -----------------------------------------------------------------
 	/*! Assign a set equal to the union of two other sets.
 
 	\param this_target
-	is the index (in this \c sparse_list object) of the set being assinged.
+	is the index in this sparse_list object of the set being assinged.
 
 	\param this_left
-	is the index (in this \c sparse_list object) of the
+	is the index in this sparse_list object of the
 	left operand for the union operation.
-	It is OK for \a this_target and \a this_left to be the same value.
+	It is OK for this_target and this_left to be the same value.
 
 	\param other_right
-	is the index (in the other \c sparse_list object) of the
+	is the index in the other sparse_list object of the
 	right operand for the union operation.
-	It is OK for \a this_target and \a other_right to be the same value.
+	It is OK for this_target and other_right to be the same value.
 
 	\param other
-	is the other \c sparse_list object (which may be the same as this
-	\c sparse_list object).
-
-	\par Checked Assertions
-	\li this_target <  n_set_
-	\li this_left   <  n_set_
-	\li other_right <  other.n_set_
+	is the other sparse_list object (which may be the same as this
+	sparse_list object).
 	*/
 	void binary_union(
 		size_t                  this_target  ,
@@ -388,55 +621,118 @@ public:
 		size_t                  other_right  ,
 		const sparse_list&      other        )
 	{
-		CPPAD_ASSERT_UNKNOWN( this_target < n_set_         );
-		CPPAD_ASSERT_UNKNOWN( this_left   < n_set_         );
-		CPPAD_ASSERT_UNKNOWN( other_right < other.n_set_   );
-		CPPAD_ASSERT_UNKNOWN( end_        == other.end()   );
+		CPPAD_ASSERT_UNKNOWN( this_target < start_.size()         );
+		CPPAD_ASSERT_UNKNOWN( this_left   < start_.size()         );
+		CPPAD_ASSERT_UNKNOWN( other_right < other.start_.size()   );
+		CPPAD_ASSERT_UNKNOWN( end_        == other.end_           );
 
-		// determine if we will delete the original version of the target
+		// case where the left set is empty
+		if( start_[this_left] == 0 )
+		{	assignment(this_target, other_right, other);
+			return;
+		}
+		// case where the right set is empty
+		if( other.start_[other_right] == 0 )
+		{	assignment(this_target, this_left, *this);
+			return;
+		}
+		CPPAD_ASSERT_UNKNOWN( reference_count(this_left) > 0 );
+		CPPAD_ASSERT_UNKNOWN( other.reference_count(other_right) > 0 );
+
+		// must get all the start indices before modify start_this
+		// (incase start_this is the same as start_left or start_right)
+		size_t start_target  = start_[this_target];
+		size_t start_left    = start_[this_left];
+		size_t start_right   = other.start_[other_right];
+
+
+		// number of list elements that will be deleted by this operation
 		size_t number_delete = 0;
-		bool delete_target = this_target == this_left;
-		delete_target     |= (this == &other) & (this_target == other_right);
-		if( delete_target )
-		{	// number of elements that will be deleted by this operation
-			number_delete = number_elements(this_target);
+		size_t ref_count     = reference_count(this_target);
+		if( ref_count == 1 )
+			number_delete = number_elements(this_target) + 1;
+		else if (ref_count > 1 )
+		{	// decrement reference counter
+			CPPAD_ASSERT_UNKNOWN( data_[start_target].value > 1 )
+			data_[start_target].value--;
 		}
 
-		// value and next for left and right sets
-		size_t left_value  = data_[this_left].value;
-		size_t left_next   = data_[this_left].next;
-		size_t right_value = other.data_[other_right].value;
-		size_t right_next  = other.data_[other_right].next;
+		// start the new list
+		size_t start        = data_.extend(1);
+		size_t next         = start;
+		start_[this_target] = start;
+		data_[start].value  = 1; // reference count
 
-		// merge left and right sets to form new target set
-		size_t current       = this_target;
-		while( (left_value < end_) | (right_value < end_) )
-		{	if( left_value == right_value )
-			{	right_value = other.data_[right_next].value;
-				right_next  = other.data_[right_next].next;
+		// next for left and right lists
+		size_t next_left   = data_[start_left].next;
+		size_t next_right  = other.data_[start_right].next;
+
+		// value for left and right sets
+		size_t value_left  = data_[next_left].value;
+		size_t value_right = other.data_[next_right].value;
+
+		CPPAD_ASSERT_UNKNOWN( value_left < end_ && value_right < end_ );
+		while( (value_left < end_) | (value_right < end_) )
+		{	if( value_left == value_right )
+			{	// advance right so left and right are no longer equal
+				next_right  = other.data_[next_right].next;
+				if( next_right == 0 )
+					value_right = end_;
+				else
+					value_right = other.data_[next_right].value;
 			}
-			size_t next         = data_.extend(1);
-			data_[current].next = next;
-			if( left_value < right_value )
-			{	data_[current].value = left_value;
-				left_value           = data_[left_next].value;
-				left_next            = data_[left_next].next;
+			if( value_left < value_right )
+			{	size_t tmp        = data_.extend(1);
+				data_[next].next  = tmp;
+				next              = tmp;
+				data_[next].value = value_left;
+				// advance left to its next element
+				next_left  = data_[next_left].next;
+				if( next_left == 0 )
+					value_left       = end_;
+				else
+					value_left = data_[next_left].value;
 			}
 			else
-			{	data_[current].value = right_value;
-				right_value = other.data_[right_next].value;
-				right_next  = other.data_[right_next].next;
+			{	CPPAD_ASSERT_UNKNOWN( value_right < value_left )
+				size_t tmp        = data_.extend(1);
+				data_[next].next  = tmp;
+				next              = tmp;
+				data_[next].value = value_right;
+				// advance right to its next element
+				next_right  = other.data_[next_right].next;
+				if( next_right == 0 )
+					value_right = end_;
+				else
+					value_right = other.data_[next_right].value;
 			}
-			current = next;
 		}
-		data_[current].value = end_;
+		data_[next].next = 0;
 
 		// adjust data_not_used_
 		data_not_used_ += number_delete;
 
-		if( 2 * data_not_used_ > data_.size() )
+		if( data_not_used_ > data_.size() / 2 )
 			collect_garbage();
+		//
+		check_data_not_used();
 	}
+	// -----------------------------------------------------------------
+	/*! Fetch n_set for vector of sets object.
+
+	\return
+	Number of from sets for this vector of sets object
+	*/
+	size_t n_set(void) const
+	{	return start_.size(); }
+	// -----------------------------------------------------------------
+	/*! Fetch end for this vector of sets object.
+
+	\return
+	is the maximum element value plus one (the minimum element value is 0).
+	*/
+	size_t end(void) const
+	{	return end_; }
 	// -----------------------------------------------------------------
 	/*! Sum over all sets of the number of elements
 
@@ -446,26 +742,10 @@ public:
 	size_t number_elements(void) const
 	{	size_t i, count;
 		count = 0;
-		for(i = 0; i < n_set_; i++)
+		for(i = 0; i < start_.size(); i++)
 			count += number_elements(i);
 		return count;
 	}
-	// -----------------------------------------------------------------
-	/*! Fetch n_set for vector of sets object.
-
-	\return
-	Number of from sets for this vector of sets object
-	*/
-	size_t n_set(void) const
-	{	return n_set_; }
-	// -----------------------------------------------------------------
-	/*! Fetch end for this vector of sets object.
-
-	\return
-	is the maximum element value plus one (the minimum element value is 0).
-	*/
-	size_t end(void) const
-	{	return end_; }
 };
 // Tell pod_vector class that each pair_size_t is plain old data and hence
 // the corresponding constructor need not be called.

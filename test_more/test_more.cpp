@@ -1,6 +1,6 @@
 // $Id$
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-15 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-16 Bradley M. Bell
 
 CppAD is distributed under multiple licenses. This distribution is under
 the terms of the
@@ -115,6 +115,9 @@ extern bool VecAD(void);
 extern bool VecADPar(void);
 extern bool VecUnary(void);
 extern bool zdouble(void);
+
+// tests in local subdirectory
+extern bool vector_set(void);
 
 namespace {
 	// function that runs one test
@@ -256,6 +259,9 @@ int main(void)
 # if ! CPPAD_EIGENVECTOR
 	ok &= Run( test_vector, "test_vector" );
 # endif
+
+	// local sub-directory
+	ok &= Run( test_vector,      "test_vector"   );
 
 	// check for errors
 	using std::cout;

@@ -154,6 +154,8 @@ ADD_EXECUTABLE(test_more EXCLUDE_FROM_ALL test_more.cpp
 	vec_ad_par.cpp
 	vec_unary.cpp
 	zdouble.cpp
+
+	local/vector_set.cpp
 )
 
 # Compiler flags for cppad source
