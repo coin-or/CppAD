@@ -121,7 +121,8 @@ private:
 	}
 	// -----------------------------------------------------------------
 	/*!
-	Private member function that checks the number of data elements not used
+	Member function that checks the number of data elements not used
+	(effectively const, but modifies and restores values)
 	*/
 	void check_data_not_used(void)
 	{	// number of sets
@@ -156,6 +157,105 @@ private:
 			number_list_entries + data_not_used_ == data_.size()
 		);
 		return;
+	}
+	// -----------------------------------------------------------------
+	/*!
+	Check if target set is equal to the union of left and right sets.
+
+	\param this_target
+	is the index in this sparse_list object of the target set.
+	It is assumed that this set is non-empty.
+
+	\param this_left
+	is the index in this sparse_list object of the
+	left operand for the union operation.
+	It is assumed that this set is non-empty.
+
+	\param other_right
+	is the index in the other sparse_list object of the
+	right operand for the union operation.
+	It is assumed that this set is non-empty.
+
+	\param other
+	is the other sparse_list object (which may be the same as this
+	sparse_list object).
+
+	\return
+	is true if and only if the target set is equal to the union of the
+	left and right sets.
+	*/
+	bool target_is_union(
+		size_t                  this_target  ,
+		size_t                  this_left    ,
+		size_t                  other_right  ,
+		const sparse_list&      other        ) const
+	{
+		CPPAD_ASSERT_UNKNOWN( this_target < start_.size()         );
+		CPPAD_ASSERT_UNKNOWN( this_left   < start_.size()         );
+		CPPAD_ASSERT_UNKNOWN( other_right < other.start_.size()   );
+		CPPAD_ASSERT_UNKNOWN( end_   == other.end_                );
+		//
+		CPPAD_ASSERT_UNKNOWN( reference_count(this_target) > 0 );
+		CPPAD_ASSERT_UNKNOWN( reference_count(this_left) > 0 );
+		CPPAD_ASSERT_UNKNOWN( other.reference_count(other_right) > 0 );
+
+		// target
+		size_t start_target  = start_[this_target];
+		size_t next_target   = data_[start_target].next;
+		size_t value_target  = data_[next_target].value;
+
+		// left
+		size_t start_left    = start_[this_left];
+		size_t next_left     = data_[start_left].next;
+		size_t value_left    = data_[next_left].value;
+
+		// right
+		size_t start_right   = other.start_[other_right];
+		size_t next_right    = other.data_[start_right].next;
+		size_t value_right   = other.data_[next_right].value;
+
+		// union
+		size_t value_union   = std::min(value_left, value_right);
+		bool check_next      = value_target == value_union;
+		//
+		while( check_next )
+		{	//
+			// next element of target
+			next_target = data_[next_target].next;
+			if( next_target == 0 )
+				value_target = end_;
+			else
+				value_target = data_[next_target].value;
+			//
+			// next element of left
+			if( value_left == value_union )
+			{	next_left  = data_[next_left].next;
+				if( next_left == 0 )
+					value_left = end_;
+				else
+					value_left = data_[next_left].value;
+			}
+			//
+			// next element of right
+			if( value_right == value_union )
+			{	next_right  = other.data_[next_right].next;
+				if( next_right == 0 )
+					value_right = end_;
+				else
+					value_right = other.data_[next_right].value;
+			}
+			//
+			// next element of union
+			CPPAD_ASSERT_UNKNOWN(
+				value_union < std::min(value_left, value_right)
+			);
+			value_union = std::min(value_left, value_right);
+			//
+			// check this element
+			check_next  = value_target == value_union;
+			check_next &= value_target < end_;
+		}
+		return value_target == value_union;
 	}
 	// -----------------------------------------------------------------
 	/*!
@@ -350,7 +450,7 @@ public:
 	\param element
 	is the element we are checking to see if it is in the set.
 	*/
-	bool is_element(size_t index, size_t element)
+	bool is_element(size_t index, size_t element) const
 	{	CPPAD_ASSERT_UNKNOWN( index   < start_.size() );
 		CPPAD_ASSERT_UNKNOWN( element < end_ );
 		//
@@ -635,6 +735,13 @@ public:
 		}
 		CPPAD_ASSERT_UNKNOWN( reference_count(this_left) > 0 );
 		CPPAD_ASSERT_UNKNOWN( other.reference_count(other_right) > 0 );
+
+		// special case where there is nothing to do
+		// (can only check this case when all sets are non-empty)
+		if( start_[this_target] != 0 )
+		{	if( target_is_union(this_target, this_left, other_right, other) )
+				return;
+		}
 
 		// must get all the start indices before modify start_this
 		// (incase start_this is the same as start_left or start_right)
