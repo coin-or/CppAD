@@ -160,102 +160,80 @@ private:
 	}
 	// -----------------------------------------------------------------
 	/*!
-	Check if target set is equal to the union of left and right sets.
+	Check if one of two sets is a subset of the other set
 
-	\param this_target
-	is the index in this sparse_list object of the target set.
-	It is assumed that this set is non-empty.
+	\param one_this
+	is the index in this sparse_list object of the first set.
 
-	\param this_left
-	is the index in this sparse_list object of the
-	left operand for the union operation.
-	It is assumed that this set is non-empty.
-
-	\param other_right
-	is the index in the other sparse_list object of the
-	right operand for the union operation.
-	It is assumed that this set is non-empty.
+	\param two_other
+	is the index in other sparse_list object of the second set.
 
 	\param other
 	is the other sparse_list object (which may be the same as this
 	sparse_list object).
 
 	\return
-	is true if and only if the target set is equal to the union of the
-	left and right sets.
+	If zero, niether set is a subset of the other.
+	If one, then set one is a subset of set two.
+	If two, then set two is a subset of set one.
+	If the two sets are equal, the value two is returned; i.e., the set
+	in the other object is identified as a subset of the set in this object.
 	*/
-	bool target_is_union(
-		size_t                  this_target  ,
-		size_t                  this_left    ,
-		size_t                  other_right  ,
-		const sparse_list&      other        ) const
+	size_t is_subset(
+		size_t                  one_this    ,
+		size_t                  two_other   ,
+		const sparse_list&      other       ) const
 	{
-		CPPAD_ASSERT_UNKNOWN( this_target < start_.size()         );
-		CPPAD_ASSERT_UNKNOWN( this_left   < start_.size()         );
-		CPPAD_ASSERT_UNKNOWN( other_right < other.start_.size()   );
-		CPPAD_ASSERT_UNKNOWN( end_   == other.end_                );
+		CPPAD_ASSERT_UNKNOWN( one_this  < start_.size()         );
+		CPPAD_ASSERT_UNKNOWN( two_other < other.start_.size()   );
+		CPPAD_ASSERT_UNKNOWN( end_  == other.end_               );
 		//
-		CPPAD_ASSERT_UNKNOWN( reference_count(this_target) > 0 );
-		CPPAD_ASSERT_UNKNOWN( reference_count(this_left) > 0 );
-		CPPAD_ASSERT_UNKNOWN( other.reference_count(other_right) > 0 );
-
-		// target
-		size_t start_target  = start_[this_target];
-		size_t next_target   = data_[start_target].next;
-		size_t value_target  = data_[next_target].value;
-
-		// left
-		size_t start_left    = start_[this_left];
-		size_t next_left     = data_[start_left].next;
-		size_t value_left    = data_[next_left].value;
-
-		// right
-		size_t start_right   = other.start_[other_right];
-		size_t next_right    = other.data_[start_right].next;
-		size_t value_right   = other.data_[next_right].value;
-
-		// union
-		size_t value_union   = std::min(value_left, value_right);
-		bool check_next      = value_target == value_union;
+		// start
+		size_t start_one    = start_[one_this];
+		size_t start_two    = other.start_[two_other];
+		if( start_two == 0 )
+			return 2;
+		if( start_one == 0 )
+			return 1;
 		//
-		while( check_next )
-		{	//
-			// next element of target
-			next_target = data_[next_target].next;
-			if( next_target == 0 )
-				value_target = end_;
+		// next
+		size_t next_one     = data_[start_one].next;
+		size_t next_two     = other.data_[start_two].next;
+		//
+		// value
+		size_t value_one    = data_[next_one].value;
+		size_t value_two    = other.data_[next_two].value;
+		//
+		bool one_subset     = true;
+		bool two_subset     = true;
+
+		size_t value_union = std::min(value_one, value_two);
+		while( (one_subset | two_subset) & (value_union < end_) )
+		{	if( value_one > value_union )
+				two_subset = false;
 			else
-				value_target = data_[next_target].value;
-			//
-			// next element of left
-			if( value_left == value_union )
-			{	next_left  = data_[next_left].next;
-				if( next_left == 0 )
-					value_left = end_;
+			{	next_one = data_[next_one].next;
+				if( next_one == 0 )
+					value_one = end_;
 				else
-					value_left = data_[next_left].value;
+					value_one = data_[next_one].value;
 			}
-			//
-			// next element of right
-			if( value_right == value_union )
-			{	next_right  = other.data_[next_right].next;
-				if( next_right == 0 )
-					value_right = end_;
+			if( value_two > value_union )
+				one_subset = false;
+			else
+			{	next_two = other.data_[next_two].next;
+				if( next_two == 0 )
+					value_two = end_;
 				else
-					value_right = other.data_[next_right].value;
+					value_two = other.data_[next_two].value;
 			}
-			//
-			// next element of union
-			CPPAD_ASSERT_UNKNOWN(
-				value_union < std::min(value_left, value_right)
-			);
-			value_union = std::min(value_left, value_right);
-			//
-			// check this element
-			check_next  = value_target == value_union;
-			check_next &= value_target < end_;
+			value_union = std::min(value_one, value_two);
 		}
-		return value_target == value_union;
+		if( two_subset )
+			return 2;
+		if( one_subset )
+			return 1;
+		return 0;
 	}
 	// -----------------------------------------------------------------
 	/*!
@@ -723,25 +701,22 @@ public:
 		CPPAD_ASSERT_UNKNOWN( other_right < other.start_.size()   );
 		CPPAD_ASSERT_UNKNOWN( end_        == other.end_           );
 
-		// case where the left set is empty
-		if( start_[this_left] == 0 )
-		{	assignment(this_target, other_right, other);
-			return;
-		}
-		// case where the right set is empty
-		if( other.start_[other_right] == 0 )
+		// check if one of the two operands is a subset of the the other
+		size_t subset = is_subset(this_left, other_right, other);
+
+		// case where right is a subset of left or right and left are equal
+		if( subset == 2 )
 		{	assignment(this_target, this_left, *this);
 			return;
 		}
+		// case where the left is a subset of right and they are not equal
+		if( subset == 1 )
+		{	assignment(this_target, other_right, other);
+			return;
+		}
+		// if niether case holds, then both left and right are non-empty
 		CPPAD_ASSERT_UNKNOWN( reference_count(this_left) > 0 );
 		CPPAD_ASSERT_UNKNOWN( other.reference_count(other_right) > 0 );
-
-		// special case where there is nothing to do
-		// (can only check this case when all sets are non-empty)
-		if( start_[this_target] != 0 )
-		{	if( target_is_union(this_target, this_left, other_right, other) )
-				return;
-		}
 
 		// must get all the start indices before modify start_this
 		// (incase start_this is the same as start_left or start_right)

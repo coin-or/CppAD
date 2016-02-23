@@ -21,6 +21,7 @@ $spell
 	Eigen
 	std
 	namespace
+	cppad
 $$
 
 $section Changes and Additions to CppAD During 2016$$
@@ -30,6 +31,21 @@ The sections listed below contain a list of the changes to CppAD
 in reverse order by date.
 The purpose of these sections is to
 assist you in learning about changes between various versions of CppAD.
+
+$head 02-23$$
+The new version of the
+$cref/cppad_sparse_list/cmake/cppad_sparse_list/$$ class uses
+reference counters reduce the number of copies of sets that are equal.
+This improved the speed of sparsity pattern calculations that use
+$cref/vector of sets/glossary/Sparsity Pattern/Vector of Sets/$$
+representations.
+For example, the results for the
+$cref cppad_sparse_hessian.cpp$$ test compare as follows:
+$codep
+	cppad_sparse_hessian_rate_cur = [ 1346, 240.63, 88.40, 28.95, 0.81 ]
+	cppad_sparse_hessian_rate_new = [ 1320, 239.97, 90.73, 41.95, 3.78 ]
+$$
+Note that the improvement is better for larger problems.
 
 $head 01-21$$
 Fix a $code valgrind$$ warning about use of uninitialized memory
