@@ -33,19 +33,24 @@ The purpose of these sections is to
 assist you in learning about changes between various versions of CppAD.
 
 $head 02-23$$
-The new version of the
+A new version of the
 $cref/cppad_sparse_list/cmake/cppad_sparse_list/$$ class uses
 reference counters reduce the number of copies of sets that are equal.
-This improved the speed of sparsity pattern calculations that use
-$cref/vector of sets/glossary/Sparsity Pattern/Vector of Sets/$$
-representations.
+This improved the speed of sparsity pattern computations that use
+the $cref/vector of sets/glossary/Sparsity Pattern/Vector of Sets/$$
+representation.
 For example, the results for the
 $cref cppad_sparse_hessian.cpp$$ test compare as follows:
 $codep
-	cppad_sparse_hessian_rate_cur = [ 1346, 240.63, 88.40, 28.95, 0.81 ]
-	cppad_sparse_hessian_rate_new = [ 1320, 239.97, 90.73, 41.95, 3.78 ]
+	sparse_hessian_size     = [  100,    400,   900,  1600, 2500 ]
+	sparse_hessian_rate_old = [ 1480, 265.21, 93.33, 41.93, 0.86 ]
+	sparse_hessian_rate_new = [ 1328, 241.61, 92.99, 40.51, 3.80 ]
 $$
-Note that the improvement is better for larger problems.
+Note that the improvement is better for larger problems. In fact,
+for large problems, the new vector of sets representation preforms better than
+the $cref/vector of boolean/glossary/Sparsity Pattern/Vector of Boolean/$$
+representation.
+
 
 $head 01-21$$
 Fix a $code valgrind$$ warning about use of uninitialized memory

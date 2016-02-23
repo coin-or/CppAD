@@ -1,6 +1,6 @@
 // $Id$
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-15 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-16 Bradley M. Bell
 
 CppAD is distributed under multiple licenses. This distribution is under
 the terms of the
@@ -548,8 +548,8 @@ int main(int argc, char *argv[])
 		size_mat_mul[i]     = 10 * i + 1;
 		size_ode[i]         = 10 * i + 1;
 		size_poly[i]        = 10 * i + 1;
-		size_sparse_hessian[i]  = 100 * (i + 1) * (i + 1);
-		size_sparse_jacobian[i] = 100 * (i + 1) * (i + 1);
+		size_sparse_hessian[i]  = 150 * (i + 1) * (i + 1);
+		size_sparse_jacobian[i] = 150 * (i + 1) * (i + 1);
 	}
 
 	switch(match)
