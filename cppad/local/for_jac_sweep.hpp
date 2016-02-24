@@ -2,7 +2,7 @@
 # ifndef CPPAD_FOR_JAC_SWEEP_HPP
 # define CPPAD_FOR_JAC_SWEEP_HPP
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-15 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-16 Bradley M. Bell
 
 CppAD is distributed under multiple licenses. This distribution is under
 the terms of the
@@ -87,7 +87,7 @@ where \f$ n \f$ is the number of independent variables
 and \f$ m \f$ is the number of dependent variables.
 The object \a play is effectly constant.
 It is not declared const because while playing back the tape
-the object \a play holds information about the currentl location
+the object \a play holds information about the current location
 with in the tape and this changes during playback.
 
 \param var_sparsity
