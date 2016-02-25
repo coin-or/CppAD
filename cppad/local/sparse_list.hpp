@@ -834,7 +834,7 @@ template <> inline bool is_pod<sparse_list::pair_size_t>(void)
 Copy a user vector of sets sparsity pattern to an internal sparse_list object.
 
 \tparam VectorSet
-is a simple vector with elements of type \c std::list<set>.
+is a simple vector with elements of type std::set<size_t>.
 
 \param internal
 The input value of sparisty does not matter.
