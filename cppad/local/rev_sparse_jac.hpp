@@ -177,304 +177,11 @@ namespace CppAD { // BEGIN_CPPAD_NAMESPACE
 \file rev_sparse_jac.hpp
 Reverse mode Jacobian sparsity patterns.
 */
-
-// =========================================================================
-// RevSparseJacBool
-/*!
-Calculate Jacobian vector of bools sparsity patterns using reverse mode.
-
-The C++ source code corresponding to this operation is
-\verbatim
-	s = f.RevSparseJac(q, r)
-\endverbatim
-
-\tparam Base
-is the base type for this recording.
-
-\tparam VectorSet
-is a simple vector class with elements of type \c bool.
-
-\param transpose
-are the sparsity patterns transposed.
-
-\param dependency
-Are the derivatives with respect to left and right of the expression below
-considered to be non-zero:
-\code
-	CondExpRel(left, right, if_true, if_false)
-\endcode
-This is used by the optimizer to obtain the correct dependency relations.
-
-\param q
-is the number of rows in the matrix \f$ R \f$.
-
-\param r
-is a sparsity pattern for the matrix \f$ R \f$.
-
-\param s
-the input value of \a s must be a vector with size <tt>p*n</tt>
-where \c n is the number of independent variables
-corresponding to the operation sequence stored in \a play.
-The input value of the components of \c s does not matter.
-On output, \a s is the sparsity pattern for the matrix
-\f[
-	S(x) = R * F^{(1)} (x)
-\f]
-where \f$ F \f$ is the function corresponding to the operation sequence
-and \a x is any argument value.
-
-\param total_num_var
-is the total number of variable in this recording.
-
-\param dep_taddr
-maps dependendent variable index
-to the corresponding variable in the tape.
-
-\param ind_taddr
-maps independent variable index
-to the corresponding variable in the tape.
-
-\param play
-is the recording that defines the function we are computing the sparsity
-pattern for.
-*/
-
-template <class Base, class VectorSet>
-void RevSparseJacBool(
-	bool                   transpose        ,
-	bool                   dependency       ,
-	size_t                 q                ,
-	const VectorSet&       r                ,
-	VectorSet&             s                ,
-	size_t                 total_num_var    ,
-	CppAD::vector<size_t>& dep_taddr        ,
-	CppAD::vector<size_t>& ind_taddr        ,
-	CppAD::player<Base>&   play             )
-{
-	// temporary indices
-	size_t i, j;
-
-	// check VectorSet is Simple Vector class with bool elements
-	CheckSimpleVector<bool, VectorSet>();
-
-	// range and domain dimensions for F
-	size_t m = dep_taddr.size();
-	size_t n = ind_taddr.size();
-
-	CPPAD_ASSERT_KNOWN(
-		q > 0,
-		"RevSparseJac: q is not greater than zero"
-	);
-	CPPAD_ASSERT_KNOWN(
-		size_t(r.size()) == q * m,
-		"RevSparseJac: size of r is not equal to\n"
-		"q times range dimension for ADFun object."
-	);
-
-	// vector of sets that will hold the results
-	sparse_pack    var_sparsity;
-	var_sparsity.resize(total_num_var, q);
-
-	// The sparsity pattern corresponding to the dependent variables
-	for(i = 0; i < m; i++)
-	{	CPPAD_ASSERT_UNKNOWN( dep_taddr[i] < total_num_var );
-		if( transpose )
-		{	for(j = 0; j < q; j++) if( r[ i * q + j ] )
-				var_sparsity.add_element( dep_taddr[i], j );
-		}
-		else
-		{	for(j = 0; j < q; j++) if( r[ j * m + i ] )
-				var_sparsity.add_element( dep_taddr[i], j );
-		}
-	}
-
-	// evaluate the sparsity patterns
-	RevJacSweep(
-		dependency,
-		n,
-		total_num_var,
-		&play,
-		var_sparsity
-	);
-
-	// return values corresponding to dependent variables
-	CPPAD_ASSERT_UNKNOWN( size_t(s.size()) == q * n );
-	for(j = 0; j < n; j++)
-	{	CPPAD_ASSERT_UNKNOWN( ind_taddr[j] == (j+1) );
-
-		// ind_taddr[j] is operator taddr for j-th independent variable
-		CPPAD_ASSERT_UNKNOWN( play.GetOp( ind_taddr[j] ) == InvOp );
-
-		// extract the result from var_sparsity
-		if( transpose )
-		{	for(i = 0; i < q; i++)
-				s[ j * q + i ] = false;
-		}
-		else
-		{	for(i = 0; i < q; i++)
-				s[ i * n + j ] = false;
-		}
-		CPPAD_ASSERT_UNKNOWN( var_sparsity.end() == q );
-		var_sparsity.begin(j+1);
-		i = var_sparsity.next_element();
-		while( i < q )
-		{	if( transpose )
-				s[ j * q + i ] = true;
-			else	s[ i * n + j ] = true;
-			i  = var_sparsity.next_element();
-		}
-	}
-}
-// =========================================================================
-// RevSparseJacSet
-/*!
-Calculate Jacobian vector of sets sparsity patterns using reverse mode.
-
-The C++ source code corresponding to this operation is
-\verbatim
-	s = f.RevSparseJac(q, r)
-\endverbatim
-
-\tparam Base
-see \c RevSparseJacBool.
-
-\tparam VectorSet
-is a simple vector class with elements of type \c std::set<size_t>.
-
-\param transpose
-see \c RevSparseJacBool.
-
-\param dependency
-see \c RevSparseJacBool.
-
-\param q
-see \c RevSparseJacBool.
-
-\param r
-see \c RevSparseJacBool.
-
-\param s
-see \c RevSparseJacBool.
-
-\param total_num_var
-see \c RevSparseJacBool.
-
-\param dep_taddr
-see \c RevSparseJacBool.
-
-\param ind_taddr
-see \c RevSparseJacBool.
-
-\param play
-see \c RevSparseJacBool.
-*/
-template <class Base, class VectorSet>
-void RevSparseJacSet(
-	bool                   transpose        ,
-	bool                   dependency       ,
-	size_t                 q                ,
-	const VectorSet&       r                ,
-	VectorSet&             s                ,
-	size_t                 total_num_var    ,
-	CppAD::vector<size_t>& dep_taddr        ,
-	CppAD::vector<size_t>& ind_taddr        ,
-	CppAD::player<Base>&   play             )
-{
-	// temporary indices
-	size_t i, j;
-	std::set<size_t>::const_iterator itr;
-
-	// check VectorSet is Simple Vector class with sets for elements
-	CheckSimpleVector<std::set<size_t>, VectorSet>(
-		one_element_std_set<size_t>(), two_element_std_set<size_t>()
-	);
-
-	// domain dimensions for F
-	size_t n = ind_taddr.size();
-	size_t m = dep_taddr.size();
-
-	CPPAD_ASSERT_KNOWN(
-		q > 0,
-		"RevSparseJac: q is not greater than zero"
-	);
-	CPPAD_ASSERT_KNOWN(
-		size_t(r.size()) == q || transpose,
-		"RevSparseJac: size of r is not equal to q and transpose is false."
-	);
-	CPPAD_ASSERT_KNOWN(
-		size_t(r.size()) == m || ! transpose,
-		"RevSparseJac: size of r is not equal to m and transpose is true."
-	);
-
-	// vector of lists that will hold the results
-	sparse_list                  var_sparsity;
-	var_sparsity.resize(total_num_var, q);
-
-	// The sparsity pattern corresponding to the dependent variables
-	if( transpose )
-	{	for(i = 0; i < m; i++)
-		{	itr = r[i].begin();
-			while(itr != r[i].end())
-			{	j = *itr++;
-				CPPAD_ASSERT_KNOWN(
-				j < q,
-				"RevSparseJac: transpose is true and element of the set\n"
-				"r[i] has value greater than or equal q."
-				);
-				CPPAD_ASSERT_UNKNOWN( dep_taddr[i] < total_num_var );
-				var_sparsity.add_element( dep_taddr[i], j );
-			}
-		}
-	}
-	else
-	{	for(i = 0; i < q; i++)
-		{	itr = r[i].begin();
-			while(itr != r[i].end())
-			{	j = *itr++;
-				CPPAD_ASSERT_KNOWN(
-				j < m,
-				"RevSparseJac: transpose is false and element of the set\n"
-				"r[i] has value greater than or equal range dimension."
-				);
-				CPPAD_ASSERT_UNKNOWN( dep_taddr[j] < total_num_var );
-				var_sparsity.add_element( dep_taddr[j], i );
-			}
-		}
-	}
-	// evaluate the sparsity patterns
-	RevJacSweep(
-		dependency,
-		n,
-		total_num_var,
-		&play,
-		var_sparsity
-	);
-
-	// return values corresponding to dependent variables
-	CPPAD_ASSERT_UNKNOWN( size_t(s.size()) == q || transpose );
-	CPPAD_ASSERT_UNKNOWN( size_t(s.size()) == n || ! transpose );
-	for(j = 0; j < n; j++)
-	{	CPPAD_ASSERT_UNKNOWN( ind_taddr[j] == (j+1) );
-
-		// ind_taddr[j] is operator taddr for j-th independent variable
-		CPPAD_ASSERT_UNKNOWN( play.GetOp( ind_taddr[j] ) == InvOp );
-
-		CPPAD_ASSERT_UNKNOWN( var_sparsity.end() == q );
-		var_sparsity.begin(j+1);
-		i = var_sparsity.next_element();
-		while( i < q )
-		{	if( transpose )
-				s[j].insert(i);
-			else	s[i].insert(j);
-			i = var_sparsity.next_element();
-		}
-	}
-}
 // =========================================================================
 // RevSparseJacCase
 
 /*!
-Private helper function for \c RevSparseJac(q, r, transpose).
+Private helper function for RevSparseJac(q, r, transpose) boolean sparsity.
 
 All of the description in the public member function
 \c RevSparseJac(q, r, transpose) apply.
@@ -511,26 +218,84 @@ void ADFun<Base>::RevSparseJacCase(
 	const VectorSet&    r                 ,
 	VectorSet&          s                 )
 {	size_t n = Domain();
+	size_t m = Range();
 
 	// dimension of the result vector
 	s.resize( q * n );
 
-	// store results in s
-	RevSparseJacBool(
-		transpose      ,
-		dependency     ,
-		q              ,
-		r              ,
-		s              ,
-		num_var_tape_  ,
-		dep_taddr_     ,
-		ind_taddr_     ,
-		play_
+	// temporary indices
+	size_t i, j;
+
+	// check VectorSet is Simple Vector class with bool elements
+	CheckSimpleVector<bool, VectorSet>();
+	//
+	CPPAD_ASSERT_KNOWN(
+		q > 0,
+		"RevSparseJac: q is not greater than zero"
 	);
+	CPPAD_ASSERT_KNOWN(
+		size_t(r.size()) == q * m,
+		"RevSparseJac: size of r is not equal to\n"
+		"q times range dimension for ADFun object."
+	);
+	//
+	// vector of sets that will hold the results
+	sparse_pack    var_sparsity;
+	var_sparsity.resize(num_var_tape_, q);
+
+	// The sparsity pattern corresponding to the dependent variables
+	for(i = 0; i < m; i++)
+	{	CPPAD_ASSERT_UNKNOWN( dep_taddr_[i] < num_var_tape_ );
+		if( transpose )
+		{	for(j = 0; j < q; j++) if( r[ i * q + j ] )
+				var_sparsity.add_element( dep_taddr_[i], j );
+		}
+		else
+		{	for(j = 0; j < q; j++) if( r[ j * m + i ] )
+				var_sparsity.add_element( dep_taddr_[i], j );
+		}
+	}
+
+	// evaluate the sparsity patterns
+	RevJacSweep(
+		dependency,
+		n,
+		num_var_tape_,
+		&play_,
+		var_sparsity
+	);
+
+	// return values corresponding to dependent variables
+	CPPAD_ASSERT_UNKNOWN( size_t(s.size()) == q * n );
+	for(j = 0; j < n; j++)
+	{	CPPAD_ASSERT_UNKNOWN( ind_taddr_[j] == (j+1) );
+
+		// ind_taddr_[j] is operator taddr for j-th independent variable
+		CPPAD_ASSERT_UNKNOWN( play_.GetOp( ind_taddr_[j] ) == InvOp );
+
+		// extract the result from var_sparsity
+		if( transpose )
+		{	for(i = 0; i < q; i++)
+				s[ j * q + i ] = false;
+		}
+		else
+		{	for(i = 0; i < q; i++)
+				s[ i * n + j ] = false;
+		}
+		CPPAD_ASSERT_UNKNOWN( var_sparsity.end() == q );
+		var_sparsity.begin(j+1);
+		i = var_sparsity.next_element();
+		while( i < q )
+		{	if( transpose )
+				s[ j * q + i ] = true;
+			else	s[ i * n + j ] = true;
+			i  = var_sparsity.next_element();
+		}
+	}
 }
 
 /*!
-Private helper function for \c RevSparseJac(q, r, transpose).
+Private helper function for RevSparseJac(q, r, transpose) set sparsity
 
 All of the description in the public member function
 \c RevSparseJac(q, r, transpose) apply.
@@ -570,19 +335,97 @@ void ADFun<Base>::RevSparseJacCase(
 		s.resize( Domain() );
 	else	s.resize( q );
 
-	// store results in r
-	RevSparseJacSet(
-		transpose      ,
-		dependency     ,
-		q              ,
-		r              ,
-		s              ,
-		num_var_tape_  ,
-		dep_taddr_     ,
-		ind_taddr_     ,
-		play_
+	// temporary indices
+	size_t i, j;
+	std::set<size_t>::const_iterator itr;
+
+	// check VectorSet is Simple Vector class with sets for elements
+	CheckSimpleVector<std::set<size_t>, VectorSet>(
+		one_element_std_set<size_t>(), two_element_std_set<size_t>()
 	);
+
+	// domain dimensions for F
+	size_t n = ind_taddr_.size();
+	size_t m = dep_taddr_.size();
+
+	CPPAD_ASSERT_KNOWN(
+		q > 0,
+		"RevSparseJac: q is not greater than zero"
+	);
+	CPPAD_ASSERT_KNOWN(
+		size_t(r.size()) == q || transpose,
+		"RevSparseJac: size of r is not equal to q and transpose is false."
+	);
+	CPPAD_ASSERT_KNOWN(
+		size_t(r.size()) == m || ! transpose,
+		"RevSparseJac: size of r is not equal to m and transpose is true."
+	);
+
+	// vector of lists that will hold the results
+	sparse_list                  var_sparsity;
+	var_sparsity.resize(num_var_tape_, q);
+
+	// The sparsity pattern corresponding to the dependent variables
+	if( transpose )
+	{	for(i = 0; i < m; i++)
+		{	itr = r[i].begin();
+			while(itr != r[i].end())
+			{	j = *itr++;
+				CPPAD_ASSERT_KNOWN(
+				j < q,
+				"RevSparseJac: transpose is true and element of the set\n"
+				"r[i] has value greater than or equal q."
+				);
+				CPPAD_ASSERT_UNKNOWN( dep_taddr_[i] < num_var_tape_ );
+				var_sparsity.add_element( dep_taddr_[i], j );
+			}
+		}
+	}
+	else
+	{	for(i = 0; i < q; i++)
+		{	itr = r[i].begin();
+			while(itr != r[i].end())
+			{	j = *itr++;
+				CPPAD_ASSERT_KNOWN(
+				j < m,
+				"RevSparseJac: transpose is false and element of the set\n"
+				"r[i] has value greater than or equal range dimension."
+				);
+				CPPAD_ASSERT_UNKNOWN( dep_taddr_[j] < num_var_tape_ );
+				var_sparsity.add_element( dep_taddr_[j], i );
+			}
+		}
+	}
+	// evaluate the sparsity patterns
+	RevJacSweep(
+		dependency,
+		n,
+		num_var_tape_,
+		&play_,
+		var_sparsity
+	);
+
+	// return values corresponding to dependent variables
+	CPPAD_ASSERT_UNKNOWN( size_t(s.size()) == q || transpose );
+	CPPAD_ASSERT_UNKNOWN( size_t(s.size()) == n || ! transpose );
+	for(j = 0; j < n; j++)
+	{	CPPAD_ASSERT_UNKNOWN( ind_taddr_[j] == (j+1) );
+
+		// ind_taddr_[j] is operator taddr for j-th independent variable
+		CPPAD_ASSERT_UNKNOWN( play_.GetOp( ind_taddr_[j] ) == InvOp );
+
+		CPPAD_ASSERT_UNKNOWN( var_sparsity.end() == q );
+		var_sparsity.begin(j+1);
+		i = var_sparsity.next_element();
+		while( i < q )
+		{	if( transpose )
+				s[j].insert(i);
+			else	s[i].insert(j);
+			i = var_sparsity.next_element();
+		}
+	}
 }
+
 // =========================================================================
 // RevSparseJac
 /*!

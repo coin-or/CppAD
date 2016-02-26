@@ -391,15 +391,15 @@ void ADFun<Base>::ForSparseJacCase(
 	//
 	CPPAD_ASSERT_KNOWN(
 		q > 0,
-		"RevSparseJac: q is not greater than zero"
+		"ForSparseJac: q is not greater than zero"
 	);
 	CPPAD_ASSERT_KNOWN(
 		size_t(r.size()) == n || transpose,
-		"RevSparseJac: size of r is not equal to n and transpose is false."
+		"ForSparseJac: size of r is not equal to n and transpose is false."
 	);
 	CPPAD_ASSERT_KNOWN(
 		size_t(r.size()) == q || ! transpose,
-		"RevSparseJac: size of r is not equal to q and transpose is true."
+		"ForSparseJac: size of r is not equal to q and transpose is true."
 	);
 	//
 	// allocate memory for the requested sparsity calculation
