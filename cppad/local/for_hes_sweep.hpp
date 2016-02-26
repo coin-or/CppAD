@@ -81,9 +81,11 @@ Otherwise it has no elements.
 \param for_hes_sparse
 The reverse Hessian sparsity pattern for the variable with index i
 corresponds to the set with index i in \a for_hes_sparse.
+The number of rows in this sparsity patter is n+1 and the row
+with index zero is not used.
 \n
 \n
-\b Input: For i = 0 , ... , \a numvar - 1
+\b Input: For i = 1 , ... , \a n
 the reverse Hessian sparsity pattern for the variable with index i is empty.
 \n
 \n
@@ -91,8 +93,6 @@ the reverse Hessian sparsity pattern for the variable with index i is empty.
 the reverse Hessian sparsity pattern for the independent dependent variable
 with index (j-1) is given by the set with index j
 in \a for_hes_sparse.
-The values in the rest of \a for_hes_sparse are not specified; i.e.,
-they are used for temporary work space.
 */
 
 template <class Base, class Vector_set>
@@ -119,19 +119,14 @@ void ForHesSweep(
 	size_t             i, j, k;
 
 	// check numvar argument
-	CPPAD_ASSERT_UNKNOWN( play->num_var_rec()     == numvar );
+	CPPAD_ASSERT_UNKNOWN( play->num_var_rec()    == numvar );
 	CPPAD_ASSERT_UNKNOWN( for_jac_sparse.n_set() == numvar );
-	CPPAD_ASSERT_UNKNOWN( for_hes_sparse.n_set() == numvar );
+	CPPAD_ASSERT_UNKNOWN( for_hes_sparse.n_set() == n+1 );
 	CPPAD_ASSERT_UNKNOWN( numvar > 0 );
 
 	// upper limit exclusive for set elements
 	size_t limit   = for_hes_sparse.end();
 	CPPAD_ASSERT_UNKNOWN( for_jac_sparse.end() == limit );
-
-	// check number of sets match
-	CPPAD_ASSERT_UNKNOWN(
-		for_jac_sparse.n_set() == for_hes_sparse.n_set()
-	);
 
 	// vecad_sparsity contains a sparsity pattern for each VecAD object.
 	// vecad_ind maps a VecAD index (beginning of the VecAD object)

@@ -275,9 +275,9 @@ void ADFun<Base>::ForSparseHesCase(
 		&play_,
 		rev_jac_sparsity
 	);
-	// vector of sets that will hold reverse Hessain values
+	// vector of sets that will hold the forward Hessain values
 	sparse_pack for_hes_sparsity;
-	for_hes_sparsity.resize(num_var_tape_, q);
+	for_hes_sparsity.resize(n+1, q);
 	//
 	// compute the Hessian sparsity patterns
 	ForHesSweep(
@@ -414,7 +414,7 @@ void ADFun<Base>::ForSparseHesCase(
 	//
 	// vector of sets that will hold reverse Hessain values
 	sparse_list for_hes_sparsity;
-	for_hes_sparsity.resize(num_var_tape_, q);
+	for_hes_sparsity.resize(n+1, q);
 
 	// compute the Hessian sparsity patterns
 	ForHesSweep(
@@ -589,7 +589,7 @@ void ADFun<Base>::ForSparseHesCheckpoint(
 
 	// holds forward Hessian sparsity pattern for all variables
 	sparse_list for_hes_sparsity;
-	for_hes_sparsity.resize(num_var_tape_, q);
+	for_hes_sparsity.resize(n+1, q);
 
 	// compute Hessian sparsity pattern for all variables
 	ForHesSweep(

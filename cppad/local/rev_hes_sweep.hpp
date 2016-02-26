@@ -120,7 +120,7 @@ void RevHesSweep(
 	size_t             i, j, k;
 
 	// check numvar argument
-	CPPAD_ASSERT_UNKNOWN( play->num_var_rec()     == numvar );
+	CPPAD_ASSERT_UNKNOWN( play->num_var_rec()    == numvar );
 	CPPAD_ASSERT_UNKNOWN( for_jac_sparse.n_set() == numvar );
 	CPPAD_ASSERT_UNKNOWN( rev_hes_sparse.n_set() == numvar );
 	CPPAD_ASSERT_UNKNOWN( numvar > 0 );
