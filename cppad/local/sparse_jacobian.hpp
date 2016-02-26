@@ -3,7 +3,7 @@
 # define CPPAD_SPARSE_JACOBIAN_HPP
 
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-15 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-16 Bradley M. Bell
 
 CppAD is distributed under multiple licenses. This distribution is under
 the terms of the
@@ -779,7 +779,9 @@ size_t ADFun<Base>::SparseJacobianForward(
 	Pattern_type s_transpose;
 	if( work.color.size() == 0 )
 	{	bool transpose = true;
-		sparsity_user2internal(s_transpose, p, m, n, transpose);
+		const char* error_msg = "SparseJacobianForward: transposed sparsity"
+		" pattern does not have proper row or column dimension";
+		sparsity_user2internal(s_transpose, p, n, m, transpose, error_msg);
 	}
 	n_sweep = SparseJacobianFor(x, s_transpose, row, col, jac, work);
 	return n_sweep;
@@ -892,7 +894,9 @@ size_t ADFun<Base>::SparseJacobianReverse(
 	Pattern_type s;
 	if( work.color.size() == 0 )
 	{	bool transpose = false;
-		sparsity_user2internal(s, p, m, n, transpose);
+		const char* error_msg = "SparseJacobianReverse: sparsity"
+		" pattern does not have proper row or column dimension";
+		sparsity_user2internal(s, p, m, n, transpose, error_msg);
 	}
 	n_sweep = SparseJacobianRev(x, s, row, col, jac, work);
 	return n_sweep;
@@ -960,7 +964,9 @@ VectorBase ADFun<Base>::SparseJacobian(
 		// need an internal copy of sparsity pattern
 		Pattern_type s_transpose;
 		bool transpose = true;
-		sparsity_user2internal(s_transpose, p, m, n, transpose);
+		const char* error_msg = "SparseJacobian: transposed sparsity"
+		" pattern does not have proper row or column dimension";
+		sparsity_user2internal(s_transpose, p, n, m, transpose, error_msg);
 
 		k = 0;
 		for(j = 0; j < n; j++)
@@ -988,7 +994,9 @@ VectorBase ADFun<Base>::SparseJacobian(
 		// need an internal copy of sparsity pattern
 		Pattern_type s;
 		bool transpose = false;
-		sparsity_user2internal(s, p, m, n, transpose);
+		const char* error_msg = "SparseJacobian: sparsity"
+		" pattern does not have proper row or column dimension";
+		sparsity_user2internal(s, p, m, n, transpose, error_msg);
 
 		k = 0;
 		for(i = 0; i < m; i++)

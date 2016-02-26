@@ -3,7 +3,7 @@
 # define CPPAD_SPARSE_PACK_HPP
 
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-15 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-16 Bradley M. Bell
 
 CppAD is distributed under multiple licenses. This distribution is under
 the terms of the
@@ -347,10 +347,10 @@ public:
 };
 
 /*!
-Copy a user vector of bools sparsity pattern to an internal sparse_pack object.
+Copy a user vector of sets sparsity pattern to an internal sparse_pack object.
 
-\tparam VectorBool
-is a simple vector with elements of type bool.
+\tparam VectorSet
+is a simple vector with elements of type std::set<size_t>.
 
 \param internal
 The input value of sparisty does not matter.
@@ -358,55 +358,50 @@ Upon return it contains the same sparsity pattern as \c user
 (or the transposed sparsity pattern).
 
 \param user
-sparsity pattern that we are placing \c internal.
+sparsity pattern that we are placing internal.
 
-\param n_row
-number of rows in the sparsity pattern in \c user
-(rand dimension).
+\param n_set
+number of sets (rows) in the internal sparsity pattern.
 
-\param n_col
-number of columns in the sparsity pattern in \c user
-(domain dimension).
+\param end
+end of set value (number of columns) in the interanl sparsity pattern.
 
 \param transpose
-if true, the sparsity pattern in \c internal is the transpose
-of the one in \c user.
-Otherwise it is the same sparsity pattern.
+if true, the user sparsity patter is the transposed.
+
+\param error_msg
+is the error message to display if some values in the user sparstiy
+pattern are not valid.
 */
-template<class VectorBool>
+template<class VectorSet>
 void sparsity_user2internal(
-	sparse_pack&       internal  ,
-	const VectorBool&  user      ,
-	size_t             n_row     ,
-	size_t             n_col     ,
-	bool               transpose )
-{
-	size_t i, j;
+	sparse_pack&            internal  ,
+	const VectorSet&        user      ,
+	size_t                  n_set     ,
+	size_t                  end       ,
+	bool                    transpose ,
+	const char*             error_msg )
+{	CPPAD_ASSERT_KNOWN(size_t( user.size() ) == n_set * end, error_msg );
 
-	CPPAD_ASSERT_KNOWN(
-		size_t( user.size() ) == n_row * n_col,
-		"Size of this vector of bools sparsity pattern is not equal\n"
-		"product of domain and range dimensions for corresponding function."
-	);
+	// size of internal sparsity pattern
+	internal.resize(n_set, end);
 
-	// transposed pattern case
 	if( transpose )
-	{	internal.resize(n_col, n_row);
-		for(j = 0; j < n_col; j++)
-		{	for(i = 0; i < n_row; i++)
-			{	if( user[ i * n_col + j ] )
-					internal.add_element(j, i);
+	{	// transposed pattern case
+		for(size_t j = 0; j < end; j++)
+		{	for(size_t i = 0; i < n_set; i++)
+			{	if( user[ j * n_set + i ] )
+					internal.add_element(i, j);
 			}
 		}
 		return;
 	}
-
-	// same pattern case
-	internal.resize(n_row, n_col);
-	for(i = 0; i < n_row; i++)
-	{	for(j = 0; j < n_col; j++)
-		{	if( user[ i * n_col + j ] )
+	else
+	{	for(size_t i = 0; i < n_set; i++)
+		{	for(size_t j = 0; j < end; j++)
+			{	if( user[ i * end + j ] )
 				internal.add_element(i, j);
+			}
 		}
 	}
 	return;

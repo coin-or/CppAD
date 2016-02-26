@@ -3,7 +3,7 @@
 # define CPPAD_SPARSE_SET_HPP
 
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-15 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-16 Bradley M. Bell
 
 CppAD is distributed under multiple licenses. This distribution is under
 the terms of the
@@ -301,7 +301,7 @@ public:
 Copy a user vector of sets sparsity pattern to an internal sparse_set object.
 
 \tparam VectorSet
-is a simple vector with elements of type \c std::set<size_t>.
+is a simple vector with elements of type std::set<size_t>.
 
 \param internal
 The input value of sparisty does not matter.
@@ -309,69 +309,67 @@ Upon return it contains the same sparsity pattern as \c user
 (or the transposed sparsity pattern).
 
 \param user
-sparsity pattern that we are placing \c internal.
+sparsity pattern that we are placing internal.
 
-\param n_row
-number of rows in the sparsity pattern in \c user
-(range dimension).
+\param n_set
+number of sets (rows) in the internal sparsity pattern.
 
-\param n_col
-number of columns in the sparsity pattern in \c user
-(domain dimension).
+\param end
+end of set value (number of columns) in the interanl sparsity pattern.
 
 \param transpose
-if true, the sparsity pattern in \c internal is the transpose
-of the one in \c user.
-Otherwise it is the same sparsity pattern.
+if true, the user sparsity patter is the transposed.
+
+\param error_msg
+is the error message to display if some values in the user sparstiy
+pattern are not valid.
 */
 template<class VectorSet>
 void sparsity_user2internal(
 	sparse_set&             internal  ,
 	const VectorSet&        user      ,
-	size_t                  n_row     ,
-	size_t                  n_col     ,
-	bool                    transpose )
+	size_t                  n_set     ,
+	size_t                  end       ,
+	bool                    transpose ,
+	const char*             error_msg )
 {
-	CPPAD_ASSERT_KNOWN(
-		size_t( user.size() ) == n_row,
-		"Size of this vector of sets sparsity pattern is not equal\n"
-		"the range dimension for the corresponding function."
-	);
+# ifndef NDEBUG
+	if( transpose )
+		CPPAD_ASSERT_KNOWN( size_t(end) == user.size(), error_msg);
+	if( ! transpose )
+		CPPAD_ASSERT_KNOWN( size_t(n_set) == user.size(), error_msg);
+# endif
 
-	size_t i, j;
+	// iterator for user set
 	std::set<size_t>::const_iterator itr;
 
-	// transposed pattern case
+	// size of internal sparsity pattern
+	internal.resize(n_set, end);
+
 	if( transpose )
-	{	internal.resize(n_col, n_row);
-		for(i = 0; i < n_row; i++)
-		{	itr = user[i].begin();
-			while(itr != user[i].end())
-			{	j = *itr++;
-				CPPAD_ASSERT_KNOWN(
-					j < n_col,
-					"An element in this vector of sets sparsity pattern "
-					"is greater than or equal\n"
-					"the domain dimension for the corresponding function."
-				);
-				internal.add_element(j, i);
+	{	// transposed pattern case
+		for(size_t j = 0; j < end; j++)
+		{	itr = user[j].begin();
+			while(itr != user[j].end())
+			{	size_t i = *itr++;
+				CPPAD_ASSERT_KNOWN(i < n_set, error_msg);
+				internal.add_element(i, j);
 			}
 		}
-		return;
 	}
-
-	// same pattern case
-	internal.resize(n_row, n_col);
-	for(i = 0; i < n_row; i++)
-	{	itr = user[i].begin();
-		while(itr != user[i].end())
-		{	j = *itr++;
-			CPPAD_ASSERT_UNKNOWN( j < n_col );
-			internal.add_element(i, j);
+	else
+	{	for(size_t i = 0; i < n_set; i++)
+		{	itr = user[i].begin();
+			while(itr != user[i].end())
+			{	size_t j = *itr++;
+				CPPAD_ASSERT_KNOWN( j < end, error_msg);
+				internal.add_element(i, j);
+			}
 		}
 	}
 	return;
 }
+
 
 } // END_CPPAD_NAMESPACE
 # endif
