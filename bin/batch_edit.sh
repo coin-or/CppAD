@@ -17,20 +17,10 @@ move_list='
 move_sed='s|list_files.sh|ls_files.sh|'
 #
 cat << EOF > junk.sed
-#
-/\$codep [*]\//! b two
-: one
-N
-/\/[*] *\$\\\$/! b one
-s|\$codep [*]/|\$srccode%cpp% */|
-s|/[*] *\$\\\$|/* %\$\$|
-#
-: two
-/\$verbatim/! b end
-/\$\\\$/! N
-/\$\\\$/! b two
-/\.[ch]pp%/s|\$verbatim|\$srcfile|
-#
+s|CPPAD_INTERNAL_SPARSE_SET  |sparse_list                |
+s|CPPAD_INTERNAL_SPARSE_SET&  |sparse_list\&                |
+s|CPPAD_INTERNAL_SPARSE_SET |sparse_list |
+/cppad\/local\/sparse_set.hpp/d
 : end
 EOF
 # -----------------------------------------------------------------------------

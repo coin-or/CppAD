@@ -3,7 +3,7 @@
 # define CPPAD_FOR_SPARSE_JAC_HPP
 
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-15 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-16 Bradley M. Bell
 
 CppAD is distributed under multiple licenses. This distribution is under
 the terms of the
@@ -432,7 +432,7 @@ void ForSparseJacSet(
 	CppAD::vector<size_t>&      dep_taddr        ,
 	CppAD::vector<size_t>&      ind_taddr        ,
 	CppAD::player<Base>&        play             ,
-	CPPAD_INTERNAL_SPARSE_SET&  for_jac_sparsity )
+	sparse_list&                for_jac_sparsity )
 {
 	// temporary indices
 	size_t i, j;
@@ -811,10 +811,10 @@ In this case
 template <class Base>
 void ADFun<Base>::ForSparseJacCheckpoint(
 	size_t                        q          ,
-	CPPAD_INTERNAL_SPARSE_SET&    r          ,
+	sparse_list&                  r          ,
 	bool                          transpose  ,
 	bool                          dependency ,
-	CPPAD_INTERNAL_SPARSE_SET&    s          )
+	sparse_list&                  s          )
 {	size_t n = Domain();
 	size_t m = Range();
 

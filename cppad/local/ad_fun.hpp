@@ -3,7 +3,7 @@
 # define CPPAD_AD_FUN_HPP
 
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-15 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-16 Bradley M. Bell
 
 CppAD is distributed under multiple licenses. This distribution is under
 the terms of the
@@ -136,7 +136,7 @@ private:
 
 	/// Set results of the forward mode Jacobian sparsity calculations
 	/// for_jac_sparse_set_.n_set() != 0  implies for_sparse_pack_ is empty.
-	CPPAD_INTERNAL_SPARSE_SET  for_jac_sparse_set_;
+	sparse_list                for_jac_sparse_set_;
 
 // ------------------------------------------------------------
 // Private member functions
@@ -329,25 +329,25 @@ public:
 		size_t                        q         ,
 		vector<bool>&                 s         ,
 		bool                          transpose ,
-		CPPAD_INTERNAL_SPARSE_SET&    h
+		sparse_list&                  h
 	);
 	// internal set sparsity version of RevSparseJac
 	// (used by checkpoint functions only)
 	void RevSparseJacCheckpoint(
 		size_t                        q          ,
-		CPPAD_INTERNAL_SPARSE_SET&    r          ,
+		sparse_list&                  r          ,
 		bool                          transpose  ,
 		bool                          dependency ,
-		CPPAD_INTERNAL_SPARSE_SET&    s
+		sparse_list&                  s
 	);
     // internal set sparsity version of RevSparseJac
     // (used by checkpoint functions only)
 	void ForSparseJacCheckpoint(
 	size_t                        q          ,
-	CPPAD_INTERNAL_SPARSE_SET&    r          ,
+	sparse_list&                  r          ,
 	bool                          transpose  ,
 	bool                          dependency ,
-	CPPAD_INTERNAL_SPARSE_SET&    s
+	sparse_list&                  s
 	);
 
 	/// amount of memory used for Jacobain sparsity pattern

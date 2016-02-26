@@ -3,7 +3,7 @@
 # define CPPAD_REV_SPARSE_HES_HPP
 
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-15 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-16 Bradley M. Bell
 
 CppAD is distributed under multiple licenses. This distribution is under
 the terms of the
@@ -433,7 +433,7 @@ void RevSparseHesSet(
 	CppAD::vector<size_t>&     dep_taddr         ,
 	CppAD::vector<size_t>&     ind_taddr         ,
 	CppAD::player<Base>&       play              ,
-	CPPAD_INTERNAL_SPARSE_SET& for_jac_sparsity  )
+	sparse_list&               for_jac_sparsity  )
 {
 	// temporary indices
 	size_t i, j;
@@ -480,7 +480,7 @@ void RevSparseHesSet(
 
 
 	// vector of sets that will hold reverse Hessain values
-	CPPAD_INTERNAL_SPARSE_SET rev_hes_sparsity;
+	sparse_list rev_hes_sparsity;
 	rev_hes_sparsity.resize(num_var, q);
 
 	// compute the Hessian sparsity patterns
@@ -748,7 +748,7 @@ void ADFun<Base>::RevSparseHesCheckpoint(
 	size_t                        q         ,
 	vector<bool>&                 s         ,
 	bool                          transpose ,
-	CPPAD_INTERNAL_SPARSE_SET&    h         )
+	sparse_list&                  h         )
 {	size_t n = Domain();
 	size_t m = Range();
 
@@ -770,7 +770,7 @@ void ADFun<Base>::RevSparseHesCheckpoint(
 	}
 
 	// holds reverse Hessian sparsity pattern for all variables
-	CPPAD_INTERNAL_SPARSE_SET rev_hes_sparsity;
+	sparse_list rev_hes_sparsity;
 	rev_hes_sparsity.resize(num_var_tape_, q);
 
 	// compute Hessian sparsity pattern for all variables

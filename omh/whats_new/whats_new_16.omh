@@ -32,9 +32,13 @@ in reverse order by date.
 The purpose of these sections is to
 assist you in learning about changes between various versions of CppAD.
 
+$head 02-25$$
+The $cref cmake$$ command line argument $code cppad_sparse_list$$
+has been removed (because it is so much better than the other option).
+
 $head 02-23$$
 A new version of the
-$cref/cppad_sparse_list/cmake/cppad_sparse_list/$$ class uses
+$code cppad_sparse_list$$ class (not part of user API) uses
 reference counters to reduce the number of copies of sets that are equal.
 This improved the speed of sparsity pattern computations that use
 the $cref/vector of sets/glossary/Sparsity Pattern/Vector of Sets/$$

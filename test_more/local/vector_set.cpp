@@ -131,11 +131,9 @@ bool test_yes_other(void)
 bool vector_set(void)
 {	bool ok = true;
 	ok     &= test_no_other<CppAD::sparse_pack>();
-	ok     &= test_no_other<CppAD::sparse_set>();
 	ok     &= test_no_other<CppAD::sparse_list>();
 	//
 	ok     &= test_yes_other<CppAD::sparse_pack>();
-	ok     &= test_yes_other<CppAD::sparse_set>();
 	ok     &= test_yes_other<CppAD::sparse_list>();
 	//
 	return ok;

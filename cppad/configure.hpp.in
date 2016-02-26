@@ -3,7 +3,7 @@
 # define CPPAD_CONFIGURE_HPP
 
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-15 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-16 Bradley M. Bell
 
 CppAD is distributed under multiple licenses. This distribution is under
 the terms of the
@@ -78,13 +78,6 @@ def CPPAD_HAS_COLPACK
 Was a colpack_prefix specified on the cmake command line.
 */
 # define CPPAD_HAS_COLPACK @cppad_has_colpack@
-
-/*!
-def CPPAD_INTERNAL_SPARSE_SET
-is the internal representation used for sparse vectors of std::set<size_t>
-either sparse_set or sparse_list).
-*/
-# define CPPAD_INTERNAL_SPARSE_SET @cppad_internal_sparse_set@
 
 /*!
 \def CPPAD_DEPRECATED

@@ -3,7 +3,7 @@
 # define CPPAD_REV_SPARSE_JAC_HPP
 
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-15 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-16 Bradley M. Bell
 
 CppAD is distributed under multiple licenses. This distribution is under
 the terms of the
@@ -407,7 +407,7 @@ void RevSparseJacSet(
 	);
 
 	// vector of lists that will hold the results
-	CPPAD_INTERNAL_SPARSE_SET    var_sparsity;
+	sparse_list                  var_sparsity;
 	var_sparsity.resize(total_num_var, q);
 
 	// The sparsity pattern corresponding to the dependent variables
@@ -696,10 +696,10 @@ or \f$ S(x)^T \f$ depending on transpose.
 template <class Base>
 void ADFun<Base>::RevSparseJacCheckpoint(
 	size_t                        q          ,
-	CPPAD_INTERNAL_SPARSE_SET&    r          ,
+	sparse_list&                  r          ,
 	bool                          transpose  ,
 	bool                          dependency ,
-	CPPAD_INTERNAL_SPARSE_SET&    s          )
+	sparse_list&                  s          )
 {	size_t n = Domain();
 	size_t m = Range();
 
@@ -717,7 +717,7 @@ void ADFun<Base>::RevSparseJacCheckpoint(
 # endif
 
 	// holds reverse Jacobian sparsity pattern for all variables
-	CPPAD_INTERNAL_SPARSE_SET var_sparsity;
+	sparse_list var_sparsity;
 	var_sparsity.resize(num_var_tape_, q);
 
 	// set sparsity pattern for dependent variables

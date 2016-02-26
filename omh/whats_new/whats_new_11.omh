@@ -1,6 +1,6 @@
 $Id$
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-15 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-16 Bradley M. Bell
 
 CppAD is distributed under multiple licenses. This distribution is under
 the terms of the
@@ -920,8 +920,8 @@ $pre
 $$
 A faster set operations item was added to the wish list.
 This has since been satisfied by
-$cref/cppad_sparse_list/cmake/cppad_sparse_list/$$ choice during
-the install process.
+$code cppad_sparse_list$$ choice during
+the install process (since removed).
 
 $head 02-02$$
 The documentation for $cref ForSparseJac$$ had some formatting errors.

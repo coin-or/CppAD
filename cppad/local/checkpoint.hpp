@@ -3,7 +3,7 @@
 # define CPPAD_CHECKPOINT_HPP
 
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-15 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-16 Bradley M. Bell
 
 CppAD is distributed under multiple licenses. This distribution is under
 the terms of the
@@ -12,7 +12,6 @@ the terms of the
 A copy of this license is included in the COPYING file of this distribution.
 Please visit http://www.coin-or.org/CppAD/ for information on other licenses.
 -------------------------------------------------------------------------- */
-# include <cppad/local/sparse_set.hpp>
 # include <cppad/local/sparse_list.hpp>
 # include <cppad/local/sparse_pack.hpp>
 
@@ -212,11 +211,11 @@ private:
 	ADFun<Base> f_;
 	//
 	/// sparsity for entire Jacobian f(x)^{(1)} does not change so can cache it
-	CPPAD_INTERNAL_SPARSE_SET  jac_sparse_set_;
+	sparse_list                jac_sparse_set_;
 	vectorBool                 jac_sparse_bool_;
 	//
 	/// sparsity for sum_i f_i(x)^{(2)} does not change so can cache it
-	CPPAD_INTERNAL_SPARSE_SET  hes_sparse_set_;
+	sparse_list                hes_sparse_set_;
 	vectorBool                 hes_sparse_bool_;
 	// ------------------------------------------------------------------------
 	option_enum sparsity(void)
@@ -232,7 +231,7 @@ private:
 		// Use the choice for forward / reverse that results in smaller
 		// size for the sparsity pattern of all variables in the tape.
 		if( n <= m )
-		{	CPPAD_INTERNAL_SPARSE_SET identity;
+		{	sparse_list identity;
 			identity.resize(n, n);
 			for(size_t j = 0; j < n; j++)
 				identity.add_element(j, j);
@@ -242,7 +241,7 @@ private:
 			f_.size_forward_set(0);
 		}
 		else
-		{	CPPAD_INTERNAL_SPARSE_SET identity;
+		{	sparse_list identity;
 			identity.resize(m, m);
 			for(size_t i = 0; i < m; i++)
 				identity.add_element(i, i);
@@ -299,7 +298,7 @@ private:
 			all_one[i] = true;
 
 		// set version of sparsity for n by n idendity matrix
-		CPPAD_INTERNAL_SPARSE_SET identity;
+		sparse_list identity;
 		identity.resize(n, n);
 		for(size_t j = 0; j < n; j++)
 			identity.add_element(j, j);

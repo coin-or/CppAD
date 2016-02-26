@@ -30,7 +30,6 @@ profile_speed='no'
 clang='no'
 no_colpack='no'
 no_ipopt='no'
-no_sparse_list='no'
 no_documentation='no'
 testvector='boost'
 while [ "$1" != "" ]
@@ -48,7 +47,6 @@ usage: bin/run_cmake.sh: \\
 	[--clang ] \\
 	[--no_colpack] \\
 	[--no_ipopt] \\
-	[--no_sparse_list] \\
 	[--no_documentation] \\
 	[--<package>_vector]
 The --help option just prints this message and exits.
@@ -82,9 +80,6 @@ EOF
 	elif [ "$1" == '--no_ipopt' ]
 	then
 		no_ipopt='yes'
-	elif [ "$1" == '--no_sparse_list' ]
-	then
-		no_sparse_list='yes'
 	elif [ "$1" == '--no_documentation' ]
 	then
 		no_documentation='yes'
@@ -180,14 +175,6 @@ do
 		cmake_args="$cmake_args  -D ${package}_prefix=$dir"
 	fi
 done
-#
-# sparse_list
-if [ "$no_sparse_list" == 'yes' ]
-then
-	cmake_args="$cmake_args -D cppad_sparse_list=NO"
-else
-	cmake_args="$cmake_args -D cppad_sparse_list=YES"
-fi
 #
 # cppad_cxx_flags
 cppad_cxx_flags="-Wall -pedantic-errors -std=$standard"

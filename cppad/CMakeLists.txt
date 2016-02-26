@@ -1,6 +1,6 @@
 # $Id:$
 # -----------------------------------------------------------------------------
-# CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-15 Bradley M. Bell
+# CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-16 Bradley M. Bell
 #
 # CppAD is distributed under multiple licenses. This distribution is under
 # the terms of the
@@ -34,9 +34,12 @@ command_line_arg(cppad_max_num_threads 48 STRING
 	"maximum number of threads that CppAD can use use"
 )
 # cppad_sparse_list
-command_line_arg(cppad_sparse_list YES BOOL
-	"use sparse list for internal sparse set representation"
-)
+IF( cppad_sparse_list )
+	MESSAGE(FATAL_ERROR
+		"cppad_sparse_list = ${cppad_sparse_list}"
+		": this command line argument has been removed"
+	)
+ENDIF( cppad_sparse_list )
 #
 # cppad_tape_id_type
 command_line_arg(cppad_tape_id_type "unsigned int" STRING
@@ -59,16 +62,6 @@ IF( cppad_deprecated )
 ELSE( cppad_deprecated )
 	SET(cppad_deprecated 0)
 ENDIF( cppad_deprecated )
-# -----------------------------------------------------------------------------
-# cppad_internal_sparse_set
-#
-IF( cppad_sparse_list )
-	SET(cppad_internal_sparse_set  sparse_list )
-ELSE( cppad_sparse_list )
-	SET(cppad_internal_sparse_set  sparse_set )
-ENDIF( cppad_sparse_list )
-MESSAGE(STATUS "cppad_internal_sparse_set = ${cppad_internal_sparse_set}" )
-#
 # -----------------------------------------------------------------------------
 # cppad_boostvector, cppad_cppadvector, cppad_eigenvector, cppad_stdvector
 #
