@@ -192,6 +192,27 @@ private:
 		VectorSet&               r
 	);
 	// ------------------------------------------------------------
+	// vector of bool version of ForSparseHes
+	// (see doxygen in rev_sparse_hes.hpp)
+	template <class VectorSet>
+	void ForSparseHesCase(
+		bool               set_type  ,
+		bool               transpose ,
+		size_t             q         ,
+		const VectorSet&   s         ,
+		VectorSet&         h
+	);
+	// vector of std::set<size_t> version of ForSparseHes
+	// (see doxygen in rev_sparse_hes.hpp)
+	template <class VectorSet>
+	void ForSparseHesCase(
+		const std::set<size_t>&  set_type  ,
+		bool                     transpose ,
+		size_t                   q         ,
+		const VectorSet&         s         ,
+		VectorSet&               h
+	);
+	// ------------------------------------------------------------
 	// vector of bool version of RevSparseHes
 	// (see doxygen in rev_sparse_hes.hpp)
 	template <class VectorSet>
@@ -316,6 +337,20 @@ public:
 	VectorSet RevSparseJac(
 		size_t q, const VectorSet &s, bool transpose = false,
 		bool dependency = false
+	);
+	// forward mode Hessian sparsity
+	// (see doxygen documentation in rev_sparse_hes.hpp)
+	template <typename VectorSet>
+	VectorSet ForSparseHes(
+		size_t q, const VectorSet &s, bool transpose = false
+	);
+	// internal set sparsity version of ForSparseHes
+	// (used by checkpoint functions only)
+	void ForSparseHesCheckpoint(
+		size_t                        q         ,
+		vector<bool>&                 s         ,
+		bool                          transpose ,
+		sparse_list&                  h
 	);
 	// reverse mode Hessian sparsity
 	// (see doxygen documentation in rev_sparse_hes.hpp)
@@ -608,6 +643,7 @@ public:
 # include <cppad/local/for_jac_sweep.hpp>
 # include <cppad/local/rev_jac_sweep.hpp>
 # include <cppad/local/rev_hes_sweep.hpp>
+# include <cppad/local/for_hes_sweep.hpp>
 
 // user interfaces
 # include <cppad/local/parallel_ad.hpp>

@@ -3,7 +3,7 @@
 # define CPPAD_SPARSE_HPP
 
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-15 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-16 Bradley M. Bell
 
 CppAD is distributed under multiple licenses. This distribution is under
 the terms of the
@@ -35,5 +35,6 @@ $end
 # include <cppad/local/for_sparse_jac.hpp>
 # include <cppad/local/rev_sparse_jac.hpp>
 # include <cppad/local/rev_sparse_hes.hpp>
+# include <cppad/local/for_sparse_hes.hpp>
 
 # endif
