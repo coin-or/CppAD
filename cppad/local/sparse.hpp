@@ -26,6 +26,7 @@ $childtable%
 	cppad/local/rev_sparse_jac.hpp%
 	example/dependency.cpp%
 	cppad/local/rev_sparse_hes.hpp%
+	cppad/local/for_sparse_hes.hpp%
 	example/bool_sparsity.cpp
 %$$
 

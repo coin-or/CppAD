@@ -526,7 +526,7 @@ void RevHesSweep(
 
 			case PowvvOp:
 			CPPAD_ASSERT_NARG_NRES(op, 2, 3)
-                        reverse_sparse_hessian_pow_op(
+			reverse_sparse_hessian_pow_op(
 			i_var, arg, RevJac, for_jac_sparse, rev_hes_sparse
 			);
 			break;

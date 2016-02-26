@@ -181,10 +181,6 @@ The file
 $cref for_sparse_hes.cpp$$
 contains an example and test of this operation.
 It returns true if it succeeds and false otherwise.
-The file
-$cref/sparsity_sub.cpp/sparsity_sub.cpp/ForSparseHes/$$
-contains an example and test of using $code ForSparseHes$$
-to compute the sparsity pattern for a subset of the Hessian.
 
 $end
 -----------------------------------------------------------------------------
@@ -259,29 +255,37 @@ void ADFun<Base>::ForSparseHesCase(
 		"ForSparseHes: size of s is not equal to\n"
 		"range dimension for ADFun object."
 	);
-
-	// Array that will hold reverse Jacobian dependency flag.
-	// Initialize as true for the dependent variables.
-	pod_vector<bool> RevJac;
-	RevJac.extend(num_var_tape_);
-	for(i = 0; i < num_var_tape_; i++)
-		RevJac[i] = false;
+	//
+	// sparsity pattern correspnding to s
+	sparse_pack rev_jac_sparsity;
+	rev_jac_sparsity.resize(num_var_tape_, 1);
 	for(i = 0; i < m; i++)
 	{	CPPAD_ASSERT_UNKNOWN( dep_taddr_[i] < num_var_tape_ );
-		RevJac[ dep_taddr_[i] ] = s[i];
+		if( s[i] )
+			rev_jac_sparsity.add_element( dep_taddr_[i], 0);
 	}
-
+	//
+	// compute reverse sparsity pattern for dependency analysis
+	// (note that we are only want non-zero derivatives not true dependency)
+	bool dependency = false;
+	RevJacSweep(
+		dependency,
+		n,
+		num_var_tape_,
+		&play_,
+		rev_jac_sparsity
+	);
 	// vector of sets that will hold reverse Hessain values
 	sparse_pack for_hes_sparsity;
 	for_hes_sparsity.resize(num_var_tape_, q);
-
+	//
 	// compute the Hessian sparsity patterns
 	ForHesSweep(
 		n,
 		num_var_tape_,
 		&play_,
 		for_jac_sparse_pack_,
-		RevJac.data(),
+		rev_jac_sparsity,
 		for_hes_sparsity
 	);
 
@@ -366,12 +370,12 @@ void ADFun<Base>::ForSparseHesCase(
 	// temporary indices
 	size_t i, j;
 	std::set<size_t>::const_iterator itr;
-
+	//
 	// check VectorSet is Simple Vector class with sets for elements
 	CheckSimpleVector<std::set<size_t>, VectorSet>(
 		one_element_std_set<size_t>(), two_element_std_set<size_t>()
 	);
-
+	//
 	CPPAD_ASSERT_KNOWN(
 		q == for_jac_sparse_set_.end(),
 		"ForSparseHes: q is not equal to its value\n"
@@ -381,13 +385,10 @@ void ADFun<Base>::ForSparseHesCase(
 		s.size() == 1,
 		"ForSparseHes: size of s is not equal to one."
 	);
-
-	// Array that will hold reverse Jacobian dependency flag.
-	// Initialize as true for the dependent variables.
-	pod_vector<bool> RevJac;
-	RevJac.extend(num_var_tape_);
-	for(i = 0; i < num_var_tape_; i++)
-		RevJac[i] = false;
+	//
+	// sparsity pattern correspnding to s
+	sparse_list rev_jac_sparsity;
+	rev_jac_sparsity.resize(num_var_tape_, 1);
 	itr = s[0].begin();
 	while( itr != s[0].end() )
 	{	i = *itr++;
@@ -397,10 +398,20 @@ void ADFun<Base>::ForSparseHesCase(
 			"greater than or equal m"
 		);
 		CPPAD_ASSERT_UNKNOWN( dep_taddr_[i] < num_var_tape_ );
-		RevJac[ dep_taddr_[i] ] = true;
+		rev_jac_sparsity.add_element( dep_taddr_[i], 0);
 	}
-
-
+	//
+	// compute reverse sparsity pattern for dependency analysis
+	// (note that we are only want non-zero derivatives not true dependency)
+	bool dependency = false;
+	RevJacSweep(
+		dependency,
+		n,
+		num_var_tape_,
+		&play_,
+		rev_jac_sparsity
+	);
+	//
 	// vector of sets that will hold reverse Hessain values
 	sparse_list for_hes_sparsity;
 	for_hes_sparsity.resize(num_var_tape_, q);
@@ -411,7 +422,7 @@ void ADFun<Base>::ForSparseHesCase(
 		num_var_tape_,
 		&play_,
 		for_jac_sparse_set_,
-		RevJac.data(),
+		rev_jac_sparsity,
 		for_hes_sparsity
 	);
 

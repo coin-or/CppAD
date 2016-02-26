@@ -11,7 +11,7 @@ Please visit http://www.coin-or.org/CppAD/ for information on other licenses.
 -------------------------------------------------------------------------- */
 
 /*
-$begin rev_sparse_hes.cpp$$
+$begin for_sparse_hes.cpp$$
 $spell
 	Hessian
 	Jac
@@ -20,12 +20,12 @@ $spell
 	Cpp
 $$
 
-$section Reverse Mode Hessian Sparsity: Example and Test$$
-$mindex RevSparseHes sparsity$$
+$section Forward Mode Hessian Sparsity: Example and Test$$
+$mindex ForSparseHes sparsity$$
 
 
 $code
-$srcfile%example/rev_sparse_hes.cpp%0%// BEGIN C++%// END C++%1%$$
+$srcfile%example/for_sparse_hes.cpp%0%// BEGIN C++%// END C++%1%$$
 $$
 
 $end
@@ -89,7 +89,7 @@ bool BoolCases(void)
 		s[i] = false;
 	s[0] = true;
 	Vector h(n * n);
-	h    = f.RevSparseHes(n, s);
+	h    = f.ForSparseHes(n, s);
 
 	// check values
 	for(i = 0; i < n; i++)
@@ -100,7 +100,7 @@ bool BoolCases(void)
 	for(i = 0; i < m; i++)
 		s[i] = false;
 	s[1] = true;
-	h    = f.RevSparseHes(n, s);
+	h    = f.ForSparseHes(n, s);
 
 	// check values
 	for(i = 0; i < n; i++)
@@ -109,7 +109,7 @@ bool BoolCases(void)
 
 	// call that transposed the result
 	bool transpose = true;
-	h    = f.RevSparseHes(n, s, transpose);
+	h    = f.ForSparseHes(n, s, transpose);
 
 	// This h is symmetric, because R is symmetric, not really testing here
 	for(i = 0; i < n; i++)
@@ -159,7 +159,7 @@ bool SetCases(void)
 	assert( s[0].empty() );
 	s[0].insert(0);
 	Vector h(n);
-	h    = f.RevSparseHes(n, s);
+	h    = f.ForSparseHes(n, s);
 
 	// check values
 	std::set<size_t>::iterator itr;
@@ -175,7 +175,7 @@ bool SetCases(void)
 	s[0].clear();
 	assert( s[0].empty() );
 	s[0].insert(1);
-	h    = f.RevSparseHes(n, s);
+	h    = f.ForSparseHes(n, s);
 
 	// check values
 	for(i = 0; i < n; i++)
@@ -187,7 +187,7 @@ bool SetCases(void)
 
 	// call that transposed the result
 	bool transpose = true;
-	h    = f.RevSparseHes(n, s, transpose);
+	h    = f.ForSparseHes(n, s, transpose);
 
 	// This h is symmetric, because R is symmetric, not really testing here
 	for(i = 0; i < n; i++)
@@ -203,7 +203,7 @@ bool SetCases(void)
 
 # include <vector>
 # include <valarray>
-bool rev_sparse_hes(void)
+bool for_sparse_hes(void)
 {	bool ok = true;
 	// Run with Vector equal to four different cases
 	// all of which are Simple Vectors with elements of type bool.

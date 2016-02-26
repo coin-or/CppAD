@@ -174,8 +174,10 @@ nobase_myinclude_HEADERS =  \
 	cppad/local/exp_op.hpp \
 	cppad/local/expm1.hpp \
 	cppad/local/expm1_op.hpp \
+	cppad/local/for_hes_sweep.hpp \
 	cppad/local/for_jac_sweep.hpp \
 	cppad/local/for_one.hpp \
+	cppad/local/for_sparse_hes.hpp \
 	cppad/local/for_sparse_jac.hpp \
 	cppad/local/for_two.hpp \
 	cppad/local/forward0sweep.hpp \

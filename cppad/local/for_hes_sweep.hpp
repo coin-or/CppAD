@@ -70,16 +70,13 @@ For i = 0 , ... , \a numvar - 1,
 the forward Jacobian sparsity pattern for the variable with index i
 corresponds to the set with index i in \a for_jac_sparse.
 
-\param RevJac
+\param rev_jac_sparse
 \b Input:
 For i = 0, ... , \a numvar - 1
-the if the variable with index i on the tape is an dependent variable and
-included in the Hessian, \a RevJac[ i ] is equal to true,
-otherwise it is equal to false.
-\n
-\n
-\b Output: The values in \a RevJac upon return are not specified; i.e.,
-it is used for temporary work space.
+the if the function we are computing the Hessian for has a non-zero
+derivative w.r.t. variable with index i,
+the set with index i has element zero.
+Otherwise it has no elements.
 
 \param for_hes_sparse
 The reverse Hessian sparsity pattern for the variable with index i
@@ -104,7 +101,7 @@ void ForHesSweep(
 	size_t                numvar,
 	player<Base>         *play,
 	Vector_set&           for_jac_sparse, // should be const
-	bool*                 RevJac,
+	Vector_set&           rev_jac_sparse, // should be const
 	Vector_set&           for_hes_sparse
 )
 {
@@ -115,7 +112,9 @@ void ForHesSweep(
 	const addr_t*   arg = CPPAD_NULL;
 
 	// length of the parameter vector (used by CppAD assert macros)
+# ifdef NOT_DEFINED
 	const size_t num_par = play->num_par_rec();
+# endif
 
 	size_t             i, j, k;
 
@@ -164,6 +163,7 @@ void ForHesSweep(
 		CPPAD_ASSERT_UNKNOWN( j == play->num_vec_ind_rec() );
 	}
 
+# ifdef NOT_DEFINED
 	// work space used by UserOp.
 	vector<size_t>     user_ix;  // variable indices for argument vector x
 	typedef std::set<size_t> size_set;
@@ -201,7 +201,7 @@ void ForHesSweep(
 # endif
 	// next expected operator in a UserOp sequence
 	enum { user_start, user_arg, user_ret, user_end } user_state = user_end;
-
+# endif
 
 	// Initialize
 	play->reverse_start(op, arg, i_op, i_var);
@@ -580,9 +580,11 @@ void ForHesSweep(
 
 			case PowvvOp:
 			CPPAD_ASSERT_NARG_NRES(op, 2, 3)
-                        reverse_sparse_hessian_pow_op(
+# ifdef NOT_DEFINED
+			reverse_sparse_hessian_pow_op(
 			i_var, arg, RevJac, for_jac_sparse, for_hes_sparse
 			);
+# endif
 			break;
 			// -------------------------------------------------
 
@@ -726,6 +728,7 @@ void ForHesSweep(
 			// -------------------------------------------------
 
 			case UserOp:
+# ifdef NOT_DEFINED
 			// start or end an atomic operation sequence
 			CPPAD_ASSERT_UNKNOWN( NumRes( UserOp ) == 0 );
 			CPPAD_ASSERT_UNKNOWN( NumArg( UserOp ) == 4 );
@@ -886,9 +889,11 @@ void ForHesSweep(
 					}
 				}
                }
+# endif
 			break;
 
 			case UsrapOp:
+# ifdef NOT_DEFINED
 			// parameter argument in an atomic operation sequence
 			CPPAD_ASSERT_UNKNOWN( user_state == user_arg );
 			CPPAD_ASSERT_UNKNOWN( 0 < user_j && user_j <= user_n );
@@ -899,9 +904,11 @@ void ForHesSweep(
 			user_vx[user_j] = false;
 			if( user_j == 0 )
 				user_state = user_start;
+# endif
 			break;
 
 			case UsravOp:
+# ifdef NOT_DEFINED
 			// variable argument in an atomic operation sequence
 			CPPAD_ASSERT_UNKNOWN( user_state == user_arg );
 			CPPAD_ASSERT_UNKNOWN( 0 < user_j && user_j <= user_n );
@@ -924,9 +931,11 @@ void ForHesSweep(
 			}
 			if( user_j == 0 )
 				user_state = user_start;
+# endif
 			break;
 
 			case UsrrpOp:
+# ifdef NOT_DEFINED
 			// parameter result in an atomic operation sequence
 			CPPAD_ASSERT_UNKNOWN( user_state == user_ret );
 			CPPAD_ASSERT_UNKNOWN( 0 < user_i && user_i <= user_m );
@@ -935,9 +944,11 @@ void ForHesSweep(
 			--user_i;
 			if( user_i == 0 )
 				user_state = user_arg;
+# endif
 			break;
 
 			case UsrrvOp:
+# ifdef NOT_DEFINED
 			// variable result in an atomic operation sequence
 			CPPAD_ASSERT_UNKNOWN( user_state == user_ret );
 			CPPAD_ASSERT_UNKNOWN( 0 < user_i && user_i <= user_m );
@@ -959,6 +970,7 @@ void ForHesSweep(
 			}
 			if( user_i == 0 )
 				user_state = user_arg;
+# endif
 			break;
 			// -------------------------------------------------
 
