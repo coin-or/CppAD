@@ -198,97 +198,59 @@ namespace CppAD { // BEGIN_CPPAD_NAMESPACE
 \file rev_sparse_hes.hpp
 Reverse mode Hessian sparsity patterns.
 */
-
 // ===========================================================================
-// RevSparseHesBool
+// RevSparseHesCase
 /*!
-Calculate Hessian sparsity patterns using reverse mode.
+Private helper function for RevSparseHes(q, s) bool sparsity.
 
-The C++ source code corresponding to this operation is
-\verbatim
-	h = f.RevSparseHes(q, s)
-\endverbatim
+All of the description in the public member function RevSparseHes(q, s)
+applies.
 
-\tparam Base
-is the base type for this recording.
-
-\tparam VectorSet
-is a simple vector with elements of type \c bool.
+\param set_type
+is a \c bool value. This argument is used to dispatch to the proper source
+code depending on the vlaue of \c VectorSet::value_type.
 
 \param transpose
-is true (false) if \c is is equal to \f$ H(x) \f$ (\f$ H(x)^T \f$)
-where
-\f[
-	H(x) = R^T (S * F)^{(2)} (x)
-\f]
-where \f$ F \f$ is the function corresponding to the operation sequence
-and \a x is any argument value.
+See \c RevSparseHes(q, s).
 
 \param q
-is the value of \a q in the
-by the previous call of the form
-\verbatim
-	f.ForSparseJac(q, r)
-\endverbatim
-The value \c r in this call is a sparsity pattern for the matrix \f$ R \f$.
+See \c RevSparseHes(q, s).
 
 \param s
-is a vector with size \c m that specifies the sparsity pattern
-for the vector \f$ S \f$,
-where \c m is the number of dependent variables
-corresponding to the operation sequence stored in \a play.
+See \c RevSparseHes(q, s).
 
 \param h
-the input value of \a h must be a vector with size \c q*n.
-The input value of its elements does not matter.
-On output, \a h is the sparsity pattern for the matrix \f$ H(x) \f$
-or \f$ H(x)^T \f$ depending on \c transpose.
-
-\param num_var
-is the total number of variables in this recording.
-
-\param dep_taddr
-maps dependendent variable index
-to the corresponding variable in the tape.
-
-\param ind_taddr
-maps independent variable index
-to the corresponding variable in the tape.
-
-\param play
-is the recording that defines the function we are computing the sparsity
-pattern for.
-
-\param for_jac_sparsity
-is a vector of sets containing the
-the forward Jacobian sparsity pattern corresponding to
-$latex R$$ for all of the variables on the tape.
+is the return value for the corresponging call to \c RevSparseJac(q, s).
 */
+template <class Base>
+template <class VectorSet>
+void ADFun<Base>::RevSparseHesCase(
+	bool              set_type         ,
+	bool              transpose        ,
+	size_t            q                ,
+	const VectorSet&  s                ,
+	VectorSet&        h                )
+{	size_t n = Domain();
+	size_t m = Range();
+	//
+	h.resize(q * n );
 
-template <class Base, class VectorSet>
-void RevSparseHesBool(
-	bool                      transpose         ,
-	size_t                    q                 ,
-	const VectorSet&          s                 ,
-	VectorSet&                h                 ,
-	size_t                    num_var           ,
-	CppAD::vector<size_t>&    dep_taddr         ,
-	CppAD::vector<size_t>&    ind_taddr         ,
-	CppAD::player<Base>&      play              ,
-	sparse_pack&              for_jac_sparsity  )
-{
+	CPPAD_ASSERT_KNOWN(
+		for_jac_sparse_pack_.n_set() > 0,
+		"RevSparseHes: previous stored call to ForSparseJac did not "
+		"use bool for the elements of r."
+	);
+	CPPAD_ASSERT_UNKNOWN( for_jac_sparse_set_.n_set() == 0 );
+	CPPAD_ASSERT_UNKNOWN( for_jac_sparse_pack_.n_set() == num_var_tape_  );
+	//
 	// temporary indices
 	size_t i, j;
 
 	// check Vector is Simple VectorSet class with bool elements
 	CheckSimpleVector<bool, VectorSet>();
 
-	// range and domain dimensions for F
-	size_t m = dep_taddr.size();
-	size_t n = ind_taddr.size();
-
 	CPPAD_ASSERT_KNOWN(
-		q == for_jac_sparsity.end(),
+		q == for_jac_sparse_pack_.end(),
 		"RevSparseHes: q is not equal to its value\n"
 		"in the previous call to ForSparseJac with this ADFun object."
 	);
@@ -301,24 +263,24 @@ void RevSparseHesBool(
 	// Array that will hold reverse Jacobian dependency flag.
 	// Initialize as true for the dependent variables.
 	pod_vector<bool> RevJac;
-	RevJac.extend(num_var);
-	for(i = 0; i < num_var; i++)
+	RevJac.extend(num_var_tape_);
+	for(i = 0; i < num_var_tape_; i++)
 		RevJac[i] = false;
 	for(i = 0; i < m; i++)
-	{	CPPAD_ASSERT_UNKNOWN( dep_taddr[i] < num_var );
-		RevJac[ dep_taddr[i] ] = s[i];
+	{	CPPAD_ASSERT_UNKNOWN( dep_taddr_[i] < num_var_tape_ );
+		RevJac[ dep_taddr_[i] ] = s[i];
 	}
 
 	// vector of sets that will hold reverse Hessain values
 	sparse_pack rev_hes_sparsity;
-	rev_hes_sparsity.resize(num_var, q);
+	rev_hes_sparsity.resize(num_var_tape_, q);
 
 	// compute the Hessian sparsity patterns
 	RevHesSweep(
 		n,
-		num_var,
-		&play,
-		for_jac_sparsity,
+		num_var_tape_,
+		&play_,
+		for_jac_sparse_pack_,
 		RevJac.data(),
 		rev_hes_sparsity
 	);
@@ -335,11 +297,11 @@ void RevSparseHesBool(
 
 	// j is index corresponding to reverse mode partial
 	for(j = 0; j < n; j++)
-	{	CPPAD_ASSERT_UNKNOWN( ind_taddr[j] < num_var );
+	{	CPPAD_ASSERT_UNKNOWN( ind_taddr_[j] < num_var_tape_ );
 
-		// ind_taddr[j] is operator taddr for j-th independent variable
-		CPPAD_ASSERT_UNKNOWN( ind_taddr[j] == j + 1 );
-		CPPAD_ASSERT_UNKNOWN( play.GetOp( ind_taddr[j] ) == InvOp );
+		// ind_taddr_[j] is operator taddr for j-th independent variable
+		CPPAD_ASSERT_UNKNOWN( ind_taddr_[j] == j + 1 );
+		CPPAD_ASSERT_UNKNOWN( play_.GetOp( ind_taddr_[j] ) == InvOp );
 
 		// extract the result from rev_hes_sparsity
 		CPPAD_ASSERT_UNKNOWN( rev_hes_sparsity.end() == q );
@@ -352,89 +314,55 @@ void RevSparseHesBool(
 			i = rev_hes_sparsity.next_element();
 		}
 	}
-
-	return;
 }
-
-// ===========================================================================
-// RevSparseHesSet
 /*!
-Calculate Hessian sparsity patterns using reverse mode.
+Private helper function for RevSparseHes(q, s) set sparsity.
 
-The C++ source code corresponding to this operation is
-\verbatim
-	h = f.RevSparseHes(q, s)
-\endverbatim
+All of the description in the public member function RevSparseHes(q, s)
+applies.
 
-\tparam Base
-is the base type for this recording.
-
-\tparam VectorSet
-is a simple vector with elements of type \c std::set<size_t>.
+\param set_type
+is a \c std::set<size_t> value.
+This argument is used to dispatch to the proper source
+code depending on the vlaue of \c VectorSet::value_type.
 
 \param transpose
-is true (false) if \c is is equal to \f$ H(x) \f$ (\f$ H(x)^T \f$)
-where
-\f[
-	H(x) = R^T (S * F)^{(2)} (x)
-\f]
-where \f$ F \f$ is the function corresponding to the operation sequence
-and \a x is any argument value.
+See \c RevSparseHes(q, s).
 
 \param q
-is the value of \a q in the
-by the previous call of the form
-\verbatim
-	f.ForSparseJac(q, r)
-\endverbatim
-The value \c r in this call is a sparsity pattern for the matrix \f$ R \f$.
+See \c RevSparseHes(q, s).
 
 \param s
-is a vector with size \c m that specifies the sparsity pattern
-for the vector \f$ S \f$,
-where \c m is the number of dependent variables
-corresponding to the operation sequence stored in \a play.
+See \c RevSparseHes(q, s).
 
 \param h
-If \c transpose, the input value of \a h must be a vector with size \a q.
-Otherwise, its input value must have size \c n;
-On input, each element of \a h must be an empty set.
-On output, \a h is the sparsity pattern for the matrix \f$ H(x) \f$
-or \f$ H(x)^T \f$ depending on \c transpose.
-
-\param num_var
-is the total number of variables in this recording.
-
-\param dep_taddr
-maps dependendent variable index
-to the corresponding variable in the tape.
-
-\param ind_taddr
-maps independent variable index
-to the corresponding variable in the tape.
-
-\param play
-is the recording that defines the function we are computing the sparsity
-pattern for.
-
-\param for_jac_sparsity
-is a vector of sets containing the
-the forward Jacobian sparsity pattern corresponding to
-$latex R$$ for all of the variables on the tape.
+is the return value for the corresponging call to \c RevSparseJac(q, s).
 */
+template <class Base>
+template <class VectorSet>
+void ADFun<Base>::RevSparseHesCase(
+	const std::set<size_t>&   set_type         ,
+	bool                      transpose        ,
+	size_t                    q                ,
+	const VectorSet&          s                ,
+	VectorSet&                h                )
+{	size_t n = Domain();
+# ifndef NDEBUG
+	size_t m = Range();
+# endif
+	//
+	if( transpose )
+		h.resize(n);
+	else	h.resize(q);
 
-template <class Base, class VectorSet>
-void RevSparseHesSet(
-	bool                       transpose         ,
-	size_t                     q                 ,
-	const  VectorSet&          s                 ,
-	VectorSet&                 h                 ,
-	size_t                     num_var           ,
-	CppAD::vector<size_t>&     dep_taddr         ,
-	CppAD::vector<size_t>&     ind_taddr         ,
-	CppAD::player<Base>&       play              ,
-	sparse_list&               for_jac_sparsity  )
-{
+	CPPAD_ASSERT_KNOWN(
+		for_jac_sparse_set_.n_set() > 0,
+		"RevSparseHes: previous stored call to ForSparseJac did not "
+		"use std::set<size_t> for the elements of r."
+	);
+	CPPAD_ASSERT_UNKNOWN( for_jac_sparse_pack_.n_set() == 0 );
+	CPPAD_ASSERT_UNKNOWN( for_jac_sparse_set_.n_set() == num_var_tape_  );
+	//
 	// temporary indices
 	size_t i, j;
 	std::set<size_t>::const_iterator itr;
@@ -444,14 +372,8 @@ void RevSparseHesSet(
 		one_element_std_set<size_t>(), two_element_std_set<size_t>()
 	);
 
-	// range and domain dimensions for F
-# ifndef NDEBUG
-	size_t m = dep_taddr.size();
-# endif
-	size_t n = ind_taddr.size();
-
 	CPPAD_ASSERT_KNOWN(
-		q == for_jac_sparsity.end(),
+		q == for_jac_sparse_set_.end(),
 		"RevSparseHes: q is not equal to its value\n"
 		"in the previous call to ForSparseJac with this ADFun object."
 	);
@@ -463,8 +385,8 @@ void RevSparseHesSet(
 	// Array that will hold reverse Jacobian dependency flag.
 	// Initialize as true for the dependent variables.
 	pod_vector<bool> RevJac;
-	RevJac.extend(num_var);
-	for(i = 0; i < num_var; i++)
+	RevJac.extend(num_var_tape_);
+	for(i = 0; i < num_var_tape_; i++)
 		RevJac[i] = false;
 	itr = s[0].begin();
 	while( itr != s[0].end() )
@@ -474,21 +396,21 @@ void RevSparseHesSet(
 			"RevSparseHes: an element of the set s[0] has value "
 			"greater than or equal m"
 		);
-		CPPAD_ASSERT_UNKNOWN( dep_taddr[i] < num_var );
-		RevJac[ dep_taddr[i] ] = true;
+		CPPAD_ASSERT_UNKNOWN( dep_taddr_[i] < num_var_tape_ );
+		RevJac[ dep_taddr_[i] ] = true;
 	}
 
 
 	// vector of sets that will hold reverse Hessain values
 	sparse_list rev_hes_sparsity;
-	rev_hes_sparsity.resize(num_var, q);
+	rev_hes_sparsity.resize(num_var_tape_, q);
 
 	// compute the Hessian sparsity patterns
 	RevHesSweep(
 		n,
-		num_var,
-		&play,
-		for_jac_sparsity,
+		num_var_tape_,
+		&play_,
+		for_jac_sparse_set_,
 		RevJac.data(),
 		rev_hes_sparsity
 	);
@@ -498,9 +420,9 @@ void RevSparseHesSet(
 	CPPAD_ASSERT_UNKNOWN( size_t(h.size()) == q || transpose );
 	CPPAD_ASSERT_UNKNOWN( size_t(h.size()) == n || ! transpose );
 	for(j = 0; j < n; j++)
-	{	CPPAD_ASSERT_UNKNOWN( ind_taddr[j] < num_var );
-		CPPAD_ASSERT_UNKNOWN( ind_taddr[j] == j + 1 );
-		CPPAD_ASSERT_UNKNOWN( play.GetOp( ind_taddr[j] ) == InvOp );
+	{	CPPAD_ASSERT_UNKNOWN( ind_taddr_[j] < num_var_tape_ );
+		CPPAD_ASSERT_UNKNOWN( ind_taddr_[j] == j + 1 );
+		CPPAD_ASSERT_UNKNOWN( play_.GetOp( ind_taddr_[j] ) == InvOp );
 
 		// extract the result from rev_hes_sparsity
 		// and add corresponding elements to result sets in h
@@ -514,8 +436,6 @@ void RevSparseHesSet(
 			i = rev_hes_sparsity.next_element();
 		}
 	}
-
-	return;
 }
 
 // ===========================================================================
@@ -590,119 +510,6 @@ VectorSet ADFun<Base>::RevSparseHes(
 	);
 
 	return h;
-}
-// ===========================================================================
-// RevSparseHesCase
-/*!
-Private helper function for RevSparseHes(q, s).
-
-All of the description in the public member function RevSparseHes(q, s)
-applies.
-
-\param set_type
-is a \c bool value. This argument is used to dispatch to the proper source
-code depending on the vlaue of \c VectorSet::value_type.
-
-\param transpose
-See \c RevSparseHes(q, s).
-
-\param q
-See \c RevSparseHes(q, s).
-
-\param s
-See \c RevSparseHes(q, s).
-
-\param h
-is the return value for the corresponging call to \c RevSparseJac(q, s).
-*/
-template <class Base>
-template <class VectorSet>
-void ADFun<Base>::RevSparseHesCase(
-	bool              set_type         ,
-	bool              transpose        ,
-	size_t            q                ,
-	const VectorSet&  s                ,
-	VectorSet&        h                )
-{	size_t n = Domain();
-	h.resize(q * n );
-
-	CPPAD_ASSERT_KNOWN(
-		for_jac_sparse_pack_.n_set() > 0,
-		"RevSparseHes: previous stored call to ForSparseJac did not "
-		"use bool for the elements of r."
-	);
-	CPPAD_ASSERT_UNKNOWN( for_jac_sparse_set_.n_set() == 0 );
-	CPPAD_ASSERT_UNKNOWN( for_jac_sparse_pack_.n_set() == num_var_tape_  );
-
-	// use sparse_pack for the calculation
-	CppAD::RevSparseHesBool(
-		transpose                ,
-		q                        ,
-		s                        ,
-		h                        ,
-		num_var_tape_            ,
-		dep_taddr_               ,
-		ind_taddr_               ,
-		play_                    ,
-		for_jac_sparse_pack_
-	);
-}
-/*!
-Private helper function for RevSparseHes(q, s).
-
-All of the description in the public member function RevSparseHes(q, s)
-applies.
-
-\param set_type
-is a \c std::set<size_t> value.
-This argument is used to dispatch to the proper source
-code depending on the vlaue of \c VectorSet::value_type.
-
-\param transpose
-See \c RevSparseHes(q, s).
-
-\param q
-See \c RevSparseHes(q, s).
-
-\param s
-See \c RevSparseHes(q, s).
-
-\param h
-is the return value for the corresponging call to \c RevSparseJac(q, s).
-*/
-template <class Base>
-template <class VectorSet>
-void ADFun<Base>::RevSparseHesCase(
-	const std::set<size_t>&   set_type         ,
-	bool                      transpose        ,
-	size_t                    q                ,
-	const VectorSet&          s                ,
-	VectorSet&                h                )
-{	size_t n = Domain();
-	if( transpose )
-		h.resize(n);
-	else	h.resize(q);
-
-	CPPAD_ASSERT_KNOWN(
-		for_jac_sparse_set_.n_set() > 0,
-		"RevSparseHes: previous stored call to ForSparseJac did not "
-		"use std::set<size_t> for the elements of r."
-	);
-	CPPAD_ASSERT_UNKNOWN( for_jac_sparse_pack_.n_set() == 0 );
-	CPPAD_ASSERT_UNKNOWN( for_jac_sparse_set_.n_set() == num_var_tape_  );
-
-	// use sparse_pack for the calculation
-	CppAD::RevSparseHesSet(
-		transpose                ,
-		q                        ,
-		s                        ,
-		h                        ,
-		num_var_tape_            ,
-		dep_taddr_               ,
-		ind_taddr_               ,
-		play_                    ,
-		for_jac_sparse_set_
-	);
 }
 // ===========================================================================
 // RevSparseHesCheckpoint
