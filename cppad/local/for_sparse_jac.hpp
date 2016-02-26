@@ -103,8 +103,10 @@ $codei%
 After this call, $icode%f%.size_forward_set()%$$ will return zero.
 
 $head x$$
-the sparsity pattern is valid for all values of the independent
-variables in $latex x \in B^n$$
+If the operation sequence in $icode f$$ is
+$cref/independent/glossary/Operation/Independent/$$ of
+the independent variables in $latex x \in B^n$$,
+the sparsity pattern is valid for all values of
 (even if it has $cref CondExp$$ or $cref VecAD$$ operations).
 
 $head q$$

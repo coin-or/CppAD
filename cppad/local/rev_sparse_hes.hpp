@@ -37,7 +37,6 @@ $icode%h% = %f%.RevSparseHes(%q%, %s%)
 %$$
 $icode%h% = %f%.RevSparseHes(%q%, %s%, %transpose%)%$$
 
-
 $head Purpose$$
 We use $latex F : \B{R}^n \rightarrow \B{R}^m$$ to denote the
 $cref/AD function/glossary/AD Function/$$ corresponding to $icode f$$.
@@ -67,8 +66,10 @@ $codei%
 %$$
 
 $head x$$
-the sparsity pattern is valid for all values of the independent
-variables in $latex x \in \B{R}^n$$
+If the operation sequence in $icode f$$ is
+$cref/independent/glossary/Operation/Independent/$$ of
+the independent variables in $latex x \in B^n$$,
+the sparsity pattern is valid for all values of
 (even if it has $cref CondExp$$ or $cref VecAD$$ operations).
 
 $head q$$

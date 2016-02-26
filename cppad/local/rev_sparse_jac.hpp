@@ -33,7 +33,6 @@ $$
 $section Jacobian Sparsity Pattern: Reverse Mode$$
 $mindex RevSparseJac sparse$$
 
-
 $head Syntax$$
 $icode%s% = %f%.RevSparseJac(%q%, %r%)
 %$$
@@ -60,8 +59,10 @@ $codei%
 %$$
 
 $head x$$
-the sparsity pattern is valid for all values of the independent
-variables in $latex x \in B^n$$
+If the operation sequence in $icode f$$ is
+$cref/independent/glossary/Operation/Independent/$$ of
+the independent variables in $latex x \in B^n$$,
+the sparsity pattern is valid for all values of
 (even if it has $cref CondExp$$ or $cref VecAD$$ operations).
 
 $head q$$

@@ -22,6 +22,8 @@ $spell
 	std
 	namespace
 	cppad
+	Hes
+	Jac
 $$
 
 $section Changes and Additions to CppAD During 2016$$
@@ -31,6 +33,15 @@ The sections listed below contain a list of the changes to CppAD
 in reverse order by date.
 The purpose of these sections is to
 assist you in learning about changes between various versions of CppAD.
+
+$head 02-26$$
+The condition that the operation sequence in $icode f$$ is
+$cref/independent/glossary/Operation/Independent/$$ of
+the independent variables was added to the statement about
+the validity of the sparsity patterns; see $icode x$$ in
+$cref/ForSparseJac/ForSparseJac/x/$$,
+$cref/RevSparseJac/RevSparseJac/x/$$, and
+$cref/RevSparseHes/RevSparseHes/x/$$.
 
 $head 02-25$$
 The $cref cmake$$ command line argument $code cppad_sparse_list$$
