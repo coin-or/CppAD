@@ -197,8 +197,7 @@ private:
 	template <class VectorSet>
 	void ForSparseHesCase(
 		bool               set_type  ,
-		bool               transpose ,
-		size_t             q         ,
+		const VectorSet&   r         ,
 		const VectorSet&   s         ,
 		VectorSet&         h
 	);
@@ -207,8 +206,7 @@ private:
 	template <class VectorSet>
 	void ForSparseHesCase(
 		const std::set<size_t>&  set_type  ,
-		bool                     transpose ,
-		size_t                   q         ,
+		const VectorSet&         r         ,
 		const VectorSet&         s         ,
 		VectorSet&               h
 	);
@@ -342,14 +340,13 @@ public:
 	// (see doxygen documentation in rev_sparse_hes.hpp)
 	template <typename VectorSet>
 	VectorSet ForSparseHes(
-		size_t q, const VectorSet &s, bool transpose = false
+		const VectorSet &r, const VectorSet &s
 	);
 	// internal set sparsity version of ForSparseHes
 	// (used by checkpoint functions only)
 	void ForSparseHesCheckpoint(
-		size_t                        q         ,
+		vector<bool>&                 r         ,
 		vector<bool>&                 s         ,
-		bool                          transpose ,
 		sparse_list&                  h
 	);
 	// reverse mode Hessian sparsity

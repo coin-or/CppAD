@@ -33,30 +33,26 @@ $$
 $section Hessian Sparsity Pattern: Reverse Mode$$
 
 $head Syntax$$
-$icode%h% = %f%.ForSparseHes(%q%, %s%)
+$icode%h% = %f%.ForSparseHes(%r%, %s%)
 %$$
-$icode%h% = %f%.ForSparseHes(%q%, %s%, %transpose%)%$$
 
 $head Purpose$$
 We use $latex F : \B{R}^n \rightarrow \B{R}^m$$ to denote the
 $cref/AD function/glossary/AD Function/$$ corresponding to $icode f$$.
-For a fixed matrix $latex R \in \B{R}^{n \times q}$$
-and a fixed vector $latex S \in \B{R}^{1 \times m}$$,
 we define
 $latex \[
 \begin{array}{rcl}
 H(x)
 & = & \partial_x \left[ \partial_u S * F[ x + R * u ] \right]_{u=0}
 \\
-& = & R^\R{T} * (S * F)^{(2)} ( x )
-\\
-H(x)^\R{T}
-& = & (S * F)^{(2)} ( x ) * R
+& = & R^\R{T} * (S * F)^{(2)} ( x ) R
 \end{array}
 \] $$
+Where $latex R \in \B{R}^{n \times n}$ is a diagonal matrix
+and $latex S \in \B{R}^{1 \times m}$ is a row vector.
 Given a
 $cref/sparsity pattern/glossary/Sparsity Pattern/$$
-for the matrix $latex R$$ and the vector $latex S$$,
+for the diagonal of $latex R$$ and the vector $latex S$$,
 $code ForSparseHes$$ returns a sparsity pattern for the $latex H(x)$$.
 
 $head f$$
@@ -65,6 +61,15 @@ $codei%
 	const ADFun<%Base%> %f%
 %$$
 
+$subhead ForSparseJac$$
+The $cref ForSparseJac$$ sparsity pattern stored in $icode f$$
+after this call corresponds to
+$codei%
+	%f%.ForSparseJac(%q%, %r_matrix%)
+%$$
+where $icode q$$ is equal to $icode n$ and
+$icode r_matrix$ is the sparsity pattern for the matrix $icode R$$.
+
 $head x$$
 If the operation sequence in $icode f$$ is
 $cref/independent/glossary/Operation/Independent/$$ of
@@ -72,37 +77,22 @@ the independent variables in $latex x \in B^n$$,
 the sparsity pattern is valid for all values of
 (even if it has $cref CondExp$$ or $cref VecAD$$ operations).
 
-$head q$$
-The argument $icode q$$ has prototype
-$codei%
-	size_t %q%
-%$$
-It specifies the number of columns in $latex R \in \B{R}^{n \times q}$$
-and the number of rows in $latex H(x) \in \B{R}^{q \times n}$$.
-It must be the same value as in the previous $cref ForSparseJac$$ call
-$codei%
-	%f%.ForSparseJac(%q%, %r%, %r_transpose%)
-%$$
-Note that if $icode r_transpose$$ is true, $icode r$$ in the call above
-corresponding to $latex R^\R{T} \in \B{R}^{q \times n}$$
-
-$head transpose$$
-The argument $icode transpose$$ has prototype
-$codei%
-	bool %transpose%
-%$$
-The default value $code false$$ is used when $icode transpose$$ is not present.
-
-
 $head r$$
-The matrix $latex R$$ is specified by the previous call
+The argument $icode r$$ has prototype
 $codei%
-	%f%.ForSparseJac(%q%, %r%, %transpose%)
+	const %VectorSet%& %r%
 %$$
-see $cref/r/ForSparseJac/r/$$.
-The type of the elements of
-$cref/VectorSet/ForSparseHes/VectorSet/$$ must be the
-same as the type of the elements of $icode r$$.
+(see $cref/VectorSet/ForSparseHes/VectorSet/$$ below)
+If it has elements of type $code bool$$,
+its size is $latex n$$.
+If it has elements of type $code std::set<size_t>$$,
+its size is one and all the elements of $icode%s%[0]%$$
+are between zero and $latex n - 1$$.
+It specifies a
+$cref/sparsity pattern/glossary/Sparsity Pattern/$$
+for the diagonal of $latex R$$.
+The fewer non-zero elements in this sparstiy pattern,
+the faster the calculation should be.
 
 $head s$$
 The argument $icode s$$ has prototype
@@ -118,6 +108,9 @@ are between zero and $latex m - 1$$.
 It specifies a
 $cref/sparsity pattern/glossary/Sparsity Pattern/$$
 for the vector $icode S$$.
+The fewer non-zero elements in this sparstiy pattern,
+the faster the calculation should be and the sparses the matrix
+$latex H(x)$$ should be.
 
 $head h$$
 The result $icode h$$ has prototype
@@ -125,26 +118,14 @@ $codei%
 	%VectorSet%& %h%
 %$$
 (see $cref/VectorSet/ForSparseHes/VectorSet/$$ below).
-
-$subhead transpose false$$
 If $icode h$$ has elements of type $code bool$$,
-its size is $latex q * n$$.
+its size is $latex n * n$$.
 If it has elements of type $code std::set<size_t>$$,
-its size is $latex q$$ and all the set elements are between
+its size is $latex n$$ and all the set elements are between
 zero and $icode%n%-1%$$ inclusive.
 It specifies a
 $cref/sparsity pattern/glossary/Sparsity Pattern/$$
 for the matrix $latex H(x)$$.
-
-$subhead transpose true$$
-If $icode h$$ has elements of type $code bool$$,
-its size is $latex n * q$$.
-If it has elements of type $code std::set<size_t>$$,
-its size is $latex n$$ and all the set elements are between
-zero and $icode%q%-1%$$ inclusive.
-It specifies a
-$cref/sparsity pattern/glossary/Sparsity Pattern/$$
-for the matrix $latex H(x)^\R{T}$$.
 
 $head VectorSet$$
 The type $icode VectorSet$$ must be a $cref SimpleVector$$ class with
@@ -155,23 +136,6 @@ of the difference.
 The type of the elements of
 $cref/VectorSet/ForSparseHes/VectorSet/$$ must be the
 same as the type of the elements of $icode r$$.
-
-$head Entire Sparsity Pattern$$
-Suppose that $latex q = n$$ and
-$latex R \in \B{R}^{n \times n}$$ is the $latex n \times n$$ identity matrix.
-Further suppose that the $latex S$$ is the $th k$$
-$cref/elementary vector/glossary/Elementary Vector/$$; i.e.
-$latex \[
-S_j = \left\{ \begin{array}{ll}
-	1  & {\rm if} \; j = k
-	\\
-	0  & {\rm otherwise}
-\end{array} \right.
-\] $$
-In this case,
-the corresponding value $icode h$$ is a
-sparsity pattern for the Hessian matrix
-$latex F_k^{(2)} (x) \in \B{R}^{n \times n}$$.
 
 $head Example$$
 $children%
@@ -206,49 +170,35 @@ applies.
 is a \c bool value. This argument is used to dispatch to the proper source
 code depending on the vlaue of \c VectorSet::value_type.
 
-\param transpose
-See \c ForSparseHes(q, s).
-
-\param q
-See \c ForSparseHes(q, s).
+\param r
+See \c ForSparseHes(r, s).
 
 \param s
-See \c ForSparseHes(q, s).
+See \c ForSparseHes(r, s).
 
 \param h
-is the return value for the corresponging call to \c RevSparseJac(q, s).
+is the return value for the corresponging call to \c ForSparseJac(q, s).
 */
 template <class Base>
 template <class VectorSet>
 void ADFun<Base>::ForSparseHesCase(
 	bool              set_type         ,
-	bool              transpose        ,
-	size_t            q                ,
+	const VectorSet&  r                ,
 	const VectorSet&  s                ,
 	VectorSet&        h                )
 {	size_t n = Domain();
 	size_t m = Range();
 	//
-	h.resize(q * n );
-
-	CPPAD_ASSERT_KNOWN(
-		for_jac_sparse_pack_.n_set() > 0,
-		"ForSparseHes: previous stored call to ForSparseJac did not "
-		"use bool for the elements of r."
-	);
-	CPPAD_ASSERT_UNKNOWN( for_jac_sparse_set_.n_set() == 0 );
-	CPPAD_ASSERT_UNKNOWN( for_jac_sparse_pack_.n_set() == num_var_tape_  );
+	for_jac_sparse_set_.resize(0, 0);
+	for_jac_sparse_pack_.resize(0, 0);
 	//
-	// temporary indices
-	size_t i, j;
-
 	// check Vector is Simple VectorSet class with bool elements
 	CheckSimpleVector<bool, VectorSet>();
-
+	//
 	CPPAD_ASSERT_KNOWN(
-		q == for_jac_sparse_pack_.end(),
-		"ForSparseHes: q is not equal to its value\n"
-		"in the previous call to ForSparseJac with this ADFun object."
+		size_t(r.size()) == n,
+		"ForSparseHes: size of r is not equal to\n"
+		"domain dimension for ADFun object."
 	);
 	CPPAD_ASSERT_KNOWN(
 		size_t(s.size()) == m,
@@ -256,18 +206,35 @@ void ADFun<Base>::ForSparseHesCase(
 		"range dimension for ADFun object."
 	);
 	//
+	// sparsity pattern corresponding to r
+	for_jac_sparse_pack_.resize(num_var_tape_, n + 1);
+	for(size_t i = 0; i < n; i++)
+	{	CPPAD_ASSERT_UNKNOWN( ind_taddr_[i] < n + 1 );
+		// ind_taddr_[i] is operator taddr for i-th independent variable
+		CPPAD_ASSERT_UNKNOWN( play_.GetOp( ind_taddr_[i] ) == InvOp );
+		//
+		if( r[i] )
+			for_jac_sparse_pack_.add_element( ind_taddr_[i], ind_taddr_[i] );
+	}
+	// compute forward Jacobiain sparsity pattern
+	bool dependency = false;
+	ForJacSweep(
+		dependency,
+		n,
+		num_var_tape_,
+		&play_,
+		for_jac_sparse_pack_
+	);
 	// sparsity pattern correspnding to s
 	sparse_pack rev_jac_sparsity;
 	rev_jac_sparsity.resize(num_var_tape_, 1);
-	for(i = 0; i < m; i++)
+	for(size_t i = 0; i < m; i++)
 	{	CPPAD_ASSERT_UNKNOWN( dep_taddr_[i] < num_var_tape_ );
 		if( s[i] )
 			rev_jac_sparsity.add_element( dep_taddr_[i], 0);
 	}
-	//
 	// compute reverse sparsity pattern for dependency analysis
 	// (note that we are only want non-zero derivatives not true dependency)
-	bool dependency = false;
 	RevJacSweep(
 		dependency,
 		n,
@@ -277,7 +244,7 @@ void ADFun<Base>::ForSparseHesCase(
 	);
 	// vector of sets that will hold the forward Hessain values
 	sparse_pack for_hes_sparsity;
-	for_hes_sparsity.resize(n+1, q);
+	for_hes_sparsity.resize(n+1, n+1);
 	//
 	// compute the Hessian sparsity patterns
 	ForHesSweep(
@@ -288,34 +255,25 @@ void ADFun<Base>::ForSparseHesCase(
 		rev_jac_sparsity,
 		for_hes_sparsity
 	);
-
-	// return values corresponding to independent variables
-	CPPAD_ASSERT_UNKNOWN( size_t(h.size()) == n * q );
-	for(j = 0; j < n; j++)
-	{	for(i = 0; i < q; i++)
-		{	if( transpose )
-				h[ j * q + i ] = false;
-			else	h[ i * n + j ] = false;
-		}
+	// initialize return values corresponding to independent variables
+	h.resize(n * n);
+	for(size_t i = 0; i < n; i++)
+	{	for(size_t j = 0; j < n; j++)
+			h[ i * n + j ] = false;
 	}
-
-	// j is index corresponding to reverse mode partial
-	for(j = 0; j < n; j++)
-	{	CPPAD_ASSERT_UNKNOWN( ind_taddr_[j] < num_var_tape_ );
-
-		// ind_taddr_[j] is operator taddr for j-th independent variable
-		CPPAD_ASSERT_UNKNOWN( ind_taddr_[j] == j + 1 );
-		CPPAD_ASSERT_UNKNOWN( play_.GetOp( ind_taddr_[j] ) == InvOp );
+	// copy to result pattern
+	CPPAD_ASSERT_UNKNOWN( for_hes_sparsity.end() == n+1 );
+	for(size_t i = 0; i < n; i++)
+	{	// ind_taddr_[i] is operator taddr for i-th independent variable
+		CPPAD_ASSERT_UNKNOWN( ind_taddr_[i] == i + 1 );
+		CPPAD_ASSERT_UNKNOWN( play_.GetOp( ind_taddr_[i] ) == InvOp );
 
 		// extract the result from for_hes_sparsity
-		CPPAD_ASSERT_UNKNOWN( for_hes_sparsity.end() == q );
-		for_hes_sparsity.begin(j + 1);
-		i = for_hes_sparsity.next_element();
-		while( i < q )
-		{	if( transpose )
-				h[ j * q + i ] = true;
-			else	h[ i * n + j ] = true;
-			i = for_hes_sparsity.next_element();
+		for_hes_sparsity.begin( ind_taddr_[i] );
+		size_t j = for_hes_sparsity.next_element();
+		while( j < for_hes_sparsity.end() )
+		{	CPPAD_ASSERT_UNKNOWN( 0 < j )
+				h[ i * n + (j-1) ] = true;
 		}
 	}
 }
@@ -330,68 +288,70 @@ is a \c std::set<size_t> value.
 This argument is used to dispatch to the proper source
 code depending on the vlaue of \c VectorSet::value_type.
 
-\param transpose
-See \c ForSparseHes(q, s).
-
-\param q
-See \c ForSparseHes(q, s).
+\param r
+See \c ForSparseHes(r, s).
 
 \param s
 See \c ForSparseHes(q, s).
 
 \param h
-is the return value for the corresponging call to \c RevSparseJac(q, s).
+is the return value for the corresponging call to \c ForSparseJac(q, s).
 */
 template <class Base>
 template <class VectorSet>
 void ADFun<Base>::ForSparseHesCase(
 	const std::set<size_t>&   set_type         ,
-	bool                      transpose        ,
-	size_t                    q                ,
+	const VectorSet&          r                ,
 	const VectorSet&          s                ,
 	VectorSet&                h                )
 {	size_t n = Domain();
 # ifndef NDEBUG
 	size_t m = Range();
 # endif
+	for_jac_sparse_set_.resize(0, 0);
+	for_jac_sparse_pack_.resize(0, 0);
 	//
-	if( transpose )
-		h.resize(n);
-	else	h.resize(q);
-
-	CPPAD_ASSERT_KNOWN(
-		for_jac_sparse_set_.n_set() > 0,
-		"ForSparseHes: previous stored call to ForSparseJac did not "
-		"use std::set<size_t> for the elements of r."
-	);
-	CPPAD_ASSERT_UNKNOWN( for_jac_sparse_pack_.n_set() == 0 );
-	CPPAD_ASSERT_UNKNOWN( for_jac_sparse_set_.n_set() == num_var_tape_  );
-	//
-	// temporary indices
-	size_t i, j;
 	std::set<size_t>::const_iterator itr;
 	//
 	// check VectorSet is Simple Vector class with sets for elements
 	CheckSimpleVector<std::set<size_t>, VectorSet>(
 		one_element_std_set<size_t>(), two_element_std_set<size_t>()
 	);
-	//
 	CPPAD_ASSERT_KNOWN(
-		q == for_jac_sparse_set_.end(),
-		"ForSparseHes: q is not equal to its value\n"
-		"in the previous call to ForSparseJac with this ADFun object."
+		r.size() == 1,
+		"ForSparseHes: size of s is not equal to one."
 	);
 	CPPAD_ASSERT_KNOWN(
 		s.size() == 1,
 		"ForSparseHes: size of s is not equal to one."
 	);
 	//
+	// sparsity pattern corresponding to r
+	for_jac_sparse_set_.resize(num_var_tape_, n + 1);
+	itr = r[0].begin();
+	while( itr != r[0].end() )
+	{	size_t i = *itr;
+		CPPAD_ASSERT_UNKNOWN( ind_taddr_[i] < n + 1 );
+		// ind_taddr_[i] is operator taddr for i-th independent variable
+		CPPAD_ASSERT_UNKNOWN( play_.GetOp( ind_taddr_[i] ) == InvOp );
+		//
+		for_jac_sparse_set_.add_element( ind_taddr_[i], ind_taddr_[i] );
+	}
+	// compute forward Jacobiain sparsity pattern
+	bool dependency = false;
+	ForJacSweep(
+		dependency,
+		n,
+		num_var_tape_,
+		&play_,
+		for_jac_sparse_set_
+	);
 	// sparsity pattern correspnding to s
 	sparse_list rev_jac_sparsity;
 	rev_jac_sparsity.resize(num_var_tape_, 1);
 	itr = s[0].begin();
 	while( itr != s[0].end() )
-	{	i = *itr++;
+	{	size_t i = *itr++;
 		CPPAD_ASSERT_KNOWN(
 			i < m,
 			"ForSparseHes: an element of the set s[0] has value "
@@ -403,7 +363,6 @@ void ADFun<Base>::ForSparseHesCase(
 	//
 	// compute reverse sparsity pattern for dependency analysis
 	// (note that we are only want non-zero derivatives not true dependency)
-	bool dependency = false;
 	RevJacSweep(
 		dependency,
 		n,
@@ -414,8 +373,8 @@ void ADFun<Base>::ForSparseHesCase(
 	//
 	// vector of sets that will hold reverse Hessain values
 	sparse_list for_hes_sparsity;
-	for_hes_sparsity.resize(n+1, q);
-
+	for_hes_sparsity.resize(n+1, n+1);
+	//
 	// compute the Hessian sparsity patterns
 	ForHesSweep(
 		n,
@@ -425,26 +384,20 @@ void ADFun<Base>::ForSparseHesCase(
 		rev_jac_sparsity,
 		for_hes_sparsity
 	);
-
 	// return values corresponding to independent variables
 	// j is index corresponding to reverse mode partial
-	CPPAD_ASSERT_UNKNOWN( size_t(h.size()) == q || transpose );
-	CPPAD_ASSERT_UNKNOWN( size_t(h.size()) == n || ! transpose );
-	for(j = 0; j < n; j++)
-	{	CPPAD_ASSERT_UNKNOWN( ind_taddr_[j] < num_var_tape_ );
-		CPPAD_ASSERT_UNKNOWN( ind_taddr_[j] == j + 1 );
-		CPPAD_ASSERT_UNKNOWN( play_.GetOp( ind_taddr_[j] ) == InvOp );
+	h.resize(n);
+	CPPAD_ASSERT_UNKNOWN( for_hes_sparsity.end() == n+1 );
+	for(size_t i = 0; i < n; i++)
+	{	CPPAD_ASSERT_UNKNOWN( ind_taddr_[i] == i + 1 );
+		CPPAD_ASSERT_UNKNOWN( play_.GetOp( ind_taddr_[i] ) == InvOp );
 
 		// extract the result from for_hes_sparsity
-		// and add corresponding elements to result sets in h
-		CPPAD_ASSERT_UNKNOWN( for_hes_sparsity.end() == q );
-		for_hes_sparsity.begin(j+1);
-		i = for_hes_sparsity.next_element();
-		while( i < q )
-		{	if( transpose )
-				h[j].insert(i);
-			else	h[i].insert(j);
-			i = for_hes_sparsity.next_element();
+		for_hes_sparsity.begin( ind_taddr_[i] );
+		size_t j = for_hes_sparsity.next_element();
+		while( j < for_hes_sparsity.end() )
+		{	CPPAD_ASSERT_UNKNOWN( 0 < j )
+				h[i].insert(j-1);
 		}
 	}
 }
@@ -467,24 +420,11 @@ is the base type for this recording.
 is a simple vector with elements of type \c bool
 or \c std::set<size_t>.
 
-\param transpose
-is true (false) if \c is is equal to \f$ H(x) \f$ (\f$ H(x)^T \f$)
-where
-\f[
-	H(x) = R^T (S * F)^{(2)} (x)
-\f]
-where \f$ F \f$ is the function corresponding to the operation sequence
-and \a x is any argument value.
-
-\param q
-is the value of \a q in the
-by the previous call of the form
-\verbatim
-	f.ForSparseJac(q, r, packed)
-\endverbatim
-The value \c r in this call is a sparsity pattern for the matrix \f$ R \f$.
-The type of the element of \c r for the previous call to \c ForSparseJac
-must be the same as the type of the elements of \c s.
+\param r
+is a vector with size \c n that specifies the sparsity pattern
+for the diagonal of the matrix \f$ R \f$,
+where \c n is the number of independent variables
+corresponding to the operation sequence stored in \a play.
 
 \param s
 is a vector with size \c m that specifies the sparsity pattern
@@ -493,10 +433,9 @@ where \c m is the number of dependent variables
 corresponding to the operation sequence stored in \a play.
 
 \return
-If \c transpose is false (true),
-the return vector is a sparsity pattern for \f$ H(x) \f$ (\f$ H(x)^T \f$).
+The return vector is a sparsity pattern for \f$ H(x) \f$
 \f[
-	H(x) = R^T ( S * F)^{(2)} (x)
+	H(x) = R^T ( S * F)^{(2)} (x) R
 \f]
 where \f$ F \f$ is the function corresponding to the operation sequence
 and \a x is any argument value.
@@ -505,7 +444,7 @@ and \a x is any argument value.
 template <class Base>
 template <class VectorSet>
 VectorSet ADFun<Base>::ForSparseHes(
-	size_t q,  const VectorSet& s, bool transpose
+	const VectorSet& r, const VectorSet& s
 )
 {	VectorSet h;
 	typedef typename VectorSet::value_type Set_type;
@@ -514,8 +453,7 @@ VectorSet ADFun<Base>::ForSparseHes(
 	// forward sparse Jacobian.
 	ForSparseHesCase(
 		Set_type()    ,
-		transpose     ,
-		q             ,
+		r             ,
 		s             ,
 		h
 	);
@@ -530,21 +468,11 @@ Hessian sparsity patterns calculation used by checkpoint functions.
 \tparam Base
 is the base type for this recording.
 
-\param transpose
-is true (false) h is equal to \f$ H(x) \f$ (\f$ H(x)^T \f$)
-where
-\f[
-	H(x) = R^T (S * F)^{(2)} (x)
-\f]
-where \f$ F \f$ is the function corresponding to the operation sequence
-and \f$ x \f$ is any argument value.
-
-\param q
-is the value of q in the by the previous call of the form
-\verbatim
-	f.ForSparseJac(q, r)
-\endverbatim
-The value r in this call is a sparsity pattern for the matrix \f$ R \f$.
+\param r
+is a vector with size n that specifies the sparsity pattern
+for the diagonal of \f$ R \f$,
+where n is the number of independent variables
+corresponding to the operation sequence stored in play_.
 
 \param s
 is a vector with size m that specifies the sparsity pattern
@@ -554,8 +482,7 @@ corresponding to the operation sequence stored in play_.
 
 \param h
 The input size and elements of h do not matter.
-On output, h is the sparsity pattern for the matrix \f$ H(x) \f$
-or \f$ H(x)^T \f$ depending on transpose.
+On output, h is the sparsity pattern for the matrix \f$ H(x) R \f$.
 
 \par Assumptions
 The forward jacobian sparsity pattern must be currently stored
@@ -563,17 +490,16 @@ in this ADFUN object.
 */
 template <class Base>
 void ADFun<Base>::ForSparseHesCheckpoint(
-	size_t                        q         ,
+	vector<bool>&                 r         ,
 	vector<bool>&                 s         ,
-	bool                          transpose ,
 	sparse_list&                  h         )
 {	size_t n = Domain();
 	size_t m = Range();
 
+# ifdef NOT_DEFINED
 	// checkpoint functions should get this right
 	CPPAD_ASSERT_UNKNOWN( for_jac_sparse_pack_.n_set() == 0 );
-	CPPAD_ASSERT_UNKNOWN( for_jac_sparse_set_.n_set() == num_var_tape_ );
-	CPPAD_ASSERT_UNKNOWN( for_jac_sparse_set_.end()   == q );
+	CPPAD_ASSERT_UNKNOWN( for_jac_sparse_set_.n_set() == 0   );
 	CPPAD_ASSERT_UNKNOWN( s.size()                    == m );
 
 	// Array that holds the reverse Jacobiain dependcy flags.
@@ -589,7 +515,7 @@ void ADFun<Base>::ForSparseHesCheckpoint(
 
 	// holds forward Hessian sparsity pattern for all variables
 	sparse_list for_hes_sparsity;
-	for_hes_sparsity.resize(n+1, q);
+	for_hes_sparsity.resize(n+1, n+1);
 
 	// compute Hessian sparsity pattern for all variables
 	ForHesSweep(
@@ -603,9 +529,9 @@ void ADFun<Base>::ForSparseHesCheckpoint(
 
 	// dimension the return value
 	if( transpose )
-		h.resize(n, q);
+		h.resize(n, n);
 	else
-		h.resize(q, n);
+		h.resize(n, n);
 
 	// j is index corresponding to reverse mode partial
 	for(size_t j = 0; j < n; j++)
@@ -626,6 +552,7 @@ void ADFun<Base>::ForSparseHesCheckpoint(
 			i = for_hes_sparsity.next_element();
 		}
 	}
+# endif
 }
 
 } // END_CPPAD_NAMESPACE

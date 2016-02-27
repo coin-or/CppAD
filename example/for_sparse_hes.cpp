@@ -72,16 +72,11 @@ bool BoolCases(void)
 	// create f: x -> y and stop tape recording
 	CppAD::ADFun<double> f(ax, ay);
 
-	// sparsity pattern for the identity matrix
-	Vector r(n * n);
+	// sparsity pattern for diagonal of identity matrix
+	Vector r(n);
 	size_t i, j;
 	for(i = 0; i < n; i++)
-	{	for(j = 0; j < n; j++)
-			r[ i * n + j ] = (i == j);
-	}
-
-	// compute sparsity pattern for J(x) = F^{(1)} (x)
-	f.ForSparseJac(n, r);
+		r[ i ] = true;
 
 	// compute sparsity pattern for H(x) = F_0^{(2)} (x)
 	Vector s(m);
@@ -89,35 +84,24 @@ bool BoolCases(void)
 		s[i] = false;
 	s[0] = true;
 	Vector h(n * n);
-	h    = f.ForSparseHes(n, s);
+	h    = f.ForSparseHes(r, s);
 
 	// check values
 	for(i = 0; i < n; i++)
 		for(j = 0; j < n; j++)
 			ok &= (h[ i * n + j ] == check_f0[ i * n + j ] );
 
-# ifdef NOT_DEFINED
 	// compute sparsity pattern for H(x) = F_1^{(2)} (x)
 	for(i = 0; i < m; i++)
 		s[i] = false;
 	s[1] = true;
-	h    = f.ForSparseHes(n, s);
+	h    = f.ForSparseHes(r, s);
 
 	// check values
 	for(i = 0; i < n; i++)
 		for(j = 0; j < n; j++)
 			ok &= (h[ i * n + j ] == check_f1[ i * n + j ] );
 
-	// call that transposed the result
-	bool transpose = true;
-	h    = f.ForSparseHes(n, s, transpose);
-
-	// This h is symmetric, because R is symmetric, not really testing here
-	for(i = 0; i < n; i++)
-		for(j = 0; j < n; j++)
-			ok &= (h[ j * n + i ] == check_f1[ i * n + j ] );
-
-# endif
 	return ok;
 }
 // define the template function SetCases<Vector> in empty namespace
@@ -145,23 +129,18 @@ bool SetCases(void)
 	// create f: x -> y and stop tape recording
 	CppAD::ADFun<double> f(ax, ay);
 
-	// sparsity pattern for the identity matrix
-	Vector r(n);
+	// sparsity pattern for the diagonal of the identity matrix
+	Vector r(0);
 	size_t i;
 	for(i = 0; i < n; i++)
-	{	assert( r[i].empty() );
-		r[i].insert(i);
-	}
-
-	// compute sparsity pattern for J(x) = F^{(1)} (x)
-	f.ForSparseJac(n, r);
+		r[0].insert(i);
 
 	// compute sparsity pattern for H(x) = F_0^{(2)} (x)
 	Vector s(1);
 	assert( s[0].empty() );
 	s[0].insert(0);
 	Vector h(n);
-	h    = f.ForSparseHes(n, s);
+	h    = f.ForSparseHes(r, s);
 
 	// check values
 	std::set<size_t>::iterator itr;
@@ -177,24 +156,12 @@ bool SetCases(void)
 	s[0].clear();
 	assert( s[0].empty() );
 	s[0].insert(1);
-	h    = f.ForSparseHes(n, s);
+	h    = f.ForSparseHes(r, s);
 
 	// check values
 	for(i = 0; i < n; i++)
 	{	for(j = 0; j < n; j++)
 		{	bool found = h[i].find(j) != h[i].end();
-			ok        &= (found == check_f1[i * n + j]);
-		}
-	}
-
-	// call that transposed the result
-	bool transpose = true;
-	h    = f.ForSparseHes(n, s, transpose);
-
-	// This h is symmetric, because R is symmetric, not really testing here
-	for(i = 0; i < n; i++)
-	{	for(j = 0; j < n; j++)
-		{	bool found = h[j].find(i) != h[j].end();
 			ok        &= (found == check_f1[i * n + j]);
 		}
 	}
