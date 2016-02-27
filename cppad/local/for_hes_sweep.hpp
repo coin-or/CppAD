@@ -199,18 +199,18 @@ void ForHesSweep(
 # endif
 
 	// Initialize
-	play->reverse_start(op, arg, i_op, i_var);
-	CPPAD_ASSERT_UNKNOWN( op == EndOp );
+	play->forward_start(op, arg, i_op, i_var);
+	CPPAD_ASSERT_UNKNOWN( op == BeginOp );
+	bool more_operators = true;
 # if CPPAD_FOR_HES_SWEEP_TRACE
 	std::cout << std::endl;
 	CppAD::vectorBool zf_value(limit);
 	CppAD::vectorBool zh_value(limit);
 # endif
-	bool more_operators = true;
 	while(more_operators)
 	{
 		// next op
-		play->reverse_next(op, arg, i_op, i_var);
+		play->forward_next(op, arg, i_op, i_var);
 # ifndef NDEBUG
 		if( i_op <= n )
 		{	CPPAD_ASSERT_UNKNOWN((op == InvOp) | (op == BeginOp));
@@ -218,8 +218,26 @@ void ForHesSweep(
 		else	CPPAD_ASSERT_UNKNOWN((op != InvOp) & (op != BeginOp));
 # endif
 
+		// does the Hessian in question have a non-zero derivative
+		// with respect to this variable
+		bool non_zero = rev_jac_sparse.is_element(i_var, 0);
+
 		// rest of information depends on the case
-		switch( op )
+		if( ! non_zero )
+		{	more_operators = op != EndOp;
+			//
+			if( op == CSumOp )
+			{	// CSumOp has a variable number of arguments
+				play->forward_csum(op, arg, i_op, i_var);
+			}
+			CPPAD_ASSERT_UNKNOWN( op != CSkipOp );
+			if( op == CSkipOp )
+			{	// CSkip has a variable number of arguments
+				play->forward_cskip(op, arg, i_op, i_var);
+			}
+			CPPAD_ASSERT_UNKNOWN( i_op < play->num_op_rec() );
+		}
+		else switch( op )
 		{
 			case AbsOp:
 			CPPAD_ASSERT_NARG_NRES(op, 1, 1)
@@ -322,11 +340,9 @@ void ForHesSweep(
 			break;
 # endif
 			// -------------------------------------------------
-
-			case BeginOp:
-			CPPAD_ASSERT_NARG_NRES(op, 1, 1)
-			more_operators = false;
-			break;
+			// case BeginOp:
+			// CPPAD_ASSERT_NARG_NRES(op, 1, 1)
+			// break;
 			// -------------------------------------------------
 
 			case CSkipOp:
@@ -414,6 +430,12 @@ void ForHesSweep(
 			i_var, arg[0], RevJac, for_jac_sparse, rev_hes_sparse
 			);
 # endif
+			break;
+			// -------------------------------------------------
+
+			case EndOp:
+			CPPAD_ASSERT_NARG_NRES(op, 0, 0);
+			more_operators = false;
 			break;
 			// -------------------------------------------------
 
@@ -540,8 +562,8 @@ void ForHesSweep(
 			case MulvvOp:
 			CPPAD_ASSERT_NARG_NRES(op, 2, 1)
 # ifdef NOT_DEFINED
-			reverse_sparse_hessian_mul_op(
-			i_var, arg, RevJac, for_jac_sparse, rev_hes_sparse
+			forward_sparse_hessian_mul_op(
+			i_var, arg, for_jac_sparse, for_hes_sparse
 			);
 # endif
 			break;
@@ -598,8 +620,8 @@ void ForHesSweep(
 			// cos(x), sin(x)
 			CPPAD_ASSERT_NARG_NRES(op, 1, 2)
 # ifdef NOT_DEFINED
-			reverse_sparse_hessian_nonlinear_unary_op(
-			i_var, arg[0], RevJac, for_jac_sparse, rev_hes_sparse
+			forward_sparse_hessian_nonlinear_unary_op(
+			i_var, arg[0], for_jac_sparse, rev_hes_sparse
 			);
 # endif
 			break;
@@ -1004,50 +1026,51 @@ void ForHesSweep(
 			CPPAD_ASSERT_UNKNOWN(0);
 		}
 # if CPPAD_FOR_HES_SWEEP_TRACE
-		for(j = 0; j < limit; j++)
-		{	zf_value[j] = false;
+		if( non_zero )
+		{	for(j = 0; j < limit; j++)
+			{	zf_value[j] = false;
 			zh_value[j] = false;
-		}
+			}
 # ifdef NOT_DEFINED
-		for_jac_sparse.begin(i_var);;
-		j = for_jac_sparse.next_element();;
-		while( j < limit )
-		{	zf_value[j] = true;
-			j = for_jac_sparse.next_element();
-		}
-		for_hes_sparse.begin(i_var);;
-		j = for_hes_sparse.next_element();;
-		while( j < limit )
-		{	zh_value[j] = true;
-			j = for_hes_sparse.next_element();
-		}
+			for_jac_sparse.begin(i_var);;
+			j = for_jac_sparse.next_element();;
+			while( j < limit )
+			{	zf_value[j] = true;
+				j = for_jac_sparse.next_element();
+			}
+			for_hes_sparse.begin(i_var);;
+			j = for_hes_sparse.next_element();;
+			while( j < limit )
+			{	zh_value[j] = true;
+				j = for_hes_sparse.next_element();
+			}
 # endif
-		printOp(
-			std::cout,
-			play,
-			i_op,
-			i_var,
-			op,
-			arg
-		);
-		// should also print RevJac[i_var], but printOpResult does not
-		// yet allow for this
-		if( NumRes(op) > 0 && op != BeginOp ) printOpResult(
-			std::cout,
-			1,
-			&zf_value,
-			1,
-			&zh_value
-		);
-		std::cout << std::endl;
+			printOp(
+				std::cout,
+				play,
+				i_op,
+				i_var,
+				op,
+				arg
+			);
+			// should also print RevJac[i_var], but printOpResult does not
+			// yet allow for this
+			if( NumRes(op) > 0 && op != BeginOp ) printOpResult(
+				std::cout,
+				1,
+				&zf_value,
+				1,
+				&zh_value
+			);
+			std::cout << std::endl;
+		}
 	}
 	std::cout << std::endl;
 # else
 	}
 # endif
-	// values corresponding to BeginOp
-	CPPAD_ASSERT_UNKNOWN( i_op == 0 );
-	CPPAD_ASSERT_UNKNOWN( i_var == 0 );
+	// value corresponding to EndOp
+	CPPAD_ASSERT_UNKNOWN( i_var + 1 == play->num_var_rec() );
 
 	return;
 }
