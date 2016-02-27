@@ -356,7 +356,6 @@ cppad_has_high_resolution_clock = @cppad_has_high_resolution_clock@
 cppad_has_mkstemp = @cppad_has_mkstemp@
 cppad_has_nullptr = @cppad_has_nullptr@
 cppad_has_rvalue = @cppad_has_rvalue@
-cppad_internal_sparse_set = @cppad_internal_sparse_set@
 cppad_max_num_threads = @cppad_max_num_threads@
 cppad_pkgconfig_cflags = @cppad_pkgconfig_cflags@
 cppad_pkgconfig_libs = @cppad_pkgconfig_libs@
@@ -407,7 +406,7 @@ top_srcdir = @top_srcdir@
 
 # $Id$
 # -----------------------------------------------------------------------------
-# CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-15 Bradley M. Bell
+# CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-16 Bradley M. Bell
 #
 # CppAD is distributed under multiple licenses. This distribution is under
 # the terms of the
@@ -525,6 +524,7 @@ nobase_myinclude_HEADERS = \
 	cppad/local/base_cond_exp.hpp \
 	cppad/local/base_double.hpp \
 	cppad/local/base_float.hpp \
+	cppad/local/base_hash.hpp \
 	cppad/local/base_limits.hpp \
 	cppad/local/base_std_math.hpp \
 	cppad/local/base_to_string.hpp \
@@ -564,8 +564,10 @@ nobase_myinclude_HEADERS = \
 	cppad/local/exp_op.hpp \
 	cppad/local/expm1.hpp \
 	cppad/local/expm1_op.hpp \
+	cppad/local/for_hes_sweep.hpp \
 	cppad/local/for_jac_sweep.hpp \
 	cppad/local/for_one.hpp \
+	cppad/local/for_sparse_hes.hpp \
 	cppad/local/for_sparse_jac.hpp \
 	cppad/local/for_two.hpp \
 	cppad/local/forward0sweep.hpp \

@@ -1,7 +1,7 @@
 #! /bin/bash -e
 # $Id$
 # -----------------------------------------------------------------------------
-# CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-15 Bradley M. Bell
+# CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-16 Bradley M. Bell
 #
 # CppAD is distributed under multiple licenses. This distribution is under
 # the terms of the
@@ -79,8 +79,8 @@ configure_file_list="
 # change version to current date
 if [ "$1" = "version" ]
 then
-	echo 'bin/version.sh copy'
-	bin/version.sh copy
+	echo 'bin/version.sh check'
+	bin/version.sh check
 	#
 	echo "OK: ./build.sh version"
 	exit 0
@@ -226,7 +226,7 @@ cat << EOF
 $dir_list \\
 CXX_FLAGS=\"$cxx_flags\" \\
 $special_types OPENMP_FLAGS=-fopenmp \\
---with-sparse_list --with-Documentation \\
+--with-Documentation \\
 --with-deprecated
 EOF
 	#
@@ -234,7 +234,7 @@ EOF
 		$dir_list \
 		CXX_FLAGS="$cxx_flags" \
 		$special_types OPENMP_FLAGS=-fopenmp \
-		--with-sparse_list --with-Documentation \
+		--with-Documentation \
 		--with-deprecated
 	#
 	for file in $configure_file_list
@@ -279,26 +279,26 @@ then
 	#
 	echo "mv doc.omh.save doc.omh"
 	      mv doc.omh.save doc.omh
-	#
+	# No longer run these because tested when bin/package.sh is run.
 	# Run automated checking of file names in original source directory
-	list="
-		check_define.sh
-		check_example.sh
-		check_if.sh
-		check_include_def.sh
-		check_include_file.sh
-		check_include_omh.sh
-		check_makefile.sh
-		check_op_code.sh
-		check_replace.sh
-		check_svn_id.sh
-		check_verbatim.sh
-	"
-	for check in $list
-	do
-		echo "bin/$check"
-		      bin/$check
-	done
+	# list="
+	#	check_define.sh
+	#	check_example.sh
+	#	check_if.sh
+	#	check_include_def.sh
+	#	check_include_file.sh
+	#	check_include_omh.sh
+	#	check_makefile.sh
+	#	check_op_code.sh
+	#	check_replace.sh
+	#	check_svn_id.sh
+	#	check_verbatim.sh
+	# "
+	# for check in $list
+	# do
+	#	echo "bin/$check"
+	#	      bin/$check
+	# done
 	# ----------------------------------------------------------------------
 	# Things to do in the build directory
 	# ----------------------------------------------------------------------
@@ -470,9 +470,10 @@ then
 	echo "bin/run_omhelp.sh xml  >> $log_file"
 	      bin/run_omhelp.sh xml  >> $log_dir/$log_file
 	#
+	# Developer documentation no longer works for auto-tools install
 	# test developer documentation
-	echo "./build.sh doxygen   >> $log_file"
-	      ./build.sh doxygen   >> $log_dir/$log_file
+	# echo "./build.sh doxygen   >> $log_file"
+	#      ./build.sh doxygen   >> $log_dir/$log_file
 	#
 	# ----------------------------------------------------------------------
 	# Things to do in the build/disribution/build directory

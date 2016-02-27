@@ -34,6 +34,10 @@ in reverse order by date.
 The purpose of these sections is to
 assist you in learning about changes between various versions of CppAD.
 
+$head 02-27$$
+The $code --with-sparse_set$$ and $code --with-sparse_set$$ options
+were removed from the $cref auto_tools$$ install procedure.
+
 $head 02-26$$
 The condition that the operation sequence in $icode f$$ is
 $cref/independent/glossary/Operation/Independent/$$ of

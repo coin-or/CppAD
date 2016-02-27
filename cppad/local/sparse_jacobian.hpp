@@ -320,7 +320,7 @@ is the base type for the recording that is stored in this
 is a simple vector class with elements of type \a Base.
 
 \tparam VectorSet
-is either \c sparse_pack, \c sparse_set or \c sparse_list.
+is either sparse_pack or sparse_list.
 
 \tparam VectorSize
 is a simple vector class with elements of type \c size_t.
@@ -517,7 +517,7 @@ is the base type for the recording that is stored in this
 is a simple vector class with elements of type \a Base.
 
 \tparam VectorSet
-is either \c sparse_pack, \c sparse_set or \c sparse_list.
+is either sparse_pack or sparse_list.
 
 \tparam VectorSize
 is a simple vector class with elements of type \c size_t.

@@ -99,6 +99,22 @@ AC_ARG_WITH(PrintFor, AC_HELP_STRING(
 if test "$PrintFor" = "yes" ; then
     AC_MSG_ERROR([--with-PrintFor not necessary, see install instructions.])
 fi
+AC_ARG_WITH(sparse_set,
+	AC_HELP_STRING([--with-sparse_set], [no longer available]),
+	[sparse_set="yes"],
+	[sparse_set="no"]
+)
+if test "$sparse_set" = "yes" ; then
+	AC_MSG_ERROR([--with-sparse_set is no longer available])
+fi
+AC_ARG_WITH(sparse_list,
+	AC_HELP_STRING([--with-sparse_list], [no longer necessary]),
+	[sparse_set="yes"],
+	[sparse_set="no"]
+)
+if test "$sparse_set" = "yes" ; then
+	AC_MSG_ERROR([--with-sparse_set is no longer necessary])
+fi
 dnl --------------------------------------------------------------------------
 AC_MSG_NOTICE([******  Check command line arguments that are used ***********])
 
@@ -186,32 +202,6 @@ if test "$eigenvector" = "yes" ; then
 else
 	AC_SUBST(cppad_eigenvector, 0)
 fi
-
-dnl Are we using sparse_set or sparse_list ----------------------------
-AC_MSG_CHECKING([--with-sparse_set])
-AC_ARG_WITH(sparse_set,
-	AC_HELP_STRING([--with-sparse_set], [default is not specified]),
-	[sparse_set="yes"],
-	[sparse_set="no"]
-)
-AC_MSG_RESULT([$sparse_set])
-dnl
-AC_MSG_CHECKING([--with-sparse_list])
-AC_ARG_WITH(sparse_list,
-	AC_HELP_STRING([--with-sparse_list], [default is not specified]),
-	[sparse_list="yes"],
-	[sparse_list="no"]
-)
-AC_MSG_RESULT([$sparse_list])
-if test "$sparse_set" = "yes" ; then
-	if test "$sparse_list" == "yes" ; then
-		AC_MSG_ERROR([cannot --with both sparse_set and sparse_list])
-	fi
-	AC_SUBST(cppad_internal_sparse_set, sparse_set)
-else
-	AC_SUBST(cppad_internal_sparse_set, sparse_list)
-fi
-
 
 dnl Are we including deprecated features in the install-----------
 AC_MSG_CHECKING([--with-deprecated])

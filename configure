@@ -726,7 +726,6 @@ POSTFIX_DIR
 cppad_deprecated
 CppAD_DEPRECATED_FALSE
 CppAD_DEPRECATED_TRUE
-cppad_internal_sparse_set
 cppad_eigenvector
 cppad_boostvector
 cppad_stdvector
@@ -832,13 +831,13 @@ with_Introduction
 with_Example
 with_TestMore
 with_PrintFor
+with_sparse_set
+with_sparse_list
 enable_msvc
 with_Documentation
 with_stdvector
 with_boostvector
 with_eigenvector
-with_sparse_set
-with_sparse_list
 with_deprecated
 '
       ac_precious_vars='build_alias
@@ -1506,12 +1505,12 @@ Optional Packages:
   --with-Example          is not necessary, see install instructions.
   --with-TestMore         is not necessary, see install instructions.
   --with-PrintFor         is not necessary, see install instructions.
+  --with-sparse_set       no longer available
+  --with-sparse_list      no longer necessary
   --with-Documentation    default is no
   --with-stdvector        default is no
   --with-boostvector      default is no
   --with-eigenvector      default is no
-  --with-sparse_set       default is not specified
-  --with-sparse_list      default is not specified
   --with-deprecated       include an implicit AD<Base> constructor from any
                           type
 
@@ -4530,6 +4529,30 @@ fi
 if test "$PrintFor" = "yes" ; then
     as_fn_error $? "--with-PrintFor not necessary, see install instructions." "$LINENO" 5
 fi
+
+# Check whether --with-sparse_set was given.
+if test "${with_sparse_set+set}" = set; then :
+  withval=$with_sparse_set; sparse_set="yes"
+else
+  sparse_set="no"
+
+fi
+
+if test "$sparse_set" = "yes" ; then
+	as_fn_error $? "--with-sparse_set is no longer available" "$LINENO" 5
+fi
+
+# Check whether --with-sparse_list was given.
+if test "${with_sparse_list+set}" = set; then :
+  withval=$with_sparse_list; sparse_set="yes"
+else
+  sparse_set="no"
+
+fi
+
+if test "$sparse_set" = "yes" ; then
+	as_fn_error $? "--with-sparse_set is no longer necessary" "$LINENO" 5
+fi
 { $as_echo "$as_me:${as_lineno-$LINENO}: ******  Check command line arguments that are used ***********" >&5
 $as_echo "$as_me: ******  Check command line arguments that are used ***********" >&6;}
 
@@ -4650,44 +4673,6 @@ else
 	cppad_eigenvector=0
 
 fi
-
-{ $as_echo "$as_me:${as_lineno-$LINENO}: checking --with-sparse_set" >&5
-$as_echo_n "checking --with-sparse_set... " >&6; }
-
-# Check whether --with-sparse_set was given.
-if test "${with_sparse_set+set}" = set; then :
-  withval=$with_sparse_set; sparse_set="yes"
-else
-  sparse_set="no"
-
-fi
-
-{ $as_echo "$as_me:${as_lineno-$LINENO}: result: $sparse_set" >&5
-$as_echo "$sparse_set" >&6; }
-{ $as_echo "$as_me:${as_lineno-$LINENO}: checking --with-sparse_list" >&5
-$as_echo_n "checking --with-sparse_list... " >&6; }
-
-# Check whether --with-sparse_list was given.
-if test "${with_sparse_list+set}" = set; then :
-  withval=$with_sparse_list; sparse_list="yes"
-else
-  sparse_list="no"
-
-fi
-
-{ $as_echo "$as_me:${as_lineno-$LINENO}: result: $sparse_list" >&5
-$as_echo "$sparse_list" >&6; }
-if test "$sparse_set" = "yes" ; then
-	if test "$sparse_list" == "yes" ; then
-		as_fn_error $? "cannot --with both sparse_set and sparse_list" "$LINENO" 5
-	fi
-	cppad_internal_sparse_set=sparse_set
-
-else
-	cppad_internal_sparse_set=sparse_list
-
-fi
-
 
 { $as_echo "$as_me:${as_lineno-$LINENO}: checking --with-deprecated" >&5
 $as_echo_n "checking --with-deprecated... " >&6; }

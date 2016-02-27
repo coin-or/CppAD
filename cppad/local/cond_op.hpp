@@ -2,7 +2,7 @@
 # ifndef CPPAD_COND_OP_HPP
 # define CPPAD_COND_OP_HPP
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-15 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-16 Bradley M. Bell
 
 CppAD is distributed under multiple licenses. This distribution is under
 the terms of the
@@ -119,7 +119,7 @@ where Rel is one of the following: Lt, Le, Eq, Ge, Gt.
 
 \tparam Vector_set
 is the type used for vectors of sets. It can be either
-\c sparse_pack, \c sparse_set, or \c sparse_list.
+sparse_pack or sparse_list.
 
 \param i_z
 is the AD variable index corresponding to the variable z.
@@ -892,7 +892,7 @@ where Rel is one of the following: Lt, Le, Eq, Ge, Gt.
 
 \tparam Vector_set
 is the type used for vectors of sets. It can be either
-\c sparse_pack, \c sparse_set, or \c sparse_list.
+sparse_pack or sparse_list.
 
 \param i_z
 is the AD variable index corresponding to the variable z.
@@ -1031,7 +1031,7 @@ where Rel is one of the following: Lt, Le, Eq, Ge, Gt.
 
 \tparam Vector_set
 is the type used for vectors of sets. It can be either
-\c sparse_pack, \c sparse_set, or \c sparse_list.
+sparse_pack or sparse_list.
 
 \param i_z
 is the AD variable index corresponding to the variable z.
@@ -1172,7 +1172,7 @@ where Rel is one of the following: Lt, Le, Eq, Ge, Gt.
 
 \tparam Vector_set
 is the type used for vectors of sets. It can be either
-\c sparse_pack, \c sparse_set, or \c sparse_list.
+sparse_pack or sparse_list.
 
 \param i_z
 is the AD variable index corresponding to the variable z.

@@ -257,7 +257,7 @@ private:
 		      sparse_jacobian_work& work
 	);
 	// ------------------------------------------------------------
-	// combined sparse_set, sparse_list and sparse_pack version of
+	// combined sparse_list and sparse_pack version of
 	// SparseHessian (see doxygen in sparse_hessian.hpp)
 	template <class VectorBase, class VectorSet, class VectorSize>
 	size_t SparseHessianCompute(

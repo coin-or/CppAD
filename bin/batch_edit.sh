@@ -17,11 +17,8 @@ move_list='
 move_sed='s|list_files.sh|ls_files.sh|'
 #
 cat << EOF > junk.sed
-s|CPPAD_INTERNAL_SPARSE_SET  |sparse_list                |
-s|CPPAD_INTERNAL_SPARSE_SET&  |sparse_list\&                |
-s|CPPAD_INTERNAL_SPARSE_SET |sparse_list |
-/cppad\/local\/sparse_set.hpp/d
-: end
+s|sparse_set, sparse_list|sparse_list|
+s|.c sparse_pack, .c sparse_set,* or .c sparse_list|sparse_pack or sparse_list|
 EOF
 # -----------------------------------------------------------------------------
 if [ $0 != "bin/batch_edit.sh" ]

@@ -123,8 +123,8 @@ am__example_SOURCES_DIST = mul_level_adolc.cpp mul_level_adolc_ode.cpp \
 	cppad_vector.cpp dependency.cpp div.cpp div_eq.cpp \
 	equal_op_seq.cpp erf.cpp error_handler.cpp exp.cpp expm1.cpp \
 	for_one.cpp for_two.cpp forward.cpp forward_dir.cpp \
-	forward_order.cpp for_sparse_jac.cpp fun_assign.cpp \
-	fun_check.cpp hes_lagrangian.cpp hes_lu_det.cpp \
+	forward_order.cpp for_sparse_hes.cpp for_sparse_jac.cpp \
+	fun_assign.cpp fun_check.cpp hes_lagrangian.cpp hes_lu_det.cpp \
 	hes_minor_det.cpp hessian.cpp hes_times_dir.cpp \
 	independent.cpp index_sort.cpp integer.cpp interface2c.cpp \
 	interp_onetape.cpp interp_retape.cpp jac_lu_det.cpp \
@@ -167,10 +167,10 @@ am_example_OBJECTS = $(am__objects_1) example.$(OBJEXT) \
 	equal_op_seq.$(OBJEXT) erf.$(OBJEXT) error_handler.$(OBJEXT) \
 	exp.$(OBJEXT) expm1.$(OBJEXT) for_one.$(OBJEXT) \
 	for_two.$(OBJEXT) forward.$(OBJEXT) forward_dir.$(OBJEXT) \
-	forward_order.$(OBJEXT) for_sparse_jac.$(OBJEXT) \
-	fun_assign.$(OBJEXT) fun_check.$(OBJEXT) \
-	hes_lagrangian.$(OBJEXT) hes_lu_det.$(OBJEXT) \
-	hes_minor_det.$(OBJEXT) hessian.$(OBJEXT) \
+	forward_order.$(OBJEXT) for_sparse_hes.$(OBJEXT) \
+	for_sparse_jac.$(OBJEXT) fun_assign.$(OBJEXT) \
+	fun_check.$(OBJEXT) hes_lagrangian.$(OBJEXT) \
+	hes_lu_det.$(OBJEXT) hes_minor_det.$(OBJEXT) hessian.$(OBJEXT) \
 	hes_times_dir.$(OBJEXT) independent.$(OBJEXT) \
 	index_sort.$(OBJEXT) integer.$(OBJEXT) interface2c.$(OBJEXT) \
 	interp_onetape.$(OBJEXT) interp_retape.$(OBJEXT) \
@@ -409,7 +409,6 @@ cppad_has_high_resolution_clock = @cppad_has_high_resolution_clock@
 cppad_has_mkstemp = @cppad_has_mkstemp@
 cppad_has_nullptr = @cppad_has_nullptr@
 cppad_has_rvalue = @cppad_has_rvalue@
-cppad_internal_sparse_set = @cppad_internal_sparse_set@
 cppad_max_num_threads = @cppad_max_num_threads@
 cppad_pkgconfig_cflags = @cppad_pkgconfig_cflags@
 cppad_pkgconfig_libs = @cppad_pkgconfig_libs@
@@ -561,6 +560,7 @@ example_SOURCES = \
 	forward.cpp \
 	forward_dir.cpp \
 	forward_order.cpp \
+	for_sparse_hes.cpp \
 	for_sparse_jac.cpp \
 	fun_assign.cpp \
 	fun_check.cpp \
@@ -752,6 +752,7 @@ distclean-compile:
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/exp.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/expm1.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/for_one.Po@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/for_sparse_hes.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/for_sparse_jac.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/for_two.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/forward.Po@am__quote@

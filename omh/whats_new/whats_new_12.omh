@@ -425,7 +425,7 @@ $list number$$
 A new type was added for the internal representation of
 $cref/vector of sets/glossary/Sparsity Pattern/Vector of Sets/$$
 sparsity patterns; see the configure
-$cref/--with-sparse_option/auto_tools/--with-sparse_option/$$.
+$code --with-sparse_option$$ (since removed).
 $lnext
 A new speed test, $cref compare_c$$, compares the speed of the same
 source code compiled with C and C++.

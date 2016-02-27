@@ -355,7 +355,7 @@ is a simple vector class with elements of type
 \c bool or \c std::set<size_t>.
 
 \tparam VectorSize
-is \c sparse_pack, \c sparse_set or \c sparse_list.
+is sparse_pack or sparse_list.
 
 \param x [in]
 is a vector specifing the point at which to compute the Hessian.
