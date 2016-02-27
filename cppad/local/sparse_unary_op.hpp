@@ -73,7 +73,6 @@ inline void forward_sparse_jacobian_unary_op(
 
 	sparsity.assignment(i_z, i_x, sparsity);
 }
-
 /*!
 Reverse mode Jacobian sparsity pattern for all unary operators.
 
@@ -137,7 +136,7 @@ inline void reverse_sparse_jacobian_unary_op(
 
 	return;
 }
-
+// ---------------------------------------------------------------------------
 /*!
 Reverse mode Hessian sparsity pattern for linear unary operators.
 
@@ -202,6 +201,48 @@ inline void reverse_sparse_hessian_nonlinear_unary_op(
 		rev_hes_sparsity.binary_union(i_x, i_x, i_x, for_jac_sparsity);
 
 	rev_jacobian[i_x] |= rev_jacobian[i_z];
+	return;
+}
+
+// ---------------------------------------------------------------------------
+/*!
+Forward mode Hessian sparsity pattern for non-linear unary operators.
+
+The C++ source code corresponding to this operation is
+\verbatim
+        w(x) = fun( v(x) )
+\endverbatim
+where fun is a non-linear function.
+
+\param i_v
+is the index of the argument variable v
+
+\param for_jac_sparsity
+for_jac_sparsity(i_v) constains the Jacobian sparsity for v(x).
+
+\param for_hes_sparsity
+On input, for_hes_sparsity includes the Hessian sparsity for v(x); i.e.,
+the sparsity can be a super set.
+Upon return it includes the Hessian sparsity for  w(x)
+*/
+template <class Vector_set>
+inline void forward_sparse_hessian_nonlinear_unary_op(
+	size_t              i_v               ,
+	Vector_set&         for_jac_sparsity  ,
+	Vector_set&         for_hes_sparsity  )
+{
+	// set of independent variables that v depends on
+	for_jac_sparsity.begin(i_v);
+
+	// next independent variables that v depends on
+	size_t i_x = for_jac_sparsity.next_element();
+
+	// loop over dependent variables with non-zero partial
+	while( i_x < for_jac_sparsity.end() )
+	{	// N(i_x) = N(i_x) union L(i_v)
+		for_hes_sparsity.binary_union(i_x, i_x, i_v, for_jac_sparsity);
+		i_x = for_jac_sparsity.next_element();
+	}
 	return;
 }
 

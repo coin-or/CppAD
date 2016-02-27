@@ -273,7 +273,8 @@ void ADFun<Base>::ForSparseHesCase(
 		size_t j = for_hes_sparsity.next_element();
 		while( j < for_hes_sparsity.end() )
 		{	CPPAD_ASSERT_UNKNOWN( 0 < j )
-				h[ i * n + (j-1) ] = true;
+			h[ i * n + (j-1) ] = true;
+			j = for_hes_sparsity.next_element();
 		}
 	}
 }

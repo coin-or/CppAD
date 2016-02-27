@@ -562,11 +562,9 @@ void ForHesSweep(
 
 			case MulvvOp:
 			CPPAD_ASSERT_NARG_NRES(op, 2, 1)
-# ifdef NOT_DEFINED
 			forward_sparse_hessian_mul_op(
-			i_var, arg, for_jac_sparse, for_hes_sparse
+				arg, for_jac_sparse, for_hes_sparse
 			);
-# endif
 			break;
 			// -------------------------------------------------
 
@@ -620,11 +618,9 @@ void ForHesSweep(
 			case SinOp:
 			// cos(x), sin(x)
 			CPPAD_ASSERT_NARG_NRES(op, 1, 2)
-# ifdef NOT_DEFINED
 			forward_sparse_hessian_nonlinear_unary_op(
-			i_var, arg[0], for_jac_sparse, rev_hes_sparse
+				arg[0], for_jac_sparse, for_hes_sparse
 			);
-# endif
 			break;
 			// -------------------------------------------------
 
