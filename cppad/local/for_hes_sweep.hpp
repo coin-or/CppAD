@@ -119,14 +119,15 @@ void ForHesSweep(
 	size_t             i, j, k;
 
 	// check numvar argument
+	size_t limit = n+1;
 	CPPAD_ASSERT_UNKNOWN( play->num_var_rec()    == numvar );
 	CPPAD_ASSERT_UNKNOWN( for_jac_sparse.n_set() == numvar );
-	CPPAD_ASSERT_UNKNOWN( for_hes_sparse.n_set() == n+1 );
+	CPPAD_ASSERT_UNKNOWN( for_hes_sparse.n_set() == limit );
 	CPPAD_ASSERT_UNKNOWN( numvar > 0 );
 
 	// upper limit exclusive for set elements
-	size_t limit   = for_hes_sparse.end();
 	CPPAD_ASSERT_UNKNOWN( for_jac_sparse.end() == limit );
+	CPPAD_ASSERT_UNKNOWN( for_hes_sparse.end() == limit );
 
 	// vecad_sparsity contains a sparsity pattern for each VecAD object.
 	// vecad_ind maps a VecAD index (beginning of the VecAD object)
@@ -205,7 +206,7 @@ void ForHesSweep(
 # if CPPAD_FOR_HES_SWEEP_TRACE
 	std::cout << std::endl;
 	CppAD::vectorBool zf_value(limit);
-	CppAD::vectorBool zh_value(limit);
+	CppAD::vectorBool zh_value(limit * limit);
 # endif
 	while(more_operators)
 	{
@@ -1027,24 +1028,25 @@ void ForHesSweep(
 		}
 # if CPPAD_FOR_HES_SWEEP_TRACE
 		if( non_zero )
-		{	for(j = 0; j < limit; j++)
-			{	zf_value[j] = false;
-			zh_value[j] = false;
+		{	for(i = 0; i < limit; i++)
+			{	zf_value[i] = false;
+				for(j = 0; j < limit; j++)
+					zh_value[i * limit + j] = false;
 			}
-# ifdef NOT_DEFINED
 			for_jac_sparse.begin(i_var);;
 			j = for_jac_sparse.next_element();;
 			while( j < limit )
 			{	zf_value[j] = true;
 				j = for_jac_sparse.next_element();
 			}
-			for_hes_sparse.begin(i_var);;
-			j = for_hes_sparse.next_element();;
-			while( j < limit )
-			{	zh_value[j] = true;
-				j = for_hes_sparse.next_element();
+			for(i = 0; i < limit; i++)
+			{	for_hes_sparse.begin(i);;
+				j = for_hes_sparse.next_element();;
+				while( j < limit )
+				{	zh_value[i * limit + j] = true;
+					j = for_hes_sparse.next_element();
+				}
 			}
-# endif
 			printOp(
 				std::cout,
 				play,
