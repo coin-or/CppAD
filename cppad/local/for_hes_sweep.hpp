@@ -25,7 +25,7 @@ This value is either zero or one.
 Zero is the normal operational value.
 If it is one, a trace of every rev_hes_sweep computation is printed.
 */
-# define CPPAD_FOR_HES_SWEEP_TRACE 1
+# define CPPAD_FOR_HES_SWEEP_TRACE 0
 
 /*!
 Given the forward Jacobian sparsity pattern for all the variables,

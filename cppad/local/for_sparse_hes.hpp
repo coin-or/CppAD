@@ -331,7 +331,7 @@ void ADFun<Base>::ForSparseHesCase(
 	for_jac_sparse_set_.resize(num_var_tape_, n + 1);
 	itr = r[0].begin();
 	while( itr != r[0].end() )
-	{	size_t i = *itr;
+	{	size_t i = *itr++;
 		CPPAD_ASSERT_UNKNOWN( ind_taddr_[i] < n + 1 );
 		// ind_taddr_[i] is operator taddr for i-th independent variable
 		CPPAD_ASSERT_UNKNOWN( play_.GetOp( ind_taddr_[i] ) == InvOp );
@@ -399,6 +399,7 @@ void ADFun<Base>::ForSparseHesCase(
 		while( j < for_hes_sparsity.end() )
 		{	CPPAD_ASSERT_UNKNOWN( 0 < j )
 				h[i].insert(j-1);
+			j = for_hes_sparsity.next_element();
 		}
 	}
 }

@@ -130,7 +130,7 @@ bool SetCases(void)
 	CppAD::ADFun<double> f(ax, ay);
 
 	// sparsity pattern for the diagonal of the identity matrix
-	Vector r(0);
+	Vector r(1);
 	size_t i;
 	for(i = 0; i < n; i++)
 		r[0].insert(i);
@@ -174,8 +174,6 @@ bool SetCases(void)
 # include <valarray>
 bool for_sparse_hes(void)
 {	bool ok = true;
-	ok &= BoolCases< CppAD::vector  <bool> >();
-# ifdef NOT_DEFINED
 	// Run with Vector equal to four different cases
 	// all of which are Simple Vectors with elements of type bool.
 	ok &= BoolCases< CppAD::vector  <bool> >();
@@ -192,7 +190,6 @@ bool for_sparse_hes(void)
 	// Do not use valarray because its element access in the const case
 	// returns a copy instead of a reference
 	// ok &= SetCases< std::valarray  <set> >();
-# endif
 
 	return ok;
 }
