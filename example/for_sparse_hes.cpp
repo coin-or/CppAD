@@ -96,6 +96,7 @@ bool BoolCases(void)
 		for(j = 0; j < n; j++)
 			ok &= (h[ i * n + j ] == check_f0[ i * n + j ] );
 
+# ifdef NOT_DEFINED
 	// compute sparsity pattern for H(x) = F_1^{(2)} (x)
 	for(i = 0; i < m; i++)
 		s[i] = false;
@@ -116,6 +117,7 @@ bool BoolCases(void)
 		for(j = 0; j < n; j++)
 			ok &= (h[ j * n + i ] == check_f1[ i * n + j ] );
 
+# endif
 	return ok;
 }
 // define the template function SetCases<Vector> in empty namespace
@@ -205,6 +207,8 @@ bool SetCases(void)
 # include <valarray>
 bool for_sparse_hes(void)
 {	bool ok = true;
+	ok &= BoolCases< CppAD::vector  <bool> >();
+# ifdef NOT_DEFINED
 	// Run with Vector equal to four different cases
 	// all of which are Simple Vectors with elements of type bool.
 	ok &= BoolCases< CppAD::vector  <bool> >();
@@ -221,6 +225,7 @@ bool for_sparse_hes(void)
 	// Do not use valarray because its element access in the const case
 	// returns a copy instead of a reference
 	// ok &= SetCases< std::valarray  <set> >();
+# endif
 
 	return ok;
 }

@@ -25,7 +25,7 @@ This value is either zero or one.
 Zero is the normal operational value.
 If it is one, a trace of every rev_hes_sweep computation is printed.
 */
-# define CPPAD_FOR_HES_SWEEP_TRACE 0
+# define CPPAD_FOR_HES_SWEEP_TRACE 1
 
 /*!
 Given the forward Jacobian sparsity pattern for all the variables,
@@ -1008,6 +1008,7 @@ void ForHesSweep(
 		{	zf_value[j] = false;
 			zh_value[j] = false;
 		}
+# ifdef NOT_DEFINED
 		for_jac_sparse.begin(i_var);;
 		j = for_jac_sparse.next_element();;
 		while( j < limit )
@@ -1020,6 +1021,7 @@ void ForHesSweep(
 		{	zh_value[j] = true;
 			j = for_hes_sparse.next_element();
 		}
+# endif
 		printOp(
 			std::cout,
 			play,
