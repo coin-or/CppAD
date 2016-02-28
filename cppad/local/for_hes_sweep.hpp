@@ -370,11 +370,9 @@ void ForHesSweep(
 
 			case PowvvOp:
 			CPPAD_ASSERT_NARG_NRES(op, 2, 3)
-# ifdef NOT_DEFINED
-			reverse_sparse_hessian_pow_op(
-			i_var, arg, RevJac, for_jac_sparse, for_hes_sparse
+			forward_sparse_hessian_pow_op(
+				arg, for_jac_sparse, for_hes_sparse
 			);
-# endif
 			break;
 			// -------------------------------------------------
 

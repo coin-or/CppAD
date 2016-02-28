@@ -20,13 +20,18 @@ bool test_one()
 	using namespace CppAD;
 
 	// dimension of the domain space
-	size_t n = 8;
+	size_t n = 12;
 
 	// dimension of the range space
 	size_t m = 1;
 
 	// temporary indices
 	size_t i, j;
+
+	// for testing load and store operations
+	CppAD::VecAD<double> ad_vec(2);
+	ad_vec[0] = 3.0;
+	ad_vec[1] = 4.0;
 
 	// initialize check values to false
 	CPPAD_TESTVECTOR(bool) check(n * n);
@@ -42,9 +47,41 @@ bool test_one()
 	// accumulate sum here
 	AD<double> sum(0.);
 
-	// first and second operand indices
+	// first operand
 	size_t F = 0;
-	size_t S = 1;
+
+	// ad_vec[variable] when ad_vec is a parameter
+	sum += ad_vec[ax[F]]; // use fact ax[F] is zero
+	F += 1;
+
+	// ad_vec[parameter] when ad_vec depends on a variable
+	// (CppAD sparsity does not separate elements of ad_vec)
+	ad_vec[ AD<double>(0) ] = ax[F] * ax[F];
+	sum += ad_vec[ ax[F] ];  // user fact that ax[F] is one
+	check[F * n + F] = true;
+	F += 1;
+
+	// parameter / variable
+	sum += 2.0 / ax[F];
+	check[F * n + F] = true;
+	F += 1;
+
+	// erf(variable)
+	sum += erf( ax[F] );
+	check[F * n + F] = true;
+	F += 1;
+
+	// pow(parameter, variable)
+	sum += pow( 2.0 , ax[F] );
+	check[F * n + F] = true;
+	F += 1;
+
+	// pow(variable, parameter)
+	sum += pow( ax[F] , 2.0 );
+	check[F * n + F] = true;
+	F += 1;
+	// second operand
+	size_t S = F + 1;
 
 	// variable * variable
 	sum += ax[F] * ax[S];
@@ -58,29 +95,12 @@ bool test_one()
 	F += 2;
 	S += 2;
 
-	// parameter / variable
-	sum += 2.0 / ax[F];
-	check[F * n + F] = true;
-	F += 1;
-	S += 1;
-
-	// erf(variable)
-	sum += erf( ax[F] );
-	check[F * n + F] = true;
-	F += 1;
-	S += 1;
-
-	// pow(parameter, variable)
-	sum += pow( 2.0 , ax[F] );
-	check[F * n + F] = true;
-	F += 1;
-	S += 1;
-
-	// pow(variable, parameter)
-	sum += pow( ax[F] , 2.0 );
-	check[F * n + F] = true;
-	F += 1;
-	S += 1;
+	// pow( variable , variable )
+	sum += pow( ax[F] , ax[S] );
+	check[F * n + F] = check[S * n + S] = true;
+	check[F * n + S] = check[S * n + F] = true;
+	F += 2;
+	S += 2;
 
 	CPPAD_TESTVECTOR(AD<double>) ay(m);
 	ay[0] = sum;
