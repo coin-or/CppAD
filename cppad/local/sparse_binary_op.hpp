@@ -375,6 +375,59 @@ inline void forward_sparse_hessian_mul_op(
 	}
 	return;
 }
+/*!
+Forward mode Hessian sparsity pattern for division operator.
+
+The C++ source code corresponding to this operation is
+\verbatim
+        w(x) = v0(x) / v1(x)
+\endverbatim
+where fun is a non-linear function.
+
+\param arg
+is the index of the argument vector for the division operation; i.e.,
+arg[0], arg[1] are the left and right operands.
+
+\param for_jac_sparsity
+for_jac_sparsity(arg[0]) constains the Jacobian sparsity for v0(x),
+for_jac_sparsity(arg[1]) constains the Jacobian sparsity for v1(x).
+
+\param for_hes_sparsity
+On input, for_hes_sparsity includes the Hessian sparsity for v0(x)
+and v1(x); i.e., the sparsity can be a super set.
+Upon return it includes the Hessian sparsity for  w(x)
+*/
+template <class Vector_set>
+inline void forward_sparse_hessian_div_op(
+	const addr_t*        arg              ,
+	Vector_set&         for_jac_sparsity  ,
+	Vector_set&         for_hes_sparsity  )
+{	// --------------------------------------------------
+	// set of independent variables that v0 depends on
+	for_jac_sparsity.begin(arg[0]);
+
+	// loop over dependent variables with non-zero partial
+	size_t i_x = for_jac_sparsity.next_element();
+	while( i_x < for_jac_sparsity.end() )
+	{	// N(i_x) = N(i_x) union L(v1)
+		for_hes_sparsity.binary_union(i_x, i_x, arg[1], for_jac_sparsity);
+		i_x = for_jac_sparsity.next_element();
+	}
+	// --------------------------------------------------
+	// set of independent variables that v1 depends on
+	for_jac_sparsity.begin(arg[1]);
+
+	// loop over dependent variables with non-zero partial
+	i_x = for_jac_sparsity.next_element();
+	while( i_x < for_jac_sparsity.end() )
+	{	// N(i_x) = N(i_x) union L(v0)
+		for_hes_sparsity.binary_union(i_x, i_x, arg[0], for_jac_sparsity);
+		// N(i_x) = N(i_x) union L(v1)
+		for_hes_sparsity.binary_union(i_x, i_x, arg[1], for_jac_sparsity);
+		i_x = for_jac_sparsity.next_element();
+	}
+	return;
+}
 // ---------------------------------------------------------------------------
 } // END_CPPAD_NAMESPACE
 # endif
