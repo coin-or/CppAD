@@ -436,8 +436,8 @@ void ForHesSweep(
 					for(i = 0; i < user_n; i++)
 						set_h[i].clear();
 				}
-				user_j     = user_n;
-				user_i     = user_m;
+				user_j     = 0;
+				user_i     = 0;
 				user_state = user_arg;
 			}
 			else
@@ -458,6 +458,7 @@ void ForHesSweep(
 				if( user_bool )
 					user_atom->for_sparse_hes(
 						user_vx, user_r, user_s, bool_h
+				);
 				if( user_set )
 					user_atom->for_sparse_hes(
 						user_vx, user_r, user_s, set_h
@@ -520,9 +521,9 @@ void ForHesSweep(
 			CPPAD_ASSERT_UNKNOWN( size_t(arg[0]) < num_par );
 			user_ix[user_j] = 0;
 			user_vx[user_j] = false;
+			++user_j;
 			if( user_j == n )
 				user_state = user_ret;
-			++user_j;
 			break;
 
 			case UsravOp:
@@ -538,9 +539,9 @@ void ForHesSweep(
 			i = for_jac_sparse.next_element();
 			if( i < for_jac_sparse.end() )
 				user_r[user_j] = true;
+			++user_j;
 			if( user_j == n )
 				user_state = user_ret;
-			++user_j;
 			break;
 
 			case UsrrpOp:
@@ -549,9 +550,9 @@ void ForHesSweep(
 			CPPAD_ASSERT_UNKNOWN( user_i < user_m );
 			CPPAD_ASSERT_UNKNOWN( NumArg(op) == 1 );
 			CPPAD_ASSERT_UNKNOWN( size_t(arg[0]) < num_par );
+			++user_i;
 			if( user_i == user_m )
 				user_state = user_end;
-			++user_i;
 			break;
 
 			case UsrrvOp:
@@ -560,9 +561,9 @@ void ForHesSweep(
 			CPPAD_ASSERT_UNKNOWN( user_i < user_m );
 			if( rev_jac_sparse.is_element(i_var, 0) )
 				user_s[user_i] = true;
-			if( user_i == 0 )
-				user_state = user_arg;
 			++user_i;
+			if( user_i == user_m )
+				user_state = user_end;
 			break;
 			// -------------------------------------------------
 

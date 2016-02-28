@@ -34,6 +34,25 @@ in reverse order by date.
 The purpose of these sections is to
 assist you in learning about changes between various versions of CppAD.
 
+$head 02-28$$
+Fix a mistake in the atomic
+$cref/rev_sparse_jac/atomic_sparsity.cpp/rev_sparse_jac/$$ example.
+To be specific
+$srccode%cpp%
+	{	st[ 0 * p + j ] = rt[ 1 * m + j ];
+		st[ 1 * p + j ] = rt[ 1 * m + j ];
+		st[ 2 * p + j ] = rt[ 0 * m + j ];
+	}
+%$$
+was changed to
+$srccode%cpp%
+	{	st[ 0 * p + j ] = rt[ 1 * p + j ];
+		st[ 1 * p + j ] = rt[ 1 * p + j ];
+		st[ 2 * p + j ] = rt[ 0 * p + j ];
+	}
+%$$
+
+
 $head 02-27$$
 The $code --with-sparse_set$$ and $code --with-sparse_set$$ options
 were removed from the $cref auto_tools$$ install procedure.

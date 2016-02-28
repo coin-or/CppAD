@@ -1,6 +1,6 @@
 // $Id$
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-15 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-16 Bradley M. Bell
 
 CppAD is distributed under multiple licenses. This distribution is under
 the terms of the
@@ -41,6 +41,7 @@ $codei%
 %ok% = %afun%.reverse(%q%, %tx%, %ty%, %px%, %py%)
 %ok% = %afun%.for_sparse_jac(%q%, %r%, %s%)
 %ok% = %afun%.rev_sparse_jac(%q%, %r%, %s%)
+%ok% = %afun%.for_sparse_hes(%vx%, %r%, %s%, %h%)
 %ok% = %afun%.rev_sparse_hes(%vx%, %s%, %t%, %q%, %r%, %u%, %v%)
 atomic_base<%Base%>::clear()%$$
 

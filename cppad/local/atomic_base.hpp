@@ -1248,6 +1248,130 @@ virtual bool rev_sparse_jac(
 {	return false; }
 /*
 -------------------------------------- ---------------------------------------
+$begin atomic_for_sparse_hes$$
+$spell
+	sq
+	mul.hpp
+	vx
+	afun
+	Jacobian
+	jac
+	CppAD
+	std
+	bool
+	hes
+	const
+$$
+
+$section Atomic Forward Hessian Sparsity Patterns$$
+
+$head Syntax$$
+$icode%ok% = %afun%.for_sparse_hes(%vx%, %r%, %s%, %h%)%$$
+
+$head Purpose$$
+This function is used by $cref ForSparseHes$$ to compute
+Hessian sparsity patterns.
+There is an unspecified scalar valued function
+$latex g : B^m \rightarrow B$$.
+Given a $cref/sparsity pattern/glossary/Sparsity Pattern/$$ for
+$latex R \in B^{n \times q}$$,
+and information about the function $latex z = g(y)$$,
+this routine computes the sparsity pattern for
+$latex \[
+	H(x) = R^\R{T} (g \circ f)^{(2)}( x ) R
+\] $$
+
+$head Implementation$$
+If you are using and $cref ForSparseHes$$,
+this virtual function must be defined by the
+$cref/atomic_user/atomic_ctor/atomic_user/$$ class.
+
+$subhead vx$$
+The argument $icode vx$$ has prototype
+$codei%
+     const CppAD:vector<bool>& %vx%
+%$$
+$icode%vx%.size() == %n%$$, and
+for $latex j = 0 , \ldots , n-1$$,
+$icode%vx%[%j%]%$$ is true if and only if
+$icode%ax%[%j%]%$$ is a $cref/variable/glossary/Variable/$$
+in the corresponding call to
+$codei%
+	%afun%(%ax%, %ay%)
+%$$
+
+$subhead r$$
+This argument has prototype
+$codei%
+     const %atomic_sparsity%& %r%
+%$$
+and is a $cref/atomic_sparsity/atomic_option/atomic_sparsity/$$ pattern for
+the diagonal of $latex R \in B^{n \times n}$$.
+
+$subhead s$$
+The argument $icode s$$ has prototype
+$codei%
+     const CppAD:vector<bool>& %s%
+%$$
+and its size is $icode m$$.
+It is a sparsity pattern for
+$latex S(x) = g^{(1)} (y) \in B^{1 \times m}$$.
+
+$subhead h$$
+This argument has prototype
+$codei%
+     %atomic_sparsity%& %h%
+%$$
+The input value of its elements
+are not specified (must not matter).
+Upon return, $icode v$$ is a
+$cref/atomic_sparsity/atomic_option/atomic_sparsity/$$ pattern for
+$latex H(x) \in B^{n \times q}$$ which is defined by
+$latex \[
+H(x) = R^\R{T} (g \circ f)^{(2)}( x ) R
+\] $$
+
+$head Examples$$
+2DO
+
+$end
+-----------------------------------------------------------------------------
+*/
+/*!
+Link from forward Hessian sparsity sweep to base_atomic
+
+\param vx [in]
+which componens of x are variables.
+
+\param r [in]
+is the forward Jacobian sparsity pattern w.r.t the argument vector x.
+
+\param s [in]
+is the reverse Jacobian sparsity pattern w.r.t the result vector y.
+
+\param h [out]
+is the Hessian sparsity pattern w.r.t the argument vector x.
+*/
+virtual bool for_sparse_hes(
+	const vector<bool>&             vx ,
+	const vector<bool>&             r  ,
+	const vector<bool>&             s  ,
+	vector< std::set<size_t> >&     h  )
+{	return false; }
+virtual bool for_sparse_hes(
+	const vector<bool>&             vx ,
+	const vector<bool>&             r  ,
+	const vector<bool>&             s  ,
+	vector<bool>&                   h  )
+{	return false; }
+virtual bool for_sparse_hes(
+	const vector<bool>&             vx ,
+	const vector<bool>&             r  ,
+	const vector<bool>&             s  ,
+	vectorBool&                     h  )
+{	return false; }
+/*
+-------------------------------------- ---------------------------------------
 $begin atomic_rev_sparse_hes$$
 $spell
 	sq
@@ -1468,130 +1592,6 @@ virtual bool rev_sparse_hes(
 	const vectorBool&                       r  ,
 	const vectorBool&                       u  ,
 	      vectorBool&                       v  )
-{	return false; }
-/*
--------------------------------------- ---------------------------------------
-$begin atomic_for_sparse_hes$$
-$spell
-	sq
-	mul.hpp
-	vx
-	afun
-	Jacobian
-	jac
-	CppAD
-	std
-	bool
-	hes
-	const
-$$
-
-$section Atomic Forward Hessian Sparsity Patterns$$
-
-$head Syntax$$
-$icode%ok% = %afun%.for_sparse_hes(%vx%, %r%, %s%, %h%)%$$
-
-$head Purpose$$
-This function is used by $cref ForSparseHes$$ to compute
-Hessian sparsity patterns.
-There is an unspecified scalar valued function
-$latex g : B^m \rightarrow B$$.
-Given a $cref/sparsity pattern/glossary/Sparsity Pattern/$$ for
-$latex R \in B^{n \times q}$$,
-and information about the function $latex z = g(y)$$,
-this routine computes the sparsity pattern for
-$latex \[
-	H(x) = R^\R{T} (g \circ f)^{(2)}( x ) R
-\] $$
-
-$head Implementation$$
-If you are using and $cref ForSparseHes$$,
-this virtual function must be defined by the
-$cref/atomic_user/atomic_ctor/atomic_user/$$ class.
-
-$subhead vx$$
-The argument $icode vx$$ has prototype
-$codei%
-     const CppAD:vector<bool>& %vx%
-%$$
-$icode%vx%.size() == %n%$$, and
-for $latex j = 0 , \ldots , n-1$$,
-$icode%vx%[%j%]%$$ is true if and only if
-$icode%ax%[%j%]%$$ is a $cref/variable/glossary/Variable/$$
-in the corresponding call to
-$codei%
-	%afun%(%ax%, %ay%)
-%$$
-
-$subhead r$$
-This argument has prototype
-$codei%
-     const %atomic_sparsity%& %r%
-%$$
-and is a $cref/atomic_sparsity/atomic_option/atomic_sparsity/$$ pattern for
-the diagonal of $latex R \in B^{n \times n}$$.
-
-$subhead s$$
-The argument $icode s$$ has prototype
-$codei%
-     const CppAD:vector<bool>& %s%
-%$$
-and its size is $icode m$$.
-It is a sparsity pattern for
-$latex S(x) = g^{(1)} (y) \in B^{1 \times m}$$.
-
-$subhead h$$
-This argument has prototype
-$codei%
-     %atomic_sparsity%& %h%
-%$$
-The input value of its elements
-are not specified (must not matter).
-Upon return, $icode v$$ is a
-$cref/atomic_sparsity/atomic_option/atomic_sparsity/$$ pattern for
-$latex H(x) \in B^{n \times q}$$ which is defined by
-$latex \[
-H(x) = R^\R{T} (g \circ f)^{(2)}( x ) R
-\] $$
-
-$head Examples$$
-2DO
-
-$end
------------------------------------------------------------------------------
-*/
-/*!
-Link from forward Hessian sparsity sweep to base_atomic
-
-\param vx [in]
-which componens of x are variables.
-
-\param r [in]
-is the forward Jacobian sparsity pattern w.r.t the argument vector x.
-
-\param s [in]
-is the reverse Jacobian sparsity pattern w.r.t the result vector y.
-
-\param h [out]
-is the Hessian sparsity pattern w.r.t the argument vector x.
-*/
-virtual bool for_sparse_hes(
-	const vector<bool>&             vx ,
-	const vector<bool>&             r  ,
-	const vector<bool>&             s  ,
-	vector< std::set<size_t> >&     v  )
-{	return false; }
-virtual bool for_sparse_hes(
-	const vector<bool>&             vx ,
-	const vector<bool>&             r  ,
-	const vector<bool>&             s  ,
-	vector<bool>&                   v  )
-{	return false; }
-virtual bool for_sparse_hes(
-	const vector<bool>&             vx ,
-	const vector<bool>&             r  ,
-	const vector<bool>&             s  ,
-	vectorBool&                     v  )
 {	return false; }
 /*
 ------------------------------------------------------------------------------
