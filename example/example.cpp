@@ -263,9 +263,7 @@ int main(void)
 	ok &= Run( Forward,           "Forward"          );
 	ok &= Run( forward_dir,       "forward_dir"      );
 	ok &= Run( forward_order,     "forward_order"    );
-# ifdef NOT_DEFINED
 	ok &= Run( for_sparse_hes,    "for_sparse_hes"   );
-# endif
 	ok &= Run( ForSparseJac,      "ForSparseJac"     );
 	ok &= Run( fun_assign,        "fun_assign"       );
 	ok &= Run( FunCheck,          "FunCheck"         );

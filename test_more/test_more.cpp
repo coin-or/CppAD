@@ -53,6 +53,7 @@ extern bool erf(void);
 extern bool Exp(void);
 extern bool expm1(void);
 extern bool ForHess(void);
+extern bool for_sparse_hes(void);
 extern bool for_sparse_jac(void);
 extern bool Forward(void);
 extern bool forward_dir(void);
@@ -184,6 +185,7 @@ int main(void)
 	ok &= Run( Exp,             "Exp"            );
 	ok &= Run( expm1,           "expm1"          );
 	ok &= Run( ForHess,         "ForHess"        );
+	ok &= Run( for_sparse_hes,  "for_sparse_hes" );
 	ok &= Run( for_sparse_jac,  "for_sparse_jac" );
 	ok &= Run( Forward,         "Forward"        );
 	ok &= Run( forward_dir,     "forward_dir"    );

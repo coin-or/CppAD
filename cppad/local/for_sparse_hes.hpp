@@ -48,8 +48,8 @@ H(x)
 & = & R^\R{T} * (S * F)^{(2)} ( x ) R
 \end{array}
 \] $$
-Where $latex R \in \B{R}^{n \times n}$ is a diagonal matrix
-and $latex S \in \B{R}^{1 \times m}$ is a row vector.
+Where $latex R \in \B{R}^{n \times n}$$ is a diagonal matrix
+and $latex S \in \B{R}^{1 \times m}$$ is a row vector.
 Given a
 $cref/sparsity pattern/glossary/Sparsity Pattern/$$
 for the diagonal of $latex R$$ and the vector $latex S$$,
@@ -67,8 +67,8 @@ after this call corresponds to
 $codei%
 	%f%.ForSparseJac(%q%, %r_matrix%)
 %$$
-where $icode q$$ is equal to $icode n$ and
-$icode r_matrix$ is the sparsity pattern for the matrix $icode R$$.
+where $icode q$$ is equal to $icode n$$ and
+$icode r_matrix$$ is the sparsity pattern for the matrix $icode R$$.
 
 $head x$$
 If the operation sequence in $icode f$$ is
@@ -91,7 +91,7 @@ are between zero and $latex n - 1$$.
 It specifies a
 $cref/sparsity pattern/glossary/Sparsity Pattern/$$
 for the diagonal of $latex R$$.
-The fewer non-zero elements in this sparstiy pattern,
+The fewer non-zero elements in this sparsity pattern,
 the faster the calculation should be.
 
 $head s$$
@@ -108,8 +108,8 @@ are between zero and $latex m - 1$$.
 It specifies a
 $cref/sparsity pattern/glossary/Sparsity Pattern/$$
 for the vector $icode S$$.
-The fewer non-zero elements in this sparstiy pattern,
-the faster the calculation should be and the sparses the matrix
+The fewer non-zero elements in this sparsity pattern,
+the faster the calculation should be and the more sparse
 $latex H(x)$$ should be.
 
 $head h$$
