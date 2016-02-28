@@ -69,7 +69,7 @@ is the AD variable index corresponding to the variable z.
 \n
 arg[0]
 is the offset of this VecAD vector relative to the beginning
-of the isvar_by_ind and index)_by_ind arrays.
+of the isvar_by_ind and index_by_ind arrays.
 \n
 \n
 arg[1]
@@ -82,7 +82,6 @@ i_vec is defined by
 If this is the LdvOp operation (if x is a variable),
 i_vec is defined by
 \verbatim
-	i_vec = floor( taylor[ arg[1] * cap_order + 0 ] )
 \endverbatim
 where floor(c) is the greatest integer less that or equal c.
 \n

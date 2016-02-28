@@ -20,7 +20,7 @@ bool test_one()
 	using namespace CppAD;
 
 	// dimension of the domain space
-	size_t n = 4;
+	size_t n = 8;
 
 	// dimension of the range space
 	size_t m = 1;
@@ -42,13 +42,45 @@ bool test_one()
 	// accumulate sum here
 	AD<double> sum(0.);
 
-	// variable * variable
-	sum += ax[0] * ax[1];
-	check[0 * n + 1] = check[1 * n + 0] = true;
+	// first and second operand indices
+	size_t F = 0;
+	size_t S = 1;
 
 	// variable * variable
-	sum += ax[2] / ax[3];
-	check[2 * n + 3] = check[3 * n + 2] = check[3 * n + 3] = true;
+	sum += ax[F] * ax[S];
+	check[F * n + S] = check[S * n + F] = true;
+	F += 2;
+	S += 2;
+
+	// variable / variable
+	sum += ax[F] / ax[S];
+	check[F * n + S] = check[S * n + F] = check[S * n + S] = true;
+	F += 2;
+	S += 2;
+
+	// parameter / variable
+	sum += 2.0 / ax[F];
+	check[F * n + F] = true;
+	F += 1;
+	S += 1;
+
+	// erf(variable)
+	sum += erf( ax[F] );
+	check[F * n + F] = true;
+	F += 1;
+	S += 1;
+
+	// pow(parameter, variable)
+	sum += pow( 2.0 , ax[F] );
+	check[F * n + F] = true;
+	F += 1;
+	S += 1;
+
+	// pow(variable, parameter)
+	sum += pow( ax[F] , 2.0 );
+	check[F * n + F] = true;
+	F += 1;
+	S += 1;
 
 	CPPAD_TESTVECTOR(AD<double>) ay(m);
 	ay[0] = sum;

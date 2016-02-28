@@ -392,7 +392,7 @@ void RevHesSweep(
 
 			case ErfOp:
 			// arg[1] is always the parameter 0
-			// arg[0] is always the parameter 2 / sqrt(pi)
+			// arg[2] is always the parameter 2 / sqrt(pi)
 			CPPAD_ASSERT_NARG_NRES(op, 3, 5);
 			reverse_sparse_hessian_nonlinear_unary_op(
 			i_var, arg[0], RevJac, for_jac_sparse, rev_hes_sparse
