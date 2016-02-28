@@ -61,15 +61,6 @@ $codei%
 	const ADFun<%Base%> %f%
 %$$
 
-$subhead ForSparseJac$$
-The $cref ForSparseJac$$ sparsity pattern stored in $icode f$$
-after this call corresponds to
-$codei%
-	%f%.ForSparseJac(%q%, %r_matrix%)
-%$$
-where $icode q$$ is equal to $icode n$$ and
-$icode r_matrix$$ is the sparsity pattern for the matrix $icode R$$.
-
 $head x$$
 If the operation sequence in $icode f$$ is
 $cref/independent/glossary/Operation/Independent/$$ of
@@ -189,9 +180,6 @@ void ADFun<Base>::ForSparseHesCase(
 {	size_t n = Domain();
 	size_t m = Range();
 	//
-	for_jac_sparse_set_.resize(0, 0);
-	for_jac_sparse_pack_.resize(0, 0);
-	//
 	// check Vector is Simple VectorSet class with bool elements
 	CheckSimpleVector<bool, VectorSet>();
 	//
@@ -207,14 +195,15 @@ void ADFun<Base>::ForSparseHesCase(
 	);
 	//
 	// sparsity pattern corresponding to r
-	for_jac_sparse_pack_.resize(num_var_tape_, n + 1);
+	sparse_pack for_jac_sparsity;
+	for_jac_sparsity.resize(num_var_tape_, n + 1);
 	for(size_t i = 0; i < n; i++)
 	{	CPPAD_ASSERT_UNKNOWN( ind_taddr_[i] < n + 1 );
 		// ind_taddr_[i] is operator taddr for i-th independent variable
 		CPPAD_ASSERT_UNKNOWN( play_.GetOp( ind_taddr_[i] ) == InvOp );
 		//
 		if( r[i] )
-			for_jac_sparse_pack_.add_element( ind_taddr_[i], ind_taddr_[i] );
+			for_jac_sparsity.add_element( ind_taddr_[i], ind_taddr_[i] );
 	}
 	// compute forward Jacobiain sparsity pattern
 	bool dependency = false;
@@ -223,7 +212,7 @@ void ADFun<Base>::ForSparseHesCase(
 		n,
 		num_var_tape_,
 		&play_,
-		for_jac_sparse_pack_
+		for_jac_sparsity
 	);
 	// sparsity pattern correspnding to s
 	sparse_pack rev_jac_sparsity;
@@ -251,7 +240,7 @@ void ADFun<Base>::ForSparseHesCase(
 		n,
 		num_var_tape_,
 		&play_,
-		for_jac_sparse_pack_,
+		for_jac_sparsity,
 		rev_jac_sparsity,
 		for_hes_sparsity
 	);
@@ -309,9 +298,6 @@ void ADFun<Base>::ForSparseHesCase(
 # ifndef NDEBUG
 	size_t m = Range();
 # endif
-	for_jac_sparse_set_.resize(0, 0);
-	for_jac_sparse_pack_.resize(0, 0);
-	//
 	std::set<size_t>::const_iterator itr;
 	//
 	// check VectorSet is Simple Vector class with sets for elements
@@ -328,7 +314,8 @@ void ADFun<Base>::ForSparseHesCase(
 	);
 	//
 	// sparsity pattern corresponding to r
-	for_jac_sparse_set_.resize(num_var_tape_, n + 1);
+	sparse_list for_jac_sparsity;
+	for_jac_sparsity.resize(num_var_tape_, n + 1);
 	itr = r[0].begin();
 	while( itr != r[0].end() )
 	{	size_t i = *itr++;
@@ -336,7 +323,7 @@ void ADFun<Base>::ForSparseHesCase(
 		// ind_taddr_[i] is operator taddr for i-th independent variable
 		CPPAD_ASSERT_UNKNOWN( play_.GetOp( ind_taddr_[i] ) == InvOp );
 		//
-		for_jac_sparse_set_.add_element( ind_taddr_[i], ind_taddr_[i] );
+		for_jac_sparsity.add_element( ind_taddr_[i], ind_taddr_[i] );
 	}
 	// compute forward Jacobiain sparsity pattern
 	bool dependency = false;
@@ -345,7 +332,7 @@ void ADFun<Base>::ForSparseHesCase(
 		n,
 		num_var_tape_,
 		&play_,
-		for_jac_sparse_set_
+		for_jac_sparsity
 	);
 	// sparsity pattern correspnding to s
 	sparse_list rev_jac_sparsity;
@@ -381,7 +368,7 @@ void ADFun<Base>::ForSparseHesCase(
 		n,
 		num_var_tape_,
 		&play_,
-		for_jac_sparse_set_,
+		for_jac_sparsity,
 		rev_jac_sparsity,
 		for_hes_sparsity
 	);
