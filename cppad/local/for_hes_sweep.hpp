@@ -112,7 +112,7 @@ void ForHesSweep(
 	const addr_t*   arg = CPPAD_NULL;
 
 	// length of the parameter vector (used by CppAD assert macros)
-# ifdef NOT_DEFINED
+# ifndef NDEBUG
 	const size_t num_par = play->num_par_rec();
 # endif
 
@@ -159,28 +159,19 @@ void ForHesSweep(
 		CPPAD_ASSERT_UNKNOWN( j == play->num_vec_ind_rec() );
 	}
 
-# ifdef NOT_DEFINED
 	// work space used by UserOp.
 	vector<size_t>     user_ix;  // variable indices for argument vector x
+	//
+	//
 	typedef std::set<size_t> size_set;
-	size_set::iterator set_itr;  // iterator for a standard set
-	size_set::iterator set_end;  // end of iterator sequence
-	vector< size_set > set_r;    // forward Jacobian sparsity for x
-	vector< size_set > set_u;    // reverse Hessian sparsity for y
-	vector< size_set > set_v;    // reverse Hessian sparsity for x
-	//
-	vector<bool>       bool_r;   // bool forward Jacobian sparsity for x
-	vector<bool>       bool_u;   // bool reverse Hessian sparsity for y
-	vector<bool>       bool_v;   // bool reverse Hessian sparsity for x
-	//
-	vectorBool         pack_r;   // pack forward Jacobian sparsity for x
-	vectorBool         pack_u;   // pack reverse Hessian sparsity for y
-	vectorBool         pack_v;   // pack reverse Hessian sparsity for x
+	vector< size_set > set_h;    // forward Hessian sparsity
+	vector<bool>       bool_h;   // forward Hessian sparsity
+	vectorBool         pack_h;   // forward Hessian sparstiy
 	//
 	vector<bool>       user_vx;  // which components of x are variables
+	vector<bool>       user_r;   // forward Jacobian sparsity for x
 	vector<bool>       user_s;   // reverse Jacobian sparsity for y
-	vector<bool>       user_t;   // reverse Jacobian sparsity for x
-	const size_t user_q = limit; // maximum element plus one
+	//
 	size_t user_index = 0;       // indentifier for this atomic operation
 	size_t user_id    = 0;       // user identifier for this call to operator
 	size_t user_i     = 0;       // index in result vector
@@ -196,8 +187,7 @@ void ForHesSweep(
 	bool               user_ok   = false;      // atomic op return value
 # endif
 	// next expected operator in a UserOp sequence
-	enum { user_start, user_arg, user_ret, user_end } user_state = user_end;
-# endif
+	enum { user_start, user_arg, user_ret, user_end } user_state = user_start;
 
 	// Initialize
 	play->forward_start(op, arg, i_op, i_var);
@@ -393,11 +383,10 @@ void ForHesSweep(
 			// -------------------------------------------------
 
 			case UserOp:
-# ifdef NOT_DEFINED
 			// start or end an atomic operation sequence
 			CPPAD_ASSERT_UNKNOWN( NumRes( UserOp ) == 0 );
 			CPPAD_ASSERT_UNKNOWN( NumArg( UserOp ) == 4 );
-			if( user_state == user_end )
+			if( user_state == user_start )
 			{	user_index = arg[0];
 				user_id    = arg[1];
 				user_n     = arg[2];
@@ -420,105 +409,76 @@ void ForHesSweep(
 				CPPAD_ASSERT_UNKNOWN( user_pack || user_bool || user_set );
 				user_ix.resize(user_n);
 				user_vx.resize(user_n);
+				user_r.resize(user_n);
 				user_s.resize(user_m);
-				user_t.resize(user_n);
 
-				// simpler to initialize all sparsity patterns as empty
+				// simpler to initialize sparsity patterns as empty
 				for(i = 0; i < user_m; i++)
 					user_s[i] = false;
 				for(i = 0; i < user_n; i++)
-					user_t[i] = false;
+					user_r[i] = false;
 				if( user_pack )
-				{	pack_r.resize(user_n * user_q);
-					pack_u.resize(user_m * user_q);
-					pack_v.resize(user_n * user_q);
-					// simpler to initialize all patterns as empty
-					for(i = 0; i < user_m; i++)
-					{
-						for(j = 0; j < user_q; j++)
-							pack_u[ i * user_q + j] = false;
-					}
+				{	pack_h.resize(user_n * user_n);
 					for(i = 0; i < user_n; i++)
-					{
-						for(j = 0; j < user_q; j++)
-						{	pack_r[ i * user_q + j] = false;
-							pack_v[ i * user_q + j] = false;
-						}
+					{	for(j = 0; j < user_n; j++)
+							pack_h[ i * user_n + j] = false;
 					}
 				}
 				if( user_bool )
-				{	bool_r.resize(user_n * user_q);
-					bool_u.resize(user_m * user_q);
-					bool_v.resize(user_n * user_q);
-					// simpler to initialize all patterns as empty
-					for(i = 0; i < user_m; i++)
-					{
-						for(j = 0; j < user_q; j++)
-							bool_u[ i * user_q + j] = false;
-					}
+				{	bool_h.resize(user_n * user_n);
 					for(i = 0; i < user_n; i++)
-					{
-						for(j = 0; j < user_q; j++)
-						{	bool_r[ i * user_q + j] = false;
-							bool_v[ i * user_q + j] = false;
-						}
+					{	for(j = 0; j < user_n; j++)
+							bool_h[ i * user_n + j] = false;
 					}
 				}
 				if( user_set )
-				{	set_r.resize(user_n);
-					set_u.resize(user_m);
-					set_v.resize(user_n);
-					for(i = 0; i < user_m; i++)
-						set_u[i].clear();
+				{	set_h.resize(user_n);
 					for(i = 0; i < user_n; i++)
-					{	set_r[i].clear();
-						set_v[i].clear();
-					}
+						set_h[i].clear();
 				}
 				user_j     = user_n;
 				user_i     = user_m;
-				user_state = user_ret;
+				user_state = user_arg;
 			}
 			else
-			{	CPPAD_ASSERT_UNKNOWN( user_state == user_start );
+			{	CPPAD_ASSERT_UNKNOWN( user_state == user_end );
 				CPPAD_ASSERT_UNKNOWN( user_index == size_t(arg[0]) );
 				CPPAD_ASSERT_UNKNOWN( user_id    == size_t(arg[1]) );
 				CPPAD_ASSERT_UNKNOWN( user_n     == size_t(arg[2]) );
 				CPPAD_ASSERT_UNKNOWN( user_m     == size_t(arg[3]) );
-				user_state = user_end;
+				user_state = user_start;
 
 				// call users function for this operation
 				user_atom->set_id(user_id);
 # ifdef NDEBUG
 				if( user_pack )
-					user_atom->rev_sparse_hes(user_vx,
-						user_s, user_t, user_q, pack_r, pack_u, pack_v
+					user_atom->for_sparse_hes(
+						user_vx, user_r, user_s, pack_h
 				);
 				if( user_bool )
-					user_atom->rev_sparse_hes(user_vx,
-						user_s, user_t, user_q, bool_r, bool_u, bool_v
-				);
+					user_atom->for_sparse_hes(
+						user_vx, user_r, user_s, bool_h
 				if( user_set )
-					user_atom->rev_sparse_hes(user_vx,
-						user_s, user_t, user_q, set_r, set_u, set_v
+					user_atom->for_sparse_hes(
+						user_vx, user_r, user_s, set_h
 				);
 # else
 				if( user_pack )
-					user_ok = user_atom->rev_sparse_hes(user_vx,
-						user_s, user_t, user_q, pack_r, pack_u, pack_v
+					user_ok = user_atom->for_sparse_hes(
+						user_vx, user_r, user_s, pack_h
 				);
 				if( user_bool )
-					user_ok = user_atom->rev_sparse_hes(user_vx,
-						user_s, user_t, user_q, bool_r, bool_u, bool_v
+					user_ok = user_atom->for_sparse_hes(
+						user_vx, user_r, user_s, bool_h
 				);
 				if( user_set )
-					user_ok = user_atom->rev_sparse_hes(user_vx,
-						user_s, user_t, user_q, set_r, set_u, set_v
+					user_ok = user_atom->for_sparse_hes(
+						user_vx, user_r, user_s, set_h
 				);
 				if( ! user_ok )
 				{	std::string msg =
 						atomic_base<Base>::class_name(user_index)
-						+ ": atomic_base.rev_sparse_hes: returned false\n";
+						+ ": atomic_base.for_sparse_hes: returned false\n";
 					if( user_pack )
 						msg += "sparsity = pack_sparsity_enum";
 					if( user_bool )
@@ -528,114 +488,81 @@ void ForHesSweep(
 					CPPAD_ASSERT_KNOWN(false, msg.c_str() );
 				}
 # endif
-				for(i = 0; i < user_n; i++) if( user_ix[i] > 0 )
-				{
-					size_t  i_x = user_ix[i];
-					if( user_t[i] )
-						RevJac[i_x] = true;
-					if( user_pack )
-					{
-						for(j = 0; j < user_q; j++)
-							if( pack_v[ i * user_q + j ] )
-								for_hes_sparse.add_element(i_x, j);
-					}
-					if( user_bool )
-					{
-						for(j = 0; j < user_q; j++)
-							if( bool_v[ i * user_q + j ] )
-								for_hes_sparse.add_element(i_x, j);
-					}
-					if( user_set )
-					{
-						set_itr = set_v[i].begin();
-						set_end = set_v[i].end();
-						while( set_itr != set_end )
-							for_hes_sparse.add_element(i_x, *set_itr++);
+				for(i = 0; i < user_n; i++)	for(j = 0; j < user_n; j++)
+				{	if( user_ix[i] > 0 && user_ix[j] > 0 )
+					{	bool flag = false;
+						if( user_pack )
+							flag = pack_h[i * user_n + j];
+						if( user_bool )
+							flag = bool_h[i * user_n + j];
+						if( user_set )
+							flag = set_h[i].find(j) != set_h[i].end();
+						if( flag )
+						{	size_t i_x = user_ix[i];
+							size_t j_x = user_ix[j];
+							for_hes_sparse.binary_union(
+								i_x, i_x, j_x, for_jac_sparse
+							);
+							for_hes_sparse.binary_union(
+								j_x, j_x, i_x, for_jac_sparse
+							);
+						}
 					}
 				}
-               }
-# endif
+			}
 			break;
 
 			case UsrapOp:
-# ifdef NOT_DEFINED
 			// parameter argument in an atomic operation sequence
 			CPPAD_ASSERT_UNKNOWN( user_state == user_arg );
-			CPPAD_ASSERT_UNKNOWN( 0 < user_j && user_j <= user_n );
+			CPPAD_ASSERT_UNKNOWN( user_j < user_n );
 			CPPAD_ASSERT_UNKNOWN( NumArg(op) == 1 );
 			CPPAD_ASSERT_UNKNOWN( size_t(arg[0]) < num_par );
-			--user_j;
 			user_ix[user_j] = 0;
 			user_vx[user_j] = false;
-			if( user_j == 0 )
-				user_state = user_start;
-# endif
+			if( user_j == n )
+				user_state = user_ret;
+			++user_j;
 			break;
 
 			case UsravOp:
-# ifdef NOT_DEFINED
 			// variable argument in an atomic operation sequence
 			CPPAD_ASSERT_UNKNOWN( user_state == user_arg );
-			CPPAD_ASSERT_UNKNOWN( 0 < user_j && user_j <= user_n );
+			CPPAD_ASSERT_UNKNOWN(  user_j < user_n );
 			CPPAD_ASSERT_UNKNOWN( NumArg(op) == 1 );
 			CPPAD_ASSERT_UNKNOWN( size_t(arg[0]) <= i_var );
 			CPPAD_ASSERT_UNKNOWN( 0 < arg[0] );
-			--user_j;
 			user_ix[user_j] = arg[0];
 			user_vx[user_j] = true;
 			for_jac_sparse.begin(arg[0]);
 			i = for_jac_sparse.next_element();
-			while( i < user_q )
-			{	if( user_pack )
-					pack_r[ user_j * user_q + i ] = true;
-				if( user_bool )
-					bool_r[ user_j * user_q + i ] = true;
-				if( user_set )
-					set_r[user_j].insert(i);
-				i = for_jac_sparse.next_element();
-			}
-			if( user_j == 0 )
-				user_state = user_start;
-# endif
+			if( i < for_jac_sparse.end() )
+				user_r[user_j] = true;
+			if( user_j == n )
+				user_state = user_ret;
+			++user_j;
 			break;
 
 			case UsrrpOp:
-# ifdef NOT_DEFINED
 			// parameter result in an atomic operation sequence
 			CPPAD_ASSERT_UNKNOWN( user_state == user_ret );
-			CPPAD_ASSERT_UNKNOWN( 0 < user_i && user_i <= user_m );
+			CPPAD_ASSERT_UNKNOWN( user_i < user_m );
 			CPPAD_ASSERT_UNKNOWN( NumArg(op) == 1 );
 			CPPAD_ASSERT_UNKNOWN( size_t(arg[0]) < num_par );
-			--user_i;
-			if( user_i == 0 )
-				user_state = user_arg;
-# endif
+			if( user_i == user_m )
+				user_state = user_end;
+			++user_i;
 			break;
 
 			case UsrrvOp:
-# ifdef NOT_DEFINED
 			// variable result in an atomic operation sequence
 			CPPAD_ASSERT_UNKNOWN( user_state == user_ret );
-			CPPAD_ASSERT_UNKNOWN( 0 < user_i && user_i <= user_m );
-			--user_i;
-			if( RevJac[i_var] )
-			{
+			CPPAD_ASSERT_UNKNOWN( user_i < user_m );
+			if( rev_jac_sparse.is_element(i_var, 0) )
 				user_s[user_i] = true;
-			}
-			for_hes_sparse.begin(i_var);
-			j = for_hes_sparse.next_element();
-			while( j < user_q )
-			{	if( user_pack )
-					pack_u[user_i * user_q + j] = true;
-				if( user_bool )
-					bool_u[user_i * user_q + j] = true;
-				if( user_set )
-					set_u[user_i].insert(j);
-				j = for_hes_sparse.next_element();
-			}
 			if( user_i == 0 )
 				user_state = user_arg;
-# endif
+			++user_i;
 			break;
 			// -------------------------------------------------
 
