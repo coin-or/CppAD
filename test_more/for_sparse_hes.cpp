@@ -20,7 +20,7 @@ bool test_one()
 	using namespace CppAD;
 
 	// dimension of the domain space
-	size_t n = 12;
+	size_t n = 14;
 
 	// dimension of the range space
 	size_t m = 1;
@@ -89,6 +89,12 @@ bool test_one()
 	F += 2;
 	S += 2;
 
+	// azmul(variable, variable)
+	sum += azmul(ax[F], ax[S]);
+	check[F * n + S] = check[S * n + F] = true;
+	F += 2;
+	S += 2;
+
 	// variable / variable
 	sum += ax[F] / ax[S];
 	check[F * n + S] = check[S * n + F] = check[S * n + S] = true;
@@ -102,6 +108,7 @@ bool test_one()
 	F += 2;
 	S += 2;
 
+	ok &= F == n;
 	CPPAD_TESTVECTOR(AD<double>) ay(m);
 	ay[0] = sum;
 

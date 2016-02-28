@@ -255,6 +255,17 @@ void ForHesSweep(
 			case LdvOp:
 			case MulpvOp:
 			case ParOp:
+			case PriOp:
+			case SignOp:
+			case StppOp:
+			case StpvOp:
+			case StvpOp:
+			case StvvOp:
+			case SubvvOp:
+			case SubpvOp:
+			case SubvpOp:
+			case ZmulpvOp:
+			case ZmulvpOp:
 			break;
 			// -------------------------------------------------
 
@@ -266,6 +277,11 @@ void ForHesSweep(
 			case CoshOp:
 			case ExpOp:
 			case LogOp:
+			case SinOp:
+			case SinhOp:
+			case SqrtOp:
+			case TanOp:
+			case TanhOp:
 # if CPPAD_USE_CPLUSPLUS_2011
 			case AcoshOp:
 			case AsinhOp:
@@ -373,143 +389,6 @@ void ForHesSweep(
 			forward_sparse_hessian_pow_op(
 				arg, for_jac_sparse, for_hes_sparse
 			);
-			break;
-			// -------------------------------------------------
-
-			case PriOp:
-			CPPAD_ASSERT_NARG_NRES(op, 5, 0);
-			break;
-			// -------------------------------------------------
-
-			case SignOp:
-			CPPAD_ASSERT_NARG_NRES(op, 1, 1);
-			// Derivative is identiaclly zero
-			break;
-			// -------------------------------------------------
-
-			case SinOp:
-			// cos(x), sin(x)
-			CPPAD_ASSERT_NARG_NRES(op, 1, 2)
-			forward_sparse_hessian_nonlinear_unary_op(
-				arg[0], for_jac_sparse, for_hes_sparse
-			);
-			break;
-			// -------------------------------------------------
-
-			case SinhOp:
-			// cosh(x), sinh(x)
-			CPPAD_ASSERT_NARG_NRES(op, 1, 2)
-# ifdef NOT_DEFINED
-			reverse_sparse_hessian_nonlinear_unary_op(
-			i_var, arg[0], RevJac, for_jac_sparse, rev_hes_sparse
-			);
-# endif
-			break;
-			// -------------------------------------------------
-
-			case SqrtOp:
-			CPPAD_ASSERT_NARG_NRES(op, 1, 1)
-# ifdef NOT_DEFINED
-			reverse_sparse_hessian_nonlinear_unary_op(
-			i_var, arg[0], RevJac, for_jac_sparse, rev_hes_sparse
-			);
-# endif
-			break;
-			// -------------------------------------------------
-
-			case StppOp:
-			// sparsity cannot propagate through a parameter
-			CPPAD_ASSERT_NARG_NRES(op, 3, 0)
-			break;
-			// -------------------------------------------------
-
-			case StpvOp:
-# ifdef NOT_DEFINED
-			reverse_sparse_hessian_store_op(
-				op,
-				arg,
-				num_vecad_ind,
-				vecad_ind.data(),
-				rev_hes_sparse,
-				vecad_sparse,
-				RevJac,
-				vecad_jac.data()
-			);
-# endif
-			break;
-			// -------------------------------------------------
-
-			case StvpOp:
-			// sparsity cannot propagate through a parameter
-			CPPAD_ASSERT_NARG_NRES(op, 3, 0)
-			break;
-			// -------------------------------------------------
-
-			case StvvOp:
-# ifdef NOT_DEFINED
-			reverse_sparse_hessian_store_op(
-				op,
-				arg,
-				num_vecad_ind,
-				vecad_ind.data(),
-				rev_hes_sparse,
-				vecad_sparse,
-				RevJac,
-				vecad_jac.data()
-			);
-# endif
-			break;
-			// -------------------------------------------------
-
-			case SubvvOp:
-			CPPAD_ASSERT_NARG_NRES(op, 2, 1)
-# ifdef NOT_DEFINED
-			reverse_sparse_hessian_addsub_op(
-			i_var, arg, RevJac, for_jac_sparse, rev_hes_sparse
-			);
-# endif
-			break;
-			// -------------------------------------------------
-
-			case SubpvOp:
-			CPPAD_ASSERT_NARG_NRES(op, 2, 1)
-# ifdef NOT_DEFINED
-			reverse_sparse_hessian_linear_unary_op(
-			i_var, arg[1], RevJac, for_jac_sparse, rev_hes_sparse
-			);
-# endif
-			break;
-			// -------------------------------------------------
-
-			case SubvpOp:
-			CPPAD_ASSERT_NARG_NRES(op, 2, 1)
-# ifdef NOT_DEFINED
-			reverse_sparse_hessian_linear_unary_op(
-			i_var, arg[0], RevJac, for_jac_sparse, rev_hes_sparse
-			);
-# endif
-			break;
-			// -------------------------------------------------
-
-			case TanOp:
-			// tan(x)^2, tan(x)
-			CPPAD_ASSERT_NARG_NRES(op, 1, 2)
-# ifdef NOT_DEFINED
-			reverse_sparse_hessian_nonlinear_unary_op(
-			i_var, arg[0], RevJac, for_jac_sparse, rev_hes_sparse
-			);
-# endif
-			break;
-			// -------------------------------------------------
-
-			case TanhOp:
-			// tanh(x)^2, tanh(x)
-			CPPAD_ASSERT_NARG_NRES(op, 1, 2)
-# ifdef NOT_DEFINED
-			reverse_sparse_hessian_nonlinear_unary_op(
-			i_var, arg[0], RevJac, for_jac_sparse, rev_hes_sparse
-			);
-# endif
 			break;
 			// -------------------------------------------------
 
@@ -760,33 +639,11 @@ void ForHesSweep(
 			break;
 			// -------------------------------------------------
 
-			case ZmulpvOp:
-			CPPAD_ASSERT_NARG_NRES(op, 2, 1)
-# ifdef NOT_DEFINED
-			reverse_sparse_hessian_linear_unary_op(
-			i_var, arg[1], RevJac, for_jac_sparse, rev_hes_sparse
-			);
-# endif
-			break;
-			// -------------------------------------------------
-
-			case ZmulvpOp:
-			CPPAD_ASSERT_NARG_NRES(op, 2, 1)
-# ifdef NOT_DEFINED
-			reverse_sparse_hessian_linear_unary_op(
-			i_var, arg[0], RevJac, for_jac_sparse, rev_hes_sparse
-			);
-# endif
-			break;
-			// -------------------------------------------------
-
 			case ZmulvvOp:
 			CPPAD_ASSERT_NARG_NRES(op, 2, 1)
-# ifdef NOT_DEFINED
-			reverse_sparse_hessian_mul_op(
-			i_var, arg, RevJac, for_jac_sparse, rev_hes_sparse
+			forward_sparse_hessian_mul_op(
+				arg, for_jac_sparse, for_hes_sparse
 			);
-# endif
 			break;
 
 			// -------------------------------------------------
