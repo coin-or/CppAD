@@ -15,6 +15,25 @@ Please visit http://www.coin-or.org/CppAD/ for information on other licenses.
 
 namespace { // Begin empty namespace
 
+void forward_sparse_jacobian_bool(CppAD::ADFun<double>& f)
+{	size_t n = f.Domain();
+	CPPAD_TESTVECTOR(bool) eye(n * n);
+	for(size_t i = 0; i < n; i++)
+	{	for(size_t j = 0; j < n; j++)
+			eye[ i * n + j] = (i == j);
+	}
+	f.ForSparseJac(n, eye);
+	return;
+}
+void forward_sparse_jacobian_set(CppAD::ADFun<double>& f)
+{	size_t n = f.Domain();
+	CPPAD_TESTVECTOR(std::set<size_t>) eye(n);
+	for(size_t i = 0; i < n; i++)
+		eye[i].insert(i);
+	f.ForSparseJac(n, eye);
+	return;
+}
+
 bool case_one()
 {	bool ok = true;
 	using namespace CppAD;
@@ -72,14 +91,7 @@ bool case_one()
 
 	// ------------------------------------------------------------------
 	// for RevSparseHes, sparsity pattern for the identity function U(x) = x
-	CPPAD_TESTVECTOR(bool) Px(n * n);
-	for(i = 0; i < n; i++)
-	{	for(j = 0; j < n; j++)
-			Px[ i * n + j ] = false;
-		Px[ i * n + i ] = true;
-	}
-	// compute sparsity pattern for Jacobian of F(U(x))
-	F.ForSparseJac(n, Px);
+	forward_sparse_jacobian_bool(F);
 	// ------------------------------------------------------------------
 	// for ForSparseHes, sparsity pattern for the diagonal of identity matix
 	CPPAD_TESTVECTOR(bool) r_bool(n);
@@ -117,13 +129,10 @@ bool case_one()
 		ok &= (! Pxx[j]);  // Hessian is identically zero
 	// ===================================================================
 	// vector of sets
-	CPPAD_TESTVECTOR(std::set<size_t>) Sx(n), r_set(1);
+	forward_sparse_jacobian_set(F);
+	CPPAD_TESTVECTOR(std::set<size_t>) r_set(1);
 	for(i = 0; i < n; i++)
-	{	Sx[i].insert(i);
 		r_set[0].insert(i);
-	}
-	// compute sparsity pattern for Jacobian of F(U(x))
-	F.ForSparseJac(n, Sx);
 	// ----------------------------------------------------------------------
 	// Hessian of F_0 ( U(x) )
 	CPPAD_TESTVECTOR(std::set<size_t>) Sy(1);
@@ -215,15 +224,7 @@ bool case_two()
 
 	// -----------------------------------------------------------------
 	// sparsity pattern for the identity function U(x) = x
-	CPPAD_TESTVECTOR(bool) Px(n * n);
-	for(i = 0; i < n; i++)
-	{	for(j = 0; j < n; j++)
-			Px[ i * n + j ] = false;
-		Px[ i * n + i ] = true;
-	}
-
-	// compute sparsity pattern for Jacobian of F(U(x))
-	F.ForSparseJac(n, Px);
+	forward_sparse_jacobian_bool(F);
 
 	// compute sparsity pattern for Hessian of F_0 ( U(x) )
 	CPPAD_TESTVECTOR(bool) Py(m);
@@ -237,12 +238,7 @@ bool case_two()
 
 	// ------------------------------------------------------------------
 	// sparsity pattern for the identity function U(x) = x
-	CPPAD_TESTVECTOR(std::set<size_t>) Sx(n);
-	for(i = 0; i < n; i++)
-		Sx[i].insert(i);
-
-	// compute sparsity pattern for Jacobian of F(U(x))
-	F.ForSparseJac(n, Sx);
+	forward_sparse_jacobian_set(F);
 
 	// compute sparsity pattern for Hessian of F_0 ( U(x) )
 	CPPAD_TESTVECTOR(std::set<size_t>) Sy(1);
@@ -286,20 +282,11 @@ bool case_three()
 
 	// ------------------------------------------------------------------
 	// sparsity pattern for the identity matrix
-	CppAD::vector<bool> r(n * n);
-	size_t i, j;
-	for(i = 0; i < n; i++)
-	{	for(j = 0; j < n; j++)
-			r[ i * n + j ] = false;
-		r[ i * n + i ] = true;
-	}
-
-	// compute sparsity pattern for J(x) = F^{(1)} (x)
-	f.ForSparseJac(n, r);
+	forward_sparse_jacobian_bool(f);
 
 	// compute sparsity pattern for H(x) = F_0^{(2)} (x)
 	CppAD::vector<bool> s(m);
-	for(i = 0; i < m; i++)
+	for(size_t i = 0; i < m; i++)
 		s[i] = false;
 	s[0] = true;
 	CppAD::vector<bool> h(n * n);
@@ -310,12 +297,7 @@ bool case_three()
 
 	// ------------------------------------------------------------------
 	// sparsity pattern for the identity function U(x) = x
-	CPPAD_TESTVECTOR(std::set<size_t>) Sx(n);
-	for(i = 0; i < n; i++)
-		Sx[i].insert(i);
-
-	// compute sparsity pattern for Jacobian of F(U(x))
-	f.ForSparseJac(n, Sx);
+	forward_sparse_jacobian_set(f);
 
 	// compute sparsity pattern for Hessian of F_0 ( U(x) )
 	CPPAD_TESTVECTOR(std::set<size_t>) Sy(1);
@@ -384,14 +366,7 @@ bool case_four()
 
 	// -----------------------------------------------------
 	// compute the forward Jacobian sparsity pattern for F
-	CPPAD_TESTVECTOR( bool ) r(n * n);
-	size_t i, j;
-	for(i = 0; i < n; i++)
-	{	for(j = 0; j < n; j++)
-			r[ i * n + j ] = false;
-		r[ i * n + i ] = true;
-	}
-	F.ForSparseJac(n, r);
+	forward_sparse_jacobian_bool(F);
 
 	// compute the reverse Hessian sparsity pattern for F
 	CPPAD_TESTVECTOR( bool ) s(m), h(n * n);
@@ -399,19 +374,14 @@ bool case_four()
 	h = F.RevSparseHes(n, s);
 
 	// check values
-	for(i = 0; i < n; i++)
-	{	for(j = 0; j < n; j++)
+	for(size_t i = 0; i < n; i++)
+	{	for(size_t j = 0; j < n; j++)
 			ok &= (h[i * n + j] == Check[i * n + j]);
 	}
 
 	// ------------------------------------------------------------------
 	// sparsity pattern for the identity function U(x) = x
-	CPPAD_TESTVECTOR(std::set<size_t>) Sx(n);
-	for(i = 0; i < n; i++)
-		Sx[i].insert(i);
-
-	// compute sparsity pattern for Jacobian of F(U(x))
-	F.ForSparseJac(n, Sx);
+	forward_sparse_jacobian_set(F);
 
 	// compute sparsity pattern for Hessian of F_0 ( U(x) )
 	CPPAD_TESTVECTOR(std::set<size_t>) Sy(1);
@@ -420,8 +390,8 @@ bool case_four()
 	Sxx = F.RevSparseHes(n, Sy);
 
 	// check values
-	for(i = 0; i < n; i++)
-	{	for(j = 0; j < n; j++)
+	for(size_t i = 0; i < n; i++)
+	{	for(size_t j = 0; j < n; j++)
 		{	bool found = Sxx[i].find(j) != Sxx[i].end();
 			ok &= (found == Check[i * n + j]);
 		}
@@ -450,13 +420,7 @@ bool case_five(void)
 	CppAD::ADFun<double> F(X, Y);
 
 	// sparsity pattern for the identity function U(x) = x
-	CPPAD_TESTVECTOR(bool) Px(n * n);
-	for(i = 0; i < n; i++)
-		for(j = 0; j < n; j++)
-			Px[ i * n + j ] = (i == j);
-
-	// compute sparsity pattern for Jacobian of F(U(x))
-	F.ForSparseJac(n, Px);
+	forward_sparse_jacobian_bool(F);
 
 	// compute sparsity pattern for Hessian of F_k ( U(x) )
 	CPPAD_TESTVECTOR(bool) Py(m);
@@ -512,8 +476,7 @@ bool case_six()
 	F2[2 * n + 1] = true;  // partial w.r.t x[2], x[1]
 	F2[2 * n + 2] = false; // partial w.r.t x[2], x[2]
 
-
-	// choose a non-symmetric sparsity patter for R
+	// choose a non-symmetric sparsity pattern for R
 	CPPAD_TESTVECTOR( bool ) r(n * n);
 	size_t i, j, k;
 	for(i = 0; i < n; i++)
