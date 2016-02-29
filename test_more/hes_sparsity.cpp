@@ -71,61 +71,88 @@ bool case_one()
 	ADFun<double> F(X, Y);
 
 	// ------------------------------------------------------------------
-	// sparsity pattern for the identity function U(x) = x
+	// for RevSparseHes, sparsity pattern for the identity function U(x) = x
 	CPPAD_TESTVECTOR(bool) Px(n * n);
 	for(i = 0; i < n; i++)
 	{	for(j = 0; j < n; j++)
 			Px[ i * n + j ] = false;
 		Px[ i * n + i ] = true;
 	}
-
 	// compute sparsity pattern for Jacobian of F(U(x))
 	F.ForSparseJac(n, Px);
-
-	// compute sparsity pattern for Hessian of F_0 ( U(x) )
+	// ------------------------------------------------------------------
+	// for ForSparseHes, sparsity pattern for the diagonal of identity matix
+	CPPAD_TESTVECTOR(bool) r_bool(n);
+	for(i = 0; i < n; i++)
+		r_bool[i] = true;
+	// ------------------------------------------------------------------
+	// Hessian of F_0 ( U(x) )
 	CPPAD_TESTVECTOR(bool) Py(m);
 	Py[0] = true;
 	Py[1] = false;
 	CPPAD_TESTVECTOR(bool) Pxx(n * n);
+	//
+	// RevSparseHes
 	Pxx = F.RevSparseHes(n, Py);
-
-	// check values
 	for(j = 0; j < n * n; j++)
 		ok &= (Pxx[j] == Check[j]);
-
-	// compute sparsity pattern for Hessian of F_1 ( U(x) )
+	//
+	// ForSparseHes
+	Pxx = F.ForSparseHes(r_bool, Py);
+	for(j = 0; j < n * n; j++)
+		ok &= (Pxx[j] == Check[j]);
+	// ------------------------------------------------------------------
+	// Hessian of F_1 ( U(x) )
 	Py[0] = false;
 	Py[1] = true;
+	//
+	// RevSparseHes
 	Pxx = F.RevSparseHes(n, Py);
 	for(j = 0; j < n * n; j++)
 		ok &= (! Pxx[j]);  // Hessian is identically zero
-
-	// ------------------------------------------------------------------
-	// sparsity pattern for the identity function U(x) = x
-	CPPAD_TESTVECTOR(std::set<size_t>) Sx(n);
+	//
+	// ForSparseHes
+	Pxx = F.ForSparseHes(r_bool, Py);
+	for(j = 0; j < n * n; j++)
+		ok &= (! Pxx[j]);  // Hessian is identically zero
+	// ===================================================================
+	// vector of sets
+	CPPAD_TESTVECTOR(std::set<size_t>) Sx(n), r_set(1);
 	for(i = 0; i < n; i++)
-		Sx[i].insert(i);
-
+	{	Sx[i].insert(i);
+		r_set[0].insert(i);
+	}
 	// compute sparsity pattern for Jacobian of F(U(x))
 	F.ForSparseJac(n, Sx);
-
-	// compute sparsity pattern for Hessian of F_0 ( U(x) )
+	// ----------------------------------------------------------------------
+	// Hessian of F_0 ( U(x) )
 	CPPAD_TESTVECTOR(std::set<size_t>) Sy(1);
 	Sy[0].insert(0);
 	CPPAD_TESTVECTOR(std::set<size_t>) Sxx(n);
+	//
+	// RevSparseHes
 	Sxx = F.RevSparseHes(n, Sy);
-
-	// check values
 	for(i = 0; i < n; i++)
 	{	for(j = 0; j < n; j++)
 		{	bool found = Sxx[i].find(j) != Sxx[i].end();
 			ok &= (found == Check[i * n + j]);
 		}
 	}
-
-	// compute sparsity pattern for Hessian of F_1 ( U(x) )
+	//
+	// ForSparseHes
+	Sxx = F.ForSparseHes(r_set, Sy);
+	for(i = 0; i < n; i++)
+	{	for(j = 0; j < n; j++)
+		{	bool found = Sxx[i].find(j) != Sxx[i].end();
+			ok &= (found == Check[i * n + j]);
+		}
+	}
+	// ----------------------------------------------------------------------
+	// Hessian of F_1 ( U(x) )
 	Sy[0].clear();
 	Sy[0].insert(1);
+	//
+	// RevSparseHes
 	Sxx = F.RevSparseHes(n, Sy);
 	for(i = 0; i < n; i++)
 	{	for(j = 0; j < n; j++)
@@ -133,7 +160,16 @@ bool case_one()
 			ok &= ! found;
 		}
 	}
-
+	//
+	// ForSparseHes
+	Sxx = F.ForSparseHes(r_set, Sy);
+	for(i = 0; i < n; i++)
+	{	for(j = 0; j < n; j++)
+		{	bool found = Sxx[i].find(j) != Sxx[i].end();
+			ok &= ! found;
+		}
+	}
+	// -----------------------------------------------------------------------
 	return ok;
 }
 
