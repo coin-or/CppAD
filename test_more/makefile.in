@@ -119,16 +119,16 @@ am__test_more_SOURCES_DIST = base_adolc.cpp ipopt_solve.cpp \
 	cond_exp_rev.cpp copy.cpp cos.cpp cosh.cpp dbl_epsilon.cpp \
 	div.cpp div_eq.cpp div_zero_one.cpp erf.cpp exp.cpp expm1.cpp \
 	extern_value.cpp extern_value.hpp for_hess.cpp \
-	for_sparse_jac.cpp forward.cpp forward_dir.cpp \
-	forward_order.cpp from_base.cpp fun_check.cpp jacobian.cpp \
-	num_limits.cpp log.cpp log1p.cpp log10.cpp mul.cpp \
-	mul_cskip.cpp mul_eq.cpp mul_level.cpp mul_cond_rev.cpp \
-	mul_zdouble.cpp mul_zero_one.cpp near_equal_ext.cpp neg.cpp \
-	ode_err_control.cpp old_usead_2.cpp old_usead_1.cpp \
-	old_tan.cpp old_reciprocal.cpp old_mat_mul.cpp old_mat_mul.hpp \
-	omp_alloc.cpp optimize.cpp parameter.cpp poly.cpp pow.cpp \
-	pow_int.cpp print_for.cpp romberg_one.cpp rosen_34.cpp \
-	runge_45.cpp reverse.cpp rev_sparse_hes.cpp rev_sparse_jac.cpp \
+	for_sparse_hes.cpp for_sparse_jac.cpp forward.cpp \
+	forward_dir.cpp forward_order.cpp from_base.cpp fun_check.cpp \
+	hes_sparsity.cpp jacobian.cpp num_limits.cpp log.cpp log1p.cpp \
+	log10.cpp mul.cpp mul_cskip.cpp mul_eq.cpp mul_level.cpp \
+	mul_cond_rev.cpp mul_zdouble.cpp mul_zero_one.cpp \
+	near_equal_ext.cpp neg.cpp ode_err_control.cpp old_usead_2.cpp \
+	old_usead_1.cpp old_tan.cpp old_reciprocal.cpp old_mat_mul.cpp \
+	old_mat_mul.hpp omp_alloc.cpp optimize.cpp parameter.cpp \
+	poly.cpp pow.cpp pow_int.cpp print_for.cpp romberg_one.cpp \
+	rosen_34.cpp runge_45.cpp reverse.cpp rev_sparse_jac.cpp \
 	rev_two.cpp simple_vector.cpp sin.cpp sin_cos.cpp sinh.cpp \
 	sparse_hessian.cpp sparse_jacobian.cpp sparse_vec_ad.cpp \
 	sqrt.cpp std_math.cpp sub.cpp sub_eq.cpp sub_zero.cpp tan.cpp \
@@ -151,9 +151,10 @@ am_test_more_OBJECTS = $(am__objects_1) $(am__objects_2) \
 	div.$(OBJEXT) div_eq.$(OBJEXT) div_zero_one.$(OBJEXT) \
 	erf.$(OBJEXT) exp.$(OBJEXT) expm1.$(OBJEXT) \
 	extern_value.$(OBJEXT) for_hess.$(OBJEXT) \
-	for_sparse_jac.$(OBJEXT) forward.$(OBJEXT) \
-	forward_dir.$(OBJEXT) forward_order.$(OBJEXT) \
-	from_base.$(OBJEXT) fun_check.$(OBJEXT) jacobian.$(OBJEXT) \
+	for_sparse_hes.$(OBJEXT) for_sparse_jac.$(OBJEXT) \
+	forward.$(OBJEXT) forward_dir.$(OBJEXT) \
+	forward_order.$(OBJEXT) from_base.$(OBJEXT) \
+	fun_check.$(OBJEXT) hes_sparsity.$(OBJEXT) jacobian.$(OBJEXT) \
 	num_limits.$(OBJEXT) log.$(OBJEXT) log1p.$(OBJEXT) \
 	log10.$(OBJEXT) mul.$(OBJEXT) mul_cskip.$(OBJEXT) \
 	mul_eq.$(OBJEXT) mul_level.$(OBJEXT) mul_cond_rev.$(OBJEXT) \
@@ -165,10 +166,9 @@ am_test_more_OBJECTS = $(am__objects_1) $(am__objects_2) \
 	omp_alloc.$(OBJEXT) optimize.$(OBJEXT) parameter.$(OBJEXT) \
 	poly.$(OBJEXT) pow.$(OBJEXT) pow_int.$(OBJEXT) \
 	print_for.$(OBJEXT) romberg_one.$(OBJEXT) rosen_34.$(OBJEXT) \
-	runge_45.$(OBJEXT) reverse.$(OBJEXT) rev_sparse_hes.$(OBJEXT) \
-	rev_sparse_jac.$(OBJEXT) rev_two.$(OBJEXT) \
-	simple_vector.$(OBJEXT) sin.$(OBJEXT) sin_cos.$(OBJEXT) \
-	sinh.$(OBJEXT) sparse_hessian.$(OBJEXT) \
+	runge_45.$(OBJEXT) reverse.$(OBJEXT) rev_sparse_jac.$(OBJEXT) \
+	rev_two.$(OBJEXT) simple_vector.$(OBJEXT) sin.$(OBJEXT) \
+	sin_cos.$(OBJEXT) sinh.$(OBJEXT) sparse_hessian.$(OBJEXT) \
 	sparse_jacobian.$(OBJEXT) sparse_vec_ad.$(OBJEXT) \
 	sqrt.$(OBJEXT) std_math.$(OBJEXT) sub.$(OBJEXT) \
 	sub_eq.$(OBJEXT) sub_zero.$(OBJEXT) tan.$(OBJEXT) \
@@ -289,7 +289,7 @@ CYGPATH_W = @CYGPATH_W@
 
 # $Id$
 # -----------------------------------------------------------------------------
-# CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-15 Bradley M. Bell
+# CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-16 Bradley M. Bell
 #
 # CppAD is distributed under multiple licenses. This distribution is under
 # the terms of the
@@ -533,12 +533,14 @@ test_more_SOURCES = \
 	extern_value.cpp \
 	extern_value.hpp \
 	for_hess.cpp \
+	for_sparse_hes.cpp \
 	for_sparse_jac.cpp \
 	forward.cpp \
 	forward_dir.cpp \
 	forward_order.cpp \
 	from_base.cpp \
 	fun_check.cpp \
+	hes_sparsity.cpp \
 	jacobian.cpp \
 	num_limits.cpp \
 	log.cpp \
@@ -571,7 +573,6 @@ test_more_SOURCES = \
 	rosen_34.cpp \
 	runge_45.cpp \
 	reverse.cpp \
-	rev_sparse_hes.cpp \
 	rev_sparse_jac.cpp \
 	rev_two.cpp \
 	simple_vector.cpp \
@@ -689,12 +690,14 @@ distclean-compile:
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/expm1.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/extern_value.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/for_hess.Po@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/for_sparse_hes.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/for_sparse_jac.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/forward.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/forward_dir.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/forward_order.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/from_base.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/fun_check.Po@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/hes_sparsity.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/ipopt_solve.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/jacobian.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/libeigen_a-cppad_eigen.Po@am__quote@
@@ -724,7 +727,6 @@ distclean-compile:
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/pow.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/pow_int.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/print_for.Po@am__quote@
-@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/rev_sparse_hes.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/rev_sparse_jac.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/rev_two.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/reverse.Po@am__quote@
