@@ -105,6 +105,7 @@ ADD_EXECUTABLE(test_more EXCLUDE_FROM_ALL test_more.cpp
 	forward_order.cpp
 	from_base.cpp
 	fun_check.cpp
+	hes_sparsity.cpp
 	jacobian.cpp
 	num_limits.cpp
 	log.cpp
@@ -131,7 +132,6 @@ ADD_EXECUTABLE(test_more EXCLUDE_FROM_ALL test_more.cpp
 	rosen_34.cpp
 	runge_45.cpp
 	reverse.cpp
-	rev_sparse_hes.cpp
 	rev_sparse_jac.cpp
 	rev_two.cpp
 	simple_vector.cpp
