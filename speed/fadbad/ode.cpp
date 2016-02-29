@@ -49,7 +49,8 @@ $srccode%cpp% */
 # include <cppad/speed/ode_evaluate.hpp>
 
 // list of possible options
-extern bool global_memory, global_onetape, global_atomic, global_optimize;
+# include <map> 
+extern std::map<std::string, bool> global_option;
 
 namespace fadbad {
 	// define fabs for use by ode_evaluate
@@ -65,9 +66,9 @@ bool link_ode(
 )
 {
 	// speed test global option values
-	if( global_atomic )
+	if( global_option["atomic"] )
 		return false;
-	if( global_memory || global_onetape || global_optimize )
+	if( global_option["memory"] || global_option["onetape"] || global_option["optimize"] )
 		return false;
 	// -------------------------------------------------------------
 	// setup

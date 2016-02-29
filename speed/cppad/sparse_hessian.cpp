@@ -49,10 +49,9 @@ $srccode%cpp% */
 # include <cppad/speed/uniform_01.hpp>
 # include <cppad/speed/sparse_hes_fun.hpp>
 
-// Note that CppAD uses global_memory at the main program level
-extern bool
-	global_onetape, global_colpack,
-	global_atomic, global_optimize, global_boolsparsity;
+// Note that CppAD uses global_option["memory"] at the main program level
+# include <map> 
+extern std::map<std::string, bool> global_option;
 
 namespace {
 	using CppAD::vector;
@@ -103,10 +102,10 @@ bool link_sparse_hessian(
 	CppAD::vector<double>&           hessian  ,
 	size_t&                          n_sweep  )
 {
-	if( global_atomic )
+	if( global_option["atomic"] )
 		return false;
 # ifndef CPPAD_COLPACK_SPEED
-	if( global_colpack )
+	if( global_option["colpack"] )
 		return false;
 # endif
 	// -----------------------------------------------------
@@ -133,7 +132,7 @@ bool link_sparse_hessian(
 	BoolVector bool_sparsity(n * n);
 
 	// ------------------------------------------------------
-	if( ! global_onetape ) while(repeat--)
+	if( ! global_option["onetape"] ) while(repeat--)
 	{	// choose a value for x
 		CppAD::uniform_01(n, x);
 		for(j = 0; j < n; j++)
@@ -148,14 +147,14 @@ bool link_sparse_hessian(
 		// create function object f : X -> Y
 		f.Dependent(a_x, a_y);
 
-		if( global_optimize )
+		if( global_option["optimize"] )
 			f.optimize();
 
 		// skip comparison operators
 		f.compare_change_count(0);
 
 		// calculate the Hessian sparsity pattern for this function
-		if( global_boolsparsity )
+		if( global_option["boolsparsity"] )
 			calc_sparsity(bool_sparsity, f);
 		else
 			calc_sparsity(set_sparsity, f);
@@ -163,11 +162,11 @@ bool link_sparse_hessian(
 		// structure that holds some of work done by SparseHessian
 		CppAD::sparse_hessian_work work;
 # ifdef CPPAD_COLPACK_SPEED
-		if( global_colpack )
+		if( global_option["colpack"] )
 			work.color_method = "colpack.star";
 # endif
 		// calculate this Hessian at this x
-		if( global_boolsparsity) n_sweep = f.SparseHessian(
+		if( global_option["boolsparsity"]) n_sweep = f.SparseHessian(
 			x, w, bool_sparsity, row, col, hessian, work
 		);
 		else n_sweep = f.SparseHessian(
@@ -189,14 +188,14 @@ bool link_sparse_hessian(
 		// create function object f : X -> Y
 		f.Dependent(a_x, a_y);
 
-		if( global_optimize )
+		if( global_option["optimize"] )
 			f.optimize();
 
 		// skip comparison operators
 		f.compare_change_count(0);
 
 		// calculate the Hessian sparsity pattern for this function
-		if( global_boolsparsity)
+		if( global_option["boolsparsity"])
 			calc_sparsity(bool_sparsity, f);
 		else
 			calc_sparsity(set_sparsity, f);
@@ -204,7 +203,7 @@ bool link_sparse_hessian(
 		// declare structure that holds some of work done by SparseHessian
 		CppAD::sparse_hessian_work work;
 # ifdef CPPAD_COLPACK_SPEED
-		if( global_colpack )
+		if( global_option["colpack"] )
 			work.color_method = "colpack.star";
 # endif
 		while(repeat--)
@@ -212,7 +211,7 @@ bool link_sparse_hessian(
 			CppAD::uniform_01(n, x);
 
 			// calculate hessian at this x
-			if( global_boolsparsity ) n_sweep = f.SparseHessian(
+			if( global_option["boolsparsity"] ) n_sweep = f.SparseHessian(
 				x, w, bool_sparsity, row, col, hessian, work
 			);
 			else n_sweep = f.SparseHessian(

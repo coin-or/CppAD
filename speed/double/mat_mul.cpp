@@ -36,9 +36,9 @@ $srccode%cpp% */
 # include <cppad/speed/mat_sum_sq.hpp>
 # include <cppad/speed/uniform_01.hpp>
 
-// Note that CppAD uses global_memory at the main program level
-extern bool
-	global_onetape, global_atomic, global_optimize;
+// Note that CppAD uses global_option["memory"] at the main program level
+# include <map> 
+extern std::map<std::string, bool> global_option;
 
 bool link_mat_mul(
 	size_t                           size     ,
@@ -48,7 +48,7 @@ bool link_mat_mul(
 	CppAD::vector<double>&           dz
 )
 {
-	if(global_onetape||global_atomic||global_optimize)
+	if(global_option["onetape"]||global_option["atomic"]||global_option["optimize"])
 		return false;
 	// -----------------------------------------------------
 	size_t n = size * size; // number of independent variables

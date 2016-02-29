@@ -42,7 +42,8 @@ $srccode%cpp% */
 # include <cppad/utility/vector.hpp>
 
 // list of possible options
-extern bool global_memory, global_onetape, global_atomic, global_optimize;
+# include <map> 
+extern std::map<std::string, bool> global_option;
 
 bool link_mat_mul(
 	size_t                           size     ,
@@ -52,7 +53,7 @@ bool link_mat_mul(
 	CppAD::vector<double>&           dz       )
 {
 	// speed test global option values
-	if( global_memory || global_onetape || global_atomic || global_optimize )
+	if( global_option["memory"] || global_option["onetape"] || global_option["atomic"] || global_option["optimize"] )
 		return false;
 	// The correctness check for this test is failing, so abort (for now).
 	return false;

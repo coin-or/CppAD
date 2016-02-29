@@ -398,7 +398,7 @@ $lend
 
 $head 10-03$$
 Change the $code hold_memory$$ speed to option to just
-$cref/memory/speed_main/option_list/memory/$$.
+$cref/memory/speed_main/Global Options/memory/$$.
 In addition, in the speed test output, include all of the options
 that are present in the output variable name;
 see $cref/speed results/speed_main/Speed Results/$$.
@@ -548,7 +548,7 @@ $cref/sparse Jacobian speed tests/link_sparse_jacobian/$$.
 
 $head 06-10$$
 $list number$$
-Add the $cref/hold_memory/speed_main/option_list/memory/$$ option
+Add the $cref/hold_memory/speed_main/Global Options/memory/$$ option
 to the speed test main program.
 This was changed to just $code memory$$; see
 $cref/10-03/whats_new_12/10-03/$$.

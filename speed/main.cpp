@@ -16,6 +16,7 @@ Please visit http://www.coin-or.org/CppAD/ for information on other licenses.
 # include <cstddef>
 # include <iostream>
 # include <iomanip>
+# include <map>
 # include <cppad/utility/vector.hpp>
 # include <cppad/speed/det_grad_33.hpp>
 # include <cppad/speed/det_33.hpp>
@@ -143,19 +144,23 @@ $codei%
 %$$
 before any of the testing routines (listed above) are called.
 
-$head option_list$$
-This is a list of options that follow $icode seed$$ value.
+$head Global Options$$
+This global variable has prototype
+$srccode%cpp%
+	extern std::map<std::string, bool> global_option;
+%$$
+This is true for each option that follows $icode seed$$.
 The order of the options does not matter and the list can be empty.
-Each option in the list, must be separate
+Each option, must be separate
 command line argument to the main program.
 The documentation below specifics how CppAD uses these options,
 see the examples in $cref speed_adolc$$ for how another package might
 uses these options.
 
 $subhead onetape$$
-If the option $code onetape$$ is present, the symbol
+If the option $code onetape$$ is present,
 $codep
-	extern bool global_onetape
+	global_option["onetape"]
 $$
 is true and otherwise it is false.
 If this external symbol is true,
@@ -178,9 +183,9 @@ $cref cppad_det_lu.cpp$$ returns false
 when $code global_onetape$$ is true.
 
 $subhead optimize$$
-If the option $code optimize$$ is present, the symbol
+If the option $code optimize$$ is present,
 $codep
-	extern bool global_optimize
+	global_option["optimize"]
 $$
 is true and otherwise it is false.
 If this external symbol is true,
@@ -188,9 +193,9 @@ CppAD will optimize the operation sequence before doing computations.
 If it is false, this optimization will not be done.
 
 $subhead atomic$$
-If the option $code atomic$$ is present, the symbol
+If the option $code atomic$$ is present,
 $codep
-	extern bool global_atomic
+	global_option["atomic"]
 $$
 is true and otherwise it is false.
 If this external symbol is true, CppAD will use its user defined
@@ -199,9 +204,9 @@ If no such atomic operation exists,
 and atomic is chosen, CppAD returns false for the test.
 
 $subhead memory$$
-If the option $code memory$$ is present, the symbol
+If the option $code memory$$ is present,
 $codep
-	extern bool global_memory
+	global_option["memory"]
 $$
 is true and otherwise it is false.
 If it is true, the CppAD
@@ -217,9 +222,9 @@ $cref/sparse_hessian/link_sparse_hessian/$$ tests.
 The other tests will ignore these options:
 
 $subhead boolsparsity$$
-If the option $code boolsparsity$$ is present, the symbol
+If the option $code boolsparsity$$ is present,
 $codep
-	extern bool global_boolsparsity
+	global_option["boolsparsity"]
 $$
 is true and otherwise it is false.
 If it is true, CppAD will use a
@@ -229,9 +234,9 @@ Otherwise it will use a
 $cref/vector of sets/glossary/Sparsity Pattern/Vector of Sets/$$.
 
 $subhead colpack$$
-If the option $code colpack$$ is present, the symbol
+If the option $code colpack$$ is present,
 $codep
-	extern bool global_colpack
+	global_option["colpack"]
 $$
 is true and otherwise it is false.
 If this external symbol is true,
@@ -331,30 +336,32 @@ extern void info_sparse_jacobian(size_t size, size_t& n_sweep);
 extern void info_sparse_hessian(size_t size, size_t& n_sweep);
 
 // --------------------------------------------------------------------------
+std::map<std::string, bool> global_option;
+// --------------------------------------------------------------------------
 
-bool   global_onetape;
-bool   global_colpack;
-bool   global_optimize;
-bool   global_atomic;
-bool   global_memory;
-bool   global_boolsparsity;
 
 namespace {
 	using std::cout;
 	using std::endl;
+	const char* option_list[] = {
+		"onetape",
+		"optimize",
+		"atomic",
+		"memory",
+		"boolsparsity",
+		"colpack",
+	};
+	size_t num_option = sizeof(option_list) / sizeof( option_list[0] );
 	// ----------------------------------------------------------------
 	// not available test message
 	void not_available_message(const char* test_name)
 	{	cout << AD_PACKAGE << ": " << test_name;
 		cout << " is not availabe with " << endl;
-		cout << "onetape = " << global_onetape << endl;
-		cout << "colpack = " << global_colpack << endl;
-		cout << "optimize = " << global_optimize << endl;
-		cout << "atomic = " << global_atomic << endl;
-		cout << "memory = " << global_memory << endl;
-		cout << "boolsparsity = " << global_boolsparsity << endl;
+		for(size_t i = 0; i < num_option; i++)
+		{	std::string option = option_list[i];
+			cout << option << " = " << global_option[option] << endl;
+		}
 	}
-
 	// ------------------------------------------------------
 	// output vector in form readable by octave or matlab
 	// convert size_t to int to avoid warning by MS compiler
@@ -388,18 +395,11 @@ namespace {
 # endif
 		}
 		cout << AD_PACKAGE << "_" << case_name;
-		if( global_onetape )
-			cout << "_onetape";
-		if( global_colpack )
-			cout << "_colpack";
-		if( global_optimize )
-			cout << "_optimize";
-		if( global_atomic )
-			cout << "_atomic";
-		if( global_memory )
-			cout << "_memory";
-		if( global_boolsparsity )
-			cout << "_boolsparsity";
+		for(size_t i = 0; i < num_option; i++)
+		{	std::string option = option_list[i];
+			if( global_option[option]  )
+				cout << "_" << option;
+		}
 		if( ! available )
 		{	cout << "_available = false" << endl;
 			return ok;
@@ -476,58 +476,42 @@ int main(int argc, char *argv[])
 	};
 	const size_t n_test  = sizeof(test_list) / sizeof(test_list[0]);
 
-	size_t i;
 	test_enum match = test_error;
 	int    iseed = 0;
 	bool   error = argc < 3;
 	if( ! error )
-	{	for(i = 0; i < n_test; i++)
+	{	for(size_t i = 0; i < n_test; i++)
 			if( strcmp(test_list[i].name, argv[1]) == 0 )
 				match = test_list[i].index;
 		error = match == test_error;
 		iseed = std::atoi( argv[2] );
 		error |= iseed < 0;
-		global_onetape      = false;
-		global_colpack      = false;
-		global_optimize     = false;
-		global_atomic       = false;
-		global_memory       = false;
-		global_boolsparsity = false;
-		for(i = 3; i < size_t(argc); i++)
-		{	if( strcmp(argv[i], "onetape") == 0 )
-				global_onetape = true;
-			else if( strcmp(argv[i], "colpack") == 0 )
-				global_colpack = true;
-			else if( strcmp(argv[i], "optimize") == 0 )
-				global_optimize = true;
-			else if( strcmp(argv[i], "atomic") == 0 )
-				global_atomic = true;
-			else if( strcmp(argv[i], "memory") == 0 )
-				global_memory = true;
-			else if( strcmp(argv[i], "boolsparsity") == 0 )
-				global_boolsparsity = true;
-			else
-				error = true;
+		for(size_t i = 0; i < num_option; i++)
+			global_option[ option_list[i] ] = false;
+		for(size_t i = 3; i < size_t(argc); i++)
+		{	error = true;
+			for(size_t j = 0; j < num_option; j++)
+			{	if( strcmp(argv[i], option_list[j]) == 0 )
+				{	global_option[ option_list[j] ] = true;
+					error = false;
+				}
+			}
 		}
 	}
 	if( error )
 	{	cout << "usage: ./speed_"
 		     << AD_PACKAGE << " test seed option_list" << endl;
 		cout << "test choices: " << endl;
-		for(i = 0; i < n_test; i++)
+		for(size_t i = 0; i < n_test; i++)
 			cout << "\t" << test_list[i].name << endl;
-		cout << "seed choices: ";
-		cout << "a positive integer used as a random seed." << endl;
-		cout << "option choices: ";
-		cout << " \"onetape\",";
-		cout << " \"colpack\",";
-		cout << " \"optimize\",";
-		cout << " \"atomic\",";
-		cout << " \"memory\",";
-		cout << " \"boolsparsity\"." << endl << endl;
+		cout << "seed: is a positive integer used as a random seed." << endl;
+		cout << "option: is zero, one or more of the following:" << endl;
+		for(size_t i = 0; i < num_option; i++)
+			cout << " " << option_list[i]; 
+		cout << endl << endl;
 		return 1;
 	}
-	if( global_memory )
+	if( global_option["memory"] )
 		CppAD::thread_alloc::hold_memory(true);
 
 	// initialize the random number simulator
@@ -542,7 +526,7 @@ int main(int argc, char *argv[])
 	CppAD::vector<size_t> size_poly(n_size);
 	CppAD::vector<size_t> size_sparse_hessian(n_size);
 	CppAD::vector<size_t> size_sparse_jacobian(n_size);
-	for(i = 0; i < n_size; i++)
+	for(size_t i = 0; i < n_size; i++)
 	{	size_det_minor[i]   = i + 1;
 		size_det_lu[i]      = 10 * i + 1;
 		size_mat_mul[i]     = 10 * i + 1;
@@ -692,7 +676,7 @@ int main(int argc, char *argv[])
 			speed_sparse_hessian, size_sparse_hessian,  "sparse_hessian"
 		);
 		cout << AD_PACKAGE << "_sparse_hessian_sweep = ";
-		for(i = 0; i < size_sparse_hessian.size(); i++)
+		for(size_t i = 0; i < size_sparse_hessian.size(); i++)
 		{	if( i == 0 )
 				cout << "[ ";
 			else	cout << ", ";
@@ -718,7 +702,7 @@ int main(int argc, char *argv[])
 			speed_sparse_jacobian, size_sparse_jacobian, "sparse_jacobian"
 		);
 		cout << AD_PACKAGE << "_sparse_jacobian_n_sweep = ";
-		for(i = 0; i < size_sparse_jacobian.size(); i++)
+		for(size_t i = 0; i < size_sparse_jacobian.size(); i++)
 		{	if( i == 0 )
 				cout << "[ ";
 			else	cout << ", ";

@@ -17,8 +17,22 @@ move_list='
 move_sed='s|list_files.sh|ls_files.sh|'
 #
 cat << EOF > junk.sed
-s|sparse_set, sparse_list|sparse_list|
-s|.c sparse_pack, .c sparse_set,* or .c sparse_list|sparse_pack or sparse_list|
+/^extern bool/! b one
+N
+N
+/global_onetape/! b one
+s|^extern bool.*global_[a-z]*;|# include <map> \\
+extern std::map<std::string, bool> global_option;|
+: one
+/^\\textern bool global_boolsparsity;$/d
+s|global_onetape|global_option["onetape"]|
+s|global_optimize|global_option["optimize"]|
+s|global_atomic|global_option["atomic"]|
+s|global_memory|global_option["memory"]|
+s|global_boolsparsity|global_option["boolsparsity"]|
+s|global_colpack|global_option["colpack"]|
+#
+s|/speed_main/option_list/|/speed_main/Global Options/|
 EOF
 # -----------------------------------------------------------------------------
 if [ $0 != "bin/batch_edit.sh" ]

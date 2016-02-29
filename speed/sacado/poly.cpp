@@ -52,7 +52,8 @@ $srccode%cpp% */
 # include <Sacado.hpp>
 
 // list of possible options
-extern bool global_memory, global_onetape, global_atomic, global_optimize;
+# include <map> 
+extern std::map<std::string, bool> global_option;
 
 bool link_poly(
 	size_t                     size     ,
@@ -61,9 +62,9 @@ bool link_poly(
 	CppAD::vector<double>     &z        ,  // polynomial argument value
 	CppAD::vector<double>     &ddp      )  // second derivative w.r.t z
 {
-	if( global_atomic )
+	if( global_option["atomic"] )
 		return false;
-	if( global_memory || global_onetape || global_optimize )
+	if( global_option["memory"] || global_option["onetape"] || global_option["optimize"] )
 		return false;
 	// -----------------------------------------------------
 	// setup

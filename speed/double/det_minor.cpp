@@ -35,9 +35,9 @@ $srccode%cpp% */
 # include <cppad/speed/det_by_minor.hpp>
 # include <cppad/speed/uniform_01.hpp>
 
-// Note that CppAD uses global_memory at the main program level
-extern bool
-	global_onetape, global_atomic, global_optimize;
+// Note that CppAD uses global_option["memory"] at the main program level
+# include <map> 
+extern std::map<std::string, bool> global_option;
 
 bool link_det_minor(
 	size_t                     size     ,
@@ -45,7 +45,7 @@ bool link_det_minor(
 	CppAD::vector<double>     &matrix   ,
 	CppAD::vector<double>     &det      )
 {
-	if(global_onetape||global_atomic||global_optimize)
+	if(global_option["onetape"]||global_option["atomic"]||global_option["optimize"])
 		return false;
 	// -----------------------------------------------------
 	// setup

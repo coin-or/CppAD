@@ -43,9 +43,9 @@ $srccode%cpp% */
 # include <cppad/speed/uniform_01.hpp>
 # include <cassert>
 
-// Note that CppAD uses global_memory at the main program level
-extern bool
-	global_onetape, global_atomic, global_optimize;
+// Note that CppAD uses global_option["memory"] at the main program level
+# include <map> 
+extern std::map<std::string, bool> global_option;
 
 bool link_ode(
 	size_t                     size       ,
@@ -55,7 +55,7 @@ bool link_ode(
 )
 {
 	// speed test global option values
-	if( global_atomic )
+	if( global_option["atomic"] )
 		return false;
 
 	// --------------------------------------------------------------------
@@ -74,7 +74,7 @@ bool link_ode(
 	CppAD::ADFun<double>  f;   // AD function
 
 	// -------------------------------------------------------------
-	if( ! global_onetape ) while(repeat--)
+	if( ! global_option["onetape"] ) while(repeat--)
 	{	// choose next x value
 		uniform_01(n, x);
 		for(j = 0; j < n; j++)
@@ -89,7 +89,7 @@ bool link_ode(
 		// create function object f : X -> Y
 		f.Dependent(X, Y);
 
-		if( global_optimize )
+		if( global_option["optimize"] )
 			f.optimize();
 
 		// skip comparison operators
@@ -112,7 +112,7 @@ bool link_ode(
 		// create function object f : X -> Y
 		f.Dependent(X, Y);
 
-		if( global_optimize )
+		if( global_option["optimize"] )
 			f.optimize();
 
 		// skip comparison operators

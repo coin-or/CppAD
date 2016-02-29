@@ -48,9 +48,9 @@ $srccode%cpp% */
 # include <cppad/cppad.hpp>
 # include <cppad/speed/uniform_01.hpp>
 
-// Note that CppAD uses global_memory at the main program level
-extern bool
-	global_onetape, global_atomic, global_optimize;
+// Note that CppAD uses global_option["memory"] at the main program level
+# include <map> 
+extern std::map<std::string, bool> global_option;
 
 bool link_poly(
 	size_t                     size     ,
@@ -60,7 +60,7 @@ bool link_poly(
 	CppAD::vector<double>     &ddp      )  // second derivative w.r.t z
 {
 	// speed test global option values
-	if( global_atomic )
+	if( global_option["atomic"] )
 		return false;
 
 	// -----------------------------------------------------
@@ -91,7 +91,7 @@ bool link_poly(
 	CppAD::ADFun<double> f;
 
 	// --------------------------------------------------------------------
-	if( ! global_onetape ) while(repeat--)
+	if( ! global_option["onetape"] ) while(repeat--)
 	{
 		// choose an argument value
 		CppAD::uniform_01(1, z);
@@ -106,7 +106,7 @@ bool link_poly(
 		// create function object f : A -> detA
 		f.Dependent(Z, P);
 
-		if( global_optimize )
+		if( global_option["optimize"] )
 			f.optimize();
 
 		// skip comparison operators
@@ -140,7 +140,7 @@ bool link_poly(
 		// create function object f : A -> detA
 		f.Dependent(Z, P);
 
-		if( global_optimize )
+		if( global_option["optimize"] )
 			f.optimize();
 
 		// skip comparison operators

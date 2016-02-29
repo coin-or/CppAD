@@ -42,7 +42,8 @@ $srccode%cpp% */
 # include <cppad/speed/uniform_01.hpp>
 
 // list of possible options
-extern bool global_memory, global_onetape, global_atomic, global_optimize;
+# include <map> 
+extern std::map<std::string, bool> global_option;
 
 bool link_ode(
 	size_t                     size       ,
@@ -52,9 +53,9 @@ bool link_ode(
 )
 {
 	// speed test global option values
-	if( global_atomic )
+	if( global_option["atomic"] )
 		return false;
-	if( global_memory || global_optimize )
+	if( global_option["memory"] || global_option["optimize"] )
 		return false;
 	// -------------------------------------------------------------
 	// setup
@@ -89,7 +90,7 @@ bool link_ode(
 		jac_ptr[i] = jac_raw + i * n;
 
 	// -------------------------------------------------------------
-	if( ! global_onetape ) while(repeat--)
+	if( ! global_option["onetape"] ) while(repeat--)
 	{	// choose next x value
 		uniform_01(n, x);
 

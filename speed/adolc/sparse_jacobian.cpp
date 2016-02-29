@@ -51,8 +51,8 @@ $srccode%cpp% */
 # include <cppad/speed/sparse_jac_fun.hpp>
 
 // list of possible options
-extern bool global_memory, global_onetape, global_atomic, global_optimize;
-extern bool global_colpack, global_boolsparsity;
+# include <map> 
+extern std::map<std::string, bool> global_option;
 
 bool link_sparse_jacobian(
 	size_t                           size     ,
@@ -64,9 +64,9 @@ bool link_sparse_jacobian(
 	      CppAD::vector<double>&     jacobian ,
 	      size_t&                    n_sweep  )
 {
-	if( global_atomic || (! global_colpack) )
+	if( global_option["atomic"] || (! global_option["colpack"]) )
 		return false;
-	if( global_memory || global_optimize )
+	if( global_option["memory"] || global_option["optimize"] )
 		return false;
 	// -----------------------------------------------------
 	// setup
@@ -97,8 +97,7 @@ bool link_sparse_jacobian(
 
 	// options that control sparse_jac
 	int        options[4];
-	extern bool global_boolsparsity;
-	if( global_boolsparsity )
+	if( global_option["boolsparsity"] )
 		options[0] = 1;  // sparsity by propagation of bit pattern
 	else
 		options[0] = 0;  // sparsity pattern by index domains
@@ -137,7 +136,7 @@ bool link_sparse_jacobian(
 	);
 	options[2]       = 0;
 	// ----------------------------------------------------------------------
-	if( ! global_onetape ) while(repeat--)
+	if( ! global_option["onetape"] ) while(repeat--)
 	{	// choose a value for x
 		CppAD::uniform_01(n, x);
 

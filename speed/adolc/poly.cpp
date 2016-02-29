@@ -54,7 +54,8 @@ $srccode%cpp% */
 # include "adolc_alloc_mat.hpp"
 
 // list of possible options
-extern bool global_memory, global_onetape, global_atomic, global_optimize;
+# include <map> 
+extern std::map<std::string, bool> global_option;
 
 bool link_poly(
 	size_t                     size     ,
@@ -63,9 +64,9 @@ bool link_poly(
 	CppAD::vector<double>     &z        ,  // polynomial argument value
 	CppAD::vector<double>     &ddp      )  // second derivative w.r.t z
 {
-	if( global_atomic )
+	if( global_option["atomic"] )
 		return false;
-	if( global_memory || global_optimize )
+	if( global_option["memory"] || global_option["optimize"] )
 		return false;
 	// -----------------------------------------------------
 	// setup
@@ -103,7 +104,7 @@ bool link_poly(
 	x[0][1] = 0.;  // second order
 
 	// ----------------------------------------------------------------------
-	if( ! global_onetape ) while(repeat--)
+	if( ! global_option["onetape"] ) while(repeat--)
 	{	// choose an argument value
 		CppAD::uniform_01(1, z);
 

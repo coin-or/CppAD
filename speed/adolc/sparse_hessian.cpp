@@ -51,8 +51,8 @@ $srccode%cpp% */
 # include <cppad/speed/sparse_hes_fun.hpp>
 
 // list of possible options
-extern bool global_memory, global_onetape, global_atomic, global_optimize;
-extern bool global_colpack, global_boolsparsity;
+# include <map> 
+extern std::map<std::string, bool> global_option;
 
 bool link_sparse_hessian(
 	size_t                           size     ,
@@ -63,9 +63,9 @@ bool link_sparse_hessian(
 	CppAD::vector<double>&           hessian  ,
 	size_t&                          n_sweep )
 {
-	if( global_atomic || (! global_colpack) )
+	if( global_option["atomic"] || (! global_option["colpack"]) )
 		return false;
-	if( global_memory || global_optimize || global_boolsparsity )
+	if( global_option["memory"] || global_option["optimize"] || global_option["boolsparsity"] )
 		return false;
 	// -----------------------------------------------------
 	// setup
@@ -107,7 +107,7 @@ bool link_sparse_hessian(
 	DblVector  values = CPPAD_NULL;   // Hessian values
 
 	// ----------------------------------------------------------------------
-	if( ! global_onetape ) while(repeat--)
+	if( ! global_option["onetape"] ) while(repeat--)
 	{	// choose a value for x
 		CppAD::uniform_01(n, x);
 
