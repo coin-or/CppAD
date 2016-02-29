@@ -34,6 +34,62 @@ void forward_sparse_jacobian_set(CppAD::ADFun<double>& f)
 	return;
 }
 
+bool sparse_hessian_test(
+	CppAD::ADFun<double>&    f     ,
+	size_t                   index ,
+	CPPAD_TESTVECTOR(bool)&  check )
+{	bool   ok = true;
+	size_t n  = f.Domain();
+	size_t m  = f.Range();
+
+	// boolean sparsity patterns
+	CPPAD_TESTVECTOR(bool) r_bool(n), s_bool(m), h_bool(n * n);
+	for(size_t j = 0; j < n; j++)
+		r_bool[j] = true;
+	for(size_t i = 0; i < m; i++)
+		s_bool[i] = i == index;
+	//
+	// bool ForSparseHes
+	h_bool = f.ForSparseHes(r_bool, s_bool);
+	for(size_t i = 0; i < n * n; i++)
+		ok &= h_bool[i] == check[i];
+	//
+	// bool RevSparseHes
+	forward_sparse_jacobian_bool(f);
+	h_bool = f.RevSparseHes(n, s_bool);
+	for(size_t i = 0; i < n * n; i++)
+		ok &= h_bool[i] == check[i];
+	//
+	// set sparsity patterns
+	CPPAD_TESTVECTOR( std::set<size_t> ) r_set(1), s_set(1), h_set(n);
+	for(size_t j = 0; j < n; j++)
+		r_set[0].insert(j);
+	s_set[0].insert(index);
+	//
+	// set ForSparseHes
+	h_set = f.ForSparseHes(r_set, s_set);
+	for(size_t i = 0; i < n; i++)
+	{	for(size_t j = 0; j < n; j++)
+		{	bool found = h_set[i].find(j) != h_set[i].end();
+			ok        &= found == check[i * n + j];
+		}
+	}
+	//
+	// set RevSparseHes
+	forward_sparse_jacobian_set(f);
+	h_set = f.RevSparseHes(n, s_set);
+	for(size_t i = 0; i < n; i++)
+	{	for(size_t j = 0; j < n; j++)
+		{	bool found = h_set[i].find(j) != h_set[i].end();
+			ok        &= found == check[i * n + j];
+		}
+	}
+	//
+	return ok;
+}
+
+
+
 bool case_one()
 {	bool ok = true;
 	using namespace CppAD;
@@ -45,16 +101,15 @@ bool case_one()
 	size_t m = 2;
 
 	// temporary indices
-	size_t i, j;
 
 	// initialize check values to false
 	CPPAD_TESTVECTOR(bool) Check(n * n);
-	for(j = 0; j < n * n; j++)
+	for(size_t j = 0; j < n * n; j++)
 		Check[j] = false;
 
 	// independent variable vector
 	CPPAD_TESTVECTOR(AD<double>) X(n);
-	for(j = 0; j < n; j++)
+	for(size_t j = 0; j < n; j++)
 		X[j] = AD<double>(j);
 	Independent(X);
 
@@ -89,95 +144,14 @@ bool case_one()
 	// create function object F : X -> Y
 	ADFun<double> F(X, Y);
 
-	// ------------------------------------------------------------------
-	// for RevSparseHes, sparsity pattern for the identity function U(x) = x
-	forward_sparse_jacobian_bool(F);
-	// ------------------------------------------------------------------
-	// for ForSparseHes, sparsity pattern for the diagonal of identity matix
-	CPPAD_TESTVECTOR(bool) r_bool(n);
-	for(i = 0; i < n; i++)
-		r_bool[i] = true;
-	// ------------------------------------------------------------------
-	// Hessian of F_0 ( U(x) )
-	CPPAD_TESTVECTOR(bool) Py(m);
-	Py[0] = true;
-	Py[1] = false;
-	CPPAD_TESTVECTOR(bool) Pxx(n * n);
-	//
-	// RevSparseHes
-	Pxx = F.RevSparseHes(n, Py);
-	for(j = 0; j < n * n; j++)
-		ok &= (Pxx[j] == Check[j]);
-	//
-	// ForSparseHes
-	Pxx = F.ForSparseHes(r_bool, Py);
-	for(j = 0; j < n * n; j++)
-		ok &= (Pxx[j] == Check[j]);
-	// ------------------------------------------------------------------
-	// Hessian of F_1 ( U(x) )
-	Py[0] = false;
-	Py[1] = true;
-	//
-	// RevSparseHes
-	Pxx = F.RevSparseHes(n, Py);
-	for(j = 0; j < n * n; j++)
-		ok &= (! Pxx[j]);  // Hessian is identically zero
-	//
-	// ForSparseHes
-	Pxx = F.ForSparseHes(r_bool, Py);
-	for(j = 0; j < n * n; j++)
-		ok &= (! Pxx[j]);  // Hessian is identically zero
-	// ===================================================================
-	// vector of sets
-	forward_sparse_jacobian_set(F);
-	CPPAD_TESTVECTOR(std::set<size_t>) r_set(1);
-	for(i = 0; i < n; i++)
-		r_set[0].insert(i);
-	// ----------------------------------------------------------------------
-	// Hessian of F_0 ( U(x) )
-	CPPAD_TESTVECTOR(std::set<size_t>) Sy(1);
-	Sy[0].insert(0);
-	CPPAD_TESTVECTOR(std::set<size_t>) Sxx(n);
-	//
-	// RevSparseHes
-	Sxx = F.RevSparseHes(n, Sy);
-	for(i = 0; i < n; i++)
-	{	for(j = 0; j < n; j++)
-		{	bool found = Sxx[i].find(j) != Sxx[i].end();
-			ok &= (found == Check[i * n + j]);
-		}
-	}
-	//
-	// ForSparseHes
-	Sxx = F.ForSparseHes(r_set, Sy);
-	for(i = 0; i < n; i++)
-	{	for(j = 0; j < n; j++)
-		{	bool found = Sxx[i].find(j) != Sxx[i].end();
-			ok &= (found == Check[i * n + j]);
-		}
-	}
-	// ----------------------------------------------------------------------
-	// Hessian of F_1 ( U(x) )
-	Sy[0].clear();
-	Sy[0].insert(1);
-	//
-	// RevSparseHes
-	Sxx = F.RevSparseHes(n, Sy);
-	for(i = 0; i < n; i++)
-	{	for(j = 0; j < n; j++)
-		{	bool found = Sxx[i].find(j) != Sxx[i].end();
-			ok &= ! found;
-		}
-	}
-	//
-	// ForSparseHes
-	Sxx = F.ForSparseHes(r_set, Sy);
-	for(i = 0; i < n; i++)
-	{	for(j = 0; j < n; j++)
-		{	bool found = Sxx[i].find(j) != Sxx[i].end();
-			ok &= ! found;
-		}
-	}
+	// check Hessian of F_0
+	ok &= sparse_hessian_test(F, 0, Check);
+
+	// check Hessian of F_1
+	for(size_t j = 0; j < n * n; j++)
+		Check[j] = false;
+	ok &= sparse_hessian_test(F, 1, Check);
+
 	// -----------------------------------------------------------------------
 	return ok;
 }
