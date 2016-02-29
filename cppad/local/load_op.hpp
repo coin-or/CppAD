@@ -82,6 +82,7 @@ i_vec is defined by
 If this is the LdvOp operation (if x is a variable),
 i_vec is defined by
 \verbatim
+	i_vec = floor( taylor[ arg[1] * cap_order + 0 ] )
 \endverbatim
 where floor(c) is the greatest integer less that or equal c.
 \n
