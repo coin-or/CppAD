@@ -43,7 +43,7 @@ $srccode%cpp% */
 # include <cppad/speed/sparse_jac_fun.hpp>
 
 // Note that CppAD uses global_option["memory"] at the main program level
-# include <map> 
+# include <map>
 extern std::map<std::string, bool> global_option;
 
 bool link_sparse_jacobian(

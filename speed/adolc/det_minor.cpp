@@ -45,7 +45,7 @@ $srccode%cpp% */
 # include <cppad/speed/uniform_01.hpp>
 
 // list of possible options
-# include <map> 
+# include <map>
 extern std::map<std::string, bool> global_option;
 
 bool link_det_minor(

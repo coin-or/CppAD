@@ -507,7 +507,7 @@ int main(int argc, char *argv[])
 		cout << "seed: is a positive integer used as a random seed." << endl;
 		cout << "option: is zero, one or more of the following:" << endl;
 		for(size_t i = 0; i < num_option; i++)
-			cout << " " << option_list[i]; 
+			cout << " " << option_list[i];
 		cout << endl << endl;
 		return 1;
 	}

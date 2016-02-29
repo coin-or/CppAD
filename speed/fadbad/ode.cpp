@@ -49,7 +49,7 @@ $srccode%cpp% */
 # include <cppad/speed/ode_evaluate.hpp>
 
 // list of possible options
-# include <map> 
+# include <map>
 extern std::map<std::string, bool> global_option;
 
 namespace fadbad {

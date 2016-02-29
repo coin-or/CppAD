@@ -39,7 +39,7 @@ $list number$$
 Merged sparse into master branch. This makes the
 $cref ForSparseHes$$ routine available for use.
 $lnext
-Changed the 
+Changed the
 $cref/global options/speed_main/Global Options/$$
 in the speed test main program to use one global variable with prototype
 $srccode%cpp%
