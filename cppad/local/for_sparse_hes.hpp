@@ -16,6 +16,7 @@ Please visit http://www.coin-or.org/CppAD/ for information on other licenses.
 /*
 $begin ForSparseHes$$
 $spell
+	Andrea Walther
 	std
 	VecAD
 	Jacobian
@@ -127,6 +128,13 @@ of the difference.
 The type of the elements of
 $cref/VectorSet/ForSparseHes/VectorSet/$$ must be the
 same as the type of the elements of $icode r$$.
+
+$head Algorithm$$
+See Algorithm II in
+$italic Computing sparse Hessians with automatic differentiation$$
+by Andrea Walther.
+Note that $icode s$$ provides the information so that
+'dead ends' are not included in the sparsity pattern.
 
 $head Example$$
 $children%

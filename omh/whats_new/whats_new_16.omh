@@ -34,6 +34,11 @@ in reverse order by date.
 The purpose of these sections is to
 assist you in learning about changes between various versions of CppAD.
 
+$head 02-29$$
+Merged sparse into master branch. This makes the
+$cref ForSparseHes$$ routine available for use.
+
+
 $head 02-28$$
 Fix a mistake in the atomic
 $cref/rev_sparse_jac/atomic_sparsity.cpp/rev_sparse_jac/$$ example.
