@@ -60,22 +60,38 @@ namespace {
 	typedef vector<bool>                BoolVector;
 
 	void calc_sparsity(SetVector& sparsity_set, CppAD::ADFun<double>& f)
-	{	size_t n = f.Domain();
-		SetVector r_set(n);
-		for(size_t j = 0; j < n; j++)
+	{	bool reverse = global_option["revsparsity"];
+		size_t q;
+		if( reverse )
+			q = f.Range();
+		else
+			q = f.Domain();
+		//
+		SetVector r_set(q);
+		for(size_t j = 0; j < q; j++)
 			r_set[j].insert(j);
-		sparsity_set = f.ForSparseJac(n, r_set);
+		if( reverse )
+			sparsity_set = f.RevSparseJac(q, r_set);
+		else
+			sparsity_set = f.ForSparseJac(q, r_set);
 	}
 	void calc_sparsity(BoolVector& sparsity_bool, CppAD::ADFun<double>& f)
-	{	size_t n = f.Domain();
-		BoolVector r_bool(n * n);
-		size_t i, j;
-		for(i = 0; i < n; i++)
-		{	for(j = 0; j < n; j++)
-				r_bool[ i * n + j] = false;
-			r_bool[ i * n + i] = true;
+	{	bool reverse = global_option["revsparsity"];
+		size_t q;
+		if( reverse )
+			q = f.Range();
+		else
+			q = f.Domain();
+		//
+		BoolVector r_bool(q * q);
+		for(size_t i = 0; i < q; i++)
+		{	for(size_t j = 0; j < q; j++)
+				r_bool[ i * q + j] = i == j;
 		}
-		sparsity_bool = f.ForSparseJac(n, r_bool);
+		if( reverse )
+			sparsity_bool = f.RevSparseJac(q, r_bool);
+		else
+			sparsity_bool = f.ForSparseJac(q, r_bool);
 	}
 
 }

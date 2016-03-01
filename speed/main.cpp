@@ -48,6 +48,7 @@ Please visit http://www.coin-or.org/CppAD/ for information on other licenses.
 /*
 $begin speed_main$$
 $spell
+	revsparsity
 	colpack
 	onetape
 	boolsparsity
@@ -233,6 +234,17 @@ for its sparsity patterns.
 Otherwise it will use a
 $cref/vector of sets/glossary/Sparsity Pattern/Vector of Sets/$$.
 
+$subhead revsparsity$$
+If the option $code revsparsity$$ is present,
+$codep
+	global_option["revsparsity"]
+$$
+is true and otherwise it is false.
+If it is true, CppAD will use a
+$cref ForSparseJac$$ and $cref ForSparseHes$$ where possible
+for its sparsity patterns.
+Otherwise it will use $cref RevSparseJac$$ and $cref RevSparseHes$$.
+
 $subhead colpack$$
 If the option $code colpack$$ is present,
 $codep
@@ -349,6 +361,7 @@ namespace {
 		"atomic",
 		"memory",
 		"boolsparsity",
+		"revsparsity",
 		"colpack",
 	};
 	size_t num_option = sizeof(option_list) / sizeof( option_list[0] );
