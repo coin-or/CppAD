@@ -118,7 +118,6 @@ cat << EOF
 $trunk_dir/configure \\
 	$build_type \\
 	--disable-silent-rules \\
-	--with-implicit_ctor \\
 	ADOLC_DIR="$trunk_dir/build/prefix" \\
 	SACADO_DIR="$trunk_dir/build/prefix" \\
 	EIGEN_DIR="$trunk_dir/build/prefix" \\
@@ -128,7 +127,6 @@ $trunk_dir/configure \\
 EOF
 if ! $trunk_dir/configure $build_type \
 	--disable-silent-rules \
-	--with-implicit_ctor \
 	ADOLC_DIR="$trunk_dir/build/prefix" \
 	SACADO_DIR="$trunk_dir/build/prefix" \
 	EIGEN_DIR="$trunk_dir/build/prefix" \

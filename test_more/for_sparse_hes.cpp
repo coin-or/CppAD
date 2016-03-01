@@ -117,7 +117,7 @@ bool test_one()
 
 	// ------------------------------------------------------------------
 	// compute sparsity
-	CPPAD_TESTVECTOR(bool) r(n), s(m), h(m * n);
+	CPPAD_TESTVECTOR(bool) r(n), s(m), h(n * n);
 	for(j = 0; j < n; j++)
 		r[j] = true;
 	for(i = 0; i < m; i++)
