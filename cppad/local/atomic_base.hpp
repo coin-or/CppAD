@@ -1329,8 +1329,13 @@ Upon return, $icode v$$ is a
 $cref/atomic_sparsity/atomic_option/atomic_sparsity/$$ pattern for
 $latex H(x) \in B^{n \times n}$$ which is defined above.
 
+$children%
+	example/atomic/for_sparse_hes.cpp
+%$$
 $head Examples$$
-2DO
+The file $cref for_sparse_hes.cpp$$ contains an example and test
+that uses this routine.
+It returns true if the test passes and false if it fails.
 
 $end
 -----------------------------------------------------------------------------
@@ -1519,23 +1524,13 @@ f^{(1)} (x)^\R{T} U(x)
 \end{array}
 \] $$
 
+$children%
+	example/atomic/rev_sparse_hes.cpp
+%$$
 $head Examples$$
-
-$subhead Define rev_sparse_hes$$
-The following files contain example atomic $code rev_sparse_hes$$ functions:
-$cref%norm_sq.cpp%atomic_norm_sq.cpp%rev_sparse_hes%$$,
-$cref%reciprocal.cpp%atomic_reciprocal.cpp%rev_sparse_hes%$$,
-$cref%tangent.cpp%atomic_tangent.cpp%rev_sparse_hes%$$,
-$cref%matrix_mul.hpp%atomic_matrix_mul.hpp%rev_sparse_hes%$$.
-
-$subhead Use rev_sparse_hes$$
-The following are links to user atomic function constructor uses:
-$cref%norm_sq.cpp%
-	atomic_norm_sq.cpp%Use Atomic Function%rev_sparse_hes%$$,
-$cref%reciprocal.cpp%
-	atomic_reciprocal.cpp%Use Atomic Function%rev_sparse_hes%$$,
-$cref%tangent.cpp%atomic_tangent.cpp%Use Atomic Function%rev_sparse_hes%$$,
-$cref%mat_mul.cpp%atomic_mat_mul.cpp%Use Atomic Function%rev_sparse_hes%$$.
+The file $cref rev_sparse_hes.cpp$$ contains an example and test
+that uses this routine.
+It returns true if the test passes and false if it fails.
 
 $end
 -----------------------------------------------------------------------------

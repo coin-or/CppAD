@@ -19,11 +19,12 @@ SET(CMAKE_BUILD_TYPE DEBUG)
 ADD_EXECUTABLE(example_atomic EXCLUDE_FROM_ALL
 	atomic.cpp
 	checkpoint.cpp
+	for_sparse_hes.cpp
 	get_started.cpp
-	rev_sparse_hes.cpp
 	mat_mul.cpp
 	norm_sq.cpp
 	reciprocal.cpp
+	rev_sparse_hes.cpp
 	sparsity.cpp
 	tangent.cpp
 )

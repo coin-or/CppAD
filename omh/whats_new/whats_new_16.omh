@@ -35,10 +35,13 @@ The purpose of these sections is to
 assist you in learning about changes between various versions of CppAD.
 
 $head 03-01$$
+$list number$$
 Improve documentation of implementation requirements for the atomic
-$cref/for_sparse_jac/atomic_for_sparse_jac/Implementation/$$ and make
-some corrections to the
-$cref atomic_rev_sparse_jac$$ documentation.
+$cref/rev_sparse_jac/atomic_rev_sparse_jac/Implementation/$$.
+$lnext
+Make some corrections to the $cref atomic_for_sparse_hes$$ documentation.
+and fix a bug in how CppAD used these functions.
+$lend
 
 $head 02-29$$
 $list number$$

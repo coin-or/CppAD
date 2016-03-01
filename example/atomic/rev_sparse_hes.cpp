@@ -43,13 +43,13 @@ void my_union(
 	result.swap(temp);
 }
 //
-class atomic_hes_sparse : public CppAD::atomic_base<double> {
+class atomic_rev_sparse_hes : public CppAD::atomic_base<double> {
 /* %$$
 $head Constructor $$
 $srccode%cpp% */
 	public:
 	// constructor (could use const char* for name)
-	atomic_hes_sparse(const std::string& name) :
+	atomic_rev_sparse_hes(const std::string& name) :
 	CppAD::atomic_base<double>(name)
 	{ }
 	private:
@@ -163,19 +163,19 @@ $srccode%cpp% */
 		}
 		return true;
 	}
-}; // End of atomic_hes_sparse class
+}; // End of atomic_rev_sparse_hes class
 
 /* %$$
 $head Use Atomic Function$$
 $srccode%cpp% */
-bool use_atomic_hes_sparse(bool x_1_variable)
+bool use_atomic_rev_sparse_hes(bool x_1_variable)
 {	bool ok = true;
 	using CppAD::AD;
 	using CppAD::NearEqual;
 	double eps = 10. * CppAD::numeric_limits<double>::epsilon();
 	//
-	// Create the atomic hes_sparse object
-	atomic_hes_sparse afun("atomic_hes_sparse");
+	// Create the atomic rev_sparse_hes object
+	atomic_rev_sparse_hes afun("atomic_rev_sparse_hes");
 	//
 	// Create the function f(u)
 	//
@@ -257,9 +257,9 @@ $srccode%cpp% */
 bool rev_sparse_hes(void)
 {	bool ok = true;
 	// test with x_1 a variable
-	ok     &= use_atomic_hes_sparse(true);
+	ok     &= use_atomic_rev_sparse_hes(true);
 	// test with x_1 a parameter
-	ok     &= use_atomic_hes_sparse(false);
+	ok     &= use_atomic_rev_sparse_hes(false);
 	return ok;
 }
 /* %$$

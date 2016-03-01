@@ -211,24 +211,18 @@ void ForHesSweep(
 
 		// does the Hessian in question have a non-zero derivative
 		// with respect to this variable
-		bool non_zero = rev_jac_sparse.is_element(i_var, 0);
-
-		// rest of information depends on the case
-		if( ! non_zero )
-		{	more_operators = op != EndOp;
-			//
-			if( op == CSumOp )
-			{	// CSumOp has a variable number of arguments
-				play->forward_csum(op, arg, i_op, i_var);
-			}
-			CPPAD_ASSERT_UNKNOWN( op != CSkipOp );
-			if( op == CSkipOp )
-			{	// CSkip has a variable number of arguments
-				play->forward_cskip(op, arg, i_op, i_var);
-			}
-			CPPAD_ASSERT_UNKNOWN( i_op < play->num_op_rec() );
-		}
-		else switch( op )
+		bool include = rev_jac_sparse.is_element(i_var, 0);
+		//
+		// operators to include even if derivative is zero
+		include |= op == EndOp;
+		include |= op == CSkipOp;
+		include |= op == UserOp;
+		include |= op == UsrapOp;
+		include |= op == UsravOp;
+		include |= op == UsrrpOp;
+		include |= op == UsrrvOp;
+		//
+		if( include ) switch( op )
 		{	// operators that should not occurr
 			// case BeginOp
 			// -------------------------------------------------
@@ -446,7 +440,6 @@ void ForHesSweep(
 				CPPAD_ASSERT_UNKNOWN( user_id    == size_t(arg[1]) );
 				CPPAD_ASSERT_UNKNOWN( user_n     == size_t(arg[2]) );
 				CPPAD_ASSERT_UNKNOWN( user_m     == size_t(arg[3]) );
-				user_state = user_start;
 
 				// call users function for this operation
 				user_atom->set_id(user_id);
@@ -510,6 +503,8 @@ void ForHesSweep(
 						}
 					}
 				}
+				//
+				user_state = user_start;
 			}
 			break;
 
@@ -580,7 +575,7 @@ void ForHesSweep(
 			CPPAD_ASSERT_UNKNOWN(0);
 		}
 # if CPPAD_FOR_HES_SWEEP_TRACE
-		if( non_zero )
+		if( include )
 		{	for(i = 0; i < limit; i++)
 			{	zf_value[i] = false;
 				for(j = 0; j < limit; j++)
