@@ -1082,7 +1082,7 @@ $children%
 	example/atomic/for_sparse_jac.cpp
 %$$
 $head Examples$$
-The file $cref for_sparse_jac.cpp$$ contains an example and test
+The file $cref atomic_for_sparse_jac.cpp$$ contains an example and test
 that uses this routine.
 It returns true if the test passes and false if it fails.
 
@@ -1323,7 +1323,7 @@ $children%
 	example/atomic/for_sparse_hes.cpp
 %$$
 $head Examples$$
-The file $cref for_sparse_hes.cpp$$ contains an example and test
+The file $cref atomic_for_sparse_hes.cpp$$ contains an example and test
 that uses this routine.
 It returns true if the test passes and false if it fails.
 
@@ -1518,7 +1518,7 @@ $children%
 	example/atomic/rev_sparse_hes.cpp
 %$$
 $head Examples$$
-The file $cref rev_sparse_hes.cpp$$ contains an example and test
+The file $cref atomic_rev_sparse_hes.cpp$$ contains an example and test
 that uses this routine.
 It returns true if the test passes and false if it fails.
 

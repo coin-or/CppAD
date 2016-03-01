@@ -12,7 +12,7 @@ Please visit http://www.coin-or.org/CppAD/ for information on other licenses.
 /*
 $begin atomic_for_sparse_hes.cpp$$
 
-$section Atomic Operation Forward Hessian Sparsity: Example and Test$$
+$section Atomic Forward Hessian Sparsity: Example and Test$$
 $mindex sparsity$$
 
 $head Purpose$$
@@ -21,23 +21,25 @@ for an atomic operation.
 
 $head function$$
 For this example, the atomic function
-$latex f : \B{R}^2 \rightarrow \B{R}^2$$ is defined by
+$latex f : \B{R}^3 \rightarrow \B{R}^2$$ is defined by
 $latex \[
-f( x_0, x_1) = \left( \begin{array}{c}
-	x_0 * x_0 \\
+f( x ) = \left( \begin{array}{c}
+	x_2 * x_2 \\
 	x_0 * x_1
 \end{array} \right)
 \] $$
 The Hessians of its component functions are
 $latex \[
-f_0^{(2)} ( x_0, x_1) = \left( \begin{array}{cc}
-	2 & 0 \\
-	0 & 0
+f_0^{(2)} ( x ) = \left( \begin{array}{ccc}
+	0 & 0 & 0  \\
+	0 & 0 & 0  \\
+	0 & 0 & 2
 \end{array} \right)
 \W{,}
-f_1^{(2)} ( x_0, x_1) = \left( \begin{array}{cc}
-	0 & 1 \\
-	1 & 0
+f_1^{(2)} ( x ) = \left( \begin{array}{ccc}
+	0 & 1 & 0 \\
+	1 & 0 & 0 \\
+	0 & 0 & 0
 \end{array} \right)
 \] $$
 
@@ -73,7 +75,7 @@ $srccode%cpp% */
 	)
 	{	size_t n = tx.size() / (q + 1);
 		size_t m = ty.size() / (q + 1);
-		assert( n == 2 );
+		assert( n == 3 );
 		assert( m == 2 );
 
 		// return flag
@@ -94,7 +96,7 @@ $srccode%cpp% */
 		//        [ x_0 * x_1 ]
 		assert( p <= 0 );
 		if( p <= 0 )
-		{	ty[0] = tx[0] * tx[0];
+		{	ty[0] = tx[2] * tx[2];
 			ty[1] = tx[0] * tx[1];
 		}
 		return ok;
@@ -111,16 +113,17 @@ $srccode%cpp% */
 		// with afun.option( CppAD::atomic_base<double>::pack_sparsity_enum )
 		size_t n = r.size() / q;
 		size_t m = s.size() / q;
-		assert( n == 2 );
+		assert( n == 3 );
 		assert( m == 2 );
 
-		// f'(x) = [ 2 * x_0 ,   0 ]
-		//         [     x_1 , x_0 ]
+
+		// f'(x) = [   0,   0, 2 x_2 ]
+		//         [ x_1, x_0,     0 ]
 
 		// sparsity for first row of S(x) = f'(x) * R
 		size_t i = 0;
 		for(size_t j = 0; j < q; j++)
-			s[ i * q + j ] = r[ 0 * q + j ];
+			s[ i * q + j ] = r[ 2 * q + j ];
 
 		// sparsity for second row of S(x) = f'(x) * R
 		i = 1;
@@ -141,21 +144,27 @@ $srccode%cpp% */
 		// with afun.option( CppAD::atomic_base<double>::pack_sparsity_enum )
 		size_t m = rt.size() / q;
 		size_t n = st.size() / q;
-		assert( n == 2 );
+		assert( n == 3 );
 		assert( m == 2 );
 
-		// f'(x)^T = [ 2 * x_0 , x_1 ]
-		//           [       0 , x_0 ]
+		//           [     0,  x_1 ]
+		// f'(x)^T = [     0,  x_0 ]
+		//           [ 2 x_2,    0 ]
 
-		// sparsity for first row of S(x)^T = f'(x)^T * R
+		// sparsity for first row of S(x)^T = f'(x)^T * R^T
 		size_t i = 0;
 		for(size_t j = 0; j < q; j++)
-			st[ i * q + j ] = rt[ 0 * q + j ] | rt[ 1 * q + j ];
+			st[ i * q + j ] = rt[ 1 * q + j ];
 
-		// sparsity for second row of S(x)^T = f'(x)^T * R
+		// sparsity for second row of S(x)^T = f'(x)^T * R^T
 		i = 1;
 		for(size_t j = 0; j < q; j++)
 			st[ i * q + j ] = rt[ 1 * q + j ];
+
+		// sparsity for third row of S(x)^T = f'(x)^T * R^T
+		i = 2;
+		for(size_t j = 0; j < q; j++)
+			st[ i * q + j ] = rt[ 0 * q + j ];
 
 		return true;
 	}
@@ -172,18 +181,20 @@ $srccode%cpp% */
 		// with afun.option( CppAD::atomic_base<double>::pack_sparsity_enum )
 		size_t n = r.size();
 		size_t m = s.size();
-		assert( n == 2 );
+		assert( n == 3 );
 		assert( m == 2 );
 		assert( h.size() == n * n );
 
-		// f_0^{(2)} (x) = [ 2 , 0 ]  f_1^{(2)} (x) = [ 0 , 1 ]
-		//                 [ 0 , 0 ]                  [ 1 , 0 ]
+		//            [ 0 , 0 , 0 ]                  [ 0 , 1 , 0 ]
+		// f_0''(x) = [ 0 , 0 , 0 ]  f_1^{(2)} (x) = [ 1 , 0 , 0 ]
+		//            [ 0 , 0 , 2 ]                  [ 0 , 0 , 0 ]
 
-		// component (1, 1) is always zero
-		h[ 1 * n + 1 ] = false;
+		// initial entire matrix as false
+		for(size_t i = 0; i < n * n; i++)
+			h[i] = false;
 
-		// component (0, 0)
-		h[ 0 * n + 0 ] = s[0] & r[0];
+		// component (2, 2)
+		h[ 2 * n + 2 ] = s[0] & r[2];
 
 		// components (1, 0) and (0, 1)
 		h[ 1 * n + 0 ] = s[1] & r[0] & r[1];
@@ -208,12 +219,14 @@ bool use_atomic_for_sparse_hes(bool x_1_variable)
 	// Create the function f(u)
 	//
 	// domain space vector
-	size_t n  = 2;
-	double x_0 = 0.75;
+	size_t n  = 3;
+	double x_0 = 1.00;
 	double x_1 = 2.00;
+	double x_2 = 3.00;
 	vector< AD<double> > au(n);
 	au[0] = x_0;
 	au[1] = x_1;
+	au[2] = x_2;
 
 	// declare independent variables and start tape recording
 	CppAD::Independent(au);
@@ -225,18 +238,19 @@ bool use_atomic_for_sparse_hes(bool x_1_variable)
 	// call user function
 	vector< AD<double> > ax(n);
 	ax[0] = au[0];
+	ax[2] = au[2];
 	if( x_1_variable )
 		ax[1] = au[1];
 	else
 		ax[1] = x_1;
-	afun(ax, ay);        // y = [ x[0] * x[0] ,  x[0] * x[1] ] ^T
+	afun(ax, ay);          // y = [ x_2 * x_2 ,  x_0 * x_1 ]^T
 
 	// create f: u -> y and stop tape recording
 	CppAD::ADFun<double> f;
 	f.Dependent (au, ay);  // f(u) = y
 	//
 	// check function value
-	double check = x_0 * x_0;
+	double check = x_2 * x_2;
 	ok &= NearEqual( Value(ay[0]) , check,  eps, eps);
 	check = x_0 * x_1;
 	ok &= NearEqual( Value(ay[1]) , check,  eps, eps);
@@ -247,8 +261,9 @@ bool use_atomic_for_sparse_hes(bool x_1_variable)
 	q     = 0;
 	xq[0] = x_0;
 	xq[1] = x_1;
+	xq[2] = x_2;
 	yq    = f.Forward(q, xq);
-	check = x_0 * x_0;
+	check = x_2 * x_2;
 	ok &= NearEqual(yq[0] , check,  eps, eps);
 	check = x_0 * x_1;
 	ok &= NearEqual(yq[1] , check,  eps, eps);
@@ -264,7 +279,9 @@ bool use_atomic_for_sparse_hes(bool x_1_variable)
 
 	// check result
 	CppAD::vectorBool check_h(n * n);
-	check_h[ 0 * n + 0 ] = true;
+	for(size_t i = 0; i < n * n; i++)
+		check_h[i] = false;
+	check_h[ 2 * n + 2 ] = true;
 	if( x_1_variable )
 	{	check_h[0 * n + 1] = true;
 		check_h[1 * n + 0] = true;
