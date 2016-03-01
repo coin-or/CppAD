@@ -20,6 +20,7 @@ ADD_EXECUTABLE(example_atomic EXCLUDE_FROM_ALL
 	atomic.cpp
 	checkpoint.cpp
 	for_sparse_hes.cpp
+	for_sparse_jac.cpp
 	get_started.cpp
 	mat_mul.cpp
 	norm_sq.cpp

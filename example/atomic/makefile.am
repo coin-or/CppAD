@@ -27,6 +27,7 @@ atomic_SOURCES   = \
 	atomic.cpp \
 	checkpoint.cpp \
 	for_sparse_hes.cpp \
+	for_sparse_jac.cpp \
 	get_started.cpp \
 	mat_mul.cpp \
 	norm_sq.cpp \

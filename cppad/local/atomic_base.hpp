@@ -1078,23 +1078,13 @@ $codei%
 If it is $code true$$, the corresponding evaluation succeeded,
 otherwise it failed.
 
+$children%
+	example/atomic/for_sparse_jac.cpp
+%$$
 $head Examples$$
-
-$subhead Define for_sparse_jac$$
-The following files contain example atomic $code for_sparse_jac$$ functions:
-$cref%norm_sq.cpp%atomic_norm_sq.cpp%for_sparse_jac%$$,
-$cref%reciprocal.cpp%atomic_reciprocal.cpp%for_sparse_jac%$$,
-$cref%tangent.cpp%atomic_tangent.cpp%for_sparse_jac%$$,
-$cref%matrix_mul.hpp%atomic_matrix_mul.hpp%for_sparse_jac%$$.
-
-$subhead Use for_sparse_jac$$
-The following are links to user atomic function constructor uses:
-$cref%norm_sq.cpp%
-	atomic_norm_sq.cpp%Use Atomic Function%for_sparse_jac%$$,
-$cref%reciprocal.cpp%
-	atomic_reciprocal.cpp%Use Atomic Function%for_sparse_jac%$$,
-$cref%tangent.cpp%atomic_tangent.cpp%Use Atomic Function%for_sparse_jac%$$,
-$cref%mat_mul.cpp%atomic_mat_mul.cpp%Use Atomic Function%for_sparse_jac%$$.
+The file $cref for_sparse_jac.cpp$$ contains an example and test
+that uses this routine.
+It returns true if the test passes and false if it fails.
 
 $end
 -----------------------------------------------------------------------------

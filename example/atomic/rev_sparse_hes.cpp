@@ -13,11 +13,32 @@ Please visit http://www.coin-or.org/CppAD/ for information on other licenses.
 $begin atomic_rev_sparse_hes.cpp$$
 
 $section Atomic Operation Reverse Hessian Sparsity: Example and Test$$
-$mindex sparsity$$
 
 $head Purpose$$
 This example demonstrates calculation of the reverse Hessian sparsity pattern
 for an atomic operation.
+
+$head function$$
+For this example, the atomic function
+$latex f : \B{R}^2 \rightarrow \B{R}^2$$ is defined by
+$latex \[
+f( x_0, x_1) = \left( \begin{array}{c}
+	x_0 * x_0 \\
+	x_0 * x_1
+\end{array} \right)
+\] $$
+The Hessians of its component functions are
+$latex \[
+f_0^{(2)} ( x_0, x_1) = \left( \begin{array}{cc}
+	2 & 0 \\
+	0 & 0
+\end{array} \right)
+\W{,}
+f_1^{(2)} ( x_0, x_1) = \left( \begin{array}{cc}
+	0 & 1 \\
+	1 & 0
+\end{array} \right)
+\] $$
 
 $nospell
 
