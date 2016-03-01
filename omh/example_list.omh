@@ -96,7 +96,7 @@ $rref atan.cpp$$
 $rref atan2.cpp$$
 $rref atanh.cpp$$
 $rref atomic_get_started.cpp$$
-$rref atomic_hes_sparse.cpp$$
+$rref atomic_rev_sparse_hes.cpp$$
 $rref atomic_matrix_mul.hpp$$
 $rref atomic_mat_mul.cpp$$
 $rref atomic_norm_sq.cpp$$

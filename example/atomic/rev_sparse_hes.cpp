@@ -10,13 +10,13 @@ A copy of this license is included in the COPYING file of this distribution.
 Please visit http://www.coin-or.org/CppAD/ for information on other licenses.
 -------------------------------------------------------------------------- */
 /*
-$begin atomic_hes_sparse.cpp$$
+$begin atomic_rev_sparse_hes.cpp$$
 
-$section Atomic Operation Hessian Sparsity: Example and Test$$
+$section Atomic Operation Reverse Hessian Sparsity: Example and Test$$
 $mindex sparsity$$
 
 $head Purpose$$
-This example demonstrates calculation of the Hessian sparsity pattern
+This example demonstrates calculation of the reverse Hessian sparsity pattern
 for an atomic operation.
 
 $nospell
@@ -254,7 +254,7 @@ bool use_atomic_hes_sparse(bool x_1_variable)
 /* %$$
 $head Test with x_1 Both a Variable and a Parameter$$
 $srccode%cpp% */
-bool hes_sparse(void)
+bool rev_sparse_hes(void)
 {	bool ok = true;
 	// test with x_1 a variable
 	ok     &= use_atomic_hes_sparse(true);

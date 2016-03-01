@@ -1,6 +1,6 @@
 // $Id$
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-15 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-16 Bradley M. Bell
 
 CppAD is distributed under multiple licenses. This distribution is under
 the terms of the
@@ -22,7 +22,7 @@ Please visit http://www.coin-or.org/CppAD/ for information on other licenses.
 // external complied tests
 extern bool checkpoint(void);
 extern bool get_started(void);
-extern bool hes_sparse(void);
+extern bool rev_sparse_hes(void);
 extern bool mat_mul(void);
 extern bool norm_sq(void);
 extern bool reciprocal(void);
@@ -57,7 +57,7 @@ int main(void)
 	// external compiled tests
 	ok &= Run( checkpoint,          "checkpoint"     );
 	ok &= Run( get_started,         "get_started"    );
-	ok &= Run( hes_sparse,          "hes_sparse"     );
+	ok &= Run( rev_sparse_hes,      "rev_sparse_hes" );
 	ok &= Run( mat_mul,             "mat_mul"        );
 	ok &= Run( norm_sq,             "norm_sq"        );
 	ok &= Run( reciprocal,          "reciprocal"     );

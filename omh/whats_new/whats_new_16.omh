@@ -34,6 +34,12 @@ in reverse order by date.
 The purpose of these sections is to
 assist you in learning about changes between various versions of CppAD.
 
+$head 03-01$$
+Improve documentation of implementation requirements for the atomic
+$cref/for_sparse_jac/atomic_for_sparse_jac/Implementation/$$ and make
+some corrections to the
+$cref atomic_rev_sparse_jac$$ documentation.
+
 $head 02-29$$
 $list number$$
 Merged sparse into master branch. This makes the

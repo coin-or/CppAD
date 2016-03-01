@@ -1,6 +1,6 @@
 # $Id$
 # -----------------------------------------------------------------------------
-# CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-15 Bradley M. Bell
+# CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-16 Bradley M. Bell
 #
 # CppAD is distributed under multiple licenses. This distribution is under
 # the terms of the
@@ -27,7 +27,7 @@ atomic_SOURCES   = \
 	atomic.cpp \
 	checkpoint.cpp \
 	get_started.cpp \
-	hes_sparse.cpp \
+	rev_sparse_hes.cpp \
 	mat_mul.cpp \
 	norm_sq.cpp \
 	reciprocal.cpp \

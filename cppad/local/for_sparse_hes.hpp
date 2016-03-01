@@ -44,9 +44,9 @@ we define
 $latex \[
 \begin{array}{rcl}
 H(x)
-& = & \partial_x \left[ \partial_u S * F[ x + R * u ] \right]_{u=0}
+& = & \partial_x \left[ \partial_u S \cdot F[ x + R \cdot u ] \right]_{u=0}
 \\
-& = & R^\R{T} * (S * F)^{(2)} ( x ) R
+& = & R^\R{T} \cdot (S \cdot F)^{(2)} ( x ) \cdot R
 \end{array}
 \] $$
 Where $latex R \in \B{R}^{n \times n}$$ is a diagonal matrix
@@ -84,7 +84,8 @@ It specifies a
 $cref/sparsity pattern/glossary/Sparsity Pattern/$$
 for the diagonal of $latex R$$.
 The fewer non-zero elements in this sparsity pattern,
-the faster the calculation should be.
+the faster the calculation should be and the more sparse
+$latex H(x)$$ should be.
 
 $head s$$
 The argument $icode s$$ has prototype

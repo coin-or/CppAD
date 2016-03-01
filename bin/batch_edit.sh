@@ -13,26 +13,14 @@
 revert_list='
 '
 move_list='
+	example/atomic/hes_sparse.cpp
 '
-move_sed='s|list_files.sh|ls_files.sh|'
+move_sed='s|hes_sparse|rev_sparse_hes|'
 #
 cat << EOF > junk.sed
-/^extern bool/! b one
-N
-N
-/global_onetape/! b one
-s|^extern bool.*global_[a-z]*;|# include <map> \\
-extern std::map<std::string, bool> global_option;|
-: one
-/^\\textern bool global_boolsparsity;$/d
-s|global_onetape|global_option["onetape"]|
-s|global_optimize|global_option["optimize"]|
-s|global_atomic|global_option["atomic"]|
-s|global_memory|global_option["memory"]|
-s|global_boolsparsity|global_option["boolsparsity"]|
-s|global_colpack|global_option["colpack"]|
-#
-s|/speed_main/option_list/|/speed_main/Global Options/|
+s|hes_sparse.cpp|rev_sparse_hes.cpp|
+s|hes_sparse(void)|rev_sparse_hes(void)|
+s|Run( hes_sparse,          "hes_sparse"     );|Run( rev_sparse_hes,      "rev_sparse_hes" );|
 EOF
 # -----------------------------------------------------------------------------
 if [ $0 != "bin/batch_edit.sh" ]

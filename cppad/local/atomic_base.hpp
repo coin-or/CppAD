@@ -1035,7 +1035,10 @@ Given a $cref/sparsity pattern/glossary/Sparsity Pattern/$$ for $latex R$$,
 $code for_sparse_jac$$ computes a sparsity pattern for $latex S(x)$$.
 
 $head Implementation$$
-If you are using $cref ForSparseJac$$,
+If you are using
+$cref ForSparseJac$$,
+$cref ForSparseHes$$, or
+$cref RevSparseHes$$,
 this virtual function must be defined by the
 $cref/atomic_user/atomic_ctor/atomic_user/$$ class.
 
@@ -1157,7 +1160,8 @@ Given a $cref/sparsity pattern/glossary/Sparsity Pattern/$$ for $latex R$$,
 $code rev_sparse_jac$$ computes a sparsity pattern for $latex S(x)$$.
 
 $head Implementation$$
-If you are using $cref RevSparseJac$$,
+If you are using
+$cref RevSparseJac$$ or $cref ForSparseHes$$,
 this virtual function must be defined by the
 $cref/atomic_user/atomic_ctor/atomic_user/$$ class.
 
@@ -1271,14 +1275,12 @@ $icode%ok% = %afun%.for_sparse_hes(%vx%, %r%, %s%, %h%)%$$
 $head Purpose$$
 This function is used by $cref ForSparseHes$$ to compute
 Hessian sparsity patterns.
-There is an unspecified scalar valued function
-$latex g : B^m \rightarrow B$$.
 Given a $cref/sparsity pattern/glossary/Sparsity Pattern/$$ for
-$latex R \in B^{n \times q}$$,
-and information about the function $latex z = g(y)$$,
+a diagonal matrix $latex R \in B^{n \times n}$$, and
+a row vector $latex S \in B^{1 \times m}$$,
 this routine computes the sparsity pattern for
 $latex \[
-	H(x) = R^\R{T} (g \circ f)^{(2)}( x ) R
+	H(x) = R^\R{T} \cdot (S \cdot f)^{(2)}( x ) \cdot R
 \] $$
 
 $head Implementation$$
@@ -1314,8 +1316,7 @@ $codei%
      const CppAD:vector<bool>& %s%
 %$$
 and its size is $icode m$$.
-It is a sparsity pattern for
-$latex S(x) = g^{(1)} (y) \in B^{1 \times m}$$.
+It is a sparsity pattern for $latex S \in B^{1 \times m}$$.
 
 $subhead h$$
 This argument has prototype
@@ -1326,10 +1327,7 @@ The input value of its elements
 are not specified (must not matter).
 Upon return, $icode v$$ is a
 $cref/atomic_sparsity/atomic_option/atomic_sparsity/$$ pattern for
-$latex H(x) \in B^{n \times q}$$ which is defined by
-$latex \[
-H(x) = R^\R{T} (g \circ f)^{(2)}( x ) R
-\] $$
+$latex H(x) \in B^{n \times n}$$ which is defined above.
 
 $head Examples$$
 2DO
