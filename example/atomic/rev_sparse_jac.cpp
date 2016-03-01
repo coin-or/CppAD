@@ -10,13 +10,17 @@ A copy of this license is included in the COPYING file of this distribution.
 Please visit http://www.coin-or.org/CppAD/ for information on other licenses.
 -------------------------------------------------------------------------- */
 /*
-$begin atomic_for_sparse_hes.cpp$$
+$begin atomic_rev_sparse_jac.cpp$$
+$spell
+	Jacobian
+	Jacobians
+$$
 
-$section Atomic Forward Hessian Sparsity: Example and Test$$
+$section Atomic Reverse Jacobian Sparsity: Example and Test$$
 
 $head Purpose$$
-This example demonstrates calculation of the forward Hessian sparsity pattern
-for an atomic operation.
+This example demonstrates calculation of the
+reverse Jacobians sparsity pattern for an atomic operation.
 
 $head function$$
 For this example, the atomic function
@@ -27,18 +31,11 @@ f( x ) = \left( \begin{array}{c}
 	x_0 * x_1
 \end{array} \right)
 \] $$
-The Hessians of its component functions are
+The corresponding Jacobian is
 $latex \[
-f_0^{(2)} ( x ) = \left( \begin{array}{ccc}
-	0 & 0 & 0  \\
-	0 & 0 & 0  \\
-	0 & 0 & 2
-\end{array} \right)
-\W{,}
-f_1^{(2)} ( x ) = \left( \begin{array}{ccc}
-	0 & 1 & 0 \\
-	1 & 0 & 0 \\
-	0 & 0 & 0
+f^{(1)} (x) = \left( \begin{array}{ccc}
+  0  &   0 & 2 x_2 \\
+x_1  & x_0 & 0
 \end{array} \right)
 \] $$
 
@@ -50,13 +47,13 @@ $srccode%cpp% */
 namespace {          // isolate items below to this file
 using CppAD::vector; // abbreviate as vector
 //
-class atomic_for_sparse_hes : public CppAD::atomic_base<double> {
+class atomic_rev_sparse_jac : public CppAD::atomic_base<double> {
 /* %$$
 $head Constructor $$
 $srccode%cpp% */
 	public:
 	// constructor (could use const char* for name)
-	atomic_for_sparse_hes(const std::string& name) :
+	atomic_rev_sparse_jac(const std::string& name) :
 	CppAD::atomic_base<double>(name)
 	{ }
 	private:
@@ -101,37 +98,6 @@ $srccode%cpp% */
 		return ok;
 	}
 /* %$$
-$head for_sparse_jac$$
-$srccode%cpp% */
-	// forward Jacobian sparsity routine called by CppAD
-	virtual bool for_sparse_jac(
-		size_t                     q ,
-		const CppAD::vectorBool&   r ,
-		CppAD::vectorBool&         s )
-	{	// This function needed becasue we are using ForSparseHes
-		// with afun.option( CppAD::atomic_base<double>::pack_sparsity_enum )
-		size_t n = r.size() / q;
-		size_t m = s.size() / q;
-		assert( n == 3 );
-		assert( m == 2 );
-
-
-		// f'(x) = [   0,   0, 2 x_2 ]
-		//         [ x_1, x_0,     0 ]
-
-		// sparsity for first row of S(x) = f'(x) * R
-		size_t i = 0;
-		for(size_t j = 0; j < q; j++)
-			s[ i * q + j ] = r[ 2 * q + j ];
-
-		// sparsity for second row of S(x) = f'(x) * R
-		i = 1;
-		for(size_t j = 0; j < q; j++)
-			s[ i * q + j ] = r[ 0 * q + j ] | r[ 1 * q + j];
-
-		return true;
-	}
-/* %$$
 $head rev_sparse_jac$$
 $srccode%cpp% */
 	// reverse Jacobian sparsity routine called by CppAD
@@ -139,7 +105,7 @@ $srccode%cpp% */
 		size_t                     q  ,
 		const CppAD::vectorBool&   rt ,
 		CppAD::vectorBool&         st )
-	{	// This function needed becasue we are using ForSparseHes
+	{	// This function needed becasue we are using RevSparseHes
 		// with afun.option( CppAD::atomic_base<double>::pack_sparsity_enum )
 		size_t m = rt.size() / q;
 		size_t n = st.size() / q;
@@ -167,53 +133,19 @@ $srccode%cpp% */
 
 		return true;
 	}
-/* %$$
-$head for_sparse_hes$$
-$srccode%cpp% */
-	// forward Hessian sparsity routine called by CppAD
-	virtual bool for_sparse_hes(
-		const vector<bool>&   vx,
-		const vector<bool>&   r ,
-		const vector<bool>&   s ,
-		CppAD::vectorBool&    h )
-	{	// This function needed because we are using RevSparseHes
-		// with afun.option( CppAD::atomic_base<double>::pack_sparsity_enum )
-		size_t n = r.size();
-		size_t m = s.size();
-		assert( n == 3 );
-		assert( m == 2 );
-		assert( h.size() == n * n );
-
-		//            [ 0 , 0 , 0 ]                  [ 0 , 1 , 0 ]
-		// f_0''(x) = [ 0 , 0 , 0 ]  f_1^{(2)} (x) = [ 1 , 0 , 0 ]
-		//            [ 0 , 0 , 2 ]                  [ 0 , 0 , 0 ]
-
-		// initial entire matrix as false
-		for(size_t i = 0; i < n * n; i++)
-			h[i] = false;
-
-		// component (2, 2)
-		h[ 2 * n + 2 ] = s[0] & r[2];
-
-		// components (1, 0) and (0, 1)
-		h[ 1 * n + 0 ] = s[1] & r[0] & r[1];
-		h[ 0 * n + 1 ] = s[1] & r[0] & r[1];
-
-		return true;
-	}
-}; // End of atomic_for_sparse_hes class
+}; // End of atomic_rev_sparse_jac class
 
 /* %$$
 $head Use Atomic Function$$
 $srccode%cpp% */
-bool use_atomic_for_sparse_hes(bool x_1_variable)
+bool use_atomic_rev_sparse_jac(bool x_1_variable)
 {	bool ok = true;
 	using CppAD::AD;
 	using CppAD::NearEqual;
 	double eps = 10. * CppAD::numeric_limits<double>::epsilon();
 	//
-	// Create the atomic for_sparse_hes object
-	atomic_for_sparse_hes afun("atomic_for_sparse_hes");
+	// Create the atomic rev_sparse_jac object
+	atomic_rev_sparse_jac afun("atomic_rev_sparse_jac");
 	//
 	// Create the function f(u)
 	//
@@ -267,26 +199,26 @@ bool use_atomic_for_sparse_hes(bool x_1_variable)
 	check = x_0 * x_1;
 	ok &= NearEqual(yq[1] , check,  eps, eps);
 
-	// forward sparse Hessian
+	// forward sparse Jacobian
 	afun.option( CppAD::atomic_base<double>::pack_sparsity_enum );
-	CppAD::vectorBool r(n), s(m), h(n * n);
-	for(size_t j = 0; j < n; j++)
-		r[j] = true;
+	CppAD::vectorBool r(m * m), s(m * n);
+	// r = identity matrix
 	for(size_t i = 0; i < m; i++)
-		s[i] = true;
-	h = f.ForSparseHes(r, s);
+		for(size_t j = 0; j < m; j++)
+			r[ i * m + j] = i == j;
+	s = f.RevSparseJac(m, r);
 
 	// check result
-	CppAD::vectorBool check_h(n * n);
-	for(size_t i = 0; i < n * n; i++)
-		check_h[i] = false;
-	check_h[ 2 * n + 2 ] = true;
-	if( x_1_variable )
-	{	check_h[0 * n + 1] = true;
-		check_h[1 * n + 0] = true;
-	}
-	for(size_t i = 0; i < n * n; i++)
-		ok &= h[ i ] == check_h[ i ];
+	CppAD::vectorBool check_s(m * n);
+	check_s[ 0 * n + 0 ] = false;
+	check_s[ 0 * n + 1 ] = false;
+	check_s[ 0 * n + 2 ] = true;
+	check_s[ 1 * n + 0 ] = true;
+	check_s[ 1 * n + 1 ] = x_1_variable;
+	check_s[ 1 * n + 2 ] = false;
+	//
+	for(size_t i = 0; i < m * n; i++)
+		ok &= s[ i ] == check_s[ i ];
 	//
 	return ok;
 }
@@ -294,12 +226,12 @@ bool use_atomic_for_sparse_hes(bool x_1_variable)
 /* %$$
 $head Test with x_1 Both a Variable and a Parameter$$
 $srccode%cpp% */
-bool for_sparse_hes(void)
+bool rev_sparse_jac(void)
 {	bool ok = true;
 	// test with x_1 a variable
-	ok     &= use_atomic_for_sparse_hes(true);
+	ok     &= use_atomic_rev_sparse_jac(true);
 	// test with x_1 a parameter
-	ok     &= use_atomic_for_sparse_hes(false);
+	ok     &= use_atomic_rev_sparse_jac(false);
 	return ok;
 }
 /* %$$

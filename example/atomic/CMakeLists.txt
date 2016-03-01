@@ -26,6 +26,7 @@ ADD_EXECUTABLE(example_atomic EXCLUDE_FROM_ALL
 	norm_sq.cpp
 	reciprocal.cpp
 	rev_sparse_hes.cpp
+	rev_sparse_jac.cpp
 	sparsity.cpp
 	tangent.cpp
 )
