@@ -1303,7 +1303,7 @@ $codei%
 $subhead r$$
 This argument has prototype
 $codei%
-     const %atomic_sparsity%& %r%
+     const CppAD:vector<bool>& %r%
 %$$
 and is a $cref/atomic_sparsity/atomic_option/atomic_sparsity/$$ pattern for
 the diagonal of $latex R \in B^{n \times n}$$.
