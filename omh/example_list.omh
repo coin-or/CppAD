@@ -103,6 +103,7 @@ $rref atomic_matrix_mul.hpp$$
 $rref atomic_norm_sq.cpp$$
 $rref atomic_reciprocal.cpp$$
 $rref atomic_rev_sparse_hes.cpp$$
+$rref atomic_rev_sparse_jac.cpp$$
 $rref atomic_sparsity.cpp$$
 $rref atomic_tangent.cpp$$
 $rref azmul.cpp$$
