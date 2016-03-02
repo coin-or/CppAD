@@ -57,7 +57,8 @@ $srccode%cpp% */
 	public:
 	// constructor (could use const char* for name)
 	atomic_rev_sparse_hes(const std::string& name) :
-	CppAD::atomic_base<double>(name)
+	// this example only uses pack sparsity patterns
+	CppAD::atomic_base<double>(name, pack_sparsity_enum)
 	{ }
 	private:
 /* %$$
@@ -293,7 +294,6 @@ bool use_atomic_rev_sparse_hes(bool x_1_variable)
 	ok &= NearEqual(yq[1] , check,  eps, eps);
 
 	// reverse sparse Hessian
-	afun.option( CppAD::atomic_base<double>::pack_sparsity_enum );
 	CppAD::vectorBool r(n * n), s(m), h(n * n);
 	for(size_t i = 0; i < n; i++)
 	{	for(size_t j = 0; j < n; j++)

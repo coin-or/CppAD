@@ -10,7 +10,7 @@ A copy of this license is included in the COPYING file of this distribution.
 Please visit http://www.coin-or.org/CppAD/ for information on other licenses.
 -------------------------------------------------------------------------- */
 /*
-$begin atomic_sparsity.cpp$$
+$begin atomic_set_sparsity.cpp$$
 $spell
 	enum
 $$
@@ -55,13 +55,13 @@ void my_union(
 	result.swap(temp);
 }
 //
-class atomic_sparsity : public CppAD::atomic_base<double> {
+class atomic_set_sparsity : public CppAD::atomic_base<double> {
 /* %$$
 $head Constructor $$
 $srccode%cpp% */
 	public:
 	// constructor
-	atomic_sparsity(const std::string& name) :
+	atomic_set_sparsity(const std::string& name) :
 	// this exampel only uses set sparsity patterns
 	CppAD::atomic_base<double>(name, set_sparsity_enum )
 	{ }
@@ -228,13 +228,13 @@ $srccode%cpp% */
 /* %$$
 $head End Class Definition$$
 $srccode%cpp% */
-}; // End of atomic_sparsity class
+}; // End of atomic_set_sparsity class
 }  // End empty namespace
 
 /* %$$
-$head Use Atomic Function$$
+$head Test Atomic Function$$
 $srccode%cpp% */
-bool sparsity(void)
+bool set_sparsity(void)
 {	bool ok = true;
 	using CppAD::AD;
 	using CppAD::NearEqual;
@@ -243,7 +243,7 @@ bool sparsity(void)
 $subhead Constructor$$
 $srccode%cpp% */
 	// Create the atomic get_started object
-	atomic_sparsity afun("atomic_sparsity");
+	atomic_set_sparsity afun("atomic_set_sparsity");
 /* %$$
 $subhead Recording$$
 $srccode%cpp% */
@@ -325,7 +325,7 @@ $srccode%cpp% */
 			ok &= h[i] == check_h[i];
 	}
 /* %$$
-$subhead Return Test Result$$
+$subhead Test Result$$
 $srccode%cpp% */
 	return ok;
 }

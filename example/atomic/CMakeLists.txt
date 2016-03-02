@@ -27,7 +27,7 @@ ADD_EXECUTABLE(example_atomic EXCLUDE_FROM_ALL
 	reciprocal.cpp
 	rev_sparse_hes.cpp
 	rev_sparse_jac.cpp
-	sparsity.cpp
+	set_sparsity.cpp
 	tangent.cpp
 )
 

@@ -34,7 +34,7 @@ atomic_SOURCES   = \
 	reciprocal.cpp \
 	rev_sparse_hes.cpp \
 	rev_sparse_jac.cpp \
-	sparsity.cpp \
+	set_sparsity.cpp \
 	tangent.cpp
 
 test: check

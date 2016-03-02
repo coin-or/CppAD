@@ -29,7 +29,7 @@ extern bool norm_sq(void);
 extern bool reciprocal(void);
 extern bool rev_sparse_hes(void);
 extern bool rev_sparse_jac(void);
-extern bool sparsity(void);
+extern bool set_sparsity(void);
 extern bool tangent(void);
 
 namespace {
@@ -66,7 +66,7 @@ int main(void)
 	ok &= Run( reciprocal,          "reciprocal"     );
 	ok &= Run( rev_sparse_hes,      "rev_sparse_hes" );
 	ok &= Run( rev_sparse_jac,      "rev_sparse_jac" );
-	ok &= Run( sparsity,            "sparsity"       );
+	ok &= Run( set_sparsity,        "set_sparsity"   );
 	ok &= Run( tangent,             "tangent"        );
 
 	// check for errors

@@ -54,7 +54,8 @@ $srccode%cpp% */
 	public:
 	// constructor (could use const char* for name)
 	atomic_rev_sparse_jac(const std::string& name) :
-	CppAD::atomic_base<double>(name)
+	// this example only uses pack sparsity patterns
+	CppAD::atomic_base<double>(name, pack_sparsity_enum)
 	{ }
 	private:
 /* %$$
@@ -200,7 +201,6 @@ bool use_atomic_rev_sparse_jac(bool x_1_variable)
 	ok &= NearEqual(yq[1] , check,  eps, eps);
 
 	// forward sparse Jacobian
-	afun.option( CppAD::atomic_base<double>::pack_sparsity_enum );
 	CppAD::vectorBool r(m * m), s(m * n);
 	// r = identity matrix
 	for(size_t i = 0; i < m; i++)
