@@ -15,7 +15,7 @@ $spell
 	enum
 $$
 
-$section Atomic Sparsity Patterns: Example and Test$$
+$section Atomic Sparsity with Set Patterns: Example and Test$$
 
 $head function$$
 For this example, the atomic function
@@ -27,17 +27,33 @@ f( x_0, x_1 , x_2 ) = \left( \begin{array}{c}
 \end{array} \right)
 \] $$
 
-$head pack_sparsity_enum$$
-This example only uses pack sparsity patterns.
+$head set_sparsity_enum$$
+This example only uses set sparsity patterns.
 
 $nospell
 
 $head Start Class Definition$$
 $srccode%cpp% */
 # include <cppad/cppad.hpp>
-namespace {                 // isolate items below to this file
-using CppAD::vector;        // abbreviate as vector
-using CppAD::vectorBool;    // abbreviate as vectorBool
+namespace {   // isolate items below to this file
+using   CppAD::vector;                          // vector
+typedef vector< std::set<size_t> > set_vector;  // atomic_sparsity
+//
+// a utility to compute the union of two sets.
+void my_union(
+	std::set<size_t>&         result  ,
+	const std::set<size_t>&   left    ,
+	const std::set<size_t>&   right   )
+{	std::set<size_t> temp;
+	std::set_union(
+		left.begin()              ,
+		left.end()                ,
+		right.begin()             ,
+		right.end()               ,
+		std::inserter(temp, temp.begin())
+	);
+	result.swap(temp);
+}
 //
 class atomic_sparsity : public CppAD::atomic_base<double> {
 /* %$$
@@ -46,8 +62,8 @@ $srccode%cpp% */
 	public:
 	// constructor
 	atomic_sparsity(const std::string& name) :
-	// this exampel only uses pack sparsity patterns
-	CppAD::atomic_base<double>(name, pack_sparsity_enum )
+	// this exampel only uses set sparsity patterns
+	CppAD::atomic_base<double>(name, set_sparsity_enum )
 	{ }
 	private:
 /* %$$
@@ -93,20 +109,19 @@ $srccode%cpp% */
 	// for_sparse_jac
 	virtual bool for_sparse_jac(
 		size_t                          p ,
-		const vectorBool&               r ,
-		vectorBool&                     s )
+		const set_vector&               r ,
+		set_vector&                     s )
 	{	// This function needed if using f.ForSparseJac
-		size_t n = r.size() / p;
-		size_t m = s.size() / p;
+		size_t n = r.size();
+		size_t m = s.size();
 		assert( n == 3 );
 		assert( m == 2 );
 
 		// sparsity for S(x) = f'(x) * R  = [ 0,   0, 1 ] * R
-		//                                  [ x1, x0, 0 ]
-		for(size_t j = 0; j < p; j++)
-		{	s[ 0 * p + j] = r[ 2 * p + j];
-			s[ 1 * p + j] = r[ 0 * p + j] || r[ 1 * p + j];
-		}
+		s[0] = r[2];
+		// s[1] = union(r[0], r[1])
+		my_union(s[1], r[0], r[1]);
+		//
 		return true;
 	}
 /* %$$
@@ -114,40 +129,39 @@ $head rev_sparse_jac$$
 $srccode%cpp% */
 	virtual bool rev_sparse_jac(
 		size_t                                p  ,
-		const vectorBool&                     rt ,
-		vectorBool&                           st )
+		const set_vector&                     rt ,
+		set_vector&                           st )
 	{	// This function needed if using RevSparseJac or optimize
-		size_t n = st.size() / p;
-		size_t m = rt.size() / p;
+		size_t n = st.size();
+		size_t m = rt.size();
 		assert( n == 3 );
 		assert( m == 2 );
 
 		//                                       [ 0, x1 ]
 		// sparsity for S(x)^T = f'(x)^T * R^T = [ 0, x0 ] * R^T
 		//                                       [ 1, 0  ]
-		for(size_t j = 0; j < p; j++)
-		{	st[ 0 * p + j ] = rt[ 1 * p + j ];
-			st[ 1 * p + j ] = rt[ 1 * p + j ];
-			st[ 2 * p + j ] = rt[ 0 * p + j ];
-		}
+		st[0] = rt[1];
+		st[1] = rt[1];
+		st[2] = rt[0];
 		return true;
 	}
 /* %$$
+$head for_sparse_hes$$
 $srccode%cpp% */
 	virtual bool for_sparse_hes(
 		const vector<bool>&                   vx,
 		const vector<bool>&                   r ,
 		const vector<bool>&                   s ,
-		vectorBool&                           h )
+		set_vector&                           h )
 	{	size_t n = r.size();
 		size_t m = s.size();
-		assert( h.size() == n * n );
+		assert( h.size() == n );
 		assert( n == 3 );
 		assert( m == 2 );
 
-		// iniialize h as empty
-		for(size_t i = 0; i < n * n; i++)
-			h[i] = false;
+		// initialize h as empty
+		for(size_t i = 0; i < n; i++)
+			h[i].clear();
 
 		// only f_1 has a non-zero hessian
 		if( ! s[1] )
@@ -158,7 +172,8 @@ $srccode%cpp% */
 			return true;
 
 		// set the possibly non-zero terms in the hessian
-		h[ 0 * n + 1 ] = h[ 1 * n + 0 ] = true;
+		h[0].insert(1);
+		h[1].insert(0);
 
 		return true;
 	}
@@ -168,17 +183,17 @@ $srccode%cpp% */
 	virtual bool rev_sparse_hes(
 		const vector<bool>&                   vx,
 		const vector<bool>&                   s ,
-		      vector<bool>&                   t ,
+		vector<bool>&                         t ,
 		size_t                                p ,
-		const vectorBool&                     r ,
-		const vectorBool&                     u ,
-		vectorBool&                           v )
+		const set_vector&                     r ,
+		const set_vector&                     u ,
+		set_vector&                           v )
 	{	// This function needed if using RevSparseHes
 		size_t m = s.size();
 		size_t n = t.size();
-		assert( r.size() == n * p );
-		assert( u.size() == m * p );
-		assert( v.size() == n * p );
+		assert( r.size() == n );
+		assert( u.size() == m );
+		assert( v.size() == n );
 		assert( n == 3 );
 		assert( m == 2 );
 
@@ -192,25 +207,21 @@ $srccode%cpp% */
 		// U(x) = g''(y) * f'(x) * R
 		// S(x) = g'(y)
 
-		//                               [ 0, x1 ]
-		// sparsity for f'(x)^T * U(x) = [ 0, x0 ] * U(x)
-		//                               [ 1, 0  ]
-		size_t j;
-		for(j = 0; j < p; j++)
-		{	v[ 0 * p + j ] = u[ 1 * m + j ];
-			v[ 1 * p + j ] = u[ 1 * m + j ];
-			v[ 2 * p + j ] = u[ 0 * m + j ];
-		}
-
-		// include forward Jacobian sparsity in Hessian sparsity
-		//                                                [ 0, 1, 0 ]
-		// sum_i S_i (x) g'(y) * f_i''(x) * R = S_1 (x) * [ 1, 0, 0 ] * R
-		//                                                [ 0, 0, 0 ]
+		//                                      [ 0, x1 ]
+		// sparsity for W(x) = f'(x)^T * U(x) = [ 0, x0 ] * U(x)
+		//                                      [ 1, 0  ]
+		v[0] = u[1];
+		v[1] = u[1];
+		v[2] = u[0];
+		//
+		//                                      [ 0, 1, 0 ]
+		// sparsity for V(x) = W(x) + S_1 (x) * [ 1, 0, 0 ] * R
+		//                                      [ 0, 0, 0 ]
 		if( s[1] )
-		{	for(j = 0; j < p; j++)
-			{	v[ 0 * p + j ] = bool(v[0 * p + j]) | bool(r[1 * p + j]);
-				v[ 1 * p + j ] = bool(v[1 * p + j]) | bool(r[0 * p + j]);
-			}
+		{	// v[0] = union( v[0], r[1] )
+			my_union(v[0], v[0], r[1]);
+			// v[1] = union( v[1], r[0] )
+			my_union(v[1], v[1], r[0]);
 		}
 		return true;
 	}
@@ -257,68 +268,65 @@ $srccode%cpp% */
 	ok &= NearEqual(ay[1] , ax[0] * ax[1],  eps, eps);
 
 /* %$$
-$subhead forsparse_jac and rev_sparse_jac$$
+$subhead for_sparse_jac$$
 $srccode%cpp% */
-	for(size_t dir = 0; dir < 2; dir++)
-	{	size_t ell;
-		if( dir == 0 )
-			ell = n;
-		else
-			ell = m;
-
-		// identity martrix
-		vectorBool r(ell * ell);
-		for(size_t i = 0; i < ell; i++)
-			for(size_t j = 0; j < ell; j++)
-				r[i * ell + j] = (i == j);
-
-		vectorBool s;
-		if( dir == 0 )
-			s = f.ForSparseJac(n, r);
-		else
-			s = f.RevSparseJac(m, r);
-
-		// check Jacobian result
-		ok  &= s.size() == m * n;
-		ok  &= s[0 * n + 0] == false;
-		ok  &= s[0 * n + 1] == false;
-		ok  &= s[0 * n + 2] == true;
-		ok  &= s[1 * n + 0] == true;
-		ok  &= s[1 * n + 1] == true;
-		ok  &= s[1 * n + 2] == false;
+	// correct Jacobian result
+	set_vector check_s(m);
+	check_s[0].insert(2);
+	check_s[1].insert(0);
+	check_s[1].insert(1);
+	// compute and test forward mode
+	{	set_vector r(n), s(m);
+		for(size_t i = 0; i < n; i++)
+			r[i].insert(i);
+		s = f.ForSparseJac(n, r);
+		for(size_t i = 0; i < m; i++)
+			ok &= s[i] == check_s[i];
+	}
+/* %$$
+$subhead rev_sparse_jac$$
+$srccode%cpp% */
+	// compute and test reverse mode
+	{	set_vector r(m), s(m);
+		for(size_t i = 0; i < m; i++)
+			r[i].insert(i);
+		s = f.RevSparseJac(m, r);
+		for(size_t i = 0; i < m; i++)
+			ok &= s[i] == check_s[i];
 	}
 /* %$$
 $subhead for_sparse_hes$$
 $srccode%cpp% */
-	{	vectorBool s(m), r(n), h(n * n);
-		s[0] = s[1] = true;
-		r[0] = r[1] = r[2] = true;
-		h    = f.ForSparseHes(r, s);
+	// correct Hessian result
+	set_vector check_h(n);
+	check_h[0].insert(1);
+	check_h[1].insert(0);
+	// compute and test forward mode
+	{	set_vector r(1), s(1), h(n);
+		for(size_t i = 0; i < m; i++)
+			s[0].insert(i);
+		for(size_t j = 0; j < n; j++)
+			r[0].insert(j);
+		h = f.ForSparseHes(r, s);
 		for(size_t i = 0; i < n; i++)
-		{	for(size_t j = 0; j < n; j++)
-			{	bool check = false;
-				check     |= (i == 0) && (j == 1);
-				check     |= (j == 0) && (i == 1);
-				ok        &= h[ i * n + j] == check;
-			}
-		}
+			ok &= h[i] == check_h[i];
 	}
 /* %$$
 $subhead rev_sparse_hes$$
+Note the previous call to $code ForSparseJac$$ above
+stored its results in $icode f$$.
 $srccode%cpp% */
-	vectorBool s(m), h(n * n);
-	s[0] = true;
-	s[1] = true;
-	h    = f.RevSparseHes(n, s);
-	for(size_t i = 0; i < n; i++)
-	{	for(size_t j = 0; j < n; j++)
-		{	bool check = false;
-			check     |= (i == 0) && (j == 1);
-			check     |= (j == 0) && (i == 1);
-			ok        &= h[ i * n + j] == check;
-		}
+	// compute and test reverse mode
+	{	set_vector s(1), h(n);
+		for(size_t i = 0; i < m; i++)
+			s[0].insert(i);
+		h = f.RevSparseHes(n, s);
+		for(size_t i = 0; i < n; i++)
+			ok &= h[i] == check_h[i];
 	}
-	//
+/* %$$
+$subhead Return Test Result$$
+$srccode%cpp% */
 	return ok;
 }
 /* %$$
