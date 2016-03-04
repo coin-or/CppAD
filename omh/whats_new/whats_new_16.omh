@@ -34,6 +34,18 @@ in reverse order by date.
 The purpose of these sections is to
 assist you in learning about changes between various versions of CppAD.
 
+$head 03-04$$
+The following atomic function examples were added
+These examples are for a specific atomic operation.
+In addition, the domain and range dimensions for these examples
+are not one and not equal to each other:
+$cref atomic_forward.cpp$$,
+$cref atomic_for_sparse_jac.cpp$$,
+$cref atomic_rev_sparse_jac.cpp$$,
+$cref atomic_for_sparse_hes.cpp$$,
+$cref atomic_rev_sparse_hes.cpp$$.
+
+
 $head 03-01$$
 $list number$$
 Improve documentation of implementation requirements for the atomic
@@ -58,22 +70,10 @@ $lend
 
 
 $head 02-28$$
-Fix a mistake in the atomic
-$cref/rev_sparse_jac/atomic_sparsity.cpp/rev_sparse_jac/$$ example.
-To be specific
-$srccode%cpp%
-	{	st[ 0 * p + j ] = rt[ 1 * m + j ];
-		st[ 1 * p + j ] = rt[ 1 * m + j ];
-		st[ 2 * p + j ] = rt[ 0 * m + j ];
-	}
-%$$
-was changed to
-$srccode%cpp%
-	{	st[ 0 * p + j ] = rt[ 1 * p + j ];
-		st[ 1 * p + j ] = rt[ 1 * p + j ];
-		st[ 2 * p + j ] = rt[ 0 * p + j ];
-	}
-%$$
+Fix a mistake in the old atomic
+$code example/sparsity/sparsity.cpp$$ example.
+This example has since been changed to
+$cref atomic_set_sparsity.cpp$$.
 
 
 $head 02-27$$

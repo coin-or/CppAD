@@ -21,6 +21,7 @@ ADD_EXECUTABLE(example_atomic EXCLUDE_FROM_ALL
 	checkpoint.cpp
 	for_sparse_hes.cpp
 	for_sparse_jac.cpp
+	forward.cpp
 	get_started.cpp
 	mat_mul.cpp
 	norm_sq.cpp

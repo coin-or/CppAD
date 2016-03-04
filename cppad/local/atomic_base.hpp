@@ -737,24 +737,13 @@ $latex \[
 	ty [ i * (q + 1) + k ] = y_i^k
 \] $$
 
+$children%
+	example/atomic/forward.cpp
+%$$
 $head Examples$$
-
-$subhead Define forward$$
-The following files contain example atomic $code forward$$ functions:
-$cref%get_started.cpp%atomic_get_started.cpp%forward%$$,
-$cref%norm_sq.cpp%atomic_norm_sq.cpp%forward%$$,
-$cref%reciprocal.cpp%atomic_reciprocal.cpp%forward%$$,
-$cref%tangent.cpp%atomic_tangent.cpp%forward%$$,
-$cref%matrix_mul.hpp%atomic_matrix_mul.hpp%forward%$$.
-
-$subhead Use forward$$
-The following are links to user atomic function forward uses:
-$cref%get_started.cpp%atomic_get_started.cpp%Use Atomic Function%forward%$$,
-$cref%norm_sq.cpp%atomic_norm_sq.cpp%Use Atomic Function%forward%$$,
-$cref%reciprocal.cpp%atomic_reciprocal.cpp%Use Atomic Function%forward%$$,
-$cref%tangent.cpp%atomic_tangent.cpp%Use Atomic Function%forward%$$,
-$cref%mat_mul.cpp%atomic_mat_mul.cpp%Use Atomic Function%forward%$$.
-
+The file $cref atomic_forward.cpp$$ contains an example and test
+that uses this routine.
+It returns true if the test passes and false if it fails.
 
 $end
 -----------------------------------------------------------------------------

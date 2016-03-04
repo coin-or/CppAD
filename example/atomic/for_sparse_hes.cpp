@@ -27,7 +27,7 @@ f( x ) = \left( \begin{array}{c}
 	x_0 * x_1
 \end{array} \right)
 \] $$
-The Hessians of its component functions are
+The Hessians of the component functions are
 $latex \[
 f_0^{(2)} ( x ) = \left( \begin{array}{ccc}
 	0 & 0 & 0  \\

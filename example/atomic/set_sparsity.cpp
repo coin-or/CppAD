@@ -21,7 +21,7 @@ $head function$$
 For this example, the atomic function
 $latex f : \B{R}^3 \rightarrow \B{R}^2$$ is defined by
 $latex \[
-f( x_0, x_1 , x_2 ) = \left( \begin{array}{c}
+f( x ) = \left( \begin{array}{c}
 	x_2 \\
 	x_0 * x_1
 \end{array} \right)

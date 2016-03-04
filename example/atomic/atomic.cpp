@@ -23,6 +23,7 @@ Please visit http://www.coin-or.org/CppAD/ for information on other licenses.
 extern bool checkpoint(void);
 extern bool for_sparse_hes(void);
 extern bool for_sparse_jac(void);
+extern bool forward(void);
 extern bool get_started(void);
 extern bool mat_mul(void);
 extern bool norm_sq(void);
@@ -59,7 +60,9 @@ int main(void)
 
 	// external compiled tests
 	ok &= Run( checkpoint,          "checkpoint"     );
+	ok &= Run( for_sparse_hes,      "for_sparse_hes" );
 	ok &= Run( for_sparse_jac,      "for_sparse_jac" );
+	ok &= Run( forward,             "forward"        );
 	ok &= Run( get_started,         "get_started"    );
 	ok &= Run( mat_mul,             "mat_mul"        );
 	ok &= Run( norm_sq,             "norm_sq"        );
