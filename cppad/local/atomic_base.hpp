@@ -874,7 +874,7 @@ $latex \[
 \] $$
 
 
-$head F, G, H$$
+$head F$$
 We use the notation $latex \{ x_j^k \} \in B^{n \times (q+1)}$$ for
 $latex \[
 	\{ x_j^k \W{:} j = 0 , \ldots , n-1, k = 0 , \ldots , q \}
@@ -888,6 +888,18 @@ $latex F : B^{n \times (q+1)} \rightarrow B^{m \times (q+1)}$$ by
 $latex \[
 	y_i^k = F_i^k [ \{ x_j^k \} ]
 \] $$
+Note that
+$latex \[
+	F_i^0 ( \{ x_j^k \} ) = f_i ( X(0) )  = f_i ( x^0 )
+\] $$
+We also note that
+$latex F_i^\ell ( \{ x_j^k \} )$$ is a function of
+$latex x^0 , \ldots , x^\ell$$
+and is determined by the derivatives of $latex f_i (x)$$
+up to order $latex \ell$$.
+
+
+$head G, H$$
 We use $latex G : B^{m \times (q+1)} \rightarrow B$$
 to denote an arbitrary scalar valued function of $latex \{ y_i^k \}$$.
 We use $latex H : B^{n \times (q+1)} \rightarrow B$$
@@ -922,7 +934,7 @@ $latex \[
 px [ j * (q + 1) + \ell ] & = & \partial H / \partial x_j^\ell
 \\
 & = &
-( \partial G / \partial \{ y_i^k \} )
+( \partial G / \partial \{ y_i^k \} ) \cdot
 	( \partial \{ y_i^k \} / \partial x_j^\ell )
 \\
 & = &
