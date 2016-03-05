@@ -30,6 +30,7 @@ extern bool norm_sq(void);
 extern bool reciprocal(void);
 extern bool rev_sparse_hes(void);
 extern bool rev_sparse_jac(void);
+extern bool reverse(void);
 extern bool set_sparsity(void);
 extern bool tangent(void);
 
@@ -69,6 +70,7 @@ int main(void)
 	ok &= Run( reciprocal,          "reciprocal"     );
 	ok &= Run( rev_sparse_hes,      "rev_sparse_hes" );
 	ok &= Run( rev_sparse_jac,      "rev_sparse_jac" );
+	ok &= Run( reverse,             "reverse"        );
 	ok &= Run( set_sparsity,        "set_sparsity"   );
 	ok &= Run( tangent,             "tangent"        );
 

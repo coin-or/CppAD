@@ -938,11 +938,13 @@ px [ j * (q + 1) + \ell ] & = & \partial H / \partial x_j^\ell
 	( \partial \{ y_i^k \} / \partial x_j^\ell )
 \\
 & = &
-\sum_{i=0}^{m-1} \sum_{k=0}^q
+\sum_{k=0}^q
+\sum_{i=0}^{m-1}
 ( \partial G / \partial y_i^k ) ( \partial y_i^k / \partial x_j^\ell )
 \\
 & = &
-\sum_{i=0}^{m-1} \sum_{k=\ell}^q
+\sum_{k=\ell}^q
+\sum_{i=0}^{m-1}
 py[ i * (q + 1 ) + k ] ( \partial F_i^k / \partial x_j^\ell )
 \end{array}
 \] $$
@@ -957,21 +959,13 @@ $codei%
 If it is $code true$$, the corresponding evaluation succeeded,
 otherwise it failed.
 
+$children%
+	example/atomic/reverse.cpp
+%$$
 $head Examples$$
-
-$subhead Define reverse$$
-The following files contain example atomic $code reverse$$ functions:
-$cref%norm_sq.cpp%atomic_norm_sq.cpp%reverse%$$,
-$cref%reciprocal.cpp%atomic_reciprocal.cpp%reverse%$$,
-$cref%tangent.cpp%atomic_tangent.cpp%reverse%$$,
-$cref%matrix_mul.hpp%atomic_matrix_mul.hpp%reverse%$$.
-
-$subhead Use reverse$$
-The following are links to user atomic function constructor uses:
-$cref%norm_sq.cpp%atomic_norm_sq.cpp%Use Atomic Function%reverse%$$,
-$cref%reciprocal.cpp%atomic_reciprocal.cpp%Use Atomic Function%reverse%$$,
-$cref%tangent.cpp%atomic_tangent.cpp%Use Atomic Function%reverse%$$,
-$cref%mat_mul.cpp%atomic_mat_mul.cpp%Use Atomic Function%reverse%$$.
+The file $cref atomic_forward.cpp$$ contains an example and test
+that uses this routine.
+It returns true if the test passes and false if it fails.
 
 $end
 -----------------------------------------------------------------------------

@@ -10,15 +10,15 @@ A copy of this license is included in the COPYING file of this distribution.
 Please visit http://www.coin-or.org/CppAD/ for information on other licenses.
 -------------------------------------------------------------------------- */
 /*
-$begin atomic_forward.cpp$$
+$begin atomic_reverse.cpp$$
 $spell
 	Jacobian
 $$
 
-$section Atomic Forward: Example and Test$$
+$section Atomic Reverse: Example and Test$$
 
 $head Purpose$$
-This example demonstrates forward mode derivative calculation
+This example demonstrates reverse mode derivative calculation
 using an atomic operation.
 
 $head function$$
@@ -60,13 +60,13 @@ $srccode%cpp% */
 namespace {          // isolate items below to this file
 using CppAD::vector; // abbreviate as vector
 //
-class atomic_forward : public CppAD::atomic_base<double> {
+class atomic_reverse : public CppAD::atomic_base<double> {
 /* %$$
 $head Constructor $$
 $srccode%cpp% */
 	public:
 	// constructor (could use const char* for name)
-	atomic_forward(const std::string& name) :
+	atomic_reverse(const std::string& name) :
 	// this example does not use sparsity patterns
 	CppAD::atomic_base<double>(name)
 	{ }
@@ -91,8 +91,8 @@ $srccode%cpp% */
 		assert( m == 2 );
 		assert( p <= q );
 
-		// this example only implements up to second order forward mode
-		bool ok = q <= 2;
+		// this example only implements up to first order forward mode
+		bool ok = q <= 1;
 		if( ! ok )
 			return ok;
 
@@ -125,35 +125,102 @@ $srccode%cpp% */
 		if( p <= 1 )
 		{	// y_0^1 = 2 * x_2^0 * x_2^1
 			ty[0 * q1 + 1] = 2.0 * tx[2 * q1 + 0] * tx[2 * q1 + 1];
+
 			// y_1^1 = x_1^0 * x_0^1 + x_0^0 * x_1^1
 			ty[1 * q1 + 1]  = tx[1 * q1 + 0] * tx[0 * q1 + 1];
 			ty[1 * q1 + 1] += tx[0 * q1 + 0] * tx[1 * q1 + 1];
 		}
-		if( q <= 1 )
+		return ok;
+	}
+/* %$$
+$head reverse$$
+$srccode%cpp% */
+	// reverse mode routine called by CppAD
+	virtual bool reverse(
+		size_t                   q ,
+		const vector<double>&    tx ,
+		const vector<double>&    ty ,
+		vector<double>&          px ,
+		const vector<double>&    py
+	)
+	{
+		size_t q1 = q + 1;
+		size_t n = tx.size() / q1;
+		size_t m = ty.size() / q1;
+		assert( n == 3 );
+		assert( m == 2 );
+
+		// this example only implements up to second order reverse mode
+		bool ok = q1 <= 2;
+		if( ! ok )
 			return ok;
-		// ------------------------------------------------------------------
-		// Second order forward mode.
-		// This case is neede if second order forwrd mode is used.
-		// f'(x) = [   0,   0, 2 x_2 ]
-		//         [ x_1, x_0,     0 ]
 		//
-		//            [ 0 , 0 , 0 ]                  [ 0 , 1 , 0 ]
-		// f_0''(x) = [ 0 , 0 , 0 ]  f_1^{(2)} (x) = [ 1 , 0 , 0 ]
-		//            [ 0 , 0 , 2 ]                  [ 0 , 0 , 0 ]
+		// initalize summation as zero
+		for(size_t j = 0; j < n; j++)
+			for(size_t k = 0; k < q; k++)
+				px[j * q1 + k] = 0.0;
 		//
-		//  y_0^2 = x^1 * f_0''( x^0 ) x^1 / 2! + f_0'( x^0 ) x^2
-		//        = ( x_2^1 * 2.0 * x_2^1 ) / 2!
-		//        + 2.0 * x_2^0 * x_2^2
-		ty[0 * q1 + 2]  = tx[2 * q1 + 1] * tx[2 * q1 + 1];
-		ty[0 * q1 + 2] += 2.0 * tx[2 * q + 0] * tx[2 * q1 + 2];
+		if( q1 == 2 )
+		{	// --------------------------------------------------------------
+			// Second order reverse first compute partials of first order
+			// We use the notation pf_ij^k for partial of F_i^1 w.r.t. x_j^k
+			//
+			// y_0^1    = 2 * x_2^0 * x_2^1
+			// pf_02^0  = 2 * x_2^1
+			// pf_02^1  = 2 * x_2^0
+			//
+			// y_1^1    = x_1^0 * x_0^1 + x_0^0 * x_1^1
+			// pf_10^0  = x_1^1
+			// pf_11^0  = x_0^1
+			// pf_10^1  = x_1^0
+			// pf_11^1  = x_0^0
+			//
+			// px_0^0 += py_0^1 * pf_00^0 + py_1^1 * pf_10^0
+			//        += py_1^1 * x_1^1
+			px[0 * q1 + 0] += py[1 * q1 + 1] * tx[1 * q1 + 1];
+			//
+			// px_0^1 += py_0^1 * pf_00^1 + py_1^1 * pf_10^1
+			//        += py_1^1 * x_1^0
+			px[0 * q1 + 1] += py[1 * q1 + 1] * tx[1 * q1 + 0];
+			//
+			// px_1^0 += py_0^1 * pf_01^0 + py_1^1 * pf_11^0
+			//        += py_1^1 * x_0^1
+			px[1 * q1 + 0] += py[1 * q1 + 1] * tx[0 * q1 + 1];
+			//
+			// px_1^1 += py_0^1 * pf_01^1 + py_1^1 * pf_11^1
+			//        += py_1^1 * x_0^0
+			px[1 * q1 + 1] += py[1 * q1 + 1] * tx[0 * q1 + 0];
+			//
+			// px_2^0 += py_0^1 * pf_02^0 + py_1^1 * pf_12^0
+			//        += py_0^1 * 2 * x_2^1
+			px[2 * q1 + 0] += py[0 * q1 + 1] * 2.0 * tx[2 * q1 + 1];
+			//
+			// px_2^1 += py_0^1 * pf_02^1 + py_1^1 * pf_12^1
+			//        += py_0^1 * 2 * x_2^0
+			px[2 * q1 + 1] += py[0 * q1 + 1] * 2.0 * tx[2 * q1 + 0];
+		}
+		// --------------------------------------------------------------
+		// First order reverse computes partials of zero order coefficients
+		// We use the notation pf_ij for partial of F_i^0 w.r.t. x_j^0
 		//
-		//  y_1^2 = x^1 * f_1''( x^0 ) x^1 / 2! + f_1'( x^0 ) x^2
-		//        = ( x_1^1 * x_0^1 + x_0^1 * x_1^1) / 2
-		//        + x_1^0 * x_0^2 + x_0^0 + x_1^2
-		ty[1 * q1 + 2]  = tx[1 * q1 + 1] * tx[0 * q1 + 1];
-		ty[1 * q1 + 2] += tx[1 * q1 + 0] * tx[0 * q1 + 2];
-		ty[1 * q1 + 2] += tx[0 * q1 + 0] * tx[1 * q1 + 2];
-		// ------------------------------------------------------------------
+		// y_0^0 = x_2^0 * x_2^0
+		// pf_00 = 0,     pf_01 = 0,  pf_02 = 2 * x_2^0
+		//
+		// y_1^0 = x_0^0 * x_1^0
+		// pf_10 = x_1^0, pf_11 = x_0^0,  pf_12 = 0
+		//
+		// px_0^0 += py_0^0 * pf_00 + py_1^0 * pf_10
+		//        += py_1^0 * x_1^0
+		px[0 * q1 + 0] += py[1 * q1 + 0] * tx[1 * q1 + 0];
+		//
+		// px_1^0 += py_1^0 * pf_01 + py_1^0 * pf_11
+		//        += py_1^0 * x_0^0
+		px[1 * q1 + 0] += py[1 * q1 + 0] * tx[0 * q1 + 0];
+		//
+		// px_2^0 += py_1^0 * pf_02 + py_1^0 * pf_12
+		//        += py_0^0 * 2.0 * x_2^0
+		px[2 * q1 + 0] += py[0 * q1 + 0] * 2.0 * tx[2 * q1 + 0];
+		// --------------------------------------------------------------
 		return ok;
 	}
 };
@@ -161,14 +228,14 @@ $srccode%cpp% */
 /* %$$
 $head Use Atomic Function$$
 $srccode%cpp% */
-bool forward(void)
+bool reverse(void)
 {	bool ok = true;
 	using CppAD::AD;
 	using CppAD::NearEqual;
 	double eps = 10. * CppAD::numeric_limits<double>::epsilon();
 	//
-	// Create the atomic_forward object
-	atomic_forward afun("atomic_forward");
+	// Create the atomic_reverse object
+	atomic_reverse afun("atomic_reverse");
 	//
 	// Create the function f(u)
 	//
@@ -216,28 +283,27 @@ bool forward(void)
 	check = x_0 * x_1;
 	ok &= NearEqual(y0[1] , check,  eps, eps);
 	// --------------------------------------------------------------------
-	// first order forward
+	// first order reverse
 	//
 	// value of Jacobian of f
 	double check_jac[] = {
 		0.0, 0.0, 2.0 * x_2,
 		x_1, x_0,       0.0
 	};
-	vector<double> x1(n), y1(m);
-	// check first order forward mode
-	for(size_t j = 0; j < n; j++)
-		x1[j] = 0.0;
-	for(size_t j = 0; j < n; j++)
-	{	// compute partial in j-th component direction
-		x1[j] = 1.0;
-		y1    = f.Forward(1, x1);
-		x1[j] = 0.0;
-		// check this direction
-		for(size_t i = 0; i < m; i++)
-			ok &= NearEqual(y1[i], check_jac[i * n + j], eps, eps);
+	vector<double> w(m), dw(n);
+	//
+	// check derivative of f_0 (x)
+	for(size_t i = 0; i < m; i++)
+	{	w[i]   = 1.0;
+		w[1-i] = 0.0;
+		dw = f.Reverse(1, w);
+		for(size_t j = 0; j < n; j++)
+		{	// compute partial in j-th component direction
+			ok &= NearEqual(dw[j], check_jac[i * n + j], eps, eps);
+		}
 	}
 	// --------------------------------------------------------------------
-	// second order forward
+	// second order reverse
 	//
 	// value of Hessian of f_0
 	double check_hes_0[] = {
@@ -252,40 +318,23 @@ bool forward(void)
 		1.0, 0.0, 0.0,
 		0.0, 0.0, 0.0
 	};
-	vector<double> x2(n), y2(m);
+	vector<double> x1(n), dw2( 2 * n );
 	for(size_t j = 0; j < n; j++)
-		x2[j] = 0.0;
-	// compute diagonal elements of the Hessian
-	for(size_t j = 0; j < n; j++)
-	{	// first order forward in j-th direction
+	{	for(size_t j1 = 0; j1 < n; j1++)
+			x1[j1] = 0.0;
 		x1[j] = 1.0;
+		// first order forward
 		f.Forward(1, x1);
-		y2 = f.Forward(2, x2);
-		// check this element of Hessian diagonal
-		ok &= NearEqual(y2[0], check_hes_0[j * n + j] / 2.0, eps, eps);
-		ok &= NearEqual(y2[1], check_hes_1[j * n + j] / 2.0, eps, eps);
-		//
-		for(size_t k = 0; k < n; k++) if( k != j )
-		{	x1[k] = 1.0;
-			f.Forward(1, x1);
-			y2 = f.Forward(2, x2);
-			//
-			// y2 = (H_jj + H_kk + H_jk + H_kj) / 2.0
-			// y2 = (H_jj + H_kk) / 2.0 + H_jk
-			//
-			double H_jj = check_hes_0[j * n + j];
-			double H_kk = check_hes_0[k * n + k];
-			double H_jk = y2[0] - (H_kk + H_jj) / 2.0;
-			ok &= NearEqual(H_jk, check_hes_0[j * n + k], eps, eps);
-			//
-			H_jj = check_hes_1[j * n + j];
-			H_kk = check_hes_1[k * n + k];
-			H_jk = y2[1] - (H_kk + H_jj) / 2.0;
-			ok &= NearEqual(H_jk, check_hes_1[j * n + k], eps, eps);
-			//
-			x1[k] = 0.0;
-		}
-		x1[j] = 0.0;
+		w[0] = 1.0;
+		w[1] = 0.0;
+		dw2  = f.Reverse(2, w);
+		for(size_t i = 0; i < n; i++)
+			ok &= NearEqual(dw2[i * 2 + 1], check_hes_0[i * n + j], eps, eps);
+		w[0] = 0.0;
+		w[1] = 1.0;
+		dw2  = f.Reverse(2, w);
+		for(size_t i = 0; i < n; i++)
+			ok &= NearEqual(dw2[i * 2 + 1], check_hes_1[i * n + j], eps, eps);
 	}
 	// --------------------------------------------------------------------
 	return ok;

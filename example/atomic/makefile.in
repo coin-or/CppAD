@@ -102,7 +102,7 @@ am_atomic_OBJECTS = atomic.$(OBJEXT) checkpoint.$(OBJEXT) \
 	forward.$(OBJEXT) get_started.$(OBJEXT) mat_mul.$(OBJEXT) \
 	norm_sq.$(OBJEXT) reciprocal.$(OBJEXT) \
 	rev_sparse_hes.$(OBJEXT) rev_sparse_jac.$(OBJEXT) \
-	set_sparsity.$(OBJEXT) tangent.$(OBJEXT)
+	reverse.$(OBJEXT) set_sparsity.$(OBJEXT) tangent.$(OBJEXT)
 atomic_OBJECTS = $(am_atomic_OBJECTS)
 atomic_LDADD = $(LDADD)
 AM_V_P = $(am__v_P_@AM_V@)
@@ -357,6 +357,7 @@ atomic_SOURCES = \
 	reciprocal.cpp \
 	rev_sparse_hes.cpp \
 	rev_sparse_jac.cpp \
+	reverse.cpp \
 	set_sparsity.cpp \
 	tangent.cpp
 
@@ -418,6 +419,7 @@ distclean-compile:
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/reciprocal.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/rev_sparse_hes.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/rev_sparse_jac.Po@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/reverse.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/set_sparsity.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/tangent.Po@am__quote@
 

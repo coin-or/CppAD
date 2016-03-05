@@ -35,6 +35,7 @@ atomic_SOURCES   = \
 	reciprocal.cpp \
 	rev_sparse_hes.cpp \
 	rev_sparse_jac.cpp \
+	reverse.cpp \
 	set_sparsity.cpp \
 	tangent.cpp
 
