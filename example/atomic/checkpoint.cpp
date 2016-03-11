@@ -37,9 +37,9 @@ $latex \[
 	\end{array} \right)
 	\; , \;
 	G(x) = \left( \begin{array}{c}
-		\cdot x_0 \cdot x_0 \cdot x_0
+		x_0 \cdot x_0 \cdot x_0
 		\\
-		\cdot x_1 \cdot x_1 \cdot x_1
+		x_1 \cdot x_1 \cdot x_1
 	\end{array} \right)
 \] $$
 
