@@ -1,6 +1,6 @@
 // $Id$
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-15 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-16 Bradley M. Bell
 
 CppAD is distributed under multiple licenses. This distribution is under
 the terms of the
@@ -204,7 +204,7 @@ bool reverse_any_cases(void)
 	return ok;
 }
 /*
-$comment reverse_any.cpp$$
+$comment reverse_checkpoint.cpp$$
 $spell
 	Taylor
 $$
@@ -312,7 +312,7 @@ where $latex \partial_{x(0)}$$ denotes the partial with respect
 to $latex x^{(0)}$$.
 
 $code
-$comment%example/reverse_any.cpp%0%// BEGIN C++%// END C++%1%$$
+$comment%example/reverse_checkpoint.cpp%0%// BEGIN C++%// END C++%1%$$
 $$
 $end
 */

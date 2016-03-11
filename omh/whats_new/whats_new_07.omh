@@ -1,6 +1,6 @@
 $Id$
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-15 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-16 Bradley M. Bell
 
 CppAD is distributed under multiple licenses. This distribution is under
 the terms of the
@@ -715,7 +715,7 @@ $head 04-14$$
 Simplify the $cref Reverse$$ mode documentation by creating
 a separate $cref reverse_two$$ section for second order reverse,
 making major changes to the description in $cref reverse_any$$,
-and creating a third order example $cref reverse_any.cpp$$ for
+and creating a third order example $cref reverse_checkpoint.cpp$$ for
 reverse mode calculations.
 $pre
 

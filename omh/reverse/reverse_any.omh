@@ -1,6 +1,6 @@
 // $Id$
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-15 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-16 Bradley M. Bell
 
 CppAD is distributed under multiple licenses. This distribution is under
 the terms of the
@@ -226,7 +226,7 @@ if this is not the case.
 $head Example$$
 $children%
 	example/reverse_three.cpp%
-	example/reverse_any.cpp
+	example/reverse_checkpoint.cpp
 %$$
 
 $list number$$
@@ -234,7 +234,7 @@ The file $cref reverse_three.cpp$$
 contains an example and test of using reverse mode
 to compute third order derivatives.
 $lnext
-The file $cref reverse_any.cpp$$
+The file $cref reverse_checkpoint.cpp$$
 contains an example and test of the general reverse mode case.
 $lend
 

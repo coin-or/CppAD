@@ -171,7 +171,7 @@ ADD_EXECUTABLE(example EXCLUDE_FROM_ALL example.cpp
 	pow.cpp
 	pow_int.cpp
 	print_for.cpp
-	reverse_any.cpp
+	reverse_checkpoint.cpp
 	reverse_one.cpp
 	reverse_three.cpp
 	reverse_two.cpp

@@ -13,14 +13,12 @@
 revert_list='
 '
 move_list='
-	example/atomic/hes_sparse.cpp
+	example/reverse_any.cpp
 '
-move_sed='s|hes_sparse|rev_sparse_hes|'
+move_sed='s|reverse_any.cpp|reverse_checkpoint.cpp|'
 #
 cat << EOF > junk.sed
-s|hes_sparse.cpp|rev_sparse_hes.cpp|
-s|hes_sparse(void)|rev_sparse_hes(void)|
-s|Run( hes_sparse,          "hes_sparse"     );|Run( rev_sparse_hes,      "rev_sparse_hes" );|
+s|reverse_any.cpp|reverse_checkpoint.cpp|
 EOF
 # -----------------------------------------------------------------------------
 if [ $0 != "bin/batch_edit.sh" ]

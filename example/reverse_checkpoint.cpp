@@ -11,7 +11,7 @@ Please visit http://www.coin-or.org/CppAD/ for information on other licenses.
 -------------------------------------------------------------------------- */
 
 /*
-$begin reverse_any.cpp$$
+$begin reverse_checkpoint.cpp$$
 $spell
 	Taylor
 $$
@@ -113,7 +113,7 @@ where $latex \partial_{x(0)}$$ denotes the partial with respect
 to $latex x^{(0)}$$.
 
 $code
-$srcfile%example/reverse_any.cpp%0%// BEGIN C++%// END C++%1%$$
+$srcfile%example/reverse_checkpoint.cpp%0%// BEGIN C++%// END C++%1%$$
 $$
 
 
