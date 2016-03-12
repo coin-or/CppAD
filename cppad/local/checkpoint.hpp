@@ -47,20 +47,28 @@ $codei%checkpoint<%Base%> %atom_fun%(%name%, %algo%, %ax%, %ay%, %sparsity%)
 %atom_fun%(%ax%, %ay%)
 checkpoint<%Base%>::clear()%$$
 
+$head See Also$$
+$cref reverse_checkpoint.cpp$$
+
 $head Purpose$$
 
 $subhead Reduce Memory$$
 You can reduce the size of the tape and memory required for AD by
 checkpointing functions of the form $latex y = f(x)$$ where
 $latex f : B^n \rightarrow B^m$$.
-The $cref/operation sequence/glossary/Operation/Sequence/$$
-representing $latex f(x)$$ cannot depend on the value of $latex x$$.
 
 $subhead Faster Recording$$
 It may also reduce the time to make a recording the same function
 for different values of the independent variable.
 Note that the operation sequence for a recording that uses $latex f(x)$$
 may depend on its independent variables.
+
+$subhead Restriction$$
+The $cref/operation sequence/glossary/Operation/Sequence/$$
+representing $latex f(x)$$ cannot depend on the value of $latex x$$.
+The approach in the $cref reverse_checkpoint.cpp$$ example case be applied
+when the operation sequence depends on $latex x$$.
+
 
 $head Method$$
 The $code checkpoint$$ class is derived from $code atomic_base$$

@@ -13,11 +13,14 @@ Please visit http://www.coin-or.org/CppAD/ for information on other licenses.
 /*
 $begin reverse_checkpoint.cpp$$
 $spell
+	Checkpointing
 	Taylor
 $$
 
-$section Reverse Mode General Case: Example and Test$$
+$section Reverse Mode General Case (Checkpointing): Example and Test$$
 
+$head See Also$$
+$cref checkpoint$$
 
 $head Purpose$$
 Break a large computation into pieces and only store values at the
