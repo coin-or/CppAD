@@ -26,6 +26,7 @@ extern bool for_sparse_jac(void);
 extern bool forward(void);
 extern bool get_started(void);
 extern bool mat_mul(void);
+extern bool mul_level(void);
 extern bool norm_sq(void);
 extern bool reciprocal(void);
 extern bool rev_sparse_hes(void);
@@ -66,6 +67,7 @@ int main(void)
 	ok &= Run( forward,             "forward"        );
 	ok &= Run( get_started,         "get_started"    );
 	ok &= Run( mat_mul,             "mat_mul"        );
+	ok &= Run( mul_level,           "mul_level"      );
 	ok &= Run( norm_sq,             "norm_sq"        );
 	ok &= Run( reciprocal,          "reciprocal"     );
 	ok &= Run( rev_sparse_hes,      "rev_sparse_hes" );

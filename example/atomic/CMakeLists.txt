@@ -24,6 +24,7 @@ ADD_EXECUTABLE(example_atomic EXCLUDE_FROM_ALL
 	forward.cpp
 	get_started.cpp
 	mat_mul.cpp
+	mul_level.cpp
 	norm_sq.cpp
 	reciprocal.cpp
 	rev_sparse_hes.cpp

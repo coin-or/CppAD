@@ -69,6 +69,14 @@ representing $latex f(x)$$ cannot depend on the value of $latex x$$.
 The approach in the $cref reverse_checkpoint.cpp$$ example case be applied
 when the operation sequence depends on $latex x$$.
 
+$subhead Multiple Level AD$$
+If $icode Base$$ is an AD type, it is possible to record $icode Base$$
+operations.
+Note that $icode atom_fun$$ will treat $icode algo$$ as an atomic
+operation while recording $codei%AD%<%Base%>%$$ operations, but not while
+recording $icode Base$$ operations.
+See the $cref atomic_mul_level.cpp$$ example.
+
 
 $head Method$$
 The $code checkpoint$$ class is derived from $code atomic_base$$
@@ -198,8 +206,8 @@ $subhead Restriction$$
 The $code clear$$ routine cannot be called
 while in $cref/parallel/ta_in_parallel/$$ execution mode.
 
-$children%
-	example/atomic/checkpoint.cpp
+$children%example/atomic/checkpoint.cpp
+	%example/atomic/mul_level.cpp
 %$$
 $head Example$$
 The file $cref checkpoint.cpp$$ contains an example and test

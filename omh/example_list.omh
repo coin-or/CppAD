@@ -101,6 +101,7 @@ $rref atomic_forward.cpp$$
 $rref atomic_get_started.cpp$$
 $rref atomic_mat_mul.cpp$$
 $rref atomic_matrix_mul.hpp$$
+$rref atomic_mul_level.cpp$$
 $rref atomic_norm_sq.cpp$$
 $rref atomic_reciprocal.cpp$$
 $rref atomic_reverse.cpp$$
