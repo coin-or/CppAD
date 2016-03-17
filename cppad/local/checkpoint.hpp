@@ -208,6 +208,7 @@ while in $cref/parallel/ta_in_parallel/$$ execution mode.
 
 $children%example/atomic/checkpoint.cpp
 	%example/atomic/mul_level.cpp
+	%example/atomic/extended_ode.cpp
 %$$
 $head Example$$
 The file $cref checkpoint.cpp$$ contains an example and test

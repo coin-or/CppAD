@@ -14,11 +14,16 @@
 # Specifies build type for this directory. Possible values are
 # empty, Debug, Release, RelWithDebInfo and MinSizeRel
 SET(CMAKE_BUILD_TYPE DEBUG)
-
+#
+CONFIGURE_FILE(
+	${CMAKE_CURRENT_SOURCE_DIR}/test_one.sh.in
+	${CMAKE_CURRENT_SOURCE_DIR}/test_one.sh
+)
 #
 ADD_EXECUTABLE(example_atomic EXCLUDE_FROM_ALL
 	atomic.cpp
 	checkpoint.cpp
+	extended_ode.cpp
 	for_sparse_hes.cpp
 	for_sparse_jac.cpp
 	forward.cpp

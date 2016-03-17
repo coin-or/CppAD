@@ -56,11 +56,8 @@ namespace {
 //
 bool mul_level(void)
 {	bool ok = true;
-	using std::cout;
-	using std::endl;
 	using CppAD::checkpoint;
 	using CppAD::ADFun;
-	using CppAD::NearEqual;
 	using CppAD::Independent;
 
 	// domain dimension for this problem

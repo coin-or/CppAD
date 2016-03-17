@@ -39,7 +39,7 @@ sed < atomic.cpp > test_one.cpp \
 -e '/ok *\&= *Run( /d' \
 -e "s/.*This line is used by test_one.sh.*/	ok \&= Run( $fun, \"$fun\");/"
 #
-cxxflags='-Wall -pedantic-errors -std=c++11'
+cxxflags='@cppad_cxx_flags@'
 if echo "$fun" | grep 'eigen' > /dev/null
 then
 	cxxflags=`echo "$cxxflags" | sed -e 's|-Wshadow||'`
@@ -48,7 +48,7 @@ cmd="g++ test_one.cpp $*"
 cmd="$cmd
 	-o test_one.exe
 	$cxxflags
-	-L /home/bradbell/cppad.git/build/cppad_lib
+	-L @cppad_BINARY_DIR@/cppad_lib
 	-lcppad_lib
 	-g
 	-fopenmp
@@ -58,32 +58,32 @@ cmd="$cmd
 	-DCPPAD_EIGEN_EXAMPLES
 	-I../..
 "
-if [ -e /home/bradbell/prefix/adolc/include ]
+if [ -e @adolc_prefix@/include ]
 then
-	cmd="$cmd -I/home/bradbell/prefix/adolc/include"
+	cmd="$cmd -I@adolc_prefix@/include"
 fi
-if [ -e /home/bradbell/prefix/colpack/include ]
+if [ -e @colpack_prefix@/include ]
 then
-	cmd="$cmd -I/home/bradbell/prefix/colpack/include"
+	cmd="$cmd -I@colpack_prefix@/include"
 fi
-if [ -e /home/bradbell/prefix/eigen/include ]
+if [ -e @eigen_prefix@/include ]
 then
-	cmd="$cmd -I/home/bradbell/prefix/eigen/include"
+	cmd="$cmd -I@eigen_prefix@/include"
 fi
 for lib in lib lib64
 do
-	if [ -e /home/bradbell/prefix/adolc/$lib ]
+	if [ -e @adolc_prefix@/$lib ]
 	then
-		cmd="$cmd -L/home/bradbell/prefix/adolc/$lib -ladolc -lColPack"
-		export LD_LIBRARY_PATH="$LD_LIBRARY_PATH:/home/bradbell/prefix/adolc/$lib"
+		cmd="$cmd -L@adolc_prefix@/$lib -ladolc -lColPack"
+		export LD_LIBRARY_PATH="$LD_LIBRARY_PATH:@adolc_prefix@/$lib"
 	fi
-	if [ -e /home/bradbell/prefix/colpack/$lib ]
+	if [ -e @colpack_prefix@/$lib ]
 	then
-		cmd="$cmd -L/home/bradbell/prefix/colpack/$lib -lColPack"
-		export LD_LIBRARY_PATH="$LD_LIBRARY_PATH:/home/bradbell/prefix/colpack/$lib"
+		cmd="$cmd -L@colpack_prefix@/$lib -lColPack"
+		export LD_LIBRARY_PATH="$LD_LIBRARY_PATH:@colpack_prefix@/$lib"
 	fi
 done
-export LD_LIBRARY_PATH="$LD_LIBRARY_PATH:/home/bradbell/cppad.git/build/cppad_lib"
+export LD_LIBRARY_PATH="$LD_LIBRARY_PATH:@cppad_BINARY_DIR@/cppad_lib"
 echo $cmd
 $cmd
 #

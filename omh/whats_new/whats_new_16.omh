@@ -34,6 +34,9 @@ in reverse order by date.
 The purpose of these sections is to
 assist you in learning about changes between various versions of CppAD.
 
+$head 03-17$$
+Add the $cref atomic_extended_ode.cpp$$ example.
+
 $head 03-12$$
 $list number$$
 Move the example $code reverse_any.cpp$$ to $cref reverse_checkpoint.cpp$$.
