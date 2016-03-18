@@ -97,7 +97,7 @@ DIST_COMMON = $(srcdir)/makefile.am $(am__DIST_COMMON)
 mkinstalldirs = $(install_sh) -d
 CONFIG_CLEAN_FILES = test.sh
 CONFIG_CLEAN_VPATH_FILES =
-am_solve_OBJECTS = solve.$(OBJEXT) get_started.$(OBJEXT) \
+am_solve_OBJECTS = get_started.$(OBJEXT) ipopt_solve.$(OBJEXT) \
 	ode_inverse.$(OBJEXT) retape.$(OBJEXT)
 solve_OBJECTS = $(am_solve_OBJECTS)
 solve_LDADD = $(LDADD)
@@ -193,7 +193,7 @@ CYGPATH_W = @CYGPATH_W@
 
 # $Id$
 # -----------------------------------------------------------------------------
-# CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-15 Bradley M. Bell
+# CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-16 Bradley M. Bell
 #
 # CppAD is distributed under multiple licenses. This distribution is under
 # the terms of the
@@ -354,8 +354,8 @@ LDADD = \
 
 #
 solve_SOURCES = \
-	solve.cpp \
 	get_started.cpp \
+	ipopt_solve.cpp \
 	ode_inverse.cpp \
 	retape.cpp
 
@@ -409,9 +409,9 @@ distclean-compile:
 	-rm -f *.tab.c
 
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/get_started.Po@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/ipopt_solve.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/ode_inverse.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/retape.Po@am__quote@
-@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/solve.Po@am__quote@
 
 .cpp.o:
 @am__fastdepCXX_TRUE@	$(AM_V_CXX)depbase=`echo $@ | sed 's|[^/]*$$|$(DEPDIR)/&|;s|\.o$$||'`;\

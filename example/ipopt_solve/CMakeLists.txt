@@ -27,8 +27,8 @@ CONFIGURE_FILE(
 
 #
 ADD_EXECUTABLE(example_ipopt_solve EXCLUDE_FROM_ALL
-	solve.cpp
 	get_started.cpp
+	ipopt_solve.cpp
 	ode_inverse.cpp
 	retape.cpp
 )
