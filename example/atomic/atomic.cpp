@@ -29,6 +29,7 @@ extern bool get_started(void);
 extern bool mat_mul(void);
 extern bool mul_level(void);
 extern bool norm_sq(void);
+extern bool ode(void);
 extern bool reciprocal(void);
 extern bool rev_sparse_hes(void);
 extern bool rev_sparse_jac(void);
@@ -71,6 +72,7 @@ int main(void)
 	ok &= Run( mat_mul,             "mat_mul"        );
 	ok &= Run( mul_level,           "mul_level"      );
 	ok &= Run( norm_sq,             "norm_sq"        );
+	ok &= Run( ode,                 "ode"            );
 	ok &= Run( reciprocal,          "reciprocal"     );
 	ok &= Run( rev_sparse_hes,      "rev_sparse_hes" );
 	ok &= Run( rev_sparse_jac,      "rev_sparse_jac" );

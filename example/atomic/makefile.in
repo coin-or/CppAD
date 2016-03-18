@@ -101,7 +101,7 @@ am_atomic_OBJECTS = atomic.$(OBJEXT) checkpoint.$(OBJEXT) \
 	extended_ode.$(OBJEXT) for_sparse_hes.$(OBJEXT) \
 	for_sparse_jac.$(OBJEXT) forward.$(OBJEXT) \
 	get_started.$(OBJEXT) mat_mul.$(OBJEXT) mul_level.$(OBJEXT) \
-	norm_sq.$(OBJEXT) reciprocal.$(OBJEXT) \
+	norm_sq.$(OBJEXT) ode.$(OBJEXT) reciprocal.$(OBJEXT) \
 	rev_sparse_hes.$(OBJEXT) rev_sparse_jac.$(OBJEXT) \
 	reverse.$(OBJEXT) set_sparsity.$(OBJEXT) tangent.$(OBJEXT)
 atomic_OBJECTS = $(am_atomic_OBJECTS)
@@ -357,6 +357,7 @@ atomic_SOURCES = \
 	mat_mul.cpp \
 	mul_level.cpp \
 	norm_sq.cpp \
+	ode.cpp \
 	reciprocal.cpp \
 	rev_sparse_hes.cpp \
 	rev_sparse_jac.cpp \
@@ -421,6 +422,7 @@ distclean-compile:
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/mat_mul.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/mul_level.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/norm_sq.Po@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/ode.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/reciprocal.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/rev_sparse_hes.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/rev_sparse_jac.Po@am__quote@

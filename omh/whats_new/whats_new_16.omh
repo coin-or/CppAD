@@ -35,7 +35,8 @@ The purpose of these sections is to
 assist you in learning about changes between various versions of CppAD.
 
 $head 03-17$$
-Add the $cref atomic_extended_ode.cpp$$ example.
+Add the
+$cref atomic_ode.cpp$$ and $cref atomic_extended_ode.cpp$$ examples.
 
 $head 03-12$$
 $list number$$

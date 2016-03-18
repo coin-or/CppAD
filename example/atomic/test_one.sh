@@ -39,7 +39,7 @@ sed < atomic.cpp > test_one.cpp \
 -e '/ok *\&= *Run( /d' \
 -e "s/.*This line is used by test_one.sh.*/	ok \&= Run( $fun, \"$fun\");/"
 #
-cxxflags='-Wall -pedantic-errors -std=c++11'
+cxxflags='-Wall -pedantic-errors -std=c++11 -Wshadow'
 if echo "$fun" | grep 'eigen' > /dev/null
 then
 	cxxflags=`echo "$cxxflags" | sed -e 's|-Wshadow||'`
