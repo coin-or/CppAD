@@ -17,7 +17,7 @@
 CMAKE_MINIMUM_REQUIRED(VERSION 2.8)
 
 # cppad_version is used by set_version.sh to get the version number.
-SET(cppad_version      "20160317" )
+SET(cppad_version      "20160318" )
 SET(cppad_url          "http://www.coin-or.org/CppAD" )
 SET(cppad_description  "Differentiation of C++ Algorithms" )
 
@@ -123,25 +123,29 @@ command_line_arg(cppad_profile_flag NOTFOUND STRING
 	"compile flag used to compile and link a profile version of a program"
 )
 # -----------------------------------------------------------------------------
-# External package prefixes
+# External package prefixes with warnings
+SET(system_include FALSE)
 #
 # adolc_prefix
-optional_package(adolc_prefix "adolc install prefix")
+optional_package(adolc_prefix ${system_include} "adolc install prefix")
 #
 # colpack_prefix
-optional_package(colpack_prefix "colpack install prefix")
-#
-# eigen_prefix
-optional_package(eigen_prefix "eigen install prefix")
-#
-# fadbad_prefix
-optional_package(fadbad_prefix "fadbad install prefix")
+optional_package(colpack_prefix ${system_include} "colpack install prefix")
 #
 # ipopt_prefix
-optional_package(ipopt_prefix "ipopt install prefix")
+optional_package(ipopt_prefix ${system_include} "ipopt install prefix")
 #
 # sacado_prefix
-optional_package(sacado_prefix "sacado install prefix")
+optional_package(sacado_prefix ${system_include} "sacado install prefix")
+# -----------------------------------------------------------------------------
+# External package prefixes without  warnings
+SET(system_include TRUE)
+#
+# eigen_prefix
+optional_package(eigen_prefix ${system_include} "eigen install prefix")
+#
+# fadbad_prefix
+optional_package(fadbad_prefix ${system_include} "fadbad install prefix")
 # -----------------------------------------------------------------------------
 # cppad_has_colpack, colpack_libs, cppad_lib
 #
@@ -166,24 +170,6 @@ ENDIF( ${cppad_cxx_flags} MATCHES ".*-std=c[+][+]11.*" )
 IF( sacado_prefix )
 	MESSAGE(STATUS "cppad_cxx_flags_sacado = ${cppad_cxx_flags_sacado}")
 ENDIF( sacado_prefix )
-# -----------------------------------------------------------------------------
-# cppad_cxx_flags_eigen
-STRING(REGEX REPLACE
-	"(.*)-Wshadow(.*)"         "\\1-Wno-shadow -Wno-deprecated-declarations\\2"
-	cppad_cxx_flags_eigen "${cppad_cxx_flags}"
-)
-IF( eigen_prefix )
-	MESSAGE(STATUS "cppad_cxx_flags_eigen = ${cppad_cxx_flags_eigen}")
-ENDIF( eigen_prefix )
-# -----------------------------------------------------------------------------
-# cppad_cxx_flags_fadbad
-STRING(REGEX REPLACE
-	"(.*)-Wshadow(.*)"         "\\1-Wno-shadow\\2"
-	cppad_cxx_flags_fadbad "${cppad_cxx_flags}"
-)
-IF( fadbad_prefix )
-	MESSAGE(STATUS "cppad_cxx_flags_fadbad = ${cppad_cxx_flags_fadbad}")
-ENDIF( fadbad_prefix )
 # -----------------------------------------------------------------------------
 # CMAKE_CXX_FLAGS
 # remove Visual Studio C++ warning level if specified in cppad_cxx_flags
