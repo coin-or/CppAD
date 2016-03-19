@@ -7913,7 +7913,7 @@ eigen_prefix=${EIGEN_DIR}
 
 ipopt_prefix=${IPOPT_DIR}
 
-ac_config_files="$ac_config_files cppad/configure.hpp cppad_ipopt/example/test.sh cppad_ipopt/speed/test.sh cppad_ipopt/test/test.sh example/ipopt_solve/test.sh example/test_one.sh pkgconfig/cppad.pc pkgconfig/cppad-uninstalled.pc test_more/test_one.sh makefile compare_c/makefile cppad_ipopt/src/makefile cppad_ipopt/example/makefile cppad_ipopt/speed/makefile cppad_ipopt/test/makefile example/makefile example/atomic/makefile example/ipopt_solve/makefile introduction/get_started/makefile introduction/exp_apx/makefile multi_thread/makefile multi_thread/test_multi/makefile print_for/makefile speed/adolc/makefile speed/cppad/makefile speed/double/makefile speed/example/makefile speed/fadbad/makefile speed/profile/makefile speed/profile/gprof.sed speed/sacado/makefile speed/src/makefile test_more/makefile"
+ac_config_files="$ac_config_files cppad/configure.hpp cppad_ipopt/example/test.sh cppad_ipopt/speed/test.sh cppad_ipopt/test/test.sh example/ipopt_solve/test.sh pkgconfig/cppad.pc pkgconfig/cppad-uninstalled.pc makefile compare_c/makefile cppad_ipopt/src/makefile cppad_ipopt/example/makefile cppad_ipopt/speed/makefile cppad_ipopt/test/makefile example/makefile example/atomic/makefile example/ipopt_solve/makefile introduction/get_started/makefile introduction/exp_apx/makefile multi_thread/makefile multi_thread/test_multi/makefile print_for/makefile speed/adolc/makefile speed/cppad/makefile speed/double/makefile speed/example/makefile speed/fadbad/makefile speed/profile/makefile speed/profile/gprof.sed speed/sacado/makefile speed/src/makefile test_more/makefile"
 
 
 ac_config_commands="$ac_config_commands example_ipopt_solve_test.sh"
@@ -7923,10 +7923,6 @@ ac_config_commands="$ac_config_commands cppad_ipopt_example_test.sh"
 ac_config_commands="$ac_config_commands cppad_ipopt_speed_test.sh"
 
 ac_config_commands="$ac_config_commands cppad_ipopt_test_test.sh"
-
-ac_config_commands="$ac_config_commands example_test_one.sh"
-
-ac_config_commands="$ac_config_commands test_more_test_one.sh"
 
 
 cat >confcache <<\_ACEOF
@@ -8738,10 +8734,6 @@ AMDEP_TRUE="$AMDEP_TRUE" ac_aux_dir="$ac_aux_dir"
 
 
 
-
-
-
-
 _ACEOF
 
 cat >>$CONFIG_STATUS <<\_ACEOF || ac_write_fail=1
@@ -8756,10 +8748,8 @@ do
     "cppad_ipopt/speed/test.sh") CONFIG_FILES="$CONFIG_FILES cppad_ipopt/speed/test.sh" ;;
     "cppad_ipopt/test/test.sh") CONFIG_FILES="$CONFIG_FILES cppad_ipopt/test/test.sh" ;;
     "example/ipopt_solve/test.sh") CONFIG_FILES="$CONFIG_FILES example/ipopt_solve/test.sh" ;;
-    "example/test_one.sh") CONFIG_FILES="$CONFIG_FILES example/test_one.sh" ;;
     "pkgconfig/cppad.pc") CONFIG_FILES="$CONFIG_FILES pkgconfig/cppad.pc" ;;
     "pkgconfig/cppad-uninstalled.pc") CONFIG_FILES="$CONFIG_FILES pkgconfig/cppad-uninstalled.pc" ;;
-    "test_more/test_one.sh") CONFIG_FILES="$CONFIG_FILES test_more/test_one.sh" ;;
     "makefile") CONFIG_FILES="$CONFIG_FILES makefile" ;;
     "compare_c/makefile") CONFIG_FILES="$CONFIG_FILES compare_c/makefile" ;;
     "cppad_ipopt/src/makefile") CONFIG_FILES="$CONFIG_FILES cppad_ipopt/src/makefile" ;;
@@ -8788,8 +8778,6 @@ do
     "cppad_ipopt_example_test.sh") CONFIG_COMMANDS="$CONFIG_COMMANDS cppad_ipopt_example_test.sh" ;;
     "cppad_ipopt_speed_test.sh") CONFIG_COMMANDS="$CONFIG_COMMANDS cppad_ipopt_speed_test.sh" ;;
     "cppad_ipopt_test_test.sh") CONFIG_COMMANDS="$CONFIG_COMMANDS cppad_ipopt_test_test.sh" ;;
-    "example_test_one.sh") CONFIG_COMMANDS="$CONFIG_COMMANDS example_test_one.sh" ;;
-    "test_more_test_one.sh") CONFIG_COMMANDS="$CONFIG_COMMANDS test_more_test_one.sh" ;;
 
   *) as_fn_error $? "invalid argument: \`$ac_config_target'" "$LINENO" 5;;
   esac
@@ -9316,8 +9304,6 @@ $as_echo X"$file" |
     "cppad_ipopt_example_test.sh":C) chmod +x cppad_ipopt/example/test.sh ;;
     "cppad_ipopt_speed_test.sh":C) chmod +x cppad_ipopt/speed/test.sh ;;
     "cppad_ipopt_test_test.sh":C) chmod +x cppad_ipopt/test/test.sh ;;
-    "example_test_one.sh":C) chmod +x example/test_one.sh ;;
-    "test_more_test_one.sh":C) chmod +x test_more/test_one.sh ;;
 
   esac
 done # for ac_tag

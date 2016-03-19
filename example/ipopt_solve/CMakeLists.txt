@@ -18,13 +18,6 @@ SET(CMAKE_BUILD_TYPE DEBUG)
 # Local link directories to search, as determined by pkg-config for ipopt
 LINK_DIRECTORIES( ${ipopt_LIBRARY_DIRS} )
 
-# Copy a file to another location and modify its contents.
-# configure_file(InputFile OutputFile [COPYONLY] [ESCAPE_QUOTES] [@ONLY])
-CONFIGURE_FILE(
-	${CMAKE_CURRENT_SOURCE_DIR}/test_one.sh.in
-	${CMAKE_CURRENT_SOURCE_DIR}/test_one.sh
-)
-
 #
 ADD_EXECUTABLE(example_ipopt_solve EXCLUDE_FROM_ALL
 	get_started.cpp

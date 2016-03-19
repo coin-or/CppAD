@@ -8,6 +8,9 @@ commit.sh.old
 doc
 doxydoc
 cppad/configure.hpp
+test_one.cpp
+test_one.exe
+bin/test_one.sh
 # all directories
 *.err
 */*.err
@@ -24,15 +27,6 @@ cppad/configure.hpp
 build
 */build
 */*/build
-test_one.exe
-*/test_one.exe
-*/*/test_one.exe
-test_one.sh
-*/test_one.sh
-*/*/test_one.sh
-test_one.cpp
-*/test_one.cpp
-*/*/test_one.cpp
 # all directories with and without extension
 new
 new.*

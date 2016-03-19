@@ -1,0 +1,113 @@
+#! /bin/bash -e
+# $Id$
+# -----------------------------------------------------------------------------
+# CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-16 Bradley M. Bell
+#
+# CppAD is distributed under multiple licenses. This distribution is under
+# the terms of the
+#                     Eclipse Public License Version 1.0.
+#
+# A copy of this license is included in the COPYING file of this distribution.
+# Please visit http://www.coin-or.org/CppAD/ for information on other licenses.
+# -----------------------------------------------------------------------------
+# Run one of the tests
+if [ "$0" != 'bin/test_one.sh' ]
+then
+cat << EOF
+usage: bin/test_one.sh dir file [extra]
+
+dir:   example, example/atomic, example/ipopt_solve, or test_more
+file:  name of *.cpp file, with extension, that contains the test
+extra: extra options for the g++ command
+EOF
+	exit 1
+fi
+dir="$1"
+file="$2"
+extra="$3"
+if [ ! -e "$dir/$file" ]
+then
+	echo "Cannot find the file $dir/$file"
+	exit 1
+fi
+if [ -e test_one.exe ]
+then
+	rm test_one.exe
+fi
+if [ -e test_one.cpp ]
+then
+	rm test_one.cpp
+fi
+original_dir=`pwd`
+# ---------------------------------------------------------------------------
+# include_flags
+include_flags="-I $original_dir"
+if [ -e @adolc_prefix@/include ]
+then
+	include_flags="$include_flags -I @adolc_prefix@/include"
+fi
+if [ -e @colpack_prefix@/include ]
+then
+	include_flags="$include_flags -I @colpack_prefix@/include"
+fi
+if [ -e @ipopt_prefix@/include ]
+then
+	include_flags="$include_flags -I @ipopt_prefix@/include"
+fi
+if [ -e @eigen_prefix@/include ]
+then
+	include_flags="$include_flags -isystem @eigen_prefix@/include"
+fi
+# --------------------------------------------------------------------------
+# determine the function name
+fun=`grep "^bool *[a-zA-Z0-9_]* *( *void *)" $dir/$file | tail -1 | \
+	sed -e "s/^bool *\([a-zA-Z0-9_]*\) *( *void *)/\1/"`
+#
+# determine the main program main
+main=`echo *$dir | sed -e 's|.*/||' -e 's|$|.cpp|'`
+#
+# create test_one.cpp
+sed < $dir/$main > test_one.cpp \
+-e '/ok *\&= *Run( /d' \
+-e "s/.*This line is used by test_one.sh.*/	ok \&= Run( $fun, \"$fun\");/"
+#
+# compiler flags
+cxx_flags='@cppad_cxx_flags@'
+#
+# library flags
+library_flags=`pkg-config --libs ipopt`
+library_flags="$library_flags @PROJECT_BINARY_DIR@/cppad_lib/libcppad_lib.so"
+library_flags="$library_flags -lboost_thread -lpthread"
+for lib in lib lib64
+do
+	if [ -e @colpack_prefix@/$lib ]
+	then
+		library_flags="$library_flags -L@colpack_prefix@/$lib -lColPack"
+		export LD_LIBRARY_PATH="$LD_LIBRARY_PATH:@colpack_prefix@/$lib"
+	fi
+	if [ -e @adolc_prefix@/$lib ]
+	then
+		library_flags="$library_flags -L@adolc_prefix@/$lib -ladolc"
+		export LD_LIBRARY_PATH="$LD_LIBRARY_PATH:@adolc_prefix@/$lib"
+	fi
+done
+#
+# compile command
+compile_command="g++ test_one.cpp -o test_one.exe
+	$dir/$file $extra
+	-g
+	$cxx_flags
+	$include_flags
+	$library_flags
+"
+# --------------------------------------------------------------------------
+export LD_LIBRARY_PATH="$LD_LIBRARY_PATH:@PROJECT_BINARY_DIR@/cppad_lib"
+echo "$compile_command"
+$compile_command
+#
+echo "./test_one.exe"
+if ! ./test_one.exe
+then
+	exit 1
+fi
+exit 0

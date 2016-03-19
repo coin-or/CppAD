@@ -477,7 +477,7 @@ if test "$have_ar" = 'no'; then
 	)
 fi
 
-dnl test_one.sh.in settings for cppad_cxx_flags
+dnl test_one.sh.in settings for cppad_cxx_flags (no longer used ?)
 AC_SUBST(cppad_cxx_flags, "-g -O0")
 
 dnl auto-tools version does not colpack
@@ -760,6 +760,7 @@ dnl names set here so cppad.pc-uninstalled works both with cmake and autoconf
 AC_SUBST(cppad_SOURCE_DIR,  ${ABS_TOP_SRCDIR} )
 dnl
 dnl names set here so */test_one.sh.in works both with cmake and autoconf
+dnl (no longer used ?)
 AC_SUBST(adolc_prefix,      ${ADOLC_DIR} )
 AC_SUBST(eigen_prefix,      ${EIGEN_DIR} )
 AC_SUBST(ipopt_prefix,      ${IPOPT_DIR} )
@@ -773,10 +774,8 @@ AC_CONFIG_FILES([
 	cppad_ipopt/speed/test.sh
 	cppad_ipopt/test/test.sh
 	example/ipopt_solve/test.sh
-	example/test_one.sh
 	pkgconfig/cppad.pc
 	pkgconfig/cppad-uninstalled.pc
-	test_more/test_one.sh
 
 	makefile
 	compare_c/makefile
@@ -822,16 +821,6 @@ AC_CONFIG_COMMANDS(
 AC_CONFIG_COMMANDS(
 	[cppad_ipopt_test_test.sh],
 	[chmod +x cppad_ipopt/test/test.sh],
-	[]
-)
-AC_CONFIG_COMMANDS(
-	[example_test_one.sh],
-	[chmod +x example/test_one.sh],
-	[]
-)
-AC_CONFIG_COMMANDS(
-	[test_more_test_one.sh],
-	[chmod +x test_more/test_one.sh],
 	[]
 )
 

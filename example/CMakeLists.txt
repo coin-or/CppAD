@@ -57,14 +57,6 @@ IF( ipopt_prefix )
 ENDIF( ipopt_prefix )
 
 
-# Copy a file to another location and modify its contents.
-# configure_file(InputFile OutputFile [COPYONLY] [ESCAPE_QUOTES] [@ONLY])
-CONFIGURE_FILE(
-	${CMAKE_CURRENT_SOURCE_DIR}/test_one.sh.in
-	${CMAKE_CURRENT_SOURCE_DIR}/test_one.sh
-)
-
-
 # add_executable(<name> [WIN32] [MACOSX_BUNDLE] [EXCLUDE_FROM_ALL]
 #                 source1 source2 ... sourceN
 # )

@@ -307,7 +307,13 @@ IF ( ipopt_prefix )
 ENDIF( ipopt_prefix )
 #
 ADD_CUSTOM_TARGET(check DEPENDS ${check_depends})
-#
+# ============================================================================
+# Copy a file to another location and modify its contents.
+# configure_file(InputFile OutputFile [COPYONLY] [ESCAPE_QUOTES] [@ONLY])
+CONFIGURE_FILE(
+	${CMAKE_CURRENT_SOURCE_DIR}/bin/test_one.sh.in
+	${CMAKE_CURRENT_SOURCE_DIR}/bin/test_one.sh
+)
 # =============================================================================
 # install procedure
 # =============================================================================

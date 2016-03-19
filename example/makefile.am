@@ -51,7 +51,6 @@ endif
 # -------------------------------------------------------------------------
 # auto-tools does not support use of colpack
 EXTRA_DIST        =  \
-	test_one.sh.in \
 	colpack_hes.cpp \
 	colpack_jac.cpp \
 	$(ADOLC_EXTRA_FILES) \

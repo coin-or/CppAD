@@ -96,7 +96,7 @@ am__configure_deps = $(am__aclocal_m4_deps) $(CONFIGURE_DEPENDENCIES) \
 	$(ACLOCAL_M4)
 DIST_COMMON = $(srcdir)/makefile.am $(am__DIST_COMMON)
 mkinstalldirs = $(install_sh) -d
-CONFIG_CLEAN_FILES = test_one.sh
+CONFIG_CLEAN_FILES =
 CONFIG_CLEAN_VPATH_FILES =
 LIBRARIES = $(noinst_LIBRARIES)
 ARFLAGS = cru
@@ -255,8 +255,7 @@ am__define_uniq_tagged_files = \
   done | $(am__uniquify_input)`
 ETAGS = etags
 CTAGS = ctags
-am__DIST_COMMON = $(srcdir)/makefile.in $(srcdir)/test_one.sh.in \
-	$(top_srcdir)/depcomp
+am__DIST_COMMON = $(srcdir)/makefile.in $(top_srcdir)/depcomp
 DISTFILES = $(DIST_COMMON) $(DIST_SOURCES) $(TEXINFOS) $(EXTRA_DIST)
 ABS_TOP_BUILDDIR = @ABS_TOP_BUILDDIR@
 ABS_TOP_SRCDIR = @ABS_TOP_SRCDIR@
@@ -473,7 +472,6 @@ top_srcdir = @top_srcdir@
 # -------------------------------------------------------------------------
 # Microsoft project files and script to run a single test
 EXTRA_DIST = \
-	test_one.sh.in  \
 	$(ADOLC_EXTRA_FILES) \
 	$(IPOPT_EXTRA_FILES) \
 	$(EIGEN_EXTRA_FILES)
@@ -630,8 +628,6 @@ $(top_srcdir)/configure: @MAINTAINER_MODE_TRUE@ $(am__configure_deps)
 $(ACLOCAL_M4): @MAINTAINER_MODE_TRUE@ $(am__aclocal_m4_deps)
 	cd $(top_builddir) && $(MAKE) $(AM_MAKEFLAGS) am--refresh
 $(am__aclocal_m4_deps):
-test_one.sh: $(top_builddir)/config.status $(srcdir)/test_one.sh.in
-	cd $(top_builddir) && $(SHELL) ./config.status $(subdir)/$@
 
 clean-noinstLIBRARIES:
 	-test -z "$(noinst_LIBRARIES)" || rm -f $(noinst_LIBRARIES)
