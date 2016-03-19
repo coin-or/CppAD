@@ -11,7 +11,7 @@ Please visit http://www.coin-or.org/CppAD/ for information on other licenses.
 -------------------------------------------------------------------------- */
 
 /*
-$begin atomic_mat_mul.cpp$$
+$begin atomic_mat_mul_xam.cpp$$
 $spell
 	mul
 $$
@@ -34,7 +34,7 @@ $srccode%cpp% */
 # include <cppad/cppad.hpp>
 # include <cppad/example/matrix_mul.hpp>
 
-bool mat_mul(void)
+bool mat_mul_xam(void)
 {	bool ok = true;
 	using CppAD::AD;
 	using CppAD::vector;

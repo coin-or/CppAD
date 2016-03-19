@@ -20,7 +20,7 @@ $section Old Matrix Multiply as a User Atomic Operation: Example and Test$$
 
 $head Deprecated 2013-05-27$$
 This example has been deprecated;
-see $cref atomic_mat_mul.cpp$$.
+use $cref atomic_mat_mul_xam.cpp$$ instead.
 
 $children%
 	test_more/old_mat_mul.hpp

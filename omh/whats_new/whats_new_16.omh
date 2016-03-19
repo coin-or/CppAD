@@ -24,6 +24,7 @@ $spell
 	cppad
 	Hes
 	Jac
+	mul
 $$
 
 $section Changes and Additions to CppAD During 2016$$
@@ -33,6 +34,9 @@ The sections listed below contain a list of the changes to CppAD
 in reverse order by date.
 The purpose of these sections is to
 assist you in learning about changes between various versions of CppAD.
+
+$head 03-19$$
+Move $code atomic_mat_mul.cpp$$ to $cref atomic_mat_mul_xam.cpp$$.
 
 $head 03-17$$
 Add the
