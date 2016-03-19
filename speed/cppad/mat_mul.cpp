@@ -44,7 +44,7 @@ $srccode%cpp% */
 # include <cppad/cppad.hpp>
 # include <cppad/speed/mat_sum_sq.hpp>
 # include <cppad/speed/uniform_01.hpp>
-# include <cppad/example/matrix_mul.hpp>
+# include <cppad/example/mat_mul.hpp>
 
 // Note that CppAD uses global_option["memory"] at the main program level
 # include <map>
@@ -80,7 +80,7 @@ bool link_mat_mul(
 	size_t nr_result = size;
 	size_t n_middle  = size;
 	size_t nc_result = size;
-	matrix_mul atom_mul(nr_result, n_middle, nc_result);
+	mat_mul atom_mul(nr_result, n_middle, nc_result);
 	//
 	if( global_option["boolsparsity"] )
 		atom_mul.option( CppAD::atomic_base<double>::pack_sparsity_enum );

@@ -36,7 +36,11 @@ The purpose of these sections is to
 assist you in learning about changes between various versions of CppAD.
 
 $head 03-19$$
+$list number$$
 Move $code atomic_mat_mul.cpp$$ to $cref atomic_mat_mul_xam.cpp$$.
+$lnext
+Move $code atomic_matrix_mul.hpp$$ to $cref atomic_mat_mul.hpp$$.
+$lend
 
 $head 03-17$$
 Add the

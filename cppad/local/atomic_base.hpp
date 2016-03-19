@@ -184,7 +184,7 @@ $cref%get_started.cpp%atomic_get_started.cpp%Constructor%$$,
 $cref%norm_sq.cpp%atomic_norm_sq.cpp%Constructor%$$,
 $cref%reciprocal.cpp%atomic_reciprocal.cpp%Constructor%$$,
 $cref%tangent.cpp%atomic_tangent.cpp%Constructor%$$,
-$cref%matrix_mul.hpp%atomic_matrix_mul.hpp%Constructor%$$.
+$cref%mat_mul.hpp%atomic_mat_mul.hpp%Constructor%$$.
 
 $subhead Use Constructor$$
 The following are links to user atomic function constructor uses:

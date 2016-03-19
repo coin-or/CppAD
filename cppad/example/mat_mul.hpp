@@ -1,6 +1,6 @@
 // $Id$
-# ifndef CPPAD_MATRIX_MUL_HPP
-# define CPPAD_MATRIX_MUL_HPP
+# ifndef CPPAD_MAT_MUL_HPP
+# define CPPAD_MAT_MUL_HPP
 
 /* --------------------------------------------------------------------------
 CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-16 Bradley M. Bell
@@ -14,7 +14,7 @@ Please visit http://www.coin-or.org/CppAD/ for information on other licenses.
 -------------------------------------------------------------------------- */
 
 /*
-$begin atomic_matrix_mul.hpp$$
+$begin atomic_mat_mul.hpp$$
 $spell
 $$
 
@@ -44,7 +44,7 @@ void my_union(
 }
 //
 // matrix result = left * right
-class matrix_mul : public CppAD::atomic_base<double> {
+class mat_mul : public CppAD::atomic_base<double> {
 /* %$$
 $head Constructor$$
 $srccode%cpp% */
@@ -64,8 +64,8 @@ $srccode%cpp% */
 	public:
 	// ---------------------------------------------------------------------
 	// constructor
-	matrix_mul(size_t nr_result, size_t n_middle, size_t nc_result)
-	: CppAD::atomic_base<double>("matrix_mul"),
+	mat_mul(size_t nr_result, size_t n_middle, size_t nc_result)
+	: CppAD::atomic_base<double>("mat_mul"),
 	nr_result_(nr_result) ,
 	n_middle_(n_middle)    ,
 	nc_result_(nc_result) ,
@@ -518,7 +518,7 @@ $srccode%cpp% */
 /* %$$
 $head End Class Definition$$
 $srccode%cpp% */
-}; // End of matrix_mul class
+}; // End of mat_mul class
 }  // End empty namespace
 /* %$$
 $$ $comment end nospell$$

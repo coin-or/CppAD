@@ -20,11 +20,11 @@ $section User Atomic Matrix Multiply: Example and Test$$
 $mindex multiply$$
 
 $children%
-	cppad/example/matrix_mul.hpp
+	cppad/example/mat_mul.hpp
 %$$
 
 $head Class Definition$$
-This example uses the file $cref atomic_matrix_mul.hpp$$
+This example uses the file $cref atomic_mat_mul.hpp$$
 which defines matrix multiply as a $cref atomic_base$$ operation.
 
 $nospell
@@ -32,7 +32,7 @@ $nospell
 $head Use Atomic Function$$
 $srccode%cpp% */
 # include <cppad/cppad.hpp>
-# include <cppad/example/matrix_mul.hpp>
+# include <cppad/example/mat_mul.hpp>
 
 bool mat_mul_xam(void)
 {	bool ok = true;
@@ -47,7 +47,7 @@ $srccode%cpp% */
 	size_t nr_result = 2;
 	size_t n_middle  = 2;
 	size_t nc_result = 2;
-	matrix_mul afun(nr_result, n_middle, nc_result);
+	mat_mul afun(nr_result, n_middle, nc_result);
 /* %$$
 $subhead Recording$$
 $srccode%cpp% */
