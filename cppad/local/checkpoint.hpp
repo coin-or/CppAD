@@ -35,6 +35,7 @@ $spell
 	const
 	enum
 	bool
+	recomputed
 $$
 
 $section Checkpointing Functions$$
@@ -62,6 +63,14 @@ It may also reduce the time to make a recording the same function
 for different values of the independent variable.
 Note that the operation sequence for a recording that uses $latex f(x)$$
 may depend on its independent variables.
+
+$subhead Repeating Forward$$
+Normally, CppAD store $cref forward$$ mode results until they freed
+using $cref capacity_order$$ or the corresponding $cref ADFun$$ object is
+deleted. This is not true for checkpoint functions because a checkpoint
+function may be used repeatedly with different arguments in the same tape.
+Thus, forward mode results are recomputed each time a checkpoint function
+is used during a forward or reverse mode sweep.
 
 $subhead Restriction$$
 The $cref/operation sequence/glossary/Operation/Sequence/$$
@@ -685,6 +694,7 @@ public:
 				}
 			}
 		}
+		// compute forward results for orders zero through q
 		ty = f_.Forward(q, tx);
 
 		// no longer need the Taylor coefficients in f_
@@ -718,12 +728,14 @@ public:
 
 		// put proper forward mode coefficients in f_
 # ifdef NDEBUG
+		// compute forward results for orders zero through q
 		f_.Forward(q, tx);
 # else
 		CPPAD_ASSERT_UNKNOWN( px.size() == n * (q+1) );
 		CPPAD_ASSERT_UNKNOWN( py.size() == m * (q+1) );
 		size_t i, j, k;
 		//
+		// compute forward results for orders zero through q
 		vector<Base> check_ty = f_.Forward(q, tx);
 		for(i = 0; i < m; i++)
 		{	for(k = 0; k <= q; k++)
