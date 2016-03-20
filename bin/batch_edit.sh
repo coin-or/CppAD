@@ -13,18 +13,10 @@
 revert_list='
 '
 move_list='
-	cppad/example/matrix_mul.hpp
 '
 move_sed='s|matrix_mul.hpp|mat_mul.hpp|'
 #
 cat << EOF > junk.sed
-s|example/matrix_mul.hpp|example/mat_mul.hpp|
-s|matrix_mul\\( *[:("]\\)|mat_mul\\1|
-s|matrix_mul class|mat_mul class|
-s|matrix_mul atom_mul|mat_mul atom_mul|
-s|matrix_mul afun|mat_mul afun|
-s|matrix_mul.hpp|mat_mul.hpp|g
-s|CPPAD_MATRIX_MUL_HPP|CPPAD_MAT_MUL_HPP|
 EOF
 # -----------------------------------------------------------------------------
 if [ $0 != "bin/batch_edit.sh" ]
@@ -54,6 +46,10 @@ done
 for old in $move_list
 do
 	new=`echo $old | sed -e "$move_sed"`
+	if [ -e "$new" ]
+	then
+		rm -r "$new"
+	fi
 	echo_eval git mv $old $new
 done
 # ----------------------------------------------------------------------------

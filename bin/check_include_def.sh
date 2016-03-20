@@ -16,6 +16,17 @@ then
 	exit 1
 fi
 # -----------------------------------------------------------------------------
+# make sure there are no files in cppad/example and example with the same name
+list=`ls cppad/example`
+for file in $list
+do
+	if [ -e "example/$file" ]
+	then
+		echo "check_include_def.sh: $file appears in cppad/example and example"
+		exit 1
+	fi
+done
+# ---------------------------------------------------------------------------
 echo "Differences between include file names and ifndef at top directives."
 echo "Also make sure same ifndef not used by two different files."
 echo "-------------------------------------------------------------------"
