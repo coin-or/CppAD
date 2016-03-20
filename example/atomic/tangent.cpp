@@ -37,20 +37,7 @@ namespace { // Begin empty namespace
 using CppAD::vector;
 //
 // a utility to compute the union of two sets.
-void my_union(
-	std::set<size_t>&         result  ,
-	const std::set<size_t>&   left    ,
-	const std::set<size_t>&   right   )
-{	std::set<size_t> temp;
-	std::set_union(
-		left.begin()              ,
-		left.end()                ,
-		right.begin()             ,
-		right.end()               ,
-		std::inserter(temp, temp.begin())
-	);
-	result.swap(temp);
-}
+using CppAD::set_union;
 //
 class atomic_tangent : public CppAD::atomic_base<float> {
 /* %$$
@@ -245,7 +232,7 @@ $srccode%cpp% */
 		assert( m == 2 );
 
 		// sparsity for S(x)^T = f'(x)^T * R^T
-		my_union(st[0], rt[0], rt[1]);
+		st[0] = set_union(rt[0], rt[1]);
 		return true;
 	}
 /* %$$
@@ -325,12 +312,12 @@ $srccode%cpp% */
 
 		// back propagate the sparsity for U, note both components
 		// of f'(x) may be non-zero;
-		my_union(v[0], u[0], u[1]);
+		v[0] = set_union(u[0], u[1]);
 
 		// include forward Jacobian sparsity in Hessian sparsity
 		// (note sparsty for f''(x) * R same as for R)
 		if( s[0] | s[1] )
-			my_union(v[0], v[0], r[0]);
+			v[0] = set_union(v[0], r[0]);
 
 		return true;
 	}

@@ -47,7 +47,10 @@ $$
 appears in the file $code cppad/utility/vector.hpp$$. This makes it
 easier to avoid conflicts when choosing $cref addon$$ names.
 $lnext
-Add the $cref set_union$$ utility.
+Add the $cref set_union$$ utility and use it to simplify the
+$cref atomic$$ examples that use
+$cref/vector of sets/glossary/Sparsity Pattern/Vector of Sets/$$
+sparsity patterns.
 $lend
 
 

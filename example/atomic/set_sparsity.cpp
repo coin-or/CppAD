@@ -40,20 +40,7 @@ using   CppAD::vector;                          // vector
 typedef vector< std::set<size_t> > set_vector;  // atomic_sparsity
 //
 // a utility to compute the union of two sets.
-void my_union(
-	std::set<size_t>&         result  ,
-	const std::set<size_t>&   left    ,
-	const std::set<size_t>&   right   )
-{	std::set<size_t> temp;
-	std::set_union(
-		left.begin()              ,
-		left.end()                ,
-		right.begin()             ,
-		right.end()               ,
-		std::inserter(temp, temp.begin())
-	);
-	result.swap(temp);
-}
+using CppAD::set_union;
 //
 class atomic_set_sparsity : public CppAD::atomic_base<double> {
 /* %$$
@@ -120,7 +107,7 @@ $srccode%cpp% */
 		// sparsity for S(x) = f'(x) * R  = [ 0,   0, 1 ] * R
 		s[0] = r[2];
 		// s[1] = union(r[0], r[1])
-		my_union(s[1], r[0], r[1]);
+		s[1] = set_union(r[0], r[1]);
 		//
 		return true;
 	}
@@ -219,9 +206,9 @@ $srccode%cpp% */
 		//                                      [ 0, 0, 0 ]
 		if( s[1] )
 		{	// v[0] = union( v[0], r[1] )
-			my_union(v[0], v[0], r[1]);
+			v[0] = set_union(v[0], r[1]);
 			// v[1] = union( v[1], r[0] )
-			my_union(v[1], v[1], r[0]);
+			v[1] = set_union(v[1], r[0]);
 		}
 		return true;
 	}

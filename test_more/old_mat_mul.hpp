@@ -183,20 +183,7 @@ $srccode%cpp% */
 /* %$$
 $head Set Union$$
 $srccode%cpp% */
-	void my_union(
-		std::set<size_t>&         result  ,
-		const std::set<size_t>&   left    ,
-		const std::set<size_t>&   right   )
-	{	std::set<size_t> temp;
-		std::set_union(
-			left.begin()              ,
-			left.end()                ,
-			right.begin()             ,
-			right.end()               ,
-			std::inserter(temp, temp.begin())
-		);
-		result.swap(temp);
-	}
+	using CppAD::set_union;
 /* %$$
 
 $head CppAD User Atomic Callback Functions$$
@@ -314,10 +301,10 @@ $srccode%cpp% */
 					mj_right  = right(middle, j, k);
 
 					// s[ij_result] = union( s[ij_result], r[im_left] )
-					my_union(s[ij_result], s[ij_result], r[im_left]);
+					s[ij_result] = set_union(s[ij_result], r[im_left]);
 
 					// s[ij_result] = union( s[ij_result], r[mj_right] )
-					my_union(s[ij_result], s[ij_result], r[mj_right]);
+					s[ij_result] = set_union(s[ij_result], r[mj_right]);
 				}
 			}
 		}
@@ -347,10 +334,10 @@ $srccode%cpp% */
 					mj_right  = right(middle, j, k);
 
 					// r[im_left] = union( r[im_left], s[ij_result] )
-					my_union(r[im_left], r[im_left], s[ij_result]);
+					r[im_left] = set_union(r[im_left], s[ij_result]);
 
 					// r[mj_right] = union( r[mj_right], s[ij_result] )
-					my_union(r[mj_right], r[mj_right], s[ij_result]);
+					r[mj_right] = set_union(r[mj_right], s[ij_result]);
 				}
 			}
 		}
@@ -396,17 +383,17 @@ $srccode%cpp% */
 					// back propagate Hessian sparsity
 					// v[im_left]  = union( v[im_left],  u[ij_result] )
 					// v[mj_right] = union( v[mj_right], u[ij_result] )
-					my_union(v[im_left],  v[im_left],  u[ij_result] );
-					my_union(v[mj_right], v[mj_right], u[ij_result] );
+					v[im_left] = set_union(v[im_left],  u[ij_result] );
+					v[mj_right] = set_union(v[mj_right], u[ij_result] );
 
 					// Check for case where the (i,j) result element
 					// is in reverse Jacobian and both left and right
 					// operands in multiplication are variables
 					if(s[ij_result] & (*vx_)[im_left] & (*vx_)[mj_right])
 					{	// v[im_left] = union( v[im_left], r[mj_right] )
-						my_union(v[im_left], v[im_left], r[mj_right] );
+						v[im_left] = set_union(v[im_left], r[mj_right] );
 						// v[mj_right] = union( v[mj_right], r[im_left] )
-						my_union(v[mj_right], v[mj_right], r[im_left] );
+						v[mj_right] = set_union(v[mj_right], r[im_left] );
 					}
 				}
 			}

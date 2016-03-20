@@ -1,6 +1,6 @@
 // $Id$
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-15 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-16 Bradley M. Bell
 
 CppAD is distributed under multiple licenses. This distribution is under
 the terms of the
@@ -1384,20 +1384,7 @@ namespace {
 		return ok;
 	}
 	// -------------------------------------------------------------------
-	void my_union(
-		std::set<size_t>&         result  ,
-		const std::set<size_t>&   left    ,
-		const std::set<size_t>&   right   )
-	{	std::set<size_t> temp;
-		std::set_union(
-			left.begin()              ,
-			left.end()                ,
-			right.begin()             ,
-			right.end()               ,
-			std::inserter(temp, temp.begin())
-		);
-		result.swap(temp);
-	}
+	using CppAD::set_union;
 
 	bool old_atomic_forward(
 		size_t                         id ,
@@ -1457,11 +1444,11 @@ namespace {
 		r[1].clear();
 		r[2].clear();
 		// y[0] = x[0] + x[1]
-		my_union(r[0], r[0], s[0]);
-		my_union(r[1], r[1], s[0]);
+		r[0] = set_union(r[0], s[0]);
+		r[1] = set_union(r[1], s[0]);
 		// y[1] = x[1] + x[2]
-		my_union(r[1], r[1], s[1]);
-		my_union(r[2], r[2], s[1]);
+		r[1] = set_union(r[1], s[1]);
+		r[2] = set_union(r[2], s[1]);
 
 		return true;
 	}

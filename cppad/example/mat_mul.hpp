@@ -28,20 +28,7 @@ $srccode%cpp% */
 namespace { // Begin empty namespace
 using CppAD::vector;
 //
-void my_union(
-	std::set<size_t>&         result  ,
-	const std::set<size_t>&   left    ,
-	const std::set<size_t>&   right   )
-{	std::set<size_t> temp;
-	std::set_union(
-		left.begin()              ,
-		left.end()                ,
-		right.begin()             ,
-		right.end()               ,
-		std::inserter(temp, temp.begin())
-	);
-	result.swap(temp);
-}
+using CppAD::set_union;
 //
 // matrix result = left * right
 class mat_mul : public CppAD::atomic_base<double> {
@@ -319,8 +306,8 @@ $srccode%cpp% */
 				{	size_t i_left  = left(i, ell, k, nk);
 					size_t i_right = right(ell, j, k, nk);
 					//
-					my_union( s[i_result], s[i_result], r[i_left] );
-					my_union( s[i_result], s[i_result], r[i_right] );
+					s[i_result] = set_union(s[i_result], r[i_left] );
+					s[i_result] = set_union(s[i_result], r[i_right] );
 				}
 			}
 		}
@@ -384,8 +371,8 @@ $srccode%cpp% */
 				{	size_t i_left  = left(i, ell, k, nk);
 					size_t i_right = right(ell, j, k, nk);
 					//
-					my_union(st[i_left],  st[i_left],  rt[i_result]);
-					my_union(st[i_right], st[i_right], rt[i_result]);
+					st[i_left] = set_union(st[i_left],  rt[i_result]);
+					st[i_right] = set_union(st[i_right], rt[i_result]);
 				}
 			}
 		}
@@ -438,14 +425,14 @@ $srccode%cpp% */
 
 					// back propagate f'(x)^T * U(x)
 					// (no need to use vx with f'(x) propogation)
-					my_union(v[i_left],  v[i_left],  u[i_result] );
-					my_union(v[i_right], v[i_right], u[i_result] );
+					v[i_left] = set_union(v[i_left],  u[i_result] );
+					v[i_right] = set_union(v[i_right], u[i_result] );
 
 					// back propagate S(x) * f''(x) * R
 					// (here is where we must check for cross terms)
 					if( s[i_result] & vx[i_left] & vx[i_right] )
-					{	my_union(v[i_left],  v[i_left],  r[i_right] );
-						my_union(v[i_right], v[i_right], r[i_left]  );
+					{	v[i_left] = set_union(v[i_left],  r[i_right] );
+						v[i_right] = set_union(v[i_right], r[i_left]  );
 					}
 				}
 			}

@@ -17,6 +17,13 @@ move_list='
 move_sed='s|matrix_mul.hpp|mat_mul.hpp|'
 #
 cat << EOF > junk.sed
+/^\\t*void my_union(/! b two
+:one
+N
+/\\n\\t*}$/! b one
+s|\\(^\\t*\\).*|\\1using CppAD::set_union;|
+: two
+s|my_union( *\\([^,]*\\), *|\\1 = set_union(|
 EOF
 # -----------------------------------------------------------------------------
 if [ $0 != "bin/batch_edit.sh" ]

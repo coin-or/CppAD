@@ -37,20 +37,7 @@ namespace {           // isolate items below to this file
 using CppAD::vector;  // abbreviate as vector
 //
 // a utility to compute the union of two sets.
-void my_union(
-	std::set<size_t>&         result  ,
-	const std::set<size_t>&   left    ,
-	const std::set<size_t>&   right   )
-{	std::set<size_t> temp;
-	std::set_union(
-		left.begin()              ,
-		left.end()                ,
-		right.begin()             ,
-		right.end()               ,
-		std::inserter(temp, temp.begin())
-	);
-	result.swap(temp);
-}
+using CppAD::set_union;
 //
 class atomic_reciprocal : public CppAD::atomic_base<double> {
 /* %$$
@@ -264,7 +251,7 @@ $srccode%cpp% */
 		// include forward Jacobian sparsity in Hessian sparsity
 		// (note sparsty for f''(x) * R same as for R)
 		if( s[0] )
-			my_union(v[0], v[0], r[0] );
+			v[0] = set_union(v[0], r[0] );
 
 		return true;
 	}
