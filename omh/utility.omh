@@ -1,6 +1,6 @@
 $Id$
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-15 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-16 Bradley M. Bell
 
 CppAD is distributed under multiple licenses. This distribution is under
 the terms of the
@@ -61,7 +61,8 @@ $children%
 	cppad/utility/vector.hpp%
 	omh/thread_alloc.omh%
 	cppad/utility/index_sort.hpp%
-	cppad/utility/to_string.hpp
+	cppad/utility/to_string.hpp%
+	cppad/utility/set_union.hpp
 %$$
 
 $head Testing$$
@@ -133,6 +134,11 @@ $tend
 $subhead to_string$$
 $table
 $rref to_string$$
+$tend
+
+$subhead set_union$$
+$table
+$rref set_union$$
 $tend
 
 $end

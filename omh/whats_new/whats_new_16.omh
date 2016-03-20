@@ -37,6 +37,7 @@ The purpose of these sections is to
 assist you in learning about changes between various versions of CppAD.
 
 $head 03-20$$
+$list number$$
 Include the sub-directory name to the include guards
 in $icode%*%.hpp%$$ files. For example,
 $codep
@@ -45,6 +46,9 @@ $codep
 $$
 appears in the file $code cppad/utility/vector.hpp$$. This makes it
 easier to avoid conflicts when choosing $cref addon$$ names.
+$lnext
+Add the $cref set_union$$ utility.
+$lend
 
 
 $head 03-19$$

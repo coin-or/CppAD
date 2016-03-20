@@ -185,6 +185,7 @@ ADD_EXECUTABLE(example EXCLUDE_FROM_ALL example.cpp
 	sparse_jacobian.cpp
 	sparse_sub_hes.cpp
 	sparsity_sub.cpp
+	set_union.cpp
 	sqrt.cpp
 	stack_machine.cpp
 	sub.cpp
