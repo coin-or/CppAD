@@ -25,6 +25,7 @@ $spell
 	Hes
 	Jac
 	mul
+	ifndef
 $$
 
 $section Changes and Additions to CppAD During 2016$$
@@ -34,6 +35,17 @@ The sections listed below contain a list of the changes to CppAD
 in reverse order by date.
 The purpose of these sections is to
 assist you in learning about changes between various versions of CppAD.
+
+$head 03-20$$
+Include the sub-directory name to the include guards
+in $icode%*%.hpp%$$ files. For example,
+$codep
+	# ifndef CPPAD_UTILITY_VECTOR_HPP
+	# define CPPAD_UTILITY_VECTOR_HPP
+$$
+appears in the file $code cppad/utility/vector.hpp$$. This makes it
+easier to avoid conflicts when choosing $cref addon$$ names.
+
 
 $head 03-19$$
 $list number$$
