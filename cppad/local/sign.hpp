@@ -1,6 +1,6 @@
 // $Id$
-# ifndef CPPAD_SIGN_HPP
-# define CPPAD_SIGN_HPP
+# ifndef CPPAD_LOCAL_SIGN_HPP
+# define CPPAD_LOCAL_SIGN_HPP
 
 /* --------------------------------------------------------------------------
 CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-16 Bradley M. Bell

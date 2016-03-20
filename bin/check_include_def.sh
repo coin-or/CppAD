@@ -19,24 +19,45 @@ fi
 echo "Differences between include file names and ifndef at top directives."
 echo "Also make sure same ifndef not used by two different files."
 echo "-------------------------------------------------------------------"
-list=`bin/ls_files.sh | sed -n -e '/\.hpp$/p'`
+list_cppad=`bin/ls_files.sh |  \
+	sed -n -e '/^cppad\/deprecated\// d' \
+	-e '/^cppad\//! d' \
+	-e '/^cppad\/base_require.hpp$/ d' \
+	-e '/^cppad\/cppad.hpp$/ d' \
+	-e '/^cppad\/utility.hpp$/ d' \
+	-e '/\.hpp$/p'`
+list_other=`bin/ls_files.sh | \
+	sed -n \
+	-e '/^cppad\/base_require.hpp$/ p' \
+	-e '/^cppad\/cppad.hpp$/ p' \
+	-e '/^cppad\/utility.hpp$/ p' \
+	-e '/^cppad\// d' \
+	-e '/\.hpp$/p'`
 #
-grep '^# *ifndef *CPPAD_[0-9a-zA-Z_]*_HPP$' $list \
-	| sed -e 's|.*# *ifndef *CPPAD_\([0-9a-zA-Z_]*\)_HPP$|\1.HPP|' \
+grep '^# *ifndef *CPPAD_[0-9A-Z_]*_HPP$' $list_other \
+	| sed -e 's|.*# *ifndef *CPPAD_\([0-9A-Z_]*\)_HPP$|\1.HPP|' \
 	| tr [a-zA-Z] [A-Za-z] \
-	| sort \
-	> bin/check_include_def.1.$$
+	> check_include_def.1.$$
 #
-echo "$list" | sed -e 's|\([^ ]*\)/||g' | sort -u > bin/check_include_def.2.$$
+grep '^# *ifndef *CPPAD_[0-9A-Z_]*_HPP$' $list_cppad \
+| sed -e 's|.*# *ifndef *CPPAD_\([^_]*\)_\([0-9A-Z_]*\)_HPP$|CPPAD/\1/\2.HPP|' \
+| tr [a-zA-Z] [A-Za-z] \
+>> check_include_def.1.$$
 #
-if diff bin/check_include_def.1.$$ bin/check_include_def.2.$$
+#
+echo "$list_other" | sed -e 's|\([^ ]*\)/||g' > check_include_def.2.$$
+echo "$list_cppad" >> check_include_def.2.$$
+#
+sort check_include_def.1.$$ > check_include_def.3.$$
+sort check_include_def.2.$$ > check_include_def.4.$$
+#
+if diff check_include_def.3.$$ check_include_def.4.$$
 then
 	different="no"
 else
 	different="yes"
 fi
-rm bin/check_include_def.1.$$
-rm bin/check_include_def.2.$$
+rm check_include_def.[1-4].$$
 #
 echo "-------------------------------------------------------------------"
 if [ $different = "yes" ]

@@ -1,9 +1,9 @@
 // $Id$
-# ifndef CPPAD_IDENTICAL_HPP
-# define CPPAD_IDENTICAL_HPP
+# ifndef CPPAD_LOCAL_IDENTICAL_HPP
+# define CPPAD_LOCAL_IDENTICAL_HPP
 
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-15 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-16 Bradley M. Bell
 
 CppAD is distributed under multiple licenses. This distribution is under
 the terms of the

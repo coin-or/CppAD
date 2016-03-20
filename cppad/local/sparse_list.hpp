@@ -1,6 +1,6 @@
 // $Id$
-# ifndef CPPAD_SPARSE_LIST_HPP
-# define CPPAD_SPARSE_LIST_HPP
+# ifndef CPPAD_LOCAL_SPARSE_LIST_HPP
+# define CPPAD_LOCAL_SPARSE_LIST_HPP
 
 /* --------------------------------------------------------------------------
 CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-16 Bradley M. Bell

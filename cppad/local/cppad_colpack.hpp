@@ -1,6 +1,6 @@
 // $Id$
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-15 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-16 Bradley M. Bell
 
 CppAD is distributed under multiple licenses. This distribution is under
 the terms of the
@@ -9,8 +9,8 @@ the terms of the
 A copy of this license is included in the COPYING file of this distribution.
 Please visit http://www.coin-or.org/CppAD/ for information on other licenses.
 -------------------------------------------------------------------------- */
-# ifndef CPPAD_CPPAD_COLPACK_HPP
-# define CPPAD_CPPAD_COLPACK_HPP
+# ifndef CPPAD_LOCAL_CPPAD_COLPACK_HPP
+# define CPPAD_LOCAL_CPPAD_COLPACK_HPP
 # if CPPAD_HAS_COLPACK
 
 namespace CppAD { // BEGIN_CPPAD_NAMESPACE

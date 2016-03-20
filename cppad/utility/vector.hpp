@@ -1,6 +1,6 @@
 // $Id$
-# ifndef CPPAD_VECTOR_HPP
-# define CPPAD_VECTOR_HPP
+# ifndef CPPAD_UTILITY_VECTOR_HPP
+# define CPPAD_UTILITY_VECTOR_HPP
 
 /* --------------------------------------------------------------------------
 CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-16 Bradley M. Bell

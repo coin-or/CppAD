@@ -1,6 +1,6 @@
 // $Id$
-# ifndef CPPAD_TESTVECTOR_HPP
-# define CPPAD_TESTVECTOR_HPP
+# ifndef CPPAD_LOCAL_TESTVECTOR_HPP
+# define CPPAD_LOCAL_TESTVECTOR_HPP
 
 /* --------------------------------------------------------------------------
 CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-16 Bradley M. Bell

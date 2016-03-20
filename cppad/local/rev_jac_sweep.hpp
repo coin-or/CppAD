@@ -1,6 +1,6 @@
 // $Id$
-# ifndef CPPAD_REV_JAC_SWEEP_HPP
-# define CPPAD_REV_JAC_SWEEP_HPP
+# ifndef CPPAD_LOCAL_REV_JAC_SWEEP_HPP
+# define CPPAD_LOCAL_REV_JAC_SWEEP_HPP
 
 /* --------------------------------------------------------------------------
 CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-16 Bradley M. Bell

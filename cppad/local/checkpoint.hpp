@@ -1,6 +1,6 @@
 // $Id$
-# ifndef CPPAD_CHECKPOINT_HPP
-# define CPPAD_CHECKPOINT_HPP
+# ifndef CPPAD_LOCAL_CHECKPOINT_HPP
+# define CPPAD_LOCAL_CHECKPOINT_HPP
 
 /* --------------------------------------------------------------------------
 CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-16 Bradley M. Bell

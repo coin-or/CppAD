@@ -1,8 +1,8 @@
 // $Id$
-# ifndef CPPAD_SOLVE_CALLBACK_HPP
-# define CPPAD_SOLVE_CALLBACK_HPP
+# ifndef CPPAD_IPOPT_SOLVE_CALLBACK_HPP
+# define CPPAD_IPOPT_SOLVE_CALLBACK_HPP
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-15 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-16 Bradley M. Bell
 
 CppAD is distributed under multiple licenses. This distribution is under
 the terms of the

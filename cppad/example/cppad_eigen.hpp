@@ -1,6 +1,6 @@
 // $Id$
-# ifndef CPPAD_CPPAD_EIGEN_HPP
-# define CPPAD_CPPAD_EIGEN_HPP
+# ifndef CPPAD_EXAMPLE_CPPAD_EIGEN_HPP
+# define CPPAD_EXAMPLE_CPPAD_EIGEN_HPP
 /* --------------------------------------------------------------------------
 CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-16 Bradley M. Bell
 
