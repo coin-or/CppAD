@@ -1,6 +1,6 @@
 // $Id$
-# ifndef CPPAD_ODE_FAST_HPP
-# define CPPAD_ODE_FAST_HPP
+# ifndef CPPAD_CPPAD_IPOPT_EXAMPLE_ODE_FAST_HPP
+# define CPPAD_CPPAD_IPOPT_EXAMPLE_ODE_FAST_HPP
 /* --------------------------------------------------------------------------
 CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-16 Bradley M. Bell
 

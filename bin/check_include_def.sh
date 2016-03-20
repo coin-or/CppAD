@@ -30,48 +30,33 @@ done
 echo "Differences between include file names and ifndef at top directives."
 echo "Also make sure same ifndef not used by two different files."
 echo "-------------------------------------------------------------------"
-list_cppad=`bin/ls_files.sh |  \
-	sed -n -e '/^cppad\/deprecated\// d' \
-	-e '/^cppad\//! d' \
-	-e '/^cppad\/base_require.hpp$/ d' \
-	-e '/^cppad\/cppad.hpp$/ d' \
-	-e '/^cppad\/utility.hpp$/ d' \
-	-e '/\.hpp$/p'`
-list_other=`bin/ls_files.sh | \
-	sed -n \
-	-e '/^cppad\/base_require.hpp$/ p' \
-	-e '/^cppad\/cppad.hpp$/ p' \
-	-e '/^cppad\/utility.hpp$/ p' \
-	-e '/^cppad\// d' \
-	-e '/\.hpp$/p'`
-#
-grep '^# *ifndef *CPPAD_[0-9A-Z_]*_HPP$' $list_other \
-	| sed -e 's|.*# *ifndef *CPPAD_\([0-9A-Z_]*\)_HPP$|\1.HPP|' \
-	| tr [a-zA-Z] [A-Za-z] \
-	> check_include_def.1.$$
-#
-grep '^# *ifndef *CPPAD_[0-9A-Z_]*_HPP$' $list_cppad \
-| sed -e 's|.*# *ifndef *CPPAD_\([^_]*\)_\([0-9A-Z_]*\)_HPP$|CPPAD/\1/\2.HPP|' \
-| tr [a-zA-Z] [A-Za-z] \
->> check_include_def.1.$$
-#
-#
-echo "$list_other" | sed -e 's|\([^ ]*\)/||g' > check_include_def.2.$$
-echo "$list_cppad" >> check_include_def.2.$$
-#
-sort check_include_def.1.$$ > check_include_def.3.$$
-sort check_include_def.2.$$ > check_include_def.4.$$
-#
-if diff check_include_def.3.$$ check_include_def.4.$$
-then
-	different="no"
-else
-	different="yes"
-fi
-rm check_include_def.[1-4].$$
+list=`bin/ls_files.sh | sed -n -e '/^cppad\/deprecated\//d' -e '/\.hpp$/p'`
+different='no'
+for file_name in $list
+do
+	dir=`echo $file_name | sed -e 's|/[^/]*$||'`
+	name=`echo $file_name | sed -e 's|^.*/||'`
+	first_dir=`echo $dir | sed -e 's|/.*||'`
+	#
+	macro_name=`sed -n -e '/^# *ifndef *CPPAD_[0-9A-Z_]*_HPP$/p' $file_name | \
+		sed -e 's|^# *ifndef *||'`
+	check=`echo $file_name | tr [a-zA-Z/.] [A-Za-z__]`
+	#
+	if [ "$first_dir" != 'cppad' ]
+	then
+		check="CPPAD_$check"
+	fi
+	#
+	if [ "$macro_name" != "$check" ]
+	then
+		echo " file_name=$file_name"
+		echo "macro_name=$macro_name"
+		different='yes'
+	fi
+done
 #
 echo "-------------------------------------------------------------------"
-if [ $different = "yes" ]
+if [ $different = 'yes' ]
 then
 	echo "Error: nothing should be between the two dashed lines above"
 	exit 1

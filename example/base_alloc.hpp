@@ -1,6 +1,6 @@
 // $Id$
-# ifndef CPPAD_BASE_ALLOC_HPP
-# define CPPAD_BASE_ALLOC_HPP
+# ifndef CPPAD_EXAMPLE_BASE_ALLOC_HPP
+# define CPPAD_EXAMPLE_BASE_ALLOC_HPP
 /* --------------------------------------------------------------------------
 CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-16 Bradley M. Bell
 
