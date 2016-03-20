@@ -67,19 +67,19 @@ ADD_EXECUTABLE(example EXCLUDE_FROM_ALL example.cpp
 	abs.cpp
 	acos.cpp
 	acosh.cpp
-	add.cpp
-	add_eq.cpp
 	ad_assign.cpp
 	ad_ctor.cpp
+	add.cpp
+	add_eq.cpp
 	ad_fun.cpp
 	ad_in_c.cpp
 	ad_input.cpp
 	ad_output.cpp
 	asin.cpp
 	asinh.cpp
+	atan2.cpp
 	atan.cpp
 	atanh.cpp
-	atan2.cpp
 	azmul.cpp
 	base_alloc.hpp
 	base_require.cpp
@@ -91,8 +91,8 @@ ADD_EXECUTABLE(example EXCLUDE_FROM_ALL example.cpp
 	check_for_nan.cpp
 	check_numeric_type.cpp
 	check_simple_vector.cpp
-	compare.cpp
 	compare_change.cpp
+	compare.cpp
 	complex_poly.cpp
 	cond_exp.cpp
 	conj_grad.cpp
@@ -108,12 +108,12 @@ ADD_EXECUTABLE(example EXCLUDE_FROM_ALL example.cpp
 	exp.cpp
 	expm1.cpp
 	for_one.cpp
+	for_sparse_hes.cpp
+	for_sparse_jac.cpp
 	for_two.cpp
 	forward.cpp
 	forward_dir.cpp
 	forward_order.cpp
-	for_sparse_hes.cpp
-	for_sparse_jac.cpp
 	fun_assign.cpp
 	fun_check.cpp
 	hes_lagrangian.cpp
@@ -130,10 +130,9 @@ ADD_EXECUTABLE(example EXCLUDE_FROM_ALL example.cpp
 	jac_lu_det.cpp
 	jac_minor_det.cpp
 	jacobian.cpp
-	num_limits.cpp
-	log.cpp
-	log1p.cpp
 	log10.cpp
+	log1p.cpp
+	log.cpp
 	lu_factor.cpp
 	lu_invert.cpp
 	lu_ratio.cpp
@@ -150,14 +149,15 @@ ADD_EXECUTABLE(example EXCLUDE_FROM_ALL example.cpp
 	near_equal_ext.cpp
 	number_skip.cpp
 	numeric_type.cpp
+	num_limits.cpp
 	ode_err_control.cpp
 	ode_err_maxabs.cpp
-	ode_gear.cpp
 	ode_gear_control.cpp
+	ode_gear.cpp
 	ode_stiff.cpp
 	ode_taylor.cpp
-	opt_val_hes.cpp
 	optimize.cpp
+	opt_val_hes.cpp
 	par_var.cpp
 	poly.cpp
 	pow.cpp
@@ -177,15 +177,15 @@ ADD_EXECUTABLE(example EXCLUDE_FROM_ALL example.cpp
 	runge45_1.cpp
 	runge45_2.cpp
 	seq_property.cpp
-	simple_vector.cpp
+	set_union.cpp
 	sign.cpp
+	simple_vector.cpp
 	sin.cpp
 	sinh.cpp
 	sparse_hessian.cpp
 	sparse_jacobian.cpp
 	sparse_sub_hes.cpp
 	sparsity_sub.cpp
-	set_union.cpp
 	sqrt.cpp
 	stack_machine.cpp
 	sub.cpp

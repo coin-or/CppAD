@@ -671,6 +671,7 @@ nobase_myinclude_HEADERS = \
 	cppad/utility/romberg_one.hpp \
 	cppad/utility/rosen_34.hpp \
 	cppad/utility/runge_45.hpp \
+	cppad/utility/set_union.hpp \
 	cppad/utility/to_string.hpp \
 	cppad/speed/det_33.hpp \
 	cppad/speed/det_by_lu.hpp \

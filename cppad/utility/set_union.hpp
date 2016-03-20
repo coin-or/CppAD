@@ -1,6 +1,6 @@
 // $Id$
-# ifndef CPPAD_UTILITY_SET_UNION
-# define CPPAD_UTILITY_SET_UNION
+# ifndef CPPAD_UTILITY_SET_UNION_HPP
+# define CPPAD_UTILITY_SET_UNION_HPP
 
 /* --------------------------------------------------------------------------
 CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-16 Bradley M. Bell
