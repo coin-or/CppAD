@@ -14,7 +14,7 @@
 if [ "$0" != 'bin/test_one.sh' ]
 then
 cat << EOF
-usage: bin/test_one.sh dir file [extra]
+usage: bin/test_one.sh dir/file [extra]
 
 dir:   example, example/atomic, example/ipopt_solve, or test_more
 file:  name of *.cpp file, with extension, that contains the test
@@ -22,12 +22,18 @@ extra: extra options for the g++ command
 EOF
 	exit 1
 fi
-dir="$1"
-file="$2"
-extra="$3"
+dir=`echo $1 | sed -e 's|/[^/]*$||'`
+file=`echo $1 | sed -e 's|.*/||'`
+extra="$2"
+# ---------------------------------------------------------------------------
+if [ "$dir" == '' ]
+then
+	echo "test_one.sh: cannot find dir in front of file"
+	exit 1
+fi
 if [ ! -e "$dir/$file" ]
 then
-	echo "Cannot find the file $dir/$file"
+	echo "test_one.sh: Cannot find the file $dir/$file"
 	exit 1
 fi
 if [ -e test_one.exe ]

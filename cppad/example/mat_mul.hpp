@@ -169,7 +169,7 @@ $srccode%cpp% */
 $head forward$$
 $srccode%cpp% */
 	// forward mode routine called by CppAD
-	bool forward(
+	virtual bool forward(
 		size_t                    q ,
 		size_t                    p ,
 		const vector<bool>&      vx ,
