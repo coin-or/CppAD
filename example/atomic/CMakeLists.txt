@@ -23,7 +23,7 @@ ADD_EXECUTABLE(example_atomic EXCLUDE_FROM_ALL
 	for_sparse_jac.cpp
 	forward.cpp
 	get_started.cpp
-	mat_mul_xam.cpp
+	mat_mul.cpp
 	mul_level.cpp
 	norm_sq.cpp
 	ode.cpp

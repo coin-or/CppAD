@@ -11,7 +11,7 @@ Please visit http://www.coin-or.org/CppAD/ for information on other licenses.
 -------------------------------------------------------------------------- */
 
 /*
-$begin atomic_mat_mul_xam.cpp$$
+$begin atomic_mat_mul.cpp$$
 $spell
 	mul
 $$
@@ -34,7 +34,7 @@ $srccode%cpp% */
 # include <cppad/cppad.hpp>
 # include <cppad/example/mat_mul.hpp>
 
-bool mat_mul_xam(void)
+bool mat_mul(void)
 {	bool ok = true;
 	using CppAD::AD;
 	using CppAD::vector;
@@ -47,7 +47,7 @@ $srccode%cpp% */
 	size_t nr_result = 2;
 	size_t n_middle  = 2;
 	size_t nc_result = 2;
-	mat_mul afun(nr_result, n_middle, nc_result);
+	atomic_mat_mul afun(nr_result, n_middle, nc_result);
 /* %$$
 $subhead Recording$$
 $srccode%cpp% */

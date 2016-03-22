@@ -100,11 +100,10 @@ CONFIG_CLEAN_VPATH_FILES =
 am_atomic_OBJECTS = atomic.$(OBJEXT) checkpoint.$(OBJEXT) \
 	extended_ode.$(OBJEXT) for_sparse_hes.$(OBJEXT) \
 	for_sparse_jac.$(OBJEXT) forward.$(OBJEXT) \
-	get_started.$(OBJEXT) mat_mul_xam.$(OBJEXT) \
-	mul_level.$(OBJEXT) norm_sq.$(OBJEXT) ode.$(OBJEXT) \
-	reciprocal.$(OBJEXT) rev_sparse_hes.$(OBJEXT) \
-	rev_sparse_jac.$(OBJEXT) reverse.$(OBJEXT) \
-	set_sparsity.$(OBJEXT) tangent.$(OBJEXT)
+	get_started.$(OBJEXT) mat_mul.$(OBJEXT) mul_level.$(OBJEXT) \
+	norm_sq.$(OBJEXT) ode.$(OBJEXT) reciprocal.$(OBJEXT) \
+	rev_sparse_hes.$(OBJEXT) rev_sparse_jac.$(OBJEXT) \
+	reverse.$(OBJEXT) set_sparsity.$(OBJEXT) tangent.$(OBJEXT)
 atomic_OBJECTS = $(am_atomic_OBJECTS)
 atomic_LDADD = $(LDADD)
 AM_V_P = $(am__v_P_@AM_V@)
@@ -355,7 +354,7 @@ atomic_SOURCES = \
 	for_sparse_jac.cpp \
 	forward.cpp \
 	get_started.cpp \
-	mat_mul_xam.cpp \
+	mat_mul.cpp \
 	mul_level.cpp \
 	norm_sq.cpp \
 	ode.cpp \
@@ -420,7 +419,7 @@ distclean-compile:
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/for_sparse_jac.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/forward.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/get_started.Po@am__quote@
-@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/mat_mul_xam.Po@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/mat_mul.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/mul_level.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/norm_sq.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/ode.Po@am__quote@

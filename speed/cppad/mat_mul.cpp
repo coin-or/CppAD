@@ -80,7 +80,7 @@ bool link_mat_mul(
 	size_t nr_result = size;
 	size_t n_middle  = size;
 	size_t nc_result = size;
-	mat_mul atom_mul(nr_result, n_middle, nc_result);
+	atomic_mat_mul atom_mul(nr_result, n_middle, nc_result);
 	//
 	if( global_option["boolsparsity"] )
 		atom_mul.option( CppAD::atomic_base<double>::pack_sparsity_enum );
@@ -166,8 +166,8 @@ bool link_mat_mul(
 		}
 	}
 	// --------------------------------------------------------------------
-	// Free temporary work space. (If there are future calls to
-	// mat_mul they would create new temporary work space.)
+	// Free temporary work space (any future atomic_mat_mul constructors
+	// would create new temporary work space.)
 	CppAD::user_atomic<double>::clear();
 
 	return true;

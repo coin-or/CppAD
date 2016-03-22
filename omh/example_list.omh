@@ -100,7 +100,7 @@ $rref atomic_for_sparse_hes.cpp$$
 $rref atomic_for_sparse_jac.cpp$$
 $rref atomic_forward.cpp$$
 $rref atomic_get_started.cpp$$
-$rref atomic_mat_mul_xam.cpp$$
+$rref atomic_mat_mul.cpp$$
 $rref atomic_mat_mul.hpp$$
 $rref atomic_mul_level.cpp$$
 $rref atomic_norm_sq.cpp$$

@@ -83,7 +83,7 @@ $childtable%
 	example/atomic/reciprocal.cpp%
 	example/atomic/set_sparsity.cpp%
 	example/atomic/tangent.cpp%
-	example/atomic/mat_mul_xam.cpp
+	example/atomic/mat_mul.cpp
 %$$
 
 $head Examples$$
@@ -108,7 +108,7 @@ The file $cref atomic_rev_sparse_hes.cpp$$ contains an minimal example
 where the user provides the code for computing Hessian sparsity patterns.
 
 $head General Case$$
-The file $cref atomic_mat_mul_xam.cpp$$ contains a more general example
+The file $cref atomic_mat_mul.cpp$$ contains a more general example
 where the user provides the code for computing derivatives.
 This example is more complex because both the domain and range
 dimensions are arbitrary.

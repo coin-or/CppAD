@@ -26,6 +26,7 @@ $spell
 	Jac
 	mul
 	ifndef
+	xam
 $$
 
 $section Changes and Additions to CppAD During 2016$$
@@ -35,6 +36,11 @@ The sections listed below contain a list of the changes to CppAD
 in reverse order by date.
 The purpose of these sections is to
 assist you in learning about changes between various versions of CppAD.
+
+$head 03-21$$
+Change the $cref atomic_mat_mul.hpp$$ class name from $code mat_mul$$
+to $code atomic_mat_mul$$. This example use of the name $code mat_mul$$
+in the $cref atomic_mat_mul.cpp$$ example / test.
 
 $head 03-20$$
 $list number$$
@@ -56,7 +62,8 @@ $lend
 
 $head 03-19$$
 $list number$$
-Move $code atomic_mat_mul.cpp$$ to $cref atomic_mat_mul_xam.cpp$$.
+Move $cref atomic_mat_mul.cpp$$ to $code atomic_mat_mul_xam.cpp$$
+(moved back on $cref/03-21/whats_new_16/03-21/$$.
 $lnext
 Move $code atomic_matrix_mul.hpp$$ to $cref atomic_mat_mul.hpp$$.
 $lend

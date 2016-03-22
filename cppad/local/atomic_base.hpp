@@ -192,7 +192,7 @@ $cref%get_started.cpp%atomic_get_started.cpp%Use Atomic Function%Constructor%$$,
 $cref%norm_sq.cpp%atomic_norm_sq.cpp%Use Atomic Function%Constructor%$$,
 $cref%reciprocal.cpp%atomic_reciprocal.cpp%Use Atomic Function%Constructor%$$,
 $cref%tangent.cpp%atomic_tangent.cpp%Use Atomic Function%Constructor%$$,
-$cref%mat_mul_xam.cpp%atomic_mat_mul_xam.cpp%Use Atomic Function%Constructor%$$.
+$cref%mat_mul.cpp%atomic_mat_mul.cpp%Use Atomic Function%Constructor%$$.
 
 
 $end
@@ -341,7 +341,7 @@ $spell
 	afun
 	const
 	CppAD
-	mat_mul_xam.cpp
+	mat_mul.cpp
 $$
 
 $section Using AD Version of Atomic Function$$
@@ -395,7 +395,7 @@ $cref%get_started.cpp%atomic_get_started.cpp%Use Atomic Function%Recording%$$,
 $cref%norm_sq.cpp%atomic_norm_sq.cpp%Use Atomic Function%Recording%$$,
 $cref%reciprocal.cpp%atomic_reciprocal.cpp%Use Atomic Function%Recording%$$,
 $cref%tangent.cpp%atomic_tangent.cpp%Use Atomic Function%Recording%$$,
-$cref%mat_mul_xam.cpp%atomic_mat_mul_xam.cpp%Use Atomic Function%Recording%$$.
+$cref%mat_mul.cpp%atomic_mat_mul.cpp%Use Atomic Function%Recording%$$.
 
 $end
 -----------------------------------------------------------------------------

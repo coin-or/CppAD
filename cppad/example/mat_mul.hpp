@@ -31,7 +31,7 @@ using CppAD::vector;
 using CppAD::set_union;
 //
 // matrix result = left * right
-class mat_mul : public CppAD::atomic_base<double> {
+class atomic_mat_mul : public CppAD::atomic_base<double> {
 /* %$$
 $head Constructor$$
 $srccode%cpp% */
@@ -51,7 +51,7 @@ $srccode%cpp% */
 	public:
 	// ---------------------------------------------------------------------
 	// constructor
-	mat_mul(size_t nr_result, size_t n_middle, size_t nc_result)
+	atomic_mat_mul(size_t nr_result, size_t n_middle, size_t nc_result)
 	: CppAD::atomic_base<double>("mat_mul"),
 	nr_result_(nr_result) ,
 	n_middle_(n_middle)    ,
