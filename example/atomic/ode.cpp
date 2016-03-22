@@ -24,7 +24,6 @@ $cref atomic_extended_ode.cpp$$,
 
 $head Purpose$$
 In this example we $cref checkpoint$$ one step of an ODE solver.
-checkpointing an extended ODE solver.
 
 $head Problem$$
 We consider the initial value problem with parameter $latex x$$ defined by,
@@ -55,8 +54,8 @@ h_4 & =  & h [ x , \tilde{z}_k (x) + \Delta t \; h_3 ]
 	\tilde{z}_k (x) + \Delta t \; ( h_1 +  2 h_2 + 2 h_3 + h_4 ) / 6
 \end{array}
 \] $$
-If $latex \tilde{z}_k (x) = z_k (x)$$, then
-$latex \tilde{z}_{k+1} (x) = z_{k+1} (x) + O( \Delta t^5 )$$, then
+If $latex \tilde{z}_k (x) = z_k (x)$$,
+$latex \tilde{z}_{k+1} (x) = z_{k+1} (x) + O( \Delta t^5 )$$.
 Other ODE solvers can use a similar method to the one used below.
 
 $head ODE$$

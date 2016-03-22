@@ -95,6 +95,7 @@ nobase_myinclude_HEADERS =  \
 	cppad/utility/elapsed_seconds.hpp \
 	cppad/example/base_adolc.hpp \
 	cppad/example/cppad_eigen.hpp \
+	cppad/example/eigen_mat_mul.hpp \
 	cppad/example/eigen_plugin.hpp \
 	cppad/example/mat_mul.hpp \
 	cppad/utility/error_handler.hpp \

@@ -95,6 +95,8 @@ $rref asinh.cpp$$
 $rref atan2.cpp$$
 $rref atan.cpp$$
 $rref atanh.cpp$$
+$rref atomic_eigen_mat_mul.cpp$$
+$rref atomic_eigen_mat_mul.hpp$$
 $rref atomic_extended_ode.cpp$$
 $rref atomic_for_sparse_hes.cpp$$
 $rref atomic_for_sparse_jac.cpp$$

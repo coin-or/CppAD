@@ -501,7 +501,6 @@ $srccode%cpp% */
 		}
 		return true;
 	}
-
 /* %$$
 $head End Class Definition$$
 $srccode%cpp% */

@@ -18,6 +18,7 @@ SET(CMAKE_BUILD_TYPE DEBUG)
 ADD_EXECUTABLE(example_atomic EXCLUDE_FROM_ALL
 	atomic.cpp
 	checkpoint.cpp
+	eigen_mat_mul.cpp
 	extended_ode.cpp
 	for_sparse_hes.cpp
 	for_sparse_jac.cpp

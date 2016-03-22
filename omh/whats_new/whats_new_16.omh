@@ -37,6 +37,10 @@ in reverse order by date.
 The purpose of these sections is to
 assist you in learning about changes between various versions of CppAD.
 
+$head 03-22$$
+Add the $cref atomic_eigen_mat_mul.cpp$$ example; see
+$cref/under construction/atomic_eigen_mat_mul.cpp/Under Construction/$$.
+
 $head 03-21$$
 Change the $cref atomic_mat_mul.hpp$$ class name from $code mat_mul$$
 to $code atomic_mat_mul$$. This example use of the name $code mat_mul$$

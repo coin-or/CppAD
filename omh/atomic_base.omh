@@ -83,6 +83,7 @@ $childtable%
 	example/atomic/reciprocal.cpp%
 	example/atomic/set_sparsity.cpp%
 	example/atomic/tangent.cpp%
+	example/atomic/eigen_mat_mul.cpp%
 	example/atomic/mat_mul.cpp
 %$$
 
