@@ -43,15 +43,15 @@ class atomic_tangent : public CppAD::atomic_base<float> {
 /* %$$
 $head Constructor $$
 $srccode%cpp% */
-	private:
+private:
 	const bool hyperbolic_; // is this hyperbolic tangent
-	public:
+public:
 	// constructor
 	atomic_tangent(const char* name, bool hyperbolic)
 	: CppAD::atomic_base<float>(name),
 	hyperbolic_(hyperbolic)
 	{ }
-	private:
+private:
 /* %$$
 $head forward$$
 $srccode%cpp% */

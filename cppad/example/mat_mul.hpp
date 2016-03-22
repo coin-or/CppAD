@@ -35,7 +35,7 @@ class atomic_mat_mul : public CppAD::atomic_base<double> {
 /* %$$
 $head Constructor$$
 $srccode%cpp% */
-	private:
+private:
 	// number of rows in left operand and in the result
 	const size_t nr_result_;
 	// number of columns in left operand and rows in right operand
@@ -48,7 +48,7 @@ $srccode%cpp% */
 # ifndef NDEBUG
 	const size_t m_;
 # endif
-	public:
+public:
 	// ---------------------------------------------------------------------
 	// constructor
 	atomic_mat_mul(size_t nr_result, size_t n_middle, size_t nc_result)
@@ -61,7 +61,7 @@ $srccode%cpp% */
 	, m_( n_middle * nc_result )
 # endif
 	{ }
-	private:
+private:
 /* %$$
 $head Left Operand Element Index$$
 $srccode%cpp% */

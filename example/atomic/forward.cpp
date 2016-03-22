@@ -64,13 +64,13 @@ class atomic_forward : public CppAD::atomic_base<double> {
 /* %$$
 $head Constructor $$
 $srccode%cpp% */
-	public:
+public:
 	// constructor (could use const char* for name)
 	atomic_forward(const std::string& name) :
 	// this example does not use sparsity patterns
 	CppAD::atomic_base<double>(name)
 	{ }
-	private:
+private:
 /* %$$
 $head forward$$
 $srccode%cpp% */

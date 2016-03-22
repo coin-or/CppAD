@@ -46,13 +46,13 @@ class atomic_set_sparsity : public CppAD::atomic_base<double> {
 /* %$$
 $head Constructor $$
 $srccode%cpp% */
-	public:
+public:
 	// constructor
 	atomic_set_sparsity(const std::string& name) :
 	// this exampel only uses set sparsity patterns
 	CppAD::atomic_base<double>(name, set_sparsity_enum )
 	{ }
-	private:
+private:
 /* %$$
 $head forward$$
 $srccode%cpp% */

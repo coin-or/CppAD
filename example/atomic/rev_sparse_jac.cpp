@@ -51,13 +51,13 @@ class atomic_rev_sparse_jac : public CppAD::atomic_base<double> {
 /* %$$
 $head Constructor $$
 $srccode%cpp% */
-	public:
+public:
 	// constructor (could use const char* for name)
 	atomic_rev_sparse_jac(const std::string& name) :
 	// this example only uses pack sparsity patterns
 	CppAD::atomic_base<double>(name, pack_sparsity_enum)
 	{ }
-	private:
+private:
 /* %$$
 $head forward$$
 $srccode%cpp% */

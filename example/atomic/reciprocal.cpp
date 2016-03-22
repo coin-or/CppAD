@@ -43,13 +43,13 @@ class atomic_reciprocal : public CppAD::atomic_base<double> {
 /* %$$
 $head Constructor $$
 $srccode%cpp% */
-	public:
+public:
 	// constructor (could use const char* for name)
 	atomic_reciprocal(const std::string& name) :
 	// this exmaple only uses set sparsity patterns
 	CppAD::atomic_base<double>(name, atomic_base<double>::set_sparsity_enum)
 	{ }
-	private:
+private:
 /* %$$
 $head forward$$
 $srccode%cpp% */

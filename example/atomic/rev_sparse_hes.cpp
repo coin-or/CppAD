@@ -54,13 +54,13 @@ class atomic_rev_sparse_hes : public CppAD::atomic_base<double> {
 /* %$$
 $head Constructor $$
 $srccode%cpp% */
-	public:
+public:
 	// constructor (could use const char* for name)
 	atomic_rev_sparse_hes(const std::string& name) :
 	// this example only uses pack sparsity patterns
 	CppAD::atomic_base<double>(name, pack_sparsity_enum)
 	{ }
-	private:
+private:
 /* %$$
 $head forward$$
 $srccode%cpp% */

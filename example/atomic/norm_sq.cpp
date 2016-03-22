@@ -45,13 +45,13 @@ class atomic_norm_sq : public CppAD::atomic_base<double> {
 /* %$$
 $head Constructor $$
 $srccode%cpp% */
-	public:
+public:
 	// constructor (could use const char* for name)
 	atomic_norm_sq(const std::string& name) :
 	// this example only uses boolean sparsity patterns
 	CppAD::atomic_base<double>(name, atomic_base<double>::bool_sparsity_enum)
 	{ }
-	private:
+private:
 /* %$$
 $head forward$$
 $srccode%cpp% */
