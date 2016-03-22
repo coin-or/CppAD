@@ -38,8 +38,13 @@ The purpose of these sections is to
 assist you in learning about changes between various versions of CppAD.
 
 $head 03-22$$
+$list number$$
 Add the $cref atomic_eigen_mat_mul.cpp$$ example; see
 $cref/under construction/atomic_eigen_mat_mul.cpp/Under Construction/$$.
+$lnext
+change $code atomic_ode.cpp$$ to $cref checkpoint_ode.cpp$$ and
+$code atomic_extended_ode.cpp$$ to $cref checkpoint_extended_ode.cpp$$.
+$lend
 
 $head 03-21$$
 Change the $cref atomic_mat_mul.hpp$$ class name from $code mat_mul$$
@@ -74,7 +79,7 @@ $lend
 
 $head 03-17$$
 Add the
-$cref atomic_ode.cpp$$ and $cref atomic_extended_ode.cpp$$ examples.
+$code atomic_ode.cpp$$ and $code atomic_extended_ode.cpp$$ examples.
 
 $head 03-12$$
 $list number$$

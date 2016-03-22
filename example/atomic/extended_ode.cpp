@@ -11,7 +11,7 @@ Please visit http://www.coin-or.org/CppAD/ for information on other licenses.
 -------------------------------------------------------------------------- */
 
 /*
-$begin atomic_extended_ode.cpp$$
+$begin checkpoint_extended_ode.cpp$$
 $spell
 	Checkpointing
 	Runge-Kutta
@@ -22,7 +22,7 @@ $section Checkpointing an Extended ODE Solver: Example and Test$$
 $index mul_level, checkpoint$$
 
 $head See Also$$
-$cref atomic_ode.cpp$$,
+$cref checkpoint_ode.cpp$$,
 $cref atomic_mul_level.cpp$$.
 
 

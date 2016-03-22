@@ -97,7 +97,7 @@ $rref atan.cpp$$
 $rref atanh.cpp$$
 $rref atomic_eigen_mat_mul.cpp$$
 $rref atomic_eigen_mat_mul.hpp$$
-$rref atomic_extended_ode.cpp$$
+$rref checkpoint_extended_ode.cpp$$
 $rref atomic_for_sparse_hes.cpp$$
 $rref atomic_for_sparse_jac.cpp$$
 $rref atomic_forward.cpp$$
@@ -106,7 +106,7 @@ $rref atomic_mat_mul.cpp$$
 $rref atomic_mat_mul.hpp$$
 $rref atomic_mul_level.cpp$$
 $rref atomic_norm_sq.cpp$$
-$rref atomic_ode.cpp$$
+$rref checkpoint_ode.cpp$$
 $rref atomic_reciprocal.cpp$$
 $rref atomic_reverse.cpp$$
 $rref atomic_rev_sparse_hes.cpp$$

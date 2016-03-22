@@ -11,7 +11,7 @@ Please visit http://www.coin-or.org/CppAD/ for information on other licenses.
 -------------------------------------------------------------------------- */
 
 /*
-$begin atomic_ode.cpp$$
+$begin checkpoint_ode.cpp$$
 $spell
 	Checkpointing
 	Runge-Kutta
@@ -20,7 +20,7 @@ $$
 $section Checkpointing an ODE Solver: Example and Test$$
 
 $head See Also$$
-$cref atomic_extended_ode.cpp$$,
+$cref checkpoint_extended_ode.cpp$$,
 
 $head Purpose$$
 In this example we $cref checkpoint$$ one step of an ODE solver.
