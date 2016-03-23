@@ -23,6 +23,27 @@ $head Under Construction$$
 This example is under construction. So far only forward mode has been
 implemented.
 
+$head Description$$
+The $cref ADFun$$ function object $icode f$$ for this example is
+$latex \[
+f(x) =
+\left( \begin{array}{cc}
+	0 & 0 \\
+	1 & 2 \\
+	2 & 4
+\end{array} \right)
+\left( \begin{array}{c}
+	x_0 \\
+	x_1
+\end{array} \right)
+=
+\left( \begin{array}{c}
+	0 \\
+	x_0 + 2 x_1 \\
+	2 x_0 + 4 x_1 )
+\end{array} \right)
+\] $$
+
 $children%
 	cppad/example/eigen_mat_mul.hpp
 %$$
@@ -44,84 +65,113 @@ namespace {
 	typedef typename atomic_eigen_mat_mul<scalar>::matrix     matrix;
 	typedef typename atomic_eigen_mat_mul<scalar>::ad_matrix  ad_matrix;
 
-	bool near_equal(const matrix& x, const matrix& y)
-	{	scalar eps = 10. * std::numeric_limits<scalar>::epsilon();
-		assert( x.rows() == y.rows() );
-		assert( x.cols() == y.cols() );
-		bool ok = true;
-		for(size_t i = 0; i < size_t(x.rows()); i++)
-		{	for(size_t j = 0; j < size_t(x.cols()); j++)
-			{	ok &= CppAD::NearEqual( x(i, j), y(i, j), eps, eps );
-			}
-		}
-		return ok;
+	// use atomic operation to multiply two AD matrices
+	ad_matrix matrix_multiply(
+		atomic_eigen_mat_mul<scalar>& mat_mul ,
+		const ad_matrix&              left    ,
+		const ad_matrix&              right   )
+	{	size_t nrow_left   = size_t( left.rows() );
+		size_t n_middle    = size_t( left.cols() );
+		size_t ncol_right  = size_t ( right.cols() );
+		assert( size_t( right.rows() ) == n_middle );
+
+		// packed version of left and right
+		size_t nx = (nrow_left + ncol_right) * n_middle;
+		CPPAD_TESTVECTOR(ad_scalar) packed_arg(nx);
+		mat_mul.pack(packed_arg, left, right);
+
+		// packed version of result = left * right
+		size_t ny = nrow_left * ncol_right;
+		CPPAD_TESTVECTOR(ad_scalar) packed_result(ny);
+		mat_mul(packed_arg, packed_result);
+
+		// result matrix
+		ad_matrix result(nrow_left, ncol_right);
+		mat_mul.unpack(packed_result, result);
+
+		return result;
 	}
+
 }
 
 bool eigen_mat_mul(void)
-{	bool ok = true;
+{	bool ok    = true;
+	scalar eps = 10. * std::numeric_limits<scalar>::epsilon();
+	using CppAD::NearEqual;
 	//
 /* %$$
 $subhead Constructor$$
 $srccode%cpp% */
 	// -------------------------------------------------------------------
-	// object that multiplies  at 3x2 matrix times a 2x1 matrix
+	// object that multiplies a 3x2 matrix times a 2x1 matrix
 	size_t nrow_left  = 3;
 	size_t n_middle   = 2;
 	size_t ncol_right = 1;
 	atomic_eigen_mat_mul<scalar> mat_mul(nrow_left, n_middle, ncol_right);
-	//
-	// left matrix
-	matrix    left(nrow_left, n_middle);
+	// -------------------------------------------------------------------
+	//        [ 0  0 ]
+	// left = [ 1  1 ]
+	//        [ 2  2 ]
 	ad_matrix ad_left(nrow_left, n_middle);
 	for(size_t i = 0; i < nrow_left; i++)
 	{	for(size_t j = 0; j < n_middle; j++)
-		{	// any value will do here
-			ad_left(i, j) = left(i, j) = scalar( i * n_middle + j );
-		}
+			ad_left(i, j) = scalar( (j + 1) * i );
 	}
-	//
-	// right matrix
-	matrix    right(n_middle, ncol_right);
+	// -------------------------------------------------------------------
+	// declare independent variable vector x
+	size_t n = 2;
+	CPPAD_TESTVECTOR(ad_scalar) ad_x(n);
+	for(size_t j = 0; j < n; j++)
+		ad_x[j] = ad_scalar(j);
+	CppAD::Independent(ad_x);
+	// -------------------------------------------------------------------
+	// right = [ x[0] , x[1] ]^T
 	ad_matrix ad_right(n_middle, ncol_right);
 	for(size_t i = 0; i < n_middle; i++)
 	{	for(size_t j = 0; j < ncol_right; j++)
-		{	// any value will do here
-			ad_right(i, j) = right(i, j) = scalar( i * ncol_right + j );
-		}
+			ad_right(i, j) = ad_x[i];
 	}
-	//
-	// number of entries in left and right matrices
-	size_t nx = (nrow_left + ncol_right) * n_middle;
-	//
-	// number of entires in the result matrix
-	size_t ny = nrow_left * ncol_right;
-	//
-	// packed version of left and right matrix
-	CPPAD_TESTVECTOR(ad_scalar) ad_x(nx);
-	mat_mul.pack(ad_x, ad_left, ad_right);
-	//
-	// declare packed version of (left,right) to be the independent variables
-	CppAD::Independent(ad_x);
-	//
-	// multiply the matrices
-	CPPAD_TESTVECTOR(ad_scalar) ad_y(ny);
-	mat_mul(ad_x, ad_y);
-	//
-	// declare packed version of left * right to be dependent variables
+	// -------------------------------------------------------------------
+	// use atomic operation to multiply left * right
+	ad_matrix ad_result = matrix_multiply(mat_mul, ad_left, ad_right);
+	// -------------------------------------------------------------------
+	// check that first component of result is a parameter
+	// and the other components are varaibles.
+	ok &= Parameter( ad_result(0, 0) );
+	ok &= Variable(  ad_result(1, 0) );
+	ok &= Variable(  ad_result(2, 0) );
+	// -------------------------------------------------------------------
+	// declare the dependent variable vector y
+	size_t m = 3;
+	CPPAD_TESTVECTOR(ad_scalar) ad_y(m);
+	for(size_t i = 0; i < m; i++)
+		ad_y[i] = ad_result(i, 0);
 	CppAD::ADFun<scalar> f(ad_x, ad_y);
-	//
-	// compute zero order forward mode
-	CPPAD_TESTVECTOR(scalar) x(nx), y(ny);
-	mat_mul.pack(x, left, right);
-	y = f.Forward(0, x);
-	matrix result(nrow_left, ncol_right);
-	mat_mul.unpack(y, result);
-	//
+	// -------------------------------------------------------------------
 	// check zero order forward mode
-	matrix check = left * right;
-	ok &= near_equal(result, check);
-	//
+	CPPAD_TESTVECTOR(scalar) x(n), y(m);
+	for(size_t i = 0; i < n; i++)
+		x[i] = scalar(i + 1);
+	y   = f.Forward(0, x);
+	ok &= NearEqual(y[0], 0.0,                     eps, eps);
+	ok &= NearEqual(y[1], x[0] + 2.0 * x[1],       eps, eps);
+	ok &= NearEqual(y[2], 2.0 * x[0] + 4.0 * x[1], eps, eps);
+	// -------------------------------------------------------------------
+	// check first order forward mode
+	CPPAD_TESTVECTOR(scalar) x1(n), y1(m);
+	x1[0] = 1.0;
+	x1[1] = 0.0;
+	y1    = f.Forward(1, x1);
+	ok   &= NearEqual(y1[0], 0.0, eps, eps);
+	ok   &= NearEqual(y1[1], 1.0, eps, eps);
+	ok   &= NearEqual(y1[2], 2.0, eps, eps);
+	x1[0] = 0.0;
+	x1[1] = 1.0;
+	y1    = f.Forward(1, x1);
+	ok   &= NearEqual(y1[0], 0.0, eps, eps);
+	ok   &= NearEqual(y1[1], 2.0, eps, eps);
+	ok   &= NearEqual(y1[2], 4.0, eps, eps);
+	// -------------------------------------------------------------------
 	return ok;
 }
 /* %$$

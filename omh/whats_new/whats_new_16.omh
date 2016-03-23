@@ -39,8 +39,12 @@ The purpose of these sections is to
 assist you in learning about changes between various versions of CppAD.
 
 $head 03-23$$
+$list number$$
 Fix bug in auto-tools file $code example/atomic/makefile.am$$
 (introduced on 03-22).
+$lnext
+Improve the $cref atomic_eigen_mat_mul.cpp$$ example.
+$lend
 
 $head 03-22$$
 $list number$$
