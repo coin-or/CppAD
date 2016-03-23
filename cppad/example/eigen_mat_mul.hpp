@@ -159,15 +159,10 @@ $srccode%cpp% */
 	static size_t cols(const ad_matrix& x)
 	{	return size_t( x.cols() ); }
 /* %$$
-$head Private Unpack$$
+$head Private Ensure Order$$
 $srccode%cpp% */
-	void unpack(
-		size_t                       n_order ,
-		const CppAD::vector<scalar>& packed  )
-	{	assert( packed.size() == n_order * nx_ );
-
-		// check size of return values
-		assert( left_.size() == right_.size() );
+	void ensure_order(size_t n_order)
+	{	assert( left_.size() == right_.size() );
 		assert( left_.size() == result_.size() );
 		if( left_.size() < n_order )
 		{	left_.resize(n_order);
@@ -180,24 +175,38 @@ $srccode%cpp% */
 				result_[k].resize(nrow_left_, ncol_right_);
 			}
 		}
+		return;
+	}
+/* %$$
+$head Private Unpack$$
+$srccode%cpp% */
+	void unpack(
+		size_t                       n_order ,
+		const CppAD::vector<scalar>& packed  ,
+		CppAD::vector<matrix>&       left    ,
+		CppAD::vector<matrix>&       right   )
+	{	assert( packed.size() == n_order * nx_ );
+		assert( left.size() >= n_order );
+		assert( right.size() >= n_order );
+		//
 		// set the return values
 		for(size_t k = 0; k < n_order; k++)
 		{	// unpack left values for this order
-			assert( rows( left_[k] ) == nrow_left_ );
-			assert( cols( left_[k] ) == n_middle_ );
+			assert( rows( left[k] ) == nrow_left_ );
+			assert( cols( left[k] ) == n_middle_ );
 			size_t index = 0;
 			for(size_t i = 0; i < nrow_left_; i++)
 			{	for(size_t j = 0; j < n_middle_; j++)
-				{	left_[k](i, j) = packed[ index * n_order + k ];
+				{	left[k](i, j) = packed[ index * n_order + k ];
 					++index;
 				}
 			}
 			// unpack right values for this order
-			assert( rows( right_[k] ) == n_middle_ );
-			assert( cols( right_[k] ) == ncol_right_ );
+			assert( rows( right[k] ) == n_middle_ );
+			assert( cols( right[k] ) == ncol_right_ );
 			for(size_t i = 0; i < n_middle_; i++)
 			{	for(size_t j = 0; j < ncol_right_; j++)
-				{	right_[k](i, j) = packed[ index * n_order + k ];
+				{	right[k](i, j) = packed[ index * n_order + k ];
 					++index;
 				}
 			}
@@ -209,18 +218,19 @@ $srccode%cpp% */
 $head Private Pack$$
 $srccode%cpp% */
 	void pack(
-		size_t                  n_order ,
-		CppAD::vector<scalar>&  packed  )
+		size_t                  n_order      ,
+		CppAD::vector<scalar>&  packed       ,
+		const CppAD::vector<matrix>&  result )
 	{	assert( packed.size() == n_order * ny_ );
-		assert( result_.size() >= n_order );
+		assert( result.size() >= n_order );
 		//
 		for(size_t k = 0; k < n_order; k++)
-		{	assert( rows( result_[k] ) == nrow_left_ );
-			assert( cols( result_[k] ) == ncol_right_ );
+		{	assert( rows( result[k] ) == nrow_left_ );
+			assert( cols( result[k] ) == ncol_right_ );
 			size_t index = 0;
 			for(size_t i = 0; i < nrow_left_; i++)
 			{	for(size_t j = 0; j < ncol_right_; j++)
-				{	packed[ index * n_order + k ] = result_[k](i, j);
+				{	packed[ index * n_order + k ] = result[k](i, j);
 					++index;
 				}
 			}
@@ -252,8 +262,11 @@ $srccode%cpp% */
 		assert( nx_ * n_order == tx.size() );
 		assert( ny_ * n_order == ty.size() );
 
+		// make sure left_, right_, and result_ are large enough
+		ensure_order(n_order);
+
 		// unpack tx into left_ and right_
-		unpack(n_order, tx);
+		unpack(n_order, tx, left_, right_);
 
 		// result for each order
 		for(size_t k = 0; k < n_order; k++)
@@ -264,7 +277,7 @@ $srccode%cpp% */
 		}
 
 		// pack result_ into ty
-		pack(n_order, ty);
+		pack(n_order, ty, result_);
 
 		// check if we are compute vy
 		if( vx.size() == 0 )
