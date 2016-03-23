@@ -135,11 +135,11 @@ private:
 	// size of the range space
 	const size_t ny_;
 	// -------------------------------------------------------------
-	// one matrix for each order for left operand
+	// one forward mode matrix for each order for left operand
 	CppAD::vector<matrix> f_left_;
-	// one matrix for each order for right operand
+	// one forward mode matrix for each order for right operand
 	CppAD::vector<matrix> f_right_;
-	// one matrix for each for the result operand
+	// one forward mode matrix for each for the result operand
 	CppAD::vector<matrix> f_result_;
 	// -------------------------------------------------------------
 /* %$$
@@ -158,86 +158,6 @@ $srccode%cpp% */
 	{	return size_t( x.cols() ); }
 	static size_t cols(const ad_matrix& x)
 	{	return size_t( x.cols() ); }
-/* %$$
-$head Private Ensure Order$$
-$srccode%cpp% */
-	void ensure_order(size_t n_order)
-	{	assert( f_left_.size() == f_right_.size() );
-		assert( f_left_.size() == f_result_.size() );
-		if( f_left_.size() < n_order )
-		{	f_left_.resize(n_order);
-			f_right_.resize(n_order);
-			f_result_.resize(n_order);
-			//
-			for(size_t k = 0; k < n_order; k++)
-			{	f_left_[k].resize(nrow_left_, n_middle_);
-				f_right_[k].resize(n_middle_, ncol_right_);
-				f_result_[k].resize(nrow_left_, ncol_right_);
-			}
-		}
-		return;
-	}
-/* %$$
-$head Private Unpack$$
-$srccode%cpp% */
-	void unpack(
-		size_t                       n_order ,
-		const CppAD::vector<scalar>& packed  ,
-		CppAD::vector<matrix>&       left    ,
-		CppAD::vector<matrix>&       right   )
-	{	assert( packed.size() == n_order * nx_ );
-		assert( left.size() >= n_order );
-		assert( right.size() >= n_order );
-		//
-		// set the return values
-		for(size_t k = 0; k < n_order; k++)
-		{	// unpack left values for this order
-			assert( rows( left[k] ) == nrow_left_ );
-			assert( cols( left[k] ) == n_middle_ );
-			size_t index = 0;
-			for(size_t i = 0; i < nrow_left_; i++)
-			{	for(size_t j = 0; j < n_middle_; j++)
-				{	left[k](i, j) = packed[ index * n_order + k ];
-					++index;
-				}
-			}
-			// unpack right values for this order
-			assert( rows( right[k] ) == n_middle_ );
-			assert( cols( right[k] ) == ncol_right_ );
-			for(size_t i = 0; i < n_middle_; i++)
-			{	for(size_t j = 0; j < ncol_right_; j++)
-				{	right[k](i, j) = packed[ index * n_order + k ];
-					++index;
-				}
-			}
-			assert( index == nx_ );
-		}
-		return;
-	}
-/* %$$
-$head Private Pack$$
-$srccode%cpp% */
-	void pack(
-		size_t                  n_order      ,
-		CppAD::vector<scalar>&  packed       ,
-		const CppAD::vector<matrix>&  result )
-	{	assert( packed.size() == n_order * ny_ );
-		assert( result.size() >= n_order );
-		//
-		for(size_t k = 0; k < n_order; k++)
-		{	assert( rows( result[k] ) == nrow_left_ );
-			assert( cols( result[k] ) == ncol_right_ );
-			size_t index = 0;
-			for(size_t i = 0; i < nrow_left_; i++)
-			{	for(size_t j = 0; j < ncol_right_; j++)
-				{	packed[ index * n_order + k ] = result[k](i, j);
-					++index;
-				}
-			}
-			assert( index == ny_ );
-		}
-		return;
-	}
 /* %$$
 $head Private forward$$
 $srccode%cpp% */
@@ -262,11 +182,47 @@ $srccode%cpp% */
 		assert( nx_ * n_order == tx.size() );
 		assert( ny_ * n_order == ty.size() );
 
-		// make sure left_, right_, and result_ are large enough
-		ensure_order(n_order);
+		// -------------------------------------------------------------------
+		// make sure f_left_, f_right_, and f_result_ are large enough
+		assert( f_left_.size() == f_right_.size() );
+		assert( f_left_.size() == f_result_.size() );
+		if( f_left_.size() < n_order )
+		{	f_left_.resize(n_order);
+			f_right_.resize(n_order);
+			f_result_.resize(n_order);
+			//
+			for(size_t k = 0; k < n_order; k++)
+			{	f_left_[k].resize(nrow_left_, n_middle_);
+				f_right_[k].resize(n_middle_, ncol_right_);
+				f_result_[k].resize(nrow_left_, ncol_right_);
+			}
+		}
 
-		// unpack tx into left_ and right_
-		unpack(n_order, tx, f_left_, f_right_);
+		// -------------------------------------------------------------------
+		// unpack tx into f_left and f_right
+		for(size_t k = 0; k < n_order; k++)
+		{	// unpack left values for this order
+			assert( rows( f_left_[k] ) == nrow_left_ );
+			assert( cols( f_left_[k] ) == n_middle_ );
+			size_t index = 0;
+			for(size_t i = 0; i < nrow_left_; i++)
+			{	for(size_t j = 0; j < n_middle_; j++)
+				{	f_left_[k](i, j) = tx[ index * n_order + k ];
+					++index;
+				}
+			}
+			// unpack right values for this order
+			assert( rows( f_right_[k] ) == n_middle_ );
+			assert( cols( f_right_[k] ) == ncol_right_ );
+			for(size_t i = 0; i < n_middle_; i++)
+			{	for(size_t j = 0; j < ncol_right_; j++)
+				{	f_right_[k](i, j) = tx[ index * n_order + k ];
+					++index;
+				}
+			}
+			assert( index == nx_ );
+		}
+		// -------------------------------------------------------------------
 
 		// result for each order
 		for(size_t k = 0; k < n_order; k++)
@@ -276,8 +232,20 @@ $srccode%cpp% */
 			}
 		}
 
+		// -------------------------------------------------------------------
 		// pack result_ into ty
-		pack(n_order, ty, f_result_);
+		for(size_t k = 0; k < n_order; k++)
+		{	assert( rows( f_result_[k] ) == nrow_left_ );
+			assert( cols( f_result_[k] ) == ncol_right_ );
+			size_t index = 0;
+			for(size_t i = 0; i < nrow_left_; i++)
+			{	for(size_t j = 0; j < ncol_right_; j++)
+				{	ty[ index * n_order + k ] = f_result_[k](i, j);
+					++index;
+				}
+			}
+			assert( index == ny_ );
+		}
 
 		// check if we are compute vy
 		if( vx.size() == 0 )
@@ -305,6 +273,31 @@ $srccode%cpp% */
 			}
 		}
 		return true;
+	}
+/* %$$
+$head reverse$$
+$srccode%cpp% */
+	// reverse mode routine called by CppAD
+	virtual bool reverse(
+		// highest order Taylor coefficient that we are computing deritive of
+		size_t                     q ,
+		// forward mode Taylor coefficients for x variables
+		const CppAD::vector<double>&     tx ,
+		// forward mode Taylor coefficients for y variables
+		const CppAD::vector<double>&     ty ,
+		// upon return, derivative of G[ F[ {x_j^k} ] ] w.r.t {x_j^k}
+		CppAD::vector<double>&           px ,
+		// derivative of G[ {y_i^k} ] w.r.t. {y_i^k}
+		const CppAD::vector<double>&     py
+	)
+	{	size_t n_order = q + 1;
+		assert( nx_ * n_order == tx.size() );
+		assert( ny_ * n_order == ty.size() );
+		assert( px.size() == tx.size() );
+		assert( py.size() == ty.size() );
+
+		// not yet implemented
+		return false;
 	}
 /* %$$
 $head End Class Definition$$
