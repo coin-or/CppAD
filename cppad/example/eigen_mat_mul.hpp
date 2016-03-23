@@ -136,11 +136,11 @@ private:
 	const size_t ny_;
 	// -------------------------------------------------------------
 	// one matrix for each order for left operand
-	CppAD::vector<matrix> left_;
+	CppAD::vector<matrix> f_left_;
 	// one matrix for each order for right operand
-	CppAD::vector<matrix> right_;
+	CppAD::vector<matrix> f_right_;
 	// one matrix for each for the result operand
-	CppAD::vector<matrix> result_;
+	CppAD::vector<matrix> f_result_;
 	// -------------------------------------------------------------
 /* %$$
 $head Private rows$$
@@ -162,17 +162,17 @@ $srccode%cpp% */
 $head Private Ensure Order$$
 $srccode%cpp% */
 	void ensure_order(size_t n_order)
-	{	assert( left_.size() == right_.size() );
-		assert( left_.size() == result_.size() );
-		if( left_.size() < n_order )
-		{	left_.resize(n_order);
-			right_.resize(n_order);
-			result_.resize(n_order);
+	{	assert( f_left_.size() == f_right_.size() );
+		assert( f_left_.size() == f_result_.size() );
+		if( f_left_.size() < n_order )
+		{	f_left_.resize(n_order);
+			f_right_.resize(n_order);
+			f_result_.resize(n_order);
 			//
 			for(size_t k = 0; k < n_order; k++)
-			{	left_[k].resize(nrow_left_, n_middle_);
-				right_[k].resize(n_middle_, ncol_right_);
-				result_[k].resize(nrow_left_, ncol_right_);
+			{	f_left_[k].resize(nrow_left_, n_middle_);
+				f_right_[k].resize(n_middle_, ncol_right_);
+				f_result_[k].resize(nrow_left_, ncol_right_);
 			}
 		}
 		return;
@@ -266,18 +266,18 @@ $srccode%cpp% */
 		ensure_order(n_order);
 
 		// unpack tx into left_ and right_
-		unpack(n_order, tx, left_, right_);
+		unpack(n_order, tx, f_left_, f_right_);
 
 		// result for each order
 		for(size_t k = 0; k < n_order; k++)
-		{	result_[k] = matrix::Zero(nrow_left_, ncol_right_);
+		{	f_result_[k] = matrix::Zero(nrow_left_, ncol_right_);
 			for(size_t ell = 0; ell <= k; ell++)
-			{	result_[k] += left_[ell] * right_[k-ell];
+			{	f_result_[k] += f_left_[ell] * f_right_[k-ell];
 			}
 		}
 
 		// pack result_ into ty
-		pack(n_order, ty, result_);
+		pack(n_order, ty, f_result_);
 
 		// check if we are compute vy
 		if( vx.size() == 0 )
@@ -292,11 +292,11 @@ $srccode%cpp% */
 				for(size_t ell = 0; ell < n_middle_; ell++)
 				{	size_t index   = i * n_middle_ + ell;
 					bool var_left  = vx[index];
-					bool nz_left   = var_left | (left_[0](i, ell) != zero);
+					bool nz_left   = var_left | (f_left_[0](i, ell) != zero);
 					index          = nrow_left_ * n_middle_;
 					index         += ell * ncol_right_ + j;
 					bool var_right = vx[index];
-					bool nz_right  = var_right | (right_[0](ell, j) != zero);
+					bool nz_right  = var_right | (f_right_[0](ell, j) != zero);
 					var |= var_left & nz_right;
 					var |= nz_left  & var_right;
 				}
