@@ -27,6 +27,7 @@ $spell
 	mul
 	ifndef
 	xam
+	makefile
 $$
 
 $section Changes and Additions to CppAD During 2016$$
@@ -36,6 +37,10 @@ The sections listed below contain a list of the changes to CppAD
 in reverse order by date.
 The purpose of these sections is to
 assist you in learning about changes between various versions of CppAD.
+
+$head 03-23$$
+Fix bug in auto-tools file $code example/atomic/makefile.am$$
+(introduced on 03-22).
 
 $head 03-22$$
 $list number$$
