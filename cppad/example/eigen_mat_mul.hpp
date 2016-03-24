@@ -33,7 +33,7 @@ $srccode%cpp% */
 $head Publice Types$$
 $srccode%cpp% */
 namespace { // BEGIN_EMPTY_NAMESPACE
-//
+
 template <class Base>
 class atomic_eigen_mat_mul : public CppAD::atomic_base<Base> {
 public:
@@ -43,9 +43,11 @@ public:
 	// type of elements during taping
 	typedef CppAD::AD<scalar> ad_scalar;
 	// type of matrix during calculation of derivatives
-	typedef Eigen::Matrix<scalar, Eigen::Dynamic, Eigen::Dynamic>    matrix;
+	typedef Eigen::Matrix<
+		scalar, Eigen::Dynamic, Eigen::Dynamic, Eigen::RowMajor>     matrix;
 	// type of matrix during taping
-	typedef Eigen::Matrix<ad_scalar, Eigen::Dynamic, Eigen::Dynamic> ad_matrix;
+	typedef Eigen::Matrix<
+		ad_scalar, Eigen::Dynamic, Eigen::Dynamic, Eigen::RowMajor > ad_matrix;
 /* %$$
 $head Public Constructor$$
 $srccode%cpp% */
@@ -82,20 +84,15 @@ $srccode%cpp% */
 		assert( rows( right ) == n_middle_ );
 		assert( cols( right ) == nc_right_ );
 		//
-		size_t index = 0;
-		for(size_t i = 0; i < nr_left_; i++)
-		{	for(size_t j = 0; j < n_middle_; j++)
-			{	packed[ index ] = left(i, j);
-				++index;
-			}
-		}
-		for(size_t i = 0; i < n_middle_; i++)
-		{	for(size_t j = 0; j < nc_right_; j++)
-			{	packed[ index ] = right(i, j);
-				++index;
-			}
-		}
-		assert( index == nx_ );
+		size_t n_left = nr_left_ * n_middle_;
+		size_t n_right = n_middle_ * nc_right_;
+		assert( n_left + n_right == nx_ );
+		//
+		for(size_t i = 0; i < n_left; i++)
+			packed[i] = left.data()[i];
+		for(size_t i = 0; i < n_right; i++)
+			packed[ i + n_left ] = right.data()[i];
+		//
 		return;
 	}
 /* %$$
@@ -109,14 +106,12 @@ $srccode%cpp% */
 		assert( rows( result ) == nr_left_ );
 		assert( cols( result ) == nc_right_ );
 		//
-		size_t index = 0;
-		for(size_t i = 0; i < nr_left_; i++)
-		{	for(size_t j = 0; j < nc_right_; j++)
-			{	result(i, j) = packed[ index ];
-				++index;
-			}
-		}
-		assert( index == ny_ );
+		size_t n_result = nr_left_ * nc_right_;
+		assert( n_result == ny_ );
+		//
+		for(size_t i = 0; i < n_result; i++)
+			result.data()[i] = packed[ i ];
+		//
 		return;
 	}
 /* %$$
