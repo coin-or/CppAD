@@ -70,23 +70,23 @@ namespace {
 		atomic_eigen_mat_mul<scalar>& mat_mul ,
 		const ad_matrix&              left    ,
 		const ad_matrix&              right   )
-	{	size_t nrow_left   = size_t( left.rows() );
+	{	size_t nr_left   = size_t( left.rows() );
 		size_t n_middle    = size_t( left.cols() );
-		size_t ncol_right  = size_t ( right.cols() );
+		size_t nc_right  = size_t ( right.cols() );
 		assert( size_t( right.rows() ) == n_middle );
 
 		// packed version of left and right
-		size_t nx = (nrow_left + ncol_right) * n_middle;
+		size_t nx = (nr_left + nc_right) * n_middle;
 		CPPAD_TESTVECTOR(ad_scalar) packed_arg(nx);
 		mat_mul.pack(packed_arg, left, right);
 
 		// packed version of result = left * right
-		size_t ny = nrow_left * ncol_right;
+		size_t ny = nr_left * nc_right;
 		CPPAD_TESTVECTOR(ad_scalar) packed_result(ny);
 		mat_mul(packed_arg, packed_result);
 
 		// result matrix
-		ad_matrix result(nrow_left, ncol_right);
+		ad_matrix result(nr_left, nc_right);
 		mat_mul.unpack(packed_result, result);
 
 		return result;
@@ -104,16 +104,16 @@ $subhead Constructor$$
 $srccode%cpp% */
 	// -------------------------------------------------------------------
 	// object that multiplies a 3x2 matrix times a 2x1 matrix
-	size_t nrow_left  = 3;
+	size_t nr_left  = 3;
 	size_t n_middle   = 2;
-	size_t ncol_right = 1;
-	atomic_eigen_mat_mul<scalar> mat_mul(nrow_left, n_middle, ncol_right);
+	size_t nc_right = 1;
+	atomic_eigen_mat_mul<scalar> mat_mul(nr_left, n_middle, nc_right);
 	// -------------------------------------------------------------------
 	//        [ 0  0 ]
 	// left = [ 1  1 ]
 	//        [ 2  2 ]
-	ad_matrix ad_left(nrow_left, n_middle);
-	for(size_t i = 0; i < nrow_left; i++)
+	ad_matrix ad_left(nr_left, n_middle);
+	for(size_t i = 0; i < nr_left; i++)
 	{	for(size_t j = 0; j < n_middle; j++)
 			ad_left(i, j) = scalar( (j + 1) * i );
 	}
@@ -126,9 +126,9 @@ $srccode%cpp% */
 	CppAD::Independent(ad_x);
 	// -------------------------------------------------------------------
 	// right = [ x[0] , x[1] ]^T
-	ad_matrix ad_right(n_middle, ncol_right);
+	ad_matrix ad_right(n_middle, nc_right);
 	for(size_t i = 0; i < n_middle; i++)
-	{	for(size_t j = 0; j < ncol_right; j++)
+	{	for(size_t j = 0; j < nc_right; j++)
 			ad_right(i, j) = ad_x[i];
 	}
 	// -------------------------------------------------------------------
@@ -151,7 +151,7 @@ $srccode%cpp% */
 	// check zero order forward mode
 	CPPAD_TESTVECTOR(scalar) x(n), y(m);
 	for(size_t i = 0; i < n; i++)
-		x[i] = scalar(i + 1);
+		x[i] = scalar(i + 2);
 	y   = f.Forward(0, x);
 	ok &= NearEqual(y[0], 0.0,                     eps, eps);
 	ok &= NearEqual(y[1], x[0] + 2.0 * x[1],       eps, eps);
@@ -172,6 +172,20 @@ $srccode%cpp% */
 	ok   &= NearEqual(y1[1], 2.0, eps, eps);
 	ok   &= NearEqual(y1[2], 4.0, eps, eps);
 	// -------------------------------------------------------------------
+	// check first order reverse mode
+	CPPAD_TESTVECTOR(scalar) w(m), dw(n);
+	w[0]  = 0.0;
+	w[1]  = 1.0;
+	w[2]  = 0.0;
+	dw    = f.Reverse(1, w);
+	ok   &= NearEqual(dw[0], 1.0, eps, eps);
+	ok   &= NearEqual(dw[1], 2.0, eps, eps);
+	w[0]  = 0.0;
+	w[1]  = 0.0;
+	w[2]  = 1.0;
+	dw    = f.Reverse(1, w);
+	ok   &= NearEqual(dw[0], 2.0, eps, eps);
+	ok   &= NearEqual(dw[1], 4.0, eps, eps);
 	return ok;
 }
 /* %$$

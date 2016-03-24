@@ -52,21 +52,21 @@ $srccode%cpp% */
 	// constructor
 	atomic_eigen_mat_mul(
 		// number of rows in left operand
-		const size_t nrow_left  ,
+		const size_t nr_left  ,
 		// number of rows in left and columns in right operand
 		const size_t n_middle   ,
 		// number of columns in right operand
-		const size_t ncol_right
+		const size_t nc_right
 	) :
 	CppAD::atomic_base<Base>(
 		"atom_eigen_mat_mul"                             ,
 		CppAD::atomic_base<Base>::set_sparsity_enum
 	) ,
-	nrow_left_(  nrow_left  )                   ,
+	nr_left_(  nr_left  )                   ,
 	n_middle_(   n_middle   )                   ,
-	ncol_right_( ncol_right )                   ,
-	nx_( (nrow_left + ncol_right) * n_middle_ ) ,
-	ny_( nrow_left * ncol_right )
+	nc_right_( nc_right )                   ,
+	nx_( (nr_left + nc_right) * n_middle_ ) ,
+	ny_( nr_left * nc_right )
 	{ }
 /* %$$
 $head Public Pack$$
@@ -77,20 +77,20 @@ $srccode%cpp% */
 		const Matrix&  left    ,
 		const Matrix&  right   )
 	{	assert( packed.size() == nx_      );
-		assert( rows( left ) == nrow_left_ );
+		assert( rows( left ) == nr_left_ );
 		assert( cols( left ) == n_middle_ );
 		assert( rows( right ) == n_middle_ );
-		assert( cols( right ) == ncol_right_ );
+		assert( cols( right ) == nc_right_ );
 		//
 		size_t index = 0;
-		for(size_t i = 0; i < nrow_left_; i++)
+		for(size_t i = 0; i < nr_left_; i++)
 		{	for(size_t j = 0; j < n_middle_; j++)
 			{	packed[ index ] = left(i, j);
 				++index;
 			}
 		}
 		for(size_t i = 0; i < n_middle_; i++)
-		{	for(size_t j = 0; j < ncol_right_; j++)
+		{	for(size_t j = 0; j < nc_right_; j++)
 			{	packed[ index ] = right(i, j);
 				++index;
 			}
@@ -106,12 +106,12 @@ $srccode%cpp% */
 		const Vector&   packed  ,
 		Matrix&         result  )
 	{	assert( packed.size() == ny_      );
-		assert( rows( result ) == nrow_left_ );
-		assert( cols( result ) == ncol_right_ );
+		assert( rows( result ) == nr_left_ );
+		assert( cols( result ) == nc_right_ );
 		//
 		size_t index = 0;
-		for(size_t i = 0; i < nrow_left_; i++)
-		{	for(size_t j = 0; j < ncol_right_; j++)
+		for(size_t i = 0; i < nr_left_; i++)
+		{	for(size_t j = 0; j < nc_right_; j++)
 			{	result(i, j) = packed[ index ];
 				++index;
 			}
@@ -125,11 +125,11 @@ $srccode%cpp% */
 private:
 	// -------------------------------------------------------------
 	// number of of rows in left operand and result
-	const size_t nrow_left_;
+	const size_t nr_left_;
 	// number of of columns in left operand and rows in right operand
 	const size_t n_middle_;
 	// number of columns in right operand and result
-	const size_t ncol_right_;
+	const size_t nc_right_;
 	// size of the domain space
 	const size_t nx_;
 	// size of the range space
@@ -190,9 +190,9 @@ $srccode%cpp% */
 			f_result_.resize(n_order);
 			//
 			for(size_t k = 0; k < n_order; k++)
-			{	f_left_[k].resize(nrow_left_, n_middle_);
-				f_right_[k].resize(n_middle_, ncol_right_);
-				f_result_[k].resize(nrow_left_, ncol_right_);
+			{	f_left_[k].resize(nr_left_, n_middle_);
+				f_right_[k].resize(n_middle_, nc_right_);
+				f_result_[k].resize(nr_left_, nc_right_);
 			}
 		}
 
@@ -200,10 +200,10 @@ $srccode%cpp% */
 		// unpack tx into f_left and f_right
 		for(size_t k = 0; k < n_order; k++)
 		{	// unpack left values for this order
-			assert( rows( f_left_[k] ) == nrow_left_ );
+			assert( rows( f_left_[k] ) == nr_left_ );
 			assert( cols( f_left_[k] ) == n_middle_ );
 			size_t index = 0;
-			for(size_t i = 0; i < nrow_left_; i++)
+			for(size_t i = 0; i < nr_left_; i++)
 			{	for(size_t j = 0; j < n_middle_; j++)
 				{	f_left_[k](i, j) = tx[ index * n_order + k ];
 					++index;
@@ -211,9 +211,9 @@ $srccode%cpp% */
 			}
 			// unpack right values for this order
 			assert( rows( f_right_[k] ) == n_middle_ );
-			assert( cols( f_right_[k] ) == ncol_right_ );
+			assert( cols( f_right_[k] ) == nc_right_ );
 			for(size_t i = 0; i < n_middle_; i++)
-			{	for(size_t j = 0; j < ncol_right_; j++)
+			{	for(size_t j = 0; j < nc_right_; j++)
 				{	f_right_[k](i, j) = tx[ index * n_order + k ];
 					++index;
 				}
@@ -224,7 +224,7 @@ $srccode%cpp% */
 		// -------------------------------------------------------------------
 		// result for each order
 		for(size_t k = 0; k < n_order; k++)
-		{	f_result_[k] = matrix::Zero(nrow_left_, ncol_right_);
+		{	f_result_[k] = matrix::Zero(nr_left_, nc_right_);
 			for(size_t ell = 0; ell <= k; ell++)
 			{	f_result_[k] += f_left_[ell] * f_right_[k-ell];
 			}
@@ -233,11 +233,11 @@ $srccode%cpp% */
 		// -------------------------------------------------------------------
 		// pack result_ into ty
 		for(size_t k = 0; k < n_order; k++)
-		{	assert( rows( f_result_[k] ) == nrow_left_ );
-			assert( cols( f_result_[k] ) == ncol_right_ );
+		{	assert( rows( f_result_[k] ) == nr_left_ );
+			assert( cols( f_result_[k] ) == nc_right_ );
 			size_t index = 0;
-			for(size_t i = 0; i < nrow_left_; i++)
-			{	for(size_t j = 0; j < ncol_right_; j++)
+			for(size_t i = 0; i < nr_left_; i++)
+			{	for(size_t j = 0; j < nc_right_; j++)
 				{	ty[ index * n_order + k ] = f_result_[k](i, j);
 					++index;
 				}
@@ -252,21 +252,21 @@ $srccode%cpp% */
 		// compute variable information for y; i.e., vy
 		scalar zero(0.0);
 		assert( n_order == 1 );
-		for(size_t i = 0; i < nrow_left_; i++)
-		{	for(size_t j = 0; j < ncol_right_; j++)
+		for(size_t i = 0; i < nr_left_; i++)
+		{	for(size_t j = 0; j < nc_right_; j++)
 			{	bool var = false;
 				for(size_t ell = 0; ell < n_middle_; ell++)
 				{	size_t index   = i * n_middle_ + ell;
 					bool var_left  = vx[index];
 					bool nz_left   = var_left | (f_left_[0](i, ell) != zero);
-					index          = nrow_left_ * n_middle_;
-					index         += ell * ncol_right_ + j;
+					index          = nr_left_ * n_middle_;
+					index         += ell * nc_right_ + j;
 					bool var_right = vx[index];
 					bool nz_right  = var_right | (f_right_[0](ell, j) != zero);
 					var |= var_left & nz_right;
 					var |= nz_left  & var_right;
 				}
-				size_t index = i * ncol_right_ + j;
+				size_t index = i * nc_right_ + j;
 				vy[index]    = var;
 			}
 		}
@@ -299,10 +299,10 @@ $srccode%cpp% */
 		assert( f_right_.size() >= n_order );
 		for(size_t k = 0; k < n_order; k++)
 		{	// unpack left values for this order
-			assert( rows( f_left_[k] ) == nrow_left_ );
+			assert( rows( f_left_[k] ) == nr_left_ );
 			assert( cols( f_left_[k] ) == n_middle_ );
 			size_t index = 0;
-			for(size_t i = 0; i < nrow_left_; i++)
+			for(size_t i = 0; i < nr_left_; i++)
 			{	for(size_t j = 0; j < n_middle_; j++)
 				{	f_left_[k](i, j) = tx[ index * n_order + k ];
 					++index;
@@ -310,9 +310,9 @@ $srccode%cpp% */
 			}
 			// unpack right values for this order
 			assert( rows( f_right_[k] ) == n_middle_ );
-			assert( cols( f_right_[k] ) == ncol_right_ );
+			assert( cols( f_right_[k] ) == nc_right_ );
 			for(size_t i = 0; i < n_middle_; i++)
-			{	for(size_t j = 0; j < ncol_right_; j++)
+			{	for(size_t j = 0; j < nc_right_; j++)
 				{	f_right_[k](i, j) = tx[ index * n_order + k ];
 					++index;
 				}
@@ -329,19 +329,19 @@ $srccode%cpp% */
 			r_result_.resize(n_order);
 			//
 			for(size_t k = 0; k < n_order; k++)
-			{	r_left_[k].resize(nrow_left_, n_middle_);
-				r_right_[k].resize(n_middle_, ncol_right_);
-				r_result_[k].resize(nrow_left_, ncol_right_);
+			{	r_left_[k].resize(nr_left_, n_middle_);
+				r_right_[k].resize(n_middle_, nc_right_);
+				r_result_[k].resize(nr_left_, nc_right_);
 			}
 		}
 		// -------------------------------------------------------------------
 		// unpack result_ from py
 		for(size_t k = 0; k < n_order; k++)
-		{	assert( rows( r_result_[k] ) == nrow_left_ );
-			assert( cols( r_result_[k] ) == ncol_right_ );
+		{	assert( rows( r_result_[k] ) == nr_left_ );
+			assert( cols( r_result_[k] ) == nc_right_ );
 			size_t index = 0;
-			for(size_t i = 0; i < nrow_left_; i++)
-			{	for(size_t j = 0; j < ncol_right_; j++)
+			for(size_t i = 0; i < nr_left_; i++)
+			{	for(size_t j = 0; j < nc_right_; j++)
 				{	r_result_[k](i, j) = py[ index * n_order + k ];
 					++index;
 				}
@@ -351,25 +351,50 @@ $srccode%cpp% */
 		// -------------------------------------------------------------------
 		// initialize r_left_ and r_right_ as zero
 		for(size_t k = 0; k < n_order; k++)
-		{	for(size_t i = 0; i < nrow_left_; i++)
+		{	for(size_t i = 0; i < nr_left_; i++)
 				for(size_t j = 0; j < n_middle_; j++)
 					r_left_[k](i, j) = scalar(0.0);
 			for(size_t i = 0; i < n_middle_; i++)
-				for(size_t j = 0; j < ncol_right_; j++)
+				for(size_t j = 0; j < nc_right_; j++)
 					r_right_[k](i, j) = scalar(0.0);
 		}
 		// -------------------------------------------------------------------
 		// matrix reverse mode calculation
-		for(size_t k1 = n_order +1; k1 > 0; k1--)
-		{	size_t k = k1 -1;
+		for(size_t k1 = n_order; k1 > 0; k1--)
+		{	size_t k = k1 - 1;
 			for(size_t ell = 0; ell <= k; ell++)
-			{
+			{	// nr x nm       = nr x nc      * nc * nm
 				r_left_[ell]    += r_result_[k] * f_right_[k-ell].transpose();
+				// nm x nc       = nm x nr * nr * nc
 				r_right_[k-ell] += f_left_[ell].transpose() * r_result_[k];
 			}
 		}
-		// not yet implemented
-		return false;
+		// -------------------------------------------------------------------
+		// pack r_left and r_right int px
+		for(size_t k = 0; k < n_order; k++)
+		{	// pack left values for this order
+			assert( rows( r_left_[k] ) == nr_left_ );
+			assert( cols( r_left_[k] ) == n_middle_ );
+			size_t index = 0;
+			for(size_t i = 0; i < nr_left_; i++)
+			{	for(size_t j = 0; j < n_middle_; j++)
+				{	px[ index * n_order + k ] = r_left_[k](i, j);
+					++index;
+				}
+			}
+			// pack right values for this order
+			assert( rows( r_right_[k] ) == n_middle_ );
+			assert( cols( r_right_[k] ) == nc_right_ );
+			for(size_t i = 0; i < n_middle_; i++)
+			{	for(size_t j = 0; j < nc_right_; j++)
+				{	px[ index * n_order + k] = r_right_[k](i, j);
+					++index;
+				}
+			}
+			assert( index == nx_ );
+		}
+		//
+		return true;
 	}
 /* %$$
 $head End Class Definition$$
