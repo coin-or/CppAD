@@ -174,7 +174,13 @@ $srccode%cpp% */
 		assert( vx.size() == 0 || ny_ == vy.size() );
 		assert( nx_ * n_order == tx.size() );
 		assert( ny_ * n_order == ty.size() );
-
+		//
+		size_t n_left   = nr_left_ * n_middle_;
+		size_t n_right  = n_middle_ * nc_right_;
+		size_t n_result = nr_left_ * nc_right_;
+		assert( n_left + n_right == nx_ );
+		assert( n_result == ny_ );
+		//
 		// -------------------------------------------------------------------
 		// make sure f_left_, f_right_, and f_result_ are large enough
 		assert( f_left_.size() == f_right_.size() );
@@ -190,54 +196,30 @@ $srccode%cpp% */
 				f_result_[k].resize(nr_left_, nc_right_);
 			}
 		}
-
 		// -------------------------------------------------------------------
 		// unpack tx into f_left and f_right
 		for(size_t k = 0; k < n_order; k++)
 		{	// unpack left values for this order
-			assert( rows( f_left_[k] ) == nr_left_ );
-			assert( cols( f_left_[k] ) == n_middle_ );
-			size_t index = 0;
-			for(size_t i = 0; i < nr_left_; i++)
-			{	for(size_t j = 0; j < n_middle_; j++)
-				{	f_left_[k](i, j) = tx[ index * n_order + k ];
-					++index;
-				}
-			}
+			for(size_t i = 0; i < n_left; i++)
+				f_left_[k].data()[i] = tx[ i * n_order + k ];
+			//
 			// unpack right values for this order
-			assert( rows( f_right_[k] ) == n_middle_ );
-			assert( cols( f_right_[k] ) == nc_right_ );
-			for(size_t i = 0; i < n_middle_; i++)
-			{	for(size_t j = 0; j < nc_right_; j++)
-				{	f_right_[k](i, j) = tx[ index * n_order + k ];
-					++index;
-				}
-			}
-			assert( index == nx_ );
+			for(size_t i = 0; i < n_right; i++)
+				f_right_[k].data()[i] = tx[ (i + n_left) * n_order + k ];
 		}
-
 		// -------------------------------------------------------------------
 		// result for each order
 		for(size_t k = 0; k < n_order; k++)
-		{	f_result_[k] = matrix::Zero(nr_left_, nc_right_);
+		{	// result[k] = sum_ell left[ell] * right[k-ell]
+			f_result_[k] = matrix::Zero(nr_left_, nc_right_);
 			for(size_t ell = 0; ell <= k; ell++)
-			{	f_result_[k] += f_left_[ell] * f_right_[k-ell];
-			}
+				f_result_[k] += f_left_[ell] * f_right_[k-ell];
 		}
-
 		// -------------------------------------------------------------------
 		// pack result_ into ty
 		for(size_t k = 0; k < n_order; k++)
-		{	assert( rows( f_result_[k] ) == nr_left_ );
-			assert( cols( f_result_[k] ) == nc_right_ );
-			size_t index = 0;
-			for(size_t i = 0; i < nr_left_; i++)
-			{	for(size_t j = 0; j < nc_right_; j++)
-				{	ty[ index * n_order + k ] = f_result_[k](i, j);
-					++index;
-				}
-			}
-			assert( index == ny_ );
+		{	for(size_t i = 0; i < n_result; i++)
+				ty[ i * n_order + k ] = f_result_[k].data()[i];
 		}
 
 		// check if we are compute vy
@@ -245,6 +227,7 @@ $srccode%cpp% */
 			return true;
 
 		// compute variable information for y; i.e., vy
+		// (note that the constant zero times a variable is a constant)
 		scalar zero(0.0);
 		assert( n_order == 1 );
 		for(size_t i = 0; i < nr_left_; i++)
