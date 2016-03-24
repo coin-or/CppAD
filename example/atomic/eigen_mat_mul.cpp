@@ -28,9 +28,9 @@ The $cref ADFun$$ function object $icode f$$ for this example is
 $latex \[
 f(x) =
 \left( \begin{array}{cc}
-	0 & 0 \\
-	1 & 2 \\
-	2 & 4
+	0   & 0 \\
+	1   & 2 \\
+	x_0 & x_1
 \end{array} \right)
 \left( \begin{array}{c}
 	x_0 \\
@@ -40,7 +40,7 @@ f(x) =
 \left( \begin{array}{c}
 	0 \\
 	x_0 + 2 x_1 \\
-	2 x_0 + 4 x_1 )
+	x_0 x_0 + x_1 x_1 )
 \end{array} \right)
 \] $$
 
@@ -109,15 +109,6 @@ $srccode%cpp% */
 	size_t nc_right = 1;
 	atomic_eigen_mat_mul<scalar> mat_mul(nr_left, n_middle, nc_right);
 	// -------------------------------------------------------------------
-	//        [ 0  0 ]
-	// left = [ 1  1 ]
-	//        [ 2  2 ]
-	ad_matrix ad_left(nr_left, n_middle);
-	for(size_t i = 0; i < nr_left; i++)
-	{	for(size_t j = 0; j < n_middle; j++)
-			ad_left(i, j) = scalar( (j + 1) * i );
-	}
-	// -------------------------------------------------------------------
 	// declare independent variable vector x
 	size_t n = 2;
 	CPPAD_TESTVECTOR(ad_scalar) ad_x(n);
@@ -125,12 +116,21 @@ $srccode%cpp% */
 		ad_x[j] = ad_scalar(j);
 	CppAD::Independent(ad_x);
 	// -------------------------------------------------------------------
+	//        [ 0     0    ]
+	// left = [ 1     2    ]
+	//        [ x[0]  x[1] ]
+	ad_matrix ad_left(nr_left, n_middle);
+	ad_left(0, 0) = ad_scalar(0.0);
+	ad_left(0, 1) = ad_scalar(0.0);
+	ad_left(1, 0) = ad_scalar(1.0);
+	ad_left(1, 1) = ad_scalar(2.0);
+	ad_left(2, 0) = ad_x[0];
+	ad_left(2, 1) = ad_x[1];
+	// -------------------------------------------------------------------
 	// right = [ x[0] , x[1] ]^T
 	ad_matrix ad_right(n_middle, nc_right);
-	for(size_t i = 0; i < n_middle; i++)
-	{	for(size_t j = 0; j < nc_right; j++)
-			ad_right(i, j) = ad_x[i];
-	}
+	ad_right(0, 0) = ad_x[0];
+	ad_right(1, 0) = ad_x[1];
 	// -------------------------------------------------------------------
 	// use atomic operation to multiply left * right
 	ad_matrix ad_result = matrix_multiply(mat_mul, ad_left, ad_right);
@@ -153,24 +153,24 @@ $srccode%cpp% */
 	for(size_t i = 0; i < n; i++)
 		x[i] = scalar(i + 2);
 	y   = f.Forward(0, x);
-	ok &= NearEqual(y[0], 0.0,                     eps, eps);
-	ok &= NearEqual(y[1], x[0] + 2.0 * x[1],       eps, eps);
-	ok &= NearEqual(y[2], 2.0 * x[0] + 4.0 * x[1], eps, eps);
+	ok &= NearEqual(y[0], 0.0,                       eps, eps);
+	ok &= NearEqual(y[1], x[0] + 2.0 * x[1],         eps, eps);
+	ok &= NearEqual(y[2], x[0] * x[0] + x[1] * x[1], eps, eps);
 	// -------------------------------------------------------------------
 	// check first order forward mode
 	CPPAD_TESTVECTOR(scalar) x1(n), y1(m);
 	x1[0] = 1.0;
 	x1[1] = 0.0;
 	y1    = f.Forward(1, x1);
-	ok   &= NearEqual(y1[0], 0.0, eps, eps);
-	ok   &= NearEqual(y1[1], 1.0, eps, eps);
-	ok   &= NearEqual(y1[2], 2.0, eps, eps);
+	ok   &= NearEqual(y1[0], 0.0,        eps, eps);
+	ok   &= NearEqual(y1[1], 1.0,        eps, eps);
+	ok   &= NearEqual(y1[2], 2.0 * x[0], eps, eps);
 	x1[0] = 0.0;
 	x1[1] = 1.0;
 	y1    = f.Forward(1, x1);
-	ok   &= NearEqual(y1[0], 0.0, eps, eps);
-	ok   &= NearEqual(y1[1], 2.0, eps, eps);
-	ok   &= NearEqual(y1[2], 4.0, eps, eps);
+	ok   &= NearEqual(y1[0], 0.0,        eps, eps);
+	ok   &= NearEqual(y1[1], 2.0,        eps, eps);
+	ok   &= NearEqual(y1[2], 2.0 * x[1], eps, eps);
 	// -------------------------------------------------------------------
 	// check first order reverse mode
 	CPPAD_TESTVECTOR(scalar) w(m), dw(n);
@@ -184,8 +184,8 @@ $srccode%cpp% */
 	w[1]  = 0.0;
 	w[2]  = 1.0;
 	dw    = f.Reverse(1, w);
-	ok   &= NearEqual(dw[0], 2.0, eps, eps);
-	ok   &= NearEqual(dw[1], 4.0, eps, eps);
+	ok   &= NearEqual(dw[0], 2.0 * x[0], eps, eps);
+	ok   &= NearEqual(dw[1], 2.0 * x[1], eps, eps);
 	return ok;
 }
 /* %$$

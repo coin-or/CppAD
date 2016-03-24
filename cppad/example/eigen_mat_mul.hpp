@@ -342,6 +342,39 @@ $srccode%cpp% */
 		return true;
 	}
 /* %$$
+$head for_sparse_jac$$
+$srccode%cpp% */
+	// forward Jacobian sparsity routine called by CppAD
+	virtual bool for_sparse_jac(
+		// number of columns in the matrix R
+		size_t                                       q ,
+		// sparsity pattern for the matrix R
+		const CppAD::vector< std::set<size_t> >&     r ,
+		// sparsity pattern for the matrix S = f'(x) * R
+		CppAD::vector< std::set<size_t> >&           s )
+	{	assert( nx_ == r.size() );
+		assert( ny_ == s.size() );
+		//
+		size_t n_left = nr_left_ * n_middle_;
+		for(size_t i = 0; i < nr_left_; i++)
+		{	for(size_t j = 0; j < nc_right_; j++)
+			{	// pack index for entry (i, j) in result
+				size_t i_result = i * nc_right_ + j;
+				s[i_result].clear();
+				for(size_t ell = 0; ell < n_middle_; ell++)
+				{	// pack index for entry (i, ell) in left
+					size_t i_left  = i * n_middle_ + ell;
+					// pack index for entry (ell, j) in right
+					size_t i_right = n_left + ell * nc_right_ + j;
+					//
+					s[i_result] = CppAD::set_union(s[i_result], r[i_left] );
+					s[i_result] = CppAD::set_union(s[i_result], r[i_right] );
+				}
+			}
+		}
+		return true;
+	}
+/* %$$
 $head End Class Definition$$
 $srccode%cpp% */
 }; // End of atomic_eigen_mat_mul class
