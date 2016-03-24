@@ -135,12 +135,10 @@ private:
 	// size of the range space
 	const size_t ny_;
 	// -------------------------------------------------------------
-	// one forward mode matrix for each order for left operand
-	CppAD::vector<matrix> f_left_;
-	// one forward mode matrix for each order for right operand
-	CppAD::vector<matrix> f_right_;
-	// one forward mode matrix for each for the result operand
-	CppAD::vector<matrix> f_result_;
+	// one forward mode vector of matrices for left, right, and result
+	CppAD::vector<matrix> f_left_, f_right_, f_result_;
+	// one reverse mode vector of matrices for left, right, and result
+	CppAD::vector<matrix> r_left_, r_right_, r_result_;
 	// -------------------------------------------------------------
 /* %$$
 $head Private rows$$
@@ -222,8 +220,8 @@ $srccode%cpp% */
 			}
 			assert( index == nx_ );
 		}
-		// -------------------------------------------------------------------
 
+		// -------------------------------------------------------------------
 		// result for each order
 		for(size_t k = 0; k < n_order; k++)
 		{	f_result_[k] = matrix::Zero(nrow_left_, ncol_right_);
@@ -295,7 +293,81 @@ $srccode%cpp% */
 		assert( ny_ * n_order == ty.size() );
 		assert( px.size() == tx.size() );
 		assert( py.size() == ty.size() );
-
+		// -------------------------------------------------------------------
+		// unpack tx into f_left and f_right
+		assert( f_left_.size() >= n_order );
+		assert( f_right_.size() >= n_order );
+		for(size_t k = 0; k < n_order; k++)
+		{	// unpack left values for this order
+			assert( rows( f_left_[k] ) == nrow_left_ );
+			assert( cols( f_left_[k] ) == n_middle_ );
+			size_t index = 0;
+			for(size_t i = 0; i < nrow_left_; i++)
+			{	for(size_t j = 0; j < n_middle_; j++)
+				{	f_left_[k](i, j) = tx[ index * n_order + k ];
+					++index;
+				}
+			}
+			// unpack right values for this order
+			assert( rows( f_right_[k] ) == n_middle_ );
+			assert( cols( f_right_[k] ) == ncol_right_ );
+			for(size_t i = 0; i < n_middle_; i++)
+			{	for(size_t j = 0; j < ncol_right_; j++)
+				{	f_right_[k](i, j) = tx[ index * n_order + k ];
+					++index;
+				}
+			}
+			assert( index == nx_ );
+		}
+		// -------------------------------------------------------------------
+		// make sure r_left_, r_right_, and r_result_ are large enough
+		assert( r_left_.size() == r_right_.size() );
+		assert( r_left_.size() == r_result_.size() );
+		if( r_left_.size() < n_order )
+		{	r_left_.resize(n_order);
+			r_right_.resize(n_order);
+			r_result_.resize(n_order);
+			//
+			for(size_t k = 0; k < n_order; k++)
+			{	r_left_[k].resize(nrow_left_, n_middle_);
+				r_right_[k].resize(n_middle_, ncol_right_);
+				r_result_[k].resize(nrow_left_, ncol_right_);
+			}
+		}
+		// -------------------------------------------------------------------
+		// unpack result_ from py
+		for(size_t k = 0; k < n_order; k++)
+		{	assert( rows( r_result_[k] ) == nrow_left_ );
+			assert( cols( r_result_[k] ) == ncol_right_ );
+			size_t index = 0;
+			for(size_t i = 0; i < nrow_left_; i++)
+			{	for(size_t j = 0; j < ncol_right_; j++)
+				{	r_result_[k](i, j) = py[ index * n_order + k ];
+					++index;
+				}
+			}
+			assert( index == ny_ );
+		}
+		// -------------------------------------------------------------------
+		// initialize r_left_ and r_right_ as zero
+		for(size_t k = 0; k < n_order; k++)
+		{	for(size_t i = 0; i < nrow_left_; i++)
+				for(size_t j = 0; j < n_middle_; j++)
+					r_left_[k](i, j) = scalar(0.0);
+			for(size_t i = 0; i < n_middle_; i++)
+				for(size_t j = 0; j < ncol_right_; j++)
+					r_right_[k](i, j) = scalar(0.0);
+		}
+		// -------------------------------------------------------------------
+		// matrix reverse mode calculation
+		for(size_t k1 = n_order +1; k1 > 0; k1--)
+		{	size_t k = k1 -1;
+			for(size_t ell = 0; ell <= k; ell++)
+			{
+				r_left_[ell]    += r_result_[k] * f_right_[k-ell].transpose();
+				r_right_[k-ell] += f_left_[ell].transpose() * r_result_[k];
+			}
+		}
 		// not yet implemented
 		return false;
 	}
