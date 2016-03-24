@@ -225,7 +225,7 @@ $srccode%cpp% */
 		// check if we are compute vy
 		if( vx.size() == 0 )
 			return true;
-
+		// ------------------------------------------------------------------
 		// compute variable information for y; i.e., vy
 		// (note that the constant zero times a variable is a constant)
 		scalar zero(0.0);
@@ -251,7 +251,7 @@ $srccode%cpp% */
 		return true;
 	}
 /* %$$
-$head reverse$$
+$head Private reverse$$
 $srccode%cpp% */
 	// reverse mode routine called by CppAD
 	virtual bool reverse(
@@ -277,17 +277,7 @@ $srccode%cpp% */
 		size_t n_result = nr_left_ * nc_right_;
 		assert( n_left + n_right == nx_ );
 		assert( n_result == ny_ );
-		// -------------------------------------------------------------------
-		// unpack tx into f_left and f_right
-		for(size_t k = 0; k < n_order; k++)
-		{	// unpack left values for this order
-			for(size_t i = 0; i < n_left; i++)
-				f_left_[k].data()[i] = tx[ i * n_order + k ];
-			//
-			// unpack right values for this order
-			for(size_t i = 0; i < n_right; i++)
-				f_right_[k].data()[i] = tx[ (i + n_left) * n_order + k ];
-		}
+		//
 		// -------------------------------------------------------------------
 		// make sure r_left_, r_right_, and r_result_ are large enough
 		assert( r_left_.size() == r_right_.size() );
@@ -302,6 +292,17 @@ $srccode%cpp% */
 				r_right_[k].resize(n_middle_, nc_right_);
 				r_result_[k].resize(nr_left_, nc_right_);
 			}
+		}
+		// -------------------------------------------------------------------
+		// unpack tx into f_left and f_right
+		for(size_t k = 0; k < n_order; k++)
+		{	// unpack left values for this order
+			for(size_t i = 0; i < n_left; i++)
+				f_left_[k].data()[i] = tx[ i * n_order + k ];
+			//
+			// unpack right values for this order
+			for(size_t i = 0; i < n_right; i++)
+				f_right_[k].data()[i] = tx[ (i + n_left) * n_order + k ];
 		}
 		// -------------------------------------------------------------------
 		// unpack result_ from py
