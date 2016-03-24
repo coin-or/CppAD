@@ -1139,7 +1139,7 @@ $head Purpose$$
 This function is used by $cref RevSparseJac$$ to compute
 Jacobian sparsity patterns.
 For a fixed matrix $latex R \in B^{q \times m}$$,
-the Jacobian of $latex R * f( x )$$ with respect to $latex x \in B^q$$ is
+the Jacobian of $latex R * f( x )$$ with respect to $latex x \in B^n$$ is
 $latex \[
 	S(x) = R * f^{(1)} (x)
 \] $$

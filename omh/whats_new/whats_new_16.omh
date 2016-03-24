@@ -39,9 +39,15 @@ The purpose of these sections is to
 assist you in learning about changes between various versions of CppAD.
 
 $head 03-24$$
+$list number$$
 Fix build of $code example/atomic.cpp$$ when
 $cref eigen_prefix$$ is not available
 (bug introduced when $cref atomic_eigen_mat_mul.cpp$$ was added).
+$lnext
+Extend $cref atomic_eigen_mat_mul.cpp$$ example to include
+$cref/for_sparse_jac/atomic_eigen_mat_mul.hpp/Private/for_sparse_jac/$$,
+$cref/rev_sparse_jac/atomic_eigen_mat_mul.hpp/Private/rev_sparse_jac/$$.
+$lend
 
 $head 03-23$$
 $list number$$

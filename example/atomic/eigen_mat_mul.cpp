@@ -200,6 +200,18 @@ $srccode%cpp% */
 	ok    &= s[1] == check_set;
 	ok    &= s[2] == check_set;
 	// -------------------------------------------------------------------
+	// check reverse Jacobian sparsity
+	r.resize(m);
+	for(size_t i = 0; i < m; i++)
+		r[i].insert(i);
+	s  = f.RevSparseJac(m, r);
+	check_set.clear();
+	ok    &= s[0] == check_set;
+	check_set.insert(0);
+	check_set.insert(1);
+	ok    &= s[1] == check_set;
+	ok    &= s[2] == check_set;
+	// -------------------------------------------------------------------
 	return ok;
 }
 /* %$$

@@ -379,6 +379,44 @@ $srccode%cpp% */
 		return true;
 	}
 /* %$$
+$subhead rev_sparse_jac$$
+$srccode%cpp% */
+	// reverse Jacobian sparsity routine called by CppAD
+	virtual bool rev_sparse_jac(
+		// number of columns in the matrix R^T
+		size_t                                      q  ,
+		// sparsity pattern for the matrix R^T
+		const CppAD::vector< std::set<size_t> >&    rt ,
+		// sparsoity pattern for the matrix S^T = f'(x)^T * R^T
+		CppAD::vector< std::set<size_t> >&          st )
+	{	assert( nx_ == st.size() );
+		assert( ny_ == rt.size() );
+
+		// initialize S^T as empty
+		for(size_t i = 0; i < nx_; i++)
+			st[i].clear();
+
+		// sparsity for S(x)^T = f'(x)^T * R^T
+		size_t n_left = nr_left_ * n_middle_;
+		for(size_t i = 0; i < nr_left_; i++)
+		{	for(size_t j = 0; j < nc_right_; j++)
+			{	// pack index for entry (i, j) in result
+				size_t i_result = i * nc_right_ + j;
+				st[i_result].clear();
+				for(size_t ell = 0; ell < n_middle_; ell++)
+				{	// pack index for entry (i, ell) in left
+					size_t i_left  = i * n_middle_ + ell;
+					// pack index for entry (ell, j) in right
+					size_t i_right = n_left + ell * nc_right_ + j;
+					//
+					st[i_left]  = CppAD::set_union(st[i_left],  rt[i_result]);
+					st[i_right] = CppAD::set_union(st[i_right], rt[i_result]);
+				}
+			}
+		}
+		return true;
+	}
+/* %$$
 $head End Class Definition$$
 $srccode%cpp% */
 }; // End of atomic_eigen_mat_mul class
