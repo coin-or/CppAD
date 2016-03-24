@@ -29,6 +29,7 @@ deprecated='no'
 profile_speed='no'
 clang='no'
 no_colpack='no'
+no_eigen='no'
 no_ipopt='no'
 no_documentation='no'
 testvector='boost'
@@ -46,6 +47,7 @@ usage: bin/run_cmake.sh: \\
 	[--profile_speed] \\
 	[--clang ] \\
 	[--no_colpack] \\
+	[--no_eigen] \\
 	[--no_ipopt] \\
 	[--no_documentation] \\
 	[--<package>_vector]
@@ -77,6 +79,9 @@ EOF
 	elif [ "$1" == '--no_colpack' ]
 	then
 		no_colpack='yes'
+	elif [ "$1" == '--no_eigen' ]
+	then
+		no_eigen='yes'
 	elif [ "$1" == '--no_ipopt' ]
 	then
 		no_ipopt='yes'
@@ -158,10 +163,14 @@ then
 fi
 #
 # {package}_prefix
-package_list='fadbad adolc eigen sacado'
+package_list='fadbad adolc sacado'
 if [ "$no_colpack" == 'no' ]
 then
 	package_list="$package_list colpack"
+fi
+if [ "$no_eigen" == 'no' ]
+then
+	package_list="$package_list eigen"
 fi
 if [ "$no_ipopt" == 'no' ]
 then

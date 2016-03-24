@@ -1,6 +1,6 @@
 // $Id$
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-15 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-16 Bradley M. Bell
 
 CppAD is distributed under multiple licenses. This distribution is under
 the terms of the
@@ -29,10 +29,13 @@ $mindex prefix get$$
 $head Purpose$$
 CppAD can include the following examples and tests that
 use the linear algebra package $href%http://eigen.tuxfamily.org%Eigen%$$:
+$comment check list with 'grep eigen omh/example_list.omh'$$
 $table
+$rref eigen_plugin.hpp$$
 $rref cppad_eigen.hpp$$
 $rref eigen_array.cpp$$
 $rref eigen_det.cpp$$
+$rref atomic_eigen_mat_mul.hpp$$
 $tend
 
 

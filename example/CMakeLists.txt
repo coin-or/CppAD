@@ -23,32 +23,19 @@ SET(check_depends example)
 ADD_SUBDIRECTORY(atomic)
 add_to_list(check_depends check_example_atomic)
 
-# adolc_prefix
+# adolc_sources, adolc_libs, and CPPAD_ADOLC_EXAMPLES
 SET(sources mul_level_adolc.cpp mul_level_adolc_ode.cpp)
 sources_libs_define(adolc "${sources}" adolc ADOLC_EXAMPLES)
+
+# eigen_sources and CPPAD_EIGEN_EXAMPLES
+SET(sources eigen_det.cpp eigen_array.cpp)
+sources_libs_define(eigen "${sources}" "" EIGEN_EXAMPLES)
 
 # colpack_prefix
 SET(colpack_sources
 	colpack_hes.cpp
 	colpack_jac.cpp
 )
-
-# eigen_prefix
-IF ( eigen_prefix )
-	# compile eigen library separately so can use different compiler flags
-	ADD_LIBRARY(example_eigen_lib EXCLUDE_FROM_ALL
-		eigen_det.cpp
-		eigen_array.cpp
-	)
-	# Adds -D define flags to the compilation of source files.
-	ADD_DEFINITIONS("-DCPPAD_EIGEN_EXAMPLES")
-	add_cppad_cxx_flags(example_eigen_lib)
-	#
-	# Add eigen to list of libraries
-	SET(eigen_libs example_eigen_lib)
-ELSE ( eigen_prefix )
-	SET(eigen_libs "")
-ENDIF ( eigen_prefix )
 
 # ipopt_prefix
 IF( ipopt_prefix )
@@ -62,6 +49,7 @@ ENDIF( ipopt_prefix )
 # )
 ADD_EXECUTABLE(example EXCLUDE_FROM_ALL example.cpp
 	${adolc_sources}
+	${eigen_sources}
 	${colpack_sources}
 	abort_recording.cpp
 	abs.cpp
@@ -212,7 +200,6 @@ TARGET_LINK_LIBRARIES(example
 	${cppad_lib}
 	${adolc_libs}
 	${colpack_libs}
-	${eigen_libs}
 )
 
 # Add the check_example target

@@ -65,7 +65,6 @@ int main(void)
 
 	// external compiled tests
 	ok &= Run( checkpoint,          "checkpoint"     );
-	ok &= Run( eigen_mat_mul,       "eigen_mat_mul"  );
 	ok &= Run( extended_ode,        "extended_ode"   );
 	ok &= Run( for_sparse_hes,      "for_sparse_hes" );
 	ok &= Run( for_sparse_jac,      "for_sparse_jac" );
@@ -81,7 +80,9 @@ int main(void)
 	ok &= Run( reverse,             "reverse"        );
 	ok &= Run( set_sparsity,        "set_sparsity"   );
 	ok &= Run( tangent,             "tangent"        );
-
+# ifdef CPPAD_EIGEN_EXAMPLES
+	ok &= Run( eigen_mat_mul,       "eigen_mat_mul"  );
+# endif
 	// check for errors
 	using std::cout;
 	using std::endl;

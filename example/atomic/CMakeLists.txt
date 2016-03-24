@@ -15,10 +15,14 @@
 # empty, Debug, Release, RelWithDebInfo and MinSizeRel
 SET(CMAKE_BUILD_TYPE DEBUG)
 #
+# eigen_sources and CPPAD_EIGEN_EXAMPLES
+SET(sources eigen_mat_mul.cpp)
+sources_libs_define(eigen "${sources}" "" EIGEN_EXAMPLES)
+#
 ADD_EXECUTABLE(example_atomic EXCLUDE_FROM_ALL
+	${eigen_sources}
 	atomic.cpp
 	checkpoint.cpp
-	eigen_mat_mul.cpp
 	extended_ode.cpp
 	for_sparse_hes.cpp
 	for_sparse_jac.cpp

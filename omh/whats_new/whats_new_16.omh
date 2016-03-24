@@ -38,6 +38,11 @@ in reverse order by date.
 The purpose of these sections is to
 assist you in learning about changes between various versions of CppAD.
 
+$head 03-24$$
+Fix build of $code example/atomic.cpp$$ when
+$cref eigen_prefix$$ is not available
+(bug introduced when $cref atomic_eigen_mat_mul.cpp$$ was added).
+
 $head 03-23$$
 $list number$$
 Fix bug in auto-tools file $code example/atomic/makefile.am$$
