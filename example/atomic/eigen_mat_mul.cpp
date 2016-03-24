@@ -186,6 +186,20 @@ $srccode%cpp% */
 	dw    = f.Reverse(1, w);
 	ok   &= NearEqual(dw[0], 2.0 * x[0], eps, eps);
 	ok   &= NearEqual(dw[1], 2.0 * x[1], eps, eps);
+	// -------------------------------------------------------------------
+	// check forward Jacobian sparsity
+	CPPAD_TESTVECTOR( std::set<size_t> ) r(n), s(m);
+	std::set<size_t> check_set;
+	for(size_t j = 0; j < n; j++)
+		r[j].insert(j);
+	s      = f.ForSparseJac(n, r);
+	check_set.clear();
+	ok    &= s[0] == check_set;
+	check_set.insert(0);
+	check_set.insert(1);
+	ok    &= s[1] == check_set;
+	ok    &= s[2] == check_set;
+	// -------------------------------------------------------------------
 	return ok;
 }
 /* %$$

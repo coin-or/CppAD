@@ -30,7 +30,9 @@ $srccode%cpp% */
 
 
 /* %$$
-$head Publice Types$$
+$head Publice$$
+
+$subhead Types$$
 $srccode%cpp% */
 namespace { // BEGIN_EMPTY_NAMESPACE
 
@@ -49,7 +51,7 @@ public:
 	typedef Eigen::Matrix<
 		ad_scalar, Eigen::Dynamic, Eigen::Dynamic, Eigen::RowMajor > ad_matrix;
 /* %$$
-$head Public Constructor$$
+$subhead Constructor$$
 $srccode%cpp% */
 	// constructor
 	atomic_eigen_mat_mul(
@@ -71,7 +73,7 @@ $srccode%cpp% */
 	ny_( nr_left * nc_right )
 	{ }
 /* %$$
-$head Public Pack$$
+$subhead Pack$$
 $srccode%cpp% */
 	template <class Matrix, class Vector>
 	void pack(
@@ -96,7 +98,7 @@ $srccode%cpp% */
 		return;
 	}
 /* %$$
-$head Public Unpack$$
+$subhead Unpack$$
 $srccode%cpp% */
 	template <class Matrix, class Vector>
 	void unpack(
@@ -115,7 +117,9 @@ $srccode%cpp% */
 		return;
 	}
 /* %$$
-$head Private Variables$$
+$head Private$$
+
+$subhead Variables$$
 $srccode%cpp% */
 private:
 	// -------------------------------------------------------------
@@ -136,7 +140,7 @@ private:
 	CppAD::vector<matrix> r_left_, r_right_, r_result_;
 	// -------------------------------------------------------------
 /* %$$
-$head Private rows$$
+$subhead rows$$
 $srccode%cpp% */
 	// convert from int to size_t
 	static size_t rows(const matrix& x)
@@ -144,7 +148,7 @@ $srccode%cpp% */
 	static size_t rows(const ad_matrix& x)
 	{	return size_t( x.rows() ); }
 /* %$$
-$head Private cols$$
+$subhead cols$$
 $srccode%cpp% */
 	// convert from int to size_t
 	static size_t cols(const matrix& x)
@@ -152,7 +156,7 @@ $srccode%cpp% */
 	static size_t cols(const ad_matrix& x)
 	{	return size_t( x.cols() ); }
 /* %$$
-$head Private forward$$
+$subhead forward$$
 $srccode%cpp% */
 	// forward mode routine called by CppAD
 	virtual bool forward(
@@ -251,7 +255,7 @@ $srccode%cpp% */
 		return true;
 	}
 /* %$$
-$head Private reverse$$
+$subhead reverse$$
 $srccode%cpp% */
 	// reverse mode routine called by CppAD
 	virtual bool reverse(
@@ -342,7 +346,7 @@ $srccode%cpp% */
 		return true;
 	}
 /* %$$
-$head for_sparse_jac$$
+$subhead for_sparse_jac$$
 $srccode%cpp% */
 	// forward Jacobian sparsity routine called by CppAD
 	virtual bool for_sparse_jac(
