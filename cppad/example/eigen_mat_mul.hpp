@@ -30,7 +30,7 @@ $srccode%cpp% */
 
 
 /* %$$
-$head Publice$$
+$head Public$$
 
 $subhead Types$$
 $srccode%cpp% */
