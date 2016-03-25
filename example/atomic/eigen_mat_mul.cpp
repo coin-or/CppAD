@@ -19,10 +19,6 @@ $$
 
 $section  Atomic Eigen Matrix Multiply: Example and Test$$
 
-$head Under Construction$$
-This example is under construction. So far only forward mode has been
-implemented.
-
 $head Description$$
 The $cref ADFun$$ function object $icode f$$ for this example is
 $latex \[

@@ -66,8 +66,7 @@ $lend
 
 $head 03-22$$
 $list number$$
-Add the $cref atomic_eigen_mat_mul.cpp$$ example; see
-$cref/under construction/atomic_eigen_mat_mul.cpp/Under Construction/$$.
+Start construction of the $cref atomic_eigen_mat_mul.cpp$$ example.
 $lnext
 change $code atomic_ode.cpp$$ to $cref checkpoint_ode.cpp$$ and
 $code atomic_extended_ode.cpp$$ to $cref checkpoint_extended_ode.cpp$$.
