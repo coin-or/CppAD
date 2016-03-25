@@ -21,6 +21,7 @@ Please visit http://www.coin-or.org/CppAD/ for information on other licenses.
 
 // external complied tests
 extern bool checkpoint(void);
+extern bool eigen_mat_div(void);
 extern bool eigen_mat_mul(void);
 extern bool extended_ode(void);
 extern bool for_sparse_hes(void);
@@ -81,6 +82,7 @@ int main(void)
 	ok &= Run( set_sparsity,        "set_sparsity"   );
 	ok &= Run( tangent,             "tangent"        );
 # ifdef CPPAD_EIGEN_EXAMPLES
+	ok &= Run( eigen_mat_div,       "eigen_mat_div"  );
 	ok &= Run( eigen_mat_mul,       "eigen_mat_mul"  );
 # endif
 	// check for errors

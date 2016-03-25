@@ -21,6 +21,13 @@ $$
 
 $section Atomic Eigen Matrix Multiply Class$$
 
+$head Purpose$$
+For fixed positive integers $latex r$$, $latex m$$, $latex c$$,
+construct and atomic operation that computes the matrix product
+$latex L \times R$$ for any $latex L \in \B{R}^{r \times m}$$ and
+$latex R \in \B{R}^{m \times c}$$.
+
+
 $nospell
 
 $head Start Class Definition$$
@@ -238,13 +245,15 @@ $srccode%cpp% */
 		{	for(size_t j = 0; j < nc_right_; j++)
 			{	bool var = false;
 				for(size_t ell = 0; ell < n_middle_; ell++)
-				{	size_t index   = i * n_middle_ + ell;
+				{	// left information
+					size_t index   = i * n_middle_ + ell;
 					bool var_left  = vx[index];
 					bool nz_left   = var_left | (f_left_[0](i, ell) != zero);
-					index          = nr_left_ * n_middle_;
-					index         += ell * nc_right_ + j;
+					// right information
+					index          = n_left + ell * nc_right_ + j;
 					bool var_right = vx[index];
 					bool nz_right  = var_right | (f_right_[0](ell, j) != zero);
+					// effect of result
 					var |= var_left & nz_right;
 					var |= nz_left  & var_right;
 				}

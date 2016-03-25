@@ -38,6 +38,9 @@ in reverse order by date.
 The purpose of these sections is to
 assist you in learning about changes between various versions of CppAD.
 
+$head 03-25$$
+Start construction of the $cref atomic_eigen_mat_div.cpp$$ example.
+
 $head 03-24$$
 $list number$$
 Fix build of $code example/atomic.cpp$$ when

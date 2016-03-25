@@ -95,6 +95,8 @@ $rref asinh.cpp$$
 $rref atan2.cpp$$
 $rref atan.cpp$$
 $rref atanh.cpp$$
+$rref atomic_eigen_mat_div.cpp$$
+$rref atomic_eigen_mat_div.hpp$$
 $rref atomic_eigen_mat_mul.cpp$$
 $rref atomic_eigen_mat_mul.hpp$$
 $rref checkpoint_extended_ode.cpp$$
