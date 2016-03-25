@@ -417,7 +417,7 @@ $srccode%cpp% */
 		return true;
 	}
 /* %$$
-$head rev_sparse_hes$$
+$subhead rev_sparse_hes$$
 $srccode%cpp% */
 	// reverse Hessian sparsity routine called by CppAD
 	virtual bool rev_sparse_hes(

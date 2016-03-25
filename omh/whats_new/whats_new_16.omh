@@ -46,7 +46,8 @@ $cref eigen_prefix$$ is not available
 $lnext
 Extend $cref atomic_eigen_mat_mul.cpp$$ example to include
 $cref/for_sparse_jac/atomic_eigen_mat_mul.hpp/Private/for_sparse_jac/$$,
-$cref/rev_sparse_jac/atomic_eigen_mat_mul.hpp/Private/rev_sparse_jac/$$.
+$cref/rev_sparse_jac/atomic_eigen_mat_mul.hpp/Private/rev_sparse_jac/$$,
+$cref/rev_sparse_hes/atomic_eigen_mat_mul.hpp/Private/rev_sparse_hes/$$.
 $lend
 
 $head 03-23$$

@@ -231,6 +231,18 @@ $srccode%cpp% */
 	ok    &= s[1] == check_set;
 	ok    &= s[2] == check_set;
 	// -------------------------------------------------------------------
+	// check reverse Hessian sparsity for f_2 (x)
+	CPPAD_TESTVECTOR( std::set<size_t> ) s2(1), h(n);
+	s2[0].clear();
+	s2[0].insert(2);
+	h = f.RevSparseHes(n, s2);
+	check_set.clear();
+	check_set.insert(0);
+	ok &= h[0] == check_set;
+	check_set.clear();
+	check_set.insert(1);
+	ok &= h[1] == check_set;
+	// -------------------------------------------------------------------
 	return ok;
 }
 /* %$$
