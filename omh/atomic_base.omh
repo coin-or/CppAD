@@ -84,7 +84,7 @@ $childtable%
 	example/atomic/set_sparsity.cpp%
 	example/atomic/tangent.cpp%
 	example/atomic/eigen_mat_mul.cpp%
-	example/atomic/eigen_mat_div.cpp%
+	example/atomic/eigen_mat_inv.cpp%
 	example/atomic/mat_mul.cpp
 %$$
 

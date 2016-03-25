@@ -13,12 +13,14 @@
 revert_list='
 '
 move_list='
+	example/atomic/eigen_mat_div.cpp
+	cppad/example/eigen_mat_div.hpp
 '
-move_sed='s|matrix_mul.hpp|mat_mul.hpp|'
+move_sed='s|mat_div|mat_inv|'
 #
 cat << EOF > junk.sed
-s|atomic_extended_ode.cpp|checkpoint_extended_ode.cpp|g
-s|atomic_ode.cpp|checkpoint_ode.cpp|g
+s|mat_div|mat_inv|g
+s|MAT_DIV|MAT_INV|
 EOF
 # -----------------------------------------------------------------------------
 if [ $0 != "bin/batch_edit.sh" ]

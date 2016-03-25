@@ -16,7 +16,7 @@
 SET(CMAKE_BUILD_TYPE DEBUG)
 #
 # eigen_sources and CPPAD_EIGEN_EXAMPLES
-SET(sources eigen_mat_div.cpp eigen_mat_mul.cpp)
+SET(sources eigen_mat_inv.cpp eigen_mat_mul.cpp)
 sources_libs_define(eigen "${sources}" "" EIGEN_EXAMPLES)
 #
 ADD_EXECUTABLE(example_atomic EXCLUDE_FROM_ALL

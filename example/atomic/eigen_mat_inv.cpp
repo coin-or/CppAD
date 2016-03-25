@@ -11,7 +11,7 @@ Please visit http://www.coin-or.org/CppAD/ for information on other licenses.
 -------------------------------------------------------------------------- */
 
 /*
-$begin atomic_eigen_mat_div.cpp$$
+$begin atomic_eigen_mat_inv.cpp$$
 $spell
 	mul
 	Eigen
@@ -39,11 +39,11 @@ f(x) =
 \] $$
 
 $children%
-	cppad/example/eigen_mat_div.hpp
+	cppad/example/eigen_mat_inv.hpp
 %$$
 
 $head Class Definition$$
-This example uses the file $cref atomic_eigen_mat_div.hpp$$
+This example uses the file $cref atomic_eigen_mat_inv.hpp$$
 which defines matrix multiply as a $cref atomic_base$$ operation.
 
 $nospell
@@ -51,44 +51,68 @@ $nospell
 $head Use Atomic Function$$
 $srccode%cpp% */
 # include <cppad/cppad.hpp>
-# include <cppad/example/eigen_mat_div.hpp>
+# include <cppad/example/eigen_mat_inv.hpp>
+# include <cppad/example/eigen_mat_mul.hpp>
 
 namespace {
 	typedef double            scalar;
 	typedef CppAD::AD<scalar> ad_scalar;
-	typedef typename atomic_eigen_mat_div<scalar>::matrix     matrix;
-	typedef typename atomic_eigen_mat_div<scalar>::ad_matrix  ad_matrix;
+	typedef typename atomic_eigen_mat_inv<scalar>::matrix     matrix;
+	typedef typename atomic_eigen_mat_inv<scalar>::ad_matrix  ad_matrix;
 
 	// use atomic operation to multiply two AD matrices
-	ad_matrix matrix_divide(
-		atomic_eigen_mat_div<scalar>& mat_div ,
+	ad_matrix matrix_multiply(
+		atomic_eigen_mat_mul<scalar>& mat_mul ,
 		const ad_matrix&              left    ,
 		const ad_matrix&              right   )
 	{	size_t nr_left   = size_t( left.rows() );
+		size_t n_middle    = size_t( left.cols() );
 		size_t nc_right  = size_t ( right.cols() );
-		assert( size_t( left.cols()  ) == nr_left );
-		assert( size_t( right.rows() ) == nr_left );
+		assert( size_t( right.rows() ) == n_middle );
 
 		// packed version of left and right
-		size_t nx = (nr_left + nc_right) * nr_left;
+		size_t nx = (nr_left + nc_right) * n_middle;
 		CPPAD_TESTVECTOR(ad_scalar) packed_arg(nx);
-		mat_div.pack(packed_arg, left, right);
+		mat_mul.pack(packed_arg, left, right);
 
-		// packed version of result = left \ right = left^{-1} * right
+		// packed version of result = left * right
 		size_t ny = nr_left * nc_right;
 		CPPAD_TESTVECTOR(ad_scalar) packed_result(ny);
-		mat_div(packed_arg, packed_result);
+		mat_mul(packed_arg, packed_result);
 
 		// result matrix
 		ad_matrix result(nr_left, nc_right);
-		mat_div.unpack(packed_result, result);
+		mat_mul.unpack(packed_result, result);
+
+		return result;
+	}
+
+	// use atomic operation to multiply two AD matrices
+	ad_matrix matrix_inverse(
+		atomic_eigen_mat_inv<scalar>& mat_inv ,
+		const ad_matrix&              arg     )
+	{	size_t nr   = size_t( arg.rows() );
+		assert( size_t( arg.cols()  ) == nr );
+
+		// packed version of arg
+		size_t nx = nr * nr;
+		CPPAD_TESTVECTOR(ad_scalar) packed_arg(nx);
+		mat_inv.pack(packed_arg, arg);
+
+		// packed version of result = left^{-1}
+		CPPAD_TESTVECTOR(ad_scalar) packed_result(nx);
+		mat_inv(packed_arg, packed_result);
+
+		// result matrix
+		ad_matrix result(nr, nr);
+		mat_inv.unpack(packed_result, result);
 
 		return result;
 	}
 
 }
 
-bool eigen_mat_div(void)
+bool eigen_mat_inv(void)
 {	bool ok    = true;
 	scalar eps = 10. * std::numeric_limits<scalar>::epsilon();
 	using CppAD::NearEqual;
@@ -97,10 +121,15 @@ bool eigen_mat_div(void)
 $subhead Constructor$$
 $srccode%cpp% */
 	// -------------------------------------------------------------------
-	// object that multiplies a 3x2 matrix times a 2x1 matrix
+	// object that multiplies a 2x2 matrix times a 2x1 matrix
 	size_t nr_left  = 2;
+	size_t n_middle = 2;
 	size_t nc_right = 1;
-	atomic_eigen_mat_div<scalar> mat_div(nr_left, nc_right);
+	atomic_eigen_mat_mul<scalar> mat_mul(nr_left, n_middle, nc_right);
+	// -------------------------------------------------------------------
+	// object that computes invers of a 2x2 matrix
+	size_t nr  = 2;
+	atomic_eigen_mat_inv<scalar> mat_inv(nr);
 	// -------------------------------------------------------------------
 	// declare independent variable vector x
 	size_t n = 3;
@@ -122,8 +151,10 @@ $srccode%cpp% */
 	ad_right(0, 0) = ad_scalar(0.0);
 	ad_right(1, 0) = ad_x[2];
 	// -------------------------------------------------------------------
-	// use atomic operation to divide left \ right = left^{-1} * right
-	ad_matrix ad_result = matrix_divide(mat_div, ad_left, ad_right);
+	// use atomic operation to compute left^{-1}
+	ad_matrix ad_left_inv = matrix_inverse(mat_inv, ad_left);
+	// use atomic operation to multiply left^{-1} * right
+	ad_matrix ad_result   = matrix_multiply(mat_mul, ad_left_inv, ad_right);
 	// -------------------------------------------------------------------
 	// check that first component of result is a parameter
 	// and the second component is a varaible.

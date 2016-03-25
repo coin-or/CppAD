@@ -26,7 +26,7 @@ AM_CPPFLAGS       = -I. \
 atomic_SOURCES   = \
 	atomic.cpp \
 	checkpoint.cpp \
-	eigen_mat_div.cpp \
+	eigen_mat_inv.cpp \
 	eigen_mat_mul.cpp \
 	extended_ode.cpp \
 	for_sparse_hes.cpp \
