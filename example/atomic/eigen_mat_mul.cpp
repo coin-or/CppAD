@@ -172,20 +172,39 @@ $srccode%cpp% */
 	ok   &= NearEqual(y1[1], 2.0,        eps, eps);
 	ok   &= NearEqual(y1[2], 2.0 * x[1], eps, eps);
 	// -------------------------------------------------------------------
+	// check second order forward mode
+	CPPAD_TESTVECTOR(scalar) x2(n), y2(m);
+	x2[0] = 0.0;
+	x2[1] = 0.0;
+	y2    = f.Forward(2, x2);
+	ok   &= NearEqual(y2[0], 0.0, eps, eps);
+	ok   &= NearEqual(y2[1], 0.0, eps, eps);
+	ok   &= NearEqual(y2[2], 1.0, eps, eps); // 1/2 * f_1''(x)
+	// -------------------------------------------------------------------
 	// check first order reverse mode
-	CPPAD_TESTVECTOR(scalar) w(m), dw(n);
+	CPPAD_TESTVECTOR(scalar) w(m), d1w(n);
 	w[0]  = 0.0;
 	w[1]  = 1.0;
 	w[2]  = 0.0;
-	dw    = f.Reverse(1, w);
-	ok   &= NearEqual(dw[0], 1.0, eps, eps);
-	ok   &= NearEqual(dw[1], 2.0, eps, eps);
+	d1w   = f.Reverse(1, w);
+	ok   &= NearEqual(d1w[0], 1.0, eps, eps);
+	ok   &= NearEqual(d1w[1], 2.0, eps, eps);
 	w[0]  = 0.0;
 	w[1]  = 0.0;
 	w[2]  = 1.0;
-	dw    = f.Reverse(1, w);
-	ok   &= NearEqual(dw[0], 2.0 * x[0], eps, eps);
-	ok   &= NearEqual(dw[1], 2.0 * x[1], eps, eps);
+	d1w   = f.Reverse(1, w);
+	ok   &= NearEqual(d1w[0], 2.0 * x[0], eps, eps);
+	ok   &= NearEqual(d1w[1], 2.0 * x[1], eps, eps);
+	// -------------------------------------------------------------------
+	// check second order reverse mode
+	CPPAD_TESTVECTOR(scalar) d2w(2 * n);
+	d2w   = f.Reverse(2, w);
+	ok   &= NearEqual(d2w[0 * 2 + 0], 2.0 * x[0], eps, eps);
+	ok   &= NearEqual(d2w[1 * 2 + 0], 2.0 * x[1], eps, eps);
+	// partial f_1 w.r.t x_1, x_0
+	ok   &= NearEqual(d2w[0 * 2 + 1], 0.0,        eps, eps);
+	// partial f_1 w.r.t x_1, x_1
+	ok   &= NearEqual(d2w[1 * 2 + 1], 2.0,        eps, eps);
 	// -------------------------------------------------------------------
 	// check forward Jacobian sparsity
 	CPPAD_TESTVECTOR( std::set<size_t> ) r(n), s(m);

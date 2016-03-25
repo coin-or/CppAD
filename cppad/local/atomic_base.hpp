@@ -1411,7 +1411,7 @@ $codei%
 %$$
 and its size is $icode m$$.
 It is a sparsity pattern for
-$latex S(x) = g^{(1)} (y) \in B^{1 \times m}$$.
+$latex S(x) = g^{(1)} [ f(x) ] \in B^{1 \times m}$$.
 
 $subhead t$$
 This argument has prototype
@@ -1457,13 +1457,13 @@ $latex \[
 \begin{array}{rcl}
 U(x)
 & = &
-\partial_u \{ \partial_y g[ y + f^{(1)} (x) R u ] \}_{u=0}
+\{ \partial_u \{ \partial_y g[ y + f^{(1)} (x) R u ] \}_{y=f(x)} \}_{u=0}
 \\
 & = &
-\partial_u \{ g^{(1)} [ y + f^{(1)} (x) R u ] \}_{u=0}
+\partial_u \{ g^{(1)} [ f(x) + f^{(1)} (x) R u ] \}_{u=0}
 \\
 & = &
-g^{(2)} (y) f^{(1)} (x) R
+g^{(2)} [ f(x) ] f^{(1)} (x) R
 \end{array}
 \] $$
 

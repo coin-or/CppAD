@@ -417,6 +417,72 @@ $srccode%cpp% */
 		return true;
 	}
 /* %$$
+$head rev_sparse_hes$$
+$srccode%cpp% */
+	// reverse Hessian sparsity routine called by CppAD
+	virtual bool rev_sparse_hes(
+		// which components of x are variables for this call
+		const CppAD::vector<bool>&                   vx,
+		// sparsity pattern for S(x) = g'[f(x)]
+		const CppAD::vector<bool>&                   s ,
+		// sparsity pattern for d/dx g[f(x)] = S(x) * f'(x)
+		CppAD::vector<bool>&                         t ,
+		// number of columns in R, U(x), and V(x)
+		size_t                                       q ,
+		// sparsity pattern for R
+		const CppAD::vector< std::set<size_t> >&     r ,
+		// sparsity pattern for U(x) = g^{(2)} [ f(x) ] * f'(x) * R
+		const CppAD::vector< std::set<size_t> >&     u ,
+		// sparsity pattern for
+		// V(x) = f'(x)^T * U(x) + sum_{i=0}^{m-1} S_i(x) f_i^{(2)} (x) * R
+		CppAD::vector< std::set<size_t> >&           v )
+	{	assert( vx.size() == nx_ );
+		assert( s.size()  == ny_ );
+		assert( t.size()  == nx_ );
+		assert( r.size()  == nx_ );
+		assert( v.size()  == nx_ );
+		//
+		// initilaize return sparsity patterns as false
+		for(size_t j = 0; j < nx_; j++)
+		{	t[j] = false;
+			v[j].clear();
+		}
+		//
+		size_t n_left = nr_left_ * n_middle_;
+		for(size_t i = 0; i < nr_left_; i++)
+		{	for(size_t j = 0; j < nc_right_; j++)
+			{	// pack index for entry (i, j) in result
+				size_t i_result = i * nc_right_ + j;
+				for(size_t ell = 0; ell < n_middle_; ell++)
+				{	// pack index for entry (i, ell) in left
+					size_t i_left  = i * n_middle_ + ell;
+					// pack index for entry (ell, j) in right
+					size_t i_right = n_left + ell * nc_right_ + j;
+					//
+					// back propagate T(x) = S(x) * f'(x).
+					t[i_left]  |= bool( s[i_result] );
+					t[i_right] |= bool( s[i_result] );
+					//
+					// V(x) = f'(x)^T * U(x) +  sum_i S_i(x) * f_i''(x) * R
+					// U(x)   = g''[ f(x) ] * f'(x) * R
+					// S_i(x) = g_i'[ f(x) ]
+					//
+					// back propagate f'(x)^T * U(x)
+					v[i_left]  = CppAD::set_union(v[i_left],  u[i_result] );
+					v[i_right] = CppAD::set_union(v[i_right], u[i_result] );
+					//
+					// back propagate S_i(x) * f_i''(x) * R
+					// (here is where we use vx to check for cross terms)
+					if( s[i_result] & vx[i_left] & vx[i_right] )
+					{	v[i_left]  = CppAD::set_union(v[i_left],  r[i_right] );
+						v[i_right] = CppAD::set_union(v[i_right], r[i_left]  );
+					}
+				}
+			}
+		}
+		return true;
+	}
+/* %$$
 $head End Class Definition$$
 $srccode%cpp% */
 }; // End of atomic_eigen_mat_mul class
