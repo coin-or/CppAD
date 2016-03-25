@@ -61,33 +61,6 @@ namespace {
 	typedef typename atomic_eigen_mat_inv<scalar>::ad_matrix  ad_matrix;
 
 	// use atomic operation to multiply two AD matrices
-	ad_matrix matrix_multiply(
-		atomic_eigen_mat_mul<scalar>& mat_mul ,
-		const ad_matrix&              left    ,
-		const ad_matrix&              right   )
-	{	size_t nr_left   = size_t( left.rows() );
-		size_t n_middle    = size_t( left.cols() );
-		size_t nc_right  = size_t ( right.cols() );
-		assert( size_t( right.rows() ) == n_middle );
-
-		// packed version of left and right
-		size_t nx = (nr_left + nc_right) * n_middle;
-		CPPAD_TESTVECTOR(ad_scalar) packed_arg(nx);
-		mat_mul.pack(packed_arg, left, right);
-
-		// packed version of result = left * right
-		size_t ny = nr_left * nc_right;
-		CPPAD_TESTVECTOR(ad_scalar) packed_result(ny);
-		mat_mul(packed_arg, packed_result);
-
-		// result matrix
-		ad_matrix result(nr_left, nc_right);
-		mat_mul.unpack(packed_result, result);
-
-		return result;
-	}
-
-	// use atomic operation to multiply two AD matrices
 	ad_matrix matrix_inverse(
 		atomic_eigen_mat_inv<scalar>& mat_inv ,
 		const ad_matrix&              arg     )
@@ -154,7 +127,7 @@ $srccode%cpp% */
 	// use atomic operation to compute left^{-1}
 	ad_matrix ad_left_inv = matrix_inverse(mat_inv, ad_left);
 	// use atomic operation to multiply left^{-1} * right
-	ad_matrix ad_result   = matrix_multiply(mat_mul, ad_left_inv, ad_right);
+	ad_matrix ad_result   = mat_mul.op(ad_left_inv, ad_right);
 	// -------------------------------------------------------------------
 	// check that first component of result is a parameter
 	// and the second component is a varaible.

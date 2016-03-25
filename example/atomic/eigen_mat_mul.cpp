@@ -55,43 +55,13 @@ $srccode%cpp% */
 # include <cppad/cppad.hpp>
 # include <cppad/example/eigen_mat_mul.hpp>
 
-namespace {
-	typedef double            scalar;
-	typedef CppAD::AD<scalar> ad_scalar;
-	typedef typename atomic_eigen_mat_mul<scalar>::matrix     matrix;
-	typedef typename atomic_eigen_mat_mul<scalar>::ad_matrix  ad_matrix;
-
-	// use atomic operation to multiply two AD matrices
-	ad_matrix matrix_multiply(
-		atomic_eigen_mat_mul<scalar>& mat_mul ,
-		const ad_matrix&              left    ,
-		const ad_matrix&              right   )
-	{	size_t nr_left   = size_t( left.rows() );
-		size_t n_middle    = size_t( left.cols() );
-		size_t nc_right  = size_t ( right.cols() );
-		assert( size_t( right.rows() ) == n_middle );
-
-		// packed version of left and right
-		size_t nx = (nr_left + nc_right) * n_middle;
-		CPPAD_TESTVECTOR(ad_scalar) packed_arg(nx);
-		mat_mul.pack(packed_arg, left, right);
-
-		// packed version of result = left * right
-		size_t ny = nr_left * nc_right;
-		CPPAD_TESTVECTOR(ad_scalar) packed_result(ny);
-		mat_mul(packed_arg, packed_result);
-
-		// result matrix
-		ad_matrix result(nr_left, nc_right);
-		mat_mul.unpack(packed_result, result);
-
-		return result;
-	}
-
-}
-
 bool eigen_mat_mul(void)
-{	bool ok    = true;
+{	//
+	typedef double                                            scalar;
+	typedef CppAD::AD<scalar>                                 ad_scalar;
+	typedef typename atomic_eigen_mat_mul<scalar>::ad_matrix  ad_matrix;
+	//
+	bool ok    = true;
 	scalar eps = 10. * std::numeric_limits<scalar>::epsilon();
 	using CppAD::NearEqual;
 	//
@@ -129,7 +99,7 @@ $srccode%cpp% */
 	ad_right(1, 0) = ad_x[1];
 	// -------------------------------------------------------------------
 	// use atomic operation to multiply left * right
-	ad_matrix ad_result = matrix_multiply(mat_mul, ad_left, ad_right);
+	ad_matrix ad_result = mat_mul.op(ad_left, ad_right);
 	// -------------------------------------------------------------------
 	// check that first component of result is a parameter
 	// and the other components are varaibles.

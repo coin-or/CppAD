@@ -80,48 +80,43 @@ $srccode%cpp% */
 	ny_( nr_left * nc_right )
 	{ }
 /* %$$
-$subhead Pack$$
+$subhead op$$
 $srccode%cpp% */
-	template <class Matrix, class Vector>
-	void pack(
-		Vector&        packed  ,
-		const Matrix&  left    ,
-		const Matrix&  right   )
-	{	assert( packed.size() == nx_      );
-		assert( rows( left ) == nr_left_ );
-		assert( cols( left ) == n_middle_ );
-		assert( rows( right ) == n_middle_ );
-		assert( cols( right ) == nc_right_ );
-		//
-		size_t n_left = nr_left_ * n_middle_;
-		size_t n_right = n_middle_ * nc_right_;
-		assert( n_left + n_right == nx_ );
-		//
-		for(size_t i = 0; i < n_left; i++)
-			packed[i] = left.data()[i];
-		for(size_t i = 0; i < n_right; i++)
-			packed[ i + n_left ] = right.data()[i];
-		//
-		return;
-	}
-/* %$$
-$subhead Unpack$$
-$srccode%cpp% */
-	template <class Matrix, class Vector>
-	void unpack(
-		const Vector&   packed  ,
-		Matrix&         result  )
-	{	assert( packed.size() == ny_      );
-		assert( rows( result ) == nr_left_ );
-		assert( cols( result ) == nc_right_ );
-		//
+	// use atomic operation to multiply two AD matrices
+	ad_matrix op(
+		const ad_matrix&              left    ,
+		const ad_matrix&              right   )
+	{	assert( nr_left_   == size_t( left.rows() )   );
+		assert( n_middle_  == size_t( left.cols() )   );
+		assert( n_middle_  == size_t( right.rows() )  );
+		assert( nc_right_  == size_t ( right.cols() ) );
+
+		// -----------------------------------------------------------------
+		// packed version of left and right
+		CPPAD_TESTVECTOR(ad_scalar) packed_arg(nx_);
+		size_t n_left   = nr_left_ * n_middle_;
+		size_t n_right  = n_middle_ * nc_right_;
 		size_t n_result = nr_left_ * nc_right_;
+		assert( n_left + n_right == nx_ );
 		assert( n_result == ny_ );
 		//
+		for(size_t i = 0; i < n_left; i++)
+			packed_arg[i] = left.data()[i];
+		for(size_t i = 0; i < n_right; i++)
+			packed_arg[ i + n_left ] = right.data()[i];
+
+		// ------------------------------------------------------------------
+		// packed version of result = left * right
+		CPPAD_TESTVECTOR(ad_scalar) packed_result(ny_);
+		(*this)(packed_arg, packed_result);
+
+		// ------------------------------------------------------------------
+		// unpack result matrix
+		ad_matrix result(nr_left_, nc_right_);
 		for(size_t i = 0; i < n_result; i++)
-			result.data()[i] = packed[ i ];
+			result.data()[i] = packed_result[ i ];
 		//
-		return;
+		return result;
 	}
 /* %$$
 $head Private$$
