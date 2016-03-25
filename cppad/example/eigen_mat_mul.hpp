@@ -226,7 +226,7 @@ $srccode%cpp% */
 				ty[ i * n_order + k ] = f_result_[k].data()[i];
 		}
 
-		// check if we are compute vy
+		// check if we are computing vy
 		if( vx.size() == 0 )
 			return true;
 		// ------------------------------------------------------------------
@@ -281,7 +281,12 @@ $srccode%cpp% */
 		size_t n_result = nr_left_ * nc_right_;
 		assert( n_left + n_right == nx_ );
 		assert( n_result == ny_ );
-		//
+		// -------------------------------------------------------------------
+		// make sure f_left_, f_right_ are large enough
+		assert( f_left_.size() == f_right_.size() );
+		assert( f_left_.size() == f_result_.size() );
+		// must have previous run forward with order >= n_order
+		assert( f_left_.size() >= n_order );
 		// -------------------------------------------------------------------
 		// make sure r_left_, r_right_, and r_result_ are large enough
 		assert( r_left_.size() == r_right_.size() );
