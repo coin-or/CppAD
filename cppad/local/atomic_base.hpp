@@ -1302,7 +1302,7 @@ $codei%
 %$$
 The input value of its elements
 are not specified (must not matter).
-Upon return, $icode v$$ is a
+Upon return, $icode h$$ is a
 $cref/atomic_sparsity/atomic_option/atomic_sparsity/$$ pattern for
 $latex H(x) \in B^{n \times n}$$ which is defined above.
 
@@ -1490,9 +1490,9 @@ V(x)
 (g \circ f)^{(2)}( x ) R
 \\
 & = &
-f^{(1)} (x)^\R{T} g^{(2)} ( y ) f^{(1)} (x)  R
+f^{(1)} (x)^\R{T} g^{(2)} [ f(x) ] f^{(1)} (x)  R
 +
-\sum_{i=1}^m g_i^{(1)} (y) \; f_i^{(2)} (x) R
+\sum_{i=1}^m g_i^{(1)} [ f(x) ] \; f_i^{(2)} (x) R
 \\
 & = &
 f^{(1)} (x)^\R{T} U(x)

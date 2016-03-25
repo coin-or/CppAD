@@ -417,6 +417,48 @@ $srccode%cpp% */
 		return true;
 	}
 /* %$$
+$subhead for_sparse_hes$$
+$srccode%cpp% */
+	virtual bool for_sparse_hes(
+		// which components of x are variables for this call
+		const CppAD::vector<bool>&                   vx,
+		// sparsity pattern for the diagonal of R
+		const CppAD::vector<bool>&                   r ,
+		// sparsity pattern for the vector S
+		const CppAD::vector<bool>&                   s ,
+		// sparsity patternfor the Hessian H(x)
+		CppAD::vector< std::set<size_t> >&           h )
+	{	assert( vx.size() == nx_ );
+		assert( r.size()  == nx_ );
+		assert( s.size()  == ny_ );
+		assert( h.size()  == nx_ );
+		//
+		// initilize h as empty
+		for(size_t i = 0; i < nx_; i++)
+			h[i].clear();
+		//
+		size_t n_left = nr_left_ * n_middle_;
+		for(size_t i = 0; i < nr_left_; i++)
+		{	for(size_t j = 0; j < nc_right_; j++)
+			{	// pack index for entry (i, j) in result
+				size_t i_result = i * nc_right_ + j;
+				if( s[i_result] )
+				{	for(size_t ell = 0; ell < n_middle_; ell++)
+					{	// pack index for entry (i, ell) in left
+						size_t i_left  = i * n_middle_ + ell;
+						// pack index for entry (ell, j) in right
+						size_t i_right = n_left + ell * nc_right_ + j;
+						if( r[i_left] & r[i_right] )
+						{	h[i_left].insert(i_right);
+							h[i_right].insert(i_left);
+						}
+					}
+				}
+			}
+		}
+		return true;
+	}
+/* %$$
 $subhead rev_sparse_hes$$
 $srccode%cpp% */
 	// reverse Hessian sparsity routine called by CppAD

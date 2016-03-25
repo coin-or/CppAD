@@ -517,7 +517,7 @@ void ForHesSweep(
 			user_ix[user_j] = 0;
 			user_vx[user_j] = false;
 			++user_j;
-			if( user_j == n )
+			if( user_j == user_n )
 				user_state = user_ret;
 			break;
 
@@ -535,7 +535,7 @@ void ForHesSweep(
 			if( i < for_jac_sparse.end() )
 				user_r[user_j] = true;
 			++user_j;
-			if( user_j == n )
+			if( user_j == user_n )
 				user_state = user_ret;
 			break;
 

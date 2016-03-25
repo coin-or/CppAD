@@ -47,7 +47,12 @@ $lnext
 Extend $cref atomic_eigen_mat_mul.cpp$$ example to include
 $cref/for_sparse_jac/atomic_eigen_mat_mul.hpp/Private/for_sparse_jac/$$,
 $cref/rev_sparse_jac/atomic_eigen_mat_mul.hpp/Private/rev_sparse_jac/$$,
+$cref/for_sparse_hes/atomic_eigen_mat_mul.hpp/Private/for_sparse_hes/$$,
 $cref/rev_sparse_hes/atomic_eigen_mat_mul.hpp/Private/rev_sparse_hes/$$.
+$lnext
+Fix a bug in the $cref ForSparseHes$$ routine.
+$lnext
+Edit $cref atomic_rev_sparse_hes$$ documentation.
 $lend
 
 $head 03-23$$
