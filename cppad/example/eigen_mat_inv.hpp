@@ -76,37 +76,31 @@ $srccode%cpp% */
 	f_sum_( nr, nr )
 	{ }
 /* %$$
-$subhead Pack$$
+$subhead op$$
 $srccode%cpp% */
-	template <class Matrix, class Vector>
-	void pack(
-		Vector&        packed  ,
-		const Matrix&  arg     )
-	{	assert( packed.size() == nx_      );
-		assert( rows( arg ) == nr_ );
-		assert( cols( arg ) == nr_ );
-		assert( nr_ * nr_   == nx_ );
-		//
+	// use atomic operation to invert an AD matrix
+	ad_matrix op(const ad_matrix& arg)
+	{	assert( nr_ == size_t( arg.rows() ) );
+		assert( nr_ == size_t( arg.cols() ) );
+
+		// -------------------------------------------------------------------
+		// packed version of arg
+		CPPAD_TESTVECTOR(ad_scalar) packed_arg(nx_);
 		for(size_t i = 0; i < nx_; i++)
-			packed[i] = arg.data()[i];
-		return;
-	}
-/* %$$
-$subhead Unpack$$
-$srccode%cpp% */
-	template <class Matrix, class Vector>
-	void unpack(
-		const Vector&   packed  ,
-		Matrix&         result  )
-	{	assert( packed.size() == nx_      );
-		assert( rows( result ) == nr_ );
-		assert( cols( result ) == nr_ );
-		assert( nr_ * nr_   == nx_ );
-		//
+			packed_arg[i] = arg.data()[i];
+
+		// -------------------------------------------------------------------
+		// packed version of result = arg^{-1}
+		CPPAD_TESTVECTOR(ad_scalar) packed_result(nx_);
+		(*this)(packed_arg, packed_result);
+
+		// -------------------------------------------------------------------
+		// unpack result matrix
+		ad_matrix result(nr_, nr_);
 		for(size_t i = 0; i < nx_; i++)
-			result.data()[i] = packed[ i ];
-		//
-		return;
+			result.data()[i] = packed_result[ i ];
+
+		return result;
 	}
 /* %$$
 $head Private$$

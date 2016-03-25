@@ -54,39 +54,14 @@ $srccode%cpp% */
 # include <cppad/example/eigen_mat_inv.hpp>
 # include <cppad/example/eigen_mat_mul.hpp>
 
-namespace {
-	typedef double            scalar;
-	typedef CppAD::AD<scalar> ad_scalar;
-	typedef typename atomic_eigen_mat_inv<scalar>::matrix     matrix;
-	typedef typename atomic_eigen_mat_inv<scalar>::ad_matrix  ad_matrix;
-
-	// use atomic operation to multiply two AD matrices
-	ad_matrix matrix_inverse(
-		atomic_eigen_mat_inv<scalar>& mat_inv ,
-		const ad_matrix&              arg     )
-	{	size_t nr   = size_t( arg.rows() );
-		assert( size_t( arg.cols()  ) == nr );
-
-		// packed version of arg
-		size_t nx = nr * nr;
-		CPPAD_TESTVECTOR(ad_scalar) packed_arg(nx);
-		mat_inv.pack(packed_arg, arg);
-
-		// packed version of result = left^{-1}
-		CPPAD_TESTVECTOR(ad_scalar) packed_result(nx);
-		mat_inv(packed_arg, packed_result);
-
-		// result matrix
-		ad_matrix result(nr, nr);
-		mat_inv.unpack(packed_result, result);
-
-		return result;
-	}
-
-}
 
 bool eigen_mat_inv(void)
-{	bool ok    = true;
+{
+	typedef double                                            scalar;
+	typedef CppAD::AD<scalar>                                 ad_scalar;
+	typedef typename atomic_eigen_mat_inv<scalar>::ad_matrix  ad_matrix;
+	//
+	bool ok    = true;
 	scalar eps = 10. * std::numeric_limits<scalar>::epsilon();
 	using CppAD::NearEqual;
 	//
@@ -125,7 +100,7 @@ $srccode%cpp% */
 	ad_right(1, 0) = ad_x[2];
 	// -------------------------------------------------------------------
 	// use atomic operation to compute left^{-1}
-	ad_matrix ad_left_inv = matrix_inverse(mat_inv, ad_left);
+	ad_matrix ad_left_inv = mat_inv.op(ad_left);
 	// use atomic operation to multiply left^{-1} * right
 	ad_matrix ad_result   = mat_mul.op(ad_left_inv, ad_right);
 	// -------------------------------------------------------------------
