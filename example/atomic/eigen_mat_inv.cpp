@@ -17,7 +17,7 @@ $spell
 	Eigen
 $$
 
-$section  Atomic Eigen Matrix Division: Example and Test$$
+$section  Atomic Eigen Matrix Inverse: Example and Test$$
 
 $head Description$$
 The $cref ADFun$$ function object $icode f$$ for this example is

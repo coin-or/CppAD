@@ -28,6 +28,7 @@ $spell
 	ifndef
 	xam
 	makefile
+	vy
 $$
 
 $section Changes and Additions to CppAD During 2016$$
@@ -39,8 +40,15 @@ The purpose of these sections is to
 assist you in learning about changes between various versions of CppAD.
 
 $head 03-26$$
+$list number$$
 Implement and test the $cref atomic_eigen_mat_inv.cpp$$
 $cref/reverse/atomic_eigen_mat_inv.hpp/Private/reverse/$$ is implemented.
+$lnext
+Fix a bug in the calculation of
+$cref/vy/atomic_forward/vy/$$ in the $cref atomic_eigen_mat_inv.hpp$$
+$cref/forward/atomic_eigen_mat_inv.hpp/Private/forward/$$ example.
+$lend
+
 
 $head 03-25$$
 $list number$$

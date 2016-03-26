@@ -253,21 +253,31 @@ $srccode%cpp% */
 		scalar zero(0.0);
 		assert( n_order == 1 );
 		for(size_t j = 0; j < nr_; j++)
-		{	for(size_t i = 0; i < nr_; i++)
+		{	// only row j of this column of the identity is non-zero
+			// initialize which elements of column j of result are variables
+			for(size_t i = 0; i < nr_; i++)
 			{	// initialize vy as false
 				size_t index = i * nr_ + j;
 				vy[index]    = false;
 			}
-			for(size_t i = 0; i < nr_; i++)
+			// determine if any elements in row j of argument are variables
+			bool row_var = false;
+			for(size_t ell = 0; ell < nr_; ell++)
+			{	// arg information
+				size_t index  = j * nr_ + ell;
+				row_var      |= vx[index];
+			}
+			if( row_var )
 			{	for(size_t ell = 0; ell < nr_; ell++)
 				{	// arg information
-					size_t index   = i * nr_ + ell;
-					bool var_arg  = vx[index];
-					// identity information
-					bool nz_eye   = ell == j;
-					// result information
-					index = i * nr_ + j;
-					vy[index] |= var_arg & nz_eye;
+					size_t index = j * nr_ + ell;
+					bool not_zero = f_arg_[0](j, ell) != scalar(0.0);
+					bool var      = vx[index];
+					if( not_zero | var )
+					{	// result information
+						index = ell * nr_ + j;
+						vy[index] = true;
+					}
 				}
 			}
 		}

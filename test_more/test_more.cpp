@@ -49,6 +49,7 @@ extern bool dbl_epsilon(void);
 extern bool Div(void);
 extern bool DivEq(void);
 extern bool DivZeroOne(void);
+extern bool eigen_mat_inv(void);
 extern bool erf(void);
 extern bool Exp(void);
 extern bool expm1(void);
@@ -256,7 +257,8 @@ int main(void)
 	ok &= Run( alloc_openmp,    "alloc_openmp"   );
 # endif
 # ifdef CPPAD_EIGEN_TEST
-	ok &= Run( cppad_eigen, "cppad_eigen" );
+	ok &= Run( cppad_eigen,     "cppad_eigen"    );
+	ok &= Run( eigen_mat_inv,   "eigen_mat_inv"  );
 # endif
 # if ! CPPAD_EIGENVECTOR
 	ok &= Run( test_vector, "test_vector" );
