@@ -38,9 +38,16 @@ in reverse order by date.
 The purpose of these sections is to
 assist you in learning about changes between various versions of CppAD.
 
+$head 03-26$$
+Implement and test the $cref atomic_eigen_mat_inv.cpp$$
+$cref/reverse/atomic_eigen_mat_inv.hpp/Private/reverse/$$ is implemented.
+
 $head 03-25$$
 $list number$$
-Start construction of the $cref atomic_eigen_mat_inv.cpp$$ example.
+Start construction of the $cref atomic_eigen_mat_inv.cpp$$ example,
+currently only
+$cref/forward/atomic_eigen_mat_inv.hpp/Private/forward/$$ is implemented
+and tested.
 $lnext
 More improvements to $cref atomic_eigen_mat_mul.cpp$$ example.
 $lend

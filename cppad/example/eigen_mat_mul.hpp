@@ -17,6 +17,7 @@ Please visit http://www.coin-or.org/CppAD/ for information on other licenses.
 $begin atomic_eigen_mat_mul.hpp$$
 $spell
 	Eigen
+	Taylor
 $$
 
 $section Atomic Eigen Matrix Multiply Class$$
@@ -24,8 +25,29 @@ $section Atomic Eigen Matrix Multiply Class$$
 $head Purpose$$
 For fixed positive integers $latex r$$, $latex m$$, $latex c$$,
 construct and atomic operation that computes the matrix product
-$latex L \times R$$ for any $latex L \in \B{R}^{r \times m}$$ and
-$latex R \in \B{R}^{m \times c}$$.
+$latex R = A \times B$$ for any $latex A \in \B{R}^{r \times m}$$ and
+$latex B \in \B{R}^{m \times c}$$.
+
+$head Theory$$
+
+$subhead Forward$$
+For $latex k = 0 , \ldots $$, the $th k$$ order Taylor coefficient
+$latex R_k$$ is given by
+$latex \[
+	R_k = \sum_{\ell = 0}^{k} A_\ell B_{k-\ell}
+\] $$
+
+$subhead Reverse$$
+We use $latex \bar{R}_k$$ for the partial of the scalar final result
+with respect to $latex R_k$$.
+The back-propagation algorithm that eliminates $latex R_k$$ is,
+for $latex \ell = 0, \ldots , k-1$$,
+$latex \[
+\bar{A}_\ell     = \bar{A}_\ell     + \bar{R}_k B_{k-\ell}^\R{T}
+\] $$
+$latex \[
+\bar{B}_{k-\ell} =  \bar{B}_{k-\ell} + A_\ell^\R{T} \bar{R}_k
+\] $$
 
 
 $nospell
@@ -263,7 +285,7 @@ $subhead reverse$$
 $srccode%cpp% */
 	// reverse mode routine called by CppAD
 	virtual bool reverse(
-		// highest order Taylor coefficient that we are computing deritive of
+		// highest order Taylor coefficient that we are computing derivative of
 		size_t                     q ,
 		// forward mode Taylor coefficients for x variables
 		const CppAD::vector<double>&     tx ,
@@ -318,7 +340,7 @@ $srccode%cpp% */
 				f_right_[k].data()[i] = tx[ (i + n_left) * n_order + k ];
 		}
 		// -------------------------------------------------------------------
-		// unpack result_ from py
+		// unpack py into r_result_
 		for(size_t k = 0; k < n_order; k++)
 		{	for(size_t i = 0; i < n_result; i++)
 				r_result_[k].data()[i] = py[ i * n_order + k ];

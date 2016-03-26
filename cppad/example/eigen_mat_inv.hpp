@@ -17,16 +17,55 @@ Please visit http://www.coin-or.org/CppAD/ for information on other licenses.
 $begin atomic_eigen_mat_inv.hpp$$
 $spell
 	Eigen
+	Taylor
 $$
 
-$section Atomic Eigen Matrix Divide Class$$
+$section Atomic Eigen Matrix Inversion Class$$
 
 $head Purpose$$
-For fixed positive integers $latex r$$, $latex c$$,
-construct and atomic operation that solve the matrix equation
-$latex L \times X = R$$ for $latex X \in \B{R}^{r \times c}$$
-for any $latex L \in \B{R}^{r \times r}$$ and
-$latex R \in \B{R}^{r \times c}$$.
+For fixed positive integer $latex p$$,
+construct and atomic operation that solve the computes the matrix inverse
+$latex R = A^{-1}$$
+for any invertible $latex A \in \B{R}^{p \times p}$$.
+
+$head Theory$$
+
+$head Forward$$
+For $latex k = 0 , \ldots$$, the $th k$$ order Taylor coefficient is given by
+$latex \[
+	I_k = \sum_{\ell=0}^k A_\ell R_{k-\ell}
+\] $$
+$latex \[
+	R_k = A_0^{-1} \left( I_k - \sum_{\ell=1}^k A_\ell R_{k-\ell} \right)
+\] $$
+where $latex I_k$$ is the $th k$$ order Taylor coefficient for the
+identity matrix. i.e., $latex I_k$$ is the identity matrix if $latex k = 0$$
+and is the zero matrix if $latex k \neq 0$$.
+
+$head Reverse$$
+We use $latex \bar{R}_k$$ for the partial of the scalar final result
+with respect to $latex R_k$$.
+Note that $latex R_0 = A_0^{-1}$$.
+The back-propagation algorithm that eliminates $latex R_k$$,
+for $latex k > 0$$, is
+for $latex \ell = 1 , \ldots , k$$
+$latex \[
+\bar{A}_\ell = \bar{A}_\ell - R_0 \bar{R}_k R_{k-\ell}^\R{T}
+\] $$
+$latex \[
+\bar{R}_{k-\ell} = \bar{R}_{k-\ell} - R_0 A_\ell^\R{T} \bar{R}_k
+\] $$
+$latex \[
+\bar{R}_0  = \bar{R}_0 + \bar{R}_k
+	\left( I_k - \sum_{\ell=1}^k A_\ell R_{k-\ell} \right)^\R{T}
+\] $$
+$latex \[
+\bar{R}_0  = \bar{R}_0 + \bar{R}_k ( A_0 R_k )^\R{T}
+\] $$
+The back-propagation algorithm that eliminates $latex R_0$$ is
+$latex \[
+	\bar{A}_0 = \bar{A}_0 - R_0^\R{T} \bar{R}_0 R_0^\R{T}
+\]$$
 
 $nospell
 
@@ -119,7 +158,7 @@ private:
 	// matrix used for forward mode summation
 	matrix f_sum_;
 	// one reverse mode vector of matrices for argument and result
-	CppAD::vector<matrix> r_arg, r_result_;
+	CppAD::vector<matrix> r_arg_, r_result_;
 	// -------------------------------------------------------------
 /* %$$
 $subhead rows$$
@@ -192,9 +231,10 @@ $srccode%cpp% */
 			else
 				f_sum_ = matrix::Zero(nr_, nr_);
 			// compute sum
-			for(size_t ell = 0; ell < k; ell++)
-				f_sum_ -= f_arg_[k-ell] * f_result_[ell];
+			for(size_t ell = 1; ell <= k; ell++)
+				f_sum_ -= f_arg_[ell] * f_result_[k-ell];
 			// solve arg_[0] * result_[k] = sum
+			// result_[k] = arg_[0]^{-1} * sum
 			f_result_[k] = lu_arg.solve(f_sum_);
 		}
 		// -------------------------------------------------------------------
@@ -231,6 +271,89 @@ $srccode%cpp% */
 				}
 			}
 		}
+		return true;
+	}
+/* %$$
+$subhead reverse$$
+$srccode%cpp% */
+	// reverse mode routine called by CppAD
+	virtual bool reverse(
+		// highest order Taylor coefficient that we are computing derivative of
+		size_t                     q ,
+		// forward mode Taylor coefficients for x variables
+		const CppAD::vector<double>&     tx ,
+		// forward mode Taylor coefficients for y variables
+		const CppAD::vector<double>&     ty ,
+		// upon return, derivative of G[ F[ {x_j^k} ] ] w.r.t {x_j^k}
+		CppAD::vector<double>&           px ,
+		// derivative of G[ {y_i^k} ] w.r.t. {y_i^k}
+		const CppAD::vector<double>&     py
+	)
+	{	size_t n_order = q + 1;
+		assert( nx_           == nr_ * nr_ );
+		assert( nx_ * n_order == tx.size() );
+		assert( nx_ * n_order == ty.size() );
+		assert( px.size()     == tx.size() );
+		assert( py.size()     == ty.size() );
+		//
+		// -------------------------------------------------------------------
+		// make sure f_arg_ is large enough
+		assert( f_arg_.size() == f_result_.size() );
+		// must have previous run forward with order >= n_order
+		assert( f_arg_.size() >= n_order );
+		// -------------------------------------------------------------------
+		// make sure r_arg_, r_result_ are large enough
+		assert( r_arg_.size() == r_result_.size() );
+		if( r_arg_.size() < n_order )
+		{	r_arg_.resize(n_order);
+			r_result_.resize(n_order);
+			//
+			for(size_t k = 0; k < n_order; k++)
+			{	r_arg_[k].resize(nr_, nr_);
+				r_result_[k].resize(nr_, nr_);
+			}
+		}
+		// -------------------------------------------------------------------
+		// unpack tx into f_arg_
+		for(size_t k = 0; k < n_order; k++)
+		{	// unpack arg values for this order
+			for(size_t i = 0; i < nx_; i++)
+				f_arg_[k].data()[i] = tx[ i * n_order + k ];
+		}
+		// -------------------------------------------------------------------
+		// unpack py into r_result_
+		for(size_t k = 0; k < n_order; k++)
+		{	for(size_t i = 0; i < nx_; i++)
+				r_result_[k].data()[i] = py[ i * n_order + k ];
+		}
+		// -------------------------------------------------------------------
+		// initialize r_arg_ as zero
+		for(size_t k = 0; k < n_order; k++)
+			r_arg_[k]   = matrix::Zero(nr_, nr_);
+		// -------------------------------------------------------------------
+		// matrix reverse mode calculation
+		//
+		for(size_t k1 = n_order; k1 > 1; k1--)
+		{	size_t k = k1 - 1;
+			for(size_t ell = 1; ell <= k; ell++)
+			{	r_arg_[ell]    -=
+					f_result_[0] * r_result_[k] * f_result_[k-ell].transpose();
+				//
+				r_result_[k-ell] -=
+					f_result_[0] * f_arg_[ell].transpose() * r_result_[k];
+			}
+			r_result_[0] +=
+			r_result_[k] * f_result_[k].transpose() * f_arg_[0].transpose();
+		}
+		r_arg_[0] -=
+		f_result_[0].transpose() * r_result_[0] * f_result_[0].transpose();
+		// -------------------------------------------------------------------
+		// pack r_arg into px
+		for(size_t k = 0; k < n_order; k++)
+		{	for(size_t i = 0; i < nx_; i++)
+				px[ i * n_order + k ] = r_arg_[k].data()[i];
+		}
+		//
 		return true;
 	}
 /* %$$

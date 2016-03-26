@@ -150,10 +150,41 @@ $srccode%cpp% */
 	x2[0] = 0.0;
 	x2[1] = 0.0;
 	x2[2] = 0.0;
-	scalar  partial = 2.0 * x[2] / (x[1] * x[1] * x[1] );
+	scalar  f1_x1_x1 = 2.0 * x[2] / (x[1] * x[1] * x[1] );
 	y2    = f.Forward(2, x2);
-	ok   &= NearEqual(y2[0], 0.0,           eps, eps);
-	ok   &= NearEqual(y2[1], partial / 2.0, eps, eps);
+	ok   &= NearEqual(y2[0], 0.0,            eps, eps);
+	ok   &= NearEqual(y2[1], f1_x1_x1 / 2.0, eps, eps);
+	// -------------------------------------------------------------------
+	// check first order reverse
+	CPPAD_TESTVECTOR(scalar) w(m), d1w(n);
+	w[0] = 1.0;
+	w[1] = 0.0;
+	d1w  = f.Reverse(1, w);
+	ok  &= NearEqual(d1w[0], 0.0, eps, eps);
+	ok  &= NearEqual(d1w[1], 0.0, eps, eps);
+	ok  &= NearEqual(d1w[2], 0.0, eps, eps);
+	w[0] = 0.0;
+	w[1] = 1.0;
+	d1w  = f.Reverse(1, w);
+	ok  &= NearEqual(d1w[0], 0.0,                  eps, eps);
+	ok  &= NearEqual(d1w[1], - x[2] / (x[1]*x[1]), eps, eps);
+	ok  &= NearEqual(d1w[2], 1.0 / x[1],           eps, eps);
+	// -------------------------------------------------------------------
+	// check second order reverse
+	CPPAD_TESTVECTOR(scalar) d2w(2 * n);
+	d2w  = f.Reverse(2, w);
+	// partial f_1 w.r.t x_0
+	ok  &= NearEqual(d2w[0 * 2 + 0], 0.0,                  eps, eps);
+	// partial f_1 w.r.t x_1
+	ok  &= NearEqual(d2w[1 * 2 + 0], - x[2] / (x[1]*x[1]), eps, eps);
+	// partial f_1 w.r.t x_2
+	ok  &= NearEqual(d2w[2 * 2 + 0], 1.0 / x[1],           eps, eps);
+	// partial f_1 w.r.t x_1, x_0
+	ok  &= NearEqual(d2w[0 * 2 + 1], 0.0,                  eps, eps);
+	// partial f_1 w.r.t x_1, x_1
+	ok  &= NearEqual(d2w[1 * 2 + 1], f1_x1_x1,             eps, eps);
+	// partial f_1 w.r.t x_1, x_2
+	ok  &= NearEqual(d2w[2 * 2 + 1], - 1.0 / (x[1]*x[1]),  eps, eps);
 	// -------------------------------------------------------------------
 	return ok;
 }

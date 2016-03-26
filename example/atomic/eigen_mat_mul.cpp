@@ -165,11 +165,13 @@ $srccode%cpp% */
 	// check second order reverse mode
 	CPPAD_TESTVECTOR(scalar) d2w(2 * n);
 	d2w   = f.Reverse(2, w);
+	// partial f_2 w.r.t. x_0
 	ok   &= NearEqual(d2w[0 * 2 + 0], 2.0 * x[0], eps, eps);
+	// partial f_2 w.r.t  x_1
 	ok   &= NearEqual(d2w[1 * 2 + 0], 2.0 * x[1], eps, eps);
-	// partial f_1 w.r.t x_1, x_0
+	// partial f_2 w.r.t x_1, x_0
 	ok   &= NearEqual(d2w[0 * 2 + 1], 0.0,        eps, eps);
-	// partial f_1 w.r.t x_1, x_1
+	// partial f_2 w.r.t x_1, x_1
 	ok   &= NearEqual(d2w[1 * 2 + 1], 2.0,        eps, eps);
 	// -------------------------------------------------------------------
 	// check forward Jacobian sparsity
