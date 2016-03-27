@@ -30,37 +30,61 @@ for any invertible $latex A \in \B{R}^{p \times p}$$.
 
 $head Theory$$
 
-$head Forward$$
-For $latex k = 0 , \ldots$$, the $th k$$ order Taylor coefficient is given by
+$subhead Forward$$
+The zero order forward mode Taylor coefficient is give by
 $latex \[
-	I_k = \sum_{\ell=0}^k A_\ell R_{k-\ell}
-\] $$
+	R_0 = A_0^{-1}
+\]$$
+For $latex k = 1 , \ldots$$, the $th k$$ order Taylor coefficient is given by
 $latex \[
-	R_k = A_0^{-1} \left( I_k - \sum_{\ell=1}^k A_\ell R_{k-\ell} \right)
+	R_k = - R_0 \left( \sum_{\ell=1}^k A_\ell R_{k-\ell} \right)
 \] $$
-where $latex I_k$$ is the $th k$$ order Taylor coefficient for the
-identity matrix. i.e., $latex I_k$$ is the identity matrix if $latex k = 0$$
-and is the zero matrix if $latex k \neq 0$$.
 
-$head Reverse$$
+
+$subhead Product of Three Matrices$$
+Suppose $latex D = A B C$$, and $latex \bar{D}$$ is the partial of the
+scalar final result with respect to $latex D$$. It follows that
+$latex \[
+	\R{d} D = \R{d} A B C + A \R{d} B C +  A B \R{d} C
+\] $$
+$latex \[
+	\R{tr} ( \bar{D}^\R{T} \R{d} D )
+	=
+	\R{tr} ( \bar{D}^\R{T} \R{d} A B C ) +
+	\R{tr} ( \bar{D}^\R{T} A \R{d} B C ) +
+	\R{tr} ( \bar{D}^\R{T} A B \R{d} C )
+\] $$
+$latex \[
+	\R{tr} ( \bar{D}^\R{T} \R{d} D )
+	=
+	\R{tr} ( B C \bar{D}^\R{T} \R{d} A ) +
+	\R{tr} ( C \bar{D}^\R{T} A \R{d} B ) +
+	\R{tr} ( \bar{D}^\R{T} A B \R{d} C )
+\] $$
+$latex \[
+	\bar{A} = \bar{D} (B C)^\R{T} \W{,}
+	\bar{B} = A^\R{T} \bar{D} C^\R{T} \W{,}
+	\bar{C} = (A B)^\R{T} \bar{D}
+\] $$
+
+$subhead Reverse$$
 We use $latex \bar{R}_k$$ for the partial of the scalar final result
 with respect to $latex R_k$$.
-Note that $latex R_0 = A_0^{-1}$$.
 The back-propagation algorithm that eliminates $latex R_k$$,
 for $latex k > 0$$, is
-for $latex \ell = 1 , \ldots , k$$
 $latex \[
-\bar{A}_\ell = \bar{A}_\ell - R_0 \bar{R}_k R_{k-\ell}^\R{T}
-\] $$
-$latex \[
-\bar{R}_{k-\ell} = \bar{R}_{k-\ell} - R_0 A_\ell^\R{T} \bar{R}_k
-\] $$
-$latex \[
-\bar{R}_0  = \bar{R}_0 + \bar{R}_k
-	\left( I_k - \sum_{\ell=1}^k A_\ell R_{k-\ell} \right)^\R{T}
+\bar{R}_0  = \bar{R}_0 - \bar{R}_k
+	\left( \sum_{\ell=1}^k A_\ell R_{k-\ell} \right)^\R{T}
 \] $$
 $latex \[
 \bar{R}_0  = \bar{R}_0 + \bar{R}_k ( A_0 R_k )^\R{T}
+\] $$
+and for $latex \ell = 1 , \ldots , k$$
+$latex \[
+\bar{A}_\ell = \bar{A}_\ell - R_0^\R{T} \bar{R}_k R_{k-\ell}^\R{T}
+\] $$
+$latex \[
+\bar{R}_{k-\ell} = \bar{R}_{k-\ell} - ( R_0 A_\ell )^\R{T} \bar{R}_k
 \] $$
 The back-propagation algorithm that eliminates $latex R_0$$ is
 $latex \[
@@ -340,15 +364,18 @@ $srccode%cpp% */
 		//
 		for(size_t k1 = n_order; k1 > 1; k1--)
 		{	size_t k = k1 - 1;
-			for(size_t ell = 1; ell <= k; ell++)
-			{	r_arg_[ell]    -=
-					f_result_[0] * r_result_[k] * f_result_[k-ell].transpose();
-				//
-				r_result_[k-ell] -=
-					f_result_[0] * f_arg_[ell].transpose() * r_result_[k];
-			}
+			// bar{R}_0 = bar{R}_0 + bar{R}_k (A_0 R_k)^T
 			r_result_[0] +=
 			r_result_[k] * f_result_[k].transpose() * f_arg_[0].transpose();
+			//
+			for(size_t ell = 1; ell <= k; ell++)
+			{	// bar{A}_l = bar{A}_l - R_0^T bar{R}_k R_{k-l}^T
+				r_arg_[ell] -= f_result_[0].transpose()
+					* r_result_[k] * f_result_[k-ell].transpose();
+				// bar{R}_{k-l} = bar{R}_{k-1} - (R_0 A_l)^T bar{R}_k
+				r_result_[k-ell] -= f_arg_[ell].transpose()
+					* f_result_[0].transpose() * r_result_[k];
+			}
 		}
 		r_arg_[0] -=
 		f_result_[0].transpose() * r_result_[0] * f_result_[0].transpose();
