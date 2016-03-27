@@ -267,39 +267,13 @@ $srccode%cpp% */
 		if( vx.size() == 0 )
 			return true;
 		// ------------------------------------------------------------------
-		// compute variable information for y; i.e., vy
-		// (note that the constant zero times a variable is a constant)
-		scalar zero(0.0);
-		assert( n_order == 1 );
-		for(size_t j = 0; j < nr_; j++)
-		{	// only row j of this column of the identity is non-zero
-			// initialize which elements of column j of result are variables
-			for(size_t i = 0; i < nr_; i++)
-			{	// initialize vy as false
-				size_t index = i * nr_ + j;
-				vy[index]    = false;
-			}
-			// determine if any elements in row j of argument are variables
-			bool row_var = false;
-			for(size_t ell = 0; ell < nr_; ell++)
-			{	// arg information
-				size_t index  = j * nr_ + ell;
-				row_var      |= vx[index];
-			}
-			if( row_var )
-			{	for(size_t ell = 0; ell < nr_; ell++)
-				{	// arg information
-					size_t index = j * nr_ + ell;
-					bool not_zero = f_arg_[0](j, ell) != scalar(0.0);
-					bool var      = vx[index];
-					if( not_zero | var )
-					{	// result information
-						index = ell * nr_ + j;
-						vy[index] = true;
-					}
-				}
-			}
-		}
+		// This is a very dumb algorithm that over estimates which
+		// elements of the inverse are variables (which is not efficient).
+		bool var = false;
+		for(size_t i = 0; i < nx_; i++)
+			var |= vx[i];
+		for(size_t i = 0; i < nx_; i++)
+			vy[i] = var;
 		return true;
 	}
 /* %$$

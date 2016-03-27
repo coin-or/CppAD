@@ -40,8 +40,14 @@ The purpose of these sections is to
 assist you in learning about changes between various versions of CppAD.
 
 $head 03-27$$
+$list number$$
 Fix a bug in the calculation of the $cref atomic_eigen_mat_inv.hpp$$
 $cref/reverse/atomic_eigen_mat_inv.hpp/Private/reverse/$$ example.
+$lnext
+Use a very simple method (that over estimates variables) for calculating
+$cref/vy/atomic_forward/vy/$$ in the $cref atomic_eigen_mat_inv.hpp$$
+$cref/forward/atomic_eigen_mat_inv.hpp/Private/forward/$$ example.
+$lend
 
 $head 03-26$$
 $list number$$

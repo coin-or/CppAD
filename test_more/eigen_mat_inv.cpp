@@ -9,6 +9,18 @@ the terms of the
 A copy of this license is included in the COPYING file of this distribution.
 Please visit http://www.coin-or.org/CppAD/ for information on other licenses.
 -------------------------------------------------------------------------- */
+# include <cppad/cppad.hpp>
+# include <cppad/example/eigen_mat_inv.hpp>
+
+namespace { // BEGIN_EMPTY_NAMESPACE
+
+typedef double                                            scalar;
+typedef CppAD::AD<scalar>                                 ad_scalar;
+typedef typename atomic_eigen_mat_inv<scalar>::ad_matrix  ad_matrix;
+
+scalar eps = 10. * std::numeric_limits<scalar>::epsilon();
+using CppAD::NearEqual;
+// --------------------------------------------------------------------------
 /*
 Test atomic_eigen_mat_inv using a non-symetric matrix
 
@@ -23,21 +35,11 @@ y[1] = 1.0  / (x[0] * x[1] + 2)
 y[2] = -2.0 / (x[0] * x[1] + 2)
 y[3] = x[0] / (x[0] * x[1] + 2)
 */
-# include <cppad/cppad.hpp>
-# include <cppad/example/eigen_mat_inv.hpp>
-
-
-bool eigen_mat_inv(void)
+bool non_symmetric(void)
 {
-	typedef double                                            scalar;
-	typedef CppAD::AD<scalar>                                 ad_scalar;
-	typedef typename atomic_eigen_mat_inv<scalar>::ad_matrix  ad_matrix;
-	//
 	bool ok    = true;
-	scalar eps = 10. * std::numeric_limits<scalar>::epsilon();
-	using CppAD::NearEqual;
 	// -------------------------------------------------------------------
-	// object that computes invers of a 2x2 matrix
+	// object that computes inverse of a 2x2 matrix
 	size_t nr  = 2;
 	atomic_eigen_mat_inv<scalar> mat_inv(nr);
 	// -------------------------------------------------------------------
@@ -154,5 +156,13 @@ bool eigen_mat_inv(void)
 	// partial f_3 w.r.t. x_1, x_1
 	ok  &= NearEqual(d2w[1 * 2 + 1], x[0] * dinv_x1_x1,           eps, eps);
 	// -------------------------------------------------------------------
+	return ok;
+}
+
+} // END_EMPTY_NAMESPACE
+
+bool eigen_mat_inv(void)
+{	bool ok = true;
+	ok     &= non_symmetric();
 	return ok;
 }

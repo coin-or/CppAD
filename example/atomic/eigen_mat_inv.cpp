@@ -104,11 +104,6 @@ $srccode%cpp% */
 	// use atomic operation to multiply left^{-1} * right
 	ad_matrix ad_result   = mat_mul.op(ad_left_inv, ad_right);
 	// -------------------------------------------------------------------
-	// check that first component of result is a parameter
-	// and the second component is a varaible.
-	ok &= Parameter( ad_result(0, 0) );
-	ok &= Variable(  ad_result(1, 0) );
-	// -------------------------------------------------------------------
 	// declare the dependent variable vector y
 	size_t m = 2;
 	CPPAD_TESTVECTOR(ad_scalar) ad_y(2);
