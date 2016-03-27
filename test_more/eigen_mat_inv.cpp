@@ -71,12 +71,43 @@ bool eigen_mat_inv(void)
 	CPPAD_TESTVECTOR(scalar) x(n), y(m);
 	for(size_t i = 0; i < n; i++)
 		x[i] = scalar(i + 2);
-	scalar det = x[0] * x[1] + 2.0;
+	scalar dinv = 1.0 / (x[0] * x[1] + 2.0);
 	y          = f.Forward(0, x);
-	ok        &= NearEqual(y[0], x[1] / det,  eps, eps);
-	ok        &= NearEqual(y[1], 1.0  / det,  eps, eps);
-	ok        &= NearEqual(y[2], -2.0 / det,  eps, eps);
-	ok        &= NearEqual(y[3], x[0] / det,  eps, eps);
+	ok        &= NearEqual(y[0], x[1] * dinv,  eps, eps);
+	ok        &= NearEqual(y[1], 1.0  * dinv,  eps, eps);
+	ok        &= NearEqual(y[2], -2.0 * dinv,  eps, eps);
+	ok        &= NearEqual(y[3], x[0] * dinv,  eps, eps);
+	// -------------------------------------------------------------------
+	// check first order forward mode
+	CPPAD_TESTVECTOR(scalar) x1(n), y1(m);
+	scalar dinv_x0 = - x[1] * dinv * dinv;
+	x1[0] = 1.0;
+	x1[1] = 0.0;
+	y1    = f.Forward(1, x1);
+	ok   &= NearEqual(y1[0], x[1] * dinv_x0,        eps, eps);
+	ok   &= NearEqual(y1[1], 1.0  * dinv_x0,        eps, eps);
+	ok   &= NearEqual(y1[2], -2.0 * dinv_x0,        eps, eps);
+	ok   &= NearEqual(y1[3], dinv + x[0] * dinv_x0, eps, eps);
+	//
+	scalar dinv_x1 = - x[0] * dinv * dinv;
+	x1[0] = 0.0;
+	x1[1] = 1.0;
+	y1    = f.Forward(1, x1);
+	ok   &= NearEqual(y1[0], dinv + x[1] * dinv_x1, eps, eps);
+	ok   &= NearEqual(y1[1], 1.0  * dinv_x1,        eps, eps);
+	ok   &= NearEqual(y1[2], -2.0 * dinv_x1,        eps, eps);
+	ok   &= NearEqual(y1[3], x[0] * dinv_x1,        eps, eps);
+	// -------------------------------------------------------------------
+	// check second order forward mode
+	CPPAD_TESTVECTOR(scalar) x2(n), y2(m);
+	scalar dinv_x1_x1 = 2.0 * x[0] * x[0] * dinv * dinv * dinv;
+	x2[0] = 0.0;
+	x2[1] = 0.0;
+	y2    = f.Forward(2, x2);
+	ok   &= NearEqual(2.0*y2[0], 2.0*dinv_x1 + x[1]*dinv_x1_x1, eps, eps);
+	ok   &= NearEqual(2.0*y2[1], 1.0  * dinv_x1_x1,             eps, eps);
+	ok   &= NearEqual(2.0*y2[2], -2.0 * dinv_x1_x1,             eps, eps);
+	ok   &= NearEqual(2.0*y2[3], x[0] * dinv_x1_x1,             eps, eps);
 	// -------------------------------------------------------------------
 	return ok;
 }

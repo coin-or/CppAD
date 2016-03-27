@@ -222,20 +222,15 @@ $srccode%cpp% */
 		// -------------------------------------------------------------------
 		// result for each order
 		//
-		// compute LU factorixation of arg_[0]
-		Eigen::FullPivLU<matrix> lu_arg( f_arg_[0] );
-		for(size_t k = 0; k < n_order; k++)
+		f_result_[0] = f_arg_[0].inverse();
+		for(size_t k = 1; k < n_order; k++)
 		{	// initialize sum
-			if( k == 0 )
-				f_sum_ = matrix::Identity(nr_, nr_);
-			else
-				f_sum_ = matrix::Zero(nr_, nr_);
+			f_sum_ = matrix::Zero(nr_, nr_);
 			// compute sum
 			for(size_t ell = 1; ell <= k; ell++)
 				f_sum_ -= f_arg_[ell] * f_result_[k-ell];
-			// solve arg_[0] * result_[k] = sum
-			// result_[k] = arg_[0]^{-1} * sum
-			f_result_[k] = lu_arg.solve(f_sum_);
+			// result_[k] = arg_[0]^{-1} * sum_
+			f_result_[k] = f_result_[0] * f_sum_;
 		}
 		// -------------------------------------------------------------------
 		// pack result_ into ty
@@ -243,7 +238,7 @@ $srccode%cpp% */
 		{	for(size_t i = 0; i < nx_; i++)
 				ty[ i * n_order + k ] = f_result_[k].data()[i];
 		}
-
+		// -------------------------------------------------------------------
 		// check if we are computing vy
 		if( vx.size() == 0 )
 			return true;

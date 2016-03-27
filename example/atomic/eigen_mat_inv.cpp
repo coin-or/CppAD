@@ -83,7 +83,7 @@ $srccode%cpp% */
 	size_t n = 3;
 	CPPAD_TESTVECTOR(ad_scalar) ad_x(n);
 	for(size_t j = 0; j < n; j++)
-		ad_x[j] = ad_scalar(j);
+		ad_x[j] = ad_scalar(j + 1);
 	CppAD::Independent(ad_x);
 	// -------------------------------------------------------------------
 	// left = [ x[0]  0    ]

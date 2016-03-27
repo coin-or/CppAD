@@ -249,7 +249,7 @@ $srccode%cpp% */
 		{	for(size_t i = 0; i < n_result; i++)
 				ty[ i * n_order + k ] = f_result_[k].data()[i];
 		}
-
+		// ------------------------------------------------------------------
 		// check if we are computing vy
 		if( vx.size() == 0 )
 			return true;
