@@ -1,6 +1,6 @@
 $Id$
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-15 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-16 Bradley M. Bell
 
 CppAD is distributed under multiple licenses. This distribution is under
 the terms of the
@@ -43,6 +43,14 @@ $spell
 $$
 
 $section The CppAD Wish List$$
+
+$head Atomic Function$$
+Change $cref atomic_base$$ so that the size of
+$cref/ax/atomic_afun/ax/$$ and $cref/ay/atomic_afun/ay/$$ can
+be different for each call. The goal is to enable one
+$cref atomic_eigen_mat_mul.hpp$$ object to work for all matrices.
+(One would need to put the one of the matrix dimension in $icode ax$$
+to achieve this goal.)
 
 $head Base Requirements$$
 Change the $cref/Base requirements/base_require/$$ to use template
