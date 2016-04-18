@@ -106,10 +106,10 @@ am__v_AR_0 = @echo "  AR      " $@;
 am__v_AR_1 = 
 libeigen_a_AR = $(AR) $(ARFLAGS)
 libeigen_a_LIBADD =
-am__libeigen_a_SOURCES_DIST = cppad_eigen.cpp eigen_mat_mul_inv.cpp
+am__libeigen_a_SOURCES_DIST = cppad_eigen.cpp eigen_mat_inv.cpp
 @CppAD_EIGEN_DIR_TRUE@am_libeigen_a_OBJECTS =  \
 @CppAD_EIGEN_DIR_TRUE@	libeigen_a-cppad_eigen.$(OBJEXT) \
-@CppAD_EIGEN_DIR_TRUE@	libeigen_a-eigen_mat_mul_inv.$(OBJEXT)
+@CppAD_EIGEN_DIR_TRUE@	libeigen_a-eigen_mat_inv.$(OBJEXT)
 libeigen_a_OBJECTS = $(am_libeigen_a_OBJECTS)
 am__test_more_SOURCES_DIST = base_adolc.cpp ipopt_solve.cpp \
 	alloc_openmp.cpp test_more.cpp abs.cpp acos.cpp acosh.cpp \
@@ -456,12 +456,12 @@ top_srcdir = @top_srcdir@
 
 @CppAD_IPOPT_FALSE@IPOPT_FLAGS = 
 @CppAD_IPOPT_TRUE@IPOPT_FLAGS = -DCPPAD_IPOPT_TEST -I$(IPOPT_DIR)/include
-@CppAD_EIGEN_DIR_FALSE@EIGEN_EXTRA_FILES = cppad_eigen.cpp eigen_mat_mul_inv.cpp
+@CppAD_EIGEN_DIR_FALSE@EIGEN_EXTRA_FILES = cppad_eigen.cpp eigen_mat_inv.cpp
 # -------------------------------------------------------------------------
 # make a special library so can have it's own compile flags (see configure.ac)
 @CppAD_EIGEN_DIR_TRUE@EIGEN_EXTRA_FILES = 
 @CppAD_EIGEN_DIR_TRUE@noinst_LIBRARIES = libeigen.a
-@CppAD_EIGEN_DIR_TRUE@libeigen_a_SOURCES = cppad_eigen.cpp eigen_mat_mul_inv.cpp
+@CppAD_EIGEN_DIR_TRUE@libeigen_a_SOURCES = cppad_eigen.cpp eigen_mat_inv.cpp
 @CppAD_EIGEN_DIR_FALSE@EIGEN_LIB = 
 @CppAD_EIGEN_DIR_TRUE@EIGEN_LIB = -L. -leigen
 @CppAD_EIGEN_DIR_TRUE@libeigen_a_CXXFLAGS = \
@@ -698,7 +698,7 @@ distclean-compile:
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/ipopt_solve.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/jacobian.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/libeigen_a-cppad_eigen.Po@am__quote@
-@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/libeigen_a-eigen_mat_mul_inv.Po@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/libeigen_a-eigen_mat_inv.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/log.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/log10.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/log1p.Po@am__quote@
@@ -784,19 +784,19 @@ libeigen_a-cppad_eigen.obj: cppad_eigen.cpp
 @AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
 @am__fastdepCXX_FALSE@	$(AM_V_CXX@am__nodep@)$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(libeigen_a_CXXFLAGS) $(CXXFLAGS) -c -o libeigen_a-cppad_eigen.obj `if test -f 'cppad_eigen.cpp'; then $(CYGPATH_W) 'cppad_eigen.cpp'; else $(CYGPATH_W) '$(srcdir)/cppad_eigen.cpp'; fi`
 
-libeigen_a-eigen_mat_mul_inv.o: eigen_mat_mul_inv.cpp
-@am__fastdepCXX_TRUE@	$(AM_V_CXX)$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(libeigen_a_CXXFLAGS) $(CXXFLAGS) -MT libeigen_a-eigen_mat_mul_inv.o -MD -MP -MF $(DEPDIR)/libeigen_a-eigen_mat_mul_inv.Tpo -c -o libeigen_a-eigen_mat_mul_inv.o `test -f 'eigen_mat_mul_inv.cpp' || echo '$(srcdir)/'`eigen_mat_mul_inv.cpp
-@am__fastdepCXX_TRUE@	$(AM_V_at)$(am__mv) $(DEPDIR)/libeigen_a-eigen_mat_mul_inv.Tpo $(DEPDIR)/libeigen_a-eigen_mat_mul_inv.Po
-@AMDEP_TRUE@@am__fastdepCXX_FALSE@	$(AM_V_CXX)source='eigen_mat_mul_inv.cpp' object='libeigen_a-eigen_mat_mul_inv.o' libtool=no @AMDEPBACKSLASH@
+libeigen_a-eigen_mat_inv.o: eigen_mat_inv.cpp
+@am__fastdepCXX_TRUE@	$(AM_V_CXX)$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(libeigen_a_CXXFLAGS) $(CXXFLAGS) -MT libeigen_a-eigen_mat_inv.o -MD -MP -MF $(DEPDIR)/libeigen_a-eigen_mat_inv.Tpo -c -o libeigen_a-eigen_mat_inv.o `test -f 'eigen_mat_inv.cpp' || echo '$(srcdir)/'`eigen_mat_inv.cpp
+@am__fastdepCXX_TRUE@	$(AM_V_at)$(am__mv) $(DEPDIR)/libeigen_a-eigen_mat_inv.Tpo $(DEPDIR)/libeigen_a-eigen_mat_inv.Po
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	$(AM_V_CXX)source='eigen_mat_inv.cpp' object='libeigen_a-eigen_mat_inv.o' libtool=no @AMDEPBACKSLASH@
 @AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
-@am__fastdepCXX_FALSE@	$(AM_V_CXX@am__nodep@)$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(libeigen_a_CXXFLAGS) $(CXXFLAGS) -c -o libeigen_a-eigen_mat_mul_inv.o `test -f 'eigen_mat_mul_inv.cpp' || echo '$(srcdir)/'`eigen_mat_mul_inv.cpp
+@am__fastdepCXX_FALSE@	$(AM_V_CXX@am__nodep@)$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(libeigen_a_CXXFLAGS) $(CXXFLAGS) -c -o libeigen_a-eigen_mat_inv.o `test -f 'eigen_mat_inv.cpp' || echo '$(srcdir)/'`eigen_mat_inv.cpp
 
-libeigen_a-eigen_mat_mul_inv.obj: eigen_mat_mul_inv.cpp
-@am__fastdepCXX_TRUE@	$(AM_V_CXX)$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(libeigen_a_CXXFLAGS) $(CXXFLAGS) -MT libeigen_a-eigen_mat_mul_inv.obj -MD -MP -MF $(DEPDIR)/libeigen_a-eigen_mat_mul_inv.Tpo -c -o libeigen_a-eigen_mat_mul_inv.obj `if test -f 'eigen_mat_mul_inv.cpp'; then $(CYGPATH_W) 'eigen_mat_mul_inv.cpp'; else $(CYGPATH_W) '$(srcdir)/eigen_mat_mul_inv.cpp'; fi`
-@am__fastdepCXX_TRUE@	$(AM_V_at)$(am__mv) $(DEPDIR)/libeigen_a-eigen_mat_mul_inv.Tpo $(DEPDIR)/libeigen_a-eigen_mat_mul_inv.Po
-@AMDEP_TRUE@@am__fastdepCXX_FALSE@	$(AM_V_CXX)source='eigen_mat_mul_inv.cpp' object='libeigen_a-eigen_mat_mul_inv.obj' libtool=no @AMDEPBACKSLASH@
+libeigen_a-eigen_mat_inv.obj: eigen_mat_inv.cpp
+@am__fastdepCXX_TRUE@	$(AM_V_CXX)$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(libeigen_a_CXXFLAGS) $(CXXFLAGS) -MT libeigen_a-eigen_mat_inv.obj -MD -MP -MF $(DEPDIR)/libeigen_a-eigen_mat_inv.Tpo -c -o libeigen_a-eigen_mat_inv.obj `if test -f 'eigen_mat_inv.cpp'; then $(CYGPATH_W) 'eigen_mat_inv.cpp'; else $(CYGPATH_W) '$(srcdir)/eigen_mat_inv.cpp'; fi`
+@am__fastdepCXX_TRUE@	$(AM_V_at)$(am__mv) $(DEPDIR)/libeigen_a-eigen_mat_inv.Tpo $(DEPDIR)/libeigen_a-eigen_mat_inv.Po
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	$(AM_V_CXX)source='eigen_mat_inv.cpp' object='libeigen_a-eigen_mat_inv.obj' libtool=no @AMDEPBACKSLASH@
 @AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
-@am__fastdepCXX_FALSE@	$(AM_V_CXX@am__nodep@)$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(libeigen_a_CXXFLAGS) $(CXXFLAGS) -c -o libeigen_a-eigen_mat_mul_inv.obj `if test -f 'eigen_mat_mul_inv.cpp'; then $(CYGPATH_W) 'eigen_mat_mul_inv.cpp'; else $(CYGPATH_W) '$(srcdir)/eigen_mat_mul_inv.cpp'; fi`
+@am__fastdepCXX_FALSE@	$(AM_V_CXX@am__nodep@)$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(libeigen_a_CXXFLAGS) $(CXXFLAGS) -c -o libeigen_a-eigen_mat_inv.obj `if test -f 'eigen_mat_inv.cpp'; then $(CYGPATH_W) 'eigen_mat_inv.cpp'; else $(CYGPATH_W) '$(srcdir)/eigen_mat_inv.cpp'; fi`
 
 ID: $(am__tagged_files)
 	$(am__define_uniq_tagged_files); mkid -fID $$unique
