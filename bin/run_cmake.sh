@@ -25,6 +25,7 @@ echo_eval() {
 verbose='no'
 standard='c++11'
 debug_speed='no'
+release_example='no'
 deprecated='no'
 profile_speed='no'
 clang='no'
@@ -43,6 +44,7 @@ usage: bin/run_cmake.sh: \\
 	[--verbose] \\
 	[--c++98] \\
 	[--debug_speed] \\
+	[--release_example] \\
 	[--deprecated] \\
 	[--profile_speed] \\
 	[--clang ] \\
@@ -66,6 +68,9 @@ EOF
 	then
 		debug_speed='yes'
 		profile_speed='no'
+	elif [ "$1" == '--release_example' ]
+	then
+		release_example='yes'
 	elif [ "$1" == '--deprecated' ]
 	then
 		deprecated='yes'
@@ -111,6 +116,15 @@ then
 else
 	sed -e 's|^SET(CMAKE_BUILD_TYPE .*|SET(CMAKE_BUILD_TYPE RELEASE)|' \
 		-i speed/CMakeLists.txt
+fi
+# ---------------------------------------------------------------------------
+if [ "$release_example" == 'yes' ]
+then
+	sed -e 's|^SET(CMAKE_BUILD_TYPE .*|SET(CMAKE_BUILD_TYPE RELEASE)|' \
+		-i  example/CMakeLists.txt
+else
+	sed -e 's|^SET(CMAKE_BUILD_TYPE .*|SET(CMAKE_BUILD_TYPE DEBUG)|' \
+		-i example/CMakeLists.txt
 fi
 # ---------------------------------------------------------------------------
 if [ ! -e build ]

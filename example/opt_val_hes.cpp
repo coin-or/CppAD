@@ -162,7 +162,10 @@ bool opt_val_hes(void)
 
 	// evaluate the Jacobian and Hessian
 	BaseVector jac(n), hes(n * n);
-	int signdet = CppAD::opt_val_hes(x, y, fun, jac, hes);
+# ifndef NDEBUG
+	int signdet =
+# endif
+	CppAD::opt_val_hes(x, y, fun, jac, hes);
 
 	// we know that F_yy is positive definate for this case
 	assert( signdet == 1 );

@@ -73,8 +73,11 @@ $srccode%cpp% */
 		const vector<double>&    tx ,
 		vector<double>&          ty
 	)
-	{	size_t n = tx.size() / (q + 1);
+	{
+# ifndef NDEBUG
+		size_t n = tx.size() / (q + 1);
 		size_t m = ty.size() / (q + 1);
+# endif
 		assert( n == 3 );
 		assert( m == 2 );
 
@@ -111,8 +114,10 @@ $srccode%cpp% */
 		CppAD::vectorBool&         s )
 	{	// This function needed becasue we are using ForSparseHes
 		// with afun.option( CppAD::atomic_base<double>::pack_sparsity_enum )
+# ifndef NDEBUG
 		size_t n = r.size() / q;
 		size_t m = s.size() / q;
+# endif
 		assert( n == 3 );
 		assert( m == 2 );
 
@@ -142,8 +147,10 @@ $srccode%cpp% */
 		CppAD::vectorBool&         st )
 	{	// This function needed becasue we are using ForSparseHes
 		// with afun.option( CppAD::atomic_base<double>::pack_sparsity_enum )
+# ifndef NDEBUG
 		size_t m = rt.size() / q;
 		size_t n = st.size() / q;
+# endif
 		assert( n == 3 );
 		assert( m == 2 );
 
@@ -180,7 +187,9 @@ $srccode%cpp% */
 	{	// This function needed because we are using RevSparseHes
 		// with afun.option( CppAD::atomic_base<double>::pack_sparsity_enum )
 		size_t n = r.size();
+# ifndef NDEBUG
 		size_t m = s.size();
+# endif
 		assert( n == 3 );
 		assert( m == 2 );
 		assert( h.size() == n * n );

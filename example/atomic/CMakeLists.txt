@@ -11,9 +11,8 @@
 # -----------------------------------------------------------------------------
 # Build the example/atomic directory tests
 
-# Specifies build type for this directory. Possible values are
+# CMAKE_BUILD_TYPE determined by parent directory. Possible values are
 # empty, Debug, Release, RelWithDebInfo and MinSizeRel
-SET(CMAKE_BUILD_TYPE DEBUG)
 #
 # eigen_sources and CPPAD_EIGEN_EXAMPLES
 SET(sources eigen_mat_inv.cpp eigen_mat_mul.cpp)

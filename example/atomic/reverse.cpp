@@ -85,8 +85,10 @@ $srccode%cpp% */
 	)
 	{
 		size_t q1 = q + 1;
+# ifndef NDEBUG
 		size_t n = tx.size() / q1;
 		size_t m = ty.size() / q1;
+# endif
 		assert( n == 3 );
 		assert( m == 2 );
 		assert( p <= q );
@@ -146,7 +148,9 @@ $srccode%cpp% */
 	{
 		size_t q1 = q + 1;
 		size_t n = tx.size() / q1;
+# ifndef NDEBUG
 		size_t m = ty.size() / q1;
+# endif
 		assert( n == 3 );
 		assert( m == 2 );
 

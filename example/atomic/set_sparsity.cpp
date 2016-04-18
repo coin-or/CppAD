@@ -65,8 +65,11 @@ $srccode%cpp% */
 		const vector<double>&    tx ,
 		vector<double>&          ty
 	)
-	{	size_t n = tx.size() / (q + 1);
+	{
+		size_t n = tx.size() / (q + 1);
+# ifndef NDEBUG
 		size_t m = ty.size() / (q + 1);
+# endif
 		assert( n == 3 );
 		assert( m == 2 );
 
@@ -99,8 +102,10 @@ $srccode%cpp% */
 		const set_vector&               r ,
 		set_vector&                     s )
 	{	// This function needed if using f.ForSparseJac
+# ifndef NDEBUG
 		size_t n = r.size();
 		size_t m = s.size();
+# endif
 		assert( n == 3 );
 		assert( m == 2 );
 
@@ -119,8 +124,10 @@ $srccode%cpp% */
 		const set_vector&                     rt ,
 		set_vector&                           st )
 	{	// This function needed if using RevSparseJac or optimize
+# ifndef NDEBUG
 		size_t n = st.size();
 		size_t m = rt.size();
+# endif
 		assert( n == 3 );
 		assert( m == 2 );
 
@@ -140,8 +147,11 @@ $srccode%cpp% */
 		const vector<bool>&                   r ,
 		const vector<bool>&                   s ,
 		set_vector&                           h )
-	{	size_t n = r.size();
+	{
+		size_t n = r.size();
+# ifndef NDEBUG
 		size_t m = s.size();
+# endif
 		assert( h.size() == n );
 		assert( n == 3 );
 		assert( m == 2 );
@@ -176,8 +186,10 @@ $srccode%cpp% */
 		const set_vector&                     u ,
 		set_vector&                           v )
 	{	// This function needed if using RevSparseHes
+# ifndef NDEBUG
 		size_t m = s.size();
 		size_t n = t.size();
+# endif
 		assert( r.size() == n );
 		assert( u.size() == m );
 		assert( v.size() == n );

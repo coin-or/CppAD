@@ -213,7 +213,9 @@ bool NearEqual(
 	const              Type  & a )
 {
 	CheckNumericType<Type>();
+# ifndef NDEBUG
 	Type zero(0);
+# endif
 
 	CPPAD_ASSERT_KNOWN(
 		zero <= r,

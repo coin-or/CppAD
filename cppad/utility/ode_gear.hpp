@@ -481,9 +481,11 @@ void OdeGear(
 	}
 
 	// LU factor (and overwrite) the matrix A
-	int sign;
 	CppAD::vector<size_t> ip(n) , jp(n);
-	sign = LuFactor(ip, jp, A);
+# ifndef NDEBUG
+	int sign =
+# endif
+	LuFactor(ip, jp, A);
 	CPPAD_ASSERT_KNOWN(
 		sign != 0,
 		"OdeGear: step size is to large"

@@ -62,8 +62,11 @@ $srccode%cpp% */
 		const vector<double>&    tx ,
 		      vector<double>&    ty
 	)
-	{	size_t n = tx.size() / (q + 1);
+	{
+# ifndef NDEBUG
+		size_t n = tx.size() / (q + 1);
 		size_t m = ty.size() / (q + 1);
+# endif
 		assert( n == 1 );
 		assert( m == 1 );
 		assert( p <= q );
@@ -119,8 +122,11 @@ $srccode%cpp% */
 		      vector<double>&    px ,
 		const vector<double>&    py
 	)
-	{	size_t n = tx.size() / (q + 1);
+	{
+# ifndef NDEBUG
+		size_t n = tx.size() / (q + 1);
 		size_t m = ty.size() / (q + 1);
+# endif
 		assert( px.size() == n * (q + 1) );
 		assert( py.size() == m * (q + 1) );
 		assert( n == 1 );
@@ -184,8 +190,10 @@ $srccode%cpp% */
 		const vector< std::set<size_t> >&     r ,
 		      vector< std::set<size_t> >&     s )
 	{	// This function needed if using f.ForSparseJac
+# ifndef NDEBUG
 		size_t n = r.size();
 		size_t m = s.size();
+# endif
 		assert( n == 1 );
 		assert( m == 1 );
 
@@ -203,8 +211,10 @@ $srccode%cpp% */
 		const vector< std::set<size_t> >&     rt ,
 		      vector< std::set<size_t> >&     st )
 	{	// This function needed if using RevSparseJac or optimize
+# ifndef NDEBUG
 		size_t n = st.size();
 		size_t m = rt.size();
+# endif
 		assert( n == 1 );
 		assert( m == 1 );
 
@@ -226,8 +236,10 @@ $srccode%cpp% */
 		const vector< std::set<size_t> >&     u ,
 		      vector< std::set<size_t> >&     v )
 	{	// This function needed if using RevSparseHes
+# ifndef NDEBUG
 		size_t n = vx.size();
 		size_t m = s.size();
+# endif
 		assert( t.size() == n );
 		assert( r.size() == n );
 		assert( u.size() == m );

@@ -39,6 +39,11 @@ in reverse order by date.
 The purpose of these sections is to
 assist you in learning about changes between various versions of CppAD.
 
+$head 04-17$$
+Fix all some compiler warnings that occurred when compiling the
+$cref/examples/Example/$$ with
+$cref/NDEBUG/faq/Speed/NDEBUG/$$ defined.
+
 $head 03-27$$
 $list number$$
 Fix a bug in the calculation of the $cref atomic_eigen_mat_inv.hpp$$

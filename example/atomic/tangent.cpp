@@ -65,8 +65,10 @@ $srccode%cpp% */
 		      vector<float>&    tzy
 	)
 	{	size_t q1 = q + 1;
+# ifndef NDEBUG
 		size_t n  = tx.size()  / q1;
 		size_t m  = tzy.size() / q1;
+# endif
 		assert( n == 1 );
 		assert( m == 2 );
 		assert( p <= q );
@@ -121,8 +123,10 @@ $srccode%cpp% */
 		const vector<float>&    pzy
 	)
 	{	size_t q1 = q + 1;
+# ifndef NDEBUG
 		size_t n  = tx.size()  / q1;
 		size_t m  = tzy.size() / q1;
+# endif
 		assert( px.size()  == n * q1 );
 		assert( pzy.size() == m * q1 );
 		assert( n == 1 );
@@ -173,8 +177,11 @@ $srccode%cpp% */
 		size_t                                p ,
 		const vector<bool>&                   r ,
 		      vector<bool>&                   s )
-	{	size_t n = r.size() / p;
+	{
+# ifndef NDEBUG
+		size_t n = r.size() / p;
 		size_t m = s.size() / p;
+# endif
 		assert( n == 1 );
 		assert( m == 2 );
 
@@ -191,8 +198,11 @@ $srccode%cpp% */
 		size_t                                p ,
 		const vector< std::set<size_t> >&     r ,
 		      vector< std::set<size_t> >&     s )
-	{	size_t n = r.size();
+	{
+# ifndef NDEBUG
+		size_t n = r.size();
 		size_t m = s.size();
+# endif
 		assert( n == 1 );
 		assert( m == 2 );
 
@@ -210,8 +220,11 @@ $srccode%cpp% */
 		size_t                                p ,
 		const vector<bool>&                  rt ,
 		      vector<bool>&                  st )
-	{	size_t n = st.size() / p;
+	{
+# ifndef NDEBUG
+		size_t n = st.size() / p;
 		size_t m = rt.size() / p;
+# endif
 		assert( n == 1 );
 		assert( m == 2 );
 
@@ -226,8 +239,11 @@ $srccode%cpp% */
 		size_t                                p ,
 		const vector< std::set<size_t> >&    rt ,
 		      vector< std::set<size_t> >&    st )
-	{	size_t n = st.size();
+	{
+# ifndef NDEBUG
+		size_t n = st.size();
 		size_t m = rt.size();
+# endif
 		assert( n == 1 );
 		assert( m == 2 );
 
@@ -248,8 +264,10 @@ $srccode%cpp% */
 		const vector<bool>&                   u ,
 		      vector<bool>&                   v )
 	{
+# ifndef NDEBUG
 		size_t m = s.size();
 		size_t n = t.size();
+# endif
 		assert( r.size() == n * p );
 		assert( u.size() == m * p );
 		assert( v.size() == n * p );
@@ -292,8 +310,11 @@ $srccode%cpp% */
 		const vector< std::set<size_t> >&     r ,
 		const vector< std::set<size_t> >&     u ,
 		      vector< std::set<size_t> >&     v )
-	{	size_t m = s.size();
+	{
+# ifndef NDEBUG
+		size_t m = s.size();
 		size_t n = t.size();
+# endif
 		assert( r.size() == n );
 		assert( u.size() == m );
 		assert( v.size() == n );
