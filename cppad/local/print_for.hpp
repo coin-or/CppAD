@@ -96,6 +96,10 @@ $codei%
 %$$
 This text is written to $code std::cout$$ after $icode var$$.
 
+$head Redirecting Output$$
+You can redirect this output to any standard output stream; see the
+$cref/s/forward_order/s/$$ in the forward mode documentation.
+
 $head Discussion$$
 This is helpful for understanding why tape evaluations
 have trouble.

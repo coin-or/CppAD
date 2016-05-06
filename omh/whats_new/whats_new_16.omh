@@ -39,6 +39,18 @@ in reverse order by date.
 The purpose of these sections is to
 assist you in learning about changes between various versions of CppAD.
 
+$head 05-05$$
+$list number$$
+Add documentation for
+$cref/redirecting output/PrintFor/Redirecting Output/$$ for the
+$code PrintFor$$ function.
+$lnext
+Change distributed version to build examples as debug instead
+of release version.
+(Was changed to release version while checking for compiler warnings;
+see $code 04-17$$ below).
+$lend
+
 $head 04-17$$
 Fix all some compiler warnings that occurred when compiling the
 $cref/examples/Example/$$ with
