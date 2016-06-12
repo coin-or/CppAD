@@ -44,6 +44,14 @@ $$
 
 $section The CppAD Wish List$$
 
+$head check_finite$$
+Sometimes one only gets infinite value during zero order forward
+and nan when computing corresponding derivatives.
+Change $cref check_for_nan$$ to $code check_finite$$
+(not infinite or nan) so that error detection happens during zero
+order forward instead of later.
+
+
 $head Atomic Function$$
 Change $cref atomic_base$$ so that the size of
 $cref/ax/atomic_afun/ax/$$ and $cref/ay/atomic_afun/ay/$$ can

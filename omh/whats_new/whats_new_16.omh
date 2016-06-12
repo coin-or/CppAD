@@ -39,6 +39,9 @@ in reverse order by date.
 The purpose of these sections is to
 assist you in learning about changes between various versions of CppAD.
 
+$head 06-10$$
+Add a $cref/check_finite/wish_list/check_finite/$$ wish list item.
+
 $head 05-05$$
 $list number$$
 Add documentation for
