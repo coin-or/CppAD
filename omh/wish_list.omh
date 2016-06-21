@@ -40,9 +40,21 @@ $spell
 	instantiation
 	Bool
 	runge
+	retape
 $$
 
 $section The CppAD Wish List$$
+
+$head checkpoint$$
+$list number$$
+There should be some examples and tests for both speed and memory use
+that demonstrate that checkpointing is useful.
+$lnext
+Change $cref checkpoint$$ so that is used $cref compare_change$$
+to determine when it is necessary to retape.
+Note that there is some question as to whether
+the sparsity pattern be allowed to change.
+$lend
 
 $head check_finite$$
 Sometimes one only gets infinite value during zero order forward
@@ -74,10 +86,6 @@ Do not remove $cref PrintFor$$ operations during $cref optimize$$ because
 they are very useful when debugging expected calculations on the tape.
 If not this, we at least need to disable optimization of $cref checkpoint$$
 functions.
-
-$head checkpoint$$
-There should be some examples and tests for both speed and memory use
-that demonstrate that checkpointing is useful.
 
 $head Machine Epsilon in Examples$$
 Use a multiple of $code std::numeric_limits<double>::epsilon()$$ instead
