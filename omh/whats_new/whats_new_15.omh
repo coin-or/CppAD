@@ -227,7 +227,7 @@ There was a mistake in the documentation for $cref index_sort$$,
 the argument $cref/ind/index_sort/ind/$$ is not $code const$$.
 
 $head 10-16$$
-Add a $cref/PrintFor optimization/wish_list/PrintFor Optimization/$$
+Add a $cref/PrintFor optimization/wish_list/Optimization/PrintFor/$$
 item to the wish list.
 
 $head 10-06$$
@@ -854,7 +854,7 @@ $codei%
 %$$
 and was not even defined when $code NDEBUG$$ was defined.
 There was a resulting speed effect for this; see the wish list
-$cref/compare change/wish_list/Comparison Changes and Optimization/$$ entry.
+$cref/compare change/wish_list/Optimization/Comparison Changes/$$ entry.
 
 $lnext
 The date when some features where deprecated has been added to the

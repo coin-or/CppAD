@@ -45,6 +45,61 @@ $$
 
 $section The CppAD Wish List$$
 
+
+$head Optimization$$
+$comment -------------------------------------------------------------------$$
+$subhead Reorganize$$
+Reorganize the
+$cref optimize$$ process so that the source code is easier to
+understand.
+
+$subhead Optional$$
+Make the different types of optimization optional; e.g.,
+skipping computations corresponding the false side of a
+$cref CondExp$$ could be optional.
+(This is already implemented as a option but not in the user API).
+
+$subhead Taping$$
+Perhaps some of the optimization done while taping forward mode
+should be delayed to the $code optimization$$ step.
+
+$subhead Special Operators$$
+Add special operators that can be implemented more efficiently, e.g.,
+$codei%
+	square(%x%) = %x% * %x%
+%$$
+and have the optimizer recognize when they should be used.
+(They could also be in the user API, but it would not be expected
+that the user would use them.)
+
+$subhead PrintFor$$
+Do not remove $cref PrintFor$$ operations during $cref optimize$$ because
+they are very useful when debugging expected calculations on the tape.
+If not this, we at least need to disable optimization of $cref checkpoint$$
+functions.
+
+$subhead Comparison Changes$$
+The comparison operators used to not be taped when
+$cref/NDEBUG/Faq/Speed/NDEBUG/$$ was defined.
+They are now taped so that the $cref compare_change$$ interface
+works even for compiler optimize code.
+This caused a significant slow down in the
+$cref cppad_det_lu.cpp$$ speed test (with no options specified).
+Perhaps there should be an option to skip the comparison taping.
+
+$head Compilation Speed$$
+Create a library corresponding to $code AD<double>$$ so that
+one does not need to re-compile all the header files every time.
+$comment -------------------------------------------------------------------$$
+
+$head Atomic Function$$
+Change the
+$cref atomic_eigen_mat_mul.hpp$$ and
+$cref atomic_eigen_mat_inv.hpp$$ examples so the dimensions of the
+matrices can be different for each call.
+(One needs to put the one of the matrix dimension in
+$cref/ax/atomic_afun/ax/$$ to do this.)
+
 $head checkpoint$$
 $list number$$
 There should be some examples and tests for both speed and memory use
@@ -63,15 +118,6 @@ Change $cref check_for_nan$$ to $code check_finite$$
 (not infinite or nan) so that error detection happens during zero
 order forward instead of later.
 
-
-$head Atomic Function$$
-Change $cref atomic_base$$ so that the size of
-$cref/ax/atomic_afun/ax/$$ and $cref/ay/atomic_afun/ay/$$ can
-be different for each call. The goal is to enable one
-$cref atomic_eigen_mat_mul.hpp$$ object to work for all matrices.
-(One would need to put the one of the matrix dimension in $icode ax$$
-to achieve this goal.)
-
 $head Base Requirements$$
 Change the $cref/Base requirements/base_require/$$ to use template
 specialization instead of functions so that there is a default value
@@ -80,12 +126,6 @@ $cref/known/cppad_assert/Known/$$ assert when the operation is used and not
 defined by the base class.
 An example of this type of template specialization can be found in
 the implementation of $cref to_string$$.
-
-$head PrintFor Optimization$$
-Do not remove $cref PrintFor$$ operations during $cref optimize$$ because
-they are very useful when debugging expected calculations on the tape.
-If not this, we at least need to disable optimization of $cref checkpoint$$
-functions.
 
 $head Machine Epsilon in Examples$$
 Use a multiple of $code std::numeric_limits<double>::epsilon()$$ instead
@@ -130,11 +170,6 @@ repeatedly calculated
 (because an iterator for the result container would be passed in).
 $lend
 
-$head Compilation Speed$$
-One could build a CppAD library for use with the type $code AD<double>$$.
-This would speed up compilation for the most common usage where
-the $icode Base$$ type is $code double$$.
-
 
 $head Operation Sequence$$
 It is possible to detect if the
@@ -144,15 +179,6 @@ does not depend on any of the
 $cref/independent variable/glossary/Tape/Independent Variable/$$ values.
 This could be returned as an extra
 $cref seq_property$$.
-
-$head Comparison Changes and Optimization$$
-The comparison operators used to not be taped when
-$cref/NDEBUG/Faq/Speed/NDEBUG/$$ was defined.
-They are now taped so that the $cref compare_change$$ interface
-works even for compiler optimize code.
-This caused a significant slow down in the
-$cref cppad_det_lu.cpp$$ speed test (with no options specified).
-Perhaps there should be an option to skip the comparison taping.
 
 $head Software Guidelines$$
 The following is a list of some software guidelines taken from
@@ -196,7 +222,6 @@ to find all the possible tracing flags.
 $head atan2$$
 The $cref/atan2/Atan2/$$ function could be made faster by adding
 a special operator for it.
-
 
 $head BenderQuad$$
 See the $cref/problem/BenderQuad/Problem/$$ with the
