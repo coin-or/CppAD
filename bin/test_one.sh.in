@@ -106,14 +106,26 @@ compile_command="g++ test_one.cpp -o test_one.exe
 	$include_flags
 	$library_flags
 "
-# --------------------------------------------------------------------------
-export LD_LIBRARY_PATH="$LD_LIBRARY_PATH:@PROJECT_BINARY_DIR@/cppad_lib"
 echo "$compile_command"
 $compile_command
+# --------------------------------------------------------------------------
+new_library_path='@PROJECT_BINARY_DIR@/cppad_lib'
+has_library_path='yes'
+if ! echo $LD_LIBRARY_PATH | grep "$new_library_path"
+then
+	has_library_path='no'
+	export LD_LIBRARY_PATH="$new_library_path:$LD_LIBRARY_PATH"
+fi
+# --------------------------------------------------------------------------
 #
 echo "./test_one.exe"
 if ! ./test_one.exe
 then
+	if [ "$has_library_path" == 'no' ]
+	then
+		echo 'Must execute the following command before running in debugger'
+		echo "export LD_LIBRARY_PATH=\"$new_library_path:\$LD_LIBRARY_PATH\""
+	fi
 	exit 1
 fi
 exit 0
