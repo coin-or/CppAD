@@ -35,60 +35,92 @@ The zero order forward mode Taylor coefficient is give by
 $latex \[
 	R_0 = A_0^{-1}
 \]$$
-For $latex k = 1 , \ldots$$, the $th k$$ order Taylor coefficient is given by
+For $latex k = 1 , \ldots$$,
+the $th k$$ order Taylor coefficient of $latex A R$$ is given by
+$latex \[
+	0 = \sum_{\ell=0}^k A_\ell R_{k-\ell}
+\] $$
+Solving for $latex R_k$$ in terms of the coefficients
+for $latex A$$ and the lower order coefficients for $latex R$$ we have
 $latex \[
 	R_k = - R_0 \left( \sum_{\ell=1}^k A_\ell R_{k-\ell} \right)
+\] $$
+Furthermore, once we have $latex R_k$$ we can compute the sum using
+$latex \[
+	A_0 R_k = - \left( \sum_{\ell=1}^k A_\ell R_{k-\ell} \right)
 \] $$
 
 
 $subhead Product of Three Matrices$$
-Suppose $latex D = A B C$$, and $latex \bar{D}$$ is the partial of the
-scalar final result with respect to $latex D$$. It follows that
+Suppose $latex \bar{E}$$ is the derivative of the
+scalar value function $latex s(E)$$ with respect to $latex E$$; i.e.,
 $latex \[
-	\R{d} D = \R{d} A B C + A \R{d} B C +  A B \R{d} C
+	\bar{E}_{i,j} = \frac{ \partial s } { \partial E_{i,j} }
 \] $$
+Also suppose that $latex t$$ is a scalar valued argument and
 $latex \[
-	\R{tr} ( \bar{D}^\R{T} \R{d} D )
+	E(t) = B(t) C(t) D(t)
+\] $$
+It follows that
+$latex \[
+	E'(t) = B'(t) C(t) D(t) + B(t) C'(t) D(t) +  B(t) C(t) D'(t)
+\] $$
+
+$latex \[
+	(s \circ E)'(t)
 	=
-	\R{tr} ( \bar{D}^\R{T} \R{d} A B C ) +
-	\R{tr} ( \bar{D}^\R{T} A \R{d} B C ) +
-	\R{tr} ( \bar{D}^\R{T} A B \R{d} C )
+	\R{tr} [ \bar{E}^\R{T} E'(t) ]
 \] $$
 $latex \[
-	\R{tr} ( \bar{D}^\R{T} \R{d} D )
 	=
-	\R{tr} ( B C \bar{D}^\R{T} \R{d} A ) +
-	\R{tr} ( C \bar{D}^\R{T} A \R{d} B ) +
-	\R{tr} ( \bar{D}^\R{T} A B \R{d} C )
+	\R{tr} [ \bar{E}^\R{T} B'(t) C(t) D(t) ] +
+	\R{tr} [ \bar{E}^\R{T} B(t) C'(t) D(t) ] +
+	\R{tr} [ \bar{E}^\R{T} B(t) C(t) D'(t) ]
 \] $$
 $latex \[
-	\bar{A} = \bar{D} (B C)^\R{T} \W{,}
-	\bar{B} = A^\R{T} \bar{D} C^\R{T} \W{,}
-	\bar{C} = (A B)^\R{T} \bar{D}
+	=
+	\R{tr} [ B(t) D(t) \bar{E}^\R{T} B'(t) ] +
+	\R{tr} [ D(t) \bar{E}^\R{T} B(t) C'(t) ] +
+	\R{tr} [ \bar{E}^\R{T} B(t) C(t) D'(t) ]
+\] $$
+$latex \[
+	\bar{B} = \bar{E} (C D)^\R{T} \W{,}
+	\bar{C} = B^\R{T} \bar{E} D^\R{T} \W{,}
+	\bar{D} = (B C)^\R{T} \bar{E}
 \] $$
 
 $subhead Reverse$$
-We use $latex \bar{R}_k$$ for the partial of the scalar final result
-with respect to $latex R_k$$.
-The back-propagation algorithm that eliminates $latex R_k$$,
-for $latex k > 0$$, is
+For $latex k > 0$$, reverse mode
+eliminates $latex R_k$$ and expresses the function values
+$latex s$$ in terms of the coefficients of $latex A$$
+and the lower order coefficients of $latex R$$.
+The effect on $latex \bar{R}_0$$
+(of eliminating $latex R_k$$) is
 $latex \[
-\bar{R}_0  = \bar{R}_0 - \bar{R}_k
-	\left( \sum_{\ell=1}^k A_\ell R_{k-\ell} \right)^\R{T}
+\bar{R}_0
+= \bar{R}_0 - \bar{R}_k \left( \sum_{\ell=1}^k A_\ell R_{k-\ell} \right)^\R{T}
+= \bar{R}_0 + \bar{R}_k ( A_0 R_k )^\R{T}
 \] $$
-$latex \[
-\bar{R}_0  = \bar{R}_0 + \bar{R}_k ( A_0 R_k )^\R{T}
-\] $$
-and for $latex \ell = 1 , \ldots , k$$
+For $latex \ell = 1 , \ldots , k$$,
+the effect on $latex \bar{R}_{k-\ell}$$ and $latex A_\ell$$
+(of eliminating $latex R_k$$) is
 $latex \[
 \bar{A}_\ell = \bar{A}_\ell - R_0^\R{T} \bar{R}_k R_{k-\ell}^\R{T}
 \] $$
 $latex \[
 \bar{R}_{k-\ell} = \bar{R}_{k-\ell} - ( R_0 A_\ell )^\R{T} \bar{R}_k
 \] $$
-The back-propagation algorithm that eliminates $latex R_0$$ is
+We note that
 $latex \[
-	\bar{A}_0 = \bar{A}_0 - R_0^\R{T} \bar{R}_0 R_0^\R{T}
+	R_0 '(t) A_0 (t) + R_0 (t) A_0 '(t) = 0
+\] $$
+$latex \[
+	R_0 '(t) = - R_0 (t) A_0 '(t) R_0 '(t)
+\] $$
+The reverse mode formula that eliminates $latex R_0$$ is
+$latex \[
+	\bar{A}_0
+	= \bar{A}_0 - R_0^\R{T} \bar{R}_0 R_0^\R{T}
 \]$$
 
 $nospell
@@ -184,22 +216,6 @@ private:
 	// one reverse mode vector of matrices for argument and result
 	CppAD::vector<matrix> r_arg_, r_result_;
 	// -------------------------------------------------------------
-/* %$$
-$subhead rows$$
-$srccode%cpp% */
-	// convert from int to size_t
-	static size_t rows(const matrix& x)
-	{	return size_t( x.rows() ); }
-	static size_t rows(const ad_matrix& x)
-	{	return size_t( x.rows() ); }
-/* %$$
-$subhead cols$$
-$srccode%cpp% */
-	// convert from int to size_t
-	static size_t cols(const matrix& x)
-	{	return size_t( x.cols() ); }
-	static size_t cols(const ad_matrix& x)
-	{	return size_t( x.cols() ); }
 /* %$$
 $subhead forward$$
 $srccode%cpp% */

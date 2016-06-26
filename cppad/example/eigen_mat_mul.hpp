@@ -37,10 +37,43 @@ $latex \[
 	R_k = \sum_{\ell = 0}^{k} A_\ell B_{k-\ell}
 \] $$
 
+$subhead Product of Two Matrices$$
+Suppose $latex \bar{E}$$ is the derivative of the
+scalar value function $latex s(E)$$ with respect to $latex E$$; i.e.,
+$latex \[
+	\bar{E}_{i,j} = \frac{ \partial s } { \partial E_{i,j} }
+\] $$
+Also suppose that $latex t$$ is a scalar valued argument and
+$latex \[
+	E(t) = C(t) D(t)
+\] $$
+It follows that
+$latex \[
+	E'(t) = C'(t) D(t) +  C(t) D'(t)
+\] $$
+
+$latex \[
+	(s \circ E)'(t)
+	=
+	\R{tr} [ \bar{E}^\R{T} E'(t) ]
+\] $$
+$latex \[
+	=
+	\R{tr} [ \bar{E}^\R{T} C'(t) D(t) ] +
+	\R{tr} [ \bar{E}^\R{T} C(t) D'(t) ]
+\] $$
+$latex \[
+	=
+	\R{tr} [ D(t) \bar{E}^\R{T} C'(t) ] +
+	\R{tr} [ \bar{E}^\R{T} C(t) D'(t) ]
+\] $$
+$latex \[
+	\bar{C} = \bar{E} D^\R{T} \W{,}
+	\bar{D} = C^\R{T} \bar{E}
+\] $$
+
 $subhead Reverse$$
-We use $latex \bar{R}_k$$ for the partial of the scalar final result
-with respect to $latex R_k$$.
-The back-propagation algorithm that eliminates $latex R_k$$ is,
+Reverse mode eliminates $latex R_k$$ as follows:
 for $latex \ell = 0, \ldots , k-1$$,
 $latex \[
 \bar{A}_\ell     = \bar{A}_\ell     + \bar{R}_k B_{k-\ell}^\R{T}
@@ -163,22 +196,6 @@ private:
 	// one reverse mode vector of matrices for left, right, and result
 	CppAD::vector<matrix> r_left_, r_right_, r_result_;
 	// -------------------------------------------------------------
-/* %$$
-$subhead rows$$
-$srccode%cpp% */
-	// convert from int to size_t
-	static size_t rows(const matrix& x)
-	{	return size_t( x.rows() ); }
-	static size_t rows(const ad_matrix& x)
-	{	return size_t( x.rows() ); }
-/* %$$
-$subhead cols$$
-$srccode%cpp% */
-	// convert from int to size_t
-	static size_t cols(const matrix& x)
-	{	return size_t( x.cols() ); }
-	static size_t cols(const ad_matrix& x)
-	{	return size_t( x.cols() ); }
 /* %$$
 $subhead forward$$
 $srccode%cpp% */

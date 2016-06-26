@@ -39,6 +39,10 @@ in reverse order by date.
 The purpose of these sections is to
 assist you in learning about changes between various versions of CppAD.
 
+$head 06-26$$
+Improve the $cref atomic_eigen_mat_mul.hpp$$ and
+$cref atomic_eigen_mat_inv.hpp$$ examples.
+
 $head 06-25$$
 Add more entries to the optimization
 $cref/wish_list/wish_list/Optimization/$$.
