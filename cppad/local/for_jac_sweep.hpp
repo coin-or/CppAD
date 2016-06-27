@@ -728,6 +728,7 @@ void ForJacSweep(
 			//
 			// parameters as integers
 			user_x[user_j] = Integer( parameter[arg[0]] );
+			//
 			// set row user_j to empty sparsity pattern
 			++user_j;
 			if( user_j == user_n )

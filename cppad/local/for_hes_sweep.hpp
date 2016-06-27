@@ -112,9 +112,7 @@ void ForHesSweep(
 	const addr_t*   arg = CPPAD_NULL;
 
 	// length of the parameter vector (used by CppAD assert macros)
-# ifndef NDEBUG
 	const size_t num_par = play->num_par_rec();
-# endif
 
 	size_t             i, j, k;
 
@@ -161,6 +159,7 @@ void ForHesSweep(
 
 	// work space used by UserOp.
 	vector<size_t>     user_ix;  // variable indices for argument vector x
+	vector<int>        user_x;   // parameters in x as integers
 	//
 	//
 	typedef std::set<size_t> size_set;
@@ -183,11 +182,15 @@ void ForHesSweep(
 	bool               user_pack = false;      // sparsity pattern type is pack
 	bool               user_bool = false;      // sparsity pattern type is bool
 	bool               user_set  = false;      // sparsity pattern type is set
-# ifndef NDEBUG
 	bool               user_ok   = false;      // atomic op return value
-# endif
 	// next expected operator in a UserOp sequence
 	enum { user_start, user_arg, user_ret, user_end } user_state = user_start;
+	//
+	// pointer to the beginning of the parameter vector
+	// (used by user atomic functions)
+	const Base* parameter = CPPAD_NULL;
+	if( num_par > 0 )
+		parameter = play->GetPar();
 
 	// Initialize
 	play->forward_start(op, arg, i_op, i_var);
@@ -394,6 +397,9 @@ void ForHesSweep(
 					CPPAD_ASSERT_KNOWN(false, msg.c_str() );
 				}
 # endif
+				if( user_x.size() != user_n )
+					user_x.resize( user_n );
+				//
 				user_pack  = user_atom->sparsity() ==
 							atomic_base<Base>::pack_sparsity_enum;
 				user_bool  = user_atom->sparsity() ==
@@ -443,32 +449,30 @@ void ForHesSweep(
 
 				// call users function for this operation
 				user_atom->set_id(user_id);
-# ifdef NDEBUG
 				if( user_pack )
-					user_atom->for_sparse_hes(
+				{	user_ok = user_atom->for_sparse_hes(
+						user_vx, user_r, user_s, pack_h, user_x
+					);
+					if( ! user_ok ) user_ok = user_atom->for_sparse_hes(
 						user_vx, user_r, user_s, pack_h
-				);
+					);
+				}
 				if( user_bool )
-					user_atom->for_sparse_hes(
+				{	user_ok = user_atom->for_sparse_hes(
+						user_vx, user_r, user_s, bool_h, user_x
+					);
+					if( ! user_ok ) user_ok = user_atom->for_sparse_hes(
 						user_vx, user_r, user_s, bool_h
-				);
+					);
+				}
 				if( user_set )
-					user_atom->for_sparse_hes(
+				{	user_ok = user_atom->for_sparse_hes(
+						user_vx, user_r, user_s, set_h, user_x
+					);
+					if( ! user_ok ) user_ok = user_atom->for_sparse_hes(
 						user_vx, user_r, user_s, set_h
-				);
-# else
-				if( user_pack )
-					user_ok = user_atom->for_sparse_hes(
-						user_vx, user_r, user_s, pack_h
-				);
-				if( user_bool )
-					user_ok = user_atom->for_sparse_hes(
-						user_vx, user_r, user_s, bool_h
-				);
-				if( user_set )
-					user_ok = user_atom->for_sparse_hes(
-						user_vx, user_r, user_s, set_h
-				);
+					);
+				}
 				if( ! user_ok )
 				{	std::string msg =
 						atomic_base<Base>::class_name(user_index)
@@ -481,7 +485,6 @@ void ForHesSweep(
 						msg += "sparsity = set_sparsity_enum";
 					CPPAD_ASSERT_KNOWN(false, msg.c_str() );
 				}
-# endif
 				for(i = 0; i < user_n; i++)	for(j = 0; j < user_n; j++)
 				{	if( user_ix[i] > 0 && user_ix[j] > 0 )
 					{	bool flag = false;
@@ -516,6 +519,10 @@ void ForHesSweep(
 			CPPAD_ASSERT_UNKNOWN( size_t(arg[0]) < num_par );
 			user_ix[user_j] = 0;
 			user_vx[user_j] = false;
+			//
+			// parameters as integers
+			user_x[user_j] = Integer( parameter[arg[0]] );
+			//
 			++user_j;
 			if( user_j == user_n )
 				user_state = user_ret;
@@ -530,6 +537,9 @@ void ForHesSweep(
 			CPPAD_ASSERT_UNKNOWN( 0 < arg[0] );
 			user_ix[user_j] = arg[0];
 			user_vx[user_j] = true;
+			// variables as integers
+			user_x[user_j] = std::numeric_limits<int>::max();
+			//
 			for_jac_sparse.begin(arg[0]);
 			i = for_jac_sparse.next_element();
 			if( i < for_jac_sparse.end() )

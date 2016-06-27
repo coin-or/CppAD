@@ -1344,11 +1344,21 @@ $$
 $section Atomic Forward Hessian Sparsity Patterns$$
 
 $head Syntax$$
-$icode%ok% = %afun%.for_sparse_hes(%vx%, %r%, %s%, %h%)%$$
+$icode%ok% = %afun%.for_sparse_hes(%vx%, %r%, %s%, %h%
+)%$$
+$icode%ok% = %afun%.for_sparse_hes(%vx%, %r%, %s%, %h%, %x%
+)%$$
 
 $head Purpose$$
 This function is used by $cref ForSparseHes$$ to compute
 Hessian sparsity patterns.
+If you are using $cref ForSparseHes$$,
+one of the versions of this
+virtual function must be defined by the
+$cref/atomic_user/atomic_ctor/atomic_user/$$ class.
+$pre
+
+$$
 Given a $cref/sparsity pattern/glossary/Sparsity Pattern/$$ for
 a diagonal matrix $latex R \in B^{n \times n}$$, and
 a row vector $latex S \in B^{1 \times m}$$,
@@ -1403,6 +1413,25 @@ Upon return, $icode h$$ is a
 $cref/atomic_sparsity/atomic_option/atomic_sparsity/$$ pattern for
 $latex H(x) \in B^{n \times n}$$ which is defined above.
 
+$subhead x$$
+$index deprecated$$
+The argument has prototype
+$codei%
+	const CppAD::vector<int>& %x%
+%$$
+and size is equal to the $icode n$$.
+This is the $cref Integer$$ value corresponding to the parameters in the
+vector $cref/ax/atomic_afun/ax/$$ (when the atomic function was called).
+To be specific, if
+$codei%
+	if( Parameter(%ax%[%i%]) == true )
+		%x%[%i%] = Integer( %ax%[%i%];
+	else
+		%x%[%i%] = std::numeric_limits<int>::max();
+%$$
+The version of this function with out the $icode x$$ argument is deprecated;
+i.e., you should include the argument even if you do not use it.
+
 $children%
 	example/atomic/for_sparse_hes.cpp
 %$$
@@ -1428,13 +1457,39 @@ is the reverse Jacobian sparsity pattern w.r.t the result vector y.
 
 \param h [out]
 is the Hessian sparsity pattern w.r.t the argument vector x.
+
+\param x
+is the integer value of the x arguments that are parameters.
 */
+virtual bool for_sparse_hes(
+	const vector<bool>&             vx ,
+	const vector<bool>&             r  ,
+	const vector<bool>&             s  ,
+	vector< std::set<size_t> >&     h  ,
+	const vector<int>&              x  )
+{	return false; }
+virtual bool for_sparse_hes(
+	const vector<bool>&             vx ,
+	const vector<bool>&             r  ,
+	const vector<bool>&             s  ,
+	vector<bool>&                   h  ,
+	const vector<int>&              x  )
+{	return false; }
+virtual bool for_sparse_hes(
+	const vector<bool>&             vx ,
+	const vector<bool>&             r  ,
+	const vector<bool>&             s  ,
+	vectorBool&                     h  ,
+	const vector<int>&              x  )
+// deprecated
+{	return false; }
 virtual bool for_sparse_hes(
 	const vector<bool>&             vx ,
 	const vector<bool>&             r  ,
 	const vector<bool>&             s  ,
 	vector< std::set<size_t> >&     h  )
 {	return false; }
+// deprecated versions
 virtual bool for_sparse_hes(
 	const vector<bool>&             vx ,
 	const vector<bool>&             r  ,

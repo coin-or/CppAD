@@ -502,8 +502,14 @@ $srccode%cpp% */
 		// sparsity pattern for the vector S
 		const CppAD::vector<bool>&                   s ,
 		// sparsity patternfor the Hessian H(x)
-		CppAD::vector< std::set<size_t> >&           h )
-	{	assert( vx.size() == nx_ );
+		CppAD::vector< std::set<size_t> >&           h ,
+		const CppAD::vector<int>&                    x )
+	{
+		size_t nr_left  = size_t( x[0] );
+		size_t n_middle = size_t( x[1] );
+		size_t nc_right = size_t( x[2] );
+		//
+		assert( vx.size() == nx_ );
 		assert( r.size()  == nx_ );
 		assert( s.size()  == ny_ );
 		assert( h.size()  == nx_ );
@@ -512,17 +518,17 @@ $srccode%cpp% */
 		for(size_t i = 0; i < nx_; i++)
 			h[i].clear();
 		//
-		size_t n_left = nr_left_ * n_middle_;
-		for(size_t i = 0; i < nr_left_; i++)
-		{	for(size_t j = 0; j < nc_right_; j++)
+		size_t n_left = nr_left * n_middle;
+		for(size_t i = 0; i < nr_left; i++)
+		{	for(size_t j = 0; j < nc_right; j++)
 			{	// pack index for entry (i, j) in result
-				size_t i_result = i * nc_right_ + j;
+				size_t i_result = i * nc_right + j;
 				if( s[i_result] )
-				{	for(size_t ell = 0; ell < n_middle_; ell++)
+				{	for(size_t ell = 0; ell < n_middle; ell++)
 					{	// pack index for entry (i, ell) in left
-						size_t i_left  = 3 + i * n_middle_ + ell;
+						size_t i_left  = 3 + i * n_middle + ell;
 						// pack index for entry (ell, j) in right
-						size_t i_right = 3 + n_left + ell * nc_right_ + j;
+						size_t i_right = 3 + n_left + ell * nc_right + j;
 						if( r[i_left] & r[i_right] )
 						{	h[i_left].insert(i_right);
 							h[i_right].insert(i_left);
