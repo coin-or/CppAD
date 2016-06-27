@@ -144,7 +144,7 @@ void RevJacSweep(
 	// work space used by UserOp.
 	//
 	vector<int>        user_x;   // parameters in x as integers
-	vector<size_t>    user_ix;   // variable indices for argument vector
+	vector<size_t>     user_ix;  // variable indices for argument vector
 	//
 	typedef std::set<size_t> size_set;
 	size_set::iterator set_itr;  // iterator for a standard set
@@ -657,7 +657,8 @@ void RevJacSweep(
 				if( user_x.size() != user_n )
 					user_x.resize( user_n );
 				if( user_ix.size() != user_n )
-					user_ix.resize(user_n);
+					user_ix.resize( user_n );
+				//
 				user_pack  = user_atom->sparsity() ==
 							atomic_base<Base>::pack_sparsity_enum;
 				user_bool  = user_atom->sparsity() ==
@@ -795,25 +796,6 @@ void RevJacSweep(
 			//
 			// variable as integers
 			user_x[user_j] = std::numeric_limits<int>::max();
-			//
-			// 2DO: It might be faster if we add set union to var_sparsity
-			// where one of the sets is not in var_sparsity.
-			if( user_pack )
-			{	for(j = 0; j < user_q; j++)
-					if( pack_s[ user_j * user_q + j ] )
-						var_sparsity.add_element(arg[0], j);
-			}
-			if( user_bool )
-			{	for(j = 0; j < user_q; j++)
-					if( bool_s[ user_j * user_q + j ] )
-						var_sparsity.add_element(arg[0], j);
-			}
-			if( user_set )
-			{	set_itr = set_s[user_j].begin();
-				set_end = set_s[user_j].end();
-				while( set_itr != set_end )
-					var_sparsity.add_element(arg[0], *set_itr++);
-			}
 			if( user_j == 0 )
 				user_state = user_start;
 			break;
