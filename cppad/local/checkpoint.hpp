@@ -427,7 +427,8 @@ private:
 	bool rev_sparse_jac(
 		size_t                                  q  ,
 		const sparsity_type&                    rt ,
-		      sparsity_type&                    st )
+		      sparsity_type&                    st ,
+		const vector<int>&                      x  )
 	{	// during user sparsity calculations
 		size_t m = f_.Range();
 		size_t n = f_.Domain();
@@ -840,8 +841,9 @@ public:
 	virtual bool rev_sparse_jac(
 		size_t                                  q  ,
 		const vectorBool&                       rt ,
-		      vectorBool&                       st )
-	{	return rev_sparse_jac< vectorBool >(q, rt, st);
+		      vectorBool&                       st ,
+		const vector<int>&                      x  )
+	{	return rev_sparse_jac< vectorBool >(q, rt, st, x);
 	}
 	/*!
 	Link from user_atomic to reverse sparse Jacobian bool
@@ -851,8 +853,9 @@ public:
 	virtual bool rev_sparse_jac(
 		size_t                                  q  ,
 		const vector<bool>&                     rt ,
-		      vector<bool>&                     st )
-	{	return rev_sparse_jac< vector<bool> >(q, rt, st);
+		      vector<bool>&                     st ,
+		const vector<int>&                      x  )
+	{	return rev_sparse_jac< vector<bool> >(q, rt, st, x);
 	}
 	/*!
 	Link from user_atomic to reverse Jacobian sets
@@ -862,7 +865,8 @@ public:
 	virtual bool rev_sparse_jac(
 		size_t                                  q  ,
 		const vector< std::set<size_t> >&       rt ,
-		      vector< std::set<size_t> >&       st )
+		      vector< std::set<size_t> >&       st ,
+		const vector<int>&                      x  )
 	{	// during user sparsity calculations
 		size_t m = f_.Range();
 		size_t n = f_.Domain();

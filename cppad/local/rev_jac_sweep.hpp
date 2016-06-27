@@ -27,26 +27,6 @@ If it is one, a trace of every rev_jac_sweep computation is printed.
 */
 # define CPPAD_REV_JAC_SWEEP_TRACE 0
 
-/*
-\def CPPAD_ATOMIC_CALL
-This avoids warnings when NDEBUG is defined and user_ok is not used.
-If \c NDEBUG is defined, this resolves to
-\code
-	user_atom->rev_sparse_jac
-\endcode
-otherwise, it respolves to
-\code
-	user_ok = user_atom->rev_sparse_jac
-\endcode
-This maco is undefined at the end of this file to facillitate is
-use with a different definition in other files.
-*/
-# ifdef NDEBUG
-# define CPPAD_ATOMIC_CALL user_atom->rev_sparse_jac
-# else
-# define CPPAD_ATOMIC_CALL user_ok = user_atom->rev_sparse_jac
-# endif
-
 /*!
 Given the sparsity pattern for the dependent variables,
 RevJacSweep computes the sparsity pattern for all the independent variables.
@@ -162,6 +142,10 @@ void RevJacSweep(
 	}
 
 	// work space used by UserOp.
+	//
+	vector<int>        user_x;   // parameters in x as integers
+	vector<size_t>    user_ix;   // variable indices for argument vector
+	//
 	typedef std::set<size_t> size_set;
 	size_set::iterator set_itr;  // iterator for a standard set
 	size_set::iterator set_end;  // end of iterator sequence
@@ -186,12 +170,16 @@ void RevJacSweep(
 	bool               user_pack = false;      // sparsity pattern type is pack
 	bool               user_bool = false;      // sparsity pattern type is bool
 	bool               user_set  = false;      // sparsity pattern type is set
-# ifndef NDEBUG
 	bool               user_ok   = false;      // atomic op return value
-# endif
 	// next expected operator in a UserOp sequence
 	enum { user_start, user_arg, user_ret, user_end } user_state = user_end;
-
+	//
+	// pointer to the beginning of the parameter vector
+	// (used by atomic functions
+	const Base* parameter = CPPAD_NULL;
+	if( num_par > 0 )
+		parameter = play->GetPar();
+	//
 	// Initialize
 	play->reverse_start(op, arg, i_op, i_var);
 	CPPAD_ASSERT_UNKNOWN( op == EndOp );
@@ -666,6 +654,10 @@ void RevJacSweep(
 					CPPAD_ASSERT_KNOWN(false, msg.c_str() );
 				}
 # endif
+				if( user_x.size() != user_n )
+					user_x.resize( user_n );
+				if( user_ix.size() != user_n )
+					user_ix.resize(user_n);
 				user_pack  = user_atom->sparsity() ==
 							atomic_base<Base>::pack_sparsity_enum;
 				user_bool  = user_atom->sparsity() ==
@@ -709,6 +701,33 @@ void RevJacSweep(
 				CPPAD_ASSERT_UNKNOWN( user_id    == size_t(arg[1]) );
 				CPPAD_ASSERT_UNKNOWN( user_n     == size_t(arg[2]) );
 				CPPAD_ASSERT_UNKNOWN( user_m     == size_t(arg[3]) );
+				//
+				// call users function for this operation
+				user_atom->set_id(user_id);
+				if( user_pack )
+				{	user_ok = user_atom->rev_sparse_jac(
+						user_q, pack_r, pack_s, user_x
+					);
+					if( ! user_ok ) user_ok = user_atom->rev_sparse_jac(
+						user_q, pack_r, pack_s
+					);
+				}
+				if( user_bool )
+				{	user_ok = user_atom->rev_sparse_jac(
+						user_q, bool_r, bool_s, user_x
+					);
+					if( ! user_ok ) user_ok = user_atom->rev_sparse_jac(
+						user_q, bool_r, bool_s
+					);
+				}
+				if( user_set )
+				{	user_ok = user_atom->rev_sparse_jac(
+						user_q, set_r, set_s, user_x
+					);
+					if( ! user_ok ) user_ok = user_atom->rev_sparse_jac(
+						user_q, set_r, set_s
+					);
+				}
 # ifndef NDEBUG
 				if( ! user_ok )
 				{	std::string msg =
@@ -723,8 +742,29 @@ void RevJacSweep(
 					CPPAD_ASSERT_KNOWN(false, msg.c_str() );
 				}
 # endif
+				//
+				// 2DO: It might be faster if we add set union to var_sparsity
+				// where one of the sets is not in var_sparsity.
+				for(j = 0; j < user_n; j++) if( user_ix[j] > 0 )
+				{	if( user_pack )
+					{	for(k = 0; k < user_q; k++)
+							if( pack_s[ j * user_q + k ] )
+								var_sparsity.add_element(user_ix[j], k);
+					}
+					if( user_bool )
+					{	for(k = 0; k < user_q; k++)
+							if( bool_s[ j * user_q + k ] )
+								var_sparsity.add_element(user_ix[j], k);
+					}
+					if( user_set )
+					{	set_itr = set_s[j].begin();
+						set_end = set_s[j].end();
+						while( set_itr != set_end )
+							var_sparsity.add_element(user_ix[j], *set_itr++);
+					}
+				}
 				user_state = user_end;
-               }
+			}
 			break;
 
 			case UsrapOp:
@@ -734,6 +774,11 @@ void RevJacSweep(
 			CPPAD_ASSERT_UNKNOWN( NumArg(op) == 1 );
 			CPPAD_ASSERT_UNKNOWN( size_t(arg[0]) < num_par );
 			--user_j;
+			user_ix[user_j] = 0;
+			//
+			// parameters as integers
+			user_x[user_j] = Integer( parameter[arg[0]] );
+			//
 			if( user_j == 0 )
 				user_state = user_start;
 			break;
@@ -746,6 +791,11 @@ void RevJacSweep(
 			CPPAD_ASSERT_UNKNOWN( size_t(arg[0]) <= i_var );
 			CPPAD_ASSERT_UNKNOWN( 0 < arg[0] );
 			--user_j;
+			user_ix[user_j] = arg[0];
+			//
+			// variable as integers
+			user_x[user_j] = std::numeric_limits<int>::max();
+			//
 			// 2DO: It might be faster if we add set union to var_sparsity
 			// where one of the sets is not in var_sparsity.
 			if( user_pack )
@@ -776,16 +826,7 @@ void RevJacSweep(
 			CPPAD_ASSERT_UNKNOWN( size_t(arg[0]) < num_par );
 			--user_i;
 			if( user_i == 0 )
-			{	// call users function for this operation
-				user_atom->set_id(user_id);
-				if( user_pack )
-					CPPAD_ATOMIC_CALL( user_q, pack_r, pack_s);
-				if( user_bool )
-					CPPAD_ATOMIC_CALL( user_q, bool_r, bool_s);
-				if( user_set )
-					CPPAD_ATOMIC_CALL( user_q, set_r, set_s);
 				user_state = user_arg;
-			}
 			break;
 
 			case UsrrvOp:
@@ -805,16 +846,7 @@ void RevJacSweep(
 				i = var_sparsity.next_element();
 			}
 			if( user_i == 0 )
-			{	// call users function for this operation
-				user_atom->set_id(user_id);
-				if( user_pack )
-					CPPAD_ATOMIC_CALL( user_q, pack_r, pack_s);
-				if( user_bool )
-					CPPAD_ATOMIC_CALL( user_q, bool_r, bool_s);
-				if( user_set )
-					CPPAD_ATOMIC_CALL( user_q, set_r, set_s);
 				user_state = user_arg;
-			}
 			break;
 			// -------------------------------------------------
 

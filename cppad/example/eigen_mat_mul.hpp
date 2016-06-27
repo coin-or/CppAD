@@ -457,26 +457,32 @@ $srccode%cpp% */
 		// sparsity pattern for the matrix R^T
 		const CppAD::vector< std::set<size_t> >&    rt ,
 		// sparsoity pattern for the matrix S^T = f'(x)^T * R^T
-		CppAD::vector< std::set<size_t> >&          st )
-	{	assert( nx_ == st.size() );
+		CppAD::vector< std::set<size_t> >&          st ,
+		const CppAD::vector<int>&                    x )
+	{
+		size_t nr_left  = size_t( x[0] );
+		size_t n_middle = size_t( x[1] );
+		size_t nc_right = size_t( x[2] );
+		//
+		assert( nx_ == st.size() );
 		assert( ny_ == rt.size() );
-
+		//
 		// initialize S^T as empty
 		for(size_t i = 0; i < nx_; i++)
 			st[i].clear();
 
 		// sparsity for S(x)^T = f'(x)^T * R^T
-		size_t n_left = nr_left_ * n_middle_;
-		for(size_t i = 0; i < nr_left_; i++)
-		{	for(size_t j = 0; j < nc_right_; j++)
+		size_t n_left = nr_left * n_middle;
+		for(size_t i = 0; i < nr_left; i++)
+		{	for(size_t j = 0; j < nc_right; j++)
 			{	// pack index for entry (i, j) in result
-				size_t i_result = i * nc_right_ + j;
+				size_t i_result = i * nc_right + j;
 				st[i_result].clear();
-				for(size_t ell = 0; ell < n_middle_; ell++)
+				for(size_t ell = 0; ell < n_middle; ell++)
 				{	// pack index for entry (i, ell) in left
-					size_t i_left  = 3 + i * n_middle_ + ell;
+					size_t i_left  = 3 + i * n_middle + ell;
 					// pack index for entry (ell, j) in right
-					size_t i_right = 3 + n_left + ell * nc_right_ + j;
+					size_t i_right = 3 + n_left + ell * nc_right + j;
 					//
 					st[i_left]  = CppAD::set_union(st[i_left],  rt[i_result]);
 					st[i_right] = CppAD::set_union(st[i_right], rt[i_result]);

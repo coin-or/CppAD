@@ -1142,7 +1142,7 @@ virtual bool for_sparse_jac(
 	      vectorBool&                       s  ,
 	const vector<int>&                      x  )
 {	return false; }
-//
+// deprecated versions
 virtual bool for_sparse_jac(
 	size_t                                  q  ,
 	const vector< std::set<size_t> >&       r  ,
@@ -1178,11 +1178,22 @@ $$
 $section Atomic Reverse Jacobian Sparsity Patterns$$
 
 $head Syntax$$
-$icode%ok% = %afun%.rev_sparse_jac(%q%, %rt%, %st%)%$$
+$icode%ok% = %afun%.rev_sparse_jac(%q%, %rt%, %st%)
+%$$
+$icode%ok% = %afun%.rev_sparse_jac(%q%, %rt%, %st%, %x%)
+%$$
 
 $head Purpose$$
-This function is used by $cref RevSparseJac$$ to compute
+This function is used by
+$cref RevSparseJac$$ to compute
 Jacobian sparsity patterns.
+If you are using $cref RevSparseJac$$,
+one of the versions of this
+virtual function must be defined by the
+$cref/atomic_user/atomic_ctor/atomic_user/$$ class.
+$pre
+
+$$
 For a fixed matrix $latex R \in B^{q \times m}$$,
 the Jacobian of $latex R * f( x )$$ with respect to $latex x \in B^n$$ is
 $latex \[
@@ -1226,6 +1237,25 @@ Upon return, $icode s$$ is a
 $cref/atomic_sparsity/atomic_option/atomic_sparsity/$$ pattern for
 $latex S(x)^\R{T} \in B^{n \times q}$$.
 
+$subhead x$$
+$index deprecated$$
+The argument has prototype
+$codei%
+	const CppAD::vector<int>& %x%
+%$$
+and size is equal to the $icode n$$.
+This is the $cref Integer$$ value corresponding to the parameters in the
+vector $cref/ax/atomic_afun/ax/$$ (when the atomic function was called).
+To be specific, if
+$codei%
+	if( Parameter(%ax%[%i%]) == true )
+		%x%[%i%] = Integer( %ax%[%i%];
+	else
+		%x%[%i%] = std::numeric_limits<int>::max();
+%$$
+The version of this function with out the $icode x$$ argument is deprecated;
+i.e., you should include the argument even if you do not use it.
+
 $head ok$$
 The return value $icode ok$$ has prototype
 $codei%
@@ -1256,7 +1286,29 @@ is the tansposed Jacobian sparsity pattern w.r.t to range variables y
 
 \param st [in]
 is the tansposed Jacobian sparsity pattern for the argument variables x
+
+\param x
+is the integer value for x arguments that are parameters.
 */
+virtual bool rev_sparse_jac(
+	size_t                                  q  ,
+	const vector< std::set<size_t> >&       rt ,
+	      vector< std::set<size_t> >&       st ,
+	const vector<int>&                      x  )
+{	return false; }
+virtual bool rev_sparse_jac(
+	size_t                                  q  ,
+	const vector<bool>&                     rt ,
+	      vector<bool>&                     st ,
+	const vector<int>&                      x  )
+{	return false; }
+virtual bool rev_sparse_jac(
+	size_t                                  q  ,
+	const vectorBool&                       rt ,
+	      vectorBool&                       st ,
+	const vector<int>&                      x  )
+{	return false; }
+// deprecated versions
 virtual bool rev_sparse_jac(
 	size_t                                  q  ,
 	const vector< std::set<size_t> >&       rt ,
