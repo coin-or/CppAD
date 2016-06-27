@@ -1490,7 +1490,7 @@ void optimize_run(
 	CPPAD_ASSERT_UNKNOWN( j == num_vecad_ind );
 
 	// work space used by UserOp.
-	vector<int>      user_x;       // parameters in x as integers
+	vector<Base>     user_x;       // parameters in x as integers
 	vector<size_t>   user_ix;      // variables indices for argument vector
 	//
 	typedef std::set<size_t> size_set;
@@ -2090,7 +2090,7 @@ void optimize_run(
 			user_ix[user_j] = 0;
 			//
 			// parameters as integers
-			user_x[user_j] = Integer( parameter[arg[0]] );
+			user_x[user_j] = parameter[arg[0]];
 			//
 			if( user_j == 0 )
 				user_state = user_start;
@@ -2107,7 +2107,7 @@ void optimize_run(
 			user_ix[user_j] = arg[0];
 			//
 			// variables as integers
-			user_x[user_j] = std::numeric_limits<int>::max();
+			user_x[user_j] = CppAD::numeric_limits<Base>::quiet_NaN();
 			//
 			if( user_j == 0 )
 				user_state = user_start;

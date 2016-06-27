@@ -1075,7 +1075,7 @@ $subhead x$$
 $index deprecated$$
 The argument has prototype
 $codei%
-	const CppAD::vector<int>& %x%
+	const CppAD::vector<%Base%>& %x%
 %$$
 and size is equal to the $icode n$$.
 This is the $cref Integer$$ value corresponding to the parameters in the
@@ -1085,7 +1085,7 @@ $codei%
 	if( Parameter(%ax%[%i%]) == true )
 		%x%[%i%] = Integer( %ax%[%i%];
 	else
-		%x%[%i%] = std::numeric_limits<int>::max();
+		%x%[%i%] = CppAD::numeric_limits<%Base%>::quiet_NaN();
 %$$
 The version of this function with out the $icode x$$ argument is deprecated;
 i.e., you should include the argument even if you do not use it.
@@ -1128,19 +1128,19 @@ virtual bool for_sparse_jac(
 	size_t                                  q  ,
 	const vector< std::set<size_t> >&       r  ,
 	      vector< std::set<size_t> >&       s  ,
-	const vector<int>&                      x  )
+	const vector<Base>&                     x  )
 {	return false; }
 virtual bool for_sparse_jac(
 	size_t                                  q  ,
 	const vector<bool>&                     r  ,
 	      vector<bool>&                     s  ,
-	const vector<int>&                      x  )
+	const vector<Base>&                     x  )
 {	return false; }
 virtual bool for_sparse_jac(
 	size_t                                  q  ,
 	const vectorBool&                       r  ,
 	      vectorBool&                       s  ,
-	const vector<int>&                      x  )
+	const vector<Base>&                     x  )
 {	return false; }
 // deprecated versions
 virtual bool for_sparse_jac(
@@ -1241,7 +1241,7 @@ $subhead x$$
 $index deprecated$$
 The argument has prototype
 $codei%
-	const CppAD::vector<int>& %x%
+	const CppAD::vector<%Base%>& %x%
 %$$
 and size is equal to the $icode n$$.
 This is the $cref Integer$$ value corresponding to the parameters in the
@@ -1251,7 +1251,7 @@ $codei%
 	if( Parameter(%ax%[%i%]) == true )
 		%x%[%i%] = Integer( %ax%[%i%];
 	else
-		%x%[%i%] = std::numeric_limits<int>::max();
+		%x%[%i%] = CppAD::numeric_limits<%Base%>::quiet_NaN();
 %$$
 The version of this function with out the $icode x$$ argument is deprecated;
 i.e., you should include the argument even if you do not use it.
@@ -1294,19 +1294,19 @@ virtual bool rev_sparse_jac(
 	size_t                                  q  ,
 	const vector< std::set<size_t> >&       rt ,
 	      vector< std::set<size_t> >&       st ,
-	const vector<int>&                      x  )
+	const vector<Base>&                     x  )
 {	return false; }
 virtual bool rev_sparse_jac(
 	size_t                                  q  ,
 	const vector<bool>&                     rt ,
 	      vector<bool>&                     st ,
-	const vector<int>&                      x  )
+	const vector<Base>&                     x  )
 {	return false; }
 virtual bool rev_sparse_jac(
 	size_t                                  q  ,
 	const vectorBool&                       rt ,
 	      vectorBool&                       st ,
-	const vector<int>&                      x  )
+	const vector<Base>&                     x  )
 {	return false; }
 // deprecated versions
 virtual bool rev_sparse_jac(
@@ -1417,7 +1417,7 @@ $subhead x$$
 $index deprecated$$
 The argument has prototype
 $codei%
-	const CppAD::vector<int>& %x%
+	const CppAD::vector<%Base%>& %x%
 %$$
 and size is equal to the $icode n$$.
 This is the $cref Integer$$ value corresponding to the parameters in the
@@ -1427,7 +1427,7 @@ $codei%
 	if( Parameter(%ax%[%i%]) == true )
 		%x%[%i%] = Integer( %ax%[%i%];
 	else
-		%x%[%i%] = std::numeric_limits<int>::max();
+		%x%[%i%] = CppAD::numeric_limits<%Base%>::quiet_NaN();
 %$$
 The version of this function with out the $icode x$$ argument is deprecated;
 i.e., you should include the argument even if you do not use it.
@@ -1466,21 +1466,21 @@ virtual bool for_sparse_hes(
 	const vector<bool>&             r  ,
 	const vector<bool>&             s  ,
 	vector< std::set<size_t> >&     h  ,
-	const vector<int>&              x  )
+	const vector<Base>&             x  )
 {	return false; }
 virtual bool for_sparse_hes(
 	const vector<bool>&             vx ,
 	const vector<bool>&             r  ,
 	const vector<bool>&             s  ,
 	vector<bool>&                   h  ,
-	const vector<int>&              x  )
+	const vector<Base>&             x  )
 {	return false; }
 virtual bool for_sparse_hes(
 	const vector<bool>&             vx ,
 	const vector<bool>&             r  ,
 	const vector<bool>&             s  ,
 	vectorBool&                     h  ,
-	const vector<int>&              x  )
+	const vector<Base>&             x  )
 // deprecated
 {	return false; }
 virtual bool for_sparse_hes(
@@ -1667,7 +1667,7 @@ $subhead x$$
 $index deprecated$$
 The argument has prototype
 $codei%
-	const CppAD::vector<int>& %x%
+	const CppAD::vector<%Base%>& %x%
 %$$
 and size is equal to the $icode n$$.
 This is the $cref Integer$$ value corresponding to the parameters in the
@@ -1677,7 +1677,7 @@ $codei%
 	if( Parameter(%ax%[%i%]) == true )
 		%x%[%i%] = Integer( %ax%[%i%];
 	else
-		%x%[%i%] = std::numeric_limits<int>::max();
+		%x%[%i%] = CppAD::numeric_limits<%Base%>::quiet_NaN();
 %$$
 The version of this function with out the $icode x$$ argument is deprecated;
 i.e., you should include the argument even if you do not use it.
@@ -1728,7 +1728,7 @@ virtual bool rev_sparse_hes(
 	const vector< std::set<size_t> >&       r  ,
 	const vector< std::set<size_t> >&       u  ,
 	      vector< std::set<size_t> >&       v  ,
-	const vector<int>&                      x  )
+	const vector<Base>&                     x  )
 {	return false; }
 virtual bool rev_sparse_hes(
 	const vector<bool>&                     vx ,
@@ -1738,7 +1738,7 @@ virtual bool rev_sparse_hes(
 	const vector<bool>&                     r  ,
 	const vector<bool>&                     u  ,
 	      vector<bool>&                     v  ,
-	const vector<int>&                      x  )
+	const vector<Base>&                     x  )
 {	return false; }
 virtual bool rev_sparse_hes(
 	const vector<bool>&                     vx ,
@@ -1748,7 +1748,7 @@ virtual bool rev_sparse_hes(
 	const vectorBool&                       r  ,
 	const vectorBool&                       u  ,
 	      vectorBool&                       v  ,
-	const vector<int>&                      x  )
+	const vector<Base>&                     x  )
 {	return false; }
 // deprecated
 virtual bool rev_sparse_hes(

@@ -165,7 +165,7 @@ void RevHesSweep(
 	}
 
 	// work space used by UserOp.
-	vector<int>        user_x;   // parameters in x as integers;
+	vector<Base>       user_x;   // parameters in x as integers;
 	vector<size_t>     user_ix;  // variable indices for argument vector x
 	//
 	typedef std::set<size_t> size_set;
@@ -828,7 +828,7 @@ void RevHesSweep(
 			user_vx[user_j] = false;
 			//
 			// parameters as integers
-			user_x[user_j] = Integer( parameter[arg[0]] );
+			user_x[user_j] = parameter[arg[0]];
 			//
 			if( user_j == 0 )
 				user_state = user_start;
@@ -846,7 +846,7 @@ void RevHesSweep(
 			user_vx[user_j] = true;
 			//
 			// variable as integers
-			user_x[user_j] = std::numeric_limits<int>::max();
+			user_x[user_j] = CppAD::numeric_limits<Base>::quiet_NaN();
 			//
 			for_jac_sparse.begin(arg[0]);
 			i = for_jac_sparse.next_element();

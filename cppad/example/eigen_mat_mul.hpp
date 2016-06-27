@@ -419,11 +419,11 @@ $srccode%cpp% */
 		const CppAD::vector< std::set<size_t> >&     r ,
 		// sparsity pattern for the matrix S = f'(x) * R
 		CppAD::vector< std::set<size_t> >&           s ,
-		const CppAD::vector<int>&                    x )
+		const CppAD::vector<Base>&                   x )
 	{
-		size_t nr_left  = size_t( x[0] );
-		size_t n_middle = size_t( x[1] );
-		size_t nc_right = size_t( x[2] );
+		size_t nr_left  = size_t( CppAD::Integer( x[0] ) );
+		size_t n_middle = size_t( CppAD::Integer( x[1] ) );
+		size_t nc_right = size_t( CppAD::Integer( x[2] ) );
 		//
 		assert( nx_ == r.size() );
 		assert( ny_ == s.size() );
@@ -458,11 +458,11 @@ $srccode%cpp% */
 		const CppAD::vector< std::set<size_t> >&    rt ,
 		// sparsoity pattern for the matrix S^T = f'(x)^T * R^T
 		CppAD::vector< std::set<size_t> >&          st ,
-		const CppAD::vector<int>&                    x )
+		const CppAD::vector<Base>&                   x )
 	{
-		size_t nr_left  = size_t( x[0] );
-		size_t n_middle = size_t( x[1] );
-		size_t nc_right = size_t( x[2] );
+		size_t nr_left  = size_t( CppAD::Integer( x[0] ) );
+		size_t n_middle = size_t( CppAD::Integer( x[1] ) );
+		size_t nc_right = size_t( CppAD::Integer( x[2] ) );
 		//
 		assert( nx_ == st.size() );
 		assert( ny_ == rt.size() );
@@ -503,11 +503,11 @@ $srccode%cpp% */
 		const CppAD::vector<bool>&                   s ,
 		// sparsity patternfor the Hessian H(x)
 		CppAD::vector< std::set<size_t> >&           h ,
-		const CppAD::vector<int>&                    x )
+		const CppAD::vector<Base>&                   x )
 	{
-		size_t nr_left  = size_t( x[0] );
-		size_t n_middle = size_t( x[1] );
-		size_t nc_right = size_t( x[2] );
+		size_t nr_left  = size_t( CppAD::Integer( x[0] ) );
+		size_t n_middle = size_t( CppAD::Integer( x[1] ) );
+		size_t nc_right = size_t( CppAD::Integer( x[2] ) );
 		//
 		assert( vx.size() == nx_ );
 		assert( r.size()  == nx_ );
@@ -560,11 +560,11 @@ $srccode%cpp% */
 		// V(x) = f'(x)^T * U(x) + sum_{i=0}^{m-1} S_i(x) f_i^{(2)} (x) * R
 		CppAD::vector< std::set<size_t> >&           v ,
 		// parameters as integers
-		const CppAD::vector<int>&                    x )
+		const CppAD::vector<Base>&                   x )
 	{
-		size_t nr_left  = size_t( x[0] );
-		size_t n_middle = size_t( x[1] );
-		size_t nc_right = size_t( x[2] );
+		size_t nr_left  = size_t( CppAD::Integer( x[0] ) );
+		size_t n_middle = size_t( CppAD::Integer( x[1] ) );
+		size_t nc_right = size_t( CppAD::Integer( x[2] ) );
 		//
 		assert( vx.size() == nx_ );
 		assert( s.size()  == ny_ );

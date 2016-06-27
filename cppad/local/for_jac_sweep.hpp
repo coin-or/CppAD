@@ -140,7 +140,7 @@ void ForJacSweep(
 	// --------------------------------------------------------------
 	// work space used by UserOp.
 	//
-	vector<int>        user_x;   // parameters in x as integers
+	vector<Base>       user_x;   // parameters in x as integers
 	//
 	typedef std::set<size_t> size_set;
 	size_set::iterator set_itr;  // iterator for a standard set
@@ -727,7 +727,7 @@ void ForJacSweep(
 			CPPAD_ASSERT_UNKNOWN( size_t(arg[0]) < num_par );
 			//
 			// parameters as integers
-			user_x[user_j] = Integer( parameter[arg[0]] );
+			user_x[user_j] = parameter[arg[0]];
 			//
 			// set row user_j to empty sparsity pattern
 			++user_j;
@@ -768,7 +768,7 @@ void ForJacSweep(
 			CPPAD_ASSERT_UNKNOWN( user_j < user_n );
 			CPPAD_ASSERT_UNKNOWN( size_t(arg[0]) <= i_var );
 			// variable as integers
-			user_x[user_j] = std::numeric_limits<int>::max();
+			user_x[user_j] = CppAD::numeric_limits<Base>::quiet_NaN();
 			// set row user_j to sparsity pattern for variable arg[0]
 			var_sparsity.begin(arg[0]);
 			i = var_sparsity.next_element();

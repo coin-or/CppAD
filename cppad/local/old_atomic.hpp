@@ -1037,7 +1037,7 @@ public:
 		size_t                                q ,
 		const vector< std::set<size_t> >&     r ,
 		      vector< std::set<size_t> >&     s ,
-		const vector<int>&                    x )
+		const vector<Base>&                   x )
 	{	size_t n = r.size();
 		size_t m = s.size();
 		bool ok  = fjs_(id_, n, m, q, r, s);
@@ -1053,7 +1053,7 @@ public:
 		size_t                               q  ,
 		const vector< std::set<size_t> >&    rt ,
 		      vector< std::set<size_t> >&    st ,
-		const vector<int>&                    x )
+		const vector<Base>&                   x )
 	{	size_t n = st.size();
 		size_t m = rt.size();
 		bool ok  = rjs_(id_, n, m, q, st, rt);
@@ -1072,7 +1072,7 @@ public:
 		const vector< std::set<size_t> >&     r ,
 		const vector< std::set<size_t> >&     u ,
 		      vector< std::set<size_t> >&     v ,
-		const vector<int>&                    x )
+		const vector<Base>&                   x )
 	{	size_t m = u.size();
 		size_t n = v.size();
 		CPPAD_ASSERT_UNKNOWN( r.size() == n );

@@ -159,7 +159,7 @@ void ForHesSweep(
 
 	// work space used by UserOp.
 	vector<size_t>     user_ix;  // variable indices for argument vector x
-	vector<int>        user_x;   // parameters in x as integers
+	vector<Base>       user_x;   // parameters in x as integers
 	//
 	//
 	typedef std::set<size_t> size_set;
@@ -521,7 +521,7 @@ void ForHesSweep(
 			user_vx[user_j] = false;
 			//
 			// parameters as integers
-			user_x[user_j] = Integer( parameter[arg[0]] );
+			user_x[user_j] = parameter[arg[0]];
 			//
 			++user_j;
 			if( user_j == user_n )
@@ -538,7 +538,7 @@ void ForHesSweep(
 			user_ix[user_j] = arg[0];
 			user_vx[user_j] = true;
 			// variables as integers
-			user_x[user_j] = std::numeric_limits<int>::max();
+			user_x[user_j] = CppAD::numeric_limits<Base>::quiet_NaN();
 			//
 			for_jac_sparse.begin(arg[0]);
 			i = for_jac_sparse.next_element();

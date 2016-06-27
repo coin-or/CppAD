@@ -386,7 +386,7 @@ private:
 		size_t                                  q  ,
 		const sparsity_type&                    r  ,
 		      sparsity_type&                    s  ,
-		const vector<int>&                      x  )
+		const vector<Base>&                     x  )
 	{	// during user sparsity calculations
 		size_t m = f_.Range();
 		size_t n = f_.Domain();
@@ -428,7 +428,7 @@ private:
 		size_t                                  q  ,
 		const sparsity_type&                    rt ,
 		      sparsity_type&                    st ,
-		const vector<int>&                      x  )
+		const vector<Base>&                     x  )
 	{	// during user sparsity calculations
 		size_t m = f_.Range();
 		size_t n = f_.Domain();
@@ -478,7 +478,7 @@ private:
 		const sparsity_type&                    r  ,
 		const sparsity_type&                    u  ,
 		      sparsity_type&                    v  ,
-		const vector<int>&                      x  )
+		const vector<Base>&                     x  )
 	{	size_t n = f_.Domain();
 # ifndef NDEBUG
 		size_t m = f_.Range();
@@ -772,7 +772,7 @@ public:
 		size_t                                  q  ,
 		const vectorBool&                       r  ,
 		      vectorBool&                       s  ,
-		const vector<int>&                      x  )
+		const vector<Base>&                     x  )
 	{	return for_sparse_jac< vectorBool >(q, r, s, x);
 	}
 	/*!
@@ -784,7 +784,7 @@ public:
 		size_t                                  q  ,
 		const vector<bool>&                     r  ,
 		      vector<bool>&                     s  ,
-		const vector<int>&                      x  )
+		const vector<Base>&                     x  )
 	{	return for_sparse_jac< vector<bool> >(q, r, s, x);
 	}
 	/*!
@@ -796,7 +796,7 @@ public:
 		size_t                                  q  ,
 		const vector< std::set<size_t> >&       r  ,
 		      vector< std::set<size_t> >&       s  ,
-		const vector<int>&                      x  )
+		const vector<Base>&                     x  )
 	{	// during user sparsity calculations
 		size_t m = f_.Range();
 		size_t n = f_.Domain();
@@ -843,7 +843,7 @@ public:
 		size_t                                  q  ,
 		const vectorBool&                       rt ,
 		      vectorBool&                       st ,
-		const vector<int>&                      x  )
+		const vector<Base>&                     x  )
 	{	return rev_sparse_jac< vectorBool >(q, rt, st, x);
 	}
 	/*!
@@ -855,7 +855,7 @@ public:
 		size_t                                  q  ,
 		const vector<bool>&                     rt ,
 		      vector<bool>&                     st ,
-		const vector<int>&                      x  )
+		const vector<Base>&                     x  )
 	{	return rev_sparse_jac< vector<bool> >(q, rt, st, x);
 	}
 	/*!
@@ -867,7 +867,7 @@ public:
 		size_t                                  q  ,
 		const vector< std::set<size_t> >&       rt ,
 		      vector< std::set<size_t> >&       st ,
-		const vector<int>&                      x  )
+		const vector<Base>&                     x  )
 	{	// during user sparsity calculations
 		size_t m = f_.Range();
 		size_t n = f_.Domain();
@@ -924,7 +924,7 @@ public:
 		const vectorBool&                       r  ,
 		const vectorBool&                       u  ,
 		      vectorBool&                       v  ,
-		const vector<int>&                      x  )
+		const vector<Base>&                     x  )
 	{	return rev_sparse_hes< vectorBool >(vx, s, t, q, r, u, v, x);
 	}
 	/*!
@@ -940,7 +940,7 @@ public:
 		const vector<bool>&                     r  ,
 		const vector<bool>&                     u  ,
 		      vector<bool>&                     v  ,
-		const vector<int>&                      x  )
+		const vector<Base>&                     x  )
 	{	return rev_sparse_hes< vector<bool> >(vx, s, t, q, r, u, v, x);
 	}
 	/*!
@@ -956,7 +956,7 @@ public:
 		const vector< std::set<size_t> >&       r  ,
 		const vector< std::set<size_t> >&       u  ,
 		      vector< std::set<size_t> >&       v  ,
-		const vector<int>&                      x  )
+		const vector<Base>&                     x  )
 	{	size_t n = f_.Domain();
 # ifndef NDEBUG
 		size_t m = f_.Range();

@@ -13,14 +13,22 @@
 revert_list='
 '
 move_list='
-	example/atomic/eigen_mat_div.cpp
-	cppad/example/eigen_mat_div.hpp
 '
 move_sed='s|mat_div|mat_inv|'
 #
 cat << EOF > junk.sed
-s|mat_div|mat_inv|g
-s|MAT_DIV|MAT_INV|
+s|vector<int>& *%x%|vector<%Base%>\\& %x%|
+s|vector<int>& \\( *\\)%x%|vector<%Base%>\\&\\1%x%|
+s|vector<int>& \\( *\\)x|vector<Base>\\&\\1x|
+s|vector<int> \\( *\\)user_x;|vector<Base>\\1user_x;|
+s|Integer( *parameter\\[arg\\[0\\]\\] )|parameter[arg[0]]|
+s|Integer( %ax%[%i%];|Value( %ax%[%i%] );|
+s|%x%\\[%i%\\] = std::numeric_limits<int>::max()|%x%[%i%] = CppAD::numeric_limits<%Base%>::quiet_NaN()|
+s|std::numeric_limits<int>::max()|CppAD::numeric_limits<Base>::quiet_NaN()|
+#
+s|nr_left  *= size_t( x\\[0\\] );|nr_left  = size_t( CppAD::Integer( x[0] ) );|
+s|n_middle *= size_t( x\\[1\\] );|n_middle = size_t( CppAD::Integer( x[1] ) );|
+s|nc_right *= size_t( x\\[2\\] );|nc_right = size_t( CppAD::Integer( x[2] ) );|
 EOF
 # -----------------------------------------------------------------------------
 if [ $0 != "bin/batch_edit.sh" ]
@@ -43,9 +51,17 @@ for file in $list_all
 do
 	if [ "$file" != 'bin/batch_edit.sh' ]
 	then
-		echo_eval sed -f junk.sed -i $file
+		sed -f junk.sed  $file > junk.$$
+		if ! diff $file junk.$$ > /dev/null
+		then
+			echo_eval sed -f junk.sed  -i $file
+		fi
 	fi
 done
+if [ -e junk.$$ ]
+then
+	rm junk.$$
+fi
 # ----------------------------------------------------------------------------
 for old in $move_list
 do
