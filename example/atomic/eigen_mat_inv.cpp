@@ -70,10 +70,7 @@ $subhead Constructor$$
 $srccode%cpp% */
 	// -------------------------------------------------------------------
 	// object that multiplies a 2x2 matrix times a 2x1 matrix
-	size_t nr_left  = 2;
-	size_t n_middle = 2;
-	size_t nc_right = 1;
-	atomic_eigen_mat_mul<scalar> mat_mul(nr_left, n_middle, nc_right);
+	atomic_eigen_mat_mul<scalar> mat_mul;
 	// -------------------------------------------------------------------
 	// object that computes invers of a 2x2 matrix
 	size_t nr  = 2;
@@ -88,6 +85,7 @@ $srccode%cpp% */
 	// -------------------------------------------------------------------
 	// left = [ x[0]  0    ]
 	//        [ 0     x[1] ]
+	size_t nr_left  = 2;
 	ad_matrix ad_left(nr_left, nr_left);
 	ad_left(0, 0) = ad_x[0];
 	ad_left(0, 1) = ad_scalar(0.0);
@@ -95,6 +93,7 @@ $srccode%cpp% */
 	ad_left(1, 1) = ad_x[1];
 	// -------------------------------------------------------------------
 	// right = [ 0 , x[2] ]^T
+	size_t nc_right = 1;
 	ad_matrix ad_right(nr_left, nc_right);
 	ad_right(0, 0) = ad_scalar(0.0);
 	ad_right(1, 0) = ad_x[2];

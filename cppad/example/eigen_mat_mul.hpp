@@ -23,9 +23,10 @@ $$
 $section Atomic Eigen Matrix Multiply Class$$
 
 $head Purpose$$
-For fixed positive integers $latex r$$, $latex m$$, $latex c$$,
-construct and atomic operation that computes the matrix product
-$latex R = A \times B$$ for any $latex A \in \B{R}^{r \times m}$$ and
+Construct an atomic operation that computes the matrix product,
+$latex R = A \times B$$
+for any positive integers $latex r$$, $latex m$$, $latex c$$,
+and any $latex A \in \B{R}^{r \times m}$$,
 $latex B \in \B{R}^{m \times c}$$.
 
 $head Theory$$
@@ -116,23 +117,11 @@ public:
 $subhead Constructor$$
 $srccode%cpp% */
 	// constructor
-	atomic_eigen_mat_mul(
-		// number of rows in left operand
-		const size_t nr_left,
-		// number of rows in left and columns in right operand
-		const size_t n_middle,
-		// number of columns in right operand
-		const size_t nc_right
-	) :
+	atomic_eigen_mat_mul(void) :
 	CppAD::atomic_base<Base>(
 		"atom_eigen_mat_mul"                             ,
 		CppAD::atomic_base<Base>::set_sparsity_enum
-	)                                                    ,
-	nr_left_(  nr_left  )                                ,
-	n_middle_(   n_middle   )                            ,
-	nc_right_( nc_right )                                ,
-	nx_( 3 + (nr_left + nc_right) * n_middle_ )          ,
-	ny_( nr_left * nc_right )
+	)
 	{ }
 /* %$$
 $subhead op$$
@@ -145,15 +134,19 @@ $srccode%cpp% */
 		size_t  n_middle  = size_t( left.cols() );
 		size_t  nc_right  = size_t( right.cols() );
 		assert( n_middle  == size_t( right.rows() )  );
-		//
+# ifndef NDEBUG
+		size_t  nx        = 3 + (nr_left + nc_right) * n_middle;
+		size_t  ny        = nr_left * nc_right;
+# endif
 		size_t n_left   = nr_left * n_middle;
 		size_t n_right  = n_middle * nc_right;
 		size_t n_result = nr_left * nc_right;
-		assert( 3 + n_left + n_right == nx_ );
-		assert( n_result == ny_ );
+		//
+		assert( 3 + n_left + n_right == nx );
+		assert( n_result == ny );
 		// -----------------------------------------------------------------
 		// packed version of left and right
-		CPPAD_TESTVECTOR(ad_scalar) packed_arg(nx_);
+		CPPAD_TESTVECTOR(ad_scalar) packed_arg(nx);
 		//
 		packed_arg[0] = ad_scalar( nr_left );
 		packed_arg[1] = ad_scalar( n_middle );
@@ -164,7 +157,7 @@ $srccode%cpp% */
 			packed_arg[ 3 + n_left + i ] = right.data()[i];
 		// ------------------------------------------------------------------
 		// packed version of result = left * right
-		CPPAD_TESTVECTOR(ad_scalar) packed_result(ny_);
+		CPPAD_TESTVECTOR(ad_scalar) packed_result(ny);
 		(*this)(packed_arg, packed_result);
 
 		// ------------------------------------------------------------------
@@ -181,17 +174,6 @@ $head Private$$
 $subhead Variables$$
 $srccode%cpp% */
 private:
-	// -------------------------------------------------------------
-	// number of of rows in left operand and result
-	const size_t nr_left_;
-	// number of of columns in left operand and rows in right operand
-	const size_t n_middle_;
-	// number of columns in right operand and result
-	const size_t nc_right_;
-	// size of the domain space
-	const size_t nx_;
-	// size of the range space
-	const size_t ny_;
 	// -------------------------------------------------------------
 	// one forward mode vector of matrices for left, right, and result
 	CppAD::vector<matrix> f_left_, f_right_, f_result_;
@@ -220,17 +202,21 @@ $srccode%cpp% */
 		size_t nr_left  = size_t( CppAD::Integer( tx[ 0 * n_order + 0 ] ) );
 		size_t n_middle = size_t( CppAD::Integer( tx[ 1 * n_order + 0 ] ) );
 		size_t nc_right = size_t( CppAD::Integer( tx[ 2 * n_order + 0 ] ) );
+# ifndef NDEBUG
+		size_t  nx        = 3 + (nr_left + nc_right) * n_middle;
+		size_t  ny        = nr_left * nc_right;
+# endif
 		//
-		assert( vx.size() == 0 || nx_ == vx.size() );
-		assert( vx.size() == 0 || ny_ == vy.size() );
-		assert( nx_ * n_order == tx.size() );
-		assert( ny_ * n_order == ty.size() );
+		assert( vx.size() == 0 || nx == vx.size() );
+		assert( vx.size() == 0 || ny == vy.size() );
+		assert( nx * n_order == tx.size() );
+		assert( ny * n_order == ty.size() );
 		//
 		size_t n_left   = nr_left * n_middle;
 		size_t n_right  = n_middle * nc_right;
 		size_t n_result = nr_left * nc_right;
-		assert( 3 + n_left + n_right == nx_ );
-		assert( n_result == ny_ );
+		assert( 3 + n_left + n_right == nx );
+		assert( n_result == ny );
 		//
 		// -------------------------------------------------------------------
 		// make sure f_left_, f_right_, and f_result_ are large enough
@@ -323,17 +309,21 @@ $srccode%cpp% */
 		size_t nr_left  = size_t( CppAD::Integer( tx[ 0 * n_order + 0 ] ) );
 		size_t n_middle = size_t( CppAD::Integer( tx[ 1 * n_order + 0 ] ) );
 		size_t nc_right = size_t( CppAD::Integer( tx[ 2 * n_order + 0 ] ) );
+# ifndef NDEBUG
+		size_t  nx        = 3 + (nr_left + nc_right) * n_middle;
+		size_t  ny        = nr_left * nc_right;
+# endif
 		//
-		assert( nx_ * n_order == tx.size() );
-		assert( ny_ * n_order == ty.size() );
+		assert( nx * n_order == tx.size() );
+		assert( ny * n_order == ty.size() );
 		assert( px.size() == tx.size() );
 		assert( py.size() == ty.size() );
 		//
 		size_t n_left   = nr_left * n_middle;
 		size_t n_right  = n_middle * nc_right;
 		size_t n_result = nr_left * nc_right;
-		assert( 3 + n_left + n_right == nx_ );
-		assert( n_result == ny_ );
+		assert( 3 + n_left + n_right == nx );
+		assert( n_result == ny );
 		// -------------------------------------------------------------------
 		// make sure f_left_, f_right_ are large enough
 		assert( f_left_.size() == f_right_.size() );
@@ -424,9 +414,13 @@ $srccode%cpp% */
 		size_t nr_left  = size_t( CppAD::Integer( x[0] ) );
 		size_t n_middle = size_t( CppAD::Integer( x[1] ) );
 		size_t nc_right = size_t( CppAD::Integer( x[2] ) );
+# ifndef NDEBUG
+		size_t  nx        = 3 + (nr_left + nc_right) * n_middle;
+		size_t  ny        = nr_left * nc_right;
+# endif
 		//
-		assert( nx_ == r.size() );
-		assert( ny_ == s.size() );
+		assert( nx == r.size() );
+		assert( ny == s.size() );
 		//
 		size_t n_left = nr_left * n_middle;
 		for(size_t i = 0; i < nr_left; i++)
@@ -463,12 +457,16 @@ $srccode%cpp% */
 		size_t nr_left  = size_t( CppAD::Integer( x[0] ) );
 		size_t n_middle = size_t( CppAD::Integer( x[1] ) );
 		size_t nc_right = size_t( CppAD::Integer( x[2] ) );
+		size_t  nx        = 3 + (nr_left + nc_right) * n_middle;
+# ifndef NDEBUG
+		size_t  ny        = nr_left * nc_right;
+# endif
 		//
-		assert( nx_ == st.size() );
-		assert( ny_ == rt.size() );
+		assert( nx == st.size() );
+		assert( ny == rt.size() );
 		//
 		// initialize S^T as empty
-		for(size_t i = 0; i < nx_; i++)
+		for(size_t i = 0; i < nx; i++)
 			st[i].clear();
 
 		// sparsity for S(x)^T = f'(x)^T * R^T
@@ -508,14 +506,18 @@ $srccode%cpp% */
 		size_t nr_left  = size_t( CppAD::Integer( x[0] ) );
 		size_t n_middle = size_t( CppAD::Integer( x[1] ) );
 		size_t nc_right = size_t( CppAD::Integer( x[2] ) );
+		size_t  nx        = 3 + (nr_left + nc_right) * n_middle;
+# ifndef NDEBUG
+		size_t  ny        = nr_left * nc_right;
+# endif
 		//
-		assert( vx.size() == nx_ );
-		assert( r.size()  == nx_ );
-		assert( s.size()  == ny_ );
-		assert( h.size()  == nx_ );
+		assert( vx.size() == nx );
+		assert( r.size()  == nx );
+		assert( s.size()  == ny );
+		assert( h.size()  == nx );
 		//
 		// initilize h as empty
-		for(size_t i = 0; i < nx_; i++)
+		for(size_t i = 0; i < nx; i++)
 			h[i].clear();
 		//
 		size_t n_left = nr_left * n_middle;
@@ -565,15 +567,19 @@ $srccode%cpp% */
 		size_t nr_left  = size_t( CppAD::Integer( x[0] ) );
 		size_t n_middle = size_t( CppAD::Integer( x[1] ) );
 		size_t nc_right = size_t( CppAD::Integer( x[2] ) );
+		size_t  nx        = 3 + (nr_left + nc_right) * n_middle;
+# ifndef NDEBUG
+		size_t  ny        = nr_left * nc_right;
+# endif
 		//
-		assert( vx.size() == nx_ );
-		assert( s.size()  == ny_ );
-		assert( t.size()  == nx_ );
-		assert( r.size()  == nx_ );
-		assert( v.size()  == nx_ );
+		assert( vx.size() == nx );
+		assert( s.size()  == ny );
+		assert( t.size()  == nx );
+		assert( r.size()  == nx );
+		assert( v.size()  == nx );
 		//
 		// initilaize return sparsity patterns as false
-		for(size_t j = 0; j < nx_; j++)
+		for(size_t j = 0; j < nx; j++)
 		{	t[j] = false;
 			v[j].clear();
 		}

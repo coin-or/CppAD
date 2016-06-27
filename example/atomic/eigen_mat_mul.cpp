@@ -69,11 +69,8 @@ bool eigen_mat_mul(void)
 $subhead Constructor$$
 $srccode%cpp% */
 	// -------------------------------------------------------------------
-	// object that multiplies a 3x2 matrix times a 2x1 matrix
-	size_t nr_left  = 3;
-	size_t n_middle   = 2;
-	size_t nc_right = 1;
-	atomic_eigen_mat_mul<scalar> mat_mul(nr_left, n_middle, nc_right);
+	// object that multiplies arbitrary matrices
+	atomic_eigen_mat_mul<scalar> mat_mul;
 	// -------------------------------------------------------------------
 	// declare independent variable vector x
 	size_t n = 2;
@@ -85,6 +82,8 @@ $srccode%cpp% */
 	//        [ 0     0    ]
 	// left = [ 1     2    ]
 	//        [ x[0]  x[1] ]
+	size_t nr_left  = 3;
+	size_t n_middle   = 2;
 	ad_matrix ad_left(nr_left, n_middle);
 	ad_left(0, 0) = ad_scalar(0.0);
 	ad_left(0, 1) = ad_scalar(0.0);
@@ -94,6 +93,7 @@ $srccode%cpp% */
 	ad_left(2, 1) = ad_x[1];
 	// -------------------------------------------------------------------
 	// right = [ x[0] , x[1] ]^T
+	size_t nc_right = 1;
 	ad_matrix ad_right(n_middle, nc_right);
 	ad_right(0, 0) = ad_x[0];
 	ad_right(1, 0) = ad_x[1];
