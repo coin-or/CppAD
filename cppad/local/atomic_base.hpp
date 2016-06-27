@@ -1018,7 +1018,10 @@ $$
 $section Atomic Forward Jacobian Sparsity Patterns$$
 
 $head Syntax$$
-$icode%ok% = %afun%.for_sparse_jac(%q%, %r%, %s%)%$$
+$icode%ok% = %afun%.for_sparse_jac(%q%, %r%, %s%)
+%$$
+$icode%ok% = %afun%.for_sparse_jac(%q%, %r%, %s%, %x%)
+%$$
 
 $head Purpose$$
 This function is used by $cref ForSparseJac$$ to compute
@@ -1036,7 +1039,8 @@ If you are using
 $cref ForSparseJac$$,
 $cref ForSparseHes$$, or
 $cref RevSparseHes$$,
-this virtual function must be defined by the
+one of the versions of this
+virtual function must be defined by the
 $cref/atomic_user/atomic_ctor/atomic_user/$$ class.
 
 $subhead q$$
@@ -1066,6 +1070,25 @@ are not specified (must not matter).
 Upon return, $icode s$$ is a
 $cref/atomic_sparsity/atomic_option/atomic_sparsity/$$ pattern for
 $latex S(x) \in B^{m \times q}$$.
+
+$subhead x$$
+$index deprecated$$
+The argument has prototype
+$codei%
+	const CppAD::vector<int>& %x%
+%$$
+and size is equal to the $icode n$$.
+This is the $cref Integer$$ value corresponding to the parameters in the
+vector $cref/ax/atomic_afun/ax/$$ (when the atomic function was called).
+To be specific, if
+$codei%
+	if( Parameter(%ax%[%i%]) == true )
+		%x%[%i%] = Integer( %ax%[%i%];
+	else
+		%x%[%i%] = std::numeric_limits<int>::max();
+%$$
+The version of this function with out the $icode x$$ argument is deprecated;
+i.e., you should include the argument even if you do not use it.
 
 $head ok$$
 The return value $icode ok$$ has prototype
@@ -1097,7 +1120,29 @@ is the Jacobian sparsity pattern for the argument vector x
 
 \param s
 is the Jacobian sparsity pattern for the result vector y
+
+\param x
+is the integer value for x arguments that are parameters.
 */
+virtual bool for_sparse_jac(
+	size_t                                  q  ,
+	const vector< std::set<size_t> >&       r  ,
+	      vector< std::set<size_t> >&       s  ,
+	const vector<int>&                      x  )
+{	return false; }
+virtual bool for_sparse_jac(
+	size_t                                  q  ,
+	const vector<bool>&                     r  ,
+	      vector<bool>&                     s  ,
+	const vector<int>&                      x  )
+{	return false; }
+virtual bool for_sparse_jac(
+	size_t                                  q  ,
+	const vectorBool&                       r  ,
+	      vectorBool&                       s  ,
+	const vector<int>&                      x  )
+{	return false; }
+//
 virtual bool for_sparse_jac(
 	size_t                                  q  ,
 	const vector< std::set<size_t> >&       r  ,

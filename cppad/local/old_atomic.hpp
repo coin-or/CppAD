@@ -1036,7 +1036,8 @@ public:
 	virtual bool for_sparse_jac(
 		size_t                                q ,
 		const vector< std::set<size_t> >&     r ,
-		      vector< std::set<size_t> >&     s )
+		      vector< std::set<size_t> >&     s ,
+		const vector<int>&                    x )
 	{	size_t n = r.size();
 		size_t m = s.size();
 		bool ok  = fjs_(id_, n, m, q, r, s);

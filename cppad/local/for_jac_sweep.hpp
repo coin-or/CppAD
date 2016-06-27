@@ -29,26 +29,6 @@ If it is one, a trace of every for_jac_sweep computation is printed.
 */
 # define CPPAD_FOR_JAC_SWEEP_TRACE 0
 
-/*
-\def CPPAD_ATOMIC_CALL
-This avoids warnings when NDEBUG is defined and user_ok is not used.
-If \c NDEBUG is defined, this resolves to
-\code
-	user_atom->for_sparse_jac
-\endcode
-otherwise, it respolves to
-\code
-	user_ok = user_atom->for_sparse_jac
-\endcode
-This maco is undefined at the end of this file to facillitate is
-use with a different definition in other files.
-*/
-# ifdef NDEBUG
-# define CPPAD_ATOMIC_CALL user_atom->for_sparse_jac
-# else
-# define CPPAD_ATOMIC_CALL user_ok = user_atom->for_sparse_jac
-# endif
-
 /*!
 Given the sparsity pattern for the independent variables,
 ForJacSweep computes the sparsity pattern for all the other variables.
@@ -160,6 +140,8 @@ void ForJacSweep(
 	// --------------------------------------------------------------
 	// work space used by UserOp.
 	//
+	vector<int>        user_x;   // parameters in x as integers
+	//
 	typedef std::set<size_t> size_set;
 	size_set::iterator set_itr;  // iterator for a standard set
 	size_set::iterator set_end;  // end of iterator sequence
@@ -184,12 +166,16 @@ void ForJacSweep(
 	bool               user_pack = false;      // sparsity pattern type is pack
 	bool               user_bool = false;      // sparsity pattern type is bool
 	bool               user_set  = false;      // sparsity pattern type is set
-# ifndef NDEBUG
 	bool               user_ok   = false;      // atomic op return value
-# endif
 	//
 	// next expected operator in a UserOp sequence
 	enum { user_start, user_arg, user_ret, user_end } user_state = user_start;
+	//
+	// pointer to the beginning of the parameter vector
+	// (used by user atomic functions)
+	const Base* parameter = CPPAD_NULL;
+	if( num_par > 0 )
+		parameter = play->GetPar();
 	// --------------------------------------------------------------
 
 # if CPPAD_FOR_JAC_SWEEP_TRACE
@@ -670,6 +656,9 @@ void ForJacSweep(
 					CPPAD_ASSERT_KNOWN(false, msg.c_str() );
 				}
 # endif
+				if( user_x.size() != user_n )
+					user_x.resize( user_n );
+				//
 				user_pack  = user_atom->sparsity() ==
 							atomic_base<Base>::pack_sparsity_enum;
 				user_bool  = user_atom->sparsity() ==
@@ -736,17 +725,38 @@ void ForJacSweep(
 			CPPAD_ASSERT_UNKNOWN( user_state == user_arg );
 			CPPAD_ASSERT_UNKNOWN( user_j < user_n );
 			CPPAD_ASSERT_UNKNOWN( size_t(arg[0]) < num_par );
+			//
+			// parameters as integers
+			user_x[user_j] = Integer( parameter[arg[0]] );
 			// set row user_j to empty sparsity pattern
 			++user_j;
 			if( user_j == user_n )
 			{	// call users function for this operation
 				user_atom->set_id(user_id);
 				if( user_pack )
-					CPPAD_ATOMIC_CALL( user_q, pack_r, pack_s);
+				{	user_ok = user_atom->for_sparse_jac(
+						user_q, pack_r, pack_s, user_x
+					);
+					if( ! user_ok ) user_ok = user_atom->for_sparse_jac(
+						user_q, pack_r, pack_s
+					);
+				}
 				if( user_bool )
-					CPPAD_ATOMIC_CALL( user_q, bool_r, bool_s);
+				{	user_ok = user_atom->for_sparse_jac(
+						user_q, bool_r, bool_s, user_x
+					);
+					if( ! user_ok ) user_ok = user_atom->for_sparse_jac(
+						user_q, bool_r, bool_s
+					);
+				}
 				if( user_set )
-					CPPAD_ATOMIC_CALL( user_q, set_r, set_s);
+				{	user_ok = user_atom->for_sparse_jac(
+						user_q, set_r, set_s, user_x
+					);
+					if( ! user_ok ) user_ok = user_atom->for_sparse_jac(
+						user_q, set_r, set_s
+					);
+				}
 				user_state = user_ret;
 			}
 			break;
@@ -756,6 +766,8 @@ void ForJacSweep(
 			CPPAD_ASSERT_UNKNOWN( user_state == user_arg );
 			CPPAD_ASSERT_UNKNOWN( user_j < user_n );
 			CPPAD_ASSERT_UNKNOWN( size_t(arg[0]) <= i_var );
+			// variable as integers
+			user_x[user_j] = std::numeric_limits<int>::max();
 			// set row user_j to sparsity pattern for variable arg[0]
 			var_sparsity.begin(arg[0]);
 			i = var_sparsity.next_element();
@@ -773,11 +785,29 @@ void ForJacSweep(
 			{	// call users function for this operation
 				user_atom->set_id(user_id);
 				if( user_pack )
-					CPPAD_ATOMIC_CALL( user_q, pack_r, pack_s);
+				{	user_ok = user_atom->for_sparse_jac(
+						user_q, pack_r, pack_s, user_x
+					);
+					if( ! user_ok ) user_ok = user_atom->for_sparse_jac(
+						user_q, pack_r, pack_s
+					);
+				}
 				if( user_bool )
-					CPPAD_ATOMIC_CALL( user_q, bool_r, bool_s);
+				{	user_ok = user_atom->for_sparse_jac(
+						user_q, bool_r, bool_s, user_x
+					);
+					if( ! user_ok ) user_ok = user_atom->for_sparse_jac(
+						user_q, bool_r, bool_s
+					);
+				}
 				if( user_set )
-					CPPAD_ATOMIC_CALL( user_q, set_r, set_s);
+				{	user_ok = user_atom->for_sparse_jac(
+						user_q, set_r, set_s, user_x
+					);
+					if( ! user_ok ) user_ok = user_atom->for_sparse_jac(
+						user_q, set_r, set_s
+					);
+				}
 				user_state = user_ret;
 			}
 			break;
@@ -892,6 +922,5 @@ void ForJacSweep(
 
 // preprocessor symbols that are local to this file
 # undef CPPAD_FOR_JAC_SWEEP_TRACE
-# undef CPPAD_ATOMIC_CALL
 
 # endif

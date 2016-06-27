@@ -118,20 +118,20 @@ $srccode%cpp% */
 	// constructor
 	atomic_eigen_mat_mul(
 		// number of rows in left operand
-		const size_t nr_left  ,
+		const size_t nr_left,
 		// number of rows in left and columns in right operand
-		const size_t n_middle   ,
+		const size_t n_middle,
 		// number of columns in right operand
 		const size_t nc_right
 	) :
 	CppAD::atomic_base<Base>(
 		"atom_eigen_mat_mul"                             ,
 		CppAD::atomic_base<Base>::set_sparsity_enum
-	) ,
-	nr_left_(  nr_left  )                   ,
-	n_middle_(   n_middle   )                   ,
-	nc_right_( nc_right )                   ,
-	nx_( (nr_left + nc_right) * n_middle_ ) ,
+	)                                                    ,
+	nr_left_(  nr_left  )                                ,
+	n_middle_(   n_middle   )                            ,
+	nc_right_( nc_right )                                ,
+	nx_( 3 + (nr_left + nc_right) * n_middle_ )          ,
 	ny_( nr_left * nc_right )
 	{ }
 /* %$$
@@ -145,21 +145,23 @@ $srccode%cpp% */
 		assert( n_middle_  == size_t( left.cols() )   );
 		assert( n_middle_  == size_t( right.rows() )  );
 		assert( nc_right_  == size_t ( right.cols() ) );
-
-		// -----------------------------------------------------------------
-		// packed version of left and right
-		CPPAD_TESTVECTOR(ad_scalar) packed_arg(nx_);
+		//
 		size_t n_left   = nr_left_ * n_middle_;
 		size_t n_right  = n_middle_ * nc_right_;
 		size_t n_result = nr_left_ * nc_right_;
-		assert( n_left + n_right == nx_ );
+		assert( 3 + n_left + n_right == nx_ );
 		assert( n_result == ny_ );
+		// -----------------------------------------------------------------
+		// packed version of left and right
+		CPPAD_TESTVECTOR(ad_scalar) packed_arg(nx_);
 		//
+		packed_arg[0] = ad_scalar( nr_left_ );
+		packed_arg[1] = ad_scalar( n_middle_ );
+		packed_arg[2] = ad_scalar( nc_right_ );
 		for(size_t i = 0; i < n_left; i++)
-			packed_arg[i] = left.data()[i];
+			packed_arg[3 + i] = left.data()[i];
 		for(size_t i = 0; i < n_right; i++)
-			packed_arg[ i + n_left ] = right.data()[i];
-
+			packed_arg[ 3 + n_left + i ] = right.data()[i];
 		// ------------------------------------------------------------------
 		// packed version of result = left * right
 		CPPAD_TESTVECTOR(ad_scalar) packed_result(ny_);
@@ -209,7 +211,7 @@ $srccode%cpp% */
 		const CppAD::vector<bool>&      vx ,
 		// which components of y are variables
 		CppAD::vector<bool>&            vy ,
-		// tx [ j * (q+1) + k ] is x_j^k
+		// tx [ 3 + j * (q+1) + k ] is x_j^k
 		const CppAD::vector<scalar>&    tx ,
 		// ty [ i * (q+1) + k ] is y_i^k
 		CppAD::vector<scalar>&          ty
@@ -223,7 +225,7 @@ $srccode%cpp% */
 		size_t n_left   = nr_left_ * n_middle_;
 		size_t n_right  = n_middle_ * nc_right_;
 		size_t n_result = nr_left_ * nc_right_;
-		assert( n_left + n_right == nx_ );
+		assert( 3 + n_left + n_right == nx_ );
 		assert( n_result == ny_ );
 		//
 		// -------------------------------------------------------------------
@@ -246,11 +248,11 @@ $srccode%cpp% */
 		for(size_t k = 0; k < n_order; k++)
 		{	// unpack left values for this order
 			for(size_t i = 0; i < n_left; i++)
-				f_left_[k].data()[i] = tx[ i * n_order + k ];
+				f_left_[k].data()[i] = tx[ (3 + i) * n_order + k ];
 			//
 			// unpack right values for this order
 			for(size_t i = 0; i < n_right; i++)
-				f_right_[k].data()[i] = tx[ (i + n_left) * n_order + k ];
+				f_right_[k].data()[i] = tx[ ( 3 + n_left + i) * n_order + k ];
 		}
 		// -------------------------------------------------------------------
 		// result for each order
@@ -280,11 +282,11 @@ $srccode%cpp% */
 			{	bool var = false;
 				for(size_t ell = 0; ell < n_middle_; ell++)
 				{	// left information
-					size_t index   = i * n_middle_ + ell;
+					size_t index   = 3 + i * n_middle_ + ell;
 					bool var_left  = vx[index];
 					bool nz_left   = var_left | (f_left_[0](i, ell) != zero);
 					// right information
-					index          = n_left + ell * nc_right_ + j;
+					index          = 3 + n_left + ell * nc_right_ + j;
 					bool var_right = vx[index];
 					bool nz_right  = var_right | (f_right_[0](ell, j) != zero);
 					// effect of result
@@ -322,7 +324,7 @@ $srccode%cpp% */
 		size_t n_left   = nr_left_ * n_middle_;
 		size_t n_right  = n_middle_ * nc_right_;
 		size_t n_result = nr_left_ * nc_right_;
-		assert( n_left + n_right == nx_ );
+		assert( 3 + n_left + n_right == nx_ );
 		assert( n_result == ny_ );
 		// -------------------------------------------------------------------
 		// make sure f_left_, f_right_ are large enough
@@ -350,11 +352,11 @@ $srccode%cpp% */
 		for(size_t k = 0; k < n_order; k++)
 		{	// unpack left values for this order
 			for(size_t i = 0; i < n_left; i++)
-				f_left_[k].data()[i] = tx[ i * n_order + k ];
+				f_left_[k].data()[i] = tx[ (3 + i) * n_order + k ];
 			//
 			// unpack right values for this order
 			for(size_t i = 0; i < n_right; i++)
-				f_right_[k].data()[i] = tx[ (i + n_left) * n_order + k ];
+				f_right_[k].data()[i] = tx[ (3 + n_left + i) * n_order + k ];
 		}
 		// -------------------------------------------------------------------
 		// unpack py into r_result_
@@ -382,13 +384,18 @@ $srccode%cpp% */
 		// -------------------------------------------------------------------
 		// pack r_left and r_right int px
 		for(size_t k = 0; k < n_order; k++)
-		{	// pack left values for this order
+		{	// dimensions are integer constants
+			px[ 0 * n_order + k ] = 0.0;
+			px[ 1 * n_order + k ] = 0.0;
+			px[ 2 * n_order + k ] = 0.0;
+			//
+			// pack left values for this order
 			for(size_t i = 0; i < n_left; i++)
-				px[ i * n_order + k ] = r_left_[k].data()[i];
+				px[ (3 + i) * n_order + k ] = r_left_[k].data()[i];
 			//
 			// pack right values for this order
 			for(size_t i = 0; i < n_right; i++)
-				px[ (i + n_left) * n_order + k] = r_right_[k].data()[i];
+				px[ (3 + i + n_left) * n_order + k] = r_right_[k].data()[i];
 		}
 		//
 		return true;
@@ -415,9 +422,9 @@ $srccode%cpp% */
 				s[i_result].clear();
 				for(size_t ell = 0; ell < n_middle_; ell++)
 				{	// pack index for entry (i, ell) in left
-					size_t i_left  = i * n_middle_ + ell;
+					size_t i_left  = 3 + i * n_middle_ + ell;
 					// pack index for entry (ell, j) in right
-					size_t i_right = n_left + ell * nc_right_ + j;
+					size_t i_right = 3 + n_left + ell * nc_right_ + j;
 					//
 					s[i_result] = CppAD::set_union(s[i_result], r[i_left] );
 					s[i_result] = CppAD::set_union(s[i_result], r[i_right] );
@@ -453,9 +460,9 @@ $srccode%cpp% */
 				st[i_result].clear();
 				for(size_t ell = 0; ell < n_middle_; ell++)
 				{	// pack index for entry (i, ell) in left
-					size_t i_left  = i * n_middle_ + ell;
+					size_t i_left  = 3 + i * n_middle_ + ell;
 					// pack index for entry (ell, j) in right
-					size_t i_right = n_left + ell * nc_right_ + j;
+					size_t i_right = 3 + n_left + ell * nc_right_ + j;
 					//
 					st[i_left]  = CppAD::set_union(st[i_left],  rt[i_result]);
 					st[i_right] = CppAD::set_union(st[i_right], rt[i_result]);
@@ -493,9 +500,9 @@ $srccode%cpp% */
 				if( s[i_result] )
 				{	for(size_t ell = 0; ell < n_middle_; ell++)
 					{	// pack index for entry (i, ell) in left
-						size_t i_left  = i * n_middle_ + ell;
+						size_t i_left  = 3 + i * n_middle_ + ell;
 						// pack index for entry (ell, j) in right
-						size_t i_right = n_left + ell * nc_right_ + j;
+						size_t i_right = 3 + n_left + ell * nc_right_ + j;
 						if( r[i_left] & r[i_right] )
 						{	h[i_left].insert(i_right);
 							h[i_right].insert(i_left);
@@ -545,9 +552,9 @@ $srccode%cpp% */
 				size_t i_result = i * nc_right_ + j;
 				for(size_t ell = 0; ell < n_middle_; ell++)
 				{	// pack index for entry (i, ell) in left
-					size_t i_left  = i * n_middle_ + ell;
+					size_t i_left  = 3 + i * n_middle_ + ell;
 					// pack index for entry (ell, j) in right
-					size_t i_right = n_left + ell * nc_right_ + j;
+					size_t i_right = 3 + n_left + ell * nc_right_ + j;
 					//
 					// back propagate T(x) = S(x) * f'(x).
 					t[i_left]  |= bool( s[i_result] );
