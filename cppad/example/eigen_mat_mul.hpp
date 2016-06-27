@@ -141,23 +141,23 @@ $srccode%cpp% */
 	ad_matrix op(
 		const ad_matrix&              left    ,
 		const ad_matrix&              right   )
-	{	assert( nr_left_   == size_t( left.rows() )   );
-		assert( n_middle_  == size_t( left.cols() )   );
-		assert( n_middle_  == size_t( right.rows() )  );
-		assert( nc_right_  == size_t ( right.cols() ) );
+	{	size_t  nr_left   = size_t( left.rows() );
+		size_t  n_middle  = size_t( left.cols() );
+		size_t  nc_right  = size_t( right.cols() );
+		assert( n_middle  == size_t( right.rows() )  );
 		//
-		size_t n_left   = nr_left_ * n_middle_;
-		size_t n_right  = n_middle_ * nc_right_;
-		size_t n_result = nr_left_ * nc_right_;
+		size_t n_left   = nr_left * n_middle;
+		size_t n_right  = n_middle * nc_right;
+		size_t n_result = nr_left * nc_right;
 		assert( 3 + n_left + n_right == nx_ );
 		assert( n_result == ny_ );
 		// -----------------------------------------------------------------
 		// packed version of left and right
 		CPPAD_TESTVECTOR(ad_scalar) packed_arg(nx_);
 		//
-		packed_arg[0] = ad_scalar( nr_left_ );
-		packed_arg[1] = ad_scalar( n_middle_ );
-		packed_arg[2] = ad_scalar( nc_right_ );
+		packed_arg[0] = ad_scalar( nr_left );
+		packed_arg[1] = ad_scalar( n_middle );
+		packed_arg[2] = ad_scalar( nc_right );
 		for(size_t i = 0; i < n_left; i++)
 			packed_arg[3 + i] = left.data()[i];
 		for(size_t i = 0; i < n_right; i++)
@@ -169,7 +169,7 @@ $srccode%cpp% */
 
 		// ------------------------------------------------------------------
 		// unpack result matrix
-		ad_matrix result(nr_left_, nc_right_);
+		ad_matrix result(nr_left, nc_right);
 		for(size_t i = 0; i < n_result; i++)
 			result.data()[i] = packed_result[ i ];
 		//
@@ -216,15 +216,19 @@ $srccode%cpp% */
 		// ty [ i * (q+1) + k ] is y_i^k
 		CppAD::vector<scalar>&          ty
 	)
-	{	size_t n_order = q + 1;
+	{	size_t n_order  = q + 1;
+		size_t nr_left  = size_t( CppAD::Integer( tx[ 0 * n_order + 0 ] ) );
+		size_t n_middle = size_t( CppAD::Integer( tx[ 1 * n_order + 0 ] ) );
+		size_t nc_right = size_t( CppAD::Integer( tx[ 2 * n_order + 0 ] ) );
+		//
 		assert( vx.size() == 0 || nx_ == vx.size() );
 		assert( vx.size() == 0 || ny_ == vy.size() );
 		assert( nx_ * n_order == tx.size() );
 		assert( ny_ * n_order == ty.size() );
 		//
-		size_t n_left   = nr_left_ * n_middle_;
-		size_t n_right  = n_middle_ * nc_right_;
-		size_t n_result = nr_left_ * nc_right_;
+		size_t n_left   = nr_left * n_middle;
+		size_t n_right  = n_middle * nc_right;
+		size_t n_result = nr_left * nc_right;
 		assert( 3 + n_left + n_right == nx_ );
 		assert( n_result == ny_ );
 		//
@@ -238,9 +242,9 @@ $srccode%cpp% */
 			f_result_.resize(n_order);
 			//
 			for(size_t k = 0; k < n_order; k++)
-			{	f_left_[k].resize(nr_left_, n_middle_);
-				f_right_[k].resize(n_middle_, nc_right_);
-				f_result_[k].resize(nr_left_, nc_right_);
+			{	f_left_[k].resize(nr_left, n_middle);
+				f_right_[k].resize(n_middle, nc_right);
+				f_result_[k].resize(nr_left, nc_right);
 			}
 		}
 		// -------------------------------------------------------------------
@@ -258,7 +262,7 @@ $srccode%cpp% */
 		// result for each order
 		for(size_t k = 0; k < n_order; k++)
 		{	// result[k] = sum_ell left[ell] * right[k-ell]
-			f_result_[k] = matrix::Zero(nr_left_, nc_right_);
+			f_result_[k] = matrix::Zero(nr_left, nc_right);
 			for(size_t ell = 0; ell <= k; ell++)
 				f_result_[k] += f_left_[ell] * f_right_[k-ell];
 		}
@@ -277,23 +281,23 @@ $srccode%cpp% */
 		// (note that the constant zero times a variable is a constant)
 		scalar zero(0.0);
 		assert( n_order == 1 );
-		for(size_t i = 0; i < nr_left_; i++)
-		{	for(size_t j = 0; j < nc_right_; j++)
+		for(size_t i = 0; i < nr_left; i++)
+		{	for(size_t j = 0; j < nc_right; j++)
 			{	bool var = false;
-				for(size_t ell = 0; ell < n_middle_; ell++)
+				for(size_t ell = 0; ell < n_middle; ell++)
 				{	// left information
-					size_t index   = 3 + i * n_middle_ + ell;
+					size_t index   = 3 + i * n_middle + ell;
 					bool var_left  = vx[index];
 					bool nz_left   = var_left | (f_left_[0](i, ell) != zero);
 					// right information
-					index          = 3 + n_left + ell * nc_right_ + j;
+					index          = 3 + n_left + ell * nc_right + j;
 					bool var_right = vx[index];
 					bool nz_right  = var_right | (f_right_[0](ell, j) != zero);
 					// effect of result
 					var |= var_left & nz_right;
 					var |= nz_left  & var_right;
 				}
-				size_t index = i * nc_right_ + j;
+				size_t index = i * nc_right + j;
 				vy[index]    = var;
 			}
 		}
@@ -315,15 +319,19 @@ $srccode%cpp% */
 		// derivative of G[ {y_i^k} ] w.r.t. {y_i^k}
 		const CppAD::vector<double>&     py
 	)
-	{	size_t n_order = q + 1;
+	{	size_t n_order  = q + 1;
+		size_t nr_left  = size_t( CppAD::Integer( tx[ 0 * n_order + 0 ] ) );
+		size_t n_middle = size_t( CppAD::Integer( tx[ 1 * n_order + 0 ] ) );
+		size_t nc_right = size_t( CppAD::Integer( tx[ 2 * n_order + 0 ] ) );
+		//
 		assert( nx_ * n_order == tx.size() );
 		assert( ny_ * n_order == ty.size() );
 		assert( px.size() == tx.size() );
 		assert( py.size() == ty.size() );
 		//
-		size_t n_left   = nr_left_ * n_middle_;
-		size_t n_right  = n_middle_ * nc_right_;
-		size_t n_result = nr_left_ * nc_right_;
+		size_t n_left   = nr_left * n_middle;
+		size_t n_right  = n_middle * nc_right;
+		size_t n_result = nr_left * nc_right;
 		assert( 3 + n_left + n_right == nx_ );
 		assert( n_result == ny_ );
 		// -------------------------------------------------------------------
@@ -342,9 +350,9 @@ $srccode%cpp% */
 			r_result_.resize(n_order);
 			//
 			for(size_t k = 0; k < n_order; k++)
-			{	r_left_[k].resize(nr_left_, n_middle_);
-				r_right_[k].resize(n_middle_, nc_right_);
-				r_result_[k].resize(nr_left_, nc_right_);
+			{	r_left_[k].resize(nr_left, n_middle);
+				r_right_[k].resize(n_middle, nc_right);
+				r_result_[k].resize(nr_left, nc_right);
 			}
 		}
 		// -------------------------------------------------------------------
@@ -367,8 +375,8 @@ $srccode%cpp% */
 		// -------------------------------------------------------------------
 		// initialize r_left_ and r_right_ as zero
 		for(size_t k = 0; k < n_order; k++)
-		{	r_left_[k]   = matrix::Zero(nr_left_, n_middle_);
-			r_right_[k]  = matrix::Zero(n_middle_, nc_right_);
+		{	r_left_[k]   = matrix::Zero(nr_left, n_middle);
+			r_right_[k]  = matrix::Zero(n_middle, nc_right);
 		}
 		// -------------------------------------------------------------------
 		// matrix reverse mode calculation
@@ -410,21 +418,27 @@ $srccode%cpp% */
 		// sparsity pattern for the matrix R
 		const CppAD::vector< std::set<size_t> >&     r ,
 		// sparsity pattern for the matrix S = f'(x) * R
-		CppAD::vector< std::set<size_t> >&           s )
-	{	assert( nx_ == r.size() );
+		CppAD::vector< std::set<size_t> >&           s ,
+		const CppAD::vector<int>&                    x )
+	{
+		size_t nr_left  = size_t( x[0] );
+		size_t n_middle = size_t( x[1] );
+		size_t nc_right = size_t( x[2] );
+		//
+		assert( nx_ == r.size() );
 		assert( ny_ == s.size() );
 		//
-		size_t n_left = nr_left_ * n_middle_;
-		for(size_t i = 0; i < nr_left_; i++)
-		{	for(size_t j = 0; j < nc_right_; j++)
+		size_t n_left = nr_left * n_middle;
+		for(size_t i = 0; i < nr_left; i++)
+		{	for(size_t j = 0; j < nc_right; j++)
 			{	// pack index for entry (i, j) in result
-				size_t i_result = i * nc_right_ + j;
+				size_t i_result = i * nc_right + j;
 				s[i_result].clear();
-				for(size_t ell = 0; ell < n_middle_; ell++)
+				for(size_t ell = 0; ell < n_middle; ell++)
 				{	// pack index for entry (i, ell) in left
-					size_t i_left  = 3 + i * n_middle_ + ell;
+					size_t i_left  = 3 + i * n_middle + ell;
 					// pack index for entry (ell, j) in right
-					size_t i_right = 3 + n_left + ell * nc_right_ + j;
+					size_t i_right = 3 + n_left + ell * nc_right + j;
 					//
 					s[i_result] = CppAD::set_union(s[i_result], r[i_left] );
 					s[i_result] = CppAD::set_union(s[i_result], r[i_right] );
