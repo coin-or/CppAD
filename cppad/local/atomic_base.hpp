@@ -1522,11 +1522,21 @@ $$
 $section Atomic Reverse Hessian Sparsity Patterns$$
 
 $head Syntax$$
-$icode%ok% = %afun%.rev_sparse_hes(%vx%, %s%, %t%, %q%, %r%, %u%, %v%)%$$
+$icode%ok% = %afun%.rev_sparse_hes(%vx%, %s%, %t%, %q%, %r%, %u%, %v%
+)%$$
+$icode%ok% = %afun%.rev_sparse_hes(%vx%, %s%, %t%, %q%, %r%, %u%, %v%, %x%
+)%$$
 
 $head Purpose$$
 This function is used by $cref RevSparseHes$$ to compute
 Hessian sparsity patterns.
+If you are using $cref RevSparseHes$$ to compute
+one of the versions of this
+virtual function muse be defined by the
+$cref/atomic_user/atomic_ctor/atomic_user/$$ class.
+$pre
+
+$$
 There is an unspecified scalar valued function
 $latex g : B^m \rightarrow B$$.
 Given a $cref/sparsity pattern/glossary/Sparsity Pattern/$$ for
@@ -1653,6 +1663,25 @@ f^{(1)} (x)^\R{T} U(x)
 \end{array}
 \] $$
 
+$subhead x$$
+$index deprecated$$
+The argument has prototype
+$codei%
+	const CppAD::vector<int>& %x%
+%$$
+and size is equal to the $icode n$$.
+This is the $cref Integer$$ value corresponding to the parameters in the
+vector $cref/ax/atomic_afun/ax/$$ (when the atomic function was called).
+To be specific, if
+$codei%
+	if( Parameter(%ax%[%i%]) == true )
+		%x%[%i%] = Integer( %ax%[%i%];
+	else
+		%x%[%i%] = std::numeric_limits<int>::max();
+%$$
+The version of this function with out the $icode x$$ argument is deprecated;
+i.e., you should include the argument even if you do not use it.
+
 $children%
 	example/atomic/rev_sparse_hes.cpp
 %$$
@@ -1687,7 +1716,41 @@ is the Hessian sparsity pattern w.r.t the result vector y.
 
 \param v [out]
 is the Hessian sparsity pattern w.r.t the argument vector x.
+
+\param x [in]
+is the integer value of the x arguments that are parameters.
 */
+virtual bool rev_sparse_hes(
+	const vector<bool>&                     vx ,
+	const vector<bool>&                     s  ,
+	      vector<bool>&                     t  ,
+	size_t                                  q  ,
+	const vector< std::set<size_t> >&       r  ,
+	const vector< std::set<size_t> >&       u  ,
+	      vector< std::set<size_t> >&       v  ,
+	const vector<int>&                      x  )
+{	return false; }
+virtual bool rev_sparse_hes(
+	const vector<bool>&                     vx ,
+	const vector<bool>&                     s  ,
+	      vector<bool>&                     t  ,
+	size_t                                  q  ,
+	const vector<bool>&                     r  ,
+	const vector<bool>&                     u  ,
+	      vector<bool>&                     v  ,
+	const vector<int>&                      x  )
+{	return false; }
+virtual bool rev_sparse_hes(
+	const vector<bool>&                     vx ,
+	const vector<bool>&                     s  ,
+	      vector<bool>&                     t  ,
+	size_t                                  q  ,
+	const vectorBool&                       r  ,
+	const vectorBool&                       u  ,
+	      vectorBool&                       v  ,
+	const vector<int>&                      x  )
+{	return false; }
+// deprecated
 virtual bool rev_sparse_hes(
 	const vector<bool>&                     vx ,
 	const vector<bool>&                     s  ,
@@ -1784,7 +1847,7 @@ static void clear(void)
 /*!
 Set value of id (used by deprecated old_atomic class)
 
-This function is called just before calling any of the virtual funcitons
+This function is called just before calling any of the virtual function
 and has the corresponding id of the corresponding virtual call.
 */
 virtual void set_id(size_t id)

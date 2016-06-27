@@ -558,8 +558,15 @@ $srccode%cpp% */
 		const CppAD::vector< std::set<size_t> >&     u ,
 		// sparsity pattern for
 		// V(x) = f'(x)^T * U(x) + sum_{i=0}^{m-1} S_i(x) f_i^{(2)} (x) * R
-		CppAD::vector< std::set<size_t> >&           v )
-	{	assert( vx.size() == nx_ );
+		CppAD::vector< std::set<size_t> >&           v ,
+		// parameters as integers
+		const CppAD::vector<int>&                    x )
+	{
+		size_t nr_left  = size_t( x[0] );
+		size_t n_middle = size_t( x[1] );
+		size_t nc_right = size_t( x[2] );
+		//
+		assert( vx.size() == nx_ );
 		assert( s.size()  == ny_ );
 		assert( t.size()  == nx_ );
 		assert( r.size()  == nx_ );
@@ -571,16 +578,16 @@ $srccode%cpp% */
 			v[j].clear();
 		}
 		//
-		size_t n_left = nr_left_ * n_middle_;
-		for(size_t i = 0; i < nr_left_; i++)
-		{	for(size_t j = 0; j < nc_right_; j++)
+		size_t n_left = nr_left * n_middle;
+		for(size_t i = 0; i < nr_left; i++)
+		{	for(size_t j = 0; j < nc_right; j++)
 			{	// pack index for entry (i, j) in result
-				size_t i_result = i * nc_right_ + j;
-				for(size_t ell = 0; ell < n_middle_; ell++)
+				size_t i_result = i * nc_right + j;
+				for(size_t ell = 0; ell < n_middle; ell++)
 				{	// pack index for entry (i, ell) in left
-					size_t i_left  = 3 + i * n_middle_ + ell;
+					size_t i_left  = 3 + i * n_middle + ell;
 					// pack index for entry (ell, j) in right
-					size_t i_right = 3 + n_left + ell * nc_right_ + j;
+					size_t i_right = 3 + n_left + ell * nc_right + j;
 					//
 					// back propagate T(x) = S(x) * f'(x).
 					t[i_left]  |= bool( s[i_result] );

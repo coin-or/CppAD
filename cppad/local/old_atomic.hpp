@@ -1071,7 +1071,8 @@ public:
 		size_t                                q ,
 		const vector< std::set<size_t> >&     r ,
 		const vector< std::set<size_t> >&     u ,
-		      vector< std::set<size_t> >&     v )
+		      vector< std::set<size_t> >&     v ,
+		const vector<int>&                    x )
 	{	size_t m = u.size();
 		size_t n = v.size();
 		CPPAD_ASSERT_UNKNOWN( r.size() == n );

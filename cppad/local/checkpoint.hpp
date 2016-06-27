@@ -477,7 +477,8 @@ private:
 		size_t                                  q  ,
 		const sparsity_type&                    r  ,
 		const sparsity_type&                    u  ,
-		      sparsity_type&                    v  )
+		      sparsity_type&                    v  ,
+		const vector<int>&                      x  )
 	{	size_t n = f_.Domain();
 # ifndef NDEBUG
 		size_t m = f_.Range();
@@ -922,8 +923,9 @@ public:
 		size_t                                  q  ,
 		const vectorBool&                       r  ,
 		const vectorBool&                       u  ,
-		      vectorBool&                       v  )
-	{	return rev_sparse_hes< vectorBool >(vx, s, t, q, r, u, v);
+		      vectorBool&                       v  ,
+		const vector<int>&                      x  )
+	{	return rev_sparse_hes< vectorBool >(vx, s, t, q, r, u, v, x);
 	}
 	/*!
 	Link from user_atomic to reverse sparse Hessian bool
@@ -937,8 +939,9 @@ public:
 		size_t                                  q  ,
 		const vector<bool>&                     r  ,
 		const vector<bool>&                     u  ,
-		      vector<bool>&                     v  )
-	{	return rev_sparse_hes< vector<bool> >(vx, s, t, q, r, u, v);
+		      vector<bool>&                     v  ,
+		const vector<int>&                      x  )
+	{	return rev_sparse_hes< vector<bool> >(vx, s, t, q, r, u, v, x);
 	}
 	/*!
 	Link from user_atomic to reverse sparse Hessian sets
@@ -952,7 +955,8 @@ public:
 		size_t                                  q  ,
 		const vector< std::set<size_t> >&       r  ,
 		const vector< std::set<size_t> >&       u  ,
-		      vector< std::set<size_t> >&       v  )
+		      vector< std::set<size_t> >&       v  ,
+		const vector<int>&                      x  )
 	{	size_t n = f_.Domain();
 # ifndef NDEBUG
 		size_t m = f_.Range();

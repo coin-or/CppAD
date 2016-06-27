@@ -729,7 +729,6 @@ void RevJacSweep(
 						user_q, set_r, set_s
 					);
 				}
-# ifndef NDEBUG
 				if( ! user_ok )
 				{	std::string msg =
 						atomic_base<Base>::class_name(user_index)
@@ -742,7 +741,6 @@ void RevJacSweep(
 						msg += "sparsity = set_sparsity_enum";
 					CPPAD_ASSERT_KNOWN(false, msg.c_str() );
 				}
-# endif
 				//
 				// 2DO: It might be faster if we add set union to var_sparsity
 				// where one of the sets is not in var_sparsity.
@@ -796,6 +794,7 @@ void RevJacSweep(
 			//
 			// variable as integers
 			user_x[user_j] = std::numeric_limits<int>::max();
+			//
 			if( user_j == 0 )
 				user_state = user_start;
 			break;
