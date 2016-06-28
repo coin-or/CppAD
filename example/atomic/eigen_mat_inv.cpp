@@ -73,8 +73,7 @@ $srccode%cpp% */
 	atomic_eigen_mat_mul<scalar> mat_mul;
 	// -------------------------------------------------------------------
 	// object that computes invers of a 2x2 matrix
-	size_t nr  = 2;
-	atomic_eigen_mat_inv<scalar> mat_inv(nr);
+	atomic_eigen_mat_inv<scalar> mat_inv;
 	// -------------------------------------------------------------------
 	// declare independent variable vector x
 	size_t n = 3;

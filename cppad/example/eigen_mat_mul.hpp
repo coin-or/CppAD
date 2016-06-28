@@ -117,8 +117,7 @@ public:
 $subhead Constructor$$
 $srccode%cpp% */
 	// constructor
-	atomic_eigen_mat_mul(void) :
-	CppAD::atomic_base<Base>(
+	atomic_eigen_mat_mul(void) : CppAD::atomic_base<Base>(
 		"atom_eigen_mat_mul"                             ,
 		CppAD::atomic_base<Base>::set_sparsity_enum
 	)
@@ -156,10 +155,11 @@ $srccode%cpp% */
 		for(size_t i = 0; i < n_right; i++)
 			packed_arg[ 3 + n_left + i ] = right.data()[i];
 		// ------------------------------------------------------------------
-		// packed version of result = left * right
+		// Packed version of result = left * right.
+		// This as an atomic_base funciton call that CppAD uses
+		// to store the atomic operation on the tape.
 		CPPAD_TESTVECTOR(ad_scalar) packed_result(ny);
 		(*this)(packed_arg, packed_result);
-
 		// ------------------------------------------------------------------
 		// unpack result matrix
 		ad_matrix result(nr_left, nc_right);

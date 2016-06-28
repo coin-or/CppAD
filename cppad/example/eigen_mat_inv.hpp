@@ -26,7 +26,8 @@ $head Purpose$$
 For fixed positive integer $latex p$$,
 construct and atomic operation that solve the computes the matrix inverse
 $latex R = A^{-1}$$
-for any invertible $latex A \in \B{R}^{p \times p}$$.
+for any positive integer $latex p$$
+and invertible matrix $latex A \in \B{R}^{p \times p}$$.
 
 $head Theory$$
 
@@ -158,61 +159,48 @@ public:
 $subhead Constructor$$
 $srccode%cpp% */
 	// constructor
-	atomic_eigen_mat_inv(
-		// number of rows and columns in argument
-		const size_t nr
-	) :
-	CppAD::atomic_base<Base>(
+	atomic_eigen_mat_inv(void) : CppAD::atomic_base<Base>(
 		"atom_eigen_mat_inv"                             ,
 		CppAD::atomic_base<Base>::set_sparsity_enum
-	) ,
-	nr_(  nr  )       ,
-	nx_( nr * nr )    ,
-	f_sum_( nr, nr )
+	)
 	{ }
 /* %$$
 $subhead op$$
 $srccode%cpp% */
 	// use atomic operation to invert an AD matrix
 	ad_matrix op(const ad_matrix& arg)
-	{	assert( nr_ == size_t( arg.rows() ) );
-		assert( nr_ == size_t( arg.cols() ) );
-
+	{	size_t nr = size_t( arg.rows() );
+		size_t ny = nr * nr;
+		size_t nx = 1 + ny;
+		assert( nr == size_t( arg.cols() ) );
 		// -------------------------------------------------------------------
 		// packed version of arg
-		CPPAD_TESTVECTOR(ad_scalar) packed_arg(nx_);
-		for(size_t i = 0; i < nx_; i++)
-			packed_arg[i] = arg.data()[i];
-
+		CPPAD_TESTVECTOR(ad_scalar) packed_arg(nx);
+		packed_arg[0] = ad_scalar( nr );
+		for(size_t i = 0; i < ny; i++)
+			packed_arg[1 + i] = arg.data()[i];
 		// -------------------------------------------------------------------
-		// packed version of result = arg^{-1}
-		CPPAD_TESTVECTOR(ad_scalar) packed_result(nx_);
+		// packed version of result = arg^{-1}.
+		// This is an atomic_base function call that CppAD uses to
+		// store the atomic operation on the tape.
+		CPPAD_TESTVECTOR(ad_scalar) packed_result(ny);
 		(*this)(packed_arg, packed_result);
-
 		// -------------------------------------------------------------------
 		// unpack result matrix
-		ad_matrix result(nr_, nr_);
-		for(size_t i = 0; i < nx_; i++)
-			result.data()[i] = packed_result[ i ];
-
+		ad_matrix result(nr, nr);
+		for(size_t i = 0; i < ny; i++)
+			result.data()[i] = packed_result[i];
 		return result;
 	}
-/* %$$
+	/* %$$
 $head Private$$
 
 $subhead Variables$$
 $srccode%cpp% */
 private:
 	// -------------------------------------------------------------
-	// number of of rows in argument and result
-	const size_t nr_;
-	// size of the domain (and range) space
-	const size_t nx_;
-	// -------------------------------------------------------------
 	// one forward mode vector of matrices for argument and result
 	CppAD::vector<matrix> f_arg_, f_result_;
-	// matrix used for forward mode summation
-	matrix f_sum_;
 	// one reverse mode vector of matrices for argument and result
 	CppAD::vector<matrix> r_arg_, r_result_;
 	// -------------------------------------------------------------
@@ -235,10 +223,13 @@ $srccode%cpp% */
 		CppAD::vector<scalar>&          ty
 	)
 	{	size_t n_order = q + 1;
-		assert( vx.size() == 0 || nx_ == vx.size() );
-		assert( vx.size() == 0 || nx_ == vy.size() );
-		assert( nx_ * n_order == tx.size() );
-		assert( nx_ * n_order == ty.size() );
+		size_t nr      = size_t( CppAD::Integer( tx[ 0 * n_order + 0 ] ) );
+		size_t ny      = nr * nr;
+		size_t nx      = 1 + ny;
+		assert( vx.size() == 0 || nx == vx.size() );
+		assert( vx.size() == 0 || ny == vy.size() );
+		assert( nx * n_order == tx.size() );
+		assert( ny * n_order == ty.size() );
 		//
 		// -------------------------------------------------------------------
 		// make sure f_arg_ and f_result_ are large enough
@@ -248,16 +239,16 @@ $srccode%cpp% */
 			f_result_.resize(n_order);
 			//
 			for(size_t k = 0; k < n_order; k++)
-			{	f_arg_[k].resize(nr_, nr_);
-				f_result_[k].resize(nr_, nr_);
+			{	f_arg_[k].resize(nr, nr);
+				f_result_[k].resize(nr, nr);
 			}
 		}
 		// -------------------------------------------------------------------
 		// unpack tx into f_arg_
 		for(size_t k = 0; k < n_order; k++)
 		{	// unpack arg values for this order
-			for(size_t i = 0; i < nx_; i++)
-				f_arg_[k].data()[i] = tx[ i * n_order + k ];
+			for(size_t i = 0; i < ny; i++)
+				f_arg_[k].data()[i] = tx[ (1 + i) * n_order + k ];
 		}
 		// -------------------------------------------------------------------
 		// result for each order
@@ -265,7 +256,7 @@ $srccode%cpp% */
 		f_result_[0] = f_arg_[0].inverse();
 		for(size_t k = 1; k < n_order; k++)
 		{	// initialize sum
-			f_sum_ = matrix::Zero(nr_, nr_);
+			matrix f_sum_ = matrix::Zero(nr, nr);
 			// compute sum
 			for(size_t ell = 1; ell <= k; ell++)
 				f_sum_ -= f_arg_[ell] * f_result_[k-ell];
@@ -275,7 +266,7 @@ $srccode%cpp% */
 		// -------------------------------------------------------------------
 		// pack result_ into ty
 		for(size_t k = 0; k < n_order; k++)
-		{	for(size_t i = 0; i < nx_; i++)
+		{	for(size_t i = 0; i < ny; i++)
 				ty[ i * n_order + k ] = f_result_[k].data()[i];
 		}
 		// -------------------------------------------------------------------
@@ -286,9 +277,9 @@ $srccode%cpp% */
 		// This is a very dumb algorithm that over estimates which
 		// elements of the inverse are variables (which is not efficient).
 		bool var = false;
-		for(size_t i = 0; i < nx_; i++)
-			var |= vx[i];
-		for(size_t i = 0; i < nx_; i++)
+		for(size_t i = 0; i < ny; i++)
+			var |= vx[1 + i];
+		for(size_t i = 0; i < ny; i++)
 			vy[i] = var;
 		return true;
 	}
@@ -309,12 +300,14 @@ $srccode%cpp% */
 		const CppAD::vector<double>&     py
 	)
 	{	size_t n_order = q + 1;
-		assert( nx_           == nr_ * nr_ );
-		assert( nx_ * n_order == tx.size() );
-		assert( nx_ * n_order == ty.size() );
-		assert( px.size()     == tx.size() );
-		assert( py.size()     == ty.size() );
+		size_t nr      = size_t( CppAD::Integer( tx[ 0 * n_order + 0 ] ) );
+		size_t ny      = nr * nr;
+		size_t nx      = 1 + ny;
 		//
+		assert( nx * n_order == tx.size() );
+		assert( ny * n_order == ty.size() );
+		assert( px.size()    == tx.size() );
+		assert( py.size()    == ty.size() );
 		// -------------------------------------------------------------------
 		// make sure f_arg_ is large enough
 		assert( f_arg_.size() == f_result_.size() );
@@ -328,27 +321,27 @@ $srccode%cpp% */
 			r_result_.resize(n_order);
 			//
 			for(size_t k = 0; k < n_order; k++)
-			{	r_arg_[k].resize(nr_, nr_);
-				r_result_[k].resize(nr_, nr_);
+			{	r_arg_[k].resize(nr, nr);
+				r_result_[k].resize(nr, nr);
 			}
 		}
 		// -------------------------------------------------------------------
 		// unpack tx into f_arg_
 		for(size_t k = 0; k < n_order; k++)
 		{	// unpack arg values for this order
-			for(size_t i = 0; i < nx_; i++)
-				f_arg_[k].data()[i] = tx[ i * n_order + k ];
+			for(size_t i = 0; i < ny; i++)
+				f_arg_[k].data()[i] = tx[ (1 + i) * n_order + k ];
 		}
 		// -------------------------------------------------------------------
 		// unpack py into r_result_
 		for(size_t k = 0; k < n_order; k++)
-		{	for(size_t i = 0; i < nx_; i++)
+		{	for(size_t i = 0; i < ny; i++)
 				r_result_[k].data()[i] = py[ i * n_order + k ];
 		}
 		// -------------------------------------------------------------------
 		// initialize r_arg_ as zero
 		for(size_t k = 0; k < n_order; k++)
-			r_arg_[k]   = matrix::Zero(nr_, nr_);
+			r_arg_[k]   = matrix::Zero(nr, nr);
 		// -------------------------------------------------------------------
 		// matrix reverse mode calculation
 		//
@@ -372,8 +365,8 @@ $srccode%cpp% */
 		// -------------------------------------------------------------------
 		// pack r_arg into px
 		for(size_t k = 0; k < n_order; k++)
-		{	for(size_t i = 0; i < nx_; i++)
-				px[ i * n_order + k ] = r_arg_[k].data()[i];
+		{	for(size_t i = 0; i < ny; i++)
+				px[ (1 + i) * n_order + k ] = r_arg_[k].data()[i];
 		}
 		//
 		return true;

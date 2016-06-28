@@ -39,9 +39,23 @@ in reverse order by date.
 The purpose of these sections is to
 assist you in learning about changes between various versions of CppAD.
 
-$head 06-26$$
+$head 06-27$$
+$list number$$
 Improve the $cref atomic_eigen_mat_mul.hpp$$ and
 $cref atomic_eigen_mat_inv.hpp$$ examples.
+Most importantly, one derived object now works for matrices of any size.
+$lnext
+Add the vector $icode x$$,
+that contains the parameters in an atomic function call
+to the user following atomic functions:
+$cref/for_sparse_jac/atomic_rev_sparse_jac/Implementation/x/$$,
+$cref/rev_sparse_jac/atomic_rev_sparse_jac/Implementation/x/$$,
+$cref/for_sparse_hes/atomic_rev_sparse_jac/Implementation/x/$$,
+$cref/rev_sparse_hes/atomic_rev_sparse_jac/Implementation/x/$$.
+This enables one to pass parameter information to these functions; e.g.,
+the dimensions of matrices that the function operates on.
+$lend
+
 
 $head 06-25$$
 Add more entries to the optimization

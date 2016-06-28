@@ -40,8 +40,7 @@ bool non_symmetric(void)
 	bool ok    = true;
 	// -------------------------------------------------------------------
 	// object that computes inverse of a 2x2 matrix
-	size_t nr  = 2;
-	atomic_eigen_mat_inv<scalar> mat_inv(nr);
+	atomic_eigen_mat_inv<scalar> mat_inv;
 	// -------------------------------------------------------------------
 	// declare independent variable vector x
 	size_t n = 2;
@@ -52,6 +51,7 @@ bool non_symmetric(void)
 	// -------------------------------------------------------------------
 	// arg = [ x[0]  -1   ]
 	//       [ 2     x[1] ]
+	size_t nr  = 2;
 	ad_matrix ad_arg(nr, nr);
 	ad_arg(0, 0) = ad_x[0];
 	ad_arg(0, 1) = ad_scalar(-1.0);

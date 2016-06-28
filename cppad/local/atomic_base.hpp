@@ -1078,12 +1078,12 @@ $codei%
 	const CppAD::vector<%Base%>& %x%
 %$$
 and size is equal to the $icode n$$.
-This is the $cref Integer$$ value corresponding to the parameters in the
+This is the $cref Value$$ value corresponding to the parameters in the
 vector $cref/ax/atomic_afun/ax/$$ (when the atomic function was called).
 To be specific, if
 $codei%
 	if( Parameter(%ax%[%i%]) == true )
-		%x%[%i%] = Integer( %ax%[%i%];
+		%x%[%i%] = Value( %ax%[%i%] );
 	else
 		%x%[%i%] = CppAD::numeric_limits<%Base%>::quiet_NaN();
 %$$
@@ -1244,12 +1244,12 @@ $codei%
 	const CppAD::vector<%Base%>& %x%
 %$$
 and size is equal to the $icode n$$.
-This is the $cref Integer$$ value corresponding to the parameters in the
+This is the $cref Value$$ corresponding to the parameters in the
 vector $cref/ax/atomic_afun/ax/$$ (when the atomic function was called).
 To be specific, if
 $codei%
 	if( Parameter(%ax%[%i%]) == true )
-		%x%[%i%] = Integer( %ax%[%i%];
+		%x%[%i%] = Value( %ax%[%i%] );
 	else
 		%x%[%i%] = CppAD::numeric_limits<%Base%>::quiet_NaN();
 %$$
@@ -1420,12 +1420,12 @@ $codei%
 	const CppAD::vector<%Base%>& %x%
 %$$
 and size is equal to the $icode n$$.
-This is the $cref Integer$$ value corresponding to the parameters in the
+This is the $cref Value$$ value corresponding to the parameters in the
 vector $cref/ax/atomic_afun/ax/$$ (when the atomic function was called).
 To be specific, if
 $codei%
 	if( Parameter(%ax%[%i%]) == true )
-		%x%[%i%] = Integer( %ax%[%i%];
+		%x%[%i%] = Value( %ax%[%i%] );
 	else
 		%x%[%i%] = CppAD::numeric_limits<%Base%>::quiet_NaN();
 %$$
@@ -1670,12 +1670,12 @@ $codei%
 	const CppAD::vector<%Base%>& %x%
 %$$
 and size is equal to the $icode n$$.
-This is the $cref Integer$$ value corresponding to the parameters in the
+This is the $cref Value$$ value corresponding to the parameters in the
 vector $cref/ax/atomic_afun/ax/$$ (when the atomic function was called).
 To be specific, if
 $codei%
 	if( Parameter(%ax%[%i%]) == true )
-		%x%[%i%] = Integer( %ax%[%i%];
+		%x%[%i%] = Value( %ax%[%i%] );
 	else
 		%x%[%i%] = CppAD::numeric_limits<%Base%>::quiet_NaN();
 %$$
