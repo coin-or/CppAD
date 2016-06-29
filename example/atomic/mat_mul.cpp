@@ -17,7 +17,9 @@ $spell
 $$
 
 $section User Atomic Matrix Multiply: Example and Test$$
-$mindex multiply$$
+
+$head See Also$$
+$cref atomic_eigen_mat_mul.cpp$$
 
 $children%
 	cppad/example/mat_mul.hpp

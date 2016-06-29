@@ -176,12 +176,14 @@ $srccode%cpp% */
 	virtual bool for_sparse_jac(
 		size_t                                p ,
 		const vector<bool>&                   r ,
-		      vector<bool>&                   s )
+		      vector<bool>&                   s ,
+		const vector<float>&                  x )
 	{
 # ifndef NDEBUG
 		size_t n = r.size() / p;
 		size_t m = s.size() / p;
 # endif
+		assert( n == x.size() );
 		assert( n == 1 );
 		assert( m == 2 );
 
@@ -197,12 +199,14 @@ $srccode%cpp% */
 	virtual bool for_sparse_jac(
 		size_t                                p ,
 		const vector< std::set<size_t> >&     r ,
-		      vector< std::set<size_t> >&     s )
+		      vector< std::set<size_t> >&     s ,
+		const vector<float>&                  x )
 	{
 # ifndef NDEBUG
 		size_t n = r.size();
 		size_t m = s.size();
 # endif
+		assert( n == x.size() );
 		assert( n == 1 );
 		assert( m == 2 );
 
@@ -219,7 +223,8 @@ $srccode%cpp% */
 	virtual bool rev_sparse_jac(
 		size_t                                p ,
 		const vector<bool>&                  rt ,
-		      vector<bool>&                  st )
+		      vector<bool>&                  st ,
+		const vector<float>&                  x )
 	{
 # ifndef NDEBUG
 		size_t n = st.size() / p;
@@ -227,6 +232,7 @@ $srccode%cpp% */
 # endif
 		assert( n == 1 );
 		assert( m == 2 );
+		assert( n == x.size() );
 
 		// sparsity for S(x)^T = f'(x)^T * R^T
 		for(size_t j = 0; j < p; j++)
@@ -238,7 +244,8 @@ $srccode%cpp% */
 	virtual bool rev_sparse_jac(
 		size_t                                p ,
 		const vector< std::set<size_t> >&    rt ,
-		      vector< std::set<size_t> >&    st )
+		      vector< std::set<size_t> >&    st ,
+		const vector<float>&                  x )
 	{
 # ifndef NDEBUG
 		size_t n = st.size();
@@ -246,6 +253,7 @@ $srccode%cpp% */
 # endif
 		assert( n == 1 );
 		assert( m == 2 );
+		assert( n == x.size() );
 
 		// sparsity for S(x)^T = f'(x)^T * R^T
 		st[0] = set_union(rt[0], rt[1]);
@@ -262,12 +270,14 @@ $srccode%cpp% */
 		size_t                                p ,
 		const vector<bool>&                   r ,
 		const vector<bool>&                   u ,
-		      vector<bool>&                   v )
+		      vector<bool>&                   v ,
+		const vector<float>&                  x )
 	{
 # ifndef NDEBUG
 		size_t m = s.size();
 		size_t n = t.size();
 # endif
+		assert( x.size() == n );
 		assert( r.size() == n * p );
 		assert( u.size() == m * p );
 		assert( v.size() == n * p );
@@ -309,12 +319,14 @@ $srccode%cpp% */
 		size_t                                p ,
 		const vector< std::set<size_t> >&     r ,
 		const vector< std::set<size_t> >&     u ,
-		      vector< std::set<size_t> >&     v )
+		      vector< std::set<size_t> >&     v ,
+		const vector<float>&                  x )
 	{
 # ifndef NDEBUG
 		size_t m = s.size();
 		size_t n = t.size();
 # endif
+		assert( x.size() == n );
 		assert( r.size() == n );
 		assert( u.size() == m );
 		assert( v.size() == n );

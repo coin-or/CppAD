@@ -188,12 +188,14 @@ $srccode%cpp% */
 	virtual bool for_sparse_jac(
 		size_t                                p ,
 		const vector< std::set<size_t> >&     r ,
-		      vector< std::set<size_t> >&     s )
+		      vector< std::set<size_t> >&     s ,
+		const vector<double>&                 x )
 	{	// This function needed if using f.ForSparseJac
 # ifndef NDEBUG
 		size_t n = r.size();
 		size_t m = s.size();
 # endif
+		assert( n == x.size() );
 		assert( n == 1 );
 		assert( m == 1 );
 
@@ -209,12 +211,14 @@ $srccode%cpp% */
 	virtual bool rev_sparse_jac(
 		size_t                                p  ,
 		const vector< std::set<size_t> >&     rt ,
-		      vector< std::set<size_t> >&     st )
+		      vector< std::set<size_t> >&     st ,
+		const vector<double>&                 x  )
 	{	// This function needed if using RevSparseJac or optimize
 # ifndef NDEBUG
 		size_t n = st.size();
 		size_t m = rt.size();
 # endif
+		assert( n == x.size() );
 		assert( n == 1 );
 		assert( m == 1 );
 
@@ -234,12 +238,14 @@ $srccode%cpp% */
 		size_t                                p ,
 		const vector< std::set<size_t> >&     r ,
 		const vector< std::set<size_t> >&     u ,
-		      vector< std::set<size_t> >&     v )
+		      vector< std::set<size_t> >&     v ,
+		const vector<double>&                 x )
 	{	// This function needed if using RevSparseHes
 # ifndef NDEBUG
 		size_t n = vx.size();
 		size_t m = s.size();
 # endif
+		assert( x.size() == n );
 		assert( t.size() == n );
 		assert( r.size() == n );
 		assert( u.size() == m );

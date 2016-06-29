@@ -111,13 +111,15 @@ $srccode%cpp% */
 	virtual bool for_sparse_jac(
 		size_t                     q ,
 		const CppAD::vectorBool&   r ,
-		CppAD::vectorBool&         s )
+		CppAD::vectorBool&         s ,
+		const vector<double>&      x )
 	{	// This function needed becasue we are using ForSparseHes
 		// with afun.option( CppAD::atomic_base<double>::pack_sparsity_enum )
 # ifndef NDEBUG
 		size_t n = r.size() / q;
 		size_t m = s.size() / q;
 # endif
+		assert( x.size() == n );
 		assert( n == 3 );
 		assert( m == 2 );
 
@@ -144,13 +146,15 @@ $srccode%cpp% */
 	virtual bool rev_sparse_jac(
 		size_t                     q  ,
 		const CppAD::vectorBool&   rt ,
-		CppAD::vectorBool&         st )
+		CppAD::vectorBool&         st ,
+		const vector<double>&      x  )
 	{	// This function needed becasue we are using ForSparseHes
 		// with afun.option( CppAD::atomic_base<double>::pack_sparsity_enum )
 # ifndef NDEBUG
 		size_t m = rt.size() / q;
 		size_t n = st.size() / q;
 # endif
+		assert( x.size() == n );
 		assert( n == 3 );
 		assert( m == 2 );
 
@@ -183,13 +187,15 @@ $srccode%cpp% */
 		const vector<bool>&   vx,
 		const vector<bool>&   r ,
 		const vector<bool>&   s ,
-		CppAD::vectorBool&    h )
+		CppAD::vectorBool&    h ,
+		const vector<double>& x )
 	{	// This function needed because we are using RevSparseHes
 		// with afun.option( CppAD::atomic_base<double>::pack_sparsity_enum )
 		size_t n = r.size();
 # ifndef NDEBUG
 		size_t m = s.size();
 # endif
+		assert( x.size() == n );
 		assert( n == 3 );
 		assert( m == 2 );
 		assert( h.size() == n * n );

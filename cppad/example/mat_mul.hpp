@@ -20,6 +20,9 @@ $$
 
 $section Matrix Multiply as an Atomic Operation$$
 
+$head See Also$$
+$cref atomic_eigen_mat_mul.hpp$$
+
 $nospell
 
 $head Start Class Definition$$
@@ -262,8 +265,10 @@ $srccode%cpp% */
 	virtual bool for_sparse_jac(
 		size_t                                q ,
 		const vector<bool>&                   r ,
-		      vector<bool>&                   s )
-	{	assert( n_ * q == r.size() );
+		      vector<bool>&                   s ,
+		const vector<double>&                 x )
+	{	assert( n_     == x.size() );
+		assert( n_ * q == r.size() );
 		assert( m_ * q == s.size() );
 		size_t p;
 
@@ -291,8 +296,10 @@ $srccode%cpp% */
 	virtual bool for_sparse_jac(
 		size_t                                q ,
 		const vector< std::set<size_t> >&     r ,
-		      vector< std::set<size_t> >&     s )
-	{	assert( n_ == r.size() );
+		      vector< std::set<size_t> >&     s ,
+		const vector<double>&                 x )
+	{	assert( n_ == x.size() );
+		assert( n_ == r.size() );
 		assert( m_ == s.size() );
 
 		// sparsity for S(x) = f'(x) * R
@@ -320,8 +327,10 @@ $srccode%cpp% */
 	virtual bool rev_sparse_jac(
 		size_t                                q ,
 		const vector<bool>&                  rt ,
-		      vector<bool>&                  st )
-	{	assert( n_ * q == st.size() );
+		      vector<bool>&                  st ,
+		const vector<double>&                 x )
+	{	assert( n_     == x.size() );
+		assert( n_ * q == st.size() );
 		assert( m_ * q == rt.size() );
 		size_t i, j, p;
 
@@ -352,8 +361,10 @@ $srccode%cpp% */
 	virtual bool rev_sparse_jac(
 		size_t                                q ,
 		const vector< std::set<size_t> >&    rt ,
-		      vector< std::set<size_t> >&    st )
-	{	assert( n_ == st.size() );
+		      vector< std::set<size_t> >&    st ,
+		const vector<double>&                 x )
+	{	assert( n_     == x.size() );
+		assert( n_ == st.size() );
 		assert( m_ == rt.size() );
 		size_t i, j;
 
@@ -389,8 +400,10 @@ $srccode%cpp% */
 		size_t                                q ,
 		const vector< std::set<size_t> >&     r ,
 		const vector< std::set<size_t> >&     u ,
-		      vector< std::set<size_t> >&     v )
+		      vector< std::set<size_t> >&     v ,
+		const vector<double>&                 x )
 	{	size_t n = vx.size();
+		assert( x.size() == n );
 		assert( t.size() == n );
 		assert( r.size() == n );
 		assert( v.size() == n );
@@ -446,8 +459,10 @@ $srccode%cpp% */
 		size_t                                q ,
 		const vector<bool>&                   r ,
 		const vector<bool>&                   u ,
-		      vector<bool>&                   v )
+		      vector<bool>&                   v ,
+		const vector<double>&                 x )
 	{	size_t n = vx.size();
+		assert( x.size() == n );
 		assert( t.size() == n );
 		assert( r.size() == n * q );
 		assert( v.size() == n * q );

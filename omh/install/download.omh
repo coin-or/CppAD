@@ -96,12 +96,12 @@ $table
 $bold version$$ $pre  $$ $cnext $bold license$$ $pre  $$ $cnext $bold link$$
 $rnext
 current  $cnext EPL $cnext $href%
-http://www.coin-or.org/download/source/CppAD/cppad-20160626.epl.tgz%
-cppad-20160626.epl.tgz%$$
+http://www.coin-or.org/download/source/CppAD/cppad-20160629.epl.tgz%
+cppad-20160629.epl.tgz%$$
 $rnext
 current  $cnext GPL $cnext $href%
-http://www.coin-or.org/download/source/CppAD/cppad-20160626.gpl.tgz%
-cppad-20160626.gpl.tgz%$$
+http://www.coin-or.org/download/source/CppAD/cppad-20160629.gpl.tgz%
+cppad-20160629.gpl.tgz%$$
 $tend
 
 $subhead Subversion$$

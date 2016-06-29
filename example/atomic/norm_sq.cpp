@@ -155,12 +155,14 @@ $srccode%cpp% */
 	virtual bool for_sparse_jac(
 		size_t                                p ,
 		const vector<bool>&                   r ,
-		      vector<bool>&                   s )
+		      vector<bool>&                   s ,
+		const vector<double>&                 x )
 	{	// This function needed if using f.ForSparseJac
 		size_t n = r.size() / p;
 # ifndef NDEBUG
 		size_t m = s.size() / p;
 # endif
+		assert( n == x.size() );
 		assert( n == 2 );
 		assert( m == 1 );
 
@@ -182,12 +184,14 @@ $srccode%cpp% */
 	virtual bool rev_sparse_jac(
 		size_t                                p  ,
 		const vector<bool>&                   rt ,
-		      vector<bool>&                   st )
+		      vector<bool>&                   st ,
+		const vector<double>&                 x  )
 	{	// This function needed if using RevSparseJac or optimize
 		size_t n = st.size() / p;
 # ifndef NDEBUG
 		size_t m = rt.size() / p;
 # endif
+		assert( n == x.size() );
 		assert( n == 2 );
 		assert( m == 1 );
 
@@ -210,12 +214,14 @@ $srccode%cpp% */
 		size_t                                p ,
 		const vector<bool>&                   r ,
 		const vector<bool>&                   u ,
-		      vector<bool>&                   v )
+		      vector<bool>&                   v ,
+		const vector<double>&                 x )
 	{	// This function needed if using RevSparseHes
 # ifndef NDEBUG
 		size_t m = s.size();
 # endif
 		size_t n = t.size();
+		assert( x.size() == n );
 		assert( r.size() == n * p );
 		assert( u.size() == m * p );
 		assert( v.size() == n * p );

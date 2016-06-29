@@ -107,13 +107,15 @@ $srccode%cpp% */
 	virtual bool for_sparse_jac(
 		size_t                     q ,
 		const CppAD::vectorBool&   r ,
-		CppAD::vectorBool&         s )
+		CppAD::vectorBool&         s ,
+		const vector<double>&      x )
 	{	// This function needed becasue we are using ForSparseJac
 		// with afun.option( CppAD::atomic_base<double>::pack_sparsity_enum )
 # ifndef NDEBUG
 		size_t n = r.size() / q;
 		size_t m = s.size() / q;
 # endif
+		assert( x.size() == n );
 		assert( n == 3 );
 		assert( m == 2 );
 
