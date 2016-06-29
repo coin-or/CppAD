@@ -1,6 +1,6 @@
 // $Id$
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-15 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-16 Bradley M. Bell
 
 CppAD is distributed under multiple licenses. This distribution is under
 the terms of the
@@ -13,6 +13,8 @@ $begin deprecated$$
 $spell
 	CppAD
 	Bool
+	jac
+	hes
 $$
 
 $section CppAD Deprecated API Features$$
@@ -43,6 +45,13 @@ $cref auto_tools$$   $cnext $title auto_tools$$
 $rnext
 $cref/nan(zero)/nan/nan(zero)/$$ $cnext $codei%nan(%zero%)%$$
 $tend
+
+$head Atomic Functions$$
+The following are links to deprecated $cref atomic_base$$ interfaces:
+$cref/for_sparse_jac/atomic_for_sparse_jac/Deprecated 2016-06-27/$$,
+$cref/rev_sparse_jac/atomic_rev_sparse_jac/Deprecated 2016-06-27/$$,
+$cref/for_sparse_hes/atomic_for_sparse_hes/Deprecated 2016-06-27/$$,
+$cref/rev_sparse_hes/atomic_rev_sparse_hes/Deprecated 2016-06-27/$$.
 
 
 $end

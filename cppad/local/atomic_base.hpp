@@ -1018,9 +1018,11 @@ $$
 $section Atomic Forward Jacobian Sparsity Patterns$$
 
 $head Syntax$$
-$icode%ok% = %afun%.for_sparse_jac(%q%, %r%, %s%)
-%$$
 $icode%ok% = %afun%.for_sparse_jac(%q%, %r%, %s%, %x%)
+%$$
+
+$head Deprecated 2016-06-27$$
+$icode%ok% = %afun%.for_sparse_jac(%q%, %r%, %s%)
 %$$
 
 $head Purpose$$
@@ -1178,9 +1180,11 @@ $$
 $section Atomic Reverse Jacobian Sparsity Patterns$$
 
 $head Syntax$$
-$icode%ok% = %afun%.rev_sparse_jac(%q%, %rt%, %st%)
-%$$
 $icode%ok% = %afun%.rev_sparse_jac(%q%, %rt%, %st%, %x%)
+%$$
+
+$head Deprecated 2016-06-27$$
+$icode%ok% = %afun%.rev_sparse_jac(%q%, %rt%, %st%)
 %$$
 
 $head Purpose$$
@@ -1344,10 +1348,10 @@ $$
 $section Atomic Forward Hessian Sparsity Patterns$$
 
 $head Syntax$$
-$icode%ok% = %afun%.for_sparse_hes(%vx%, %r%, %s%, %h%
-)%$$
-$icode%ok% = %afun%.for_sparse_hes(%vx%, %r%, %s%, %h%, %x%
-)%$$
+$icode%ok% = %afun%.for_sparse_hes(%vx%, %r%, %s%, %h%, %x%)%$$
+
+$head Deprecated 2016-06-27$$
+$icode%ok% = %afun%.for_sparse_hes(%vx%, %r%, %s%, %h%)%$$
 
 $head Purpose$$
 This function is used by $cref ForSparseHes$$ to compute
@@ -1522,10 +1526,10 @@ $$
 $section Atomic Reverse Hessian Sparsity Patterns$$
 
 $head Syntax$$
-$icode%ok% = %afun%.rev_sparse_hes(%vx%, %s%, %t%, %q%, %r%, %u%, %v%
-)%$$
-$icode%ok% = %afun%.rev_sparse_hes(%vx%, %s%, %t%, %q%, %r%, %u%, %v%, %x%
-)%$$
+$icode%ok% = %afun%.rev_sparse_hes(%vx%, %s%, %t%, %q%, %r%, %u%, %v%, %x%)%$$
+
+$head Deprecated 2016-06-27$$
+$icode%ok% = %afun%.rev_sparse_hes(%vx%, %s%, %t%, %q%, %r%, %u%, %v%)%$$
 
 $head Purpose$$
 This function is used by $cref RevSparseHes$$ to compute
