@@ -76,11 +76,8 @@ bool link_mat_mul(
 	w[0] = 1.;
 
 	// user atomic information
-	CppAD::vector<ADScalar> ax(2 * n), ay(n);
-	size_t nr_result = size;
-	size_t n_middle  = size;
-	size_t nc_result = size;
-	atomic_mat_mul atom_mul(nr_result, n_middle, nc_result);
+	CppAD::vector<ADScalar> ax(3 + 2 * n), ay(n);
+	atomic_mat_mul atom_mul;
 	//
 	if( global_option["boolsparsity"] )
 		atom_mul.option( CppAD::atomic_base<double>::pack_sparsity_enum );
@@ -100,9 +97,12 @@ bool link_mat_mul(
 		if( ! global_option["atomic"] )
 			mat_sum_sq(size, X, Y, Z);
 		else
-		{	for(j = 0; j < n; j++)
-			{	ax[j]   = X[j];
-				ax[j+n] = X[j];
+		{	ax[0] = ADScalar( size ); // number of rows in left matrix
+			ax[1] = ADScalar( size ); // rows in left and columns in right
+			ax[2] = ADScalar( size ); // number of columns in right matrix
+			for(j = 0; j < n; j++)
+			{	ax[3 + j]     = X[j];
+				ax[3 + n + j] = X[j];
 			}
 			// Y = X * X
 			atom_mul(ax, ay);

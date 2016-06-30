@@ -39,6 +39,10 @@ in reverse order by date.
 The purpose of these sections is to
 assist you in learning about changes between various versions of CppAD.
 
+$head 06-30$$
+Change the $cref atomic_mat_mul.cpp$$ example so that on atomic object
+works for matrices of any size.
+
 $head 06-29$$
 Change the $cref atomic_base$$ examples so they do no longer use the
 deprecated $cref/atomic function/deprecated/Atomic Functions/$$ interfaces to
@@ -49,7 +53,7 @@ $head 06-27$$
 $list number$$
 Improve the $cref atomic_eigen_mat_mul.hpp$$ and
 $cref atomic_eigen_mat_inv.hpp$$ examples.
-Most importantly, one derived object now works for matrices of any size.
+Most importantly, one atomic object now works for matrices of any size.
 $lnext
 Add the vector $icode x$$,
 that contains the parameters in an atomic function call

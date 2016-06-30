@@ -38,128 +38,144 @@ class atomic_mat_mul : public CppAD::atomic_base<double> {
 /* %$$
 $head Constructor$$
 $srccode%cpp% */
-private:
-	// number of rows in left operand and in the result
-	const size_t nr_result_;
-	// number of columns in left operand and rows in right operand
-	const size_t n_middle_;
-	// number of columns in right operand and in the result
-	const size_t nc_result_;
-	// dimension of the domain space
-	const size_t n_;
-	// dimension of the range space
-# ifndef NDEBUG
-	const size_t m_;
-# endif
 public:
 	// ---------------------------------------------------------------------
 	// constructor
-	atomic_mat_mul(size_t nr_result, size_t n_middle, size_t nc_result)
-	: CppAD::atomic_base<double>("mat_mul"),
-	nr_result_(nr_result) ,
-	n_middle_(n_middle)    ,
-	nc_result_(nc_result) ,
-	n_( nr_result * n_middle + n_middle * nc_result )
-# ifndef NDEBUG
-	, m_( n_middle * nc_result )
-# endif
+	atomic_mat_mul(void) : CppAD::atomic_base<double>("mat_mul")
 	{ }
 private:
 /* %$$
 $head Left Operand Element Index$$
+Index in the Taylor coefficient matrix $icode tx$$ of a left matrix element.
 $srccode%cpp% */
-	// left matrix element index in the taylor coefficient vector tx.
 	size_t left(
-		size_t i  , // left matrix row index
-		size_t j  , // left matrix column index
-		size_t k  , // Taylor coeffocient order
-		size_t nk ) // number of Taylor coefficients in tx
-	{	assert( i < nr_result_ );
-		assert( j < n_middle_ );
-		return (i * n_middle_ + j) * nk + k;
+		size_t i        , // left matrix row index
+		size_t j        , // left matrix column index
+		size_t k        , // Taylor coeffocient order
+		size_t nk       , // number of Taylor coefficients in tx
+		size_t nr_left  , // rows in left matrix
+		size_t n_middle , // rows in left and columns in right
+		size_t nc_right ) // columns in right matrix
+	{	assert( i < nr_left );
+		assert( j < n_middle );
+		return (3 + i * n_middle + j) * nk + k;
 	}
 /* %$$
 $head Right Operand Element Index$$
+Index in the Taylor coefficient matrix $icode tx$$ of a right matrix element.
 $srccode%cpp% */
-	// right matrix element index in the taylor coefficient vector tx.
 	size_t right(
-		size_t i  , // right matrix row index
-		size_t j  , // right matrix column index
-		size_t k  , // Taylor coeffocient order
-		size_t nk ) // number of Taylor coefficients in tx
-	{	assert( i < n_middle_  );
-		assert( j < nc_result_ );
-		size_t offset = nr_result_ * n_middle_;
-		return (offset + i * nc_result_ + j) * nk + k;
+		size_t i        , // right matrix row index
+		size_t j        , // right matrix column index
+		size_t k        , // Taylor coeffocient order
+		size_t nk       , // number of Taylor coefficients in tx
+		size_t nr_left  , // rows in left matrix
+		size_t n_middle , // rows in left and columns in right
+		size_t nc_right ) // columns in right matrix
+	{	assert( i < n_middle );
+		assert( j < nc_right );
+		size_t offset = 3 + nr_left * n_middle;
+		return (offset + i * nc_right + j) * nk + k;
 	}
 /* %$$
 $head Result Element Index$$
+Index in the Taylor coefficient matrix $icode ty$$ of a result matrix element.
 $srccode%cpp% */
-	// result matrix element index in the taylor coefficient vector ty.
 	size_t result(
-		size_t i  , // result matrix row index
-		size_t j  , // result matrix column index
-		size_t k  , // Taylor coeffocient order
-		size_t nk ) // number of Taylor coefficients in ty
-	{	assert( i < nr_result_  );
-		assert( j < nc_result_ );
-		return (i * nc_result_ + j) * nk + k;
+		size_t i        , // result matrix row index
+		size_t j        , // result matrix column index
+		size_t k        , // Taylor coeffocient order
+		size_t nk       , // number of Taylor coefficients in ty
+		size_t nr_left  , // rows in left matrix
+		size_t n_middle , // rows in left and columns in right
+		size_t nc_right ) // columns in right matrix
+	{	assert( i < nr_left  );
+		assert( j < nc_right );
+		return (i * nc_right + j) * nk + k;
 	}
 /* %$$
 $head Forward Matrix Multipliy$$
+Forward mode multiply Taylor coefficients in $icode tx$$ and sum into
+$icode ty$$ (for one pair of left and right orders)
 $srccode%cpp% */
-	// Forward mode multiply Taylor coefficients in tx and sum into ty
-	// (for one pair of left and right orders)
 	void forward_multiply(
-		size_t                 k_left  , // order for left coefficients
-		size_t                 k_right , // order for right coefficients
-		const vector<double>&  tx      , // domain space Taylor coefficients
-		      vector<double>&  ty      ) // range space Taylor coefficients
-	{	size_t nk       = tx.size() / n_;
-		assert( nk == ty.size() / m_ );
+		size_t                 k_left   , // order for left coefficients
+		size_t                 k_right  , // order for right coefficients
+		const vector<double>&  tx       , // domain space Taylor coefficients
+		      vector<double>&  ty       , // range space Taylor coefficients
+		size_t                 nr_left  , // rows in left matrix
+		size_t                 n_middle , // rows in left and columns in right
+		size_t                 nc_right ) // columns in right matrix
+	{
+		size_t nx       = 3 + (nr_left + nc_right) * n_middle;
+		size_t nk       = tx.size() / nx;
+# ifndef NDEBUG
+		size_t ny       = nr_left * nc_right;
+		assert( nk == ty.size() / ny );
+# endif
 		//
 		size_t k_result = k_left + k_right;
 		assert( k_result < nk );
 		//
-		for(size_t i = 0; i < nr_result_; i++)
-		{	for(size_t j = 0; j < nc_result_; j++)
+		for(size_t i = 0; i < nr_left; i++)
+		{	for(size_t j = 0; j < nc_right; j++)
 			{	double sum = 0.0;
-				for(size_t ell = 0; ell < n_middle_; ell++)
-				{	size_t i_left  = left(i, ell, k_left, nk);
-					size_t i_right = right(ell, j,  k_right, nk);
+				for(size_t ell = 0; ell < n_middle; ell++)
+				{	size_t i_left  = left(
+						i, ell, k_left, nk, nr_left, n_middle, nc_right
+					);
+					size_t i_right = right(
+						ell, j,  k_right, nk, nr_left, n_middle, nc_right
+					);
 					sum           += tx[i_left] * tx[i_right];
 				}
-				size_t i_result = result(i, j, k_result, nk);
+				size_t i_result = result(
+					i, j, k_result, nk, nr_left, n_middle, nc_right
+				);
 				ty[i_result]   += sum;
 			}
 		}
 	}
 /* %$$
 $head Reverse Matrix Multipliy$$
+Reverse mode partials of Taylor coefficients and sum into $icode px$$
+(for one pair of left and right orders)
 $srccode%cpp% */
-	// Reverse mode partials of Taylor coefficients and sum into px
-	// (for one pair of left and right orders)
 	void reverse_multiply(
 		size_t                 k_left  , // order for left coefficients
 		size_t                 k_right , // order for right coefficients
 		const vector<double>&  tx      , // domain space Taylor coefficients
 		const vector<double>&  ty      , // range space Taylor coefficients
 		      vector<double>&  px      , // partials w.r.t. tx
-		const vector<double>&  py      ) // partials w.r.t. ty
-	{	size_t nk       = tx.size() / n_;
-		assert( nk == ty.size() / m_ );
+		const vector<double>&  py      , // partials w.r.t. ty
+		size_t                 nr_left  , // rows in left matrix
+		size_t                 n_middle , // rows in left and columns in right
+		size_t                 nc_right ) // columns in right matrix
+	{
+		size_t nx       = 3 + (nr_left + nc_right) * n_middle;
+		size_t nk       = tx.size() / nx;
+# ifndef NDEBUG
+		size_t ny       = nr_left * nc_right;
+		assert( nk == ty.size() / ny );
+# endif
 		assert( tx.size() == px.size() );
 		assert( ty.size() == py.size() );
 		//
 		size_t k_result = k_left + k_right;
 		assert( k_result < nk );
 		//
-		for(size_t i = 0; i < nr_result_; i++)
-		{	for(size_t j = 0; j < nc_result_; j++)
-			{	size_t i_result = result(i, j, k_result, nk);
-				for(size_t ell = 0; ell < n_middle_; ell++)
-				{	size_t i_left  = left(i, ell, k_left, nk);
-					size_t i_right = right(ell, j,  k_right, nk);
+		for(size_t i = 0; i < nr_left; i++)
+		{	for(size_t j = 0; j < nc_right; j++)
+			{	size_t i_result = result(
+					i, j, k_result, nk, nr_left, n_middle, nc_right
+				);
+				for(size_t ell = 0; ell < n_middle; ell++)
+				{	size_t i_left  = left(
+						i, ell, k_left, nk, nr_left, n_middle, nc_right
+					);
+					size_t i_right = right(
+						ell, j,  k_right, nk, nr_left, n_middle, nc_right
+					);
 					// sum        += tx[i_left] * tx[i_right];
 					px[i_left]    += tx[i_right] * py[i_result];
 					px[i_right]   += tx[i_left]  * py[i_result];
@@ -170,8 +186,8 @@ $srccode%cpp% */
 	}
 /* %$$
 $head forward$$
+Routine called by CppAD during $cref Forward$$ mode.
 $srccode%cpp% */
-	// forward mode routine called by CppAD
 	virtual bool forward(
 		size_t                    q ,
 		size_t                    p ,
@@ -180,30 +196,43 @@ $srccode%cpp% */
 		const vector<double>&    tx ,
 		      vector<double>&    ty
 	)
-	{	size_t p1 = p + 1;
-		assert( vx.size() == 0 || n_ == vx.size() );
-		assert( vx.size() == 0 || m_ == vy.size() );
-		assert( n_ * p1 == tx.size() );
-		assert( m_ * p1 == ty.size() );
+	{	size_t n_order  = p + 1;
+		size_t nr_left  = size_t( tx[ 0 * n_order + 0 ] );
+		size_t n_middle = size_t( tx[ 1 * n_order + 0 ] );
+		size_t nc_right = size_t( tx[ 2 * n_order + 0 ] );
+# ifndef NDEBUG
+		size_t nx       = 3 + (nr_left + nc_right) * n_middle;
+		size_t ny       = nr_left * nc_right;
+# endif
+		assert( vx.size() == 0 || nx == vx.size() );
+		assert( vx.size() == 0 || ny == vy.size() );
+		assert( nx * n_order == tx.size() );
+		assert( ny * n_order == ty.size() );
 		size_t i, j, ell;
 
 		// check if we are computing vy information
 		if( vx.size() > 0 )
 		{	size_t nk = 1;
 			size_t k  = 0;
-			for(i = 0; i < nr_result_; i++)
-			{	for(j = 0; j < nc_result_; j++)
+			for(i = 0; i < nr_left; i++)
+			{	for(j = 0; j < nc_right; j++)
 				{	bool var = false;
-					for(ell = 0; ell < n_middle_; ell++)
-					{	size_t i_left  = left(i, ell, k, nk);
-						size_t i_right = right(ell, j, k, nk);
+					for(ell = 0; ell < n_middle; ell++)
+					{	size_t i_left  = left(
+							i, ell, k, nk, nr_left, n_middle, nc_right
+						);
+						size_t i_right = right(
+							ell, j, k, nk, nr_left, n_middle, nc_right
+						);
 						bool   nz_left = vx[i_left] |(tx[i_left]  != 0.);
 						bool  nz_right = vx[i_right]|(tx[i_right] != 0.);
 						// if not multiplying by the constant zero
 						if( nz_left & nz_right )
 								var |= bool(vx[i_left]) | bool(vx[i_right]);
 					}
-					size_t i_result = result(i, j, k, nk);
+					size_t i_result = result(
+						i, j, k, nk, nr_left, n_middle, nc_right
+					);
 					vy[i_result] = var;
 				}
 			}
@@ -211,16 +240,22 @@ $srccode%cpp% */
 
 		// initialize result as zero
 		size_t k;
-		for(i = 0; i < nr_result_; i++)
-		{	for(j = 0; j < nc_result_; j++)
+		for(i = 0; i < nr_left; i++)
+		{	for(j = 0; j < nc_right; j++)
 			{	for(k = q; k <= p; k++)
-					ty[ result(i, j, k, p1) ] = 0.0;
+				{	size_t i_result = result(
+						i, j, k, n_order, nr_left, n_middle, nc_right
+					);
+					ty[i_result] = 0.0;
+				}
 			}
 		}
 		for(k = q; k <= p; k++)
 		{	// sum the produces that result in order k
 			for(ell = 0; ell <= k; ell++)
-				forward_multiply(ell, k - ell, tx, ty);
+				forward_multiply(
+					ell, k - ell, tx, ty, nr_left, n_middle, nc_right
+				);
 		}
 
 		// all orders are implented, so always return true
@@ -228,8 +263,8 @@ $srccode%cpp% */
 	}
 /* %$$
 $head reverse$$
+Routine called by CppAD during $cref Reverse$$ mode.
 $srccode%cpp% */
-	// reverse mode routine called by CppAD
 	virtual bool reverse(
 		size_t                     p ,
 		const vector<double>&     tx ,
@@ -237,9 +272,16 @@ $srccode%cpp% */
 		      vector<double>&     px ,
 		const vector<double>&     py
 	)
-	{	size_t p1 = p + 1;
-		assert( n_ * p1 == tx.size() );
-		assert( m_ * p1 == ty.size() );
+	{	size_t n_order  = p + 1;
+		size_t nr_left  = size_t( tx[ 0 * n_order + 0 ] );
+		size_t n_middle = size_t( tx[ 1 * n_order + 0 ] );
+		size_t nc_right = size_t( tx[ 2 * n_order + 0 ] );
+# ifndef NDEBUG
+		size_t nx       = 3 + (nr_left + nc_right) * n_middle;
+		size_t ny       = nr_left * nc_right;
+# endif
+		assert( nx * n_order == tx.size() );
+		assert( ny * n_order == ty.size() );
 		assert( px.size() == tx.size() );
 		assert( py.size() == ty.size() );
 
@@ -248,11 +290,13 @@ $srccode%cpp% */
 			px[i] = 0.0;
 
 		// number of orders to differentiate
-		size_t k = p1;
+		size_t k = n_order;
 		while(k--)
 		{	// differentiate the produces that result in order k
 			for(size_t ell = 0; ell <= k; ell++)
-				reverse_multiply(ell, k - ell, tx, ty, px, py);
+				reverse_multiply(
+					ell, k - ell, tx, ty, px, py, nr_left, n_middle, nc_right
+				);
 		}
 
 		// all orders are implented, so always return true
@@ -260,29 +304,44 @@ $srccode%cpp% */
 	}
 /* %$$
 $head for_sparse_jac$$
+Routines called by CppAD during $cref ForSparseJac$$.
 $srccode%cpp% */
-	// forward Jacobian sparsity routine called by CppAD
+	// boolean sparsity patterns
 	virtual bool for_sparse_jac(
 		size_t                                q ,
 		const vector<bool>&                   r ,
 		      vector<bool>&                   s ,
 		const vector<double>&                 x )
-	{	assert( n_     == x.size() );
-		assert( n_ * q == r.size() );
-		assert( m_ * q == s.size() );
+	{
+		size_t nr_left  = size_t( CppAD::Integer( x[0] ) );
+		size_t n_middle = size_t( CppAD::Integer( x[1] ) );
+		size_t nc_right = size_t( CppAD::Integer( x[2] ) );
+# ifndef NDEBUG
+		size_t  nx      = 3 + (nr_left + nc_right) * n_middle;
+		size_t  ny      = nr_left * nc_right;
+# endif
+		assert( nx     == x.size() );
+		assert( nx * q == r.size() );
+		assert( ny * q == s.size() );
 		size_t p;
 
 		// sparsity for S(x) = f'(x) * R
 		size_t nk = 1;
 		size_t k  = 0;
-		for(size_t i = 0; i < nr_result_; i++)
-		{	for(size_t j = 0; j < nc_result_; j++)
-			{	size_t i_result = result(i, j, k, nk);
+		for(size_t i = 0; i < nr_left; i++)
+		{	for(size_t j = 0; j < nc_right; j++)
+			{	size_t i_result = result(
+					i, j, k, nk, nr_left, n_middle, nc_right
+				);
 				for(p = 0; p < q; p++)
 					s[i_result * q + p] = false;
-				for(size_t ell = 0; ell < n_middle_; ell++)
-				{	size_t i_left  = left(i, ell, k, nk);
-					size_t i_right = right(ell, j, k, nk);
+				for(size_t ell = 0; ell < n_middle; ell++)
+				{	size_t i_left  = left(
+						i, ell, k, nk, nr_left, n_middle, nc_right
+					);
+					size_t i_right = right(
+						ell, j, k, nk, nr_left, n_middle, nc_right
+					);
 					for(p = 0; p < q; p++)
 					{	// cast avoids Microsoft warning (should not be needed)
 						s[i_result * q + p] |= bool( r[i_left * q + p ] );
@@ -293,25 +352,40 @@ $srccode%cpp% */
 		}
 		return true;
 	}
+	// set sparsity patterns
 	virtual bool for_sparse_jac(
 		size_t                                q ,
 		const vector< std::set<size_t> >&     r ,
 		      vector< std::set<size_t> >&     s ,
 		const vector<double>&                 x )
-	{	assert( n_ == x.size() );
-		assert( n_ == r.size() );
-		assert( m_ == s.size() );
+	{
+		size_t nr_left  = size_t( CppAD::Integer( x[0] ) );
+		size_t n_middle = size_t( CppAD::Integer( x[1] ) );
+		size_t nc_right = size_t( CppAD::Integer( x[2] ) );
+# ifndef NDEBUG
+		size_t  nx      = 3 + (nr_left + nc_right) * n_middle;
+		size_t  ny      = nr_left * nc_right;
+# endif
+		assert( nx == x.size() );
+		assert( nx == r.size() );
+		assert( ny == s.size() );
 
 		// sparsity for S(x) = f'(x) * R
 		size_t nk = 1;
 		size_t k  = 0;
-		for(size_t i = 0; i < nr_result_; i++)
-		{	for(size_t j = 0; j < nc_result_; j++)
-			{	size_t i_result = result(i, j, k, nk);
+		for(size_t i = 0; i < nr_left; i++)
+		{	for(size_t j = 0; j < nc_right; j++)
+			{	size_t i_result = result(
+					i, j, k, nk, nr_left, n_middle, nc_right
+				);
 				s[i_result].clear();
-				for(size_t ell = 0; ell < n_middle_; ell++)
-				{	size_t i_left  = left(i, ell, k, nk);
-					size_t i_right = right(ell, j, k, nk);
+				for(size_t ell = 0; ell < n_middle; ell++)
+				{	size_t i_left  = left(
+						i, ell, k, nk, nr_left, n_middle, nc_right
+					);
+					size_t i_right = right(
+						ell, j, k, nk, nr_left, n_middle, nc_right
+					);
 					//
 					s[i_result] = set_union(s[i_result], r[i_left] );
 					s[i_result] = set_union(s[i_result], r[i_right] );
@@ -322,20 +396,29 @@ $srccode%cpp% */
 	}
 /* %$$
 $head rev_sparse_jac$$
+Routines called by CppAD during $cref RevSparseJac$$.
 $srccode%cpp% */
-	// reverse Jacobian sparsity routine called by CppAD
+	// boolean sparsity patterns
 	virtual bool rev_sparse_jac(
 		size_t                                q ,
 		const vector<bool>&                  rt ,
 		      vector<bool>&                  st ,
 		const vector<double>&                 x )
-	{	assert( n_     == x.size() );
-		assert( n_ * q == st.size() );
-		assert( m_ * q == rt.size() );
+	{
+		size_t nr_left  = size_t( CppAD::Integer( x[0] ) );
+		size_t n_middle = size_t( CppAD::Integer( x[1] ) );
+		size_t nc_right = size_t( CppAD::Integer( x[2] ) );
+		size_t  nx      = 3 + (nr_left + nc_right) * n_middle;
+# ifndef NDEBUG
+		size_t  ny      = nr_left * nc_right;
+# endif
+		assert( nx     == x.size() );
+		assert( nx * q == st.size() );
+		assert( ny * q == rt.size() );
 		size_t i, j, p;
 
 		// initialize
-		for(i = 0; i < n_; i++)
+		for(i = 0; i < nx; i++)
 		{	for(p = 0; p < q; p++)
 				st[ i * q + p ] = false;
 		}
@@ -343,12 +426,18 @@ $srccode%cpp% */
 		// sparsity for S(x)^T = f'(x)^T * R^T
 		size_t nk = 1;
 		size_t k  = 0;
-		for(i = 0; i < nr_result_; i++)
-		{	for(j = 0; j < nc_result_; j++)
-			{	size_t i_result = result(i, j, k, nk);
-				for(size_t ell = 0; ell < n_middle_; ell++)
-				{	size_t i_left  = left(i, ell, k, nk);
-					size_t i_right = right(ell, j, k, nk);
+		for(i = 0; i < nr_left; i++)
+		{	for(j = 0; j < nc_right; j++)
+			{	size_t i_result = result(
+					i, j, k, nk, nr_left, n_middle, nc_right
+				);
+				for(size_t ell = 0; ell < n_middle; ell++)
+				{	size_t i_left  = left(
+						i, ell, k, nk, nr_left, n_middle, nc_right
+					);
+					size_t i_right = right(
+						ell, j, k, nk, nr_left, n_middle, nc_right
+					);
 					for(p = 0; p < q; p++)
 					{	st[i_left * q + p] |= bool( rt[i_result * q + p] );
 						st[i_right* q + p] |= bool( rt[i_result * q + p] );
@@ -358,31 +447,46 @@ $srccode%cpp% */
 		}
 		return true;
 	}
+	// set sparsity patterns
 	virtual bool rev_sparse_jac(
 		size_t                                q ,
 		const vector< std::set<size_t> >&    rt ,
 		      vector< std::set<size_t> >&    st ,
 		const vector<double>&                 x )
-	{	assert( n_     == x.size() );
-		assert( n_ == st.size() );
-		assert( m_ == rt.size() );
+	{
+		size_t nr_left  = size_t( CppAD::Integer( x[0] ) );
+		size_t n_middle = size_t( CppAD::Integer( x[1] ) );
+		size_t nc_right = size_t( CppAD::Integer( x[2] ) );
+		size_t  nx      = 3 + (nr_left + nc_right) * n_middle;
+# ifndef NDEBUG
+		size_t  ny        = nr_left * nc_right;
+# endif
+		assert( nx == x.size() );
+		assert( nx == st.size() );
+		assert( ny == rt.size() );
 		size_t i, j;
 
 		// initialize
-		for(i = 0; i < n_; i++)
+		for(i = 0; i < nx; i++)
 			st[i].clear();
 
 		// sparsity for S(x)^T = f'(x)^T * R^T
 		size_t nk = 1;
 		size_t k  = 0;
-		for(i = 0; i < nr_result_; i++)
-		{	for(j = 0; j < nc_result_; j++)
-			{	size_t i_result = result(i, j, k, nk);
-				for(size_t ell = 0; ell < n_middle_; ell++)
-				{	size_t i_left  = left(i, ell, k, nk);
-					size_t i_right = right(ell, j, k, nk);
+		for(i = 0; i < nr_left; i++)
+		{	for(j = 0; j < nc_right; j++)
+			{	size_t i_result = result(
+					i, j, k, nk, nr_left, n_middle, nc_right
+				);
+				for(size_t ell = 0; ell < n_middle; ell++)
+				{	size_t i_left  = left(
+						i, ell, k, nk, nr_left, n_middle, nc_right
+					);
+					size_t i_right = right(
+						ell, j, k, nk, nr_left, n_middle, nc_right
+					);
 					//
-					st[i_left] = set_union(st[i_left],  rt[i_result]);
+					st[i_left]  = set_union(st[i_left],  rt[i_result]);
 					st[i_right] = set_union(st[i_right], rt[i_result]);
 				}
 			}
@@ -391,8 +495,9 @@ $srccode%cpp% */
 	}
 /* %$$
 $head rev_sparse_hes$$
+Routines called by $cref RevSparseHes$$.
 $srccode%cpp% */
-	// reverse Hessian sparsity routine called by CppAD
+	// set sparsity patterns
 	virtual bool rev_sparse_hes(
 		const vector<bool>&                   vx,
 		const vector<bool>&                   s ,
@@ -402,30 +507,43 @@ $srccode%cpp% */
 		const vector< std::set<size_t> >&     u ,
 		      vector< std::set<size_t> >&     v ,
 		const vector<double>&                 x )
-	{	size_t n = vx.size();
-		assert( x.size() == n );
-		assert( t.size() == n );
-		assert( r.size() == n );
-		assert( v.size() == n );
+	{
+		size_t nr_left  = size_t( CppAD::Integer( x[0] ) );
+		size_t n_middle = size_t( CppAD::Integer( x[1] ) );
+		size_t nc_right = size_t( CppAD::Integer( x[2] ) );
+		size_t  nx        = 3 + (nr_left + nc_right) * n_middle;
 # ifndef NDEBUG
-		size_t m = s.size();
-		assert( u.size() == m );
+		size_t  ny        = nr_left * nc_right;
 # endif
+		assert( x.size()  == nx );
+		assert( vx.size() == nx );
+		assert( t.size()  == nx );
+		assert( r.size()  == nx );
+		assert( v.size()  == nx );
+		assert( s.size()  == ny );
+		assert( u.size()  == ny );
+		//
 		size_t i, j;
 		//
 		// initilaize sparsity patterns as false
-		for(j = 0; j < n; j++)
+		for(j = 0; j < nx; j++)
 		{	t[j] = false;
 			v[j].clear();
 		}
 		size_t nk = 1;
 		size_t k  = 0;
-		for(i = 0; i < nr_result_; i++)
-		{	for(j = 0; j < nc_result_; j++)
-			{	size_t i_result = result(i, j, k, nk);
-				for(size_t ell = 0; ell < n_middle_; ell++)
-				{	size_t i_left  = left(i, ell, k, nk);
-					size_t i_right = right(ell, j, k, nk);
+		for(i = 0; i < nr_left; i++)
+		{	for(j = 0; j < nc_right; j++)
+			{	size_t i_result = result(
+					i, j, k, nk, nr_left, n_middle, nc_right
+				);
+				for(size_t ell = 0; ell < n_middle; ell++)
+				{	size_t i_left  = left(
+						i, ell, k, nk, nr_left, n_middle, nc_right
+					);
+					size_t i_right = right(
+						ell, j, k, nk, nr_left, n_middle, nc_right
+					);
 					//
 					// Compute sparsity for T(x) = S(x) * f'(x).
 					// We need not use vx with f'(x) back propagation.
@@ -438,13 +556,13 @@ $srccode%cpp% */
 
 					// back propagate f'(x)^T * U(x)
 					// (no need to use vx with f'(x) propogation)
-					v[i_left] = set_union(v[i_left],  u[i_result] );
+					v[i_left]  = set_union(v[i_left],  u[i_result] );
 					v[i_right] = set_union(v[i_right], u[i_result] );
 
 					// back propagate S(x) * f''(x) * R
 					// (here is where we must check for cross terms)
 					if( s[i_result] & vx[i_left] & vx[i_right] )
-					{	v[i_left] = set_union(v[i_left],  r[i_right] );
+					{	v[i_left]  = set_union(v[i_left],  r[i_right] );
 						v[i_right] = set_union(v[i_right], r[i_left]  );
 					}
 				}
@@ -452,6 +570,7 @@ $srccode%cpp% */
 		}
 		return true;
 	}
+	// bool sparsity
 	virtual bool rev_sparse_hes(
 		const vector<bool>&                   vx,
 		const vector<bool>&                   s ,
@@ -461,31 +580,43 @@ $srccode%cpp% */
 		const vector<bool>&                   u ,
 		      vector<bool>&                   v ,
 		const vector<double>&                 x )
-	{	size_t n = vx.size();
-		assert( x.size() == n );
-		assert( t.size() == n );
-		assert( r.size() == n * q );
-		assert( v.size() == n * q );
+	{
+		size_t nr_left  = size_t( CppAD::Integer( x[0] ) );
+		size_t n_middle = size_t( CppAD::Integer( x[1] ) );
+		size_t nc_right = size_t( CppAD::Integer( x[2] ) );
+		size_t  nx        = 3 + (nr_left + nc_right) * n_middle;
 # ifndef NDEBUG
-		size_t m = s.size();
-		assert( u.size() == m * q );
+		size_t  ny        = nr_left * nc_right;
 # endif
+		assert( x.size()  == nx );
+		assert( vx.size() == nx );
+		assert( t.size()  == nx );
+		assert( r.size()  == nx * q );
+		assert( v.size()  == nx * q );
+		assert( s.size()  == ny );
+		assert( u.size()  == ny * q );
 		size_t i, j, p;
 		//
 		// initilaize sparsity patterns as false
-		for(j = 0; j < n; j++)
+		for(j = 0; j < nx; j++)
 		{	t[j] = false;
 			for(p = 0; p < q; p++)
 				v[j * q + p] = false;
 		}
 		size_t nk = 1;
 		size_t k  = 0;
-		for(i = 0; i < nr_result_; i++)
-		{	for(j = 0; j < nc_result_; j++)
-			{	size_t i_result = result(i, j, k, nk);
-				for(size_t ell = 0; ell < n_middle_; ell++)
-				{	size_t i_left  = left(i, ell, k, nk);
-					size_t i_right = right(ell, j, k, nk);
+		for(i = 0; i < nr_left; i++)
+		{	for(j = 0; j < nc_right; j++)
+			{	size_t i_result = result(
+					i, j, k, nk, nr_left, n_middle, nc_right
+				);
+				for(size_t ell = 0; ell < n_middle; ell++)
+				{	size_t i_left  = left(
+						i, ell, k, nk, nr_left, n_middle, nc_right
+					);
+					size_t i_right = right(
+						ell, j, k, nk, nr_left, n_middle, nc_right
+					);
 					//
 					// Compute sparsity for T(x) = S(x) * f'(x).
 					// We so not need to use vx with f'(x) propagation.

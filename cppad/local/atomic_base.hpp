@@ -176,24 +176,15 @@ $tend
 There is a default value for $icode sparsity$$ if it is not
 included in the constructor (which may be either the bool or set option).
 
-$head Examples$$
+$head Example$$
 
 $subhead Define Constructor$$
-The following are links to user atomic function constructor definitions:
-$cref%get_started.cpp%atomic_get_started.cpp%Constructor%$$,
-$cref%norm_sq.cpp%atomic_norm_sq.cpp%Constructor%$$,
-$cref%reciprocal.cpp%atomic_reciprocal.cpp%Constructor%$$,
-$cref%tangent.cpp%atomic_tangent.cpp%Constructor%$$,
-$cref%mat_mul.hpp%atomic_mat_mul.hpp%Constructor%$$.
+The following is an example of a user atomic function constructor definitions:
+$cref%get_started.cpp%atomic_get_started.cpp%Constructor%$$.
 
 $subhead Use Constructor$$
-The following are links to user atomic function constructor uses:
-$cref%get_started.cpp%atomic_get_started.cpp%Use Atomic Function%Constructor%$$,
-$cref%norm_sq.cpp%atomic_norm_sq.cpp%Use Atomic Function%Constructor%$$,
-$cref%reciprocal.cpp%atomic_reciprocal.cpp%Use Atomic Function%Constructor%$$,
-$cref%tangent.cpp%atomic_tangent.cpp%Use Atomic Function%Constructor%$$,
-$cref%mat_mul.cpp%atomic_mat_mul.cpp%Use Atomic Function%Constructor%$$.
-
+The following is an example using a user atomic function constructor:
+$cref%get_started.cpp%atomic_get_started.cpp%Use Atomic Function%Constructor%$$.
 
 $end
 */

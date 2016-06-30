@@ -46,10 +46,7 @@ $subhead Constructor$$
 $srccode%cpp% */
 	// -------------------------------------------------------------------
 	// object that multiplies  2 x 2  matrices
-	size_t nr_result = 2;
-	size_t n_middle  = 2;
-	size_t nc_result = 2;
-	atomic_mat_mul afun(nr_result, n_middle, nc_result);
+	atomic_mat_mul afun;
 /* %$$
 $subhead Recording$$
 $srccode%cpp% */
@@ -62,25 +59,33 @@ $srccode%cpp% */
 	CppAD::Independent(ax);
 
 	// ------------------------------------------------------------------
-	vector< AD<double> > atom_x(nr_result * n_middle + n_middle * nc_result);
+	size_t nr_left = 2;
+	size_t n_middle  = 2;
+	size_t nc_right = 2;
+	vector< AD<double> > atom_x(3 + (nr_left + nc_right) * n_middle );
+
+	// matrix dimensions
+	atom_x[0] = AD<double>( nr_left );
+	atom_x[1] = AD<double>( n_middle );
+	atom_x[2] = AD<double>( nc_right );
 
 	// left matrix
-	atom_x[0] = ax[0];  // left[0, 0] = x0
-	atom_x[1] = ax[1];  // left[0, 1] = x1
-	atom_x[2] = 5.;     // left[1, 0] = 5
-	atom_x[3] = 6.;     // left[1, 1] = 6
+	atom_x[3] = ax[0];  // left[0, 0] = x0
+	atom_x[4] = ax[1];  // left[0, 1] = x1
+	atom_x[5] = 5.;     // left[1, 0] = 5
+	atom_x[6] = 6.;     // left[1, 1] = 6
 
 	// right matix
-	atom_x[4] = ax[2];  // right[0, 0] = x2
-	atom_x[5] = 7.;     // right[0, 1] = 7
-	atom_x[6] = ax[3];  // right[1, 0] = x3
-	atom_x[7] = 8.;     // right[1, 1] = 8
+	atom_x[7] = ax[2];  // right[0, 0] = x2
+	atom_x[8] = 7.;     // right[0, 1] = 7
+	atom_x[9] = ax[3];  // right[1, 0] = x3
+	atom_x[10] = 8.;     // right[1, 1] = 8
 	// ------------------------------------------------------------------
 	/*
 	[ x0 , x1 ] * [ x2 , 7 ] = [ x0*x2 + x1*x3 , x0*7 + x1*8 ]
 	[ 5  , 6  ]   [ x3 , 8 ]   [  5*x2 +  6*x3 ,  5*7 +  6*8 ]
 	*/
-	vector< AD<double> > atom_y(nr_result * nc_result);
+	vector< AD<double> > atom_y(nr_left * nc_right);
 	afun(atom_x, atom_y);
 
 	ok &= (atom_y[0] == x[0]*x[2] + x[1]*x[3]) & Variable(atom_y[0]);
