@@ -16,6 +16,14 @@ Please visit http://www.coin-or.org/CppAD/ for information on other licenses.
 /*
 $begin atomic_mat_mul.hpp$$
 $spell
+	Taylor
+	ty
+	px
+	CppAD
+	jac
+	hes
+	nr
+	nc
 $$
 
 $section Matrix Multiply as an Atomic Operation$$
@@ -23,7 +31,16 @@ $section Matrix Multiply as an Atomic Operation$$
 $head See Also$$
 $cref atomic_eigen_mat_mul.hpp$$
 
-$nospell
+$head Matrix Dimensions$$
+This example puts the matrix dimensions in the atomic function arguments,
+instead of the $cref/constructor/atomic_ctor/$$, so that they can
+be different for different calls to the atomic function.
+These dimensions are:
+$table
+$icode nr_left$$ $cnext number of rows in the left matrix $rend
+$icode n_middle$$ $cnext rows in the left matrix and columns in right $rend
+$icode nc_right$$ $cnext number of columns in the right matrix
+$tend
 
 $head Start Class Definition$$
 $srccode%cpp% */
@@ -94,7 +111,7 @@ $srccode%cpp% */
 		return (i * nc_right + j) * nk + k;
 	}
 /* %$$
-$head Forward Matrix Multipliy$$
+$head Forward Matrix Multiply$$
 Forward mode multiply Taylor coefficients in $icode tx$$ and sum into
 $icode ty$$ (for one pair of left and right orders)
 $srccode%cpp% */
@@ -137,7 +154,7 @@ $srccode%cpp% */
 		}
 	}
 /* %$$
-$head Reverse Matrix Multipliy$$
+$head Reverse Matrix Multiply$$
 Reverse mode partials of Taylor coefficients and sum into $icode px$$
 (for one pair of left and right orders)
 $srccode%cpp% */
@@ -653,7 +670,7 @@ $srccode%cpp% */
 }; // End of mat_mul class
 }  // End empty namespace
 /* %$$
-$$ $comment end nospell$$
+$comment end nospell$$
 $end
 */
 

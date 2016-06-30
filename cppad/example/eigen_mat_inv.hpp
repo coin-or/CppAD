@@ -29,6 +29,12 @@ $latex R = A^{-1}$$
 for any positive integer $latex p$$
 and invertible matrix $latex A \in \B{R}^{p \times p}$$.
 
+$head Matrix Dimensions$$
+This example puts the matrix dimension $latex p$$
+in the atomic function arguments,
+instead of the $cref/constructor/atomic_ctor/$$,
+so it can be different for different calls to the atomic function.
+
 $head Theory$$
 
 $subhead Forward$$

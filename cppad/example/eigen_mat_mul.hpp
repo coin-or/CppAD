@@ -18,6 +18,8 @@ $begin atomic_eigen_mat_mul.hpp$$
 $spell
 	Eigen
 	Taylor
+	nr
+	nc
 $$
 
 $section Atomic Eigen Matrix Multiply Class$$
@@ -31,6 +33,20 @@ $latex R = A \times B$$
 for any positive integers $latex r$$, $latex m$$, $latex c$$,
 and any $latex A \in \B{R}^{r \times m}$$,
 $latex B \in \B{R}^{m \times c}$$.
+
+$head Matrix Dimensions$$
+This example puts the matrix dimensions in the atomic function arguments,
+instead of the $cref/constructor/atomic_ctor/$$, so that they can
+be different for different calls to the atomic function.
+These dimensions are:
+$table
+$icode nr_left$$
+	$cnext number of rows in the left matrix; i.e, $latex r$$ $rend
+$icode n_middle$$
+	$cnext rows in the left matrix and columns in right; i.e, $latex m$$ $rend
+$icode nc_right$$
+	$cnext number of columns in the right matrix; i.e., $latex c$$
+$tend
 
 $head Theory$$
 
