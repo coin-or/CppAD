@@ -1,6 +1,6 @@
 // $Id$
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-15 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-16 Bradley M. Bell
 
 CppAD is distributed under multiple licenses. This distribution is under
 the terms of the
@@ -39,7 +39,15 @@ forward mode computes the Taylor coefficients for the function
 $latex \[
 	Y (t) = F [ X(t) ]
 \]$$
+This version of forward mode computes multiple directions as the same
+time (reducing the number of passes through the tape). This requires more
+memory, but might be faster in some cases.
 
+$head Reverse Mode$$
+Reverse mode for multiple directions has not yet been implemented.
+If you have speed tests that indicate that multiple direction forward
+mode is faster, and you want to try multiple direction reverse mode,
+contact the CppAD project manager.
 
 $head Notation$$
 
