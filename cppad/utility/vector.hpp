@@ -403,16 +403,16 @@ public:
 	)
 	{	length_ = n;
 
-		// check if we can use current memory
-		if( capacity_ >= length_ )
-			return;
+		// check if we must allocate new memory
+		if( capacity_ < length_ )
+		{
+			// check if there is old memory to be freed
+			if( capacity_ > 0 )
+				delete_data(data_);
 
-		// check if there is old memory to be freed
-		if( capacity_ > 0 )
-			delete_data(data_);
-
-		// get new memory and set capacity
-		data_ = thread_alloc::create_array<Type>(length_, capacity_);
+			// get new memory and set capacity
+			data_ = thread_alloc::create_array<Type>(length_, capacity_);
+		}
 	}
 
 	/// free memory and set number of elements to zero

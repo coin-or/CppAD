@@ -886,12 +886,9 @@ void forward1sweep(
 					CPPAD_ASSERT_KNOWN(false, msg.c_str() );
 				}
 # endif
-				if(user_tx.size() != user_n * user_q1)
-					user_tx.resize(user_n * user_q1);
-				if(user_ty.size() != user_m * user_q1)
-					user_ty.resize(user_m * user_q1);
-				if(user_iy.size() != user_m)
-					user_iy.resize(user_m);
+				user_tx.resize(user_n * user_q1);
+				user_ty.resize(user_m * user_q1);
+				user_iy.resize(user_m);
 				user_j     = 0;
 				user_i     = 0;
 				user_state = user_arg;

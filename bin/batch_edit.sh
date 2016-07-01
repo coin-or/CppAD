@@ -17,18 +17,56 @@ move_list='
 move_sed='s|mat_div|mat_inv|'
 #
 cat << EOF > junk.sed
-s|vector<int>& *%x%|vector<%Base%>\\& %x%|
-s|vector<int>& \\( *\\)%x%|vector<%Base%>\\&\\1%x%|
-s|vector<int>& \\( *\\)x|vector<Base>\\&\\1x|
-s|vector<int> \\( *\\)user_x;|vector<Base>\\1user_x;|
-s|Integer( *parameter\\[arg\\[0\\]\\] )|parameter[arg[0]]|
-s|Integer( %ax%[%i%];|Value( %ax%[%i%] );|
-s|%x%\\[%i%\\] = std::numeric_limits<int>::max()|%x%[%i%] = CppAD::numeric_limits<%Base%>::quiet_NaN()|
-s|std::numeric_limits<int>::max()|CppAD::numeric_limits<Base>::quiet_NaN()|
-#
-s|nr_left  *= size_t( x\\[0\\] );|nr_left  = size_t( CppAD::Integer( x[0] ) );|
-s|n_middle *= size_t( x\\[1\\] );|n_middle = size_t( CppAD::Integer( x[1] ) );|
-s|nc_right *= size_t( x\\[2\\] );|nc_right = size_t( CppAD::Integer( x[2] ) );|
+/if( *user_[ti]*x.size() *!= *user_n *)/! b one
+N
+s|^\\([\\t]*\\).*\\(user_[ti]*x.resize( *user_n *);\\)\$|\1\2|
+: one
+/if( *user_[ti]y.size() *!= *user_m *)/! b two
+N
+s|^\\([\\t]*\\).*\\(user_[ti]y.resize( *user_m *);\\)\$|\1\2|
+: two
+# ------------------------------------------------------------------------
+/if( *user_tx.size() *!= *user_n *\\* *user_q1 *)/! b three
+N
+s|^\\([\\t]*\\).*\\(user_tx.resize( *user_n *\\* *user_q1 *);\\)\$|\1\2|
+: three
+/if( *user_ty.size() *!= *user_m *\\* *user_q1 *)/! b four
+N
+s|^\\([\\t]*\\).*\\(user_ty.resize( *user_m *\\* *user_q1 *);\\)\$|\1\2|
+: four
+# ------------------------------------------------------------------------
+/if( *user_tx_one.size() *!= *user_n *\\* *user_q1 *)/! b five
+N
+s|^\\([\\t]*\\).*\\(user_tx_one.resize( *user_n *\\* *user_q1 *);\\)\$|\1\2|
+: five
+/if( *user_ty_one.size() *!= *user_m *\\* *user_q1 *)/! b six
+N
+s|^\\([\\t]*\\).*\\(user_ty_one.resize( *user_m *\\* *user_q1 *);\\)\$|\1\2|
+: six
+# ------------------------------------------------------------------------
+/if( *user_tx_all.size() *!= *user_n *\\* *(q \\* r + 1) *)/! b seven
+N
+s|^\\([\\t]*\\).*\\(user_tx_all.resize( *user_n *\\* *(q \\* r + 1) *);\\)\$|\1\2|
+: seven
+/if( *user_ty_all.size() *!= *user_m *\\* *(q \\* r + 1) *)/! b eight
+N
+s|^\\([\\t]*\\).*\\(user_ty_all.resize( *user_m *\\* *(q \\* r + 1) *);\\)\$|\1\2|
+: eight
+# ------------------------------------------------------------------------
+/if( *pack_[rs].size() *!= *user_[nm] *\\* *user_q *)/! b nine
+N
+s|^\\([\\t{]*\\).*\\(pack_[rs].resize( *user_[nm] *\\* *user_q *);\\)\$|\1\2|
+: nine
+# ------------------------------------------------------------------------
+/if( *bool_[rs].size() *!= *user_[nm] *\\* *user_q *)/! b eleven
+N
+s|^\\([\\t{]*\\).*\\(bool_[rs].resize( *user_[nm] *\\* *user_q *);\\)\$|\1\2|
+: eleven
+# ------------------------------------------------------------------------
+/if( *set_[rs].size() *!= *user_[nm] *)/! b thirteen
+N
+s|^\\([\\t{]*\\).*\\(set_[rs].resize( *user_[nm] *);\\)\$|\1\2|
+: thirteen
 EOF
 # -----------------------------------------------------------------------------
 if [ $0 != "bin/batch_edit.sh" ]

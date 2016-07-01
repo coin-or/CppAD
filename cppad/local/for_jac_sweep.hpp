@@ -656,8 +656,7 @@ void ForJacSweep(
 					CPPAD_ASSERT_KNOWN(false, msg.c_str() );
 				}
 # endif
-				if( user_x.size() != user_n )
-					user_x.resize( user_n );
+				user_x.resize( user_n );
 				//
 				user_pack  = user_atom->sparsity() ==
 							atomic_base<Base>::pack_sparsity_enum;
@@ -667,28 +666,22 @@ void ForJacSweep(
 							atomic_base<Base>::set_sparsity_enum;
 				CPPAD_ASSERT_UNKNOWN( user_pack || user_bool || user_set );
 				if( user_pack )
-				{	if( pack_r.size() != user_n * user_q )
-						pack_r.resize( user_n * user_q );
-					if( pack_s.size() != user_m * user_q )
-						pack_s.resize( user_m * user_q );
+				{	pack_r.resize( user_n * user_q );
+					pack_s.resize( user_m * user_q );
 					for(i = 0; i < user_n; i++)
 						for(j = 0; j < user_q; j++)
 							pack_r[ i * user_q + j] = false;
 				}
 				if( user_bool )
-				{	if( bool_r.size() != user_n * user_q )
-						bool_r.resize( user_n * user_q );
-					if( bool_s.size() != user_m * user_q )
-						bool_s.resize( user_m * user_q );
+				{	bool_r.resize( user_n * user_q );
+					bool_s.resize( user_m * user_q );
 					for(i = 0; i < user_n; i++)
 						for(j = 0; j < user_q; j++)
 							bool_r[ i * user_q + j] = false;
 				}
 				if( user_set)
-				{	if(set_r.size() != user_n )
-						set_r.resize(user_n);
-					if(set_s.size() != user_m )
-						set_s.resize(user_m);
+				{	set_r.resize(user_n);
+					set_s.resize(user_m);
 					for(i = 0; i < user_n; i++)
 						set_r[i].clear();
 				}

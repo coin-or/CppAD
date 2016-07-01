@@ -397,8 +397,7 @@ void ForHesSweep(
 					CPPAD_ASSERT_KNOWN(false, msg.c_str() );
 				}
 # endif
-				if( user_x.size() != user_n )
-					user_x.resize( user_n );
+				user_x.resize( user_n );
 				//
 				user_pack  = user_atom->sparsity() ==
 							atomic_base<Base>::pack_sparsity_enum;

@@ -778,13 +778,10 @@ void forward0sweep(
 					CPPAD_ASSERT_KNOWN(false, msg.c_str() );
 				}
 # endif
-				if(user_tx.size() != user_n)
-					user_tx.resize(user_n);
-				if(user_ty.size() != user_m)
-					user_ty.resize(user_m);
+				user_tx.resize(user_n);
+				user_ty.resize(user_m);
 # if CPPAD_FORWARD0SWEEP_TRACE
-				if( user_iy.size() != user_m )
-					user_iy.resize(user_m);
+				user_iy.resize(user_m);
 # endif
 				user_j     = 0;
 				user_i     = 0;

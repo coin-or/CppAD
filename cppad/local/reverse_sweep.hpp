@@ -687,8 +687,7 @@ void ReverseSweep(
 					CPPAD_ASSERT_KNOWN(false, msg.c_str() );
 				}
 # endif
-				if(user_ix.size() != user_n)
-					user_ix.resize(user_n);
+				user_ix.resize(user_n);
 				if(user_tx.size() != user_n * user_k1)
 				{	user_tx.resize(user_n * user_k1);
 					user_px.resize(user_n * user_k1);

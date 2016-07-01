@@ -1948,10 +1948,8 @@ void optimize_run(
 						+ ": atomic_base function has been deleted";
 					CPPAD_ASSERT_KNOWN(false, msg.c_str() );
 				}
-				if( user_x.size() != user_n )
-					user_x.resize( user_n );
-				if( user_ix.size() != user_n )
-					user_ix.resize( user_n );
+				user_x.resize( user_n );
+				user_ix.resize( user_n );
 				//
 				user_pack  = user_atom->sparsity() ==
 							atomic_base<Base>::pack_sparsity_enum;
