@@ -45,9 +45,30 @@ $$
 
 $section The CppAD Wish List$$
 
+$head check_finite$$
+Sometimes one only gets infinite value during zero order forward
+and nan when computing corresponding derivatives.
+Change $cref check_for_nan$$ to $code check_finite$$
+(not infinite or nan) so that error detection happens during zero
+order forward instead of later.
 
-$head Optimization$$
+$comment ------------------------------------------------------------------ $$
+$head checkpoint$$
+
+$subhead Retape$$
+Change $cref checkpoint$$ so that is used $cref compare_change$$
+to determine when it is necessary to retape.
+Note that there is some question as to whether
+the sparsity pattern be allowed to change.
+
+$subhead Testing$$
+There should be some examples and tests for both speed and memory use
+that demonstrate that checkpointing is useful.
+
+
 $comment -------------------------------------------------------------------$$
+$head Optimization$$
+
 $subhead Reorganize$$
 Reorganize the
 $cref optimize$$ process so that the source code is easier to
@@ -87,36 +108,10 @@ This caused a significant slow down in the
 $cref cppad_det_lu.cpp$$ speed test (with no options specified).
 Perhaps there should be an option to skip the comparison taping.
 
+$comment -------------------------------------------------------------------$$
 $head Compilation Speed$$
 Create a library corresponding to $code AD<double>$$ so that
 one does not need to re-compile all the header files every time.
-$comment -------------------------------------------------------------------$$
-
-$head Atomic Function$$
-Change the
-$cref atomic_eigen_mat_mul.hpp$$ and
-$cref atomic_eigen_mat_inv.hpp$$ examples so the dimensions of the
-matrices can be different for each call.
-(One needs to put the one of the matrix dimension in
-$cref/ax/atomic_afun/ax/$$ to do this.)
-
-$head checkpoint$$
-$list number$$
-There should be some examples and tests for both speed and memory use
-that demonstrate that checkpointing is useful.
-$lnext
-Change $cref checkpoint$$ so that is used $cref compare_change$$
-to determine when it is necessary to retape.
-Note that there is some question as to whether
-the sparsity pattern be allowed to change.
-$lend
-
-$head check_finite$$
-Sometimes one only gets infinite value during zero order forward
-and nan when computing corresponding derivatives.
-Change $cref check_for_nan$$ to $code check_finite$$
-(not infinite or nan) so that error detection happens during zero
-order forward instead of later.
 
 $head Base Requirements$$
 Change the $cref/Base requirements/base_require/$$ to use template
