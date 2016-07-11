@@ -45,6 +45,29 @@ $$
 
 $section The CppAD Wish List$$
 
+$head Sparsity Patterns$$
+It may be that each set has a large overhead in a large and very sparse
+$cref/vector of sets/glossary/Sparsity Pattern/Vector of Sets/$$
+representation of a sparsity pattern.
+The user API for this representation uses
+$codei%
+	%vector%< std::set<size_t> >
+%$$
+Perhaps CppAD's API should have a sparse matrix class with the following fields
+$codei%
+	%vector%<size_t> %row%;
+	%vector%<size_t> %col%;
+	%vector%<%Type%> %val%;
+%$$
+where the vectors are arbitrary $cref/simple vectors/SimpleVector/$$.
+If the $icode val$$ vector has size zero,
+this would just be a sparsity pattern
+(and $icode row$$ and $icode col$$ vectors would have the same size).
+Otherwise, it would be a sparse matrix with elements of type $icode Type$$
+and $icode val$$ would have the
+same size as $icode row$$ and $icode col$$.
+
+
 $head check_finite$$
 Sometimes one only gets infinite value during zero order forward
 and nan when computing corresponding derivatives.
