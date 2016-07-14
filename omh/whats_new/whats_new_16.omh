@@ -39,6 +39,9 @@ in reverse order by date.
 The purpose of these sections is to
 assist you in learning about changes between various versions of CppAD.
 
+$head 07-14$$
+Correct title in $cref ForSparseHes$$ (change Reverse to Forward).
+
 $head 06-30$$
 Change the $cref atomic_mat_mul.cpp$$ example so that on atomic object
 works for matrices of any size.

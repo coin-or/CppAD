@@ -31,7 +31,7 @@ $spell
 	cpp
 $$
 
-$section Hessian Sparsity Pattern: Reverse Mode$$
+$section Hessian Sparsity Pattern: Forward Mode$$
 
 $head Syntax$$
 $icode%h% = %f%.ForSparseHes(%r%, %s%)
