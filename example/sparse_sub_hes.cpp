@@ -18,9 +18,10 @@ $$
 $section Sparse Hessian on Subset of Variables: Example and Test$$
 
 $head Purpose$$
-This example uses a subset of the sparsity pattern,
-to compute the Hessian for a subset of the variables,
-without having to compute the sparsity pattern for the entire function.
+This example uses a
+$cref/column subset/sparse_hessian/p/Column Subset/$$ of the sparsity pattern
+to compute the Hessian for a subset of the variables.
+The values in the rest of the sparsity pattern do not matter.
 
 $head See Also$$
 $cref sub_sparse_hes.cpp$$
@@ -33,7 +34,9 @@ $end
 */
 // BEGIN C++
 # include <cppad/cppad.hpp>
-bool sparse_sub_hes(void)
+namespace { // BEGIN_EMPTY_NAMESPACE
+
+bool test(const char* color_method)
 {	bool ok = true;
 	using CppAD::AD;
 	typedef CppAD::vector< double >                   d_vector;
@@ -117,6 +120,7 @@ bool sparse_sub_hes(void)
 
 	// compute Hessian
 	CppAD::sparse_hessian_work work;
+	work.color_method = color_method;
 	d_vector x(n), hes( row.size() );
 	for(size_t j = 0; j < n; j++)
 		x[j] = double(j+1);
@@ -134,6 +138,14 @@ bool sparse_sub_hes(void)
 		}
 		ell++;
 	}
+	return ok;
+}
+} // END_EMPTY_NAMESPACE
+
+bool sparse_sub_hes(void)
+{	bool ok = true;
+	ok &= test("cppad.symmetric");
+	ok &= test("cppad.general");
 	return ok;
 }
 // END C++

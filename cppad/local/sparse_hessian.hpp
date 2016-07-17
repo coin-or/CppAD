@@ -104,25 +104,33 @@ zero and $latex n - 1$$.
 It specifies a
 $cref/sparsity pattern/glossary/Sparsity Pattern/$$
 for the Hessian $latex H(x)$$.
-$pre
 
-$$
+$subhead Purpose$$
 If this sparsity pattern does not change between calls to
 $codei SparseHessian$$, it should be faster to calculate $icode p$$ once and
 pass this argument to $codei SparseHessian$$.
-Furthermore, if you specify $icode work$$ in the calling sequence,
-it is not necessary to keep the sparsity pattern; see the heading
-$cref/p/sparse_hessian/work/p/$$ under the $icode work$$ description.
-$pre
-
-$$
-In addition,
-if you specify $icode p$$, CppAD will use the same
+If you specify $icode p$$, CppAD will use the same
 type of sparsity representation
 (vectors of $code bool$$ or vectors of $code std::set<size_t>$$)
 for its internal calculations.
 Otherwise, the representation
 for the internal calculations is unspecified.
+
+$subhead work$$
+If you specify $icode work$$ in the calling sequence,
+it is not necessary to keep the sparsity pattern; see the heading
+$cref/p/sparse_hessian/work/p/$$ under the $icode work$$ description.
+
+$subhead Column Subset$$
+If the arguments $icode row$$ and $icode col$$ are present,
+and $cref/color_method/sparse_hessian/work/color_method/$$ is
+$code cppad.general$$ or $code cppad.symmetric$$,
+it is not necessary to compute the entire sparsity pattern.
+Only the following subset of column values will matter:
+$codei%
+	{ %col%[%k%] : %k% = 0 , %...% , %K%-1 }
+%$$.
+
 
 $head row, col$$
 The arguments $icode row$$ and $icode col$$ are optional and have prototype

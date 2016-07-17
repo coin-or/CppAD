@@ -39,6 +39,13 @@ in reverse order by date.
 The purpose of these sections is to
 assist you in learning about changes between various versions of CppAD.
 
+$head 07-17$$
+Add documentation for only needing to compute a
+$cref/column subset/sparse_hessian/p/Column Subset/$$ of the sparsity
+pattern when computing a subset of a sparse Hessians.
+In addition, improve the corresponding example
+$cref sparse_sub_hes.cpp$$.
+
 $head 07-14$$
 Correct title in $cref ForSparseHes$$ (change Reverse to Forward).
 
