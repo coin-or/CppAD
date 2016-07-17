@@ -36,16 +36,15 @@ $end
 # include <cppad/cppad.hpp>
 namespace { // BEGIN_EMPTY_NAMESPACE
 
-bool test(const char* color_method)
-{	bool ok = true;
+// --------------------------------------------------------------------------
+CppAD::ADFun<double> record_function(size_t n)
+{	// must be greater than or equal 3; see n_sweep below
+	assert( n >= 3 );
+	//
 	using CppAD::AD;
-	typedef CppAD::vector< double >                   d_vector;
-	typedef CppAD::vector< AD<double> >               a_vector;
-	typedef CppAD::vector<size_t>                     i_vector;
-	typedef CppAD::vector< std::set<size_t> >         s_vector;
-
+	typedef CppAD::vector< AD<double> >     a_vector;
+	//
 	// domain space vector
-	size_t n = 12;  // must be greater than or equal 3; see n_sweep below
 	a_vector a_x(n);
 	for(size_t j = 0; j < n; j++)
 		a_x[j] = AD<double> (0);
@@ -64,7 +63,20 @@ bool test(const char* color_method)
 	// (without executing zero order forward calculation)
 	CppAD::ADFun<double> f;
 	f.Dependent(a_x, a_y);
-
+	//
+	return f;
+}
+// --------------------------------------------------------------------------
+bool test_set(const char* color_method)
+{	bool ok = true;
+	//
+	typedef CppAD::vector< double >                   d_vector;
+	typedef CppAD::vector<size_t>                     i_vector;
+	typedef CppAD::vector< std::set<size_t> >         s_vector;
+	//
+	size_t n = 12;
+	CppAD::ADFun<double> f = record_function(n);
+	//
 	// sparsity patteren for the sub-set of variables we are computing
 	// the hessian w.r.t.
 	size_t n_sub = 4;
@@ -84,33 +96,16 @@ bool test(const char* color_method)
 	bool transpose = true;
 	s_vector h = f.RevSparseHes(n_sub, s, transpose);
 
-	// check sparsity pattern
-	for(size_t i = 0; i < n; i++)
-	{	std::set<size_t> check;
-		assert( check.empty() );
-		if( i <= n_sub )
-		{	if( i == 0 )
-				check.insert(1);
-			else
-			{	check.insert(i-1);
-				if( i < n_sub )
-					check.insert(i);
-				if( i + 1 < n_sub)
-					check.insert(i+1);
-			}
-		}
-		ok &= h[i] == check;
-	}
-
 	// set the row and column indices that correspond to lower triangle
 	i_vector row, col;
 	for(size_t i = 0; i < n_sub; i++)
-	{	std::set<size_t>::iterator itr;
-		for(itr = h[i].begin(); itr != h[i].end(); itr++)
-		{	if( *itr <= i )
-			{	row.push_back( i );
-				col.push_back( *itr );
-			}
+	{	if( i > 0 )
+		{	// diagonal element
+			row.push_back(i);
+			col.push_back(i);
+			// lower diagonal element
+			row.push_back(i);
+			col.push_back(i-1);
 		}
 	}
 
@@ -140,12 +135,91 @@ bool test(const char* color_method)
 	}
 	return ok;
 }
+// --------------------------------------------------------------------------
+bool test_bool(const char* color_method)
+{	bool ok = true;
+	//
+	typedef CppAD::vector< double >    d_vector;
+	typedef CppAD::vector<size_t>      i_vector;
+	typedef CppAD::vector<bool>        s_vector;
+	//
+	size_t n = 12;
+	CppAD::ADFun<double> f = record_function(n);
+	//
+	// sparsity patteren for the sub-set of variables we are computing
+	// the hessian w.r.t.
+	size_t n_sub = 4;
+	s_vector r(n * n_sub);
+	for(size_t i = 0; i < n; i++)
+	{	for(size_t j = 0; j < n_sub; j++)
+			r[ i * n_sub + j ] = (i == j);
+	}
+
+	// store forward sparsity for J(x) = F^{(1)} (x) * R
+	f.ForSparseJac(n_sub, r);
+
+	// compute sparsity pattern for H(x) = (S * F)^{(2)} ( x ) * R
+	s_vector s(1);
+	s[0] = true;
+	bool transpose = true;
+	s_vector h = f.RevSparseHes(n_sub, s, transpose);
+
+	// set the row and column indices that correspond to lower triangle
+	i_vector row, col;
+	for(size_t i = 0; i < n_sub; i++)
+	{	if( i > 0 )
+		{	// diagonal element
+			row.push_back(i);
+			col.push_back(i);
+			// lower diagonal element
+			row.push_back(i);
+			col.push_back(i-1);
+		}
+	}
+
+	// weighting for the Hessian
+	d_vector w(1);
+	w[0] = 1.0;
+
+	// extend sparsity pattern (values in extended columns do not matter)
+	s_vector h_extended(n * n);
+	for(size_t i = 0; i < n; i++)
+	{	for(size_t j = 0; j < n_sub; j++)
+			h_extended[ i * n + j ] = h[ i * n_sub + j ];
+		for(size_t j = n_sub; j < n; j++)
+			h_extended[ i * n + j ] = false;
+	}
+	// compute Hessian
+	CppAD::sparse_hessian_work work;
+	work.color_method = color_method;
+	d_vector x(n), hes( row.size() );
+	for(size_t j = 0; j < n; j++)
+		x[j] = double(j+1);
+	f.SparseHessian(x, w, h_extended, row, col, hes, work);
+
+	// check the values in the sparse hessian
+	for(size_t ell = 0; ell < row.size(); ell++)
+	{	size_t i = row[ell];
+		size_t j = col[ell];
+		if( i == j )
+			ok &= hes[ell] == 2.0 * x[i-1];
+		else
+		{	ok &= j+1 == i;
+			ok &= hes[ell] == 2.0 * x[i];
+		}
+		ell++;
+	}
+	return ok;
+}
 } // END_EMPTY_NAMESPACE
 
 bool sparse_sub_hes(void)
 {	bool ok = true;
-	ok &= test("cppad.symmetric");
-	ok &= test("cppad.general");
+	ok &= test_set("cppad.symmetric");
+	ok &= test_set("cppad.general");
+	//
+	ok &= test_bool("cppad.symmetric");
+	ok &= test_bool("cppad.general");
 	return ok;
 }
 // END C++
