@@ -67,6 +67,7 @@ $end
 
 # include <set>
 # include <algorithm>
+# include <iterator>
 
 namespace CppAD {
 	template <class Element>
