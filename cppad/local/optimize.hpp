@@ -126,6 +126,7 @@ $end
 -----------------------------------------------------------------------------
 */
 # include <stack>
+# include <iterator>
 
 namespace CppAD { // BEGIN_CPPAD_NAMESPACE
 namespace optimize { // BEGIN_CPPAD_OPTIMIZE_NAMESPACE
