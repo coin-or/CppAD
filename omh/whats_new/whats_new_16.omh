@@ -29,6 +29,7 @@ $spell
 	xam
 	makefile
 	vy
+	inv
 $$
 
 $section Changes and Additions to CppAD During 2016$$
@@ -38,6 +39,15 @@ The sections listed below contain a list of the changes to CppAD
 in reverse order by date.
 The purpose of these sections is to
 assist you in learning about changes between various versions of CppAD.
+
+$head 08-25$$
+$list number$$
+Fix some missing include files (when compiling with MS Visual Studio 2015).
+$lnext
+Fix a typo in the
+$cref/Reverse/atomic_eigen_mat_inv.hpp/Theory/Reverse/$$ section of the
+$code eigen_mat_inv.hpp$$ example.
+$lend
 
 $head 07-17$$
 Add documentation for only needing to compute a

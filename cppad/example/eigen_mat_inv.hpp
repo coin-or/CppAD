@@ -122,7 +122,7 @@ $latex \[
 	R_0 '(t) A_0 (t) + R_0 (t) A_0 '(t) = 0
 \] $$
 $latex \[
-	R_0 '(t) = - R_0 (t) A_0 '(t) R_0 '(t)
+	R_0 '(t) = - R_0 (t) A_0 '(t) R_0 (t)
 \] $$
 The reverse mode formula that eliminates $latex R_0$$ is
 $latex \[
