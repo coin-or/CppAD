@@ -30,6 +30,7 @@ $spell
 	makefile
 	vy
 	inv
+	atanh
 $$
 
 $section Changes and Additions to CppAD During 2016$$
@@ -42,7 +43,12 @@ assist you in learning about changes between various versions of CppAD.
 
 $head 08-25$$
 $list number$$
-Fix some missing include files (when compiling with MS Visual Studio 2015).
+Fix some missing include files in
+$code optimize.hpp$$ and $code set_union.hpp$$
+(when compiling with MS Visual Studio 2015).
+$lnext
+Fix a warning in $code atanh.hpp$$
+(when compiling with MS Visual Studio 14).
 $lnext
 Fix a typo in the
 $cref/Reverse/atomic_eigen_mat_inv.hpp/Theory/Reverse/$$ section of the

@@ -73,7 +73,7 @@ namespace CppAD {
 
 template <class Type>
 Type atanh_template(const Type &x)
-{	return CppAD::log( (1 + x) / (1 - x) ) / 2.0;
+{	return CppAD::log( (Type(1) + x) / (Type(1) - x) ) / Type(2);
 }
 
 inline float atanh(const float &x)
