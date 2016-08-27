@@ -742,7 +742,7 @@ else
 	cppad_pkgconfig_libs_value="-L$prefix/lib"
 fi
 if test "$POSTFIX_DIR" != "" ; then
-	cppad_pkgconfig_cflags_value="$cppad_cflags_value/$POSTFIX_DIR"
+	cppad_pkgconfig_cflags_value="$cppad_pkgconfig_cflags_value/$POSTFIX_DIR"
 	cppad_pkgconfig_libs_value="$cppad_pkgconfig_libs_value/$POSTFIX_DIR"
 fi
 if test "$IPOPT_DIR" == "" ; then
@@ -755,6 +755,8 @@ fi
 AC_SUBST(cppad_pkgconfig_cflags,   "$cppad_pkgconfig_cflags_value")
 AC_SUBST(cppad_pkgconfig_libs,     "$cppad_pkgconfig_libs_value")
 AC_SUBST(cppad_pkgconfig_requires, "$cppad_pkgconfig_requires_value")
+AC_SUBST(cppad_prefix,             "$prefix")
+AC_SUBST(cppad_abs_includedir,     "$includedir")
 dnl
 dnl names set here so cppad.pc-uninstalled works both with cmake and autoconf
 AC_SUBST(cppad_SOURCE_DIR,  ${ABS_TOP_SRCDIR} )

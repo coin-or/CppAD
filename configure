@@ -631,6 +631,8 @@ ipopt_prefix
 eigen_prefix
 adolc_prefix
 cppad_SOURCE_DIR
+cppad_abs_includedir
+cppad_prefix
 cppad_pkgconfig_requires
 cppad_pkgconfig_libs
 cppad_pkgconfig_cflags
@@ -7889,7 +7891,7 @@ else
 	cppad_pkgconfig_libs_value="-L$prefix/lib"
 fi
 if test "$POSTFIX_DIR" != "" ; then
-	cppad_pkgconfig_cflags_value="$cppad_cflags_value/$POSTFIX_DIR"
+	cppad_pkgconfig_cflags_value="$cppad_pkgconfig_cflags_value/$POSTFIX_DIR"
 	cppad_pkgconfig_libs_value="$cppad_pkgconfig_libs_value/$POSTFIX_DIR"
 fi
 if test "$IPOPT_DIR" == "" ; then
@@ -7904,6 +7906,10 @@ cppad_pkgconfig_cflags="$cppad_pkgconfig_cflags_value"
 cppad_pkgconfig_libs="$cppad_pkgconfig_libs_value"
 
 cppad_pkgconfig_requires="$cppad_pkgconfig_requires_value"
+
+cppad_prefix="$prefix"
+
+cppad_abs_includedir="$includedir"
 
 cppad_SOURCE_DIR=${ABS_TOP_SRCDIR}
 

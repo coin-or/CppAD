@@ -10,8 +10,13 @@
 # A copy of this license is included in the COPYING file of this distribution.
 # Please visit http://www.coin-or.org/CppAD/ for information on other licenses.
 # -----------------------------------------------------------------------------
+# build script for use with auto-tools install
+# -----------------------------------------------------------------------------
 # prefix directories for the corresponding packages
-ADOLC_DIR=$HOME/prefix/adolc
+#
+# This test script no longer works with the current version of ADOLC
+# ADOLC_DIR=$HOME/prefix/adolc
+#
 BOOST_DIR=/usr
 CPPAD_DIR=$HOME/prefix/cppad
 EIGEN_DIR=$HOME/prefix/eigen
@@ -72,8 +77,6 @@ fi
 # Files are created by the configure command and copied to the source tree
 configure_file_list="
 	cppad/configure.hpp
-	example/test_one.sh
-	test_more/test_one.sh
 "
 # -----------------------------------------------------------------------------
 # change version to current date
@@ -176,11 +179,6 @@ then
 	dir_list="
 		--prefix=$CPPAD_DIR
 	"
-	if [ -e $ADOLC_DIR/include/adolc ]
-	then
-		dir_list="$dir_list
-			ADOLC_DIR=$ADOLC_DIR"
-	fi
 	if [ -e $BOOST_DIR/include/boost ]
 	then
 		dir_list="$dir_list BOOST_DIR=$BOOST_DIR"
