@@ -265,6 +265,7 @@ $srccode%cpp% */
 		}
 		// -------------------------------------------------------------------
 		// result for each order
+		// (we could avoid recalculting f_result_[k] for k=0,...,p-1)
 		for(size_t k = 0; k < n_order; k++)
 		{	// result[k] = sum_ell left[ell] * right[k-ell]
 			f_result_[k] = matrix::Zero(nr_left, nc_right);

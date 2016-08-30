@@ -41,6 +41,9 @@ in reverse order by date.
 The purpose of these sections is to
 assist you in learning about changes between various versions of CppAD.
 
+$head 08-30$$
+Add the $cref atomic_eigen_cholesky.cpp$$ example.
+
 $head 08-25$$
 $list number$$
 Fix some missing include files in

@@ -23,8 +23,7 @@ $$
 $section Atomic Eigen Matrix Inversion Class$$
 
 $head Purpose$$
-For fixed positive integer $latex p$$,
-construct and atomic operation that solve the computes the matrix inverse
+Construct an atomic operation that computes the matrix inverse
 $latex R = A^{-1}$$
 for any positive integer $latex p$$
 and invertible matrix $latex A \in \B{R}^{p \times p}$$.
@@ -258,16 +257,17 @@ $srccode%cpp% */
 		}
 		// -------------------------------------------------------------------
 		// result for each order
+		// (we could avoid recalculting f_result_[k] for k=0,...,p-1)
 		//
 		f_result_[0] = f_arg_[0].inverse();
 		for(size_t k = 1; k < n_order; k++)
 		{	// initialize sum
-			matrix f_sum_ = matrix::Zero(nr, nr);
+			matrix f_sum = matrix::Zero(nr, nr);
 			// compute sum
 			for(size_t ell = 1; ell <= k; ell++)
-				f_sum_ -= f_arg_[ell] * f_result_[k-ell];
+				f_sum -= f_arg_[ell] * f_result_[k-ell];
 			// result_[k] = arg_[0]^{-1} * sum_
-			f_result_[k] = f_result_[0] * f_sum_;
+			f_result_[k] = f_result_[0] * f_sum;
 		}
 		// -------------------------------------------------------------------
 		// pack result_ into ty

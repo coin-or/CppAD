@@ -69,10 +69,10 @@ bool eigen_mat_inv(void)
 $subhead Constructor$$
 $srccode%cpp% */
 	// -------------------------------------------------------------------
-	// object that multiplies a 2x2 matrix times a 2x1 matrix
+	// object that multiplies matrices
 	atomic_eigen_mat_mul<scalar> mat_mul;
 	// -------------------------------------------------------------------
-	// object that computes invers of a 2x2 matrix
+	// object that computes inverse of a square matrix
 	atomic_eigen_mat_inv<scalar> mat_inv;
 	// -------------------------------------------------------------------
 	// declare independent variable vector x
