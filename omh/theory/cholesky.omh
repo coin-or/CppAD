@@ -340,7 +340,7 @@ $latex \[
 \] $$
 which is the same as
 $latex \[
-	\bar{L}_0 \stackrel{-}{=} M_k L_k
+	\bar{L}_0 \stackrel{+}{=} 2 \; \R{lower} [ \bar{B}_k L_k ]
 \] $$
 
 We still need to remove $latex B_k$$ from the dependency.

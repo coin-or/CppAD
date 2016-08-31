@@ -24,8 +24,6 @@ $$
 
 $section Atomic Eigen Cholesky Factorization Class$$
 
-$head Under Construction$$
-
 $head Purpose$$
 Construct an atomic operation that computes a lower triangular matrix
 $latex L $$ such that $latex L L^\R{T} = A$$
@@ -219,6 +217,140 @@ $srccode%cpp% */
 		for(size_t i = 0; i < ny; i++)
 			vy[i] = var;
 		//
+		return true;
+	}
+/* %$$
+$subhead reverse$$
+$srccode%cpp% */
+	// reverse mode routine called by CppAD
+	virtual bool reverse(
+		// highest order Taylor coefficient that we are computing derivative of
+		size_t                     q ,
+		// forward mode Taylor coefficients for x variables
+		const CppAD::vector<double>&     tx ,
+		// forward mode Taylor coefficients for y variables
+		const CppAD::vector<double>&     ty ,
+		// upon return, derivative of G[ F[ {x_j^k} ] ] w.r.t {x_j^k}
+		CppAD::vector<double>&           px ,
+		// derivative of G[ {y_i^k} ] w.r.t. {y_i^k}
+		const CppAD::vector<double>&     py
+	)
+	{	size_t n_order = q + 1;
+		size_t nr = size_t( CppAD::Integer( tx[ 0 * n_order + 0 ] ) );
+		size_t ny = ( (nr + 1 ) * nr ) / 2;
+		size_t nx = 1 + ny;
+		//
+		assert( nx * n_order == tx.size() );
+		assert( ny * n_order == ty.size() );
+		assert( px.size()    == tx.size() );
+		assert( py.size()    == ty.size() );
+		// -------------------------------------------------------------------
+		// make sure f_arg_ is large enough
+		assert( f_arg_.size() == f_result_.size() );
+		// must have previous run forward with order >= n_order
+		assert( f_arg_.size() >= n_order );
+		// -------------------------------------------------------------------
+		// make sure r_arg_, r_result_ are large enough
+		assert( r_arg_.size() == r_result_.size() );
+		if( r_arg_.size() < n_order )
+		{	r_arg_.resize(n_order);
+			r_result_.resize(n_order);
+			//
+			for(size_t k = 0; k < n_order; k++)
+			{	r_arg_[k].resize(nr, nr);
+				r_result_[k].resize(nr, nr);
+			}
+		}
+		// -------------------------------------------------------------------
+		// unpack tx into f_arg_
+		for(size_t k = 0; k < n_order; k++)
+		{	size_t index = 1;
+			// unpack arg values for this order
+			for(size_t i = 0; i < nr; i++)
+			{	for(size_t j = 0; j <= i; j++)
+				{	f_arg_[k](i, j) = tx[ index * n_order + k ];
+					f_arg_[k](j, i) = f_arg_[k](i, j);
+					index++;
+				}
+			}
+		}
+		// -------------------------------------------------------------------
+		// unpack py into r_result_
+		for(size_t k = 0; k < n_order; k++)
+		{	r_result_[k] = matrix::Zero(nr, nr);
+			size_t index = 0;
+			for(size_t i = 0; i < nr; i++)
+			{	for(size_t j = 0; j <= i; j++)
+				{	r_result_[k](i, j) = py[ index * n_order + k ];
+					r_result_[k](j, i) = r_result_[k](i, j);
+					index++;
+				}
+			}
+		}
+		// -------------------------------------------------------------------
+		// initialize r_arg_ as zero
+		for(size_t k = 0; k < n_order; k++)
+			r_arg_[k]   = matrix::Zero(nr, nr);
+		// -------------------------------------------------------------------
+		// matrix reverse mode calculation
+		lower_view L_0 = f_result_[0].template triangularView<Eigen::Lower>();
+		//
+		for(size_t k1 = n_order; k1 > 1; k1--)
+		{	size_t k = k1 - 1;
+			// M_k = L_0^{-T} * low[ L_0^T * bar{L}_k ]^{T} L_0^{-1}
+			matrix M_k = L_0.transpose() * r_result_[k];
+			for(size_t i = 0; i < nr; i++)
+				M_k(i, i) /= scalar(2.0);
+			M_k = M_k.template triangularView<Eigen::Lower>();
+			M_k = L_0.template solve<Eigen::OnTheRight>( M_k );
+			M_k = L_0.transpose().template solve<Eigen::OnTheLeft>( M_k );
+			//
+			// remove L_k and compute bar{B}_k
+			matrix barB_k = scalar(0.5) * ( M_k + M_k.transpose() );
+			r_arg_[k]    += barB_k;
+			barB_k        = scalar(-1.0) * barB_k;
+			//
+			// 2.0 * lower( bar{B}_k L_k )
+			matrix temp = scalar(2.0) * barB_k * f_result_[k];
+			temp        = temp.template triangularView<Eigen::Lower>();
+			//
+			// remove C_k
+			r_result_[0] += temp;
+			//
+			// remove B_k
+			for(size_t ell = 1; ell < k; ell++)
+			{	// bar{L}_ell = 2 * lower( \bar{B}_k * L_{k-ell} )
+				temp = scalar(2.0) * barB_k * f_arg_[k-ell];
+				r_arg_[ell] += temp.template triangularView<Eigen::Lower>();
+
+			}
+		}
+		// M_0 = L_0^{-T} * low[ L_0^T * bar{L}_0 ]^{T} L_0^{-1}
+		matrix M_0 = L_0.transpose() * r_result_[0];
+		for(size_t i = 0; i < nr; i++)
+			M_0(i, i) /= scalar(2.0);
+		M_0 = M_0.template triangularView<Eigen::Lower>();
+		M_0 = L_0.template solve<Eigen::OnTheRight>( M_0 );
+		M_0 = L_0.transpose().template solve<Eigen::OnTheLeft>( M_0 );
+		// remove L_0
+		r_arg_[0] += scalar(0.5) * ( M_0 + M_0.transpose() );
+		// -------------------------------------------------------------------
+		// pack r_arg into px
+		// note that only the lower triangle of barA_k is stored in px
+		for(size_t k = 0; k < n_order; k++)
+		{	size_t index = 0;
+			px[ index * n_order + k ] = 0.0;
+			index++;
+			for(size_t i = 0; i < nr; i++)
+			{	for(size_t j = 0; j < i; j++)
+				{	px[ index * n_order + k ] = 2.0 * r_arg_[k](i, j);
+					index++;
+				}
+				px[ index * n_order + k] = r_arg_[k](i, i);
+				index++;
+			}
+		}
+		// -------------------------------------------------------------------
 		return true;
 	}
 /* %$$
