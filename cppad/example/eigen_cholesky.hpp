@@ -282,7 +282,6 @@ $srccode%cpp% */
 			for(size_t i = 0; i < nr; i++)
 			{	for(size_t j = 0; j <= i; j++)
 				{	r_result_[k](i, j) = py[ index * n_order + k ];
-					r_result_[k](j, i) = r_result_[k](i, j);
 					index++;
 				}
 			}
@@ -320,9 +319,8 @@ $srccode%cpp% */
 			// remove B_k
 			for(size_t ell = 1; ell < k; ell++)
 			{	// bar{L}_ell = 2 * lower( \bar{B}_k * L_{k-ell} )
-				temp = scalar(2.0) * barB_k * f_arg_[k-ell];
-				r_arg_[ell] += temp.template triangularView<Eigen::Lower>();
-
+				temp = scalar(2.0) * barB_k * f_result_[k-ell];
+				r_result_[ell] += temp.template triangularView<Eigen::Lower>();
 			}
 		}
 		// M_0 = L_0^{-T} * low[ L_0^T * bar{L}_0 ]^{T} L_0^{-1}

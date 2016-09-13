@@ -208,6 +208,29 @@ $srccode%cpp% */
 	scalar f2_x2_x2 = - 0.5 * f2_x2 / (f2 * f2 );
 	ok             &= NearEqual(d2w[2 * 2 + 1], f2_x2_x2, eps, eps);
 	// -------------------------------------------------------------------
+	// check third order reverse mode
+	CPPAD_TESTVECTOR(scalar) d3w(3 * n);
+	d3w  = f.Reverse(3, w);
+	//
+	// check first order results
+	ok &= NearEqual(d3w[0 * 3 + 0], f2_x0, eps, eps);
+	ok &= NearEqual(d3w[1 * 3 + 0], f2_x1, eps, eps);
+	ok &= NearEqual(d3w[2 * 3 + 0], f2_x2, eps, eps);
+	//
+	// check second order results
+	ok             &= NearEqual(d3w[0 * 3 + 1], f2_x2_x0, eps, eps);
+	ok             &= NearEqual(d3w[1 * 3 + 1], f2_x2_x1, eps, eps);
+	ok             &= NearEqual(d3w[2 * 3 + 1], f2_x2_x2, eps, eps);
+	// -------------------------------------------------------------------
+	scalar f2_x2_x2_x0 = - 0.5 * f2_x2_x0 / (f2 * f2);
+	f2_x2_x2_x0 += f2_x2 * f2_x0 / (f2 * f2 * f2);
+	ok          &= NearEqual(d3w[0 * 3 + 2], 0.5 * f2_x2_x2_x0, eps, eps);
+	scalar f2_x2_x2_x1 = - 0.5 * f2_x2_x1 / (f2 * f2);
+	f2_x2_x2_x1 += f2_x2 * f2_x1 / (f2 * f2 * f2);
+	ok          &= NearEqual(d3w[1 * 3 + 2], 0.5 * f2_x2_x2_x1, eps, eps);
+	scalar f2_x2_x2_x2 = - 0.5 * f2_x2_x2 / (f2 * f2);
+	f2_x2_x2_x2 += f2_x2 * f2_x2 / (f2 * f2 * f2);
+	ok          &= NearEqual(d3w[2 * 3 + 2], 0.5 * f2_x2_x2_x2, eps, eps);
 	return ok;
 }
 /* %$$
