@@ -41,6 +41,11 @@ in reverse order by date.
 The purpose of these sections is to
 assist you in learning about changes between various versions of CppAD.
 
+$head 09-13$$
+Test third order and fix
+bug in $cref atomic_eigen_cholesky.hpp$$ for orders greater
+than or equal to three.
+
 $head 08-30$$
 Add the $cref atomic_eigen_cholesky.cpp$$ example.
 
