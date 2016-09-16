@@ -18,10 +18,11 @@ Please visit http://www.coin-or.org/CppAD/ for information on other licenses.
 Preprecessor definitions that presist after cppad/cppad.hpp is included:
 
 # undef CPPAD_ASSERT_FIRST_CALL_NOT_PARALLEL used by CPPAD_USER_ATOMIC
-# undef CPPAD_ASSERT_KNOWN needed by cppad_ipopt
-# undef CPPAD_ASSERT_UNKNOWN needed by cppad_ipopt
-# undef CPPAD_HASH_TABLE_SIZE used by test_more/optimize.cpp
-# undef EIGEN_MATRIXBASE_PLUGIN example use of Eigen with CppAD
+# undef CPPAD_ASSERT_KNOWN                   used by cppad_ipopt
+# undef CPPAD_ASSERT_UNKNOWN                 used by cppad_ipopt
+# undef CPPAD_HASH_TABLE_SIZE                used by test_more/optimize.cpp
+# undef EIGEN_MATRIXBASE_PLUGIN              example use of Eigen with CppAD
+# undef CPPAD_HAS_COLPACK                    used by speed/cppad/sparse_*.cpp
 
 # undef CPPAD_BOOL_BINARY         in user api
 # undef CPPAD_BOOL_UNARY          in user api
@@ -71,7 +72,6 @@ Preprecessor definitions that presist after cppad/cppad.hpp is included:
 # undef CPPAD_FOLD_ASSIGNMENT_OPERATOR
 # undef CPPAD_FOLD_BOOL_VALUED_BINARY_OPERATOR
 # undef CPPAD_FOR_JAC_SWEEP_TRACE
-# undef CPPAD_HAS_COLPACK
 # undef CPPAD_HAS_GETTIMEOFDAY
 # undef CPPAD_HAS_MKSTEMP
 # undef CPPAD_HAS_TMPNAM_S
