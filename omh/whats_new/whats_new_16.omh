@@ -31,6 +31,7 @@ $spell
 	vy
 	inv
 	atanh
+	colpack
 $$
 
 $section Changes and Additions to CppAD During 2016$$
@@ -40,6 +41,13 @@ The sections listed below contain a list of the changes to CppAD
 in reverse order by date.
 The purpose of these sections is to
 assist you in learning about changes between various versions of CppAD.
+
+$head 09-16$$
+Fix a problem using the
+$cref/colpack/speed_main/Sparsity Options/colpack/$$ option to the
+$code speed_cppad$$ program.
+(There was a problem whereby the $code speed_cppad$$
+program did not properly detect when $code colpack$$ was available.)
 
 $head 09-13$$
 Test third order and fix
