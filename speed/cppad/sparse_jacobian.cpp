@@ -108,7 +108,7 @@ bool link_sparse_jacobian(
 {
 	if( global_option["atomic"] )
 		return false;
-# ifndef CPPAD_COLPACK_SPEED
+# if ! CPPAD_HAS_COLPACK
 	if( global_option["colpack"] )
 		return false;
 # endif
@@ -159,7 +159,7 @@ bool link_sparse_jacobian(
 
 		// structure that holds some of the work done by SparseJacobian
 		CppAD::sparse_jacobian_work work;
-# ifdef CPPAD_COLPACK_SPEED
+# if CPPAD_HAS_COLPACK
 		if( global_option["colpack"] )
 			work.color_method = "colpack";
 # endif
@@ -201,7 +201,7 @@ bool link_sparse_jacobian(
 
 		// structure that holds some of the work done by SparseJacobian
 		CppAD::sparse_jacobian_work work;
-# ifdef CPPAD_COLPACK_SPEED
+# if CPPAD_HAS_COLPACK
 		if( global_option["colpack"] )
 			work.color_method = "colpack";
 # endif

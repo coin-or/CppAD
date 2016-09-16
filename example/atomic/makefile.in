@@ -98,13 +98,14 @@ mkinstalldirs = $(install_sh) -d
 CONFIG_CLEAN_FILES =
 CONFIG_CLEAN_VPATH_FILES =
 am_atomic_OBJECTS = atomic.$(OBJEXT) checkpoint.$(OBJEXT) \
-	eigen_mat_inv.$(OBJEXT) eigen_mat_mul.$(OBJEXT) \
-	extended_ode.$(OBJEXT) for_sparse_hes.$(OBJEXT) \
-	for_sparse_jac.$(OBJEXT) forward.$(OBJEXT) \
-	get_started.$(OBJEXT) mat_mul.$(OBJEXT) mul_level.$(OBJEXT) \
-	norm_sq.$(OBJEXT) ode.$(OBJEXT) reciprocal.$(OBJEXT) \
-	rev_sparse_hes.$(OBJEXT) rev_sparse_jac.$(OBJEXT) \
-	reverse.$(OBJEXT) set_sparsity.$(OBJEXT) tangent.$(OBJEXT)
+	eigen_cholesky.$(OBJEXT) eigen_mat_inv.$(OBJEXT) \
+	eigen_mat_mul.$(OBJEXT) extended_ode.$(OBJEXT) \
+	for_sparse_hes.$(OBJEXT) for_sparse_jac.$(OBJEXT) \
+	forward.$(OBJEXT) get_started.$(OBJEXT) mat_mul.$(OBJEXT) \
+	mul_level.$(OBJEXT) norm_sq.$(OBJEXT) ode.$(OBJEXT) \
+	reciprocal.$(OBJEXT) rev_sparse_hes.$(OBJEXT) \
+	rev_sparse_jac.$(OBJEXT) reverse.$(OBJEXT) \
+	set_sparsity.$(OBJEXT) tangent.$(OBJEXT)
 atomic_OBJECTS = $(am_atomic_OBJECTS)
 atomic_LDADD = $(LDADD)
 AM_V_P = $(am__v_P_@AM_V@)
@@ -352,6 +353,7 @@ AM_CPPFLAGS = -I. \
 atomic_SOURCES = \
 	atomic.cpp \
 	checkpoint.cpp \
+	eigen_cholesky.cpp \
 	eigen_mat_inv.cpp \
 	eigen_mat_mul.cpp \
 	extended_ode.cpp \
@@ -419,6 +421,7 @@ distclean-compile:
 
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/atomic.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/checkpoint.Po@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/eigen_cholesky.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/eigen_mat_inv.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/eigen_mat_mul.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/extended_ode.Po@am__quote@

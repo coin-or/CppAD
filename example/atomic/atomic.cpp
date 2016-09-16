@@ -82,7 +82,7 @@ int main(void)
 	ok &= Run( reverse,             "reverse"        );
 	ok &= Run( set_sparsity,        "set_sparsity"   );
 	ok &= Run( tangent,             "tangent"        );
-# ifdef CPPAD_EIGEN_EXAMPLES
+# ifdef CPPAD_HAS_EIGEN
 	ok &= Run( eigen_cholesky,      "eigen_cholesky" );
 	ok &= Run( eigen_mat_inv,       "eigen_mat_inv"  );
 	ok &= Run( eigen_mat_mul,       "eigen_mat_mul"  );

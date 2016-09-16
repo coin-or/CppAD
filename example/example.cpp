@@ -351,7 +351,7 @@ int main(void)
 	ok &= Run( Var2Par,           "Var2Par"          );
 	ok &= Run( vec_ad,            "vec_ad"           );
 	ok &= Run( vectorBool,        "vectorBool"       );
-# ifdef CPPAD_ADOLC_EXAMPLES
+# ifdef CPPAD_HAS_ADOLC
 	ok &= Run( mul_level_adolc,      "mul_level_adolc"     );
 	ok &= Run( mul_level_adolc_ode,  "mul_level_adolc_ode" );
 # endif
@@ -359,7 +359,7 @@ int main(void)
 	ok &= Run( colpack_hes,       "colpack_hes"      );
 	ok &= Run( colpack_jac,       "colpack_jac"      );
 # endif
-# ifdef CPPAD_EIGEN_EXAMPLES
+# ifdef CPPAD_HAS_EIGEN
 	ok &= Run( eigen_array,       "eigen_array"      );
 	ok &= Run( eigen_det,         "eigen_det"        );
 # endif

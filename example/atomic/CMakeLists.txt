@@ -14,9 +14,9 @@
 # CMAKE_BUILD_TYPE determined by parent directory. Possible values are
 # empty, Debug, Release, RelWithDebInfo and MinSizeRel
 #
-# eigen_sources and CPPAD_EIGEN_EXAMPLES
+# eigen_sources and CPPAD_HAS_EIGEN
 SET(sources eigen_mat_inv.cpp eigen_cholesky.cpp eigen_mat_mul.cpp)
-sources_libs_define(eigen "${sources}" "" EIGEN_EXAMPLES)
+sources_libs_define(eigen "${sources}" "" HAS_EIGEN)
 #
 ADD_EXECUTABLE(example_atomic EXCLUDE_FROM_ALL
 	${eigen_sources}

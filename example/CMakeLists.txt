@@ -23,13 +23,13 @@ SET(check_depends example)
 ADD_SUBDIRECTORY(atomic)
 add_to_list(check_depends check_example_atomic)
 
-# adolc_sources, adolc_libs, and CPPAD_ADOLC_EXAMPLES
+# adolc_sources, adolc_libs, and CPPAD_HAS_ADOLC
 SET(sources mul_level_adolc.cpp mul_level_adolc_ode.cpp)
-sources_libs_define(adolc "${sources}" adolc ADOLC_EXAMPLES)
+sources_libs_define(adolc "${sources}" adolc HAS_ADOLC)
 
-# eigen_sources and CPPAD_EIGEN_EXAMPLES
+# eigen_sources and CPPAD_HAS_EIGEN
 SET(sources eigen_det.cpp eigen_array.cpp)
-sources_libs_define(eigen "${sources}" "" EIGEN_EXAMPLES)
+sources_libs_define(eigen "${sources}" "" HAS_EIGEN)
 
 # colpack_prefix
 SET(colpack_sources

@@ -466,7 +466,7 @@ top_srcdir = @top_srcdir@
 @CppAD_ADOLC_FALSE@ADOLC_LIB = 
 @CppAD_ADOLC_TRUE@ADOLC_LIB = -ladolc -lColPack -L$(ADOLC_DIR)/lib -L$(ADOLC_DIR)/lib64
 @CppAD_ADOLC_FALSE@ADOLC_FLAGS = 
-@CppAD_ADOLC_TRUE@ADOLC_FLAGS = -DCPPAD_ADOLC_EXAMPLES -I$(ADOLC_DIR)/include
+@CppAD_ADOLC_TRUE@ADOLC_FLAGS = -DCPPAD_HAS_ADOLC -I$(ADOLC_DIR)/include
 @CppAD_EIGEN_DIR_FALSE@@CppAD_HAVE_AR_TRUE@EIGEN_EXTRA_FILES = eigen_det.cpp eigen_array.cpp
 # -------------------------------------------------------------------------
 # make a special library so can have it's own compile flags (see configure.ac)
@@ -478,11 +478,11 @@ top_srcdir = @top_srcdir@
 @CppAD_EIGEN_DIR_TRUE@@CppAD_HAVE_AR_TRUE@EIGEN_LIB = -L. -leigen
 @CppAD_HAVE_AR_FALSE@EIGEN_LIB = 
 @CppAD_EIGEN_DIR_FALSE@@CppAD_HAVE_AR_TRUE@EIGEN_FLAGS = 
-@CppAD_EIGEN_DIR_TRUE@@CppAD_HAVE_AR_TRUE@EIGEN_FLAGS = -DCPPAD_EIGEN_EXAMPLES
+@CppAD_EIGEN_DIR_TRUE@@CppAD_HAVE_AR_TRUE@EIGEN_FLAGS = -DCPPAD_HAS_EIGEN
 @CppAD_HAVE_AR_FALSE@EIGEN_FLAGS = 
 @CppAD_EIGEN_DIR_TRUE@@CppAD_HAVE_AR_TRUE@libeigen_a_CXXFLAGS = \
 @CppAD_EIGEN_DIR_TRUE@@CppAD_HAVE_AR_TRUE@	-g $(CXX_FLAGS_EIGEN) \
-@CppAD_EIGEN_DIR_TRUE@@CppAD_HAVE_AR_TRUE@	-DCPPAD_EIGEN_EXAMPLES \
+@CppAD_EIGEN_DIR_TRUE@@CppAD_HAVE_AR_TRUE@	-DCPPAD_HAS_EIGEN \
 @CppAD_EIGEN_DIR_TRUE@@CppAD_HAVE_AR_TRUE@	-I$(EIGEN_DIR)/include
 
 # -------------------------------------------------------------------------

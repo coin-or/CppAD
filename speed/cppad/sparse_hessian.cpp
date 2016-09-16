@@ -117,7 +117,7 @@ bool link_sparse_hessian(
 {
 	if( global_option["atomic"] )
 		return false;
-# ifndef CPPAD_COLPACK_SPEED
+# if ! CPPAD_HAS_COLPACK
 	if( global_option["colpack"] )
 		return false;
 # endif
@@ -174,7 +174,7 @@ bool link_sparse_hessian(
 
 		// structure that holds some of work done by SparseHessian
 		CppAD::sparse_hessian_work work;
-# ifdef CPPAD_COLPACK_SPEED
+# if CPPAD_HAS_COLPACK
 		if( global_option["colpack"] )
 			work.color_method = "colpack.star";
 # endif
@@ -215,7 +215,7 @@ bool link_sparse_hessian(
 
 		// declare structure that holds some of work done by SparseHessian
 		CppAD::sparse_hessian_work work;
-# ifdef CPPAD_COLPACK_SPEED
+# if CPPAD_HAS_COLPACK
 		if( global_option["colpack"] )
 			work.color_method = "colpack.star";
 # endif
