@@ -32,6 +32,9 @@ $spell
 	inv
 	atanh
 	colpack
+	Wmisleading
+	gcc
+	sacado
 $$
 
 $section Changes and Additions to CppAD During 2016$$
@@ -41,6 +44,23 @@ The sections listed below contain a list of the changes to CppAD
 in reverse order by date.
 The purpose of these sections is to
 assist you in learning about changes between various versions of CppAD.
+
+$head 09-26$$
+$list number$$
+A possible bug in the $cref optimize$$ command was fixed.
+To be specific, a warning of the form
+indentations;
+$codei%
+	warning: this 'if' clause does not guard... [-Wmisleading-indentation]
+%$$
+using the gcc-6.2.1 compiler, was fixed and it may have fixed a bug.
+$lnext
+There was a problem with the
+$cref/sacado/speed_sacado/$$ where the symbol
+$code HAS_C99_TR1_CMATH$$ was being defined twice.
+This has been fixed by leaving it up to the sacado install to determine
+if this symbol should be defined.
+$lend
 
 $head 09-16$$
 Fix a problem using the

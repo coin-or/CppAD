@@ -1986,9 +1986,10 @@ void optimize_run(
 				{	if(user_s_set.size() != user_n )
 						user_s_set.resize(user_n);
 					if(user_r_set.size() != user_m )
-						user_r_set.resize(user_m);
+					{	user_r_set.resize(user_m);
 						for(i = 0; i < user_m; i++)
 							user_r_set[i].clear();
+					}
 				}
 				//
 				user_j     = user_n;

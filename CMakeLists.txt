@@ -17,7 +17,7 @@
 CMAKE_MINIMUM_REQUIRED(VERSION 2.8)
 
 # cppad_version is used by set_version.sh to get the version number.
-SET(cppad_version      "20160916" )
+SET(cppad_version      "20160926" )
 SET(cppad_url          "http://www.coin-or.org/CppAD" )
 SET(cppad_description  "Differentiation of C++ Algorithms" )
 
@@ -161,16 +161,6 @@ ENDIF( colpack_prefix )
 # =============================================================================
 # automated system configuration
 # =============================================================================
-# cppad_cxx_flags_sacado
-IF( ${cppad_cxx_flags} MATCHES ".*-std=c[+][+]11.*" )
-	SET(cppad_cxx_flags_sacado "${cppad_cxx_flags} -D HAS_C99_TR1_CMATH" )
-ELSE( ${cppad_cxx_flags} MATCHES ".*-std=c[+][+]11.*" )
-	SET(cppad_cxx_flags_sacado ${cppad_cxx_flags} )
-ENDIF( ${cppad_cxx_flags} MATCHES ".*-std=c[+][+]11.*" )
-IF( sacado_prefix )
-	MESSAGE(STATUS "cppad_cxx_flags_sacado = ${cppad_cxx_flags_sacado}")
-ENDIF( sacado_prefix )
-# -----------------------------------------------------------------------------
 # CMAKE_CXX_FLAGS
 # remove Visual Studio C++ warning level if specified in cppad_cxx_flags
 IF ( cppad_cxx_flags MATCHES "/W[0-9]" )

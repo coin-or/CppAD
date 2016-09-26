@@ -12,10 +12,7 @@
 # add_cppad_cxx_flags(target_name)
 #
 # target_name: (in)
-# If target_name ends in _sacado,
-# the compiler flags for this target are set to
-#	cppad_cxx_flags_sacado
-# Otherwise, the compiler flags for this target are set to
+# The compiler flags for this target are set to
 #	cppad_cxx_flags.
 #
 # Side Effects:
@@ -25,12 +22,6 @@
 MACRO(add_cppad_cxx_flags target_name)
 	#
 	SET(flags ${cppad_cxx_flags})
-	IF( ${target_name} MATCHES ".*_sacado$" )
-		SET(flags "${cppad_cxx_flags_sacado}")
-		MESSAGE(STATUS
-			"${target_name} cxx_flags = ${cppad_cxx_flags_sacado}"
-		)
-	ENDIF( ${target_name} MATCHES ".*_sacado$" )
 	IF( flags )
 		SET_TARGET_PROPERTIES(
 			${target_name} PROPERTIES COMPILE_FLAGS "${flags}"
