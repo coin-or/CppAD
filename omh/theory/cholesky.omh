@@ -204,7 +204,7 @@ We use the same assumptions as in Lemma 1 except that the
 matrix $latex S$$ is lower triangular (instead of symmetric).
 It follows that
 $latex \[
-	\hat{S} = \bar{S} + M
+	\hat{S} = \bar{S} + \R{lower}(M)
 \] $$
 where
 $latex \[
