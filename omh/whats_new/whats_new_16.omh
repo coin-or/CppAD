@@ -45,6 +45,11 @@ in reverse order by date.
 The purpose of these sections is to
 assist you in learning about changes between various versions of CppAD.
 
+$head 09-27$$
+Change the implementation of $cref atomic_eigen_cholesky.hpp$$ so that
+the computation of $latex M_k$$ exactly agrees with the corresponding
+$cref/theory/cholesky_theory/$$.
+
 $head 09-26$$
 $list number$$
 A possible bug in the $cref optimize$$ command was fixed.

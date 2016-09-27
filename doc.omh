@@ -91,7 +91,7 @@ $$
 
 $comment bin/version assumes that : follows cppad version number here$$
 $section
-cppad-20160926: A Package for Differentiation of C++ Algorithms
+cppad-20160927: A Package for Differentiation of C++ Algorithms
 $$
 $mindex AD algorithmic differentiation automatic C++ algorithm derivative CppAD version cppad.hpp$$
 

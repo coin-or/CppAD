@@ -296,13 +296,21 @@ $srccode%cpp% */
 		//
 		for(size_t k1 = n_order; k1 > 1; k1--)
 		{	size_t k = k1 - 1;
-			// M_k = L_0^{-T} * low[ L_0^T * bar{L}_k ]^{T} L_0^{-1}
-			matrix M_k = L_0.transpose() * r_result_[k];
+			//
+			// L_0^T * bar{L}_k
+			matrix tmp1 = L_0.transpose() * r_result_[k];
+			//
+			//low[ L_0^T * bar{L}_k ]
 			for(size_t i = 0; i < nr; i++)
-				M_k(i, i) /= scalar(2.0);
-			M_k = M_k.template triangularView<Eigen::Lower>();
-			M_k = L_0.template solve<Eigen::OnTheRight>( M_k );
-			M_k = L_0.transpose().template solve<Eigen::OnTheLeft>( M_k );
+				tmp1(i, i) /= scalar(2.0);
+			matrix tmp2 = tmp1.template triangularView<Eigen::Lower>();
+			//
+			// L_0^{-T} low[ L_0^T * bar{L}_k ]
+			tmp1 = L_0.transpose().template solve<Eigen::OnTheLeft>( tmp2 );
+			//
+			// M_k = L_0^{-T} * low[ L_0^T * bar{L}_k ]^{T} L_0^{-1}
+			matrix M_k = L_0.transpose().template
+				solve<Eigen::OnTheLeft>( tmp1.transpose() );
 			//
 			// remove L_k and compute bar{B}_k
 			matrix barB_k = scalar(0.5) * ( M_k + M_k.transpose() );
