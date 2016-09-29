@@ -45,6 +45,13 @@ in reverse order by date.
 The purpose of these sections is to
 assist you in learning about changes between various versions of CppAD.
 
+$head 09-29$$
+The multiple directions version of
+$cref/forward/forward_dir/$$ was missing $cref erf$$ function
+in the case where C++ 2011 was supported; see
+$href%https://github.com/coin-or/CppAD/issues/16%issue 16%$$.
+This has been fixed.
+
 $head 09-27$$
 Change the implementation of $cref atomic_eigen_cholesky.hpp$$ so that
 the computation of $latex M_k$$ exactly agrees with the corresponding

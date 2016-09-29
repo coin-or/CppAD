@@ -98,7 +98,6 @@ number of directions for Taylor coefficients that we are computing.
 \param i_z
 variable index corresponding to the last (primary) result for this operation;
 i.e. the row index in \a taylor corresponding to z.
-The auxillary result is called y has index \a i_z - 1.
 
 \param i_x
 variable index corresponding to the argument for this operator;

@@ -498,7 +498,6 @@ void forward1sweep(
 # if CPPAD_USE_CPLUSPLUS_2011
 			case ErfOp:
 			CPPAD_ASSERT_UNKNOWN( CPPAD_USE_CPLUSPLUS_2011 );
-			// 2DO: implement zero order version of this function
 			forward_erf_op(p, q, i_var, arg, parameter, J, taylor);
 			break;
 # endif

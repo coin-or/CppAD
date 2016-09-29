@@ -57,10 +57,11 @@ bool Erf(void)
 	CppAD::ADFun<double> f(ax, ay);
 
 	// check relative erorr
-	double erf_x0 = 0.52050;
+	double erf_x0 = 0.5204998778130465;
 	ok &= NearEqual(ay[0] , erf_x0,  0.,    4e-4);
 # if CPPAD_USE_CPLUSPLUS_2011
-	ok &= NearEqual(ay[0] , erf_x0,  0.,    1e-5);
+	double tmp = std::max(1e-15, eps);
+	ok &= NearEqual(ay[0] , erf_x0,  0.,    tmp);
 # endif
 
 	// value of derivative of erf at x0

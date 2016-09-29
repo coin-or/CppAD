@@ -1,6 +1,6 @@
 // $Id$
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-15 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-16 Bradley M. Bell
 
 CppAD is distributed under multiple licenses. This distribution is under
 the terms of the
@@ -13,15 +13,16 @@ Please visit http://www.coin-or.org/CppAD/ for information on other licenses.
 # include <cppad/cppad.hpp>
 
 namespace {
+	// ---------------------------------------------------------------------
 	bool old_example(void)
 	{	bool ok = true;
 		using namespace CppAD;
 		using CppAD::atan;
 		using CppAD::exp;
 		using CppAD::sqrt;
-	# if CPPAD_USE_CPLUSPLUS_2011
+# if CPPAD_USE_CPLUSPLUS_2011
 		double eps = 100.0 * std::numeric_limits<double>::epsilon();
-	# endif
+# endif
 		// Construct function object corresponding to erf
 		CPPAD_TESTVECTOR(AD<double>) ax(1);
 		CPPAD_TESTVECTOR(AD<double>) ay(1);
@@ -50,9 +51,9 @@ namespace {
 		y1    = f.Forward(1, x1);
 		check = df.Forward(0, x0);
 		ok   &= NearEqual(check[0], y1[0], 0., 2e-3);
-	# if CPPAD_USE_CPLUSPLUS_2011
+# if CPPAD_USE_CPLUSPLUS_2011
 		ok   &= NearEqual(check[0], y1[0], eps, eps);
-	# endif
+# endif
 
 		// check second derivative
 		CPPAD_TESTVECTOR(double) x2(1), y2(1);
@@ -60,9 +61,9 @@ namespace {
 		y2    = f.Forward(2, x2);
 		check = df.Forward(1, x1);
 		ok   &= NearEqual(check[0] / 2.0, y2[0], 0., 2e-3);
-	# if CPPAD_USE_CPLUSPLUS_2011
+# if CPPAD_USE_CPLUSPLUS_2011
 		ok   &= NearEqual(check[0] / 2.0, y2[0], eps, eps);
-	# endif
+# endif
 
 		// check third derivative
 		CPPAD_TESTVECTOR(double) x3(1), y3(1);
@@ -70,9 +71,9 @@ namespace {
 		y3    = f.Forward(3, x3);
 		check = df.Forward(2, x2);
 		ok   &= NearEqual(check[0] / 3.0, y3[0], 0., 2e-3);
-	# if CPPAD_USE_CPLUSPLUS_2011
+# if CPPAD_USE_CPLUSPLUS_2011
 		ok   &= NearEqual(check[0] / 3.0, y3[0], eps, eps);
-	# endif
+# endif
 
 		// check 4-th order of reverse mode
 		CPPAD_TESTVECTOR(double) w(1), dy(4), x4(1), y4(1);
@@ -82,28 +83,29 @@ namespace {
 		y4    = f.Forward(4, x4);
 		//
 		ok  &= NearEqual(dy[0], y1[0], 0., 2e-3);
-	# if CPPAD_USE_CPLUSPLUS_2011
+# if CPPAD_USE_CPLUSPLUS_2011
 		ok  &= NearEqual(dy[0], y1[0], eps, eps);
-	# endif
+# endif
 		//
 		ok  &= NearEqual(dy[1], 2.0 * y2[0], 0., 2e-3);
-	# if CPPAD_USE_CPLUSPLUS_2011
+# if CPPAD_USE_CPLUSPLUS_2011
 		ok  &= NearEqual(dy[1], 2.0 * y2[0], eps, eps);
-	# endif
+# endif
 		//
 		ok  &= NearEqual(dy[2], 3.0 * y3[0], 0., 2e-3);
-	# if CPPAD_USE_CPLUSPLUS_2011
+# if CPPAD_USE_CPLUSPLUS_2011
 		ok  &= NearEqual(dy[2], 3.0 * y3[0], eps, eps);
-	# endif
+# endif
 		//
 		ok  &= NearEqual(dy[3], 4.0 * y4[0], 0., 2e-3);
-	# if CPPAD_USE_CPLUSPLUS_2011
+# if CPPAD_USE_CPLUSPLUS_2011
 		ok  &= NearEqual(dy[3], 4.0 * y4[0], eps, eps);
-	# endif
+# endif
 
 		return ok;
 	}
 # if CPPAD_USE_CPLUSPLUS_2011
+	// ---------------------------------------------------------------------
 	bool hessian(void)
 	{	bool ok = true;
 		double eps = 1.0 * std::numeric_limits<double>::epsilon();
@@ -146,6 +148,86 @@ namespace {
 		}
 		return ok;
 	}
+	// ---------------------------------------------------------------------
+	bool mul_dir(void)
+	{	bool ok = true;
+		using namespace CppAD;
+		using CppAD::atan;
+		using CppAD::exp;
+		using CppAD::sqrt;
+		double eps = 100.0 * std::numeric_limits<double>::epsilon();
+
+		// Construct function object corresponding to erf
+		CPPAD_TESTVECTOR(AD<double>) ax(1);
+		CPPAD_TESTVECTOR(AD<double>) ay(1);
+		ax[0] = 0.;
+		Independent(ax);
+		ay[0] = erf(ax[0]);
+		ADFun<double> f(ax, ay);
+
+		// Construct function object corresponding to derivative of erf
+		Independent(ax);
+		double pi = 4.0 * atan(1.0);
+		ay[0] = exp( - ax[0] * ax[0] ) * 2.0 / sqrt(pi);
+		ADFun<double> df(ax, ay);
+
+		// number of directions
+		size_t r = 1;
+
+		// vectors to use with objects
+		CPPAD_TESTVECTOR(double) x0(1), y0(1), x1(1), y1(1), y2(1), y3(1);
+		CPPAD_TESTVECTOR(double) zero(1), check(1);
+		CPPAD_TESTVECTOR(double) xq(r), yq(r), checkq(r), zeroq(r);
+
+		// check function value
+		x0[0]      = 1.5;
+		y0         = f.Forward(0, x0);
+		check[0]   = 0.9661051464753108;
+		double tmp = std::max(1e-15, eps);
+		ok        &= NearEqual(check[0], y0[0], 0.0, tmp);
+
+		// check first order derivative
+		x1[0] = 1.0;
+		y1    = f.Forward(1, x1);
+		check = df.Forward(0, x0);
+		ok   &= NearEqual(check[0], y1[0], eps, eps);
+		for(size_t ell = 0.0; ell < r; ell++)
+		{	xq[ell]     = x1[ell] / (ell + 1.0);
+			zeroq[ell]  = 0.0;
+		}
+		yq    = f.Forward(1, r, xq);
+		for(size_t ell = 0.0; ell < r; ell++)
+		{	checkq[ell] = check[0] * xq[ell];
+			ok         &= NearEqual(checkq[ell], yq[ell], eps, eps);
+		}
+
+		// check second order derivative
+		zero[0]   = 0.0;
+		y2        = f.Forward(2, zero);
+		check     = df.Forward(1, x1);
+		check[0] /= 2.0;
+		ok       &= NearEqual(check[0], y2[0], eps, eps);
+		yq        = f.Forward(2, r, zeroq);
+		for(size_t ell = 0.0; ell < r; ell++)
+		{	checkq[ell] = check[0] * xq[ell];
+			ok         &= NearEqual(checkq[ell], yq[ell], eps, eps);
+		}
+
+		// check third order derivative
+		zero[0]   = 0.0;
+		y3        = f.Forward(3, zero);
+		check     = df.Forward(2, zero);
+		check[0] /= 3.0;
+		ok       &= NearEqual(check[0], y3[0], eps, eps);
+		yq        = f.Forward(3, r, zeroq);
+		for(size_t ell = 0.0; ell < r; ell++)
+		{	checkq[ell] = check[0] * xq[ell];
+			ok         &= NearEqual(checkq[ell], yq[ell], eps, eps);
+		}
+
+		return ok;
+	}
+	// -------------------------------------------------------------------
 # endif
 }
 bool erf(void)
@@ -153,6 +235,7 @@ bool erf(void)
 	ok     &= old_example();
 # if CPPAD_USE_CPLUSPLUS_2011
 	ok     &= hessian();
+	ok     &= mul_dir();
 # endif
 	return ok;
 }

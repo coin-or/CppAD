@@ -378,6 +378,11 @@ void forward2sweep(
 			break;
 			// -------------------------------------------------
 
+			case ErfOp:
+			forward_erf_op_dir(q, r, i_var, arg, parameter, J, taylor);
+			break;
+			// -------------------------------------------------
+
 			case ExpOp:
 			forward_exp_op_dir(q, r, i_var, arg[0], J, taylor);
 			break;
