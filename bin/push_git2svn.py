@@ -119,7 +119,7 @@ if os.path.isdir(svn_directory) :
 	choice_list = [ 'use' , 'new' ]
 	choice      = pause(question, choice_list)
 	if choice == 'new' :
-		cmd         = 'rm -r ' + svn_directory
+		cmd         = 'rm -rf ' + svn_directory
 		print_system(cmd)
 else :
 	choice      = 'new'
@@ -166,7 +166,7 @@ else :
 # export the git verison of the directory
 git_directory = work_directory + '/git'
 if os.path.isdir(git_directory) :
-	cmd = 'rm -r ' + git_directory
+	cmd = 'rm -rf ' + git_directory
 	print_system(cmd)
 cmd  = 'svn export '
 cmd +=  git_repository + '/' + git_branch_path + ' ' + git_directory

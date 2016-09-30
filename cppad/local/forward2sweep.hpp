@@ -378,10 +378,12 @@ void forward2sweep(
 			break;
 			// -------------------------------------------------
 
+# if CPPAD_USE_CPLUSPLUS_2011
 			case ErfOp:
 			forward_erf_op_dir(q, r, i_var, arg, parameter, J, taylor);
 			break;
 			// -------------------------------------------------
+# endif
 
 			case ExpOp:
 			forward_exp_op_dir(q, r, i_var, arg[0], J, taylor);

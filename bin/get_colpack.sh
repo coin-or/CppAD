@@ -1,7 +1,7 @@
 #! /bin/bash -e
 # $Id$
 # -----------------------------------------------------------------------------
-# CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-15 Bradley M. Bell
+# CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-16 Bradley M. Bell
 #
 # CppAD is distributed under multiple licenses. This distribution is under
 # the terms of the
@@ -61,8 +61,8 @@ echo_eval() {
 }
 # -----------------------------------------------------------------------------
 echo 'Download colpack to build/external and install it to build/prefix'
-version='1.0.9'
-web_page='http://cscapes.cs.purdue.edu/download/ColPack'
+version='1.0.10'
+web_page='https://codeload.github.com/CSCsw/ColPack/tar.gz'
 cppad_dir=`pwd`
 prefix="$cppad_dir/build/prefix"
 installed_flag="build/external/colpack-${version}.installed"
@@ -87,7 +87,7 @@ echo_eval cd build/external
 # -----------------------------------------------------------------------------
 if [ ! -e "ColPack-$version.tar.gz" ]
 then
-	echo_eval wget --no-check-certificate $web_page/ColPack-$version.tar.gz
+	echo_eval curl $web_page/v$version -o ColPack-$version.tar.gz
 fi
 # -----------------------------------------------------------------------------
 if [ ! -e ColPack-$version ]
@@ -98,7 +98,6 @@ echo_eval cd ColPack-$version
 # -----------------------------------------------------------------------------
 if which autoconf >& /dev/null
 then
-	echo_eval rm aclocal.m4 ltmain.sh
 	echo_eval libtoolize
 	echo_eval autoreconf --install --force
 fi

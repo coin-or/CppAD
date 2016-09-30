@@ -485,13 +485,14 @@ AC_SUBST(cppad_has_colpack, 0)
 
 dnl auto-tools version will assumes mkstemp is available.
 AC_SUBST(cppad_has_mkstemp, 1)
+AC_SUBST(cppad_has_tmpnam_s, 0)
 
 dnl auto-tools version cannot use c++11 compiler
 dnl so supress corresponding features
 AC_SUBST(cppad_has_nullptr, 0)
 AC_SUBST(cppad_has_rvalue, 0)
 AC_SUBST(cppad_has_cstdint_8_to_64, 0)
-AC_SUBST(cppad_use_cplusplus_2011, 0)
+AC_SUBST(cppad_cplusplus_201100_ok, 0)
 AC_SUBST(cppad_has_high_resolution_clock, 0)
 
 dnl Determine if size_t has same size as unsigned int

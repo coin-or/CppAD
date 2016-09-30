@@ -669,10 +669,11 @@ EGREP
 GREP
 CPP
 cppad_has_high_resolution_clock
-cppad_use_cplusplus_2011
+cppad_cplusplus_201100_ok
 cppad_has_cstdint_8_to_64
 cppad_has_rvalue
 cppad_has_nullptr
+cppad_has_tmpnam_s
 cppad_has_mkstemp
 cppad_has_colpack
 cppad_cxx_flags
@@ -6203,6 +6204,8 @@ cppad_has_colpack=0
 
 cppad_has_mkstemp=1
 
+cppad_has_tmpnam_s=0
+
 
 cppad_has_nullptr=0
 
@@ -6210,7 +6213,7 @@ cppad_has_rvalue=0
 
 cppad_has_cstdint_8_to_64=0
 
-cppad_use_cplusplus_2011=0
+cppad_cplusplus_201100_ok=0
 
 cppad_has_high_resolution_clock=0
 
