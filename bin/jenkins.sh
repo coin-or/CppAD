@@ -29,18 +29,29 @@ echo_eval() {
 	echo $*
 	eval $*
 }
-# bash function that logs stdout, stderr, and executes a command
+# Bash function that logs stdout, stderr, and executes a command.
+# In the special case where this is an echo command,
+# it just redirects the output to the log file.
 log_eval() {
-	echo "------------------------------------------------" >> ../jenkins.log
-	echo "------------------------------------------------" >> ../jenkins.err
-	echo $*  >> $trunk_dir/jenkins.log
-	echo $*  >> $trunk_dir/jenkins.err
-	echo $* "1>> $trunk_dir/jenkins.log 2>> $trunk_dir/jenkins.err"
-	if ! eval $*  1>> $trunk_dir/jenkins.log 2>> $trunk_dir/jenkins.err
+	if [ "$1" == 'echo' ]
 	then
-		echo_eval cat $trunk_dir/jenkins.log
-		echo_eval cat $trunk_dir/jenkins.err
-		exit 1
+		shift
+		if ! echo $* >> $trunk_dir/jenkins.log
+		then
+			echo_eval cat $trunk_dir/jenkins.log
+			echo_eval cat $trunk_dir/jenkins.err
+			exit 1
+		fi
+	else
+		echo $*  >> $trunk_dir/jenkins.log
+		echo $*  >> $trunk_dir/jenkins.err
+		echo $* "1>> $trunk_dir/jenkins.log 2>> $trunk_dir/jenkins.err"
+		if ! eval $*  1>> $trunk_dir/jenkins.log 2>> $trunk_dir/jenkins.err
+		then
+			echo_eval cat $trunk_dir/jenkins.log
+			echo_eval cat $trunk_dir/jenkins.err
+			exit 1
+		fi
 	fi
 }
 for ext in log err
@@ -144,6 +155,8 @@ fi
 log_eval make check
 #
 # run the tests
+log_eval echo "LD_LIBRARY_PATH=$LD_LIBRARY_PATH"
+log_eval ls -l "$trunk_dir/build/prefix/$libdir"
 log_eval make test
 #
 # print the test results on the console
