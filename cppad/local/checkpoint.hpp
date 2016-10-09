@@ -521,13 +521,16 @@ private:
 		// hes_sparse_set_ can be used every time this is needed.
 		for(size_t i = 0; i < n; i++)
 		{	for(size_t k = 0; k < q; k++)
-				v[i * q + k] = false;
-			for(size_t j = 0; j < n; j++)
-			{	if( hes_sparse_bool_[i * n + j] )
-				{	for(size_t k = 0; k < q; k++)
-						// v[i * q + k] |= r[ j * q + k ];
-						v[i * q + k] = bool(v[i*q + k]) | bool(r[j*q + k]);
+			{	// initialize sparsity pattern for H(i,k)
+				bool h_ik = false;
+				// H(i,k) = sum_j f''(i,j) * R(j,k)
+				for(size_t j = 0; j < n; j++)
+				{	bool f_ij = hes_sparse_bool_[i * n + j];
+					bool r_jk = r[j * q + k];
+					h_ik     |= ( f_ij & r_jk );
 				}
+				// sparsity for H(i,k)
+				v[i * q + k] = h_ik;
 			}
 		}
 
