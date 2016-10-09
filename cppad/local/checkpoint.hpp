@@ -406,13 +406,16 @@ private:
 		}
 		// sparsity for  s = jac_sparse_bool_ * r
 		for(size_t i = 0; i < m; i++)
-		{	// compute row i of the return pattern
-			for(size_t j = 0; j < n; j++)
-			{	if( jac_sparse_bool_[ i * n + j] )
-				{	for(size_t k = 0; k < q; k++)
-						// s[i * q + k] |= r[j * q + k ];
-						s[i * q + k] = bool(s[i * q + k]) | bool(r[j * q + k]);
+		{	for(size_t k = 0; k < q; k++)
+			{	// initialize sparsity for S(i,k)
+				bool s_ik = false;
+				// S(i,k) = sum_j J(i,j) * R(j,k)
+				for(size_t j = 0; j < n; j++)
+				{	bool J_ij = jac_sparse_bool_[ i * n + j];
+					bool R_jk = r[j * q + k ];
+					s_ik |= ( J_ij & R_jk );
 				}
+				s[i * q + k] = s_ik;
 			}
 		}
 		return ok;
