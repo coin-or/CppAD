@@ -442,24 +442,20 @@ private:
 		CPPAD_ASSERT_UNKNOWN( st.size() == n * q );
 		bool ok  = true;
 		//
-		for(size_t j = 0; j < n; j++)
-		{	for(size_t k = 0; k < q; k++)
-				st[j * q + k] = false;
-		}
-		//
-		// sparsity for  s = r * jac_sparse_bool_
-		// s^T = jac_sparse_bool_^T * r^T
-		for(size_t i = 0; i < m; i++)
-		{	// i is the row index in r^T
-			for(size_t k = 0; k < q; k++)
-			{	// k is column index in r^T
-				if( rt[i * q + k] )
-				{	// i is column index in jac_sparse_bool_^T
-					for(size_t j = 0; j < n; j++)
-					{	if( jac_sparse_bool_[i * n + j] )
-							st[j * q + k ] = true;
-					}
+		// S = R * J where J is jacobian
+		for(size_t i = 0; i < q; i++)
+		{	for(size_t j = 0; j < n; j++)
+			{	// initialize sparsity for S(i,j)
+				bool s_ij = false;
+				// S(i,j) = sum_k R(i,k) * J(k,j)
+				for(size_t k = 0; k < m; k++)
+				{	// sparsity for R(i, k)
+					bool R_ik = rt[ k * q + i ];
+					bool J_kj = jac_sparse_bool_[ k * n + j ];
+					s_ij     |= (R_ik & J_kj);
 				}
+				// set sparsity for S^T
+				st[ j * q + i ] = s_ij;
 			}
 		}
 		return ok;
