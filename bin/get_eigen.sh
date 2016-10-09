@@ -1,7 +1,7 @@
 #! /bin/bash -e
 # $Id$
 # -----------------------------------------------------------------------------
-# CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-15 Bradley M. Bell
+# CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-16 Bradley M. Bell
 #
 # CppAD is distributed under multiple licenses. This distribution is under
 # the terms of the
@@ -63,7 +63,7 @@ echo_eval() {
 }
 # -----------------------------------------------------------------------------
 echo 'Download eigen to build/external and install it to build/prefix'
-version='3.2.0'
+version='3.2.9'
 web_page='https://bitbucket.org/eigen/eigen/get'
 cppad_dir=`pwd`
 prefix="$cppad_dir/build/prefix"
