@@ -1,7 +1,7 @@
 #! /bin/bash -e
 # $Id$
 # -----------------------------------------------------------------------------
-# CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-15 Bradley M. Bell
+# CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-16 Bradley M. Bell
 #
 # CppAD is distributed under multiple licenses. This distribution is under
 # the terms of the
@@ -121,7 +121,8 @@ export PKG_CONFIG_PATH="$prefix/$libdir/pkgconfig"
 echo_eval ./configure \
 	--enable-debug \
 	--prefix="$prefix" \
-	--libdir="$prefix/$libdir"
+	--libdir="$prefix/$libdir" \
+	coin_skip_warn_cxxflags='yes'
 echo_eval make install
 # -----------------------------------------------------------------------------
 echo_eval touch $cppad_dir/$installed_flag
