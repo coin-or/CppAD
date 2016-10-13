@@ -37,7 +37,7 @@ This routine is accurate to within .02 seconds
 (see $cref elapsed_seconds.cpp$$).
 It does not necessary work for time intervals that are greater than a day.
 $list number$$
-If the C++11 $code std::chrono::high_resolution_clock$$ is available,
+If the C++11 $code std::chrono::steady_clock$$ is available,
 it will be used for timing.
 $lnext
 Otherwise, if running under the Microsoft compiler,
@@ -118,14 +118,14 @@ inline double elapsed_seconds(void)
 # if CPPAD_USE_CPLUSPLUS_2011
 {	CPPAD_ASSERT_FIRST_CALL_NOT_PARALLEL;
 	static bool first_ = true;
-	static std::chrono::time_point<std::chrono::high_resolution_clock> start_;
+	static std::chrono::time_point<std::chrono::steady_clock> start_;
 	if( first_ )
-	{	start_ = std::chrono::high_resolution_clock::now();
+	{	start_ = std::chrono::steady_clock::now();
 		first_ = false;
 		return 0.0;
 	}
-	std::chrono::time_point<std::chrono::high_resolution_clock> now;
-    now   = std::chrono::high_resolution_clock::now();
+	std::chrono::time_point<std::chrono::steady_clock> now;
+    now   = std::chrono::steady_clock::now();
     std::chrono::duration<double> difference = now - start_;
 	return difference.count();
 }

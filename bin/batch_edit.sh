@@ -17,10 +17,7 @@ move_list='
 move_sed='s|mat_div|mat_inv|'
 #
 cat << EOF > junk.sed
-s|# ifdef CPPAD_COLPACK_SPEED|# if CPPAD_HAS_COLPACK|
-s|# ifndef CPPAD_COLPACK_SPEED|# if ! CPPAD_HAS_COLPACK|
-s|ADOLC_EXAMPLES|HAS_ADOLC|
-s|EIGEN_EXAMPLES|HAS_EIGEN|
+s|high_resolution_clock|steady_clock|
 EOF
 # -----------------------------------------------------------------------------
 if [ $0 != "bin/batch_edit.sh" ]

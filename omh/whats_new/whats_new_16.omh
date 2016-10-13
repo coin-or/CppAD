@@ -35,6 +35,7 @@ $spell
 	Wmisleading
 	gcc
 	sacado
+	chrono
 $$
 
 $section Changes and Additions to CppAD During 2016$$
@@ -44,6 +45,19 @@ The sections listed below contain a list of the changes to CppAD
 in reverse order by date.
 The purpose of these sections is to
 assist you in learning about changes between various versions of CppAD.
+
+$head 10-12$$
+$list number$$
+Change $cref elapsed_seconds$$ to use
+$code std::chrono::steady_clock$$ instead of
+$code std::chrono::high_resolution_clock$$.
+$lnext
+The test for C++11 features was failing on a Mac system
+because the elapsed time was returning as zero (between two events).
+This test has been made more robust by add a one millisecond sleep
+between the two clock accesses.
+$lend
+
 
 $head 09-29$$
 The multiple directions version of

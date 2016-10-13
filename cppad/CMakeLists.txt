@@ -185,26 +185,29 @@ FOREACH(c11_function erf asinh acosh atanh expm1 log1p)
 	ENDIF( NOT cppad_compiler_has_${c11_function} )
 ENDFOREACH(c11_function)
 # -----------------------------------------------------------------------------
-# cppad_has_high_resolution_clock
+# cppad_has_steady_clock
 #
 SET(source "
 # include <chrono>
+# include <thread>
+# include <iostream>
 int main(void)
-{	std::chrono::time_point<std::chrono::high_resolution_clock> start, end;
-    start = std::chrono::high_resolution_clock::now();
-    end   = std::chrono::high_resolution_clock::now();
+{	std::chrono::time_point<std::chrono::steady_clock> start, end;
+    start = std::chrono::steady_clock::now();
+	std::this_thread::sleep_for( std::chrono::milliseconds(1) );
+    end   = std::chrono::steady_clock::now();
     std::chrono::duration<double> difference = end - start;
 	double elapsed_seconds = difference.count();
-	if( elapsed_seconds > 0.0 )
+	if( elapsed_seconds >= 0.9e-3 ) // 1e-3 = one millisecond
 		return 0;
 	return 1;
 }
 "
 )
-check_source_runs("${source}" cppad_has_high_resolution_clock)
-IF( NOT cppad_has_high_resolution_clock )
+check_source_runs("${source}" cppad_has_steady_clock)
+IF( NOT cppad_has_steady_clock )
 	SET(cppad_cplusplus_201100_ok 0)
-ENDIF( NOT cppad_has_high_resolution_clock )
+ENDIF( NOT cppad_has_steady_clock )
 # =============================================================================
 # End C++11 features
 #

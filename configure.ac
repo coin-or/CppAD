@@ -12,7 +12,7 @@ dnl ---------------------------------------------------------------------------
 dnl
 dnl Process this file with autoconf to produce a configure script.
 dnl   package   version              bug-report
-AC_INIT([cppad], [20161009], [cppad@list.coin-or.org])
+AC_INIT([cppad], [20161012], [cppad@list.coin-or.org])
 AM_SILENT_RULES([yes])
 
 dnl By defalut disable maintainer mode when running configure;
@@ -493,7 +493,7 @@ AC_SUBST(cppad_has_nullptr, 0)
 AC_SUBST(cppad_has_rvalue, 0)
 AC_SUBST(cppad_has_cstdint_8_to_64, 0)
 AC_SUBST(cppad_cplusplus_201100_ok, 0)
-AC_SUBST(cppad_has_high_resolution_clock, 0)
+AC_SUBST(cppad_has_steady_clock, 0)
 
 dnl Determine if size_t has same size as unsigned int
 AC_CHECK_SIZEOF([size_t])
