@@ -136,6 +136,10 @@ if [ -e CMakeCache.txt ]
 then
 	echo_eval rm CMakeCache.txt
 fi
+if [ -e CMakeFiles ]
+then
+	echo_eval rm -r CMakeFiles
+fi
 # ---------------------------------------------------------------------------
 # clean all variables in cmake cache
 cmake_args='-U .+'

@@ -486,15 +486,18 @@ On output, h is the sparsity pattern for the matrix \f$ H(x) R \f$.
 The forward jacobian sparsity pattern must be currently stored
 in this ADFUN object.
 */
+
+// The checkpoint class is not yet using forward sparse Hessians.
+# ifdef CPPAD_NOT_DEFINED
 template <class Base>
 void ADFun<Base>::ForSparseHesCheckpoint(
 	vector<bool>&                 r         ,
 	vector<bool>&                 s         ,
 	sparse_list&                  h         )
-{	size_t n = Domain();
+{
+	size_t n = Domain();
 	size_t m = Range();
 
-# ifdef NOT_DEFINED
 	// checkpoint functions should get this right
 	CPPAD_ASSERT_UNKNOWN( for_jac_sparse_pack_.n_set() == 0 );
 	CPPAD_ASSERT_UNKNOWN( for_jac_sparse_set_.n_set() == 0   );
@@ -550,8 +553,8 @@ void ADFun<Base>::ForSparseHesCheckpoint(
 			i = for_hes_sparsity.next_element();
 		}
 	}
-# endif
 }
+# endif
 
 } // END_CPPAD_NAMESPACE
 # endif
