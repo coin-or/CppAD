@@ -102,6 +102,18 @@ log_eval bin/get_colpack.sh
 #	$trunk_dir/build/prefix/$libdir
 log_eval bin/get_adolc.sh
 # -------------------------------------------------------------------
+# something is wrong with the jenkins system or the autotools
+pushd $prefix/$libdir
+if [ -e 'libadolc.so' ] && [ ! -e 'libadolc.so.2' ]
+then
+	ln -s libadolc.so libadolc.so.2
+fi
+if [ -e 'libColPack.so' ] && [ ! -e 'libColPack.so.0' ]
+then
+	ln -s libColPack.so libColPack.so.0
+fi
+popd
+# -------------------------------------------------------------------
 system_name=`uname | sed -e 's|\(......\).*|\1|'`
 if [ "$system_name" == 'CYGWIN' ]
 then
@@ -134,6 +146,7 @@ $trunk_dir/configure \\
 	EIGEN_DIR="$trunk_dir/build/prefix" \\
 	IPOPT_DIR="$trunk_dir/build/prefix" \\
 	FADBAD_DIR="$trunk_dir/build/prefix"  \\
+	CXX_FLAGE='-Wall -std=c++11' \\
 	OPENMP_FLAGS=-fopenmp
 EOF
 if ! $trunk_dir/configure $build_type \
@@ -143,6 +156,7 @@ if ! $trunk_dir/configure $build_type \
 	EIGEN_DIR="$trunk_dir/build/prefix" \
 	IPOPT_DIR="$trunk_dir/build/prefix" \
 	FADBAD_DIR="$trunk_dir/build/prefix" \
+	CXX_FLAGE='-Wall -std=c++11' \
 	OPENMP_FLAGS=-fopenmp
 then
 	echo "Error during configure command. Here is config.log file:"
