@@ -103,15 +103,17 @@ log_eval bin/get_colpack.sh
 log_eval bin/get_adolc.sh
 # -------------------------------------------------------------------
 # something is wrong with the jenkins system or the autotools
-pushd $prefix/$libdir
-if [ -e 'libadolc.so' ] && [ ! -e 'libadolc.so.2' ]
-then
-	ln -s libadolc.so libadolc.so.2
-fi
-if [ -e 'libColPack.so' ] && [ ! -e 'libColPack.so.0' ]
-then
-	ln -s libColPack.so libColPack.so.0
-fi
+pushd build/prefix/$libdir
+for ver in 0 1 2
+do
+	for name in adolc ColPack
+	do
+		if [ -e "lib$name.so" ] && [ ! -e "lib$name.so.$ver" ]
+		then
+			log_eval ln -s lib$name.so lib$name.so.$ver
+		fi
+	done
+done
 popd
 # -------------------------------------------------------------------
 system_name=`uname | sed -e 's|\(......\).*|\1|'`
