@@ -45,7 +45,7 @@ log_eval() {
 	else
 		echo $*  >> $trunk_dir/jenkins.log
 		echo $*  >> $trunk_dir/jenkins.err
-		echo $* "1>> $trunk_dir/jenkins.log 2>> $trunk_dir/jenkins.err"
+		echo $* "1>> jenkins.log 2>> jenkins.err"
 		if ! eval $*  1>> $trunk_dir/jenkins.log 2>> $trunk_dir/jenkins.err
 		then
 			echo_eval cat $trunk_dir/jenkins.log
@@ -146,8 +146,9 @@ $trunk_dir/configure \\
 	EIGEN_DIR="$trunk_dir/build/prefix" \\
 	IPOPT_DIR="$trunk_dir/build/prefix" \\
 	FADBAD_DIR="$trunk_dir/build/prefix"  \\
-	CXX_FLAGE='-Wall -std=c++11' \\
-	OPENMP_FLAGS=-fopenmp
+	CXX_FLAGS='-Wall -std=c++11' \\
+	OPENMP_FLAGS=-fopenmp \\
+	1>> jenkins.log 2>> jenkins.err
 EOF
 if ! $trunk_dir/configure $build_type \
 	--disable-silent-rules \
@@ -156,8 +157,9 @@ if ! $trunk_dir/configure $build_type \
 	EIGEN_DIR="$trunk_dir/build/prefix" \
 	IPOPT_DIR="$trunk_dir/build/prefix" \
 	FADBAD_DIR="$trunk_dir/build/prefix" \
-	CXX_FLAGE='-Wall -std=c++11' \
-	OPENMP_FLAGS=-fopenmp
+	CXX_FLAGS='-Wall -std=c++11' \
+	OPENMP_FLAGS=-fopenmp \
+	1>> $trunk_dir/jenkins.log 2>> $trunk_dir/jenkins.err
 then
 	echo "Error during configure command. Here is config.log file:"
 	echo "--------------------------------------------------------"
