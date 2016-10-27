@@ -46,6 +46,10 @@ in reverse order by date.
 The purpose of these sections is to
 assist you in learning about changes between various versions of CppAD.
 
+$head 10-27$$
+The optional $cref/optimize/checkpoint/optimize/$$ option
+was added to the checkpoint functions.
+
 $head 10-12$$
 $list number$$
 Change $cref elapsed_seconds$$ to use

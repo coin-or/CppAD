@@ -2089,7 +2089,7 @@ void optimize_run(
 			--user_j;
 			user_ix[user_j] = 0;
 			//
-			// parameters as integers
+			// parameter arguments
 			user_x[user_j] = parameter[arg[0]];
 			//
 			if( user_j == 0 )
@@ -2106,7 +2106,7 @@ void optimize_run(
 			--user_j;
 			user_ix[user_j] = arg[0];
 			//
-			// variables as integers
+			// variable arguments as parameters
 			user_x[user_j] = CppAD::numeric_limits<Base>::quiet_NaN();
 			//
 			if( user_j == 0 )

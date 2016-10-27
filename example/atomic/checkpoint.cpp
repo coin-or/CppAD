@@ -77,7 +77,8 @@ namespace {
 		}
 		return;
 	}
-	bool test_case(option_enum f_sparsity, option_enum g_sparsity)
+	bool test_case(
+		option_enum f_sparsity, option_enum g_sparsity, bool optimize )
 	{	bool ok = true;
 		using CppAD::checkpoint;
 		using CppAD::ADFun;
@@ -182,10 +183,10 @@ bool checkpoint(void)
 	option_enum set_sparsity  = CppAD::atomic_base<double>::set_sparsity_enum;
 
 	// test some different cases
-	ok &= test_case(pack_sparsity, pack_sparsity);
-	ok &= test_case(pack_sparsity, bool_sparsity);
-	ok &= test_case(bool_sparsity, set_sparsity);
-	ok &= test_case(set_sparsity,  set_sparsity);
+	ok &= test_case(pack_sparsity, pack_sparsity, true);
+	ok &= test_case(pack_sparsity, bool_sparsity, false);
+	ok &= test_case(bool_sparsity, set_sparsity,  true);
+	ok &= test_case(set_sparsity,  set_sparsity,  false);
 
 	return ok;
 }

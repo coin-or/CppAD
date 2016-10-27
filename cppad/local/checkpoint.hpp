@@ -41,7 +41,9 @@ $$
 $section Checkpointing Functions$$
 
 $head Syntax$$
-$codei%checkpoint<%Base%> %atom_fun%(%name%, %algo%, %ax%, %ay%, %sparsity%)
+$codei%checkpoint<%Base%> %atom_fun%(
+	%name%, %algo%, %ax%, %ay%, %sparsity%, %optimize%
+)
 %sv% = %atom_fun%.size_var()
 %atom_fun%.option(%option_value%)
 %algo%(%ax%, %ay%)
@@ -164,6 +166,20 @@ $codei%atomic_base<%Base%>::pack_sparsity_enum%$$,
 $codei%atomic_base<%Base%>::bool_sparsity_enum%$$, or
 $codei%atomic_base<%Base%>::set_sparsity_enum%$$.
 This argument is optional and its default value is unspecified.
+
+$head optimize$$
+This argument has prototype
+$codei%
+	bool %optimize%
+%$$
+It specifies if the recording corresponding to the atomic function
+should be $cref/optimized/optimize/$$.
+One expects to use a checkpoint function many times, so it should
+be worth the time to optimize its operation sequence.
+For debugging purposes, it may be useful to use the
+original operation sequence (before optimization)
+because it corresponds more closely to $icode algo$$.
+This argument is optional and its default value is true.
 
 
 $head size_var$$
@@ -564,15 +580,21 @@ public:
 	what type of sparsity patterns are computed by this function,
 	pack_sparsity_enum bool_sparsity_enum, or set_sparsity_enum.
 	The default value is unspecified.
+
+	\param optimize [in]
+l	should the operation sequence corresponding to the algo be optimized.
+	The default value is true, but it is
+	sometimes useful to use false for debugging purposes.
 	*/
 	template <class Algo, class ADVector>
 	checkpoint(
-		const char*                    name     ,
-		Algo&                          algo     ,
-		const ADVector&                ax       ,
-		ADVector&                      ay       ,
+		const char*                    name            ,
+		Algo&                          algo            ,
+		const ADVector&                ax              ,
+		ADVector&                      ay              ,
 		option_enum                    sparsity =
-				atomic_base<Base>::pack_sparsity_enum
+				atomic_base<Base>::pack_sparsity_enum  ,
+		bool                           optimize = true
 	) : atomic_base<Base>(name, sparsity)
 	{	CheckSimpleVector< CppAD::AD<Base> , ADVector>();
 
@@ -584,11 +606,14 @@ public:
 		algo(x_tmp, ay);
 		// create function f_ : x -> y
 		f_.Dependent(ay);
-		// suppress checking for nan in f_ results
-		// (see optimize documentation for atomic functions)
-		f_.check_for_nan(false);
-		// now optimize (we expect to use this function many times).
-		f_.optimize();
+		if( optimize )
+		{	// suppress checking for nan in f_ results
+			// (see optimize documentation for atomic functions)
+			f_.check_for_nan(false);
+			//
+			// now optimize
+			f_.optimize();
+		}
 		// now disable checking of comparison opertaions
 		// 2DO: add a debugging mode that checks for changes and aborts
 		f_.compare_change_count(0);
