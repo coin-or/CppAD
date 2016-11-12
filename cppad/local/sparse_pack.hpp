@@ -21,11 +21,14 @@ namespace CppAD { // BEGIN_CPPAD_NAMESPACE
 Vector of sets of positive integers stored as a packed array of bools.
 */
 
+// ==========================================================================
 /*!
 Vector of sets of postivie integers, each set stored as a packed boolean array.
 */
 
+class sparse_pack_const_iterator;
 class sparse_pack {
+	friend sparse_pack_const_iterator;
 private:
 	/// Type used to pack elements (should be the same as corresponding
 	/// typedef in multiple_n_bit() in test_more/sparse_hacobian.cpp)
@@ -50,6 +53,9 @@ private:
 	/// (use end_ for no such element exists; i.e., past end of the set).
 	size_t next_element_;
 public:
+	/// declare a const iterator
+	typedef sparse_pack_const_iterator const_iterator;
+
 	// -----------------------------------------------------------------
 	/*! Default constructor (no sets)
 	*/
@@ -174,6 +180,7 @@ public:
 		next_index_   = index;
 		next_element_ = 0;
 	}
+
 	/*! Get the next element from the current retrieval set.
 
 	\return
@@ -345,6 +352,108 @@ public:
 	size_t end(void) const
 	{	return end_; }
 };
+// ==========================================================================
+/*!
+cons_iterator for one set of positive integers in a sparse_pack object.
+*/
+class sparse_pack_const_iterator {
+private:
+	/// Type used to pack elements in sparse_pack
+	typedef sparse_pack::Pack Pack;
+
+	/// data for the entire vector of sets
+	const pod_vector<Pack>&  data_;
+
+	/// Number of bits per Pack value
+	const size_t             n_bit_;
+
+	/// Number of Pack values necessary to represent end_ bits.
+	const size_t             n_pack_;
+
+	/// Possible elements in each set are 0, 1, ..., end_ - 1;
+	const size_t             end_;
+
+	/// index of this set in the vector of sets;
+	const size_t             next_index_;
+
+	/// value of the next element in this set
+	/// (use end_ for no such element exists; i.e., past end of the set).
+	size_t                   next_element_;
+public:
+	/// construct a const_iterator for a set in a sparse_pack object
+	sparse_pack_const_iterator (const sparse_pack& pack, size_t index)
+	:
+	data_      ( pack.data_ )         ,
+	n_bit_     ( pack.n_bit_ )        ,
+	n_pack_    ( pack.n_pack_ )       ,
+	end_       ( pack.end_ )          ,
+	next_index_( index )
+	{	static Pack one(1);
+		CPPAD_ASSERT_UNKNOWN( index < pack.n_set_ );
+		//
+		next_element_ = 0;
+		if( next_element_ < end_ )
+		{	Pack check = data_[ next_index_ * n_pack_ + 0 ];
+			if( check & one )
+				return;
+		}
+		// element with index zero is not in this set of integers,
+		// advance to first element or end
+		++(*this);
+	}
+
+	/// advance to next element in this set
+	sparse_pack_const_iterator& operator++(void)
+	{	static Pack one(1);
+		CPPAD_ASSERT_UNKNOWN( next_element_ <= end_ );
+		if( next_element_ != end_ )
+		{	// initialize packed data index
+			size_t j  = next_element_ / n_bit_;
+
+			// initialize bit index
+			size_t k  = next_element_ - j * n_bit_;
+
+			// start search at this packed value
+			Pack check = data_[ next_index_ * n_pack_ + j ];
+			while( true )
+			{	// check if this element is in the set
+				if( check & (one << k) )
+					return *this;
+
+				// increment next element before checking this one
+				next_element_++;
+
+				// check if there are more elements in the set
+				if( next_element_ == end_ )
+					return *this;
+
+				// increment bit index in Pack value so corresponds to
+				// next element
+				k++;
+				CPPAD_ASSERT_UNKNOWN( k <= n_bit_ );
+
+				// check if we must go to next packed value
+				if( k == n_bit_ )
+				{	// get next packed value
+					k     = 0;
+					j++;
+					CPPAD_ASSERT_UNKNOWN( j < n_pack_ );
+					check = data_[ next_index_ * n_pack_ + j ];
+				}
+			}
+			// should never get here
+			CPPAD_ASSERT_UNKNOWN(false);
+		}
+		return *this;
+	}
+
+	/// obtain value of this element of the set of positive integers
+	/// (end_ for no such element)
+	size_t operator*(void) const
+	{	return next_element_; }
+};
+
+// ==========================================================================
 
 /*!
 Copy a user vector of sets sparsity pattern to an internal sparse_pack object.

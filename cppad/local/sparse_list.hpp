@@ -22,12 +22,18 @@ Vector of sets of positive integers stored as singly linked lists
 in with the element values strictly increasing.
 */
 
+// =========================================================================
 /*!
 Vector of sets of positive integers, each set stored as a singly
 linked list.
 */
+class sparse_list_const_iterator;
 class sparse_list {
+	friend sparse_list_const_iterator;
 public:
+	/// declare a const iterator
+	typedef sparse_list_const_iterator const_iterator;
+
 	/// type used for each entry in a singly linked list.
 	struct pair_size_t {
 		/// For the first entry in each list, this is the reference count.
@@ -825,6 +831,60 @@ public:
 		return count;
 	}
 };
+// =========================================================================
+/*!
+cons_iterator for one set of positive integers in a sparse_list object.
+*/
+class sparse_list_const_iterator {
+private:
+	/// type used by sparse_list to represent one element of the list
+	typedef sparse_list::pair_size_t pair_size_t;
+
+	/// data for the entire vector of sets
+	const pod_vector<pair_size_t>& data_;
+
+	/// Possible elements in each set are 0, 1, ..., end_ - 1;
+	const size_t                   end_;
+
+	/// next element in the singly linked list
+	/// (next_pair_.value == end_ for past end of list)
+	pair_size_t                    next_pair_;
+public:
+	/// construct a const_iterator for a set in a sparse_pack object
+	sparse_list_const_iterator (const sparse_list& list, size_t index)
+	:
+	data_( list.data_ )    ,
+	end_ ( list.end_ )
+	{	CPPAD_ASSERT_UNKNOWN( index < list.start_.size() );
+		size_t start = list.start_[index];
+		if( start == 0 )
+			next_pair_.value = end_;
+		else
+		{	CPPAD_ASSERT_UNKNOWN( list.reference_count(index) > 0 );
+			next_pair_ = data_[start];
+			++(*this);
+		}
+	}
+
+	/// advance to next element in this set
+	sparse_list_const_iterator& operator++(void)
+	{	if( next_pair_.value != end_ )
+		{	if( next_pair_.next == 0 )
+				next_pair_.value = end_;
+			else
+			{	next_pair_  = data_[next_pair_.next];
+				CPPAD_ASSERT_UNKNOWN( next_pair_.value < end_ );
+			}
+		}
+		return *this;
+	}
+
+	/// obtain value of this element of the set of positive integers
+	/// (end_ for no such element)
+	size_t operator*(void)
+	{	return next_pair_.value; }
+};
+// =========================================================================
 // Tell pod_vector class that each pair_size_t is plain old data and hence
 // the corresponding constructor need not be called.
 template <> inline bool is_pod<sparse_list::pair_size_t>(void)

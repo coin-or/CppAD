@@ -696,13 +696,13 @@ l	should the operation sequence corresponding to the algo be optimized.
 				//
 				for(size_t i = 0; i < m; i++)
 				{	vy[i] = false;
-					jac_sparse_set_.begin(i);
-					size_t j = jac_sparse_set_.next_element();
+					sparse_list::const_iterator set_itr(jac_sparse_set_, i);
+					size_t j = *set_itr;
 					while(j < n )
 					{	// y[i] depends on the value of x[j]
 						// cast avoid Microsoft warning (should not be needed)
 						vy[i] |= static_cast<bool>( vx[j] );
-						j = jac_sparse_set_.next_element();
+						j = *(++set_itr);
 					}
 				}
 			}
@@ -844,8 +844,8 @@ l	should the operation sequence corresponding to the algo be optimized.
 		// sparsity for  s = jac_sparse_set_ * r
 		for(size_t i = 0; i < m; i++)
 		{	// compute row i of the return pattern
-			jac_sparse_set_.begin(i);
-			size_t j = jac_sparse_set_.next_element();
+			sparse_list::const_iterator set_itr(jac_sparse_set_, i);
+			size_t j = *set_itr;
 			while(j < n )
 			{	std::set<size_t>::const_iterator itr_j;
 				const std::set<size_t>& r_j( r[j] );
@@ -854,7 +854,7 @@ l	should the operation sequence corresponding to the algo be optimized.
 					CPPAD_ASSERT_UNKNOWN( k < q );
 					s[i].insert(k);
 				}
-				j = jac_sparse_set_.next_element();
+				j = *(++set_itr);
 			}
 		}
 
@@ -925,12 +925,12 @@ l	should the operation sequence corresponding to the algo be optimized.
 				CPPAD_ASSERT_UNKNOWN( k < q );
 				//
 				// i is column index in jac_sparse_set^T
-				jac_sparse_set_.begin(i);
-				size_t j = jac_sparse_set_.next_element();
+				sparse_list::const_iterator set_itr(jac_sparse_set_, i);
+				size_t j = *set_itr;
 				while( j < n )
 				{	// j is row index in jac_sparse_set^T
 					st[j].insert(k);
-					j = jac_sparse_set_.next_element();
+					j = *(++set_itr);
 				}
 			}
 		}
@@ -1028,8 +1028,8 @@ l	should the operation sequence corresponding to the algo be optimized.
 		// hes_sparse_set_ can be used every time this is needed.
 		for(size_t i = 0; i < n; i++)
 		{	v[i].clear();
-			hes_sparse_set_.begin(i);
-			size_t j = hes_sparse_set_.next_element();
+			sparse_list::const_iterator set_itr(hes_sparse_set_, i);
+			size_t j = *set_itr;
 			while( j < n )
 			{	std::set<size_t>::const_iterator itr_j;
 				const std::set<size_t>& r_j( r[j] );
@@ -1037,7 +1037,7 @@ l	should the operation sequence corresponding to the algo be optimized.
 				{	size_t k = *itr_j;
 					v[i].insert(k);
 				}
-				j = hes_sparse_set_.next_element();
+				j = *(++set_itr);
 			}
 		}
 		// compute sparsity pattern for V(x) = A(x) + H(x)
