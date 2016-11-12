@@ -228,20 +228,20 @@ Upon return it includes the Hessian sparsity for  w(x)
 template <class Vector_set>
 inline void forward_sparse_hessian_nonlinear_unary_op(
 	size_t              i_v               ,
-	Vector_set&         for_jac_sparsity  ,
+	const Vector_set&   for_jac_sparsity  ,
 	Vector_set&         for_hes_sparsity  )
 {
 	// set of independent variables that v depends on
-	for_jac_sparsity.begin(i_v);
+	typename Vector_set::const_iterator itr(for_jac_sparsity, i_v);
 
 	// next independent variables that v depends on
-	size_t i_x = for_jac_sparsity.next_element();
+	size_t i_x = *itr;
 
 	// loop over dependent variables with non-zero partial
 	while( i_x < for_jac_sparsity.end() )
 	{	// N(i_x) = N(i_x) union L(i_v)
 		for_hes_sparsity.binary_union(i_x, i_x, i_v, for_jac_sparsity);
-		i_x = for_jac_sparsity.next_element();
+		i_x = *(++itr);
 	}
 	return;
 }
