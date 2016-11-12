@@ -154,7 +154,7 @@ public:
 	\li index    < n_set_
 	\li element  < end_
 	*/
-	bool is_element(size_t index, size_t element)
+	bool is_element(size_t index, size_t element) const
 	{	static Pack one(1);
 		static Pack zero(0);
 		CPPAD_ASSERT_UNKNOWN( index   < n_set_ );
@@ -407,42 +407,45 @@ public:
 	{	static Pack one(1);
 		CPPAD_ASSERT_UNKNOWN( next_element_ <= end_ );
 		if( next_element_ != end_ )
-		{	// initialize packed data index
-			size_t j  = next_element_ / n_bit_;
+		{	++next_element_;
+			if( next_element_ != end_ )
+			{	// initialize packed data index
+				size_t j  = next_element_ / n_bit_;
 
-			// initialize bit index
-			size_t k  = next_element_ - j * n_bit_;
+				// initialize bit index
+				size_t k  = next_element_ - j * n_bit_;
 
-			// start search at this packed value
-			Pack check = data_[ next_index_ * n_pack_ + j ];
-			while( true )
-			{	// check if this element is in the set
-				if( check & (one << k) )
-					return *this;
+				// start search at this packed value
+				Pack check = data_[ next_index_ * n_pack_ + j ];
+				while( true )
+				{	// check if this element is in the set
+					if( check & (one << k) )
+						return *this;
 
-				// increment next element before checking this one
-				next_element_++;
+					// increment next element before checking this one
+					next_element_++;
 
-				// check if there are more elements in the set
-				if( next_element_ == end_ )
-					return *this;
+					// check if there are more elements in the set
+					if( next_element_ == end_ )
+						return *this;
 
-				// increment bit index in Pack value so corresponds to
-				// next element
-				k++;
-				CPPAD_ASSERT_UNKNOWN( k <= n_bit_ );
+					// increment bit index in Pack value so corresponds to
+					// next element
+					k++;
+					CPPAD_ASSERT_UNKNOWN( k <= n_bit_ );
 
-				// check if we must go to next packed value
-				if( k == n_bit_ )
-				{	// get next packed value
-					k     = 0;
-					j++;
-					CPPAD_ASSERT_UNKNOWN( j < n_pack_ );
-					check = data_[ next_index_ * n_pack_ + j ];
+					// check if we must go to next packed value
+					if( k == n_bit_ )
+					{	// get next packed value
+						k     = 0;
+						j++;
+						CPPAD_ASSERT_UNKNOWN( j < n_pack_ );
+						check = data_[ next_index_ * n_pack_ + j ];
+					}
 				}
+				// should never get here
+				CPPAD_ASSERT_UNKNOWN(false);
 			}
-			// should never get here
-			CPPAD_ASSERT_UNKNOWN(false);
 		}
 		return *this;
 	}
