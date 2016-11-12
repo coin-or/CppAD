@@ -56,7 +56,7 @@ sets \c n to the number of columns in the sparse matrix.
 All of the column indices are less than this value.
 \n
 <code>VectorSet::const_iterator itr(pattern, i)</code>
-instructs the iterator facility to start iterating over
+constructs an iterator that starts iterating over
 columns in the i-th row of the sparsity pattern.
 \n
 <code>j = *itr</code>

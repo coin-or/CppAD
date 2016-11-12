@@ -43,9 +43,6 @@ add element \c e to set with index \c s.
 
 \param pattern [in]
 Is a representation of the sparsity pattern for the matrix.
-Note that color_symmetric does not change the values in pattern,
-but it is not const because its iterator facility modifies some of its
-internal data.
 \n
 <code>m = pattern.n_set()</code>
 \n
@@ -58,15 +55,16 @@ sets n to the number of columns in the sparse matrix
 (which must be equal to the number of rows).
 All of the column indices are less than this value.
 \n
-<code>pattern.begin(i)</code>
-instructs the iterator facility to start iterating over
+<code>VectorSet::const_iterator itr(pattern, i)</code>
+constructs an iterator that starts iterating over
 columns in the i-th row of the sparsity pattern.
 \n
-<code>j = pattern.next_element()</code>
-Sets j to the next possibly non-zero column
-in the row specified by the previous call to <code>pattern.begin</code>.
-If there are no more such columns, the value
-<code>pattern.end()</code> is returned.
+<code>j = *itr</code>
+Sets j to the next possibly non-zero column.
+\n
+<code>++itr</code>
+Advances to the next possibly non-zero column.
+\n
 
 \param row [in/out]
 is a vector specifying which row indices to compute.
@@ -113,7 +111,7 @@ the maximum, with respect to k, of <code>color[ row[k] ]</code>.
 */
 template <class VectorSet>
 void color_symmetric_cppad(
-	VectorSet&              pattern   ,
+	const VectorSet&        pattern   ,
 	CppAD::vector<size_t>&  row       ,
 	CppAD::vector<size_t>&  col       ,
 	CppAD::vector<size_t>&  color     )
@@ -182,13 +180,13 @@ void color_symmetric_cppad(
 
 			// Forbid rows i2 != i1 that have non-zero sparsity at (i2, j1).
 			// Note that this is the same as non-zero sparsity at (j1, i2)
-			pattern.begin(j1);
-			i2 = pattern.next_element();
+			typename VectorSet::const_iterator pattern_itr(pattern, j1);
+			i2 = *pattern_itr;
 			while( i2 != pattern.end() )
 			{	c2 = color[i2];
 				if( c2 < c1 )
 					forbidden[c2] = true;
-				i2 = pattern.next_element();
+				i2 = *(++pattern_itr);
 			}
 			itr1++;
 		}
@@ -258,7 +256,7 @@ can be computed together.
 */
 template <class VectorSet>
 void color_symmetric_colpack(
-	VectorSet&              pattern   ,
+	const VectorSet&        pattern   ,
 	CppAD::vector<size_t>&  row       ,
 	CppAD::vector<size_t>&  col       ,
 	CppAD::vector<size_t>&  color     )
@@ -277,11 +275,11 @@ void color_symmetric_colpack(
 	size_t n_nonzero_total = 0;
 	for(i = 0; i < m; i++)
 	{	n_nonzero[i] = 0;
-		pattern.begin(i);
-		j = pattern.next_element();
+		typename VectorSet::const_iterator pattern_itr(pattern, i);
+		j = *pattern_itr;
 		while( j != pattern.end() )
 		{	n_nonzero[i]++;
-			j = pattern.next_element();
+			j = *(++pattern_itr);
 		}
 		n_nonzero_total += n_nonzero[i];
 	}
@@ -293,12 +291,12 @@ void color_symmetric_colpack(
 	for(i = 0; i < m; i++)
 	{	adolc_pattern[i]    = adolc_memory.data() + i_memory;
 		adolc_pattern[i][0] = n_nonzero[i];
-		pattern.begin(i);
-		j = pattern.next_element();
+		typename VectorSet::const_iterator pattern_itr(pattern, i);
+		j = *pattern_itr;
 		k = 1;
 		while(j != pattern.end() )
 		{	adolc_pattern[i][k++] = j;
-			j = pattern.next_element();
+			j = *(++pattern_itr);
 		}
 		CPPAD_ASSERT_UNKNOWN( k == 1 + n_nonzero[i] );
 		i_memory += k;
