@@ -15,7 +15,7 @@ Please visit http://www.coin-or.org/CppAD/ for information on other licenses.
 
 namespace CppAD { // BEGIN_CPPAD_NAMESPACE
 /*!
-\file rev_hes_sweep.hpp
+\file for_hes_sweep.hpp
 Compute Forward mode Hessian sparsity patterns.
 */
 
@@ -100,8 +100,8 @@ void ForHesSweep(
 	size_t                n,
 	size_t                numvar,
 	player<Base>         *play,
-	Vector_set&           for_jac_sparse, // should be const
-	Vector_set&           rev_jac_sparse, // should be const
+	const Vector_set&     for_jac_sparse,
+	const Vector_set&     rev_jac_sparse,
 	Vector_set&           for_hes_sparse
 )
 {
@@ -539,10 +539,12 @@ void ForHesSweep(
 			// variables as integers
 			user_x[user_j] = CppAD::numeric_limits<Base>::quiet_NaN();
 			//
-			for_jac_sparse.begin(arg[0]);
-			i = for_jac_sparse.next_element();
-			if( i < for_jac_sparse.end() )
-				user_r[user_j] = true;
+			{	typename Vector_set::const_iterator
+					itr_1(for_jac_sparse, arg[0]);
+				i = *itr_1;
+				if( i < for_jac_sparse.end() )
+					user_r[user_j] = true;
+			}
 			++user_j;
 			if( user_j == user_n )
 				user_state = user_ret;
@@ -590,18 +592,18 @@ void ForHesSweep(
 				for(j = 0; j < limit; j++)
 					zh_value[i * limit + j] = false;
 			}
-			for_jac_sparse.begin(i_var);;
-			j = for_jac_sparse.next_element();;
+			typename Vector_set::const_iterator itr_2(for_jac_sparse, i_var);
+			j = *itr_2;
 			while( j < limit )
 			{	zf_value[j] = true;
-				j = for_jac_sparse.next_element();
+				j = *(++itr_2);
 			}
 			for(i = 0; i < limit; i++)
-			{	for_hes_sparse.begin(i);;
-				j = for_hes_sparse.next_element();;
+			{	typename Vector_set::const_iterator itr_3(for_hes_sparse, i);
+				j = *itr_3;
 				while( j < limit )
 				{	zh_value[i * limit + j] = true;
-					j = for_hes_sparse.next_element();
+					j = *(++itr_3);
 				}
 			}
 			printOp(
