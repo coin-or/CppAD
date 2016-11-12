@@ -347,30 +347,30 @@ Upon return it includes the Hessian sparsity for  w(x)
 */
 template <class Vector_set>
 inline void forward_sparse_hessian_mul_op(
-	const addr_t*        arg              ,
-	Vector_set&         for_jac_sparsity  ,
+	const addr_t*       arg               ,
+	const Vector_set&   for_jac_sparsity  ,
 	Vector_set&         for_hes_sparsity  )
 {	// --------------------------------------------------
 	// set of independent variables that v0 depends on
-	for_jac_sparsity.begin(arg[0]);
+	typename Vector_set::const_iterator itr_0(for_jac_sparsity, arg[0]);
 
 	// loop over dependent variables with non-zero partial
-	size_t i_x = for_jac_sparsity.next_element();
+	size_t i_x = *itr_0;
 	while( i_x < for_jac_sparsity.end() )
 	{	// N(i_x) = N(i_x) union L(v1)
 		for_hes_sparsity.binary_union(i_x, i_x, arg[1], for_jac_sparsity);
-		i_x = for_jac_sparsity.next_element();
+		i_x = *(++itr_0);
 	}
 	// --------------------------------------------------
 	// set of independent variables that v1 depends on
-	for_jac_sparsity.begin(arg[1]);
+	typename Vector_set::const_iterator itr_1(for_jac_sparsity, arg[1]);
 
 	// loop over dependent variables with non-zero partial
-	i_x = for_jac_sparsity.next_element();
+	i_x = *itr_1;
 	while( i_x < for_jac_sparsity.end() )
 	{	// N(i_x) = N(i_x) union L(v0)
 		for_hes_sparsity.binary_union(i_x, i_x, arg[0], for_jac_sparsity);
-		i_x = for_jac_sparsity.next_element();
+		i_x = *(++itr_1);
 	}
 	return;
 }
@@ -397,32 +397,32 @@ Upon return it includes the Hessian sparsity for  w(x)
 */
 template <class Vector_set>
 inline void forward_sparse_hessian_div_op(
-	const addr_t*        arg              ,
-	Vector_set&         for_jac_sparsity  ,
+	const addr_t*       arg               ,
+	const Vector_set&   for_jac_sparsity  ,
 	Vector_set&         for_hes_sparsity  )
 {	// --------------------------------------------------
 	// set of independent variables that v0 depends on
-	for_jac_sparsity.begin(arg[0]);
+	typename Vector_set::const_iterator itr_0(for_jac_sparsity, arg[0]);
 
 	// loop over dependent variables with non-zero partial
-	size_t i_x = for_jac_sparsity.next_element();
+	size_t i_x = *itr_0;
 	while( i_x < for_jac_sparsity.end() )
 	{	// N(i_x) = N(i_x) union L(v1)
 		for_hes_sparsity.binary_union(i_x, i_x, arg[1], for_jac_sparsity);
-		i_x = for_jac_sparsity.next_element();
+		i_x = *(++itr_0);
 	}
 	// --------------------------------------------------
 	// set of independent variables that v1 depends on
-	for_jac_sparsity.begin(arg[1]);
+	typename Vector_set::const_iterator itr_1(for_jac_sparsity, arg[1]);
 
 	// loop over dependent variables with non-zero partial
-	i_x = for_jac_sparsity.next_element();
+	i_x = *itr_1;
 	while( i_x < for_jac_sparsity.end() )
 	{	// N(i_x) = N(i_x) union L(v0)
 		for_hes_sparsity.binary_union(i_x, i_x, arg[0], for_jac_sparsity);
 		// N(i_x) = N(i_x) union L(v1)
 		for_hes_sparsity.binary_union(i_x, i_x, arg[1], for_jac_sparsity);
-		i_x = for_jac_sparsity.next_element();
+		i_x = *(++itr_1);
 	}
 	return;
 }
@@ -449,34 +449,34 @@ Upon return it includes the Hessian sparsity for  w(x)
 */
 template <class Vector_set>
 inline void forward_sparse_hessian_pow_op(
-	const addr_t*        arg              ,
-	Vector_set&         for_jac_sparsity  ,
+	const addr_t*       arg               ,
+	const Vector_set&   for_jac_sparsity  ,
 	Vector_set&         for_hes_sparsity  )
 {	// --------------------------------------------------
 	// set of independent variables that v0 depends on
-	for_jac_sparsity.begin(arg[0]);
+	typename Vector_set::const_iterator itr_0(for_jac_sparsity, arg[0]);
 
 	// loop over dependent variables with non-zero partial
-	size_t i_x = for_jac_sparsity.next_element();
+	size_t i_x = *itr_0;
 	while( i_x < for_jac_sparsity.end() )
 	{	// N(i_x) = N(i_x) union L(v0)
 		for_hes_sparsity.binary_union(i_x, i_x, arg[0], for_jac_sparsity);
 		// N(i_x) = N(i_x) union L(v1)
 		for_hes_sparsity.binary_union(i_x, i_x, arg[1], for_jac_sparsity);
-		i_x = for_jac_sparsity.next_element();
+		i_x = *(++itr_0);
 	}
 	// --------------------------------------------------
 	// set of independent variables that v1 depends on
-	for_jac_sparsity.begin(arg[1]);
+	typename Vector_set::const_iterator itr_1(for_jac_sparsity, arg[1]);
 
 	// loop over dependent variables with non-zero partial
-	i_x = for_jac_sparsity.next_element();
+	i_x = *itr_1;
 	while( i_x < for_jac_sparsity.end() )
 	{	// N(i_x) = N(i_x) union L(v0)
 		for_hes_sparsity.binary_union(i_x, i_x, arg[0], for_jac_sparsity);
 		// N(i_x) = N(i_x) union L(v1)
 		for_hes_sparsity.binary_union(i_x, i_x, arg[1], for_jac_sparsity);
-		i_x = for_jac_sparsity.next_element();
+		i_x = *(++itr_1);
 	}
 	return;
 }
