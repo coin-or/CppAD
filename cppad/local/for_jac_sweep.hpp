@@ -763,16 +763,17 @@ void ForJacSweep(
 			// variable as integers
 			user_x[user_j] = CppAD::numeric_limits<Base>::quiet_NaN();
 			// set row user_j to sparsity pattern for variable arg[0]
-			var_sparsity.begin(arg[0]);
-			i = var_sparsity.next_element();
-			while( i < user_q )
-			{	if( user_pack )
-					pack_r[user_j * user_q + i] = true;
-				if( user_bool )
-					bool_r[user_j * user_q + i] = true;
-				if( user_set )
-					set_r[user_j].insert(i);
-				i = var_sparsity.next_element();
+			{	typename Vector_set::const_iterator itr(var_sparsity, arg[0]);
+				i = *itr;
+				while( i < user_q )
+				{	if( user_pack )
+						pack_r[user_j * user_q + i] = true;
+					if( user_bool )
+						bool_r[user_j * user_q + i] = true;
+					if( user_set )
+						set_r[user_j].insert(i);
+					i = *(++itr);
+				}
 			}
 			++user_j;
 			if( user_j == user_n )
@@ -880,11 +881,11 @@ void ForJacSweep(
 		// value for this variable
 		for(j = 0; j < limit; j++)
 			z_value[j] = false;
-		var_sparsity.begin(i_var);
-		j = var_sparsity.next_element();
+		typename Vector_set::const_iterator itr(var_sparsity, i_var);
+		j = *itr;
 		while( j < limit )
 		{	z_value[j] = true;
-			j = var_sparsity.next_element();
+			j = *(++itr);
 		}
 		printOp(
 			std::cout,

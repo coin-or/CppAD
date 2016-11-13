@@ -858,7 +858,9 @@ public:
 	{	CPPAD_ASSERT_UNKNOWN( index < list.start_.size() );
 		size_t start = list.start_[index];
 		if( start == 0 )
-			next_pair_.value = end_;
+		{	next_pair_.value = end_;
+			next_pair_.next  = 0; // to avoid compiler warning in operator++
+		}
 		else
 		{	CPPAD_ASSERT_UNKNOWN( list.reference_count(index) > 0 );
 			next_pair_ = data_[start];
