@@ -807,16 +807,17 @@ void RevJacSweep(
 			CPPAD_ASSERT_UNKNOWN( user_state == user_ret );
 			CPPAD_ASSERT_UNKNOWN( 0 < user_i && user_i <= user_m );
 			--user_i;
-			var_sparsity.begin(i_var);
-			i = var_sparsity.next_element();
-			while( i < user_q )
-			{	if( user_pack )
-					pack_r[ user_i * user_q + i ] = true;
-				if( user_bool )
-					bool_r[ user_i * user_q + i ] = true;
-				if( user_set )
-					set_r[user_i].insert(i);
-				i = var_sparsity.next_element();
+			{	typename Vector_set::const_iterator itr(var_sparsity, i_var);
+				i = *itr;
+				while( i < user_q )
+				{	if( user_pack )
+						pack_r[ user_i * user_q + i ] = true;
+					if( user_bool )
+						bool_r[ user_i * user_q + i ] = true;
+					if( user_set )
+						set_r[user_i].insert(i);
+					i = *(++itr);
+				}
 			}
 			if( user_i == 0 )
 				user_state = user_arg;
@@ -853,11 +854,11 @@ void RevJacSweep(
 # if CPPAD_REV_JAC_SWEEP_TRACE
 		for(j = 0; j < limit; j++)
 			z_value[j] = false;
-		var_sparsity.begin(i_var);
-		j = var_sparsity.next_element();
+		typename Vector_set::const_iterator itr(var_sparsity, i_var);
+		j = *itr;
 		while( j < limit )
 		{	z_value[j] = true;
-			j          = var_sparsity.next_element();
+			j          = *(++itr);
 		}
 		printOp(
 			std::cout,
