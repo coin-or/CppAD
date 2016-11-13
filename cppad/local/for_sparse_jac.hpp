@@ -328,13 +328,13 @@ void ADFun<Base>::ForSparseJacCase(
 				s[ i * q + j ] = false;
 		}
 		CPPAD_ASSERT_UNKNOWN( for_jac_sparse_pack_.end() == q );
-		for_jac_sparse_pack_.begin( dep_taddr_[i] );
-		j = for_jac_sparse_pack_.next_element();
+		sparse_pack::const_iterator itr(for_jac_sparse_pack_, dep_taddr_[i] );
+		j = *itr;
 		while( j < q )
 		{	if( transpose )
 				s[j * m + i] = true;
 			else	s[i * q + j] = true;
-			j = for_jac_sparse_pack_.next_element();
+			j = *(++itr);
 		}
 	}
 }
@@ -389,7 +389,7 @@ void ADFun<Base>::ForSparseJacCase(
 
 	// temporary indices
 	size_t i, j;
-	std::set<size_t>::const_iterator itr;
+	std::set<size_t>::const_iterator itr_1;
 	//
 	CPPAD_ASSERT_KNOWN(
 		q > 0,
@@ -411,9 +411,9 @@ void ADFun<Base>::ForSparseJacCase(
 	if( transpose )
 	{	for(i = 0; i < q; i++)
 		{	// add the elements that are present
-			itr = r[i].begin();
-			while( itr != r[i].end() )
-			{	j = *itr++;
+			itr_1 = r[i].begin();
+			while( itr_1 != r[i].end() )
+			{	j = *itr_1++;
 				CPPAD_ASSERT_KNOWN(
 				j < n,
 				"ForSparseJac: transpose is true and element of the set\n"
@@ -433,9 +433,9 @@ void ADFun<Base>::ForSparseJacCase(
 			CPPAD_ASSERT_UNKNOWN( play_.GetOp( ind_taddr_[i] ) == InvOp );
 
 			// add the elements that are present
-			itr = r[i].begin();
-			while( itr != r[i].end() )
-			{	j = *itr++;
+			itr_1 = r[i].begin();
+			while( itr_1 != r[i].end() )
+			{	j = *itr_1++;
 				CPPAD_ASSERT_KNOWN(
 					j < q,
 					"ForSparseJac: an element of the set r[i] "
@@ -463,13 +463,13 @@ void ADFun<Base>::ForSparseJacCase(
 		// extract results from for_jac_sparse_set_
 		// and add corresponding elements to sets in s
 		CPPAD_ASSERT_UNKNOWN( for_jac_sparse_set_.end() == q );
-		for_jac_sparse_set_.begin( dep_taddr_[i] );
-		j = for_jac_sparse_set_.next_element();
+		sparse_list::const_iterator itr_2(for_jac_sparse_set_, dep_taddr_[i] );
+		j = *itr_2;
 		while( j < q )
 		{	if( transpose )
 				s[j].insert(i);
 			else	s[i].insert(j);
-			j = for_jac_sparse_set_.next_element();
+			j = *(++itr_2);
 		}
 	}
 }
@@ -639,7 +639,7 @@ In this case
 template <class Base>
 void ADFun<Base>::ForSparseJacCheckpoint(
 	size_t                        q          ,
-	sparse_list&                  r          ,
+	const sparse_list&            r          ,
 	bool                          transpose  ,
 	bool                          dependency ,
 	sparse_list&                  s          )
@@ -671,21 +671,21 @@ void ADFun<Base>::ForSparseJacCheckpoint(
 	// set sparsity pattern for dependent variables
 	if( transpose )
 	{	for(size_t i = 0; i < q; i++)
-		{	r.begin(i);
-			size_t j = r.next_element();
+		{	sparse_list::const_iterator itr(r, i);
+			size_t j = *itr;
 			while( j < n )
 			{	for_jac_sparse_set_.add_element( ind_taddr_[j], i );
-				j = r.next_element();
+				j = *(++itr);
 			}
 		}
 	}
 	else
 	{	for(size_t j = 0; j < n; j++)
-		{	r.begin(j);
-			size_t i = r.next_element();
+		{	sparse_list::const_iterator itr(r, j);
+			size_t i = *itr;
 			while( i < q )
 			{	for_jac_sparse_set_.add_element( ind_taddr_[j], i );
-				i = r.next_element();
+				i = *(++itr);
 			}
 		}
 	}
@@ -711,14 +711,14 @@ void ADFun<Base>::ForSparseJacCheckpoint(
 
 		// extract the result from for_jac_sparse_set_
 		CPPAD_ASSERT_UNKNOWN( for_jac_sparse_set_.end() == q );
-		for_jac_sparse_set_.begin( dep_taddr_[i] );
-		size_t j = for_jac_sparse_set_.next_element();
+		sparse_list::const_iterator itr(for_jac_sparse_set_, dep_taddr_[i] );
+		size_t j = *itr;
 		while( j < q )
 		{	if( transpose )
 				s.add_element(j, i);
 			else
 				s.add_element(i, j);
-			j  = for_jac_sparse_set_.next_element();
+			j  = *(++itr);
 		}
 	}
 
