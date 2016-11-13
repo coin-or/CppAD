@@ -267,12 +267,12 @@ void ADFun<Base>::ForSparseHesCase(
 		CPPAD_ASSERT_UNKNOWN( play_.GetOp( ind_taddr_[i] ) == InvOp );
 
 		// extract the result from for_hes_sparsity
-		for_hes_sparsity.begin( ind_taddr_[i] );
-		size_t j = for_hes_sparsity.next_element();
+		sparse_pack::const_iterator itr(for_hes_sparsity, ind_taddr_[i] );
+		size_t j = *itr;
 		while( j < for_hes_sparsity.end() )
 		{	CPPAD_ASSERT_UNKNOWN( 0 < j )
 			h[ i * n + (j-1) ] = true;
-			j = for_hes_sparsity.next_element();
+			j = *(++itr);
 		}
 	}
 }
@@ -307,7 +307,7 @@ void ADFun<Base>::ForSparseHesCase(
 # ifndef NDEBUG
 	size_t m = Range();
 # endif
-	std::set<size_t>::const_iterator itr;
+	std::set<size_t>::const_iterator itr_1;
 	//
 	// check VectorSet is Simple Vector class with sets for elements
 	CheckSimpleVector<std::set<size_t>, VectorSet>(
@@ -325,9 +325,9 @@ void ADFun<Base>::ForSparseHesCase(
 	// sparsity pattern corresponding to r
 	sparse_list for_jac_sparsity;
 	for_jac_sparsity.resize(num_var_tape_, n + 1);
-	itr = r[0].begin();
-	while( itr != r[0].end() )
-	{	size_t i = *itr++;
+	itr_1 = r[0].begin();
+	while( itr_1 != r[0].end() )
+	{	size_t i = *itr_1++;
 		CPPAD_ASSERT_UNKNOWN( ind_taddr_[i] < n + 1 );
 		// ind_taddr_[i] is operator taddr for i-th independent variable
 		CPPAD_ASSERT_UNKNOWN( play_.GetOp( ind_taddr_[i] ) == InvOp );
@@ -346,9 +346,9 @@ void ADFun<Base>::ForSparseHesCase(
 	// sparsity pattern correspnding to s
 	sparse_list rev_jac_sparsity;
 	rev_jac_sparsity.resize(num_var_tape_, 1);
-	itr = s[0].begin();
-	while( itr != s[0].end() )
-	{	size_t i = *itr++;
+	itr_1 = s[0].begin();
+	while( itr_1 != s[0].end() )
+	{	size_t i = *itr_1++;
 		CPPAD_ASSERT_KNOWN(
 			i < m,
 			"ForSparseHes: an element of the set s[0] has value "
@@ -390,12 +390,12 @@ void ADFun<Base>::ForSparseHesCase(
 		CPPAD_ASSERT_UNKNOWN( play_.GetOp( ind_taddr_[i] ) == InvOp );
 
 		// extract the result from for_hes_sparsity
-		for_hes_sparsity.begin( ind_taddr_[i] );
-		size_t j = for_hes_sparsity.next_element();
+		sparse_list::const_iterator itr_2(for_hes_sparsity, ind_taddr_[i] );
+		size_t j = *itr_2;
 		while( j < for_hes_sparsity.end() )
 		{	CPPAD_ASSERT_UNKNOWN( 0 < j )
 				h[i].insert(j-1);
-			j = for_hes_sparsity.next_element();
+			j = *(++itr_2);
 		}
 	}
 }
@@ -544,13 +544,13 @@ void ADFun<Base>::ForSparseHesCheckpoint(
 
 		// extract the result from for_hes_sparsity
 		CPPAD_ASSERT_UNKNOWN( for_hes_sparsity.end() == q );
-		for_hes_sparsity.begin(j + 1);
-		size_t i = for_hes_sparsity.next_element();
+		sparse_list::const_iterator itr(for_hes_sparsity, .j + 1);
+		size_t i = *itr;
 		while( i < q )
 		{	if( transpose )
 				h.add_element(j,  i);
 			else	h.add_element(i, j);
-			i = for_hes_sparsity.next_element();
+			i = *(++itr);
 		}
 	}
 }
