@@ -732,13 +732,13 @@ VectorBase ADFun<Base>::SparseHessian(
 	sparsity_user2internal(s, p, n, n, transpose, error_msg);
 	k = 0;
 	for(i = 0; i < n; i++)
-	{	s.begin(i);
-		j = s.next_element();
+	{	typename Pattern_type::const_iterator itr(s, i);
+		j = *itr;
 		while( j != s.end() )
 		{	row.push_back(i);
 			col.push_back(j);
 			k++;
-			j = s.next_element();
+			j = *(++itr);
 		}
 	}
 	size_t K = k;

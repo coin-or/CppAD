@@ -970,13 +970,13 @@ VectorBase ADFun<Base>::SparseJacobian(
 
 		k = 0;
 		for(j = 0; j < n; j++)
-		{	s_transpose.begin(j);
-			i = s_transpose.next_element();
+		{	typename Pattern_type::const_iterator itr(s_transpose, j);
+			i = *itr;
 			while( i != s_transpose.end() )
 			{	row.push_back(i);
 				col.push_back(j);
 				k++;
-				i = s_transpose.next_element();
+				i = *(++itr);
 			}
 		}
 		size_t K = k;
@@ -1000,13 +1000,13 @@ VectorBase ADFun<Base>::SparseJacobian(
 
 		k = 0;
 		for(i = 0; i < m; i++)
-		{	s.begin(i);
-			j = s.next_element();
+		{	typename Pattern_type::const_iterator itr(s, i);
+			j = *itr;
 			while( j != s.end() )
 			{	row.push_back(i);
 				col.push_back(j);
 				k++;
-				j = s.next_element();
+				j = *(++itr);
 			}
 		}
 		size_t K = k;

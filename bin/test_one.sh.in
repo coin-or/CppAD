@@ -25,6 +25,11 @@ fi
 dir=`echo $1 | sed -e 's|/[^/]*$||'`
 file=`echo $1 | sed -e 's|.*/||'`
 extra="$2"
+if [ "$dir" == 'test_more/local' ]
+then
+	dir='test_more'
+	file="local/$file"
+fi
 # ---------------------------------------------------------------------------
 if [ "$dir" == '' ]
 then

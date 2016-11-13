@@ -70,10 +70,10 @@ bool test_no_other(void)
 	ok &= ! vec_set.is_element(source, source+2);
 	//
 	// now check the elements in set 0 by iterating over them
-	vec_set.begin(target);
-	ok &= vec_set.next_element() == source+1;
-	ok &= vec_set.next_element() == source+2;
-	ok &= vec_set.next_element() == end;
+	typename VectorSet::const_iterator itr(vec_set, target);
+	ok &= *itr     == source+1;
+	ok &= *(++itr) == source+2;
+	ok &= *(++itr) == end;
 	//
 	// now test clear
 	vec_set.clear(1);
