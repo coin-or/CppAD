@@ -36,6 +36,7 @@ $spell
 	gcc
 	sacado
 	chrono
+	const_iterator
 $$
 
 $section Changes and Additions to CppAD During 2016$$
@@ -45,6 +46,15 @@ The sections listed below contain a list of the changes to CppAD
 in reverse order by date.
 The purpose of these sections is to
 assist you in learning about changes between various versions of CppAD.
+
+$head 11-13$$
+Merged in the $code sparse$$ branch which has $code const_iterator$$,
+instead of $code next_element$$ for the
+$code sparse_list$$ and $code sparse_pack$$ classes.
+These classes are not part of the CppAD API and hence their specifications
+can change (as in this case).
+They can be used to get more efficient representations of
+$cref/sparsity patterns/glossary/Sparsity Pattern/$$.
 
 $head 10-27$$
 The optional $cref/optimize/checkpoint/optimize/$$ option
