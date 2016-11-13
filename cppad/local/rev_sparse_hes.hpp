@@ -306,13 +306,13 @@ void ADFun<Base>::RevSparseHesCase(
 
 		// extract the result from rev_hes_sparsity
 		CPPAD_ASSERT_UNKNOWN( rev_hes_sparsity.end() == q );
-		rev_hes_sparsity.begin(j + 1);
-		i = rev_hes_sparsity.next_element();
+		sparse_pack::const_iterator itr(rev_hes_sparsity, j + 1);
+		i = *itr;
 		while( i < q )
 		{	if( transpose )
 				h[ j * q + i ] = true;
 			else	h[ i * n + j ] = true;
-			i = rev_hes_sparsity.next_element();
+			i = *(++itr);
 		}
 	}
 }
@@ -366,7 +366,7 @@ void ADFun<Base>::RevSparseHesCase(
 	//
 	// temporary indices
 	size_t i, j;
-	std::set<size_t>::const_iterator itr;
+	std::set<size_t>::const_iterator itr_1;
 
 	// check VectorSet is Simple Vector class with sets for elements
 	CheckSimpleVector<std::set<size_t>, VectorSet>(
@@ -389,9 +389,9 @@ void ADFun<Base>::RevSparseHesCase(
 	RevJac.extend(num_var_tape_);
 	for(i = 0; i < num_var_tape_; i++)
 		RevJac[i] = false;
-	itr = s[0].begin();
-	while( itr != s[0].end() )
-	{	i = *itr++;
+	itr_1 = s[0].begin();
+	while( itr_1 != s[0].end() )
+	{	i = *itr_1++;
 		CPPAD_ASSERT_KNOWN(
 			i < m,
 			"RevSparseHes: an element of the set s[0] has value "
@@ -428,13 +428,13 @@ void ADFun<Base>::RevSparseHesCase(
 		// extract the result from rev_hes_sparsity
 		// and add corresponding elements to result sets in h
 		CPPAD_ASSERT_UNKNOWN( rev_hes_sparsity.end() == q );
-		rev_hes_sparsity.begin(j+1);
-		i = rev_hes_sparsity.next_element();
+		sparse_list::const_iterator itr_2(rev_hes_sparsity, j+1);
+		i = *itr_2;
 		while( i < q )
 		{	if( transpose )
 				h[j].insert(i);
 			else	h[i].insert(j);
-			i = rev_hes_sparsity.next_element();
+			i = *(++itr_2);
 		}
 	}
 }
@@ -607,13 +607,13 @@ void ADFun<Base>::RevSparseHesCheckpoint(
 
 		// extract the result from rev_hes_sparsity
 		CPPAD_ASSERT_UNKNOWN( rev_hes_sparsity.end() == q );
-		rev_hes_sparsity.begin(j + 1);
-		size_t i = rev_hes_sparsity.next_element();
+		sparse_list::const_iterator itr(rev_hes_sparsity, j + 1);
+		size_t i = *itr;
 		while( i < q )
 		{	if( transpose )
 				h.add_element(j,  i);
 			else	h.add_element(i, j);
-			i = rev_hes_sparsity.next_element();
+			i = *(++itr);
 		}
 	}
 }

@@ -367,7 +367,7 @@ public:
 	// (used by checkpoint functions only)
 	void RevSparseJacCheckpoint(
 		size_t                        q          ,
-		sparse_list&                  r          ,
+		const sparse_list&            r          ,
 		bool                          transpose  ,
 		bool                          dependency ,
 		sparse_list&                  s
