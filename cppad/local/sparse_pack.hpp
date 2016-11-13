@@ -46,12 +46,6 @@ private:
 	size_t n_pack_;
 	/// Data for all the sets.
 	pod_vector<Pack>  data_;
-	/// index for which we were retrieving next_element
-	/// (use n_set_ if no such index exists).
-	size_t next_index_;
-	/// Next element to start search at
-	/// (use end_ for no such element exists; i.e., past end of the set).
-	size_t next_element_;
 public:
 	/// declare a const iterator
 	typedef sparse_pack_const_iterator const_iterator;
@@ -60,11 +54,9 @@ public:
 	/*! Default constructor (no sets)
 	*/
 	sparse_pack(void) :
-	n_set_(0)                     ,
-	end_(0)                       ,
-	n_pack_(0)                    ,
-	next_index_(0)                ,
-	next_element_(0)
+	n_set_(0)      ,
+	end_(0)        ,
+	n_pack_(0)
 	{ }
 	// -----------------------------------------------------------------
 	/*! Make use of copy constructor an error
@@ -114,10 +106,6 @@ public:
 			while(i--)
 				data_[i] = zero;
 		}
-
-		// values that signify past end of list
-		next_index_   = n_set_;
-		next_element_ = end_;
 	}
 	// -----------------------------------------------------------------
 	/*! Add one element to a set.
@@ -163,71 +151,6 @@ public:
 		size_t k  = element - j * n_bit_;
 		Pack mask = one << k;
 		return (data_[ index * n_pack_ + j] & mask) != zero;
-	}
-	// -----------------------------------------------------------------
-	/*! Begin retrieving elements from one of the sets.
-
-	\param index
-	is the index for the set that is going to be retrieved.
-	The elements of the set are retrieved in increasing order.
-
-	\par Checked Assertions
-	\li index  < n_set_
-	*/
-	void begin(size_t index)
-	{	// initialize element to search for in this set
-		CPPAD_ASSERT_UNKNOWN( index < n_set_ );
-		next_index_   = index;
-		next_element_ = 0;
-	}
-
-	/*! Get the next element from the current retrieval set.
-
-	\return
-	is the next element in the set with index
-	specified by the previous call to \c begin.
-	If no such element exists, \c this->end() is returned.
-	*/
-	size_t next_element(void)
-	{	static Pack one(1);
-		CPPAD_ASSERT_UNKNOWN( next_index_ < n_set_ );
-		CPPAD_ASSERT_UNKNOWN( next_element_ <= end_ );
-
-		if( next_element_ == end_ )
-			return end_;
-
-		// initialize packed data index
-		size_t j  = next_element_ / n_bit_;
-
-		// initialize bit index
-		size_t k  = next_element_ - j * n_bit_;
-
-		// start search at this packed value
-		Pack check = data_[ next_index_ * n_pack_ + j ];
-		while( true )
-		{	// increment next element before checking this one
-			next_element_++;
-			// check if this element is in the set
-			if( check & (one << k) )
-				return next_element_ - 1;
-			// check if no more elements in the set
-			if( next_element_ == end_ )
-				return end_;
-			// increment bit index in Pack value so corresponds to
-			// next element
-			k++;
-			CPPAD_ASSERT_UNKNOWN( k <= n_bit_ );
-			if( k == n_bit_ )
-			{	// get next packed value
-				k     = 0;
-				j++;
-				CPPAD_ASSERT_UNKNOWN( j < n_pack_ );
-				check = data_[ next_index_ * n_pack_ + j ];
-			}
-		}
-		// should never get here
-		CPPAD_ASSERT_UNKNOWN(false);
-		return end_;
 	}
 	// -----------------------------------------------------------------
 	/*! Assign the empty set to one of the sets.

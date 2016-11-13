@@ -50,10 +50,6 @@ private:
 	/// Possible elements in each set are 0, 1, ..., end_ - 1;
 	size_t end_;
 
-	/// This index is used as an iterator for one list and points to the
-	/// next pair for the list.
-	pair_size_t next_pair_;
-
 	/// number of elements in data_ that have been allocated
 	/// and are no longer being used.
 	size_t data_not_used_;
@@ -379,7 +375,7 @@ public:
 	sparse_list(void) :
 	end_(0)                   ,
 	data_not_used_(0)
-	{	next_pair_.next = 0; }
+	{ }
 	// -----------------------------------------------------------------
 	/// Destructor
 	~sparse_list(void)
@@ -409,11 +405,9 @@ public:
 			data_not_used_  = 0;
 			end_            = 0;
 			//
-			next_pair_.next = 0;
 			return;
 		}
 		end_                   = end_in;
-		next_pair_.next        = 0;
 		//
 		start_.erase();
 		start_.extend(n_set_in);
@@ -509,47 +503,6 @@ public:
 		data_[previous].next  = insert;
 		data_[insert].value   = element;
 		//
-	}
-	// -----------------------------------------------------------------
-	/*! Begin retrieving elements from one of the sets.
-
-	\param index
-	is the index for the set that is going to be retrieved.
-	The elements of the set are retrieved in increasing order.
-	*/
-	void begin(size_t index)
-	{	// initialize element to search for in this set
-		CPPAD_ASSERT_UNKNOWN( index < start_.size() );
-		size_t start = start_[index];
-		if( start == 0 )
-			next_pair_.next = 0;
-		else
-		{	CPPAD_ASSERT_UNKNOWN( reference_count(index) > 0 );
-			next_pair_.next  = data_[start].next;
-		}
-		return;
-	}
-	// -----------------------------------------------------------------
-	/*!
-	Get the next element from the current retrieval set.
-
-	\return
-	is the next element in the set with index
-	specified by the previous call to begin.
-	If no such element exists, this->end() is returned.
-
-	\par Assumption
-	There is no call to add_element or binary_union
-	since the previvious begin
-	*/
-	size_t next_element(void)
-	{	if( next_pair_.next == 0 )
-			return end_;
-
-		next_pair_     = data_[next_pair_.next];
-		size_t element = next_pair_.value;
-
-		return element;
 	}
 	// -----------------------------------------------------------------
 	/*! Assign the empty set to one of the sets.

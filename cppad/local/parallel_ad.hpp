@@ -98,10 +98,10 @@ void parallel_ad(void)
 	sparse_pack sp;
 	sp.resize(1, 1);       // so can call add_element
 	sp.add_element(0, 0);  // has static data
-	sp.begin(0);           // so can call next_element
-	sp.next_element();     // has static data
 	sp.clear(0);           // has static data
 	sp.is_element(0, 0);   // has static data
+	sparse_pack::const_iterator itr(sp, 0); // has static data
+	++itr;                                  // has static data
 
 	// statics that depend on the value of Base
 	AD<Base>::tape_id_handle(0);
