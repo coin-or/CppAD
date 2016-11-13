@@ -103,7 +103,7 @@ void RevHesSweep(
 	size_t                n,
 	size_t                numvar,
 	player<Base>         *play,
-	Vector_set&           for_jac_sparse, // should be const
+	const Vector_set&     for_jac_sparse,
 	bool*                 RevJac,
 	Vector_set&           rev_hes_sparse
 )
@@ -848,16 +848,17 @@ void RevHesSweep(
 			// variable as integers
 			user_x[user_j] = CppAD::numeric_limits<Base>::quiet_NaN();
 			//
-			for_jac_sparse.begin(arg[0]);
-			i = for_jac_sparse.next_element();
-			while( i < user_q )
-			{	if( user_pack )
-					pack_r[ user_j * user_q + i ] = true;
-				if( user_bool )
-					bool_r[ user_j * user_q + i ] = true;
-				if( user_set )
-					set_r[user_j].insert(i);
-				i = for_jac_sparse.next_element();
+			{	typename Vector_set::const_iterator itr(for_jac_sparse, arg[0]);
+				i = *itr;
+				while( i < user_q )
+				{	if( user_pack )
+						pack_r[ user_j * user_q + i ] = true;
+					if( user_bool )
+						bool_r[ user_j * user_q + i ] = true;
+					if( user_set )
+						set_r[user_j].insert(i);
+					i = *(++itr);
+				}
 			}
 			if( user_j == 0 )
 				user_state = user_start;
@@ -883,16 +884,17 @@ void RevHesSweep(
 			{
 				user_s[user_i] = true;
 			}
-			rev_hes_sparse.begin(i_var);
-			j = rev_hes_sparse.next_element();
-			while( j < user_q )
-			{	if( user_pack )
-					pack_u[user_i * user_q + j] = true;
-				if( user_bool )
-					bool_u[user_i * user_q + j] = true;
-				if( user_set )
-					set_u[user_i].insert(j);
-				j = rev_hes_sparse.next_element();
+			{	typename Vector_set::const_iterator itr(rev_hes_sparse, i_var);
+				j = *itr;
+				while( j < user_q )
+				{	if( user_pack )
+						pack_u[user_i * user_q + j] = true;
+					if( user_bool )
+						bool_u[user_i * user_q + j] = true;
+					if( user_set )
+						set_u[user_i].insert(j);
+					j = *(++itr);
+				}
 			}
 			if( user_i == 0 )
 				user_state = user_arg;
@@ -932,17 +934,17 @@ void RevHesSweep(
 		{	zf_value[j] = false;
 			zh_value[j] = false;
 		}
-		for_jac_sparse.begin(i_var);;
-		j = for_jac_sparse.next_element();;
+		typename Vector_set::const_iterator itr_jac(for_jac_sparse, i_var);
+		j = *itr_jac;
 		while( j < limit )
 		{	zf_value[j] = true;
-			j = for_jac_sparse.next_element();
+			j = *(++itr_jac);
 		}
-		rev_hes_sparse.begin(i_var);;
-		j = rev_hes_sparse.next_element();;
+		typename Vector_set::const_iterator itr_hes(rev_hes_sparse, i_var);
+		j = *itr_hes;
 		while( j < limit )
 		{	zh_value[j] = true;
-			j = rev_hes_sparse.next_element();
+			j = *(++itr_hes);
 		}
 		printOp(
 			std::cout,

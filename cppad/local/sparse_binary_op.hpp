@@ -184,7 +184,7 @@ inline void reverse_sparse_hessian_addsub_op(
 	size_t               i_z                ,
 	const addr_t*        arg                ,
 	bool*                jac_reverse        ,
-	Vector_set&          for_jac_sparsity   ,
+	const Vector_set&    for_jac_sparsity   ,
 	Vector_set&          rev_hes_sparsity   )
 {
 	// check assumptions
@@ -216,7 +216,7 @@ inline void reverse_sparse_hessian_mul_op(
 	size_t               i_z                ,
 	const addr_t*        arg                ,
 	bool*                jac_reverse        ,
-	Vector_set&          for_jac_sparsity   ,
+	const Vector_set&    for_jac_sparsity   ,
 	Vector_set&          rev_hes_sparsity   )
 {
 	// check assumptions
@@ -254,7 +254,7 @@ inline void reverse_sparse_hessian_div_op(
 	size_t               i_z                ,
 	const addr_t*        arg                ,
 	bool*                jac_reverse        ,
-	Vector_set&          for_jac_sparsity   ,
+	const Vector_set&    for_jac_sparsity   ,
 	Vector_set&          rev_hes_sparsity   )
 {
 	// check assumptions
@@ -294,7 +294,7 @@ inline void reverse_sparse_hessian_pow_op(
 	size_t               i_z                ,
 	const addr_t*        arg                ,
 	bool*                jac_reverse        ,
-	Vector_set&          for_jac_sparsity   ,
+	const Vector_set&    for_jac_sparsity   ,
 	Vector_set&          rev_hes_sparsity   )
 {
 	// check assumptions

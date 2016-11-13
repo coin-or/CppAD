@@ -157,7 +157,7 @@ inline void reverse_sparse_hessian_linear_unary_op(
 	size_t              i_z               ,
 	size_t              i_x               ,
 	bool*               rev_jacobian      ,
-	Vector_set&         for_jac_sparsity  ,
+	const Vector_set&   for_jac_sparsity  ,
 	Vector_set&         rev_hes_sparsity  )
 {
 	// check assumptions
@@ -190,7 +190,7 @@ inline void reverse_sparse_hessian_nonlinear_unary_op(
 	size_t              i_z               ,
 	size_t              i_x               ,
 	bool*               rev_jacobian      ,
-	Vector_set&         for_jac_sparsity  ,
+	const Vector_set&   for_jac_sparsity  ,
 	Vector_set&         rev_hes_sparsity  )
 {
 	// check assumptions
