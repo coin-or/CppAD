@@ -297,7 +297,7 @@ private:
 	const size_t             end_;
 
 	/// index of this set in the vector of sets;
-	const size_t             next_index_;
+	const size_t             index_;
 
 	/// value of the next element in this set
 	/// (use end_ for no such element exists; i.e., past end of the set).
@@ -310,13 +310,13 @@ public:
 	n_bit_     ( pack.n_bit_ )        ,
 	n_pack_    ( pack.n_pack_ )       ,
 	end_       ( pack.end_ )          ,
-	next_index_( index )
+	index_     ( index )
 	{	static Pack one(1);
 		CPPAD_ASSERT_UNKNOWN( index < pack.n_set_ );
 		//
 		next_element_ = 0;
 		if( next_element_ < end_ )
-		{	Pack check = data_[ next_index_ * n_pack_ + 0 ];
+		{	Pack check = data_[ index_ * n_pack_ + 0 ];
 			if( check & one )
 				return;
 		}
@@ -342,32 +342,36 @@ public:
 		// initialize bit index
 		size_t k  = next_element_ - j * n_bit_;
 
+		// initialize mask
+		size_t mask = one << k;
+
 		// start search at this packed value
-		Pack check = data_[ next_index_ * n_pack_ + j ];
+		Pack check = data_[ index_ * n_pack_ + j ];
+		//
 		while( true )
 		{	// check if this element is in the set
-			if( check & (one << k) )
+			if( check & mask )
 				return *this;
 
 			// increment next element before checking this one
 			next_element_++;
-
-			// check if there are more elements in the set
 			if( next_element_ == end_ )
 				return *this;
 
-			// increment bit index in Pack value so corresponds to
-			// next_element_
+			// shift mask to left one bit so corresponds to next_element_
+			// (use mask <<= 1. not one << k, so compiler knows value)
 			k++;
+			mask <<= 1;
 			CPPAD_ASSERT_UNKNOWN( k <= n_bit_ );
 
 			// check if we must go to next packed data index
 			if( k == n_bit_ )
 			{	// get next packed value
 				k     = 0;
+				mask  = one;
 				j++;
 				CPPAD_ASSERT_UNKNOWN( j < n_pack_ );
-				check = data_[ next_index_ * n_pack_ + j ];
+				check = data_[ index_ * n_pack_ + j ];
 			}
 		}
 		// should never get here

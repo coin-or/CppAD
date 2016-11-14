@@ -796,14 +796,14 @@ private:
 	/// data for the entire vector of sets
 	const pod_vector<pair_size_t>& data_;
 
-	/// Possible elements in each set are 0, 1, ..., end_ - 1;
+	/// Possible elements in a list are 0, 1, ..., end_ - 1;
 	const size_t                   end_;
 
 	/// next element in the singly linked list
 	/// (next_pair_.value == end_ for past end of list)
 	pair_size_t                    next_pair_;
 public:
-	/// construct a const_iterator for a set in a sparse_pack object
+	/// construct a const_iterator for a list in a sparse_list object
 	sparse_list_const_iterator (const sparse_list& list, size_t index)
 	:
 	data_( list.data_ )    ,
@@ -815,17 +815,20 @@ public:
 			next_pair_.value = end_;
 		}
 		else
-		{	CPPAD_ASSERT_UNKNOWN( list.reference_count(index) > 0 );
-			// value for start entry is reference counter for this list
+		{	// value for this entry is reference count for list
+			CPPAD_ASSERT_UNKNOWN( data_[start].value > 0 );
+
+			// index where list truely starts
 			size_t next = data_[start].next;
 			CPPAD_ASSERT_UNKNOWN( next != 0 );
-			// next entry is true start of the list
+
+			// true first entry in the list
 			next_pair_ = data_[next];
 			CPPAD_ASSERT_UNKNOWN( next_pair_.value < end_ );
 		}
 	}
 
-	/// advance to next element in this set
+	/// advance to next element in this list
 	sparse_list_const_iterator& operator++(void)
 	{	if( next_pair_.next == 0 )
 			next_pair_.value = end_;

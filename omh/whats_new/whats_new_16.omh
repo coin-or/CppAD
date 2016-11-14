@@ -47,6 +47,12 @@ in reverse order by date.
 The purpose of these sections is to
 assist you in learning about changes between various versions of CppAD.
 
+$head 11-14$$
+Increase the speed of the $code sparse_pack$$ class.
+This improves the speed for
+$cref/vector of boolean/glossary/Sparsity Pattern/Vector of Boolean/$$
+sparsity pattern calculations.
+
 $head 11-13$$
 Merged in the $code sparse$$ branch which has $code const_iterator$$,
 instead of $code next_element$$ for the
