@@ -817,21 +817,22 @@ public:
 		else
 		{	CPPAD_ASSERT_UNKNOWN( list.reference_count(index) > 0 );
 			// value for start entry is reference counter for this list
-			next_pair_.next = data_[start].next;
-			// advance to true first entry in this list
-			CPPAD_ASSERT_UNKNOWN( next_pair_.next != 0 );
-			++(*this);
+			size_t next = data_[start].next;
+			CPPAD_ASSERT_UNKNOWN( next != 0 );
+			// next entry is true start of the list
+			next_pair_ = data_[next];
+			CPPAD_ASSERT_UNKNOWN( next_pair_.value < end_ );
 		}
 	}
 
 	/// advance to next element in this set
 	sparse_list_const_iterator& operator++(void)
-	{	if( next_pair_.next != 0 )
+	{	if( next_pair_.next == 0 )
+			next_pair_.value = end_;
+		else
 		{	next_pair_  = data_[next_pair_.next];
 			CPPAD_ASSERT_UNKNOWN( next_pair_.value < end_ );
 		}
-		else
-			next_pair_.value = end_;
 		return *this;
 	}
 
