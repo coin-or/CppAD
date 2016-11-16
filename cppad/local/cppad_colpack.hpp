@@ -13,7 +13,7 @@ Please visit http://www.coin-or.org/CppAD/ for information on other licenses.
 # define CPPAD_LOCAL_CPPAD_COLPACK_HPP
 # if CPPAD_HAS_COLPACK
 
-namespace CppAD { // BEGIN_CPPAD_NAMESPACE
+namespace CppAD { namespace local { // BEGIN_CPPAD_LOCAL_NAMESPACE
 /*!
 \file cppad_colpack.hpp
 External interface to Colpack routines used by cppad.
@@ -97,7 +97,7 @@ extern void cppad_colpack_symmetric(
 	const CppAD::vector<unsigned int*>&  adolc_pattern
 );
 
-} // END_CPPAD_NAMESPACE
+} } // END_CPPAD_LOCAL_NAMESPACE
 
 # endif
 # endif

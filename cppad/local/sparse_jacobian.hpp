@@ -410,11 +410,11 @@ size_t ADFun<Base>::SparseJacobianFor(
 		// execute coloring algorithm
 		color.resize(n);
 		if(	work.color_method == "cppad" )
-			color_general_cppad(p_transpose, col, row, color);
+			local::color_general_cppad(p_transpose, col, row, color);
 		else if( work.color_method == "colpack" )
 		{
 # if CPPAD_HAS_COLPACK
-			color_general_colpack(p_transpose, col, row, color);
+			local::color_general_colpack(p_transpose, col, row, color);
 # else
 			CPPAD_ASSERT_KNOWN(
 				false,
@@ -607,11 +607,11 @@ size_t ADFun<Base>::SparseJacobianRev(
 		// execute the coloring algorithm
 		color.resize(m);
 		if(	work.color_method == "cppad" )
-			color_general_cppad(p, row, col, color);
+			local::color_general_cppad(p, row, col, color);
 		else if( work.color_method == "colpack" )
 		{
 # if CPPAD_HAS_COLPACK
-			color_general_colpack(p, row, col, color);
+			local::color_general_colpack(p, row, col, color);
 # else
 			CPPAD_ASSERT_KNOWN(
 				false,

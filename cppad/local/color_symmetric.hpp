@@ -3,6 +3,7 @@
 # define CPPAD_LOCAL_COLOR_SYMMETRIC_HPP
 
 # include <cppad/configure.hpp>
+# include <cppad/local/cppad_colpack.hpp>
 
 /* --------------------------------------------------------------------------
 CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-16 Bradley M. Bell
@@ -14,6 +15,8 @@ the terms of the
 A copy of this license is included in the COPYING file of this distribution.
 Please visit http://www.coin-or.org/CppAD/ for information on other licenses.
 -------------------------------------------------------------------------- */
+
+namespace CppAD { namespace local { // BEGIN_CPPAD_LOCAL_NAMESPACE
 /*!
 \file color_symmetric.hpp
 Coloring algorithm for a symmetric sparse matrix.
@@ -327,5 +330,7 @@ void color_symmetric_colpack(
 	return;
 # endif // CPPAD_HAS_COLPACK
 }
+
+} } // END_CPPAD_LOCAL_NAMESPACE
 
 # endif

@@ -468,13 +468,13 @@ size_t ADFun<Base>::SparseHessianCompute(
 		// execute coloring algorithm
 		color.resize(n);
 		if( work.color_method == "cppad.general" )
-			color_general_cppad(sparsity, row, col, color);
+			local::color_general_cppad(sparsity, row, col, color);
 		else if( work.color_method == "cppad.symmetric" )
-			color_symmetric_cppad(sparsity, row, col, color);
+			local::color_symmetric_cppad(sparsity, row, col, color);
 		else if( work.color_method == "colpack.star" )
 		{
 # if CPPAD_HAS_COLPACK
-			color_symmetric_colpack(sparsity, row, col, color);
+			local::color_symmetric_colpack(sparsity, row, col, color);
 # else
 			CPPAD_ASSERT_KNOWN(
 				false,

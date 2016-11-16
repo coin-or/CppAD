@@ -12,9 +12,11 @@ the terms of the
 A copy of this license is included in the COPYING file of this distribution.
 Please visit http://www.coin-or.org/CppAD/ for information on other licenses.
 -------------------------------------------------------------------------- */
+
+# include <cppad/configure.hpp>
 # include <cppad/local/cppad_colpack.hpp>
 
-namespace CppAD { // BEGIN_CPPAD_NAMESPACE
+namespace CppAD { namespace local { // BEGIN_CPPAD_LOCAL_NAMESPACE
 /*!
 \file color_general.hpp
 Coloring algorithm for a general sparse matrix.
@@ -281,5 +283,5 @@ void color_general_colpack(
 }
 # endif // CPPAD_HAS_COLPACK
 
-} // END_CPPAD_NAMESPACE
+} } // END_CPPAD_LOCAL_NAMESPACE
 # endif
