@@ -147,7 +147,7 @@ void forward0sweep(
 	bool                  print,
 	size_t                n,
 	size_t                numvar,
-	player<Base>*         play,
+	local::player<Base>*         play,
 	size_t                J,
 	Base*                 taylor,
 	bool*                 cskip_op,

@@ -177,7 +177,7 @@ void ReverseSweep(
 	size_t                      d,
 	size_t                      n,
 	size_t                      numvar,
-	player<Base>*               play,
+	local::player<Base>*               play,
 	size_t                      J,
 	const Base*                 Taylor,
 	size_t                      K,

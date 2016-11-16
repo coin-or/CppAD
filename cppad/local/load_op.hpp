@@ -143,7 +143,7 @@ In this case, the error above should be detected during tape recording.
 */
 template <class Base>
 inline void forward_load_op_0(
-	player<Base>*  play        ,
+	local::player<Base>*  play        ,
 	size_t         i_z         ,
 	const addr_t*  arg         ,
 	const Base*    parameter   ,
@@ -246,7 +246,7 @@ Zero order forward mode implementation of op = LdpOp.
 */
 template <class Base>
 inline void forward_load_p_op_0(
-	player<Base>*  play        ,
+	local::player<Base>*  play        ,
 	size_t         i_z         ,
 	const addr_t*  arg         ,
 	const Base*    parameter   ,
@@ -289,7 +289,7 @@ Zero order forward mode implementation of op = LdvOp.
 */
 template <class Base>
 inline void forward_load_v_op_0(
-	player<Base>*  play        ,
+	local::player<Base>*  play        ,
 	size_t         i_z         ,
 	const addr_t*  arg         ,
 	const Base*    parameter   ,
@@ -411,7 +411,7 @@ is set to the k-order Taylor coefficient for z in the ell-th direction.
 */
 template <class Base>
 inline void forward_load_op(
-	const player<Base>*  play                 ,
+	const local::player<Base>*  play                 ,
 	OpCode               op                   ,
 	size_t               p                    ,
 	size_t               q                    ,

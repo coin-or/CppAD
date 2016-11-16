@@ -18,6 +18,16 @@ Please visit http://www.coin-or.org/CppAD/ for information on other licenses.
 # include <cstdint>
 # endif
 
+/*!
+\file declare_ad.hpp CppAD forward declarations; i.e., before definition
+*/
+
+namespace CppAD { namespace local { // BEGIN_CPPAD_LOCAL_NAMESPACE
+
+template <class Base> class player;
+
+} } // END_CPPAD_LOCAL_NAMESPACE
+
 namespace CppAD {
 	// The conditional expression operator enum type
 	enum CompareOp
@@ -41,7 +51,6 @@ namespace CppAD {
 	template <class Base> class ADTape;
 	template <class Base> class atomic_base;
 	template <class Base> class discrete;
-	template <class Base> class player;
 	template <class Base> class recorder;
 	template <class Base> class VecAD;
 	template <class Base> class VecAD_reference;

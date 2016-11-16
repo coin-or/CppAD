@@ -30,7 +30,7 @@ it records operations of type AD< \a Base >.
 */
 template <class Base>
 class recorder {
-	friend class player<Base>;
+	friend class local::player<Base>;
 
 private:
 	/// operator index at which to abort recording with an error

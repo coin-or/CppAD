@@ -127,7 +127,7 @@ private:
 	pod_vector<addr_t> load_op_;
 
 	/// the operation sequence corresponding to this object
-	player<Base> play_;
+	local::player<Base> play_;
 
 	/// Packed results of the forward mode Jacobian sparsity calculations.
 	/// for_jac_sparse_pack_.n_set() != 0  implies other sparsity results

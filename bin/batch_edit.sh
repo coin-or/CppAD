@@ -17,7 +17,10 @@ move_list='
 move_sed='s|mat_div|mat_inv|'
 #
 cat << EOF > junk.sed
-s|high_resolution_clock|steady_clock|
+s|player<Base>\\*\\( *\\)play|local::player<Base>*\\1play|
+s|player<Base>\\( *\\)\\*play|local::player<Base>*\\1play|
+s|player<Base>\\( *\\)play|local::player<Base>\\1play|
+s|friend class player<Base>|friend class local::player<Base>|
 EOF
 # -----------------------------------------------------------------------------
 if [ $0 != "bin/batch_edit.sh" ]

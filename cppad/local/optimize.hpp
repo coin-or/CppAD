@@ -1416,7 +1416,7 @@ void optimize_run(
 	const std::string&           options   ,
 	size_t                       n         ,
 	CppAD::vector<size_t>&       dep_taddr ,
-	player<Base>*                play      ,
+	local::player<Base>*                play      ,
 	recorder<Base>*              rec       )
 {
 	// nan with type Base
