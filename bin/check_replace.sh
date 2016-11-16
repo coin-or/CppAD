@@ -4,7 +4,7 @@
 # CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-16 Bradley M. Bell
 #
 # CppAD is distributed under multiple licenses. This distribution is under
-# the terms of the 
+# the terms of the
 #                     Eclipse Public License Version 1.0.
 #
 # A copy of this license is included in the COPYING file of this distribution.
@@ -23,14 +23,14 @@ check_replace() {
 	if ! diff $replace_file $new_file > /dev/null
 	then
 		cat << EOF
-check_replace.sh: Error: 
+check_replace.sh: Error:
 The replacement text in $replace_file
-does not match its definition in $define_file. 
+does not match its definition in $define_file.
 Execute the following command to fix this:
-	mv $new_file $replace_file 
+	mv $new_file $replace_file
 EOF
 		exit 1
-	fi 
+	fi
 	rm $new_file
 }
 # -----------------------------------------------------------------------------

@@ -128,8 +128,8 @@ $end
 # include <stack>
 # include <iterator>
 
-namespace CppAD { // BEGIN_CPPAD_NAMESPACE
-namespace optimize { // BEGIN_CPPAD_OPTIMIZE_NAMESPACE
+// BEGIN_CPPAD_LOCAL_OPTIMIZE_NAMESPACE
+namespace CppAD { namespace local { namespace optimize  {
 /*!
 \file optimize.hpp
 Routines for optimizing a tape
@@ -910,7 +910,7 @@ struct_size_pair record_pv(
 	size_t                                             current        ,
 	size_t                                             npar           ,
 	const Base*                                        par            ,
-	local::recorder<Base>*                                    rec            ,
+	recorder<Base>*                                    rec            ,
 	OpCode                                             op             ,
 	const addr_t*                                      arg            )
 {
@@ -1013,7 +1013,7 @@ struct_size_pair record_vp(
 	size_t                                             current        ,
 	size_t                                             npar           ,
 	const Base*                                        par            ,
-	local::recorder<Base>*                                    rec            ,
+	recorder<Base>*                                    rec            ,
 	OpCode                                             op             ,
 	const addr_t*                                      arg            )
 {
@@ -1113,7 +1113,7 @@ struct_size_pair record_vv(
 	size_t                                             current        ,
 	size_t                                             npar           ,
 	const Base*                                        par            ,
-	local::recorder<Base>*                                    rec            ,
+	recorder<Base>*                                    rec            ,
 	OpCode                                             op             ,
 	const addr_t*                                      arg            )
 {
@@ -1240,7 +1240,7 @@ struct_size_pair record_csum(
 	size_t                                             current        ,
 	size_t                                             npar           ,
 	const Base*                                        par            ,
-	local::recorder<Base>*                                    rec            ,
+	recorder<Base>*                                    rec            ,
 	struct_csum_stacks&                              work           )
 {
 
@@ -1416,8 +1416,8 @@ void optimize_run(
 	const std::string&           options   ,
 	size_t                       n         ,
 	CppAD::vector<size_t>&       dep_taddr ,
-	local::player<Base>*                play      ,
-	local::recorder<Base>*              rec       )
+	player<Base>*                play      ,
+	recorder<Base>*              rec       )
 {
 	// nan with type Base
 	Base base_nan = Base( std::numeric_limits<double>::quiet_NaN() );
@@ -3003,7 +3003,9 @@ void optimize_run(
 	}
 }
 
-} // END_CPPAD_OPTIMIZE_NAMESPACE
+} } } // END_CPPAD_LOCAL_OPTIMIZE_NAMESPACE
+
+namespace CppAD { // BEGIN_CPPAD_NAMESPACE
 
 /*!
 Optimize a player object operation sequence
@@ -3057,7 +3059,7 @@ void ADFun<Base>::optimize(const std::string& options)
 # endif
 
 	// create the optimized recording
-	CppAD::optimize::optimize_run<Base>(options, n, dep_taddr_, &play_, &rec);
+	local::optimize::optimize_run<Base>(options, n, dep_taddr_, &play_, &rec);
 
 	// number of variables in the recording
 	num_var_tape_  = rec.num_var_rec();
