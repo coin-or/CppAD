@@ -14,7 +14,7 @@ Please visit http://www.coin-or.org/CppAD/ for information on other licenses.
 # include <cppad/local/hash_code.hpp>
 # include <cppad/local/pod_vector.hpp>
 
-namespace CppAD { // BEGIN_CPPAD_NAMESPACE
+namespace CppAD { namespace local { // BEGIN_CPPAD_LOCAL_NAMESPACE
 /*!
 \file recorder.hpp
 File used to define the recorder class.
@@ -30,7 +30,7 @@ it records operations of type AD< \a Base >.
 */
 template <class Base>
 class recorder {
-	friend class local::player<Base>;
+	friend class player<Base>;
 
 private:
 	/// operator index at which to abort recording with an error
@@ -583,5 +583,5 @@ inline size_t recorder<Base>::PutTxt(const char *text)
 // -------------------------------------------------------------------------
 
 
-} // END_CPPAD_NAMESPACE
+} } // END_CPPAD_LOCAL_NAMESPACE
 # endif

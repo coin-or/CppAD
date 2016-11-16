@@ -104,7 +104,7 @@ private:
 	/// Set by Independent and effectively const
 	size_t         size_independent_;
 	/// This is where the information is recorded.
-	recorder<Base>              Rec_;
+	local::recorder<Base>              Rec_;
 	// ----------------------------------------------------------------------
 	// private functions
 	//

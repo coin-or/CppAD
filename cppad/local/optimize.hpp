@@ -910,7 +910,7 @@ struct_size_pair record_pv(
 	size_t                                             current        ,
 	size_t                                             npar           ,
 	const Base*                                        par            ,
-	recorder<Base>*                                    rec            ,
+	local::recorder<Base>*                                    rec            ,
 	OpCode                                             op             ,
 	const addr_t*                                      arg            )
 {
@@ -1013,7 +1013,7 @@ struct_size_pair record_vp(
 	size_t                                             current        ,
 	size_t                                             npar           ,
 	const Base*                                        par            ,
-	recorder<Base>*                                    rec            ,
+	local::recorder<Base>*                                    rec            ,
 	OpCode                                             op             ,
 	const addr_t*                                      arg            )
 {
@@ -1113,7 +1113,7 @@ struct_size_pair record_vv(
 	size_t                                             current        ,
 	size_t                                             npar           ,
 	const Base*                                        par            ,
-	recorder<Base>*                                    rec            ,
+	local::recorder<Base>*                                    rec            ,
 	OpCode                                             op             ,
 	const addr_t*                                      arg            )
 {
@@ -1240,7 +1240,7 @@ struct_size_pair record_csum(
 	size_t                                             current        ,
 	size_t                                             npar           ,
 	const Base*                                        par            ,
-	recorder<Base>*                                    rec            ,
+	local::recorder<Base>*                                    rec            ,
 	struct_csum_stacks&                              work           )
 {
 
@@ -1417,7 +1417,7 @@ void optimize_run(
 	size_t                       n         ,
 	CppAD::vector<size_t>&       dep_taddr ,
 	local::player<Base>*                play      ,
-	recorder<Base>*              rec       )
+	local::recorder<Base>*              rec       )
 {
 	// nan with type Base
 	Base base_nan = Base( std::numeric_limits<double>::quiet_NaN() );
@@ -3025,7 +3025,7 @@ If this option is present, no conditional skip operators will be generated.
 template <class Base>
 void ADFun<Base>::optimize(const std::string& options)
 {	// place to store the optimized version of the recording
-	recorder<Base> rec;
+	local::recorder<Base> rec;
 
 	// number of independent variables
 	size_t n = ind_taddr_.size();

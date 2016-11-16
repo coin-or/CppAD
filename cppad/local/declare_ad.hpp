@@ -25,6 +25,7 @@ Please visit http://www.coin-or.org/CppAD/ for information on other licenses.
 namespace CppAD { namespace local { // BEGIN_CPPAD_LOCAL_NAMESPACE
 
 template <class Base> class player;
+template <class Base> class recorder;
 
 } } // END_CPPAD_LOCAL_NAMESPACE
 
@@ -51,7 +52,6 @@ namespace CppAD {
 	template <class Base> class ADTape;
 	template <class Base> class atomic_base;
 	template <class Base> class discrete;
-	template <class Base> class recorder;
 	template <class Base> class VecAD;
 	template <class Base> class VecAD_reference;
 
