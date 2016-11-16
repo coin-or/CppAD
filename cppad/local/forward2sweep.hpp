@@ -13,7 +13,7 @@ A copy of this license is included in the COPYING file of this distribution.
 Please visit http://www.coin-or.org/CppAD/ for information on other licenses.
 -------------------------------------------------------------------------- */
 
-namespace CppAD { // BEGIN_CPPAD_NAMESPACE
+namespace CppAD { namespace local { // BEGIN_CPPAD_LOCAL_NAMESPACE
 /*!
 \file forward2sweep.hpp
 Compute one Taylor coefficient for each direction requested.
@@ -806,5 +806,5 @@ void forward2sweep(
 # undef CPPAD_FORWARD2SWEEP_TRACE
 # undef CPPAD_ATOMIC_CALL
 
-} // END_CPPAD_NAMESPACE
+} } // END_CPPAD_LOCAL_NAMESPACE
 # endif

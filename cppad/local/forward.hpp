@@ -148,7 +148,7 @@ VectorBase ADFun<Base>::Forward(
 	CPPAD_ASSERT_UNKNOWN( cskip_op_.size() == play_.num_op_rec() );
 	CPPAD_ASSERT_UNKNOWN( load_op_.size()  == play_.num_load_op_rec() );
 	if( q == 0 )
-	{	forward0sweep(s, true,
+	{	local::forward0sweep(s, true,
 			n, num_var_tape_, &play_, C,
 			taylor_.data(), cskip_op_.data(), load_op_,
 			compare_change_count_,
@@ -157,7 +157,7 @@ VectorBase ADFun<Base>::Forward(
 		);
 	}
 	else
-	{	forward1sweep(s, true, p, q,
+	{	local::forward1sweep(s, true, p, q,
 			n, num_var_tape_, &play_, C,
 			taylor_.data(), cskip_op_.data(), load_op_,
 			compare_change_count_,
@@ -376,7 +376,7 @@ VectorBase ADFun<Base>::Forward(
 	// evaluate the derivatives
 	CPPAD_ASSERT_UNKNOWN( cskip_op_.size() == play_.num_op_rec() );
 	CPPAD_ASSERT_UNKNOWN( load_op_.size()  == play_.num_load_op_rec() );
-	forward2sweep(
+	local::forward2sweep(
 		q,
 		r,
 		n,

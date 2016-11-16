@@ -17,8 +17,14 @@ move_list='
 move_sed='s|optimize.hpp|optimize/optimize.hpp|'
 #
 cat << EOF > junk.sed
-s|ADTape<Base>|local::ADTape<Base>|
-/local::ADTape<Base>/s|        \\\\| \\\\|
+s|ForHesSweep(|local::ForHesSweep(|
+s|ForJacSweep(|local::ForJacSweep(|
+s|forward0sweep(|local::forward0sweep(|
+s|forward1sweep(|local::forward1sweep(|
+s|forward2sweep(|local::forward2sweep(|
+s|ReverseSweep(|local::ReverseSweep(|
+s|RevHesSweep(|local::RevHesSweep(|
+s|RevJacSweep(|local::RevJacSweep(|
 EOF
 # -----------------------------------------------------------------------------
 if [ $0 != "bin/batch_edit.sh" ]
