@@ -503,7 +503,7 @@ acos, asin, atan, cos, cosh, exp, fabs, log, sin, sinh, sqrt, tan, tanh.
                                                                   \
         if( Variable(*this) )                                     \
         {   CPPAD_ASSERT_UNKNOWN( NumArg(Op) == 1 );              \
-            ADTape<Base> *tape = tape_this();                     \
+            local::ADTape<Base> *tape = tape_this();              \
             tape->Rec_.PutArg(taddr_);                            \
             result.taddr_ = tape->Rec_.PutOp(Op);                 \
             result.tape_id_    = tape->id_;                       \
@@ -553,7 +553,7 @@ namespace CppAD {
 
 		if( Variable(*this) )
 		{	CPPAD_ASSERT_UNKNOWN( NumArg(ErfOp) == 3 );
-			ADTape<Base> *tape = tape_this();
+			local::ADTape<Base> *tape = tape_this();
 			// arg[0] = argument to erf function
 			tape->Rec_.PutArg(taddr_);
 			// arg[1] = zero

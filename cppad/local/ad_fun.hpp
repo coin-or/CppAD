@@ -143,7 +143,7 @@ private:
 
 	/// change the operation sequence corresponding to this object
 	template <typename ADvector>
-	void Dependent(ADTape<Base> *tape, const ADvector &y);
+	void Dependent(local::ADTape<Base> *tape, const ADvector &y);
 
 	// ------------------------------------------------------------
 	// vector of bool version of ForSparseJac

@@ -140,7 +140,7 @@ namespace CppAD {
 	{	CPPAD_ASSERT_NARG_NRES(PriOp, 5, 0);
 
 		// check for case where we are not recording operations
-		ADTape<Base>* tape = AD<Base>::tape_ptr();
+		local::ADTape<Base>* tape = AD<Base>::tape_ptr();
 		if( tape == CPPAD_NULL )
 			return;
 

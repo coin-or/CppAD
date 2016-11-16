@@ -234,7 +234,7 @@ AD<Base> CondExpOp(
 	returnValue.value_ = CondExpOp(cop,
 		left.value_, right.value_, if_true.value_, if_false.value_);
 
-	ADTape<Base> *tape = CPPAD_NULL;
+	local::ADTape<Base> *tape = CPPAD_NULL;
 	if( Variable(left) )
 		tape = left.tape_this();
 	if( Variable(right) )
@@ -257,7 +257,7 @@ AD<Base> CondExpOp(
 /// All these operations are done in \c Rec_, so we should move this
 /// routine to <tt>recorder<Base></tt>.
 template <class Base>
-void ADTape<Base>::RecordCondExp(
+void local::ADTape<Base>::RecordCondExp(
 	enum CompareOp  cop         ,
 	AD<Base>       &returnValue ,
 	const AD<Base> &left        ,

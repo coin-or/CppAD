@@ -262,7 +262,7 @@ public:
 
 		ay.value_ = f_(ax.value_);
 		if( Variable(ax) )
-		{	ADTape<Base> *tape = ax.tape_this();
+		{	local::ADTape<Base> *tape = ax.tape_this();
 			CPPAD_ASSERT_UNKNOWN( NumRes(DisOp) == 1 );
 			CPPAD_ASSERT_UNKNOWN( NumArg(DisOp) == 2 );
 

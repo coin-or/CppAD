@@ -14,7 +14,7 @@ Please visit http://www.coin-or.org/CppAD/ for information on other licenses.
 -------------------------------------------------------------------------- */
 # include <cppad/local/define.hpp>
 
-namespace CppAD { // BEGIN_CPPAD_NAMESPACE
+namespace CppAD { namespace local { // BEGIN_CPPAD_LOCAL__NAMESPACE
 
 /*!
 Class used to hold tape that records AD<Base> operations.
@@ -215,6 +215,6 @@ size_t ADTape<Base>::AddVec(size_t length, const pod_vector<Base>& data)
 	return start;
 }
 
-} // END_CPPAD_NAMESPACE
+} } // END_CPPAD_LOCAL_NAMESPACE
 
 # endif

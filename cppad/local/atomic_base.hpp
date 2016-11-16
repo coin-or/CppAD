@@ -445,7 +445,7 @@ void operator()(
 	//
 	// Determine tape corresponding to variables in ax
 	tape_id_t     tape_id  = 0;
-	ADTape<Base>* tape     = CPPAD_NULL;
+	local::ADTape<Base>* tape     = CPPAD_NULL;
 	for(j = 0; j < n; j++)
 	{	tx[j]  = ax[j].value_;
 		vx[j]  = Variable( ax[j] );

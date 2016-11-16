@@ -109,11 +109,11 @@ memory.
 The bug mentioned on $cref/12-01/whats_new_05/12-01/$$ resurfaced
 and the corresponding routine was changed as follows:
 $codep
-	static ADTape<Base> *Tape(void)
+	static local::ADTape<Base> *Tape(void)
 	{	// If we return &tape, instead of creating and returning ptr,
 		// there seems to be a bug in g++ with -O2 option.
-		static ADTape<Base> tape;
-		static ADTape<Base> *ptr = &tape;
+		static local::ADTape<Base> tape;
+		static local::ADTape<Base> *ptr = &tape;
 		return ptr;
 	}
 $$
@@ -266,8 +266,8 @@ The speed test of $cref lu_vec_ad.cpp$$ has been reinstated.
 It appears that there is some sort of bug in the gcc compiler with
 the -O2 option whereby the following member function
 $codep
-	static ADTape<Base> *Tape(void)
-	{	static ADTape<Base> tape;
+	static local::ADTape<Base> *Tape(void)
+	{	static local::ADTape<Base> tape;
 		return &tape;
 	}
 $$

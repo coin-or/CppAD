@@ -13,13 +13,12 @@
 revert_list='
 '
 move_list='
-	cppad/local/optimize.hpp
 '
 move_sed='s|optimize.hpp|optimize/optimize.hpp|'
 #
 cat << EOF > junk.sed
-s|/local/optimize.hpp|/local/optimize/optimize.hpp|
-s|_LOCAL_OPTIMIZE_HPP|_LOCAL_OPTIMIZE_OPTIMIZE_HPP|
+s|ADTape<Base>|local::ADTape<Base>|
+/local::ADTape<Base>/s|        \\\\| \\\\|
 EOF
 # -----------------------------------------------------------------------------
 if [ $0 != "bin/batch_edit.sh" ]

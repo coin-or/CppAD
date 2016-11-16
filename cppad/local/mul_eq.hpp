@@ -25,7 +25,7 @@ AD<Base>& AD<Base>::operator *= (const AD<Base> &right)
 	value_ *= right.value_;
 
 	// check if there is a recording in progress
-	ADTape<Base>* tape = AD<Base>::tape_ptr();
+	local::ADTape<Base>* tape = AD<Base>::tape_ptr();
 	if( tape == CPPAD_NULL )
 		return *this;
 	tape_id_t tape_id = tape->id_;

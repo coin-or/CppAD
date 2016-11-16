@@ -79,7 +79,7 @@ AD<Base> AD<Base>::sign_me (void) const
 	{	// add this operation to the tape
 		CPPAD_ASSERT_UNKNOWN( NumRes(SignOp) == 1 );
 		CPPAD_ASSERT_UNKNOWN( NumArg(SignOp) == 1 );
-		ADTape<Base> *tape = tape_this();
+		local::ADTape<Base> *tape = tape_this();
 
 		// corresponding operand address
 		tape->Rec_.PutArg(taddr_);

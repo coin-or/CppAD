@@ -123,8 +123,7 @@ $end
 -----------------------------------------------------------------------------
 */
 
-//  BEGIN CppAD namespace
-namespace CppAD {
+namespace CppAD { namespace local { //  BEGIN_CPPAD_LOCAL_NAMESPACE
 // ---------------------------------------------------------------------------
 
 template <typename Base>
@@ -165,6 +164,9 @@ void ADTape<Base>::Independent(VectorAD &x, size_t abort_op_index)
 	// done specifying all of the independent variables
 	size_independent_ = n;
 }
+} } // END_CPPAD_LOCAL_NAMESPACE
+
+namespace CppAD { // BEGIN_CPPAD_NAMESPACE
 
 template <typename VectorAD>
 inline void Independent(VectorAD &x, size_t abort_op_index)
@@ -176,14 +178,15 @@ inline void Independent(VectorAD &x, size_t abort_op_index)
 		"a previous tape is still active (for this thread).\n"
 		"AD<Base>::abort_recording() would abort this previous recording."
 	);
-	ADTape<Base>* tape = ADBase::tape_manage(tape_manage_new);
+	local::ADTape<Base>* tape = ADBase::tape_manage(tape_manage_new);
 	tape->Independent(x, abort_op_index);
 }
 template <typename VectorAD>
 inline void Independent(VectorAD &x)
 {	size_t abort_op_index = 0;
-	Independent(x, abort_op_index); }
+	Independent(x, abort_op_index);
 }
-// END CppAD namespace
+
+} // END_CPPAD_NAMESPACE
 
 # endif

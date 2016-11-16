@@ -99,7 +99,7 @@ azmul(const AD<Base>& x, const AD<Base>& y)
 	result.value_ = azmul(x.value_, y.value_);
 
 	// check if there is a recording in progress
-	ADTape<Base>* tape = AD<Base>::tape_ptr();
+	local::ADTape<Base>* tape = AD<Base>::tape_ptr();
 	if( tape == CPPAD_NULL )
 		return result;
 	tape_id_t tape_id = tape->id_;

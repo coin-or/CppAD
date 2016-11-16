@@ -52,7 +52,7 @@ $end
 namespace CppAD {
 	template <typename Base>
 	void AD<Base>::abort_recording(void)
-	{	ADTape<Base>* tape = AD<Base>::tape_ptr();
+	{	local::ADTape<Base>* tape = AD<Base>::tape_ptr();
 		if( tape != CPPAD_NULL )
 			AD<Base>::tape_manage(tape_manage_delete);
 	}

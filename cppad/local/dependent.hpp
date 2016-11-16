@@ -150,7 +150,7 @@ The dependent variable vector for the corresponding function.
 template <typename Base>
 template <typename ADvector>
 void ADFun<Base>::Dependent(const ADvector &y)
-{	ADTape<Base>* tape = AD<Base>::tape_ptr();
+{	local::ADTape<Base>* tape = AD<Base>::tape_ptr();
 	CPPAD_ASSERT_KNOWN(
 		tape != CPPAD_NULL,
 		"Can't store current operation sequence in this ADFun object"
@@ -186,7 +186,7 @@ void ADFun<Base>::Dependent(const ADvector &x, const ADvector &y)
 		Variable(x[0]),
 		"Dependent: independent variable vector has been changed."
 	);
-	ADTape<Base> *tape = AD<Base>::tape_ptr(x[0].tape_id_);
+	local::ADTape<Base> *tape = AD<Base>::tape_ptr(x[0].tape_id_);
 	CPPAD_ASSERT_KNOWN(
 		tape->size_independent_ == size_t( x.size() ),
 		"Dependent: independent variable vector has been changed."
@@ -234,7 +234,7 @@ new tape except for check_for_nan_.
 
 template <typename Base>
 template <typename ADvector>
-void ADFun<Base>::Dependent(ADTape<Base> *tape, const ADvector &y)
+void ADFun<Base>::Dependent(local::ADTape<Base> *tape, const ADvector &y)
 {
 	size_t   m = y.size();
 	size_t   n = tape->size_independent_;

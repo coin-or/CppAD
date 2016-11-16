@@ -131,7 +131,7 @@ bool operator < (const AD<Base> &left , const AD<Base> &right)
 	bool var_left  = Variable(left);
 	bool var_right = Variable(right);
 
-	ADTape<Base> *tape = CPPAD_NULL;
+	local::ADTape<Base> *tape = CPPAD_NULL;
 	if( var_left )
 	{	tape = left.tape_this();
 		if( var_right )
@@ -182,7 +182,7 @@ bool operator <= (const AD<Base> &left , const AD<Base> &right)
 	bool var_left  = Variable(left);
 	bool var_right = Variable(right);
 
-	ADTape<Base> *tape = CPPAD_NULL;
+	local::ADTape<Base> *tape = CPPAD_NULL;
 	if( var_left )
 	{	tape = left.tape_this();
 		if( var_right )
@@ -233,7 +233,7 @@ bool operator > (const AD<Base> &left , const AD<Base> &right)
 	bool var_left  = Variable(left);
 	bool var_right = Variable(right);
 
-	ADTape<Base> *tape = CPPAD_NULL;
+	local::ADTape<Base> *tape = CPPAD_NULL;
 	if( var_left )
 	{	tape = left.tape_this();
 		if( var_right )
@@ -284,7 +284,7 @@ bool operator >= (const AD<Base> &left , const AD<Base> &right)
 	bool var_left  = Variable(left);
 	bool var_right = Variable(right);
 
-	ADTape<Base> *tape = CPPAD_NULL;
+	local::ADTape<Base> *tape = CPPAD_NULL;
 	if( var_left )
 	{	tape = left.tape_this();
 		if( var_right )
@@ -335,7 +335,7 @@ bool operator == (const AD<Base> &left , const AD<Base> &right)
 	bool var_left  = Variable(left);
 	bool var_right = Variable(right);
 
-	ADTape<Base> *tape = CPPAD_NULL;
+	local::ADTape<Base> *tape = CPPAD_NULL;
 	if( var_left )
 	{	tape = left.tape_this();
 		if( var_right )
@@ -377,7 +377,7 @@ bool operator != (const AD<Base> &left , const AD<Base> &right)
 	bool var_left  = Variable(left);
 	bool var_right = Variable(right);
 
-	ADTape<Base> *tape = CPPAD_NULL;
+	local::ADTape<Base> *tape = CPPAD_NULL;
 	if( var_left )
 	{	tape = left.tape_this();
 		if( var_right )

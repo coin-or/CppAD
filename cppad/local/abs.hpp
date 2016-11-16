@@ -90,7 +90,7 @@ AD<Base> AD<Base>::abs_me (void) const
 	{	// add this operation to the tape
 		CPPAD_ASSERT_UNKNOWN( NumRes(AbsOp) == 1 );
 		CPPAD_ASSERT_UNKNOWN( NumArg(AbsOp) == 1 );
-		ADTape<Base> *tape = tape_this();
+		local::ADTape<Base> *tape = tape_this();
 
 		// corresponding operand address
 		tape->Rec_.PutArg(taddr_);

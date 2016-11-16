@@ -102,7 +102,7 @@ class AD {
 	);
 
 	// classes
-	friend class ADTape<Base>;
+	friend class local::ADTape<Base>;
 	friend class ADFun<Base>;
 	friend class atomic_base<Base>;
 	friend class discrete<Base>;
@@ -270,15 +270,15 @@ private:
 	// tape linking functions
 	//
 	// not static
-	inline ADTape<Base>* tape_this(void) const;
+	inline local::ADTape<Base>* tape_this(void) const;
 	//
 	// static
 	inline static tape_id_t**    tape_id_handle(size_t thread);
 	inline static tape_id_t*     tape_id_ptr(size_t thread);
-	inline static ADTape<Base>** tape_handle(size_t thread);
-	static ADTape<Base>*         tape_manage(tape_manage_job job);
-	inline static ADTape<Base>*  tape_ptr(void);
-	inline static ADTape<Base>*  tape_ptr(tape_id_t tape_id);
+	inline static local::ADTape<Base>** tape_handle(size_t thread);
+	static local::ADTape<Base>*         tape_manage(tape_manage_job job);
+	inline static local::ADTape<Base>*  tape_ptr(void);
+	inline static local::ADTape<Base>*  tape_ptr(tape_id_t tape_id);
 };
 // ---------------------------------------------------------------------------
 
