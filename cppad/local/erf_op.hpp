@@ -19,7 +19,7 @@ Please visit http://www.coin-or.org/CppAD/ for information on other licenses.
 # include <cppad/local/exp_op.hpp>
 
 
-namespace CppAD { // BEGIN_CPPAD_NAMESPACE
+namespace CppAD { namespace local { // BEGIN_CPPAD_LOCAL_NAMESPACE
 /*!
 \file erf_op.hpp
 Forward and reverse mode calculations for z = erf(x).
@@ -554,6 +554,6 @@ inline void reverse_erf_op(
 }
 
 
-} // END_CPPAD_NAMESPACE
+} } // END_CPPAD_LOCAL_NAMESPACE
 # endif // CPPAD_USE_CPLUSPLUS_2011
 # endif // CPPAD_ERF_OP_INCLUDED

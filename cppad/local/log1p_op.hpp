@@ -14,7 +14,7 @@ A copy of this license is included in the COPYING file of this distribution.
 Please visit http://www.coin-or.org/CppAD/ for information on other licenses.
 -------------------------------------------------------------------------- */
 
-namespace CppAD { // BEGIN_CPPAD_NAMESPACE
+namespace CppAD { namespace local { // BEGIN_CPPAD_LOCAL_NAMESPACE
 /*!
 \file log1p_op.hpp
 Forward and reverse mode calculations for z = log1p(x).
@@ -200,6 +200,6 @@ inline void reverse_log1p_op(
 	px[0] += azmul(pz[0], inv_1px0);
 }
 
-} // END_CPPAD_NAMESPACE
+} } // END_CPPAD_LOCAL_NAMESPACE
 # endif
 # endif

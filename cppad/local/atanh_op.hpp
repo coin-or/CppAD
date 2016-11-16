@@ -15,7 +15,7 @@ Please visit http://www.coin-or.org/CppAD/ for information on other licenses.
 -------------------------------------------------------------------------- */
 
 
-namespace CppAD { // BEGIN_CPPAD_NAMESPACE
+namespace CppAD { namespace local { // BEGIN_CPPAD_LOCAL_NAMESPACE
 /*!
 \file atanh_op.hpp
 Forward and reverse mode calculations for z = atanh(x).
@@ -233,6 +233,6 @@ inline void reverse_atanh_op(
 	px[0] += azmul(pz[0], inv_b0) - Base(2) * azmul(pb[0], x[0]);
 }
 
-} // END_CPPAD_NAMESPACE
+} } // END_CPPAD_LOCAL_NAMESPACE
 # endif
 # endif
