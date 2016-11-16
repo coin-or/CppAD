@@ -1,6 +1,6 @@
 // $Id$
-# ifndef CPPAD_LOCAL_AD_BINARY_HPP
-# define CPPAD_LOCAL_AD_BINARY_HPP
+# ifndef CPPAD_CORE_AD_BINARY_HPP
+# define CPPAD_CORE_AD_BINARY_HPP
 
 /* --------------------------------------------------------------------------
 CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-16 Bradley M. Bell

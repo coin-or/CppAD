@@ -1,6 +1,6 @@
 // $Id$
-# ifndef CPPAD_LOCAL_AD_TO_STRING_HPP
-# define CPPAD_LOCAL_AD_TO_STRING_HPP
+# ifndef CPPAD_CORE_AD_TO_STRING_HPP
+# define CPPAD_CORE_AD_TO_STRING_HPP
 /* --------------------------------------------------------------------------
 CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-16 Bradley M. Bell
 
@@ -53,7 +53,7 @@ It returns true if it succeeds and false otherwise.
 $end
 */
 # include <cppad/utility/to_string.hpp>
-# include <cppad/local/ad.hpp>
+# include <cppad/core/ad.hpp>
 
 namespace CppAD {
 

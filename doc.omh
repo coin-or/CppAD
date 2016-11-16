@@ -250,7 +250,7 @@ $childtable%
 	omh/install/install.omh%
 	omh/introduction.omh%
 	cppad/local/user_ad.hpp%
-	cppad/local/ad_fun.hpp%
+	cppad/core/ad_fun.hpp%
 	omh/preprocessor.omh%
 	omh/multi_thread.omh%
 	omh/utility.omh%

@@ -1,7 +1,7 @@
 #! /bin/bash -e
 # $Id$
 # -----------------------------------------------------------------------------
-# CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-15 Bradley M. Bell
+# CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-16 Bradley M. Bell
 #
 # CppAD is distributed under multiple licenses. This distribution is under
 # the terms of the
@@ -47,7 +47,9 @@ INHERIT_DOCS            = NO
 INLINE_INHERITED_MEMB   = YES
 INPUT                   = \
 	./cppad \
+	./cppad/core \
 	./cppad/local \
+	./cppad/local/optimize \
 	./cppad/ipopt \
 	./cppad_ipopt/src \
 	./cppad_lib \

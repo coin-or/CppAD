@@ -25,8 +25,8 @@ $mindex convert from$$
 $children%
 	cppad/local/value.hpp%
 	cppad/local/integer.hpp%
-	cppad/local/ad_to_string.hpp%
-	cppad/local/ad_io.hpp%
+	cppad/core/ad_to_string.hpp%
+	cppad/core/ad_io.hpp%
 	cppad/local/print_for.hpp%
 	cppad/local/var2par.hpp
 %$$
@@ -44,8 +44,8 @@ $end
 
 # include <cppad/local/value.hpp>
 # include <cppad/local/integer.hpp>
-# include <cppad/local/ad_to_string.hpp>
-# include <cppad/local/ad_io.hpp>
+# include <cppad/core/ad_to_string.hpp>
+# include <cppad/core/ad_io.hpp>
 # include <cppad/local/print_for.hpp>
 # include <cppad/local/var2par.hpp>
 

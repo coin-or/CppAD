@@ -498,24 +498,24 @@ nobase_myinclude_HEADERS = \
 	cppad/ipopt/solve.hpp \
 	cppad/ipopt/solve_callback.hpp \
 	cppad/ipopt/solve_result.hpp \
-	cppad/local/abort_recording.hpp \
-	cppad/local/abs.hpp \
+	cppad/core/abort_recording.hpp \
+	cppad/core/abs.hpp \
 	cppad/local/abs_op.hpp \
 	cppad/local/acos_op.hpp \
-	cppad/local/acosh.hpp \
+	cppad/core/acosh.hpp \
 	cppad/local/acosh_op.hpp \
-	cppad/local/ad_assign.hpp \
-	cppad/local/ad_binary.hpp \
-	cppad/local/ad_ctor.hpp \
+	cppad/core/ad_assign.hpp \
+	cppad/core/ad_binary.hpp \
+	cppad/core/ad_ctor.hpp \
 	cppad/local/add_eq.hpp \
 	cppad/local/add.hpp \
 	cppad/local/add_op.hpp \
-	cppad/local/ad_io.hpp \
-	cppad/local/ad_fun.hpp \
-	cppad/local/ad.hpp \
+	cppad/core/ad_io.hpp \
+	cppad/core/ad_fun.hpp \
+	cppad/core/ad.hpp \
 	cppad/local/ad_tape.hpp \
-	cppad/local/ad_to_string.hpp \
-	cppad/local/ad_valued.hpp \
+	cppad/core/ad_to_string.hpp \
+	cppad/core/ad_valued.hpp \
 	cppad/local/arithmetic.hpp \
 	cppad/local/asin_op.hpp \
 	cppad/local/asinh.hpp \

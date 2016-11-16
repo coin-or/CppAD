@@ -1,6 +1,6 @@
 // $Id$
-# ifndef CPPAD_LOCAL_AD_FUN_HPP
-# define CPPAD_LOCAL_AD_FUN_HPP
+# ifndef CPPAD_CORE_AD_FUN_HPP
+# define CPPAD_CORE_AD_FUN_HPP
 
 /* --------------------------------------------------------------------------
 CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-16 Bradley M. Bell
@@ -43,7 +43,7 @@ $childtable%
 	cppad/local/independent.hpp%
 	cppad/local/fun_construct.hpp%
 	cppad/local/dependent.hpp%
-	cppad/local/abort_recording.hpp%
+	cppad/core/abort_recording.hpp%
 	omh/seq_property.omh%
 	cppad/local/fun_eval.hpp%
 	cppad/local/drivers.hpp%
@@ -647,7 +647,7 @@ public:
 # include <cppad/local/independent.hpp>
 # include <cppad/local/dependent.hpp>
 # include <cppad/local/fun_construct.hpp>
-# include <cppad/local/abort_recording.hpp>
+# include <cppad/core/abort_recording.hpp>
 # include <cppad/local/fun_eval.hpp>
 # include <cppad/local/drivers.hpp>
 # include <cppad/local/fun_check.hpp>

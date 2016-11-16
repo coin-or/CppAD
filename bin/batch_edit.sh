@@ -13,18 +13,32 @@
 revert_list='
 '
 move_list='
+	cppad/local/abs.hpp
+	cppad/local/acosh.hpp
+	cppad/local/abort_recording.hpp
+	cppad/local/ad_assign.hpp
+	cppad/local/ad_binary.hpp
+	cppad/local/ad_ctor.hpp
+	cppad/local/ad_fun.hpp
+	cppad/local/ad.hpp
+	cppad/local/ad_io.hpp
+	cppad/local/ad_to_string.hpp
+	cppad/local/ad_valued.hpp
 '
-move_sed='s|optimize.hpp|optimize/optimize.hpp|'
+move_sed='s|/local/|/core/|'
 #
 cat << EOF > junk.sed
-s|ForHesSweep(|local::ForHesSweep(|
-s|ForJacSweep(|local::ForJacSweep(|
-s|forward0sweep(|local::forward0sweep(|
-s|forward1sweep(|local::forward1sweep(|
-s|forward2sweep(|local::forward2sweep(|
-s|ReverseSweep(|local::ReverseSweep(|
-s|RevHesSweep(|local::RevHesSweep(|
-s|RevJacSweep(|local::RevJacSweep(|
+s|/local/abs.hpp|/core/abs.hpp|
+s|/local/acosh.hpp|/core/acosh.hpp|
+s|/local/abort_recording.hpp|/core/abort_recording.hpp|
+s|/local/ad_assign.hpp|/core/ad_assign.hpp|
+s|/local/ad_binary.hpp|/core/ad_binary.hpp|
+s|/local/ad_ctor.hpp|/core/ad_ctor.hpp|
+s|/local/ad_fun.hpp|/core/ad_fun.hpp|
+s|/local/ad.hpp|/core/ad.hpp|
+s|/local/ad_io.hpp|/core/ad_io.hpp|
+s|/local/ad_to_string.hpp|/core/ad_to_string.hpp|
+s|/local/ad_valued.hpp|/core/ad_valued.hpp|
 EOF
 # -----------------------------------------------------------------------------
 if [ $0 != "bin/batch_edit.sh" ]

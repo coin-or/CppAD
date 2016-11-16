@@ -64,8 +64,8 @@ $codei%
 %$$
 
 $children%cppad/local/std_math_98.hpp
-	%cppad/local/abs.hpp
-	%cppad/local/acosh.hpp
+	%cppad/core/abs.hpp
+	%cppad/core/acosh.hpp
 	%cppad/local/asinh.hpp
 	%cppad/local/atanh.hpp
 	%cppad/local/erf.hpp
@@ -104,8 +104,8 @@ $tend
 
 $end
 */
-# include <cppad/local/abs.hpp>
-# include <cppad/local/acosh.hpp>
+# include <cppad/core/abs.hpp>
+# include <cppad/core/acosh.hpp>
 # include <cppad/local/asinh.hpp>
 # include <cppad/local/atanh.hpp>
 # include <cppad/local/erf.hpp>

@@ -2,7 +2,7 @@
 # ifndef CPPAD_CPPAD_HPP
 # define CPPAD_CPPAD_HPP
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-15 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-16 Bradley M. Bell
 
 CppAD is distributed under multiple licenses. This distribution is under
 the terms of the
@@ -52,7 +52,7 @@ Please visit http://www.coin-or.org/CppAD/ for information on other licenses.
 // ---------------------------------------------------------------------------
 // declare the AD<Base> template class
 
-# include <cppad/local/ad.hpp>
+# include <cppad/core/ad.hpp>
 
 // ---------------------------------------------------------------------------
 
@@ -60,7 +60,7 @@ Please visit http://www.coin-or.org/CppAD/ for information on other licenses.
 // tape that tape for AD<Base> acts as a user of Base operations
 // so user_ad.hpp must come before op.hpp
 # include <cppad/local/op.hpp>       // executes taped operations
-# include <cppad/local/ad_fun.hpp>   // ADFun objects
+# include <cppad/core/ad_fun.hpp>   // ADFun objects
 
 // ---------------------------------------------------------------------------
 // library routines that require the rest of CppAD
