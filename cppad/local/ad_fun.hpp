@@ -48,7 +48,7 @@ $childtable%
 	cppad/local/fun_eval.hpp%
 	cppad/local/drivers.hpp%
 	cppad/local/fun_check.hpp%
-	cppad/local/optimize.hpp%
+	cppad/local/optimize/optimize.hpp%
 	cppad/local/check_for_nan.hpp
 %$$
 
@@ -652,6 +652,6 @@ public:
 # include <cppad/local/drivers.hpp>
 # include <cppad/local/fun_check.hpp>
 # include <cppad/local/omp_max_thread.hpp>
-# include <cppad/local/optimize.hpp>
+# include <cppad/local/optimize/optimize.hpp>
 
 # endif

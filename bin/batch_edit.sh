@@ -13,15 +13,13 @@
 revert_list='
 '
 move_list='
+	cppad/local/optimize.hpp
 '
-move_sed='s|mat_div|mat_inv|'
+move_sed='s|optimize.hpp|optimize/optimize.hpp|'
 #
 cat << EOF > junk.sed
-s|recorder<Base>\\*\\( *\\)rec|local::recorder<Base>*\\1rec|
-# s|player<Base>\\( *\\)\\*play|local::player<Base>*\\1play|
-s|recorder<Base>\\( *\\)Rec_|local::recorder<Base>\\1Rec_|
-s|recorder<Base>\\( *\\)rec|local::recorder<Base>\\1rec|
-# s|friend class player<Base>|friend class local::player<Base>|
+s|/local/optimize.hpp|/local/optimize/optimize.hpp|
+s|_LOCAL_OPTIMIZE_HPP|_LOCAL_OPTIMIZE_OPTIMIZE_HPP|
 EOF
 # -----------------------------------------------------------------------------
 if [ $0 != "bin/batch_edit.sh" ]
@@ -62,6 +60,11 @@ do
 	if [ -e "$new" ]
 	then
 		rm -r "$new"
+	fi
+	dir=`echo $new | sed -e 's|/[^/]*$||'`
+	if [ "$dir" != "$new" ] && [ ! -e "$dir" ]
+	then
+		echo_eval mkdir $dir
 	fi
 	echo_eval git mv $old $new
 done
