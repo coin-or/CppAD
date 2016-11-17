@@ -144,13 +144,13 @@ $srccode%cpp% */
 
 $childtable%
 	omh/base_require/base_member.omh%
-	cppad/local/base_cond_exp.hpp%
+	cppad/core/base_cond_exp.hpp%
 	omh/base_require/base_identical.omh%
 	omh/base_require/base_ordered.omh%
-	cppad/local/base_std_math.hpp%
-	cppad/local/base_limits.hpp%
-	cppad/local/base_to_string.hpp%
-	cppad/local/base_hash.hpp%
+	cppad/core/base_std_math.hpp%
+	cppad/core/base_limits.hpp%
+	cppad/core/base_to_string.hpp%
+	cppad/core/base_hash.hpp%
 	omh/base_require/base_example.omh
 %$$
 
@@ -164,20 +164,20 @@ $end
 # include <cppad/local/declare_ad.hpp>
 
 // grouping documentation by feature
-# include <cppad/local/base_cond_exp.hpp>
-# include <cppad/local/base_std_math.hpp>
-# include <cppad/local/base_limits.hpp>
-# include <cppad/local/base_to_string.hpp>
-# include <cppad/local/base_hash.hpp>
+# include <cppad/core/base_cond_exp.hpp>
+# include <cppad/core/base_std_math.hpp>
+# include <cppad/core/base_limits.hpp>
+# include <cppad/core/base_to_string.hpp>
+# include <cppad/core/base_hash.hpp>
 
 // must define template class numeric_limits before the base cases
 # include <cppad/local/numeric_limits.hpp>
 # include <cppad/local/epsilon.hpp> // deprecated
 
 // base cases that come with CppAD
-# include <cppad/local/base_float.hpp>
-# include <cppad/local/base_double.hpp>
-# include <cppad/local/base_complex.hpp>
+# include <cppad/core/base_float.hpp>
+# include <cppad/core/base_double.hpp>
+# include <cppad/core/base_complex.hpp>
 
 // deprecated base type
 # include <cppad/local/zdouble.hpp>

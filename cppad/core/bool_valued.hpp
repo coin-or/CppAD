@@ -1,6 +1,6 @@
 // $Id$
-# ifndef CPPAD_LOCAL_BOOL_VALUED_HPP
-# define CPPAD_LOCAL_BOOL_VALUED_HPP
+# ifndef CPPAD_CORE_BOOL_VALUED_HPP
+# define CPPAD_CORE_BOOL_VALUED_HPP
 
 /* --------------------------------------------------------------------------
 CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-16 Bradley M. Bell
@@ -25,7 +25,7 @@ $section Bool Valued Operations and Functions with AD Arguments$$
 $children%
 	cppad/local/compare.hpp%
 	cppad/local/near_equal_ext.hpp%
-	cppad/local/bool_fun.hpp%
+	cppad/core/bool_fun.hpp%
 	cppad/local/par_var.hpp%
 	cppad/local/equal_op_seq.hpp
 %$$
@@ -43,7 +43,7 @@ $end
 
 # include <cppad/local/compare.hpp>
 # include <cppad/local/near_equal_ext.hpp>
-# include <cppad/local/bool_fun.hpp>
+# include <cppad/core/bool_fun.hpp>
 # include <cppad/local/par_var.hpp>
 # include <cppad/local/equal_op_seq.hpp>
 

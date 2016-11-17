@@ -53,7 +53,7 @@ $childtable%
 	cppad/core/ad_assign.hpp%
 	cppad/local/convert.hpp%
 	cppad/core/ad_valued.hpp%
-	cppad/local/bool_valued.hpp%
+	cppad/core/bool_valued.hpp%
 	cppad/local/vec_ad.hpp%
 	cppad/base_require.hpp
 %$$
@@ -67,7 +67,7 @@ $end
 # include <cppad/local/convert.hpp>
 # include <cppad/local/vec_ad.hpp>
 # include <cppad/core/ad_valued.hpp>
-# include <cppad/local/bool_valued.hpp>
+# include <cppad/core/bool_valued.hpp>
 # include <cppad/local/zdouble.hpp>
 
 # endif

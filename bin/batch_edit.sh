@@ -13,22 +13,32 @@
 revert_list='
 '
 move_list='
-	cppad/local/arithmetic.hpp
-	cppad/local/asinh.hpp
-	cppad/local/atan2.hpp
-	cppad/local/atanh.hpp
-	cppad/local/atomic_base.hpp
-	cppad/local/azmul.hpp
+cppad/local/base_complex.hpp
+cppad/local/base_cond_exp.hpp
+cppad/local/base_double.hpp
+cppad/local/base_float.hpp
+cppad/local/base_hash.hpp
+cppad/local/base_limits.hpp
+cppad/local/base_std_math.hpp
+cppad/local/base_to_string.hpp
+cppad/local/bender_quad.hpp
+cppad/local/bool_fun.hpp
+cppad/local/bool_valued.hpp
 '
 move_sed='s|/local/|/core/|'
 #
 cat << EOF > junk.sed
-s|/local/arithmetic.hpp|/core/arithmetic.hpp|
-s|/local/asinh.hpp|/core/asinh.hpp|
-s|/local/atan2.hpp|/core/atan2.hpp|
-s|/local/atanh.hpp|/core/atanh.hpp|
-s|/local/atomic_base.hpp|/core/atomic_base.hpp|
-s|/local/azmul.hpp|/core/azmul.hpp|
+s|/local/base_complex.hpp|/core/base_complex.hpp|
+s|/local/base_cond_exp.hpp|/core/base_cond_exp.hpp|
+s|/local/base_double.hpp|/core/base_double.hpp|
+s|/local/base_float.hpp|/core/base_float.hpp|
+s|/local/base_hash.hpp|/core/base_hash.hpp|
+s|/local/base_limits.hpp|/core/base_limits.hpp|
+s|/local/base_std_math.hpp|/core/base_std_math.hpp|
+s|/local/base_to_string.hpp|/core/base_to_string.hpp|
+s|/local/bender_quad.hpp|/core/bender_quad.hpp|
+s|/local/bool_fun.hpp|/core/bool_fun.hpp|
+s|/local/bool_valued.hpp|/core/bool_valued.hpp|
 EOF
 # -----------------------------------------------------------------------------
 if [ $0 != "bin/batch_edit.sh" ]

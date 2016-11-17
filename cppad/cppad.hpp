@@ -65,7 +65,7 @@ Please visit http://www.coin-or.org/CppAD/ for information on other licenses.
 // ---------------------------------------------------------------------------
 // library routines that require the rest of CppAD
 # include <cppad/local/lu_ratio.hpp>
-# include <cppad/local/bender_quad.hpp>
+# include <cppad/core/bender_quad.hpp>
 # include <cppad/local/opt_val_hes.hpp>
 
 // undo definitions in Define.h

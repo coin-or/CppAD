@@ -526,17 +526,17 @@ nobase_myinclude_HEADERS = \
 	cppad/local/atanh_op.hpp \
 	cppad/core/atomic_base.hpp \
 	cppad/core/azmul.hpp \
-	cppad/local/base_complex.hpp \
-	cppad/local/base_cond_exp.hpp \
-	cppad/local/base_double.hpp \
-	cppad/local/base_float.hpp \
-	cppad/local/base_hash.hpp \
-	cppad/local/base_limits.hpp \
-	cppad/local/base_std_math.hpp \
-	cppad/local/base_to_string.hpp \
-	cppad/local/bender_quad.hpp \
-	cppad/local/bool_fun.hpp \
-	cppad/local/bool_valued.hpp \
+	cppad/core/base_complex.hpp \
+	cppad/core/base_cond_exp.hpp \
+	cppad/core/base_double.hpp \
+	cppad/core/base_float.hpp \
+	cppad/core/base_hash.hpp \
+	cppad/core/base_limits.hpp \
+	cppad/core/base_std_math.hpp \
+	cppad/core/base_to_string.hpp \
+	cppad/core/bender_quad.hpp \
+	cppad/core/bool_fun.hpp \
+	cppad/core/bool_valued.hpp \
 	cppad/local/capacity_order.hpp \
 	cppad/local/checkpoint.hpp \
 	cppad/local/check_for_nan.hpp \
