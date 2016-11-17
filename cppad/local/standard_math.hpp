@@ -66,8 +66,8 @@ $codei%
 $children%cppad/local/std_math_98.hpp
 	%cppad/core/abs.hpp
 	%cppad/core/acosh.hpp
-	%cppad/local/asinh.hpp
-	%cppad/local/atanh.hpp
+	%cppad/core/asinh.hpp
+	%cppad/core/atanh.hpp
 	%cppad/local/erf.hpp
 	%cppad/local/expm1.hpp
 	%cppad/local/log1p.hpp
@@ -106,8 +106,8 @@ $end
 */
 # include <cppad/core/abs.hpp>
 # include <cppad/core/acosh.hpp>
-# include <cppad/local/asinh.hpp>
-# include <cppad/local/atanh.hpp>
+# include <cppad/core/asinh.hpp>
+# include <cppad/core/atanh.hpp>
 # include <cppad/local/erf.hpp>
 # include <cppad/local/expm1.hpp>
 # include <cppad/local/log1p.hpp>
@@ -119,14 +119,14 @@ $begin binary_math$$
 
 $section The Binary Math Functions$$
 
-$childtable%cppad/local/atan2.hpp
+$childtable%cppad/core/atan2.hpp
 	%cppad/local/pow.hpp
-	%cppad/local/azmul.hpp
+	%cppad/core/azmul.hpp
 %$$
 
 $end
 */
-# include <cppad/local/atan2.hpp>
+# include <cppad/core/atan2.hpp>
 # include <cppad/local/pow.hpp>
 
 # endif

@@ -23,7 +23,7 @@ $section AD Valued Operations and Functions$$
 
 $comment atomic.omh includes atomic_base.omh which atomic_base.hpp$$
 $childtable%
-	cppad/local/arithmetic.hpp%
+	cppad/core/arithmetic.hpp%
 	cppad/local/standard_math.hpp%
 	cppad/local/cond_exp.hpp%
 	cppad/local/discrete.hpp%
@@ -37,12 +37,12 @@ $end
 // include MathOther.h after CondExp.h because some MathOther.h routines use
 // CondExp.h and CondExp.h is not sufficently declared in Declare.h
 
-# include <cppad/local/arithmetic.hpp>
+# include <cppad/core/arithmetic.hpp>
 # include <cppad/local/standard_math.hpp>
-# include <cppad/local/azmul.hpp>
+# include <cppad/core/azmul.hpp>
 # include <cppad/local/cond_exp.hpp>
 # include <cppad/local/discrete.hpp>
-# include <cppad/local/atomic_base.hpp>
+# include <cppad/core/atomic_base.hpp>
 # include <cppad/local/checkpoint.hpp>
 # include <cppad/local/old_atomic.hpp>
 

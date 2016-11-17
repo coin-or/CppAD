@@ -1,6 +1,6 @@
 // $Id$
-# ifndef CPPAD_LOCAL_ATANH_HPP
-# define CPPAD_LOCAL_ATANH_HPP
+# ifndef CPPAD_CORE_ASINH_HPP
+# define CPPAD_CORE_ASINH_HPP
 
 /* --------------------------------------------------------------------------
 CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-16 Bradley M. Bell
@@ -15,24 +15,24 @@ Please visit http://www.coin-or.org/CppAD/ for information on other licenses.
 
 /*
 -------------------------------------------------------------------------------
-$begin atanh$$
+
+$begin asinh$$
 $spell
-	atanh
+	asinh
 	const
 	Vec
 	std
 	cmath
 	CppAD
-	tanh
 $$
-$section The Inverse Hyperbolic Tangent Function: atanh$$
+$section The Inverse Hyperbolic Sine Function: asinh$$
 
 $head Syntax$$
-$icode%y% = atanh(%x%)%$$
+$icode%y% = asinh(%x%)%$$
 
 $head Description$$
-The inverse hyperbolic tangent function is defined by
-$icode%x% == tanh(%y%)%$$.
+The inverse hyperbolic sine function is defined by
+$icode%x% == sinh(%y%)%$$.
 
 $head x, y$$
 See the $cref/possible types/unary_standard_math/Possible Types/$$
@@ -49,16 +49,16 @@ $subhead false$$
 If this preprocessor symbol is false ($code 0$$),
 CppAD uses the representation
 $latex \[
-\R{atanh} (x) = \frac{1}{2} \log \left( \frac{1 + x}{1 - x} \right)
+\R{asinh} (x) = \log \left( x + \sqrt{ 1 + x^2 } \right)
 \] $$
 to compute this function.
 
 $head Example$$
 $children%
-	example/atanh.cpp
+	example/asinh.cpp
 %$$
 The file
-$cref atanh.cpp$$
+$cref asinh.cpp$$
 contains an example and test of this function.
 It returns true if it succeeds and false otherwise.
 
@@ -72,26 +72,26 @@ $end
 namespace CppAD {
 
 template <class Type>
-Type atanh_template(const Type &x)
-{	return CppAD::log( (Type(1) + x) / (Type(1) - x) ) / Type(2);
+Type asinh_template(const Type &x)
+{	return CppAD::log( x + CppAD::sqrt( Type(1) + x * x ) );
 }
 
-inline float atanh(const float &x)
-{	return atanh_template(x); }
+inline float asinh(const float &x)
+{	return asinh_template(x); }
 
-inline double atanh(const double &x)
-{	return atanh_template(x); }
-
-template <class Base>
-inline AD<Base> atanh(const AD<Base> &x)
-{	return atanh_template(x); }
+inline double asinh(const double &x)
+{	return asinh_template(x); }
 
 template <class Base>
-inline AD<Base> atanh(const VecAD_reference<Base> &x)
-{	return atanh_template( x.ADBase() ); }
+inline AD<Base> asinh(const AD<Base> &x)
+{	return asinh_template(x); }
+
+template <class Base>
+inline AD<Base> asinh(const VecAD_reference<Base> &x)
+{	return asinh_template( x.ADBase() ); }
 
 
 } // END CppAD namespace
 
 # endif // CPPAD_USE_CPLUSPLUS_2011
-# endif // CPPAD_ATANH_INCLUDED
+# endif // CPPAD_ASINH_INCLUDED

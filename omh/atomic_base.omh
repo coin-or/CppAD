@@ -77,7 +77,7 @@ $icode%ok% == false%$$ unless you require
 forward mode calculation of second derivatives.
 
 $childtable%
-	cppad/local/atomic_base.hpp%
+	cppad/core/atomic_base.hpp%
 	example/atomic/get_started.cpp%
 	example/atomic/norm_sq.cpp%
 	example/atomic/reciprocal.cpp%

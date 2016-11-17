@@ -13,32 +13,22 @@
 revert_list='
 '
 move_list='
-	cppad/local/abs.hpp
-	cppad/local/acosh.hpp
-	cppad/local/abort_recording.hpp
-	cppad/local/ad_assign.hpp
-	cppad/local/ad_binary.hpp
-	cppad/local/ad_ctor.hpp
-	cppad/local/ad_fun.hpp
-	cppad/local/ad.hpp
-	cppad/local/ad_io.hpp
-	cppad/local/ad_to_string.hpp
-	cppad/local/ad_valued.hpp
+	cppad/local/arithmetic.hpp
+	cppad/local/asinh.hpp
+	cppad/local/atan2.hpp
+	cppad/local/atanh.hpp
+	cppad/local/atomic_base.hpp
+	cppad/local/azmul.hpp
 '
 move_sed='s|/local/|/core/|'
 #
 cat << EOF > junk.sed
-s|/local/abs.hpp|/core/abs.hpp|
-s|/local/acosh.hpp|/core/acosh.hpp|
-s|/local/abort_recording.hpp|/core/abort_recording.hpp|
-s|/local/ad_assign.hpp|/core/ad_assign.hpp|
-s|/local/ad_binary.hpp|/core/ad_binary.hpp|
-s|/local/ad_ctor.hpp|/core/ad_ctor.hpp|
-s|/local/ad_fun.hpp|/core/ad_fun.hpp|
-s|/local/ad.hpp|/core/ad.hpp|
-s|/local/ad_io.hpp|/core/ad_io.hpp|
-s|/local/ad_to_string.hpp|/core/ad_to_string.hpp|
-s|/local/ad_valued.hpp|/core/ad_valued.hpp|
+s|/local/arithmetic.hpp|/core/arithmetic.hpp|
+s|/local/asinh.hpp|/core/asinh.hpp|
+s|/local/atan2.hpp|/core/atan2.hpp|
+s|/local/atanh.hpp|/core/atanh.hpp|
+s|/local/atomic_base.hpp|/core/atomic_base.hpp|
+s|/local/azmul.hpp|/core/azmul.hpp|
 EOF
 # -----------------------------------------------------------------------------
 if [ $0 != "bin/batch_edit.sh" ]

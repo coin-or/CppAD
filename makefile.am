@@ -123,16 +123,16 @@ nobase_myinclude_HEADERS =  \
 	cppad/local/ad_tape.hpp \
 	cppad/core/ad_to_string.hpp \
 	cppad/core/ad_valued.hpp \
-	cppad/local/arithmetic.hpp \
+	cppad/core/arithmetic.hpp \
 	cppad/local/asin_op.hpp \
-	cppad/local/asinh.hpp \
+	cppad/core/asinh.hpp \
 	cppad/local/asinh_op.hpp \
-	cppad/local/atan2.hpp \
+	cppad/core/atan2.hpp \
 	cppad/local/atan_op.hpp \
-	cppad/local/atanh.hpp \
+	cppad/core/atanh.hpp \
 	cppad/local/atanh_op.hpp \
-	cppad/local/atomic_base.hpp \
-	cppad/local/azmul.hpp \
+	cppad/core/atomic_base.hpp \
+	cppad/core/azmul.hpp \
 	cppad/local/base_complex.hpp \
 	cppad/local/base_cond_exp.hpp \
 	cppad/local/base_double.hpp \
