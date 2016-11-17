@@ -507,8 +507,8 @@ nobase_myinclude_HEADERS = \
 	cppad/core/ad_assign.hpp \
 	cppad/core/ad_binary.hpp \
 	cppad/core/ad_ctor.hpp \
-	cppad/local/add_eq.hpp \
-	cppad/local/add.hpp \
+	cppad/core/add_eq.hpp \
+	cppad/core/add.hpp \
 	cppad/local/add_op.hpp \
 	cppad/core/ad_io.hpp \
 	cppad/core/ad_fun.hpp \

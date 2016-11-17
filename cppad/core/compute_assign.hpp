@@ -135,7 +135,7 @@ $latex \[
 $end
 -----------------------------------------------------------------------------
 */
-# include <cppad/local/add_eq.hpp>
+# include <cppad/core/add_eq.hpp>
 # include <cppad/core/sub_eq.hpp>
 # include <cppad/core/mul_eq.hpp>
 # include <cppad/core/div_eq.hpp>

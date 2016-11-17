@@ -1,6 +1,6 @@
 // $Id$
-# ifndef CPPAD_LOCAL_ADD_HPP
-# define CPPAD_LOCAL_ADD_HPP
+# ifndef CPPAD_CORE_ADD_EQ_HPP
+# define CPPAD_CORE_ADD_EQ_HPP
 
 /* --------------------------------------------------------------------------
 CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-16 Bradley M. Bell
@@ -17,80 +17,75 @@ Please visit http://www.coin-or.org/CppAD/ for information on other licenses.
 namespace CppAD {
 
 template <class Base>
-AD<Base> operator + (const AD<Base> &left , const AD<Base> &right)
+AD<Base>& AD<Base>::operator += (const AD<Base> &right)
 {
-	// compute the Base part of this AD object
-	AD<Base> result;
-	result.value_  = left.value_ + right.value_;
-	CPPAD_ASSERT_UNKNOWN( Parameter(result) );
+	// compute the Base part
+	Base left;
+	left    = value_;
+	value_ += right.value_;
 
 	// check if there is a recording in progress
 	local::ADTape<Base>* tape = AD<Base>::tape_ptr();
 	if( tape == CPPAD_NULL )
-		return result;
+		return *this;
 	tape_id_t tape_id = tape->id_;
 
 	// tape_id cannot match the default value for tape_id_; i.e., 0
 	CPPAD_ASSERT_UNKNOWN( tape_id > 0 );
-	bool var_left  = left.tape_id_  == tape_id;
+	bool var_left  = tape_id_       == tape_id;
 	bool var_right = right.tape_id_ == tape_id;
 
 	if( var_left )
 	{	if( var_right )
-		{	// result = variable + variable
+		{	// this = variable + variable
 			CPPAD_ASSERT_UNKNOWN( NumRes(AddvvOp) == 1 );
 			CPPAD_ASSERT_UNKNOWN( NumArg(AddvvOp) == 2 );
 
 			// put operand addresses in tape
-			tape->Rec_.PutArg(left.taddr_, right.taddr_);
+			tape->Rec_.PutArg(taddr_, right.taddr_);
 			// put operator in the tape
-			result.taddr_ = tape->Rec_.PutOp(AddvvOp);
-			// make result a variable
-			result.tape_id_ = tape_id;
+			taddr_ = tape->Rec_.PutOp(AddvvOp);
+			// make this a variable
+			CPPAD_ASSERT_UNKNOWN( tape_id_ == tape_id );
 		}
-		else if( IdenticalZero(right.value_) )
-		{	// result = variable + 0
-			result.make_variable(left.tape_id_, left.taddr_);
-		}
-		else
-		{	// result = variable  + parameter
-			//        = parameter + variable
+		else if( ! IdenticalZero( right.value_ ) )
+		{	// this = variable  + parameter
+			//      = parameter + variable
 			CPPAD_ASSERT_UNKNOWN( NumRes(AddpvOp) == 1 );
 			CPPAD_ASSERT_UNKNOWN( NumArg(AddpvOp) == 2 );
 
 			// put operand addresses in tape
 			addr_t p = tape->Rec_.PutPar(right.value_);
-			tape->Rec_.PutArg(p, left.taddr_);
+			tape->Rec_.PutArg(p, taddr_);
 			// put operator in the tape
-			result.taddr_ = tape->Rec_.PutOp(AddpvOp);
-			// make result a variable
-			result.tape_id_ = tape_id;
+			taddr_ = tape->Rec_.PutOp(AddpvOp);
+			// make this a variable
+			CPPAD_ASSERT_UNKNOWN( tape_id_ == tape_id );
 		}
 	}
-	else if( var_right )
-	{	if( IdenticalZero(left.value_) )
-		{	// result = 0 + variable
-			result.make_variable(right.tape_id_, right.taddr_);
+	else if( var_right  )
+	{	if( IdenticalZero(left) )
+		{	// this = 0 + right
+			make_variable(right.tape_id_, right.taddr_);
 		}
 		else
-		{	// result = parameter + variable
+		{	// this = parameter + variable
 			CPPAD_ASSERT_UNKNOWN( NumRes(AddpvOp) == 1 );
 			CPPAD_ASSERT_UNKNOWN( NumArg(AddpvOp) == 2 );
 
 			// put operand addresses in tape
-			addr_t p = tape->Rec_.PutPar(left.value_);
+			addr_t p = tape->Rec_.PutPar(left);
 			tape->Rec_.PutArg(p, right.taddr_);
 			// put operator in the tape
-			result.taddr_ = tape->Rec_.PutOp(AddpvOp);
-			// make result a variable
-			result.tape_id_ = tape_id;
+			taddr_ = tape->Rec_.PutOp(AddpvOp);
+			// make this a variable
+			tape_id_ = tape_id;
 		}
 	}
-	return result;
+	return *this;
 }
 
-// convert other cases into the case above
-CPPAD_FOLD_AD_VALUED_BINARY_OPERATOR(+)
+CPPAD_FOLD_ASSIGNMENT_OPERATOR(+=)
 
 } // END CppAD namespace
 

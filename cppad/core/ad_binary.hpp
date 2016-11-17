@@ -137,7 +137,7 @@ $latex \[
 $end
 -----------------------------------------------------------------------------
 */
-# include <cppad/local/add.hpp>
+# include <cppad/core/add.hpp>
 # include <cppad/core/sub.hpp>
 # include <cppad/core/mul.hpp>
 # include <cppad/core/div.hpp>
