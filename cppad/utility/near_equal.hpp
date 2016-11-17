@@ -144,7 +144,7 @@ $end
 
 # include <limits>
 # include <complex>
-# include <cppad/local/cppad_assert.hpp>
+# include <cppad/core/cppad_assert.hpp>
 # include <cppad/utility/check_numeric_type.hpp>
 
 namespace CppAD { // Begin CppAD namespace

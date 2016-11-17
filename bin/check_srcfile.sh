@@ -30,7 +30,7 @@ EOF
 special_case='
 bin/check_srcfile.sh
 bin/package.sh
-cppad/local/cond_exp.hpp
+cppad/core/cond_exp.hpp
 introduction/exp_apx/exp_2.omh
 introduction/exp_apx/exp_eps.omh
 omh/license.omh

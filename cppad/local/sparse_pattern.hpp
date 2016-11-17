@@ -14,7 +14,7 @@ Please visit http://www.coin-or.org/CppAD/ for information on other licenses.
 -------------------------------------------------------------------------- */
 
 // necessary definitions
-# include <cppad/local/define.hpp>
+# include <cppad/core/define.hpp>
 # include <cppad/local/sparse_pack.hpp>
 # include <cppad/local/sparse_list.hpp>
 

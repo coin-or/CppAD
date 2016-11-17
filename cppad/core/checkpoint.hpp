@@ -1,6 +1,6 @@
 // $Id$
-# ifndef CPPAD_LOCAL_CHECKPOINT_HPP
-# define CPPAD_LOCAL_CHECKPOINT_HPP
+# ifndef CPPAD_CORE_CHECKPOINT_HPP
+# define CPPAD_CORE_CHECKPOINT_HPP
 
 /* --------------------------------------------------------------------------
 CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-16 Bradley M. Bell
@@ -94,7 +94,7 @@ The $code checkpoint$$ class is derived from $code atomic_base$$
 and makes this easy.
 It implements all the $code atomic_base$$
 $cref/virtual functions/atomic_base/Virtual Functions/$$
-and hence its source code $code cppad/local/checkpoint.hpp$$
+and hence its source code $code cppad/core/checkpoint.hpp$$
 provides an example implementation of $cref atomic_base$$.
 The difference is that $code checkpoint.hpp$$ uses AD
 instead of user provided derivatives.

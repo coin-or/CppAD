@@ -42,14 +42,14 @@ derivative values, and other values related to the corresponding function.
 $childtable%
 	cppad/local/independent.hpp%
 	cppad/local/fun_construct.hpp%
-	cppad/local/dependent.hpp%
+	cppad/core/dependent.hpp%
 	cppad/core/abort_recording.hpp%
 	omh/seq_property.omh%
 	cppad/local/fun_eval.hpp%
-	cppad/local/drivers.hpp%
+	cppad/core/drivers.hpp%
 	cppad/local/fun_check.hpp%
 	cppad/local/optimize/optimize.hpp%
-	cppad/local/check_for_nan.hpp
+	cppad/core/check_for_nan.hpp
 %$$
 
 $end
@@ -645,11 +645,11 @@ public:
 // user interfaces
 # include <cppad/local/parallel_ad.hpp>
 # include <cppad/local/independent.hpp>
-# include <cppad/local/dependent.hpp>
+# include <cppad/core/dependent.hpp>
 # include <cppad/local/fun_construct.hpp>
 # include <cppad/core/abort_recording.hpp>
 # include <cppad/local/fun_eval.hpp>
-# include <cppad/local/drivers.hpp>
+# include <cppad/core/drivers.hpp>
 # include <cppad/local/fun_check.hpp>
 # include <cppad/local/omp_max_thread.hpp>
 # include <cppad/local/optimize/optimize.hpp>

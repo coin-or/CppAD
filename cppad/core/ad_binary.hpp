@@ -140,6 +140,6 @@ $end
 # include <cppad/local/add.hpp>
 # include <cppad/local/sub.hpp>
 # include <cppad/local/mul.hpp>
-# include <cppad/local/div.hpp>
+# include <cppad/core/div.hpp>
 
 # endif

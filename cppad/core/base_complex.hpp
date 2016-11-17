@@ -73,7 +73,7 @@ $srccode%cpp% */
 # include <limits>
 # include <complex>
 # include <cppad/base_require.hpp>
-# include <cppad/local/cppad_assert.hpp>
+# include <cppad/core/cppad_assert.hpp>
 
 /* %$$
 

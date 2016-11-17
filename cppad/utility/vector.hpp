@@ -321,7 +321,7 @@ $end
 # include <cstddef>
 # include <iostream>
 # include <limits>
-# include <cppad/local/cppad_assert.hpp>
+# include <cppad/core/cppad_assert.hpp>
 # include <cppad/utility/check_simple_vector.hpp>
 # include <cppad/utility/thread_alloc.hpp>
 

@@ -144,7 +144,7 @@ $end
 */
 
 # include <cppad/utility/check_numeric_type.hpp>
-# include <cppad/local/cppad_assert.hpp>
+# include <cppad/core/cppad_assert.hpp>
 # include <cppad/utility/vector.hpp>
 
 namespace CppAD { // BEGIN CppAD namespace

@@ -99,8 +99,8 @@ $end
 */
 
 # include <cstddef>
-# include <cppad/local/cppad_assert.hpp>
-# include <cppad/local/define.hpp>
+# include <cppad/core/cppad_assert.hpp>
+# include <cppad/core/define.hpp>
 # include <cppad/utility/thread_alloc.hpp>
 
 namespace CppAD {

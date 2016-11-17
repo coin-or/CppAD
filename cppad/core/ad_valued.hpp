@@ -25,8 +25,8 @@ $comment atomic.omh includes atomic_base.omh which atomic_base.hpp$$
 $childtable%
 	cppad/core/arithmetic.hpp%
 	cppad/local/standard_math.hpp%
-	cppad/local/cond_exp.hpp%
-	cppad/local/discrete.hpp%
+	cppad/core/cond_exp.hpp%
+	cppad/core/discrete.hpp%
 	cppad/local/numeric_limits.hpp%
 	omh/atomic.omh
 %$$
@@ -40,10 +40,10 @@ $end
 # include <cppad/core/arithmetic.hpp>
 # include <cppad/local/standard_math.hpp>
 # include <cppad/core/azmul.hpp>
-# include <cppad/local/cond_exp.hpp>
-# include <cppad/local/discrete.hpp>
+# include <cppad/core/cond_exp.hpp>
+# include <cppad/core/discrete.hpp>
 # include <cppad/core/atomic_base.hpp>
-# include <cppad/local/checkpoint.hpp>
+# include <cppad/core/checkpoint.hpp>
 # include <cppad/local/old_atomic.hpp>
 
 # endif

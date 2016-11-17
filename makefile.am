@@ -144,38 +144,38 @@ nobase_myinclude_HEADERS =  \
 	cppad/core/bender_quad.hpp \
 	cppad/core/bool_fun.hpp \
 	cppad/core/bool_valued.hpp \
-	cppad/local/capacity_order.hpp \
-	cppad/local/checkpoint.hpp \
-	cppad/local/check_for_nan.hpp \
+	cppad/core/capacity_order.hpp \
+	cppad/core/checkpoint.hpp \
+	cppad/core/check_for_nan.hpp \
 	cppad/local/color_general.hpp \
 	cppad/local/color_symmetric.hpp \
-	cppad/local/compare.hpp \
+	cppad/core/compare.hpp \
 	cppad/local/comp_op.hpp \
-	cppad/local/compute_assign.hpp \
-	cppad/local/cond_exp.hpp \
+	cppad/core/compute_assign.hpp \
+	cppad/core/cond_exp.hpp \
 	cppad/local/cond_op.hpp \
-	cppad/local/convert.hpp \
+	cppad/core/convert.hpp \
 	cppad/local/cosh_op.hpp \
 	cppad/local/cos_op.hpp \
-	cppad/local/cppad_assert.hpp \
+	cppad/core/cppad_assert.hpp \
 	cppad/local/cppad_colpack.hpp \
 	cppad/local/cskip_op.hpp \
 	cppad/local/csum_op.hpp \
 	cppad/local/declare_ad.hpp \
-	cppad/local/define.hpp \
-	cppad/local/dependent.hpp \
-	cppad/local/discrete.hpp \
+	cppad/core/define.hpp \
+	cppad/core/dependent.hpp \
+	cppad/core/discrete.hpp \
 	cppad/local/discrete_op.hpp \
-	cppad/local/div_eq.hpp \
-	cppad/local/div.hpp \
+	cppad/core/div_eq.hpp \
+	cppad/core/div.hpp \
 	cppad/local/div_op.hpp \
-	cppad/local/drivers.hpp \
-	cppad/local/epsilon.hpp \
+	cppad/core/drivers.hpp \
+	cppad/core/epsilon.hpp \
 	cppad/local/equal_op_seq.hpp \
-	cppad/local/erf.hpp \
+	cppad/core/erf.hpp \
 	cppad/local/erf_op.hpp \
 	cppad/local/exp_op.hpp \
-	cppad/local/expm1.hpp \
+	cppad/core/expm1.hpp \
 	cppad/local/expm1_op.hpp \
 	cppad/local/for_hes_sweep.hpp \
 	cppad/local/for_jac_sweep.hpp \

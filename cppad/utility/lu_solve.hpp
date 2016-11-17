@@ -245,7 +245,7 @@ $end
 // link exp for float and double cases
 # include <cppad/base_require.hpp>
 
-# include <cppad/local/cppad_assert.hpp>
+# include <cppad/core/cppad_assert.hpp>
 # include <cppad/utility/check_simple_vector.hpp>
 # include <cppad/utility/check_numeric_type.hpp>
 # include <cppad/utility/lu_factor.hpp>

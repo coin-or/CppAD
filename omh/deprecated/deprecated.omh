@@ -27,7 +27,7 @@ $childtable%
 	cppad/utility/track_new_del.hpp%
 	omh/deprecated/omp_alloc.omh%
 	cppad/utility/memory_leak.hpp%
-	cppad/local/epsilon.hpp%
+	cppad/core/epsilon.hpp%
 	cppad/local/test_vector.hpp%
 	cppad_ipopt/src/cppad_ipopt_nlp.hpp%
 	cppad/local/old_atomic.hpp%

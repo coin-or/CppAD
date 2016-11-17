@@ -18,7 +18,7 @@ Please visit http://www.coin-or.org/CppAD/ for information on other licenses.
 # endif
 # include <algorithm>
 # include <cppad/utility/thread_alloc.hpp>
-# include <cppad/local/cppad_assert.hpp>
+# include <cppad/core/cppad_assert.hpp>
 # include <cppad/local/op_code.hpp>
 
 namespace CppAD { // BEGIN_CPPAD_NAMESPACE

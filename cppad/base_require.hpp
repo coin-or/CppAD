@@ -159,8 +159,8 @@ $end
 
 // definitions that must come before base implementations
 # include <cppad/utility/error_handler.hpp>
-# include <cppad/local/define.hpp>
-# include <cppad/local/cppad_assert.hpp>
+# include <cppad/core/define.hpp>
+# include <cppad/core/cppad_assert.hpp>
 # include <cppad/local/declare_ad.hpp>
 
 // grouping documentation by feature
@@ -172,7 +172,7 @@ $end
 
 // must define template class numeric_limits before the base cases
 # include <cppad/local/numeric_limits.hpp>
-# include <cppad/local/epsilon.hpp> // deprecated
+# include <cppad/core/epsilon.hpp> // deprecated
 
 // base cases that come with CppAD
 # include <cppad/core/base_float.hpp>

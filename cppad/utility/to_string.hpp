@@ -100,7 +100,7 @@ $end
 # include <cmath>
 # include <iomanip>
 # include <sstream>
-# include <cppad/local/cppad_assert.hpp>
+# include <cppad/core/cppad_assert.hpp>
 
 # define CPPAD_SPECIALIZE_TO_STRING_INTEGER(Type) \
 template <> struct to_string_struct<Type>\

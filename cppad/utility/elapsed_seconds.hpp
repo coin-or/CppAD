@@ -74,10 +74,10 @@ $end
 //		cd work/speed/example
 //		make test.sh
 // fails with the error message 'gettimeofday' not defined.
-# include <cppad/local/cppad_assert.hpp>
+# include <cppad/core/cppad_assert.hpp>
 
 // define CPPAD_NULL
-# include <cppad/local/define.hpp>
+# include <cppad/core/define.hpp>
 
 // needed before one can use CPPAD_ASSERT_FIRST_CALL_NOT_PARALLEL
 # include <cppad/utility/thread_alloc.hpp>

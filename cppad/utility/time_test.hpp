@@ -141,7 +141,7 @@ $end
 # include <cstddef>
 # include <cmath>
 # include <cppad/utility/elapsed_seconds.hpp>
-# include <cppad/local/define.hpp>
+# include <cppad/core/define.hpp>
 
 # define CPPAD_EXTRA_RUN_BEFORE_TIMING 0
 

@@ -414,7 +414,7 @@ $end
 // link exp and log for float and double
 # include <cppad/base_require.hpp>
 
-# include <cppad/local/cppad_assert.hpp>
+# include <cppad/core/cppad_assert.hpp>
 # include <cppad/utility/check_simple_vector.hpp>
 # include <cppad/utility/nan.hpp>
 

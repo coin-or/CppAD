@@ -236,8 +236,8 @@ It returns true, if it succeeds, and false otherwise.
 $end
 ------------------------------------------------------------------------------
 */
-# include <cppad/local/define.hpp>
-# include <cppad/local/cppad_assert.hpp>
+# include <cppad/core/define.hpp>
+# include <cppad/core/cppad_assert.hpp>
 # include <cppad/utility/thread_alloc.hpp>
 # include <sstream>
 # include <string>

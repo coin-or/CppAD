@@ -129,8 +129,8 @@ $end
 # include <iostream>
 
 # include <cppad/configure.hpp>
-# include <cppad/local/define.hpp>
-# include <cppad/local/cppad_assert.hpp>
+# include <cppad/core/define.hpp>
+# include <cppad/core/cppad_assert.hpp>
 # include <cppad/local/declare_ad.hpp>
 
 namespace CppAD { // BEGIN_CPPAD_NAMESPACE

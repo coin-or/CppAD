@@ -38,7 +38,7 @@ Please visit http://www.coin-or.org/CppAD/ for information on other licenses.
 # include <cppad/configure.hpp>
 
 // definitions that are local to the CppAD include files
-# include <cppad/local/define.hpp>
+# include <cppad/core/define.hpp>
 
 // vectors used with CppAD
 # include <cppad/local/testvector.hpp>

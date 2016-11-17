@@ -25,8 +25,8 @@ Please visit http://www.coin-or.org/CppAD/ for information on other licenses.
 # pragma warning(disable:4345)
 # endif
 
-# include <cppad/local/cppad_assert.hpp>
-# include <cppad/local/define.hpp>
+# include <cppad/core/cppad_assert.hpp>
+# include <cppad/core/define.hpp>
 # include <cppad/local/set_get_in_parallel.hpp>
 namespace CppAD { // BEGIN_CPPAD_NAMESPACE
 /*!

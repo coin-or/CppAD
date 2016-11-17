@@ -1,6 +1,6 @@
 // $Id$
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-15 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-16 Bradley M. Bell
 
 CppAD is distributed under multiple licenses. This distribution is under
 the terms of the
@@ -15,7 +15,7 @@ $section Atomic AD Functions$$
 $mindex operation$$
 
 $childtable%
-	cppad/local/checkpoint.hpp%
+	cppad/core/checkpoint.hpp%
 	omh/atomic_base.omh
 %$$
 

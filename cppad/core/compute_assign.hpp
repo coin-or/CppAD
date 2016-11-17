@@ -1,6 +1,6 @@
 // $Id$
-# ifndef CPPAD_LOCAL_COMPUTE_ASSIGN_HPP
-# define CPPAD_LOCAL_COMPUTE_ASSIGN_HPP
+# ifndef CPPAD_CORE_COMPUTE_ASSIGN_HPP
+# define CPPAD_CORE_COMPUTE_ASSIGN_HPP
 
 /* --------------------------------------------------------------------------
 CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-16 Bradley M. Bell
@@ -138,6 +138,6 @@ $end
 # include <cppad/local/add_eq.hpp>
 # include <cppad/local/sub_eq.hpp>
 # include <cppad/local/mul_eq.hpp>
-# include <cppad/local/div_eq.hpp>
+# include <cppad/core/div_eq.hpp>
 
 # endif

@@ -198,7 +198,7 @@ It true, tmpnam_s works in C++ on this system.
 This preprocessor symbol is used for a null pointer.
 
 If it is not yet defined,
-it is defined when cppad/local/define.hpp is included.
+it is defined when cppad/core/define.hpp is included.
 */
 # ifndef CPPAD_NULL
 # if CPPAD_USE_CPLUSPLUS_2011

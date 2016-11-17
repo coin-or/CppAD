@@ -68,8 +68,8 @@ $children%cppad/local/std_math_98.hpp
 	%cppad/core/acosh.hpp
 	%cppad/core/asinh.hpp
 	%cppad/core/atanh.hpp
-	%cppad/local/erf.hpp
-	%cppad/local/expm1.hpp
+	%cppad/core/erf.hpp
+	%cppad/core/expm1.hpp
 	%cppad/local/log1p.hpp
 	%cppad/local/sign.hpp
 %$$
@@ -108,8 +108,8 @@ $end
 # include <cppad/core/acosh.hpp>
 # include <cppad/core/asinh.hpp>
 # include <cppad/core/atanh.hpp>
-# include <cppad/local/erf.hpp>
-# include <cppad/local/expm1.hpp>
+# include <cppad/core/erf.hpp>
+# include <cppad/core/expm1.hpp>
 # include <cppad/local/log1p.hpp>
 # include <cppad/local/sign.hpp>
 # include <cppad/local/sign.hpp>

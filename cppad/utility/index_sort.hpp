@@ -79,7 +79,7 @@ $end
 # include <algorithm>
 # include <cppad/utility/thread_alloc.hpp>
 # include <cppad/utility/check_simple_vector.hpp>
-# include <cppad/local/define.hpp>
+# include <cppad/core/define.hpp>
 
 namespace CppAD { // BEGIN_CPPAD_NAMESPACE
 /*!

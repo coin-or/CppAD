@@ -1,6 +1,6 @@
 // $Id$
-# ifndef CPPAD_LOCAL_ERF_HPP
-# define CPPAD_LOCAL_ERF_HPP
+# ifndef CPPAD_CORE_EXPM1_HPP
+# define CPPAD_CORE_EXPM1_HPP
 
 /* --------------------------------------------------------------------------
 CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-16 Bradley M. Bell
@@ -15,26 +15,24 @@ Please visit http://www.coin-or.org/CppAD/ for information on other licenses.
 
 /*
 -------------------------------------------------------------------------------
-$begin erf$$
+$begin expm1$$
 $spell
-	erf
+	exp
+	expm1
 	const
 	Vec
 	std
 	cmath
 	CppAD
-	Vedder
 $$
-$section The Error Function$$
+$section The Exponential Function Minus One: expm1$$
 
 $head Syntax$$
-$icode%y% = erf(%x%)%$$
+$icode%y% = expm1(%x%)%$$
 
 $head Description$$
-Returns the value of the error function which is defined by
-$latex \[
-{\rm erf} (x) = \frac{2}{ \sqrt{\pi} } \int_0^x \exp( - t * t ) \; {\bf d} t
-\] $$
+Returns the value of the exponential function minus one which is defined
+by $icode%y% == exp(%x%) - 1%$$.
 
 $head x, y$$
 See the $cref/possible types/unary_standard_math/Possible Types/$$
@@ -49,22 +47,18 @@ this is an $cref/atomic operation/glossary/Operation/Atomic/$$.
 
 $subhead false$$
 If this preprocessor symbol is false ($code 0$$),
-CppAD uses a fast approximation (few numerical operations)
-with relative error bound $latex 4 \times 10^{-4}$$; see
-Vedder, J.D.,
-$icode Simple approximations for the error function and its inverse$$,
-American Journal of Physics,
-v 55,
-n 8,
-1987,
-p 762-3.
+CppAD uses the representation
+$latex \[
+\R{expm1} (x) = \exp(x) - 1
+\] $$
+to compute this function.
 
 $head Example$$
 $children%
-	example/erf.cpp
+	example/expm1.cpp
 %$$
 The file
-$cref erf.cpp$$
+$cref expm1.cpp$$
 contains an example and test of this function.
 It returns true if it succeeds and false otherwise.
 
@@ -78,30 +72,26 @@ $end
 namespace CppAD {
 
 template <class Type>
-Type erf_template(const Type &x)
-{	using CppAD::exp;
-	const Type a = static_cast<Type>(993./880.);
-	const Type b = static_cast<Type>(89./880.);
-
-	return tanh( (a + b * x * x) * x );
+Type expm1_template(const Type &x)
+{	return CppAD::exp(x) - Type(1);
 }
 
-inline float erf(const float &x)
-{	return erf_template(x); }
+inline float expm1(const float &x)
+{	return expm1_template(x); }
 
-inline double erf(const double &x)
-{	return erf_template(x); }
-
-template <class Base>
-inline AD<Base> erf(const AD<Base> &x)
-{	return erf_template(x); }
+inline double expm1(const double &x)
+{	return expm1_template(x); }
 
 template <class Base>
-inline AD<Base> erf(const VecAD_reference<Base> &x)
-{	return erf_template( x.ADBase() ); }
+inline AD<Base> expm1(const AD<Base> &x)
+{	return expm1_template(x); }
+
+template <class Base>
+inline AD<Base> expm1(const VecAD_reference<Base> &x)
+{	return expm1_template( x.ADBase() ); }
 
 
 } // END CppAD namespace
 
 # endif // CPPAD_USE_CPLUSPLUS_2011
-# endif // CPPAD_ERF_INCLUDED
+# endif // CPPAD_EXPM1_INCLUDED

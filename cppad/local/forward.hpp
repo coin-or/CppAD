@@ -14,9 +14,9 @@ Please visit http://www.coin-or.org/CppAD/ for information on other licenses.
 -------------------------------------------------------------------------- */
 
 // documened after Forward but included here so easy to see
-# include <cppad/local/capacity_order.hpp>
+# include <cppad/core/capacity_order.hpp>
 # include <cppad/local/num_skip.hpp>
-# include <cppad/local/check_for_nan.hpp>
+# include <cppad/core/check_for_nan.hpp>
 
 namespace CppAD { // BEGIN_CPPAD_NAMESPACE
 /*!

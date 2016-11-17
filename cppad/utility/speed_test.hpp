@@ -343,7 +343,7 @@ $end
 # include <string>
 # include <iostream>
 # include <iomanip>
-# include <cppad/local/cppad_assert.hpp>
+# include <cppad/core/cppad_assert.hpp>
 
 namespace CppAD { // BEGIN CppAD namespace
 

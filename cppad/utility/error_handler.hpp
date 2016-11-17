@@ -112,7 +112,7 @@ It reports the meaning of the error from the C++ programmers point of view.
 
 $children%
 	example/error_handler.cpp%
-	cppad/local/cppad_assert.hpp
+	cppad/core/cppad_assert.hpp
 %$$
 $head Example$$
 The file
