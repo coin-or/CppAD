@@ -17,7 +17,7 @@ Please visit http://www.coin-or.org/CppAD/ for information on other licenses.
 # include <cppad/local/sparse_pattern.hpp>
 
 // operations
-# include <cppad/local/std_math_98.hpp>
+# include <cppad/core/std_math_98.hpp>
 # include <cppad/local/abs_op.hpp>
 # include <cppad/local/add_op.hpp>
 # include <cppad/local/acos_op.hpp>

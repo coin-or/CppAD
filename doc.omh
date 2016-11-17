@@ -249,7 +249,7 @@ this can cause naming conflicts.
 $childtable%
 	omh/install/install.omh%
 	omh/introduction.omh%
-	cppad/local/user_ad.hpp%
+	cppad/core/user_ad.hpp%
 	cppad/core/ad_fun.hpp%
 	omh/preprocessor.omh%
 	omh/multi_thread.omh%

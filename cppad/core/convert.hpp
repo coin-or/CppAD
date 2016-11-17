@@ -23,12 +23,12 @@ $section Conversion and I/O of AD Objects$$
 $mindex convert from$$
 
 $children%
-	cppad/local/value.hpp%
-	cppad/local/integer.hpp%
+	cppad/core/value.hpp%
+	cppad/core/integer.hpp%
 	cppad/core/ad_to_string.hpp%
 	cppad/core/ad_io.hpp%
-	cppad/local/print_for.hpp%
-	cppad/local/var2par.hpp
+	cppad/core/print_for.hpp%
+	cppad/core/var2par.hpp
 %$$
 $table
 $rref Value$$
@@ -42,11 +42,11 @@ $tend
 $end
 */
 
-# include <cppad/local/value.hpp>
-# include <cppad/local/integer.hpp>
+# include <cppad/core/value.hpp>
+# include <cppad/core/integer.hpp>
 # include <cppad/core/ad_to_string.hpp>
 # include <cppad/core/ad_io.hpp>
-# include <cppad/local/print_for.hpp>
-# include <cppad/local/var2par.hpp>
+# include <cppad/core/print_for.hpp>
+# include <cppad/core/var2par.hpp>
 
 # endif

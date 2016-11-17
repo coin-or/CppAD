@@ -138,8 +138,8 @@ $end
 -----------------------------------------------------------------------------
 */
 # include <cppad/local/add.hpp>
-# include <cppad/local/sub.hpp>
-# include <cppad/local/mul.hpp>
+# include <cppad/core/sub.hpp>
+# include <cppad/core/mul.hpp>
 # include <cppad/core/div.hpp>
 
 # endif

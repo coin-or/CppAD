@@ -24,8 +24,8 @@ designed to work with CppAD in particular.
 
 $childtable%
 	cppad/core/bender_quad.hpp%
-	cppad/local/opt_val_hes.hpp%
-	cppad/local/lu_ratio.hpp
+	cppad/core/opt_val_hes.hpp%
+	cppad/core/lu_ratio.hpp
 %$$
 
 $end

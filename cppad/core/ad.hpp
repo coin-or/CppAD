@@ -15,7 +15,7 @@ Please visit http://www.coin-or.org/CppAD/ for information on other licenses.
 
 // simple AD operations that must be defined for AD as well as base class
 # include <cppad/local/ordered.hpp>
-# include <cppad/local/identical.hpp>
+# include <cppad/core/identical.hpp>
 
 // define the template classes that are used by the AD template class
 # include <cppad/local/op_code.hpp>

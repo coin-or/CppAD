@@ -24,9 +24,9 @@ $section Bool Valued Operations and Functions with AD Arguments$$
 
 $children%
 	cppad/core/compare.hpp%
-	cppad/local/near_equal_ext.hpp%
+	cppad/core/near_equal_ext.hpp%
 	cppad/core/bool_fun.hpp%
-	cppad/local/par_var.hpp%
+	cppad/core/par_var.hpp%
 	cppad/local/equal_op_seq.hpp
 %$$
 $table
@@ -42,9 +42,9 @@ $end
 */
 
 # include <cppad/core/compare.hpp>
-# include <cppad/local/near_equal_ext.hpp>
+# include <cppad/core/near_equal_ext.hpp>
 # include <cppad/core/bool_fun.hpp>
-# include <cppad/local/par_var.hpp>
+# include <cppad/core/par_var.hpp>
 # include <cppad/local/equal_op_seq.hpp>
 
 # endif

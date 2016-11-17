@@ -41,10 +41,10 @@ Please visit http://www.coin-or.org/CppAD/ for information on other licenses.
 # include <cppad/core/define.hpp>
 
 // vectors used with CppAD
-# include <cppad/local/testvector.hpp>
+# include <cppad/core/testvector.hpp>
 
 // deprecated vectors used with CppAD
-# include <cppad/local/test_vector.hpp>
+# include <cppad/core/test_vector.hpp>
 
 // Declare classes and fucntions that are used before defined
 # include <cppad/local/declare_ad.hpp>
@@ -56,7 +56,7 @@ Please visit http://www.coin-or.org/CppAD/ for information on other licenses.
 
 // ---------------------------------------------------------------------------
 
-# include <cppad/local/user_ad.hpp>  // AD class methods available to the user
+# include <cppad/core/user_ad.hpp>  // AD class methods available to the user
 // tape that tape for AD<Base> acts as a user of Base operations
 // so user_ad.hpp must come before op.hpp
 # include <cppad/local/op.hpp>       // executes taped operations
@@ -64,9 +64,9 @@ Please visit http://www.coin-or.org/CppAD/ for information on other licenses.
 
 // ---------------------------------------------------------------------------
 // library routines that require the rest of CppAD
-# include <cppad/local/lu_ratio.hpp>
+# include <cppad/core/lu_ratio.hpp>
 # include <cppad/core/bender_quad.hpp>
-# include <cppad/local/opt_val_hes.hpp>
+# include <cppad/core/opt_val_hes.hpp>
 
 // undo definitions in Define.h
 # include <cppad/local/undef.hpp>

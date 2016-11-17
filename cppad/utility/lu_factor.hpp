@@ -272,7 +272,7 @@ inline bool AbsGeq(
 	return xsq >= ysq;
 }
 
-// Lines that are different from code in cppad/local/lu_ratio.hpp end with //
+// Lines that are different from code in cppad/core/lu_ratio.hpp end with //
 template <class SizeVector, class FloatVector>                          //
 int LuFactor(SizeVector &ip, SizeVector &jp, FloatVector &LU)           //
 {

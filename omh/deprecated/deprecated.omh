@@ -23,15 +23,15 @@ $childtable%
 	omh/deprecated/include_deprecated.omh%
 	omh/deprecated/fun_deprecated.omh%
 	omh/deprecated/compare_change.omh%
-	cppad/local/omp_max_thread.hpp%
+	cppad/core/omp_max_thread.hpp%
 	cppad/utility/track_new_del.hpp%
 	omh/deprecated/omp_alloc.omh%
 	cppad/utility/memory_leak.hpp%
 	cppad/core/epsilon.hpp%
-	cppad/local/test_vector.hpp%
+	cppad/core/test_vector.hpp%
 	cppad_ipopt/src/cppad_ipopt_nlp.hpp%
-	cppad/local/old_atomic.hpp%
-	cppad/local/zdouble.hpp
+	cppad/core/old_atomic.hpp%
+	cppad/core/zdouble.hpp
 %$$
 
 $table

@@ -171,7 +171,7 @@ $end
 # include <cppad/core/base_hash.hpp>
 
 // must define template class numeric_limits before the base cases
-# include <cppad/local/numeric_limits.hpp>
+# include <cppad/core/numeric_limits.hpp>
 # include <cppad/core/epsilon.hpp> // deprecated
 
 // base cases that come with CppAD
@@ -180,6 +180,6 @@ $end
 # include <cppad/core/base_complex.hpp>
 
 // deprecated base type
-# include <cppad/local/zdouble.hpp>
+# include <cppad/core/zdouble.hpp>
 
 # endif
