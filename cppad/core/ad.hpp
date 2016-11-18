@@ -285,7 +285,7 @@ private:
 } // END_CPPAD_NAMESPACE
 
 // tape linking private functions
-# include <cppad/local/tape_link.hpp>
+# include <cppad/core/tape_link.hpp>
 
 // operations that expect the AD template class to be defined
 

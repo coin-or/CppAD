@@ -518,7 +518,7 @@ $end
 		{	bool set = true;
 			set_get_num_threads(num_threads);
 			// emphasize that this routine is outside thread_alloc class
-			CppAD::set_get_in_parallel(CPPAD_NULL, set);
+			CppAD::local::set_get_in_parallel(CPPAD_NULL, set);
 			set_get_thread_num(CPPAD_NULL, set);
 			return;
 		}
@@ -558,7 +558,7 @@ $end
 		{	bool set = true;
 			set_get_num_threads(num_threads);
 			// emphasize that this routine is outside thread_alloc class
-			CppAD::set_get_in_parallel(in_parallel, set);
+			CppAD::local::set_get_in_parallel(in_parallel, set);
 			set_get_thread_num(thread_num, set);
 		}
 	}
@@ -636,7 +636,7 @@ $end
 	/// other threads are currently executing.
 	static bool in_parallel(void)
 	{	// emphasize that this routine is outside thread_alloc class
-		return CppAD::set_get_in_parallel(0);
+		return CppAD::local::set_get_in_parallel(0);
 	}
 /* -----------------------------------------------------------------------
 $begin ta_thread_num$$

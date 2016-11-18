@@ -370,7 +370,7 @@ void ADFun<Base>::RevSparseHesCase(
 
 	// check VectorSet is Simple Vector class with sets for elements
 	CheckSimpleVector<std::set<size_t>, VectorSet>(
-		one_element_std_set<size_t>(), two_element_std_set<size_t>()
+		local::one_element_std_set<size_t>(), local::two_element_std_set<size_t>()
 	);
 
 	CPPAD_ASSERT_KNOWN(

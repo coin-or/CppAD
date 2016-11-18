@@ -18,7 +18,7 @@ Please visit http://www.coin-or.org/CppAD/ for information on other licenses.
 // needed before one can use CPPAD_ASSERT_FIRST_CALL_NOT_PARALLEL
 # include <cppad/utility/thread_alloc.hpp>
 
-namespace CppAD { // BEGIN_CPPAD_NAMESPACE
+namespace CppAD { namespace local { // BEGIN_CPPAD_LOCAL_NAMESPACE
 /*!
 \file std_set.hpp
 Two constant standard sets (currently used for concept checking).
@@ -49,5 +49,5 @@ const std::set<Scalar>& two_element_std_set(void)
 	return two;
 }
 
-} // END_CPPAD_NAMESPACE
+} } // END_CPPAD_LOCAL_NAMESPACE
 # endif

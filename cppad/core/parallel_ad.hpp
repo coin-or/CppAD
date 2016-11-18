@@ -91,8 +91,8 @@ void parallel_ad(void)
 	ErrorHandler::Current();
 	NumArg(BeginOp);
 	NumRes(BeginOp);
-	one_element_std_set<size_t>();
-	two_element_std_set<size_t>();
+	local::one_element_std_set<size_t>();
+	local::two_element_std_set<size_t>();
 
 	// the sparse_pack class has member functions with static data
 	local::sparse_pack sp;

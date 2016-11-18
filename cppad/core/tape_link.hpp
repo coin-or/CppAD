@@ -1,6 +1,6 @@
 // $Id$
-# ifndef CPPAD_LOCAL_TAPE_LINK_HPP
-# define CPPAD_LOCAL_TAPE_LINK_HPP
+# ifndef CPPAD_CORE_TAPE_LINK_HPP
+# define CPPAD_CORE_TAPE_LINK_HPP
 
 /* --------------------------------------------------------------------------
 CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-16 Bradley M. Bell
