@@ -190,10 +190,12 @@ nobase_myinclude_HEADERS =  \
 	cppad/core/fun_check.hpp \
 	cppad/core/fun_construct.hpp \
 	cppad/core/fun_eval.hpp \
+	cppad/core/hash_code.hpp \
 	cppad/local/hash_code.hpp \
 	cppad/core/hessian.hpp \
 	cppad/core/identical.hpp \
 	cppad/local/independent.hpp \
+	cppad/core/independent.hpp \
 	cppad/core/integer.hpp \
 	cppad/core/jacobian.hpp \
 	cppad/local/load_op.hpp \

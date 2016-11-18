@@ -14,7 +14,7 @@ Please visit http://www.coin-or.org/CppAD/ for information on other licenses.
 -------------------------------------------------------------------------- */
 # include <cppad/core/base_hash.hpp>
 /*!
-\file hash_code.hpp
+\file local/hash_code.hpp
 CppAD hashing utility.
 */
 
@@ -245,34 +245,5 @@ unsigned short local_hash_code(
 }
 
 } } // END_CPPAD_LOCAL_NAMESPACE
-
-namespace CppAD { // BEGIN_CPPAD_NAMESPACE
-/*!
-General purpose hash code for an arbitrary value.
-
-\tparam Value
-is the type of the argument being hash coded.
-It should be a plain old data class; i.e.,
-the values included in the equality operator in the object and
-not pointed to by the object.
-
-\param value
-the value that we are generating a hash code for.
-All of the fields in value should have been set before the hash code
-is computed (otherwise undefined values are used).
-
-\return
-is a hash code that is between zero and CPPAD_HASH_TABLE_SIZE - 1.
-
-\par Checked Assertions
-\li \c std::numeric_limits<unsigned short>::max() >= CPPAD_HASH_TABLE_SIZE
-\li \c sizeof(value) is even
-\li \c sizeof(unsigned short)  == 2
-*/
-template <class Value>
-unsigned short hash_code(const Value& value)
-{	return local::local_hash_code(value); }
-
-} // END_CPPAD_NAMESPACE
 
 # endif
