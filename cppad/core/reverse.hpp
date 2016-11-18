@@ -102,7 +102,7 @@ VectorBase ADFun<Base>::Reverse(size_t q, const VectorBase &w)
 	// number of dependent variables
 	size_t m = dep_taddr_.size();
 
-	pod_vector<Base> Partial;
+	local::pod_vector<Base> Partial;
 	Partial.extend(num_var_tape_  * q);
 
 	// update maximum memory requirement

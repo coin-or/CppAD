@@ -15,7 +15,7 @@ Please visit http://www.coin-or.org/CppAD/ for information on other licenses.
 # include <cppad/core/define.hpp>
 # include <list>
 
-namespace CppAD { // BEGIN_CPPAD_NAMESPACE
+namespace CppAD { namespace local { // BEGIN_CPPAD_LOCAL_NAMESPACE
 /*!
 \file sparse_list.hpp
 Vector of sets of positive integers stored as singly linked lists
@@ -68,10 +68,10 @@ private:
 	for this list and data_[ start_[i] ].next is not zero becasue there
 	is at least one entry in this list.
 	*/
-	CppAD::pod_vector<size_t> start_;
+	pod_vector<size_t> start_;
 
 	/// The data for all the singly linked lists.
-	CppAD::pod_vector<pair_size_t> data_;
+	pod_vector<pair_size_t> data_;
 
 	// -----------------------------------------------------------------
 	/*!
@@ -923,5 +923,5 @@ void sparsity_user2internal(
 	return;
 }
 
-} // END_CPPAD_NAMESPACE
+} } // END_CPPAD_LOCAL_NAMESPACE
 # endif

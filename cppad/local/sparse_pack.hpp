@@ -15,7 +15,7 @@ Please visit http://www.coin-or.org/CppAD/ for information on other licenses.
 # include <cppad/core/cppad_assert.hpp>
 # include <cppad/local/pod_vector.hpp>
 
-namespace CppAD { // BEGIN_CPPAD_NAMESPACE
+namespace CppAD { namespace local { // BEGIN_CPPAD_LOCAL_NAMESPACE
 /*!
 \file sparse_pack.hpp
 Vector of sets of positive integers stored as a packed array of bools.
@@ -448,5 +448,5 @@ void sparsity_user2internal(
 	return;
 }
 
-} // END_CPPAD_NAMESPACE
+} } // END_CPPAD_LOCAL_NAMESPACE
 # endif

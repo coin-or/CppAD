@@ -241,7 +241,7 @@ void ADFun<Base>::RevSparseJacCase(
 	);
 	//
 	// vector of sets that will hold the results
-	sparse_pack    var_sparsity;
+	local::sparse_pack    var_sparsity;
 	var_sparsity.resize(num_var_tape_, q);
 
 	// The sparsity pattern corresponding to the dependent variables
@@ -284,7 +284,7 @@ void ADFun<Base>::RevSparseJacCase(
 				s[ i * n + j ] = false;
 		}
 		CPPAD_ASSERT_UNKNOWN( var_sparsity.end() == q );
-		sparse_pack::const_iterator itr(var_sparsity, j+1);
+		local::sparse_pack::const_iterator itr(var_sparsity, j+1);
 		i = *itr;
 		while( i < q )
 		{	if( transpose )
@@ -363,7 +363,7 @@ void ADFun<Base>::RevSparseJacCase(
 	);
 
 	// vector of lists that will hold the results
-	sparse_list                  var_sparsity;
+	local::sparse_list           var_sparsity;
 	var_sparsity.resize(num_var_tape_, q);
 
 	// The sparsity pattern corresponding to the dependent variables
@@ -416,7 +416,7 @@ void ADFun<Base>::RevSparseJacCase(
 		CPPAD_ASSERT_UNKNOWN( play_.GetOp( ind_taddr_[j] ) == InvOp );
 
 		CPPAD_ASSERT_UNKNOWN( var_sparsity.end() == q );
-		sparse_list::const_iterator itr_2(var_sparsity, j+1);
+		local::sparse_list::const_iterator itr_2(var_sparsity, j+1);
 		i = *itr_2;
 		while( i < q )
 		{	if( transpose )
@@ -540,10 +540,10 @@ or \f$ S(x)^T \f$ depending on transpose.
 template <class Base>
 void ADFun<Base>::RevSparseJacCheckpoint(
 	size_t                        q          ,
-	const sparse_list&            r          ,
+	const local::sparse_list&     r          ,
 	bool                          transpose  ,
 	bool                          dependency ,
-	sparse_list&                  s          )
+	local::sparse_list&                  s          )
 {	size_t n = Domain();
 	size_t m = Range();
 
@@ -561,13 +561,13 @@ void ADFun<Base>::RevSparseJacCheckpoint(
 # endif
 
 	// holds reverse Jacobian sparsity pattern for all variables
-	sparse_list var_sparsity;
+	local::sparse_list var_sparsity;
 	var_sparsity.resize(num_var_tape_, q);
 
 	// set sparsity pattern for dependent variables
 	if( transpose )
 	{	for(size_t i = 0; i < m; i++)
-		{	sparse_list::const_iterator itr(r, i);
+		{	local::sparse_list::const_iterator itr(r, i);
 			size_t j = *itr;
 			while( j < q )
 			{	var_sparsity.add_element( dep_taddr_[i], j );
@@ -577,7 +577,7 @@ void ADFun<Base>::RevSparseJacCheckpoint(
 	}
 	else
 	{	for(size_t j = 0; j < q; j++)
-		{	sparse_list::const_iterator itr(r, j);
+		{	local::sparse_list::const_iterator itr(r, j);
 			size_t i = *itr;
 			while( i < m )
 			{	var_sparsity.add_element( dep_taddr_[i], j );
@@ -610,7 +610,7 @@ void ADFun<Base>::RevSparseJacCheckpoint(
 
 		// extract the result from var_sparsity
 		CPPAD_ASSERT_UNKNOWN( var_sparsity.end() == q );
-		sparse_list::const_iterator itr(var_sparsity, j+1);
+		local::sparse_list::const_iterator itr(var_sparsity, j+1);
 		size_t i = *itr;
 		while( i < q )
 		{	if( transpose )

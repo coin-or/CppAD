@@ -116,15 +116,15 @@ private:
 	CppAD::vector<bool>   dep_parameter_;
 
 	/// results of the forward mode calculations
-	pod_vector<Base> taylor_;
+	local::pod_vector<Base> taylor_;
 
 	/// which operations can be conditionally skipped
 	/// Set during forward pass of order zero
-	pod_vector<bool> cskip_op_;
+	local::pod_vector<bool> cskip_op_;
 
 	/// Variable on the tape corresponding to each vecad load operation
 	/// (if zero, the operation corresponds to a parameter).
-	pod_vector<addr_t> load_op_;
+	local::pod_vector<addr_t> load_op_;
 
 	/// the operation sequence corresponding to this object
 	local::player<Base> play_;
@@ -132,11 +132,11 @@ private:
 	/// Packed results of the forward mode Jacobian sparsity calculations.
 	/// for_jac_sparse_pack_.n_set() != 0  implies other sparsity results
 	/// are empty
-	sparse_pack      for_jac_sparse_pack_;
+	local::sparse_pack      for_jac_sparse_pack_;
 
 	/// Set results of the forward mode Jacobian sparsity calculations
 	/// for_jac_sparse_set_.n_set() != 0  implies for_sparse_pack_ is empty.
-	sparse_list                for_jac_sparse_set_;
+	local::sparse_list         for_jac_sparse_set_;
 
 // ------------------------------------------------------------
 // Private member functions
@@ -347,7 +347,7 @@ public:
 	void ForSparseHesCheckpoint(
 		vector<bool>&                 r         ,
 		vector<bool>&                 s         ,
-		sparse_list&                  h
+		local::sparse_list&                  h
 	);
 	// reverse mode Hessian sparsity
 	// (see doxygen documentation in rev_sparse_hes.hpp)
@@ -361,25 +361,25 @@ public:
 		size_t                        q         ,
 		vector<bool>&                 s         ,
 		bool                          transpose ,
-		sparse_list&                  h
+		local::sparse_list&                  h
 	);
 	// internal set sparsity version of RevSparseJac
 	// (used by checkpoint functions only)
 	void RevSparseJacCheckpoint(
 		size_t                        q          ,
-		const sparse_list&            r          ,
+		const local::sparse_list&     r          ,
 		bool                          transpose  ,
 		bool                          dependency ,
-		sparse_list&                  s
+		local::sparse_list&                  s
 	);
     // internal set sparsity version of RevSparseJac
     // (used by checkpoint functions only)
 	void ForSparseJacCheckpoint(
 	size_t                        q          ,
-	const sparse_list&            r          ,
+	const local::sparse_list&     r          ,
 	bool                          transpose  ,
 	bool                          dependency ,
-	sparse_list&                  s
+	local::sparse_list&                  s
 	);
 
 	/// amount of memory used for Jacobain sparsity pattern

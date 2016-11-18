@@ -254,11 +254,11 @@ private:
 	ADFun<Base> f_;
 	//
 	/// sparsity for entire Jacobian f(x)^{(1)} does not change so can cache it
-	sparse_list                jac_sparse_set_;
+	local::sparse_list         jac_sparse_set_;
 	vectorBool                 jac_sparse_bool_;
 	//
 	/// sparsity for sum_i f_i(x)^{(2)} does not change so can cache it
-	sparse_list                hes_sparse_set_;
+	local::sparse_list         hes_sparse_set_;
 	vectorBool                 hes_sparse_bool_;
 	// ------------------------------------------------------------------------
 	option_enum sparsity(void)
@@ -274,7 +274,7 @@ private:
 		// Use the choice for forward / reverse that results in smaller
 		// size for the sparsity pattern of all variables in the tape.
 		if( n <= m )
-		{	sparse_list identity;
+		{	local::sparse_list identity;
 			identity.resize(n, n);
 			for(size_t j = 0; j < n; j++)
 				identity.add_element(j, j);
@@ -284,7 +284,7 @@ private:
 			f_.size_forward_set(0);
 		}
 		else
-		{	sparse_list identity;
+		{	local::sparse_list identity;
 			identity.resize(m, m);
 			for(size_t i = 0; i < m; i++)
 				identity.add_element(i, i);
@@ -341,7 +341,7 @@ private:
 			all_one[i] = true;
 
 		// set version of sparsity for n by n idendity matrix
-		sparse_list identity;
+		local::sparse_list identity;
 		identity.resize(n, n);
 		for(size_t j = 0; j < n; j++)
 			identity.add_element(j, j);
@@ -696,7 +696,7 @@ l	should the operation sequence corresponding to the algo be optimized.
 				//
 				for(size_t i = 0; i < m; i++)
 				{	vy[i] = false;
-					sparse_list::const_iterator set_itr(jac_sparse_set_, i);
+					local::sparse_list::const_iterator set_itr(jac_sparse_set_, i);
 					size_t j = *set_itr;
 					while(j < n )
 					{	// y[i] depends on the value of x[j]
@@ -844,7 +844,7 @@ l	should the operation sequence corresponding to the algo be optimized.
 		// sparsity for  s = jac_sparse_set_ * r
 		for(size_t i = 0; i < m; i++)
 		{	// compute row i of the return pattern
-			sparse_list::const_iterator set_itr(jac_sparse_set_, i);
+			local::sparse_list::const_iterator set_itr(jac_sparse_set_, i);
 			size_t j = *set_itr;
 			while(j < n )
 			{	std::set<size_t>::const_iterator itr_j;
@@ -925,7 +925,7 @@ l	should the operation sequence corresponding to the algo be optimized.
 				CPPAD_ASSERT_UNKNOWN( k < q );
 				//
 				// i is column index in jac_sparse_set^T
-				sparse_list::const_iterator set_itr(jac_sparse_set_, i);
+				local::sparse_list::const_iterator set_itr(jac_sparse_set_, i);
 				size_t j = *set_itr;
 				while( j < n )
 				{	// j is row index in jac_sparse_set^T
@@ -1028,7 +1028,7 @@ l	should the operation sequence corresponding to the algo be optimized.
 		// hes_sparse_set_ can be used every time this is needed.
 		for(size_t i = 0; i < n; i++)
 		{	v[i].clear();
-			sparse_list::const_iterator set_itr(hes_sparse_set_, i);
+			local::sparse_list::const_iterator set_itr(hes_sparse_set_, i);
 			size_t j = *set_itr;
 			while( j < n )
 			{	std::set<size_t>::const_iterator itr_j;

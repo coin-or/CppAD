@@ -472,7 +472,7 @@ private:
 	const  size_t   length_;
 
 	/// elements of this vector
-	pod_vector<Base> data_;
+	local::pod_vector<Base> data_;
 
 	/// offset in cummulate vector corresponding to this object
 	size_t offset_;

@@ -21,7 +21,7 @@ Please visit http://www.coin-or.org/CppAD/ for information on other licenses.
 # include <cppad/core/cppad_assert.hpp>
 # include <cppad/local/op_code.hpp>
 
-namespace CppAD { // BEGIN_CPPAD_NAMESPACE
+namespace CppAD { namespace local { // BEGIN_CPPAD_LOCAL_NAMESPACE
 /*!
 \file pod_vector.hpp
 File used to define pod_vector class
@@ -289,5 +289,5 @@ public:
 	}
 };
 
-} // END_CPPAD_NAMESPACE
+} } // END_CPPAD_LOCAL_NAMESPACE
 # endif

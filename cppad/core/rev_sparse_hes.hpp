@@ -263,7 +263,7 @@ void ADFun<Base>::RevSparseHesCase(
 
 	// Array that will hold reverse Jacobian dependency flag.
 	// Initialize as true for the dependent variables.
-	pod_vector<bool> RevJac;
+	local::pod_vector<bool> RevJac;
 	RevJac.extend(num_var_tape_);
 	for(i = 0; i < num_var_tape_; i++)
 		RevJac[i] = false;
@@ -273,7 +273,7 @@ void ADFun<Base>::RevSparseHesCase(
 	}
 
 	// vector of sets that will hold reverse Hessain values
-	sparse_pack rev_hes_sparsity;
+	local::sparse_pack rev_hes_sparsity;
 	rev_hes_sparsity.resize(num_var_tape_, q);
 
 	// compute the Hessian sparsity patterns
@@ -306,7 +306,7 @@ void ADFun<Base>::RevSparseHesCase(
 
 		// extract the result from rev_hes_sparsity
 		CPPAD_ASSERT_UNKNOWN( rev_hes_sparsity.end() == q );
-		sparse_pack::const_iterator itr(rev_hes_sparsity, j + 1);
+		local::sparse_pack::const_iterator itr(rev_hes_sparsity, j + 1);
 		i = *itr;
 		while( i < q )
 		{	if( transpose )
@@ -385,7 +385,7 @@ void ADFun<Base>::RevSparseHesCase(
 
 	// Array that will hold reverse Jacobian dependency flag.
 	// Initialize as true for the dependent variables.
-	pod_vector<bool> RevJac;
+	local::pod_vector<bool> RevJac;
 	RevJac.extend(num_var_tape_);
 	for(i = 0; i < num_var_tape_; i++)
 		RevJac[i] = false;
@@ -403,7 +403,7 @@ void ADFun<Base>::RevSparseHesCase(
 
 
 	// vector of sets that will hold reverse Hessain values
-	sparse_list rev_hes_sparsity;
+	local::sparse_list rev_hes_sparsity;
 	rev_hes_sparsity.resize(num_var_tape_, q);
 
 	// compute the Hessian sparsity patterns
@@ -428,7 +428,7 @@ void ADFun<Base>::RevSparseHesCase(
 		// extract the result from rev_hes_sparsity
 		// and add corresponding elements to result sets in h
 		CPPAD_ASSERT_UNKNOWN( rev_hes_sparsity.end() == q );
-		sparse_list::const_iterator itr_2(rev_hes_sparsity, j+1);
+		local::sparse_list::const_iterator itr_2(rev_hes_sparsity, j+1);
 		i = *itr_2;
 		while( i < q )
 		{	if( transpose )
@@ -556,7 +556,7 @@ void ADFun<Base>::RevSparseHesCheckpoint(
 	size_t                        q         ,
 	vector<bool>&                 s         ,
 	bool                          transpose ,
-	sparse_list&                  h         )
+	local::sparse_list&                  h         )
 {	size_t n = Domain();
 	size_t m = Range();
 
@@ -568,7 +568,7 @@ void ADFun<Base>::RevSparseHesCheckpoint(
 
 	// Array that holds the reverse Jacobiain dependcy flags.
 	// Initialize as true for dependent variables, flase for others.
-	pod_vector<bool> RevJac;
+	local::pod_vector<bool> RevJac;
 	RevJac.extend(num_var_tape_);
 	for(size_t i = 0; i < num_var_tape_; i++)
 		RevJac[i] = false;
@@ -578,7 +578,7 @@ void ADFun<Base>::RevSparseHesCheckpoint(
 	}
 
 	// holds reverse Hessian sparsity pattern for all variables
-	sparse_list rev_hes_sparsity;
+	local::sparse_list rev_hes_sparsity;
 	rev_hes_sparsity.resize(num_var_tape_, q);
 
 	// compute Hessian sparsity pattern for all variables
@@ -607,7 +607,7 @@ void ADFun<Base>::RevSparseHesCheckpoint(
 
 		// extract the result from rev_hes_sparsity
 		CPPAD_ASSERT_UNKNOWN( rev_hes_sparsity.end() == q );
-		sparse_list::const_iterator itr(rev_hes_sparsity, j + 1);
+		local::sparse_list::const_iterator itr(rev_hes_sparsity, j + 1);
 		size_t i = *itr;
 		while( i < q )
 		{	if( transpose )

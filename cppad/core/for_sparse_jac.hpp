@@ -328,7 +328,7 @@ void ADFun<Base>::ForSparseJacCase(
 				s[ i * q + j ] = false;
 		}
 		CPPAD_ASSERT_UNKNOWN( for_jac_sparse_pack_.end() == q );
-		sparse_pack::const_iterator itr(for_jac_sparse_pack_, dep_taddr_[i] );
+		local::sparse_pack::const_iterator itr(for_jac_sparse_pack_, dep_taddr_[i] );
 		j = *itr;
 		while( j < q )
 		{	if( transpose )
@@ -463,7 +463,7 @@ void ADFun<Base>::ForSparseJacCase(
 		// extract results from for_jac_sparse_set_
 		// and add corresponding elements to sets in s
 		CPPAD_ASSERT_UNKNOWN( for_jac_sparse_set_.end() == q );
-		sparse_list::const_iterator itr_2(for_jac_sparse_set_, dep_taddr_[i] );
+		local::sparse_list::const_iterator itr_2(for_jac_sparse_set_, dep_taddr_[i] );
 		j = *itr_2;
 		while( j < q )
 		{	if( transpose )
@@ -639,10 +639,10 @@ In this case
 template <class Base>
 void ADFun<Base>::ForSparseJacCheckpoint(
 	size_t                        q          ,
-	const sparse_list&            r          ,
+	const local::sparse_list&     r          ,
 	bool                          transpose  ,
 	bool                          dependency ,
-	sparse_list&                  s          )
+	local::sparse_list&                  s          )
 {	size_t n = Domain();
 	size_t m = Range();
 
@@ -671,7 +671,7 @@ void ADFun<Base>::ForSparseJacCheckpoint(
 	// set sparsity pattern for dependent variables
 	if( transpose )
 	{	for(size_t i = 0; i < q; i++)
-		{	sparse_list::const_iterator itr(r, i);
+		{	local::sparse_list::const_iterator itr(r, i);
 			size_t j = *itr;
 			while( j < n )
 			{	for_jac_sparse_set_.add_element( ind_taddr_[j], i );
@@ -681,7 +681,7 @@ void ADFun<Base>::ForSparseJacCheckpoint(
 	}
 	else
 	{	for(size_t j = 0; j < n; j++)
-		{	sparse_list::const_iterator itr(r, j);
+		{	local::sparse_list::const_iterator itr(r, j);
 			size_t i = *itr;
 			while( i < q )
 			{	for_jac_sparse_set_.add_element( ind_taddr_[j], i );
@@ -711,7 +711,7 @@ void ADFun<Base>::ForSparseJacCheckpoint(
 
 		// extract the result from for_jac_sparse_set_
 		CPPAD_ASSERT_UNKNOWN( for_jac_sparse_set_.end() == q );
-		sparse_list::const_iterator itr(for_jac_sparse_set_, dep_taddr_[i] );
+		local::sparse_list::const_iterator itr(for_jac_sparse_set_, dep_taddr_[i] );
 		size_t j = *itr;
 		while( j < q )
 		{	if( transpose )

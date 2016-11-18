@@ -173,7 +173,7 @@ void ADFun<Base>::capacity_order(size_t c, size_t r)
 
 	// Allocate new taylor with requested number of orders and directions
 	size_t new_len   = ( (c-1)*r + 1 ) * num_var_tape_;
-	pod_vector<Base> new_taylor;
+	local::pod_vector<Base> new_taylor;
 	new_taylor.extend(new_len);
 
 	// number of orders to copy

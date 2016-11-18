@@ -649,7 +649,7 @@ size_t ADFun<Base>::SparseHessian(
 		return n_sweep;
 
 	typedef typename VectorSet::value_type Set_type;
-	typedef typename internal_sparsity<Set_type>::pattern_type Pattern_type;
+	typedef typename local::internal_sparsity<Set_type>::pattern_type Pattern_type;
 	Pattern_type s;
 	if( work.color.size() == 0 )
 	{	bool transpose = false;
@@ -713,7 +713,7 @@ VectorBase ADFun<Base>::SparseHessian(
 	);
 
 	typedef typename VectorSet::value_type Set_type;
-	typedef typename internal_sparsity<Set_type>::pattern_type Pattern_type;
+	typedef typename local::internal_sparsity<Set_type>::pattern_type Pattern_type;
 
 	// initialize the return value as zero
 	Base zero(0);

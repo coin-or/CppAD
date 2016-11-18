@@ -775,7 +775,7 @@ size_t ADFun<Base>::SparseJacobianForward(
 		return n_sweep;
 
 	typedef typename VectorSet::value_type Set_type;
-	typedef typename internal_sparsity<Set_type>::pattern_type Pattern_type;
+	typedef typename local::internal_sparsity<Set_type>::pattern_type Pattern_type;
 	Pattern_type s_transpose;
 	if( work.color.size() == 0 )
 	{	bool transpose = true;
@@ -890,7 +890,7 @@ size_t ADFun<Base>::SparseJacobianReverse(
 		return n_sweep;
 
 	typedef typename VectorSet::value_type Set_type;
-	typedef typename internal_sparsity<Set_type>::pattern_type Pattern_type;
+	typedef typename local::internal_sparsity<Set_type>::pattern_type Pattern_type;
 	Pattern_type s;
 	if( work.color.size() == 0 )
 	{	bool transpose = false;
@@ -948,7 +948,7 @@ VectorBase ADFun<Base>::SparseJacobian(
 	CheckSimpleVector<Base, VectorBase>();
 
 	typedef typename VectorSet::value_type Set_type;
-	typedef typename internal_sparsity<Set_type>::pattern_type Pattern_type;
+	typedef typename local::internal_sparsity<Set_type>::pattern_type Pattern_type;
 
 	// initialize the return value as zero
 	Base zero(0);
