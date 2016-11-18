@@ -564,7 +564,7 @@ nobase_myinclude_HEADERS = \
 	cppad/local/div_op.hpp \
 	cppad/core/drivers.hpp \
 	cppad/core/epsilon.hpp \
-	cppad/local/equal_op_seq.hpp \
+	cppad/core/equal_op_seq.hpp \
 	cppad/core/erf.hpp \
 	cppad/local/erf_op.hpp \
 	cppad/local/exp_op.hpp \
@@ -606,7 +606,7 @@ nobase_myinclude_HEADERS = \
 	cppad/local/op.hpp \
 	cppad/local/optimize/optimize.hpp \
 	cppad/core/opt_val_hes.hpp \
-	cppad/local/ordered.hpp \
+	cppad/core/ordered.hpp \
 	cppad/core/parallel_ad.hpp \
 	cppad/local/parameter_op.hpp \
 	cppad/core/par_var.hpp \
@@ -654,7 +654,7 @@ nobase_myinclude_HEADERS = \
 	cppad/core/testvector.hpp \
 	cppad/core/unary_minus.hpp \
 	cppad/core/unary_plus.hpp \
-	cppad/local/undef.hpp \
+	cppad/core/undef.hpp \
 	cppad/core/user_ad.hpp \
 	cppad/core/value.hpp \
 	cppad/core/var2par.hpp \

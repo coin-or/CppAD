@@ -27,7 +27,7 @@ $children%
 	cppad/core/near_equal_ext.hpp%
 	cppad/core/bool_fun.hpp%
 	cppad/core/par_var.hpp%
-	cppad/local/equal_op_seq.hpp
+	cppad/core/equal_op_seq.hpp
 %$$
 $table
 $rref Compare$$
@@ -45,6 +45,6 @@ $end
 # include <cppad/core/near_equal_ext.hpp>
 # include <cppad/core/bool_fun.hpp>
 # include <cppad/core/par_var.hpp>
-# include <cppad/local/equal_op_seq.hpp>
+# include <cppad/core/equal_op_seq.hpp>
 
 # endif

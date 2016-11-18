@@ -69,6 +69,6 @@ Please visit http://www.coin-or.org/CppAD/ for information on other licenses.
 # include <cppad/core/opt_val_hes.hpp>
 
 // undo definitions in Define.h
-# include <cppad/local/undef.hpp>
+# include <cppad/core/undef.hpp>
 
 # endif

@@ -1,7 +1,7 @@
 #! /bin/bash -e
 # $Id$
 # -----------------------------------------------------------------------------
-# CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-15 Bradley M. Bell
+# CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-16 Bradley M. Bell
 #
 # CppAD is distributed under multiple licenses. This distribution is under
 # the terms of the
@@ -43,11 +43,11 @@ do
 	symbol=`echo $symbol_file | sed -e 's|:.*||'`
 	file=`echo $symbol_file | sed -e 's|.*:||'`
 	ok='false'
-	if grep "$symbol *in user api" cppad/local/undef.hpp > /dev/null
+	if grep "$symbol *in user api" cppad/core/undef.hpp > /dev/null
 	then
 		ok='true'
 	fi
-	if grep "$symbol *in deprecated api" cppad/local/undef.hpp > /dev/null
+	if grep "$symbol *in deprecated api" cppad/core/undef.hpp > /dev/null
 	then
 		ok='true'
 	fi
@@ -55,7 +55,7 @@ do
 	then
 		echo "The symbol $symbol"
 		echo "appears in $file omhelp documentation"
-		echo "but is not listed as in user api in cppad/local/undef.hpp"
+		echo "but is not listed as in user api in cppad/core/undef.hpp"
 		exit 1
 	fi
 done
