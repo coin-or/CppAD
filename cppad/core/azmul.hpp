@@ -112,14 +112,14 @@ azmul(const AD<Base>& x, const AD<Base>& y)
 	if( var_x )
 	{	if( var_y )
 		{	// result = azmul(variable, variable)
-			CPPAD_ASSERT_UNKNOWN( NumRes(ZmulvvOp) == 1 );
-			CPPAD_ASSERT_UNKNOWN( NumArg(ZmulvvOp) == 2 );
+			CPPAD_ASSERT_UNKNOWN( local::NumRes(local::ZmulvvOp) == 1 );
+			CPPAD_ASSERT_UNKNOWN( local::NumArg(local::ZmulvvOp) == 2 );
 
 			// put operand addresses in tape
 			tape->Rec_.PutArg(x.taddr_, y.taddr_);
 
 			// put operator in the tape
-			result.taddr_ = tape->Rec_.PutOp(ZmulvvOp);
+			result.taddr_ = tape->Rec_.PutOp(local::ZmulvvOp);
 
 			// make result a variable
 			result.tape_id_ = tape_id;
@@ -133,15 +133,15 @@ azmul(const AD<Base>& x, const AD<Base>& y)
 		}
 		else
 		{	// result = zmul(variable, parameter)
-			CPPAD_ASSERT_UNKNOWN( NumRes(ZmulvpOp) == 1 );
-			CPPAD_ASSERT_UNKNOWN( NumArg(ZmulvpOp) == 2 );
+			CPPAD_ASSERT_UNKNOWN( local::NumRes(local::ZmulvpOp) == 1 );
+			CPPAD_ASSERT_UNKNOWN( local::NumArg(local::ZmulvpOp) == 2 );
 
 			// put operand addresses in tape
 			addr_t p = tape->Rec_.PutPar(y.value_);
 			tape->Rec_.PutArg(x.taddr_, p);
 
 			// put operator in the tape
-			result.taddr_ = tape->Rec_.PutOp(ZmulvpOp);
+			result.taddr_ = tape->Rec_.PutOp(local::ZmulvpOp);
 
 			// make result a variable
 			result.tape_id_ = tape_id;
@@ -157,15 +157,15 @@ azmul(const AD<Base>& x, const AD<Base>& y)
 		}
 		else
 		{	// result = zmul(parameter, variable)
-			CPPAD_ASSERT_UNKNOWN( NumRes(ZmulpvOp) == 1 );
-			CPPAD_ASSERT_UNKNOWN( NumArg(ZmulpvOp) == 2 );
+			CPPAD_ASSERT_UNKNOWN( local::NumRes(local::ZmulpvOp) == 1 );
+			CPPAD_ASSERT_UNKNOWN( local::NumArg(local::ZmulpvOp) == 2 );
 
 			// put operand addresses in tape
 			addr_t p = tape->Rec_.PutPar(x.value_);
 			tape->Rec_.PutArg(p, y.taddr_);
 
 			// put operator in the tape
-			result.taddr_ = tape->Rec_.PutOp(ZmulpvOp);
+			result.taddr_ = tape->Rec_.PutOp(local::ZmulpvOp);
 
 			// make result a variable
 			result.tape_id_ = tape_id;

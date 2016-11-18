@@ -413,21 +413,21 @@ public:
 
 			size_t load_op_index = tape->Rec_.num_load_op_rec();
 			if( IdenticalPar(ind_) )
-			{	CPPAD_ASSERT_UNKNOWN( NumRes(LdpOp) == 1 );
-				CPPAD_ASSERT_UNKNOWN( NumArg(LdpOp) == 3 );
+			{	CPPAD_ASSERT_UNKNOWN( local::NumRes(local::LdpOp) == 1 );
+				CPPAD_ASSERT_UNKNOWN( local::NumArg(local::LdpOp) == 3 );
 
 				// put operand addresses in tape
 				tape->Rec_.PutArg(
 					vec_->offset_, i, load_op_index
 				);
 				// put operator in the tape, ind_ is a parameter
-				result.taddr_ = tape->Rec_.PutLoadOp(LdpOp);
+				result.taddr_ = tape->Rec_.PutLoadOp(local::LdpOp);
 				// change result to variable for this load
 				result.tape_id_ = tape->id_;
 			}
 			else
-			{	CPPAD_ASSERT_UNKNOWN( NumRes(LdvOp) == 1 );
-				CPPAD_ASSERT_UNKNOWN( NumArg(LdvOp) == 3 );
+			{	CPPAD_ASSERT_UNKNOWN( local::NumRes(local::LdvOp) == 1 );
+				CPPAD_ASSERT_UNKNOWN( local::NumArg(local::LdvOp) == 3 );
 				addr_t ind_taddr;
 				if( Parameter(ind_) )
 				{	// kludge that should not be needed
@@ -446,7 +446,7 @@ public:
 					vec_->offset_, ind_taddr, load_op_index
 				);
 				// put operator in the tape, ind_ is a variable
-				result.taddr_ = tape->Rec_.PutLoadOp(LdvOp);
+				result.taddr_ = tape->Rec_.PutLoadOp(local::LdvOp);
 				// change result to variable for this load
 				result.tape_id_ = tape->id_;
 			}
@@ -633,25 +633,25 @@ void VecAD_reference<Base>::operator=(const AD<Base> &y)
 	// record the setting of this array element
 	CPPAD_ASSERT_UNKNOWN( vec_->offset_ > 0 );
 	if( Parameter(ind_) )
-	{	CPPAD_ASSERT_UNKNOWN( NumArg(StpvOp) == 3 );
-		CPPAD_ASSERT_UNKNOWN( NumRes(StpvOp) == 0 );
+	{	CPPAD_ASSERT_UNKNOWN( local::NumArg(local::StpvOp) == 3 );
+		CPPAD_ASSERT_UNKNOWN( local::NumRes(local::StpvOp) == 0 );
 
 		// put operand addresses in tape
 		tape->Rec_.PutArg(vec_->offset_, i, y.taddr_);
 
 		// put operator in the tape, ind_ is parameter, y is variable
-		tape->Rec_.PutOp(StpvOp);
+		tape->Rec_.PutOp(local::StpvOp);
 	}
 	else
-	{	CPPAD_ASSERT_UNKNOWN( NumArg(StvvOp) == 3 );
-		CPPAD_ASSERT_UNKNOWN( NumRes(StvvOp) == 0 );
+	{	CPPAD_ASSERT_UNKNOWN( local::NumArg(local::StvvOp) == 3 );
+		CPPAD_ASSERT_UNKNOWN( local::NumRes(local::StvvOp) == 0 );
 		CPPAD_ASSERT_UNKNOWN( ind_.taddr_ > 0 );
 
 		// put operand addresses in tape
 		tape->Rec_.PutArg(vec_->offset_, ind_.taddr_, y.taddr_);
 
 		// put operator in the tape, ind_ is variable, y is variable
-		tape->Rec_.PutOp(StvvOp);
+		tape->Rec_.PutOp(local::StvvOp);
 	}
 }
 
@@ -684,25 +684,25 @@ void VecAD_reference<Base>::operator=(const Base &y)
 	// record the setting of this array element
 	CPPAD_ASSERT_UNKNOWN( vec_->offset_ > 0 );
 	if( Parameter(ind_) )
-	{	CPPAD_ASSERT_UNKNOWN( NumArg(StppOp) == 3 );
-		CPPAD_ASSERT_UNKNOWN( NumRes(StppOp) == 0 );
+	{	CPPAD_ASSERT_UNKNOWN( local::NumArg(local::StppOp) == 3 );
+		CPPAD_ASSERT_UNKNOWN( local::NumRes(local::StppOp) == 0 );
 
 		// put operand addresses in tape
 		tape->Rec_.PutArg(vec_->offset_, i, p);
 
 		// put operator in the tape, ind_ is parameter, y is parameter
-		tape->Rec_.PutOp(StppOp);
+		tape->Rec_.PutOp(local::StppOp);
 	}
 	else
-	{	CPPAD_ASSERT_UNKNOWN( NumArg(StvpOp) == 3 );
-		CPPAD_ASSERT_UNKNOWN( NumRes(StvpOp) == 0 );
+	{	CPPAD_ASSERT_UNKNOWN( local::NumArg(local::StvpOp) == 3 );
+		CPPAD_ASSERT_UNKNOWN( local::NumRes(local::StvpOp) == 0 );
 		CPPAD_ASSERT_UNKNOWN( ind_.taddr_ > 0 );
 
 		// put operand addresses in tape
 		tape->Rec_.PutArg(vec_->offset_, ind_.taddr_, p);
 
 		// put operator in the tape, ind_ is variable, y is parameter
-		tape->Rec_.PutOp(StvpOp);
+		tape->Rec_.PutOp(local::StvpOp);
 	}
 }
 

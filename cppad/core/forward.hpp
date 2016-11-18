@@ -134,7 +134,7 @@ VectorBase ADFun<Base>::Forward(
 	{	CPPAD_ASSERT_UNKNOWN( ind_taddr_[j] < num_var_tape_  );
 
 		// ind_taddr_[j] is operator taddr for j-th independent variable
-		CPPAD_ASSERT_UNKNOWN( play_.GetOp( ind_taddr_[j] ) == InvOp );
+		CPPAD_ASSERT_UNKNOWN( play_.GetOp( ind_taddr_[j] ) == local::InvOp );
 
 		if( p ==  q )
 			taylor_[ C * ind_taddr_[j] + q] = xq[j];
@@ -365,7 +365,7 @@ VectorBase ADFun<Base>::Forward(
 	{	CPPAD_ASSERT_UNKNOWN( ind_taddr_[j] < num_var_tape_  );
 
 		// ind_taddr_[j] is operator taddr for j-th independent variable
-		CPPAD_ASSERT_UNKNOWN( play_.GetOp( ind_taddr_[j] ) == InvOp );
+		CPPAD_ASSERT_UNKNOWN( play_.GetOp( ind_taddr_[j] ) == local::InvOp );
 
 		for(ell = 0; ell < r; ell++)
 		{	size_t index = ((c-1)*r + 1)*ind_taddr_[j] + (q-1)*r + ell + 1;

@@ -291,7 +291,7 @@ void ADFun<Base>::ForSparseJacCase(
 	for(i = 0; i < n; i++)
 	{	CPPAD_ASSERT_UNKNOWN( ind_taddr_[i] < num_var_tape_ );
 		// ind_taddr_[i] is operator taddr for i-th independent variable
-		CPPAD_ASSERT_UNKNOWN( play_.GetOp( ind_taddr_[i] ) == InvOp );
+		CPPAD_ASSERT_UNKNOWN( play_.GetOp( ind_taddr_[i] ) == local::InvOp );
 
 		// set bits that are true
 		if( transpose )
@@ -421,7 +421,7 @@ void ADFun<Base>::ForSparseJacCase(
 				);
 				CPPAD_ASSERT_UNKNOWN( ind_taddr_[j] < num_var_tape_ );
 				// operator for j-th independent variable
-				CPPAD_ASSERT_UNKNOWN( play_.GetOp( ind_taddr_[j] ) == InvOp );
+				CPPAD_ASSERT_UNKNOWN( play_.GetOp( ind_taddr_[j] ) == local::InvOp );
 				for_jac_sparse_set_.add_element( ind_taddr_[j], i);
 			}
 		}
@@ -430,7 +430,7 @@ void ADFun<Base>::ForSparseJacCase(
 	{	for(i = 0; i < n; i++)
 		{	CPPAD_ASSERT_UNKNOWN( ind_taddr_[i] < num_var_tape_ );
 			// ind_taddr_[i] is operator taddr for i-th independent variable
-			CPPAD_ASSERT_UNKNOWN( play_.GetOp( ind_taddr_[i] ) == InvOp );
+			CPPAD_ASSERT_UNKNOWN( play_.GetOp( ind_taddr_[i] ) == local::InvOp );
 
 			// add the elements that are present
 			itr_1 = r[i].begin();
@@ -657,7 +657,7 @@ void ADFun<Base>::ForSparseJacCheckpoint(
 	}
 	for(size_t j = 0; j < n; j++)
 	{	CPPAD_ASSERT_UNKNOWN( ind_taddr_[j] == (j+1) );
-		CPPAD_ASSERT_UNKNOWN( play_.GetOp( ind_taddr_[j] ) == InvOp );
+		CPPAD_ASSERT_UNKNOWN( play_.GetOp( ind_taddr_[j] ) == local::InvOp );
 	}
 # endif
 

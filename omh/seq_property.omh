@@ -1,6 +1,6 @@
 $Id$
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-15 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-16 Bradley M. Bell
 
 CppAD is distributed under multiple licenses. This distribution is under
 the terms of the
@@ -205,7 +205,7 @@ and is the amount of memory required to store the operation sequence
 (not counting a small amount of memory required for every operation sequence).
 For the current version of CppAD, this is given by
 $codei%
-	%s% = %f%.size_op()     * sizeof(CppAD::OpCode)
+	%s% = %f%.size_op()     * sizeof(CppAD::local::OpCode)
 	    + %f%.size_op_arg() * sizeof(%tape_addr_type%)
 	    + %f%.size_par()    * sizeof(%Base%)
 	    + %f%.size_text()   * sizeof(char)

@@ -89,8 +89,8 @@ void parallel_ad(void)
 	// ensure statics in following functions are initialized
 	elapsed_seconds();
 	ErrorHandler::Current();
-	NumArg(BeginOp);
-	NumRes(BeginOp);
+	local::NumArg(local::BeginOp);
+	local::NumRes(local::BeginOp);
 	local::one_element_std_set<size_t>();
 	local::two_element_std_set<size_t>();
 

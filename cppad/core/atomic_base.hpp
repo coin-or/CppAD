@@ -503,50 +503,50 @@ void operator()(
 	if( record_operation )
 	{
 		// Operator that marks beginning of this atomic operation
-		CPPAD_ASSERT_UNKNOWN( NumRes(UserOp) == 0 );
-		CPPAD_ASSERT_UNKNOWN( NumArg(UserOp) == 4 );
+		CPPAD_ASSERT_UNKNOWN( local::NumRes(local::UserOp) == 0 );
+		CPPAD_ASSERT_UNKNOWN( local::NumArg(local::UserOp) == 4 );
 		tape->Rec_.PutArg(index_, id, n, m);
-		tape->Rec_.PutOp(UserOp);
+		tape->Rec_.PutOp(local::UserOp);
 
 		// Now put n operators, one for each element of argument vector
-		CPPAD_ASSERT_UNKNOWN( NumRes(UsravOp) == 0 );
-		CPPAD_ASSERT_UNKNOWN( NumRes(UsrapOp) == 0 );
-		CPPAD_ASSERT_UNKNOWN( NumArg(UsravOp) == 1 );
-		CPPAD_ASSERT_UNKNOWN( NumArg(UsrapOp) == 1 );
+		CPPAD_ASSERT_UNKNOWN( local::NumRes(local::UsravOp) == 0 );
+		CPPAD_ASSERT_UNKNOWN( local::NumRes(local::UsrapOp) == 0 );
+		CPPAD_ASSERT_UNKNOWN( local::NumArg(local::UsravOp) == 1 );
+		CPPAD_ASSERT_UNKNOWN( local::NumArg(local::UsrapOp) == 1 );
 		for(j = 0; j < n; j++)
 		{	if( vx[j] )
 			{	// information for an argument that is a variable
 				tape->Rec_.PutArg(ax[j].taddr_);
-				tape->Rec_.PutOp(UsravOp);
+				tape->Rec_.PutOp(local::UsravOp);
 			}
 			else
 			{	// information for an argument that is parameter
 				addr_t par = tape->Rec_.PutPar(ax[j].value_);
 				tape->Rec_.PutArg(par);
-				tape->Rec_.PutOp(UsrapOp);
+				tape->Rec_.PutOp(local::UsrapOp);
 			}
 		}
 
 		// Now put m operators, one for each element of result vector
-		CPPAD_ASSERT_UNKNOWN( NumArg(UsrrpOp) == 1 );
-		CPPAD_ASSERT_UNKNOWN( NumRes(UsrrpOp) == 0 );
-		CPPAD_ASSERT_UNKNOWN( NumArg(UsrrvOp) == 0 );
-		CPPAD_ASSERT_UNKNOWN( NumRes(UsrrvOp) == 1 );
+		CPPAD_ASSERT_UNKNOWN( local::NumArg(local::UsrrpOp) == 1 );
+		CPPAD_ASSERT_UNKNOWN( local::NumRes(local::UsrrpOp) == 0 );
+		CPPAD_ASSERT_UNKNOWN( local::NumArg(local::UsrrvOp) == 0 );
+		CPPAD_ASSERT_UNKNOWN( local::NumRes(local::UsrrvOp) == 1 );
 		for(i = 0; i < m; i++)
 		{	if( vy[i] )
-			{	ay[i].taddr_    = tape->Rec_.PutOp(UsrrvOp);
+			{	ay[i].taddr_    = tape->Rec_.PutOp(local::UsrrvOp);
 				ay[i].tape_id_  = tape_id;
 			}
 			else
 			{	addr_t par = tape->Rec_.PutPar(ay[i].value_);
 				tape->Rec_.PutArg(par);
-				tape->Rec_.PutOp(UsrrpOp);
+				tape->Rec_.PutOp(local::UsrrpOp);
 			}
 		}
 
 		// Put a duplicate UserOp at end of UserOp sequence
 		tape->Rec_.PutArg(index_, id, n, m);
-		tape->Rec_.PutOp(UserOp);
+		tape->Rec_.PutOp(local::UserOp);
 	}
 	return;
 }

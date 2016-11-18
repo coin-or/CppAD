@@ -137,7 +137,7 @@ namespace CppAD {
 	template <class Base>
 	void PrintFor(const AD<Base>& pos,
 		const char *before, const AD<Base>& var, const char* after)
-	{	CPPAD_ASSERT_NARG_NRES(PriOp, 5, 0);
+	{	CPPAD_ASSERT_NARG_NRES(local::PriOp, 5, 0);
 
 		// check for case where we are not recording operations
 		local::ADTape<Base>* tape = AD<Base>::tape_ptr();
@@ -181,7 +181,7 @@ namespace CppAD {
 
 		// put the operator in the tape
 		tape->Rec_.PutArg(ind0, ind1, ind2, ind3, ind4);
-		tape->Rec_.PutOp(PriOp);
+		tape->Rec_.PutOp(local::PriOp);
 	}
 	// Fold all other cases into the case above
 	template <class Base>

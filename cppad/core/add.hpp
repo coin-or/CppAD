@@ -38,13 +38,13 @@ AD<Base> operator + (const AD<Base> &left , const AD<Base> &right)
 	if( var_left )
 	{	if( var_right )
 		{	// result = variable + variable
-			CPPAD_ASSERT_UNKNOWN( NumRes(AddvvOp) == 1 );
-			CPPAD_ASSERT_UNKNOWN( NumArg(AddvvOp) == 2 );
+			CPPAD_ASSERT_UNKNOWN( local::NumRes(local::AddvvOp) == 1 );
+			CPPAD_ASSERT_UNKNOWN( local::NumArg(local::AddvvOp) == 2 );
 
 			// put operand addresses in tape
 			tape->Rec_.PutArg(left.taddr_, right.taddr_);
 			// put operator in the tape
-			result.taddr_ = tape->Rec_.PutOp(AddvvOp);
+			result.taddr_ = tape->Rec_.PutOp(local::AddvvOp);
 			// make result a variable
 			result.tape_id_ = tape_id;
 		}
@@ -55,14 +55,14 @@ AD<Base> operator + (const AD<Base> &left , const AD<Base> &right)
 		else
 		{	// result = variable  + parameter
 			//        = parameter + variable
-			CPPAD_ASSERT_UNKNOWN( NumRes(AddpvOp) == 1 );
-			CPPAD_ASSERT_UNKNOWN( NumArg(AddpvOp) == 2 );
+			CPPAD_ASSERT_UNKNOWN( local::NumRes(local::AddpvOp) == 1 );
+			CPPAD_ASSERT_UNKNOWN( local::NumArg(local::AddpvOp) == 2 );
 
 			// put operand addresses in tape
 			addr_t p = tape->Rec_.PutPar(right.value_);
 			tape->Rec_.PutArg(p, left.taddr_);
 			// put operator in the tape
-			result.taddr_ = tape->Rec_.PutOp(AddpvOp);
+			result.taddr_ = tape->Rec_.PutOp(local::AddpvOp);
 			// make result a variable
 			result.tape_id_ = tape_id;
 		}
@@ -74,14 +74,14 @@ AD<Base> operator + (const AD<Base> &left , const AD<Base> &right)
 		}
 		else
 		{	// result = parameter + variable
-			CPPAD_ASSERT_UNKNOWN( NumRes(AddpvOp) == 1 );
-			CPPAD_ASSERT_UNKNOWN( NumArg(AddpvOp) == 2 );
+			CPPAD_ASSERT_UNKNOWN( local::NumRes(local::AddpvOp) == 1 );
+			CPPAD_ASSERT_UNKNOWN( local::NumArg(local::AddpvOp) == 2 );
 
 			// put operand addresses in tape
 			addr_t p = tape->Rec_.PutPar(left.value_);
 			tape->Rec_.PutArg(p, right.taddr_);
 			// put operator in the tape
-			result.taddr_ = tape->Rec_.PutOp(AddpvOp);
+			result.taddr_ = tape->Rec_.PutOp(local::AddpvOp);
 			// make result a variable
 			result.tape_id_ = tape_id;
 		}

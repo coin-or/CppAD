@@ -43,13 +43,13 @@ AD<Base> operator / (const AD<Base> &left , const AD<Base> &right)
 				"Dividing AD objects that are"
 				" variables on different tapes."
 			);
-			CPPAD_ASSERT_UNKNOWN( NumRes(DivvvOp) == 1 );
-			CPPAD_ASSERT_UNKNOWN( NumArg(DivvvOp) == 2 );
+			CPPAD_ASSERT_UNKNOWN( local::NumRes(local::DivvvOp) == 1 );
+			CPPAD_ASSERT_UNKNOWN( local::NumArg(local::DivvvOp) == 2 );
 
 			// put operand addresses in tape
 			tape->Rec_.PutArg(left.taddr_, right.taddr_);
 			// put operator in the tape
-			result.taddr_ = tape->Rec_.PutOp(DivvvOp);
+			result.taddr_ = tape->Rec_.PutOp(local::DivvvOp);
 			// make result a variable
 			result.tape_id_ = tape_id;
 		}
@@ -59,14 +59,14 @@ AD<Base> operator / (const AD<Base> &left , const AD<Base> &right)
 		}
 		else
 		{	// result = variable / parameter
-			CPPAD_ASSERT_UNKNOWN( NumRes(DivvpOp) == 1 );
-			CPPAD_ASSERT_UNKNOWN( NumArg(DivvpOp) == 2 );
+			CPPAD_ASSERT_UNKNOWN( local::NumRes(local::DivvpOp) == 1 );
+			CPPAD_ASSERT_UNKNOWN( local::NumArg(local::DivvpOp) == 2 );
 
 			// put operand addresses in tape
 			addr_t p = tape->Rec_.PutPar(right.value_);
 			tape->Rec_.PutArg(left.taddr_, p);
 			// put operator in the tape
-			result.taddr_ = tape->Rec_.PutOp(DivvpOp);
+			result.taddr_ = tape->Rec_.PutOp(local::DivvpOp);
 			// make result a variable
 			result.tape_id_ = tape_id;
 		}
@@ -77,14 +77,14 @@ AD<Base> operator / (const AD<Base> &left , const AD<Base> &right)
 		}
 		else
 		{	// result = parameter / variable
-			CPPAD_ASSERT_UNKNOWN( NumRes(DivpvOp) == 1 );
-			CPPAD_ASSERT_UNKNOWN( NumArg(DivpvOp) == 2 );
+			CPPAD_ASSERT_UNKNOWN( local::NumRes(local::DivpvOp) == 1 );
+			CPPAD_ASSERT_UNKNOWN( local::NumArg(local::DivpvOp) == 2 );
 
 			// put operand addresses in tape
 			addr_t p = tape->Rec_.PutPar(left.value_);
 			tape->Rec_.PutArg(p, right.taddr_);
 			// put operator in the tape
-			result.taddr_ = tape->Rec_.PutOp(DivpvOp);
+			result.taddr_ = tape->Rec_.PutOp(local::DivpvOp);
 			// make result a variable
 			result.tape_id_ = tape_id;
 		}

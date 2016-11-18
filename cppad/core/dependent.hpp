@@ -252,7 +252,7 @@ void ADFun<Base>::Dependent(local::ADTape<Base> *tape, const ADvector &y)
 	// Begin setting ad_fun.hpp private member data
 	// ---------------------------------------------------------------------
 	// dep_parameter_, dep_taddr_
-	CPPAD_ASSERT_UNKNOWN( NumRes(ParOp) == 1 );
+	CPPAD_ASSERT_UNKNOWN( local::NumRes(local::ParOp) == 1 );
 	dep_parameter_.resize(m);
 	dep_taddr_.resize(m);
 	for(i = 0; i < m; i++)
@@ -268,7 +268,7 @@ void ADFun<Base>::Dependent(local::ADTape<Base> *tape, const ADvector &y)
 	}
 
 	// put an EndOp at the end of the tape
-	tape->Rec_.PutOp(EndOp);
+	tape->Rec_.PutOp(local::EndOp);
 
 	// some size_t values in ad_fun.hpp
 	has_been_optimized_        = false;
@@ -305,7 +305,7 @@ void ADFun<Base>::Dependent(local::ADTape<Base> *tape, const ADvector &y)
 	ind_taddr_.resize(n);
 	CPPAD_ASSERT_UNKNOWN( n < num_var_tape_);
 	for(j = 0; j < n; j++)
-	{	CPPAD_ASSERT_UNKNOWN( play_.GetOp(j+1) == InvOp );
+	{	CPPAD_ASSERT_UNKNOWN( play_.GetOp(j+1) == local::InvOp );
 		ind_taddr_[j] = j+1;
 	}
 

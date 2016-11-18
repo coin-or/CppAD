@@ -38,13 +38,13 @@ AD<Base> operator - (const AD<Base> &left , const AD<Base> &right)
 	if( var_left )
 	{	if( var_right )
 		{	// result = variable - variable
-			CPPAD_ASSERT_UNKNOWN( NumRes(SubvvOp) == 1 );
-			CPPAD_ASSERT_UNKNOWN( NumArg(SubvvOp) == 2 );
+			CPPAD_ASSERT_UNKNOWN( local::NumRes(local::SubvvOp) == 1 );
+			CPPAD_ASSERT_UNKNOWN( local::NumArg(local::SubvvOp) == 2 );
 
 			// put operand addresses in tape
 			tape->Rec_.PutArg(left.taddr_, right.taddr_);
 			// put operator in the tape
-			result.taddr_ = tape->Rec_.PutOp(SubvvOp);
+			result.taddr_ = tape->Rec_.PutOp(local::SubvvOp);
 			// make result a variable
 			result.tape_id_ = tape_id;
 		}
@@ -54,28 +54,28 @@ AD<Base> operator - (const AD<Base> &left , const AD<Base> &right)
 		}
 		else
 		{	// result = variable - parameter
-			CPPAD_ASSERT_UNKNOWN( NumRes(SubvpOp) == 1 );
-			CPPAD_ASSERT_UNKNOWN( NumArg(SubvpOp) == 2 );
+			CPPAD_ASSERT_UNKNOWN( local::NumRes(local::SubvpOp) == 1 );
+			CPPAD_ASSERT_UNKNOWN( local::NumArg(local::SubvpOp) == 2 );
 
 			// put operand addresses in tape
 			addr_t p = tape->Rec_.PutPar(right.value_);
 			tape->Rec_.PutArg(left.taddr_, p);
 			// put operator in the tape
-			result.taddr_ = tape->Rec_.PutOp(SubvpOp);
+			result.taddr_ = tape->Rec_.PutOp(local::SubvpOp);
 			// make result a variable
 			result.tape_id_ = tape_id;
 		}
 	}
 	else if( var_right )
 	{	// result = parameter - variable
-		CPPAD_ASSERT_UNKNOWN( NumRes(SubpvOp) == 1 );
-		CPPAD_ASSERT_UNKNOWN( NumArg(SubpvOp) == 2 );
+		CPPAD_ASSERT_UNKNOWN( local::NumRes(local::SubpvOp) == 1 );
+		CPPAD_ASSERT_UNKNOWN( local::NumArg(local::SubpvOp) == 2 );
 
 		// put operand addresses in tape
 		addr_t p = tape->Rec_.PutPar(left.value_);
 		tape->Rec_.PutArg(p, right.taddr_);
 		// put operator in the tape
-		result.taddr_ = tape->Rec_.PutOp(SubpvOp);
+		result.taddr_ = tape->Rec_.PutOp(local::SubpvOp);
 		// make result a variable
 		result.tape_id_ = tape_id;
 	}

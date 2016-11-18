@@ -302,7 +302,7 @@ void ADFun<Base>::RevSparseHesCase(
 
 		// ind_taddr_[j] is operator taddr for j-th independent variable
 		CPPAD_ASSERT_UNKNOWN( ind_taddr_[j] == j + 1 );
-		CPPAD_ASSERT_UNKNOWN( play_.GetOp( ind_taddr_[j] ) == InvOp );
+		CPPAD_ASSERT_UNKNOWN( play_.GetOp( ind_taddr_[j] ) == local::InvOp );
 
 		// extract the result from rev_hes_sparsity
 		CPPAD_ASSERT_UNKNOWN( rev_hes_sparsity.end() == q );
@@ -423,7 +423,7 @@ void ADFun<Base>::RevSparseHesCase(
 	for(j = 0; j < n; j++)
 	{	CPPAD_ASSERT_UNKNOWN( ind_taddr_[j] < num_var_tape_ );
 		CPPAD_ASSERT_UNKNOWN( ind_taddr_[j] == j + 1 );
-		CPPAD_ASSERT_UNKNOWN( play_.GetOp( ind_taddr_[j] ) == InvOp );
+		CPPAD_ASSERT_UNKNOWN( play_.GetOp( ind_taddr_[j] ) == local::InvOp );
 
 		// extract the result from rev_hes_sparsity
 		// and add corresponding elements to result sets in h
@@ -603,7 +603,7 @@ void ADFun<Base>::RevSparseHesCheckpoint(
 
 		// ind_taddr_[j] is operator taddr for j-th independent variable
 		CPPAD_ASSERT_UNKNOWN( ind_taddr_[j] == j + 1 );
-		CPPAD_ASSERT_UNKNOWN( play_.GetOp( ind_taddr_[j] ) == InvOp );
+		CPPAD_ASSERT_UNKNOWN( play_.GetOp( ind_taddr_[j] ) == local::InvOp );
 
 		// extract the result from rev_hes_sparsity
 		CPPAD_ASSERT_UNKNOWN( rev_hes_sparsity.end() == q );

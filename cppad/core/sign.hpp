@@ -77,14 +77,14 @@ AD<Base> AD<Base>::sign_me (void) const
 
 	if( Variable(*this) )
 	{	// add this operation to the tape
-		CPPAD_ASSERT_UNKNOWN( NumRes(SignOp) == 1 );
-		CPPAD_ASSERT_UNKNOWN( NumArg(SignOp) == 1 );
+		CPPAD_ASSERT_UNKNOWN( local::NumRes(local::SignOp) == 1 );
+		CPPAD_ASSERT_UNKNOWN( local::NumArg(local::SignOp) == 1 );
 		local::ADTape<Base> *tape = tape_this();
 
 		// corresponding operand address
 		tape->Rec_.PutArg(taddr_);
 		// put operator in the tape
-		result.taddr_ = tape->Rec_.PutOp(SignOp);
+		result.taddr_ = tape->Rec_.PutOp(local::SignOp);
 		// make result a variable
 		result.tape_id_    = tape->id_;
 	}

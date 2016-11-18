@@ -263,13 +263,13 @@ public:
 		ay.value_ = f_(ax.value_);
 		if( Variable(ax) )
 		{	local::ADTape<Base> *tape = ax.tape_this();
-			CPPAD_ASSERT_UNKNOWN( NumRes(DisOp) == 1 );
-			CPPAD_ASSERT_UNKNOWN( NumArg(DisOp) == 2 );
+			CPPAD_ASSERT_UNKNOWN( local::NumRes(local::DisOp) == 1 );
+			CPPAD_ASSERT_UNKNOWN( local::NumArg(local::DisOp) == 2 );
 
 			// put operand addresses in the tape
 			tape->Rec_.PutArg(index_, ax.taddr_);
 			// put operator in the tape
-			ay.taddr_ = tape->Rec_.PutOp(DisOp);
+			ay.taddr_ = tape->Rec_.PutOp(local::DisOp);
 			// make result a variable
 			ay.tape_id_    = tape->id_;
 

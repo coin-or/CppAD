@@ -38,13 +38,13 @@ AD<Base> operator * (const AD<Base> &left , const AD<Base> &right)
 	if( var_left )
 	{	if( var_right )
 		{	// result = variable * variable
-			CPPAD_ASSERT_UNKNOWN( NumRes(MulvvOp) == 1 );
-			CPPAD_ASSERT_UNKNOWN( NumArg(MulvvOp) == 2 );
+			CPPAD_ASSERT_UNKNOWN( local::NumRes(local::MulvvOp) == 1 );
+			CPPAD_ASSERT_UNKNOWN( local::NumArg(local::MulvvOp) == 2 );
 
 			// put operand addresses in tape
 			tape->Rec_.PutArg(left.taddr_, right.taddr_);
 			// put operator in the tape
-			result.taddr_ = tape->Rec_.PutOp(MulvvOp);
+			result.taddr_ = tape->Rec_.PutOp(local::MulvvOp);
 			// make result a variable
 			result.tape_id_ = tape_id;
 		}
@@ -57,14 +57,14 @@ AD<Base> operator * (const AD<Base> &left , const AD<Base> &right)
 		}
 		else
 		{	// result = variable * parameter
-			CPPAD_ASSERT_UNKNOWN( NumRes(MulpvOp) == 1 );
-			CPPAD_ASSERT_UNKNOWN( NumArg(MulpvOp) == 2 );
+			CPPAD_ASSERT_UNKNOWN( local::NumRes(local::MulpvOp) == 1 );
+			CPPAD_ASSERT_UNKNOWN( local::NumArg(local::MulpvOp) == 2 );
 
 			// put operand addresses in tape
 			addr_t p = tape->Rec_.PutPar(right.value_);
 			tape->Rec_.PutArg(p, left.taddr_);
 			// put operator in the tape
-			result.taddr_ = tape->Rec_.PutOp(MulpvOp);
+			result.taddr_ = tape->Rec_.PutOp(local::MulpvOp);
 			// make result a variable
 			result.tape_id_ = tape_id;
 		}
@@ -79,14 +79,14 @@ AD<Base> operator * (const AD<Base> &left , const AD<Base> &right)
 		}
 		else
 		{	// result = parameter * variable
-			CPPAD_ASSERT_UNKNOWN( NumRes(MulpvOp) == 1 );
-			CPPAD_ASSERT_UNKNOWN( NumArg(MulpvOp) == 2 );
+			CPPAD_ASSERT_UNKNOWN( local::NumRes(local::MulpvOp) == 1 );
+			CPPAD_ASSERT_UNKNOWN( local::NumArg(local::MulpvOp) == 2 );
 
 			// put operand addresses in tape
 			addr_t p = tape->Rec_.PutPar(left.value_);
 			tape->Rec_.PutArg(p, right.taddr_);
 			// put operator in the tape
-			result.taddr_ = tape->Rec_.PutOp(MulpvOp);
+			result.taddr_ = tape->Rec_.PutOp(local::MulpvOp);
 			// make result a variable
 			result.tape_id_ = tape_id;
 		}

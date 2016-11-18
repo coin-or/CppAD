@@ -180,7 +180,7 @@ VectorBase ADFun<Base>::Reverse(size_t q, const VectorBase &w)
 	{	CPPAD_ASSERT_UNKNOWN( ind_taddr_[j] < num_var_tape_  );
 
 		// independent variable taddr equals its operator taddr
-		CPPAD_ASSERT_UNKNOWN( play_.GetOp( ind_taddr_[j] ) == InvOp );
+		CPPAD_ASSERT_UNKNOWN( play_.GetOp( ind_taddr_[j] ) == local::InvOp );
 
 		// by the Reverse Identity Theorem
 		// partial of y^{(k)} w.r.t. u^{(0)} is equal to

@@ -351,8 +351,7 @@ public:
 	*/
 	void forward_next(
 	OpCode& op, const addr_t*& op_arg, size_t& op_index, size_t& var_index)
-	{	using CppAD::NumRes;
-		using CppAD::NumArg;
+	{
 		CPPAD_ASSERT_UNKNOWN( op_       == op );
 		CPPAD_ASSERT_UNKNOWN( op_arg    == op_arg_ );
 		CPPAD_ASSERT_UNKNOWN( op_index  == op_index_ );
@@ -399,8 +398,7 @@ public:
 	*/
 	void forward_csum(
 	OpCode& op, const addr_t*& op_arg, size_t& op_index, size_t& var_index)
-	{	using CppAD::NumRes;
-		using CppAD::NumArg;
+	{
 		CPPAD_ASSERT_UNKNOWN( op_       == op );
 		CPPAD_ASSERT_UNKNOWN( op_arg    == op_arg_ );
 		CPPAD_ASSERT_UNKNOWN( op_index  == op_index_ );
@@ -448,8 +446,7 @@ public:
 	*/
 	void forward_cskip(
 	OpCode& op, const addr_t*& op_arg, size_t& op_index, size_t& var_index)
-	{	using CppAD::NumRes;
-		using CppAD::NumArg;
+	{
 		CPPAD_ASSERT_UNKNOWN( op_       == op );
 		CPPAD_ASSERT_UNKNOWN( op_arg    == op_arg_ );
 		CPPAD_ASSERT_UNKNOWN( op_index  == op_index_ );
@@ -561,8 +558,7 @@ public:
 	*/
 	void reverse_next(
 	OpCode& op, const addr_t*& op_arg, size_t& op_index, size_t& var_index)
-	{	using CppAD::NumRes;
-		using CppAD::NumArg;
+	{
 		CPPAD_ASSERT_UNKNOWN( op_       == op );
 		CPPAD_ASSERT_UNKNOWN( op_arg    == op_arg_ );
 		CPPAD_ASSERT_UNKNOWN( op_index  == op_index_ );
@@ -607,8 +603,7 @@ public:
 
 	void reverse_csum(
 	OpCode& op, const addr_t*& op_arg, size_t& op_index, size_t& var_index)
-	{	using CppAD::NumRes;
-		using CppAD::NumArg;
+	{
 		CPPAD_ASSERT_UNKNOWN( op_       == op );
 		CPPAD_ASSERT_UNKNOWN( op_arg    == op_arg_ );
 		CPPAD_ASSERT_UNKNOWN( op_index  == op_index_ );
@@ -658,8 +653,7 @@ public:
 
 	void reverse_cskip(
 	OpCode& op, const addr_t*& op_arg, size_t& op_index, size_t& var_index)
-	{	using CppAD::NumRes;
-		using CppAD::NumArg;
+	{
 		CPPAD_ASSERT_UNKNOWN( op_       == op );
 		CPPAD_ASSERT_UNKNOWN( op_arg    == op_arg_ );
 		CPPAD_ASSERT_UNKNOWN( op_index  == op_index_ );

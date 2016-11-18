@@ -72,7 +72,7 @@ namespace CppAD {
 template <typename Base>
 size_t ADFun<Base>::number_skip(void)
 {	// must pass through operation sequence to map operations to variables
-	OpCode op;
+	local::OpCode op;
 	size_t        i_op;
 	size_t        i_var;
 	const addr_t* arg;
@@ -82,13 +82,13 @@ size_t ADFun<Base>::number_skip(void)
 
 	// start playback
 	play_.forward_start(op, arg, i_op, i_var);
-	CPPAD_ASSERT_UNKNOWN(op == BeginOp)
-	while(op != EndOp)
+	CPPAD_ASSERT_UNKNOWN(op == local::BeginOp)
+	while(op != local::EndOp)
 	{	// next op
 		play_.forward_next(op, arg, i_op, i_var);
-		if( op == CSumOp)
+		if( op == local::CSumOp)
 			play_.forward_csum(op, arg, i_op, i_var);
-		else if (op == CSkipOp)
+		else if (op == local::CSkipOp)
 			play_.forward_cskip(op, arg, i_op, i_var);
 		//
 		if( cskip_op_[i_op] )

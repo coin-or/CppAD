@@ -88,14 +88,14 @@ AD<Base> AD<Base>::abs_me (void) const
 
 	if( Variable(*this) )
 	{	// add this operation to the tape
-		CPPAD_ASSERT_UNKNOWN( NumRes(AbsOp) == 1 );
-		CPPAD_ASSERT_UNKNOWN( NumArg(AbsOp) == 1 );
+		CPPAD_ASSERT_UNKNOWN( local::NumRes(local::AbsOp) == 1 );
+		CPPAD_ASSERT_UNKNOWN( local::NumArg(local::AbsOp) == 1 );
 		local::ADTape<Base> *tape = tape_this();
 
 		// corresponding operand address
 		tape->Rec_.PutArg(taddr_);
 		// put operator in the tape
-		result.taddr_ = tape->Rec_.PutOp(AbsOp);
+		result.taddr_ = tape->Rec_.PutOp(local::AbsOp);
 		// make result a variable
 		result.tape_id_    = tape->id_;
 	}

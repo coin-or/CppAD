@@ -272,7 +272,7 @@ void ADFun<Base>::RevSparseJacCase(
 	{	CPPAD_ASSERT_UNKNOWN( ind_taddr_[j] == (j+1) );
 
 		// ind_taddr_[j] is operator taddr for j-th independent variable
-		CPPAD_ASSERT_UNKNOWN( play_.GetOp( ind_taddr_[j] ) == InvOp );
+		CPPAD_ASSERT_UNKNOWN( play_.GetOp( ind_taddr_[j] ) == local::InvOp );
 
 		// extract the result from var_sparsity
 		if( transpose )
@@ -413,7 +413,7 @@ void ADFun<Base>::RevSparseJacCase(
 	{	CPPAD_ASSERT_UNKNOWN( ind_taddr_[j] == (j+1) );
 
 		// ind_taddr_[j] is operator taddr for j-th independent variable
-		CPPAD_ASSERT_UNKNOWN( play_.GetOp( ind_taddr_[j] ) == InvOp );
+		CPPAD_ASSERT_UNKNOWN( play_.GetOp( ind_taddr_[j] ) == local::InvOp );
 
 		CPPAD_ASSERT_UNKNOWN( var_sparsity.end() == q );
 		local::sparse_list::const_iterator itr_2(var_sparsity, j+1);
@@ -606,7 +606,7 @@ void ADFun<Base>::RevSparseJacCheckpoint(
 	{	CPPAD_ASSERT_UNKNOWN( ind_taddr_[j] == (j+1) );
 
 		// ind_taddr_[j] is operator taddr for j-th independent variable
-		CPPAD_ASSERT_UNKNOWN( play_.GetOp( ind_taddr_[j] ) == InvOp );
+		CPPAD_ASSERT_UNKNOWN( play_.GetOp( ind_taddr_[j] ) == local::InvOp );
 
 		// extract the result from var_sparsity
 		CPPAD_ASSERT_UNKNOWN( var_sparsity.end() == q );

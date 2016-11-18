@@ -517,26 +517,26 @@ acos, asin, atan, cos, cosh, exp, fabs, log, sin, sinh, sqrt, tan, tanh.
 //  BEGIN CppAD namespace
 namespace CppAD {
 
-     CPPAD_STANDARD_MATH_UNARY_AD(acos, AcosOp)
-     CPPAD_STANDARD_MATH_UNARY_AD(asin, AsinOp)
-     CPPAD_STANDARD_MATH_UNARY_AD(atan, AtanOp)
-     CPPAD_STANDARD_MATH_UNARY_AD(cos, CosOp)
-     CPPAD_STANDARD_MATH_UNARY_AD(cosh, CoshOp)
-     CPPAD_STANDARD_MATH_UNARY_AD(exp, ExpOp)
-     CPPAD_STANDARD_MATH_UNARY_AD(fabs, AbsOp)
-     CPPAD_STANDARD_MATH_UNARY_AD(log, LogOp)
-     CPPAD_STANDARD_MATH_UNARY_AD(sin, SinOp)
-     CPPAD_STANDARD_MATH_UNARY_AD(sinh, SinhOp)
-     CPPAD_STANDARD_MATH_UNARY_AD(sqrt, SqrtOp)
-     CPPAD_STANDARD_MATH_UNARY_AD(tan, TanOp)
-     CPPAD_STANDARD_MATH_UNARY_AD(tanh, TanhOp)
+     CPPAD_STANDARD_MATH_UNARY_AD(acos, local::AcosOp)
+     CPPAD_STANDARD_MATH_UNARY_AD(asin, local::AsinOp)
+     CPPAD_STANDARD_MATH_UNARY_AD(atan, local::AtanOp)
+     CPPAD_STANDARD_MATH_UNARY_AD(cos, local::CosOp)
+     CPPAD_STANDARD_MATH_UNARY_AD(cosh, local::CoshOp)
+     CPPAD_STANDARD_MATH_UNARY_AD(exp, local::ExpOp)
+     CPPAD_STANDARD_MATH_UNARY_AD(fabs, local::AbsOp)
+     CPPAD_STANDARD_MATH_UNARY_AD(log, local::LogOp)
+     CPPAD_STANDARD_MATH_UNARY_AD(sin, local::SinOp)
+     CPPAD_STANDARD_MATH_UNARY_AD(sinh, local::SinhOp)
+     CPPAD_STANDARD_MATH_UNARY_AD(sqrt, local::SqrtOp)
+     CPPAD_STANDARD_MATH_UNARY_AD(tan, local::TanOp)
+     CPPAD_STANDARD_MATH_UNARY_AD(tanh, local::TanhOp)
 
 # if CPPAD_USE_CPLUSPLUS_2011
-     CPPAD_STANDARD_MATH_UNARY_AD(asinh, AsinhOp)
-     CPPAD_STANDARD_MATH_UNARY_AD(acosh, AcoshOp)
-     CPPAD_STANDARD_MATH_UNARY_AD(atanh, AtanhOp)
-     CPPAD_STANDARD_MATH_UNARY_AD(expm1, Expm1Op)
-     CPPAD_STANDARD_MATH_UNARY_AD(log1p, Log1pOp)
+     CPPAD_STANDARD_MATH_UNARY_AD(asinh, local::AsinhOp)
+     CPPAD_STANDARD_MATH_UNARY_AD(acosh, local::AcoshOp)
+     CPPAD_STANDARD_MATH_UNARY_AD(atanh, local::AtanhOp)
+     CPPAD_STANDARD_MATH_UNARY_AD(expm1, local::Expm1Op)
+     CPPAD_STANDARD_MATH_UNARY_AD(log1p, local::Log1pOp)
 # endif
 
 # if CPPAD_USE_CPLUSPLUS_2011
@@ -552,7 +552,7 @@ namespace CppAD {
 		CPPAD_ASSERT_UNKNOWN( Parameter(result) );
 
 		if( Variable(*this) )
-		{	CPPAD_ASSERT_UNKNOWN( NumArg(ErfOp) == 3 );
+		{	CPPAD_ASSERT_UNKNOWN( local::NumArg(local::ErfOp) == 3 );
 			local::ADTape<Base> *tape = tape_this();
 			// arg[0] = argument to erf function
 			tape->Rec_.PutArg(taddr_);
@@ -565,7 +565,7 @@ namespace CppAD {
 			));
 			tape->Rec_.PutArg(p);
 			//
-			result.taddr_ = tape->Rec_.PutOp(ErfOp);
+			result.taddr_ = tape->Rec_.PutOp(local::ErfOp);
 			result.tape_id_    = tape->id_;
 		}
 		return result;

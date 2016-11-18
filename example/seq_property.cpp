@@ -130,7 +130,7 @@ bool seq_property(void)
 	ok &= f.size_text()   == ntext;
 	ok &= f.size_VecAD()  == nvecad;
 	size_t sum = 0;
-	sum += nop    * sizeof(CppAD::OpCode);
+	sum += nop    * sizeof(CppAD::local::OpCode);
 	sum += narg   * sizeof(CPPAD_TAPE_ADDR_TYPE);
 	sum += npar   * sizeof(double);
 	sum += ntext  * sizeof(char);

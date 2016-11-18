@@ -209,7 +209,7 @@ void ADFun<Base>::ForSparseHesCase(
 	for(size_t i = 0; i < n; i++)
 	{	CPPAD_ASSERT_UNKNOWN( ind_taddr_[i] < n + 1 );
 		// ind_taddr_[i] is operator taddr for i-th independent variable
-		CPPAD_ASSERT_UNKNOWN( play_.GetOp( ind_taddr_[i] ) == InvOp );
+		CPPAD_ASSERT_UNKNOWN( play_.GetOp( ind_taddr_[i] ) == local::InvOp );
 		//
 		if( r[i] )
 			for_jac_sparsity.add_element( ind_taddr_[i], ind_taddr_[i] );
@@ -264,7 +264,7 @@ void ADFun<Base>::ForSparseHesCase(
 	for(size_t i = 0; i < n; i++)
 	{	// ind_taddr_[i] is operator taddr for i-th independent variable
 		CPPAD_ASSERT_UNKNOWN( ind_taddr_[i] == i + 1 );
-		CPPAD_ASSERT_UNKNOWN( play_.GetOp( ind_taddr_[i] ) == InvOp );
+		CPPAD_ASSERT_UNKNOWN( play_.GetOp( ind_taddr_[i] ) == local::InvOp );
 
 		// extract the result from for_hes_sparsity
 		local::sparse_pack::const_iterator itr(for_hes_sparsity, ind_taddr_[i] );
@@ -330,7 +330,7 @@ void ADFun<Base>::ForSparseHesCase(
 	{	size_t i = *itr_1++;
 		CPPAD_ASSERT_UNKNOWN( ind_taddr_[i] < n + 1 );
 		// ind_taddr_[i] is operator taddr for i-th independent variable
-		CPPAD_ASSERT_UNKNOWN( play_.GetOp( ind_taddr_[i] ) == InvOp );
+		CPPAD_ASSERT_UNKNOWN( play_.GetOp( ind_taddr_[i] ) == local::InvOp );
 		//
 		for_jac_sparsity.add_element( ind_taddr_[i], ind_taddr_[i] );
 	}
@@ -387,7 +387,7 @@ void ADFun<Base>::ForSparseHesCase(
 	CPPAD_ASSERT_UNKNOWN( for_hes_sparsity.end() == n+1 );
 	for(size_t i = 0; i < n; i++)
 	{	CPPAD_ASSERT_UNKNOWN( ind_taddr_[i] == i + 1 );
-		CPPAD_ASSERT_UNKNOWN( play_.GetOp( ind_taddr_[i] ) == InvOp );
+		CPPAD_ASSERT_UNKNOWN( play_.GetOp( ind_taddr_[i] ) == local::InvOp );
 
 		// extract the result from for_hes_sparsity
 		local::sparse_list::const_iterator itr_2(for_hes_sparsity, ind_taddr_[i] );
@@ -540,7 +540,7 @@ void ADFun<Base>::ForSparseHesCheckpoint(
 
 		// ind_taddr_[j] is operator taddr for j-th independent variable
 		CPPAD_ASSERT_UNKNOWN( ind_taddr_[j] == j + 1 );
-		CPPAD_ASSERT_UNKNOWN( play_.GetOp( ind_taddr_[j] ) == InvOp );
+		CPPAD_ASSERT_UNKNOWN( play_.GetOp( ind_taddr_[j] ) == local::InvOp );
 
 		// extract the result from for_hes_sparsity
 		CPPAD_ASSERT_UNKNOWN( for_hes_sparsity.end() == q );

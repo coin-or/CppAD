@@ -609,7 +609,7 @@ addr_t unary_match(
 	CPPAD_ASSERT_UNKNOWN( size_t(arg[0]) < current );
 	new_arg[0] = tape[arg[0]].new_var;
 	CPPAD_ASSERT_UNKNOWN( size_t(new_arg[0]) < current );
-	code = hash_code(
+	code = local_hash_code(
 		op                  ,
 		new_arg             ,
 		npar                ,
@@ -779,7 +779,7 @@ inline addr_t binary_match(
 		default:
 		CPPAD_ASSERT_UNKNOWN(false);
 	}
-	code = hash_code(
+	code = local_hash_code(
 		op                  ,
 		new_arg             ,
 		npar                ,
@@ -818,7 +818,7 @@ inline addr_t binary_match(
 	// check for match with argument order switched ----------------------
 	CPPAD_ASSERT_UNKNOWN( op == AddvvOp || op == MulvvOp );
 	std::swap(new_arg[0], new_arg[1]);
-	unsigned short code_switch = hash_code(
+	unsigned short code_switch = local_hash_code(
 		op                  ,
 		new_arg             ,
 		npar                ,
@@ -3040,7 +3040,7 @@ void ADFun<Base>::optimize(const std::string& options)
 	if( check_zero_order )
 	{	// zero order coefficients for independent vars
 		for(j = 0; j < n; j++)
-		{	CPPAD_ASSERT_UNKNOWN( play_.GetOp(j+1) == InvOp );
+		{	CPPAD_ASSERT_UNKNOWN( play_.GetOp(j+1) == local::InvOp );
 			CPPAD_ASSERT_UNKNOWN( ind_taddr_[j]    == j+1   );
 			x[j] = taylor_[ ind_taddr_[j] * cap_order_taylor_ + 0];
 		}
