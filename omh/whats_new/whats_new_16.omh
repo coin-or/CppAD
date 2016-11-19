@@ -47,6 +47,14 @@ in reverse order by date.
 The purpose of these sections is to
 assist you in learning about changes between various versions of CppAD.
 
+$head 11-18$$
+Move classes and functions that are part of the user API from the
+$code cppad/local$$ directory to the $code cppad/core$$ directory.
+The remaining symbols, in the $code cppad/local$$ directory, are now
+in the $code CppAD::local$$ namespace.
+Note that a class in the $code CppAD$$ name space, may have a member
+function that is not part of the user API.
+
 $head 11-14$$
 Increase the speed of the $code sparse_pack$$ class.
 This improves the speed for
