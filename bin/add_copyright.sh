@@ -36,7 +36,25 @@ fi
 #
 echo "write copyright message to bin/add_copyright.$$"
 case $ext in
-	cpp | hpp | omh)
+	hpp)
+	upper_name=`echo $file_name | tr [a-z./] [A-Z__]`
+	cat << EOF  > bin/add_copyright.$$
+// \$Id\$
+# ifndef $upper_name
+# define $upper_name
+/* --------------------------------------------------------------------------
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-16 Bradley M. Bell
+
+CppAD is distributed under multiple licenses. This distribution is under
+the terms of the
+                    Eclipse Public License Version 1.0.
+
+A copy of this license is included in the COPYING file of this distribution.
+Please visit http://www.coin-or.org/CppAD/ for information on other licenses.
+-------------------------------------------------------------------------- */
+EOF
+	;;
+	cpp | omh)
 	cat << EOF  > bin/add_copyright.$$
 // \$Id\$
 /* --------------------------------------------------------------------------
@@ -112,6 +130,12 @@ echo "mv $file_name ~/trash"
 #
 echo "mv bin/add_copyright.$$ $file_name"
       mv bin/add_copyright.$$ $file_name
+#
+# add endif at end of *.hpp files
+if [ "$ext" == 'hpp' ]
+then
+	echo "# endif" >> $file_name
+fi
 # ----------------------------------------------------------------------------
 echo "$0: OK"
 exit 0

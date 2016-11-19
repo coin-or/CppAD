@@ -127,6 +127,13 @@ $end
 */
 # include <stack>
 # include <iterator>
+# include <cppad/local/optimize/connect_type.hpp>
+# include <cppad/local/optimize/cexp_pair.hpp>
+# include <cppad/local/optimize/set_cexp_pair.hpp>
+# include <cppad/local/optimize/old_variable.hpp>
+# include <cppad/local/optimize/size_pair.hpp>
+# include <cppad/local/optimize/csum_variable.hpp>
+# include <cppad/local/optimize/csum_stacks.hpp>
 
 // BEGIN_CPPAD_LOCAL_OPTIMIZE_NAMESPACE
 namespace CppAD { namespace local { namespace optimize  {
@@ -134,280 +141,6 @@ namespace CppAD { namespace local { namespace optimize  {
 \file optimize.hpp
 Routines for optimizing a tape
 */
-
-
-/*!
-State for this variable set during reverse sweep.
-*/
-enum enum_connect_type {
-	/// There is no operation that connects this variable to the
-	/// independent variables.
-	not_connected        ,
-
-	/// There is one or more operations that connects this variable to the
-	/// independent variables.
-	yes_connected        ,
-
-	/// There is only one parrent that connects this variable to the
-	/// independent variables and the parent is a summation operation; i.e.,
-	/// AddvvOp, AddpvOp, SubpvOp, SubvpOp, or SubvvOp.
-	sum_connected        ,
-
-	/// Satisfies the sum_connected assumptions above and in addition
-	/// this variable is the result of summation operator.
-	csum_connected       ,
-
-	/// This node is only connected in the case where the comparision is
-	/// true for the conditional expression with index \c connect_index.
-	cexp_connected
-
-};
-
-/*!
-Class used to hold information about one conditional expression.
-*/
-class class_cexp_pair {
-public:
-	/// packs both the compare and index information
-	/// compare = pack_ % 2
-	/// index   = pack_ / 2
-	size_t pack_;
-
-	/// If this is true (false) this connection is only for the case where
-	/// the comparision in the conditional expression is true (false)
-	bool compare(void) const
-	{	return pack_ % 2 != 0; }
-
-	/// This is the index of the conditional expression (in cksip_info)
-	/// for this connection
-	size_t index(void) const
-	{	return pack_ / 2; }
-
-	/// constructor
-	class_cexp_pair(const bool& compare_arg, const size_t& index_arg)
-	: pack_(size_t(compare_arg) + 2 * index_arg )
-	{	CPPAD_ASSERT_UNKNOWN( compare_arg == compare() );
-		CPPAD_ASSERT_UNKNOWN( index_arg == index() );
-	}
-
-	/// assignment operator
-	void operator=(const class_cexp_pair& right)
-	{	pack_ = right.pack_; }
-
-	/// not equal operator
-	bool operator!=(const class_cexp_pair& right)
-	{	return pack_ != right.pack_; }
-
-	/// Less than operator
-	/// (required for intersection of two sets of class_cexp_pair elements).
-	bool operator<(const class_cexp_pair& right) const
-	{	return pack_ < right.pack_; }
-};
-
-/*!
-A container that is like std::set<class_cexp_pair> except that it does
-not allocate empty sets and only has a few operations.
-*/
-class class_set_cexp_pair {
-private:
-	// This set is empty if and only if ptr_ == CPPAD_NULL;
-	std::set<class_cexp_pair>* ptr_;
-
-	void new_ptr(void)
-	{	CPPAD_ASSERT_UNKNOWN( ptr_ == CPPAD_NULL );
-		ptr_ = new std::set<class_cexp_pair>;
-		CPPAD_ASSERT_UNKNOWN( ptr_ != CPPAD_NULL );
-		// std::cout << "new ptr_ = " << ptr_ << std::endl;
-	}
-
-	void delete_ptr(void)
-	{	if( ptr_ != CPPAD_NULL )
-		{	// std::cout << "delete ptr_ = " << ptr_ << std::endl;
-			delete ptr_;
-		}
-		ptr_ = CPPAD_NULL;
-	}
-
-public:
-	/// constructor
-	class_set_cexp_pair(void)
-	{	ptr_ = CPPAD_NULL; }
-
-	/// destructor
-	~class_set_cexp_pair(void)
-	{	delete_ptr(); }
-
-	void print(void)
-	{	if( ptr_ == CPPAD_NULL )
-		{	std::cout << "{ }";
-			return;
-		}
-		CPPAD_ASSERT_UNKNOWN( ! empty() );
-		const char* sep = "{ ";
-		std::set<class_cexp_pair>::const_iterator itr;
-		for(itr = ptr_->begin(); itr != ptr_->end(); itr++)
-		{	std::cout << sep;
-			std::cout << "(" << itr->compare() << "," << itr->index() << ")";
-			sep = ", ";
-		}
-		std::cout << "}";
-	}
-
-	/// assignment operator
-	void operator=(const class_set_cexp_pair& other)
-	{	// make this a copy of the other set
-		if( other.ptr_ == CPPAD_NULL )
-		{	if( ptr_ == CPPAD_NULL )
-				return;
-			delete_ptr();
-			return;
-		}
-		CPPAD_ASSERT_UNKNOWN( ! other.empty() );
-		if( ptr_ == CPPAD_NULL )
-			new_ptr();
-		*ptr_ = *other.ptr_;
-	}
-
-	/// insert an element in this set
-	void insert(const class_cexp_pair& element)
-	{	if( ptr_ == CPPAD_NULL )
-			new_ptr();
-		ptr_->insert(element);
-		CPPAD_ASSERT_UNKNOWN( ! empty() );
-	}
-
-	/// is this set empty
-	bool empty(void) const
-	{	if( ptr_ == CPPAD_NULL )
-			return true;
-		CPPAD_ASSERT_UNKNOWN( ! ptr_->empty() );
-		return false;
-	}
-
-	/// remove the elements in this set
-	void clear(void)
-	{	if( ptr_ == CPPAD_NULL )
-			return;
-		CPPAD_ASSERT_UNKNOWN( ! empty() );
-		delete_ptr();
-	}
-
-	// returns begin pointer for the set
-	std::set<class_cexp_pair>::const_iterator begin(void)
-	{	CPPAD_ASSERT_UNKNOWN( ! empty() );
-		return ptr_->begin();
-	}
-
-	// returns end pointer for the set
-	std::set<class_cexp_pair>::const_iterator end(void)
-	{	CPPAD_ASSERT_UNKNOWN( ! empty() );
-		return ptr_->end();
-	}
-
-	/*!
-	Make this set the intersection of itself with another set.
-
-	\param other
-	the other set
-
-	*/
-	void intersection(const class_set_cexp_pair& other )
-	{	// empty result case
-		if( ptr_ == CPPAD_NULL )
-			return;
-
-		// empty result case
-		if( other.ptr_ == CPPAD_NULL )
-		{	delete_ptr();
-			return;
-		}
-
-		// put result here
-		class_set_cexp_pair result;
-		CPPAD_ASSERT_UNKNOWN( result.ptr_ == CPPAD_NULL );
-		result.new_ptr();
-		CPPAD_ASSERT_UNKNOWN( result.ptr_ != CPPAD_NULL );
-
-		// do the intersection
-		std::set_intersection(
-			ptr_->begin()   ,
-			ptr_->end()     ,
-			other.ptr_->begin()  ,
-			other.ptr_->end()    ,
-			std::inserter(*result.ptr_, result.ptr_->begin())
-		);
-		if( result.ptr_->empty() )
-			result.delete_ptr();
-
-		// swap this and the result
-		std::swap(ptr_, result.ptr_);
-
-		return;
-	}
-
-};
-/*!
-Structure used by \c optimize to hold information about one variable.
-in the old operation seqeunce.
-*/
-struct struct_old_variable {
-	/// Operator for which this variable is the result, \c NumRes(op) > 0.
-	/// Set by the reverse sweep at beginning of optimization.
-	OpCode              op;
-
-	/// Pointer to first argument (child) for this operator.
-	/// Set by the reverse sweep at beginning of optimization.
-	const addr_t*       arg;
-
-	/// How is this variable connected to the independent variables
-	enum_connect_type connect_type;
-
-	/// New operation sequence corresponding to this old varable.
-	/// Set during forward sweep to the index in the new tape
-	addr_t new_var;
-
-	/// New operator index for this varable.
-	/// Set during forward sweep to the index in the new tape
-	size_t new_op;
-
-	/// Did this variable match another variable in the operation sequence
-	bool match;
-};
-
-struct struct_size_pair {
-	size_t i_op;  // an operator index
-	size_t i_var; // a variable index
-};
-
-/*!
-Structures used by \c record_csum
-to hold information about one variable.
-*/
-struct struct_csum_variable {
-	/// Operator for which this variable is the result, \c NumRes(op) > 0.
-	OpCode              op;
-
-	/// Pointer to first argument (child) for this operator.
-	/// Set by the reverse sweep at beginning of optimization.
-	const addr_t*       arg;
-
-	/// Is this variable added to the summation
-	/// (if not it is subtracted)
-	bool                add;
-};
-
-/*!
-Structure used to pass work space from \c optimize to \c record_csum
-(so that stacks do not start from zero size every time).
-*/
-struct struct_csum_stacks {
-	/// stack of operations in the cummulative summation
-	std::stack<struct struct_csum_variable>   op_stack;
-	/// stack of variables to be added
-	std::stack<size_t >                         add_stack;
-	/// stack of variables to be subtracted
-	std::stack<size_t >                         sub_stack;
-};
 
 /*!
 CExpOp information that is copied to corresponding CSkipOp
@@ -1236,17 +969,19 @@ j that is a variable operand for the current operation.
 
 template <class Base>
 struct_size_pair record_csum(
-	const CppAD::vector<struct struct_old_variable>& tape           ,
+	const CppAD::vector<struct struct_old_variable>&   tape           ,
 	size_t                                             current        ,
 	size_t                                             npar           ,
 	const Base*                                        par            ,
 	recorder<Base>*                                    rec            ,
-	struct_csum_stacks&                              work           )
+	// local information passed so stacks need not be allocated for every call
+	struct_csum_stacks&                                work           )
 {
-
+	// check assumption about work space
 	CPPAD_ASSERT_UNKNOWN( work.op_stack.empty() );
 	CPPAD_ASSERT_UNKNOWN( work.add_stack.empty() );
 	CPPAD_ASSERT_UNKNOWN( work.sub_stack.empty() );
+	//
 	CPPAD_ASSERT_UNKNOWN( tape[current].connect_type == yes_connected );
 
 	size_t                        i;
