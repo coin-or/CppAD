@@ -39,6 +39,7 @@ check_replace cond_op.hpp                        cond_op.hpp
 check_replace load_op.hpp                        load_op.hpp
 check_replace store_op.hpp                       store_op.hpp
 check_replace optimize/define_prototype.hpp      optimize/optimize.hpp
+check_replace optimize/define_prototype.hpp      optimize/unary_match.hpp
 check_replace forward0sweep.hpp                  forward1sweep.hpp
 # -----------------------------------------------------------------------------
 echo "replace_html.sh: OK"

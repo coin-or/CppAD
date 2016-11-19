@@ -37,7 +37,8 @@ It follows that current < tape.size() and NumRes( tape[current].op ) > 0.
 Suppose i <= current, j < NumArg( tape[i] ), and k = tape[i].arg[j],
 It is assumed that tape[i].arg[j] is connected to the dependent variables
 and tape[k].new_var has been set to the corresponding variable.
-Note that tape[i].arg[j] < i <= current.
+Note that tape[i].arg[j] < i <= current and
+tape[k].new_var <= k < current.
 
 \param npar
 is the number of parameters corresponding to the old operation sequence.
