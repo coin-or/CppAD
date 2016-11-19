@@ -33,6 +33,8 @@ struct struct_old_variable {
 
 	/// Pointer to first argument (child) for this operator.
 	/// Set by the reverse sweep at beginning of optimization.
+	/// For j = 0 , ... , NumArg(op) - 1, arg[j] is the j-th argument
+	/// to the operator in the old operation sequence.
 	const addr_t*       arg;
 
 	/// How is this variable connected to the independent variables
@@ -40,8 +42,9 @@ struct struct_old_variable {
 
 	/// Index of this variable in new operation sequence.
 	/// Set during forward sweep to the index in the new tape. The value
-	/// new_var = number of varables in old tape is used for not yet defined
-	/// (some old variables are removed and so never defined).
+	/// new_var = number of varables in old tape is used for not yet defined.
+	/// Some variables in the old tape are not connected to the dependent
+	/// variables and never get a new_var defined.
 	addr_t new_var;
 
 	/// New operator index for this varable.

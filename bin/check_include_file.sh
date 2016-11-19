@@ -40,6 +40,7 @@ cat bin/check_include_file.1.$$ | \
 #
 # The following files should never be included:
 #	cppad/local/prototype_op.hpp
+#	cppad/local/optimize/define_prototype.hpp
 #	cppad/example/eigen_plugin.hpp
 # All other files should.
 # The file cppad/configure.hpp may not yet be created.
@@ -47,6 +48,7 @@ bin/ls_files.sh | sed -n -e '/cppad\/.*\.hpp$/p' | \
 	sed \
 		-e '1,1s|^|cppad/configure.hpp\n|' \
 		-e '/cppad\/local\/prototype_op.hpp/d' \
+		-e '/cppad\/local\/optimize\/define_prototype.hpp/d' \
 		-e '/cppad\/example\/eigen_plugin.hpp/d'  \
 		-e '/cppad\/deprecated\//d' | \
 	sort -u > bin/check_include_file.3.$$

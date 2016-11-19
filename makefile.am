@@ -221,6 +221,9 @@ nobase_myinclude_HEADERS =  \
 	cppad/local/optimize/optimize.hpp \
 	cppad/local/optimize/set_cexp_pair.hpp \
 	cppad/local/optimize/size_pair.hpp \
+	cppad/local/optimize/cskip_info.hpp \
+	cppad/local/optimize/define_prototype.hpp \
+	cppad/local/optimize/user_info.hpp \
 	cppad/core/opt_val_hes.hpp \
 	cppad/core/ordered.hpp \
 	cppad/core/parallel_ad.hpp \

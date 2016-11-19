@@ -134,6 +134,8 @@ $end
 # include <cppad/local/optimize/size_pair.hpp>
 # include <cppad/local/optimize/csum_variable.hpp>
 # include <cppad/local/optimize/csum_stacks.hpp>
+# include <cppad/local/optimize/cskip_info.hpp>
+# include <cppad/local/optimize/user_info.hpp>
 
 // BEGIN_CPPAD_LOCAL_OPTIMIZE_NAMESPACE
 namespace CppAD { namespace local { namespace optimize  {
@@ -141,113 +143,6 @@ namespace CppAD { namespace local { namespace optimize  {
 \file optimize.hpp
 Routines for optimizing a tape
 */
-
-/*!
-CExpOp information that is copied to corresponding CSkipOp
-*/
-struct struct_cskip_info {
-	/// comparision operator
-	CompareOp cop;
-	/// (flag & 1) is true if and only if left is a variable
-	/// (flag & 2) is true if and only if right is a variable
-	size_t flag;
-	/// index for left comparison operand
-	size_t left;
-	/// index for right comparison operand
-	size_t right;
-	/// maximum variable index between left and right
-	size_t max_left_right;
-	/// set of variables to skip on true
-	CppAD::vector<size_t> skip_var_true;
-	/// set of variables to skip on false
-	CppAD::vector<size_t> skip_var_false;
-	/// set of operations to skip on true
-	CppAD::vector<size_t> skip_op_true;
-	/// set of operations to skip on false
-	CppAD::vector<size_t> skip_op_false;
-	/// size of skip_op_true
-	size_t n_op_true;
-	/// size of skip_op_false
-	size_t n_op_false;
-	/// index in the argument recording of first argument for this CSkipOp
-	size_t i_arg;
-};
-/*!
-Connection information for a user atomic function
-*/
-struct struct_user_info {
-	/// type of connection for this atomic function
-	enum_connect_type connect_type;
-	/// If this is an conditional connection, this is the information
-	/// of the correpsonding CondExpOp operators
-	class_set_cexp_pair cexp_set;
-	/// If this is a conditional connection, this is the operator
-	/// index of the beginning of the atomic call sequence; i.e.,
-	/// the first UserOp.
-	size_t op_begin;
-	/// If this is a conditional connection, this is one more than the
-	///  operator index of the ending of the atomic call sequence; i.e.,
-	/// the second UserOp.
-	size_t op_end;
-};
-
-/*!
-Shared documentation for optimization helper functions (not called).
-
-<!-- define prototype -->
-\param tape
-is a vector that maps a variable index, in the old operation sequence,
-to an <tt>struct_old_variable</tt> information record.
-Note that the index for this vector must be greater than or equal zero and
-less than <tt>tape.size()</tt>.
-
-\li <tt>tape[i].op</tt>
-is the operator in the old operation sequence
-corresponding to the old variable index \c i.
-Assertion: <tt>NumRes(tape[i].op) > 0</tt>.
-
-\li <tt>tape[i].arg</tt>
-for <tt>j < NumArg( tape[i].op ), tape[i].arg[j]</tt>
-is the j-th the argument, in the old operation sequence,
-corresponding to the old variable index \c i.
-Assertion: <tt>tape[i].arg[j] < i</tt>.
-
-\li <tt>tape[i].new_var</tt>
-Suppose
-<tt>i <= current, j < NumArg( tape[i].op ), and k = tape[i].arg[j]</tt>,
-and \c j corresponds to a variable for operator <tt>tape[i].op</tt>.
-It follows that <tt>tape[k].new_var</tt>
-has alread been set to the variable in the new operation sequence
-corresponding to the old variable index \c k.
-This means that the \c new_var value has been set
-for all the possible arguments that come before \a current.
-
-\param current
-is the index in the old operation sequence for
-the variable corresponding to the result for the current operator.
-Assertions:
-<tt>
-current < tape.size(),
-NumRes( tape[current].op ) > 0.
-</tt>
-
-\param npar
-is the number of parameters corresponding to this operation sequence.
-
-\param par
-is a vector of length \a npar containing the parameters
-for this operation sequence; i.e.,
-given a parameter index \c i, the corresponding parameter value is
-<tt>par[i]</tt>.
-<!-- end prototype -->
-*/
-template <class Base>
-void prototype(
-	const CppAD::vector<struct struct_old_variable>& tape           ,
-	size_t                                             current        ,
-	size_t                                             npar           ,
-	const Base*                                        par            )
-{	CPPAD_ASSERT_UNKNOWN(false); }
 
 /*!
 Check a unary operator for a complete match with a previous operator.
@@ -258,48 +153,26 @@ can be used inplace of the result for current operator.
 <!-- replace prototype -->
 \param tape
 is a vector that maps a variable index, in the old operation sequence,
-to an <tt>struct_old_variable</tt> information record.
-Note that the index for this vector must be greater than or equal zero and
-less than <tt>tape.size()</tt>.
-
-\li <tt>tape[i].op</tt>
-is the operator in the old operation sequence
-corresponding to the old variable index \c i.
-Assertion: <tt>NumRes(tape[i].op) > 0</tt>.
-
-\li <tt>tape[i].arg</tt>
-for <tt>j < NumArg( tape[i].op ), tape[i].arg[j]</tt>
-is the j-th the argument, in the old operation sequence,
-corresponding to the old variable index \c i.
-Assertion: <tt>tape[i].arg[j] < i</tt>.
-
-\li <tt>tape[i].new_var</tt>
-Suppose
-<tt>i <= current, j < NumArg( tape[i].op ), and k = tape[i].arg[j]</tt>,
-and \c j corresponds to a variable for operator <tt>tape[i].op</tt>.
-It follows that <tt>tape[k].new_var</tt>
-has alread been set to the variable in the new operation sequence
-corresponding to the old variable index \c k.
-This means that the \c new_var value has been set
-for all the possible arguments that come before \a current.
+to the corresponding struct_old_variable information.
+Note that the old variable index must be greater than or equal zero and
+less than tape.size().
 
 \param current
 is the index in the old operation sequence for
 the variable corresponding to the result for the current operator.
-Assertions:
-<tt>
-current < tape.size(),
-NumRes( tape[current].op ) > 0.
-</tt>
+It follows that current < tape.size() and NumRes( tape[current].op ) > 0.
+Suppose i <= current, j < NumArg( tape[i] ), and k = tape[i].arg[j],
+It is assumed that tape[i].arg[j] is connected to the dependent variables
+and tape[k].new_var has been set to the corresponding variable.
+Note that tape[i].arg[j] < i <= current.
 
 \param npar
-is the number of parameters corresponding to this operation sequence.
+is the number of parameters corresponding to the old operation sequence.
 
 \param par
-is a vector of length \a npar containing the parameters
-for this operation sequence; i.e.,
-given a parameter index \c i, the corresponding parameter value is
-<tt>par[i]</tt>.
+is a vector of length npar containing the parameters
+the old operation sequence; i.e.,
+given a parameter index i < npar, the corresponding parameter value is par[i].
 <!-- end prototype -->
 
 \param hash_table_var
@@ -365,48 +238,26 @@ Check a binary operator for a complete match with a previous operator,
 <!-- replace prototype -->
 \param tape
 is a vector that maps a variable index, in the old operation sequence,
-to an <tt>struct_old_variable</tt> information record.
-Note that the index for this vector must be greater than or equal zero and
-less than <tt>tape.size()</tt>.
-
-\li <tt>tape[i].op</tt>
-is the operator in the old operation sequence
-corresponding to the old variable index \c i.
-Assertion: <tt>NumRes(tape[i].op) > 0</tt>.
-
-\li <tt>tape[i].arg</tt>
-for <tt>j < NumArg( tape[i].op ), tape[i].arg[j]</tt>
-is the j-th the argument, in the old operation sequence,
-corresponding to the old variable index \c i.
-Assertion: <tt>tape[i].arg[j] < i</tt>.
-
-\li <tt>tape[i].new_var</tt>
-Suppose
-<tt>i <= current, j < NumArg( tape[i].op ), and k = tape[i].arg[j]</tt>,
-and \c j corresponds to a variable for operator <tt>tape[i].op</tt>.
-It follows that <tt>tape[k].new_var</tt>
-has alread been set to the variable in the new operation sequence
-corresponding to the old variable index \c k.
-This means that the \c new_var value has been set
-for all the possible arguments that come before \a current.
+to the corresponding struct_old_variable information.
+Note that the old variable index must be greater than or equal zero and
+less than tape.size().
 
 \param current
 is the index in the old operation sequence for
 the variable corresponding to the result for the current operator.
-Assertions:
-<tt>
-current < tape.size(),
-NumRes( tape[current].op ) > 0.
-</tt>
+It follows that current < tape.size() and NumRes( tape[current].op ) > 0.
+Suppose i <= current, j < NumArg( tape[i] ), and k = tape[i].arg[j],
+It is assumed that tape[i].arg[j] is connected to the dependent variables
+and tape[k].new_var has been set to the corresponding variable.
+Note that tape[i].arg[j] < i <= current.
 
 \param npar
-is the number of parameters corresponding to this operation sequence.
+is the number of parameters corresponding to the old operation sequence.
 
 \param par
-is a vector of length \a npar containing the parameters
-for this operation sequence; i.e.,
-given a parameter index \c i, the corresponding parameter value is
-<tt>par[i]</tt>.
+is a vector of length npar containing the parameters
+the old operation sequence; i.e.,
+given a parameter index i < npar, the corresponding parameter value is par[i].
 <!-- end prototype -->
 
 \param hash_table_var
@@ -579,48 +430,26 @@ Record an operation of the form (parameter op variable).
 <!-- replace prototype -->
 \param tape
 is a vector that maps a variable index, in the old operation sequence,
-to an <tt>struct_old_variable</tt> information record.
-Note that the index for this vector must be greater than or equal zero and
-less than <tt>tape.size()</tt>.
-
-\li <tt>tape[i].op</tt>
-is the operator in the old operation sequence
-corresponding to the old variable index \c i.
-Assertion: <tt>NumRes(tape[i].op) > 0</tt>.
-
-\li <tt>tape[i].arg</tt>
-for <tt>j < NumArg( tape[i].op ), tape[i].arg[j]</tt>
-is the j-th the argument, in the old operation sequence,
-corresponding to the old variable index \c i.
-Assertion: <tt>tape[i].arg[j] < i</tt>.
-
-\li <tt>tape[i].new_var</tt>
-Suppose
-<tt>i <= current, j < NumArg( tape[i].op ), and k = tape[i].arg[j]</tt>,
-and \c j corresponds to a variable for operator <tt>tape[i].op</tt>.
-It follows that <tt>tape[k].new_var</tt>
-has alread been set to the variable in the new operation sequence
-corresponding to the old variable index \c k.
-This means that the \c new_var value has been set
-for all the possible arguments that come before \a current.
+to the corresponding struct_old_variable information.
+Note that the old variable index must be greater than or equal zero and
+less than tape.size().
 
 \param current
 is the index in the old operation sequence for
 the variable corresponding to the result for the current operator.
-Assertions:
-<tt>
-current < tape.size(),
-NumRes( tape[current].op ) > 0.
-</tt>
+It follows that current < tape.size() and NumRes( tape[current].op ) > 0.
+Suppose i <= current, j < NumArg( tape[i] ), and k = tape[i].arg[j],
+It is assumed that tape[i].arg[j] is connected to the dependent variables
+and tape[k].new_var has been set to the corresponding variable.
+Note that tape[i].arg[j] < i <= current.
 
 \param npar
-is the number of parameters corresponding to this operation sequence.
+is the number of parameters corresponding to the old operation sequence.
 
 \param par
-is a vector of length \a npar containing the parameters
-for this operation sequence; i.e.,
-given a parameter index \c i, the corresponding parameter value is
-<tt>par[i]</tt>.
+is a vector of length npar containing the parameters
+the old operation sequence; i.e.,
+given a parameter index i < npar, the corresponding parameter value is par[i].
 <!-- end prototype -->
 
 \param rec
@@ -682,48 +511,26 @@ Record an operation of the form (variable op parameter).
 <!-- replace prototype -->
 \param tape
 is a vector that maps a variable index, in the old operation sequence,
-to an <tt>struct_old_variable</tt> information record.
-Note that the index for this vector must be greater than or equal zero and
-less than <tt>tape.size()</tt>.
-
-\li <tt>tape[i].op</tt>
-is the operator in the old operation sequence
-corresponding to the old variable index \c i.
-Assertion: <tt>NumRes(tape[i].op) > 0</tt>.
-
-\li <tt>tape[i].arg</tt>
-for <tt>j < NumArg( tape[i].op ), tape[i].arg[j]</tt>
-is the j-th the argument, in the old operation sequence,
-corresponding to the old variable index \c i.
-Assertion: <tt>tape[i].arg[j] < i</tt>.
-
-\li <tt>tape[i].new_var</tt>
-Suppose
-<tt>i <= current, j < NumArg( tape[i].op ), and k = tape[i].arg[j]</tt>,
-and \c j corresponds to a variable for operator <tt>tape[i].op</tt>.
-It follows that <tt>tape[k].new_var</tt>
-has alread been set to the variable in the new operation sequence
-corresponding to the old variable index \c k.
-This means that the \c new_var value has been set
-for all the possible arguments that come before \a current.
+to the corresponding struct_old_variable information.
+Note that the old variable index must be greater than or equal zero and
+less than tape.size().
 
 \param current
 is the index in the old operation sequence for
 the variable corresponding to the result for the current operator.
-Assertions:
-<tt>
-current < tape.size(),
-NumRes( tape[current].op ) > 0.
-</tt>
+It follows that current < tape.size() and NumRes( tape[current].op ) > 0.
+Suppose i <= current, j < NumArg( tape[i] ), and k = tape[i].arg[j],
+It is assumed that tape[i].arg[j] is connected to the dependent variables
+and tape[k].new_var has been set to the corresponding variable.
+Note that tape[i].arg[j] < i <= current.
 
 \param npar
-is the number of parameters corresponding to this operation sequence.
+is the number of parameters corresponding to the old operation sequence.
 
 \param par
-is a vector of length \a npar containing the parameters
-for this operation sequence; i.e.,
-given a parameter index \c i, the corresponding parameter value is
-<tt>par[i]</tt>.
+is a vector of length npar containing the parameters
+the old operation sequence; i.e.,
+given a parameter index i < npar, the corresponding parameter value is par[i].
 <!-- end prototype -->
 
 \param rec
@@ -782,48 +589,26 @@ Record an operation of the form (variable op variable).
 <!-- replace prototype -->
 \param tape
 is a vector that maps a variable index, in the old operation sequence,
-to an <tt>struct_old_variable</tt> information record.
-Note that the index for this vector must be greater than or equal zero and
-less than <tt>tape.size()</tt>.
-
-\li <tt>tape[i].op</tt>
-is the operator in the old operation sequence
-corresponding to the old variable index \c i.
-Assertion: <tt>NumRes(tape[i].op) > 0</tt>.
-
-\li <tt>tape[i].arg</tt>
-for <tt>j < NumArg( tape[i].op ), tape[i].arg[j]</tt>
-is the j-th the argument, in the old operation sequence,
-corresponding to the old variable index \c i.
-Assertion: <tt>tape[i].arg[j] < i</tt>.
-
-\li <tt>tape[i].new_var</tt>
-Suppose
-<tt>i <= current, j < NumArg( tape[i].op ), and k = tape[i].arg[j]</tt>,
-and \c j corresponds to a variable for operator <tt>tape[i].op</tt>.
-It follows that <tt>tape[k].new_var</tt>
-has alread been set to the variable in the new operation sequence
-corresponding to the old variable index \c k.
-This means that the \c new_var value has been set
-for all the possible arguments that come before \a current.
+to the corresponding struct_old_variable information.
+Note that the old variable index must be greater than or equal zero and
+less than tape.size().
 
 \param current
 is the index in the old operation sequence for
 the variable corresponding to the result for the current operator.
-Assertions:
-<tt>
-current < tape.size(),
-NumRes( tape[current].op ) > 0.
-</tt>
+It follows that current < tape.size() and NumRes( tape[current].op ) > 0.
+Suppose i <= current, j < NumArg( tape[i] ), and k = tape[i].arg[j],
+It is assumed that tape[i].arg[j] is connected to the dependent variables
+and tape[k].new_var has been set to the corresponding variable.
+Note that tape[i].arg[j] < i <= current.
 
 \param npar
-is the number of parameters corresponding to this operation sequence.
+is the number of parameters corresponding to the old operation sequence.
 
 \param par
-is a vector of length \a npar containing the parameters
-for this operation sequence; i.e.,
-given a parameter index \c i, the corresponding parameter value is
-<tt>par[i]</tt>.
+is a vector of length npar containing the parameters
+the old operation sequence; i.e.,
+given a parameter index i < npar, the corresponding parameter value is par[i].
 <!-- end prototype -->
 
 \param rec
@@ -887,48 +672,26 @@ Recording a cummulative cummulative summation starting at its highest parrent.
 <!-- replace prototype -->
 \param tape
 is a vector that maps a variable index, in the old operation sequence,
-to an <tt>struct_old_variable</tt> information record.
-Note that the index for this vector must be greater than or equal zero and
-less than <tt>tape.size()</tt>.
-
-\li <tt>tape[i].op</tt>
-is the operator in the old operation sequence
-corresponding to the old variable index \c i.
-Assertion: <tt>NumRes(tape[i].op) > 0</tt>.
-
-\li <tt>tape[i].arg</tt>
-for <tt>j < NumArg( tape[i].op ), tape[i].arg[j]</tt>
-is the j-th the argument, in the old operation sequence,
-corresponding to the old variable index \c i.
-Assertion: <tt>tape[i].arg[j] < i</tt>.
-
-\li <tt>tape[i].new_var</tt>
-Suppose
-<tt>i <= current, j < NumArg( tape[i].op ), and k = tape[i].arg[j]</tt>,
-and \c j corresponds to a variable for operator <tt>tape[i].op</tt>.
-It follows that <tt>tape[k].new_var</tt>
-has alread been set to the variable in the new operation sequence
-corresponding to the old variable index \c k.
-This means that the \c new_var value has been set
-for all the possible arguments that come before \a current.
+to the corresponding struct_old_variable information.
+Note that the old variable index must be greater than or equal zero and
+less than tape.size().
 
 \param current
 is the index in the old operation sequence for
 the variable corresponding to the result for the current operator.
-Assertions:
-<tt>
-current < tape.size(),
-NumRes( tape[current].op ) > 0.
-</tt>
+It follows that current < tape.size() and NumRes( tape[current].op ) > 0.
+Suppose i <= current, j < NumArg( tape[i] ), and k = tape[i].arg[j],
+It is assumed that tape[i].arg[j] is connected to the dependent variables
+and tape[k].new_var has been set to the corresponding variable.
+Note that tape[i].arg[j] < i <= current.
 
 \param npar
-is the number of parameters corresponding to this operation sequence.
+is the number of parameters corresponding to the old operation sequence.
 
 \param par
-is a vector of length \a npar containing the parameters
-for this operation sequence; i.e.,
-given a parameter index \c i, the corresponding parameter value is
-<tt>par[i]</tt>.
+is a vector of length npar containing the parameters
+the old operation sequence; i.e.,
+given a parameter index i < npar, the corresponding parameter value is par[i].
 <!-- end prototype -->
 
 \param rec
