@@ -28,7 +28,7 @@ Vector of sets of postivie integers, each set stored as a packed boolean array.
 
 class sparse_pack_const_iterator;
 class sparse_pack {
-	friend sparse_pack_const_iterator;
+	friend class sparse_pack_const_iterator;
 private:
 	/// Type used to pack elements (should be the same as corresponding
 	/// typedef in multiple_n_bit() in test_more/sparse_hacobian.cpp)

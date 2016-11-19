@@ -24,7 +24,9 @@ Please visit http://www.coin-or.org/CppAD/ for information on other licenses.
 
 namespace CppAD { namespace local { // BEGIN_CPPAD_LOCAL_NAMESPACE
 
+template <class Base> class ADTape;
 template <class Base> class player;
+template <class Base> class recorder;
 
 } } // END_CPPAD_LOCAL_NAMESPACE
 
@@ -69,6 +71,19 @@ namespace CppAD {
 	template <class Base> bool GreaterThanZero   (const AD<Base> &u);
 	template <class Base> bool GreaterThanOrZero (const AD<Base> &u);
 	template <class Base> AD<Base> Var2Par       (const AD<Base> &u);
+	template <class Base> AD<Base> abs           (const AD<Base> &u);
+	template <class Base> AD<Base> acos          (const AD<Base> &u);
+	template <class Base> AD<Base> asin          (const AD<Base> &u);
+	template <class Base> AD<Base> atan          (const AD<Base> &u);
+	template <class Base> AD<Base> cos           (const AD<Base> &u);
+	template <class Base> AD<Base> cosh          (const AD<Base> &u);
+	template <class Base> AD<Base> exp           (const AD<Base> &u);
+	template <class Base> AD<Base> log           (const AD<Base> &u);
+	template <class Base> AD<Base> log10         (const AD<Base> &u);
+	template <class Base> AD<Base> sin           (const AD<Base> &u);
+	template <class Base> AD<Base> sinh          (const AD<Base> &u);
+	template <class Base> AD<Base> sqrt          (const AD<Base> &u);
+	template <class Base> AD<Base> tan           (const AD<Base> &u);
 
 	// arithematic operators
 	template <class Base> AD<Base> operator + (

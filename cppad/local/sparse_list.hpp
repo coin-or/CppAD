@@ -29,7 +29,7 @@ linked list.
 */
 class sparse_list_const_iterator;
 class sparse_list {
-	friend sparse_list_const_iterator;
+	friend class sparse_list_const_iterator;
 public:
 	/// declare a const iterator
 	typedef sparse_list_const_iterator const_iterator;
