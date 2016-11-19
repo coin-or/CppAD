@@ -13,7 +13,7 @@ Please visit http://www.coin-or.org/CppAD/ for information on other licenses.
 -------------------------------------------------------------------------- */
 /*!
 \file unary_match.hpp
-Check if a unary operation is identical to a previous operation.
+Check if a unary operation is a match for a previous operation.
 */
 // BEGIN_CPPAD_LOCAL_OPTIMIZE_NAMESPACE
 namespace CppAD { namespace local { namespace optimize  {
@@ -53,7 +53,7 @@ given a parameter index i < npar, the corresponding parameter value is par[i].
 is a vector with size CPPAD_HASH_TABLE_SIZE
 that maps a hash code to the corresponding
 variable index in the old operation sequence.
-All the values in this table are be less than current.
+All the values in this table are less than current.
 
 \param code
 The input value of code does not matter.
