@@ -214,6 +214,9 @@ nobase_myinclude_HEADERS =  \
 	cppad/local/op_code.hpp \
 	cppad/local/op.hpp \
 	cppad/local/optimize/cexp_pair.hpp \
+	cppad/local/optimize/record_csum.hpp \
+	cppad/local/optimize/record_vv.hpp \
+	cppad/local/optimize/record_vp.hpp \
 	cppad/local/optimize/record_pv.hpp \
 	cppad/local/optimize/connect_type.hpp \
 	cppad/local/optimize/csum_stacks.hpp \

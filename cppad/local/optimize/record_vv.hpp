@@ -1,6 +1,6 @@
 // $Id$
-# ifndef CPPAD_LOCAL_OPTIMIZE_RECORD_PV_HPP
-# define CPPAD_LOCAL_OPTIMIZE_RECORD_PV_HPP
+# ifndef CPPAD_LOCAL_OPTIMIZE_RECORD_VV_HPP
+# define CPPAD_LOCAL_OPTIMIZE_RECORD_VV_HPP
 /* --------------------------------------------------------------------------
 CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-16 Bradley M. Bell
 
@@ -12,14 +12,13 @@ A copy of this license is included in the COPYING file of this distribution.
 Please visit http://www.coin-or.org/CppAD/ for information on other licenses.
 -------------------------------------------------------------------------- */
 /*!
-\file record_pv.hpp
-Record an operation of the form (parameter op variable).
+\file record_vv.hpp
+Record an operation of the form (variable op variable).
 */
 // BEGIN_CPPAD_LOCAL_OPTIMIZE_NAMESPACE
 namespace CppAD { namespace local { namespace optimize  {
-
 /*!
-Record an operation of the form (parameter op variable).
+Record an operation of the form (variable op variable).
 
 <!-- replace prototype -->
 \param tape
@@ -52,17 +51,17 @@ is the object that will record the operations.
 
 \param op
 is the operator that we are recording which must be one of the following:
-AddpvOp, DivpvOp, MulpvOp, PowpvOp, SubpvOp, ZmulpvOp.
+AddvvOp, DivvvOp, MulvvOp, PowvvOp, SubvvOp, ZmulvvOp.
 
 \param arg
 is the vector of arguments for this operator.
 
 \return
-the result is the operaiton and variable index corresponding to the current
+the result is the operation and variable index corresponding to the current
 operation in the new operation sequence.
 */
 template <class Base>
-struct_size_pair record_pv(
+struct_size_pair record_vv(
 	const CppAD::vector<struct struct_old_variable>&   tape           ,
 	size_t                                             current        ,
 	size_t                                             npar           ,
@@ -73,22 +72,22 @@ struct_size_pair record_pv(
 {
 # ifndef NDEBUG
 	switch(op)
-	{	case AddpvOp:
-		case DivpvOp:
-		case MulpvOp:
-		case PowpvOp:
-		case SubpvOp:
-		case ZmulpvOp:
+	{	case AddvvOp:
+		case DivvvOp:
+		case MulvvOp:
+		case PowvvOp:
+		case SubvvOp:
+		case ZmulvvOp:
 		break;
 
 		default:
 		CPPAD_ASSERT_UNKNOWN(false);
 	}
 # endif
-	CPPAD_ASSERT_UNKNOWN( size_t(arg[0]) < npar    );
+	CPPAD_ASSERT_UNKNOWN( size_t(arg[0]) < current );
 	CPPAD_ASSERT_UNKNOWN( size_t(arg[1]) < current );
 	addr_t new_arg[2];
-	new_arg[0]   = rec->PutPar( par[arg[0]] );
+	new_arg[0]   = tape[ arg[0] ].new_var;
 	new_arg[1]   = tape[ arg[1] ].new_var;
 	rec->PutArg( new_arg[0], new_arg[1] );
 
@@ -96,6 +95,7 @@ struct_size_pair record_pv(
 	ret.i_op  = rec->num_op_rec();
 	ret.i_var = rec->PutOp(op);
 	CPPAD_ASSERT_UNKNOWN( size_t(new_arg[0]) < ret.i_var );
+	CPPAD_ASSERT_UNKNOWN( size_t(new_arg[1]) < ret.i_var );
 	return ret;
 }
 
