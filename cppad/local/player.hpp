@@ -29,9 +29,10 @@ are done using the type  \a Base .
 */
 template <class Base>
 class player {
-
-// -------------- Variables that define the recording -----------------------
 private:
+	// ----------------------------------------------------------------------
+	// Variables that define the recording
+	// ----------------------------------------------------------------------
 	/// Number of variables in the recording.
 	size_t    num_var_rec_;
 
@@ -57,13 +58,28 @@ private:
 	/// Character strings ('\\0' terminated) in the recording.
 	pod_vector<char> text_rec_;
 
+	// ----------------------------------------------------------------------
+	// Variables used for iterating thorough operators in the recording
+	// ----------------------------------------------------------------------
+	/// Current operator
+	OpCode    op_;
 
-// --------------- Functions used to create and maniplate a recording -------
+	/// Index in recording corresponding to current operator
+	size_t    op_index_;
+
+	/// Current offset of the argument indices in op_arg_rec_
+	const addr_t*   op_arg_;
+
+	/// Index for primary (last) variable corresponding to current operator
+	size_t    var_index_;
+
+
 public:
-	/// Default constructor
+	// =================================================================
+	/// constructor
 	player(void) :
 	num_var_rec_(0)                                      ,
-	num_load_op_rec_(0)                                      ,
+	num_load_op_rec_(0)                                  ,
 	op_rec_( std::numeric_limits<addr_t>::max() )        ,
 	vecad_ind_rec_( std::numeric_limits<addr_t>::max() ) ,
 	op_arg_rec_( std::numeric_limits<addr_t>::max() )    ,
@@ -71,13 +87,14 @@ public:
 	text_rec_( std::numeric_limits<addr_t>::max() )
 	{ }
 
-	/// Destructor
+	// =================================================================
+	/// destructor
 	~player(void)
 	{ }
 
 	// ===============================================================
 	/*!
-	Moving an operation sequence from a recorder to a player
+	Moving an operation sequence from a recorder to this player
 
 	\param rec
 	the object that was used to record the operation sequence.  After this
@@ -118,7 +135,7 @@ public:
 	}
 	// ===============================================================
 	/*!
-	Copying an operation sequence from one player to another
+	Copying an operation sequence from another player to this one
 
 	\param play
 	the object that contains the operatoion sequence to copy.
@@ -135,8 +152,7 @@ public:
 		text_rec_           = play.text_rec_;
 	}
 	// ===============================================================
-
-	/// Erase all information in an operation sequence player.
+	/// Erase the recording stored in the player
 	void Erase(void)
 	{
 		num_var_rec_       = 0;
@@ -149,8 +165,9 @@ public:
 		par_rec_.erase();
 		text_rec_.erase();
 	}
-
-public:
+	// ================================================================
+	// const functions that retrieve infromation from this player
+	// ================================================================
 	/*!
 	\brief
 	Old method of fetching an operator from the recording.
@@ -258,23 +275,9 @@ public:
 		     + vecad_ind_rec_.size() * sizeof(addr_t)
 		;
 	}
-
-// ------------- Variables used for new methog of playing back a recording ---
-private:
-	/// Current operator
-	OpCode    op_;
-
-	/// Index in recording corresponding to current operator
-	size_t    op_index_;
-
-	/// Current offset of the argument indices in op_arg_rec_
-	const addr_t*   op_arg_;
-
-	/// Index for primary (last) variable corresponding to current operator
-	size_t    var_index_;
-
-// ----------- Functions used in new method for palying back a recording ---
-public:
+	// =====================================================================
+	// Forward iteration over operations in this player
+	// =====================================================================
 	/*!
 	Start a play back of the recording during a forward sweep.
 
@@ -472,6 +475,9 @@ public:
 		);
 		CPPAD_ASSERT_UNKNOWN( var_index_  < num_var_rec_ );
 	}
+	// =====================================================================
+	// Reverse iteration over operations in this player
+	// =====================================================================
 	/*!
 	Start a play back of the recording during a reverse sweep.
 
