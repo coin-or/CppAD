@@ -24,8 +24,8 @@ File used to define the player class.
 Class used to store and play back an operation sequence recording.
 
 \tparam Base
-These were AD< \a Base > operations when recorded. Operations during playback
-are done using the type  \a Base .
+These were AD< Base > operations when recorded. Operations during playback
+are done using the type Base .
 */
 template <class Base>
 class player {
@@ -99,8 +99,8 @@ public:
 	\param rec
 	the object that was used to record the operation sequence.  After this
 	operation, the state of the recording is no longer defined. For example,
-	the \c pod_vector member variables in \c this have been swapped with
-	\c rec .
+	the pod_vector member variables in this have been swapped with
+	 rec .
 	*/
 	void get(recorder<Base>& rec)
 	{	size_t i;
@@ -170,7 +170,7 @@ public:
 	// ================================================================
 	/*!
 	\brief
-	Old method of fetching an operator from the recording.
+	fetch an operator from the recording.
 
 	\return
 	the i-th operator in the recording.
@@ -284,20 +284,20 @@ public:
 	Use repeated calls to forward_next to play back one operator at a time.
 
 	\param op [out]
-	The input value of \c op does not matter. Its output value is the
+	The input value of op does not matter. Its output value is the
 	first operator in the recording; i.e., BeginOp.
 
 	\param op_arg [out]
-	The input value of \c op_arg does not matter. Its output value is the
+	The input value of op_arg does not matter. Its output value is the
 	beginning of the vector of argument indices for the first operation;
 	i.e., 0
 
 	\param op_index [out]
-	The input value of \c op_index does not matter. Its output value
+	The input value of op_index does not matter. Its output value
 	is the index of the next first operator in the recording; i.e., 0.
 
 	\param var_index [out]
-	The input value of \c var_index does not matter. Its output value is the
+	The input value of var_index does not matter. Its output value is the
 	index of the primary (last) result corresponding to the the first
 	operator (which must be a BeginOp); i.e., 0.
 	*/
@@ -324,22 +324,22 @@ public:
 	forward_start, forward_next, forward_csum, forward_cskip.
 
 	\param op [in,out]
-	The input value of \c op must be its output value from the
+	The input value of op must be its output value from the
 	previous call to a forward_routine.
 	Its output value is the next operator in the recording.
-	For speed, \c forward_next does not check for the special cases
-	where  <tt>op == CSumOp</tt> or <tt>op == CSkipOp</tt>. In these cases,
-	the other return values from \c forward_next must be corrected by a call
-	to \c forward_csum or \c forward_cskip respectively.
+	For speed, forward_next does not check for the special cases
+	where  op == CSumOp or op == CSkipOp. In these cases,
+	the other return values from forward_next must be corrected by a call
+	to forward_csum or forward_cskip respectively.
 
 	\param op_arg [in,out]
-	The input value of \c op_arg must be its output value form the
+	The input value of op_arg must be its output value form the
 	previous call to a forward routine.
 	Its output value is the
 	beginning of the vector of argument indices for this operation.
 
 	\param op_index [in,out]
-	The input value of \c op_index must be its output value form the
+	The input value of op_index must be its output value form the
 	previous call to a forward routine.
 	Its output value is the index of the next operator in the recording.
 	Thus the ouput value following the previous call to forward_start is one.
@@ -347,7 +347,7 @@ public:
 	the output value increases by one with each call to forward_next.
 
 	\param var_index [in,out]
-	The input value of \c var_index must be its output value form the
+	The input value of var_index must be its output value form the
 	previous call to a forward routine.
 	Its output value is the
 	index of the primary (last) result corresponding to the operator op.
@@ -380,24 +380,24 @@ public:
 		CPPAD_ASSERT_UNKNOWN( var_index_  < num_var_rec_ );
 	}
 	/*!
-	Correct \c forward_next return values when <tt>op == CSumOp</tt>.
+	Correct forward_next return values when op == CSumOp.
 
 	\param op [in]
 	The input value of op must be the return value from the previous
-	call to \c forward_next and must be \c CSumOp. It is not modified.
+	call to forward_next and must be CSumOp. It is not modified.
 
 	\param op_arg [in,out]
-	The input value of \c op_arg must be the return value from the
-	previous call to \c forward_next. Its output value is the
+	The input value of op_arg must be the return value from the
+	previous call to forward_next. Its output value is the
 	beginning of the vector of argument indices for the next operation.
 
 	\param op_index [in]
-	The input value of \c op_index does must be the return value from the
-	previous call to \c forward_next. Its is not modified.
+	The input value of op_index does must be the return value from the
+	previous call to forward_next. Its is not modified.
 
 	\param var_index [in,out]
-	The input value of \c var_index must be the return value from the
-	previous call to \c forward_next. It is not modified.
+	The input value of var_index must be the return value from the
+	previous call to forward_next. It is not modified.
 	*/
 	void forward_csum(
 	OpCode& op, const addr_t*& op_arg, size_t& op_index, size_t& var_index)
@@ -428,24 +428,24 @@ public:
 		CPPAD_ASSERT_UNKNOWN( var_index_  < num_var_rec_ );
 	}
 	/*!
-	Correct \c forward_next return values when <tt>op == CSkipOp</tt>.
+	Correct forward_next return values when op == CSkipOp.
 
 	\param op [in]
 	The input value of op must be the return value from the previous
-	call to \c forward_next and must be \c CSkipOp. It is not modified.
+	call to forward_next and must be CSkipOp. It is not modified.
 
 	\param op_arg [in,out]
-	The input value of \c op_arg must be the return value from the
-	previous call to \c forward_next. Its output value is the
+	The input value of op_arg must be the return value from the
+	previous call to forward_next. Its output value is the
 	beginning of the vector of argument indices for the next operation.
 
 	\param op_index [in]
-	The input value of \c op_index does must be the return value from the
-	previous call to \c forward_next. Its is not modified.
+	The input value of op_index does must be the return value from the
+	previous call to forward_next. Its is not modified.
 
 	\param var_index [in,out]
-	The input value of \c var_index must be the return value from the
-	previous call to \c forward_next. It is not modified.
+	The input value of var_index must be the return value from the
+	previous call to forward_next. It is not modified.
 	*/
 	void forward_cskip(
 	OpCode& op, const addr_t*& op_arg, size_t& op_index, size_t& var_index)
@@ -484,23 +484,23 @@ public:
 	Use repeated calls to reverse_next to play back one operator at a time.
 
 	\param op [out]
-	The input value of \c op does not matter. Its output value is the
+	The input value of op does not matter. Its output value is the
 	last operator in the recording; i.e., EndOp.
 
 	\param op_arg [out]
-	The input value of \c op_arg does not matter. Its output value is the
+	The input value of op_arg does not matter. Its output value is the
 	beginning of the vector of argument indices for the last operation;
-	(there are no arguments for the last operation so \a op_arg is invalid).
+	(there are no arguments for the last operation so op_arg is invalid).
 
 	\param op_index [out[
-	The input value of \c op_index does not matter. Its output value
+	The input value of op_index does not matter. Its output value
 	is the index of the last operator in the recording.
 
 	\param var_index [out]
-	The input value of \c var_index does not matter. Its output value is the
+	The input value of var_index does not matter. Its output value is the
 	index of the primary (last) result corresponding to the the last
 	operator (which must be a EndOp).
-	(there are no results for the last operation so \a var_index is invalid).
+	(there are no results for the last operation so var_index is invalid).
 	*/
 
 	void reverse_start(
@@ -525,26 +525,26 @@ public:
 	reverse_start, reverse_next, reverse_csum, reverse_cskip.
 
 	\param op [in,out]
-	The input value of \c op must be its output value from the
+	The input value of op must be its output value from the
 	previous call to a reverse_routine.
 	Its output value is the next operator in the recording (in reverse order).
 	The last operator sets op equal to EndOp.
 
 	\param op_arg [in,out]
-	The input value of \c op_arg must be its output value from the
+	The input value of op_arg must be its output value from the
 	previous call to a reverse_routine.
 	Its output value is the
 	beginning of the vector of argument indices for this operation.
 	The last operator sets op_arg equal to the beginning of the
 	argument indices for the entire recording.
-	For speed, \c reverse_next does not check for the special cases
-	<tt>op == CSumOp</tt> or <tt>op == CSkipOp</tt>. In these cases, the other
-	return values from \c reverse_next must be corrected by a call to
-	\c reverse_csum or \c reverse_cskip respectively.
+	For speed, reverse_next does not check for the special cases
+	op == CSumOp or op == CSkipOp. In these cases, the other
+	return values from reverse_next must be corrected by a call to
+	 reverse_csum or reverse_cskip respectively.
 
 
 	\param op_index [in,out]
-	The input value of \c op_index must be its output value from the
+	The input value of op_index must be its output value from the
 	previous call to a reverse_routine.
 	Its output value
 	is the index of this operator in the recording. Thus the output
@@ -555,7 +555,7 @@ public:
 	The last operator sets op_index equal to 0.
 
 	\param var_index [in,out]
-	The input value of \c var_index must be its output value from the
+	The input value of var_index must be its output value from the
 	previous call to a reverse_routine.
 	Its output value is the
 	index of the primary (last) result corresponding to the operator op.
@@ -587,24 +587,24 @@ public:
 		);
 	}
 	/*!
-	Correct \c reverse_next return values when <tt>op == CSumOp</tt>.
+	Correct reverse_next return values when op == CSumOp.
 
 	\param op [in]
-	The input value of \c op must be the return value from the previous
-	call to \c reverse_next and must be \c CSumOp. It is not modified.
+	The input value of op must be the return value from the previous
+	call to reverse_next and must be CSumOp. It is not modified.
 
 	\param op_arg [in,out]
-	The input value of \c op_arg must be the return value from the
-	previous call to \c reverse_next. Its output value is the
+	The input value of op_arg must be the return value from the
+	previous call to reverse_next. Its output value is the
 	beginning of the vector of argument indices for this operation.
 
 	\param op_index [in]
-	The input value of \c op_index must be the return value from the
-	previous call to \c reverse_next. It is not modified.
+	The input value of op_index must be the return value from the
+	previous call to reverse_next. It is not modified.
 
 	\param var_index [in]
-	The input value of \c var_index must be the return value from the
-	previous call to \c reverse_next. It is not modified.
+	The input value of var_index must be the return value from the
+	previous call to reverse_next. It is not modified.
 	*/
 
 	void reverse_csum(
@@ -636,25 +636,25 @@ public:
 		CPPAD_ASSERT_UNKNOWN( var_index_  < num_var_rec_ );
 	}
 	/*!
-	Correct \c reverse_next return values when <tt>op == CSkipOp</tt>.
+	Correct reverse_next return values when op == CSkipOp.
 
 
 	\param op [int]
-	The input value of \c op must be the return value from the previous
-	call to \c reverse_next and must be \c CSkipOp. It is not modified.
+	The input value of op must be the return value from the previous
+	call to reverse_next and must be CSkipOp. It is not modified.
 
 	\param op_arg [in,out]
-	The input value of \c op_arg must be the return value from the
-	previous call to \c reverse_next. Its output value is the
+	The input value of op_arg must be the return value from the
+	previous call to reverse_next. Its output value is the
 	beginning of the vector of argument indices for this operation.
 
 	\param op_index [in]
-	The input value of \c op_index must be the return value from the
-	previous call to \c reverse_next. It is not modified.
+	The input value of op_index must be the return value from the
+	previous call to reverse_next. It is not modified.
 
 	\param var_index [in]
-	The input value of \c var_index must be the return value from the
-	previous call to \c reverse_next. It is not modified.
+	The input value of var_index must be the return value from the
+	previous call to reverse_next. It is not modified.
 	*/
 
 	void reverse_cskip(
