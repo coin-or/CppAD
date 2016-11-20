@@ -73,6 +73,11 @@ private:
 	/// Index for primary (last) variable corresponding to current operator
 	size_t    var_index_;
 
+# ifndef NDEBUG
+	/// Flag indicating that a special function must be called before next
+	bool      special_before_next_;
+# endif
+
 
 public:
 	// =================================================================
@@ -308,10 +313,11 @@ public:
 		op_arg    = op_arg_      = op_arg_rec_.data();
 		op_index  = op_index_    = 0;
 		var_index = var_index_   = 0;
-
+# ifndef NDEBUG
+		special_before_next_     = false;
 		CPPAD_ASSERT_UNKNOWN( op_  == BeginOp );
 		CPPAD_ASSERT_NARG_NRES(op_, 1, 1);
-
+# endif
 		return;
 	}
 
@@ -355,6 +361,7 @@ public:
 	void forward_next(
 	OpCode& op, const addr_t*& op_arg, size_t& op_index, size_t& var_index)
 	{
+		CPPAD_ASSERT_UNKNOWN( ! special_before_next_ );
 		CPPAD_ASSERT_UNKNOWN( op_       == op );
 		CPPAD_ASSERT_UNKNOWN( op_arg    == op_arg_ );
 		CPPAD_ASSERT_UNKNOWN( op_index  == op_index_ );
@@ -372,12 +379,15 @@ public:
 		// index for last result for next operator
 		var_index   = var_index_ += NumRes(op);
 
-
+# ifndef NDEBUG
+		special_before_next_ = (op == CSumOp) | (op == CSkipOp);
+		//
 		CPPAD_ASSERT_UNKNOWN( op_arg_rec_.data() <= op_arg_ );
 		CPPAD_ASSERT_UNKNOWN(
 			op_arg_ + NumArg(op) <= op_arg_rec_.data() + op_arg_rec_.size()
 		);
 		CPPAD_ASSERT_UNKNOWN( var_index_  < num_var_rec_ );
+# endif
 	}
 	/*!
 	Correct forward_next return values when op == CSumOp.
@@ -421,11 +431,16 @@ public:
 		*/
 		op_arg = op_arg_   += op_arg[0] + op_arg[1] + 4;
 
+# ifndef NDEBUG
+		CPPAD_ASSERT_UNKNOWN( special_before_next_ );
+		special_before_next_ = false;
+		//
 		CPPAD_ASSERT_UNKNOWN( op_arg_rec_.data() <= op_arg_ );
 		CPPAD_ASSERT_UNKNOWN(
 			op_arg_ + NumArg(op) <= op_arg_rec_.data() + op_arg_rec_.size()
 		);
 		CPPAD_ASSERT_UNKNOWN( var_index_  < num_var_rec_ );
+# endif
 	}
 	/*!
 	Correct forward_next return values when op == CSkipOp.
@@ -469,11 +484,16 @@ public:
 		*/
 		op_arg  = op_arg_  += 7 + op_arg[4] + op_arg[5];
 
+# ifndef NDEBUG
+		CPPAD_ASSERT_UNKNOWN( special_before_next_ );
+		special_before_next_ = false;
+		//
 		CPPAD_ASSERT_UNKNOWN( op_arg_rec_.data() <= op_arg_ );
 		CPPAD_ASSERT_UNKNOWN(
 			op_arg_ + NumArg(op) <= op_arg_rec_.data() + op_arg_rec_.size()
 		);
 		CPPAD_ASSERT_UNKNOWN( var_index_  < num_var_rec_ );
+# endif
 	}
 	// =====================================================================
 	// Reverse iteration over operations in this player
@@ -510,8 +530,11 @@ public:
 		op_index    = op_index_   = op_rec_.size() - 1;
 		var_index   = var_index_  = num_var_rec_ - 1;
 		op          = op_         = OpCode( op_rec_[ op_index_ ] );
+# ifndef NDEBUG
+		special_before_next_      = false;
 		CPPAD_ASSERT_UNKNOWN( op_ == EndOp );
 		CPPAD_ASSERT_NARG_NRES(op, 0, 0);
+# endif
 		return;
 	}
 
@@ -565,6 +588,7 @@ public:
 	void reverse_next(
 	OpCode& op, const addr_t*& op_arg, size_t& op_index, size_t& var_index)
 	{
+		CPPAD_ASSERT_UNKNOWN( ! special_before_next_ );
 		CPPAD_ASSERT_UNKNOWN( op_       == op );
 		CPPAD_ASSERT_UNKNOWN( op_arg    == op_arg_ );
 		CPPAD_ASSERT_UNKNOWN( op_index  == op_index_ );
@@ -581,10 +605,15 @@ public:
 
 		// first argument for next operator
 		op_arg      = op_arg_    -= NumArg(op);
+
+# ifndef NDEBUG
+		special_before_next_ = (op == CSumOp) | (op == CSkipOp);
+		//
 		CPPAD_ASSERT_UNKNOWN( op_arg_rec_.data() <= op_arg_ );
 		CPPAD_ASSERT_UNKNOWN(
 			op_arg_ + NumArg(op) <= op_arg_rec_.data() + op_arg_rec_.size()
 		);
+# endif
 	}
 	/*!
 	Correct reverse_next return values when op == CSumOp.
@@ -630,14 +659,17 @@ public:
 		CPPAD_ASSERT_UNKNOWN(
 		op_arg[0] + op_arg[1] == op_arg[ 3 + op_arg[0] + op_arg[1] ]
 		);
-
+# ifndef NDEBUG
+		CPPAD_ASSERT_UNKNOWN( special_before_next_ );
+		special_before_next_ = false;
+		//
 		CPPAD_ASSERT_UNKNOWN( op_index_  < op_rec_.size() );
 		CPPAD_ASSERT_UNKNOWN( op_arg_rec_.data() <= op_arg_ );
 		CPPAD_ASSERT_UNKNOWN( var_index_  < num_var_rec_ );
+# endif
 	}
 	/*!
 	Correct reverse_next return values when op == CSkipOp.
-
 
 	\param op [int]
 	The input value of op must be the return value from the previous
@@ -679,9 +711,14 @@ public:
 		CPPAD_ASSERT_UNKNOWN(
 		op_arg[4] + op_arg[5] == op_arg[ 6 + op_arg[4] + op_arg[5] ]
 		);
+# ifndef NDEBUG
+		CPPAD_ASSERT_UNKNOWN( special_before_next_ );
+		special_before_next_ = false;
+		//
 		CPPAD_ASSERT_UNKNOWN( op_index_  < op_rec_.size() );
 		CPPAD_ASSERT_UNKNOWN( op_arg_rec_.data() <= op_arg_ );
 		CPPAD_ASSERT_UNKNOWN( var_index_  < num_var_rec_ );
+# endif
 	}
 
 };
