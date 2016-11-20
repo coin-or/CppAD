@@ -583,10 +583,12 @@ nobase_myinclude_HEADERS = \
 	cppad/core/fun_check.hpp \
 	cppad/core/fun_construct.hpp \
 	cppad/core/fun_eval.hpp \
+	cppad/core/hash_code.hpp \
 	cppad/local/hash_code.hpp \
 	cppad/core/hessian.hpp \
 	cppad/core/identical.hpp \
 	cppad/local/independent.hpp \
+	cppad/core/independent.hpp \
 	cppad/core/integer.hpp \
 	cppad/core/jacobian.hpp \
 	cppad/local/load_op.hpp \
@@ -604,7 +606,24 @@ nobase_myinclude_HEADERS = \
 	cppad/core/omp_max_thread.hpp \
 	cppad/local/op_code.hpp \
 	cppad/local/op.hpp \
-	cppad/local/optimize/optimize.hpp \
+	cppad/local/optimize/cexp_pair.hpp \
+	cppad/local/optimize/record_csum.hpp \
+	cppad/local/optimize/record_vv.hpp \
+	cppad/local/optimize/record_vp.hpp \
+	cppad/local/optimize/record_pv.hpp \
+	cppad/local/optimize/connect_type.hpp \
+	cppad/local/optimize/csum_stacks.hpp \
+	cppad/local/optimize/csum_variable.hpp \
+	cppad/local/optimize/old_variable.hpp \
+	cppad/local/optimize/optimize_run.hpp \
+	cppad/core/optimize.hpp \
+	cppad/local/optimize/set_cexp_pair.hpp \
+	cppad/local/optimize/size_pair.hpp \
+	cppad/local/optimize/cskip_info.hpp \
+	cppad/local/optimize/define_prototype.hpp \
+	cppad/local/optimize/user_info.hpp \
+	cppad/local/optimize/unary_match.hpp \
+	cppad/local/optimize/binary_match.hpp \
 	cppad/core/opt_val_hes.hpp \
 	cppad/core/ordered.hpp \
 	cppad/core/parallel_ad.hpp \
