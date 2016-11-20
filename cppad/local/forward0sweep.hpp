@@ -224,8 +224,7 @@ void forward0sweep(
 # endif
 	//
 	// next expected operator in a UserOp sequence
-	enum { user_start, user_arg, user_ret, user_end, user_trace }
-	user_state = user_start;
+	enum_user_state user_state = user_start;
 
 	// length of the parameter vector (used by CppAD assert macros)
 	const size_t num_par = play->num_par_rec();

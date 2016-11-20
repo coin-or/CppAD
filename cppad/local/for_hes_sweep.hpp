@@ -184,7 +184,7 @@ void ForHesSweep(
 	bool               user_set  = false;      // sparsity pattern type is set
 	bool               user_ok   = false;      // atomic op return value
 	// next expected operator in a UserOp sequence
-	enum { user_start, user_arg, user_ret, user_end } user_state = user_start;
+	enum_user_state user_state = user_start;
 	//
 	// pointer to the beginning of the parameter vector
 	// (used by user atomic functions)

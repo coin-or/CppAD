@@ -225,7 +225,7 @@ void ReverseSweep(
 # endif
 	//
 	// next expected operator in a UserOp sequence
-	enum { user_start, user_arg, user_ret, user_end } user_state = user_end;
+	enum_user_state user_state = user_end;
 
 	// temporary indices
 	size_t j, ell;
