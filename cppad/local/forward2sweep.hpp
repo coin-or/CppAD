@@ -213,6 +213,7 @@ void forward2sweep(
 	play->forward_start(op, arg, i_op, i_var);
 	CPPAD_ASSERT_UNKNOWN( op == BeginOp );
 # if CPPAD_FORWARD2SWEEP_TRACE
+	bool user_trace  = false;
 	std::cout << std::endl;
 	CppAD::vector<Base> Z_vec(q+1);
 # endif
@@ -630,10 +631,9 @@ void forward2sweep(
 						}
 					}
 				}
-# if CPPAD_FORWARD2SWEEP_TRACE
-				user_state = user_trace;
-# else
 				user_state = user_start;
+# if CPPAD_FORWARD2SWEEP_TRACE
+				user_trace = true;
 # endif
 			}
 			break;
@@ -722,8 +722,8 @@ void forward2sweep(
 			CPPAD_ASSERT_UNKNOWN(0);
 		}
 # if CPPAD_FORWARD2SWEEP_TRACE
-		if( user_state == user_trace )
-		{	user_state = user_start;
+		if( user_trace )
+		{	user_trace = false;
 			CPPAD_ASSERT_UNKNOWN( op == UserOp );
 			CPPAD_ASSERT_UNKNOWN( NumArg(UsrrvOp) == 0 );
 			for(i = 0; i < user_m; i++) if( user_iy[i] > 0 )

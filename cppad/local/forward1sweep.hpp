@@ -304,9 +304,12 @@ void forward1sweep(
 	// skip the BeginOp at the beginning of the recording
 	play->forward_start(op, arg, i_op, i_var);
 	CPPAD_ASSERT_UNKNOWN( op == BeginOp );
+	//
 # if CPPAD_FORWARD1SWEEP_TRACE
+	bool user_trace = false;
 	std::cout << std::endl;
 # endif
+	//
 	bool more_operators = true;
 	while(more_operators)
 	{
@@ -916,10 +919,9 @@ void forward1sweep(
 						for(k = p; k <= q; k++)
 							taylor[ user_iy[i] * J + k ] =
 								user_ty[ i * user_q1 + k ];
-# if CPPAD_FORWARD1SWEEP_TRACE
-				user_state = user_trace;
-# else
 				user_state = user_start;
+# if CPPAD_FORWARD1SWEEP_TRACE
+				user_trace = true;
 # endif
 			}
 			break;
@@ -996,8 +998,8 @@ void forward1sweep(
 			CPPAD_ASSERT_UNKNOWN(0);
 		}
 # if CPPAD_FORWARD1SWEEP_TRACE
-		if( user_state == user_trace )
-		{	user_state = user_start;
+		if( user_trace )
+		{	user_trace = false;
 
 			CPPAD_ASSERT_UNKNOWN( op == UserOp );
 			CPPAD_ASSERT_UNKNOWN( NumArg(UsrrvOp) == 0 );

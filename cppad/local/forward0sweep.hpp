@@ -246,6 +246,9 @@ void forward0sweep(
 	*/
 
 # if CPPAD_FORWARD0SWEEP_TRACE
+	// flag as to when to trace user function values
+	bool user_trace            = false;
+
 	// variable indices for results vector
 	// (done differently for order zero).
 	vector<size_t> user_iy;
@@ -800,10 +803,9 @@ void forward0sweep(
 					CPPAD_ASSERT_KNOWN(false, msg.c_str() );
 				}
 # endif
-# if CPPAD_FORWARD0SWEEP_TRACE
-				user_state = user_trace;
-# else
 				user_state = user_start;
+# if CPPAD_FORWARD0SWEEP_TRACE
+				user_trace = true;
 # endif
 			}
 			break;
@@ -887,8 +889,8 @@ void forward0sweep(
 		}
 # if CPPAD_FORWARD0SWEEP_TRACE
 		size_t  d  = 0;
-		if( user_state == user_trace )
-		{	user_state = user_start;
+		if( user_trace )
+		{	user_trace = false;
 
 			CPPAD_ASSERT_UNKNOWN( op == UserOp );
 			CPPAD_ASSERT_UNKNOWN( NumArg(UsrrvOp) == 0 );
