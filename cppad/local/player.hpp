@@ -597,6 +597,7 @@ public:
 
 			case UsrapOp:
 			case UsravOp:
+			CPPAD_ASSERT_UNKNOWN( NumArg(op) == 1 );
 			CPPAD_ASSERT_UNKNOWN( user_state == user_arg );
 			CPPAD_ASSERT_UNKNOWN( user_i == 0 );
 			CPPAD_ASSERT_UNKNOWN( user_j < user_n );
@@ -607,6 +608,8 @@ public:
 
 			case UsrrpOp:
 			case UsrrvOp:
+			CPPAD_ASSERT_UNKNOWN( NumArg(op) == 1 || op == UsrrvOp );
+			CPPAD_ASSERT_UNKNOWN( NumArg(op) == 0 || op == UsrrpOp );
 			CPPAD_ASSERT_UNKNOWN( user_state == user_ret );
 			CPPAD_ASSERT_UNKNOWN( user_i < user_m );
 			CPPAD_ASSERT_UNKNOWN( user_j == user_n );
