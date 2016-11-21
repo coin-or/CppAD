@@ -155,21 +155,16 @@ void ForJacSweep(
 	vectorBool         pack_s;   // pack sparisty pattern for the result y
 	//
 	const size_t user_q = limit; // maximum element plus one
-	size_t user_index = 0;       // indentifier for this atomic operation
-	size_t user_old   = 0;       // extra information used by old_atomic
-	size_t user_i     = 0;       // index in result vector
-	size_t user_j     = 0;       // index in argument vector
-	size_t user_m     = 0;       // size of result vector
-	size_t user_n     = 0;       // size of arugment vector
+	//
+	// information defined by forward_user
+	size_t user_index=0, user_old=0, user_m=0, user_n=0, user_i=0, user_j=0;
+	enum_user_state user_state = user_start; // proper initialization
 	//
 	atomic_base<Base>* user_atom = CPPAD_NULL; // user's atomic op calculator
 	bool               user_pack = false;      // sparsity pattern type is pack
 	bool               user_bool = false;      // sparsity pattern type is bool
 	bool               user_set  = false;      // sparsity pattern type is set
 	bool               user_ok   = false;      // atomic op return value
-	//
-	// next expected operator in a UserOp sequence
-	enum_user_state user_state = user_start;
 	//
 	// pointer to the beginning of the parameter vector
 	// (used by user atomic functions)
@@ -188,7 +183,8 @@ void ForJacSweep(
 	CPPAD_ASSERT_UNKNOWN( op == BeginOp );
 	bool more_operators = true;
 	while(more_operators)
-	{
+	{	bool flag; // temporary for use in switch cases.
+
 		// this op
 		play->forward_next(op, arg, i_op, i_var);
 		CPPAD_ASSERT_UNKNOWN( (i_op > n)  | (op == InvOp) );
@@ -640,14 +636,12 @@ void ForJacSweep(
 
 			case UserOp:
 			// start or end an atomic operation sequence
-			CPPAD_ASSERT_UNKNOWN( NumRes( UserOp ) == 0 );
-			CPPAD_ASSERT_UNKNOWN( NumArg( UserOp ) == 4 );
-			if( user_state == user_start )
-			{	user_index = arg[0];
-				user_old   = arg[1];
-				user_n     = arg[2];
-				user_m     = arg[3];
-				user_atom  = atomic_base<Base>::class_object(user_index);
+			flag = user_state == user_start;
+			play->forward_user(op, user_state,
+				user_index, user_old, user_m, user_n, user_i, user_j
+			);
+			if( flag )
+			{	user_atom  = atomic_base<Base>::class_object(user_index);
 # ifndef NDEBUG
 				if( user_atom == CPPAD_NULL )
 				{	std::string msg =
@@ -685,16 +679,9 @@ void ForJacSweep(
 					for(i = 0; i < user_n; i++)
 						set_r[i].clear();
 				}
-				user_j     = 0;
-				user_i     = 0;
-				user_state = user_arg;
 			}
 			else
-			{	CPPAD_ASSERT_UNKNOWN( user_state == user_end );
-				CPPAD_ASSERT_UNKNOWN( user_index == size_t(arg[0]) );
-				CPPAD_ASSERT_UNKNOWN( user_old   == size_t(arg[1]) );
-				CPPAD_ASSERT_UNKNOWN( user_n     == size_t(arg[2]) );
-				CPPAD_ASSERT_UNKNOWN( user_m     == size_t(arg[3]) );
+			{
 # ifndef NDEBUG
 				if( ! user_ok )
 				{	std::string msg =
@@ -709,21 +696,17 @@ void ForJacSweep(
 					CPPAD_ASSERT_KNOWN(false, msg.c_str() );
 				}
 # endif
-				user_state = user_start;
 			}
 			break;
 
 			case UsrapOp:
 			// parameter argument in an atomic operation sequence
-			CPPAD_ASSERT_UNKNOWN( user_state == user_arg );
-			CPPAD_ASSERT_UNKNOWN( user_j < user_n );
-			CPPAD_ASSERT_UNKNOWN( size_t(arg[0]) < num_par );
-			//
-			// parameters as integers
 			user_x[user_j] = parameter[arg[0]];
 			//
 			// set row user_j to empty sparsity pattern
-			++user_j;
+			play->forward_user(op, user_state,
+				user_index, user_old, user_m, user_n, user_i, user_j
+			);
 			if( user_j == user_n )
 			{	// call users function for this operation
 				user_atom->set_old(user_old);
@@ -751,15 +734,11 @@ void ForJacSweep(
 						user_q, set_r, set_s
 					);
 				}
-				user_state = user_ret;
 			}
 			break;
 
 			case UsravOp:
 			// variable argument in an atomic operation sequence
-			CPPAD_ASSERT_UNKNOWN( user_state == user_arg );
-			CPPAD_ASSERT_UNKNOWN( user_j < user_n );
-			CPPAD_ASSERT_UNKNOWN( size_t(arg[0]) <= i_var );
 			// variable as integers
 			user_x[user_j] = CppAD::numeric_limits<Base>::quiet_NaN();
 			// set row user_j to sparsity pattern for variable arg[0]
@@ -775,7 +754,9 @@ void ForJacSweep(
 					i = *(++itr);
 				}
 			}
-			++user_j;
+			play->forward_user(op, user_state,
+				user_index, user_old, user_m, user_n, user_i, user_j
+			);
 			if( user_j == user_n )
 			{	// call users function for this operation
 				user_atom->set_old(user_old);
@@ -803,23 +784,18 @@ void ForJacSweep(
 						user_q, set_r, set_s
 					);
 				}
-				user_state = user_ret;
 			}
 			break;
 
 			case UsrrpOp:
 			// parameter result in an atomic operation sequence
-			CPPAD_ASSERT_UNKNOWN( user_state == user_ret );
-			CPPAD_ASSERT_UNKNOWN( user_i < user_m );
-			user_i++;
-			if( user_i == user_m )
-				user_state = user_end;
+			play->forward_user(op, user_state,
+				user_index, user_old, user_m, user_n, user_i, user_j
+			);
 			break;
 
 			case UsrrvOp:
 			// variable result in an atomic operation sequence
-			CPPAD_ASSERT_UNKNOWN( user_state == user_ret );
-			CPPAD_ASSERT_UNKNOWN( user_i < user_m );
 			// It might be faster if we add set union to var_sparsity
 			// where one of the sets is not in var_sparsity
 			if( user_pack )
@@ -838,9 +814,9 @@ void ForJacSweep(
 				while( set_itr != set_end )
 					var_sparsity.add_element(i_var, *set_itr++);
 			}
-			user_i++;
-			if( user_i == user_m )
-				user_state = user_end;
+			play->forward_user(op, user_state,
+				user_index, user_old, user_m, user_n, user_i, user_j
+			);
 			break;
 			// -------------------------------------------------
 
