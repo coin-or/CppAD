@@ -176,7 +176,7 @@ void forward2sweep(
 	vector<Base> user_ty_one;    // result vector Taylor coefficients
 	vector<Base> user_ty_all;
 	size_t user_index = 0;       // indentifier for this atomic operation
-	size_t user_id    = 0;       // user identifier for this call to operator
+	size_t user_old   = 0;       // extra information used by old_atomic
 	size_t user_i     = 0;       // index in result vector
 	size_t user_j     = 0;       // index in argument vector
 	size_t user_m     = 0;       // size of result vector
@@ -556,7 +556,7 @@ void forward2sweep(
 			CPPAD_ASSERT_UNKNOWN( NumArg( UserOp ) == 4 );
 			if( user_state == user_start )
 			{	user_index = arg[0];
-				user_id    = arg[1];
+				user_old   = arg[1];
 				user_n     = arg[2];
 				user_m     = arg[3];
 				user_atom  = atomic_base<Base>::class_object(user_index);
@@ -582,12 +582,12 @@ void forward2sweep(
 			else
 			{	CPPAD_ASSERT_UNKNOWN( user_state == user_end );
 				CPPAD_ASSERT_UNKNOWN( user_index == size_t(arg[0]) );
-				CPPAD_ASSERT_UNKNOWN( user_id    == size_t(arg[1]) );
+				CPPAD_ASSERT_UNKNOWN( user_old   == size_t(arg[1]) );
 				CPPAD_ASSERT_UNKNOWN( user_n     == size_t(arg[2]) );
 				CPPAD_ASSERT_UNKNOWN( user_m     == size_t(arg[3]) );
 
 				// call users function for this operation
-				user_atom->set_id(user_id);
+				user_atom->set_old(user_old);
 				for(ell = 0; ell < r; ell++)
 				{	// set user_tx
 					for(j = 0; j < user_n; j++)

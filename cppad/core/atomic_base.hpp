@@ -402,7 +402,7 @@ A simple vector class with elements of type <code>AD<Base></code>.
 optional extra information vector that is just passed through by CppAD,
 and used by old_atomic derived class (not other derived classes).
 This is an extra parameter to the virtual callbacks for old_atomic;
-see the set_id member function.
+see the set_old member function.
 
 \param ax
 is the argument vector for this call,
@@ -467,7 +467,7 @@ void operator()(
 	}
 	// Use zero order forward mode to compute values
 	size_t p = 0, q = 0;
-	set_id(id);
+	set_old(id);
 # ifdef NDEBUG
 	forward(p, q, vx, vy, tx, ty);
 # else
@@ -1845,7 +1845,7 @@ Set value of id (used by deprecated old_atomic class)
 This function is called just before calling any of the virtual function
 and has the corresponding id of the corresponding virtual call.
 */
-virtual void set_id(size_t id)
+virtual void set_old(size_t id)
 { }
 // ---------------------------------------------------------------------------
 };

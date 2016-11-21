@@ -967,7 +967,7 @@ public:
 	\param id
 	id value corresponding to next virtual callback
 	*/
-	virtual void set_id(size_t id)
+	virtual void set_old(size_t id)
 	{	id_ = id; }
 	/*!
 	Link from old_atomic to forward mode

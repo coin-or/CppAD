@@ -166,7 +166,7 @@ void optimize_run(
 	//
 	size_t user_q     = 0;       // column dimension for sparsity patterns
 	size_t user_index = 0;       // indentifier for this user_atomic operation
-	size_t user_id    = 0;       // user identifier for this call to operator
+	size_t user_old   = 0;       // extra information used by old_atomic
 	size_t user_i     = 0;       // index in result vector
 	size_t user_j     = 0;       // index in argument vector
 	size_t user_m     = 0;       // size of result vector
@@ -598,7 +598,7 @@ void optimize_run(
 			CPPAD_ASSERT_UNKNOWN( NumArg( UserOp ) == 4 );
 			if( user_state == user_end )
 			{	user_index = arg[0];
-				user_id    = arg[1];
+				user_old   = arg[1];
 				user_n     = arg[2];
 				user_m     = arg[3];
 				user_q     = 1;
@@ -665,12 +665,12 @@ void optimize_run(
 			else
 			{	CPPAD_ASSERT_UNKNOWN( user_state == user_start );
 				CPPAD_ASSERT_UNKNOWN( user_index == size_t(arg[0]) );
-				CPPAD_ASSERT_UNKNOWN( user_id    == size_t(arg[1]) );
+				CPPAD_ASSERT_UNKNOWN( user_old   == size_t(arg[1]) );
 				CPPAD_ASSERT_UNKNOWN( user_n     == size_t(arg[2]) );
 				CPPAD_ASSERT_UNKNOWN( user_m     == size_t(arg[3]) );
 				//
 				// call users function for this operation
-				user_atom->set_id(user_id);
+				user_atom->set_old(user_old);
 				bool user_ok = false;
 				if( user_pack )
 				{	user_ok = user_atom->rev_sparse_jac(
@@ -1508,7 +1508,7 @@ void optimize_run(
 			{	user_state = user_start;
 				user_info[user_curr].op_end = rec->num_op_rec() + 1;
 			}
-			// user_index, user_id, user_n, user_m
+			// user_index, user_old, user_n, user_m
 			if( user_info[user_curr].connect_type != not_connected )
 			{	rec->PutArg(arg[0], arg[1], arg[2], arg[3]);
 				rec->PutOp(UserOp);

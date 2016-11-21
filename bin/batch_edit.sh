@@ -13,44 +13,14 @@
 revert_list='
 '
 move_list='
-cppad/local/capacity_order.hpp
-cppad/local/check_for_nan.hpp
-cppad/local/checkpoint.hpp
-cppad/local/compare.hpp
-cppad/local/compute_assign.hpp
-cppad/local/cond_exp.hpp
-cppad/local/convert.hpp
-cppad/local/cppad_assert.hpp
-cppad/local/define.hpp
-cppad/local/dependent.hpp
-cppad/local/discrete.hpp
-cppad/local/div_eq.hpp
-cppad/local/div.hpp
-cppad/local/drivers.hpp
-cppad/local/epsilon.hpp
-cppad/local/erf.hpp
-cppad/local/expm1.hpp
 '
 move_sed='s|/local/|/core/|'
 #
 cat << EOF > junk.sed
-s|/local/capacity_order.hpp|/core/capacity_order.hpp|
-s|/local/check_for_nan.hpp|/core/check_for_nan.hpp|
-s|/local/checkpoint.hpp|/core/checkpoint.hpp|
-s|/local/compare.hpp|/core/compare.hpp|
-s|/local/compute_assign.hpp|/core/compute_assign.hpp|
-s|/local/cond_exp.hpp|/core/cond_exp.hpp|
-s|/local/convert.hpp|/core/convert.hpp|
-s|/local/cppad_assert.hpp|/core/cppad_assert.hpp|
-s|/local/define.hpp|/core/define.hpp|
-s|/local/dependent.hpp|/core/dependent.hpp|
-s|/local/discrete.hpp|/core/discrete.hpp|
-s|/local/div_eq.hpp|/core/div_eq.hpp|
-s|/local/div.hpp|/core/div.hpp|
-s|/local/drivers.hpp|/core/drivers.hpp|
-s|/local/epsilon.hpp|/core/epsilon.hpp|
-s|/local/erf.hpp|/core/erf.hpp|
-s|/local/expm1.hpp|/core/expm1.hpp|
+s|user identifier for this call to operator|extra information used by old_atomic|
+s|user_id  |user_old |g
+s|user_id|user_old|g
+s|set_id|set_old|g
 EOF
 # -----------------------------------------------------------------------------
 if [ $0 != "bin/batch_edit.sh" ]
