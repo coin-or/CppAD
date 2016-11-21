@@ -509,6 +509,117 @@ public:
 		CPPAD_ASSERT_UNKNOWN( var_index_  < num_var_rec_ );
 # endif
 	}
+	/*!
+	Extra information when forward_next returns one of the following op values:
+	UserOp, UsrapOp, UsravOp, UsrrpOp, UsrrvOp.
+
+	\param op [in]
+	The value of op must be the return value from the previous
+	call to forward_next and one of those listed above.
+
+	\param user_state [in,out]
+	This should be initialized to user_start before the first call to
+	forward_user and not changed by the calling program.
+	Upon return it is the state of the user atomic call as follows:
+	\li user_start next user operator will be UserOp at beginning of a call
+	\li user_arg   next operator will be UsrapOp or UsravOp.
+	\li user_ret   next operator will be UsrrpOp or UsrrvOp.
+	\li user_end   next operator will be UserOp at end of a call
+
+	\param user_index [in,out]
+	This should not be changed by the calling program.
+	Upon return it is the atomic_base index for this user atomic function.
+
+	\param user_old [in,out]
+	This should not be changed by the calling program.
+	Upon return it is the extra information used by the old_atomic interface.
+
+	\param user_m [in,out]
+	This should not be changed by the calling program.
+	Upon return it is the number of results for this user atomic function.
+
+	\param user_n [in,out]
+	This should not be changed by the calling program.
+	Upon return it is the number of arguments to this user atomic function.
+
+	\param user_i [in,out]
+	This should not be changed by the calling program.
+	Upon return it is the index for the next result for this
+	user atomic function; i.e., the next UsrrpOp or UsrrvOp.
+	If there are no more results, the return value is user_m.
+
+	\param user_j [in,out]
+	This should not be changed by the calling program.
+	Upon return it is the index for the next argument for this
+	user atomic function; i.e., the next UsrapOp or UsravOp.
+	If there are no more arguments, the return value is user_n.
+
+	\par Initialization
+	The initial value of user_index, user_old, user_m, user_n, user_i, user_j
+	do not matter. They may be initialized to avoid compiler warnings.
+	*/
+	void forward_user(
+		const OpCode&    op         ,
+		enum_user_state& user_state ,
+		size_t&          user_index ,
+		size_t&          user_old   ,
+		size_t&          user_m     ,
+		size_t&          user_n     ,
+		size_t&          user_i     ,
+		size_t&          user_j     )
+	{	switch(op)
+		{
+			case UserOp:
+			CPPAD_ASSERT_NARG_NRES(op, 4, 0);
+			if( user_state == user_start )
+			{	// copy of UsrOp at beginning of this atomic sequence
+				user_index = op_arg_[0];
+				user_old   = op_arg_[1];
+				user_n     = op_arg_[2];
+				user_m     = op_arg_[3];
+				user_j     = 0;
+				user_i     = 0;
+				CPPAD_ASSERT_UNKNOWN( user_n > 0 );
+				user_state = user_arg;
+			}
+			else
+			{	// copy of UsrOp at end of this atomic sequence
+				CPPAD_ASSERT_UNKNOWN( user_state == user_end );
+				CPPAD_ASSERT_UNKNOWN( user_index == size_t(op_arg_[0]) );
+				CPPAD_ASSERT_UNKNOWN( user_old   == size_t(op_arg_[1]) );
+				CPPAD_ASSERT_UNKNOWN( user_n     == size_t(op_arg_[2]) );
+				CPPAD_ASSERT_UNKNOWN( user_m     == size_t(op_arg_[3]) );
+				CPPAD_ASSERT_UNKNOWN( user_j     == user_n );
+				CPPAD_ASSERT_UNKNOWN( user_i     == user_m );
+				user_state = user_start;
+			}
+			break;
+
+			case UsrapOp:
+			case UsravOp:
+			CPPAD_ASSERT_UNKNOWN( user_state == user_arg );
+			CPPAD_ASSERT_UNKNOWN( user_i == 0 );
+			CPPAD_ASSERT_UNKNOWN( user_j < user_n );
+			++user_j;
+			if( user_j == user_n )
+				user_state = user_ret;
+			break;
+
+			case UsrrpOp:
+			case UsrrvOp:
+			CPPAD_ASSERT_UNKNOWN( user_state == user_ret );
+			CPPAD_ASSERT_UNKNOWN( user_i < user_m );
+			CPPAD_ASSERT_UNKNOWN( user_j == user_n );
+			++user_i;
+			if( user_i == user_m )
+				user_state = user_end;
+			break;
+
+			default:
+			CPPAD_ASSERT_UNKNOWN(false);
+		}
+		return;
+	}
 	// =====================================================================
 	// Reverse iteration over operations in this player
 	// =====================================================================
