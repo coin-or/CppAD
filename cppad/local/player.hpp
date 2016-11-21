@@ -309,7 +309,10 @@ public:
 	operator (which must be a BeginOp); i.e., 0.
 	*/
 	void forward_start(
-	OpCode& op, const addr_t*& op_arg, size_t& op_index, size_t& var_index)
+		OpCode&        op         ,
+		const addr_t*& op_arg     ,
+		size_t&        op_index   ,
+		size_t&        var_index  )
 	{
 		op        = op_          = OpCode( op_rec_[0] );
 		op_arg    = op_arg_      = op_arg_rec_.data();
@@ -361,7 +364,10 @@ public:
 	index of the primary (last) result corresponding to the operator op.
 	*/
 	void forward_next(
-	OpCode& op, const addr_t*& op_arg, size_t& op_index, size_t& var_index)
+		OpCode&        op         ,
+		const addr_t*& op_arg     ,
+		size_t&        op_index   ,
+		size_t&        var_index  )
 	{
 		CPPAD_ASSERT_UNKNOWN( ! special_before_next_ );
 		CPPAD_ASSERT_UNKNOWN( op_       == op );
@@ -404,15 +410,18 @@ public:
 	beginning of the vector of argument indices for the next operation.
 
 	\param op_index [in]
-	The input value of op_index does must be the return value from the
+	The input value of op_index must be the return value from the
 	previous call to forward_next. Its is not modified.
 
-	\param var_index [in,out]
+	\param var_index [in]
 	The input value of var_index must be the return value from the
 	previous call to forward_next. It is not modified.
 	*/
 	void forward_csum(
-	OpCode& op, const addr_t*& op_arg, size_t& op_index, size_t& var_index)
+		const OpCode&  op         ,
+		const addr_t*& op_arg     ,
+		const size_t&  op_index   ,
+		const size_t&  var_index  )
 	{
 		CPPAD_ASSERT_UNKNOWN( op_       == op );
 		CPPAD_ASSERT_UNKNOWN( op_arg    == op_arg_ );
@@ -457,15 +466,18 @@ public:
 	beginning of the vector of argument indices for the next operation.
 
 	\param op_index [in]
-	The input value of op_index does must be the return value from the
+	The input value of op_index must be the return value from the
 	previous call to forward_next. Its is not modified.
 
-	\param var_index [in,out]
+	\param var_index [in]
 	The input value of var_index must be the return value from the
 	previous call to forward_next. It is not modified.
 	*/
 	void forward_cskip(
-	OpCode& op, const addr_t*& op_arg, size_t& op_index, size_t& var_index)
+		const OpCode&  op         ,
+		const addr_t*& op_arg     ,
+		const size_t&  op_index   ,
+		const size_t&  var_index  )
 	{
 		CPPAD_ASSERT_UNKNOWN( op_       == op );
 		CPPAD_ASSERT_UNKNOWN( op_arg    == op_arg_ );
@@ -526,7 +538,10 @@ public:
 	*/
 
 	void reverse_start(
-	OpCode& op, const addr_t*& op_arg, size_t& op_index, size_t& var_index)
+		OpCode&        op         ,
+		const addr_t*& op_arg     ,
+		size_t&        op_index   ,
+		size_t&        var_index  )
 	{
 		op_arg      = op_arg_     = op_arg_rec_.data() + op_arg_rec_.size();
 		op_index    = op_index_   = op_rec_.size() - 1;
@@ -588,7 +603,10 @@ public:
 	at beginning of operation sequence).
 	*/
 	void reverse_next(
-	OpCode& op, const addr_t*& op_arg, size_t& op_index, size_t& var_index)
+		OpCode&        op         ,
+		const addr_t*& op_arg     ,
+		size_t&        op_index   ,
+		size_t&        var_index  )
 	{
 		CPPAD_ASSERT_UNKNOWN( ! special_before_next_ );
 		CPPAD_ASSERT_UNKNOWN( op_       == op );
@@ -639,7 +657,10 @@ public:
 	*/
 
 	void reverse_csum(
-	OpCode& op, const addr_t*& op_arg, size_t& op_index, size_t& var_index)
+		const OpCode&  op         ,
+		const addr_t*& op_arg     ,
+		const size_t&  op_index   ,
+		const size_t&  var_index  )
 	{
 		CPPAD_ASSERT_UNKNOWN( op_       == op );
 		CPPAD_ASSERT_UNKNOWN( op_arg    == op_arg_ );
@@ -692,7 +713,10 @@ public:
 	*/
 
 	void reverse_cskip(
-	OpCode& op, const addr_t*& op_arg, size_t& op_index, size_t& var_index)
+		const OpCode&  op         ,
+		const addr_t*& op_arg     ,
+		const size_t&  op_index   ,
+		const size_t&  var_index  )
 	{
 		CPPAD_ASSERT_UNKNOWN( op_       == op );
 		CPPAD_ASSERT_UNKNOWN( op_arg    == op_arg_ );
