@@ -500,6 +500,7 @@ nobase_myinclude_HEADERS = \
 	cppad/ipopt/solve_result.hpp \
 	cppad/core/abort_recording.hpp \
 	cppad/core/abs.hpp \
+	cppad/local/user_state.hpp \
 	cppad/local/abs_op.hpp \
 	cppad/local/acos_op.hpp \
 	cppad/core/acosh.hpp \
