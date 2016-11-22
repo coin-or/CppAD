@@ -332,10 +332,10 @@ public:
 	/*!
 	Fetch the next operator during a forward sweep.
 
-	Use forward_start to initialize to the first operator; i.e.,
-	the BeginOp at the beginning of the recording.
+	Use forward_start to initialize forward play back to the first operator;
+	i.e., the BeginOp at the beginning of the recording.
 	We use the notation forward_routine to denote the set
-	forward_start, forward_next, forward_csum, forward_cskip.
+	forward_start, forward_next, forward_csum, forward_cskip, forward_user.
 
 	\param op [in,out]
 	The input value of op must be its output value from the
@@ -359,7 +359,7 @@ public:
 	\param op_index [in,out]
 	The input value of op_index must be its output value form the
 	previous call to a forward routine.
-	Its output value is the index of the next operator in the recording.
+	Its output value is the index of this operator in the recording.
 	Thus the ouput value following the previous call to forward_start is one.
 	In addition,
 	the output value increases by one with each call to forward_next.
@@ -699,30 +699,29 @@ public:
 	/*!
 	Fetch the next operator during a reverse sweep.
 
-	Use reverse_start to initialize to reverse play back.
-	The first call to reverse_next (after reverse_start) will give the
-	last operator in the recording.
+	Use reverse_start to initialize reverse play back to the last operator;
+	i.e., the EndOp at the end of the recording.
 	We use the notation reverse_routine to denote the set
-	reverse_start, reverse_next, reverse_csum, reverse_cskip.
+	reverse_start, reverse_next, reverse_csum, reverse_cskip, reverse_user.
 
 	\param op [in,out]
 	The input value of op must be its output value from the
 	previous call to a reverse_routine.
 	Its output value is the next operator in the recording (in reverse order).
-	The last operator sets op equal to EndOp.
+	For speed, reverse_next does not check for the special cases
+	where op == CSumOp (op == CSkipOp). In this case
+	some of the return values from reverse_next must be corrected by a call
+	to reverse_csum (reverse_cskip).
+	In addition, for speed, extra information that is only used by the
+	UserOp, UsrapOp, UsravOp, UsrrpOp, UsrrvOp operations is not returned
+	for all operations. If this information is needed, then reverse_user
+	should be called after each call to reverse_next.
 
 	\param op_arg [in,out]
 	The input value of op_arg must be its output value from the
 	previous call to a reverse_routine.
 	Its output value is the
 	beginning of the vector of argument indices for this operation.
-	The last operator sets op_arg equal to the beginning of the
-	argument indices for the entire recording.
-	For speed, reverse_next does not check for the special cases
-	op == CSumOp or op == CSkipOp. In these cases, the other
-	return values from reverse_next must be corrected by a call to
-	 reverse_csum or reverse_cskip respectively.
-
 
 	\param op_index [in,out]
 	The input value of op_index must be its output value from the
@@ -730,10 +729,10 @@ public:
 	Its output value
 	is the index of this operator in the recording. Thus the output
 	value following the previous call to reverse_start is equal to
-	the number of variables in the recording minus one.
+	the number of operators in the recording minus one.
 	In addition, the output value decreases by one with each call to
 	reverse_next.
-	The last operator sets op_index equal to 0.
+	The last operator, BeginOp, sets op_index equal to 0.
 
 	\param var_index [in,out]
 	The input value of var_index must be its output value from the
@@ -886,6 +885,142 @@ public:
 		CPPAD_ASSERT_UNKNOWN( op_arg_rec_.data() <= op_arg_ );
 		CPPAD_ASSERT_UNKNOWN( var_index_ < num_var_rec_ );
 # endif
+	}
+	/*!
+	Extra information when reverse_next returns one of the following op values:
+	UserOp, UsrapOp, UsravOp, UsrrpOp, UsrrvOp.
+
+	\param op [in]
+	The value of op must be the return value from the previous
+	call to reverse_next and one of those listed above.
+
+	\param user_state [in,out]
+	This should be initialized to user_end before each call to
+	reverse_start and not otherwise changed by the calling program.
+	Upon return it is the state of the user atomic call as follows:
+	\li user_end next user operator will be UserOp at end of a call
+	\li user_ret next operator will be UsrrpOp or UsrrvOp.
+	\li user_arg next operator will be UsrapOp or UsravOp.
+	\li user_start next operator will be UserOp at beginning of a call
+
+	\param user_index [in,out]
+	This should not be changed by the calling program.
+	Upon return it is the atomic_base index for this user atomic function.
+
+	\param user_old [in,out]
+	This should not be changed by the calling program.
+	Upon return it is the extra information used by the old_atomic interface.
+
+	\param user_m [in,out]
+	This should not be changed by the calling program.
+	Upon return it is the number of results for this user atomic function.
+
+	\param user_n [in,out]
+	This should not be changed by the calling program.
+	Upon return it is the number of arguments to this user atomic function.
+
+	\param user_i [in,out]
+	This should not be changed by the calling program.
+	Upon return it is the index for this result for this
+	user atomic function; i.e., this UsrrpOp or UsrrvOp.
+	If the input value of user_state is user_end, the return value is user_m.
+
+	\param user_j [in,out]
+	This should not be changed by the calling program.
+	Upon return it is the index for this argument for this
+	user atomic function; i.e., this UsrapOp or UsravOp.
+	If the input value of user_state is user_end, the return value is user_n.
+
+	\return
+	the return value is a pointer to the atomic_base<Base> object
+	for the correspnding function. If the corresponding user function
+	has been deleted, an CPPAD_ASSERT_KNOWN is generated and a null pointer
+	is returned.
+
+	\par Initialization
+	The initial value of user_index, user_old, user_m, user_n, user_i, user_j
+	do not matter. They may be initialized to avoid compiler warnings.
+	*/
+	atomic_base<Base>* reverse_user(
+		const OpCode&    op         ,
+		enum_user_state& user_state ,
+		size_t&          user_index ,
+		size_t&          user_old   ,
+		size_t&          user_m     ,
+		size_t&          user_n     ,
+		size_t&          user_i     ,
+		size_t&          user_j     )
+	{	switch(op)
+		{
+			case UserOp:
+			CPPAD_ASSERT_NARG_NRES(op, 4, 0);
+			if( user_state == user_end )
+			{
+				// reverse_user arguments determined by values in UserOp
+				user_index = op_arg_[0];
+				user_old   = op_arg_[1];
+				user_n     = op_arg_[2];
+				user_m     = op_arg_[3];
+				CPPAD_ASSERT_UNKNOWN( user_n > 0 );
+
+				// other reverse_user arguments
+				user_j     = user_n;
+				user_i     = user_m;
+				user_state = user_ret;
+
+				// the atomic_base object corresponding to this user function
+				user_atom_ = atomic_base<Base>::class_object(user_index);
+# ifndef NDEBUG
+				if( user_atom_ == CPPAD_NULL )
+				{	std::string msg =
+						atomic_base<Base>::class_name(user_index)
+						+ ": atomic_base function has been deleted";
+					CPPAD_ASSERT_KNOWN(false, msg.c_str() );
+				}
+# endif
+			}
+			else
+			{	// copy of UsrOp at end of this atomic sequence
+				CPPAD_ASSERT_UNKNOWN( user_state == user_start );
+				CPPAD_ASSERT_UNKNOWN( user_index == size_t(op_arg_[0]) );
+				CPPAD_ASSERT_UNKNOWN( user_old   == size_t(op_arg_[1]) );
+				CPPAD_ASSERT_UNKNOWN( user_n     == size_t(op_arg_[2]) );
+				CPPAD_ASSERT_UNKNOWN( user_m     == size_t(op_arg_[3]) );
+				CPPAD_ASSERT_UNKNOWN( user_j     == 0 );
+				CPPAD_ASSERT_UNKNOWN( user_i     == 0 );
+				user_state = user_end;
+			}
+			break;
+
+			case UsrapOp:
+			case UsravOp:
+			CPPAD_ASSERT_UNKNOWN( NumArg(op) == 1 );
+			CPPAD_ASSERT_UNKNOWN( user_state == user_arg );
+			CPPAD_ASSERT_UNKNOWN( user_i == 0 );
+			CPPAD_ASSERT_UNKNOWN( user_j <= user_n );
+			CPPAD_ASSERT_UNKNOWN( 0 < user_j );
+			--user_j;
+			if( user_j == 0 )
+				user_state = user_start;
+			break;
+
+			case UsrrpOp:
+			case UsrrvOp:
+			CPPAD_ASSERT_UNKNOWN( NumArg(op) == 1 || op == UsrrvOp );
+			CPPAD_ASSERT_UNKNOWN( NumArg(op) == 0 || op == UsrrpOp );
+			CPPAD_ASSERT_UNKNOWN( user_state == user_ret );
+			CPPAD_ASSERT_UNKNOWN( user_i <= user_m );
+			CPPAD_ASSERT_UNKNOWN( user_j == user_n );
+			CPPAD_ASSERT_UNKNOWN( 0 < user_i );
+			--user_i;
+			if( user_i == 0 )
+				user_state = user_arg;
+			break;
+
+			default:
+			CPPAD_ASSERT_UNKNOWN(false);
+		}
+		return user_atom_;
 	}
 
 };
