@@ -159,20 +159,15 @@ void RevJacSweep(
 	vectorBool         pack_s;   // pack sparisty pattern for the result y
 	//
 	const size_t user_q = limit; // maximum element plus one
-	size_t user_index = 0;       // indentifier for this atomic operation
-	size_t user_old   = 0;       // extra information used by old_atomic
-	size_t user_i     = 0;       // index in result vector
-	size_t user_j     = 0;       // index in argument vector
-	size_t user_m     = 0;       // size of result vector
-	size_t user_n     = 0;       // size of arugment vector
-	//
 	atomic_base<Base>* user_atom = CPPAD_NULL; // user's atomic op calculator
 	bool               user_pack = false;      // sparsity pattern type is pack
 	bool               user_bool = false;      // sparsity pattern type is bool
 	bool               user_set  = false;      // sparsity pattern type is set
 	bool               user_ok   = false;      // atomic op return value
-	// next expected operator in a UserOp sequence
-	enum_user_state user_state = user_end;
+	//
+	// information defined by forward_user
+	size_t user_index=0, user_old=0, user_m=0, user_n=0, user_i=0, user_j=0;
+	enum_user_state user_state = user_end; // proper initialization
 	//
 	// pointer to the beginning of the parameter vector
 	// (used by atomic functions
@@ -189,7 +184,8 @@ void RevJacSweep(
 # endif
 	bool more_operators = true;
 	while(more_operators)
-	{
+	{	bool flag; // temporary for use in switch cases
+		//
 		// next op
 		play->reverse_next(op, arg, i_op, i_var);
 # ifndef NDEBUG
@@ -638,23 +634,12 @@ void RevJacSweep(
 
 			case UserOp:
 			// start or end atomic operation sequence
-			CPPAD_ASSERT_UNKNOWN( NumRes( UserOp ) == 0 );
-			CPPAD_ASSERT_UNKNOWN( NumArg( UserOp ) == 4 );
-			if( user_state == user_end )
-			{	user_index = arg[0];
-				user_old   = arg[1];
-				user_n     = arg[2];
-				user_m     = arg[3];
-				user_atom  = atomic_base<Base>::class_object(user_index);
-# ifndef NDEBUG
-				if( user_atom == CPPAD_NULL )
-				{	std::string msg =
-						atomic_base<Base>::class_name(user_index)
-						+ ": atomic_base function has been deleted";
-					CPPAD_ASSERT_KNOWN(false, msg.c_str() );
-				}
-# endif
-				user_x.resize( user_n );
+			flag = user_state == user_end;
+			user_atom = play->reverse_user(op, user_state,
+				user_index, user_old, user_m, user_n, user_i, user_j
+			);
+			if( flag )
+			{	user_x.resize( user_n );
 				user_ix.resize( user_n );
 				//
 				user_pack  = user_atom->sparsity() ==
@@ -684,18 +669,9 @@ void RevJacSweep(
 					for(i = 0; i < user_m; i++)
 						set_r[i].clear();
 				}
-				user_j     = user_n;
-				user_i     = user_m;
-				user_state = user_ret;
 			}
 			else
-			{	CPPAD_ASSERT_UNKNOWN( user_state == user_start );
-				CPPAD_ASSERT_UNKNOWN( user_index == size_t(arg[0]) );
-				CPPAD_ASSERT_UNKNOWN( user_old   == size_t(arg[1]) );
-				CPPAD_ASSERT_UNKNOWN( user_n     == size_t(arg[2]) );
-				CPPAD_ASSERT_UNKNOWN( user_m     == size_t(arg[3]) );
-				//
-				// call users function for this operation
+			{	// call users function for this operation
 				user_atom->set_old(user_old);
 				if( user_pack )
 				{	user_ok = user_atom->rev_sparse_jac(
@@ -754,59 +730,48 @@ void RevJacSweep(
 							var_sparsity.add_element(user_ix[j], *set_itr++);
 					}
 				}
-				user_state = user_end;
 			}
 			break;
 
 			case UsrapOp:
 			// parameter argument in an atomic operation sequence
-			CPPAD_ASSERT_UNKNOWN( user_state == user_arg );
-			CPPAD_ASSERT_UNKNOWN( 0 < user_j && user_j <= user_n );
-			CPPAD_ASSERT_UNKNOWN( NumArg(op) == 1 );
 			CPPAD_ASSERT_UNKNOWN( size_t(arg[0]) < num_par );
-			--user_j;
+			play->reverse_user(op, user_state,
+				user_index, user_old, user_m, user_n, user_i, user_j
+			);
 			user_ix[user_j] = 0;
 			//
 			// parameters as integers
 			user_x[user_j] = parameter[arg[0]];
 			//
-			if( user_j == 0 )
-				user_state = user_start;
 			break;
 
 			case UsravOp:
 			// variable argument in an atomic operation sequence
-			CPPAD_ASSERT_UNKNOWN( user_state == user_arg );
-			CPPAD_ASSERT_UNKNOWN( 0 < user_j && user_j <= user_n );
-			CPPAD_ASSERT_UNKNOWN( NumArg(op) == 1 );
 			CPPAD_ASSERT_UNKNOWN( size_t(arg[0]) <= i_var );
 			CPPAD_ASSERT_UNKNOWN( 0 < arg[0] );
-			--user_j;
+			play->reverse_user(op, user_state,
+				user_index, user_old, user_m, user_n, user_i, user_j
+			);
 			user_ix[user_j] = arg[0];
 			//
 			// variable as integers
 			user_x[user_j] = CppAD::numeric_limits<Base>::quiet_NaN();
-			//
-			if( user_j == 0 )
-				user_state = user_start;
 			break;
 
 			case UsrrpOp:
 			// parameter result in an atomic operation sequence
-			CPPAD_ASSERT_UNKNOWN( user_state == user_ret );
-			CPPAD_ASSERT_UNKNOWN( 0 < user_i && user_i <= user_m );
-			CPPAD_ASSERT_UNKNOWN( NumArg(op) == 1 );
 			CPPAD_ASSERT_UNKNOWN( size_t(arg[0]) < num_par );
-			--user_i;
-			if( user_i == 0 )
-				user_state = user_arg;
+			play->reverse_user(op, user_state,
+				user_index, user_old, user_m, user_n, user_i, user_j
+			);
 			break;
 
 			case UsrrvOp:
 			// variable result in an atomic operation sequence
-			CPPAD_ASSERT_UNKNOWN( user_state == user_ret );
-			CPPAD_ASSERT_UNKNOWN( 0 < user_i && user_i <= user_m );
-			--user_i;
+			play->reverse_user(op, user_state,
+				user_index, user_old, user_m, user_n, user_i, user_j
+			);
 			{	typename Vector_set::const_iterator itr(var_sparsity, i_var);
 				i = *itr;
 				while( i < user_q )
