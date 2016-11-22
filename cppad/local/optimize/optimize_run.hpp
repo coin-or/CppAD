@@ -1,4 +1,5 @@
 // $Id$
+
 # ifndef CPPAD_LOCAL_OPTIMIZE_OPTIMIZE_RUN_HPP
 # define CPPAD_LOCAL_OPTIMIZE_OPTIMIZE_RUN_HPP
 
@@ -164,21 +165,16 @@ void optimize_run(
 	vectorBool       user_r_pack;  // pack sparsity pattern for result
 	vectorBool       user_s_pack;  // pack sparisty pattern for argument
 	//
+	// information defined by forward_user
+	size_t user_index=0, user_old=0, user_m=0, user_n=0, user_i=0, user_j=0;
+	enum_user_state user_state = user_start;
+	//
 	size_t user_q     = 0;       // column dimension for sparsity patterns
-	size_t user_index = 0;       // indentifier for this user_atomic operation
-	size_t user_old   = 0;       // extra information used by old_atomic
-	size_t user_i     = 0;       // index in result vector
-	size_t user_j     = 0;       // index in argument vector
-	size_t user_m     = 0;       // size of result vector
-	size_t user_n     = 0;       // size of arugment vector
 	//
 	atomic_base<Base>* user_atom = CPPAD_NULL; // current user atomic function
 	bool               user_pack = false;      // sparsity pattern type is pack
 	bool               user_bool = false;      // sparsity pattern type is bool
 	bool               user_set  = false;      // sparsity pattern type is set
-
-	// next expected operator in a UserOp sequence
-	enum_user_state user_state;
 	//
 	// pointer to the beginning of the parameter vector
 	// (used by atomic functions
@@ -961,7 +957,9 @@ void optimize_run(
 
 	user_state = user_start;
 	while(op != EndOp)
-	{	// next op
+	{	bool flag; // for temporary in switch cases
+
+		// next op
 		play->forward_next(op, arg, i_op, i_var);
 		CPPAD_ASSERT_UNKNOWN( (i_op > n)  | (op == InvOp) );
 		CPPAD_ASSERT_UNKNOWN( (i_op <= n) | (op != InvOp) );
@@ -1497,16 +1495,17 @@ void optimize_run(
 
 			// -----------------------------------------------------------
 			case UserOp:
-			CPPAD_ASSERT_NARG_NRES(op, 4, 0);
-			if( user_state == user_start )
-			{	user_state = user_arg;
-				CPPAD_ASSERT_UNKNOWN( user_curr > 0 );
+			flag = user_state == user_start;
+			play->forward_user(op, user_state,
+				user_index, user_old, user_m, user_n, user_i, user_j
+			);
+			if( flag )
+			{	CPPAD_ASSERT_UNKNOWN( user_curr > 0 );
 				user_curr--;
 				user_info[user_curr].op_begin = rec->num_op_rec();
 			}
 			else
-			{	user_state = user_start;
-				user_info[user_curr].op_end = rec->num_op_rec() + 1;
+			{	user_info[user_curr].op_end = rec->num_op_rec() + 1;
 			}
 			// user_index, user_old, user_n, user_m
 			if( user_info[user_curr].connect_type != not_connected )
@@ -1516,7 +1515,9 @@ void optimize_run(
 			break;
 
 			case UsrapOp:
-			CPPAD_ASSERT_NARG_NRES(op, 1, 0);
+			play->forward_user(op, user_state,
+				user_index, user_old, user_m, user_n, user_i, user_j
+			);
 			if( user_info[user_curr].connect_type != not_connected )
 			{	new_arg[0] = rec->PutPar( play->GetPar(arg[0]) );
 				rec->PutArg(new_arg[0]);
@@ -1525,7 +1526,9 @@ void optimize_run(
 			break;
 
 			case UsravOp:
-			CPPAD_ASSERT_NARG_NRES(op, 1, 0);
+			play->forward_user(op, user_state,
+				user_index, user_old, user_m, user_n, user_i, user_j
+			);
 			if( user_info[user_curr].connect_type != not_connected )
 			{	new_arg[0] = tape[arg[0]].new_var;
 				if( size_t(new_arg[0]) < num_var )
@@ -1543,7 +1546,9 @@ void optimize_run(
 			break;
 
 			case UsrrpOp:
-			CPPAD_ASSERT_NARG_NRES(op, 1, 0);
+			play->forward_user(op, user_state,
+				user_index, user_old, user_m, user_n, user_i, user_j
+			);
 			if( user_info[user_curr].connect_type != not_connected )
 			{	new_arg[0] = rec->PutPar( play->GetPar(arg[0]) );
 				rec->PutArg(new_arg[0]);
@@ -1552,7 +1557,9 @@ void optimize_run(
 			break;
 
 			case UsrrvOp:
-			CPPAD_ASSERT_NARG_NRES(op, 0, 1);
+			play->forward_user(op, user_state,
+				user_index, user_old, user_m, user_n, user_i, user_j
+			);
 			if( user_info[user_curr].connect_type != not_connected )
 			{	tape[i_var].new_op  = rec->num_op_rec();
 				tape[i_var].new_var = rec->PutOp(UsrrvOp);
