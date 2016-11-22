@@ -112,7 +112,7 @@ bool seq_property(void)
 
 	// create f: x -> y and stop tape recording
 	CppAD::ADFun<double> f(x, y);
-	nop   += 1;   // special operator for y[0] becasue it is a parameter
+	nop   += 1;   // special operator for y[0] because it is a parameter
 	nvar  += 1;   // special variable for y[0] because it is a parameter
 	narg  += 1;   // identifies which parameter corresponds to y[0]
 	nop   += 1;   // special operator at the end of operation sequence

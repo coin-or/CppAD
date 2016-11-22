@@ -527,7 +527,7 @@ public:
 	}
 
 	/*! add vector to the back of this vector
-	(we could not use push_back becasue MS V++ 7.1 did not resolve
+	(we could not use push_back because MS V++ 7.1 did not resolve
 	to non-template member function when scalar is used.)
 	*/
 	template <class Vector>

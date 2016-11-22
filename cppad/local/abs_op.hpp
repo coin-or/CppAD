@@ -152,7 +152,7 @@ inline void reverse_abs_op(
 	// Taylor coefficients and partials corresponding to result
 	Base* pz       = partial +    i_z * nc_partial;
 
-	// do not need azmul becasue sign is either +1, -1, or zero
+	// do not need azmul because sign is either +1, -1, or zero
 	for(j = 0; j <= d; j++)
 		px[j] += sign(x[0]) * pz[j];
 }

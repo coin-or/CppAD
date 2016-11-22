@@ -113,7 +113,7 @@ $srccode%cpp% */
 		const CppAD::vectorBool&   r ,
 		CppAD::vectorBool&         s ,
 		const vector<double>&      x )
-	{	// This function needed becasue we are using ForSparseHes
+	{	// This function needed because we are using ForSparseHes
 		// with afun.option( CppAD::atomic_base<double>::pack_sparsity_enum )
 # ifndef NDEBUG
 		size_t n = r.size() / q;
@@ -148,7 +148,7 @@ $srccode%cpp% */
 		const CppAD::vectorBool&   rt ,
 		CppAD::vectorBool&         st ,
 		const vector<double>&      x  )
-	{	// This function needed becasue we are using ForSparseHes
+	{	// This function needed because we are using ForSparseHes
 		// with afun.option( CppAD::atomic_base<double>::pack_sparsity_enum )
 # ifndef NDEBUG
 		size_t m = rt.size() / q;

@@ -109,7 +109,7 @@ namespace {
 		// checkpointing should use fewer operations
 		ok &= check_yes.size_var() < check_not.size_var();
 
-		// this does not really save space becasue f and g are only used once
+		// this does not really save space because f and g are only used once
 		ok &= check_not.size_var() <=
 			check_yes.size_var() + atom_f.size_var() + atom_g.size_var();
 

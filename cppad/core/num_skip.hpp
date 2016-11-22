@@ -67,7 +67,7 @@ $end
 // BEGIN CppAD namespace
 namespace CppAD {
 
-// This routine is not const becasue it runs through the operations sequence
+// This routine is not const because it runs through the operations sequence
 // 2DO: compute this value during zero order forward operations.
 template <typename Base>
 size_t ADFun<Base>::number_skip(void)

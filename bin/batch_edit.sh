@@ -17,10 +17,7 @@ move_list='
 move_sed='s|/local/|/core/|'
 #
 cat << EOF > junk.sed
-s|user identifier for this call to operator|extra information used by old_atomic|
-s|user_id  |user_old |g
-s|user_id|user_old|g
-s|set_id|set_old|g
+s|becasue|because|g
 EOF
 # -----------------------------------------------------------------------------
 if [ $0 != "bin/batch_edit.sh" ]

@@ -110,7 +110,7 @@ $srccode%cpp% */
 		const CppAD::vectorBool&   rt ,
 		CppAD::vectorBool&         st ,
 		const vector<double>&      x  )
-	{	// This function needed becasue we are using RevSparseHes
+	{	// This function needed because we are using RevSparseHes
 		// with afun.option( CppAD::atomic_base<double>::pack_sparsity_enum )
 # ifndef NDEBUG
 		size_t m = rt.size() / q;

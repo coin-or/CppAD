@@ -65,7 +65,7 @@ private:
 	If the i-th set is non-empty, start_[i] is the index in data_
 	for the first entry in the i-th singly linked list for this set.
 	In this case and data_[ start_[i] ].value is the reference count
-	for this list and data_[ start_[i] ].next is not zero becasue there
+	for this list and data_[ start_[i] ].next is not zero because there
 	is at least one entry in this list.
 	*/
 	pod_vector<size_t> start_;

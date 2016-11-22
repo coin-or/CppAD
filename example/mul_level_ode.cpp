@@ -297,7 +297,7 @@ bool mul_level_ode(void)
 
 	// evaluate the Jacobian of h at a
 	CPPAD_TESTVECTOR(double) jac ( f.Jacobian(x) );
-	// There appears to be a bug in g++ version 4.4.2 becasue it generates
+	// There appears to be a bug in g++ version 4.4.2 because it generates
 	// a warning for the equivalent form
 	// CPPAD_TESTVECTOR(double) jac = f.Jacobian(x);
 
