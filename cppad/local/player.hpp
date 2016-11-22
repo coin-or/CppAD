@@ -36,13 +36,13 @@ private:
 	// Variables that define the recording
 	// ----------------------------------------------------------------------
 	/// Number of variables in the recording.
-	size_t    num_var_rec_;
+	size_t num_var_rec_;
 
 	/// number of vecad load opeations in the reconding
-	size_t    num_load_op_rec_;
+	size_t num_load_op_rec_;
 
 	/// Number of VecAD vectors in the recording
-	size_t    num_vecad_vec_rec_;
+	size_t num_vecad_vec_rec_;
 
 	/// The operators in the recording.
 	pod_vector<CPPAD_OP_CODE_TYPE> op_rec_;
@@ -64,16 +64,16 @@ private:
 	// Variables used for iterating thorough operators in the recording
 	// ----------------------------------------------------------------------
 	/// Current operator
-	OpCode    op_;
+	OpCode op_;
 
 	/// Index in recording corresponding to current operator
-	size_t    op_index_;
+	size_t op_index_;
 
 	/// Current offset of the argument indices in op_arg_rec_
-	const addr_t*   op_arg_;
+	const addr_t* op_arg_;
 
 	/// Index for primary (last) variable corresponding to current operator
-	size_t    var_index_;
+	size_t var_index_;
 
 # ifndef NDEBUG
 	/// Flag indicating that a special function must be called before next
@@ -104,7 +104,7 @@ public:
 	Moving an operation sequence from a recorder to this player
 
 	\param rec
-	the object that was used to record the operation sequence.  After this
+	the object that was used to record the operation sequence. After this
 	operation, the state of the recording is no longer defined. For example,
 	the pod_vector member variables in this have been swapped with
 	 rec .
@@ -320,7 +320,7 @@ public:
 		var_index = var_index_   = 0;
 # ifndef NDEBUG
 		special_before_next_     = false;
-		CPPAD_ASSERT_UNKNOWN( op_  == BeginOp );
+		CPPAD_ASSERT_UNKNOWN( op_ == BeginOp );
 		CPPAD_ASSERT_NARG_NRES(op_, 1, 1);
 # endif
 		return;
@@ -339,9 +339,13 @@ public:
 	previous call to a forward_routine.
 	Its output value is the next operator in the recording.
 	For speed, forward_next does not check for the special cases
-	where  op == CSumOp or op == CSkipOp. In these cases,
-	the other return values from forward_next must be corrected by a call
-	to forward_csum or forward_cskip respectively.
+	where op == CSumOp (op == CSkipOp). In this case
+	some of the return values from forward_next must be corrected by a call
+	to forward_csum (forward_cskip).
+	In addition, for speed, extra information that is only used by the
+	UserOp, UsrapOp, UsravOp, UsrrpOp, UsrrvOp operations is not returned
+	for all operations. If this information is needed, then forward_user
+	should be called after each call to forward_next.
 
 	\param op_arg [in,out]
 	The input value of op_arg must be its output value form the
@@ -394,7 +398,7 @@ public:
 		CPPAD_ASSERT_UNKNOWN(
 			op_arg_ + NumArg(op) <= op_arg_rec_.data() + op_arg_rec_.size()
 		);
-		CPPAD_ASSERT_UNKNOWN( var_index_  < num_var_rec_ );
+		CPPAD_ASSERT_UNKNOWN( var_index_ < num_var_rec_ );
 # endif
 	}
 	/*!
@@ -440,7 +444,7 @@ public:
 		We must change op_arg_ so that when you add NumArg(CSumOp)
 		you get first argument for next operator in sequence.
 		*/
-		op_arg = op_arg_   += op_arg[0] + op_arg[1] + 4;
+		op_arg = op_arg_ += op_arg[0] + op_arg[1] + 4;
 
 # ifndef NDEBUG
 		CPPAD_ASSERT_UNKNOWN( special_before_next_ );
@@ -450,7 +454,7 @@ public:
 		CPPAD_ASSERT_UNKNOWN(
 			op_arg_ + NumArg(op) <= op_arg_rec_.data() + op_arg_rec_.size()
 		);
-		CPPAD_ASSERT_UNKNOWN( var_index_  < num_var_rec_ );
+		CPPAD_ASSERT_UNKNOWN( var_index_ < num_var_rec_ );
 # endif
 	}
 	/*!
@@ -496,7 +500,7 @@ public:
 		We must change op_arg_ so that when you add NumArg(CSkipOp)
 		you get first argument for next operator in sequence.
 		*/
-		op_arg  = op_arg_  += 7 + op_arg[4] + op_arg[5];
+		op_arg = op_arg_ += 7 + op_arg[4] + op_arg[5];
 
 # ifndef NDEBUG
 		CPPAD_ASSERT_UNKNOWN( special_before_next_ );
@@ -506,7 +510,7 @@ public:
 		CPPAD_ASSERT_UNKNOWN(
 			op_arg_ + NumArg(op) <= op_arg_rec_.data() + op_arg_rec_.size()
 		);
-		CPPAD_ASSERT_UNKNOWN( var_index_  < num_var_rec_ );
+		CPPAD_ASSERT_UNKNOWN( var_index_ < num_var_rec_ );
 # endif
 	}
 	/*!
@@ -518,13 +522,13 @@ public:
 	call to forward_next and one of those listed above.
 
 	\param user_state [in,out]
-	This should be initialized to user_start before the first call to
-	forward_user and not changed by the calling program.
+	This should be initialized to user_start before each call to
+	forward_start and not otherwise changed by the calling program.
 	Upon return it is the state of the user atomic call as follows:
 	\li user_start next user operator will be UserOp at beginning of a call
-	\li user_arg   next operator will be UsrapOp or UsravOp.
-	\li user_ret   next operator will be UsrrpOp or UsrrvOp.
-	\li user_end   next operator will be UserOp at end of a call
+	\li user_arg next operator will be UsrapOp or UsravOp.
+	\li user_ret next operator will be UsrrpOp or UsrrvOp.
+	\li user_end next operator will be UserOp at end of a call
 
 	\param user_index [in,out]
 	This should not be changed by the calling program.
@@ -662,7 +666,7 @@ public:
 		var_index   = var_index_  = num_var_rec_ - 1;
 		op          = op_         = OpCode( op_rec_[ op_index_ ] );
 # ifndef NDEBUG
-		special_before_next_      = false;
+		special_before_next_ = false;
 		CPPAD_ASSERT_UNKNOWN( op_ == EndOp );
 		CPPAD_ASSERT_NARG_NRES(op, 0, 0);
 # endif
@@ -790,7 +794,7 @@ public:
 		// last argument for this csum operation
 		--op_arg;
 		// first argument for this csum operation
-		op_arg      = op_arg_    -= (op_arg[0] + 4);
+		op_arg = op_arg_ -= (op_arg[0] + 4);
 		// now op_arg points to the first argument for this csum operator
 
 		CPPAD_ASSERT_UNKNOWN(
@@ -800,9 +804,9 @@ public:
 		CPPAD_ASSERT_UNKNOWN( special_before_next_ );
 		special_before_next_ = false;
 		//
-		CPPAD_ASSERT_UNKNOWN( op_index_  < op_rec_.size() );
+		CPPAD_ASSERT_UNKNOWN( op_index_ < op_rec_.size() );
 		CPPAD_ASSERT_UNKNOWN( op_arg_rec_.data() <= op_arg_ );
-		CPPAD_ASSERT_UNKNOWN( var_index_  < num_var_rec_ );
+		CPPAD_ASSERT_UNKNOWN( var_index_ < num_var_rec_ );
 # endif
 	}
 	/*!
@@ -846,7 +850,7 @@ public:
 		// last argument for this cskip operation
 		--op_arg;
 		// first argument for this cskip operation
-		op_arg      = op_arg_    -= (op_arg[0] + 7);
+		op_arg = op_arg_ -= (op_arg[0] + 7);
 
 		CPPAD_ASSERT_UNKNOWN(
 		op_arg[4] + op_arg[5] == op_arg[ 6 + op_arg[4] + op_arg[5] ]
@@ -855,9 +859,9 @@ public:
 		CPPAD_ASSERT_UNKNOWN( special_before_next_ );
 		special_before_next_ = false;
 		//
-		CPPAD_ASSERT_UNKNOWN( op_index_  < op_rec_.size() );
+		CPPAD_ASSERT_UNKNOWN( op_index_ < op_rec_.size() );
 		CPPAD_ASSERT_UNKNOWN( op_arg_rec_.data() <= op_arg_ );
-		CPPAD_ASSERT_UNKNOWN( var_index_  < num_var_rec_ );
+		CPPAD_ASSERT_UNKNOWN( var_index_ < num_var_rec_ );
 # endif
 	}
 
