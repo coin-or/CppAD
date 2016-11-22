@@ -75,6 +75,9 @@ private:
 	/// Index for primary (last) variable corresponding to current operator
 	size_t var_index_;
 
+	/// Pointer to atomic_base object for current user function
+	atomic_base<Base>* user_atom_;
+
 # ifndef NDEBUG
 	/// Flag indicating that a special function must be called before next
 	bool      special_before_next_;
@@ -558,11 +561,17 @@ public:
 	user atomic function; i.e., the next UsrapOp or UsravOp.
 	If there are no more arguments, the return value is user_n.
 
+	\return
+	the return value is a pointer to the atomic_base<Base> object
+	for the correspnding function. If the corresponding user function
+	has been deleted, an CPPAD_ASSERT_KNOWN is generated and a null pointer
+	is returned.
+
 	\par Initialization
 	The initial value of user_index, user_old, user_m, user_n, user_i, user_j
 	do not matter. They may be initialized to avoid compiler warnings.
 	*/
-	void forward_user(
+	atomic_base<Base>* forward_user(
 		const OpCode&    op         ,
 		enum_user_state& user_state ,
 		size_t&          user_index ,
@@ -576,15 +585,29 @@ public:
 			case UserOp:
 			CPPAD_ASSERT_NARG_NRES(op, 4, 0);
 			if( user_state == user_start )
-			{	// copy of UsrOp at beginning of this atomic sequence
+			{
+				// forward_user arguments determined by values in UserOp
 				user_index = op_arg_[0];
 				user_old   = op_arg_[1];
 				user_n     = op_arg_[2];
 				user_m     = op_arg_[3];
+				CPPAD_ASSERT_UNKNOWN( user_n > 0 );
+
+				// other forward_user arguments
 				user_j     = 0;
 				user_i     = 0;
-				CPPAD_ASSERT_UNKNOWN( user_n > 0 );
 				user_state = user_arg;
+
+				// the atomic_base object corresponding to this user function
+				user_atom_ = atomic_base<Base>::class_object(user_index);
+# ifndef NDEBUG
+				if( user_atom_ == CPPAD_NULL )
+				{	std::string msg =
+						atomic_base<Base>::class_name(user_index)
+						+ ": atomic_base function has been deleted";
+					CPPAD_ASSERT_KNOWN(false, msg.c_str() );
+				}
+# endif
 			}
 			else
 			{	// copy of UsrOp at end of this atomic sequence
@@ -625,7 +648,7 @@ public:
 			default:
 			CPPAD_ASSERT_UNKNOWN(false);
 		}
-		return;
+		return user_atom_;
 	}
 	// =====================================================================
 	// Reverse iteration over operations in this player

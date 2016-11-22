@@ -868,20 +868,11 @@ void forward1sweep(
 			case UserOp:
 			// start or end an atomic operation sequence
 			flag = user_state == user_start;
-			play->forward_user(op, user_state,
+			user_atom = play->forward_user(op, user_state,
 				user_index, user_old, user_m, user_n, user_i, user_j
 			);
 			if( flag )
-			{	user_atom  = atomic_base<Base>::class_object(user_index);
-# ifndef NDEBUG
-				if( user_atom == CPPAD_NULL )
-				{	std::string msg =
-						atomic_base<Base>::class_name(user_index)
-						+ ": atomic_base function has been deleted";
-					CPPAD_ASSERT_KNOWN(false, msg.c_str() );
-				}
-# endif
-				user_tx.resize(user_n * user_q1);
+			{	user_tx.resize(user_n * user_q1);
 				user_ty.resize(user_m * user_q1);
 				user_iy.resize(user_m);
 			}
