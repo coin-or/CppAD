@@ -16,16 +16,16 @@ namespace CppAD { namespace local { // BEGIN_CPPAD_LOCAL_NAMESPACE
 
 enum enum_user_state {
 	/// next UserOp marks beginning of a user atomic call
-	user_start,
+	start_user,
 
 	/// next UsrapOp (UsravOp) is a parameter (variable) argument
-	user_arg,
+	arg_user,
 
 	/// next UsrrpOp (UsrrvOp) is a parameter (variable) result
-	user_ret,
+	ret_user,
 
 	/// next UserOp marks end of a user atomic call
-	user_end,
+	end_user,
 };
 
 } } // END_CPPAD_LOCAL_NAMESPACE

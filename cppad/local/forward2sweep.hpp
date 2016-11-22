@@ -178,7 +178,7 @@ void forward2sweep(
 	//
 	// information defined by forward_user
 	size_t user_index=0, user_old=0, user_m=0, user_n=0, user_i=0, user_j=0;
-	enum_user_state user_state = user_start; // proper initialization
+	enum_user_state user_state = start_user; // proper initialization
 	//
 	atomic_base<Base>* user_atom = CPPAD_NULL; // user's atomic op calculator
 # ifndef NDEBUG
@@ -548,7 +548,7 @@ void forward2sweep(
 
 			case UserOp:
 			// start or end an atomic operation sequence
-			flag = user_state == user_start;
+			flag = user_state == start_user;
 			user_atom = play->forward_user(op, user_state,
 				user_index, user_old, user_m, user_n, user_i, user_j
 			);
@@ -760,7 +760,7 @@ void forward2sweep(
 # else
 	}
 # endif
-	CPPAD_ASSERT_UNKNOWN( user_state == user_start );
+	CPPAD_ASSERT_UNKNOWN( user_state == start_user );
 	CPPAD_ASSERT_UNKNOWN( i_var + 1 == play->num_var_rec() );
 
 	return;

@@ -195,7 +195,7 @@ void optimize_run(
 	play->reverse_start(op, arg, i_op, i_var);
 	CPPAD_ASSERT_UNKNOWN( op == EndOp );
 	size_t mask;
-	user_state = user_end;
+	user_state = end_user;
 	while(op != BeginOp)
 	{	bool flag; // temporary for use in switch cases
 		//
@@ -592,7 +592,7 @@ void optimize_run(
 			// ============================================================
 			case UserOp:
 			// start or end atomic operation sequence
-			flag = user_state == user_end;
+			flag = user_state == end_user;
 			user_atom = play->reverse_user(op, user_state,
 				user_index, user_old, user_m, user_n, user_i, user_j
 			);
@@ -921,7 +921,7 @@ void optimize_run(
 	// tempory used to hold a size_pair
 	struct_size_pair size_pair;
 
-	user_state = user_start;
+	user_state = start_user;
 	while(op != EndOp)
 	{	bool flag; // for temporary in switch cases
 
@@ -934,7 +934,7 @@ void optimize_run(
 		bool skip = cskip_order_next < cskip_info.size();
 		skip     &= op != BeginOp;
 		skip     &= op != InvOp;
-		skip     &= user_state == user_start;
+		skip     &= user_state == start_user;
 		if( skip )
 		{	j     = cskip_info_order[cskip_order_next];
 			if( NumRes(op) > 0 )
@@ -1461,7 +1461,7 @@ void optimize_run(
 
 			// -----------------------------------------------------------
 			case UserOp:
-			flag = user_state == user_start;
+			flag = user_state == start_user;
 			play->forward_user(op, user_state,
 				user_index, user_old, user_m, user_n, user_i, user_j
 			);

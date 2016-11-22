@@ -525,13 +525,13 @@ public:
 	call to forward_next and one of those listed above.
 
 	\param user_state [in,out]
-	This should be initialized to user_start before each call to
+	This should be initialized to start_user before each call to
 	forward_start and not otherwise changed by the calling program.
 	Upon return it is the state of the user atomic call as follows:
-	\li user_start next user operator will be UserOp at beginning of a call
-	\li user_arg next operator will be UsrapOp or UsravOp.
-	\li user_ret next operator will be UsrrpOp or UsrrvOp.
-	\li user_end next operator will be UserOp at end of a call
+	\li start_user next user operator will be UserOp at beginning of a call
+	\li arg_user next operator will be UsrapOp or UsravOp.
+	\li ret_user next operator will be UsrrpOp or UsrrvOp.
+	\li end_user next operator will be UserOp at end of a call
 
 	\param user_index [in,out]
 	This should not be changed by the calling program.
@@ -584,7 +584,7 @@ public:
 		{
 			case UserOp:
 			CPPAD_ASSERT_NARG_NRES(op, 4, 0);
-			if( user_state == user_start )
+			if( user_state == start_user )
 			{
 				// forward_user arguments determined by values in UserOp
 				user_index = op_arg_[0];
@@ -596,7 +596,7 @@ public:
 				// other forward_user arguments
 				user_j     = 0;
 				user_i     = 0;
-				user_state = user_arg;
+				user_state = arg_user;
 
 				// the atomic_base object corresponding to this user function
 				user_atom_ = atomic_base<Base>::class_object(user_index);
@@ -611,38 +611,38 @@ public:
 			}
 			else
 			{	// copy of UsrOp at end of this atomic sequence
-				CPPAD_ASSERT_UNKNOWN( user_state == user_end );
+				CPPAD_ASSERT_UNKNOWN( user_state == end_user );
 				CPPAD_ASSERT_UNKNOWN( user_index == size_t(op_arg_[0]) );
 				CPPAD_ASSERT_UNKNOWN( user_old   == size_t(op_arg_[1]) );
 				CPPAD_ASSERT_UNKNOWN( user_n     == size_t(op_arg_[2]) );
 				CPPAD_ASSERT_UNKNOWN( user_m     == size_t(op_arg_[3]) );
 				CPPAD_ASSERT_UNKNOWN( user_j     == user_n );
 				CPPAD_ASSERT_UNKNOWN( user_i     == user_m );
-				user_state = user_start;
+				user_state = start_user;
 			}
 			break;
 
 			case UsrapOp:
 			case UsravOp:
 			CPPAD_ASSERT_UNKNOWN( NumArg(op) == 1 );
-			CPPAD_ASSERT_UNKNOWN( user_state == user_arg );
+			CPPAD_ASSERT_UNKNOWN( user_state == arg_user );
 			CPPAD_ASSERT_UNKNOWN( user_i == 0 );
 			CPPAD_ASSERT_UNKNOWN( user_j < user_n );
 			++user_j;
 			if( user_j == user_n )
-				user_state = user_ret;
+				user_state = ret_user;
 			break;
 
 			case UsrrpOp:
 			case UsrrvOp:
 			CPPAD_ASSERT_UNKNOWN( NumArg(op) == 1 || op == UsrrvOp );
 			CPPAD_ASSERT_UNKNOWN( NumArg(op) == 0 || op == UsrrpOp );
-			CPPAD_ASSERT_UNKNOWN( user_state == user_ret );
+			CPPAD_ASSERT_UNKNOWN( user_state == ret_user );
 			CPPAD_ASSERT_UNKNOWN( user_i < user_m );
 			CPPAD_ASSERT_UNKNOWN( user_j == user_n );
 			++user_i;
 			if( user_i == user_m )
-				user_state = user_end;
+				user_state = end_user;
 			break;
 
 			default:
@@ -895,13 +895,13 @@ public:
 	call to reverse_next and one of those listed above.
 
 	\param user_state [in,out]
-	This should be initialized to user_end before each call to
+	This should be initialized to end_user before each call to
 	reverse_start and not otherwise changed by the calling program.
 	Upon return it is the state of the user atomic call as follows:
-	\li user_end next user operator will be UserOp at end of a call
-	\li user_ret next operator will be UsrrpOp or UsrrvOp.
-	\li user_arg next operator will be UsrapOp or UsravOp.
-	\li user_start next operator will be UserOp at beginning of a call
+	\li end_user next user operator will be UserOp at end of a call
+	\li ret_user next operator will be UsrrpOp or UsrrvOp.
+	\li arg_user next operator will be UsrapOp or UsravOp.
+	\li start_user next operator will be UserOp at beginning of a call
 
 	\param user_index [in,out]
 	This should not be changed by the calling program.
@@ -923,13 +923,13 @@ public:
 	This should not be changed by the calling program.
 	Upon return it is the index for this result for this
 	user atomic function; i.e., this UsrrpOp or UsrrvOp.
-	If the input value of user_state is user_end, the return value is user_m.
+	If the input value of user_state is end_user, the return value is user_m.
 
 	\param user_j [in,out]
 	This should not be changed by the calling program.
 	Upon return it is the index for this argument for this
 	user atomic function; i.e., this UsrapOp or UsravOp.
-	If the input value of user_state is user_end, the return value is user_n.
+	If the input value of user_state is end_user, the return value is user_n.
 
 	\return
 	the return value is a pointer to the atomic_base<Base> object
@@ -954,7 +954,7 @@ public:
 		{
 			case UserOp:
 			CPPAD_ASSERT_NARG_NRES(op, 4, 0);
-			if( user_state == user_end )
+			if( user_state == end_user )
 			{
 				// reverse_user arguments determined by values in UserOp
 				user_index = op_arg_[0];
@@ -966,7 +966,7 @@ public:
 				// other reverse_user arguments
 				user_j     = user_n;
 				user_i     = user_m;
-				user_state = user_ret;
+				user_state = ret_user;
 
 				// the atomic_base object corresponding to this user function
 				user_atom_ = atomic_base<Base>::class_object(user_index);
@@ -981,40 +981,40 @@ public:
 			}
 			else
 			{	// copy of UsrOp at end of this atomic sequence
-				CPPAD_ASSERT_UNKNOWN( user_state == user_start );
+				CPPAD_ASSERT_UNKNOWN( user_state == start_user );
 				CPPAD_ASSERT_UNKNOWN( user_index == size_t(op_arg_[0]) );
 				CPPAD_ASSERT_UNKNOWN( user_old   == size_t(op_arg_[1]) );
 				CPPAD_ASSERT_UNKNOWN( user_n     == size_t(op_arg_[2]) );
 				CPPAD_ASSERT_UNKNOWN( user_m     == size_t(op_arg_[3]) );
 				CPPAD_ASSERT_UNKNOWN( user_j     == 0 );
 				CPPAD_ASSERT_UNKNOWN( user_i     == 0 );
-				user_state = user_end;
+				user_state = end_user;
 			}
 			break;
 
 			case UsrapOp:
 			case UsravOp:
 			CPPAD_ASSERT_UNKNOWN( NumArg(op) == 1 );
-			CPPAD_ASSERT_UNKNOWN( user_state == user_arg );
+			CPPAD_ASSERT_UNKNOWN( user_state == arg_user );
 			CPPAD_ASSERT_UNKNOWN( user_i == 0 );
 			CPPAD_ASSERT_UNKNOWN( user_j <= user_n );
 			CPPAD_ASSERT_UNKNOWN( 0 < user_j );
 			--user_j;
 			if( user_j == 0 )
-				user_state = user_start;
+				user_state = start_user;
 			break;
 
 			case UsrrpOp:
 			case UsrrvOp:
 			CPPAD_ASSERT_UNKNOWN( NumArg(op) == 1 || op == UsrrvOp );
 			CPPAD_ASSERT_UNKNOWN( NumArg(op) == 0 || op == UsrrpOp );
-			CPPAD_ASSERT_UNKNOWN( user_state == user_ret );
+			CPPAD_ASSERT_UNKNOWN( user_state == ret_user );
 			CPPAD_ASSERT_UNKNOWN( user_i <= user_m );
 			CPPAD_ASSERT_UNKNOWN( user_j == user_n );
 			CPPAD_ASSERT_UNKNOWN( 0 < user_i );
 			--user_i;
 			if( user_i == 0 )
-				user_state = user_arg;
+				user_state = arg_user;
 			break;
 
 			default:

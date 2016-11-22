@@ -219,7 +219,7 @@ void forward0sweep(
 	//
 	// information defined by forward_user
 	size_t user_index=0, user_old=0, user_m=0, user_n=0, user_i=0, user_j=0;
-	enum_user_state user_state = user_start; // proper initialization
+	enum_user_state user_state = start_user; // proper initialization
 
 	// length of the parameter vector (used by CppAD assert macros)
 	const size_t num_par = play->num_par_rec();
@@ -760,7 +760,7 @@ void forward0sweep(
 
 			case UserOp:
 			// start or end an atomic operation sequence
-			flag = user_state == user_start;
+			flag = user_state == start_user;
 			user_atom = play->forward_user(op, user_state,
 				user_index, user_old, user_m, user_n, user_i, user_j
 			);
@@ -919,7 +919,7 @@ void forward0sweep(
 # else
 	}
 # endif
-	CPPAD_ASSERT_UNKNOWN( user_state == user_start );
+	CPPAD_ASSERT_UNKNOWN( user_state == start_user );
 	CPPAD_ASSERT_UNKNOWN( i_var + 1 == play->num_var_rec() );
 
 	return;

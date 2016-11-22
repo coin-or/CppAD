@@ -17,7 +17,10 @@ move_list='
 move_sed='s|/local/|/core/|'
 #
 cat << EOF > junk.sed
-s|becasue|because|g
+s|user_start|start_user|g
+s|user_arg|arg_user|g
+s|user_ret|ret_user|g
+s|user_end|end_user|g
 EOF
 # -----------------------------------------------------------------------------
 if [ $0 != "bin/batch_edit.sh" ]

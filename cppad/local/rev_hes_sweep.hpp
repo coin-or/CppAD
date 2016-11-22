@@ -196,7 +196,7 @@ void RevHesSweep(
 	//
 	// information defined by forward_user
 	size_t user_index=0, user_old=0, user_m=0, user_n=0, user_i=0, user_j=0;
-	enum_user_state user_state = user_end; // proper initialization
+	enum_user_state user_state = end_user; // proper initialization
 	//
 	// pointer to the beginning of the parameter vector
 	// (used by atomic functions
@@ -655,7 +655,7 @@ void RevHesSweep(
 
 			case UserOp:
 			// start or end an atomic operation sequence
-			flag = user_state == user_end;
+			flag = user_state == end_user;
 			user_atom = play->reverse_user(op, user_state,
 				user_index, user_old, user_m, user_n, user_i, user_j
 			);
