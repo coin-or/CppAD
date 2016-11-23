@@ -31,6 +31,7 @@ Please visit http://www.coin-or.org/CppAD/ for information on other licenses.
 # include <cppad/local/optimize/record_vp.hpp>
 # include <cppad/local/optimize/record_vv.hpp>
 # include <cppad/local/optimize/record_csum.hpp>
+# include <cppad/local/optimize/op_info.hpp>
 
 /*!
 \file optimize_run.hpp
@@ -593,11 +594,33 @@ void optimize_run(
 			case UserOp:
 			// start or end atomic operation sequence
 			flag = user_state == end_user;
-			user_atom = play->reverse_user(op, user_state,
-				user_index, user_old, user_m, user_n, user_i, user_j
-			);
 			if( flag )
-			{	user_x.resize( user_n );
+			{	// reverse_user ------------------------------------------
+				user_index = arg[0];
+				user_old   = arg[1];
+				user_n     = arg[2];
+				user_m     = arg[3];
+				CPPAD_ASSERT_UNKNOWN( user_n > 0 );
+
+				// other reverse_user arguments
+				user_j     = user_n;
+				user_i     = user_m;
+				user_state = ret_user;
+
+				// the atomic_base object corresponding to this user function
+				user_atom = atomic_base<Base>::class_object(user_index);
+# ifndef NDEBUG
+				if( user_atom == CPPAD_NULL )
+				{	std::string msg =
+						atomic_base<Base>::class_name(user_index)
+						+ ": atomic_base function has been deleted";
+					CPPAD_ASSERT_KNOWN(false, msg.c_str() );
+				}
+# endif
+				// -----------------------------------------------------------
+
+
+				user_x.resize( user_n );
 				user_ix.resize( user_n );
 				//
 				user_pack  = user_atom->sparsity() ==
@@ -646,7 +669,11 @@ void optimize_run(
 				user_info.push_back(info);
 			}
 			else
-			{	// call users function for this operation
+			{	// reverse_user
+				CPPAD_ASSERT_UNKNOWN( user_state == start_user );
+				user_state = end_user;
+				//
+				// call users function for this operation
 				user_atom->set_old(user_old);
 				bool user_ok = false;
 				if( user_pack )
@@ -719,9 +746,14 @@ void optimize_run(
 			case UsrapOp:
 			// parameter argument in an atomic operation sequence
 			CPPAD_ASSERT_UNKNOWN( size_t(arg[0]) < num_par );
-			play->reverse_user(op, user_state,
-				user_index, user_old, user_m, user_n, user_i, user_j
-			);
+			//
+			// reverse_user
+			CPPAD_ASSERT_UNKNOWN( user_state == arg_user );
+			CPPAD_ASSERT_UNKNOWN( 0 < user_j )
+			--user_j;
+			if( user_j == 0 )
+				user_state = start_user;
+			//
 			user_ix[user_j] = 0;
 			//
 			// parameter arguments
@@ -733,9 +765,14 @@ void optimize_run(
 			// variable argument in an atomic operation sequence
 			CPPAD_ASSERT_UNKNOWN( size_t(arg[0]) <= i_var );
 			CPPAD_ASSERT_UNKNOWN( 0 < arg[0] );
-			play->reverse_user(op, user_state,
-				user_index, user_old, user_m, user_n, user_i, user_j
-			);
+			//
+			// reverse_user
+			CPPAD_ASSERT_UNKNOWN( user_state == arg_user );
+			CPPAD_ASSERT_UNKNOWN( 0 < user_j )
+			--user_j;
+			if( user_j == 0 )
+				user_state = start_user;
+			//
 			user_ix[user_j] = arg[0];
 			//
 			// variable arguments as parameters
@@ -745,9 +782,14 @@ void optimize_run(
 
 			case UsrrvOp:
 			// variable result in an atomic operation sequence
-			play->reverse_user(op, user_state,
-				user_index, user_old, user_m, user_n, user_i, user_j
-			);
+			//
+			// reverse_user
+			CPPAD_ASSERT_UNKNOWN( user_state == ret_user );
+			CPPAD_ASSERT_UNKNOWN( 0 < user_i )
+			--user_i;
+			if( user_i == 0 )
+				user_state = arg_user;
+			//
 			switch( connect_type )
 			{	case not_connected:
 				break;
@@ -791,9 +833,12 @@ void optimize_run(
 
 			case UsrrpOp:
 			CPPAD_ASSERT_UNKNOWN( size_t(arg[0]) < num_par );
-			play->reverse_user(op, user_state,
-				user_index, user_old, user_m, user_n, user_i, user_j
-			);
+			// reverse_user
+			CPPAD_ASSERT_UNKNOWN( user_state == ret_user );
+			CPPAD_ASSERT_UNKNOWN( 0 < user_i )
+			--user_i;
+			if( user_i == 0 )
+				user_state = arg_user;
 			break;
 			// ============================================================
 

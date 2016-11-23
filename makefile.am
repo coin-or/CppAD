@@ -214,6 +214,7 @@ nobase_myinclude_HEADERS =  \
 	cppad/core/omp_max_thread.hpp \
 	cppad/local/op_code.hpp \
 	cppad/local/op.hpp \
+	cppad/local/optimize/op_info.hpp \
 	cppad/local/optimize/cexp_pair.hpp \
 	cppad/local/optimize/record_csum.hpp \
 	cppad/local/optimize/record_vv.hpp \
