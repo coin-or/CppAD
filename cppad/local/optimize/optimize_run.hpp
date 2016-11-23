@@ -205,9 +205,9 @@ void optimize_run(
 	play->reverse_start(op, arg, i_op, i_var);
 	CPPAD_ASSERT_UNKNOWN( op == EndOp );
 	size_t mask;
-	user_state = end_user;
 	//
-	i_op = num_op;
+	user_state = end_user;
+	i_op       = num_op;
 	while( i_op > 0 )
 	{	--i_op;
 		//
@@ -959,16 +959,18 @@ void optimize_run(
 	CPPAD_ASSERT_UNKNOWN( j == num_vecad_ind );
 
 	// start playing the operations in the forward direction
-	play->forward_start(op, arg, i_op, i_var);
 	CPPAD_ASSERT_UNKNOWN( user_curr == user_info.size() );
-
-	// playing forward skips BeginOp at the beginning, but not EndOp at
-	// the end.  Put BeginOp at beginning of recording
+	i_op = 0;
+	op   = op2info[i_op].op;
+	arg  = op2info[i_op].arg;
 	CPPAD_ASSERT_UNKNOWN( op == BeginOp );
 	CPPAD_ASSERT_NARG_NRES(BeginOp, 1, 1);
+	CPPAD_ASSERT_UNKNOWN( size_t(arg[0]) == 0 );
+	//
+	// Put BeginOp at beginning of recording
 	tape[i_var].new_op  = rec->num_op_rec();
 	tape[i_var].new_var = rec->PutOp(BeginOp);
-	rec->PutArg(0);
+	rec->PutArg(arg[0]);
 
 
 	// temporary buffer for new argument values
@@ -982,11 +984,14 @@ void optimize_run(
 	struct_size_pair size_pair;
 
 	user_state = start_user;
-	while(op != EndOp)
+	for( i_op = 1; i_op < num_op; i_op++)
 	{	bool flag; // for temporary in switch cases
-
+		//
 		// next op
-		play->forward_next(op, arg, i_op, i_var);
+		op    = op2info[i_op].op;
+		arg   = op2info[i_op].arg;
+		i_var = op2info[i_op].i_var;
+		//
 		CPPAD_ASSERT_UNKNOWN( (i_op > n)  | (op == InvOp) );
 		CPPAD_ASSERT_UNKNOWN( (i_op <= n) | (op != InvOp) );
 
@@ -1522,16 +1527,27 @@ void optimize_run(
 			// -----------------------------------------------------------
 			case UserOp:
 			flag = user_state == start_user;
-			play->forward_user(op, user_state,
-				user_index, user_old, user_m, user_n, user_i, user_j
-			);
 			if( flag )
-			{	CPPAD_ASSERT_UNKNOWN( user_curr > 0 );
+			{	// forward_user
+				user_index = arg[0];
+				user_old   = arg[1];
+				user_n     = arg[2];
+				user_m     = arg[3];
+				user_j     = 0;
+				user_i     = 0;
+				user_state = arg_user;
+
+
+				CPPAD_ASSERT_UNKNOWN( user_curr > 0 );
 				user_curr--;
 				user_info[user_curr].op_begin = rec->num_op_rec();
 			}
 			else
-			{	user_info[user_curr].op_end = rec->num_op_rec() + 1;
+			{	// forward_user
+				CPPAD_ASSERT_UNKNOWN( user_state == end_user );
+				user_state = start_user;
+				//
+				user_info[user_curr].op_end = rec->num_op_rec() + 1;
 			}
 			// user_index, user_old, user_n, user_m
 			if( user_info[user_curr].connect_type != not_connected )
@@ -1541,9 +1557,11 @@ void optimize_run(
 			break;
 
 			case UsrapOp:
-			play->forward_user(op, user_state,
-				user_index, user_old, user_m, user_n, user_i, user_j
-			);
+			// forward_user
+			++user_j;
+			if( user_j == user_n )
+				user_state = ret_user;
+			//
 			if( user_info[user_curr].connect_type != not_connected )
 			{	new_arg[0] = rec->PutPar( play->GetPar(arg[0]) );
 				rec->PutArg(new_arg[0]);
@@ -1552,9 +1570,11 @@ void optimize_run(
 			break;
 
 			case UsravOp:
-			play->forward_user(op, user_state,
-				user_index, user_old, user_m, user_n, user_i, user_j
-			);
+			// forward_user
+			++user_j;
+			if( user_j == user_n )
+				user_state = ret_user;
+			//
 			if( user_info[user_curr].connect_type != not_connected )
 			{	new_arg[0] = tape[arg[0]].new_var;
 				if( size_t(new_arg[0]) < num_var )
@@ -1572,9 +1592,11 @@ void optimize_run(
 			break;
 
 			case UsrrpOp:
-			play->forward_user(op, user_state,
-				user_index, user_old, user_m, user_n, user_i, user_j
-			);
+			// forward_user
+			++user_i;
+			if( user_i == user_m )
+				user_state = end_user;
+			//
 			if( user_info[user_curr].connect_type != not_connected )
 			{	new_arg[0] = rec->PutPar( play->GetPar(arg[0]) );
 				rec->PutArg(new_arg[0]);
@@ -1583,9 +1605,11 @@ void optimize_run(
 			break;
 
 			case UsrrvOp:
-			play->forward_user(op, user_state,
-				user_index, user_old, user_m, user_n, user_i, user_j
-			);
+			// forward_user
+			++user_i;
+			if( user_i == user_m )
+				user_state = end_user;
+			//
 			if( user_info[user_curr].connect_type != not_connected )
 			{	tape[i_var].new_op  = rec->num_op_rec();
 				tape[i_var].new_var = rec->PutOp(UsrrvOp);
