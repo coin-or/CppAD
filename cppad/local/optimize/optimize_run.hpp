@@ -206,12 +206,18 @@ void optimize_run(
 	CPPAD_ASSERT_UNKNOWN( op == EndOp );
 	size_t mask;
 	user_state = end_user;
-	while(op != BeginOp)
-	{	bool flag; // temporary for use in switch cases
+	//
+	i_op = num_op;
+	while( i_op > 0 )
+	{	--i_op;
+		//
+		bool flag; // temporary for use in switch cases
 		//
 		// next op
-		play->reverse_next(op, arg, i_op, i_var);
-
+		op    = op2info[i_op].op;
+		arg   = op2info[i_op].arg;
+		i_var = op2info[i_op].i_var;
+		//
 		// Store the operator corresponding to each variable
 		if( NumRes(op) > 0 )
 		{	tape[i_var].op = op;
