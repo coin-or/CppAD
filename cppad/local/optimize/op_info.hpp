@@ -34,25 +34,26 @@ struct op_info {
 };
 
 template <class Base>
-void forward_pass(
+void get_op_info(
 	player<Base>*          play                ,
 	vector<op_info>&       op2info             ,
 	vector<size_t>&        var2op              )
 {
 	// number of operators in the tape
 	const size_t num_op = play->num_op_rec();
+	CPPAD_ASSERT_UNKNOWN( op2info.size() == num_op );
 	//
 	// number of variables in the tape
 	const size_t num_var = play->num_var_rec();
 	//
 	// initialize mapping from variable index to operator index
-	var2op.resize(num_var);
+	CPPAD_ASSERT_UNKNOWN( var2op.size() == num_var );
 	for(size_t i = 0; i < num_var; i++)
 		var2op[i] = num_op; // invalid (used for auxillary variables)
 	//
 	// information set by forward_user
 	size_t user_index=0, user_old=0, user_m=0, user_n=0, user_i=0, user_j=0;
-	enum_user_state user_state = end_user;
+	enum_user_state user_state = start_user;
 	//
 	// information set by forward_next
 	OpCode        op;     // operator
@@ -75,7 +76,7 @@ void forward_pass(
 	//
 	while(op != EndOp)
 	{	// next operator
-		play->reverse_next(op, arg, i_op, i_var);
+		play->forward_next(op, arg, i_op, i_var);
 		//
 		// information for this operator
 		op2info[i_op].op    = op;

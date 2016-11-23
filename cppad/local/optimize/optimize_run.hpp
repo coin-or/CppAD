@@ -81,6 +81,18 @@ void optimize_run(
 	player<Base>*                play      ,
 	recorder<Base>*              rec       )
 {
+
+	// number of operators in the player
+	const size_t num_op = play->num_op_rec();
+
+	// number of variables in the player
+	const size_t num_var = play->num_var_rec();
+
+	// operator information
+	CppAD::vector<op_info>  op2info(num_op);
+	CppAD::vector<size_t>   var2op(num_var);
+	get_op_info(play, op2info, var2op);
+
 	// nan with type Base
 	Base base_nan = Base( std::numeric_limits<double>::quiet_NaN() );
 
@@ -98,9 +110,6 @@ void optimize_run(
 
 	// range and domain dimensions for F
 	size_t m = dep_taddr.size();
-
-	// number of variables in the player
-	const size_t num_var = play->num_var_rec();
 
 	// number of parameters in the player
 	const size_t num_par = play->num_par_rec();
