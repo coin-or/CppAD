@@ -192,27 +192,10 @@ void optimize_run(
 	vector<Base>     user_x;       // parameters in x as integers
 	vector<size_t>   user_ix;      // variables indices for argument vector
 	//
-	typedef std::set<size_t> size_set;
-	vector<size_set> user_r_set;   // set sparsity pattern for result
-	vector<size_set> user_s_set;   // set sparisty pattern for argument
-	//
-	vector<bool>     user_r_bool;  // bool sparsity pattern for result
-	vector<bool>     user_s_bool;  // bool sparisty pattern for argument
-	//
-	vectorBool       user_r_pack;  // pack sparsity pattern for result
-	vectorBool       user_s_pack;  // pack sparisty pattern for argument
-	//
 	// information defined by forward_user
-	size_t user_index=0, user_old=0, user_m=0, user_n=0, user_i=0, user_j=0;
+	size_t user_m=0, user_n=0, user_i=0, user_j=0;
 	enum_user_state user_state;
 	//
-	const size_t user_q     = 1;   // column dimension for sparsity patterns
-	//
-	atomic_base<Base>* user_atom = CPPAD_NULL; // current user atomic function
-	bool               user_pack = false;      // sparsity pattern type is pack
-	bool               user_bool = false;      // sparsity pattern type is bool
-	bool               user_set  = false;      // sparsity pattern type is set
-
 	// During reverse mode, compute type of connection for each call to
 	// a user atomic function.
 	CppAD::vector<struct_user_info>    user_info;
@@ -632,8 +615,6 @@ void optimize_run(
 			flag = user_state == end_user;
 			if( flag )
 			{	// reverse_user ------------------------------------------
-				user_index = arg[0];
-				user_old   = arg[1];
 				user_n     = arg[2];
 				user_m     = arg[3];
 				CPPAD_ASSERT_UNKNOWN( user_n > 0 );
@@ -642,62 +623,11 @@ void optimize_run(
 				user_j     = user_n;
 				user_i     = user_m;
 				user_state = ret_user;
-
-				// the atomic_base object corresponding to this user function
-				user_atom = atomic_base<Base>::class_object(user_index);
-# ifndef NDEBUG
-				if( user_atom == CPPAD_NULL )
-				{	std::string msg =
-						atomic_base<Base>::class_name(user_index)
-						+ ": atomic_base function has been deleted";
-					CPPAD_ASSERT_KNOWN(false, msg.c_str() );
-				}
-# endif
 				// -----------------------------------------------------------
 
 
 				user_x.resize( user_n );
 				user_ix.resize( user_n );
-				//
-				user_pack  = user_atom->sparsity() ==
-							atomic_base<Base>::pack_sparsity_enum;
-				user_bool  = user_atom->sparsity() ==
-							atomic_base<Base>::bool_sparsity_enum;
-				user_set   = user_atom->sparsity() ==
-							atomic_base<Base>::set_sparsity_enum;
-				CPPAD_ASSERT_UNKNOWN( user_pack || user_bool || user_set );
-
-				user_set   = user_atom->sparsity() ==
-					atomic_base<Base>::set_sparsity_enum;
-				//
-				// Note user_q is 1, but use it for clarity of code
-				if( user_pack )
-				{	if( user_r_pack.size() != user_m * user_q )
-						user_r_pack.resize( user_m * user_q );
-					if( user_s_pack.size() != user_n * user_q )
-						user_s_pack.resize( user_n * user_q );
-					for(i = 0; i < user_m; i++)
-						for(j = 0; j < user_q; j++)
-							user_r_pack[ i * user_q + j] = false;
-				}
-				if( user_bool )
-				{	if( user_r_bool.size() != user_m * user_q )
-						user_r_bool.resize( user_m * user_q );
-					if( user_s_bool.size() != user_n * user_q )
-						user_s_bool.resize( user_n * user_q );
-					for(i = 0; i < user_m; i++)
-						for(j = 0; j < user_q; j++)
-							user_r_bool[ i * user_q + j] = false;
-				}
-				if( user_set )
-				{	if(user_s_set.size() != user_n )
-						user_s_set.resize(user_n);
-					if(user_r_set.size() != user_m )
-					{	user_r_set.resize(user_m);
-						for(i = 0; i < user_m; i++)
-							user_r_set[i].clear();
-					}
-				}
 				//
 				struct_user_info info;
 				info.connect_type = not_connected;
@@ -709,68 +639,9 @@ void optimize_run(
 				CPPAD_ASSERT_UNKNOWN( user_state == start_user );
 				user_state = end_user;
 				//
-				// call users function for this operation
-				user_atom->set_old(user_old);
-				bool user_ok = false;
-				if( user_pack )
-				{	user_ok = user_atom->rev_sparse_jac(
-						user_q, user_r_pack, user_s_pack, user_x
-					);
-					if( ! user_ok ) user_ok = user_atom->rev_sparse_jac(
-						user_q, user_r_pack, user_s_pack
-					);
-				}
-				if( user_bool )
-				{	user_ok = user_atom->rev_sparse_jac(
-						user_q, user_r_bool, user_s_bool, user_x
-					);
-					if( ! user_ok ) user_ok = user_atom->rev_sparse_jac(
-						user_q, user_r_bool, user_s_bool
-					);
-				}
-				if( user_set )
-				{	user_ok = user_atom->rev_sparse_jac(
-						user_q, user_r_set, user_s_set, user_x
-					);
-					if( ! user_ok ) user_ok = user_atom->rev_sparse_jac(
-						user_q, user_r_set, user_s_set
-					);
-				}
-				if( ! user_ok )
-				{	std::string s =
-						"Optimizing an ADFun object"
-						" that contains the atomic function\n\t";
-					s += user_atom->afun_name();
-					s += "\nCurrent atomic_sparsity is set to ";
-					//
-					if( user_set )
-						s += "set_sparsity_enum.\n";
-					if( user_bool )
-						s += "bool_sparsity_enum.\n";
-					if( user_pack )
-						s += "pack_sparsity_enum.\n";
-					//
-					s += "This version of rev_sparse_jac returned false";
-					CPPAD_ASSERT_KNOWN(false, s.c_str() );
-				}
-				// 2DO: It might be faster if we add set union to var_sparsity
-				// where one of the sets is not in var_sparsity.
 				for(j = 0; j < user_n; j++) if( user_ix[j] > 0 )
-				{	if( user_set )
-					{	if( ! user_s_set[j].empty() )
-							tape[user_ix[j]].connect_type =
-								user_info[user_curr].connect_type;
-					}
-					if( user_bool )
-					{	if( user_s_bool[j] )
-							tape[user_ix[j]].connect_type =
-								user_info[user_curr].connect_type;
-					}
-					if( user_pack )
-					{	if( user_s_pack[j] )
-							tape[user_ix[j]].connect_type =
-								user_info[user_curr].connect_type;
-					}
+				{	if( op2usage[ var2op[ user_ix[j] ] ] > 0 )
+						tape[ user_ix[j] ].connect_type = yes_connected;
 				}
 				//
 				CPPAD_ASSERT_UNKNOWN( user_curr + 1 == user_info.size() );
@@ -834,12 +705,6 @@ void optimize_run(
 				case sum_connected:
 				case csum_connected:
 				user_info[user_curr].connect_type = yes_connected;
-				if( user_set )
-					user_r_set[user_i].insert(0);
-				if( user_bool )
-					user_r_bool[user_i] = true;
-				if( user_pack )
-					user_r_pack[user_i] = true;
 				break;
 
 				case cexp_connected:
@@ -854,12 +719,6 @@ void optimize_run(
 						user_info[user_curr].connect_type = yes_connected;
 				}
 				else	user_info[user_curr].connect_type = yes_connected;
-				if( user_set )
-					user_r_set[user_i].insert(0);
-				if( user_bool )
-					user_r_bool[user_i] = true;
-				if( user_pack )
-					user_r_pack[user_i] = true;
 				break;
 
 				default:
@@ -1550,8 +1409,6 @@ void optimize_run(
 			flag = user_state == start_user;
 			if( flag )
 			{	// forward_user
-				user_index = arg[0];
-				user_old   = arg[1];
 				user_n     = arg[2];
 				user_m     = arg[3];
 				user_j     = 0;
