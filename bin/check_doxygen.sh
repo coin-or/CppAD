@@ -1,7 +1,7 @@
 #! /bin/bash -e
 # $Id$
 # -----------------------------------------------------------------------------
-# CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-15 Bradley M. Bell
+# CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-16 Bradley M. Bell
 #
 # CppAD is distributed under multiple licenses. This distribution is under
 # the terms of the
@@ -16,38 +16,10 @@ then
 	exit 1
 fi
 # -----------------------------------------------------------------------------
-if [ ! -e "doxygen.err" ]
+if ! bin/run_doxygen.sh
 then
-	bin/run_doxygen.sh
+	echo 'check_doxygen.sh: Error'
+	exit 1
 fi
-doxygen_version=`doxygen --version  |
-	sed -e 's|\.|*100+|' -e 's|\.|*10+|' -e 's|\..*||'`
-let doxygen_version=$doxygen_version
-if (( $doxygen_version <= 155 ))
-then
-	doxygen_version=`doxygen --version`
-	echo "doxygen version $doxygen_version is <= 1.5.6"
-	echo "Hence it is to old to check for warnings or errors."
-	exit 0
-fi
-if (( $doxygen_version == 163 ))
-then
-	doxygen_version=`doxygen --version`
-	echo "doxygen version $doxygen_version is == 1.6.3"
-	echo "Hence it has a problem with warnings about missing # defines;"
-	echo "see http://comments.gmane.org/gmane.text.doxygen.general/8594"
-	exit 0
-fi
-list=`head doxygen.err`
-if [ "$list" == "" ]
-then
-	echo "$O: OK"
-	exit 0
-fi
-echo bin/"check_doxygen.sh: Doxygen errors or warnings; see doxygen.err"
-if [ "$USER" != "bradbell" ]
-then
-	exit 0
-fi
-echo "$O: Error"
-exit 1
+echo 'check_doxygen.sh: OK'
+exit 0

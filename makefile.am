@@ -86,52 +86,25 @@ myinclude_HEADERS = \
 	$(IPOPT_HEADER)
 #
 nobase_myinclude_HEADERS =  \
-	cppad/utility.hpp \
 	cppad/base_require.hpp \
-	cppad/utility/check_numeric_type.hpp \
-	cppad/utility/check_simple_vector.hpp \
 	cppad/configure.hpp \
-	cppad/cppad.hpp \
-	cppad/utility/elapsed_seconds.hpp \
-	cppad/example/base_adolc.hpp \
-	cppad/example/cppad_eigen.hpp \
-	cppad/example/eigen_cholesky.hpp \
-	cppad/example/eigen_mat_inv.hpp \
-	cppad/example/eigen_mat_mul.hpp \
-	cppad/example/eigen_plugin.hpp \
-	cppad/example/mat_mul.hpp \
-	cppad/utility/error_handler.hpp \
-	cppad/utility/index_sort.hpp \
-	cppad/ipopt/solve.hpp \
-	cppad/ipopt/solve_callback.hpp \
-	cppad/ipopt/solve_result.hpp \
 	cppad/core/abort_recording.hpp \
 	cppad/core/abs.hpp \
-	cppad/local/user_state.hpp \
-	cppad/local/abs_op.hpp \
-	cppad/local/acos_op.hpp \
 	cppad/core/acosh.hpp \
-	cppad/local/acosh_op.hpp \
 	cppad/core/ad_assign.hpp \
 	cppad/core/ad_binary.hpp \
 	cppad/core/ad_ctor.hpp \
 	cppad/core/add_eq.hpp \
 	cppad/core/add.hpp \
-	cppad/local/add_op.hpp \
-	cppad/core/ad_io.hpp \
 	cppad/core/ad_fun.hpp \
 	cppad/core/ad.hpp \
-	cppad/local/ad_tape.hpp \
+	cppad/core/ad_io.hpp \
 	cppad/core/ad_to_string.hpp \
 	cppad/core/ad_valued.hpp \
 	cppad/core/arithmetic.hpp \
-	cppad/local/asin_op.hpp \
 	cppad/core/asinh.hpp \
-	cppad/local/asinh_op.hpp \
 	cppad/core/atan2.hpp \
-	cppad/local/atan_op.hpp \
 	cppad/core/atanh.hpp \
-	cppad/local/atanh_op.hpp \
 	cppad/core/atomic_base.hpp \
 	cppad/core/azmul.hpp \
 	cppad/core/base_complex.hpp \
@@ -146,137 +119,66 @@ nobase_myinclude_HEADERS =  \
 	cppad/core/bool_fun.hpp \
 	cppad/core/bool_valued.hpp \
 	cppad/core/capacity_order.hpp \
-	cppad/core/checkpoint.hpp \
 	cppad/core/check_for_nan.hpp \
-	cppad/local/color_general.hpp \
-	cppad/local/color_symmetric.hpp \
+	cppad/core/checkpoint.hpp \
 	cppad/core/compare.hpp \
-	cppad/local/comp_op.hpp \
 	cppad/core/compute_assign.hpp \
 	cppad/core/cond_exp.hpp \
-	cppad/local/cond_op.hpp \
 	cppad/core/convert.hpp \
-	cppad/local/cosh_op.hpp \
-	cppad/local/cos_op.hpp \
 	cppad/core/cppad_assert.hpp \
-	cppad/local/cppad_colpack.hpp \
-	cppad/local/cskip_op.hpp \
-	cppad/local/csum_op.hpp \
-	cppad/local/declare_ad.hpp \
 	cppad/core/define.hpp \
 	cppad/core/dependent.hpp \
 	cppad/core/discrete.hpp \
-	cppad/local/discrete_op.hpp \
 	cppad/core/div_eq.hpp \
 	cppad/core/div.hpp \
-	cppad/local/div_op.hpp \
 	cppad/core/drivers.hpp \
 	cppad/core/epsilon.hpp \
 	cppad/core/equal_op_seq.hpp \
 	cppad/core/erf.hpp \
-	cppad/local/erf_op.hpp \
-	cppad/local/exp_op.hpp \
 	cppad/core/expm1.hpp \
-	cppad/local/expm1_op.hpp \
-	cppad/local/for_hes_sweep.hpp \
-	cppad/local/for_jac_sweep.hpp \
 	cppad/core/for_one.hpp \
 	cppad/core/for_sparse_hes.hpp \
 	cppad/core/for_sparse_jac.hpp \
 	cppad/core/for_two.hpp \
-	cppad/local/forward0sweep.hpp \
-	cppad/local/forward1sweep.hpp \
-	cppad/local/forward2sweep.hpp \
 	cppad/core/forward.hpp \
 	cppad/core/fun_check.hpp \
 	cppad/core/fun_construct.hpp \
 	cppad/core/fun_eval.hpp \
 	cppad/core/hash_code.hpp \
-	cppad/local/hash_code.hpp \
 	cppad/core/hessian.hpp \
 	cppad/core/identical.hpp \
-	cppad/local/independent.hpp \
 	cppad/core/independent.hpp \
 	cppad/core/integer.hpp \
 	cppad/core/jacobian.hpp \
-	cppad/local/load_op.hpp \
-	cppad/local/log_op.hpp \
 	cppad/core/log1p.hpp \
-	cppad/local/log1p_op.hpp \
 	cppad/core/lu_ratio.hpp \
 	cppad/core/mul_eq.hpp \
 	cppad/core/mul.hpp \
-	cppad/local/mul_op.hpp \
 	cppad/core/near_equal_ext.hpp \
 	cppad/core/numeric_limits.hpp \
 	cppad/core/num_skip.hpp \
 	cppad/core/old_atomic.hpp \
 	cppad/core/omp_max_thread.hpp \
-	cppad/local/op_code.hpp \
-	cppad/local/op.hpp \
-	cppad/local/optimize/op_info.hpp \
-	cppad/local/optimize/cexp_pair.hpp \
-	cppad/local/optimize/record_csum.hpp \
-	cppad/local/optimize/record_vv.hpp \
-	cppad/local/optimize/record_vp.hpp \
-	cppad/local/optimize/record_pv.hpp \
-	cppad/local/optimize/connect_type.hpp \
-	cppad/local/optimize/csum_stacks.hpp \
-	cppad/local/optimize/csum_variable.hpp \
-	cppad/local/optimize/old_variable.hpp \
-	cppad/local/optimize/optimize_run.hpp \
 	cppad/core/optimize.hpp \
-	cppad/local/optimize/set_cexp_pair.hpp \
-	cppad/local/optimize/size_pair.hpp \
-	cppad/local/optimize/cskip_info.hpp \
-	cppad/local/optimize/define_prototype.hpp \
-	cppad/local/optimize/user_info.hpp \
-	cppad/local/optimize/unary_match.hpp \
-	cppad/local/optimize/binary_match.hpp \
 	cppad/core/opt_val_hes.hpp \
 	cppad/core/ordered.hpp \
 	cppad/core/parallel_ad.hpp \
-	cppad/local/parameter_op.hpp \
 	cppad/core/par_var.hpp \
-	cppad/local/player.hpp \
-	cppad/local/pod_vector.hpp \
 	cppad/core/pow.hpp \
-	cppad/local/pow_op.hpp \
 	cppad/core/print_for.hpp \
-	cppad/local/print_op.hpp \
-	cppad/local/prototype_op.hpp \
-	cppad/local/recorder.hpp \
 	cppad/core/reverse.hpp \
-	cppad/local/reverse_sweep.hpp \
-	cppad/local/rev_hes_sweep.hpp \
-	cppad/local/rev_jac_sweep.hpp \
 	cppad/core/rev_one.hpp \
 	cppad/core/rev_sparse_hes.hpp \
 	cppad/core/rev_sparse_jac.hpp \
 	cppad/core/rev_two.hpp \
-	cppad/local/set_get_in_parallel.hpp \
 	cppad/core/sign.hpp \
-	cppad/local/sign_op.hpp \
-	cppad/local/sin_op.hpp \
-	cppad/local/sinh_op.hpp \
-	cppad/local/sparse_binary_op.hpp \
 	cppad/core/sparse_hessian.hpp \
 	cppad/core/sparse.hpp \
 	cppad/core/sparse_jacobian.hpp \
-	cppad/local/sparse_list.hpp \
-	cppad/local/sparse_pack.hpp \
-	cppad/local/sparse_pattern.hpp \
-	cppad/local/sparse_unary_op.hpp \
-	cppad/local/sqrt_op.hpp \
 	cppad/core/standard_math.hpp \
 	cppad/core/std_math_98.hpp \
-	cppad/local/std_set.hpp \
-	cppad/local/store_op.hpp \
 	cppad/core/sub_eq.hpp \
 	cppad/core/sub.hpp \
-	cppad/local/sub_op.hpp \
-	cppad/local/tanh_op.hpp \
-	cppad/local/tan_op.hpp \
 	cppad/core/tape_link.hpp \
 	cppad/core/test_vector.hpp \
 	cppad/core/testvector.hpp \
@@ -288,7 +190,116 @@ nobase_myinclude_HEADERS =  \
 	cppad/core/var2par.hpp \
 	cppad/core/vec_ad.hpp \
 	cppad/core/zdouble.hpp \
+	cppad/cppad.hpp \
+	cppad/example/base_adolc.hpp \
+	cppad/example/cppad_eigen.hpp \
+	cppad/example/eigen_cholesky.hpp \
+	cppad/example/eigen_mat_inv.hpp \
+	cppad/example/eigen_mat_mul.hpp \
+	cppad/example/eigen_plugin.hpp \
+	cppad/example/mat_mul.hpp \
+	cppad/ipopt/solve_callback.hpp \
+	cppad/ipopt/solve.hpp \
+	cppad/ipopt/solve_result.hpp \
+	cppad/local/abs_op.hpp \
+	cppad/local/acosh_op.hpp \
+	cppad/local/acos_op.hpp \
+	cppad/local/add_op.hpp \
+	cppad/local/ad_tape.hpp \
+	cppad/local/asinh_op.hpp \
+	cppad/local/asin_op.hpp \
+	cppad/local/atanh_op.hpp \
+	cppad/local/atan_op.hpp \
+	cppad/local/color_general.hpp \
+	cppad/local/color_symmetric.hpp \
+	cppad/local/comp_op.hpp \
+	cppad/local/cond_op.hpp \
+	cppad/local/cosh_op.hpp \
+	cppad/local/cos_op.hpp \
+	cppad/local/cppad_colpack.hpp \
+	cppad/local/cskip_op.hpp \
+	cppad/local/csum_op.hpp \
+	cppad/local/declare_ad.hpp \
+	cppad/local/discrete_op.hpp \
+	cppad/local/div_op.hpp \
+	cppad/local/erf_op.hpp \
+	cppad/local/expm1_op.hpp \
+	cppad/local/exp_op.hpp \
+	cppad/local/for_hes_sweep.hpp \
+	cppad/local/for_jac_sweep.hpp \
+	cppad/local/forward0sweep.hpp \
+	cppad/local/forward1sweep.hpp \
+	cppad/local/forward2sweep.hpp \
+	cppad/local/hash_code.hpp \
+	cppad/local/independent.hpp \
+	cppad/local/load_op.hpp \
+	cppad/local/log1p_op.hpp \
+	cppad/local/log_op.hpp \
+	cppad/local/mul_op.hpp \
+	cppad/local/op_code.hpp \
+	cppad/local/op.hpp \
+	cppad/local/optimize/binary_match.hpp \
+	cppad/local/optimize/cexp_pair.hpp \
+	cppad/local/optimize/connect_type.hpp \
+	cppad/local/optimize/cskip_info.hpp \
+	cppad/local/optimize/csum_stacks.hpp \
+	cppad/local/optimize/csum_variable.hpp \
+	cppad/local/optimize/define_prototype.hpp \
+	cppad/local/optimize/old_variable.hpp \
+	cppad/local/optimize/op_info.hpp \
+	cppad/local/optimize/optimize_run.hpp \
+	cppad/local/optimize/record_csum.hpp \
+	cppad/local/optimize/record_pv.hpp \
+	cppad/local/optimize/record_vp.hpp \
+	cppad/local/optimize/record_vv.hpp \
+	cppad/local/optimize/set_cexp_pair.hpp \
+	cppad/local/optimize/size_pair.hpp \
+	cppad/local/optimize/unary_match.hpp \
+	cppad/local/optimize/usage.hpp \
+	cppad/local/optimize/user_info.hpp \
+	cppad/local/parameter_op.hpp \
+	cppad/local/player.hpp \
+	cppad/local/pod_vector.hpp \
+	cppad/local/pow_op.hpp \
+	cppad/local/print_op.hpp \
+	cppad/local/prototype_op.hpp \
+	cppad/local/recorder.hpp \
+	cppad/local/reverse_sweep.hpp \
+	cppad/local/rev_hes_sweep.hpp \
+	cppad/local/rev_jac_sweep.hpp \
+	cppad/local/set_get_in_parallel.hpp \
+	cppad/local/sign_op.hpp \
+	cppad/local/sinh_op.hpp \
+	cppad/local/sin_op.hpp \
+	cppad/local/sparse_binary_op.hpp \
+	cppad/local/sparse_list.hpp \
+	cppad/local/sparse_pack.hpp \
+	cppad/local/sparse_pattern.hpp \
+	cppad/local/sparse_unary_op.hpp \
+	cppad/local/sqrt_op.hpp \
+	cppad/local/std_set.hpp \
+	cppad/local/store_op.hpp \
+	cppad/local/sub_op.hpp \
+	cppad/local/tanh_op.hpp \
+	cppad/local/tan_op.hpp \
+	cppad/local/user_state.hpp \
 	cppad/local/zmul_op.hpp \
+	cppad/speed/det_33.hpp \
+	cppad/speed/det_by_lu.hpp \
+	cppad/speed/det_by_minor.hpp \
+	cppad/speed/det_grad_33.hpp \
+	cppad/speed/det_of_minor.hpp \
+	cppad/speed/mat_sum_sq.hpp \
+	cppad/speed/ode_evaluate.hpp \
+	cppad/speed/sparse_hes_fun.hpp \
+	cppad/speed/sparse_jac_fun.hpp \
+	cppad/speed/uniform_01.hpp \
+	cppad/utility/check_numeric_type.hpp \
+	cppad/utility/check_simple_vector.hpp \
+	cppad/utility/elapsed_seconds.hpp \
+	cppad/utility/error_handler.hpp \
+	cppad/utility.hpp \
+	cppad/utility/index_sort.hpp \
 	cppad/utility/lu_factor.hpp \
 	cppad/utility/lu_invert.hpp \
 	cppad/utility/lu_solve.hpp \
@@ -306,20 +317,10 @@ nobase_myinclude_HEADERS =  \
 	cppad/utility/rosen_34.hpp \
 	cppad/utility/runge_45.hpp \
 	cppad/utility/set_union.hpp \
-	cppad/utility/to_string.hpp \
-	cppad/speed/det_33.hpp \
-	cppad/speed/det_by_lu.hpp \
-	cppad/speed/det_by_minor.hpp \
-	cppad/speed/det_grad_33.hpp \
-	cppad/speed/det_of_minor.hpp \
-	cppad/speed/mat_sum_sq.hpp \
-	cppad/speed/ode_evaluate.hpp \
-	cppad/speed/sparse_hes_fun.hpp \
-	cppad/speed/sparse_jac_fun.hpp \
 	cppad/utility/speed_test.hpp \
-	cppad/speed/uniform_01.hpp \
 	cppad/utility/thread_alloc.hpp \
 	cppad/utility/time_test.hpp \
+	cppad/utility/to_string.hpp \
 	cppad/utility/track_new_del.hpp \
 	cppad/utility/vector.hpp
 # End nobase_myinclude_HEADERS (check_makefile.sh uses this comment)

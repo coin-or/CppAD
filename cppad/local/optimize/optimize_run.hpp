@@ -32,6 +32,7 @@ Please visit http://www.coin-or.org/CppAD/ for information on other licenses.
 # include <cppad/local/optimize/record_vv.hpp>
 # include <cppad/local/optimize/record_csum.hpp>
 # include <cppad/local/optimize/op_info.hpp>
+# include <cppad/local/optimize/usage.hpp>
 
 /*!
 \file optimize_run.hpp
@@ -82,34 +83,17 @@ void optimize_run(
 	recorder<Base>*              rec       )
 {
 
+	// check options
+	bool conditional_skip =
+		options.find("no_conditional_skip", 0) == std::string::npos;
+	bool compare_op =
+		options.find("no_compare_op", 0) == std::string::npos;
+
 	// number of operators in the player
 	const size_t num_op = play->num_op_rec();
 
 	// number of variables in the player
 	const size_t num_var = play->num_var_rec();
-
-	// operator information
-	CppAD::vector<op_info>  op2info(num_op);
-	CppAD::vector<size_t>   var2op(num_var);
-	get_op_info(play, op2info, var2op);
-
-	// nan with type Base
-	Base base_nan = Base( std::numeric_limits<double>::quiet_NaN() );
-
-	// temporary indices
-	size_t i, j, k;
-
-	// check options
-	bool conditional_skip =
-		options.find("no_conditional_skip", 0) == std::string::npos;
-
-	// temporary variables
-	OpCode        op;   // current operator
-	const addr_t* arg;  // operator arguments
-	size_t        i_var;  // index of first result for current operator
-
-	// range and domain dimensions for F
-	size_t m = dep_taddr.size();
 
 	// number of parameters in the player
 	const size_t num_par = play->num_par_rec();
@@ -119,6 +103,49 @@ void optimize_run(
 
 	// number of VecAD vectors
 	size_t num_vecad_vec   = play->num_vecad_vec_rec();
+
+	// length of VecAD vectors
+	vector<size_t> vecad_length(num_vecad_vec);
+	{	size_t index = 0;
+		for(size_t i = 0; i < num_vecad_vec; i++)
+		{	// length of this VecAD
+			size_t length = play->GetVecInd(index);
+			vecad_length[i] = length;
+			index          += length + 1;
+		}
+		CPPAD_ASSERT_UNKNOWN( index == num_vecad_ind );
+	}
+
+	// pointer to the beginning of the parameter vector
+	// (used by atomic functions
+	const Base* parameter = CPPAD_NULL;
+	if( num_par > 0 )
+		parameter = play->GetPar();
+
+	// operator information
+	CppAD::vector<op_info>  op2info(num_op);
+	CppAD::vector<size_t>   var2op(num_var);
+	get_op_info(play, op2info, var2op);
+
+	// usage informationo
+	CppAD::vector<size_t> op2usage(num_op);
+	get_usage(compare_op, num_par, parameter,
+		num_vecad_ind, vecad_length, dep_taddr, op2info, var2op, op2usage
+	);
+
+	// nan with type Base
+	Base base_nan = Base( std::numeric_limits<double>::quiet_NaN() );
+
+	// temporary indices
+	size_t i, j, k;
+
+	// temporary variables
+	OpCode        op;   // current operator
+	const addr_t* arg;  // operator arguments
+	size_t        i_var;  // index of first result for current operator
+
+	// range and domain dimensions for F
+	size_t m = dep_taddr.size();
 
 	// -------------------------------------------------------------
 	// data structure that maps variable index in original operation
@@ -185,12 +212,6 @@ void optimize_run(
 	bool               user_pack = false;      // sparsity pattern type is pack
 	bool               user_bool = false;      // sparsity pattern type is bool
 	bool               user_set  = false;      // sparsity pattern type is set
-	//
-	// pointer to the beginning of the parameter vector
-	// (used by atomic functions
-	const Base* parameter = CPPAD_NULL;
-	if( num_par > 0 )
-		parameter = play->GetPar();
 
 	// During reverse mode, compute type of connection for each call to
 	// a user atomic function.
