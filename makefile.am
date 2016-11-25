@@ -255,7 +255,6 @@ nobase_myinclude_HEADERS =  \
 	cppad/local/optimize/set_cexp_pair.hpp \
 	cppad/local/optimize/size_pair.hpp \
 	cppad/local/optimize/unary_match.hpp \
-	cppad/local/optimize/usage.hpp \
 	cppad/local/optimize/user_info.hpp \
 	cppad/local/parameter_op.hpp \
 	cppad/local/player.hpp \

@@ -32,7 +32,6 @@ Please visit http://www.coin-or.org/CppAD/ for information on other licenses.
 # include <cppad/local/optimize/record_vv.hpp>
 # include <cppad/local/optimize/record_csum.hpp>
 # include <cppad/local/optimize/op_info.hpp>
-# include <cppad/local/optimize/usage.hpp>
 
 /*!
 \file optimize_run.hpp
@@ -104,18 +103,6 @@ void optimize_run(
 	// number of VecAD vectors
 	size_t num_vecad_vec   = play->num_vecad_vec_rec();
 
-	// length of VecAD vectors
-	vector<size_t> vecad_length(num_vecad_vec);
-	{	size_t index = 0;
-		for(size_t i = 0; i < num_vecad_vec; i++)
-		{	// length of this VecAD
-			size_t length = play->GetVecInd(index);
-			vecad_length[i] = length;
-			index          += length + 1;
-		}
-		CPPAD_ASSERT_UNKNOWN( index == num_vecad_ind );
-	}
-
 	// pointer to the beginning of the parameter vector
 	// (used by atomic functions
 	const Base* parameter = CPPAD_NULL;
@@ -123,15 +110,9 @@ void optimize_run(
 		parameter = play->GetPar();
 
 	// operator information
-	CppAD::vector<op_info>  op2info(num_op);
-	CppAD::vector<size_t>   var2op(num_var);
-	get_op_info(play, op2info, var2op);
-
-	// usage informationo
-	CppAD::vector<size_t> op2usage(num_op);
-	get_usage(compare_op, num_par, parameter,
-		num_vecad_ind, vecad_length, dep_taddr, op2info, var2op, op2usage
-	);
+	CppAD::vector<struct_op_info>  op_info(num_op);
+	CppAD::vector<size_t>          var2op(num_var);
+	get_op_info(compare_op, play, dep_taddr, var2op, op_info);
 
 	// nan with type Base
 	Base base_nan = Base( std::numeric_limits<double>::quiet_NaN() );
@@ -218,9 +199,9 @@ void optimize_run(
 		bool flag; // temporary for use in switch cases
 		//
 		// next op
-		op    = op2info[i_op].op;
-		arg   = op2info[i_op].arg;
-		i_var = op2info[i_op].i_var;
+		op    = op_info[i_op].op;
+		arg   = op_info[i_op].arg;
+		i_var = op_info[i_op].i_var;
 		//
 		// Store the operator corresponding to each variable
 		if( NumRes(op) > 0 )
@@ -640,7 +621,7 @@ void optimize_run(
 				user_state = end_user;
 				//
 				for(j = 0; j < user_n; j++) if( user_ix[j] > 0 )
-				{	if( op2usage[ var2op[ user_ix[j] ] ] > 0 )
+				{	if( op_info[ var2op[ user_ix[j] ] ].usage > 0 )
 						tape[ user_ix[j] ].connect_type = yes_connected;
 				}
 				//
@@ -841,8 +822,8 @@ void optimize_run(
 	// start playing the operations in the forward direction
 	CPPAD_ASSERT_UNKNOWN( user_curr == user_info.size() );
 	i_op = 0;
-	op   = op2info[i_op].op;
-	arg  = op2info[i_op].arg;
+	op   = op_info[i_op].op;
+	arg  = op_info[i_op].arg;
 	CPPAD_ASSERT_UNKNOWN( op == BeginOp );
 	CPPAD_ASSERT_NARG_NRES(BeginOp, 1, 1);
 	CPPAD_ASSERT_UNKNOWN( size_t(arg[0]) == 0 );
@@ -868,9 +849,9 @@ void optimize_run(
 	{	bool flag; // for temporary in switch cases
 		//
 		// next op
-		op    = op2info[i_op].op;
-		arg   = op2info[i_op].arg;
-		i_var = op2info[i_op].i_var;
+		op    = op_info[i_op].op;
+		arg   = op_info[i_op].arg;
+		i_var = op_info[i_op].i_var;
 		//
 		CPPAD_ASSERT_UNKNOWN( (i_op > n)  | (op == InvOp) );
 		CPPAD_ASSERT_UNKNOWN( (i_op <= n) | (op != InvOp) );
