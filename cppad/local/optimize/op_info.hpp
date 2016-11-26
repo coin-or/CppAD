@@ -322,6 +322,9 @@ void get_op_info(
 			break;  // --------------------------------------------
 
 			// Operations where there is nothing to do
+			case CSkipOp:
+			play->reverse_cskip(op, arg, i_op, i_var);
+			//
 			case BeginOp: // set during initialization of usage
 			case EndOp:   // set during initialization of usage
 			case ParOp:
@@ -411,6 +414,18 @@ void get_op_info(
 			}
 			break; // -----------------------------------------------------
 
+			// =============================================================
+			// cumuilative summation operator
+			// ============================================================
+			case CSumOp:
+			play->reverse_csum(op, arg, i_op, i_var);
+			{	size_t num_add = size_t( arg[0] );
+				size_t num_sub = size_t( arg[1] );
+				for(size_t i = 0; i < num_add + num_sub; i++)
+				{	j_op = var2op[ arg[3 + i] ];
+					++op_info[j_op].usage;
+				}
+			}
 			// =============================================================
 			// user defined atomic operators
 			// ============================================================
