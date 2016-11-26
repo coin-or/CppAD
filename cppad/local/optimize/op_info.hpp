@@ -219,18 +219,24 @@ void get_op_info(
 	{	i_op                = var2op[ dep_taddr[i] ];
 		op_info[i_op].usage = 1;
 	}
+	// value for BeginOp and EndOp
+	CPPAD_ASSERT_UNKNOWN( op_info[0].op == BeginOp);
+	CPPAD_ASSERT_UNKNOWN( op_info[num_op-1].op == EndOp);
+	op_info[0].usage        = 1;
+	op_info[num_op-1].usage = 1;
 	//
+	// Initialize reverse pass
 	user_state = end_user;
-	i_op       = num_op;
-	while( i_op > 0 )
-	{	size_t j_op;  // temporary operator index
+	play->reverse_start(op, arg, i_op, i_var);
+	CPPAD_ASSERT_UNKNOWN( op == EndOp );
+	op_info[i_op].usage = 1;
+	while( op != BeginOp )
+	{	bool   flag;  // temporary boolean value
+		size_t j_op;  // temporary operator index
 		bool   use;   // a temporary usage variable
 		//
-		--i_op;
-		//
 		// next op
-		op    = op_info[i_op].op;
-		arg   = op_info[i_op].arg;
+		play->reverse_next(op, arg, i_op, i_var);
 		//
 		// is the result of this operation used
 		size_t use_result = op_info[i_op].usage;
@@ -316,8 +322,8 @@ void get_op_info(
 			break;  // --------------------------------------------
 
 			// Operations where there is nothing to do
-			case BeginOp:
-			case EndOp:
+			case BeginOp: // set during initialization of usage
+			case EndOp:   // set during initialization of usage
 			case ParOp:
 			case PriOp:
 			break;  // -----------------------------------------------
@@ -411,30 +417,12 @@ void get_op_info(
 
 			case UserOp:
 			// start or end atomic operation sequence
-			if( user_state == end_user )
-			{	// reverse_user ------------------------------------------
-				user_index = arg[0];
-				user_old   = arg[1];
-				user_n     = arg[2];
-				user_m     = arg[3];
-				CPPAD_ASSERT_UNKNOWN( user_n > 0 );
-
-				// other reverse_user arguments
-				user_j     = user_n;
-				user_i     = user_m;
-				user_state = ret_user;
-
-				// the atomic_base object corresponding to this user function
-				user_atom = atomic_base<Base>::class_object(user_index);
-# ifndef NDEBUG
-				if( user_atom == CPPAD_NULL )
-				{	std::string msg =
-						atomic_base<Base>::class_name(user_index)
-						+ ": atomic_base function has been deleted";
-					CPPAD_ASSERT_KNOWN(false, msg.c_str() );
-				}
-# endif
-				// -------------------------------------------------------
+			flag      = user_state == end_user;
+			user_atom = play->reverse_user(op, user_state,
+				user_index, user_old, user_m, user_n, user_i, user_j
+			);
+			if( flag )
+			{	// -------------------------------------------------------
 				user_x.resize(  user_n );
 				user_ix.resize( user_n );
 				//
@@ -467,11 +455,7 @@ void get_op_info(
 				}
 			}
 			else
-			{	// reverse_user
-				CPPAD_ASSERT_UNKNOWN( user_state == start_user );
-				user_state = end_user;
-				//
-				// call users function for this operation
+			{	// call users function for this operation
 				user_atom->set_old(user_old);
 				bool user_ok  = false;
 				size_t user_q = 1; // as if sum of dependent variables
@@ -540,12 +524,9 @@ void get_op_info(
 			// parameter argument in an atomic operation sequence
 			CPPAD_ASSERT_UNKNOWN( size_t(arg[0]) < num_par );
 			//
-			// reverse_user
-			CPPAD_ASSERT_UNKNOWN( user_state == arg_user );
-			CPPAD_ASSERT_UNKNOWN( 0 < user_j )
-			--user_j;
-			if( user_j == 0 )
-				user_state = start_user;
+			play->reverse_user(op, user_state,
+				user_index, user_old, user_m, user_n, user_i, user_j
+			);
 			//
 			user_ix[user_j] = 0;
 			//
@@ -559,13 +540,9 @@ void get_op_info(
 			CPPAD_ASSERT_UNKNOWN( size_t(arg[0]) <= op_info[i_op].i_var );
 			CPPAD_ASSERT_UNKNOWN( 0 < arg[0] );
 			//
-			// reverse_user
-			CPPAD_ASSERT_UNKNOWN( user_state == arg_user );
-			CPPAD_ASSERT_UNKNOWN( 0 < user_j )
-			--user_j;
-			if( user_j == 0 )
-				user_state = start_user;
-			//
+			play->reverse_user(op, user_state,
+				user_index, user_old, user_m, user_n, user_i, user_j
+			);
 			user_ix[user_j] = arg[0];
 			//
 			// variable arguments as parameters
@@ -576,13 +553,9 @@ void get_op_info(
 			case UsrrvOp:
 			// variable result in an atomic operation sequence
 			//
-			// reverse_user
-			CPPAD_ASSERT_UNKNOWN( user_state == ret_user );
-			CPPAD_ASSERT_UNKNOWN( 0 < user_i )
-			--user_i;
-			if( user_i == 0 )
-				user_state = arg_user;
-			//
+			play->reverse_user(op, user_state,
+				user_index, user_old, user_m, user_n, user_i, user_j
+			);
 			if( use_result )
 			{	if( user_set )
 					user_r_set[user_i].insert(0);
@@ -595,10 +568,9 @@ void get_op_info(
 
 			case UsrrpOp:
 			CPPAD_ASSERT_UNKNOWN( size_t(arg[0]) < num_par );
-			// reverse_user
-			CPPAD_ASSERT_UNKNOWN( user_state == ret_user );
-			CPPAD_ASSERT_UNKNOWN( 0 < user_i )
-			--user_i;
+			play->reverse_user(op, user_state,
+				user_index, user_old, user_m, user_n, user_i, user_j
+			);
 			if( user_i == 0 )
 				user_state = arg_user;
 			break;
