@@ -75,8 +75,8 @@ private:
 	/// Index for primary (last) variable corresponding to current operator
 	size_t var_index_;
 
-	/// Pointer to atomic_base object for current user function
-	atomic_base<Base>* user_atom_;
+	/// index for the current user atomic function
+	size_t user_index_;
 
 # ifndef NDEBUG
 	/// Flag indicating that a special function must be called before next
@@ -533,10 +533,6 @@ public:
 	\li ret_user next operator will be UsrrpOp or UsrrvOp.
 	\li end_user next operator will be UserOp at end of a call
 
-	\param user_index [in,out]
-	This should not be changed by the calling program.
-	Upon return it is the atomic_base index for this user atomic function.
-
 	\param user_old [in,out]
 	This should not be changed by the calling program.
 	Upon return it is the extra information used by the old_atomic interface.
@@ -568,29 +564,29 @@ public:
 	is returned.
 
 	\par Initialization
-	The initial value of user_index, user_old, user_m, user_n, user_i, user_j
+	The initial value of user_old, user_m, user_n, user_i, user_j
 	do not matter. They may be initialized to avoid compiler warnings.
 	*/
 	atomic_base<Base>* forward_user(
 		const OpCode&    op         ,
 		enum_user_state& user_state ,
-		size_t&          user_index ,
 		size_t&          user_old   ,
 		size_t&          user_m     ,
 		size_t&          user_n     ,
 		size_t&          user_i     ,
 		size_t&          user_j     )
-	{	switch(op)
+	{	atomic_base<Base>* user_atom;
+		switch(op)
 		{
 			case UserOp:
 			CPPAD_ASSERT_NARG_NRES(op, 4, 0);
 			if( user_state == start_user )
 			{
 				// forward_user arguments determined by values in UserOp
-				user_index = op_arg_[0];
-				user_old   = op_arg_[1];
-				user_n     = op_arg_[2];
-				user_m     = op_arg_[3];
+				user_index_ = op_arg_[0];
+				user_old    = op_arg_[1];
+				user_n      = op_arg_[2];
+				user_m      = op_arg_[3];
 				CPPAD_ASSERT_UNKNOWN( user_n > 0 );
 
 				// other forward_user arguments
@@ -598,12 +594,12 @@ public:
 				user_i     = 0;
 				user_state = arg_user;
 
-				// the atomic_base object corresponding to this user function
-				user_atom_ = atomic_base<Base>::class_object(user_index);
 # ifndef NDEBUG
-				if( user_atom_ == CPPAD_NULL )
-				{	std::string msg =
-						atomic_base<Base>::class_name(user_index)
+				user_atom = atomic_base<Base>::class_object(user_index_);
+				if( user_atom == CPPAD_NULL )
+				{	// user_atom is null so cannot use user_atom->afun_name()
+					std::string msg =
+						atomic_base<Base>::class_name(user_index_)
 						+ ": atomic_base function has been deleted";
 					CPPAD_ASSERT_KNOWN(false, msg.c_str() );
 				}
@@ -612,7 +608,7 @@ public:
 			else
 			{	// copy of UsrOp at end of this atomic sequence
 				CPPAD_ASSERT_UNKNOWN( user_state == end_user );
-				CPPAD_ASSERT_UNKNOWN( user_index == size_t(op_arg_[0]) );
+				CPPAD_ASSERT_UNKNOWN( user_index_ == size_t(op_arg_[0]) );
 				CPPAD_ASSERT_UNKNOWN( user_old   == size_t(op_arg_[1]) );
 				CPPAD_ASSERT_UNKNOWN( user_n     == size_t(op_arg_[2]) );
 				CPPAD_ASSERT_UNKNOWN( user_m     == size_t(op_arg_[3]) );
@@ -648,7 +644,10 @@ public:
 			default:
 			CPPAD_ASSERT_UNKNOWN(false);
 		}
-		return user_atom_;
+		// the atomic_base object corresponding to this user function
+		user_atom = atomic_base<Base>::class_object(user_index_);
+		CPPAD_ASSERT_UNKNOWN( user_atom != CPPAD_NULL );
+		return user_atom;
 	}
 	// =====================================================================
 	// Reverse iteration over operations in this player
@@ -903,10 +902,6 @@ public:
 	\li arg_user next operator will be UsrapOp or UsravOp.
 	\li start_user next operator will be UserOp at beginning of a call
 
-	\param user_index [in,out]
-	This should not be changed by the calling program.
-	Upon return it is the atomic_base index for this user atomic function.
-
 	\param user_old [in,out]
 	This should not be changed by the calling program.
 	Upon return it is the extra information used by the old_atomic interface.
@@ -938,29 +933,29 @@ public:
 	is returned.
 
 	\par Initialization
-	The initial value of user_index, user_old, user_m, user_n, user_i, user_j
+	The initial value of user_old, user_m, user_n, user_i, user_j
 	do not matter. They may be initialized to avoid compiler warnings.
 	*/
 	atomic_base<Base>* reverse_user(
 		const OpCode&    op         ,
 		enum_user_state& user_state ,
-		size_t&          user_index ,
 		size_t&          user_old   ,
 		size_t&          user_m     ,
 		size_t&          user_n     ,
 		size_t&          user_i     ,
 		size_t&          user_j     )
-	{	switch(op)
+	{	atomic_base<Base>* user_atom;
+		switch(op)
 		{
 			case UserOp:
 			CPPAD_ASSERT_NARG_NRES(op, 4, 0);
 			if( user_state == end_user )
 			{
 				// reverse_user arguments determined by values in UserOp
-				user_index = op_arg_[0];
-				user_old   = op_arg_[1];
-				user_n     = op_arg_[2];
-				user_m     = op_arg_[3];
+				user_index_ = op_arg_[0];
+				user_old    = op_arg_[1];
+				user_n      = op_arg_[2];
+				user_m      = op_arg_[3];
 				CPPAD_ASSERT_UNKNOWN( user_n > 0 );
 
 				// other reverse_user arguments
@@ -969,11 +964,12 @@ public:
 				user_state = ret_user;
 
 				// the atomic_base object corresponding to this user function
-				user_atom_ = atomic_base<Base>::class_object(user_index);
 # ifndef NDEBUG
-				if( user_atom_ == CPPAD_NULL )
-				{	std::string msg =
-						atomic_base<Base>::class_name(user_index)
+				user_atom = atomic_base<Base>::class_object(user_index_);
+				if( user_atom == CPPAD_NULL )
+				{	// user_atom is null so cannot use user_atom->afun_name()
+					std::string msg =
+						atomic_base<Base>::class_name(user_index_)
 						+ ": atomic_base function has been deleted";
 					CPPAD_ASSERT_KNOWN(false, msg.c_str() );
 				}
@@ -982,7 +978,7 @@ public:
 			else
 			{	// copy of UsrOp at end of this atomic sequence
 				CPPAD_ASSERT_UNKNOWN( user_state == start_user );
-				CPPAD_ASSERT_UNKNOWN( user_index == size_t(op_arg_[0]) );
+				CPPAD_ASSERT_UNKNOWN( user_index_ == size_t(op_arg_[0]) );
 				CPPAD_ASSERT_UNKNOWN( user_old   == size_t(op_arg_[1]) );
 				CPPAD_ASSERT_UNKNOWN( user_n     == size_t(op_arg_[2]) );
 				CPPAD_ASSERT_UNKNOWN( user_m     == size_t(op_arg_[3]) );
@@ -1020,7 +1016,10 @@ public:
 			default:
 			CPPAD_ASSERT_UNKNOWN(false);
 		}
-		return user_atom_;
+		// the atomic_base object corresponding to this user function
+		user_atom = atomic_base<Base>::class_object(user_index_);
+		CPPAD_ASSERT_UNKNOWN( user_atom != CPPAD_NULL );
+		return user_atom;
 	}
 
 };

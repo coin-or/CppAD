@@ -218,7 +218,7 @@ void forward0sweep(
 # endif
 	//
 	// information defined by forward_user
-	size_t user_index=0, user_old=0, user_m=0, user_n=0, user_i=0, user_j=0;
+	size_t user_old=0, user_m=0, user_n=0, user_i=0, user_j=0;
 	enum_user_state user_state = start_user; // proper initialization
 
 	// length of the parameter vector (used by CppAD assert macros)
@@ -762,7 +762,7 @@ void forward0sweep(
 			// start or end an atomic operation sequence
 			flag = user_state == start_user;
 			user_atom = play->forward_user(op, user_state,
-				user_index, user_old, user_m, user_n, user_i, user_j
+				user_old, user_m, user_n, user_i, user_j
 			);
 			if( flag )
 			{	user_tx.resize(user_n);
@@ -776,7 +776,7 @@ void forward0sweep(
 # ifndef NDEBUG
 				if( ! user_ok )
 				{	std::string msg =
-						atomic_base<Base>::class_name(user_index)
+						user_atom->afun_name()
 						+ ": atomic_base.forward: returned false";
 					CPPAD_ASSERT_KNOWN(false, msg.c_str() );
 				}
@@ -792,7 +792,7 @@ void forward0sweep(
 			CPPAD_ASSERT_UNKNOWN( size_t( arg[0] ) < num_par );
 			user_tx[user_j] = parameter[ arg[0] ];
 			play->forward_user(op, user_state,
-				user_index, user_old, user_m, user_n, user_i, user_j
+				user_old, user_m, user_n, user_i, user_j
 			);
 			if( user_j == user_n )
 			{	// call users function for this operation
@@ -808,7 +808,7 @@ void forward0sweep(
 			CPPAD_ASSERT_UNKNOWN( size_t(arg[0]) <= i_var );
 			user_tx[user_j] = taylor[ arg[0] * J + 0 ];
 			play->forward_user(op, user_state,
-				user_index, user_old, user_m, user_n, user_i, user_j
+				user_old, user_m, user_n, user_i, user_j
 			);
 			if( user_j == user_n )
 			{	// call users function for this operation
@@ -825,7 +825,7 @@ void forward0sweep(
 			user_iy[user_i] = 0;
 # endif
 			play->forward_user(op, user_state,
-				user_index, user_old, user_m, user_n, user_i, user_j
+				user_old, user_m, user_n, user_i, user_j
 			);
 			break;
 
@@ -836,7 +836,7 @@ void forward0sweep(
 # endif
 			taylor[ i_var * J + 0 ] = user_ty[user_i];
 			play->forward_user(op, user_state,
-				user_index, user_old, user_m, user_n, user_i, user_j
+				user_old, user_m, user_n, user_i, user_j
 			);
 			break;
 			// -------------------------------------------------

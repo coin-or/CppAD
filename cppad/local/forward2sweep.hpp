@@ -177,7 +177,7 @@ void forward2sweep(
 	vector<Base> user_ty_all;
 	//
 	// information defined by forward_user
-	size_t user_index=0, user_old=0, user_m=0, user_n=0, user_i=0, user_j=0;
+	size_t user_old=0, user_m=0, user_n=0, user_i=0, user_j=0;
 	enum_user_state user_state = start_user; // proper initialization
 	//
 	atomic_base<Base>* user_atom = CPPAD_NULL; // user's atomic op calculator
@@ -550,7 +550,7 @@ void forward2sweep(
 			// start or end an atomic operation sequence
 			flag = user_state == start_user;
 			user_atom = play->forward_user(op, user_state,
-				user_index, user_old, user_m, user_n, user_i, user_j
+				user_old, user_m, user_n, user_i, user_j
 			);
 			if( flag )
 			{	user_tx_one.resize(user_n * user_q1);
@@ -593,7 +593,7 @@ void forward2sweep(
 # ifndef NDEBUG
 					if( ! user_ok )
 					{	std::string msg =
-							atomic_base<Base>::class_name(user_index)
+							user_atom->afun_name()
 							+ ": atomic_base.forward: returned false";
 						CPPAD_ASSERT_KNOWN(false, msg.c_str() );
 					}
@@ -620,7 +620,7 @@ void forward2sweep(
 				for(k = 1; k < user_q1; k++)
 					user_tx_all[user_j*(q*r+1) + (k-1)*r+1+ell] = Base(0);
 			play->forward_user(op, user_state,
-				user_index, user_old, user_m, user_n, user_i, user_j
+				user_old, user_m, user_n, user_i, user_j
 			);
 			break;
 
@@ -634,7 +634,7 @@ void forward2sweep(
 				}
 			}
 			play->forward_user(op, user_state,
-				user_index, user_old, user_m, user_n, user_i, user_j
+				user_old, user_m, user_n, user_i, user_j
 			);
 			break;
 
@@ -646,7 +646,7 @@ void forward2sweep(
 				for(k = 1; k < user_q1; k++)
 					user_ty_all[user_i*(q*r+1) + (k-1)*r+1+ell] = Base(0);
 			play->forward_user(op, user_state,
-				user_index, user_old, user_m, user_n, user_i, user_j
+				user_old, user_m, user_n, user_i, user_j
 			);
 			break;
 
@@ -661,7 +661,7 @@ void forward2sweep(
 				}
 			}
 			play->forward_user(op, user_state,
-				user_index, user_old, user_m, user_n, user_i, user_j
+				user_old, user_m, user_n, user_i, user_j
 			);
 			break;
 			// -------------------------------------------------

@@ -1408,7 +1408,7 @@ void optimize_run(
 				//
 				user_info[user_curr].op_end = rec->num_op_rec() + 1;
 			}
-			// user_index, user_old, user_n, user_m
+			// user_old, user_n, user_m
 			if( user_info[user_curr].connect_type != not_connected )
 			{	rec->PutArg(arg[0], arg[1], arg[2], arg[3]);
 				rec->PutOp(UserOp);

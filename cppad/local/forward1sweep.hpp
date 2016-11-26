@@ -264,7 +264,7 @@ void forward1sweep(
 # endif
 	//
 	// information defined by forward_user
-	size_t user_index=0, user_old=0, user_m=0, user_n=0, user_i=0, user_j=0;
+	size_t user_old=0, user_m=0, user_n=0, user_i=0, user_j=0;
 	enum_user_state user_state = start_user; // proper initialization
 
 	// length of the parameter vector (used by CppAD assert macros)
@@ -869,7 +869,7 @@ void forward1sweep(
 			// start or end an atomic operation sequence
 			flag = user_state == start_user;
 			user_atom = play->forward_user(op, user_state,
-				user_index, user_old, user_m, user_n, user_i, user_j
+				user_old, user_m, user_n, user_i, user_j
 			);
 			if( flag )
 			{	user_tx.resize(user_n * user_q1);
@@ -885,7 +885,7 @@ void forward1sweep(
 # ifndef NDEBUG
 				if( ! user_ok )
 				{	std::string msg =
-						atomic_base<Base>::class_name(user_index)
+						user_atom->afun_name()
 						+ ": atomic_base.forward: returned false";
 					CPPAD_ASSERT_KNOWN(false, msg.c_str() );
 				}
@@ -908,7 +908,7 @@ void forward1sweep(
 			for(k = 1; k < user_q1; k++)
 				user_tx[user_j * user_q1 + k] = Base(0);
 			play->forward_user(op, user_state,
-				user_index, user_old, user_m, user_n, user_i, user_j
+				user_old, user_m, user_n, user_i, user_j
 			);
 			break;
 
@@ -918,7 +918,7 @@ void forward1sweep(
 			for(k = 0; k < user_q1; k++)
 				user_tx[user_j * user_q1 + k] = taylor[ arg[0] * J + k];
 			play->forward_user(op, user_state,
-				user_index, user_old, user_m, user_n, user_i, user_j
+				user_old, user_m, user_n, user_i, user_j
 			);
 			break;
 
@@ -929,7 +929,7 @@ void forward1sweep(
 			for(k = 1; k < p; k++)
 				user_ty[user_i * user_q1 + k] = Base(0);
 			play->forward_user(op, user_state,
-				user_index, user_old, user_m, user_n, user_i, user_j
+				user_old, user_m, user_n, user_i, user_j
 			);
 			break;
 
@@ -939,7 +939,7 @@ void forward1sweep(
 			for(k = 0; k < p; k++)
 				user_ty[user_i * user_q1 + k] = taylor[ i_var * J + k];
 			play->forward_user(op, user_state,
-				user_index, user_old, user_m, user_n, user_i, user_j
+				user_old, user_m, user_n, user_i, user_j
 			);
 			break;
 			// -------------------------------------------------

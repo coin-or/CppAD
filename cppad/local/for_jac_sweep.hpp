@@ -157,7 +157,7 @@ void ForJacSweep(
 	const size_t user_q = limit; // maximum element plus one
 	//
 	// information defined by forward_user
-	size_t user_index=0, user_old=0, user_m=0, user_n=0, user_i=0, user_j=0;
+	size_t user_old=0, user_m=0, user_n=0, user_i=0, user_j=0;
 	enum_user_state user_state = start_user; // proper initialization
 	//
 	atomic_base<Base>* user_atom = CPPAD_NULL; // user's atomic op calculator
@@ -638,7 +638,7 @@ void ForJacSweep(
 			// start or end an atomic operation sequence
 			flag = user_state == start_user;
 			user_atom = play->forward_user(op, user_state,
-				user_index, user_old, user_m, user_n, user_i, user_j
+				user_old, user_m, user_n, user_i, user_j
 			);
 			if( flag )
 			{	user_x.resize( user_n );
@@ -676,7 +676,7 @@ void ForJacSweep(
 # ifndef NDEBUG
 				if( ! user_ok )
 				{	std::string msg =
-						atomic_base<Base>::class_name(user_index)
+						user_atom->afun_name()
 						+ ": atomic_base.for_sparse_jac: returned false\n";
 					if( user_pack )
 						msg += "sparsity = pack_sparsity_enum";
@@ -696,7 +696,7 @@ void ForJacSweep(
 			//
 			// set row user_j to empty sparsity pattern
 			play->forward_user(op, user_state,
-				user_index, user_old, user_m, user_n, user_i, user_j
+				user_old, user_m, user_n, user_i, user_j
 			);
 			if( user_j == user_n )
 			{	// call users function for this operation
@@ -746,7 +746,7 @@ void ForJacSweep(
 				}
 			}
 			play->forward_user(op, user_state,
-				user_index, user_old, user_m, user_n, user_i, user_j
+				user_old, user_m, user_n, user_i, user_j
 			);
 			if( user_j == user_n )
 			{	// call users function for this operation
@@ -781,7 +781,7 @@ void ForJacSweep(
 			case UsrrpOp:
 			// parameter result in an atomic operation sequence
 			play->forward_user(op, user_state,
-				user_index, user_old, user_m, user_n, user_i, user_j
+				user_old, user_m, user_n, user_i, user_j
 			);
 			break;
 
@@ -806,7 +806,7 @@ void ForJacSweep(
 					var_sparsity.add_element(i_var, *set_itr++);
 			}
 			play->forward_user(op, user_state,
-				user_index, user_old, user_m, user_n, user_i, user_j
+				user_old, user_m, user_n, user_i, user_j
 			);
 			break;
 			// -------------------------------------------------

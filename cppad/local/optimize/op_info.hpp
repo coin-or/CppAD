@@ -98,7 +98,7 @@ void get_op_info(
 		var2op[i] = num_op; // invalid (used for auxillary variables)
 	//
 	// information set by forward_user
-	size_t user_index=0, user_old=0, user_m=0, user_n=0, user_i=0, user_j=0;
+	size_t user_old=0, user_m=0, user_n=0, user_i=0, user_j=0;
 	enum_user_state user_state;
 	//
 	// information set by forward_next
@@ -154,7 +154,7 @@ void get_op_info(
 			case UsrrpOp:
 			case UsrrvOp:
 			play->forward_user(op, user_state,
-				user_index, user_old, user_m, user_n, user_i, user_j
+				user_old, user_m, user_n, user_i, user_j
 			);
 			break;
 
@@ -419,7 +419,7 @@ void get_op_info(
 			// start or end atomic operation sequence
 			flag      = user_state == end_user;
 			user_atom = play->reverse_user(op, user_state,
-				user_index, user_old, user_m, user_n, user_i, user_j
+				user_old, user_m, user_n, user_i, user_j
 			);
 			if( flag )
 			{	// -------------------------------------------------------
@@ -525,7 +525,7 @@ void get_op_info(
 			CPPAD_ASSERT_UNKNOWN( size_t(arg[0]) < num_par );
 			//
 			play->reverse_user(op, user_state,
-				user_index, user_old, user_m, user_n, user_i, user_j
+				user_old, user_m, user_n, user_i, user_j
 			);
 			//
 			user_ix[user_j] = 0;
@@ -541,7 +541,7 @@ void get_op_info(
 			CPPAD_ASSERT_UNKNOWN( 0 < arg[0] );
 			//
 			play->reverse_user(op, user_state,
-				user_index, user_old, user_m, user_n, user_i, user_j
+				user_old, user_m, user_n, user_i, user_j
 			);
 			user_ix[user_j] = arg[0];
 			//
@@ -554,7 +554,7 @@ void get_op_info(
 			// variable result in an atomic operation sequence
 			//
 			play->reverse_user(op, user_state,
-				user_index, user_old, user_m, user_n, user_i, user_j
+				user_old, user_m, user_n, user_i, user_j
 			);
 			if( use_result )
 			{	if( user_set )
@@ -569,10 +569,8 @@ void get_op_info(
 			case UsrrpOp:
 			CPPAD_ASSERT_UNKNOWN( size_t(arg[0]) < num_par );
 			play->reverse_user(op, user_state,
-				user_index, user_old, user_m, user_n, user_i, user_j
+				user_old, user_m, user_n, user_i, user_j
 			);
-			if( user_i == 0 )
-				user_state = arg_user;
 			break;
 			// ============================================================
 

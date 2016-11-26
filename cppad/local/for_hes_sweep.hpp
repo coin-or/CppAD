@@ -172,7 +172,7 @@ void ForHesSweep(
 	vector<bool>       user_s;   // reverse Jacobian sparsity for y
 	//
 	// information defined by forward_user
-	size_t user_index=0, user_old=0, user_m=0, user_n=0, user_i=0, user_j=0;
+	size_t user_old=0, user_m=0, user_n=0, user_i=0, user_j=0;
 	enum_user_state user_state = start_user; // proper initialization
 	//
 	atomic_base<Base>* user_atom = CPPAD_NULL; // user's atomic op calculator
@@ -379,7 +379,7 @@ void ForHesSweep(
 			// start or end an atomic operation sequence
 			flag = user_state == start_user;
 			user_atom = play->forward_user(op, user_state,
-				user_index, user_old, user_m, user_n, user_i, user_j
+				user_old, user_m, user_n, user_i, user_j
 			);
 			if( flag )
 			{	user_x.resize( user_n );
@@ -450,7 +450,7 @@ void ForHesSweep(
 				}
 				if( ! user_ok )
 				{	std::string msg =
-						atomic_base<Base>::class_name(user_index)
+						user_atom->afun_name()
 						+ ": atomic_base.for_sparse_hes: returned false\n";
 					if( user_pack )
 						msg += "sparsity = pack_sparsity_enum";
@@ -494,7 +494,7 @@ void ForHesSweep(
 			user_x[user_j] = parameter[arg[0]];
 			//
 			play->forward_user(op, user_state,
-				user_index, user_old, user_m, user_n, user_i, user_j
+				user_old, user_m, user_n, user_i, user_j
 			);
 			break;
 
@@ -514,7 +514,7 @@ void ForHesSweep(
 					user_r[user_j] = true;
 			}
 			play->forward_user(op, user_state,
-				user_index, user_old, user_m, user_n, user_i, user_j
+				user_old, user_m, user_n, user_i, user_j
 			);
 			break;
 
@@ -522,7 +522,7 @@ void ForHesSweep(
 			// parameter result in an atomic operation sequence
 			CPPAD_ASSERT_UNKNOWN( size_t(arg[0]) < num_par );
 			play->forward_user(op, user_state,
-				user_index, user_old, user_m, user_n, user_i, user_j
+				user_old, user_m, user_n, user_i, user_j
 			);
 			break;
 
@@ -531,7 +531,7 @@ void ForHesSweep(
 			if( rev_jac_sparse.is_element(i_var, 0) )
 				user_s[user_i] = true;
 			play->forward_user(op, user_state,
-				user_index, user_old, user_m, user_n, user_i, user_j
+				user_old, user_m, user_n, user_i, user_j
 			);
 			break;
 			// -------------------------------------------------

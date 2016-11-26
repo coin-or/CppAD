@@ -219,7 +219,7 @@ void ReverseSweep(
 # endif
 	//
 	// information defined by forward_user
-	size_t user_index=0, user_old=0, user_m=0, user_n=0, user_i=0, user_j=0;
+	size_t user_old=0, user_m=0, user_n=0, user_i=0, user_j=0;
 	enum_user_state user_state = end_user; // proper initialization
 
 	// temporary indices
@@ -670,7 +670,7 @@ void ReverseSweep(
 			// start or end an atomic operation sequence
 			flag = user_state == end_user;
 			user_atom = play->reverse_user(op, user_state,
-				user_index, user_old, user_m, user_n, user_i, user_j
+				user_old, user_m, user_n, user_i, user_j
 			);
 			if( flag )
 			{	user_ix.resize(user_n);
@@ -692,7 +692,7 @@ void ReverseSweep(
 # ifndef NDEBUG
 				if( ! user_ok )
 				{	std::string msg =
-						atomic_base<Base>::class_name(user_index)
+						user_atom->afun_name()
 						+ ": atomic_base.reverse: returned false";
 					CPPAD_ASSERT_KNOWN(false, msg.c_str() );
 				}
@@ -709,7 +709,7 @@ void ReverseSweep(
 			// parameter argument in an atomic operation sequence
 			CPPAD_ASSERT_UNKNOWN( size_t(arg[0]) < num_par );
 			play->reverse_user(op, user_state,
-				user_index, user_old, user_m, user_n, user_i, user_j
+				user_old, user_m, user_n, user_i, user_j
 			);
 			user_ix[user_j] = 0;
 			user_tx[user_j * user_k1 + 0] = parameter[ arg[0]];
@@ -722,7 +722,7 @@ void ReverseSweep(
 			CPPAD_ASSERT_UNKNOWN( size_t(arg[0]) <= i_var );
 			CPPAD_ASSERT_UNKNOWN( 0 < arg[0] );
 			play->reverse_user(op, user_state,
-				user_index, user_old, user_m, user_n, user_i, user_j
+				user_old, user_m, user_n, user_i, user_j
 			);
 			user_ix[user_j] = arg[0];
 			for(ell = 0; ell < user_k1; ell++)
@@ -733,7 +733,7 @@ void ReverseSweep(
 			// parameter result in an atomic operation sequence
 			CPPAD_ASSERT_UNKNOWN( size_t(arg[0]) < num_par );
 			play->reverse_user(op, user_state,
-				user_index, user_old, user_m, user_n, user_i, user_j
+				user_old, user_m, user_n, user_i, user_j
 			);
 			for(ell = 0; ell < user_k1; ell++)
 			{	user_py[user_i * user_k1 + ell] = Base(0.);
@@ -745,7 +745,7 @@ void ReverseSweep(
 			case UsrrvOp:
 			// variable result in an atomic operation sequence
 			play->reverse_user(op, user_state,
-				user_index, user_old, user_m, user_n, user_i, user_j
+				user_old, user_m, user_n, user_i, user_j
 			);
 			for(ell = 0; ell < user_k1; ell++)
 			{	user_py[user_i * user_k1 + ell] =

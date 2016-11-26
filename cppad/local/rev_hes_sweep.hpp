@@ -195,7 +195,7 @@ void RevHesSweep(
 	bool               user_ok   = false;      // atomic op return value
 	//
 	// information defined by forward_user
-	size_t user_index=0, user_old=0, user_m=0, user_n=0, user_i=0, user_j=0;
+	size_t user_old=0, user_m=0, user_n=0, user_i=0, user_j=0;
 	enum_user_state user_state = end_user; // proper initialization
 	//
 	// pointer to the beginning of the parameter vector
@@ -657,7 +657,7 @@ void RevHesSweep(
 			// start or end an atomic operation sequence
 			flag = user_state == end_user;
 			user_atom = play->reverse_user(op, user_state,
-				user_index, user_old, user_m, user_n, user_i, user_j
+				user_old, user_m, user_n, user_i, user_j
 			);
 			if( flag )
 			{	user_pack  = user_atom->sparsity() ==
@@ -755,7 +755,7 @@ void RevHesSweep(
 				}
 				if( ! user_ok )
 				{	std::string msg =
-						atomic_base<Base>::class_name(user_index)
+						user_atom->afun_name()
 						+ ": atomic_base.rev_sparse_hes: returned false\n";
 					if( user_pack )
 						msg += "sparsity = pack_sparsity_enum";
@@ -797,7 +797,7 @@ void RevHesSweep(
 			// parameter argument in an atomic operation sequence
 			CPPAD_ASSERT_UNKNOWN( size_t(arg[0]) < num_par );
 			play->reverse_user(op, user_state,
-				user_index, user_old, user_m, user_n, user_i, user_j
+				user_old, user_m, user_n, user_i, user_j
 			);
 			user_ix[user_j] = 0;
 			user_vx[user_j] = false;
@@ -812,7 +812,7 @@ void RevHesSweep(
 			CPPAD_ASSERT_UNKNOWN( size_t(arg[0]) <= i_var );
 			CPPAD_ASSERT_UNKNOWN( 0 < arg[0] );
 			play->reverse_user(op, user_state,
-				user_index, user_old, user_m, user_n, user_i, user_j
+				user_old, user_m, user_n, user_i, user_j
 			);
 			user_ix[user_j] = arg[0];
 			user_vx[user_j] = true;
@@ -838,14 +838,14 @@ void RevHesSweep(
 			// parameter result in an atomic operation sequence
 			CPPAD_ASSERT_UNKNOWN( size_t(arg[0]) < num_par );
 			play->reverse_user(op, user_state,
-				user_index, user_old, user_m, user_n, user_i, user_j
+				user_old, user_m, user_n, user_i, user_j
 			);
 			break;
 
 			case UsrrvOp:
 			// variable result in an atomic operation sequence
 			play->reverse_user(op, user_state,
-				user_index, user_old, user_m, user_n, user_i, user_j
+				user_old, user_m, user_n, user_i, user_j
 			);
 			if( RevJac[i_var] )
 			{

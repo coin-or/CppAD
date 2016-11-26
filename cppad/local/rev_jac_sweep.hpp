@@ -166,7 +166,7 @@ void RevJacSweep(
 	bool               user_ok   = false;      // atomic op return value
 	//
 	// information defined by forward_user
-	size_t user_index=0, user_old=0, user_m=0, user_n=0, user_i=0, user_j=0;
+	size_t user_old=0, user_m=0, user_n=0, user_i=0, user_j=0;
 	enum_user_state user_state = end_user; // proper initialization
 	//
 	// pointer to the beginning of the parameter vector
@@ -636,7 +636,7 @@ void RevJacSweep(
 			// start or end atomic operation sequence
 			flag = user_state == end_user;
 			user_atom = play->reverse_user(op, user_state,
-				user_index, user_old, user_m, user_n, user_i, user_j
+				user_old, user_m, user_n, user_i, user_j
 			);
 			if( flag )
 			{	user_x.resize( user_n );
@@ -699,7 +699,7 @@ void RevJacSweep(
 				}
 				if( ! user_ok )
 				{	std::string msg =
-						atomic_base<Base>::class_name(user_index)
+						user_atom->afun_name()
 						+ ": atomic_base.rev_sparse_jac: returned false\n";
 					if( user_pack )
 						msg += "sparsity = pack_sparsity_enum";
@@ -737,7 +737,7 @@ void RevJacSweep(
 			// parameter argument in an atomic operation sequence
 			CPPAD_ASSERT_UNKNOWN( size_t(arg[0]) < num_par );
 			play->reverse_user(op, user_state,
-				user_index, user_old, user_m, user_n, user_i, user_j
+				user_old, user_m, user_n, user_i, user_j
 			);
 			user_ix[user_j] = 0;
 			//
@@ -751,7 +751,7 @@ void RevJacSweep(
 			CPPAD_ASSERT_UNKNOWN( size_t(arg[0]) <= i_var );
 			CPPAD_ASSERT_UNKNOWN( 0 < arg[0] );
 			play->reverse_user(op, user_state,
-				user_index, user_old, user_m, user_n, user_i, user_j
+				user_old, user_m, user_n, user_i, user_j
 			);
 			user_ix[user_j] = arg[0];
 			//
@@ -763,14 +763,14 @@ void RevJacSweep(
 			// parameter result in an atomic operation sequence
 			CPPAD_ASSERT_UNKNOWN( size_t(arg[0]) < num_par );
 			play->reverse_user(op, user_state,
-				user_index, user_old, user_m, user_n, user_i, user_j
+				user_old, user_m, user_n, user_i, user_j
 			);
 			break;
 
 			case UsrrvOp:
 			// variable result in an atomic operation sequence
 			play->reverse_user(op, user_state,
-				user_index, user_old, user_m, user_n, user_i, user_j
+				user_old, user_m, user_n, user_i, user_j
 			);
 			{	typename Vector_set::const_iterator itr(var_sparsity, i_var);
 				i = *itr;
