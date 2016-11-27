@@ -55,6 +55,14 @@ work.op_stack, work.add_stack, and work.sub_stack, are all empty.
 These stacks are passed in so that they are created once
 and then be reused with calls to record_csum.
 
+\param var2op
+mapping from old variable index to old operator index
+(only used for error checking)
+
+\param op_info
+mapping from old index to operator information
+(only used for error checking)
+
 \par Assumptions
 tape[i].new_var is not yet defined for any node i that is csum_connected
 to the current node; i.e., tape[i].new_var = tape.size() for all such nodes.
@@ -79,7 +87,9 @@ struct_size_pair record_csum(
 	const Base*                                        par            ,
 	recorder<Base>*                                    rec            ,
 	// local information passed so stacks need not be allocated for every call
-	struct_csum_stacks&                                work           )
+	struct_csum_stacks&                                work           ,
+	const vector<size_t>&                              var2op         ,
+	const vector<struct_op_info>&                      op_info        )
 {
 	// check assumption about work space
 	CPPAD_ASSERT_UNKNOWN( work.op_stack.empty() );
@@ -87,6 +97,11 @@ struct_size_pair record_csum(
 	CPPAD_ASSERT_UNKNOWN( work.sub_stack.empty() );
 	//
 	CPPAD_ASSERT_UNKNOWN( tape[current].connect_type == yes_connected );
+# ifndef NDEBUG
+	{	size_t i_op = var2op[current];
+		CPPAD_ASSERT_UNKNOWN( ! op_info[i_op].csum_connected );
+	}
+# endif
 
 	size_t                        i;
 	OpCode                        op;
@@ -145,6 +160,12 @@ struct_size_pair record_csum(
 			case SubvvOp:
 			//
 			// check if the first argument is csum_connected
+# ifndef NDEBUG
+			{	bool flag1 = tape[arg[0]].connect_type == csum_connected;
+				bool flag2 = op_info[ var2op[ arg[0] ] ].csum_connected;
+				CPPAD_ASSERT_UNKNOWN( flag1 == flag2 );
+			}
+# endif
 			if( tape[arg[0]].connect_type == csum_connected )
 			{	CPPAD_ASSERT_UNKNOWN(
 					size_t(tape[arg[0]].new_var) == tape.size()
@@ -189,6 +210,12 @@ struct_size_pair record_csum(
 			case AddvvOp:
 			case AddpvOp:
 			// check if the second argument is csum_connected
+# ifndef NDEBUG
+			{	bool flag1 = tape[arg[1]].connect_type == csum_connected;
+				bool flag2 = op_info[ var2op[ arg[1] ] ].csum_connected;
+				CPPAD_ASSERT_UNKNOWN( flag1 == flag2 );
+			}
+# endif
 			if( tape[arg[1]].connect_type == csum_connected )
 			{	CPPAD_ASSERT_UNKNOWN(
 					size_t(tape[arg[1]].new_var) == tape.size()

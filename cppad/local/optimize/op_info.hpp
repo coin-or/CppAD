@@ -37,6 +37,11 @@ struct struct_op_info {
 	/// varialbe gets one use count. Certain other side effects can get a
 	// use count. For example, comparision operators may or may not be counted.
 	size_t        usage;
+
+	/// Is this variable use only once, is its parrent a summation,
+	/// and is it a summation. In this case it can be removed as part
+	/// of a cumulative summation starting at its parent or above.
+	bool          csum_connected;
 };
 
 /*!
@@ -592,6 +597,123 @@ void get_op_info(
 			// all cases should be handled above
 			default:
 			CPPAD_ASSERT_UNKNOWN(0);
+		}
+	}
+	// ----------------------------------------------------------------------
+	// Forward (could use revese) pass to compute csum_connected
+	// ----------------------------------------------------------------------
+	for(size_t i = 0; i < num_op; i++)
+		op_info[i].csum_connected = false;
+	//
+	play->forward_start(op, arg, i_op, i_var);
+	CPPAD_ASSERT_UNKNOWN( op == BeginOp );
+	//
+	user_state = start_user;
+	while(op != EndOp)
+	{
+		// next operator
+		play->forward_next(op, arg, i_op, i_var);
+		//
+		switch( op )
+		{	case CSumOp:
+			// must correct arg before next operator
+			play->forward_csum(op, arg, i_op, i_var);
+# ifndef NDEBUG
+			{	size_t num_add = size_t( arg[0] );
+				size_t num_sub = size_t( arg[1] );
+				for(size_t i = 0; i < num_add + num_sub; i++)
+				{	size_t j_op = var2op[ arg[3 + i] ];
+					CPPAD_ASSERT_UNKNOWN( op_info[j_op].usage != 1 );
+				}
+			}
+# endif
+			break; // --------------------------------------------------------
+
+			case CSkipOp:
+			// must correct arg before next operator
+			play->forward_csum(op, arg, i_op, i_var);
+			break; // --------------------------------------------------------
+
+			case UserOp:
+			case UsrapOp:
+			case UsravOp:
+			case UsrrpOp:
+			case UsrrvOp:
+			play->forward_user(op, user_state,
+				user_old, user_m, user_n, user_i, user_j
+			);
+			break; // --------------------------------------------------------
+
+			case AddvvOp:
+			case SubvvOp:
+			for(size_t i = 0; i < 2; i++)
+			{	size_t j_op = var2op[ arg[i] ];
+				switch( op_info[j_op].op )
+				{
+					case AddpvOp:
+					case AddvvOp:
+					case SubpvOp:
+					case SubvpOp:
+					case SubvvOp:
+					if( op_info[j_op].usage == 1 )
+					{	CPPAD_ASSERT_UNKNOWN( ! op_info[j_op].csum_connected );
+						op_info[j_op].csum_connected = true;
+					}
+					break;
+
+					default:
+					break;
+				}
+			}
+			break; // --------------------------------------------------------
+
+			case AddpvOp:
+			case SubpvOp:
+			{
+				size_t j_op = var2op[ arg[1] ];
+				switch( op_info[j_op].op )
+				{
+					case AddpvOp:
+					case AddvvOp:
+					case SubpvOp:
+					case SubvpOp:
+					case SubvvOp:
+					if( op_info[j_op].usage == 1 )
+					{	CPPAD_ASSERT_UNKNOWN( ! op_info[j_op].csum_connected );
+						op_info[j_op].csum_connected = true;
+					}
+					break;
+
+					default:
+					break;
+				}
+			}
+			break; // --------------------------------------------------------
+
+			case SubvpOp:
+			{	size_t j_op = var2op[ arg[0] ];
+				switch( op_info[j_op].op )
+				{
+					case AddpvOp:
+					case AddvvOp:
+					case SubpvOp:
+					case SubvpOp:
+					case SubvvOp:
+					if( op_info[j_op].usage == 1 )
+					{	CPPAD_ASSERT_UNKNOWN( ! op_info[j_op].csum_connected );
+						op_info[j_op].csum_connected = true;
+					}
+					break;
+
+					default:
+					break;
+				}
+			}
+			break; // --------------------------------------------------------
+
+
+			default:
+			break;
 		}
 	}
 	return;

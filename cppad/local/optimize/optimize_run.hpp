@@ -16,6 +16,7 @@ Please visit http://www.coin-or.org/CppAD/ for information on other licenses.
 
 # include <stack>
 # include <iterator>
+# include <cppad/local/optimize/op_info.hpp>
 # include <cppad/local/optimize/connect_type.hpp>
 # include <cppad/local/optimize/cexp_pair.hpp>
 # include <cppad/local/optimize/set_cexp_pair.hpp>
@@ -31,7 +32,6 @@ Please visit http://www.coin-or.org/CppAD/ for information on other licenses.
 # include <cppad/local/optimize/record_vp.hpp>
 # include <cppad/local/optimize/record_vv.hpp>
 # include <cppad/local/optimize/record_csum.hpp>
-# include <cppad/local/optimize/op_info.hpp>
 
 /*!
 \file optimize_run.hpp
@@ -1016,7 +1016,9 @@ void optimize_run(
 					play->num_par_rec() ,
 					play->GetPar()      ,
 					rec                 ,
-					csum_work
+					csum_work           ,
+					var2op              ,
+					op_info
 				);
 				tape[i_var].new_op  = size_pair.i_op;
 				tape[i_var].new_var = size_pair.i_var;
@@ -1098,7 +1100,9 @@ void optimize_run(
 					play->num_par_rec() ,
 					play->GetPar()      ,
 					rec                 ,
-					csum_work
+					csum_work           ,
+					var2op              ,
+					op_info
 				);
 				tape[i_var].new_op  = size_pair.i_op;
 				tape[i_var].new_var = size_pair.i_var;
@@ -1153,7 +1157,9 @@ void optimize_run(
 					play->num_par_rec() ,
 					play->GetPar()      ,
 					rec                 ,
-					csum_work
+					csum_work           ,
+					var2op              ,
+					op_info
 				);
 				tape[i_var].new_op  = size_pair.i_op;
 				tape[i_var].new_var = size_pair.i_var;
