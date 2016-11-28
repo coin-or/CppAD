@@ -19,7 +19,7 @@ Please visit http://www.coin-or.org/CppAD/ for information on other licenses.
 # include <cppad/local/optimize/op_info.hpp>
 # include <cppad/local/optimize/connect_type.hpp>
 # include <cppad/local/optimize/cexp_pair.hpp>
-# include <cppad/local/optimize/set_cexp_pair.hpp>
+# include <cppad/local/optimize/fast_empty_set.hpp>
 # include <cppad/local/optimize/old_variable.hpp>
 # include <cppad/local/optimize/size_pair.hpp>
 # include <cppad/local/optimize/csum_variable.hpp>
@@ -135,7 +135,7 @@ void optimize_run(
 
 	// if tape[i].connect_type == exp_connected, cexp_set[i] is the
 	// corresponding information for the conditional connection.
-	CppAD::vector<class_set_cexp_pair> cexp_vec_set;
+	CppAD::vector< fast_empty_set<class_cexp_pair> > cexp_vec_set;
 	if( conditional_skip )
 		cexp_vec_set.resize(num_var);
 	// -------------------------------------------------------------
@@ -215,7 +215,7 @@ void optimize_run(
 		else	CPPAD_ASSERT_UNKNOWN((op != InvOp) & (op != BeginOp));
 # endif
 		enum_connect_type connect_type      = tape[i_var].connect_type;
-		class_set_cexp_pair* cexp_set = CPPAD_NULL;
+		fast_empty_set<class_cexp_pair>* cexp_set = CPPAD_NULL;
 		if( conditional_skip )
 			cexp_set = &cexp_vec_set[i_var];
 		switch( op )

@@ -61,6 +61,13 @@ public:
 	{	return pack_ < right.pack_; }
 };
 
+// implement output operator
+inline std::ostream& operator <<
+( std::ostream &os, const class_cexp_pair& pair)
+{	os << '(' << pair.compare() << ',' << pair.index() << ')';
+	return os;
+}
+
 } } } // END_CPPAD_LOCAL_OPTIMIZE_NAMESPACE
 
 # endif

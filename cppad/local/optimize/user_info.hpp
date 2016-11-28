@@ -31,7 +31,7 @@ struct struct_user_info {
 
 	/// If this is an conditional connection, this is the information
 	/// of the correpsonding CondExpOp operators
-	class_set_cexp_pair cexp_set;
+	fast_empty_set<class_cexp_pair> cexp_set;
 
 	/// If this is a conditional connection, this is the operator
 	/// index of the beginning of the atomic call sequence; i.e.,

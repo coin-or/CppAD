@@ -1,6 +1,6 @@
 // $Id$
-# ifndef CPPAD_LOCAL_OPTIMIZE_SET_CEXP_PAIR_HPP
-# define CPPAD_LOCAL_OPTIMIZE_SET_CEXP_PAIR_HPP
+# ifndef CPPAD_LOCAL_OPTIMIZE_FAST_EMPTY_SET_HPP
+# define CPPAD_LOCAL_OPTIMIZE_FAST_EMPTY_SET_HPP
 /* --------------------------------------------------------------------------
 CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-16 Bradley M. Bell
 
@@ -14,28 +14,30 @@ Please visit http://www.coin-or.org/CppAD/ for information on other licenses.
 
 # include <set>
 # include <iterator>
-# include <cppad/local/optimize/cexp_pair.hpp>
 
 /*!
-\file set_cexp_pair.hpp
-A set with class_cexp_pair elements.
+\file fast_empty_set.hpp
+A set template class that is fast in the empty set case
+(for use when the set is likely to be empty)
 */
 
 // BEGIN_CPPAD_LOCAL_OPTIMIZE_NAMESPACE
 namespace CppAD { namespace local { namespace optimize  {
 /*!
-A container that is like std::set<class_cexp_pair> except that it does
+A container that is like std::set<Element> except that it does
 not allocate empty sets and only has a few operations.
 */
-class class_set_cexp_pair {
+
+template <class Element>
+class fast_empty_set {
 private:
 	/// This set is empty if and only if ptr_ == CPPAD_NULL;
-	std::set<class_cexp_pair>* ptr_;
+	std::set<Element>* ptr_;
 
 	/// allocate a pointer to a set (just before adding an element)
 	void new_ptr(void)
 	{	CPPAD_ASSERT_UNKNOWN( ptr_ == CPPAD_NULL );
-		ptr_ = new std::set<class_cexp_pair>;
+		ptr_ = new std::set<Element>;
 		CPPAD_ASSERT_UNKNOWN( ptr_ != CPPAD_NULL );
 		// std::cout << "new ptr_ = " << ptr_ << std::endl;
 	}
@@ -51,11 +53,11 @@ private:
 
 public:
 	/// constructor
-	class_set_cexp_pair(void)
+	fast_empty_set(void)
 	{	ptr_ = CPPAD_NULL; }
 
 	/// destructor
-	~class_set_cexp_pair(void)
+	~fast_empty_set(void)
 	{	delete_ptr(); }
 
 	/// print a set (for debugging)
@@ -66,17 +68,16 @@ public:
 		}
 		CPPAD_ASSERT_UNKNOWN( ! empty() );
 		const char* sep = "{ ";
-		std::set<class_cexp_pair>::const_iterator itr;
+		typename std::set<Element>::const_iterator itr;
 		for(itr = ptr_->begin(); itr != ptr_->end(); itr++)
-		{	std::cout << sep;
-			std::cout << "(" << itr->compare() << "," << itr->index() << ")";
+		{	std::cout << sep << *itr;
 			sep = ", ";
 		}
 		std::cout << "}";
 	}
 
 	/// assignment operator
-	void operator=(const class_set_cexp_pair& other)
+	void operator=(const fast_empty_set& other)
 	{	// case where other set is empty
 		if( other.ptr_ == CPPAD_NULL )
 		{	if( ptr_ == CPPAD_NULL )
@@ -91,7 +92,7 @@ public:
 	}
 
 	/// insert an element in this set
-	void insert(const class_cexp_pair& element)
+	void insert(const Element& element)
 	{	if( ptr_ == CPPAD_NULL )
 			new_ptr();
 		ptr_->insert(element);
@@ -115,13 +116,13 @@ public:
 	}
 
 	/// returns begin pointer for a non-empty set
-	std::set<class_cexp_pair>::const_iterator begin(void)
+	typename std::set<Element>::const_iterator begin(void)
 	{	CPPAD_ASSERT_UNKNOWN( ! empty() );
 		return ptr_->begin();
 	}
 
 	/// returns end pointer for a non-empty set
-	std::set<class_cexp_pair>::const_iterator end(void)
+	typename std::set<Element>::const_iterator end(void)
 	{	CPPAD_ASSERT_UNKNOWN( ! empty() );
 		return ptr_->end();
 	}
@@ -132,7 +133,7 @@ public:
 	\param other
 	the other set
 	*/
-	void intersection(const class_set_cexp_pair& other )
+	void intersection(const fast_empty_set& other )
 	{	// if this is empty, result is empty
 		if( ptr_ == CPPAD_NULL )
 			return;
@@ -144,7 +145,7 @@ public:
 		}
 
 		// put result here
-		class_set_cexp_pair result;
+		fast_empty_set result;
 		CPPAD_ASSERT_UNKNOWN( result.ptr_ == CPPAD_NULL );
 		result.new_ptr();
 		CPPAD_ASSERT_UNKNOWN( result.ptr_ != CPPAD_NULL );

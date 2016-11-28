@@ -245,6 +245,7 @@ nobase_myinclude_HEADERS =  \
 	cppad/local/optimize/csum_stacks.hpp \
 	cppad/local/optimize/csum_variable.hpp \
 	cppad/local/optimize/define_prototype.hpp \
+	cppad/local/optimize/fast_empty_set.hpp \
 	cppad/local/optimize/old_variable.hpp \
 	cppad/local/optimize/op_info.hpp \
 	cppad/local/optimize/optimize_run.hpp \
@@ -252,7 +253,6 @@ nobase_myinclude_HEADERS =  \
 	cppad/local/optimize/record_pv.hpp \
 	cppad/local/optimize/record_vp.hpp \
 	cppad/local/optimize/record_vv.hpp \
-	cppad/local/optimize/set_cexp_pair.hpp \
 	cppad/local/optimize/size_pair.hpp \
 	cppad/local/optimize/unary_match.hpp \
 	cppad/local/optimize/user_info.hpp \
