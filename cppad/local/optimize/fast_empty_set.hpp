@@ -30,6 +30,9 @@ not allocate empty sets and only has a few operations.
 
 template <class Element>
 class fast_empty_set {
+public:
+	/// iterator
+	typedef typename std::set<Element>::const_iterator const_iterator;
 private:
 	/// This set is empty if and only if ptr_ == CPPAD_NULL;
 	std::set<Element>* ptr_;
@@ -51,6 +54,12 @@ private:
 		ptr_ = CPPAD_NULL;
 	}
 
+	/// Static function for begin and end in empty set case.
+	/// 2DO: call this before multi-threading.
+	static const_iterator empty_iterator(void)
+	{	static std::set<Element> empty_set;
+		return empty_set.end();
+	}
 public:
 	/// constructor
 	fast_empty_set(void)
@@ -75,12 +84,11 @@ public:
 		}
 		CPPAD_ASSERT_UNKNOWN( ! empty() );
 		const char* sep = "{";
-		typename std::set<Element>::const_iterator itr;
-		for(itr = ptr_->begin(); itr != ptr_->end(); itr++)
+		for(const_iterator itr = ptr_->begin(); itr != ptr_->end(); itr++)
 		{	std::cout << sep << *itr;
 			sep = ",";
 		}
-		std::cout << "}\n";
+		std::cout << "}";
 	}
 
 	/// assignment operator
@@ -123,15 +131,25 @@ public:
 	}
 
 	/// returns begin pointer for a non-empty set
-	typename std::set<Element>::const_iterator begin(void)
-	{	CPPAD_ASSERT_UNKNOWN( ptr_ != CPPAD_NULL );
+	const_iterator begin(void) const
+	{	if( ptr_ == CPPAD_NULL )
+			return empty_iterator();
+		//
 		return ptr_->begin();
 	}
 
 	/// returns end pointer for a non-empty set
-	typename std::set<Element>::const_iterator end(void)
-	{	CPPAD_ASSERT_UNKNOWN( ptr_ != CPPAD_NULL );
+	const_iterator end(void) const
+	{	if( ptr_ == CPPAD_NULL )
+			return empty_iterator();
 		return ptr_->end();
+	}
+
+	/// find an element
+	const_iterator find(const Element& element) const
+	{	if( ptr_ == CPPAD_NULL )
+			return empty_iterator();
+		return ptr_->find(element);
 	}
 
 	/*!

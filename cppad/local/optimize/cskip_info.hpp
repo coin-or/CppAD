@@ -25,6 +25,10 @@ namespace CppAD { namespace local { namespace optimize  {
 Information about one conditional expression.
 */
 struct struct_cskip_info {
+	/// The operator index for this conditional expression operation
+	/// only used to check op_info
+	size_t i_op;
+
 	/// comparision operator
 	CompareOp cop;
 

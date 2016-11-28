@@ -172,6 +172,7 @@ void get_op_info(
 	// it represents a paraemeter during the recording process. So we set
 	var2op[i_var] = num_op;
 	//
+	size_t num_inv_op = 0;
 	user_state = start_user;
 	while(op != EndOp)
 	{	// next operator
@@ -181,6 +182,12 @@ void get_op_info(
 		op_info[i_op].op    = op;
 		op_info[i_op].arg   = arg;
 		op_info[i_op].i_var = i_var;
+		//
+		// count number of independent variables
+		if( op == InvOp )
+		{	++num_inv_op;
+			CPPAD_ASSERT_UNKNOWN( num_inv_op == i_op );
+		}
 		//
 		// mapping from variable index to operator index
 		if( NumRes(op) > 0 )
@@ -268,9 +275,11 @@ void get_op_info(
 	// initialize operator usage
 	for(size_t i = 0; i < num_op; i++)
 		op_info[i].usage = 0;
+	for(size_t i = 1; i <= num_inv_op; i++)
+		op_info[i].usage = 1;       // independent variables
 	for(size_t i = 0; i < dep_taddr.size(); i++)
 	{	i_op                = var2op[ dep_taddr[i] ];
-		op_info[i_op].usage = 1;
+		op_info[i_op].usage = 1;    // dependent variables
 	}
 	// value for BeginOp and EndOp
 	CPPAD_ASSERT_UNKNOWN( op_info[0].op == BeginOp);
@@ -375,19 +384,14 @@ void get_op_info(
 			case SubvvOp:
 			case ZmulvvOp:
 			if( use_result > 0 )
-			{	size_t j_op = var2op[ arg[0] ];
-				++op_info[j_op].usage;
-				size_t k_op = var2op[ arg[1] ];
-				++op_info[k_op].usage;
-				//
-				// cexp_set
-				set_cexp_compare cexp_set( cexp_set_result );
-				if( op_info[j_op].usage > 1 )
-					cexp_set.intersection( op_info[j_op].cexp_set );
-				if( op_info[k_op].usage > 1 )
-					cexp_set.intersection( op_info[k_op].cexp_set );
-				op_info[j_op].cexp_set = cexp_set;
-				op_info[k_op].cexp_set = cexp_set;
+			{	for(size_t i = 0; i < 2; i++)
+				{	size_t j_op = var2op[ arg[i] ];
+					++op_info[j_op].usage;
+					if( op_info[j_op].usage > 1 )
+						op_info[j_op].cexp_set.intersection( cexp_set_result );
+					else
+						op_info[j_op].cexp_set = cexp_set_result;
+				}
 			}
 			break; // --------------------------------------------
 
@@ -396,22 +400,24 @@ void get_op_info(
 			case CExpOp:
 			if( use_result > 0 )
 			{	CPPAD_ASSERT_UNKNOWN( NumArg(CExpOp) == 6 );
-				set_cexp_compare cexp_set( cexp_set_result );
 				addr_t mask[] = {1, 2, 4, 8};
 				for(size_t i = 0; i < 4; i++)
 				{	if( arg[1] & mask[i] )
 					{	size_t j_op = var2op[ arg[2 + i] ];
 						++op_info[j_op].usage;
 						if( op_info[j_op].usage > 1 )
-							cexp_set.intersection( op_info[j_op].cexp_set );
+							op_info[j_op].cexp_set.intersection(
+								cexp_set_result
+						);
+						else
+							op_info[j_op].cexp_set = cexp_set_result;
 					}
 				}
-				for(size_t i = 0; i < 4; i++)
+				// here is where we add eleemnts to cexp_set
+				for(size_t i = 2; i < 4; i++)
 				{	if( arg[1] & mask[i] )
 					{	size_t j_op = var2op[ arg[2 + i] ];
-						op_info[j_op].cexp_set = cexp_set;
-						//
-						// here is where we add eleemnts to cexp_set
+						CPPAD_ASSERT_UNKNOWN( op_info[j_op].usage > 0 );
 						if( i == 2 )
 						{	// j_op corresponds to arg[4]; i.e., the value
 							// used when the comparison result is true. It
@@ -435,17 +441,13 @@ void get_op_info(
 			case CSkipOp:
 			play->reverse_cskip(op, arg, i_op, i_var);
 			//
-			case BeginOp: // set during initialization of usage
-			case EndOp:   // set during initialization of usage
 			case ParOp:
 			case PriOp:
-			break;  // -----------------------------------------------
-
-			// These operats get an extra count for being indpendent variables
-			// and are needed no matter what conditional expressions appear.
+			// set during initialization of usage
 			case InvOp:
-			++op_info[i_op].usage;
-			break; // -----------------------------------------------
+			case BeginOp:
+			case EndOp:
+			break;  // -----------------------------------------------
 
 			// =============================================================
 			// Comparison operators
@@ -499,19 +501,14 @@ void get_op_info(
 			case EqvvOp:
 			case NevvOp:
 			if( compare_op )
-			{	size_t j_op = var2op[ arg[0] ];
-				++op_info[j_op].usage;
-				size_t k_op = var2op[ arg[1] ];
-				++op_info[k_op].usage;
-				//
-				// cexp_set
-				set_cexp_compare cexp_set( cexp_set_result );
-				if( op_info[j_op].usage > 1 )
-					cexp_set.intersection( op_info[j_op].cexp_set );
-				if( op_info[k_op].usage > 1 )
-					cexp_set.intersection( op_info[k_op].cexp_set );
-				op_info[j_op].cexp_set = cexp_set;
-				op_info[k_op].cexp_set = cexp_set;
+			{	for(size_t i = 0; i < 2; i++)
+				{	size_t j_op = var2op[ arg[i] ];
+					++op_info[j_op].usage;
+					if( op_info[j_op].usage > 1 )
+						op_info[j_op].cexp_set.intersection( cexp_set_result );
+					else
+						op_info[j_op].cexp_set = cexp_set_result;
+				}
 			}
 			break; // ----------------------------------------------
 
@@ -563,18 +560,14 @@ void get_op_info(
 			// ============================================================
 			case CSumOp:
 			play->reverse_csum(op, arg, i_op, i_var);
-			{	set_cexp_compare cexp_set( cexp_set_result );
+			{
 				size_t num_add = size_t( arg[0] );
 				size_t num_sub = size_t( arg[1] );
 				for(size_t i = 0; i < num_add + num_sub; i++)
 				{	size_t j_op = var2op[ arg[3 + i] ];
 					++op_info[j_op].usage;
 					if( op_info[j_op].usage > 1 )
-						cexp_set.intersection( op_info[j_op].cexp_set );
-				}
-				for(size_t i = 0; i < num_add + num_sub; i++)
-				{	size_t j_op = var2op[ arg[3 + i] ];
-					op_info[j_op].cexp_set = cexp_set;
+						op_info[j_op].cexp_set.intersection( cexp_set_result );
 				}
 			}
 			// =============================================================
@@ -687,12 +680,7 @@ void get_op_info(
 							++op_info[j_op].usage;
 					}
 					if( op_info[j_op].usage > 1 && user_usage )
-						user_cexp_set.intersection( op_info[j_op].cexp_set );
-				}
-				if( user_usage )
-				for(size_t j = 0; j < user_n; j++) if( user_ix[j] > 0 )
-				{	size_t j_op = var2op[ user_ix[j] ];
-					op_info[j_op].cexp_set = user_cexp_set;
+						op_info[j_op].cexp_set.intersection( user_cexp_set );
 				}
 			}
 			break; // -------------------------------------------------------
