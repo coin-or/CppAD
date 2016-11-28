@@ -237,7 +237,6 @@ void get_op_info(
 	op_info[i_op].usage = 1;
 	while( op != BeginOp )
 	{	bool   flag;  // temporary boolean value
-		size_t j_op;  // temporary operator index
 		bool   use;   // a temporary usage variable
 		//
 		// next op
@@ -277,7 +276,7 @@ void get_op_info(
 			case TanhOp:
 			case ZmulvpOp:
 			if( use_result > 0 )
-			{	j_op = var2op[ arg[0] ];
+			{	size_t j_op = var2op[ arg[0] ];
 				++op_info[j_op].usage;
 			}
 			break; // --------------------------------------------
@@ -291,7 +290,7 @@ void get_op_info(
 			case SubpvOp:
 			case ZmulpvOp:
 			if( use_result > 0 )
-			{	j_op = var2op[ arg[1] ];
+			{	size_t j_op = var2op[ arg[1] ];
 				++op_info[j_op].usage;
 			}
 			break; // --------------------------------------------
@@ -304,10 +303,10 @@ void get_op_info(
 			case SubvvOp:
 			case ZmulvvOp:
 			if( use_result > 0 )
-			{	j_op = var2op[ arg[0] ];
+			{	size_t j_op = var2op[ arg[0] ];
 				++op_info[j_op].usage;
-				j_op = var2op[ arg[1] ];
-				++op_info[j_op].usage;
+				size_t k_op = var2op[ arg[1] ];
+				++op_info[k_op].usage;
 			}
 			break; // --------------------------------------------
 
@@ -319,7 +318,7 @@ void get_op_info(
 				addr_t mask[] = {1, 2, 4, 8};
 				for(size_t i = 0; i < 4; i++)
 				{	if( arg[1] & mask[i] )
-					{	j_op = var2op[ arg[2 + i] ];
+					{	size_t j_op = var2op[ arg[2 + i] ];
 						++op_info[j_op].usage;
 					}
 				}
@@ -351,7 +350,7 @@ void get_op_info(
 			case EqpvOp:
 			case NepvOp:
 			if( compare_op )
-			{	j_op = var2op[ arg[1] ];
+			{	size_t j_op = var2op[ arg[1] ];
 				++op_info[j_op].usage;
 			}
 			break; // ----------------------------------------------
@@ -360,7 +359,7 @@ void get_op_info(
 			case LevpOp:
 			case LtvpOp:
 			if( compare_op )
-			{	j_op = var2op[ arg[0] ];
+			{	size_t j_op = var2op[ arg[0] ];
 				++op_info[j_op].usage;
 			}
 			break; // ----------------------------------------------
@@ -371,7 +370,7 @@ void get_op_info(
 			case EqvvOp:
 			case NevvOp:
 			if( compare_op ) for(size_t i = 0; i < 2; i++)
-			{	j_op = var2op[ arg[i] ];
+			{	size_t j_op = var2op[ arg[i] ];
 				++op_info[j_op].usage;
 			}
 			break; // ----------------------------------------------
@@ -394,7 +393,7 @@ void get_op_info(
 			{	size_t i_vec = arg2vecad[ arg[0] ];
 				++vecad_usage[i_vec];
 				//
-				j_op = var2op[ arg[1] ];
+				size_t j_op = var2op[ arg[1] ];
 				++op_info[j_op].usage;
 			}
 			break; // --------------------------------------------
@@ -403,7 +402,7 @@ void get_op_info(
 			case StpvOp:
 			use = vecad_usage[ arg2vecad[ arg[0] ] ];
 			if( use )
-			{	j_op = var2op[ arg[2] ];
+			{	size_t j_op = var2op[ arg[2] ];
 				++op_info[j_op].usage;
 			}
 			break; // --------------------------------------------
@@ -412,10 +411,10 @@ void get_op_info(
 			case StvvOp:
 			use = vecad_usage[ arg2vecad[ arg[0] ] ];
 			if( use )
-			{	j_op = var2op[ arg[1] ];
+			{	size_t j_op = var2op[ arg[1] ];
 				++op_info[j_op].usage;
-				j_op = var2op[ arg[2] ];
-				++op_info[j_op].usage;
+				size_t k_op = var2op[ arg[2] ];
+				++op_info[k_op].usage;
 			}
 			break; // -----------------------------------------------------
 
@@ -427,7 +426,7 @@ void get_op_info(
 			{	size_t num_add = size_t( arg[0] );
 				size_t num_sub = size_t( arg[1] );
 				for(size_t i = 0; i < num_add + num_sub; i++)
-				{	j_op = var2op[ arg[3 + i] ];
+				{	size_t j_op = var2op[ arg[3 + i] ];
 					++op_info[j_op].usage;
 				}
 			}
