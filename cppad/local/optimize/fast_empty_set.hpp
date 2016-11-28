@@ -45,7 +45,7 @@ private:
 	/// delete a pointer to a set (make it empty)
 	void delete_ptr(void)
 	{	if( ptr_ != CPPAD_NULL )
-		{	// std::cout << "delete ptr_ = " << ptr_ << std::endl;
+		{	// std::cout << "del ptr_ = " << ptr_ << std::endl;
 			delete ptr_;
 		}
 		ptr_ = CPPAD_NULL;
@@ -55,25 +55,32 @@ public:
 	/// constructor
 	fast_empty_set(void)
 	{	ptr_ = CPPAD_NULL; }
+	explicit fast_empty_set(const fast_empty_set& other)
+	{	ptr_ = CPPAD_NULL;
+		if( other.ptr_ != CPPAD_NULL )
+		{	new_ptr();
+			*ptr_ = *other.ptr_;
+		}
+	}
 
 	/// destructor
 	~fast_empty_set(void)
 	{	delete_ptr(); }
 
 	/// print a set (for debugging)
-	void print(void)
+	void print(void) const
 	{	if( ptr_ == CPPAD_NULL )
 		{	std::cout << "{ }";
 			return;
 		}
 		CPPAD_ASSERT_UNKNOWN( ! empty() );
-		const char* sep = "{ ";
+		const char* sep = "{";
 		typename std::set<Element>::const_iterator itr;
 		for(itr = ptr_->begin(); itr != ptr_->end(); itr++)
 		{	std::cout << sep << *itr;
-			sep = ", ";
+			sep = ",";
 		}
-		std::cout << "}";
+		std::cout << "}\n";
 	}
 
 	/// assignment operator
@@ -117,13 +124,13 @@ public:
 
 	/// returns begin pointer for a non-empty set
 	typename std::set<Element>::const_iterator begin(void)
-	{	CPPAD_ASSERT_UNKNOWN( ! empty() );
+	{	CPPAD_ASSERT_UNKNOWN( ptr_ != CPPAD_NULL );
 		return ptr_->begin();
 	}
 
 	/// returns end pointer for a non-empty set
 	typename std::set<Element>::const_iterator end(void)
-	{	CPPAD_ASSERT_UNKNOWN( ! empty() );
+	{	CPPAD_ASSERT_UNKNOWN( ptr_ != CPPAD_NULL );
 		return ptr_->end();
 	}
 
@@ -134,7 +141,8 @@ public:
 	the other set
 	*/
 	void intersection(const fast_empty_set& other )
-	{	// if this is empty, result is empty
+	{
+		// if this is empty, result is empty
 		if( ptr_ == CPPAD_NULL )
 			return;
 
