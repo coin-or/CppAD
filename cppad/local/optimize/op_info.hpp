@@ -31,33 +31,33 @@ private:
 	size_t index_;
 
 	/// does this correspond to a true or false result for the comparison
-	bool   result_;
+	bool   compare_;
 
 public:
 	/// constructor
-	cexp_compare(size_t index, bool result) :
+	cexp_compare(size_t index, bool compare) :
 	index_ ( index )  ,
-	result_( result )
+	compare_( compare )
 	{ }
 
 	/// index()
 	size_t index(void) const
 	{	return index_; }
 
-	/// result()
-	bool result(void) const
-	{	return result_; }
+	/// compare()
+	bool compare(void) const
+	{	return compare_; }
 
 	/// comparison operator (necessary for set elements)
 	bool operator < (const cexp_compare& right) const
-	{	size_t left_key  = 2 * index_ + size_t(result_);
-		size_t right_key = 2 * right.index_ + size_t( right.result_ );
+	{	size_t left_key  = 2 * index_ + size_t(compare_);
+		size_t right_key = 2 * right.index_ + size_t( right.compare_ );
 		return left_key < right_key;
 	}
 };
 
 inline std::ostream& operator << (std::ostream& os, const cexp_compare& cexp)
-{	os << '(' << cexp.index() << ',' << cexp.result() << ')';
+{	os << '(' << cexp.index() << ',' << cexp.compare() << ')';
 	return os;
 }
 
