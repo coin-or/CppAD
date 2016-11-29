@@ -22,13 +22,15 @@ Create operator information tables
 // BEGIN_CPPAD_LOCAL__OPTIMIZE_NAMESPACE
 namespace CppAD { namespace local { namespace optimize {
 
-/// information that identifies the result of a conditional operator compare
+/// information that identifies
+// a conditional expression and its comparison result.
 class cexp_compare {
 private:
-	/// operator index for conditional operator
+	/// Conditional expression index, cexp2op[ index_ ]
+	/// is the coreresponding operator index.
 	size_t index_;
 
-	/// does the comparision result in true or false result
+	/// does this correspond to a true or false result for the comparison
 	bool   result_;
 
 public:
@@ -111,13 +113,23 @@ changes while it plays back the operation seqeunce.
 is a vector of variable indices for the dependent variables.
 
 \param var2op
-The size of this vector must be equal to the number of variables
+The input size of this vector must be zero.
+Upone return it has size equal to the number of variables
 in the operation sequence; i.e., num_var = play->nun_var_rec().
-The input value of its elements does not matter. Upon return it
-maps a variable index to the operator that created the variable.
+It maps each variable index to the operator that created the variable.
 This is only true for the primary variables.
 If the index i_var corresponds to an auxillary variable, var2op[i_var]
 is equalt to num_op (which is not a valid operator index).
+
+\param cexp2op
+The input size of this vector must be zero.
+Upon return it has size equal to the number of conditional expressions
+in the operation sequence; i.e., the number of CExpOp operators.
+It maps each conditional expression index to the corresponding operator index
+where it appears in the operation sequence; i.e
+for each j, op_info[ cexp2op[j] ].op == CExpOp.
+Furthermore, cexp2op is monotone increasing; i.e., if j1 > j2,
+cexp2op[j1] > cexp2op[j2].
 
 \param op_info
 The size of this vector must be equal to the number of operators
@@ -132,6 +144,7 @@ void get_op_info(
 	player<Base>*                 play                ,
 	const vector<size_t>&         dep_taddr           ,
 	vector<size_t>&               var2op              ,
+	vector<size_t>&               cexp2op             ,
 	vector<struct_op_info>&       op_info             )
 {
 	// number of operators in the tape
@@ -142,9 +155,13 @@ void get_op_info(
 	const size_t num_var = play->num_var_rec();
 	//
 	// initialize mapping from variable index to operator index
-	CPPAD_ASSERT_UNKNOWN( var2op.size() == num_var );
+	CPPAD_ASSERT_UNKNOWN( var2op.size() == 0 );
+	var2op.resize( num_var );
 	for(size_t i = 0; i < num_var; i++)
 		var2op[i] = num_op; // invalid (used for auxillary variables)
+	//
+	// check input size of cexp2op
+	CPPAD_ASSERT_UNKNOWN( cexp2op.size() == 0 );
 	//
 	// information set by forward_user
 	size_t user_old=0, user_m=0, user_n=0, user_i=0, user_j=0;
@@ -172,7 +189,8 @@ void get_op_info(
 	// it represents a paraemeter during the recording process. So we set
 	var2op[i_var] = num_op;
 	//
-	size_t num_inv_op = 0;
+	size_t num_cexp_op = 0;
+	size_t num_inv_op  = 0;
 	user_state = start_user;
 	while(op != EndOp)
 	{	// next operator
@@ -182,12 +200,6 @@ void get_op_info(
 		op_info[i_op].op    = op;
 		op_info[i_op].arg   = arg;
 		op_info[i_op].i_var = i_var;
-		//
-		// count number of independent variables
-		if( op == InvOp )
-		{	++num_inv_op;
-			CPPAD_ASSERT_UNKNOWN( num_inv_op == i_op );
-		}
 		//
 		// mapping from variable index to operator index
 		if( NumRes(op) > 0 )
@@ -214,10 +226,24 @@ void get_op_info(
 			);
 			break;
 
+			case InvOp:
+			// Count number of independent variables. Independent variable
+			// operators must follow directly after the BeginOp.
+			++num_inv_op;
+			CPPAD_ASSERT_UNKNOWN( num_inv_op == i_op );
+			break;
+
+			case CExpOp:
+			// Set the operator index for this conditional expression and
+			// count the number of conditional expressions.
+			++num_cexp_op;
+			break;
+
 			default:
 			break;
 		}
 	}
+	cexp2op.resize( num_cexp_op );
 	//
 	// ----------------------------------------------------------------------
 	// Reverse pass to compute usage and cexp_set for each operator
@@ -288,7 +314,8 @@ void get_op_info(
 	op_info[num_op-1].usage = 1;
 	//
 	// Initialize reverse pass
-	user_state = end_user;
+	size_t cexp_index = num_cexp_op;
+	user_state        = end_user;
 	play->reverse_start(op, arg, i_op, i_var);
 	CPPAD_ASSERT_UNKNOWN( op == EndOp );
 	op_info[i_op].usage = 1;
@@ -398,6 +425,8 @@ void get_op_info(
 			// Conditional expression operators
 			// arg[2], arg[3], arg[4], arg[5] are parameters or variables
 			case CExpOp:
+			--cexp_index;
+			cexp2op[ cexp_index ] = i_op;
 			if( use_result > 0 )
 			{	CPPAD_ASSERT_UNKNOWN( NumArg(CExpOp) == 6 );
 				addr_t mask[] = {1, 2, 4, 8};
@@ -422,14 +451,14 @@ void get_op_info(
 						{	// j_op corresponds to arg[4]; i.e., the value
 							// used when the comparison result is true. It
 							// can be skipped when the comparison is false.
-							cexp_compare cexp(i_op, false);
+							cexp_compare cexp(cexp_index, false);
 							op_info[j_op].cexp_set.insert(cexp);
 						}
 						if( i == 3 )
 						{	// j_op corresponds to arg[5]; i.e., the value
 							// used when the comparison result is false. It
 							// can be skipped when the comparison is true.
-							cexp_compare cexp(i_op, true);
+							cexp_compare cexp(cexp_index, true);
 							op_info[j_op].cexp_set.insert(cexp);
 						}
 					}

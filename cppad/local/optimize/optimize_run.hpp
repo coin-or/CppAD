@@ -111,8 +111,8 @@ void optimize_run(
 
 	// operator information
 	CppAD::vector<struct_op_info>  op_info(num_op);
-	CppAD::vector<size_t>          var2op(num_var);
-	get_op_info(compare_op, play, dep_taddr, var2op, op_info);
+	CppAD::vector<size_t>          var2op(0), cexp2op;
+	get_op_info(compare_op, play, dep_taddr, var2op, cexp2op, op_info);
 
 	// nan with type Base
 	Base base_nan = Base( std::numeric_limits<double>::quiet_NaN() );
@@ -747,14 +747,16 @@ void optimize_run(
 	}
 	// -------------------------------------------------------------
 	// Check op_info conditional skip information
+	size_t cexp_index = cexp2op.size();
 	for(i = 0; i < cskip_info.size(); i++)
-	{	i_op = cskip_info[i].i_op;
+	{	--cexp_index;
+		i_op = cexp2op[cexp_index];
 		//
 		for(j = 0; j < cskip_info[i].skip_var_true.size(); j++)
 		{	size_t j_var = cskip_info[i].skip_var_true[j];
 			size_t j_op  = var2op[j_var];
 			fast_empty_set<cexp_compare> cexp_set( op_info[j_op].cexp_set );
-			cexp_compare element(i_op, true);
+			cexp_compare element(cexp_index, true);
 			CPPAD_ASSERT_UNKNOWN( cexp_set.find(element) != cexp_set.end() );
 			// std::cout << "i_op = " << i_op;
 			// std::cout << ", (j_op, compare) = (" << j_op << ",true)\n";
@@ -764,7 +766,7 @@ void optimize_run(
 		{	size_t j_var = cskip_info[i].skip_var_false[j];
 			size_t j_op  = var2op[j_var];
 			fast_empty_set<cexp_compare> cexp_set( op_info[j_op].cexp_set );
-			cexp_compare element(i_op, false);
+			cexp_compare element(cexp_index, false);
 			CPPAD_ASSERT_UNKNOWN( cexp_set.find(element) != cexp_set.end() );
 			// std::cout << "i_op = " << i_op;
 			// std::cout << ", (j_op, compare) = (" << j_op << ",false)\n";
