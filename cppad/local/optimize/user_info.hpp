@@ -36,12 +36,14 @@ struct struct_user_info {
 	/// If this is a conditional connection, this is the operator
 	/// index of the beginning of the atomic call sequence; i.e.,
 	/// the first UserOp.
-	size_t op_begin;
+	size_t old_op_begin;
+	size_t new_op_begin;
 
 	/// If this is a conditional connection, this is one more than the
 	///  operator index of the ending of the atomic call sequence; i.e.,
 	/// the second UserOp.
-	size_t op_end;
+	size_t old_op_end;
+	size_t new_op_end;
 };
 
 } } } // END_CPPAD_LOCAL_OPTIMIZE_NAMESPACE

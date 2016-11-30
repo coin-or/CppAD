@@ -615,7 +615,7 @@ void optimize_run(
 				//
 				struct_user_info info;
 				info.connect_type = not_connected;
-				info.op_end       = i_op + 1;
+				info.old_op_end   = i_op + 1;
 				user_info.push_back(info);
 			}
 			else
@@ -629,8 +629,8 @@ void optimize_run(
 				}
 				//
 				CPPAD_ASSERT_UNKNOWN( user_curr + 1 == user_info.size() );
-				user_info[user_curr].op_begin = i_op;
-				user_curr                     = user_info.size();
+				user_info[user_curr].old_op_begin = i_op;
+				user_curr                         = user_info.size();
 			}
 			break;
 
@@ -791,10 +791,10 @@ void optimize_run(
 			{	size_t j = itr->index();
 				if( itr->compare() == false )
 					cskip_info[j].n_op_false =
-						user_info[i].op_end - user_info[i].op_begin;
+						user_info[i].old_op_end - user_info[i].old_op_begin;
 				else
 					cskip_info[j].n_op_true =
-						user_info[i].op_end - user_info[i].op_begin;
+						user_info[i].old_op_end - user_info[i].old_op_begin;
 				itr++;
 			}
 		}
@@ -1446,14 +1446,14 @@ void optimize_run(
 
 				CPPAD_ASSERT_UNKNOWN( user_curr > 0 );
 				user_curr--;
-				user_info[user_curr].op_begin = rec->num_op_rec();
+				user_info[user_curr].new_op_begin = rec->num_op_rec();
 			}
 			else
 			{	// forward_user
 				CPPAD_ASSERT_UNKNOWN( user_state == end_user );
 				user_state = start_user;
 				//
-				user_info[user_curr].op_end = rec->num_op_rec() + 1;
+				user_info[user_curr].new_op_end = rec->num_op_rec() + 1;
 			}
 			// user_old, user_n, user_m
 			if( user_info[user_curr].connect_type != not_connected )
@@ -1556,8 +1556,8 @@ void optimize_run(
 				user_info[i].cexp_set.begin();
 			while( itr != user_info[i].cexp_set.end() )
 			{	size_t j = itr->index();
-				size_t k = user_info[i].op_begin;
-				while(k < user_info[i].op_end)
+				size_t k = user_info[i].new_op_begin;
+				while(k < user_info[i].new_op_end)
 				{	if( itr->compare() == false )
 						cskip_info[j].skip_op_false.push_back(k++);
 					else	cskip_info[j].skip_op_true.push_back(k++);
