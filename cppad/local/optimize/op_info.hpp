@@ -132,10 +132,12 @@ Furthermore, cexp2op is monotone increasing; i.e., if j1 > j2,
 cexp2op[j1] > cexp2op[j2].
 
 \param op_info
-The size of this vector must be equal to the number of operators
+The input size of this vector must be zero.
+Upon return it has size equal to the number of operators
 in the operation sequence; i.e., num_op = play->nun_var_rec().
-The input value of its elements does not matter. Upon return the value of
-have been set to the values corresponding to the operation sequence.
+The struct_op_info op_info[i]
+have been set to the values corresponding to the i-th operator
+in the operation sequence.
 */
 
 template <class Base>
@@ -147,21 +149,21 @@ void get_op_info(
 	vector<size_t>&               cexp2op             ,
 	vector<struct_op_info>&       op_info             )
 {
+	CPPAD_ASSERT_UNKNOWN( var2op.size()  == 0 );
+	CPPAD_ASSERT_UNKNOWN( cexp2op.size() == 0 );
+	CPPAD_ASSERT_UNKNOWN( op_info.size() == 0 );
+
 	// number of operators in the tape
 	const size_t num_op = play->num_op_rec();
-	CPPAD_ASSERT_UNKNOWN( op_info.size() == num_op );
+	op_info.resize( num_op );
 	//
 	// number of variables in the tape
 	const size_t num_var = play->num_var_rec();
+	var2op.resize( num_var );
 	//
 	// initialize mapping from variable index to operator index
-	CPPAD_ASSERT_UNKNOWN( var2op.size() == 0 );
-	var2op.resize( num_var );
 	for(size_t i = 0; i < num_var; i++)
 		var2op[i] = num_op; // invalid (used for auxillary variables)
-	//
-	// check input size of cexp2op
-	CPPAD_ASSERT_UNKNOWN( cexp2op.size() == 0 );
 	//
 	// information set by forward_user
 	size_t user_old=0, user_m=0, user_n=0, user_i=0, user_j=0;
@@ -243,6 +245,7 @@ void get_op_info(
 			break;
 		}
 	}
+	// now know the size of cexp2op
 	cexp2op.resize( num_cexp_op );
 	//
 	// ----------------------------------------------------------------------

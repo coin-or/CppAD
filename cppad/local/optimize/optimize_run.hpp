@@ -110,8 +110,8 @@ void optimize_run(
 		parameter = play->GetPar();
 
 	// operator information
-	CppAD::vector<struct_op_info>  op_info(num_op);
-	CppAD::vector<size_t>          var2op(0), cexp2op;
+	CppAD::vector<struct_op_info>  op_info;
+	CppAD::vector<size_t>          var2op, cexp2op;
 	get_op_info(compare_op, play, dep_taddr, var2op, cexp2op, op_info);
 
 	// nan with type Base
