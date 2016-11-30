@@ -117,9 +117,6 @@ void optimize_run(
 	// nan with type Base
 	Base base_nan = Base( std::numeric_limits<double>::quiet_NaN() );
 
-	// temporary indices
-	size_t k;
-
 	// temporary variables
 	OpCode        op;   // current operator
 	const addr_t* arg;  // operator arguments
@@ -163,7 +160,7 @@ void optimize_run(
 			size_t length = play->GetVecInd(j);
 			// set to proper index for this VecAD
 			vecad[j] = i;
-			for(k = 1; k <= length; k++)
+			for(size_t k = 1; k <= length; k++)
 				vecad[j+k] = num_vecad_vec; // invalid index
 			// start of next VecAD
 			j       += length + 1;
@@ -842,7 +839,7 @@ void optimize_run(
 			{	// Put this VecAD vector in new recording
 				CPPAD_ASSERT_UNKNOWN(length < num_vecad_ind);
 				new_vecad_ind[j] = rec->PutVecInd(length);
-				for(k = 1; k <= length; k++) new_vecad_ind[j+k] =
+				for(size_t k = 1; k <= length; k++) new_vecad_ind[j+k] =
 					rec->PutVecInd(
 						rec->PutPar(
 							play->GetPar(
@@ -1554,7 +1551,7 @@ void optimize_run(
 				user_info[i].cexp_set.begin();
 			while( itr != user_info[i].cexp_set.end() )
 			{	size_t j = itr->index();
-				k = user_info[i].op_begin;
+				size_t k = user_info[i].op_begin;
 				while(k < user_info[i].op_end)
 				{	if( itr->compare() == true )
 						cskip_info[j].skip_op_false.push_back(k++);
