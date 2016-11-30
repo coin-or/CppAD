@@ -47,7 +47,9 @@ struct struct_op_info {
 	bool csum_connected;
 
 	/// Set of conditional expressions comparisons that usage of this
-	/// operator depends on. This set is left empty when usage = 0.
+	/// operator depends on. The operator can be skipped if any of the
+	// comparisons results in the set holds. This set is not defined
+	// (left empty) when usage = 0 for an operator.
 	/// It is also left empty for the result of any VecAD operations.
 	fast_empty_set<cexp_compare>  cexp_set;
 };
@@ -408,25 +410,25 @@ void get_op_info(
 					}
 				}
 				// here is where we add eleemnts to cexp_set
-				for(size_t i = 2; i < 4; i++)
-				{	if( arg[1] & mask[i] )
-					{	size_t j_op = var2op[ arg[2 + i] ];
-						CPPAD_ASSERT_UNKNOWN( op_info[j_op].usage > 0 );
-						if( i == 2 )
-						{	// j_op corresponds to arg[4]; i.e., the value
-							// used when the comparison result is true. It
-							// can be skipped when the comparison is false.
-							cexp_compare cexp(cexp_index, false);
-							op_info[j_op].cexp_set.insert(cexp);
-						}
-						if( i == 3 )
-						{	// j_op corresponds to arg[5]; i.e., the value
-							// used when the comparison result is false. It
-							// can be skipped when the comparison is true.
-							cexp_compare cexp(cexp_index, true);
-							op_info[j_op].cexp_set.insert(cexp);
-						}
-					}
+				if( arg[1] & 4 )
+				{	// arg[4] is a variable
+					size_t j_op = var2op[ arg[4] ];
+					CPPAD_ASSERT_UNKNOWN( op_info[j_op].usage > 0 );
+					// j_op corresponds to  the value used when
+					// the comparison result is true. It can be skipped when
+					// the comparison is false.
+					cexp_compare cexp(cexp_index, false);
+					op_info[j_op].cexp_set.insert(cexp);
+				}
+				if( arg[1] & 8 )
+				{	// arg[5] is a variable
+					size_t j_op = var2op[ arg[5] ];
+					CPPAD_ASSERT_UNKNOWN( op_info[j_op].usage > 0 );
+					// j_op corresponds to  the value used when
+					// the comparison result is false. It can be skipped when
+					// the comparison is true.
+					cexp_compare cexp(cexp_index, true);
+					op_info[j_op].cexp_set.insert(cexp);
 				}
 			}
 			break;  // --------------------------------------------
