@@ -735,14 +735,13 @@ void optimize_run(
 	// Determine which variables can be conditionally skipped
 	for(size_t i = 0; i < num_var; i++)
 	{
-		if( tape[i].connect_type == cexp_connected &&
-		  ! cexp_vec_set[i].empty() )
+		if( tape[i].connect_type == cexp_connected )
 		{
 			CPPAD_ASSERT_UNKNOWN( var2op[i] < num_op );
 			CPPAD_ASSERT_UNKNOWN(
 				cexp_vec_set[i] == op_info[ var2op[i] ].cexp_set
 			);
-			std::set<cexp_compare>::const_iterator itr =
+			fast_empty_set<cexp_compare>::const_iterator itr =
 				cexp_vec_set[i].begin();
 			while( itr != cexp_vec_set[i].end() )
 			{	size_t j = itr->index();
@@ -783,9 +782,8 @@ void optimize_run(
 	// -------------------------------------------------------------
 	// Determine size of skip information in user_info
 	for(size_t i = 0; i < user_info.size(); i++)
-	{	if( user_info[i].connect_type == cexp_connected &&
-		  ! user_info[i].cexp_set.empty() )
-		{	std::set<cexp_compare>::const_iterator itr =
+	{	if( user_info[i].connect_type == cexp_connected )
+		{	fast_empty_set<cexp_compare>::const_iterator itr =
 				user_info[i].cexp_set.begin();
 			while( itr != user_info[i].cexp_set.end() )
 			{	size_t j = itr->index();
@@ -1550,9 +1548,8 @@ void optimize_run(
 
 	// Move skip information from user_info to cskip_info
 	for(size_t i = 0; i < user_info.size(); i++)
-	{	if( user_info[i].connect_type == cexp_connected &&
-		  ! user_info[i].cexp_set.empty() )
-		{	std::set<cexp_compare>::const_iterator itr =
+	{	if( user_info[i].connect_type == cexp_connected )
+		{	fast_empty_set<cexp_compare>::const_iterator itr =
 				user_info[i].cexp_set.begin();
 			while( itr != user_info[i].cexp_set.end() )
 			{	size_t j = itr->index();
