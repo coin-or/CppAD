@@ -106,6 +106,17 @@ public:
 		*ptr_ = *other.ptr_;
 	}
 
+	/// eqaulity operator
+	bool operator==(const fast_empty_set& other)
+	{	// case where other set is empty
+		if( other.ptr_ == CPPAD_NULL )
+			return ptr_ == CPPAD_NULL;
+		if( ptr_ == CPPAD_NULL )
+			return false;
+		//
+		return *ptr_ == *other.ptr_;
+	}
+
 	/// insert an element in this set
 	void insert(const Element& element)
 	{	if( ptr_ == CPPAD_NULL )

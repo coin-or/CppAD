@@ -734,9 +734,15 @@ void optimize_run(
 
 	// Determine which variables can be conditionally skipped
 	for(size_t i = 0; i < num_var; i++)
-	{	if( tape[i].connect_type == cexp_connected &&
+	{
+		if( tape[i].connect_type == cexp_connected &&
 		  ! cexp_vec_set[i].empty() )
-		{	std::set<cexp_compare>::const_iterator itr =
+		{
+			CPPAD_ASSERT_UNKNOWN( var2op[i] < num_op );
+			CPPAD_ASSERT_UNKNOWN(
+				cexp_vec_set[i] == op_info[ var2op[i] ].cexp_set
+			);
+			std::set<cexp_compare>::const_iterator itr =
 				cexp_vec_set[i].begin();
 			while( itr != cexp_vec_set[i].end() )
 			{	size_t j = itr->index();

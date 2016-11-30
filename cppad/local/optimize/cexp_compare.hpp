@@ -46,6 +46,11 @@ public:
 	bool compare(void) const
 	{	return compare_; }
 
+	/// check for equality
+	bool operator==(const cexp_compare& right) const
+	{	return (index_ == index_) & (compare_ == compare_);
+	}
+
 	/// comparison operator (necessary for set elements)
 	bool operator < (const cexp_compare& right) const
 	{	size_t left_key  = 2 * index_ + size_t(compare_);
