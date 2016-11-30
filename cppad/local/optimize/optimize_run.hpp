@@ -118,7 +118,7 @@ void optimize_run(
 	Base base_nan = Base( std::numeric_limits<double>::quiet_NaN() );
 
 	// temporary indices
-	size_t j, k;
+	size_t k;
 
 	// temporary variables
 	OpCode        op;   // current operator
@@ -145,7 +145,7 @@ void optimize_run(
 	for(size_t i = 0; i < num_var; i++)
 		tape[i].connect_type = not_connected;
 
-	for(j = 0; j < m; j++)
+	for(size_t j = 0; j < m; j++)
 	{	// mark dependent variables as having one or more connections
 		tape[ dep_taddr[j] ].connect_type = yes_connected;
 	}
@@ -155,19 +155,21 @@ void optimize_run(
 	// VecAD object) to the vecad_connect falg for the VecAD object.
 	CppAD::vector<enum_connect_type>   vecad_connect(num_vecad_vec);
 	CppAD::vector<size_t> vecad(num_vecad_ind);
-	j = 0;
-	for(size_t i = 0; i < num_vecad_vec; i++)
-	{	vecad_connect[i] = not_connected;
-		// length of this VecAD
-		size_t length = play->GetVecInd(j);
-		// set to proper index for this VecAD
-		vecad[j] = i;
-		for(k = 1; k <= length; k++)
-			vecad[j+k] = num_vecad_vec; // invalid index
-		// start of next VecAD
-		j       += length + 1;
+	{
+		size_t j = 0;
+		for(size_t i = 0; i < num_vecad_vec; i++)
+		{	vecad_connect[i] = not_connected;
+			// length of this VecAD
+			size_t length = play->GetVecInd(j);
+			// set to proper index for this VecAD
+			vecad[j] = i;
+			for(k = 1; k <= length; k++)
+				vecad[j+k] = num_vecad_vec; // invalid index
+			// start of next VecAD
+			j       += length + 1;
+		}
+		CPPAD_ASSERT_UNKNOWN( j == num_vecad_ind );
 	}
-	CPPAD_ASSERT_UNKNOWN( j == num_vecad_ind );
 
 	// work space used by UserOp.
 	vector<Base>     user_x;       // parameters in x as integers
@@ -625,7 +627,7 @@ void optimize_run(
 				CPPAD_ASSERT_UNKNOWN( user_state == start_user );
 				user_state = end_user;
 				//
-				for(j = 0; j < user_n; j++) if( user_ix[j] > 0 )
+				for(size_t j = 0; j < user_n; j++) if( user_ix[j] > 0 )
 				{	if( op_info[ var2op[ user_ix[j] ] ].usage > 0 )
 						tape[ user_ix[j] ].connect_type = yes_connected;
 				}
@@ -741,7 +743,7 @@ void optimize_run(
 		{	std::set<class_cexp_pair>::const_iterator itr =
 				cexp_vec_set[i].begin();
 			while( itr != cexp_vec_set[i].end() )
-			{	j = itr->index();
+			{	size_t j = itr->index();
 				if( itr->compare() == true )
 					cskip_info[j].skip_var_false.push_back(i);
 				else cskip_info[j].skip_var_true.push_back(i);
@@ -756,7 +758,7 @@ void optimize_run(
 	{	--cexp_index;
 		i_op = cexp2op[cexp_index];
 		//
-		for(j = 0; j < cskip_info[i].skip_var_true.size(); j++)
+		for(size_t j = 0; j < cskip_info[i].skip_var_true.size(); j++)
 		{	size_t j_var = cskip_info[i].skip_var_true[j];
 			size_t j_op  = var2op[j_var];
 			fast_empty_set<cexp_compare> cexp_set( op_info[j_op].cexp_set );
@@ -766,7 +768,7 @@ void optimize_run(
 			// std::cout << ", (j_op, compare) = (" << j_op << ",true)\n";
 
 		}
-		for(j = 0; j < cskip_info[i].skip_var_false.size(); j++)
+		for(size_t j = 0; j < cskip_info[i].skip_var_false.size(); j++)
 		{	size_t j_var = cskip_info[i].skip_var_false[j];
 			size_t j_op  = var2op[j_var];
 			fast_empty_set<cexp_compare> cexp_set( op_info[j_op].cexp_set );
@@ -784,7 +786,7 @@ void optimize_run(
 		{	std::set<class_cexp_pair>::const_iterator itr =
 				user_info[i].cexp_set.begin();
 			while( itr != user_info[i].cexp_set.end() )
-			{	j = itr->index();
+			{	size_t j = itr->index();
 				if( itr->compare() == true )
 					cskip_info[j].n_op_false =
 						user_info[i].op_end - user_info[i].op_begin;
@@ -831,26 +833,27 @@ void optimize_run(
 	CppAD::vector<size_t> new_vecad_ind(num_vecad_ind);
 	for(size_t i = 0; i < num_vecad_ind; i++)
 		new_vecad_ind[i] = num_vecad_ind; // invalid index
-
-	j = 0;     // index into the old set of indices
-	for(size_t i = 0; i < num_vecad_vec; i++)
-	{	// length of this VecAD
-		size_t length = play->GetVecInd(j);
-		if( vecad_connect[i] != not_connected )
-		{	// Put this VecAD vector in new recording
-			CPPAD_ASSERT_UNKNOWN(length < num_vecad_ind);
-			new_vecad_ind[j] = rec->PutVecInd(length);
-			for(k = 1; k <= length; k++) new_vecad_ind[j+k] =
-				rec->PutVecInd(
-					rec->PutPar(
-						play->GetPar(
-							play->GetVecInd(j+k)
-			) ) );
+	{
+		size_t j = 0;     // index into the old set of indices
+		for(size_t i = 0; i < num_vecad_vec; i++)
+		{	// length of this VecAD
+			size_t length = play->GetVecInd(j);
+			if( vecad_connect[i] != not_connected )
+			{	// Put this VecAD vector in new recording
+				CPPAD_ASSERT_UNKNOWN(length < num_vecad_ind);
+				new_vecad_ind[j] = rec->PutVecInd(length);
+				for(k = 1; k <= length; k++) new_vecad_ind[j+k] =
+					rec->PutVecInd(
+						rec->PutPar(
+							play->GetPar(
+								play->GetVecInd(j+k)
+				) ) );
+			}
+			// start of next VecAD
+			j       += length + 1;
 		}
-		// start of next VecAD
-		j       += length + 1;
+		CPPAD_ASSERT_UNKNOWN( j == num_vecad_ind );
 	}
-	CPPAD_ASSERT_UNKNOWN( j == num_vecad_ind );
 
 	// start playing the operations in the forward direction
 	CPPAD_ASSERT_UNKNOWN( user_curr == user_info.size() );
@@ -895,14 +898,15 @@ void optimize_run(
 		skip     &= op != InvOp;
 		skip     &= user_state == start_user;
 		if( skip )
-		{	j     = cskip_info_order[cskip_order_next];
+		{	size_t j = cskip_info_order[cskip_order_next];
 			if( NumRes(op) > 0 )
 				skip &= cskip_info[j].max_left_right < i_var;
 			else
 				skip &= cskip_info[j].max_left_right <= i_var;
 		}
 		if( skip )
-		{	cskip_order_next++;
+		{	size_t j = cskip_info_order[cskip_order_next];
+			cskip_order_next++;
 			struct_cskip_info info = cskip_info[j];
 			size_t n_true  = info.skip_var_true.size() + info.n_op_true;
 			size_t n_false = info.skip_var_false.size() + info.n_op_false;
@@ -1549,7 +1553,7 @@ void optimize_run(
 		{	std::set<class_cexp_pair>::const_iterator itr =
 				user_info[i].cexp_set.begin();
 			while( itr != user_info[i].cexp_set.end() )
-			{	j = itr->index();
+			{	size_t j = itr->index();
 				k = user_info[i].op_begin;
 				while(k < user_info[i].op_end)
 				{	if( itr->compare() == true )
@@ -1579,7 +1583,7 @@ void optimize_run(
 			rec->ReplaceArg(i_arg++, info.right );
 			rec->ReplaceArg(i_arg++, n_true     );
 			rec->ReplaceArg(i_arg++, n_false    );
-			for(j = 0; j < info.skip_var_true.size(); j++)
+			for(size_t j = 0; j < info.skip_var_true.size(); j++)
 			{	i_var = info.skip_var_true[j];
 				if( tape[i_var].match )
 				{	// The operation for this argument has been removed,
@@ -1591,11 +1595,11 @@ void optimize_run(
 					rec->ReplaceArg(i_arg++, tape[i_var].new_op );
 				}
 			}
-			for(j = 0; j < info.skip_op_true.size(); j++)
+			for(size_t j = 0; j < info.skip_op_true.size(); j++)
 			{	i_op = info.skip_op_true[j];
 				rec->ReplaceArg(i_arg++, i_op);
 			}
-			for(j = 0; j < info.skip_var_false.size(); j++)
+			for(size_t j = 0; j < info.skip_var_false.size(); j++)
 			{	i_var = info.skip_var_false[j];
 				if( tape[i_var].match )
 				{	// The operation for this argument has been removed,
@@ -1607,7 +1611,7 @@ void optimize_run(
 					rec->ReplaceArg(i_arg++, tape[i_var].new_op );
 				}
 			}
-			for(j = 0; j < info.skip_op_false.size(); j++)
+			for(size_t j = 0; j < info.skip_op_false.size(); j++)
 			{	i_op = info.skip_op_false[j];
 				rec->ReplaceArg(i_arg++, i_op);
 			}
