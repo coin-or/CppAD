@@ -490,7 +490,7 @@ void optimize_run(
 					{	tape[arg[4]].connect_type = cexp_connected;
 						cexp_vec_set[arg[4]]     = *cexp_set;
 						cexp_vec_set[arg[4]].insert(
-							cexp_compare(index, true)
+							cexp_compare(index, false)
 						);
 					}
 					else
@@ -510,7 +510,7 @@ void optimize_run(
 					{	tape[arg[5]].connect_type = cexp_connected;
 						cexp_vec_set[arg[5]]     = *cexp_set;
 						cexp_vec_set[arg[5]].insert(
-							cexp_compare(index, false)
+							cexp_compare(index, true)
 						);
 					}
 					else
@@ -746,7 +746,7 @@ void optimize_run(
 				cexp_vec_set[i].begin();
 			while( itr != cexp_vec_set[i].end() )
 			{	size_t j = itr->index();
-				if( itr->compare() == true )
+				if( itr->compare() == false )
 					cskip_info[j].skip_var_false.push_back(i);
 				else cskip_info[j].skip_var_true.push_back(i);
 				itr++;
@@ -789,7 +789,7 @@ void optimize_run(
 				user_info[i].cexp_set.begin();
 			while( itr != user_info[i].cexp_set.end() )
 			{	size_t j = itr->index();
-				if( itr->compare() == true )
+				if( itr->compare() == false )
 					cskip_info[j].n_op_false =
 						user_info[i].op_end - user_info[i].op_begin;
 				else
@@ -1558,7 +1558,7 @@ void optimize_run(
 			{	size_t j = itr->index();
 				size_t k = user_info[i].op_begin;
 				while(k < user_info[i].op_end)
-				{	if( itr->compare() == true )
+				{	if( itr->compare() == false )
 						cskip_info[j].skip_op_false.push_back(k++);
 					else	cskip_info[j].skip_op_true.push_back(k++);
 				}
