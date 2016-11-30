@@ -118,7 +118,7 @@ void optimize_run(
 	Base base_nan = Base( std::numeric_limits<double>::quiet_NaN() );
 
 	// temporary indices
-	size_t i, j, k;
+	size_t j, k;
 
 	// temporary variables
 	OpCode        op;   // current operator
@@ -142,7 +142,7 @@ void optimize_run(
 	// Determine how each variable is connected to the dependent variables
 
 	// initialize all variables has having no connections
-	for(i = 0; i < num_var; i++)
+	for(size_t i = 0; i < num_var; i++)
 		tape[i].connect_type = not_connected;
 
 	for(j = 0; j < m; j++)
@@ -156,7 +156,7 @@ void optimize_run(
 	CppAD::vector<enum_connect_type>   vecad_connect(num_vecad_vec);
 	CppAD::vector<size_t> vecad(num_vecad_ind);
 	j = 0;
-	for(i = 0; i < num_vecad_vec; i++)
+	for(size_t i = 0; i < num_vecad_vec; i++)
 	{	vecad_connect[i] = not_connected;
 		// length of this VecAD
 		size_t length = play->GetVecInd(j);
@@ -387,7 +387,7 @@ void optimize_run(
 			// Special case for AddvvOp and SubvvOp
 			case AddvvOp:
 			case SubvvOp:
-			for(i = 0; i < 2; i++) switch( connect_type )
+			for(size_t i = 0; i < 2; i++) switch( connect_type )
 			{	case not_connected:
 				break;
 
@@ -428,7 +428,7 @@ void optimize_run(
 			case MulvvOp:
 			case PowvvOp:
 			case ZmulvvOp:
-			for(i = 0; i < 2; i++) switch( connect_type )
+			for(size_t i = 0; i < 2; i++) switch( connect_type )
 			{	case not_connected:
 				break;
 
@@ -561,7 +561,7 @@ void optimize_run(
 			case LdpOp:
 			if( tape[i_var].connect_type != not_connected )
 			{
-				i                = vecad[ arg[0] - 1 ];
+				size_t i         = vecad[ arg[0] - 1 ];
 				vecad_connect[i] = yes_connected;
 			}
 			break; // --------------------------------------------
@@ -570,7 +570,7 @@ void optimize_run(
 			case LdvOp:
 			if( tape[i_var].connect_type != not_connected )
 			{
-				i                    = vecad[ arg[0] - 1 ];
+				size_t i             = vecad[ arg[0] - 1 ];
 				vecad_connect[i]     = yes_connected;
 				tape[arg[1]].connect_type = yes_connected;
 			}
@@ -578,17 +578,21 @@ void optimize_run(
 
 			// Store a variable using a parameter index
 			case StpvOp:
-			i = vecad[ arg[0] - 1 ];
-			if( vecad_connect[i] != not_connected )
-				tape[arg[2]].connect_type = yes_connected;
+			{
+				size_t i = vecad[ arg[0] - 1 ];
+				if( vecad_connect[i] != not_connected )
+					tape[arg[2]].connect_type = yes_connected;
+			}
 			break; // --------------------------------------------
 
 			// Store a variable using a variable index
 			case StvvOp:
-			i = vecad[ arg[0] - 1 ];
-			if( vecad_connect[i] )
-			{	tape[arg[1]].connect_type = yes_connected;
-				tape[arg[2]].connect_type = yes_connected;
+			{
+				size_t i = vecad[ arg[0] - 1 ];
+				if( vecad_connect[i] )
+				{	tape[arg[1]].connect_type = yes_connected;
+					tape[arg[2]].connect_type = yes_connected;
+				}
 			}
 			break;
 			// ============================================================
@@ -731,7 +735,7 @@ void optimize_run(
 	tape[i_var].connect_type = yes_connected;
 
 	// Determine which variables can be conditionally skipped
-	for(i = 0; i < num_var; i++)
+	for(size_t i = 0; i < num_var; i++)
 	{	if( tape[i].connect_type == cexp_connected &&
 		  ! cexp_vec_set[i].empty() )
 		{	std::set<class_cexp_pair>::const_iterator itr =
@@ -748,7 +752,7 @@ void optimize_run(
 	// -------------------------------------------------------------
 	// Check op_info conditional skip information
 	size_t cexp_index = cexp2op.size();
-	for(i = 0; i < cskip_info.size(); i++)
+	for(size_t i = 0; i < cskip_info.size(); i++)
 	{	--cexp_index;
 		i_op = cexp2op[cexp_index];
 		//
@@ -774,7 +778,7 @@ void optimize_run(
 	}
 	// -------------------------------------------------------------
 	// Determine size of skip information in user_info
-	for(i = 0; i < user_info.size(); i++)
+	for(size_t i = 0; i < user_info.size(); i++)
 	{	if( user_info[i].connect_type == cexp_connected &&
 		  ! user_info[i].cexp_set.empty() )
 		{	std::set<class_cexp_pair>::const_iterator itr =
@@ -796,7 +800,7 @@ void optimize_run(
 	// index for the left and right comparision operands
 	CppAD::vector<size_t> cskip_info_order( cskip_info.size() );
 	{	CppAD::vector<size_t> keys( cskip_info.size() );
-		for(i = 0; i < cskip_info.size(); i++)
+		for(size_t i = 0; i < cskip_info.size(); i++)
 			keys[i] = std::max( cskip_info[i].left, cskip_info[i].right );
 		CppAD::index_sort(keys, cskip_info_order);
 	}
@@ -809,13 +813,13 @@ void optimize_run(
 	// Initilaize table mapping hash code to variable index in tape
 	// as pointing to the BeginOp at the beginning of the tape
 	CppAD::vector<size_t>  hash_table_var(CPPAD_HASH_TABLE_SIZE);
-	for(i = 0; i < CPPAD_HASH_TABLE_SIZE; i++)
+	for(size_t i = 0; i < CPPAD_HASH_TABLE_SIZE; i++)
 		hash_table_var[i] = 0;
 	CPPAD_ASSERT_UNKNOWN( tape[0].op == BeginOp );
 
 	// initialize mapping from old variable index to new
 	// operator and variable index
-	for(i = 0; i < num_var; i++)
+	for(size_t i = 0; i < num_var; i++)
 	{	tape[i].new_op  = 0;       // invalid index (except for BeginOp)
 		tape[i].new_var = num_var; // invalid index
 	}
@@ -825,11 +829,11 @@ void optimize_run(
 
 	// initialize mapping from old VecAD index to new VecAD index
 	CppAD::vector<size_t> new_vecad_ind(num_vecad_ind);
-	for(i = 0; i < num_vecad_ind; i++)
+	for(size_t i = 0; i < num_vecad_ind; i++)
 		new_vecad_ind[i] = num_vecad_ind; // invalid index
 
 	j = 0;     // index into the old set of indices
-	for(i = 0; i < num_vecad_vec; i++)
+	for(size_t i = 0; i < num_vecad_vec; i++)
 	{	// length of this VecAD
 		size_t length = play->GetVecInd(j);
 		if( vecad_connect[i] != not_connected )
@@ -946,8 +950,10 @@ void optimize_run(
 			case StpvOp:
 			case StvvOp:
 			CPPAD_ASSERT_UNKNOWN( NumRes(op) == 0 );
-			i = vecad[ arg[0] - 1 ];
-			keep = vecad_connect[i] != not_connected;
+			{
+				size_t i = vecad[ arg[0] - 1 ];
+				keep = vecad_connect[i] != not_connected;
+			}
 			break;
 
 			case AddpvOp:
@@ -1018,8 +1024,8 @@ void optimize_run(
 				new_arg[0]   = tape[ arg[0] ].new_var;
 				rec->PutArg( new_arg[0] );
 				tape[i_var].new_op  = rec->num_op_rec();
-				tape[i_var].new_var = i = rec->PutOp(op);
-				CPPAD_ASSERT_UNKNOWN( size_t(new_arg[0]) < i );
+				tape[i_var].new_var = rec->PutOp(op);
+				CPPAD_ASSERT_UNKNOWN(new_arg[0] < tape[i_var].new_var);
 				if( op == ErfOp )
 				{	// Error function is a special case
 					// second argument is always the parameter 0
@@ -1234,7 +1240,7 @@ void optimize_run(
 			new_arg[0] = arg[0];
 			new_arg[1] = arg[1];
 			mask = 1;
-			for(i = 2; i < 6; i++)
+			for(size_t i = 2; i < 6; i++)
 			{	if( arg[1] & mask )
 				{	new_arg[i] = tape[arg[i]].new_var;
 					CPPAD_ASSERT_UNKNOWN(
@@ -1525,7 +1531,7 @@ void optimize_run(
 
 	}
 	// modify the dependent variable vector to new indices
-	for(i = 0; i < dep_taddr.size(); i++ )
+	for(size_t i = 0; i < dep_taddr.size(); i++ )
 	{	CPPAD_ASSERT_UNKNOWN( size_t(tape[dep_taddr[i]].new_var) < num_var );
 		dep_taddr[i] = tape[ dep_taddr[i] ].new_var;
 	}
@@ -1537,7 +1543,7 @@ void optimize_run(
 # endif
 
 	// Move skip information from user_info to cskip_info
-	for(i = 0; i < user_info.size(); i++)
+	for(size_t i = 0; i < user_info.size(); i++)
 	{	if( user_info[i].connect_type == cexp_connected &&
 		  ! user_info[i].cexp_set.empty() )
 		{	std::set<class_cexp_pair>::const_iterator itr =
@@ -1557,7 +1563,7 @@ void optimize_run(
 
 	// fill in the arguments for the CSkip operations
 	CPPAD_ASSERT_UNKNOWN( cskip_order_next == cskip_info.size() );
-	for(i = 0; i < cskip_info.size(); i++)
+	for(size_t i = 0; i < cskip_info.size(); i++)
 	{	struct_cskip_info info = cskip_info[i];
 		if( info.i_arg > 0 )
 		{	CPPAD_ASSERT_UNKNOWN( info.n_op_true==info.skip_op_true.size() );
