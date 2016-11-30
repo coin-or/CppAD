@@ -18,7 +18,6 @@ Please visit http://www.coin-or.org/CppAD/ for information on other licenses.
 # include <iterator>
 # include <cppad/local/optimize/op_info.hpp>
 # include <cppad/local/optimize/connect_type.hpp>
-# include <cppad/local/optimize/cexp_pair.hpp>
 # include <cppad/local/optimize/fast_empty_set.hpp>
 # include <cppad/local/optimize/old_variable.hpp>
 # include <cppad/local/optimize/size_pair.hpp>
@@ -132,7 +131,7 @@ void optimize_run(
 
 	// if tape[i].connect_type == exp_connected, cexp_set[i] is the
 	// corresponding information for the conditional connection.
-	CppAD::vector< fast_empty_set<class_cexp_pair> > cexp_vec_set;
+	CppAD::vector< fast_empty_set<cexp_compare> > cexp_vec_set;
 	if( conditional_skip )
 		cexp_vec_set.resize(num_var);
 	// -------------------------------------------------------------
@@ -214,7 +213,7 @@ void optimize_run(
 		else	CPPAD_ASSERT_UNKNOWN((op != InvOp) & (op != BeginOp));
 # endif
 		enum_connect_type connect_type      = tape[i_var].connect_type;
-		fast_empty_set<class_cexp_pair>* cexp_set = CPPAD_NULL;
+		fast_empty_set<cexp_compare>* cexp_set = CPPAD_NULL;
 		if( conditional_skip )
 			cexp_set = &cexp_vec_set[i_var];
 		switch( op )
@@ -491,7 +490,7 @@ void optimize_run(
 					{	tape[arg[4]].connect_type = cexp_connected;
 						cexp_vec_set[arg[4]]     = *cexp_set;
 						cexp_vec_set[arg[4]].insert(
-							class_cexp_pair(true, index)
+							cexp_compare(index, true)
 						);
 					}
 					else
@@ -511,7 +510,7 @@ void optimize_run(
 					{	tape[arg[5]].connect_type = cexp_connected;
 						cexp_vec_set[arg[5]]     = *cexp_set;
 						cexp_vec_set[arg[5]].insert(
-							class_cexp_pair(false, index)
+							cexp_compare(index, false)
 						);
 					}
 					else
@@ -737,7 +736,7 @@ void optimize_run(
 	for(size_t i = 0; i < num_var; i++)
 	{	if( tape[i].connect_type == cexp_connected &&
 		  ! cexp_vec_set[i].empty() )
-		{	std::set<class_cexp_pair>::const_iterator itr =
+		{	std::set<cexp_compare>::const_iterator itr =
 				cexp_vec_set[i].begin();
 			while( itr != cexp_vec_set[i].end() )
 			{	size_t j = itr->index();
@@ -780,7 +779,7 @@ void optimize_run(
 	for(size_t i = 0; i < user_info.size(); i++)
 	{	if( user_info[i].connect_type == cexp_connected &&
 		  ! user_info[i].cexp_set.empty() )
-		{	std::set<class_cexp_pair>::const_iterator itr =
+		{	std::set<cexp_compare>::const_iterator itr =
 				user_info[i].cexp_set.begin();
 			while( itr != user_info[i].cexp_set.end() )
 			{	size_t j = itr->index();
@@ -1547,7 +1546,7 @@ void optimize_run(
 	for(size_t i = 0; i < user_info.size(); i++)
 	{	if( user_info[i].connect_type == cexp_connected &&
 		  ! user_info[i].cexp_set.empty() )
-		{	std::set<class_cexp_pair>::const_iterator itr =
+		{	std::set<cexp_compare>::const_iterator itr =
 				user_info[i].cexp_set.begin();
 			while( itr != user_info[i].cexp_set.end() )
 			{	size_t j = itr->index();

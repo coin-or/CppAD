@@ -13,7 +13,7 @@ A copy of this license is included in the COPYING file of this distribution.
 Please visit http://www.coin-or.org/CppAD/ for information on other licenses.
 -------------------------------------------------------------------------- */
 /*!
-\file cexp_compae.hpp
+\file cexp_compare.hpp
 information that idenfies a conditional expression and its comparison result
 */
 
