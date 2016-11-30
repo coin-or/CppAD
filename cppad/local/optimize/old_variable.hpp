@@ -52,7 +52,7 @@ struct struct_old_variable {
 	size_t new_op;
 
 	/// Did this variable match a previous variable in the new operation
-	/// sequence. If so, we can use the previous varialbe in its place.
+	/// sequence. If so, we can use the previous variable in its place.
 	bool match;
 };
 

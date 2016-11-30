@@ -82,7 +82,7 @@ bool check_for_nan(void)
 		size_t vector_size = std::atoi(number.c_str());
 		ok &= vector_size == 2;
 
-		// get and check first dependent varialbe index that is nan
+		// get and check first dependent variable index that is nan
 		pattern = "index = ";
 		start   = msg.find(pattern) + pattern.size();
 		number  = "";

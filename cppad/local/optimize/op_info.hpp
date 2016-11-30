@@ -37,7 +37,7 @@ struct struct_op_info {
 
 	/// Number of times an operator is used. This counts using the results
 	/// as well as other factors. Being a dependent variable or independent
-	/// varialbe gets one use count. Certain other side effects can get a
+	/// variable gets one use count. Certain other side effects can get a
 	// use count. For example, comparision operators may or may not be counted.
 	size_t usage;
 

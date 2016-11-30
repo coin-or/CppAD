@@ -131,7 +131,7 @@ inline void forward_cskip_op_0(
 
 	Base left, right;
 	if( arg[1] & 1 )
-	{	// If varialbe arg[2] <= i_z, it has already been computed,
+	{	// If variable arg[2] <= i_z, it has already been computed,
 		// but it will be skipped for higher orders.
 		left = taylor[ arg[2] * cap_order + 0 ];
 	}
@@ -140,7 +140,7 @@ inline void forward_cskip_op_0(
 		left = parameter[ arg[2] ];
 	}
 	if( arg[1] & 2 )
-	{	// If varialbe arg[3] <= i_z, it has already been computed,
+	{	// If variable arg[3] <= i_z, it has already been computed,
 		// but it will be skipped for higher orders.
 		right = taylor[ arg[3] * cap_order + 0 ];
 	}
