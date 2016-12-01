@@ -695,11 +695,10 @@ void optimize_run(
 				CPPAD_ASSERT_UNKNOWN( conditional_skip );
 				if( user_info[user_curr].connect_type == not_connected )
 				{	user_info[user_curr].connect_type  = connect_type;
-					user_info[user_curr].cexp_set      = *cexp_set;
 				}
 				else if(user_info[user_curr].connect_type==cexp_connected)
-				{	user_info[user_curr].cexp_set.intersection(*cexp_set);
-					if( user_info[user_curr].cexp_set.empty() )
+				{
+					if( op_info[i_op].cexp_set.empty() )
 						user_info[user_curr].connect_type = yes_connected;
 				}
 				else	user_info[user_curr].connect_type = yes_connected;
@@ -783,9 +782,10 @@ void optimize_run(
 	// Determine size of skip information in user_info
 	for(size_t i = 0; i < user_info.size(); i++)
 	{	if( user_info[i].connect_type == cexp_connected )
-		{	fast_empty_set<cexp_compare>::const_iterator itr =
-				user_info[i].cexp_set.begin();
-			while( itr != user_info[i].cexp_set.end() )
+		{	size_t j_op = user_info[i].old_op_begin;
+			fast_empty_set<cexp_compare>::const_iterator itr =
+				op_info[j_op].cexp_set.begin();
+			while( itr != op_info[j_op].cexp_set.end() )
 			{	size_t j = itr->index();
 				if( itr->compare() == false )
 					cskip_info[j].n_op_false =
@@ -1549,9 +1549,10 @@ void optimize_run(
 	// Move skip information from user_info to cskip_info
 	for(size_t i = 0; i < user_info.size(); i++)
 	{	if( user_info[i].connect_type == cexp_connected )
-		{	fast_empty_set<cexp_compare>::const_iterator itr =
-				user_info[i].cexp_set.begin();
-			while( itr != user_info[i].cexp_set.end() )
+		{	size_t j_op = user_info[i].old_op_begin;
+			fast_empty_set<cexp_compare>::const_iterator itr =
+				op_info[j_op].cexp_set.begin();
+			while( itr != op_info[j_op].cexp_set.end() )
 			{	size_t j = itr->index();
 				size_t k = user_info[i].new_op_begin;
 				while(k < user_info[i].new_op_end)

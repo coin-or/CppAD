@@ -29,10 +29,6 @@ struct struct_user_info {
 	/// type of connection for this atomic function
 	enum_connect_type connect_type;
 
-	/// If this is an conditional connection, this is the information
-	/// of the correpsonding CondExpOp operators
-	fast_empty_set<cexp_compare> cexp_set;
-
 	/// If this is a conditional connection, this is the operator
 	/// index of the beginning of the atomic call sequence; i.e.,
 	/// the first UserOp.
