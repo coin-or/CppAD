@@ -1504,7 +1504,8 @@ void optimize_run(
 				user_state = end_user;
 			//
 			if( user_info[user_curr].connect_type != not_connected )
-			{	tape[i_var].new_op  = rec->num_op_rec();
+			{	old_op2new_op[i_op] = rec->num_op_rec();
+				tape[i_var].new_op  = rec->num_op_rec();
 				tape[i_var].new_var = rec->PutOp(UsrrvOp);
 			}
 			break;
@@ -1530,9 +1531,11 @@ void optimize_run(
 	}
 
 # ifndef NDEBUG
-	size_t num_new_op = rec->num_op_rec();
-	for(i_var = 0; i_var < tape.size(); i_var++)
-		CPPAD_ASSERT_UNKNOWN( tape[i_var].new_op < num_new_op );
+	for(i_op = 0; i_op < num_op; i_op++) if( NumRes( op_info[i_op].op ) > 0 )
+	{	i_var = op_info[i_op].i_var;
+		CPPAD_ASSERT_UNKNOWN( tape[i_var].new_op < rec->num_op_rec() );
+		CPPAD_ASSERT_UNKNOWN( old_op2new_op[i_op] == tape[i_var].new_op );
+	}
 # endif
 
 	// Move skip information from user_info to cskip_info
