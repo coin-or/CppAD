@@ -113,6 +113,9 @@ void optimize_run(
 	CppAD::vector<size_t>          var2op, cexp2op;
 	get_op_info(compare_op, play, dep_taddr, var2op, cexp2op, op_info);
 
+	// number of conditonal expressions
+	size_t num_cexp_op = cexp2op.size();
+
 	// nan with type Base
 	Base base_nan = Base( std::numeric_limits<double>::quiet_NaN() );
 
@@ -181,7 +184,8 @@ void optimize_run(
 	size_t                             user_curr = 0;
 
 	/// During reverse mode, information for each CSkip operation
-	CppAD::vector<struct_cskip_info>   cskip_info;
+	CppAD::vector<struct_cskip_info>   cskip_info(num_cexp_op);
+	size_t index_cskip_info = num_cexp_op; // initialize for reverse mode
 
 	// Initialize a reverse mode sweep through the operation sequence
 	size_t i_op;
@@ -457,8 +461,8 @@ void optimize_run(
 
 			// Conditional expression operators
 			case CExpOp:
+			--index_cskip_info;
 			CPPAD_ASSERT_UNKNOWN( NumArg(CExpOp) == 6 );
-			if( connect_type != not_connected )
 			{	struct_cskip_info info;
 				info.i_op       = i_op;
 				info.cop        = CompareOp( arg[0] );
@@ -471,18 +475,22 @@ void optimize_run(
 				//
 				size_t index    = 0;
 				if( arg[1] & 1 )
-				{	index = std::max(index, info.left);
-					tape[info.left].connect_type = yes_connected;
-				}
+					index = std::max(index, info.left);
 				if( arg[1] & 2 )
-				{	index = std::max(index, info.right);
-					tape[info.right].connect_type = yes_connected;
-				}
+					index = std::max(index, info.right);
 				CPPAD_ASSERT_UNKNOWN( index > 0 );
 				info.max_left_right = index;
 				//
-				index = cskip_info.size();
-				cskip_info.push_back(info);
+				cskip_info[index_cskip_info] = info;
+			}
+			if( connect_type != not_connected )
+			{	size_t left  = cskip_info[index_cskip_info].left;
+				size_t right = cskip_info[index_cskip_info].right;
+				//
+				if( arg[1] & 1 )
+					tape[left].connect_type = yes_connected;
+				if( arg[1] & 2 )
+					tape[right].connect_type = yes_connected;
 				//
 				if( arg[1] & 4 )
 				{	if( conditional_skip &&
@@ -490,7 +498,7 @@ void optimize_run(
 					{	tape[arg[4]].connect_type = cexp_connected;
 						cexp_vec_set[arg[4]]     = *cexp_set;
 						cexp_vec_set[arg[4]].insert(
-							cexp_compare(index, false)
+							cexp_compare(index_cskip_info, false)
 						);
 					}
 					else
@@ -510,7 +518,7 @@ void optimize_run(
 					{	tape[arg[5]].connect_type = cexp_connected;
 						cexp_vec_set[arg[5]]     = *cexp_set;
 						cexp_vec_set[arg[5]].insert(
-							cexp_compare(index, true)
+							cexp_compare(index_cskip_info, true)
 						);
 					}
 					else
@@ -753,16 +761,14 @@ void optimize_run(
 	}
 	// -------------------------------------------------------------
 	// Check op_info conditional skip information
-	size_t cexp_index = cexp2op.size();
 	for(size_t i = 0; i < cskip_info.size(); i++)
-	{	--cexp_index;
-		i_op = cexp2op[cexp_index];
+	{	i_op = cexp2op[i];
 		//
 		for(size_t j = 0; j < cskip_info[i].skip_var_true.size(); j++)
 		{	size_t j_var = cskip_info[i].skip_var_true[j];
 			size_t j_op  = var2op[j_var];
 			fast_empty_set<cexp_compare> cexp_set( op_info[j_op].cexp_set );
-			cexp_compare element(cexp_index, true);
+			cexp_compare element(i, true);
 			CPPAD_ASSERT_UNKNOWN( cexp_set.find(element) != cexp_set.end() );
 			// std::cout << "i_op = " << i_op;
 			// std::cout << ", (j_op, compare) = (" << j_op << ",true)\n";
@@ -772,7 +778,7 @@ void optimize_run(
 		{	size_t j_var = cskip_info[i].skip_var_false[j];
 			size_t j_op  = var2op[j_var];
 			fast_empty_set<cexp_compare> cexp_set( op_info[j_op].cexp_set );
-			cexp_compare element(cexp_index, false);
+			cexp_compare element(i, false);
 			CPPAD_ASSERT_UNKNOWN( cexp_set.find(element) != cexp_set.end() );
 			// std::cout << "i_op = " << i_op;
 			// std::cout << ", (j_op, compare) = (" << j_op << ",false)\n";

@@ -48,7 +48,7 @@ public:
 
 	/// check for equality
 	bool operator==(const cexp_compare& right) const
-	{	return (index_ == index_) & (compare_ == compare_);
+	{	return (index_ == right.index_) & (compare_ == right.compare_);
 	}
 
 	/// comparison operator (necessary for set elements)
