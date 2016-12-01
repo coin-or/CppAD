@@ -678,6 +678,9 @@ void get_op_info(
 					if( op_info[j_op].usage > 1 && user_usage )
 						op_info[j_op].cexp_set.intersection( user_cexp_set );
 				}
+				// set cexp_set for the user operations for this call
+				for(size_t j = 0; j < user_n + user_m + 2; j++)
+					op_info[i_op + j].cexp_set = user_cexp_set;
 			}
 			break; // -------------------------------------------------------
 
