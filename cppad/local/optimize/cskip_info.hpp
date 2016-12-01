@@ -52,15 +52,15 @@ struct struct_cskip_info {
 	CppAD::vector<size_t> skip_var_false;
 
 	/// set of operations to skip on true
-	CppAD::vector<size_t> skip_op_true;
+	CppAD::vector<size_t> skip_new_op_true;
 
 	/// set of operations to skip on false
-	CppAD::vector<size_t> skip_op_false;
+	CppAD::vector<size_t> skip_new_op_false;
 
-	/// size of skip_op_true
+	/// size of skip_new_op_true
 	size_t n_op_true;
 
-	/// size of skip_op_false
+	/// size of skip_new_op_false
 	size_t n_op_false;
 
 	/// index in the new recording of first argument for this CSkipOp

@@ -1513,8 +1513,8 @@ void optimize_run(
 				size_t k = user_info[i].new_op_begin;
 				while(k < user_info[i].new_op_end)
 				{	if( itr->compare() == false )
-						cskip_info[j].skip_op_false.push_back(k++);
-					else	cskip_info[j].skip_op_true.push_back(k++);
+						cskip_info[j].skip_new_op_false.push_back(k++);
+					else	cskip_info[j].skip_new_op_true.push_back(k++);
 				}
 				itr++;
 			}
@@ -1526,12 +1526,12 @@ void optimize_run(
 	for(size_t i = 0; i < cskip_info.size(); i++)
 	{	struct_cskip_info info = cskip_info[i];
 		if( info.i_arg > 0 )
-		{	CPPAD_ASSERT_UNKNOWN( info.n_op_true==info.skip_op_true.size() );
-			CPPAD_ASSERT_UNKNOWN(info.n_op_false==info.skip_op_false.size());
+		{	CPPAD_ASSERT_UNKNOWN( info.n_op_true==info.skip_new_op_true.size() );
+			CPPAD_ASSERT_UNKNOWN(info.n_op_false==info.skip_new_op_false.size());
 			size_t n_true  =
-				info.skip_var_true.size() + info.skip_op_true.size();
+				info.skip_var_true.size() + info.skip_new_op_true.size();
 			size_t n_false =
-				info.skip_var_false.size() + info.skip_op_false.size();
+				info.skip_var_false.size() + info.skip_new_op_false.size();
 			size_t i_arg   = info.i_arg;
 			rec->ReplaceArg(i_arg++, info.cop   );
 			rec->ReplaceArg(i_arg++, info.flag  );
@@ -1551,8 +1551,8 @@ void optimize_run(
 					rec->ReplaceArg(i_arg++, tape[i_var].new_op );
 				}
 			}
-			for(size_t j = 0; j < info.skip_op_true.size(); j++)
-			{	i_op = info.skip_op_true[j];
+			for(size_t j = 0; j < info.skip_new_op_true.size(); j++)
+			{	i_op = info.skip_new_op_true[j];
 				rec->ReplaceArg(i_arg++, i_op);
 			}
 			for(size_t j = 0; j < info.skip_var_false.size(); j++)
@@ -1567,8 +1567,8 @@ void optimize_run(
 					rec->ReplaceArg(i_arg++, tape[i_var].new_op );
 				}
 			}
-			for(size_t j = 0; j < info.skip_op_false.size(); j++)
-			{	i_op = info.skip_op_false[j];
+			for(size_t j = 0; j < info.skip_new_op_false.size(); j++)
+			{	i_op = info.skip_new_op_false[j];
 				rec->ReplaceArg(i_arg++, i_op);
 			}
 			rec->ReplaceArg(i_arg++, n_true + n_false);
