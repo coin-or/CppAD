@@ -735,31 +735,6 @@ void optimize_run(
 		}
 	}
 	// -------------------------------------------------------------
-	// Check op_info conditional skip information
-	for(size_t i = 0; i < cskip_info.size(); i++)
-	{	i_op = cexp2op[i];
-		//
-		for(size_t j = 0; j < cskip_info[i].skip_var_true.size(); j++)
-		{	size_t j_var = cskip_info[i].skip_var_true[j];
-			size_t j_op  = var2op[j_var];
-			fast_empty_set<cexp_compare> cexp_set( op_info[j_op].cexp_set );
-			cexp_compare element(i, true);
-			CPPAD_ASSERT_UNKNOWN( cexp_set.find(element) != cexp_set.end() );
-			// std::cout << "i_op = " << i_op;
-			// std::cout << ", (j_op, compare) = (" << j_op << ",true)\n";
-
-		}
-		for(size_t j = 0; j < cskip_info[i].skip_var_false.size(); j++)
-		{	size_t j_var = cskip_info[i].skip_var_false[j];
-			size_t j_op  = var2op[j_var];
-			fast_empty_set<cexp_compare> cexp_set( op_info[j_op].cexp_set );
-			cexp_compare element(i, false);
-			CPPAD_ASSERT_UNKNOWN( cexp_set.find(element) != cexp_set.end() );
-			// std::cout << "i_op = " << i_op;
-			// std::cout << ", (j_op, compare) = (" << j_op << ",false)\n";
-		}
-	}
-	// -------------------------------------------------------------
 	// Determine size of skip information in user_info
 	for(size_t i = 0; i < user_info.size(); i++)
 	{	if( user_info[i].connect_type == cexp_connected )
