@@ -1498,7 +1498,7 @@ void optimize_run(
 			if( user_i == user_m )
 				user_state = end_user;
 			//
-			if( user_info[user_curr].connect_type != not_connected )
+			if( op_info[i_op].usage > 0 )
 			{	old_op2new_op[i_op] = rec->num_op_rec();
 				tape[i_var].new_op  = rec->num_op_rec();
 				tape[i_var].new_var = rec->PutOp(UsrrvOp);

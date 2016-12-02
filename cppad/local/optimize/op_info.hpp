@@ -662,7 +662,9 @@ void get_op_info(
 				}
 				// 2DO: It might be faster if we add set union to var_sparsity
 				// where one of the sets is not in var_sparsity.
-				for(size_t j = 0; j < user_n; j++) if( user_ix[j] > 0 )
+				if( user_usage )
+				for(size_t j = 0; j < user_n; j++)
+				if( user_ix[j] > 0 )
 				{	// This user argument is a variable
 					size_t j_op = var2op[ user_ix[j] ];
 					if( user_set )
@@ -677,12 +679,17 @@ void get_op_info(
 					{	if( user_s_pack[j] )
 							++op_info[j_op].usage;
 					}
-					if( op_info[j_op].usage > 1 && user_usage )
+					if( op_info[j_op].usage )
 						op_info[j_op].cexp_set.intersection( user_cexp_set );
+					else
+						op_info[j_op].cexp_set = user_cexp_set;
 				}
 				// set cexp_set for the user operations for this call
+				if( user_usage )
 				for(size_t j = 0; j < user_n + user_m + 2; j++)
-					op_info[i_op + j].cexp_set = user_cexp_set;
+				{	op_info[i_op + j].cexp_set = user_cexp_set;
+					++op_info[i_op + j].usage;
+				}
 			}
 			break; // -------------------------------------------------------
 
