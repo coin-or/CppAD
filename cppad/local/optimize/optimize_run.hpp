@@ -24,7 +24,6 @@ Please visit http://www.coin-or.org/CppAD/ for information on other licenses.
 # include <cppad/local/optimize/csum_variable.hpp>
 # include <cppad/local/optimize/csum_stacks.hpp>
 # include <cppad/local/optimize/cskip_info.hpp>
-# include <cppad/local/optimize/user_info.hpp>
 # include <cppad/local/optimize/unary_match.hpp>
 # include <cppad/local/optimize/binary_match.hpp>
 # include <cppad/local/optimize/record_pv.hpp>
@@ -173,11 +172,6 @@ void optimize_run(
 	size_t user_m=0, user_n=0, user_i=0, user_j=0;
 	enum_user_state user_state;
 	//
-	// During reverse mode, compute type of connection for each call to
-	// a user atomic function.
-	CppAD::vector<struct_user_info>    user_info;
-	size_t                             user_curr = 0;
-
 	/// During reverse mode, information for each CSkip operation
 	CppAD::vector<struct_cskip_info>   cskip_info(num_cexp_op);
 	size_t index_cskip_info = num_cexp_op; // initialize for reverse mode
@@ -596,10 +590,6 @@ void optimize_run(
 				user_x.resize( user_n );
 				user_ix.resize( user_n );
 				//
-				struct_user_info info;
-				info.connect_type = not_connected;
-				info.old_op_end   = i_op + 1;
-				user_info.push_back(info);
 			}
 			else
 			{	// reverse_user
@@ -610,10 +600,6 @@ void optimize_run(
 				{	if( op_info[ var2op[ user_ix[j] ] ].usage > 0 )
 						tape[ user_ix[j] ].connect_type = yes_connected;
 				}
-				//
-				CPPAD_ASSERT_UNKNOWN( user_curr + 1 == user_info.size() );
-				user_info[user_curr].old_op_begin = i_op;
-				user_curr                         = user_info.size();
 			}
 			break;
 
@@ -671,20 +657,10 @@ void optimize_run(
 				case yes_connected:
 				case sum_connected:
 				case csum_connected:
-				user_info[user_curr].connect_type = yes_connected;
 				break;
 
 				case cexp_connected:
 				CPPAD_ASSERT_UNKNOWN( conditional_skip );
-				if( user_info[user_curr].connect_type == not_connected )
-				{	user_info[user_curr].connect_type  = connect_type;
-				}
-				else if(user_info[user_curr].connect_type==cexp_connected)
-				{
-					if( op_info[i_op].cexp_set.empty() )
-						user_info[user_curr].connect_type = yes_connected;
-				}
-				else	user_info[user_curr].connect_type = yes_connected;
 				break;
 
 				default:
@@ -730,25 +706,6 @@ void optimize_run(
 		}
 	}
 	// -------------------------------------------------------------
-	// Determine size of skip information in user_info
-	for(size_t i = 0; i < user_info.size(); i++)
-	{	if( user_info[i].connect_type == cexp_connected )
-		{	size_t j_op = user_info[i].old_op_begin;
-			fast_empty_set<cexp_compare>::const_iterator itr =
-				op_info[j_op].cexp_set.begin();
-			while( itr != op_info[j_op].cexp_set.end() )
-			{	size_t j = itr->index();
-				if( itr->compare() == false )
-					cskip_info[j].n_op_false =
-						user_info[i].old_op_end - user_info[i].old_op_begin;
-				else
-					cskip_info[j].n_op_true =
-						user_info[i].old_op_end - user_info[i].old_op_begin;
-				itr++;
-			}
-		}
-	}
-
 	// Sort the conditional skip information by the maximum of the
 	// index for the left and right comparision operands
 	CppAD::vector<size_t> cskip_info_order( cskip_info.size() );
@@ -807,7 +764,6 @@ void optimize_run(
 	}
 
 	// start playing the operations in the forward direction
-	CPPAD_ASSERT_UNKNOWN( user_curr == user_info.size() );
 	i_op = 0;
 	op   = op_info[i_op].op;
 	arg  = op_info[i_op].arg;
@@ -1419,21 +1375,15 @@ void optimize_run(
 				user_j     = 0;
 				user_i     = 0;
 				user_state = arg_user;
-
-
-				CPPAD_ASSERT_UNKNOWN( user_curr > 0 );
-				user_curr--;
-				user_info[user_curr].new_op_begin = rec->num_op_rec();
 			}
 			else
 			{	// forward_user
 				CPPAD_ASSERT_UNKNOWN( user_state == end_user );
 				user_state = start_user;
 				//
-				user_info[user_curr].new_op_end = rec->num_op_rec() + 1;
 			}
 			// user_old, user_n, user_m
-			if( user_info[user_curr].connect_type != not_connected )
+			if( op_info[i_op].usage > 0 )
 			{	rec->PutArg(arg[0], arg[1], arg[2], arg[3]);
 				old_op2new_op[i_op] = rec->num_op_rec();
 				rec->PutOp(UserOp);
@@ -1446,7 +1396,7 @@ void optimize_run(
 			if( user_j == user_n )
 				user_state = ret_user;
 			//
-			if( user_info[user_curr].connect_type != not_connected )
+			if( op_info[i_op].usage > 0 )
 			{	new_arg[0] = rec->PutPar( play->GetPar(arg[0]) );
 				rec->PutArg(new_arg[0]);
 				old_op2new_op[i_op] = rec->num_op_rec();
@@ -1460,7 +1410,7 @@ void optimize_run(
 			if( user_j == user_n )
 				user_state = ret_user;
 			//
-			if( user_info[user_curr].connect_type != not_connected )
+			if( op_info[i_op].usage > 0 )
 			{	new_arg[0] = tape[arg[0]].new_var;
 				if( size_t(new_arg[0]) < num_var )
 				{	rec->PutArg(new_arg[0]);
@@ -1484,7 +1434,7 @@ void optimize_run(
 			if( user_i == user_m )
 				user_state = end_user;
 			//
-			if( user_info[user_curr].connect_type != not_connected )
+			if( op_info[i_op].usage > 0 )
 			{	new_arg[0] = rec->PutPar( play->GetPar(arg[0]) );
 				rec->PutArg(new_arg[0]);
 				old_op2new_op[i_op] = rec->num_op_rec();
