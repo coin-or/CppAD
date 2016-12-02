@@ -449,8 +449,6 @@ void optimize_run(
 				info.flag       = arg[1];
 				info.left       = arg[2];
 				info.right      = arg[3];
-				info.n_op_true  = 0;
-				info.n_op_false = 0;
 				info.i_arg      = 0; // case where no CSkipOp for this CExpOp
 				//
 				size_t index    = 0;
