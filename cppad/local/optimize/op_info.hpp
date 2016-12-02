@@ -410,7 +410,9 @@ void get_op_info(
 					}
 				}
 				// here is where we add eleemnts to cexp_set
-				if( arg[1] & 4 )
+				bool same_variable = bool(arg[1] & 4) && bool(arg[1] & 8);
+				same_variable     &= arg[4] == arg[5];
+				if( ( arg[1] & 4 ) && (! same_variable) )
 				{	// arg[4] is a variable
 					size_t j_op = var2op[ arg[4] ];
 					CPPAD_ASSERT_UNKNOWN( op_info[j_op].usage > 0 );
@@ -420,7 +422,7 @@ void get_op_info(
 					cexp_compare cexp(cexp_index, false);
 					op_info[j_op].cexp_set.insert(cexp);
 				}
-				if( arg[1] & 8 )
+				if( ( arg[1] & 8 ) && (! same_variable) )
 				{	// arg[5] is a variable
 					size_t j_op = var2op[ arg[5] ];
 					CPPAD_ASSERT_UNKNOWN( op_info[j_op].usage > 0 );

@@ -46,10 +46,10 @@ struct struct_cskip_info {
 	size_t max_left_right;
 
 	/// set of variables to skip on true
-	CppAD::vector<size_t> skip_var_true;
+	CppAD::vector<size_t> skip_old_op_true;
 
 	/// set of variables to skip on false
-	CppAD::vector<size_t> skip_var_false;
+	CppAD::vector<size_t> skip_old_op_false;
 
 	/// set of operations to skip on true
 	CppAD::vector<size_t> skip_new_op_true;

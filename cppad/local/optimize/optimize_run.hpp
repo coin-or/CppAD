@@ -714,22 +714,17 @@ void optimize_run(
 	tape[i_var].op           = op;
 	tape[i_var].connect_type = yes_connected;
 
-	// Determine which variables can be conditionally skipped
-	for(size_t i = 0; i < num_var; i++)
-	{
-		if( tape[i].connect_type == cexp_connected )
+	// Determine which operators can be conditionally skipped
+	for(size_t i = 0; i < num_op; i++)
+	{	if( ! op_info[i].cexp_set.empty() )
 		{
-			CPPAD_ASSERT_UNKNOWN( var2op[i] < num_op );
-			CPPAD_ASSERT_UNKNOWN(
-				op_info[ var2op[i] ].cexp_set == op_info[ var2op[i] ].cexp_set
-			);
 			fast_empty_set<cexp_compare>::const_iterator itr =
-				op_info[ var2op[i] ].cexp_set.begin();
-			while( itr != op_info[ var2op[i] ].cexp_set.end() )
+				op_info[i].cexp_set.begin();
+			while( itr != op_info[i].cexp_set.end() )
 			{	size_t j = itr->index();
 				if( itr->compare() == false )
-					cskip_info[j].skip_var_false.push_back(i);
-				else cskip_info[j].skip_var_true.push_back(i);
+					cskip_info[j].skip_old_op_false.push_back(i);
+				else cskip_info[j].skip_old_op_true.push_back(i);
 				itr++;
 			}
 		}
@@ -870,8 +865,8 @@ void optimize_run(
 		{	size_t j = cskip_info_order[cskip_order_next];
 			cskip_order_next++;
 			struct_cskip_info info = cskip_info[j];
-			size_t n_true  = info.skip_var_true.size() + info.n_op_true;
-			size_t n_false = info.skip_var_false.size() + info.n_op_false;
+			size_t n_true  = info.skip_old_op_true.size();
+			size_t n_false = info.skip_old_op_false.size();
 			skip &= n_true > 0 || n_false > 0;
 			if( skip )
 			{	CPPAD_ASSERT_UNKNOWN( NumRes(CSkipOp) == 0 );
@@ -1537,37 +1532,14 @@ void optimize_run(
 		CPPAD_ASSERT_UNKNOWN( old_op2new_op[i_op] == tape[i_var].new_op );
 	}
 # endif
-
-	// Move skip information from user_info to cskip_info
-	for(size_t i = 0; i < user_info.size(); i++)
-	{	if( user_info[i].connect_type == cexp_connected )
-		{	size_t j_op = user_info[i].old_op_begin;
-			fast_empty_set<cexp_compare>::const_iterator itr =
-				op_info[j_op].cexp_set.begin();
-			while( itr != op_info[j_op].cexp_set.end() )
-			{	size_t j = itr->index();
-				size_t k = user_info[i].new_op_begin;
-				while(k < user_info[i].new_op_end)
-				{	if( itr->compare() == false )
-						cskip_info[j].skip_new_op_false.push_back(k++);
-					else	cskip_info[j].skip_new_op_true.push_back(k++);
-				}
-				itr++;
-			}
-		}
-	}
-
 	// fill in the arguments for the CSkip operations
 	CPPAD_ASSERT_UNKNOWN( cskip_order_next == cskip_info.size() );
 	for(size_t i = 0; i < cskip_info.size(); i++)
 	{	struct_cskip_info info = cskip_info[i];
 		if( info.i_arg > 0 )
-		{	CPPAD_ASSERT_UNKNOWN( info.n_op_true==info.skip_new_op_true.size() );
-			CPPAD_ASSERT_UNKNOWN(info.n_op_false==info.skip_new_op_false.size());
-			size_t n_true  =
-				info.skip_var_true.size() + info.skip_new_op_true.size();
-			size_t n_false =
-				info.skip_var_false.size() + info.skip_new_op_false.size();
+		{
+			size_t n_true  = info.skip_old_op_true.size();
+			size_t n_false = info.skip_old_op_false.size();
 			size_t i_arg   = info.i_arg;
 			rec->ReplaceArg(i_arg++, info.cop   );
 			rec->ReplaceArg(i_arg++, info.flag  );
@@ -1575,37 +1547,33 @@ void optimize_run(
 			rec->ReplaceArg(i_arg++, info.right );
 			rec->ReplaceArg(i_arg++, n_true     );
 			rec->ReplaceArg(i_arg++, n_false    );
-			for(size_t j = 0; j < info.skip_var_true.size(); j++)
-			{	i_var = info.skip_var_true[j];
-				if( tape[i_var].match )
-				{	// The operation for this argument has been removed,
+			for(size_t j = 0; j < info.skip_old_op_true.size(); j++)
+			{	i_op = info.skip_old_op_true[j];
+				bool remove = old_op2new_op[i_op] == 0;
+				if( NumRes( op_info[i_op].op ) > 0 )
+					if( tape[ op_info[i_op].i_var].match )
+						remove = true;
+				if( remove )
+				{	// This operation has been removed or matched,
 					// so use an operator index that never comes up.
 					rec->ReplaceArg(i_arg++, rec->num_op_rec());
 				}
 				else
-				{	CPPAD_ASSERT_UNKNOWN( tape[i_var].new_op > 0 );
-					rec->ReplaceArg(i_arg++, tape[i_var].new_op );
-				}
+					rec->ReplaceArg(i_arg++, old_op2new_op[i_op] );
 			}
-			for(size_t j = 0; j < info.skip_new_op_true.size(); j++)
-			{	i_op = info.skip_new_op_true[j];
-				rec->ReplaceArg(i_arg++, i_op);
-			}
-			for(size_t j = 0; j < info.skip_var_false.size(); j++)
-			{	i_var = info.skip_var_false[j];
-				if( tape[i_var].match )
-				{	// The operation for this argument has been removed,
+			for(size_t j = 0; j < info.skip_old_op_false.size(); j++)
+			{	i_op   = info.skip_old_op_false[j];
+				bool remove = old_op2new_op[i_op] == 0;
+				if( NumRes( op_info[i_op].op ) > 0 )
+					if( tape[ op_info[i_op].i_var].match )
+						remove = true;
+				if( remove )
+				{	// This operation has been removed or matched,
 					// so use an operator index that never comes up.
 					rec->ReplaceArg(i_arg++, rec->num_op_rec());
 				}
 				else
-				{	CPPAD_ASSERT_UNKNOWN( tape[i_var].new_op > 0 );
-					rec->ReplaceArg(i_arg++, tape[i_var].new_op );
-				}
-			}
-			for(size_t j = 0; j < info.skip_new_op_false.size(); j++)
-			{	i_op = info.skip_new_op_false[j];
-				rec->ReplaceArg(i_arg++, i_op);
+					rec->ReplaceArg(i_arg++, old_op2new_op[i_op] );
 			}
 			rec->ReplaceArg(i_arg++, n_true + n_false);
 # ifndef NDEBUG
