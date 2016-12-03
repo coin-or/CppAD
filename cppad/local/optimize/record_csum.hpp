@@ -96,13 +96,9 @@ struct_size_pair record_csum(
 	CPPAD_ASSERT_UNKNOWN( work.add_stack.empty() );
 	CPPAD_ASSERT_UNKNOWN( work.sub_stack.empty() );
 	//
-	CPPAD_ASSERT_UNKNOWN( tape[current].connect_type == yes_connected );
-# ifndef NDEBUG
-	{	size_t i_op = var2op[current];
-		CPPAD_ASSERT_UNKNOWN( ! op_info[i_op].csum_connected );
-	}
-# endif
-
+	size_t i_op = var2op[current];
+	CPPAD_ASSERT_UNKNOWN( ! op_info[i_op].csum_connected );
+	//
 	size_t                        i;
 	OpCode                        op;
 	const addr_t*                 arg;
@@ -110,8 +106,8 @@ struct_size_pair record_csum(
 	struct struct_csum_variable var;
 	//
 	// information corresponding to the root node in the cummulative summation
-	var.op  = tape[current].op;   // this operator
-	var.arg = tape[current].arg;  // arguments for this operator
+	var.op  = op_info[i_op].op;   // this operator
+	var.arg = op_info[i_op].arg;  // arguments for this operator
 	var.add = true;               // was parrent operator positive or negative
 	//
 	// initialize stack as containing this one operator
@@ -122,13 +118,14 @@ struct_size_pair record_csum(
 	//
 # ifndef NDEBUG
 	bool ok = false;
+	struct_op_info info = op_info[i_op];
 	if( var.op == SubvpOp )
-		ok = tape[ tape[current].arg[0] ].connect_type == csum_connected;
+		ok = op_info[ var2op[info.arg[0]] ].csum_connected;
 	if( var.op == AddpvOp || var.op == SubpvOp )
-		ok = tape[ tape[current].arg[1] ].connect_type == csum_connected;
+		ok = op_info[ var2op[info.arg[1]] ].csum_connected;
 	if( var.op == AddvvOp || var.op == SubvvOp )
-	{	ok  = tape[ tape[current].arg[0] ].connect_type == csum_connected;
-		ok |= tape[ tape[current].arg[1] ].connect_type == csum_connected;
+	{	ok  = op_info[ var2op[info.arg[0]] ].csum_connected;
+		ok |= op_info[ var2op[info.arg[1]] ].csum_connected;
 	}
 	CPPAD_ASSERT_UNKNOWN( ok );
 # endif
@@ -161,18 +158,18 @@ struct_size_pair record_csum(
 			//
 			// check if the first argument is csum_connected
 # ifndef NDEBUG
-			{	bool flag1 = tape[arg[0]].connect_type == csum_connected;
+			{	bool flag1 = op_info[var2op[arg[0]]].csum_connected;
 				bool flag2 = op_info[ var2op[ arg[0] ] ].csum_connected;
 				CPPAD_ASSERT_UNKNOWN( flag1 == flag2 );
 			}
 # endif
-			if( tape[arg[0]].connect_type == csum_connected )
+			if( op_info[var2op[arg[0]]].csum_connected )
 			{	CPPAD_ASSERT_UNKNOWN(
 					size_t(tape[arg[0]].new_var) == tape.size()
 				);
 				// push the operator corresponding to the first argument
-				var.op  = tape[arg[0]].op;
-				var.arg = tape[arg[0]].arg;
+				var.op  = op_info[ var2op[arg[0]] ].op;
+				var.arg = op_info[ var2op[arg[0]] ].arg;
 				// first argument has same sign as parent node
 				var.add = add;
 				work.op_stack.push( var );
@@ -211,18 +208,18 @@ struct_size_pair record_csum(
 			case AddpvOp:
 			// check if the second argument is csum_connected
 # ifndef NDEBUG
-			{	bool flag1 = tape[arg[1]].connect_type == csum_connected;
+			{	bool flag1 = op_info[var2op[arg[1]]].csum_connected;
 				bool flag2 = op_info[ var2op[ arg[1] ] ].csum_connected;
 				CPPAD_ASSERT_UNKNOWN( flag1 == flag2 );
 			}
 # endif
-			if( tape[arg[1]].connect_type == csum_connected )
+			if( op_info[var2op[arg[1]]].csum_connected )
 			{	CPPAD_ASSERT_UNKNOWN(
 					size_t(tape[arg[1]].new_var) == tape.size()
 				);
 				// push the operator corresoponding to the second arugment
-				var.op   = tape[arg[1]].op;
-				var.arg  = tape[arg[1]].arg;
+				var.op   = op_info[ var2op[arg[1]] ].op;
+				var.arg  = op_info[ var2op[arg[1]] ].arg;
 				var.add  = add;
 				work.op_stack.push( var );
 			}
