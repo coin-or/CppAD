@@ -232,31 +232,16 @@ void optimize_run(
 			case TanOp:
 			case TanhOp:
 			case ZmulvpOp:
-			switch( connect_type )
-			{	case not_connected:
-				break;
-
-				case yes_connected:
-				case sum_connected:
-				case csum_connected:
-				tape[arg[0]].connect_type = yes_connected;
-				break;
-
-				case cexp_connected:
-				CPPAD_ASSERT_UNKNOWN( conditional_skip )
-				if( tape[arg[0]].connect_type == not_connected )
-				{	tape[arg[0]].connect_type = cexp_connected;
+			{	size_t j_op = var2op[ arg[0] ];
+				if( op_info[j_op].csum_connected )
+					tape[arg[0]].connect_type = csum_connected;
+				else if( op_info[j_op].usage > 0 )
+					tape[arg[0]].connect_type = yes_connected;
+				else
+				{	CPPAD_ASSERT_UNKNOWN(
+						tape[arg[0]].connect_type == not_connected
+					);
 				}
-				else if( tape[arg[0]].connect_type == cexp_connected )
-				{
-					if( op_info[ var2op[arg[0]] ].cexp_set.empty() )
-						tape[arg[0]].connect_type = yes_connected;
-				}
-				else	tape[arg[0]].connect_type = yes_connected;
-				break;
-
-				default:
-				CPPAD_ASSERT_UNKNOWN(false);
 			}
 			break; // --------------------------------------------
 
@@ -266,31 +251,16 @@ void optimize_run(
 			case MulpvOp:
 			case PowpvOp:
 			case ZmulpvOp:
-			switch( connect_type )
-			{	case not_connected:
-				break;
-
-				case yes_connected:
-				case sum_connected:
-				case csum_connected:
-				tape[arg[1]].connect_type = yes_connected;
-				break;
-
-				case cexp_connected:
-				CPPAD_ASSERT_UNKNOWN( conditional_skip )
-				if( tape[arg[1]].connect_type == not_connected )
-				{	tape[arg[1]].connect_type = cexp_connected;
+			{	size_t j_op = var2op[ arg[1] ];
+				if( op_info[j_op].csum_connected )
+					tape[arg[1]].connect_type = csum_connected;
+				else if( op_info[j_op].usage > 0 )
+					tape[arg[1]].connect_type = yes_connected;
+				else
+				{	CPPAD_ASSERT_UNKNOWN(
+						tape[arg[1]].connect_type == not_connected
+					);
 				}
-				else if( tape[arg[1]].connect_type == cexp_connected )
-				{
-					if( op_info[ var2op[arg[1]] ].cexp_set.empty() )
-						tape[arg[1]].connect_type = yes_connected;
-				}
-				else	tape[arg[1]].connect_type = yes_connected;
-				break;
-
-				default:
-				CPPAD_ASSERT_UNKNOWN(false);
 			}
 			break; // --------------------------------------------
 
@@ -411,31 +381,17 @@ void optimize_run(
 			case MulvvOp:
 			case PowvvOp:
 			case ZmulvvOp:
-			for(size_t i = 0; i < 2; i++) switch( connect_type )
-			{	case not_connected:
-				break;
-
-				case yes_connected:
-				case sum_connected:
-				case csum_connected:
-				tape[arg[i]].connect_type = yes_connected;
-				break;
-
-				case cexp_connected:
-				CPPAD_ASSERT_UNKNOWN( conditional_skip )
-				if( tape[arg[i]].connect_type == not_connected )
-				{	tape[arg[i]].connect_type = cexp_connected;
+			for(size_t i = 0; i < 2; i++)
+			{	size_t j_op = var2op[ arg[i] ];
+				if( op_info[j_op].csum_connected )
+					tape[arg[i]].connect_type = csum_connected;
+				else if( op_info[j_op].usage > 0 )
+					tape[arg[i]].connect_type = yes_connected;
+				else
+				{	CPPAD_ASSERT_UNKNOWN(
+						tape[arg[i]].connect_type == not_connected
+					);
 				}
-				else if( tape[arg[i]].connect_type == cexp_connected )
-				{
-					if( op_info[ var2op[arg[i]] ].cexp_set.empty() )
-						tape[arg[i]].connect_type = yes_connected;
-				}
-				else	tape[arg[i]].connect_type = yes_connected;
-				break;
-
-				default:
-				CPPAD_ASSERT_UNKNOWN(false);
 			}
 			break; // --------------------------------------------
 
