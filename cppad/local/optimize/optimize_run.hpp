@@ -801,9 +801,10 @@ void optimize_run(
 				new_arg[1],
 				new_arg[2]
 			);
-			old2new[i_op].new_op = rec->num_op_rec();
-			tape[i_var].new_op  = rec->num_op_rec();
-			tape[i_var].new_var = rec->PutLoadOp(op);
+			old2new[i_op].new_op  = rec->num_op_rec();
+			old2new[i_op].new_var = rec->PutLoadOp(op);
+			tape[i_var].new_op  = old2new[i_op].new_op;
+			tape[i_var].new_var = old2new[i_op].new_var;
 			break;
 			// ---------------------------------------------------
 			// Load using a variable index
@@ -819,9 +820,10 @@ void optimize_run(
 				new_arg[1],
 				new_arg[2]
 			);
-			old2new[i_op].new_op = rec->num_op_rec();
-			tape[i_var].new_op  = rec->num_op_rec();
-			tape[i_var].new_var = rec->PutLoadOp(op);
+			old2new[i_op].new_op  = rec->num_op_rec();
+			old2new[i_op].new_var = rec->PutLoadOp(op);
+			tape[i_var].new_op  = old2new[i_op].new_op;
+			tape[i_var].new_var = old2new[i_op].new_var;
 			break;
 			// ---------------------------------------------------
 			// Store a parameter using a parameter index
@@ -895,6 +897,7 @@ void optimize_run(
 
 			// -----------------------------------------------------------
 			case UserOp:
+			CPPAD_ASSERT_NARG_NRES(op, 4, 0);
 			flag = user_state == start_user;
 			if( flag )
 			{	// forward_user
@@ -919,6 +922,7 @@ void optimize_run(
 			break;
 
 			case UsrapOp:
+			CPPAD_ASSERT_NARG_NRES(op, 1, 0);
 			// forward_user
 			++user_j;
 			if( user_j == user_n )
@@ -933,6 +937,7 @@ void optimize_run(
 			break;
 
 			case UsravOp:
+			CPPAD_ASSERT_NARG_NRES(op, 1, 0);
 			// forward_user
 			++user_j;
 			if( user_j == user_n )
@@ -957,6 +962,7 @@ void optimize_run(
 			break;
 
 			case UsrrpOp:
+			CPPAD_ASSERT_NARG_NRES(op, 1, 0);
 			// forward_user
 			++user_i;
 			if( user_i == user_m )
@@ -971,15 +977,17 @@ void optimize_run(
 			break;
 
 			case UsrrvOp:
+			CPPAD_ASSERT_NARG_NRES(op, 0, 1);
 			// forward_user
 			++user_i;
 			if( user_i == user_m )
 				user_state = end_user;
 			//
 			if( op_info[i_op].usage > 0 )
-			{	old2new[i_op].new_op = rec->num_op_rec();
-				tape[i_var].new_op  = rec->num_op_rec();
-				tape[i_var].new_var = rec->PutOp(UsrrvOp);
+			{	old2new[i_op].new_op  = rec->num_op_rec();
+				old2new[i_op].new_var = rec->PutOp(UsrrvOp);
+				tape[i_var].new_op  = old2new[i_op].new_op;
+				tape[i_var].new_var = old2new[i_op].new_var;
 			}
 			break;
 			// ---------------------------------------------------
