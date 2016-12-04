@@ -50,14 +50,14 @@ given a parameter index i < npar, the corresponding parameter value is par[i].
 \param rec
 is the object that will record the new operations.
 
+\return
+is the operator and variable indices in the new operation sequence.
+
 \param work
 Is temporary work space. On input and output,
 work.op_stack, work.add_stack, and work.sub_stack, are all empty.
 These stacks are passed in so that they are created once
 and then be reused with calls to record_csum.
-
-\return
-is the operator and variable indices in the new operation sequence.
 
 \par Assumptions
 op_info[i_o].op

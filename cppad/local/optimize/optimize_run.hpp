@@ -495,7 +495,9 @@ void optimize_run(
 			}
 			else
 			{	size_pair = record_vp(
-					tape                , // inputs
+					var2op              ,
+					op_info             ,
+					old2new             ,
 					i_var               ,
 					play->num_par_rec() ,
 					play->GetPar()      ,
@@ -600,7 +602,9 @@ void optimize_run(
 			}
 			else
 			{	size_pair = record_pv(
-					tape                , // inputs
+					var2op              ,
+					op_info             ,
+					old2new             ,
 					i_var               ,
 					play->num_par_rec() ,
 					play->GetPar()      ,
@@ -669,7 +673,9 @@ void optimize_run(
 			}
 			else
 			{	size_pair = record_vv(
-					tape                , // inputs
+					var2op              ,
+					op_info             ,
+					old2new             ,
 					i_var               ,
 					play->num_par_rec() ,
 					play->GetPar()      ,
