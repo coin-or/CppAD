@@ -292,8 +292,10 @@ void get_op_info(
 		// next op
 		play->reverse_next(op, arg, i_op, i_var);
 		//
-		// is the result of this operation used
+		// Is the result of this operation used
+		// (which only makes sense when NumRes(op) > 0).
 		size_t use_result                = op_info[i_op].usage;
+		//
 		// set of conditional expressions connected to its use
 		set_cexp_compare cexp_set_result( op_info[i_op].cexp_set );
 		switch( op )
@@ -327,6 +329,7 @@ void get_op_info(
 			case TanOp:
 			case TanhOp:
 			case ZmulvpOp:
+			CPPAD_ASSERT_UNKNOWN( NumRes(op) > 0 );
 			if( use_result > 0 )
 			{	size_t j_op = var2op[ arg[0] ];
 				++op_info[j_op].usage;
@@ -352,6 +355,7 @@ void get_op_info(
 			case PowpvOp:
 			case SubpvOp:
 			case ZmulpvOp:
+			CPPAD_ASSERT_UNKNOWN( NumRes(op) > 0 );
 			if( use_result > 0 )
 			{	size_t j_op = var2op[ arg[1] ];
 				++op_info[j_op].usage;
@@ -376,6 +380,7 @@ void get_op_info(
 			case PowvvOp:
 			case SubvvOp:
 			case ZmulvvOp:
+			CPPAD_ASSERT_UNKNOWN( NumRes(op) > 0 );
 			if( use_result > 0 )
 			{	for(size_t i = 0; i < 2; i++)
 				{	size_t j_op = var2op[ arg[i] ];
@@ -393,6 +398,7 @@ void get_op_info(
 			case CExpOp:
 			--cexp_index;
 			cexp2op[ cexp_index ] = i_op;
+			CPPAD_ASSERT_UNKNOWN( NumRes(op) > 0 );
 			if( use_result > 0 )
 			{	CPPAD_ASSERT_UNKNOWN( NumArg(CExpOp) == 6 );
 				addr_t mask[] = {1, 2, 4, 8};
@@ -437,9 +443,12 @@ void get_op_info(
 			// Operations where there is nothing to do
 			case CSkipOp:
 			play->reverse_cskip(op, arg, i_op, i_var);
+			break;
 			//
 			case ParOp:
 			case PriOp:
+			break;
+
 			// set during initialization of usage
 			case InvOp:
 			case BeginOp:
@@ -455,8 +464,11 @@ void get_op_info(
 			case LtpvOp:
 			case EqpvOp:
 			case NepvOp:
+			CPPAD_ASSERT_UNKNOWN( NumRes(op) == 0 );
 			if( compare_op )
-			{	size_t j_op = var2op[ arg[1] ];
+			{	++op_info[i_op].usage;
+				//
+				size_t j_op = var2op[ arg[1] ];
 				++op_info[j_op].usage;
 				//
 				// cexp_set
@@ -475,8 +487,11 @@ void get_op_info(
 			// Compare operators where arg[0] is only variable
 			case LevpOp:
 			case LtvpOp:
+			CPPAD_ASSERT_UNKNOWN( NumRes(op) == 0 );
 			if( compare_op )
-			{	size_t j_op = var2op[ arg[0] ];
+			{	++op_info[i_op].usage;
+				//
+				size_t j_op = var2op[ arg[0] ];
 				++op_info[j_op].usage;
 				//
 				// cexp_set
@@ -498,7 +513,11 @@ void get_op_info(
 			case EqvvOp:
 			case NevvOp:
 			if( compare_op )
-			{	for(size_t i = 0; i < 2; i++)
+			CPPAD_ASSERT_UNKNOWN( NumRes(op) == 0 );
+			if( compare_op )
+			{	++op_info[i_op].usage;
+				//
+				for(size_t i = 0; i < 2; i++)
 				{	size_t j_op = var2op[ arg[i] ];
 					++op_info[j_op].usage;
 					if( op_info[j_op].usage > 1 )
@@ -515,6 +534,7 @@ void get_op_info(
 
 			// load operator using a parameter index
 			case LdpOp:
+			CPPAD_ASSERT_UNKNOWN( NumRes(op) > 0 );
 			if( use_result > 0 )
 			{	size_t i_vec = arg2vecad[ arg[0] ];
 				++vecad_usage[i_vec];
@@ -523,6 +543,7 @@ void get_op_info(
 
 			// load operator using a variable index
 			case LdvOp:
+			CPPAD_ASSERT_UNKNOWN( NumRes(op) > 0 );
 			if( use_result > 0 )
 			{	size_t i_vec = arg2vecad[ arg[0] ];
 				++vecad_usage[i_vec];
@@ -534,8 +555,10 @@ void get_op_info(
 
 			// Store a variable using a parameter index
 			case StpvOp:
+			CPPAD_ASSERT_UNKNOWN( NumRes(op) == 0 );
 			if( vecad_usage[ arg2vecad[ arg[0] ] ] >  0 )
 			{	++op_info[i_op].usage;
+				//
 				size_t j_op = var2op[ arg[2] ];
 				++op_info[j_op].usage;
 			}
@@ -543,8 +566,10 @@ void get_op_info(
 
 			// Store a variable using a variable index
 			case StvvOp:
+			CPPAD_ASSERT_UNKNOWN( NumRes(op) == 0 );
 			if( vecad_usage[ arg2vecad[ arg[0] ] ] > 0 )
 			{	++op_info[i_op].usage;
+				//
 				size_t j_op = var2op[ arg[1] ];
 				++op_info[j_op].usage;
 				size_t k_op = var2op[ arg[2] ];
@@ -556,6 +581,7 @@ void get_op_info(
 			// cumuilative summation operator
 			// ============================================================
 			case CSumOp:
+			CPPAD_ASSERT_UNKNOWN( NumRes(op) == 1 );
 			play->reverse_csum(op, arg, i_op, i_var);
 			{
 				size_t num_add = size_t( arg[0] );
@@ -728,6 +754,7 @@ void get_op_info(
 			play->reverse_user(op, user_state,
 				user_old, user_m, user_n, user_i, user_j
 			);
+			CPPAD_ASSERT_UNKNOWN( NumRes(op) > 0 );
 			if( use_result )
 			{	if( user_set )
 					user_r_set[user_i].insert(0);
