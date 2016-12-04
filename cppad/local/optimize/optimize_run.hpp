@@ -198,203 +198,23 @@ void optimize_run(
 		if( NumRes(op) > 0 )
 		{	tape[i_var].op = op;
 			tape[i_var].arg = arg;
+			if( op_info[i_op].csum_connected )
+				tape[i_var].connect_type = csum_connected;
+			else if( op_info[i_op].usage > 0 )
+				tape[i_var].connect_type = yes_connected;
+			else
+			{	CPPAD_ASSERT_UNKNOWN(
+					tape[i_var].connect_type == not_connected
+				);
+			}
 		}
-# ifndef NDEBUG
-		if( i_op <= n )
-		{	CPPAD_ASSERT_UNKNOWN((op == InvOp) | (op == BeginOp));
-		}
-		else	CPPAD_ASSERT_UNKNOWN((op != InvOp) & (op != BeginOp));
-# endif
-		enum_connect_type connect_type      = tape[i_var].connect_type;
+		enum_connect_type connect_type = not_connected;
+		if( op_info[i_op].csum_connected )
+				connect_type = csum_connected;
+		else if( op_info[i_op].usage > 0 )
+				connect_type = yes_connected;
 		switch( op )
 		{
-			// One variable corresponding to arg[0]
-			case AbsOp:
-			case AcosOp:
-			case AcoshOp:
-			case AsinOp:
-			case AsinhOp:
-			case AtanOp:
-			case AtanhOp:
-			case CosOp:
-			case CoshOp:
-			case DivvpOp:
-			case ErfOp:
-			case ExpOp:
-			case Expm1Op:
-			case LogOp:
-			case Log1pOp:
-			case PowvpOp:
-			case SignOp:
-			case SinOp:
-			case SinhOp:
-			case SqrtOp:
-			case TanOp:
-			case TanhOp:
-			case ZmulvpOp:
-			{	size_t j_op = var2op[ arg[0] ];
-				if( op_info[j_op].csum_connected )
-					tape[arg[0]].connect_type = csum_connected;
-				else if( op_info[j_op].usage > 0 )
-					tape[arg[0]].connect_type = yes_connected;
-				else
-				{	CPPAD_ASSERT_UNKNOWN(
-						tape[arg[0]].connect_type == not_connected
-					);
-				}
-			}
-			break; // --------------------------------------------
-
-			// One variable corresponding to arg[1]
-			case DisOp:
-			case DivpvOp:
-			case MulpvOp:
-			case PowpvOp:
-			case ZmulpvOp:
-			{	size_t j_op = var2op[ arg[1] ];
-				if( op_info[j_op].csum_connected )
-					tape[arg[1]].connect_type = csum_connected;
-				else if( op_info[j_op].usage > 0 )
-					tape[arg[1]].connect_type = yes_connected;
-				else
-				{	CPPAD_ASSERT_UNKNOWN(
-						tape[arg[1]].connect_type == not_connected
-					);
-				}
-			}
-			break; // --------------------------------------------
-
-			// Special case for SubvpOp
-			case SubvpOp:
-			switch( connect_type )
-			{	case not_connected:
-				break;
-
-				case yes_connected:
-				case sum_connected:
-				case csum_connected:
-				if( tape[arg[0]].connect_type == not_connected )
-					tape[arg[0]].connect_type = sum_connected;
-				else	tape[arg[0]].connect_type = yes_connected;
-				break;
-
-				case cexp_connected:
-				CPPAD_ASSERT_UNKNOWN( conditional_skip )
-				if( tape[arg[0]].connect_type == not_connected )
-				{	tape[arg[0]].connect_type = cexp_connected;
-				}
-				else if( tape[arg[0]].connect_type == cexp_connected )
-				{
-					if( op_info[ var2op[arg[0]] ].cexp_set.empty() )
-						tape[arg[0]].connect_type = yes_connected;
-				}
-				else	tape[arg[0]].connect_type = yes_connected;
-				break;
-
-				default:
-				CPPAD_ASSERT_UNKNOWN(false);
-			}
-			if( connect_type == sum_connected )
-			{	// convert sum to csum connection for this variable
-				tape[i_var].connect_type = connect_type = csum_connected;
-			}
-			break; // --------------------------------------------
-
-			// Special case for AddpvOp and SubpvOp
-			case AddpvOp:
-			case SubpvOp:
-			switch( connect_type )
-			{	case not_connected:
-				break;
-
-				case yes_connected:
-				case sum_connected:
-				case csum_connected:
-				if( tape[arg[1]].connect_type == not_connected )
-					tape[arg[1]].connect_type = sum_connected;
-				else	tape[arg[1]].connect_type = yes_connected;
-				break;
-
-				case cexp_connected:
-				CPPAD_ASSERT_UNKNOWN( conditional_skip )
-				if( tape[arg[1]].connect_type == not_connected )
-				{	tape[arg[1]].connect_type = cexp_connected;
-				}
-				else if( tape[arg[1]].connect_type == cexp_connected )
-				{
-					if( op_info[ var2op[arg[1]] ].cexp_set.empty() )
-						tape[arg[1]].connect_type = yes_connected;
-				}
-				else	tape[arg[1]].connect_type = yes_connected;
-				break;
-
-				default:
-				CPPAD_ASSERT_UNKNOWN(false);
-			}
-			if( connect_type == sum_connected )
-			{	// convert sum to csum connection for this variable
-				tape[i_var].connect_type = connect_type = csum_connected;
-			}
-			break; // --------------------------------------------
-
-
-			// Special case for AddvvOp and SubvvOp
-			case AddvvOp:
-			case SubvvOp:
-			for(size_t i = 0; i < 2; i++) switch( connect_type )
-			{	case not_connected:
-				break;
-
-				case yes_connected:
-				case sum_connected:
-				case csum_connected:
-				if( tape[arg[i]].connect_type == not_connected )
-					tape[arg[i]].connect_type = sum_connected;
-				else	tape[arg[i]].connect_type = yes_connected;
-				break;
-
-				case cexp_connected:
-				CPPAD_ASSERT_UNKNOWN( conditional_skip )
-				if( tape[arg[i]].connect_type == not_connected )
-				{	tape[arg[i]].connect_type = cexp_connected;
-				}
-				else if( tape[arg[i]].connect_type == cexp_connected )
-				{
-					if( op_info[ var2op[arg[i]] ].cexp_set.empty() )
-						tape[arg[i]].connect_type = yes_connected;
-				}
-				else	tape[arg[i]].connect_type = yes_connected;
-				break;
-
-				default:
-				CPPAD_ASSERT_UNKNOWN(false);
-			}
-			if( connect_type == sum_connected )
-			{	// convert sum to csum connection for this variable
-				tape[i_var].connect_type = connect_type = csum_connected;
-			}
-			break; // --------------------------------------------
-
-			// Other binary operators
-			// where operands are arg[0], arg[1]
-			case DivvvOp:
-			case MulvvOp:
-			case PowvvOp:
-			case ZmulvvOp:
-			for(size_t i = 0; i < 2; i++)
-			{	size_t j_op = var2op[ arg[i] ];
-				if( op_info[j_op].csum_connected )
-					tape[arg[i]].connect_type = csum_connected;
-				else if( op_info[j_op].usage > 0 )
-					tape[arg[i]].connect_type = yes_connected;
-				else
-				{	CPPAD_ASSERT_UNKNOWN(
-						tape[arg[i]].connect_type == not_connected
-					);
-				}
-			}
-			break; // --------------------------------------------
-
 			// Conditional expression operators
 			case CExpOp:
 			--index_cskip_info;
@@ -417,74 +237,7 @@ void optimize_run(
 				//
 				cskip_info[index_cskip_info] = info;
 			}
-			if( connect_type != not_connected )
-			{	size_t left  = cskip_info[index_cskip_info].left;
-				size_t right = cskip_info[index_cskip_info].right;
-				//
-				if( arg[1] & 1 )
-					tape[left].connect_type = yes_connected;
-				if( arg[1] & 2 )
-					tape[right].connect_type = yes_connected;
-				//
-				if( arg[1] & 4 )
-				{	if( conditional_skip &&
-						tape[arg[4]].connect_type == not_connected )
-					{	tape[arg[4]].connect_type = cexp_connected;
-					}
-					else
-					{	// if arg[4] is cexp_connected, it could be
-						// connected for both the true and false case
-						// 2DO: if previously cexp_connected
-						// and the true/false sense is the same, should
-						// keep this conditional connnection.
-						tape[arg[4]].connect_type = yes_connected;
-					}
-				}
-				if( arg[1] & 8 )
-				{	if( conditional_skip &&
-						tape[arg[5]].connect_type == not_connected )
-					{	tape[arg[5]].connect_type = cexp_connected;
-					}
-					else
-					{
-						tape[arg[5]].connect_type = yes_connected;
-					}
-				}
-			}
 			break;  // --------------------------------------------
-
-			// Operations where there is nothing to do
-			case EndOp:
-			case ParOp:
-			case PriOp:
-			break;  // --------------------------------------------
-
-			// Operators that never get removed
-			case BeginOp:
-			case InvOp:
-			tape[i_var].connect_type = yes_connected;
-			break;
-
-			// Compare operators never get removed -----------------
-			case LepvOp:
-			case LtpvOp:
-			case EqpvOp:
-			case NepvOp:
-			tape[arg[1]].connect_type = yes_connected;
-			break;
-
-			case LevpOp:
-			case LtvpOp:
-			tape[arg[0]].connect_type = yes_connected;
-			break;
-
-			case LevvOp:
-			case LtvvOp:
-			case EqvvOp:
-			case NevvOp:
-			tape[arg[0]].connect_type = yes_connected;
-			tape[arg[1]].connect_type = yes_connected;
-			break;
 
 			// Load using a parameter index ----------------------
 			case LdpOp:
@@ -633,9 +386,9 @@ void optimize_run(
 			break;
 			// ============================================================
 
-			// all cases should be handled above
+			// noting to do in this case
 			default:
-			CPPAD_ASSERT_UNKNOWN(0);
+			break;
 		}
 	}
 	//
