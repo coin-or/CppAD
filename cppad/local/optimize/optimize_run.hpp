@@ -315,9 +315,10 @@ void optimize_run(
 	}
 	//
 	// Put BeginOp at beginning of recording
-	old2new[i_op].new_op = rec->num_op_rec();
-	tape[i_var].new_op  = rec->num_op_rec();
-	tape[i_var].new_var = rec->PutOp(BeginOp);
+	old2new[i_op].new_op  = rec->num_op_rec();
+	old2new[i_op].new_var = rec->PutOp(BeginOp);
+	tape[i_var].new_op  = old2new[i_op].new_op;
+	tape[i_var].new_var = old2new[i_op].new_var;
 	rec->PutArg(arg[0]);
 
 
@@ -377,7 +378,8 @@ void optimize_run(
 		unsigned short code         = 0;
 		bool           replace_hash = false;
 		addr_t         match_var;
-		tape[i_var].match = false;
+		old2new[i_op].match = false;
+		tape[i_var].match   = old2new[i_op].match;
 		//
 		if( op_info[i_op].usage > 0 ) switch( op )
 		{
@@ -411,18 +413,25 @@ void optimize_run(
 				code                  // outputs
 			);
 			if( match_var > 0 )
-			{	tape[i_var].match     = true;
-				tape[match_var].match = true;
-				tape[i_var].new_var   = tape[match_var].new_var;
+			{	size_t j_op = var2op[match_var];
+				//
+				old2new[i_op].match   = true;
+				old2new[j_op].match   = true;
+				old2new[i_op].new_var = old2new[j_op].new_var;
+				tape[i_var].match     = old2new[i_op].match;
+				tape[match_var].match = old2new[j_op].match;
+				tape[i_var].new_var   = old2new[i_op].new_var;
 			}
 			else
 			{
 				replace_hash = true;
 				new_arg[0]   = tape[ arg[0] ].new_var;
 				rec->PutArg( new_arg[0] );
-				old2new[i_op].new_op = rec->num_op_rec();
-				tape[i_var].new_op  = rec->num_op_rec();
-				tape[i_var].new_var = rec->PutOp(op);
+				//
+				old2new[i_op].new_op  = rec->num_op_rec();
+				old2new[i_op].new_var = rec->PutOp(op);
+				tape[i_var].new_op  = old2new[i_op].new_op;
+				tape[i_var].new_var = old2new[i_op].new_var;
 				CPPAD_ASSERT_UNKNOWN(new_arg[0] < tape[i_var].new_var);
 				if( op == ErfOp )
 				{	// Error function is a special case
@@ -456,9 +465,10 @@ void optimize_run(
 					var2op              ,
 					op_info
 				);
-				old2new[i_op].new_op = size_pair.i_op;
-				tape[i_var].new_op  = size_pair.i_op;
-				tape[i_var].new_var = size_pair.i_var;
+				old2new[i_op].new_op  = size_pair.i_op;
+				old2new[i_op].new_var = size_pair.i_var;
+				tape[i_var].new_op  = old2new[i_op].new_op;
+				tape[i_var].new_var = old2new[i_op].new_var;
 				// abort rest of this case
 				break;
 			}
@@ -474,9 +484,14 @@ void optimize_run(
 				code                  // outputs
 			);
 			if( match_var > 0 )
-			{	tape[i_var].match     = true;
-				tape[match_var].match = true;
-				tape[i_var].new_var   = tape[match_var].new_var;
+			{	size_t j_op = var2op[match_var];
+				//
+				old2new[i_op].match   = true;
+				old2new[j_op].match   = true;
+				old2new[i_op].new_var = old2new[j_op].new_var;
+				tape[i_var].match     = old2new[i_op].match;
+				tape[match_var].match = old2new[j_op].match;
+				tape[i_var].new_var   = old2new[i_op].new_var;
 			}
 			else
 			{	size_pair = record_vp(
@@ -488,9 +503,10 @@ void optimize_run(
 					op                  ,
 					arg
 				);
-				old2new[i_op].new_op = size_pair.i_op;
-				tape[i_var].new_op  = size_pair.i_op;
-				tape[i_var].new_var = size_pair.i_var;
+				old2new[i_op].new_op  = size_pair.i_op;
+				old2new[i_op].new_var = size_pair.i_var;
+				tape[i_var].new_op  = old2new[i_op].new_op;
+				tape[i_var].new_var = old2new[i_op].new_var;
 				replace_hash = true;
 			}
 			break;
@@ -507,17 +523,24 @@ void optimize_run(
 				code                  // outputs
 			);
 			if( match_var > 0 )
-			{	tape[i_var].match     = true;
-				tape[match_var].match = true;
-				tape[i_var].new_var   = tape[match_var].new_var;
+			{	size_t j_op = var2op[match_var];
+				//
+				old2new[i_op].match   = true;
+				old2new[j_op].match   = true;
+				old2new[i_op].new_var = old2new[j_op].new_var;
+				tape[i_var].match     = old2new[i_op].match;
+				tape[match_var].match = old2new[j_op].match;
+				tape[i_var].new_var   = old2new[i_op].new_var;
 			}
 			else
 			{	new_arg[0] = arg[0];
 				new_arg[1] = tape[ arg[1] ].new_var;
 				rec->PutArg( new_arg[0], new_arg[1] );
-				old2new[i_op].new_op = rec->num_op_rec();
-				tape[i_var].new_op  = rec->num_op_rec();
-				tape[i_var].new_var = rec->PutOp(op);
+				//
+				old2new[i_op].new_op  = rec->num_op_rec();
+				old2new[i_op].new_var = rec->PutOp(op);
+				tape[i_var].new_op  = old2new[i_op].new_op;
+				tape[i_var].new_var = old2new[i_op].new_var;
 				CPPAD_ASSERT_UNKNOWN(
 					new_arg[1] < tape[i_var].new_var
 				);
@@ -546,9 +569,10 @@ void optimize_run(
 					var2op              ,
 					op_info
 				);
-				old2new[i_op].new_op = size_pair.i_op;
-				tape[i_var].new_op  = size_pair.i_op;
-				tape[i_var].new_var = size_pair.i_var;
+				old2new[i_op].new_op  = size_pair.i_op;
+				old2new[i_op].new_var = size_pair.i_var;
+				tape[i_var].new_op  = old2new[i_op].new_op;
+				tape[i_var].new_var = old2new[i_op].new_var;
 				// abort rest of this case
 				break;
 			}
@@ -565,9 +589,14 @@ void optimize_run(
 				code                  // outputs
 			);
 			if( match_var > 0 )
-			{	tape[i_var].match     = true;
-				tape[match_var].match = true;
-				tape[i_var].new_var   = tape[match_var].new_var;
+			{	size_t j_op = var2op[match_var];
+				//
+				old2new[i_op].match   = true;
+				old2new[j_op].match   = true;
+				old2new[i_op].new_var = old2new[j_op].new_var;
+				tape[i_var].match     = old2new[i_op].match;
+				tape[match_var].match = old2new[j_op].match;
+				tape[i_var].new_var   = old2new[i_op].new_var;
 			}
 			else
 			{	size_pair = record_pv(
@@ -579,15 +608,15 @@ void optimize_run(
 					op                  ,
 					arg
 				);
-				old2new[i_op].new_op = size_pair.i_op;
-				tape[i_var].new_op  = size_pair.i_op;
-				tape[i_var].new_var = size_pair.i_var;
+				old2new[i_op].new_op  = size_pair.i_op;
+				old2new[i_op].new_var = size_pair.i_var;
+				tape[i_var].new_op  = old2new[i_op].new_op;
+				tape[i_var].new_var = old2new[i_op].new_var;
 				replace_hash = true;
 			}
 			break;
 			// ---------------------------------------------------
-			// Binary operator where
-			// both operators are variables
+			// Binary operator where both operands are variables
 			case AddvvOp:
 			case SubvvOp:
 			// check if this is the top of a csum connection
@@ -609,9 +638,10 @@ void optimize_run(
 					var2op              ,
 					op_info
 				);
-				old2new[i_op].new_op = size_pair.i_op;
-				tape[i_var].new_op  = size_pair.i_op;
-				tape[i_var].new_var = size_pair.i_var;
+				old2new[i_op].new_op  = size_pair.i_op;
+				old2new[i_op].new_var = size_pair.i_var;
+				tape[i_var].new_op  = old2new[i_op].new_op;
+				tape[i_var].new_var = old2new[i_op].new_var;
 				// abort rest of this case
 				break;
 			}
@@ -628,9 +658,14 @@ void optimize_run(
 				code                  // outputs
 			);
 			if( match_var > 0 )
-			{	tape[i_var].match     = true;
-				tape[match_var].match = true;
-				tape[i_var].new_var   = tape[match_var].new_var;
+			{	size_t j_op = var2op[match_var];
+				//
+				old2new[i_op].match   = true;
+				old2new[j_op].match   = true;
+				old2new[i_op].new_var = old2new[j_op].new_var;
+				tape[i_var].match     = old2new[i_op].match;
+				tape[match_var].match = old2new[j_op].match;
+				tape[i_var].new_var   = old2new[i_op].new_var;
 			}
 			else
 			{	size_pair = record_vv(
@@ -642,9 +677,10 @@ void optimize_run(
 					op                  ,
 					arg
 				);
-				old2new[i_op].new_op = size_pair.i_op;
-				tape[i_var].new_op  = size_pair.i_op;
-				tape[i_var].new_var = size_pair.i_var;
+				old2new[i_op].new_op  = size_pair.i_op;
+				old2new[i_op].new_var = size_pair.i_var;
+				tape[i_var].new_op  = old2new[i_op].new_op;
+				tape[i_var].new_var = old2new[i_op].new_var;
 				replace_hash = true;
 			}
 			break;
@@ -675,9 +711,10 @@ void optimize_run(
 				new_arg[4] ,
 				new_arg[5]
 			);
-			old2new[i_op].new_op = rec->num_op_rec();
-			tape[i_var].new_op  = rec->num_op_rec();
-			tape[i_var].new_var = rec->PutOp(op);
+			old2new[i_op].new_op  = rec->num_op_rec();
+			old2new[i_op].new_var = rec->PutOp(op);
+			tape[i_var].new_op  = old2new[i_op].new_op;
+			tape[i_var].new_var = old2new[i_op].new_var;
 			//
 			// The new addresses for left and right are used during
 			// fill in the arguments for the CSkip operations. This does not
@@ -734,20 +771,22 @@ void optimize_run(
 			// Operations with no arguments and one result
 			case InvOp:
 			CPPAD_ASSERT_NARG_NRES(op, 0, 1);
-			old2new[i_op].new_op = rec->num_op_rec();
-			tape[i_var].new_op  = rec->num_op_rec();
-			tape[i_var].new_var = rec->PutOp(op);
+			old2new[i_op].new_op  = rec->num_op_rec();
+			old2new[i_op].new_var = rec->PutOp(op);
+			tape[i_var].new_op  = old2new[i_op].new_op;
+			tape[i_var].new_var = old2new[i_op].new_var;
 			break;
 			// ---------------------------------------------------
 			// Operations with one argument that is a parameter
 			case ParOp:
 			CPPAD_ASSERT_NARG_NRES(op, 1, 1);
 			new_arg[0] = rec->PutPar( play->GetPar(arg[0] ) );
-
 			rec->PutArg( new_arg[0] );
-			old2new[i_op].new_op = rec->num_op_rec();
-			tape[i_var].new_op  = rec->num_op_rec();
-			tape[i_var].new_var = rec->PutOp(op);
+			//
+			old2new[i_op].new_op  = rec->num_op_rec();
+			old2new[i_op].new_var = rec->PutOp(op);
+			tape[i_var].new_op  = old2new[i_op].new_op;
+			tape[i_var].new_var = old2new[i_op].new_var;
 			break;
 			// ---------------------------------------------------
 			// Load using a parameter index
