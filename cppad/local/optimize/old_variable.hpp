@@ -37,9 +37,6 @@ struct struct_old_variable {
 	/// to the operator in the old operation sequence.
 	const addr_t*       arg;
 
-	/// How is this variable connected to the independent variables
-	enum_connect_type connect_type;
-
 	/// Index of this variable in new operation sequence.
 	/// Set during forward sweep to the index in the new tape. The value
 	/// new_var = number of varables in old tape is used for not yet defined.

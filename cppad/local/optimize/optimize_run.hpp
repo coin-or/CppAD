@@ -111,9 +111,6 @@ void optimize_run(
 	const addr_t* arg;  // operator arguments
 	size_t        i_var;  // index of first result for current operator
 
-	// range and domain dimensions for F
-	size_t m = dep_taddr.size();
-
 	// -------------------------------------------------------------
 	// data structure that maps variable index in original operation
 	// sequence to corresponding operator information
@@ -121,15 +118,6 @@ void optimize_run(
 
 	// -------------------------------------------------------------
 	// Determine how each variable is connected to the dependent variables
-
-	// initialize all variables has having no connections
-	for(size_t i = 0; i < num_var; i++)
-		tape[i].connect_type = not_connected;
-
-	for(size_t j = 0; j < m; j++)
-	{	// mark dependent variables as having one or more connections
-		tape[ dep_taddr[j] ].connect_type = yes_connected;
-	}
 
 	// vecad_connect contains a value for each VecAD object.
 	// vecad maps a VecAD index (which corresponds to the beginning of the
@@ -180,15 +168,6 @@ void optimize_run(
 		if( NumRes(op) > 0 )
 		{	tape[i_var].op = op;
 			tape[i_var].arg = arg;
-			if( op_info[i_op].csum_connected )
-				tape[i_var].connect_type = csum_connected;
-			else if( op_info[i_op].usage > 0 )
-				tape[i_var].connect_type = yes_connected;
-			else
-			{	CPPAD_ASSERT_UNKNOWN(
-					tape[i_var].connect_type == not_connected
-				);
-			}
 		}
 		switch( op )
 		{
@@ -218,7 +197,7 @@ void optimize_run(
 
 			// Load using a parameter index ----------------------
 			case LdpOp:
-			if( tape[i_var].connect_type != not_connected )
+			if( op_info[i_op].usage > 0 )
 			{
 				size_t i         = vecad[ arg[0] - 1 ];
 				vecad_connect[i] = yes_connected;
@@ -227,11 +206,10 @@ void optimize_run(
 
 			// Load using a variable index
 			case LdvOp:
-			if( tape[i_var].connect_type != not_connected )
+			if( op_info[i_op].usage > 0 )
 			{
 				size_t i             = vecad[ arg[0] - 1 ];
 				vecad_connect[i]     = yes_connected;
-				tape[arg[1]].connect_type = yes_connected;
 			}
 			break; // --------------------------------------------
 
@@ -245,7 +223,6 @@ void optimize_run(
 	// values corresponding to BeginOp
 	CPPAD_ASSERT_UNKNOWN( i_op == 0 && i_var == 0 && op == BeginOp );
 	tape[i_var].op           = op;
-	tape[i_var].connect_type = yes_connected;
 
 	// Determine which operators can be conditionally skipped
 	for(size_t i = 0; i < num_op; i++)
@@ -392,36 +369,13 @@ void optimize_run(
 				rec->PutOp(CSkipOp);
 			}
 		}
-
-		// determine if we should keep this operation in the new
-		// operation sequence
-		bool keep;
-		switch( op )
-		{
-			case StppOp:
-			case StvpOp:
-			case StpvOp:
-			case StvvOp:
-			CPPAD_ASSERT_UNKNOWN( NumRes(op) == 0 );
-			{
-				size_t i = vecad[ arg[0] - 1 ];
-				keep = vecad_connect[i] != not_connected;
-				CPPAD_ASSERT_UNKNOWN(
-					keep == ( op_info[i_op].usage > 0 )
-				);
-			}
-			break;
-
-			default:
-			keep = op_info[i_op].usage > 0;
-			break;
-		}
-
+		//
 		unsigned short code         = 0;
 		bool           replace_hash = false;
 		addr_t         match_var;
 		tape[i_var].match = false;
-		if( keep ) switch( op )
+		//
+		if( op_info[i_op].usage > 0 ) switch( op )
 		{
 			// Unary operator where operand is arg[0]
 			case AbsOp:
@@ -485,7 +439,7 @@ void optimize_run(
 			// check if this is the top of a csum connection
 			if( op_info[i_op].csum_connected )
 				break;
-			if( tape[arg[0]].connect_type == csum_connected )
+			if( op_info[ var2op[arg[0]] ].csum_connected )
 			{
 				// convert to a sequence of summation operators
 				size_pair = record_csum(
@@ -575,7 +529,7 @@ void optimize_run(
 			// check if this is the top of a csum connection
 			if( op_info[i_op].csum_connected )
 				break;
-			if( tape[arg[1]].connect_type == csum_connected )
+			if( op_info[ var2op[arg[1]] ].csum_connected )
 			{
 				// convert to a sequence of summation operators
 				size_pair = record_csum(
@@ -635,8 +589,9 @@ void optimize_run(
 			// check if this is the top of a csum connection
 			if( op_info[i_op].csum_connected )
 				break;
-			if( (tape[arg[0]].connect_type == csum_connected) |
-			    (tape[arg[1]].connect_type == csum_connected)
+			if(
+				op_info[ var2op[arg[0]] ].csum_connected |
+				op_info[ var2op[arg[1]] ].csum_connected
 			)
 			{
 				// convert to a sequence of summation operators
