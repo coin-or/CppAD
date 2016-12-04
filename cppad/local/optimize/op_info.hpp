@@ -288,7 +288,6 @@ void get_op_info(
 	op_info[i_op].usage = 1;
 	while( op != BeginOp )
 	{	bool   flag;  // temporary boolean value
-		bool   use;   // a temporary usage variable
 		//
 		// next op
 		play->reverse_next(op, arg, i_op, i_var);
@@ -535,18 +534,18 @@ void get_op_info(
 
 			// Store a variable using a parameter index
 			case StpvOp:
-			use = vecad_usage[ arg2vecad[ arg[0] ] ];
-			if( use )
-			{	size_t j_op = var2op[ arg[2] ];
+			if( vecad_usage[ arg2vecad[ arg[0] ] ] >  0 )
+			{	++op_info[i_op].usage;
+				size_t j_op = var2op[ arg[2] ];
 				++op_info[j_op].usage;
 			}
 			break; // --------------------------------------------
 
 			// Store a variable using a variable index
 			case StvvOp:
-			use = vecad_usage[ arg2vecad[ arg[0] ] ];
-			if( use )
-			{	size_t j_op = var2op[ arg[1] ];
+			if( vecad_usage[ arg2vecad[ arg[0] ] ] > 0 )
+			{	++op_info[i_op].usage;
+				size_t j_op = var2op[ arg[1] ];
 				++op_info[j_op].usage;
 				size_t k_op = var2op[ arg[2] ];
 				++op_info[k_op].usage;

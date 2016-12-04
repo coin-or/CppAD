@@ -235,25 +235,6 @@ void optimize_run(
 			}
 			break; // --------------------------------------------
 
-			// Store a variable using a parameter index
-			case StpvOp:
-			{
-				size_t i = vecad[ arg[0] - 1 ];
-				if( vecad_connect[i] != not_connected )
-					tape[arg[2]].connect_type = yes_connected;
-			}
-			break; // --------------------------------------------
-
-			// Store a variable using a variable index
-			case StvvOp:
-			{
-				size_t i = vecad[ arg[0] - 1 ];
-				if( vecad_connect[i] )
-				{	tape[arg[1]].connect_type = yes_connected;
-					tape[arg[2]].connect_type = yes_connected;
-				}
-			}
-			break;
 			// ============================================================
 			// noting to do in this case
 			default:
@@ -416,29 +397,7 @@ void optimize_run(
 		// operation sequence
 		bool keep;
 		switch( op )
-		{	// see wish_list/Optimize/CompareChange entry.
-			case EqpvOp:
-			case EqvvOp:
-			case LepvOp:
-			case LevpOp:
-			case LevvOp:
-			case LtpvOp:
-			case LtvpOp:
-			case LtvvOp:
-			case NepvOp:
-			case NevvOp:
-			keep = true;
-			break;
-
-			case PriOp:
-			keep = false;
-			break;
-
-			case InvOp:
-			case EndOp:
-			keep = true;
-			break;
-
+		{
 			case StppOp:
 			case StvpOp:
 			case StpvOp:
@@ -447,28 +406,14 @@ void optimize_run(
 			{
 				size_t i = vecad[ arg[0] - 1 ];
 				keep = vecad_connect[i] != not_connected;
+				CPPAD_ASSERT_UNKNOWN(
+					keep == ( op_info[i_op].usage > 0 )
+				);
 			}
 			break;
 
-			case AddpvOp:
-			case AddvvOp:
-			case SubpvOp:
-			case SubvpOp:
-			case SubvvOp:
-			keep  = tape[i_var].connect_type != not_connected;
-			keep &= tape[i_var].connect_type != csum_connected;
-			break;
-
-			case UserOp:
-			case UsrapOp:
-			case UsravOp:
-			case UsrrpOp:
-			case UsrrvOp:
-			keep = true;
-			break;
-
 			default:
-			keep = tape[i_var].connect_type != not_connected;
+			keep = op_info[i_op].usage > 0;
 			break;
 		}
 
