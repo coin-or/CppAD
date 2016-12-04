@@ -80,9 +80,6 @@ void optimize_run(
 	recorder<Base>*              rec       )
 {
 
-	// check options
-	bool conditional_skip =
-		options.find("no_conditional_skip", 0) == std::string::npos;
 	bool compare_op =
 		options.find("no_compare_op", 0) == std::string::npos;
 
@@ -92,20 +89,11 @@ void optimize_run(
 	// number of variables in the player
 	const size_t num_var = play->num_var_rec();
 
-	// number of parameters in the player
-	const size_t num_par = play->num_par_rec();
-
 	// number of  VecAD indices
 	size_t num_vecad_ind   = play->num_vec_ind_rec();
 
 	// number of VecAD vectors
 	size_t num_vecad_vec   = play->num_vecad_vec_rec();
-
-	// pointer to the beginning of the parameter vector
-	// (used by atomic functions
-	const Base* parameter = CPPAD_NULL;
-	if( num_par > 0 )
-		parameter = play->GetPar();
 
 	// operator information
 	CppAD::vector<struct_op_info>  op_info;
@@ -183,18 +171,12 @@ void optimize_run(
 	size_t mask;
 	//
 	user_state = end_user;
-	i_op       = num_op;
 	while( i_op > 0 )
-	{	--i_op;
-		//
-		bool flag; // temporary for use in switch cases
-		//
+	{
 		// next op
-		op    = op_info[i_op].op;
-		arg   = op_info[i_op].arg;
-		i_var = op_info[i_op].i_var;
+		play->reverse_next(op, arg, i_op, i_var);
 		//
-		// Store the operator corresponding to each variable
+		// tape info for this operation
 		if( NumRes(op) > 0 )
 		{	tape[i_var].op = op;
 			tape[i_var].arg = arg;
@@ -208,11 +190,6 @@ void optimize_run(
 				);
 			}
 		}
-		enum_connect_type connect_type = not_connected;
-		if( op_info[i_op].csum_connected )
-				connect_type = csum_connected;
-		else if( op_info[i_op].usage > 0 )
-				connect_type = yes_connected;
 		switch( op )
 		{
 			// Conditional expression operators
@@ -278,114 +255,6 @@ void optimize_run(
 			}
 			break;
 			// ============================================================
-			case UserOp:
-			// start or end atomic operation sequence
-			flag = user_state == end_user;
-			if( flag )
-			{	// reverse_user ------------------------------------------
-				user_n     = arg[2];
-				user_m     = arg[3];
-				CPPAD_ASSERT_UNKNOWN( user_n > 0 );
-
-				// other reverse_user arguments
-				user_j     = user_n;
-				user_i     = user_m;
-				user_state = ret_user;
-				// -----------------------------------------------------------
-
-
-				user_x.resize( user_n );
-				user_ix.resize( user_n );
-				//
-			}
-			else
-			{	// reverse_user
-				CPPAD_ASSERT_UNKNOWN( user_state == start_user );
-				user_state = end_user;
-				//
-				for(size_t j = 0; j < user_n; j++) if( user_ix[j] > 0 )
-				{	if( op_info[ var2op[ user_ix[j] ] ].usage > 0 )
-						tape[ user_ix[j] ].connect_type = yes_connected;
-				}
-			}
-			break;
-
-			case UsrapOp:
-			// parameter argument in an atomic operation sequence
-			CPPAD_ASSERT_UNKNOWN( size_t(arg[0]) < num_par );
-			//
-			// reverse_user
-			CPPAD_ASSERT_UNKNOWN( user_state == arg_user );
-			CPPAD_ASSERT_UNKNOWN( 0 < user_j )
-			--user_j;
-			if( user_j == 0 )
-				user_state = start_user;
-			//
-			user_ix[user_j] = 0;
-			//
-			// parameter arguments
-			user_x[user_j] = parameter[arg[0]];
-			//
-			break;
-
-			case UsravOp:
-			// variable argument in an atomic operation sequence
-			CPPAD_ASSERT_UNKNOWN( size_t(arg[0]) <= i_var );
-			CPPAD_ASSERT_UNKNOWN( 0 < arg[0] );
-			//
-			// reverse_user
-			CPPAD_ASSERT_UNKNOWN( user_state == arg_user );
-			CPPAD_ASSERT_UNKNOWN( 0 < user_j )
-			--user_j;
-			if( user_j == 0 )
-				user_state = start_user;
-			//
-			user_ix[user_j] = arg[0];
-			//
-			// variable arguments as parameters
-			user_x[user_j] = CppAD::numeric_limits<Base>::quiet_NaN();
-			//
-			break;
-
-			case UsrrvOp:
-			// variable result in an atomic operation sequence
-			//
-			// reverse_user
-			CPPAD_ASSERT_UNKNOWN( user_state == ret_user );
-			CPPAD_ASSERT_UNKNOWN( 0 < user_i )
-			--user_i;
-			if( user_i == 0 )
-				user_state = arg_user;
-			//
-			switch( connect_type )
-			{	case not_connected:
-				break;
-
-				case yes_connected:
-				case sum_connected:
-				case csum_connected:
-				break;
-
-				case cexp_connected:
-				CPPAD_ASSERT_UNKNOWN( conditional_skip );
-				break;
-
-				default:
-				CPPAD_ASSERT_UNKNOWN(false);
-			}
-			break;
-
-			case UsrrpOp:
-			CPPAD_ASSERT_UNKNOWN( size_t(arg[0]) < num_par );
-			// reverse_user
-			CPPAD_ASSERT_UNKNOWN( user_state == ret_user );
-			CPPAD_ASSERT_UNKNOWN( 0 < user_i )
-			--user_i;
-			if( user_i == 0 )
-				user_state = arg_user;
-			break;
-			// ============================================================
-
 			// noting to do in this case
 			default:
 			break;
