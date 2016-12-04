@@ -456,14 +456,14 @@ void optimize_run(
 			{
 				// convert to a sequence of summation operators
 				size_pair = record_csum(
-					tape                , // inputs
+					var2op              ,
+					op_info             ,
+					old2new             ,
 					i_var               ,
 					play->num_par_rec() ,
 					play->GetPar()      ,
 					rec                 ,
-					csum_work           ,
-					var2op              ,
-					op_info
+					csum_work
 				);
 				old2new[i_op].new_op  = size_pair.i_op;
 				old2new[i_op].new_var = size_pair.i_var;
@@ -560,14 +560,14 @@ void optimize_run(
 			{
 				// convert to a sequence of summation operators
 				size_pair = record_csum(
-					tape                , // inputs
+					var2op              ,
+					op_info             ,
+					old2new             ,
 					i_var               ,
 					play->num_par_rec() ,
 					play->GetPar()      ,
 					rec                 ,
-					csum_work           ,
-					var2op              ,
-					op_info
+					csum_work
 				);
 				old2new[i_op].new_op  = size_pair.i_op;
 				old2new[i_op].new_var = size_pair.i_var;
@@ -629,14 +629,14 @@ void optimize_run(
 			{
 				// convert to a sequence of summation operators
 				size_pair = record_csum(
-					tape                , // inputs
+					var2op              ,
+					op_info             ,
+					old2new             ,
 					i_var               ,
 					play->num_par_rec() ,
 					play->GetPar()      ,
 					rec                 ,
-					csum_work           ,
-					var2op              ,
-					op_info
+					csum_work
 				);
 				old2new[i_op].new_op  = size_pair.i_op;
 				old2new[i_op].new_var = size_pair.i_var;

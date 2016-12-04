@@ -15,27 +15,29 @@ Please visit http://www.coin-or.org/CppAD/ for information on other licenses.
 \file record_csum.hpp
 Recording a cummulative cummulative summation.
 */
+# include <cppad/local/optimize/old2new.hpp>
+
 // BEGIN_CPPAD_LOCAL_OPTIMIZE_NAMESPACE
 namespace CppAD { namespace local { namespace optimize  {
 /*!
 Recording a cummulative cummulative summation.
 
-<!-- replace prototype -->
-\param tape
-is a vector that maps a variable index, in the old operation sequence,
-to the corresponding struct_old_variable information.
-Note that the old variable index must be greater than or equal zero and
-less than tape.size().
+\param var2op
+mapping from old variable index to old operator index.
+
+\param op_info
+mapping from old index to operator index to operator information
+
+\param old2new
+mapping from old operator index to information about the new recording.
 
 \param current
 is the index in the old operation sequence for
 the variable corresponding to the result for the current operator.
-It follows that current < tape.size() and NumRes( tape[current].op ) > 0.
-Suppose i <= current, j < NumArg( tape[i] ), and k = tape[i].arg[j],
-It is assumed that tape[i].arg[j] is connected to the dependent variables
-and tape[k].new_var has been set to the corresponding variable.
-Note that tape[i].arg[j] < i <= current and
-tape[k].new_var <= k < current.
+We use the notataion i_op = var2op[current].
+It follows that  NumRes( op_info[i_op].op ) > 0.
+If 0 < j_op < i_op, either op_info[j_op].csum_connected,
+op_info[j_op].usage = 0, or old2new[j_op].new_var != 0.
 
 \param npar
 is the number of parameters corresponding to the old operation sequence.
@@ -44,10 +46,9 @@ is the number of parameters corresponding to the old operation sequence.
 is a vector of length npar containing the parameters
 the old operation sequence; i.e.,
 given a parameter index i < npar, the corresponding parameter value is par[i].
-<!-- end prototype -->
 
 \param rec
-is the object that will record the operations.
+is the object that will record the new operations.
 
 \param work
 Is temporary work space. On input and output,
@@ -55,41 +56,29 @@ work.op_stack, work.add_stack, and work.sub_stack, are all empty.
 These stacks are passed in so that they are created once
 and then be reused with calls to record_csum.
 
-\param var2op
-mapping from old variable index to old operator index
-(only used for error checking)
-
-\param op_info
-mapping from old index to operator information
-(only used for error checking)
+\return
+is the operator and variable indices in the new operation sequence.
 
 \par Assumptions
-tape[i].new_var is not yet defined for any node i that is csum_connected
-to the current node; i.e., tape[i].new_var = tape.size() for all such nodes.
-For example; suppose j is an argument in the old operation sequence for the
-current operator, i = tape[current].arg[j], and
-tape[arg[j]].connect_type == csum_connected. It follows that
-tape[i].new_var == tape.size().
-
-\par Restriction:
-tape[current].op
+op_info[i_o].op
 must be one of AddpvOp, AddvvOp, SubpvOp, SubvpOp, SubvvOp.
-tape[current].connect_type must be yes_connected.
-tape[j].connect_type == csum_connected for some index
-j that is a variable argument for the current operation.
+op_info[i_op].usage > 0 and ! op_info[i_op].csum_connected.
+Furthermore op_info[j_op].csum_connected is true from some
+j_op that corresponds to a variable that is an argument to
+op_info[i_op].
 */
 
 template <class Base>
 struct_size_pair record_csum(
-	const CppAD::vector<struct struct_old_variable>&   tape           ,
+	const vector<size_t>&                              var2op         ,
+	const vector<struct_op_info>&                      op_info        ,
+	const CppAD::vector<struct struct_old2new>&        old2new        ,
 	size_t                                             current        ,
 	size_t                                             npar           ,
 	const Base*                                        par            ,
 	recorder<Base>*                                    rec            ,
 	// local information passed so stacks need not be allocated for every call
-	struct_csum_stacks&                                work           ,
-	const vector<size_t>&                              var2op         ,
-	const vector<struct_op_info>&                      op_info        )
+	struct_csum_stacks&                                work           )
 {
 	// check assumption about work space
 	CPPAD_ASSERT_UNKNOWN( work.op_stack.empty() );
@@ -165,7 +154,7 @@ struct_size_pair record_csum(
 # endif
 			if( op_info[var2op[arg[0]]].csum_connected )
 			{	CPPAD_ASSERT_UNKNOWN(
-					size_t(tape[arg[0]].new_var) == tape.size()
+					size_t( old2new[ var2op[arg[0]] ].new_var) == 0
 				);
 				// push the operator corresponding to the first argument
 				var.op  = op_info[ var2op[arg[0]] ].op;
@@ -177,7 +166,6 @@ struct_size_pair record_csum(
 			else
 			{	// there are no nodes below this one
 				CPPAD_ASSERT_UNKNOWN( size_t(arg[0]) < current );
-				CPPAD_ASSERT_UNKNOWN( tape[arg[0]].new_var <= arg[0] );
 				if( add )
 					work.add_stack.push(arg[0]);
 				else	work.sub_stack.push(arg[0]);
@@ -215,7 +203,7 @@ struct_size_pair record_csum(
 # endif
 			if( op_info[var2op[arg[1]]].csum_connected )
 			{	CPPAD_ASSERT_UNKNOWN(
-					size_t(tape[arg[1]].new_var) == tape.size()
+					size_t( old2new[ var2op[arg[1]] ].new_var) == 0
 				);
 				// push the operator corresoponding to the second arugment
 				var.op   = op_info[ var2op[arg[1]] ].op;
@@ -226,7 +214,6 @@ struct_size_pair record_csum(
 			else
 			{	// there are no nodes below this one
 				CPPAD_ASSERT_UNKNOWN( size_t(arg[1]) < current );
-				CPPAD_ASSERT_UNKNOWN( tape[arg[1]].new_var <=  arg[1] );
 				if( add )
 					work.add_stack.push(arg[1]);
 				else	work.sub_stack.push(arg[1]);
@@ -250,8 +237,8 @@ struct_size_pair record_csum(
 	for(i = 0; i < n_add; i++)
 	{	CPPAD_ASSERT_UNKNOWN( ! work.add_stack.empty() );
 		size_t old_arg = work.add_stack.top();
-		new_arg        = tape[old_arg].new_var;
-		CPPAD_ASSERT_UNKNOWN( new_arg < current );
+		new_arg        = old2new[ var2op[old_arg] ].new_var;
+		CPPAD_ASSERT_UNKNOWN( 0 < new_arg && new_arg < current );
 		rec->PutArg(new_arg);         // arg[3+i]
 		work.add_stack.pop();
 	}
@@ -259,8 +246,8 @@ struct_size_pair record_csum(
 	for(i = 0; i < n_sub; i++)
 	{	CPPAD_ASSERT_UNKNOWN( ! work.sub_stack.empty() );
 		size_t old_arg = work.sub_stack.top();
-		new_arg        = tape[old_arg].new_var;
-		CPPAD_ASSERT_UNKNOWN( new_arg < current );
+		new_arg        = old2new[ var2op[old_arg] ].new_var;
+		CPPAD_ASSERT_UNKNOWN( 0 < new_arg && new_arg < current );
 		rec->PutArg(new_arg);      // arg[3 + arg[0] + i]
 		work.sub_stack.pop();
 	}
