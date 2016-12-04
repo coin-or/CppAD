@@ -405,12 +405,14 @@ void optimize_run(
 			case TanOp:
 			case TanhOp:
 			match_var = unary_match(
-				tape                ,  // inputs
+				var2op              ,
+				op_info             ,
+				old2new             ,
 				i_var               ,
 				play->num_par_rec() ,
 				play->GetPar()      ,
 				hash_table_var      ,
-				code                  // outputs
+				code
 			);
 			if( match_var > 0 )
 			{	size_t j_op = var2op[match_var];

@@ -94,8 +94,8 @@ struct_size_pair record_vv(
 	struct_size_pair ret;
 	ret.i_op  = rec->num_op_rec();
 	ret.i_var = rec->PutOp(op);
-	CPPAD_ASSERT_UNKNOWN( size_t(new_arg[0]) < ret.i_var );
-	CPPAD_ASSERT_UNKNOWN( size_t(new_arg[1]) < ret.i_var );
+	CPPAD_ASSERT_UNKNOWN( 0 < new_arg[0] && size_t(new_arg[0]) < ret.i_var );
+	CPPAD_ASSERT_UNKNOWN( 0 < new_arg[1] && size_t(new_arg[1]) < ret.i_var );
 	return ret;
 }
 
