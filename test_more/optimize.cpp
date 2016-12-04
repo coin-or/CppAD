@@ -25,7 +25,80 @@ namespace {
 
 	// note this enum type is not part of the API (but its values are)
 	CppAD::atomic_base<double>::option_enum atomic_sparsity_option_;
-	//
+	// ----------------------------------------------------------------
+	class ode_evaluate_fun {
+	public:
+		// Given that y_i (0) = x_i,
+		// the following y_i (t) satisfy the ODE below:
+		// y_0 (t) = x[0]
+		// y_1 (t) = x[1] + x[0] * t
+		// y_2 (t) = x[2] + x[1] * t + x[0] * t^2/2
+		// y_3 (t) = x[3] + x[2] * t + x[1] * t^2/2 + x[0] * t^3 / 3!
+		// ...
+		void Ode(
+			const CppAD::AD<double>&                      t,
+			const CppAD::vector< CppAD::AD<double> >&     y,
+			CppAD::vector< CppAD::AD<double> >&           f)
+		{	size_t n  = y.size();
+			f[0]      = 0.;
+			for(size_t k = 1; k < n; k++)
+				f[k] = y[k-1];
+		}
+	};
+	bool optimize_ode(void)
+	{	bool ok = true;
+		using CppAD::AD;
+		using CppAD::vector;
+		double eps = 100. * std::numeric_limits<double>::epsilon();
+
+		// independent variable vector
+		size_t n = 2;
+		vector< AD<double> > ax(n);
+		for(size_t j = 0; j < n; j++)
+			ax[j] = AD<double>(j+1);
+		Independent(ax);
+
+		// function that defines the ode
+		ode_evaluate_fun F;
+
+		// initial and final time
+		AD<double> ati = 0.0;
+		AD<double> atf = 0.5;
+
+		// initial value for y(x, t); i.e. y(x, 0)
+		// (is a reference to x)
+		size_t m = n;
+		vector< AD<double> >  ayi = ax;
+
+		// final value for y(x, t); i.e., y(x, 1)
+		vector< AD<double> >  ayf(m);
+
+		// Use one fourth order Runge-Kutta step to solve ODE
+		size_t M = 1;
+		ayf = CppAD::Runge45(F, M, ati, atf, ayi);
+
+		// function f(x) = y(x, tf)
+		CppAD::ADFun<double> f(ax, ayf);
+
+		// optimize f(x)
+		f.optimize();
+
+		// compute f'(x)
+		vector<double> x(n), jac(m * n);
+		for(size_t j = 0; j < n; j++)
+			x[j] = double(j+1);
+		jac = f.Jacobian(x);
+
+
+		// check f'(x)
+		double tj = 1.0;
+		for(size_t j = 0; j < n; j++)
+		{	for(size_t i = j; i < m; i++)
+				ok &= CppAD::NearEqual( tj , jac[ i * n * j], eps, eps );
+			tj *= Value( atf - ati );
+		}
+		return ok;
+	}
 	// ----------------------------------------------------------------
 	// Test nested conditional expressions.
 	bool nested_cond_exp(void)
@@ -1763,6 +1836,9 @@ bool optimize(void)
 {	bool ok = true;
 	conditional_skip_       = true;
 	atomic_sparsity_option_ = CppAD::atomic_base<double>::bool_sparsity_enum;
+
+	// optimize an example ODE
+	ok &= optimize_ode();
 
 	// atomic sparsity loop
 	for(size_t i = 0; i < 3; i++)

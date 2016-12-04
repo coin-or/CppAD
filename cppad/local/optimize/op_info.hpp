@@ -37,7 +37,7 @@ struct struct_op_info {
 
 	/// Number of times an operator is used. This counts using the results
 	/// as well as other factors. Being a dependent variable or independent
-	/// variable gets one use count. Certain other side effects can get a
+	/// variable gets two usage counts. Certain other side effects can get a
 	// use count. For example, comparision operators may or may not be counted.
 	size_t usage;
 
@@ -269,10 +269,10 @@ void get_op_info(
 	for(size_t i = 0; i < num_op; i++)
 		op_info[i].usage = 0;
 	for(size_t i = 1; i <= num_inv_op; i++)
-		op_info[i].usage = 1;       // independent variables
+		op_info[i].usage = 2;       // independent variables
 	for(size_t i = 0; i < dep_taddr.size(); i++)
 	{	i_op                = var2op[ dep_taddr[i] ];
-		op_info[i_op].usage = 1;    // dependent variables
+		op_info[i_op].usage = 2;    // dependent variables
 	}
 	// value for BeginOp and EndOp
 	CPPAD_ASSERT_UNKNOWN( op_info[0].op == BeginOp);

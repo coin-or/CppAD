@@ -915,6 +915,9 @@ void optimize_run(
 			// Binary operators where
 			// left is a variable and right is a parameter
 			case SubvpOp:
+			// check if this is the top of a csum connection
+			if( op_info[i_op].csum_connected )
+				break;
 			if( tape[arg[0]].connect_type == csum_connected )
 			{
 				// convert to a sequence of summation operators
@@ -1002,6 +1005,9 @@ void optimize_run(
 			// left is a parameter and right is a variable
 			case SubpvOp:
 			case AddpvOp:
+			// check if this is the top of a csum connection
+			if( op_info[i_op].csum_connected )
+				break;
 			if( tape[arg[1]].connect_type == csum_connected )
 			{
 				// convert to a sequence of summation operators
@@ -1059,6 +1065,9 @@ void optimize_run(
 			// both operators are variables
 			case AddvvOp:
 			case SubvvOp:
+			// check if this is the top of a csum connection
+			if( op_info[i_op].csum_connected )
+				break;
 			if( (tape[arg[0]].connect_type == csum_connected) |
 			    (tape[arg[1]].connect_type == csum_connected)
 			)
