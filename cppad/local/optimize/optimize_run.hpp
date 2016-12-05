@@ -106,10 +106,11 @@ void optimize_run(
 	// nan with type Base
 	Base base_nan = Base( std::numeric_limits<double>::quiet_NaN() );
 
-	// temporary variables
-	OpCode        op;   // current operator
-	const addr_t* arg;  // operator arguments
-	size_t        i_var;  // index of first result for current operator
+	// information for current operator
+	size_t        i_op;   // index
+	OpCode        op;     // operator
+	const addr_t* arg;    // arguments
+	size_t        i_var;  // variable index of primary (last) result
 
 	// -------------------------------------------------------------
 	// Determine how each variable is connected to the dependent variables
@@ -143,12 +144,35 @@ void optimize_run(
 	size_t user_m=0, user_n=0, user_i=0, user_j=0;
 	enum_user_state user_state;
 	//
-	/// During reverse mode, information for each CSkip operation
+	/// information for each CSkip operation
 	CppAD::vector<struct_cskip_info>   cskip_info(num_cexp_op);
-	size_t index_cskip_info = num_cexp_op; // initialize for reverse mode
+	for(size_t i = 0; i < num_cexp_op; i++)
+	{	i_op            = cexp2op[i];
+		arg             = op_info[i_op].arg;
+		CPPAD_ASSERT_UNKNOWN( op_info[i_op].op == CExpOp );
+		//
+		struct_cskip_info info;
+		info.i_op       = i_op;
+		info.cop        = CompareOp( arg[0] );
+		info.flag       = arg[1];
+		info.left       = arg[2];
+		info.right      = arg[3];
+		info.i_arg      = 0; // case where no CSkipOp for this CExpOp
+		//
+		// max_left_right
+		size_t index    = 0;
+		if( arg[1] & 1 )
+			index = std::max(index, info.left);
+		if( arg[1] & 2 )
+			index = std::max(index, info.right);
+		CPPAD_ASSERT_UNKNOWN( index > 0 );
+		info.max_left_right = index;
+		//
+		cskip_info[i] = info;
+	};
+
 
 	// Initialize a reverse mode sweep through the operation sequence
-	size_t i_op;
 	play->reverse_start(op, arg, i_op, i_var);
 	CPPAD_ASSERT_UNKNOWN( op == EndOp );
 	size_t mask;
@@ -160,30 +184,6 @@ void optimize_run(
 		play->reverse_next(op, arg, i_op, i_var);
 		switch( op )
 		{
-			// Conditional expression operators
-			case CExpOp:
-			--index_cskip_info;
-			CPPAD_ASSERT_UNKNOWN( NumArg(CExpOp) == 6 );
-			{	struct_cskip_info info;
-				info.i_op       = i_op;
-				info.cop        = CompareOp( arg[0] );
-				info.flag       = arg[1];
-				info.left       = arg[2];
-				info.right      = arg[3];
-				info.i_arg      = 0; // case where no CSkipOp for this CExpOp
-				//
-				size_t index    = 0;
-				if( arg[1] & 1 )
-					index = std::max(index, info.left);
-				if( arg[1] & 2 )
-					index = std::max(index, info.right);
-				CPPAD_ASSERT_UNKNOWN( index > 0 );
-				info.max_left_right = index;
-				//
-				cskip_info[index_cskip_info] = info;
-			}
-			break;  // --------------------------------------------
-
 			// Load using a parameter index ----------------------
 			case LdpOp:
 			if( op_info[i_op].usage > 0 )
