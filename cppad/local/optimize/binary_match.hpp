@@ -19,23 +19,24 @@ Check if a binary operation is a match for a previous operation.
 namespace CppAD { namespace local { namespace optimize  {
 /*!
 Check if a binary operation is a match for a previous operation.
+A previous identical operation can be used inplace of the current operation.
 
-<!-- replace prototype -->
-\param tape
-is a vector that maps a variable index, in the old operation sequence,
-to the corresponding struct_old_variable information.
-Note that the old variable index must be greater than or equal zero and
-less than tape.size().
+\param var2op
+mapping from old variable index to old operator index.
+
+\param op_info
+mapping from old index to operator index to operator information
+
+\param old2new
+mapping from old operator index to information about the new recording.
 
 \param current
 is the index in the old operation sequence for
 the variable corresponding to the result for the current operator.
-It follows that current < tape.size() and NumRes( tape[current].op ) > 0.
-Suppose i <= current, j < NumArg( tape[i] ), and k = tape[i].arg[j],
-It is assumed that tape[i].arg[j] is connected to the dependent variables
-and tape[k].new_var has been set to the corresponding variable.
-Note that tape[i].arg[j] < i <= current and
-tape[k].new_var <= k < current.
+We use the notataion i_op = var2op[current].
+It follows that  NumRes( op_info[i_op].op ) > 0.
+If 0 < j_op < i_op, either op_info[j_op].csum_connected,
+op_info[j_op].usage = 0, or old2new[j_op].new_var != 0.
 
 \param npar
 is the number of parameters corresponding to the old operation sequence.
@@ -44,7 +45,6 @@ is the number of parameters corresponding to the old operation sequence.
 is a vector of length npar containing the parameters
 the old operation sequence; i.e.,
 given a parameter index i < npar, the corresponding parameter value is par[i].
-<!-- end prototype -->
 
 \param hash_table_var
 is a vector with size CPPAD_HASH_TABLE_SIZE
@@ -52,33 +52,36 @@ that maps a hash code to the corresponding
 variable index in the old operation sequence.
 All the values in this table are less than current.
 
-\param code
+\param code [out]
 The input value of code does not matter.
 The output value of code is the hash code corresponding to
 this operation in the new operation sequence.
 
 \return
-If the return value is zero,
-no match was found.
+If the return value is zero, no identical operation was found.
 If the return value is greater than zero,
-it is the index of a new variable that can be used to replace the
-old variable.
-
+it is the old operation sequence index of a variable,
+that comes before current, and can be used to replace the current variable.
 
 \par Restrictions:
 The binary operator must be an addition, subtraction, multiplication, division
-or power operator.  NumArg( tape[current].op ) == 2.
+or power operator.
+NumArg( op_info[i_op].op ) == 2, NumRes( op_info[i_op].op ) == 1.
 */
 template <class Base>
 inline addr_t binary_match(
-	const CppAD::vector<struct struct_old_variable>&   tape           ,
+	const vector<size_t>&                              var2op         ,
+	const vector<struct_op_info>&                      op_info        ,
+	const CppAD::vector<struct struct_old2new>&        old2new        ,
 	size_t                                             current        ,
 	size_t                                             npar           ,
 	const Base*                                        par            ,
 	const CppAD::vector<size_t>&                       hash_table_var ,
 	unsigned short&                                    code           )
-{	OpCode        op         = tape[current].op;
-	const addr_t* arg        = tape[current].arg;
+{	// current operator
+	size_t        i_op       = var2op[current];
+	OpCode        op         = op_info[i_op].op;
+	const addr_t* arg        = op_info[i_op].arg;
 	addr_t        new_arg[2];
 	bool          parameter[2];
 
@@ -93,7 +96,7 @@ inline addr_t binary_match(
 		// parameter not defined for this case
 		CPPAD_ASSERT_UNKNOWN( size_t(arg[1]) < current );
 		new_arg[0]   = arg[0];
-		new_arg[1]   = tape[arg[1]].new_var;
+		new_arg[1]   = old2new[ var2op[arg[1]] ].new_var;
 		break;
 
 		// parameter op variable ----------------------------------
@@ -109,7 +112,7 @@ inline addr_t binary_match(
 		CPPAD_ASSERT_UNKNOWN( size_t(arg[0]) < npar );
 		// arg[1]
 		parameter[1] = false;
-		new_arg[1]   = tape[arg[1]].new_var;
+		new_arg[1]   = old2new[ var2op[arg[1]] ].new_var;
 		CPPAD_ASSERT_UNKNOWN( size_t(arg[1]) < current );
 		break;
 
@@ -120,7 +123,7 @@ inline addr_t binary_match(
 		case ZmulvpOp:
 		// arg[0]
 		parameter[0] = false;
-		new_arg[0]   = tape[arg[0]].new_var;
+		new_arg[0]   = old2new[ var2op[arg[0]] ].new_var;
 		CPPAD_ASSERT_UNKNOWN( size_t(arg[0]) < current );
 		// arg[1]
 		parameter[1] = true;
@@ -137,11 +140,11 @@ inline addr_t binary_match(
 		case ZmulvvOp:
 		// arg[0]
 		parameter[0] = false;
-		new_arg[0]   = tape[arg[0]].new_var;
+		new_arg[0]   = old2new[ var2op[arg[0]] ].new_var;
 		CPPAD_ASSERT_UNKNOWN( size_t(arg[0]) < current );
 		// arg[1]
 		parameter[1] = false;
-		new_arg[1]   = tape[arg[1]].new_var;
+		new_arg[1]   = old2new[ var2op[arg[1]] ].new_var;
 		CPPAD_ASSERT_UNKNOWN( size_t(arg[1]) < current );
 		break;
 
@@ -157,16 +160,16 @@ inline addr_t binary_match(
 	);
 	size_t  i_var  = hash_table_var[code];
 	CPPAD_ASSERT_UNKNOWN( i_var < current );
-	if( op == tape[i_var].op )
+	if( i_var != 0 && op == op_info[var2op[i_var]].op )
 	{	bool match = true;
 		if( op == DisOp )
-		{	match   &= new_arg[0] == tape[i_var].arg[0];
-			size_t k = tape[i_var].arg[1];
-			match   &= new_arg[1] == tape[k].new_var;
+		{	match   &= new_arg[0] == op_info[var2op[i_var]].arg[0];
+			size_t k = op_info[var2op[i_var]].arg[1];
+			match   &= new_arg[1] == old2new[var2op[k]].new_var;
 		}
 		else
 		{	for(size_t j = 0; j < 2; j++)
-			{	size_t k = tape[i_var].arg[j];
+			{	size_t k = op_info[var2op[i_var]].arg[j];
 				if( parameter[j] )
 				{	CPPAD_ASSERT_UNKNOWN( k < npar );
 					match &= IdenticalEqualPar(
@@ -175,7 +178,7 @@ inline addr_t binary_match(
 				}
 				else
 				{	CPPAD_ASSERT_UNKNOWN( k < i_var );
-					match &= (new_arg[j] == tape[k].new_var);
+					match &= (new_arg[j] == old2new[var2op[k]].new_var);
 				}
 			}
 		}
@@ -196,13 +199,13 @@ inline addr_t binary_match(
 	);
 	i_var  = hash_table_var[code_switch];
 	CPPAD_ASSERT_UNKNOWN( i_var < current );
-	if( op == tape[i_var].op )
+	if( i_var != 0 && op == op_info[var2op[i_var]].op )
 	{	bool match = true;
 		size_t j;
 		for(j = 0; j < 2; j++)
-		{	size_t k = tape[i_var].arg[j];
+		{	size_t k = op_info[var2op[i_var]].arg[j];
 			CPPAD_ASSERT_UNKNOWN( k < i_var );
-			match &= (new_arg[j] == tape[k].new_var);
+			match &= (new_arg[j] == old2new[var2op[k]].new_var);
 		}
 		if( match )
 			match_var = i_var;

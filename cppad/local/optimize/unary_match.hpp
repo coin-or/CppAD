@@ -108,12 +108,14 @@ addr_t unary_match(
 	size_t  i_var  = hash_table_var[code];
 	CPPAD_ASSERT_UNKNOWN( i_var < current );
 	//
-	size_t j_op = var2op[i_var];
-	if( op == op_info[j_op].op )
-	{	size_t k = op_info[j_op].arg[0];
-		CPPAD_ASSERT_UNKNOWN( k < i_var );
-		if ( size_t(new_arg[0]) == old2new[ var2op[k] ].new_var )
-			return i_var;
+	if( i_var != 0 )
+	{	size_t j_op = var2op[i_var];
+		if( op == op_info[j_op].op )
+		{	size_t k = op_info[j_op].arg[0];
+			CPPAD_ASSERT_UNKNOWN( k < i_var );
+			if ( new_arg[0] == old2new[ var2op[k] ].new_var )
+				return i_var;
+		}
 	}
 	return 0;
 }

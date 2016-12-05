@@ -26,7 +26,7 @@ struct struct_old2new {
 	size_t  new_op;
 
 	/// New varaible index for this old operator.
-	size_t  new_var;
+	addr_t  new_var;
 
 	/// Did this old operator match a another operator in the operation
 	/// sequence. If so, we only need one of the two operators.

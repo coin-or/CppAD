@@ -478,12 +478,14 @@ void optimize_run(
 			case PowvpOp:
 			case ZmulvpOp:
 			match_var = binary_match(
-				tape                ,  // inputs
+				var2op              ,
+				op_info             ,
+				old2new             ,
 				i_var               ,
 				play->num_par_rec() ,
 				play->GetPar()      ,
 				hash_table_var      ,
-				code                  // outputs
+				code
 			);
 			if( match_var > 0 )
 			{	size_t j_op = var2op[match_var];
@@ -519,12 +521,14 @@ void optimize_run(
 			// left is an index and right is a variable
 			case DisOp:
 			match_var = binary_match(
-				tape                ,  // inputs
+				var2op              ,
+				op_info             ,
+				old2new             ,
 				i_var               ,
 				play->num_par_rec() ,
 				play->GetPar()      ,
 				hash_table_var      ,
-				code                  // outputs
+				code
 			);
 			if( match_var > 0 )
 			{	size_t j_op = var2op[match_var];
@@ -585,12 +589,14 @@ void optimize_run(
 			case PowpvOp:
 			case ZmulpvOp:
 			match_var = binary_match(
-				tape                ,  // inputs
+				var2op              ,
+				op_info             ,
+				old2new             ,
 				i_var               ,
 				play->num_par_rec() ,
 				play->GetPar()      ,
 				hash_table_var      ,
-				code                  // outputs
+				code
 			);
 			if( match_var > 0 )
 			{	size_t j_op = var2op[match_var];
@@ -656,12 +662,14 @@ void optimize_run(
 			case PowvvOp:
 			case ZmulvvOp:
 			match_var = binary_match(
-				tape                ,  // inputs
+				var2op              ,
+				op_info             ,
+				old2new             ,
 				i_var               ,
 				play->num_par_rec() ,
 				play->GetPar()      ,
 				hash_table_var      ,
-				code                  // outputs
+				code
 			);
 			if( match_var > 0 )
 			{	size_t j_op = var2op[match_var];
