@@ -960,7 +960,7 @@ void optimize_run(
 				user_state = ret_user;
 			//
 			if( op_info[i_op].usage > 0 )
-			{	new_arg[0] = tape[arg[0]].new_var;
+			{	new_arg[0] = old2new[ var2op[arg[0]] ].new_var;
 				if( size_t(new_arg[0]) < num_var )
 				{	rec->PutArg(new_arg[0]);
 					old2new[i_op].new_op = rec->num_op_rec();
@@ -1002,8 +1002,6 @@ void optimize_run(
 			if( op_info[i_op].usage > 0 )
 			{	old2new[i_op].new_op  = rec->num_op_rec();
 				old2new[i_op].new_var = rec->PutOp(UsrrvOp);
-				tape[i_var].new_op  = old2new[i_op].new_op;
-				tape[i_var].new_var = old2new[i_op].new_var;
 			}
 			break;
 			// ---------------------------------------------------
@@ -1015,7 +1013,7 @@ void optimize_run(
 		}
 		if( replace_hash )
 		{	// The old variable index i_var corresponds to the
-			// new variable index tape[i_var].new_var. In addition
+			// new variable index old2new[var2op[i_var]].new_var. In addition
 			// this is the most recent variable that has this code.
 			hash_table_var[code] = i_var;
 		}
@@ -1023,16 +1021,14 @@ void optimize_run(
 	}
 	// modify the dependent variable vector to new indices
 	for(size_t i = 0; i < dep_taddr.size(); i++ )
-	{	CPPAD_ASSERT_UNKNOWN( size_t(tape[dep_taddr[i]].new_var) < num_var );
-		dep_taddr[i] = tape[ dep_taddr[i] ].new_var;
+	{	dep_taddr[i] = old2new[ var2op[dep_taddr[i]] ].new_var;
+		CPPAD_ASSERT_UNKNOWN( size_t(dep_taddr[i]) < num_var );
 	}
 
 # ifndef NDEBUG
-	for(i_op = 0; i_op < num_op; i_op++) if( NumRes( op_info[i_op].op ) > 0 )
-	{	i_var = op_info[i_op].i_var;
-		CPPAD_ASSERT_UNKNOWN( tape[i_var].new_op < rec->num_op_rec() );
-		CPPAD_ASSERT_UNKNOWN( old2new[i_op].new_op == tape[i_var].new_op );
-	}
+	for(i_op = 0; i_op < num_op; i_op++)
+		if( NumRes( op_info[i_op].op ) > 0 )
+			CPPAD_ASSERT_UNKNOWN( old2new[i_op].new_op < rec->num_op_rec() );
 # endif
 	// fill in the arguments for the CSkip operations
 	CPPAD_ASSERT_UNKNOWN( cskip_order_next == cskip_info.size() );
@@ -1052,9 +1048,8 @@ void optimize_run(
 			for(size_t j = 0; j < info.skip_old_op_true.size(); j++)
 			{	i_op = info.skip_old_op_true[j];
 				bool remove = old2new[i_op].new_op == 0;
-				if( NumRes( op_info[i_op].op ) > 0 )
-					if( tape[ op_info[i_op].i_var].match )
-						remove = true;
+				if( old2new[i_op].match )
+					remove = true;
 				if( remove )
 				{	// This operation has been removed or matched,
 					// so use an operator index that never comes up.
@@ -1066,9 +1061,8 @@ void optimize_run(
 			for(size_t j = 0; j < info.skip_old_op_false.size(); j++)
 			{	i_op   = info.skip_old_op_false[j];
 				bool remove = old2new[i_op].new_op == 0;
-				if( NumRes( op_info[i_op].op ) > 0 )
-					if( tape[ op_info[i_op].i_var].match )
-						remove = true;
+				if( old2new[i_op].match )
+					remove = true;
 				if( remove )
 				{	// This operation has been removed or matched,
 					// so use an operator index that never comes up.
