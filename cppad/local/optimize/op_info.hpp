@@ -251,8 +251,6 @@ void get_op_info(
 	bool               user_set  = false;      // sparsity pattern type is set
 	//
 	typedef fast_empty_set<cexp_compare> set_cexp_compare;
-	set_cexp_compare user_cexp_set;      // conditional comparison set
-	bool             user_usage =false ; // are any of result values used
 	// -----------------------------------------------------------------------
 	// vecad information
 	size_t num_vecad      = play->num_vecad_vec_rec();
@@ -306,7 +304,8 @@ void get_op_info(
 	user_state        = end_user;
 	play->reverse_start(op, arg, i_op, i_var);
 	CPPAD_ASSERT_UNKNOWN( op == EndOp );
-	op_info[i_op].usage = 1;
+	op_info[i_op].usage    = 1;
+	size_t first_user_i_op = 0;
 	while( op != BeginOp )
 	{	bool   flag;  // temporary boolean value
 		//
@@ -318,7 +317,7 @@ void get_op_info(
 		size_t use_result                = op_info[i_op].usage;
 		//
 		// set of conditional expressions connected to its use
-		set_cexp_compare cexp_set_result( op_info[i_op].cexp_set );
+		const set_cexp_compare& cexp_set_result( op_info[i_op].cexp_set );
 		switch( op )
 		{
 			// =============================================================
@@ -628,8 +627,10 @@ void get_op_info(
 			);
 			if( flag )
 			{	// -------------------------------------------------------
-				user_cexp_set.clear();
-				user_usage = false;
+				first_user_i_op = i_op - user_n - user_m - 1;
+				CPPAD_ASSERT_UNKNOWN( i_op > user_n + user_m + 1 );
+				CPPAD_ASSERT_UNKNOWN( op_info[first_user_i_op].usage == 0 );
+				CPPAD_ASSERT_UNKNOWN(op_info[first_user_i_op].cexp_set.empty());
 				//
 				user_x.resize(  user_n );
 				user_ix.resize( user_n );
@@ -663,7 +664,9 @@ void get_op_info(
 				}
 			}
 			else
-			{	// call users function for this operation
+			{	CPPAD_ASSERT_UNKNOWN( i_op == first_user_i_op );
+				//
+				// call users function for this operation
 				user_atom->set_old(user_old);
 				bool user_ok  = false;
 				size_t user_q = 1; // as if sum of dependent variables
@@ -710,7 +713,7 @@ void get_op_info(
 				}
 				// 2DO: It might be faster if we add set union to var_sparsity
 				// where one of the sets is not in var_sparsity.
-				if( user_usage )
+				if( op_info[first_user_i_op].usage > 0 )
 				for(size_t j = 0; j < user_n; j++)
 				if( user_ix[j] > 0 )
 				{	// This user argument is a variable
@@ -727,15 +730,20 @@ void get_op_info(
 					{	if( user_s_pack[j] )
 							++op_info[j_op].usage;
 					}
-					if( op_info[j_op].usage )
-						op_info[j_op].cexp_set.intersection( user_cexp_set );
+					if( op_info[j_op].usage > 0 )
+						op_info[j_op].cexp_set.intersection(
+							op_info[first_user_i_op].cexp_set
+					);
 					else
-						op_info[j_op].cexp_set = user_cexp_set;
+						op_info[j_op].cexp_set =
+							op_info[first_user_i_op].cexp_set;
 				}
 				// set cexp_set for the user operations for this call
-				if( user_usage )
+				if( op_info[first_user_i_op].usage > 0 )
 				for(size_t j = 0; j < user_n + user_m + 2; j++)
-				{	op_info[i_op + j].cexp_set = user_cexp_set;
+				{	op_info[i_op + j].cexp_set =
+							op_info[first_user_i_op].cexp_set
+					;
 					++op_info[i_op + j].usage;
 				}
 			}
@@ -786,11 +794,15 @@ void get_op_info(
 				if( user_pack )
 					user_r_pack[user_i] = true;
 				//
-				if( ! user_usage )
-					user_cexp_set = cexp_set_result;
+				if( op_info[first_user_i_op].usage == 0 )
+				{	op_info[first_user_i_op].cexp_set = cexp_set_result;
+				}
 				else
-					user_cexp_set.intersection( cexp_set_result );
-				user_usage = true;
+				{	op_info[first_user_i_op].cexp_set.intersection(
+						cexp_set_result
+					);
+				}
+				++op_info[first_user_i_op].usage;
 			}
 			break; // --------------------------------------------------------
 
