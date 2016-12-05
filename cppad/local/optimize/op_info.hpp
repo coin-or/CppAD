@@ -151,8 +151,9 @@ void get_op_info(
 	op_info[i_op].arg   = arg;
 	op_info[i_op].i_var = i_var;
 	//
-	// This variaible index, 0, is automatically created, but not used because
-	// it represents a paraemeter during the recording process. So we set
+	// This variaible index, 0, is automatically created, but it should
+	// not used because variable index 0 represents a paraemeter during
+	// the recording process. So we set
 	var2op[i_var] = num_op;
 	//
 	size_t num_cexp_op = 0;

@@ -247,7 +247,6 @@ nobase_myinclude_HEADERS =  \
 	cppad/local/optimize/define_prototype.hpp \
 	cppad/local/optimize/fast_empty_set.hpp \
 	cppad/local/optimize/old2new.hpp \
-	cppad/local/optimize/old_variable.hpp \
 	cppad/local/optimize/op_info.hpp \
 	cppad/local/optimize/optimize_run.hpp \
 	cppad/local/optimize/record_csum.hpp \
