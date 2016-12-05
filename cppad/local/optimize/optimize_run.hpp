@@ -46,10 +46,14 @@ using AD< \a Base > and computations by this routine are done using type
 \a Base.
 
 \param options
-The possible values for this string are:
-"", "no_conditional_skip".
-If it is "no_conditional_skip", then no conditional skip operations
-will be generated.
+\li
+If the sub-string "no_conditional_skip" appears,
+no conditional skip operations will be generated.
+\li
+If the sub-string "no_compare_op" appears,
+then comparison operators will be removed.
+This means that the compare_change function will no-longer
+be meaningful for the resulting recording.
 
 \param n
 is the number of independent variables on the tape.
@@ -79,6 +83,8 @@ void optimize_run(
 	player<Base>*                play      ,
 	recorder<Base>*              rec       )
 {
+	bool conditional_skip =
+		options.find("no_conditional_skip", 0) == std::string::npos;
 
 	bool compare_op =
 		options.find("no_compare_op", 0) == std::string::npos;
@@ -100,7 +106,14 @@ void optimize_run(
 	vector<bool>            vecad_used;
 	vector<struct_op_info>  op_info;
 	get_op_info(
-		compare_op, play, dep_taddr, var2op, cexp2op, vecad_used, op_info
+		conditional_skip,
+		compare_op,
+		play,
+		dep_taddr,
+		var2op,
+		cexp2op,
+		vecad_used,
+		op_info
 	);
 	// number of conditonal expressions
 	size_t num_cexp_op = cexp2op.size();

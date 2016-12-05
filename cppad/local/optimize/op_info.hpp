@@ -62,6 +62,13 @@ base type for the operator; i.e., this operation was recorded
 using AD< \a Base > and computations by this routine are done using type
 \a Base.
 
+\param conditional_skip
+If conditional_skip this is true, the conditional skip information
+op_info[i_op].cexp_set, will be calculated for each operator.
+This may be time intensive and may not have much benefit in the optimized
+recording. If conditional_skip if false, op_info[i_op].cexp_set will
+be empty for all i_op.
+
 \param compare_op
 if this is true, arguments are considered used if they appear in compare
 operators. This is a side effect because compare operators have boolean
@@ -113,6 +120,7 @@ in the operation sequence.
 
 template <class Base>
 void get_op_info(
+	bool                          conditional_skip    ,
 	bool                          compare_op          ,
 	player<Base>*                 play                ,
 	const vector<size_t>&         dep_taddr           ,
@@ -427,28 +435,30 @@ void get_op_info(
 							op_info[j_op].cexp_set = cexp_set_result;
 					}
 				}
-				// here is where we add eleemnts to cexp_set
-				bool same_variable = bool(arg[1] & 4) && bool(arg[1] & 8);
-				same_variable     &= arg[4] == arg[5];
-				if( ( arg[1] & 4 ) && (! same_variable) )
-				{	// arg[4] is a variable
-					size_t j_op = var2op[ arg[4] ];
-					CPPAD_ASSERT_UNKNOWN( op_info[j_op].usage > 0 );
-					// j_op corresponds to  the value used when
-					// the comparison result is true. It can be skipped when
-					// the comparison is false.
-					cexp_compare cexp(cexp_index, false);
-					op_info[j_op].cexp_set.insert(cexp);
-				}
-				if( ( arg[1] & 8 ) && (! same_variable) )
-				{	// arg[5] is a variable
-					size_t j_op = var2op[ arg[5] ];
-					CPPAD_ASSERT_UNKNOWN( op_info[j_op].usage > 0 );
-					// j_op corresponds to  the value used when
-					// the comparison result is false. It can be skipped when
-					// the comparison is true.
-					cexp_compare cexp(cexp_index, true);
-					op_info[j_op].cexp_set.insert(cexp);
+				// here is where we add elements to cexp_set
+				if( conditional_skip )
+				{	bool same_variable = bool(arg[1] & 4) && bool(arg[1] & 8);
+					same_variable     &= arg[4] == arg[5];
+					if( ( arg[1] & 4 ) && (! same_variable) )
+					{	// arg[4] is a variable
+						size_t j_op = var2op[ arg[4] ];
+						CPPAD_ASSERT_UNKNOWN( op_info[j_op].usage > 0 );
+						// j_op corresponds to  the value used when the
+						// comparison result is true. It can be skipped when
+						// the comparison is false.
+						cexp_compare cexp(cexp_index, false);
+						op_info[j_op].cexp_set.insert(cexp);
+					}
+					if( ( arg[1] & 8 ) && (! same_variable) )
+					{	// arg[5] is a variable
+						size_t j_op = var2op[ arg[5] ];
+						CPPAD_ASSERT_UNKNOWN( op_info[j_op].usage > 0 );
+						// j_op corresponds to the value used when the
+						// comparison result is false. It can be skipped when
+						// the comparison is true.
+						cexp_compare cexp(cexp_index, true);
+						op_info[j_op].cexp_set.insert(cexp);
+					}
 				}
 			}
 			break;  // --------------------------------------------
