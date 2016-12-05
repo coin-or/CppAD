@@ -404,11 +404,13 @@ void get_op_info(
 			if( use_result > 0 )
 			{	for(size_t i = 0; i < 2; i++)
 				{	size_t j_op = var2op[ arg[i] ];
-					++op_info[j_op].usage;
-					if( op_info[j_op].usage > 1 )
-						op_info[j_op].cexp_set.intersection( cexp_set_result );
-					else
+					//
+					if( op_info[j_op].usage == 0 )
 						op_info[j_op].cexp_set = cexp_set_result;
+					else
+						op_info[j_op].cexp_set.intersection( cexp_set_result );
+					//
+					++op_info[j_op].usage;
 				}
 			}
 			break; // --------------------------------------------
@@ -425,13 +427,15 @@ void get_op_info(
 				for(size_t i = 0; i < 4; i++)
 				{	if( arg[1] & mask[i] )
 					{	size_t j_op = var2op[ arg[2 + i] ];
-						++op_info[j_op].usage;
-						if( op_info[j_op].usage > 1 )
+						//
+						if( op_info[j_op].usage == 0 )
+							op_info[j_op].cexp_set = cexp_set_result;
+						else
 							op_info[j_op].cexp_set.intersection(
 								cexp_set_result
 						);
-						else
-							op_info[j_op].cexp_set = cexp_set_result;
+						//
+						++op_info[j_op].usage;
 					}
 				}
 				// here is where we add elements to cexp_set
@@ -541,11 +545,13 @@ void get_op_info(
 				//
 				for(size_t i = 0; i < 2; i++)
 				{	size_t j_op = var2op[ arg[i] ];
-					++op_info[j_op].usage;
-					if( op_info[j_op].usage > 1 )
-						op_info[j_op].cexp_set.intersection( cexp_set_result );
-					else
+					//
+					if( op_info[j_op].usage == 0 )
 						op_info[j_op].cexp_set = cexp_set_result;
+					else
+						op_info[j_op].cexp_set.intersection( cexp_set_result );
+					//
+					++op_info[j_op].usage;
 				}
 			}
 			break; // ----------------------------------------------
@@ -610,9 +616,13 @@ void get_op_info(
 				size_t num_sub = size_t( arg[1] );
 				for(size_t i = 0; i < num_add + num_sub; i++)
 				{	size_t j_op = var2op[ arg[3 + i] ];
-					++op_info[j_op].usage;
-					if( op_info[j_op].usage > 1 )
+					//
+					if( op_info[j_op].usage == 0 )
+						op_info[j_op].cexp_set = cexp_set_result;
+					else
 						op_info[j_op].cexp_set.intersection( cexp_set_result );
+					//
+					++op_info[j_op].usage;
 				}
 			}
 			// =============================================================
