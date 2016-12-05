@@ -250,6 +250,54 @@ public:
 			data_[t++] = ( data_[l++] | other.data_[r++] );
 	}
 	// -----------------------------------------------------------------
+	/*! Assing a set equal to the intersection of two other sets.
+
+	\param this_target
+	is the index (in this \c sparse_pack object) of the set being assinged.
+
+	\par Warning
+	This operation is not implemented for sparse_list and hence cannot
+	be used for the sparsity calculations.
+
+	\param this_left
+	is the index (in this \c sparse_pack object) of the
+	left operand for the intersection operation.
+	It is OK for \a this_target and \a this_left to be the same value.
+
+	\param other_right
+	is the index (in the other \c sparse_pack object) of the
+	right operand for the intersection operation.
+	It is OK for \a this_target and \a other_right to be the same value.
+
+	\param other
+	is the other \c sparse_pack object (which may be the same as this
+	\c sparse_pack object).
+
+	\par Checked Assertions
+	\li this_target <  n_set_
+	\li this_left   <  n_set_
+	\li other_right <  other.n_set_
+	\li n_pack_     == other.n_pack_
+	*/
+	void binary_intersection(
+		size_t                  this_target  ,
+		size_t                  this_left    ,
+		size_t                  other_right  ,
+		const sparse_pack&      other        )
+	{	CPPAD_ASSERT_UNKNOWN( this_target < n_set_         );
+		CPPAD_ASSERT_UNKNOWN( this_left   < n_set_         );
+		CPPAD_ASSERT_UNKNOWN( other_right < other.n_set_   );
+		CPPAD_ASSERT_UNKNOWN( n_pack_    ==  other.n_pack_ );
+
+		size_t t = this_target * n_pack_;
+		size_t l  = this_left  * n_pack_;
+		size_t r  = other_right * n_pack_;
+
+		size_t j = n_pack_;
+		while(j--)
+			data_[t++] = ( data_[l++] & other.data_[r++] );
+	}
+	// -----------------------------------------------------------------
 	/*! Amount of memory used by this vector of sets
 
 	\return

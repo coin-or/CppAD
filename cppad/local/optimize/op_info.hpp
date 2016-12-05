@@ -352,18 +352,16 @@ void get_op_info(
 			CPPAD_ASSERT_UNKNOWN( NumRes(op) > 0 );
 			if( use_result > 0 )
 			{	size_t j_op = var2op[ arg[0] ];
-				++op_info[j_op].usage;
-				//
 				// cexp_set
-				if( op_info[j_op].usage == 1 )
-				{	// first use of this argument
+				if( op_info[j_op].usage == 0 )
+				{	// set[j_op] = set[i_op]
 					op_info[j_op].cexp_set = cexp_set_result;
 				}
 				else
-				{	// interset set for this result with previous set
-					// for this argument
+				{	// set[j_op] = set[j_op] intersect set[i_op]
 					op_info[j_op].cexp_set.intersection( cexp_set_result );
 				}
+				++op_info[j_op].usage;
 			}
 			break; // --------------------------------------------
 
@@ -378,18 +376,16 @@ void get_op_info(
 			CPPAD_ASSERT_UNKNOWN( NumRes(op) > 0 );
 			if( use_result > 0 )
 			{	size_t j_op = var2op[ arg[1] ];
-				++op_info[j_op].usage;
-				//
 				// cexp_set
-				if( op_info[j_op].usage == 1 )
-				{	// first use of this argument
+				if( op_info[j_op].usage == 0 )
+				{	// set[j_op] = set[i_op]
 					op_info[j_op].cexp_set = cexp_set_result;
 				}
 				else
-				{	// interset set for this result with previous set
-					// for this argument
+				{	// set[j_op] = set[j_op] intersect set[i_op]
 					op_info[j_op].cexp_set.intersection( cexp_set_result );
 				}
+				++op_info[j_op].usage;
 			}
 			break; // --------------------------------------------
 
@@ -404,12 +400,15 @@ void get_op_info(
 			if( use_result > 0 )
 			{	for(size_t i = 0; i < 2; i++)
 				{	size_t j_op = var2op[ arg[i] ];
-					//
+					// cexp_set
 					if( op_info[j_op].usage == 0 )
+					{	// set[j_op] = set[i_op]
 						op_info[j_op].cexp_set = cexp_set_result;
+					}
 					else
+					{	// set[j_op] = set[j_op] intersect set[i_op]
 						op_info[j_op].cexp_set.intersection( cexp_set_result );
-					//
+					}
 					++op_info[j_op].usage;
 				}
 			}
@@ -427,14 +426,17 @@ void get_op_info(
 				for(size_t i = 0; i < 4; i++)
 				{	if( arg[1] & mask[i] )
 					{	size_t j_op = var2op[ arg[2 + i] ];
-						//
+						// cexp_set
 						if( op_info[j_op].usage == 0 )
+						{	// set[j_op] = set[i_op]
 							op_info[j_op].cexp_set = cexp_set_result;
+						}
 						else
+						{	// set[j_op] = set[j_op] intersect set[i_op]
 							op_info[j_op].cexp_set.intersection(
 								cexp_set_result
-						);
-						//
+							);
+						}
 						++op_info[j_op].usage;
 					}
 				}
@@ -495,18 +497,16 @@ void get_op_info(
 			{	++op_info[i_op].usage;
 				//
 				size_t j_op = var2op[ arg[1] ];
-				++op_info[j_op].usage;
-				//
 				// cexp_set
-				if( op_info[j_op].usage == 1 )
-				{	// first use of this argument
+				if( op_info[j_op].usage == 0 )
+				{	// set[j_op] = set[i_op]
 					op_info[j_op].cexp_set = cexp_set_result;
 				}
 				else
-				{	// interset set for this result with previous set
-					// for this argument
+				{	// set[j_op] = set[j_op] intersect set[i_op]
 					op_info[j_op].cexp_set.intersection( cexp_set_result );
 				}
+				++op_info[j_op].usage;
 			}
 			break; // ----------------------------------------------
 
@@ -518,18 +518,16 @@ void get_op_info(
 			{	++op_info[i_op].usage;
 				//
 				size_t j_op = var2op[ arg[0] ];
-				++op_info[j_op].usage;
-				//
 				// cexp_set
-				if( op_info[j_op].usage == 1 )
-				{	// first use of this argument
+				if( op_info[j_op].usage == 0 )
+				{	// set[j_op] = set[i_op]
 					op_info[j_op].cexp_set = cexp_set_result;
 				}
 				else
-				{	// interset set for this result with previous set
-					// for this argument
+				{	// set[j_op] = set[j_op] intersect set[i_op]
 					op_info[j_op].cexp_set.intersection( cexp_set_result );
 				}
+				++op_info[j_op].usage;
 			}
 			break; // ----------------------------------------------
 
@@ -545,12 +543,15 @@ void get_op_info(
 				//
 				for(size_t i = 0; i < 2; i++)
 				{	size_t j_op = var2op[ arg[i] ];
-					//
+					// cexp_set
 					if( op_info[j_op].usage == 0 )
+					{	// set[j_op] = set[i_op]
 						op_info[j_op].cexp_set = cexp_set_result;
+					}
 					else
+					{	// set[j_op] = set[j_op] intersect set[i_op]
 						op_info[j_op].cexp_set.intersection( cexp_set_result );
-					//
+					}
 					++op_info[j_op].usage;
 				}
 			}
@@ -616,12 +617,15 @@ void get_op_info(
 				size_t num_sub = size_t( arg[1] );
 				for(size_t i = 0; i < num_add + num_sub; i++)
 				{	size_t j_op = var2op[ arg[3 + i] ];
-					//
+					// cexp_set
 					if( op_info[j_op].usage == 0 )
+					{	// set[j_op] = set[i_op]
 						op_info[j_op].cexp_set = cexp_set_result;
+					}
 					else
+					{	// set[j_op] = set[j_op] intersect set[i_op]
 						op_info[j_op].cexp_set.intersection( cexp_set_result );
-					//
+					}
 					++op_info[j_op].usage;
 				}
 			}
