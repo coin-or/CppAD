@@ -95,6 +95,13 @@ for each j, op_info[ cexp2op[j] ].op == CExpOp.
 Furthermore, cexp2op is monotone increasing; i.e., if j1 > j2,
 cexp2op[j1] > cexp2op[j2].
 
+\param vecad_used
+The input size of this vector must be zero.
+Upon retun it has size equal to the number of VecAD vectors
+in the operations sequences; i.e., play->num_vecad_vec_rec().
+The VecAD vectors are indexed in the order that thier indices apprear
+in the one large play->GetVecInd that holds all the VecAD vectors.
+
 \param op_info
 The input size of this vector must be zero.
 Upon return it has size equal to the number of operators
@@ -111,10 +118,12 @@ void get_op_info(
 	const vector<size_t>&         dep_taddr           ,
 	vector<size_t>&               var2op              ,
 	vector<size_t>&               cexp2op             ,
+	vector<bool>&                 vecad_used          ,
 	vector<struct_op_info>&       op_info             )
 {
 	CPPAD_ASSERT_UNKNOWN( var2op.size()  == 0 );
 	CPPAD_ASSERT_UNKNOWN( cexp2op.size() == 0 );
+	CPPAD_ASSERT_UNKNOWN( vecad_used.size() == 0 );
 	CPPAD_ASSERT_UNKNOWN( op_info.size() == 0 );
 
 	// number of operators in the tape
@@ -241,20 +250,23 @@ void get_op_info(
 	size_t num_vecad      = play->num_vecad_vec_rec();
 	size_t num_vecad_ind  = play->num_vec_ind_rec();
 	//
-	vector<size_t> vecad_usage(num_vecad);
+	vecad_used.resize(num_vecad);
 	for(size_t i = 0; i < num_vecad; i++)
-		vecad_usage[i] = 0;
+		vecad_used[i] = false;
 	//
 	vector<size_t> arg2vecad(num_vecad_ind);
 	for(size_t i = 0; i < num_vecad_ind; i++)
 		arg2vecad[i] = num_vecad; // invalid value
 	size_t arg_0 = 1; // value of arg[0] for theh first vecad
 	for(size_t i = 0; i < num_vecad; i++)
-	{	arg2vecad[arg_0] = i; // from arg[0] value to index in vecad_usage
+	{
+		// mapping from arg[0] value to index for this vecad object.
+		arg2vecad[arg_0] = i;
+		//
 		// length of this vecad object
 		size_t length = play->GetVecInd(arg_0 - 1);
-		// set to proper index for this VecAD
-		// next arg[0] value
+		//
+		// set to proper index in GetVecInd for next VecAD arg[0] value
 		arg_0        += length + 1;
 	}
 	CPPAD_ASSERT_UNKNOWN( arg_0 == num_vecad_ind + 1 );
@@ -538,7 +550,7 @@ void get_op_info(
 			CPPAD_ASSERT_UNKNOWN( NumRes(op) > 0 );
 			if( use_result > 0 )
 			{	size_t i_vec = arg2vecad[ arg[0] ];
-				++vecad_usage[i_vec];
+				vecad_used[i_vec] = true;
 			}
 			break; // --------------------------------------------
 
@@ -547,7 +559,7 @@ void get_op_info(
 			CPPAD_ASSERT_UNKNOWN( NumRes(op) > 0 );
 			if( use_result > 0 )
 			{	size_t i_vec = arg2vecad[ arg[0] ];
-				++vecad_usage[i_vec];
+				vecad_used[i_vec] = true;
 				//
 				size_t j_op = var2op[ arg[1] ];
 				++op_info[j_op].usage;
@@ -557,7 +569,7 @@ void get_op_info(
 			// Store a variable using a parameter index
 			case StpvOp:
 			CPPAD_ASSERT_UNKNOWN( NumRes(op) == 0 );
-			if( vecad_usage[ arg2vecad[ arg[0] ] ] >  0 )
+			if( vecad_used[ arg2vecad[ arg[0] ] ] )
 			{	++op_info[i_op].usage;
 				//
 				size_t j_op = var2op[ arg[2] ];
@@ -568,7 +580,7 @@ void get_op_info(
 			// Store a variable using a variable index
 			case StvvOp:
 			CPPAD_ASSERT_UNKNOWN( NumRes(op) == 0 );
-			if( vecad_usage[ arg2vecad[ arg[0] ] ] > 0 )
+			if( vecad_used[ arg2vecad[ arg[0] ] ] )
 			{	++op_info[i_op].usage;
 				//
 				size_t j_op = var2op[ arg[1] ];

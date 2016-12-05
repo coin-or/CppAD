@@ -96,10 +96,12 @@ void optimize_run(
 	size_t num_vecad_vec   = play->num_vecad_vec_rec();
 
 	// operator information
-	CppAD::vector<struct_op_info>  op_info;
-	CppAD::vector<size_t>          var2op, cexp2op;
-	get_op_info(compare_op, play, dep_taddr, var2op, cexp2op, op_info);
-
+	vector<size_t>          var2op, cexp2op;
+	vector<bool>            vecad_used;
+	vector<struct_op_info>  op_info;
+	get_op_info(
+		compare_op, play, dep_taddr, var2op, cexp2op, vecad_used, op_info
+	);
 	// number of conditonal expressions
 	size_t num_cexp_op = cexp2op.size();
 
@@ -111,30 +113,6 @@ void optimize_run(
 	OpCode        op;     // operator
 	const addr_t* arg;    // arguments
 	size_t        i_var;  // variable index of primary (last) result
-
-	// -------------------------------------------------------------
-	// Determine how each variable is connected to the dependent variables
-
-	// vecad_connect contains a value for each VecAD object.
-	// vecad maps a VecAD index (which corresponds to the beginning of the
-	// VecAD object) to the vecad_connect falg for the VecAD object.
-	CppAD::vector<enum_connect_type>   vecad_connect(num_vecad_vec);
-	CppAD::vector<size_t> vecad(num_vecad_ind);
-	{
-		size_t j = 0;
-		for(size_t i = 0; i < num_vecad_vec; i++)
-		{	vecad_connect[i] = not_connected;
-			// length of this VecAD
-			size_t length = play->GetVecInd(j);
-			// set to proper index for this VecAD
-			vecad[j] = i;
-			for(size_t k = 1; k <= length; k++)
-				vecad[j+k] = num_vecad_vec; // invalid index
-			// start of next VecAD
-			j       += length + 1;
-		}
-		CPPAD_ASSERT_UNKNOWN( j == num_vecad_ind );
-	}
 
 	// work space used by UserOp.
 	vector<Base>     user_x;       // parameters in x as integers
@@ -171,46 +149,6 @@ void optimize_run(
 		cskip_info[i] = info;
 	};
 
-
-	// Initialize a reverse mode sweep through the operation sequence
-	play->reverse_start(op, arg, i_op, i_var);
-	CPPAD_ASSERT_UNKNOWN( op == EndOp );
-	size_t mask;
-	//
-	user_state = end_user;
-	while( i_op > 0 )
-	{
-		// next op
-		play->reverse_next(op, arg, i_op, i_var);
-		switch( op )
-		{
-			// Load using a parameter index ----------------------
-			case LdpOp:
-			if( op_info[i_op].usage > 0 )
-			{
-				size_t i         = vecad[ arg[0] - 1 ];
-				vecad_connect[i] = yes_connected;
-			}
-			break; // --------------------------------------------
-
-			// Load using a variable index
-			case LdvOp:
-			if( op_info[i_op].usage > 0 )
-			{
-				size_t i             = vecad[ arg[0] - 1 ];
-				vecad_connect[i]     = yes_connected;
-			}
-			break; // --------------------------------------------
-
-			// ============================================================
-			// noting to do in this case
-			default:
-			break;
-		}
-	}
-	//
-	// values corresponding to BeginOp
-	CPPAD_ASSERT_UNKNOWN( i_op == 0 && i_var == 0 && op == BeginOp );
 
 	// Determine which operators can be conditionally skipped
 	for(size_t i = 0; i < num_op; i++)
@@ -261,7 +199,7 @@ void optimize_run(
 		for(size_t i = 0; i < num_vecad_vec; i++)
 		{	// length of this VecAD
 			size_t length = play->GetVecInd(j);
-			if( vecad_connect[i] != not_connected )
+			if( vecad_used[i] )
 			{	// Put this VecAD vector in new recording
 				CPPAD_ASSERT_UNKNOWN(length < num_vecad_ind);
 				new_vecad_ind[j] = rec->PutVecInd(length);
@@ -312,7 +250,8 @@ void optimize_run(
 
 	user_state = start_user;
 	for( i_op = 1; i_op < num_op; i_op++)
-	{	bool flag; // for temporary in switch cases
+	{	bool   flag;   // temporary used in some switch cases
+		addr_t mask; // temporary used in some switch cases
 		//
 		// next op
 		op    = op_info[i_op].op;
