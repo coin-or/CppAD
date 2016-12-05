@@ -731,34 +731,35 @@ void get_op_info(
 				for(size_t j = 0; j < user_n; j++)
 				if( user_ix[j] > 0 )
 				{	// This user argument is a variable
-					size_t j_op = var2op[ user_ix[j] ];
+					bool use_arg_j = false;
 					if( user_set )
 					{	if( ! user_s_set[j].empty() )
-							++op_info[j_op].usage;
+							use_arg_j = true;
 					}
 					if( user_bool )
 					{	if( user_s_bool[j] )
-							++op_info[j_op].usage;
+							use_arg_j = true;
 					}
 					if( user_pack )
 					{	if( user_s_pack[j] )
-							++op_info[j_op].usage;
+							use_arg_j = true;
 					}
-					if( op_info[j_op].usage > 0 )
-						op_info[j_op].cexp_set.intersection(
-							op_info[first_user_i_op].cexp_set
-					);
-					else
-						op_info[j_op].cexp_set =
-							op_info[first_user_i_op].cexp_set;
-				}
-				// set cexp_set for the user operations for this call
-				if( op_info[first_user_i_op].usage > 0 )
-				for(size_t j = 0; j < user_n + user_m + 2; j++)
-				{	op_info[i_op + j].cexp_set =
-							op_info[first_user_i_op].cexp_set
-					;
-					++op_info[i_op + j].usage;
+					if( use_arg_j )
+					{	size_t j_op = var2op[ user_ix[j] ];
+						// cexp_set
+						if( op_info[j_op].usage == 0 )
+						{	// set[j_op] = set[first_user_i_op]
+							op_info[j_op].cexp_set =
+								op_info[first_user_i_op].cexp_set;
+						}
+						else
+						{	// set[j_op] = set[j_op] intersect set[user_op]
+							op_info[j_op].cexp_set.intersection(
+								op_info[first_user_i_op].cexp_set
+							);
+						}
+						++op_info[j_op].usage;
+					}
 				}
 			}
 			break; // -------------------------------------------------------

@@ -160,19 +160,34 @@ void optimize_run(
 
 
 	// Determine which operators can be conditionally skipped
-	for(size_t i = 0; i < num_op; i++)
-	{	if( ! op_info[i].cexp_set.empty() )
-		{
+	i_op = 0;
+	while(i_op < num_op)
+	{	size_t n_op = 1;
+		if( ! op_info[i_op].cexp_set.empty() )
+		{	if( op_info[i_op].op == UserOp )
+			{	// i_op is the first operations in this user atomic call.
+				// Count number of user ops in this call.
+				while( op_info[i_op + n_op].op != UserOp )
+					++n_op;
+				++n_op;
+			}
+			//
 			fast_empty_set<cexp_compare>::const_iterator itr =
-				op_info[i].cexp_set.begin();
-			while( itr != op_info[i].cexp_set.end() )
+				op_info[i_op].cexp_set.begin();
+			while( itr != op_info[i_op].cexp_set.end() )
 			{	size_t j = itr->index();
 				if( itr->compare() == false )
-					cskip_info[j].skip_old_op_false.push_back(i);
-				else cskip_info[j].skip_old_op_true.push_back(i);
+				{	for(size_t i = 0; i < n_op; i++)
+						cskip_info[j].skip_old_op_false.push_back(i_op + i);
+				}
+				else
+				{	for(size_t i = 0; i < n_op; i++)
+						cskip_info[j].skip_old_op_true.push_back(i_op + i);
+				}
 				itr++;
 			}
 		}
+		i_op += n_op;
 	}
 	// -------------------------------------------------------------
 	// Sort the conditional skip information by the maximum of the
