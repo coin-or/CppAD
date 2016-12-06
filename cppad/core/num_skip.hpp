@@ -94,19 +94,19 @@ size_t ADFun<Base>::number_skip(void)
 		//
 		if( op == local::UserOp )
 		{	// skip only appears at front or back UserOp of user atomic call
+			bool skip_call = cskip_op_[i_op];
 			CPPAD_ASSERT_UNKNOWN( user_state == local::start_user );
 			play_.forward_user(
 				op, user_state, user_old, user_m, user_n, user_i, user_j
 			);
-			if( cskip_op_[i_op] )
-				num_var_skip += NumRes(op);
+			CPPAD_ASSERT_UNKNOWN( NumRes(op) == 0 );
 			size_t num_op = user_m + user_n + 1;
 			for(size_t i = 0; i < num_op; i++)
 			{	play_.forward_next(op, arg, i_op, i_var);
 				play_.forward_user(
 					op, user_state, user_old, user_m, user_n, user_i, user_j
 				);
-				if( cskip_op_[i_op] )
+				if( skip_call )
 					num_var_skip += NumRes(op);
 			}
 			CPPAD_ASSERT_UNKNOWN( user_state == local::start_user );

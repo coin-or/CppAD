@@ -162,14 +162,25 @@ void optimize_run(
 	// Determine which operators can be conditionally skipped
 	i_op = 0;
 	while(i_op < num_op)
-	{	size_t n_op = 1;
+	{	size_t j_op = i_op;
 		if( ! op_info[i_op].cexp_set.empty() )
 		{	if( op_info[i_op].op == UserOp )
 			{	// i_op is the first operations in this user atomic call.
-				// Count number of user ops in this call.
-				while( op_info[i_op + n_op].op != UserOp )
-					++n_op;
-				++n_op;
+				// Find the last operation in this call.
+				++j_op;
+				while( op_info[j_op].op != UserOp )
+				{	switch( op_info[j_op].op )
+					{	case UsrapOp:
+						case UsravOp:
+						case UsrrpOp:
+						case UsrrvOp:
+						break;
+
+						default:
+						CPPAD_ASSERT_UNKNOWN(false);
+					}
+					++j_op;
+				}
 			}
 			//
 			fast_empty_set<cexp_compare>::const_iterator itr =
@@ -177,17 +188,20 @@ void optimize_run(
 			while( itr != op_info[i_op].cexp_set.end() )
 			{	size_t j = itr->index();
 				if( itr->compare() == false )
-				{	for(size_t i = 0; i < n_op; i++)
-						cskip_info[j].skip_old_op_false.push_back(i_op + i);
+				{	cskip_info[j].skip_old_op_false.push_back(i_op);
+					if( j_op != i_op )
+						cskip_info[j].skip_old_op_false.push_back(j_op);
 				}
 				else
-				{	for(size_t i = 0; i < n_op; i++)
-						cskip_info[j].skip_old_op_true.push_back(i_op + i);
+				{	cskip_info[j].skip_old_op_true.push_back(i_op);
+					if( j_op != i_op )
+						cskip_info[j].skip_old_op_true.push_back(j_op);
 				}
 				itr++;
 			}
 		}
-		i_op += n_op;
+		CPPAD_ASSERT_UNKNOWN( i_op <= j_op );
+		i_op += (1 + j_op) - i_op;
 	}
 	// -------------------------------------------------------------
 	// Sort the conditional skip information by the maximum of the
