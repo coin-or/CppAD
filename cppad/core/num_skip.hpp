@@ -34,7 +34,7 @@ $cref seq_property$$
 $head Purpose$$
 The $cref/conditional expressions/CondExp/$$ use either the
 $cref/if_true/CondExp/$$ or $cref/if_false/CondExp/$$.
-This leads to the fact that some terms only need to be evaluated
+Hence, some terms only need to be evaluated
 depending on the value of the comparison in the conditional expression.
 The $cref optimize$$ option is capable of detecting some of these
 case and determining variables that can be skipped.
@@ -77,24 +77,51 @@ size_t ADFun<Base>::number_skip(void)
 	size_t        i_var;
 	const addr_t* arg;
 
+	// information defined by forward_user
+	size_t user_old=0, user_m=0, user_n=0, user_i=0, user_j=0;
+	local::enum_user_state user_state;
+
 	// number of variables skipped
-	size_t n_skip = 0;
+	size_t num_var_skip = 0;
 
 	// start playback
+	user_state = local::start_user;
 	play_.forward_start(op, arg, i_op, i_var);
 	CPPAD_ASSERT_UNKNOWN(op == local::BeginOp)
 	while(op != local::EndOp)
 	{	// next op
 		play_.forward_next(op, arg, i_op, i_var);
-		if( op == local::CSumOp)
-			play_.forward_csum(op, arg, i_op, i_var);
-		else if (op == local::CSkipOp)
-			play_.forward_cskip(op, arg, i_op, i_var);
 		//
-		if( cskip_op_[i_op] )
-			n_skip += NumRes(op);
+		if( op == local::UserOp )
+		{	// skip only appears at front or back UserOp of user atomic call
+			CPPAD_ASSERT_UNKNOWN( user_state == local::start_user );
+			play_.forward_user(
+				op, user_state, user_old, user_m, user_n, user_i, user_j
+			);
+			if( cskip_op_[i_op] )
+				num_var_skip += NumRes(op);
+			size_t num_op = user_m + user_n + 1;
+			for(size_t i = 0; i < num_op; i++)
+			{	play_.forward_next(op, arg, i_op, i_var);
+				play_.forward_user(
+					op, user_state, user_old, user_m, user_n, user_i, user_j
+				);
+				if( cskip_op_[i_op] )
+					num_var_skip += NumRes(op);
+			}
+			CPPAD_ASSERT_UNKNOWN( user_state == local::start_user );
+		}
+		else
+		{	if( op == local::CSumOp)
+				play_.forward_csum(op, arg, i_op, i_var);
+			else if (op == local::CSkipOp)
+				play_.forward_cskip(op, arg, i_op, i_var);
+			//
+			if( cskip_op_[i_op] )
+				num_var_skip += NumRes(op);
+		}
 	}
-	return n_skip;
+	return num_var_skip;
 }
 
 } // END CppAD namespace
