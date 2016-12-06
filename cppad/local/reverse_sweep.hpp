@@ -160,6 +160,8 @@ Is a vector with size play->num_op_rec().
 If cskip_op[i] is true, the operator index i in the recording
 does not affect any of the dependent variable (given the value
 of the independent variables).
+Note that all the operators in an atomic function call are skipped as a block,
+so only the last UserOp fore each call needs to have cskip_op[i] true.
 
 \param var_by_load_op
 is a vector with size play->num_load_op_rec().
@@ -243,17 +245,39 @@ void ReverseSweep(
 
 		// check if we are skipping this operation
 		while( cskip_op[i_op] )
-		{	if( op == CSumOp )
-			{	// CSumOp has a variable number of arguments
+		{	switch(op)
+			{	case CSumOp:
+				// CSumOp has a variable number of arguments
 				play->reverse_csum(op, arg, i_op, i_var);
+				break;
+
+				case CSkipOp:
+				// CSkip has a variable number of arguments
+				play->reverse_cskip(op, arg, i_op, i_var);
+				break;
+
+				case UserOp:
+				{	// skip all operations in this user atomic call
+					CPPAD_ASSERT_UNKNOWN( user_state == end_user );
+					play->reverse_user(op, user_state,
+						user_old, user_m, user_n, user_i, user_j
+					);
+					size_t n_skip = user_m + user_n + 1;
+					for(size_t i = 0; i < n_skip; i++)
+					{	play->reverse_next(op, arg, i_op, i_var);
+						play->reverse_user(op, user_state,
+							user_old, user_m, user_n, user_i, user_j
+						);
+					}
+					CPPAD_ASSERT_UNKNOWN( user_state == end_user );
+				}
+				break;
+
+				default:
+				break;
 			}
-			CPPAD_ASSERT_UNKNOWN( op != CSkipOp );
-			// if( op == CSkipOp )
-			// {	// CSkip has a variable number of arguments
-			//	play->reverse_cskip(op, arg, i_op, i_var);
-			// }
-			CPPAD_ASSERT_UNKNOWN( i_op < play->num_op_rec() );
 			play->reverse_next(op, arg, i_op, i_var);
+			CPPAD_ASSERT_UNKNOWN( i_op < play->num_op_rec() );
 		}
 
 		// rest of informaiton depends on the case

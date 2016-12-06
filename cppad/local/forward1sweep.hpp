@@ -318,15 +318,37 @@ void forward1sweep(
 
 		// check if we are skipping this operation
 		while( cskip_op[i_op] )
-		{	if( op == CSumOp )
-			{	// CSumOp has a variable number of arguments
+		{	switch(op)
+			{	case CSumOp:
+				// CSumOp has a variable number of arguments
 				play->forward_csum(op, arg, i_op, i_var);
+				break;
+
+				case CSkipOp:
+				// CSkip has a variable number of arguments
+				play->forward_cskip(op, arg, i_op, i_var);
+				break;
+
+				case UserOp:
+				{	// skip all operations in this user atomic call
+					CPPAD_ASSERT_UNKNOWN( user_state == start_user );
+					play->forward_user(op, user_state,
+						user_old, user_m, user_n, user_i, user_j
+					);
+					size_t n_skip = user_m + user_n + 1;
+					for(i = 0; i < n_skip; i++)
+					{	play->forward_next(op, arg, i_op, i_var);
+						play->forward_user(op, user_state,
+							user_old, user_m, user_n, user_i, user_j
+						);
+					}
+					CPPAD_ASSERT_UNKNOWN( user_state == start_user );
+				}
+				break;
+
+				default:
+				break;
 			}
-			CPPAD_ASSERT_UNKNOWN( op != CSkipOp );
-			// if( op == CSkipOp )
-			// {	// CSkip has a variable number of arguments
-			//	play->forward_cskip(op, arg, i_op, i_var);
-			// }
 			play->forward_next(op, arg, i_op, i_var);
 			CPPAD_ASSERT_UNKNOWN( i_op < play->num_op_rec() );
 		}
