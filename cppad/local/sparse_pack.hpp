@@ -84,10 +84,11 @@ public:
 	is the number of sets in this vector of sets.
 
 	\param end_in
-	is the maximum element plus one (the minimum element is 0).
+	is the maximum element plus one. The minimum element is 0 and
+	end must be greater than zero (unless n_set is also zero).
 	*/
 	void resize(size_t n_set_in, size_t end_in)
-	{
+	{	CPPAD_ASSERT_UNKNOWN( n_set_in == 0 || 0 < end_in );
 		n_set_          = n_set_in;
 		end_            = end_in;
 		if( n_set_ == 0 )
