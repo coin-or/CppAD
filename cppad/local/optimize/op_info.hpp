@@ -58,29 +58,52 @@ struct struct_op_info {
 /*!
 Increarse argument usage and propagate cexp_set from parent to argument.
 
-\param op_info
-structure that holds the usage and cexp_set information for all operators.
-
 \param i_parent
 is the operator index for the parent operator.
 
 \param i_arg
 is the operator index for the argument to the parent operator.
 
+\param op_info
+structure that holds the struct_op_info information for each operators.
+The output value of op_info[i_arg].usage is one greater than its input value.
+
+\param vec_set
+This is a vector of sets with one set for each operator. We denote
+the i-th set by set[i].
+
+\li
+In the special case where vec_set.n_set() is zero,
+vec_set is not changed.
+
+\li
+If vec_set.n_set() != 0 and op_info[i_arg].usage == 0,
+the input value of set[i_arg] must be empty.
+In this case the output value if set[i_arg] is equal to set[i_parent]
+(which may also be empty).
+
+\li
+If vec_set.n_set() != 0 and op_info[i_arg].usage != 0,
+the output value of set[i_arg] is the intersection of
+its input value and set[i_parent].
 */
 inline void usage_cexp_parent2arg(
-	vector<struct_op_info>& op_info    ,
 	size_t                  i_parent   ,
-	size_t                  i_arg      )
-{	if( op_info[i_arg].usage == 0 )
+	size_t                  i_arg      ,
+	vector<struct_op_info>& op_info    ,
+	sparse_pack&            vec_set    )
+{	++op_info[i_arg].usage;
+	if( vec_set.n_set() == 0 )
+		return;
+	//
+	if( op_info[i_arg].usage == 1 )
 	{	// set[i_arg] = set[i_parent]
-		op_info[i_arg].cexp_set = op_info[i_parent].cexp_set;
+		vec_set.assignment(i_arg, i_parent, vec_set);
 	}
 	else
 	{	// set[i_arg] = set[i_arg] intersect set[i_parent]
-		op_info[i_arg].cexp_set.intersection( op_info[i_parent].cexp_set );
+		vec_set.binary_intersection(i_arg, i_arg, i_parent, vec_set);
 	}
-	++op_info[i_arg].usage;
 }
 
 /*!
@@ -310,6 +333,20 @@ void get_op_info(
 	if( num_par > 0 )
 		parameter = play->GetPar();
 	// -----------------------------------------------------------------------
+	// vector of sets used to hold conditional information about when an
+	// operator can be skipped
+	//
+	// number of sets
+	size_t num_set = 0;
+	if( conditional_skip && num_cexp_op > 0)
+		num_set = num_op;
+	// maximum element value plus 1
+	// conditional expression index   = element / 2
+	// conditional expression compare = bool ( element % 2)
+	size_t end_set = 2 * num_cexp_op;
+	sparse_pack vec_set;
+	vec_set.resize(num_set, end_set);
+	// -----------------------------------------------------------------------
 	//
 	// initialize operator usage
 	for(size_t i = 0; i < num_op; i++)
@@ -377,7 +414,7 @@ void get_op_info(
 			CPPAD_ASSERT_UNKNOWN( NumRes(op) > 0 );
 			if( use_result > 0 )
 			{	size_t j_op = var2op[ arg[0] ];
-				usage_cexp_parent2arg(op_info, i_op, j_op);
+				usage_cexp_parent2arg(i_op, j_op, op_info, vec_set);
 			}
 			break; // --------------------------------------------
 
@@ -392,7 +429,7 @@ void get_op_info(
 			CPPAD_ASSERT_UNKNOWN( NumRes(op) > 0 );
 			if( use_result > 0 )
 			{	size_t j_op = var2op[ arg[1] ];
-				usage_cexp_parent2arg(op_info, i_op, j_op);
+				usage_cexp_parent2arg(i_op, j_op, op_info, vec_set);
 			}
 			break; // --------------------------------------------
 
@@ -407,7 +444,7 @@ void get_op_info(
 			if( use_result > 0 )
 			{	for(size_t i = 0; i < 2; i++)
 				{	size_t j_op = var2op[ arg[i] ];
-					usage_cexp_parent2arg(op_info, i_op, j_op);
+					usage_cexp_parent2arg(i_op, j_op, op_info, vec_set);
 				}
 			}
 			break; // --------------------------------------------
@@ -424,7 +461,7 @@ void get_op_info(
 				for(size_t i = 0; i < 4; i++)
 				{	if( arg[1] & mask[i] )
 					{	size_t j_op = var2op[ arg[2 + i] ];
-						usage_cexp_parent2arg(op_info, i_op, j_op);
+						usage_cexp_parent2arg(i_op, j_op, op_info, vec_set);
 					}
 				}
 				// here is where we add elements to cexp_set
@@ -437,9 +474,9 @@ void get_op_info(
 						CPPAD_ASSERT_UNKNOWN( op_info[j_op].usage > 0 );
 						// j_op corresponds to  the value used when the
 						// comparison result is true. It can be skipped when
-						// the comparison is false.
-						cexp_compare cexp(cexp_index, false);
-						op_info[j_op].cexp_set.insert(cexp);
+						// the comparison is false (0).
+						size_t element = 2 * cexp_index + 0;
+						vec_set.add_element(j_op, element);
 					}
 					if( ( arg[1] & 8 ) && (! same_variable) )
 					{	// arg[5] is a variable
@@ -447,9 +484,9 @@ void get_op_info(
 						CPPAD_ASSERT_UNKNOWN( op_info[j_op].usage > 0 );
 						// j_op corresponds to the value used when the
 						// comparison result is false. It can be skipped when
-						// the comparison is true.
-						cexp_compare cexp(cexp_index, true);
-						op_info[j_op].cexp_set.insert(cexp);
+						// the comparison is true (1).
+						size_t element = 2 * cexp_index + 1;
+						vec_set.add_element(j_op, element);
 					}
 				}
 			}
@@ -484,7 +521,7 @@ void get_op_info(
 			{	++op_info[i_op].usage;
 				//
 				size_t j_op = var2op[ arg[1] ];
-				usage_cexp_parent2arg(op_info, i_op, j_op);
+				usage_cexp_parent2arg(i_op, j_op, op_info, vec_set);
 			}
 			break; // ----------------------------------------------
 
@@ -496,7 +533,7 @@ void get_op_info(
 			{	++op_info[i_op].usage;
 				//
 				size_t j_op = var2op[ arg[0] ];
-				usage_cexp_parent2arg(op_info, i_op, j_op);
+				usage_cexp_parent2arg(i_op, j_op, op_info, vec_set);
 			}
 			break; // ----------------------------------------------
 
@@ -512,7 +549,7 @@ void get_op_info(
 				//
 				for(size_t i = 0; i < 2; i++)
 				{	size_t j_op = var2op[ arg[i] ];
-					usage_cexp_parent2arg(op_info, i_op, j_op);
+					usage_cexp_parent2arg(i_op, j_op, op_info, vec_set);
 				}
 			}
 			break; // ----------------------------------------------
@@ -577,7 +614,7 @@ void get_op_info(
 				size_t num_sub = size_t( arg[1] );
 				for(size_t i = 0; i < num_add + num_sub; i++)
 				{	size_t j_op = var2op[ arg[3 + i] ];
-					usage_cexp_parent2arg(op_info, i_op, j_op);
+					usage_cexp_parent2arg(i_op, j_op, op_info, vec_set);
 				}
 			}
 			// =============================================================
@@ -697,7 +734,9 @@ void get_op_info(
 					}
 					if( use_arg_j )
 					{	size_t j_op = var2op[ user_ix[j] ];
-						usage_cexp_parent2arg(op_info, first_user_i_op, j_op);
+						usage_cexp_parent2arg(
+							first_user_i_op, j_op, op_info, vec_set
+						);
 					}
 				}
 			}
@@ -748,7 +787,7 @@ void get_op_info(
 				if( user_pack )
 					user_r_pack[user_i] = true;
 				//
-				usage_cexp_parent2arg(op_info, i_op, first_user_i_op);
+				usage_cexp_parent2arg(i_op, first_user_i_op, op_info, vec_set);
 			}
 			break; // --------------------------------------------------------
 
@@ -882,7 +921,7 @@ void get_op_info(
 			break;
 		}
 	}
-	if( ! conditional_skip )
+	if( vec_set.n_set() == 0 )
 		return;
 	// ----------------------------------------------------------------------
 	// compute cskip_info
@@ -916,7 +955,8 @@ void get_op_info(
 	i_op = 0;
 	while(i_op < num_op)
 	{	size_t j_op = i_op;
-		if( ! op_info[i_op].cexp_set.empty() )
+		sparse_pack_const_iterator itr(vec_set, i_op);
+		if( *itr != vec_set.end() )
 		{	if( op_info[i_op].op == UserOp )
 			{	// i_op is the first operations in this user atomic call.
 				// Find the last operation in this call.
@@ -936,21 +976,21 @@ void get_op_info(
 				}
 			}
 			//
-			fast_empty_set<cexp_compare>::const_iterator itr =
-				op_info[i_op].cexp_set.begin();
-			while( itr != op_info[i_op].cexp_set.end() )
-			{	size_t j = itr->index();
-				if( itr->compare() == false )
-				{	cskip_info[j].skip_old_op_false.push_back(i_op);
+			while( *itr != vec_set.end() )
+			{	size_t element = *itr;
+				size_t index   = element / 2;
+				bool   compare = bool( element % 2 );
+				if( compare == false )
+				{	cskip_info[index].skip_old_op_false.push_back(i_op);
 					if( j_op != i_op )
-						cskip_info[j].skip_old_op_false.push_back(j_op);
+						cskip_info[index].skip_old_op_false.push_back(j_op);
 				}
 				else
-				{	cskip_info[j].skip_old_op_true.push_back(i_op);
+				{	cskip_info[index].skip_old_op_true.push_back(i_op);
 					if( j_op != i_op )
-						cskip_info[j].skip_old_op_true.push_back(j_op);
+						cskip_info[index].skip_old_op_true.push_back(j_op);
 				}
-				itr++;
+				++itr;
 			}
 		}
 		CPPAD_ASSERT_UNKNOWN( i_op <= j_op );
