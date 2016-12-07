@@ -19,6 +19,7 @@ Create operator information tables
 
 # include <cppad/local/optimize/cexp_compare.hpp>
 # include <cppad/local/optimize/fast_empty_set.hpp>
+# include <cppad/local/optimize/cskip_info.hpp>
 
 // BEGIN_CPPAD_LOCAL_OPTIMIZE_NAMESPACE
 namespace CppAD { namespace local { namespace optimize {
@@ -120,15 +121,16 @@ This is only true for the primary variables.
 If the index i_var corresponds to an auxillary variable, var2op[i_var]
 is equalt to num_op (which is not a valid operator index).
 
-\param cexp2op
+\param cskip_info
 The input size of this vector must be zero.
-Upon return it has size equal to the number of conditional expressions
+If conditional_skip is false, cskip_info is not changed.
+Otherwise,
+upon return cskip_info has size equal to the number of conditional expressions
 in the operation sequence; i.e., the number of CExpOp operators.
-It maps each conditional expression index to the corresponding operator index
-where it appears in the operation sequence; i.e
-for each j, op_info[ cexp2op[j] ].op == CExpOp.
-Furthermore, cexp2op is monotone increasing; i.e., if j1 > j2,
-cexp2op[j1] > cexp2op[j2].
+The value cskip_info[j] is the information corresponding to the j-th
+conditional expression in the operation sequence.
+This vector is in the same order as the operation sequence; i.e.
+if j1 > j2, cskip_info[j1].i_op > cskip_info[j2].i_op.
 
 \param vecad_used
 The input size of this vector must be zero.
@@ -153,12 +155,12 @@ void get_op_info(
 	player<Base>*                 play                ,
 	const vector<size_t>&         dep_taddr           ,
 	vector<size_t>&               var2op              ,
-	vector<size_t>&               cexp2op             ,
+	vector<struct_cskip_info>&    cskip_info          ,
 	vector<bool>&                 vecad_used          ,
 	vector<struct_op_info>&       op_info             )
 {
 	CPPAD_ASSERT_UNKNOWN( var2op.size()  == 0 );
-	CPPAD_ASSERT_UNKNOWN( cexp2op.size() == 0 );
+	CPPAD_ASSERT_UNKNOWN( cskip_info.size() == 0 );
 	CPPAD_ASSERT_UNKNOWN( vecad_used.size() == 0 );
 	CPPAD_ASSERT_UNKNOWN( op_info.size() == 0 );
 
@@ -255,13 +257,12 @@ void get_op_info(
 			break;
 		}
 	}
-	// now know the size of cexp2op
-	cexp2op.resize( num_cexp_op );
+	// vector that maps conditional expression index to operator index
+	vector<size_t> cexp2op( num_cexp_op );
 	//
 	// ----------------------------------------------------------------------
 	// Reverse pass to compute usage and cexp_set for each operator
 	// ----------------------------------------------------------------------
-	//
 	// work space used by user defined atomic functions
 	typedef std::set<size_t> size_set;
 	vector<Base>     user_x;       // parameters in x as integers
@@ -303,12 +304,12 @@ void get_op_info(
 	}
 	CPPAD_ASSERT_UNKNOWN( arg_0 == num_vecad_ind + 1 );
 	// -----------------------------------------------------------------------
-	//
 	// parameter information (used by atomic function calls)
 	size_t num_par = play->num_par_rec();
 	const Base* parameter = CPPAD_NULL;
 	if( num_par > 0 )
 		parameter = play->GetPar();
+	// -----------------------------------------------------------------------
 	//
 	// initialize operator usage
 	for(size_t i = 0; i < num_op; i++)
@@ -880,6 +881,80 @@ void get_op_info(
 			default:
 			break;
 		}
+	}
+	if( ! conditional_skip )
+		return;
+	// ----------------------------------------------------------------------
+	// compute cskip_info
+	// ----------------------------------------------------------------------
+	// initialize information for each conditional expression
+	cskip_info.resize(num_cexp_op);
+	for(size_t i = 0; i < num_cexp_op; i++)
+	{	i_op            = cexp2op[i];
+		arg             = op_info[i_op].arg;
+		CPPAD_ASSERT_UNKNOWN( op_info[i_op].op == CExpOp );
+		//
+		struct_cskip_info info;
+		info.i_op       = i_op;
+		info.cop        = CompareOp( arg[0] );
+		info.flag       = arg[1];
+		info.left       = arg[2];
+		info.right      = arg[3];
+		//
+		// max_left_right
+		size_t index    = 0;
+		if( arg[1] & 1 )
+			index = std::max(index, info.left);
+		if( arg[1] & 2 )
+			index = std::max(index, info.right);
+		CPPAD_ASSERT_UNKNOWN( index > 0 );
+		info.max_left_right = index;
+		//
+		cskip_info[i] = info;
+	};
+	// Determine which operators can be conditionally skipped
+	i_op = 0;
+	while(i_op < num_op)
+	{	size_t j_op = i_op;
+		if( ! op_info[i_op].cexp_set.empty() )
+		{	if( op_info[i_op].op == UserOp )
+			{	// i_op is the first operations in this user atomic call.
+				// Find the last operation in this call.
+				++j_op;
+				while( op_info[j_op].op != UserOp )
+				{	switch( op_info[j_op].op )
+					{	case UsrapOp:
+						case UsravOp:
+						case UsrrpOp:
+						case UsrrvOp:
+						break;
+
+						default:
+						CPPAD_ASSERT_UNKNOWN(false);
+					}
+					++j_op;
+				}
+			}
+			//
+			fast_empty_set<cexp_compare>::const_iterator itr =
+				op_info[i_op].cexp_set.begin();
+			while( itr != op_info[i_op].cexp_set.end() )
+			{	size_t j = itr->index();
+				if( itr->compare() == false )
+				{	cskip_info[j].skip_old_op_false.push_back(i_op);
+					if( j_op != i_op )
+						cskip_info[j].skip_old_op_false.push_back(j_op);
+				}
+				else
+				{	cskip_info[j].skip_old_op_true.push_back(i_op);
+					if( j_op != i_op )
+						cskip_info[j].skip_old_op_true.push_back(j_op);
+				}
+				itr++;
+			}
+		}
+		CPPAD_ASSERT_UNKNOWN( i_op <= j_op );
+		i_op += (1 + j_op) - i_op;
 	}
 	return;
 }

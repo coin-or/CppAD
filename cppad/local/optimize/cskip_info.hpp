@@ -26,10 +26,9 @@ Information about one conditional expression.
 */
 struct struct_cskip_info {
 	/// The operator index for this conditional expression operation
-	/// only used to check op_info
 	size_t i_op;
 
-	/// comparision operator
+	/// comparision operator for this conditional expression
 	CompareOp cop;
 
 	/// (flag & 1) is true if and only if left is a variable
@@ -42,17 +41,18 @@ struct struct_cskip_info {
 	/// variable or parameter index for right comparison operand
 	size_t right;
 
-	/// maximum variable index (ignore parameters) between left and right
+	/// maximum variable index between left and right (ignoring parameters).
 	size_t max_left_right;
 
-	/// set of variables to skip on true
+	/// set of operator that are not used when comparison result is true
+	/// Note that UsrapOp, UsravOp, UsrrpOp, and UsrrvOp, are not in this
+	/// vector and should be skipped when the corresponding UserOp are skipped.
 	CppAD::vector<size_t> skip_old_op_true;
 
-	/// set of variables to skip on false
+	/// set of variables that are not used when comparison result is false
+	/// Note that UsrapOp, UsravOp, UsrrpOp, and UsrrvOp, are not in this
+	/// vector and should be skipped when the corresponding UserOp are skipped.
 	CppAD::vector<size_t> skip_old_op_false;
-
-	/// index in the new recording of first argument for this CSkipOp
-	size_t i_arg;
 };
 
 } } } // END_CPPAD_LOCAL_OPTIMIZE_NAMESPACE

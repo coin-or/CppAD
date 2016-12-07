@@ -102,25 +102,25 @@ void optimize_run(
 	size_t num_vecad_vec   = play->num_vecad_vec_rec();
 
 	// operator information
-	vector<size_t>          var2op, cexp2op;
-	vector<bool>            vecad_used;
-	vector<struct_op_info>  op_info;
+	vector<size_t>            var2op;
+	vector<struct_cskip_info> cskip_info;
+	vector<bool>              vecad_used;
+	vector<struct_op_info>    op_info;
 	get_op_info(
 		conditional_skip,
 		compare_op,
 		play,
 		dep_taddr,
 		var2op,
-		cexp2op,
+		cskip_info,
 		vecad_used,
 		op_info
 	);
-	// number of conditonal expressions
-	size_t num_cexp_op = cexp2op.size();
 
 	// nan with type Base
 	Base base_nan = Base( std::numeric_limits<double>::quiet_NaN() );
 
+	// -------------------------------------------------------------
 	// information for current operator
 	size_t        i_op;   // index
 	OpCode        op;     // operator
@@ -130,93 +130,42 @@ void optimize_run(
 	// information defined by forward_user
 	size_t user_old=0, user_m=0, user_n=0, user_i=0, user_j=0;
 	enum_user_state user_state;
-	//
-	/// information for each CSkip operation
-	CppAD::vector<struct_cskip_info>   cskip_info(num_cexp_op);
-	for(size_t i = 0; i < num_cexp_op; i++)
-	{	i_op            = cexp2op[i];
-		arg             = op_info[i_op].arg;
-		CPPAD_ASSERT_UNKNOWN( op_info[i_op].op == CExpOp );
-		//
-		struct_cskip_info info;
-		info.i_op       = i_op;
-		info.cop        = CompareOp( arg[0] );
-		info.flag       = arg[1];
-		info.left       = arg[2];
-		info.right      = arg[3];
-		info.i_arg      = 0; // case where no CSkipOp for this CExpOp
-		//
-		// max_left_right
-		size_t index    = 0;
-		if( arg[1] & 1 )
-			index = std::max(index, info.left);
-		if( arg[1] & 2 )
-			index = std::max(index, info.right);
-		CPPAD_ASSERT_UNKNOWN( index > 0 );
-		info.max_left_right = index;
-		//
-		cskip_info[i] = info;
-	};
-
-
-	// Determine which operators can be conditionally skipped
-	i_op = 0;
-	while(i_op < num_op)
-	{	size_t j_op = i_op;
-		if( ! op_info[i_op].cexp_set.empty() )
-		{	if( op_info[i_op].op == UserOp )
-			{	// i_op is the first operations in this user atomic call.
-				// Find the last operation in this call.
-				++j_op;
-				while( op_info[j_op].op != UserOp )
-				{	switch( op_info[j_op].op )
-					{	case UsrapOp:
-						case UsravOp:
-						case UsrrpOp:
-						case UsrrvOp:
-						break;
-
-						default:
-						CPPAD_ASSERT_UNKNOWN(false);
-					}
-					++j_op;
-				}
-			}
-			//
-			fast_empty_set<cexp_compare>::const_iterator itr =
-				op_info[i_op].cexp_set.begin();
-			while( itr != op_info[i_op].cexp_set.end() )
-			{	size_t j = itr->index();
-				if( itr->compare() == false )
-				{	cskip_info[j].skip_old_op_false.push_back(i_op);
-					if( j_op != i_op )
-						cskip_info[j].skip_old_op_false.push_back(j_op);
-				}
-				else
-				{	cskip_info[j].skip_old_op_true.push_back(i_op);
-					if( j_op != i_op )
-						cskip_info[j].skip_old_op_true.push_back(j_op);
-				}
-				itr++;
-			}
-		}
-		CPPAD_ASSERT_UNKNOWN( i_op <= j_op );
-		i_op += (1 + j_op) - i_op;
-	}
 	// -------------------------------------------------------------
-	// Sort the conditional skip information by the maximum of the
-	// index for the left and right comparision operands
-	CppAD::vector<size_t> cskip_info_order( cskip_info.size() );
-	{	CppAD::vector<size_t> keys( cskip_info.size() );
-		for(size_t i = 0; i < cskip_info.size(); i++)
-			keys[i] = std::max( cskip_info[i].left, cskip_info[i].right );
+	// conditional skip information
+	//
+	// size of the conditional cskip information structure
+	// (This is equal to the number of conditional expressions when
+	// conditional_skip is true.)
+	size_t num_cskip = cskip_info.size();
+	CPPAD_ASSERT_UNKNOWN( conditional_skip || num_cskip == 0 );
+
+	// sort the conditional skip information by max_left_right
+	vector<size_t> cskip_info_order(num_cskip);
+	if( num_cskip > 0 )
+	{	CppAD::vector<size_t> keys(num_cskip);
+		for(size_t i = 0; i < num_cskip; i++)
+			keys[i] = cskip_info[i].max_left_right;
 		CppAD::index_sort(keys, cskip_info_order);
 	}
+
 	// index in sorted order
 	size_t cskip_order_next = 0;
-	// index in order during reverse sweep
-	size_t cskip_info_index = cskip_info.size();
 
+	// index in order during reverse sweep
+	size_t cskip_info_index = num_cskip;
+
+	// information about the conditional skip in the new operation sequence
+	struct struct_cskip_new {
+		size_t left;
+		size_t right;
+		size_t max_left_right;
+		size_t i_arg;
+	};
+	vector<struct_cskip_new> cskip_new(num_cskip);
+	// flag used to indicate that this conditional expression is skipped
+	for(size_t i = 0; i < num_cskip; i++)
+		cskip_new[i].i_arg = 0;
+	// -------------------------------------------------------------
 
 	// Initilaize table mapping hash code to variable index in tape
 	// as pointing to the BeginOp at the beginning of the tape
@@ -293,10 +242,11 @@ void optimize_run(
 		play->forward_next(op, arg, i_op, i_var);
 
 		// determine if we should insert a conditional skip here
-		bool skip = cskip_order_next < cskip_info.size();
-		skip     &= op != BeginOp;
-		skip     &= op != InvOp;
-		skip     &= user_state == start_user;
+		bool skip  = conditional_skip;
+		skip      &= cskip_order_next < num_cskip;
+		skip      &= op != BeginOp;
+		skip      &= op != InvOp;
+		skip      &= user_state == start_user;
 		if( skip )
 		{	size_t j = cskip_info_order[cskip_order_next];
 			if( NumRes(op) > 0 )
@@ -308,16 +258,18 @@ void optimize_run(
 		{	size_t j = cskip_info_order[cskip_order_next];
 			cskip_order_next++;
 			struct_cskip_info info = cskip_info[j];
-			size_t n_true  = info.skip_old_op_true.size();
-			size_t n_false = info.skip_old_op_false.size();
+			size_t n_true          = info.skip_old_op_true.size();
+			size_t n_false         = info.skip_old_op_false.size();
 			skip &= n_true > 0 || n_false > 0;
 			if( skip )
 			{	CPPAD_ASSERT_UNKNOWN( NumRes(CSkipOp) == 0 );
 				size_t n_arg   = 7 + n_true + n_false;
 				// reserve space for the arguments to this operator but
 				// delay setting them until we have all the new addresses
-				cskip_info[j].i_arg = rec->ReserveArg(n_arg);
-				CPPAD_ASSERT_UNKNOWN( cskip_info[j].i_arg > 0 );
+				cskip_new[j].i_arg = rec->ReserveArg(n_arg);
+				// i_arg == 0 is used to check if conditional expression
+				// has been skipped.
+				CPPAD_ASSERT_UNKNOWN( cskip_new[j].i_arg > 0 );
 				// There is no corresponding old operator in this case
 				rec->PutOp(CSkipOp);
 			}
@@ -679,10 +631,12 @@ void optimize_run(
 			// The new addresses for left and right are used during
 			// fill in the arguments for the CSkip operations. This does not
 			// affect max_left_right which is used during this sweep.
-			CPPAD_ASSERT_UNKNOWN( cskip_info_index > 0 );
-			cskip_info_index--;
-			cskip_info[ cskip_info_index ].left  = new_arg[2];
-			cskip_info[ cskip_info_index ].right = new_arg[3];
+			if( conditional_skip )
+			{	CPPAD_ASSERT_UNKNOWN( cskip_info_index > 0 );
+				cskip_info_index--;
+				cskip_new[ cskip_info_index ].left  = new_arg[2];
+				cskip_new[ cskip_info_index ].right = new_arg[3];
+			}
 			break;
 			// ---------------------------------------------------
 			// Operations with no arguments and no results
@@ -931,15 +885,17 @@ void optimize_run(
 		if( NumRes( op_info[i_op].op ) > 0 )
 			CPPAD_ASSERT_UNKNOWN( old2new[i_op].new_op < rec->num_op_rec() );
 # endif
+	// make sure that all the conditional expressions have been
+	// checked to see if they are still present
+	CPPAD_ASSERT_UNKNOWN( cskip_order_next == num_cskip );
 	// fill in the arguments for the CSkip operations
-	CPPAD_ASSERT_UNKNOWN( cskip_order_next == cskip_info.size() );
-	for(size_t i = 0; i < cskip_info.size(); i++)
-	{	struct_cskip_info info = cskip_info[i];
-		if( info.i_arg > 0 )
-		{
+	for(size_t i = 0; i < num_cskip; i++)
+	{	// if cskip_new[i].i_arg == 0, this conditional expression was skipped
+		if( cskip_new[i].i_arg > 0 )
+		{	struct_cskip_info info = cskip_info[i];
 			size_t n_true  = info.skip_old_op_true.size();
 			size_t n_false = info.skip_old_op_false.size();
-			size_t i_arg   = info.i_arg;
+			size_t i_arg   = cskip_new[i].i_arg;
 			rec->ReplaceArg(i_arg++, info.cop   );
 			rec->ReplaceArg(i_arg++, info.flag  );
 			rec->ReplaceArg(i_arg++, info.left  );
@@ -947,7 +903,7 @@ void optimize_run(
 			rec->ReplaceArg(i_arg++, n_true     );
 			rec->ReplaceArg(i_arg++, n_false    );
 			for(size_t j = 0; j < info.skip_old_op_true.size(); j++)
-			{	i_op = info.skip_old_op_true[j];
+			{	i_op = cskip_info[i].skip_old_op_true[j];
 				bool remove = old2new[i_op].new_op == 0;
 				if( old2new[i_op].match )
 					remove = true;
@@ -960,7 +916,7 @@ void optimize_run(
 					rec->ReplaceArg(i_arg++, old2new[i_op].new_op );
 			}
 			for(size_t j = 0; j < info.skip_old_op_false.size(); j++)
-			{	i_op   = info.skip_old_op_false[j];
+			{	i_op   = cskip_info[i].skip_old_op_false[j];
 				bool remove = old2new[i_op].new_op == 0;
 				if( old2new[i_op].match )
 					remove = true;
@@ -975,7 +931,7 @@ void optimize_run(
 			rec->ReplaceArg(i_arg++, n_true + n_false);
 # ifndef NDEBUG
 			size_t n_arg   = 7 + n_true + n_false;
-			CPPAD_ASSERT_UNKNOWN( info.i_arg + n_arg == i_arg );
+			CPPAD_ASSERT_UNKNOWN( cskip_new[i].i_arg + n_arg == i_arg );
 # endif
 		}
 	}
