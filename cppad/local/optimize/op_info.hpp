@@ -38,11 +38,6 @@ struct struct_op_info {
 
 	/// How is this operator used to compute the dependent variables.
 	enum_usage usage;
-
-	/// Is this operator only used once, is its parrent a summation,
-	/// and is it a summation. In this case it can be removed as part
-	/// of a cumulative summation starting at its parent or above.
-	bool csum_connected;
 };
 
 /// increment usage:
@@ -829,8 +824,6 @@ void get_op_info(
 	// ----------------------------------------------------------------------
 	// Forward (could use revese) pass to compute csum_connected
 	// ----------------------------------------------------------------------
-	for(size_t i = 0; i < num_op; i++)
-		op_info[i].csum_connected = false;
 	//
 	play->forward_start(op, arg, i_op, i_var);
 	CPPAD_ASSERT_UNKNOWN( op == BeginOp );
@@ -840,6 +833,7 @@ void get_op_info(
 	{
 		// next operator
 		play->forward_next(op, arg, i_op, i_var);
+		CPPAD_ASSERT_UNKNOWN( op_info[i_op].usage != csum_usage );
 		//
 		switch( op )
 		{	case CSumOp:
@@ -850,7 +844,8 @@ void get_op_info(
 				size_t num_sub = size_t( arg[1] );
 				for(size_t i = 0; i < num_add + num_sub; i++)
 				{	size_t j_op = var2op[ arg[3 + i] ];
-					CPPAD_ASSERT_UNKNOWN( op_info[j_op].usage != 1 );
+					// previous optimization should have prevented this case
+					CPPAD_ASSERT_UNKNOWN( op_info[j_op].usage != one_usage );
 				}
 			}
 # endif
@@ -882,10 +877,8 @@ void get_op_info(
 					case SubpvOp:
 					case SubvpOp:
 					case SubvvOp:
-					if( op_info[j_op].usage == 1 )
-					{	CPPAD_ASSERT_UNKNOWN( ! op_info[j_op].csum_connected );
-						op_info[j_op].csum_connected = true;
-					}
+					if( op_info[j_op].usage == one_usage )
+						op_info[j_op].usage = csum_usage;
 					break;
 
 					default:
@@ -905,10 +898,8 @@ void get_op_info(
 					case SubpvOp:
 					case SubvpOp:
 					case SubvvOp:
-					if( op_info[j_op].usage == 1 )
-					{	CPPAD_ASSERT_UNKNOWN( ! op_info[j_op].csum_connected );
-						op_info[j_op].csum_connected = true;
-					}
+					if( op_info[j_op].usage == one_usage )
+						op_info[j_op].usage = csum_usage;
 					break;
 
 					default:
@@ -926,10 +917,8 @@ void get_op_info(
 					case SubpvOp:
 					case SubvpOp:
 					case SubvvOp:
-					if( op_info[j_op].usage == 1 )
-					{	CPPAD_ASSERT_UNKNOWN( ! op_info[j_op].csum_connected );
-						op_info[j_op].csum_connected = true;
-					}
+					if( op_info[j_op].usage == one_usage )
+						op_info[j_op].usage = csum_usage;
 					break;
 
 					default:

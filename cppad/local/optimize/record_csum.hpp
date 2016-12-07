@@ -36,8 +36,8 @@ is the index in the old operation sequence for
 the variable corresponding to the result for the current operator.
 We use the notataion i_op = var2op[current].
 It follows that  NumRes( op_info[i_op].op ) > 0.
-If 0 < j_op < i_op, either op_info[j_op].csum_connected,
-op_info[j_op].usage = 0, or old2new[j_op].new_var != 0.
+If 0 < j_op < i_op, either op_info[j_op].usage == csum_usage,
+op_info[j_op].usage = no_usage, or old2new[j_op].new_var != 0.
 
 \param npar
 is the number of parameters corresponding to the old operation sequence.
@@ -62,8 +62,8 @@ and then be reused with calls to record_csum.
 \par Assumptions
 op_info[i_o].op
 must be one of AddpvOp, AddvvOp, SubpvOp, SubvpOp, SubvvOp.
-op_info[i_op].usage > 0 and ! op_info[i_op].csum_connected.
-Furthermore op_info[j_op].csum_connected is true from some
+op_info[i_op].usage != no_usage and ! op_info[i_op].usage == csum_usage.
+Furthermore op_info[j_op].usage == csum_usage is true from some
 j_op that corresponds to a variable that is an argument to
 op_info[i_op].
 */
@@ -86,7 +86,7 @@ struct_size_pair record_csum(
 	CPPAD_ASSERT_UNKNOWN( work.sub_stack.empty() );
 	//
 	size_t i_op = var2op[current];
-	CPPAD_ASSERT_UNKNOWN( ! op_info[i_op].csum_connected );
+	CPPAD_ASSERT_UNKNOWN( ! ( op_info[i_op].usage == csum_usage ) );
 	//
 	size_t                        i;
 	OpCode                        op;
@@ -109,12 +109,12 @@ struct_size_pair record_csum(
 	bool ok = false;
 	struct_op_info info = op_info[i_op];
 	if( var.op == SubvpOp )
-		ok = op_info[ var2op[info.arg[0]] ].csum_connected;
+		ok = op_info[ var2op[info.arg[0]] ].usage == csum_usage;
 	if( var.op == AddpvOp || var.op == SubpvOp )
-		ok = op_info[ var2op[info.arg[1]] ].csum_connected;
+		ok = op_info[ var2op[info.arg[1]] ].usage == csum_usage;
 	if( var.op == AddvvOp || var.op == SubvvOp )
-	{	ok  = op_info[ var2op[info.arg[0]] ].csum_connected;
-		ok |= op_info[ var2op[info.arg[1]] ].csum_connected;
+	{	ok  = op_info[ var2op[info.arg[0]] ].usage == csum_usage;
+		ok |= op_info[ var2op[info.arg[1]] ].usage == csum_usage;
 	}
 	CPPAD_ASSERT_UNKNOWN( ok );
 # endif
@@ -145,14 +145,8 @@ struct_size_pair record_csum(
 			case SubvpOp:
 			case SubvvOp:
 			//
-			// check if the first argument is csum_connected
-# ifndef NDEBUG
-			{	bool flag1 = op_info[var2op[arg[0]]].csum_connected;
-				bool flag2 = op_info[ var2op[ arg[0] ] ].csum_connected;
-				CPPAD_ASSERT_UNKNOWN( flag1 == flag2 );
-			}
-# endif
-			if( op_info[var2op[arg[0]]].csum_connected )
+			// check if the first argument has csum usage
+			if( op_info[var2op[arg[0]]].usage == csum_usage )
 			{	CPPAD_ASSERT_UNKNOWN(
 					size_t( old2new[ var2op[arg[0]] ].new_var) == 0
 				);
@@ -194,14 +188,8 @@ struct_size_pair record_csum(
 			// cases where second argument is a variable and has same sign
 			case AddvvOp:
 			case AddpvOp:
-			// check if the second argument is csum_connected
-# ifndef NDEBUG
-			{	bool flag1 = op_info[var2op[arg[1]]].csum_connected;
-				bool flag2 = op_info[ var2op[ arg[1] ] ].csum_connected;
-				CPPAD_ASSERT_UNKNOWN( flag1 == flag2 );
-			}
-# endif
-			if( op_info[var2op[arg[1]]].csum_connected )
+			// check if the second argument has csum usage
+			if( op_info[var2op[arg[1]]].usage == csum_usage )
 			{	CPPAD_ASSERT_UNKNOWN(
 					size_t( old2new[ var2op[arg[1]] ].new_var) == 0
 				);

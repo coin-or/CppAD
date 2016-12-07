@@ -375,9 +375,9 @@ void optimize_run(
 			// left is a variable and right is a parameter
 			case SubvpOp:
 			// check if this is the top of a csum connection
-			if( op_info[i_op].csum_connected )
+			if( op_info[i_op].usage == csum_usage )
 				break;
-			if( op_info[ var2op[arg[0]] ].csum_connected )
+			if( op_info[ var2op[arg[0]] ].usage == csum_usage )
 			{
 				// convert to a sequence of summation operators
 				size_pair = record_csum(
@@ -473,9 +473,9 @@ void optimize_run(
 			case SubpvOp:
 			case AddpvOp:
 			// check if this is the top of a csum connection
-			if( op_info[i_op].csum_connected )
+			if( op_info[i_op].usage == csum_usage )
 				break;
-			if( op_info[ var2op[arg[1]] ].csum_connected )
+			if( op_info[ var2op[arg[1]] ].usage == csum_usage )
 			{
 				// convert to a sequence of summation operators
 				size_pair = record_csum(
@@ -536,11 +536,11 @@ void optimize_run(
 			case AddvvOp:
 			case SubvvOp:
 			// check if this is the top of a csum connection
-			if( op_info[i_op].csum_connected )
+			if( op_info[i_op].usage == csum_usage )
 				break;
 			if(
-				op_info[ var2op[arg[0]] ].csum_connected |
-				op_info[ var2op[arg[1]] ].csum_connected
+				op_info[ var2op[arg[0]] ].usage == csum_usage ||
+				op_info[ var2op[arg[1]] ].usage == csum_usage
 			)
 			{
 				// convert to a sequence of summation operators
