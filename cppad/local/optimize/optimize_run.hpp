@@ -16,6 +16,7 @@ Please visit http://www.coin-or.org/CppAD/ for information on other licenses.
 
 # include <stack>
 # include <iterator>
+# include <cppad/local/optimize/usage.hpp>
 # include <cppad/local/optimize/op_info.hpp>
 # include <cppad/local/optimize/old2new.hpp>
 # include <cppad/local/optimize/size_pair.hpp>
@@ -308,7 +309,7 @@ void optimize_run(
 		addr_t         match_var;
 		old2new[i_op].match = false;
 		//
-		if( op_info[usage_i_op].usage > 0 ) switch( op )
+		if( op_info[usage_i_op].usage != no_usage ) switch( op )
 		{
 			// Unary operator where operand is arg[0]
 			case AbsOp:
@@ -803,7 +804,7 @@ void optimize_run(
 			case UserOp:
 			CPPAD_ASSERT_NARG_NRES(op, 4, 0);
 			// user_old, user_n, user_m
-			if( op_info[first_user_i_op].usage > 0 )
+			if( op_info[first_user_i_op].usage != no_usage )
 			{	rec->PutArg(arg[0], arg[1], arg[2], arg[3]);
 				old2new[i_op].new_op = rec->num_op_rec();
 				rec->PutOp(UserOp);
@@ -812,7 +813,7 @@ void optimize_run(
 
 			case UsrapOp:
 			CPPAD_ASSERT_NARG_NRES(op, 1, 0);
-			if( op_info[first_user_i_op].usage > 0 )
+			if( op_info[first_user_i_op].usage != no_usage )
 			{	new_arg[0] = rec->PutPar( play->GetPar(arg[0]) );
 				rec->PutArg(new_arg[0]);
 				old2new[i_op].new_op = rec->num_op_rec();
@@ -822,7 +823,7 @@ void optimize_run(
 
 			case UsravOp:
 			CPPAD_ASSERT_NARG_NRES(op, 1, 0);
-			if( op_info[first_user_i_op].usage > 0 )
+			if( op_info[first_user_i_op].usage != no_usage )
 			{	new_arg[0] = old2new[ var2op[arg[0]] ].new_var;
 				if( size_t(new_arg[0]) < num_var )
 				{	rec->PutArg(new_arg[0]);
@@ -842,7 +843,7 @@ void optimize_run(
 
 			case UsrrpOp:
 			CPPAD_ASSERT_NARG_NRES(op, 1, 0);
-			if( op_info[first_user_i_op].usage > 0 )
+			if( op_info[first_user_i_op].usage != no_usage )
 			{	new_arg[0] = rec->PutPar( play->GetPar(arg[0]) );
 				rec->PutArg(new_arg[0]);
 				old2new[i_op].new_op = rec->num_op_rec();
@@ -852,7 +853,7 @@ void optimize_run(
 
 			case UsrrvOp:
 			CPPAD_ASSERT_NARG_NRES(op, 0, 1);
-			if( op_info[first_user_i_op].usage > 0 )
+			if( op_info[first_user_i_op].usage != no_usage )
 			{	old2new[i_op].new_op  = rec->num_op_rec();
 				old2new[i_op].new_var = rec->PutOp(UsrrvOp);
 			}

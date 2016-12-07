@@ -253,6 +253,7 @@ nobase_myinclude_HEADERS =  \
 	cppad/local/optimize/record_vv.hpp \
 	cppad/local/optimize/size_pair.hpp \
 	cppad/local/optimize/unary_match.hpp \
+	cppad/local/optimize/usage.hpp \
 	cppad/local/parameter_op.hpp \
 	cppad/local/player.hpp \
 	cppad/local/pod_vector.hpp \

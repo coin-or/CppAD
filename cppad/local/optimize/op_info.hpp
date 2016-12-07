@@ -19,6 +19,7 @@ Create operator information tables
 
 # include <cppad/local/optimize/cexp_compare.hpp>
 # include <cppad/local/optimize/cskip_info.hpp>
+# include <cppad/local/optimize/usage.hpp>
 
 // BEGIN_CPPAD_LOCAL_OPTIMIZE_NAMESPACE
 namespace CppAD { namespace local { namespace optimize {
@@ -35,17 +36,36 @@ struct struct_op_info {
 	// operator has not results, this is num_var (an invalid variable index).
 	size_t i_var;
 
-	/// Number of times an operator is used. This counts using the results
-	/// as well as other factors. Being a dependent variable or independent
-	/// variable gets two usage counts. Certain other side effects can get a
-	// use count. For example, comparision operators may or may not be counted.
-	size_t usage;
+	/// How is this operator used to compute the dependent variables.
+	enum_usage usage;
 
 	/// Is this operator only used once, is its parrent a summation,
 	/// and is it a summation. In this case it can be removed as part
 	/// of a cumulative summation starting at its parent or above.
 	bool csum_connected;
 };
+
+/// increment usage:
+/// no_usage -> one_usage, one_usage -> yes_usage, yes_usage -> yes_usage.
+inline void increment_usage(enum_usage& usage)
+{	switch( usage )
+	{
+		case no_usage:
+		usage = one_usage;
+		break;
+
+		case one_usage:
+		case yes_usage:
+		usage = yes_usage;
+		break;
+
+		// this case never happens when increment_usage is called.
+		case csum_usage:
+		CPPAD_ASSERT_UNKNOWN(false);
+		break;
+	}
+	return;
+}
 
 /*!
 Increarse argument usage and propagate cexp_set from parent to argument.
@@ -58,7 +78,7 @@ is the operator index for the argument to the parent operator.
 
 \param op_info
 structure that holds the struct_op_info information for each operators.
-The output value of op_info[i_arg].usage is one greater than its input value.
+The output value of op_info[i_arg].usage is increased by one; to be specific,
 
 \param cexp_set
 This is a vector of sets with one set for each operator. We denote
@@ -69,13 +89,13 @@ In the special case where cexp_set.n_set() is zero,
 cexp_set is not changed.
 
 \li
-If cexp_set.n_set() != 0 and op_info[i_arg].usage == 0,
+If cexp_set.n_set() != 0 and op_info[i_arg].usage == no_usage,
 the input value of set[i_arg] must be empty.
 In this case the output value if set[i_arg] is equal to set[i_parent]
 (which may also be empty).
 
 \li
-If cexp_set.n_set() != 0 and op_info[i_arg].usage != 0,
+If cexp_set.n_set() != 0 and op_info[i_arg].usage != no_usage,
 the output value of set[i_arg] is the intersection of
 its input value and set[i_parent].
 */
@@ -84,11 +104,13 @@ inline void usage_cexp_parent2arg(
 	size_t                  i_arg      ,
 	vector<struct_op_info>& op_info    ,
 	sparse_pack&            cexp_set   )
-{	++op_info[i_arg].usage;
+{
+	increment_usage( op_info[i_arg].usage );
+	//
 	if( cexp_set.n_set() == 0 )
 		return;
 	//
-	if( op_info[i_arg].usage == 1 )
+	if( op_info[i_arg].usage == one_usage )
 	{	// set[i_arg] = set[i_parent]
 		cexp_set.assignment(i_arg, i_parent, cexp_set);
 	}
@@ -327,7 +349,7 @@ void get_op_info(
 	// Set of conditional expressions comparisons that usage of each
 	/// operator depends on. The operator can be skipped if any of the
 	// comparisons results in the set holds. A set for operator i_op is
-	// not defined and left empty when op_info[i_op].usage = 0.
+	// not defined and left empty when op_info[i_op].usage = no_usage.
 	/// It is also left empty for the result of any VecAD operations.
 	sparse_pack cexp_set;
 	//
@@ -345,25 +367,25 @@ void get_op_info(
 	//
 	// initialize operator usage
 	for(size_t i = 0; i < num_op; i++)
-		op_info[i].usage = 0;
+		op_info[i].usage = no_usage;
 	for(size_t i = 1; i <= num_inv_op; i++)
-		op_info[i].usage = 2;       // independent variables
+		op_info[i].usage = yes_usage;       // independent variables
 	for(size_t i = 0; i < dep_taddr.size(); i++)
 	{	i_op                = var2op[ dep_taddr[i] ];
-		op_info[i_op].usage = 2;    // dependent variables
+		op_info[i_op].usage = yes_usage;    // dependent variables
 	}
 	// value for BeginOp and EndOp
 	CPPAD_ASSERT_UNKNOWN( op_info[0].op == BeginOp);
 	CPPAD_ASSERT_UNKNOWN( op_info[num_op-1].op == EndOp);
-	op_info[0].usage        = 1;
-	op_info[num_op-1].usage = 1;
+	op_info[0].usage        = yes_usage;
+	op_info[num_op-1].usage = yes_usage;
 	//
 	// Initialize reverse pass
 	size_t cexp_index = num_cexp_op;
 	user_state        = end_user;
 	play->reverse_start(op, arg, i_op, i_var);
 	CPPAD_ASSERT_UNKNOWN( op == EndOp );
-	op_info[i_op].usage    = 1;
+	op_info[i_op].usage    = yes_usage;
 	size_t first_user_i_op = 0;
 	while( op != BeginOp )
 	{	bool   flag;  // temporary boolean value
@@ -371,9 +393,9 @@ void get_op_info(
 		// next op
 		play->reverse_next(op, arg, i_op, i_var);
 		//
-		// Is the result of this operation used
-		// (which only makes sense when NumRes(op) > 0).
-		size_t use_result                = op_info[i_op].usage;
+		// Is the result of this operation used.
+		// (This only makes sense when NumRes(op) > 0.)
+		enum_usage use_result = op_info[i_op].usage;
 		//
 		switch( op )
 		{
@@ -407,7 +429,7 @@ void get_op_info(
 			case TanhOp:
 			case ZmulvpOp:
 			CPPAD_ASSERT_UNKNOWN( NumRes(op) > 0 );
-			if( use_result > 0 )
+			if( use_result != no_usage )
 			{	size_t j_op = var2op[ arg[0] ];
 				usage_cexp_parent2arg(i_op, j_op, op_info, cexp_set);
 			}
@@ -422,7 +444,7 @@ void get_op_info(
 			case SubpvOp:
 			case ZmulpvOp:
 			CPPAD_ASSERT_UNKNOWN( NumRes(op) > 0 );
-			if( use_result > 0 )
+			if( use_result != no_usage )
 			{	size_t j_op = var2op[ arg[1] ];
 				usage_cexp_parent2arg(i_op, j_op, op_info, cexp_set);
 			}
@@ -436,7 +458,7 @@ void get_op_info(
 			case SubvvOp:
 			case ZmulvvOp:
 			CPPAD_ASSERT_UNKNOWN( NumRes(op) > 0 );
-			if( use_result > 0 )
+			if( use_result != no_usage )
 			{	for(size_t i = 0; i < 2; i++)
 				{	size_t j_op = var2op[ arg[i] ];
 					usage_cexp_parent2arg(i_op, j_op, op_info, cexp_set);
@@ -450,7 +472,7 @@ void get_op_info(
 			--cexp_index;
 			cexp2op[ cexp_index ] = i_op;
 			CPPAD_ASSERT_UNKNOWN( NumRes(op) > 0 );
-			if( use_result > 0 )
+			if( use_result != no_usage )
 			{	CPPAD_ASSERT_UNKNOWN( NumArg(CExpOp) == 6 );
 				addr_t mask[] = {1, 2, 4, 8};
 				for(size_t i = 0; i < 4; i++)
@@ -466,7 +488,7 @@ void get_op_info(
 					if( ( arg[1] & 4 ) && (! same_variable) )
 					{	// arg[4] is a variable
 						size_t j_op = var2op[ arg[4] ];
-						CPPAD_ASSERT_UNKNOWN( op_info[j_op].usage > 0 );
+						CPPAD_ASSERT_UNKNOWN(op_info[j_op].usage != no_usage);
 						// j_op corresponds to  the value used when the
 						// comparison result is true. It can be skipped when
 						// the comparison is false (0).
@@ -476,7 +498,7 @@ void get_op_info(
 					if( ( arg[1] & 8 ) && (! same_variable) )
 					{	// arg[5] is a variable
 						size_t j_op = var2op[ arg[5] ];
-						CPPAD_ASSERT_UNKNOWN( op_info[j_op].usage > 0 );
+						CPPAD_ASSERT_UNKNOWN(op_info[j_op].usage != no_usage);
 						// j_op corresponds to the value used when the
 						// comparison result is false. It can be skipped when
 						// the comparison is true (1).
@@ -513,7 +535,7 @@ void get_op_info(
 			case NepvOp:
 			CPPAD_ASSERT_UNKNOWN( NumRes(op) == 0 );
 			if( compare_op )
-			{	++op_info[i_op].usage;
+			{	increment_usage( op_info[i_op].usage );
 				//
 				size_t j_op = var2op[ arg[1] ];
 				usage_cexp_parent2arg(i_op, j_op, op_info, cexp_set);
@@ -525,7 +547,7 @@ void get_op_info(
 			case LtvpOp:
 			CPPAD_ASSERT_UNKNOWN( NumRes(op) == 0 );
 			if( compare_op )
-			{	++op_info[i_op].usage;
+			{	increment_usage( op_info[i_op].usage );
 				//
 				size_t j_op = var2op[ arg[0] ];
 				usage_cexp_parent2arg(i_op, j_op, op_info, cexp_set);
@@ -540,7 +562,7 @@ void get_op_info(
 			if( compare_op )
 			CPPAD_ASSERT_UNKNOWN( NumRes(op) == 0 );
 			if( compare_op )
-			{	++op_info[i_op].usage;
+			{	increment_usage( op_info[i_op].usage );
 				//
 				for(size_t i = 0; i < 2; i++)
 				{	size_t j_op = var2op[ arg[i] ];
@@ -556,7 +578,7 @@ void get_op_info(
 			// load operator using a parameter index
 			case LdpOp:
 			CPPAD_ASSERT_UNKNOWN( NumRes(op) > 0 );
-			if( use_result > 0 )
+			if( use_result != no_usage )
 			{	size_t i_vec = arg2vecad[ arg[0] ];
 				vecad_used[i_vec] = true;
 			}
@@ -565,12 +587,12 @@ void get_op_info(
 			// load operator using a variable index
 			case LdvOp:
 			CPPAD_ASSERT_UNKNOWN( NumRes(op) > 0 );
-			if( use_result > 0 )
+			if( use_result != no_usage )
 			{	size_t i_vec = arg2vecad[ arg[0] ];
 				vecad_used[i_vec] = true;
 				//
 				size_t j_op = var2op[ arg[1] ];
-				++op_info[j_op].usage;
+				increment_usage( op_info[j_op].usage );
 			}
 			break; // --------------------------------------------
 
@@ -578,10 +600,10 @@ void get_op_info(
 			case StpvOp:
 			CPPAD_ASSERT_UNKNOWN( NumRes(op) == 0 );
 			if( vecad_used[ arg2vecad[ arg[0] ] ] )
-			{	++op_info[i_op].usage;
+			{	increment_usage( op_info[i_op].usage );
 				//
 				size_t j_op = var2op[ arg[2] ];
-				++op_info[j_op].usage;
+				increment_usage( op_info[j_op].usage );
 			}
 			break; // --------------------------------------------
 
@@ -589,12 +611,12 @@ void get_op_info(
 			case StvvOp:
 			CPPAD_ASSERT_UNKNOWN( NumRes(op) == 0 );
 			if( vecad_used[ arg2vecad[ arg[0] ] ] )
-			{	++op_info[i_op].usage;
+			{	increment_usage( op_info[i_op].usage );
 				//
 				size_t j_op = var2op[ arg[1] ];
-				++op_info[j_op].usage;
+				increment_usage( op_info[j_op].usage );
 				size_t k_op = var2op[ arg[2] ];
-				++op_info[k_op].usage;
+				increment_usage( op_info[k_op].usage );
 			}
 			break; // -----------------------------------------------------
 
@@ -715,7 +737,7 @@ void get_op_info(
 				}
 				// 2DO: It might be faster if we add set union to var_sparsity
 				// where one of the sets is not in var_sparsity.
-				if( op_info[first_user_i_op].usage > 0 )
+				if( op_info[first_user_i_op].usage != no_usage )
 				for(size_t j = 0; j < user_n; j++)
 				if( user_ix[j] > 0 )
 				{	// This user argument is a variable
