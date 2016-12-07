@@ -19,7 +19,6 @@ Please visit http://www.coin-or.org/CppAD/ for information on other licenses.
 # include <cppad/local/optimize/op_info.hpp>
 # include <cppad/local/optimize/old2new.hpp>
 # include <cppad/local/optimize/connect_type.hpp>
-# include <cppad/local/optimize/fast_empty_set.hpp>
 # include <cppad/local/optimize/size_pair.hpp>
 # include <cppad/local/optimize/csum_variable.hpp>
 # include <cppad/local/optimize/csum_stacks.hpp>
