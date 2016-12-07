@@ -257,8 +257,8 @@ void optimize_run(
 		{	size_t j = cskip_info_order[cskip_order_next];
 			cskip_order_next++;
 			struct_cskip_info info = cskip_info[j];
-			size_t n_true          = info.skip_old_op_true.size();
-			size_t n_false         = info.skip_old_op_false.size();
+			size_t n_true          = info.skip_op_true.size();
+			size_t n_false         = info.skip_op_false.size();
 			skip &= n_true > 0 || n_false > 0;
 			if( skip )
 			{	CPPAD_ASSERT_UNKNOWN( NumRes(CSkipOp) == 0 );
@@ -892,8 +892,8 @@ void optimize_run(
 	{	// if cskip_new[i].i_arg == 0, this conditional expression was skipped
 		if( cskip_new[i].i_arg > 0 )
 		{	struct_cskip_info info = cskip_info[i];
-			size_t n_true  = info.skip_old_op_true.size();
-			size_t n_false = info.skip_old_op_false.size();
+			size_t n_true  = info.skip_op_true.size();
+			size_t n_false = info.skip_op_false.size();
 			size_t i_arg   = cskip_new[i].i_arg;
 			rec->ReplaceArg(i_arg++, info.cop   );
 			rec->ReplaceArg(i_arg++, info.flag  );
@@ -901,8 +901,8 @@ void optimize_run(
 			rec->ReplaceArg(i_arg++, info.right );
 			rec->ReplaceArg(i_arg++, n_true     );
 			rec->ReplaceArg(i_arg++, n_false    );
-			for(size_t j = 0; j < info.skip_old_op_true.size(); j++)
-			{	i_op = cskip_info[i].skip_old_op_true[j];
+			for(size_t j = 0; j < info.skip_op_true.size(); j++)
+			{	i_op = cskip_info[i].skip_op_true[j];
 				bool remove = old2new[i_op].new_op == 0;
 				if( old2new[i_op].match )
 					remove = true;
@@ -914,8 +914,8 @@ void optimize_run(
 				else
 					rec->ReplaceArg(i_arg++, old2new[i_op].new_op );
 			}
-			for(size_t j = 0; j < info.skip_old_op_false.size(); j++)
-			{	i_op   = cskip_info[i].skip_old_op_false[j];
+			for(size_t j = 0; j < info.skip_op_false.size(); j++)
+			{	i_op   = cskip_info[i].skip_op_false[j];
 				bool remove = old2new[i_op].new_op == 0;
 				if( old2new[i_op].match )
 					remove = true;

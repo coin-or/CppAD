@@ -981,14 +981,14 @@ void get_op_info(
 				size_t index   = element / 2;
 				bool   compare = bool( element % 2 );
 				if( compare == false )
-				{	cskip_info[index].skip_old_op_false.push_back(i_op);
+				{	cskip_info[index].skip_op_false.push_back(i_op);
 					if( j_op != i_op )
-						cskip_info[index].skip_old_op_false.push_back(j_op);
+						cskip_info[index].skip_op_false.push_back(j_op);
 				}
 				else
-				{	cskip_info[index].skip_old_op_true.push_back(i_op);
+				{	cskip_info[index].skip_op_true.push_back(i_op);
 					if( j_op != i_op )
-						cskip_info[index].skip_old_op_true.push_back(j_op);
+						cskip_info[index].skip_op_true.push_back(j_op);
 				}
 				++itr;
 			}

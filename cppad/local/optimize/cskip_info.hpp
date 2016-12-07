@@ -47,12 +47,12 @@ struct struct_cskip_info {
 	/// set of operator that are not used when comparison result is true
 	/// Note that UsrapOp, UsravOp, UsrrpOp, and UsrrvOp, are not in this
 	/// vector and should be skipped when the corresponding UserOp are skipped.
-	CppAD::vector<size_t> skip_old_op_true;
+	CppAD::vector<size_t> skip_op_true;
 
 	/// set of variables that are not used when comparison result is false
 	/// Note that UsrapOp, UsravOp, UsrrpOp, and UsrrvOp, are not in this
 	/// vector and should be skipped when the corresponding UserOp are skipped.
-	CppAD::vector<size_t> skip_old_op_false;
+	CppAD::vector<size_t> skip_op_false;
 };
 
 } } } // END_CPPAD_LOCAL_OPTIMIZE_NAMESPACE
