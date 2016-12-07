@@ -240,7 +240,6 @@ nobase_myinclude_HEADERS =  \
 	cppad/local/op.hpp \
 	cppad/local/optimize/binary_match.hpp \
 	cppad/local/optimize/cexp_compare.hpp \
-	cppad/local/optimize/connect_type.hpp \
 	cppad/local/optimize/cskip_info.hpp \
 	cppad/local/optimize/csum_stacks.hpp \
 	cppad/local/optimize/csum_variable.hpp \
