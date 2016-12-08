@@ -808,116 +808,6 @@ void get_op_info(
 		}
 	}
 	// ----------------------------------------------------------------------
-	// Forward (could use revese) pass to compute csum_connected
-	// ----------------------------------------------------------------------
-	play->forward_start(op, arg, i_op, i_var);
-	CPPAD_ASSERT_UNKNOWN( op == BeginOp );
-	//
-	user_state = start_user;
-	while(op != EndOp)
-	{
-		// next operator
-		play->forward_next(op, arg, i_op, i_var);
-		CPPAD_ASSERT_UNKNOWN( op_info[i_op].usage != csum_usage );
-		//
-		switch( op )
-		{	case CSumOp:
-			// must correct arg before next operator
-			play->forward_csum(op, arg, i_op, i_var);
-# ifndef NDEBUG
-			{	size_t num_add = size_t( arg[0] );
-				size_t num_sub = size_t( arg[1] );
-				for(size_t i = 0; i < num_add + num_sub; i++)
-				{	size_t j_op = var2op[ arg[3 + i] ];
-					// previous optimization should have prevented this case
-					CPPAD_ASSERT_UNKNOWN( op_info[j_op].usage != one_usage );
-				}
-			}
-# endif
-			break; // --------------------------------------------------------
-
-			case CSkipOp:
-			// must correct arg before next operator
-			play->forward_csum(op, arg, i_op, i_var);
-			break; // --------------------------------------------------------
-
-			case UserOp:
-			case UsrapOp:
-			case UsravOp:
-			case UsrrpOp:
-			case UsrrvOp:
-			play->forward_user(op, user_state,
-				user_old, user_m, user_n, user_i, user_j
-			);
-			break; // --------------------------------------------------------
-
-			case AddvvOp:
-			case SubvvOp:
-			for(size_t i = 0; i < 2; i++)
-			{	size_t j_op = var2op[ arg[i] ];
-				switch( op_info[j_op].op )
-				{
-					case AddpvOp:
-					case AddvvOp:
-					case SubpvOp:
-					case SubvpOp:
-					case SubvvOp:
-					if( op_info[j_op].usage == one_usage )
-						op_info[j_op].usage = csum_usage;
-					break;
-
-					default:
-					break;
-				}
-			}
-			break; // --------------------------------------------------------
-
-			case AddpvOp:
-			case SubpvOp:
-			{
-				size_t j_op = var2op[ arg[1] ];
-				switch( op_info[j_op].op )
-				{
-					case AddpvOp:
-					case AddvvOp:
-					case SubpvOp:
-					case SubvpOp:
-					case SubvvOp:
-					if( op_info[j_op].usage == one_usage )
-						op_info[j_op].usage = csum_usage;
-					break;
-
-					default:
-					break;
-				}
-			}
-			break; // --------------------------------------------------------
-
-			case SubvpOp:
-			{	size_t j_op = var2op[ arg[0] ];
-				switch( op_info[j_op].op )
-				{
-					case AddpvOp:
-					case AddvvOp:
-					case SubpvOp:
-					case SubvpOp:
-					case SubvvOp:
-					if( op_info[j_op].usage == one_usage )
-						op_info[j_op].usage = csum_usage;
-					break;
-
-					default:
-					break;
-				}
-			}
-			break; // --------------------------------------------------------
-
-
-			default:
-			break;
-		}
-	}
-	// ----------------------------------------------------------------------
 	// compute previos in op_info
 	// ----------------------------------------------------------------------
 	vector<size_t>  hash_table_op(CPPAD_HASH_TABLE_SIZE);
@@ -1028,6 +918,116 @@ void get_op_info(
 			);
 			if( op_info[i_op].previous == 0 )
 				hash_table_op[code] = i_op;
+			break;
+		}
+	}
+	// ----------------------------------------------------------------------
+	// Forward (could use revese) pass to compute csum_connected
+	// ----------------------------------------------------------------------
+	play->forward_start(op, arg, i_op, i_var);
+	CPPAD_ASSERT_UNKNOWN( op == BeginOp );
+	//
+	user_state = start_user;
+	while(op != EndOp)
+	{
+		// next operator
+		play->forward_next(op, arg, i_op, i_var);
+		CPPAD_ASSERT_UNKNOWN( op_info[i_op].usage != csum_usage );
+		//
+		switch( op )
+		{	case CSumOp:
+			// must correct arg before next operator
+			play->forward_csum(op, arg, i_op, i_var);
+# ifndef NDEBUG
+			{	size_t num_add = size_t( arg[0] );
+				size_t num_sub = size_t( arg[1] );
+				for(size_t i = 0; i < num_add + num_sub; i++)
+				{	size_t j_op = var2op[ arg[3 + i] ];
+					// previous optimization should have prevented this case
+					CPPAD_ASSERT_UNKNOWN( op_info[j_op].usage != one_usage );
+				}
+			}
+# endif
+			break; // --------------------------------------------------------
+
+			case CSkipOp:
+			// must correct arg before next operator
+			play->forward_csum(op, arg, i_op, i_var);
+			break; // --------------------------------------------------------
+
+			case UserOp:
+			case UsrapOp:
+			case UsravOp:
+			case UsrrpOp:
+			case UsrrvOp:
+			play->forward_user(op, user_state,
+				user_old, user_m, user_n, user_i, user_j
+			);
+			break; // --------------------------------------------------------
+
+			case AddvvOp:
+			case SubvvOp:
+			for(size_t i = 0; i < 2; i++)
+			{	size_t j_op = var2op[ arg[i] ];
+				switch( op_info[j_op].op )
+				{
+					case AddpvOp:
+					case AddvvOp:
+					case SubpvOp:
+					case SubvpOp:
+					case SubvvOp:
+					if( op_info[j_op].usage == one_usage )
+						op_info[j_op].usage = csum_usage;
+					break;
+
+					default:
+					break;
+				}
+			}
+			break; // --------------------------------------------------------
+
+			case AddpvOp:
+			case SubpvOp:
+			{
+				size_t j_op = var2op[ arg[1] ];
+				switch( op_info[j_op].op )
+				{
+					case AddpvOp:
+					case AddvvOp:
+					case SubpvOp:
+					case SubvpOp:
+					case SubvvOp:
+					if( op_info[j_op].usage == one_usage )
+						op_info[j_op].usage = csum_usage;
+					break;
+
+					default:
+					break;
+				}
+			}
+			break; // --------------------------------------------------------
+
+			case SubvpOp:
+			{	size_t j_op = var2op[ arg[0] ];
+				switch( op_info[j_op].op )
+				{
+					case AddpvOp:
+					case AddvvOp:
+					case SubpvOp:
+					case SubvpOp:
+					case SubvvOp:
+					if( op_info[j_op].usage == one_usage )
+						op_info[j_op].usage = csum_usage;
+					break;
+
+					default:
+					break;
+				}
+			}
+			break; // --------------------------------------------------------
+
+
+			default:
 			break;
 		}
 	}
