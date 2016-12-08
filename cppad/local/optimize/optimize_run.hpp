@@ -325,11 +325,7 @@ void optimize_run(
 			previous = op_info[i_op].previous;
 			if( previous > 0 )
 			{	size_t j_op = previous;
-				//
-				old2new[i_op].match   = true;
-				old2new[j_op].match   = true;
 				old2new[i_op].new_var = old2new[j_op].new_var;
-				op_info[i_op].previous = previous;
 			}
 			else
 			{	//
@@ -382,11 +378,7 @@ void optimize_run(
 			previous = op_info[i_op].previous;
 			if( previous > 0 )
 			{	size_t j_op = previous;
-				//
-				old2new[i_op].match   = true;
-				old2new[j_op].match   = true;
 				old2new[i_op].new_var = old2new[j_op].new_var;
-				op_info[i_op].previous = previous;
 			}
 			else
 			{	//
@@ -412,11 +404,7 @@ void optimize_run(
 			previous = op_info[i_op].previous;
 			if( previous > 0 )
 			{	size_t j_op = previous;
-				//
-				old2new[i_op].match   = true;
-				old2new[j_op].match   = true;
 				old2new[i_op].new_var = old2new[j_op].new_var;
-				op_info[i_op].previous = previous;
 			}
 			else
 			{	//
@@ -465,11 +453,7 @@ void optimize_run(
 			previous = op_info[i_op].previous;
 			if( previous > 0 )
 			{	size_t j_op = previous;
-				//
-				old2new[i_op].match   = true;
-				old2new[j_op].match   = true;
 				old2new[i_op].new_var = old2new[j_op].new_var;
-				op_info[i_op].previous = previous;
 			}
 			else
 			{	//
@@ -523,11 +507,7 @@ void optimize_run(
 			previous = op_info[i_op].previous;
 			if( previous > 0 )
 			{	size_t j_op = previous;
-				//
-				old2new[i_op].match   = true;
-				old2new[j_op].match   = true;
 				old2new[i_op].new_var = old2new[j_op].new_var;
-				op_info[i_op].previous = previous;
 			}
 			else
 			{	//

@@ -917,11 +917,21 @@ void get_op_info(
 			case ZmulpvOp:
 			case ZmulvpOp:
 			case ZmulvvOp:
-			op_info[i_op].previous = match_op(
+			{	size_t previous = match_op(
 				var2op, op_info, i_op, hash_table_op, code
-			);
-			if( op_info[i_op].previous == 0 )
-				hash_table_op[code] = i_op;
+				);
+				if( previous == 0 )
+					hash_table_op[code] = i_op;
+				else
+				{	// treat like a unary operator that assigns i_op
+					// equal to previous.
+					op_info[i_op].previous = previous;
+					usage_cexp_parent2arg(i_op, previous, op_info, cexp_set);
+					CPPAD_ASSERT_UNKNOWN(
+						op_info[previous].usage == yes_usage
+					);
+				}
+			}
 			break;
 		}
 	}
@@ -1048,7 +1058,10 @@ void get_op_info(
 	// initialize information for each conditional expression
 	cskip_info.resize(num_cexp_op);
 	for(size_t i = 0; i < num_cexp_op; i++)
-	{	i_op            = cexp2op[i];
+	{	CPPAD_ASSERT_UNKNOWN(
+			op_info[i].previous == 0 || op_info[i].usage == yes_usage
+		);
+		i_op            = cexp2op[i];
 		arg             = op_info[i_op].arg;
 		CPPAD_ASSERT_UNKNOWN( op_info[i_op].op == CExpOp );
 		//

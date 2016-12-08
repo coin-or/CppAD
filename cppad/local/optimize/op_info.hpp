@@ -38,9 +38,9 @@ struct struct_op_info {
 	\li
 	If previous == 0, no such operator was found.
 	\li
-	If previous != 0, op_info[pevious].previous == 0.
-	\li
-	If usage == no_usage, previous = 0.
+	If previous != 0,
+	op_info[pevious].previous == 0 and
+	op_info[previous].usage == yes_usage.
 	*/
 	size_t previous;
 };
