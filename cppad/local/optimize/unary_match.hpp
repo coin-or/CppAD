@@ -11,6 +11,8 @@ the terms of the
 A copy of this license is included in the COPYING file of this distribution.
 Please visit http://www.coin-or.org/CppAD/ for information on other licenses.
 -------------------------------------------------------------------------- */
+# include <cppad/local/optimize/hash_code.hpp>
+
 /*!
 \file unary_match.hpp
 Check if a unary operation is a match for a previous operation.
@@ -69,6 +71,8 @@ that comes before current, and can be used to replace the current variable.
 NumArg( op_info[i_op].op ) == 1 or op_info[i_op].op == ErfOp.
 NumRes( op_info[i_op].op ) > 0.
 */
+
+
 template <class Base>
 addr_t unary_match(
 	const vector<size_t>&                              var2op         ,
@@ -99,12 +103,8 @@ addr_t unary_match(
 	//
 	new_arg[0] = old2new[ var2op[arg[0]] ].new_var;
 	CPPAD_ASSERT_UNKNOWN( 0 < new_arg[0] && new_arg[0] <= arg[0] );
-	code = local_hash_code(
-		op                  ,
-		new_arg             ,
-		npar                ,
-		par
-	);
+	//
+	code           = optimize_hash_code(op, new_arg);
 	size_t  i_var  = hash_table_var[code];
 	CPPAD_ASSERT_UNKNOWN( i_var < current );
 	//

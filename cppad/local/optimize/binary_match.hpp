@@ -11,6 +11,7 @@ the terms of the
 A copy of this license is included in the COPYING file of this distribution.
 Please visit http://www.coin-or.org/CppAD/ for information on other licenses.
 -------------------------------------------------------------------------- */
+# include <cppad/local/optimize/hash_code.hpp>
 /*!
 \file binary_match.hpp
 Check if a binary operation is a match for a previous operation.
@@ -68,6 +69,7 @@ The binary operator must be an addition, subtraction, multiplication, division
 or power operator.
 NumArg( op_info[i_op].op ) == 2, NumRes( op_info[i_op].op ) == 1.
 */
+
 template <class Base>
 inline addr_t binary_match(
 	const vector<size_t>&                              var2op         ,
@@ -152,12 +154,7 @@ inline addr_t binary_match(
 		default:
 		CPPAD_ASSERT_UNKNOWN(false);
 	}
-	code = local_hash_code(
-		op                  ,
-		new_arg             ,
-		npar                ,
-		par
-	);
+	code           = optimize_hash_code(op, new_arg);
 	size_t  i_var  = hash_table_var[code];
 	CPPAD_ASSERT_UNKNOWN( i_var < current );
 	if( i_var != 0 && op == op_info[var2op[i_var]].op )
