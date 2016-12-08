@@ -27,8 +27,11 @@ Specialized hash code for a CppAD operator and its arguments
 \param op
 is the operator that we are computing a hash code for.
 
+\param num_arg
+number of elements of arg to include in the hash code.
+
 \param arg
-is a vector of length \c NumArg(op)
+is a vector of length num_arg
 containing the corresponding argument indices for this operator.
 
 \return
@@ -37,6 +40,7 @@ is a hash code that is between zero and CPPAD_HASH_TABLE_SIZE - 1.
 
 inline unsigned short optimize_hash_code(
 	OpCode        op      ,
+	size_t        num_arg ,
 	const addr_t* arg     )
 {	typedef unsigned short ushort;
 
@@ -57,7 +61,7 @@ inline unsigned short optimize_hash_code(
 	// initialize with value that separates operators as much as possible
 	ushort code = static_cast<ushort>( static_cast<ushort>(op) * op_fac );
 
-	for(size_t i = 0; i < NumArg(op); ++i)
+	for(size_t i = 0; i < num_arg; ++i)
 	{	const ushort* v = reinterpret_cast<const ushort*>(arg + i);
 		for(size_t j = 0; j < short_addr_t; ++j)
 			code += v[j];

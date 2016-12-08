@@ -23,8 +23,7 @@ Please visit http://www.coin-or.org/CppAD/ for information on other licenses.
 # include <cppad/local/optimize/csum_variable.hpp>
 # include <cppad/local/optimize/csum_stacks.hpp>
 # include <cppad/local/optimize/cskip_info.hpp>
-# include <cppad/local/optimize/unary_match.hpp>
-# include <cppad/local/optimize/binary_match.hpp>
+# include <cppad/local/optimize/match_op.hpp>
 # include <cppad/local/optimize/record_pv.hpp>
 # include <cppad/local/optimize/record_vp.hpp>
 # include <cppad/local/optimize/record_vv.hpp>
@@ -168,9 +167,9 @@ void optimize_run(
 
 	// Initilaize table mapping hash code to variable index in tape
 	// as pointing to the BeginOp at the beginning of the tape
-	CppAD::vector<size_t>  hash_table_var(CPPAD_HASH_TABLE_SIZE);
+	vector<size_t>  hash_table_op(CPPAD_HASH_TABLE_SIZE);
 	for(size_t i = 0; i < CPPAD_HASH_TABLE_SIZE; i++)
-		hash_table_var[i] = 0;
+		hash_table_op[i] = 0;
 	CPPAD_ASSERT_UNKNOWN( op_info[0].op == BeginOp );
 
 	// Erase all information in the old recording
@@ -305,8 +304,7 @@ void optimize_run(
 		}
 		//
 		unsigned short code         = 0;
-		bool           replace_hash = false;
-		addr_t         match_var;
+		size_t         previous;
 		old2new[i_op].match = false;
 		//
 		if( op_info[usage_i_op].usage != no_usage ) switch( op )
@@ -332,26 +330,24 @@ void optimize_run(
 			case SqrtOp:
 			case TanOp:
 			case TanhOp:
-			match_var = unary_match(
+			previous = match_op(
 				var2op              ,
 				op_info             ,
-				old2new             ,
-				i_var               ,
-				play->num_par_rec() ,
-				play->GetPar()      ,
-				hash_table_var      ,
+				i_op                ,
+				hash_table_op       ,
 				code
 			);
-			if( match_var > 0 )
-			{	size_t j_op = var2op[match_var];
+			if( previous > 0 )
+			{	size_t j_op = previous;
 				//
 				old2new[i_op].match   = true;
 				old2new[j_op].match   = true;
 				old2new[i_op].new_var = old2new[j_op].new_var;
+				op_info[i_op].previous = previous;
 			}
 			else
-			{
-				replace_hash = true;
+			{	hash_table_op[code] = i_op;
+				//
 				new_arg[0]   = old2new[ var2op[arg[0]] ].new_var;
 				rec->PutArg( new_arg[0] );
 				//
@@ -398,25 +394,25 @@ void optimize_run(
 			case DivvpOp:
 			case PowvpOp:
 			case ZmulvpOp:
-			match_var = binary_match(
+			previous = match_op(
 				var2op              ,
 				op_info             ,
-				old2new             ,
-				i_var               ,
-				play->num_par_rec() ,
-				play->GetPar()      ,
-				hash_table_var      ,
+				i_op                ,
+				hash_table_op       ,
 				code
 			);
-			if( match_var > 0 )
-			{	size_t j_op = var2op[match_var];
+			if( previous > 0 )
+			{	size_t j_op = previous;
 				//
 				old2new[i_op].match   = true;
 				old2new[j_op].match   = true;
 				old2new[i_op].new_var = old2new[j_op].new_var;
+				op_info[i_op].previous = previous;
 			}
 			else
-			{	size_pair = record_vp(
+			{	hash_table_op[code] = i_op;
+				//
+				size_pair = record_vp(
 					var2op              ,
 					op_info             ,
 					old2new             ,
@@ -429,32 +425,31 @@ void optimize_run(
 				);
 				old2new[i_op].new_op  = size_pair.i_op;
 				old2new[i_op].new_var = size_pair.i_var;
-				replace_hash = true;
 			}
 			break;
 			// ---------------------------------------------------
 			// Binary operators where
 			// left is an index and right is a variable
 			case DisOp:
-			match_var = binary_match(
+			previous = match_op(
 				var2op              ,
 				op_info             ,
-				old2new             ,
-				i_var               ,
-				play->num_par_rec() ,
-				play->GetPar()      ,
-				hash_table_var      ,
+				i_op                ,
+				hash_table_op       ,
 				code
 			);
-			if( match_var > 0 )
-			{	size_t j_op = var2op[match_var];
+			if( previous > 0 )
+			{	size_t j_op = previous;
 				//
 				old2new[i_op].match   = true;
 				old2new[j_op].match   = true;
 				old2new[i_op].new_var = old2new[j_op].new_var;
+				op_info[i_op].previous = previous;
 			}
 			else
-			{	new_arg[0] = arg[0];
+			{	hash_table_op[code] = i_op;
+				//
+				new_arg[0] = arg[0];
 				new_arg[1] = old2new[ var2op[arg[1]] ].new_var;
 				rec->PutArg( new_arg[0], new_arg[1] );
 				//
@@ -463,7 +458,6 @@ void optimize_run(
 				CPPAD_ASSERT_UNKNOWN(
 					new_arg[1] < old2new[var2op[i_var]].new_var
 				);
-				replace_hash = true;
 			}
 			break;
 
@@ -497,25 +491,25 @@ void optimize_run(
 			case MulpvOp:
 			case PowpvOp:
 			case ZmulpvOp:
-			match_var = binary_match(
+			previous = match_op(
 				var2op              ,
 				op_info             ,
-				old2new             ,
-				i_var               ,
-				play->num_par_rec() ,
-				play->GetPar()      ,
-				hash_table_var      ,
+				i_op                ,
+				hash_table_op       ,
 				code
 			);
-			if( match_var > 0 )
-			{	size_t j_op = var2op[match_var];
+			if( previous > 0 )
+			{	size_t j_op = previous;
 				//
 				old2new[i_op].match   = true;
 				old2new[j_op].match   = true;
 				old2new[i_op].new_var = old2new[j_op].new_var;
+				op_info[i_op].previous = previous;
 			}
 			else
-			{	size_pair = record_pv(
+			{	hash_table_op[code] = i_op;
+				//
+				size_pair = record_pv(
 					var2op              ,
 					op_info             ,
 					old2new             ,
@@ -528,7 +522,6 @@ void optimize_run(
 				);
 				old2new[i_op].new_op  = size_pair.i_op;
 				old2new[i_op].new_var = size_pair.i_var;
-				replace_hash = true;
 			}
 			break;
 			// ---------------------------------------------------
@@ -563,25 +556,25 @@ void optimize_run(
 			case MulvvOp:
 			case PowvvOp:
 			case ZmulvvOp:
-			match_var = binary_match(
+			previous = match_op(
 				var2op              ,
 				op_info             ,
-				old2new             ,
-				i_var               ,
-				play->num_par_rec() ,
-				play->GetPar()      ,
-				hash_table_var      ,
+				i_op                ,
+				hash_table_op       ,
 				code
 			);
-			if( match_var > 0 )
-			{	size_t j_op = var2op[match_var];
+			if( previous > 0 )
+			{	size_t j_op = previous;
 				//
 				old2new[i_op].match   = true;
 				old2new[j_op].match   = true;
 				old2new[i_op].new_var = old2new[j_op].new_var;
+				op_info[i_op].previous = previous;
 			}
 			else
-			{	size_pair = record_vv(
+			{	hash_table_op[code] = i_op;
+				//
+				size_pair = record_vv(
 					var2op              ,
 					op_info             ,
 					old2new             ,
@@ -594,7 +587,6 @@ void optimize_run(
 				);
 				old2new[i_op].new_op  = size_pair.i_op;
 				old2new[i_op].new_var = size_pair.i_var;
-				replace_hash = true;
 			}
 			break;
 			// ---------------------------------------------------
@@ -865,13 +857,6 @@ void optimize_run(
 			CPPAD_ASSERT_UNKNOWN(false);
 
 		}
-		if( replace_hash )
-		{	// The old variable index i_var corresponds to the
-			// new variable index old2new[var2op[i_var]].new_var. In addition
-			// this is the most recent variable that has this code.
-			hash_table_var[code] = i_var;
-		}
-
 	}
 	// modify the dependent variable vector to new indices
 	for(size_t i = 0; i < dep_taddr.size(); i++ )

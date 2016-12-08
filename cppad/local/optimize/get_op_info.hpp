@@ -344,6 +344,9 @@ void get_op_info(
 	//
 	cexp_set.resize(num_set, end_set);
 	// -----------------------------------------------------------------------
+	// initialize previous
+	for(size_t i = 0; i < num_op; i++)
+		op_info[i].previous = 0;
 	//
 	// initialize operator usage
 	for(size_t i = 0; i < num_op; i++)

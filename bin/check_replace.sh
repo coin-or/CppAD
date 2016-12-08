@@ -41,8 +41,6 @@ check_replace store_op.hpp                       store_op.hpp
 check_replace forward0sweep.hpp                  forward1sweep.hpp
 #
 list='
-	unary_match.hpp
-	binary_match.hpp
 	record_pv.hpp
 	record_vp.hpp
 	record_vv.hpp
