@@ -18,6 +18,7 @@ Create operator information tables
 */
 
 # include <cppad/local/optimize/op_info.hpp>
+# include <cppad/local/optimize/match_op.hpp>
 # include <cppad/local/optimize/cexp_compare.hpp>
 # include <cppad/local/optimize/cskip_info.hpp>
 # include <cppad/local/optimize/usage.hpp>
@@ -344,9 +345,6 @@ void get_op_info(
 	//
 	cexp_set.resize(num_set, end_set);
 	// -----------------------------------------------------------------------
-	// initialize previous
-	for(size_t i = 0; i < num_op; i++)
-		op_info[i].previous = 0;
 	//
 	// initialize operator usage
 	for(size_t i = 0; i < num_op; i++)
@@ -812,7 +810,6 @@ void get_op_info(
 	// ----------------------------------------------------------------------
 	// Forward (could use revese) pass to compute csum_connected
 	// ----------------------------------------------------------------------
-	//
 	play->forward_start(op, arg, i_op, i_var);
 	CPPAD_ASSERT_UNKNOWN( op == BeginOp );
 	//
@@ -920,11 +917,126 @@ void get_op_info(
 			break;
 		}
 	}
-	if( cexp_set.n_set() == 0 )
-		return;
+	// ----------------------------------------------------------------------
+	// compute previos in op_info
+	// ----------------------------------------------------------------------
+	vector<size_t>  hash_table_op(CPPAD_HASH_TABLE_SIZE);
+	for(size_t i = 0; i < CPPAD_HASH_TABLE_SIZE; i++)
+		hash_table_op[i] = 0;
+	//
+	for(size_t i = 0; i < num_op; i++)
+		op_info[i].previous = 0;
+	//
+	play->forward_start(op, arg, i_op, i_var);
+	CPPAD_ASSERT_UNKNOWN( op == BeginOp );
+	//
+	user_state = start_user;
+	while(op != EndOp)
+	{	unsigned short code;
+
+		// next operator
+		play->forward_next(op, arg, i_op, i_var);
+		CPPAD_ASSERT_UNKNOWN( op_info[i_op].previous == 0 );
+		//
+		switch( op )
+		{
+			case CSumOp:
+			// must correct arg before next operator
+			play->forward_csum(op, arg, i_op, i_var);
+			// no previous
+			break;
+
+			case CSkipOp:
+			// must correct arg before next operator
+			play->forward_csum(op, arg, i_op, i_var);
+			// no previous
+			break;
+
+			case NumberOp:
+			CPPAD_ASSERT_UNKNOWN(false);
+			break;
+
+			case BeginOp:
+			case CExpOp:
+			case EndOp:
+			case InvOp:
+			case LdpOp:
+			case LdvOp:
+			case ParOp:
+			case PriOp:
+			case StppOp:
+			case StpvOp:
+			case StvpOp:
+			case StvvOp:
+			case UserOp:
+			case UsrapOp:
+			case UsravOp:
+			case UsrrpOp:
+			case UsrrvOp:
+			// no previous
+			break;
+
+			case AbsOp:
+			case AcosOp:
+			case AcoshOp:
+			case AddpvOp:
+			case AddvvOp:
+			case AsinOp:
+			case AsinhOp:
+			case AtanOp:
+			case AtanhOp:
+			case CosOp:
+			case CoshOp:
+			case DisOp:
+			case DivpvOp:
+			case DivvpOp:
+			case DivvvOp:
+			case EqpvOp:
+			case EqvvOp:
+			case ErfOp:
+			case ExpOp:
+			case Expm1Op:
+			case LepvOp:
+			case LevpOp:
+			case LevvOp:
+			case LogOp:
+			case Log1pOp:
+			case LtpvOp:
+			case LtvpOp:
+			case LtvvOp:
+			case MulpvOp:
+			case MulvvOp:
+			case NepvOp:
+			case NevvOp:
+			case PowpvOp:
+			case PowvpOp:
+			case PowvvOp:
+			case SignOp:
+			case SinOp:
+			case SinhOp:
+			case SqrtOp:
+			case SubpvOp:
+			case SubvpOp:
+			case SubvvOp:
+			case TanOp:
+			case TanhOp:
+			case ZmulpvOp:
+			case ZmulvpOp:
+			case ZmulvvOp:
+			op_info[i_op].previous = match_op(
+				var2op, op_info, i_op, hash_table_op, code
+			);
+			if( op_info[i_op].previous == 0 )
+				hash_table_op[code] = i_op;
+			break;
+		}
+	}
 	// ----------------------------------------------------------------------
 	// compute cskip_info
 	// ----------------------------------------------------------------------
+	if( cexp_set.n_set() == 0 )
+		return;
+	//
 	// initialize information for each conditional expression
 	cskip_info.resize(num_cexp_op);
 	for(size_t i = 0; i < num_cexp_op; i++)

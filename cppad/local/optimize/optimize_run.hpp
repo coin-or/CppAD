@@ -165,13 +165,6 @@ void optimize_run(
 		cskip_new[i].i_arg = 0;
 	// -------------------------------------------------------------
 
-	// Initilaize table mapping hash code to variable index in tape
-	// as pointing to the BeginOp at the beginning of the tape
-	vector<size_t>  hash_table_op(CPPAD_HASH_TABLE_SIZE);
-	for(size_t i = 0; i < CPPAD_HASH_TABLE_SIZE; i++)
-		hash_table_op[i] = 0;
-	CPPAD_ASSERT_UNKNOWN( op_info[0].op == BeginOp );
-
 	// Erase all information in the old recording
 	rec->free();
 
@@ -303,7 +296,6 @@ void optimize_run(
 			break;
 		}
 		//
-		unsigned short code         = 0;
 		size_t         previous;
 		old2new[i_op].match = false;
 		//
@@ -330,13 +322,7 @@ void optimize_run(
 			case SqrtOp:
 			case TanOp:
 			case TanhOp:
-			previous = match_op(
-				var2op              ,
-				op_info             ,
-				i_op                ,
-				hash_table_op       ,
-				code
-			);
+			previous = op_info[i_op].previous;
 			if( previous > 0 )
 			{	size_t j_op = previous;
 				//
@@ -346,8 +332,7 @@ void optimize_run(
 				op_info[i_op].previous = previous;
 			}
 			else
-			{	hash_table_op[code] = i_op;
-				//
+			{	//
 				new_arg[0]   = old2new[ var2op[arg[0]] ].new_var;
 				rec->PutArg( new_arg[0] );
 				//
@@ -394,13 +379,7 @@ void optimize_run(
 			case DivvpOp:
 			case PowvpOp:
 			case ZmulvpOp:
-			previous = match_op(
-				var2op              ,
-				op_info             ,
-				i_op                ,
-				hash_table_op       ,
-				code
-			);
+			previous = op_info[i_op].previous;
 			if( previous > 0 )
 			{	size_t j_op = previous;
 				//
@@ -410,8 +389,7 @@ void optimize_run(
 				op_info[i_op].previous = previous;
 			}
 			else
-			{	hash_table_op[code] = i_op;
-				//
+			{	//
 				size_pair = record_vp(
 					var2op              ,
 					op_info             ,
@@ -431,13 +409,7 @@ void optimize_run(
 			// Binary operators where
 			// left is an index and right is a variable
 			case DisOp:
-			previous = match_op(
-				var2op              ,
-				op_info             ,
-				i_op                ,
-				hash_table_op       ,
-				code
-			);
+			previous = op_info[i_op].previous;
 			if( previous > 0 )
 			{	size_t j_op = previous;
 				//
@@ -447,8 +419,7 @@ void optimize_run(
 				op_info[i_op].previous = previous;
 			}
 			else
-			{	hash_table_op[code] = i_op;
-				//
+			{	//
 				new_arg[0] = arg[0];
 				new_arg[1] = old2new[ var2op[arg[1]] ].new_var;
 				rec->PutArg( new_arg[0], new_arg[1] );
@@ -491,13 +462,7 @@ void optimize_run(
 			case MulpvOp:
 			case PowpvOp:
 			case ZmulpvOp:
-			previous = match_op(
-				var2op              ,
-				op_info             ,
-				i_op                ,
-				hash_table_op       ,
-				code
-			);
+			previous = op_info[i_op].previous;
 			if( previous > 0 )
 			{	size_t j_op = previous;
 				//
@@ -507,8 +472,7 @@ void optimize_run(
 				op_info[i_op].previous = previous;
 			}
 			else
-			{	hash_table_op[code] = i_op;
-				//
+			{	//
 				size_pair = record_pv(
 					var2op              ,
 					op_info             ,
@@ -556,13 +520,7 @@ void optimize_run(
 			case MulvvOp:
 			case PowvvOp:
 			case ZmulvvOp:
-			previous = match_op(
-				var2op              ,
-				op_info             ,
-				i_op                ,
-				hash_table_op       ,
-				code
-			);
+			previous = op_info[i_op].previous;
 			if( previous > 0 )
 			{	size_t j_op = previous;
 				//
@@ -572,8 +530,7 @@ void optimize_run(
 				op_info[i_op].previous = previous;
 			}
 			else
-			{	hash_table_op[code] = i_op;
-				//
+			{	//
 				size_pair = record_vv(
 					var2op              ,
 					op_info             ,
