@@ -33,9 +33,15 @@ struct struct_op_info {
 	/// How is this operator used to compute the dependent variables.
 	enum_usage usage;
 
-	/// previous operator that can be used in place of this operator.
-	/// If previous is zero, no such operator was found. If previous != 0,
-	/// op_info[pevious].previous = 0.
+	/*!
+	previous operator that can be used in place of this operator.
+	\li
+	If previous == 0, no such operator was found.
+	\li
+	If previous != 0, op_info[pevious].previous == 0.
+	\li
+	If usage == no_usage, previous = 0.
+	*/
 	size_t previous;
 };
 

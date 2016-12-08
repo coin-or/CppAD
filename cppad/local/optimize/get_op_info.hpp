@@ -276,7 +276,6 @@ void get_op_info(
 	}
 	// vector that maps conditional expression index to operator index
 	vector<size_t> cexp2op( num_cexp_op );
-	//
 	// ----------------------------------------------------------------------
 	// Reverse pass to compute usage and cexp_set for each operator
 	// ----------------------------------------------------------------------
@@ -808,7 +807,7 @@ void get_op_info(
 		}
 	}
 	// ----------------------------------------------------------------------
-	// compute previos in op_info
+	// compute previous in op_info
 	// ----------------------------------------------------------------------
 	vector<size_t>  hash_table_op(CPPAD_HASH_TABLE_SIZE);
 	for(size_t i = 0; i < CPPAD_HASH_TABLE_SIZE; i++)
@@ -833,21 +832,26 @@ void get_op_info(
 			case CSumOp:
 			// must correct arg before next operator
 			play->forward_csum(op, arg, i_op, i_var);
-			// no previous
 			break;
 
 			case CSkipOp:
 			// must correct arg before next operator
 			play->forward_csum(op, arg, i_op, i_var);
-			// no previous
 			break;
 
+			default:
+			break;
+		}
+		if( op_info[i_op].usage != no_usage ) switch(op)
+		{
 			case NumberOp:
 			CPPAD_ASSERT_UNKNOWN(false);
 			break;
 
 			case BeginOp:
 			case CExpOp:
+			case CSkipOp:
+			case CSumOp:
 			case EndOp:
 			case InvOp:
 			case LdpOp:
@@ -948,21 +952,25 @@ void get_op_info(
 				}
 			}
 # endif
-			break; // --------------------------------------------------------
+			break;
 
 			case CSkipOp:
 			// must correct arg before next operator
 			play->forward_csum(op, arg, i_op, i_var);
-			break; // --------------------------------------------------------
+			break;
 
+			default:
+			break;
+		}
+		if( op_info[i_op].usage != no_usage ) switch(op)
+		{
+			case CSkipOp:
+			case CSumOp:
 			case UserOp:
 			case UsrapOp:
 			case UsravOp:
 			case UsrrpOp:
 			case UsrrvOp:
-			play->forward_user(op, user_state,
-				user_old, user_m, user_n, user_i, user_j
-			);
 			break; // --------------------------------------------------------
 
 			case AddvvOp:
