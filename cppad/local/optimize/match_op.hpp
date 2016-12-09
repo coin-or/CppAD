@@ -104,7 +104,8 @@ inline size_t match_op(
 		case SqrtOp:
 		case TanOp:
 		case TanhOp:
-		{	arg_match[0] = arg[0];
+		{	// arg[0] is a variable index
+			arg_match[0] = arg[0];
 			size_t previous = op_info[ var2op[arg[0]] ].previous;
 			if( previous != 0 )
 			{	CPPAD_ASSERT_UNKNOWN( op_info[previous].previous == 0 );
@@ -148,8 +149,40 @@ inline size_t match_op(
 		case PowpvOp:
 		case SubpvOp:
 		case ZmulpvOp:
-		CPPAD_ASSERT_UNKNOWN( num_arg == 2 );
-		variable[1] = true;
+		{	// arg[0] is a parameter index, arg[1] is a variable index
+			arg_match[0] = arg[0];
+			arg_match[1] = arg[1];
+			size_t previous = op_info[ var2op[arg[1]] ].previous;
+			if( previous != 0 )
+			{	CPPAD_ASSERT_UNKNOWN( op_info[previous].previous == 0 );
+				arg_match[1] = op_info[previous].i_var;
+			}
+			num_arg = 2;
+			code = optimize_hash_code(op, num_arg, arg_match);
+			//
+			// candidate previous for current operator
+			size_t candidate  = hash_table_op[code];
+			CPPAD_ASSERT_UNKNOWN( candidate < current );
+			CPPAD_ASSERT_UNKNOWN( op_info[candidate].previous == 0 );
+			//
+			// check for a match
+			bool match = candidate != 0;
+			match     &= op == op_info[candidate].op;
+			match     &= arg[0] == op_info[candidate].arg[0];
+			if( ! match )
+				return 0;
+			//
+			previous = op_info[ var2op[op_info[candidate].arg[1]] ].previous;
+			if( previous == 0 )
+				match = arg_match[1] == op_info[candidate].arg[1];
+			else
+			{	CPPAD_ASSERT_UNKNOWN( op_info[previous].previous == 0 );
+				match = arg_match[1] == addr_t( op_info[previous].i_var );
+			}
+			if( match )
+				return candidate;
+			return 0;
+		}
 		break;
 
 		case DivvpOp:
@@ -158,21 +191,93 @@ inline size_t match_op(
 		case PowvpOp:
 		case SubvpOp:
 		case ZmulvpOp:
-		CPPAD_ASSERT_UNKNOWN( num_arg == 2 );
-		variable[0] = true;
+		{	// arg[0] is a variable index, arg[1] is a parameter index
+			arg_match[0] = arg[0];
+			arg_match[1] = arg[1];
+			size_t previous = op_info[ var2op[arg[0]] ].previous;
+			if( previous != 0 )
+			{	CPPAD_ASSERT_UNKNOWN( op_info[previous].previous == 0 );
+				arg_match[0] = op_info[previous].i_var;
+			}
+			num_arg = 2;
+			code = optimize_hash_code(op, num_arg, arg_match);
+			//
+			// candidate previous for current operator
+			size_t candidate  = hash_table_op[code];
+			CPPAD_ASSERT_UNKNOWN( candidate < current );
+			CPPAD_ASSERT_UNKNOWN( op_info[candidate].previous == 0 );
+			//
+			// check for a match
+			bool match = candidate != 0;
+			match     &= op == op_info[candidate].op;
+			match     &= arg[1] == op_info[candidate].arg[1];
+			if( ! match )
+				return 0;
+			//
+			previous = op_info[ var2op[op_info[candidate].arg[0]] ].previous;
+			if( previous == 0 )
+				match = arg_match[0] == op_info[candidate].arg[0];
+			else
+			{	CPPAD_ASSERT_UNKNOWN( op_info[previous].previous == 0 );
+				match = arg_match[0] == addr_t( op_info[previous].i_var );
+			}
+			if( match )
+				return candidate;
+			return 0;
+		}
 		break;
 
-		case AddvvOp:
 		case DivvvOp:
 		case EqvvOp:
 		case LevvOp:
 		case LtvvOp:
-		case MulvvOp:
 		case NevvOp:
 		case PowvvOp:
 		case SubvvOp:
 		case ZmulvvOp:
-		CPPAD_ASSERT_UNKNOWN( num_arg == 2 );
+		{	// arg[0] is a variable index, arg[1] is a variable index
+			arg_match[0] = arg[0];
+			arg_match[1] = arg[1];
+			size_t previous;
+			for(size_t j = 0; j < 2; j++)
+			{	previous = op_info[ var2op[arg[j]] ].previous;
+				if( previous != 0 )
+				{	CPPAD_ASSERT_UNKNOWN( op_info[previous].previous == 0 );
+					arg_match[j] = op_info[previous].i_var;
+				}
+			}
+			num_arg = 2;
+			code = optimize_hash_code(op, num_arg, arg_match);
+			//
+			// candidate previous for current operator
+			size_t candidate  = hash_table_op[code];
+			CPPAD_ASSERT_UNKNOWN( candidate < current );
+			CPPAD_ASSERT_UNKNOWN( op_info[candidate].previous == 0 );
+			//
+			// check for a match
+			bool match = candidate != 0;
+			match     &= op == op_info[candidate].op;
+			if( ! match )
+				return 0;
+			for(size_t j = 0; j < 2; j++)
+			{	previous =
+					op_info[ var2op[op_info[candidate].arg[j]] ].previous;
+				if( previous == 0 )
+					match &= arg_match[j] == op_info[candidate].arg[j];
+				else
+				{	CPPAD_ASSERT_UNKNOWN(op_info[previous].previous == 0);
+					match &= arg_match[j] == addr_t( op_info[previous].i_var );
+				}
+			}
+			if( match )
+				return candidate;
+			return 0;
+		}
+		break;
+
+		case AddvvOp:
+		case MulvvOp:
+		num_arg = 2;
 		variable[0] = true;
 		variable[1] = true;
 		break;
