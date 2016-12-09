@@ -813,36 +813,11 @@ void get_op_info(
 	for(size_t i = 0; i < CPPAD_HASH_TABLE_SIZE; i++)
 		hash_table_op[i] = 0;
 	//
-	for(size_t i = 0; i < num_op; i++)
-		op_info[i].previous = 0;
-	//
-	play->forward_start(op, arg, i_op, i_var);
-	CPPAD_ASSERT_UNKNOWN( op == BeginOp );
-	//
 	user_state = start_user;
-	while(op != EndOp)
+	for(i_op = 0; i_op < num_op; ++i_op)
 	{	unsigned short code;
 
-		// next operator
-		play->forward_next(op, arg, i_op, i_var);
-		CPPAD_ASSERT_UNKNOWN( op_info[i_op].previous == 0 );
-		//
-		switch( op )
-		{
-			case CSumOp:
-			// must correct arg before next operator
-			play->forward_csum(op, arg, i_op, i_var);
-			break;
-
-			case CSkipOp:
-			// must correct arg before next operator
-			play->forward_csum(op, arg, i_op, i_var);
-			break;
-
-			default:
-			break;
-		}
-		if( op_info[i_op].usage != no_usage ) switch(op)
+		if( op_info[i_op].usage != no_usage ) switch( op_info[i_op].op )
 		{
 			case NumberOp:
 			CPPAD_ASSERT_UNKNOWN(false);
@@ -867,7 +842,8 @@ void get_op_info(
 			case UsravOp:
 			case UsrrpOp:
 			case UsrrvOp:
-			// no previous
+			// these operators never match pevious operators
+			op_info[i_op].previous = 0;
 			break;
 
 			case AbsOp:
@@ -917,20 +893,20 @@ void get_op_info(
 			case ZmulpvOp:
 			case ZmulvpOp:
 			case ZmulvvOp:
-			{	size_t previous = match_op(
+			op_info[i_op].previous = match_op(
 				var2op, op_info, i_op, hash_table_op, code
+			);
+			if( op_info[i_op].previous == 0 )
+			{	// no matching previous operator
+				hash_table_op[code] = i_op;
+			}
+			else
+			{	// like a unary operator that assigns i_op equal to previous.
+				size_t previous = op_info[i_op].previous;
+				usage_cexp_parent2arg(i_op, previous, op_info, cexp_set);
+				CPPAD_ASSERT_UNKNOWN(
+					op_info[previous].usage == yes_usage
 				);
-				if( previous == 0 )
-					hash_table_op[code] = i_op;
-				else
-				{	// treat like a unary operator that assigns i_op
-					// equal to previous.
-					op_info[i_op].previous = previous;
-					usage_cexp_parent2arg(i_op, previous, op_info, cexp_set);
-					CPPAD_ASSERT_UNKNOWN(
-						op_info[previous].usage == yes_usage
-					);
-				}
 			}
 			break;
 		}

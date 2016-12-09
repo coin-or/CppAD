@@ -149,72 +149,78 @@ inline size_t match_op(
 		CPPAD_ASSERT_UNKNOWN(false);
 	}
 	//
-	// map arguments that are variables to previous variables
+	// If i-th argument to current operator has a previous operator,
+	// this is the i-th argument for previous operator.
+	// Otherwise, it is the i-th argument for the current operator
 	// (if a previous variable exists)
-	addr_t arg_previous[2];
+	addr_t arg_match[2];
 	for(size_t j = 0; j < num_arg; ++j)
-	{	arg_previous[j] = arg[j];
+	{	arg_match[j] = arg[j];
 		if( variable[j] )
-		{	size_t j_op = var2op[ arg[j] ];
-			if( op_info[j_op].previous != 0 )
-				j_op = op_info[j_op].previous;
-			CPPAD_ASSERT_UNKNOWN( op_info[j_op].previous == 0 );
-			//
-			arg_previous[j] = op_info[j_op].i_var;
+		{	size_t previous = op_info[ var2op[arg[j]] ].previous;
+			if( previous != 0 )
+			{	CPPAD_ASSERT_UNKNOWN( op_info[previous].previous == 0 );
+				//
+				arg_match[j] = op_info[previous].i_var;
+			}
 		}
 	}
-	code = optimize_hash_code(op, num_arg, arg_previous);
+	code = optimize_hash_code(op, num_arg, arg_match);
 	//
-	// previous for current operator
-	size_t  previous  = hash_table_op[code];
-	CPPAD_ASSERT_UNKNOWN( previous < current );
-	CPPAD_ASSERT_UNKNOWN( op_info[previous].previous == 0 );
+	// candidate previous for current operator
+	size_t  candidate  = hash_table_op[code];
+	CPPAD_ASSERT_UNKNOWN( candidate < current );
+	CPPAD_ASSERT_UNKNOWN( op_info[candidate].previous == 0 );
 	//
 	// check for a match
-	bool match = previous != 0;
-	match     &= op == op_info[previous].op;
+	bool match = candidate != 0;
+	match     &= op == op_info[candidate].op;
 	if( match )
 	{	for(size_t j = 0; j < num_arg; j++)
 		{	if( variable[j] )
-			{	size_t j_op = var2op[ op_info[previous].arg[j] ];
-				if( op_info[j_op].previous != 0 )
-					j_op = op_info[j_op].previous;
-				CPPAD_ASSERT_UNKNOWN( op_info[j_op].previous == 0 );
-				//
-				match &= arg_previous[j] == addr_t( op_info[j_op].i_var );
+			{	size_t previous =
+					op_info[ var2op[op_info[candidate].arg[j]] ].previous;
+				if( previous != 0 )
+				{	CPPAD_ASSERT_UNKNOWN( op_info[previous].previous == 0 );
+					//
+					match &= arg_match[j] == addr_t( op_info[previous].i_var );
+				}
+				else
+					match &= arg_match[j] == op_info[candidate].arg[j];
 			}
-			else
-				match &= arg_previous[j] == op_info[previous].arg[j];
 		}
 		if( match )
-			return previous;
+			return candidate;
 	}
 
 	// special case where operator is commutative
 	if( (op == AddvvOp) | (op == MulvvOp ) )
 	{	CPPAD_ASSERT_UNKNOWN( NumArg(op) == 2 );
-		std::swap( arg_previous[0], arg_previous[1] );
+		std::swap( arg_match[0], arg_match[1] );
 		//
-		code      = optimize_hash_code(op, num_arg, arg_previous);
-		previous  = hash_table_op[code];
-		CPPAD_ASSERT_UNKNOWN( previous < current );
-		CPPAD_ASSERT_UNKNOWN( op_info[previous].previous == 0 );
+		code      = optimize_hash_code(op, num_arg, arg_match);
+		candidate  = hash_table_op[code];
+		CPPAD_ASSERT_UNKNOWN( candidate < current );
+		CPPAD_ASSERT_UNKNOWN( op_info[candidate].previous == 0 );
 		//
-		match  = previous != 0;
-		match &= op == op_info[previous].op;
+		match  = candidate != 0;
+		match &= op == op_info[candidate].op;
 		if( match )
 		{	for(size_t j = 0; j < num_arg; j++)
 			{	CPPAD_ASSERT_UNKNOWN( variable[j] )
-				size_t j_op = var2op[ op_info[previous].arg[j] ];
-				if( op_info[j_op].previous != 0 )
-					j_op = op_info[j_op].previous;
-				CPPAD_ASSERT_UNKNOWN( op_info[j_op].previous == 0 );
-				//
-				match &= arg_previous[j] == addr_t( op_info[j_op].i_var );
+				size_t previous =
+					op_info[ var2op[op_info[candidate].arg[j]] ].previous;
+				if( previous != 0 )
+				{	CPPAD_ASSERT_UNKNOWN( op_info[previous].previous == 0 );
+					//
+					match &= arg_match[j] == addr_t( op_info[previous].i_var );
+				}
+				else
+					match &= arg_match[j] == op_info[candidate].arg[j];
 			}
+			if( match )
+				return candidate;
 		}
-		if( match )
-			return previous;
 	}
 	// special op code used for no match
 	return 0;
