@@ -76,11 +76,15 @@ inline size_t match_op(
 	bool   variable[2];
 	variable[0] = false;
 	variable[1] = false;
+	//
+	// If i-th argument to current operator has a previous operator,
+	// this is the i-th argument for previous operator.
+	// Otherwise, it is the i-th argument for the current operator
+	// (if a previous variable exists)
+	addr_t arg_match[2];
 	switch(op)
 	{	//
 		case ErfOp:
-		num_arg = 1; // other arugments are always the same
-		//
 		case AbsOp:
 		case AcosOp:
 		case AcoshOp:
@@ -100,8 +104,36 @@ inline size_t match_op(
 		case SqrtOp:
 		case TanOp:
 		case TanhOp:
-		CPPAD_ASSERT_UNKNOWN( num_arg == 1 );
-		variable[0] = true;
+		{	arg_match[0] = arg[0];
+			size_t previous = op_info[ var2op[arg[0]] ].previous;
+			if( previous != 0 )
+			{	CPPAD_ASSERT_UNKNOWN( op_info[previous].previous == 0 );
+				arg_match[0] = op_info[previous].i_var;
+			}
+			num_arg = 1;
+			code = optimize_hash_code(op, num_arg, arg_match);
+			//
+			// candidate previous for current operator
+			size_t candidate  = hash_table_op[code];
+			CPPAD_ASSERT_UNKNOWN( candidate < current );
+			CPPAD_ASSERT_UNKNOWN( op_info[candidate].previous == 0 );
+			//
+			if( (candidate == 0) | (op != op_info[candidate].op) )
+				return 0;
+			//
+			// check for a match
+			bool match;
+			previous = op_info[ var2op[op_info[candidate].arg[0]] ].previous;
+			if( previous == 0 )
+				match = arg_match[0] == op_info[candidate].arg[0];
+			else
+			{	CPPAD_ASSERT_UNKNOWN( op_info[previous].previous == 0 );
+				match = arg_match[0] == addr_t( op_info[previous].i_var );
+			}
+			if( match )
+				return candidate;
+			return 0;
+		}
 		break;
 
 
@@ -148,12 +180,6 @@ inline size_t match_op(
 		default:
 		CPPAD_ASSERT_UNKNOWN(false);
 	}
-	//
-	// If i-th argument to current operator has a previous operator,
-	// this is the i-th argument for previous operator.
-	// Otherwise, it is the i-th argument for the current operator
-	// (if a previous variable exists)
-	addr_t arg_match[2];
 	for(size_t j = 0; j < num_arg; ++j)
 	{	arg_match[j] = arg[j];
 		if( variable[j] )
