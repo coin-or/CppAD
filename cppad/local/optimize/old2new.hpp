@@ -27,11 +27,6 @@ struct struct_old2new {
 
 	/// New varaible index for this old operator.
 	addr_t  new_var;
-
-	/// Did this old operator match a another operator in the operation
-	/// sequence. If so, we only need one of the two operators.
-	// In addition, we cannot cskip, or csum the one we use.
-	bool match;
 };
 
 } } } // END_CPPAD_LOCAL_OPTIMIZE_NAMESPACE

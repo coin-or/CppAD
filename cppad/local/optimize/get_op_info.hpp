@@ -1087,27 +1087,31 @@ void get_op_info(
 	i_op = 0;
 	while(i_op < num_op)
 	{	size_t j_op = i_op;
-		sparse_pack_const_iterator itr(cexp_set, i_op);
-		if( *itr != cexp_set.end() )
-		{	if( op_info[i_op].op == UserOp )
-			{	// i_op is the first operations in this user atomic call.
-				// Find the last operation in this call.
-				++j_op;
-				while( op_info[j_op].op != UserOp )
-				{	switch( op_info[j_op].op )
-					{	case UsrapOp:
-						case UsravOp:
-						case UsrrpOp:
-						case UsrrvOp:
-						break;
-
-						default:
-						CPPAD_ASSERT_UNKNOWN(false);
-					}
+		bool keep = op_info[i_op].usage != no_usage;
+		keep     &= op_info[i_op].usage != csum_usage;
+		keep     &= op_info[i_op].previous == 0;
+		if( keep )
+		{	sparse_pack_const_iterator itr(cexp_set, i_op);
+			if( *itr != cexp_set.end() )
+			{	if( op_info[i_op].op == UserOp )
+				{	// i_op is the first operations in this user atomic call.
+					// Find the last operation in this call.
 					++j_op;
+					while( op_info[j_op].op != UserOp )
+					{	switch( op_info[j_op].op )
+						{	case UsrapOp:
+							case UsravOp:
+							case UsrrpOp:
+							case UsrrvOp:
+							break;
+
+							default:
+							CPPAD_ASSERT_UNKNOWN(false);
+						}
+						++j_op;
+					}
 				}
 			}
-			//
 			while( *itr != cexp_set.end() )
 			{	size_t element = *itr;
 				size_t index   = element / 2;

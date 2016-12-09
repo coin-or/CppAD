@@ -297,7 +297,6 @@ void optimize_run(
 		}
 		//
 		size_t         previous;
-		old2new[i_op].match = false;
 		//
 		if( op_info[usage_i_op].usage != no_usage ) switch( op )
 		{
@@ -825,29 +824,15 @@ void optimize_run(
 			rec->ReplaceArg(i_arg++, n_false    );
 			for(size_t j = 0; j < info.skip_op_true.size(); j++)
 			{	i_op = cskip_info[i].skip_op_true[j];
-				bool remove = old2new[i_op].new_op == 0;
-				if( old2new[i_op].match )
-					remove = true;
-				if( remove )
-				{	// This operation has been removed or matched,
-					// so use an operator index that never comes up.
-					rec->ReplaceArg(i_arg++, rec->num_op_rec());
-				}
-				else
-					rec->ReplaceArg(i_arg++, old2new[i_op].new_op );
+				// op_info[i_op].usage != no_usage or csum_usage
+				CPPAD_ASSERT_UNKNOWN( old2new[i_op].new_op != 0 );
+				rec->ReplaceArg(i_arg++, old2new[i_op].new_op );
 			}
 			for(size_t j = 0; j < info.skip_op_false.size(); j++)
 			{	i_op   = cskip_info[i].skip_op_false[j];
-				bool remove = old2new[i_op].new_op == 0;
-				if( old2new[i_op].match )
-					remove = true;
-				if( remove )
-				{	// This operation has been removed or matched,
-					// so use an operator index that never comes up.
-					rec->ReplaceArg(i_arg++, rec->num_op_rec());
-				}
-				else
-					rec->ReplaceArg(i_arg++, old2new[i_op].new_op );
+				// op_info[i_op].usage != no_usage or csum_usage
+				CPPAD_ASSERT_UNKNOWN( old2new[i_op].new_op != 0 );
+				rec->ReplaceArg(i_arg++, old2new[i_op].new_op );
 			}
 			rec->ReplaceArg(i_arg++, n_true + n_false);
 # ifndef NDEBUG
