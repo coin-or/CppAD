@@ -25,6 +25,8 @@ $spell
 	cppad
 	std
 	CondExpEq
+	const
+	op
 $$
 
 $section Optimize an ADFun Object Tape$$
@@ -32,8 +34,10 @@ $mindex sequence operations speed memory NDEBUG$$
 
 
 $head Syntax$$
-$icode%f%.optimize()%$$
-
+$icode%f%.optimize()
+%$$
+$icode%f%.optimize(%options%)
+%$$
 
 $head Purpose$$
 The operation sequence corresponding to an $cref ADFun$$ object can
@@ -48,6 +52,33 @@ The object $icode f$$ has prototype
 $codei%
 	ADFun<%Base%> %f%
 %$$
+
+$head options$$
+This argument has prototype
+$codei%
+	const std::string& %options%
+%$$
+
+$subhead conditional_skip$$
+If the sub-string $code conditional_skip$$ appears in $icode options$$,
+conditional skip operations will be generated; $cref number_skip$$.
+This may make the optimize routine use significantly more memory
+and take significantly more time to optimize $icode f$$.
+On the other, it may save a significant amount of time when
+using $icode f$$ for $cref forward$$ or $cref reverse$$ mode calculations.
+The default for $icode options$$ (when it is not present)
+includes $code conditional_skip$$.
+
+$subhead compare_op$$
+If the sub-string $code compare_op$$ appears in $icode options$$,
+comparison operators will be left in the optimized function.
+These operators are necessary for the
+$cref compare_change$$ functions to be meaningful.
+On the other hand, they are not necessary, and take extra time,
+when the compare_change functions are not used.
+The default for $icode options$$ (when it is not present)
+includes $code compare_op$$.
+
 
 $head Improvements$$
 You can see the reduction in number of variables in the operation sequence
@@ -143,9 +174,18 @@ using AD<Base> and computations by this routine are done using type
 \a Base.
 
 \param options
-The default value for this option is the empty string.
-The only other possible value is "no_conditional_skip".
-If this option is present, no conditional skip operators will be generated.
+\li
+If the sub-string "conditional_skip" appears,
+conditional skip operations will be generated.
+This may make the optimize routine use significantly more memory
+and take significantly more time.
+\li
+If the sub-string "compare_op" appears,
+then comparison operators will left in the optimized tape.
+These operators are necessary for the compare_change function to be
+be meaningful in the resulting recording.
+On the other hand, they are not necessary and take extra time
+when compare_change is not used.
 */
 template <class Base>
 void ADFun<Base>::optimize(const std::string& options)

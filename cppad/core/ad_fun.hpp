@@ -583,7 +583,9 @@ public:
 
 	// Optimize the tape
 	// (see doxygen documentation in optimize.hpp)
-	void optimize(const std::string& options = "");
+	void optimize(
+		const std::string& options = "conditional_skip compare_op"
+	);
 	// ------------------- Deprecated -----------------------------
 
 	/// deprecated: assign a new operation sequence

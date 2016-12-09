@@ -16,20 +16,20 @@ Please visit http://www.coin-or.org/CppAD/ for information on other licenses.
 namespace CppAD { namespace local { namespace optimize {
 
 enum enum_usage {
-	/// this operator is not used
+	/// This operator is not used.
 	no_usage,
 
-	/// This operator is used once and only once
+	/// This operator is used once and only once.
 	one_usage,
 
-	/// This operator is used one or more times
+	/// This operator is used one or more times.
 	yes_usage,
 
 	/*!
-	This operator only used once, it is a summation operator, and its parrent
-	is a summation operator. Furthermore, its result is not a dependent
-	variable. Hece case it can be removed as part of a cumulative summation
-	starting at its parent or above.
+	This operator is only used once, it is a summation operator,
+	and its parrent is a summation operator. Furthermore, its result is not
+	a dependent variable. Hece case it can be removed as part of a
+	cumulative summation starting at its parent or above.
 	*/
 	csum_usage
 };

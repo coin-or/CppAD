@@ -31,6 +31,7 @@ struct struct_op_info {
 	size_t i_var;
 
 	/// How is this operator used to compute the dependent variables.
+	/// If usage = csum_usage or usage = no_usage, previous = 0.
 	enum_usage usage;
 
 	/*!

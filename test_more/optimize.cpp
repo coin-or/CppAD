@@ -127,9 +127,9 @@ namespace {
 
 		// now optimize the operation sequence
 		if( conditional_skip_ )
-			f.optimize();
+			f.optimize("conditional_skip compare_op");
 		else
-			f.optimize("no_conditional_skip");
+			f.optimize("");
 
 		// now zero order forward
 		vector<double> x(2), y(1);
@@ -198,9 +198,9 @@ namespace {
 		// now optimize the operation sequence
 		j_check.option( atomic_sparsity_option_ );
 		if( conditional_skip_ )
-			f.optimize();
+			f.optimize("conditional_skip compare_op");
 		else
-			f.optimize("no_conditional_skip");
+			f.optimize("");
 
 		// check result where true case is used; i.e., au[0] > au[1]
 		vector<double> x(2), y(1);
@@ -270,9 +270,9 @@ namespace {
 
 		// now optimize the operation sequence
 		if( conditional_skip_ )
-			f.optimize();
+			f.optimize("conditional_skip compare_op");
 		else
-			f.optimize("no_conditional_skip");
+			f.optimize("");
 
 		// optimized zero order forward when condition is false
 		x[0] = 4.;
@@ -334,9 +334,9 @@ namespace {
 		// now optimize the operation sequence
 		g_check.option( atomic_sparsity_option_ );
 		if( conditional_skip_ )
-			f.optimize();
+			f.optimize("conditional_skip compare_op");
 		else
-			f.optimize("no_conditional_skip");
+			f.optimize("");
 
 		// number of variables after optimization
 		// (does not include ay[0] and ay[1])
@@ -381,9 +381,9 @@ namespace {
 		// now optimize f so that the calculation of au[1] is removed
 		g_check.option( atomic_sparsity_option_ );
 		if( conditional_skip_ )
-			f.optimize();
+			f.optimize("conditional_skip compare_op");
 		else
-			f.optimize("no_conditional_skip");
+			f.optimize("");
 
 		// check difference in number of variables
 		size_t n_after = f.size_var();
@@ -497,9 +497,9 @@ namespace {
 
 		// Optimize the operation sequence
 		if( conditional_skip_ )
-			F.optimize();
+			F.optimize("conditional_skip compare_op");
 		else
-			F.optimize("no_conditional_skip");
+			F.optimize("");
 
 		// Check size after optimization
 		ok &= F.size_var() == opt;
@@ -575,9 +575,9 @@ namespace {
 		}
 
 		if( conditional_skip_ )
-			F.optimize();
+			F.optimize("conditional_skip compare_op");
 		else
-			F.optimize("no_conditional_skip");
+			F.optimize("");
 
 		// Check number of VecAD vectors plus number of VecAD elements
 		ok &= (F.size_VecAD() == 1 + m);
@@ -613,9 +613,9 @@ namespace {
 
 		CppAD::ADFun<double> F(X, Y);
 		if( conditional_skip_ )
-			F.optimize();
+			F.optimize("conditional_skip compare_op");
 		else
-			F.optimize("no_conditional_skip");
+			F.optimize("");
 		y = F.Forward(0, x);
 
 		// Use identically equal because the result of the operations
@@ -664,9 +664,9 @@ namespace {
 		vector<double> y_original     = F.Forward(0, x);
 		size_t         size_original  = F.size_var();
 		if( conditional_skip_ )
-			F.optimize();
+			F.optimize("conditional_skip compare_op");
 		else
-			F.optimize("no_conditional_skip");
+			F.optimize("");
 		ok &= F.size_var() + 5 == size_original;
 		vector<double> y = F.Forward(0, x);
 		ok &=  NearEqual(y[0], y_original[0], eps_, eps_);
@@ -785,9 +785,9 @@ namespace {
 
 		// Optimize the operation sequence
 		if( conditional_skip_ )
-			F.optimize();
+			F.optimize("conditional_skip compare_op");
 		else
-			F.optimize("no_conditional_skip");
+			F.optimize("");
 
 		// Check size after optimization
 		ok &= F.size_var() == (n + 1 + opt);
@@ -854,9 +854,9 @@ namespace {
 			ok &= ( y[i] == Value( Y[i] ) );
 
 		if( conditional_skip_ )
-			F.optimize();
+			F.optimize("conditional_skip compare_op");
 		else
-			F.optimize("no_conditional_skip");
+			F.optimize("");
 
 		// check number of variables  in optimized version
 		ok &= (F.size_var() == 1 + n + m + 2 );
@@ -921,9 +921,9 @@ namespace {
 			ok &= ( y[i] == Value( Y[i] ) );
 
 		if( conditional_skip_ )
-			F.optimize();
+			F.optimize("conditional_skip compare_op");
 		else
-			F.optimize("no_conditional_skip");
+			F.optimize("");
 
 		// check number of variables  in optimized version
 		ok &= (F.size_var() == 1 + n + m + 2 );
@@ -977,9 +977,9 @@ namespace {
 		ok &= ( y[0] == Value( Y[0] ) );
 
 		if( conditional_skip_ )
-			F.optimize();
+			F.optimize("conditional_skip compare_op");
 		else
-			F.optimize("no_conditional_skip");
+			F.optimize("");
 
 		// check same number of variables in optimized version
 		ok &= (F.size_var() == 1 + n + n_operations );
@@ -1043,9 +1043,9 @@ namespace {
 			ok &= ( y[i] == Value( Y[i] ) );
 
 		if( conditional_skip_ )
-			F.optimize();
+			F.optimize("conditional_skip compare_op");
 		else
-			F.optimize("no_conditional_skip");
+			F.optimize("");
 
 		// check number of variables  in optimized version
 		ok &= (F.size_var() == n_optimize );
@@ -1077,9 +1077,9 @@ namespace {
 
 		// now optimize the operation sequence
 		if( conditional_skip_ )
-			F.optimize();
+			F.optimize("conditional_skip compare_op");
 		else
-			F.optimize("no_conditional_skip");
+			F.optimize("");
 
 		// use zero order to evaluate F[ (3, 4) ]
 		CppAD::vector<double>  x0( F.Domain() );
@@ -1129,9 +1129,9 @@ namespace {
 
 		// now optimize the operation sequence
 		if( conditional_skip_ )
-			F.optimize();
+			F.optimize("conditional_skip compare_op");
 		else
-			F.optimize("no_conditional_skip");
+			F.optimize("");
 
 		// use zero order to evaluate F[ (3, 4) ]
 		CppAD::vector<double>  x0( F.Domain() );
@@ -1208,9 +1208,9 @@ namespace {
 		// create function object F : X -> Y
 		ADFun<double> F(X, Y);
 		if( conditional_skip_ )
-			F.optimize();
+			F.optimize("conditional_skip compare_op");
 		else
-			F.optimize("no_conditional_skip");
+			F.optimize("");
 
 		// ---------------------------------------------------------
 		// dependency matrix for the identity function
@@ -1289,9 +1289,9 @@ namespace {
 		// create function object F : X -> Y
 		ADFun<double> F(X, Y);
 		if( conditional_skip_ )
-			F.optimize();
+			F.optimize("conditional_skip compare_op");
 		else
-			F.optimize("no_conditional_skip");
+			F.optimize("");
 
 		// ----------------------------------------------------------
 		// dependency matrix for the identity function
@@ -1349,9 +1349,9 @@ namespace {
 		// create function object F : X -> Y
 		CppAD::ADFun<double> F(X, Y);
 		if( conditional_skip_ )
-			F.optimize();
+			F.optimize("conditional_skip compare_op");
 		else
-			F.optimize("no_conditional_skip");
+			F.optimize("");
 
 		// sparsity pattern for the identity function U(x) = x
 		CppAD::vector<bool> Px(n * n);
@@ -1398,9 +1398,9 @@ namespace {
 
 		CppAD::ADFun<double> f(X, Y);
 		if( conditional_skip_ )
-			f.optimize();
+			f.optimize("conditional_skip compare_op");
 		else
-			f.optimize("no_conditional_skip");
+			f.optimize("");
 
 		CppAD::vector<double> x(n), y(m);
 		size_t i;
@@ -1440,9 +1440,9 @@ namespace {
 
 		CppAD::ADFun<double> f(X, Y);
 		if( conditional_skip_ )
-			f.optimize();
+			f.optimize("conditional_skip compare_op");
 		else
-			f.optimize("no_conditional_skip");
+			f.optimize("");
 
 		CppAD::vector<double> x(n), y(m), w(m), dw(n);
 		x[0] = 1.0;
@@ -1612,9 +1612,9 @@ namespace {
 		// Used to fail assert in optimize that forward mode results
 		// are identically equal
 		if( conditional_skip_ )
-			f.optimize();
+			f.optimize("conditional_skip compare_op");
 		else
-			f.optimize("no_conditional_skip");
+			f.optimize("");
 
 		return ok;
 	}
@@ -1634,9 +1634,9 @@ namespace {
 
 		size_t size_before = f.size_var();
 		if( conditional_skip_ )
-			f.optimize();
+			f.optimize("conditional_skip compare_op");
 		else
-			f.optimize("no_conditional_skip");
+			f.optimize("");
 		size_t size_after = f.size_var();
 		ok &= size_after + 1 == size_before;
 
@@ -1688,9 +1688,9 @@ namespace {
 		x[1]      = 2.0;
 		y_before  = f.Forward(0, x);
 		if( conditional_skip_ )
-			f.optimize();
+			f.optimize("conditional_skip compare_op");
 		else
-			f.optimize("no_conditional_skip");
+			f.optimize("");
 		y_after   = f.Forward(0, x);
 
 		ok &= y_before[0] == y_after[0];
@@ -1732,9 +1732,9 @@ namespace {
 		dx[1]     = 2.0;
 		dy_before = f.Forward(1, dx);
 		if( conditional_skip_ )
-			f.optimize();
+			f.optimize("conditional_skip compare_op");
 		else
-			f.optimize("no_conditional_skip");
+			f.optimize("");
 		y_after   = f.Forward(0, x);
 		dy_after  = f.Forward(1, dx);
 
@@ -1766,9 +1766,9 @@ namespace {
 		CppAD::ADFun<double> f(ax, ay);
 
 		if( conditional_skip_ )
-			f.optimize();
+			f.optimize("conditional_skip compare_op");
 		else
-			f.optimize("no_conditional_skip");
+			f.optimize("");
 
 		vector<double> x(n), w(1), dx(n);
 		for(size_t j = 0;j < n; j++)
@@ -1807,9 +1807,9 @@ namespace {
 		ay[2]  = CppAD::CondExpGe(ax[0], three, exp(ax[0]), exp(ax[0]) );
 		CppAD::ADFun<double> f(ax, ay);
 		if( conditional_skip_ )
-			f.optimize();
+			f.optimize("conditional_skip compare_op");
 		else
-			f.optimize("no_conditional_skip");
+			f.optimize("");
 
 		// check case where x[0] >= 3
 		vector<double> x(2), y(3);

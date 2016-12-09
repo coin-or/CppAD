@@ -47,6 +47,10 @@ in reverse order by date.
 The purpose of these sections is to
 assist you in learning about changes between various versions of CppAD.
 
+$head 12-09$$
+The $cref/options/optimize/options/$$ argument was added to the
+optimize routine.
+
 $head 11-18$$
 Move classes and functions that are part of the user API from the
 $code cppad/local$$ directory to the $code cppad/core$$ directory.
