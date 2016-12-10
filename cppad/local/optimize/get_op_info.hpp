@@ -26,30 +26,33 @@ Create operator information tables
 // BEGIN_CPPAD_LOCAL_OPTIMIZE_NAMESPACE
 namespace CppAD { namespace local { namespace optimize {
 
-/// increment usage:
-/// no_usage -> one_usage, one_usage -> yes_usage, yes_usage -> yes_usage.
-inline void increment_usage(enum_usage& usage)
-{	switch( usage )
+/// Is this an addition or subtraction operator
+inline bool add_or_subtract(OpCode op)
+{	bool result;
+	switch(op)
 	{
-		case no_usage:
-		usage = one_usage;
+		case AddpvOp:
+		case AddvvOp:
+		case SubpvOp:
+		case SubvpOp:
+		case SubvvOp:
+		result = true;
 		break;
 
-		case one_usage:
-		case yes_usage:
-		usage = yes_usage;
-		break;
-
-		// this case never happens when increment_usage is called.
-		case csum_usage:
-		CPPAD_ASSERT_UNKNOWN(false);
+		default:
+		result = false;
 		break;
 	}
-	return;
+	return result;
 }
+
 
 /*!
 Increarse argument usage and propagate cexp_set from parent to argument.
+
+\param sum_parent
+is parent an addition or subtraction operator (passed for speed so
+do not need to call add_or_subtract for parent).
 
 \param i_parent
 is the operator index for the parent operator.
@@ -58,8 +61,11 @@ is the operator index for the parent operator.
 is the operator index for the argument to the parent operator.
 
 \param op_info
-structure that holds the struct_op_info information for each operators.
-The output value of op_info[i_arg].usage is increased by one; to be specific,
+structure that holds the information for each of the operators.
+The output value of op_info[i_arg].usage is increased; to be specific,
+If sum_parent is true and the input value of op_info[i_arg].usage
+is no_usage, its output value is csum_usage.
+Otherwise, the output value of op_info[i_arg].usage is yes_usage.
 
 \param cexp_set
 This is a vector of sets with one set for each operator. We denote
@@ -81,24 +87,33 @@ the output value of set[i_arg] is the intersection of
 its input value and set[i_parent].
 */
 inline void usage_cexp_parent2arg(
+	bool                    sum_parent ,
 	size_t                  i_parent   ,
 	size_t                  i_arg      ,
 	vector<struct_op_info>& op_info    ,
 	sparse_pack&            cexp_set   )
 {
-	increment_usage( op_info[i_arg].usage );
-	//
-	if( cexp_set.n_set() == 0 )
-		return;
-	//
-	if( op_info[i_arg].usage == one_usage )
-	{	// set[i_arg] = set[i_parent]
-		cexp_set.assignment(i_arg, i_parent, cexp_set);
+	// cexp_set
+	if( cexp_set.n_set() > 0 )
+	{	if( op_info[i_arg].usage == no_usage )
+		{	// set[i_arg] = set[i_parent]
+			cexp_set.assignment(i_arg, i_parent, cexp_set);
+		}
+		else
+		{	// set[i_arg] = set[i_arg] intersect set[i_parent]
+			cexp_set.binary_intersection(i_arg, i_arg, i_parent, cexp_set);
+		}
 	}
+	// usage
+	bool csum = sum_parent && op_info[i_arg].usage == no_usage;
+	if( csum )
+		csum = add_or_subtract( op_info[i_arg].op );
+	if( csum )
+		op_info[i_arg].usage = csum_usage;
 	else
-	{	// set[i_arg] = set[i_arg] intersect set[i_parent]
-		cexp_set.binary_intersection(i_arg, i_arg, i_parent, cexp_set);
-	}
+		op_info[i_arg].usage = yes_usage;
+	//
+	return;
 }
 
 /*!
@@ -377,6 +392,7 @@ void get_op_info(
 		// (This only makes sense when NumRes(op) > 0.)
 		enum_usage use_result = op_info[i_op].usage;
 		//
+		bool sum_op = false;
 		switch( op )
 		{
 			// =============================================================
@@ -384,6 +400,9 @@ void get_op_info(
 			// =============================================================
 
 			// Only one variable with index arg[0]
+			case SubvpOp:
+			sum_op = true;
+			//
 			case AbsOp:
 			case AcosOp:
 			case AcoshOp:
@@ -404,44 +423,49 @@ void get_op_info(
 			case SinOp:
 			case SinhOp:
 			case SqrtOp:
-			case SubvpOp:
 			case TanOp:
 			case TanhOp:
 			case ZmulvpOp:
 			CPPAD_ASSERT_UNKNOWN( NumRes(op) > 0 );
 			if( use_result != no_usage )
 			{	size_t j_op = var2op[ arg[0] ];
-				usage_cexp_parent2arg(i_op, j_op, op_info, cexp_set);
+				usage_cexp_parent2arg(sum_op, i_op, j_op, op_info, cexp_set);
 			}
 			break; // --------------------------------------------
 
 			// Only one variable with index arg[1]
 			case AddpvOp:
+			case SubpvOp:
+			sum_op = true;
+			//
 			case DisOp:
 			case DivpvOp:
 			case MulpvOp:
 			case PowpvOp:
-			case SubpvOp:
 			case ZmulpvOp:
 			CPPAD_ASSERT_UNKNOWN( NumRes(op) > 0 );
 			if( use_result != no_usage )
 			{	size_t j_op = var2op[ arg[1] ];
-				usage_cexp_parent2arg(i_op, j_op, op_info, cexp_set);
+				usage_cexp_parent2arg(sum_op, i_op, j_op, op_info, cexp_set);
 			}
 			break; // --------------------------------------------
 
 			// arg[0] and arg[1] are the only variables
 			case AddvvOp:
+			case SubvvOp:
+			sum_op = true;
+			//
 			case DivvvOp:
 			case MulvvOp:
 			case PowvvOp:
-			case SubvvOp:
 			case ZmulvvOp:
 			CPPAD_ASSERT_UNKNOWN( NumRes(op) > 0 );
 			if( use_result != no_usage )
 			{	for(size_t i = 0; i < 2; i++)
 				{	size_t j_op = var2op[ arg[i] ];
-					usage_cexp_parent2arg(i_op, j_op, op_info, cexp_set);
+					usage_cexp_parent2arg(
+						sum_op, i_op, j_op, op_info, cexp_set
+					);
 				}
 			}
 			break; // --------------------------------------------
@@ -458,7 +482,9 @@ void get_op_info(
 				for(size_t i = 0; i < 4; i++)
 				{	if( arg[1] & mask[i] )
 					{	size_t j_op = var2op[ arg[2 + i] ];
-						usage_cexp_parent2arg(i_op, j_op, op_info, cexp_set);
+						usage_cexp_parent2arg(
+							sum_op, i_op, j_op, op_info, cexp_set
+						);
 					}
 				}
 				// here is where we add elements to cexp_set
@@ -515,10 +541,10 @@ void get_op_info(
 			case NepvOp:
 			CPPAD_ASSERT_UNKNOWN( NumRes(op) == 0 );
 			if( compare_op )
-			{	increment_usage( op_info[i_op].usage );
+			{	op_info[i_op].usage = yes_usage;
 				//
 				size_t j_op = var2op[ arg[1] ];
-				usage_cexp_parent2arg(i_op, j_op, op_info, cexp_set);
+				usage_cexp_parent2arg(sum_op, i_op, j_op, op_info, cexp_set);
 			}
 			break; // ----------------------------------------------
 
@@ -527,10 +553,10 @@ void get_op_info(
 			case LtvpOp:
 			CPPAD_ASSERT_UNKNOWN( NumRes(op) == 0 );
 			if( compare_op )
-			{	increment_usage( op_info[i_op].usage );
+			{	op_info[i_op].usage = yes_usage;
 				//
 				size_t j_op = var2op[ arg[0] ];
-				usage_cexp_parent2arg(i_op, j_op, op_info, cexp_set);
+				usage_cexp_parent2arg(sum_op, i_op, j_op, op_info, cexp_set);
 			}
 			break; // ----------------------------------------------
 
@@ -542,11 +568,13 @@ void get_op_info(
 			if( compare_op )
 			CPPAD_ASSERT_UNKNOWN( NumRes(op) == 0 );
 			if( compare_op )
-			{	increment_usage( op_info[i_op].usage );
+			{	op_info[i_op].usage = yes_usage;
 				//
 				for(size_t i = 0; i < 2; i++)
 				{	size_t j_op = var2op[ arg[i] ];
-					usage_cexp_parent2arg(i_op, j_op, op_info, cexp_set);
+					usage_cexp_parent2arg(
+						sum_op, i_op, j_op, op_info, cexp_set
+					);
 				}
 			}
 			break; // ----------------------------------------------
@@ -572,7 +600,7 @@ void get_op_info(
 				vecad_used[i_vec] = true;
 				//
 				size_t j_op = var2op[ arg[1] ];
-				increment_usage( op_info[j_op].usage );
+				op_info[j_op].usage = yes_usage;
 			}
 			break; // --------------------------------------------
 
@@ -580,10 +608,10 @@ void get_op_info(
 			case StpvOp:
 			CPPAD_ASSERT_UNKNOWN( NumRes(op) == 0 );
 			if( vecad_used[ arg2vecad[ arg[0] ] ] )
-			{	increment_usage( op_info[i_op].usage );
+			{	op_info[i_op].usage = yes_usage;
 				//
 				size_t j_op = var2op[ arg[2] ];
-				increment_usage( op_info[j_op].usage );
+				op_info[j_op].usage = yes_usage;
 			}
 			break; // --------------------------------------------
 
@@ -591,12 +619,12 @@ void get_op_info(
 			case StvvOp:
 			CPPAD_ASSERT_UNKNOWN( NumRes(op) == 0 );
 			if( vecad_used[ arg2vecad[ arg[0] ] ] )
-			{	increment_usage( op_info[i_op].usage );
+			{	op_info[i_op].usage = yes_usage;
 				//
 				size_t j_op = var2op[ arg[1] ];
-				increment_usage( op_info[j_op].usage );
+				op_info[j_op].usage = yes_usage;
 				size_t k_op = var2op[ arg[2] ];
-				increment_usage( op_info[k_op].usage );
+				op_info[k_op].usage = yes_usage;
 			}
 			break; // -----------------------------------------------------
 
@@ -611,7 +639,9 @@ void get_op_info(
 				size_t num_sub = size_t( arg[1] );
 				for(size_t i = 0; i < num_add + num_sub; i++)
 				{	size_t j_op = var2op[ arg[3 + i] ];
-					usage_cexp_parent2arg(i_op, j_op, op_info, cexp_set);
+					usage_cexp_parent2arg(
+						sum_op, i_op, j_op, op_info, cexp_set
+					);
 				}
 			}
 			// =============================================================
@@ -737,7 +767,7 @@ void get_op_info(
 					if( use_arg_j )
 					{	size_t j_op = var2op[ user_ix[j] ];
 						usage_cexp_parent2arg(
-							first_user_i_op, j_op, op_info, cexp_set
+							sum_op, first_user_i_op, j_op, op_info, cexp_set
 						);
 					}
 				}
@@ -789,7 +819,9 @@ void get_op_info(
 				if( user_pack )
 					user_r_pack[user_i] = true;
 				//
-				usage_cexp_parent2arg(i_op, first_user_i_op, op_info, cexp_set);
+				usage_cexp_parent2arg(
+					sum_op, i_op, first_user_i_op, op_info, cexp_set
+				);
 			}
 			break; // --------------------------------------------------------
 
@@ -817,7 +849,7 @@ void get_op_info(
 	for(i_op = 0; i_op < num_op; ++i_op)
 	{	unsigned short code;
 
-		if( op_info[i_op].usage != no_usage ) switch( op_info[i_op].op )
+		if( op_info[i_op].usage == yes_usage ) switch( op_info[i_op].op )
 		{
 			case NumberOp:
 			CPPAD_ASSERT_UNKNOWN(false);
@@ -903,125 +935,11 @@ void get_op_info(
 			else
 			{	// like a unary operator that assigns i_op equal to previous.
 				size_t previous = op_info[i_op].previous;
-				usage_cexp_parent2arg(i_op, previous, op_info, cexp_set);
-				CPPAD_ASSERT_UNKNOWN(
-					op_info[previous].usage == yes_usage
+				bool sum_op = false;
+				usage_cexp_parent2arg(
+					sum_op, i_op, previous, op_info, cexp_set
 				);
 			}
-			break;
-		}
-	}
-	// ----------------------------------------------------------------------
-	// Forward (could use revese) pass to compute csum_connected
-	// ----------------------------------------------------------------------
-	play->forward_start(op, arg, i_op, i_var);
-	CPPAD_ASSERT_UNKNOWN( op == BeginOp );
-	//
-	user_state = start_user;
-	while(op != EndOp)
-	{
-		// next operator
-		play->forward_next(op, arg, i_op, i_var);
-		CPPAD_ASSERT_UNKNOWN( op_info[i_op].usage != csum_usage );
-		//
-		switch( op )
-		{	case CSumOp:
-			// must correct arg before next operator
-			play->forward_csum(op, arg, i_op, i_var);
-# ifndef NDEBUG
-			{	size_t num_add = size_t( arg[0] );
-				size_t num_sub = size_t( arg[1] );
-				for(size_t i = 0; i < num_add + num_sub; i++)
-				{	size_t j_op = var2op[ arg[3 + i] ];
-					// previous optimization should have prevented this case
-					CPPAD_ASSERT_UNKNOWN( op_info[j_op].usage != one_usage );
-				}
-			}
-# endif
-			break;
-
-			case CSkipOp:
-			// must correct arg before next operator
-			play->forward_csum(op, arg, i_op, i_var);
-			break;
-
-			default:
-			break;
-		}
-		if( op_info[i_op].usage != no_usage ) switch(op)
-		{
-			case CSkipOp:
-			case CSumOp:
-			case UserOp:
-			case UsrapOp:
-			case UsravOp:
-			case UsrrpOp:
-			case UsrrvOp:
-			break; // --------------------------------------------------------
-
-			case AddvvOp:
-			case SubvvOp:
-			for(size_t i = 0; i < 2; i++)
-			{	size_t j_op = var2op[ arg[i] ];
-				switch( op_info[j_op].op )
-				{
-					case AddpvOp:
-					case AddvvOp:
-					case SubpvOp:
-					case SubvpOp:
-					case SubvvOp:
-					if( op_info[j_op].usage == one_usage )
-						op_info[j_op].usage = csum_usage;
-					break;
-
-					default:
-					break;
-				}
-			}
-			break; // --------------------------------------------------------
-
-			case AddpvOp:
-			case SubpvOp:
-			{
-				size_t j_op = var2op[ arg[1] ];
-				switch( op_info[j_op].op )
-				{
-					case AddpvOp:
-					case AddvvOp:
-					case SubpvOp:
-					case SubvpOp:
-					case SubvvOp:
-					if( op_info[j_op].usage == one_usage )
-						op_info[j_op].usage = csum_usage;
-					break;
-
-					default:
-					break;
-				}
-			}
-			break; // --------------------------------------------------------
-
-			case SubvpOp:
-			{	size_t j_op = var2op[ arg[0] ];
-				switch( op_info[j_op].op )
-				{
-					case AddpvOp:
-					case AddvvOp:
-					case SubpvOp:
-					case SubvpOp:
-					case SubvvOp:
-					if( op_info[j_op].usage == one_usage )
-						op_info[j_op].usage = csum_usage;
-					break;
-
-					default:
-					break;
-				}
-			}
-			break; // --------------------------------------------------------
-
-
-			default:
 			break;
 		}
 	}
