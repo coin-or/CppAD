@@ -112,6 +112,8 @@ bool link_sparse_jacobian(
 	if( global_option["colpack"] )
 		return false;
 # endif
+	// optimization options: no conditional skips or compare operators
+	std::string options="";
 	// -----------------------------------------------------
 	// setup
 	typedef vector< std::set<size_t> >  SetVector;
@@ -146,7 +148,7 @@ bool link_sparse_jacobian(
 		f.Dependent(a_x, a_y);
 
 		if( global_option["optimize"] )
-			f.optimize();
+			f.optimize(options);
 
 		// skip comparison operators
 		f.compare_change_count(0);
@@ -188,7 +190,7 @@ bool link_sparse_jacobian(
 		f.Dependent(a_x, a_y);
 
 		if( global_option["optimize"] )
-			f.optimize();
+			f.optimize(options);
 
 		// skip comparison operators
 		f.compare_change_count(0);

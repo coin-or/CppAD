@@ -58,6 +58,8 @@ bool link_ode(
 	if( global_option["atomic"] )
 		return false;
 
+	// optimization options: no conditional skips or compare operators
+	std::string options="";
 	// --------------------------------------------------------------------
 	// setup
 	assert( x.size() == size );
@@ -90,7 +92,7 @@ bool link_ode(
 		f.Dependent(X, Y);
 
 		if( global_option["optimize"] )
-			f.optimize();
+			f.optimize(options);
 
 		// skip comparison operators
 		f.compare_change_count(0);
@@ -113,7 +115,7 @@ bool link_ode(
 		f.Dependent(X, Y);
 
 		if( global_option["optimize"] )
-			f.optimize();
+			f.optimize(options);
 
 		// skip comparison operators
 		f.compare_change_count(0);

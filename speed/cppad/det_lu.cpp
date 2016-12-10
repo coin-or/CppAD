@@ -56,6 +56,8 @@ bool link_det_lu(
 	if( global_option["onetape"] || global_option["atomic"] )
 		return false;
 
+	// optimization options: no conditional skips or compare operators
+	std::string options="";
 	// -----------------------------------------------------
 	// setup
 	typedef CppAD::AD<double>           ADScalar;
@@ -89,7 +91,7 @@ bool link_det_lu(
 		// create function object f : A -> detA
 		f.Dependent(A, detA);
 		if( global_option["optimize"] )
-			f.optimize();
+			f.optimize(options);
 
 		// skip comparison operators
 		f.compare_change_count(0);

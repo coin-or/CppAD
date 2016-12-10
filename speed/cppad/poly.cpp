@@ -63,6 +63,8 @@ bool link_poly(
 	if( global_option["atomic"] )
 		return false;
 
+	// optimization options: no conditional skips or compare operators
+	std::string options="";
 	// -----------------------------------------------------
 	// setup
 	typedef CppAD::AD<double>     ADScalar;
@@ -107,7 +109,7 @@ bool link_poly(
 		f.Dependent(Z, P);
 
 		if( global_option["optimize"] )
-			f.optimize();
+			f.optimize(options);
 
 		// skip comparison operators
 		f.compare_change_count(0);
@@ -141,7 +143,7 @@ bool link_poly(
 		f.Dependent(Z, P);
 
 		if( global_option["optimize"] )
-			f.optimize();
+			f.optimize(options);
 
 		// skip comparison operators
 		f.compare_change_count(0);

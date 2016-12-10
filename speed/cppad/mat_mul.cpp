@@ -58,6 +58,8 @@ bool link_mat_mul(
 	CppAD::vector<double>&           dz
 )
 {
+	// optimization options: no conditional skips or compare operators
+	std::string options="";
 	// -----------------------------------------------------
 	// setup
 	typedef CppAD::AD<double>           ADScalar;
@@ -114,7 +116,7 @@ bool link_mat_mul(
 		f.Dependent(X, Z);
 
 		if( global_option["optimize"] )
-			f.optimize();
+			f.optimize(options);
 
 		// skip comparison operators
 		f.compare_change_count(0);
@@ -151,7 +153,7 @@ bool link_mat_mul(
 		f.Dependent(X, Z);
 
 		if( global_option["optimize"] )
-			f.optimize();
+			f.optimize(options);
 
 		// skip comparison operators
 		f.compare_change_count(0);

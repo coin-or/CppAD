@@ -57,6 +57,8 @@ bool link_det_minor(
 	if( global_option["atomic"] )
 		return false;
 
+	// optimization options: no conditional skips or compare operators
+	std::string options="";
 	// -----------------------------------------------------
 	// setup
 
@@ -96,7 +98,7 @@ bool link_det_minor(
 		f.Dependent(A, detA);
 
 		if( global_option["optimize"] )
-			f.optimize();
+			f.optimize(options);
 
 		// skip comparison operators
 		f.compare_change_count(0);
@@ -124,7 +126,7 @@ bool link_det_minor(
 		f.Dependent(A, detA);
 
 		if( global_option["optimize"] )
-			f.optimize();
+			f.optimize(options);
 
 		// skip comparison operators
 		f.compare_change_count(0);
