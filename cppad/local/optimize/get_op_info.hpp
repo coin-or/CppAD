@@ -19,7 +19,6 @@ Create operator information tables
 
 # include <cppad/local/optimize/op_info.hpp>
 # include <cppad/local/optimize/match_op.hpp>
-# include <cppad/local/optimize/cexp_compare.hpp>
 # include <cppad/local/optimize/cskip_info.hpp>
 # include <cppad/local/optimize/usage.hpp>
 

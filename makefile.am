@@ -239,11 +239,9 @@ nobase_myinclude_HEADERS =  \
 	cppad/local/op_code.hpp \
 	cppad/local/op.hpp \
 	cppad/local/optimize/match_op.hpp \
-	cppad/local/optimize/cexp_compare.hpp \
 	cppad/local/optimize/cskip_info.hpp \
 	cppad/local/optimize/csum_stacks.hpp \
 	cppad/local/optimize/csum_variable.hpp \
-	cppad/local/optimize/define_prototype.hpp \
 	cppad/local/optimize/get_op_info.hpp \
 	cppad/local/optimize/hash_code.hpp \
 	cppad/local/optimize/old2new.hpp \

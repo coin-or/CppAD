@@ -39,17 +39,6 @@ check_replace cond_op.hpp                        cond_op.hpp
 check_replace load_op.hpp                        load_op.hpp
 check_replace store_op.hpp                       store_op.hpp
 check_replace forward0sweep.hpp                  forward1sweep.hpp
-#
-list='
-	record_pv.hpp
-	record_vp.hpp
-	record_vv.hpp
-	record_csum.hpp
-'
-for file in $list
-do
-	check_replace optimize/define_prototype.hpp      optimize/$file
-done
 # -----------------------------------------------------------------------------
 echo "replace_html.sh: OK"
 exit 0

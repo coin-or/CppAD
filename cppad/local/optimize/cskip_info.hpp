@@ -28,9 +28,6 @@ struct struct_cskip_info {
 	/// The operator index for this conditional expression operation
 	size_t i_op;
 
-	/// comparision operator for this conditional expression
-	CompareOp cop;
-
 	/// (flag & 1) is true if and only if left is a variable
 	/// (flag & 2) is true if and only if right is a variable
 	size_t flag;
@@ -53,6 +50,9 @@ struct struct_cskip_info {
 	/// Note that UsrapOp, UsravOp, UsrrpOp, and UsrrvOp, are not in this
 	/// vector and should be skipped when the corresponding UserOp are skipped.
 	CppAD::vector<size_t> skip_op_false;
+
+	/// comparision operator for this conditional expression
+	CompareOp cop;
 };
 
 } } } // END_CPPAD_LOCAL_OPTIMIZE_NAMESPACE

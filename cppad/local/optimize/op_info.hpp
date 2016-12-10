@@ -20,19 +20,12 @@ namespace CppAD { namespace local { namespace optimize {
 
 /// information for one operator
 struct struct_op_info {
-	/// op code
-	OpCode op;
-
 	/// arguments
 	const addr_t* arg;
 
 	/// Primary (not auxillary) variable index for this operator. If the
 	// operator has not results, this is num_var (an invalid variable index).
 	size_t i_var;
-
-	/// How is this operator used to compute the dependent variables.
-	/// If usage = csum_usage or usage = no_usage, previous = 0.
-	enum_usage usage;
 
 	/*!
 	previous operator that can be used in place of this operator.
@@ -44,6 +37,14 @@ struct struct_op_info {
 	op_info[previous].usage == yes_usage.
 	*/
 	size_t previous;
+
+	/// op code
+	OpCode op;
+
+	/// How is this operator used to compute the dependent variables.
+	/// If usage = csum_usage or usage = no_usage, previous = 0.
+	enum_usage usage;
+
 };
 
 } } } // END_CPPAD_LOCAL_OPTIMIZE_NAMESPACE
