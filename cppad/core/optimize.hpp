@@ -79,6 +79,16 @@ when the compare_change functions are not used.
 The default for $icode options$$ (when it is not present)
 includes $code compare_op$$.
 
+$head Examples$$
+$children%example/optimize/compare_op.cpp
+	%example/optimize/conditional_exp.cpp
+	%example/optimize/cumulative_sum.cpp
+%$$
+$table
+$tref optimize_conditional_exp.cpp$$ $rnext
+$tref optimize_cumulative_sum.cpp$$
+$tend
+
 
 $head Improvements$$
 You can see the reduction in number of variables in the operation sequence
@@ -133,7 +143,6 @@ If $icode%u%[%i%]%$$ does not affect the value of
 the dependent variables for $icode f$$,
 the value of $icode%u%[%i%]%$$ is set to $cref nan$$.
 
-
 $head Checking Optimization$$
 If $cref/NDEBUG/Faq/Speed/NDEBUG/$$ is not defined,
 and $cref/f.size_order()/size_order/$$ is greater than zero,
@@ -143,15 +152,6 @@ the same as before.
 If they are not the same, the
 $cref ErrorHandler$$ is called with a known error message
 related to $icode%f%.optimize()%$$.
-
-$head Example$$
-$children%
-	example/optimize.cpp
-%$$
-The file
-$cref optimize.cpp$$
-contains an example and test of this operation.
-It returns true if it succeeds and false otherwise.
 
 $end
 -----------------------------------------------------------------------------

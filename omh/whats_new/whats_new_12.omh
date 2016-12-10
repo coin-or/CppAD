@@ -443,7 +443,7 @@ the corresponding memory (use $icode%x%.clear()%$$ instead).
 $lnext
 Fix a bug in error checking during $cref optimize$$ procedure
 had the following $code valgrind$$ symptom during the
-$cref optimize.cpp$$ example:
+$code optimize.cpp$$ example:
 $codep
 	==6344== Conditional jump or move depends on uninitialised value(s)
 $$

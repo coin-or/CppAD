@@ -9,16 +9,16 @@ the terms of the
 A copy of this license is included in the COPYING file of this distribution.
 Please visit http://www.coin-or.org/CppAD/ for information on other licenses.
 -------------------------------------------------------------------------- */
-
 /*
-$begin optimize.cpp$$
+$begin optimize_compare_op.cpp$$
 
-$section ADFun Operation Sequence Optimization: Example and Test$$
-$mindex optimize$$
+$section Example Optimization and Comparison Operators$$
 
+$head See Also$$
+$cref cond_exp.cpp$$
 
 $code
-$srcfile%example/optimize.cpp%0%// BEGIN C++%// END C++%1%$$
+$srcfile%example/optimize/compare_op.cpp%0%// BEGIN C++%// END C++%1%$$
 $$
 
 $end
@@ -74,7 +74,7 @@ namespace {
 	}
 }
 
-bool optimize(void)
+bool compare_op(void)
 {	bool ok = true;
 	using CppAD::AD;
 
@@ -97,7 +97,8 @@ bool optimize(void)
 	ok &= (f.size_var() == n_var);
 
 	// Optimize the operation sequence
-	f.optimize();
+	std::string options="compare_op";
+	f.optimize(options);
 	ok &= (f.size_var() == n_opt);
 
 	// Check result for a zero order calculation for a different x,

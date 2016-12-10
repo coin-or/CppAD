@@ -220,7 +220,9 @@ $rref ode_gear_control.cpp$$
 $rref ode_gear.cpp$$
 $rref ode_stiff.cpp$$
 $rref ode_taylor.cpp$$
-$rref optimize.cpp$$
+$rref optimize_compare_op.cpp$$
+$rref optimize_conditional_exp.cpp$$
+$rref optimize_cumulative_sum.cpp$$
 $rref opt_val_hes.cpp$$
 $rref par_var.cpp$$
 $rref poly.cpp$$

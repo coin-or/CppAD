@@ -23,6 +23,10 @@ SET(check_depends example)
 ADD_SUBDIRECTORY(atomic)
 add_to_list(check_depends check_example_atomic)
 
+# optimize examples
+ADD_SUBDIRECTORY(optimize)
+add_to_list(check_depends check_example_optimize)
+
 # adolc_sources, adolc_libs, and CPPAD_HAS_ADOLC
 SET(sources mul_level_adolc.cpp mul_level_adolc_ode.cpp)
 sources_libs_define(adolc "${sources}" adolc HAS_ADOLC)
@@ -144,7 +148,6 @@ ADD_EXECUTABLE(example EXCLUDE_FROM_ALL example.cpp
 	ode_gear.cpp
 	ode_stiff.cpp
 	ode_taylor.cpp
-	optimize.cpp
 	opt_val_hes.cpp
 	par_var.cpp
 	poly.cpp

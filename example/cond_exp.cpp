@@ -19,7 +19,9 @@ $spell
 $$
 
 $section Conditional Expressions: Example and Test$$
-$mindex CondExp$$
+
+$head See Also$$
+$cref optimize_conditional_exp.cpp$$
 
 
 $head Description$$

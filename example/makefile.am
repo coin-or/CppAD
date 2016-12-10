@@ -171,7 +171,6 @@ example_SOURCES   = \
 	ode_gear.cpp \
 	ode_stiff.cpp \
 	ode_taylor.cpp \
-	optimize.cpp \
 	opt_val_hes.cpp \
 	par_var.cpp \
 	poly.cpp \

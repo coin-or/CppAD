@@ -47,6 +47,17 @@ in reverse order by date.
 The purpose of these sections is to
 assist you in learning about changes between various versions of CppAD.
 
+$head 12-10$$
+$list number$$
+Move $code example/optimize.cpp$$ to
+$cref optimize_compare_op.cpp$$.
+$lnext
+Add the following examples:
+$cref optimize_conditional_exp.cpp$$,
+$cref optimize_cumulative_sum.cpp$$.
+$lend
+
+
 $head 12-09$$
 The $cref/options/optimize/options/$$ argument was added to the
 optimize routine.
