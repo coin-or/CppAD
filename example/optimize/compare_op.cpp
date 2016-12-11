@@ -26,51 +26,47 @@ $end
 // BEGIN C++
 # include <cppad/cppad.hpp>
 namespace {
-	template <class VectorFloat> void fun(
-		const VectorFloat& x, VectorFloat& y, size_t& n_var, size_t& n_opt )
-	{	typedef typename VectorFloat::value_type Float;
+	struct tape_size { size_t n_var; size_t n_op; };
 
-		// One for each independent variable and one phantom variable at
-		// the beginning of operation sequence.
-		n_var = 1 + x.size();
+	template <class Vector> void fun(
+		const std::string& options ,
+		const Vector& x, Vector& y, tape_size& before, tape_size& after
+	)
+	{	typedef typename Vector::value_type scalar;
 
-		// One operator for each independent variable and one to mark
-		// beginning of operation sequence.
-		n_opt = 1 + x.size();
+		// phantom variable with index 0 and independent variables
+		// begin operator, independent variable operators and end operator
+		before.n_var = 1 + x.size(); before.n_op  = 2 + x.size();
+		after.n_var  = 1 + x.size(); after.n_op   = 2 + x.size();
 
 		// Create a variable that is is only used in the comparision operation
-		// (was optimized out until 2015-01-12).
-		Float a = 1. / x[0];
-		n_var += 1;
-		n_opt += 1;
+		scalar one = 1. / x[0];
+		before.n_var += 1; before.n_op += 1;
+		after.n_var += 1;  after.n_op += 1;
 
 		// Create a variable that is used by the result
-		Float b = x[0] * 5.;
-		n_var += 1;
-		n_opt += 1;
+		scalar two = x[0] * 5.;
+		before.n_var += 1; before.n_op += 1;
+		after.n_var += 1;  after.n_op += 1;
 
-		// only one variable created for this comparison operation
+		// Only one variable created for this comparison operation
 		// but the value depends on which branch is taken.
-		Float c;
-		if( a < x[0] )
-			c = 2.0 * b;
+		scalar three;
+		if( one < x[0] )        // comparison operator
+			three = two / 2.0;  // division operator
 		else
-			c = 3.0 * b;
-		n_var += 1;
-		n_opt += 1;
+			three = 2.0 * two;  // multiplication operator
+		// comparison and either division of multiplication operator
+		before.n_var += 1; before.n_op += 2;
+		// comparison operator depends on optimization options
+		after.n_var += 1;  after.n_op += 1;
+		if( options.find("compare_op") != std::string::npos )
+			after.n_op += 1;
 
-		// Create a variable that is optimized out because it
-		// will always have the same value as b
-		Float d = 5. * x[0];
-		n_var += 1;
-		n_opt += 0;
-
-		// Create three variables that will be converted to one
-		// cumulative summation. Note that a is not connected to
-		// the result y (in the operation sequence).
-		y[0]   = 1.0 + b + c + d;
-		n_var += 3;
-		n_opt += 1;
+		// results for this operation sequence
+		y[0] = three;
+		before.n_var += 0; before.n_op  += 0;
+		after.n_var  += 0; after.n_op   += 0;
 	}
 }
 
@@ -86,20 +82,24 @@ bool compare_op(void)
 	// declare independent variables and start tape recording
 	CppAD::Independent(ax);
 
+	// optimizations options
+	std::string options = "compare_op";
+
 	// range space vector
 	size_t m = 1;
 	CPPAD_TESTVECTOR(AD<double>) ay(m);
-	size_t n_var, n_opt;
-	fun(ax, ay, n_var, n_opt);
+	tape_size before, after;
+	fun(options, ax, ay, before, after);
 
 	// create f: x -> y and stop tape recording
 	CppAD::ADFun<double> f(ax, ay);
-	ok &= (f.size_var() == n_var);
+	ok &= f.size_var() == before.n_var;
+	ok &= f.size_op() == before.n_op;
 
 	// Optimize the operation sequence
-	std::string options="compare_op";
 	f.optimize(options);
-	ok &= (f.size_var() == n_opt);
+	ok &= f.size_var() == after.n_var;
+	ok &= f.size_op() == after.n_op;
 
 	// Check result for a zero order calculation for a different x,
 	// where the result of the comparison is he same.
@@ -107,25 +107,16 @@ bool compare_op(void)
 	x[0] = 0.75;
 	y    = f.Forward(0, x);
 	ok  &= f.CompareChange() == 0;
-	fun(x, check, n_var, n_opt);
-	ok  &= (y[0] == check[0]);
+	fun(options, x, check, before, after);
+	ok &= y[0] == check[0];
 
 	// Check case where result of the comparision is differnent
+	// (hence one needs to re-tape to get correct result)
 	x[0] = 2.0;
 	y    = f.Forward(0, x);
 	ok  &= f.CompareChange() == 1;
-	fun(x, check, n_var, n_opt);
-	ok &= (y[0] != check[0]);
-
-	// re-tape at new x value, re-optimize, and re-evaluate forward
-	ax[0] = x[0];
-	CppAD::Independent(ax);
-	fun(ax, ay, n_var, n_opt);
-	f.Dependent(ax, ay);
-	f.optimize();
-	y   = f.Forward(0, x);
-	ok &= f.CompareChange() == 0;
-	ok &= (y[0] == check[0]);
+	fun(options, x, check, before, after);
+	ok  &= std::fabs(y[0] - check[0]) > 0.5;
 
 	return ok;
 }

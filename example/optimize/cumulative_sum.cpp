@@ -32,13 +32,10 @@ namespace {
 	)
 	{	typedef typename Vector::value_type scalar;
 
-		// phantom variable with index 0  and independent variables
-		before.n_var = 1 + x.size();
-		after.n_var  = 1 + x.size();
-
+		// phantom variable with index 0 and independent variables
 		// begin operator, independent variable operators and end operator
-		before.n_op  = 2 + x.size();
-		after.n_op   = 2 + x.size();
+		before.n_var = 1 + x.size(); before.n_op  = 2 + x.size();
+		after.n_var  = 1 + x.size(); after.n_op   = 2 + x.size();
 
 		// operators that are identical, and that will be made part of the
 		// cummulative summation. Make sure do not replace second variable
