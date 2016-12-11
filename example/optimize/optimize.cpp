@@ -22,6 +22,7 @@ Please visit http://www.coin-or.org/CppAD/ for information on other licenses.
 extern bool compare_op(void);
 extern bool conditional_exp(void);
 extern bool cumulative_sum(void);
+extern bool reverse_active(void);
 
 namespace {
 	// function that runs one test
@@ -52,6 +53,7 @@ int main(void)
 	ok &= Run( cumulative_sum,      "compare_op"         );
 	ok &= Run( cumulative_sum,      "cumulative_sum"     );
 	ok &= Run( conditional_exp,     "conditional_exp"    );
+	ok &= Run( reverse_active,      "reverse_active"     );
 
 	// check for errors
 	using std::cout;

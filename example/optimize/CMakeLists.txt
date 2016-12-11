@@ -21,6 +21,7 @@ ADD_EXECUTABLE(example_optimize EXCLUDE_FROM_ALL
 	compare_op.cpp
 	cumulative_sum.cpp
 	optimize.cpp
+	reverse_active.cpp
 )
 
 # Extra compiler flags

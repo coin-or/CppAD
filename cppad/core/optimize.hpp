@@ -84,6 +84,7 @@ $head Examples$$
 $children%example/optimize/compare_op.cpp
 	%example/optimize/conditional_exp.cpp
 	%example/optimize/cumulative_sum.cpp
+	%example/optimize/reverse_active.cpp
 %$$
 $table
 $tref optimize_conditional_exp.cpp$$ $rnext
@@ -176,13 +177,13 @@ using AD<Base> and computations by this routine are done using type
 
 \param options
 \li
-If the sub-string "conditional_skip" appears,
-conditional skip operations will be generated.
-This may make the optimize routine use significantly more memory
-and take significantly more time.
+If the sub-string "no_conditional_skip" appears,
+conditional skip operations will not be generated.
+This may make the optimize routine use significantly less memory
+and take significantly less time.
 \li
-If the sub-string "compare_op" appears,
-then comparison operators will left in the optimized tape.
+If the sub-string "no_compare_op" appears,
+then comparison operators will be removed from the optimized tape.
 These operators are necessary for the compare_change function to be
 be meaningful in the resulting recording.
 On the other hand, they are not necessary and take extra time

@@ -223,6 +223,7 @@ $rref ode_taylor.cpp$$
 $rref optimize_compare_op.cpp$$
 $rref optimize_conditional_exp.cpp$$
 $rref optimize_cumulative_sum.cpp$$
+$rref optimize_reverse_active.cpp$$
 $rref opt_val_hes.cpp$$
 $rref par_var.cpp$$
 $rref poly.cpp$$
