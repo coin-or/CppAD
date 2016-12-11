@@ -43,15 +43,16 @@ base type for the operator; i.e., this operation was recorded
 using AD< \a Base > and computations by this routine are done using type
 \a Base.
 
+
 \param options
 \li
-If the sub-string "conditional_skip" appears,
-conditional skip operations will be generated.
-This may make the optimize routine use significantly more memory
-and take significantly more time.
+If the sub-string "no_conditional_skip" appears,
+conditional skip operations will not be generated.
+This may make the optimize routine use significantly less memory
+and take significantly less time.
 \li
-If the sub-string "compare_op" appears,
-then comparison operators will left in the optimized tape.
+If the sub-string "no_compare_op" appears,
+then comparison operators will be removed from the optimized tape.
 These operators are necessary for the compare_change function to be
 be meaningful in the resulting recording.
 On the other hand, they are not necessary and take extra time
@@ -86,10 +87,10 @@ void optimize_run(
 	recorder<Base>*              rec       )
 {
 	bool conditional_skip =
-		options.find("conditional_skip", 0) != std::string::npos;
+		options.find("no_conditional_skip", 0) == std::string::npos;
 
 	bool compare_op =
-		options.find("compare_op", 0) != std::string::npos;
+		options.find("no_compare_op", 0) == std::string::npos;
 
 	// number of operators in the player
 	const size_t num_op = play->num_op_rec();

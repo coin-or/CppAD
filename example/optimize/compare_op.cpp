@@ -60,7 +60,7 @@ namespace {
 		before.n_var += 1; before.n_op += 2;
 		// comparison operator depends on optimization options
 		after.n_var += 1;  after.n_op += 1;
-		if( options.find("compare_op") != std::string::npos )
+		if( options.find("no_compare_op") == std::string::npos )
 			after.n_op += 1;
 
 		// results for this operation sequence
@@ -83,7 +83,7 @@ bool compare_op(void)
 	CppAD::Independent(ax);
 
 	// optimizations options
-	std::string options = "compare_op";
+	std::string options = "";
 
 	// range space vector
 	size_t m = 1;

@@ -58,26 +58,27 @@ This argument has prototype
 $codei%
 	const std::string& %options%
 %$$
+The default for $icode options$$ is the empty string.
+If it is present, it must consist of one or more of the options below
+separated by a single space character.
 
-$subhead conditional_skip$$
-If the sub-string $code conditional_skip$$ appears in $icode options$$,
-conditional skip operations will be generated; $cref number_skip$$.
-This may make the optimize routine use significantly more memory
-and take significantly more time to optimize $icode f$$.
-On the other, it may save a significant amount of time when
-using $icode f$$ for $cref forward$$ or $cref reverse$$ mode calculations.
-The default for $icode options$$ (when it is not present)
-includes $code conditional_skip$$.
+$subhead no_conditional_skip$$
+If the sub-string $code no_conditional_skip$$ appears in $icode options$$,
+conditional skip operations are not be generated.
+This may make the optimize routine use significantly less memory
+and take less time to optimize $icode f$$.
+If conditional skip operations are generated,
+it may save a significant amount of time when
+using $icode f$$ for $cref forward$$ or $cref reverse$$ mode calculations;
+see $cref number_skip$$.
 
-$subhead compare_op$$
-If the sub-string $code compare_op$$ appears in $icode options$$,
-comparison operators will be left in the optimized function.
+$subhead no_compare_op$$
+If the sub-string $code no_compare_op$$ appears in $icode options$$,
+comparison operators will be removed from the optimized function.
 These operators are necessary for the
 $cref compare_change$$ functions to be meaningful.
 On the other hand, they are not necessary, and take extra time,
 when the compare_change functions are not used.
-The default for $icode options$$ (when it is not present)
-includes $code compare_op$$.
 
 $head Examples$$
 $children%example/optimize/compare_op.cpp

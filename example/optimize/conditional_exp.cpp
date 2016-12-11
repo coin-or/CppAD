@@ -72,7 +72,6 @@ namespace {
 		y[0] = five;
 		before.n_var += 0; before.n_op  += 0;
 		after.n_var  += 0; after.n_op   += 0;
-
 	}
 }
 
@@ -100,7 +99,7 @@ bool conditional_exp(void)
 	ok &= f.size_op()  == before.n_op;
 
 	// Optimize the operation sequence
-	std::string options = "conditional_skip";
+	std::string options = "";
 	f.optimize(options);
 	ok &= f.size_var() == after.n_var;
 	ok &= f.size_op()  == after.n_op;
