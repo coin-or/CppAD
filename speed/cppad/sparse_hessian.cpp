@@ -122,7 +122,7 @@ bool link_sparse_hessian(
 		return false;
 # endif
 	// optimization options: no conditional skips or compare operators
-	std::string options="";
+	std::string options="no_compare_op";
 	// -----------------------------------------------------
 	// setup
 	typedef vector<double>              DblVector;

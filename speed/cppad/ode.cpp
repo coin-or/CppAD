@@ -59,7 +59,7 @@ bool link_ode(
 		return false;
 
 	// optimization options: no conditional skips or compare operators
-	std::string options="";
+	std::string options="no_compare_op";
 	// --------------------------------------------------------------------
 	// setup
 	assert( x.size() == size );

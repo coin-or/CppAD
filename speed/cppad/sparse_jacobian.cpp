@@ -113,7 +113,7 @@ bool link_sparse_jacobian(
 		return false;
 # endif
 	// optimization options: no conditional skips or compare operators
-	std::string options="";
+	std::string options="no_compare_op";
 	// -----------------------------------------------------
 	// setup
 	typedef vector< std::set<size_t> >  SetVector;

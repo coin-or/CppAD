@@ -86,12 +86,26 @@ void optimize_run(
 	player<Base>*                play      ,
 	recorder<Base>*              rec       )
 {
-	bool conditional_skip =
-		options.find("no_conditional_skip", 0) == std::string::npos;
-
-	bool compare_op =
-		options.find("no_compare_op", 0) == std::string::npos;
-
+	bool conditional_skip = true;
+	bool compare_op       = true;
+	size_t index = 0;
+	while( index < options.size() )
+	{	while( index < options.size() && options[index] == ' ' )
+			++index;
+		std::string option;
+		while( index < options.size() && options[index] != ' ' )
+			option += options[index++];
+		if( option != "" )
+		{	if( option == "no_conditional_skip" )
+				conditional_skip = false;
+			else if( option == "no_compare_op" )
+				compare_op = false;
+			else
+			{	option += " is not a valid optimize option";
+				CPPAD_ASSERT_KNOWN( false , option.c_str() );
+			}
+		}
+	}
 	// number of operators in the player
 	const size_t num_op = play->num_op_rec();
 

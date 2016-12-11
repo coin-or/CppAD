@@ -58,7 +58,7 @@ bool link_det_minor(
 		return false;
 
 	// optimization options: no conditional skips or compare operators
-	std::string options="";
+	std::string options="no_compare_op";
 	// -----------------------------------------------------
 	// setup
 

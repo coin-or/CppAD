@@ -57,7 +57,7 @@ bool link_det_lu(
 		return false;
 
 	// optimization options: no conditional skips or compare operators
-	std::string options="";
+	std::string options="no_compare_op";
 	// -----------------------------------------------------
 	// setup
 	typedef CppAD::AD<double>           ADScalar;
