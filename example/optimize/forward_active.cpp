@@ -49,20 +49,34 @@ namespace {
 		// and results in the constant zero.
 		scalar two    = 0.0 * x[0];
 
-		// operations that only involve constants are not recorded
+		// operations that only involve constants do not take any operations
 		scalar three  = (1.0 + two) * 3.0;
 		before.n_var += 0; before.n_op  += 0;
 		after.n_var  += 0; after.n_op   += 0;
 
-		// This is the same as adding (x[0] + x[1]) * ( 0.0 + 3.0 )
-		// (If we had used all additions here, optimization would convert this
-		// to one cumulative summation operator.)
-		scalar four   = (zero + one) * ( two + three );
+		// The optimizer will reconize that zero + one = one + zero
+		// for all values of x.
+		scalar four   = zero + one;
+		scalar five   = one  + zero;
 		before.n_var += 2; before.n_op  += 2;
-		after.n_var  += 2; after.n_op   += 2;
+		after.n_var  += 1; after.n_op   += 1;
+
+		// The optimizer will reconize that sin(x[3]) = sin(x[3])
+		// for all values of x. Note that, for computation of derivatives,
+		// sin(x[3]) and cos(x[3]) are stored on the tape as a pair.
+		scalar six    = sin(x[2]);
+		scalar seven  = sin(x[2]);
+		before.n_var += 4; before.n_op  += 2;
+		after.n_var  += 2; after.n_op   += 1;
+
+		// If we used addition here, five + seven = zero + one + seven
+		// which would get converted to a cumulative summation operator.
+		scalar eight = five * seven;
+		before.n_var += 1; before.n_op  += 1;
+		after.n_var  += 1; after.n_op   += 1;
 
 		// results for this operation sequence
-		y[0] = four;
+		y[0] = eight;
 		before.n_var += 0; before.n_op  += 0;
 		after.n_var  += 0; after.n_op   += 0;
 	}
@@ -73,10 +87,11 @@ bool forward_active(void)
 	using CppAD::AD;
 
 	// domain space vector
-	size_t n  = 2;
+	size_t n  = 3;
 	CPPAD_TESTVECTOR(AD<double>) ax(n);
 	ax[0] = 0.5;
 	ax[1] = 1.5;
+	ax[2] = 2.0;
 
 	// declare independent variables and start tape recording
 	CppAD::Independent(ax);
