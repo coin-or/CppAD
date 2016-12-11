@@ -17,10 +17,11 @@
 # eigen_sources and CPPAD_HAS_EIGEN
 #
 ADD_EXECUTABLE(example_optimize EXCLUDE_FROM_ALL
-	conditional_exp.cpp
+	conditional_skip.cpp
 	compare_op.cpp
 	cumulative_sum.cpp
 	optimize.cpp
+	forward_active.cpp
 	reverse_active.cpp
 )
 

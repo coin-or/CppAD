@@ -10,15 +10,15 @@ A copy of this license is included in the COPYING file of this distribution.
 Please visit http://www.coin-or.org/CppAD/ for information on other licenses.
 -------------------------------------------------------------------------- */
 /*
-$begin optimize_compare_op.cpp$$
+$begin optimize_conditional_skip.cpp$$
 
-$section Example Optimization and Comparison Operators$$
+$section Example Optimization and Conditional Expressions$$
 
 $head See Also$$
 $cref cond_exp.cpp$$
 
 $code
-$srcfile%example/optimize/compare_op.cpp%0%// BEGIN C++%// END C++%1%$$
+$srcfile%example/optimize/conditional_skip.cpp%0%// BEGIN C++%// END C++%1%$$
 $$
 
 $end
@@ -34,47 +34,51 @@ namespace {
 	)
 	{	typedef typename Vector::value_type scalar;
 
+
 		// phantom variable with index 0 and independent variables
 		// begin operator, independent variable operators and end operator
 		before.n_var = 1 + x.size(); before.n_op  = 2 + x.size();
 		after.n_var  = 1 + x.size(); after.n_op   = 2 + x.size();
 
 		// Create a variable that is is only used in the comparision operation
-		// It is not used when the comparison operator is not included
 		scalar one = 1. / x[0];
 		before.n_var += 1; before.n_op += 1;
-		after.n_var += 0;  after.n_op += 0;
-		if( options.find("no_compare_op") == std::string::npos )
-		{	after.n_var += 1;  after.n_op += 1;
-		}
+		after.n_var  += 1; after.n_op += 1;
 
-		// Create a variable that is used by the result
-		scalar two = x[0] * 5.;
+		// Note that the left and right operand in the CondExpLt comparison
+		// are determined at this point. Hence the conditional skip operator
+		// will be inserted here so that the operations mentioned below can
+		// also be skipped during zero order foward mode.
+
+		// Create a variable that is only used when comparison result is true
+		// (can be skipped when the comparison result is false)
+		scalar two = x[0] * 5.0;
 		before.n_var += 1; before.n_op += 1;
-		after.n_var += 1;  after.n_op += 1;
+		after.n_var  += 1; after.n_op += 1;
 
-		// Only one variable created for this comparison operation
-		// but the value depends on which branch is taken.
-		scalar three;
-		if( one < x[0] )        // comparison operator
-			three = two / 2.0;  // division operator
-		else
-			three = 2.0 * two;  // multiplication operator
-		// comparison and either division of multiplication operator
-		before.n_var += 1; before.n_op += 2;
-		// comparison operator depends on optimization options
-		after.n_var += 1;  after.n_op += 1;
-		if( options.find("no_compare_op") == std::string::npos )
-			after.n_op += 1;
+		// Create two variables only used when the comparison result is false
+		// (can be skipped when the comparison result is true)
+		scalar three = 5.0 + x[0];
+		scalar four  = three * 3.0;
+		before.n_var += 2; before.n_op += 2;
+		after.n_var  += 2; after.n_op += 2;
+
+		// conditional expression
+		// (conditional skip operator is added to operation sequence)
+		scalar five = CppAD::CondExpLt(one, x[0], two, four);
+		before.n_var += 1; before.n_op += 1;
+		after.n_var  += 1; after.n_op += 1;
+		if( options.find("no_conditional_skip") == std::string::npos )
+			after.n_op += 1; // for conditional skip operation
 
 		// results for this operation sequence
-		y[0] = three;
+		y[0] = five;
 		before.n_var += 0; before.n_op  += 0;
 		after.n_var  += 0; after.n_op   += 0;
 	}
 }
 
-bool compare_op(void)
+bool conditional_skip(void)
 {	bool ok = true;
 	using CppAD::AD;
 
@@ -91,43 +95,45 @@ bool compare_op(void)
 	{	// optimization options
 		std::string options = "";
 		if( k == 0 )
-			options = "no_compare_op";
+			options = "no_conditional_skip";
 
 		// declare independent variables and start tape recording
 		CppAD::Independent(ax);
 
-		// compute function value
+		// compute function computation
 		tape_size before, after;
 		fun(options, ax, ay, before, after);
 
 		// create f: x -> y and stop tape recording
 		CppAD::ADFun<double> f(ax, ay);
 		ok &= f.size_var() == before.n_var;
-		ok &= f.size_op() == before.n_op;
+		ok &= f.size_op()  == before.n_op;
 
 		// Optimize the operation sequence
 		f.optimize(options);
 		ok &= f.size_var() == after.n_var;
-		ok &= f.size_op() == after.n_op;
+		ok &= f.size_op()  == after.n_op;
 
-		// Check result for a zero order calculation for a different x,
-		// where the result of the comparison is he same.
+		// Check case where result of the comparison is true (x[0] > 1.0).
 		CPPAD_TESTVECTOR(double) x(n), y(m), check(m);
-		x[0] = 0.75;
+		x[0] = 1.75;
 		y    = f.Forward(0, x);
-		if ( options == "" )
-			ok  &= f.CompareChange() == 0;
+		fun(options, x, check, before, after);
+		ok  &= y[0] == check[0];
+		if( options == "" )
+			ok  &= f.number_skip() == 2;
+		else
+			ok &= f.number_skip() == 0;
+
+		// Check case where result of the comparision is false (x[0] <= 1.0)
+		x[0] = 0.5;
+		y    = f.Forward(0, x);
 		fun(options, x, check, before, after);
 		ok &= y[0] == check[0];
-
-		// Check case where result of the comparision is differnent
-		// (hence one needs to re-tape to get correct result)
-		x[0] = 2.0;
-		y    = f.Forward(0, x);
-		if ( options == "" )
-			ok  &= f.CompareChange() == 1;
-		fun(options, x, check, before, after);
-		ok  &= std::fabs(y[0] - check[0]) > 0.5;
+		if( options == "" )
+			ok  &= f.number_skip() == 1;
+		else
+			ok &= f.number_skip() == 0;
 	}
 	return ok;
 }

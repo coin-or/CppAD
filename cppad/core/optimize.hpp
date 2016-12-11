@@ -20,12 +20,11 @@ $spell
 	jac
 	bool
 	Taylor
-	var
 	CppAD
 	cppad
 	std
-	CondExpEq
 	const
+	onetape
 	op
 $$
 
@@ -81,34 +80,31 @@ On the other hand, they are not necessary, and take extra time,
 when the compare_change functions are not used.
 
 $head Examples$$
-$children%example/optimize/compare_op.cpp
-	%example/optimize/conditional_exp.cpp
-	%example/optimize/cumulative_sum.cpp
+$children%
+	example/optimize/forward_active.cpp
 	%example/optimize/reverse_active.cpp
+	%example/optimize/compare_op.cpp
+	%example/optimize/conditional_skip.cpp
+	%example/optimize/cumulative_sum.cpp
 %$$
 $table
-$tref optimize_conditional_exp.cpp$$ $rnext
-$tref optimize_cumulative_sum.cpp$$
+$cref/forward_active.cpp/optimize_forward_active.cpp/$$ $cnext
+	$title optimize_forward_active.cpp$$
+$rnext
+$cref/reverse_active.cpp/optimize_reverse_active.cpp/$$ $cnext
+	$title optimize_reverse_active.cpp$$
+$rnext
+$cref/compare_op.cpp/optimize_compare_op.cpp/$$ $cnext
+	$title optimize_compare_op.cpp$$
+$rnext
+$cref/conditional_skip.cpp/optimize_conditional_skip.cpp/$$ $cnext
+	$title optimize_conditional_skip.cpp$$
+$rnext
+$cref/cumulative_sum.cpp/optimize_cumulative_sum.cpp/$$ $cnext
+	$title optimize_cumulative_sum.cpp$$
 $tend
 
-
-$head Improvements$$
-You can see the reduction in number of variables in the operation sequence
-by calling the function $cref/f.size_var()/seq_property/size_var/$$
-before and after the optimization procedure.
-Given that the optimization procedure takes time,
-it may be faster to skip this optimize procedure and just compute
-derivatives using the original operation sequence.
-
-$subhead Testing$$
-You can run the CppAD $cref/speed/speed_main/$$ tests and see
-the corresponding changes in number of variables and execution time;
-see $cref cmake_check$$.
-
 $head Efficiency$$
-The $code optimize$$ member function
-may greatly reduce the number of variables
-in the operation sequence; see $cref/size_var/seq_property/size_var/$$.
 If a $cref/zero order forward/forward_zero/$$ calculation is done during
 the construction of $icode f$$, it will require more memory
 and time than required after the optimization procedure.
@@ -126,6 +122,17 @@ $codei%
 %$$
 See the discussion about
 $cref/sequence constructors/FunConstruct/Sequence Constructor/$$.
+
+$head Speed Testing$$
+You can run the CppAD $cref/speed/speed_main/$$ tests and see
+the corresponding changes in number of variables and execution time.
+Note that there is an interaction between using
+$cref/optimize/speed_main/Global Options/optimize/$$ and
+$cref/onetape/speed_main/Global Options/onetape/$$.
+If $icode onetape$$ is true and $icode optimize$$ is true,
+the optimized tape will be reused many times.
+If $icode onetape$$ is false and $icode optimize$$ is true,
+the tape will be re-optimized for each test.
 
 $head Atomic Functions$$
 There are some subtitle issue with optimized $cref atomic$$ functions

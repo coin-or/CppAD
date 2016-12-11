@@ -221,8 +221,9 @@ $rref ode_gear.cpp$$
 $rref ode_stiff.cpp$$
 $rref ode_taylor.cpp$$
 $rref optimize_compare_op.cpp$$
-$rref optimize_conditional_exp.cpp$$
+$rref optimize_conditional_skip.cpp$$
 $rref optimize_cumulative_sum.cpp$$
+$rref optimize_forward_active.cpp$$
 $rref optimize_reverse_active.cpp$$
 $rref opt_val_hes.cpp$$
 $rref par_var.cpp$$

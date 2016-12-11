@@ -20,8 +20,9 @@ Please visit http://www.coin-or.org/CppAD/ for information on other licenses.
 
 // external complied tests
 extern bool compare_op(void);
-extern bool conditional_exp(void);
+extern bool conditional_skip(void);
 extern bool cumulative_sum(void);
+extern bool forward_active(void);
 extern bool reverse_active(void);
 
 namespace {
@@ -52,7 +53,8 @@ int main(void)
 	// external compiled tests
 	ok &= Run( cumulative_sum,      "compare_op"         );
 	ok &= Run( cumulative_sum,      "cumulative_sum"     );
-	ok &= Run( conditional_exp,     "conditional_exp"    );
+	ok &= Run( conditional_skip,    "conditional_skip"   );
+	ok &= Run( forward_active,      "forward_active"     );
 	ok &= Run( reverse_active,      "reverse_active"     );
 
 	// check for errors

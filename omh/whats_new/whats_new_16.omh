@@ -37,6 +37,7 @@ $spell
 	sacado
 	chrono
 	const_iterator
+	op
 $$
 
 $section Changes and Additions to CppAD During 2016$$
@@ -47,15 +48,15 @@ in reverse order by date.
 The purpose of these sections is to
 assist you in learning about changes between various versions of CppAD.
 
-$head 12-10$$
-$list number$$
-Move $code example/optimize.cpp$$ to
-$cref optimize_compare_op.cpp$$.
-$lnext
-Add the following examples:
-$cref optimize_conditional_exp.cpp$$,
-$cref optimize_cumulative_sum.cpp$$.
-$lend
+$head 12-11$$
+Improve the $cref optimize$$ documentation.
+This includes making examples that demonstrate
+specific aspects of the optimization; see
+$cref/forward_active.cpp/optimize_forward_active.cpp/$$,
+$cref/reverse_active.cpp/optimize_reverse_active.cpp/$$,
+$cref/compare_op.cpp/optimize_compare_op.cpp/$$,
+$cref/conditional_skip.cpp/optimize_conditional_skip.cpp/$$,
+$cref/cumulative_sum.cpp/optimize_cumulative_sum.cpp/$$.
 
 
 $head 12-09$$
