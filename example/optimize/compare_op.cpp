@@ -44,6 +44,7 @@ namespace {
 		scalar one = 1. / x[0];
 		before.n_var += 1; before.n_op += 1;
 		after.n_var  += 0; after.n_op  += 0;
+		// If we keep comparision operators, we must compute their operands
 		if( options.find("no_compare_op") == std::string::npos )
 		{	after.n_var += 1;  after.n_op += 1;
 		}
@@ -64,6 +65,7 @@ namespace {
 		before.n_var += 1; before.n_op += 2;
 		// comparison operator depends on optimization options
 		after.n_var += 1;  after.n_op += 1;
+		// check if we are keeping the comparison operator
 		if( options.find("no_compare_op") == std::string::npos )
 			after.n_op += 1;
 
