@@ -144,8 +144,6 @@ void optimize_run(
 	const addr_t* arg;    // arguments
 	size_t        i_var;  // variable index of primary (last) result
 
-	// information defined by forward_user
-	size_t user_old=0, user_m=0, user_n=0, user_i=0, user_j=0;
 	enum_user_state user_state;
 	// -------------------------------------------------------------
 	// conditional skip information
@@ -232,25 +230,15 @@ void optimize_run(
 	// tempory used to hold a size_pair
 	struct_size_pair size_pair;
 
-	// start playing the operations in the forward direction
-	play->forward_start(op, arg, i_op, i_var);
-	CPPAD_ASSERT_UNKNOWN( op == BeginOp );
-	CPPAD_ASSERT_NARG_NRES(BeginOp, 1, 1);
-	CPPAD_ASSERT_UNKNOWN( size_t(arg[0]) == 0 );
-	//
-	// Put BeginOp at beginning of recording
-	old2new[i_op].new_op  = rec->num_op_rec();
-	old2new[i_op].new_var = rec->PutOp(BeginOp);
-	rec->PutArg(arg[0]);
-	//
-	size_t first_user_i_op = 0;
 	user_state = start_user;
-	while( op != EndOp )
+	for(i_op = 0; i_op < num_op; ++i_op)
 	{	addr_t mask; // temporary used in some switch cases
 		//
-		// this op
-		play->forward_next(op, arg, i_op, i_var);
-
+		// this operator information
+		op    =  op_info[i_op].op;
+		arg   =  op_info[i_op].arg;
+		i_var =  op_info[i_op].i_var;
+		//
 		// determine if we should insert a conditional skip here
 		bool skip  = conditional_skip;
 		skip      &= cskip_order_next < num_cskip;
@@ -284,41 +272,26 @@ void optimize_run(
 				rec->PutOp(CSkipOp);
 			}
 		}
-		//
-		size_t usage_i_op = i_op;
-		switch(op)
-		{	case CSkipOp:
-			play->forward_cskip(op, arg, i_op, i_var);
-			break;
-
-			case CSumOp:
-			play->forward_csum(op, arg, i_op, i_var);
-			break;
-
-			case UserOp:
-			// index of the first operator in the atomic user function call
-			if( user_state == start_user )
-				first_user_i_op = i_op;
-			//
-			case UsrapOp:
-			case UsravOp:
-			case UsrrpOp:
-			case UsrrvOp:
-			play->forward_user(op, user_state,
-				user_old, user_m, user_n, user_i, user_j
-			);
-			// All the operators for a user atomic function call act as a block
-			usage_i_op = first_user_i_op;
-			break;
-
-			default:
-			break;
+		if( op == UserOp )
+		{	if( user_state == start_user )
+				user_state = end_user;
+			else
+			{	CPPAD_ASSERT_UNKNOWN( user_state == end_user );
+				user_state = start_user;
+			}
 		}
-		//
 		size_t         previous;
 		//
-		if( op_info[usage_i_op].usage != no_usage ) switch( op )
+		if( op_info[i_op].usage == yes_usage ) switch( op )
 		{
+			case BeginOp:
+			CPPAD_ASSERT_NARG_NRES(op, 1, 1);
+			// Put BeginOp at beginning of recording
+			old2new[i_op].new_op  = rec->num_op_rec();
+			old2new[i_op].new_var = rec->PutOp(BeginOp);
+			rec->PutArg(arg[0]);
+			break;
+
 			// Unary operator where operand is arg[0]
 			case AbsOp:
 			case AcosOp:
@@ -352,7 +325,9 @@ void optimize_run(
 				//
 				old2new[i_op].new_op  = rec->num_op_rec();
 				old2new[i_op].new_var = rec->PutOp(op);
-				CPPAD_ASSERT_UNKNOWN(new_arg[0] < old2new[var2op[i_var]].new_var);
+				CPPAD_ASSERT_UNKNOWN(
+					new_arg[0] < old2new[var2op[i_var]].new_var
+				);
 				if( op == ErfOp )
 				{	// Error function is a special case
 					// second argument is always the parameter 0
@@ -751,59 +726,49 @@ void optimize_run(
 			case UserOp:
 			CPPAD_ASSERT_NARG_NRES(op, 4, 0);
 			// user_old, user_n, user_m
-			if( op_info[first_user_i_op].usage != no_usage )
-			{	rec->PutArg(arg[0], arg[1], arg[2], arg[3]);
-				old2new[i_op].new_op = rec->num_op_rec();
-				rec->PutOp(UserOp);
-			}
+			rec->PutArg(arg[0], arg[1], arg[2], arg[3]);
+			old2new[i_op].new_op = rec->num_op_rec();
+			rec->PutOp(UserOp);
 			break;
 
 			case UsrapOp:
 			CPPAD_ASSERT_NARG_NRES(op, 1, 0);
-			if( op_info[first_user_i_op].usage != no_usage )
-			{	new_arg[0] = rec->PutPar( play->GetPar(arg[0]) );
+			new_arg[0] = rec->PutPar( play->GetPar(arg[0]) );
+			rec->PutArg(new_arg[0]);
+			old2new[i_op].new_op = rec->num_op_rec();
+			rec->PutOp(UsrapOp);
+			break;
+
+			case UsravOp:
+			CPPAD_ASSERT_NARG_NRES(op, 1, 0);
+			new_arg[0] = old2new[ var2op[arg[0]] ].new_var;
+			if( size_t(new_arg[0]) < num_var )
+			{	rec->PutArg(new_arg[0]);
+				old2new[i_op].new_op = rec->num_op_rec();
+				rec->PutOp(UsravOp);
+			}
+			else
+			{	// This argument does not affect the result and
+				// has been optimized out so use nan in its place.
+				new_arg[0] = rec->PutPar( base_nan );
 				rec->PutArg(new_arg[0]);
 				old2new[i_op].new_op = rec->num_op_rec();
 				rec->PutOp(UsrapOp);
 			}
 			break;
 
-			case UsravOp:
-			CPPAD_ASSERT_NARG_NRES(op, 1, 0);
-			if( op_info[first_user_i_op].usage != no_usage )
-			{	new_arg[0] = old2new[ var2op[arg[0]] ].new_var;
-				if( size_t(new_arg[0]) < num_var )
-				{	rec->PutArg(new_arg[0]);
-					old2new[i_op].new_op = rec->num_op_rec();
-					rec->PutOp(UsravOp);
-				}
-				else
-				{	// This argument does not affect the result and
-					// has been optimized out so use nan in its place.
-					new_arg[0] = rec->PutPar( base_nan );
-					rec->PutArg(new_arg[0]);
-					old2new[i_op].new_op = rec->num_op_rec();
-					rec->PutOp(UsrapOp);
-				}
-			}
-			break;
-
 			case UsrrpOp:
 			CPPAD_ASSERT_NARG_NRES(op, 1, 0);
-			if( op_info[first_user_i_op].usage != no_usage )
-			{	new_arg[0] = rec->PutPar( play->GetPar(arg[0]) );
-				rec->PutArg(new_arg[0]);
-				old2new[i_op].new_op = rec->num_op_rec();
-				rec->PutOp(UsrrpOp);
-			}
+			new_arg[0] = rec->PutPar( play->GetPar(arg[0]) );
+			rec->PutArg(new_arg[0]);
+			old2new[i_op].new_op = rec->num_op_rec();
+			rec->PutOp(UsrrpOp);
 			break;
 
 			case UsrrvOp:
 			CPPAD_ASSERT_NARG_NRES(op, 0, 1);
-			if( op_info[first_user_i_op].usage != no_usage )
-			{	old2new[i_op].new_op  = rec->num_op_rec();
-				old2new[i_op].new_var = rec->PutOp(UsrrvOp);
-			}
+			old2new[i_op].new_op  = rec->num_op_rec();
+			old2new[i_op].new_var = rec->PutOp(UsrrvOp);
 			break;
 			// ---------------------------------------------------
 
@@ -843,13 +808,13 @@ void optimize_run(
 			rec->ReplaceArg(i_arg++, n_false    );
 			for(size_t j = 0; j < info.skip_op_true.size(); j++)
 			{	i_op = cskip_info[i].skip_op_true[j];
-				// op_info[i_op].usage != no_usage or csum_usage
+				// op_info[i_op].usage == yes_usage
 				CPPAD_ASSERT_UNKNOWN( old2new[i_op].new_op != 0 );
 				rec->ReplaceArg(i_arg++, old2new[i_op].new_op );
 			}
 			for(size_t j = 0; j < info.skip_op_false.size(); j++)
 			{	i_op   = cskip_info[i].skip_op_false[j];
-				// op_info[i_op].usage != no_usage or csum_usage
+				// op_info[i_op].usage == yes_usage
 				CPPAD_ASSERT_UNKNOWN( old2new[i_op].new_op != 0 );
 				rec->ReplaceArg(i_arg++, old2new[i_op].new_op );
 			}

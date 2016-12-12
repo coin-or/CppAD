@@ -174,7 +174,7 @@ in the one large play->GetVecInd that holds all the VecAD vectors.
 The input size of this vector must be zero.
 Upon return it has size equal to the number of operators
 in the operation sequence; i.e., num_op = play->nun_var_rec().
-The struct_op_info op_info[i]
+The value op_info[i]
 have been set to the values corresponding to the i-th operator
 in the operation sequence.
 */
@@ -380,7 +380,7 @@ void get_op_info(
 	play->reverse_start(op, arg, i_op, i_var);
 	CPPAD_ASSERT_UNKNOWN( op == EndOp );
 	op_info[i_op].usage    = yes_usage;
-	size_t first_user_i_op = 0;
+	size_t last_user_i_op = 0;
 	while( op != BeginOp )
 	{	bool   flag;  // temporary boolean value
 		//
@@ -655,12 +655,12 @@ void get_op_info(
 			);
 			if( flag )
 			{	// -------------------------------------------------------
-				first_user_i_op = i_op - user_n - user_m - 1;
+				last_user_i_op = i_op;
 				CPPAD_ASSERT_UNKNOWN( i_op > user_n + user_m + 1 );
-				CPPAD_ASSERT_UNKNOWN( op_info[first_user_i_op].usage == 0 );
+				CPPAD_ASSERT_UNKNOWN(op_info[last_user_i_op].usage==no_usage);
 # ifndef NDEBUG
 				if( cexp_set.n_set() > 0 )
-				{	sparse_pack_const_iterator itr(cexp_set, first_user_i_op);
+				{	sparse_pack_const_iterator itr(cexp_set, last_user_i_op);
 					CPPAD_ASSERT_UNKNOWN( *itr == cexp_set.end() );
 				}
 # endif
@@ -697,8 +697,9 @@ void get_op_info(
 				}
 			}
 			else
-			{	CPPAD_ASSERT_UNKNOWN( i_op == first_user_i_op );
-				//
+			{	CPPAD_ASSERT_UNKNOWN(
+					i_op + user_n + user_m + 1 == last_user_i_op
+				);
 				// call users function for this operation
 				user_atom->set_old(user_old);
 				bool user_ok  = false;
@@ -744,9 +745,8 @@ void get_op_info(
 					s += "This version of rev_sparse_jac returned false";
 					CPPAD_ASSERT_KNOWN(false, s.c_str() );
 				}
-				// 2DO: It might be faster if we add set union to var_sparsity
-				// where one of the sets is not in var_sparsity.
-				if( op_info[first_user_i_op].usage != no_usage )
+
+				if( op_info[last_user_i_op].usage != no_usage )
 				for(size_t j = 0; j < user_n; j++)
 				if( user_ix[j] > 0 )
 				{	// This user argument is a variable
@@ -766,10 +766,17 @@ void get_op_info(
 					if( use_arg_j )
 					{	size_t j_op = var2op[ user_ix[j] ];
 						usage_cexp_parent2arg(
-							sum_op, first_user_i_op, j_op, op_info, cexp_set
+							sum_op, last_user_i_op, j_op, op_info, cexp_set
 						);
 					}
 				}
+				// copy set infomation from last to first
+				if( cexp_set.n_set() > 0 )
+					cexp_set.assignment(i_op, last_user_i_op, cexp_set);
+				// copy user information from last to all the user operators
+				// for this call
+				for(size_t j = 0; j < user_n + user_m + 1; ++j)
+					op_info[i_op + j].usage = op_info[last_user_i_op].usage;
 			}
 			break; // -------------------------------------------------------
 
@@ -819,7 +826,7 @@ void get_op_info(
 					user_r_pack[user_i] = true;
 				//
 				usage_cexp_parent2arg(
-					sum_op, i_op, first_user_i_op, op_info, cexp_set
+					sum_op, i_op, last_user_i_op, op_info, cexp_set
 				);
 			}
 			break; // --------------------------------------------------------
