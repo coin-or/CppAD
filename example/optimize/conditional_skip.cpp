@@ -43,7 +43,7 @@ namespace {
 		// Create a variable that is is only used in the comparision operation
 		scalar one = 1. / x[0];
 		before.n_var += 1; before.n_op += 1;
-		after.n_var  += 1; after.n_op += 1;
+		after.n_var  += 1; after.n_op  += 1;
 
 		// Note that the left and right operand in the CondExpLt comparison
 		// are determined at this point. Hence the conditional skip operator
@@ -54,20 +54,20 @@ namespace {
 		// (can be skipped when the comparison result is false)
 		scalar two = x[0] * 5.0;
 		before.n_var += 1; before.n_op += 1;
-		after.n_var  += 1; after.n_op += 1;
+		after.n_var  += 1; after.n_op  += 1;
 
 		// Create two variables only used when the comparison result is false
 		// (can be skipped when the comparison result is true)
 		scalar three = 5.0 + x[0];
 		scalar four  = three * 3.0;
 		before.n_var += 2; before.n_op += 2;
-		after.n_var  += 2; after.n_op += 2;
+		after.n_var  += 2; after.n_op  += 2;
 
 		// conditional expression
 		// (conditional skip operator is added to operation sequence)
 		scalar five = CppAD::CondExpLt(one, x[0], two, four);
 		before.n_var += 1; before.n_op += 1;
-		after.n_var  += 1; after.n_op += 1;
+		after.n_var  += 1; after.n_op  += 1;
 		if( options.find("no_conditional_skip") == std::string::npos )
 			after.n_op += 1; // for conditional skip operation
 

@@ -43,7 +43,7 @@ namespace {
 		// It is not used when the comparison operator is not included
 		scalar one = 1. / x[0];
 		before.n_var += 1; before.n_op += 1;
-		after.n_var += 0;  after.n_op += 0;
+		after.n_var  += 0; after.n_op  += 0;
 		if( options.find("no_compare_op") == std::string::npos )
 		{	after.n_var += 1;  after.n_op += 1;
 		}
@@ -51,7 +51,7 @@ namespace {
 		// Create a variable that is used by the result
 		scalar two = x[0] * 5.;
 		before.n_var += 1; before.n_op += 1;
-		after.n_var += 1;  after.n_op += 1;
+		after.n_var  += 1; after.n_op += 1;
 
 		// Only one variable created for this comparison operation
 		// but the value depends on which branch is taken.
