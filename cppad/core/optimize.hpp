@@ -85,6 +85,7 @@ $children%
 	%example/optimize/reverse_active.cpp
 	%example/optimize/compare_op.cpp
 	%example/optimize/conditional_skip.cpp
+	%example/optimize/nest_conditional.cpp
 	%example/optimize/cumulative_sum.cpp
 %$$
 $table
@@ -99,6 +100,9 @@ $cref/compare_op.cpp/optimize_compare_op.cpp/$$ $cnext
 $rnext
 $cref/conditional_skip.cpp/optimize_conditional_skip.cpp/$$ $cnext
 	$title optimize_conditional_skip.cpp$$
+$rnext
+$cref/nest_conditional.cpp/optimize_nest_conditional.cpp/$$ $cnext
+	$title optimize_nest_conditional.cpp$$
 $rnext
 $cref/cumulative_sum.cpp/optimize_cumulative_sum.cpp/$$ $cnext
 	$title optimize_cumulative_sum.cpp$$

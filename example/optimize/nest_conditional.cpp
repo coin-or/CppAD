@@ -10,15 +10,15 @@ A copy of this license is included in the COPYING file of this distribution.
 Please visit http://www.coin-or.org/CppAD/ for information on other licenses.
 -------------------------------------------------------------------------- */
 /*
-$begin optimize_conditional_skip.cpp$$
+$begin optimize_nest_conditional.cpp$$
 
-$section Example Optimization and Conditional Expressions$$
+$section Example Optimization and Nested Conditional Expressions$$
 
 $head See Also$$
 $cref cond_exp.cpp$$
 
 $code
-$srcfile%example/optimize/conditional_skip.cpp%0%// BEGIN C++%// END C++%1%$$
+$srcfile%example/optimize/nest_conditional.cpp%0%// BEGIN C++%// END C++%1%$$
 $$
 
 $end
@@ -34,63 +34,70 @@ namespace {
 	)
 	{	typedef typename Vector::value_type scalar;
 
-
 		// phantom variable with index 0 and independent variables
 		// begin operator, independent variable operators and end operator
 		before.n_var = 1 + x.size(); before.n_op  = 2 + x.size();
 		after.n_var  = 1 + x.size(); after.n_op   = 2 + x.size();
 
-		// Create a variable that is is only used as left operand
-		// in the comparision operation
-		scalar left = 1. / x[0];
+		// Create a variable that is is only used in the second comparision
+		scalar two = 1. + x[0];
 		before.n_var += 1; before.n_op += 1;
 		after.n_var  += 1; after.n_op  += 1;
 
-		// right operand in comparison operation
-		scalar right  = x[0];
-		before.n_var += 0; before.n_op  += 0;
-		after.n_var  += 0; after.n_op   += 0;
-
-		// Note that the left and right operand in the CondExpLt comparison
-		// are determined at this point. Hence the conditional skip operator
-		// will be inserted here so that the operations mentioned below can
-		// also be skipped during zero order foward mode.
+		// Conditional skip for second comparison will be inserted here.
 		if( options.find("no_conditional_skip") == std::string::npos )
 			after.n_op += 1; // for conditional skip operation
 
-		// Create a variable that is only used when comparison result is true
-		// (can be skipped when the comparison result is false)
-		scalar if_true = x[0] * 5.0;
+		// Create a variable that is is only used in the first comparision
+		// (can be skipped when second comparison result is false)
+		scalar one = 1. / x[0];
 		before.n_var += 1; before.n_op += 1;
 		after.n_var  += 1; after.n_op  += 1;
 
-		// Create two variables only used when the comparison result is false
-		// (can be skipped when the comparison result is true)
-		scalar temp      = 5.0 + x[0];
-		scalar if_false  = temp * 3.0;
-		before.n_var += 2; before.n_op += 2;
-		after.n_var  += 2; after.n_op  += 2;
+		// Conditional skip for first comparison will be inserted here.
+		if( options.find("no_conditional_skip") == std::string::npos )
+			after.n_op += 1; // for conditional skip operation
 
-		// conditional comparision is 1 / x[0] < x[0]
-		scalar value = CppAD::CondExpLt(left, right, if_true, if_false);
+		// value when first comparison if false
+		scalar one_false = 5.0;
+
+		// Create a variable that is only used when second comparison is true
+		// (can be skipped whe it is false)
+		scalar one_true = x[0] / 5.0;
+		before.n_var += 1; before.n_op += 1;
+		after.n_var  += 1; after.n_op  += 1;
+
+		// value when second comparison is false
+		scalar two_false = 3.0;
+
+		// First conditional compaison is 1 / x[0] < x[0]
+		// is only used when second conditional expression is true
+		// (can be skipped when it is false)
+		scalar two_true  = CppAD::CondExpLt(one, x[0], one_true, one_false);
+		before.n_var += 1; before.n_op += 1;
+		after.n_var  += 1; after.n_op  += 1;
+
+		// Second conditional compaison is 1 + x[0] < x[1]
+		scalar two_value = CppAD::CondExpLt(two, x[1], two_true, two_false);
 		before.n_var += 1; before.n_op += 1;
 		after.n_var  += 1; after.n_op  += 1;
 
 		// results for this operation sequence
-		y[0] = value;
+		y[0] = two_value;
 		before.n_var += 0; before.n_op  += 0;
 		after.n_var  += 0; after.n_op   += 0;
 	}
 }
 
-bool conditional_skip(void)
+bool nest_conditional(void)
 {	bool ok = true;
 	using CppAD::AD;
 
 	// domain space vector
-	size_t n  = 1;
+	size_t n  = 2;
 	CPPAD_TESTVECTOR(AD<double>) ax(n);
 	ax[0] = 0.5;
+	ax[1] = 0.5;
 
 	// range space vector
 	size_t m = 1;
@@ -119,24 +126,49 @@ bool conditional_skip(void)
 		ok &= f.size_var() == after.n_var;
 		ok &= f.size_op()  == after.n_op;
 
-		// Check case where result of the comparison is true (x[0] > 1.0).
+		// Check case where result of the second comparison is true
+		// and first comparison is true
 		CPPAD_TESTVECTOR(double) x(n), y(m), check(m);
 		x[0] = 1.75;
+		x[1] = 4.0;
 		y    = f.Forward(0, x);
 		fun(options, x, check, before, after);
 		ok  &= y[0] == check[0];
-		if( options == "" )
-			ok  &= f.number_skip() == 2;
-		else
-			ok &= f.number_skip() == 0;
+		ok  &= f.number_skip() == 0;
 
-		// Check case where result of the comparision is false (x[0] <= 1.0)
+		// Check case where result of the second comparison is true
+		// and first comparison is false
 		x[0] = 0.5;
+		x[1] = 4.0;
 		y    = f.Forward(0, x);
 		fun(options, x, check, before, after);
 		ok &= y[0] == check[0];
 		if( options == "" )
 			ok  &= f.number_skip() == 1;
+		else
+			ok &= f.number_skip() == 0;
+
+		// Check case where result of the second comparison is false
+		// and first comparison is true
+		x[0] = 1.75;
+		x[1] = 0.0;
+		y    = f.Forward(0, x);
+		fun(options, x, check, before, after);
+		ok &= y[0] == check[0];
+		if( options == "" )
+			ok  &= f.number_skip() == 3;
+		else
+			ok &= f.number_skip() == 0;
+
+		// Check case where result of the second comparison is false
+		// and first comparison is false
+		x[0] = 0.5;
+		x[1] = 0.0;
+		y    = f.Forward(0, x);
+		fun(options, x, check, before, after);
+		ok &= y[0] == check[0];
+		if( options == "" )
+			ok  &= f.number_skip() == 3;
 		else
 			ok &= f.number_skip() == 0;
 	}

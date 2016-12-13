@@ -49,10 +49,15 @@ The purpose of these sections is to
 assist you in learning about changes between various versions of CppAD.
 
 $head 12-13$$
+$list number$$
 Fix a bug in $cref ForSparseHes$$. To be more specific,
 there was a bug in handling the cumulative summations operator in this
 routine. This could only come up when used
 an $cref/optimized/optimize/$$ $cref/f/ForSparseHes/f/$$,
+$lnext
+Add the
+$cref/nest_conditional.cpp/optimize_nest_conditional.cpp/$$ example.
+$lend
 
 
 $head 12-11$$

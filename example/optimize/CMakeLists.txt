@@ -22,8 +22,9 @@ ADD_EXECUTABLE(example_optimize EXCLUDE_FROM_ALL
 	conditional_skip.cpp
 	compare_op.cpp
 	cumulative_sum.cpp
-	optimize.cpp
 	forward_active.cpp
+	nest_conditional.cpp
+	optimize.cpp
 	reverse_active.cpp
 )
 
