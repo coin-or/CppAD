@@ -847,13 +847,12 @@ void get_op_info(
 	// ----------------------------------------------------------------------
 	// compute previous in op_info
 	// ----------------------------------------------------------------------
-	vector<size_t>  hash_table_op(CPPAD_HASH_TABLE_SIZE);
-	for(size_t i = 0; i < CPPAD_HASH_TABLE_SIZE; i++)
-		hash_table_op[i] = 0;
+	sparse_list  hash_table_op;
+	hash_table_op.resize(CPPAD_HASH_TABLE_SIZE, num_op);
 	//
 	user_state = start_user;
 	for(i_op = 0; i_op < num_op; ++i_op)
-	{	unsigned short code;
+	{	op_info[i_op].previous = 0;
 
 		if( op_info[i_op].usage == yes_usage ) switch( op_info[i_op].op )
 		{
@@ -881,7 +880,6 @@ void get_op_info(
 			case UsrrpOp:
 			case UsrrvOp:
 			// these operators never match pevious operators
-			op_info[i_op].previous = 0;
 			break;
 
 			case AbsOp:
@@ -931,17 +929,13 @@ void get_op_info(
 			case ZmulpvOp:
 			case ZmulvpOp:
 			case ZmulvvOp:
-			op_info[i_op].previous = match_op(
-				var2op, op_info, i_op, hash_table_op, code
-			);
-			if( op_info[i_op].previous == 0 )
-			{	// no matching previous operator
-				hash_table_op[code] = i_op;
-			}
-			else
+			// check for a previous match
+			match_op( var2op, op_info, i_op, hash_table_op );
+			if( op_info[i_op].previous != 0 )
 			{	// like a unary operator that assigns i_op equal to previous.
 				size_t previous = op_info[i_op].previous;
 				bool sum_op = false;
+				CPPAD_ASSERT_UNKNOWN( previous < i_op );
 				usage_cexp_parent2arg(
 					sum_op, i_op, previous, op_info, cexp_set
 				);
