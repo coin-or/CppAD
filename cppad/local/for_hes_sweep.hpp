@@ -215,6 +215,7 @@ void ForHesSweep(
 		// operators to include even if derivative is zero
 		include |= op == EndOp;
 		include |= op == CSkipOp;
+		include |= op == CSumOp;
 		include |= op == UserOp;
 		include |= op == UsrapOp;
 		include |= op == UsravOp;
@@ -283,7 +284,7 @@ void ForHesSweep(
 			// CSkipOp has a variable number of arguments and
 			// reverse_next thinks it one has one argument.
 			// We must inform reverse_next of this special case.
-			play->reverse_cskip(op, arg, i_op, i_var);
+			play->forward_cskip(op, arg, i_op, i_var);
 			break;
 			// -------------------------------------------------
 
@@ -291,7 +292,7 @@ void ForHesSweep(
 			// CSumOp has a variable number of arguments and
 			// reverse_next thinks it one has one argument.
 			// We must inform reverse_next of this special case.
-			play->reverse_csum(op, arg, i_op, i_var);
+			play->forward_csum(op, arg, i_op, i_var);
 			break;
 			// -------------------------------------------------
 

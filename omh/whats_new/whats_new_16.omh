@@ -48,6 +48,13 @@ in reverse order by date.
 The purpose of these sections is to
 assist you in learning about changes between various versions of CppAD.
 
+$head 12-13$$
+Fix a bug in $cref ForSparseHes$$. To be more specific,
+there was a bug in handling the cumulative summations operator in this
+routine. This could only come up when used
+an $cref/optimized/optimize/$$ $cref/f/ForSparseHes/f/$$,
+
+
 $head 12-11$$
 Improve the $cref optimize$$ documentation.
 This includes making examples that demonstrate
