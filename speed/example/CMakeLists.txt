@@ -1,17 +1,16 @@
 # $Id$
 # -----------------------------------------------------------------------------
-# CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-14 Bradley M. Bell
+# CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-16 Bradley M. Bell
 #
 # CppAD is distributed under multiple licenses. This distribution is under
-# the terms of the 
+# the terms of the
 #                     Eclipse Public License Version 1.0.
 #
 # A copy of this license is included in the COPYING file of this distribution.
 # Please visit http://www.coin-or.org/CppAD/ for information on other licenses.
 # -----------------------------------------------------------------------------
-# Build the speed/cppad directory tests 
-# Inherit environment from ../CMakeList.txt
-# CMAKE_BUILD_TYPE determined by parent directory
+# Build the speed/cppad directory tests
+# Inherit build type from ../CMakeList.txt
 
 # add_executable(<name> [WIN32] [MACOSX_BUNDLE] [EXCLUDE_FROM_ALL]
 #                 source1 source2 ... sourceN
@@ -36,7 +35,7 @@ ADD_EXECUTABLE(speed_example EXCLUDE_FROM_ALL example.cpp
 add_cppad_cxx_flags( speed_example )
 
 # Add the check_speed_example target
-ADD_CUSTOM_TARGET(check_speed_example 
-	speed_example 
+ADD_CUSTOM_TARGET(check_speed_example
+	speed_example
 	DEPENDS speed_example speed_src
 )

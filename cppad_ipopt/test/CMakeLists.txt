@@ -10,11 +10,7 @@
 # Please visit http://www.coin-or.org/CppAD/ for information on other licenses.
 # -----------------------------------------------------------------------------
 # Build the cppad_ipopt/test directory tests
-# Inherit environment from ../CMakeList.txt
-
-# Specifies build type for this directory. Possible values are
-# empty, Debug, Release, RelWithDebInfo and MinSizeRel
-SET(CMAKE_BUILD_TYPE DEBUG)
+# Inherit build tyope from ../CMakeList.txt
 
 # Local include directories to search (not in package_prefix/include)
 INCLUDE_DIRECTORIES( ${CMAKE_CURRENT_SOURCE_DIR}/../src )

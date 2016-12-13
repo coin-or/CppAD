@@ -9,10 +9,9 @@
 # A copy of this license is included in the COPYING file of this distribution.
 # Please visit http://www.coin-or.org/CppAD/ for information on other licenses.
 # -----------------------------------------------------------------------------
-# Build the speed/* directory tests
-# Inherit environment from ../CMakeList.txt
 
-# Specify build type for this directory and all its subdirectories.
+# Specify build type for this directory and all its subdirectories
+# (subdirectories do not specify build type).
 # Possible values are DEBUG, RELEASE, RelWithDebInfo and MinSizeRel
 # CppAD developers can use DEBUG for debugging speed tests.
 SET(CMAKE_BUILD_TYPE RELEASE)

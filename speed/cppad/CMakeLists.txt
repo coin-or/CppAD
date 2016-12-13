@@ -10,8 +10,7 @@
 # Please visit http://www.coin-or.org/CppAD/ for information on other licenses.
 # -----------------------------------------------------------------------------
 # Build the speed/cppad directory tests
-# Inherit environment from ../CMakeList.txt
-# CMAKE_BUILD_TYPE determined by parent directory
+# Inherit build type environment from ../CMakeList.txt
 
 # Adds flags to the compiler command line for sources in the current directory
 # and below. This command can be used to add any flags, but it was originally

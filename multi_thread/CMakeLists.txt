@@ -1,16 +1,19 @@
 # $Id$
 # -----------------------------------------------------------------------------
-# CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-14 Bradley M. Bell
+# CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-16 Bradley M. Bell
 #
 # CppAD is distributed under multiple licenses. This distribution is under
-# the terms of the 
+# the terms of the
 #                     Eclipse Public License Version 1.0.
 #
 # A copy of this license is included in the COPYING file of this distribution.
 # Please visit http://www.coin-or.org/CppAD/ for information on other licenses.
 # -----------------------------------------------------------------------------
-# Build the multi_thread/* directory tests 
-# Inherit environment from ../CMakeList.txt
+
+# Specifies build type for this directory and all its subdirecgtories
+# (subdirectories do not specify build type).
+# Possible values are , Debug, Release, RelWithDebInfo and MinSizeRel
+SET(CMAKE_BUILD_TYPE DEBUG)
 
 # initialize list as empty
 SET(check_depends "")
@@ -41,14 +44,14 @@ MESSAGE(STATUS "pthread library path = ${pthread_lib_path}")
 IF ( pthread_lib_path )
 	CHECK_LIBRARY_EXISTS(
 		pthread pthread_barrier_wait ${pthread_lib_path} pthread_ok
-	)   
+	)
 	IF ( pthread_ok )
 		ADD_SUBDIRECTORY(pthread)
 		add_to_list(check_depends check_multi_thread_pthread)
 	ENDIF ( pthread_ok )
 ENDIF ( pthread_lib_path )
 
-# IF we find a boost multi-threadding library, define the corresponding 
+# IF we find a boost multi-threadding library, define the corresponding
 # bthread_lib, bthread_lib_path, and process the bthread subdirectory.
 IF ( Boost_FOUND )
 	SET(bthread_lib NOTFOUND)
@@ -65,7 +68,7 @@ IF ( Boost_FOUND )
 					# CHECK_CXX_SOURCE_RUNS(source variable)
 					SET(source "
 # include <boost/thread.hpp>
-int main(void) 
+int main(void)
 {	boost::barrier wait(1);
 	return 0;
 }"					)
@@ -83,7 +86,7 @@ int main(void)
 	IF( bthread_lib )
 		ADD_SUBDIRECTORY(bthread)
 		add_to_list(check_depends check_multi_thread_bthread)
-		MESSAGE(STATUS 
+		MESSAGE(STATUS
 		"boost multi-threading library = ${bthread_lib_path}/${bthread_lib}"
 		)
 	ELSE( bthread_lib )

@@ -11,8 +11,9 @@
 # -----------------------------------------------------------------------------
 # Build the example/ipopt_solve directory tests
 
-# CMAKE_BUILD_TYPE determined by parent directory. Possible values are
+# Specifies build type for this directory. Possible values are
 # empty, Debug, Release, RelWithDebInfo and MinSizeRel
+SET(CMAKE_BUILD_TYPE DEBUG)
 
 # Local link directories to search, as determined by pkg-config for ipopt
 LINK_DIRECTORIES( ${ipopt_LIBRARY_DIRS} )

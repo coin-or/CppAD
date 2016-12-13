@@ -10,8 +10,7 @@
 # Please visit http://www.coin-or.org/CppAD/ for information on other licenses.
 # -----------------------------------------------------------------------------
 # Build the speed/adolc directory tests
-# Inherit environment from ../CMakeList.txt
-# CMAKE_BUILD_TYPE determined by parent directory
+# Inherit build type from ../CMakeList.txt
 
 # assert adolc_prefix is defined
 IF ( NOT adolc_prefix )
