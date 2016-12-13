@@ -122,7 +122,7 @@ void optimize_run(
 	size_t num_vecad_vec   = play->num_vecad_vec_rec();
 
 	// operator information
-	vector<size_t>            var2op;
+	vector<addr_t>            var2op;
 	vector<struct_cskip_info> cskip_info;
 	vector<bool>              vecad_used;
 	vector<struct_op_info>    op_info;

@@ -185,7 +185,7 @@ void get_op_info(
 	bool                          compare_op          ,
 	player<Base>*                 play                ,
 	const vector<size_t>&         dep_taddr           ,
-	vector<size_t>&               var2op              ,
+	vector<addr_t>&               var2op              ,
 	vector<struct_cskip_info>&    cskip_info          ,
 	vector<bool>&                 vecad_used          ,
 	vector<struct_op_info>&       op_info             )

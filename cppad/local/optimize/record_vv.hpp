@@ -60,7 +60,7 @@ is the vector of arguments for this operator.
 */
 template <class Base>
 struct_size_pair record_vv(
-	const vector<size_t>&                              var2op         ,
+	const vector<addr_t>&                              var2op         ,
 	const vector<struct_op_info>&                      op_info        ,
 	const CppAD::vector<struct struct_old2new>&        old2new        ,
 	size_t                                             current        ,

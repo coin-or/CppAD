@@ -68,7 +68,7 @@ and a match for the current operator is not found.
 */
 
 inline void match_op(
-	const vector<size_t>&          var2op         ,
+	const vector<addr_t>&          var2op         ,
 	vector<struct_op_info>&        op_info        ,
 	size_t                         current        ,
 	sparse_list&                   hash_table_op  )
