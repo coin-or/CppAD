@@ -184,8 +184,11 @@ inline void match_op(
 	sparse_list_const_iterator itr(hash_table_op, code);
 	//
 	// check for a match
+	size_t count = 0;
 	while( *itr != hash_table_op.end() )
-	{	// candidate previous for current operator
+	{	++count;
+		//
+		// candidate previous for current operator
 		size_t  candidate  = *itr;
 		CPPAD_ASSERT_UNKNOWN( candidate < current );
 		CPPAD_ASSERT_UNKNOWN( op_info[candidate].previous == 0 );
@@ -250,6 +253,11 @@ inline void match_op(
 			}
 			++itr_swap;
 		}
+	}
+	CPPAD_ASSERT_UNKNOWN( count < 11 );
+	if( count == 10 )
+	{	// restart the list
+		hash_table_op.clear(code);
 	}
 	// no match was found, add this operator the the set for this hash code
 	hash_table_op.add_element(code, current);
