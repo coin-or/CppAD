@@ -23,7 +23,7 @@ Information that maps old an old operator to a new opeator and new variable.
 */
 struct struct_old2new {
 	/// New operator index for this old operator.
-	size_t  new_op;
+	addr_t  new_op;
 
 	/// New varaible index for this old operator.
 	addr_t  new_var;

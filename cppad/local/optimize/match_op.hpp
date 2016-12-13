@@ -72,12 +72,14 @@ inline void match_op(
 	vector<struct_op_info>&        op_info        ,
 	size_t                         current        ,
 	sparse_list&                   hash_table_op  )
-{
+{	size_t num_op = op_info.size();
+	//
 	CPPAD_ASSERT_UNKNOWN( op_info[current].previous == 0 );
 	CPPAD_ASSERT_UNKNOWN(
 		hash_table_op.n_set() == CPPAD_HASH_TABLE_SIZE
 	);
-	CPPAD_ASSERT_UNKNOWN( hash_table_op.end() == op_info.size() );
+	CPPAD_ASSERT_UNKNOWN( hash_table_op.end() == num_op );
+	CPPAD_ASSERT_UNKNOWN( current < num_op );
 	//
 	// current operator
 	OpCode        op         = op_info[current].op;
@@ -185,7 +187,7 @@ inline void match_op(
 	//
 	// check for a match
 	size_t count = 0;
-	while( *itr != hash_table_op.end() )
+	while( *itr != num_op )
 	{	++count;
 		//
 		// candidate previous for current operator
@@ -225,7 +227,7 @@ inline void match_op(
 		//
 		code      = optimize_hash_code(op, num_arg, arg_match);
 		sparse_list_const_iterator itr_swap(hash_table_op, code);
-		while( *itr_swap != hash_table_op.end() )
+		while( *itr_swap != num_op )
 		{
 			size_t candidate  = *itr_swap;
 			CPPAD_ASSERT_UNKNOWN( candidate < current );

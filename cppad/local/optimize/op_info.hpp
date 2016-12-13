@@ -25,7 +25,7 @@ struct struct_op_info {
 
 	/// Primary (not auxillary) variable index for this operator. If the
 	// operator has not results, this is num_var (an invalid variable index).
-	size_t i_var;
+	addr_t i_var;
 
 	/*!
 	previous operator that can be used in place of this operator.
@@ -36,7 +36,7 @@ struct struct_op_info {
 	op_info[pevious].previous == 0 and
 	op_info[previous].usage == yes_usage.
 	*/
-	size_t previous;
+	addr_t previous;
 
 	/// op code
 	OpCode op;

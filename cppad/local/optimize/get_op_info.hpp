@@ -240,6 +240,9 @@ void get_op_info(
 	while(op != EndOp)
 	{	// next operator
 		play->forward_next(op, arg, i_op, i_var);
+		CPPAD_ASSERT_UNKNOWN(
+			size_t( std::numeric_limits<addr_t>::max() ) > i_var
+		);
 		//
 		// information for this operator
 		op_info[i_op].op    = op;
@@ -797,7 +800,7 @@ void get_op_info(
 
 			case UsravOp:
 			// variable argument in an atomic operation sequence
-			CPPAD_ASSERT_UNKNOWN( size_t(arg[0]) <= op_info[i_op].i_var );
+			CPPAD_ASSERT_UNKNOWN( arg[0] <= op_info[i_op].i_var );
 			CPPAD_ASSERT_UNKNOWN( 0 < arg[0] );
 			//
 			play->reverse_user(op, user_state,
