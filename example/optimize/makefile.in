@@ -87,26 +87,22 @@ PRE_UNINSTALL = :
 POST_UNINSTALL = :
 build_triplet = @build@
 host_triplet = @host@
-check_PROGRAMS = speed$(EXEEXT)
-subdir = cppad_ipopt/speed
+check_PROGRAMS = optimize$(EXEEXT)
+subdir = example/optimize
 ACLOCAL_M4 = $(top_srcdir)/aclocal.m4
 am__aclocal_m4_deps = $(top_srcdir)/configure.ac
 am__configure_deps = $(am__aclocal_m4_deps) $(CONFIGURE_DEPENDENCIES) \
 	$(ACLOCAL_M4)
 DIST_COMMON = $(srcdir)/makefile.am $(am__DIST_COMMON)
 mkinstalldirs = $(install_sh) -d
-CONFIG_CLEAN_FILES = test.sh
+CONFIG_CLEAN_FILES =
 CONFIG_CLEAN_VPATH_FILES =
-am__dirstamp = $(am__leading_dot)dirstamp
-am_speed_OBJECTS = speed.$(OBJEXT) ../src/cppad_ipopt_nlp.$(OBJEXT) \
-	../src/hes_fg_map.$(OBJEXT) ../src/jac_g_map.$(OBJEXT) \
-	../src/sparse_map2vec.$(OBJEXT) \
-	../src/vec_fun_pattern.$(OBJEXT) ode_speed.$(OBJEXT)
-speed_OBJECTS = $(am_speed_OBJECTS)
-speed_LDADD = $(LDADD)
-am__DEPENDENCIES_1 =
-speed_DEPENDENCIES = $(am__DEPENDENCIES_1) $(am__DEPENDENCIES_1) \
-	$(am__DEPENDENCIES_1) $(am__DEPENDENCIES_1)
+am_optimize_OBJECTS = compare_op.$(OBJEXT) conditional_skip.$(OBJEXT) \
+	cumulative_sum.$(OBJEXT) forward_active.$(OBJEXT) \
+	nest_conditional.$(OBJEXT) optimize.$(OBJEXT) \
+	reverse_active.$(OBJEXT)
+optimize_OBJECTS = $(am_optimize_OBJECTS)
+optimize_LDADD = $(LDADD)
 AM_V_P = $(am__v_P_@AM_V@)
 am__v_P_ = $(am__v_P_@AM_DEFAULT_V@)
 am__v_P_0 = false
@@ -136,20 +132,8 @@ AM_V_CXXLD = $(am__v_CXXLD_@AM_V@)
 am__v_CXXLD_ = $(am__v_CXXLD_@AM_DEFAULT_V@)
 am__v_CXXLD_0 = @echo "  CXXLD   " $@;
 am__v_CXXLD_1 = 
-COMPILE = $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) \
-	$(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS)
-AM_V_CC = $(am__v_CC_@AM_V@)
-am__v_CC_ = $(am__v_CC_@AM_DEFAULT_V@)
-am__v_CC_0 = @echo "  CC      " $@;
-am__v_CC_1 = 
-CCLD = $(CC)
-LINK = $(CCLD) $(AM_CFLAGS) $(CFLAGS) $(AM_LDFLAGS) $(LDFLAGS) -o $@
-AM_V_CCLD = $(am__v_CCLD_@AM_V@)
-am__v_CCLD_ = $(am__v_CCLD_@AM_DEFAULT_V@)
-am__v_CCLD_0 = @echo "  CCLD    " $@;
-am__v_CCLD_1 = 
-SOURCES = $(speed_SOURCES)
-DIST_SOURCES = $(speed_SOURCES)
+SOURCES = $(optimize_SOURCES)
+DIST_SOURCES = $(optimize_SOURCES)
 am__can_run_installinfo = \
   case $$AM_UPDATE_INFO_DIR in \
     n|no|NO) false;; \
@@ -174,8 +158,7 @@ am__define_uniq_tagged_files = \
   done | $(am__uniquify_input)`
 ETAGS = etags
 CTAGS = ctags
-am__DIST_COMMON = $(srcdir)/makefile.in $(srcdir)/test.sh.in \
-	$(top_srcdir)/depcomp
+am__DIST_COMMON = $(srcdir)/makefile.in $(top_srcdir)/depcomp
 DISTFILES = $(DIST_COMMON) $(DIST_SOURCES) $(TEXINFOS) $(EXTRA_DIST)
 ABS_TOP_BUILDDIR = @ABS_TOP_BUILDDIR@
 ABS_TOP_SRCDIR = @ABS_TOP_SRCDIR@
@@ -355,43 +338,22 @@ top_build_prefix = @top_build_prefix@
 top_builddir = @top_builddir@
 top_srcdir = @top_srcdir@
 #
-EXTRA_DIST = test.sh.in
-#
-# BEGIN OPTIMIZE
-AM_CXXFLAGS = -O2 -DNDEBUG $(CXX_FLAGS)
-# END OPTIMIZE
-#
-# BEGIN DEBUG
-# AM_CXXFLAGS     = -g $(CXX_FLAGS)
-# END DEBUG
+AM_CXXFLAGS = -g $(CXX_FLAGS)
 #
 AM_CPPFLAGS = -I. \
 	-I$(top_srcdir) \
 	$(BOOST_INCLUDE) \
-	$(EIGEN_INCLUDE) \
-	-I$(IPOPT_DIR)/include
+	$(EIGEN_INCLUDE)
 
 #
-LDADD = \
-                    -lcppad_ipopt \
-                    $(CPPAD_IPOPT_LIBS) \
-                    $(FCLIBS) \
-                    $(PTHREAD_LIB) \
-                    $(DL_LIB)
-
-AM_LDFLAGS = -L../src
-#
-# Cannot use ../src/libcppad_ipopt.a because it is compiled for debugging
-# so build an optimized version here to use here.
-speed_SOURCES = \
-	speed.cpp \
-	../src/cppad_ipopt_nlp.cpp \
-	../src/fun_record.hpp \
-	../src/hes_fg_map.cpp \
-	../src/jac_g_map.cpp \
-	../src/sparse_map2vec.cpp \
-	../src/vec_fun_pattern.cpp \
-	ode_speed.cpp
+optimize_SOURCES = \
+	compare_op.cpp \
+	conditional_skip.cpp \
+	cumulative_sum.cpp \
+	forward_active.cpp \
+	nest_conditional.cpp \
+	optimize.cpp \
+	reverse_active.cpp 
 
 all: all-am
 
@@ -406,9 +368,9 @@ $(srcdir)/makefile.in: @MAINTAINER_MODE_TRUE@ $(srcdir)/makefile.am  $(am__confi
 	      exit 1;; \
 	  esac; \
 	done; \
-	echo ' cd $(top_srcdir) && $(AUTOMAKE) --gnu cppad_ipopt/speed/makefile'; \
+	echo ' cd $(top_srcdir) && $(AUTOMAKE) --gnu example/optimize/makefile'; \
 	$(am__cd) $(top_srcdir) && \
-	  $(AUTOMAKE) --gnu cppad_ipopt/speed/makefile
+	  $(AUTOMAKE) --gnu example/optimize/makefile
 makefile: $(srcdir)/makefile.in $(top_builddir)/config.status
 	@case '$?' in \
 	  *config.status*) \
@@ -426,46 +388,27 @@ $(top_srcdir)/configure: @MAINTAINER_MODE_TRUE@ $(am__configure_deps)
 $(ACLOCAL_M4): @MAINTAINER_MODE_TRUE@ $(am__aclocal_m4_deps)
 	cd $(top_builddir) && $(MAKE) $(AM_MAKEFLAGS) am--refresh
 $(am__aclocal_m4_deps):
-test.sh: $(top_builddir)/config.status $(srcdir)/test.sh.in
-	cd $(top_builddir) && $(SHELL) ./config.status $(subdir)/$@
 
 clean-checkPROGRAMS:
 	-test -z "$(check_PROGRAMS)" || rm -f $(check_PROGRAMS)
-../src/$(am__dirstamp):
-	@$(MKDIR_P) ../src
-	@: > ../src/$(am__dirstamp)
-../src/$(DEPDIR)/$(am__dirstamp):
-	@$(MKDIR_P) ../src/$(DEPDIR)
-	@: > ../src/$(DEPDIR)/$(am__dirstamp)
-../src/cppad_ipopt_nlp.$(OBJEXT): ../src/$(am__dirstamp) \
-	../src/$(DEPDIR)/$(am__dirstamp)
-../src/hes_fg_map.$(OBJEXT): ../src/$(am__dirstamp) \
-	../src/$(DEPDIR)/$(am__dirstamp)
-../src/jac_g_map.$(OBJEXT): ../src/$(am__dirstamp) \
-	../src/$(DEPDIR)/$(am__dirstamp)
-../src/sparse_map2vec.$(OBJEXT): ../src/$(am__dirstamp) \
-	../src/$(DEPDIR)/$(am__dirstamp)
-../src/vec_fun_pattern.$(OBJEXT): ../src/$(am__dirstamp) \
-	../src/$(DEPDIR)/$(am__dirstamp)
 
-speed$(EXEEXT): $(speed_OBJECTS) $(speed_DEPENDENCIES) $(EXTRA_speed_DEPENDENCIES) 
-	@rm -f speed$(EXEEXT)
-	$(AM_V_CXXLD)$(CXXLINK) $(speed_OBJECTS) $(speed_LDADD) $(LIBS)
+optimize$(EXEEXT): $(optimize_OBJECTS) $(optimize_DEPENDENCIES) $(EXTRA_optimize_DEPENDENCIES) 
+	@rm -f optimize$(EXEEXT)
+	$(AM_V_CXXLD)$(CXXLINK) $(optimize_OBJECTS) $(optimize_LDADD) $(LIBS)
 
 mostlyclean-compile:
 	-rm -f *.$(OBJEXT)
-	-rm -f ../src/*.$(OBJEXT)
 
 distclean-compile:
 	-rm -f *.tab.c
 
-@AMDEP_TRUE@@am__include@ @am__quote@../src/$(DEPDIR)/cppad_ipopt_nlp.Po@am__quote@
-@AMDEP_TRUE@@am__include@ @am__quote@../src/$(DEPDIR)/hes_fg_map.Po@am__quote@
-@AMDEP_TRUE@@am__include@ @am__quote@../src/$(DEPDIR)/jac_g_map.Po@am__quote@
-@AMDEP_TRUE@@am__include@ @am__quote@../src/$(DEPDIR)/sparse_map2vec.Po@am__quote@
-@AMDEP_TRUE@@am__include@ @am__quote@../src/$(DEPDIR)/vec_fun_pattern.Po@am__quote@
-@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/ode_speed.Po@am__quote@
-@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/speed.Po@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/compare_op.Po@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/conditional_skip.Po@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/cumulative_sum.Po@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/forward_active.Po@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/nest_conditional.Po@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/optimize.Po@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/reverse_active.Po@am__quote@
 
 .cpp.o:
 @am__fastdepCXX_TRUE@	$(AM_V_CXX)depbase=`echo $@ | sed 's|[^/]*$$|$(DEPDIR)/&|;s|\.o$$||'`;\
@@ -596,8 +539,6 @@ clean-generic:
 distclean-generic:
 	-test -z "$(CONFIG_CLEAN_FILES)" || rm -f $(CONFIG_CLEAN_FILES)
 	-test . = "$(srcdir)" || test -z "$(CONFIG_CLEAN_VPATH_FILES)" || rm -f $(CONFIG_CLEAN_VPATH_FILES)
-	-rm -f ../src/$(DEPDIR)/$(am__dirstamp)
-	-rm -f ../src/$(am__dirstamp)
 
 maintainer-clean-generic:
 	@echo "This command is intended for maintainers to use"
@@ -607,7 +548,7 @@ clean: clean-am
 clean-am: clean-checkPROGRAMS clean-generic mostlyclean-am
 
 distclean: distclean-am
-	-rm -rf ../src/$(DEPDIR) ./$(DEPDIR)
+	-rm -rf ./$(DEPDIR)
 	-rm -f makefile
 distclean-am: clean-am distclean-compile distclean-generic \
 	distclean-tags
@@ -653,7 +594,7 @@ install-ps-am:
 installcheck-am:
 
 maintainer-clean: maintainer-clean-am
-	-rm -rf ../src/$(DEPDIR) ./$(DEPDIR)
+	-rm -rf ./$(DEPDIR)
 	-rm -f makefile
 maintainer-clean-am: distclean-am maintainer-clean-generic
 
@@ -690,7 +631,7 @@ uninstall-am:
 
 
 test: check
-	./test.sh
+	./optimize
 
 # Tell versions [3.59,3.63) of GNU make to not export all variables.
 # Otherwise a system limit (for SysV at least) may be exceeded.

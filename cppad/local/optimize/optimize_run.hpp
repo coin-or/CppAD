@@ -171,14 +171,6 @@ void optimize_run(
 
 	// index in order during reverse sweep
 	size_t cskip_info_index = num_cskip;
-
-	// information about the conditional skip in the new operation sequence
-	struct struct_cskip_new {
-		size_t left;
-		size_t right;
-		size_t max_left_right;
-		size_t i_arg;
-	};
 	vector<struct_cskip_new> cskip_new(num_cskip);
 	// flag used to indicate that this conditional expression is skipped
 	for(size_t i = 0; i < num_cskip; i++)

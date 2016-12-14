@@ -329,6 +329,7 @@ SUBDIRS =  \
 	$(SPEED_DIRS) \
 	example \
 	example/atomic \
+	example/optimize \
 	compare_c \
 	introduction/get_started \
 	introduction/exp_apx \
@@ -354,6 +355,7 @@ EXTRA_DIST = \
 	example/CMakeLists.txt \
 	example/atomic/CMakeLists.txt \
 	example/ipopt_solve/CMakeLists.txt \
+	example/optimize/CMakeLists.txt \
 	test_more/CMakeLists.txt \
 	CMakeLists.txt \
 	cppad_ipopt/src/CMakeLists.txt \
@@ -382,6 +384,7 @@ test_directory_list = \
 	$(SPEED_TESTS) \
 	example \
 	example/atomic \
+	example/optimize \
 	compare_c \
 	introduction/get_started \
 	introduction/exp_apx \

@@ -25,7 +25,7 @@ enum enum_user_state {
 	ret_user,
 
 	/// next UserOp marks end of a user atomic call
-	end_user,
+	end_user
 };
 
 } } // END_CPPAD_LOCAL_NAMESPACE

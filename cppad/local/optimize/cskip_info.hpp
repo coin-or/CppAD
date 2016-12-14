@@ -55,6 +55,18 @@ struct struct_cskip_info {
 	CompareOp cop;
 };
 
+// Information about the conditional skip in the new operation sequence
+struct struct_cskip_new {
+	/// new variable or parameter index for left comparison operand
+	size_t left;
+	/// new variable or parameter index for right comparison operand
+	size_t right;
+	/// maximum variable index between left and right (ignoring parameters).
+	size_t max_left_right;
+	/// index where this conditional skips arguments start
+	size_t i_arg;
+};
+
 } } } // END_CPPAD_LOCAL_OPTIMIZE_NAMESPACE
 
 # endif

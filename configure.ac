@@ -789,6 +789,7 @@ AC_CONFIG_FILES([
 	example/makefile
 	example/atomic/makefile
 	example/ipopt_solve/makefile
+	example/optimize/makefile
 	introduction/get_started/makefile
 	introduction/exp_apx/makefile
 	multi_thread/makefile
