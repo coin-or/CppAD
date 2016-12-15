@@ -1,6 +1,6 @@
 // $Id$
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-15 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-16 Bradley M. Bell
 
 CppAD is distributed under multiple licenses. This distribution is under
 the terms of the
@@ -144,7 +144,11 @@ bool correct_mat_mul(bool is_package_double)
 }
 
 void speed_mat_mul(size_t size, size_t repeat)
-{	CppAD::vector<double>  x(size * size), z(1), dz(size * size);
+{	// free statically allocated memory
+	if( size == 0 && repeat == 0 )
+		return;
+	//
+	CppAD::vector<double>  x(size * size), z(1), dz(size * size);
 
 	link_mat_mul(size, repeat, x, z, dz);
 	return;

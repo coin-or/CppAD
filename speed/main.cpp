@@ -453,6 +453,9 @@ namespace {
 			else cout << std::setprecision(2) << rate;
 		}
 		cout << " ]" << endl;
+		//
+		// free statically allocated memory (size = repeat = 0)
+		speed_case(0, 0);
 		return;
 	}
 }
