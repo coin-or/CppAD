@@ -62,7 +62,7 @@ namespace {
 		scalar one_false = 5.0;
 
 		// Create a variable that is only used when second comparison is true
-		// (can be skipped whe it is false)
+		// (can be skipped when it is false)
 		scalar one_true = x[0] / 5.0;
 		before.n_var += 1; before.n_op += 1;
 		after.n_var  += 1; after.n_op  += 1;
