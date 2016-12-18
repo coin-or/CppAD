@@ -14,13 +14,13 @@ Please visit http://www.coin-or.org/CppAD/ for information on other licenses.
  %{
  /* Put header files here or function declarations like below */
  extern double My_variable;
- extern int fact(int n);
+ extern int my_fact(int n);
  extern int my_mod(int x, int y);
- extern char *get_time();
+ extern const char* my_message();
  %}
 
  extern double My_variable;
- extern int fact(int n);
+ extern int my_fact(int n);
  extern int my_mod(int x, int y);
- extern char *get_time();
+ extern const char* my_message();
 

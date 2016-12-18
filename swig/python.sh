@@ -38,17 +38,23 @@ import sys
 import my_example
 # initialze exit status as OK
 error_count = 0;
-# check factor function
-if my_example.fact(4) == 24 :
+#
+if my_example.my_fact(4) == 24 :
 	print("my_example.fact: OK")
 else :
-	print("my_example.fact: Error")
+	print("my_example.my_fact: Error")
 	error_count = error_count + 1;
-# check my_mod function
+#
 if my_example.my_mod(4,3) == 1 :
 	print("my_example.my_mod: OK")
 else :
 	print("my_example.my_mod: Error")
+	error_count = error_count + 1;
+#
+if my_example.my_message() == "OK" :
+	print("my_example.my_message: OK")
+else :
+	print("my_example.my_message: Error")
 	error_count = error_count + 1;
 #
 # return error_count

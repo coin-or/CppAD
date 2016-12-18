@@ -37,18 +37,25 @@ cat << EOF > my_example.m
 my_example
 % initialze exit status as OK
 error_count = 0;
-% check factor function
-if (my_example.fact(4) == 24)
-	printf("my_example.fact: OK\n")
+%
+if (my_example.my_fact(4) == 24)
+	printf("my_example.my_fact: OK\n")
 else
-	printf("my_example.fact: Error\n")
+	printf("my_example.my_fact: Error\n")
 	error_count = error_count + 1;
 end
-% check my_mod function
+%
 if (my_example.my_mod(4,3) == 1)
 	printf("my_example.my_mod: OK\n")
 else
 	printf("my_example.my_mod: Error\n")
+	error_count = error_count + 1;
+end
+%
+if (my_example.my_message() == "OK" )
+	printf("my_example.my_message: OK")
+else
+	printf("my_example.my_message: Error")
 	error_count = error_count + 1;
 end
 %
