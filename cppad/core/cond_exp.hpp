@@ -126,11 +126,6 @@ From this point on, values corresponding to the case that is not required
 are not computed.
 This optimization is done for the rest of zero order forward mode
 as well as forward and reverse derivatives calculations.
-There is one exception to this optimization; see
-$cref/optimizing nested conditional expressions
-	/wish_list
-	/Optimizing Nested Conditional Expressions
-/$$.
 
 $head Deprecate 2005-08-07$$
 Previous versions of CppAD used
@@ -274,7 +269,7 @@ void local::ADTape<Base>::RecordCondExp(
 	// ind[0] = cop
 	ind0 = addr_t( cop );
 
-	// ind[1] = base 2 representaion of the value
+	// ind[1] = base 2 represenation of the value
 	// [Var(left), Var(right), Var(if_true), Var(if_false)]
 	ind1 = 0;
 

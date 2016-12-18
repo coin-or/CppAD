@@ -853,8 +853,8 @@ $codei%
 	%f%.optimize()
 %$$
 and was not even defined when $code NDEBUG$$ was defined.
-There was a resulting speed effect for this; see the wish list
-$cref/compare change/wish_list/Optimization/Comparison Changes/$$ entry.
+There was a resulting speed effect for this; see
+$cref/no_compare_op/optimize/options/no_compare_op/$$.
 
 $lnext
 The date when some features where deprecated has been added to the

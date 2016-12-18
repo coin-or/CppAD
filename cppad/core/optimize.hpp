@@ -62,6 +62,9 @@ If it is present, it must consist of one or more of the options below
 separated by a single space character.
 
 $subhead no_conditional_skip$$
+The $code optimize$$ function can create conditional skip operators
+to improve the speed of conditional expressions; see
+$cref/optimize/CondExp/Optimize/$$.
 If the sub-string $code no_conditional_skip$$ appears in $icode options$$,
 conditional skip operations are not be generated.
 This may make the optimize routine use significantly less memory

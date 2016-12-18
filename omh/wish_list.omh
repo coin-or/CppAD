@@ -13,37 +13,68 @@ $begin wish_list$$
 $spell
 	op
 	Recomputation
-	jacobian
-	nz
-	RevSparseJac
 	optimizer
-	Rel
-	Gt
-	Eq
-	CondExpLt
-	Checkpointing
+	checkpointing
 	grep
 	recomputed
-	afun
 	iterator
 	std
-	cos
 	Adolc
 	xml
 	hpp
 	CppAD
 	Atan
 	cppad
-	mul
-	div
-	instantiate
-	instantiation
-	Bool
-	runge
-	retape
+	tapeless
+	Retape
 $$
 
 $section The CppAD Wish List$$
+
+$comment ----------------------------------------------------------------- $$
+$head Optimization$$
+
+$subhead Taping$$
+Perhaps some of the optimization done while taping forward mode
+should be delayed to the $code optimization$$ step.
+
+$subhead Special Operators$$
+Add special operators that can be implemented more efficiently, e.g.,
+$codei%
+	square(%x%) = %x% * %x%
+%$$
+and have the optimizer recognize when they should be used.
+(They could also be in the user API, but it would not be expected
+that the user would use them.)
+
+$subhead PrintFor$$
+Do not remove $cref PrintFor$$ operations during $cref optimize$$ because
+they are very useful when debugging expected calculations on the tape.
+If not this, we at least need to disable optimization of $cref checkpoint$$
+functions.
+
+$comment ------------------------------------------------------------------ $$
+$head checkpoint$$
+
+$subhead Extend$$
+Perhaps there should be a version of the
+$cref checkpoint$$ class that uses a tapeless AD package to compute
+derivative values.
+This would allow for algorithms where the operations sequence
+depends on the independent variable values.
+There is a question as to how sparsity patterns would be determined
+in this case.
+Perhaps they would be passed into the constructor.
+If it was known to be constant,
+the user could compute the pattern using CppAD.
+Otherwise, the user would input
+a conservative estimate of the pattern that would be correct.
+
+$subhead Testing$$
+There should be some examples and tests for both speed and memory use
+that demonstrate that checkpointing is useful.
+
+$comment -------------------------------------------------------------------$$
 
 $head Sparsity Patterns$$
 It may be that each set has a large overhead in a large and very sparse
@@ -75,63 +106,6 @@ Change $cref check_for_nan$$ to $code check_finite$$
 (not infinite or nan) so that error detection happens during zero
 order forward instead of later.
 
-$comment ------------------------------------------------------------------ $$
-$head checkpoint$$
-
-$subhead Retape$$
-Change $cref checkpoint$$ so that is used $cref compare_change$$
-to determine when it is necessary to retape.
-Note that there is some question as to whether
-the sparsity pattern be allowed to change.
-
-$subhead Testing$$
-There should be some examples and tests for both speed and memory use
-that demonstrate that checkpointing is useful.
-
-
-$comment -------------------------------------------------------------------$$
-$head Optimization$$
-
-$subhead Reorganize$$
-Reorganize the
-$cref optimize$$ process so that the source code is easier to
-understand.
-
-$subhead Optional$$
-Make the different types of optimization optional; e.g.,
-skipping computations corresponding the false side of a
-$cref CondExp$$ could be optional.
-(This is already implemented as a option but not in the user API).
-
-$subhead Taping$$
-Perhaps some of the optimization done while taping forward mode
-should be delayed to the $code optimization$$ step.
-
-$subhead Special Operators$$
-Add special operators that can be implemented more efficiently, e.g.,
-$codei%
-	square(%x%) = %x% * %x%
-%$$
-and have the optimizer recognize when they should be used.
-(They could also be in the user API, but it would not be expected
-that the user would use them.)
-
-$subhead PrintFor$$
-Do not remove $cref PrintFor$$ operations during $cref optimize$$ because
-they are very useful when debugging expected calculations on the tape.
-If not this, we at least need to disable optimization of $cref checkpoint$$
-functions.
-
-$subhead Comparison Changes$$
-The comparison operators used to not be taped when
-$cref/NDEBUG/Faq/Speed/NDEBUG/$$ was defined.
-They are now taped so that the $cref compare_change$$ interface
-works even for compiler optimize code.
-This caused a significant slow down in the
-$cref cppad_det_lu.cpp$$ speed test (with no options specified).
-Perhaps there should be an option to skip the comparison taping.
-
-$comment -------------------------------------------------------------------$$
 $head Compilation Speed$$
 Create a library corresponding to $code AD<double>$$ so that
 one does not need to re-compile all the header files every time.
@@ -153,23 +127,6 @@ see $cref sqrt.cpp$$.
 $head Adolc$$
 Create a documentation page that shows how to convert Adolc commands to
 CppAD commands.
-
-$head Optimizing Nested Conditional Expressions$$
-If one $cref/optimizes/optimize/$$ the code
-$codep
-	x = CondExpLt(left_x, right_x, true_x, false_x)
-	y = CondExpGt(left_y, right_y, true_y, false_y)
-	z = CondExpEq(left_z, right_z, x, y)
-$$
-only two of the expressions
-$code true_x$$, $code false_x$$, $code true_y$$, $code false_y$$
-will be evaluated
-(two will be skipped depending on the result of $code left_z == right_z$$).
-Not all of the expressions corresponding to
-$code left_x$$, $code right_x$$, $code left_y$$, $code right_y$$ need to be
-evaluate, but they are.
-The optimizer could be improved to skip two more expressions
-(depending on the result of $code left_z == right_z$$).
 
 $head Forward Mode Recomputation$$
 If the results of $cref forward_order$$ have already been computed and are still
