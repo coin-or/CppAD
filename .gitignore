@@ -3,7 +3,6 @@ git_commit.sh
 aclocal.m4
 ar-lib
 autom4te.cache
-build
 commit.sh.old
 doc
 doxydoc
