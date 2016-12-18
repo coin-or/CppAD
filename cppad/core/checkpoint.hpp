@@ -614,7 +614,7 @@ l	should the operation sequence corresponding to the algo be optimized.
 			// now optimize
 			f_.optimize();
 		}
-		// now disable checking of comparison opertaions
+		// now disable checking of comparison operations
 		// 2DO: add a debugging mode that checks for changes and aborts
 		f_.compare_change_count(0);
 	}

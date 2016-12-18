@@ -17,7 +17,8 @@ move_list='
 move_sed='s|/local/|/core/|'
 #
 cat << EOF > junk.sed
-s|varialbe|variable|g
+s|taion|ation|g
+s|aation|ation|g
 EOF
 # -----------------------------------------------------------------------------
 if [ $0 != "bin/batch_edit.sh" ]
@@ -35,7 +36,17 @@ echo_eval() {
 cp bin/batch_edit.sh $HOME/trash/batch_edit.sh
 git reset --hard
 # ---------------------------------------------------------------------------
-list_all=`bin/ls_files.sh`
+list_all=`bin/ls_files.sh | sed \
+	-e '/^compile$/d' \
+	-e '/^config\.guess$/d' \
+	-e '/^config\.sub$/d' \
+	-e '/^configure$/d' \
+	-e '/^depcomp$/d' \
+	-e '/^epl-v10.txt$/d' \
+	-e '/^gpl-v10.txt$/d' \
+	-e '/^makefile.in$/d' \
+	-e '/\/makefile.in$/d' \
+	-e '/^missing$/d'`
 for file in $list_all
 do
 	if [ "$file" != 'bin/batch_edit.sh' ]

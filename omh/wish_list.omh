@@ -56,10 +56,10 @@ functions.
 $comment ------------------------------------------------------------------ $$
 $head checkpoint$$
 
-$subhead Extend$$
+$subhead Retape$$
 Perhaps there should be a version of the
 $cref checkpoint$$ class that uses a tapeless AD package to compute
-derivative values.
+the derivative values.
 This would allow for algorithms where the operations sequence
 depends on the independent variable values.
 There is a question as to how sparsity patterns would be determined
@@ -67,7 +67,7 @@ in this case.
 Perhaps they would be passed into the constructor.
 If it was known to be constant,
 the user could compute the pattern using CppAD.
-Otherwise, the user would input
+Otherwise, the user could input
 a conservative estimate of the pattern that would be correct.
 
 $subhead Testing$$

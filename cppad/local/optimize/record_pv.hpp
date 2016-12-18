@@ -33,7 +33,7 @@ mapping from old operator index to information about the new recording.
 \param current
 is the index in the old operation sequence for
 the variable corresponding to the result for the current operator.
-We use the notataion i_op = var2op[current].
+We use the notation i_op = var2op[current].
 It follows that  NumRes( op_info[i_op].op ) > 0.
 If 0 < j_op < i_op, either op_info[j_op].csum_connected,
 op_info[j_op].usage = 0, or old2new[j_op].new_var != 0.

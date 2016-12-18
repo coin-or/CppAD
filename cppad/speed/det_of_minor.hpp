@@ -251,7 +251,7 @@ Scalar det_of_minor(
 		// compute determinant of the current sub-minor S
 		Scalar detS = det_of_minor(a, m, n - 1, r, c);
 
-		// restore column Cj to representaion of M as a minor of A
+		// restore column Cj to represenation of M as a minor of A
 		c[Cj1] = Cj;
 
 		// include this sub-minor term in the summation
