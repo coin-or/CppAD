@@ -227,8 +227,9 @@ There was a mistake in the documentation for $cref index_sort$$,
 the argument $cref/ind/index_sort/ind/$$ is not $code const$$.
 
 $head 10-16$$
-Add a $cref/PrintFor optimization/wish_list/Optimization/PrintFor/$$
-item to the wish list.
+Add a $cref PrintFor$$ optimization wish list item.
+This has been done,
+see $cref/no_print_for_op/optimize/options/no_print_for_op/$$.
 
 $head 10-06$$
 $list number$$

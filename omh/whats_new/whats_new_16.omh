@@ -48,6 +48,10 @@ in reverse order by date.
 The purpose of these sections is to
 assist you in learning about changes between various versions of CppAD.
 
+$head 12-18$$
+Add the $cref/no_print_for_op/optimize/options/no_print_for_op/$$ to the
+optimize routine.
+
 $head 12-13$$
 $list number$$
 Fix a bug in $cref ForSparseHes$$. To be more specific,

@@ -135,6 +135,11 @@ operators. This is a side effect because compare operators have boolean
 results (and the result is not in the tape; i.e. NumRes(op) is zero
 for these operators. (This is an example of a side effect.)
 
+\param print_for_op
+if this is true, arguments are considered used if they appear in
+print forward operators; i.e., PriOp.
+This is also a side effect; i.e. NumRes(PriOp) is zero.
+
 \param play
 This is the operation sequence.
 It is essentially const, except for play back state which
@@ -183,6 +188,7 @@ template <class Base>
 void get_op_info(
 	bool                          conditional_skip    ,
 	bool                          compare_op          ,
+	bool                          print_for_op        ,
 	player<Base>*                 play                ,
 	const vector<size_t>&         dep_taddr           ,
 	vector<addr_t>&               var2op              ,
@@ -506,7 +512,6 @@ void get_op_info(
 			// (new CSkip options are generated if conditional_skip is true)
 			case CSkipOp:
 			case ParOp:
-			case PriOp:
 			break;
 
 			// Operators that are always used
@@ -515,6 +520,28 @@ void get_op_info(
 			case EndOp:
 			op_info[i_op].usage = yes_usage;
 			break;  // -----------------------------------------------
+
+			// The print forward operator
+			case PriOp:
+			CPPAD_ASSERT_NARG_NRES(op, 5, 0);
+			if( print_for_op )
+			{	op_info[i_op].usage = yes_usage;
+				if( arg[0] & 1 )
+				{	// arg[1] is a variable
+					size_t j_op = var2op[ arg[1] ];
+					usage_cexp_parent2arg(
+						sum_op, i_op, j_op, op_info, cexp_set
+					);
+				}
+				if( arg[0] & 2 )
+				{	// arg[3] is a variable
+					size_t j_op = var2op[ arg[3] ];
+					usage_cexp_parent2arg(
+						sum_op, i_op, j_op, op_info, cexp_set
+					);
+				}
+			}
+			break; // -----------------------------------------------------
 
 			// =============================================================
 			// Comparison operators

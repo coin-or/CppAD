@@ -82,11 +82,18 @@ $cref compare_change$$ functions to be meaningful.
 On the other hand, they are not necessary, and take extra time,
 when the compare_change functions are not used.
 
+$subhead no_print_for_op$$
+If the sub-string $code no_compare_op$$ appears in $icode options$$,
+$cref PrintFor$$ operations will be removed form the optimized function.
+These operators are useful for reporting problems evaluating derivatives
+at independent variable values different from those used to record a function.
+
 $head Examples$$
 $children%
 	example/optimize/forward_active.cpp
 	%example/optimize/reverse_active.cpp
 	%example/optimize/compare_op.cpp
+	%example/optimize/print_for.cpp
 	%example/optimize/conditional_skip.cpp
 	%example/optimize/nest_conditional.cpp
 	%example/optimize/cumulative_sum.cpp
@@ -100,6 +107,9 @@ $cref/reverse_active.cpp/optimize_reverse_active.cpp/$$ $cnext
 $rnext
 $cref/compare_op.cpp/optimize_compare_op.cpp/$$ $cnext
 	$title optimize_compare_op.cpp$$
+$rnext
+$cref/print_for_op.cpp/optimize_print_for.cpp/$$ $cnext
+	$title optimize_print_for.cpp$$
 $rnext
 $cref/conditional_skip.cpp/optimize_conditional_skip.cpp/$$ $cnext
 	$title optimize_conditional_skip.cpp$$

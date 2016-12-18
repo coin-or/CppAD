@@ -47,12 +47,6 @@ and have the optimizer recognize when they should be used.
 (They could also be in the user API, but it would not be expected
 that the user would use them.)
 
-$subhead PrintFor$$
-Do not remove $cref PrintFor$$ operations during $cref optimize$$ because
-they are very useful when debugging expected calculations on the tape.
-If not this, we at least need to disable optimization of $cref checkpoint$$
-functions.
-
 $comment ------------------------------------------------------------------ $$
 $head checkpoint$$
 

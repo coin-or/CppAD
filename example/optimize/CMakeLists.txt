@@ -24,6 +24,7 @@ ADD_EXECUTABLE(example_optimize EXCLUDE_FROM_ALL
 	cumulative_sum.cpp
 	forward_active.cpp
 	nest_conditional.cpp
+	print_for.cpp
 	optimize.cpp
 	reverse_active.cpp
 )

@@ -24,6 +24,7 @@ extern bool conditional_skip(void);
 extern bool cumulative_sum(void);
 extern bool forward_active(void);
 extern bool nest_conditional(void);
+extern bool print_for(void);
 extern bool reverse_active(void);
 
 namespace {
@@ -57,6 +58,7 @@ int main(void)
 	ok &= Run( conditional_skip,    "conditional_skip"   );
 	ok &= Run( forward_active,      "forward_active"     );
 	ok &= Run( nest_conditional,    "nest_conditional"   );
+	ok &= Run( print_for,           "print_for"          );
 	ok &= Run( reverse_active,      "reverse_active"     );
 
 	// check for errors

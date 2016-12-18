@@ -57,6 +57,11 @@ These operators are necessary for the compare_change function to be
 be meaningful in the resulting recording.
 On the other hand, they are not necessary and take extra time
 when compare_change is not used.
+\li
+If the sub-string "no_print_for" appears,
+then print forward (PriOp) operators will be removed from the optimized tape.
+These operators are useful for reporting problems evaluating derivatives
+at independent variable values different from those used to record a function.
 
 \param n
 is the number of independent variables on the tape.
@@ -88,6 +93,7 @@ void optimize_run(
 {
 	bool conditional_skip = true;
 	bool compare_op       = true;
+	bool print_for_op     = true;
 	size_t index = 0;
 	while( index < options.size() )
 	{	while( index < options.size() && options[index] == ' ' )
@@ -100,6 +106,8 @@ void optimize_run(
 				conditional_skip = false;
 			else if( option == "no_compare_op" )
 				compare_op = false;
+			else if( option == "no_print_for_op" )
+				print_for_op = false;
 			else
 			{	option += " is not a valid optimize option";
 				CPPAD_ASSERT_KNOWN( false , option.c_str() );
@@ -129,6 +137,7 @@ void optimize_run(
 	get_op_info(
 		conditional_skip,
 		compare_op,
+		print_for_op,
 		play,
 		dep_taddr,
 		var2op,
@@ -287,6 +296,7 @@ void optimize_run(
 			rec->PutArg(arg[0]);
 			break;
 
+			// --------------------------------------------------------------
 			// Unary operator where operand is arg[0]
 			case AbsOp:
 			case AcosOp:
@@ -614,7 +624,50 @@ void optimize_run(
 			old2new[i_op].new_op  = rec->num_op_rec();
 			old2new[i_op].new_var = rec->PutOp(op);
 			break;
+
 			// ---------------------------------------------------
+			// print forward operator
+			case PriOp:
+			CPPAD_ASSERT_NARG_NRES(op, 5, 0);
+			// arg[0]
+			new_arg[0] = arg[0];
+			//
+			// arg[1]
+			if( arg[0] & 1 )
+			{	new_arg[1] = old2new[ var2op[arg[1]] ].new_var;
+				CPPAD_ASSERT_UNKNOWN( size_t(new_arg[1]) < num_var );
+			}
+			else
+			{	new_arg[1] = rec->PutPar( play->GetPar( arg[1] ) );
+			}
+			//
+			// arg[3]
+			if( arg[0] & 2 )
+			{	new_arg[3] = old2new[ var2op[arg[3]] ].new_var;
+				CPPAD_ASSERT_UNKNOWN( size_t(new_arg[3]) < num_var );
+			}
+			else
+			{	new_arg[3] = rec->PutPar( play->GetPar( arg[3] ) );
+			}
+			new_arg[2] = rec->PutTxt( play->GetTxt(arg[2]) );
+			new_arg[4] = rec->PutTxt( play->GetTxt(arg[4]) );
+			//
+			rec->PutArg(
+				new_arg[0] ,
+				new_arg[1] ,
+				new_arg[2] ,
+				new_arg[3] ,
+				new_arg[4]
+			);
+			// new operator
+			old2new[i_op].new_op  = rec->num_op_rec();
+			// no new variable
+			rec->PutOp(op);
+			break;
+
+			// ---------------------------------------------------
+			// VecAD operators
+
 			// Load using a parameter index
 			case LdpOp:
 			CPPAD_ASSERT_NARG_NRES(op, 3, 1);
@@ -630,7 +683,7 @@ void optimize_run(
 			old2new[i_op].new_op  = rec->num_op_rec();
 			old2new[i_op].new_var = rec->PutLoadOp(op);
 			break;
-			// ---------------------------------------------------
+
 			// Load using a variable index
 			case LdvOp:
 			CPPAD_ASSERT_NARG_NRES(op, 3, 1);
@@ -647,7 +700,7 @@ void optimize_run(
 			old2new[i_op].new_op  = rec->num_op_rec();
 			old2new[i_op].new_var = rec->PutLoadOp(op);
 			break;
-			// ---------------------------------------------------
+
 			// Store a parameter using a parameter index
 			case StppOp:
 			CPPAD_ASSERT_NARG_NRES(op, 3, 0);
@@ -663,7 +716,7 @@ void optimize_run(
 			old2new[i_op].new_op = rec->num_op_rec();
 			rec->PutOp(op);
 			break;
-			// ---------------------------------------------------
+
 			// Store a parameter using a variable index
 			case StvpOp:
 			CPPAD_ASSERT_NARG_NRES(op, 3, 0);
@@ -680,7 +733,7 @@ void optimize_run(
 			old2new[i_op].new_op = rec->num_op_rec();
 			rec->PutOp(op);
 			break;
-			// ---------------------------------------------------
+
 			// Store a variable using a parameter index
 			case StpvOp:
 			CPPAD_ASSERT_NARG_NRES(op, 3, 0);
@@ -698,7 +751,7 @@ void optimize_run(
 			old2new[i_op].new_op = rec->num_op_rec();
 			rec->PutOp(op);
 			break;
-			// ---------------------------------------------------
+
 			// Store a variable using a variable index
 			case StvvOp:
 			CPPAD_ASSERT_NARG_NRES(op, 3, 0);
@@ -718,6 +771,8 @@ void optimize_run(
 			break;
 
 			// -----------------------------------------------------------
+			// user atomic function call operators
+
 			case UserOp:
 			CPPAD_ASSERT_NARG_NRES(op, 4, 0);
 			// user_old, user_n, user_m
