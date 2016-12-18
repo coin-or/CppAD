@@ -20,9 +20,11 @@ fi
 echo_eval mkdir build
 echo_eval cp my_example.* build
 echo_eval cd build
+#
 # create my_example_wrap.cpp
 echo_eval swig -python -c++ my_example.i
 echo_eval mv my_example_wrap.cxx my_example_wrap.cpp
+#
 # build module that is loadable by python
 echo_eval g++ my_example.cpp my_example_wrap.cpp \
 	-c \

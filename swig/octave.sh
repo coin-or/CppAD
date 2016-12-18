@@ -20,6 +20,7 @@ fi
 echo_eval mkdir build
 echo_eval cp my_example.* build
 echo_eval cd build
+#
 # create my_example_wrap.cpp
 echo_eval swig -octave -c++ my_example.i
 echo_eval mv my_example_wrap.cxx my_example_wrap.cpp
@@ -28,6 +29,7 @@ sed \
 	-e '/^ *int *val1 *;/s/;/= 0 ;/' \
 	-e '/^ *int *val2 *;/s/;/= 0 ;/' \
 	-i my_example_wrap.cpp
+#
 # build module that is loadable by octave
 echo_eval mkoctfile my_example.cpp my_example_wrap.cpp -o my_example.oct
 # ---------------------------------------------------------------------------
