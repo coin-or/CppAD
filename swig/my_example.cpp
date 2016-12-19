@@ -51,3 +51,26 @@ const char* raise_exception(const char* message) throw(const char*)
 	// never get to here
 	return "";
 }
+
+// -----------------------------------------------------------------------
+// ctor
+my_class::my_class(void)
+{ };
+my_class::my_class(int value) : value_(value)
+{ };
+// destructor
+my_class::~my_class(void)
+{ };
+// int
+my_class::operator int(void) const
+{	return value_; }
+// assign
+void my_class::operator=(const my_class& right)
+{	value_ = right.value_; }
+// additon
+my_class my_class::operator+(const my_class& right)
+{	return my_class( value_ + right.value_ ); }
+// equality
+bool my_class::operator==(const my_class& right)
+{	return( value_ == right.value_ ); }
+// -----------------------------------------------------------------------

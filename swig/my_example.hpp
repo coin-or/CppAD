@@ -18,4 +18,23 @@ void        add_by_ptr(int x, int y, int* result);
 int         max_array_by_ptr(int n, int* x);
 const char* raise_exception(const char* message) throw(const char*);
 
+class my_class
+{	private:
+		int value_;
+	public:
+		// ctor
+		my_class(void);
+		my_class(int value);
+		// destructor
+		~my_class(void);
+		// int
+		operator int(void) const;
+		// assign
+		void operator=(const my_class& right);
+		// additon
+		my_class operator+(const my_class& right);
+		// equality
+		bool operator==(const my_class& right);
+};
+
 # endif

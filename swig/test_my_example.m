@@ -69,6 +69,16 @@ else
 	printf("my_example.raise_exception.message_of_void: Error\n")
 	error_count = error_count + 1
 end
+# --------------------------------------------
+my_two   = my_example.my_class(2);
+my_three = my_example.my_class(3);
+my_five  = my_two + my_three;
+if( my_five == my_example.my_class(5) )
+	printf("my_example.my_class: OK\n")
+else
+	printf("my_example.my_class: Error\n")
+	error_count = error_count + 1
+end
 % ---------------------------------------------
 % return error_count
 exit(error_count)

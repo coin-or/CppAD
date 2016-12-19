@@ -66,5 +66,14 @@ else :
 	print("my_example.raise_exception.message_of_void: Error")
 	error_count = error_count + 1
 # --------------------------------------------
+my_two   = my_example.my_class(2);
+my_three = my_example.my_class(3);
+my_five  = my_two + my_three
+if my_five == my_example.my_class(5) :
+	print("my_example.my_class: OK")
+else :
+	print("my_example.my_class: Error")
+	error_count = error_count + 1
+# --------------------------------------------
 # return error_count
 sys.exit(error_count)
