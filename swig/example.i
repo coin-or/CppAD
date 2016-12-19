@@ -9,10 +9,10 @@ the terms of the
 A copy of this license is included in the COPYING file of this distribution.
 Please visit http://www.coin-or.org/CppAD/ for information on other licenses.
 -------------------------------------------------------------------------- */
-/* my_example.i */
-%module my_example
+/* example.i */
+%module example
 %{
-# include "my_example.hpp"
+# include "example.hpp"
 %}
 
 %include "cpointer.i"
@@ -22,5 +22,5 @@ Please visit http://www.coin-or.org/CppAD/ for information on other licenses.
 %array_functions(int, int_array_ptr);
 %array_class(int, int_array_class);
 
-%include "my_example.hpp"
+%include "example.hpp"
 

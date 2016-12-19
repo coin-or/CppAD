@@ -19,21 +19,21 @@ then
 fi
 echo_eval cd build
 #
-# create my_example_octave.cpp
-echo_eval swig -octave -I.. -c++ -o my_example_octave.cpp ../my_example.i
-echo 'fix warnings about unitialized variables in my_example_octave.cpp'
+# create example_octave.cpp
+echo_eval swig -octave -I.. -c++ -o example_octave.cpp ../example.i
+echo 'fix warnings about unitialized variables in example_octave.cpp'
 sed \
 	-e '/^ *int *val1 *;/s/;/= 0 ;/' \
 	-e '/^ *int *val2 *;/s/;/= 0 ;/' \
 	-e '/^ *int *val3 *;/s/;/= 0 ;/' \
-	-i my_example_octave.cpp
+	-i example_octave.cpp
 #
 # build module that is loadable by octave
-echo_eval mkoctfile -I.. ../my_example.cpp my_example_octave.cpp \
-	-o my_example.oct
+echo_eval mkoctfile -I.. ../example.cpp example_octave.cpp \
+	-o example.oct
 #
 cd ..
-if octave -q test_my_example.m
+if octave -q test_example.m
 then
 	echo 'All tests passed'
 else

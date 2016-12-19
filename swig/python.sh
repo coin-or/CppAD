@@ -19,20 +19,20 @@ then
 fi
 echo_eval cd build
 #
-# create my_example_python.cpp
-echo_eval swig -python -c++ -I.. -o my_example_python.cpp ../my_example.i
+# create example_python.cpp
+echo_eval swig -python -c++ -I.. -o example_python.cpp ../example.i
 #
 # build module that is loadable by python
-echo_eval g++ -I.. ../my_example.cpp my_example_python.cpp \
+echo_eval g++ -I.. ../example.cpp example_python.cpp \
 	-c \
 	-fPIC \
 	-I /usr/include/python2.7
-echo_eval g++ -shared my_example.o my_example_python.o \
-	-o _my_example.so
+echo_eval g++ -shared example.o example_python.o \
+	-o _example.so
 #
 # test the module
 cd ..
-if python test_my_example.py
+if python test_example.py
 then
 	echo 'All tests passed'
 else
