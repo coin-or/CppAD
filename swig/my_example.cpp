@@ -11,24 +11,24 @@ Please visit http://www.coin-or.org/CppAD/ for information on other licenses.
 -------------------------------------------------------------------------- */
 # include "my_example.h"
 
-// integer return value, integer arguments
-int my_fact(int n) {
+// factorial_by_val
+int factorial_by_val(int n) {
 	if (n <= 1) return 1;
-	else return n * my_fact(n - 1);
+	else return n * factorial_by_val(n - 1);
 }
 
-// c string return value
-const char* my_message(void)
+// message_of_void
+const char* message_of_void(void)
 {	return "OK";
 }
 
-// integer pointer argument to one integer value
-void my_add(int x, int y, int* result)
+// add_by_ptr
+void add_by_ptr(int x, int y, int* result)
 {	*result = x + y;
 }
 
-// integer pointer argument to array of integer values
-int my_max(int n, int* x)
+// max_array_ptr
+int max_array_by_ptr(int n, int* x)
 {	int result = x[0];
 	for(int i = 1; i < 10; i++)
 		if( x[i] > result )

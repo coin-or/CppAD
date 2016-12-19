@@ -12,10 +12,10 @@ A copy of this license is included in the COPYING file of this distribution.
 Please visit http://www.coin-or.org/CppAD/ for information on other licenses.
 -------------------------------------------------------------------------- */
 
-int         my_fact(int n);
-const char* my_message();
-void        my_add(int x, int y, int* result);
-int         my_max(int n, int* x);
+int         factorial_by_val(int n);
+const char* message_of_void();
+void        add_by_ptr(int x, int y, int* result);
+int         max_array_by_ptr(int n, int* x);
 
 
 # endif
