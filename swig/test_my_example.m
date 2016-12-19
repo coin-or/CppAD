@@ -51,9 +51,9 @@ for i = 0 : (n-1)
 	array_obj(i) = 2 * i;
 endfor
 if( my_example.max_array_by_ptr(n, array_obj) == 18 )
-	printf("my_example.max_array_by_ptr: pointer:  OK\n")
+	printf("my_example.max_array_by_ptr: class:  OK\n")
 else
-	printf("my_example.max_array_by_ptr: pointer:  Error\n")
+	printf("my_example.max_array_by_ptr: class:  Error\n")
 	error_count = error_count + 1;
 end
 % ---------------------------------------------

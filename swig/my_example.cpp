@@ -9,7 +9,7 @@ the terms of the
 A copy of this license is included in the COPYING file of this distribution.
 Please visit http://www.coin-or.org/CppAD/ for information on other licenses.
 -------------------------------------------------------------------------- */
-# include "my_example.h"
+# include "my_example.hpp"
 
 // factorial_by_val
 int factorial_by_val(int n) {
@@ -22,7 +22,7 @@ const char* message_of_void(void)
 {	return "OK";
 }
 
-// add_by_ptr
+// add_by_ptadd_by_ptr
 void add_by_ptr(int x, int y, int* result)
 {	*result = x + y;
 }
