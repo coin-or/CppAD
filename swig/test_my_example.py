@@ -25,9 +25,9 @@ else :
 	print("my_example.my_message: Error")
 	error_count = error_count + 1
 # --------------------------------------------
-ptr = my_example.int_ctor()
-my_example.my_add(3, 4, ptr)
-if ptr.value() == 7 :
+obj = my_example.int_class()
+my_example.my_add(3, 4, obj)
+if obj.value() == 7 :
 	print("my_example.my_add: OK")
 else :
 	print("my_example.my_add: Error")
