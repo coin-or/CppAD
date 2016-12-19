@@ -20,6 +20,7 @@ Please visit http://www.coin-or.org/CppAD/ for information on other licenses.
 
 %include "carrays.i"
 %array_functions(int, int_array_ptr);
+%array_class(int, int_array_class);
 
 %include "my_example.h"
 

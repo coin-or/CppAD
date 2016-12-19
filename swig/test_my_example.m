@@ -20,7 +20,7 @@ else
 	error_count = error_count + 1;
 end
 % ---------------------------------------------
-% integer pointer argument to one integer value
+% integer class objecgt call by reference
 obj = my_example.int_class();
 my_example.my_add(3, 4, obj)
 if( obj.value() == 7 )
@@ -37,12 +37,25 @@ for i = 0 : (n-1)
 	my_example.int_array_ptr_setitem(array_ptr, i, 2 * i);
 endfor
 if( my_example.my_max(n, array_ptr) == 18 )
-	printf("my_example.my_max: OK\n")
+	printf("my_example.my_max: pointer:  OK\n")
 else
-	printf("my_example.my_max: Error\n")
+	printf("my_example.my_max: pointer:  Error\n")
 	error_count = error_count + 1;
 end
 my_example.delete_int_array_ptr(array_ptr);
+% ---------------------------------------------
+% integer array object call by reference
+n   = 10;
+array_obj = my_example.int_array_class(n);
+for i = 0 : (n-1)
+	array_obj(i) = 2 * i;
+endfor
+if( my_example.my_max(n, array_obj) == 18 )
+	printf("my_example.my_max: pointer:  OK\n")
+else
+	printf("my_example.my_max: pointer:  Error\n")
+	error_count = error_count + 1;
+end
 % ---------------------------------------------
 % return error_count
 exit(error_count)
