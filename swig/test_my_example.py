@@ -69,7 +69,9 @@ else :
 my_two   = my_example.my_class(2);
 my_three = my_example.my_class(3);
 my_five  = my_two + my_three
-if my_five == my_example.my_class(5) :
+ok       = my_five == my_example.my_class(5)
+ok       = ok and 4 < my_five.value()  and my_five.value() < 6
+if ok :
 	print('my_example.my_class: OK')
 else :
 	print('my_example.my_class: Error')

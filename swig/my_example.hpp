@@ -28,9 +28,7 @@ class my_class
 		// destructor
 		~my_class(void);
 		// int
-		operator int(void) const;
-		// assign
-		void operator=(const my_class& right);
+		int value(void) const;
 		// additon
 		my_class operator+(const my_class& right);
 		// equality
