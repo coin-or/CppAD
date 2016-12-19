@@ -35,17 +35,17 @@ else
 end
 %
 n   = 10;
-vec = my_example.new_int_vector(n);
+array_ptr = my_example.new_int_array_ptr(n);
 for i = 0 : (n-1)
-	my_example.int_vector_setitem(vec, i, 2 * i);
+	my_example.int_array_ptr_setitem(array_ptr, i, 2 * i);
 endfor
-if( my_example.my_max(n, vec) == 18 )
+if( my_example.my_max(n, array_ptr) == 18 )
 	printf("my_example.my_max: OK\n")
 else
 	printf("my_example.my_max: Error\n")
 	error_count = error_count + 1;
 end
-my_example.delete_int_vector(vec);
+my_example.delete_int_array_ptr(array_ptr);
 % ---------------------------------------------
 % return error_count
 exit(error_count)

@@ -19,7 +19,7 @@ Please visit http://www.coin-or.org/CppAD/ for information on other licenses.
 %pointer_class(int, int_class);
 
 %include "carrays.i"
-%array_functions(int, int_vector);
+%array_functions(int, int_array_ptr);
 
 %include "my_example.h"
 
