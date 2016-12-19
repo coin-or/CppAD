@@ -14,9 +14,6 @@
 # Specifies build type for this directory. Possible values are
 # empty, Debug, Release, RelWithDebInfo and MinSizeRel
 SET(CMAKE_BUILD_TYPE DEBUG)
-
-#
-# eigen_sources and CPPAD_HAS_EIGEN
 #
 ADD_EXECUTABLE(example_optimize EXCLUDE_FROM_ALL
 	conditional_skip.cpp

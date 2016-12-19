@@ -21,16 +21,15 @@ echo_eval mkdir build
 echo_eval cp my_example.* build
 echo_eval cd build
 #
-# create my_example_wrap.cpp
-echo_eval swig -python -c++ my_example.i
-echo_eval mv my_example_wrap.cxx my_example_wrap.cpp
+# create my_example_python.cpp
+echo_eval swig -python -c++ -o my_example_python.cpp my_example.i
 #
 # build module that is loadable by python
-echo_eval g++ my_example.cpp my_example_wrap.cpp \
+echo_eval g++ my_example.cpp my_example_python.cpp \
 	-c \
 	-fPIC \
 	-I /usr/include/python2.7
-echo_eval g++ -shared my_example.o my_example_wrap.o \
+echo_eval g++ -shared my_example.o my_example_python.o \
 	-o _my_example.so
 # ---------------------------------------------------------------------------
 # text module

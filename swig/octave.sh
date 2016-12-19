@@ -21,18 +21,17 @@ echo_eval mkdir build
 echo_eval cp my_example.* build
 echo_eval cd build
 #
-# create my_example_wrap.cpp
-echo_eval swig -octave -c++ my_example.i
-echo_eval mv my_example_wrap.cxx my_example_wrap.cpp
-echo 'fix warnings about unitialized variables in my_example_wrap.cpp'
+# create my_example_octave.cpp
+echo_eval swig -octave -o my_example_octave.cpp -c++ my_example.i
+echo 'fix warnings about unitialized variables in my_example_octave.cpp'
 sed \
 	-e '/^ *int *val1 *;/s/;/= 0 ;/' \
 	-e '/^ *int *val2 *;/s/;/= 0 ;/' \
 	-e '/^ *int *val3 *;/s/;/= 0 ;/' \
-	-i my_example_wrap.cpp
+	-i my_example_octave.cpp
 #
 # build module that is loadable by octave
-echo_eval mkoctfile my_example.cpp my_example_wrap.cpp -o my_example.oct
+echo_eval mkoctfile my_example.cpp my_example_octave.cpp -o my_example.oct
 # ---------------------------------------------------------------------------
 # text module
 cat << EOF > my_example.m
