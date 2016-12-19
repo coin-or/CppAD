@@ -28,6 +28,7 @@ echo 'fix warnings about unitialized variables in my_example_wrap.cpp'
 sed \
 	-e '/^ *int *val1 *;/s/;/= 0 ;/' \
 	-e '/^ *int *val2 *;/s/;/= 0 ;/' \
+	-e '/^ *int *val3 *;/s/;/= 0 ;/' \
 	-i my_example_wrap.cpp
 #
 # build module that is loadable by octave
@@ -39,28 +40,28 @@ cat << EOF > my_example.m
 my_example
 % initialze exit status as OK
 error_count = 0;
-%
+% ---------------------------------------------
 if (my_example.my_fact(4) == 24)
 	printf("my_example.my_fact: OK\n")
 else
 	printf("my_example.my_fact: Error\n")
 	error_count = error_count + 1;
 end
-%
+% ---------------------------------------------
 if (my_example.my_mod(4,3) == 1)
 	printf("my_example.my_mod: OK\n")
 else
 	printf("my_example.my_mod: Error\n")
 	error_count = error_count + 1;
 end
-%
+% ---------------------------------------------
 if (my_example.my_message() == "OK" )
 	printf("my_example.my_message: OK\n")
 else
 	printf("my_example.my_message: Error\n")
 	error_count = error_count + 1;
 end
-%
+% ---------------------------------------------
 ptr = my_example.int_ptr();
 my_example.my_add(3, 4, ptr)
 if( ptr.value() == 7 )
@@ -69,7 +70,19 @@ else
 	printf("my_example.my_add: Error\n")
 	error_count = error_count + 1;
 end
-%
+% ---------------------------------------------
+n   = 10;
+vec = my_example.new_int_vector(n);
+for i = 0 : (n-1)
+	my_example.int_vector_setitem(vec, i, 2 * i);
+endfor
+if( my_example.my_max(n, vec) == 18 )
+	printf("my_example.my_max: OK\n")
+else
+	printf("my_example.my_max: Error\n")
+	error_count = error_count + 1;
+end
+% ---------------------------------------------
 % return error_count
 exit(error_count)
 EOF

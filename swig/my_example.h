@@ -12,9 +12,11 @@ A copy of this license is included in the COPYING file of this distribution.
 Please visit http://www.coin-or.org/CppAD/ for information on other licenses.
 -------------------------------------------------------------------------- */
 
-extern int         my_fact(int n);
-extern int         my_mod(int x, int y);
-extern const char* my_message();
-void               my_add(int x, int y, int* result);
+int         my_fact(int n);
+int         my_mod(int x, int y);
+const char* my_message();
+void        my_add(int x, int y, int* result);
+int         my_max(int n, int* x);
+
 
 # endif

@@ -17,7 +17,7 @@ int my_fact(int n) {
 }
 
 int my_mod(int x, int y) {
-	return (x%y);
+	return (x % y);
 }
 
 const char* my_message()
@@ -26,4 +26,12 @@ const char* my_message()
 
 void my_add(int x, int y, int* result)
 {	*result = x + y;
+}
+
+int my_max(int n, int* x)
+{	int result = x[0];
+	for(int i = 1; i < 10; i++)
+		if( x[i] > result )
+			result = x[i];
+	return result;
 }
