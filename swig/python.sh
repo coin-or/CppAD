@@ -72,12 +72,13 @@ n   = 10
 vec = my_example.new_int_vector(n)
 for i in range(n) :
 	my_example.int_vector_setitem(vec, i, 2 * i)
-# --------------------------------------------
+#
 if my_example.my_max(n, vec) == 18 :
 	print("my_example.my_max: OK")
 else :
 	print("my_example.my_max: Error")
 	error_count = error_count + 1
+my_example.delete_int_vector(vec)
 # --------------------------------------------
 # return error_count
 sys.exit(error_count)

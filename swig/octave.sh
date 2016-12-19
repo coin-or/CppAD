@@ -70,7 +70,7 @@ else
 	printf("my_example.my_add: Error\n")
 	error_count = error_count + 1;
 end
-% ---------------------------------------------
+%
 n   = 10;
 vec = my_example.new_int_vector(n);
 for i = 0 : (n-1)
@@ -82,6 +82,7 @@ else
 	printf("my_example.my_max: Error\n")
 	error_count = error_count + 1;
 end
+my_example.delete_int_vector(vec);
 % ---------------------------------------------
 % return error_count
 exit(error_count)
