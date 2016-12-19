@@ -21,8 +21,5 @@ Please visit http://www.coin-or.org/CppAD/ for information on other licenses.
 %include "carrays.i"
 %array_functions(int, int_vector);
 
-int         my_fact(int n);
-int         my_mod(int x, int y);
-const char* my_message();
-void        my_add(int x, int y, int* result);
-int         my_max(int n, int* x);
+%include "my_example.h"
+
