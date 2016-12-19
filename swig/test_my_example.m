@@ -4,6 +4,7 @@ my_example
 % initialze exit status as OK
 error_count = 0;
 % ---------------------------------------------
+% integer return value, integer arguments
 if (my_example.my_fact(4) == 24)
 	printf("my_example.my_fact: OK\n")
 else
@@ -11,13 +12,7 @@ else
 	error_count = error_count + 1;
 end
 % ---------------------------------------------
-if (my_example.my_mod(4,3) == 1)
-	printf("my_example.my_mod: OK\n")
-else
-	printf("my_example.my_mod: Error\n")
-	error_count = error_count + 1;
-end
-% ---------------------------------------------
+% c string return value
 if (my_example.my_message() == "OK" )
 	printf("my_example.my_message: OK\n")
 else
@@ -25,6 +20,7 @@ else
 	error_count = error_count + 1;
 end
 % ---------------------------------------------
+% integer pointer argument to one integer value
 obj = my_example.int_class();
 my_example.my_add(3, 4, obj)
 if( obj.value() == 7 )
@@ -33,7 +29,8 @@ else
 	printf("my_example.my_add: Error\n")
 	error_count = error_count + 1;
 end
-%
+% ---------------------------------------------
+% integer pointer argument to array of integer values
 n   = 10;
 array_ptr = my_example.new_int_array_ptr(n);
 for i = 0 : (n-1)

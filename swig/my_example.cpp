@@ -11,23 +11,23 @@ Please visit http://www.coin-or.org/CppAD/ for information on other licenses.
 -------------------------------------------------------------------------- */
 # include "my_example.h"
 
+// integer return value, integer arguments
 int my_fact(int n) {
 	if (n <= 1) return 1;
 	else return n * my_fact(n - 1);
 }
 
-int my_mod(int x, int y) {
-	return (x % y);
-}
-
-const char* my_message()
+// c string return value
+const char* my_message(void)
 {	return "OK";
 }
 
+// integer pointer argument to one integer value
 void my_add(int x, int y, int* result)
 {	*result = x + y;
 }
 
+// integer pointer argument to array of integer values
 int my_max(int n, int* x)
 {	int result = x[0];
 	for(int i = 1; i < 10; i++)
