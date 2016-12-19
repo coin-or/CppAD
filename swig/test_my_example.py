@@ -55,5 +55,16 @@ else :
 	print("my_example.max_array_by_ptr: class: Error")
 	error_count = error_count + 1
 # --------------------------------------------
+try :
+	my_example.raise_exception('test message');
+	message = ''
+except :
+	message = my_example.raise_exception('');
+if message == "test message" :
+	print("my_example.my_example.raise_exception: OK")
+else :
+	print("my_example.raise_exception.message_of_void: Error")
+	error_count = error_count + 1
+# --------------------------------------------
 # return error_count
 sys.exit(error_count)

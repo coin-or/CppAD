@@ -10,6 +10,7 @@ A copy of this license is included in the COPYING file of this distribution.
 Please visit http://www.coin-or.org/CppAD/ for information on other licenses.
 -------------------------------------------------------------------------- */
 # include "my_example.hpp"
+# include <string>
 
 // factorial_by_val
 int factorial_by_val(int n) {
@@ -34,4 +35,19 @@ int max_array_by_ptr(int n, int* x)
 		if( x[i] > result )
 			result = x[i];
 	return result;
+}
+
+// raise_exception or return previous error message
+const char* raise_exception(const char* message) throw(const char*)
+{	// previous error message
+	static std::string previous = "";
+	if( message[0] == '\0' )
+		return previous.c_str();
+	previous = message;
+	//
+	// raise exception
+	throw message;
+	//
+	// never get to here
+	return "";
 }

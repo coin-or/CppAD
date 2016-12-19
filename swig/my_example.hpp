@@ -16,6 +16,6 @@ int         factorial_by_val(int n);
 const char* message_of_void();
 void        add_by_ptr(int x, int y, int* result);
 int         max_array_by_ptr(int n, int* x);
-
+const char* raise_exception(const char* message) throw(const char*);
 
 # endif

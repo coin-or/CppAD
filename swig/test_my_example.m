@@ -56,6 +56,19 @@ else
 	printf("my_example.max_array_by_ptr: class:  Error\n")
 	error_count = error_count + 1;
 end
+# --------------------------------------------
+try
+	my_example.raise_exception("test message");
+	message = "";
+catch
+	message = my_example.raise_exception("");
+end_try_catch
+if( message == "test message" )
+	printf("my_example.my_example.raise_exception: OK\n")
+else
+	printf("my_example.raise_exception.message_of_void: Error\n")
+	error_count = error_count + 1
+end
 % ---------------------------------------------
 % return error_count
 exit(error_count)
