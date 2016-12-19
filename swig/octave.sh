@@ -55,9 +55,18 @@ else
 end
 %
 if (my_example.my_message() == "OK" )
-	printf("my_example.my_message: OK")
+	printf("my_example.my_message: OK\n")
 else
-	printf("my_example.my_message: Error")
+	printf("my_example.my_message: Error\n")
+	error_count = error_count + 1;
+end
+%
+ptr = my_example.int_ptr();
+my_example.my_add(3, 4, ptr)
+if( ptr.value() == 7 )
+	printf("my_example.my_add: OK\n")
+else
+	printf("my_example.my_add: Error\n")
 	error_count = error_count + 1;
 end
 %

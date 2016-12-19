@@ -23,3 +23,7 @@ int my_mod(int x, int y) {
 const char* my_message()
 {	return "OK";
 }
+
+void my_add(int x, int y, int* result)
+{	*result = x + y;
+}
