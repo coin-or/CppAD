@@ -13,19 +13,17 @@
 #! /bin/bash -e
 # ---------------------------------------------------------------------------
 # create new build directory
-if [ -e build ]
+if [ ! -e build ]
 then
-	echo_eval rm -r build
+	echo_eval mkdir build
 fi
-echo_eval mkdir build
-echo_eval cp my_example.* build
 echo_eval cd build
 #
 # create my_example_python.cpp
-echo_eval swig -python -c++ -o my_example_python.cpp my_example.i
+echo_eval swig -python -c++ -I.. -o my_example_python.cpp ../my_example.i
 #
 # build module that is loadable by python
-echo_eval g++ my_example.cpp my_example_python.cpp \
+echo_eval g++ -I.. ../my_example.cpp my_example_python.cpp \
 	-c \
 	-fPIC \
 	-I /usr/include/python2.7

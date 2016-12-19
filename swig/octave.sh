@@ -13,16 +13,14 @@
 #! /bin/bash -e
 # ---------------------------------------------------------------------------
 # create new build directory
-if [ -e build ]
+if [ ! -e build ]
 then
-	echo_eval rm -r build
+	echo_eval mkdir build
 fi
-echo_eval mkdir build
-echo_eval cp my_example.* build
 echo_eval cd build
 #
 # create my_example_octave.cpp
-echo_eval swig -octave -o my_example_octave.cpp -c++ my_example.i
+echo_eval swig -octave -I.. -c++ -o my_example_octave.cpp ../my_example.i
 echo 'fix warnings about unitialized variables in my_example_octave.cpp'
 sed \
 	-e '/^ *int *val1 *;/s/;/= 0 ;/' \
@@ -31,7 +29,8 @@ sed \
 	-i my_example_octave.cpp
 #
 # build module that is loadable by octave
-echo_eval mkoctfile my_example.cpp my_example_octave.cpp -o my_example.oct
+echo_eval mkoctfile -I.. ../my_example.cpp my_example_octave.cpp \
+	-o my_example.oct
 # ---------------------------------------------------------------------------
 # text module
 cat << EOF > my_example.m
