@@ -62,7 +62,7 @@ else
 	error_count = error_count + 1;
 end
 % ---------------------------------------------
-ptr = my_example.int_ptr();
+ptr = my_example.int_ctor();
 my_example.my_add(3, 4, ptr)
 if( ptr.value() == 7 )
 	printf("my_example.my_add: OK\n")

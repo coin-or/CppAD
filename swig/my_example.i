@@ -16,7 +16,7 @@ Please visit http://www.coin-or.org/CppAD/ for information on other licenses.
 %}
 
 %include "cpointer.i"
-%pointer_class(int, int_ptr);
+%pointer_class(int, int_ctor);
 
 %include "carrays.i"
 %array_functions(int, int_vector);
