@@ -100,7 +100,7 @@ CONFIG_CLEAN_VPATH_FILES =
 am_optimize_OBJECTS = compare_op.$(OBJEXT) conditional_skip.$(OBJEXT) \
 	cumulative_sum.$(OBJEXT) forward_active.$(OBJEXT) \
 	nest_conditional.$(OBJEXT) optimize.$(OBJEXT) \
-	reverse_active.$(OBJEXT)
+	print_for.$(OBJEXT) reverse_active.$(OBJEXT)
 optimize_OBJECTS = $(am_optimize_OBJECTS)
 optimize_LDADD = $(LDADD)
 AM_V_P = $(am__v_P_@AM_V@)
@@ -353,7 +353,8 @@ optimize_SOURCES = \
 	forward_active.cpp \
 	nest_conditional.cpp \
 	optimize.cpp \
-	reverse_active.cpp 
+	print_for.cpp \
+	reverse_active.cpp
 
 all: all-am
 
@@ -408,6 +409,7 @@ distclean-compile:
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/forward_active.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/nest_conditional.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/optimize.Po@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/print_for.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/reverse_active.Po@am__quote@
 
 .cpp.o:

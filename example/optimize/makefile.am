@@ -30,6 +30,7 @@ optimize_SOURCES   = \
 	forward_active.cpp \
 	nest_conditional.cpp \
 	optimize.cpp \
+	print_for.cpp \
 	reverse_active.cpp
 
 test: check
