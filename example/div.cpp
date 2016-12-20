@@ -30,6 +30,7 @@ bool Div(void)
 {	bool ok = true;
 	using CppAD::AD;
 	using CppAD::NearEqual;
+	double eps99 = 99.0 * std::numeric_limits<double>::epsilon();
 
 
 	// domain space vector
@@ -56,21 +57,21 @@ bool Div(void)
 	CppAD::ADFun<double> f(x, y);
 
 	// check value
-	ok &= NearEqual(y[0], x0*x0*3.*2.*1./(4.*x0),  1e-10 , 1e-10);
+	ok &= NearEqual(y[0], x0*x0*3.*2.*1./(4.*x0), eps99, eps99);
 
 	// forward computation of partials w.r.t. x[0]
 	CPPAD_TESTVECTOR(double) dx(n);
 	CPPAD_TESTVECTOR(double) dy(m);
 	dx[0] = 1.;
 	dy    = f.Forward(1, dx);
-	ok   &= NearEqual(dy[0], 3.*2.*1./4., 1e-10, 1e-10);
+	ok   &= NearEqual(dy[0], 3.*2.*1./4., eps99, eps99);
 
 	// reverse computation of derivative of y[0]
 	CPPAD_TESTVECTOR(double)  w(m);
 	CPPAD_TESTVECTOR(double) dw(n);
 	w[0]  = 1.;
 	dw    = f.Reverse(1, w);
-	ok   &= NearEqual(dw[0], 3.*2.*1./4., 1e-10, 1e-10);
+	ok   &= NearEqual(dw[0], 3.*2.*1./4., eps99, eps99);
 
 	// use a VecAD<Base>::reference object with division
 	CppAD::VecAD<double> v(1);

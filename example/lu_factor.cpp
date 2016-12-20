@@ -42,6 +42,8 @@ bool LuFactor(void)
 	using std::rand;
 	using std::srand;
 # endif
+	using CppAD::NearEqual;
+	double eps99 = 99.0 * std::numeric_limits<double>::epsilon();
 
 	size_t  n = 5;                        // number rows in A
 	double  rand_max = double(RAND_MAX);  // maximum rand value
@@ -109,7 +111,7 @@ bool LuFactor(void)
 			// element (i,j) in permuted version of A
 			pij  = A[ ip[i] * n + jp[j] ];
 			// compare
-			ok  &= CppAD::NearEqual(pij, sum, 1e-10, 1e-10);
+			ok  &= NearEqual(pij, sum, eps99, eps99);
 		}
 	}
 

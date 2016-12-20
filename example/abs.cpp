@@ -36,6 +36,7 @@ bool abs(void)
 
 	using CppAD::AD;
 	using CppAD::NearEqual;
+	double eps99 = 99.0 * std::numeric_limits<double>::epsilon();
 
 	// domain space vector
 	size_t n = 1;
@@ -114,9 +115,9 @@ bool abs(void)
 	AD<double> zero(0);
 	v[zero]           = -1;
 	AD<double> result = abs(v[zero]);
-	ok    &= NearEqual(result, 1., 1e-10, 1e-10);
+	ok    &= NearEqual(result, 1., eps99, eps99);
 	result = fabs(v[zero]);
-	ok    &= NearEqual(result, 1., 1e-10, 1e-10);
+	ok    &= NearEqual(result, 1., eps99, eps99);
 
 	return ok;
 }

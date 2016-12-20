@@ -34,6 +34,7 @@ bool RevOneCases()
 {	bool ok = true;
 	using CppAD::AD;
 	using CppAD::NearEqual;
+	double eps99 = 99.0 * std::numeric_limits<double>::epsilon();
 	using CppAD::exp;
 	using CppAD::sin;
 	using CppAD::cos;
@@ -65,18 +66,18 @@ bool RevOneCases()
 	// compute and check derivative of y[0]
 	Vector dw(n);
 	dw  = f.RevOne(x, 0);
-	ok &= NearEqual(dw[0],      exp(x[1]), 1e-10, 1e-10 ); // w.r.t x[0]
-	ok &= NearEqual(dw[1], x[0]*exp(x[1]), 1e-10, 1e-10 ); // w.r.t x[1]
+	ok &= NearEqual(dw[0],      exp(x[1]), eps99, eps99); // w.r.t x[0]
+	ok &= NearEqual(dw[1], x[0]*exp(x[1]), eps99, eps99); // w.r.t x[1]
 
 	// compute and check derivative of y[1]
 	dw  = f.RevOne(x, 1);
-	ok &= NearEqual(dw[0],      sin(x[1]), 1e-10, 1e-10 );
-	ok &= NearEqual(dw[1], x[0]*cos(x[1]), 1e-10, 1e-10 );
+	ok &= NearEqual(dw[0],      sin(x[1]), eps99, eps99);
+	ok &= NearEqual(dw[1], x[0]*cos(x[1]), eps99, eps99);
 
 	// compute and check derivative of y[2]
 	dw  = f.RevOne(x, 2);
-	ok &= NearEqual(dw[0],        cos(x[1]), 1e-10, 1e-10 );
-	ok &= NearEqual(dw[1], - x[0]*sin(x[1]), 1e-10, 1e-10 );
+	ok &= NearEqual(dw[0],        cos(x[1]), eps99, eps99);
+	ok &= NearEqual(dw[1], - x[0]*sin(x[1]), eps99, eps99);
 
 	return ok;
 }

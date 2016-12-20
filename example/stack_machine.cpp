@@ -137,6 +137,7 @@ bool StackMachine(void)
 
 	using CppAD::AD;
 	using CppAD::NearEqual;
+	double eps99 = 99.0 * std::numeric_limits<double>::epsilon();
 	using CppAD::vector;
 
 	// The users program in that stack machine language
@@ -199,17 +200,17 @@ bool StackMachine(void)
 	vector<double> dy(m);
 	dx[0] = 1.;
 	dy    = f.Forward(p, dx);
-	ok   &= NearEqual(dy[0], 1., 1e-10, 1e-10);
-	ok   &= NearEqual(dy[1], 2., 1e-10, 1e-10);
-	ok   &= NearEqual(dy[2], 2., 1e-10, 1e-10);
-	ok   &= NearEqual(dy[3], .5, 1e-10, 1e-10);
+	ok   &= NearEqual(dy[0], 1., eps99, eps99);
+	ok   &= NearEqual(dy[1], 2., eps99, eps99);
+	ok   &= NearEqual(dy[2], 2., eps99, eps99);
+	ok   &= NearEqual(dy[3], .5, eps99, eps99);
 
 	// Use Jacobian routine (which automatically decides which mode to use)
 	dy = f.Jacobian(x);
-	ok   &= NearEqual(dy[0], 1., 1e-10, 1e-10);
-	ok   &= NearEqual(dy[1], 2., 1e-10, 1e-10);
-	ok   &= NearEqual(dy[2], 2., 1e-10, 1e-10);
-	ok   &= NearEqual(dy[3], .5, 1e-10, 1e-10);
+	ok   &= NearEqual(dy[0], 1., eps99, eps99);
+	ok   &= NearEqual(dy[1], 2., eps99, eps99);
+	ok   &= NearEqual(dy[2], 2., eps99, eps99);
+	ok   &= NearEqual(dy[3], .5, eps99, eps99);
 
 	return ok;
 }

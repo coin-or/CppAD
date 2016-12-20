@@ -112,6 +112,7 @@ namespace {
 
 bool OdeGearControl(void)
 {	bool ok = true;     // initial return value
+	using CppAD::NearEqual;
 
 	CPPAD_TESTVECTOR(double) w(2);
 	w[0] = 10.;
@@ -145,12 +146,12 @@ bool OdeGearControl(void)
 		ti, tf, xi, smin, smax, sini, eabs, erel, ef, maxabs, nstep);
 
 	double x0 = exp(-w[0]*tf);
-	ok &= CppAD::NearEqual(x0, xf[0], 1e-4, 1e-4);
-	ok &= CppAD::NearEqual(0., ef[0], 1e-4, 1e-4);
+	ok &= NearEqual(x0, xf[0], 1e-4, 1e-4);
+	ok &= NearEqual(0., ef[0], 1e-4, 1e-4);
 
 	double x1 = w[0] * (exp(-w[0]*tf) - exp(-w[1]*tf))/(w[1] - w[0]);
-	ok &= CppAD::NearEqual(x1, xf[1], 1e-4, 1e-4);
-	ok &= CppAD::NearEqual(0., ef[1], 1e-4, 1e-4);
+	ok &= NearEqual(x1, xf[1], 1e-4, 1e-4);
+	ok &= NearEqual(0., ef[1], 1e-4, 1e-4);
 
 	return ok;
 }

@@ -28,7 +28,10 @@ list=`git status | sed -n \
         -e '/^[#\t ]*renamed:/p' \
         -e '/^[#\t ]*new file:/p' | \
             sed -e 's/^.*: *//' -e 's/ -> /\n/' | \
-			sed -e '/makefile.in$/d' |
+			sed -e '/makefile.in$/d' \
+				-e '/check_copyright.sh$/d' \
+				-e '/AUTHORS/d' \
+				-e '/COPYING/d' |
                 sort -u`
 cat << EOF > check_copyright.1.$$
 # Change copyright second year to current year
@@ -40,6 +43,11 @@ for file in $list
 do
 	if [ -e $file ]
 	then
+		if ! grep 'Copyright (C) [0-9]*-[0-9][0-9]' $file > /dev/null
+		then
+			echo "Cannot find copyright message in $file"
+			exit 1
+		fi
 		sed -f check_copyright.1.$$ $file > check_copyright.2.$$
 		if ! diff $file check_copyright.2.$$ > /dev/null
 		then

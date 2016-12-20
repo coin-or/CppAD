@@ -34,6 +34,7 @@ bool log10(void)
 
 	using CppAD::AD;
 	using CppAD::NearEqual;
+	double eps99 = 99.0 * std::numeric_limits<double>::epsilon();
 
 	// domain space vector
 	size_t n  = 1;
@@ -57,28 +58,28 @@ bool log10(void)
 	CppAD::ADFun<double> f(x, y);
 
 	// check value
-	ok &= NearEqual(y[0] , x0,  1e-10 , 1e-10);
+	ok &= NearEqual(y[0] , x0, eps99, eps99);
 
 	// forward computation of first partial w.r.t. x[0]
 	CPPAD_TESTVECTOR(double) dx(n);
 	CPPAD_TESTVECTOR(double) dy(m);
 	dx[0] = 1.;
 	dy    = f.Forward(1, dx);
-	ok   &= NearEqual(dy[0], 1., 1e-10, 1e-10);
+	ok   &= NearEqual(dy[0], 1., eps99, eps99);
 
 	// reverse computation of derivative of y[0]
 	CPPAD_TESTVECTOR(double)  w(m);
 	CPPAD_TESTVECTOR(double) dw(n);
 	w[0]  = 1.;
 	dw    = f.Reverse(1, w);
-	ok   &= NearEqual(dw[0], 1., 1e-10, 1e-10);
+	ok   &= NearEqual(dw[0], 1., eps99, eps99);
 
 	// use a VecAD<Base>::reference object with log10
 	CppAD::VecAD<double> v(1);
 	AD<double> zero(0);
 	v[zero]           = pow_10_x0;
 	AD<double> result = CppAD::log10(v[zero]);
-	ok   &= NearEqual(result, x0, 1e-10, 1e-10);
+	ok   &= NearEqual(result, x0, eps99, eps99);
 
 	return ok;
 }

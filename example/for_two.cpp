@@ -36,6 +36,7 @@ bool ForTwoCases()
 {	bool ok = true;
 	using CppAD::AD;
 	using CppAD::NearEqual;
+	double eps99 = 99.0 * std::numeric_limits<double>::epsilon();
 	using CppAD::exp;
 	using CppAD::sin;
 	using CppAD::cos;
@@ -84,14 +85,14 @@ bool ForTwoCases()
 	[ 2 * x[0] * cos(x[1]) ]
 	*/
 	// second partial of y w.r.t x[0] and x[1]
-	ok &=  NearEqual( 2.*exp(x[1]), ddy[0*p+0], 1e-10, 1e-10 );
-	ok &=  NearEqual( 2.*sin(x[1]), ddy[1*p+0], 1e-10, 1e-10 );
-	ok &=  NearEqual( 2.*cos(x[1]), ddy[2*p+0], 1e-10, 1e-10 );
+	ok &=  NearEqual( 2.*exp(x[1]), ddy[0*p+0], eps99, eps99);
+	ok &=  NearEqual( 2.*sin(x[1]), ddy[1*p+0], eps99, eps99);
+	ok &=  NearEqual( 2.*cos(x[1]), ddy[2*p+0], eps99, eps99);
 
 	// second partial of F w.r.t x[0] and x[1]
-	ok &=  NearEqual( 2.*x[0]*exp(x[1]), ddy[0*p+1], 1e-10, 1e-10 );
-	ok &=  NearEqual( 2.*x[0]*cos(x[1]), ddy[1*p+1], 1e-10, 1e-10 );
-	ok &=  NearEqual(-2.*x[0]*sin(x[1]), ddy[2*p+1], 1e-10, 1e-10 );
+	ok &=  NearEqual( 2.*x[0]*exp(x[1]), ddy[0*p+1], eps99, eps99);
+	ok &=  NearEqual( 2.*x[0]*cos(x[1]), ddy[1*p+1], eps99, eps99);
+	ok &=  NearEqual(-2.*x[0]*sin(x[1]), ddy[2*p+1], eps99, eps99);
 
 	return ok;
 }

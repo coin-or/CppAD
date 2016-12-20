@@ -91,6 +91,9 @@ bool CheckLuFactor(
 	const CPPAD_TESTVECTOR(size_t) &jp )
 {	bool     ok = true;
 
+	using CppAD::NearEqual;
+	double eps99 = 99.0 * std::numeric_limits<double>::epsilon();
+
 	double  sum;                          // element of L * U
 	double  pij;                          // element of permuted x
 	size_t  i, j, k;                      // temporary indices
@@ -130,7 +133,7 @@ bool CheckLuFactor(
 			// element (i,j) in permuted version of A
 			pij  = x[ ip[i] * n + jp[j] ];
 			// compare
-			ok  &= CppAD::NearEqual(pij, sum, 1e-10, 1e-10);
+			ok  &= NearEqual(pij, sum, eps99, eps99);
 		}
 	}
 	return ok;

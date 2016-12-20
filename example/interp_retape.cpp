@@ -88,6 +88,7 @@ bool interp_retape(void)
 
 	using CppAD::AD;
 	using CppAD::NearEqual;
+	double eps99 = 99.0 * std::numeric_limits<double>::epsilon();
 
 	// domain space vector
 	size_t n = 1;
@@ -130,7 +131,7 @@ bool interp_retape(void)
 		delta  = ArgumentValue[k+1] - ArgumentValue[k];
 		check  = FunctionValue[k+1] * (x[0]-ArgumentValue[k]) / delta
 	               + FunctionValue[k] * (ArgumentValue[k+1]-x[0]) / delta;
-		ok    &= NearEqual(Y[0], check, 1e-10, 1e-10);
+		ok    &= NearEqual(Y[0], check, eps99, eps99);
 
 		// evaluate partials w.r.t. x[0]
 		dx[0] = 1.;
@@ -139,7 +140,7 @@ bool interp_retape(void)
 		// check that the derivative is the slope
 		check = (FunctionValue[k+1] - FunctionValue[k])
 		      / (ArgumentValue[k+1] - ArgumentValue[k]);
-		ok   &= NearEqual(dy[0], check, 1e-10, 1e-10);
+		ok   &= NearEqual(dy[0], check, eps99, eps99);
 	}
 	return ok;
 }

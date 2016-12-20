@@ -37,6 +37,7 @@ bool HessianCases()
 {	bool ok = true;
 	using CppAD::AD;
 	using CppAD::NearEqual;
+	double eps99 = 99.0 * std::numeric_limits<double>::epsilon();
 	using CppAD::exp;
 	using CppAD::sin;
 	using CppAD::cos;
@@ -79,10 +80,10 @@ bool HessianCases()
 	F_1^{(2)} = [        2 * sin(x[1]) ,      2 * x[0] * cos(x[1]) ]
 	            [ 2 * x[0] * cos(x[1]) , - x[0] * x[0] * sin(x[1]) ]
 	*/
-	ok &=  NearEqual(          2.*sin(x[1]), hes[0*n+0], 1e-10, 1e-10 );
-	ok &=  NearEqual(     2.*x[0]*cos(x[1]), hes[0*n+1], 1e-10, 1e-10 );
-	ok &=  NearEqual(     2.*x[0]*cos(x[1]), hes[1*n+0], 1e-10, 1e-10 );
-	ok &=  NearEqual( - x[0]*x[0]*sin(x[1]), hes[1*n+1], 1e-10, 1e-10 );
+	ok &=  NearEqual(          2.*sin(x[1]), hes[0*n+0], eps99, eps99);
+	ok &=  NearEqual(     2.*x[0]*cos(x[1]), hes[0*n+1], eps99, eps99);
+	ok &=  NearEqual(     2.*x[0]*cos(x[1]), hes[1*n+0], eps99, eps99);
+	ok &=  NearEqual( - x[0]*x[0]*sin(x[1]), hes[1*n+1], eps99, eps99);
 
 	return ok;
 }

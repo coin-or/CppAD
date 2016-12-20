@@ -166,6 +166,8 @@ namespace { // Empty namespace
 
 bool CheckNumericType(void)
 {	bool ok  = true;
+	using CppAD::NearEqual;
+	double eps99 = 99.0 * std::numeric_limits<double>::epsilon();
 
 	MyType A[4];
 	A[0] = MyType(1); A[1] = MyType(2);
@@ -180,10 +182,10 @@ bool CheckNumericType(void)
 
 	MyType sum;
 	sum = A[0] * x[0] + A[1] * x[1];
-	ok &= CppAD::NearEqual(sum.Double(), b[0].Double(), 1e-10, 1e-10);
+	ok &= NearEqual(sum.Double(), b[0].Double(), eps99, eps99);
 
 	sum = A[2] * x[0] + A[3] * x[1];
-	ok &= CppAD::NearEqual(sum.Double(), b[1].Double(), 1e-10, 1e-10);
+	ok &= NearEqual(sum.Double(), b[1].Double(), eps99, eps99);
 
 	return ok;
 }

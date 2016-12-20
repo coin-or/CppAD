@@ -86,6 +86,9 @@ bool runge_45_1(void)
 {	bool ok = true;     // initial return value
 	size_t i;           // temporary indices
 
+	using CppAD::NearEqual;
+	double eps99 = 99.0 * std::numeric_limits<double>::epsilon();
+
 	size_t  n = 5;      // number components in X(t) and order of method
 	size_t  M = 2;      // number of Runge45 steps in [ti, tf]
 	double ti = 0.;     // initial time
@@ -111,7 +114,7 @@ bool runge_45_1(void)
 			ok    &= (e[i] >= 0.);
 			// 5th order method is exact for i < 5
 			if( i < 5 ) ok &=
-				CppAD::NearEqual(xf[i], check, 1e-10, 1e-10);
+				NearEqual(xf[i], check, eps99, eps99);
 			// 4th order method is exact for i < 4
 			if( i < 4 )
 				ok &= (e[i] <= 1e-10);

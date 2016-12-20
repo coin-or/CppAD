@@ -35,6 +35,7 @@ bool Sinh(void)
 
 	using CppAD::AD;
 	using CppAD::NearEqual;
+	double eps99 = 99.0 * std::numeric_limits<double>::epsilon();
 
 	// domain space vector
 	size_t n  = 1;
@@ -55,7 +56,7 @@ bool Sinh(void)
 
 	// check value
 	double check = std::sinh(x0);
-	ok &= NearEqual(y[0] , check,  1e-10 , 1e-10);
+	ok &= NearEqual(y[0] , check, eps99, eps99);
 
 	// forward computation of first partial w.r.t. x[0]
 	CPPAD_TESTVECTOR(double) dx(n);
@@ -63,14 +64,14 @@ bool Sinh(void)
 	dx[0] = 1.;
 	dy    = f.Forward(1, dx);
 	check = std::cosh(x0);
-	ok   &= NearEqual(dy[0], check, 1e-10, 1e-10);
+	ok   &= NearEqual(dy[0], check, eps99, eps99);
 
 	// reverse computation of derivative of y[0]
 	CPPAD_TESTVECTOR(double)  w(m);
 	CPPAD_TESTVECTOR(double) dw(n);
 	w[0]  = 1.;
 	dw    = f.Reverse(1, w);
-	ok   &= NearEqual(dw[0], check, 1e-10, 1e-10);
+	ok   &= NearEqual(dw[0], check, eps99, eps99);
 
 	// use a VecAD<Base>::reference object with sinh
 	CppAD::VecAD<double> v(1);
@@ -78,7 +79,7 @@ bool Sinh(void)
 	v[zero]           = x0;
 	AD<double> result = CppAD::sinh(v[zero]);
 	check = std::sinh(x0);
-	ok   &= NearEqual(result, check, 1e-10, 1e-10);
+	ok   &= NearEqual(result, check, eps99, eps99);
 
 	return ok;
 }

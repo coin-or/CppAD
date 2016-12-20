@@ -88,6 +88,7 @@ bool vec_ad(void)
 
 	using CppAD::AD;
 	using CppAD::NearEqual;
+	double eps99 = 99.0 * std::numeric_limits<double>::epsilon();
 
 	// domain space vector
 	size_t n = 4;
@@ -124,8 +125,8 @@ bool vec_ad(void)
 	double num1  = x[0] * b[1] - b[0] * x[2];
 
 	// check value
-	ok &= NearEqual(Y[0] , num0 / den,  1e-10 , 1e-10);
-	ok &= NearEqual(Y[1] , num1 / den,  1e-10 , 1e-10);
+	ok &= NearEqual(Y[0] , num0 / den, eps99, eps99);
+	ok &= NearEqual(Y[1] , num1 / den, eps99, eps99);
 
 	// forward computation of partials w.r.t. x[0]
 	CPPAD_TESTVECTOR(double) dx(n);
@@ -133,8 +134,8 @@ bool vec_ad(void)
 	dx[0] = 1.; dx[1] = 0.;
 	dx[2] = 0.; dx[3] = 0.;
 	dy    = f.Forward(1, dx);
-	ok &= NearEqual(dy[0], 0.         - num0 * x[3] / dsq, 1e-10, 1e-10);
-	ok &= NearEqual(dy[1], b[1] / den - num1 * x[3] / dsq, 1e-10, 1e-10);
+	ok &= NearEqual(dy[0], 0.         - num0 * x[3] / dsq, eps99, eps99);
+	ok &= NearEqual(dy[1], b[1] / den - num1 * x[3] / dsq, eps99, eps99);
 
 	// compute the solution for a new x matrix such that pivioting
 	// on the original rmax row would divide by zero
@@ -150,25 +151,25 @@ bool vec_ad(void)
 
 	// check values
 	y    = f.Forward(0, x);
-	ok &= NearEqual(y[0] , num0 / den,  1e-10 , 1e-10);
-	ok &= NearEqual(y[1] , num1 / den,  1e-10 , 1e-10);
+	ok &= NearEqual(y[0] , num0 / den, eps99, eps99);
+	ok &= NearEqual(y[1] , num1 / den, eps99, eps99);
 
 	// forward computation of partials w.r.t. x[1]
 	dx[0] = 0.; dx[1] = 1.;
 	dx[2] = 0.; dx[3] = 0.;
 	dy    = f.Forward(1, dx);
-	ok   &= NearEqual(dy[0],-b[1] / den + num0 * x[2] / dsq, 1e-10, 1e-10);
-	ok   &= NearEqual(dy[1], 0.         + num1 * x[2] / dsq, 1e-10, 1e-10);
+	ok   &= NearEqual(dy[0],-b[1] / den + num0 * x[2] / dsq, eps99, eps99);
+	ok   &= NearEqual(dy[1], 0.         + num1 * x[2] / dsq, eps99, eps99);
 
 	// reverse computation of derivative of y[0] w.r.t x
 	CPPAD_TESTVECTOR(double) w(m);
 	CPPAD_TESTVECTOR(double) dw(n);
 	w[0] = 1.; w[1] = 0.;
 	dw   = f.Reverse(1, w);
-	ok  &= NearEqual(dw[0], 0.         - num0 * x[3] / dsq, 1e-10, 1e-10);
-	ok  &= NearEqual(dw[1],-b[1] / den + num0 * x[2] / dsq, 1e-10, 1e-10);
-	ok  &= NearEqual(dw[2], 0.         + num0 * x[1] / dsq, 1e-10, 1e-10);
-	ok  &= NearEqual(dw[3], b[0] / den - num0 * x[0] / dsq, 1e-10, 1e-10);
+	ok  &= NearEqual(dw[0], 0.         - num0 * x[3] / dsq, eps99, eps99);
+	ok  &= NearEqual(dw[1],-b[1] / den + num0 * x[2] / dsq, eps99, eps99);
+	ok  &= NearEqual(dw[2], 0.         + num0 * x[1] / dsq, eps99, eps99);
+	ok  &= NearEqual(dw[3], b[0] / den - num0 * x[0] / dsq, eps99, eps99);
 
 	return ok;
 }

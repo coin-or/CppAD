@@ -157,6 +157,9 @@ bool Rosen34(void)
 {	bool ok = true;     // initial return value
 	size_t i;           // temporary indices
 
+	using CppAD::NearEqual;
+	double eps99 = 99.0 * std::numeric_limits<double>::epsilon();
+
 	size_t  n = 4;      // number components in X(t) and order of method
 	size_t  M = 2;      // number of Rosen34 steps in [ti, tf]
 	double ti = 0.;     // initial time
@@ -182,7 +185,7 @@ bool Rosen34(void)
 			ok    &= (e[i] >= 0.);
 			// 4th order method is exact for i < 4
 			if( i < 4 ) ok &=
-				CppAD::NearEqual(xf[i], check, 1e-10, 1e-10);
+				NearEqual(xf[i], check, eps99, eps99);
 			// 3rd order method is exact for i < 3
 			if( i < 3 )
 				ok &= (e[i] <= 1e-10);

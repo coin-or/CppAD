@@ -48,6 +48,7 @@ bool HesTimesDir(void)
 
 	using CppAD::AD;
 	using CppAD::NearEqual;
+	double eps99 = 99.0 * std::numeric_limits<double>::epsilon();
 
 	// domain space vector
 	size_t n = 5;
@@ -83,7 +84,7 @@ bool HesTimesDir(void)
 	// F''(x)      = 2 * Identity_Matrix
 	// F''(x) * dx = 2 * dx
 	for(j = 0; j < n; j++)
-		ok &= NearEqual(ddw[j * 2 + 1], 2.*dx[j], 1e-10, 1e-10);
+		ok &= NearEqual(ddw[j * 2 + 1], 2.*dx[j], eps99, eps99);
 
 	return ok;
 }
