@@ -1,6 +1,6 @@
 // $Id$
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-15 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-16 Bradley M. Bell
 
 CppAD is distributed under multiple licenses. This distribution is under
 the terms of the
@@ -80,6 +80,8 @@ bool Rosen34(void)
 {	bool ok = true;
 
 	using namespace CppAD;
+	using CppAD::NearEqual;
+	double eps99 = 99.0 * std::numeric_limits<double>::epsilon();
 
 	CPPAD_TESTVECTOR(AD<double>) x(3);
 	CPPAD_TESTVECTOR(AD<double>) w(3);
@@ -120,7 +122,7 @@ bool Rosen34(void)
 	ok &= NearEqual(x[1],  x1, 0., 1. / (nstep * nstep) );
 
 	AD<double> x2 = w[2] * t1 * t1 / 2.;
-	ok &= NearEqual(x[2],  x2, 1e-14, 1e-14);
+	ok &= NearEqual(x[2],  x2, eps99, eps99);
 
 	// check dx[0] / dw[0]
 	for(i = 0; i < size_t(w.size()); i++)
@@ -139,7 +141,7 @@ bool Rosen34(void)
 	q[1] = 0.;
 	q[2] = 1.;
 	r    = f.Forward(1, q);
-	ok &= NearEqual(r[2], x2 / w[2],  1e-14, 1e-14 );
+	ok &= NearEqual(r[2], x2 / w[2], eps99, eps99);
 
 	return ok;
 }

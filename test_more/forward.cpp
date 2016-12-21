@@ -1,6 +1,6 @@
 // $Id$
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-15 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-16 Bradley M. Bell
 
 CppAD is distributed under multiple licenses. This distribution is under
 the terms of the
@@ -23,6 +23,8 @@ bool ForwardCases(void)
 {	bool ok = true;
 
 	using namespace CppAD;
+	using CppAD::NearEqual;
+	double eps99 = 99.0 * std::numeric_limits<double>::epsilon();
 
 	// independent variable vector
 	CPPAD_TESTVECTOR(AD<double>) X(2);
@@ -43,7 +45,7 @@ bool ForwardCases(void)
 	x0[0]    = 3.;
 	x0[1]    = 4.;
 	y0       = F.Forward(0, x0);
-	ok      &= NearEqual(y0[0] , x0[0]*x0[0]*x0[1], 1e-10, 1e-10);
+	ok      &= NearEqual(y0[0] , x0[0]*x0[0]*x0[1], eps99, eps99);
 
 	// evaluate derivative of F in X[0] direction
 	VectorDouble x1( F.Domain() );
@@ -51,7 +53,7 @@ bool ForwardCases(void)
 	x1[0]    = 1.;
 	x1[1]    = 0.;
 	y1       = F.Forward(1, x1);
-	ok      &= NearEqual(y1[0] , 2.*x0[0]*x0[1], 1e-10, 1e-10);
+	ok      &= NearEqual(y1[0] , 2.*x0[0]*x0[1], eps99, eps99);
 
 	// evaluate second derivative of F in X[0] direction
 	VectorDouble x2( F.Domain() );
@@ -60,30 +62,30 @@ bool ForwardCases(void)
 	x2[1]       = 0.;
 	y2          = F.Forward(2, x2);
 	double F_00 = 2. * y2[0];
-	ok         &= NearEqual(F_00, 2.*x0[1], 1e-10, 1e-10);
+	ok         &= NearEqual(F_00, 2.*x0[1], eps99, eps99);
 
 	// evalute derivative of F in X[1] direction
 	x1[0]    = 0.;
 	x1[1]    = 1.;
 	y1       = F.Forward(1, x1);
-	ok      &= NearEqual(y1[0] , x0[0]*x0[0], 1e-10, 1e-10);
+	ok      &= NearEqual(y1[0] , x0[0]*x0[0], eps99, eps99);
 
 	// evaluate second derivative of F in X[1] direction
 	y2          = F.Forward(2, x2);
 	double F_11 = 2. * y2[0];
-	ok         &= NearEqual(F_11, 0., 1e-10, 1e-10);
+	ok         &= NearEqual(F_11, 0., eps99, eps99);
 
 	// evalute derivative of F in X[0] + X[1] direction
 	x1[0]    = 1.;
 	x1[1]    = 1.;
 	y1       = F.Forward(1, x1);
-	ok      &= NearEqual(y1[0], 2.*x0[0]*x0[1] + x0[0]*x0[0], 1e-10, 1e-10);
+	ok      &= NearEqual(y1[0], 2.*x0[0]*x0[1] + x0[0]*x0[0], eps99, eps99);
 
 	// use second derivative of F in X[0] direction to
 	// compute second partial of F w.r.t X[1] w.r.t X[2]
 	y2          = F.Forward(2, x2);
 	double F_01 = y2[0] - F_00 / 2. - F_11 / 2.;
-	ok         &= NearEqual(F_01 , 2.*x0[0], 1e-10, 1e-10);
+	ok         &= NearEqual(F_01 , 2.*x0[0], eps99, eps99);
 
 	return ok;
 }
@@ -92,6 +94,8 @@ bool ForwardOlder(void)
 {	bool ok = true;
 
 	using namespace CppAD;
+	using CppAD::NearEqual;
+	double eps99 = 99.0 * std::numeric_limits<double>::epsilon();
 
 	// independent variable vector
 	CPPAD_TESTVECTOR(AD<double>) U(3);
@@ -129,8 +133,8 @@ bool ForwardOlder(void)
 	f0[1] = u0[0] * u0[1] * u0[2];
 
 	// compare values
-	ok &= NearEqual(v0[0] , f0[0], 1e-10, 1e-10);
-	ok &= NearEqual(v0[1] , f0[1], 1e-10, 1e-10);
+	ok &= NearEqual(v0[0] , f0[0], eps99, eps99);
+	ok &= NearEqual(v0[1] , f0[1], eps99, eps99);
 
 	// use ADFun object to evaluate f^(1) [ u0 ] * u1 -----------------
 	CPPAD_TESTVECTOR(double) u1( f.Domain() );
@@ -176,7 +180,7 @@ bool ForwardOlder(void)
 		for(j = 0; j < 3; j++)
 			v2_1 += .5 * u1[i] * H1[i * 3 + j] * u1[j];
 	}
-	ok &= NearEqual(v2[1], v2_1, 1e-10, 1e-10);
+	ok &= NearEqual(v2[1], v2_1, eps99, eps99);
 
 
 	return ok;

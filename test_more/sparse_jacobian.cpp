@@ -1,6 +1,6 @@
 // $Id$
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-15 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-16 Bradley M. Bell
 
 CppAD is distributed under multiple licenses. This distribution is under
 the terms of the
@@ -22,7 +22,7 @@ bool rc_tridiagonal(void)
 	using CppAD::AD;
 	using CppAD::NearEqual;
 	size_t i, j, k, ell;
-	double eps = 10. * CppAD::epsilon<double>();
+	double eps10 = 10. * CppAD::epsilon<double>();
 
 	// domain space vector
 	size_t n = 13; // must be greater than or equal 3 (see n_sweep below)
@@ -91,14 +91,14 @@ bool rc_tridiagonal(void)
 	ok &= n_sweep == 3;
 	for(k = 0; k < K; k++)
 	{	ell = r[k] * n + c[k];
-		ok &=  NearEqual(check[ell], jac[k], eps, eps);
+		ok &=  NearEqual(check[ell], jac[k], eps10, eps10);
 	}
 	work.clear();
 	n_sweep = f.SparseJacobianReverse(x, p, r, c, jac, work);
 	ok &= n_sweep == 3;
 	for(k = 0; k < K; k++)
 	{	ell = r[k] * n + c[k];
-		ok &=  NearEqual(check[ell], jac[k], eps, eps);
+		ok &=  NearEqual(check[ell], jac[k], eps10, eps10);
 	}
 
 	return ok;
@@ -110,7 +110,7 @@ bool rc_set(void)
 	using CppAD::AD;
 	using CppAD::NearEqual;
 	size_t i, j, k, ell;
-	double eps = 10. * CppAD::epsilon<double>();
+	double eps10 = 10. * CppAD::epsilon<double>();
 
 	// domain space vector
 	size_t n = 4;
@@ -163,7 +163,7 @@ bool rc_set(void)
 	size_t n_sweep = f.SparseJacobianForward(x, p, r, c, jac, work);
 	for(k = 0; k < 3; k++)
 	{	ell = r[k] * n + c[k];
-		ok &=  NearEqual(check[ell], jac[k], eps, eps);
+		ok &=  NearEqual(check[ell], jac[k], eps10, eps10);
 	}
 	ok &= (n_sweep == 1);
 
@@ -178,7 +178,7 @@ bool rc_set(void)
 	n_sweep = f.SparseJacobianReverse(x, p, r, c, jac, work);
 	for(k = 0; k < 4; k++)
 	{	ell = r[k] * n + c[k];
-		ok &=  NearEqual(check[ell], jac[k], eps, eps);
+		ok &=  NearEqual(check[ell], jac[k], eps10, eps10);
 	}
 	ok &= (n_sweep == 1);
 
@@ -190,7 +190,7 @@ bool rc_bool(void)
 	using CppAD::AD;
 	using CppAD::NearEqual;
 	size_t j, k, ell;
-	double eps = 10. * CppAD::epsilon<double>();
+	double eps10 = 10. * CppAD::epsilon<double>();
 
 	// domain space vector
 	size_t n = 4;
@@ -241,7 +241,7 @@ bool rc_bool(void)
 	size_t n_sweep = f.SparseJacobianForward(x, s, r, c, jac, work);
 	for(k = 0; k < 3; k++)
 	{	ell = r[k] * n + c[k];
-		ok &=  NearEqual(check[ell], jac[k], eps, eps);
+		ok &=  NearEqual(check[ell], jac[k], eps10, eps10);
 	}
 	ok &= (n_sweep == 1);
 
@@ -256,7 +256,7 @@ bool rc_bool(void)
 	n_sweep = f.SparseJacobianReverse(x, s, r, c, jac, work);
 	for(k = 0; k < 4; k++)
 	{	ell = r[k] * n + c[k];
-		ok &=  NearEqual(check[ell], jac[k], eps, eps);
+		ok &=  NearEqual(check[ell], jac[k], eps10, eps10);
 	}
 	ok &= (n_sweep == 1);
 

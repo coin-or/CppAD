@@ -1,6 +1,6 @@
 // $Id$
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-15 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-16 Bradley M. Bell
 
 CppAD is distributed under multiple licenses. This distribution is under
 the terms of the
@@ -16,6 +16,7 @@ bool RevTwo()
 	using CppAD::AD;
 	using CppAD::vector;
 	using CppAD::NearEqual;
+	double eps99 = 99.0 * std::numeric_limits<double>::epsilon();
 
 
 	size_t n = 2;
@@ -40,12 +41,12 @@ bool RevTwo()
 	I[0] = 0;
 	J[0] = 0;
 	H    = F.RevTwo(x, I, J);
-	ok  &= NearEqual(H[0], 2., 1e-10, 1e-10);
-	ok  &= NearEqual(H[1], 1., 1e-10, 1e-10);
+	ok  &= NearEqual(H[0], 2., eps99, eps99);
+	ok  &= NearEqual(H[1], 1., eps99, eps99);
 	J[0] = 1;
 	H    = F.RevTwo(x, I, J);
-	ok  &= NearEqual(H[0], 1., 1e-10, 1e-10);
-	ok  &= NearEqual(H[1], 4., 1e-10, 1e-10);
+	ok  &= NearEqual(H[0], 1., eps99, eps99);
+	ok  &= NearEqual(H[1], 4., eps99, eps99);
 
 	return ok;
 }

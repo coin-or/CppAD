@@ -1,6 +1,6 @@
 // $Id$
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-15 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-16 Bradley M. Bell
 
 CppAD is distributed under multiple licenses. This distribution is under
 the terms of the
@@ -22,6 +22,7 @@ bool PowTestOne(void)
 
 	using CppAD::AD;
 	using CppAD::NearEqual;
+	double eps99 = 99.0 * std::numeric_limits<double>::epsilon();
 
 	// domain space vector
 	size_t n  = 2;
@@ -48,7 +49,7 @@ bool PowTestOne(void)
 	double check = std::pow(x, y);
 	size_t i;
 	for(i = 0; i < m; i++)
-		ok &= NearEqual(Z[i] , check,  1e-10 , 1e-10);
+		ok &= NearEqual(Z[i] , check, eps99, eps99);
 
 	// forward computation of first partial w.r.t. x
 	CPPAD_TESTVECTOR(double) dxy(n);
@@ -57,18 +58,18 @@ bool PowTestOne(void)
 	dxy[1] = 0.;
 	dz    = f.Forward(1, dxy);
 	check = y * std::pow(x, y-1.);
-	ok   &= NearEqual(dz[0], check, 1e-10, 1e-10);
-	ok   &= NearEqual(dz[1], check, 1e-10, 1e-10);
-	ok   &= NearEqual(dz[2],    0., 1e-10, 1e-10);
+	ok   &= NearEqual(dz[0], check, eps99, eps99);
+	ok   &= NearEqual(dz[1], check, eps99, eps99);
+	ok   &= NearEqual(dz[2],    0., eps99, eps99);
 
 	// forward computation of first partial w.r.t. y
 	dxy[0] = 0.;
 	dxy[1] = 1.;
 	dz    = f.Forward(1, dxy);
 	check = std::log(x) * std::pow(x, y);
-	ok   &= NearEqual(dz[0], check, 1e-10, 1e-10);
-	ok   &= NearEqual(dz[1],    0., 1e-10, 1e-10);
-	ok   &= NearEqual(dz[2], check, 1e-10, 1e-10);
+	ok   &= NearEqual(dz[0], check, eps99, eps99);
+	ok   &= NearEqual(dz[1],    0., eps99, eps99);
+	ok   &= NearEqual(dz[2], check, eps99, eps99);
 
 	// reverse computation of derivative of z[0] + z[1] + z[2]
 	CPPAD_TESTVECTOR(double)  w(m);
@@ -78,9 +79,9 @@ bool PowTestOne(void)
 	w[2]  = 1.;
 	dw    = f.Reverse(1, w);
 	check = y * std::pow(x, y-1.);
-	ok   &= NearEqual(dw[0], 2. * check, 1e-10, 1e-10);
+	ok   &= NearEqual(dw[0], 2. * check, eps99, eps99);
 	check = std::log(x) * std::pow(x, y);
-	ok   &= NearEqual(dw[1], 2. * check, 1e-10, 1e-10);
+	ok   &= NearEqual(dw[1], 2. * check, eps99, eps99);
 
 	// use a VecAD<Base>::reference object with pow
 	CppAD::VecAD<double> v(2);
@@ -89,7 +90,7 @@ bool PowTestOne(void)
 	v[zero]           = XY[0];
 	v[one]            = XY[1];
 	AD<double> result = CppAD::pow(v[zero], v[one]);
-	ok               &= NearEqual(result, Z[0], 1e-10, 1e-10);
+	ok               &= NearEqual(result, Z[0], eps99, eps99);
 
 	return ok;
 }
@@ -100,6 +101,8 @@ bool PowTestTwo(void)
 	using CppAD::pow;
 	using CppAD::exp;
 	using namespace CppAD;
+	using CppAD::NearEqual;
+	double eps99 = 99.0 * std::numeric_limits<double>::epsilon();
 
 
 	// independent variable vector, indices, values, and declaration
@@ -136,8 +139,8 @@ bool PowTestTwo(void)
 	*/
 
 	// check values
-	ok &= NearEqual(Z[x] , exp(2. * 3.),              1e-10 , 1e-10);
-	ok &= NearEqual(Z[y] , exp( 2. * 3. * exp(2.) ),  1e-10 , 1e-10);
+	ok &= NearEqual(Z[x] , exp(2. * 3.), eps99, eps99);
+	ok &= NearEqual(Z[y] , exp( 2. * 3. * exp(2.) ), eps99, eps99);
 
 	// forward computation of partials w.r.t. s
 	v[s] = 1.;
@@ -189,6 +192,7 @@ bool PowTestThree(void)
 
 	using CppAD::AD;
 	using CppAD::NearEqual;
+	double eps99 = 99.0 * std::numeric_limits<double>::epsilon();
 
 	// domain space vector
 	size_t n  = 1;
@@ -224,7 +228,7 @@ bool PowTestThree(void)
 	dy    = f.Forward(1, dx);
 	ok   &= (dy[0] == 0.);
 	ok   &= (dy[1] == 0.);
-	ok   &= NearEqual(dy[2], 1., 1e-10, 1e-10);
+	ok   &= NearEqual(dy[2], 1., eps99, eps99);
 	ok   &= (dy[3] == 0.);
 
 	// reverse mode computation of derivative of y[0]+y[1]+y[2]+y[3]
@@ -235,7 +239,7 @@ bool PowTestThree(void)
 	w[2] = 1.;
 	w[3] = 1.;
 	dw   = f.Reverse(1, w);
-	ok  &= NearEqual(dw[0], 1., 1e-10, 1e-10);
+	ok  &= NearEqual(dw[0], 1., eps99, eps99);
 
 	return ok;
 }
@@ -245,6 +249,7 @@ bool PowTestFour(void)
 
 	using CppAD::AD;
 	using CppAD::NearEqual;
+	double eps99 = 99.0 * std::numeric_limits<double>::epsilon();
 
 	// domain space vector
 	size_t n  = 1;
@@ -272,7 +277,7 @@ bool PowTestFour(void)
 	double check;
 	for(i = 1; i < m; i++)
 	{	check = std::pow(x0, double(i-1));
-		ok   &= NearEqual(y[i], check, 1e-10, 1e-10);
+		ok   &= NearEqual(y[i], check, eps99, eps99);
 	}
 
 	// forward computation of first partial w.r.t. x
@@ -286,7 +291,7 @@ bool PowTestFour(void)
 	{	if( i == 1 )
 			check = 0.;
 		else	check = double(i-1) * std::pow(x0, double(i-2));
-		ok   &= NearEqual(dy[i], check, 1e-10, 1e-10);
+		ok   &= NearEqual(dy[i], check, eps99, eps99);
 		sum  += check;
 	}
 
@@ -296,7 +301,7 @@ bool PowTestFour(void)
 	for(i = 0; i < m; i++)
 		w[i] = 1.;
 	dw   = f.Reverse(1, w);
-	ok  &= NearEqual(dw[0], sum, 1e-10, 1e-10);
+	ok  &= NearEqual(dw[0], sum, eps99, eps99);
 
 	return ok;
 }
@@ -305,6 +310,7 @@ bool PowTestFive(void)
 
 	using CppAD::AD;
 	using CppAD::NearEqual;
+	double eps99 = 99.0 * std::numeric_limits<double>::epsilon();
 
 	// domain space vector
 	size_t n  = 1;
@@ -335,7 +341,7 @@ bool PowTestFive(void)
 	CPPAD_TESTVECTOR(double) dy(m);
 	dx[0] = 1.;
 	dy    = f.Forward(1, dx);
-	ok   &= NearEqual(dy[0], d1, 1e-10, 1e-10);
+	ok   &= NearEqual(dy[0], d1, eps99, eps99);
 
 	// reverse mode computation of second partials
 	// x.r.t. x[1],x[0]  and x[1], x[1]
@@ -344,8 +350,8 @@ bool PowTestFive(void)
 	CPPAD_TESTVECTOR(double) ddw(2*n);
 	w[0] = 1.;
 	ddw  = f.Reverse(2, w);
-	ok  &= NearEqual(ddw[0], d1, 1e-10, 1e-10);
-	ok  &= NearEqual(ddw[1], d2, 1e-10, 1e-10);
+	ok  &= NearEqual(ddw[0], d1, eps99, eps99);
+	ok  &= NearEqual(ddw[1], d2, eps99, eps99);
 
 	return ok;
 }
@@ -354,6 +360,7 @@ bool PowTestSix(void)
 
 	using CppAD::AD;
 	using CppAD::NearEqual;
+	double eps99 = 99.0 * std::numeric_limits<double>::epsilon();
 
 	// domain space vector
 	size_t n  = 1;
@@ -388,7 +395,7 @@ bool PowTestSix(void)
 	CPPAD_TESTVECTOR(AD<double>) dy(m);
 	dx[0] = 1.;
 	dy    = F.Forward(1, dx);
-	ok   &= NearEqual(dy[0], d1, 1e-10, 1e-10);
+	ok   &= NearEqual(dy[0], d1, eps99, eps99);
 
 	// reverse mode computation of second partials
 	// x.r.t. x[1],x[0]  and x[1], x[1]
@@ -397,8 +404,8 @@ bool PowTestSix(void)
 	CPPAD_TESTVECTOR(AD<double>) ddw(2*n);
 	w[0] = 1.;
 	ddw  = F.Reverse(2, w);
-	ok  &= NearEqual(ddw[0], d1, 1e-10, 1e-10);
-	ok  &= NearEqual(ddw[1], d2, 1e-10, 1e-10);
+	ok  &= NearEqual(ddw[0], d1, eps99, eps99);
+	ok  &= NearEqual(ddw[1], d2, eps99, eps99);
 
 	return ok;
 }

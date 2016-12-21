@@ -1,6 +1,6 @@
 // $Id$
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-15 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-16 Bradley M. Bell
 
 CppAD is distributed under multiple licenses. This distribution is under
 the terms of the
@@ -25,6 +25,8 @@ bool ForHess(void)
 	using CppAD::exp;
 	using CppAD::sin;
 	using CppAD::cos;
+	using CppAD::NearEqual;
+	double eps99 = 99.0 * std::numeric_limits<double>::epsilon();
 
 	size_t i;
 
@@ -78,8 +80,8 @@ bool ForHess(void)
 		u1[i] = 1.;
 		F.Forward(1, u1);
 		CPPAD_TESTVECTOR(double) Di = F.Forward(2, u2);
-		ok &= NearEqual( 2. * Di[0] , H0[ i + 3 * i], 1e-10, 1e-10);
-		ok &= NearEqual( 2. * Di[1] , H1[ i + 3 * i], 1e-10, 1e-10);
+		ok &= NearEqual( 2. * Di[0] , H0[ i + 3 * i], eps99, eps99);
+		ok &= NearEqual( 2. * Di[1] , H1[ i + 3 * i], eps99, eps99);
 		//
 		for(j = i+1; j < 3; j++)
 		{	// cross term in i and j direction
@@ -94,9 +96,9 @@ bool ForHess(void)
 
 			// (i, j) elements of the Hessians
 			double H0ij = Cij[0] - Di[0] - Dj[0];
-			ok &= NearEqual( H0ij, H0[j + 3 * i], 1e-10, 1e-10);
+			ok &= NearEqual( H0ij, H0[j + 3 * i], eps99, eps99);
 			double H1ij = Cij[1] - Di[1] - Dj[1];
-			ok &= NearEqual( H1ij, H1[j + 3 * i], 1e-10, 1e-10);
+			ok &= NearEqual( H1ij, H1[j + 3 * i], eps99, eps99);
 
 			// reset all components of u1 to zero
 			u1[j] = 0.;

@@ -1,6 +1,6 @@
 // $Id$
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-15 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-16 Bradley M. Bell
 
 CppAD is distributed under multiple licenses. This distribution is under
 the terms of the
@@ -21,6 +21,8 @@ bool DivEqTestOne(void)
 {	bool ok = true;
 
 	using namespace CppAD;
+	using CppAD::NearEqual;
+	double eps99 = 99.0 * std::numeric_limits<double>::epsilon();
 
 	// independent variable vector, indices, values, and declaration
 	CPPAD_TESTVECTOR(AD<double>) U(2);
@@ -63,15 +65,15 @@ bool DivEqTestOne(void)
 		ok &= ! f.Parameter(i);
 
 	// check functin values
-	ok &= NearEqual(Z[x] , 3. / 2. , 1e-10, 1e-10);
-	ok &= NearEqual(Z[y] , 2. / 5. , 1e-10, 1e-10);
+	ok &= NearEqual(Z[x] , 3. / 2. , eps99, eps99);
+	ok &= NearEqual(Z[y] , 2. / 5. , eps99, eps99);
 
 	// forward computation of partials w.r.t. t
 	v[s] = 0.;
 	v[t] = 1.;
 	w    = f.Forward(1, v);
-	ok &= NearEqual(w[x] , -1.*U[s]/(U[t]*U[t]) , 1e-10, 1e-10); // dx/dt
-	ok &= NearEqual(w[y] , 1. / 5.              , 1e-10, 1e-10); // dy/dt
+	ok &= NearEqual(w[x] , -1.*U[s]/(U[t]*U[t]) , eps99, eps99); // dx/dt
+	ok &= NearEqual(w[y] , 1. / 5.              , eps99, eps99); // dy/dt
 
 	// reverse computation of second partials of x
 	CPPAD_TESTVECTOR(double) r( f.Domain() * 2 );
@@ -90,6 +92,8 @@ bool DivEqTestTwo(void)
 {	bool ok = true;
 
 	using namespace CppAD;
+	using CppAD::NearEqual;
+	double eps99 = 99.0 * std::numeric_limits<double>::epsilon();
 
 	// independent variable vector
 	double u0 = .5;
@@ -110,7 +114,7 @@ bool DivEqTestTwo(void)
 	CPPAD_TESTVECTOR(double) w(1);
 
 	// check value
-	ok &= NearEqual(Z[0] , u0*u0/(2*4*u0),  1e-10 , 1e-10);
+	ok &= NearEqual(Z[0] , u0*u0/(2*4*u0), eps99, eps99);
 
 	// forward computation of partials w.r.t. u
 	size_t j;
@@ -121,7 +125,7 @@ bool DivEqTestTwo(void)
 	for(j = 1; j < p; j++)
 	{	jfac *= j;
 		w     = f.Forward(j, v);
-		ok &= NearEqual(jfac*w[0], value, 1e-10 , 1e-10); // d^jz/du^j
+		ok &= NearEqual(jfac*w[0], value, eps99, eps99); // d^jz/du^j
 		v[0]  = 0.;
 		value = 0.;
 	}
@@ -133,7 +137,7 @@ bool DivEqTestTwo(void)
 	jfac  = 1.;
 	value = 1./8.;
 	for(j = 0; j < p; j++)
-	{	ok &= NearEqual(jfac*r[j], value, 1e-10 , 1e-10); // d^jz/du^j
+	{	ok &= NearEqual(jfac*r[j], value, eps99, eps99); // d^jz/du^j
 		jfac *= (j + 1);
 		value = 0.;
 	}

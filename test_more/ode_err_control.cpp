@@ -1,6 +1,6 @@
 // $Id$
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-15 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-16 Bradley M. Bell
 
 CppAD is distributed under multiple licenses. This distribution is under
 the terms of the
@@ -69,6 +69,8 @@ namespace {
 bool OdeErrControl_one(void)
 {	bool   ok = true;     // initial return value
 
+	using CppAD::NearEqual;
+
 	// Runge45 should yield exact results for x_i (t) = t^(i+1), i < 4
 	size_t  n = 6;
 
@@ -103,7 +105,7 @@ bool OdeErrControl_one(void)
 	double check = 1.;
 	for(i = 0; i < n; i++)
 	{	check *= tf;
-		ok &= CppAD::NearEqual(check, xf[i], erel, 0.);
+		ok &= NearEqual(check, xf[i], erel, 0.);
 	}
 
 	return ok;
@@ -171,6 +173,7 @@ namespace {
 
 bool OdeErrControl_two(void)
 {	bool ok = true;     // initial return value
+	using CppAD::NearEqual;
 
 	CppAD::vector<double> w(2);
 	w[0] = 10.;
@@ -204,12 +207,12 @@ bool OdeErrControl_two(void)
 		ti, tf, xi, smin, smax, scur, eabs, erel, ef, maxabs, nstep);
 
 	double x0 = exp(-w[0]*tf);
-	ok &= CppAD::NearEqual(x0, xf[0], 1e-4, 1e-4);
-	ok &= CppAD::NearEqual(0., ef[0], 1e-4, 1e-4);
+	ok &= NearEqual(x0, xf[0], 1e-4, 1e-4);
+	ok &= NearEqual(0., ef[0], 1e-4, 1e-4);
 
 	double x1 = w[0] * (exp(-w[0]*tf) - exp(-w[1]*tf))/(w[1] - w[0]);
-	ok &= CppAD::NearEqual(x1, xf[1], 1e-4, 1e-4);
-	ok &= CppAD::NearEqual(0., ef[1], 1e-4, 1e-4);
+	ok &= NearEqual(x1, xf[1], 1e-4, 1e-4);
+	ok &= NearEqual(0., ef[1], 1e-4, 1e-4);
 
 	return ok;
 }
@@ -324,6 +327,7 @@ namespace {
 
 bool OdeErrControl_three(void)
 {	bool ok = true;     // initial return value
+	using CppAD::NearEqual;
 
 	double alpha = 10.;
 	Method_three method(alpha);
@@ -356,14 +360,14 @@ bool OdeErrControl_three(void)
 
 
 	double x0       = exp( alpha * tf * tf );
-	ok &= CppAD::NearEqual(x0, xf[0], 1e-4, 1e-4);
-	ok &= CppAD::NearEqual(0., ef[0], 1e-4, 1e-4);
+	ok &= NearEqual(x0, xf[0], 1e-4, 1e-4);
+	ok &= NearEqual(0., ef[0], 1e-4, 1e-4);
 
 	double root_pi    = sqrt( 4. * atan(1.));
 	double root_alpha = sqrt( alpha );
 	double x1 = CppAD::erf(alpha * tf) * root_pi / (2 * root_alpha);
-	ok &= CppAD::NearEqual(x1, xf[1], 1e-4, 1e-4);
-	ok &= CppAD::NearEqual(0., ef[1], 1e-4, 1e-4);
+	ok &= NearEqual(x1, xf[1], 1e-4, 1e-4);
+	ok &= NearEqual(0., ef[1], 1e-4, 1e-4);
 
 	ok &= method.F.was_negative();
 

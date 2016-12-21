@@ -1,6 +1,6 @@
 // $Id$
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-15 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-16 Bradley M. Bell
 
 CppAD is distributed under multiple licenses. This distribution is under
 the terms of the
@@ -22,7 +22,7 @@ bool rc_tridiagonal(void)
 	using CppAD::AD;
 	using CppAD::NearEqual;
 	size_t i, j, k, ell;
-	double eps = 10. * CppAD::epsilon<double>();
+	double eps10 = 10. * CppAD::epsilon<double>();
 
 	size_t n = 12; // must be greater than or equal 3; see n_sweep.
 	size_t m = n - 1;
@@ -90,9 +90,9 @@ bool rc_tridiagonal(void)
 	ok &= n_sweep == 3;
 	for(k = 0; k < K; k++)
 	{	ell = r[k] * n + c[k];
-		ok &=  NearEqual(check[ell], hes[k], eps, eps);
+		ok &=  NearEqual(check[ell], hes[k], eps10, eps10);
 		ell = c[k] * n + r[k];
-		ok &=  NearEqual(check[ell], hes[k], eps, eps);
+		ok &=  NearEqual(check[ell], hes[k], eps10, eps10);
 	}
 
 	return ok;

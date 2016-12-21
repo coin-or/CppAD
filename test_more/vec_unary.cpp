@@ -1,6 +1,6 @@
 // $Id$
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-15 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-16 Bradley M. Bell
 
 CppAD is distributed under multiple licenses. This distribution is under
 the terms of the
@@ -27,6 +27,8 @@ bool VecUnary(void)
 	using CppAD::exp;
 	using CppAD::log;
 	using CppAD::sqrt;
+	using CppAD::NearEqual;
+	double eps99 = 99.0 * std::numeric_limits<double>::epsilon();
 
 	bool ok  = true;
 	size_t n = 8;
@@ -86,14 +88,14 @@ bool VecUnary(void)
 
 	z    = f.Forward(0, x);
 
-	ok  &= NearEqual(z[0],      - x[0],  1e-10, 1e-10);
-	ok  &= NearEqual(z[1], sin( x[1] ),  1e-10, 1e-10);
-	ok  &= NearEqual(z[2], abs( x[2] ),  1e-10, 1e-10);
-	ok  &= NearEqual(z[3], atan(x[3] ),  1e-10, 1e-10);
-	ok  &= NearEqual(z[4], cos( x[4] ),  1e-10, 1e-10);
-	ok  &= NearEqual(z[5], exp( x[5] ),  1e-10, 1e-10);
-	ok  &= NearEqual(z[6], log( x[6] ),  1e-10, 1e-10);
-	ok  &= NearEqual(z[7], sqrt(x[7] ),  1e-10, 1e-10);
+	ok  &= NearEqual(z[0],      - x[0], eps99, eps99);
+	ok  &= NearEqual(z[1], sin( x[1] ), eps99, eps99);
+	ok  &= NearEqual(z[2], abs( x[2] ), eps99, eps99);
+	ok  &= NearEqual(z[3], atan(x[3] ), eps99, eps99);
+	ok  &= NearEqual(z[4], cos( x[4] ), eps99, eps99);
+	ok  &= NearEqual(z[5], exp( x[5] ), eps99, eps99);
+	ok  &= NearEqual(z[6], log( x[6] ), eps99, eps99);
+	ok  &= NearEqual(z[7], sqrt(x[7] ), eps99, eps99);
 
 	return ok;
 }

@@ -1,6 +1,6 @@
 // $Id$
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-15 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-16 Bradley M. Bell
 
 CppAD is distributed under multiple licenses. This distribution is under
 the terms of the
@@ -22,6 +22,8 @@ bool DivTestOne(void)
 {	bool ok = true;
 
 	using namespace CppAD;
+	using CppAD::NearEqual;
+	double eps99 = 99.0 * std::numeric_limits<double>::epsilon();
 
 	// assign some parameters
 	AD<double> zero = 0.;
@@ -65,9 +67,9 @@ bool DivTestOne(void)
 	ok &= f.Parameter(w);
 
 	// check values
-	ok &= NearEqual( Z[x] , 2. / 3. ,           1e-10 , 1e-10);
-	ok &= NearEqual( Z[y] , 2. / ( 3. * 4. ) ,  1e-10 , 1e-10);
-	ok &= NearEqual( Z[z] , 5. * 3. * 4. / 2. , 1e-10 , 1e-10);
+	ok &= NearEqual( Z[x] , 2. / 3. , eps99, eps99);
+	ok &= NearEqual( Z[y] , 2. / ( 3. * 4. ) , eps99, eps99);
+	ok &= NearEqual( Z[z] , 5. * 3. * 4. / 2. , eps99, eps99);
 	ok &= ( Z[w] == 0. );
 	ok &= ( Z[u] == Z[z] );
 
@@ -75,9 +77,9 @@ bool DivTestOne(void)
 	q[s] = 1.;
 	q[t] = 0.;
 	r    = f.Forward(1, q);
-	ok &= NearEqual(r[x], 1./U[t],                1e-10 , 1e-10); // dx/ds
-	ok &= NearEqual(r[y], 1./(U[t]*4.),           1e-10 , 1e-10); // dy/ds
-	ok &= NearEqual(r[z], -5.*U[t]*4./(U[s]*U[s]),1e-10 , 1e-10); // dz/ds
+	ok &= NearEqual(r[x], 1./U[t], eps99, eps99); // dx/ds
+	ok &= NearEqual(r[y], 1./(U[t]*4.), eps99, eps99); // dy/ds
+	ok &= NearEqual(r[z], -5.*U[t]*4./(U[s]*U[s]), eps99, eps99); // dz/ds
 	ok &= ( r[u] == r[z] );                                       // du/ds
 	ok &= ( r[v] == r[z] );                                       // dv/ds
 	ok &= ( r[w] == 0. );                                         // dw/ds
@@ -86,7 +88,7 @@ bool DivTestOne(void)
 	q[s] = 1.;
 	q[t] = 1.;
 	r    = f.Forward(1, q);
-	ok  &= NearEqual(r[x], 1./U[t] - U[s]/(U[t] * U[t]), 1e-10, 1e-10);
+	ok  &= NearEqual(r[x], 1./U[t] - U[s]/(U[t] * U[t]), eps99, eps99);
 
 	// second order reverse mode computation
 	CPPAD_TESTVECTOR(double) Q( f.Domain() * 2 );
@@ -106,6 +108,8 @@ bool DivTestOne(void)
 bool DivTestTwo(void)
 {	bool ok = true;
 	using namespace CppAD;
+	using CppAD::NearEqual;
+	double eps99 = 99.0 * std::numeric_limits<double>::epsilon();
 
 	// independent variable vector
 	double u0 = .5;
@@ -128,7 +132,7 @@ bool DivTestTwo(void)
 	CPPAD_TESTVECTOR(double) w(1);
 
 	// check value
-	ok &= NearEqual(Value(Z[0]) , u0*u0/(4/(3/(u0/2))),  1e-10 , 1e-10);
+	ok &= NearEqual(Value(Z[0]) , u0*u0/(4/(3/(u0/2))), eps99, eps99);
 
 	// forward computation of partials w.r.t. u
 	size_t j;
@@ -140,7 +144,7 @@ bool DivTestTwo(void)
 	{
 		jfac *= j;
 		w     = f.Forward(j, v);
-		ok &= NearEqual(jfac*w[0], value, 1e-10 , 1e-10); // d^jz/du^j
+		ok &= NearEqual(jfac*w[0], value, eps99, eps99); // d^jz/du^j
 		v[0]  = 0.;
 		value = 0.;
 	}
@@ -153,7 +157,7 @@ bool DivTestTwo(void)
 	value = 6. / 4.;
 	for(j = 0; j < p; j++)
 	{
-		ok &= NearEqual(jfac*r[j], value, 1e-10 , 1e-10); // d^jz/du^j
+		ok &= NearEqual(jfac*r[j], value, eps99, eps99); // d^jz/du^j
 		jfac *= (j + 1);
 		value = 0.;
 	}
@@ -164,6 +168,8 @@ bool DivTestTwo(void)
 bool DivTestThree(void)
 {	bool ok = true;
 	using namespace CppAD;
+	using CppAD::NearEqual;
+	double eps99 = 99.0 * std::numeric_limits<double>::epsilon();
 
 	// more testing of variable / variable case
 	double x0 = 2.;
@@ -184,15 +190,15 @@ bool DivTestThree(void)
 	dx[1] = 1.;
 	dy    = f.Forward(1, dx);
 	check = 1. / x1 - x0 / (x1 * x1);
-	ok   &= NearEqual(dy[0], check, 1e-10 , 1e-10);
+	ok   &= NearEqual(dy[0], check, eps99, eps99);
 
 	CPPAD_TESTVECTOR(double) w(m), dw(n);
 	w[0]  = 1.;
 	dw    = f.Reverse(1, w);
 	check = 1. / x1;
-	ok   &= NearEqual(dw[0], check, 1e-10 , 1e-10);
+	ok   &= NearEqual(dw[0], check, eps99, eps99);
 	check = - x0 / (x1 * x1);
-	ok   &= NearEqual(dw[1], check, 1e-10 , 1e-10);
+	ok   &= NearEqual(dw[1], check, eps99, eps99);
 
 	return ok;
 }
