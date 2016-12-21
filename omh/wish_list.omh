@@ -113,11 +113,6 @@ defined by the base class.
 An example of this type of template specialization can be found in
 the implementation of $cref to_string$$.
 
-$head Machine Epsilon in Examples$$
-Use a multiple of $code std::numeric_limits<double>::epsilon()$$ instead
-$code 1e-10$$ for a small number in correctness checks; e.g.,
-see $cref sqrt.cpp$$.
-
 $head Adolc$$
 Create a documentation page that shows how to convert Adolc commands to
 CppAD commands.
