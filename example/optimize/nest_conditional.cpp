@@ -92,6 +92,8 @@ namespace {
 bool nest_conditional(void)
 {	bool ok = true;
 	using CppAD::AD;
+	using CppAD::NearEqual;
+	double eps10 = 10.0 * std::numeric_limits<double>::epsilon();
 
 	// domain space vector
 	size_t n  = 2;
@@ -133,7 +135,7 @@ bool nest_conditional(void)
 		x[1] = 4.0;
 		y    = f.Forward(0, x);
 		fun(options, x, check, before, after);
-		ok  &= y[0] == check[0];
+		ok &= NearEqual(y[0], check[0], eps10, eps10);
 		ok  &= f.number_skip() == 0;
 
 		// Check case where result of the second comparison is true
@@ -142,7 +144,7 @@ bool nest_conditional(void)
 		x[1] = 4.0;
 		y    = f.Forward(0, x);
 		fun(options, x, check, before, after);
-		ok &= y[0] == check[0];
+		ok &= NearEqual(y[0], check[0], eps10, eps10);
 		if( options == "" )
 			ok  &= f.number_skip() == 1;
 		else
@@ -154,7 +156,7 @@ bool nest_conditional(void)
 		x[1] = 0.0;
 		y    = f.Forward(0, x);
 		fun(options, x, check, before, after);
-		ok &= y[0] == check[0];
+		ok &= NearEqual(y[0], check[0], eps10, eps10);
 		if( options == "" )
 			ok  &= f.number_skip() == 3;
 		else
@@ -166,7 +168,7 @@ bool nest_conditional(void)
 		x[1] = 0.0;
 		y    = f.Forward(0, x);
 		fun(options, x, check, before, after);
-		ok &= y[0] == check[0];
+		ok &= NearEqual(y[0], check[0], eps10, eps10);
 		if( options == "" )
 			ok  &= f.number_skip() == 3;
 		else

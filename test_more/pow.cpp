@@ -387,7 +387,7 @@ bool PowTestSix(void)
 	CppAD::ADFun< AD<double> > F(X, Y);
 
 	// check function value
-	ok  &= (Value( Value(Y[0]) ) == pow(x0, e) );
+	ok  &= NearEqual(Value(Value(Y[0])), pow(x0, e), eps99, eps99);
 
 	// forward computation of first partial w.r.t. x[1]
 	double d1 = e * pow(x0, (e-1));

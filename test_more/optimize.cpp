@@ -20,7 +20,6 @@ namespace {
 	bool conditional_skip_;
 
 	// accuracy for almost equal checks
-	double eps_ = 10. * std::numeric_limits<double>::epsilon();
 	using CppAD::NearEqual;
 
 	// note this enum type is not part of the API (but its values are)
@@ -48,8 +47,9 @@ namespace {
 	bool optimize_ode(void)
 	{	bool ok = true;
 		using CppAD::AD;
+		using CppAD::NearEqual;
+		double eps10 = 10.0 * std::numeric_limits<double>::epsilon();
 		using CppAD::vector;
-		double eps = 100. * std::numeric_limits<double>::epsilon();
 
 		// independent variable vector
 		size_t n = 2;
@@ -94,7 +94,7 @@ namespace {
 		double tj = 1.0;
 		for(size_t j = 0; j < n; j++)
 		{	for(size_t i = j; i < m; i++)
-				ok &= CppAD::NearEqual( tj , jac[ i * n * j], eps, eps );
+				ok &= CppAD::NearEqual( tj , jac[ i * n * j], eps10, eps10);
 			tj *= Value( atf - ati );
 		}
 		return ok;
@@ -104,6 +104,8 @@ namespace {
 	bool nested_cond_exp(void)
 	{	bool ok = true;
 		using CppAD::AD;
+		using CppAD::NearEqual;
+		double eps10 = 10.0 * std::numeric_limits<double>::epsilon();
 		using CppAD::vector;
 
 		// independent variable vector
@@ -156,7 +158,7 @@ namespace {
 				c3 = 6.0 * c1;
 			else	c3 = 7.0 * c2;
 
-			ok &= y[0] == c3;
+			ok &= NearEqual(y[0], c3, eps10, eps10);
 		}
 		return ok;
 	}
@@ -172,6 +174,8 @@ namespace {
 	bool atomic_cond_exp_sparsity(void)
 	{	bool ok = true;
 		using CppAD::AD;
+		using CppAD::NearEqual;
+		double eps10 = 10.0 * std::numeric_limits<double>::epsilon();
 		using CppAD::vector;
 
 		// Create a checkpoint version of the function g
@@ -207,14 +211,14 @@ namespace {
 		x[0] = 1.;
 		x[1] = -1;
 		y    = f.Forward(0, x);
-		ok  &= y[0] == x[0] + double(3) * x[1];
+		ok &= NearEqual(y[0], x[0] + double(3) * x[1], eps10, eps10);
 
 
 		// check result where false case is used; i.e., au[0] <= au[1]
 		x[0] = 1.;
 		x[1] = 1;
 		y    = f.Forward(0, x);
-		ok  &= y[0] == x[0] + double(4) * x[1];
+		ok &= NearEqual(y[0], x[0] + double(4) * x[1], eps10, eps10);
 
 		return ok;
 	}
@@ -233,6 +237,8 @@ namespace {
 	bool atomic_cond_exp(void)
 	{	bool ok = true;
 		typedef CppAD::vector< CppAD::AD<double> > ADVector;
+		using CppAD::NearEqual;
+		double eps10 = 10.0 * std::numeric_limits<double>::epsilon();
 
 		// Create a checkpoint version of the function g
 		ADVector ax(2), ag(1), ah(1), ay(1);
@@ -261,7 +267,7 @@ namespace {
 		x[0] = 3.;
 		x[1] = 4.;
 		y    = f.Forward(0, x);
-		ok  &= y[0] == x[0] + x[1];
+		ok &= NearEqual(y[0], x[0] + x[1], eps10, eps10);
 
 		// before optimize
 		k_check.option( atomic_sparsity_option_ );
@@ -278,7 +284,7 @@ namespace {
 		x[0] = 4.;
 		x[1] = 3.;
 		y    = f.Forward(0, x);
-		ok  &= y[0] == x[0] - x[1];
+		ok &= NearEqual(y[0], x[0] - x[1], eps10, eps10);
 
 		// after optimize can skip either call to g or call to h
 		ok  &= f.number_skip() == 1;
@@ -287,13 +293,13 @@ namespace {
 		dx[0] = 2.;
 		dx[1] = 1.;
 		dy    = f.Forward(1, dx);
-		ok   &= dy[0] == dx[0] - dx[1];
+		ok &= NearEqual(dy[0], dx[0] - dx[1], eps10, eps10);
 
 		// optimized first order reverse
 		w[0]  = 1.;
 		dx    = f.Reverse(1, w);
-		ok   &= dx[0] == 1.;
-		ok   &= dx[1] == -1.;
+		ok &= NearEqual(dx[0], 1., eps10, eps10);
+		ok &= NearEqual(dx[1], -1., eps10, eps10);
 
 		return ok;
 	}
@@ -307,6 +313,8 @@ namespace {
 	bool atomic_no_used(void)
 	{	bool ok = true;
 		using CppAD::AD;
+		using CppAD::NearEqual;
+		double eps10 = 10.0 * std::numeric_limits<double>::epsilon();
 		using CppAD::vector;
 
 		// Create a checkpoint version of the function g
@@ -348,13 +356,15 @@ namespace {
 		x[0] = 4.;
 		x[1] = 3.;
 		z    = f.Forward(0, x);
-		ok  &= z[0] == x[0] - x[1];
+		ok &= NearEqual(z[0], x[0] - x[1], eps10, eps10);
 
 		return ok;
 	}
 	bool atomic_arguments(void)
 	{	bool ok = true;
 		using CppAD::AD;
+		using CppAD::NearEqual;
+		double eps10 = 10.0 * std::numeric_limits<double>::epsilon();
 		using CppAD::vector;
 		vector< AD<double> > au(2), aw(2), ax(2), ay(1);
 
@@ -394,7 +404,7 @@ namespace {
 		x[0] = 5.0;
 		x[1] = 6.0;
 		y    = f.Forward(0, x);
-		ok  &= (y[0] == x[0] + x[1]);
+		ok &= NearEqual(y[0], x[0] + x[1], eps10, eps10);
 
 		return ok;
 	}
@@ -462,6 +472,8 @@ namespace {
 	{	// Test all except for VecAD operations
 		bool ok = true;
 		using CppAD::AD;
+		using CppAD::NearEqual;
+		double eps10 = 10.0 * std::numeric_limits<double>::epsilon();
 		size_t original;
 		size_t opt;
 		size_t i, j;
@@ -490,7 +502,7 @@ namespace {
 		y = F.Forward(0, x);
 		depend_fun(x, check, original, opt);
 		for(i = 0; i < m; i++)
-			ok &= NearEqual(y[i], check[i], eps_, eps_);
+			ok &= NearEqual(y[i], check[i], eps10, eps10);
 
 		// Check size before optimization
 		ok &= F.size_var() == original;
@@ -508,7 +520,7 @@ namespace {
 		// (should have already been checked if NDEBUG not defined)
 		y = F.Forward(0, x);
 		for(i = 0; i < m; i++)
-			ok &= NearEqual(y[i], check[i], eps_, eps_);
+			ok &= NearEqual(y[i], check[i], eps10, eps10);
 
 		return ok;
 	}
@@ -517,6 +529,8 @@ namespace {
 	{	// Test VecAD operations
 		bool ok = true;
 		using CppAD::AD;
+		using CppAD::NearEqual;
+		double eps10 = 10.0 * std::numeric_limits<double>::epsilon();
 		size_t i, j;
 
 		// domain space vector
@@ -570,8 +584,8 @@ namespace {
 		y = F.Forward(0, x);
 		for(i = 0; i < m; i++)
 		{	if( i != static_cast<size_t>(x[0]) )
-				ok &= (y[i] == 0.);
-			else	ok &= (y[i] == x[1]);
+				ok &= NearEqual(y[i], 0., eps10, eps10);
+			else	ok &= NearEqual(y[i], x[1], eps10, eps10);
 		}
 
 		if( conditional_skip_ )
@@ -584,8 +598,8 @@ namespace {
 		y = F.Forward(0, x);
 		for(i = 0; i < m; i++)
 		{	if( i != static_cast<size_t>(x[0]) )
-				ok &= (y[i] == 0.);
-			else	ok &= (y[i] == x[1]);
+				ok &= NearEqual(y[i], 0., eps10, eps10);
+			else	ok &= NearEqual(y[i], x[1], eps10, eps10);
 		}
 
 		return ok;
@@ -594,6 +608,8 @@ namespace {
 	{	// Power function is a special case for optimize
 		bool ok = true;
 		using CppAD::AD;
+		using CppAD::NearEqual;
+		double eps10 = 10.0 * std::numeric_limits<double>::epsilon();
 		using CppAD::vector;
 
 		size_t n = 3;
@@ -622,7 +638,7 @@ namespace {
 		// have been stored as double and gaurd bits have been dropped.
 		// (This may not be true for some compiler in the future).
 		for(j = 0; j < n; j++)
-			ok &= ( y[j] == Value(Y[j]) );
+			ok &= NearEqual(y[j], Value(Y[j]), eps10, eps10);
 
 		// check reverse mode derivative
 		vector<double>   w(n), dw(n);
@@ -632,13 +648,13 @@ namespace {
 		dw = F.Reverse(1, w);
 
 		double check = x[1] * pow( x[0], x[1] - 1. );
-		ok &= NearEqual( dw[0], check, eps_, eps_ );
+		ok &= NearEqual( dw[0], check, eps10, eps10 );
 
 		check = log( x[0] ) * pow( x[0], x[1] );
-		ok &= NearEqual( dw[1], check, eps_, eps_ );
+		ok &= NearEqual( dw[1], check, eps10, eps10 );
 
 		check = 0.;
-		ok &= NearEqual( dw[2], check, eps_, eps_ );
+		ok &= NearEqual( dw[2], check, eps10, eps10 );
 
 		return ok;
 	}
@@ -647,6 +663,8 @@ namespace {
 		bool ok = true;
 # if CPPAD_USE_CPLUSPLUS_2011
 		using CppAD::AD;
+		using CppAD::NearEqual;
+		double eps10 = 10.0 * std::numeric_limits<double>::epsilon();
 		using CppAD::vector;
 
 		size_t n = 1;
@@ -669,7 +687,7 @@ namespace {
 			F.optimize("no_conditional_skip");
 		ok &= F.size_var() + 5 == size_original;
 		vector<double> y = F.Forward(0, x);
-		ok &=  NearEqual(y[0], y_original[0], eps_, eps_);
+		ok &=  NearEqual(y[0], y_original[0], eps10, eps10);
 # endif
 		return ok;
 	}
@@ -750,6 +768,8 @@ namespace {
 	{
 		bool ok = true;
 		using CppAD::AD;
+		using CppAD::NearEqual;
+		double eps10 = 10.0 * std::numeric_limits<double>::epsilon();
 		size_t original;
 		size_t opt;
 		size_t i, j;
@@ -778,7 +798,7 @@ namespace {
 		y = F.Forward(0, x);
 		duplicate_fun(x, check, original, opt);
 		for(i = 0; i < m; i++)
-			ok &= NearEqual(y[i], check[i], eps_, eps_);
+			ok &= NearEqual(y[i], check[i], eps10, eps10);
 
 		// Check size before optimization
 		ok &= F.size_var() == (n + 1 + original);
@@ -796,7 +816,7 @@ namespace {
 		// (should have already been checked if NDEBUG not defined)
 		y = F.Forward(0, x);
 		for(i = 0; i < m; i++)
-			ok &= NearEqual(y[i], check[i], eps_, eps_);
+			ok &= NearEqual(y[i], check[i], eps10, eps10);
 
 		return ok;
 	}
@@ -806,6 +826,8 @@ namespace {
 		// new and not just old argument indices.
 		bool ok = true;
 		using CppAD::AD;
+		using CppAD::NearEqual;
+		double eps10 = 10.0 * std::numeric_limits<double>::epsilon();
 		size_t i, j;
 
 		// domain space vector
@@ -851,7 +873,7 @@ namespace {
 
 		y   = F.Forward(0, x);
 		for(i = 0; i < m; i++)
-			ok &= ( y[i] == Value( Y[i] ) );
+			ok &= NearEqual(y[i], Value(Y[i]), eps10, eps10);
 
 		if( conditional_skip_ )
 			F.optimize();
@@ -863,7 +885,7 @@ namespace {
 
 		y   = F.Forward(0, x);
 		for(i = 0; i < m; i++)
-			ok &= ( y[i] == Value( Y[i] ) );
+			ok &= NearEqual(y[i], Value(Y[i]), eps10, eps10);
 
 		return ok;
 	}
@@ -873,6 +895,8 @@ namespace {
 		// new and not just old argument indices (commutative case).
 		bool ok = true;
 		using CppAD::AD;
+		using CppAD::NearEqual;
+		double eps10 = 10.0 * std::numeric_limits<double>::epsilon();
 		size_t i, j;
 
 		// domain space vector
@@ -918,7 +942,7 @@ namespace {
 
 		y   = F.Forward(0, x);
 		for(i = 0; i < m; i++)
-			ok &= ( y[i] == Value( Y[i] ) );
+			ok &= NearEqual(y[i], Value(Y[i]), eps10, eps10);
 
 		if( conditional_skip_ )
 			F.optimize();
@@ -930,7 +954,7 @@ namespace {
 
 		y   = F.Forward(0, x);
 		for(i = 0; i < m; i++)
-			ok &= ( y[i] == Value( Y[i] ) );
+			ok &= NearEqual(y[i], Value(Y[i]), eps10, eps10);
 
 		return ok;
 	}
@@ -940,6 +964,8 @@ namespace {
 		// and operator, but also operand (old bug that has been fixed).
 		bool ok = true;
 		using CppAD::AD;
+		using CppAD::NearEqual;
+		double eps10 = 10.0 * std::numeric_limits<double>::epsilon();
 		size_t j;
 
 		// domain space vector
@@ -974,7 +1000,7 @@ namespace {
 		x[0] = 1.;
 
 		y   = F.Forward(0, x);
-		ok &= ( y[0] == Value( Y[0] ) );
+		ok &= NearEqual(y[0], Value(Y[0]), eps10, eps10);
 
 		if( conditional_skip_ )
 			F.optimize();
@@ -985,7 +1011,7 @@ namespace {
 		ok &= (F.size_var() == 1 + n + n_operations );
 
 		y   = F.Forward(0, x);
-		ok &= ( y[0] == Value( Y[0] ) );
+		ok &= NearEqual(y[0], Value(Y[0]), eps10, eps10);
 
 		return ok;
 	}
@@ -995,6 +1021,8 @@ namespace {
 		// to a cummulative summation sequence.
 		bool ok = true;
 		using CppAD::AD;
+		using CppAD::NearEqual;
+		double eps10 = 10.0 * std::numeric_limits<double>::epsilon();
 		size_t i, j;
 
 		// domain space vector
@@ -1040,7 +1068,7 @@ namespace {
 
 		y   = F.Forward(0, x);
 		for(i = 0; i < m; i++)
-			ok &= ( y[i] == Value( Y[i] ) );
+			ok &= NearEqual(y[i], Value(Y[i]), eps10, eps10);
 
 		if( conditional_skip_ )
 			F.optimize();
@@ -1052,7 +1080,7 @@ namespace {
 
 		y   = F.Forward(0, x);
 		for(i = 0; i < m; i++)
-			ok &= ( y[i] == Value( Y[i] ) );
+			ok &= NearEqual(y[i], Value(Y[i]), eps10, eps10);
 
 		return ok;
 	}
@@ -1061,6 +1089,8 @@ namespace {
 	{	bool ok = true;
 
 		using namespace CppAD;
+		using CppAD::NearEqual;
+		double eps10 = 10.0 * std::numeric_limits<double>::epsilon();
 
 		// independent variable vector
 		CppAD::vector< AD<double> > X(2);
@@ -1087,7 +1117,7 @@ namespace {
 		x0[0]    = 3.;
 		x0[1]    = 4.;
 		y0       = F.Forward(0, x0);
-		ok      &= NearEqual(y0[0] , x0[0]+x0[0]+x0[1], eps_, eps_);
+		ok      &= NearEqual(y0[0] , x0[0]+x0[0]+x0[1], eps10, eps10);
 
 		// evaluate derivative of F in X[0] direction
 		CppAD::vector<double> x1( F.Domain() );
@@ -1095,7 +1125,7 @@ namespace {
 		x1[0]    = 1.;
 		x1[1]    = 0.;
 		y1       = F.Forward(1, x1);
-		ok      &= NearEqual(y1[0] , x1[0]+x1[0]+x1[1], eps_, eps_);
+		ok      &= NearEqual(y1[0] , x1[0]+x1[0]+x1[1], eps10, eps10);
 
 		// evaluate second derivative of F in X[0] direction
 		CppAD::vector<double> x2( F.Domain() );
@@ -1104,7 +1134,7 @@ namespace {
 		x2[1]       = 0.;
 		y2          = F.Forward(2, x2);
 		double F_00 = 2. * y2[0];
-		ok         &= NearEqual(F_00, 0., eps_, eps_);
+		ok         &= NearEqual(F_00, 0., eps10, eps10);
 
 		return ok;
 	}
@@ -1113,6 +1143,8 @@ namespace {
 	{	bool ok = true;
 
 		using namespace CppAD;
+		using CppAD::NearEqual;
+		double eps10 = 10.0 * std::numeric_limits<double>::epsilon();
 
 		// independent variable vector
 		CppAD::vector< AD<double> > X(2);
@@ -1139,15 +1171,15 @@ namespace {
 		x0[0]    = 3.;
 		x0[1]    = 4.;
 		y0       = F.Forward(0, x0);
-		ok      &= NearEqual(y0[0] , x0[0]-x0[0]+x0[1], eps_, eps_);
+		ok      &= NearEqual(y0[0] , x0[0]-x0[0]+x0[1], eps10, eps10);
 
 		// evaluate derivative of F
 		CppAD::vector<double> dF( F.Domain() );
 		CppAD::vector<double> w( F.Range() );
 		w[0]    = 1.;
 		dF      = F.Reverse(1, w);
-		ok     &= NearEqual(dF[0] , 0., eps_, eps_);
-		ok     &= NearEqual(dF[1] , 1., eps_, eps_);
+		ok     &= NearEqual(dF[0] , 0., eps10, eps10);
+		ok     &= NearEqual(dF[1] , 1., eps10, eps10);
 
 		return ok;
 	}
@@ -1299,7 +1331,7 @@ namespace {
 		size_t i, j;
 		for(i = 0; i < m; i++)
 		{	for(j = 0; j < m; j++)
-				Py[ i * m + j ] = (i == j);
+				Py[ i * m + j ] = i == j;
 		}
 
 		// evaluate the dependency matrix for F(x)
@@ -1309,7 +1341,7 @@ namespace {
 		// check values
 		for(i = 0; i < m; i++)
 		{	for(j = 0; j < n; j++)
-				ok &= (Px[i * n + j] == Check[i * n + j]);
+				ok &= Px[i * n + j] == Check[i * n + j];
 		}
 
 		return ok;
@@ -1357,7 +1389,7 @@ namespace {
 		CppAD::vector<bool> Px(n * n);
 		for(i = 0; i < n; i++)
 			for(j = 0; j < n; j++)
-				Px[ i * n + j ] = (i == j);
+				Px[ i * n + j ] = i == j;
 
 		// compute sparsity pattern for Jacobian of F(U(x))
 		CppAD::vector<bool> P_jac(m * n);
@@ -1378,6 +1410,8 @@ namespace {
 	bool cond_exp_depend(void)
 	{	bool ok = true;
 		using CppAD::AD;
+		using CppAD::NearEqual;
+		double eps10 = 10.0 * std::numeric_limits<double>::epsilon();
 
 		AD<double> zero(0.), one(1.), two(2.), three(3.);
 
@@ -1409,13 +1443,13 @@ namespace {
 		y    = f.Forward(0, x);
 
 		if( x[0] + .5 < 1. )
-			ok  &= y[0] == 2.;
-		else	ok  &= y[0] == 3.;
+			ok &= NearEqual(y[0], 2., eps10, eps10);
+		else	ok &= NearEqual(y[0], 3., eps10, eps10);
 		if( 0. < x[1] + .5 )
-			ok  &= y[1] == 2.;
-		else	ok  &= y[1] == 3.;
-		ok  &= y[2] == x[2] + .5;;
-		ok  &= y[3] == 2.;
+			ok &= NearEqual(y[1], 2., eps10, eps10);
+		else	ok &= NearEqual(y[1], 3., eps10, eps10);
+		ok &= NearEqual(y[2], x[2] + .5, eps10, eps10);;
+		ok &= NearEqual(y[3], 2., eps10, eps10);
 
 		return ok;
 	}
@@ -1424,6 +1458,8 @@ namespace {
 	bool cond_exp_removed(void)
 	{	bool ok = true;
 		using CppAD::AD;
+		using CppAD::NearEqual;
+		double eps10 = 10.0 * std::numeric_limits<double>::epsilon();
 		AD<double> zero(0.);
 
 		size_t n = 1;
@@ -1447,12 +1483,12 @@ namespace {
 		CppAD::vector<double> x(n), y(m), w(m), dw(n);
 		x[0] = 1.0;
 		y    = f.Forward(0, x);
-		ok &= NearEqual(y[0], false_case, eps_, eps_);
+		ok &= NearEqual(y[0], false_case, eps10, eps10);
 
 		w[0] = 1.0;
 		dw   = f.Reverse(1, w);
 		// derivative of cos is minus sin
-		ok &= NearEqual(dw[0], - true_case, eps_, eps_);
+		ok &= NearEqual(dw[0], - true_case, eps10, eps10);
 
 		return ok;
 	}
@@ -1479,8 +1515,8 @@ namespace {
 		ty[1] = tx[1] + tx[2];
 
 		if( vy.size() > 0 )
-		{	vy[0] = (vx[0] | vx[1]);
-			vy[1] = (vx[1] | vx[2]);
+		{	vy[0] = vx[0] | vx[1];
+			vy[1] = vx[1] | vx[2];
 		}
 		return true;
 	}
@@ -1553,6 +1589,8 @@ namespace {
 	{	bool ok = true;
 
 		using CppAD::AD;
+		using CppAD::NearEqual;
+		double eps10 = 10.0 * std::numeric_limits<double>::epsilon();
 		size_t j;
 		size_t n = 3;
 		size_t m = 2;
@@ -1580,9 +1618,9 @@ namespace {
 			x[j] = (j + 1) * (j + 1);
 		y = g.Forward(0, x);
 		// y[0] = x[0] + x[1]
-		ok &= (y[0] == x[0] + x[1]);
+		ok &= NearEqual(y[0], x[0] + x[1], eps10, eps10);
 		// y[1] = x[1] + x[2]
-		ok &= (y[0] == x[0] + x[1]);
+		ok &= NearEqual(y[0], x[0] + x[1], eps10, eps10);
 
 		return ok;
 	}
@@ -1625,6 +1663,8 @@ namespace {
 	bool discrete_function(void)
 	{	bool ok = true;
 		using CppAD::vector;
+		using CppAD::NearEqual;
+		double eps10 = 10.0 * std::numeric_limits<double>::epsilon();
 
 		vector< CppAD::AD<double> > ax(1), ay(1);
 		ax[0] = 0.0;
@@ -1643,7 +1683,7 @@ namespace {
 		vector<double> x(1), y(1);
 		x[0] = -2.2;
 		y    = f.Forward(0, x);
-		ok &= y[0] == -6.0;
+		ok &= NearEqual(y[0], -6.0, eps10, eps10);
 
 		return ok;
 	}
@@ -1657,6 +1697,8 @@ namespace {
 	bool cond_exp_skip_atomic(void)
 	{	bool ok = true;
 		using CppAD::AD;
+		using CppAD::NearEqual;
+		double eps10 = 10.0 * std::numeric_limits<double>::epsilon();
 		using CppAD::vector;
 
 		// Create a checkpoint version of the function i_algo
@@ -1693,7 +1735,7 @@ namespace {
 			f.optimize("no_conditional_skip");
 		y_after   = f.Forward(0, x);
 
-		ok &= y_before[0] == y_after[0];
+		ok &= NearEqual(y_before[0], y_after[0], eps10, eps10);
 
 		return ok;
 	}
@@ -1703,6 +1745,8 @@ namespace {
 	bool cond_exp_atomic_dependence(void)
 	{	bool ok = true;
 		using CppAD::AD;
+		using CppAD::NearEqual;
+		double eps10 = 10.0 * std::numeric_limits<double>::epsilon();
 		using CppAD::vector;
 
 		// Create a checkpoint version of the function i_algo
@@ -1738,8 +1782,8 @@ namespace {
 		y_after   = f.Forward(0, x);
 		dy_after  = f.Forward(1, dx);
 
-		ok &= y_before[0]  == y_after[0];
-		ok &= dy_before[0] == dy_after[0];
+		ok &= NearEqual(y_before[0] , y_after[0], eps10, eps10);
+		ok &= NearEqual(dy_before[0], dy_after[0], eps10, eps10);
 
 		return ok;
 	}
@@ -1757,6 +1801,8 @@ namespace {
 		size_t n = 3;
 		using CppAD::vector;
 		using CppAD::AD;
+		using CppAD::NearEqual;
+		double eps10 = 10.0 * std::numeric_limits<double>::epsilon();
 
 		vector< AD<double> > ax(n), ay(1);
 		for(size_t j = 0; j < n; j++)
@@ -1778,9 +1824,9 @@ namespace {
 		dx = f.Reverse(1, w);
 		for(size_t j = 0; j < n; j++)
 		{	if( j == n-1 )
-				ok &= dx[j] == 2.0;
+				ok &= NearEqual(dx[j], 2.0, eps10, eps10);
 			else
-				ok &= dx[j] == 0.0;
+				ok &= NearEqual(dx[j], 0.0, eps10, eps10);
 		}
 		return ok;
 	}
@@ -1790,6 +1836,8 @@ namespace {
 	{	bool ok = true;
 		using CppAD::vector;
 		using CppAD::AD;
+		using CppAD::NearEqual;
+		double eps10 = 10.0 * std::numeric_limits<double>::epsilon();
 
 		// f(x) = x[0] + x[0] if x[0] >= 3
 		//      = x[0] + x[1] otherwise
@@ -1816,17 +1864,17 @@ namespace {
 		x[0] = 4.0;
 		x[1] = 2.0;
 		y    = f.Forward(0, x);
-		ok  &= y[0] == x[0] + x[1];
-		ok  &= y[1] == x[0] - x[1];
-		ok  &= y[2] == exp(x[0]);
+		ok &= NearEqual(y[0], x[0] + x[1], eps10, eps10);
+		ok &= NearEqual(y[1], x[0] - x[1], eps10, eps10);
+		ok &= NearEqual(y[2], exp(x[0]), eps10, eps10);
 
 		// check case where x[0] < 3
 		x[0] = 1.0;
 		x[1] = 2.0;
 		y    = f.Forward(0, x);
-		ok  &= y[0] == x[0] + x[1];
-		ok  &= y[1] == x[0] - x[1];
-		ok  &= y[2] == exp(x[0]);
+		ok &= NearEqual(y[0], x[0] + x[1], eps10, eps10);
+		ok &= NearEqual(y[1], x[0] - x[1], eps10, eps10);
+		ok &= NearEqual(y[2], exp(x[0]), eps10, eps10);
 
 		return ok;
 	}

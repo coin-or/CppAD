@@ -85,6 +85,8 @@ namespace {
 bool forward_active(void)
 {	bool ok = true;
 	using CppAD::AD;
+	using CppAD::NearEqual;
+	double eps10 = 10.0 * std::numeric_limits<double>::epsilon();
 
 	// domain space vector
 	size_t n  = 3;
@@ -120,7 +122,7 @@ bool forward_active(void)
 		x[i] = double(i + 2);
 	y    = f.Forward(0, x);
 	fun(x, check, before, after);
-	ok  &= y[0] == check[0];
+	ok &= NearEqual(y[0], check[0], eps10, eps10);
 
 	return ok;
 }

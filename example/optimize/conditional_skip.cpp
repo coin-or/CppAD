@@ -86,6 +86,8 @@ namespace {
 bool conditional_skip(void)
 {	bool ok = true;
 	using CppAD::AD;
+	using CppAD::NearEqual;
+	double eps10 = 10.0 * std::numeric_limits<double>::epsilon();
 
 	// domain space vector
 	size_t n  = 1;
@@ -124,7 +126,7 @@ bool conditional_skip(void)
 		x[0] = 1.75;
 		y    = f.Forward(0, x);
 		fun(options, x, check, before, after);
-		ok  &= y[0] == check[0];
+		ok &= NearEqual(y[0], check[0], eps10, eps10);
 		if( options == "" )
 			ok  &= f.number_skip() == 2;
 		else
@@ -134,7 +136,7 @@ bool conditional_skip(void)
 		x[0] = 0.5;
 		y    = f.Forward(0, x);
 		fun(options, x, check, before, after);
-		ok &= y[0] == check[0];
+		ok &= NearEqual(y[0], check[0], eps10, eps10);
 		if( options == "" )
 			ok  &= f.number_skip() == 1;
 		else

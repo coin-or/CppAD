@@ -38,6 +38,7 @@ $spell
 	chrono
 	const_iterator
 	op
+	mingw
 $$
 
 $section Changes and Additions to CppAD During 2016$$
@@ -47,6 +48,12 @@ The sections listed below contain a list of the changes to CppAD
 in reverse order by date.
 The purpose of these sections is to
 assist you in learning about changes between various versions of CppAD.
+
+$head 12-20$$
+Change the optimize $cref/examples/optimize/Examples/$$ to use
+$cref NearEqual$$ for floating point tests (instead of exactly equal).
+There were some other exactly equal floating point tests that were
+failing on a $code mingw$$ system. Theses have also been fixed.
 
 $head 12-18$$
 Add the $cref/no_print_for_op/optimize/options/no_print_for_op/$$ to the

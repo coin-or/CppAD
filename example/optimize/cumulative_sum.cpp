@@ -66,7 +66,8 @@ namespace {
 bool cumulative_sum(void)
 {	bool ok = true;
 	using CppAD::AD;
-	double eps = 100. * std::numeric_limits<double>::epsilon();
+	using CppAD::NearEqual;
+	double eps10 = 10.0 * std::numeric_limits<double>::epsilon();
 
 	// domain space vector
 	size_t n  = 2;
@@ -99,7 +100,7 @@ bool cumulative_sum(void)
 	x[1] = 2.25;
 	y    = f.Forward(0, x);
 	fun(x, check, before, after);
-	ok  &= CppAD::NearEqual(y[0], check[0], eps, eps);
+	ok  &= CppAD::NearEqual(y[0], check[0], eps10, eps10);
 
 	return ok;
 }
