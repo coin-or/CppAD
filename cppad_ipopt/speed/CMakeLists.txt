@@ -51,3 +51,7 @@ ADD_CUSTOM_TARGET(check_cppad_ipopt_speed
 	cppad_ipopt_speed
 	DEPENDS cppad_ipopt_speed cppad_ipopt
 )
+
+# Change check depends in parent environment
+add_to_list(check_cppad_ipopt_depends check_cppad_ipopt_speed)
+SET(check_cppad_ipopt_depends "${check_cppad_ipopt_depends}" PARENT_SCOPE)

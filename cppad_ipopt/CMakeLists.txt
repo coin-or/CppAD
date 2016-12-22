@@ -15,7 +15,7 @@
 SET(CMAKE_BUILD_TYPE RELEASE)
 
 # Initialize list of tests as empty
-SET(check_depends "")
+SET(check_cppad_ipopt_depends "")
 
 # assert ipopt_prefix is defined
 IF ( NOT ipopt_prefix )
@@ -28,15 +28,13 @@ ENDIF ( NOT ipopt_prefix )
 # before the current input file continues beyond this command.
 # add_subdirectory(source_dir [binary_dir] [EXCLUDE_FROM_ALL])
 ADD_SUBDIRECTORY(src)
-#
 ADD_SUBDIRECTORY(example)
-add_to_list(check_depends check_cppad_ipopt_example)
-#
 ADD_SUBDIRECTORY(speed)
-add_to_list(check_depends check_cppad_ipopt_speed)
-#
 ADD_SUBDIRECTORY(test)
-add_to_list(check_depends check_cppad_ipopt_test)
 
 # Add the check_cppad_ipopt target
-ADD_CUSTOM_TARGET(check_cppad_ipopt DEPENDS ${check_depends} )
+ADD_CUSTOM_TARGET(check_cppad_ipopt DEPENDS ${check_cppad_ipopt_depends} )
+
+# Change check depends in parent environment
+add_to_list(check_depends check_cppad_ipopt)
+SET(check_depends "${check_depends}" PARENT_SCOPE)

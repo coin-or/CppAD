@@ -264,17 +264,16 @@ ENDIF( ipopt_prefix )
 # Initialize list of tests as empty
 SET(check_depends "")
 #
+# directories whith no check depends entries
 ADD_SUBDIRECTORY(cppad)
 ADD_SUBDIRECTORY(pkgconfig)
 IF( colpack_prefix )
 	ADD_SUBDIRECTORY(cppad_lib)
 ENDIF( colpack_prefix)
 #
-#
-IF ( ipopt_prefix )
-	ADD_SUBDIRECTORY(cppad_ipopt)
-	add_to_list(check_depends check_cppad_ipopt)
-ENDIF( ipopt_prefix )
+IF( NOT ( "${check_depends}" STREQUAL "" ) )
+	MESSAGE(FATAL_ERROR "Error in CMakeLists.txt scripts")
+ENDIF( NOT ( "${check_depends}" STREQUAL "" ) )
 #
 ADD_SUBDIRECTORY(swig)
 ADD_SUBDIRECTORY(example)
@@ -284,6 +283,9 @@ ADD_SUBDIRECTORY(print_for)
 ADD_SUBDIRECTORY(test_more)
 ADD_SUBDIRECTORY(multi_thread)
 ADD_SUBDIRECTORY(speed)
+IF ( ipopt_prefix )
+	ADD_SUBDIRECTORY(cppad_ipopt)
+ENDIF( ipopt_prefix )
 #
 ADD_CUSTOM_TARGET(check DEPENDS ${check_depends})
 # ============================================================================

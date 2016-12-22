@@ -49,3 +49,7 @@ ADD_CUSTOM_TARGET(check_cppad_ipopt_example
 	cppad_ipopt_example
 	DEPENDS cppad_ipopt_example cppad_ipopt
 )
+
+# Change check depends in parent environment
+add_to_list(check_cppad_ipopt_depends check_cppad_ipopt_example)
+SET(check_cppad_ipopt_depends "${check_cppad_ipopt_depends}" PARENT_SCOPE)
