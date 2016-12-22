@@ -271,14 +271,8 @@ IF( colpack_prefix )
 ENDIF( colpack_prefix)
 #
 #
-ADD_SUBDIRECTORY(introduction)
-add_to_list(check_depends check_introduction)
 #
-ADD_SUBDIRECTORY(print_for)
-add_to_list(check_depends check_print_for)
 #
-ADD_SUBDIRECTORY(test_more)
-add_to_list(check_depends check_test_more)
 #
 ADD_SUBDIRECTORY(multi_thread)
 add_to_list(check_depends check_multi_thread)
@@ -294,6 +288,9 @@ ENDIF( ipopt_prefix )
 ADD_SUBDIRECTORY(swig)
 ADD_SUBDIRECTORY(example)
 ADD_SUBDIRECTORY(compare_c)
+ADD_SUBDIRECTORY(introduction)
+ADD_SUBDIRECTORY(print_for)
+ADD_SUBDIRECTORY(test_more)
 #
 ADD_CUSTOM_TARGET(check DEPENDS ${check_depends})
 # ============================================================================

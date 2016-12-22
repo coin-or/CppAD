@@ -16,7 +16,7 @@
 SET(CMAKE_BUILD_TYPE DEBUG)
 
 # initialize list as empty
-SET(check_depends "")
+SET(check_multi_thread_depends "")
 
 # Define the operation
 # CHECK_LIBRARY_EXISTS (LIBRARY FUNCTION LOCATION VARIABLE)
@@ -32,7 +32,6 @@ FIND_PACKAGE(OpenMP)
 IF ( OPENMP_FOUND )
 	# OpenMP_CXX_FLAGS - flags to add to the CXX compiler for OpenMP support
 	ADD_SUBDIRECTORY(openmp)
-	add_to_list(check_depends check_multi_thread_openmp)
 ENDIF ( OPENMP_FOUND )
 
 # If pthreads found, set pthread_lib and pthread_lib_path and process subdir
@@ -47,7 +46,6 @@ IF ( pthread_lib_path )
 	)
 	IF ( pthread_ok )
 		ADD_SUBDIRECTORY(pthread)
-		add_to_list(check_depends check_multi_thread_pthread)
 	ENDIF ( pthread_ok )
 ENDIF ( pthread_lib_path )
 
@@ -85,7 +83,6 @@ int main(void)
 	#
 	IF( bthread_lib )
 		ADD_SUBDIRECTORY(bthread)
-		add_to_list(check_depends check_multi_thread_bthread)
 		MESSAGE(STATUS
 		"boost multi-threading library = ${bthread_lib_path}/${bthread_lib}"
 		)
@@ -95,4 +92,8 @@ int main(void)
 ENDIF ( Boost_FOUND )
 
 # check_multi_thread
-ADD_CUSTOM_TARGET(check_multi_thread DEPENDS ${check_depends})
+ADD_CUSTOM_TARGET(check_multi_thread DEPENDS ${check_multi_thread_depends})
+
+# Change check depends in parent environment
+add_to_list(check_depends check_multi_thread)
+SET(check_depends "${check_depends}" PARENT_SCOPE)

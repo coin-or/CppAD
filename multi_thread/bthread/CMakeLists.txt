@@ -47,3 +47,7 @@ ADD_CUSTOM_TARGET(check_multi_thread_bthread
 	multi_thread_bthread simple_ad
 	DEPENDS multi_thread_bthread
 )
+
+# Change check depends in parent environment
+add_to_list(check_multi_thread_depends check_multi_thread_bthread)
+SET(check_multi_thread_depends "${check_multi_thread_depends}" PARENT_SCOPE)

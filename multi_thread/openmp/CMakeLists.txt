@@ -47,3 +47,8 @@ ADD_CUSTOM_TARGET(check_multi_thread_openmp
 	multi_thread_openmp simple_ad
 	DEPENDS multi_thread_openmp
 )
+
+
+# Change check depends in parent environment
+add_to_list(check_multi_thread_depends check_multi_thread_openmp)
+SET(check_multi_thread_depends "${check_multi_thread_depends}" PARENT_SCOPE)

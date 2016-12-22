@@ -150,3 +150,7 @@ TARGET_LINK_LIBRARIES(test_more
 
 # Add the check_test_more target
 ADD_CUSTOM_TARGET( check_test_more test_more DEPENDS test_more )
+
+# Change check depends in parent environment
+add_to_list(check_depends check_test_more)
+SET(check_depends "${check_depends}" PARENT_SCOPE)
