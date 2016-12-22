@@ -74,6 +74,7 @@ do
 		introduction/get_started/CMakeLists.txt | \
 		multi_thread/CMakeLists.txt | \
 		print_for/CMakeLists.txt | \
+		swig/CMakeLists.txt | \
 		test_more/CMakeLists.txt )
 		check="CMAKE_BUILD_TYPE DEBUG"
 		if ! grep "$check" $file > /dev/null

@@ -17,7 +17,7 @@
 CMAKE_MINIMUM_REQUIRED(VERSION 2.8)
 
 # cppad_version is used by set_version.sh to get the version number.
-SET(cppad_version      "20161220" )
+SET(cppad_version      "20161222" )
 SET(cppad_url          "http://www.coin-or.org/CppAD" )
 SET(cppad_description  "Differentiation of C++ Algorithms" )
 
@@ -295,6 +295,8 @@ IF ( ipopt_prefix )
 	ADD_SUBDIRECTORY(cppad_ipopt)
 	add_to_list(check_depends check_cppad_ipopt)
 ENDIF( ipopt_prefix )
+#
+ADD_SUBDIRECTORY(swig)
 #
 ADD_CUSTOM_TARGET(check DEPENDS ${check_depends})
 # ============================================================================
