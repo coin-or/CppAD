@@ -11,7 +11,9 @@
 # ----------------------------------------------------------------------------
 # use debug build type for initial swig implementation
 SET(CMAKE_BUILD_TYPE DEBUG)
-#
+
+# initialize check_swig_depends
+SET(check_swig_depends "")
 # ----------------------------------------------------------------------------
 # check if we are using swig
 SET( use_swig FALSE )
@@ -89,8 +91,7 @@ IF ( SWIG_FOUND AND PythonLibs_FOUND AND PythonInterp_FOUND)
 	)
 
 	# add to list for all checks
-	add_to_list(check_depends check_swig_python)
-	MESSAGE(STATUS "check_depends=${check_depends}")
+	add_to_list(check_swig_depends check_swig_python)
 
 ENDIF ( SWIG_FOUND AND PythonLibs_FOUND AND PythonInterp_FOUND)
 # ----------------------------------------------------------------------------
@@ -154,13 +155,13 @@ IF( SWIG_FOUND AND octave_config )
 	)
 
 	# add to list for all checks
-	add_to_list(check_depends check_swig_python)
-	MESSAGE(STATUS "check_depends=${check_depends}")
+	add_to_list(check_swig_depends check_swig_octave)
 
 ENDIF( SWIG_FOUND AND octave_config )
 
-IF( SWIG_FOUND )
-	# change check_depends in parent scope
-	SET(check_depends "${check_depends}" PARENT_SCOPE)
-ENDIF( SWIG_FOUND )
+# Add the check_swig target
+ADD_CUSTOM_TARGET(check_swig DEPENDS ${check_swig_depends})
 
+# Change check depends in parent environment
+add_to_list(check_depends check_swig)
+SET(check_depends "${check_depends}" PARENT_SCOPE)

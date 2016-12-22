@@ -9,8 +9,6 @@
 # A copy of this license is included in the COPYING file of this distribution.
 # Please visit http://www.coin-or.org/CppAD/ for information on other licenses.
 # -----------------------------------------------------------------------------
-# Build the example/atomic directory tests
-
 # Specifies build type for this directory. Possible values are
 # empty, Debug, Release, RelWithDebInfo and MinSizeRel
 SET(CMAKE_BUILD_TYPE DEBUG)
@@ -48,3 +46,7 @@ ADD_CUSTOM_TARGET(check_example_atomic
 	example_atomic
 	DEPENDS example_atomic
 )
+
+# add to check check_example_depends in parent environment
+add_to_list(check_example_depends check_example_atomic)
+SET(check_example_depends "${check_example_depends}" PARENT_SCOPE)

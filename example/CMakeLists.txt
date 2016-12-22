@@ -17,15 +17,13 @@
 SET(CMAKE_BUILD_TYPE DEBUG)
 
 # initialize check_depends
-SET(check_depends example)
+SET(check_example_depends example)
 
 # atomic examples
 ADD_SUBDIRECTORY(atomic)
-add_to_list(check_depends check_example_atomic)
 
 # optimize examples
 ADD_SUBDIRECTORY(optimize)
-add_to_list(check_depends check_example_optimize)
 
 # adolc_sources, adolc_libs, and CPPAD_HAS_ADOLC
 SET(sources mul_level_adolc.cpp mul_level_adolc_ode.cpp)
@@ -206,4 +204,8 @@ TARGET_LINK_LIBRARIES(example
 )
 
 # Add the check_example target
-ADD_CUSTOM_TARGET(check_example example DEPENDS ${check_depends})
+ADD_CUSTOM_TARGET(check_example example DEPENDS ${check_example_depends})
+
+# Change check depends in parent environment
+add_to_list(check_depends check_example)
+SET(check_depends "${check_depends}" PARENT_SCOPE)

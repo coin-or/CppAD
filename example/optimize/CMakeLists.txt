@@ -34,3 +34,7 @@ ADD_CUSTOM_TARGET(check_example_optimize
 	example_optimize
 	DEPENDS example_optimize
 )
+
+# add to check check_example_depends in parent environment
+add_to_list(check_example_depends check_example_optimize)
+SET(check_example_depends "${check_example_depends}" PARENT_SCOPE)
