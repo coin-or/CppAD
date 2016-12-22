@@ -11,8 +11,6 @@
 # -----------------------------------------------------------------------------
 # load the modules
 import sys
-#
-sys.path.append( 'build' )
 import swig_example
 #
 # initialze exit status as OK

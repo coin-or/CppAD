@@ -270,9 +270,6 @@ IF( colpack_prefix )
 	ADD_SUBDIRECTORY(cppad_lib)
 ENDIF( colpack_prefix)
 #
-ADD_SUBDIRECTORY(compare_c)
-add_to_list(check_depends check_compare_c)
-#
 #
 ADD_SUBDIRECTORY(introduction)
 add_to_list(check_depends check_introduction)
@@ -296,6 +293,7 @@ ENDIF( ipopt_prefix )
 #
 ADD_SUBDIRECTORY(swig)
 ADD_SUBDIRECTORY(example)
+ADD_SUBDIRECTORY(compare_c)
 #
 ADD_CUSTOM_TARGET(check DEPENDS ${check_depends})
 # ============================================================================

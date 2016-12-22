@@ -10,8 +10,8 @@
 % Please visit http://www.coin-or.org/CppAD/ for information on other licenses.
 % -----------------------------------------------------------------------------
 % load the module
-addpath('build')
 swig_example
+%
 % initialze exit status as OK
 error_count = 0;
 % ---------------------------------------------

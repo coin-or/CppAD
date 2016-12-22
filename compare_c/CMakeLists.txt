@@ -1,9 +1,9 @@
 # $Id$
 # -----------------------------------------------------------------------------
-# CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-12 Bradley M. Bell
+# CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-16 Bradley M. Bell
 #
 # CppAD is distributed under multiple licenses. This distribution is under
-# the terms of the 
+# the terms of the
 #                     Eclipse Public License Version 1.0.
 #
 # A copy of this license is included in the COPYING file of this distribution.
@@ -14,7 +14,7 @@
 #	det
 #	cpp
 # $$
-# 
+#
 # $section Compare Speed of C and C++$$
 # $index compare, speed C and C++$$
 # $index speed, compare C and C++$$
@@ -37,7 +37,7 @@
 # $end
 # -----------------------------------------------------------------------------
 
-# Specifies build type for this directory. Possible values are 
+# Specifies build type for this directory. Possible values are
 # empty, Debug, Release, RelWithDebInfo and MinSizeRel
 SET(CMAKE_BUILD_TYPE RELEASE)
 
@@ -59,14 +59,18 @@ FOREACH( com c cpp )
 	ENDIF( ${com} STREQUAL cpp )
 	#
 	# Add target the executes this program
-	ADD_CUSTOM_TARGET(check_det_by_minor_${com} 
-		det_by_minor_${com} 
-		DEPENDS det_by_minor_${com} 
+	ADD_CUSTOM_TARGET(check_det_by_minor_${com}
+		det_by_minor_${com}
+		DEPENDS det_by_minor_${com}
 	)
 
 ENDFOREACH(com)
 
-# Add the check_compare_c target
-ADD_CUSTOM_TARGET( check_compare_c 
-	DEPENDS check_det_by_minor_c check_det_by_minor_cpp 
+# check_compare_c target
+ADD_CUSTOM_TARGET( check_compare_c
+	DEPENDS check_det_by_minor_c check_det_by_minor_cpp
 )
+
+# Add check_compare_c to check depends in parent environment
+add_to_list(check_depends check_compare_c)
+SET(check_depends "${check_depends}" PARENT_SCOPE)
