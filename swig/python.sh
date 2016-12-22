@@ -17,20 +17,20 @@ then
 fi
 echo_eval cd build
 #
-# create example_python.cpp
-echo_eval swig -python -c++ -I.. -o example_python.cpp ../example.i
+# create swig_example_python.cpp
+echo_eval swig -python -c++ -I.. -o swig_example_python.cpp ../swig_example.i
 #
 # build module that is loadable by python
-echo_eval g++ -I.. ../example.cpp example_python.cpp \
+echo_eval g++ -I.. ../swig_example.cpp swig_example_python.cpp \
 	-c \
 	-fPIC \
 	-I /usr/include/python2.7
-echo_eval g++ -shared example.o example_python.o \
-	-o _example.so
+echo_eval g++ -shared swig_example.o swig_example_python.o \
+	-o _swig_example.so
 #
 # test the module
 cd ..
-if python test_example.py
+if python check_swig_example.py
 then
 	echo 'All tests passed'
 else
