@@ -45,3 +45,7 @@ ADD_CUSTOM_TARGET(check_speed_double
 	speed_double correct 54321
 	DEPENDS speed_double speed_src
 )
+
+# Change check depends in parent environment
+add_to_list(check_speed_depends check_speed_double)
+SET(check_speed_depends "${check_speed_depends}" PARENT_SCOPE)

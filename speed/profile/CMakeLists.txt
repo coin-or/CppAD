@@ -70,3 +70,7 @@ CONFIGURE_FILE(
 	${CMAKE_CURRENT_BINARY_DIR}/gprof.sed
 	COPYONLY
 )
+
+# Change check depends in parent environment
+add_to_list(check_speed_depends check_speed_profile)
+SET(check_speed_depends "${check_speed_depends}" PARENT_SCOPE)

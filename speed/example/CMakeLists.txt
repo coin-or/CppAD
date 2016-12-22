@@ -39,3 +39,7 @@ ADD_CUSTOM_TARGET(check_speed_example
 	speed_example
 	DEPENDS speed_example speed_src
 )
+
+# Change check depends in parent environment
+add_to_list(check_speed_depends check_speed_example)
+SET(check_speed_depends "${check_speed_depends}" PARENT_SCOPE)

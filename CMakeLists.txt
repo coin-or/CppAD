@@ -271,15 +271,6 @@ IF( colpack_prefix )
 ENDIF( colpack_prefix)
 #
 #
-#
-#
-#
-ADD_SUBDIRECTORY(multi_thread)
-add_to_list(check_depends check_multi_thread)
-#
-ADD_SUBDIRECTORY(speed)
-add_to_list(check_depends check_speed)
-#
 IF ( ipopt_prefix )
 	ADD_SUBDIRECTORY(cppad_ipopt)
 	add_to_list(check_depends check_cppad_ipopt)
@@ -291,6 +282,8 @@ ADD_SUBDIRECTORY(compare_c)
 ADD_SUBDIRECTORY(introduction)
 ADD_SUBDIRECTORY(print_for)
 ADD_SUBDIRECTORY(test_more)
+ADD_SUBDIRECTORY(multi_thread)
+ADD_SUBDIRECTORY(speed)
 #
 ADD_CUSTOM_TARGET(check DEPENDS ${check_depends})
 # ============================================================================

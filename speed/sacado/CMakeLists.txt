@@ -78,3 +78,7 @@ ADD_CUSTOM_TARGET(check_speed_sacado
 	speed_sacado correct 54321
 	DEPENDS speed_sacado speed_src
 )
+
+# Change check depends in parent environment
+add_to_list(check_speed_depends check_speed_sacado)
+SET(check_speed_depends "${check_speed_depends}" PARENT_SCOPE)
