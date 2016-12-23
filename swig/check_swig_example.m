@@ -92,6 +92,18 @@ else
 	printf('swig_example.normal_class: Error\n')
 	error_count = error_count + 1
 end
+# --------------------------------------------
+two   = swig_example.double_class(2.0);
+three = swig_example.double_class(3.0);
+five  = two + three;
+ok       = five == swig_example.double_class(5.0);
+ok       = ok & (4.5 < five.value() ) & (five.value() < 5.5);
+if( ok )
+	printf('swig_example.double_class: OK\n')
+else
+	printf('swig_example.double_class: Error\n')
+	error_count = error_count + 1
+end
 % ---------------------------------------------
 % return error_count
 exit(error_count)

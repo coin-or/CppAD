@@ -86,5 +86,17 @@ else :
 	print('swig_example.normal_class: Error')
 	error_count = error_count + 1
 # --------------------------------------------
+# double instantiation of a template class
+two   = swig_example.double_class(2.0);
+three = swig_example.double_class(3.0);
+five  = two + three
+ok       = five == swig_example.double_class(5.0)
+ok       = ok and 4.5 < five.value()  and five.value() < 5.5
+if ok :
+	print('swig_example.double_class: OK')
+else :
+	print('swig_example.double_class: Error')
+	error_count = error_count + 1
+# --------------------------------------------
 # return error_count
 sys.exit(error_count)

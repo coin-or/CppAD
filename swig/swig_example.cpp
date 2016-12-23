@@ -53,7 +53,7 @@ const char* raise_exception(const char* message) throw(const char*)
 }
 
 // -----------------------------------------------------------------------
-// ctor
+// normal_class
 normal_class::normal_class(void)
 { };
 normal_class::normal_class(int value) : value_(value)
@@ -69,5 +69,5 @@ normal_class normal_class::operator+(const normal_class& right) const
 {	return normal_class( value_ + right.value_ ); }
 // equality
 bool normal_class::operator==(const normal_class& right) const
-{	return( value_ == right.value_ ); }
+{	return ( value_ == right.value_ ); }
 // -----------------------------------------------------------------------

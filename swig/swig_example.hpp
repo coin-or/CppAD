@@ -35,4 +35,23 @@ class normal_class
 		bool operator==(const normal_class& right) const;
 };
 
+template <class Type> class template_class
+{	private:
+		Type value_;
+	public:
+		// ctor
+		template_class(const Type& value) : value_(value)
+		{ }
+		// value
+		Type value(void) const
+		{	return value_; }
+		// addition
+		template_class operator+(const template_class& right) const
+		{	return template_class( value_ + right.value_ ); }
+		// equality
+		bool operator==(const template_class& right) const
+		{	return (value_ == right.value_); }
+};
+
+
 # endif
