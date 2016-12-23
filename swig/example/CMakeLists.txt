@@ -77,14 +77,18 @@ IF ( SWIG_FOUND AND PythonLibs_FOUND AND PythonInterp_FOUND)
 	SWIG_LINK_LIBRARIES(swig_example ${PYTHON_LIBRARIES})
 
 	# copy test program to directory with swig module is located
-	FILE(COPY check_swig_example.py
-		DESTINATION "${CMAKE_CURRENT_BINARY_DIR}"
+	ADD_CUSTOM_TARGEt(check_swig_example_py
+		"${CMAKE_COMMAND}" -E copy
+		"${CMAKE_CURRENT_SOURCE_DIR}/check_swig_example.py"
+		"${CMAKE_CURRENT_BINARY_DIR}/check_swig_example.py"
+		DEPENDS
+		"${CMAKE_CURRENT_SOURCE_DIR}/check_swig_example.py"
 	)
 
 	# check_swig_example_python (note underbar in front of swig_example)
 	ADD_CUSTOM_TARGET(check_swig_example_python
 		python check_swig_example.py
-		DEPENDS _swig_example
+		DEPENDS _swig_example check_swig_example_py
 	)
 	MESSAGE(STATUS "make check_swig_example_python: available")
 
@@ -139,14 +143,17 @@ IF( SWIG_FOUND AND octave_config )
 	SWIG_LINK_LIBRARIES(swig_example
 		${octave_liboctinterp} ${octave_liboctave}
 	)
-	# copy test program to directory with swig module is located
-	FILE(COPY check_swig_example.m
-		DESTINATION "${CMAKE_CURRENT_BINARY_DIR}"
+	ADD_CUSTOM_TARGET(check_swig_example_m
+		${CMAKE_COMMAND} -E copy
+		${CMAKE_CURRENT_SOURCE_DIR}/check_swig_example.m
+		${CMAKE_CURRENT_BINARY_DIR}/check_swig_example.m
+		DEPENDS
+		${CMAKE_CURRENT_SOURCE_DIR}/check_swig_example.m
 	)
 	# check_swig_example_octave (no underbar in front of swig_example)
 	ADD_CUSTOM_TARGET(check_swig_example_octave
 		octave check_swig_example.m
-		DEPENDS swig_example
+		DEPENDS swig_example check_swig_example_m
 	)
 	MESSAGE(STATUS "make check_swig_example_octave: available")
 
