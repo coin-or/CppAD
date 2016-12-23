@@ -22,6 +22,9 @@ Please visit http://www.coin-or.org/CppAD/ for information on other licenses.
 %array_functions(int, int_array_ptr);
 %array_class(int, int_array_class);
 
+%include "std_vector.i"
+
 %include "swig_example.hpp"
 
-%template(double_class) template_class<double>;
+%template(double_class)  template_class<double>;
+%template(vector_double) std::vector<double>;

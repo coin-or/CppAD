@@ -64,6 +64,18 @@ else :
 	print('swig_example.max_array_by_ptr: class: Error')
 	error_count = error_count + 1
 # --------------------------------------------
+# max_std_vector_double: std::vector<double>
+n   = 10
+vec = swig_example.vector_double(n)
+for i in range(n) :
+	vec[i] = 2.0 * i;
+#
+if swig_example.max_std_vector_double(vec) == 18.0 :
+	print('swig_example.max_std_vector_double: class: OK')
+else :
+	print('swig_example.max_std_vector_double: class: Error')
+	error_count = error_count + 1
+# --------------------------------------------
 try :
 	swig_example.raise_exception('test message')
 	message = ''

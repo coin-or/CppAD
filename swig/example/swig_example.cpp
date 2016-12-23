@@ -11,6 +11,7 @@ Please visit http://www.coin-or.org/CppAD/ for information on other licenses.
 -------------------------------------------------------------------------- */
 # include "swig_example.hpp"
 # include <string>
+# include <limits>
 
 // factorial_by_val
 int factorial_by_val(int n) {
@@ -36,6 +37,17 @@ int max_array_by_ptr(int n, int* x)
 			result = x[i];
 	return result;
 }
+
+// max_std_vector_double
+double max_std_vector_double(const std::vector<double>& x)
+{	double result = - std::numeric_limits<double>::infinity();
+	for(size_t i = 0; i < x.size(); i++)
+		if( x[i] > result )
+			result = x[i];
+	return result;
+}
+
+
 
 // raise_exception or return previous error message
 const char* raise_exception(const char* message) throw(const char*)

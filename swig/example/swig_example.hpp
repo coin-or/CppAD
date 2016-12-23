@@ -11,12 +11,14 @@ the terms of the
 A copy of this license is included in the COPYING file of this distribution.
 Please visit http://www.coin-or.org/CppAD/ for information on other licenses.
 -------------------------------------------------------------------------- */
+# include <vector>
 
 int         factorial_by_val(int n);
 const char* message_of_void();
 void        add_by_ptr(int x, int y, int* result);
 int         max_array_by_ptr(int n, int* x);
 const char* raise_exception(const char* message) throw(const char*);
+double      max_std_vector_double(const std::vector<double>& x);
 
 class normal_class
 {	private:
