@@ -42,6 +42,7 @@ ADD_CUSTOM_TARGET(check_introduction_exp_apx
 	introduction_exp_apx
 	DEPENDS introduction_exp_apx
 )
+MESSAGE(STATUS "make check_introduction_exp_apx: available")
 
 # Change check depends in parent environment
 add_to_list(check_introduction_depends check_introduction_exp_apx)

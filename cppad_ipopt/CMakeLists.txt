@@ -34,6 +34,7 @@ ADD_SUBDIRECTORY(test)
 
 # Add the check_cppad_ipopt target
 ADD_CUSTOM_TARGET(check_cppad_ipopt DEPENDS ${check_cppad_ipopt_depends} )
+MESSAGE(STATUS "make check_cppad_ipopt: available")
 
 # Change check depends in parent environment
 add_to_list(check_depends check_cppad_ipopt)

@@ -78,6 +78,7 @@ ADD_CUSTOM_TARGET(check_speed_sacado
 	speed_sacado correct 54321
 	DEPENDS speed_sacado speed_src
 )
+MESSAGE(STATUS "make check_speed_sacado: available")
 
 # Change check depends in parent environment
 add_to_list(check_speed_depends check_speed_sacado)

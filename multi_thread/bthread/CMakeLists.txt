@@ -47,6 +47,7 @@ ADD_CUSTOM_TARGET(check_multi_thread_bthread
 	multi_thread_bthread simple_ad
 	DEPENDS multi_thread_bthread
 )
+MESSAGE(STATUS "make check_multi_thread_bthread: available")
 
 # Change check depends in parent environment
 add_to_list(check_multi_thread_depends check_multi_thread_bthread)

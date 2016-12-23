@@ -26,6 +26,7 @@ ADD_CUSTOM_TARGET(check_introduction_get_started
 	introduction_get_started
 	DEPENDS introduction_get_started
 )
+MESSAGE(STATUS "make check_introduction_get_started: available")
 
 # Change check depends in parent environment
 add_to_list(check_introduction_depends check_introduction_get_started)

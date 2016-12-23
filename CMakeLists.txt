@@ -264,7 +264,7 @@ ENDIF( ipopt_prefix )
 # Initialize list of tests as empty
 SET(check_depends "")
 #
-# directories whith no check depends entries
+# directories with no check depends entries
 ADD_SUBDIRECTORY(cppad)
 ADD_SUBDIRECTORY(pkgconfig)
 IF( colpack_prefix )
@@ -275,6 +275,7 @@ IF( NOT ( "${check_depends}" STREQUAL "" ) )
 	MESSAGE(FATAL_ERROR "Error in CMakeLists.txt scripts")
 ENDIF( NOT ( "${check_depends}" STREQUAL "" ) )
 #
+# directories with check depends entries
 ADD_SUBDIRECTORY(swig)
 ADD_SUBDIRECTORY(example)
 ADD_SUBDIRECTORY(compare_c)
@@ -288,6 +289,7 @@ IF ( ipopt_prefix )
 ENDIF( ipopt_prefix )
 #
 ADD_CUSTOM_TARGET(check DEPENDS ${check_depends})
+MESSAGE(STATUS "make check: avialable")
 # ============================================================================
 # Copy a file to another location and modify its contents.
 # configure_file(InputFile OutputFile [COPYONLY] [ESCAPE_QUOTES] [@ONLY])

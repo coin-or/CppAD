@@ -18,6 +18,7 @@ ADD_SUBDIRECTORY(get_started)
 
 # Add the check_introduction target
 ADD_CUSTOM_TARGET(check_introduction DEPENDS ${check_introduction_depends})
+MESSAGE(STATUS "make check_introduction: available")
 
 # Change check depends in parent environment
 add_to_list(check_depends check_introduction)

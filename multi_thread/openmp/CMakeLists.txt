@@ -47,6 +47,7 @@ ADD_CUSTOM_TARGET(check_multi_thread_openmp
 	multi_thread_openmp simple_ad
 	DEPENDS multi_thread_openmp
 )
+MESSAGE(STATUS "make check_multi_thread_openmp: available")
 
 
 # Change check depends in parent environment

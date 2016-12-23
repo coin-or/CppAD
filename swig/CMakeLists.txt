@@ -58,9 +58,6 @@ ENDIF( use_swig )
 # ----------------------------------------------------------------------------
 # python
 IF ( SWIG_FOUND AND PythonLibs_FOUND AND PythonInterp_FOUND)
-	# report to user
-	MESSAGE(STATUS "adding swig python module")
-
 	# which version of python did we find
 	SET(lib    "${PYTHONLIBS_VERSION_STRING}" )
 	SET(interp "${PYTHON_VERSION_STRING}" )
@@ -89,6 +86,7 @@ IF ( SWIG_FOUND AND PythonLibs_FOUND AND PythonInterp_FOUND)
 		python check_swig_example.py
 		DEPENDS _swig_example
 	)
+	MESSAGE(STATUS "make check_swig_python: available")
 
 	# add to list for all checks
 	add_to_list(check_swig_depends check_swig_python)
@@ -97,9 +95,6 @@ ENDIF ( SWIG_FOUND AND PythonLibs_FOUND AND PythonInterp_FOUND)
 # ----------------------------------------------------------------------------
 # octave
 IF( SWIG_FOUND AND octave_config )
-	# report to user
-	MESSAGE(STATUS "adding swig octave module")
-	#
 	# octave include directories
 	EXECUTE_PROCESS(
 		COMMAND ${octave_config} -p OCTINCLUDEDIR
@@ -153,6 +148,7 @@ IF( SWIG_FOUND AND octave_config )
 		octave check_swig_example.m
 		DEPENDS swig_example
 	)
+	MESSAGE(STATUS "make check_swig_octave: available")
 
 	# add to list for all checks
 	add_to_list(check_swig_depends check_swig_octave)
@@ -161,6 +157,7 @@ ENDIF( SWIG_FOUND AND octave_config )
 
 # Add the check_swig target
 ADD_CUSTOM_TARGET(check_swig DEPENDS ${check_swig_depends})
+MESSAGE(STATUS "make check_swig: available")
 
 # Change check depends in parent environment
 add_to_list(check_depends check_swig)

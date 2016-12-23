@@ -59,6 +59,7 @@ ADD_CUSTOM_TARGET(
 	DEPENDS
 	speed_adolc speed_src
 )
+MESSAGE(STATUS "make check_speed_adolc: available")
 
 # Change check depends in parent environment
 add_to_list(check_speed_depends check_speed_adolc)

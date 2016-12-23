@@ -26,6 +26,7 @@ add_cppad_cxx_flags(print_for)
 
 # check_print_for target
 ADD_CUSTOM_TARGET(check_print_for print_for DEPENDS print_for)
+MESSAGE(STATUS "make check_print_for: available")
 
 # Change check depends in parent environment
 add_to_list(check_depends check_print_for)

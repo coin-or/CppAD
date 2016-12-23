@@ -59,6 +59,7 @@ ADD_CUSTOM_TARGET(check_speed_profile
 	speed_profile correct 54321
 	DEPENDS speed_profile
 )
+MESSAGE(STATUS "make check_speed_profile: available")
 
 # Sed script to make gprof output more readable, use:
 #	./speed_profile speed 54321

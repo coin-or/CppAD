@@ -42,6 +42,7 @@ ADD_CUSTOM_TARGET(check_cppad_ipopt_test
 	cppad_ipopt_test
 	DEPENDS cppad_ipopt_test cppad_ipopt
 )
+MESSAGE(STATUS "make check_cppad_ipopt_test: available")
 
 # Change check depends in parent environment
 add_to_list(check_cppad_ipopt_depends check_cppad_ipopt_test)

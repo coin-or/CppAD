@@ -42,3 +42,4 @@ ADD_CUSTOM_TARGET(check_example_ipopt_solve
 	example_ipopt_solve
 	DEPENDS example_ipopt_solve
 )
+MESSAGE(STATUS "make check_example_ipopt_solve: available")

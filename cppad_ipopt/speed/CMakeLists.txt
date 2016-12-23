@@ -51,6 +51,7 @@ ADD_CUSTOM_TARGET(check_cppad_ipopt_speed
 	cppad_ipopt_speed
 	DEPENDS cppad_ipopt_speed cppad_ipopt
 )
+MESSAGE(STATUS "make check_cppad_ipopt_speed: available")
 
 # Change check depends in parent environment
 add_to_list(check_cppad_ipopt_depends check_cppad_ipopt_speed)

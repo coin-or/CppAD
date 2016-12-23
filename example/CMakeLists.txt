@@ -205,6 +205,7 @@ TARGET_LINK_LIBRARIES(example
 
 # Add the check_example target
 ADD_CUSTOM_TARGET(check_example example DEPENDS ${check_example_depends})
+MESSAGE(STATUS "make check_example: available")
 
 # Change check depends in parent environment
 add_to_list(check_depends check_example)

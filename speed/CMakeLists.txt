@@ -23,13 +23,9 @@ SET(check_speed_depends "")
 # before the current input file continues beyond this command.
 # add_subdirectory(source_dir [binary_dir] [EXCLUDE_FROM_ALL])
 ADD_SUBDIRECTORY(src)
-#
 ADD_SUBDIRECTORY(cppad)
-#
 ADD_SUBDIRECTORY(double)
-#
 ADD_SUBDIRECTORY(example)
-#
 IF ( cppad_profile_flag )
 	ADD_SUBDIRECTORY(profile)
 ENDIF ( cppad_profile_flag )
@@ -46,6 +42,7 @@ ENDIF( sacado_prefix )
 
 # check_speed
 ADD_CUSTOM_TARGET(check_speed DEPENDS ${check_speed_depends} )
+MESSAGE(STATUS "make check_speed: available")
 
 # Change check depends in parent environment
 add_to_list(check_depends check_speed)

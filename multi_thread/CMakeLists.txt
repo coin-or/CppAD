@@ -93,6 +93,7 @@ ENDIF ( Boost_FOUND )
 
 # check_multi_thread
 ADD_CUSTOM_TARGET(check_multi_thread DEPENDS ${check_multi_thread_depends})
+MESSAGE(STATUS "make check_multi_thread: available")
 
 # Change check depends in parent environment
 add_to_list(check_depends check_multi_thread)

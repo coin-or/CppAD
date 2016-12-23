@@ -63,6 +63,7 @@ FOREACH( com c cpp )
 		det_by_minor_${com}
 		DEPENDS det_by_minor_${com}
 	)
+	MESSAGE(STATUS "make check_det_by_minor_${com}: available")
 
 ENDFOREACH(com)
 
@@ -70,6 +71,7 @@ ENDFOREACH(com)
 ADD_CUSTOM_TARGET( check_compare_c
 	DEPENDS check_det_by_minor_c check_det_by_minor_cpp
 )
+MESSAGE(STATUS "make check_compare_c: available")
 
 # Add check_compare_c to check depends in parent environment
 add_to_list(check_depends check_compare_c)

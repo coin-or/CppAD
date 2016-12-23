@@ -46,6 +46,7 @@ ADD_CUSTOM_TARGET(check_example_atomic
 	example_atomic
 	DEPENDS example_atomic
 )
+MESSAGE(STATUS "make check_example_atomic: available")
 
 # add to check check_example_depends in parent environment
 add_to_list(check_example_depends check_example_atomic)
