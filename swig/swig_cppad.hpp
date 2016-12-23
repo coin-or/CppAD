@@ -33,6 +33,10 @@ public:
 	d_vector(const d_vector& x);
 	/// number of elements currently in this vector
 	int size(void) const;
+	/// change the number of elements in this vector
+	void resize(int n);
+	/// point the the data
+	double* data(void);
 };
 
 

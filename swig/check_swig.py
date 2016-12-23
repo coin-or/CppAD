@@ -17,12 +17,23 @@ import swig_cppad
 error_count = 0
 # --------------------------------------------
 # d_vector
-two   = swig_cppad.d_vector(2)
-ok    = two.size() == 2
+ok  = 1
+vec = swig_cppad.d_vector(2)
+# size
+ok  = ok and vec.size() == 2
+# resize
+vec.resize(4)
+ok  = ok and vec.size() == 4
+# data
+for i in range(4) :
+	a     = vec.data()
+	swig_cppad.double_array_setitem(a, i, 3.0)
+	value = swig_cppad.double_array_getitem(a, i)
+	ok    = ok and value == 3.0
 if ok :
-	print('swig_example.d_vector: OK')
+	print('swig_cppad.d_vector: OK')
 else :
-	print('swig_example.d_vector: Error')
+	print('swig_cppad.d_vector: Error')
 	error_count = error_count + 1
 # --------------------------------------------
 # return error_count

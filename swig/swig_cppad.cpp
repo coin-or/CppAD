@@ -37,6 +37,15 @@ d_vector::d_vector(const d_vector& x)
 }
 /// number of elements in this vector
 int d_vector::size(void) const
-{	return int( ptr_->size() ); }
+{	return int( ptr_->size() );
+}
+/// number of elements in this vector
+void d_vector::resize(int n)
+{	ptr_->resize( size_t(n) );
+}
+/// pointer to the data
+double* d_vector::data(void)
+{	return ptr_->data();
+}
 // ---------------------------------------------------------------------------
 

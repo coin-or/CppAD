@@ -15,8 +15,21 @@ swig_cppad
 % initialze exit status as OK
 error_count = 0;
 % ---------------------------------------------
-two = swig_cppad.d_vector(2);
-ok  = two.size() == 2;
+% d_vector
+ok  = 1;
+vec = swig_cppad.d_vector(2);
+% size
+ok  = ok & vec.size() == 2;
+% resize
+vec.resize(4);
+ok  = ok & vec.size() == 4;
+% data
+a     = vec.data();
+for i = 0 : 3
+	swig_cppad.double_array_setitem(a, i, 3.0);
+	value = swig_cppad.double_array_getitem(a, i);
+	ok    = ok & value == 3.0;
+endfor
 if( ok )
 	printf('swig_cppad.d_vector: OK\n')
 else
