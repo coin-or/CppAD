@@ -40,8 +40,8 @@ case $ext in
 	upper_name=`echo $file_name | tr [a-z./] [A-Z__]`
 	cat << EOF  > bin/add_copyright.$$
 // \$Id\$
-# ifndef $upper_name
-# define $upper_name
+# ifndef CPPAD_$upper_name
+# define CPPAD_$upper_name
 /* --------------------------------------------------------------------------
 CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-16 Bradley M. Bell
 

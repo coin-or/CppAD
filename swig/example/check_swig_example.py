@@ -56,7 +56,7 @@ swig_example.delete_int_array_ptr(array_ptr)
 n   = 10
 array_obj = swig_example.int_array_class(n)
 for i in range(n) :
-	array_obj[i] = 2 * i;
+	array_obj[i] = 2 * i
 #
 if swig_example.max_array_by_ptr(n, array_obj) == 18 :
 	print('swig_example.max_array_by_ptr: class: OK')
@@ -65,18 +65,18 @@ else :
 	error_count = error_count + 1
 # --------------------------------------------
 try :
-	swig_example.raise_exception('test message');
+	swig_example.raise_exception('test message')
 	message = ''
 except :
-	message = swig_example.raise_exception('');
+	message = swig_example.raise_exception('')
 if message == 'test message' :
 	print('swig_example.swig_example.raise_exception: OK')
 else :
 	print('swig_example.raise_exception.message_of_void: Error')
 	error_count = error_count + 1
 # --------------------------------------------
-two   = swig_example.normal_class(2);
-three = swig_example.normal_class(3);
+two   = swig_example.normal_class(2)
+three = swig_example.normal_class(3)
 five  = two + three
 ok       = five == swig_example.normal_class(5)
 ok       = ok and 4 < five.value()  and five.value() < 6
@@ -87,8 +87,8 @@ else :
 	error_count = error_count + 1
 # --------------------------------------------
 # double instantiation of a template class
-two   = swig_example.double_class(2.0);
-three = swig_example.double_class(3.0);
+two   = swig_example.double_class(2.0)
+three = swig_example.double_class(3.0)
 five  = two + three
 ok       = five == swig_example.double_class(5.0)
 ok       = ok and 4.5 < five.value()  and five.value() < 5.5
