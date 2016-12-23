@@ -54,6 +54,7 @@ $spell
 	postfix
 	id
 	addr
+	grep
 $$
 
 $section Using CMake to Configure CppAD$$
@@ -116,6 +117,15 @@ cmake %%                                                                     \
     \
     ..
 %$$
+
+$head make check$$
+Important information about the CppAD configuration is output
+by this command. If you have the $code grep$$ program,
+and store the output in $code cmake.log$$, you can get a list of
+all the test options with the command:
+$codep
+	grep 'make check' cmake.log
+$$
 
 $head cmake_verbose_makefile$$
 This value should be either $code YES$$ or $code NO$$.

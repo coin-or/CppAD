@@ -91,10 +91,12 @@ int main(void)
 	ENDIF( bthread_lib )
 ENDIF ( Boost_FOUND )
 
-# check_multi_thread
-ADD_CUSTOM_TARGET(check_multi_thread DEPENDS ${check_multi_thread_depends})
-MESSAGE(STATUS "make check_multi_thread: available")
+IF( NOT( "${check_multi_threads_depends}" STREQUAL "" ) )
+	# check_multi_thread
+	ADD_CUSTOM_TARGET(check_multi_thread DEPENDS ${check_multi_thread_depends})
+	MESSAGE(STATUS "make check_multi_thread: available")
 
-# Change check depends in parent environment
-add_to_list(check_depends check_multi_thread)
-SET(check_depends "${check_depends}" PARENT_SCOPE)
+	# Change check depends in parent environment
+	add_to_list(check_depends check_multi_thread)
+	SET(check_depends "${check_depends}" PARENT_SCOPE)
+ENDIF( NOT( "${check_multi_threads_depends}" STREQUAL "" ) )

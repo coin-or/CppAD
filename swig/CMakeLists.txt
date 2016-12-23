@@ -155,10 +155,12 @@ IF( SWIG_FOUND AND octave_config )
 
 ENDIF( SWIG_FOUND AND octave_config )
 
-# Add the check_swig target
-ADD_CUSTOM_TARGET(check_swig DEPENDS ${check_swig_depends})
-MESSAGE(STATUS "make check_swig: available")
+IF( NOT( "${check_swig_depends}" STREQUAL "" ) )
+	# Add the check_swig target
+	ADD_CUSTOM_TARGET(check_swig DEPENDS ${check_swig_depends})
+	MESSAGE(STATUS "make check_swig: available")
 
-# Change check depends in parent environment
-add_to_list(check_depends check_swig)
-SET(check_depends "${check_depends}" PARENT_SCOPE)
+	# Change check depends in parent environment
+	add_to_list(check_depends check_swig)
+	SET(check_depends "${check_depends}" PARENT_SCOPE)
+ENDIF( NOT( "${check_swig_depends}" STREQUAL "" ) )

@@ -49,6 +49,10 @@ in reverse order by date.
 The purpose of these sections is to
 assist you in learning about changes between various versions of CppAD.
 
+$head 12-23$$
+Added a way for the user to determine what tests options are available; see
+$cref/make check/cmake/make check/$$.
+
 $head 12-20$$
 Change the optimize $cref/examples/optimize/Examples/$$ to use
 $cref NearEqual$$ for floating point tests (instead of exactly equal).
