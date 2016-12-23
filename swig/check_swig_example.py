@@ -75,15 +75,15 @@ else :
 	print('swig_example.raise_exception.message_of_void: Error')
 	error_count = error_count + 1
 # --------------------------------------------
-two   = swig_example.my_class(2);
-three = swig_example.my_class(3);
+two   = swig_example.normal_class(2);
+three = swig_example.normal_class(3);
 five  = two + three
-ok       = five == swig_example.my_class(5)
+ok       = five == swig_example.normal_class(5)
 ok       = ok and 4 < five.value()  and five.value() < 6
 if ok :
-	print('swig_example.my_class: OK')
+	print('swig_example.normal_class: OK')
 else :
-	print('swig_example.my_class: Error')
+	print('swig_example.normal_class: Error')
 	error_count = error_count + 1
 # --------------------------------------------
 # return error_count

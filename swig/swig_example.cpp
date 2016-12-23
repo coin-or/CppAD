@@ -54,20 +54,20 @@ const char* raise_exception(const char* message) throw(const char*)
 
 // -----------------------------------------------------------------------
 // ctor
-my_class::my_class(void)
+normal_class::normal_class(void)
 { };
-my_class::my_class(int value) : value_(value)
+normal_class::normal_class(int value) : value_(value)
 { };
 // destructor
-my_class::~my_class(void)
+normal_class::~normal_class(void)
 { };
 // value
-int my_class::value (void) const
+int normal_class::value (void) const
 {	return value_; }
 // additon
-my_class my_class::operator+(const my_class& right)
-{	return my_class( value_ + right.value_ ); }
+normal_class normal_class::operator+(const normal_class& right)
+{	return normal_class( value_ + right.value_ ); }
 // equality
-bool my_class::operator==(const my_class& right)
+bool normal_class::operator==(const normal_class& right)
 {	return( value_ == right.value_ ); }
 // -----------------------------------------------------------------------

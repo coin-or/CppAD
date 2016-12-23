@@ -81,15 +81,15 @@ else
 	error_count = error_count + 1
 end
 # --------------------------------------------
-two   = swig_example.my_class(2);
-three = swig_example.my_class(3);
+two   = swig_example.normal_class(2);
+three = swig_example.normal_class(3);
 five  = two + three;
-ok       = five == swig_example.my_class(5);
+ok       = five == swig_example.normal_class(5);
 ok       = ok & (4 < five.value() ) & (five.value() < 6);
 if( ok )
-	printf('swig_example.my_class: OK\n')
+	printf('swig_example.normal_class: OK\n')
 else
-	printf('swig_example.my_class: Error\n')
+	printf('swig_example.normal_class: Error\n')
 	error_count = error_count + 1
 end
 % ---------------------------------------------
