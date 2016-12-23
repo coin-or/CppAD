@@ -65,9 +65,9 @@ normal_class::~normal_class(void)
 int normal_class::value (void) const
 {	return value_; }
 // additon
-normal_class normal_class::operator+(const normal_class& right)
+normal_class normal_class::operator+(const normal_class& right) const
 {	return normal_class( value_ + right.value_ ); }
 // equality
-bool normal_class::operator==(const normal_class& right)
+bool normal_class::operator==(const normal_class& right) const
 {	return( value_ == right.value_ ); }
 // -----------------------------------------------------------------------

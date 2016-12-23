@@ -30,9 +30,9 @@ class normal_class
 		// int
 		int value(void) const;
 		// additon
-		normal_class operator+(const normal_class& right);
+		normal_class operator+(const normal_class& right) const;
 		// equality
-		bool operator==(const normal_class& right);
+		bool operator==(const normal_class& right) const;
 };
 
 # endif
