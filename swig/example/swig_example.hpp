@@ -1,6 +1,6 @@
 /* $Id$ */
-# ifndef CPPAD_SWIG_SWIG_EXAMPLE_HPP
-# define CPPAD_SWIG_SWIG_EXAMPLE_HPP
+# ifndef CPPAD_SWIG_EXAMPLE_SWIG_EXAMPLE_HPP
+# define CPPAD_SWIG_EXAMPLE_SWIG_EXAMPLE_HPP
 /* --------------------------------------------------------------------------
 CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-16 Bradley M. Bell
 
