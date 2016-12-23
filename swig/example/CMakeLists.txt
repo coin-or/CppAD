@@ -44,7 +44,10 @@ IF( use_swig )
 	# CMAKE_SWIG_OUTDIR
 	# where to write all the swig generated module (swig -outdir option)
 
-	# a global used to add special flags to all swig calls.
+	# By default, the #include is ignored unless you run SWIG with the
+	# -includeall option. The reason for ignoring traditional includes is
+	# that you often don't want SWIG to try and wrap everything included in
+	# standard header system headers and auxiliary files.
 	SET(CMAKE_SWIG_FLAGS "")
 
 	# treat like a C++ files
@@ -52,7 +55,7 @@ IF( use_swig )
 
 	# use swig flags when processing this file
 	SET_SOURCE_FILES_PROPERTIES(
-		swig_example.i PROPERTIES SWIG_FLAGS "-includeall"
+		swig_example.i PROPERTIES SWIG_FLAGS ""
 	)
 ENDIF( use_swig )
 # ----------------------------------------------------------------------------
