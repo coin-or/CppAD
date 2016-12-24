@@ -20,7 +20,7 @@ namespace CppAD {
 	template <class Base> class ADFun;
 }
 class a_double;
-class adfun;
+class a_fun;
 
 /// structure with exact same member data as AD<double>
 struct a_double_data {
@@ -43,7 +43,7 @@ void abort_recording(void);
 /// swig class that acts the same as CppAD::AD<double>
 class a_double
 {	friend std::vector<a_double> independent(const std::vector<double>& x);
-	friend class adfun;
+	friend class a_fun;
 	//
 	// private members are not in swig interface
 	private:
@@ -75,10 +75,10 @@ class a_double
 	a_double operator/(const a_double& ad) const;
 };
 // --------------------------------------------------------------------------
-// adfun
+// a_fun
 // --------------------------------------------------------------------------
 /// swig class that acts the same as CppAD::ADFun<double>
-class adfun
+class a_fun
 {	// private members are not in swig interface
 	private:
 	/// ADFun<double> representation
@@ -87,11 +87,11 @@ class adfun
 	// public members are in swig interface
 	public:
 	/// default ctor
-	adfun(void);
+	a_fun(void);
 	/// destructor
-	~adfun(void);
+	~a_fun(void);
 	/// constrtuctor
-	adfun( const std::vector<a_double>& ax, const std::vector<a_double>& ay );
+	a_fun( const std::vector<a_double>& ax, const std::vector<a_double>& ay );
 };
 // --------------------------------------------------------------------------
 

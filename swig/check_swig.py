@@ -59,7 +59,7 @@ else :
 # std::vector<a_double>
 # --------------------------------------------
 ok    = True
-a_vec = swig_cppad.vector_a_d(2)
+a_vec = swig_cppad.vector_ad(2)
 # size
 ok  = ok and a_vec.size() == 2
 # resize
@@ -72,9 +72,9 @@ for i in range( a_vec.size() ) :
 for i in range( a_vec.size() ) :
 	ok = ok and a_vec[i].value() == 2.0 * i
 if ok :
-	print('swig_cppad.vector_a_d: OK')
+	print('swig_cppad.vector_ad:  OK')
 else :
-	print('swig_cppad.vector_a_d: Error')
+	print('swig_cppad.vector_ad:  Error')
 	error_count = error_count + 1
 # --------------------------------------------
 # independent and afun
@@ -85,9 +85,9 @@ x  = swig_cppad.vector_double(n)
 for i in range(n) :
 	x[i] = i + 1
 ax    = swig_cppad.independent(x)
-ay    = swig_cppad.vector_a_d(m)
+ay    = swig_cppad.vector_ad(m)
 ay[0] = ax[0] - ax[1]
-af    = swig_cppad.adfun(ax, ay)
+af    = swig_cppad.a_fun(ax, ay)
 # --------------------------------------------
 # return error_count
 sys.exit(error_count)

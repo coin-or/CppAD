@@ -13,7 +13,7 @@ Please visit http://www.coin-or.org/CppAD/ for information on other licenses.
 # include "swig_cppad.hpp"
 
 // ad_result_binary_op
-# define binary_op_ad_result(op) \
+# define BINARY_OP_AD_RESULT(op) \
 a_double a_double::operator op(const a_double& ad) const \
 {	a_double result; \
 	*result.ptr() = *ptr() op *ad.ptr(); \
@@ -64,10 +64,10 @@ double a_double::value(void) const
 	return result;
 }
 // binary operators with an ad result
-binary_op_ad_result(+)
-binary_op_ad_result(-)
-binary_op_ad_result(*)
-binary_op_ad_result(/)
+BINARY_OP_AD_RESULT(+)
+BINARY_OP_AD_RESULT(-)
+BINARY_OP_AD_RESULT(*)
+BINARY_OP_AD_RESULT(/)
 // --------------------------------------------------------------------------
 // independent is a friend for ad_double
 std::vector<a_double> independent(const std::vector<double>& x)
@@ -88,18 +88,18 @@ void abort_recording(void)
 {	CppAD::AD<double>::abort_recording();
 }
 // --------------------------------------------------------------------------
-// adfun
+// a_fun
 // --------------------------------------------------------------------------
-adfun::adfun(void)
+a_fun::a_fun(void)
 {	ptr_ = new CppAD::ADFun<double>();
 	CPPAD_ASSERT_UNKNOWN( ptr_ != CPPAD_NULL );
 }
-adfun::~adfun(void)
+a_fun::~a_fun(void)
 {	if( ptr_ != CPPAD_NULL )
 	CPPAD_ASSERT_UNKNOWN( ptr_ != CPPAD_NULL );
 	delete ptr_;
 }
-adfun::adfun(
+a_fun::a_fun(
 	const std::vector<a_double>& ax ,
 	const std::vector<a_double>& ay )
 {	ptr_ = new CppAD::ADFun<double>();

@@ -62,7 +62,7 @@ end
 % std::vector<a_double>
 % ---------------------------------------------
 ok    = true;
-a_vec = swig_cppad.vector_a_d(2);
+a_vec = swig_cppad.vector_ad(2);
 % size
 ok  = ok & a_vec.size() == 2;
 % resize
@@ -77,9 +77,9 @@ for i = 0 : (a_vec.size()-1)
 	ok = ok & a_vec(i).value() == 2.0 * i;
 endfor
 if( ok )
-	printf('swig_cppad.vector_a_d: OK\n')
+	printf('swig_cppad.vector_ad:  OK\n')
 else
-	printf('swig_cppad.vector_a_d: Error\n')
+	printf('swig_cppad.vector_ad:  Error\n')
 	error_count = error_count + 1
 end
 % ---------------------------------------------
