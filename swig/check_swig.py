@@ -56,5 +56,26 @@ else :
 	print('swig_cppad.a_double: Error')
 	error_count = error_count + 1
 # --------------------------------------------
+# std::vector<a_double>
+# --------------------------------------------
+ok    = True
+a_vec = swig_cppad.vector_a_d(2)
+# size
+ok  = ok and a_vec.size() == 2
+# resize
+a_vec.resize(4)
+ok  = ok and a_vec.size() == 4
+# setting elements
+for i in range( a_vec.size() ) :
+	a_vec[i] = swig_cppad.a_double(2.0 * i)
+# getting elements
+for i in range( a_vec.size() ) :
+	ok = ok and a_vec[i].value() == 2.0 * i
+if ok :
+	print('swig_cppad.vector_a_d: OK')
+else :
+	print('swig_cppad.vector_a_d: Error')
+	error_count = error_count + 1
+# --------------------------------------------
 # return error_count
 sys.exit(error_count)

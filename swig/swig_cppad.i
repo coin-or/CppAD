@@ -30,4 +30,5 @@ Please visit http://www.coin-or.org/CppAD/ for information on other licenses.
 %include "swig_cppad.hpp"
 
 %template(vector_double) std::vector<double>;
+%template(vector_a_d)    std::vector<a_double>;
 
