@@ -33,6 +33,18 @@ typedef enum {
 
 template <class Base>
 class AD {
+private :
+	// -----------------------------------------------------------------------
+	// value_ corresponding to this object
+	Base value_;
+
+	// Tape identifier corresponding to taddr
+	tape_id_t tape_id_;
+
+	// taddr_ in tape for this variable
+	addr_t taddr_;
+	// -----------------------------------------------------------------------
+
 	// enable use of AD<Base> in parallel mode
 	template <class Type>
 	friend void parallel_ad(void);
@@ -241,14 +253,6 @@ public:
 	);
 
 private:
-	// value_ corresponding to this object
-	Base value_;
-
-	// Tape identifier corresponding to taddr
-	tape_id_t tape_id_;
-
-	// taddr_ in tape for this variable
-	addr_t taddr_;
 	//
 	// Make this variable a parameter
 	//
