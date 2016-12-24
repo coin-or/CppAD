@@ -15,25 +15,26 @@ swig_cppad
 % initialze exit status as OK
 error_count = 0;
 % ---------------------------------------------
-% d_vector
+% std::vector<double>
 ok  = 1;
-vec = swig_cppad.d_vector(2);
+vec = swig_cppad.vector_double(2);
 % size
 ok  = ok & vec.size() == 2;
 % resize
 vec.resize(4);
 ok  = ok & vec.size() == 4;
-% data
-a     = vec.data();
-for i = 0 : 3
-	swig_cppad.double_array_setitem(a, i, 3.0);
-	value = swig_cppad.double_array_getitem(a, i);
-	ok    = ok & value == 3.0;
+% setting elements
+for i = 0 : (vec.size()-1)
+	vec(i) = 2.0 * i;
+endfor
+% getting elements
+for i = 0 : (vec.size()-1)
+	ok = ok & vec(i) == 2.0 * i;
 endfor
 if( ok )
-	printf('swig_cppad.d_vector: OK\n')
+	printf('swig_cppad.vector_double: OK\n')
 else
-	printf('swig_cppad.d_vector: Error\n')
+	printf('swig_cppad.vector_double: Error\n')
 	error_count = error_count + 1
 end
 % ---------------------------------------------

@@ -16,24 +16,24 @@ import swig_cppad
 # initialze exit status as OK
 error_count = 0
 # --------------------------------------------
-# d_vector
+# std::vector<double>
 ok  = 1
-vec = swig_cppad.d_vector(2)
+vec = swig_cppad.vector_double(2)
 # size
 ok  = ok and vec.size() == 2
 # resize
 vec.resize(4)
 ok  = ok and vec.size() == 4
-# data
-for i in range(4) :
-	a     = vec.data()
-	swig_cppad.double_array_setitem(a, i, 3.0)
-	value = swig_cppad.double_array_getitem(a, i)
-	ok    = ok and value == 3.0
+# setting elements
+for i in range( vec.size() ) :
+	vec[i] = 2.0 * i
+# getting elements
+for i in range( vec.size() ) :
+	ok = ok and vec[i] == 2.0 * i
 if ok :
-	print('swig_cppad.d_vector: OK')
+	print('swig_cppad.vector_double: OK')
 else :
-	print('swig_cppad.d_vector: Error')
+	print('swig_cppad.vector_double: Error')
 	error_count = error_count + 1
 # --------------------------------------------
 # return error_count

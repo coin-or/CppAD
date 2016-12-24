@@ -26,8 +26,8 @@ Please visit http://www.coin-or.org/CppAD/ for information on other licenses.
 # include "swig_cppad.hpp"
 %}
 
-%include "carrays.i"
-%array_functions(double, double_array);
-
+%include "std_vector.i"
 %include "swig_cppad.hpp"
+
+%template(vector_double) std::vector<double>;
 
