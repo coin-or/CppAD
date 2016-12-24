@@ -30,15 +30,17 @@ struct a_double_data {
 // --------------------------------------------------------------------------
 // a_double
 // --------------------------------------------------------------------------
-/// A swig class that will act the same as CppAD::AD<double>
+/// swig class that acts the same as CppAD::AD<double>
 class a_double
-{	private:
+{	// private members are not in swig interface
+	private:
 		/// data for this object
 		a_double_data        data_;
 		/// pointer to this as an AD<double> object
 		CppAD::AD<double>* ptr(void);
 		/// const version of pointer to this as an AD<double> object
 		const CppAD::AD<double>* ptr(void) const;
+	// public members are in swig interface
 	public:
 		/// default ctor
 		a_double(void);
@@ -50,8 +52,11 @@ class a_double
 		a_double(const a_double& ad);
 		/// conversion to double
 		double value(void) const;
-		// additon
+		// binary operators with ad_double result
 		a_double operator+(const a_double& ad) const;
+		a_double operator-(const a_double& ad) const;
+		a_double operator*(const a_double& ad) const;
+		a_double operator/(const a_double& ad) const;
 };
 // --------------------------------------------------------------------------
 

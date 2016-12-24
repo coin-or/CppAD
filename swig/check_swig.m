@@ -46,6 +46,12 @@ two   = swig_cppad.a_double(2.0);
 three = swig_cppad.a_double(3.0);
 five  = two + three;
 ok    = ok & 4.5 < five.value() & five.value() < 5.5;
+six        = two * three;
+ok         = ok & 5.5 < six.value() & six.value() < 6.5;
+neg_one    = two - three;
+ok         = ok & -1.5 < neg_one.value() & neg_one.value() < -0.5;
+two_thirds = two / three;
+ok         = ok & 0.5 < two_thirds.value() & two_thirds.value() < 1.0;
 if( ok )
 	printf('swig_cppad.a_double: OK\n')
 else

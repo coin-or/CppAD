@@ -12,6 +12,14 @@ Please visit http://www.coin-or.org/CppAD/ for information on other licenses.
 # include <cppad/cppad.hpp>
 # include "swig_cppad.hpp"
 
+// ad_result_binary_op
+# define binary_op_ad_result(op) \
+a_double a_double::operator op(const a_double& ad) const \
+{	a_double result; \
+	*result.ptr() = *ptr() op *ad.ptr(); \
+	return result; \
+}
+
 // --------------------------------------------------------------------------
 // a_double private member functions
 // --------------------------------------------------------------------------
@@ -50,10 +58,9 @@ double a_double::value(void) const
 {	double result = Value( *ptr() );
 	return result;
 }
-// additon
-a_double a_double::operator+(const a_double& ad) const
-{	a_double result;
-	*result.ptr() = *ptr() + *ad.ptr();
-	return result;
-};
+// binary operators with an ad result
+binary_op_ad_result(+)
+binary_op_ad_result(-)
+binary_op_ad_result(*)
+binary_op_ad_result(/)
 // --------------------------------------------------------------------------

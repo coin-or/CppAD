@@ -39,11 +39,17 @@ else :
 # --------------------------------------------
 # a_double
 # --------------------------------------------
-ok    = True
-two   = swig_cppad.a_double(2.0)
-three = swig_cppad.a_double(3.0)
-five  = two + three
-ok    = ok and 4.5 < five.value() and five.value() < 5.5
+ok         = True
+two        = swig_cppad.a_double(2.0)
+three      = swig_cppad.a_double(3.0)
+five       = two + three
+ok         = ok and 4.5 < five.value() and five.value() < 5.5
+six        = two * three
+ok         = ok and 5.5 < six.value() and six.value() < 6.5
+neg_one    = two - three
+ok         = ok and -1.5 < neg_one.value() and neg_one.value() < -0.5
+two_thirds = two / three
+ok         = ok and 0.5 < two_thirds.value() and two_thirds.value() < 1.0
 if ok :
 	print('swig_cppad.a_double: OK')
 else :
