@@ -31,6 +31,11 @@ CppAD::AD<double>* a_double::ptr(void)
 const CppAD::AD<double>* a_double::ptr(void) const
 {	return reinterpret_cast< const CppAD::AD<double>* >( & data_ );
 }
+// ctor from CppAD::AD<double>
+a_double::a_double(const CppAD::AD<double>* ad_ptr)
+{	CPPAD_ASSERT_UNKNOWN( sizeof(data_) == sizeof( CppAD::AD<double> ) );
+	new ( & data_ ) CppAD::AD<double>(*ad_ptr);
+}
 // ---------------------------------------------------------------------------
 // a_double public member functions
 // ---------------------------------------------------------------------------
@@ -63,4 +68,48 @@ binary_op_ad_result(+)
 binary_op_ad_result(-)
 binary_op_ad_result(*)
 binary_op_ad_result(/)
+// --------------------------------------------------------------------------
+// independent is a friend for ad_double
+std::vector<a_double> independent(const std::vector<double>& x)
+{	using CppAD::AD;
+	size_t n = x.size();
+	CppAD::vector< AD<double> > ax(n);
+	for(size_t j = 0; j < n; j++)
+		ax[j] = x[j];
+	CppAD::Independent(ax);
+	std::vector<a_double> result(n);
+	for(size_t j = 0; j < n; j++)
+		result[j] = a_double( &ax[j] );
+	return result;
+}
+// --------------------------------------------------------------------------
+// abort_recording
+void abort_recording(void)
+{	CppAD::AD<double>::abort_recording();
+}
+// --------------------------------------------------------------------------
+// adfun
+// --------------------------------------------------------------------------
+adfun::adfun(void)
+{	ptr_ = new CppAD::ADFun<double>();
+	CPPAD_ASSERT_UNKNOWN( ptr_ != CPPAD_NULL );
+}
+adfun::~adfun(void)
+{	if( ptr_ != CPPAD_NULL )
+	CPPAD_ASSERT_UNKNOWN( ptr_ != CPPAD_NULL );
+	delete ptr_;
+}
+adfun::adfun(
+	const std::vector<a_double>& ax ,
+	const std::vector<a_double>& ay )
+{	ptr_ = new CppAD::ADFun<double>();
+	size_t n = ax.size();
+	size_t m = ay.size();
+	std::vector< CppAD::AD<double> > ax_copy(n), ay_copy(m);
+	for(size_t j = 0; j < n; j++)
+		ax_copy[j] = *( ax[j].ptr() );
+	for(size_t i = 0; i < m; i++)
+		ay_copy[i] = *( ay[i].ptr() );
+	ptr_->Dependent(ax_copy, ay_copy);
+}
 // --------------------------------------------------------------------------

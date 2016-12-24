@@ -77,5 +77,17 @@ else :
 	print('swig_cppad.vector_a_d: Error')
 	error_count = error_count + 1
 # --------------------------------------------
+# independent and afun
+ok = True
+n  = 2
+m  = 1
+x  = swig_cppad.vector_double(n)
+for i in range(n) :
+	x[i] = i + 1
+ax    = swig_cppad.independent(x)
+ay    = swig_cppad.vector_a_d(m)
+ay[0] = ax[0] - ax[1]
+af    = swig_cppad.adfun(ax, ay)
+# --------------------------------------------
 # return error_count
 sys.exit(error_count)

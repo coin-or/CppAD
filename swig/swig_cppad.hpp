@@ -11,11 +11,16 @@ the terms of the
 A copy of this license is included in the COPYING file of this distribution.
 Please visit http://www.coin-or.org/CppAD/ for information on other licenses.
 -------------------------------------------------------------------------- */
+# include <vector>
 # include <cppad/configure.hpp>
 
+// declarations without definitions
 namespace CppAD {
 	template <class Base> class AD;
+	template <class Base> class ADFun;
 }
+class a_double;
+class adfun;
 
 /// structure with exact same member data as AD<double>
 struct a_double_data {
@@ -28,36 +33,70 @@ struct a_double_data {
 };
 
 // --------------------------------------------------------------------------
+// functions
+std::vector<a_double> independent(const std::vector<double>& x);
+void abort_recording(void);
+
+// --------------------------------------------------------------------------
 // a_double
 // --------------------------------------------------------------------------
 /// swig class that acts the same as CppAD::AD<double>
 class a_double
-{	// private members are not in swig interface
+{	friend std::vector<a_double> independent(const std::vector<double>& x);
+	friend class adfun;
+	//
+	// private members are not in swig interface
 	private:
-		/// data for this object
-		a_double_data        data_;
-		/// pointer to this as an AD<double> object
-		CppAD::AD<double>* ptr(void);
-		/// const version of pointer to this as an AD<double> object
-		const CppAD::AD<double>* ptr(void) const;
+	/// data for this object
+	a_double_data        data_;
+	/// pointer to this as an AD<double> object
+	CppAD::AD<double>* ptr(void);
+	/// const version of pointer to this as an AD<double> object
+	const CppAD::AD<double>* ptr(void) const;
+	/// ctor from CppAD::AD<double>
+	a_double(const CppAD::AD<double>* ad_ptr);
+	// -----------------------------------------------------------------------
 	// public members are in swig interface
 	public:
-		/// default ctor
-		a_double(void);
-		/// destructor
-		~a_double(void);
-		/// ctor from double
-		a_double(const double& value);
-		/// ctor from a_double
-		a_double(const a_double& ad);
-		/// conversion to double
-		double value(void) const;
-		// binary operators with ad_double result
-		a_double operator+(const a_double& ad) const;
-		a_double operator-(const a_double& ad) const;
-		a_double operator*(const a_double& ad) const;
-		a_double operator/(const a_double& ad) const;
+	/// default ctor
+	a_double(void);
+	/// destructor
+	~a_double(void);
+	/// ctor from double
+	a_double(const double& value);
+	/// ctor from a_double
+	a_double(const a_double& ad);
+	/// conversion to double
+	double value(void) const;
+	// binary operators with a_double result
+	a_double operator+(const a_double& ad) const;
+	a_double operator-(const a_double& ad) const;
+	a_double operator*(const a_double& ad) const;
+	a_double operator/(const a_double& ad) const;
 };
 // --------------------------------------------------------------------------
+// adfun
+// --------------------------------------------------------------------------
+/// swig class that acts the same as CppAD::ADFun<double>
+class adfun
+{	// private members are not in swig interface
+	private:
+	/// ADFun<double> representation
+	CppAD::ADFun<double>* ptr_;
+	// -----------------------------------------------------------------------
+	// public members are in swig interface
+	public:
+	/// default ctor
+	adfun(void);
+	/// destructor
+	~adfun(void);
+	/// constrtuctor
+	adfun( const std::vector<a_double>& ax, const std::vector<a_double>& ay );
+};
+// --------------------------------------------------------------------------
+
+
+
+
 
 # endif
