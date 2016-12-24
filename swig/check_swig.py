@@ -17,7 +17,8 @@ import swig_cppad
 error_count = 0
 # --------------------------------------------
 # std::vector<double>
-ok  = 1
+# --------------------------------------------
+ok  = True
 vec = swig_cppad.vector_double(2)
 # size
 ok  = ok and vec.size() == 2
@@ -34,6 +35,19 @@ if ok :
 	print('swig_cppad.vector_double: OK')
 else :
 	print('swig_cppad.vector_double: Error')
+	error_count = error_count + 1
+# --------------------------------------------
+# a_double
+# --------------------------------------------
+ok    = True
+two   = swig_cppad.a_double(2.0)
+three = swig_cppad.a_double(3.0)
+five  = two + three
+ok    = ok and 4.5 < five.value() and five.value() < 5.5
+if ok :
+	print('swig_cppad.a_double: OK')
+else :
+	print('swig_cppad.a_double: Error')
 	error_count = error_count + 1
 # --------------------------------------------
 # return error_count
