@@ -27,16 +27,16 @@ ok  = ok & vec.size() == 4;
 % setting elements
 for i = 0 : (vec.size()-1)
 	vec(i) = 2.0 * i;
-endfor
+end
 % getting elements
 for i = 0 : (vec.size()-1)
 	ok = ok & vec(i) == 2.0 * i;
-endfor
+end
 if( ok )
 	printf('swig_cppad.vector_double: OK\n')
 else
 	printf('swig_cppad.vector_double: Error\n')
-	error_count = error_count + 1
+	error_count = error_count + 1;
 end
 % --------------------------------------------
 % a_double
@@ -56,7 +56,7 @@ if( ok )
 	printf('swig_cppad.a_double: OK\n')
 else
 	printf('swig_cppad.a_double: Error\n')
-	error_count = error_count + 1
+	error_count = error_count + 1;
 end
 % ---------------------------------------------
 % std::vector<a_double>
@@ -71,16 +71,38 @@ ok  = ok & a_vec.size() == 4;
 % setting elements
 for i = 0 : (a_vec.size()-1)
 	a_vec(i) = a_double(2.0 * i);
-endfor
+end
 % getting elements
 for i = 0 : (a_vec.size()-1)
 	ok = ok & a_vec(i).value() == 2.0 * i;
-endfor
+end
 if( ok )
 	printf('swig_cppad.vector_ad:  OK\n')
 else
 	printf('swig_cppad.vector_ad:  Error\n')
-	error_count = error_count + 1
+	error_count = error_count + 1;
+end
+% --------------------------------------------
+% afun(ax, ay)
+ok = true;
+n  = 2;
+m  = 1;
+x  = swig_cppad.vector_double(n);
+for i = 0 : (n-1)
+	x(i) = i + 1;
+end
+ax    = swig_cppad.independent(x);
+ay    = swig_cppad.vector_ad(m);
+ay(0) = ax(0) - ax(1);
+af    = swig_cppad.a_fun(ax, ay);
+p     = 0;
+y     = af.forward(p, x);
+ok    = ok & y(0) == -1.0;
+if( ok )
+	printf('swig_cppad.a_fun:  OK\n')
+else
+	printf('swig_cppad.a_fun:  Error\n')
+	error_count = error_count + 1;
 end
 % ---------------------------------------------
 % return error_count

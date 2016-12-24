@@ -92,6 +92,8 @@ class a_fun
 	~a_fun(void);
 	/// constrtuctor
 	a_fun( const std::vector<a_double>& ax, const std::vector<a_double>& ay );
+	/// forward
+	std::vector<double> forward(int p, const std::vector<double>& xp );
 };
 // --------------------------------------------------------------------------
 
