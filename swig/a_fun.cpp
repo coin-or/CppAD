@@ -10,7 +10,7 @@ A copy of this license is included in the COPYING file of this distribution.
 Please visit http://www.coin-or.org/CppAD/ for information on other licenses.
 -------------------------------------------------------------------------- */
 # include <cppad/cppad.hpp>
-# include "a_fun.hpp"
+# include <swig/a_fun.hpp>
 
 // ctor default
 a_fun::a_fun(void)

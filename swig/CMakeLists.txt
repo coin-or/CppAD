@@ -47,9 +47,6 @@ IF( SWIG_FOUND )
 ENDIF( SWIG_FOUND )
 # ----------------------------------------------------------------------------
 IF( use_swig )
-	# include files in this source directory
-	INCLUDE_DIRECTORIES(${CMAKE_CURRENT_SOURCE_DIR})
-
 	# include the swig specific macros
 	INCLUDE( ${CMAKE_ROOT}/Modules/UseSWIG.cmake )
 

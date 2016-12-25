@@ -10,7 +10,7 @@ A copy of this license is included in the COPYING file of this distribution.
 Please visit http://www.coin-or.org/CppAD/ for information on other licenses.
 -------------------------------------------------------------------------- */
 # include <cppad/cppad.hpp>
-# include "function.hpp"
+# include <swig/function.hpp>
 
 // independent is a friend for ad_double
 std::vector<a_double> independent(const std::vector<double>& x)
