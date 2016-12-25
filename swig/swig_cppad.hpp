@@ -73,12 +73,18 @@ class a_double
 	a_double operator-(const a_double& ad) const;
 	a_double operator*(const a_double& ad) const;
 	a_double operator/(const a_double& ad) const;
+	// comparison operators
+	bool operator< (const a_double& ad) const;
+	bool operator<=(const a_double& ad) const;
+	bool operator> (const a_double& ad) const;
+	bool operator>=(const a_double& ad) const;
+	bool operator==(const a_double& ad) const;
+	bool operator!=(const a_double& ad) const;
 	// computed assignment operators
 	a_double operator+=(const a_double& ad);
 	a_double operator-=(const a_double& ad);
 	a_double operator*=(const a_double& ad);
 	a_double operator/=(const a_double& ad);
-
 };
 // --------------------------------------------------------------------------
 // a_fun

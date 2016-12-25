@@ -19,6 +19,12 @@ a_double a_double::operator op(const a_double& ad) const \
 	*result.ptr() = *ptr() op *ad.ptr(); \
 	return result; \
 }
+// comparison operators
+# define COMPARISON_OP(op) \
+bool a_double::operator op(const a_double& ad) const \
+{	bool result =  *ptr() op *ad.ptr(); \
+	return result; \
+}
 // computed assignment operators
 # define COMPUTED_ASSIGNMENT_OP(op) \
 a_double a_double::operator op(const a_double& ad)\
@@ -74,6 +80,13 @@ BINARY_OP_AD_RESULT(+)
 BINARY_OP_AD_RESULT(-)
 BINARY_OP_AD_RESULT(*)
 BINARY_OP_AD_RESULT(/)
+// comparison operators
+COMPARISON_OP(<)
+COMPARISON_OP(<=)
+COMPARISON_OP(>)
+COMPARISON_OP(>=)
+COMPARISON_OP(==)
+COMPARISON_OP(!=)
 // computed assignment operators
 COMPUTED_ASSIGNMENT_OP(+=)
 COMPUTED_ASSIGNMENT_OP(-=)
