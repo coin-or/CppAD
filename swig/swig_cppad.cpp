@@ -12,12 +12,17 @@ Please visit http://www.coin-or.org/CppAD/ for information on other licenses.
 # include <cppad/cppad.hpp>
 # include "swig_cppad.hpp"
 
-// ad_result_binary_op
+// binary operators with ad results
 # define BINARY_OP_AD_RESULT(op) \
 a_double a_double::operator op(const a_double& ad) const \
 {	a_double result; \
 	*result.ptr() = *ptr() op *ad.ptr(); \
 	return result; \
+}
+// computed assignment operators
+# define COMPUTED_ASSIGNMENT_OP(op) \
+void a_double::operator op(const a_double& ad)\
+{	*ptr() op *ad.ptr(); \
 }
 
 // --------------------------------------------------------------------------
@@ -68,6 +73,11 @@ BINARY_OP_AD_RESULT(+)
 BINARY_OP_AD_RESULT(-)
 BINARY_OP_AD_RESULT(*)
 BINARY_OP_AD_RESULT(/)
+// computed assignment operators
+COMPUTED_ASSIGNMENT_OP(+=)
+COMPUTED_ASSIGNMENT_OP(-=)
+COMPUTED_ASSIGNMENT_OP(*=)
+COMPUTED_ASSIGNMENT_OP(/=)
 // --------------------------------------------------------------------------
 // independent is a friend for ad_double
 std::vector<a_double> independent(const std::vector<double>& x)

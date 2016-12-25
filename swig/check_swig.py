@@ -84,21 +84,22 @@ m  = 1
 x  = swig_cppad.vector_double(n)
 for i in range(n) :
 	x[i] = i + 1
-ax    = swig_cppad.independent(x)
-ay    = swig_cppad.vector_ad(m)
-ay[0] = ax[0] - ax[1]
-af    = swig_cppad.a_fun(ax, ay)
-xp    = swig_cppad.vector_double(n)
-xp[0] = 3.0
-xp[1] = 1.0;
-p     = 0
-yp    = af.forward(p, xp)
-ok    = ok and yp[0] == 2.0
-xp[0] = 0.0
-xp[1] = 1.0;
-p     = 1
-yp    = af.forward(p, xp)
-ok    = ok and yp[0] == -1.0
+ax     = swig_cppad.independent(x)
+ay     = swig_cppad.vector_ad(m)
+ay[0]  = ax[0] - ax[1]
+ay[0] += ax[0]
+af     = swig_cppad.a_fun(ax, ay)
+xp     = swig_cppad.vector_double(n)
+xp[0]  = 3.0
+xp[1]  = 1.0;
+p      = 0
+yp     = af.forward(p, xp)
+ok     = ok and yp[0] == 5.0
+xp[0]  = 0.0
+xp[1]  = 1.0;
+p      = 1
+yp     = af.forward(p, xp)
+ok     = ok and yp[0] == -1.0
 if ok :
 	print('swig_cppad.a_fun:  OK')
 else :
