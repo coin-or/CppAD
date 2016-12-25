@@ -15,6 +15,16 @@ SET(CMAKE_BUILD_TYPE DEBUG)
 # Initialize list of tests as empty
 SET(check_swig_depends "")
 
+# files used to build the module for each language
+SET(swig_files swig_cppad.i
+	a_double.hpp
+	a_fun.hpp
+	function.hpp
+	a_double.cpp
+	a_fun.cpp
+	function.cpp
+)
+
 # subdirectories
 ADD_SUBDIRECTORY(example)
 # -----------------------------------------------------------------------------
@@ -76,7 +86,7 @@ IF ( SWIG_FOUND AND PythonLibs_FOUND AND PythonInterp_FOUND)
 	INCLUDE_DIRECTORIES(${PYTHON_INCLUDE_PATH})
 
 	# SWIG_ADD_MODULE(name language [ files ])
-	SWIG_ADD_MODULE(swig_cppad python swig_cppad.i swig_cppad.cpp)
+	SWIG_ADD_MODULE(swig_cppad python ${swig_files})
 
 	# SWIG_LINK_LIBRARIES(name [ libraries ])
 	SWIG_LINK_LIBRARIES(swig_cppad ${PYTHON_LIBRARIES})
@@ -142,7 +152,7 @@ IF( SWIG_FOUND AND octave_config )
 	INCLUDE_DIRECTORIES(${octave_include_dirs})
 	#
 	# SWIG_ADD_MODULE(name language [ files ])
-	SWIG_ADD_MODULE(swig_cppad octave swig_cppad.i swig_cppad.cpp)
+	SWIG_ADD_MODULE(swig_cppad octave ${swig_files})
 	#
 	# SWIG_LINK_LIBRARIES(name [ libraries ])
 	SWIG_LINK_LIBRARIES(swig_cppad

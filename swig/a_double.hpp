@@ -1,6 +1,6 @@
 // $Id$
-# ifndef CPPAD_SWIG_SWIG_CPPAD_HPP
-# define CPPAD_SWIG_SWIG_CPPAD_HPP
+# ifndef CPPAD_SWIG_A_DOUBLE_HPP
+# define CPPAD_SWIG_A_DOUBLE_HPP
 /* --------------------------------------------------------------------------
 CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-16 Bradley M. Bell
 
@@ -17,10 +17,7 @@ Please visit http://www.coin-or.org/CppAD/ for information on other licenses.
 // declarations without definitions
 namespace CppAD {
 	template <class Base> class AD;
-	template <class Base> class ADFun;
 }
-class a_double;
-class a_fun;
 
 /// structure with exact same member data as AD<double>
 struct a_double_data {
@@ -32,14 +29,6 @@ struct a_double_data {
 	CPPAD_TAPE_ADDR_TYPE   taddr;
 };
 
-// --------------------------------------------------------------------------
-// functions
-std::vector<a_double> independent(const std::vector<double>& x);
-void abort_recording(void);
-
-// --------------------------------------------------------------------------
-// a_double
-// --------------------------------------------------------------------------
 /// swig class that acts the same as CppAD::AD<double>
 class a_double
 {	// private members are not in swig interface
@@ -86,31 +75,5 @@ class a_double
 	a_double operator*=(const a_double& ad);
 	a_double operator/=(const a_double& ad);
 };
-// --------------------------------------------------------------------------
-// a_fun
-// --------------------------------------------------------------------------
-/// swig class that acts the same as CppAD::ADFun<double>
-class a_fun
-{	// private members are not in swig interface
-	private:
-	/// ADFun<double> representation
-	CppAD::ADFun<double>* ptr_;
-	// -----------------------------------------------------------------------
-	// public members are in swig interface
-	public:
-	/// default ctor
-	a_fun(void);
-	/// destructor
-	~a_fun(void);
-	/// constrtuctor
-	a_fun( const std::vector<a_double>& ax, const std::vector<a_double>& ay );
-	/// forward
-	std::vector<double> forward(int p, const std::vector<double>& xp );
-};
-// --------------------------------------------------------------------------
-
-
-
-
 
 # endif

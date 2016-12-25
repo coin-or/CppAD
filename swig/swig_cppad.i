@@ -23,12 +23,16 @@ Please visit http://www.coin-or.org/CppAD/ for information on other licenses.
 /* swig_cppad.i */
 %module swig_cppad
 %{
-# include "swig_cppad.hpp"
+# include "a_double.hpp"
+# include "a_fun.hpp"
+# include "function.hpp"
 %}
 
 %ignore  ptr;
 %include "std_vector.i"
-%include "swig_cppad.hpp"
+%include "a_double.hpp"
+%include "a_fun.hpp"
+%include "function.hpp"
 
 %template(vector_double) std::vector<double>;
 %template(vector_ad)     std::vector<a_double>;
