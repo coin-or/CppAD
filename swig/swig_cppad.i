@@ -26,6 +26,7 @@ Please visit http://www.coin-or.org/CppAD/ for information on other licenses.
 # include "swig_cppad.hpp"
 %}
 
+%ignore  ptr;
 %include "std_vector.i"
 %include "swig_cppad.hpp"
 

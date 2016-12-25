@@ -42,13 +42,13 @@ void abort_recording(void);
 // --------------------------------------------------------------------------
 /// swig class that acts the same as CppAD::AD<double>
 class a_double
-{	friend std::vector<a_double> independent(const std::vector<double>& x);
-	friend class a_fun;
-	//
-	// private members are not in swig interface
+{	// private members are not in swig interface
 	private:
 	/// data for this object
 	a_double_data        data_;
+	// -----------------------------------------------------------------------
+	// public members not in swig interface (see %ignore ptr)
+	public:
 	/// pointer to this as an AD<double> object
 	CppAD::AD<double>* ptr(void);
 	/// const version of pointer to this as an AD<double> object
@@ -56,7 +56,7 @@ class a_double
 	/// ctor from CppAD::AD<double>
 	a_double(const CppAD::AD<double>* ad_ptr);
 	// -----------------------------------------------------------------------
-	// public members are in swig interface
+	// public members in swig interface
 	public:
 	/// default ctor
 	a_double(void);
