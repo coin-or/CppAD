@@ -21,8 +21,9 @@ a_double a_double::operator op(const a_double& ad) const \
 }
 // computed assignment operators
 # define COMPUTED_ASSIGNMENT_OP(op) \
-void a_double::operator op(const a_double& ad)\
+a_double a_double::operator op(const a_double& ad)\
 {	*ptr() op *ad.ptr(); \
+	return *this; \
 }
 
 // --------------------------------------------------------------------------
