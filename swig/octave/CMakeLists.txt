@@ -62,7 +62,7 @@ IF( octave_config )
 	INCLUDE_DIRECTORIES(${octave_include_dirs})
 
 	# SWIG_ADD_MODULE(name language [ files ])
-	SWIG_ADD_MODULE(cppad_swig octave ${swig_control_file} empty.cpp )
+	SWIG_ADD_MODULE(cppad_swig octave ${swig_control_file} )
 
 	# SWIG_LINK_LIBRARIES(name [ libraries ])
 	SWIG_LINK_LIBRARIES(cppad_swig

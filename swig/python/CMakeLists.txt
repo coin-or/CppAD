@@ -40,7 +40,7 @@ IF ( PythonLibs_FOUND AND PythonInterp_FOUND)
 	INCLUDE_DIRECTORIES(${PYTHON_INCLUDE_PATH})
 
 	# SWIG_ADD_MODULE(name language [ files ])
-	SWIG_ADD_MODULE(cppad_swig python ${swig_control_file} empty.cpp)
+	SWIG_ADD_MODULE(cppad_swig python ${swig_control_file} )
 
 	MESSAGE(STATUS "swig_generated_sources=${swig_generated_sources}")
 

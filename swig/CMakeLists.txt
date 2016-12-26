@@ -22,9 +22,6 @@ ADD_SUBDIRECTORY(example)
 FIND_PACKAGE(SWIG)
 IF( SWIG_FOUND )
 
-	# include the swig specific macros
-	INCLUDE( ${CMAKE_ROOT}/Modules/UseSWIG.cmake )
-
 	# swig_control_file: used by the subdirectories below
 	SET(swig_control_file "${CMAKE_CURRENT_SOURCE_DIR}/cppad_swig.i" )
 

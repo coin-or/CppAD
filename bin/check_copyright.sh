@@ -30,7 +30,7 @@ list=`git status | sed -n \
             sed -e 's/^.*: *//' -e 's/ -> /\n/' | \
 			sed -e '/makefile.in$/d' \
 				-e '/\/check_copyright.sh$/d' \
-				-e '/\/empty.cpp$/d' \
+				-e '/\/use_swig.cmake$/d' \
 				-e '/AUTHORS/d' \
 				-e '/COPYING/d' |
                 sort -u`
