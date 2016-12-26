@@ -63,11 +63,11 @@ IF( octave_config )
 	INCLUDE_DIRECTORIES(${octave_include_dirs})
 
 	# SWIG_ADD_MODULE(name language [ files ])
-	SWIG_ADD_MODULE(cppad_swig octave ${swig_module_files} )
+	SWIG_ADD_MODULE(cppad_swig octave ${swig_control_file} empty.cpp )
 
 	# SWIG_LINK_LIBRARIES(name [ libraries ])
 	SWIG_LINK_LIBRARIES(cppad_swig
-		${octave_liboctinterp} ${octave_liboctave}
+		cppad_swig_lib ${octave_liboctinterp} ${octave_liboctave}
 	)
 
 	# copy test program to directory with swig module is located

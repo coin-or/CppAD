@@ -29,7 +29,8 @@ list=`git status | sed -n \
         -e '/^[#\t ]*new file:/p' | \
             sed -e 's/^.*: *//' -e 's/ -> /\n/' | \
 			sed -e '/makefile.in$/d' \
-				-e '/check_copyright.sh$/d' \
+				-e '/\/check_copyright.sh$/d' \
+				-e '/\/empty.cpp$/d' \
 				-e '/AUTHORS/d' \
 				-e '/COPYING/d' |
                 sort -u`

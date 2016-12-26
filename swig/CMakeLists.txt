@@ -22,19 +22,28 @@ ADD_SUBDIRECTORY(example)
 FIND_PACKAGE(SWIG)
 IF( SWIG_FOUND )
 
-	# swig_congrol_file: used by the subdirectories below
-	SET(swig_control_file "${CMAKE_CURRENT_SOURCE_DIR}/cppad_swig.i" )
-
-	# swig_module_files: used by the subdirectories below
-	SET(swig_module_files "${swig_control_file}" )
-	FOREACH(root_name a_double a_fun function)
-		add_to_list(
-			swig_module_files "${CMAKE_CURRENT_SOURCE_DIR}/${root_name}"
-	)
-	ENDFOREACH(root_name)
-
 	# include the swig specific macros
 	INCLUDE( ${CMAKE_ROOT}/Modules/UseSWIG.cmake )
+
+	# swig_control_file: used by the subdirectories below
+	SET(swig_control_file "${CMAKE_CURRENT_SOURCE_DIR}/cppad_swig.i" )
+
+	# cppad_swig_lib
+	# library used by subdirectories below
+	ADD_LIBRARY(cppad_swig_lib SHARED EXCLUDE_FROM_ALL
+		a_double.cpp
+		a_fun.cpp
+		function.cpp
+	)
+	add_cppad_cxx_flags( cppad_swig_lib )
+
+	# SWIG_MODULE_cppad_swig_EXTRA_DEPS
+	# swig extra dependencies used by subdirectories below
+	SET(SWIG_MODULE_cppad_swig_EXTRA_DEPS
+		"${CMAKE_CURRENT_SOURCE_DIR}/a_double.hpp"
+		"${CMAKE_CURRENT_SOURCE_DIR}/a_fun.hpp"
+		"${CMAKE_CURRENT_SOURCE_DIR}/function.hpp"
+	)
 
 	# subdirectories that use swig_cpapd_files
 	ADD_SUBDIRECTORY(python)

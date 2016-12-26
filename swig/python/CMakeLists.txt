@@ -40,10 +40,12 @@ IF ( PythonLibs_FOUND AND PythonInterp_FOUND)
 	INCLUDE_DIRECTORIES(${PYTHON_INCLUDE_PATH})
 
 	# SWIG_ADD_MODULE(name language [ files ])
-	SWIG_ADD_MODULE(cppad_swig python ${swig_module_files} )
+	SWIG_ADD_MODULE(cppad_swig python ${swig_control_file} empty.cpp)
+
+	MESSAGE(STATUS "swig_generated_sources=${swig_generated_sources}")
 
 	# SWIG_LINK_LIBRARIES(name [ libraries ])
-	SWIG_LINK_LIBRARIES(cppad_swig ${PYTHON_LIBRARIES})
+	SWIG_LINK_LIBRARIES(cppad_swig cppad_swig_lib ${PYTHON_LIBRARIES})
 
 	# copy test program to directory with swig module is located
 	ADD_CUSTOM_TARGET(check_swig_py
