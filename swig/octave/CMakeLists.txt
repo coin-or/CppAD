@@ -92,10 +92,10 @@ IF( SWIG_FOUND AND octave_config )
 		DEPENDS
 		${CMAKE_CURRENT_SOURCE_DIR}/check_swig.m
 	)
-	# check_swig_octave (no underbar in front of swig_cppad)
+	# check_swig_octave
 	ADD_CUSTOM_TARGET(check_swig_octave
 		octave check_swig.m
-		DEPENDS swig_cppad check_swig_m
+		DEPENDS ${SWIG_MODULE_swig_cppad_REAL_NAME} check_swig_m
 	)
 	MESSAGE(STATUS "make check_swig_octave: available")
 

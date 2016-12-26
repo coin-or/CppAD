@@ -68,10 +68,10 @@ IF ( SWIG_FOUND AND PythonLibs_FOUND AND PythonInterp_FOUND)
 		${CMAKE_CURRENT_SOURCE_DIR}/check_swig.py
 	)
 
-	# check_swig_python (note underbar in front of swig_cppad)
+	# check_swig_python
 	ADD_CUSTOM_TARGET(check_swig_python
 		python check_swig.py
-		DEPENDS _swig_cppad check_swig_py
+		DEPENDS ${SWIG_MODULE_swig_cppad_REAL_NAME} check_swig_py
 	)
 	MESSAGE(STATUS "make check_swig_python: available")
 

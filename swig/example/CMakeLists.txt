@@ -80,10 +80,10 @@ IF ( SWIG_FOUND AND PythonLibs_FOUND AND PythonInterp_FOUND)
 		"${CMAKE_CURRENT_SOURCE_DIR}/check_swig_example.py"
 	)
 
-	# check_swig_example_python (note underbar in front of swig_example)
+	# check_swig_example_python
 	ADD_CUSTOM_TARGET(check_swig_example_python
 		python check_swig_example.py
-		DEPENDS _swig_example check_swig_example_py
+		DEPENDS ${SWIG_MODULE_swig_example_REAL_NAME} check_swig_example_py
 	)
 	MESSAGE(STATUS "make check_swig_example_python: available")
 
@@ -145,10 +145,10 @@ IF( SWIG_FOUND AND octave_config )
 		DEPENDS
 		${CMAKE_CURRENT_SOURCE_DIR}/check_swig_example.m
 	)
-	# check_swig_example_octave (no underbar in front of swig_example)
+	# check_swig_example_octave
 	ADD_CUSTOM_TARGET(check_swig_example_octave
 		octave check_swig_example.m
-		DEPENDS swig_example check_swig_example_m
+		DEPENDS ${SWIG_MODULE_swig_example_REAL_NAME} check_swig_example_m
 	)
 	MESSAGE(STATUS "make check_swig_example_octave: available")
 
