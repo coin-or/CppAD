@@ -12,13 +12,11 @@
 # used debug during initial development of swig interface
 SET(CMAKE_BUILD_TYPE DEBUG)
 
-FIND_PACKAGE(SWIG)
-IF( SWIG_FOUND )
-	FIND_PACKAGE(PythonInterp)
-	FIND_PACKAGE(PythonLibs)
-ENDIF( SWIG_FOUND )
+assert( SWIG_FOUND )
+FIND_PACKAGE(PythonInterp)
+FIND_PACKAGE(PythonLibs)
 # ----------------------------------------------------------------------------
-IF ( SWIG_FOUND AND PythonLibs_FOUND AND PythonInterp_FOUND)
+IF ( PythonLibs_FOUND AND PythonInterp_FOUND)
 	# which version of python did we find
 	SET(lib    "${PYTHONLIBS_VERSION_STRING}" )
 	SET(interp "${PYTHON_VERSION_STRING}" )
@@ -67,4 +65,4 @@ IF ( SWIG_FOUND AND PythonLibs_FOUND AND PythonInterp_FOUND)
 	add_to_list(check_swig_depends check_swig_python)
 	SET(check_swig_depends "${check_swig_depends}" PARENT_SCOPE)
 
-ENDIF ( SWIG_FOUND AND PythonLibs_FOUND AND PythonInterp_FOUND)
+ENDIF ( PythonLibs_FOUND AND PythonInterp_FOUND)

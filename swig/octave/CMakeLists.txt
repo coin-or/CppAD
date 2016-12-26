@@ -12,11 +12,9 @@
 # used debug during initial development of swig interface
 SET(CMAKE_BUILD_TYPE DEBUG)
 
-FIND_PACKAGE(SWIG)
-IF( SWIG_FOUND )
-	FIND_PROGRAM(octave_config NAMES octave-config)
-ENDIF( SWIG_FOUND )
-IF( SWIG_FOUND AND octave_config )
+assert( SWIG_FOUND )
+FIND_PROGRAM(octave_config NAMES octave-config)
+IF( octave_config )
 
 	# treat like a C++ files
 	SET_SOURCE_FILES_PROPERTIES(
@@ -91,4 +89,4 @@ IF( SWIG_FOUND AND octave_config )
 	add_to_list(check_swig_depends check_swig_octave)
 	SET(check_swig_depends "${check_swig_depends}" PARENT_SCOPE)
 
-ENDIF( SWIG_FOUND AND octave_config )
+ENDIF( octave_config )
