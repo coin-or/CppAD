@@ -76,6 +76,8 @@ do
 		print_for/CMakeLists.txt | \
 		swig/CMakeLists.txt | \
 		swig/example/CMakeLists.txt | \
+		swig/python/CMakeLists.txt | \
+		swig/octave/CMakeLists.txt | \
 		test_more/CMakeLists.txt )
 		check="CMAKE_BUILD_TYPE DEBUG"
 		if ! grep "$check" $file > /dev/null
