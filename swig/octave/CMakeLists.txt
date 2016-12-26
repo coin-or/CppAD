@@ -27,17 +27,14 @@ IF( SWIG_FOUND AND octave_config )
 	# CMAKE_SWIG_OUTDIR
 	# where to write all the swig generated module (swig -outdir option)
 
-	# a global used to add special flags to all swig calls.
-	SET(CMAKE_SWIG_FLAGS "")
-
 	# treat like a C++ files
 	SET_SOURCE_FILES_PROPERTIES(
 		${swig_control_file} PROPERTIES CPLUSPLUS ON
 	)
 
-	# use swig flags when processing this file
+	# swig flags when processing this file
 	SET_SOURCE_FILES_PROPERTIES(
-		${swig_control_file} PROPERTIES SWIG_FLAGS ""
+		${swig_control_file} PROPERTIES SWIG_FLAGS "-Wall"
 	)
 	# octave include directories
 	EXECUTE_PROCESS(
