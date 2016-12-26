@@ -18,9 +18,6 @@ IF( SWIG_FOUND )
 ENDIF( SWIG_FOUND )
 IF( SWIG_FOUND AND octave_config )
 
-	# include the swig specific macros
-	INCLUDE( ${CMAKE_ROOT}/Modules/UseSWIG.cmake )
-
 	# treat like a C++ files
 	SET_SOURCE_FILES_PROPERTIES(
 		${swig_control_file} PROPERTIES CPLUSPLUS ON

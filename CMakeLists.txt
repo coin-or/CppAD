@@ -67,6 +67,9 @@ INCLUDE(cmake/sources_libs_define.cmake)
 #
 # check_source_runs(source variable)
 INCLUDE(cmake/check_source_runs.cmake)
+#
+# macro that acts for cmake like assert acts for C
+INCLUDE(cmake/assert.cmake)
 # =============================================================================
 # command line arguments
 # =============================================================================

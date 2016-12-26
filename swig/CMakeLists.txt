@@ -12,24 +12,35 @@
 # used debug during initial development of swig interface
 SET(CMAKE_BUILD_TYPE DEBUG)
 
-# Initialize list of tests as empty
+# Initialize list of tests as empty (added to by sub-directories below)
 SET(check_swig_depends "")
 
-# example subdirectory
+# example runs with out environment used for other subdirectories
 ADD_SUBDIRECTORY(example)
 
-# swig_congrol_file: used by the subdirectories below
-SET(swig_control_file "${CMAKE_CURRENT_SOURCE_DIR}/cppad_swig.i" )
+# check if we have swig
+FIND_PACKAGE(SWIG)
+IF( SWIG_FOUND )
 
-# swig_module_files: used by the subdirectories below
-SET(swig_module_files "${swig_control_file}" )
-FOREACH(root_name a_double a_fun function)
-	add_to_list(swig_module_files "${CMAKE_CURRENT_SOURCE_DIR}/${root_name}" )
-ENDFOREACH(root_name)
+	# swig_congrol_file: used by the subdirectories below
+	SET(swig_control_file "${CMAKE_CURRENT_SOURCE_DIR}/cppad_swig.i" )
 
-# subdirectories that use swig_cpapd_files
-ADD_SUBDIRECTORY(python)
-ADD_SUBDIRECTORY(octave)
+	# swig_module_files: used by the subdirectories below
+	SET(swig_module_files "${swig_control_file}" )
+	FOREACH(root_name a_double a_fun function)
+		add_to_list(
+			swig_module_files "${CMAKE_CURRENT_SOURCE_DIR}/${root_name}"
+	)
+	ENDFOREACH(root_name)
+
+	# include the swig specific macros
+	INCLUDE( ${CMAKE_ROOT}/Modules/UseSWIG.cmake )
+
+	# subdirectories that use swig_cpapd_files
+	ADD_SUBDIRECTORY(python)
+	ADD_SUBDIRECTORY(octave)
+
+ENDIF( SWIG_FOUND )
 
 IF( NOT( "${check_swig_depends}" STREQUAL "" ) )
 	# Add the check_swig target

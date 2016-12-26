@@ -28,9 +28,6 @@ IF ( SWIG_FOUND AND PythonLibs_FOUND AND PythonInterp_FOUND)
 		)
 	ENDIF( NOT ( "${lib}" STREQUAL "${interp}" ) )
 
-	# include the swig specific macros
-	INCLUDE( ${CMAKE_ROOT}/Modules/UseSWIG.cmake )
-
 	# treat like a C++ files
 	SET_SOURCE_FILES_PROPERTIES(
 		${swig_control_file} PROPERTIES CPLUSPLUS ON
