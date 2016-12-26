@@ -21,12 +21,6 @@ IF( SWIG_FOUND AND octave_config )
 	# include the swig specific macros
 	INCLUDE( ${CMAKE_ROOT}/Modules/UseSWIG.cmake )
 
-	# SWIG_MODULE_name_REAL_NAME
-	# To get the actual name of the swig module
-
-	# CMAKE_SWIG_OUTDIR
-	# where to write all the swig generated module (swig -outdir option)
-
 	# treat like a C++ files
 	SET_SOURCE_FILES_PROPERTIES(
 		${swig_control_file} PROPERTIES CPLUSPLUS ON
@@ -50,40 +44,37 @@ IF( SWIG_FOUND AND octave_config )
 	STRING(REGEX REPLACE
 		"\\octave$" "" octave_include_dirs ${octave_include_dirs}
 	)
-	#
+
 	# octave library dcirectories
 	EXECUTE_PROCESS(
 		COMMAND ${octave_config} -p OCTLIBDIR
 		OUTPUT_VARIABLE  octave_library_dirs
 		OUTPUT_STRIP_TRAILING_WHITESPACE
 	)
-	#
+
 	# liboctinterp
 	FIND_LIBRARY(octave_liboctinterp
 		NAMES octinterp liboctinterp
 		PATHS "${octave_library_dirs}"
 	)
-	#
+
 	# liboctave
 	FIND_LIBRARY(octave_liboctave
 		NAMES octave liboctave
 		PATHS "${octave_library_dirs}"
 	)
-	#
+
 	# include directory determined by find octive-config
 	INCLUDE_DIRECTORIES(${octave_include_dirs})
-	#
+
 	# SWIG_ADD_MODULE(name language [ files ])
 	SWIG_ADD_MODULE(cppad_swig octave ${swig_module_files} )
 
-	# use current binary directory for swig output files
-	SET(CMAKE_SWIG_OUTDIR "${CMAKE_CURRENT_BINARY_DIR}")
-	#
 	# SWIG_LINK_LIBRARIES(name [ libraries ])
 	SWIG_LINK_LIBRARIES(cppad_swig
 		${octave_liboctinterp} ${octave_liboctave}
 	)
-	#
+
 	# copy test program to directory with swig module is located
 	ADD_CUSTOM_TARGET(check_swig_m
 		${CMAKE_COMMAND} -E copy

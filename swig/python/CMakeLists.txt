@@ -31,12 +31,6 @@ IF ( SWIG_FOUND AND PythonLibs_FOUND AND PythonInterp_FOUND)
 	# include the swig specific macros
 	INCLUDE( ${CMAKE_ROOT}/Modules/UseSWIG.cmake )
 
-	# SWIG_MODULE_name_REAL_NAME
-	# To get the actual name of the swig module
-
-	# CMAKE_SWIG_OUTDIR
-	# where to write all the swig generated module (swig -outdir option)
-
 	# treat like a C++ files
 	SET_SOURCE_FILES_PROPERTIES(
 		${swig_control_file} PROPERTIES CPLUSPLUS ON
@@ -55,9 +49,6 @@ IF ( SWIG_FOUND AND PythonLibs_FOUND AND PythonInterp_FOUND)
 
 	# SWIG_LINK_LIBRARIES(name [ libraries ])
 	SWIG_LINK_LIBRARIES(cppad_swig ${PYTHON_LIBRARIES})
-
-	# use current binary directory for swig output files
-	SET(CMAKE_SWIG_OUTDIR "${CMAKE_CURRENT_BINARY_DIR}")
 
 	# copy test program to directory with swig module is located
 	ADD_CUSTOM_TARGET(check_swig_py
