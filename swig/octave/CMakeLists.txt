@@ -32,12 +32,12 @@ IF( SWIG_FOUND AND octave_config )
 
 	# treat like a C++ files
 	SET_SOURCE_FILES_PROPERTIES(
-		../swig_cppad.i PROPERTIES CPLUSPLUS ON
+		${swig_control_file} PROPERTIES CPLUSPLUS ON
 	)
 
 	# use swig flags when processing this file
 	SET_SOURCE_FILES_PROPERTIES(
-		../swig_cppad.i PROPERTIES SWIG_FLAGS ""
+		${swig_control_file} PROPERTIES SWIG_FLAGS ""
 	)
 	# octave include directories
 	EXECUTE_PROCESS(
@@ -77,9 +77,7 @@ IF( SWIG_FOUND AND octave_config )
 	INCLUDE_DIRECTORIES(${octave_include_dirs})
 	#
 	# SWIG_ADD_MODULE(name language [ files ])
-	SWIG_ADD_MODULE(swig_cppad octave
-			../swig_cppad.i ../a_double.cpp ../a_fun.cpp ../function.cpp
-	)
+	SWIG_ADD_MODULE(swig_cppad octave ${swig_module_files} )
 
 	# use current binary directory for swig output files
 	SET(CMAKE_SWIG_OUTDIR "${CMAKE_CURRENT_BINARY_DIR}")

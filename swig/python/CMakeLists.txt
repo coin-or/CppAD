@@ -42,21 +42,19 @@ IF ( SWIG_FOUND AND PythonLibs_FOUND AND PythonInterp_FOUND)
 
 	# treat like a C++ files
 	SET_SOURCE_FILES_PROPERTIES(
-		../swig_cppad.i PROPERTIES CPLUSPLUS ON
+		${swig_control_file} PROPERTIES CPLUSPLUS ON
 	)
 
 	# use swig flags when processing this file
 	SET_SOURCE_FILES_PROPERTIES(
-		../swig_cppad.i PROPERTIES SWIG_FLAGS ""
+		${swig_control_file} PROPERTIES SWIG_FLAGS ""
 	)
 
 	# include directory determined by find PythonLibs
 	INCLUDE_DIRECTORIES(${PYTHON_INCLUDE_PATH})
 
 	# SWIG_ADD_MODULE(name language [ files ])
-	SWIG_ADD_MODULE(swig_cppad python
-			../swig_cppad.i ../a_double.cpp ../a_fun.cpp ../function.cpp
-	)
+	SWIG_ADD_MODULE(swig_cppad python ${swig_module_files} )
 
 	# SWIG_LINK_LIBRARIES(name [ libraries ])
 	SWIG_LINK_LIBRARIES(swig_cppad ${PYTHON_LIBRARIES})

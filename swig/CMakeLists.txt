@@ -15,8 +15,17 @@ SET(CMAKE_BUILD_TYPE DEBUG)
 # Initialize list of tests as empty
 SET(check_swig_depends "")
 
-# subdirectories
+# example subdirectory
 ADD_SUBDIRECTORY(example)
+
+# swig_congrol_file: used by the subdirectories below
+SET(swig_control_file "${CMAKE_CURRENT_SOURCE_DIR}/swig_cppad.i" )
+
+# swig_module_files: used by the subdirectories below
+SET(swig_module_files "${swig_control_file}" )
+FOREACH(root_name a_double a_fun function)
+	add_to_list(swig_module_files "${CMAKE_CURRENT_SOURCE_DIR}/${root_name}" )
+ENDFOREACH(root_name)
 
 # subdirectories that use swig_cpapd_files
 ADD_SUBDIRECTORY(python)
