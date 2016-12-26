@@ -21,10 +21,9 @@ IF( octave_config )
 		${swig_control_file} PROPERTIES CPLUSPLUS ON
 	)
 
-	# swig flags when processing this file
-	SET_SOURCE_FILES_PROPERTIES(
-		${swig_control_file} PROPERTIES SWIG_FLAGS "-Wall"
-	)
+	# octave does not support +=, -=, *=, or /=, so supress these warnings
+	SET(CMAKE_SWIG_FLAGS -Wextra -w365,366,367,368 )
+
 	# octave include directories
 	EXECUTE_PROCESS(
 		COMMAND ${octave_config} -p OCTINCLUDEDIR
