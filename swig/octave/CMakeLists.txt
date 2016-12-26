@@ -74,13 +74,13 @@ IF( SWIG_FOUND AND octave_config )
 	INCLUDE_DIRECTORIES(${octave_include_dirs})
 	#
 	# SWIG_ADD_MODULE(name language [ files ])
-	SWIG_ADD_MODULE(swig_cppad octave ${swig_module_files} )
+	SWIG_ADD_MODULE(cppad_swig octave ${swig_module_files} )
 
 	# use current binary directory for swig output files
 	SET(CMAKE_SWIG_OUTDIR "${CMAKE_CURRENT_BINARY_DIR}")
 	#
 	# SWIG_LINK_LIBRARIES(name [ libraries ])
-	SWIG_LINK_LIBRARIES(swig_cppad
+	SWIG_LINK_LIBRARIES(cppad_swig
 		${octave_liboctinterp} ${octave_liboctave}
 	)
 	#
@@ -95,7 +95,7 @@ IF( SWIG_FOUND AND octave_config )
 	# check_swig_octave
 	ADD_CUSTOM_TARGET(check_swig_octave
 		octave check_swig.m
-		DEPENDS ${SWIG_MODULE_swig_cppad_REAL_NAME} check_swig_m
+		DEPENDS ${SWIG_MODULE_cppad_swig_REAL_NAME} check_swig_m
 	)
 	MESSAGE(STATUS "make check_swig_octave: available")
 

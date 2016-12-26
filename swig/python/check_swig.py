@@ -11,7 +11,7 @@
 # -----------------------------------------------------------------------------
 # load the modules
 import sys
-import swig_cppad
+import cppad_swig
 #
 # initialze exit status as OK
 error_count = 0
@@ -19,7 +19,7 @@ error_count = 0
 # std::vector<double>
 # --------------------------------------------
 ok  = True
-vec = swig_cppad.vector_double(2)
+vec = cppad_swig.vector_double(2)
 # size
 ok  = ok and vec.size() == 2
 # resize
@@ -32,16 +32,16 @@ for i in range( vec.size() ) :
 for i in range( vec.size() ) :
 	ok = ok and vec[i] == 2.0 * i
 if ok :
-	print('swig_cppad.vector_double: OK')
+	print('cppad_swig.vector_double: OK')
 else :
-	print('swig_cppad.vector_double: Error')
+	print('cppad_swig.vector_double: Error')
 	error_count = error_count + 1
 # --------------------------------------------
 # a_double
 # --------------------------------------------
 ok         = True
-two        = swig_cppad.a_double(2.0)
-three      = swig_cppad.a_double(3.0)
+two        = cppad_swig.a_double(2.0)
+three      = cppad_swig.a_double(3.0)
 five       = two + three
 six        = two * three
 neg_one    = two - three
@@ -52,15 +52,15 @@ ok         = ok and neg_one.value() == -1.0
 ok         = ok and 0.5 < two_thirds.value() and two_thirds.value() < 1.0
 ok         = ok and five < six
 if ok :
-	print('swig_cppad.a_double: OK')
+	print('cppad_swig.a_double: OK')
 else :
-	print('swig_cppad.a_double: Error')
+	print('cppad_swig.a_double: Error')
 	error_count = error_count + 1
 # --------------------------------------------
 # std::vector<a_double>
 # --------------------------------------------
 ok    = True
-a_vec = swig_cppad.vector_ad(2)
+a_vec = cppad_swig.vector_ad(2)
 # size
 ok  = ok and a_vec.size() == 2
 # resize
@@ -68,29 +68,29 @@ a_vec.resize(4)
 ok  = ok and a_vec.size() == 4
 # setting elements
 for i in range( a_vec.size() ) :
-	a_vec[i] = swig_cppad.a_double(2.0 * i)
+	a_vec[i] = cppad_swig.a_double(2.0 * i)
 # getting elements
 for i in range( a_vec.size() ) :
 	ok = ok and a_vec[i].value() == 2.0 * i
 if ok :
-	print('swig_cppad.vector_ad:  OK')
+	print('cppad_swig.vector_ad:  OK')
 else :
-	print('swig_cppad.vector_ad:  Error')
+	print('cppad_swig.vector_ad:  Error')
 	error_count = error_count + 1
 # --------------------------------------------
 # afun(ax, ay)
 ok = True
 n  = 2
 m  = 1
-x  = swig_cppad.vector_double(n)
+x  = cppad_swig.vector_double(n)
 for i in range(n) :
 	x[i] = i + 1
-ax     = swig_cppad.independent(x)
-ay     = swig_cppad.vector_ad(m)
+ax     = cppad_swig.independent(x)
+ay     = cppad_swig.vector_ad(m)
 ay[0]  = ax[0] - ax[1]
 ay[0] += ax[0]
-af     = swig_cppad.a_fun(ax, ay)
-xp     = swig_cppad.vector_double(n)
+af     = cppad_swig.a_fun(ax, ay)
+xp     = cppad_swig.vector_double(n)
 xp[0]  = 3.0
 xp[1]  = 1.0;
 p      = 0
@@ -102,9 +102,9 @@ p      = 1
 yp     = af.forward(p, xp)
 ok     = ok and yp[0] == -1.0
 if ok :
-	print('swig_cppad.a_fun:  OK')
+	print('cppad_swig.a_fun:  OK')
 else :
-	print('swig_cppad.a_fun:  Error')
+	print('cppad_swig.a_fun:  Error')
 	error_count = error_count + 1
 # --------------------------------------------
 # return error_count

@@ -20,8 +20,8 @@ the terms of the
 A copy of this license is included in the COPYING file of this distribution.
 Please visit http://www.coin-or.org/CppAD/ for information on other licenses.
 -------------------------------------------------------------------------- */
-/* swig_cppad.i */
-%module swig_cppad
+/* cppad_swig.i */
+%module cppad_swig
 %{
 # include <swig/a_double.hpp>
 # include <swig/a_fun.hpp>

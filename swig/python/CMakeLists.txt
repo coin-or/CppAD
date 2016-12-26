@@ -51,10 +51,10 @@ IF ( SWIG_FOUND AND PythonLibs_FOUND AND PythonInterp_FOUND)
 	INCLUDE_DIRECTORIES(${PYTHON_INCLUDE_PATH})
 
 	# SWIG_ADD_MODULE(name language [ files ])
-	SWIG_ADD_MODULE(swig_cppad python ${swig_module_files} )
+	SWIG_ADD_MODULE(cppad_swig python ${swig_module_files} )
 
 	# SWIG_LINK_LIBRARIES(name [ libraries ])
-	SWIG_LINK_LIBRARIES(swig_cppad ${PYTHON_LIBRARIES})
+	SWIG_LINK_LIBRARIES(cppad_swig ${PYTHON_LIBRARIES})
 
 	# use current binary directory for swig output files
 	SET(CMAKE_SWIG_OUTDIR "${CMAKE_CURRENT_BINARY_DIR}")
@@ -71,7 +71,7 @@ IF ( SWIG_FOUND AND PythonLibs_FOUND AND PythonInterp_FOUND)
 	# check_swig_python
 	ADD_CUSTOM_TARGET(check_swig_python
 		python check_swig.py
-		DEPENDS ${SWIG_MODULE_swig_cppad_REAL_NAME} check_swig_py
+		DEPENDS ${SWIG_MODULE_cppad_swig_REAL_NAME} check_swig_py
 	)
 	MESSAGE(STATUS "make check_swig_python: available")
 

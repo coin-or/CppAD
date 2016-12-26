@@ -19,7 +19,7 @@ SET(check_swig_depends "")
 ADD_SUBDIRECTORY(example)
 
 # swig_congrol_file: used by the subdirectories below
-SET(swig_control_file "${CMAKE_CURRENT_SOURCE_DIR}/swig_cppad.i" )
+SET(swig_control_file "${CMAKE_CURRENT_SOURCE_DIR}/cppad_swig.i" )
 
 # swig_module_files: used by the subdirectories below
 SET(swig_module_files "${swig_control_file}" )
