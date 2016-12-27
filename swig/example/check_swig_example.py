@@ -13,12 +13,12 @@
 import sys
 import swig_example
 #
-# initialze exit status as OK
+# initialze error_count
 error_count = 0
 # --------------------------------------------
 # factorial_by_val
 if swig_example.factorial_by_val(4) == 24 :
-	print('swig_example.fact: OK')
+	print('swig_example.factorial_by_val: OK')
 else :
 	print('swig_example.factorial_by_val: Error')
 	error_count = error_count + 1

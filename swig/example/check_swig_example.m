@@ -12,7 +12,7 @@
 % load the module
 swig_example
 %
-% initialze exit status as OK
+% initialze error count
 error_count = 0;
 % ---------------------------------------------
 % factorial_by_val
