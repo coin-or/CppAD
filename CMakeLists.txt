@@ -70,9 +70,6 @@ INCLUDE(cmake/check_source_runs.cmake)
 #
 # macro that acts for cmake like assert acts for C
 INCLUDE(cmake/assert.cmake)
-#
-# version of UseSWIG.cmake modified so wrapper has .cpp extension
-INCLUDE(cmake/use_swig.cmake)
 # =============================================================================
 # command line arguments
 # =============================================================================
