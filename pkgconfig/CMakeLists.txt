@@ -1,9 +1,9 @@
 # $Id:$
 # -----------------------------------------------------------------------------
-# CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-15 Bradley M. Bell
+# CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-16 Bradley M. Bell
 #
 # CppAD is distributed under multiple licenses. This distribution is under
-# the terms of the 
+# the terms of the
 #                     Eclipse Public License Version 1.0.
 #
 # A copy of this license is included in the COPYING file of this distribution.
@@ -30,32 +30,32 @@ IF( colpack_prefix )
 	SET(cppad_pkgconfig_libs "${cppad_pkgconfig_libs} -lColPack")
 	FOREACH(dir ${cmake_install_libdirs})
 		IF(IS_DIRECTORY ${colpack_prefix}/${dir} )
-			SET(cppad_pkgconfig_libs 
+			SET(cppad_pkgconfig_libs
 				"${cppad_pkgconfig_libs} -L${colpack_prefix}/${dir}"
 			)
 		ENDIF(IS_DIRECTORY ${colpack_prefix}/${dir} )
 	ENDFOREACH(dir)
 	FOREACH(dir ${cmake_install_includedirs})
 		IF(IS_DIRECTORY ${colpack_prefix}/${dir} )
-			SET(cppad_pkgconfig_cflags 
+			SET(cppad_pkgconfig_cflags
 				"${cppad_pkgconfig_cflags} -I${colpack_prefix}/${dir}"
 			)
 		ENDIF(IS_DIRECTORY ${colpack_prefix}/${dir} )
 	ENDFOREACH(dir)
 ENDIF( colpack_prefix )
 #
-MESSAGE(STATUS "cppad_pkgconfig_cflags = ${cppad_pkgconfig_cflags}")
-MESSAGE(STATUS "cppad_pkgconfig_libs = ${cppad_pkgconfig_libs}")
-MESSAGE(STATUS "cppad_pkgconfig_requires = ${cppad_pkgconfig_requires}")
+print_variable(cppad_pkgconfig_cflags)
+print_variable(cppad_pkgconfig_libs)
+print_variable(cppad_pkgconfig_requires)
 #
 # Copy a file to another location and modify its contents.
 # configure_file(InputFile OutputFile [COPYONLY] [ESCAPE_QUOTES] [@ONLY])
 CONFIGURE_FILE(
-	${CMAKE_CURRENT_SOURCE_DIR}/cppad.pc.in             
-	${CMAKE_CURRENT_BINARY_DIR}/cppad.pc 
+	${CMAKE_CURRENT_SOURCE_DIR}/cppad.pc.in
+	${CMAKE_CURRENT_BINARY_DIR}/cppad.pc
 )
 CONFIGURE_FILE(
-	${CMAKE_CURRENT_SOURCE_DIR}/cppad-uninstalled.pc.in 
+	${CMAKE_CURRENT_SOURCE_DIR}/cppad-uninstalled.pc.in
 	${CMAKE_CURRENT_BINARY_DIR}/cppad-uninstalled.pc
 )
 # During install copy cppad.pc to CMAKE_INSTALL_PREFIX/

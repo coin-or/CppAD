@@ -19,7 +19,7 @@ MACRO(check_match match_variable match_constant output_variable)
 	ELSE( match_flag )
 		SET(${output_variable} 0)
 	ENDIF( match_flag )
-	MESSAGE(STATUS "${output_variable} = ${${output_variable}}" )
+	print_variable(${output_variable})
 ENDMACRO(check_match)
 # -----------------------------------------------------------------------------
 # command line arguments
@@ -211,7 +211,7 @@ ENDIF( NOT cppad_has_steady_clock )
 # =============================================================================
 # End C++11 features
 #
-MESSAGE(STATUS "cppad_cplusplus_201100_ok = ${cppad_cplusplus_201100_ok}")
+print_variable(cppad_cplusplus_201100_ok)
 # -----------------------------------------------------------------------------
 # cppad_has_gettimeofday
 #

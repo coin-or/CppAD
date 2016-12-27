@@ -32,7 +32,7 @@ STRING(REGEX REPLACE
 	soversion
 	${soversion}
 )
-MESSAGE(STATUS "soversion=${soversion}")
+print_variable(soversion)
 #
 #  add_library(<name> [STATIC | SHARED | MODULE] [EXCLUDE_FROM_ALL]
 #	source1 source2 ... sourceN)

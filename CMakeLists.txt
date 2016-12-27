@@ -32,8 +32,6 @@ PROJECT(cppad)
 # include_directories([AFTER|BEFORE] [SYSTEM] dir1 dir2 ...)
 INCLUDE_DIRECTORIES( ${cppad_SOURCE_DIR} )
 
-
-
 # =============================================================================
 # Some system cmake language extensions
 # =============================================================================
@@ -68,8 +66,11 @@ INCLUDE(cmake/sources_libs_define.cmake)
 # check_source_runs(source variable)
 INCLUDE(cmake/check_source_runs.cmake)
 #
-# macro that acts for cmake like assert acts for C
+# assert(variable)
 INCLUDE(cmake/assert.cmake)
+#
+# print_variable(variable)
+INCLUDE(cmake/print_variable.cmake)
 # =============================================================================
 # command line arguments
 # =============================================================================
@@ -169,7 +170,7 @@ ENDIF( colpack_prefix )
 IF ( cppad_cxx_flags MATCHES "/W[0-9]" )
 	STRING( REGEX REPLACE "/W[0-9]" "" CMAKE_CXX_FLAGS ${CMAKE_CXX_FLAGS} )
 ENDIF ( cppad_cxx_flags MATCHES "/W[0-9]" )
-MESSAGE(STATUS "CMAKE_CXX_FLAGS = ${CMAKE_CXX_FLAGS}")
+print_variable(CMAKE_CXX_FLAGS)
 # -----------------------------------------------------------------------------
 # set cppad_abs_${middle_name} for middle_name equal to:
 #	includedir, liddir, datadir, docdir
@@ -209,7 +210,7 @@ IF ( Boost_FOUND )
 		"([^ ]*)/[^/ ]*" "\\1"
 		boost_prefix "${boost_include_dir}"
 	)
-	MESSAGE(STATUS "boost_prefix = ${boost_prefix}")
+	print_variable(boost_prefix)
 	#
 	# add boost include directories
 	FOREACH(dir ${cmake_install_includedirs})
