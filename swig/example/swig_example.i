@@ -10,10 +10,17 @@ A copy of this license is included in the COPYING file of this distribution.
 Please visit http://www.coin-or.org/CppAD/ for information on other licenses.
 -------------------------------------------------------------------------- */
 /* swig_example.i */
-%module swig_example
 %{
 # include "swig_example.hpp"
 %}
+
+# ifdef SWIGPYTHON
+%module py_example
+# endif
+# ifdef SWIGOCTAVE
+%module m_example
+# endif
+
 
 %include "cpointer.i"
 %pointer_class(int, int_class);

@@ -60,10 +60,10 @@ IF ( SWIG_FOUND AND PythonLibs_FOUND AND PythonInterp_FOUND)
 	INCLUDE_DIRECTORIES(${PYTHON_INCLUDE_PATH})
 
 	# SWIG_ADD_MODULE(name language [ files ])
-	SWIG_ADD_MODULE(swig_example python swig_example.i swig_example.cpp)
+	SWIG_ADD_MODULE(py_example python swig_example.i swig_example.cpp)
 
 	# SWIG_LINK_LIBRARIES(name [ libraries ])
-	SWIG_LINK_LIBRARIES(swig_example ${PYTHON_LIBRARIES})
+	SWIG_LINK_LIBRARIES(py_example ${PYTHON_LIBRARIES})
 
 	# example use of CMAKE_SWIG_OUTDIR (not necessary in this case)
 	SET(CMAKE_SWIG_OUTDIR "${CMAKE_CURRENT_BINARY_DIR}")
@@ -80,7 +80,7 @@ IF ( SWIG_FOUND AND PythonLibs_FOUND AND PythonInterp_FOUND)
 	# check_swig_example_python
 	ADD_CUSTOM_TARGET(check_swig_example_python
 		python check_swig_example.py
-		DEPENDS ${SWIG_MODULE_swig_example_REAL_NAME} check_swig_example_py
+		DEPENDS ${SWIG_MODULE_py_example_REAL_NAME} check_swig_example_py
 	)
 	MESSAGE(STATUS "make check_swig_example_python: available")
 
@@ -129,10 +129,10 @@ IF( SWIG_FOUND AND octave_config )
 	INCLUDE_DIRECTORIES(${octave_include_dirs})
 	#
 	# SWIG_ADD_MODULE(name language [ files ])
-	SWIG_ADD_MODULE(swig_example octave swig_example.i swig_example.cpp)
+	SWIG_ADD_MODULE(m_example octave swig_example.i swig_example.cpp)
 	#
 	# SWIG_LINK_LIBRARIES(name [ libraries ])
-	SWIG_LINK_LIBRARIES(swig_example
+	SWIG_LINK_LIBRARIES(m_example
 		${octave_liboctinterp} ${octave_liboctave}
 	)
 	ADD_CUSTOM_TARGET(check_swig_example_m
@@ -145,7 +145,7 @@ IF( SWIG_FOUND AND octave_config )
 	# check_swig_example_octave
 	ADD_CUSTOM_TARGET(check_swig_example_octave
 		octave check_swig_example.m
-		DEPENDS ${SWIG_MODULE_swig_example_REAL_NAME} check_swig_example_m
+		DEPENDS ${SWIG_MODULE_m_example_REAL_NAME} check_swig_example_m
 	)
 	MESSAGE(STATUS "make check_swig_example_octave: available")
 
