@@ -9,7 +9,7 @@
 % A copy of this license is included in the COPYING file of this distribution.
 % Please visit http://www.coin-or.org/CppAD/ for information on other licenses.
 % -----------------------------------------------------------------------------
-% load the module
+function ok = check_swig()
 cppad_swig
 %
 % initialze exit status as OK
@@ -114,6 +114,5 @@ else
 	printf('cppad_swig.a_fun:  Error\n')
 	error_count = error_count + 1;
 end
-% ---------------------------------------------
-% return error_count
-exit(error_count)
+ok = logical(error_count == 0);
+end

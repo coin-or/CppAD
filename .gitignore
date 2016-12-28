@@ -1,15 +1,17 @@
-# top directory only
+# only one file
 git_commit.sh
 aclocal.m4
 ar-lib
 autom4te.cache
+bin/test_one.sh
 commit.sh.old
-doc
-doxydoc
 cppad/configure.hpp
 test_one.cpp
 test_one.exe
-bin/test_one.sh
+# only one directory
+doc
+doxydoc
+swig/python/*.pyc
 # all directories
 *.err
 */*.err

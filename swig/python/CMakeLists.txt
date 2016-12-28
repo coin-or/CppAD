@@ -17,6 +17,12 @@ FIND_PACKAGE(PythonInterp)
 FIND_PACKAGE(PythonLibs)
 # ----------------------------------------------------------------------------
 IF ( PythonLibs_FOUND AND PythonInterp_FOUND)
+	# create check_all.py for this directory
+	CONFIGURE_FILE(
+		${CMAKE_CURRENT_SOURCE_DIR}/check_all.py.in
+		${CMAKE_CURRENT_BINARY_DIR}/check_all.py
+	)
+
 	# which version of python did we find
 	SET(lib    "${PYTHONLIBS_VERSION_STRING}" )
 	SET(interp "${PYTHON_VERSION_STRING}" )
@@ -45,19 +51,10 @@ IF ( PythonLibs_FOUND AND PythonInterp_FOUND)
 	# SWIG_LINK_LIBRARIES(name [ libraries ])
 	SWIG_LINK_LIBRARIES(cppad_swig cppad_swig_lib ${PYTHON_LIBRARIES})
 
-	# copy test program to directory with swig module is located
-	ADD_CUSTOM_TARGET(check_swig_py
-		${CMAKE_COMMAND} -E copy
-		${CMAKE_CURRENT_SOURCE_DIR}/check_swig.py
-		${CMAKE_CURRENT_BINARY_DIR}/check_swig.py
-		DEPENDS
-		${CMAKE_CURRENT_SOURCE_DIR}/check_swig.py
-	)
-
 	# check_swig_python
 	ADD_CUSTOM_TARGET(check_swig_python
-		python check_swig.py
-		DEPENDS ${SWIG_MODULE_cppad_swig_REAL_NAME} check_swig_py
+		python check_all.py
+		DEPENDS ${SWIG_MODULE_cppad_swig_REAL_NAME} check_swig.py
 	)
 	MESSAGE(STATUS "make check_swig_python: available")
 

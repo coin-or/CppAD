@@ -15,6 +15,11 @@ SET(CMAKE_BUILD_TYPE DEBUG)
 assert( SWIG_FOUND )
 FIND_PROGRAM(octave_config NAMES octave-config)
 IF( octave_config )
+	# create check_all.m for this directory
+	CONFIGURE_FILE(
+		${CMAKE_CURRENT_SOURCE_DIR}/check_all.m.in
+		${CMAKE_CURRENT_BINARY_DIR}/check_all.m
+	)
 
 	# treat like a C++ files
 	SET_SOURCE_FILES_PROPERTIES(
@@ -69,18 +74,10 @@ IF( octave_config )
 		cppad_swig_lib ${octave_liboctinterp} ${octave_liboctave}
 	)
 
-	# copy test program to directory with swig module is located
-	ADD_CUSTOM_TARGET(check_swig_m
-		${CMAKE_COMMAND} -E copy
-		${CMAKE_CURRENT_SOURCE_DIR}/check_swig.m
-		${CMAKE_CURRENT_BINARY_DIR}/check_swig.m
-		DEPENDS
-		${CMAKE_CURRENT_SOURCE_DIR}/check_swig.m
-	)
 	# check_swig_octave
 	ADD_CUSTOM_TARGET(check_swig_octave
-		octave check_swig.m
-		DEPENDS ${SWIG_MODULE_cppad_swig_REAL_NAME} check_swig_m
+		octave check_all.m
+		DEPENDS ${SWIG_MODULE_cppad_swig_REAL_NAME}
 	)
 	MESSAGE(STATUS "make check_swig_octave: available")
 
