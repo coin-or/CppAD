@@ -10,8 +10,8 @@
 # Please visit http://www.coin-or.org/CppAD/ for information on other licenses.
 # -----------------------------------------------------------------------------
 # load the modules
-import cppad_swig
 def check_swig () :
+	import cppad_swig
 	#
 	# initialze exit status as OK
 	error_count = 0
@@ -106,4 +106,4 @@ def check_swig () :
 	else :
 		print('cppad_swig.a_fun:  Error')
 		error_count = error_count + 1
-	return bool(error_count) == 0
+	return bool(error_count == 0)

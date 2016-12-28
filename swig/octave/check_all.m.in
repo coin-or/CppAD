@@ -10,10 +10,30 @@
 % Please visit http://www.coin-or.org/CppAD/ for information on other licenses.
 % -----------------------------------------------------------------------------
 % path to test source code
+source_dir = '@CMAKE_CURRENT_SOURCE_DIR@'
 addpath('@CMAKE_CURRENT_SOURCE_DIR@')
-ok = check_swig ();
 %
-if ~ ok
+error_count = 0;
+function ok = run_test(name)
+	eval( strcat( 'ok = ' , name , '();' ) )
+	if ok
+		printf( strcat('octave: ', name , ': OK\n') )
+	else
+		printf( strcat('octave: ', name , ': Error\n') )
+		error_count = error_count + 1;
+	end
+end
+source_list = dir( strcat(source_dir, '/*.m') );
+n_test      = length(source_list);
+for i = [1 : n_test]
+	name = source_list(i).name;
+	name = name(1 : length(name) - 2 );
+	run_test(name);
+end
+%
+if error_count > 0
+	printf('octave: check_all: error_count = %d\n', error_count)
 	exit(1)
 end
+printf('octave: check_all: OK\n')
 exit(0)

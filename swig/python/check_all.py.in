@@ -10,11 +10,27 @@
 # Please visit http://www.coin-or.org/CppAD/ for information on other licenses.
 # -----------------------------------------------------------------------------
 import sys
-sys.path.append('@CMAKE_CURRENT_SOURCE_DIR@')
-import check_swig
+import os
+source_dir = '@CMAKE_CURRENT_SOURCE_DIR@'
+sys.path.append(source_dir)
 #
-ok = check_swig.check_swig()
+error_count = 0
+def run_test(name) :
+	exec( 'import ' + name )
+	exec( 'ok = ' + name + '.' + name + '()' )
+	if ok :
+		print('python: ' + name + ': OK')
+	else :
+		print('python: ' + name + ': Error')
+		error_count = error_count + 1
 #
-if not ok :
+for file_name in os.listdir(source_dir) :
+	if file_name.endswith('.py') :
+		name = file_name[0 : -3 ]
+		run_test(name)
+#
+if error_count > 0 :
+	print('python: check_all: error_count = ', error_count)
 	sys.exit(1)
+print('python: check_all: OK')
 sys.exit(0)
