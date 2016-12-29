@@ -46,15 +46,15 @@ IF ( PythonLibs_FOUND AND PythonInterp_FOUND)
 	INCLUDE_DIRECTORIES(${PYTHON_INCLUDE_PATH})
 
 	# SWIG_ADD_MODULE(name language [ files ])
-	SWIG_ADD_MODULE(cppad_swig python ${swig_control_file} )
+	SWIG_ADD_MODULE(py_cppad python ${swig_control_file} )
 
 	# SWIG_LINK_LIBRARIES(name [ libraries ])
-	SWIG_LINK_LIBRARIES(cppad_swig cppad_swig_lib ${PYTHON_LIBRARIES})
+	SWIG_LINK_LIBRARIES(py_cppad cppad_swig_lib ${PYTHON_LIBRARIES})
 
 	# check_swig_python
 	ADD_CUSTOM_TARGET(check_swig_python
 		python check_all.py
-		DEPENDS ${SWIG_MODULE_cppad_swig_REAL_NAME} check_swig.py
+		DEPENDS ${SWIG_MODULE_py_cppad_REAL_NAME} check_swig.py
 	)
 	MESSAGE(STATUS "make check_swig_python: available")
 

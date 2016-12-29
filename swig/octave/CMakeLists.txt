@@ -67,17 +67,17 @@ IF( octave_config )
 	INCLUDE_DIRECTORIES(${octave_include_dirs})
 
 	# SWIG_ADD_MODULE(name language [ files ])
-	SWIG_ADD_MODULE(cppad_swig octave ${swig_control_file} )
+	SWIG_ADD_MODULE(m_cppad octave ${swig_control_file} )
 
 	# SWIG_LINK_LIBRARIES(name [ libraries ])
-	SWIG_LINK_LIBRARIES(cppad_swig
+	SWIG_LINK_LIBRARIES(m_cppad
 		cppad_swig_lib ${octave_liboctinterp} ${octave_liboctave}
 	)
 
 	# check_swig_octave
 	ADD_CUSTOM_TARGET(check_swig_octave
 		octave check_all.m
-		DEPENDS ${SWIG_MODULE_cppad_swig_REAL_NAME}
+		DEPENDS ${SWIG_MODULE_m_cppad_REAL_NAME}
 	)
 	MESSAGE(STATUS "make check_swig_octave: available")
 

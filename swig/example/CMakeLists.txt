@@ -164,7 +164,6 @@ IF( SWIG_FOUND AND PERLLIBS_FOUND )
 	#
 	# include directory determined by find PythonLibs
 	INCLUDE_DIRECTORIES(${PERL_INCLUDE_PATH})
-	print_variable(PERL_INCLUDE_PATH)
 	#
 	# SWIG_ADD_MODULE(name language [ files ])
 	SWIG_ADD_MODULE(pl_example perl swig_example.i swig_example.cpp)
