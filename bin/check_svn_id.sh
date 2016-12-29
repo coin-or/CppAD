@@ -1,5 +1,4 @@
 #! /bin/bash -e
-# $Id$
 # -----------------------------------------------------------------------------
 # CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-16 Bradley M. Bell
 #
@@ -16,44 +15,55 @@ then
 	exit 1
 fi
 # -----------------------------------------------------------------------------
-echo "Checking for \$Id.*\$ in beginning of source code"
-echo "-------------------------------------------------------"
+list=`git status | sed -n \
+        -e '/^[#\t ]*deleted:/p' \
+        -e '/^[#\t ]*modified:/p' \
+        -e '/^[#\t ]*both modified:/p' \
+        -e '/^[#\t ]*renamed:/p' \
+        -e '/^[#\t ]*new file:/p' | \
+			sed -e 's/^.*: *//' -e 's/ -> /\n/' | \
+			sed -e '/^makefile.in$/d' \
+				-e '/^.gitignore$/d' \
+				-e '/\/makefile.in$/d' \
+				-e '/bin\/check_svn_id.sh$/d' \
+				-e '/AUTHORS/d' \
+				-e '/COPYING/d' |
+                sort -u`
 ok="yes"
-list=`bin/ls_files.sh | sed -n \
-	-e '/^gpl-3.0.txt$/d' \
-	-e '/^epl-v10.txt$/d' \
-	-e '/cppad\/local\/config.h.in$/d' \
-	-e '/^makefile.in$/d' \
-	-e '/^svn_commit.sh$/d' \
-	-e '/^git_commit.sh$/d' \
-	-e '/\/makefile.in$/d'  \
-	-e '/\.hpp$/p' \
-	-e '/\.cpp$/p' \
-	-e '/\.omh$/p' \
-	-e '/\.txt$/p' \
-	-e '/\.sh$/p'  \
-	-e '/\.in$/p'  \
-	-e '/\.am$/p'`
-#
 for file in $list
 do
-	# deprecated link files have just one line
-	lines=`cat $file | wc -l`
-	if [ "$lines" != 1 ]
+	if [ -e $file ]
 	then
-		if ! head -2 $file | grep '$Id.*\$' > /dev/null
+		sed $file -e '/$Id.*\$/d' > check_svn_id.$$
+		if ! diff $file check_svn_id.$$ > /dev/null
 		then
-			echo "$file does not have '\$Id.*\$' in first two lines"
-			ok="no"
+			echo '----------------------------------------------------'
+			echo "check_svn_id.sh: automatic changes to $file:"
+			if diff $file check_svn_id.$$
+			then
+				echo 'bin/check_svn_id.sh: program error'
+				rm check_svn_id.$$
+				exit 1
+			fi
+			ok='no'
+			if [ -x $file ]
+			then
+				mv check_svn_id.$$ $file
+				chmod +x $file
+			else
+				mv check_svn_id.$$ $file
+			fi
 		fi
 	fi
 done
-echo "-------------------------------------------------------"
-if [ "$ok" = "no" ]
+if [ -e check_svn_id.$$ ]
 then
-	echo "Error: nothing should be between the two dashed lines above"
-	exit 1
-else
-	echo "Ok: nothing is between the two dashed lines above"
-	exit 0
+	rm check_svn_id.$$
 fi
+if [ "$ok" == 'no' ]
+then
+	exit 1
+fi
+# ----------------------------------------------------------------------------
+echo "$0: OK"
+exit 0
