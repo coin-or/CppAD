@@ -20,6 +20,9 @@ Please visit http://www.coin-or.org/CppAD/ for information on other licenses.
 # ifdef SWIGOCTAVE
 %module m_example
 # endif
+# ifdef SWIGPERL
+%module pl_example
+# endif
 
 
 %include "cpointer.i"

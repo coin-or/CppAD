@@ -29,6 +29,11 @@ IF( SWIG_FOUND )
 	IF( octave_config )
 		SET( use_swig TRUE )
 	ENDIF( octave_config )
+	#
+	FIND_PACKAGE(PerlLibs)
+	IF( PERLLIBS_FOUND )
+		SET( use_swig TRUE )
+	ENDIF( PERLLIBS_FOUND )
 ENDIF( SWIG_FOUND )
 # ----------------------------------------------------------------------------
 IF( use_swig )
@@ -153,7 +158,44 @@ IF( SWIG_FOUND AND octave_config )
 	add_to_list(check_swig_example_depends check_swig_example_octave)
 
 ENDIF( SWIG_FOUND AND octave_config )
-
+# ----------------------------------------------------------------------------
+# perl
+IF( SWIG_FOUND AND PERLLIBS_FOUND )
+	#
+	# include directory determined by find PythonLibs
+	INCLUDE_DIRECTORIES(${PERL_INCLUDE_PATH})
+	print_variable(PERL_INCLUDE_PATH)
+	#
+	# SWIG_ADD_MODULE(name language [ files ])
+	SWIG_ADD_MODULE(pl_example perl swig_example.i swig_example.cpp)
+	#
+	# SWIG_LINK_LIBRARIES(name [ libraries ])
+	SWIG_LINK_LIBRARIES(pl_example ${PERL_LIBRARY})
+	#
+	# example use of CMAKE_SWIG_OUTDIR (not necessary in this case)
+	SET(CMAKE_SWIG_OUTDIR "${CMAKE_CURRENT_BINARY_DIR}")
+	#
+	# copy test program to directory with swig module is located
+	ADD_CUSTOM_TARGEt(check_swig_example_pl
+		"${CMAKE_COMMAND}" -E copy
+		"${CMAKE_CURRENT_SOURCE_DIR}/check_swig_example.pl"
+		"${CMAKE_CURRENT_BINARY_DIR}/check_swig_example.pl"
+		DEPENDS
+		"${CMAKE_CURRENT_SOURCE_DIR}/check_swig_example.pl"
+	)
+	#
+	# check_swig_example_perl
+	ADD_CUSTOM_TARGET(check_swig_example_perl
+		perl check_swig_example.pl
+		DEPENDS ${SWIG_MODULE_pl_example_REAL_NAME} check_swig_example_pl
+	)
+	MESSAGE(STATUS "make check_swig_example_perl: available")
+	#
+	# add to list for all checks
+	add_to_list(check_swig_example_depends check_swig_example_perl)
+	#
+ENDIF( SWIG_FOUND AND PERLLIBS_FOUND )
+# ----------------------------------------------------------------------------
 IF( NOT( "${check_swig_example_depends}" STREQUAL "" ) )
 	# Add the check_swig_example target
 	ADD_CUSTOM_TARGET(check_swig_example DEPENDS ${check_swig_example_depends})
