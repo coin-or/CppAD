@@ -11,12 +11,18 @@ divert(-1)
 # -----------------------------------------------------------------------------
 
 # some simple constants
+define(ext_, pl)
 define(module_, pl_cppad)
 define(true_, 1)
 define(false_, 0)
 define(and_, &&)
 define(end_, })
 define(c_, `#')
+
+# generate_output_file_(example)
+define(generate_output_file_,
+`#' This file can be automatically generaeted using the following command
+`#' m4 ../perl.m4 ../xam/$1.m4 > $1.ext_)
 
 # begin_bool_fun_0_(return_variable, fun_name)
 define(begin_bool_fun_0_,
@@ -60,7 +66,7 @@ define(vec_set_, `$'$1->set($2, $3))
 define(vec_get_, `$'$1->get($2))
 
 # begin_for_(variable, upper)
-define(begin_for_, for(my `$'$1 = 0; `$'$1 < $2; `$'$1++) { )
+define(begin_for_, for(my `$'$1 = 0; `$'$1 < $2; `$'$1++) {)
 
 # print_text_(text)
 define(print_text_, print "$1\n";)

@@ -11,12 +11,18 @@ divert(-1)
 # -----------------------------------------------------------------------------
 
 # some simple constants
+define(ext_, py)
 define(module_, py_cppad)
 define(true_, True)
 define(false_, Flase)
 define(and_, and)
 define(end_, `#')
 define(c_, `#')
+
+# generate_output_file_(language)
+define(generate_output_file_,
+`#' This file can be automatically generaeted using the following command
+`#' m4 ../python.m4 ../xam/$1.m4 > $1.ext_)
 
 # begin_bool_fun_0_(return_variable, fun_name)
 define(begin_bool_fun_0_,

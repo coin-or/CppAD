@@ -11,12 +11,19 @@ divert(-1)
 # -----------------------------------------------------------------------------
 
 # some simple constants
+define(ext_, m)
 define(module_, m_cppad)
 define(true_, true)
 define(false_, false)
 define(and_, &&)
 define(end_, end)
 define(c_, `%')
+
+# generate_output_file_(example)
+define(generate_output_file_,
+`%' This file can be automatically generaeted using the following command
+`%' m4 ../octave.m4 ../xam/$1.m4 > $1.ext_)
+
 
 # begin_bool_fun_0_(name, return_variable)
 define(begin_bool_fun_0_,
@@ -26,7 +33,7 @@ function $1 = $2()
 	module_
 	c_
 	c_ initialize return variable
-	$1 = true_)
+	$1 = true_;)
 
 # module_fun_1_(fun_name, argument)
 define(module_fun_1_, module_.$1($2))
@@ -50,10 +57,10 @@ define(and_assign_, $1 = $1 and_ $2;)
 define(member_fun_1_, $1.$2($3))
 
 # vec_set_(vector, index, value)
-define(vec_set_, $1[$2] = $3)
+define(vec_set_, $1($2) = $3;)
 
 # vec_get_(vector, index)
-define(vec_get_, $1[$2])
+define(vec_get_, $1($2))
 
 # begin_for_(variable, upper)
 define(begin_for_, for $1 = [ 0 :($2-1) ])

@@ -1,3 +1,4 @@
+generate_output_file_(vector_double_xam)
 c_ -----------------------------------------------------------------------------
 c_ CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-16 Bradley M. Bell
 c_
@@ -19,8 +20,8 @@ begin_bool_fun_0_(ok, vector_double_xam)
 	and_assign_(ok, member_fun_1_(vec, size, ) == n)
 	c_
 	c_ setting elements
-	begin_for_(i, 0, var_(n) )
-		vec_set_(vec, var_(i), 2.0 * var_(i) )
+	begin_for_(i, var_(n) )
+		vec_set_(vec, var_(i), 2.0 * var_(i))
 	end_
 	c_ getting elements
 	begin_for_(i, var_(n) )
