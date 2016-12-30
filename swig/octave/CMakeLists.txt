@@ -1,4 +1,3 @@
-# $Id$
 # -----------------------------------------------------------------------------
 # CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-16 Bradley M. Bell
 #
@@ -26,7 +25,8 @@ IF( octave_config )
 		${swig_control_file} PROPERTIES CPLUSPLUS ON
 	)
 
-	# octave does not support +=, -=, *=, or /=, so supress these warnings
+	# swig -octave warns that it does not support +=, -=, *=, or /=,
+	# (but is does and the code works) so supress these warnings.
 	SET(CMAKE_SWIG_FLAGS -Wextra -w365,366,367,368 )
 
 	# octave include directories

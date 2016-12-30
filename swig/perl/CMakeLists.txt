@@ -26,10 +26,9 @@ IF ( PERLLIBS_FOUND )
 		${swig_control_file} PROPERTIES CPLUSPLUS ON
 	)
 
-	# swig flags when processing this file
-	SET_SOURCE_FILES_PROPERTIES(
-		${swig_control_file} PROPERTIES SWIG_FLAGS "-Wall"
-	)
+	# swig -perl warns that it does not support *=, or /=,
+	# supress these warnings.
+	SET(CMAKE_SWIG_FLAGS -Wextra -w367,368 )
 
 	# include directory determined by find PerlLibs
 	INCLUDE_DIRECTORIES(${PERL_INCLUDE_PATH})
