@@ -16,7 +16,7 @@ begin_bool_fun_0_(ok, vector_double_xam)
 	new_var_new_(vec, module_fun_1_(vector_double, n))
 	c_
 	c_ check size
-	and_assign_(ok, member_fun_1_(vec, size, ) == n)
+	and_assign_(ok, member_fun_0_(vec, size) == n)
 	c_
 	c_ setting elements
 	begin_for_(i, var_(n) )

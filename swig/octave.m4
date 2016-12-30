@@ -53,6 +53,9 @@ define(assign_, $1 = $2;)
 # and_assign_(variable, value)
 define(and_assign_, $1 = $1 and_ $2;)
 
+# member_fun_0_(variable, member_fun)
+define(member_fun_0_, $1.$2())
+
 # member_fun_1_(variable, member_fun, argument)
 define(member_fun_1_, $1.$2($3))
 
