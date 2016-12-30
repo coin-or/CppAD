@@ -1,4 +1,3 @@
-# $Id$
 # -----------------------------------------------------------------------------
 # CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-16 Bradley M. Bell
 #
@@ -48,6 +47,7 @@ IF( SWIG_FOUND )
 	# subdirectories that use swig_cpapd_files
 	ADD_SUBDIRECTORY(python)
 	ADD_SUBDIRECTORY(octave)
+	ADD_SUBDIRECTORY(perl)
 
 ENDIF( SWIG_FOUND )
 

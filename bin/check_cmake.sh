@@ -1,5 +1,4 @@
 #! /bin/bash -e
-# $Id$
 # -----------------------------------------------------------------------------
 # CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-16 Bradley M. Bell
 #
@@ -76,6 +75,7 @@ do
 		print_for/CMakeLists.txt | \
 		swig/CMakeLists.txt | \
 		swig/example/CMakeLists.txt | \
+		swig/perl/CMakeLists.txt | \
 		swig/python/CMakeLists.txt | \
 		swig/octave/CMakeLists.txt | \
 		test_more/CMakeLists.txt )
