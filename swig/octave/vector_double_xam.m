@@ -11,7 +11,8 @@
 % A copy of this license is included in the COPYING file of this distribution.
 % Please visit http://www.coin-or.org/CppAD/ for information on other licenses.
 % -----------------------------------------------------------------------------
-
+% std::vector<double>
+% -----------------------------------------------------------------------------
 function ok = vector_double_xam()
 	%
 	% load the cppad swig library
@@ -19,8 +20,6 @@ function ok = vector_double_xam()
 	%
 	% initialize return variable
 	ok = true;
-	% -----------------------------------------------------------
-	% std::vector<double>
 	n = 4;
 	vec = m_cppad.vector_double(n);
 	%

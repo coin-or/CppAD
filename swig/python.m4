@@ -19,9 +19,9 @@ define(and_, and)
 define(end_, `#')
 define(c_, `#')
 
-# generate_output_file_(language)
-define(generate_output_file_,
-`#' This file can be automatically generaeted using the following command
+# header_(language)
+define(header_,
+c_ This file can be automatically generaeted using the following command
 `#' m4 ../python.m4 ../xam/$1.m4 > $1.ext_)
 
 # begin_bool_fun_0_(return_variable, fun_name)

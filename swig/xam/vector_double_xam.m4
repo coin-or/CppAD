@@ -1,4 +1,4 @@
-generate_output_file_(vector_double_xam)
+header_(vector_double_xam)
 c_ -----------------------------------------------------------------------------
 c_ CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-16 Bradley M. Bell
 c_
@@ -9,10 +9,9 @@ c_
 c_ A copy of this license is included in the COPYING file of this distribution.
 c_ Please visit http://www.coin-or.org/CppAD/ for information on other licenses.
 c_ -----------------------------------------------------------------------------
-
+c_ std::vector<double>
+c_ -----------------------------------------------------------------------------
 begin_bool_fun_0_(ok, vector_double_xam)
-	c_ -----------------------------------------------------------
-	c_ std::vector<double>
 	new_var_(n, 4)
 	new_var_new_(vec, module_fun_1_(vector_double, n))
 	c_

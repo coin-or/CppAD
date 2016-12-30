@@ -10,7 +10,7 @@
 % Please visit http://www.coin-or.org/CppAD/ for information on other licenses.
 % -----------------------------------------------------------------------------
 % path to test source code
-source_dir = '@CMAKE_CURRENT_SOURCE_DIR@'
+source_dir = '@CMAKE_CURRENT_SOURCE_DIR@';
 addpath('@CMAKE_CURRENT_SOURCE_DIR@')
 %
 error_count = 0;

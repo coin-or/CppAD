@@ -11,7 +11,8 @@
 # A copy of this license is included in the COPYING file of this distribution.
 # Please visit http://www.coin-or.org/CppAD/ for information on other licenses.
 # -----------------------------------------------------------------------------
-
+# std::vector<double>
+# -----------------------------------------------------------------------------
 package vector_double_xam;
 sub vector_double_xam() {
 	# check for standard perl programming conventions
@@ -23,8 +24,6 @@ sub vector_double_xam() {
 	#
 	# initilaize return variable
 	my $ok = 1;
-	# -----------------------------------------------------------
-	# std::vector<double>
 	my $n = 4;
 	my $vec = new pl_cppad::vector_double(n);
 	#
