@@ -33,12 +33,12 @@ sub vector_ad_xam() {
 	# setting elements
 	for(my $i = 0; $i < $n ; $i++) {
 		my $ad = new pl_cppad::a_double(2.0 * i);
-		$a_vec->set($i, $ad)
+		$a_vec->set($i, $ad);
 	}
 	# getting elements
 	for(my $i = 0; $i < $n ; $i++) {
 		my $a_element = $a_vec->get($i);
 		$ok = $ok && $a_element->value() == 2.0 * $i;
 	}
-	return( $ok )
+	return( $ok );
 }

@@ -32,12 +32,12 @@ sub vector_double_xam() {
 	#
 	# setting elements
 	for(my $i = 0; $i < $n ; $i++) {
-		$vec->set($i, 2.0 * $i)
+		$vec->set($i, 2.0 * $i);
 	}
 	# getting elements
 	for(my $i = 0; $i < $n ; $i++) {
 		my $element = $vec->get($i);
 		$ok = $ok && $element == 2.0 * $i;
 	}
-	return( $ok )
+	return( $ok );
 }

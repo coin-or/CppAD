@@ -37,6 +37,9 @@ def $2() :
 # module_fun_1_(fun_name, argument)
 define(module_fun_1_, module_.$1($2))
 
+# module_fun_2_(fun_name, argument1, argument2)
+define(module_fun_2_, module_.$1($2, $3))
+
 # var_(variable)
 define(var_, $1)
 
@@ -57,6 +60,9 @@ define(member_fun_0_, $1.$2())
 
 # member_fun_1_(variable, member_fun, argument)
 define(member_fun_1_, $1.$2($3))
+
+# member_fun_2_(variable, member_fun, argument1, argument2)
+define(member_fun_2_, $1.$2($3, $4))
 
 # vec_set_(vector, index, value)
 define(vec_set_, $1[$2] = $3)

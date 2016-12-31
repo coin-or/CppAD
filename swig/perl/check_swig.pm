@@ -100,8 +100,7 @@ sub check_swig ()
 	for(my $i = 0; $i < $n; $i++)
 	{	$x->set($i, $i + 1);
 	}
-	my $ax = new pl_cppad::vector_ad(0);
-	$ax    = pl_cppad::independent($x);
+	my $ax = pl_cppad::independent($x);
 	my $ay = new pl_cppad::vector_ad($m);
 	{	my $ad_0 = $ax->get(0);
 		my $ad_1 = $ax->get(1);
