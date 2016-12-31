@@ -17,9 +17,8 @@ my $error_count = 0;
 sub run_test
 {	my $name = shift;
 	my $ok   = 1;
-	# my $command = "use $name ; \$ok = $name::$name();";
-	use check_swig;
-	$ok = check_swig::check_swig();
+	my $command = "use $name ; \$ok = $name::$name();";
+	eval( $command );
 	if( $ok )
 	{	print "perl: $name: OK\n"; }
 	else

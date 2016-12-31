@@ -37,7 +37,7 @@ begin_bool_fun_0_(ok, a_fun_xam)
 	c_ first order forward
 	vec_set_(x, 0, 0.0)
 	vec_set_(x, 1, 1.0)
-	new_var_(y, member_fun_2_(af, forward, 1, var_(x)))
+	assign_(y, member_fun_2_(af, forward, 1, var_(x)))
 	and_assign_(ok, vec_get_(y, 0) == -1.0)
 	c_
 	return_(var_(ok))

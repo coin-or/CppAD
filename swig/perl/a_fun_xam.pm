@@ -49,7 +49,7 @@ sub a_fun_xam() {
 	# first order forward
 	$x->set(0, 0.0);
 	$x->set(1, 1.0);
-	my $y = $af->forward(1, $x);
+	$y = $af->forward(1, $x);
 	$ok = $ok && $y->get(0) == -1.0;
 	#
 	return( $ok );

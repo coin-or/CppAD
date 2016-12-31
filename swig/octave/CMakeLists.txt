@@ -77,7 +77,9 @@ IF( octave_config )
 	# check_swig_octave
 	ADD_CUSTOM_TARGET(check_swig_octave
 		octave check_all.m
-		DEPENDS ${SWIG_MODULE_m_cppad_REAL_NAME}
+		DEPENDS
+		${SWIG_MODULE_m_cppad_REAL_NAME}
+		${CMAKE_CURRENT_BINARY_DIR}/check_all.m
 	)
 	MESSAGE(STATUS "make check_swig_octave: available")
 

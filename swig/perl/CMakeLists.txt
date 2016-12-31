@@ -42,7 +42,9 @@ IF ( PERLLIBS_FOUND )
 	# check_swig_perl
 	ADD_CUSTOM_TARGET(check_swig_perl
 		perl check_all.pl
-		DEPENDS ${SWIG_MODULE_pl_cppad_REAL_NAME} check_swig.pm
+		DEPENDS
+		${SWIG_MODULE_pl_cppad_REAL_NAME}
+		${CMAKE_CURRENT_BINARY_DIR}/check_all.pl
 	)
 	MESSAGE(STATUS "make check_swig_perl: available")
 

@@ -21,7 +21,7 @@ list=`ls xam/*.m4 | sed -e 's|^xam/||' -e '/junk.m4$/d' -e 's|\.m4$||'`
 ok='yes'
 declare -A ext
 ext['octave']='m'
-ext['perl']='pl'
+ext['perl']='pm'
 ext['python']='py'
 for name in $list
 do
