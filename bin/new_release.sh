@@ -22,8 +22,8 @@ echo_eval() {
 }
 # -----------------------------------------------------------------------------
 svn_repo="https://projects.coin-or.org/svn/CppAD"
-stable_version="20160000"
-release='1'
+stable_version="20170000" # start each stable_version at yyyy0000
+release='0'               # first release for each stable version is 0
 # -----------------------------------------------------------------------------
 branch=`git branch | grep '^\*'`
 if [ "$branch" != '* master' ]
@@ -72,7 +72,7 @@ fi
 #
 if [ "$remote_hash" == '' ]
 then
-	echo "new_release.sh: $stable_branch does not exist ?"
+	echo "new_release.sh: remote $stable_branch does not exist ?"
 	echo "	git push origin $stable_branch"
 	exit 1
 fi
@@ -94,6 +94,8 @@ then
 	echo 'new_release.sh: local and remote differ for this branch'
 	echo "local  $stable_branch: $local_hash"
 	echo "remote $stable_branch: $remote_hash"
+	echo "try: git checkout $stable_branch"
+	echo '     git push'
 	exit 1
 fi
 #
@@ -133,6 +135,7 @@ list=`git status -s`
 if [ "$list" != '' ]
 then
 	echo "new_release.sh: 'git status -s' is not empty (for master branch)"
+	echo 'You must commit or abort changes before proceeding.'
 	exit 1
 fi
 # =============================================================================
