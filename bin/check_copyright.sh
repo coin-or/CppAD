@@ -1,5 +1,4 @@
 #! /bin/bash -e
-# $Id$
 # -----------------------------------------------------------------------------
 # CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-16 Bradley M. Bell
 #
@@ -32,7 +31,6 @@ list=`git status | sed -n \
 				-e '/^.gitignore$/d' \
 				-e '/\/makefile.in$/d' \
 				-e '/\/check_copyright.sh$/d' \
-				-e '/\/use_swig.cmake$/d' \
 				-e '/AUTHORS/d' \
 				-e '/COPYING/d' |
                 sort -u`
