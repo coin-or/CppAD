@@ -516,7 +516,7 @@ nobase_myinclude_HEADERS = \
 	cppad/core/check_for_nan.hpp \
 	cppad/core/checkpoint.hpp \
 	cppad/core/compare.hpp \
-	cppad/core/compute_assign.hpp \
+	cppad/core/compound_assign.hpp \
 	cppad/core/cond_exp.hpp \
 	cppad/core/convert.hpp \
 	cppad/core/cppad_assert.hpp \

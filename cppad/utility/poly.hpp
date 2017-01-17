@@ -1,9 +1,8 @@
-// $Id$
 # ifndef CPPAD_UTILITY_POLY_HPP
 # define CPPAD_UTILITY_POLY_HPP
 
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-16 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-17 Bradley M. Bell
 
 CppAD is distributed under multiple licenses. This distribution is under
 the terms of the
@@ -103,8 +102,8 @@ and $icode i$$ is an $code int$$:
 $table
 $icode%x%  = %i%$$   $cnext assignment     $rnext
 $icode%x%  = %y%$$   $cnext assignment     $rnext
-$icode%x% *= %y%$$   $cnext multiplication computed assignment $rnext
-$icode%x% += %y%$$   $cnext addition computed assignment
+$icode%x% *= %y%$$   $cnext multiplication compound assignment $rnext
+$icode%x% += %y%$$   $cnext addition compound assignment
 
 $tend
 

@@ -1,9 +1,8 @@
-// $Id$
 # ifndef CPPAD_CORE_AD_HPP
 # define CPPAD_CORE_AD_HPP
 
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-16 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-17 Bradley M. Bell
 
 CppAD is distributed under multiple licenses. This distribution is under
 the terms of the
@@ -191,7 +190,7 @@ public:
 	// base type corresponding to an AD object
 	friend Base Value <Base> (const AD<Base> &x);
 
-	// computed assignment operators
+	// compound assignment operators
 	inline AD& operator += (const AD &right);
 	inline AD& operator -= (const AD &right);
 	inline AD& operator *= (const AD &right);

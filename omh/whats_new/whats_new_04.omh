@@ -1,6 +1,5 @@
-$Id$
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-15 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-17 Bradley M. Bell
 
 CppAD is distributed under multiple licenses. This distribution is under
 the terms of the
@@ -689,7 +688,7 @@ This documentation has been fixed to this effect.
 
 
 $head 04-19$$
-The $cref/+=/compute_assign/$$ operator did not function correctly
+The $cref/+=/compound_assign/$$ operator did not function correctly
 when the left hand operand was a
 $cref/parameter/glossary/Parameter/$$
 and the right hand operand was a variable

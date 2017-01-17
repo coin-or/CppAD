@@ -1,9 +1,8 @@
-// $Id$
-# ifndef CPPAD_CORE_COMPUTE_ASSIGN_HPP
-# define CPPAD_CORE_COMPUTE_ASSIGN_HPP
+# ifndef CPPAD_CORE_COMPOUND_ASSIGN_HPP
+# define CPPAD_CORE_COMPOUND_ASSIGN_HPP
 
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-16 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-17 Bradley M. Bell
 
 CppAD is distributed under multiple licenses. This distribution is under
 the terms of the
@@ -15,14 +14,14 @@ Please visit http://www.coin-or.org/CppAD/ for information on other licenses.
 
 /*
 -------------------------------------------------------------------------------
-$begin compute_assign$$
+$begin compound_assign$$
 $spell
 	Op
 	VecAD
 	const
 $$
 
-$section AD Computed Assignment Operators$$
+$section AD Compound Assignment Operators$$
 $mindex + add plus - subtract minus * multiply times / divide multiple$$
 
 
@@ -34,7 +33,7 @@ $head Syntax$$
 $icode%x% %Op% %y%$$
 
 $head Purpose$$
-Performs computed assignment operations
+Performs compound assignment operations
 where either $icode x$$ has type
 $codei%AD<%Base%>%$$.
 

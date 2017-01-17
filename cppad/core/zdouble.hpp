@@ -1,8 +1,7 @@
-// $Id$
 # ifndef CPPAD_CORE_ZDOUBLE_HPP
 # define CPPAD_CORE_ZDOUBLE_HPP
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-16 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-17 Bradley M. Bell
 
 CppAD is distributed under multiple licenses. This distribution is under
 the terms of the
@@ -141,7 +140,7 @@ Define a class like double but with an absolute zero.
 
 /*!
 \def CPPAD_ZDOUBLE_NORMAL_ASSIGN_OPERATOR(op)
-Define a computed assignment member operator that functions the same
+Define a compound assignment member operator that functions the same
 as corresponding double operator.
 */
 # define CPPAD_ZDOUBLE_NORMAL_ASSIGN_OPERATOR(op) \
@@ -156,7 +155,7 @@ as corresponding double operator.
 
 /*!
 \def CPPAD_ZDOUBLE_UNARY_OPERATOR(op)
-Define a unary computed assignment member operator.
+Define a unary compound assignment member operator.
 */
 # define CPPAD_ZDOUBLE_UNARY_OPERATOR(op) \
 	zdouble operator op (void) const      \
@@ -299,9 +298,9 @@ public:
 		return *this;
 	}
 	//
-	/// Normal computed assignment
+	/// Normal compound assignment
 	CPPAD_ZDOUBLE_NORMAL_ASSIGN_OPERATOR(+=)
-	/// Normal computed assignment
+	/// Normal compound assignment
 	CPPAD_ZDOUBLE_NORMAL_ASSIGN_OPERATOR(-=)
 	/// Normal unary operator
 	CPPAD_ZDOUBLE_UNARY_OPERATOR(+)

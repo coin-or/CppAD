@@ -1,9 +1,8 @@
-// $Id$
 # ifndef CPPAD_CORE_VEC_AD_HPP
 # define CPPAD_CORE_VEC_AD_HPP
 
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-16 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-17 Bradley M. Bell
 
 CppAD is distributed under multiple licenses. This distribution is under
 the terms of the
@@ -100,7 +99,7 @@ can be used to compute the corresponding $icode Base$$ value.
 
 $lnext
 The object $icode r$$ cannot be used
-with the $cref/computed assignments operators/Arithmetic/$$
+with the $cref/compound assignments operators/Arithmetic/$$
 $code +=$$,
 $code -=$$,
 $code *=$$, or
@@ -310,14 +309,14 @@ Defines the VecAD<Base> class.
 
 /*!
 \def CPPAD_VEC_AD_COMPUTED_ASSIGNMENT(op, name)
-Prints an error message if the correspinding computed assignment is used.
+Prints an error message if the correspinding compound assignment is used.
 
 THis macro is used to print an error message if any of the
-computed assignments are used with the VecAD_reference class.
+compound assignments are used with the VecAD_reference class.
 The argument \c op is one of the following:
 += , -= , *= , /=.
 The argument \c name, is a string literal with the name of the
-computed assignment \c op.
+compound assignment \c op.
 */
 # define CPPAD_VEC_AD_COMPUTED_ASSIGNMENT(op, name)                     \
 VecAD_reference& operator op (const VecAD_reference<Base> &right)       \
@@ -381,7 +380,7 @@ public:
 	void operator = (const Base     &right);
 	void operator = (int             right);
 
-	// computed assignments
+	// compound assignments
 	CPPAD_VEC_AD_COMPUTED_ASSIGNMENT( += , " += " )
 	CPPAD_VEC_AD_COMPUTED_ASSIGNMENT( -= , " -= " )
 	CPPAD_VEC_AD_COMPUTED_ASSIGNMENT( *= , " *= " )

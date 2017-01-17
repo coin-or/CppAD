@@ -1,6 +1,5 @@
-// $Id$
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-16 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-17 Bradley M. Bell
 
 CppAD is distributed under multiple licenses. This distribution is under
 the terms of the
@@ -103,22 +102,22 @@ namespace { // Empty namespace
 		}
 # endif
 # if CppADMyTypeOmit != 7
-		// computed assignment addition
+		// compound assignment addition
 		void operator += (const MyType &x)
 		{	d += x.d; }
 # endif
 # if CppADMyTypeOmit != 8
-		// computed assignment subtraction
+		// compound assignment subtraction
 		void operator -= (const MyType &x)
 		{	d -= x.d; }
 # endif
 # if CppADMyTypeOmit != 9
-		// computed assignment multiplication
+		// compound assignment multiplication
 		void operator *= (const MyType &x)
 		{	d *= x.d; }
 # endif
 # if CppADMyTypeOmit != 10
-		// computed assignment division
+		// compound assignment division
 		void operator /= (const MyType &x)
 		{	d /= x.d; }
 # endif

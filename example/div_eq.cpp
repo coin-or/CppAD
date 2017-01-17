@@ -1,6 +1,5 @@
-// $Id$
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-16 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-17 Bradley M. Bell
 
 CppAD is distributed under multiple licenses. This distribution is under
 the terms of the
@@ -13,7 +12,7 @@ Please visit http://www.coin-or.org/CppAD/ for information on other licenses.
 /*
 $begin div_eq.cpp$$
 
-$section AD Computed Assignment Division: Example and Test$$
+$section AD Compound Assignment Division: Example and Test$$
 $mindex /= divide assign plus add$$
 
 
@@ -48,7 +47,7 @@ bool DivEq(void)
 	y[0] = x[0] * x[0];  // initial value
 	y[0] /= 2;           // AD<double> /= int
 	y[0] /= 4.;          // AD<double> /= double
-	y[1] = y[0] /= x[0]; // use the result of a computed assignment
+	y[1] = y[0] /= x[0]; // use the result of a compound assignment
 
 	// create f: x -> y and stop tape recording
 	CppAD::ADFun<double> f(x, y);

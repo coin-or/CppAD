@@ -1,9 +1,8 @@
-// $Id$
 # ifndef CPPAD_CORE_ARITHMETIC_HPP
 # define CPPAD_CORE_ARITHMETIC_HPP
 
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-16 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-17 Bradley M. Bell
 
 CppAD is distributed under multiple licenses. This distribution is under
 the terms of the
@@ -23,13 +22,13 @@ $$
 
 
 
-$section AD Arithmetic Operators and Computed Assignments$$
+$section AD Arithmetic Operators and Compound Assignments$$
 
 $childtable%
 	cppad/core/unary_plus.hpp%
 	cppad/core/unary_minus.hpp%
 	cppad/core/ad_binary.hpp%
-	cppad/core/compute_assign.hpp
+	cppad/core/compound_assign.hpp
 %$$
 
 $end
@@ -38,6 +37,6 @@ $end
 # include <cppad/core/unary_plus.hpp>
 # include <cppad/core/unary_minus.hpp>
 # include <cppad/core/ad_binary.hpp>
-# include <cppad/core/compute_assign.hpp>
+# include <cppad/core/compound_assign.hpp>
 
 # endif

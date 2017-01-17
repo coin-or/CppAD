@@ -1,6 +1,5 @@
-// $Id$
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-15 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-17 Bradley M. Bell
 
 CppAD is distributed under multiple licenses. This distribution is under
 the terms of the
@@ -93,7 +92,7 @@ Type f_Two(CPPAD_TESTVECTOR(Type) &x)
 	while(i--)
 		sum += x[i] * x[i];
 
-	// check computed assignment AD< AD<double> > -= int
+	// check compound assignment AD< AD<double> > -= int
 	sum -= 1;
 
 	// check double * AD< AD<double> >

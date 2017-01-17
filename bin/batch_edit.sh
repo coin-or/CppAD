@@ -1,7 +1,6 @@
 #! /bin/bash -e
-# $Id$
 # -----------------------------------------------------------------------------
-# CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-16 Bradley M. Bell
+# CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-17 Bradley M. Bell
 #
 # CppAD is distributed under multiple licenses. This distribution is under
 # the terms of the
@@ -13,12 +12,19 @@
 revert_list='
 '
 move_list='
+	cppad/core/compute_assign.hpp
 '
-move_sed='s|/local/|/core/|'
+move_sed='s|compute_assign|compound_assign|'
 #
 cat << EOF > junk.sed
-s|taion|ation|g
-s|aation|ation|g
+s|\\([cC]\\)omputed \\([aA]\\)ssignment|\\1ompound \\2ssignment|g
+s|CPPAD_CORE_COMPUTE_ASSIGN_HPP|CPPAD_CORE_COMPOUND_ASSIGN_HPP|g
+#
+s|compute_assign.hpp|compound_assign.hpp|g
+s|begin compute_assign|begin compound_assign|g
+s|cref compute_assign|cref compound_assign|g
+s|/compute_assign/|/compound_assign/|g
+s|%compute_assign%|%compound_assign%|g
 EOF
 # -----------------------------------------------------------------------------
 if [ $0 != "bin/batch_edit.sh" ]

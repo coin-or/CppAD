@@ -1,6 +1,5 @@
-$Id$
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-15 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-17 Bradley M. Bell
 
 CppAD is distributed under multiple licenses. This distribution is under
 the terms of the
@@ -95,13 +94,13 @@ $icode%x% *  %y%$$  $cnext binary multiplication             $cnext
 	$icode NumericType$$    $rnext
 $icode%x% /  %y%$$  $cnext binary division                   $cnext
 	$icode NumericType$$    $rnext
-$icode%z% += %y%$$  $cnext computed assignment addition       $cnext
+$icode%z% += %y%$$  $cnext compound assignment addition       $cnext
 	unspecified          $rnext
-$icode%z% -= %y%$$  $cnext computed assignment subtraction    $cnext
+$icode%z% -= %y%$$  $cnext compound assignment subtraction    $cnext
 	unspecified          $rnext
-$icode%z% *= %y%$$  $cnext computed assignment multiplication $cnext
+$icode%z% *= %y%$$  $cnext compound assignment multiplication $cnext
 	unspecified          $rnext
-$icode%z% /= %y%$$  $cnext computed assignment division       $cnext
+$icode%z% /= %y%$$  $cnext compound assignment division       $cnext
 	unspecified
 $tend
 

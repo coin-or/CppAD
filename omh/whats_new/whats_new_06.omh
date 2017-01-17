@@ -1,6 +1,5 @@
-$Id$
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-15 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-17 Bradley M. Bell
 
 CppAD is distributed under multiple licenses. This distribution is under
 the terms of the
@@ -946,7 +945,7 @@ documentation and examples for
 $cref UnaryPlus$$,
 $cref UnaryMinus$$,
 $cref ad_binary$$,
-$cref compute_assign$$, and
+$cref compound_assign$$, and
 $cref unary_standard_math$$
 
 
@@ -1081,7 +1080,7 @@ The $cref Compare$$ documentation and example have been improved.
 
 $head 02-24$$
 The documentation and examples have been improved for the following sections:
-$cref/division/ad_binary/$$, $cref/-=/compute_assign/$$, $cref/*=/compute_assign/$$, and $cref%/=%compute_assign%$$.
+$cref/division/ad_binary/$$, $cref/-=/compound_assign/$$, $cref/*=/compound_assign/$$, and $cref%/=%compound_assign%$$.
 
 $head 02-23$$
 The $cref/multiplication/ad_binary/$$ documentation and example have been improved.
@@ -1102,14 +1101,14 @@ and the problem has been fixed.
 
 
 $head 02-15$$
-The $cref/+=/compute_assign/$$ documentation and example have been improved.
+The $cref/+=/compound_assign/$$ documentation and example have been improved.
 
 $head 02-14$$
 The $cref/addition/ad_binary/$$ documentation and example have been improved.
 
 
 $head 02-13$$
-Combine the old binary operator and computed assignment documentation
+Combine the old binary operator and compound assignment documentation
 into $cref Arithmetic$$ documentation.
 $pre
 

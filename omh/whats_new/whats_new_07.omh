@@ -1,6 +1,5 @@
-$Id$
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-16 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-17 Bradley M. Bell
 
 CppAD is distributed under multiple licenses. This distribution is under
 the terms of the
@@ -588,7 +587,7 @@ and then preforming the division.
 
 $head 05-26$$
 If the $icode Base$$ type is not $code double$$,
-the $cref/computed assignment/compute_assign/$$ operators did not
+the $cref/compound assignment/compound_assign/$$ operators did not
 always allow for $code double$$ operands. For example,
 if $icode x$$ had type $code AD< AD<double> >$$
 $codei%
@@ -613,10 +612,10 @@ and combine all those operators into one section ($cref ad_binary$$).
 $pre
 
 $$
-The documentation for all the $cref/computed assignment/compute_assign/$$
+The documentation for all the $cref/compound assignment/compound_assign/$$
 operators has been grouped together.
 In addition, a
-computed assignment wish list item has been added
+compound assignment wish list item has been added
 (it was completed and removed with the
 $cref/05-26/whats_new_07/05-26/$$ update.)
 

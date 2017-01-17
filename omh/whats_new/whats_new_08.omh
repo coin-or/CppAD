@@ -1,6 +1,5 @@
-$Id$
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-15 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-17 Bradley M. Bell
 
 CppAD is distributed under multiple licenses. This distribution is under
 the terms of the
@@ -392,7 +391,7 @@ instead of members of $code AD<double>$$.
 $pre
 
 $$
-Remove computed assignment entry from wish list
+Remove compound assignment entry from wish list
 (it was fixed on $cref/2007-05-26/whats_new_07/05-26/$$).
 Add an expression hashing entry to the $cref wish_list$$
 (it has since been removed).

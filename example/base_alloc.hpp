@@ -1,8 +1,7 @@
-// $Id$
 # ifndef CPPAD_EXAMPLE_BASE_ALLOC_HPP
 # define CPPAD_EXAMPLE_BASE_ALLOC_HPP
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-16 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-17 Bradley M. Bell
 
 CppAD is distributed under multiple licenses. This distribution is under
 the terms of the
@@ -65,9 +64,9 @@ $srccode%cpp% */
 # include <cppad/utility/thread_alloc.hpp>
 /* %$$
 
-$head Computed Assignment Macro$$
+$head Compound Assignment Macro$$
 This macro is used for the
-$code base_alloc$$ computed assignment operators; to be specific,
+$code base_alloc$$ compound assignment operators; to be specific,
 used with $icode op $$ equal to
 $code +=$$,
 $code -=$$,
