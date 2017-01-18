@@ -1,7 +1,7 @@
 #! /bin/bash -e
 # $Id$
 # -----------------------------------------------------------------------------
-# CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-16 Bradley M. Bell
+# CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-17 Bradley M. Bell
 #
 # CppAD is distributed under multiple licenses. This distribution is under
 # the terms of the
@@ -25,6 +25,22 @@ fi
 version="$1"
 error_file="$2"
 output_directory="$3"
+# -----------------------------------------------------------------------------
+# convert multi-line assignments to single line assignments.
+echo "doxygen -g doxyfile > /dev/null"
+doxygen -g doxyfile > /dev/null
+cat << EOF > bin/doxyfile.$$
+/^[A-Z_]* *=.*\\\\$/! b end
+: loop
+N
+/\\\\$/b loop
+s|\\\\\\n| |g
+s|  *| |g
+#
+:end
+EOF
+sed -i doxyfile -f bin/doxyfile.$$
+# -----------------------------------------------------------------------------
 # PREDEFINED:see http://www.stack.nl/~dimitri/doxygen/manual/preprocessing.html
 # 2DO: change EXTRACT_ALL to NO so get warnings for undocumented functions.
 echo "create bin/doxyfile.$$"
@@ -86,8 +102,6 @@ sed \
 	-e 's/$/|/' \
 	-i bin/doxyfile.$$
 #
-echo "doxygen -g doxyfile > /dev/null"
-doxygen -g doxyfile > /dev/null
 #
 echo "sed -f bin/doxyfile.$$ -i doxyfile"
 sed -f bin/doxyfile.$$ -i doxyfile

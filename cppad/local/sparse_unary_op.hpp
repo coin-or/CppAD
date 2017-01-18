@@ -2,7 +2,7 @@
 # ifndef CPPAD_LOCAL_SPARSE_UNARY_OP_HPP
 # define CPPAD_LOCAL_SPARSE_UNARY_OP_HPP
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-16 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-17 Bradley M. Bell
 
 CppAD is distributed under multiple licenses. This distribution is under
 the terms of the
@@ -150,7 +150,7 @@ where fun is a linear functions; e.g. abs, or
 \endverbatim
 where op is a C++ binary operator and q is a parameter.
 
-\copydetails reverse_sparse_hessian_unary_op
+\copydetails CppAD::local::reverse_sparse_hessian_unary_op
 */
 template <class Vector_set>
 inline void reverse_sparse_hessian_linear_unary_op(
@@ -183,7 +183,7 @@ where fun is a non-linear functions; e.g. sin. or
 where q is a parameter.
 
 
-\copydetails reverse_sparse_hessian_unary_op
+\copydetails CppAD::local::reverse_sparse_hessian_unary_op
 */
 template <class Vector_set>
 inline void reverse_sparse_hessian_nonlinear_unary_op(

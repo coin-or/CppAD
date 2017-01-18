@@ -3,7 +3,7 @@
 # define CPPAD_LOCAL_LOAD_OP_HPP
 
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-16 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-17 Bradley M. Bell
 
 CppAD is distributed under multiple licenses. This distribution is under
 the terms of the
@@ -242,7 +242,7 @@ inline void sparse_load_op(
 /*!
 Zero order forward mode implementation of op = LdpOp.
 
-\copydetails forward_load_op_0
+\copydetails CppAD::local::forward_load_op_0
 */
 template <class Base>
 inline void forward_load_p_op_0(
@@ -285,7 +285,7 @@ inline void forward_load_p_op_0(
 /*!
 Zero order forward mode implementation of op = LdvOp.
 
-\copydetails forward_load_op_0
+\copydetails CppAD::local::forward_load_op_0
 */
 template <class Base>
 inline void forward_load_v_op_0(
@@ -577,7 +577,7 @@ Forward mode sparsity operations for LdpOp and LdvOp
 \param dependency
 is this a dependency (or sparsity) calculation.
 
-\copydetails sparse_load_op
+\copydetails CppAD::local::sparse_load_op
 */
 template <class Vector_set>
 inline void forward_sparse_load_op(
@@ -611,7 +611,7 @@ Reverse mode Jacobian sparsity operations for LdpOp and LdvOp
 \param dependency
 is this a dependency (or sparsity) calculation.
 
-\copydetails sparse_load_op
+\copydetails CppAD::local::sparse_load_op
 */
 template <class Vector_set>
 inline void reverse_sparse_jacobian_load_op(
@@ -642,7 +642,7 @@ inline void reverse_sparse_jacobian_load_op(
 /*!
 Reverse mode Hessian sparsity operations for LdpOp and LdvOp
 
-\copydetails sparse_load_op
+\copydetails CppAD::local::sparse_load_op
 
 \param var_jacobian
 \a var_jacobian[i_z]

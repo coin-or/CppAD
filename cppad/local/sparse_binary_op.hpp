@@ -2,7 +2,7 @@
 # ifndef CPPAD_LOCAL_SPARSE_BINARY_OP_HPP
 # define CPPAD_LOCAL_SPARSE_BINARY_OP_HPP
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-16 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-17 Bradley M. Bell
 
 CppAD is distributed under multiple licenses. This distribution is under
 the terms of the
@@ -177,7 +177,7 @@ The C++ source code corresponding to a unary operation has the form
 \endverbatim
 where op is + or - and x, y are variables.
 
-\copydetails reverse_sparse_hessian_binary_op
+\copydetails CppAD::local::reverse_sparse_hessian_binary_op
 */
 template <class Vector_set>
 inline void reverse_sparse_hessian_addsub_op(
@@ -209,7 +209,7 @@ The C++ source code corresponding to a unary operation has the form
 \endverbatim
 where x and y are variables.
 
-\copydetails reverse_sparse_hessian_binary_op
+\copydetails CppAD::local::reverse_sparse_hessian_binary_op
 */
 template <class Vector_set>
 inline void reverse_sparse_hessian_mul_op(
@@ -247,7 +247,7 @@ The C++ source code corresponding to a unary operation has the form
 \endverbatim
 where x and y are variables.
 
-\copydetails reverse_sparse_hessian_binary_op
+\copydetails CppAD::local::reverse_sparse_hessian_binary_op
 */
 template <class Vector_set>
 inline void reverse_sparse_hessian_div_op(
@@ -287,7 +287,7 @@ The C++ source code corresponding to a unary operation has the form
 \endverbatim
 where x and y are variables.
 
-\copydetails reverse_sparse_hessian_binary_op
+\copydetails CppAD::local::reverse_sparse_hessian_binary_op
 */
 template <class Vector_set>
 inline void reverse_sparse_hessian_pow_op(

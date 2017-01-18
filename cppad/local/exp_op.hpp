@@ -3,7 +3,7 @@
 # define CPPAD_LOCAL_EXP_OP_HPP
 
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-16 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-17 Bradley M. Bell
 
 CppAD is distributed under multiple licenses. This distribution is under
 the terms of the
@@ -29,7 +29,7 @@ The C++ source code corresponding to this operation is
 	z = exp(x)
 \endverbatim
 
-\copydetails forward_unary1_op
+\copydetails CppAD::local::forward_unary1_op
 */
 template <class Base>
 inline void forward_exp_op(
@@ -73,7 +73,7 @@ The C++ source code corresponding to this operation is
 	z = exp(x)
 \endverbatim
 
-\copydetails forward_unary1_op_dir
+\copydetails CppAD::local::forward_unary1_op_dir
 */
 template <class Base>
 inline void forward_exp_op_dir(
@@ -112,7 +112,7 @@ The C++ source code corresponding to this operation is
 	z = exp(x)
 \endverbatim
 
-\copydetails forward_unary1_op_0
+\copydetails CppAD::local::forward_unary1_op_0
 */
 template <class Base>
 inline void forward_exp_op_0(
@@ -140,7 +140,7 @@ The C++ source code corresponding to this operation is
 	z = exp(x)
 \endverbatim
 
-\copydetails reverse_unary1_op
+\copydetails CppAD::local::reverse_unary1_op
 */
 
 template <class Base>

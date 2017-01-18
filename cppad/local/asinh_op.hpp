@@ -4,7 +4,7 @@
 # if CPPAD_USE_CPLUSPLUS_2011
 
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-16 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-17 Bradley M. Bell
 
 CppAD is distributed under multiple licenses. This distribution is under
 the terms of the
@@ -36,7 +36,7 @@ The auxillary result is
 The value of y, and its derivatives, are computed along with the value
 and derivatives of z.
 
-\copydetails forward_unary2_op
+\copydetails CppAD::local::forward_unary2_op
 */
 template <class Base>
 inline void forward_asinh_op(
@@ -100,7 +100,7 @@ The auxillary result is
 The value of y, and its derivatives, are computed along with the value
 and derivatives of z.
 
-\copydetails forward_unary2_op_dir
+\copydetails CppAD::local::forward_unary2_op_dir
 */
 template <class Base>
 inline void forward_asinh_op_dir(
@@ -153,7 +153,7 @@ The auxillary result is
 \endverbatim
 The value of y is computed along with the value of z.
 
-\copydetails forward_unary2_op_0
+\copydetails CppAD::local::forward_unary2_op_0
 */
 template <class Base>
 inline void forward_asinh_op_0(
@@ -188,7 +188,7 @@ The auxillary result is
 \endverbatim
 The value of y is computed along with the value of z.
 
-\copydetails reverse_unary2_op
+\copydetails CppAD::local::reverse_unary2_op
 */
 
 template <class Base>

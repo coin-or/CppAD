@@ -12,19 +12,17 @@
 revert_list='
 '
 move_list='
-	cppad/core/compute_assign.hpp
 '
 move_sed='s|compute_assign|compound_assign|'
 #
 cat << EOF > junk.sed
-s|\\([cC]\\)omputed \\([aA]\\)ssignment|\\1ompound \\2ssignment|g
-s|CPPAD_CORE_COMPUTE_ASSIGN_HPP|CPPAD_CORE_COMPOUND_ASSIGN_HPP|g
+s|copydetails forward_\\([a-z0-9_]*\\)_op|copydetails CppAD::local::forward_\\1_op|
+s|copydetails reverse_\\([a-z_0-9]*\\)_op|copydetails CppAD::local::reverse_\\1_op|
+s|copydetails \\(color_symmetric_cppad\\)|copydetails CppAD::local::\\1|
+s|copydetails \\(sparse_load_op\\)|copydetails CppAD::local::\\1|
+s|copydetails \\(sparse_store_op\\)|copydetails CppAD::local::\\1|
 #
-s|compute_assign.hpp|compound_assign.hpp|g
-s|begin compute_assign|begin compound_assign|g
-s|cref compute_assign|cref compound_assign|g
-s|/compute_assign/|/compound_assign/|g
-s|%compute_assign%|%compound_assign%|g
+s|ref IdenticalPar|ref CppAD::IdenticalPar|
 EOF
 # -----------------------------------------------------------------------------
 if [ $0 != "bin/batch_edit.sh" ]

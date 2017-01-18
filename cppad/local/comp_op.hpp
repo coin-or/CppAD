@@ -3,7 +3,7 @@
 # define CPPAD_LOCAL_COMP_OP_HPP
 
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-16 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-17 Bradley M. Bell
 
 CppAD is distributed under multiple licenses. This distribution is under
 the terms of the
@@ -139,7 +139,7 @@ inline void forward_levv_op_0(
 /*!
 Zero order forward mode comparison check that left < right
 
-\copydetails forward_lepv_op_0
+\copydetails CppAD::local::forward_lepv_op_0
 */
 template <class Base>
 inline void forward_ltpv_op_0(
@@ -162,7 +162,7 @@ inline void forward_ltpv_op_0(
 /*!
 Zero order forward mode comparison check that left < right
 
-\copydetails forward_levp_op_0
+\copydetails CppAD::local::forward_levp_op_0
 */
 template <class Base>
 inline void forward_ltvp_op_0(
@@ -185,7 +185,7 @@ inline void forward_ltvp_op_0(
 /*!
 Zero order forward mode comparison check that left < right
 
-\copydetails forward_levv_op_0
+\copydetails CppAD::local::forward_levv_op_0
 */
 template <class Base>
 inline void forward_ltvv_op_0(
@@ -209,7 +209,7 @@ inline void forward_ltvv_op_0(
 /*!
 Zero order forward mode comparison check that left == right
 
-\copydetails forward_lepv_op_0
+\copydetails CppAD::local::forward_lepv_op_0
 */
 template <class Base>
 inline void forward_eqpv_op_0(
@@ -232,7 +232,7 @@ inline void forward_eqpv_op_0(
 /*!
 Zero order forward mode comparison check that left == right
 
-\copydetails forward_levv_op_0
+\copydetails CppAD::local::forward_levv_op_0
 */
 template <class Base>
 inline void forward_eqvv_op_0(
@@ -256,7 +256,7 @@ inline void forward_eqvv_op_0(
 /*!
 Zero order forward mode comparison check that left != right
 
-\copydetails forward_lepv_op_0
+\copydetails CppAD::local::forward_lepv_op_0
 */
 template <class Base>
 inline void forward_nepv_op_0(
@@ -279,7 +279,7 @@ inline void forward_nepv_op_0(
 /*!
 Zero order forward mode comparison check that left != right
 
-\copydetails forward_levv_op_0
+\copydetails CppAD::local::forward_levv_op_0
 */
 template <class Base>
 inline void forward_nevv_op_0(

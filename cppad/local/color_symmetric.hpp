@@ -6,7 +6,7 @@
 # include <cppad/local/cppad_colpack.hpp>
 
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-16 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-17 Bradley M. Bell
 
 CppAD is distributed under multiple licenses. This distribution is under
 the terms of the
@@ -255,7 +255,7 @@ void color_symmetric_cppad(
 Colpack algorithm for determining which rows of a symmetric sparse matrix
 can be computed together.
 
-\copydetails color_symmetric_cppad
+\copydetails CppAD::local::color_symmetric_cppad
 */
 template <class VectorSet>
 void color_symmetric_colpack(

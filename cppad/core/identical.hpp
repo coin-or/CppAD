@@ -3,7 +3,7 @@
 # define CPPAD_CORE_IDENTICAL_HPP
 
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-16 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-17 Bradley M. Bell
 
 CppAD is distributed under multiple licenses. This distribution is under
 the terms of the
@@ -54,7 +54,7 @@ object that we are checking.
 
 \return
 returns true if and only if
-\c x is equals zero and is identically a parameter \ref IdenticalPar.
+\c x is equals zero and is identically a parameter \ref CppAD::IdenticalPar.
 */
 template <class Base>
 CPPAD_INLINE_FRIEND_TEMPLATE_FUNCTION
@@ -70,7 +70,7 @@ object that we are checking.
 
 \return
 returns true if and only if
-\c x is equals one and is identically a parameter \ref IdenticalPar.
+\c x is equals one and is identically a parameter \ref CppAD::IdenticalPar.
 */
 template <class Base>
 CPPAD_INLINE_FRIEND_TEMPLATE_FUNCTION
@@ -89,7 +89,7 @@ second of two objects we are checking for equal.
 
 \return
 returns true if and only if
-the arguments are equal and both identically parameters \ref IdenticalPar.
+the arguments are equal and both identically parameters \ref CppAD::IdenticalPar.
 */
 template <class Base>
 CPPAD_INLINE_FRIEND_TEMPLATE_FUNCTION
