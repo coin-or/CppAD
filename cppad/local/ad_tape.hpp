@@ -1,9 +1,8 @@
-// $Id$
 # ifndef CPPAD_LOCAL_AD_TAPE_HPP
 # define CPPAD_LOCAL_AD_TAPE_HPP
 
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-16 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-17 Bradley M. Bell
 
 CppAD is distributed under multiple licenses. This distribution is under
 the terms of the
@@ -37,14 +36,14 @@ class ADTape {
 
 	// functions -----------------------------------------------------------
 	// PrintFor
-	friend void PrintFor <Base> (
+	friend void CppAD::PrintFor <Base> (
 		const AD<Base>&    flag   ,
 		const char*        before ,
 		const AD<Base>&    var    ,
 		const char*        after
 	);
 	// CondExpOp
-	friend AD<Base> CondExpOp <Base> (
+	friend AD<Base> CppAD::CondExpOp <Base> (
 		enum CompareOp  cop          ,
 		const AD<Base> &left         ,
 		const AD<Base> &right        ,
@@ -52,40 +51,40 @@ class ADTape {
 		const AD<Base> &falseCase
 	);
 	// pow
-	friend AD<Base> pow <Base>
+	friend AD<Base> CppAD::pow <Base>
 		(const AD<Base> &x, const AD<Base> &y);
 	// azmul
-	friend AD<Base> azmul <Base>
+	friend AD<Base> CppAD::azmul <Base>
 		(const AD<Base> &x, const AD<Base> &y);
 	// Parameter
-	friend bool Parameter     <Base>
+	friend bool CppAD::Parameter     <Base>
 		(const AD<Base> &u);
 	// Variable
-	friend bool Variable      <Base>
+	friend bool CppAD::Variable      <Base>
 		(const AD<Base> &u);
 	// operators -----------------------------------------------------------
 	// arithematic binary operators
-	friend AD<Base> operator + <Base>
+	friend AD<Base> CppAD::operator + <Base>
 		(const AD<Base> &left, const AD<Base> &right);
-	friend AD<Base> operator - <Base>
+	friend AD<Base> CppAD::operator - <Base>
 		(const AD<Base> &left, const AD<Base> &right);
-	friend AD<Base> operator * <Base>
+	friend AD<Base> CppAD::operator * <Base>
 		(const AD<Base> &left, const AD<Base> &right);
-	friend AD<Base> operator / <Base>
+	friend AD<Base> CppAD::operator / <Base>
 		(const AD<Base> &left, const AD<Base> &right);
 
 	// comparison operators
-	friend bool operator < <Base>
+	friend bool CppAD::operator < <Base>
 		(const AD<Base> &left, const AD<Base> &right);
-	friend bool operator <= <Base>
+	friend bool CppAD::operator <= <Base>
 		(const AD<Base> &left, const AD<Base> &right);
-	friend bool operator > <Base>
+	friend bool CppAD::operator > <Base>
 		(const AD<Base> &left, const AD<Base> &right);
-	friend bool operator >= <Base>
+	friend bool CppAD::operator >= <Base>
 		(const AD<Base> &left, const AD<Base> &right);
-	friend bool operator == <Base>
+	friend bool CppAD::operator == <Base>
 		(const AD<Base> &left, const AD<Base> &right);
-	friend bool operator != <Base>
+	friend bool CppAD::operator != <Base>
 		(const AD<Base> &left, const AD<Base> &right);
 	// ======================================================================
 
