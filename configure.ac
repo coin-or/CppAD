@@ -1,5 +1,5 @@
 dnl ---------------------------------------------------------------------------
-dnl CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-16 Bradley M. Bell
+dnl CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-17 Bradley M. Bell
 dnl
 dnl CppAD is distributed under multiple licenses. This distribution is under
 dnl the terms of the
@@ -11,7 +11,7 @@ dnl ---------------------------------------------------------------------------
 dnl
 dnl Process this file with autoconf to produce a configure script.
 dnl   package   version              bug-report
-AC_INIT([cppad], [20170117], [cppad@list.coin-or.org])
+AC_INIT([cppad], [20170118], [cppad@list.coin-or.org])
 AM_SILENT_RULES([yes])
 
 dnl By defalut disable maintainer mode when running configure;

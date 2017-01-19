@@ -1,5 +1,5 @@
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-16 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-17 Bradley M. Bell
 
 CppAD is distributed under multiple licenses. This distribution is under
 the terms of the
@@ -95,12 +95,12 @@ $table
 $bold version$$ $pre  $$ $cnext $bold license$$ $pre  $$ $cnext $bold link$$
 $rnext
 current  $cnext EPL $cnext $href%
-http://www.coin-or.org/download/source/CppAD/cppad-20170117.epl.tgz%
-cppad-20170117.epl.tgz%$$
+http://www.coin-or.org/download/source/CppAD/cppad-20170118.epl.tgz%
+cppad-20170118.epl.tgz%$$
 $rnext
 current  $cnext GPL $cnext $href%
-http://www.coin-or.org/download/source/CppAD/cppad-20170117.gpl.tgz%
-cppad-20170117.gpl.tgz%$$
+http://www.coin-or.org/download/source/CppAD/cppad-20170118.gpl.tgz%
+cppad-20170118.gpl.tgz%$$
 $tend
 
 $subhead Subversion$$
