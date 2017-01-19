@@ -101,6 +101,7 @@ Type f_Two(CPPAD_TESTVECTOR(Type) &x)
 
 bool Two(void)
 {	bool ok = true;                          // initialize test result
+	double eps99 = 99.0 * std::numeric_limits<double>::epsilon();
 
 	typedef CppAD::AD<double>   ADdouble;    // for one level of taping
 	typedef CppAD::AD<ADdouble> ADDdouble;   // for two levels of taping
@@ -147,7 +148,7 @@ bool Two(void)
 	// f'(x)      = (x[0], x[1], ... , x[n-1])
 	// f''(x) * v = ( v[0], v[1],  ... , x[n-1] )
 	for(j = 0; j < n; j++)
-		ok &= CppAD::NearEqual(ddf_v[j], v[j], 1e-10, 1e-10);
+		ok &= CppAD::NearEqual(ddf_v[j], v[j], eps99, eps99);
 
 	return ok;
 }
@@ -156,6 +157,7 @@ bool Two(void)
 
 bool adolc(void)
 {	bool ok = true;                   // initialize test result
+	double eps99 = 99.0 * std::numeric_limits<double>::epsilon();
 
 	typedef adouble      ADdouble;         // for first level of taping
 	typedef CppAD::AD<ADdouble> ADDdouble; // for second level of taping
@@ -212,7 +214,7 @@ bool adolc(void)
 	// f'(x)      = (x[0], x[1], ... , x[n-1])
 	// f''(x) * v = ( v[0], v[1],  ... , x[n-1] )
 	for(j = 0; j < n; j++)
-		ok &= CppAD::NearEqual(ddf_v[j], v[j], 1e-10, 1e-10);
+		ok &= CppAD::NearEqual(ddf_v[j], v[j], eps99, eps99);
 
 	CPPAD_TRACK_DEL_VEC(v);                 // check usage of delete
 	CPPAD_TRACK_DEL_VEC(ddf_v);

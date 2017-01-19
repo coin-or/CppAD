@@ -1,6 +1,5 @@
-// $Id$
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-15 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-17 Bradley M. Bell
 
 CppAD is distributed under multiple licenses. This distribution is under
 the terms of the
@@ -18,11 +17,11 @@ Old example now just used for validation testing.
 
 bool PowInt(void)
 {	bool ok = true;
-
 	using CppAD::pow;
 	using CppAD::exp;
 	using CppAD::log;
 	using namespace CppAD;
+	double eps99 = 99.0 * std::numeric_limits<double>::epsilon();
 
 
 	// independent variable vector, indices, values, and declaration
@@ -49,14 +48,14 @@ bool PowInt(void)
 
 	// check function values values
 	double u = Value(U[0]);
-	ok &= NearEqual(Z[0] , exp( log(u) * 5.),              1e-10 , 1e-10);
-	ok &= NearEqual(Z[1] , exp( - log(u) * 5.),            1e-10 , 1e-10);
+	ok &= NearEqual(Z[0] , exp( log(u) * 5.),              eps99 , eps99);
+	ok &= NearEqual(Z[1] , exp( - log(u) * 5.),            eps99 , eps99);
 
 	// forward computation of partials
 	v[0] = 1.;
 	w = f.Forward(1, v);
-	ok &= NearEqual(w[0] , 5. * exp( log(u) * 4.),         1e-10 , 1e-10);
-	ok &= NearEqual(w[1] , - 5. * exp( - log(u) * 6.),     1e-10 , 1e-10);
+	ok &= NearEqual(w[0] , 5. * exp( log(u) * 4.),         eps99 , eps99);
+	ok &= NearEqual(w[1] , - 5. * exp( - log(u) * 6.),     eps99 , eps99);
 
 	return ok;
 }

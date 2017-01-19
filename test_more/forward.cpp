@@ -1,6 +1,5 @@
-// $Id$
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-16 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-17 Bradley M. Bell
 
 CppAD is distributed under multiple licenses. This distribution is under
 the terms of the
@@ -150,9 +149,9 @@ bool ForwardOlder(void)
 
 	// compare values
 	ok &= NearEqual(v1[0] ,
-		g0[0]*u1[0] + g0[1]*u1[1] + g0[2]*u1[2] , 1e-10, 1e-10);
+		g0[0]*u1[0] + g0[1]*u1[1] + g0[2]*u1[2] , eps99, eps99);
 	ok &= NearEqual(v1[1] ,
-		g1[0]*u1[0] + g1[1]*u1[1] + g1[2]*u1[2] , 1e-10, 1e-10);
+		g1[0]*u1[0] + g1[1]*u1[1] + g1[2]*u1[2] , eps99, eps99);
 
 	// use ADFun object to evaluate ------------------------------------
 	// (1/2) * { f^(1)[ u0 ] * u2 + u1^T * f^(2)[ u0 ] * u1 }
@@ -171,7 +170,7 @@ bool ForwardOlder(void)
 
 	// compare values
 	ok &= NearEqual(v2[0] ,
-		g0[0]*u2[0] + g0[1]*u2[1] + g0[2]*u2[2] , 1e-10, 1e-10);
+		g0[0]*u2[0] + g0[1]*u2[1] + g0[2]*u2[2] , eps99, eps99);
 
 	size_t j;
 	double v2_1 = 0.;

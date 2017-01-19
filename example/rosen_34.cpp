@@ -1,6 +1,5 @@
-// $Id$
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-16 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-17 Bradley M. Bell
 
 CppAD is distributed under multiple licenses. This distribution is under
 the terms of the
@@ -188,7 +187,7 @@ bool Rosen34(void)
 				NearEqual(xf[i], check, eps99, eps99);
 			// 3rd order method is exact for i < 3
 			if( i < 3 )
-				ok &= (e[i] <= 1e-10);
+				ok &= (e[i] <= eps99);
 
 			// check value for next i
 			check *= tf;

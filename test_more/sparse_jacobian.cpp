@@ -1,6 +1,5 @@
-// $Id$
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-16 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-17 Bradley M. Bell
 
 CppAD is distributed under multiple licenses. This distribution is under
 the terms of the
@@ -270,6 +269,7 @@ bool reverse_bool(void)
 	using CppAD::AD;
 	using CppAD::NearEqual;
 	size_t i, j, k;
+	double eps99 = 99.0 * std::numeric_limits<double>::epsilon();
 
 	// domain space vector
 	size_t n = 4;
@@ -307,7 +307,7 @@ bool reverse_bool(void)
 	check[4] = 0.; check[5] = 0.; check[6]  = 3.; check[7]  = 4.;
 	check[8] = 5.; check[9] = 6.; check[10] = 7.; check[11] = 8.*x[3];
 	for(k = 0; k < 12; k++)
-		ok &=  NearEqual(check[k], jac[k], 1e-10, 1e-10 );
+		ok &=  NearEqual(check[k], jac[k], eps99, eps99 );
 
 	// test passing sparsity pattern
 	VectorBool s(m * m);
@@ -320,7 +320,7 @@ bool reverse_bool(void)
 	p   = f.RevSparseJac(m, s);
 	jac = f.SparseJacobian(x, p);
 	for(k = 0; k < 12; k++)
-		ok &=  NearEqual(check[k], jac[k], 1e-10, 1e-10 );
+		ok &=  NearEqual(check[k], jac[k], eps99, eps99 );
 
 	return ok;
 }
@@ -331,6 +331,7 @@ bool reverse_set(void)
 	using CppAD::AD;
 	using CppAD::NearEqual;
 	size_t i, j, k;
+	double eps99 = 99.0 * std::numeric_limits<double>::epsilon();
 
 	// domain space vector
 	size_t n = 4;
@@ -368,7 +369,7 @@ bool reverse_set(void)
 	check[4] = 0.; check[5] = 0.; check[6]  = 1.; check[7]  = 1.;
 	check[8] = 1.; check[9] = 1.; check[10] = 1.; check[11] = x[3];
 	for(k = 0; k < 12; k++)
-		ok &=  NearEqual(check[k], jac[k], 1e-10, 1e-10 );
+		ok &=  NearEqual(check[k], jac[k], eps99, eps99 );
 
 	// test passing sparsity pattern
 	VectorSet s(m), p(m);
@@ -377,7 +378,7 @@ bool reverse_set(void)
 	p   = f.RevSparseJac(m, s);
 	jac = f.SparseJacobian(x, p);
 	for(k = 0; k < 12; k++)
-		ok &=  NearEqual(check[k], jac[k], 1e-10, 1e-10 );
+		ok &=  NearEqual(check[k], jac[k], eps99, eps99 );
 
 	return ok;
 }
@@ -388,6 +389,7 @@ bool forward_bool(void)
 	using CppAD::AD;
 	using CppAD::NearEqual;
 	size_t j, k;
+	double eps99 = 99.0 * std::numeric_limits<double>::epsilon();
 
 	// domain space vector
 	size_t n = 3;
@@ -428,7 +430,7 @@ bool forward_bool(void)
 	check[6] = 0.; check[7]  = 1.; check[8]  = 1.;
 	check[9] = 0.; check[10] = 1.; check[11] = x[2];
 	for(k = 0; k < 12; k++)
-		ok &=  NearEqual(check[k], jac[k], 1e-10, 1e-10 );
+		ok &=  NearEqual(check[k], jac[k], eps99, eps99 );
 
 	// test passing sparsity pattern
 	VectorBool r(n * n);
@@ -441,7 +443,7 @@ bool forward_bool(void)
 	p   = f.ForSparseJac(n, r);
 	jac = f.SparseJacobian(x, p);
 	for(k = 0; k < 12; k++)
-		ok &=  NearEqual(check[k], jac[k], 1e-10, 1e-10 );
+		ok &=  NearEqual(check[k], jac[k], eps99, eps99 );
 
 	return ok;
 }
@@ -452,6 +454,7 @@ bool forward_set(void)
 	using CppAD::AD;
 	using CppAD::NearEqual;
 	size_t j, k;
+	double eps99 = 99.0 * std::numeric_limits<double>::epsilon();
 
 	// domain space vector
 	size_t n = 3;
@@ -492,7 +495,7 @@ bool forward_set(void)
 	check[6] = 0.; check[7]  = 1.; check[8]  = 1.;
 	check[9] = 0.; check[10] = 1.; check[11] = x[2];
 	for(k = 0; k < 12; k++)
-		ok &=  NearEqual(check[k], jac[k], 1e-10, 1e-10 );
+		ok &=  NearEqual(check[k], jac[k], eps99, eps99 );
 
 	// test passing sparsity pattern
 	VectorSet r(n), p(m);
@@ -501,7 +504,7 @@ bool forward_set(void)
 	p   = f.ForSparseJac(n, r);
 	jac = f.SparseJacobian(x, p);
 	for(k = 0; k < 12; k++)
-		ok &=  NearEqual(check[k], jac[k], 1e-10, 1e-10 );
+		ok &=  NearEqual(check[k], jac[k], eps99, eps99 );
 
 	return ok;
 }

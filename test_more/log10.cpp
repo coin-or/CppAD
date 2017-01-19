@@ -1,6 +1,5 @@
-// $Id$
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-15 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-17 Bradley M. Bell
 
 CppAD is distributed under multiple licenses. This distribution is under
 the terms of the
@@ -17,10 +16,10 @@ Old example now used just for validation testing.
 
 bool log10(void)
 {	bool ok = true;
-
 	using CppAD::log10;
 	using CppAD::log;
 	using namespace CppAD;
+	double eps99 = 99.0 * std::numeric_limits<double>::epsilon();
 
 	// independent variable vector, indices, values, and declaration
 	CPPAD_TESTVECTOR(AD<double>) U(1);
@@ -41,21 +40,21 @@ bool log10(void)
 	CPPAD_TESTVECTOR(double) w( f.Range() );
 
 	// check values
-	ok &= NearEqual(Z[x] , 1.,  1e-10 , 1e-10);
-	ok &= NearEqual(Z[y] , 0.,  1e-10 , 1e-10);
+	ok &= NearEqual(Z[x] , 1.,  eps99 , eps99);
+	ok &= NearEqual(Z[y] , 0.,  eps99 , eps99);
 
 	// forward computation of partials w.r.t. s
 	double l10 = log(10.);
 	v[s] = 1.;
 	w    = f.Forward(1, v);
-	ok &= NearEqual(w[x], 1./(U[s]*l10)         , 1e-10 , 1e-10); // dx/ds
-	ok &= NearEqual(w[y], 1./(U[s]*Z[x]*l10*l10), 1e-10 , 1e-10); // dy/ds
+	ok &= NearEqual(w[x], 1./(U[s]*l10)         , eps99 , eps99); // dx/ds
+	ok &= NearEqual(w[y], 1./(U[s]*Z[x]*l10*l10), eps99 , eps99); // dy/ds
 
 	// reverse computation of partials of y
 	w[x] = 0.;
 	w[y] = 1.;
 	v    = f.Reverse(1,w);
-	ok &= NearEqual(v[s], 1./(U[s]*Z[x]*l10*l10), 1e-10 , 1e-10); // dy/ds
+	ok &= NearEqual(v[s], 1./(U[s]*Z[x]*l10*l10), eps99 , eps99); // dy/ds
 
 	return ok;
 }

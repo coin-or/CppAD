@@ -1,6 +1,5 @@
-// $Id$
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-15 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-17 Bradley M. Bell
 
 CppAD is distributed under multiple licenses. This distribution is under
 the terms of the
@@ -17,9 +16,9 @@ Old acos examples now used just for valiadation testing
 
 bool acos(void)
 {	bool ok = true;
-
 	using CppAD::acos;
 	using namespace CppAD;
+	double eps99 = 99.0 * std::numeric_limits<double>::epsilon();
 
 	// independent variable vector
 	CPPAD_TESTVECTOR(AD<double>) U(1);
@@ -39,7 +38,7 @@ bool acos(void)
 	CPPAD_TESTVECTOR(double) w(1);
 
 	// check value
-	ok &= NearEqual(U[0] , Z[0],  1e-10 , 1e-10);
+	ok &= NearEqual(U[0] , Z[0],  eps99 , eps99);
 
 	// forward computation of partials w.r.t. u
 	size_t j;
@@ -50,7 +49,7 @@ bool acos(void)
 	for(j = 1; j < p; j++)
 	{	jfac *= j;
 		w     = f.Forward(j, v);
-		ok &= NearEqual(jfac*w[0], value, 1e-10 , 1e-10); // d^jz/du^j
+		ok &= NearEqual(jfac*w[0], value, jfac*eps99 , jfac*eps99);// d^jz/du^j
 		v[0]  = 0.;
 		value = 0.;
 	}
@@ -62,7 +61,7 @@ bool acos(void)
 	jfac  = 1.;
 	value = 1.;
 	for(j = 0; j < p; j++)
-	{	ok &= NearEqual(jfac*r[j], value, 1e-10 , 1e-10); // d^jz/du^j
+	{	ok &= NearEqual(jfac*r[j], value, jfac*eps99 , jfac*eps99);// d^jz/du^j
 		jfac *= (j + 1);
 		value = 0.;
 	}

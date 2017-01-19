@@ -1,6 +1,5 @@
-// $Id$
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-15 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-17 Bradley M. Bell
 
 CppAD is distributed under multiple licenses. This distribution is under
 the terms of the
@@ -23,10 +22,10 @@ namespace { // Begin empty namespace
 
 bool VecADTestOne(void)
 {	bool ok = true;
-
 	using namespace CppAD;
 	using CppAD::sin;
 	using CppAD::cos;
+	double eps99 = 99.0 * std::numeric_limits<double>::epsilon();
 
 
 	size_t      n = 3;
@@ -86,17 +85,17 @@ bool VecADTestOne(void)
 		x[0] = double(i);
 		z    = f.Forward(0, x);
 		vx   = double(n - i);
-		ok  &= NearEqual(z[0], sin(x[0]) * vx, 1e-10, 1e-10);
+		ok  &= NearEqual(z[0], sin(x[0]) * vx, eps99, eps99);
 
 		// note that derivative of v[x] w.r.t. x is zero
 		dx[0] = 1.;
 		dz    = f.Forward(1, dx);
-		ok   &= NearEqual(dz[0], cos(x[0]) * vx, 1e-10, 1e-10);
+		ok   &= NearEqual(dz[0], cos(x[0]) * vx, eps99, eps99);
 
 		// reverse mode calculation of same value
 		dz[0] = 1.;
 		dx    = f.Reverse(1, dz);
-		ok   &= NearEqual(dx[0], cos(x[0]) * vx, 1e-10, 1e-10);
+		ok   &= NearEqual(dx[0], cos(x[0]) * vx, eps99, eps99);
 	}
 
 
@@ -111,6 +110,7 @@ CPPAD_DISCRETE_FUNCTION(double, Floor)
 bool VecADTestTwo(void)
 {	bool ok = true;
 	using namespace CppAD;
+	double eps99 = 99.0 * std::numeric_limits<double>::epsilon();
 
 	double pi    = 4. * CppAD::atan(1.);
 	size_t nx    = 10;                       // number of x grid point
@@ -160,14 +160,14 @@ bool VecADTestTwo(void)
 	CPPAD_TESTVECTOR(double)  y(1);
 	x[0] = xStep / 2.;
 	y    = f.Forward(0, x);
-	ok  &= NearEqual(y[0], (Data[0] + Data[1])/2., 1e-10, 1e-10);
+	ok  &= NearEqual(y[0], (Data[0] + Data[1])/2., eps99, eps99);
 
 	// evalute the derivative with respect to x
 	CPPAD_TESTVECTOR(double) dx(1);
 	CPPAD_TESTVECTOR(double) dy(1);
 	dx[0] = 1.;
 	dy    = f.Forward(1, dx);
-	ok   &= NearEqual(dy[0], (Data[1] - Data[0]) / xStep, 1e-10, 1e-10);
+	ok   &= NearEqual(dy[0], (Data[1] - Data[0]) / xStep, eps99, eps99);
 
 	return ok;
 }

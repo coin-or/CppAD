@@ -1,6 +1,5 @@
-// $Id$
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-15 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-17 Bradley M. Bell
 
 CppAD is distributed under multiple licenses. This distribution is under
 the terms of the
@@ -17,10 +16,10 @@ Old example now just used for validation testing.
 
 bool Sin(void)
 {	bool ok = true;
-
 	using CppAD::sin;
 	using CppAD::cos;
 	using namespace CppAD;
+	double eps99 = 99.0 * std::numeric_limits<double>::epsilon();
 
 	// independent variable vector
 	CPPAD_TESTVECTOR(AD<double>) U(1);
@@ -40,7 +39,7 @@ bool Sin(void)
 	double sin_u = sin( Value(U[0]) );
 	double cos_u = cos( Value(U[0]) );
 
-	ok &= NearEqual(sin_u, Value(Z[0]),  1e-10 , 1e-10);
+	ok &= NearEqual(sin_u, Value(Z[0]),  eps99 , eps99);
 
 	// forward computation of partials w.r.t. u
 	size_t j;
@@ -60,7 +59,7 @@ bool Sin(void)
 		else	value = sin_u;
 
 		jfac *= j;
-		ok &= NearEqual(jfac*w[0], value, 1e-10 , 1e-10); // d^jz/du^j
+		ok &= NearEqual(jfac*w[0], value, eps99 , eps99); // d^jz/du^j
 		v[0]  = 0.;
 	}
 
@@ -80,7 +79,7 @@ bool Sin(void)
 			value = -cos_u;
 		else	value = sin_u;
 
-		ok &= NearEqual(jfac*r[j], value, 1e-10 , 1e-10); // d^jz/du^j
+		ok &= NearEqual(jfac*r[j], value, eps99 , eps99); // d^jz/du^j
 
 		jfac *= (j + 1);
 	}

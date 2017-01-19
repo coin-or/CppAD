@@ -1,6 +1,5 @@
-// $Id$
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-16 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-17 Bradley M. Bell
 
 CppAD is distributed under multiple licenses. This distribution is under
 the terms of the
@@ -33,6 +32,7 @@ $end
 
 bool det_by_lu()
 {	bool ok = true;
+	double eps99 = 99.0 * std::numeric_limits<double>::epsilon();
 
 	// dimension of the matrix
 	size_t n = 3;
@@ -59,7 +59,7 @@ bool det_by_lu()
 	      - a[1]*(a[3]*a[8] - a[5]*a[6])
 	      + a[2]*(a[3]*a[7] - a[4]*a[6]);
 
-	ok = CppAD::NearEqual(det, check, 1e-10, 1e-10);
+	ok = CppAD::NearEqual(det, check, eps99, eps99);
 
 	return ok;
 }

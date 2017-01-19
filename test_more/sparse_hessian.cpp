@@ -1,6 +1,5 @@
-// $Id$
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-16 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-17 Bradley M. Bell
 
 CppAD is distributed under multiple licenses. This distribution is under
 the terms of the
@@ -105,6 +104,7 @@ bool bool_case()
 	using CppAD::AD;
 	using CppAD::NearEqual;
 	size_t i, j, k;
+	double eps99 = 99.0 * std::numeric_limits<double>::epsilon();
 
 	// domain space vector
 	size_t n = 3;
@@ -142,7 +142,7 @@ bool bool_case()
 	check[3] = 1.; check[4] = 2.; check[5] = 0.;
 	check[6] = 0.; check[7] = 0.; check[8] = 2.;
 	for(k = 0; k < n * n; k++)
-		ok &=  NearEqual(check[k], h[k], 1e-10, 1e-10 );
+		ok &=  NearEqual(check[k], h[k], eps99, eps99 );
 
 	// determine the sparsity pattern p for Hessian of w^T F
 	VectorBool r(n * n);
@@ -161,7 +161,7 @@ bool bool_case()
 	// test passing sparsity pattern
 	h = f.SparseHessian(x, w, p);
 	for(k = 0; k < n * n; k++)
-		ok &=  NearEqual(check[k], h[k], 1e-10, 1e-10 );
+		ok &=  NearEqual(check[k], h[k], eps99, eps99 );
 
 	return ok;
 }
@@ -171,6 +171,7 @@ bool set_case()
 	using CppAD::AD;
 	using CppAD::NearEqual;
 	size_t i, j, k;
+	double eps99 = 99.0 * std::numeric_limits<double>::epsilon();
 
 	// domain space vector
 	size_t n = 3;
@@ -208,7 +209,7 @@ bool set_case()
 	check[3] = 1.; check[4] = 2.; check[5] = 0.;
 	check[6] = 0.; check[7] = 0.; check[8] = 2.;
 	for(k = 0; k < n * n; k++)
-		ok &=  NearEqual(check[k], h[k], 1e-10, 1e-10 );
+		ok &=  NearEqual(check[k], h[k], eps99, eps99 );
 
 	// determine the sparsity pattern p for Hessian of w^T F
 	VectorSet r(n);
@@ -225,7 +226,7 @@ bool set_case()
 	// test passing sparsity pattern
 	h = f.SparseHessian(x, w, p);
 	for(k = 0; k < n * n; k++)
-		ok &=  NearEqual(check[k], h[k], 1e-10, 1e-10 );
+		ok &=  NearEqual(check[k], h[k], eps99, eps99 );
 
 	return ok;
 }

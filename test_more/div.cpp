@@ -1,6 +1,5 @@
-// $Id$
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-16 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-17 Bradley M. Bell
 
 CppAD is distributed under multiple licenses. This distribution is under
 the terms of the
@@ -98,8 +97,8 @@ bool DivTestOne(void)
 	ok  &= NearEqual(
 		Q[s * f.Domain() + 1],
 		- 1. / (U[t] * U[t]),
-		1e-10,
-		1e-10
+		eps99,
+		eps99
 	);
 
 	return ok;

@@ -1,6 +1,5 @@
-// $Id$
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-15 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-17 Bradley M. Bell
 
 CppAD is distributed under multiple licenses. This distribution is under
 the terms of the
@@ -21,10 +20,10 @@ namespace { // Begin empty namespace
 
 bool Sin(void)
 {	bool ok = true;
-
 	using CppAD::sin;
 	using CppAD::cos;
 	using namespace CppAD;
+	double eps99 = 99.0 * std::numeric_limits<double>::epsilon();
 
 	// independent variable vector
 	double x = .5;
@@ -49,7 +48,7 @@ bool Sin(void)
 	double sin_u = sin( Value(U) );
 	double cos_u = cos( Value(U) );
 
-	ok &= NearEqual(sin_u, Value(Z[0]),  1e-10 , 1e-10);
+	ok &= NearEqual(sin_u, Value(Z[0]),  eps99 , eps99);
 
 	// forward computation of partials w.r.t. u
 	size_t j;
@@ -77,7 +76,7 @@ bool Sin(void)
 		jfac *= j;
 
 		// check j-th derivative of z w.r.t x
-		ok &= NearEqual(jfac*w[0], sinj * yj, 1e-10 , 1e-10);
+		ok &= NearEqual(jfac*w[0], sinj * yj, eps99 , eps99);
 
 		v[0]  = 0.;
 	}
@@ -103,11 +102,11 @@ bool Sin(void)
 		else	sinjp = sin_u;
 
 		// derivative w.r.t x of sin^{(j)} (x * y) * y^j
-		ok &= NearEqual(jfac*r[0+j], sinjp * yj * y, 1e-10 , 1e-10);
+		ok &= NearEqual(jfac*r[0+j], sinjp * yj * y, eps99 , eps99);
 
 		// derivative w.r.t y of sin^{(j)} (x * y) * y^j
 		double value = sinjp * yj * x + j * sinj * yj / y;
-		ok &= NearEqual(jfac*r[p+j], value , 1e-10 , 1e-10);
+		ok &= NearEqual(jfac*r[p+j], value , eps99 , eps99);
 
 		jfac  *= (j + 1);
 		yj    *= y;
@@ -118,10 +117,10 @@ bool Sin(void)
 
 bool Cos(void)
 {	bool ok = true;
-
 	using CppAD::sin;
 	using CppAD::cos;
 	using namespace CppAD;
+	double eps99 = 99.0 * std::numeric_limits<double>::epsilon();
 
 	// independent variable vector
 	double x = .5;
@@ -146,7 +145,7 @@ bool Cos(void)
 	double sin_u = sin( Value(U) );
 	double cos_u = cos( Value(U) );
 
-	ok &= NearEqual(cos_u, Value(Z[0]),  1e-10 , 1e-10);
+	ok &= NearEqual(cos_u, Value(Z[0]),  eps99 , eps99);
 
 	// forward computation of partials w.r.t. u
 	size_t j;
@@ -174,7 +173,7 @@ bool Cos(void)
 		jfac *= j;
 
 		// check j-th derivative of z w.r.t x
-		ok &= NearEqual(jfac*w[0], cosj * yj, 1e-10 , 1e-10);
+		ok &= NearEqual(jfac*w[0], cosj * yj, eps99 , eps99);
 
 		v[0]  = 0.;
 	}
@@ -200,11 +199,11 @@ bool Cos(void)
 		else	cosjp = cos_u;
 
 		// derivative w.r.t x of cos^{(j)} (x * y) * y^j
-		ok &= NearEqual(jfac*r[0+j], cosjp * yj * y, 1e-10 , 1e-10);
+		ok &= NearEqual(jfac*r[0+j], cosjp * yj * y, eps99 , eps99);
 
 		// derivative w.r.t y of cos^{(j)} (x * y) * y^j
 		double value = cosjp * yj * x + j * cosj * yj / y;
-		ok &= NearEqual(jfac*r[p+j], value , 1e-10 , 1e-10);
+		ok &= NearEqual(jfac*r[p+j], value , eps99 , eps99);
 
 		jfac  *= (j + 1);
 		yj    *= y;
@@ -215,10 +214,10 @@ bool Cos(void)
 
 bool Cosh(void)
 {	bool ok = true;
-
 	using CppAD::sinh;
 	using CppAD::cosh;
 	using namespace CppAD;
+	double eps99 = 99.0 * std::numeric_limits<double>::epsilon();
 
 	// independent variable vector
 	double x = .5;
@@ -243,7 +242,7 @@ bool Cosh(void)
 	double sinh_u = sinh( Value(U) );
 	double cosh_u = cosh( Value(U) );
 
-	ok &= NearEqual(cosh_u, Value(Z[0]),  1e-10 , 1e-10);
+	ok &= NearEqual(cosh_u, Value(Z[0]),  eps99 , eps99);
 
 	// forward computation of partials w.r.t. u
 	size_t j;
@@ -267,7 +266,7 @@ bool Cosh(void)
 		jfac *= j;
 
 		// check j-th derivative of z w.r.t x
-		ok &= NearEqual(jfac*w[0], coshj * yj, 1e-10 , 1e-10);
+		ok &= NearEqual(jfac*w[0], coshj * yj, eps99 , eps99);
 
 		v[0]  = 0.;
 	}
@@ -289,11 +288,11 @@ bool Cosh(void)
 		else	coshjp = cosh_u;
 
 		// derivative w.r.t x of cosh^{(j)} (x * y) * y^j
-		ok &= NearEqual(jfac*r[0+j], coshjp * yj * y, 1e-10 , 1e-10);
+		ok &= NearEqual(jfac*r[0+j], coshjp * yj * y, eps99 , eps99);
 
 		// derivative w.r.t y of cosh^{(j)} (x * y) * y^j
 		double value = coshjp * yj * x + j * coshj * yj / y;
-		ok &= NearEqual(jfac*r[p+j], value , 1e-10 , 1e-10);
+		ok &= NearEqual(jfac*r[p+j], value , eps99 , eps99);
 
 		jfac  *= (j + 1);
 		yj    *= y;
@@ -304,10 +303,10 @@ bool Cosh(void)
 
 bool Sinh(void)
 {	bool ok = true;
-
 	using CppAD::sinh;
 	using CppAD::cosh;
 	using namespace CppAD;
+	double eps99 = 99.0 * std::numeric_limits<double>::epsilon();
 
 	// independent variable vector
 	double x = .5;
@@ -332,7 +331,7 @@ bool Sinh(void)
 	double sinh_u = sinh( Value(U) );
 	double cosh_u = cosh( Value(U) );
 
-	ok &= NearEqual(sinh_u, Value(Z[0]),  1e-10 , 1e-10);
+	ok &= NearEqual(sinh_u, Value(Z[0]),  eps99 , eps99);
 
 	// forward computation of partials w.r.t. u
 	size_t j;
@@ -356,7 +355,7 @@ bool Sinh(void)
 		jfac *= j;
 
 		// check j-th derivative of z w.r.t x
-		ok &= NearEqual(jfac*w[0], sinhj * yj, 1e-10 , 1e-10);
+		ok &= NearEqual(jfac*w[0], sinhj * yj, eps99 , eps99);
 
 		v[0]  = 0.;
 	}
@@ -378,11 +377,11 @@ bool Sinh(void)
 		else	sinhjp = sinh_u;
 
 		// derivative w.r.t x of sinh^{(j)} (x * y) * y^j
-		ok &= NearEqual(jfac*r[0+j], sinhjp * yj * y, 1e-10 , 1e-10);
+		ok &= NearEqual(jfac*r[0+j], sinhjp * yj * y, eps99 , eps99);
 
 		// derivative w.r.t y of sinh^{(j)} (x * y) * y^j
 		double value = sinhjp * yj * x + j * sinhj * yj / y;
-		ok &= NearEqual(jfac*r[p+j], value , 1e-10 , 1e-10);
+		ok &= NearEqual(jfac*r[p+j], value , eps99 , eps99);
 
 		jfac  *= (j + 1);
 		yj    *= y;

@@ -1,6 +1,5 @@
-// $Id$
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-15 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-17 Bradley M. Bell
 
 CppAD is distributed under multiple licenses. This distribution is under
 the terms of the
@@ -20,10 +19,10 @@ namespace { // BEGIN empty namespace
 
 bool SqrtTestOne(void)
 {	bool ok = true;
-
 	using CppAD::sqrt;
 	using CppAD::pow;
 	using namespace CppAD;
+	double eps99 = 99.0 * std::numeric_limits<double>::epsilon();
 
 	// independent variable vector, indices, values, and declaration
 	CPPAD_TESTVECTOR(AD<double>) U(1);
@@ -44,20 +43,20 @@ bool SqrtTestOne(void)
 	CPPAD_TESTVECTOR(double) w( f.Range() );
 
 	// check values
-	ok &= NearEqual(Z[x] , 2.,        1e-10 , 1e-10);
-	ok &= NearEqual(Z[y] , sqrt(2.),  1e-10 , 1e-10);
+	ok &= NearEqual(Z[x] , 2.,        eps99 , eps99);
+	ok &= NearEqual(Z[y] , sqrt(2.),  eps99 , eps99);
 
 	// forward computation of partials w.r.t. s
 	v[s] = 1.;
 	w    = f.Forward(1, v);
-	ok &= NearEqual(w[x], .5  * pow(4., -.5),   1e-10 , 1e-10); // dx/ds
-	ok &= NearEqual(w[y], .25 * pow(4., -.75),  1e-10 , 1e-10); // dy/ds
+	ok &= NearEqual(w[x], .5  * pow(4., -.5),   eps99 , eps99); // dx/ds
+	ok &= NearEqual(w[y], .25 * pow(4., -.75),  eps99 , eps99); // dy/ds
 
 	// reverse computation of partials of y
 	w[x] = 0.;
 	w[y] = 1.;
 	v    = f.Reverse(1,w);
-	ok &= NearEqual(v[s], .25 * pow(4., -.75),  1e-10 , 1e-10); // dy/ds
+	ok &= NearEqual(v[s], .25 * pow(4., -.75),  eps99 , eps99); // dy/ds
 
 	// forward computation of second partials w.r.t s
 	v[s] = 1.;
@@ -67,8 +66,8 @@ bool SqrtTestOne(void)
 	ok &= NearEqual(       // d^2 y / (ds ds)
 		2. * w[y] ,
 		-.75 * .25 * pow(4., -1.75),
-		1e-10 ,
-		1e-10
+		eps99 ,
+		eps99
 	);
 
 	// reverse computation of second partials of y
@@ -79,8 +78,8 @@ bool SqrtTestOne(void)
 	ok &= NearEqual(      // d^2 y / (ds ds)
 		r[2 * s + 1] ,
 		-.75 * .25 * pow(4., -1.75),
-		1e-10 ,
-		1e-10
+		eps99 ,
+		eps99
 	);
 
 	return ok;
@@ -89,6 +88,7 @@ bool SqrtTestOne(void)
 bool SqrtTestTwo(void)
 {	bool ok = true;
 	using namespace CppAD;
+	double eps99 = 99.0 * std::numeric_limits<double>::epsilon();
 
 	// independent variable vector
 	CPPAD_TESTVECTOR(AD<double>) U(1);
@@ -108,7 +108,7 @@ bool SqrtTestTwo(void)
 	CPPAD_TESTVECTOR(double) w(1);
 
 	// check value
-	ok &= NearEqual(U[0] , Z[0],  1e-10 , 1e-10);
+	ok &= NearEqual(U[0] , Z[0],  eps99 , eps99);
 
 	// forward computation of partials w.r.t. u
 	size_t j;
@@ -119,7 +119,7 @@ bool SqrtTestTwo(void)
 	for(j = 1; j < p; j++)
 	{	jfac *= j;
 		w     = f.Forward(j, v);
-		ok &= NearEqual(jfac*w[0], value, 1e-10 , 1e-10); // d^jz/du^j
+		ok &= NearEqual(jfac*w[0], value, eps99 , eps99); // d^jz/du^j
 		v[0]  = 0.;
 		value = 0.;
 	}
@@ -131,7 +131,7 @@ bool SqrtTestTwo(void)
 	jfac  = 1.;
 	value = 1.;
 	for(j = 0; j < p; j++)
-	{	ok &= NearEqual(jfac*r[j], value, 1e-10 , 1e-10); // d^jz/du^j
+	{	ok &= NearEqual(jfac*r[j], value, eps99 , eps99); // d^jz/du^j
 		jfac *= (j + 1);
 		value = 0.;
 	}
@@ -140,10 +140,10 @@ bool SqrtTestTwo(void)
 }
 bool SqrtTestThree(void)
 {	bool ok = true;
-
 	using CppAD::sqrt;
 	using CppAD::exp;
 	using namespace CppAD;
+	double eps99 = 99.0 * std::numeric_limits<double>::epsilon();
 
 	// independent variable vector, indices, values, and declaration
 	double x = 4.;
@@ -163,31 +163,31 @@ bool SqrtTestThree(void)
 	CPPAD_TESTVECTOR(double) y1( f.Range() );
 	x1[0] = 1.;
 	y1    = f.Forward(1, x1);
-	ok   &= NearEqual(y1[0], exp(x/2.)/2.,   1e-10 , 1e-10);
+	ok   &= NearEqual(y1[0], exp(x/2.)/2.,   eps99 , eps99);
 
 	// forward computation of second Taylor coefficient
 	CPPAD_TESTVECTOR(double) x2( f.Domain() );
 	CPPAD_TESTVECTOR(double) y2( f.Range() );
 	x2[0] = 0.;
 	y2    = f.Forward(2, x2);
-	ok   &= NearEqual(2.*y2[0] , exp(x/2.)/4., 1e-10 , 1e-10 );
+	ok   &= NearEqual(2.*y2[0] , exp(x/2.)/4., eps99 , eps99 );
 
 	// forward computation of third Taylor coefficient
 	CPPAD_TESTVECTOR(double) x3( f.Domain() );
 	CPPAD_TESTVECTOR(double) y3( f.Range() );
 	x3[0] = 0.;
 	y3    = f.Forward(3, x3);
-	ok   &= NearEqual(6.*y3[0] , exp(x/2.)/8., 1e-10 , 1e-10 );
+	ok   &= NearEqual(6.*y3[0] , exp(x/2.)/8., eps99 , eps99 );
 
 	// reverse computation of deritavitve of Taylor coefficients
 	CPPAD_TESTVECTOR(double) r( f.Domain() * 4 );
 	CPPAD_TESTVECTOR(double) w(1);
 	w[0] = 1.;
 	r    = f.Reverse(4, w);
-	ok   &= NearEqual(r[0], exp(x/2.)/2., 1e-10 , 1e-10);
-	ok   &= NearEqual(r[1], exp(x/2.)/4., 1e-10 , 1e-10 );
-	ok   &= NearEqual(2.*r[2], exp(x/2.)/8., 1e-10 , 1e-10 );
-	ok   &= NearEqual(6.*r[3], exp(x/2.)/16., 1e-10 , 1e-10 );
+	ok   &= NearEqual(r[0], exp(x/2.)/2., eps99 , eps99);
+	ok   &= NearEqual(r[1], exp(x/2.)/4., eps99 , eps99 );
+	ok   &= NearEqual(2.*r[2], exp(x/2.)/8., eps99 , eps99 );
+	ok   &= NearEqual(6.*r[3], exp(x/2.)/16., eps99 , eps99 );
 
 	return ok;
 

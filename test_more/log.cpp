@@ -1,6 +1,5 @@
-// $Id$
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-15 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-17 Bradley M. Bell
 
 CppAD is distributed under multiple licenses. This distribution is under
 the terms of the
@@ -21,9 +20,9 @@ namespace { // BEGIN empty namespace
 
 bool LogTestOne(void)
 {	bool ok = true;
-
 	using CppAD::log;
 	using namespace CppAD;
+	double eps99 = 99.0 * std::numeric_limits<double>::epsilon();
 
 	// independent variable vector, indices, values, and declaration
 	CPPAD_TESTVECTOR(AD<double>) U(1);
@@ -44,20 +43,20 @@ bool LogTestOne(void)
 	CPPAD_TESTVECTOR(double) w( f.Range() );
 
 	// check values
-	ok &= NearEqual(Z[x] , log(2.),  1e-10 , 1e-10);
-	ok &= NearEqual(Z[y] , log( log(2.) ),  1e-10 , 1e-10);
+	ok &= NearEqual(Z[x] , log(2.),  eps99 , eps99);
+	ok &= NearEqual(Z[y] , log( log(2.) ),  eps99 , eps99);
 
 	// forward computation of partials w.r.t. s
 	v[s] = 1.;
 	w    = f.Forward(1, v);
-	ok &= NearEqual(w[x], 1. / U[s],          1e-10 , 1e-10); // dx/ds
-	ok &= NearEqual(w[y], 1. / (U[s] * Z[x]), 1e-10 , 1e-10); // dy/ds
+	ok &= NearEqual(w[x], 1. / U[s],          eps99 , eps99); // dx/ds
+	ok &= NearEqual(w[y], 1. / (U[s] * Z[x]), eps99 , eps99); // dy/ds
 
 	// reverse computation of partials of y
 	w[x] = 0.;
 	w[y] = 1.;
 	v    = f.Reverse(1,w);
-	ok &= NearEqual(v[s], 1. / (U[s] * Z[x]), 1e-10 , 1e-10); // dy/ds
+	ok &= NearEqual(v[s], 1. / (U[s] * Z[x]), eps99 , eps99); // dy/ds
 
 	// forward computation of second partials w.r.t. s
 	v[s] = 1.;
@@ -67,8 +66,8 @@ bool LogTestOne(void)
 	ok &= NearEqual(
 		2. * w[y] ,
 		- 1. / (Z[x]*Z[x]*U[s]*U[s]) - 1. / (Z[x]*U[s]*U[s]),
-		1e-10 ,
-		1e-10
+		eps99 ,
+		eps99
 	);
 
 	// reverse computation of second partials of y
@@ -79,17 +78,17 @@ bool LogTestOne(void)
 	ok &= NearEqual(
 		r[2 * s + 1] ,
 		- 1. / (Z[x]*Z[x]*U[s]*U[s]) - 1. / (Z[x]*U[s]*U[s]),
-		1e-10 ,
-		1e-10
+		eps99 ,
+		eps99
 	);
 
 	return ok;
 }
 bool LogTestTwo(void)
 {	bool ok = true;
-
 	using CppAD::log;
 	using namespace CppAD;
+	double eps99 = 99.0 * std::numeric_limits<double>::epsilon();
 
 	// independent variable vector
 	CPPAD_TESTVECTOR(AD<double>) U(1);
@@ -109,7 +108,7 @@ bool LogTestTwo(void)
 	CPPAD_TESTVECTOR(double) w(1);
 
 	// check value
-	ok &= NearEqual(U[0] , Z[0],  1e-10 , 1e-10);
+	ok &= NearEqual(U[0] , Z[0],  eps99 , eps99);
 
 	// forward computation of partials w.r.t. u
 	size_t j;
@@ -120,7 +119,7 @@ bool LogTestTwo(void)
 	for(j = 1; j < p; j++)
 	{	jfac *= j;
 		w     = f.Forward(j, v);
-		ok &= NearEqual(jfac*w[0], value, 1e-10 , 1e-10); // d^jz/du^j
+		ok &= NearEqual(jfac*w[0], value, eps99 , eps99); // d^jz/du^j
 		v[0]  = 0.;
 		value = 0.;
 	}
@@ -132,7 +131,7 @@ bool LogTestTwo(void)
 	jfac  = 1.;
 	value = 1.;
 	for(j = 0; j < p; j++)
-	{	ok &= NearEqual(jfac*r[j], value, 1e-10 , 1e-10); // d^jz/du^j
+	{	ok &= NearEqual(jfac*r[j], value, eps99 , eps99); // d^jz/du^j
 		jfac *= (j + 1);
 		value = 0.;
 	}

@@ -1,6 +1,5 @@
-// $Id$
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-16 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-17 Bradley M. Bell
 
 CppAD is distributed under multiple licenses. This distribution is under
 the terms of the
@@ -81,9 +80,9 @@ bool DivEqTestOne(void)
 	w[y] = 0.;
 	r    = f.Reverse(2, w);
 	ok &= NearEqual(r[2 * s + 1]                 // d^2 x / (dt ds)
-		 , - 1. / (U[t] * U[t])     , 1e-10 , 1e-10 );
+		 , - 1. / (U[t] * U[t])     , eps99 , eps99 );
 	ok &= NearEqual(r[2 * t + 1]                 // d^2 x / (dt dt)
-		, 2. * U[s] / (U[t] * U[t] * U[t])  , 1e-10 , 1e-10 );
+		, 2. * U[s] / (U[t] * U[t] * U[t])  , eps99 , eps99 );
 
 	return ok;
 }

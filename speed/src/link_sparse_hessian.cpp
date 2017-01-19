@@ -1,6 +1,5 @@
-// $Id$
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-16 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-17 Bradley M. Bell
 
 CppAD is distributed under multiple licenses. This distribution is under
 the terms of the
@@ -304,6 +303,7 @@ true, if correctness test passes, and false otherwise.
 */
 bool correct_sparse_hessian(bool is_package_double)
 {
+	double eps99 = 99.0 * std::numeric_limits<double>::epsilon();
 	size_t n      = 10;
 	size_t repeat = 1;
 	vector<double> x(n);
@@ -331,7 +331,7 @@ bool correct_sparse_hessian(bool is_package_double)
 	bool ok = true;
 	size_t k;
 	for(k = 0; k < size; k++)
-		ok &= CppAD::NearEqual(check[k], hessian[k], 1e-10, 1e-10);
+		ok &= CppAD::NearEqual(check[k], hessian[k], eps99, eps99);
 
 	return ok;
 }

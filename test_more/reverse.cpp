@@ -1,6 +1,5 @@
-// $Id$
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-16 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-17 Bradley M. Bell
 
 CppAD is distributed under multiple licenses. This distribution is under
 the terms of the
@@ -19,8 +18,8 @@ namespace { // ----------------------------------------------------------
 
 bool reverse_one(void)
 {	bool ok = true;
-
 	using namespace CppAD;
+	double eps99 = 99.0 * std::numeric_limits<double>::epsilon();
 
 	// independent variable vector
 	CPPAD_TESTVECTOR(AD<double>) U(3);
@@ -62,7 +61,7 @@ bool reverse_one(void)
 	// compare values
 	for(i = 0; i < 3; i++)
 	{	ok &= NearEqual(r1[i] ,
-			v[0] * g0[i] + v[1] * g1[i], 1e-10, 1e-10);
+			v[0] * g0[i] + v[1] * g1[i], eps99, eps99);
 	}
 
 	// -------------------------------------------------------------------
@@ -86,7 +85,7 @@ bool reverse_one(void)
 	// check derivative of the zero order term
 	for(i = 0; i < 3; i++)
 	{	ok &= NearEqual(r2[p * i + 0] ,
-			v[0] * g0[i] + v[1] * g1[i], 1e-10, 1e-10);
+			v[0] * g0[i] + v[1] * g1[i], eps99, eps99);
 	}
 
 	/*
@@ -114,7 +113,7 @@ bool reverse_one(void)
 			sum += H1[i * 3 + j] * u1[j];
 
 		// note term corresponding to v[0] is zero
-		ok &= NearEqual(r2[p * i + 1], v[1] * sum, 1e-10, 1e-10);
+		ok &= NearEqual(r2[p * i + 1], v[1] * sum, eps99, eps99);
 	}
 
 	return ok;
@@ -126,6 +125,7 @@ bool reverse_any_cases(void)
 {	bool ok = true;
 	using CppAD::AD;
 	using CppAD::NearEqual;
+	double eps99 = 99.0 * std::numeric_limits<double>::epsilon();
 
 	// domain space vector
 	size_t n = 3;
@@ -154,7 +154,7 @@ bool reverse_any_cases(void)
 	W0      = f.Forward(0, u);
 	double check;
 	check   =  u[0]*u[1]*u[2];
-	ok     &= NearEqual(W0[0] , check, 1e-10, 1e-10);
+	ok     &= NearEqual(W0[0] , check, eps99, eps99);
 
 	// define W_t(t, u) = partial W(t, u) w.r.t t
 	// W_t(t, u)  = (u_0 + dx_0*t)*(u_1 + dx_1*t)*dx_2
@@ -167,7 +167,7 @@ bool reverse_any_cases(void)
 	dx[2] = .4;
 	W1    = f.Forward(1, dx);
         check =  u[0]*u[1]*dx[2] + u[0]*u[2]*dx[1] + u[1]*u[2]*dx[0];
-	ok   &= NearEqual(W1[0], check, 1e-10, 1e-10);
+	ok   &= NearEqual(W1[0], check, eps99, eps99);
 
 	// define W_tt (t, u) = partial W_t(t, u) w.r.t t
 	// W_tt(t, u) = 2*(u_0 + dx_0*t)*dx_1*dx_2
@@ -178,7 +178,7 @@ bool reverse_any_cases(void)
 	ddx[0] = ddx[1] = ddx[2] = 0.;
         W2     = f.Forward(2, ddx);
         check  =  u[0]*dx[1]*dx[2] + u[1]*dx[0]*dx[2] + u[2]*dx[0]*dx[1];
-	ok    &= NearEqual(W2[0], check, 1e-10, 1e-10);
+	ok    &= NearEqual(W2[0], check, eps99, eps99);
 
 	// use third order reverse mode to evaluate derivatives
 	size_t p = 3;
@@ -187,19 +187,19 @@ bool reverse_any_cases(void)
 	dw     = f.Reverse(p, w);
 
 	// check derivative of W0(u) w.r.t. u
-	ok    &= NearEqual(dw[0*p+0], u[1]*u[2], 1e-10, 1e-10);
-	ok    &= NearEqual(dw[1*p+0], u[0]*u[2], 1e-10, 1e-10);
-	ok    &= NearEqual(dw[2*p+0], u[0]*u[1], 1e-10, 1e-10);
+	ok    &= NearEqual(dw[0*p+0], u[1]*u[2], eps99, eps99);
+	ok    &= NearEqual(dw[1*p+0], u[0]*u[2], eps99, eps99);
+	ok    &= NearEqual(dw[2*p+0], u[0]*u[1], eps99, eps99);
 
 	// check derivative of W1(u) w.r.t. u
-	ok    &= NearEqual(dw[0*p+1], u[1]*dx[2] + u[2]*dx[1], 1e-10, 1e-10);
-	ok    &= NearEqual(dw[1*p+1], u[0]*dx[2] + u[2]*dx[0], 1e-10, 1e-10);
-	ok    &= NearEqual(dw[2*p+1], u[0]*dx[1] + u[1]*dx[0], 1e-10, 1e-10);
+	ok    &= NearEqual(dw[0*p+1], u[1]*dx[2] + u[2]*dx[1], eps99, eps99);
+	ok    &= NearEqual(dw[1*p+1], u[0]*dx[2] + u[2]*dx[0], eps99, eps99);
+	ok    &= NearEqual(dw[2*p+1], u[0]*dx[1] + u[1]*dx[0], eps99, eps99);
 
 	// check derivative of W2(u) w.r.t u
-	ok    &= NearEqual(dw[0*p+2], dx[1]*dx[2], 1e-10, 1e-10);
-	ok    &= NearEqual(dw[1*p+2], dx[0]*dx[2], 1e-10, 1e-10);
-	ok    &= NearEqual(dw[2*p+2], dx[0]*dx[1], 1e-10, 1e-10);
+	ok    &= NearEqual(dw[0*p+2], dx[1]*dx[2], eps99, eps99);
+	ok    &= NearEqual(dw[1*p+2], dx[0]*dx[2], eps99, eps99);
+	ok    &= NearEqual(dw[2*p+2], dx[0]*dx[1], eps99, eps99);
 
 	return ok;
 }

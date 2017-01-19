@@ -1,9 +1,8 @@
-// $Id$
 # ifndef CPPAD_SPEED_DET_33_HPP
 # define CPPAD_SPEED_DET_33_HPP
 
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-16 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-17 Bradley M. Bell
 
 CppAD is distributed under multiple licenses. This distribution is under
 the terms of the
@@ -101,6 +100,7 @@ namespace CppAD {
 template <class Vector>
 	bool det_33(const Vector &x, const Vector &d)
 	{	bool ok = true;
+		double eps99 = 99.0 * std::numeric_limits<double>::epsilon();
 
 		// use expansion by minors to compute the determinant by hand
 		double check = 0.;
@@ -108,7 +108,7 @@ template <class Vector>
 		check -= x[1] * ( x[3] * x[8] - x[5] * x[6] );
 		check += x[2] * ( x[3] * x[7] - x[4] * x[6] );
 
-		ok &= CppAD::NearEqual(check, d[0], 1e-10, 1e-10);
+		ok &= CppAD::NearEqual(check, d[0], eps99, eps99);
 
 		return ok;
 	}

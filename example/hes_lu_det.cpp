@@ -1,6 +1,5 @@
-// $Id$
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-16 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-17 Bradley M. Bell
 
 CppAD is distributed under multiple licenses. This distribution is under
 the terms of the
@@ -34,8 +33,8 @@ bool HesLuDet(void)
 {	bool ok = true;
 
 	using namespace CppAD;
-
 	typedef std::complex<double> Complex;
+	double eps99 = 99.0 * std::numeric_limits<double>::epsilon();
 
 	size_t n = 2;
 
@@ -81,7 +80,7 @@ bool HesLuDet(void)
 		 one, zero, zero, zero
 	};
 	for( i = 0; i < n*n*n*n; i++)
-		ok &= NearEqual( Htrue[i], H[i], 1e-10 , 1e-10 );
+		ok &= NearEqual( Htrue[i], H[i], eps99 , eps99 );
 
 	return ok;
 }

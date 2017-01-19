@@ -1,6 +1,5 @@
-// $Id$
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-16 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-17 Bradley M. Bell
 
 CppAD is distributed under multiple licenses. This distribution is under
 the terms of the
@@ -32,8 +31,8 @@ $end
 
 bool JacLuDet(void)
 {	bool ok = true;
-
 	using namespace CppAD;
+	double eps99 = 99.0 * std::numeric_limits<double>::epsilon();
 
 	size_t n = 2;
 
@@ -72,7 +71,7 @@ bool JacLuDet(void)
 	*/
 	Complex Jtrue[]  = { x[3], -x[2], -x[1], x[0] };
 	for( i = 0; i < n*n; i++)
-		ok &= NearEqual( Jtrue[i], J[i], 1e-10 , 1e-10 );
+		ok &= NearEqual( Jtrue[i], J[i], eps99 , eps99 );
 
 	return ok;
 }

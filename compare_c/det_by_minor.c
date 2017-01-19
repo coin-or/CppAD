@@ -1,7 +1,7 @@
 /* $Id: */
 
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-16 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-17 Bradley M. Bell
 
 CppAD is distributed under multiple licenses. This distribution is under
 the terms of the
@@ -16,6 +16,7 @@ Please visit http://www.coin-or.org/CppAD/ for information on other licenses.
 # include <math.h>
 # include <stdio.h>
 # include <stddef.h>
+# include <float.h>
 
 // In the case of plain C, we defined the type bool together with ture, false
 # ifndef __cplusplus
@@ -394,7 +395,8 @@ bool correct_det_by_minor(void)
 	check -= a[1] * ( a[3] * a[8] - a[5] * a[6] );
 	check += a[2] * ( a[3] * a[7] - a[4] * a[6] );
 
-	if( fabs(det / check - 1.0) < 1e-10 )
+	double eps99 = 99.0 * DBL_EPSILON;
+	if( fabs(det / check - 1.0) < eps99 )
 		return true;
 	return false;
 }

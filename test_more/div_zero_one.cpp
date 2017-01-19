@@ -1,6 +1,5 @@
-// $Id$
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-15 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-17 Bradley M. Bell
 
 CppAD is distributed under multiple licenses. This distribution is under
 the terms of the
@@ -20,10 +19,9 @@ typedef CppAD::AD<double>      ADdouble;
 typedef CppAD::AD< ADdouble > ADDdouble;
 
 bool DivZeroOne(void)
-{
+{	bool ok = true;
 	using namespace CppAD;
-
-	bool ok = true;
+	double eps99 = 99.0 * std::numeric_limits<double>::epsilon();
 
 	size_t i;
 	for(i = 0; i < 3; i++)
@@ -64,11 +62,11 @@ bool DivZeroOne(void)
 			// check derivatives of f
 			ADdouble check = - double(i) / double(j * j);
 			if( j != 0 ) ok &= NearEqual(
-				v[0], check, 1e-10, 1e-10 );
+				v[0], check, eps99, eps99 );
 
 			check = 1. / double(i * i);
 			if( i != 0 ) ok &= NearEqual(
-				v[1], check, 1e-10, 1e-10);
+				v[1], check, eps99, eps99);
 
 			// g(x) = f'(y) = {-x/y^2 , 1/(x * x)}
 			ADFun<double> g(x, v);
@@ -81,9 +79,9 @@ bool DivZeroOne(void)
 
 			// check derivatives of g
 			if( j != 0 ) ok &= NearEqual(
-				b[0], - 1./double(j*j), 1e-10, 1e-10 );
+				b[0], - 1./double(j*j), eps99, eps99 );
 			if( i != 0 ) ok &= NearEqual(
-				b[1], -2./double(i*i*i), 1e-10, 1e-10);
+				b[1], -2./double(i*i*i), eps99, eps99);
 
 		}
 	}

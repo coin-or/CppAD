@@ -1,6 +1,5 @@
-// $Id$
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-16 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-17 Bradley M. Bell
 
 CppAD is distributed under multiple licenses. This distribution is under
 the terms of the
@@ -113,6 +112,7 @@ namespace {
 bool OdeGearControl(void)
 {	bool ok = true;     // initial return value
 	using CppAD::NearEqual;
+	double eps99 = 99.0 * std::numeric_limits<double>::epsilon();
 
 	CPPAD_TESTVECTOR(double) w(2);
 	w[0] = 10.;
@@ -139,7 +139,7 @@ bool OdeGearControl(void)
 	double tf   = 1.;
 	double smin = 1e-8;
 	double smax = 1.;
-	double sini = 1e-10;
+	double sini = eps99;
 	double erel = 0.;
 
 	xf = CppAD::OdeGearControl(F, M,

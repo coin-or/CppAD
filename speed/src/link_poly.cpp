@@ -1,6 +1,5 @@
-// $Id$
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-16 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-17 Bradley M. Bell
 
 CppAD is distributed under multiple licenses. This distribution is under
 the terms of the
@@ -106,6 +105,7 @@ bool correct_poly(bool is_package_double)
 {	size_t size   = 10;
 	size_t repeat = 1;
 	CppAD::vector<double>  a(size), z(1), ddp(1);
+	double eps99 = 99.0 * std::numeric_limits<double>::epsilon();
 
 	link_poly(size, repeat, a, z, ddp);
 
@@ -116,7 +116,7 @@ bool correct_poly(bool is_package_double)
 	else	k = 2;
 	check = CppAD::Poly(k, a, z[0]);
 
-	bool ok = CppAD::NearEqual(check, ddp[0], 1e-10, 1e-10);
+	bool ok = CppAD::NearEqual(check, ddp[0], eps99, eps99);
 	return ok;
 }
 void speed_poly(size_t size, size_t repeat)

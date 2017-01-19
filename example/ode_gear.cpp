@@ -1,6 +1,5 @@
-// $Id$
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-16 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-17 Bradley M. Bell
 
 CppAD is distributed under multiple licenses. This distribution is under
 the terms of the
@@ -123,6 +122,7 @@ namespace {
 bool OdeGear(void)
 {	bool ok = true; // initial return value
 	size_t i, j;    // temporary indices
+	double eps99 = 99.0 * std::numeric_limits<double>::epsilon();
 
 	size_t  m = 4;  // index of next value in X
 	size_t  n = m;  // number of components in x(t)
@@ -161,11 +161,11 @@ bool OdeGear(void)
 		for(i = 0; i < n; i++)
 		{	// method is exact up to order m and x[i] = t^{i+1}
 			if( i + 1 <= m ) ok &= CppAD::NearEqual(
-				X[m * n + i], check, 1e-10, 1e-10
+				X[m * n + i], check, eps99, eps99
 			);
 			// error bound should be zero up to order m-1
 			if( i + 1 < m ) ok &= CppAD::NearEqual(
-				e[i], 0., 1e-10, 1e-10
+				e[i], 0., eps99, eps99
 			);
 			// check value for next i
 			check *= T[m];

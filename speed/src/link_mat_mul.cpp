@@ -1,6 +1,5 @@
-// $Id$
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-16 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-17 Bradley M. Bell
 
 CppAD is distributed under multiple licenses. This distribution is under
 the terms of the
@@ -109,6 +108,7 @@ bool correct_mat_mul(bool is_package_double)
 {	size_t size   = 2;
 	size_t repeat = 1;
 	CppAD::vector<double>  x(size * size), z(1), dz(size * size);
+	double eps99 = 99.0 * std::numeric_limits<double>::epsilon();
 
 	link_mat_mul(size, repeat, x, z, dz);
 
@@ -124,21 +124,21 @@ bool correct_mat_mul(bool is_package_double)
 		check += x00 * x01 + x01 * x11; // y01
 		check += x10 * x00 + x11 * x10; // y10
 		check += x10 * x01 + x11 * x11; // y11
-		ok &= CppAD::NearEqual(check, z[0], 1e-10, 1e-10);
+		ok &= CppAD::NearEqual(check, z[0], eps99, eps99);
 		return ok;
 	}
 	// partial w.r.t. x00
 	check = x00 + x00 + x01 + x10;
-	ok   &= CppAD::NearEqual(check, dz[0 * size + 0], 1e-10, 1e-10);
+	ok   &= CppAD::NearEqual(check, dz[0 * size + 0], eps99, eps99);
 	// partial w.r.t. x01
 	check = x10 + x00 + x11 + x10;
-	ok   &= CppAD::NearEqual(check, dz[0 * size + 1], 1e-10, 1e-10);
+	ok   &= CppAD::NearEqual(check, dz[0 * size + 1], eps99, eps99);
 	// partial w.r.t. x10
 	check = x01 + x00 + x11 + x01;
-	ok   &= CppAD::NearEqual(check, dz[1 * size + 0], 1e-10, 1e-10);
+	ok   &= CppAD::NearEqual(check, dz[1 * size + 0], eps99, eps99);
 	// partial w.r.t. x11
 	check = x01 + x10 + x11 + x11;
-	ok   &= CppAD::NearEqual(check, dz[1 * size + 1], 1e-10, 1e-10);
+	ok   &= CppAD::NearEqual(check, dz[1 * size + 1], eps99, eps99);
 
 	return ok;
 }

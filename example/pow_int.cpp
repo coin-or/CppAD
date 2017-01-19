@@ -1,6 +1,5 @@
-// $Id$
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-16 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-17 Bradley M. Bell
 
 CppAD is distributed under multiple licenses. This distribution is under
 the terms of the
@@ -34,9 +33,9 @@ $end
 
 bool pow_int(void)
 {	bool ok = true;
-
 	using CppAD::AD;
 	using CppAD::NearEqual;
+	double eps99 = 99.0 * std::numeric_limits<double>::epsilon();
 
 	// declare independent variables and start tape recording
 	size_t n  = 1;
@@ -59,7 +58,7 @@ bool pow_int(void)
 	double check;
 	for(i = 0; i < int(m); i++)
 	{	check = std::pow(x0, double(i - 3));
-		ok &= NearEqual(y[i] , check,  1e-10 , 1e-10);
+		ok &= NearEqual(y[i] , check,  eps99 , eps99);
 	}
 
 	// forward computation of first partial w.r.t. x[0]
@@ -69,7 +68,7 @@ bool pow_int(void)
 	dy    = f.Forward(1, dx);
 	for(i = 0; i < int(m); i++)
 	{	check = double(i-3) * std::pow(x0, double(i - 4));
-		ok &= NearEqual(dy[i] , check,  1e-10 , 1e-10);
+		ok &= NearEqual(dy[i] , check,  eps99 , eps99);
 	}
 
 	// reverse computation of derivative of y[i]
@@ -81,7 +80,7 @@ bool pow_int(void)
 	{	w[i] = 1.;
 		dw    = f.Reverse(1, w);
 		check = double(i-3) * std::pow(x0, double(i - 4));
-		ok &= NearEqual(dw[0] , check,  1e-10 , 1e-10);
+		ok &= NearEqual(dw[0] , check,  eps99 , eps99);
 		w[i] = 0.;
 	}
 

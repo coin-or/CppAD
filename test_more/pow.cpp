@@ -1,6 +1,5 @@
-// $Id$
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-16 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-17 Bradley M. Bell
 
 CppAD is distributed under multiple licenses. This distribution is under
 the terms of the
@@ -180,8 +179,8 @@ bool PowTestTwo(void)
 		f_rr[y] - f_ss[y] - f_tt[y],
 		(1. + U[s]) * u * Z[y] +
 			(1. + U[s]) * U[t] * u * U[s] * u * Z[y],
-		1e-10 ,
-		1e-10
+		eps99 ,
+		eps99
 	);
 
 	return ok;

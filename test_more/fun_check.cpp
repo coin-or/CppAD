@@ -1,6 +1,5 @@
-// $Id$
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-15 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-17 Bradley M. Bell
 
 CppAD is distributed under multiple licenses. This distribution is under
 the terms of the
@@ -46,6 +45,7 @@ bool FunCheckCases(void)
 	using CppAD::AD;
 	using CppAD::ADFun;
 	using CppAD::Independent;
+	double eps99 = 99.0 * std::numeric_limits<double>::epsilon();
 
 	// use the ADFun default constructor
 	ADFun<double> f;
@@ -80,8 +80,8 @@ bool FunCheckCases(void)
 	size_t j;
 	for(j = 0; j < n; j++)
 		x[j] = Value(X[j]);
-	double r = 1e-10;
-	double a = 1e-10;
+	double r = eps99;
+	double a = eps99;
 	ok      &= FunCheck(f, g, x, a, r);
 
 	// function values should not agree when the independent variable

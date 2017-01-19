@@ -1,6 +1,5 @@
-// $Id$
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-15 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-17 Bradley M. Bell
 
 CppAD is distributed under multiple licenses. This distribution is under
 the terms of the
@@ -95,8 +94,8 @@ bool MulTestOne(void)
 
 bool MulTestTwo(void)
 {	bool ok = true;
-
 	using namespace CppAD;
+	double eps99 = 99.0 * std::numeric_limits<double>::epsilon();
 
 	// independent variable vector
 	double u0 = .5;
@@ -119,7 +118,7 @@ bool MulTestTwo(void)
 	CPPAD_TESTVECTOR(double) w(1);
 
 	// check value
-	ok &= NearEqual(Value(Z[0]) , u0*4*3*2*u0,  1e-10 , 1e-10);
+	ok &= NearEqual(Value(Z[0]) , u0*4*3*2*u0,  eps99 , eps99);
 
 	// forward computation of partials w.r.t. u
 	size_t j;
@@ -136,7 +135,7 @@ bool MulTestTwo(void)
 
 		jfac *= j;
 		w     = f.Forward(j, v);
-		ok &= NearEqual(jfac*w[0], value, 1e-10 , 1e-10); // d^jz/du^j
+		ok &= NearEqual(jfac*w[0], value, eps99 , eps99); // d^jz/du^j
 		v[0]  = 0.;
 	}
 
@@ -153,7 +152,7 @@ bool MulTestTwo(void)
 			value = 48.;
 		else	value = 0.;
 
-		ok &= NearEqual(jfac*r[j], value, 1e-10 , 1e-10); // d^jz/du^j
+		ok &= NearEqual(jfac*r[j], value, eps99 , eps99); // d^jz/du^j
 		jfac *= (j + 1);
 	}
 

@@ -9,20 +9,16 @@
 # A copy of this license is included in the COPYING file of this distribution.
 # Please visit http://www.coin-or.org/CppAD/ for information on other licenses.
 # -----------------------------------------------------------------------------
-revert_list='
-'
+revert_list=`
+	ls introduction/*/*.cpp
+`
+revert_list="$revert_list omh/whats_new/whats_new_15.omh"
 move_list='
 '
 move_sed='s|compute_assign|compound_assign|'
 #
 cat << EOF > junk.sed
-s|copydetails forward_\\([a-z0-9_]*\\)_op|copydetails CppAD::local::forward_\\1_op|
-s|copydetails reverse_\\([a-z_0-9]*\\)_op|copydetails CppAD::local::reverse_\\1_op|
-s|copydetails \\(color_symmetric_cppad\\)|copydetails CppAD::local::\\1|
-s|copydetails \\(sparse_load_op\\)|copydetails CppAD::local::\\1|
-s|copydetails \\(sparse_store_op\\)|copydetails CppAD::local::\\1|
-#
-s|ref IdenticalPar|ref CppAD::IdenticalPar|
+s|1e-10|eps99|g
 EOF
 # -----------------------------------------------------------------------------
 if [ $0 != "bin/batch_edit.sh" ]
