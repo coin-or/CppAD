@@ -1,7 +1,7 @@
 #! /bin/bash -e
 # $Id$
 # -----------------------------------------------------------------------------
-# CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-16 Bradley M. Bell
+# CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-17 Bradley M. Bell
 #
 # CppAD is distributed under multiple licenses. This distribution is under
 # the terms of the
@@ -23,7 +23,7 @@ echo_eval() {
 # -----------------------------------------------------------------------------
 svn_repo="https://projects.coin-or.org/svn/CppAD"
 stable_version="20170000" # start each stable_version at yyyy0000
-release='0'               # first release for each stable version is 0
+release='1'               # first release for each stable version is 0
 # -----------------------------------------------------------------------------
 branch=`git branch | grep '^\*'`
 if [ "$branch" != '* master' ]
@@ -146,6 +146,15 @@ branch=`git branch | grep '^\*' | sed -e 's|^\* *||'`
 if [ "$branch" != "$stable_branch" ]
 then
 	echo_eval git checkout $stable_branch
+fi
+# -----------------------------------------------------------------------------
+# make sure check_copyright.sh changes date to current, not previous, year
+yy=`date +%y`
+if ! grep "\\\\1-$yy *Bradley M. Bell" bin/check_copyright.sh > /dev/null
+then
+	echo "new_release.sh: bin/check_copyright end date is not $yy"
+	echo "Fix it and then commit changes in $stable_version"
+	exit 1
 fi
 # -----------------------------------------------------------------------------
 check_one=`bin/version.sh get`
