@@ -12,9 +12,29 @@ Please visit http://www.coin-or.org/CppAD/ for information on other licenses.
 $begin whats_new_17$$
 $spell
 	CppAD
+	doxygen
+	cppad
+	hpp
 $$
 
 $section Changes and Additions to CppAD During 2017$$
 
+$head 01-19$$
+Convert more examples / tests to use a multiple of machine epsilon
+instead of $code 1e-10$$.
+
+$head 01-18$$
+$list number$$
+Fix developer
+$href%https://www.coin-or.org/CppAD/Doc/doxydoc/html/%doxydoc%$$
+documentation so that it works with newer version of doxygen.
+$lnext
+Fix a Visual C++ 2015 compilation problem in friend declarations
+in the file $code cppad/local/ad_tape.hpp$$.
+$lend
+
+$head 01-17$$
+Change computed assignment to
+$cref/compound assignment/compound_assign/$$.
 
 $end

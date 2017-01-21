@@ -9,16 +9,16 @@
 # A copy of this license is included in the COPYING file of this distribution.
 # Please visit http://www.coin-or.org/CppAD/ for information on other licenses.
 # -----------------------------------------------------------------------------
-revert_list=`
-	ls introduction/*/*.cpp
-`
+revert_list='
+'
 revert_list="$revert_list omh/whats_new/whats_new_15.omh"
 move_list='
 '
 move_sed='s|compute_assign|compound_assign|'
 #
 cat << EOF > junk.sed
-s|1e-10|eps99|g
+s|NearEqual(jfac\\*\\([^,]*\\), *value *, *jfac\\*eps99 *, *jfac\\*eps99)|NearEqual(\\1, value/jfac, eps99, eps99)|
+s|NearEqual(jfac\\*\\([^,]*\\), *value *, *eps99 *, *eps99)|NearEqual(\\1, value/jfac, eps99, eps99)|
 EOF
 # -----------------------------------------------------------------------------
 if [ $0 != "bin/batch_edit.sh" ]

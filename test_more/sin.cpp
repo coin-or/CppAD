@@ -59,7 +59,7 @@ bool Sin(void)
 		else	value = sin_u;
 
 		jfac *= j;
-		ok &= NearEqual(jfac*w[0], value, eps99 , eps99); // d^jz/du^j
+		ok &= NearEqual(w[0], value/jfac, eps99, eps99); // d^jz/du^j
 		v[0]  = 0.;
 	}
 
@@ -79,7 +79,7 @@ bool Sin(void)
 			value = -cos_u;
 		else	value = sin_u;
 
-		ok &= NearEqual(jfac*r[j], value, eps99 , eps99); // d^jz/du^j
+		ok &= NearEqual(r[j], value/jfac, eps99, eps99); // d^jz/du^j
 
 		jfac *= (j + 1);
 	}

@@ -108,7 +108,7 @@ bool AddTestTwo(void)
 	for(j = 1; j < p; j++)
 	{	jfac *= j;
 		w     = f.Forward(j, v);
-		ok &= NearEqual(jfac*w[0], value, eps99 , eps99); // d^jz/du^j
+		ok &= NearEqual(w[0], value/jfac, eps99, eps99); // d^jz/du^j
 		v[0]  = 0.;
 		value = 0.;
 	}
@@ -120,7 +120,7 @@ bool AddTestTwo(void)
 	jfac  = 1.;
 	value = 2.;
 	for(j = 0; j < p; j++)
-	{	ok &= NearEqual(jfac*r[j], value, eps99 , eps99); // d^jz/du^j
+	{	ok &= NearEqual(r[j], value/jfac, eps99, eps99); // d^jz/du^j
 		jfac *= (j + 1);
 		value = 0.;
 	}

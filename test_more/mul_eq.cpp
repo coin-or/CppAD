@@ -119,7 +119,7 @@ bool MulEqTestTwo(void)
 
 		jfac *= j;
 		w     = f.Forward(j, v);
-		ok &= NearEqual(jfac*w[0], value, eps99 , eps99); // d^jz/du^j
+		ok &= NearEqual(w[0], value/jfac, eps99, eps99); // d^jz/du^j
 		v[0]  = 0.;
 	}
 
@@ -136,7 +136,7 @@ bool MulEqTestTwo(void)
 			value = 16.;
 		else	value = 0.;
 
-		ok &= NearEqual(jfac*r[j], value, eps99 , eps99); // d^jz/du^j
+		ok &= NearEqual(r[j], value/jfac, eps99, eps99); // d^jz/du^j
 		jfac *= (j + 1);
 	}
 
