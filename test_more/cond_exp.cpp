@@ -1,6 +1,5 @@
-// $Id$
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-15 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-17 Bradley M. Bell
 
 CppAD is distributed under multiple licenses. This distribution is under
 the terms of the
@@ -415,7 +414,6 @@ bool OldExample(void)
 	using CppAD::AD;
 	using CppAD::NearEqual;
 	using CppAD::log;
-	using CppAD::abs;
 	double eps = 100. * std::numeric_limits<double>::epsilon();
 
 	// domain space vector
@@ -458,13 +456,13 @@ bool OldExample(void)
 	CPPAD_TESTVECTOR(double) w(m);   // function weights
 	CPPAD_TESTVECTOR(double) dw(n);  // derivative of weighted function
 
-	// a case where abs( x[j] ) > 0 for all j
+	// a case where fabs( x[j] ) > 0 for all j
 	double check  = 0.;
 	double sign   = 1.;
 	for(j = 0; j < n; j++)
 	{	sign *= -1.;
 		x[j] = sign * double(j + 1);
-		check += log( abs( x[j] ) );
+		check += log( fabs( x[j] ) );
 	}
 
 	// function value
@@ -476,8 +474,8 @@ bool OldExample(void)
 	dw   = f.Reverse(1, w);
 	for(j = 0; j < n; j++)
 	{	if( x[j] > 0. )
-			ok &= NearEqual(dw[j], 1./abs( x[j] ), eps, eps);
-		else	ok &= NearEqual(dw[j], -1./abs( x[j] ), eps, eps);
+			ok &= NearEqual(dw[j], 1./fabs( x[j] ), eps, eps);
+		else	ok &= NearEqual(dw[j], -1./fabs( x[j] ), eps, eps);
 	}
 
 	// a case where x[0] is equal to zero
@@ -497,9 +495,9 @@ bool OldExample(void)
 	dw   = f.Reverse(1, w);
 	for(j = 0; j < n; j++)
 	{	if( x[j] > 0. )
-			ok &= NearEqual(dw[j], 1./abs( x[j] ), eps, eps);
+			ok &= NearEqual(dw[j], 1./fabs( x[j] ), eps, eps);
 		else if( x[j] < 0. )
-			ok &= NearEqual(dw[j], -1./abs( x[j] ), eps, eps);
+			ok &= NearEqual(dw[j], -1./fabs( x[j] ), eps, eps);
 		else
 			ok &= NearEqual(dw[j], 0.0, eps, eps);
 	}

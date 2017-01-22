@@ -1,6 +1,5 @@
-// $Id$
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-15 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-17 Bradley M. Bell
 
 CppAD is distributed under multiple licenses. This distribution is under
 the terms of the
@@ -31,7 +30,7 @@ bool cond_exp_rev(void)
 	Independent(ax);
 
 	// AbsOp
-	ay.push_back( CondExpGt(ax[0], azero, ax[0], abs(ax[1]) ));
+	ay.push_back( CondExpGt(ax[0], azero, ax[0], fabs(ax[1]) ));
 
 	// AcosOp
 	ay.push_back( CondExpGt(ax[0], azero, ax[0], acos(ax[1]) ));

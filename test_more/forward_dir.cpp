@@ -1,6 +1,5 @@
-// $Id$
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-15 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-17 Bradley M. Bell
 
 CppAD is distributed under multiple licenses. This distribution is under
 the terms of the
@@ -100,7 +99,7 @@ namespace {
 		// range space vector
 		size_t m = 1;
 		CPPAD_TESTVECTOR(AD<double>) ay(m);
-		ay[0] = abs( ax[0] ) + abs( 2.0 * ax[1] );
+		ay[0] = fabs( ax[0] ) + fabs( 2.0 * ax[1] );
 
 		// create f: x -> y and stop tape recording
 		CppAD::ADFun<double> f(ax, ay);
@@ -125,12 +124,12 @@ namespace {
 		ok &= size_t( y2.size() ) == r*m;
 		//
 		// Y_0  (t)    = F[X_0(t)]
-		//             = abs(0.5 + 1t + 2t^2) + abs( 2*(-1.0 + 2t + 3t^2 ) )
+		//             = fabs(0.5 + 1t + 2t^2) + fabs( 2*(-1.0 + 2t + 3t^2 ) )
 		double y_1_0   = -3.0;
 		double y_2_0   = -4.0;
 		//
 		// Y_1  (t)    = F[X_1(t)]
-		//             = abs(0.5 + 2t + 3t^2) + abs( 2*(-1.0 + 3t + 4t^2 ) )
+		//             = fabs(0.5 + 2t + 3t^2) + fabs( 2*(-1.0 + 3t + 4t^2 ) )
 		double y_1_1   = -4.0;
 		double y_2_1   = -5.0;
 		//
@@ -1085,7 +1084,7 @@ namespace {
 		x0[0] = -3.0;
 		y0  = f.Forward(0, x0);
 		ok &= size_t( y0.size() ) == m;
-		ok &= NearEqual(y0[0], CppAD::abs(x0[0]), eps, eps);
+		ok &= NearEqual(y0[0], fabs(x0[0]), eps, eps);
 
 		// first order Taylor coefficients
 		size_t r = 2, ell;

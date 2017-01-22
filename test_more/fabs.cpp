@@ -1,6 +1,5 @@
-// $Id$
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-15 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-17 Bradley M. Bell
 
 CppAD is distributed under multiple licenses. This distribution is under
 the terms of the
@@ -17,7 +16,7 @@ Test of directional derivative in AD< AD< double > > case.
 # include <cppad/cppad.hpp>
 
 
-bool abs(void)
+bool fabs(void)
 {	// test if CppAD::abs uses if statement during forward computations
 	bool ok = true;
 
@@ -30,7 +29,7 @@ bool abs(void)
 	CPPAD_TESTVECTOR( ADDdouble ) aax(1), aay(1);
 	aax[0] = ADDdouble(0.);
 	CppAD::Independent(aax);
-	aay[0] = CppAD::abs(aax[0]);
+	aay[0] = fabs(aax[0]);
 	CppAD::ADFun< ADdouble > af(aax, aay);
 
 	// f(x) = |x|

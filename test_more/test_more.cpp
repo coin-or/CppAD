@@ -1,6 +1,5 @@
-// $Id$
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-16 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-17 Bradley M. Bell
 
 CppAD is distributed under multiple licenses. This distribution is under
 the terms of the
@@ -17,7 +16,7 @@ Please visit http://www.coin-or.org/CppAD/ for information on other licenses.
 # include <cppad/utility/thread_alloc.hpp>
 
 // prototype external compiled tests (this line expected by bin/new_test.sh)
-extern bool abs(void);
+extern bool fabs(void);
 extern bool acos(void);
 extern bool acosh(void);
 extern bool adfun_copy(void);
@@ -154,7 +153,7 @@ int main(void)
 	// This line is used by test_one.sh
 
 	// run external compiled tests (this line expected by bin/new_test.sh)
-	ok &= Run( abs,             "abs"            );
+	ok &= Run( fabs,            "fabs"           );
 	ok &= Run( acos,            "acos"           );
 	ok &= Run( acosh,           "acosh"          );
 	ok &= Run( adfun_copy,      "adfun_copy"     );

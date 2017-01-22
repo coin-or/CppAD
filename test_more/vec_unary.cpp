@@ -1,6 +1,5 @@
-// $Id$
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-16 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-17 Bradley M. Bell
 
 CppAD is distributed under multiple licenses. This distribution is under
 the terms of the
@@ -20,7 +19,6 @@ Test the use of VecADelem with unary operators
 bool VecUnary(void)
 {
 	using namespace CppAD;
-	using CppAD::abs;
 	using CppAD::sin;
 	using CppAD::atan;
 	using CppAD::cos;
@@ -55,7 +53,7 @@ bool VecUnary(void)
 
 	j    = 2.;
 	Y[j] = X[2];
-	Z[2] = abs( Y[j] );
+	Z[2] = fabs( Y[j] );
 
 	j    = 3.;
 	Y[j] = X[3];
@@ -84,13 +82,13 @@ bool VecUnary(void)
 
 	for(i = 0; i < n; i++)
 		x[i] = 2. / double(i + 1);
-	x[7] = abs( x[7] );
+	x[7] = fabs( x[7] );
 
 	z    = f.Forward(0, x);
 
 	ok  &= NearEqual(z[0],      - x[0], eps99, eps99);
 	ok  &= NearEqual(z[1], sin( x[1] ), eps99, eps99);
-	ok  &= NearEqual(z[2], abs( x[2] ), eps99, eps99);
+	ok  &= NearEqual(z[2], fabs( x[2] ), eps99, eps99);
 	ok  &= NearEqual(z[3], atan(x[3] ), eps99, eps99);
 	ok  &= NearEqual(z[4], cos( x[4] ), eps99, eps99);
 	ok  &= NearEqual(z[5], exp( x[5] ), eps99, eps99);

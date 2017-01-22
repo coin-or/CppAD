@@ -265,7 +265,7 @@ bool std_math(void)
 
 // supress this test until ../bug/abs.sh is fixed
 # ifdef CPPAD_NOT_DEFINED
-bool abs(void)
+bool fabs(void)
 {	bool ok = true;
 	using CppAD::AD;
 	using CppAD::Independent;
@@ -282,10 +282,10 @@ bool abs(void)
 	CPPAD_TESTVECTOR(ADdouble)    ax(n),  ay(m);
 	CPPAD_TESTVECTOR(ADDdouble)  aax(n), aay(m);
 
-	// create af(x) = abs(x)
+	// create af(x) = fabs(x)
 	aax[0] = 1.;
 	Independent( aax );
-	aay[0] = abs(aax[0]);
+	aay[0] = fabs(aax[0]);
 	ADFun<ADdouble> af(aax, aay);
 
 	// create g(x) = af'(x)
@@ -326,7 +326,7 @@ bool mul_level(void)
 # endif
 	ok     &= std_math();
 # ifdef CPPAD_NOT_DEFINED
-	ok     &= abs();
+	ok     &= fabs();
 # endif
 
 	return ok;

@@ -1,6 +1,5 @@
-// $Id$
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-15 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-17 Bradley M. Bell
 
 CppAD is distributed under multiple licenses. This distribution is under
 the terms of the
@@ -56,7 +55,7 @@ bool forward_order(void)
 	size_t identity_end = i;
 
 	// other functions
-	Y[i] = abs( X[i] );         i++;   // AbsOp
+	Y[i] = fabs( X[i] );        i++;   // AbsOp
 	Y[i] = X[i-1] + X[i] + 2.0; i++;   // AddvvOp, AddvpOp
 	Y[i] = cosh( X[i] );        i++;   // CoshOp
 	Y[i] = my_discrete( X[i] ); i++;   // DisOp
@@ -108,8 +107,8 @@ bool forward_order(void)
 		i++;
 	}
 
-	// y_i = abs( x_i )
-	y[0] = CppAD::abs( x[i] );
+	// y_i = fabs( x_i )
+	y[0] = fabs( x[i] );
 	y[1] = CppAD::sign( x[i] );
 	y[2] = 0.0;
 	for(k = 0; k < p1; k++)

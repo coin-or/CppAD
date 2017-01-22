@@ -1,6 +1,5 @@
-// $Id$
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-16 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-17 Bradley M. Bell
 
 CppAD is distributed under multiple licenses. This distribution is under
 the terms of the
@@ -424,7 +423,7 @@ namespace {
 
 		// unary operator where operand is arg[0]
 		// (note that sin corresponds to two tape variables)
-		not_used = CppAD::abs(x[0]);
+		not_used = fabs(x[0]);
 		y[0]     = sin(x[0]);
 		original += 3;
 		opt      += 2;
@@ -987,7 +986,7 @@ namespace {
 		);
 		Y[0] = X[0];
 		for(j = 0; j < n_operations; j++)
-			Y[0] = abs(Y[0]);
+			Y[0] = fabs(Y[0]);
 
 		// create f: X -> Y and stop tape recording
 		CppAD::ADFun<double> F;

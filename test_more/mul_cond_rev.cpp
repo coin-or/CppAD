@@ -1,6 +1,5 @@
-// $Id$
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-15 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-17 Bradley M. Bell
 
 CppAD is distributed under multiple licenses. This distribution is under
 the terms of the
@@ -55,7 +54,7 @@ bool mul_cond_rev(void)
 	// div
 	a2y[i++]  = CondExpGt(a2x[0], a2zero, a2nan_var, a2zero);
 	// abs
-	a2y[i++]  = CondExpGt(a2x[0], a2zero, abs( a2y[0] ), a2zero);
+	a2y[i++]  = CondExpGt(a2x[0], a2zero, fabs( a2y[0] ), a2zero);
 	// add
 	a2y[i++]  = CondExpGt(a2x[0], a2zero, a2nan_var + a2nan_var, a2zero);
 	// acos
@@ -123,7 +122,7 @@ bool mul_cond_rev(void)
 	// div
 	a1y[i++]  = CondExpGt(a1x[0], a1zero, a1nan_var, a1zero);
 	// abs
-	a1y[i++]  = CondExpGt(a1x[0], a1zero, abs( a1y[0] ), a1zero);
+	a1y[i++]  = CondExpGt(a1x[0], a1zero, fabs( a1y[0] ), a1zero);
 	// add
 	a1y[i++]  = CondExpGt(a1x[0], a1zero, a1nan_var + a1nan_var, a1zero);
 	// acos
