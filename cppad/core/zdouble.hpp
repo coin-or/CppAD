@@ -229,16 +229,15 @@ class zdouble {
 	\code
 		os << z1
 		Integer(z1)
-		abs(z1)
+		fabs(z1)
 		pow(z1, z2)
-		abs_geq(z1, z2)
+		fabs_geq(z1, z2)
 		fun(z1)
 	\endcode
 	where fun is any of the standard math unary functions.
 	*/
 	friend std::ostream& operator << (std::ostream &os, const zdouble& z);
 	friend int Integer(const zdouble& z);
-	friend zdouble abs(const zdouble& x);
 	friend zdouble pow(const zdouble& x, const zdouble& y);
 	friend bool abs_geq(const zdouble& x, const zdouble& y);
 	//
@@ -504,7 +503,7 @@ CPPAD_ZDOUBLE_STD_MATH(log1p)
 
 /// Base type requirement: abs
 inline zdouble abs(const zdouble& x)
-{	return std::fabs(x.dbl_); }
+{	return fabs(x); }
 
 /// Base type requirement: sign
 inline zdouble sign(const zdouble& x)

@@ -1,8 +1,7 @@
-// $Id$
 # ifndef CPPAD_EXAMPLE_BASE_ADOLC_HPP
 # define CPPAD_EXAMPLE_BASE_ADOLC_HPP
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-16 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-17 Bradley M. Bell
 
 CppAD is distributed under multiple licenses. This distribution is under
 the terms of the
@@ -343,7 +342,7 @@ namespace CppAD {
 		double value = x.value();
 		if( value == 0.0 )
 			return code;
-		double log_x = std::log( abs( value ) );
+		double log_x = std::log( fabs( value ) );
 		// assume log( std::numeric_limits<double>::max() ) is near 700
 		code = static_cast<unsigned short>(
 			(CPPAD_HASH_TABLE_SIZE / 700 + 1) * log_x

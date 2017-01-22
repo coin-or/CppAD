@@ -293,6 +293,7 @@ namespace CppAD {
 	BASE_ALLOC_STD_MATH(cos)
 	BASE_ALLOC_STD_MATH(cosh)
 	BASE_ALLOC_STD_MATH(exp)
+	BASE_ALLOC_STD_MATH(fabs)
 	BASE_ALLOC_STD_MATH(log)
 	BASE_ALLOC_STD_MATH(log10)
 	BASE_ALLOC_STD_MATH(sin)
@@ -302,12 +303,12 @@ namespace CppAD {
 	BASE_ALLOC_STD_MATH(tanh)
 }
 /* %$$
-The absolute value function is special because its $code std$$ name is
+The absolute value function is special because it $code std$$ name is
 $code fabs$$
 $srccode%cpp% */
 namespace CppAD {
 	inline base_alloc abs(const base_alloc& x)
-	{	return std::fabs(*x.ptrdbl_); }
+	{	return fabs(x); }
 }
 /* %$$
 
@@ -382,7 +383,7 @@ namespace CppAD {
 	{	unsigned short code = 0;
 		if( *x.ptrdbl_ == 0.0 )
 			return code;
-		double log_x = log( abs( *x.ptrdbl_ ) );
+		double log_x = log( std::fabs( *x.ptrdbl_ ) );
 		// assume log( std::numeric_limits<double>::max() ) is near 700
 		code = static_cast<unsigned short>(
 			(CPPAD_HASH_TABLE_SIZE / 700 + 1) * log_x
