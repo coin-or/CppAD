@@ -1,6 +1,5 @@
-// $Id$
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-16 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-17 Bradley M. Bell
 
 CppAD is distributed under multiple licenses. This distribution is under
 the terms of the
@@ -50,10 +49,10 @@ namespace {
 			// compute the Huber function using a conditional
 			// statement that depends on the value of x.
 			double eps = 0.1;
-			if( abs(x[0]) <= eps )
+			if( fabs(x[0]) <= eps )
 				fg[0] = x[0] * x[0] / (2.0 * eps);
 			else
-				fg[0] = abs(x[0]) - eps / 2.0;
+				fg[0] = fabs(x[0]) - eps / 2.0;
 
 			return;
 		}

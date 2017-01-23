@@ -1,9 +1,8 @@
-// $Id$
 # ifndef CPPAD_CORE_ATAN2_HPP
 # define CPPAD_CORE_ATAN2_HPP
 
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-16 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-17 Bradley M. Bell
 
 CppAD is distributed under multiple licenses. This distribution is under
 the terms of the
@@ -102,8 +101,8 @@ AD<Base> atan2 (const AD<Base> &y, const AD<Base> &x)
 	AD<Base> pi2(2. * atan(1.));
 	AD<Base> pi(2. * pi2);
 
-	AD<Base> ax = abs(x);
-	AD<Base> ay = abs(y);
+	AD<Base> ax = fabs(x);
+	AD<Base> ay = fabs(y);
 
 	// if( ax > ay )
 	//	theta = atan(ay / ax);

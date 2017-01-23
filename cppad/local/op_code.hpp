@@ -1,9 +1,8 @@
-// $Id$
 # ifndef CPPAD_LOCAL_OP_CODE_HPP
 # define CPPAD_LOCAL_OP_CODE_HPP
 
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-16 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-17 Bradley M. Bell
 
 CppAD is distributed under multiple licenses. This distribution is under
 the terms of the
@@ -47,7 +46,7 @@ operand is a parameter and the right operand is a variable.
 */
 // alphabetical order is checked by bin/check_op_code.sh
 enum OpCode {
-	AbsOp,    // abs(variable)
+	AbsOp,    // fabs(variable)
 	AcosOp,   // acos(variable)
 	AcoshOp,  // acosh(variable)
 	AddpvOp,  // parameter  + variable
