@@ -111,7 +111,7 @@ am__libeigen_a_SOURCES_DIST = eigen_det.cpp eigen_array.cpp
 @CppAD_EIGEN_DIR_TRUE@@CppAD_HAVE_AR_TRUE@	libeigen_a-eigen_array.$(OBJEXT)
 libeigen_a_OBJECTS = $(am_libeigen_a_OBJECTS)
 am__example_SOURCES_DIST = mul_level_adolc.cpp mul_level_adolc_ode.cpp \
-	abort_recording.cpp abs.cpp acos.cpp acosh.cpp ad_assign.cpp \
+	abort_recording.cpp fabs.cpp acos.cpp acosh.cpp ad_assign.cpp \
 	ad_ctor.cpp add.cpp add_eq.cpp ad_fun.cpp ad_in_c.cpp \
 	ad_input.cpp ad_output.cpp asin.cpp asinh.cpp atan2.cpp \
 	atan.cpp atanh.cpp azmul.cpp base_alloc.hpp base_require.cpp \
@@ -150,7 +150,7 @@ am__example_SOURCES_DIST = mul_level_adolc.cpp mul_level_adolc_ode.cpp \
 @CppAD_ADOLC_TRUE@am__objects_1 = mul_level_adolc.$(OBJEXT) \
 @CppAD_ADOLC_TRUE@	mul_level_adolc_ode.$(OBJEXT)
 am_example_OBJECTS = $(am__objects_1) abort_recording.$(OBJEXT) \
-	abs.$(OBJEXT) acos.$(OBJEXT) acosh.$(OBJEXT) \
+	fabs.$(OBJEXT) acos.$(OBJEXT) acosh.$(OBJEXT) \
 	ad_assign.$(OBJEXT) ad_ctor.$(OBJEXT) add.$(OBJEXT) \
 	add_eq.$(OBJEXT) ad_fun.$(OBJEXT) ad_in_c.$(OBJEXT) \
 	ad_input.$(OBJEXT) ad_output.$(OBJEXT) asin.$(OBJEXT) \
@@ -310,9 +310,8 @@ CXX_FLAGS_EIGEN = @CXX_FLAGS_EIGEN@
 CXX_FLAGS_FADBAD = @CXX_FLAGS_FADBAD@
 CYGPATH_W = @CYGPATH_W@
 
-# $Id$
 # -----------------------------------------------------------------------------
-# CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-16 Bradley M. Bell
+# CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-17 Bradley M. Bell
 #
 # CppAD is distributed under multiple licenses. This distribution is under
 # the terms of the
@@ -512,7 +511,7 @@ example_SOURCES = \
 	$(ADOLC_SRC_FILES) \
 	\
 	abort_recording.cpp \
-	abs.cpp \
+	fabs.cpp \
 	acos.cpp \
 	acosh.cpp \
 	ad_assign.cpp \
@@ -707,7 +706,6 @@ distclean-compile:
 	-rm -f *.tab.c
 
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/abort_recording.Po@am__quote@
-@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/abs.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/acos.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/acosh.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/ad_assign.Po@am__quote@
@@ -750,6 +748,7 @@ distclean-compile:
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/example.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/exp.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/expm1.Po@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/fabs.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/for_one.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/for_sparse_hes.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/for_sparse_jac.Po@am__quote@
