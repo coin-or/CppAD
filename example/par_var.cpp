@@ -1,6 +1,5 @@
-// $Id$
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-16 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-17 Bradley M. Bell
 
 CppAD is distributed under multiple licenses. This distribution is under
 the terms of the
@@ -49,7 +48,7 @@ bool ParVar(void)
 	CPPAD_TESTVECTOR(AD<double>) y(m);
 	y[0] = 2.;
 	ok  &= Parameter(y[0]);    // y[0] does not depend on x[0]
-	y[1] = abs(x[0]);
+	y[1] = fabs(x[0]);
 	ok  &= Variable(y[1]);     // y[1] does depends on x[0]
 
 	// VecAD objects

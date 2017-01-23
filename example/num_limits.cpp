@@ -1,6 +1,5 @@
-// $Id$
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-16 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-17 Bradley M. Bell
 
 CppAD is distributed under multiple licenses. This distribution is under
 the terms of the
@@ -58,10 +57,10 @@ namespace {
 		Float eps   = CppAD::numeric_limits<Float>::epsilon();
 		//
 		Float match = (min / 100.) * 100.;
-		ok         &= abs(match / min - 1.0)  > 3.0 * eps;
+		ok         &= fabs(match / min - 1.0)  > 3.0 * eps;
 		//
 		match       = (min * 100.) / 100.;
-		ok         &= abs(match / min - 1.0)  < 3.0 * eps;
+		ok         &= fabs(match / min - 1.0)  < 3.0 * eps;
 		return ok;
 	}
 	// -----------------------------------------------------------------
@@ -71,10 +70,10 @@ namespace {
 		Float eps   = CppAD::numeric_limits<Float>::epsilon();
 		//
 		Float match = (max * 100.) / 100.;
-		ok         &= abs(match / max - 1.0) > 3.0 * eps;
+		ok         &= fabs(match / max - 1.0) > 3.0 * eps;
 		//
 		match       = (max / 100.) * 100.;
-		ok         &= abs(match / max - 1.0) < 3.0 * eps;
+		ok         &= fabs(match / max - 1.0) < 3.0 * eps;
 		return ok;
 	}
 	// -----------------------------------------------------------------

@@ -1,6 +1,5 @@
-// $Id$
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-16 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-17 Bradley M. Bell
 
 CppAD is distributed under multiple licenses. This distribution is under
 the terms of the
@@ -178,7 +177,7 @@ void cad_unary(cad_unary_op op, cad* p_operand, cad* p_result)
 	switch(op)
 	{
 		case op_abs:
-		*result = abs( *operand );
+		*result = fabs( *operand );
 		break;
 
 		case op_acos:

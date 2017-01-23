@@ -1,9 +1,8 @@
-// $Id$
 # ifndef CPPAD_CORE_ABS_HPP
 # define CPPAD_CORE_ABS_HPP
 
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-16 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-17 Bradley M. Bell
 
 CppAD is distributed under multiple licenses. This distribution is under
 the terms of the
@@ -65,10 +64,10 @@ The result for $icode%x% == 0%$$ used to be a directional derivative.
 
 $head Example$$
 $children%
-	example/abs.cpp
+	example/fabs.cpp
 %$$
 The file
-$cref abs.cpp$$
+$cref fabs.cpp$$
 contains an example and test of this function.
 It returns true if it succeeds and false otherwise.
 

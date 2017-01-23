@@ -1,6 +1,5 @@
-// $Id$
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-16 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-17 Bradley M. Bell
 
 CppAD is distributed under multiple licenses. This distribution is under
 the terms of the
@@ -57,7 +56,7 @@ namespace {
 		// tape AD operation sequence that determines the row of A
 		// with maximum absolute element in column zero
 		AD<double> zero(0), one(1);
-		AD<double> rmax = CondExpGt(abs(a[0]), abs(a[2]), zero, one);
+		AD<double> rmax = CondExpGt(fabs(a[0]), fabs(a[2]), zero, one);
 
 		// divide row rmax by A(rmax, 0)
 		A[rmax * 2 + 1]  = A[rmax * 2 + 1] / A[rmax * 2 + 0];

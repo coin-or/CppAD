@@ -1,6 +1,5 @@
-// $Id$
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-16 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-17 Bradley M. Bell
 
 CppAD is distributed under multiple licenses. This distribution is under
 the terms of the
@@ -56,7 +55,6 @@ bool CondExp(void)
 	using CppAD::AD;
 	using CppAD::NearEqual;
 	using CppAD::log;
-	using CppAD::abs;
 	double eps  = 100. * CppAD::numeric_limits<double>::epsilon();
 
 	// domain space vector

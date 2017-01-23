@@ -1,6 +1,5 @@
-// $Id$
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-16 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-17 Bradley M. Bell
 
 CppAD is distributed under multiple licenses. This distribution is under
 the terms of the
@@ -11,7 +10,7 @@ Please visit http://www.coin-or.org/CppAD/ for information on other licenses.
 -------------------------------------------------------------------------- */
 
 /*
-$begin abs.cpp$$
+$begin fabs.cpp$$
 $spell
 	fabs
 	abs
@@ -22,7 +21,7 @@ $mindex abs fabs$$
 
 
 $code
-$srcfile%example/abs.cpp%0%// BEGIN C++%// END C++%1%$$
+$srcfile%example/fabs.cpp%0%// BEGIN C++%// END C++%1%$$
 $$
 
 $end
@@ -31,7 +30,7 @@ $end
 
 # include <cppad/cppad.hpp>
 
-bool abs(void)
+bool fabs(void)
 {	bool ok = true;
 
 	using CppAD::AD;
@@ -49,9 +48,9 @@ bool abs(void)
 	// range space vector
 	size_t m = 6;
 	CPPAD_TESTVECTOR(AD<double>) y(m);
-	y[0]     = abs(x[0] - 1.);
-	y[1]     = abs(x[0]);
-	y[2]     = abs(x[0] + 1.);
+	y[0]     = fabs(x[0] - 1.);
+	y[1]     = fabs(x[0]);
+	y[2]     = fabs(x[0] + 1.);
 	//
 	y[3]     = fabs(x[0] - 1.);
 	y[4]     = fabs(x[0]);
@@ -114,7 +113,7 @@ bool abs(void)
 	CppAD::VecAD<double> v(1);
 	AD<double> zero(0);
 	v[zero]           = -1;
-	AD<double> result = abs(v[zero]);
+	AD<double> result = fabs(v[zero]);
 	ok    &= NearEqual(result, 1., eps99, eps99);
 	result = fabs(v[zero]);
 	ok    &= NearEqual(result, 1., eps99, eps99);

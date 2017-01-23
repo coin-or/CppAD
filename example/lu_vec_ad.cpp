@@ -1,6 +1,5 @@
-// $Id$
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-15 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-17 Bradley M. Bell
 
 CppAD is distributed under multiple licenses. This distribution is under
 the terms of the
@@ -230,7 +229,7 @@ AD<double> LuVecAD(
 				etmp  = Matrix[ index ];
 
 				// compute absolute value of element
-				etmp = abs(etmp);
+				etmp = fabs(etmp);
 
 				// update maximum absolute value so far
 				emax = CondExpGe(etmp, emax, etmp, emax);
@@ -266,7 +265,7 @@ AD<double> LuVecAD(
 		singular = CondExpEq(pivot, Zero, One, singular);
 
 		// update the log of absolute determinant and its sign
-		etmp     = abs(pivot);
+		etmp     = fabs(pivot);
 		logdet   = logdet + log( etmp );
 		signdet  = CondExpGe(pivot, Zero, signdet, - signdet);
 
