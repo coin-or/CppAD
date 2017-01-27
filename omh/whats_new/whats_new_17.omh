@@ -11,6 +11,7 @@ Please visit http://www.coin-or.org/CppAD/ for information on other licenses.
 
 $begin whats_new_17$$
 $spell
+	Perl
 	CppAD
 	doxygen
 	cppad
@@ -18,6 +19,11 @@ $spell
 $$
 
 $section Changes and Additions to CppAD During 2017$$
+
+$head 01-27$$
+Add a $cref addon$$ link to
+$href%http://www.seanet.com/~bradbell/cppad_swig%cppad_swig%$$,
+a C++ AD object library and swig interface to Perl, Octave, and Python.
 
 $head 01-19$$
 Convert more examples / tests to use a multiple of machine epsilon

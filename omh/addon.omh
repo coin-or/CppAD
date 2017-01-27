@@ -1,6 +1,6 @@
 // $Id$
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-15 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-17 Bradley M. Bell
 
 CppAD is distributed under multiple licenses. This distribution is under
 the terms of the
@@ -11,6 +11,7 @@ Please visit http://www.coin-or.org/CppAD/ for information on other licenses.
 -------------------------------------------------------------------------- */
 $begin addon$$
 $spell
+	Perl
 	Addons
 	addon
 	libdir
@@ -37,21 +38,25 @@ $icode name$$  $pre  $$ $cnext
 $icode longer$$ $pre  $$ $cnext
 $icode description$$
 $rnext
-$href%https://github.com/joaoleal/CppADCodeGen/%cg%$$ $cnext
-	$code CppADCodeGen$$ $cnext
-	C++ Source Code Generation of CppAD Derivative Calculations
-$rnext
-$href%http://www.seanet.com/~bradbell/pycppad/pycppad.htm%py%$$ $cnext
-	$code pycppad$$ $cnext
-	A Python Interface to CppAD
-$rnext
 $href%https://github.com/kaskr/adcomp%tmb%$$ $cnext
 	$code adcomp$$ $cnext
 	An R Interface to CppAD with Random Effects Modeling Utilities
 $rnext
+$href%https://github.com/joaoleal/CppADCodeGen/%cg%$$ $cnext
+	$code CppADCodeGen$$ $cnext
+	C++ Source Code Generation of CppAD Derivative Calculations
+$rnext
 $href%http://moby.ihme.washington.edu/bradbell/cppad_mixed%mixed%$$
 	$cnext $code cppad_mixed$$ $cnext
 	A C++ Interface to Random Effects Laplace Approximation
+$rnext
+$href%http://www.seanet.com/~bradbell/cppad_swig%swig%$$
+	$cnext $code cppad_swig$$ $cnext
+	A C++ AD Library with a Swig Interface to Perl, Octave, and Python
+$rnext
+$href%http://www.seanet.com/~bradbell/pycppad/pycppad.htm%py%$$ $cnext
+	$code pycppad$$ $cnext
+	A Python Interface to CppAD
 $tend
 
 $head Include Files$$
