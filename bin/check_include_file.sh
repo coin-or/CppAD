@@ -1,7 +1,6 @@
 #! /bin/bash -e
-# $Id$
 # -----------------------------------------------------------------------------
-# CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-16 Bradley M. Bell
+# CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-17 Bradley M. Bell
 #
 # CppAD is distributed under multiple licenses. This distribution is under
 # the terms of the
@@ -22,7 +21,7 @@ echo "Checking difference between C++ include directives and file names."
 echo "-------------------------------------------------------------------"
 if [ -e check_include_file.1.$$ ]
 then
-	echo "bin/check_include_file.sh: unexpected bin/check_include_file.1.$$"
+	echo "bin/check_include_file.sh: unexpected check_include_file.1.$$"
 	exit 1
 fi
 list=`bin/ls_files.sh | sed -n \
@@ -31,12 +30,12 @@ list=`bin/ls_files.sh | sed -n \
 for file in $list
 do
 	sed -n -e '/^# *include *<cppad\//p' $file \
-		>> bin/check_include_file.1.$$
+		>> check_include_file.1.$$
 done
 #
-cat bin/check_include_file.1.$$ | \
+cat check_include_file.1.$$ | \
 	sed -e 's%[^<]*<%%'  -e 's%>.*$%%' | \
-	sort -u > bin/check_include_file.2.$$
+	sort -u > check_include_file.2.$$
 #
 # The following files should never be included:
 #	cppad/local/prototype_op.hpp
@@ -51,17 +50,41 @@ bin/ls_files.sh | sed -n -e '/cppad\/.*\.hpp$/p' | \
 		-e '/cppad\/local\/optimize\/define_prototype.hpp/d' \
 		-e '/cppad\/example\/eigen_plugin.hpp/d'  \
 		-e '/cppad\/deprecated\//d' | \
-	sort -u > bin/check_include_file.3.$$
+	sort -u > check_include_file.3.$$
 #
-if diff bin/check_include_file.2.$$ bin/check_include_file.3.$$
+different='no'
+if ! diff check_include_file.2.$$ check_include_file.3.$$ > /dev/null
 then
-	different="no"
-else
-	different="yes"
+	found='no'
+	different='yes'
+	for file in `cat check_include_file.2.$$`
+	do
+		if ! grep "$file" check_include_file.3.$$ > /dev/null
+		then
+			found='yes'
+			echo "The included file $file is unknown to git."
+			echo 'Perhaps it needs to be added ?'
+		fi
+	done
+	for file in `cat check_include_file.3.$$`
+	do
+		if ! grep "$file" check_include_file.2.$$ > /dev/null
+		then
+			found='yes'
+			echo "The included $file is no longer included."
+			echo 'Perhaps it needs to be git deleted ?'
+		fi
+	done
+	if [ "$found" == 'no' ]
+	then
+		echo 'bin/check_include_file.sh: Cannot find reason for difference'
+		echo 'Improve this script.'
+		exit 1
+	fi
 fi
 for index in 1 2 3
 do
-	rm bin/check_include_file.$index.$$
+	rm check_include_file.$index.$$
 done
 #
 echo "-------------------------------------------------------------------"

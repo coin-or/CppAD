@@ -312,6 +312,8 @@ nobase_myinclude_HEADERS =  \
 	cppad/utility/rosen_34.hpp \
 	cppad/utility/runge_45.hpp \
 	cppad/utility/set_union.hpp \
+	cppad/utility/sparse_rc.hpp \
+	cppad/utility/sparse_rcv.hpp \
 	cppad/utility/speed_test.hpp \
 	cppad/utility/thread_alloc.hpp \
 	cppad/utility/time_test.hpp \

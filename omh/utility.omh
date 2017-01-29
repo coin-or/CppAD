@@ -1,6 +1,5 @@
-$Id$
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-16 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-17 Bradley M. Bell
 
 CppAD is distributed under multiple licenses. This distribution is under
 the terms of the
@@ -62,7 +61,9 @@ $children%
 	omh/thread_alloc.omh%
 	cppad/utility/index_sort.hpp%
 	cppad/utility/to_string.hpp%
-	cppad/utility/set_union.hpp
+	cppad/utility/set_union.hpp%
+	cppad/utility/sparse_rc.hpp%
+	cppad/utility/sparse_rcv.hpp
 %$$
 
 $head Testing$$
@@ -114,8 +115,8 @@ $table
 $rref ErrorHandler$$
 $tend
 
-$subhead Simple Vector Template Class$$
-A simple implementation of a template vector class
+$subhead The CppAD Vector Template Class$$
+This is a simple implementation of a template vector class
 (that is easy to view in a C++ debugger):
 $table
 $rref CppAD_vector$$
@@ -139,6 +140,12 @@ $tend
 $subhead set_union$$
 $table
 $rref set_union$$
+$tend
+
+$subhead Sparse Matrices$$
+$table
+$rref sparse_rc$$
+$rref sparse_rcv$$
 $tend
 
 $end
