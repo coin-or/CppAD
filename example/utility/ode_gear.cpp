@@ -36,7 +36,7 @@ x_i '(t)   & = & (i+1) t^i = (i+1) x_{i-1} (t) & {\rm if \;} i > 0
 The example tests OdeGear using the relations above:
 
 $code
-$srcfile%example/ode_gear.cpp%0%// BEGIN C++%// END C++%1%$$
+$srcfile%example/utility/ode_gear.cpp%0%// BEGIN C++%// END C++%1%$$
 $$
 
 $end

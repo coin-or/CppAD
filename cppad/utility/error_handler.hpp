@@ -1,8 +1,7 @@
-// $Id$
 # ifndef CPPAD_UTILITY_ERROR_HANDLER_HPP
 # define CPPAD_UTILITY_ERROR_HANDLER_HPP
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-16 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-17 Bradley M. Bell
 
 CppAD is distributed under multiple licenses. This distribution is under
 the terms of the
@@ -111,7 +110,7 @@ and is a $code '\0'$$ terminated character vector.
 It reports the meaning of the error from the C++ programmers point of view.
 
 $children%
-	example/error_handler.cpp%
+	example/utility/error_handler.cpp%
 	cppad/core/cppad_assert.hpp
 %$$
 $head Example$$

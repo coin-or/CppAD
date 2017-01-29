@@ -24,6 +24,9 @@ ADD_SUBDIRECTORY(atomic)
 # optimize examples
 ADD_SUBDIRECTORY(optimize)
 
+# utility examples
+ADD_SUBDIRECTORY(utility)
+
 # adolc_sources, adolc_libs, and CPPAD_HAS_ADOLC
 SET(sources mul_level_adolc.cpp mul_level_adolc_ode.cpp)
 sources_libs_define(adolc "${sources}" adolc HAS_ADOLC)
@@ -78,8 +81,6 @@ ADD_EXECUTABLE(example EXCLUDE_FROM_ALL example.cpp
 	capacity_order.cpp
 	change_param.cpp
 	check_for_nan.cpp
-	check_numeric_type.cpp
-	check_simple_vector.cpp
 	compare_change.cpp
 	compare.cpp
 	complex_poly.cpp
@@ -87,13 +88,11 @@ ADD_EXECUTABLE(example EXCLUDE_FROM_ALL example.cpp
 	conj_grad.cpp
 	cos.cpp
 	cosh.cpp
-	cppad_vector.cpp
 	dependency.cpp
 	div.cpp
 	div_eq.cpp
 	equal_op_seq.cpp
 	erf.cpp
-	error_handler.cpp
 	exp.cpp
 	expm1.cpp
 	for_one.cpp
@@ -111,7 +110,6 @@ ADD_EXECUTABLE(example EXCLUDE_FROM_ALL example.cpp
 	hessian.cpp
 	hes_times_dir.cpp
 	independent.cpp
-	index_sort.cpp
 	integer.cpp
 	interface2c.cpp
 	interp_onetape.cpp
@@ -122,10 +120,7 @@ ADD_EXECUTABLE(example EXCLUDE_FROM_ALL example.cpp
 	log10.cpp
 	log1p.cpp
 	log.cpp
-	lu_factor.cpp
-	lu_invert.cpp
 	lu_ratio.cpp
-	lu_solve.cpp
 	lu_vec_ad.cpp
 	lu_vec_ad.hpp
 	lu_vec_ad_ok.cpp
@@ -133,16 +128,10 @@ ADD_EXECUTABLE(example EXCLUDE_FROM_ALL example.cpp
 	mul_eq.cpp
 	mul_level.cpp
 	mul_level_ode.cpp
-	nan.cpp
-	near_equal.cpp
 	near_equal_ext.cpp
 	number_skip.cpp
 	numeric_type.cpp
 	num_limits.cpp
-	ode_err_control.cpp
-	ode_err_maxabs.cpp
-	ode_gear_control.cpp
-	ode_gear.cpp
 	ode_stiff.cpp
 	ode_taylor.cpp
 	opt_val_hes.cpp
@@ -159,15 +148,10 @@ ADD_EXECUTABLE(example EXCLUDE_FROM_ALL example.cpp
 	rev_sparse_hes.cpp
 	rev_sparse_jac.cpp
 	rev_two.cpp
-	romberg_mul.cpp
-	romberg_one.cpp
 	rosen_34.cpp
-	runge45_1.cpp
 	runge45_2.cpp
 	seq_property.cpp
-	set_union.cpp
 	sign.cpp
-	simple_vector.cpp
 	sin.cpp
 	sinh.cpp
 	sparse_hessian.cpp
@@ -182,14 +166,11 @@ ADD_EXECUTABLE(example EXCLUDE_FROM_ALL example.cpp
 	tan.cpp
 	tanh.cpp
 	tape_index.cpp
-	thread_alloc.cpp
-	to_string.cpp
 	unary_minus.cpp
 	unary_plus.cpp
 	value.cpp
 	var2par.cpp
 	vec_ad.cpp
-	vector_bool.cpp
 )
 
 # Compiler flags for cppad source

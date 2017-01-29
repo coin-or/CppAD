@@ -37,7 +37,7 @@ $latex \[
 The example tests OdeGearControl using the relations above:
 
 $code
-$srcfile%example/ode_gear_control.cpp%0%// BEGIN C++%// END C++%1%$$
+$srcfile%example/utility/ode_gear_control.cpp%0%// BEGIN C++%// END C++%1%$$
 $$
 
 $end

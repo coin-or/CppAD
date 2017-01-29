@@ -22,7 +22,7 @@ $mindex LuInvert$$
 
 
 $code
-$srcfile%example/lu_invert.cpp%0%// BEGIN C++%// END C++%1%$$
+$srcfile%example/utility/lu_invert.cpp%0%// BEGIN C++%// END C++%1%$$
 $$
 
 $end

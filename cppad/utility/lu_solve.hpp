@@ -1,9 +1,8 @@
-// $Id$
 # ifndef CPPAD_UTILITY_LU_SOLVE_HPP
 # define CPPAD_UTILITY_LU_SOLVE_HPP
 
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-16 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-17 Bradley M. Bell
 
 CppAD is distributed under multiple licenses. This distribution is under
 the terms of the
@@ -222,7 +221,7 @@ and it is not $code std::complex<float>$$ or $code std::complex<double>$$,
 see the documentation for $code AbsGeq$$ in $cref/LuFactor/LuFactor/AbsGeq/$$.
 
 $children%
-	example/lu_solve.cpp%
+	example/utility/lu_solve.cpp%
 	omh/lu_solve_hpp.omh
 %$$
 $head Example$$

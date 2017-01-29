@@ -1,9 +1,8 @@
-// $Id$
 # ifndef CPPAD_UTILITY_SET_UNION_HPP
 # define CPPAD_UTILITY_SET_UNION_HPP
 
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-16 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-17 Bradley M. Bell
 
 CppAD is distributed under multiple licenses. This distribution is under
 the terms of the
@@ -55,7 +54,7 @@ Note that C++11 detects that the return value is a temporary
 and uses it for the result instead of making a separate copy.
 
 $children%
-	example/set_union.cpp
+	example/utility/set_union.cpp
 %$$
 $head Example$$
 The file $cref set_union.cpp$$ contains an example and test of this

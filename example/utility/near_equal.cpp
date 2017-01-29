@@ -1,6 +1,5 @@
-// $Id$
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-16 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-17 Bradley M. Bell
 
 CppAD is distributed under multiple licenses. This distribution is under
 the terms of the
@@ -27,7 +26,7 @@ to avoid a name conflict with $code ../lib/NearEqual.cpp$$
 in the corresponding Microsoft project file.
 
 $code
-$srcfile%example/near_equal.cpp%0%// BEGIN C++%// END C++%1%$$
+$srcfile%example/utility/near_equal.cpp%0%// BEGIN C++%// END C++%1%$$
 $$
 
 $end

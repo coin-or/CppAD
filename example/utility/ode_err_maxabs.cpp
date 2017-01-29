@@ -1,6 +1,5 @@
-// $Id$
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-16 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-17 Bradley M. Bell
 
 CppAD is distributed under multiple licenses. This distribution is under
 the terms of the
@@ -41,7 +40,7 @@ $latex X_0 (t)$$ is near zero.
 This example tests OdeErrControl using the $icode maxabs$$ argument.
 
 $code
-$srcfile%example/ode_err_maxabs.cpp%0%// BEGIN C++%// END C++%1%$$
+$srcfile%example/utility/ode_err_maxabs.cpp%0%// BEGIN C++%// END C++%1%$$
 $$
 
 $end

@@ -36,7 +36,7 @@ X_i '(t)   & = & (i+1) t^i = (i+1) X_{i-1} (t) & {\rm if \;} i > 0
 The example tests Runge45 using the relations above:
 
 $code
-$srcfile%example/runge45_1.cpp%0%// BEGIN C++%// END C++%1%$$
+$srcfile%example/utility/runge45_1.cpp%0%// BEGIN C++%// END C++%1%$$
 $$
 
 $end

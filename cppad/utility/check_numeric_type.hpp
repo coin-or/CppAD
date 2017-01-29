@@ -52,7 +52,7 @@ can be used in $cref/parallel/ta_in_parallel/$$ mode.
 
 $head Example$$
 $children%
-	example/check_numeric_type.cpp
+	example/utility/check_numeric_type.cpp
 %$$
 The file $cref check_numeric_type.cpp$$
 contains an example and test of this function.

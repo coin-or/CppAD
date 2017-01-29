@@ -1,9 +1,8 @@
-// $Id$
 # ifndef CPPAD_UTILITY_NAN_HPP
 # define CPPAD_UTILITY_NAN_HPP
 
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-16 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-17 Bradley M. Bell
 
 CppAD is distributed under multiple licenses. This distribution is under
 the terms of the
@@ -134,7 +133,7 @@ The type $icode Vector$$ must be a $cref SimpleVector$$ class with
 elements of type $icode Scalar$$.
 
 $children%
-	example/nan.cpp
+	example/utility/nan.cpp
 %$$
 $head Example$$
 The file $cref nan.cpp$$

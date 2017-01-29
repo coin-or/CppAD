@@ -1,9 +1,8 @@
-// $Id$
 # ifndef CPPAD_UTILITY_LU_FACTOR_HPP
 # define CPPAD_UTILITY_LU_FACTOR_HPP
 
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-16 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-17 Bradley M. Bell
 
 CppAD is distributed under multiple licenses. This distribution is under
 the terms of the
@@ -212,7 +211,7 @@ of $icode x$$ is greater than or equal the
 sum of the square of the real and imaginary parts of $icode y$$.
 
 $children%
-	example/lu_factor.cpp%
+	example/utility/lu_factor.cpp%
 	omh/lu_factor_hpp.omh
 %$$
 $head Example$$

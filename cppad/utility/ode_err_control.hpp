@@ -1,9 +1,8 @@
-// $Id$
 # ifndef CPPAD_UTILITY_ODE_ERR_CONTROL_HPP
 # define CPPAD_UTILITY_ODE_ERR_CONTROL_HPP
 
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-16 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-17 Bradley M. Bell
 
 CppAD is distributed under multiple licenses. This distribution is under
 the terms of the
@@ -374,8 +373,8 @@ if this is not the case.
 
 $head Example$$
 $children%
-	example/ode_err_control.cpp%
-	example/ode_err_maxabs.cpp
+	example/utility/ode_err_control.cpp%
+	example/utility/ode_err_maxabs.cpp
 %$$
 The files
 $cref ode_err_control.cpp$$

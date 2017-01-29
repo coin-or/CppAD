@@ -1,6 +1,5 @@
-// $Id$
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-16 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-17 Bradley M. Bell
 
 CppAD is distributed under multiple licenses. This distribution is under
 the terms of the
@@ -20,7 +19,7 @@ $section Replacing The CppAD Error Handler: Example and Test$$
 $mindex handler$$
 
 $code
-$srcfile%example/error_handler.cpp%0%// BEGIN C++%// END C++%1%$$
+$srcfile%example/utility/error_handler.cpp%0%// BEGIN C++%// END C++%1%$$
 $$
 
 $end

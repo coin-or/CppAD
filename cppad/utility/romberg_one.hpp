@@ -1,9 +1,8 @@
-// $Id$
 # ifndef CPPAD_UTILITY_ROMBERG_ONE_HPP
 # define CPPAD_UTILITY_ROMBERG_ONE_HPP
 
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-16 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-17 Bradley M. Bell
 
 CppAD is distributed under multiple licenses. This distribution is under
 the terms of the
@@ -125,11 +124,11 @@ returns the $code bool$$ value true if $icode x$$ is less than
 $icode y$$ and false otherwise.
 
 $children%
-	example/romberg_one.cpp
+	example/utility/romberg_one.cpp
 %$$
 $head Example$$
 $comment%
-	example/romberg_one.cpp
+	example/utility/romberg_one.cpp
 %$$
 The file
 $cref romberg_one.cpp$$

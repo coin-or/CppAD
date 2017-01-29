@@ -1,9 +1,8 @@
-// $Id$
 # ifndef CPPAD_UTILITY_RUNGE_45_HPP
 # define CPPAD_UTILITY_RUNGE_45_HPP
 
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-16 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-17 Bradley M. Bell
 
 CppAD is distributed under multiple licenses. This distribution is under
 the terms of the
@@ -234,7 +233,7 @@ must not be $cref/parallel/ta_in_parallel/$$ execution mode.
 
 $head Example$$
 $children%
-	example/runge45_1.cpp%
+	example/utility/runge45_1.cpp%
 	example/runge45_2.cpp
 %$$
 The file
