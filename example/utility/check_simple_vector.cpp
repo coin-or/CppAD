@@ -1,6 +1,5 @@
-// $Id$
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-16 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-17 Bradley M. Bell
 
 CppAD is distributed under multiple licenses. This distribution is under
 the terms of the
@@ -17,7 +16,7 @@ $section The CheckSimpleVector Function: Example and Test$$
 $mindex check SimpleVector$$
 
 $code
-$srcfile%example/check_simple_vector.cpp%0%// BEGIN C++%// END C++%1%$$
+$srcfile%example/utility/check_simple_vector.cpp%0%// BEGIN C++%// END C++%1%$$
 $$
 
 $end

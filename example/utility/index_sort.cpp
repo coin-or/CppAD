@@ -1,6 +1,5 @@
-// $Id$
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-16 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-17 Bradley M. Bell
 
 CppAD is distributed under multiple licenses. This distribution is under
 the terms of the
@@ -18,7 +17,7 @@ $mindex index_sort$$
 
 
 $code
-$srcfile%example/index_sort.cpp%0%// BEGIN C++%// END C++%1%$$
+$srcfile%example/utility/index_sort.cpp%0%// BEGIN C++%// END C++%1%$$
 $$
 
 $end

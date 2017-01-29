@@ -1,6 +1,5 @@
-$Id$
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-16 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-17 Bradley M. Bell
 
 CppAD is distributed under multiple licenses. This distribution is under
 the terms of the
@@ -461,7 +460,7 @@ Improve the documentation for $cref pow$$ and $cref pow_int$$.
 $lnext
 Change all the example section names to be same as corresponding file names;
 e.g. change $code vectorBool.cpp$$ to $cref vector_bool.cpp$$
-for the example $code example/vector_bool.cpp$$.
+for the example $code example/utility/vector_bool.cpp$$.
 $lend
 
 $head 07-07$$

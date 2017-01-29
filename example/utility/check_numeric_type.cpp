@@ -16,7 +16,7 @@ $section The CheckNumericType Function: Example and Test$$
 $mindex check NumericType$$
 
 $code
-$srcfile%example/check_numeric_type.cpp%0%// BEGIN C++%// END C++%1%$$
+$srcfile%example/utility/check_numeric_type.cpp%0%// BEGIN C++%// END C++%1%$$
 $$
 
 $end

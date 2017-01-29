@@ -1,8 +1,7 @@
-// $Id$
 # ifndef CPPAD_UTILITY_TO_STRING_HPP
 # define CPPAD_UTILITY_TO_STRING_HPP
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-16 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-17 Bradley M. Bell
 
 CppAD is distributed under multiple licenses. This distribution is under
 the terms of the
@@ -87,7 +86,7 @@ enough digits are used in the representation so that
 the result is accurate to withing round off error.
 
 $children%
-	example/to_string.cpp
+	example/utility/to_string.cpp
 %$$
 $head Example$$
 The file $cref to_string.cpp$$

@@ -1,9 +1,8 @@
-// $Id$
 # ifndef CPPAD_UTILITY_VECTOR_HPP
 # define CPPAD_UTILITY_VECTOR_HPP
 
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-16 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-17 Bradley M. Bell
 
 CppAD is distributed under multiple licenses. This distribution is under
 the terms of the
@@ -291,8 +290,8 @@ $lend
 
 $head Example$$
 $children%
-	example/cppad_vector.cpp%
-	example/vector_bool.cpp
+	example/utility/cppad_vector.cpp%
+	example/utility/vector_bool.cpp
 %$$
 The files
 $cref cppad_vector.cpp$$ and

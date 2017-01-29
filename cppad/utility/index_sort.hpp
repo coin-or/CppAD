@@ -1,9 +1,8 @@
-// $Id$
 # ifndef CPPAD_UTILITY_INDEX_SORT_HPP
 # define CPPAD_UTILITY_INDEX_SORT_HPP
 
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-16 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-17 Bradley M. Bell
 
 CppAD is distributed under multiple licenses. This distribution is under
 the terms of the
@@ -68,7 +67,7 @@ $codei%
 
 $head Example$$
 $children%
-	example/index_sort.cpp
+	example/utility/index_sort.cpp
 %$$
 The file $cref index_sort.cpp$$ contains an example
 and test of this routine.
