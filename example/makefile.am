@@ -50,8 +50,6 @@ endif
 # -------------------------------------------------------------------------
 # auto-tools does not support use of colpack
 EXTRA_DIST        =  \
-	colpack_hes.cpp \
-	colpack_jac.cpp \
 	$(ADOLC_EXTRA_FILES) \
 	$(EIGEN_EXTRA_FILES)
 #
@@ -98,7 +96,6 @@ example_SOURCES   = \
 	base_require.cpp \
 	bender_quad.cpp \
 	bool_fun.cpp \
-	bool_sparsity.cpp \
 	capacity_order.cpp \
 	change_param.cpp \
 	check_for_nan.cpp \
@@ -106,7 +103,6 @@ example_SOURCES   = \
 	compare.cpp \
 	complex_poly.cpp \
 	cond_exp.cpp \
-	conj_grad.cpp \
 	cos.cpp \
 	cosh.cpp \
 	dependency.cpp \
@@ -118,8 +114,6 @@ example_SOURCES   = \
 	exp.cpp \
 	expm1.cpp \
 	for_one.cpp \
-	for_sparse_hes.cpp \
-	for_sparse_jac.cpp \
 	for_two.cpp \
 	forward.cpp \
 	forward_dir.cpp \
@@ -167,8 +161,6 @@ example_SOURCES   = \
 	reverse_three.cpp \
 	reverse_two.cpp \
 	rev_one.cpp \
-	rev_sparse_hes.cpp \
-	rev_sparse_jac.cpp \
 	rev_two.cpp \
 	rosen_34.cpp \
 	runge45_2.cpp \
@@ -176,15 +168,10 @@ example_SOURCES   = \
 	sign.cpp \
 	sin.cpp \
 	sinh.cpp \
-	sparse_hessian.cpp \
-	sparse_jacobian.cpp \
-	sparse_sub_hes.cpp \
-	sparsity_sub.cpp \
 	sqrt.cpp \
 	stack_machine.cpp \
 	sub.cpp \
 	sub_eq.cpp \
-	sub_sparse_hes.cpp \
 	tan.cpp \
 	tanh.cpp \
 	tape_index.cpp \

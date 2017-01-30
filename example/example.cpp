@@ -62,17 +62,13 @@ extern bool azmul(void);
 extern bool base_require(void);
 extern bool BenderQuad(void);
 extern bool BoolFun(void);
-extern bool bool_sparsity(void);
 extern bool capacity_order(void);
 extern bool change_param(void);
 extern bool check_for_nan(void);
-extern bool colpack_hes(void);
-extern bool colpack_jac(void);
 extern bool compare_change(void);
 extern bool Compare(void);
 extern bool complex_poly(void);
 extern bool CondExp(void);
-extern bool conj_grad(void);
 extern bool Cosh(void);
 extern bool Cos(void);
 extern bool dependency(void);
@@ -85,8 +81,6 @@ extern bool Erf(void);
 extern bool expm1(void);
 extern bool exp(void);
 extern bool ForOne(void);
-extern bool for_sparse_hes(void);
-extern bool ForSparseJac(void);
 extern bool ForTwo(void);
 extern bool forward_dir(void);
 extern bool forward_order(void);
@@ -134,8 +128,6 @@ extern bool reverse_one(void);
 extern bool reverse_three(void);
 extern bool reverse_two(void);
 extern bool RevOne(void);
-extern bool rev_sparse_hes(void);
-extern bool RevSparseJac(void);
 extern bool RevTwo(void);
 extern bool Rosen34(void);
 extern bool runge_45_2(void);
@@ -143,14 +135,9 @@ extern bool seq_property(void);
 extern bool sign(void);
 extern bool Sinh(void);
 extern bool Sin(void);
-extern bool sparse_hessian(void);
-extern bool sparse_jacobian(void);
-extern bool sparse_sub_hes(void);
-extern bool sparsity_sub(void);
 extern bool Sqrt(void);
 extern bool StackMachine(void);
 extern bool SubEq(void);
-extern bool sub_sparse_hes(void);
 extern bool Sub(void);
 extern bool Tanh(void);
 extern bool Tan(void);
@@ -213,7 +200,6 @@ int main(void)
 	ok &= Run( azmul,             "azmul"            );
 	ok &= Run( BenderQuad,        "BenderQuad"       );
 	ok &= Run( BoolFun,           "BoolFun"          );
-	ok &= Run( bool_sparsity,     "bool_sparsity"    );
 	ok &= Run( capacity_order,    "capacity_order"   );
 	ok &= Run( change_param,      "change_param"     );
 	ok &= Run( check_for_nan,     "check_for_nan"    );
@@ -221,7 +207,6 @@ int main(void)
 	ok &= Run( Compare,           "Compare"          );
 	ok &= Run( complex_poly,      "complex_poly"     );
 	ok &= Run( CondExp,           "CondExp"          );
-	ok &= Run( conj_grad,         "conj_grad"        );
 	ok &= Run( Cos,               "Cos"              );
 	ok &= Run( Cosh,              "Cosh"             );
 	ok &= Run( dependency,        "dependency"       );
@@ -232,8 +217,6 @@ int main(void)
 	ok &= Run( exp,               "exp"              );
 	ok &= Run( expm1,             "expm1"            );
 	ok &= Run( ForOne,            "ForOne"           );
-	ok &= Run( for_sparse_hes,    "for_sparse_hes"   );
-	ok &= Run( ForSparseJac,      "ForSparseJac"     );
 	ok &= Run( ForTwo,            "ForTwo"           );
 	ok &= Run( forward_dir,       "forward_dir"      );
 	ok &= Run( Forward,           "Forward"          );
@@ -278,8 +261,6 @@ int main(void)
 	ok &= Run( reverse_three,     "reverse_three"    );
 	ok &= Run( reverse_two,       "reverse_two"      );
 	ok &= Run( RevOne,            "RevOne"           );
-	ok &= Run( rev_sparse_hes,    "rev_sparse_hes"   );
-	ok &= Run( RevSparseJac,      "RevSparseJac"     );
 	ok &= Run( RevTwo,            "RevTwo"           );
 	ok &= Run( Rosen34,           "Rosen34"          );
 	ok &= Run( runge_45_2,        "runge_45_2"       );
@@ -287,14 +268,9 @@ int main(void)
 	ok &= Run( sign,              "sign"             );
 	ok &= Run( Sinh,              "Sinh"             );
 	ok &= Run( Sin,               "Sin"              );
-	ok &= Run( sparse_hessian,    "sparse_hessian"   );
-	ok &= Run( sparse_jacobian,   "sparse_jacobian"  );
-	ok &= Run( sparse_sub_hes,    "sparse_sub_hes"   );
-	ok &= Run( sparsity_sub,      "sparsity_sub"     );
 	ok &= Run( Sqrt,              "Sqrt"             );
 	ok &= Run( StackMachine,      "StackMachine"     );
 	ok &= Run( SubEq,             "SubEq"            );
-	ok &= Run( sub_sparse_hes,    "sub_sparse_hes"   );
 	ok &= Run( Sub,               "Sub"              );
 	ok &= Run( Tanh,              "Tanh"             );
 	ok &= Run( Tan,               "Tan"              );
@@ -309,8 +285,6 @@ int main(void)
 	ok &= Run( mul_level_adolc_ode,  "mul_level_adolc_ode" );
 # endif
 # ifdef CPPAD_COLPACK_EXAMPLES
-	ok &= Run( colpack_hes,       "colpack_hes"      );
-	ok &= Run( colpack_jac,       "colpack_jac"      );
 # endif
 # ifdef CPPAD_HAS_EIGEN
 	ok &= Run( eigen_array,       "eigen_array"      );

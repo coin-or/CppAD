@@ -1,6 +1,5 @@
-// $Id$
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-16 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-17 Bradley M. Bell
 
 CppAD is distributed under multiple licenses. This distribution is under
 the terms of the
@@ -11,7 +10,7 @@ Please visit http://www.coin-or.org/CppAD/ for information on other licenses.
 -------------------------------------------------------------------------- */
 
 /*
-$begin for_sparse_hes.cpp$$
+$begin rev_sparse_hes.cpp$$
 $spell
 	Hessian
 	Jac
@@ -20,12 +19,12 @@ $spell
 	Cpp
 $$
 
-$section Forward Mode Hessian Sparsity: Example and Test$$
-$mindex ForSparseHes sparsity$$
+$section Reverse Mode Hessian Sparsity: Example and Test$$
+$mindex RevSparseHes sparsity$$
 
 
 $code
-$srcfile%example/for_sparse_hes.cpp%0%// BEGIN C++%// END C++%1%$$
+$srcfile%example/sparse/rev_sparse_hes.cpp%0%// BEGIN C++%// END C++%1%$$
 $$
 
 $end
@@ -49,66 +48,7 @@ bool check_f1[] = {
 
 // define the template function BoolCases<Vector> in empty namespace
 template <typename Vector> // vector class, elements of type bool
-bool BoolCases(bool optimize)
-{	bool ok = true;
-	using CppAD::AD;
-
-	// domain space vector
-	size_t n = 3;
-	CPPAD_TESTVECTOR(AD<double>) ax(n);
-	ax[0] = 0.;
-	ax[1] = 1.;
-	ax[2] = 2.;
-
-	// declare independent variables and start recording
-	CppAD::Independent(ax);
-
-	// range space vector
-	size_t m = 2;
-	CPPAD_TESTVECTOR(AD<double>) ay(m);
-	ay[0] = sin( ax[2] ) + ax[0] + ax[1] + ax[2];
-	ay[1] = ax[0] * ax[1];
-
-	// create f: x -> y and stop tape recording
-	CppAD::ADFun<double> f(ax, ay);
-	if( optimize )
-		f.optimize();
-
-	// sparsity pattern for diagonal of identity matrix
-	Vector r(n);
-	size_t i, j;
-	for(i = 0; i < n; i++)
-		r[ i ] = true;
-
-	// compute sparsity pattern for H(x) = F_0^{(2)} (x)
-	Vector s(m);
-	for(i = 0; i < m; i++)
-		s[i] = false;
-	s[0] = true;
-	Vector h(n * n);
-	h    = f.ForSparseHes(r, s);
-
-	// check values
-	for(i = 0; i < n; i++)
-		for(j = 0; j < n; j++)
-			ok &= (h[ i * n + j ] == check_f0[ i * n + j ] );
-
-	// compute sparsity pattern for H(x) = F_1^{(2)} (x)
-	for(i = 0; i < m; i++)
-		s[i] = false;
-	s[1] = true;
-	h    = f.ForSparseHes(r, s);
-
-	// check values
-	for(i = 0; i < n; i++)
-		for(j = 0; j < n; j++)
-			ok &= (h[ i * n + j ] == check_f1[ i * n + j ] );
-
-	return ok;
-}
-// define the template function SetCases<Vector> in empty namespace
-template <typename Vector> // vector class, elements of type std::set<size_t>
-bool SetCases(bool optimize)
+bool BoolCases(void)
 {	bool ok = true;
 	using CppAD::AD;
 
@@ -130,21 +70,95 @@ bool SetCases(bool optimize)
 
 	// create f: x -> y and stop tape recording
 	CppAD::ADFun<double> f(ax, ay);
-	if( optimize )
-		f.optimize();
 
-	// sparsity pattern for the diagonal of the identity matrix
-	Vector r(1);
+	// sparsity pattern for the identity matrix
+	Vector r(n * n);
+	size_t i, j;
+	for(i = 0; i < n; i++)
+	{	for(j = 0; j < n; j++)
+			r[ i * n + j ] = (i == j);
+	}
+
+	// compute sparsity pattern for J(x) = F^{(1)} (x)
+	f.ForSparseJac(n, r);
+
+	// compute sparsity pattern for H(x) = F_0^{(2)} (x)
+	Vector s(m);
+	for(i = 0; i < m; i++)
+		s[i] = false;
+	s[0] = true;
+	Vector h(n * n);
+	h    = f.RevSparseHes(n, s);
+
+	// check values
+	for(i = 0; i < n; i++)
+		for(j = 0; j < n; j++)
+			ok &= (h[ i * n + j ] == check_f0[ i * n + j ] );
+
+	// compute sparsity pattern for H(x) = F_1^{(2)} (x)
+	for(i = 0; i < m; i++)
+		s[i] = false;
+	s[1] = true;
+	h    = f.RevSparseHes(n, s);
+
+	// check values
+	for(i = 0; i < n; i++)
+		for(j = 0; j < n; j++)
+			ok &= (h[ i * n + j ] == check_f1[ i * n + j ] );
+
+	// call that transposed the result
+	bool transpose = true;
+	h    = f.RevSparseHes(n, s, transpose);
+
+	// This h is symmetric, because R is symmetric, not really testing here
+	for(i = 0; i < n; i++)
+		for(j = 0; j < n; j++)
+			ok &= (h[ j * n + i ] == check_f1[ i * n + j ] );
+
+	return ok;
+}
+// define the template function SetCases<Vector> in empty namespace
+template <typename Vector> // vector class, elements of type std::set<size_t>
+bool SetCases(void)
+{	bool ok = true;
+	using CppAD::AD;
+
+	// domain space vector
+	size_t n = 3;
+	CPPAD_TESTVECTOR(AD<double>) ax(n);
+	ax[0] = 0.;
+	ax[1] = 1.;
+	ax[2] = 2.;
+
+	// declare independent variables and start recording
+	CppAD::Independent(ax);
+
+	// range space vector
+	size_t m = 2;
+	CPPAD_TESTVECTOR(AD<double>) ay(m);
+	ay[0] = sin( ax[2] );
+	ay[1] = ax[0] * ax[1];
+
+	// create f: x -> y and stop tape recording
+	CppAD::ADFun<double> f(ax, ay);
+
+	// sparsity pattern for the identity matrix
+	Vector r(n);
 	size_t i;
 	for(i = 0; i < n; i++)
-		r[0].insert(i);
+	{	assert( r[i].empty() );
+		r[i].insert(i);
+	}
+
+	// compute sparsity pattern for J(x) = F^{(1)} (x)
+	f.ForSparseJac(n, r);
 
 	// compute sparsity pattern for H(x) = F_0^{(2)} (x)
 	Vector s(1);
 	assert( s[0].empty() );
 	s[0].insert(0);
 	Vector h(n);
-	h    = f.ForSparseHes(r, s);
+	h    = f.RevSparseHes(n, s);
 
 	// check values
 	std::set<size_t>::iterator itr;
@@ -160,12 +174,24 @@ bool SetCases(bool optimize)
 	s[0].clear();
 	assert( s[0].empty() );
 	s[0].insert(1);
-	h    = f.ForSparseHes(r, s);
+	h    = f.RevSparseHes(n, s);
 
 	// check values
 	for(i = 0; i < n; i++)
 	{	for(j = 0; j < n; j++)
 		{	bool found = h[i].find(j) != h[i].end();
+			ok        &= (found == check_f1[i * n + j]);
+		}
+	}
+
+	// call that transposed the result
+	bool transpose = true;
+	h    = f.RevSparseHes(n, s, transpose);
+
+	// This h is symmetric, because R is symmetric, not really testing here
+	for(i = 0; i < n; i++)
+	{	for(j = 0; j < n; j++)
+		{	bool found = h[j].find(i) != h[j].end();
 			ok        &= (found == check_f1[i * n + j]);
 		}
 	}
@@ -176,28 +202,25 @@ bool SetCases(bool optimize)
 
 # include <vector>
 # include <valarray>
-bool for_sparse_hes(void)
+bool rev_sparse_hes(void)
 {	bool ok = true;
-	for(size_t k = 0; k < 2; k++)
-	{	bool optimize = bool(k);
+	// Run with Vector equal to four different cases
+	// all of which are Simple Vectors with elements of type bool.
+	ok &= BoolCases< CppAD::vector  <bool> >();
+	ok &= BoolCases< CppAD::vectorBool     >();
+	ok &= BoolCases< std::vector    <bool> >();
+	ok &= BoolCases< std::valarray  <bool> >();
 
-		// Run with Vector equal to four different cases
-		// all of which are Simple Vectors with elements of type bool.
-		ok &= BoolCases< CppAD::vector  <bool> >(optimize);
-		ok &= BoolCases< CppAD::vectorBool     >(optimize);
-		ok &= BoolCases< std::vector    <bool> >(optimize);
-		ok &= BoolCases< std::valarray  <bool> >(optimize);
+	// Run with Vector equal to two different cases both of which are
+	// Simple Vectors with elements of type std::set<size_t>
+	typedef std::set<size_t> set;
+	ok &= SetCases< CppAD::vector  <set> >();
+	ok &= SetCases< std::vector    <set> >();
 
-		// Run with Vector equal to two different cases both of which are
-		// Simple Vectors with elements of type std::set<size_t>
-		typedef std::set<size_t> set;
-		ok &= SetCases< CppAD::vector  <set> >(optimize);
-		ok &= SetCases< std::vector    <set> >(optimize);
+	// Do not use valarray because its element access in the const case
+	// returns a copy instead of a reference
+	// ok &= SetCases< std::valarray  <set> >();
 
-		// Do not use valarray because its element access in the const case
-		// returns a copy instead of a reference
-		// ok &= SetCases< std::valarray  <set> >(optimize);
-	}
 	return ok;
 }
 
