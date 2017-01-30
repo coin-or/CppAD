@@ -123,12 +123,21 @@ $codei%
 where $icode k$$ is less than $icode nnz$$ and $icode s$$
 is a $icode Scalar$$ object.
 
+$children%
+	example/utility/sparse_rcv.cpp
+%$$
+$head Example$$
+The file $cref sparse_rcv.cpp$$
+contains an example and test of this class.
+It returns true if it succeeds and false otherwise.
+
 $end
 */
 /*!
 \file sparse_rcv.hpp
 A sparse matrix class.
 */
+# include <cppad/utility/sparse_rc.hpp>
 
 namespace CppAD { // BEGIN CPPAD_NAMESPACE
 

@@ -39,6 +39,7 @@ extern bool runge_45_1(void);
 extern bool set_union(void);
 extern bool SimpleVector(void);
 extern bool sparse_rc(void);
+extern bool sparse_rcv(void);
 extern bool thread_alloc(void);
 extern bool to_string(void);
 extern bool vectorBool(void);
@@ -90,6 +91,7 @@ int main(void)
 	ok &= Run( SimpleVector,           "SimpleVector" );
 	ok &= Run( thread_alloc,           "thread_alloc" );
 	ok &= Run( sparse_rc,              "sparse_rc" );
+	ok &= Run( sparse_rcv,             "sparse_rcv" );
 	ok &= Run( to_string,              "to_string" );
 	ok &= Run( vectorBool,             "vectorBool" );
 

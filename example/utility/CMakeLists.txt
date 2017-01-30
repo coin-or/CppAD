@@ -33,6 +33,7 @@ ADD_EXECUTABLE(example_utility EXCLUDE_FROM_ALL
 	set_union.cpp
 	simple_vector.cpp
 	sparse_rc.cpp
+	sparse_rcv.cpp
 	thread_alloc.cpp
 	to_string.cpp
 	utility.cpp
