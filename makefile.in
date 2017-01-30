@@ -194,7 +194,7 @@ DIST_SUBDIRS = cppad_ipopt/src example/ipopt_solve cppad_ipopt/example \
 	cppad_ipopt/speed cppad_ipopt/test speed/src speed/adolc \
 	speed/cppad speed/double speed/example speed/fadbad \
 	speed/profile speed/sacado example example/atomic \
-	example/optimize example/utility compare_c \
+	example/optimize example/sparse example/utility compare_c \
 	introduction/get_started introduction/exp_apx print_for \
 	multi_thread multi_thread/test_multi test_more
 am__DIST_COMMON = $(srcdir)/makefile.in \
@@ -724,6 +724,7 @@ SUBDIRS = \
 	example \
 	example/atomic \
 	example/optimize \
+	example/sparse \
 	example/utility \
 	compare_c \
 	introduction/get_started \
