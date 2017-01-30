@@ -30,18 +30,19 @@ This class is under construction and not yet appropriation for public use.
 $head Syntax$$
 $codei%# include <cppad/utility/sparse_rc.hpp>
 %$$
-$codei%sparse_rc %pattern%(%row_in%, %col_in%)
+$codei%sparse_rc %pattern%<%SizeVector%>(%row_in%, %col_in%)
 %$$
-$codei%sparse_rc %pattern%(%other%)
+$codei%sparse_rc %pattern%<%SizeVector%>(%other%)
 %$$
-$codei%const %Vector%<size_t>& %row%( %pattern%.row() )
+$codei%const %SizeVector%& %row%( %pattern%.row() )
 %$$
-$codei%const %Vector%<size_t>& %col%( %pattern%.col() )
+$codei%const %SizeVector%& %col%( %pattern%.col() )
 %$$
 
-$head Vector$$
-We use $icode Vector$$ to denote a
-$cref SimpleVector$$ template class.
+$head SizeVector$$
+We use $icode SizeVector$$ to denote $cref SimpleVector$$ class
+$cref/with elements of type/SimpleVector/Elements of Specified Type/$$
+$code size$$.
 
 $head nnz$$
 We use the notation $icode nnz$$ to denote the number of
@@ -50,7 +51,7 @@ possibly non-zero entries in the pattern; i.e., $icode%row_in%.size()%$$.
 $head row_in$$
 This argument has prototype
 $codei%
-	const %Vector%<size_t>& %row_in%
+	const %SizeVector%& %row_in%
 %$$
 For $icode%k% = 0, %...%, %nnz%-1%$$,
 $icode%row_in%[%k%]%$$ is the row index for the $th k$$ possibly
@@ -60,7 +61,7 @@ non-zero entry in the sparsity pattern.
 $head col_in$$
 This argument has prototype
 $codei%
-	const %Vector%<size_t>& %col_in%
+	const %SizeVector%& %col_in%
 %$$
 It must have the same size as $icode row_in$$.
 For $icode%k% = 0, %...%, %nnz%-1%$$,
@@ -85,26 +86,36 @@ $head col$$
 This is vector is equal to $icode col_in$$ in the constructor for
 $icode pattern$$.
 
+$children%
+	example/utility/sparse_rc.cpp
+%$$
+$head Example$$
+The file $cref sparse_rc.cpp$$
+contains an example and test of this class.
+It returns true if it succeeds and false otherwise.
+
 $end
 */
 /*!
 \file sparse_rc.hpp
 A Matrix sparsity pattern class.
 */
+# include <cstddef> // for size_t
+# include <cppad/core/cppad_assert.hpp> // for CPPAD_ASSERT
 
 namespace CppAD { // BEGIN CPPAD_NAMESPACE
 
 /// sparsity pattern for a matrix with indices of type size_t
-template < template<class> class Vector >
+template <class SizeVector>
 class sparse_rc {
 private:
 	/// row_[k] is the row index for the k-th possibly non-zero entry
-	const Vector<size_t> row_;
+	const SizeVector row_;
 	/// col_[k] is the column index for the k-th possibly non-zero entry
-	const Vector<size_t> col_;
+	const SizeVector col_;
 public:
 	/// Constructor from row and column vectors
-	sparse_rc(const Vector<size_t>& row_in, const Vector<size_t>& col_in)
+	sparse_rc(const SizeVector& row_in, const SizeVector& col_in)
 	: row_(row_in), col_(col_in)
 	{	CPPAD_ASSERT_KNOWN(
 			row_in.size() == col_in.size(),
@@ -116,10 +127,10 @@ public:
 	: row_( other.row_ ), col_( other.col_ )
 	{ }
 	/// row indices
-	const Vector<size_t>& row(void) const
+	const SizeVector& row(void) const
 	{	return row_; }
 	/// column indices
-	const Vector<size_t>& col(void) const
+	const SizeVector& col(void) const
 	{	return col_; }
 };
 

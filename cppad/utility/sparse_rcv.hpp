@@ -35,27 +35,28 @@ This class is under construction and not yet appropriation for public use.
 $head Syntax$$
 $codei%# include <cppad/utility/sparse_rcv.hpp>
 %$$
-$codei%sparse_rcv %matrix%(%nr%, %nc%, %pattern%, %val_in%)
+$codei%sparse_rcv<%ValueVector%> %matrix%(%nr%, %nc%, %pattern%)
 %$$
 $icode%nr%  = %matrix%.nr()
 %$$
 $icode%nc%  = %matrix%.nc()
 %$$
-$codei%const %Vector%<size_t>& %row%( %pattern%.row() )
+$codei%const %SizeVector& %row%( %pattern%.row() )
 %$$
-$codei%const %Vector%<size_t>& %col%( %pattern%.col() )
+$codei%const %SizeVector& %col%( %pattern%.col() )
 %$$
-$codei%const %Vector%<%Scalar%>& %val%( %matrix%.val() )
+$codei%const %ValueVector%& %val%( %matrix%.val() )
 %$$
-$icode%Vector%<%Scalar%>& %val_var%( %matrix%.val() )
+$icode%ValueVector%& %val_var%( %matrix%.val() )
 %$$
 
-$head Vector$$
-We use $cref/Vector/sparse_rc/Vector/$$ to denote the
-$cref SimpleVector$$ template class corresponding to $icode pattern$$.
+$head SizeVector$$
+We use $cref/SizeVector/sparse_rc/SizeVector/$$ to denote the
+$cref SimpleVector$$ class corresponding to $icode pattern$$.
 
-$head Scalar$$
-We use $icode Scalar$$ to denote the type of elements in the sparse matrix.
+$head ValueScalar$$
+We use $icode ValueVector$$ to denote the
+$cref SimpleVector$$ class corresponding to $icode val_in$$.
 
 $head nr$$
 This argument and return value has prototype
@@ -78,7 +79,7 @@ when $icode nc$$ is the return value.
 $head pattern$$
 This argument has prototype
 $codei%
-	const sparse_rc<%Vector%>& %pattern%
+	const sparse_rc<%SizeVector%>& %pattern%
 %$$
 It specifies the pattern for the non-zero entries in the sparse matrix.
 
@@ -90,7 +91,7 @@ $icode%pattern%.row().size()%$$.
 $head val_in$$
 This argument has prototype
 $codei%
-	const %Vector%<%Scalar%>& %val_in%
+	const %ValueVector%& %val_in%
 %$$
 It muse have size $icode nnz$$ and specifies the initial values
 for the non-zero elements in the sparse matrix.
@@ -132,11 +133,11 @@ A sparse matrix class.
 namespace CppAD { // BEGIN CPPAD_NAMESPACE
 
 /// Sparse matrices with elements of type Scalar
-template < template<class> class Vector , class Scalar >
-class sparse_rcv : public sparse_rc<Vector> {
+template <class ValueVector , class SizeVector>
+class sparse_rcv : public sparse_rc<SizeVector> {
 private:
 	/// val_[k] is the value for the k-th possibly non-zero entry in the matrix
-	Vector<Scalar>   val_;
+	ValueVector    val_;
 	/// number of rows in the matrix
 	const size_t   nr_;
 	/// number of columns in the matrix
@@ -145,29 +146,29 @@ public:
 	// ------------------------------------------------------------------------
 	/// constructor
 	sparse_rcv(
-		size_t                   nr      ,
-		size_t                   nc      ,
-		const sparse_rc<Vector>& pattern ,
-		const Vector<Scalar>&    val_in  )
+		size_t                       nr      ,
+		size_t                       nc      ,
+		const sparse_rc<SizeVector>& pattern ,
+		const ValueVector&           val_in  )
 	:
-	sparse_rc<Vector>(pattern)     ,
-	val_(val_in)                   ,
-	nr_(nr)                        ,
+	sparse_rc<SizeVector>(pattern)  ,
+	val_(val_in)                    ,
+	nr_(nr)                         ,
 	nc_(nc)
 	{
 # ifndef NDEBUG
-		size_t nnz = sparse_rc<Vector>::row().size();
+		size_t nnz = pattern.row().size();
 		CPPAD_ASSERT_KNOWN(
 		val_in.size() == nnz ,
 		"sparse_rcv: size of val_in is not equal number non-zeros in pattern"
 		);
 		for(size_t k = 0; k < nnz; k++)
 		{	CPPAD_ASSERT_KNOWN(
-				sparse_rc<Vector>::row()[k] < nr,
+				pattern.row()[k] < nr,
 				"sparse_rcv: a pattern row index is not less than nr"
 			);
 			CPPAD_ASSERT_KNOWN(
-				sparse_rc<Vector>::col()[k] < nc,
+				pattern.col()[k] < nc,
 				"sparse_rcv: a pattern column index is not less than nc"
 			);
 		}
@@ -181,9 +182,9 @@ public:
 	size_t nc(void) const
 	{	return nc_; }
 	/// value vector
-	const Vector<Scalar>& val(void) const
+	const ValueVector& val(void) const
 	{	return val_; }
-	Vector<Scalar>&  val(void)
+	ValueVector&  val(void)
 	{	return val_; }
 };
 

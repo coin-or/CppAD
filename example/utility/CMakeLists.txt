@@ -32,6 +32,7 @@ ADD_EXECUTABLE(example_utility EXCLUDE_FROM_ALL
 	runge45_1.cpp
 	set_union.cpp
 	simple_vector.cpp
+	sparse_rc.cpp
 	thread_alloc.cpp
 	to_string.cpp
 	utility.cpp
