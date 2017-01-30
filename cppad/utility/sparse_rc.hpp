@@ -21,7 +21,7 @@ $spell
 	hpp
 	rc
 $$
-$section Row and Column Sparsity Patterns$$
+$section Row and Column Index Sparsity Patterns$$
 
 $head Under Construction$$
 This class is under construction and not yet appropriation for public use.

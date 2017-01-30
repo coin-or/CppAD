@@ -1,6 +1,5 @@
-$Id$
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-16 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-17 Bradley M. Bell
 
 CppAD is distributed under multiple licenses. This distribution is under
 the terms of the
@@ -101,7 +100,7 @@ function that is not part of the user API.
 $head 11-14$$
 Increase the speed of the $code sparse_pack$$ class.
 This improves the speed for
-$cref/vector of boolean/glossary/Sparsity Pattern/Vector of Boolean/$$
+$cref/vector of boolean/glossary/Sparsity Pattern/Boolean Vector/$$
 sparsity pattern calculations.
 
 $head 11-13$$
@@ -434,7 +433,7 @@ $$
 Note that the improvement is only for large problems. In fact,
 for large problems, preliminary testing indicates that
 the new vector of sets representation preforms better than
-the $cref/vector of boolean/glossary/Sparsity Pattern/Vector of Boolean/$$
+the $cref/vector of boolean/glossary/Sparsity Pattern/Boolean Vector/$$
 representation.
 
 

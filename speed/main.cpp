@@ -1,6 +1,5 @@
-// $Id$
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-16 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-17 Bradley M. Bell
 
 CppAD is distributed under multiple licenses. This distribution is under
 the terms of the
@@ -229,7 +228,7 @@ $codep
 $$
 is true and otherwise it is false.
 If it is true, CppAD will use a
-$cref/vector of bool/glossary/Sparsity Pattern/Vector of Boolean/$$
+$cref/vector of bool/glossary/Sparsity Pattern/Boolean Vector/$$
 for its sparsity patterns.
 Otherwise it will use a
 $cref/vector of sets/glossary/Sparsity Pattern/Vector of Sets/$$.

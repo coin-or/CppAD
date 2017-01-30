@@ -1,6 +1,5 @@
-$Id$
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-15 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-17 Bradley M. Bell
 
 CppAD is distributed under multiple licenses. This distribution is under
 the terms of the
@@ -139,68 +138,27 @@ $cref/Parameter(u)/ParVar/$$ returns true
 and $cref/Variable(u)/ParVar/$$ returns false.
 
 $head Sparsity Pattern$$
-CppAD describes a sparse matrix as a vector of sets with each
-vector component corresponding to a row
-and the elements of the set corresponding to the possibly non-zero columns.
-A vector of $code bool$$
-can represent a vector of sets using one bit per element.
-(Some vectors of $code bool$$ use one byte per element but
-$cref/vectorBool/CppAD_vector/vectorBool/$$ is an example class that
-uses one bit per element.)
-The problem is that this representation uses one bit for both the elements
-that are there and the ones that are not.
-$pre
+Suppose that $latex A \in B^{m \times n}$$ is a sparse matrix.
+CppAD has several ways to specify the elements of $latex A$$
+that are possible non-zero.
 
-$$
-A vector of $code std::set<size_t>$$ does not
-represent the elements that are not present,
-but it uses about three $code size_t$$ values
-for each element that is present.
-For example, if $code size_t$$ uses 32 bits,
-a vector of $code std::set<size_t>$$ uses
-about 100 bits for each element that is present in the
-vector of sets.
-Thus, a vector of $code std::set<size_t>$$ should be more efficient for
-very sparse matrix representations.
+$subhead Row and Column Vectors$$
+A pair of non-negative integer vectors $latex r$$, $latex c$$
+are a sparsity pattern for $latex A$$
+if for every non-zero element $latex A_{i,j}$$,
+there is a $latex k$$ such that $latex i = r_k$$ and $latex j = c_k$$.
 
-$subhead Vector of Boolean$$
-Given a matrix
-$latex A \in B^{m \times n}$$,
-a vector of $code bool$$ $latex B$$ of length $latex m \times n$$
-is a sparsity pattern for $latex A$$ if
-for $latex i = 0, \ldots , m-1$$ and $latex j = 0 , \ldots n-1$$,
-$latex \[
-A_{i,j} \neq 0
-\; \Rightarrow \;
-B_{i * n + j} = {\rm true}
-\] $$
-Given two sparsity patterns $latex B$$ and $icode C$$
-for a matrix $icode A$$, we say that $icode B$$ is more efficient than
-$icode C$$ if $icode B$$ has fewer true elements than $icode C$$.
-For example, if $latex A$$ is the identity matrix,
-$latex \[
-	B_{i * n + j} = (i = j)
-\] $$
-defines an efficient sparsity pattern for $latex A$$.
+$subhead Boolean Vector$$
+A boolean vector $latex b$$, of length $latex m n$$,
+is a sparsity pattern for $latex A$$
+if for every non-zero element $latex A_{i,j}$$,
+$latex b_{i n + j}$$ is true.
 
 $subhead Vector of Sets$$
-Given a matrix
-$latex A \in B^{m \times n}$$,
-a vector of sets $latex S$$ of length $latex m$$ is a
-sparsity pattern for $latex A$$ if
-for $latex i = 0, \ldots , m-1$$
-$latex \[
-A_{i,j} \neq 0
-\; \Rightarrow \; j \in S_i
-\] $$
-Given two sparsity patterns $latex S$$ and $icode T$$
-for a matrix $icode A$$, we say that $icode S$$ is more efficient than
-$icode T$$ if $icode S$$ has fewer elements than $icode T$$.
-For example, if $latex A$$ is the identity matrix,
-$latex \[
-	S_i =  \{ i \}
-\] $$
-defines an efficient sparsity pattern for $latex A$$.
+A vector of sets $latex s$$ of positive integers, of length $latex m$$,
+is a sparsity pattern for $latex A$$
+if for every non-zero element $latex A_{i,j}$$, $latex j \in s_k $$.
+
 
 $head Tape$$
 

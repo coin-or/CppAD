@@ -17,8 +17,7 @@ move_list='
 move_sed='s|compute_assign|compound_assign|'
 #
 cat << EOF > junk.sed
-s|NearEqual(jfac\\*\\([^,]*\\), *value *, *jfac\\*eps99 *, *jfac\\*eps99)|NearEqual(\\1, value/jfac, eps99, eps99)|
-s|NearEqual(jfac\\*\\([^,]*\\), *value *, *eps99 *, *eps99)|NearEqual(\\1, value/jfac, eps99, eps99)|
+s|/glossary/Sparsity Pattern/Vector of Boolean/|/glossary/Sparsity Pattern/Boolean Vector/|
 EOF
 # -----------------------------------------------------------------------------
 if [ $0 != "bin/batch_edit.sh" ]
