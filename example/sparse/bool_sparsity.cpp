@@ -1,6 +1,5 @@
-// $Id$
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-16 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-17 Bradley M. Bell
 
 CppAD is distributed under multiple licenses. This distribution is under
 the terms of the
@@ -22,7 +21,7 @@ $head Purpose$$
 This example show how to conserve memory when computing sparsity patterns.
 
 $code
-$srcfile%example/bool_sparsity.cpp%0%// BEGIN C++%// END C++%1%$$
+$srcfile%example/sparse/bool_sparsity.cpp%0%// BEGIN C++%// END C++%1%$$
 $$
 
 $end

@@ -24,6 +24,9 @@ ADD_SUBDIRECTORY(atomic)
 # optimize examples
 ADD_SUBDIRECTORY(optimize)
 
+# sparse examples
+ADD_SUBDIRECTORY(sparse)
+
 # utility examples
 ADD_SUBDIRECTORY(utility)
 
@@ -34,12 +37,6 @@ sources_libs_define(adolc "${sources}" adolc HAS_ADOLC)
 # eigen_sources and CPPAD_HAS_EIGEN
 SET(sources eigen_det.cpp eigen_array.cpp)
 sources_libs_define(eigen "${sources}" "" HAS_EIGEN)
-
-# colpack_prefix
-SET(colpack_sources
-	colpack_hes.cpp
-	colpack_jac.cpp
-)
 
 # ipopt_prefix
 IF( ipopt_prefix )
@@ -54,7 +51,6 @@ ENDIF( ipopt_prefix )
 ADD_EXECUTABLE(example EXCLUDE_FROM_ALL example.cpp
 	${adolc_sources}
 	${eigen_sources}
-	${colpack_sources}
 	abort_recording.cpp
 	fabs.cpp
 	acos.cpp
@@ -77,7 +73,6 @@ ADD_EXECUTABLE(example EXCLUDE_FROM_ALL example.cpp
 	base_require.cpp
 	bender_quad.cpp
 	bool_fun.cpp
-	bool_sparsity.cpp
 	capacity_order.cpp
 	change_param.cpp
 	check_for_nan.cpp
@@ -85,7 +80,6 @@ ADD_EXECUTABLE(example EXCLUDE_FROM_ALL example.cpp
 	compare.cpp
 	complex_poly.cpp
 	cond_exp.cpp
-	conj_grad.cpp
 	cos.cpp
 	cosh.cpp
 	dependency.cpp
@@ -96,8 +90,6 @@ ADD_EXECUTABLE(example EXCLUDE_FROM_ALL example.cpp
 	exp.cpp
 	expm1.cpp
 	for_one.cpp
-	for_sparse_hes.cpp
-	for_sparse_jac.cpp
 	for_two.cpp
 	forward.cpp
 	forward_dir.cpp
@@ -145,8 +137,6 @@ ADD_EXECUTABLE(example EXCLUDE_FROM_ALL example.cpp
 	reverse_three.cpp
 	reverse_two.cpp
 	rev_one.cpp
-	rev_sparse_hes.cpp
-	rev_sparse_jac.cpp
 	rev_two.cpp
 	rosen_34.cpp
 	runge45_2.cpp
@@ -154,15 +144,10 @@ ADD_EXECUTABLE(example EXCLUDE_FROM_ALL example.cpp
 	sign.cpp
 	sin.cpp
 	sinh.cpp
-	sparse_hessian.cpp
-	sparse_jacobian.cpp
-	sparse_sub_hes.cpp
-	sparsity_sub.cpp
 	sqrt.cpp
 	stack_machine.cpp
 	sub.cpp
 	sub_eq.cpp
-	sub_sparse_hes.cpp
 	tan.cpp
 	tanh.cpp
 	tape_index.cpp
@@ -178,9 +163,7 @@ add_cppad_cxx_flags(example)
 
 # List of libraries to be linked into the specified target
 TARGET_LINK_LIBRARIES(example
-	${cppad_lib}
 	${adolc_libs}
-	${colpack_libs}
 )
 
 # Add the check_example target

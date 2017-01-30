@@ -1,0 +1,39 @@
+# -----------------------------------------------------------------------------
+# CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-17 Bradley M. Bell
+#
+# CppAD is distributed under multiple licenses. This distribution is under
+# the terms of the
+#                     Eclipse Public License Version 1.0.
+#
+# A copy of this license is included in the COPYING file of this distribution.
+# Please visit http://www.coin-or.org/CppAD/ for information on other licenses.
+# -----------------------------------------------------------------------------
+# automake input file
+#
+# CppAD pusts all it's preprocessor definitions in the cppad/configure.hpp
+DEFS          =
+#
+check_PROGRAMS    = sparse
+#
+AM_CXXFLAGS       = -g $(CXX_FLAGS)
+#
+AM_CPPFLAGS       = -I. -I$(top_srcdir) $(BOOST_INCLUDE) $(EIGEN_INCLUDE)
+#
+sparse_SOURCES   = \
+	sparse.cpp \
+	sub_sparse_hes.cpp \
+	sparsity_sub.cpp \
+	sparse_sub_hes.cpp \
+	sparse_jacobian.cpp \
+	sparse_hessian.cpp \
+	rev_sparse_jac.cpp \
+	rev_sparse_hes.cpp \
+	for_sparse_jac.cpp \
+	for_sparse_hes.cpp \
+	conj_grad.cpp \
+	colpack_jac.cpp \
+	colpack_hes.cpp \
+	bool_sparsity.cpp
+#
+test: check
+	./sparse

@@ -1,9 +1,8 @@
-// $Id$
 # ifndef CPPAD_CORE_REV_SPARSE_HES_HPP
 # define CPPAD_CORE_REV_SPARSE_HES_HPP
 
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-16 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-17 Bradley M. Bell
 
 CppAD is distributed under multiple licenses. This distribution is under
 the terms of the
@@ -175,8 +174,8 @@ $latex F_k^{(2)} (x) \in \B{R}^{n \times n}$$.
 
 $head Example$$
 $children%
-	example/rev_sparse_hes.cpp
-	%example/sparsity_sub.cpp
+	example/sparse/rev_sparse_hes.cpp
+	%example/sparse/sparsity_sub.cpp
 %$$
 The file
 $cref rev_sparse_hes.cpp$$

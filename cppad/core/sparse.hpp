@@ -1,9 +1,8 @@
-// $Id$
 # ifndef CPPAD_CORE_SPARSE_HPP
 # define CPPAD_CORE_SPARSE_HPP
 
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-16 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-17 Bradley M. Bell
 
 CppAD is distributed under multiple licenses. This distribution is under
 the terms of the
@@ -27,7 +26,7 @@ $childtable%
 	example/dependency.cpp%
 	cppad/core/rev_sparse_hes.hpp%
 	cppad/core/for_sparse_hes.hpp%
-	example/bool_sparsity.cpp
+	example/sparse/bool_sparsity.cpp
 %$$
 
 $end

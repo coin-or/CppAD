@@ -69,6 +69,7 @@ do
 		example/atomic/CMakeLists.txt | \
 		example/ipopt_solve/CMakeLists.txt | \
 		example/optimize/CMakeLists.txt | \
+		example/sparse/CMakeLists.txt | \
 		example/utility/CMakeLists.txt | \
 		introduction/exp_apx/CMakeLists.txt | \
 		introduction/get_started/CMakeLists.txt | \

@@ -1,9 +1,8 @@
-// $Id$
 # ifndef CPPAD_CORE_REV_SPARSE_JAC_HPP
 # define CPPAD_CORE_REV_SPARSE_JAC_HPP
 
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-16 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-17 Bradley M. Bell
 
 CppAD is distributed under multiple licenses. This distribution is under
 the terms of the
@@ -160,7 +159,7 @@ sparsity pattern for the Jacobian $latex S(x) = F^{(1)} ( x )$$.
 
 $head Example$$
 $children%
-	example/rev_sparse_jac.cpp
+	example/sparse/rev_sparse_jac.cpp
 %$$
 The file
 $cref rev_sparse_jac.cpp$$

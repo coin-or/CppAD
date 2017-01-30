@@ -1,9 +1,8 @@
-// $Id$
 # ifndef CPPAD_CORE_SPARSE_HESSIAN_HPP
 # define CPPAD_CORE_SPARSE_HESSIAN_HPP
 
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-16 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-17 Bradley M. Bell
 
 CppAD is distributed under multiple licenses. This distribution is under
 the terms of the
@@ -287,9 +286,9 @@ $icode%f%.Forward(0, %x%)%$$
 and the other coefficients are unspecified.
 
 $children%
-	example/sparse_hessian.cpp%
-	example/sub_sparse_hes.cpp%
-	example/sparse_sub_hes.cpp
+	example/sparse/sparse_hessian.cpp%
+	example/sparse/sub_sparse_hes.cpp%
+	example/sparse/sparse_sub_hes.cpp
 %$$
 
 $head Example$$
