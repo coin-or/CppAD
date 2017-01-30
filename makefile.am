@@ -331,6 +331,7 @@ SUBDIRS =  \
 	example \
 	example/atomic \
 	example/optimize \
+	example/utility \
 	compare_c \
 	introduction/get_started \
 	introduction/exp_apx \

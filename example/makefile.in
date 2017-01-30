@@ -117,36 +117,29 @@ am__example_SOURCES_DIST = mul_level_adolc.cpp mul_level_adolc_ode.cpp \
 	atan.cpp atanh.cpp azmul.cpp base_alloc.hpp base_require.cpp \
 	bender_quad.cpp bool_fun.cpp bool_sparsity.cpp \
 	capacity_order.cpp change_param.cpp check_for_nan.cpp \
-	check_numeric_type.cpp check_simple_vector.cpp \
 	compare_change.cpp compare.cpp complex_poly.cpp cond_exp.cpp \
-	conj_grad.cpp cos.cpp cosh.cpp cppad_vector.cpp dependency.cpp \
-	div.cpp div_eq.cpp equal_op_seq.cpp erf.cpp error_handler.cpp \
-	example.cpp exp.cpp expm1.cpp for_one.cpp for_sparse_hes.cpp \
-	for_sparse_jac.cpp for_two.cpp forward.cpp forward_dir.cpp \
-	forward_order.cpp fun_assign.cpp fun_check.cpp \
-	hes_lagrangian.cpp hes_lu_det.cpp hes_minor_det.cpp \
-	hessian.cpp hes_times_dir.cpp independent.cpp index_sort.cpp \
-	integer.cpp interface2c.cpp interp_onetape.cpp \
+	conj_grad.cpp cos.cpp cosh.cpp dependency.cpp div.cpp \
+	div_eq.cpp equal_op_seq.cpp erf.cpp example.cpp exp.cpp \
+	expm1.cpp for_one.cpp for_sparse_hes.cpp for_sparse_jac.cpp \
+	for_two.cpp forward.cpp forward_dir.cpp forward_order.cpp \
+	fun_assign.cpp fun_check.cpp hes_lagrangian.cpp hes_lu_det.cpp \
+	hes_minor_det.cpp hessian.cpp hes_times_dir.cpp \
+	independent.cpp integer.cpp interface2c.cpp interp_onetape.cpp \
 	interp_retape.cpp jac_lu_det.cpp jac_minor_det.cpp \
-	jacobian.cpp log10.cpp log1p.cpp log.cpp lu_factor.cpp \
-	lu_invert.cpp lu_ratio.cpp lu_solve.cpp lu_vec_ad.cpp \
-	lu_vec_ad.hpp lu_vec_ad_ok.cpp mul.cpp mul_eq.cpp \
-	mul_level.cpp mul_level_ode.cpp nan.cpp near_equal.cpp \
-	near_equal_ext.cpp number_skip.cpp numeric_type.cpp \
-	num_limits.cpp ode_err_control.cpp ode_err_maxabs.cpp \
-	ode_gear_control.cpp ode_gear.cpp ode_stiff.cpp ode_taylor.cpp \
-	opt_val_hes.cpp par_var.cpp poly.cpp pow.cpp pow_int.cpp \
-	print_for.cpp reverse_checkpoint.cpp reverse_one.cpp \
-	reverse_three.cpp reverse_two.cpp rev_one.cpp \
-	rev_sparse_hes.cpp rev_sparse_jac.cpp rev_two.cpp \
-	romberg_mul.cpp romberg_one.cpp rosen_34.cpp runge45_1.cpp \
-	runge45_2.cpp seq_property.cpp set_union.cpp sign.cpp \
-	simple_vector.cpp sin.cpp sinh.cpp sparse_hessian.cpp \
-	sparse_jacobian.cpp sparse_sub_hes.cpp sparsity_sub.cpp \
-	sqrt.cpp stack_machine.cpp sub.cpp sub_eq.cpp \
+	jacobian.cpp log10.cpp log1p.cpp log.cpp lu_ratio.cpp \
+	lu_vec_ad.cpp lu_vec_ad.hpp lu_vec_ad_ok.cpp mul.cpp \
+	mul_eq.cpp mul_level.cpp mul_level_ode.cpp near_equal_ext.cpp \
+	number_skip.cpp numeric_type.cpp num_limits.cpp ode_stiff.cpp \
+	ode_taylor.cpp opt_val_hes.cpp par_var.cpp poly.cpp pow.cpp \
+	pow_int.cpp print_for.cpp reverse_checkpoint.cpp \
+	reverse_one.cpp reverse_three.cpp reverse_two.cpp rev_one.cpp \
+	rev_sparse_hes.cpp rev_sparse_jac.cpp rev_two.cpp rosen_34.cpp \
+	runge45_2.cpp seq_property.cpp sign.cpp sin.cpp sinh.cpp \
+	sparse_hessian.cpp sparse_jacobian.cpp sparse_sub_hes.cpp \
+	sparsity_sub.cpp sqrt.cpp stack_machine.cpp sub.cpp sub_eq.cpp \
 	sub_sparse_hes.cpp tan.cpp tanh.cpp tape_index.cpp \
-	thread_alloc.cpp to_string.cpp unary_minus.cpp unary_plus.cpp \
-	value.cpp var2par.cpp vec_ad.cpp vector_bool.cpp
+	unary_minus.cpp unary_plus.cpp value.cpp var2par.cpp \
+	vec_ad.cpp
 @CppAD_ADOLC_TRUE@am__objects_1 = mul_level_adolc.$(OBJEXT) \
 @CppAD_ADOLC_TRUE@	mul_level_adolc_ode.$(OBJEXT)
 am_example_OBJECTS = $(am__objects_1) abort_recording.$(OBJEXT) \
@@ -158,50 +151,42 @@ am_example_OBJECTS = $(am__objects_1) abort_recording.$(OBJEXT) \
 	azmul.$(OBJEXT) base_require.$(OBJEXT) bender_quad.$(OBJEXT) \
 	bool_fun.$(OBJEXT) bool_sparsity.$(OBJEXT) \
 	capacity_order.$(OBJEXT) change_param.$(OBJEXT) \
-	check_for_nan.$(OBJEXT) check_numeric_type.$(OBJEXT) \
-	check_simple_vector.$(OBJEXT) compare_change.$(OBJEXT) \
+	check_for_nan.$(OBJEXT) compare_change.$(OBJEXT) \
 	compare.$(OBJEXT) complex_poly.$(OBJEXT) cond_exp.$(OBJEXT) \
 	conj_grad.$(OBJEXT) cos.$(OBJEXT) cosh.$(OBJEXT) \
-	cppad_vector.$(OBJEXT) dependency.$(OBJEXT) div.$(OBJEXT) \
-	div_eq.$(OBJEXT) equal_op_seq.$(OBJEXT) erf.$(OBJEXT) \
-	error_handler.$(OBJEXT) example.$(OBJEXT) exp.$(OBJEXT) \
-	expm1.$(OBJEXT) for_one.$(OBJEXT) for_sparse_hes.$(OBJEXT) \
-	for_sparse_jac.$(OBJEXT) for_two.$(OBJEXT) forward.$(OBJEXT) \
-	forward_dir.$(OBJEXT) forward_order.$(OBJEXT) \
-	fun_assign.$(OBJEXT) fun_check.$(OBJEXT) \
-	hes_lagrangian.$(OBJEXT) hes_lu_det.$(OBJEXT) \
-	hes_minor_det.$(OBJEXT) hessian.$(OBJEXT) \
+	dependency.$(OBJEXT) div.$(OBJEXT) div_eq.$(OBJEXT) \
+	equal_op_seq.$(OBJEXT) erf.$(OBJEXT) example.$(OBJEXT) \
+	exp.$(OBJEXT) expm1.$(OBJEXT) for_one.$(OBJEXT) \
+	for_sparse_hes.$(OBJEXT) for_sparse_jac.$(OBJEXT) \
+	for_two.$(OBJEXT) forward.$(OBJEXT) forward_dir.$(OBJEXT) \
+	forward_order.$(OBJEXT) fun_assign.$(OBJEXT) \
+	fun_check.$(OBJEXT) hes_lagrangian.$(OBJEXT) \
+	hes_lu_det.$(OBJEXT) hes_minor_det.$(OBJEXT) hessian.$(OBJEXT) \
 	hes_times_dir.$(OBJEXT) independent.$(OBJEXT) \
-	index_sort.$(OBJEXT) integer.$(OBJEXT) interface2c.$(OBJEXT) \
+	integer.$(OBJEXT) interface2c.$(OBJEXT) \
 	interp_onetape.$(OBJEXT) interp_retape.$(OBJEXT) \
 	jac_lu_det.$(OBJEXT) jac_minor_det.$(OBJEXT) \
 	jacobian.$(OBJEXT) log10.$(OBJEXT) log1p.$(OBJEXT) \
-	log.$(OBJEXT) lu_factor.$(OBJEXT) lu_invert.$(OBJEXT) \
-	lu_ratio.$(OBJEXT) lu_solve.$(OBJEXT) lu_vec_ad.$(OBJEXT) \
+	log.$(OBJEXT) lu_ratio.$(OBJEXT) lu_vec_ad.$(OBJEXT) \
 	lu_vec_ad_ok.$(OBJEXT) mul.$(OBJEXT) mul_eq.$(OBJEXT) \
-	mul_level.$(OBJEXT) mul_level_ode.$(OBJEXT) nan.$(OBJEXT) \
-	near_equal.$(OBJEXT) near_equal_ext.$(OBJEXT) \
-	number_skip.$(OBJEXT) numeric_type.$(OBJEXT) \
-	num_limits.$(OBJEXT) ode_err_control.$(OBJEXT) \
-	ode_err_maxabs.$(OBJEXT) ode_gear_control.$(OBJEXT) \
-	ode_gear.$(OBJEXT) ode_stiff.$(OBJEXT) ode_taylor.$(OBJEXT) \
-	opt_val_hes.$(OBJEXT) par_var.$(OBJEXT) poly.$(OBJEXT) \
-	pow.$(OBJEXT) pow_int.$(OBJEXT) print_for.$(OBJEXT) \
+	mul_level.$(OBJEXT) mul_level_ode.$(OBJEXT) \
+	near_equal_ext.$(OBJEXT) number_skip.$(OBJEXT) \
+	numeric_type.$(OBJEXT) num_limits.$(OBJEXT) \
+	ode_stiff.$(OBJEXT) ode_taylor.$(OBJEXT) opt_val_hes.$(OBJEXT) \
+	par_var.$(OBJEXT) poly.$(OBJEXT) pow.$(OBJEXT) \
+	pow_int.$(OBJEXT) print_for.$(OBJEXT) \
 	reverse_checkpoint.$(OBJEXT) reverse_one.$(OBJEXT) \
 	reverse_three.$(OBJEXT) reverse_two.$(OBJEXT) \
 	rev_one.$(OBJEXT) rev_sparse_hes.$(OBJEXT) \
-	rev_sparse_jac.$(OBJEXT) rev_two.$(OBJEXT) \
-	romberg_mul.$(OBJEXT) romberg_one.$(OBJEXT) rosen_34.$(OBJEXT) \
-	runge45_1.$(OBJEXT) runge45_2.$(OBJEXT) seq_property.$(OBJEXT) \
-	set_union.$(OBJEXT) sign.$(OBJEXT) simple_vector.$(OBJEXT) \
+	rev_sparse_jac.$(OBJEXT) rev_two.$(OBJEXT) rosen_34.$(OBJEXT) \
+	runge45_2.$(OBJEXT) seq_property.$(OBJEXT) sign.$(OBJEXT) \
 	sin.$(OBJEXT) sinh.$(OBJEXT) sparse_hessian.$(OBJEXT) \
 	sparse_jacobian.$(OBJEXT) sparse_sub_hes.$(OBJEXT) \
 	sparsity_sub.$(OBJEXT) sqrt.$(OBJEXT) stack_machine.$(OBJEXT) \
 	sub.$(OBJEXT) sub_eq.$(OBJEXT) sub_sparse_hes.$(OBJEXT) \
 	tan.$(OBJEXT) tanh.$(OBJEXT) tape_index.$(OBJEXT) \
-	thread_alloc.$(OBJEXT) to_string.$(OBJEXT) \
 	unary_minus.$(OBJEXT) unary_plus.$(OBJEXT) value.$(OBJEXT) \
-	var2par.$(OBJEXT) vec_ad.$(OBJEXT) vector_bool.$(OBJEXT)
+	var2par.$(OBJEXT) vec_ad.$(OBJEXT)
 example_OBJECTS = $(am_example_OBJECTS)
 example_LDADD = $(LDADD)
 am__DEPENDENCIES_1 =
@@ -536,8 +521,6 @@ example_SOURCES = \
 	capacity_order.cpp \
 	change_param.cpp \
 	check_for_nan.cpp \
-	check_numeric_type.cpp \
-	check_simple_vector.cpp \
 	compare_change.cpp \
 	compare.cpp \
 	complex_poly.cpp \
@@ -545,13 +528,11 @@ example_SOURCES = \
 	conj_grad.cpp \
 	cos.cpp \
 	cosh.cpp \
-	cppad_vector.cpp \
 	dependency.cpp \
 	div.cpp \
 	div_eq.cpp \
 	equal_op_seq.cpp \
 	erf.cpp \
-	error_handler.cpp \
 	example.cpp \
 	exp.cpp \
 	expm1.cpp \
@@ -570,7 +551,6 @@ example_SOURCES = \
 	hessian.cpp \
 	hes_times_dir.cpp \
 	independent.cpp \
-	index_sort.cpp \
 	integer.cpp \
 	interface2c.cpp\
 	interp_onetape.cpp\
@@ -581,10 +561,7 @@ example_SOURCES = \
 	log10.cpp \
 	log1p.cpp \
 	log.cpp \
-	lu_factor.cpp \
-	lu_invert.cpp \
 	lu_ratio.cpp \
-	lu_solve.cpp \
 	lu_vec_ad.cpp \
 	lu_vec_ad.hpp \
 	lu_vec_ad_ok.cpp \
@@ -592,16 +569,10 @@ example_SOURCES = \
 	mul_eq.cpp \
 	mul_level.cpp \
 	mul_level_ode.cpp \
-	nan.cpp \
-	near_equal.cpp \
 	near_equal_ext.cpp \
 	number_skip.cpp \
 	numeric_type.cpp \
 	num_limits.cpp \
-	ode_err_control.cpp \
-	ode_err_maxabs.cpp \
-	ode_gear_control.cpp\
-	ode_gear.cpp \
 	ode_stiff.cpp \
 	ode_taylor.cpp \
 	opt_val_hes.cpp \
@@ -618,15 +589,10 @@ example_SOURCES = \
 	rev_sparse_hes.cpp \
 	rev_sparse_jac.cpp \
 	rev_two.cpp \
-	romberg_mul.cpp \
-	romberg_one.cpp \
 	rosen_34.cpp \
-	runge45_1.cpp \
 	runge45_2.cpp \
 	seq_property.cpp \
-	set_union.cpp \
 	sign.cpp \
-	simple_vector.cpp \
 	sin.cpp \
 	sinh.cpp \
 	sparse_hessian.cpp \
@@ -641,14 +607,11 @@ example_SOURCES = \
 	tan.cpp \
 	tanh.cpp \
 	tape_index.cpp \
-	thread_alloc.cpp \
-	to_string.cpp \
 	unary_minus.cpp \
 	unary_plus.cpp \
 	value.cpp \
 	var2par.cpp \
-	vec_ad.cpp  \
-	vector_bool.cpp
+	vec_ad.cpp
 
 all: all-am
 
@@ -729,8 +692,6 @@ distclean-compile:
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/capacity_order.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/change_param.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/check_for_nan.Po@am__quote@
-@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/check_numeric_type.Po@am__quote@
-@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/check_simple_vector.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/compare.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/compare_change.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/complex_poly.Po@am__quote@
@@ -738,13 +699,11 @@ distclean-compile:
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/conj_grad.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/cos.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/cosh.Po@am__quote@
-@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/cppad_vector.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/dependency.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/div.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/div_eq.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/equal_op_seq.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/erf.Po@am__quote@
-@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/error_handler.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/example.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/exp.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/expm1.Po@am__quote@
@@ -764,7 +723,6 @@ distclean-compile:
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/hes_times_dir.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/hessian.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/independent.Po@am__quote@
-@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/index_sort.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/integer.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/interface2c.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/interp_onetape.Po@am__quote@
@@ -777,10 +735,7 @@ distclean-compile:
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/log.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/log10.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/log1p.Po@am__quote@
-@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/lu_factor.Po@am__quote@
-@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/lu_invert.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/lu_ratio.Po@am__quote@
-@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/lu_solve.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/lu_vec_ad.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/lu_vec_ad_ok.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/mul.Po@am__quote@
@@ -789,16 +744,10 @@ distclean-compile:
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/mul_level_adolc.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/mul_level_adolc_ode.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/mul_level_ode.Po@am__quote@
-@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/nan.Po@am__quote@
-@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/near_equal.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/near_equal_ext.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/num_limits.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/number_skip.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/numeric_type.Po@am__quote@
-@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/ode_err_control.Po@am__quote@
-@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/ode_err_maxabs.Po@am__quote@
-@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/ode_gear.Po@am__quote@
-@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/ode_gear_control.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/ode_stiff.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/ode_taylor.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/opt_val_hes.Po@am__quote@
@@ -815,15 +764,10 @@ distclean-compile:
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/reverse_one.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/reverse_three.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/reverse_two.Po@am__quote@
-@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/romberg_mul.Po@am__quote@
-@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/romberg_one.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/rosen_34.Po@am__quote@
-@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/runge45_1.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/runge45_2.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/seq_property.Po@am__quote@
-@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/set_union.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/sign.Po@am__quote@
-@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/simple_vector.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/sin.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/sinh.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/sparse_hessian.Po@am__quote@
@@ -838,14 +782,11 @@ distclean-compile:
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/tan.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/tanh.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/tape_index.Po@am__quote@
-@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/thread_alloc.Po@am__quote@
-@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/to_string.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/unary_minus.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/unary_plus.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/value.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/var2par.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/vec_ad.Po@am__quote@
-@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/vector_bool.Po@am__quote@
 
 .cpp.o:
 @am__fastdepCXX_TRUE@	$(AM_V_CXX)depbase=`echo $@ | sed 's|[^/]*$$|$(DEPDIR)/&|;s|\.o$$||'`;\

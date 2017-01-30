@@ -192,7 +192,7 @@ example_SOURCES   = \
 	unary_plus.cpp \
 	value.cpp \
 	var2par.cpp \
-	vec_ad.cpp  \
+	vec_ad.cpp
 
 test: check
 	./example
