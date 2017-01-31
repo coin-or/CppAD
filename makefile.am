@@ -267,9 +267,9 @@ nobase_myinclude_HEADERS =  \
 	cppad/local/sinh_op.hpp \
 	cppad/local/sin_op.hpp \
 	cppad/local/sparse_binary_op.hpp \
+	cppad/local/sparse_internal.hpp \
 	cppad/local/sparse_list.hpp \
 	cppad/local/sparse_pack.hpp \
-	cppad/local/sparse_pattern.hpp \
 	cppad/local/sparse_unary_op.hpp \
 	cppad/local/sqrt_op.hpp \
 	cppad/local/std_set.hpp \

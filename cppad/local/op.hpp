@@ -3,7 +3,7 @@
 # define CPPAD_LOCAL_OP_HPP
 
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-16 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-17 Bradley M. Bell
 
 CppAD is distributed under multiple licenses. This distribution is under
 the terms of the
@@ -14,7 +14,7 @@ Please visit http://www.coin-or.org/CppAD/ for information on other licenses.
 -------------------------------------------------------------------------- */
 
 // used by the sparse operators
-# include <cppad/local/sparse_pattern.hpp>
+# include <cppad/local/sparse_internal.hpp>
 
 // operations
 # include <cppad/core/std_math_98.hpp>
