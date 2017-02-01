@@ -334,11 +334,12 @@ public:
 		bool dependency = false
 	);
 	template <typename SizeVector>
-	sparse_rc<SizeVector> for_sparse_jac(
-		const sparse_rc<SizeVector>& pattern_in    ,
-		bool                         transpose     ,
-		bool                         dependency    ,
-		bool                         internal_bool
+	void for_sparse_jac(
+		const sparse_rc<SizeVector>& pattern_in       ,
+		bool                         transpose        ,
+		bool                         dependency       ,
+		bool                         internal_bool    ,
+		sparse_rc<SizeVector>&       pattern_out
 	);
 	// ---------------------------------------------------------------------
 	// forward mode Hessian sparsity

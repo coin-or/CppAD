@@ -26,8 +26,8 @@ $$
 $section Forward Mode Spare Jacobian Patterns$$
 
 $head Syntax$$
-$icode%pattern_out% = %f%.for_sparse_jac(
-	%pattern_in%, %transpose%, %dependency%, %internal_bool%
+$icode%f%.for_sparse_jac(
+	%pattern_in%, %transpose%, %dependency%, %internal_bool%, %pattern_out%
 )%$$
 
 $head Purpose$$
@@ -132,12 +132,13 @@ $head internal_bool$$
 See $cref/f/for_sparse_jac/f/$$ above.
 
 $head pattern_out$$
-The return value $icode pattern_out$$ has prototype
+This argument has prototype
 $codei%
 	sparse_rc<%SizeVector%>& %pattern_out%
 %$$
+This input value of $icode pattern_out$$ does not matter.
 If $icode transpose$$ it is false (true),
-$icode pattern_out$$ is a sparsity pattern for
+upon return $icode pattern_out$$ is a sparsity pattern for
 $latex S(x)$$ ($latex S(x)^\R{T}$$).
 
 $head Sparsity for Entire Jacobian$$
@@ -192,7 +193,7 @@ This is used by the optimizer to obtain the correct dependency relations.
 If this is true, calculations are done with sets represented by vectors
 of boolean values. Othewise, index sets are used.
 
-\return
+\param pattern_out
 The value of transpose is false (true),
 the return value is a sparsity pattern for S(x) ( S(x)^T ) where
 \f[
@@ -203,11 +204,12 @@ and x is any argument value.
 */
 template <class Base>
 template <class SizeVector>
-sparse_rc<SizeVector> ADFun<Base>::for_sparse_jac(
+void ADFun<Base>::for_sparse_jac(
 	const sparse_rc<SizeVector>& pattern_in       ,
 	bool                         transpose        ,
 	bool                         dependency       ,
-	bool                         internal_bool    )
+	bool                         internal_bool    ,
+	sparse_rc<SizeVector>&       pattern_out      )
 {	// number or rows, columns, and non-zeros in pattern_in
 	size_t nr_in  = pattern_in.nr();
 	size_t nc_in  = pattern_in.nc();
@@ -226,9 +228,10 @@ sparse_rc<SizeVector> ADFun<Base>::for_sparse_jac(
 	{	// allocate memory for bool sparsity calculation
 		// (sparsity pattern is emtpy after a resize)
 		for_jac_sparse_pack_.resize(num_var_tape_, ell);
+		for_jac_sparse_set_.resize(0, 0);
 		//
 		// set sparsity patttern for independent variables
-		local::set_internal_independent<SizeVector, local::sparse_pack>(
+		local::set_internal_independent(
 			transpose             ,
 			ind_taddr_            ,
 			pattern_in            ,
@@ -243,9 +246,9 @@ sparse_rc<SizeVector> ADFun<Base>::for_sparse_jac(
 			&play_,
 			for_jac_sparse_pack_
 		);
-		// count number of non-zeros in return value
-		return local::get_internal_dependent<SizeVector, local::sparse_pack>(
-			transpose, dep_taddr_, for_jac_sparse_pack_
+		// set the output pattern
+		local::get_internal_dependent(
+			transpose, dep_taddr_, for_jac_sparse_pack_, pattern_out
 		);
 	}
 	// allocate memory for set sparsity calculation
@@ -253,7 +256,7 @@ sparse_rc<SizeVector> ADFun<Base>::for_sparse_jac(
 	for_jac_sparse_set_.resize(num_var_tape_, ell);
 	//
 	// set sparsity patttern for independent variables
-	local::set_internal_independent<SizeVector, local::sparse_list>(
+	local::set_internal_independent(
 		transpose             ,
 		ind_taddr_            ,
 		pattern_in            ,
@@ -268,9 +271,9 @@ sparse_rc<SizeVector> ADFun<Base>::for_sparse_jac(
 		&play_,
 		for_jac_sparse_set_
 	);
-	// count number of non-zeros in return value
-	return local::get_internal_dependent<SizeVector, local::sparse_list>(
-		transpose, dep_taddr_, for_jac_sparse_set_
+	// set the ouput pattern
+	local::get_internal_dependent(
+		transpose, dep_taddr_, for_jac_sparse_set_, pattern_out
 	);
 }
 

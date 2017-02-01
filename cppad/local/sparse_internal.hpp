@@ -77,7 +77,6 @@ It is assumed to be empty on input. On output, the pattern for each
 independent variable will be as specified by pattern_in.
 The pattern for the other varialbes is not affected.
 
-
 */
 template <class SizeVector, class InternalSparsity>
 void set_internal_independent(
@@ -120,15 +119,17 @@ dependent variable index in pattern_in.
 \param pattern_in
 This is the internal sparsity pattern for all of the variables on the tape.
 
-\return
-This is an index sparsity pattern for dependent variables,
+\param pattern_out
+The input value of pattern_out does not matter.
+Upon return it is an index sparsity pattern for dependent variables,
 or its transpose, depending on the value of transpose.
 */
 template <class SizeVector, class InternalSparsity>
-sparse_rc<SizeVector> get_internal_dependent(
+void get_internal_dependent(
 	bool                          transpose   ,
 	CppAD::vector<size_t>&        dependent   ,
-	const InternalSparsity&       pattern_in  )
+	const InternalSparsity&       pattern_in  ,
+	sparse_rc<SizeVector>&        pattern_out )
 {	typedef typename InternalSparsity::const_iterator iterator;
 	// number dependent variables
 	size_t nr = dependent.size();
@@ -147,7 +148,7 @@ sparse_rc<SizeVector> get_internal_dependent(
 	}
 	// transposed
 	if( transpose )
-	{	sparse_rc<SizeVector> pattern_out(nc, nr, nnz);
+	{	pattern_out.resize(nc, nr, nnz);
 		//
 		size_t k = 0;
 		for(size_t i = 0; i < nr; i++)
@@ -158,10 +159,10 @@ sparse_rc<SizeVector> get_internal_dependent(
 				j = *(++itr);
 			}
 		}
-		return  pattern_out;
+		return;
 	}
 	// not transposed
-	sparse_rc<SizeVector> pattern_out(nr, nc, nnz);
+	pattern_out.resize(nr, nc, nnz);
 	//
 	size_t k = 0;
 	for(size_t i = 0; i < nr; i++)
@@ -172,7 +173,7 @@ sparse_rc<SizeVector> get_internal_dependent(
 			j = *(++itr);
 		}
 	}
-	return  pattern_out;
+	return;
 }
 
 

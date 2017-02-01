@@ -22,6 +22,7 @@ $spell
 	rc
 	nr
 	nc
+	resize
 $$
 $section Row and Column Index Sparsity Patterns$$
 
@@ -31,7 +32,9 @@ This class is under construction and not yet appropriation for public use.
 $head Syntax$$
 $codei%# include <cppad/utility/sparse_rc.hpp>
 %$$
-$codei%sparse_rc<%SizeVector%>  %pattern%(%nr%, %nc%, %nnz%)
+$codei%sparse_rc<%SizeVector%>  %pattern%
+%$$
+$icode%resize%(%nr%, %nc%, %nnz%)
 %$$
 $icode%pattern%.set(%k%, %r%, %c%)
 %$$
@@ -50,6 +53,11 @@ $head SizeVector$$
 We use $icode SizeVector$$ to denote $cref SimpleVector$$ class
 $cref/with elements of type/SimpleVector/Elements of Specified Type/$$
 $code size$$.
+
+$head pattern$$
+The sparsity $icode pattern$$ is $code const$$
+except during its constructor, assignment, $code resize$$, and $code set$$.
+
 
 $head nr$$
 This argument has prototype
@@ -75,6 +83,11 @@ $codei%
 It specifies the number of possibly non-zero
 index pairs in the sparsity pattern.
 The function call $code nnz()$$ returns the value of $icode nnz$$.
+
+$head resize$$
+The current sparsity pattern is lost and a new one is started
+with the specified parameters. The elements in the $icode row$$
+and $icode col$$ vectors must assigned using $code set$$.
 
 $head k$$
 This argument has type
@@ -141,21 +154,21 @@ template <class SizeVector>
 class sparse_rc {
 private:
 	/// number of rows in the sparstiy pattern
-	const size_t nr_;
+	size_t nr_;
 	/// number of columns in the sparstiy pattern
-	const size_t nc_;
+	size_t nc_;
 	/// number of possibly non-zero index pairs
-	const size_t nnz_;
+	size_t nnz_;
 	/// row_[k] is the row index for the k-th possibly non-zero entry
 	SizeVector row_;
 	/// col_[k] is the column index for the k-th possibly non-zero entry
 	SizeVector col_;
 public:
-	/// constructor
-	sparse_rc(size_t nr, size_t nc, size_t nnz)
-	: nr_(nr), nc_(nc), nnz_(nnz), row_(nnz), col_(nnz)
+	/// default constructor
+	sparse_rc(void)
+	: nr_(0), nc_(0), nnz_(0), row_(0), col_(0)
 	{ }
-	// copy constructor
+	/// copy constructor
 	sparse_rc(const sparse_rc& other)
 	:
 	nr_(other.nr_)   ,
@@ -164,6 +177,14 @@ public:
 	row_(other.row_) ,
 	col_(other.col_)
 	{ }
+	/// resize
+	void resize(size_t nr, size_t nc, size_t nnz)
+	{	nr_ = nr;
+		nc_ = nc;
+		nnz_ = nnz;
+		row_.resize(nnz);
+		col_.resize(nnz);
+	}
 	/// set a possibly non-zero indices
 	void set(size_t k, size_t r, size_t c)
 	{	CPPAD_ASSERT_KNOWN(
