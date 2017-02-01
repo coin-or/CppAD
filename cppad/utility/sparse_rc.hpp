@@ -20,6 +20,8 @@ $spell
 	cppad
 	hpp
 	rc
+	nr
+	nc
 $$
 $section Row and Column Index Sparsity Patterns$$
 
@@ -29,9 +31,15 @@ This class is under construction and not yet appropriation for public use.
 $head Syntax$$
 $codei%# include <cppad/utility/sparse_rc.hpp>
 %$$
-$codei%sparse_rc %pattern%<%SizeVector%>(%row_in%, %col_in%)
+$codei%sparse_rc<%SizeVector%>  %pattern%(%nr%, %nc%, %nnz%)
 %$$
-$codei%sparse_rc %pattern%<%SizeVector%>(%other%)
+$icode%pattern%.set(%k%, %r%, %c%)
+%$$
+$icode%pattern%.nr()
+%$$
+$icode%pattern%.nc()
+%$$
+$icode%pattern%.nnz()
 %$$
 $codei%const %SizeVector%& %row%( %pattern%.row() )
 %$$
@@ -43,47 +51,70 @@ We use $icode SizeVector$$ to denote $cref SimpleVector$$ class
 $cref/with elements of type/SimpleVector/Elements of Specified Type/$$
 $code size$$.
 
+$head nr$$
+This argument has prototype
+$codei%
+	size_t %nr%
+%$$
+It specifies the number of rows in the sparsity pattern.
+The function call $code nr()$$ returns the value of $icode nr$$.
+
+$head nc$$
+This argument has prototype
+$codei%
+	size_t %nc%
+%$$
+It specifies the number of columns in the sparsity pattern.
+The function call $code nc()$$ returns the value of $icode nc$$.
+
 $head nnz$$
-We use the notation $icode nnz$$ to denote the number of
-possibly non-zero entries in the pattern; i.e., $icode%row_in%.size()%$$.
-
-$head row_in$$
 This argument has prototype
 $codei%
-	const %SizeVector%& %row_in%
+	size_t %nnz%
 %$$
-For $icode%k% = 0, %...%, %nnz%-1%$$,
-$icode%row_in%[%k%]%$$ is the row index for the $th k$$ possibly
-non-zero entry in the sparsity pattern.
+It specifies the number of possibly non-zero elements in the sparsity pattern.
+The function call $code nnz()$$ returns the value of $icode nnz$$.
 
-
-$head col_in$$
-This argument has prototype
+$head k$$
+This argument has type
 $codei%
-	const %SizeVector%& %col_in%
+	size_t %k%
 %$$
-It must have the same size as $icode row_in$$.
-For $icode%k% = 0, %...%, %nnz%-1%$$,
-$icode%col_in%[%k%]%$$ is the column index for the $th k$$ possibly
-non-zero entry in the sparsity pattern.
+and must be less than $icode nnz$$.
 
-$head pattern$$
-This object is $code const$$ except during its constructor.
-
-$head other$$
-This argument has prototype
+$head r$$
+This argument has type
 $codei%
-	const sparse_rc& %other%
+	size_t %r%
 %$$
-The sparsity pattern $icode pattern$$ will be the same as $icode other$$.
+It specifies the value assigned to $icode%row%[%k%]%$$ and must
+be less than $icode nr$$.
+
+$head c$$
+This argument has type
+$codei%
+	size_t %c%
+%$$
+It specifies the value assigned to $icode%col%[%k%]%$$ and must
+be less than $icode nc$$.
+
+$head set$$
+This function sets the values
+$codei%
+	%row%[%k%] = %r%
+	%col%[%k%] = %c%
+%$$
 
 $head row$$
-This is vector is equal to $icode row_in$$ in the constructor for
-$icode pattern$$.
+This vector has size $icode nnz$$ and
+$icode%row%[%k%]%$$
+is the row index of the $th k$$ possibly non-zero
+element in the sparsity pattern.
 
 $head col$$
-This is vector is equal to $icode col_in$$ in the constructor for
-$icode pattern$$.
+This vector has size $icode nnz$$ and
+$icode%col[%k%]%$$ is the column index of the $th k$$ possibly non-zero
+element in the sparsity pattern.
 
 $children%
 	example/utility/sparse_rc.cpp
@@ -108,23 +139,57 @@ namespace CppAD { // BEGIN CPPAD_NAMESPACE
 template <class SizeVector>
 class sparse_rc {
 private:
+	/// number of rows in the sparstiy pattern
+	const size_t nr_;
+	/// number of columns in the sparstiy pattern
+	const size_t nc_;
+	/// number of possibly non-zero elements
+	const size_t nnz_;
 	/// row_[k] is the row index for the k-th possibly non-zero entry
-	const SizeVector row_;
+	SizeVector row_;
 	/// col_[k] is the column index for the k-th possibly non-zero entry
-	const SizeVector col_;
+	SizeVector col_;
 public:
-	/// Constructor from row and column vectors
-	sparse_rc(const SizeVector& row_in, const SizeVector& col_in)
-	: row_(row_in), col_(col_in)
-	{	CPPAD_ASSERT_KNOWN(
-			row_in.size() == col_in.size(),
-			"CppAD::sparse_rc constructor: row and col size are not equal"
-		);
-	}
-	/// Constructor from another sparsity pattern
-	sparse_rc(const sparse_rc& other)
-	: row_( other.row_ ), col_( other.col_ )
+	/// constructor
+	sparse_rc(size_t nr, size_t nc, size_t nnz)
+	: nr_(nr), nc_(nc), nnz_(nnz), row_(nnz), col_(nnz)
 	{ }
+	// copy constructor
+	sparse_rc(const sparse_rc& other)
+	:
+	nr_(other.nr_)   ,
+	nc_(other.nc_)   ,
+	nnz_(other.nnz_) ,
+	row_(other.row_) ,
+	col_(other.col_)
+	{ }
+	/// set a possibly non-zero indices
+	void set(size_t k, size_t r, size_t c)
+	{	CPPAD_ASSERT_KNOWN(
+			k < nnz_,
+			"The index k is not less than nnz in sparse_rc::set"
+		);
+		CPPAD_ASSERT_KNOWN(
+			r < nr_,
+			"The index r is not less than nr in sparse_rc::set"
+		);
+		CPPAD_ASSERT_KNOWN(
+			c < nc_,
+			"The index c is to not less than nc in sparse_rc::set"
+		);
+		row_[k] = r;
+		col_[k] = c;
+	}
+	/// nr()
+	size_t nr(void) const
+	{	return nr_; }
+	/// nc()
+	size_t nc(void) const
+	{	return nc_; }
+	/// nnz()
+	size_t nnz(void) const
+	{	return nnz_; }
+	/// referenc to k-th element of column vector
 	/// row indices
 	const SizeVector& row(void) const
 	{	return row_; }

@@ -33,27 +33,26 @@ bool sparse_rc(void)
 {	bool ok = true;
 	typedef std::vector<size_t> SizeVector;
 
-	// a diagonal matrix
+	// sparsity pattern for a 5 by 5 diagonal matrix
+	size_t nr  = 5;
+	size_t nc  = 5;
 	size_t nnz = 5;
-	SizeVector row_in(nnz);
-	SizeVector col_in(nnz);
+	CppAD::sparse_rc<SizeVector> pattern(nr, nc, nnz);
 	for(size_t k = 0; k < nnz; k++)
-	{	row_in[k] = k;
-		col_in[k] = k;
+	{	size_t r = k;
+		size_t c = k;
+		pattern.set(k, r, c);
 	}
-
-	// row and column sparsity pattern
-	// (C++17 does not require <SizeVector> in this construction)
-	CppAD::sparse_rc<SizeVector> pattern(row_in, col_in);
 
 	// row and column vectors corresponding to pattern
 	const SizeVector& row( pattern.row() );
 	const SizeVector& col( pattern.row() );
 
 	// check row and column
-	ok &= row == row_in;
-	ok &= col == col_in;
-
+	for(size_t k = 0; k < nnz; k++)
+	{	ok &= row[k] == k;
+		ok &= col[k] == k;
+	}
 
 	return ok;
 }

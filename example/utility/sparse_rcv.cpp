@@ -35,39 +35,33 @@ bool sparse_rcv(void)
 	typedef std::vector<size_t> SizeVector;
 	typedef std::vector<double> ValueVector;
 
-	// a diagonal matrix
+	// sparsity pattern for a 5 by 5 diagonal matrix
+	size_t nr  = 5;
+	size_t nc  = 5;
 	size_t nnz = 5;
-	SizeVector row_in(nnz);
-	SizeVector col_in(nnz);
+	CppAD::sparse_rc<SizeVector> pattern(nr, nc, nnz);
 	for(size_t k = 0; k < nnz; k++)
-	{	row_in[k] = k;
-		col_in[k] = k;
+	{	size_t r = k;
+		size_t c = k;
+		pattern.set(k, r, c);
 	}
 
-	// sparsity pattern
-	// (C++17 does not require <SizeVector> in this construction)
-	CppAD::sparse_rc<SizeVector> pattern(row_in, col_in);
-
 	// sparse matrix
-	size_t nr = 5;
-	size_t nc = 5;
-	ValueVector val_in(nnz);
+	CppAD::sparse_rcv<SizeVector, ValueVector> matrix(pattern);
 	for(size_t k = 0; k < nnz; k++)
-		val_in[k] = double(k);
-
-	// sparse matrix
-	// (C++17 does not require <ValueVector, SizeVector> in this construction)
-	CppAD::sparse_rcv<ValueVector, SizeVector> matrix(nr, nc, pattern, val_in);
+		matrix.set(k, double(k));
 
 	// row, column, and value vectors
 	const SizeVector&  row( matrix.row() );
 	const SizeVector&  col( matrix.row() );
 	const ValueVector& val( matrix.val() );
 
-	// check row, col, val
-	ok &= row == row_in;
-	ok &= col == col_in;
-	ok &= val == val_in;
+	// check row,  column, and value
+	for(size_t k = 0; k < nnz; k++)
+	{	ok &= row[k] == k;
+		ok &= col[k] == k;
+		ok &= val[k] == double(k);
+	}
 
 	return ok;
 }

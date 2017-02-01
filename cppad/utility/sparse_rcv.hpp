@@ -34,93 +34,96 @@ This class is under construction and not yet appropriation for public use.
 $head Syntax$$
 $codei%# include <cppad/utility/sparse_rcv.hpp>
 %$$
-$codei%sparse_rcv<%ValueVector%> %matrix%(%nr%, %nc%, %pattern%)
+$codei%sparse_rcv<%SizeVector%, %ValueVector%>  %matrix%(%pattern%)
 %$$
-$icode%nr%  = %matrix%.nr()
+$icode%matrix%.set(%k%, %v%)
 %$$
-$icode%nc%  = %matrix%.nc()
+$icode%nr% = %matrix%.nr()
 %$$
-$codei%const %SizeVector& %row%( %pattern%.row() )
+$icode%nc% = %matrix%.nc()
 %$$
-$codei%const %SizeVector& %col%( %pattern%.col() )
+$icode%nnz% = %matrix%.nnz()
+%$$
+$codei%const %SizeVector%& %row%( %matrix%.row() )
+%$$
+$codei%const %SizeVector%& %col%( %matrix%.col() )
 %$$
 $codei%const %ValueVector%& %val%( %matrix%.val() )
-%$$
-$icode%ValueVector%& %val_var%( %matrix%.val() )
 %$$
 
 $head SizeVector$$
 We use $cref/SizeVector/sparse_rc/SizeVector/$$ to denote the
 $cref SimpleVector$$ class corresponding to $icode pattern$$.
 
-$head ValueScalar$$
+$head ValueVector$$
 We use $icode ValueVector$$ to denote the
-$cref SimpleVector$$ class corresponding to $icode val_in$$.
-
-$head nr$$
-This argument and return value has prototype
-$codei%
-	size_t %nr%
-%$$
-and is the number of rows in the matrix.
-The object $icode matrix$$ is $code const$$
-when $icode nr$$ is the return value.
-
-$head nc$$
-This argument and return value has prototype
-$codei%
-	size_t %nc%
-%$$
-and is the number of columns in the matrix.
-The object $icode matrix$$ is $code const$$
-when $icode nc$$ is the return value.
+$cref SimpleVector$$ class corresponding to $icode val$$.
 
 $head pattern$$
 This argument has prototype
 $codei%
 	const sparse_rc<%SizeVector%>& %pattern%
 %$$
-It specifies the pattern for the non-zero entries in the sparse matrix.
+It specifies the possibly non-zero entries in the $icode matrix$$.
+
+$head matrix$$
+This is a sparse matrix object with the sparsity specified by $icode pattern$$.
+It is $code const$$ for all the operations except for
+the constructor and $code set$$.
+
+$head nr$$
+This return value has prototype
+$codei%
+	size_t %nr%
+%$$
+and is the number of rows in $icode matrix$$.
+
+$head nc$$
+This argument and return value has prototype
+$codei%
+	size_t %nc%
+%$$
+and is the number of columns in $icode matrix$$.
 
 $head nnz$$
 We use the notation $icode nnz$$ to denote the number of
-possibly non-zero entries in the pattern; i.e.,
-$icode%pattern%.row().size()%$$.
+possibly non-zero entries in $icode matrix$$.
 
-$head val_in$$
-This argument has prototype
+$head k$$
+This argument has type
 $codei%
-	const %ValueVector%& %val_in%
+	size_t %k%
 %$$
-It muse have size $icode nnz$$ and specifies the initial values
-for the non-zero elements in the sparse matrix.
-To be specific,
-for $icode%k% = 0, %...%, %nnz%-1%$$,
-$icode%val_in%[%k%]%$$ is the initial value for the element with
-row index $icode%row%[%k%]%$$ and column index $icode%col%[%k%]%$$.
+and must be less than $icode nnz$$.
+
+$head v$$
+This argument has type
+$codei%
+	%ValueVector%::value_type
+%$$
+It specifies the value assigned to $icode%val%[%k%]%$$.
+
+$head set$$
+This function sets the value
+$codei%
+	%val%[%k%] = %v%
+%$$
 
 $head row$$
-This vector contains the row indices for the possibly non-zero entries
-in the sparse matrix (as specified by $icode pattern$$).
+This vector has size $icode nnz$$ and
+$icode%row%[%k%]%$$
+is the row index of the $th k$$ possibly non-zero
+element in $icode matrix$$.
 
 $head col$$
-This vector contains the column indices for the possibly non-zero entries
-in the sparse matrix (as specified by $icode pattern$$).
+This vector has size $icode nnz$$ and
+$icode%col[%k%]%$$ is the column index of the $th k$$ possibly non-zero
+element in $icode matrix$$
 
 $head val$$
-This vector has the same size as $icode row$$ and
-contains the current values for the possibly non-zero entries
+This vector has size $icode nnz$$ and
+$icode%val[%k%]%$$ is value of the $th k$$ possibly non-zero entry
 in the sparse matrix.
-
-$head val_var$$
-This vector has the same properties as $icode val$$ and
-in addition, you can change to value of the elements of the vector
-with the following assignment
-$codei%
-	%val_var%[%k%] = %s%
-%$$
-where $icode k$$ is less than $icode nnz$$ and $icode s$$
-is a $icode Scalar$$ object.
 
 $children%
 	example/utility/sparse_rcv.cpp
@@ -141,58 +144,42 @@ A sparse matrix class.
 namespace CppAD { // BEGIN CPPAD_NAMESPACE
 
 /// Sparse matrices with elements of type Scalar
-template <class ValueVector , class SizeVector>
-class sparse_rcv : public sparse_rc<SizeVector> {
+template <class SizeVector, class ValueVector>
+class sparse_rcv {
 private:
+	/// sparsity pattern
+	const sparse_rc<SizeVector> pattern_;
+	/// value_type
+	typedef typename ValueVector::value_type value_type;
 	/// val_[k] is the value for the k-th possibly non-zero entry in the matrix
 	ValueVector    val_;
-	/// number of rows in the matrix
-	const size_t   nr_;
-	/// number of columns in the matrix
-	const size_t   nc_;
 public:
 	// ------------------------------------------------------------------------
 	/// constructor
-	sparse_rcv(
-		size_t                       nr      ,
-		size_t                       nc      ,
-		const sparse_rc<SizeVector>& pattern ,
-		const ValueVector&           val_in  )
+	sparse_rcv(const sparse_rc<SizeVector>& pattern )
 	:
-	sparse_rc<SizeVector>(pattern)  ,
-	val_(val_in)                    ,
-	nr_(nr)                         ,
-	nc_(nc)
-	{
-# ifndef NDEBUG
-		size_t nnz = pattern.row().size();
-		CPPAD_ASSERT_KNOWN(
-		val_in.size() == nnz ,
-		"sparse_rcv: size of val_in is not equal number non-zeros in pattern"
-		);
-		for(size_t k = 0; k < nnz; k++)
-		{	CPPAD_ASSERT_KNOWN(
-				pattern.row()[k] < nr,
-				"sparse_rcv: a pattern row index is not less than nr"
-			);
-			CPPAD_ASSERT_KNOWN(
-				pattern.col()[k] < nc,
-				"sparse_rcv: a pattern column index is not less than nc"
-			);
-		}
-# endif
-	}
+	pattern_(pattern)    ,
+	val_(pattern_.nnz())
+	{ }
 	// ------------------------------------------------------------------------
-	/// number of rows in matrix
+	void set(size_t k, const value_type& v)
+	{	CPPAD_ASSERT_KNOWN(
+			pattern_.nnz(),
+			"The index k is not less than nnz in sparse_rcv::set"
+		);
+		val_[k] = v;
+	}
 	size_t nr(void) const
-	{	return nr_; }
-	/// number of columns in matrix
+	{	return pattern_.nr(); }
 	size_t nc(void) const
-	{	return nc_; }
-	/// value vector
+	{	return pattern_.nc(); }
+	size_t nnz(void) const
+	{	return pattern_.nnz(); }
+	const SizeVector& row(void) const
+	{	return pattern_.row(); }
+	const SizeVector& col(void) const
+	{	return pattern_.col(); }
 	const ValueVector& val(void) const
-	{	return val_; }
-	ValueVector&  val(void)
 	{	return val_; }
 };
 
