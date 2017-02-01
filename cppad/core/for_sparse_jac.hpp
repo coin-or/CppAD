@@ -107,6 +107,7 @@ The argument $icode pattern_in$$ has prototype
 $codei%
 	const sparse_rc<%SizeVector%>& %pattern_in%
 %$$
+see $cref sparse_rc$$.
 If $icode transpose$$ it is false (true),
 $icode pattern_in$$ is a sparsity pattern for $latex R$$ ($latex R^\R{T}$$).
 
@@ -122,7 +123,8 @@ This argument has prototype
 $codei%
 	bool %dependency%
 %$$
-If $icode dependency$$ is true,
+It index pairs show dependency, instead of non-zero Jacobian value;
+see $icode dependency$$ is true,
 the $cref/dependency pattern/dependency.cpp/Dependency Pattern/$$
 (instead of sparsity pattern) is computed.
 
@@ -144,6 +146,15 @@ $latex R$$ is the $latex n \times n$$ identity matrix.
 In this case, $icode pattern_out$$ is a sparsity pattern for
 $latex F^{(1)} ( x )$$  ( $latex F^{(1)} (x)^\R{T}$$ )
 if $icode transpose$$ is false (true).
+
+$head Example$$
+$children%
+	example/sparse/for_sparse_jac.cpp
+%$$
+The file
+$cref for_sparse_jac.cpp$$
+contains an example and test of this operation.
+It returns true if it succeeds and false otherwise.
 
 $end
 -----------------------------------------------------------------------------
@@ -200,7 +211,6 @@ sparse_rc<SizeVector> ADFun<Base>::for_sparse_jac(
 {	// number or rows, columns, and non-zeros in pattern_in
 	size_t nr_in  = pattern_in.nr();
 	size_t nc_in  = pattern_in.nc();
-	size_t nnz_in = pattern_in.nnz();
 	//
 	size_t n   = nr_in;
 	size_t ell = nc_in;
@@ -459,13 +469,6 @@ the corresponding value for $icode s$$ is a
 sparsity pattern for the Jacobian $latex S(x) = F^{(1)} ( x )$$.
 
 $head Example$$
-$children%
-	example/sparse/for_sparse_jac.cpp
-%$$
-The file
-$cref for_sparse_jac.cpp$$
-contains an example and test of this operation.
-It returns true if it succeeds and false otherwise.
 The file
 $cref/sparsity_sub.cpp/sparsity_sub.cpp/ForSparseJac/$$
 contains an example and test of using $code ForSparseJac$$
