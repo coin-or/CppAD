@@ -1,9 +1,8 @@
-// $Id$
 # ifndef CPPAD_CORE_AD_FUN_HPP
 # define CPPAD_CORE_AD_FUN_HPP
 
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-16 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-17 Bradley M. Bell
 
 CppAD is distributed under multiple licenses. This distribution is under
 the terms of the
@@ -322,20 +321,26 @@ public:
 	template <typename VectorBase>
 	VectorBase Reverse(size_t p, const VectorBase &v);
 
+	// ---------------------------------------------------------------------
 	// forward mode Jacobian sparsity
-	// (see doxygen documentation in for_sparse_jac.hpp)
 	template <typename VectorSet>
 	VectorSet ForSparseJac(
 		size_t q, const VectorSet &r, bool transpose = false,
 		bool dependency = false
 	);
-	// reverse mode Jacobian sparsity
-	// (see doxygen documentation in rev_sparse_jac.hpp)
 	template <typename VectorSet>
 	VectorSet RevSparseJac(
 		size_t q, const VectorSet &s, bool transpose = false,
 		bool dependency = false
 	);
+	template <typename SizeVector>
+	sparse_rc<SizeVector> for_sparse_jac(
+		const sparse_rc<SizeVector>& pattern_in    ,
+		bool                         transpose     ,
+		bool                         dependency    ,
+		bool                         internal_bool
+	);
+	// ---------------------------------------------------------------------
 	// forward mode Hessian sparsity
 	// (see doxygen documentation in rev_sparse_hes.hpp)
 	template <typename VectorSet>

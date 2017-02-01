@@ -72,7 +72,8 @@ This argument has prototype
 $codei%
 	size_t %nnz%
 %$$
-It specifies the number of possibly non-zero elements in the sparsity pattern.
+It specifies the number of possibly non-zero
+index pairs in the sparsity pattern.
 The function call $code nnz()$$ returns the value of $icode nnz$$.
 
 $head k$$
@@ -109,12 +110,12 @@ $head row$$
 This vector has size $icode nnz$$ and
 $icode%row%[%k%]%$$
 is the row index of the $th k$$ possibly non-zero
-element in the sparsity pattern.
+index pair in the sparsity pattern.
 
 $head col$$
 This vector has size $icode nnz$$ and
 $icode%col[%k%]%$$ is the column index of the $th k$$ possibly non-zero
-element in the sparsity pattern.
+index pair in the sparsity pattern.
 
 $children%
 	example/utility/sparse_rc.cpp
@@ -143,7 +144,7 @@ private:
 	const size_t nr_;
 	/// number of columns in the sparstiy pattern
 	const size_t nc_;
-	/// number of possibly non-zero elements
+	/// number of possibly non-zero index pairs
 	const size_t nnz_;
 	/// row_[k] is the row index for the k-th possibly non-zero entry
 	SizeVector row_;
@@ -189,7 +190,6 @@ public:
 	/// nnz()
 	size_t nnz(void) const
 	{	return nnz_; }
-	/// referenc to k-th element of column vector
 	/// row indices
 	const SizeVector& row(void) const
 	{	return row_; }
