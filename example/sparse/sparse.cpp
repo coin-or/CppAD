@@ -28,6 +28,7 @@ extern bool RevSparseJac(void);
 extern bool rev_sparse_hes(void);
 extern bool for_sparse_jac(void);
 extern bool for_sparse_hes(void);
+extern bool dependency(void);
 extern bool conj_grad(void);
 extern bool colpack_jac(void);
 extern bool colpack_hes(void);
@@ -68,6 +69,7 @@ int main(void)
 	ok &= Run( rev_sparse_hes,                    "rev_sparse_hes" );
 	ok &= Run( for_sparse_jac,                    "for_sparse_jac" );
 	ok &= Run( for_sparse_hes,                    "for_sparse_hes" );
+	ok &= Run( dependency,                           "dependency" );
 	ok &= Run( conj_grad,                    "conj_grad" );
 	ok &= Run( colpack_jac,                    "colpack_jac" );
 	ok &= Run( colpack_hes,                    "colpack_hes" );

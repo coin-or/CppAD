@@ -23,6 +23,7 @@ ADD_EXECUTABLE(example_sparse EXCLUDE_FROM_ALL
 	rev_sparse_hes.cpp
 	for_sparse_jac.cpp
 	for_sparse_hes.cpp
+	dependency.cpp
 	conj_grad.cpp
 	colpack_jac.cpp
 	colpack_hes.cpp

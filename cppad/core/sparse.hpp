@@ -23,7 +23,7 @@ $section Calculating Sparsity Patterns$$
 $childtable%
 	cppad/core/for_sparse_jac.hpp%
 	cppad/core/rev_sparse_jac.hpp%
-	example/dependency.cpp%
+	example/sparse/dependency.cpp%
 	cppad/core/rev_sparse_hes.hpp%
 	cppad/core/for_sparse_hes.hpp%
 	example/sparse/bool_sparsity.cpp

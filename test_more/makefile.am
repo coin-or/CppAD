@@ -113,6 +113,7 @@ test_more_SOURCES  = \
 	cos.cpp \
 	cosh.cpp \
 	dbl_epsilon.cpp \
+	dependency.cpp \
 	div.cpp \
 	div_eq.cpp \
 	div_zero_one.cpp \

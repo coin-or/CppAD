@@ -71,7 +71,6 @@ extern bool complex_poly(void);
 extern bool CondExp(void);
 extern bool Cosh(void);
 extern bool Cos(void);
-extern bool dependency(void);
 extern bool DivEq(void);
 extern bool Div(void);
 extern bool eigen_array(void);
@@ -209,7 +208,6 @@ int main(void)
 	ok &= Run( CondExp,           "CondExp"          );
 	ok &= Run( Cos,               "Cos"              );
 	ok &= Run( Cosh,              "Cosh"             );
-	ok &= Run( dependency,        "dependency"       );
 	ok &= Run( Div,               "Div"              );
 	ok &= Run( DivEq,             "DivEq"            );
 	ok &= Run( EqualOpSeq,        "EqualOpSeq"       );

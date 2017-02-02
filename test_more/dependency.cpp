@@ -1,6 +1,5 @@
-// $Id$
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-16 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-17 Bradley M. Bell
 
 CppAD is distributed under multiple licenses. This distribution is under
 the terms of the
@@ -11,7 +10,7 @@ Please visit http://www.coin-or.org/CppAD/ for information on other licenses.
 -------------------------------------------------------------------------- */
 
 /*
-$begin dependency.cpp$$
+Old example for deprecated interface.
 $spell
 	CppAD
 	Jac
@@ -47,7 +46,7 @@ $cref/RevSparseJac/RevSparseJac/dependency/$$ is a flag that signals
 that the dependency pattern (instead of the sparsity pattern) is computed.
 
 $code
-$srcfile%example/dependency.cpp%0%// BEGIN C++%// END C++%1%$$
+$srcfile%test_more/dependency.cpp%0%// BEGIN C++%// END C++%1%$$
 $$
 
 $end

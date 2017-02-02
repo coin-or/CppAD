@@ -67,6 +67,7 @@ ADD_EXECUTABLE(test_more EXCLUDE_FROM_ALL test_more.cpp
 	cos.cpp
 	cosh.cpp
 	dbl_epsilon.cpp
+	dependency.cpp
 	div.cpp
 	div_eq.cpp
 	div_zero_one.cpp
