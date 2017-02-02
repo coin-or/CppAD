@@ -73,30 +73,64 @@ bool for_sparse_jac(void)
 	f.for_sparse_jac(
 		pattern_in, transpose, dependency, internal_bool, pattern_out
 	);
-
-	// check values
-	const SizeVector& row( pattern_out.row() );
-	const SizeVector& col( pattern_out.col() );
 	size_t nnz = pattern_out.nnz();
-	ok &= nnz == 4;
-	//
-	// indices that sort output pattern in column major order
-	SizeVector keys(nnz), ind(nnz);
-	for(size_t k = 0; k < nnz; k++)
-	{	ok     &= col[k] < nc;
-		keys[k] = row[k] * nc + col[k];
+	ok        &= nnz == 4;
+	ok        &= pattern_out.nr() == m;
+	ok        &= pattern_out.nc() == n;
+	{	// check results
+		const SizeVector& row( pattern_out.row() );
+		const SizeVector& col( pattern_out.col() );
+		//
+		// indices that sort output pattern in column major order
+		SizeVector keys(nnz), ind(nnz);
+		for(size_t k = 0; k < nnz; k++)
+		{	ok     &= row[k] < m;
+			ok     &= col[k] < n;
+			keys[k] = row[k] * n + col[k];
+		}
+		CppAD::index_sort(keys, ind);
+		//
+		ok &= row[ ind[0] ] ==  0  && col[ ind[0] ] ==  0;
+		ok &= row[ ind[1] ] ==  1  && col[ ind[1] ] ==  0;
+		ok &= row[ ind[2] ] ==  1  && col[ ind[2] ] ==  1;
+		ok &= row[ ind[3] ] ==  2  && col[ ind[3] ] ==  1;
+		//
+		// check that set and not boolean values are stored
+		ok &= (f.size_forward_set() > 0);
+		ok &= (f.size_forward_bool() == 0);
 	}
-	CppAD::index_sort(keys, ind);
-	//
-	ok &= row[ ind[0] ] ==  0  && col[ ind[0] ] ==  0;
-	ok &= row[ ind[1] ] ==  1  && col[ ind[1] ] ==  0;
-	ok &= row[ ind[2] ] ==  1  && col[ ind[2] ] ==  1;
-	ok &= row[ ind[3] ] ==  2  && col[ ind[3] ] ==  1;
-	//
-	// check that set and not boolean values are stored
-	ok &= (f.size_forward_set() > 0);
-	ok &= (f.size_forward_bool() == 0);
-	//
+	// note that the transpose of the identity is the identity
+	transpose     = true;
+	internal_bool = true;
+	f.for_sparse_jac(
+		pattern_in, transpose, dependency, internal_bool, pattern_out
+	);
+	nnz  = pattern_out.nnz();
+	ok  &= nnz == 4;
+	ok  &= pattern_out.nr() == n;
+	ok  &= pattern_out.nc() == m;
+	{	// check results
+		const SizeVector& row( pattern_out.row() );
+		const SizeVector& col( pattern_out.col() );
+		//
+		// indices that sort output pattern in row major order
+		SizeVector keys(nnz), ind(nnz);
+		for(size_t k = 0; k < nnz; k++)
+		{	ok     &= row[k] < n;
+			ok     &= col[k] < m;
+			keys[k] = col[k] * n + row[k];
+		}
+		CppAD::index_sort(keys, ind);
+		//
+		ok &= col[ ind[0] ] ==  0  && row[ ind[0] ] ==  0;
+		ok &= col[ ind[1] ] ==  1  && row[ ind[1] ] ==  0;
+		ok &= col[ ind[2] ] ==  1  && row[ ind[2] ] ==  1;
+		ok &= col[ ind[3] ] ==  2  && row[ ind[3] ] ==  1;
+		//
+		// check that set and not boolean values are stored
+		ok &= (f.size_forward_set() == 0);
+		ok &= (f.size_forward_bool() > 0);
+	}
 	return ok;
 }
 // END C++

@@ -251,30 +251,35 @@ void ADFun<Base>::for_sparse_jac(
 			transpose, dep_taddr_, for_jac_sparse_pack_, pattern_out
 		);
 	}
-	// allocate memory for set sparsity calculation
-	// (sparsity pattern is emtpy after a resize)
-	for_jac_sparse_set_.resize(num_var_tape_, ell);
-	//
-	// set sparsity patttern for independent variables
-	local::set_internal_independent(
-		transpose             ,
-		ind_taddr_            ,
-		pattern_in            ,
-		for_jac_sparse_set_
-	);
+	else
+	{
+		// allocate memory for set sparsity calculation
+		// (sparsity pattern is emtpy after a resize)
+		for_jac_sparse_set_.resize(num_var_tape_, ell);
+		for_jac_sparse_pack_.resize(0, 0);
+		//
+		// set sparsity patttern for independent variables
+		local::set_internal_independent(
+			transpose             ,
+			ind_taddr_            ,
+			pattern_in            ,
+			for_jac_sparse_set_
+		);
 
-	// compute sparsity for other variables
-	local::ForJacSweep(
-		dependency,
-		n,
-		num_var_tape_,
-		&play_,
-		for_jac_sparse_set_
-	);
-	// set the ouput pattern
-	local::get_internal_dependent(
-		transpose, dep_taddr_, for_jac_sparse_set_, pattern_out
-	);
+		// compute sparsity for other variables
+		local::ForJacSweep(
+			dependency,
+			n,
+			num_var_tape_,
+			&play_,
+			for_jac_sparse_set_
+		);
+		// set the ouput pattern
+		local::get_internal_dependent(
+			transpose, dep_taddr_, for_jac_sparse_set_, pattern_out
+		);
+	}
+	return;
 }
 
 
