@@ -39,9 +39,11 @@ value of the $th j$$ independent variable,
 the corresponding entry in the dependency pattern is non-zero (true).
 Otherwise it is zero (false).
 CppAD uses $cref/sparsity patterns/glossary/Sparsity Pattern/$$
-to represent dependency matrices.
+to represent dependency patterns.
+
+$head Computation$$
 The $icode dependency$$ argument to
-$cref/ForSparseJac/ForSparseJac/dependency/$$ and
+$cref/for_sparse_jac/for_sparse_jac/dependency/$$ and
 $cref/RevSparseJac/RevSparseJac/dependency/$$ is a flag that signals
 that the dependency pattern (instead of the sparsity pattern) is computed.
 
@@ -66,6 +68,8 @@ bool dependency(void)
 {	bool ok = true;
 	using CppAD::AD;
 	using CppAD::NearEqual;
+	typedef CPPAD_TESTVECTOR(size_t)     SizeVector;
+	typedef CppAD::sparse_rc<SizeVector> sparsity;
 
 	// VecAD object for use later
 	CppAD::VecAD<double> vec_ad(2);
@@ -88,38 +92,54 @@ bool dependency(void)
 	size_t m  = n;
 	size_t m1 = n - 1;
 	CPPAD_TESTVECTOR(AD<double>) ay(m);
-	ay[m1-0] = sign( ax[0] );
-	ay[m1-1] = CondExpLe( ax[1], azero, azero, aone);
-	ay[m1-2] = CondExpLe( azero, ax[2], azero, aone);
-	ay[m1-3] = heavyside( ax[3] );
-	ay[m1-4] = vec_ad[ ax[4] - AD<double>(4.0) ];
+	// Note that ay[m1 - j] depends on ax[j]
+	ay[m1 - 0] = sign( ax[0] );
+	ay[m1 - 1] = CondExpLe( ax[1], azero, azero, aone);
+	ay[m1 - 2] = CondExpLe( azero, ax[2], azero, aone);
+	ay[m1 - 3] = heavyside( ax[3] );
+	ay[m1 - 4] = vec_ad[ ax[4] - AD<double>(4.0) ];
 
 	// create f: x -> y and stop tape recording
 	CppAD::ADFun<double> f(ax, ay);
 
-	// -----------------------------------------------------------
-	// ForSparseJac and bool dependency
-	bool transpose  = false;
-	bool dependency;
-	// could replace CppAD::vectorBooll by CPPAD_TEST_VECTOR<bool>
-	CppAD::vectorBool eye_bool(n * n), depend_bool(m * n);
-	for(size_t i = 0; i < n; i++)
-	{	for(size_t j = 0; j < n; j++)
-			eye_bool[i * n + j] = (i == j);
-	}
-	dependency = true;
-	depend_bool = f.ForSparseJac(n, eye_bool, transpose, dependency);
-	for(size_t i = 0; i < m; i++)
-	{	for(size_t j = 0; j < n; j++)
-			ok &= depend_bool[i * n + j] == (i == (m1-j));
-	}
-	dependency = false;
-	depend_bool = f.ForSparseJac(n, eye_bool, transpose, dependency);
-	for(size_t i = 0; i < m; i++)
-	{	for(size_t j = 0; j < n; j++)
-			ok &= depend_bool[i * n + j] == false;
+	// sparsity pattern for n by n identity matrix
+	size_t nr  = n;
+	size_t nc  = n;
+	size_t nnz = n;
+	sparsity pattern_in;
+	pattern_in.resize(nr, nc, nnz);
+	for(size_t k = 0; k < nnz; k++)
+	{	size_t r = k;
+		size_t c = k;
+		pattern_in.set(k, r, c);
 	}
 
+	// compute dependency pattern
+	bool transpose     = false;
+	bool dependency    = true;  // would transpose dependency pattern
+	bool internal_bool = true;  // does not affect result
+	sparsity pattern_out;
+	f.for_sparse_jac(
+		pattern_in, transpose, dependency, internal_bool, pattern_out
+	);
+	const SizeVector& row( pattern_out.row() );
+	const SizeVector& col( pattern_out.col() );
+
+	// indices that sort output pattern in column major order
+	SizeVector keys(nnz), ind(nnz);
+	for(size_t k = 0; k < nnz; k++)
+	{	ok     &= row[k] < m;
+		ok     &= col[k] < n;
+		keys[k] = row[k] * n + col[k];
+	}
+	CppAD::index_sort(keys, ind);
+	ok &= pattern_out.nr()  == n;
+	ok &= pattern_out.nc()  == n;
+	ok &= pattern_out.nnz() == n;
+	for(size_t k = 0; k < n; k++)
+	{	ok &= row[ ind[k] ] == k;
+		ok &= col[ ind[k] ] == m1 - k;
+	}
 	// -----------------------------------------------------------
 	// RevSparseJac and set dependency
 	CppAD::vector<    std::set<size_t> > eye_set(m), depend_set(m);
@@ -127,7 +147,6 @@ bool dependency(void)
 	{	ok &= eye_set[i].empty();
 		eye_set[i].insert(i);
 	}
-	dependency = true;
 	depend_set = f.RevSparseJac(n, eye_set, transpose, dependency);
 	for(size_t i = 0; i < m; i++)
 	{	std::set<size_t> check;

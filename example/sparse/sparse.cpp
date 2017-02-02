@@ -60,20 +60,20 @@ int main(void)
 	// This line is used by test_one.sh
 
 	// external compiled tests
-	ok &= Run( sub_sparse_hes,                    "sub_sparse_hes" );
-	ok &= Run( sparsity_sub,                    "sparsity_sub" );
-	ok &= Run( sparse_sub_hes,                    "sparse_sub_hes" );
-	ok &= Run( sparse_jacobian,                    "sparse_jacobian" );
-	ok &= Run( sparse_hessian,                    "sparse_hessian" );
-	ok &= Run( RevSparseJac,                    "RevSparseJac" );
-	ok &= Run( rev_sparse_hes,                    "rev_sparse_hes" );
-	ok &= Run( for_sparse_jac,                    "for_sparse_jac" );
-	ok &= Run( for_sparse_hes,                    "for_sparse_hes" );
-	ok &= Run( dependency,                           "dependency" );
-	ok &= Run( conj_grad,                    "conj_grad" );
-	ok &= Run( colpack_jac,                    "colpack_jac" );
-	ok &= Run( colpack_hes,                    "colpack_hes" );
-	ok &= Run( bool_sparsity,                    "bool_sparsity" );
+	ok &= Run( sub_sparse_hes,            "sub_sparse_hes" );
+	ok &= Run( sparsity_sub,              "sparsity_sub" );
+	ok &= Run( sparse_sub_hes,            "sparse_sub_hes" );
+	ok &= Run( sparse_jacobian,           "sparse_jacobian" );
+	ok &= Run( sparse_hessian,            "sparse_hessian" );
+	ok &= Run( RevSparseJac,              "RevSparseJac" );
+	ok &= Run( rev_sparse_hes,            "rev_sparse_hes" );
+	ok &= Run( for_sparse_jac,            "for_sparse_jac" );
+	ok &= Run( for_sparse_hes,            "for_sparse_hes" );
+	ok &= Run( dependency,                "dependency" );
+	ok &= Run( conj_grad,                 "conj_grad" );
+	ok &= Run( colpack_jac,               "colpack_jac" );
+	ok &= Run( colpack_hes,               "colpack_hes" );
+	ok &= Run( bool_sparsity,             "bool_sparsity" );
 
 
 	// check for errors
