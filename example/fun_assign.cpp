@@ -1,6 +1,6 @@
 // $Id$
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-16 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-17 Bradley M. Bell
 
 CppAD is distributed under multiple licenses. This distribution is under
 the terms of the
@@ -69,9 +69,9 @@ bool fun_assign(void)
 	g = f;
 
 	// check values that should be equal
-	ok &= ( g.size_order()       == f.size_order() );
-	ok &= ( g.size_forward_bool() == f.size_forward_bool() );
-	ok &= ( g.size_forward_set()  == f.size_forward_set() );
+	ok &= ( g.size_order() == f.size_order() );
+	ok &= ( (g.size_forward_bool() > 0) == (f.size_forward_bool() > 0) );
+	ok &= ( (g.size_forward_set() > 0)  == (f.size_forward_set() > 0) );
 
 	// Use zero order Taylor coefficient from f for first order
 	// calculation using g.

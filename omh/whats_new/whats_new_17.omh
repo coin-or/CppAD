@@ -16,9 +16,35 @@ $spell
 	doxygen
 	cppad
 	hpp
+	bool
+	Jacobian
 $$
 
 $section Changes and Additions to CppAD During 2017$$
+
+$head 02-02$$
+Change $cref/size_forward_bool/for_sparse_jac/f/size_forward_bool/$$ and
+Change $cref/size_forward_set/for_sparse_jac/f/size_forward_set/$$
+so that they are a better approximation of the number of bytes
+(unsigned characters) being used.
+The exact same sparsity pattern might use different memory
+in two different function objects (because memory is allocated in chunks).
+The $cref fun_assign.cpp$$ example has been changed to reflect this fact.
+
+$head 02-01$$
+Add the $cref for_sparse_jac$$ interface for the sparse Jacobian calculations.
+This is the first use of $cref sparse_rc$$,
+a sparsity pattern class that uses row and column
+$cref/index vectors/glossary/Sparsity Pattern/Row and Column Index Vectors/$$.
+
+$head 01-30$$
+Move the $cref/sparsity/sparse/$$ examples from $code example$$
+to $code example/sparse$$ subdirectory.
+This included the sparse $cref/driver/drivers/$$ examples.
+
+$head 01-29$$
+Move the $cref utility$$ examples from $code example$$
+to $code example/utility$$ subdirectory.
 
 $head 01-27$$
 Add a $cref addon$$ link to

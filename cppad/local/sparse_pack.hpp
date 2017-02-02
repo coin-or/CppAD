@@ -1,9 +1,8 @@
-// $Id$
 # ifndef CPPAD_LOCAL_SPARSE_PACK_HPP
 # define CPPAD_LOCAL_SPARSE_PACK_HPP
 
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-16 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-17 Bradley M. Bell
 
 CppAD is distributed under multiple licenses. This distribution is under
 the terms of the
@@ -299,15 +298,6 @@ public:
 			data_[t++] = ( data_[l++] & other.data_[r++] );
 	}
 	// -----------------------------------------------------------------
-	/*! Amount of memory used by this vector of sets
-
-	\return
-	The amount of memory in units of type unsigned char memory.
-	*/
-	size_t memory(void) const
-	{	return n_set_ * n_pack_ * sizeof(Pack);
-	}
-	// -----------------------------------------------------------------
 	/*! Fetch n_set for vector of sets object.
 
 	\return
@@ -323,6 +313,15 @@ public:
 	*/
 	size_t end(void) const
 	{	return end_; }
+	// -----------------------------------------------------------------
+	/*! Amount of memory used by this vector of sets
+
+	\return
+	The amount of memory in units of type unsigned char memory.
+	*/
+	size_t memory(void) const
+	{	return data_.capacity() * sizeof(Pack);
+	}
 };
 // ==========================================================================
 /*!

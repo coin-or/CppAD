@@ -142,7 +142,7 @@ Suppose that $latex A \in B^{m \times n}$$ is a sparse matrix.
 CppAD has several ways to specify the elements of $latex A$$
 that are possible non-zero.
 
-$subhead Row and Column Vectors$$
+$subhead Row and Column Index Vectors$$
 A pair of non-negative integer vectors $latex r$$, $latex c$$
 are a sparsity pattern for $latex A$$
 if for every non-zero element $latex A_{i,j}$$,

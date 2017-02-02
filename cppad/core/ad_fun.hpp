@@ -388,7 +388,7 @@ public:
 	local::sparse_list&                  s
 	);
 
-	/// amount of memory used for Jacobain sparsity pattern
+	/// amount of memory used for boolean Jacobain sparsity pattern
 	size_t size_forward_bool(void) const
 	{	return for_jac_sparse_pack_.memory(); }
 
@@ -401,9 +401,9 @@ public:
 		for_jac_sparse_pack_.resize(0, 0);
 	}
 
-	/// total number of elements used for Jacobian sparsity pattern
+	/// amount of memory used for vector of set Jacobain sparsity pattern
 	size_t size_forward_set(void) const
-	{	return for_jac_sparse_set_.number_elements(); }
+	{	return for_jac_sparse_set_.memory(); }
 
 	/// free memory used for Jacobain sparsity pattern
 	void size_forward_set(size_t zero)
@@ -610,7 +610,7 @@ public:
 	size_t Memory(void) const
 	{	size_t pervar  = cap_order_taylor_ * sizeof(Base)
 		+ for_jac_sparse_pack_.memory()
-		+ 3 * sizeof(size_t) * for_jac_sparse_set_.number_elements();
+		+ for_jac_sparse_set_.memory();
 		size_t total   = num_var_tape_  * pervar + play_.Memory();
 		return total;
 	}

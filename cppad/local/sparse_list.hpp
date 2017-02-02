@@ -1,9 +1,8 @@
-// $Id$
 # ifndef CPPAD_LOCAL_SPARSE_LIST_HPP
 # define CPPAD_LOCAL_SPARSE_LIST_HPP
 
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-16 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-17 Bradley M. Bell
 
 CppAD is distributed under multiple licenses. This distribution is under
 the terms of the
@@ -771,17 +770,13 @@ public:
 	size_t end(void) const
 	{	return end_; }
 	// -----------------------------------------------------------------
-	/*! Sum over all sets of the number of elements
+	/*! Amount of memory used by this vector of sets
 
-	/return
-	The the total number of elements
+	\return
+	The amount of memory in units of type unsigned char memory.
 	*/
-	size_t number_elements(void) const
-	{	size_t i, count;
-		count = 0;
-		for(i = 0; i < start_.size(); i++)
-			count += number_elements(i);
-		return count;
+	size_t memory(void) const
+	{	return data_.capacity() * sizeof(pair_size_t);
 	}
 };
 // =========================================================================
