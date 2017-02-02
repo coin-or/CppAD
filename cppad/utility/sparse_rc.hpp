@@ -48,6 +48,10 @@ $codei%const %SizeVector%& %row%( %pattern%.row() )
 %$$
 $codei%const %SizeVector%& %col%( %pattern%.col() )
 %$$
+$icode%SizeVector% %row_major% = %pattern%.row_major()
+%$$
+$icode%SizeVector% %col_major% = %pattern%.col_major()
+%$$
 
 $head SizeVector$$
 We use $icode SizeVector$$ to denote $cref SimpleVector$$ class
@@ -56,7 +60,7 @@ $code size$$.
 
 $head pattern$$
 The sparsity $icode pattern$$ is $code const$$
-except during its constructor, assignment, $code resize$$, and $code set$$.
+except during its constructor, $code resize$$, and $code set$$.
 
 
 $head nr$$
@@ -127,8 +131,30 @@ index pair in the sparsity pattern.
 
 $head col$$
 This vector has size $icode nnz$$ and
-$icode%col[%k%]%$$ is the column index of the $th k$$ possibly non-zero
+$icode%col%[%k%]%$$ is the column index of the $th k$$ possibly non-zero
 index pair in the sparsity pattern.
+
+$head row_major$$
+This vector has size $icode nnz$$ and sorts the sparsity pattern
+in row-major order. To be specific,
+$codei%
+	%col%[ %row_major%[%k%] ] <= %col%[ %row_major%[%k%+1] ]
+%$$
+and if $icode%col%[ %row_major%[%k%] ] == %col%[ %row_major%[%k%+1] ]%$$,
+$codei%
+	%row%[ %row_major%[%k%] ] < %row%[ %row_major%[%k%+1] ]
+%$$
+
+$head col_major$$
+This vector has size $icode nnz$$ and sorts the sparsity pattern
+in column-major order. To be specific,
+$codei%
+	%row%[ %col_major%[%k%] ] <= %row%[ %col_major%[%k%+1] ]
+%$$
+and if $icode%row%[ %col_major%[%k%] ] == %row%[ %col_major%[%k%+1] ]%$$,
+$codei%
+	%col%[ %col_major%[%k%] ] < %col%[ %col_major%[%k%+1] ]
+%$$
 
 $children%
 	example/utility/sparse_rc.cpp
@@ -145,7 +171,8 @@ $end
 A Matrix sparsity pattern class.
 */
 # include <cstddef> // for size_t
-# include <cppad/core/cppad_assert.hpp> // for CPPAD_ASSERT
+# include <cppad/core/cppad_assert.hpp>  // for CPPAD_ASSERT
+# include <cppad/utility/index_sort.hpp> // for row and column major ordering
 
 namespace CppAD { // BEGIN CPPAD_NAMESPACE
 
@@ -153,9 +180,9 @@ namespace CppAD { // BEGIN CPPAD_NAMESPACE
 template <class SizeVector>
 class sparse_rc {
 private:
-	/// number of rows in the sparstiy pattern
+	/// number of rows in the sparsity pattern
 	size_t nr_;
-	/// number of columns in the sparstiy pattern
+	/// number of columns in the sparsity pattern
 	size_t nc_;
 	/// number of possibly non-zero index pairs
 	size_t nnz_;
@@ -201,6 +228,7 @@ public:
 		);
 		row_[k] = r;
 		col_[k] = c;
+		//
 	}
 	/// nr()
 	size_t nr(void) const
@@ -217,6 +245,26 @@ public:
 	/// column indices
 	const SizeVector& col(void) const
 	{	return col_; }
+	/// row-major indices
+	SizeVector row_major(void) const
+	{	SizeVector keys(nnz_), row_major(nnz_);
+		for(size_t k = 0; k < nnz_; k++)
+		{	CPPAD_ASSERT_UNKNOWN( row_[k] < nr_ );
+			keys[k] = col_[k] * nr_ + row_[k];
+		}
+		index_sort(keys, row_major);
+		return row_major;
+	}
+	/// column-major indices
+	SizeVector col_major(void) const
+	{	SizeVector keys(nnz_), col_major(nnz_);
+		for(size_t k = 0; k < nnz_; k++)
+		{	CPPAD_ASSERT_UNKNOWN( col_[k] < nc_ );
+			keys[k] = row_[k] * nc_ + col_[k];
+		}
+		index_sort(keys, col_major);
+		return col_major;
+	}
 };
 
 } // END_CPPAD_NAMESPACE

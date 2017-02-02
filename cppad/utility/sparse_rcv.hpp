@@ -50,6 +50,10 @@ $codei%const %SizeVector%& %col%( %matrix%.col() )
 %$$
 $codei%const %ValueVector%& %val%( %matrix%.val() )
 %$$
+$icode%SizeVector% %row_major% = %pattern%.row_major()
+%$$
+$icode%SizeVector% %col_major% = %pattern%.col_major()
+%$$
 
 $head SizeVector$$
 We use $cref/SizeVector/sparse_rc/SizeVector/$$ to denote the
@@ -125,6 +129,28 @@ This vector has size $icode nnz$$ and
 $icode%val[%k%]%$$ is value of the $th k$$ possibly non-zero entry
 in the sparse matrix.
 
+$head row_major$$
+This vector has size $icode nnz$$ and sorts the matrix
+in row-major order. To be specific,
+$codei%
+	%col%[ %row_major%[%k%] ] <= %col%[ %row_major%[%k%+1] ]
+%$$
+and if $icode%col%[ %row_major%[%k%] ] == %col%[ %row_major%[%k%+1] ]%$$,
+$codei%
+	%row%[ %row_major%[%k%] ] < %row%[ %row_major%[%k%+1] ]
+%$$
+
+$head col_major$$
+This vector has size $icode nnz$$ and sorts the matrix
+in column-major order. To be specific,
+$codei%
+	%row%[ %col_major%[%k%] ] <= %row%[ %col_major%[%k%+1] ]
+%$$
+and if $icode%row%[ %col_major%[%k%] ] == %row%[ %col_major%[%k%+1] ]%$$,
+$codei%
+	%col%[ %col_major%[%k%] ] < %col%[ %col_major%[%k%+1] ]
+%$$
+
 $children%
 	example/utility/sparse_rcv.cpp
 %$$
@@ -181,6 +207,10 @@ public:
 	{	return pattern_.col(); }
 	const ValueVector& val(void) const
 	{	return val_; }
+	SizeVector row_major(void) const
+	{	return pattern_.row_major(); }
+	SizeVector col_major(void) const
+	{	return pattern_.col_major(); }
 };
 
 } // END_CPPAD_NAMESPACE

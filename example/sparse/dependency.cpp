@@ -124,21 +124,15 @@ bool dependency(void)
 	);
 	const SizeVector& row( pattern_out.row() );
 	const SizeVector& col( pattern_out.col() );
+	SizeVector col_major = pattern_out.col_major();
 
-	// indices that sort output pattern in column major order
-	SizeVector keys(nnz), ind(nnz);
-	for(size_t k = 0; k < nnz; k++)
-	{	ok     &= row[k] < m;
-		ok     &= col[k] < n;
-		keys[k] = row[k] * n + col[k];
-	}
-	CppAD::index_sort(keys, ind);
+	// check result
 	ok &= pattern_out.nr()  == n;
 	ok &= pattern_out.nc()  == n;
 	ok &= pattern_out.nnz() == n;
 	for(size_t k = 0; k < n; k++)
-	{	ok &= row[ ind[k] ] == k;
-		ok &= col[ ind[k] ] == m1 - k;
+	{	ok &= row[ col_major[k] ] == k;
+		ok &= col[ col_major[k] ] == m1 - k;
 	}
 	// -----------------------------------------------------------
 	// RevSparseJac and set dependency

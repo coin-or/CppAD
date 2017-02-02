@@ -42,26 +42,29 @@ bool sparse_rcv(void)
 	size_t nnz = 5;
 	pattern.resize(nr, nc, nnz);
 	for(size_t k = 0; k < nnz; k++)
-	{	size_t r = k;
-		size_t c = k;
+	{	size_t r = nnz - k - 1; // reverse or column-major order
+		size_t c = nnz - k - 1;
 		pattern.set(k, r, c);
 	}
 
 	// sparse matrix
 	CppAD::sparse_rcv<SizeVector, ValueVector> matrix(pattern);
 	for(size_t k = 0; k < nnz; k++)
-		matrix.set(k, double(k));
+	{	double v = double(k);
+		matrix.set(nnz - k - 1, v);
+	}
 
 	// row, column, and value vectors
 	const SizeVector&  row( matrix.row() );
 	const SizeVector&  col( matrix.row() );
 	const ValueVector& val( matrix.val() );
+	SizeVector col_major = matrix.col_major();
 
 	// check row,  column, and value
 	for(size_t k = 0; k < nnz; k++)
-	{	ok &= row[k] == k;
-		ok &= col[k] == k;
-		ok &= val[k] == double(k);
+	{	ok &= row[ col_major[k] ] == k;
+		ok &= col[ col_major[k] ] == k;
+		ok &= val[ col_major[k] ] == double(k);
 	}
 
 	return ok;

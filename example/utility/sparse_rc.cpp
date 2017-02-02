@@ -40,19 +40,20 @@ bool sparse_rc(void)
 	size_t nnz = 5;
 	pattern.resize(nr, nc, nnz);
 	for(size_t k = 0; k < nnz; k++)
-	{	size_t r = k;
-		size_t c = k;
+	{	size_t r = nnz - k - 1; // reverse or row-major order
+		size_t c = nnz - k - 1;
 		pattern.set(k, r, c);
 	}
 
 	// row and column vectors corresponding to pattern
 	const SizeVector& row( pattern.row() );
 	const SizeVector& col( pattern.row() );
+	SizeVector row_major = pattern.row_major();
 
 	// check row and column
 	for(size_t k = 0; k < nnz; k++)
-	{	ok &= row[k] == k;
-		ok &= col[k] == k;
+	{	ok &= row[ row_major[k] ] == k;
+		ok &= col[ row_major[k] ] == k;
 	}
 
 	return ok;
