@@ -23,7 +23,7 @@ $spell
 	cpp
 $$
 
-$section Reverse Mode Spare Jacobian Patterns$$
+$section Reverse Mode Jacobian Sparsity Patterns$$
 
 $head Syntax$$
 $icode%f%.rev_jac_sparsity(
@@ -31,18 +31,18 @@ $icode%f%.rev_jac_sparsity(
 )%$$
 
 $head Purpose$$
-We use $latex F : B^n \rightarrow B^m$$ to denote the
+We use $latex F : \B{R}^n \rightarrow \B{R}^m$$ to denote the
 $cref/AD function/glossary/AD Function/$$ corresponding to
 the operation sequence stored in $icode f$$.
 Fix $latex R \in \B{R}^{\ell \times m}$$ and define the function
 $latex \[
-	S(x) = R * F^{(1)} ( x )
+	J(x) = R * F^{(1)} ( x )
 \] $$
 Given the $cref/sparsity pattern/glossary/Sparsity Pattern/$$ for $latex R$$,
-$code rev_jac_sparsity$$ computes a sparsity pattern for $latex S(x)$$.
+$code rev_jac_sparsity$$ computes a sparsity pattern for $latex J(x)$$.
 
 $head x$$
-Note that the sparsity pattern $latex S(x)$$ corresponds to the
+Note that the sparsity pattern $latex J(x)$$ corresponds to the
 operation sequence stored in $icode f$$ and does not depend on
 the argument $icode x$$.
 (The operation sequence may contain
@@ -58,11 +58,6 @@ The object $icode f$$ has prototype
 $codei%
 	ADFun<%Base%> %f%
 %$$
-The $cref ADFun$$ object $icode f$$ is not $code const$$.
-After a call to $code rev_jac_sparsity$$, a sparsity pattern
-for each of the variables in the operation sequence
-is held in $icode f$$ for possible later use during
-reverse Hessian sparsity calculations.
 
 $head pattern_in$$
 The argument $icode pattern_in$$ has prototype
@@ -86,10 +81,7 @@ This argument has prototype
 $codei%
 	bool %dependency%
 %$$
-It index pairs show dependency, instead of non-zero Jacobian value;
-see $icode dependency$$ is true,
-the $cref/dependency pattern/dependency.cpp/Dependency Pattern/$$
-(instead of sparsity pattern) is computed.
+see $cref/pattern_out/rev_jac_sparsity/pattern_out/$$ below.
 
 $head internal_bool$$
 If this is true, calculations are done with sets represented by a vector
@@ -103,11 +95,14 @@ $codei%
 This input value of $icode pattern_out$$ does not matter.
 If $icode transpose$$ it is false (true),
 upon return $icode pattern_out$$ is a sparsity pattern for
-$latex S(x)$$ ($latex S(x)^\R{T}$$).
+$latex J(x)$$ ($latex J(x)^\R{T}$$).
+If $icode dependency$$ is true, $icode pattern_out$$ is a
+$cref/dependency pattern/dependency.cpp/Dependency Pattern/$$
+instead of sparsity pattern.
 
 $head Sparsity for Entire Jacobian$$
 Suppose that
-$latex R$$ is the $latex n \times n$$ identity matrix.
+$latex R$$ is the $latex m \times m$$ identity matrix.
 In this case, $icode pattern_out$$ is a sparsity pattern for
 $latex F^{(1)} ( x )$$  ( $latex F^{(1)} (x)^\R{T}$$ )
 if $icode transpose$$ is false (true).
@@ -159,9 +154,9 @@ of boolean values. Otherwise, a vector of standard sets is used.
 
 \param pattern_out
 The value of transpose is false (true),
-the return value is a sparsity pattern for S(x) ( S(x)^T ) where
+the return value is a sparsity pattern for J(x) ( J(x)^T ) where
 \f[
-	S(x) = R * F^{(1)} (x)
+	J(x) = R * F^{(1)} (x)
 \f]
 Here F is the function corresponding to the operation sequence
 and x is any argument value.
@@ -194,15 +189,15 @@ void ADFun<Base>::rev_jac_sparsity(
 	if( internal_bool )
 	{	// allocate memory for bool sparsity calculation
 		// (sparsity pattern is emtpy after a resize)
-		local::sparse_pack var_sparsity;
-		var_sparsity.resize(num_var_tape_, ell);
+		local::sparse_pack internal_jac;
+		internal_jac.resize(num_var_tape_, ell);
 		//
 		// set sparsity patttern for dependent variables
 		local::set_internal_sparsity(
 			! transpose           ,
 			dep_taddr_            ,
 			pattern_in            ,
-			var_sparsity
+			internal_jac
 		);
 
 		// compute sparsity for other variables
@@ -211,25 +206,25 @@ void ADFun<Base>::rev_jac_sparsity(
 			n,
 			num_var_tape_,
 			&play_,
-			var_sparsity
+			internal_jac
 		);
 		// get sparstiy pattern for independent variables
 		local::get_internal_sparsity(
-			! transpose, ind_taddr_, var_sparsity, pattern_out
+			! transpose, ind_taddr_, internal_jac, pattern_out
 		);
 	}
 	else
 	{	// allocate memory for bool sparsity calculation
 		// (sparsity pattern is emtpy after a resize)
-		local::sparse_list var_sparsity;
-		var_sparsity.resize(num_var_tape_, ell);
+		local::sparse_list internal_jac;
+		internal_jac.resize(num_var_tape_, ell);
 		//
 		// set sparsity patttern for dependent variables
 		local::set_internal_sparsity(
 			! transpose           ,
 			dep_taddr_            ,
 			pattern_in            ,
-			var_sparsity
+			internal_jac
 		);
 
 		// compute sparsity for other variables
@@ -238,11 +233,11 @@ void ADFun<Base>::rev_jac_sparsity(
 			n,
 			num_var_tape_,
 			&play_,
-			var_sparsity
+			internal_jac
 		);
 		// get sparstiy pattern for independent variables
 		local::get_internal_sparsity(
-			! transpose, ind_taddr_, var_sparsity, pattern_out
+			! transpose, ind_taddr_, internal_jac, pattern_out
 		);
 	}
 	return;

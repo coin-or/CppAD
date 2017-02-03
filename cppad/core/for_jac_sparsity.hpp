@@ -23,7 +23,7 @@ $spell
 	cpp
 $$
 
-$section Forward Mode Spare Jacobian Patterns$$
+$section Forward Mode Jacobian Sparsity Patterns$$
 
 $head Syntax$$
 $icode%f%.for_jac_sparsity(
@@ -31,18 +31,18 @@ $icode%f%.for_jac_sparsity(
 )%$$
 
 $head Purpose$$
-We use $latex F : B^n \rightarrow B^m$$ to denote the
+We use $latex F : \B{R}^n \rightarrow \B{R}^m$$ to denote the
 $cref/AD function/glossary/AD Function/$$ corresponding to
 the operation sequence stored in $icode f$$.
 Fix $latex R \in \B{R}^{n \times \ell}$$ and define the function
 $latex \[
-	S(x) = F^{(1)} ( x ) * R
+	J(x) = F^{(1)} ( x ) * R
 \] $$
 Given the $cref/sparsity pattern/glossary/Sparsity Pattern/$$ for $latex R$$,
-$code for_jac_sparsity$$ computes a sparsity pattern for $latex S(x)$$.
+$code for_jac_sparsity$$ computes a sparsity pattern for $latex J(x)$$.
 
 $head x$$
-Note that the sparsity pattern $latex S(x)$$ corresponds to the
+Note that the sparsity pattern $latex J(x)$$ corresponds to the
 operation sequence stored in $icode f$$ and does not depend on
 the argument $icode x$$.
 (The operation sequence may contain
@@ -124,10 +124,7 @@ This argument has prototype
 $codei%
 	bool %dependency%
 %$$
-It index pairs show dependency, instead of non-zero Jacobian value;
-see $icode dependency$$ is true,
-the $cref/dependency pattern/dependency.cpp/Dependency Pattern/$$
-(instead of sparsity pattern) is computed.
+see $cref/pattern_out/for_jac_sparsity/pattern_out/$$ below.
 
 $head internal_bool$$
 If this is true, calculations are done with sets represented by a vector
@@ -141,7 +138,10 @@ $codei%
 This input value of $icode pattern_out$$ does not matter.
 If $icode transpose$$ it is false (true),
 upon return $icode pattern_out$$ is a sparsity pattern for
-$latex S(x)$$ ($latex S(x)^\R{T}$$).
+$latex J(x)$$ ($latex J(x)^\R{T}$$).
+If $icode dependency$$ is true, $icode pattern_out$$ is a
+$cref/dependency pattern/dependency.cpp/Dependency Pattern/$$
+instead of sparsity pattern.
 
 $head Sparsity for Entire Jacobian$$
 Suppose that
@@ -197,9 +197,9 @@ of boolean values. Othewise, a vector of standard sets is used.
 
 \param pattern_out
 The value of transpose is false (true),
-the return value is a sparsity pattern for S(x) ( S(x)^T ) where
+the return value is a sparsity pattern for J(x) ( J(x)^T ) where
 \f[
-	S(x) = F^{(1)} (x) * R
+	J(x) = F^{(1)} (x) * R
 \f]
 Here F is the function corresponding to the operation sequence
 and x is any argument value.

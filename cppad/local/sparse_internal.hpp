@@ -80,7 +80,7 @@ The pattern for the other variables is not affected.
 template <class SizeVector, class InternalSparsity>
 void set_internal_sparsity(
 	bool                          transpose   ,
-	CppAD::vector<size_t>&        tape_index  ,
+	const CppAD::vector<size_t>&  tape_index  ,
 	const sparse_rc<SizeVector>&  pattern_in  ,
 	InternalSparsity&             pattern_out )
 {	const SizeVector& row( pattern_in.row() );
@@ -126,7 +126,7 @@ in tape_index, or its transpose, depending on the value of transpose.
 template <class SizeVector, class InternalSparsity>
 void get_internal_sparsity(
 	bool                          transpose   ,
-	CppAD::vector<size_t>&        tape_index  ,
+	const CppAD::vector<size_t>&  tape_index  ,
 	const InternalSparsity&       pattern_in  ,
 	sparse_rc<SizeVector>&        pattern_out )
 {	typedef typename InternalSparsity::const_iterator iterator;
