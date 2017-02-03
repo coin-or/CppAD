@@ -135,6 +135,7 @@ nobase_myinclude_HEADERS =  \
 	cppad/core/equal_op_seq.hpp \
 	cppad/core/erf.hpp \
 	cppad/core/expm1.hpp \
+	cppad/core/for_jac_sparsity.hpp
 	cppad/core/for_one.hpp \
 	cppad/core/for_sparse_hes.hpp \
 	cppad/core/for_sparse_jac.hpp \

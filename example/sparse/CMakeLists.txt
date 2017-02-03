@@ -21,6 +21,7 @@ ADD_EXECUTABLE(example_sparse EXCLUDE_FROM_ALL
 	sparse_hessian.cpp
 	rev_sparse_jac.cpp
 	rev_sparse_hes.cpp
+	for_jac_sparsity.cpp
 	for_sparse_jac.cpp
 	for_sparse_hes.cpp
 	dependency.cpp

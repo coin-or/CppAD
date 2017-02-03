@@ -43,7 +43,7 @@ to represent dependency patterns.
 
 $head Computation$$
 The $icode dependency$$ argument to
-$cref/for_sparse_jac/for_sparse_jac/dependency/$$ and
+$cref/for_jac_sparsity/for_jac_sparsity/dependency/$$ and
 $cref/RevSparseJac/RevSparseJac/dependency/$$ is a flag that signals
 that the dependency pattern (instead of the sparsity pattern) is computed.
 
@@ -119,7 +119,7 @@ bool dependency(void)
 	bool dependency    = true;  // would transpose dependency pattern
 	bool internal_bool = true;  // does not affect result
 	sparsity pattern_out;
-	f.for_sparse_jac(
+	f.for_jac_sparsity(
 		pattern_in, transpose, dependency, internal_bool, pattern_out
 	);
 	const SizeVector& row( pattern_out.row() );

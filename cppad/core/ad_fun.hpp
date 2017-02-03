@@ -334,7 +334,7 @@ public:
 		bool dependency = false
 	);
 	template <typename SizeVector>
-	void for_sparse_jac(
+	void for_jac_sparsity(
 		const sparse_rc<SizeVector>& pattern_in       ,
 		bool                         transpose        ,
 		bool                         dependency       ,

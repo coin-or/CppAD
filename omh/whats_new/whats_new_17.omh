@@ -23,8 +23,8 @@ $$
 $section Changes and Additions to CppAD During 2017$$
 
 $head 02-02$$
-Change $cref/size_forward_bool/for_sparse_jac/f/size_forward_bool/$$ and
-Change $cref/size_forward_set/for_sparse_jac/f/size_forward_set/$$
+Change $cref/size_forward_bool/for_jac_sparsity/f/size_forward_bool/$$ and
+Change $cref/size_forward_set/for_jac_sparsity/f/size_forward_set/$$
 so that they are a better approximation of the number of bytes
 (unsigned characters) being used.
 The exact same sparsity pattern might use different memory
@@ -32,7 +32,7 @@ in two different function objects (because memory is allocated in chunks).
 The $cref fun_assign.cpp$$ example has been changed to reflect this fact.
 
 $head 02-01$$
-Add the $cref for_sparse_jac$$ interface for the sparse Jacobian calculations.
+Add the $cref for_jac_sparsity$$ interface for the sparse Jacobian calculations.
 This is the first use of $cref sparse_rc$$,
 a sparsity pattern class that uses row and column
 $cref/index vectors/glossary/Sparsity Pattern/Row and Column Index Vectors/$$.
