@@ -167,6 +167,7 @@ nobase_myinclude_HEADERS =  \
 	cppad/core/pow.hpp \
 	cppad/core/print_for.hpp \
 	cppad/core/reverse.hpp \
+	cppad/core/rev_jac_sparsity.hpp
 	cppad/core/rev_one.hpp \
 	cppad/core/rev_sparse_hes.hpp \
 	cppad/core/rev_sparse_jac.hpp \

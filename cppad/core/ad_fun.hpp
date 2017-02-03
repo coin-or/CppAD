@@ -342,7 +342,7 @@ public:
 		sparse_rc<SizeVector>&       pattern_out
 	);
 	template <typename SizeVector>
-	void rev_sparse_jac(
+	void rev_jac_sparsity(
 		const sparse_rc<SizeVector>& pattern_in       ,
 		bool                         transpose        ,
 		bool                         dependency       ,
