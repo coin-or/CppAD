@@ -322,7 +322,7 @@ public:
 	VectorBase Reverse(size_t p, const VectorBase &v);
 
 	// ---------------------------------------------------------------------
-	// forward mode Jacobian sparsity
+	// Jacobian sparsity
 	template <typename VectorSet>
 	VectorSet ForSparseJac(
 		size_t q, const VectorSet &r, bool transpose = false,
@@ -335,6 +335,14 @@ public:
 	);
 	template <typename SizeVector>
 	void for_sparse_jac(
+		const sparse_rc<SizeVector>& pattern_in       ,
+		bool                         transpose        ,
+		bool                         dependency       ,
+		bool                         internal_bool    ,
+		sparse_rc<SizeVector>&       pattern_out
+	);
+	template <typename SizeVector>
+	void rev_sparse_jac(
 		const sparse_rc<SizeVector>& pattern_in       ,
 		bool                         transpose        ,
 		bool                         dependency       ,
