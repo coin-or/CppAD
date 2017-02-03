@@ -24,6 +24,7 @@ extern bool sparsity_sub(void);
 extern bool sparse_sub_hes(void);
 extern bool sparse_jacobian(void);
 extern bool sparse_hessian(void);
+extern bool rev_hes_sparsity(void);
 extern bool rev_jac_sparsity(void);
 extern bool RevSparseJac(void);
 extern bool rev_sparse_hes(void);
@@ -67,6 +68,7 @@ int main(void)
 	ok &= Run( sparse_sub_hes,            "sparse_sub_hes" );
 	ok &= Run( sparse_jacobian,           "sparse_jacobian" );
 	ok &= Run( sparse_hessian,            "sparse_hessian" );
+	ok &= Run( rev_hes_sparsity,          "rev_hes_sparsity" );
 	ok &= Run( rev_jac_sparsity,          "rev_jac_sparsity" );
 	ok &= Run( RevSparseJac,              "RevSparseJac" );
 	ok &= Run( rev_sparse_hes,            "rev_sparse_hes" );

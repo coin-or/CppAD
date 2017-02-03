@@ -238,6 +238,7 @@ $rref reverse_checkpoint.cpp$$
 $rref reverse_one.cpp$$
 $rref reverse_three.cpp$$
 $rref reverse_two.cpp$$
+$rref rev_hes_sparsity.cpp$$
 $rref rev_jac_sparsity.cpp$$
 $rref rev_one.cpp$$
 $rref rev_sparse_hes.cpp$$

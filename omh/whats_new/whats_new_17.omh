@@ -22,6 +22,10 @@ $$
 
 $section Changes and Additions to CppAD During 2017$$
 
+$head 02-03$$
+Add the $cref rev_jac_sparsity$$ and $cref rev_hes_sparsity$$ interfaces.
+These use $cref sparse_rc$$ sparsity patterns.
+
 $head 02-02$$
 Change $cref/size_forward_bool/for_jac_sparsity/f/size_forward_bool/$$ and
 Change $cref/size_forward_set/for_jac_sparsity/f/size_forward_set/$$

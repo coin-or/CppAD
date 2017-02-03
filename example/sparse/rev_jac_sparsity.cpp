@@ -66,6 +66,7 @@ bool rev_jac_sparsity(void)
 		size_t c = k;
 		pattern_in.set(k, r, c);
 	}
+	// compute sparsite pattern for J(x) = F'(x)
 	bool transpose       = false;
 	bool dependency      = false;
 	bool internal_bool   = false;

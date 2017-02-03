@@ -272,8 +272,8 @@ void ADFun<Base>::RevSparseHesCase(
 	}
 
 	// vector of sets that will hold reverse Hessain values
-	local::sparse_pack rev_hes_sparsity;
-	rev_hes_sparsity.resize(num_var_tape_, q);
+	local::sparse_pack rev_hes_pattern;
+	rev_hes_pattern.resize(num_var_tape_, q);
 
 	// compute the Hessian sparsity patterns
 	local::RevHesSweep(
@@ -282,7 +282,7 @@ void ADFun<Base>::RevSparseHesCase(
 		&play_,
 		for_jac_sparse_pack_,
 		RevJac.data(),
-		rev_hes_sparsity
+		rev_hes_pattern
 	);
 
 	// return values corresponding to independent variables
@@ -303,9 +303,9 @@ void ADFun<Base>::RevSparseHesCase(
 		CPPAD_ASSERT_UNKNOWN( ind_taddr_[j] == j + 1 );
 		CPPAD_ASSERT_UNKNOWN( play_.GetOp( ind_taddr_[j] ) == local::InvOp );
 
-		// extract the result from rev_hes_sparsity
-		CPPAD_ASSERT_UNKNOWN( rev_hes_sparsity.end() == q );
-		local::sparse_pack::const_iterator itr(rev_hes_sparsity, j + 1);
+		// extract the result from rev_hes_pattern
+		CPPAD_ASSERT_UNKNOWN( rev_hes_pattern.end() == q );
+		local::sparse_pack::const_iterator itr(rev_hes_pattern, j + 1);
 		i = *itr;
 		while( i < q )
 		{	if( transpose )
@@ -402,8 +402,8 @@ void ADFun<Base>::RevSparseHesCase(
 
 
 	// vector of sets that will hold reverse Hessain values
-	local::sparse_list rev_hes_sparsity;
-	rev_hes_sparsity.resize(num_var_tape_, q);
+	local::sparse_list rev_hes_pattern;
+	rev_hes_pattern.resize(num_var_tape_, q);
 
 	// compute the Hessian sparsity patterns
 	local::RevHesSweep(
@@ -412,7 +412,7 @@ void ADFun<Base>::RevSparseHesCase(
 		&play_,
 		for_jac_sparse_set_,
 		RevJac.data(),
-		rev_hes_sparsity
+		rev_hes_pattern
 	);
 
 	// return values corresponding to independent variables
@@ -424,10 +424,10 @@ void ADFun<Base>::RevSparseHesCase(
 		CPPAD_ASSERT_UNKNOWN( ind_taddr_[j] == j + 1 );
 		CPPAD_ASSERT_UNKNOWN( play_.GetOp( ind_taddr_[j] ) == local::InvOp );
 
-		// extract the result from rev_hes_sparsity
+		// extract the result from rev_hes_pattern
 		// and add corresponding elements to result sets in h
-		CPPAD_ASSERT_UNKNOWN( rev_hes_sparsity.end() == q );
-		local::sparse_list::const_iterator itr_2(rev_hes_sparsity, j+1);
+		CPPAD_ASSERT_UNKNOWN( rev_hes_pattern.end() == q );
+		local::sparse_list::const_iterator itr_2(rev_hes_pattern, j+1);
 		i = *itr_2;
 		while( i < q )
 		{	if( transpose )
@@ -577,8 +577,8 @@ void ADFun<Base>::RevSparseHesCheckpoint(
 	}
 
 	// holds reverse Hessian sparsity pattern for all variables
-	local::sparse_list rev_hes_sparsity;
-	rev_hes_sparsity.resize(num_var_tape_, q);
+	local::sparse_list rev_hes_pattern;
+	rev_hes_pattern.resize(num_var_tape_, q);
 
 	// compute Hessian sparsity pattern for all variables
 	local::RevHesSweep(
@@ -587,7 +587,7 @@ void ADFun<Base>::RevSparseHesCheckpoint(
 		&play_,
 		for_jac_sparse_set_,
 		RevJac.data(),
-		rev_hes_sparsity
+		rev_hes_pattern
 	);
 
 	// dimension the return value
@@ -604,9 +604,9 @@ void ADFun<Base>::RevSparseHesCheckpoint(
 		CPPAD_ASSERT_UNKNOWN( ind_taddr_[j] == j + 1 );
 		CPPAD_ASSERT_UNKNOWN( play_.GetOp( ind_taddr_[j] ) == local::InvOp );
 
-		// extract the result from rev_hes_sparsity
-		CPPAD_ASSERT_UNKNOWN( rev_hes_sparsity.end() == q );
-		local::sparse_list::const_iterator itr(rev_hes_sparsity, j + 1);
+		// extract the result from rev_hes_pattern
+		CPPAD_ASSERT_UNKNOWN( rev_hes_pattern.end() == q );
+		local::sparse_list::const_iterator itr(rev_hes_pattern, j + 1);
 		size_t i = *itr;
 		while( i < q )
 		{	if( transpose )

@@ -349,6 +349,13 @@ public:
 		bool                         internal_bool    ,
 		sparse_rc<SizeVector>&       pattern_out
 	);
+	template <typename BoolVector, typename SizeVector>
+	void rev_hes_sparsity(
+		const BoolVector&            select           ,
+		bool                         transpose        ,
+		bool                         internal_bool    ,
+		sparse_rc<SizeVector>&       pattern_out
+	);
 	// ---------------------------------------------------------------------
 	// forward mode Hessian sparsity
 	// (see doxygen documentation in rev_sparse_hes.hpp)
