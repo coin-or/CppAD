@@ -50,7 +50,7 @@ struct internal_sparsity< std::set<size_t> >
 };
 // ---------------------------------------------------------------------------
 /*!
-Set the internal sparsity pattern for the independent variables
+Set the internal sparsity pattern for a sub-set of variables on tape
 
 \tparam SizeVector
 The type used for index sparsity patterns. This is a simple vector
@@ -63,25 +63,24 @@ sparse_pack or sparse_list.
 \param transpose
 If this is true, pattern_in is transposed.
 
-\param independent
+\param tape_index
 This is the mapping from an index in pattern_in to the corresponding
-indpendent variable index in pattern_out.
+index in the tape and pattern_out.
 
 \param pattern_in
-This is the sparsity pattern for independent variables
+This is the sparsity pattern for variables,
 or its transpose, depending on the value of transpose.
 
 \param pattern_out
 This is a sparsity pattern for all of the variables on the tape.
 It is assumed to be empty on input. On output, the pattern for each
-independent variable will be as specified by pattern_in.
-The pattern for the other varialbes is not affected.
-
+of the variables in tape_index will be as specified by pattern_in.
+The pattern for the other variables is not affected.
 */
 template <class SizeVector, class InternalSparsity>
-void set_internal_independent(
+void set_internal_sparsity(
 	bool                          transpose   ,
-	CppAD::vector<size_t>&        independent ,
+	CppAD::vector<size_t>&        tape_index  ,
 	const sparse_rc<SizeVector>&  pattern_in  ,
 	InternalSparsity&             pattern_out )
 {	const SizeVector& row( pattern_in.row() );
@@ -92,14 +91,14 @@ void set_internal_independent(
 		size_t c = col[k];
 		if( transpose )
 			std::swap(r, c);
-		CPPAD_ASSERT_UNKNOWN( independent[r] < pattern_out.n_set() );
+		CPPAD_ASSERT_UNKNOWN( tape_index[r] < pattern_out.n_set() );
 		CPPAD_ASSERT_UNKNOWN( c < pattern_out.end() );
-		pattern_out.add_element( independent[r], c );
+		pattern_out.add_element( tape_index[r], c );
 	}
 }
 // ---------------------------------------------------------------------------
 /*!
-Get an index sparsity pattern for just the dependent variables
+Get sparsity pattern for a sub-set of variables
 
 \tparam SizeVector
 The type used for index sparsity patterns. This is a simple vector
@@ -112,34 +111,34 @@ sparse_pack or sparse_list.
 \param transpose
 If this is true, pattern_out is transposed.
 
-\param dependent
+\param tape_index
 This is the mapping from an index in pattern_out to the corresponding
-dependent variable index in pattern_in.
+index in the tape and pattern_in.
 
 \param pattern_in
 This is the internal sparsity pattern for all of the variables on the tape.
 
 \param pattern_out
 The input value of pattern_out does not matter.
-Upon return it is an index sparsity pattern for dependent variables,
-or its transpose, depending on the value of transpose.
+Upon return it is an index sparsity pattern for each of the variables
+in tape_index, or its transpose, depending on the value of transpose.
 */
 template <class SizeVector, class InternalSparsity>
-void get_internal_dependent(
+void get_internal_sparsity(
 	bool                          transpose   ,
-	CppAD::vector<size_t>&        dependent   ,
+	CppAD::vector<size_t>&        tape_index  ,
 	const InternalSparsity&       pattern_in  ,
 	sparse_rc<SizeVector>&        pattern_out )
 {	typedef typename InternalSparsity::const_iterator iterator;
-	// number dependent variables
-	size_t nr = dependent.size();
+	// number variables
+	size_t nr = tape_index.size();
 	// column size of interanl sparstiy pattern
 	size_t nc = pattern_in.end();
 	// determine nnz, the number of possibly non-zero index pairs
 	size_t nnz = 0;
 	for(size_t i = 0; i < nr; i++)
-	{	CPPAD_ASSERT_UNKNOWN( dependent[i] < pattern_in.n_set() );
-		iterator itr(pattern_in, dependent[i]);
+	{	CPPAD_ASSERT_UNKNOWN( tape_index[i] < pattern_in.n_set() );
+		iterator itr(pattern_in, tape_index[i]);
 		size_t j = *itr;
 		while( j < nc )
 		{	++nnz;
@@ -152,7 +151,7 @@ void get_internal_dependent(
 		//
 		size_t k = 0;
 		for(size_t i = 0; i < nr; i++)
-		{	iterator itr(pattern_in, dependent[i]);
+		{	iterator itr(pattern_in, tape_index[i]);
 			size_t j = *itr;
 			while( j < nc )
 			{	pattern_out.set(k++, j, i);
@@ -166,7 +165,7 @@ void get_internal_dependent(
 	//
 	size_t k = 0;
 	for(size_t i = 0; i < nr; i++)
-	{	iterator itr(pattern_in, dependent[i]);
+	{	iterator itr(pattern_in, tape_index[i]);
 		size_t j = *itr;
 		while( j < nc )
 		{	pattern_out.set(k++, i, j);

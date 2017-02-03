@@ -45,8 +45,8 @@ $head x$$
 Note that the sparsity pattern $latex S(x)$$ corresponds to the
 operation sequence stored in $icode f$$ and does not depend on
 the argument $icode x$$.
-Note that the operation sequence may contain
-$cref CondExp$$ and  $cref VecAD$$ operations.
+(The operation sequence may contain
+$cref CondExp$$ and  $cref VecAD$$ operations.)
 
 $head SizeVector$$
 The type $icode SizeVector$$ is a $cref SimpleVector$$ class with
@@ -116,7 +116,8 @@ This argument has prototype
 $codei%
 	bool %transpose%
 %$$
-See $cref/pattern_out/for_sparse_jac/pattern_out/$$ below.
+See $cref/pattern_in/for_sparse_jac/pattern_in/$$ above and
+$cref/pattern_out/for_sparse_jac/pattern_out/$$ below.
 
 $head dependency$$
 This argument has prototype
@@ -129,7 +130,8 @@ the $cref/dependency pattern/dependency.cpp/Dependency Pattern/$$
 (instead of sparsity pattern) is computed.
 
 $head internal_bool$$
-See $cref/f/for_sparse_jac/f/$$ above.
+If this is true, calculations are done with sets represented by a vector
+of boolean values. Otherwise, a vector of standard sets is used.
 
 $head pattern_out$$
 This argument has prototype
@@ -190,8 +192,8 @@ considered to be non-zero:
 This is used by the optimizer to obtain the correct dependency relations.
 
 \param internal_bool
-If this is true, calculations are done with sets represented by vectors
-of boolean values. Othewise, index sets are used.
+If this is true, calculations are done with sets represented by a vector
+of boolean values. Othewise, a vector of standard sets is used.
 
 \param pattern_out
 The value of transpose is false (true),
@@ -231,7 +233,7 @@ void ADFun<Base>::for_sparse_jac(
 		for_jac_sparse_set_.resize(0, 0);
 		//
 		// set sparsity patttern for independent variables
-		local::set_internal_independent(
+		local::set_internal_sparsity(
 			transpose             ,
 			ind_taddr_            ,
 			pattern_in            ,
@@ -247,7 +249,7 @@ void ADFun<Base>::for_sparse_jac(
 			for_jac_sparse_pack_
 		);
 		// set the output pattern
-		local::get_internal_dependent(
+		local::get_internal_sparsity(
 			transpose, dep_taddr_, for_jac_sparse_pack_, pattern_out
 		);
 	}
@@ -259,7 +261,7 @@ void ADFun<Base>::for_sparse_jac(
 		for_jac_sparse_pack_.resize(0, 0);
 		//
 		// set sparsity patttern for independent variables
-		local::set_internal_independent(
+		local::set_internal_sparsity(
 			transpose             ,
 			ind_taddr_            ,
 			pattern_in            ,
@@ -274,8 +276,8 @@ void ADFun<Base>::for_sparse_jac(
 			&play_,
 			for_jac_sparse_set_
 		);
-		// set the ouput pattern
-		local::get_internal_dependent(
+		// get the ouput pattern
+		local::get_internal_sparsity(
 			transpose, dep_taddr_, for_jac_sparse_set_, pattern_out
 		);
 	}
