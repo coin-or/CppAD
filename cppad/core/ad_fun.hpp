@@ -351,8 +351,15 @@ public:
 	);
 	template <typename BoolVector, typename SizeVector>
 	void rev_hes_sparsity(
-		const BoolVector&            select           ,
+		const BoolVector&            select_range     ,
 		bool                         transpose        ,
+		bool                         internal_bool    ,
+		sparse_rc<SizeVector>&       pattern_out
+	);
+	template <typename BoolVector, typename SizeVector>
+	void for_hes_sparsity(
+		const BoolVector&            select_domain    ,
+		const BoolVector&            select_range     ,
 		bool                         internal_bool    ,
 		sparse_rc<SizeVector>&       pattern_out
 	);

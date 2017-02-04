@@ -29,7 +29,7 @@ $section Reverse Mode Hessian Sparsity Patterns$$
 
 $head Syntax$$
 $icode%f%.rev_hes_sparsity(
-	%selection%, %transpose%, %internal_bool%, %pattern_out%
+	%select_range%, %transpose%, %internal_bool%, %pattern_out%
 )%$$
 
 $head Purpose$$
@@ -74,13 +74,13 @@ $codei%
 		%pattern_in%, %transpose%, %dependency%, %internal_bool%, %pattern_out%
 )%$$
 
-$head selection$$
-The argument $icode selection$$ has prototype
+$head select_range$$
+The argument $icode select_range$$ has prototype
 $codei%
-	const BoolVector& %selection%
+	const BoolVector& %select_range%
 %$$
 It has size $latex m$$ and specifies which components of the vector
-$latex s$$ are non-zero; i.e., $icode%selection%[%i%]%$$ is true
+$latex s$$ are non-zero; i.e., $icode%select_range%[%i%]%$$ is true
 if and only if $latex s_i$$ is non-zero.
 
 $head transpose$$
@@ -92,7 +92,7 @@ See $cref/pattern_out/rev_hes_sparsity/pattern_out/$$ below.
 
 $head internal_bool$$
 If this is true, calculations are done with sets represented by a vector
-of boolean values. Otherwise, a vector of standard sets is used.
+of boolean values. Otherwise, a vector of sets of integers is used.
 This must be the same as in the previous call to
 $icode%f%.for_jac_sparsity%$$.
 
@@ -134,15 +134,15 @@ Reverse Hessian sparsity patterns.
 \tparam Base
 is the base type for this recording.
 
-\tparam SizeVector
-is the simple vector with elements of type size_t that is used for
-row, column index sparsity patterns.
-
 \tparam BoolVector
 is the simple vector with elements of type bool that is used for
 sparsity for the vector s.
 
-\param selection
+\tparam SizeVector
+is the simple vector with elements of type size_t that is used for
+row, column index sparsity patterns.
+
+\param select_range
 is a sparsity pattern for for s.
 
 \param transpose
@@ -164,7 +164,7 @@ and x is any argument value.
 template <class Base>
 template <class BoolVector, class SizeVector>
 void ADFun<Base>::rev_hes_sparsity(
-	const BoolVector&            selection        ,
+	const BoolVector&            select_range     ,
 	bool                         transpose        ,
 	bool                         internal_bool    ,
 	sparse_rc<SizeVector>&       pattern_out      )
@@ -172,8 +172,8 @@ void ADFun<Base>::rev_hes_sparsity(
 	size_t m  = Range();
 	//
 	CPPAD_ASSERT_KNOWN(
-		selection.size() == m,
-		"rev_hes_sparsity: size of selection is not equal to "
+		select_range.size() == m,
+		"rev_hes_sparsity: size of select_range is not equal to "
 		"number of dependent variables"
 	);
 	//
@@ -185,7 +185,7 @@ void ADFun<Base>::rev_hes_sparsity(
 	//
 	// initialize rev_jac_pattern for dependent variables
 	for(size_t i = 0; i < m; i++)
-		rev_jac_pattern[ dep_taddr_[i] ] = selection[i];
+		rev_jac_pattern[ dep_taddr_[i] ] = select_range[i];
 	//
 	//
 	if( internal_bool )

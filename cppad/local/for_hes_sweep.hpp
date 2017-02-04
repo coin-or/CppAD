@@ -1,9 +1,8 @@
-// $Id$
 # ifndef CPPAD_LOCAL_FOR_HES_SWEEP_HPP
 # define CPPAD_LOCAL_FOR_HES_SWEEP_HPP
 
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-16 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-17 Bradley M. Bell
 
 CppAD is distributed under multiple licenses. This distribution is under
 the terms of the
@@ -79,18 +78,18 @@ the set with index i has element zero.
 Otherwise it has no elements.
 
 \param for_hes_sparse
-The reverse Hessian sparsity pattern for the variable with index i
+The forward Hessian sparsity pattern for the variable with index i
 corresponds to the set with index i in \a for_hes_sparse.
 The number of rows in this sparsity patter is n+1 and the row
 with index zero is not used.
 \n
 \n
 \b Input: For i = 1 , ... , \a n
-the reverse Hessian sparsity pattern for the variable with index i is empty.
+the forward Hessian sparsity pattern for the variable with index i is empty.
 \n
 \n
 \b Output: For j = 1 , ... , \a n,
-the reverse Hessian sparsity pattern for the independent dependent variable
+the forward Hessian sparsity pattern for the independent dependent variable
 with index (j-1) is given by the set with index j
 in \a for_hes_sparse.
 */

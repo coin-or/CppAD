@@ -10,17 +10,17 @@ Please visit http://www.coin-or.org/CppAD/ for information on other licenses.
 -------------------------------------------------------------------------- */
 
 /*
-$begin rev_hes_sparsity.cpp$$
+$begin for_hes_sparsity.cpp$$
 $spell
 	Hessian
 	Cpp
 $$
 
-$section Reverse Mode Hessian Sparsity: Example and Test$$
+$section Forward Mode Hessian Sparsity: Example and Test$$
 
 
 $code
-$srcfile%example/sparse/rev_hes_sparsity.cpp%0%// BEGIN C++%// END C++%1%$$
+$srcfile%example/sparse/for_hes_sparsity.cpp%0%// BEGIN C++%// END C++%1%$$
 $$
 
 $end
@@ -28,7 +28,7 @@ $end
 // BEGIN C++
 # include <cppad/cppad.hpp>
 
-bool rev_hes_sparsity(void)
+bool for_hes_sparsity(void)
 {	bool ok = true;
 	using CppAD::AD;
 	typedef CPPAD_TESTVECTOR(size_t)     SizeVector;
@@ -53,32 +53,19 @@ bool rev_hes_sparsity(void)
 	// create f: x -> y and stop tape recording
 	CppAD::ADFun<double> f(ax, ay);
 
-	// sparsity pattern for the identity matrix
-	sparsity pattern_in;
-	size_t nr     = n;
-	size_t nc     = n;
-	size_t nnz_in = n;
-	pattern_in.resize(nr, nc, nnz_in);
-	for(size_t k = 0; k < nnz_in; k++)
-	{	size_t r = k;
-		size_t c = k;
-		pattern_in.set(k, r, c);
-	}
-	// compute sparsity pattern for J(x) = F'(x)
-	bool transpose       = false;
-	bool dependency      = false;
-	bool internal_bool   = false;
-	sparsity pattern_out;
-	f.for_jac_sparsity(
-		pattern_in, transpose, dependency, internal_bool, pattern_out
-	);
-	//
+	// include all x components in sparsity pattern
+	CPPAD_TESTVECTOR(bool) select_domain(n);
+	for(size_t j = 0; j < n; j++)
+		select_domain[j] = true;
+
 	// compute sparsity pattern for H(x) = F_1''(x)
 	CPPAD_TESTVECTOR(bool) select_range(m);
-	select_range[0] = false;
-	select_range[1] = true;
-	f.rev_hes_sparsity(
-		select_range, transpose, internal_bool, pattern_out
+	select_range[0]    = false;
+	select_range[1]    = true;
+	bool internal_bool = true;
+	sparsity pattern_out;
+	f.for_hes_sparsity(
+		select_domain, select_range, internal_bool, pattern_out
 	);
 	size_t nnz = pattern_out.nnz();
 	ok        &= nnz == 2;
@@ -96,8 +83,8 @@ bool rev_hes_sparsity(void)
 	// compute sparsity pattern for H(x) = F_0''(x)
 	select_range[0] = true;
 	select_range[1] = false;
-	f.rev_hes_sparsity(
-		select_range, transpose, internal_bool, pattern_out
+	f.for_hes_sparsity(
+		select_domain, select_range, internal_bool, pattern_out
 	);
 	nnz = pattern_out.nnz();
 	ok &= nnz == 1;

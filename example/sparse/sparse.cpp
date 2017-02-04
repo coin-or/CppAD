@@ -28,6 +28,7 @@ extern bool rev_hes_sparsity(void);
 extern bool rev_jac_sparsity(void);
 extern bool RevSparseJac(void);
 extern bool rev_sparse_hes(void);
+extern bool for_hes_sparsity(void);
 extern bool for_jac_sparsity(void);
 extern bool ForSparseJac(void);
 extern bool for_sparse_hes(void);
@@ -72,6 +73,7 @@ int main(void)
 	ok &= Run( rev_jac_sparsity,          "rev_jac_sparsity" );
 	ok &= Run( RevSparseJac,              "RevSparseJac" );
 	ok &= Run( rev_sparse_hes,            "rev_sparse_hes" );
+	ok &= Run( for_hes_sparsity,          "for_hes_sparsity" );
 	ok &= Run( for_jac_sparsity,          "for_jac_sparsity" );
 	ok &= Run( ForSparseJac,              "ForSparseJac" );
 	ok &= Run( for_sparse_hes,            "for_sparse_hes" );

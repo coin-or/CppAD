@@ -128,7 +128,7 @@ see $cref/pattern_out/for_jac_sparsity/pattern_out/$$ below.
 
 $head internal_bool$$
 If this is true, calculations are done with sets represented by a vector
-of boolean values. Otherwise, a vector of standard sets is used.
+of boolean values. Otherwise, a vector of sets of integers is used.
 
 $head pattern_out$$
 This argument has prototype

@@ -158,6 +158,7 @@ $rref example.cpp$$
 $rref exp.cpp$$
 $rref expm1.cpp$$
 $rref expm1.cpp$$
+$rref for_hes_sparsity.cpp$$
 $rref for_jac_sparsity.cpp$$
 $rref for_one.cpp$$
 $rref for_sparse_hes.cpp$$
