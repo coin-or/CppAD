@@ -93,7 +93,7 @@ $cref/vector of sets/glossary/Sparsity Pattern/Vector of Sets/$$
 sparsity patterns.
 If $icode internal_bool$$ if true, $icode k$$ will be zero.
 Otherwise it will be non-zero.
-If you do not need this information for future $cref RevSparseHes$$
+If you do not need this information for future $cref rev_hes_sparsity$$
 calculations, it can be deleted
 (and the corresponding memory freed) using
 $codei%

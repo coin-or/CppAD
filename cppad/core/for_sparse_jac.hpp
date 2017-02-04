@@ -87,12 +87,13 @@ After $code ForSparseJac$$, if $icode k$$ is a $code size_t$$ object,
 $codei%
 	%k% = %f%.size_forward_set()
 %$$
-sets $icode s$$ to the total number of elements in all the sets corresponding
-to the sparsity pattern stored in the function object $icode f$$.
+sets $icode k$$ to the amount of memory (in unsigned character units)
+used to store the
+$cref/vector of sets/glossary/Sparsity Pattern/Vector of Sets/$$
+sparsity patterns.
 If the sparsity patterns for this operation use elements of type $code bool$$,
 the return value for $code size_forward_set$$ will be zero.
-Otherwise, its return value will be non-zero
-(unless the entire sparsity pattern is false).
+Otherwise, its return value will be non-zero.
 This sparsity pattern is stored for use by $cref RevSparseHes$$ and
 when it is not longer needed, it can be deleted
 (and the corresponding memory freed) using
