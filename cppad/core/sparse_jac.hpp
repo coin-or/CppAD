@@ -117,7 +117,6 @@ If it is empty, information is stored in $icode work$$.
 This can be used to reduce computation when
 a future call is for the same object $icode f$$,
 the same member function $code sparse_jac_for$$ or $code sparse_jac_rev$$,
-the same sparsity pattern,
 and the same subset of the Jacobian.
 If any of these values change, use $icode%work%.clear()%$$ to
 empty this structure.
@@ -154,7 +153,39 @@ Sparse Jacobian calculation routines.
 */
 namespace CppAD { // BEGIN_CPPAD_NAMESPACE
 
+/*!
+Calculate sparse Jacobains using forward mode
 
+\tparam Base
+the base type for the recording that is stored in the ADFun object.
+
+\tparam SizeVector
+a simple vector class with elements of type size_t.
+
+\tparam BaseVector
+a simple vector class with elements of type Base.
+
+\param x
+a vector of length n, the number of independent variables in f
+(this ADFun object).
+
+\param pattern
+is a sparsity pattern for the Jacobian of f;
+pattern.nr() == m,
+pattern.nc() == n,
+where m is number of dependent variables in f.
+
+\param subset
+specifices the subset of the sparsity pattern where the Jacobian is evaluated.
+subset.nr() == m,
+subset.nc() == n.
+
+\param work
+this structure must be empty, or contain the information stored
+by a previous call to sparse_jac_for.
+The previous call must be for the same ADFun object f
+and the same subset.
+*/
 template <class Base>
 template <class SizeVector, class BaseVector>
 size_t ADFun<Base>::sparse_jac_for(
