@@ -192,8 +192,9 @@ private:
 	SizeVector col_;
 public:
 	/// default constructor
+	/// Eigen vector is ambiguous for row_(0), col_(0) so use default ctor
 	sparse_rc(void)
-	: nr_(0), nc_(0), nnz_(0), row_(0), col_(0)
+	: nr_(0), nc_(0), nnz_(0)
 	{ }
 	/// copy constructor
 	sparse_rc(const sparse_rc& other)
