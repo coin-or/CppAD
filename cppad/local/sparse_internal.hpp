@@ -64,8 +64,9 @@ sparse_pack or sparse_list.
 If this is true, pattern_in is transposed.
 
 \param tape_index
-This is the mapping from an index in pattern_in to the corresponding
-index in the tape and pattern_out.
+If traspose is false (true),
+this is the mapping from row (column) index in pattern_in to the corresponding
+row index in the tape and pattern_out.
 
 \param pattern_in
 This is the sparsity pattern for variables,
@@ -73,7 +74,8 @@ or its transpose, depending on the value of transpose.
 
 \param pattern_out
 This is a sparsity pattern for all of the variables on the tape.
-It is assumed to be empty on input. On output, the pattern for each
+The number of sets and possible elements has been set, and all of the sets
+are empty on input. On output, the pattern for each
 of the variables in tape_index will be as specified by pattern_in.
 The pattern for the other variables is not affected.
 */
@@ -112,14 +114,17 @@ sparse_pack or sparse_list.
 If this is true, pattern_out is transposed.
 
 \param tape_index
-This is the mapping from an index in pattern_out to the corresponding
+If transpose is false (true)
+this is the mapping from row (column) an index in pattern_out
+to the corresponding
 index in the tape and pattern_in.
 
 \param pattern_in
 This is the internal sparsity pattern for all of the variables on the tape.
 
 \param pattern_out
-The input value of pattern_out does not matter.
+The input value of pattern_out does not matter
+(not even its number of rows, columns, or elements).
 Upon return it is an index sparsity pattern for each of the variables
 in tape_index, or its transpose, depending on the value of transpose.
 */

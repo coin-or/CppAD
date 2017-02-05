@@ -22,6 +22,7 @@ Please visit http://www.coin-or.org/CppAD/ for information on other licenses.
 extern bool sub_sparse_hes(void);
 extern bool sparsity_sub(void);
 extern bool sparse_sub_hes(void);
+extern bool sparse_jac_for(void);
 extern bool sparse_jacobian(void);
 extern bool sparse_hessian(void);
 extern bool rev_hes_sparsity(void);
@@ -67,6 +68,7 @@ int main(void)
 	ok &= Run( sub_sparse_hes,            "sub_sparse_hes" );
 	ok &= Run( sparsity_sub,              "sparsity_sub" );
 	ok &= Run( sparse_sub_hes,            "sparse_sub_hes" );
+	ok &= Run( sparse_jac_for,            "sparse_jac_for" );
 	ok &= Run( sparse_jacobian,           "sparse_jacobian" );
 	ok &= Run( sparse_hessian,            "sparse_hessian" );
 	ok &= Run( rev_hes_sparsity,          "rev_hes_sparsity" );

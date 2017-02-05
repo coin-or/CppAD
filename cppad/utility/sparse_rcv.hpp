@@ -50,9 +50,9 @@ $codei%const %SizeVector%& %col%( %matrix%.col() )
 %$$
 $codei%const %ValueVector%& %val%( %matrix%.val() )
 %$$
-$icode%SizeVector% %row_major% = %pattern%.row_major()
+$icode%SizeVector% %row_major% = %matrix%.row_major()
 %$$
-$icode%SizeVector% %col_major% = %pattern%.col_major()
+$icode%SizeVector% %col_major% = %matrix%.col_major()
 %$$
 
 $head SizeVector$$
@@ -72,8 +72,10 @@ It specifies the possibly non-zero entries in the $icode matrix$$.
 
 $head matrix$$
 This is a sparse matrix object with the sparsity specified by $icode pattern$$.
-It is $code const$$ for all the operations except for
-the constructor and $code set$$.
+Only the $icode val$$ vector can be changed. All other values returned by
+$icode matrix$$ are fixed during the constructor and constant there after.
+The $icode val$$ vector is only changed by the constructor
+and the $code set$$ function.
 
 $head nr$$
 This return value has prototype

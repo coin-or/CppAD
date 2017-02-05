@@ -333,6 +333,15 @@ public:
 		size_t q, const VectorSet &s, bool transpose = false,
 		bool dependency = false
 	);
+	// ---------------------------------------------------------------------
+	template <typename SizeVector, typename BaseVector>
+	size_t sparse_jac_for(
+		const BaseVector&                    x       ,
+		const sparse_rc<SizeVector>&         pattern ,
+		sparse_rcv<SizeVector, BaseVector>&  subset  ,
+		sparse_jacobian_work&                work
+	);
+	// ---------------------------------------------------------------------
 	template <typename SizeVector>
 	void for_jac_sparsity(
 		const sparse_rc<SizeVector>& pattern_in       ,

@@ -18,9 +18,15 @@ $spell
 	hpp
 	bool
 	Jacobian
+	jac
 $$
 
 $section Changes and Additions to CppAD During 2017$$
+
+$head 02-05$$
+Add the $cref/sparse_jac_for/sparse_jac/$$ routine
+which uses $cref sparse_rc$$ sparsity patterns
+and $cref sparse_rcv$$ matrix subsets.
 
 $head 02-03$$
 Add the

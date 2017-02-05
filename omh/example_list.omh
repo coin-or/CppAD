@@ -261,6 +261,7 @@ $rref sinh.cpp$$
 $rref sparse_hes_fun.cpp$$
 $rref sparse_hessian.cpp$$
 $rref sparse_jac_fun.cpp$$
+$rref sparse_jac_for.cpp$$
 $rref sparse_jacobian.cpp$$
 $rref sparse_rc.cpp$$
 $rref sparse_rcv.cpp$$
