@@ -106,7 +106,7 @@ bool sparse_jac_rev(void)
 	//
 	// compute entire forward mode Jacobian
 	sparse_rcv<s_vector, d_vector> subset( pattern_jac );
-	CppAD::sparse_jacobian_work work;
+	CppAD::sparse_jac_work work;
 	size_t n_sweep = f.sparse_jac_rev(x, pattern_jac, subset, work);
 	ok &= n_sweep == 2;
 	//

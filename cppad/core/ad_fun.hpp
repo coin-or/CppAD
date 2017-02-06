@@ -339,14 +339,14 @@ public:
 		const BaseVector&                    x       ,
 		const sparse_rc<SizeVector>&         pattern ,
 		sparse_rcv<SizeVector, BaseVector>&  subset  ,
-		sparse_jacobian_work&                work
+		sparse_jac_work&                     work
 	);
 	template <typename SizeVector, typename BaseVector>
 	size_t sparse_jac_rev(
 		const BaseVector&                    x       ,
 		const sparse_rc<SizeVector>&         pattern ,
 		sparse_rcv<SizeVector, BaseVector>&  subset  ,
-		sparse_jacobian_work&                work
+		sparse_jac_work&                     work
 	);
 	// ---------------------------------------------------------------------
 	template <typename SizeVector>

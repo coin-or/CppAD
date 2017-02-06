@@ -273,7 +273,6 @@ It return $code true$$, if it succeeds and $code false$$ otherwise.
 $end
 ==============================================================================
 */
-# include <cppad/core/sparse_jac_work.hpp>
 # include <cppad/local/std_set.hpp>
 # include <cppad/local/color_general.hpp>
 
@@ -282,6 +281,32 @@ namespace CppAD { // BEGIN_CPPAD_NAMESPACE
 \file sparse_jacobian.hpp
 Sparse Jacobian driver routine and helper functions.
 */
+// ===========================================================================
+/*!
+class used by SparseJacobian to hold information so it does not need to be
+recomputed.
+*/
+class sparse_jacobian_work {
+	public:
+		/// Coloring method: "cppad", or "colpack"
+		/// (this field is set by user)
+		std::string color_method;
+		/// indices that sort the user row and col arrays by color
+		CppAD::vector<size_t> order;
+		/// results of the coloring algorithm
+		CppAD::vector<size_t> color;
+
+		/// constructor
+		sparse_jacobian_work(void) : color_method("cppad")
+		{ }
+		/// reset coloring method to its default and
+		/// inform CppAD that color and order need to be recomputed
+		void clear(void)
+		{	color_method = "cppad";
+			order.clear();
+			color.clear();
+		}
+};
 // ===========================================================================
 /*!
 Private helper function forward mode cases

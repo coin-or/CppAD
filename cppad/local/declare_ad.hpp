@@ -1,9 +1,8 @@
-// $Id$
 # ifndef CPPAD_LOCAL_DECLARE_AD_HPP
 # define CPPAD_LOCAL_DECLARE_AD_HPP
 
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-16 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-17 Bradley M. Bell
 
 CppAD is distributed under multiple licenses. This distribution is under
 the terms of the
@@ -46,6 +45,7 @@ namespace CppAD {
 	typedef CPPAD_TAPE_ID_TYPE   tape_id_t;
 
 	// classes
+	class sparse_jac_work;
 	class sparse_jacobian_work;
 	class sparse_hessian_work;
 	template <class Base> class AD;

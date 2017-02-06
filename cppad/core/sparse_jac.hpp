@@ -23,14 +23,18 @@ $spell
 	rcv
 	nr
 	nc
+	std
+	Cppad
+	Colpack
+	cmake
 $$
 
-$section Sparse Jacobians$$
+$section Computing Sparse Jacobians$$
 
 $head Syntax$$
-$icode%n_sweep% = f%.sparse_jac_for(%x%, %pattern%, %subset%, %work%)
+$icode%n_sweep% = %f%.sparse_jac_for(%x%, %pattern%, %subset%, %work%)
 %$$
-$icode%n_sweep% = f%.sparse_jac_rev(%x%, %pattern%, %subset%, %work%)
+$icode%n_sweep% = %f%.sparse_jac_rev(%x%, %pattern%, %subset%, %work%)
 %$$
 
 
@@ -92,6 +96,8 @@ $codei%
 Its row size is $icode%pattern%.nr() == %m%$$,
 and its column size is $icode%pattern%.nc() == %n%$$.
 It is a sparsity pattern for the Jacobian $latex J(x)$$.
+This argument is not used (and need not satisfy any conditions),
+when $cref/work/sparse_jac/work/$$ is non-empty.
 
 $head subset$$
 This argument has prototype
@@ -109,7 +115,7 @@ of the Jacobian.
 $head work$$
 This argument has prototype
 $codei%
-	sparse_jacobian_work& %work%
+	sparse_jac_work& %work%
 %$$
 We refer to its initial value,
 and its value after $icode%work%.clear()%$$, as empty.
@@ -120,6 +126,45 @@ the same member function $code sparse_jac_for$$ or $code sparse_jac_rev$$,
 and the same subset of the Jacobian.
 If any of these values change, use $icode%work%.clear()%$$ to
 empty this structure.
+
+$subhead color_method$$
+The coloring algorithm determines which rows (reverse) or columns (forward)
+can be computed during the same sweep.
+This field has prototype
+$codei%
+	std::string %work%.color_method
+%$$
+This value only matters when work is empty; i.e.,
+after the $icode work$$ constructor or $icode%work%.clear()%$$.
+$codei%
+
+"cppad"
+%$$
+This is the default value for $icode%work%.color_method%$$; i.e.,
+its value after the constructor or $icode%work%.clear()%$$.
+This uses a general purpose coloring algorithm written for Cppad.
+$codei%
+
+"colpack"
+%$$
+If $cref colpack_prefix$$ is specified on the
+$cref/cmake command/cmake/CMake Command/$$ line,
+you can set $icode%work%.method%$$ to $code "colpack"$$.
+This uses a general purpose coloring algorithm that is part of Colpack.
+
+$head n_sweep$$
+The return value $icode n_sweep$$ has prototype
+$codei%
+	size_t %n_sweep%
+%$$
+If $code sparse_jac_for$$ ($code sparse_jac_rev$$) is used,
+$icode n_sweep$$ is the number of first order forward (reverse) sweeps
+used to compute the requested Jacobian values.
+It is also the number of colors determined by the coloring method
+mentioned above.
+It is proportional to the total computational work,
+not counting the zero order forward sweep,
+or combining multiple columns (rows) into a single sweep.
 
 $head Uses Forward$$
 After each call to $cref Forward$$,
@@ -144,15 +189,41 @@ They return $code true$$, if they succeed, and $code false$$ otherwise.
 $end
 */
 # include <cppad/core/cppad_assert.hpp>
-# include <cppad/core/sparse_jac_work.hpp>
 # include <cppad/local/sparse_internal.hpp>
 # include <cppad/local/color_general.hpp>
+# include <cppad/utility/vector.hpp>
 
 /*!
 \file sparse_jac.hpp
 Sparse Jacobian calculation routines.
 */
 namespace CppAD { // BEGIN_CPPAD_NAMESPACE
+/*!
+Class used to hold information used by Sparse Jacobian routines in this file,
+so they do not need to be recomputed every time.
+*/
+	class sparse_jac_work {
+		public:
+			/// Coloring method: "cppad", or "colpack"
+			/// (this field is set by user)
+			std::string color_method;
+			/// indices that sort the user row and col arrays by color
+			CppAD::vector<size_t> order;
+			/// results of the coloring algorithm
+			CppAD::vector<size_t> color;
+			//
+			/// constructor
+			sparse_jac_work(void) : color_method("cppad")
+			{ }
+			/// reset work to empty.
+			/// This informs CppAD that color and order need to be recomputed
+			void clear(void)
+			{	color_method = "cppad";
+				order.clear();
+				color.clear();
+			}
+	};
+
 // ----------------------------------------------------------------------------
 /*!
 Calculate sparse Jacobains using forward mode
@@ -193,18 +264,10 @@ size_t ADFun<Base>::sparse_jac_for(
 	const BaseVector&                    x       ,
 	const sparse_rc<SizeVector>&         pattern ,
 	sparse_rcv<SizeVector, BaseVector>&  subset  ,
-	sparse_jacobian_work&                work    )
+	sparse_jac_work&                     work    )
 {	size_t m = Range();
 	size_t n = Domain();
 	//
-	CPPAD_ASSERT_KNOWN(
-		pattern.nr() == m,
-		"sparse_jac_for: pattern.nr() not equal range dimension for f"
-	);
-	CPPAD_ASSERT_KNOWN(
-		pattern.nc() == n,
-		"sparse_jac_for: pattern.nc() not equal domain dimension for f"
-	);
 	CPPAD_ASSERT_KNOWN(
 		subset.nr() == m,
 		"sparse_jac_for: subset.nr() not equal range dimension for f"
@@ -239,6 +302,14 @@ size_t ADFun<Base>::sparse_jac_for(
 	// check for case where input work is empty
 	if( color.size() == 0 )
 	{	// compute work color and order vectors
+		CPPAD_ASSERT_KNOWN(
+			pattern.nr() == m,
+			"sparse_jac_for: pattern.nr() not equal range dimension for f"
+		);
+		CPPAD_ASSERT_KNOWN(
+			pattern.nc() == n,
+			"sparse_jac_for: pattern.nc() not equal domain dimension for f"
+		);
 		//
 		// convert pattern to an internal version of its transpose
 		vector<size_t> internal_index(n);
@@ -356,18 +427,10 @@ size_t ADFun<Base>::sparse_jac_rev(
 	const BaseVector&                    x       ,
 	const sparse_rc<SizeVector>&         pattern ,
 	sparse_rcv<SizeVector, BaseVector>&  subset  ,
-	sparse_jacobian_work&                work    )
+	sparse_jac_work&                     work    )
 {	size_t m = Range();
 	size_t n = Domain();
 	//
-	CPPAD_ASSERT_KNOWN(
-		pattern.nr() == m,
-		"sparse_jac_rev: pattern.nr() not equal range dimension for f"
-	);
-	CPPAD_ASSERT_KNOWN(
-		pattern.nc() == n,
-		"sparse_jac_rev: pattern.nc() not equal domain dimension for f"
-	);
 	CPPAD_ASSERT_KNOWN(
 		subset.nr() == m,
 		"sparse_jac_rev: subset.nr() not equal range dimension for f"
@@ -402,6 +465,14 @@ size_t ADFun<Base>::sparse_jac_rev(
 	// check for case where input work is empty
 	if( color.size() == 0 )
 	{	// compute work color and order vectors
+		CPPAD_ASSERT_KNOWN(
+			pattern.nr() == m,
+			"sparse_jac_rev: pattern.nr() not equal range dimension for f"
+		);
+		CPPAD_ASSERT_KNOWN(
+			pattern.nc() == n,
+			"sparse_jac_rev: pattern.nc() not equal domain dimension for f"
+		);
 		//
 		// convert pattern to an internal version
 		vector<size_t> internal_index(n);
