@@ -87,10 +87,10 @@ bool rev_hes_sparsity(void)
 	{	// check results
 		const SizeVector& row( pattern_out.row() );
 		const SizeVector& col( pattern_out.col() );
-		SizeVector col_major = pattern_out.col_major();
+		SizeVector row_major = pattern_out.row_major();
 		//
-		ok &= row[ col_major[0] ] ==  0  && col[ col_major[0] ] ==  1;
-		ok &= row[ col_major[1] ] ==  1  && col[ col_major[1] ] ==  0;
+		ok &= row[ row_major[0] ] ==  0  && col[ row_major[0] ] ==  1;
+		ok &= row[ row_major[1] ] ==  1  && col[ row_major[1] ] ==  0;
 	}
 	//
 	// compute sparsity pattern for H(x) = F_0''(x)

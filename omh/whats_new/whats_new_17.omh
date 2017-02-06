@@ -24,9 +24,14 @@ $$
 $section Changes and Additions to CppAD During 2017$$
 
 $head 02-05$$
+$list number$$
 Add the $cref/sparse_jac_for/sparse_jac/$$ routine
 which uses $cref sparse_rc$$ sparsity patterns
 and $cref sparse_rcv$$ matrix subsets.
+$lnext
+Order for $cref sparse_rc$$ row-major and column-major was switched.
+This has been fixed.
+$lend
 
 $head 02-03$$
 Add the

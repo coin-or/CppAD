@@ -251,7 +251,7 @@ public:
 	{	SizeVector keys(nnz_), row_major(nnz_);
 		for(size_t k = 0; k < nnz_; k++)
 		{	CPPAD_ASSERT_UNKNOWN( row_[k] < nr_ );
-			keys[k] = col_[k] * nr_ + row_[k];
+			keys[k] = row_[k] * nc_ + col_[k];
 		}
 		index_sort(keys, row_major);
 		return row_major;
@@ -261,7 +261,7 @@ public:
 	{	SizeVector keys(nnz_), col_major(nnz_);
 		for(size_t k = 0; k < nnz_; k++)
 		{	CPPAD_ASSERT_UNKNOWN( col_[k] < nc_ );
-			keys[k] = row_[k] * nc_ + col_[k];
+			keys[k] = col_[k] * nr_ + row_[k];
 		}
 		index_sort(keys, col_major);
 		return col_major;

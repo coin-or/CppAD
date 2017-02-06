@@ -131,8 +131,8 @@ bool dependency(void)
 	ok &= pattern_out.nc()  == n;
 	ok &= pattern_out.nnz() == n;
 	for(size_t k = 0; k < n; k++)
-	{	ok &= row[ col_major[k] ] == k;
-		ok &= col[ col_major[k] ] == m1 - k;
+	{	ok &= row[ col_major[k] ] == m1 - k;
+		ok &= col[ col_major[k] ] == k;
 	}
 	// -----------------------------------------------------------
 	// RevSparseJac and set dependency

@@ -10,7 +10,7 @@ Please visit http://www.coin-or.org/CppAD/ for information on other licenses.
 -------------------------------------------------------------------------- */
 
 /*
-$begin sparse_jac_for.cpp$$
+$begin sparse_jac_rev.cpp$$
 $spell
 	Cpp
 	Jacobian
@@ -19,14 +19,14 @@ $$
 $section Sparse Jacobian: Example and Test$$
 
 $code
-$srcfile%example/sparse/sparse_jac_for.cpp%0%// BEGIN C++%// END C++%1%$$
+$srcfile%example/sparse/sparse_jac_rev.cpp%0%// BEGIN C++%// END C++%1%$$
 $$
 
 $end
 */
 // BEGIN C++
 # include <cppad/cppad.hpp>
-bool sparse_jac_for(void)
+bool sparse_jac_rev(void)
 {	bool ok = true;
 	//
 	using CppAD::AD;
@@ -39,7 +39,7 @@ bool sparse_jac_for(void)
 	typedef CPPAD_TESTVECTOR(size_t)     s_vector;
 	//
 	// domain space vector
-	size_t n = 3;
+	size_t n = 4;
 	a_vector  a_x(n);
 	for(size_t j = 0; j < n; j++)
 		a_x[j] = AD<double> (0);
@@ -47,12 +47,11 @@ bool sparse_jac_for(void)
 	// declare independent variables and starting recording
 	CppAD::Independent(a_x);
 	//
-	size_t m = 4;
+	size_t m = 3;
 	a_vector  a_y(m);
-	a_y[0] = a_x[0] + a_x[2];
-	a_y[1] = a_x[0] + a_x[2];
-	a_y[2] = a_x[1] + a_x[2];
-	a_y[3] = a_x[1] + a_x[2] * a_x[2] / 2.;
+	a_y[0] = a_x[0] + a_x[1];
+	a_y[1] = a_x[2] + a_x[3];
+	a_y[2] = a_x[0] + a_x[1] + a_x[2] + a_x[3] * a_x[3] / 2.;
 	//
 	// create f: x -> y and stop tape recording
 	CppAD::ADFun<double> f(a_x, a_y);
@@ -62,14 +61,12 @@ bool sparse_jac_for(void)
 	for(size_t j = 0; j < n; j++)
 		x[j] = double(j);
 	/*
-	       [ 1 0 1   ]
-	J(x) = [ 1 0 1   ]
-	       [ 0 1 1   ]
-	       [ 0 1 x_2 ]
+	       [ 1 1 0 0  ]
+	J(x) = [ 0 0 1 1  ]
+	       [ 1 1 1 x_3]
 	*/
-	d_vector check(m * n);
 	//
-	// column-major order values of J(x)
+	// row-major order values of J(x)
 	size_t nnz = 8;
 	s_vector check_row(nnz), check_col(nnz);
 	d_vector check_val(nnz);
@@ -78,24 +75,24 @@ bool sparse_jac_for(void)
 		if( k < 7 )
 			check_val[k] = 1.0;
 		else
-			check_val[k] = x[2];
+			check_val[k] = x[3];
 		//
 		// check_row and check_col
-		check_row[k] = k;
+		check_col[k] = k;
 		if( k < 2 )
-			check_col[k] = 0;
+			check_row[k] = 0;
 		else if( k < 4 )
-			check_col[k] = 1;
+			check_row[k] = 1;
 		else
-		{	check_col[k] = 2;
-			check_row[k] = k - 4;
+		{	check_row[k] = 2;
+			check_col[k] = k - 4;
 		}
 	}
 	//
-	// n by n identity matrix sparsity
+	// m by m identity matrix sparsity
 	sparse_rc<s_vector> pattern_in;
-	pattern_in.resize(n, n, n);
-	for(size_t k = 0; k < n; k++)
+	pattern_in.resize(m, m, m);
+	for(size_t k = 0; k < m; k++)
 		pattern_in.set(k, k, k);
 	//
 	// sparsity for J(x)
@@ -103,48 +100,48 @@ bool sparse_jac_for(void)
 	bool dependency    = false;
 	bool internal_bool = true;
 	sparse_rc<s_vector> pattern_jac;
-	f.for_jac_sparsity(
+	f.rev_jac_sparsity(
 		pattern_in, transpose, dependency, internal_bool, pattern_jac
 	);
 	//
 	// compute entire forward mode Jacobian
 	sparse_rcv<s_vector, d_vector> subset( pattern_jac );
 	CppAD::sparse_jacobian_work work;
-	size_t n_sweep = f.sparse_jac_for(x, pattern_jac, subset, work);
+	size_t n_sweep = f.sparse_jac_rev(x, pattern_jac, subset, work);
 	ok &= n_sweep == 2;
 	//
 	const s_vector row( subset.row() );
 	const s_vector col( subset.col() );
 	const d_vector val( subset.val() );
-	s_vector col_major = subset.col_major();
+	s_vector row_major = subset.row_major();
 	ok  &= subset.nnz() == nnz;
 	for(size_t k = 0; k < nnz; k++)
-	{	ok &= row[ col_major[k] ] == check_row[k];
-		ok &= col[ col_major[k] ] == check_col[k];
-		ok &= val[ col_major[k] ] == check_val[k];
+	{	ok &= row[ row_major[k] ] == check_row[k];
+		ok &= col[ row_major[k] ] == check_col[k];
+		ok &= val[ row_major[k] ] == check_val[k];
 	}
-	// compute non-zero in row 3 only
-	sparse_rc<s_vector> pattern_row3;
-	pattern_row3.resize(m, n, 2); // nr = m, nc = n, nnz = 2
-	pattern_row3.set(0, 3, 1);    // row[0] = 3, col[0] = 1
-	pattern_row3.set(1, 3, 2);    // row[1] = 3, col[1] = 2
-	sparse_rcv<s_vector, d_vector> subset_row3( pattern_row3 );
+	// compute non-zero in col 3 only
+	sparse_rc<s_vector> pattern_col3;
+	pattern_col3.resize(m, n, 2); // nr = m, nc = n, nnz = 2
+	pattern_col3.set(0, 1, 3);    // row[0] = 1, col[0] = 3
+	pattern_col3.set(1, 2, 3);    // row[1] = 2, col[1] = 3
+	sparse_rcv<s_vector, d_vector> subset_col3( pattern_col3 );
 	work.clear();
-	n_sweep = f.sparse_jac_for(x, pattern_jac, subset_row3, work);
+	n_sweep = f.sparse_jac_rev(x, pattern_jac, subset_col3, work);
 	ok &= n_sweep == 2;
 	//
-	const s_vector row_row3( subset_row3.row() );
-	const s_vector col_row3( subset_row3.col() );
-	const d_vector val_row3( subset_row3.val() );
-	ok &= subset_row3.nnz() == 2;
+	const s_vector row_col3( subset_col3.row() );
+	const s_vector col_col3( subset_col3.col() );
+	const d_vector val_col3( subset_col3.val() );
+	ok &= subset_col3.nnz() == 2;
 	//
-	ok &= row_row3[0] == 3;
-	ok &= col_row3[0] == 1;
-	ok &= val_row3[0] == 1.0;
+	ok &= row_col3[0] == 1;
+	ok &= col_col3[0] == 3;
+	ok &= val_col3[0] == 1.0;
 	//
-	ok &= row_row3[1] == 3;
-	ok &= col_row3[1] == 2;
-	ok &= val_row3[1] == x[2];
+	ok &= row_col3[1] == 2;
+	ok &= col_col3[1] == 3;
+	ok &= val_col3[1] == x[3];
 	//
 	return ok;
 }

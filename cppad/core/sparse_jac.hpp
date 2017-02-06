@@ -134,11 +134,12 @@ All the other forward mode coefficients are unspecified.
 
 $head Example$$
 $children%
-	example/sparse/sparse_jac_for.cpp
+	example/sparse/sparse_jac_for.cpp%
+	example/sparse/sparse_jac_rev.cpp
 %$$
-The file $cref sparse_jac_for.cpp$$
-is examples and tests of $code sparse_jac_for$$.
-It return $code true$$, if it succeeds and $code false$$ otherwise.
+The files $cref sparse_jac_for.cpp$$ and $cref sparse_jac_rev.cpp$$
+are examples and tests of $code sparse_jac_for$$ and $code sparse_jac_rev$$.
+They return $code true$$, if they succeed, and $code false$$ otherwise.
 
 $end
 */
@@ -152,7 +153,7 @@ $end
 Sparse Jacobian calculation routines.
 */
 namespace CppAD { // BEGIN_CPPAD_NAMESPACE
-
+// ----------------------------------------------------------------------------
 /*!
 Calculate sparse Jacobains using forward mode
 
@@ -290,7 +291,7 @@ size_t ADFun<Base>::sparse_jac_for(
 	for(size_t k = 0; k < K; k++)
 		subset.set(k, zero);
 	//
-	// direction vector and return values for calls to forward
+	// direction vector and return values for calls to Forward
 	BaseVector dx(n), dy(m);
 	//
 	// loop over colors
@@ -310,6 +311,169 @@ size_t ADFun<Base>::sparse_jac_for(
 		// set the corresponding components of the result
 		while( k < K && color[ col[order[k]] ] == ell )
 		{	subset.set(order[k], dy[row[order[k]]] );
+			k++;
+		}
+	}
+	return n_color;
+}
+// ----------------------------------------------------------------------------
+/*!
+Calculate sparse Jacobains using reverse mode
+
+\tparam Base
+the base type for the recording that is stored in the ADFun object.
+
+\tparam SizeVector
+a simple vector class with elements of type size_t.
+
+\tparam BaseVector
+a simple vector class with elements of type Base.
+
+\param x
+a vector of length n, the number of independent variables in f
+(this ADFun object).
+
+\param pattern
+is a sparsity pattern for the Jacobian of f;
+pattern.nr() == m,
+pattern.nc() == n,
+where m is number of dependent variables in f.
+
+\param subset
+specifices the subset of the sparsity pattern where the Jacobian is evaluated.
+subset.nr() == m,
+subset.nc() == n.
+
+\param work
+this structure must be empty, or contain the information stored
+by a previous call to sparse_jac_rev.
+The previous call must be for the same ADFun object f
+and the same subset.
+*/
+template <class Base>
+template <class SizeVector, class BaseVector>
+size_t ADFun<Base>::sparse_jac_rev(
+	const BaseVector&                    x       ,
+	const sparse_rc<SizeVector>&         pattern ,
+	sparse_rcv<SizeVector, BaseVector>&  subset  ,
+	sparse_jacobian_work&                work    )
+{	size_t m = Range();
+	size_t n = Domain();
+	//
+	CPPAD_ASSERT_KNOWN(
+		pattern.nr() == m,
+		"sparse_jac_rev: pattern.nr() not equal range dimension for f"
+	);
+	CPPAD_ASSERT_KNOWN(
+		pattern.nc() == n,
+		"sparse_jac_rev: pattern.nc() not equal domain dimension for f"
+	);
+	CPPAD_ASSERT_KNOWN(
+		subset.nr() == m,
+		"sparse_jac_rev: subset.nr() not equal range dimension for f"
+	);
+	CPPAD_ASSERT_KNOWN(
+		subset.nc() == n,
+		"sparse_jac_rev: subset.nc() not equal domain dimension for f"
+	);
+	//
+	// row and column vectors in subset
+	const SizeVector& row( subset.row() );
+	const SizeVector& col( subset.col() );
+	//
+	vector<size_t>& color(work.color);
+	vector<size_t>& order(work.order);
+	CPPAD_ASSERT_KNOWN(
+		color.size() == 0 || color.size() == n,
+		"sparse_jac_rev: work is non-empty and conditions have changed"
+	);
+	//
+	// point at which we are evaluationg the Jacobian
+	Forward(0, x);
+	//
+	// number of elements in the subset
+	size_t K = subset.nnz();
+	//
+	// check for case were there is nothing to do
+	// (except for call to Forward(0, x)
+	if( K == 0 )
+		return 0;
+	//
+	// check for case where input work is empty
+	if( color.size() == 0 )
+	{	// compute work color and order vectors
+		//
+		// convert pattern to an internal version
+		vector<size_t> internal_index(n);
+		for(size_t j = 0; j < n; j++)
+			internal_index[j] = j;
+		bool transpose = false;
+		local::sparse_list internal_pattern;
+		internal_pattern.resize(m, n);
+		local::set_internal_sparsity(
+			transpose, internal_index, pattern, internal_pattern
+		);
+		//
+		// execute coloring algorithm
+		color.resize(m);
+		if(	work.color_method == "cppad" )
+			local::color_general_cppad(internal_pattern, row, col, color);
+		else if( work.color_method == "colpack" )
+		{
+# if CPPAD_HAS_COLPACK
+			local::color_general_colpack(internal_pattern, row, col, color);
+# else
+			CPPAD_ASSERT_KNOWN(
+				false,
+				"sparse_jac_rev: work.color_method = colpack "
+				"and colpack_prefix missing from cmake command line."
+			);
+# endif
+		}
+		else CPPAD_ASSERT_KNOWN(
+			false,
+			"sparse_jac_rev: work.color_method is not valid."
+		);
+		//
+		// put sorting indices in color order
+		SizeVector key(K);
+		order.resize(K);
+		for(size_t k = 0; k < K; k++)
+			key[k] = color[ row[k] ];
+		index_sort(key, order);
+	}
+	// Base versions of zero and one
+	Base one(1.0);
+	Base zero(0.0);
+	//
+	size_t n_color = 1;
+	for(size_t i = 0; i < m; i++) if( color[i] < m )
+		n_color = std::max(n_color, color[i] + 1);
+	//
+	// initialize the return Jacobian values as zero
+	for(size_t k = 0; k < K; k++)
+		subset.set(k, zero);
+	//
+	// weighting vector and return values for calls to Reverse
+	BaseVector w(m), dw(n);
+	//
+	// loop over colors
+	size_t k = 0;
+	for(size_t ell = 0; ell < n_color; ell++)
+	{	CPPAD_ASSERT_UNKNOWN( color[ row[ order[k] ] ] == ell );
+		//
+		// combine all rows with this color
+		for(size_t i = 0; i < m; i++)
+		{	w[i] = zero;
+			if( color[i] == ell )
+				w[i] = one;
+		}
+		// call reverse mode for all these rows at once
+		dw = Reverse(1, w);
+		//
+		// set the corresponding components of the result
+		while( k < K && color[ row[order[k]] ] == ell )
+		{	subset.set(order[k], dw[col[order[k]]] );
 			k++;
 		}
 	}
