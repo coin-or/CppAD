@@ -1,4 +1,3 @@
-// $Id$
 # ifndef CPPAD_LOCAL_COLOR_SYMMETRIC_HPP
 # define CPPAD_LOCAL_COLOR_SYMMETRIC_HPP
 
@@ -97,7 +96,7 @@ So the the the color for row[k] can be used to compute entry
 is a vector with size m.
 The input value of its elements does not matter.
 Upon return, it is a coloring for the rows of the sparse matrix.
-Note that if color[i] == m, then ther is no index k for which
+Note that if color[i] == m, then there is no index k for which
 row[k] == i (for the return value of row).
 \n
 \n

@@ -177,6 +177,7 @@ nobase_myinclude_HEADERS =  \
 	cppad/core/sign.hpp \
 	cppad/core/sparse_hessian.hpp \
 	cppad/core/sparse.hpp \
+	cppad/core/sparse_hes.hpp \
 	cppad/core/sparse_jac.hpp \
 	cppad/core/sparse_jacobian.hpp \
 	cppad/core/standard_math.hpp \

@@ -477,7 +477,7 @@ size_t ADFun<Base>::SparseHessianCompute(
 # else
 			CPPAD_ASSERT_KNOWN(
 				false,
-				"SparseHessian: work.color_method = colpack.star"
+				"SparseHessian: work.color_method = colpack.star "
 				"and colpack_prefix missing from cmake command line."
 			);
 # endif

@@ -26,6 +26,7 @@ $childtable%
 	cppad/core/rev_hes_sparsity.hpp%
 	cppad/core/for_hes_sparsity.hpp%
 	cppad/core/sparse_jac.hpp%
+	cppad/core/sparse_hes.hpp%
 
 	cppad/core/for_sparse_jac.hpp%
 	cppad/core/rev_sparse_jac.hpp%
@@ -43,6 +44,7 @@ $end
 # include <cppad/core/rev_hes_sparsity.hpp>
 # include <cppad/core/for_hes_sparsity.hpp>
 # include <cppad/core/sparse_jac.hpp>
+# include <cppad/core/sparse_hes.hpp>
 //
 # include <cppad/core/for_sparse_jac.hpp>
 # include <cppad/core/rev_sparse_jac.hpp>

@@ -45,6 +45,7 @@ namespace CppAD {
 	typedef CPPAD_TAPE_ID_TYPE   tape_id_t;
 
 	// classes
+	class sparse_hes_work;
 	class sparse_jac_work;
 	class sparse_jacobian_work;
 	class sparse_hessian_work;

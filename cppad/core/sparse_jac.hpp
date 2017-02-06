@@ -202,28 +202,27 @@ namespace CppAD { // BEGIN_CPPAD_NAMESPACE
 Class used to hold information used by Sparse Jacobian routines in this file,
 so they do not need to be recomputed every time.
 */
-	class sparse_jac_work {
-		public:
-			/// Coloring method: "cppad", or "colpack"
-			/// (this field is set by user)
-			std::string color_method;
-			/// indices that sort the user row and col arrays by color
-			CppAD::vector<size_t> order;
-			/// results of the coloring algorithm
-			CppAD::vector<size_t> color;
-			//
-			/// constructor
-			sparse_jac_work(void) : color_method("cppad")
-			{ }
-			/// reset work to empty.
-			/// This informs CppAD that color and order need to be recomputed
-			void clear(void)
-			{	color_method = "cppad";
-				order.clear();
-				color.clear();
-			}
-	};
-
+class sparse_jac_work {
+	public:
+		/// Coloring method: "cppad", or "colpack"
+		/// (this field is set by user)
+		std::string color_method;
+		/// indices that sort the user row and col arrays by color
+		CppAD::vector<size_t> order;
+		/// results of the coloring algorithm
+		CppAD::vector<size_t> color;
+		//
+		/// constructor
+		sparse_jac_work(void) : color_method("cppad")
+		{ }
+		/// reset work to empty.
+		/// This informs CppAD that color and order need to be recomputed
+		void clear(void)
+		{	color_method = "cppad";
+			order.clear();
+			color.clear();
+		}
+};
 // ----------------------------------------------------------------------------
 /*!
 Calculate sparse Jacobains using forward mode
@@ -257,6 +256,10 @@ this structure must be empty, or contain the information stored
 by a previous call to sparse_jac_for.
 The previous call must be for the same ADFun object f
 and the same subset.
+
+\return
+This is the number of first order forward sweeps used to compute
+the Jacobian.
 */
 template <class Base>
 template <class SizeVector, class BaseVector>
@@ -420,6 +423,10 @@ this structure must be empty, or contain the information stored
 by a previous call to sparse_jac_rev.
 The previous call must be for the same ADFun object f
 and the same subset.
+
+\return
+This is the number of first order reverse sweeps used to compute
+the Jacobian.
 */
 template <class Base>
 template <class SizeVector, class BaseVector>

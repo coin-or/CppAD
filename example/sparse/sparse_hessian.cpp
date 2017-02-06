@@ -17,7 +17,6 @@ $spell
 $$
 
 $section Sparse Hessian: Example and Test$$
-$mindex Hessian spare$$
 
 
 $code

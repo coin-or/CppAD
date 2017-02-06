@@ -260,6 +260,7 @@ $rref sin.cpp$$
 $rref sinh.cpp$$
 $rref sparse_hes_fun.cpp$$
 $rref sparse_hessian.cpp$$
+$rref sparse_hes.cpp$$
 $rref sparse_jac_fun.cpp$$
 $rref sparse_jac_for.cpp$$
 $rref sparse_jac_rev.cpp$$

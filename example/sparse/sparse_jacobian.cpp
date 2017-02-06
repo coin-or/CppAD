@@ -17,7 +17,6 @@ $spell
 $$
 
 $section Sparse Jacobian: Example and Test$$
-$mindex Jacobian spare$$
 
 
 $code

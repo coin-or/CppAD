@@ -17,6 +17,7 @@ ADD_EXECUTABLE(example_sparse EXCLUDE_FROM_ALL
 	sub_sparse_hes.cpp
 	sparsity_sub.cpp
 	sparse_sub_hes.cpp
+	sparse_hes.cpp
 	sparse_jac_for.cpp
 	sparse_jac_rev.cpp
 	sparse_jacobian.cpp
