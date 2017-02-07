@@ -81,6 +81,7 @@ namespace {
 				identity, transpose, dependency, internal_bool, sparsity
 			);
 		}
+		else
 		{	f.for_jac_sparsity(
 				identity, transpose, dependency, internal_bool, sparsity
 			);

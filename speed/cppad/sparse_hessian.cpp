@@ -131,9 +131,9 @@ bool link_sparse_hessian(
 	// declare sparsity pattern
 	CppAD::sparse_rc<s_vector>  sparsity;
 	//
-	// declare subset where Jacobian is evaluated
+	// declare subset where Hessian is evaluated
 	CppAD::sparse_rc<s_vector> subset_pattern;
-	size_t nr  = m;
+	size_t nr  = n;
 	size_t nc  = n;
 	size_t nnz = row.size();
 	subset_pattern.resize(nr, nc, nnz);
