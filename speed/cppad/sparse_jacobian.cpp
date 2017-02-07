@@ -1,6 +1,5 @@
-// $Id$
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-16 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-17 Bradley M. Bell
 
 CppAD is distributed under multiple licenses. This distribution is under
 the terms of the
@@ -56,44 +55,37 @@ extern std::map<std::string, bool> global_option;
 
 namespace {
 	using CppAD::vector;
-	typedef vector< std::set<size_t> >  SetVector;
-	typedef vector<bool>                BoolVector;
+	typedef vector<size_t>  s_vector;
+	typedef vector<bool>    b_vector;
 
-	void calc_sparsity(SetVector& sparsity_set, CppAD::ADFun<double>& f)
-	{	bool reverse = global_option["revsparsity"];
+	void calc_sparsity(
+		CppAD::sparse_rc<s_vector>& sparsity ,
+		CppAD::ADFun<double>&       f        )
+	{	bool reverse       = global_option["revsparsity"];
+		bool transpose     = false;
+		bool internal_bool = global_option["boolsparsity"];
+		bool dependency    = false;
 		size_t q;
 		if( reverse )
 			q = f.Range();
 		else
 			q = f.Domain();
 		//
-		SetVector r_set(q);
-		for(size_t j = 0; j < q; j++)
-			r_set[j].insert(j);
-		if( reverse )
-			sparsity_set = f.RevSparseJac(q, r_set);
-		else
-			sparsity_set = f.ForSparseJac(q, r_set);
-	}
-	void calc_sparsity(BoolVector& sparsity_bool, CppAD::ADFun<double>& f)
-	{	bool reverse = global_option["revsparsity"];
-		size_t q;
-		if( reverse )
-			q = f.Range();
-		else
-			q = f.Domain();
+		CppAD::sparse_rc<s_vector> identity;
+		identity.resize(q, q, q);
+		for(size_t k = 0; k < q; k++)
+			identity.set(k, k, k);
 		//
-		BoolVector r_bool(q * q);
-		for(size_t i = 0; i < q; i++)
-		{	for(size_t j = 0; j < q; j++)
-				r_bool[ i * q + j] = i == j;
+		if( reverse )
+		{	f.rev_jac_sparsity(
+				identity, transpose, dependency, internal_bool, sparsity
+			);
 		}
-		if( reverse )
-			sparsity_bool = f.RevSparseJac(q, r_bool);
-		else
-			sparsity_bool = f.ForSparseJac(q, r_bool);
+		{	f.for_jac_sparsity(
+				identity, transpose, dependency, internal_bool, sparsity
+			);
+		}
 	}
-
 }
 
 bool link_sparse_jacobian(
@@ -116,93 +108,93 @@ bool link_sparse_jacobian(
 	std::string options="no_compare_op";
 	// -----------------------------------------------------
 	// setup
-	typedef vector< std::set<size_t> >  SetVector;
-	typedef CppAD::AD<double>           ADScalar;
-	typedef CppAD::vector<ADScalar>     ADVector;
-
-	size_t j;
+	typedef CppAD::AD<double>    a_double;
+	typedef vector<double>       d_vector;
+	typedef vector<a_double>     ad_vector;
+	//
 	size_t order = 0;         // derivative order corresponding to function
 	size_t n     = size;      // number of independent variables
-	ADVector   a_x(n);        // AD domain space vector
-	ADVector   a_y(m);        // AD range space vector y = g(x)
+	ad_vector  a_x(n);        // AD domain space vector
+	ad_vector  a_y(m);        // AD range space vector y = f(x)
 	CppAD::ADFun<double> f;   // AD function object
-
+	//
 	// declare sparsity pattern
-	SetVector  set_sparsity(m);
-	BoolVector bool_sparsity(m * n);
-
+	CppAD::sparse_rc<s_vector>  sparsity;
+	//
+	// declare subset where Jacobian is evaluated
+	CppAD::sparse_rc<s_vector> subset_pattern;
+	size_t nr  = m;
+	size_t nc  = n;
+	size_t nnz = row.size();
+	subset_pattern.resize(nr, nc, nnz);
+	for(size_t k = 0; k < nnz; k++)
+		subset_pattern.set(k, row[k], col[k]);
+	CppAD::sparse_rcv<s_vector, d_vector> subset( subset_pattern );
+	const d_vector& subset_val( subset.val() );
+	//
 	// ------------------------------------------------------
 	if( ! global_option["onetape"] ) while(repeat--)
 	{	// choose a value for x
 		CppAD::uniform_01(n, x);
-		for(j = 0; j < n; j++)
+		for(size_t j = 0; j < n; j++)
 			a_x[j] = x[j];
-
+		//
 		// declare independent variables
 		Independent(a_x);
-
-		// AD computation of f (x)
-		CppAD::sparse_jac_fun<ADScalar>(m, n, a_x, row, col, order, a_y);
-
+		//
+		// AD computation of f(x)
+		CppAD::sparse_jac_fun<a_double>(m, n, a_x, row, col, order, a_y);
+		//
 		// create function object f : X -> Y
 		f.Dependent(a_x, a_y);
-
+		//
 		if( global_option["optimize"] )
 			f.optimize(options);
-
+		//
 		// skip comparison operators
 		f.compare_change_count(0);
-
+		//
 		// calculate the Jacobian sparsity pattern for this function
-		if( global_option["boolsparsity"] )
-			calc_sparsity(bool_sparsity, f);
-		else
-			calc_sparsity(set_sparsity, f);
-
-		// structure that holds some of the work done by SparseJacobian
-		CppAD::sparse_jacobian_work work;
+		calc_sparsity(sparsity, f);
+		//
+		// structure that holds some of the work done by sparse_jac_for
+		CppAD::sparse_jac_work work;
 # if CPPAD_HAS_COLPACK
 		if( global_option["colpack"] )
 			work.color_method = "colpack";
 # endif
 		// calculate the Jacobian at this x
 		// (use forward mode because m > n ?)
-		if( global_option["boolsparsity"]) n_sweep = f.SparseJacobianForward(
-				x, bool_sparsity, row, col, jacobian, work
-		);
-		else n_sweep = f.SparseJacobianForward(
-				x, set_sparsity, row, col, jacobian, work
-		);
+		n_sweep = f.sparse_jac_for(x, sparsity, subset, work);
+		for(size_t k = 0; k < nnz; k++)
+			jacobian[k] = subset_val[k];
 	}
 	else
 	{	// choose a value for x
 		CppAD::uniform_01(n, x);
-		for(j = 0; j < n; j++)
+		for(size_t j = 0; j < n; j++)
 			a_x[j] = x[j];
-
+		//
 		// declare independent variables
 		Independent(a_x);
-
-		// AD computation of f (x)
-		CppAD::sparse_jac_fun<ADScalar>(m, n, a_x, row, col, order, a_y);
-
+		//
+		// AD computation of f(x)
+		CppAD::sparse_jac_fun<a_double>(m, n, a_x, row, col, order, a_y);
+		//
 		// create function object f : X -> Y
 		f.Dependent(a_x, a_y);
-
+		//
 		if( global_option["optimize"] )
 			f.optimize(options);
-
+		//
 		// skip comparison operators
 		f.compare_change_count(0);
-
+		//
 		// calculate the Jacobian sparsity pattern for this function
-		if( global_option["boolsparsity"] )
-			calc_sparsity(bool_sparsity, f);
-		else
-			calc_sparsity(set_sparsity, f);
-
-		// structure that holds some of the work done by SparseJacobian
-		CppAD::sparse_jacobian_work work;
+		calc_sparsity(sparsity, f);
+		//
+		// structure that holds some of the work done by sparse_jac_for
+		CppAD::sparse_jac_work work;
 # if CPPAD_HAS_COLPACK
 		if( global_option["colpack"] )
 			work.color_method = "colpack";
@@ -210,15 +202,12 @@ bool link_sparse_jacobian(
 		while(repeat--)
 		{	// choose a value for x
 			CppAD::uniform_01(n, x);
-
+			//
 			// calculate the Jacobian at this x
 			// (use forward mode because m > n ?)
-			if( global_option["boolsparsity"] ) n_sweep = f.SparseJacobianForward(
-					x, bool_sparsity, row, col, jacobian, work
-			);
-			else n_sweep = f.SparseJacobianForward(
-					x, set_sparsity, row, col, jacobian, work
-			);
+			n_sweep = f.sparse_jac_for(x, sparsity, subset, work);
+			for(size_t k = 0; k < nnz; k++)
+				jacobian[k] = subset_val[k];
 		}
 	}
 	return true;
