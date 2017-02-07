@@ -355,13 +355,13 @@ namespace {
 	using std::cout;
 	using std::endl;
 	const char* option_list[] = {
+		"atomic",
+		"boolsparsity",
+		"colpack",
+		"memory",
 		"onetape",
 		"optimize",
-		"atomic",
-		"memory",
-		"boolsparsity",
 		"revsparsity",
-		"colpack",
 	};
 	size_t num_option = sizeof(option_list) / sizeof( option_list[0] );
 	// ----------------------------------------------------------------

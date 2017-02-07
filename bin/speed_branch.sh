@@ -1,7 +1,6 @@
 #! /bin/bash -e
-# $Id$
 # -----------------------------------------------------------------------------
-# CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-15 Bradley M. Bell
+# CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-17 Bradley M. Bell
 #
 # CppAD is distributed under multiple licenses. This distribution is under
 # the terms of the
@@ -20,7 +19,7 @@ then
 cat << EOF
 usage: bin/speed_branch.sh branch_one branch_two [option_1 [option_2 ...] ]
 where the possible options are:
-	onetape, colpack, optimize, atomic, memory, boolsparsity, colpack
+	atomic, boolsparsity, colpack, memory, onetape, optimize, revsparsity
 EOF
 	exit 1
 fi
