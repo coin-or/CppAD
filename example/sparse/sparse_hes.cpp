@@ -93,7 +93,7 @@ bool sparse_hes(void)
 	// compute entire sparse Hessian (really only need lower triangle)
 	CppAD::sparse_rcv<s_vector, d_vector> subset( hes_pattern );
 	CppAD::sparse_hes_work work;
-	size_t n_sweep = f.sparse_hes(x, w, hes_pattern, subset, work);
+	size_t n_sweep = f.sparse_hes(x, w, subset, hes_pattern, work);
 	ok &= n_sweep == 2;
 	//
 	const s_vector row( subset.row() );

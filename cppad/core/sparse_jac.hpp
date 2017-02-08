@@ -32,9 +32,9 @@ $$
 $section Computing Sparse Jacobians$$
 
 $head Syntax$$
-$icode%n_sweep% = %f%.sparse_jac_for(%x%, %pattern%, %subset%, %work%)
+$icode%n_sweep% = %f%.sparse_jac_for(%x%, %subset%, %pattern%, %work%)
 %$$
-$icode%n_sweep% = %f%.sparse_jac_rev(%x%, %pattern%, %subset%, %work%)
+$icode%n_sweep% = %f%.sparse_jac_rev(%x%, %subset%, %pattern%, %work%)
 %$$
 
 
@@ -88,17 +88,6 @@ and its size is $icode n$$.
 It specifies the point at which to evaluate the Jacobian
 $latex J(x)$$.
 
-$head pattern$$
-This argument has prototype
-$codei%
-	const sparse_rc<%SizeVector%>& %pattern%
-%$$
-Its row size is $icode%pattern%.nr() == %m%$$,
-and its column size is $icode%pattern%.nc() == %n%$$.
-It is a sparsity pattern for the Jacobian $latex J(x)$$.
-This argument is not used (and need not satisfy any conditions),
-when $cref/work/sparse_jac/work/$$ is non-empty.
-
 $head subset$$
 This argument has prototype
 $codei%
@@ -111,6 +100,19 @@ The input value of its value vector
 $icode%subset%.val()%$$ does not matter.
 Upon return it contains the value of the corresponding elements
 of the Jacobian.
+All of the row, column pairs in $icode subset$$ must also appear in
+$icode pattern$$; i.e., they must be possible non-zero.
+
+$head pattern$$
+This argument has prototype
+$codei%
+	const sparse_rc<%SizeVector%>& %pattern%
+%$$
+Its row size is $icode%pattern%.nr() == %m%$$,
+and its column size is $icode%pattern%.nc() == %n%$$.
+It is a sparsity pattern for the Jacobian $latex J(x)$$.
+This argument is not used (and need not satisfy any conditions),
+when $cref/work/sparse_jac/work/$$ is non-empty.
 
 $head work$$
 This argument has prototype
@@ -240,16 +242,16 @@ a simple vector class with elements of type Base.
 a vector of length n, the number of independent variables in f
 (this ADFun object).
 
+\param subset
+specifices the subset of the sparsity pattern where the Jacobian is evaluated.
+subset.nr() == m,
+subset.nc() == n.
+
 \param pattern
 is a sparsity pattern for the Jacobian of f;
 pattern.nr() == m,
 pattern.nc() == n,
 where m is number of dependent variables in f.
-
-\param subset
-specifices the subset of the sparsity pattern where the Jacobian is evaluated.
-subset.nr() == m,
-subset.nc() == n.
 
 \param work
 this structure must be empty, or contain the information stored
@@ -265,8 +267,8 @@ template <class Base>
 template <class SizeVector, class BaseVector>
 size_t ADFun<Base>::sparse_jac_for(
 	const BaseVector&                    x       ,
-	const sparse_rc<SizeVector>&         pattern ,
 	sparse_rcv<SizeVector, BaseVector>&  subset  ,
+	const sparse_rc<SizeVector>&         pattern ,
 	sparse_jac_work&                     work    )
 {	size_t m = Range();
 	size_t n = Domain();
@@ -407,16 +409,16 @@ a simple vector class with elements of type Base.
 a vector of length n, the number of independent variables in f
 (this ADFun object).
 
+\param subset
+specifices the subset of the sparsity pattern where the Jacobian is evaluated.
+subset.nr() == m,
+subset.nc() == n.
+
 \param pattern
 is a sparsity pattern for the Jacobian of f;
 pattern.nr() == m,
 pattern.nc() == n,
 where m is number of dependent variables in f.
-
-\param subset
-specifices the subset of the sparsity pattern where the Jacobian is evaluated.
-subset.nr() == m,
-subset.nc() == n.
 
 \param work
 this structure must be empty, or contain the information stored
@@ -432,8 +434,8 @@ template <class Base>
 template <class SizeVector, class BaseVector>
 size_t ADFun<Base>::sparse_jac_rev(
 	const BaseVector&                    x       ,
-	const sparse_rc<SizeVector>&         pattern ,
 	sparse_rcv<SizeVector, BaseVector>&  subset  ,
+	const sparse_rc<SizeVector>&         pattern ,
 	sparse_jac_work&                     work    )
 {	size_t m = Range();
 	size_t n = Domain();

@@ -337,23 +337,23 @@ public:
 	template <typename SizeVector, typename BaseVector>
 	size_t sparse_jac_for(
 		const BaseVector&                    x       ,
-		const sparse_rc<SizeVector>&         pattern ,
 		sparse_rcv<SizeVector, BaseVector>&  subset  ,
+		const sparse_rc<SizeVector>&         pattern ,
 		sparse_jac_work&                     work
 	);
 	template <typename SizeVector, typename BaseVector>
 	size_t sparse_jac_rev(
 		const BaseVector&                    x       ,
-		const sparse_rc<SizeVector>&         pattern ,
 		sparse_rcv<SizeVector, BaseVector>&  subset  ,
+		const sparse_rc<SizeVector>&         pattern ,
 		sparse_jac_work&                     work
 	);
 	template <typename SizeVector, typename BaseVector>
 	size_t sparse_hes(
 		const BaseVector&                    x       ,
 		const BaseVector&                    w       ,
-		const sparse_rc<SizeVector>&         pattern ,
 		sparse_rcv<SizeVector, BaseVector>&  subset  ,
+		const sparse_rc<SizeVector>&         pattern ,
 		sparse_hes_work&                     work
 	);
 	// ---------------------------------------------------------------------

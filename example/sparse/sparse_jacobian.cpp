@@ -33,7 +33,7 @@ bool reverse()
 {	bool ok = true;
 	using CppAD::AD;
 	using CppAD::NearEqual;
-	typedef CPPAD_TESTVECTOR(AD<double>) a_vector;
+	typedef CPPAD_TESTVECTOR(AD<double>)   a_vector;
 	typedef CPPAD_TESTVECTOR(double)       d_vector;
 	typedef CPPAD_TESTVECTOR(size_t)       i_vector;
 	size_t i, j, k, ell;

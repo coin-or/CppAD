@@ -30,7 +30,7 @@ $$
 $section Computing Sparse Hessians$$
 
 $head Syntax$$
-$icode%n_sweep% = %f%.sparse_hes(%x%, %w%, %pattern%, %subset%, %work%)
+$icode%n_sweep% = %f%.sparse_hes(%x%, %w%, %subset% %pattern%, %work%)
 %$$
 
 $head Purpose$$
@@ -84,17 +84,6 @@ and its size is $icode m$$.
 It specifies the weight for each of the components of $latex F(x)$$;
 i.e. $latex w_i$$ is the weight for $latex F_i (x)$$.
 
-$head pattern$$
-This argument has prototype
-$codei%
-	const sparse_rc<%SizeVector%>& %pattern%
-%$$
-Its row size and column size is $icode n$$; i.e.,
-$icode%pattern%.nr() == %n%$$ and $icode%pattern%.nc() == %n%$$.
-It is a sparsity pattern for the Hessian $latex H(x)$$.
-This argument is not used (and need not satisfy any conditions),
-when $cref/work/sparse_hes/work/$$ is non-empty.
-
 $head subset$$
 This argument has prototype
 $codei%
@@ -107,6 +96,19 @@ The input value of its value vector
 $icode%subset%.val()%$$ does not matter.
 Upon return it contains the value of the corresponding elements
 of the Hessian.
+All of the row, column pairs in $icode subset$$ must also appear in
+$icode pattern$$; i.e., they must be possible non-zero.
+
+$head pattern$$
+This argument has prototype
+$codei%
+	const sparse_rc<%SizeVector%>& %pattern%
+%$$
+Its row size and column size is $icode n$$; i.e.,
+$icode%pattern%.nr() == %n%$$ and $icode%pattern%.nc() == %n%$$.
+It is a sparsity pattern for the Hessian $latex H(x)$$.
+This argument is not used (and need not satisfy any conditions),
+when $cref/work/sparse_hes/work/$$ is non-empty.
 
 $head work$$
 This argument has prototype
@@ -252,16 +254,16 @@ a vector of length n, the number of independent variables in f
 a vector of length m, the number of dependent variables in f
 (this ADFun object).
 
+\param subset
+specifices the subset of the sparsity pattern where the Hessian is evaluated.
+subset.nr() == n,
+subset.nc() == n.
+
 \param pattern
 is a sparsity pattern for the Hessian of w^T * f;
 pattern.nr() == n,
 pattern.nc() == n,
 where m is number of dependent variables in f.
-
-\param subset
-specifices the subset of the sparsity pattern where the Hessian is evaluated.
-subset.nr() == n,
-subset.nc() == n.
 
 \param work
 this structure must be empty, or contain the information stored
@@ -278,8 +280,8 @@ template <class SizeVector, class BaseVector>
 size_t ADFun<Base>::sparse_hes(
 	const BaseVector&                    x       ,
 	const BaseVector&                    w       ,
-	const sparse_rc<SizeVector>&         pattern ,
 	sparse_rcv<SizeVector, BaseVector>&  subset  ,
+	const sparse_rc<SizeVector>&         pattern ,
 	sparse_hes_work&                     work    )
 {	size_t n = Domain();
 	//
