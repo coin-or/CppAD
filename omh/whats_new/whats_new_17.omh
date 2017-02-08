@@ -19,9 +19,21 @@ $spell
 	bool
 	Jacobian
 	jac
+	hes
 $$
 
 $section Changes and Additions to CppAD During 2017$$
+
+$head 02-08$$
+$list number$$
+Make coloring a separate argument to
+$cref/sparse_jac/sparse_jac/coloring/$$ and
+$cref/sparse_hes/sparse_hes/coloring/$$.
+$lnext
+Add the
+$cref/group_max/sparse_jac/group_max/$$
+argument to the $code sparse_jac_for$$ function.
+$lend
 
 $head 02-05$$
 $list number$$

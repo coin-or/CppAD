@@ -111,7 +111,10 @@ bool sparse_jac_for(void)
 	sparse_rcv<s_vector, d_vector> subset( pattern_jac );
 	CppAD::sparse_jac_work work;
 	std::string coloring = "cppad";
-	size_t n_sweep = f.sparse_jac_for(x, subset, pattern_jac, coloring, work);
+	size_t group_max = 10;
+	size_t n_sweep = f.sparse_jac_for(
+		group_max, x, subset, pattern_jac, coloring, work
+	);
 	ok &= n_sweep == 2;
 	//
 	const s_vector row( subset.row() );
@@ -131,7 +134,9 @@ bool sparse_jac_for(void)
 	pattern_row3.set(1, 3, 2);    // row[1] = 3, col[1] = 2
 	sparse_rcv<s_vector, d_vector> subset_row3( pattern_row3 );
 	work.clear();
-	n_sweep = f.sparse_jac_for(x, subset_row3, pattern_jac, coloring, work);
+	n_sweep = f.sparse_jac_for(
+		group_max, x, subset_row3, pattern_jac, coloring, work
+	);
 	ok &= n_sweep == 2;
 	//
 	const s_vector row_row3( subset_row3.row() );

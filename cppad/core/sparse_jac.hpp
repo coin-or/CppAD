@@ -33,7 +33,7 @@ $section Computing Sparse Jacobians$$
 
 $head Syntax$$
 $icode%n_sweep% = %f%.sparse_jac_for(
-	%x%, %subset%, %pattern%, %coloring%, %work%
+	%group_max%, %x%, %subset%, %pattern%, %coloring%, %work%
 )%$$
 $icode%n_sweep% = %f%.sparse_jac_rev(
 	%x%, %subset%, %pattern%, %coloring%, %work%
@@ -80,6 +80,23 @@ $codei%
 Note that the Taylor coefficients stored in $icode f$$ are affected
 by this operation; see
 $cref/uses forward/sparse_jac/Uses Forward/$$ below.
+
+$head group_max$$
+This argument has prototype
+$codei%
+	size_t %group_max%
+%$$
+and must be greater than zero.
+It specifies the maximum number of colors to group during
+a single forward sweep.
+If a single color is in a group,
+the single direction for of first order forward mode
+$cref forward_one$$ is used.
+If multiple colors are in a group,
+the multiple direction for of first order forward mode
+$cref forward_dir$$ is used.
+This uses separate memory for each direction (more memory),
+but my be significantly faster.
 
 $head x$$
 This argument has prototype
@@ -230,6 +247,10 @@ a simple vector class with elements of type size_t.
 \tparam BaseVector
 a simple vector class with elements of type Base.
 
+\param group_max
+specifies the maximum number of colors to group during a single forward sweep.
+This must be greater than zero and group_max = 1 minimizes memory usage.
+
 \param x
 a vector of length n, the number of independent variables in f
 (this ADFun object).
@@ -262,11 +283,12 @@ the Jacobian.
 template <class Base>
 template <class SizeVector, class BaseVector>
 size_t ADFun<Base>::sparse_jac_for(
-	const BaseVector&                    x        ,
-	sparse_rcv<SizeVector, BaseVector>&  subset   ,
-	const sparse_rc<SizeVector>&         pattern  ,
-	const std::string&                   coloring ,
-	sparse_jac_work&                     work     )
+	size_t                               group_max  ,
+	const BaseVector&                    x          ,
+	sparse_rcv<SizeVector, BaseVector>&  subset     ,
+	const sparse_rc<SizeVector>&         pattern    ,
+	const std::string&                   coloring   ,
+	sparse_jac_work&                     work       )
 {	size_t m = Range();
 	size_t n = Domain();
 	//
@@ -364,29 +386,47 @@ size_t ADFun<Base>::sparse_jac_for(
 	for(size_t k = 0; k < K; k++)
 		subset.set(k, zero);
 	//
-	// direction vector and return values for calls to Forward
-	BaseVector dx(n), dy(m);
-	//
-	// loop over colors
+	// index in subset
 	size_t k = 0;
-	for(size_t ell = 0; ell < n_color; ell++)
-	{	CPPAD_ASSERT_UNKNOWN( color[ col[ order[k] ] ] == ell );
+	// number of colors computed so far
+	size_t color_count = 0;
+	//
+	while( color_count < n_color )
+	{	// number of colors that will be in this group
+		size_t group_size = std::min(group_max, n_color - color_count);
 		//
-		// combine all columns with this color
-		for(size_t j = 0; j < n; j++)
-		{	dx[j] = zero;
-			if( color[j] == ell )
-				dx[j] = one;
-		}
-		// call forward mode for all these columns at once
-		dy = Forward(1, dx);
+		// forward mode values for independent and dependent variables
+		BaseVector dx(n * group_size), dy(m * group_size);
 		//
-		// set the corresponding components of the result
-		while( k < K && color[ col[order[k]] ] == ell )
-		{	subset.set(order[k], dy[row[order[k]]] );
-			k++;
+		// set dx
+		for(size_t ell = 0; ell < group_size; ell++)
+		{	// combine all columns with this color
+			for(size_t j = 0; j < n; j++)
+			{	dx[j * group_size + ell] = zero;
+				if( color[j] == ell + color_count )
+					dx[j * group_size + ell] = one;
+			}
 		}
+		if( group_size == 1 )
+			dy = Forward(1, dx);
+		else
+			dy = Forward(1, group_size, dx);
+		//
+		// store results in subset
+		for(size_t ell = 0; ell < group_size; ell++)
+		{	// color with index ell + color_count is in this group
+			while(k < K && color[ col[ order[k] ] ] == ell + color_count )
+			{	// subset element with index order[k] is included in this color
+				size_t r = row[ order[k] ];
+				subset.set( order[k], dy[ r * group_size + ell ] );
+				++k;
+			}
+		}
+		// advance color count
+		color_count += group_size;
 	}
+	CPPAD_ASSERT_UNKNOWN( color_count == n_color );
+	//
 	return n_color;
 }
 // ----------------------------------------------------------------------------

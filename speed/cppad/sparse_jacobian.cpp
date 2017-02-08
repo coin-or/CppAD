@@ -139,6 +139,9 @@ bool link_sparse_jacobian(
 	if( global_option["colpack"] )
 		coloring = "colpack";
 # endif
+	//
+	// maximum number of colors at once
+	size_t group_max = 25;
 	// ------------------------------------------------------
 	if( ! global_option["onetape"] ) while(repeat--)
 	{	// choose a value for x
@@ -169,7 +172,9 @@ bool link_sparse_jacobian(
 		//
 		// calculate the Jacobian at this x
 		// (use forward mode because m > n ?)
-		n_sweep = f.sparse_jac_for(x, subset, sparsity, coloring, work);
+		n_sweep = f.sparse_jac_for(
+			group_max, x, subset, sparsity, coloring, work
+		);
 		for(size_t k = 0; k < nnz; k++)
 			jacobian[k] = subset_val[k];
 	}
@@ -206,7 +211,9 @@ bool link_sparse_jacobian(
 			//
 			// calculate the Jacobian at this x
 			// (use forward mode because m > n ?)
-			n_sweep = f.sparse_jac_for(x, subset, sparsity, coloring, work);
+			n_sweep = f.sparse_jac_for(
+				group_max, x, subset, sparsity, coloring, work
+			);
 			for(size_t k = 0; k < nnz; k++)
 				jacobian[k] = subset_val[k];
 		}
