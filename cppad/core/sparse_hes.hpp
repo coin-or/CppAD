@@ -25,13 +25,15 @@ $spell
 	cppad
 	colpack
 	cmake
+	Jacobian
 $$
 
 $section Computing Sparse Hessians$$
 
 $head Syntax$$
-$icode%n_sweep% = %f%.sparse_hes(%x%, %w%, %subset% %pattern%, %work%)
-%$$
+$icode%n_sweep% = %f%.sparse_hes(
+	%x%, %w%, %subset% %pattern%, %coloring%, %work%
+)%$$
 
 $head Purpose$$
 We use $latex F : \B{R}^n \rightarrow \B{R}^m$$ to denote the
@@ -110,6 +112,32 @@ It is a sparsity pattern for the Hessian $latex H(x)$$.
 This argument is not used (and need not satisfy any conditions),
 when $cref/work/sparse_hes/work/$$ is non-empty.
 
+$head coloring$$
+The coloring algorithm determines which rows and columns
+can be computed during the same sweep.
+This field has prototype
+$codei%
+	const std::string& %coloring%
+%$$
+This value only matters when work is empty; i.e.,
+after the $icode work$$ constructor or $icode%work%.clear()%$$.
+
+$subhead cppad.symmetric$$
+This coloring takes advantage of the fact that the Hessian matrix
+is symmetric when find a coloring that requires fewer
+$cref/sweeps/sparse_hes/n_sweep/$$.
+
+$subhead cppad.general$$
+This is the same as the sparse Jacobian
+$cref/cppad/sparse_jac/coloring/cppad/$$ method
+which does not take advantage of symmetry.
+
+$subhead colpack.star$$
+If $cref colpack_prefix$$ was specified on the
+$cref/cmake command/cmake/CMake Command/$$ line,
+you can set $icode coloring$$ to $code colpack.star$$.
+This also takes advantage of the fact that the Hessian matrix is symmetric.
+
 $head work$$
 This argument has prototype
 $codei%
@@ -123,38 +151,6 @@ a future call is for the same object $icode f$$,
 and the same subset of the Hessian.
 If either of these values change, use $icode%work%.clear()%$$ to
 empty this structure.
-
-$subhead color_method$$
-The coloring algorithm determines which rows and columns
-can be computed during the same sweep.
-This field has prototype
-$codei%
-	std::string %work%.color_method
-%$$
-This value only matters when work is empty; i.e.,
-after the $icode work$$ constructor or $icode%work%.clear()%$$.
-$codei%
-
-"cppad.symmetric"
-%$$
-This is the default coloring method (after a constructor or $code clear()$$).
-It takes advantage of the fact that the Hessian matrix
-is symmetric when find a coloring that requires fewer
-$cref/sweeps/sparse_hes/n_sweep/$$.
-$codei%
-
-"cppad.general"
-%$$
-This is the same as the $code "cppad"$$ method for the
-$cref/sparse_hes/sparse_hes/work/color_method/$$ calculation.
-$codei%
-
-"colpack.star"
-%$$
-If $cref colpack_prefix$$ was specified on the
-$cref/cmake command/cmake/CMake Command/$$ line,
-you can set $icode%work%.method%$$ to $code "colpack.star"$$.
-This also takes advantage of the fact that the Hessian matrix is symmetric.
 
 $head n_sweep$$
 The return value $icode n_sweep$$ has prototype
@@ -209,9 +205,6 @@ so it does not need to be recomputed every time.
 */
 class sparse_hes_work {
 	public:
-		/// Coloring method: cppad.symmertic, cppad.general, or colpack.start
-		/// (this field is set by user)
-		std::string color_method;
 		/// row and column indicies for return values
 		/// (some may be reflected by symmetric coloring algorithms)
 		CppAD::vector<size_t> row;
@@ -222,11 +215,11 @@ class sparse_hes_work {
 		CppAD::vector<size_t> color;
 
 		/// constructor
-		sparse_hes_work(void) : color_method("cppad.symmetric")
+		sparse_hes_work(void)
 		{ }
 		/// inform CppAD that this information needs to be recomputed
 		void clear(void)
-		{	color_method = "cppad.symmetric";
+		{
 			row.clear();
 			col.clear();
 			order.clear();
@@ -265,6 +258,10 @@ pattern.nr() == n,
 pattern.nc() == n,
 where m is number of dependent variables in f.
 
+\param coloring
+determines which coloring algorithm is used.
+This must be cppad.symmetric, cppad.general, or colpack.star.
+
 \param work
 this structure must be empty, or contain the information stored
 by a previous call to sparse_hes.
@@ -278,11 +275,12 @@ This is the number of first order forward
 template <class Base>
 template <class SizeVector, class BaseVector>
 size_t ADFun<Base>::sparse_hes(
-	const BaseVector&                    x       ,
-	const BaseVector&                    w       ,
-	sparse_rcv<SizeVector, BaseVector>&  subset  ,
-	const sparse_rc<SizeVector>&         pattern ,
-	sparse_hes_work&                     work    )
+	const BaseVector&                    x        ,
+	const BaseVector&                    w        ,
+	sparse_rcv<SizeVector , BaseVector>& subset   ,
+	const sparse_rc<SizeVector>&         pattern  ,
+	const std::string&                   coloring ,
+	sparse_hes_work&                     work     )
 {	size_t n = Domain();
 	//
 	CPPAD_ASSERT_KNOWN(
@@ -384,25 +382,25 @@ size_t ADFun<Base>::sparse_hes(
 		//
 		// execute coloring algorithm
 		color.resize(n);
-		if( work.color_method == "cppad.general" )
+		if( coloring == "cppad.general" )
 			local::color_general_cppad(internal_pattern, row, col, color);
-		else if( work.color_method == "cppad.symmetric" )
+		else if( coloring == "cppad.symmetric" )
 			local::color_general_cppad(internal_pattern, row, col, color);
-		else if( work.color_method == "colpack.star" )
+		else if( coloring == "colpack.star" )
 		{
 # if CPPAD_HAS_COLPACK
 			local::color_general_colpack(internal_pattern, row, col, color);
 # else
 			CPPAD_ASSERT_KNOWN(
 				false,
-				"sparse_hes: work.color_method = colpack.star "
+				"sparse_hes: coloring = colpack.star "
 				"and colpack_prefix not in cmake command line."
 			);
 # endif
 		}
 		else CPPAD_ASSERT_KNOWN(
 			false,
-			"sparse_hes: work.color_method is not valid."
+			"sparse_hes: coloring is not valid."
 		);
 		//
 		// put sorting indices in color order

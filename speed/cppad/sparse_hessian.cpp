@@ -141,6 +141,13 @@ bool link_sparse_hessian(
 		subset_pattern.set(k, row[k], col[k]);
 	CppAD::sparse_rcv<s_vector, d_vector> subset( subset_pattern );
 	const d_vector& subset_val( subset.val() );
+	//
+	// coloring method
+	std::string coloring = "cppad.symmetric";
+# if CPPAD_HAS_COLPACK
+	if( global_option["colpack"] )
+		coloring = "colpack.star";
+# endif
 	// -----------------------------------------------------------------------
 	if( ! global_option["onetape"] ) while(repeat--)
 	{	// choose a value for x
@@ -168,12 +175,9 @@ bool link_sparse_hessian(
 		//
 		// structure that holds some of work done by sparse_hes
 		CppAD::sparse_hes_work work;
-# if CPPAD_HAS_COLPACK
-		if( global_option["colpack"] )
-			work.color_method = "colpack.star";
-# endif
+		//
 		// calculate this Hessian at this x
-		n_sweep = f.sparse_hes(x, w, sparsity, subset, work);
+		n_sweep = f.sparse_hes(x, w, subset, sparsity, coloring, work);
 		for(size_t k = 0; k < nnz; k++)
 			hessian[k] = subset_val[k];
 	}
@@ -203,16 +207,12 @@ bool link_sparse_hessian(
 		//
 		// declare structure that holds some of work done by sparse_hes
 		CppAD::sparse_hes_work work;
-# if CPPAD_HAS_COLPACK
-		if( global_option["colpack"] )
-			work.color_method = "colpack.star";
-# endif
 		while(repeat--)
 		{	// choose a value for x
 			CppAD::uniform_01(n, x);
 			//
 			// calculate this Hessian at this x
-			n_sweep = f.sparse_hes(x, w, sparsity, subset, work);
+			n_sweep = f.sparse_hes(x, w, subset, sparsity, coloring, work);
 			for(size_t k = 0; k < nnz; k++)
 				hessian[k] = subset_val[k];
 		}

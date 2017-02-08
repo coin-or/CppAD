@@ -133,6 +133,12 @@ bool link_sparse_jacobian(
 	CppAD::sparse_rcv<s_vector, d_vector> subset( subset_pattern );
 	const d_vector& subset_val( subset.val() );
 	//
+	// coloring method
+	std::string coloring = "cppad";
+# if CPPAD_HAS_COLPACK
+	if( global_option["colpack"] )
+		coloring = "colpack";
+# endif
 	// ------------------------------------------------------
 	if( ! global_option["onetape"] ) while(repeat--)
 	{	// choose a value for x
@@ -160,13 +166,10 @@ bool link_sparse_jacobian(
 		//
 		// structure that holds some of the work done by sparse_jac_for
 		CppAD::sparse_jac_work work;
-# if CPPAD_HAS_COLPACK
-		if( global_option["colpack"] )
-			work.color_method = "colpack";
-# endif
+		//
 		// calculate the Jacobian at this x
 		// (use forward mode because m > n ?)
-		n_sweep = f.sparse_jac_for(x, sparsity, subset, work);
+		n_sweep = f.sparse_jac_for(x, subset, sparsity, coloring, work);
 		for(size_t k = 0; k < nnz; k++)
 			jacobian[k] = subset_val[k];
 	}
@@ -196,17 +199,14 @@ bool link_sparse_jacobian(
 		//
 		// structure that holds some of the work done by sparse_jac_for
 		CppAD::sparse_jac_work work;
-# if CPPAD_HAS_COLPACK
-		if( global_option["colpack"] )
-			work.color_method = "colpack";
-# endif
+		//
 		while(repeat--)
 		{	// choose a value for x
 			CppAD::uniform_01(n, x);
 			//
 			// calculate the Jacobian at this x
 			// (use forward mode because m > n ?)
-			n_sweep = f.sparse_jac_for(x, sparsity, subset, work);
+			n_sweep = f.sparse_jac_for(x, subset, sparsity, coloring, work);
 			for(size_t k = 0; k < nnz; k++)
 				jacobian[k] = subset_val[k];
 		}

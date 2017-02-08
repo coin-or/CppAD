@@ -107,7 +107,8 @@ bool sparse_jac_rev(void)
 	// compute entire forward mode Jacobian
 	sparse_rcv<s_vector, d_vector> subset( pattern_jac );
 	CppAD::sparse_jac_work work;
-	size_t n_sweep = f.sparse_jac_rev(x, subset, pattern_jac, work);
+	std::string coloring = "cppad";
+	size_t n_sweep = f.sparse_jac_rev(x, subset, pattern_jac, coloring, work);
 	ok &= n_sweep == 2;
 	//
 	const s_vector row( subset.row() );
@@ -127,7 +128,7 @@ bool sparse_jac_rev(void)
 	pattern_col3.set(1, 2, 3);    // row[1] = 2, col[1] = 3
 	sparse_rcv<s_vector, d_vector> subset_col3( pattern_col3 );
 	work.clear();
-	n_sweep = f.sparse_jac_rev(x, subset_col3, pattern_jac, work);
+	n_sweep = f.sparse_jac_rev(x, subset_col3, pattern_jac, coloring, work);
 	ok &= n_sweep == 2;
 	//
 	const s_vector row_col3( subset_col3.row() );

@@ -32,10 +32,12 @@ $$
 $section Computing Sparse Jacobians$$
 
 $head Syntax$$
-$icode%n_sweep% = %f%.sparse_jac_for(%x%, %subset%, %pattern%, %work%)
-%$$
-$icode%n_sweep% = %f%.sparse_jac_rev(%x%, %subset%, %pattern%, %work%)
-%$$
+$icode%n_sweep% = %f%.sparse_jac_for(
+	%x%, %subset%, %pattern%, %coloring%, %work%
+)%$$
+$icode%n_sweep% = %f%.sparse_jac_rev(
+	%x%, %subset%, %pattern%, %coloring%, %work%
+)%$$
 
 
 $head Purpose$$
@@ -114,6 +116,25 @@ It is a sparsity pattern for the Jacobian $latex J(x)$$.
 This argument is not used (and need not satisfy any conditions),
 when $cref/work/sparse_jac/work/$$ is non-empty.
 
+$head coloring$$
+The coloring algorithm determines which rows (reverse) or columns (forward)
+can be computed during the same sweep.
+This field has prototype
+$codei%
+	const std::string& %coloring%
+%$$
+This value only matters when work is empty; i.e.,
+after the $icode work$$ constructor or $icode%work%.clear()%$$.
+
+$subhead cppad$$
+This uses a general purpose coloring algorithm written for Cppad.
+
+$subhead colpack$$
+If $cref colpack_prefix$$ is specified on the
+$cref/cmake command/cmake/CMake Command/$$ line,
+you can set $icode coloring$$ to $code colpack$$.
+This uses a general purpose coloring algorithm that is part of Colpack.
+
 $head work$$
 This argument has prototype
 $codei%
@@ -128,31 +149,6 @@ the same member function $code sparse_jac_for$$ or $code sparse_jac_rev$$,
 and the same subset of the Jacobian.
 If any of these values change, use $icode%work%.clear()%$$ to
 empty this structure.
-
-$subhead color_method$$
-The coloring algorithm determines which rows (reverse) or columns (forward)
-can be computed during the same sweep.
-This field has prototype
-$codei%
-	std::string %work%.color_method
-%$$
-This value only matters when work is empty; i.e.,
-after the $icode work$$ constructor or $icode%work%.clear()%$$.
-$codei%
-
-"cppad"
-%$$
-This is the default value for $icode%work%.color_method%$$; i.e.,
-its value after the constructor or $icode%work%.clear()%$$.
-This uses a general purpose coloring algorithm written for Cppad.
-$codei%
-
-"colpack"
-%$$
-If $cref colpack_prefix$$ is specified on the
-$cref/cmake command/cmake/CMake Command/$$ line,
-you can set $icode%work%.method%$$ to $code "colpack"$$.
-This uses a general purpose coloring algorithm that is part of Colpack.
 
 $head n_sweep$$
 The return value $icode n_sweep$$ has prototype
@@ -206,22 +202,18 @@ so they do not need to be recomputed every time.
 */
 class sparse_jac_work {
 	public:
-		/// Coloring method: "cppad", or "colpack"
-		/// (this field is set by user)
-		std::string color_method;
 		/// indices that sort the user row and col arrays by color
 		CppAD::vector<size_t> order;
 		/// results of the coloring algorithm
 		CppAD::vector<size_t> color;
 		//
 		/// constructor
-		sparse_jac_work(void) : color_method("cppad")
+		sparse_jac_work(void)
 		{ }
 		/// reset work to empty.
 		/// This informs CppAD that color and order need to be recomputed
 		void clear(void)
-		{	color_method = "cppad";
-			order.clear();
+		{	order.clear();
 			color.clear();
 		}
 };
@@ -253,6 +245,10 @@ pattern.nr() == m,
 pattern.nc() == n,
 where m is number of dependent variables in f.
 
+\param coloring
+determines which coloring algorithm is used.
+This must be cppad or colpack.
+
 \param work
 this structure must be empty, or contain the information stored
 by a previous call to sparse_jac_for.
@@ -266,10 +262,11 @@ the Jacobian.
 template <class Base>
 template <class SizeVector, class BaseVector>
 size_t ADFun<Base>::sparse_jac_for(
-	const BaseVector&                    x       ,
-	sparse_rcv<SizeVector, BaseVector>&  subset  ,
-	const sparse_rc<SizeVector>&         pattern ,
-	sparse_jac_work&                     work    )
+	const BaseVector&                    x        ,
+	sparse_rcv<SizeVector, BaseVector>&  subset   ,
+	const sparse_rc<SizeVector>&         pattern  ,
+	const std::string&                   coloring ,
+	sparse_jac_work&                     work     )
 {	size_t m = Range();
 	size_t n = Domain();
 	//
@@ -329,23 +326,23 @@ size_t ADFun<Base>::sparse_jac_for(
 		//
 		// execute coloring algorithm
 		color.resize(n);
-		if(	work.color_method == "cppad" )
+		if(	coloring == "cppad" )
 			local::color_general_cppad(pattern_transpose, col, row, color);
-		else if( work.color_method == "colpack" )
+		else if( coloring == "colpack" )
 		{
 # if CPPAD_HAS_COLPACK
 			local::color_general_colpack(pattern_transpose, col, row, color);
 # else
 			CPPAD_ASSERT_KNOWN(
 				false,
-				"sparse_jac_for: work.color_method = colpack "
+				"sparse_jac_for: coloring = colpack "
 				"and colpack_prefix missing from cmake command line."
 			);
 # endif
 		}
 		else CPPAD_ASSERT_KNOWN(
 			false,
-			"sparse_jac_for: work.color_method is not valid."
+			"sparse_jac_for: coloring is not valid."
 		);
 		//
 		// put sorting indices in color order
@@ -420,6 +417,10 @@ pattern.nr() == m,
 pattern.nc() == n,
 where m is number of dependent variables in f.
 
+\param coloring
+determines which coloring algorithm is used.
+This must be cppad or colpack.
+
 \param work
 this structure must be empty, or contain the information stored
 by a previous call to sparse_jac_rev.
@@ -433,10 +434,11 @@ the Jacobian.
 template <class Base>
 template <class SizeVector, class BaseVector>
 size_t ADFun<Base>::sparse_jac_rev(
-	const BaseVector&                    x       ,
-	sparse_rcv<SizeVector, BaseVector>&  subset  ,
-	const sparse_rc<SizeVector>&         pattern ,
-	sparse_jac_work&                     work    )
+	const BaseVector&                    x        ,
+	sparse_rcv<SizeVector, BaseVector>&  subset   ,
+	const sparse_rc<SizeVector>&         pattern  ,
+	const std::string&                   coloring ,
+	sparse_jac_work&                     work     )
 {	size_t m = Range();
 	size_t n = Domain();
 	//
@@ -496,23 +498,23 @@ size_t ADFun<Base>::sparse_jac_rev(
 		//
 		// execute coloring algorithm
 		color.resize(m);
-		if(	work.color_method == "cppad" )
+		if(	coloring == "cppad" )
 			local::color_general_cppad(internal_pattern, row, col, color);
-		else if( work.color_method == "colpack" )
+		else if( coloring == "colpack" )
 		{
 # if CPPAD_HAS_COLPACK
 			local::color_general_colpack(internal_pattern, row, col, color);
 # else
 			CPPAD_ASSERT_KNOWN(
 				false,
-				"sparse_jac_rev: work.color_method = colpack "
+				"sparse_jac_rev: coloring = colpack "
 				"and colpack_prefix missing from cmake command line."
 			);
 # endif
 		}
 		else CPPAD_ASSERT_KNOWN(
 			false,
-			"sparse_jac_rev: work.color_method is not valid."
+			"sparse_jac_rev: coloring is not valid."
 		);
 		//
 		// put sorting indices in color order
