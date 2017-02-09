@@ -30,6 +30,16 @@ $$
 
 $section The CppAD Wish List$$
 
+$head Deprecated$$
+Move files that only implement deprecated features into the
+$code cppad/deprecated$$ directory.
+Move all of the examples for $cref deprecated$$ features to
+$code example/deprecated$$.
+
+$head Example$$
+Split the $cref/example list/ListAllExamples/$$
+into separate groups by the corresponding example subdirectory.
+
 $comment ----------------------------------------------------------------- $$
 $head Optimization$$
 
