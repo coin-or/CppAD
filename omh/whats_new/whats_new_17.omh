@@ -24,6 +24,15 @@ $$
 
 $section Changes and Additions to CppAD During 2017$$
 
+$head 02-09$$
+Remove the sparsity pattern wish list item.
+For sparsity patterns, this was completed by
+$cref sparse_rc$$ and the sparsity pattern routines that used it;
+e.g., $cref for_jac_sparsity$$.
+For sparse matrices, it was completed by
+$cref sparse_rcv$$ and the sparse matrix routines that use it; e.g.,
+$cref sparse_jac$$.
+
 $head 02-08$$
 $list number$$
 Make coloring a separate argument to

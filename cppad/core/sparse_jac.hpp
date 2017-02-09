@@ -90,11 +90,11 @@ and must be greater than zero.
 It specifies the maximum number of colors to group during
 a single forward sweep.
 If a single color is in a group,
-the single direction for of first order forward mode
-$cref forward_one$$ is used.
+a single direction for of first order forward mode
+$cref forward_one$$ is used for each color.
 If multiple colors are in a group,
 the multiple direction for of first order forward mode
-$cref forward_dir$$ is used.
+$cref forward_dir$$ is used with one direction for each color.
 This uses separate memory for each direction (more memory),
 but my be significantly faster.
 
