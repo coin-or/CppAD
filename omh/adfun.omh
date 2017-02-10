@@ -24,6 +24,25 @@ $childtable%
 
 $end
 -------------------------------------------------------------------------------
+$begin drivers$$
+$spell
+$$
+
+
+$section First and Second Order Derivatives: Easy Drivers$$
+
+
+$childtable%
+	cppad/core/jacobian.hpp%
+	cppad/core/hessian.hpp%
+	cppad/core/for_one.hpp%
+	cppad/core/rev_one.hpp%
+	cppad/core/for_two.hpp%
+	cppad/core/rev_two.hpp
+%$$
+
+$end
+-------------------------------------------------------------------------------
 $begin Forward$$
 
 $section Forward Mode$$

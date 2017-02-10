@@ -40,9 +40,8 @@ derivative values, and other values related to the corresponding function.
 
 $childtable%
 	omh/adfun.omh%
-	cppad/core/drivers.hpp%
-	cppad/core/fun_check.hpp%
 	cppad/core/optimize.hpp%
+	cppad/core/fun_check.hpp%
 	cppad/core/check_for_nan.hpp
 %$$
 

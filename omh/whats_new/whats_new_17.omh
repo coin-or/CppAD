@@ -25,8 +25,12 @@ $$
 $section Changes and Additions to CppAD During 2017$$
 
 $head 02-10$$
+$list number$$
 Fix problems with $cref auto_tools$$ build
 (started near 02-01 while working on sparsity branch).
+$lnext
+Reorder (better organize) the $cref ADFun$$ documentation section.
+$lend
 
 $head 02-09$$
 $list number$$
