@@ -849,7 +849,8 @@ $pre
 
 $$
 Group the documentation for the $cref ADFun$$ member functions that
-$cref/evaluate functions and derivative values/FunEval/$$.
+evaluate functions and derivative values.
+This organization has since been changed.
 $pre
 
 $$

@@ -1,0 +1,67 @@
+-------------------------------------------------------------------------------
+  CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-17 Bradley M. Bell
+
+  CppAD is distributed under multiple licenses. This distribution is under
+  the terms of the
+                      Eclipse Public License Version 1.0.
+
+  A copy of this license is included in the COPYING file of this distribution.
+  Please visit http://www.coin-or.org/CppAD/ for information on other licenses.
+-------------------------------------------------------------------------------
+$begin adfun_create$$
+$spell
+$$
+
+$section Creating an ADFun Object (Recording an Operation Sequence)$$
+
+$childtable%
+	cppad/core/independent.hpp%
+	cppad/core/fun_construct.hpp%
+	cppad/core/dependent.hpp%
+	cppad/core/abort_recording.hpp%
+	omh/seq_property.omh
+%$$
+
+$end
+-------------------------------------------------------------------------------
+$begin Forward$$
+
+$section Forward Mode$$
+
+$childtable%
+	omh/forward/forward_zero.omh%
+	omh/forward/forward_one.omh%
+	omh/forward/forward_two.omh%
+	omh/forward/forward_order.omh%
+	omh/forward/forward_dir.omh%
+	omh/forward/size_order.omh%
+	omh/forward/compare_change.omh%
+	cppad/core/capacity_order.hpp%
+	cppad/core/num_skip.hpp
+%$$
+
+$end
+-------------------------------------------------------------------------------
+$begin Reverse$$
+$spell
+	xq
+$$
+
+$section Reverse Mode$$
+
+$head Multiple Directions$$
+Reverse mode after $cref/Forward(q, r, xq)/forward_dir/$$
+with number of directions $icode%r% != 1%$$ is not yet supported.
+There is one exception, $cref reverse_one$$ is allowed
+because there is only one zero order forward direction.
+After such an operation, only the zero order forward
+results are retained (the higher order forward results are lost).
+
+$childtable%
+	omh/reverse/reverse_one.omh%
+	omh/reverse/reverse_two.omh%
+	omh/reverse/reverse_any.omh
+%$$
+
+$end
+-------------------------------------------------------------------------------

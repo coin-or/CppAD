@@ -39,12 +39,8 @@ The $code ADFun$$ object can then be used to calculate function values,
 derivative values, and other values related to the corresponding function.
 
 $childtable%
-	cppad/core/independent.hpp%
-	cppad/core/fun_construct.hpp%
-	cppad/core/dependent.hpp%
-	cppad/core/abort_recording.hpp%
-	omh/seq_property.omh%
-	cppad/core/fun_eval.hpp%
+	omh/adfun.omh%
+	cppad/core/sparse.hpp%
 	cppad/core/drivers.hpp%
 	cppad/core/fun_check.hpp%
 	cppad/core/optimize.hpp%
