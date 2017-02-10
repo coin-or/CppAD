@@ -97,17 +97,17 @@ DIST_COMMON = $(srcdir)/makefile.am $(am__DIST_COMMON)
 mkinstalldirs = $(install_sh) -d
 CONFIG_CLEAN_FILES =
 CONFIG_CLEAN_VPATH_FILES =
-am_utility_OBJECTS = utility.$(OBJEXT) vector_bool.$(OBJEXT) \
-	to_string.$(OBJEXT) thread_alloc.$(OBJEXT) \
-	simple_vector.$(OBJEXT) set_union.$(OBJEXT) \
-	runge45_1.$(OBJEXT) romberg_one.$(OBJEXT) \
-	romberg_mul.$(OBJEXT) ode_gear_control.$(OBJEXT) \
-	ode_gear.$(OBJEXT) ode_err_maxabs.$(OBJEXT) \
-	ode_err_control.$(OBJEXT) near_equal.$(OBJEXT) nan.$(OBJEXT) \
-	lu_solve.$(OBJEXT) lu_invert.$(OBJEXT) lu_factor.$(OBJEXT) \
-	index_sort.$(OBJEXT) error_handler.$(OBJEXT) \
-	cppad_vector.$(OBJEXT) check_simple_vector.$(OBJEXT) \
-	check_numeric_type.$(OBJEXT)
+am_utility_OBJECTS = check_numeric_type.$(OBJEXT) \
+	check_simple_vector.$(OBJEXT) cppad_vector.$(OBJEXT) \
+	error_handler.$(OBJEXT) index_sort.$(OBJEXT) \
+	lu_factor.$(OBJEXT) lu_invert.$(OBJEXT) lu_solve.$(OBJEXT) \
+	nan.$(OBJEXT) near_equal.$(OBJEXT) ode_err_control.$(OBJEXT) \
+	ode_err_maxabs.$(OBJEXT) ode_gear_control.$(OBJEXT) \
+	ode_gear.$(OBJEXT) romberg_mul.$(OBJEXT) romberg_one.$(OBJEXT) \
+	runge45_1.$(OBJEXT) set_union.$(OBJEXT) \
+	simple_vector.$(OBJEXT) sparse_rc.$(OBJEXT) \
+	sparse_rcv.$(OBJEXT) thread_alloc.$(OBJEXT) \
+	to_string.$(OBJEXT) utility.$(OBJEXT) vector_bool.$(OBJEXT)
 utility_OBJECTS = $(am_utility_OBJECTS)
 utility_LDADD = $(LDADD)
 AM_V_P = $(am__v_P_@AM_V@)
@@ -349,29 +349,31 @@ AM_CXXFLAGS = -g $(CXX_FLAGS)
 AM_CPPFLAGS = -I. -I$(top_srcdir) $(BOOST_INCLUDE) $(EIGEN_INCLUDE)
 #
 utility_SOURCES = \
-	utility.cpp \
-	vector_bool.cpp \
-	to_string.cpp \
-	thread_alloc.cpp \
-	simple_vector.cpp \
-	set_union.cpp \
-	runge45_1.cpp \
-	romberg_one.cpp \
-	romberg_mul.cpp \
+check_numeric_type.cpp \
+	check_simple_vector.cpp \
+	cppad_vector.cpp \
+	error_handler.cpp \
+	index_sort.cpp \
+	lu_factor.cpp \
+	lu_invert.cpp \
+	lu_solve.cpp \
+	nan.cpp \
+	near_equal.cpp \
+	ode_err_control.cpp \
+	ode_err_maxabs.cpp \
 	ode_gear_control.cpp \
 	ode_gear.cpp \
-	ode_err_maxabs.cpp \
-	ode_err_control.cpp \
-	near_equal.cpp \
-	nan.cpp \
-	lu_solve.cpp \
-	lu_invert.cpp \
-	lu_factor.cpp \
-	index_sort.cpp \
-	error_handler.cpp \
-	cppad_vector.cpp \
-	check_simple_vector.cpp \
-	check_numeric_type.cpp
+	romberg_mul.cpp \
+	romberg_one.cpp \
+	runge45_1.cpp \
+	set_union.cpp \
+	simple_vector.cpp \
+	sparse_rc.cpp \
+	sparse_rcv.cpp \
+	thread_alloc.cpp \
+	to_string.cpp \
+	utility.cpp \
+	vector_bool.cpp
 
 all: all-am
 
@@ -439,6 +441,8 @@ distclean-compile:
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/runge45_1.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/set_union.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/simple_vector.Po@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/sparse_rc.Po@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/sparse_rcv.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/thread_alloc.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/to_string.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/utility.Po@am__quote@

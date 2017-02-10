@@ -529,6 +529,8 @@ nobase_myinclude_HEADERS = \
 	cppad/core/equal_op_seq.hpp \
 	cppad/core/erf.hpp \
 	cppad/core/expm1.hpp \
+	cppad/core/for_hes_sparsity.hpp \
+	cppad/core/for_jac_sparsity.hpp \
 	cppad/core/for_one.hpp \
 	cppad/core/for_sparse_hes.hpp \
 	cppad/core/for_sparse_jac.hpp \
@@ -560,6 +562,8 @@ nobase_myinclude_HEADERS = \
 	cppad/core/pow.hpp \
 	cppad/core/print_for.hpp \
 	cppad/core/reverse.hpp \
+	cppad/core/rev_hes_sparsity.hpp \
+	cppad/core/rev_jac_sparsity.hpp \
 	cppad/core/rev_one.hpp \
 	cppad/core/rev_sparse_hes.hpp \
 	cppad/core/rev_sparse_jac.hpp \
@@ -567,6 +571,8 @@ nobase_myinclude_HEADERS = \
 	cppad/core/sign.hpp \
 	cppad/core/sparse_hessian.hpp \
 	cppad/core/sparse.hpp \
+	cppad/core/sparse_hes.hpp \
+	cppad/core/sparse_jac.hpp \
 	cppad/core/sparse_jacobian.hpp \
 	cppad/core/standard_math.hpp \
 	cppad/core/std_math_98.hpp \
@@ -661,9 +667,9 @@ nobase_myinclude_HEADERS = \
 	cppad/local/sinh_op.hpp \
 	cppad/local/sin_op.hpp \
 	cppad/local/sparse_binary_op.hpp \
+	cppad/local/sparse_internal.hpp \
 	cppad/local/sparse_list.hpp \
 	cppad/local/sparse_pack.hpp \
-	cppad/local/sparse_pattern.hpp \
 	cppad/local/sparse_unary_op.hpp \
 	cppad/local/sqrt_op.hpp \
 	cppad/local/std_set.hpp \
@@ -706,6 +712,8 @@ nobase_myinclude_HEADERS = \
 	cppad/utility/rosen_34.hpp \
 	cppad/utility/runge_45.hpp \
 	cppad/utility/set_union.hpp \
+	cppad/utility/sparse_rc.hpp \
+	cppad/utility/sparse_rcv.hpp \
 	cppad/utility/speed_test.hpp \
 	cppad/utility/thread_alloc.hpp \
 	cppad/utility/time_test.hpp \

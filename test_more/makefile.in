@@ -118,9 +118,9 @@ am__test_more_SOURCES_DIST = base_adolc.cpp ipopt_solve.cpp \
 	base_alloc.cpp check_simple_vector.cpp checkpoint.cpp \
 	compare.cpp compare_change.cpp cond_exp.cpp cond_exp_ad.cpp \
 	cond_exp_rev.cpp copy.cpp cos.cpp cosh.cpp dbl_epsilon.cpp \
-	div.cpp div_eq.cpp div_zero_one.cpp erf.cpp exp.cpp expm1.cpp \
-	extern_value.cpp extern_value.hpp for_hess.cpp \
-	for_sparse_hes.cpp for_sparse_jac.cpp forward.cpp \
+	dependency.cpp div.cpp div_eq.cpp div_zero_one.cpp erf.cpp \
+	exp.cpp expm1.cpp extern_value.cpp extern_value.hpp \
+	for_hess.cpp for_sparse_hes.cpp for_sparse_jac.cpp forward.cpp \
 	forward_dir.cpp forward_order.cpp from_base.cpp fun_check.cpp \
 	hes_sparsity.cpp jacobian.cpp num_limits.cpp log.cpp log1p.cpp \
 	log10.cpp mul.cpp mul_cskip.cpp mul_eq.cpp mul_level.cpp \
@@ -149,9 +149,9 @@ am_test_more_OBJECTS = $(am__objects_1) $(am__objects_2) \
 	compare_change.$(OBJEXT) cond_exp.$(OBJEXT) \
 	cond_exp_ad.$(OBJEXT) cond_exp_rev.$(OBJEXT) copy.$(OBJEXT) \
 	cos.$(OBJEXT) cosh.$(OBJEXT) dbl_epsilon.$(OBJEXT) \
-	div.$(OBJEXT) div_eq.$(OBJEXT) div_zero_one.$(OBJEXT) \
-	erf.$(OBJEXT) exp.$(OBJEXT) expm1.$(OBJEXT) \
-	extern_value.$(OBJEXT) for_hess.$(OBJEXT) \
+	dependency.$(OBJEXT) div.$(OBJEXT) div_eq.$(OBJEXT) \
+	div_zero_one.$(OBJEXT) erf.$(OBJEXT) exp.$(OBJEXT) \
+	expm1.$(OBJEXT) extern_value.$(OBJEXT) for_hess.$(OBJEXT) \
 	for_sparse_hes.$(OBJEXT) for_sparse_jac.$(OBJEXT) \
 	forward.$(OBJEXT) forward_dir.$(OBJEXT) \
 	forward_order.$(OBJEXT) from_base.$(OBJEXT) \
@@ -525,6 +525,7 @@ test_more_SOURCES = \
 	cos.cpp \
 	cosh.cpp \
 	dbl_epsilon.cpp \
+	dependency.cpp \
 	div.cpp \
 	div_eq.cpp \
 	div_zero_one.cpp \
@@ -680,6 +681,7 @@ distclean-compile:
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/cos.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/cosh.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/dbl_epsilon.Po@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/dependency.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/div.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/div_eq.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/div_zero_one.Po@am__quote@

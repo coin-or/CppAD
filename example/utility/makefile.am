@@ -20,7 +20,7 @@ AM_CXXFLAGS       = -g $(CXX_FLAGS)
 AM_CPPFLAGS       = -I. -I$(top_srcdir) $(BOOST_INCLUDE) $(EIGEN_INCLUDE)
 #
 utility_SOURCES   = \
-	check_numeric_type.cpp
+	check_numeric_type.cpp \
 	check_simple_vector.cpp \
 	cppad_vector.cpp \
 	error_handler.cpp \
@@ -44,7 +44,7 @@ utility_SOURCES   = \
 	thread_alloc.cpp \
 	to_string.cpp \
 	utility.cpp \
-	vector_bool.cpp \
+	vector_bool.cpp
 #
 test: check
 	./utility

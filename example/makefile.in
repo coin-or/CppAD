@@ -118,24 +118,24 @@ am__example_SOURCES_DIST = mul_level_adolc.cpp mul_level_adolc_ode.cpp \
 	bender_quad.cpp bool_fun.cpp capacity_order.cpp \
 	change_param.cpp check_for_nan.cpp compare_change.cpp \
 	compare.cpp complex_poly.cpp cond_exp.cpp cos.cpp cosh.cpp \
-	dependency.cpp div.cpp div_eq.cpp equal_op_seq.cpp erf.cpp \
-	example.cpp exp.cpp expm1.cpp for_one.cpp for_two.cpp \
-	forward.cpp forward_dir.cpp forward_order.cpp fun_assign.cpp \
-	fun_check.cpp hes_lagrangian.cpp hes_lu_det.cpp \
-	hes_minor_det.cpp hessian.cpp hes_times_dir.cpp \
-	independent.cpp integer.cpp interface2c.cpp interp_onetape.cpp \
-	interp_retape.cpp jac_lu_det.cpp jac_minor_det.cpp \
-	jacobian.cpp log10.cpp log1p.cpp log.cpp lu_ratio.cpp \
-	lu_vec_ad.cpp lu_vec_ad.hpp lu_vec_ad_ok.cpp mul.cpp \
-	mul_eq.cpp mul_level.cpp mul_level_ode.cpp near_equal_ext.cpp \
-	number_skip.cpp numeric_type.cpp num_limits.cpp ode_stiff.cpp \
-	ode_taylor.cpp opt_val_hes.cpp par_var.cpp poly.cpp pow.cpp \
-	pow_int.cpp print_for.cpp reverse_checkpoint.cpp \
-	reverse_one.cpp reverse_three.cpp reverse_two.cpp rev_one.cpp \
-	rev_two.cpp rosen_34.cpp runge45_2.cpp seq_property.cpp \
-	sign.cpp sin.cpp sinh.cpp sqrt.cpp stack_machine.cpp sub.cpp \
-	sub_eq.cpp tan.cpp tanh.cpp tape_index.cpp unary_minus.cpp \
-	unary_plus.cpp value.cpp var2par.cpp vec_ad.cpp
+	div.cpp div_eq.cpp equal_op_seq.cpp erf.cpp example.cpp \
+	exp.cpp expm1.cpp for_one.cpp for_two.cpp forward.cpp \
+	forward_dir.cpp forward_order.cpp fun_assign.cpp fun_check.cpp \
+	hes_lagrangian.cpp hes_lu_det.cpp hes_minor_det.cpp \
+	hessian.cpp hes_times_dir.cpp independent.cpp integer.cpp \
+	interface2c.cpp interp_onetape.cpp interp_retape.cpp \
+	jac_lu_det.cpp jac_minor_det.cpp jacobian.cpp log10.cpp \
+	log1p.cpp log.cpp lu_ratio.cpp lu_vec_ad.cpp lu_vec_ad.hpp \
+	lu_vec_ad_ok.cpp mul.cpp mul_eq.cpp mul_level.cpp \
+	mul_level_ode.cpp near_equal_ext.cpp number_skip.cpp \
+	numeric_type.cpp num_limits.cpp ode_stiff.cpp ode_taylor.cpp \
+	opt_val_hes.cpp par_var.cpp poly.cpp pow.cpp pow_int.cpp \
+	print_for.cpp reverse_checkpoint.cpp reverse_one.cpp \
+	reverse_three.cpp reverse_two.cpp rev_one.cpp rev_two.cpp \
+	rosen_34.cpp runge45_2.cpp seq_property.cpp sign.cpp sin.cpp \
+	sinh.cpp sqrt.cpp stack_machine.cpp sub.cpp sub_eq.cpp tan.cpp \
+	tanh.cpp tape_index.cpp unary_minus.cpp unary_plus.cpp \
+	value.cpp var2par.cpp vec_ad.cpp
 @CppAD_ADOLC_TRUE@am__objects_1 = mul_level_adolc.$(OBJEXT) \
 @CppAD_ADOLC_TRUE@	mul_level_adolc_ode.$(OBJEXT)
 am_example_OBJECTS = $(am__objects_1) abort_recording.$(OBJEXT) \
@@ -149,14 +149,13 @@ am_example_OBJECTS = $(am__objects_1) abort_recording.$(OBJEXT) \
 	change_param.$(OBJEXT) check_for_nan.$(OBJEXT) \
 	compare_change.$(OBJEXT) compare.$(OBJEXT) \
 	complex_poly.$(OBJEXT) cond_exp.$(OBJEXT) cos.$(OBJEXT) \
-	cosh.$(OBJEXT) dependency.$(OBJEXT) div.$(OBJEXT) \
-	div_eq.$(OBJEXT) equal_op_seq.$(OBJEXT) erf.$(OBJEXT) \
-	example.$(OBJEXT) exp.$(OBJEXT) expm1.$(OBJEXT) \
-	for_one.$(OBJEXT) for_two.$(OBJEXT) forward.$(OBJEXT) \
-	forward_dir.$(OBJEXT) forward_order.$(OBJEXT) \
-	fun_assign.$(OBJEXT) fun_check.$(OBJEXT) \
-	hes_lagrangian.$(OBJEXT) hes_lu_det.$(OBJEXT) \
-	hes_minor_det.$(OBJEXT) hessian.$(OBJEXT) \
+	cosh.$(OBJEXT) div.$(OBJEXT) div_eq.$(OBJEXT) \
+	equal_op_seq.$(OBJEXT) erf.$(OBJEXT) example.$(OBJEXT) \
+	exp.$(OBJEXT) expm1.$(OBJEXT) for_one.$(OBJEXT) \
+	for_two.$(OBJEXT) forward.$(OBJEXT) forward_dir.$(OBJEXT) \
+	forward_order.$(OBJEXT) fun_assign.$(OBJEXT) \
+	fun_check.$(OBJEXT) hes_lagrangian.$(OBJEXT) \
+	hes_lu_det.$(OBJEXT) hes_minor_det.$(OBJEXT) hessian.$(OBJEXT) \
 	hes_times_dir.$(OBJEXT) independent.$(OBJEXT) \
 	integer.$(OBJEXT) interface2c.$(OBJEXT) \
 	interp_onetape.$(OBJEXT) interp_retape.$(OBJEXT) \
@@ -516,7 +515,6 @@ example_SOURCES = \
 	cond_exp.cpp \
 	cos.cpp \
 	cosh.cpp \
-	dependency.cpp \
 	div.cpp \
 	div_eq.cpp \
 	equal_op_seq.cpp \
@@ -676,7 +674,6 @@ distclean-compile:
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/cond_exp.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/cos.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/cosh.Po@am__quote@
-@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/dependency.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/div.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/div_eq.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/equal_op_seq.Po@am__quote@
