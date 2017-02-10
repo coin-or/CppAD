@@ -1,6 +1,5 @@
-// $Id$
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-16 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-17 Bradley M. Bell
 
 CppAD is distributed under multiple licenses. This distribution is under
 the terms of the
@@ -42,7 +41,7 @@ namespace {
 		after.n_var  += 0; after.n_op   += 0;
 		//
 		// compute product of even and odd variables
-		for(size_t i = 2; i < x.size(); i++)
+		for(size_t i = 2; i < size_t( x.size() ); i++)
 		{	if( i % 2 == 0 )
 			{	// prod_even will affect dependent variable
 				prod_even = prod_even * x[i];

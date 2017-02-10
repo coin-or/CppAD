@@ -216,7 +216,7 @@ AC_MSG_RESULT([$deprecated])
 AM_CONDITIONAL(CppAD_DEPRECATED, test "$deprecated" = 'yes' )
 if test "$deprecated" = "yes" ; then
 	AC_MSG_ERROR(
-		[--with-deprecated has been removed; see whats_new 2017-02-10."
+		[--with-deprecated has been removed; see whats_new 2017-02-10]
 	)
 fi
 

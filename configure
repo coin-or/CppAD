@@ -726,7 +726,6 @@ ADOLC_DIR
 CppAD_POSTFIX_FALSE
 CppAD_POSTFIX_TRUE
 POSTFIX_DIR
-cppad_deprecated
 CppAD_DEPRECATED_FALSE
 CppAD_DEPRECATED_TRUE
 cppad_eigenvector
@@ -4699,11 +4698,8 @@ else
 fi
 
 if test "$deprecated" = "yes" ; then
-	cppad_deprecated="1"
-
-else
-	cppad_deprecated="0"
-
+	as_fn_error $? "--with-deprecated has been removed; see whats_new 2017-02-10
+	" "$LINENO" 5
 fi
 
 { $as_echo "$as_me:${as_lineno-$LINENO}: checking POSTFIX_DIR" >&5
