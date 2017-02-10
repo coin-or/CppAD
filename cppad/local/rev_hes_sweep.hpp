@@ -1,9 +1,8 @@
-// $Id$
 # ifndef CPPAD_LOCAL_REV_HES_SWEEP_HPP
 # define CPPAD_LOCAL_REV_HES_SWEEP_HPP
 
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-16 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-17 Bradley M. Bell
 
 CppAD is distributed under multiple licenses. This distribution is under
 the terms of the
@@ -102,7 +101,7 @@ template <class Base, class Vector_set>
 void RevHesSweep(
 	size_t                n,
 	size_t                numvar,
-	local::player<Base>*         play,
+	local::player<Base>*  play,
 	const Vector_set&     for_jac_sparse,
 	bool*                 RevJac,
 	Vector_set&           rev_hes_sparse

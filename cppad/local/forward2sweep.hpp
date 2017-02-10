@@ -1,9 +1,8 @@
-// $Id$
 # ifndef CPPAD_LOCAL_FORWARD2SWEEP_HPP
 # define CPPAD_LOCAL_FORWARD2SWEEP_HPP
 
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-16 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-17 Bradley M. Bell
 
 CppAD is distributed under multiple licenses. This distribution is under
 the terms of the
@@ -142,7 +141,7 @@ void forward2sweep(
 	const size_t                r,
 	const size_t                n,
 	const size_t                numvar,
-	      local::player<Base>*         play,
+	      local::player<Base>*  play,
 	const size_t                J,
 	      Base*                 taylor,
 	const bool*                 cskip_op,

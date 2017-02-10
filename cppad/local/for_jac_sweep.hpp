@@ -1,8 +1,7 @@
-// $Id$
 # ifndef CPPAD_LOCAL_FOR_JAC_SWEEP_HPP
 # define CPPAD_LOCAL_FOR_JAC_SWEEP_HPP
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-16 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-17 Bradley M. Bell
 
 CppAD is distributed under multiple licenses. This distribution is under
 the terms of the
@@ -90,7 +89,7 @@ void ForJacSweep(
 	bool                  dependency   ,
 	size_t                n            ,
 	size_t                numvar       ,
-	local::player<Base>*         play         ,
+	local::player<Base>*  play         ,
 	Vector_set&           var_sparsity )
 {
 	OpCode           op;
