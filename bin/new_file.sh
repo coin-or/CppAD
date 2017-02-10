@@ -97,7 +97,7 @@ EOF
 	;;
 	# -------------------------------------------------------------------------
 	omh | omh.in )
-	root_name=`echo $file_name | sed -e 's/.*/||' -e 's|\.omh.*||'`
+	root_name=`echo $file_name | sed -e 's|.*/||' -e 's|\.omh.*||'`
 	cat << EOF  > $file_name
 -------------------------------------------------------------------------------
   CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-17 Bradley M. Bell
