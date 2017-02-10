@@ -26,6 +26,10 @@ $section Changes and Additions to CppAD During 2017$$
 
 $head 02-10$$
 $list number$$
+The subset of deprecated features corresponding to
+$cref/cppad_deprecated=YES/cmake/cppad_deprecated/YES/$$
+have been completely removed.
+$lnext
 Fix problems with $cref auto_tools$$ build
 (started near 02-01 while working on sparsity branch).
 $lnext

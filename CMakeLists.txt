@@ -328,9 +328,13 @@ IF ( cmake_install_docdir )
 ENDIF ( cmake_install_docdir )
 #
 IF( ${cppad_deprecated} )
-	# During install copy deprecated include files
-	INSTALL(
-		DIRECTORY "${CMAKE_SOURCE_DIR}/cppad/deprecated/"
-		DESTINATION ${cppad_abs_includedir}/cppad
+	STRING( TOLOWER "${cppad_deprecated}" temp )
+	IF( "${temp}" STREQUAL "yes" )
+		MESSAGE(FATAL_ERROR
+		"cppad_deprecated = YES has been removed; see whats_new 2017-02-10."
+		)
+	ENDIF( "${temp}" STREQUAL "yes" )
+	MESSAGE(FATAL_ERROR
+		"cppad_deprecated = ${cppad_deprecated} not a valid choice"
 	)
 ENDIF( ${cppad_deprecated} )

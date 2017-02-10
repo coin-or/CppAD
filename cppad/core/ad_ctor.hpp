@@ -1,9 +1,8 @@
-// $Id$
 # ifndef CPPAD_CORE_AD_CTOR_HPP
 # define CPPAD_CORE_AD_CTOR_HPP
 
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-16 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-17 Bradley M. Bell
 
 CppAD is distributed under multiple licenses. This distribution is under
 the terms of the
@@ -58,9 +57,9 @@ for any type that has an explicit constructor of the form
 $icode%Base%(%x%)%$$.
 
 $subhead Deprecated 2013-12-31$$
-If you set $cref/cppad_deprecated/cmake/cppad_deprecated/$$
-to be $code YES$$ during the install procedure,
-you will get an implicit constructor with prototype
+It used to be the case that
+$cref/cppad_deprecated=YES/cmake/cppad_deprecated/YES/$$
+would provide an implicit constructor with prototype
 $codei%
 	const %Type%&        %x%
 %$$

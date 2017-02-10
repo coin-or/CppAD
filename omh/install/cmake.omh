@@ -1,6 +1,5 @@
-$Id$
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-16 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-17 Bradley M. Bell
 
 CppAD is distributed under multiple licenses. This distribution is under
 the terms of the
@@ -350,12 +349,16 @@ $code uint64_t$$.
 
 $head cppad_deprecated$$
 The default value for $icode cppad_deprecated$$ is $code NO$$.
-If it is $code YES$$, then all the CppAD
-$cref deprecated$$ features are included in the
-$cref/installation/install/Instructions/Step 4: Installation/$$.
-Otherwise, some of the deprecated features
-may be excluded from the installation.
-(The intention here is to exclude more deprecated features as time marches on.)
+
+$subhead YES$$
+The $icode%cppad_deprecated=%YES%$$,
+used to provided the deprecated
+$cref/include files/include_deprecated/$$
+and the deprecated
+$cref/AD constructor/ad_ctor/x/Deprecated 2013-12-31/$$.
+This is no longer available and source code that requires these features
+much be changed.
+
 
 $children%
 	omh/install/adolc_prefix.omh%

@@ -202,7 +202,7 @@ else
 	AC_SUBST(cppad_eigenvector, 0)
 fi
 
-dnl Are we including deprecated features in the install-----------
+dnl Are we trying to including deprecated include files -----------
 AC_MSG_CHECKING([--with-deprecated])
 AC_ARG_WITH(deprecated,
 	AC_HELP_STRING(
@@ -215,9 +215,9 @@ AC_ARG_WITH(deprecated,
 AC_MSG_RESULT([$deprecated])
 AM_CONDITIONAL(CppAD_DEPRECATED, test "$deprecated" = 'yes' )
 if test "$deprecated" = "yes" ; then
-	AC_SUBST(cppad_deprecated, "1")
-else
-	AC_SUBST(cppad_deprecated, "0")
+	AC_MSG_ERROR(
+		[--with-deprecated has been removed; see whats_new 2017-02-10."
+	)
 fi
 
 dnl The postfix directiory corresponding to CppAD ------------------------

@@ -1,9 +1,8 @@
-// $Id$
 # ifndef CPPAD_CONFIGURE_HPP
 # define CPPAD_CONFIGURE_HPP
 
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-16 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-17 Bradley M. Bell
 
 CppAD is distributed under multiple licenses. This distribution is under
 the terms of the
@@ -81,9 +80,7 @@ Was a colpack_prefix specified on the cmake command line.
 
 /*!
 \def CPPAD_DEPRECATED
-If this symbol is one, an implicit constor of AD<Base> is defined
-where the argument has any type.
-Otherwise this constructor is explicit.
+If this symbol is not currently being used.
 */
 # define CPPAD_DEPRECATED @cppad_deprecated@
 

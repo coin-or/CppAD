@@ -1,6 +1,5 @@
-# $Id:$
 # -----------------------------------------------------------------------------
-# CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-16 Bradley M. Bell
+# CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-17 Bradley M. Bell
 #
 # CppAD is distributed under multiple licenses. This distribution is under
 # the terms of the
@@ -52,16 +51,9 @@ command_line_arg(cppad_tape_addr_type "unsigned int" STRING
 )
 #
 # cppad_deprecated
-command_line_arg(cppad_deprecated NO BOOL
+command_line_arg(cppad_deprecated NO STRING
 	"implicit (instead of explicit) conversion from any type to AD<Base>"
 )
-# -----------------------------------------------------------------------------
-# cppad_deprecated
-IF( cppad_deprecated )
-	SET(cppad_deprecated 1)
-ELSE( cppad_deprecated )
-	SET(cppad_deprecated 0)
-ENDIF( cppad_deprecated )
 # -----------------------------------------------------------------------------
 # cppad_boostvector, cppad_cppadvector, cppad_eigenvector, cppad_stdvector
 #

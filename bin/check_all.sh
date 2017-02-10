@@ -1,7 +1,6 @@
 #! /bin/bash -e
-# $Id$
 # -----------------------------------------------------------------------------
-# CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-16 Bradley M. Bell
+# CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-17 Bradley M. Bell
 #
 # CppAD is distributed under multiple licenses. This distribution is under
 # the terms of the
@@ -92,7 +91,7 @@ if [ "$random_zero_one" == '0' ]
 then
 	echo_log_eval bin/run_cmake.sh --boost_vector
 else
-	echo_log_eval bin/run_cmake.sh --deprecated
+	echo_log_eval bin/run_cmake.sh --eigen_vector
 fi
 echo_log_eval cd build
 # -----------------------------------------------------------------------------

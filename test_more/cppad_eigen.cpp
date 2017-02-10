@@ -1,6 +1,5 @@
-// $Id$
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-15 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-17 Bradley M. Bell
 
 CppAD is distributed under multiple licenses. This distribution is under
 the terms of the
@@ -55,7 +54,6 @@ bool cppad_eigen(void)
 	stream_out << X;
 	ok &= "1" == stream_out.str();
 
-# if ! CPPAD_DEPRECATED
 	// multiplying three matrices together used to cause warning
 	// before making ctor from arbitrary type to AD<Base> explicit.
 	typedef CppAD::AD<double> AScalar;
@@ -65,7 +63,6 @@ bool cppad_eigen(void)
 	C(0,0) = 3.0;
 	D      = A * B * C;
 	ok    &= D(0,0) == 6.0 ;
-# endif
 
 	return ok;
 }
