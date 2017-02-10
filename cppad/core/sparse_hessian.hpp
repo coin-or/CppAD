@@ -29,8 +29,7 @@ $spell
 	colpack
 $$
 
-$section Sparse Hessian: Easy Driver$$
-$mindex SparseHessian$$
+$section Sparse Hessian$$
 
 $head Syntax$$
 $icode%hes% = %f%.SparseHessian(%x%, %w%)

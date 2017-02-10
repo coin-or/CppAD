@@ -142,7 +142,7 @@ If one uses this type in a
 AD of $icode Base$$
 $cref/operation sequence/glossary/Operation/Sequence/$$,
 $cref/sparsity pattern/glossary/Sparsity Pattern/$$ calculations
-($cref Sparse$$)
+($cref sparsity_pattern$$)
 are less efficient because the dependence of different
 elements of the vector cannot be separated.
 

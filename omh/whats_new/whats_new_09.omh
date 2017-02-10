@@ -1,6 +1,5 @@
-$Id$
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-16 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-17 Bradley M. Bell
 
 CppAD is distributed under multiple licenses. This distribution is under
 the terms of the
@@ -241,7 +240,7 @@ Some more memory allocation improvements (related to those
 on 09-18) were made.
 
 $head 09-18$$
-A bug was found in all the $cref/Sparsity/Sparse/$$ calculations.
+A bug was found in all the $cref sparsity_pattern$$ calculations.
 The result was that eight times the necessary memory was being used
 during these calculations.  This has been fixed.
 

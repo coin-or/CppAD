@@ -1,9 +1,8 @@
-// $Id$
 # ifndef CPPAD_CORE_DRIVERS_HPP
 # define CPPAD_CORE_DRIVERS_HPP
 
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-16 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-17 Bradley M. Bell
 
 CppAD is distributed under multiple licenses. This distribution is under
 the terms of the
@@ -29,9 +28,7 @@ $childtable%
 	cppad/core/rev_one.hpp%
 	cppad/core/hessian.hpp%
 	cppad/core/for_two.hpp%
-	cppad/core/rev_two.hpp%
-	cppad/core/sparse_jacobian.hpp%
-	cppad/core/sparse_hessian.hpp
+	cppad/core/rev_two.hpp
 %$$
 
 $end
@@ -42,7 +39,5 @@ $end
 # include <cppad/core/hessian.hpp>
 # include <cppad/core/for_two.hpp>
 # include <cppad/core/rev_two.hpp>
-# include <cppad/core/sparse_jacobian.hpp>
-# include <cppad/core/sparse_hessian.hpp>
 
 # endif

@@ -86,7 +86,7 @@ a sparsity pattern class that uses row and column
 $cref/index vectors/glossary/Sparsity Pattern/Row and Column Index Vectors/$$.
 
 $head 01-30$$
-Move the $cref/sparsity/sparse/$$ examples from $code example$$
+Move the $cref sparsity_pattern$$ examples from $code example$$
 to $code example/sparse$$ subdirectory.
 This included the sparse $cref/driver/drivers/$$ examples.
 

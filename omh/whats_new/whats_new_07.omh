@@ -942,7 +942,7 @@ $pre
 $$
 The change to the $code pow$$ function on
 $cref/06-12-10/whats_new_06/12-10/$$ did not include the
-necessary changes to the $cref/Sparsity/Sparse/$$ calculations.
+necessary changes to the sparsity calculations.
 This has been fixed.
 
 $head 02-02$$

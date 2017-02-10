@@ -35,8 +35,7 @@ $spell
 	Taylor
 $$
 
-$section Sparse Jacobian: Easy Driver$$
-$mindex SparseJacobian$$
+$section Sparse Jacobian$$
 
 $head Syntax$$
 $icode%jac% = %f%.SparseJacobian(%x%)

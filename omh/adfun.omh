@@ -8,11 +8,11 @@
   A copy of this license is included in the COPYING file of this distribution.
   Please visit http://www.coin-or.org/CppAD/ for information on other licenses.
 -------------------------------------------------------------------------------
-$begin adfun_create$$
+$begin record_adfun$$
 $spell
 $$
 
-$section Creating an ADFun Object (Recording an Operation Sequence)$$
+$section Create an ADFun Object (Record an Operation Sequence)$$
 
 $childtable%
 	cppad/core/independent.hpp%
@@ -61,6 +61,49 @@ $childtable%
 	omh/reverse/reverse_one.omh%
 	omh/reverse/reverse_two.omh%
 	omh/reverse/reverse_any.omh
+%$$
+
+$end
+-------------------------------------------------------------------------------
+$begin sparsity_pattern$$
+$spell
+$$
+
+
+$section Calculating Sparsity Patterns$$
+
+$childtable%
+	cppad/core/for_jac_sparsity.hpp%
+	cppad/core/for_sparse_jac.hpp%
+
+	cppad/core/rev_jac_sparsity.hpp%
+	cppad/core/rev_sparse_jac.hpp%
+
+	cppad/core/rev_hes_sparsity.hpp%
+	cppad/core/rev_sparse_hes.hpp%
+
+	cppad/core/for_hes_sparsity.hpp%
+	cppad/core/for_sparse_hes.hpp%
+
+	example/sparse/dependency.cpp%
+	example/sparse/bool_sparsity.cpp
+%$$
+
+$end
+-------------------------------------------------------------------------------
+$begin sparse_derivative$$
+$spell
+$$
+
+
+$section Calculating Sparse Derivatives$$
+
+$childtable%
+	cppad/core/sparse_jac.hpp%
+	cppad/core/sparse_jacobian.hpp%
+
+	cppad/core/sparse_hes.hpp%
+	cppad/core/sparse_hessian.hpp
 %$$
 
 $end
