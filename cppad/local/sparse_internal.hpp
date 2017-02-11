@@ -61,49 +61,48 @@ The type used for intenal sparsity patterns. This can be either
 sparse_pack or sparse_list.
 
 \param transpose
-If this is true, pattern_in is transposed.
+If this is true, rc_pattern is transposed.
 
-\param tape_index
+\param internal_index
 If traspose is false (true),
-this is the mapping from row (column) index in pattern_in to the corresponding
-row index in the tape and pattern_out.
+this is the mapping from row (column) index in rc_pattern to the corresponding
+row index in the internal_pattern.
 
-\param pattern_in
+\param rc_pattern
 This is the sparsity pattern for variables,
 or its transpose, depending on the value of transpose.
 
-\param pattern_out
-This is a sparsity pattern for all of the variables on the tape.
+\param internal_pattern
 The number of sets and possible elements has been set, and all of the sets
-in tape_index are empty on input. On output, the pattern for each
-of the variables in tape_index will be as specified by pattern_in.
+in internal_index are empty on input. On output, the pattern for each
+of the variables in internal_index will be as specified by rc_pattern.
 The pattern for the other variables is not affected.
 */
 template <class SizeVector, class InternalSparsity>
 void set_internal_sparsity(
-	bool                          transpose   ,
-	const CppAD::vector<size_t>&  tape_index  ,
-	const sparse_rc<SizeVector>&  pattern_in  ,
-	InternalSparsity&             pattern_out )
+	bool                          transpose        ,
+	const CppAD::vector<size_t>&  internal_index   ,
+	const sparse_rc<SizeVector>&  rc_pattern       ,
+	InternalSparsity&             internal_pattern )
 {
 # ifndef NDEBUG
-	size_t nr = pattern_in.nr();
+	size_t nr = rc_pattern.nr();
 	if( transpose )
-		nr = pattern_in.nc();
+		nr = rc_pattern.nc();
 	for(size_t i = 0; i < nr; i++)
-		CPPAD_ASSERT_UNKNOWN( pattern_out.number_elements(i) == 0 );
+		CPPAD_ASSERT_UNKNOWN( internal_pattern.number_elements(i) == 0 );
 # endif
-	const SizeVector& row( pattern_in.row() );
-	const SizeVector& col( pattern_in.col() );
+	const SizeVector& row( rc_pattern.row() );
+	const SizeVector& col( rc_pattern.col() );
 	size_t nnz = row.size();
 	for(size_t k = 0; k < nnz; k++)
 	{	size_t r = row[k];
 		size_t c = col[k];
 		if( transpose )
 			std::swap(r, c);
-		CPPAD_ASSERT_UNKNOWN( tape_index[r] < pattern_out.n_set() );
-		CPPAD_ASSERT_UNKNOWN( c < pattern_out.end() );
-		pattern_out.add_element( tape_index[r], c );
+		CPPAD_ASSERT_UNKNOWN( internal_index[r] < internal_pattern.n_set() );
+		CPPAD_ASSERT_UNKNOWN( c < internal_pattern.end() );
+		internal_pattern.add_element( internal_index[r], c );
 	}
 }
 // ---------------------------------------------------------------------------
@@ -119,39 +118,38 @@ The type used for intenal sparsity patterns. This can be either
 sparse_pack or sparse_list.
 
 \param transpose
-If this is true, pattern_out is transposed.
+If this is true, rc_pattern is transposed.
 
-\param tape_index
+\param internal_index
 If transpose is false (true)
-this is the mapping from row (column) an index in pattern_out
-to the corresponding
-index in the tape and pattern_in.
+this is the mapping from row (column) an index in rc_pattern
+to the corresponding row index in internal_pattern.
 
-\param pattern_in
-This is the internal sparsity pattern for all of the variables on the tape.
+\param internal_pattern
+This is the internal sparsity pattern.
 
-\param pattern_out
-The input value of pattern_out does not matter
+\param rc_pattern
+The input value of rc_pattern does not matter
 (not even its number of rows, columns, or elements).
 Upon return it is an index sparsity pattern for each of the variables
-in tape_index, or its transpose, depending on the value of transpose.
+in internal_index, or its transpose, depending on the value of transpose.
 */
 template <class SizeVector, class InternalSparsity>
 void get_internal_sparsity(
-	bool                          transpose   ,
-	const CppAD::vector<size_t>&  tape_index  ,
-	const InternalSparsity&       pattern_in  ,
-	sparse_rc<SizeVector>&        pattern_out )
+	bool                          transpose         ,
+	const CppAD::vector<size_t>&  internal_index    ,
+	const InternalSparsity&       internal_pattern  ,
+	sparse_rc<SizeVector>&        rc_pattern        )
 {	typedef typename InternalSparsity::const_iterator iterator;
 	// number variables
-	size_t nr = tape_index.size();
+	size_t nr = internal_index.size();
 	// column size of interanl sparstiy pattern
-	size_t nc = pattern_in.end();
+	size_t nc = internal_pattern.end();
 	// determine nnz, the number of possibly non-zero index pairs
 	size_t nnz = 0;
 	for(size_t i = 0; i < nr; i++)
-	{	CPPAD_ASSERT_UNKNOWN( tape_index[i] < pattern_in.n_set() );
-		iterator itr(pattern_in, tape_index[i]);
+	{	CPPAD_ASSERT_UNKNOWN( internal_index[i] < internal_pattern.n_set() );
+		iterator itr(internal_pattern, internal_index[i]);
 		size_t j = *itr;
 		while( j < nc )
 		{	++nnz;
@@ -160,28 +158,28 @@ void get_internal_sparsity(
 	}
 	// transposed
 	if( transpose )
-	{	pattern_out.resize(nc, nr, nnz);
+	{	rc_pattern.resize(nc, nr, nnz);
 		//
 		size_t k = 0;
 		for(size_t i = 0; i < nr; i++)
-		{	iterator itr(pattern_in, tape_index[i]);
+		{	iterator itr(internal_pattern, internal_index[i]);
 			size_t j = *itr;
 			while( j < nc )
-			{	pattern_out.set(k++, j, i);
+			{	rc_pattern.set(k++, j, i);
 				j = *(++itr);
 			}
 		}
 		return;
 	}
 	// not transposed
-	pattern_out.resize(nr, nc, nnz);
+	rc_pattern.resize(nr, nc, nnz);
 	//
 	size_t k = 0;
 	for(size_t i = 0; i < nr; i++)
-	{	iterator itr(pattern_in, tape_index[i]);
+	{	iterator itr(internal_pattern, internal_index[i]);
 		size_t j = *itr;
 		while( j < nc )
-		{	pattern_out.set(k++, i, j);
+		{	rc_pattern.set(k++, i, j);
 			j = *(++itr);
 		}
 	}
