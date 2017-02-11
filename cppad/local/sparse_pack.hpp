@@ -33,7 +33,7 @@ private:
 	/// typedef in multiple_n_bit() in test_more/sparse_hacobian.cpp)
 	typedef size_t Pack;
 	/// Number of bits per Pack value
-	static const size_t n_bit_ = std::numeric_limits<Pack>::digits;
+	const size_t n_bit_ = std::numeric_limits<Pack>::digits;
 	/// Number of sets that we are representing
 	/// (set by constructor and resize).
 	size_t n_set_;
@@ -106,6 +106,30 @@ public:
 			while(i--)
 				data_[i] = zero;
 		}
+	}
+	// -----------------------------------------------------------------
+	/*!
+	Count number of elements in a set.
+
+	\param index
+	is the index in of the set we are counting the elements of.
+	*/
+	size_t number_elements(size_t index) const
+	{	static Pack one(1);
+		CPPAD_ASSERT_UNKNOWN( index < n_set_ );
+		size_t count  = 0;
+		for(size_t k = 0; k < n_pack_; k++)
+		{	Pack   unit = data_[ index * n_pack_ + k ];
+			Pack   mask = one;
+			size_t n    = std::min(n_bit_, end_ - n_bit_ * k);
+			for(size_t bit = 0; bit < n; bit++)
+			{	CPPAD_ASSERT_UNKNOWN( mask > one || bit == 0);
+				if( mask & unit )
+					++count;
+				mask = mask << 1;
+			}
+		}
+		return count;
 	}
 	// -----------------------------------------------------------------
 	/*! Add one element to a set.

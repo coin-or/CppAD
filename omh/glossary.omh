@@ -147,6 +147,8 @@ A pair of non-negative integer vectors $latex r$$, $latex c$$
 are a sparsity pattern for $latex A$$
 if for every non-zero element $latex A_{i,j}$$,
 there is a $latex k$$ such that $latex i = r_k$$ and $latex j = c_k$$.
+Furthermore, for every $latex \ell != k$$,
+either $latex r_\ell != r_k$$ or $latex c_\ell != c_k$$.
 
 $subhead Boolean Vector$$
 A boolean vector $latex b$$, of length $latex m n$$,

@@ -139,7 +139,7 @@ $codei%
 %$$
 and if $icode%col%[ %row_major%[%k%] ] == %col%[ %row_major%[%k%+1] ]%$$,
 $codei%
-	%row%[ %row_major%[%k%] ] < %row%[ %row_major%[%k%+1] ]
+	%row%[ %row_major%[%k%] ] <= %row%[ %row_major%[%k%+1] ]
 %$$
 
 $head col_major$$
@@ -150,7 +150,7 @@ $codei%
 %$$
 and if $icode%row%[ %col_major%[%k%] ] == %row%[ %col_major%[%k%+1] ]%$$,
 $codei%
-	%col%[ %col_major%[%k%] ] < %col%[ %col_major%[%k%+1] ]
+	%col%[ %col_major%[%k%] ] <= %col%[ %col_major%[%k%+1] ]
 %$$
 
 $children%

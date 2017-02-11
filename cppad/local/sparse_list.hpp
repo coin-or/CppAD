@@ -94,34 +94,6 @@ private:
 	}
 	// -----------------------------------------------------------------
 	/*!
-	Private member function that counts number of elements in a set.
-
-	\param index
-	is the index in start_ of the set we are counting the elements of.
-	*/
-	size_t number_elements(size_t index) const
-	{	CPPAD_ASSERT_UNKNOWN(index < start_.size() );
-
-		size_t count   = 0;
-		size_t start   = start_[index];
-
-		// check if the set is empty
-		if( start == 0 )
-			return count;
-		CPPAD_ASSERT_UNKNOWN( reference_count(index) > 0 );
-
-		// advance to the first element in the set
-		size_t next    = data_[start].next;
-		while( next != 0 )
-		{	CPPAD_ASSERT_UNKNOWN( data_[next].value < end_ );
-			count++;
-			next  = data_[next].next;
-		}
-		CPPAD_ASSERT_UNKNOWN( count > 0 );
-		return count;
-	}
-	// -----------------------------------------------------------------
-	/*!
 	Member function that checks the number of data elements not used
 	(effectively const, but modifies and restores values)
 	*/
@@ -416,6 +388,34 @@ public:
 		data_.erase();
 		data_.extend(1); // first element is not used
 		data_not_used_  = 1;
+	}
+	// -----------------------------------------------------------------
+	/*!
+	Count number of elements in a set.
+
+	\param index
+	is the index of the set we are counting the elements of.
+	*/
+	size_t number_elements(size_t index) const
+	{	CPPAD_ASSERT_UNKNOWN(index < start_.size() );
+
+		size_t count   = 0;
+		size_t start   = start_[index];
+
+		// check if the set is empty
+		if( start == 0 )
+			return count;
+		CPPAD_ASSERT_UNKNOWN( reference_count(index) > 0 );
+
+		// advance to the first element in the set
+		size_t next    = data_[start].next;
+		while( next != 0 )
+		{	CPPAD_ASSERT_UNKNOWN( data_[next].value < end_ );
+			count++;
+			next  = data_[next].next;
+		}
+		CPPAD_ASSERT_UNKNOWN( count > 0 );
+		return count;
 	}
 	// -----------------------------------------------------------------
 	/*!

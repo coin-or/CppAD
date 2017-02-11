@@ -75,7 +75,7 @@ or its transpose, depending on the value of transpose.
 \param pattern_out
 This is a sparsity pattern for all of the variables on the tape.
 The number of sets and possible elements has been set, and all of the sets
-are empty on input. On output, the pattern for each
+in tape_index are empty on input. On output, the pattern for each
 of the variables in tape_index will be as specified by pattern_in.
 The pattern for the other variables is not affected.
 */
@@ -85,7 +85,15 @@ void set_internal_sparsity(
 	const CppAD::vector<size_t>&  tape_index  ,
 	const sparse_rc<SizeVector>&  pattern_in  ,
 	InternalSparsity&             pattern_out )
-{	const SizeVector& row( pattern_in.row() );
+{
+# ifndef NDEBUG
+	size_t nr = pattern_in.nr();
+	if( transpose )
+		nr = pattern_in.nc();
+	for(size_t i = 0; i < nr; i++)
+		CPPAD_ASSERT_UNKNOWN( pattern_out.number_elements(i) == 0 );
+# endif
+	const SizeVector& row( pattern_in.row() );
 	const SizeVector& col( pattern_in.col() );
 	size_t nnz = row.size();
 	for(size_t k = 0; k < nnz; k++)
