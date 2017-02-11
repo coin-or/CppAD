@@ -167,12 +167,12 @@ void ADFun<Base>::for_hes_sparsity(
 	size_t m  = Range();
 	//
 	CPPAD_ASSERT_KNOWN(
-		select_domain.size() == n,
+		size_t( select_domain.size() ) == n,
 		"for_hes_sparsity: size of select_domain is not equal to "
 		"number of independent variables"
 	);
 	CPPAD_ASSERT_KNOWN(
-		select_range.size() == m,
+		size_t( select_range.size() ) == m,
 		"for_hes_sparsity: size of select_range is not equal to "
 		"number of dependent variables"
 	);

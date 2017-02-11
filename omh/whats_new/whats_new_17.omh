@@ -20,14 +20,22 @@ $spell
 	Jacobian
 	jac
 	hes
+	eigen
 $$
 
 $section Changes and Additions to CppAD During 2017$$
 
 $head 02-11$$
+$list number$$
 Remove the 'Under Construction' heading from the
 $cref sparse_rc$$ and $cref sparse_rcv$$ documentation; i.e.,
 they are ready for public use (part of the CppAD API).
+$lnext
+Fix some warning that occur when using
+$cref/eigen/cppad_testvector/eigen/$$ for the CppAD test vector.
+(The Eigen vector $code size()$$ function
+returns an $code int$$ instead of $code size_t$$.)
+$lend
 
 $head 02-10$$
 $list number$$

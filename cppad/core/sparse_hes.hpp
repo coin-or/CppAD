@@ -292,11 +292,11 @@ size_t ADFun<Base>::sparse_hes(
 		"sparse_hes: subset.nc() not equal domain dimension for f"
 	);
 	CPPAD_ASSERT_KNOWN(
-		x.size() == n,
+		size_t( x.size() ) == n,
 		"sparse_hes: x.size() not equal domain dimension for f"
 	);
 	CPPAD_ASSERT_KNOWN(
-		w.size() == Range(),
+		size_t( w.size() ) == Range(),
 		"sparse_hes: w.size() not equal range dimension for f"
 	);
 	//

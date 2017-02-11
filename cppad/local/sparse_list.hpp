@@ -883,9 +883,9 @@ void sparsity_user2internal(
 {
 # ifndef NDEBUG
 	if( transpose )
-		CPPAD_ASSERT_KNOWN( size_t(end) == user.size(), error_msg);
+		CPPAD_ASSERT_KNOWN( end == size_t( user.size() ), error_msg);
 	if( ! transpose )
-		CPPAD_ASSERT_KNOWN( size_t(n_set) == user.size(), error_msg);
+		CPPAD_ASSERT_KNOWN( n_set == size_t( user.size() ), error_msg);
 # endif
 
 	// iterator for user set
