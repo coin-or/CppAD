@@ -24,6 +24,11 @@ $$
 
 $section Changes and Additions to CppAD During 2017$$
 
+$head 02-11$$
+Remove the 'Under Construction' heading from the
+$cref sparse_rc$$ and $cref sparse_rcv$$ documentation; i.e.,
+they are ready for public use (part of the CppAD API).
+
 $head 02-10$$
 $list number$$
 The subset of deprecated features corresponding to

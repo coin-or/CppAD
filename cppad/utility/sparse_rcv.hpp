@@ -28,9 +28,6 @@ $spell
 $$
 $section Sparse Matrix Row, Column, Value Representation$$
 
-$head Under Construction$$
-This class is under construction and not yet appropriation for public use.
-
 $head Syntax$$
 $codei%# include <cppad/utility/sparse_rcv.hpp>
 %$$

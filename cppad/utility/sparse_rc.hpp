@@ -26,9 +26,6 @@ $spell
 $$
 $section Row and Column Index Sparsity Patterns$$
 
-$head Under Construction$$
-This class is under construction and not yet appropriation for public use.
-
 $head Syntax$$
 $codei%# include <cppad/utility/sparse_rc.hpp>
 %$$
