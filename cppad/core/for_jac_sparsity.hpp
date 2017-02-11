@@ -225,6 +225,7 @@ void ADFun<Base>::for_jac_sparsity(
 		"for_jac_sparsity: number rows in R "
 		"is not equal number of independent variables."
 	);
+	bool is_tape = true;
 	if( internal_bool )
 	{	// allocate memory for bool sparsity calculation
 		// (sparsity pattern is emtpy after a resize)
@@ -234,6 +235,7 @@ void ADFun<Base>::for_jac_sparsity(
 		// set sparsity patttern for independent variables
 		local::set_internal_sparsity(
 			transpose             ,
+			is_tape               ,
 			ind_taddr_            ,
 			pattern_in            ,
 			for_jac_sparse_pack_
@@ -249,7 +251,7 @@ void ADFun<Base>::for_jac_sparsity(
 		);
 		// set the output pattern
 		local::get_internal_sparsity(
-			transpose, dep_taddr_, for_jac_sparse_pack_, pattern_out
+			transpose, is_tape, dep_taddr_, for_jac_sparse_pack_, pattern_out
 		);
 	}
 	else
@@ -262,6 +264,7 @@ void ADFun<Base>::for_jac_sparsity(
 		// set sparsity patttern for independent variables
 		local::set_internal_sparsity(
 			transpose             ,
+			is_tape               ,
 			ind_taddr_            ,
 			pattern_in            ,
 			for_jac_sparse_set_
@@ -277,7 +280,7 @@ void ADFun<Base>::for_jac_sparsity(
 		);
 		// get the ouput pattern
 		local::get_internal_sparsity(
-			transpose, dep_taddr_, for_jac_sparse_set_, pattern_out
+			transpose, is_tape, dep_taddr_, for_jac_sparse_set_, pattern_out
 		);
 	}
 	return;

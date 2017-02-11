@@ -374,10 +374,11 @@ size_t ADFun<Base>::sparse_hes(
 		for(size_t j = 0; j < n; j++)
 			internal_index[j] = j;
 		bool transpose = false;
+		bool is_tape   = false;
 		local::sparse_list internal_pattern;
 		internal_pattern.resize(n, n);
 		local::set_internal_sparsity(
-			transpose, internal_index, pattern, internal_pattern
+			transpose, is_tape, internal_index, pattern, internal_pattern
 		);
 		//
 		// execute coloring algorithm

@@ -35,6 +35,8 @@ Fix some warning that occur when using
 $cref/eigen/cppad_testvector/eigen/$$ for the CppAD test vector.
 (The Eigen vector $code size()$$ function
 returns an $code int$$ instead of $code size_t$$.)
+$lnext
+Fix a bug in $cref/sparse_jac_rev/sparse_jac/$$.
 $lend
 
 $head 02-10$$

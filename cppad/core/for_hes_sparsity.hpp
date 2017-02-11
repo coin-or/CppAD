@@ -179,6 +179,7 @@ void ADFun<Base>::for_hes_sparsity(
 	// do not need transpose or depenency
 	bool transpose  = false;
 	bool dependency = false;
+	bool is_tape    = true;
 	//
 	sparse_rc<SizeVector> pattern_tmp;
 	if( internal_bool )
@@ -228,7 +229,7 @@ void ADFun<Base>::for_hes_sparsity(
 		//
 		// put the result in pattern_tmp
 		get_internal_sparsity(
-			transpose, ind_taddr_, internal_for_hes, pattern_tmp
+			transpose, is_tape, ind_taddr_, internal_for_hes, pattern_tmp
 		);
 	}
 	else
@@ -280,7 +281,7 @@ void ADFun<Base>::for_hes_sparsity(
 		//
 		// put the result in pattern_tmp
 		get_internal_sparsity(
-			transpose, ind_taddr_, internal_for_hes, pattern_tmp
+			transpose, is_tape, ind_taddr_, internal_for_hes, pattern_tmp
 		);
 	}
 	// subtract 1 from all column values

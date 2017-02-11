@@ -63,6 +63,11 @@ sparse_pack or sparse_list.
 \param transpose
 If this is true, rc_pattern is transposed.
 
+\param tape
+If this is true, the internal sparstity pattern corresponds to the tape.
+This means that row index zero, in the internal sparsity pattern,
+corresponds to a parameter and must be empty.
+
 \param internal_index
 If traspose is false (true),
 this is the mapping from row (column) index in rc_pattern to the corresponding
@@ -81,6 +86,7 @@ The pattern for the other variables is not affected.
 template <class SizeVector, class InternalSparsity>
 void set_internal_sparsity(
 	bool                          transpose        ,
+	bool                          tape             ,
 	const CppAD::vector<size_t>&  internal_index   ,
 	const sparse_rc<SizeVector>&  rc_pattern       ,
 	InternalSparsity&             internal_pattern )
@@ -91,6 +97,7 @@ void set_internal_sparsity(
 		nr = rc_pattern.nc();
 	for(size_t i = 0; i < nr; i++)
 		CPPAD_ASSERT_UNKNOWN( internal_pattern.number_elements(i) == 0 );
+	CPPAD_ASSERT_UNKNOWN( internal_index.size() == nr );
 # endif
 	const SizeVector& row( rc_pattern.row() );
 	const SizeVector& col( rc_pattern.col() );
@@ -100,6 +107,7 @@ void set_internal_sparsity(
 		size_t c = col[k];
 		if( transpose )
 			std::swap(r, c);
+		CPPAD_ASSERT_UNKNOWN(! ( tape && internal_index[r] == 0 ) );
 		CPPAD_ASSERT_UNKNOWN( internal_index[r] < internal_pattern.n_set() );
 		CPPAD_ASSERT_UNKNOWN( c < internal_pattern.end() );
 		internal_pattern.add_element( internal_index[r], c );
@@ -120,6 +128,11 @@ sparse_pack or sparse_list.
 \param transpose
 If this is true, rc_pattern is transposed.
 
+\param tape
+If this is true, the internal sparstity pattern corresponds to the tape.
+This means that row index zero, in the internal sparsity pattern,
+corresponds to a parameter and must be empty.
+
 \param internal_index
 If transpose is false (true)
 this is the mapping from row (column) an index in rc_pattern
@@ -137,6 +150,7 @@ in internal_index, or its transpose, depending on the value of transpose.
 template <class SizeVector, class InternalSparsity>
 void get_internal_sparsity(
 	bool                          transpose         ,
+	bool                          tape              ,
 	const CppAD::vector<size_t>&  internal_index    ,
 	const InternalSparsity&       internal_pattern  ,
 	sparse_rc<SizeVector>&        rc_pattern        )
@@ -152,7 +166,8 @@ void get_internal_sparsity(
 		iterator itr(internal_pattern, internal_index[i]);
 		size_t j = *itr;
 		while( j < nc )
-		{	++nnz;
+		{	CPPAD_ASSERT_UNKNOWN( ! ( tape && internal_index[i] == 0 ) );
+			++nnz;
 			j = *(++itr);
 		}
 	}

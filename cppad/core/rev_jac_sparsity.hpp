@@ -185,6 +185,7 @@ void ADFun<Base>::rev_jac_sparsity(
 	// number of independent variables
 	size_t n = Domain();
 	//
+	bool is_tape = true;
 	if( internal_bool )
 	{	// allocate memory for bool sparsity calculation
 		// (sparsity pattern is emtpy after a resize)
@@ -194,6 +195,7 @@ void ADFun<Base>::rev_jac_sparsity(
 		// set sparsity patttern for dependent variables
 		local::set_internal_sparsity(
 			! transpose           ,
+			is_tape               ,
 			dep_taddr_            ,
 			pattern_in            ,
 			internal_jac
@@ -209,7 +211,7 @@ void ADFun<Base>::rev_jac_sparsity(
 		);
 		// get sparstiy pattern for independent variables
 		local::get_internal_sparsity(
-			! transpose, ind_taddr_, internal_jac, pattern_out
+			! transpose, is_tape, ind_taddr_, internal_jac, pattern_out
 		);
 	}
 	else
@@ -221,6 +223,7 @@ void ADFun<Base>::rev_jac_sparsity(
 		// set sparsity patttern for dependent variables
 		local::set_internal_sparsity(
 			! transpose           ,
+			is_tape               ,
 			dep_taddr_            ,
 			pattern_in            ,
 			internal_jac
@@ -236,7 +239,7 @@ void ADFun<Base>::rev_jac_sparsity(
 		);
 		// get sparstiy pattern for independent variables
 		local::get_internal_sparsity(
-			! transpose, ind_taddr_, internal_jac, pattern_out
+			! transpose, is_tape, ind_taddr_, internal_jac, pattern_out
 		);
 	}
 	return;
