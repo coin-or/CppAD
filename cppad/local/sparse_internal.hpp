@@ -96,7 +96,9 @@ void set_internal_sparsity(
 	if( transpose )
 		nr = pattern_in.nc();
 	for(size_t i = 0; i < nr; i++)
-		CPPAD_ASSERT_UNKNOWN( internal_pattern.number_elements(i) == 0 );
+	{	size_t i_var = internal_index[i];
+		CPPAD_ASSERT_UNKNOWN( internal_pattern.number_elements(i_var) == 0 );
+	}
 	CPPAD_ASSERT_UNKNOWN( internal_index.size() == nr );
 # endif
 	const SizeVector& row( pattern_in.row() );
