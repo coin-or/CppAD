@@ -197,8 +197,8 @@ void ADFun<Base>::rev_jac_sparsity(
 			! transpose           ,
 			is_tape               ,
 			dep_taddr_            ,
-			pattern_in            ,
-			internal_jac
+			internal_jac          ,
+			pattern_in
 		);
 
 		// compute sparsity for other variables
@@ -225,8 +225,8 @@ void ADFun<Base>::rev_jac_sparsity(
 			! transpose           ,
 			is_tape               ,
 			dep_taddr_            ,
-			pattern_in            ,
-			internal_jac
+			internal_jac          ,
+			pattern_in
 		);
 
 		// compute sparsity for other variables

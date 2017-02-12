@@ -73,23 +73,23 @@ If traspose is false (true),
 this is the mapping from row (column) index in rc_pattern to the corresponding
 row index in the internal_pattern.
 
-\param rc_pattern
-This is the sparsity pattern for variables,
-or its transpose, depending on the value of transpose.
-
 \param internal_pattern
 The number of sets and possible elements has been set, and all of the sets
 in internal_index are empty on input. On output, the pattern for each
 of the variables in internal_index will be as specified by rc_pattern.
 The pattern for the other variables is not affected.
+
+\param rc_pattern
+This is the sparsity pattern for variables,
+or its transpose, depending on the value of transpose.
 */
 template <class SizeVector, class InternalSparsity>
 void set_internal_sparsity(
 	bool                          transpose        ,
 	bool                          tape             ,
 	const CppAD::vector<size_t>&  internal_index   ,
-	const sparse_rc<SizeVector>&  rc_pattern       ,
-	InternalSparsity&             internal_pattern )
+	InternalSparsity&             internal_pattern ,
+	const sparse_rc<SizeVector>&  rc_pattern       )
 {
 # ifndef NDEBUG
 	size_t nr = rc_pattern.nr();
