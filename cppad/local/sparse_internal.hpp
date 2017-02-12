@@ -61,7 +61,7 @@ The type used for intenal sparsity patterns. This can be either
 sparse_pack or sparse_list.
 
 \param transpose
-If this is true, rc_pattern is transposed.
+If this is true, pattern_in is transposed.
 
 \param tape
 If this is true, the internal sparstity pattern corresponds to the tape.
@@ -70,16 +70,16 @@ corresponds to a parameter and must be empty.
 
 \param internal_index
 If traspose is false (true),
-this is the mapping from row (column) index in rc_pattern to the corresponding
+this is the mapping from row (column) index in pattern_in to the corresponding
 row index in the internal_pattern.
 
 \param internal_pattern
 The number of sets and possible elements has been set, and all of the sets
 in internal_index are empty on input. On output, the pattern for each
-of the variables in internal_index will be as specified by rc_pattern.
+of the variables in internal_index will be as specified by pattern_in.
 The pattern for the other variables is not affected.
 
-\param rc_pattern
+\param pattern_in
 This is the sparsity pattern for variables,
 or its transpose, depending on the value of transpose.
 */
@@ -89,18 +89,18 @@ void set_internal_sparsity(
 	bool                          tape             ,
 	const CppAD::vector<size_t>&  internal_index   ,
 	InternalSparsity&             internal_pattern ,
-	const sparse_rc<SizeVector>&  rc_pattern       )
+	const sparse_rc<SizeVector>&  pattern_in       )
 {
 # ifndef NDEBUG
-	size_t nr = rc_pattern.nr();
+	size_t nr = pattern_in.nr();
 	if( transpose )
-		nr = rc_pattern.nc();
+		nr = pattern_in.nc();
 	for(size_t i = 0; i < nr; i++)
 		CPPAD_ASSERT_UNKNOWN( internal_pattern.number_elements(i) == 0 );
 	CPPAD_ASSERT_UNKNOWN( internal_index.size() == nr );
 # endif
-	const SizeVector& row( rc_pattern.row() );
-	const SizeVector& col( rc_pattern.col() );
+	const SizeVector& row( pattern_in.row() );
+	const SizeVector& col( pattern_in.col() );
 	size_t nnz = row.size();
 	for(size_t k = 0; k < nnz; k++)
 	{	size_t r = row[k];
@@ -126,7 +126,7 @@ The type used for intenal sparsity patterns. This can be either
 sparse_pack or sparse_list.
 
 \param transpose
-If this is true, rc_pattern is transposed.
+If this is true, pattern_out is transposed.
 
 \param tape
 If this is true, the internal sparstity pattern corresponds to the tape.
@@ -135,14 +135,14 @@ corresponds to a parameter and must be empty.
 
 \param internal_index
 If transpose is false (true)
-this is the mapping from row (column) an index in rc_pattern
+this is the mapping from row (column) an index in pattern_out
 to the corresponding row index in internal_pattern.
 
 \param internal_pattern
 This is the internal sparsity pattern.
 
-\param rc_pattern
-The input value of rc_pattern does not matter
+\param pattern_out
+The input value of pattern_out does not matter
 (not even its number of rows, columns, or elements).
 Upon return it is an index sparsity pattern for each of the variables
 in internal_index, or its transpose, depending on the value of transpose.
@@ -153,7 +153,7 @@ void get_internal_sparsity(
 	bool                          tape              ,
 	const CppAD::vector<size_t>&  internal_index    ,
 	const InternalSparsity&       internal_pattern  ,
-	sparse_rc<SizeVector>&        rc_pattern        )
+	sparse_rc<SizeVector>&        pattern_out        )
 {	typedef typename InternalSparsity::const_iterator iterator;
 	// number variables
 	size_t nr = internal_index.size();
@@ -173,28 +173,28 @@ void get_internal_sparsity(
 	}
 	// transposed
 	if( transpose )
-	{	rc_pattern.resize(nc, nr, nnz);
+	{	pattern_out.resize(nc, nr, nnz);
 		//
 		size_t k = 0;
 		for(size_t i = 0; i < nr; i++)
 		{	iterator itr(internal_pattern, internal_index[i]);
 			size_t j = *itr;
 			while( j < nc )
-			{	rc_pattern.set(k++, j, i);
+			{	pattern_out.set(k++, j, i);
 				j = *(++itr);
 			}
 		}
 		return;
 	}
 	// not transposed
-	rc_pattern.resize(nr, nc, nnz);
+	pattern_out.resize(nr, nc, nnz);
 	//
 	size_t k = 0;
 	for(size_t i = 0; i < nr; i++)
 	{	iterator itr(internal_pattern, internal_index[i]);
 		size_t j = *itr;
 		while( j < nc )
-		{	rc_pattern.set(k++, i, j);
+		{	pattern_out.set(k++, i, j);
 			j = *(++itr);
 		}
 	}
