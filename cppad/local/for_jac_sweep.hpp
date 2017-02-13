@@ -139,31 +139,16 @@ void ForJacSweep(
 	// --------------------------------------------------------------
 	// work space used by UserOp.
 	//
-	vector<Base>       user_x;   // parameters in x as integers
-	//
-	typedef std::set<size_t> size_set;
-	size_set::iterator set_itr;  // iterator for a standard set
-	size_set::iterator set_end;  // end of iterator sequence
-	vector< size_set > set_r;    // set sparsity pattern for the argument x
-	vector< size_set > set_s;    // set sparisty pattern for the result y
-	//
-	vector<bool>       bool_r;   // bool sparsity pattern for the argument x
-	vector<bool>       bool_s;   // bool sparisty pattern for the result y
-	//
-	vectorBool         pack_r;   // pack sparsity pattern for the argument x
-	vectorBool         pack_s;   // pack sparisty pattern for the result y
-	//
 	const size_t user_q = limit; // maximum element plus one
+	vector<Base>       user_x;   // value of parameter arguments to function
+	vector<size_t>     user_ix;  // variable index (on tape) for each argument
+	vector<size_t>     user_iy;  // variable index (on tape) for each result
 	//
 	// information defined by forward_user
 	size_t user_old=0, user_m=0, user_n=0, user_i=0, user_j=0;
 	enum_user_state user_state = start_user; // proper initialization
 	//
 	atomic_base<Base>* user_atom = CPPAD_NULL; // user's atomic op calculator
-	bool               user_pack = false;      // sparsity pattern type is pack
-	bool               user_bool = false;      // sparsity pattern type is bool
-	bool               user_set  = false;      // sparsity pattern type is set
-	bool               user_ok   = false;      // atomic op return value
 	//
 	// pointer to the beginning of the parameter vector
 	// (used by user atomic functions)
@@ -641,40 +626,31 @@ void ForJacSweep(
 			);
 			if( flag )
 			{	user_x.resize( user_n );
-				//
-				user_pack  = user_atom->sparsity() ==
-							atomic_base<Base>::pack_sparsity_enum;
-				user_bool  = user_atom->sparsity() ==
-							atomic_base<Base>::bool_sparsity_enum;
-				user_set   = user_atom->sparsity() ==
-							atomic_base<Base>::set_sparsity_enum;
-				CPPAD_ASSERT_UNKNOWN( user_pack || user_bool || user_set );
-				if( user_pack )
-				{	pack_r.resize( user_n * user_q );
-					pack_s.resize( user_m * user_q );
-					for(i = 0; i < user_n; i++)
-						for(j = 0; j < user_q; j++)
-							pack_r[ i * user_q + j] = false;
-				}
-				if( user_bool )
-				{	bool_r.resize( user_n * user_q );
-					bool_s.resize( user_m * user_q );
-					for(i = 0; i < user_n; i++)
-						for(j = 0; j < user_q; j++)
-							bool_r[ i * user_q + j] = false;
-				}
-				if( user_set)
-				{	set_r.resize(user_n);
-					set_s.resize(user_m);
-					for(i = 0; i < user_n; i++)
-						set_r[i].clear();
-				}
+				user_ix.resize( user_n );
+				user_iy.resize( user_m );
 			}
 			else
 			{
-# ifndef NDEBUG
-				if( ! user_ok )
-				{	std::string msg =
+				user_atom->set_old(user_old);
+# ifdef NDEBUG
+				user_atom->for_sparse_jac(
+					user_q, user_x, user_ix, user_iy, var_sparsity
+				);
+# else
+				bool ok = user_atom->for_sparse_jac(
+					user_q, user_x, user_ix, user_iy, var_sparsity
+				);
+				if( ! ok )
+				{
+					bool user_pack  = user_atom->sparsity() ==
+						atomic_base<Base>::pack_sparsity_enum;
+					bool user_bool  = user_atom->sparsity() ==
+						atomic_base<Base>::bool_sparsity_enum;
+					bool user_set   = user_atom->sparsity() ==
+						atomic_base<Base>::set_sparsity_enum;
+					CPPAD_ASSERT_UNKNOWN( user_pack || user_bool || user_set );
+					//
+					std::string msg =
 						user_atom->afun_name()
 						+ ": atomic_base.for_sparse_jac: returned false\n";
 					if( user_pack )
@@ -691,119 +667,34 @@ void ForJacSweep(
 
 			case UsrapOp:
 			// parameter argument in an atomic operation sequence
-			user_x[user_j] = parameter[arg[0]];
+			user_x[user_j]  = parameter[arg[0]];
+			user_ix[user_j] = 0; // special variable index used for parameters
 			//
-			// set row user_j to empty sparsity pattern
 			play->forward_user(op, user_state,
 				user_old, user_m, user_n, user_i, user_j
 			);
-			if( user_j == user_n )
-			{	// call users function for this operation
-				user_atom->set_old(user_old);
-				if( user_pack )
-				{	user_ok = user_atom->for_sparse_jac(
-						user_q, pack_r, pack_s, user_x
-					);
-					if( ! user_ok ) user_ok = user_atom->for_sparse_jac(
-						user_q, pack_r, pack_s
-					);
-				}
-				if( user_bool )
-				{	user_ok = user_atom->for_sparse_jac(
-						user_q, bool_r, bool_s, user_x
-					);
-					if( ! user_ok ) user_ok = user_atom->for_sparse_jac(
-						user_q, bool_r, bool_s
-					);
-				}
-				if( user_set )
-				{	user_ok = user_atom->for_sparse_jac(
-						user_q, set_r, set_s, user_x
-					);
-					if( ! user_ok ) user_ok = user_atom->for_sparse_jac(
-						user_q, set_r, set_s
-					);
-				}
-			}
 			break;
 
 			case UsravOp:
 			// variable argument in an atomic operation sequence
 			// variable as integers
-			user_x[user_j] = CppAD::numeric_limits<Base>::quiet_NaN();
-			// set row user_j to sparsity pattern for variable arg[0]
-			{	typename Vector_set::const_iterator itr(var_sparsity, arg[0]);
-				i = *itr;
-				while( i < user_q )
-				{	if( user_pack )
-						pack_r[user_j * user_q + i] = true;
-					if( user_bool )
-						bool_r[user_j * user_q + i] = true;
-					if( user_set )
-						set_r[user_j].insert(i);
-					i = *(++itr);
-				}
-			}
+			user_x[user_j]  = CppAD::numeric_limits<Base>::quiet_NaN();
+			user_ix[user_j] = arg[0]; // variable index for this argument
 			play->forward_user(op, user_state,
 				user_old, user_m, user_n, user_i, user_j
 			);
-			if( user_j == user_n )
-			{	// call users function for this operation
-				user_atom->set_old(user_old);
-				if( user_pack )
-				{	user_ok = user_atom->for_sparse_jac(
-						user_q, pack_r, pack_s, user_x
-					);
-					if( ! user_ok ) user_ok = user_atom->for_sparse_jac(
-						user_q, pack_r, pack_s
-					);
-				}
-				if( user_bool )
-				{	user_ok = user_atom->for_sparse_jac(
-						user_q, bool_r, bool_s, user_x
-					);
-					if( ! user_ok ) user_ok = user_atom->for_sparse_jac(
-						user_q, bool_r, bool_s
-					);
-				}
-				if( user_set )
-				{	user_ok = user_atom->for_sparse_jac(
-						user_q, set_r, set_s, user_x
-					);
-					if( ! user_ok ) user_ok = user_atom->for_sparse_jac(
-						user_q, set_r, set_s
-					);
-				}
-			}
 			break;
 
 			case UsrrpOp:
 			// parameter result in an atomic operation sequence
+			user_iy[user_i] = 0; // special variable index used for parameters
 			play->forward_user(op, user_state,
 				user_old, user_m, user_n, user_i, user_j
 			);
 			break;
 
 			case UsrrvOp:
-			// variable result in an atomic operation sequence
-			// It might be faster if we add set union to var_sparsity
-			// where one of the sets is not in var_sparsity
-			if( user_pack )
-			{	for(j = 0; j < user_q; j++)
-					if( pack_s[ user_i * user_q + j ] )
-						var_sparsity.add_element(i_var, j);
-			}
-			if( user_bool )
-			{	for(j = 0; j < user_q; j++)
-					if( bool_s[ user_i * user_q + j ] )
-						var_sparsity.add_element(i_var, j);
-			}
-			if( user_set )
-			{	set_itr = set_s[user_i].begin();
-				set_end = set_s[user_i].end();
-				while( set_itr != set_end )
-					var_sparsity.add_element(i_var, *set_itr++);
-			}
+			user_iy[user_i] = i_var;
 			play->forward_user(op, user_state,
 				user_old, user_m, user_n, user_i, user_j
 			);

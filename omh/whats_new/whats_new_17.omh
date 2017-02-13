@@ -21,9 +21,16 @@ $spell
 	jac
 	hes
 	eigen
+	mul
 $$
 
 $section Changes and Additions to CppAD During 2017$$
+
+$head 02-13$$
+Improve $cref/for_sparse_jac/atomic_eigen_mat_mul.hpp/Private/for_sparse_jac/$$
+calculation in $code eigen_mat_mul.hpp$$ example.
+It now checks for the parameter zero and does not propagate any sparsity
+in case (because the result is always zero).
 
 $head 02-11$$
 $list number$$
