@@ -185,7 +185,8 @@ void ADFun<Base>::rev_jac_sparsity(
 	// number of independent variables
 	size_t n = Domain();
 	//
-	bool is_tape = true;
+	bool zero_empty  = true;
+	bool input_empty = true;
 	if( internal_bool )
 	{	// allocate memory for bool sparsity calculation
 		// (sparsity pattern is emtpy after a resize)
@@ -194,8 +195,9 @@ void ADFun<Base>::rev_jac_sparsity(
 		//
 		// set sparsity patttern for dependent variables
 		local::set_internal_sparsity(
+			zero_empty            ,
+			input_empty           ,
 			! transpose           ,
-			is_tape               ,
 			dep_taddr_            ,
 			internal_jac          ,
 			pattern_in
@@ -222,8 +224,9 @@ void ADFun<Base>::rev_jac_sparsity(
 		//
 		// set sparsity patttern for dependent variables
 		local::set_internal_sparsity(
+			zero_empty            ,
+			input_empty           ,
 			! transpose           ,
-			is_tape               ,
 			dep_taddr_            ,
 			internal_jac          ,
 			pattern_in

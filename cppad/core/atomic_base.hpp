@@ -1194,11 +1194,13 @@ bool for_sparse_jac(
 	vector<size_t>&            x_index      ,
 	vector<size_t>&            y_index      ,
 	InternalSparsity&          var_sparsity )
-{	bool   transpose = false;
-	bool   tape      = true;
-	size_t m         = y_index.size();
-	bool   ok        = false;
-	size_t thread    = thread_alloc::thread_num();
+{
+	bool   zero_empty  = true;
+	bool   input_empty = true;
+	bool   transpose   = false;
+	size_t m           = y_index.size();
+	bool   ok          = false;
+	size_t thread      = thread_alloc::thread_num();
 	//
 	if( sparsity_ == pack_sparsity_enum )
 	{	vectorBool& pack_r ( afun_pack_r_[thread] );
@@ -1212,8 +1214,8 @@ bool for_sparse_jac(
 		if( ! ok )
 			ok = for_sparse_jac(q, pack_r, pack_s);
 		//
-		local::set_internal_sparsity(
-			transpose, tape, y_index, var_sparsity, pack_s
+		local::set_internal_sparsity(zero_empty, input_empty,
+			transpose, y_index, var_sparsity, pack_s
 		);
 	}
 	else if( sparsity_ == bool_sparsity_enum )
@@ -1228,8 +1230,8 @@ bool for_sparse_jac(
 		if( ! ok )
 			ok = for_sparse_jac(q, bool_r, bool_s);
 		//
-		local::set_internal_sparsity(
-			transpose, tape, y_index, var_sparsity, bool_s
+		local::set_internal_sparsity(zero_empty, input_empty,
+			transpose, y_index, var_sparsity, bool_s
 		);
 	}
 	else
@@ -1245,8 +1247,8 @@ bool for_sparse_jac(
 		if( ! ok )
 			ok = for_sparse_jac(q, set_r, set_s);
 		//
-		local::set_internal_sparsity(
-			transpose, tape, y_index, var_sparsity, set_s
+		local::set_internal_sparsity(zero_empty, input_empty,
+			transpose, y_index, var_sparsity, set_s
 		);
 	}
 	return ok;

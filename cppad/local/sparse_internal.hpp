@@ -50,7 +50,7 @@ struct internal_sparsity< std::set<size_t> >
 };
 // ---------------------------------------------------------------------------
 /*!
-Set the internal sparsity pattern for a sub-set of variables on tape
+Update the internal sparsity pattern for a sub-set of rows
 
 \tparam SizeVector
 The type used for index sparsity patterns. This is a simple vector
@@ -60,26 +60,39 @@ with elements of type size_t.
 The type used for intenal sparsity patterns. This can be either
 sparse_pack or sparse_list.
 
+\param zero_empty
+If this is true, the internal sparstity pattern corresponds to row zero
+must be empty on input and output. It is usefull to check this because
+index zero, on the tape, is used for paramters and should not have
+entries in the corresponding sparsity.
+
+\param input_empty
+If this is true, the initial sparsity pattern for row
+internal_index[i] is empty for all i.
+In this case, one is setting the sparsity patterns; i.e.,
+the output pattern in row internal_index[i] is the corresponding
+entries in pattern.
+
 \param transpose
 If this is true, pattern_in is transposed.
 
-\param tape
-If this is true, the internal sparstity pattern corresponds to the tape.
-This means that row index zero, in the internal sparsity pattern,
-corresponds to a parameter and must be empty.
-
 \param internal_index
+This specifies the sub-set of rows in internal_sparsity that we are updating.
 If traspose is false (true),
 this is the mapping from row (column) index in pattern_in to the corresponding
 row index in the internal_pattern.
 
 \param internal_pattern
-The number of sets internal_pattern.n_set(),
-and possible elements internal_pattern.end(),
-have been set, and all of the sets
-in internal_index are empty on input. On output, the pattern for each
-of the variables in internal_index will be as specified by pattern_in.
-The pattern for the other variables is not affected.
+On input, the number of sets internal_pattern.n_set(),
+and possible elements internal_pattern.end(), have been set.
+If input_empty is true, and all of the sets
+in internal_index are empty on input.
+On output, the entries in pattern_in are added to internal_pattern.
+To be specific, suppose transpose is false, and (i, j) is a possibly
+non-zero entry in pattern_in, the entry (internal_index[i], j) is added
+to internal_pattern.
+On the other hand, if transpose is true,
+the entry (internal_index[j], i) is added to internal_pattern.
 
 \param pattern_in
 This is the sparsity pattern for variables,
@@ -87,8 +100,9 @@ or its transpose, depending on the value of transpose.
 */
 template <class SizeVector, class InternalSparsity>
 void set_internal_sparsity(
+	bool                          zero_empty       ,
+	bool                          input_empty      ,
 	bool                          transpose        ,
-	bool                          tape             ,
 	const vector<size_t>&         internal_index   ,
 	InternalSparsity&             internal_pattern ,
 	const sparse_rc<SizeVector>&  pattern_in       )
@@ -104,7 +118,7 @@ void set_internal_sparsity(
 	{	CPPAD_ASSERT_UNKNOWN( pattern_in.nr() == nr );
 		CPPAD_ASSERT_UNKNOWN( pattern_in.nc() == nc );
 	}
-	for(size_t i = 0; i < nr; i++)
+	if( input_empty ) for(size_t i = 0; i < nr; i++)
 	{	size_t i_var = internal_index[i];
 		CPPAD_ASSERT_UNKNOWN( internal_pattern.number_elements(i_var) == 0 );
 	}
@@ -119,7 +133,7 @@ void set_internal_sparsity(
 			std::swap(r, c);
 		// this assert may occur when a useratomic function returns
 		// non-empty sparsity for a variable CppAD knows is a parameter.
-		CPPAD_ASSERT_UNKNOWN(! ( tape && internal_index[r] == 0 ) );
+		CPPAD_ASSERT_UNKNOWN(! ( zero_empty && internal_index[r] == 0 ) );
 		CPPAD_ASSERT_UNKNOWN( internal_index[r] < internal_pattern.n_set() );
 		CPPAD_ASSERT_UNKNOWN( c < nc );
 		internal_pattern.add_element( internal_index[r], c );
@@ -127,8 +141,9 @@ void set_internal_sparsity(
 }
 template <class InternalSparsity>
 void set_internal_sparsity(
+	bool                          zero_empty       ,
+	bool                          input_empty      ,
 	bool                          transpose        ,
-	bool                          tape             ,
 	const vector<size_t>&         internal_index   ,
 	InternalSparsity&             internal_pattern ,
 	const vectorBool&             pattern_in       )
@@ -136,7 +151,7 @@ void set_internal_sparsity(
 	size_t nc = internal_pattern.end();
 # ifndef NDEBUG
 	CPPAD_ASSERT_UNKNOWN( pattern_in.size() == nr * nc );
-	for(size_t i = 0; i < nr; i++)
+	if( input_empty ) for(size_t i = 0; i < nr; i++)
 	{	size_t i_var = internal_index[i];
 		CPPAD_ASSERT_UNKNOWN( internal_pattern.number_elements(i_var) == 0 );
 	}
@@ -150,7 +165,7 @@ void set_internal_sparsity(
 			{	size_t i_var = internal_index[i];
 				// this assert may occur when a useratomic function returns
 				// non-empty sparsity for a variable CppAD knows is a parameter.
-				CPPAD_ASSERT_UNKNOWN(! ( tape && i_var == 0 ) );
+				CPPAD_ASSERT_UNKNOWN(! ( zero_empty && i_var == 0 ) );
 				CPPAD_ASSERT_UNKNOWN( i_var < internal_pattern.n_set() );
 				internal_pattern.add_element( i_var, j);
 			}
@@ -160,8 +175,9 @@ void set_internal_sparsity(
 }
 template <class InternalSparsity>
 void set_internal_sparsity(
+	bool                          zero_empty       ,
+	bool                          input_empty      ,
 	bool                          transpose        ,
-	bool                          tape             ,
 	const vector<size_t>&         internal_index   ,
 	InternalSparsity&             internal_pattern ,
 	const vector<bool>&           pattern_in       )
@@ -169,7 +185,7 @@ void set_internal_sparsity(
 	size_t nc = internal_pattern.end();
 # ifndef NDEBUG
 	CPPAD_ASSERT_UNKNOWN( pattern_in.size() == nr * nc );
-	for(size_t i = 0; i < nr; i++)
+	if( input_empty ) for(size_t i = 0; i < nr; i++)
 	{	size_t i_var = internal_index[i];
 		CPPAD_ASSERT_UNKNOWN( internal_pattern.number_elements(i_var) == 0 );
 	}
@@ -183,7 +199,7 @@ void set_internal_sparsity(
 			{	size_t i_var = internal_index[i];
 				// this assert may occur when a useratomic function returns
 				// non-empty sparsity for a variable CppAD knows is a parameter.
-				CPPAD_ASSERT_UNKNOWN(! ( tape && i_var == 0 ) );
+				CPPAD_ASSERT_UNKNOWN(! ( zero_empty && i_var == 0 ) );
 				CPPAD_ASSERT_UNKNOWN( i_var < internal_pattern.n_set() );
 				internal_pattern.add_element( i_var, j);
 			}
@@ -193,15 +209,16 @@ void set_internal_sparsity(
 }
 template <class InternalSparsity>
 void set_internal_sparsity(
+	bool                               zero_empty       ,
+	bool                               input_empty      ,
 	bool                               transpose        ,
-	bool                               tape             ,
 	const vector<size_t>&              internal_index   ,
 	InternalSparsity&                  internal_pattern ,
 	const vector< std::set<size_t> >&  pattern_in       )
 {	size_t nr = internal_index.size();
 	size_t nc = internal_pattern.end();
 # ifndef NDEBUG
-	for(size_t i = 0; i < nr; i++)
+	if( input_empty ) for(size_t i = 0; i < nr; i++)
 	{	size_t i_var = internal_index[i];
 		CPPAD_ASSERT_UNKNOWN( internal_pattern.number_elements(i_var) == 0 );
 	}
@@ -215,7 +232,7 @@ void set_internal_sparsity(
 				size_t i_var = internal_index[i];
 				// this assert may occur when a useratomic function returns
 				// non-empty sparsity for a variable CppAD knows is a parameter.
-				CPPAD_ASSERT_UNKNOWN(! ( tape && i_var == 0 ) );
+				CPPAD_ASSERT_UNKNOWN(! ( zero_empty && i_var == 0 ) );
 				CPPAD_ASSERT_UNKNOWN( i_var < internal_pattern.n_set() );
 				internal_pattern.add_element( i_var, j);
 				++itr;
@@ -231,7 +248,7 @@ void set_internal_sparsity(
 				size_t i_var = internal_index[i];
 				// this assert may occur when a user atomic function returns
 				// non-empty sparsity for a variable CppAD knows is a parameter.
-				CPPAD_ASSERT_UNKNOWN(! ( tape && i_var == 0 ) );
+				CPPAD_ASSERT_UNKNOWN(! ( zero_empty && i_var == 0 ) );
 				CPPAD_ASSERT_UNKNOWN( i_var < internal_pattern.n_set() );
 				internal_pattern.add_element( i_var, j);
 				++itr;

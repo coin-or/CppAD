@@ -339,12 +339,13 @@ size_t ADFun<Base>::sparse_jac_for(
 		vector<size_t> internal_index(n);
 		for(size_t j = 0; j < n; j++)
 			internal_index[j] = j;
-		bool transpose = true;
-		bool is_tape   = false;
+		bool transpose   = true;
+		bool zero_empty  = false;
+		bool input_empty = true;
 		local::sparse_list pattern_transpose;
 		pattern_transpose.resize(n, m);
-		local::set_internal_sparsity(
-			transpose, is_tape, internal_index, pattern_transpose, pattern
+		local::set_internal_sparsity(zero_empty, input_empty,
+			transpose, internal_index, pattern_transpose, pattern
 		);
 		//
 		// execute coloring algorithm
@@ -530,12 +531,13 @@ size_t ADFun<Base>::sparse_jac_rev(
 		vector<size_t> internal_index(m);
 		for(size_t i = 0; i < m; i++)
 			internal_index[i] = i;
-		bool transpose = false;
-		bool is_tape   = false;
+		bool transpose   = false;
+		bool zero_empty  = false;
+		bool input_empty = true;
 		local::sparse_list internal_pattern;
 		internal_pattern.resize(m, n);
-		local::set_internal_sparsity(
-			transpose, is_tape, internal_index, internal_pattern, pattern
+		local::set_internal_sparsity(zero_empty, input_empty,
+			transpose, internal_index, internal_pattern, pattern
 		);
 		//
 		// execute coloring algorithm
