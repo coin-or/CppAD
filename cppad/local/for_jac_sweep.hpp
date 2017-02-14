@@ -137,8 +137,10 @@ void ForJacSweep(
 	}
 
 	// --------------------------------------------------------------
-	// work space used by UserOp.
+	// user's atomic op calculator
+	atomic_base<Base>* user_atom = CPPAD_NULL;
 	//
+	// work space used by UserOp.
 	const size_t user_q = limit; // maximum element plus one
 	vector<Base>       user_x;   // value of parameter arguments to function
 	vector<size_t>     user_ix;  // variable index (on tape) for each argument
@@ -147,8 +149,6 @@ void ForJacSweep(
 	// information defined by forward_user
 	size_t user_old=0, user_m=0, user_n=0, user_i=0, user_j=0;
 	enum_user_state user_state = start_user; // proper initialization
-	//
-	atomic_base<Base>* user_atom = CPPAD_NULL; // user's atomic op calculator
 	//
 	// pointer to the beginning of the parameter vector
 	// (used by user atomic functions)
@@ -619,18 +619,18 @@ void ForJacSweep(
 			// -------------------------------------------------
 
 			case UserOp:
-			// start or end an atomic operation sequence
 			flag = user_state == start_user;
 			user_atom = play->forward_user(op, user_state,
 				user_old, user_m, user_n, user_i, user_j
 			);
 			if( flag )
-			{	user_x.resize( user_n );
+			{	// start of atomic operation sequence
+				user_x.resize( user_n );
 				user_ix.resize( user_n );
 				user_iy.resize( user_m );
 			}
 			else
-			{
+			{	// end of atomic operation sequence
 				user_atom->set_old(user_old);
 # ifdef NDEBUG
 				user_atom->for_sparse_jac(
@@ -666,9 +666,11 @@ void ForJacSweep(
 			break;
 
 			case UsrapOp:
-			// parameter argument in an atomic operation sequence
+			CPPAD_ASSERT_UNKNOWN( size_t(arg[0]) < num_par );
+			// argument parameter value
 			user_x[user_j]  = parameter[arg[0]];
-			user_ix[user_j] = 0; // special variable index used for parameters
+			// special variable index used for parameters
+			user_ix[user_j] = 0;
 			//
 			play->forward_user(op, user_state,
 				user_old, user_m, user_n, user_i, user_j
@@ -679,7 +681,8 @@ void ForJacSweep(
 			// variable argument in an atomic operation sequence
 			// variable as integers
 			user_x[user_j]  = CppAD::numeric_limits<Base>::quiet_NaN();
-			user_ix[user_j] = arg[0]; // variable index for this argument
+			// variable index for this argument
+			user_ix[user_j] = arg[0];
 			play->forward_user(op, user_state,
 				user_old, user_m, user_n, user_i, user_j
 			);
