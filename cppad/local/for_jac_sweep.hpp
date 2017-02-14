@@ -146,9 +146,10 @@ void ForJacSweep(
 	vector<size_t>     user_ix;  // variable index (on tape) for each argument
 	vector<size_t>     user_iy;  // variable index (on tape) for each result
 	//
-	// information defined by forward_user
+	// information set by forward_user (initialization to avoid warnings)
 	size_t user_old=0, user_m=0, user_n=0, user_i=0, user_j=0;
-	enum_user_state user_state = start_user; // proper initialization
+	// information set by forward_user (necessary initialization)
+	enum_user_state user_state = start_user;
 	//
 	// pointer to the beginning of the parameter vector
 	// (used by user atomic functions)
@@ -158,6 +159,7 @@ void ForJacSweep(
 	// --------------------------------------------------------------
 
 # if CPPAD_FOR_JAC_SWEEP_TRACE
+	vector<size_t>    user_usrrp; // parameter index for UsrrpOp operators
 	std::cout << std::endl;
 	CppAD::vectorBool z_value(limit);
 # endif
@@ -628,6 +630,9 @@ void ForJacSweep(
 				user_x.resize( user_n );
 				user_ix.resize( user_n );
 				user_iy.resize( user_m );
+# if CPPAD_FOR_JAC_SWEEP_TRACE
+				user_usrrp.resize( user_m );
+# endif
 			}
 			else
 			{	// end of atomic operation sequence
@@ -689,8 +694,12 @@ void ForJacSweep(
 			break;
 
 			case UsrrpOp:
-			// parameter result in an atomic operation sequence
-			user_iy[user_i] = 0; // special variable index used for parameters
+			// special variable index used for parameters
+			user_iy[user_i] = 0;
+# if CPPAD_FOR_JAC_SWEEP_TRACE
+			// remember argument for delayed tracing
+			user_usrrp[user_i] = arg[0];
+# endif
 			play->forward_user(op, user_state,
 				user_old, user_m, user_n, user_i, user_j
 			);
@@ -732,6 +741,48 @@ void ForJacSweep(
 			CPPAD_ASSERT_UNKNOWN(0);
 		}
 # if CPPAD_FOR_JAC_SWEEP_TRACE
+		if( op == UserOp && user_state == start_user )
+		{	// print operators that have been delayed
+			CPPAD_ASSERT_UNKNOWN( user_m == user_iy.size() );
+			CPPAD_ASSERT_UNKNOWN( i_op > user_m );
+			CPPAD_ASSERT_NARG_NRES(UsrrpOp, 1, 0);
+			CPPAD_ASSERT_NARG_NRES(UsrrvOp, 0, 1);
+			addr_t arg_tmp[1];
+			for(i = 0; i < user_m; i++)
+			{	size_t j_var = user_iy[i];
+				// value for this variable
+				for(j = 0; j < limit; j++)
+					z_value[j] = false;
+				typename Vector_set::const_iterator itr(var_sparsity, j_var);
+				j = *itr;
+				while( j < limit )
+				{	z_value[j] = true;
+					j = *(++itr);
+				}
+				OpCode op_tmp = UsrrvOp;
+				if( j_var == 0 )
+				{	op_tmp     = UsrrpOp;
+					arg_tmp[0] = user_usrrp[i];
+				}
+				// j_var is zero when there is no result.
+				printOp(
+					std::cout,
+					play,
+					i_op - user_m + i,
+					j_var,
+					op_tmp,
+					arg_tmp
+				);
+				if( j_var > 0 ) printOpResult(
+					std::cout,
+					1,
+					&z_value,
+					0,
+					(CppAD::vectorBool *) CPPAD_NULL
+				);
+				std::cout << std::endl;
+			}
+		}
 		const addr_t*   arg_tmp = arg;
 		if( op == CSumOp )
 			arg_tmp = arg - arg[-1] - 4;
@@ -747,22 +798,27 @@ void ForJacSweep(
 		{	z_value[j] = true;
 			j = *(++itr);
 		}
-		printOp(
-			std::cout,
-			play,
-			i_op,
-			i_var,
-			op,
-			arg_tmp
-		);
-		if( NumRes(op) > 0 ) printOpResult(
-			std::cout,
-			1,
-			&z_value,
-			0,
-			(CppAD::vectorBool *) CPPAD_NULL
-		);
-		std::cout << std::endl;
+		// must delay print for these cases till after atomic user call
+		bool delay_print = op == UsrrpOp;
+		delay_print     |= op == UsrrvOp;
+		if( ! delay_print )
+		{	 printOp(
+				std::cout,
+				play,
+				i_op,
+				i_var,
+				op,
+				arg_tmp
+			);
+			if( NumRes(op) > 0 && (! delay_print) ) printOpResult(
+				std::cout,
+				1,
+				&z_value,
+				0,
+				(CppAD::vectorBool *) CPPAD_NULL
+			);
+			std::cout << std::endl;
+		}
 	}
 	std::cout << std::endl;
 # else
