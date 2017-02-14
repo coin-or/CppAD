@@ -255,11 +255,6 @@ sparse_pack or sparse_list.
 \param transpose
 If this is true, pattern_out is transposed.
 
-\param tape
-If this is true, the internal sparstity pattern corresponds to the tape.
-This means that row index zero, in the internal sparsity pattern,
-corresponds to a parameter and must be empty.
-
 \param internal_index
 If transpose is false (true)
 this is the mapping from row (column) an index in pattern_out
@@ -276,7 +271,6 @@ in internal_index, or its transpose, depending on the value of transpose.
 template <class SizeVector, class InternalSparsity>
 void get_internal_sparsity(
 	bool                          transpose         ,
-	bool                          tape              ,
 	const vector<size_t>&         internal_index    ,
 	const InternalSparsity&       internal_pattern  ,
 	sparse_rc<SizeVector>&        pattern_out        )
@@ -292,8 +286,7 @@ void get_internal_sparsity(
 		iterator itr(internal_pattern, internal_index[i]);
 		size_t j = *itr;
 		while( j < nc )
-		{	CPPAD_ASSERT_UNKNOWN( ! ( tape && internal_index[i] == 0 ) );
-			++nnz;
+		{	++nnz;
 			j = *(++itr);
 		}
 	}
@@ -329,7 +322,6 @@ void get_internal_sparsity(
 template <class InternalSparsity>
 void get_internal_sparsity(
 	bool                          transpose         ,
-	bool                          tape              ,
 	const vector<size_t>&         internal_index    ,
 	const InternalSparsity&       internal_pattern  ,
 	vectorBool&                   pattern_out       )
@@ -349,8 +341,7 @@ void get_internal_sparsity(
 		iterator itr(internal_pattern, internal_index[i]);
 		size_t j = *itr;
 		while( j < nc )
-		{	CPPAD_ASSERT_UNKNOWN( ! ( tape && internal_index[i] == 0 ) );
-			if( transpose )
+		{	if( transpose )
 				pattern_out[j * nr + i] = true;
 			else
 				pattern_out[i * nc + j] = true;
@@ -362,7 +353,6 @@ void get_internal_sparsity(
 template <class InternalSparsity>
 void get_internal_sparsity(
 	bool                          transpose         ,
-	bool                          tape              ,
 	const vector<size_t>&         internal_index    ,
 	const InternalSparsity&       internal_pattern  ,
 	vector<bool>&                 pattern_out       )
@@ -382,8 +372,7 @@ void get_internal_sparsity(
 		iterator itr(internal_pattern, internal_index[i]);
 		size_t j = *itr;
 		while( j < nc )
-		{	CPPAD_ASSERT_UNKNOWN( ! ( tape && internal_index[i] == 0 ) );
-			if( transpose )
+		{	if( transpose )
 				pattern_out[j * nr + i] = true;
 			else
 				pattern_out[i * nc + j] = true;
@@ -395,7 +384,6 @@ void get_internal_sparsity(
 template <class InternalSparsity>
 void get_internal_sparsity(
 	bool                          transpose         ,
-	bool                          tape              ,
 	const vector<size_t>&         internal_index    ,
 	const InternalSparsity&       internal_pattern  ,
 	vector< std::set<size_t> >&   pattern_out       )
@@ -416,8 +404,7 @@ void get_internal_sparsity(
 		iterator itr(internal_pattern, internal_index[i]);
 		size_t j = *itr;
 		while( j < nc )
-		{	CPPAD_ASSERT_UNKNOWN( ! ( tape && internal_index[i] == 0 ) );
-			if( transpose )
+		{	if( transpose )
 				pattern_out[j].insert(i);
 			else
 				pattern_out[i].insert(j);

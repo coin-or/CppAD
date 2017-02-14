@@ -251,7 +251,7 @@ void ADFun<Base>::for_jac_sparsity(
 		);
 		// set the output pattern
 		local::get_internal_sparsity(
-			transpose, is_tape, dep_taddr_, for_jac_sparse_pack_, pattern_out
+			transpose, dep_taddr_, for_jac_sparse_pack_, pattern_out
 		);
 	}
 	else
@@ -280,7 +280,7 @@ void ADFun<Base>::for_jac_sparsity(
 		);
 		// get the ouput pattern
 		local::get_internal_sparsity(
-			transpose, is_tape, dep_taddr_, for_jac_sparse_set_, pattern_out
+			transpose, dep_taddr_, for_jac_sparse_set_, pattern_out
 		);
 	}
 	return;

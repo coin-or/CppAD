@@ -1204,7 +1204,7 @@ bool for_sparse_jac(
 	{	vectorBool& pack_r ( afun_pack_r_[thread] );
 		vectorBool& pack_s ( afun_pack_s_[thread] );
 		local::get_internal_sparsity(
-			transpose, tape, x_index, var_sparsity, pack_r
+			transpose, x_index, var_sparsity, pack_r
 		);
 		//
 		pack_s.resize(m * q );
@@ -1220,7 +1220,7 @@ bool for_sparse_jac(
 	{	vector<bool>& bool_r ( afun_bool_r_[thread] );
 		vector<bool>& bool_s ( afun_bool_s_[thread] );
 		local::get_internal_sparsity(
-			transpose, tape, x_index, var_sparsity, bool_r
+			transpose, x_index, var_sparsity, bool_r
 		);
 		//
 		bool_s.resize(m * q );
@@ -1237,7 +1237,7 @@ bool for_sparse_jac(
 		vector< std::set<size_t> >& set_r ( afun_set_r_[thread] );
 		vector< std::set<size_t> >& set_s ( afun_set_s_[thread] );
 		local::get_internal_sparsity(
-			transpose, tape, x_index, var_sparsity, set_r
+			transpose, x_index, var_sparsity, set_r
 		);
 		//
 		set_s.resize(m);

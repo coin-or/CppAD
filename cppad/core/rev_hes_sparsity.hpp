@@ -187,7 +187,6 @@ void ADFun<Base>::rev_hes_sparsity(
 		rev_jac_pattern[ dep_taddr_[i] ] = select_range[i];
 	//
 	//
-	bool is_tape = true;
 	if( internal_bool )
 	{	CPPAD_ASSERT_KNOWN(
 			for_jac_sparse_pack_.n_set() > 0,
@@ -214,7 +213,7 @@ void ADFun<Base>::rev_hes_sparsity(
 		);
 		// get sparstiy pattern for independent variables
 		local::get_internal_sparsity(
-			transpose, is_tape, ind_taddr_, internal_hes, pattern_out
+			transpose, ind_taddr_, internal_hes, pattern_out
 		);
 	}
 	else
@@ -243,7 +242,7 @@ void ADFun<Base>::rev_hes_sparsity(
 		);
 		// get sparstiy pattern for independent variables
 		local::get_internal_sparsity(
-			transpose, is_tape, ind_taddr_, internal_hes, pattern_out
+			transpose, ind_taddr_, internal_hes, pattern_out
 		);
 	}
 	return;

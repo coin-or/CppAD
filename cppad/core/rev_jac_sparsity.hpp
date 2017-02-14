@@ -211,7 +211,7 @@ void ADFun<Base>::rev_jac_sparsity(
 		);
 		// get sparstiy pattern for independent variables
 		local::get_internal_sparsity(
-			! transpose, is_tape, ind_taddr_, internal_jac, pattern_out
+			! transpose, ind_taddr_, internal_jac, pattern_out
 		);
 	}
 	else
@@ -239,7 +239,7 @@ void ADFun<Base>::rev_jac_sparsity(
 		);
 		// get sparstiy pattern for independent variables
 		local::get_internal_sparsity(
-			! transpose, is_tape, ind_taddr_, internal_jac, pattern_out
+			! transpose, ind_taddr_, internal_jac, pattern_out
 		);
 	}
 	return;
