@@ -26,9 +26,22 @@ $spell
 	cppad
 	tapeless
 	Retape
+	jac
+	isnan
 $$
 
 $section The CppAD Wish List$$
+
+$head Atomic$$
+Add an
+$cref atomic_option$$ that checks if the sparsity patterns calculated
+by user atomic functions have
+elements for arguments that are know to be parameters and
+could be more efficient.
+For example, the user's version of $code for_sparse_jac$$ could check
+$cref/x/atomic_for_sparse_jac/Implementation/x/$$ to see for which components
+are variables;
+i.e., $cref/isnan(x[j])/nan/isnan/$$ is true for a particular call.
 
 $head Deprecated$$
 Move files that only implement deprecated features into the

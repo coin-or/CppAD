@@ -62,9 +62,8 @@ sparse_pack or sparse_list.
 
 \param zero_empty
 If this is true, the internal sparstity pattern corresponds to row zero
-must be empty on input and output. It is usefull to check this because
-index zero, on the tape, is used for paramters and should not have
-entries in the corresponding sparsity.
+must be empty on input and will be emtpy output; i.e., any corresponding
+values in pattern_in will be ignored.
 
 \param input_empty
 If this is true, the initial sparsity pattern for row
@@ -131,12 +130,13 @@ void set_internal_sparsity(
 		size_t c = col[k];
 		if( transpose )
 			std::swap(r, c);
-		// this assert may occur when a useratomic function returns
-		// non-empty sparsity for a variable CppAD knows is a parameter.
-		CPPAD_ASSERT_UNKNOWN(! ( zero_empty && internal_index[r] == 0 ) );
-		CPPAD_ASSERT_UNKNOWN( internal_index[r] < internal_pattern.n_set() );
+		//
+		size_t i_var = internal_index[r];
+		CPPAD_ASSERT_UNKNOWN( i_var < internal_pattern.n_set() );
 		CPPAD_ASSERT_UNKNOWN( c < nc );
-		internal_pattern.add_element( internal_index[r], c );
+		bool ignore  = zero_empty && i_var == 0;
+		if( ! ignore )
+			internal_pattern.add_element( internal_index[r], c );
 	}
 }
 template <class InternalSparsity>
@@ -163,11 +163,11 @@ void set_internal_sparsity(
 				flag = pattern_in[j * nr + i];
 			if( flag )
 			{	size_t i_var = internal_index[i];
-				// this assert may occur when a useratomic function returns
-				// non-empty sparsity for a variable CppAD knows is a parameter.
-				CPPAD_ASSERT_UNKNOWN(! ( zero_empty && i_var == 0 ) );
 				CPPAD_ASSERT_UNKNOWN( i_var < internal_pattern.n_set() );
-				internal_pattern.add_element( i_var, j);
+				CPPAD_ASSERT_UNKNOWN( j < nc );
+				bool ignore  = zero_empty && i_var == 0;
+				if( ! ignore )
+					internal_pattern.add_element( i_var, j);
 			}
 		}
 	}
@@ -197,11 +197,11 @@ void set_internal_sparsity(
 				flag = pattern_in[j * nr + i];
 			if( flag )
 			{	size_t i_var = internal_index[i];
-				// this assert may occur when a useratomic function returns
-				// non-empty sparsity for a variable CppAD knows is a parameter.
-				CPPAD_ASSERT_UNKNOWN(! ( zero_empty && i_var == 0 ) );
 				CPPAD_ASSERT_UNKNOWN( i_var < internal_pattern.n_set() );
-				internal_pattern.add_element( i_var, j);
+				CPPAD_ASSERT_UNKNOWN( j < nc );
+				bool ignore  = zero_empty && i_var == 0;
+				if( ! ignore )
+					internal_pattern.add_element( i_var, j);
 			}
 		}
 	}
@@ -230,11 +230,11 @@ void set_internal_sparsity(
 			while( itr != pattern_in[j].end() )
 			{	size_t i = *itr;
 				size_t i_var = internal_index[i];
-				// this assert may occur when a useratomic function returns
-				// non-empty sparsity for a variable CppAD knows is a parameter.
-				CPPAD_ASSERT_UNKNOWN(! ( zero_empty && i_var == 0 ) );
 				CPPAD_ASSERT_UNKNOWN( i_var < internal_pattern.n_set() );
-				internal_pattern.add_element( i_var, j);
+				CPPAD_ASSERT_UNKNOWN( j < nc );
+				bool ignore  = zero_empty && i_var == 0;
+				if( ! ignore )
+					internal_pattern.add_element( i_var, j);
 				++itr;
 			}
 		}
@@ -246,11 +246,11 @@ void set_internal_sparsity(
 			while( itr != pattern_in[i].end() )
 			{	size_t j = *itr;
 				size_t i_var = internal_index[i];
-				// this assert may occur when a user atomic function returns
-				// non-empty sparsity for a variable CppAD knows is a parameter.
-				CPPAD_ASSERT_UNKNOWN(! ( zero_empty && i_var == 0 ) );
 				CPPAD_ASSERT_UNKNOWN( i_var < internal_pattern.n_set() );
-				internal_pattern.add_element( i_var, j);
+				CPPAD_ASSERT_UNKNOWN( j < nc );
+				bool ignore  = zero_empty && i_var == 0;
+				if( ! ignore )
+					internal_pattern.add_element( i_var, j);
 				++itr;
 			}
 		}
@@ -415,6 +415,8 @@ void get_internal_sparsity(
 		pattern_out.resize(nc);
 	else
 		pattern_out.resize(nr);
+	for(size_t k = 0; k < pattern_out.size(); k++)
+		pattern_out[k].clear();
 	//
 	for(size_t i = 0; i < nr; i++)
 	{	CPPAD_ASSERT_UNKNOWN( internal_index[i] < internal_pattern.n_set() );

@@ -621,6 +621,9 @@ void ForJacSweep(
 			// -------------------------------------------------
 
 			case UserOp:
+			CPPAD_ASSERT_UNKNOWN(
+				user_state == start_user || user_state == end_user
+			);
 			flag = user_state == start_user;
 			user_atom = play->forward_user(op, user_state,
 				user_old, user_m, user_n, user_i, user_j
@@ -683,8 +686,7 @@ void ForJacSweep(
 			break;
 
 			case UsravOp:
-			// variable argument in an atomic operation sequence
-			// variable as integers
+			// argument variables not avaiable during sparsity calculations
 			user_x[user_j]  = CppAD::numeric_limits<Base>::quiet_NaN();
 			// variable index for this argument
 			user_ix[user_j] = arg[0];
@@ -706,6 +708,7 @@ void ForJacSweep(
 			break;
 
 			case UsrrvOp:
+			// variable index for this result
 			user_iy[user_i] = i_var;
 			play->forward_user(op, user_state,
 				user_old, user_m, user_n, user_i, user_j
