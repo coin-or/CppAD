@@ -33,7 +33,7 @@ private:
 	/// typedef in multiple_n_bit() in test_more/sparse_hacobian.cpp)
 	typedef size_t Pack;
 	/// Number of bits per Pack value
-	const size_t n_bit_ = std::numeric_limits<Pack>::digits;
+	const size_t n_bit_;
 	/// Number of sets that we are representing
 	/// (set by constructor and resize).
 	size_t n_set_;
@@ -53,6 +53,7 @@ public:
 	/*! Default constructor (no sets)
 	*/
 	sparse_pack(void) :
+	n_bit_( std::numeric_limits<Pack>::digits ),
 	n_set_(0)      ,
 	end_(0)        ,
 	n_pack_(0)
@@ -63,7 +64,8 @@ public:
 	\param v
 	vector that we are attempting to make a copy of.
 	*/
-	sparse_pack(const sparse_pack& v)
+	sparse_pack(const sparse_pack& v) :
+	n_bit_( std::numeric_limits<Pack>::digits )
 	{	// Error:
 		// Probably a sparse_pack argument has been passed by value
 		CPPAD_ASSERT_UNKNOWN(0);
