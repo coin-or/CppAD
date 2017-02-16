@@ -26,6 +26,10 @@ $$
 
 $section Changes and Additions to CppAD During 2017$$
 
+$head 02-15$$
+Fix bug when using $cref ForSparseHes$$ with atomic functions; i.e.,
+$cref atomic_for_sparse_hes$$.
+
 $head 02-13$$
 Improve $cref/for_sparse_jac/atomic_eigen_mat_mul.hpp/Private/for_sparse_jac/$$
 calculation in $code eigen_mat_mul.hpp$$ example.

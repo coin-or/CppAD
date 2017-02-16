@@ -472,12 +472,25 @@ void ForHesSweep(
 						if( flag )
 						{	size_t i_x = user_ix[i];
 							size_t j_x = user_ix[j];
-							for_hes_sparse.binary_union(
-								i_x, i_x, j_x, for_jac_sparse
-							);
-							for_hes_sparse.binary_union(
-								j_x, j_x, i_x, for_jac_sparse
-							);
+							{	typename Vector_set::const_iterator
+									itr_i(for_jac_sparse, i_x);
+								size_t ix = *itr_i;
+								while( ix < for_jac_sparse.end() )
+								{	for_hes_sparse.binary_union(
+										ix, ix, j_x, for_jac_sparse
+									);
+									ix = *(++itr_i);
+								}
+								typename Vector_set::const_iterator
+									itr_j(for_jac_sparse, j_x);
+								size_t jx = *itr_j;
+								while( jx < for_jac_sparse.end() )
+								{	for_hes_sparse.binary_union(
+										jx, jx, i_x, for_jac_sparse
+									);
+									jx = *(++itr_j);
+								}
+							}
 						}
 					}
 				}
