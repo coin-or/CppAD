@@ -1,9 +1,8 @@
-// $Id$
 # ifndef CPPAD_LOCAL_FOR_HES_SWEEP_HPP
 # define CPPAD_LOCAL_FOR_HES_SWEEP_HPP
 
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-16 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-17 Bradley M. Bell
 
 CppAD is distributed under multiple licenses. This distribution is under
 the terms of the
@@ -79,18 +78,18 @@ the set with index i has element zero.
 Otherwise it has no elements.
 
 \param for_hes_sparse
-The reverse Hessian sparsity pattern for the variable with index i
+The forward Hessian sparsity pattern for the variable with index i
 corresponds to the set with index i in \a for_hes_sparse.
 The number of rows in this sparsity patter is n+1 and the row
 with index zero is not used.
 \n
 \n
 \b Input: For i = 1 , ... , \a n
-the reverse Hessian sparsity pattern for the variable with index i is empty.
+the forward Hessian sparsity pattern for the variable with index i is empty.
 \n
 \n
 \b Output: For j = 1 , ... , \a n,
-the reverse Hessian sparsity pattern for the independent dependent variable
+the forward Hessian sparsity pattern for the independent dependent variable
 with index (j-1) is given by the set with index j
 in \a for_hes_sparse.
 */
@@ -473,12 +472,25 @@ void ForHesSweep(
 						if( flag )
 						{	size_t i_x = user_ix[i];
 							size_t j_x = user_ix[j];
-							for_hes_sparse.binary_union(
-								i_x, i_x, j_x, for_jac_sparse
-							);
-							for_hes_sparse.binary_union(
-								j_x, j_x, i_x, for_jac_sparse
-							);
+							{	typename Vector_set::const_iterator
+									itr_i(for_jac_sparse, i_x);
+								size_t ix = *itr_i;
+								while( ix < for_jac_sparse.end() )
+								{	for_hes_sparse.binary_union(
+										ix, ix, j_x, for_jac_sparse
+									);
+									ix = *(++itr_i);
+								}
+								typename Vector_set::const_iterator
+									itr_j(for_jac_sparse, j_x);
+								size_t jx = *itr_j;
+								while( jx < for_jac_sparse.end() )
+								{	for_hes_sparse.binary_union(
+										jx, jx, i_x, for_jac_sparse
+									);
+									jx = *(++itr_j);
+								}
+							}
 						}
 					}
 				}
