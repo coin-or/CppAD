@@ -150,13 +150,13 @@ void ForJacSweep(
 	size_t user_old=0, user_m=0, user_n=0, user_i=0, user_j=0;
 	// information set by forward_user (necessary initialization)
 	enum_user_state user_state = start_user;
+	// --------------------------------------------------------------
 	//
 	// pointer to the beginning of the parameter vector
 	// (used by user atomic functions)
 	const Base* parameter = CPPAD_NULL;
 	if( num_par > 0 )
 		parameter = play->GetPar();
-	// --------------------------------------------------------------
 
 # if CPPAD_FOR_JAC_SWEEP_TRACE
 	vector<size_t>    user_usrrp; // parameter index for UsrrpOp operators
@@ -629,7 +629,7 @@ void ForJacSweep(
 				user_old, user_m, user_n, user_i, user_j
 			);
 			if( flag )
-			{	// start of atomic operation sequence
+			{	// start of user atomic operation sequence
 				user_x.resize( user_n );
 				user_ix.resize( user_n );
 				user_iy.resize( user_m );
@@ -638,7 +638,7 @@ void ForJacSweep(
 # endif
 			}
 			else
-			{	// end of atomic operation sequence
+			{	// end of user atomic operation sequence
 				user_atom->set_old(user_old);
 # ifdef NDEBUG
 				user_atom->for_sparse_jac(
@@ -686,10 +686,13 @@ void ForJacSweep(
 			break;
 
 			case UsravOp:
+			CPPAD_ASSERT_UNKNOWN( size_t(arg[0]) <= i_var );
+			CPPAD_ASSERT_UNKNOWN( 0 < arg[0] );
 			// argument variables not avaiable during sparsity calculations
 			user_x[user_j]  = CppAD::numeric_limits<Base>::quiet_NaN();
 			// variable index for this argument
 			user_ix[user_j] = arg[0];
+			//
 			play->forward_user(op, user_state,
 				user_old, user_m, user_n, user_i, user_j
 			);

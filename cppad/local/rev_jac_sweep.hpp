@@ -154,6 +154,7 @@ void RevJacSweep(
 	size_t user_old=0, user_m=0, user_n=0, user_i=0, user_j=0;
 	// information set by forward_user (necessary initialization)
 	enum_user_state user_state = end_user; // proper initialization
+	// ----------------------------------------------------------------------
 	//
 	// pointer to the beginning of the parameter vector
 	// (used by atomic functions
@@ -627,12 +628,13 @@ void RevJacSweep(
 				user_old, user_m, user_n, user_i, user_j
 			);
 			if( flag )
-			{	user_x.resize( user_n );
+			{	// start of user atomic operation sequence
+				user_x.resize( user_n );
 				user_ix.resize( user_n );
 				user_iy.resize( user_m );
 			}
 			else
-			{	// call users function for this operation
+			{	// end of users atomic operation sequence
 				user_atom->set_old(user_old);
 # ifdef NDEBUG
 				user_atom->rev_sparse_jac(
@@ -754,6 +756,8 @@ void RevJacSweep(
 			op,
 			arg
 		);
+		// Note that sparsity for UsrrvOp are computed before call to
+		// atomic function so no need to delay printing (as in forward mode)
 		if( NumRes(op) > 0 && op != BeginOp ) printOpResult(
 			std::cout,
 			0,

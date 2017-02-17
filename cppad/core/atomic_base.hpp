@@ -56,10 +56,15 @@ private:
 	//
 	vectorBool                  afun_pack_r_[CPPAD_MAX_NUM_THREADS];
 	vectorBool                  afun_pack_s_[CPPAD_MAX_NUM_THREADS];
+	vectorBool                  afun_pack_h_[CPPAD_MAX_NUM_THREADS];
+	//
 	vector<bool>                afun_bool_r_[CPPAD_MAX_NUM_THREADS];
 	vector<bool>                afun_bool_s_[CPPAD_MAX_NUM_THREADS];
+	vector<bool>                afun_bool_h_[CPPAD_MAX_NUM_THREADS];
+	//
 	vector< std::set<size_t> >  afun_set_r_[CPPAD_MAX_NUM_THREADS];
 	vector< std::set<size_t> >  afun_set_s_[CPPAD_MAX_NUM_THREADS];
+	vector< std::set<size_t> >  afun_set_h_[CPPAD_MAX_NUM_THREADS];
 	//
 	// -----------------------------------------------------
 	// static member functions
@@ -1110,7 +1115,7 @@ $end
 -----------------------------------------------------------------------------
 */
 /*!
-Link after case split, from for_jac_sweep to atomic_base.
+Link, after case split, from for_jac_sweep to atomic_base.
 
 \param q
 is the column dimension for the Jacobian sparsity partterns.
@@ -1160,7 +1165,7 @@ virtual bool for_sparse_jac(
 {	return false; }
 
 /*!
-Link before case split, from for_jac_sweep to atomic_base.
+Link, before case split, from for_jac_sweep to atomic_base.
 
 \tparam InternalSparsity
 Is the used internaly for sparsity calculations; i.e.,
@@ -1170,7 +1175,7 @@ sparse_pack or sparse_list.
 is the column dimension, on the tape, for the Jacobian sparsity partterns.
 
 \param x
-is parameter arguments to the function, other components are not defined.
+is parameter arguments to the function, other components are nan.
 
 \param x_index
 is the variable index, on the tape, for the arguments to this function.
@@ -1190,9 +1195,9 @@ for the j-th result for this atomic function.
 template <class InternalSparsity>
 bool for_sparse_jac(
 	size_t                     q            ,
-	vector<Base>&              x            ,
-	vector<size_t>&            x_index      ,
-	vector<size_t>&            y_index      ,
+	const vector<Base>&        x            ,
+	const vector<size_t>&      x_index      ,
+	const vector<size_t>&      y_index      ,
 	InternalSparsity&          var_sparsity )
 {
 	// intial results are empty during forward mode
@@ -1374,7 +1379,7 @@ $end
 -----------------------------------------------------------------------------
 */
 /*!
-Link after case split, from rev_jac_sweep to atomic_base
+Link, after case split, from rev_jac_sweep to atomic_base
 
 \param q [in]
 is the row dimension for the Jacobian sparsity partterns
@@ -1424,7 +1429,7 @@ virtual bool rev_sparse_jac(
 {	return false; }
 
 /*!
-Link before case split, from rev_jac_sweep to atomic_base.
+Link, before case split, from rev_jac_sweep to atomic_base.
 
 \tparam InternalSparsity
 Is the used internaly for sparsity calculations; i.e.,
@@ -1434,7 +1439,7 @@ sparse_pack or sparse_list.
 is the column dimension, on the tape, for the Jacobian sparsity partterns.
 
 \param x
-is parameter arguments to the function, other components are not defined.
+is parameter arguments to the function, other components are nan.
 
 \param x_index
 is the variable index, on the tape, for the arguments to this function.
@@ -1453,9 +1458,9 @@ the sparsity has been updated to remove y as a function of x.
 template <class InternalSparsity>
 bool rev_sparse_jac(
 	size_t                     q            ,
-	vector<Base>&              x            ,
-	vector<size_t>&            x_index      ,
-	vector<size_t>&            y_index      ,
+	const vector<Base>&        x            ,
+	const vector<size_t>&      x_index      ,
+	const vector<size_t>&      y_index      ,
 	InternalSparsity&          var_sparsity )
 {
 	// initial results may be non-empty during reverse mode
@@ -1637,7 +1642,7 @@ $end
 -----------------------------------------------------------------------------
 */
 /*!
-Link from forward Hessian sparsity sweep to base_atomic
+Link, after case split, from for_hes_sweep to atomic_base.
 
 \param vx [in]
 which componens of x are variables.
@@ -1695,6 +1700,146 @@ virtual bool for_sparse_hes(
 	const vector<bool>&             s  ,
 	vectorBool&                     h  )
 {	return false; }
+/*!
+Link, before case split, from for_hes_sweep to atomic_base.
+
+\tparam InternalSparsity
+Is the used internaly for sparsity calculations; i.e.,
+sparse_pack or sparse_list.
+
+\param x
+is parameter arguments to the function, other components are nan.
+
+\param x_index
+is the variable index, on the tape, for the arguments to this function.
+This size of x_index is n, the number of arguments to this function.
+
+\param y_index
+is the variable index, on the tape, for the results for this function.
+This size of y_index is m, the number of results for this function.
+
+\param for_jac_sparsity
+On input, for j = 0, ... , n-1, the sparsity pattern with index x_index[j],
+is the forward Jacobian sparsity for the j-th argument to this atomic function.
+
+\param rev_jac_sparsity
+On input, for i = 0, ... , m-1, the sparsity pattern with index y_index[i],
+is the reverse Jacobian sparsity for the i-th result to this atomic function.
+This shows which components of the result affect the function we are
+computing the Hessian of.
+
+\param for_hes_sparsity
+This is the sparsity pattern for the Hessian. On input, the non-linear
+terms in the atomic fuction have not been included. Upon return, they
+have been included.
+*/
+template <class InternalSparsity>
+bool for_sparse_hes(
+	const vector<Base>&        x                ,
+	const vector<size_t>&      x_index          ,
+	const vector<size_t>&      y_index          ,
+	const InternalSparsity&    for_jac_sparsity ,
+	const InternalSparsity&    rev_jac_sparsity ,
+	InternalSparsity&          for_hes_sparsity )
+{	typedef typename InternalSparsity::const_iterator const_iterator;
+	CPPAD_ASSERT_UNKNOWN( rev_jac_sparsity.end() == 1 );
+	size_t n      = x_index.size();
+	size_t m      = y_index.size();
+	bool   ok     = false;
+	size_t thread = thread_alloc::thread_num();
+	//
+	// vx
+	vector<bool> vx(n);
+	for(size_t j = 0; j < n; j++)
+		vx[j] = x_index[j] != 0;
+	//
+	// bool_r
+	vector<bool>& bool_r( afun_bool_r_[thread] );
+	bool_r.resize(n);
+	for(size_t j = 0; j < n; j++)
+	{	// check if we must compute row and column j of h
+		const_iterator itr(for_jac_sparsity, x_index[j]);
+		size_t i = *itr;
+		bool_r[j] = i < for_jac_sparsity.end();
+	}
+	//
+	// bool s
+	vector<bool>& bool_s( afun_bool_s_[thread] );
+	bool_s.resize(m);
+	for(size_t i = 0; i < m; i++)
+	{	// check if row i of result is included in h
+		bool_s[i] = rev_jac_sparsity.is_element(y_index[i], 0);
+	}
+	//
+	// h
+	vectorBool&                 pack_h( afun_pack_h_[thread] );
+	vector<bool>&               bool_h( afun_bool_h_[thread] );
+	vector< std::set<size_t> >& set_h(  afun_set_h_[thread] );
+	//
+	// call user's version of atomic function
+	if( sparsity_ == pack_sparsity_enum )
+	{	pack_h.resize(n * n);
+		ok = for_sparse_hes(vx, bool_r, bool_s, pack_h, x);
+		if( ! ok )
+			ok = for_sparse_hes(vx, bool_r, bool_s, pack_h);
+	}
+	else if( sparsity_ == bool_sparsity_enum )
+	{	bool_h.resize(n * n);
+		ok = for_sparse_hes(vx, bool_r, bool_s, bool_h, x);
+		if( ! ok )
+			ok = for_sparse_hes(vx, bool_r, bool_s, bool_h);
+	}
+	else
+	{	CPPAD_ASSERT_UNKNOWN( sparsity_ == set_sparsity_enum )
+		set_h.resize(n);
+		ok = for_sparse_hes(vx, bool_r, bool_s, set_h, x);
+		if( ! ok )
+			ok = for_sparse_hes(vx, bool_r, bool_s, set_h);
+	}
+	//
+	// modify hessian in calling routine
+	if( ok )
+	{	for(size_t i = 0; i < n; i++)
+		{	for(size_t j = 0; j < n; j++)
+			{	if( (x_index[i] > 0) & (x_index[j] > 0) )
+				{	bool flag = false;
+					switch( sparsity_ )
+					{	case pack_sparsity_enum:
+						flag = pack_h[i * n + j];
+						break;
+						//
+						case bool_sparsity_enum:
+						flag = bool_h[i * n + j];
+						break;
+						//
+						case set_sparsity_enum:
+						flag = set_h[i].find(j) != set_h[i].end();
+						break;
+					}
+					if( flag )
+					{	const_iterator itr_i(for_jac_sparsity, x_index[i]);
+						size_t i_x = *itr_i;
+						while( i_x < for_jac_sparsity.end() )
+						{	for_hes_sparsity.binary_union(
+								i_x, i_x, x_index[j], for_jac_sparsity
+							);
+							i_x = *(++itr_i);
+						}
+						const_iterator itr_j(for_jac_sparsity, x_index[j]);
+						size_t j_x = *itr_j;
+						while( j_x < for_jac_sparsity.end() )
+						{	for_hes_sparsity.binary_union(
+								j_x, j_x, x_index[i], for_jac_sparsity
+							);
+							j_x = *(++itr_j);
+						}
+					}
+				}
+			}
+		}
+	}
+	return ok;
+}
 /*
 -------------------------------------- ---------------------------------------
 $begin atomic_rev_sparse_hes$$

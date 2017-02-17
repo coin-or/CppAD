@@ -28,6 +28,7 @@ $spell
 	Retape
 	jac
 	isnan
+	vx
 $$
 
 $section The CppAD Wish List$$
@@ -42,6 +43,9 @@ For example, the user's version of $code for_sparse_jac$$ could check
 $cref/x/atomic_for_sparse_jac/Implementation/x/$$ to see for which components
 are variables;
 i.e., $cref/isnan(x[j])/nan/isnan/$$ is true for a particular call.
+Note that
+$cref/vx/atomic_for_sparse_hes/Implementation/vx/$$ should be removed,
+because the method above can be used to determine this information.
 
 $head Deprecated$$
 Move files that only implement deprecated features into the
