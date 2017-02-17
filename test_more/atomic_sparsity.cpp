@@ -11,8 +11,6 @@ Please visit http://www.coin-or.org/CppAD/ for information on other licenses.
 /*
 Atomic function
 g( x ) = [ x_2, x_0 * x_1 ]
-
-f(u) = g( u_0 + u_1, u_0 + u_1, u_2 )
 \] $$
 */
 # include <cppad/cppad.hpp>
@@ -196,9 +194,11 @@ private:
 		return true;
 	}
 }; // End of atomic_set_sparsity class
-}  // End empty namespace
 
-bool atomic_sparsity(void)
+
+// f(u) = g( u_0 + u_1 , u_0 + u_1 , u_2 )
+//      = [ u_2 , (u_0 + u_1)^2 ]
+bool test_one(void)
 {	bool ok = true;
 	using CppAD::AD;
 	using CppAD::NearEqual;
@@ -251,7 +251,7 @@ bool atomic_sparsity(void)
 		for(size_t i = 0; i < m; i++)
 			ok &= s[i] == check_s[i];
 	}
-	// correct Hessian result
+	// correct Hessian result for w_0 * f_0 (u) + w_1 * f_1(u)
 	set_vector check_h(n);
 	check_h[0].insert(0);
 	check_h[0].insert(1);
@@ -275,5 +275,117 @@ bool atomic_sparsity(void)
 		for(size_t i = 0; i < n; i++)
 			ok &= h[i] == check_h[i];
 	}
+	return ok;
+}
+
+// f(u) = g( u_0 + u_1 , u_1 + u_2 , u_2 + u_0 )
+//      = [ u_2 + u_0 , (u_0 + u_1)*(u_1 + u_2) ]
+bool test_two(void)
+{	bool ok = true;
+	using CppAD::AD;
+	using CppAD::NearEqual;
+	double eps = 10. * std::numeric_limits<double>::epsilon();
+	// Create the atomic get_started object
+	atomic_set_sparsity afun("atomic_set_sparsity");
+	size_t n = 3;
+	size_t m = 2;
+	vector< AD<double> > au(n), ay(m);
+	for(size_t j = 0; j < n; j++)
+		au[j] = double(j + 1);
+
+	// declare independent variables and start tape recording
+	CppAD::Independent(au);
+
+	// ax
+	vector< AD<double> > ax(n);
+	ax[0] = au[0] + au[1];
+	ax[1] = au[1] + au[2];
+	ax[2] = au[2] + au[0];
+
+	// call user function
+	afun(ax, ay);
+
+	// create f: u -> y and stop tape recording
+	CppAD::ADFun<double> f(au, ay);
+
+	// check function value
+	ok &= NearEqual(ay[0] , au[2] + au[0],  eps, eps);
+	ok &= NearEqual(ay[1] , (au[0] + au[1]) * (au[1] + au[2]),  eps, eps);
+
+	// correct Jacobian result
+	set_vector check_s(m);
+	check_s[0].insert(2);
+	check_s[0].insert(0);
+	check_s[1].insert(0);
+	check_s[1].insert(1);
+	check_s[1].insert(2);
+	// compute and test forward mode
+	{	set_vector r(n), s(m);
+		for(size_t i = 0; i < n; i++)
+			r[i].insert(i);
+		s = f.ForSparseJac(n, r);
+		for(size_t i = 0; i < m; i++)
+			ok &= s[i] == check_s[i];
+	}
+	// compute and test reverse mode
+	{	set_vector r(m), s(m);
+		for(size_t i = 0; i < m; i++)
+			r[i].insert(i);
+		s = f.RevSparseJac(m, r);
+		for(size_t i = 0; i < m; i++)
+			ok &= s[i] == check_s[i];
+	}
+	// ----------------------------------------------------------------------
+	// correct Hessian result for f_0 (u)
+	set_vector check_h(n), s(1);
+	s[0].insert(0);
+	// compute and test forward mode
+	{	set_vector r(1), h(n);
+		for(size_t j = 0; j < n; j++)
+			r[0].insert(j);
+		h = f.ForSparseHes(r, s);
+		for(size_t i = 0; i < n; i++)
+			ok &= h[i] == check_h[i];
+	}
+	// compute and test reverse mode
+	{	set_vector h(n);
+		h = f.RevSparseHes(n, s);
+		for(size_t i = 0; i < n; i++)
+			ok &= h[i] == check_h[i];
+	}
+	// ----------------------------------------------------------------------
+	// correct Hessian result for f_1 (u)
+	s[0].clear();
+	s[0].insert(1);
+	check_h[0].insert(1);
+	check_h[0].insert(2);
+	check_h[1].insert(0);
+	check_h[1].insert(1);
+	check_h[1].insert(2);
+	check_h[2].insert(0);
+	check_h[2].insert(1);
+	// compute and test forward mode
+	{	set_vector r(1), h(n);
+		for(size_t j = 0; j < n; j++)
+			r[0].insert(j);
+		h = f.ForSparseHes(r, s);
+		for(size_t i = 0; i < n; i++)
+			ok &= h[i] == check_h[i];
+	}
+	// compute and test reverse mode
+	{	set_vector h(n);
+		h = f.RevSparseHes(n, s);
+		for(size_t i = 0; i < n; i++)
+			ok &= h[i] == check_h[i];
+	}
+	return ok;
+}
+
+}  // End empty namespace
+
+bool atomic_sparsity(void)
+{	bool ok = true;
+	ok     &= test_one();
+	ok     &= test_two();
 	return ok;
 }
