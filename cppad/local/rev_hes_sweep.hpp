@@ -163,39 +163,20 @@ void RevHesSweep(
 		CPPAD_ASSERT_UNKNOWN( j == play->num_vec_ind_rec() );
 	}
 
-	// work space used by UserOp.
-	vector<Base>       user_x;   // parameters in x as integers;
-	vector<size_t>     user_ix;  // variable indices for argument vector x
-	//
-	typedef std::set<size_t> size_set;
-	size_set::iterator set_itr;  // iterator for a standard set
-	size_set::iterator set_end;  // end of iterator sequence
-	vector< size_set > set_r;    // forward Jacobian sparsity for x
-	vector< size_set > set_u;    // reverse Hessian sparsity for y
-	vector< size_set > set_v;    // reverse Hessian sparsity for x
-	//
-	vector<bool>       bool_r;   // bool forward Jacobian sparsity for x
-	vector<bool>       bool_u;   // bool reverse Hessian sparsity for y
-	vector<bool>       bool_v;   // bool reverse Hessian sparsity for x
-	//
-	vectorBool         pack_r;   // pack forward Jacobian sparsity for x
-	vectorBool         pack_u;   // pack reverse Hessian sparsity for y
-	vectorBool         pack_v;   // pack reverse Hessian sparsity for x
-	//
-	vector<bool>       user_vx;  // which components of x are variables
-	vector<bool>       user_s;   // reverse Jacobian sparsity for y
-	vector<bool>       user_t;   // reverse Jacobian sparsity for x
-	const size_t user_q = limit; // maximum element plus one
-	//
+	// ----------------------------------------------------------------------
+	// user's atomic op calculator
 	atomic_base<Base>* user_atom = CPPAD_NULL; // user's atomic op calculator
-	bool               user_pack = false;      // sparsity pattern type is pack
-	bool               user_bool = false;      // sparsity pattern type is bool
-	bool               user_set  = false;      // sparsity pattern type is set
-	bool               user_ok   = false;      // atomic op return value
 	//
-	// information defined by forward_user
+	// work space used by UserOp.
+	vector<Base>       user_x;   // parameters in x as integers
+	vector<size_t>     user_ix;  // variable indices for argument vector
+	vector<size_t>     user_iy;  // variable indices for result vector
+	//
+	// information set by forward_user (initialization to avoid warnings)
 	size_t user_old=0, user_m=0, user_n=0, user_i=0, user_j=0;
+	// information set by forward_user (necessary initialization)
 	enum_user_state user_state = end_user; // proper initialization
+	// ----------------------------------------------------------------------
 	//
 	// pointer to the beginning of the parameter vector
 	// (used by atomic functions
@@ -653,142 +634,25 @@ void RevHesSweep(
 			// -------------------------------------------------
 
 			case UserOp:
-			// start or end an atomic operation sequence
+			CPPAD_ASSERT_UNKNOWN(
+				user_state == start_user || user_state == end_user
+			);
 			flag = user_state == end_user;
 			user_atom = play->reverse_user(op, user_state,
 				user_old, user_m, user_n, user_i, user_j
 			);
 			if( flag )
-			{	user_pack  = user_atom->sparsity() ==
-							atomic_base<Base>::pack_sparsity_enum;
-				user_bool  = user_atom->sparsity() ==
-							atomic_base<Base>::bool_sparsity_enum;
-				user_set   = user_atom->sparsity() ==
-							atomic_base<Base>::set_sparsity_enum;
-				CPPAD_ASSERT_UNKNOWN( user_pack || user_bool || user_set );
-				user_x.resize(user_n);
+			{	user_x.resize(user_n);
 				user_ix.resize(user_n);
-				user_vx.resize(user_n);
-				user_s.resize(user_m);
-				user_t.resize(user_n);
-
-				// simpler to initialize all sparsity patterns as empty
-				for(i = 0; i < user_m; i++)
-					user_s[i] = false;
-				for(i = 0; i < user_n; i++)
-					user_t[i] = false;
-				if( user_pack )
-				{	pack_r.resize(user_n * user_q);
-					pack_u.resize(user_m * user_q);
-					pack_v.resize(user_n * user_q);
-					// simpler to initialize all patterns as empty
-					for(i = 0; i < user_m; i++)
-					{
-						for(j = 0; j < user_q; j++)
-							pack_u[ i * user_q + j] = false;
-					}
-					for(i = 0; i < user_n; i++)
-					{
-						for(j = 0; j < user_q; j++)
-						{	pack_r[ i * user_q + j] = false;
-							pack_v[ i * user_q + j] = false;
-						}
-					}
-				}
-				if( user_bool )
-				{	bool_r.resize(user_n * user_q);
-					bool_u.resize(user_m * user_q);
-					bool_v.resize(user_n * user_q);
-					// simpler to initialize all patterns as empty
-					for(i = 0; i < user_m; i++)
-					{
-						for(j = 0; j < user_q; j++)
-							bool_u[ i * user_q + j] = false;
-					}
-					for(i = 0; i < user_n; i++)
-					{
-						for(j = 0; j < user_q; j++)
-						{	bool_r[ i * user_q + j] = false;
-							bool_v[ i * user_q + j] = false;
-						}
-					}
-				}
-				if( user_set )
-				{	set_r.resize(user_n);
-					set_u.resize(user_m);
-					set_v.resize(user_n);
-					for(i = 0; i < user_m; i++)
-						set_u[i].clear();
-					for(i = 0; i < user_n; i++)
-					{	set_r[i].clear();
-						set_v[i].clear();
-					}
-				}
+				user_iy.resize(user_m);
 			}
 			else
 			{	// call users function for this operation
 				user_atom->set_old(user_old);
-				if( user_pack )
-				{	user_ok = user_atom->rev_sparse_hes(user_vx,
-						user_s, user_t, user_q, pack_r, pack_u, pack_v, user_x
-					);
-					if( ! user_ok ) user_ok = user_atom->rev_sparse_hes(
-						user_vx, user_s, user_t, user_q, pack_r, pack_u, pack_v
-					);
-				}
-				if( user_bool )
-				{	user_ok = user_atom->rev_sparse_hes(user_vx,
-						user_s, user_t, user_q, bool_r, bool_u, bool_v, user_x
-					);
-					if( ! user_ok ) user_ok = user_atom->rev_sparse_hes(
-						user_vx, user_s, user_t, user_q, bool_r, bool_u, bool_v
-					);
-				}
-				if( user_set )
-				{	user_ok = user_atom->rev_sparse_hes(user_vx,
-						user_s, user_t, user_q, set_r, set_u, set_v, user_x
-					);
-					if( ! user_ok ) user_ok = user_atom->rev_sparse_hes(
-						user_vx, user_s, user_t, user_q, set_r, set_u, set_v
-					);
-				}
-				if( ! user_ok )
-				{	std::string msg =
-						user_atom->afun_name()
-						+ ": atomic_base.rev_sparse_hes: returned false\n";
-					if( user_pack )
-						msg += "sparsity = pack_sparsity_enum";
-					if( user_bool )
-						msg += "sparsity = bool_sparsity_enum";
-					if( user_set )
-						msg += "sparsity = set_sparsity_enum";
-					CPPAD_ASSERT_KNOWN(false, msg.c_str() );
-				}
-				for(i = 0; i < user_n; i++) if( user_ix[i] > 0 )
-				{
-					size_t  i_x = user_ix[i];
-					if( user_t[i] )
-						RevJac[i_x] = true;
-					if( user_pack )
-					{
-						for(j = 0; j < user_q; j++)
-							if( pack_v[ i * user_q + j ] )
-								rev_hes_sparse.add_element(i_x, j);
-					}
-					if( user_bool )
-					{
-						for(j = 0; j < user_q; j++)
-							if( bool_v[ i * user_q + j ] )
-								rev_hes_sparse.add_element(i_x, j);
-					}
-					if( user_set )
-					{
-						set_itr = set_v[i].begin();
-						set_end = set_v[i].end();
-						while( set_itr != set_end )
-							rev_hes_sparse.add_element(i_x, *set_itr++);
-					}
-				}
+				user_atom->rev_sparse_hes(
+					user_x, user_ix, user_iy,
+					for_jac_sparse, RevJac, rev_hes_sparse
+				);
 			}
 			break;
 
@@ -798,12 +662,10 @@ void RevHesSweep(
 			play->reverse_user(op, user_state,
 				user_old, user_m, user_n, user_i, user_j
 			);
-			user_ix[user_j] = 0;
-			user_vx[user_j] = false;
-			//
-			// parameters as integers
+			// argument parameter value
 			user_x[user_j] = parameter[arg[0]];
-			//
+			// special variable index used for parameters
+			user_ix[user_j] = 0;
 			break;
 
 			case UsravOp:
@@ -813,24 +675,10 @@ void RevHesSweep(
 			play->reverse_user(op, user_state,
 				user_old, user_m, user_n, user_i, user_j
 			);
-			user_ix[user_j] = arg[0];
-			user_vx[user_j] = true;
-			//
-			// variable as integers
+			// argument variables not available during sparsity calculations
 			user_x[user_j] = CppAD::numeric_limits<Base>::quiet_NaN();
-			//
-			{	typename Vector_set::const_iterator itr(for_jac_sparse, arg[0]);
-				i = *itr;
-				while( i < user_q )
-				{	if( user_pack )
-						pack_r[ user_j * user_q + i ] = true;
-					if( user_bool )
-						bool_r[ user_j * user_q + i ] = true;
-					if( user_set )
-						set_r[user_j].insert(i);
-					i = *(++itr);
-				}
-			}
+			// variable index for this argument
+			user_ix[user_j] = arg[0];
 			break;
 
 			case UsrrpOp:
@@ -839,6 +687,8 @@ void RevHesSweep(
 			play->reverse_user(op, user_state,
 				user_old, user_m, user_n, user_i, user_j
 			);
+			// special variable index used for parameters
+			user_iy[user_i] = 0;
 			break;
 
 			case UsrrvOp:
@@ -846,22 +696,8 @@ void RevHesSweep(
 			play->reverse_user(op, user_state,
 				user_old, user_m, user_n, user_i, user_j
 			);
-			if( RevJac[i_var] )
-			{
-				user_s[user_i] = true;
-			}
-			{	typename Vector_set::const_iterator itr(rev_hes_sparse, i_var);
-				j = *itr;
-				while( j < user_q )
-				{	if( user_pack )
-						pack_u[user_i * user_q + j] = true;
-					if( user_bool )
-						bool_u[user_i * user_q + j] = true;
-					if( user_set )
-						set_u[user_i].insert(j);
-					j = *(++itr);
-				}
-			}
+			// variable index for this result
+			user_iy[user_i] = i_var;
 			break;
 			// -------------------------------------------------
 

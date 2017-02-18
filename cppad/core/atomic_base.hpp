@@ -54,17 +54,21 @@ private:
 	vector<Base>  afun_tx_[CPPAD_MAX_NUM_THREADS];
 	vector<Base>  afun_ty_[CPPAD_MAX_NUM_THREADS];
 	//
+	vectorBool                  afun_pack_h_[CPPAD_MAX_NUM_THREADS];
 	vectorBool                  afun_pack_r_[CPPAD_MAX_NUM_THREADS];
 	vectorBool                  afun_pack_s_[CPPAD_MAX_NUM_THREADS];
-	vectorBool                  afun_pack_h_[CPPAD_MAX_NUM_THREADS];
+	vectorBool                  afun_pack_u_[CPPAD_MAX_NUM_THREADS];
 	//
+	vector<bool>                afun_bool_h_[CPPAD_MAX_NUM_THREADS];
 	vector<bool>                afun_bool_r_[CPPAD_MAX_NUM_THREADS];
 	vector<bool>                afun_bool_s_[CPPAD_MAX_NUM_THREADS];
-	vector<bool>                afun_bool_h_[CPPAD_MAX_NUM_THREADS];
+	vector<bool>                afun_bool_t_[CPPAD_MAX_NUM_THREADS];
+	vector<bool>                afun_bool_u_[CPPAD_MAX_NUM_THREADS];
 	//
+	vector< std::set<size_t> >  afun_set_h_[CPPAD_MAX_NUM_THREADS];
 	vector< std::set<size_t> >  afun_set_r_[CPPAD_MAX_NUM_THREADS];
 	vector< std::set<size_t> >  afun_set_s_[CPPAD_MAX_NUM_THREADS];
-	vector< std::set<size_t> >  afun_set_h_[CPPAD_MAX_NUM_THREADS];
+	vector< std::set<size_t> >  afun_set_u_[CPPAD_MAX_NUM_THREADS];
 	//
 	// -----------------------------------------------------
 	// static member functions
@@ -2145,6 +2149,159 @@ virtual bool rev_sparse_hes(
 	const vectorBool&                       u  ,
 	      vectorBool&                       v  )
 {	return false; }
+/*!
+Link, before case split, from rev_hes_sweep to atomic_base.
+
+\tparam InternalSparsity
+Is the used internaly for sparsity calculations; i.e.,
+sparse_pack or sparse_list.
+
+\param x
+is parameter arguments to the function, other components are nan.
+
+\param x_index
+is the variable index, on the tape, for the arguments to this function.
+This size of x_index is n, the number of arguments to this function.
+
+\param y_index
+is the variable index, on the tape, for the results for this function.
+This size of y_index is m, the number of results for this function.
+
+\param for_jac_sparsity
+On input, for j = 0, ... , n-1, the sparsity pattern with index x_index[j],
+is the forward Jacobian sparsity for the j-th argument to this atomic function.
+
+\param rev_jac_flag
+This shows which variables affect the function we are
+computing the Hessian of.
+On input, for i = 0, ... , m-1, the rev_jac_flag[ y_index[i] ] is true
+if the Jacobian of function (we are computing sparsity for) is no-zero.
+Upon return, for j = 0, ... , n-1, rev_jac_flag [ x_index[j] ]
+as been adjusted to accound removing this atomic function.
+
+\param rev_hes_sparsity
+This is the sparsity pattern for the Hessian.
+On input, for i = 0, ... , m-1, row y_index[i] is the reverse Hessian sparsity
+with one of the partials with respect to to y_index[i].
+*/
+template <class InternalSparsity>
+void rev_sparse_hes(
+	const vector<Base>&        x                ,
+	const vector<size_t>&      x_index          ,
+	const vector<size_t>&      y_index          ,
+	const InternalSparsity&    for_jac_sparsity ,
+	bool*                      rev_jac_flag     ,
+	InternalSparsity&          rev_hes_sparsity )
+{	CPPAD_ASSERT_UNKNOWN( for_jac_sparsity.end() == rev_hes_sparsity.end() );
+	size_t q           = rev_hes_sparsity.end();
+	size_t n           = x_index.size();
+	size_t m           = y_index.size();
+	bool   ok          = false;
+	size_t thread      = thread_alloc::thread_num();
+	bool   zero_empty  = true;
+	bool   input_empty = false;
+	bool   transpose   = false;
+	//
+	// vx
+	vector<bool> vx(n);
+	for(size_t j = 0; j < n; j++)
+		vx[j] = x_index[j] != 0;
+	//
+	// note that s and t are vectors so transpose does not matter for bool case
+	vector<bool> bool_s( afun_bool_s_[thread] );
+	vector<bool> bool_t( afun_bool_t_[thread] );
+	//
+	bool_s.resize(m);
+	bool_t.resize(n);
+	//
+	for(size_t i = 0; i < m; i++)
+	{	if( y_index[i] > 0  )
+			bool_s[i] = rev_jac_flag[ y_index[i] ];
+	}
+	//
+	std::string msg = ": atomic_base.rev_sparse_hes: returned false";
+	if( sparsity_ == pack_sparsity_enum )
+	{	vectorBool&  pack_r( afun_pack_r_[thread] );
+		vectorBool&  pack_u( afun_pack_u_[thread] );
+		vectorBool&  pack_v( afun_pack_h_[thread] );
+		//
+		pack_v.resize(n * q);
+		//
+		local::get_internal_sparsity(
+			transpose, x_index, for_jac_sparsity, pack_r
+		);
+		local::get_internal_sparsity(
+			transpose, y_index, rev_hes_sparsity, pack_u
+		);
+		//
+		ok = rev_sparse_hes(vx, bool_s, bool_t, q, pack_r, pack_u, pack_v, x);
+		if( ! ok )
+			ok = rev_sparse_hes(vx, bool_s, bool_t, q, pack_r, pack_u, pack_v);
+		if( ! ok )
+		{	msg = afun_name() + msg + " sparsity = pack_sparsity_enum";
+			CPPAD_ASSERT_KNOWN(false, msg.c_str());
+		}
+		local::set_internal_sparsity(zero_empty, input_empty,
+			transpose, x_index, rev_hes_sparsity, pack_v
+		);
+	}
+	else if( sparsity_ == bool_sparsity_enum )
+	{	vector<bool>&  bool_r( afun_bool_r_[thread] );
+		vector<bool>&  bool_u( afun_bool_u_[thread] );
+		vector<bool>&  bool_v( afun_bool_h_[thread] );
+		//
+		bool_v.resize(n * q);
+		//
+		local::get_internal_sparsity(
+			transpose, x_index, for_jac_sparsity, bool_r
+		);
+		local::get_internal_sparsity(
+			transpose, y_index, rev_hes_sparsity, bool_u
+		);
+		//
+		ok = rev_sparse_hes(vx, bool_s, bool_t, q, bool_r, bool_u, bool_v, x);
+		if( ! ok )
+			ok = rev_sparse_hes(vx, bool_s, bool_t, q, bool_r, bool_u, bool_v);
+		if( ! ok )
+		{	msg = afun_name() + msg + " sparsity = bool_sparsity_enum";
+			CPPAD_ASSERT_KNOWN(false, msg.c_str());
+		}
+		local::set_internal_sparsity(zero_empty, input_empty,
+			transpose, x_index, rev_hes_sparsity, bool_v
+		);
+	}
+	else
+	{	CPPAD_ASSERT_UNKNOWN( sparsity_ == set_sparsity_enum );
+		vector< std::set<size_t> >&  set_r( afun_set_r_[thread] );
+		vector< std::set<size_t> >&  set_u( afun_set_u_[thread] );
+		vector< std::set<size_t> >&  set_v( afun_set_h_[thread] );
+		//
+		set_v.resize(n);
+		//
+		local::get_internal_sparsity(
+			transpose, x_index, for_jac_sparsity, set_r
+		);
+		local::get_internal_sparsity(
+			transpose, y_index, rev_hes_sparsity, set_u
+		);
+		//
+		ok = rev_sparse_hes(vx, bool_s, bool_t, q, set_r, set_u, set_v, x);
+		if( ! ok )
+			ok = rev_sparse_hes(vx, bool_s, bool_t, q, set_r, set_u, set_v);
+		if( ! ok )
+		{	msg = afun_name() + msg + " sparsity = set_sparsity_enum";
+			CPPAD_ASSERT_KNOWN(false, msg.c_str());
+		}
+		local::set_internal_sparsity(zero_empty, input_empty,
+			transpose, x_index, rev_hes_sparsity, set_v
+		);
+	}
+	for(size_t j = 0; j < n; j++)
+	{	if( x_index[j] > 0  )
+			rev_jac_flag[ x_index[j] ] |= bool_t[j];
+	}
+	return;
+}
 /*
 ------------------------------------------------------------------------------
 $begin atomic_base_clear$$
