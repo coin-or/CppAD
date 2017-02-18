@@ -1193,7 +1193,7 @@ is empty. On output, it is the sparsity
 for the j-th result for this atomic function.
 */
 template <class InternalSparsity>
-bool for_sparse_jac(
+void for_sparse_jac(
 	size_t                     q            ,
 	const vector<Base>&        x            ,
 	const vector<size_t>&      x_index      ,
@@ -1208,6 +1208,7 @@ bool for_sparse_jac(
 	bool   ok          = false;
 	size_t thread      = thread_alloc::thread_num();
 	//
+	std::string msg    = ": atomic_base.for_sparse_jac: returned false";
 	if( sparsity_ == pack_sparsity_enum )
 	{	vectorBool& pack_r ( afun_pack_r_[thread] );
 		vectorBool& pack_s ( afun_pack_s_[thread] );
@@ -1219,7 +1220,10 @@ bool for_sparse_jac(
 		ok = for_sparse_jac(q, pack_r, pack_s, x);
 		if( ! ok )
 			ok = for_sparse_jac(q, pack_r, pack_s);
-		//
+		if( ! ok )
+		{	msg = afun_name() + msg + " sparsity = pack_sparsity_enum";
+			CPPAD_ASSERT_KNOWN(false, msg.c_str());
+		}
 		local::set_internal_sparsity(zero_empty, input_empty,
 			transpose, y_index, var_sparsity, pack_s
 		);
@@ -1230,12 +1234,14 @@ bool for_sparse_jac(
 		local::get_internal_sparsity(
 			transpose, x_index, var_sparsity, bool_r
 		);
-		//
 		bool_s.resize(m * q );
 		ok = for_sparse_jac(q, bool_r, bool_s, x);
 		if( ! ok )
 			ok = for_sparse_jac(q, bool_r, bool_s);
-		//
+		if( ! ok )
+		{	msg = afun_name() + msg + " sparsity = bool_sparsity_enum";
+			CPPAD_ASSERT_KNOWN(false, msg.c_str());
+		}
 		local::set_internal_sparsity(zero_empty, input_empty,
 			transpose, y_index, var_sparsity, bool_s
 		);
@@ -1252,12 +1258,15 @@ bool for_sparse_jac(
 		ok = for_sparse_jac(q, set_r, set_s, x);
 		if( ! ok )
 			ok = for_sparse_jac(q, set_r, set_s);
-		//
+		if( ! ok )
+		{	msg = afun_name() + msg + " sparsity = set_sparsity_enum";
+			CPPAD_ASSERT_KNOWN(false, msg.c_str());
+		}
 		local::set_internal_sparsity(zero_empty, input_empty,
 			transpose, y_index, var_sparsity, set_s
 		);
 	}
-	return ok;
+	return;
 }
 /*
 -------------------------------------- ---------------------------------------
@@ -1456,7 +1465,7 @@ On output, for j = 0, ... , n-1, the sparsity pattern with index x_index[j],
 the sparsity has been updated to remove y as a function of x.
 */
 template <class InternalSparsity>
-bool rev_sparse_jac(
+void rev_sparse_jac(
 	size_t                     q            ,
 	const vector<Base>&        x            ,
 	const vector<size_t>&      x_index      ,
@@ -1471,6 +1480,7 @@ bool rev_sparse_jac(
 	bool   ok          = false;
 	size_t thread      = thread_alloc::thread_num();
 	//
+	std::string msg    = ": atomic_base.rev_sparse_jac: returned false";
 	if( sparsity_ == pack_sparsity_enum )
 	{	vectorBool& pack_rt ( afun_pack_r_[thread] );
 		vectorBool& pack_st ( afun_pack_s_[thread] );
@@ -1482,7 +1492,10 @@ bool rev_sparse_jac(
 		ok = rev_sparse_jac(q, pack_rt, pack_st, x);
 		if( ! ok )
 			ok = rev_sparse_jac(q, pack_rt, pack_st);
-		//
+		if( ! ok )
+		{	msg = afun_name() + msg + " sparsity = pack_sparsity_enum";
+			CPPAD_ASSERT_KNOWN(false, msg.c_str());
+		}
 		local::set_internal_sparsity(zero_empty, input_empty,
 			transpose, x_index, var_sparsity, pack_st
 		);
@@ -1493,12 +1506,14 @@ bool rev_sparse_jac(
 		local::get_internal_sparsity(
 			transpose, y_index, var_sparsity, bool_rt
 		);
-		//
 		bool_st.resize(n * q );
 		ok = rev_sparse_jac(q, bool_rt, bool_st, x);
 		if( ! ok )
 			ok = rev_sparse_jac(q, bool_rt, bool_st);
-		//
+		if( ! ok )
+		{	msg = afun_name() + msg + " sparsity = bool_sparsity_enum";
+			CPPAD_ASSERT_KNOWN(false, msg.c_str());
+		}
 		local::set_internal_sparsity(zero_empty, input_empty,
 			transpose, x_index, var_sparsity, bool_st
 		);
@@ -1510,17 +1525,19 @@ bool rev_sparse_jac(
 		local::get_internal_sparsity(
 			transpose, y_index, var_sparsity, set_rt
 		);
-		//
 		set_st.resize(n);
 		ok = rev_sparse_jac(q, set_rt, set_st, x);
 		if( ! ok )
 			ok = rev_sparse_jac(q, set_rt, set_st);
-		//
+		if( ! ok )
+		{	msg = afun_name() + msg + " sparsity = set_sparsity_enum";
+			CPPAD_ASSERT_KNOWN(false, msg.c_str());
+		}
 		local::set_internal_sparsity(zero_empty, input_empty,
 			transpose, x_index, var_sparsity, set_st
 		);
 	}
-	return ok;
+	return;
 }
 /*
 -------------------------------------- ---------------------------------------
@@ -1734,7 +1751,7 @@ terms in the atomic fuction have not been included. Upon return, they
 have been included.
 */
 template <class InternalSparsity>
-bool for_sparse_hes(
+void for_sparse_hes(
 	const vector<Base>&        x                ,
 	const vector<size_t>&      x_index          ,
 	const vector<size_t>&      y_index          ,
@@ -1777,17 +1794,26 @@ bool for_sparse_hes(
 	vector< std::set<size_t> >& set_h(  afun_set_h_[thread] );
 	//
 	// call user's version of atomic function
+	std::string msg    = ": atomic_base.for_sparse_hes: returned false";
 	if( sparsity_ == pack_sparsity_enum )
 	{	pack_h.resize(n * n);
 		ok = for_sparse_hes(vx, bool_r, bool_s, pack_h, x);
 		if( ! ok )
 			ok = for_sparse_hes(vx, bool_r, bool_s, pack_h);
+		if( ! ok )
+		{	msg = afun_name() + msg + " sparsity = pack_sparsity_enum";
+			CPPAD_ASSERT_KNOWN(false, msg.c_str());
+		}
 	}
 	else if( sparsity_ == bool_sparsity_enum )
 	{	bool_h.resize(n * n);
 		ok = for_sparse_hes(vx, bool_r, bool_s, bool_h, x);
 		if( ! ok )
 			ok = for_sparse_hes(vx, bool_r, bool_s, bool_h);
+		if( ! ok )
+		{	msg = afun_name() + msg + " sparsity = bool_sparsity_enum";
+			CPPAD_ASSERT_KNOWN(false, msg.c_str());
+		}
 	}
 	else
 	{	CPPAD_ASSERT_UNKNOWN( sparsity_ == set_sparsity_enum )
@@ -1795,11 +1821,15 @@ bool for_sparse_hes(
 		ok = for_sparse_hes(vx, bool_r, bool_s, set_h, x);
 		if( ! ok )
 			ok = for_sparse_hes(vx, bool_r, bool_s, set_h);
+		if( ! ok )
+		{	msg = afun_name() + msg + " sparsity = set_sparsity_enum";
+			CPPAD_ASSERT_KNOWN(false, msg.c_str());
+		}
 	}
+	CPPAD_ASSERT_UNKNOWN( ok );
 	//
 	// modify hessian in calling routine
-	if( ok )
-	{	for(size_t i = 0; i < n; i++)
+		for(size_t i = 0; i < n; i++)
 		{	for(size_t j = 0; j < n; j++)
 			{	if( (x_index[i] > 0) & (x_index[j] > 0) )
 				{	bool flag = false;
@@ -1837,8 +1867,7 @@ bool for_sparse_hes(
 				}
 			}
 		}
-	}
-	return ok;
+	return;
 }
 /*
 -------------------------------------- ---------------------------------------

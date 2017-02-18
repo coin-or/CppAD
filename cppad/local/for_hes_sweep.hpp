@@ -386,39 +386,10 @@ void ForHesSweep(
 			else
 			{	// end of user atomic operation sequence
 				user_atom->set_old(user_old);
-# ifdef NDEBUG
 				user_atom->for_sparse_hes(
 					user_x, user_ix, user_iy,
 					for_jac_sparse, rev_jac_sparse, for_hes_sparse
 				);
-# else
-				bool ok = user_atom->for_sparse_hes(
-					user_x, user_ix, user_iy,
-					for_jac_sparse, rev_jac_sparse, for_hes_sparse
-				);
-				if( ! ok )
-				{
-					bool user_pack  = user_atom->sparsity() ==
-						atomic_base<Base>::pack_sparsity_enum;
-					bool user_bool  = user_atom->sparsity() ==
-						atomic_base<Base>::bool_sparsity_enum;
-					bool user_set   = user_atom->sparsity() ==
-						atomic_base<Base>::set_sparsity_enum;
-					CPPAD_ASSERT_UNKNOWN( user_pack || user_bool || user_set );
-					//
-
-					std::string msg =
-						user_atom->afun_name()
-						+ ": atomic_base.for_sparse_hes: returned false\n";
-					if( user_pack )
-						msg += "sparsity = pack_sparsity_enum";
-					if( user_bool )
-						msg += "sparsity = bool_sparsity_enum";
-					if( user_set )
-						msg += "sparsity = set_sparsity_enum";
-					CPPAD_ASSERT_KNOWN(false, msg.c_str() );
-				}
-# endif
 			}
 			break;
 
