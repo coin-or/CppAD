@@ -181,6 +181,7 @@ void ForHesSweep(
 	CPPAD_ASSERT_UNKNOWN( op == BeginOp );
 	bool more_operators = true;
 # if CPPAD_FOR_HES_SWEEP_TRACE
+	vector<size_t> user_usrrp; // parameter index for UsrrpOp operators
 	std::cout << std::endl;
 	CppAD::vectorBool zf_value(limit);
 	CppAD::vectorBool zh_value(limit * limit);
@@ -378,6 +379,9 @@ void ForHesSweep(
 				user_x.resize( user_n );
 				user_ix.resize( user_n );
 				user_iy.resize( user_m );
+# if CPPAD_FOR_HES_SWEEP_TRACE
+				user_usrrp.resize( user_m );
+# endif
 			}
 			else
 			{	// end of user atomic operation sequence
@@ -447,6 +451,10 @@ void ForHesSweep(
 			CPPAD_ASSERT_UNKNOWN( size_t(arg[0]) < num_par );
 			// special variable index user for parameters
 			user_iy[user_i] = 0;
+# if CPPAD_FOR_HES_SWEEP_TRACE
+			// remember argument for delayed tracing
+			user_usrrp[user_i] = arg[0];
+# endif
 			//
 			play->forward_user(op, user_state,
 				user_old, user_m, user_n, user_i, user_j
@@ -476,37 +484,97 @@ void ForHesSweep(
 			CPPAD_ASSERT_UNKNOWN(0);
 		}
 # if CPPAD_FOR_HES_SWEEP_TRACE
-		if( include )
-		{	for(i = 0; i < limit; i++)
-			{	zf_value[i] = false;
-				for(j = 0; j < limit; j++)
-					zh_value[i * limit + j] = false;
+		typedef typename Vector_set::const_iterator const_iterator;
+		if( op == UserOp && user_state == start_user )
+		{	// print operators that have been delayed
+			CPPAD_ASSERT_UNKNOWN( user_m == user_iy.size() );
+			CPPAD_ASSERT_UNKNOWN( i_op > user_m );
+			CPPAD_ASSERT_NARG_NRES(UsrrpOp, 1, 0);
+			CPPAD_ASSERT_NARG_NRES(UsrrvOp, 0, 1);
+			addr_t arg_tmp[1];
+			for(k = 0; k < user_m; k++)
+			{	size_t k_var = user_iy[k];
+				// value for this variable
+				for(i = 0; i < limit; i++)
+				{	zf_value[i] = false;
+					for(j = 0; j < limit; j++)
+						zh_value[i * limit + j] = false;
+				}
+				const_iterator itr_1(for_jac_sparse, i_var);
+				j = *itr_1;
+				while( j < limit )
+				{	zf_value[j] = true;
+					j = *(++itr_1);
+				}
+				for(i = 0; i < limit; i++)
+				{	const_iterator itr_2(for_hes_sparse, i);
+					j = *itr_2;
+					while( j < limit )
+					{	zh_value[i * limit + j] = true;
+						j = *(++itr_2);
+					}
+				}
+				OpCode op_tmp = UsrrvOp;
+				if( k_var == 0 )
+				{	op_tmp     = UsrrpOp;
+					arg_tmp[0] = user_usrrp[k];
+				}
+				// k_var is zero when there is no result
+				printOp(
+					std::cout,
+					play,
+					i_op - user_m + k,
+					k_var,
+					op_tmp,
+					arg_tmp
+				);
+				if( k_var > 0 ) printOpResult(
+					std::cout,
+					1,
+					&zf_value,
+					1,
+					&zh_value
+				);
+				std::cout << std::endl;
 			}
-			typename Vector_set::const_iterator itr_2(for_jac_sparse, i_var);
+		}
+		const addr_t*   arg_tmp = arg;
+		if( op == CSumOp )
+			arg_tmp = arg - arg[-1] - 4;
+		if( op == CSkipOp )
+			arg_tmp = arg - arg[-1] - 7;
+		for(i = 0; i < limit; i++)
+		{	zf_value[i] = false;
+			for(j = 0; j < limit; j++)
+				zh_value[i * limit + j] = false;
+		}
+		const_iterator itr_1(for_jac_sparse, i_var);
+		j = *itr_1;
+		while( j < limit )
+		{	zf_value[j] = true;
+			j = *(++itr_1);
+		}
+		for(i = 0; i < limit; i++)
+		{	const_iterator itr_2(for_hes_sparse, i);
 			j = *itr_2;
 			while( j < limit )
-			{	zf_value[j] = true;
+			{	zh_value[i * limit + j] = true;
 				j = *(++itr_2);
 			}
-			for(i = 0; i < limit; i++)
-			{	typename Vector_set::const_iterator itr_3(for_hes_sparse, i);
-				j = *itr_3;
-				while( j < limit )
-				{	zh_value[i * limit + j] = true;
-					j = *(++itr_3);
-				}
-			}
-			printOp(
+		}
+		// must delay print for these cases till after atomic user call
+		bool delay_print = op == UsrrpOp;
+		delay_print     |= op == UsrrvOp;
+		if( ! delay_print )
+		{	 printOp(
 				std::cout,
 				play,
 				i_op,
 				i_var,
 				op,
-				arg
+				arg_tmp
 			);
-			// should also print RevJac[i_var], but printOpResult does not
-			// yet allow for this
-			if( NumRes(op) > 0 && op != BeginOp ) printOpResult(
+			if( NumRes(op) > 0 && (! delay_print) ) printOpResult(
 				std::cout,
 				1,
 				&zf_value,
