@@ -1829,44 +1829,44 @@ void for_sparse_hes(
 	CPPAD_ASSERT_UNKNOWN( ok );
 	//
 	// modify hessian in calling routine
-		for(size_t i = 0; i < n; i++)
-		{	for(size_t j = 0; j < n; j++)
-			{	if( (x_index[i] > 0) & (x_index[j] > 0) )
-				{	bool flag = false;
-					switch( sparsity_ )
-					{	case pack_sparsity_enum:
-						flag = pack_h[i * n + j];
-						break;
-						//
-						case bool_sparsity_enum:
-						flag = bool_h[i * n + j];
-						break;
-						//
-						case set_sparsity_enum:
-						flag = set_h[i].find(j) != set_h[i].end();
-						break;
+	for(size_t i = 0; i < n; i++)
+	{	for(size_t j = 0; j < n; j++)
+		{	if( (x_index[i] > 0) & (x_index[j] > 0) )
+			{	bool flag = false;
+				switch( sparsity_ )
+				{	case pack_sparsity_enum:
+					flag = pack_h[i * n + j];
+					break;
+					//
+					case bool_sparsity_enum:
+					flag = bool_h[i * n + j];
+					break;
+					//
+					case set_sparsity_enum:
+					flag = set_h[i].find(j) != set_h[i].end();
+					break;
+				}
+				if( flag )
+				{	const_iterator itr_i(for_jac_sparsity, x_index[i]);
+					size_t i_x = *itr_i;
+					while( i_x < for_jac_sparsity.end() )
+					{	for_hes_sparsity.binary_union(
+							i_x, i_x, x_index[j], for_jac_sparsity
+						);
+						i_x = *(++itr_i);
 					}
-					if( flag )
-					{	const_iterator itr_i(for_jac_sparsity, x_index[i]);
-						size_t i_x = *itr_i;
-						while( i_x < for_jac_sparsity.end() )
-						{	for_hes_sparsity.binary_union(
-								i_x, i_x, x_index[j], for_jac_sparsity
-							);
-							i_x = *(++itr_i);
-						}
-						const_iterator itr_j(for_jac_sparsity, x_index[j]);
-						size_t j_x = *itr_j;
-						while( j_x < for_jac_sparsity.end() )
-						{	for_hes_sparsity.binary_union(
-								j_x, j_x, x_index[i], for_jac_sparsity
-							);
-							j_x = *(++itr_j);
-						}
+					const_iterator itr_j(for_jac_sparsity, x_index[j]);
+					size_t j_x = *itr_j;
+					while( j_x < for_jac_sparsity.end() )
+					{	for_hes_sparsity.binary_union(
+							j_x, j_x, x_index[i], for_jac_sparsity
+						);
+						j_x = *(++itr_j);
 					}
 				}
 			}
 		}
+	}
 	return;
 }
 /*
