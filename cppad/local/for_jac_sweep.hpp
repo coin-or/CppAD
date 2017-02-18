@@ -141,7 +141,6 @@ void ForJacSweep(
 	atomic_base<Base>* user_atom = CPPAD_NULL;
 	//
 	// work space used by UserOp.
-	const size_t user_q = limit; // maximum element plus one
 	vector<Base>       user_x;   // value of parameter arguments to function
 	vector<size_t>     user_ix;  // variable index (on tape) for each argument
 	vector<size_t>     user_iy;  // variable index (on tape) for each result
@@ -641,7 +640,7 @@ void ForJacSweep(
 			{	// end of user atomic operation sequence
 				user_atom->set_old(user_old);
 				user_atom->for_sparse_jac(
-					user_q, user_x, user_ix, user_iy, var_sparsity
+					user_x, user_ix, user_iy, var_sparsity
 				);
 			}
 			break;

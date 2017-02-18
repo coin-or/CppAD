@@ -1175,9 +1175,6 @@ Link, before case split, from for_jac_sweep to atomic_base.
 Is the used internaly for sparsity calculations; i.e.,
 sparse_pack or sparse_list.
 
-\param q
-is the column dimension, on the tape, for the Jacobian sparsity partterns.
-
 \param x
 is parameter arguments to the function, other components are nan.
 
@@ -1198,13 +1195,13 @@ for the j-th result for this atomic function.
 */
 template <class InternalSparsity>
 void for_sparse_jac(
-	size_t                     q            ,
 	const vector<Base>&        x            ,
 	const vector<size_t>&      x_index      ,
 	const vector<size_t>&      y_index      ,
 	InternalSparsity&          var_sparsity )
 {
 	// intial results are empty during forward mode
+	size_t q           = var_sparsity.end();
 	bool   input_empty = true;
 	bool   zero_empty  = true;
 	bool   transpose   = false;
@@ -1448,9 +1445,6 @@ Link, before case split, from rev_jac_sweep to atomic_base.
 Is the used internaly for sparsity calculations; i.e.,
 sparse_pack or sparse_list.
 
-\param q
-is the column dimension, on the tape, for the Jacobian sparsity partterns.
-
 \param x
 is parameter arguments to the function, other components are nan.
 
@@ -1470,13 +1464,13 @@ the sparsity has been updated to remove y as a function of x.
 */
 template <class InternalSparsity>
 void rev_sparse_jac(
-	size_t                     q            ,
 	const vector<Base>&        x            ,
 	const vector<size_t>&      x_index      ,
 	const vector<size_t>&      y_index      ,
 	InternalSparsity&          var_sparsity )
 {
 	// initial results may be non-empty during reverse mode
+	size_t q           = var_sparsity.end();
 	bool   input_empty = false;
 	bool   zero_empty  = true;
 	bool   transpose   = false;

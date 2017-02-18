@@ -145,7 +145,6 @@ void RevJacSweep(
 	atomic_base<Base>* user_atom = CPPAD_NULL; // user's atomic op calculator
 	//
 	// work space used by UserOp.
-	const size_t user_q = limit; // maximum element plus one
 	vector<Base>       user_x;   // parameters in x as integers
 	vector<size_t>     user_ix;  // variable indices for argument vector
 	vector<size_t>     user_iy;  // variable indices for result vector
@@ -637,7 +636,7 @@ void RevJacSweep(
 			{	// end of users atomic operation sequence
 				user_atom->set_old(user_old);
 				user_atom->rev_sparse_jac(
-					user_q, user_x, user_ix, user_iy, var_sparsity
+					user_x, user_ix, user_iy, var_sparsity
 				);
 			}
 			break;
