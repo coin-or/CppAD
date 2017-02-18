@@ -2357,12 +2357,22 @@ static void clear(void)
 				op->afun_tx_[thread].clear();
 				op->afun_ty_[thread].clear();
 				//
+				op->afun_pack_h_[thread].clear();
 				op->afun_pack_r_[thread].clear();
 				op->afun_pack_s_[thread].clear();
+				op->afun_pack_u_[thread].clear();
+				//
+				op->afun_bool_h_[thread].clear();
 				op->afun_bool_r_[thread].clear();
 				op->afun_bool_s_[thread].clear();
+				op->afun_bool_t_[thread].clear();
+				op->afun_bool_u_[thread].clear();
+				//
+				op->afun_set_h_[thread].clear();
 				op->afun_set_r_[thread].clear();
 				op->afun_set_s_[thread].clear();
+				op->afun_set_u_[thread].clear();
+
 			}
 		}
 	}
