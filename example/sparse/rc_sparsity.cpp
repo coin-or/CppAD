@@ -268,7 +268,63 @@ namespace {
 		}
 		return ok;
 	}
-
+	// Use reverse mode for Hessian and sparsity pattern
+	bool reverse_hes(CppAD::ADFun<double>& f)
+	{	bool ok = true;
+		size_t n = f.Domain();
+		size_t m = f.Range();
+		//
+		// n by n identity matrix
+		sparse_rc<s_vector> pattern_in;
+		pattern_in.resize(n, n, n);
+		for(size_t j = 0; j < n; j++)
+			pattern_in.set(j, j, j);
+		//
+		bool transpose     = false;
+		bool dependency    = false;
+		bool internal_bool = true;
+		sparse_rc<s_vector> pattern_out;
+		//
+		f.for_jac_sparsity(
+			pattern_in, transpose, dependency, internal_bool, pattern_out
+		);
+		//
+		for(size_t i = 0; i < m; i++)
+		{	// select i-th component of range
+			b_vector select_range(m);
+			d_vector w(m);
+			for(size_t k = 0; k < m; k++)
+			{	select_range[k] = k == i;
+				w[k] = 0.0;
+				if( k == i )
+					w[k] = 1.0;
+			}
+			//
+			f.rev_hes_sparsity(
+				select_range, transpose, internal_bool, pattern_out
+			);
+			//
+			// compute Hessian for i-th component function
+			std::string                    coloring  = "cppad.symmetric";
+			sparse_rcv<s_vector, d_vector> subset( pattern_out );
+			CppAD::sparse_hes_work         work;
+			d_vector x(n);
+			for(size_t j = 0; j < n; j++)
+				x[j] = double(j + 2);
+			size_t n_sweep = f.sparse_hes(
+				x, w, subset, pattern_out, coloring, work
+			);
+			//
+			// check Hessian
+			if( i == n )
+				ok &= subset.nnz() == 0;
+			else
+			{	ok &= check_hes(i, x, subset);
+				ok &= n_sweep == 2;
+			}
+		}
+		return ok;
+	}
 }
 // driver for all of the cases above
 bool rc_sparsity(void)
@@ -288,6 +344,7 @@ bool rc_sparsity(void)
 	ok &= forward_jac(f);
 	ok &= reverse_jac(f);
 	ok &= forward_hes(f);
+	ok &= reverse_hes(f);
 	//
 	return ok;
 }
