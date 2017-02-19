@@ -92,6 +92,44 @@ namespace {
 		}
 		return ok;
 	}
+	// Use forward mode for Jacobian and sparsity pattern
+	bool forward_jac(CppAD::ADFun<double>& f)
+	{	bool ok = true;
+		size_t n = f.Domain();
+		//
+		// sparsity pattern for identity matrix
+		sparse_rc<s_vector> pattern_in;
+		pattern_in.resize(n, n, n);
+		for(size_t k = 0; k < n; k++)
+			pattern_in.set(k, k, k);
+		//
+		// sparsity pattern for Jacobian
+		bool transpose     = false;
+		bool dependency    = false;
+		bool internal_bool = false;
+		sparse_rc<s_vector> pattern_out;
+		f.for_jac_sparsity(
+			pattern_in, transpose, dependency, internal_bool, pattern_out
+		);
+		//
+		// compute entire Jacobian
+		size_t                         group_max = 1;
+		std::string                    coloring  = "cppad";
+		sparse_rcv<s_vector, d_vector> subset( pattern_out );
+		CppAD::sparse_jac_work         work;
+		d_vector x(n);
+		for(size_t j = 0; j < n; j++)
+			x[j] = double(j + 2);
+		size_t n_sweep = f.sparse_jac_for(
+			group_max, x, subset, pattern_out, coloring, work
+		);
+		//
+		// check Jacobian
+		ok &= check_jac(x, subset);
+		ok &= n_sweep == 2;
+		//
+		return ok;
+	}
 	// Use reverse mode for Jacobian and sparsity pattern
 	bool reverse_jac(CppAD::ADFun<double>& f)
 	{	bool ok = true;
@@ -146,6 +184,7 @@ bool rc_sparsity(void)
 	CppAD::ADFun<double> f(x, y);
 	//
 	// run the example / tests
+	ok &= forward_jac(f);
 	ok &= reverse_jac(f);
 	//
 	return ok;
