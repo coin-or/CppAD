@@ -39,7 +39,7 @@ extern bool dependency(void);
 extern bool conj_grad(void);
 extern bool colpack_jac(void);
 extern bool colpack_hes(void);
-extern bool bool_sparsity(void);
+extern bool rc_sparsity(void);
 
 namespace {
 	// function that runs one test
@@ -87,7 +87,7 @@ int main(void)
 	ok &= Run( conj_grad,                 "conj_grad" );
 	ok &= Run( colpack_jac,               "colpack_jac" );
 	ok &= Run( colpack_hes,               "colpack_hes" );
-	ok &= Run( bool_sparsity,             "bool_sparsity" );
+	ok &= Run( rc_sparsity,               "rc_sparsity" );
 
 
 	// check for errors

@@ -10,7 +10,8 @@ Please visit http://www.coin-or.org/CppAD/ for information on other licenses.
 -------------------------------------------------------------------------- */
 
 /*
-$begin bool_sparsity.cpp$$
+Old example / test
+@begin bool_sparsity.cpp$$
 $spell
 	Bool
 $$
@@ -21,10 +22,10 @@ $head Purpose$$
 This example show how to conserve memory when computing sparsity patterns.
 
 $code
-$srcfile%example/sparse/bool_sparsity.cpp%0%// BEGIN C++%// END C++%1%$$
+$srcfile%test_more/bool_sparsity.cpp%0%// BEGIN C++%// END C++%1%$$
 $$
 
-$end
+@end
 */
 // BEGIN C++
 # include <cppad/cppad.hpp>

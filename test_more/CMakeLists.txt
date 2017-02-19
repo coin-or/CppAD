@@ -57,6 +57,7 @@ ADD_EXECUTABLE(test_more EXCLUDE_FROM_ALL test_more.cpp
 	atomic_sparsity.cpp
 	azmul.cpp
 	base_alloc.cpp
+	bool_sparsity.cpp
 	check_simple_vector.cpp
 	checkpoint.cpp
 	compare.cpp

@@ -1,6 +1,6 @@
 $Id$
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-16 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-17 Bradley M. Bell
 
 CppAD is distributed under multiple licenses. This distribution is under
 the terms of the
@@ -202,8 +202,9 @@ To be specific, the argument $cref/r/RevSparseJac/r/$$
 was transposed from what the documentation said.
 (This has no effect in the usual case where $icode r$$ is the identity.)
 $lnext
-Added the $cref bool_sparsity.cpp$$ examples which show how
+Added the $code bool_sparsity.cpp$$ examples which show how
 to conserve memory when computing sparsity patterns.
+(This has since been replaced by $cref rc_sparsity.cpp$$.)
 $lnext
 Modified the $cref ipopt_solve$$ procedure to take
 advantage of the memory conserving sparsity pattern calculations

@@ -34,7 +34,8 @@ $section Computing Sparse Jacobians$$
 $head Syntax$$
 $icode%n_sweep% = %f%.sparse_jac_for(
 	%group_max%, %x%, %subset%, %pattern%, %coloring%, %work%
-)%$$
+)
+%$$
 $icode%n_sweep% = %f%.sparse_jac_rev(
 	%x%, %subset%, %pattern%, %coloring%, %work%
 )%$$

@@ -34,7 +34,7 @@ ADD_EXECUTABLE(example_sparse EXCLUDE_FROM_ALL
 	conj_grad.cpp
 	colpack_jac.cpp
 	colpack_hes.cpp
-	bool_sparsity.cpp
+	rc_sparsity.cpp
 )
 
 # Extra compiler flags

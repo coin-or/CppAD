@@ -65,7 +65,8 @@ This argument has prototype
 $codei%
 	const sparse_rc<%SizeVector%>& %pattern%
 %$$
-It specifies the possibly non-zero entries in the $icode matrix$$.
+It specifies the number of rows, number of columns and
+the possibly non-zero entries in the $icode matrix$$.
 
 $head matrix$$
 This is a sparse matrix object with the sparsity specified by $icode pattern$$.
@@ -138,6 +139,8 @@ and if $icode%col%[ %row_major%[%k%] ] == %col%[ %row_major%[%k%+1] ]%$$,
 $codei%
 	%row%[ %row_major%[%k%] ] < %row%[ %row_major%[%k%+1] ]
 %$$
+This routine generates an assert if there are two entries with the same
+row and column values (if $code NDEBUG$$ is not defined).
 
 $head col_major$$
 This vector has size $icode nnz$$ and sorts the matrix
@@ -149,6 +152,8 @@ and if $icode%row%[ %col_major%[%k%] ] == %row%[ %col_major%[%k%+1] ]%$$,
 $codei%
 	%col%[ %col_major%[%k%] ] < %col%[ %col_major%[%k%+1] ]
 %$$
+This routine generates an assert if there are two entries with the same
+row and column values (if $code NDEBUG$$ is not defined).
 
 $children%
 	example/utility/sparse_rcv.cpp

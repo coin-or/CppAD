@@ -41,7 +41,7 @@ sparse_SOURCES   = \
 	conj_grad.cpp \
 	colpack_jac.cpp \
 	colpack_hes.cpp \
-	bool_sparsity.cpp
+	rc_sparsity.cpp
 #
 test: check
 	./sparse

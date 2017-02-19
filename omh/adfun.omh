@@ -105,7 +105,7 @@ $childtable%
 	cppad/core/for_sparse_hes.hpp%
 
 	example/sparse/dependency.cpp%
-	example/sparse/bool_sparsity.cpp
+	example/sparse/rc_sparsity.cpp
 %$$
 
 $end

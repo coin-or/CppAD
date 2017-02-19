@@ -139,8 +139,10 @@ $codei%
 %$$
 and if $icode%col%[ %row_major%[%k%] ] == %col%[ %row_major%[%k%+1] ]%$$,
 $codei%
-	%row%[ %row_major%[%k%] ] <= %row%[ %row_major%[%k%+1] ]
+	%row%[ %row_major%[%k%] ] < %row%[ %row_major%[%k%+1] ]
 %$$
+This routine generates an assert if there are two entries with the same
+row and column values (if $code NDEBUG$$ is not defined).
 
 $head col_major$$
 This vector has size $icode nnz$$ and sorts the sparsity pattern
@@ -150,8 +152,10 @@ $codei%
 %$$
 and if $icode%row%[ %col_major%[%k%] ] == %row%[ %col_major%[%k%+1] ]%$$,
 $codei%
-	%col%[ %col_major%[%k%] ] <= %col%[ %col_major%[%k%+1] ]
+	%col%[ %col_major%[%k%] ] < %col%[ %col_major%[%k%+1] ]
 %$$
+This routine generates an assert if there are two entries with the same
+row and column values (if $code NDEBUG$$ is not defined).
 
 $children%
 	example/utility/sparse_rc.cpp
@@ -251,6 +255,19 @@ public:
 			keys[k] = row_[k] * nc_ + col_[k];
 		}
 		index_sort(keys, row_major);
+# ifndef NDEBUG
+		for(size_t ell = 0; ell + 1 < nnz_; ell++)
+		{	size_t k  = row_major[ ell ];
+			size_t kp = row_major[ ell + 1 ];
+			CPPAD_ASSERT_KNOWN(
+				row_[k] != row_[kp] || col_[k] != col_[kp],
+				"sparse_rc: row_major: duplicate entry in this pattern"
+			);
+			CPPAD_ASSERT_UNKNOWN(
+				row_[k]<row_[kp] || (row_[k]==row_[kp] && col_[k]<col_[kp])
+			);
+		}
+# endif
 		return row_major;
 	}
 	/// column-major indices
@@ -261,6 +278,19 @@ public:
 			keys[k] = col_[k] * nr_ + row_[k];
 		}
 		index_sort(keys, col_major);
+# ifndef NDEBUG
+		for(size_t ell = 0; ell + 1 < nnz_; ell++)
+		{	size_t k  = col_major[ ell ];
+			size_t kp = col_major[ ell + 1 ];
+			CPPAD_ASSERT_KNOWN(
+				col_[k] != col_[kp] || row_[k] != row_[kp],
+				"sparse_rc: col_major: duplicate entry in this pattern"
+			);
+			CPPAD_ASSERT_UNKNOWN(
+				col_[k]<col_[kp] || (col_[k]==col_[kp] && row_[k]<row_[kp])
+			);
+		}
+# endif
 		return col_major;
 	}
 };

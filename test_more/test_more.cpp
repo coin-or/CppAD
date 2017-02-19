@@ -34,6 +34,7 @@ extern bool atomic_sparsity(void);
 extern bool azmul(void);
 extern bool base_adolc(void);
 extern bool base_alloc_test(void);
+extern bool bool_sparsity(void);
 extern bool check_simple_vector(void);
 extern bool checkpoint(void);
 extern bool Compare(void);
@@ -170,6 +171,7 @@ int main(void)
 	ok &= Run( atan2,           "atan2"          );
 	ok &= Run( atomic_sparsity, "atomic_sparsity");
 	ok &= Run( azmul,           "azmul"          );
+	ok &= Run( bool_sparsity,   "bool_sparsity"  );
 	ok &= Run( check_simple_vector, "check_simple_vector" );
 	ok &= Run( checkpoint,      "checkpoint"     );
 	ok &= Run( Compare,         "Compare"        );

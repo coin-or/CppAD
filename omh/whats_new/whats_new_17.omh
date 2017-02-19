@@ -22,9 +22,20 @@ $spell
 	hes
 	eigen
 	mul
+	rc
 $$
 
 $section Changes and Additions to CppAD During 2017$$
+
+$head 02-19$$
+$list number$$
+Remove the $code bool_sparsity.cpp$$ example and
+add the $cref rc_sparsity.cpp$$ example.
+$lnext
+Check for duplicate entries during
+$cref/row_major/sparse_rc/row_major/$$ and $code col_major$$ in
+$code sparse_rc$$.
+$lend
 
 $head 02-15$$
 Fix bug when using $cref ForSparseHes$$ with atomic functions; i.e.,

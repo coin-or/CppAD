@@ -123,7 +123,6 @@ $rref base_complex.hpp$$
 $rref base_require.cpp$$
 $rref bender_quad.cpp$$
 $rref bool_fun.cpp$$
-$rref bool_sparsity.cpp$$
 $rref capacity_order.cpp$$
 $rref change_param.cpp$$
 $rref check_for_nan.cpp$$
@@ -235,6 +234,7 @@ $rref pow.cpp$$
 $rref pow_int.cpp$$
 $rref print_for_cout.cpp$$
 $rref print_for_string.cpp$$
+$rref rc_sparsity.cpp$$
 $rref reverse_checkpoint.cpp$$
 $rref reverse_one.cpp$$
 $rref reverse_three.cpp$$
