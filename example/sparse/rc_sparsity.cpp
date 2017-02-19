@@ -37,13 +37,15 @@ namespace {
 	using CppAD::sparse_rcv;
 	using CppAD::NearEqual;
 	//
+	typedef CPPAD_TESTVECTOR(bool)                b_vector;
 	typedef CPPAD_TESTVECTOR(size_t)              s_vector;
 	typedef CPPAD_TESTVECTOR(double)              d_vector;
 	typedef CPPAD_TESTVECTOR( CppAD::AD<double> ) a_vector;
 	//
 	double eps99 = 99.0 * std::numeric_limits<double>::epsilon();
-	//
+	// -----------------------------------------------------------------------
 	// function f(x) that we are computing sparse results for
+	// -----------------------------------------------------------------------
 	a_vector fun(const a_vector& x)
 	{	size_t n  = x.size();
 		a_vector ret(n + 1);
@@ -54,7 +56,9 @@ namespace {
 		ret[n] = 0.0;
 		return ret;
 	}
-	// check sparsity pattern for f(x)
+	// -----------------------------------------------------------------------
+	// Jacobian
+	// -----------------------------------------------------------------------
 	bool check_jac(
 		const d_vector&                       x      ,
 		const sparse_rcv<s_vector, d_vector>& subset )
@@ -168,6 +172,103 @@ namespace {
 		//
 		return ok;
 	}
+	// ------------------------------------------------------------------------
+	// Hessian
+	// ------------------------------------------------------------------------
+	bool check_hes(
+		size_t                                i      ,
+		const d_vector&                       x      ,
+		const sparse_rcv<s_vector, d_vector>& subset )
+	{	bool ok  = true;
+		size_t n = x.size();
+		size_t j = (i + 1) % n;
+		//
+		ok &= subset.nnz() == 3;
+		const s_vector& row( subset.row() );
+		const s_vector& col( subset.col() );
+		const d_vector& val( subset.val() );
+		s_vector row_major = subset.row_major();
+		//
+		double v0 = val[ row_major[0] ];
+		double v1 = val[ row_major[1] ];
+		double v2 = val[ row_major[2] ];
+		if( j < i )
+		{	ok &= row[ row_major[0] ] == j;
+			ok &= col[ row_major[0] ] == i;
+			ok &= NearEqual( v0, 2.0 * x[i], eps99, eps99 );
+			//
+			ok &= row[ row_major[1] ] == i;
+			ok &= col[ row_major[1] ] == j;
+			ok &= NearEqual( v1, 2.0 * x[i], eps99, eps99 );
+			//
+			ok &= row[ row_major[2] ] == i;
+			ok &= col[ row_major[2] ] == i;
+			ok &= NearEqual( v2, 2.0 * x[j], eps99, eps99 );
+		}
+		else
+		{	ok &= row[ row_major[0] ] == i;
+			ok &= col[ row_major[0] ] == i;
+			ok &= NearEqual( v0, 2.0 * x[j], eps99, eps99 );
+			//
+			ok &= row[ row_major[1] ] == i;
+			ok &= col[ row_major[1] ] == j;
+			ok &= NearEqual( v1, 2.0 * x[i], eps99, eps99 );
+			//
+			ok &= row[ row_major[2] ] == j;
+			ok &= col[ row_major[2] ] == i;
+			ok &= NearEqual( v2, 2.0 * x[i], eps99, eps99 );
+		}
+		return ok;
+	}
+	// Use forward mode for Hessian and sparsity pattern
+	bool forward_hes(CppAD::ADFun<double>& f)
+	{	bool ok = true;
+		size_t n = f.Domain();
+		size_t m = f.Range();
+		//
+		b_vector select_domain(n);
+		for(size_t j = 0; j < n; j++)
+			select_domain[j] = true;
+		sparse_rc<s_vector> pattern_out;
+		//
+		for(size_t i = 0; i < m; i++)
+		{	// select i-th component of range
+			b_vector select_range(m);
+			d_vector w(m);
+			for(size_t k = 0; k < m; k++)
+			{	select_range[k] = k == i;
+				w[k] = 0.0;
+				if( k == i )
+					w[k] = 1.0;
+			}
+			//
+			bool internal_bool = false;
+			f.for_hes_sparsity(
+				select_domain, select_range, internal_bool, pattern_out
+			);
+			//
+			// compute Hessian for i-th component function
+			std::string                    coloring  = "cppad.symmetric";
+			sparse_rcv<s_vector, d_vector> subset( pattern_out );
+			CppAD::sparse_hes_work         work;
+			d_vector x(n);
+			for(size_t j = 0; j < n; j++)
+				x[j] = double(j + 2);
+			size_t n_sweep = f.sparse_hes(
+				x, w, subset, pattern_out, coloring, work
+			);
+			//
+			// check Hessian
+			if( i == n )
+				ok &= subset.nnz() == 0;
+			else
+			{	ok &= check_hes(i, x, subset);
+				ok &= n_sweep == 2;
+			}
+		}
+		return ok;
+	}
+
 }
 // driver for all of the cases above
 bool rc_sparsity(void)
@@ -186,6 +287,7 @@ bool rc_sparsity(void)
 	// run the example / tests
 	ok &= forward_jac(f);
 	ok &= reverse_jac(f);
+	ok &= forward_hes(f);
 	//
 	return ok;
 }

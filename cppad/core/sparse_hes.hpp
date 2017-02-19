@@ -32,7 +32,7 @@ $section Computing Sparse Hessians$$
 
 $head Syntax$$
 $icode%n_sweep% = %f%.sparse_hes(
-	%x%, %w%, %subset% %pattern%, %coloring%, %work%
+	%x%, %w%, %subset%, %pattern%, %coloring%, %work%
 )%$$
 
 $head Purpose$$
@@ -42,7 +42,7 @@ Here $icode n$$ is the $cref/domain/seq_property/Domain/$$ size,
 and $icode m$$ is the $cref/range/seq_property/Range/$$ size, or $icode f$$.
 The syntax above takes advantage of sparsity when computing the Hessian
 $latex \[
-	H(x) = \dpow{2}{x} \sum_{i=0}^{m-1} F_i (x)
+	H(x) = \dpow{2}{x} \sum_{i=0}^{m-1} w_i F_i (x)
 \] $$
 In the sparse case, this should be faster and take less memory than
 $cref Hessian$$.
