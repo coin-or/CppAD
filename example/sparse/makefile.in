@@ -107,7 +107,7 @@ am_sparse_OBJECTS = sparse.$(OBJEXT) sub_sparse_hes.$(OBJEXT) \
 	for_jac_sparsity.$(OBJEXT) for_sparse_jac.$(OBJEXT) \
 	for_sparse_hes.$(OBJEXT) dependency.$(OBJEXT) \
 	conj_grad.$(OBJEXT) colpack_jac.$(OBJEXT) \
-	colpack_hes.$(OBJEXT) bool_sparsity.$(OBJEXT)
+	colpack_hes.$(OBJEXT) rc_sparsity.$(OBJEXT)
 sparse_OBJECTS = $(am_sparse_OBJECTS)
 sparse_LDADD = $(LDADD)
 AM_V_P = $(am__v_P_@AM_V@)
@@ -369,7 +369,7 @@ sparse_SOURCES = \
 	conj_grad.cpp \
 	colpack_jac.cpp \
 	colpack_hes.cpp \
-	bool_sparsity.cpp
+	rc_sparsity.cpp
 
 all: all-am
 
@@ -418,7 +418,6 @@ mostlyclean-compile:
 distclean-compile:
 	-rm -f *.tab.c
 
-@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/bool_sparsity.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/colpack_hes.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/colpack_jac.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/conj_grad.Po@am__quote@
@@ -427,6 +426,7 @@ distclean-compile:
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/for_jac_sparsity.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/for_sparse_hes.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/for_sparse_jac.Po@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/rc_sparsity.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/rev_hes_sparsity.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/rev_jac_sparsity.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/rev_sparse_hes.Po@am__quote@
