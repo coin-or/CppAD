@@ -85,9 +85,11 @@ int main(void)
 	ok &= Run( for_sparse_hes,            "for_sparse_hes" );
 	ok &= Run( dependency,                "dependency" );
 	ok &= Run( conj_grad,                 "conj_grad" );
+	ok &= Run( rc_sparsity,               "rc_sparsity" );
+# if CPPAD_HAS_COLPACK
 	ok &= Run( colpack_jac,               "colpack_jac" );
 	ok &= Run( colpack_hes,               "colpack_hes" );
-	ok &= Run( rc_sparsity,               "rc_sparsity" );
+# endif
 
 
 	// check for errors
