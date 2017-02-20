@@ -214,7 +214,7 @@ public:
 		row_.resize(nnz);
 		col_.resize(nnz);
 	}
-	/// set a possibly non-zero indices
+	/// set row and column for a possibly non-zero element
 	void set(size_t k, size_t r, size_t c)
 	{	CPPAD_ASSERT_KNOWN(
 			k < nnz_,
@@ -232,13 +232,13 @@ public:
 		col_[k] = c;
 		//
 	}
-	/// nr()
+	/// number of rows in matrix
 	size_t nr(void) const
 	{	return nr_; }
-	/// nc()
+	/// number of columns in matrix
 	size_t nc(void) const
 	{	return nc_; }
-	/// nnz()
+	/// number of possibly non-zero elements in matrix
 	size_t nnz(void) const
 	{	return nnz_; }
 	/// row indices
@@ -247,7 +247,7 @@ public:
 	/// column indices
 	const SizeVector& col(void) const
 	{	return col_; }
-	/// row-major indices
+	/// row-major order
 	SizeVector row_major(void) const
 	{	SizeVector keys(nnz_), row_major(nnz_);
 		for(size_t k = 0; k < nnz_; k++)
