@@ -45,9 +45,9 @@ $codei%const %SizeVector%& %row%( %pattern%.row() )
 %$$
 $codei%const %SizeVector%& %col%( %pattern%.col() )
 %$$
-$icode%SizeVector% %row_major% = %pattern%.row_major()
+$icode%row_major% = %pattern%.row_major()
 %$$
-$icode%SizeVector% %col_major% = %pattern%.col_major()
+$icode%col_major% = %pattern%.col_major()
 %$$
 
 $head SizeVector$$
@@ -56,9 +56,9 @@ $cref/with elements of type/SimpleVector/Elements of Specified Type/$$
 $code size$$.
 
 $head pattern$$
+This object is used to hold a sparsity pattern for a matrix.
 The sparsity $icode pattern$$ is $code const$$
 except during its constructor, $code resize$$, and $code set$$.
-
 
 $head nr$$
 This argument has prototype
@@ -88,30 +88,7 @@ The function call $code nnz()$$ returns the value of $icode nnz$$.
 $head resize$$
 The current sparsity pattern is lost and a new one is started
 with the specified parameters. The elements in the $icode row$$
-and $icode col$$ vectors must assigned using $code set$$.
-
-$head k$$
-This argument has type
-$codei%
-	size_t %k%
-%$$
-and must be less than $icode nnz$$.
-
-$head r$$
-This argument has type
-$codei%
-	size_t %r%
-%$$
-It specifies the value assigned to $icode%row%[%k%]%$$ and must
-be less than $icode nr$$.
-
-$head c$$
-This argument has type
-$codei%
-	size_t %c%
-%$$
-It specifies the value assigned to $icode%col%[%k%]%$$ and must
-be less than $icode nc$$.
+and $icode col$$ vectors should be assigned using $code set$$.
 
 $head set$$
 This function sets the values
@@ -119,6 +96,29 @@ $codei%
 	%row%[%k%] = %r%
 	%col%[%k%] = %c%
 %$$
+
+$subhead k$$
+This argument has type
+$codei%
+	size_t %k%
+%$$
+and must be less than $icode nnz$$.
+
+$subhead r$$
+This argument has type
+$codei%
+	size_t %r%
+%$$
+It specifies the value assigned to $icode%row%[%k%]%$$ and must
+be less than $icode nr$$.
+
+$subhead c$$
+This argument has type
+$codei%
+	size_t %c%
+%$$
+It specifies the value assigned to $icode%col%[%k%]%$$ and must
+be less than $icode nc$$.
 
 $head row$$
 This vector has size $icode nnz$$ and
@@ -132,8 +132,13 @@ $icode%col%[%k%]%$$ is the column index of the $th k$$ possibly non-zero
 index pair in the sparsity pattern.
 
 $head row_major$$
-This vector has size $icode nnz$$ and sorts the sparsity pattern
-in row-major order. To be specific,
+This vector has prototype
+$codei%
+	%SizeVector% %row_major%
+%$$
+and its size $icode nnz$$.
+It sorts the sparsity pattern in row-major order.
+To be specific,
 $codei%
 	%col%[ %row_major%[%k%] ] <= %col%[ %row_major%[%k%+1] ]
 %$$
@@ -145,8 +150,13 @@ This routine generates an assert if there are two entries with the same
 row and column values (if $code NDEBUG$$ is not defined).
 
 $head col_major$$
-This vector has size $icode nnz$$ and sorts the sparsity pattern
-in column-major order. To be specific,
+This vector has prototype
+$codei%
+	%SizeVector% %col_major%
+%$$
+and its size $icode nnz$$.
+It sorts the sparsity pattern in column-major order.
+To be specific,
 $codei%
 	%row%[ %col_major%[%k%] ] <= %row%[ %col_major%[%k%+1] ]
 %$$

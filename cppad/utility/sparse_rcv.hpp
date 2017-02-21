@@ -47,9 +47,9 @@ $codei%const %SizeVector%& %col%( %matrix%.col() )
 %$$
 $codei%const %ValueVector%& %val%( %matrix%.val() )
 %$$
-$icode%SizeVector% %row_major% = %matrix%.row_major()
+$icode%row_major% = %matrix%.row_major()
 %$$
-$icode%SizeVector% %col_major% = %matrix%.col_major()
+$icode%col_major% = %matrix%.col_major()
 %$$
 
 $head SizeVector$$
@@ -130,8 +130,13 @@ $icode%val[%k%]%$$ is value of the $th k$$ possibly non-zero entry
 in the sparse matrix.
 
 $head row_major$$
-This vector has size $icode nnz$$ and sorts the matrix
-in row-major order. To be specific,
+This vector has prototype
+$codei%
+	%SizeVector% %row_major%
+%$$
+and its size $icode nnz$$.
+It sorts the sparsity pattern in row-major order.
+To be specific,
 $codei%
 	%col%[ %row_major%[%k%] ] <= %col%[ %row_major%[%k%+1] ]
 %$$
@@ -143,8 +148,13 @@ This routine generates an assert if there are two entries with the same
 row and column values (if $code NDEBUG$$ is not defined).
 
 $head col_major$$
-This vector has size $icode nnz$$ and sorts the matrix
-in column-major order. To be specific,
+This vector has prototype
+$codei%
+	%SizeVector% %col_major%
+%$$
+and its size $icode nnz$$.
+It sorts the sparsity pattern in column-major order.
+To be specific,
 $codei%
 	%row%[ %col_major%[%k%] ] <= %row%[ %col_major%[%k%+1] ]
 %$$
@@ -199,20 +209,28 @@ public:
 		);
 		val_[k] = v;
 	}
+	/// number of rows in matrix
 	size_t nr(void) const
 	{	return pattern_.nr(); }
+	/// number of columns in matrix
 	size_t nc(void) const
 	{	return pattern_.nc(); }
+	/// number of possibly non-zero elements in matrix
 	size_t nnz(void) const
 	{	return pattern_.nnz(); }
+	/// row indices
 	const SizeVector& row(void) const
 	{	return pattern_.row(); }
+	/// column indices
 	const SizeVector& col(void) const
 	{	return pattern_.col(); }
+	/// value for possibly non-zero elements
 	const ValueVector& val(void) const
 	{	return val_; }
+	/// row-major order
 	SizeVector row_major(void) const
 	{	return pattern_.row_major(); }
+	/// column-major indices
 	SizeVector col_major(void) const
 	{	return pattern_.col_major(); }
 };

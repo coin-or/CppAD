@@ -27,6 +27,10 @@ $$
 
 $section Changes and Additions to CppAD During 2017$$
 
+$head 02-21$$
+Minor improvements to syntax and documentation for
+$cref sparse_rc$$ and $cref sparse_rcv$$.
+
 $head 02-19$$
 $list number$$
 Remove the $code bool_sparsity.cpp$$ example and
