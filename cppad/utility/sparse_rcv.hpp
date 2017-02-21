@@ -93,25 +93,26 @@ $head nnz$$
 We use the notation $icode nnz$$ to denote the number of
 possibly non-zero entries in $icode matrix$$.
 
-$head k$$
+$head set$$
+This function sets the value
+$codei%
+	%val%[%k%] = %v%
+%$$
+
+$subhead k$$
 This argument has type
 $codei%
 	size_t %k%
 %$$
 and must be less than $icode nnz$$.
 
-$head v$$
+$subhead v$$
 This argument has type
 $codei%
-	%ValueVector%::value_type
+	const %ValueVector%::value_type& %v%
 %$$
 It specifies the value assigned to $icode%val%[%k%]%$$.
 
-$head set$$
-This function sets the value
-$codei%
-	%val%[%k%] = %v%
-%$$
 
 $head row$$
 This vector has size $icode nnz$$ and
@@ -127,7 +128,7 @@ element in $icode matrix$$
 $head val$$
 This vector has size $icode nnz$$ and
 $icode%val[%k%]%$$ is value of the $th k$$ possibly non-zero entry
-in the sparse matrix.
+in the sparse matrix (the value may be zero).
 
 $head row_major$$
 This vector has prototype

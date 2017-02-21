@@ -91,7 +91,7 @@ $$
 
 $section Calculating Sparsity Patterns$$
 
-$childtable%
+$children%
 	cppad/core/for_jac_sparsity.hpp%
 	cppad/core/for_sparse_jac.hpp%
 
@@ -108,6 +108,23 @@ $childtable%
 	example/sparse/rc_sparsity.cpp
 %$$
 
+$head Preferred Sparsity Patterns$$
+$table
+$rref for_jac_sparsity$$
+$rref rev_jac_sparsity$$
+$rref for_hes_sparsity$$
+$rref rev_hes_sparsity$$
+$tend
+
+$head Old Sparsity Patterns$$
+$table
+$rref ForSparseJac$$
+$rref RevSparseJac$$
+$rref ForSparseHes$$
+$rref RevSparseHes$$
+$tend
+
+
 $end
 -------------------------------------------------------------------------------
 $begin sparse_derivative$$
@@ -117,13 +134,26 @@ $$
 
 $section Calculating Sparse Derivatives$$
 
-$childtable%
+$children%
 	cppad/core/sparse_jac.hpp%
 	cppad/core/sparse_jacobian.hpp%
 
 	cppad/core/sparse_hes.hpp%
 	cppad/core/sparse_hessian.hpp
 %$$
+
+$head Preferred Sparsity Patterns$$
+$table
+$rref sparse_jac$$
+$rref sparse_hes$$
+$tend
+
+$head Old Sparsity Patterns$$
+$table
+$rref sparse_jacobian$$
+$rref sparse_hessian$$
+$tend
+
 
 $end
 -------------------------------------------------------------------------------

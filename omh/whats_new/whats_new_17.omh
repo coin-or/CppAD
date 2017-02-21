@@ -28,8 +28,13 @@ $$
 $section Changes and Additions to CppAD During 2017$$
 
 $head 02-21$$
+$list number$$
 Minor improvements to syntax and documentation for
 $cref sparse_rc$$ and $cref sparse_rcv$$.
+$lnext
+Separate preferred sparsity versions in
+$cref sparsity_pattern$$ and $cref sparse_derivative$$.
+$lend
 
 $head 02-19$$
 $list number$$
