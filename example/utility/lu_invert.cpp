@@ -42,7 +42,7 @@ bool LuInvert(void)
 	using std::rand;
 	using std::srand;
 # endif
-	double eps99 = 99.0 * std::numeric_limits<double>::epsilon();
+	double eps200 = 200.0 * std::numeric_limits<double>::epsilon();
 
 	size_t  n = 7;                        // number rows in A
 	size_t  m = 3;                        // number columns in B
@@ -121,7 +121,7 @@ bool LuInvert(void)
 	for(i = 0; i < n; i++)
 	{	for(k = 0; k < m; k++)
 		{	ok &= CppAD::NearEqual(
-				X[i * m + k], B[i * m + k], eps99, eps99
+				X[i * m + k], B[i * m + k], eps200, eps200
 			);
 		}
 	}
