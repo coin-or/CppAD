@@ -72,7 +72,7 @@ $codei%
 %$$
 It has size $latex n$$ and specifies which components of the diagonal of
 $latex D$$ are non-zero; i.e., $icode%select_domain%[%j%]%$$ is true
-if and only if $latex D_{i,i}$$ is non-zero.
+if and only if $latex D_{j,j}$$ is possibly non-zero.
 
 
 $head select_range$$
@@ -82,7 +82,7 @@ $codei%
 %$$
 It has size $latex m$$ and specifies which components of the vector
 $latex s$$ are non-zero; i.e., $icode%select_range%[%i%]%$$ is true
-if and only if $latex s_i$$ is non-zero.
+if and only if $latex s_i$$ is possibly non-zero.
 
 $head internal_bool$$
 If this is true, calculations are done with sets represented by a vector

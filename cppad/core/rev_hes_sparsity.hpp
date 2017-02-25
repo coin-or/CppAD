@@ -80,7 +80,7 @@ $codei%
 %$$
 It has size $latex m$$ and specifies which components of the vector
 $latex s$$ are non-zero; i.e., $icode%select_range%[%i%]%$$ is true
-if and only if $latex s_i$$ is non-zero.
+if and only if $latex s_i$$ is possibly non-zero.
 
 $head transpose$$
 This argument has prototype
