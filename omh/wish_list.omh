@@ -34,8 +34,15 @@ $$
 $section The CppAD Wish List$$
 
 $head Atomic$$
-Add an
-$cref atomic_option$$ that checks if the sparsity patterns calculated
+
+$subhead Element-wise Operations$$
+Add user atomic functions for element-wise addition, subtraction,
+multiplication, and division.
+Where the operands are $cref/simple vectors/SimpleVector/$$
+with elements of type $codei%AD<%Base%>%$$.
+
+$subhead Sparsity$$
+Add an $cref atomic_option$$ that checks if the sparsity patterns calculated
 by user atomic functions have
 elements for arguments that are know to be parameters and
 could be more efficient.

@@ -28,9 +28,14 @@ $$
 $section Changes and Additions to CppAD During 2017$$
 
 $head 02-26$$
+$list number$$
 Fix warning during $cref cmake$$ command,
 on $href%https://www.cygwin.com/%cygwin%$$ systems,
 about $code WIN32$$ not being defined.
+$lnext
+Add $cref/element-wise operations/wish_list/Atomic/Element-wise Operations/$$
+to the wish list.
+$lend
 
 $head 02-21$$
 $list number$$
