@@ -15,6 +15,9 @@
 # see http://www.cmake.org/pipermail/cmake/2013-January/053213.html
 CMAKE_MINIMUM_REQUIRED(VERSION 2.8)
 
+# Suppress warnging that WIN32 not defined on cygwin
+SET(CMAKE_LEGACY_CYGWIN_WIN32 0)
+
 # cppad_version is used by set_version.sh to get the version number.
 SET(cppad_version      "20170226" )
 SET(cppad_url          "http://www.coin-or.org/CppAD" )
