@@ -27,6 +27,11 @@ $$
 
 $section Changes and Additions to CppAD During 2017$$
 
+$head 02-26$$
+Fix warning during $cref cmake$$ command,
+on $href%https://www.cygwin.com/%cygwin%$$ systems,
+about $code WIN32$$ not being defined.
+
 $head 02-21$$
 $list number$$
 Minor improvements to syntax and documentation for
