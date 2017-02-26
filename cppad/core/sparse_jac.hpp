@@ -52,7 +52,7 @@ $latex \[
 \] $$
 In the sparse case, this should be faster and take less memory than
 $cref Jacobian$$.
-The matrix element $latex J_{i,j} (x)$$ is the partial of
+We use the notation $latex J_{i,j} (x)$$ to denote the partial of
 $latex F_i (x)$$ with respect to $latex x_j$$.
 
 $head SizeVector$$
@@ -66,11 +66,11 @@ $cref/elements of type/SimpleVector/Elements of Specified Type/$$
 $code size_t$$.
 
 $head sparse_jac_for$$
-This function first order forward mode sweeps $cref forward_one$$
+This function uses first order forward mode sweeps $cref forward_one$$
 to compute multiple columns of the Jacobian at the same time.
 
 $head sparse_jac_rev$$
-This function first order reverse mode sweeps $cref reverse_one$$
+This uses function first order reverse mode sweeps $cref reverse_one$$
 to compute multiple rows of the Jacobian at the same time.
 
 $head f$$
@@ -121,7 +121,7 @@ $icode%subset%.val()%$$ does not matter.
 Upon return it contains the value of the corresponding elements
 of the Jacobian.
 All of the row, column pairs in $icode subset$$ must also appear in
-$icode pattern$$; i.e., they must be possible non-zero.
+$icode pattern$$; i.e., they must be possibly non-zero.
 
 $head pattern$$
 This argument has prototype
@@ -178,7 +178,7 @@ $icode n_sweep$$ is the number of first order forward (reverse) sweeps
 used to compute the requested Jacobian values.
 It is also the number of colors determined by the coloring method
 mentioned above.
-It is proportional to the total computational work,
+This is proportional to the total computational work,
 not counting the zero order forward sweep,
 or combining multiple columns (rows) into a single sweep.
 

@@ -99,7 +99,7 @@ $icode%subset%.val()%$$ does not matter.
 Upon return it contains the value of the corresponding elements
 of the Hessian.
 All of the row, column pairs in $icode subset$$ must also appear in
-$icode pattern$$; i.e., they must be possible non-zero.
+$icode pattern$$; i.e., they must be possibly non-zero.
 
 $head pattern$$
 This argument has prototype
@@ -165,7 +165,7 @@ It is also the number of colors determined by the coloring method
 mentioned above.
 This is proportional to the total computational work,
 not counting the zero order forward sweep,
-or combining multiple columns (rows) into a single sweep.
+or combining multiple columns and rows into a single sweep.
 
 $head Uses Forward$$
 After each call to $cref Forward$$,
@@ -228,7 +228,7 @@ class sparse_hes_work {
 };
 // ----------------------------------------------------------------------------
 /*!
-Calculate sparse Jacobains using forward mode
+Calculate sparse Hessians using forward mode
 
 \tparam Base
 the base type for the recording that is stored in the ADFun object.
@@ -310,7 +310,7 @@ size_t ADFun<Base>::sparse_hes(
 	const SizeVector& subset_row( subset.row() );
 	const SizeVector& subset_col( subset.col() );
 	//
-	// point at which we are evaluationg the Jacobian
+	// point at which we are evaluationg the Hessian
 	Forward(0, x);
 	//
 	// number of elements in the subset
