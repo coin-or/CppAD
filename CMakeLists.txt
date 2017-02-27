@@ -11,29 +11,28 @@
 # =============================================================================
 # Some constants
 # =============================================================================
+# Suppress warnging that WIN32 not defined on cygwin
+SET(CMAKE_LEGACY_CYGWIN_WIN32 0) # remove when version below >= 2.8.4
+#
 # Set the minimum required version of cmake for this project.
 # see http://www.cmake.org/pipermail/cmake/2013-January/053213.html
 CMAKE_MINIMUM_REQUIRED(VERSION 2.8)
-
-# Suppress warnging that WIN32 not defined on cygwin
-SET(CMAKE_LEGACY_CYGWIN_WIN32 0)
-
+#
 # cppad_version is used by set_version.sh to get the version number.
-SET(cppad_version      "20170226" )
+SET(cppad_version      "20170227" )
 SET(cppad_url          "http://www.coin-or.org/CppAD" )
 SET(cppad_description  "Differentiation of C++ Algorithms" )
-
-
+#
 # Set name of this project and create the variables
 # cppad_BINARY_DIR and cppad_SOURCE_DIR.
 # project(projectname [CXX] [C] [Java])
 PROJECT(cppad)
-
+#
 # Add this directory to the list of C++ preprocessor include directories
 # for the entire project.
 # include_directories([AFTER|BEFORE] [SYSTEM] dir1 dir2 ...)
 INCLUDE_DIRECTORIES( ${cppad_SOURCE_DIR} )
-
+#
 # =============================================================================
 # Some system cmake language extensions
 # =============================================================================
