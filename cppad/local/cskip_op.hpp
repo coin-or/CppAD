@@ -1,9 +1,8 @@
-// $Id$
 # ifndef CPPAD_LOCAL_CSKIP_OP_HPP
 # define CPPAD_LOCAL_CSKIP_OP_HPP
 
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-16 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-17 Bradley M. Bell
 
 CppAD is distributed under multiple licenses. This distribution is under
 the terms of the
@@ -133,6 +132,7 @@ inline void forward_cskip_op_0(
 	if( arg[1] & 1 )
 	{	// If variable arg[2] <= i_z, it has already been computed,
 		// but it will be skipped for higher orders.
+		CPPAD_ASSERT_UNKNOWN( size_t(arg[2]) <= i_z );
 		left = taylor[ arg[2] * cap_order + 0 ];
 	}
 	else
@@ -142,6 +142,7 @@ inline void forward_cskip_op_0(
 	if( arg[1] & 2 )
 	{	// If variable arg[3] <= i_z, it has already been computed,
 		// but it will be skipped for higher orders.
+		CPPAD_ASSERT_UNKNOWN( size_t(arg[3]) <= i_z );
 		right = taylor[ arg[3] * cap_order + 0 ];
 	}
 	else
