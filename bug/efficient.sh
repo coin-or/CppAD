@@ -11,11 +11,15 @@
 # Please visit http://www.coin-or.org/CppAD/ for information on other licenses.
 # -----------------------------------------------------------------------------
 # 1260 | 6ce3cba095b850be40918f34cb69661624177ebd | Feb 8 07:57:24 2016
+# 1260 | 1d6dc964379103ffc27725c649e22416e1cd233b | Feb 20 18:34:50 2016
+# 1293 | f2f000b0ee9c4e1599f231aad3dea1198d28c0fc | Feb 22 16:57:46 2016
+# 1293 | 4456948025c577d39f6eadd46ef2d4d7374eff46 | Feb 23 08:53:51 2016
+# 1293 | bd973e669c98709ac669f5f501b64be41acb6b48 | Feb 25 08:04:09 2016
 # 1293 | b50dd50e931e0802c9eff5e3e8855ee827e34d46 | Mar 1 22:31:38 2016
 # 1293 | 30860e98aa7f7b69ac6deb83ed8e564a46ef96a1 | Mar 27 09:09:58 2016
 # 1293 | 428bc21fad81a0d7eae6cac76782acb10248fcf0 | Jun 30 08:20:43 2016
 # 1293 | 14a35c1f3d44df5090fd35d1f8fe3ce0d4e18fc9 | Feb 16 05:26:23 2017
-version='b50dd50e931e0802c9eff5e3e8855ee827e34d46'
+version='f2f000b0ee9c4e1599f231aad3dea1198d28c0fc'
 # -----------------------------------------------------------------------------
 # bash function that echos and executes a command
 echo_eval() {
