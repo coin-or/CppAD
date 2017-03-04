@@ -10,9 +10,8 @@
 # A copy of this license is included in the COPYING file of this distribution.
 # Please visit http://www.coin-or.org/CppAD/ for information on other licenses.
 # -----------------------------------------------------------------------------
-cppad_path="$HOME/repo/cppad.git"
-before_version='20160000.1'
-after_version='20170000.2'
+before_version='6ce3cba095b850be40918f34cb69661624177ebd'
+after_version='14a35c1f3d44df5090fd35d1f8fe3ce0d4e18fc9'
 # -----------------------------------------------------------------------------
 # bash function that echos and executes a command
 echo_eval() {
@@ -21,6 +20,7 @@ echo_eval() {
 }
 # -----------------------------------------------------------------------------
 cd ..
+cppad_path=`pwd`
 if [ ! -e bug/build ]
 then
     mkdir bug/build
@@ -294,21 +294,36 @@ std::vector<CppAD::AD<double> > evaluateModel(const std::vector<CppAD::AD<double
 }
 EOF
 # -----------------------------------------------------------------------------
+cp bug/efficient.sh ~/trash
+git checkout bug/efficient.sh
+#
+before_date=`git show -q $before_version | grep Date | sed -e 's|Date: *||'`
+after_date=`git show -q $after_version | grep Date | sed -e 's|Date: *||'`
+#
 echo_eval git checkout -q $before_version
 echo "bin/run_cmake.sh > efficient.log"
 bin/run_cmake.sh > bug/efficient.log
 cd bug/build
-echo_eval g++ -I${cppad_path} --std=c++11 -g test_jac_nnz.cpp -o test_jac_nnz >> ../efficient.log
+echo_eval g++ -I${cppad_path} --std=c++11 -g test_jac_nnz.cpp -o test_jac_nnz
 before_nnz=`./test_jac_nnz`
-echo "before_nnz = $before_nnz"
+echo "before_nnz = $before_nnz, before_date = $before_date"
 cd ../..
 #
 echo_eval git checkout -q $after_version
-echo "bin/run_cmake.sh > efficient.log"
-bin/run_cmake.sh > bug/efficient.log
+echo "bin/run_cmake.sh >> efficient.log"
+bin/run_cmake.sh >> bug/efficient.log
 cd bug/build
-echo_eval g++ -I${cppad_path} --std=c++11 -g test_jac_nnz.cpp -o test_jac_nnz >> ../efficient.log
+echo_eval g++ -I${cppad_path} --std=c++11 -g test_jac_nnz.cpp -o test_jac_nnz
 after_nnz=`./test_jac_nnz`
-echo "after_nnz = $after_nnz"
+echo "after_nnz = $after_nnz, after_date = $after_date"
 cd ../..
 echo_eval git checkout -q master
+cp ~/trash/efficient.sh bug/.
+#
+for file in example/test_one.sh test_more/test_one.sh
+do
+	if [ -e $file ]
+	then
+		rm $file
+	fi
+done
