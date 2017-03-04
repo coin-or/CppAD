@@ -27,6 +27,10 @@ $$
 
 $section Changes and Additions to CppAD During 2017$$
 
+$head 03-04$$
+Fix a serious bug in the optimization of conditional expressions;
+see $cref/no_conditional_skip/optimize/options/no_conditional_skip/$$.
+
 $head 02-26$$
 $list number$$
 Fix warning during $cref cmake$$ command,

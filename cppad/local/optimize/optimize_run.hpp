@@ -1,4 +1,3 @@
-// $Id$
 
 # ifndef CPPAD_LOCAL_OPTIMIZE_OPTIMIZE_RUN_HPP
 # define CPPAD_LOCAL_OPTIMIZE_OPTIMIZE_RUN_HPP
@@ -160,28 +159,33 @@ void optimize_run(
 	// -------------------------------------------------------------
 	// conditional expression information
 	//
-	// size of the conditional expression information structure
-	// (This is equal to the number of conditional expressions when
-	// conditional_skip is true.)
+	// Size of the conditional expression information structure.
+	// This is equal to the number of conditional expressions when
+	// conditional_skip is true, otherwise it is zero.
 	size_t num_cexp = cexp_info.size();
 	CPPAD_ASSERT_UNKNOWN( conditional_skip || num_cexp == 0 );
-
+	//
 	// sort the conditional expression information by max_left_right
-	vector<size_t> cexp_info_order(num_cexp);
+	// this is the conditional skip order
+	vector<size_t> cskip_order(num_cexp);
 	if( num_cexp > 0 )
 	{	CppAD::vector<size_t> keys(num_cexp);
 		for(size_t i = 0; i < num_cexp; i++)
 			keys[i] = cexp_info[i].max_left_right;
-		CppAD::index_sort(keys, cexp_info_order);
+		CppAD::index_sort(keys, cskip_order);
 	}
-
-	// index in sorted order
+	// initial index in conditional skip order
 	size_t cskip_order_next = 0;
+	//
+	// initialize index in conditional expression order
+	size_t cexp_next = 0;
 
-	// index in order during reverse sweep
-	size_t cexp_info_index = num_cexp;
+	// mapping from conditional expression index to conditional skip
+	// information on new tape
 	vector<struct_cskip_new> cskip_new(num_cexp);
-	// flag used to indicate that this conditional expression is skipped
+	//
+	// flag used to indicate that there is no conditional skip
+	// for this conditional expression
 	for(size_t i = 0; i < num_cexp; i++)
 		cskip_new[i].i_arg = 0;
 	// -------------------------------------------------------------
@@ -250,14 +254,14 @@ void optimize_run(
 		skip      &= op != InvOp;
 		skip      &= user_state == start_user;
 		if( skip )
-		{	size_t j = cexp_info_order[cskip_order_next];
+		{	size_t j = cskip_order[cskip_order_next];
 			if( NumRes(op) > 0 )
 				skip &= cexp_info[j].max_left_right < i_var;
 			else
 				skip &= cexp_info[j].max_left_right <= i_var;
 		}
 		if( skip )
-		{	size_t j = cexp_info_order[cskip_order_next];
+		{	size_t j = cskip_order[cskip_order_next];
 			cskip_order_next++;
 			struct_cexp_info info = cexp_info[j];
 			size_t n_true          = info.skip_op_true.size();
@@ -286,7 +290,11 @@ void optimize_run(
 		}
 		size_t         previous;
 		//
-		if( op_info[i_op].usage == yes_usage ) switch( op )
+		if( op_info[i_op].usage != yes_usage )
+		{	if( op == CExpOp )
+				++cexp_next;
+		}
+		else switch( op )
 		{
 			case BeginOp:
 			CPPAD_ASSERT_NARG_NRES(op, 1, 1);
@@ -558,10 +566,11 @@ void optimize_run(
 			// fill in the arguments for the CSkip operations. This does not
 			// affect max_left_right which is used during this sweep.
 			if( conditional_skip )
-			{	CPPAD_ASSERT_UNKNOWN( cexp_info_index > 0 );
-				cexp_info_index--;
-				cskip_new[ cexp_info_index ].left  = new_arg[2];
-				cskip_new[ cexp_info_index ].right = new_arg[3];
+			{	CPPAD_ASSERT_UNKNOWN( cexp_next < num_cexp );
+				CPPAD_ASSERT_UNKNOWN( cexp_info[cexp_next].i_op == i_op );
+				cskip_new[ cexp_next ].left  = new_arg[2];
+				cskip_new[ cexp_next ].right = new_arg[3];
+				++cexp_next;
 			}
 			break;
 			// ---------------------------------------------------
@@ -852,10 +861,12 @@ void optimize_run(
 			size_t n_true  = info.skip_op_true.size();
 			size_t n_false = info.skip_op_false.size();
 			size_t i_arg   = cskip_new[i].i_arg;
+			size_t left    = cskip_new[i].left;
+			size_t right   = cskip_new[i].right;
 			rec->ReplaceArg(i_arg++, info.cop   );
 			rec->ReplaceArg(i_arg++, info.flag  );
-			rec->ReplaceArg(i_arg++, info.left  );
-			rec->ReplaceArg(i_arg++, info.right );
+			rec->ReplaceArg(i_arg++, left  );
+			rec->ReplaceArg(i_arg++, right );
 			rec->ReplaceArg(i_arg++, n_true     );
 			rec->ReplaceArg(i_arg++, n_false    );
 			for(size_t j = 0; j < info.skip_op_true.size(); j++)

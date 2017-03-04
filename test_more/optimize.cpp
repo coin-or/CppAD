@@ -1877,6 +1877,50 @@ namespace {
 
 		return ok;
 	}
+
+	// Test case where a variable is removed during optimization
+	// (bug fixed 2017-03-04)
+	bool cond_exp_skip_remove_var(void)
+	{	bool ok = true;
+		using CppAD::vector;
+		using CppAD::AD;
+		using CppAD::NearEqual;
+		double eps10 = 10.0 * std::numeric_limits<double>::epsilon();
+
+		vector< AD<double> > ax(2), ay(2);
+		ax[0] = 1.0;
+		ax[1] = 2.0;
+		Independent(ax);
+		//
+		AD<double> var_1   = ax[0] + ax[1];
+		AD<double> var_2   = ax[0] + ax[1]; // gets removed during optimization
+		AD<double> var_3   = ax[0] - ax[1];
+		AD<double> par_1   = 1.0;
+		//
+		// first conditional expression depends on var_1
+		// 6 * x_0 if x_0 + x_1 >= 1.0,  7 * x_1 otherwise
+		ay[0] = CppAD::CondExpGe(var_1, par_1, 6.0 * ax[0], 7.0 * ax[1]);
+		//
+		// second conditional expression depends on var_3
+		// 8 * x_0 if x_0 - x_1 >= x_0 + x_1, 9 * x_1 otherwise
+		ay[1] = CppAD::CondExpGe(var_3, par_1, 8.0 * ax[0], 9.0 * ax[1]);
+		CppAD::ADFun<double> f(ax, ay);
+		//
+		if( conditional_skip_ )
+			f.optimize();
+		else
+			f.optimize("no_conditional_skip");
+
+		// check case where x[0] = 2, x[1] = 4
+		vector<double> x(2), y(2);
+		x[0] = 2.0;
+		x[1] = 4.0;
+		y    = f.Forward(0, x);
+		ok &= NearEqual(y[0], 6.0 * x[0], eps10, eps10);
+		ok &= NearEqual(y[1], 9.0 * x[1], eps10, eps10);
+
+		return ok;
+	}
 }
 
 bool optimize(void)
@@ -1949,8 +1993,12 @@ bool optimize(void)
 		// check reverse mode conditional skipping
 		ok     &= cond_exp_reverse();
 		// check case where an expresion needed by both true and false case
-		ok     &=  cond_exp_both_true_and_false();
+		ok     &= cond_exp_both_true_and_false();
+		// check case were a variable in left or right expressions
+		// is removed during the optimization
+		ok     &= cond_exp_skip_remove_var();
 	}
+		ok     &= cond_exp_skip_remove_var();
 	//
 	CppAD::user_atomic<double>::clear();
 	return ok;
