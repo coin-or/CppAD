@@ -10,8 +10,10 @@
 # A copy of this license is included in the COPYING file of this distribution.
 # Please visit http://www.coin-or.org/CppAD/ for information on other licenses.
 # -----------------------------------------------------------------------------
-before_version='6ce3cba095b850be40918f34cb69661624177ebd'
-after_version='14a35c1f3d44df5090fd35d1f8fe3ce0d4e18fc9'
+# 1260 | 6ce3cba095b850be40918f34cb69661624177ebd | Feb 8 07:57:24 2016
+# 1293 | 428bc21fad81a0d7eae6cac76782acb10248fcf0 | Jun 30 08:20:43 2016
+# 1293 | 14a35c1f3d44df5090fd35d1f8fe3ce0d4e18fc9 | Feb 16 05:26:23 2017
+version='428bc21fad81a0d7eae6cac76782acb10248fcf0'
 # -----------------------------------------------------------------------------
 # bash function that echos and executes a command
 echo_eval() {
@@ -297,27 +299,16 @@ EOF
 cp bug/efficient.sh ~/trash
 git checkout bug/efficient.sh
 #
-before_date=`git show -q $before_version | grep Date | \
-	sed -e 's|Date: *[^ ]* *||' -e 's|[^ ]*$||'`
-after_date=`git show -q $after_version | grep Date | \
+date=`git show -q $version | grep Date | head -1 | \
 	sed -e 's|Date: *[^ ]* *||' -e 's|[^ ]*$||'`
 #
-echo_eval git checkout -q $before_version
+echo_eval git checkout -q $version
 echo "bin/run_cmake.sh > efficient.log"
 bin/run_cmake.sh > bug/efficient.log
 cd bug/build
 echo_eval g++ -I${cppad_path} --std=c++11 -g test_jac_nnz.cpp -o test_jac_nnz
-before_nnz=`./test_jac_nnz`
-echo "before_nnz = $before_nnz, before_date = $before_date"
-cd ../..
-#
-echo_eval git checkout -q $after_version
-echo "bin/run_cmake.sh >> efficient.log"
-bin/run_cmake.sh >> bug/efficient.log
-cd bug/build
-echo_eval g++ -I${cppad_path} --std=c++11 -g test_jac_nnz.cpp -o test_jac_nnz
-after_nnz=`./test_jac_nnz`
-echo "after_nnz = $after_nnz, after_date = $after_date"
+nnz=`./test_jac_nnz`
+echo "nnz = $nnz, date = $date"
 cd ../..
 echo_eval git checkout -q master
 cp ~/trash/efficient.sh bug/.
@@ -329,3 +320,6 @@ do
 		rm $file
 	fi
 done
+#
+echo "# $nnz | $version | $date" >> bug/efficient.sh
+# -----------------------------------------------------------------------------
