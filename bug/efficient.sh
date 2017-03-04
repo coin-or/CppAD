@@ -297,8 +297,10 @@ EOF
 cp bug/efficient.sh ~/trash
 git checkout bug/efficient.sh
 #
-before_date=`git show -q $before_version | grep Date | sed -e 's|Date: *||'`
-after_date=`git show -q $after_version | grep Date | sed -e 's|Date: *||'`
+before_date=`git show -q $before_version | grep Date | \
+	sed -e 's|Date: *[^ ]* *||' -e 's|[^ ]*$||'`
+after_date=`git show -q $after_version | grep Date | \
+	sed -e 's|Date: *[^ ]* *||' -e 's|[^ ]*$||'`
 #
 echo_eval git checkout -q $before_version
 echo "bin/run_cmake.sh > efficient.log"
