@@ -243,11 +243,7 @@ std::vector<CppAD::AD<double> > evaluateModel(const std::vector<CppAD::AD<double
 
         atomModel(xik, dxikdt); // ODE
         for (size_t j = 0; j < ns_; j++) {
-            dep[eq + j] = dxikdt[j]
-                          + 0.13797958971132715 * x[s0 + j]
-                          + -0.10749149571305303 * x[s0 + nvarsk + j]
-                          + -0.038928002823013501 * x[s0 + 2 * nvarsk + j]
-                          + 0.008439908824739363 * x[s0 + 3 * nvarsk + j];
+            dep[eq + j] = 1.0;
         }
         eq += ns_;
 
@@ -260,11 +256,7 @@ std::vector<CppAD::AD<double> > evaluateModel(const std::vector<CppAD::AD<double
 
         atomModel(xik, dxikdt); // ODE
         for (size_t j = 0; j < ns_; j++) {
-            dep[eq + j] = dxikdt[j]
-                          + -0.057979589711327127 * x[s0 + j]
-                          + 0.11892800282301351 * x[s0 + nvarsk + j]
-                          + -0.025841837620280327 * x[s0 + 2 * nvarsk + j]
-                          + -0.035106575491406049 * x[s0 + 3 * nvarsk + j];
+            dep[eq + j] = 1.0;
         }
         eq += ns_;
 
@@ -278,10 +270,7 @@ std::vector<CppAD::AD<double> > evaluateModel(const std::vector<CppAD::AD<double
         atomModel(xik, dxikdt); // ODE
         for (size_t j = 0; j < ns_; j++) {
             dep[eq + j] = dxikdt[j]
-                          + 0.099999999999999978 * x[s0 + j]
-                          + -0.18439908824739357 * x[s0 + nvarsk + j]
-                          + 0.25106575491406025 * x[s0 + 2 * nvarsk + j]
-                          + -0.16666666666666669 * x[s0 + 3 * nvarsk + j];
+                          + 0.25106575491406025 * x[s0 + 2 * nvarsk + j];
         }
         eq += ns_;
 
