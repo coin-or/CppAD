@@ -49,34 +49,10 @@ int main(int argc, char *argv[]) {
      */
     auto atomicFunction = [](const std::vector <AD<double>>& ind,
                              std::vector <AD<double>>& dxdt) {
-        // temporary variables
-        std::vector<AD<double> > v(17);
-
-        v[0] = 1.0;
-        v[1] = 1.0;
-        v[2] = 1.0;
-        v[3] = 1.0;
-        v[4] = 1.0;
-        v[5] = 1.0;
-        v[6] = 1.0;
-        v[7] = 1.0;
-        v[8] = 1.0;
-        v[9] = 1.0;
-        v[7] = 1.0;
-        v[10] = 1.0;
-        v[11] = ind[13] * ind[13];
-        v[12] = ind[12] * ind[12];
-        v[13] = ind[2] * ind[2];
-        v[14] = ind[13] * ind[13];
-        v[15] = ind[2] * ind[2];
-        v[16] = ind[2] - ind[3];
         dxdt[2] = 1.0;
-        v[11] = ind[2] * dxdt[2];
         dxdt[0] = 1.0;
-        dxdt[1] = v[11];
-        v[11] = 1.0;
-        v[7] = 1.0;
-        dxdt[3] = v[16];
+        dxdt[1] = ind[2];
+        dxdt[3] = ind[2];
     };
 
     std::vector<double> xx(na_);
