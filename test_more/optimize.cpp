@@ -1894,16 +1894,17 @@ namespace {
 		//
 		AD<double> var_1   = ax[0] + ax[1];
 		AD<double> var_2   = ax[0] + ax[1]; // gets removed during optimization
-		AD<double> var_3   = ax[0] - ax[1];
+		AD<double> var_3   = ax[0] + ax[1]; // gets removed during optimization
+		AD<double> var_4   = ax[0] - ax[1];
 		AD<double> par_1   = 1.0;
 		//
 		// first conditional expression depends on var_1
 		// 6 * x_0 if x_0 + x_1 >= 1.0,  7 * x_1 otherwise
 		ay[0] = CppAD::CondExpGe(var_1, par_1, 6.0 * ax[0], 7.0 * ax[1]);
 		//
-		// second conditional expression depends on var_3
+		// second conditional expression depends on var_4
 		// 8 * x_0 if x_0 - x_1 >= x_0 + x_1, 9 * x_1 otherwise
-		ay[1] = CppAD::CondExpGe(var_3, par_1, 8.0 * ax[0], 9.0 * ax[1]);
+		ay[1] = CppAD::CondExpGe(var_4, par_1, 8.0 * ax[0], 9.0 * ax[1]);
 		CppAD::ADFun<double> f(ax, ay);
 		//
 		if( conditional_skip_ )
@@ -1998,7 +1999,6 @@ bool optimize(void)
 		// is removed during the optimization
 		ok     &= cond_exp_skip_remove_var();
 	}
-		ok     &= cond_exp_skip_remove_var();
 	//
 	CppAD::user_atomic<double>::clear();
 	return ok;
