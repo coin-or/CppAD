@@ -189,9 +189,13 @@ std::vector<CppAD::AD<double> > evaluateModel(const std::vector<CppAD::AD<double
 
     // dependent variable vector
     std::vector<AD<double> > dep(m2);
+	for(size_t i = 0; i < m2; i++)
+		dep[i] = 0.0;
 
     std::vector<AD<double> > dxikdt(ns_);
     std::vector<AD<double> > xik(na_);
+	for(size_t j = 0; j < na_; j++)
+		xik[j] = 1.0;
 
     // parameters
     for (size_t j = 0; j < npar_; j++)
@@ -202,53 +206,22 @@ std::vector<CppAD::AD<double> > evaluateModel(const std::vector<CppAD::AD<double
     size_t nMstart = npar_ + nvarsk * K_ * repeat + nvarsk;
     size_t eq = 0;
 
-    for (size_t i = 0; i < repeat; i++) {
+	size_t i = 0;
+    {
         size_t s0 = s;
 
-        // controls
-        for (size_t j = 0; j < nm_; j++) {
-            xik[ns_ + j] = x[nMstart + nm_ * i + j];
-        }
-
-        // K = 1
-        for (size_t j = 0; j < ns_; j++) {
-            xik[j] = x[s + j]; // states
-        }
-        s += nvarsk;
-        // xik[ns + nm + npar] = x[s + ns];// time
-
-        atomModel(xik, dxikdt); // ODE
-        for (size_t j = 0; j < ns_; j++) {
-            dep[eq + j] = 1.0;
-        }
-        eq += ns_;
-
-        // K = 2
-        for (size_t j = 0; j < ns_; j++) {
-            xik[j] = x[s + j]; // states
-        }
-        s += nvarsk;
-        // xik[ns + nm + npar] = x[s + ns];// time
-
-        atomModel(xik, dxikdt); // ODE
-        for (size_t j = 0; j < ns_; j++) {
-            dep[eq + j] = 1.0;
-        }
-        eq += ns_;
+        s += 2 * nvarsk;
+        eq += 2 * ns_;
 
         // K = 3
         for (size_t j = 0; j < ns_; j++) {
             xik[j] = x[s + j]; // states
         }
-        s += nvarsk;
-        // xik[ns + nm + npar] = x[s + ns];// time
 
         atomModel(xik, dxikdt); // ODE
         for (size_t j = 0; j < ns_; j++) {
-            dep[eq + j] = dxikdt[j]
-                          + 0.25106575491406025 * x[s0 + 2 * nvarsk + j];
+            dep[j] = dxikdt[j] +  x[s0 + 2 * nvarsk + j];
         }
-        eq += ns_;
 
     }
 
