@@ -321,11 +321,11 @@ cd ../..
 echo_eval git checkout -q master
 cp ~/trash/efficient.sh bug/.
 #
-for file in example/test_one.sh test_more/test_one.sh
+for dir in example example/ipopt_solve test_more
 do
-	if [ -e $file ]
+	if [ -e $dir/test_one.sh ]
 	then
-		rm $file
+		rm $dir/test_one.sh
 	fi
 done
 #
