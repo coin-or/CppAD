@@ -304,22 +304,30 @@ std::vector<CppAD::AD<double> > evaluateModel(const std::vector<CppAD::AD<double
 }
 EOF
 # -----------------------------------------------------------------------------
-cp bug/efficient.sh ~/trash
-git checkout bug/efficient.sh
-#
-date=`git show -q $version | grep Date | head -1 | \
-	sed -e 's|Date: *[^ ]* *||' -e 's| *[^ ]*$||'`
-#
-echo_eval git checkout -q $version
-echo "bin/run_cmake.sh > efficient.log"
-bin/run_cmake.sh > bug/efficient.log
+if [ "$version" == 'master' ]
+then
+	date=`date | sed -e 's|^[^ ]* *||' -e 's| *[^ ]* *\([^ ]*\)$| \1|'`
+else
+	cp bug/efficient.sh ~/trash
+	git checkout bug/efficient.sh
+	#
+	date=`git show -q $version | grep Date | head -1 | \
+		sed -e 's|Date: *[^ ]* *||' -e 's| *[^ ]*$||'`
+	#
+	echo_eval git checkout -q $version
+	echo "bin/run_cmake.sh > efficient.log"
+	bin/run_cmake.sh > bug/efficient.log
+fi
 cd bug/build
 echo_eval g++ -I${cppad_path} --std=c++11 -g test_jac_nnz.cpp -o test_jac_nnz
 nnz=`./test_jac_nnz`
 echo "nnz = $nnz, date = $date"
 cd ../..
-echo_eval git checkout -q master
-cp ~/trash/efficient.sh bug/.
+if [ "$version" != 'master' ]
+then
+	echo_eval git checkout -q master
+	cp ~/trash/efficient.sh bug/.
+fi
 #
 for dir in example example/ipopt_solve test_more
 do
