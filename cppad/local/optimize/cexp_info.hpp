@@ -1,8 +1,7 @@
-// $Id$
-# ifndef CPPAD_LOCAL_OPTIMIZE_CSKIP_INFO_HPP
-# define CPPAD_LOCAL_OPTIMIZE_CSKIP_INFO_HPP
+# ifndef CPPAD_LOCAL_OPTIMIZE_CEXP_INFO_HPP
+# define CPPAD_LOCAL_OPTIMIZE_CEXP_INFO_HPP
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-16 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-17 Bradley M. Bell
 
 CppAD is distributed under multiple licenses. This distribution is under
 the terms of the
@@ -15,7 +14,7 @@ Please visit http://www.coin-or.org/CppAD/ for information on other licenses.
 # include <cppad/utility/vector.hpp>
 
 /*!
-\file cskip_info.hpp
+\file cexp_info.hpp
 Information about one conditional expression.
 */
 
@@ -24,7 +23,7 @@ namespace CppAD { namespace local { namespace optimize  {
 /*!
 Information about one conditional expression.
 */
-struct struct_cskip_info {
+struct struct_cexp_info {
 	/// The operator index for this conditional expression operation
 	size_t i_op;
 

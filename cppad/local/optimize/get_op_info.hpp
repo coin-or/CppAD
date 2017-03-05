@@ -1,9 +1,8 @@
-// $Id$
 # ifndef CPPAD_LOCAL_OPTIMIZE_GET_OP_INFO_HPP
 # define CPPAD_LOCAL_OPTIMIZE_GET_OP_INFO_HPP
 
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-16 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-17 Bradley M. Bell
 
 CppAD is distributed under multiple licenses. This distribution is under
 the terms of the
@@ -19,7 +18,7 @@ Create operator information tables
 
 # include <cppad/local/optimize/op_info.hpp>
 # include <cppad/local/optimize/match_op.hpp>
-# include <cppad/local/optimize/cskip_info.hpp>
+# include <cppad/local/optimize/cexp_info.hpp>
 # include <cppad/local/optimize/usage.hpp>
 
 // BEGIN_CPPAD_LOCAL_OPTIMIZE_NAMESPACE
@@ -124,8 +123,8 @@ using AD< \a Base > and computations by this routine are done using type
 \a Base.
 
 \param conditional_skip
-If conditional_skip this is true, the conditional skip information
-cskip_info will be calculated.
+If conditional_skip this is true, the conditional expression information
+cexp_info will be calculated.
 This may be time intensive and may not have much benefit in the optimized
 recording.
 
@@ -157,16 +156,16 @@ This is only true for the primary variables.
 If the index i_var corresponds to an auxillary variable, var2op[i_var]
 is equalt to num_op (which is not a valid operator index).
 
-\param cskip_info
+\param cexp_info
 The input size of this vector must be zero.
-If conditional_skip is false, cskip_info is not changed.
+If conditional_skip is false, cexp_info is not changed.
 Otherwise,
-upon return cskip_info has size equal to the number of conditional expressions
+upon return cexp_info has size equal to the number of conditional expressions
 in the operation sequence; i.e., the number of CExpOp operators.
-The value cskip_info[j] is the information corresponding to the j-th
+The value cexp_info[j] is the information corresponding to the j-th
 conditional expression in the operation sequence.
 This vector is in the same order as the operation sequence; i.e.
-if j1 > j2, cskip_info[j1].i_op > cskip_info[j2].i_op.
+if j1 > j2, cexp_info[j1].i_op > cexp_info[j2].i_op.
 
 \param vecad_used
 The input size of this vector must be zero.
@@ -192,12 +191,12 @@ void get_op_info(
 	player<Base>*                 play                ,
 	const vector<size_t>&         dep_taddr           ,
 	vector<addr_t>&               var2op              ,
-	vector<struct_cskip_info>&    cskip_info          ,
+	vector<struct_cexp_info>&     cexp_info           ,
 	vector<bool>&                 vecad_used          ,
 	vector<struct_op_info>&       op_info             )
 {
 	CPPAD_ASSERT_UNKNOWN( var2op.size()  == 0 );
-	CPPAD_ASSERT_UNKNOWN( cskip_info.size() == 0 );
+	CPPAD_ASSERT_UNKNOWN( cexp_info.size() == 0 );
 	CPPAD_ASSERT_UNKNOWN( vecad_used.size() == 0 );
 	CPPAD_ASSERT_UNKNOWN( op_info.size() == 0 );
 
@@ -984,13 +983,13 @@ void get_op_info(
 		}
 	}
 	// ----------------------------------------------------------------------
-	// compute cskip_info
+	// compute cexp_info
 	// ----------------------------------------------------------------------
 	if( cexp_set.n_set() == 0 )
 		return;
 	//
 	// initialize information for each conditional expression
-	cskip_info.resize(num_cexp_op);
+	cexp_info.resize(num_cexp_op);
 	for(size_t i = 0; i < num_cexp_op; i++)
 	{	CPPAD_ASSERT_UNKNOWN(
 			op_info[i].previous == 0 || op_info[i].usage == yes_usage
@@ -999,7 +998,7 @@ void get_op_info(
 		arg             = op_info[i_op].arg;
 		CPPAD_ASSERT_UNKNOWN( op_info[i_op].op == CExpOp );
 		//
-		struct_cskip_info info;
+		struct_cexp_info info;
 		info.i_op       = i_op;
 		info.cop        = CompareOp( arg[0] );
 		info.flag       = arg[1];
@@ -1015,7 +1014,7 @@ void get_op_info(
 		CPPAD_ASSERT_UNKNOWN( index > 0 );
 		info.max_left_right = index;
 		//
-		cskip_info[i] = info;
+		cexp_info[i] = info;
 	};
 	// Determine which operators can be conditionally skipped
 	i_op = 0;
@@ -1051,14 +1050,14 @@ void get_op_info(
 				size_t index   = element / 2;
 				bool   compare = bool( element % 2 );
 				if( compare == false )
-				{	cskip_info[index].skip_op_false.push_back(i_op);
+				{	cexp_info[index].skip_op_false.push_back(i_op);
 					if( j_op != i_op )
-						cskip_info[index].skip_op_false.push_back(j_op);
+						cexp_info[index].skip_op_false.push_back(j_op);
 				}
 				else
-				{	cskip_info[index].skip_op_true.push_back(i_op);
+				{	cexp_info[index].skip_op_true.push_back(i_op);
 					if( j_op != i_op )
-						cskip_info[index].skip_op_true.push_back(j_op);
+						cexp_info[index].skip_op_true.push_back(j_op);
 				}
 				++itr;
 			}
