@@ -25,8 +25,6 @@ fi
 #
 cat << EOF > bug/build/test_jac_nnz.cpp
 #include <cppad/cppad.hpp>
-#include <assert.h>
-#include <vector>
 
 using namespace CppAD;
 CppAD::vector<CppAD::AD<double> > evaluateModel(
@@ -34,10 +32,7 @@ CppAD::vector<CppAD::AD<double> > evaluateModel(
 	CppAD::atomic_base<double>& atomModel
 );
 
-const size_t K_ = 3;
 const size_t ns_ = 4;
-const size_t nm_ = 2;
-const size_t na_ = ns_ + nm_;
 
 namespace {
     void algo(
@@ -53,8 +48,8 @@ namespace {
 
 int main(int argc, char *argv[]) {
 
-    CppAD::vector<AD<double>> ay(ns_), ax(na_);
-    for(size_t i = 0; i < na_; ++i)
+    CppAD::vector<AD<double>> ay(ns_), ax(ns_);
+    for(size_t i = 0; i < ns_; ++i)
         ax[i] = 1.0;
 
     checkpoint<double> atomic_fun(
@@ -65,15 +60,8 @@ int main(int argc, char *argv[]) {
 		atomic_base<double>::set_sparsity_enum
 	);
 
-    /**
-     * create tape
-     */
-    size_t nMstart = ns_ * K_  + ns_;
-
-    size_t n = nMstart + nm_;
-
-    CppAD::vector <AD<double>> u(n);
-    for (size_t j = 0; j < n; j++)
+    CppAD::vector <AD<double>> u(ns_);
+    for (size_t j = 0; j < ns_; j++)
         u[j] = 1.0;
 
     CppAD::Independent(u);
@@ -107,24 +95,11 @@ CppAD::vector<CppAD::AD<double> > evaluateModel(
 	const CppAD::vector<CppAD::AD<double> >& x,
 	CppAD::atomic_base<double>&            atom_fun )
 {
-    size_t m2 = K_ * ns_;
-
     // dependent variable vector
-    CppAD::vector<AD<double> > dep(m2);
-	for(size_t i = 0; i < m2; i++)
-		dep[i] = 0.0;
-
-    CppAD::vector<AD<double> > dxikdt(ns_);
-    CppAD::vector<AD<double> > xik(na_);
-	for(size_t j = 0; j < na_; j++)
-		xik[j] = 1.0;
-
+    CppAD::vector<AD<double> > dep(ns_), dxdt(ns_);
+	atom_fun(x, dxdt); // ODE
 	for (size_t j = 0; j < ns_; j++) {
-		xik[j] = x[j]; // states
-	}
-	atom_fun(xik, dxikdt); // ODE
-	for (size_t j = 0; j < ns_; j++) {
-		dep[j] = dxikdt[j] +  x[j];
+		dep[j] = dxdt[j] +  x[j];
 	}
 
 	return dep;
