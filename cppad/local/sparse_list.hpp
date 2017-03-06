@@ -1,9 +1,8 @@
-// $Id$
 # ifndef CPPAD_LOCAL_SPARSE_LIST_HPP
 # define CPPAD_LOCAL_SPARSE_LIST_HPP
 
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-16 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-17 Bradley M. Bell
 
 CppAD is distributed under multiple licenses. This distribution is under
 the terms of the
@@ -485,7 +484,7 @@ public:
 		//
 		CPPAD_ASSERT_UNKNOWN( reference_count(index) == 1 );
 		size_t previous = start_[index];
-		size_t next     = data_[start].next;
+		size_t next     = data_[previous].next;
 		size_t value    = data_[next].value;
 		CPPAD_ASSERT_UNKNOWN( value < end_ );
 		while( value < element )
