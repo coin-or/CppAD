@@ -490,11 +490,15 @@ public:
 		// make sure that we have a separate copy of this set
 		separate_copy(index);
 		//
-		CPPAD_ASSERT_UNKNOWN( reference_count(index) == 1 );
+		// start of list with this index (after separate_copy)
 		size_t previous = start_[index];
-		size_t next     = data_[start].next;
+		// check reference count for this list
+		CPPAD_ASSERT_UNKNOWN( data_[previous].value == 1 );
+		// first entry in this list (which starts out non-empty)
+		size_t next     = data_[previous].next;
 		size_t value    = data_[next].value;
 		CPPAD_ASSERT_UNKNOWN( value < end_ );
+		// locate place to insert this element
 		while( value < element )
 		{	previous = next;
 			next     = data_[next].next;
@@ -509,7 +513,6 @@ public:
 		data_[insert].next    = next;
 		data_[previous].next  = insert;
 		data_[insert].value   = element;
-		//
 	}
 	// -----------------------------------------------------------------
 	/*! Assign the empty set to one of the sets.

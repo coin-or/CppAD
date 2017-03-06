@@ -552,13 +552,83 @@ bool multiple_of_n_bit(void)
 
 	return ok;
 }
+
+// check for a sparse_list bug that was fixed on 2017-04-06
+void algo_sparse_list_bug(
+	const CppAD::vector < CppAD::AD<double> >& ax ,
+	CppAD::vector < CppAD::AD<double> >&       ay )
+{
+	ay[2] = 1.0;
+	ay[0] = 1.0;
+	ay[1] = ax[2];
+	ay[3] = ax[2];
+}
+bool sparse_list_bug(void)
+{	bool ok  = true;
+	using CppAD::AD;
+	using CppAD::vector;
+	typedef CppAD::vector < std::set<size_t> > sparsity;
+	//
+	size_t n = 4;
+	vector<AD<double>> ay(n), ax(n);
+	for(size_t i = 0; i < n; ++i)
+		ax[i] = 1.0;
+	//
+	// sparsity pattern corresponding to identity matrix
+	sparsity eye(n);
+	for (size_t i = 0; i < n; i++)
+		eye[i].insert(i);
+	//
+	CppAD::checkpoint<double> atom_fun(
+		"sparse_list_bug",
+		algo_sparse_list_bug,
+		ax,
+		ay,
+		CppAD::atomic_base<double>::set_sparsity_enum
+	);
+	//
+	vector <AD<double>> au(n);
+	for (size_t j = 0; j < n; j++)
+		au[j] = 1.0;
+	//
+	// version of function that uses atom_fun
+	CppAD::Independent(au);
+	vector<AD<double> > av(n);
+	atom_fun(au, ay);
+	for (size_t j = 0; j < n; j++) {
+		av[j] = ay[j] +  au[j];
+	}
+	CppAD::ADFun<double> yes_atom_fun(au, av);
+	//
+	// version of function that uses algoright
+	CppAD::Independent(au);
+	algo_sparse_list_bug(au, ay);
+	for (size_t j = 0; j < n; j++) {
+		av[j] = ay[j] +  au[j];
+	}
+	CppAD::ADFun<double> no_atom_fun(au, av);
+
+	//
+	sparsity pattern_yes = yes_atom_fun.RevSparseJac(n, eye);
+	sparsity pattern_no  = no_atom_fun.RevSparseJac(n, eye);
+	//
+	for(size_t i = 0; i < n; i++)
+		ok &= pattern_yes[i] == pattern_no[i];
+	//
+	return ok;
+}
+
+
+
 } // End empty namespace
+
 # include <vector>
 # include <valarray>
 bool sparse_jacobian(void)
 {	bool ok = true;
 	ok &= rc_tridiagonal();
 	ok &= multiple_of_n_bit();
+	ok &= sparse_list_bug();
 	// ---------------------------------------------------------------
 	// vector of bool cases
 	ok &=      rc_bool< CppAD::vector<double>, CppAD::vectorBool   >();
