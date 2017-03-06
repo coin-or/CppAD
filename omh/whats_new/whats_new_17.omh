@@ -27,8 +27,16 @@ $$
 
 $section Changes and Additions to CppAD During 2017$$
 
+$head 03-06$$
+Fix a bug in the sparsity computation using the
+internal representation for
+$cref/vectors of sets/glossary/Sparsity Pattern/Vector of Sets/$$;
+i.e., when $icode internal_bool$$ was false in
+any of the $cref sparsity_pattern$$ calculations; e.g.,
+$cref/for_jac_sparsity/for_jac_sparsity/internal_bool/$$.
+
 $head 03-04$$
-Fix a serious bug in the optimization of conditional expressions;
+Fix a bug in the optimization of conditional expressions;
 see $cref/no_conditional_skip/optimize/options/no_conditional_skip/$$.
 
 $head 02-26$$
