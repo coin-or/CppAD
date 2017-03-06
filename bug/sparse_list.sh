@@ -52,7 +52,7 @@ int main(int argc, char *argv[]) {
     for(size_t i = 0; i < ns_; ++i)
         ax[i] = 1.0;
 
-    checkpoint<double> atomic_fun(
+    checkpoint<double> atom_fun(
 		"cstr",
 		algo,
 		ax,
@@ -66,10 +66,13 @@ int main(int argc, char *argv[]) {
 
     CppAD::Independent(u);
 
-    CppAD::vector<AD<double>> v = evaluateModel(u, atomic_fun);
-
+    CppAD::vector<AD<double> > dep(ns_), dxdt(ns_);
+	atom_fun(u, dxdt); // ODE
+	for (size_t j = 0; j < ns_; j++) {
+		dep[j] = dxdt[j] +  u[j];
+	}
     ADFun<double> fun;
-    fun.Dependent(v);
+    fun.Dependent(dep);
 
     /**
      * determine Jacobian sparsity
@@ -89,20 +92,6 @@ int main(int argc, char *argv[]) {
     }
 	std::cout << nnz << "\n";
     return 0;
-}
-
-CppAD::vector<CppAD::AD<double> > evaluateModel(
-	const CppAD::vector<CppAD::AD<double> >& x,
-	CppAD::atomic_base<double>&            atom_fun )
-{
-    // dependent variable vector
-    CppAD::vector<AD<double> > dep(ns_), dxdt(ns_);
-	atom_fun(x, dxdt); // ODE
-	for (size_t j = 0; j < ns_; j++) {
-		dep[j] = dxdt[j] +  x[j];
-	}
-
-	return dep;
 }
 EOF
 # -----------------------------------------------------------------------------
