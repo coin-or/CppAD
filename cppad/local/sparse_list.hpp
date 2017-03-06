@@ -350,7 +350,11 @@ public:
 	// -----------------------------------------------------------------
 	/// Destructor
 	~sparse_list(void)
-	{ }
+	{
+# ifndef NDEBUG
+		check_data_not_used();
+# endif
+	}
 	// -----------------------------------------------------------------
 	/*!
 	Start a new vector of sets.
@@ -368,7 +372,11 @@ public:
 	is the maximum element plus one (the minimum element is 0).
 	*/
 	void resize(size_t n_set_in, size_t end_in)
-	{	if( n_set_in == 0 )
+	{
+# ifndef NDEBUG
+		check_data_not_used();
+# endif
+		if( n_set_in == 0 )
 		{	// restore object to start after constructor
 			// (no memory allocated for this object)
 			data_.free();

@@ -1,5 +1,4 @@
 #! /bin/bash -e
-# $Id:$
 # -----------------------------------------------------------------------------
 # CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-17 Bradley M. Bell
 #
@@ -90,8 +89,6 @@ int main(int argc, char *argv[]) {
 }
 EOF
 # -----------------------------------------------------------------------------
-git checkout cppad/local/sparse_list.hpp
-sed -e '505s|^|check_data_not_used();\n|' -i cppad/local/sparse_list.hpp
 cd bug/build
 echo_eval g++ -I${cppad_path} --std=c++11 -g test_jac_nnz.cpp -o test_jac_nnz
 echo_eval ./test_jac_nnz
