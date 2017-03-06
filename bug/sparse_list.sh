@@ -36,22 +36,22 @@ const size_t ns_ = 4;
 
 namespace {
     void algo(
-		const CppAD::vector <AD<double>>& ind ,
-		CppAD::vector <AD<double>>&      dxdt )
+		const CppAD::vector <AD<double>>& ax ,
+		CppAD::vector <AD<double>>&       ay )
 	{
-        dxdt[2] = 1.0;
-        dxdt[0] = 1.0;
-        dxdt[1] = ind[2];
-        dxdt[3] = ind[2];
+        ay[2] = 1.0;
+        ay[0] = 1.0;
+        ay[1] = ax[2];
+        ay[3] = ax[2];
     };
 }
 
 int main(int argc, char *argv[]) {
-
+	//
     CppAD::vector<AD<double>> ay(ns_), ax(ns_);
     for(size_t i = 0; i < ns_; ++i)
         ax[i] = 1.0;
-
+	//
     checkpoint<double> atom_fun(
 		"cstr",
 		algo,
@@ -59,34 +59,29 @@ int main(int argc, char *argv[]) {
 		ay,
 		atomic_base<double>::set_sparsity_enum
 	);
-
-    CppAD::vector <AD<double>> u(ns_);
+	//
+    CppAD::vector <AD<double>> au(ns_);
     for (size_t j = 0; j < ns_; j++)
-        u[j] = 1.0;
-
-    CppAD::Independent(u);
-
-    CppAD::vector<AD<double> > dep(ns_), dxdt(ns_);
-	atom_fun(u, dxdt); // ODE
+        au[j] = 1.0;
+	//
+    CppAD::Independent(au);
+	//
+    CppAD::vector<AD<double> > av(ns_);
+	atom_fun(au, ay); // ODE
 	for (size_t j = 0; j < ns_; j++) {
-		dep[j] = dxdt[j] +  u[j];
+		av[j] = ay[j] +  au[j];
 	}
     ADFun<double> fun;
-    fun.Dependent(dep);
-
-    /**
-     * determine Jacobian sparsity
-     */
-    size_t m = fun.Range();
-
-    CppAD::vector<std::set<size_t> > s_s(m);
-    for (size_t i = 0; i < m; i++)
+    fun.Dependent(av);
+	//
+    CppAD::vector<std::set<size_t> > s_s(ns_);
+    for (size_t i = 0; i < ns_; i++)
         s_s[i].insert(i);
-
-    auto sparsity = fun.RevSparseJac(m, s_s);
-
+	//
+    auto sparsity = fun.RevSparseJac(ns_, s_s);
+	//
     size_t nnz = 0;
-    for (size_t i = 0; i < sparsity.size(); i++) {
+    for (size_t i = 0; i < ns_; i++) {
 		std::set<size_t> s_i = sparsity[i];
         nnz += s_i.size();
     }
