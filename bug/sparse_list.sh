@@ -26,11 +26,6 @@ cat << EOF > bug/build/test_jac_nnz.cpp
 #include <cppad/cppad.hpp>
 
 using namespace CppAD;
-CppAD::vector<CppAD::AD<double> > evaluateModel(
-	const CppAD::vector<CppAD::AD<double> >& x,
-	CppAD::atomic_base<double>& atomModel
-);
-
 const size_t ns_ = 4;
 
 namespace {
