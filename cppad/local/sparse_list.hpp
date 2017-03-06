@@ -94,6 +94,29 @@ private:
 	}
 	// -----------------------------------------------------------------
 	/*!
+	Private member function that prints the vector or sets (used for debugging)
+	*/
+	void print(void) const
+	{	// number of sets
+		std::cout << "sparse_list:\n";
+		for(size_t i = 0; i < start_.size(); i++)
+		{	size_t start = start_[i];
+			std::cout << "set[" << i << "] =";
+			if( start != 0 )
+			{	// advance to the first element in the set
+				size_t next    = data_[start].next;
+				while( next != 0 )
+				{	CPPAD_ASSERT_UNKNOWN( data_[next].value < end_ );
+					std::cout << " " << data_[next].value;
+					next  = data_[next].next;
+				}
+			}
+			std::cout << "\n";
+		}
+		return;
+	}
+	// -----------------------------------------------------------------
+	/*!
 	Member function that checks the number of data elements not used
 	(effectively const, but modifies and restores values)
 	*/
