@@ -27,6 +27,12 @@ $$
 
 $section Changes and Additions to CppAD During 2017$$
 
+$head 03-10$$
+Add the a sizing constructor to the
+$cref/sparse_rc syntax/sparse_rc/Syntax/$$; i.e.,
+a constructor that sets the number of row, number of columns,
+and number of possibly non-zero values in the sparsity pattern.
+
 $head 03-06$$
 Fix a bug in the sparsity computation using the
 internal representation for

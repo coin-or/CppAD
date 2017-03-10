@@ -102,8 +102,7 @@ namespace {
 		size_t n = f.Domain();
 		//
 		// sparsity pattern for identity matrix
-		sparse_rc<s_vector> pattern_in;
-		pattern_in.resize(n, n, n);
+		sparse_rc<s_vector> pattern_in(n, n, n);
 		for(size_t k = 0; k < n; k++)
 			pattern_in.set(k, k, k);
 		//
@@ -141,8 +140,7 @@ namespace {
 		size_t m = f.Range();
 		//
 		// sparsity pattern for identity matrix
-		sparse_rc<s_vector> pattern_in;
-		pattern_in.resize(m, m, m);
+		sparse_rc<s_vector> pattern_in(m, m, m);
 		for(size_t k = 0; k < m; k++)
 			pattern_in.set(k, k, k);
 		//
@@ -275,8 +273,7 @@ namespace {
 		size_t m = f.Range();
 		//
 		// n by n identity matrix
-		sparse_rc<s_vector> pattern_in;
-		pattern_in.resize(n, n, n);
+		sparse_rc<s_vector> pattern_in(n, n, n);
 		for(size_t j = 0; j < n; j++)
 			pattern_in.set(j, j, j);
 		//

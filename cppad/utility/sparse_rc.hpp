@@ -31,6 +31,8 @@ $codei%# include <cppad/utility/sparse_rc.hpp>
 %$$
 $codei%sparse_rc<%SizeVector%>  %pattern%
 %$$
+$codei%sparse_rc<%SizeVector%>  %pattern%(%nr%, %nc%, %nnz%)
+%$$
 $icode%resize%(%nr%, %nc%, %nnz%)
 %$$
 $icode%pattern%.set(%k%, %r%, %c%)
@@ -207,6 +209,13 @@ public:
 	sparse_rc(void)
 	: nr_(0), nc_(0), nnz_(0)
 	{ }
+	/// sizing constructor
+	/// Eigen vector is ambiguous for row_(0), col_(0) so use default ctor
+	sparse_rc(size_t nr, size_t nc, size_t nnz)
+	: nr_(nr), nc_(nc), nnz_(nnz)
+	{	row_.resize(nnz);
+		col_.resize(nnz);
+	}
 	/// copy constructor
 	sparse_rc(const sparse_rc& other)
 	:

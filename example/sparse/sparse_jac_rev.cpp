@@ -90,8 +90,7 @@ bool sparse_jac_rev(void)
 	}
 	//
 	// m by m identity matrix sparsity
-	sparse_rc<s_vector> pattern_in;
-	pattern_in.resize(m, m, m);
+	sparse_rc<s_vector> pattern_in(m, m, m);
 	for(size_t k = 0; k < m; k++)
 		pattern_in.set(k, k, k);
 	//
@@ -121,9 +120,8 @@ bool sparse_jac_rev(void)
 		ok &= col[ row_major[k] ] == check_col[k];
 		ok &= val[ row_major[k] ] == check_val[k];
 	}
-	// compute non-zero in col 3 only
-	sparse_rc<s_vector> pattern_col3;
-	pattern_col3.resize(m, n, 2); // nr = m, nc = n, nnz = 2
+	// compute non-zero in col 3 only, nr = m, nc = n, nnz = 2
+	sparse_rc<s_vector> pattern_col3(m, n, 2);
 	pattern_col3.set(0, 1, 3);    // row[0] = 1, col[0] = 3
 	pattern_col3.set(1, 2, 3);    // row[1] = 2, col[1] = 3
 	sparse_rcv<s_vector, d_vector> subset_col3( pattern_col3 );

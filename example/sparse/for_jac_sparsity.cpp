@@ -56,11 +56,10 @@ bool for_jac_sparsity(void)
 	CppAD::ADFun<double> f(ax, ay);
 
 	// sparsity pattern for the identity matrix
-	sparsity pattern_in;
 	size_t nr     = n;
 	size_t nc     = n;
 	size_t nnz_in = n;
-	pattern_in.resize(nr, nc, nnz_in);
+	sparsity pattern_in(nr, nc, nnz_in);
 	for(size_t k = 0; k < nnz_in; k++)
 	{	size_t r = k;
 		size_t c = k;

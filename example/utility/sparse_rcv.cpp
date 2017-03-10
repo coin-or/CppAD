@@ -36,11 +36,10 @@ bool sparse_rcv(void)
 	typedef std::vector<double> ValueVector;
 
 	// sparsity pattern for a 5 by 5 diagonal matrix
-	CppAD::sparse_rc<SizeVector> pattern;
 	size_t nr  = 5;
 	size_t nc  = 5;
 	size_t nnz = 5;
-	pattern.resize(nr, nc, nnz);
+	CppAD::sparse_rc<SizeVector> pattern(nr, nc, nnz);
 	for(size_t k = 0; k < nnz; k++)
 	{	size_t r = nnz - k - 1; // reverse or column-major order
 		size_t c = nnz - k - 1;

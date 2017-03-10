@@ -33,21 +33,37 @@ bool sparse_rc(void)
 {	bool ok = true;
 	typedef std::vector<size_t> SizeVector;
 
-	// sparsity pattern for a 5 by 5 diagonal matrix
-	CppAD::sparse_rc<SizeVector> pattern;
-	size_t nr  = 5;
-	size_t nc  = 5;
-	size_t nnz = 5;
+	// 3 by 3 identity matrix
+	size_t nr  = 3;
+	size_t nc  = 3;
+	size_t nnz = 3;
+	CppAD::sparse_rc<SizeVector> pattern(nr, nc, nnz);
+	for(size_t k = 0; k < nnz; k++)
+		pattern.set(k, k, k);
+
+	// row and column vectors corresponding to pattern
+	const SizeVector& row( pattern.row() );
+	const SizeVector& col( pattern.row() );
+
+	// check pattern
+	ok &= pattern.nnz() == nnz;
+	ok &= pattern.nr()  == nr;
+	ok &= pattern.nc()  == nc;
+	for(size_t k = 0; k < nnz; k++)
+	{	ok &= row[k] == k;
+		ok &= col[k] == k;
+	}
+
+	// change to sparsity pattern for a 5 by 5 diagonal matrix
+	nr  = 5;
+	nc  = 5;
+	nnz = 5;
 	pattern.resize(nr, nc, nnz);
 	for(size_t k = 0; k < nnz; k++)
 	{	size_t r = nnz - k - 1; // reverse or row-major order
 		size_t c = nnz - k - 1;
 		pattern.set(k, r, c);
 	}
-
-	// row and column vectors corresponding to pattern
-	const SizeVector& row( pattern.row() );
-	const SizeVector& col( pattern.row() );
 	SizeVector row_major = pattern.row_major();
 
 	// check row and column

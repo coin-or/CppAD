@@ -106,8 +106,7 @@ bool dependency(void)
 	size_t nr  = n;
 	size_t nc  = n;
 	size_t nnz = n;
-	sparsity pattern_in;
-	pattern_in.resize(nr, nc, nnz);
+	sparsity pattern_in(nr, nc, nnz);
 	for(size_t k = 0; k < nnz; k++)
 	{	size_t r = k;
 		size_t c = k;
