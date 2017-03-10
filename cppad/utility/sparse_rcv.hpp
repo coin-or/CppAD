@@ -31,6 +31,8 @@ $section Sparse Matrix Row, Column, Value Representation$$
 $head Syntax$$
 $codei%# include <cppad/utility/sparse_rcv.hpp>
 %$$
+$codei%sparse_rcv<%SizeVector%, %ValueVector%>  %empty%
+%$$
 $codei%sparse_rcv<%SizeVector%, %ValueVector%>  %matrix%(%pattern%)
 %$$
 $icode%matrix%.set(%k%, %v%)
@@ -59,6 +61,14 @@ $cref SimpleVector$$ class corresponding to $icode pattern$$.
 $head ValueVector$$
 We use $icode ValueVector$$ to denote the
 $cref SimpleVector$$ class corresponding to $icode val$$.
+
+$head empty$$
+This is an empty sparse matrix object. To be specific,
+the corresponding number of rows $icode nr$$,
+number of columns $icode nc$$,
+and number of possibly non-zero values $icode nnz$$,
+are all zero.
+
 
 $head pattern$$
 This argument has prototype
@@ -196,6 +206,10 @@ private:
 	ValueVector    val_;
 public:
 	// ------------------------------------------------------------------------
+	/// default constructor
+	sparse_rcv(void)
+	: pattern_(0, 0, 0), val_(0)
+	{ }
 	/// constructor
 	sparse_rcv(const sparse_rc<SizeVector>& pattern )
 	:

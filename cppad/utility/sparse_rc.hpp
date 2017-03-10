@@ -62,6 +62,11 @@ This object is used to hold a sparsity pattern for a matrix.
 The sparsity $icode pattern$$ is $code const$$
 except during its constructor, $code resize$$, and $code set$$.
 
+$subhead empty$$
+If the arguments $icode nr$$, $icode nc$$ and $icode nnz$$ are not present,
+the value zero is used in there place and this is referred to as an empty
+sparsity pattern.
+
 $head nr$$
 This argument has prototype
 $codei%

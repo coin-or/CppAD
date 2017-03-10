@@ -35,6 +35,12 @@ bool sparse_rcv(void)
 	typedef std::vector<size_t> SizeVector;
 	typedef std::vector<double> ValueVector;
 
+	// an empty sparity pattern
+	CppAD::sparse_rc<SizeVector> empty;
+	ok &= empty.nr() == 0;
+	ok &= empty.nc() == 0;
+	ok &= empty.nnz() == 0;
+
 	// sparsity pattern for a 5 by 5 diagonal matrix
 	size_t nr  = 5;
 	size_t nc  = 5;
