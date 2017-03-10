@@ -1379,10 +1379,6 @@ install-data-hook:
 @CppAD_DOCUMENTATION_TRUE@	chmod -R a-w $(doc_package)
 @CppAD_DOCUMENTATION_TRUE@	chmod -R u+w $(doc_package)
 @CppAD_DOCUMENTATION_TRUE@	chmod -R a+r $(doc_package)
-@CppAD_DEPRECATED_TRUE@	cp -a $(top_srcdir)/cppad/deprecated/* $(inc_postfix)/cppad
-@CppAD_DEPRECATED_TRUE@	chmod -R a-w $(inc_postfix)/cppad
-@CppAD_DEPRECATED_TRUE@	chmod -R u+w $(inc_postfix)/cppad
-@CppAD_DEPRECATED_TRUE@	chmod -R a+r $(inc_postfix)/cppad
 
 # Tell versions [3.59,3.63) of GNU make to not export all variables.
 # Otherwise a system limit (for SysV at least) may be exceeded.

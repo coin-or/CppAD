@@ -1,7 +1,7 @@
 #! /bin/bash -e
 # $Id$
 # -----------------------------------------------------------------------------
-# CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-16 Bradley M. Bell
+# CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-17 Bradley M. Bell
 #
 # CppAD is distributed under multiple licenses. This distribution is under
 # the terms of the
@@ -26,7 +26,6 @@ verbose='no'
 standard='c++11'
 debug_speed='no'
 release_example='no'
-deprecated='no'
 profile_speed='no'
 clang='no'
 no_colpack='no'
@@ -45,7 +44,6 @@ usage: bin/run_cmake.sh: \\
 	[--c++98] \\
 	[--debug_speed] \\
 	[--release_example] \\
-	[--deprecated] \\
 	[--profile_speed] \\
 	[--clang ] \\
 	[--no_colpack] \\
@@ -71,9 +69,6 @@ EOF
 	elif [ "$1" == '--release_example' ]
 	then
 		release_example='yes'
-	elif [ "$1" == '--deprecated' ]
-	then
-		deprecated='yes'
 	elif [ "$1" == '--profile_speed' ]
 	then
 		profile_speed='yes'
@@ -222,14 +217,6 @@ fi
 if [ "$profile_speed" == 'yes' ]
 then
 	cmake_args="$cmake_args -D cppad_profile_flag=-pg"
-fi
-#
-# deprecated
-if [ "$deprecated" == 'yes' ]
-then
-	cmake_args="$cmake_args -D cppad_deprecated=YES"
-else
-	cmake_args="$cmake_args -D cppad_deprecated=NO"
 fi
 #
 # simple options

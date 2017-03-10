@@ -1,6 +1,6 @@
 $Id$
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-16 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-17 Bradley M. Bell
 
 CppAD is distributed under multiple licenses. This distribution is under
 the terms of the
@@ -103,7 +103,6 @@ $codei%
 	--prefix=%prefix_dir%                    \
 	--with-Documentation                     \
 	--with-%test%vector                      \
-	--with-deprecated                        \
 	MAX_NUM_THREADS=%max_num_threads%         \
 	CXX_FLAGS=%cxx_flags%                     \
 	OPENMP_FLAGS=%openmp_flags%               \
@@ -285,11 +284,6 @@ See also,
 $cref/boost_dir/auto_tools/boost_dir/$$
 and
 $cref/eigen_dir/auto_tools/eigen_dir/$$.
-
-$head --with-deprecated$$
-If this configure argument is present, then all the
-$cref deprecated$$ features are included in the install.
-Otherwise, they are not included.
 
 $head max_num_threads$$
 this specifies the value for the default value for the preprocessor symbol

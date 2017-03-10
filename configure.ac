@@ -114,6 +114,19 @@ AC_ARG_WITH(sparse_list,
 if test "$sparse_set" = "yes" ; then
 	AC_MSG_ERROR([--with-sparse_set is no longer necessary])
 fi
+AC_ARG_WITH(deprecated, AC_HELP_STRING(
+	[--with-deprecated],
+	[include deprectated features that are no longer available]
+	),
+	[deprecated="yes"],
+	[deprecated="no"]
+)
+AM_CONDITIONAL(CppAD_DEPRECATED, test "$deprecated" = 'yes' )
+if test "$deprecated" = "yes" ; then
+	AC_MSG_ERROR(
+		[--with-deprecated has been removed; see whats_new 2017-02-10]
+	)
+fi
 dnl --------------------------------------------------------------------------
 AC_MSG_NOTICE([******  Check command line arguments that are used ***********])
 
@@ -200,24 +213,6 @@ if test "$eigenvector" = "yes" ; then
 	AC_SUBST(cppad_eigenvector, 1)
 else
 	AC_SUBST(cppad_eigenvector, 0)
-fi
-
-dnl Are we trying to including deprecated include files -----------
-AC_MSG_CHECKING([--with-deprecated])
-AC_ARG_WITH(deprecated,
-	AC_HELP_STRING(
-		[--with-deprecated],
-		[include an implicit AD<Base> constructor from any type]
-	),
-	[deprecated="yes"],
-	[deprecated="no"]
-)
-AC_MSG_RESULT([$deprecated])
-AM_CONDITIONAL(CppAD_DEPRECATED, test "$deprecated" = 'yes' )
-if test "$deprecated" = "yes" ; then
-	AC_MSG_ERROR(
-		[--with-deprecated has been removed; see whats_new 2017-02-10]
-	)
 fi
 
 dnl The postfix directiory corresponding to CppAD ------------------------

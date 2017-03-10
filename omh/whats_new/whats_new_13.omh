@@ -1,6 +1,6 @@
 $Id$
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-16 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-17 Bradley M. Bell
 
 CppAD is distributed under multiple licenses. This distribution is under
 the terms of the
@@ -75,7 +75,7 @@ There was a problem with deprecated $cref auto_tools$$
 (created when optional implicit constructor from any type was added).
 This has been fixed by adding the
 $code --with-implicit_ctor$$ option
-(later changed to $cref/--with-deprecated/auto_tools/--with-deprecated/$$).
+(later removed on $cref/2017-02-10/whats_new_17/02-10/$$.)
 $lend
 
 $head 12-27$$

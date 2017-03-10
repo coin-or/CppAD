@@ -726,13 +726,13 @@ ADOLC_DIR
 CppAD_POSTFIX_FALSE
 CppAD_POSTFIX_TRUE
 POSTFIX_DIR
-CppAD_DEPRECATED_FALSE
-CppAD_DEPRECATED_TRUE
 cppad_eigenvector
 cppad_boostvector
 cppad_stdvector
 CppAD_DOCUMENTATION_FALSE
 CppAD_DOCUMENTATION_TRUE
+CppAD_DEPRECATED_FALSE
+CppAD_DEPRECATED_TRUE
 am__fastdepCC_FALSE
 am__fastdepCC_TRUE
 CCDEPMODE
@@ -835,12 +835,12 @@ with_TestMore
 with_PrintFor
 with_sparse_set
 with_sparse_list
+with_deprecated
 enable_msvc
 with_Documentation
 with_stdvector
 with_boostvector
 with_eigenvector
-with_deprecated
 '
       ac_precious_vars='build_alias
 host_alias
@@ -1509,12 +1509,12 @@ Optional Packages:
   --with-PrintFor         is not necessary, see install instructions.
   --with-sparse_set       no longer available
   --with-sparse_list      no longer necessary
+  --with-deprecated       include deprectated features that are no longer
+                          available
   --with-Documentation    default is no
   --with-stdvector        default is no
   --with-boostvector      default is no
   --with-eigenvector      default is no
-  --with-deprecated       include an implicit AD<Base> constructor from any
-                          type
 
 Some influential environment variables:
   CC          C compiler command
@@ -4555,6 +4555,27 @@ fi
 if test "$sparse_set" = "yes" ; then
 	as_fn_error $? "--with-sparse_set is no longer necessary" "$LINENO" 5
 fi
+
+# Check whether --with-deprecated was given.
+if test "${with_deprecated+set}" = set; then :
+  withval=$with_deprecated; deprecated="yes"
+else
+  deprecated="no"
+
+fi
+
+ if test "$deprecated" = 'yes' ; then
+  CppAD_DEPRECATED_TRUE=
+  CppAD_DEPRECATED_FALSE='#'
+else
+  CppAD_DEPRECATED_TRUE='#'
+  CppAD_DEPRECATED_FALSE=
+fi
+
+if test "$deprecated" = "yes" ; then
+	as_fn_error $? "--with-deprecated has been removed; see whats_new 2017-02-10
+	" "$LINENO" 5
+fi
 { $as_echo "$as_me:${as_lineno-$LINENO}: ******  Check command line arguments that are used ***********" >&5
 $as_echo "$as_me: ******  Check command line arguments that are used ***********" >&6;}
 
@@ -4674,32 +4695,6 @@ if test "$eigenvector" = "yes" ; then
 else
 	cppad_eigenvector=0
 
-fi
-
-{ $as_echo "$as_me:${as_lineno-$LINENO}: checking --with-deprecated" >&5
-$as_echo_n "checking --with-deprecated... " >&6; }
-
-# Check whether --with-deprecated was given.
-if test "${with_deprecated+set}" = set; then :
-  withval=$with_deprecated; deprecated="yes"
-else
-  deprecated="no"
-
-fi
-
-{ $as_echo "$as_me:${as_lineno-$LINENO}: result: $deprecated" >&5
-$as_echo "$deprecated" >&6; }
- if test "$deprecated" = 'yes' ; then
-  CppAD_DEPRECATED_TRUE=
-  CppAD_DEPRECATED_FALSE='#'
-else
-  CppAD_DEPRECATED_TRUE='#'
-  CppAD_DEPRECATED_FALSE=
-fi
-
-if test "$deprecated" = "yes" ; then
-	as_fn_error $? "--with-deprecated has been removed; see whats_new 2017-02-10
-	" "$LINENO" 5
 fi
 
 { $as_echo "$as_me:${as_lineno-$LINENO}: checking POSTFIX_DIR" >&5
@@ -8103,12 +8098,12 @@ if test -z "${am__fastdepCC_TRUE}" && test -z "${am__fastdepCC_FALSE}"; then
   as_fn_error $? "conditional \"am__fastdepCC\" was never defined.
 Usually this means the macro was only invoked conditionally." "$LINENO" 5
 fi
-if test -z "${CppAD_DOCUMENTATION_TRUE}" && test -z "${CppAD_DOCUMENTATION_FALSE}"; then
-  as_fn_error $? "conditional \"CppAD_DOCUMENTATION\" was never defined.
-Usually this means the macro was only invoked conditionally." "$LINENO" 5
-fi
 if test -z "${CppAD_DEPRECATED_TRUE}" && test -z "${CppAD_DEPRECATED_FALSE}"; then
   as_fn_error $? "conditional \"CppAD_DEPRECATED\" was never defined.
+Usually this means the macro was only invoked conditionally." "$LINENO" 5
+fi
+if test -z "${CppAD_DOCUMENTATION_TRUE}" && test -z "${CppAD_DOCUMENTATION_FALSE}"; then
+  as_fn_error $? "conditional \"CppAD_DOCUMENTATION\" was never defined.
 Usually this means the macro was only invoked conditionally." "$LINENO" 5
 fi
 if test -z "${CppAD_POSTFIX_TRUE}" && test -z "${CppAD_POSTFIX_FALSE}"; then

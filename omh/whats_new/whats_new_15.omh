@@ -120,8 +120,9 @@ $head 12-01$$
 Fix problem with $cref auto_tools$$ install handling of the
 deprecated files.
 This included changing the auto-tools
-$code --with-implicit_ctor$$ option to
-$cref/--with-deprecated/auto_tools/--with-deprecated/$$.
+$code --with-implicit_ctor$$ option to $cref auto_tools$$.
+This was removed on
+$cref/2017-02-10/whats_new_17/02-10/$$.
 
 $head 11-30$$
 $list number$$
