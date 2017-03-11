@@ -35,6 +35,8 @@ $codei%sparse_rcv<%SizeVector%, %ValueVector%>  %empty%
 %$$
 $codei%sparse_rcv<%SizeVector%, %ValueVector%>  %matrix%(%pattern%)
 %$$
+$codei%target% = %matrix%
+%$$
 $icode%matrix%.set(%k%, %v%)
 %$$
 $icode%nr% = %matrix%.nr()
@@ -84,6 +86,17 @@ Only the $icode val$$ vector can be changed. All other values returned by
 $icode matrix$$ are fixed during the constructor and constant there after.
 The $icode val$$ vector is only changed by the constructor
 and the $code set$$ function.
+There is one exception to the rule, where $icode matrix$$ corresponds
+to $icode target$$ for an assignment statement.
+
+$head target$$
+The target of the assignment statement must have prototype
+$codei%
+	sparse_rcv<%SizeVector%, %ValueVector%>  %target%
+%$$
+After this assignment statement, $icode target$$ is an independent copy
+of $icode matrix$$; i.e. it has all the same values as $icode matrix$$
+and changes to $icode target$$ do not affect $icode matrix$$.
 
 $head nr$$
 This return value has prototype
@@ -199,7 +212,7 @@ template <class SizeVector, class ValueVector>
 class sparse_rcv {
 private:
 	/// sparsity pattern
-	const sparse_rc<SizeVector> pattern_;
+	sparse_rc<SizeVector> pattern_;
 	/// value_type
 	typedef typename ValueVector::value_type value_type;
 	/// val_[k] is the value for the k-th possibly non-zero entry in the matrix
@@ -216,6 +229,13 @@ public:
 	pattern_(pattern)    ,
 	val_(pattern_.nnz())
 	{ }
+	/// assignment
+	void operator=(const sparse_rcv& matrix)
+	{	pattern_ = matrix.pattern_;
+		// simple vector assignment requires vectors to have same size
+		val_.resize( matrix.nnz() );
+		val_ = matrix.val();
+	}
 	// ------------------------------------------------------------------------
 	void set(size_t k, const value_type& v)
 	{	CPPAD_ASSERT_KNOWN(

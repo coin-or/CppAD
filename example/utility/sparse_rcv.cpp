@@ -35,12 +35,6 @@ bool sparse_rcv(void)
 	typedef std::vector<size_t> SizeVector;
 	typedef std::vector<double> ValueVector;
 
-	// an empty sparity pattern
-	CppAD::sparse_rc<SizeVector> empty;
-	ok &= empty.nr() == 0;
-	ok &= empty.nc() == 0;
-	ok &= empty.nnz() == 0;
-
 	// sparsity pattern for a 5 by 5 diagonal matrix
 	size_t nr  = 5;
 	size_t nc  = 5;
@@ -72,6 +66,22 @@ bool sparse_rcv(void)
 		ok &= val[ col_major[k] ] == double(k);
 	}
 
+	// create an empty matrix
+	CppAD::sparse_rcv<SizeVector, ValueVector> target;
+	ok &= target.nnz() == 0;
+	ok &= target.nr()  == 0;
+	ok &= target.nc()  == 0;
+
+	// now use it as the target for an assignment statement
+	target = matrix;
+	ok    &= target.nr()  == matrix.nr();
+	ok    &= target.nc()  == matrix.nc();
+	ok    &= target.nnz() == matrix.nnz();
+	for(size_t k = 0; k < nnz; k++)
+	{	ok &= target.row()[k] == row[k];
+		ok &= target.col()[k] == col[k];
+		ok &= target.val()[k] == val[k];
+	}
 	return ok;
 }
 

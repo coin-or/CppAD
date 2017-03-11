@@ -29,9 +29,11 @@ $section Row and Column Index Sparsity Patterns$$
 $head Syntax$$
 $codei%# include <cppad/utility/sparse_rc.hpp>
 %$$
-$codei%sparse_rc<%SizeVector%>  %pattern%
+$codei%sparse_rc<%SizeVector%>  %empty%
 %$$
 $codei%sparse_rc<%SizeVector%>  %pattern%(%nr%, %nc%, %nnz%)
+%$$
+$codei%target% = %pattern%
 %$$
 $icode%resize%(%nr%, %nc%, %nnz%)
 %$$
@@ -57,15 +59,26 @@ We use $icode SizeVector$$ to denote $cref SimpleVector$$ class
 $cref/with elements of type/SimpleVector/Elements of Specified Type/$$
 $code size$$.
 
+$head empty$$
+This is an empty sparsity pattern. To be specific,
+the corresponding number of rows $icode nr$$,
+number of columns $icode nc$$,
+and number of possibly non-zero values $icode nnz$$,
+are all zero.
+
 $head pattern$$
 This object is used to hold a sparsity pattern for a matrix.
 The sparsity $icode pattern$$ is $code const$$
 except during its constructor, $code resize$$, and $code set$$.
 
-$subhead empty$$
-If the arguments $icode nr$$, $icode nc$$ and $icode nnz$$ are not present,
-the value zero is used in there place and this is referred to as an empty
-sparsity pattern.
+$head target$$
+The target of the assignment statement must have prototype
+$codei%
+	sparse_rc<%SizeVector%>  %target%
+%$$
+After this assignment statement, $icode target$$ is an independent copy
+of $icode pattern$$; i.e. it has all the same values as $icode pattern$$
+and changes to $icode target$$ do not affect $icode pattern$$.
 
 $head nr$$
 This argument has prototype
@@ -230,6 +243,17 @@ public:
 	row_(other.row_) ,
 	col_(other.col_)
 	{ }
+	/// assignment
+	void operator=(const sparse_rc& pattern)
+	{	nr_  = pattern.nr_;
+		nc_  = pattern.nc_;
+		nnz_ = pattern.nnz_;
+		// simple vector assignment requires vectors to have same size
+		row_.resize(nnz_);
+		col_.resize(nnz_);
+		row_ = pattern.row_;
+		col_ = pattern.col_;
+	}
 	/// resize
 	void resize(size_t nr, size_t nc, size_t nnz)
 	{	nr_ = nr;

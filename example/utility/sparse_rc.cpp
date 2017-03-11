@@ -72,6 +72,21 @@ bool sparse_rc(void)
 		ok &= col[ row_major[k] ] == k;
 	}
 
+	// create an empty pattern
+	CppAD::sparse_rc<SizeVector> target;
+	ok &= target.nnz() == 0;
+	ok &= target.nr()  == 0;
+	ok &= target.nc()  == 0;
+
+	// now use it as the target for an assignment statement
+	target = pattern;
+	ok    &= target.nr()  == pattern.nr();
+	ok    &= target.nc()  == pattern.nc();
+	ok    &= target.nnz() == pattern.nnz();
+	for(size_t k = 0; k < nnz; k++)
+	{	ok &= target.row()[k] == row[k];
+		ok &= target.col()[k] == col[k];
+	}
 	return ok;
 }
 
