@@ -68,7 +68,7 @@ $codei%
 $head select_domain$$
 The argument $icode diagonal$$ has prototype
 $codei%
-	const BoolVector& %select_domain%
+	const %BoolVector%& %select_domain%
 %$$
 It has size $latex n$$ and specifies which components of the diagonal of
 $latex D$$ are non-zero; i.e., $icode%select_domain%[%j%]%$$ is true
@@ -78,7 +78,7 @@ if and only if $latex D_{j,j}$$ is possibly non-zero.
 $head select_range$$
 The argument $icode select_range$$ has prototype
 $codei%
-	const BoolVector& %select_range%
+	const %BoolVector%& %select_range%
 %$$
 It has size $latex m$$ and specifies which components of the vector
 $latex s$$ are non-zero; i.e., $icode%select_range%[%i%]%$$ is true

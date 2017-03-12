@@ -76,7 +76,7 @@ $codei%
 $head select_range$$
 The argument $icode select_range$$ has prototype
 $codei%
-	const BoolVector& %select_range%
+	const %BoolVector%& %select_range%
 %$$
 It has size $latex m$$ and specifies which components of the vector
 $latex s$$ are non-zero; i.e., $icode%select_range%[%i%]%$$ is true
