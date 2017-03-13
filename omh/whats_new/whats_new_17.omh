@@ -28,6 +28,11 @@ $$
 
 $section Changes and Additions to CppAD During 2017$$
 
+$head 03-13$$
+The documentation for the Hessian in $cref rev_hes_sparsity$$ was
+transposed; i.e., the sense of
+$cref/transpose/rev_hes_sparsity/transpose/$$ was reversed.
+
 $head 03-11$$
 Add sparse assignment statements; see $icode target$$ for
 $cref/sparse_rc/sparse_rc/target/$$ and

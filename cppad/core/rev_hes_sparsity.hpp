@@ -38,7 +38,7 @@ the operation sequence stored in $icode f$$.
 Fix $latex R \in \B{R}^{n \times \ell}$$, $latex s \in \B{R}^m$$
 and define the function
 $latex \[
-	H(x) = R^\R{T} ( s^\R{T} F )^{(2)} ( x )
+	H(x) = ( s^\R{T} F )^{(2)} ( x ) R
 \] $$
 Given a $cref/sparsity pattern/glossary/Sparsity Pattern/$$ for $latex R$$
 and for the vector $latex s$$,
