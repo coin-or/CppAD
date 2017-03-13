@@ -109,6 +109,9 @@ $codei%
 Its row size and column size is $icode n$$; i.e.,
 $icode%pattern%.nr() == %n%$$ and $icode%pattern%.nc() == %n%$$.
 It is a sparsity pattern for the Hessian $latex H(x)$$.
+If the $th i$$ row and $th i$$ column do not appear in $icode subset$$,
+the $th i$$ row and column of $icode pattern$$ does not matter
+(need not be computed).
 This argument is not used (and need not satisfy any conditions),
 when $cref/work/sparse_hes/work/$$ is non-empty.
 
