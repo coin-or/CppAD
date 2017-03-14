@@ -115,6 +115,14 @@ the $th i$$ row and column of $icode pattern$$ does not matter
 This argument is not used (and need not satisfy any conditions),
 when $cref/work/sparse_hes/work/$$ is non-empty.
 
+$subhead subset$$
+If the $th i$$ row and $th i$$ column do not appear in $icode subset$$,
+the $th i$$ row and column of $icode pattern$$ do not matter.
+In this case the $th i-th$$ row and column may have no entries in
+$icode pattern$$ even though they are possibly non-zero in $latex H(x)$$.
+(This can be used to reduce the amount of computation required to find
+$icode pattern$$.)
+
 $head coloring$$
 The coloring algorithm determines which rows and columns
 can be computed during the same sweep.
