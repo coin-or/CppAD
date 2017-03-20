@@ -120,6 +120,18 @@ bool sparse_jac_rev(void)
 		ok &= col[ row_major[k] ] == check_col[k];
 		ok &= val[ row_major[k] ] == check_val[k];
 	}
+	//
+	// test using work stored by previous sparse_jac_rev
+	sparse_rc<s_vector> pattern_not_used;
+	std::string         coloring_not_used;
+	n_sweep = f.sparse_jac_rev(x, subset, pattern_jac, coloring, work);
+	ok &= n_sweep == 2;
+	for(size_t k = 0; k < nnz; k++)
+	{	ok &= row[ row_major[k] ] == check_row[k];
+		ok &= col[ row_major[k] ] == check_col[k];
+		ok &= val[ row_major[k] ] == check_val[k];
+	}
+	//
 	// compute non-zero in col 3 only, nr = m, nc = n, nnz = 2
 	sparse_rc<s_vector> pattern_col3(m, n, 2);
 	pattern_col3.set(0, 1, 3);    // row[0] = 1, col[0] = 3

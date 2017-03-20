@@ -28,6 +28,18 @@ $$
 
 $section Changes and Additions to CppAD During 2017$$
 
+$head 03-20$$
+There was a mistake in $cref sparse_jac$$ that caused the
+following assert to mistakenly occur:
+$codep
+sparse_jac_rev: work is non-empty and conditions have changed
+Error detected by false result for
+    color.size() == 0 || color.size() == n
+$$
+A test that using a previously stores work vector
+has been added to $cref sparse_jac_rev.cpp$$
+and this bug has been fixed.
+
 $head 03-13$$
 The documentation for the Hessian in $cref rev_hes_sparsity$$ was
 transposed; i.e., the sense of

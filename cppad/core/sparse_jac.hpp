@@ -501,7 +501,7 @@ size_t ADFun<Base>::sparse_jac_rev(
 	vector<size_t>& color(work.color);
 	vector<size_t>& order(work.order);
 	CPPAD_ASSERT_KNOWN(
-		color.size() == 0 || color.size() == n,
+		color.size() == 0 || color.size() == m,
 		"sparse_jac_rev: work is non-empty and conditions have changed"
 	);
 	//

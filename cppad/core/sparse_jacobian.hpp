@@ -184,7 +184,7 @@ $subhead color_method$$
 The coloring algorithm determines which columns (forward mode)
 or rows (reverse mode) can be computed during the same sweep.
 This field has prototype
-$codep%
+$codei%
 	std::string %work%.color_method
 %$$
 and its default value (after a constructor or $code clear()$$)
