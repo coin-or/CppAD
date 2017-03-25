@@ -28,6 +28,13 @@ $$
 
 $section Changes and Additions to CppAD During 2017$$
 
+$head 03-25$$
+The $cref sparse_hes$$ function was more efficient if
+there were more entries in each row of the requested
+$cref/subset/sparse_hes/subset/$$. This has been changed
+to more entries in each column, and documentation to this effect
+was included.
+
 $head 03-20$$
 There was a mistake in $cref sparse_jac$$ that caused the
 following assert to mistakenly occur:

@@ -120,6 +120,7 @@ ADD_EXECUTABLE(test_more EXCLUDE_FROM_ALL test_more.cpp
 	sinh.cpp
 	sparse_hessian.cpp
 	sparse_jacobian.cpp
+	sparse_sub_hes.cpp
 	sparse_vec_ad.cpp
 	sqrt.cpp
 	std_math.cpp

@@ -297,11 +297,11 @@ is examples and tests of $code sparse_hessian$$.
 It return $code true$$, if it succeeds and $code false$$ otherwise.
 
 $head Subset Hessian$$
-The routines
-$cref sub_sparse_hes.cpp$$ and $cref sparse_sub_hes.cpp$$
-are examples and tests that compute a sparse Hessian
+The routine
+$cref sub_sparse_hes.cpp$$
+is an example and test that compute a sparse Hessian
 for a subset of the variables.
-They return $code true$$, if they succeed and $code false$$ otherwise.
+It returns $code true$$, for success, and $code false$$ otherwise.
 
 $end
 -----------------------------------------------------------------------------

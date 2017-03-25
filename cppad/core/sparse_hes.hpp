@@ -94,12 +94,21 @@ $codei%
 Its row size and column size is $icode n$$; i.e.,
 $icode%subset%.nr() == %n%$$ and $icode%subset%.nc() == %n%$$.
 It specifies which elements of the Hessian are computed.
+$list number$$
 The input value of its value vector
 $icode%subset%.val()%$$ does not matter.
 Upon return it contains the value of the corresponding elements
 of the Hessian.
+$lnext
 All of the row, column pairs in $icode subset$$ must also appear in
 $icode pattern$$; i.e., they must be possibly non-zero.
+$lnext
+The Hessian is symmetric, so one has a choice as to which off diagonal
+elements to put in $icode subset$$.
+It will probably be more efficient if one makes this choice so that
+the there are more entries in each non-zero column of $icode subset$$;
+see $cref/n_sweep/sparse_hes/n_sweep/$$ below.
+$lend
 
 $head pattern$$
 This argument has prototype
@@ -196,6 +205,12 @@ $children%
 The files $cref sparse_hes.cpp$$
 is an example and test of $code sparse_hes$$.
 It returns $code true$$, if it succeeds, and $code false$$ otherwise.
+
+$head Subset Hessian$$
+The routine
+$cref sparse_sub_hes.cpp$$
+is an example and test that compute a subset of a sparse Hessian.
+It returns $code true$$, for success, and $code false$$ otherwise.
 
 $end
 */
