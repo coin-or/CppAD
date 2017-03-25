@@ -380,11 +380,11 @@ size_t ADFun<Base>::sparse_hes(
 			col[k] = subset_col[k];
 		}
 		//
-		// create an internal version of pattern
+		// convert pattern to an internal version of its transpose
 		vector<size_t> internal_index(n);
 		for(size_t j = 0; j < n; j++)
 			internal_index[j] = j;
-		bool transpose   = false;
+		bool transpose   = true;
 		bool zero_empty  = false;
 		bool input_empty = true;
 		local::sparse_list internal_pattern;
@@ -394,15 +394,16 @@ size_t ADFun<Base>::sparse_hes(
 		);
 		//
 		// execute coloring algorithm
+		// (we are using transpose becasue coloring groups rows, not columns)
 		color.resize(n);
 		if( coloring == "cppad.general" )
-			local::color_general_cppad(internal_pattern, row, col, color);
+			local::color_general_cppad(internal_pattern, col, row, color);
 		else if( coloring == "cppad.symmetric" )
-			local::color_general_cppad(internal_pattern, row, col, color);
+			local::color_general_cppad(internal_pattern, col, row, color);
 		else if( coloring == "colpack.star" )
 		{
 # if CPPAD_HAS_COLPACK
-			local::color_general_colpack(internal_pattern, row, col, color);
+			local::color_general_colpack(internal_pattern, col, row, color);
 # else
 			CPPAD_ASSERT_KNOWN(
 				false,
@@ -420,7 +421,7 @@ size_t ADFun<Base>::sparse_hes(
 		SizeVector key(K);
 		order.resize(K);
 		for(size_t k = 0; k < K; k++)
-			key[k] = color[ row[k] ];
+			key[k] = color[ col[k] ];
 		index_sort(key, order);
 	}
 	// Base versions of zero and one
@@ -444,13 +445,13 @@ size_t ADFun<Base>::sparse_hes(
 	// loop over colors
 	size_t k = 0;
 	for(size_t ell = 0; ell < n_color; ell++)
-	{	CPPAD_ASSERT_UNKNOWN( color[ row[ order[k] ] ] == ell );
+	{	CPPAD_ASSERT_UNKNOWN( color[ col[ order[k] ] ] == ell );
 		//
-		// combine all rows with this color
-		for(size_t i = 0; i < n; i++)
-		{	dx[i] = zero;
-			if( color[i] == ell )
-				dx[i] = one;
+		// combine all columns with this color
+		for(size_t j = 0; j < n; j++)
+		{	dx[j] = zero;
+			if( color[j] == ell )
+				dx[j] = one;
 		}
 		// call forward mode for all these rows at once
 		Forward(1, dx);
@@ -459,8 +460,8 @@ size_t ADFun<Base>::sparse_hes(
 		ddw = Reverse(2, w);
 		//
 		// set the corresponding components of the result
-		while( k < K && color[ row[order[k]] ] == ell )
-		{	size_t index = col[ order[k] ] * 2 + 1;
+		while( k < K && color[ col[order[k]] ] == ell )
+		{	size_t index = row[ order[k] ] * 2 + 1;
 			subset.set(order[k], ddw[index] );
 			k++;
 		}

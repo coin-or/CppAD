@@ -350,6 +350,7 @@ size_t ADFun<Base>::sparse_jac_for(
 		);
 		//
 		// execute coloring algorithm
+		// (we are using transpose because coloring groups rows, not columns).
 		color.resize(n);
 		if(	coloring == "cppad" )
 			local::color_general_cppad(pattern_transpose, col, row, color);
