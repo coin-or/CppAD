@@ -132,10 +132,11 @@ am__test_more_SOURCES_DIST = base_adolc.cpp ipopt_solve.cpp \
 	poly.cpp pow.cpp pow_int.cpp print_for.cpp romberg_one.cpp \
 	rosen_34.cpp runge_45.cpp reverse.cpp rev_sparse_jac.cpp \
 	rev_two.cpp simple_vector.cpp sin.cpp sin_cos.cpp sinh.cpp \
-	sparse_hessian.cpp sparse_jacobian.cpp sparse_vec_ad.cpp \
-	sqrt.cpp std_math.cpp sub.cpp sub_eq.cpp sub_zero.cpp tan.cpp \
-	test_vector.cpp to_string.cpp track_new_del.cpp value.cpp \
-	vec_ad.cpp vec_ad_par.cpp vec_unary.cpp zdouble.cpp
+	sparse_hessian.cpp sparse_jacobian.cpp sparse_sub_hes.cpp \
+	sparse_vec_ad.cpp sqrt.cpp std_math.cpp sub.cpp sub_eq.cpp \
+	sub_zero.cpp tan.cpp test_vector.cpp to_string.cpp \
+	track_new_del.cpp value.cpp vec_ad.cpp vec_ad_par.cpp \
+	vec_unary.cpp zdouble.cpp
 @CppAD_ADOLC_TRUE@am__objects_1 = base_adolc.$(OBJEXT)
 @CppAD_IPOPT_TRUE@am__objects_2 = ipopt_solve.$(OBJEXT)
 @CppAD_OPENMP_TRUE@am__objects_3 = alloc_openmp.$(OBJEXT)
@@ -171,10 +172,10 @@ am_test_more_OBJECTS = $(am__objects_1) $(am__objects_2) \
 	runge_45.$(OBJEXT) reverse.$(OBJEXT) rev_sparse_jac.$(OBJEXT) \
 	rev_two.$(OBJEXT) simple_vector.$(OBJEXT) sin.$(OBJEXT) \
 	sin_cos.$(OBJEXT) sinh.$(OBJEXT) sparse_hessian.$(OBJEXT) \
-	sparse_jacobian.$(OBJEXT) sparse_vec_ad.$(OBJEXT) \
-	sqrt.$(OBJEXT) std_math.$(OBJEXT) sub.$(OBJEXT) \
-	sub_eq.$(OBJEXT) sub_zero.$(OBJEXT) tan.$(OBJEXT) \
-	test_vector.$(OBJEXT) to_string.$(OBJEXT) \
+	sparse_jacobian.$(OBJEXT) sparse_sub_hes.$(OBJEXT) \
+	sparse_vec_ad.$(OBJEXT) sqrt.$(OBJEXT) std_math.$(OBJEXT) \
+	sub.$(OBJEXT) sub_eq.$(OBJEXT) sub_zero.$(OBJEXT) \
+	tan.$(OBJEXT) test_vector.$(OBJEXT) to_string.$(OBJEXT) \
 	track_new_del.$(OBJEXT) value.$(OBJEXT) vec_ad.$(OBJEXT) \
 	vec_ad_par.$(OBJEXT) vec_unary.$(OBJEXT) zdouble.$(OBJEXT)
 test_more_OBJECTS = $(am_test_more_OBJECTS)
@@ -585,6 +586,7 @@ test_more_SOURCES = \
 	sinh.cpp \
 	sparse_hessian.cpp \
 	sparse_jacobian.cpp \
+	sparse_sub_hes.cpp \
 	sparse_vec_ad.cpp \
 	sqrt.cpp \
 	std_math.cpp \
@@ -745,6 +747,7 @@ distclean-compile:
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/sinh.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/sparse_hessian.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/sparse_jacobian.Po@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/sparse_sub_hes.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/sparse_vec_ad.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/sqrt.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/std_math.Po@am__quote@
