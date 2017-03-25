@@ -29,11 +29,18 @@ $$
 $section Changes and Additions to CppAD During 2017$$
 
 $head 03-25$$
+$list number$$
 The $cref sparse_hes$$ function was more efficient if
 there were more entries in each row of the requested
 $cref/subset/sparse_hes/subset/$$. This has been changed
 to more entries in each column, and documentation to this effect
 was included.
+$lnext
+The $cref optimize$$ routine was using to much memory when
+it was optimizing conditional skip operations; see
+$cref/no_conditional_skip/optimize/options/no_conditional_skip/$$.
+This has been fixed.
+$lend
 
 $head 03-20$$
 There was a mistake in $cref sparse_jac$$ that caused the

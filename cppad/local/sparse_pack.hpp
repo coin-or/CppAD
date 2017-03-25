@@ -278,10 +278,6 @@ public:
 	// -----------------------------------------------------------------
 	/*! Assing a set equal to the intersection of two other sets.
 
-	\par Warning
-	This operation is not implemented for sparse_list and hence cannot
-	be used for the sparsity calculations.
-
 	\param this_target
 	is the index (in this \c sparse_pack object) of the set being assinged.
 
