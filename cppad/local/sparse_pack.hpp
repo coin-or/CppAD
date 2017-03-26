@@ -344,6 +344,10 @@ public:
 	size_t memory(void) const
 	{	return data_.capacity() * sizeof(Pack);
 	}
+	/*!
+	Print the vector of sets (used for debugging)
+	*/
+	void print(void) const;
 };
 // ==========================================================================
 /*!
@@ -454,6 +458,24 @@ public:
 	size_t operator*(void) const
 	{	return next_element_; }
 };
+// =========================================================================
+/*!
+Print the vector of sets (used for debugging)
+*/
+inline void sparse_pack::print(void) const
+{	std::cout << "sparse_pack:\n";
+	for(size_t i = 0; i < n_set(); i++)
+	{	std::cout << "set[" << i << "] = {";
+		const_iterator itr(*this, i);
+		while( *itr != end() )
+		{	std::cout << *itr;
+			if( *(++itr) != end() )
+				std::cout << ",";
+		}
+		std::cout << "}\n";
+	}
+	return;
+}
 
 // ==========================================================================
 

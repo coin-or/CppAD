@@ -94,29 +94,6 @@ private:
 	}
 	// -----------------------------------------------------------------
 	/*!
-	Private member function that prints the vector or sets (used for debugging)
-	*/
-	void print(void) const
-	{	// number of sets
-		std::cout << "sparse_list:\n";
-		for(size_t i = 0; i < start_.size(); i++)
-		{	size_t start = start_[i];
-			std::cout << "set[" << i << "] =";
-			if( start != 0 )
-			{	// advance to the first element in the set
-				size_t next    = data_[start].next;
-				while( next != 0 )
-				{	CPPAD_ASSERT_UNKNOWN( data_[next].value < end_ );
-					std::cout << " " << data_[next].value;
-					next  = data_[next].next;
-				}
-			}
-			std::cout << "\n";
-		}
-		return;
-	}
-	// -----------------------------------------------------------------
-	/*!
 	Member function that checks the number of data elements not used
 	(effectively const, but modifies and restores values)
 	*/
@@ -918,11 +895,11 @@ public:
 			}
 			if( value_right > value_left )
 			{	// advance left
-				next_left  = other.data_[next_left].next;
+				next_left  = data_[next_left].next;
 				if( next_left == 0 )
 					value_left = end_;
 				else
-					value_left = other.data_[next_left].value;
+					value_left = data_[next_left].value;
 			}
 		}
 		if( start != 0 )
@@ -961,6 +938,10 @@ public:
 	size_t memory(void) const
 	{	return data_.capacity() * sizeof(pair_size_t);
 	}
+	/*!
+	Print the vector of sets (used for debugging)
+	*/
+	void print(void) const;
 };
 // =========================================================================
 /*!
@@ -1022,6 +1003,24 @@ public:
 	size_t operator*(void)
 	{	return next_pair_.value; }
 };
+// =========================================================================
+/*!
+Print the vector of sets (used for debugging)
+*/
+inline void sparse_list::print(void) const
+{	std::cout << "sparse_list:\n";
+	for(size_t i = 0; i < n_set(); i++)
+	{	std::cout << "set[" << i << "] = {";
+		const_iterator itr(*this, i);
+		while( *itr != end() )
+		{	std::cout << *itr;
+			if( *(++itr) != end() )
+				std::cout << ",";
+		}
+		std::cout << "}\n";
+	}
+	return;
+}
 // =========================================================================
 // Tell pod_vector class that each pair_size_t is plain old data and hence
 // the corresponding constructor need not be called.

@@ -1,6 +1,5 @@
-// $Id$
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-16 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-17 Bradley M. Bell
 
 CppAD is distributed under multiple licenses. This distribution is under
 the terms of the
@@ -126,6 +125,53 @@ bool test_yes_other(void)
 	return ok;
 }
 
+template <class VectorSet>
+bool test_intersection(void)
+{	bool ok = true;
+	//
+	VectorSet vec_set;
+	size_t n_set = 3;
+	size_t end   = 5;
+	vec_set.resize(n_set, end);
+	//
+	// set[0] = {1, 2}
+	vec_set.add_element(0, 1);
+	vec_set.add_element(0, 2);
+	//
+	// set[1] = {2, 3}
+	vec_set.add_element(1, 2);
+	vec_set.add_element(1, 3);
+	//
+	// set[2] = set[0] intersect set[1]
+	size_t target = 2;
+	size_t left   = 0;
+	size_t right  = 1;
+	vec_set.binary_intersection(target, left, right, vec_set);
+	//
+	typename VectorSet::const_iterator itr1(vec_set, target);
+	ok &= *itr1     == 2;
+	ok &= *(++itr1) == end;
+	//
+	// other[1] = set[1]
+	VectorSet other;
+	other.resize(n_set, end);
+	target        = 1;
+	size_t source = 1;
+	other.assignment(target, source, vec_set);
+	//
+	// set[2] = set[0] intersect other[1]
+	target = 2;
+	left   = 0;
+	right  = 1;
+	vec_set.binary_intersection(target, left, right, other);
+	//
+	typename VectorSet::const_iterator itr2(vec_set, target);
+	ok &= *itr2     == 2;
+	ok &= *(++itr2) == end;
+	//
+	return ok;
+}
+
 } // END empty namespace
 
 bool vector_set(void)
@@ -135,6 +181,9 @@ bool vector_set(void)
 	//
 	ok     &= test_yes_other<CppAD::local::sparse_pack>();
 	ok     &= test_yes_other<CppAD::local::sparse_list>();
+	//
+	ok     &= test_intersection<CppAD::local::sparse_pack>();
+	ok     &= test_intersection<CppAD::local::sparse_list>();
 	//
 	return ok;
 }
