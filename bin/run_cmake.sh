@@ -1,5 +1,4 @@
 #! /bin/bash -e
-# $Id$
 # -----------------------------------------------------------------------------
 # CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-17 Bradley M. Bell
 #
@@ -25,6 +24,7 @@ echo_eval() {
 verbose='no'
 standard='c++11'
 debug_speed='no'
+debug_cppad_ipopt='no'
 release_example='no'
 profile_speed='no'
 clang='no'
@@ -43,6 +43,7 @@ usage: bin/run_cmake.sh: \\
 	[--verbose] \\
 	[--c++98] \\
 	[--debug_speed] \\
+	[--debug_cppad_ipopt] \\
 	[--release_example] \\
 	[--profile_speed] \\
 	[--clang ] \\
@@ -66,6 +67,9 @@ EOF
 	then
 		debug_speed='yes'
 		profile_speed='no'
+	elif [ "$1" == '--debug_cppad_ipopt' ]
+	then
+		debug_cppad_ipopt='yes'
 	elif [ "$1" == '--release_example' ]
 	then
 		release_example='yes'
@@ -111,6 +115,15 @@ then
 else
 	sed -e 's|^SET(CMAKE_BUILD_TYPE .*|SET(CMAKE_BUILD_TYPE RELEASE)|' \
 		-i speed/CMakeLists.txt
+fi
+# ---------------------------------------------------------------------------
+if [ "$debug_cppad_ipopt" == 'yes' ]
+then
+	sed -e 's|^SET(CMAKE_BUILD_TYPE .*|SET(CMAKE_BUILD_TYPE DEBUG)|' \
+		-i  cppad_ipopt/CMakeLists.txt
+else
+	sed -e 's|^SET(CMAKE_BUILD_TYPE .*|SET(CMAKE_BUILD_TYPE RELEASE)|' \
+		-i  cppad_ipopt/CMakeLists.txt
 fi
 # ---------------------------------------------------------------------------
 if [ "$release_example" == 'yes' ]

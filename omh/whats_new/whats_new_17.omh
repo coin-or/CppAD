@@ -24,9 +24,21 @@ $spell
 	mul
 	rc
 	rcv
+	omhelp
+	valgrind
+	uninitialised
 $$
 
 $section Changes and Additions to CppAD During 2017$$
+
+$head 03-29$$
+The following valgrind error might occur when the optimize skipped
+setting values that did not affect the dependent variables:
+$codei%
+	Conditional jump or move depends on uninitialised value(s)
+%$$
+This was not a bug, the code has been changed to avoid this error
+in order to make it easier to use valgrind with CppAD.
 
 $head 03-25$$
 $list number$$

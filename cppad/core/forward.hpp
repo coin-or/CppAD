@@ -1,9 +1,8 @@
-// $Id$
 # ifndef CPPAD_CORE_FORWARD_HPP
 # define CPPAD_CORE_FORWARD_HPP
 
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-16 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-17 Bradley M. Bell
 
 CppAD is distributed under multiple licenses. This distribution is under
 the terms of the
@@ -129,6 +128,14 @@ VectorBase ADFun<Base>::Forward(
 	// short hand notation for order capacity
 	size_t C = cap_order_taylor_;
 
+	// The optimizer may skip a step that does not affect dependent variables.
+	// Initilaizing zero order coefficients avoids following valgrind warning:
+	// "Conditional jump or move depends on uninitialised value(s)".
+	if( p == 0 )
+	{	for(j = 0; j < num_var_tape_; j++)
+			taylor_[C * j + 0] = CppAD::numeric_limits<Base>::quiet_NaN();
+	}
+
 	// set Taylor coefficients for independent variables
 	for(j = 0; j < n; j++)
 	{	CPPAD_ASSERT_UNKNOWN( ind_taddr_[j] < num_var_tape_  );
@@ -136,7 +143,7 @@ VectorBase ADFun<Base>::Forward(
 		// ind_taddr_[j] is operator taddr for j-th independent variable
 		CPPAD_ASSERT_UNKNOWN( play_.GetOp( ind_taddr_[j] ) == local::InvOp );
 
-		if( p ==  q )
+		if( p == q )
 			taylor_[ C * ind_taddr_[j] + q] = xq[j];
 		else
 		{	for(k = 0; k <= q; k++)

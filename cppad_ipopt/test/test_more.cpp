@@ -1,6 +1,5 @@
-// $Id$
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-15 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-17 Bradley M. Bell
 
 CppAD is distributed under multiple licenses. This distribution is under
 the terms of the
@@ -49,7 +48,7 @@ int main(void)
 {	bool ok = true;
 
 	// external compiled tests
-	ok &= Run( k_gt_one,            "k_get_one"          );
+	ok &= Run( k_gt_one,            "k_gt_one"           );
 	ok &= Run( multiple_solution,   "multiple_solution"  );
 	ok &= Run( retape_k1_l1,        "retape_k1_l1"       );
 	ok &= Run( retape_k1_l2,        "retape_k1_l2"       );

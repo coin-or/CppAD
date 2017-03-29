@@ -531,6 +531,11 @@ public:
 	// maximum finite value
 	static zdouble max(void)
 	{	return std::numeric_limits<double>::max(); }
+	// quiet_NaN
+	static zdouble quiet_NaN(void)
+	{
+		return zdouble( std::numeric_limits<double>::quiet_NaN() );
+	}
 };
 
 } // CPPAD_END_NAMESPACE
