@@ -31,6 +31,10 @@ $$
 
 $section Changes and Additions to CppAD During 2017$$
 
+$head 03-31$$
+Fix some $code valgrind$$ errors that occurred while running the CppAD
+test set.
+
 $head 03-29$$
 The following valgrind error might occur when the optimize skipped
 setting values that did not affect the dependent variables:
