@@ -126,7 +126,7 @@ EOF
 		echo 'new_file.sh: file_name does not begin with bin/'
 		exit 1
 	fi
-	cat << EOF  > bin/new_file.$$
+	cat << EOF  > $file_name
 #! /bin/bash -eu
 # -----------------------------------------------------------------------------
 # CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-17 Bradley M. Bell

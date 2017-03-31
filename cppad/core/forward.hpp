@@ -131,9 +131,9 @@ VectorBase ADFun<Base>::Forward(
 	// The optimizer may skip a step that does not affect dependent variables.
 	// Initilaizing zero order coefficients avoids following valgrind warning:
 	// "Conditional jump or move depends on uninitialised value(s)".
-	if( p == 0 )
-	{	for(j = 0; j < num_var_tape_; j++)
-			taylor_[C * j + 0] = CppAD::numeric_limits<Base>::quiet_NaN();
+	for(j = 0; j < num_var_tape_; j++)
+	{	for(k = p; k <= q; k++)
+			taylor_[C * j + k] = CppAD::numeric_limits<Base>::quiet_NaN();
 	}
 
 	// set Taylor coefficients for independent variables
