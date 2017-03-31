@@ -37,10 +37,38 @@ do
 	fi
 	echo "valgrind $program $arguments 2> valgrind.log"
 	valgrind $program $arguments 2> valgrind.log
-	if ! grep 'ERROR SUMMARY: 0 errors' valgrind.log
+	if ! grep '^==[0-9]*== ERROR SUMMARY: 0' valgrind.log
 	then
 		grep 'ERROR SUMMARY' valgrind.log
 		exit 1
+	fi
+	if ! grep '^==[0-9]*== *definitely lost: 0' valgrind.log
+	then
+		if grep '^==[0-9]*== *definitely lost:' valgrind.log
+		then
+			exit 1
+		fi
+	fi
+	if ! grep '^==[0-9]*== *indirectly lost: 0' valgrind.log
+	then
+		if grep '^==[0-9]*== *indirectly lost:' valgrind.log
+		then
+			exit 1
+		fi
+	fi
+	if ! grep '^==[0-9]*== *possibly lost: 0' valgrind.log
+	then
+		if grep '^==[0-9]*== *possibly lost:' valgrind.log
+		then
+			exit 1
+		fi
+	fi
+	if ! grep '^==[0-9]*== *suppressed: 0' valgrind.log
+	then
+		if grep '^==[0-9]*== *suppressed:' valgrind.log
+		then
+			exit 1
+		fi
 	fi
 done
 # -----------------------------------------------------------------------------
