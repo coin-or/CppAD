@@ -175,10 +175,9 @@ private:
 
 	\return
 	If zero, niether set is a subset of the other.
-	If one, then set one is a subset of set two.
-	If two, then set two is a subset of set one.
-	If the two sets are equal, the value two is returned; i.e., the set
-	in the other object is identified as a subset of the set in this object.
+	If one, then the two sets are equal.
+	If two, then set one is a subset of set two and not equal set two.
+	If three, then set two is a subset of set one and not equal set one..
 	*/
 	size_t is_subset(
 		size_t                  one_this    ,
@@ -192,10 +191,19 @@ private:
 		// start
 		size_t start_one    = start_[one_this];
 		size_t start_two    = other.start_[two_other];
-		if( start_two == 0 )
-			return 2;
+		//
 		if( start_one == 0 )
-			return 1;
+		{	// set one is empty
+			if( start_two == 0 )
+			{	// set two is empty
+				return 1;
+			}
+			return 2;
+		}
+		if( start_two == 0 )
+		{	// set two is empty and one is not empty
+			return 3;
+		}
 		//
 		// next
 		size_t next_one     = data_[start_one].next;
@@ -207,7 +215,7 @@ private:
 		//
 		bool one_subset     = true;
 		bool two_subset     = true;
-
+		//
 		size_t value_union = std::min(value_one, value_two);
 		while( (one_subset | two_subset) & (value_union < end_) )
 		{	if( value_one > value_union )
@@ -230,10 +238,20 @@ private:
 			}
 			value_union = std::min(value_one, value_two);
 		}
-		if( two_subset )
-			return 2;
 		if( one_subset )
-			return 1;
+		{	if( two_subset )
+			{	// sets are equal
+				return 1;
+			}
+			// one is a subset of two
+			return 2;
+		}
+		if( two_subset )
+		{	// two is a subset of one
+			return 3;
+		}
+		//
+		// neither is a subset
 		return 0;
 	}
 	// -----------------------------------------------------------------
@@ -663,12 +681,12 @@ public:
 		size_t subset = is_subset(this_left, other_right, other);
 
 		// case where right is a subset of left or right and left are equal
-		if( subset == 2 )
+		if( subset == 1 || subset == 3 )
 		{	assignment(this_target, this_left, *this);
 			return;
 		}
 		// case where the left is a subset of right and they are not equal
-		if( subset == 1 )
+		if( subset == 2 )
 		{	assignment(this_target, other_right, other);
 			return;
 		}
