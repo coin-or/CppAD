@@ -1,6 +1,5 @@
-// $Id$
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-16 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-17 Bradley M. Bell
 
 CppAD is distributed under multiple licenses. This distribution is under
 the terms of the
@@ -132,6 +131,8 @@ namespace {
 
 		// compare reverse mode results
 		CPPAD_TESTVECTOR(double) w(m*(q+1)), dw_not(n*(q+1)), dw_yes(n*(q+1));
+		for(i = 0; i < m * (q + 1); i++)
+			w[i] = double( 1.0 / double(i + 1.0) );
 		dw_not = check_not.Reverse(q+1, w);
 		dw_yes = check_yes.Reverse(q+1, w);
 		for(j = 0; j < n; j++)
@@ -158,7 +159,7 @@ namespace {
 		r_not = check_not.RevSparseJac(m, s);
 		r_yes = check_yes.RevSparseJac(m, s);
 		for(i = 0; i < m; i++)
-			ok &= s_not[i] == s_yes[i];
+			ok &= r_not[i] == r_yes[i];
 
 
 		// compare reverse mode Hessian sparsity patterns

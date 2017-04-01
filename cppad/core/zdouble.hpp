@@ -2,7 +2,7 @@
 # ifndef CPPAD_CORE_ZDOUBLE_HPP
 # define CPPAD_CORE_ZDOUBLE_HPP
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-16 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-17 Bradley M. Bell
 
 CppAD is distributed under multiple licenses. This distribution is under
 the terms of the
@@ -533,6 +533,11 @@ public:
 	// maximum finite value
 	static zdouble max(void)
 	{	return std::numeric_limits<double>::max(); }
+	// quiet_NaN
+	static zdouble quiet_NaN(void)
+	{
+		return zdouble( std::numeric_limits<double>::quiet_NaN() );
+	}
 };
 
 } // CPPAD_END_NAMESPACE
