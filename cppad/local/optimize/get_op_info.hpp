@@ -89,7 +89,7 @@ inline void usage_cexp_parent2arg(
 	size_t                  i_parent   ,
 	size_t                  i_arg      ,
 	vector<struct_op_info>& op_info    ,
-	sparse_pack&            cexp_set   )
+	sparse_list&            cexp_set   )
 {
 	// cexp_set
 	if( cexp_set.n_set() > 0 )
@@ -345,7 +345,7 @@ void get_op_info(
 	// comparisons results in the set holds. A set for operator i_op is
 	// not defined and left empty when op_info[i_op].usage = no_usage.
 	/// It is also left empty for the result of any VecAD operations.
-	sparse_pack cexp_set;
+	sparse_list cexp_set;
 	//
 	// number of sets
 	size_t num_set = 0;
@@ -677,7 +677,7 @@ void get_op_info(
 				CPPAD_ASSERT_UNKNOWN(op_info[last_user_i_op].usage==no_usage);
 # ifndef NDEBUG
 				if( cexp_set.n_set() > 0 )
-				{	sparse_pack_const_iterator itr(cexp_set, last_user_i_op);
+				{	sparse_list_const_iterator itr(cexp_set, last_user_i_op);
 					CPPAD_ASSERT_UNKNOWN( *itr == cexp_set.end() );
 				}
 # endif
@@ -1024,7 +1024,7 @@ void get_op_info(
 		keep     &= op_info[i_op].usage != csum_usage;
 		keep     &= op_info[i_op].previous == 0;
 		if( keep )
-		{	sparse_pack_const_iterator itr(cexp_set, i_op);
+		{	sparse_list_const_iterator itr(cexp_set, i_op);
 			if( *itr != cexp_set.end() )
 			{	if( op_info[i_op].op == UserOp )
 				{	// i_op is the first operations in this user atomic call.
