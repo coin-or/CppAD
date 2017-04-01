@@ -641,7 +641,7 @@ void get_op_info(
 			break; // -----------------------------------------------------
 
 			// =============================================================
-			// cumuilative summation operator
+			// cumulative summation operator
 			// ============================================================
 			case CSumOp:
 			CPPAD_ASSERT_UNKNOWN( NumRes(op) == 1 );
