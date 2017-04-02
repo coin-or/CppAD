@@ -31,6 +31,10 @@ $$
 
 $section Changes and Additions to CppAD During 2017$$
 
+$head 04-02$$
+Fix a bug in the optimization of conditional expressions; see,
+$cref/no_conditional_skip/optimize/options/no_conditional_skip/$$.
+
 $head 03-31$$
 Fix some $code valgrind$$ errors that occurred while running the CppAD
 test set.
