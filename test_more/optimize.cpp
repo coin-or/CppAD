@@ -1922,6 +1922,56 @@ namespace {
 
 		return ok;
 	}
+
+	// Test case where if_false case is not used by conditional expression
+	// but is use after conditional expression.
+	// (bug fixed 2017-04-02)
+	bool cond_exp_if_false_used_after(void)
+	{	bool ok = true;
+		using CppAD::vector;
+		using CppAD::AD;
+		using CppAD::NearEqual;
+		double eps10 = 10.0 * std::numeric_limits<double>::epsilon();
+
+		vector< AD<double> > ax(2), ay(1);
+		ax[0] = 1.0;
+		ax[1] = 2.0;
+		Independent(ax);
+		//
+		AD<double> left     = ax[0];
+		AD<double> right    = ax[1];
+		AD<double> if_true  = ax[0] + ax[0];
+		AD<double> if_false = ax[1] + ax[1];
+		//
+		AD<double> cexp = CondExpLt(left, right, if_true, if_false);
+		ay[0] = cexp + if_false;
+		CppAD::ADFun<double> f(ax, ay);
+		//
+		if( conditional_skip_ )
+			f.optimize();
+		else
+			f.optimize("no_conditional_skip");
+		//
+		// check case where x[0] < x[1]
+		vector<double> x(2), y(1);
+		x[0] = 2.0;
+		x[1] = 4.0;
+		y    = f.Forward(0, x);
+		ok &= NearEqual(y[0], x[0] + x[0] + x[1] + x[1], eps10, eps10);
+		ok &= f.number_skip() == 0;
+		//
+		// check case where x[0] >= x[1] (if_true is not used)
+		x[0] = 4.0;
+		x[1] = 2.0;
+		y    = f.Forward(0, x);
+		ok &= NearEqual(y[0], x[1] + x[1] + x[1] + x[1], eps10, eps10);
+		if( conditional_skip_ )
+			ok &= f.number_skip() == 1;
+		else
+			ok &= f.number_skip() == 0;
+		//
+		return ok;
+	}
 }
 
 bool optimize(void)
@@ -1998,6 +2048,8 @@ bool optimize(void)
 		// check case were a variable in left or right expressions
 		// is removed during the optimization
 		ok     &= cond_exp_skip_remove_var();
+		// check case where an if case is used after the conditional expression
+		ok     &= cond_exp_if_false_used_after();
 	}
 	//
 	CppAD::user_atomic<double>::clear();
