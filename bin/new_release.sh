@@ -23,7 +23,7 @@ echo_eval() {
 # -----------------------------------------------------------------------------
 svn_repo="https://projects.coin-or.org/svn/CppAD"
 stable_version="20170000" # start each stable_version at yyyy0000
-release='3'               # first release for each stable version is 0
+release='4'               # first release for each stable version is 0
 # -----------------------------------------------------------------------------
 branch=`git branch | grep '^\*'`
 if [ "$branch" != '* master' ]
