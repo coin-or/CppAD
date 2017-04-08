@@ -166,6 +166,23 @@ The value cexp_info[j] is the information corresponding to the j-th
 conditional expression in the operation sequence.
 This vector is in the same order as the operation sequence; i.e.
 if j1 > j2, cexp_info[j1].i_op > cexp_info[j2].i_op.
+Note that skip_op_true and skip_op_false could be part of this structure,
+but then we would allocate and deallocate two vectors for each conditonal
+expression in the operation sequence.
+
+\param skip_op_true
+This vector of sets is empty on input.
+Upon return, the j-th set is the operators that are not used when
+comparison result for cexp_info[j] is true.
+Note that UsrapOp, UsravOp, UsrrpOp, and UsrrvOp, are not in this
+set and should be skipped when the corresponding UserOp are skipped.
+
+\param skip_op_false
+This vector of sets is empty on input.
+Upon return, the j-th set is the operators that are not used when
+comparison result for cexp_info[j] is false.
+Note that UsrapOp, UsravOp, UsrrpOp, and UsrrvOp, are not in this
+set and should be skipped when the corresponding UserOp are skipped.
 
 \param vecad_used
 The input size of this vector must be zero.
@@ -192,6 +209,8 @@ void get_op_info(
 	const vector<size_t>&         dep_taddr           ,
 	vector<addr_t>&               var2op              ,
 	vector<struct_cexp_info>&     cexp_info           ,
+	sparse_list&                  skip_op_true        ,
+	sparse_list&                  skip_op_false       ,
 	vector<bool>&                 vecad_used          ,
 	vector<struct_op_info>&       op_info             )
 {
@@ -1011,6 +1030,9 @@ void get_op_info(
 	//
 	// initialize information for each conditional expression
 	cexp_info.resize(num_cexp_op);
+	skip_op_true.resize(num_cexp_op, num_op);
+	skip_op_false.resize(num_cexp_op, num_op);
+	//
 	for(size_t i = 0; i < num_cexp_op; i++)
 	{	CPPAD_ASSERT_UNKNOWN(
 			op_info[i].previous == 0 || op_info[i].usage == yes_usage
@@ -1071,14 +1093,20 @@ void get_op_info(
 				size_t index   = element / 2;
 				bool   compare = bool( element % 2 );
 				if( compare == false )
-				{	cexp_info[index].skip_op_false.push_back(i_op);
+				{	// cexp_info[index].skip_op_false.push_back(i_op);
+					skip_op_false.add_element(index, i_op);
 					if( j_op != i_op )
-						cexp_info[index].skip_op_false.push_back(j_op);
+					{	// cexp_info[index].skip_op_false.push_back(j_op);
+						skip_op_false.add_element(index, j_op);
+					}
 				}
 				else
-				{	cexp_info[index].skip_op_true.push_back(i_op);
+				{	// cexp_info[index].skip_op_true.push_back(i_op);
+					skip_op_true.add_element(index, i_op);
 					if( j_op != i_op )
-						cexp_info[index].skip_op_true.push_back(j_op);
+					{	// cexp_info[index].skip_op_true.push_back(j_op);
+						skip_op_true.add_element(index, j_op);
+					}
 				}
 				++itr;
 			}

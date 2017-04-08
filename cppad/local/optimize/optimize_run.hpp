@@ -130,7 +130,9 @@ void optimize_run(
 
 	// operator information
 	vector<addr_t>            var2op;
-	vector<struct_cexp_info> cexp_info;
+	vector<struct_cexp_info>  cexp_info;
+	sparse_list               skip_op_true;
+	sparse_list               skip_op_false;
 	vector<bool>              vecad_used;
 	vector<struct_op_info>    op_info;
 	get_op_info(
@@ -141,6 +143,8 @@ void optimize_run(
 		dep_taddr,
 		var2op,
 		cexp_info,
+		skip_op_true,
+		skip_op_false,
 		vecad_used,
 		op_info
 	);
@@ -263,9 +267,8 @@ void optimize_run(
 		if( skip )
 		{	size_t j = cskip_order[cskip_order_next];
 			cskip_order_next++;
-			struct_cexp_info info = cexp_info[j];
-			size_t n_true          = info.skip_op_true.size();
-			size_t n_false         = info.skip_op_false.size();
+			size_t n_true   = skip_op_true.number_elements(j);
+			size_t n_false  = skip_op_false.number_elements(j);
 			skip &= n_true > 0 || n_false > 0;
 			if( skip )
 			{	CPPAD_ASSERT_UNKNOWN( NumRes(CSkipOp) == 0 );
@@ -858,8 +861,8 @@ void optimize_run(
 	{	// if cskip_new[i].i_arg == 0, this conditional expression was skipped
 		if( cskip_new[i].i_arg > 0 )
 		{	struct_cexp_info info = cexp_info[i];
-			size_t n_true  = info.skip_op_true.size();
-			size_t n_false = info.skip_op_false.size();
+			size_t n_true  = skip_op_true.number_elements(i);
+			size_t n_false = skip_op_false.number_elements(i);
 			size_t i_arg   = cskip_new[i].i_arg;
 			size_t left    = cskip_new[i].left;
 			size_t right   = cskip_new[i].right;
@@ -869,17 +872,23 @@ void optimize_run(
 			rec->ReplaceArg(i_arg++, right );
 			rec->ReplaceArg(i_arg++, n_true     );
 			rec->ReplaceArg(i_arg++, n_false    );
-			for(size_t j = 0; j < info.skip_op_true.size(); j++)
-			{	i_op = cexp_info[i].skip_op_true[j];
+			sparse_list::const_iterator itr_true(skip_op_true, i);
+			while( *itr_true != skip_op_true.end() )
+			{	i_op = *itr_true;
 				// op_info[i_op].usage == yes_usage
 				CPPAD_ASSERT_UNKNOWN( old2new[i_op].new_op != 0 );
 				rec->ReplaceArg(i_arg++, old2new[i_op].new_op );
+				//
+				++itr_true;
 			}
-			for(size_t j = 0; j < info.skip_op_false.size(); j++)
-			{	i_op   = cexp_info[i].skip_op_false[j];
+			sparse_list::const_iterator itr_false(skip_op_false, i);
+			while( *itr_false != skip_op_false.end() )
+			{	i_op   = *itr_false;
 				// op_info[i_op].usage == yes_usage
 				CPPAD_ASSERT_UNKNOWN( old2new[i_op].new_op != 0 );
 				rec->ReplaceArg(i_arg++, old2new[i_op].new_op );
+				//
+				++itr_false;
 			}
 			rec->ReplaceArg(i_arg++, n_true + n_false);
 # ifndef NDEBUG

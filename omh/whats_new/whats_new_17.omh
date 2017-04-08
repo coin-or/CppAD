@@ -27,9 +27,16 @@ $spell
 	omhelp
 	valgrind
 	uninitialised
+	deallocations
 $$
 
 $section Changes and Additions to CppAD During 2017$$
+
+$head 04-08$$
+The $cref/optimization/optimize/$$, with a large number of
+$cref/conditional expressions/CondExp/$$, was performing many
+memory allocations and deallocations. This has been reduced.
+
 
 $head 04-02$$
 Fix a bug in the optimization of conditional expressions; see,
