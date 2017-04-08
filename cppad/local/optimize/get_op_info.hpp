@@ -46,22 +46,22 @@ inline bool add_or_subtract(OpCode op)
 
 
 /*!
-Increarse argument usage and propagate cexp_set from parent to argument.
+Increarse argument usage and propagate cexp_set from result to argument.
 
-\param sum_parent
-is parent an addition or subtraction operator (passed for speed so
-do not need to call add_or_subtract for parent).
+\param sum_result
+is result an addition or subtraction operator (passed for speed so
+do not need to call add_or_subtract for result).
 
-\param i_parent
-is the operator index for the parent operator.
+\param i_result
+is the operator index for the result operator.
 
 \param i_arg
-is the operator index for the argument to the parent operator.
+is the operator index for the argument to the result operator.
 
 \param op_info
 structure that holds the information for each of the operators.
 The output value of op_info[i_arg].usage is increased; to be specific,
-If sum_parent is true and the input value of op_info[i_arg].usage
+If sum_result is true and the input value of op_info[i_arg].usage
 is no_usage, its output value is csum_usage.
 Otherwise, the output value of op_info[i_arg].usage is yes_usage.
 
@@ -76,17 +76,17 @@ cexp_set is not changed.
 \li
 If cexp_set.n_set() != 0 and op_info[i_arg].usage == no_usage,
 the input value of set[i_arg] must be empty.
-In this case the output value if set[i_arg] is equal to set[i_parent]
+In this case the output value if set[i_arg] is equal to set[i_result]
 (which may also be empty).
 
 \li
 If cexp_set.n_set() != 0 and op_info[i_arg].usage != no_usage,
 the output value of set[i_arg] is the intersection of
-its input value and set[i_parent].
+its input value and set[i_result].
 */
-inline void usage_cexp_parent2arg(
-	bool                    sum_parent ,
-	size_t                  i_parent   ,
+inline void usage_cexp_result2arg(
+	bool                    sum_result ,
+	size_t                  i_result   ,
 	size_t                  i_arg      ,
 	vector<struct_op_info>& op_info    ,
 	sparse_list&            cexp_set   )
@@ -94,16 +94,16 @@ inline void usage_cexp_parent2arg(
 	// cexp_set
 	if( cexp_set.n_set() > 0 )
 	{	if( op_info[i_arg].usage == no_usage )
-		{	// set[i_arg] = set[i_parent]
-			cexp_set.assignment(i_arg, i_parent, cexp_set);
+		{	// set[i_arg] = set[i_result]
+			cexp_set.assignment(i_arg, i_result, cexp_set);
 		}
 		else
-		{	// set[i_arg] = set[i_arg] intersect set[i_parent]
-			cexp_set.binary_intersection(i_arg, i_arg, i_parent, cexp_set);
+		{	// set[i_arg] = set[i_arg] intersect set[i_result]
+			cexp_set.binary_intersection(i_arg, i_arg, i_result, cexp_set);
 		}
 	}
 	// usage
-	bool csum = sum_parent && op_info[i_arg].usage == no_usage;
+	bool csum = sum_result && op_info[i_arg].usage == no_usage;
 	if( csum )
 		csum = add_or_subtract( op_info[i_arg].op );
 	if( csum )
@@ -421,7 +421,7 @@ void get_op_info(
 			CPPAD_ASSERT_UNKNOWN( NumRes(op) > 0 );
 			if( use_result != no_usage )
 			{	size_t j_op = var2op[ arg[0] ];
-				usage_cexp_parent2arg(sum_op, i_op, j_op, op_info, cexp_set);
+				usage_cexp_result2arg(sum_op, i_op, j_op, op_info, cexp_set);
 			}
 			break; // --------------------------------------------
 
@@ -438,7 +438,7 @@ void get_op_info(
 			CPPAD_ASSERT_UNKNOWN( NumRes(op) > 0 );
 			if( use_result != no_usage )
 			{	size_t j_op = var2op[ arg[1] ];
-				usage_cexp_parent2arg(sum_op, i_op, j_op, op_info, cexp_set);
+				usage_cexp_result2arg(sum_op, i_op, j_op, op_info, cexp_set);
 			}
 			break; // --------------------------------------------
 
@@ -455,7 +455,7 @@ void get_op_info(
 			if( use_result != no_usage )
 			{	for(size_t i = 0; i < 2; i++)
 				{	size_t j_op = var2op[ arg[i] ];
-					usage_cexp_parent2arg(
+					usage_cexp_result2arg(
 						sum_op, i_op, j_op, op_info, cexp_set
 					);
 				}
@@ -470,17 +470,17 @@ void get_op_info(
 			CPPAD_ASSERT_UNKNOWN( NumRes(op) > 0 );
 			if( use_result != no_usage )
 			{	CPPAD_ASSERT_UNKNOWN( NumArg(CExpOp) == 6 );
-				// propgate from parent to left argument
+				// propgate from result to left argument
 				if( arg[1] & 1 )
 				{	size_t j_op = var2op[ arg[2] ];
-					usage_cexp_parent2arg(
+					usage_cexp_result2arg(
 						sum_op, i_op, j_op, op_info, cexp_set
 					);
 				}
-				// propgate from parent to right argument
+				// propgate from result to right argument
 				if( arg[1] & 2 )
 				{	size_t j_op = var2op[ arg[3] ];
-					usage_cexp_parent2arg(
+					usage_cexp_result2arg(
 							sum_op, i_op, j_op, op_info, cexp_set
 					);
 				}
@@ -493,7 +493,7 @@ void get_op_info(
 				{	size_t j_op = var2op[ arg[4] ];
 					bool can_skip = conditional_skip & (! same_variable);
 					can_skip     &= op_info[j_op].usage == no_usage;
-					usage_cexp_parent2arg(
+					usage_cexp_result2arg(
 						sum_op, i_op, j_op, op_info, cexp_set
 					);
 					if( can_skip )
@@ -512,7 +512,7 @@ void get_op_info(
 				{	size_t j_op = var2op[ arg[5] ];
 					bool can_skip = conditional_skip & (! same_variable);
 					can_skip     &= op_info[j_op].usage == no_usage;
-					usage_cexp_parent2arg(
+					usage_cexp_result2arg(
 						sum_op, i_op, j_op, op_info, cexp_set
 					);
 					if( can_skip )
@@ -549,14 +549,14 @@ void get_op_info(
 				if( arg[0] & 1 )
 				{	// arg[1] is a variable
 					size_t j_op = var2op[ arg[1] ];
-					usage_cexp_parent2arg(
+					usage_cexp_result2arg(
 						sum_op, i_op, j_op, op_info, cexp_set
 					);
 				}
 				if( arg[0] & 2 )
 				{	// arg[3] is a variable
 					size_t j_op = var2op[ arg[3] ];
-					usage_cexp_parent2arg(
+					usage_cexp_result2arg(
 						sum_op, i_op, j_op, op_info, cexp_set
 					);
 				}
@@ -577,7 +577,7 @@ void get_op_info(
 			{	op_info[i_op].usage = yes_usage;
 				//
 				size_t j_op = var2op[ arg[1] ];
-				usage_cexp_parent2arg(sum_op, i_op, j_op, op_info, cexp_set);
+				usage_cexp_result2arg(sum_op, i_op, j_op, op_info, cexp_set);
 			}
 			break; // ----------------------------------------------
 
@@ -589,7 +589,7 @@ void get_op_info(
 			{	op_info[i_op].usage = yes_usage;
 				//
 				size_t j_op = var2op[ arg[0] ];
-				usage_cexp_parent2arg(sum_op, i_op, j_op, op_info, cexp_set);
+				usage_cexp_result2arg(sum_op, i_op, j_op, op_info, cexp_set);
 			}
 			break; // ----------------------------------------------
 
@@ -605,7 +605,7 @@ void get_op_info(
 				//
 				for(size_t i = 0; i < 2; i++)
 				{	size_t j_op = var2op[ arg[i] ];
-					usage_cexp_parent2arg(
+					usage_cexp_result2arg(
 						sum_op, i_op, j_op, op_info, cexp_set
 					);
 				}
@@ -671,7 +671,7 @@ void get_op_info(
 				size_t num_sub = size_t( arg[1] );
 				for(size_t i = 0; i < num_add + num_sub; i++)
 				{	size_t j_op = var2op[ arg[3 + i] ];
-					usage_cexp_parent2arg(
+					usage_cexp_result2arg(
 						sum_op, i_op, j_op, op_info, cexp_set
 					);
 				}
@@ -811,7 +811,7 @@ void get_op_info(
 					}
 					if( use_arg_j )
 					{	size_t j_op = var2op[ user_ix[j] ];
-						usage_cexp_parent2arg(
+						usage_cexp_result2arg(
 							sum_op, last_user_i_op, j_op, op_info, cexp_set
 						);
 					}
@@ -881,7 +881,7 @@ void get_op_info(
 				if( user_pack )
 					user_r_pack[user_i] = true;
 				//
-				usage_cexp_parent2arg(
+				usage_cexp_result2arg(
 					sum_op, i_op, last_user_i_op, op_info, cexp_set
 				);
 			}
@@ -996,7 +996,7 @@ void get_op_info(
 				size_t previous = op_info[i_op].previous;
 				bool sum_op = false;
 				CPPAD_ASSERT_UNKNOWN( previous < i_op );
-				usage_cexp_parent2arg(
+				usage_cexp_result2arg(
 					sum_op, i_op, previous, op_info, cexp_set
 				);
 			}
