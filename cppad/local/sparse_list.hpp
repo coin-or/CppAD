@@ -567,7 +567,7 @@ public:
 			// adjust data_not_used_
 			data_not_used_ += number_delete;
 
-			if( data_not_used_ > data_.size() / 2 )
+			if( data_not_used_ > data_.size() / 2 + 100 )
 				collect_garbage();
 		}
 		//
@@ -653,9 +653,8 @@ public:
 		data_not_used_ += number_delete;
 
 		// check if time for garbage collection
-		if( data_not_used_ > data_.size() / 2 )
+		if( data_not_used_ > data_.size() / 2 + 100 )
 			collect_garbage();
-		//
 	}
 	// -----------------------------------------------------------------
 	/*! Assign a set equal to the union of two other sets.
@@ -778,9 +777,8 @@ public:
 		// adjust data_not_used_
 		data_not_used_ += number_delete;
 
-		if( data_not_used_ > data_.size() / 2 )
+		if( data_not_used_ > data_.size() / 2 + 100 )
 			collect_garbage();
-		//
 	}
 	// -----------------------------------------------------------------
 	/*! Assign a set equal to the intersection of two other sets.
@@ -910,7 +908,7 @@ public:
 		// adjust data_not_used_
 		data_not_used_ += number_delete;
 		//
-		if( data_not_used_ > data_.size() / 2 )
+		if( data_not_used_ > data_.size() / 2 + 100 )
 			collect_garbage();
 	}
 	// -----------------------------------------------------------------
