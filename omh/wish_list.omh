@@ -34,6 +34,15 @@ $$
 
 $section The CppAD Wish List$$
 
+$head Debug and Release$$
+Currently the
+Debug ($code NDEBUG$$ defined) and
+Release ($code NDEBUG$$ not defined) versions of CppAD
+are not compatible.
+Perhaps the things that make them incompatible could be put under a
+separate extra debugging flag.
+
+
 $head Sparsity Subsets$$
 Change the documentation for all the sparse Hessian routines to include
 $cref/pattern subset/sparse_hes/pattern/subset/$$ option.
