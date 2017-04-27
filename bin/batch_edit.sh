@@ -1,7 +1,7 @@
 #! /bin/bash -e
 # $Id$
 # -----------------------------------------------------------------------------
-# CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-16 Bradley M. Bell
+# CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-17 Bradley M. Bell
 #
 # CppAD is distributed under multiple licenses. This distribution is under
 # the terms of the
@@ -17,8 +17,8 @@ move_list='
 move_sed='s|/local/|/core/|'
 #
 cat << EOF > junk.sed
-s|taion|ation|g
-s|aation|ation|g
+s|NearEqual(jfac\\*\\([^,]*\\), *value *, *jfac\\*eps99 *, *jfac\\*eps99)|NearEqual(\\1, value/jfac, eps99, eps99)|
+s|NearEqual(jfac\\*\\([^,]*\\), *value *, *eps99 *, *eps99)|NearEqual(\\1, value/jfac, eps99, eps99)|
 EOF
 # -----------------------------------------------------------------------------
 if [ $0 != "bin/batch_edit.sh" ]
