@@ -1,6 +1,5 @@
-// $Id$
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-16 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-17 Bradley M. Bell
 
 CppAD is distributed under multiple licenses. This distribution is under
 the terms of the
@@ -9,7 +8,6 @@ the terms of the
 A copy of this license is included in the COPYING file of this distribution.
 Please visit http://www.coin-or.org/CppAD/ for information on other licenses.
 -------------------------------------------------------------------------- */
-
 /*
 $begin zdouble.cpp$$
 $spell
@@ -28,9 +26,9 @@ $end
 # include <cppad/cppad.hpp>
 
 namespace {
-	template <class Base> bool test(bool is_double)
+	template <class Base> bool test_one(void)
 	{	bool ok = true;
-		Base eps = 10. * std::numeric_limits<double>::epsilon();
+		Base eps99 = 99. * std::numeric_limits<double>::epsilon();
 
 		typedef CppAD::AD<Base>   a1type;
 		typedef CppAD::AD<a1type> a2type;
@@ -97,9 +95,30 @@ namespace {
 		x[0] = 1.0;
 		x[1] = 2.0;
 		z    = g.Forward(0, x);
-		ok &= CppAD::NearEqual(z[0], 1.0/x[1], eps, eps);
-		ok &= CppAD::NearEqual(z[1], - x[0]/(x[1]*x[1]), eps, eps);
+		ok &= CppAD::NearEqual(z[0], 1.0/x[1], eps99, eps99);
+		ok &= CppAD::NearEqual(z[1], - x[0]/(x[1]*x[1]), eps99, eps99);
 
+		return ok;
+	}
+	bool test_two(void)
+	{	bool ok = true;
+		using CppAD::zdouble;
+		//
+		zdouble eps = CppAD::numeric_limits<zdouble>::epsilon();
+		ok          &= eps == std::numeric_limits<double>::epsilon();
+		//
+		zdouble min = CppAD::numeric_limits<zdouble>::min();
+		ok          &= min == std::numeric_limits<double>::min();
+		//
+		zdouble max = CppAD::numeric_limits<zdouble>::max();
+		ok          &= max == std::numeric_limits<double>::max();
+		//
+		zdouble nan = CppAD::numeric_limits<zdouble>::quiet_NaN();
+		ok          &= nan != nan;
+		//
+		int digits10 = CppAD::numeric_limits<zdouble>::digits10;
+		ok          &= digits10 == std::numeric_limits<double>::digits10;
+		//
 		return ok;
 	}
 }
@@ -110,13 +129,11 @@ bool zdouble(void)
 	using CppAD::NearEqual;
 	using CppAD::zdouble;
 	//
-	bool is_double = false;
-	ok &= test<zdouble>(is_double);
+	ok &= test_one<zdouble>();
+	ok &= test_one<double>();
 	//
-	is_double = true;
-	ok &= test<double>(is_double);
+	ok &= test_two();
 	//
 	return ok;
 }
-
 // END C++

@@ -519,24 +519,7 @@ inline zdouble pow(const zdouble& x, const zdouble& y)
 { return std::pow(x.dbl_, y.dbl_); }
 
 /// Base type requirement: limits
-template <>
-class numeric_limits<zdouble> {
-public:
-	// machine epsilon
-	static zdouble epsilon(void)
-	{	return std::numeric_limits<double>::epsilon(); }
-	// minimum positive normalized value
-	static zdouble min(void)
-	{	return std::numeric_limits<double>::min(); }
-	// maximum finite value
-	static zdouble max(void)
-	{	return std::numeric_limits<double>::max(); }
-	// quiet_NaN
-	static zdouble quiet_NaN(void)
-	{
-		return zdouble( std::numeric_limits<double>::quiet_NaN() );
-	}
-};
+CPPAD_NUMERIC_LIMITS(double, zdouble)
 
 } // CPPAD_END_NAMESPACE
 
