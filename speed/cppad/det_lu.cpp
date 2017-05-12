@@ -1,6 +1,5 @@
-// $Id$
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-16 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-17 Bradley M. Bell
 
 CppAD is distributed under multiple licenses. This distribution is under
 the terms of the
@@ -38,9 +37,9 @@ See $cref link_det_lu$$.
 
 $head Implementation$$
 $srccode%cpp% */
-# include <cppad/utility/vector.hpp>
 # include <cppad/speed/det_by_lu.hpp>
 # include <cppad/speed/uniform_01.hpp>
+# include <cppad/cppad.hpp>
 
 // Note that CppAD uses global_option["memory"] at the main program level
 # include <map>

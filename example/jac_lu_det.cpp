@@ -29,10 +29,20 @@ $end
 # include <cppad/cppad.hpp>
 # include <cppad/speed/det_by_lu.hpp>
 
+// The AD complex case is used by this example so must
+// define a specializatgion of LeqZero,AbsGeq for the AD<Complex> case
+namespace CppAD {
+	CPPAD_BOOL_BINARY( std::complex<double> ,  AbsGeq   )
+	CPPAD_BOOL_UNARY(  std::complex<double> ,  LeqZero )
+}
+
 bool JacLuDet(void)
 {	bool ok = true;
 	using namespace CppAD;
 	double eps99 = 99.0 * std::numeric_limits<double>::epsilon();
+
+	typedef std::complex<double> Complex;
+	typedef AD<Complex>          ADComplex;
 
 	size_t n = 2;
 

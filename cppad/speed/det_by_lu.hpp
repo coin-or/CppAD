@@ -1,9 +1,8 @@
-// $Id$
 # ifndef CPPAD_SPEED_DET_BY_LU_HPP
 # define CPPAD_SPEED_DET_BY_LU_HPP
 
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-16 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-17 Bradley M. Bell
 
 CppAD is distributed under multiple licenses. This distribution is under
 the terms of the
@@ -127,27 +126,20 @@ $end
 ---------------------------------------------------------------------------
 */
 // BEGIN C++
-# include <cppad/cppad.hpp>
-# include <complex>
+# include <cppad/utility/vector.hpp>
+# include <cppad/utility/lu_solve.hpp>
 
 // BEGIN CppAD namespace
 namespace CppAD {
-
-// The AD complex case is used by examples by not used by speed tests
-// Must define a specializatgion of LeqZero,AbsGeq for the ADComplex case
-typedef std::complex<double>     Complex;
-typedef CppAD::AD<Complex>     ADComplex;
-CPPAD_BOOL_UNARY(Complex,  LeqZero )
-CPPAD_BOOL_BINARY(Complex, AbsGeq )
 
 template <class Scalar>
 class det_by_lu {
 private:
 	const size_t m_;
 	const size_t n_;
-	CPPAD_TESTVECTOR(Scalar) A_;
-	CPPAD_TESTVECTOR(Scalar) B_;
-	CPPAD_TESTVECTOR(Scalar) X_;
+	CppAD::vector<Scalar> A_;
+	CppAD::vector<Scalar> B_;
+	CppAD::vector<Scalar> X_;
 public:
 	det_by_lu(size_t n) : m_(0), n_(n), A_(n * n)
 	{	}
@@ -155,7 +147,6 @@ public:
 	template <class Vector>
 	inline Scalar operator()(const Vector &x)
 	{
-		using CppAD::exp;
 
 		Scalar       logdet;
 		Scalar       det;

@@ -1,8 +1,7 @@
-// $Id$
 # ifndef CPPAD_EXAMPLE_CPPAD_EIGEN_HPP
 # define CPPAD_EXAMPLE_CPPAD_EIGEN_HPP
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-16 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-17 Bradley M. Bell
 
 CppAD is distributed under multiple licenses. This distribution is under
 the terms of the
@@ -83,6 +82,8 @@ namespace Eigen {
 		typedef CppAD::AD<Base>   Real;
 		// type for AD<Base> operations that result in non-integer values
 		typedef CppAD::AD<Base>   NonInteger;
+		//  type to use for numeric literals such as "2" or "0.5".
+		typedef CppAD::AD<Base>   Literal;
 		// type for nested value inside an AD<Base> expression tree
 		typedef CppAD::AD<Base>   Nested;
 
@@ -146,7 +147,7 @@ namespace Eigen {
 	namespace internal {
 
 		template<class Base>
-		struct significant_decimals_default_impl< CppAD::AD<Base>, false>
+		struct significant_decimals_impl< CppAD::AD<Base> >
 		{	typedef CppAD::AD<Base> Scalar;
 
 			typedef typename NumTraits<Scalar>::Real RealScalar;
