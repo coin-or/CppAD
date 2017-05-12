@@ -1,6 +1,5 @@
-$Id$
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-15 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-17 Bradley M. Bell
 
 CppAD is distributed under multiple licenses. This distribution is under
 the terms of the
@@ -13,22 +12,17 @@ Please visit http://www.coin-or.org/CppAD/ for information on other licenses.
 $begin Faq$$
 $escape !$$
 $spell
+	github
 	instantiating
-	cppad@list.coin-or.org
 	faq
 	std
 	whatsnew
-	sqrt
-	cmath
 	Namespace
-	Dvector
-	Gcc
 	CppAD
 	Lu
 $$
 
 $section Frequently Asked Questions and Answers$$
-$mindex FAQ operator reporting ErrorHandler avoid record taping mode CPPAD_TESTVECTOR standard math function storage$$
 
 $head Assignment and Independent$$
 Why does the code sequence
@@ -53,32 +47,25 @@ $pre
 
 $$
 $list number$$
-The first step is to search this page for mention of
-some feature that perhaps you interpreting as a bug
-(and is not).
-If this does not solve your problem, continue
-to the next step.
+The first step is to check currently open
+$href%https://github.com/coin-or/CppAD/issues%issues%$$ on github.
+If it is an open issue, and you want to hurry it along, you can add
+a comment to the effect that it is holding you up.
 $lnext
-The second step is to check the
-$cref whats_new$$ messages from the date
-of the release that you are using to the current date.
-If the bug has been mentioned and fixed,
-then $cref install$$ the current version of CppAD.
-If this does not solve your problem, continue
-to the next step.
+The next step is to search the
+$cref whats_new$$ sections for mention of a related bug fix
+between the date of the version you are using and the current date.
+It the bug has been fixed, obtain a more recent release that has the fix
+and see if that works for you.
 $lnext
-Create a simple as possible demonstration of the bug;
+The next step is to
+create a simple demonstration of the bug;
 see the file $code bug/template.sh$$ for a template that you can
 edit for that purpose.
 The smaller the program, the better the bug report.
 $lnext
-Send an e-mail message to the mailing list
-$href%
-	http://list.coin-or.org/mailman/listinfo/cppad%
-	cppad@list.coin-or.org
-%$$
-with a description of the bug.
-Attaching your program that demonstrates the bug.
+The next step is open a new issue on github and provide your simple
+example so that the problem can be reproduced.
 $lend
 
 $head CompareChange$$
@@ -134,15 +121,18 @@ $head Matrix Inverse$$
 Is it possible to differentiate (with respect to the matrix elements)
 the computation of the inverse of a matrix
 where the computation of the inverse uses pivoting ?
-$pre
 
-$$
+$subhead LuSolve$$#
 The example routine $cref LuSolve$$ can be used to do this
 because the inverse is a special case of the solution of linear equations.
 The examples
 $cref jac_lu_det.cpp$$ and $cref hes_lu_det.cpp$$
 use LuSolve to compute derivatives of the
 determinant with respect to the components of the matrix.
+
+$subhead Atomic Operation$$
+One can also do this by making the inversion of the matrix an atomic operation;
+e.g., see $cref atomic_eigen_mat_inv.cpp$$.
 
 $head Mode: Forward or Reverse$$
 When evaluating derivatives,
@@ -184,25 +174,6 @@ $cref/CppAD::vector/CppAD_vector/$$ template class, but it can be changed.
 Note that all the preprocessor symbols that are defined or used
 by CppAD begin with either $code CPPAD$$
 (some old deprecated symbols begin with $code CppAD$$).
-
-$subhead Using$$
-Why do I have trouble when the following command
-$codep
-	using namespace CppAD
-$$
-is at the global level
-(not within a function or some other limited scope).
-$pre
-
-$$
-Some versions of $code # include <cmath>$$ for
-gcc and Visual C++ define the standard math functions,
-(for example $codei%double sqrt(double %x%)%$$)
-at the global level.
-It is necessary to put your $code using$$ commands within the scope
-of a function,
-or some other limited scope,
-in order to shadow these improper global definitions.
 
 $head Speed$$
 How do I get the best speed performance out of CppAD ?

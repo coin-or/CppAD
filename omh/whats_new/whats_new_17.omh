@@ -37,6 +37,8 @@ $section Changes and Additions to CppAD During 2017$$
 
 $head 05-12$$
 $list number$$
+The $cref Faq$$ has been updated.
+$lnext
 Remove includes of $code cppad/cppad.hpp$$ from the
 $codei%cppad/speed/%*%.hpp%$$ files.
 This avoids an incompatibility between sacado and newer versions of eigen,
