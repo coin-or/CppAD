@@ -201,7 +201,6 @@ nobase_myinclude_HEADERS =  \
 	cppad/example/eigen_cholesky.hpp \
 	cppad/example/eigen_mat_inv.hpp \
 	cppad/example/eigen_mat_mul.hpp \
-	cppad/example/eigen_plugin.hpp \
 	cppad/example/mat_mul.hpp \
 	cppad/ipopt/solve_callback.hpp \
 	cppad/ipopt/solve.hpp \
@@ -433,6 +432,12 @@ if CppAD_DOCUMENTATION
 	chmod -R a-w $(doc_package)
 	chmod -R u+w $(doc_package)
 	chmod -R a+r $(doc_package)
+endif
+if CppAD_DEPRECATED
+	cp -a $(top_srcdir)/cppad/deprecated/* $(inc_postfix)/cppad
+	chmod -R a-w $(inc_postfix)/cppad
+	chmod -R u+w $(inc_postfix)/cppad
+	chmod -R a+r $(inc_postfix)/cppad
 endif
 #
 pkgconfigdir = $(datadir)/pkgconfig

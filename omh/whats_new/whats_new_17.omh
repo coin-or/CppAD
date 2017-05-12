@@ -29,16 +29,40 @@ $spell
 	uninitialised
 	deallocations
 	sacado
+	typedef
+	plugin
 $$
 
 $section Changes and Additions to CppAD During 2017$$
 
 $head 05-12$$
+$list number$$
 Remove includes of $code cppad/cppad.hpp$$ from the
 $codei%cppad/speed/%*%.hpp%$$ files.
-This avoids an incompatibility between sacado and new versions of eigen,
+This avoids an incompatibility between sacado and newer versions of eigen,
 when eigen is used for the
 $cref/test vector/testvector/Eigen Vectors/$$.
+$lnext
+The $cref/eigen/eigen_prefix/$$ package changed its requirements for
+defining Scalar types
+(some where between eigen-3.2.9 and eigen-3.3.3).
+The member variable
+$cref/digit10/numeric_limits/digits10/$$ was added to the
+$code numeric_limits$$ to accommodate this change.
+$lnext
+Note that this fix required adding $code digits10$$ to the
+user defined $icode Base$$ type
+$cref/requirements/base_require/$$; see
+$cref base_limits$$.
+$lnext
+In addition, it is no longer necessary to add the typedef
+$codei%
+	typedef Scalar value_type;
+%$$
+so the file $code cppad/example/eigen_plugin.hpp$$ has been removed.
+(This type definition was previously necessary for eigen vectors
+to be $cref/simple vectors/SimpleVector/$$.)
+$lend
 
 $head 04-08$$
 The $cref/optimization/optimize/$$, with a large number of

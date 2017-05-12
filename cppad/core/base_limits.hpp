@@ -1,9 +1,8 @@
-// $Id$
 # ifndef CPPAD_CORE_BASE_LIMITS_HPP
 # define CPPAD_CORE_BASE_LIMITS_HPP
 
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-16 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-17 Bradley M. Bell
 
 CppAD is distributed under multiple licenses. This distribution is under
 the terms of the
@@ -59,6 +58,7 @@ template <> class numeric_limits<Base>\
 	{	return static_cast<Base>( std::numeric_limits<Other>::epsilon() ); }\
 	static Base quiet_NaN(void) \
 	{	return static_cast<Base>( std::numeric_limits<Other>::quiet_NaN() ); }\
+	static const int digits10 = std::numeric_limits<Other>::digits10;\
 };
 /* %$$
 $end

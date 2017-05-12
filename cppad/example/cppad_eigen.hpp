@@ -19,7 +19,6 @@ $spell
 	inline
 	neg
 	eps
-	plugin
 	atan
 	Num
 	acos
@@ -44,31 +43,27 @@ $section Enable Use of Eigen Linear Algebra Package with CppAD$$
 $head Syntax$$
 $codei%# include <cppad/example/cppad_eigen.hpp>%$$
 $children%
-	cppad/example/eigen_plugin.hpp%
 	example/eigen_array.cpp%
 	example/eigen_det.cpp
 %$$
 
 $head Purpose$$
-Enables the use of the
-$href%http://eigen.tuxfamily.org%eigen%$$
-linear algebra package with the type $icode%AD<%Base%>%$$.
+Enables the use of the $cref/eigen/eigen_prefix/$$
+linear algebra package with the type $icode%AD<%Base%>%$$; see
+$href%
+	https://eigen.tuxfamily.org/dox/TopicCustomizing_CustomScalar.html%
+	custom scalar types
+%$$.
 
 $head Example$$
 The files $cref eigen_array.cpp$$ and $cref eigen_det.cpp$$
 contain an example and test of this include file.
-It returns true if it succeeds and false otherwise.
+They return true if they succeed and false otherwise.
 
 $head Include Files$$
 The file $code cppad_eigen.hpp$$ includes both
 $code <cppad/cppad.hpp>$$ and $code <Eigen/Core>$$.
-In addition,
-The file $cref eigen_plugin.hpp$$
-is used to define $code value_type$$
-in the Eigen matrix class definition so its vectors are
-$cref/simple vectors/SimpleVector/$$.
 $srccode%cpp% */
-# define EIGEN_MATRIXBASE_PLUGIN <cppad/example/eigen_plugin.hpp>
 # include <Eigen/Core>
 # include <cppad/cppad.hpp>
 /* %$$
@@ -122,6 +117,9 @@ namespace Eigen {
 		static CppAD::AD<Base> highest(void)
 		{	return CppAD::numeric_limits< CppAD::AD<Base> >::max(); }
 
+		// number of decimal digits that can be represented without change.
+		static int digits10(void)
+		{	return CppAD::numeric_limits< CppAD::AD<Base> >::digits10; }
 	};
 }
 /* %$$
@@ -143,26 +141,6 @@ namespace CppAD {
 		{	return x * x; }
 }
 
-namespace Eigen {
-	namespace internal {
-
-		template<class Base>
-		struct significant_decimals_impl< CppAD::AD<Base> >
-		{	typedef CppAD::AD<Base> Scalar;
-
-			typedef typename NumTraits<Scalar>::Real RealScalar;
-			static inline int run()
-			{	Scalar neg_log_eps = - log(
-					NumTraits<RealScalar>::epsilon()
-				);
-				int ceil_neg_log_eps = Integer( neg_log_eps );
-				if( Scalar(ceil_neg_log_eps) < neg_log_eps )
-					ceil_neg_log_eps++;
-				return ceil_neg_log_eps;
-			}
-		};
-	}
-}
 /* %$$
 $end
 */

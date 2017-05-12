@@ -83,6 +83,16 @@ namespace {
 		ok         &= nan != nan;
 		return ok;
 	}
+	// -----------------------------------------------------------------
+	bool check_digits10(void)
+	{	bool ok     = true;
+		Float neg_log_eps =
+			- log10( CppAD::numeric_limits<Float>::epsilon() );
+		int ceil_neg_log_eps =
+			Integer( neg_log_eps );
+		ok &= ceil_neg_log_eps == CppAD::numeric_limits<Float>::digits10;
+		return ok;
+	}
 }
 
 bool num_limits(void)
@@ -92,6 +102,7 @@ bool num_limits(void)
 	ok &= check_min();
 	ok &= check_max();
 	ok &= check_nan();
+	ok &= check_digits10();
 
 	return ok;
 }

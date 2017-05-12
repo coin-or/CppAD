@@ -1,8 +1,7 @@
-// $Id$
 # ifndef CPPAD_CORE_NUMERIC_LIMITS_HPP
 # define CPPAD_CORE_NUMERIC_LIMITS_HPP
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-16 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-17 Bradley M. Bell
 
 CppAD is distributed under multiple licenses. This distribution is under
 the terms of the
@@ -34,6 +33,7 @@ $icode%max% = numeric_limits<%Float%>::max()
 %$$
 $icode%nan% = numeric_limits<%Float%>::quiet_NaN()
 %$$
+$codei numeric_limits<%Float%>::digits10$$
 
 $head CppAD::numeric_limits$$
 These functions and have the prototype
@@ -42,6 +42,7 @@ $codei%
 %$$
 where $icode fun$$ is
 $code epsilon$$, $code min$$, $code max$$, and $code quiet_NaN$$.
+(Note that $code digits10$$ is member variable and not a function.)
 
 $head std::numeric_limits$$
 CppAD does not use a specialization of $code std::numeric_limits$$
@@ -114,6 +115,16 @@ $codei%
 	%nan% != %nan%
 %$$
 
+$head digits10$$
+The member variable $code digits10$$ has prototype
+$codei%
+	static const int numeric_limits<%Float%>::digits10
+%$$
+It is the number of decimal digits that can be represented by a
+$icode Float$$ value.  A number with this many decimal digits can be
+converted to $icode Float$$ and back to a string,
+without change due to rounding or overflow.
+
 
 $head Example$$
 $children%
@@ -139,7 +150,7 @@ namespace CppAD { // BEGIN_CPPAD_NAMESPACE
 File that defines CppAD numeric_limits for AD types
 */
 
-/// Default value for all undefined numeric_limits types
+/// All tthese defaults correspond to errors
 template <class Float>
 class numeric_limits {
 public:
@@ -175,6 +186,8 @@ public:
 		);
 		return Float(0);
 	}
+	/// number of decimal digits
+	static const int digits10 = -1;
 };
 
 /// Partial specialization that defines limits for for all AD types
@@ -190,9 +203,11 @@ public:
 	/// maximum finite value
 	static AD<Base> max(void)
 	{	return AD<Base>( numeric_limits<Base>::max() ); }
-	/// note a number
+	/// not a number
 	static AD<Base> quiet_NaN(void)
 	{	return AD<Base>( numeric_limits<Base>::quiet_NaN() ); }
+	/// number of decimal digits
+	static const int digits10 = numeric_limits<Base>::digits10;
 };
 
 } // END_CPPAD_NAMESPACE
