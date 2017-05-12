@@ -9,25 +9,19 @@ A copy of this license is included in the COPYING file of this distribution.
 Please visit http://www.coin-or.org/CppAD/ for information on other licenses.
 -------------------------------------------------------------------------- */
 
-$begin Appendix$$
+$begin License$$
 $spell
+	CppAD
 $$
 
-$section Appendix$$
+$section Your License for the CppAD Software$$
 
-$childtable%
-	omh/appendix/faq.omh%
-	omh/appendix/theory/theory.omh%
-	omh/appendix/glossary.omh%
-	omh/appendix/bib.omh%
-	omh/appendix/wish_list.omh%
-	omh/appendix/whats_new/whats_new.omh%
-	omh/appendix/deprecated/deprecated.omh%
-	compare_c/CMakeLists.txt%
-	omh/appendix/numeric_ad.omh%
-	omh/appendix/addon.omh%
-	omh/appendix/license.omh
-%$$
+$pre
+
+$$
+
+$fixed
+$verbatim%epl-v10.txt%$$
+$$
 
 $end
-

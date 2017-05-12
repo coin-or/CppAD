@@ -1,0 +1,69 @@
+// BEGIN SHORT COPYRIGHT
+/* --------------------------------------------------------------------------
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-17 Bradley M. Bell
+
+CppAD is distributed under multiple licenses. This distribution is under
+the terms of the
+                    Eclipse Public License Version 1.0.
+
+A copy of this license is included in the COPYING file of this distribution.
+Please visit http://www.coin-or.org/CppAD/ for information on other licenses.
+-------------------------------------------------------------------------- */
+// END SHORT COPYRIGHT
+
+$begin exp_reverse$$
+$spell
+	Taylor
+	exp
+	expm
+$$
+
+$section Exponential Function Reverse Mode Theory$$
+$mindex exp expm1$$
+
+We use the reverse theory
+$cref%standard math function
+	%ReverseTheory
+	%Standard Math Functions
+%$$
+definition for the functions $latex H$$ and $latex G$$.
+The zero order forward mode formula for the
+$cref/exponential/exp_forward/$$ is
+$latex \[
+	z^{(0)}  =  F ( x^{(0)} )
+\] $$
+and for $latex j > 0$$,
+$latex \[
+	z^{(j)}  = x^{(j)} d^{(0)}
+		+ \frac{1}{j} \sum_{k=1}^{j} k x^{(k)} z^{(j-k)}
+\] $$
+where
+$latex \[
+d^{(0)} = \left\{ \begin{array}{ll}
+	0 & \R{if} \; F(x) = \R{exp}(x)
+	\\
+	1 & \R{if} \; F(x) = \R{expm1}(x)
+\end{array} \right.
+\] $$
+For order $latex j = 0, 1, \ldots$$ we note that
+$latex \[
+\begin{array}{rcl}
+\D{H}{ x^{(j)} }
+& = & \D{G}{ x^{(j)} }  + \D{G}{ z^{(j)} } \D{ z^{(j)} }{ x^{(j)} }
+\\
+& = & \D{G}{ x^{(j)} }  + \D{G}{ z^{(j)} } ( d^{(0)} + z^{(0)} )
+\end{array}
+\] $$
+
+If $latex j > 0$$, then for $latex k = 1 , \ldots , j$$
+$latex \[
+\begin{array}{rcl}
+\D{H}{ x^{(k)} } & = &
+\D{G}{ x^{(k)} }  + \D{G}{ z^{(j)} } \frac{1}{j}  k z^{(j-k)}
+\\
+\D{H}{ z^{(j-k)} } & = &
+\D{G}{ z^{(j-k)} }  + \D{G}{ z^{(j)} } \frac{1}{j}  k x^{(k)}
+\end{array}
+\] $$
+
+$end

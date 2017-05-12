@@ -1,6 +1,5 @@
-// $Id$
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-16 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-17 Bradley M. Bell
 
 CppAD is distributed under multiple licenses. This distribution is under
 the terms of the
@@ -39,7 +38,7 @@ where the matrix is positive definite; i.e.,
 $latex x_0 > 0$$, $latex x_2 > 0$$ and
 $latex x_0 x_2 - x_1 x_1 > 0$$.
 
-$childtable%omh/theory/cholesky.omh
+$childtable%omh/appendix/theory/cholesky.omh
 	%cppad/example/eigen_cholesky.hpp
 %$$
 

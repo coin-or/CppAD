@@ -1,7 +1,6 @@
 #! /bin/bash -e
-# $Id$
 # -----------------------------------------------------------------------------
-# CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-16 Bradley M. Bell
+# CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-17 Bradley M. Bell
 #
 # CppAD is distributed under multiple licenses. This distribution is under
 # the terms of the
@@ -40,7 +39,7 @@ fi
 top_srcdir=`pwd`
 # ----------------------------------------------------------------------------
 this_license=`\
-	grep '$verbatim%' omh/license.omh | sed -e 's|$verbatim%\(...\).*|\1|'`
+	grep '$verbatim%' omh/appendix/license.omh | sed -e 's|$verbatim%\(...\).*|\1|'`
 if [ "$this_license" == 'epl' ]
 then
 	remove_list='gpl-3.0.txt bin/gpl_license.sh'
@@ -48,7 +47,7 @@ elif [ "$this_license" == 'gpl' ]
 then
 	remove_list='epl-v10.txt epl-v10.html bin/gpl_license.sh'
 else
-	echo 'bin/package.sh: cannot find license in omh/license.omh'
+	echo 'bin/package.sh: cannot find license in omh/appendix/license.omh'
 	exit 1
 fi
 # ----------------------------------------------------------------------------

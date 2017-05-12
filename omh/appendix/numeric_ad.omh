@@ -9,25 +9,22 @@ A copy of this license is included in the COPYING file of this distribution.
 Please visit http://www.coin-or.org/CppAD/ for information on other licenses.
 -------------------------------------------------------------------------- */
 
-$begin Appendix$$
+$begin numeric_ad$$
 $spell
+	CppAD
+	namespace
+	alloc
 $$
 
-$section Appendix$$
+
+$section Some Numerical AD Utilities$$
+The routines listed below are numerical utilities that are
+designed to work with CppAD in particular.
 
 $childtable%
-	omh/appendix/faq.omh%
-	omh/appendix/theory/theory.omh%
-	omh/appendix/glossary.omh%
-	omh/appendix/bib.omh%
-	omh/appendix/wish_list.omh%
-	omh/appendix/whats_new/whats_new.omh%
-	omh/appendix/deprecated/deprecated.omh%
-	compare_c/CMakeLists.txt%
-	omh/appendix/numeric_ad.omh%
-	omh/appendix/addon.omh%
-	omh/appendix/license.omh
+	cppad/core/bender_quad.hpp%
+	cppad/core/opt_val_hes.hpp%
+	cppad/core/lu_ratio.hpp
 %$$
 
 $end
-

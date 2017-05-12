@@ -1,7 +1,6 @@
 #! /bin/bash -e
-# $Id$
 # -----------------------------------------------------------------------------
-# CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-15 Bradley M. Bell
+# CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-17 Bradley M. Bell
 #
 # CppAD is distributed under multiple licenses. This distribution is under
 # the terms of the
@@ -159,7 +158,7 @@ cp $start_dir/gpl-3.0.txt $archive_name/gpl-3.0.txt
 list="
 	makefile.am
 	makefile.in
-	omh/license.omh
+	omh/appendix/license.omh
 "
 for file in $list
 do

@@ -1,7 +1,6 @@
 #! /bin/bash -e
-# $Id$
 # -----------------------------------------------------------------------------
-# CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-16 Bradley M. Bell
+# CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-17 Bradley M. Bell
 #
 # CppAD is distributed under multiple licenses. This distribution is under
 # the terms of the
@@ -33,7 +32,7 @@ bin/package.sh
 cppad/core/cond_exp.hpp
 introduction/exp_apx/exp_2.omh
 introduction/exp_apx/exp_eps.omh
-omh/license.omh
+omh/appendix/license.omh
 bin/batch_edit.sh
 '
 # -----------------------------------------------------------------------------

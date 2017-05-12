@@ -1,0 +1,65 @@
+/* --------------------------------------------------------------------------
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-17 Bradley M. Bell
+
+CppAD is distributed under multiple licenses. This distribution is under
+the terms of the
+                    Eclipse Public License Version 1.0.
+
+A copy of this license is included in the COPYING file of this distribution.
+Please visit http://www.coin-or.org/CppAD/ for information on other licenses.
+-------------------------------------------------------------------------- */
+
+$begin whats_new$$
+$spell
+	CppAD
+	Eigen
+	std
+	namespace
+$$
+
+$section Changes and Additions to CppAD$$
+
+$head Introduction$$
+The sections listed below contain a list of the changes to CppAD
+in reverse order by date.
+The purpose of these sections is to
+assist you in learning about changes between various versions of CppAD.
+
+$children%
+	omh/appendix/whats_new/whats_new_17.omh%
+	omh/appendix/whats_new/whats_new_16.omh%
+	omh/appendix/whats_new/whats_new_15.omh%
+	omh/appendix/whats_new/whats_new_14.omh%
+	omh/appendix/whats_new/whats_new_13.omh%
+	omh/appendix/whats_new/whats_new_12.omh%
+	omh/appendix/whats_new/whats_new_11.omh%
+	omh/appendix/whats_new/whats_new_10.omh%
+	omh/appendix/whats_new/whats_new_09.omh%
+	omh/appendix/whats_new/whats_new_08.omh%
+	omh/appendix/whats_new/whats_new_07.omh%
+	omh/appendix/whats_new/whats_new_06.omh%
+	omh/appendix/whats_new/whats_new_05.omh%
+	omh/appendix/whats_new/whats_new_04.omh%
+	omh/appendix/whats_new/whats_new_03.omh
+%$$
+
+$head This Year$$
+$cref whats_new_17$$
+
+$head Previous Years$$
+$cref whats_new_16$$
+$cref whats_new_15$$
+$cref whats_new_14$$
+$cref whats_new_13$$
+$cref whats_new_12$$
+$cref whats_new_11$$,
+$cref whats_new_10$$,
+$cref whats_new_09$$,
+$cref whats_new_08$$,
+$cref whats_new_07$$,
+$cref whats_new_06$$,
+$cref whats_new_05$$,
+$cref whats_new_04$$,
+$cref whats_new_03$$.
+
+$end
