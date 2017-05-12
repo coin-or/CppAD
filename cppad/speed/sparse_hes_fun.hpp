@@ -1,9 +1,8 @@
-// $Id$
 # ifndef CPPAD_SPEED_SPARSE_HES_FUN_HPP
 # define CPPAD_SPEED_SPARSE_HES_FUN_HPP
 
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-16 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-17 Bradley M. Bell
 
 CppAD is distributed under multiple licenses. This distribution is under
 the terms of the
@@ -61,9 +60,6 @@ The template function $code sparse_hes_fun$$
 is defined in the $code CppAD$$ namespace by including
 the file $code cppad/speed/sparse_hes_fun.hpp$$
 (relative to the CppAD distribution directory).
-It is only intended for example and testing purposes,
-so it is not automatically included by
-$cref/cppad.hpp/cppad/$$.
 
 $head Float$$
 The type $icode Float$$ must be a $cref NumericType$$.

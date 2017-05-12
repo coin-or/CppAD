@@ -28,9 +28,17 @@ $spell
 	valgrind
 	uninitialised
 	deallocations
+	sacado
 $$
 
 $section Changes and Additions to CppAD During 2017$$
+
+$head 05-12$$
+Remove includes of $code cppad/cppad.hpp$$ from the
+$codei%cppad/speed/%*%.hpp%$$ files.
+This avoids an incompatibility between sacado and new versions of eigen,
+when eigen is used for the
+$cref/test vector/testvector/Eigen Vectors/$$.
 
 $head 04-08$$
 The $cref/optimization/optimize/$$, with a large number of

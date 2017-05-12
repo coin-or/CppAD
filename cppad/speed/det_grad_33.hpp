@@ -1,9 +1,8 @@
-// $Id$
 # ifndef CPPAD_SPEED_DET_GRAD_33_HPP
 # define CPPAD_SPEED_DET_GRAD_33_HPP
 
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-16 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-17 Bradley M. Bell
 
 CppAD is distributed under multiple licenses. This distribution is under
 the terms of the
@@ -18,10 +17,10 @@ $spell
 	cppad
 	CppAD
 	det
-	cppad.hpp
 	namespace
 	const
 	bool
+	hpp
 $$
 
 $section Check Gradient of Determinant of 3 by 3 matrix$$
@@ -42,9 +41,6 @@ The template function $code det_grad_33$$ is defined in the $code CppAD$$
 namespace by including
 the file $code cppad/speed/det_grad_33.hpp$$
 (relative to the CppAD distribution directory).
-It is only intended for example and testing purposes,
-so it is not automatically included by
-$cref/cppad.hpp/cppad/$$.
 
 $head x$$
 The argument $icode x$$ has prototype

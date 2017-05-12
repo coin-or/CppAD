@@ -1,9 +1,8 @@
-// $Id$
 # ifndef CPPAD_SPEED_DET_OF_MINOR_HPP
 # define CPPAD_SPEED_DET_OF_MINOR_HPP
 
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-16 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-17 Bradley M. Bell
 
 CppAD is distributed under multiple licenses. This distribution is under
 the terms of the
@@ -16,12 +15,12 @@ Please visit http://www.coin-or.org/CppAD/ for information on other licenses.
 $begin det_of_minor$$
 $spell
 	CppAD
-	cppad.hpp
 	hpp
 	std
 	Det
 	const
 	namespace
+	cppad
 $$
 
 
@@ -39,9 +38,6 @@ The template function $code det_of_minor$$ is defined in the $code CppAD$$
 namespace by including
 the file $code cppad/speed/det_of_minor.hpp$$
 (relative to the CppAD distribution directory).
-It is only intended for example and testing purposes,
-so it is not automatically included by
-$cref/cppad.hpp/cppad/$$.
 
 $head Purpose$$
 This template function
@@ -215,6 +211,9 @@ $end
 ---------------------------------------------------------------------------
 */
 // BEGIN C++
+# include <vector>
+# include <cstddef>
+
 namespace CppAD { // BEGIN CppAD namespace
 template <class Scalar>
 Scalar det_of_minor(

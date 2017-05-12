@@ -1,9 +1,8 @@
-// $Id$
 # ifndef CPPAD_SPEED_UNIFORM_01_HPP
 # define CPPAD_SPEED_UNIFORM_01_HPP
 
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-16 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-17 Bradley M. Bell
 
 CppAD is distributed under multiple licenses. This distribution is under
 the terms of the
@@ -16,8 +15,9 @@ Please visit http://www.coin-or.org/CppAD/ for information on other licenses.
 $begin uniform_01$$
 $spell
 	CppAD
-	cppad.hpp
 	namespace
+	cppad
+	hpp
 $$
 
 $section Simulate a [0,1] Uniform Random Variate$$
@@ -39,9 +39,6 @@ The template function $code uniform_01$$ is defined in the $code CppAD$$
 namespace by including
 the file $code cppad/speed/uniform_01.hpp$$
 (relative to the CppAD distribution directory).
-It is only intended for example and testing purposes,
-so it is not automatically included by
-$cref/cppad.hpp/cppad/$$.
 
 $head seed$$
 The argument $icode seed$$ has prototype

@@ -1,9 +1,8 @@
-// $Id$
 # ifndef CPPAD_SPEED_MAT_SUM_SQ_HPP
 # define CPPAD_SPEED_MAT_SUM_SQ_HPP
 
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-16 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-17 Bradley M. Bell
 
 CppAD is distributed under multiple licenses. This distribution is under
 the terms of the
@@ -20,7 +19,8 @@ $spell
 	const
 	CppAD
 	sq
-	cppad.hpp
+	cppad
+	hpp
 $$
 
 $section Sum Elements of a Matrix Times Itself$$
@@ -48,9 +48,6 @@ The template function $code mat_sum_sq$$ is defined in the $code CppAD$$
 namespace by including
 the file $code cppad/speed/mat_sum_sq.hpp$$
 (relative to the CppAD distribution directory).
-It is only intended for example and testing purposes,
-so it is not automatically included by
-$cref/cppad.hpp/cppad/$$.
 
 $head n$$
 This argument has prototype

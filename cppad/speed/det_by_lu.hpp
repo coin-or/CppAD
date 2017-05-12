@@ -43,9 +43,6 @@ The template class $code det_by_lu$$ is defined in the $code CppAD$$
 namespace by including
 the file $code cppad/speed/det_by_lu.hpp$$
 (relative to the CppAD distribution directory).
-It is only intended for example and testing purposes,
-so it is not automatically included by
-$cref/cppad.hpp/cppad/$$.
 
 $head Constructor$$
 The syntax

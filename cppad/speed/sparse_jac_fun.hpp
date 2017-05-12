@@ -55,9 +55,6 @@ The template function $code sparse_jac_fun$$
 is defined in the $code CppAD$$ namespace by including
 the file $code cppad/speed/sparse_jac_fun.hpp$$
 (relative to the CppAD distribution directory).
-It is only intended for example and testing purposes,
-so it is not automatically included by
-$cref/cppad.hpp/cppad/$$.
 
 $head Float$$
 The type $icode Float$$ must be a $cref NumericType$$.

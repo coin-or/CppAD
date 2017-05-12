@@ -1,9 +1,8 @@
-// $Id$
 # ifndef CPPAD_SPEED_ODE_EVALUATE_HPP
 # define CPPAD_SPEED_ODE_EVALUATE_HPP
 
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-16 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-17 Bradley M. Bell
 
 CppAD is distributed under multiple licenses. This distribution is under
 the terms of the
@@ -60,9 +59,6 @@ The template function $code ode_evaluate$$
 is defined in the $code CppAD$$ namespace by including
 the file $code cppad/speed/ode_evaluate.hpp$$
 (relative to the CppAD distribution directory).
-It is only intended for example and testing purposes,
-so it is not automatically included by
-$cref/cppad.hpp/cppad/$$.
 
 $head Float$$
 

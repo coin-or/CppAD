@@ -17,10 +17,10 @@ $spell
 	cppad
 	CppAD
 	det
-	cppad.hpp
 	namespace
 	const
 	bool
+	hpp
 $$
 
 $section Check Determinant of 3 by 3 matrix$$
@@ -41,9 +41,6 @@ The template function $code det_33$$ is defined in the $code CppAD$$
 namespace by including
 the file $code cppad/speed/det_33.hpp$$
 (relative to the CppAD distribution directory).
-It is only intended for example and testing purposes,
-so it is not automatically included by
-$cref/cppad.hpp/cppad/$$.
 
 $head x$$
 The argument $icode x$$ has prototype

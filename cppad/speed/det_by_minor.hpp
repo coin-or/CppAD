@@ -1,9 +1,8 @@
-// $Id$
 # ifndef CPPAD_SPEED_DET_BY_MINOR_HPP
 # define CPPAD_SPEED_DET_BY_MINOR_HPP
 
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-16 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-17 Bradley M. Bell
 
 CppAD is distributed under multiple licenses. This distribution is under
 the terms of the
@@ -41,9 +40,6 @@ The template class $code det_by_minor$$ is defined in the $code CppAD$$
 namespace by including
 the file $code cppad/speed/det_by_minor.hpp$$
 (relative to the CppAD distribution directory).
-It is only intended for example and testing purposes,
-so it is not automatically included by
-$cref/cppad.hpp/cppad/$$.
 
 $head Constructor$$
 The syntax
@@ -124,8 +120,8 @@ $end
 ---------------------------------------------------------------------------
 */
 // BEGIN C++
-# include <cppad/cppad.hpp>
 # include <cppad/speed/det_of_minor.hpp>
+# include <vector>
 
 // BEGIN CppAD namespace
 namespace CppAD {
