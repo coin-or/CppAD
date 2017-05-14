@@ -170,7 +170,7 @@ then
 fi
 # -----------------------------------------------------------------------------
 # make sure that autotools version of makfiles is up to current version
-echo_eval "./build.sh automake"
+echo_eval "bin/autotools.sh automake"
 list=`git status -s`
 if [ "$list" != '' ]
 then

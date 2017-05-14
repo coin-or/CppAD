@@ -25,9 +25,9 @@ SACADO_DIR=$HOME/prefix/sacado
 # version type is one of "trunk" or "stable"
 version_type="stable"
 # -----------------------------------------------------------------------------
-if [ $0 != "./build.sh" ]
+if [ $0 != "bin/autotools.sh" ]
 then
-	echo "./build.sh: must be executed in the directory that contians it"
+	echo "bin/autotools.sh: must be executed in the directory that contians it"
 	exit 1
 fi
 if [ "$2" != "" ]
@@ -45,8 +45,8 @@ then
      for option in $*
      do
 		echo "=============================================================="
-		echo "begin: ./build.sh $option"
-          ./build.sh $option
+		echo "begin: bin/autotools.sh $option"
+          bin/autotools.sh $option
      done
 	echo "=============================================================="
      exit 0
@@ -84,7 +84,7 @@ then
 	echo 'bin/version.sh check'
 	bin/version.sh check
 	#
-	echo "OK: ./build.sh version"
+	echo "OK: bin/autotools.sh version"
 	exit 0
 fi
 # -----------------------------------------------------------------------------
@@ -162,7 +162,7 @@ then
 		fi
 	done
 	#
-	echo "OK: ./build.sh automake"
+	echo "OK: bin/autotools.sh automake"
 	exit 0
 fi
 # -----------------------------------------------------------------------------
@@ -238,7 +238,7 @@ EOF
 		cp $file ../$file
 	done
 	#
-	echo "OK: ./build.sh configure"
+	echo "OK: bin/autotools.sh configure"
 	exit 0
 fi
 # -----------------------------------------------------------------------------
@@ -328,7 +328,7 @@ then
 	echo "mv cppad-$version.tar.gz cppad-$version.epl.tgz"
 	      mv cppad-$version.tar.gz cppad-$version.epl.tgz
 	#
-	echo "OK: ./build.sh dist"
+	echo "OK: bin/autotools.sh dist"
 	exit 0
 fi
 # -----------------------------------------------------------------------------
@@ -339,7 +339,7 @@ then
 		'This comment is used to remove the table below'
 	then
 		echo "doc.omh is missing a table."
-		echo "Try re-running build.sh configure."
+		echo "Try re-running bin/autotools.sh configure."
 	fi
 	for flag in "printable" ""
 	do
@@ -352,7 +352,7 @@ then
 		done
 	done
 	#
-	echo "OK: ./build.sh omhelp"
+	echo "OK: bin/autotools.sh omhelp"
 	exit 0
 fi
 # -----------------------------------------------------------------------------
@@ -361,7 +361,7 @@ then
 	echo "bin/run_doxygen.sh"
 	bin/run_doxygen.sh
 	#
-	echo "OK: ./build.sh doxygen"
+	echo "OK: bin/autotools.sh doxygen"
 	exit 0
 fi
 # -----------------------------------------------------------------------------
@@ -371,7 +371,7 @@ then
 	echo "bin/gpl_license.sh cppad-$version build build"
 	bin/gpl_license.sh cppad-$version build build
 	#
-	echo "OK: ./build.sh gpl"
+	echo "OK: bin/autotools.sh gpl"
 	exit 0
 fi
 # -----------------------------------------------------------------------------
@@ -389,7 +389,7 @@ then
 	echo "cp *.log doc"
 	cp *.log doc
 	#
-	echo "OK: ./build.sh copy2doc"
+	echo "OK: bin/autotools.sh copy2doc"
 	exit 0
 fi
 # -----------------------------------------------------------------------------
@@ -407,12 +407,12 @@ then
 	"
 	if [ "$version_type" != "trunk" ]
 	then
-		# only use the help built during the build.sh dist command
+		# only use the help built during the bin/autotools.sh dist command
 		list=`echo $list | sed -e 's|omhelp||'`
 	fi
-	echo "./build.sh $list"
-	./build.sh $list
-	echo "OK: ./build.sh all"
+	echo "bin/autotools.sh $list"
+	bin/autotools.sh $list
+	echo "OK: bin/autotools.sh all"
 	exit 0
 fi
 # -----------------------------------------------------------------------------
@@ -455,11 +455,11 @@ then
 	      cd cppad-$version
 	#
 	# build_test_only configuration
-	echo "sed -i -e 's|^#_build_test_only:||' build.sh"
-	sed -i -e 's|^#_build_test_only:||' build.sh
+	echo "sed -i -e 's|^#_build_test_only:||' bin/autotools.sh"
+	sed -i -e 's|^#_build_test_only:||' bin/autotools.sh
 	#
-	echo "./build.sh configure >> $log_file"
-	      ./build.sh configure >> $log_dir/$log_file
+	echo "bin/autotools.sh configure >> $log_file"
+	      bin/autotools.sh configure >> $log_dir/$log_file
 	#
 	# test user documentation
 	echo "bin/run_omhelp.sh xml  >> $log_file"
@@ -467,8 +467,8 @@ then
 	#
 	# Developer documentation no longer works for auto-tools install
 	# test developer documentation
-	# echo "./build.sh doxygen   >> $log_file"
-	#      ./build.sh doxygen   >> $log_dir/$log_file
+	# echo "bin/autotools.sh doxygen   >> $log_file"
+	#      bin/autotools.sh doxygen   >> $log_dir/$log_file
 	#
 	# ----------------------------------------------------------------------
 	# Things to do in the build/disribution/build directory
@@ -542,11 +542,11 @@ EOF
 	#
 	echo "No errors or warnings found; see build_test.log."
 	#
-	echo "OK: ./build.sh test"
+	echo "OK: bin/autotools.sh test"
 	exit 0
 fi
 # -----------------------------------------------------------------------------
-# report build.sh usage error
+# report bin/autotools.sh usage error
 if [ "$1" != "" ]
 then
      echo "$1 is not a valid option"
@@ -559,7 +559,7 @@ else
 	all_cases="run all the options above in order with exception of omhelp"
 fi
 cat << EOF
-usage: ./build.sh option_1 option_2 ...
+usage: bin/autotools.sh option_1 option_2 ...
 
 options                                                             requires
 -------                                                             --------

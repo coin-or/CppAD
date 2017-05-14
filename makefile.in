@@ -200,8 +200,8 @@ DIST_SUBDIRS = cppad_ipopt/src example/ipopt_solve cppad_ipopt/example \
 am__DIST_COMMON = $(srcdir)/makefile.in \
 	$(top_srcdir)/cppad/configure.hpp.in \
 	$(top_srcdir)/pkgconfig/cppad-uninstalled.pc.in \
-	$(top_srcdir)/pkgconfig/cppad.pc.in COPYING NEWS ar-lib \
-	compile config.guess config.sub depcomp install-sh missing
+	$(top_srcdir)/pkgconfig/cppad.pc.in COPYING ar-lib compile \
+	config.guess config.sub depcomp install-sh missing
 DISTFILES = $(DIST_COMMON) $(DIST_SOURCES) $(TEXINFOS) $(EXTRA_DIST)
 distdir = $(PACKAGE)-$(VERSION)
 top_distdir = $(distdir)
@@ -743,7 +743,7 @@ SUBDIRS = \
 # note that bin/gpl_license.sh is deleted by dist-hook
 EXTRA_DIST = \
 	bin \
-	build.sh \
+	bin/autotools.sh \
 	doc.omh \
 	doc \
 	epl-v10.txt \

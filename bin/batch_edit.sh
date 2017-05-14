@@ -10,20 +10,16 @@
 # Please visit http://www.coin-or.org/CppAD/ for information on other licenses.
 # -----------------------------------------------------------------------------
 revert_list='
+	omh/appendix/whats_new/whats_new_07.omh
 '
 move_list='
-	cppad/local/optimize/cskip_info.hpp
+	build.sh
 '
-move_sed='s|cskip_info|cexp_info|'
+move_sed='s|build.sh|bin/autotools.sh|'
 #
 cat << EOF > junk.sed
-s|cskip_info|cexp_info|g
-s|CSKIP_INFO|CEXP_INFO|g
-s|num_cskip|num_cexp|g
-s|conditional cskip information|conditional expression information|
-s|conditional skip information|conditional expression information|
-s|cexp_info>&|& |
-s|cexp_info \( *\),|cexp_info  \1,|
+s|./build.sh|bin/autotools.sh|g
+s|build.sh|bin/autotools.sh|g
 EOF
 # -----------------------------------------------------------------------------
 if [ $0 != "bin/batch_edit.sh" ]

@@ -1,7 +1,7 @@
 #! /bin/bash -e
 # $Id$
 # -----------------------------------------------------------------------------
-# CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-11 Bradley M. Bell
+# CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-17 Bradley M. Bell
 #
 # CppAD is distributed under multiple licenses. This distribution is under
 # the terms of the
@@ -34,10 +34,10 @@ svn checkout $repository/$branch svn_dist
 echo "cd svn_dist"
 cd svn_dist
 #
-echo "./build.sh configure"
-if ! ./build.sh configure
+echo "bin/autotools.sh configure"
+if ! bin/autotools.sh configure
 then
-	echo "$script: error durring ./build.sh configure in ./svn_dist"
+	echo "$script: error durring bin/autotools.sh configure in ./svn_dist"
 	exit 1
 fi
 #
@@ -61,4 +61,4 @@ fi
 echo "cat test.log >> svn_dist.log"
 cat test.log >> $log_dir/svn_dist.log
 #
-echo "OK: $script, results are in svn_dist.log" 
+echo "OK: $script, results are in svn_dist.log"
