@@ -9,17 +9,20 @@
 # A copy of this license is included in the COPYING file of this distribution.
 # Please visit http://www.coin-or.org/CppAD/ for information on other licenses.
 # -----------------------------------------------------------------------------
+spell_list='
+	autotools
+'
 revert_list='
-	omh/appendix/whats_new/whats_new_07.omh
 '
 move_list='
-	build.sh
+	omh/install/auto_tools.omh
 '
-move_sed='s|build.sh|bin/autotools.sh|'
+move_sed='s|auto_tools|autotools|'
 #
 cat << EOF > junk.sed
-s|./build.sh|bin/autotools.sh|g
-s|build.sh|bin/autotools.sh|g
+s|auto_tools|autotools|g
+s|auto-tools|autotools|g
+s|Auto Tools|Autotools|g
 EOF
 # -----------------------------------------------------------------------------
 if [ $0 != "bin/batch_edit.sh" ]
@@ -48,6 +51,7 @@ list_all=`bin/ls_files.sh | sed \
 	-e '/^makefile.in$/d' \
 	-e '/\/makefile.in$/d' \
 	-e '/^missing$/d'`
+edit_list=''
 for file in $list_all
 do
 	if [ "$file" != 'bin/batch_edit.sh' ]
@@ -56,6 +60,7 @@ do
 		if ! diff $file junk.$$ > /dev/null
 		then
 			echo_eval sed -f junk.sed  -i $file
+			edit_list="$edit_list $file"
 		fi
 	fi
 done
@@ -63,6 +68,28 @@ if [ -e junk.$$ ]
 then
 	rm junk.$$
 fi
+# ----------------------------------------------------------------------------
+for word in $spell_list
+do
+#
+cat << EOF > junk.sed
+/\$spell\$/! b skip
+:loop
+/\$\\\$/b check
+N
+b loop
+#
+: check
+/$word/b skip
+s/\$spell/&\\n\\t$word/
+#
+: skip
+EOF
+	for file in $edit_list
+	do
+		echo_eval sed -f junk.sed -i $file
+	done
+done
 # ----------------------------------------------------------------------------
 for old in $move_list
 do

@@ -70,7 +70,7 @@ There was a problem with this automation
 when $code eigen$$ was used for the cppad $cref testvector$$.
 This has been fixed.
 $lnext
-There was a problem with deprecated $cref auto_tools$$
+There was a problem with deprecated $cref autotools$$
 (created when optional implicit constructor from any type was added).
 This has been fixed by adding the
 $code --with-implicit_ctor$$ option
@@ -161,7 +161,7 @@ This required adding the
 $cref/dependency/RevSparseJac/dependency/$$ argument to the
 reverse Jacobian sparsity pattern calculation.
 $lnext
-Fix the deprecated autotools install (see $cref auto_tools$$)
+Fix the deprecated autotools install (see $cref autotools$$)
 which was broken by the changes on 10-22.
 To be specific, the
 example for $cref number_skip$$ was not being included.

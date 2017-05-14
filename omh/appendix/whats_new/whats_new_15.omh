@@ -12,6 +12,7 @@ Please visit http://www.coin-or.org/CppAD/ for information on other licenses.
 $begin whats_new_15$$
 $dollar @$$
 $spell
+	autotools
 	addon
 	runge
 	lcppad
@@ -116,10 +117,10 @@ includes; e.g., $code <cppad/utility/vector.hpp>$$.
 $lend
 
 $head 12-01$$
-Fix problem with $cref auto_tools$$ install handling of the
+Fix problem with $cref autotools$$ install handling of the
 deprecated files.
-This included changing the auto-tools
-$code --with-implicit_ctor$$ option to $cref auto_tools$$.
+This included changing the autotools
+$code --with-implicit_ctor$$ option to $cref autotools$$.
 This was removed on
 $cref/2017-02-10/whats_new_17/02-10/$$.
 
@@ -252,7 +253,7 @@ $lnext
 The documentation for some of the $cref deprecated$$ features
 was missing the date when they were deprecated.
 This has been fixed; e.g., see
-$cref/Deprecated 2012-12-26/auto_tools/Deprecated 2012-12-26/$$.
+$cref/Deprecated 2012-12-26/autotools/Deprecated 2012-12-26/$$.
 $lend
 
 
@@ -482,7 +483,7 @@ $lnext
 The source code control for CppAD has a link to $code compile$$,
 instead of real file.
 This sometimes caused problems with the
-deprecated $cref auto_tools$$ install procedure and has been fixed.
+deprecated $cref autotools$$ install procedure and has been fixed.
 $lend
 
 $head 08-16$$
@@ -832,7 +833,7 @@ $codei%
 This has been fixed.
 
 $head 01-21$$
-The deprecated $cref auto_tools$$ procedure had a bug in the
+The deprecated $cref autotools$$ procedure had a bug in the
 detection of when the size of an $code unsigned int$$
 was the same as the size of a $code size_t$$. This has been fixed.
 

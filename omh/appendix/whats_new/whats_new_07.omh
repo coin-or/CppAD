@@ -11,6 +11,7 @@ Please visit http://www.coin-or.org/CppAD/ for information on other licenses.
 
 $begin whats_new_07$$
 $spell
+	autotools
 	mul
 	cxx
 	omh
@@ -79,7 +80,7 @@ $head 12-25$$
 The $cref install$$ instructions have been improved.
 
 $head 12-21$$
-The $cref/--with-Documentation/auto_tools/--with-Documentation/$$
+The $cref/--with-Documentation/autotools/--with-Documentation/$$
 option on the $code configure$$ command line caused an error on some
 systems because it attempted to copy to many files.
 This has been fixed by copying the directory instead of the individual files.
@@ -103,7 +104,7 @@ $code cppad.spec$$.
 
 $head 12-02$$
 Add the $codei%DESTDIR=%directory%$$ option on the
-$cref/make install/auto_tools/make install/$$ command line.
+$cref/make install/autotools/make install/$$ command line.
 
 $head 11-29$$
 The $cref unary_standard_math$$ function $code sqrt$$ did not link properly
@@ -178,7 +179,7 @@ This has been fixed.
 $pre
 
 $$
-The $cref/unix install/auto_tools/$$ procedure has been modified
+The $cref/unix install/autotools/$$ procedure has been modified
 so that the one configure flag
 $code --with-Speed$$
 builds all the possible executables related to the speed testing.
@@ -189,7 +190,7 @@ Improve the $cref speed_main$$ documentation and output
 $pre
 
 $$
-The subversion copy of the $cref/configure/auto_tools/Configure/$$ script
+The subversion copy of the $cref/configure/autotools/Configure/$$ script
 was not executable.
 This has been fixed.
 
@@ -252,7 +253,7 @@ $pre
 
 $$
 The installation was broken on some systems because the
-$cref/configure/auto_tools/Configure/$$ command tried to run
+$cref/configure/autotools/Configure/$$ command tried to run
 the $code autoconf$$ and $code automake$$ programs.
 This has been fixed by adding
 $code AM_MAINTAINER_MODE$$ to the $code autoconf$$ input file.
@@ -264,7 +265,7 @@ $code subversion$$
 methods to include a full installation and old versions.
 
 $head 10-23$$
-The $cref/cxx_flags/auto_tools/cxx_flags/$$ environment variable
+The $cref/cxx_flags/autotools/cxx_flags/$$ environment variable
 has been changed from $code CPP_ERROR_WARN$$ to $code CXX_FLAGS$$.
 $pre
 
@@ -302,7 +303,7 @@ $$
 The $icode postfix_dir$$ option
 was removed on $cref/2006-12-05/whats_new_06/12-05/$$ but
 it was not removed from the
-$cref/configure/auto_tools/Configure/$$
+$cref/configure/autotools/Configure/$$
 documentation.
 This has been fixed.
 $pre
@@ -335,7 +336,7 @@ $pre
 $$
 Add $code ADOLC_DIR$$, $code FADBAD_DIR$$, $code SACADO_DIR$$,
 and $code BOOST_DIR$$
-to the $cref/configure/auto_tools/Configure/$$ help string.
+to the $cref/configure/autotools/Configure/$$ help string.
 
 
 $head 10-16$$
@@ -539,7 +540,7 @@ The $cref get_started.cpp$$
 example did not build when
 the $code --with-Introduction$$ and
 $code BOOST_DIR$$ options were included on the
-$cref/configure/auto_tools/Configure/$$ command line.
+$cref/configure/autotools/Configure/$$ command line.
 In fact, some of the $cref speed$$ tests also had compilation errors
 when $code BOOST_DIR$$ was include in the configure command.
 This has been fixed.
@@ -947,7 +948,7 @@ This has been fixed.
 
 $head 02-02$$
 Fix minor errors and improve
-$cref/profiling/auto_tools/Profiling CppAD/$$ documentation.
+$cref/profiling/autotools/Profiling CppAD/$$ documentation.
 Also change the problem sizes used for the $cref speed$$ tests.
 
 $head 02-01$$

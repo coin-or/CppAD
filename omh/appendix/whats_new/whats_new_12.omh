@@ -12,6 +12,7 @@ Please visit http://www.coin-or.org/CppAD/ for information on other licenses.
 $begin whats_new_12$$
 $dollar @$$
 $spell
+	autotools
 	plugin
 	checkpointing
 	Jacobians
@@ -131,7 +132,7 @@ $head 12-26$$
 In $code branches/ipopt_solve$$:
 $list number$$
 Convert documentation most all documentation references from
-the deprecated $cref auto_tools$$ instructions to the new $cref cmake$$
+the deprecated $cref autotools$$ instructions to the new $cref cmake$$
 instructions.
 $lnext
 Include the $cref Introduction$$ programs in the
@@ -202,11 +203,11 @@ $lend
 
 $head 12-14$$
 $list number$$
-Fix the old $cref auto_tools$$ so that it works with the
+Fix the old $cref autotools$$ so that it works with the
 new $code cppad.pc$$.
 $lnext
 Fix the old installation
-$cref/--with-Documentation/auto_tools/--with-Documentation/$$ option
+$cref/--with-Documentation/autotools/--with-Documentation/$$ option
 (it was attempting to copy from the wrong directory).
 $lend
 
@@ -278,7 +279,7 @@ $lend
 $head 11-17$$
 $list number$$
 Finish documenting the new $cref cmake$$ configuration instructions
-and deprecate the old $cref/unix/auto_tools/$$ instructions.
+and deprecate the old $cref/unix/autotools/$$ instructions.
 $lnext
 Change the specifications for
 $cref/CPPAD_MAX_NUM_THREADS/multi_thread/CPPAD_MAX_NUM_THREADS/$$
@@ -302,7 +303,7 @@ $cref cmake$$ configuration procedure during installation.
 This included factoring out the
 $cref download$$ procedure as a separate section
 so that the same download instruction also apply to the
-$cref/unix/auto_tools/$$ install procedure.
+$cref/unix/autotools/$$ install procedure.
 
 $lnext
 Changed
@@ -352,13 +353,13 @@ $cref/CondExpOp/base_alloc.hpp/CondExpOp/$$ function.
 This has been fixed and the comments for this example have been improved.
 
 $head 10-31$$
-The CppAD $cref/profiling/auto_tools/Profiling CppAD/$$ was not compiling
+The CppAD $cref/profiling/autotools/Profiling CppAD/$$ was not compiling
 the $code speed/src/*.cpp$$ files with the profiling flag.
 This has been changes
 (only for the profiling speed test).
 
 $head 10-30$$
-The $cref/fadbad_dir/auto_tools/fadbad_dir/$$ directory install instructions
+The $cref/fadbad_dir/autotools/fadbad_dir/$$ directory install instructions
 were changed.
 To be specific, $code FADBAD++$$ was changed to $code include/FADBAD++$$.
 This makes it more like the other optional packages.
@@ -466,7 +467,7 @@ $lend
 
 $head 07-07$$
 Add the $code CPPAD_TAPE_ID_TYPE$$ argument to the
-$cref/configure/auto_tools/Configure/$$ command line.
+$cref/configure/autotools/Configure/$$ command line.
 
 $head 07-05$$
 Deprecate $cref/CPPAD_TEST_VECTOR/test_vector/$$ and use
@@ -480,7 +481,7 @@ Replace the requirement that the $cref SimpleVector$$
 $cref/size/SimpleVector/Size/$$ function return a $code size_t$$ value to
 the requirement that it can be converted to a $code size_t$$ value.
 $lnext
-The $cref/--with-eigenvector/auto_tools/Configure/$$ option was
+The $cref/--with-eigenvector/autotools/Configure/$$ option was
 added to the $code configure$$ command line.
 $lend
 
@@ -542,7 +543,7 @@ linear algebra package.
 $head 06-15$$
 Include the $cref base_adolc.hpp$$ as
 $code <cppad/example/base_adolc.hpp>$$ under the
-$cref/prefix_dir/auto_tools/prefix_dir/$$ directory.
+$cref/prefix_dir/autotools/prefix_dir/$$ directory.
 
 $head 06-12$$
 Increase the size and of the
@@ -703,7 +704,7 @@ $lend
 
 
 $head 04-19$$
-The $cref/BOOST_DIR/auto_tools/boost_dir/$$
+The $cref/BOOST_DIR/autotools/boost_dir/$$
 configure command line value has been changed to be the corresponding
 prefix during the installation of boost.
 To be specific, it used to be that
@@ -726,9 +727,9 @@ $cref/multi_threading/multi_thread/$$.
 
 $head 04-10$$
 Add control of the
-$cref/max_num_threads/auto_tools/max_num_threads/$$ argument
+$cref/max_num_threads/autotools/max_num_threads/$$ argument
 to the unix
-$cref/configure/auto_tools/Configure/$$ command.
+$cref/configure/autotools/Configure/$$ command.
 
 $head 04-06$$
 $list number$$
@@ -757,7 +758,7 @@ Fixed a race condition when using CppAD with
 $cref/multi-threading/multi_thread/$$.
 This has been fixed and the error message below no longer occurs.
 Suppose that you ran the CppAD
-$cref/configure/auto_tools/Configure/$$ command in the $code work$$
+$cref/configure/autotools/Configure/$$ command in the $code work$$
 directory.
 If you then edited the file $code work/multi_thread/makefile$$
 and changed
@@ -857,7 +858,7 @@ $cref simple_ad_bthread.cpp$$
 and $cref simple_ad_pthread.cpp$$.
 $lnext
 Fix bug in finding boost multi-threading library
-(due to fact that $cref/boost_dir/auto_tools/boost_dir/$$
+(due to fact that $cref/boost_dir/autotools/boost_dir/$$
 is not the prefix during the boost installation).
 $lend
 
@@ -915,12 +916,12 @@ $lend
 $head 01-30$$
 Make another attempt to fix linking with boost threads where the wrong
 version of the library is in the system include directory; i.e.,
-to have $cref/boost_dir/auto_tools/boost_dir/$$ override the default
+to have $cref/boost_dir/autotools/boost_dir/$$ override the default
 library.
 
 $head 01-27$$
 There were some problems with
-$cref/configure's/auto_tools/Configure/$$ automatic detection of
+$cref/configure's/autotools/Configure/$$ automatic detection of
 the boost multi-threading library.
 These have been fixed.
 
@@ -972,7 +973,7 @@ $lend
 
 $head 01-16$$
 The test program $code multi_thread/test.sh$$ failed if the
-$cref/openmp_flags/auto_tools/openmp_flags/$$ not present in the
+$cref/openmp_flags/autotools/openmp_flags/$$ not present in the
 $code configure$$ command.
 This has been fixed.
 In addition, this $code test.sh$$ has been made faster by cycling through
@@ -981,7 +982,7 @@ test.
 
 $head 01-15$$
 Fix $code make test$$ so it works when
-$cref/configure/auto_tools/Configure/$$ is run in the distribution directory
+$cref/configure/autotools/Configure/$$ is run in the distribution directory
 $codei%cppad-%yyyymmdd%$$
 (not just when it is run in a different directory).
 

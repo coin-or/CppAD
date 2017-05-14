@@ -40,13 +40,14 @@ $section Changes and Additions to CppAD During 2017$$
 
 $head 05-14$$
 $list number$$
-The file $code build.sh$$ was moved to $code bin/autotools.sh$$.
+The file $code build.sh$$ was moved to $code bin/autotools.sh$$,
+and `auto tools' has been changed to $cref autotools$$.
 $lnext
 The README file was replace by readme.md
 and AUTHORS was moved to authors.
 $lnext
 The NEWS, INSALL, and ChangeLog files
-are no longer necessary for auto_tools build and have been removed.
+are no longer necessary for autotools build and have been removed.
 $lnext
 The file test_more/sparse_jacobian.cpp generated a warning
 under some gcc compiler options.
@@ -220,7 +221,7 @@ The subset of deprecated features corresponding to
 $cref/cppad_deprecated=YES/cmake/cppad_deprecated/YES/$$
 have been completely removed.
 $lnext
-Fix problems with $cref auto_tools$$ build
+Fix problems with $cref autotools$$ build
 (started near 02-01 while working on sparsity branch).
 $lnext
 Reorder (better organize) the $cref ADFun$$ documentation section.

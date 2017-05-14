@@ -10,6 +10,7 @@ Please visit http://www.coin-or.org/CppAD/ for information on other licenses.
 -------------------------------------------------------------------------- */
 $begin include_deprecated$$
 $spell
+	autotools
 	sudo
 	mv
 	Rosen
@@ -62,9 +63,9 @@ $codei%
 	sudo ln -s cppad CppAD
 %$$
 where
-$cref/prefix_dir/auto_tools/prefix_dir/$$
+$cref/prefix_dir/autotools/prefix_dir/$$
 is the prefix directory corresponding to your
-$cref/Unix installation/auto_tools/$$.
+$cref/Unix installation/autotools/$$.
 This will link form the deprecated commands
 to the commands that should be used:
 

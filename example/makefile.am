@@ -48,7 +48,7 @@ EIGEN_LIB           =
 EIGEN_FLAGS         =
 endif
 # -------------------------------------------------------------------------
-# auto-tools does not support use of colpack
+# autotools does not support use of colpack
 EXTRA_DIST        =  \
 	$(ADOLC_EXTRA_FILES) \
 	$(EIGEN_EXTRA_FILES)

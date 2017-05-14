@@ -1,5 +1,4 @@
 #! /bin/bash -e
-# $Id$
 # -----------------------------------------------------------------------------
 # CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-17 Bradley M. Bell
 #
@@ -175,7 +174,7 @@ list=`git status -s`
 if [ "$list" != '' ]
 then
 	echo "new_release.sh: 'git status -s' is not empty"
-	echo 'stable branch auto-tools install not up to current version'
+	echo 'stable branch autotools install not up to current version'
 	echo 'commit the local changes.'
 	exit 1
 fi

@@ -12,6 +12,7 @@ Please visit http://www.coin-or.org/CppAD/ for information on other licenses.
 $begin whats_new_14$$
 $dollar @$$
 $spell
+	autotools
 	cstdint
 	addr
 	omhelp
@@ -133,7 +134,7 @@ This has been fixed.
 
 $head 12-17$$
 Fix some compiler warnings and $cref speed$$ program names
-when using the deprecated $cref/auto-tools/auto_tools/$$ install procedure.
+when using the deprecated $cref/autotools/autotools/$$ install procedure.
 
 $head 12-16$$
 If the $code c++11$$ include file $code <cstdint>$$
@@ -157,7 +158,7 @@ $cref/create_array/ta_create_array/Alignment/$$ specifications
 and
 $cref/thread_alloc example/thread_alloc.cpp/$$.
 $lnext
-Advance the deprecated $cref/unix install/auto_tools/$$ utilities to
+Advance the deprecated $cref/unix install/autotools/$$ utilities to
 autoconf-2.69 and automake-1.13.4.
 $lend
 
@@ -221,7 +222,7 @@ $lend
 
 $head 05-23$$
 The $cref speed$$ test instructions were converted from using
-the old auto-tools $cref/unix install/auto_tools/$$ instructions
+the old autotools $cref/unix install/autotools/$$ instructions
 to use the $cref cmake$$ install instructions.
 These instructions should work on any system, not just unix.
 

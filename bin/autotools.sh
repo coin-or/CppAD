@@ -9,7 +9,7 @@
 # A copy of this license is included in the COPYING file of this distribution.
 # Please visit http://www.coin-or.org/CppAD/ for information on other licenses.
 # -----------------------------------------------------------------------------
-# build script for use with auto-tools install
+# build script for use with autotools install
 # -----------------------------------------------------------------------------
 # prefix directories for the corresponding packages
 #
@@ -465,7 +465,7 @@ then
 	echo "bin/run_omhelp.sh xml  >> $log_file"
 	      bin/run_omhelp.sh xml  >> $log_dir/$log_file
 	#
-	# Developer documentation no longer works for auto-tools install
+	# Developer documentation no longer works for autotools install
 	# test developer documentation
 	# echo "bin/autotools.sh doxygen   >> $log_file"
 	#      bin/autotools.sh doxygen   >> $log_dir/$log_file

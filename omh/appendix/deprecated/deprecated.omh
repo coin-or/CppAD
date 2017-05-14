@@ -10,6 +10,7 @@ Please visit http://www.coin-or.org/CppAD/ for information on other licenses.
 -------------------------------------------------------------------------- */
 $begin deprecated$$
 $spell
+	autotools
 	CppAD
 	Bool
 	jac
@@ -40,7 +41,7 @@ $rnext
 $cref/CppADCreateDiscrete/Discrete/CppADCreateDiscrete Deprecated 2007-07-28/$$  $cnext
 	$title Discrete$$
 $rnext
-$cref auto_tools$$   $cnext $title auto_tools$$
+$cref autotools$$   $cnext $title autotools$$
 $rnext
 $cref/nan(zero)/nan/nan(zero)/$$ $cnext $codei%nan(%zero%)%$$
 $tend

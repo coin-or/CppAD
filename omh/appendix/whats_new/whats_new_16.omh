@@ -11,6 +11,7 @@ Please visit http://www.coin-or.org/CppAD/ for information on other licenses.
 
 $begin whats_new_16$$
 $spell
+	autotools
 	alloc
 	hpp
 	valgrind
@@ -299,7 +300,7 @@ $lend
 
 $head 03-23$$
 $list number$$
-Fix bug in auto-tools file $code example/atomic/makefile.am$$
+Fix bug in autotools file $code example/atomic/makefile.am$$
 (introduced on 03-22).
 $lnext
 Improve the $cref atomic_eigen_mat_mul.cpp$$ example
@@ -401,7 +402,7 @@ $cref atomic_set_sparsity.cpp$$.
 
 $head 02-27$$
 The $code --with-sparse_set$$ and $code --with-sparse_set$$ options
-were removed from the $cref auto_tools$$ install procedure.
+were removed from the $cref autotools$$ install procedure.
 
 $head 02-26$$
 The condition that the operation sequence in $icode f$$ is

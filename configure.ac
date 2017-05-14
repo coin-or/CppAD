@@ -11,7 +11,7 @@ dnl ---------------------------------------------------------------------------
 dnl
 dnl Process this file with autoconf to produce a configure script.
 dnl   package   version              bug-report
-AC_INIT([cppad], [20170513], [cppad@list.coin-or.org])
+AC_INIT([cppad], [20170514], [cppad@list.coin-or.org])
 AM_SILENT_RULES([yes])
 
 dnl By defalut disable maintainer mode when running configure;
@@ -477,14 +477,14 @@ fi
 dnl test_one.sh.in settings for cppad_cxx_flags (no longer used ?)
 AC_SUBST(cppad_cxx_flags, "-g -O0")
 
-dnl auto-tools version does not colpack
+dnl autotools version does not colpack
 AC_SUBST(cppad_has_colpack, 0)
 
-dnl auto-tools version will assumes mkstemp is available.
+dnl autotools version will assumes mkstemp is available.
 AC_SUBST(cppad_has_mkstemp, 1)
 AC_SUBST(cppad_has_tmpnam_s, 0)
 
-dnl auto-tools version cannot use c++11 compiler
+dnl autotools version cannot use c++11 compiler
 dnl so supress corresponding features
 AC_SUBST(cppad_has_nullptr, 0)
 AC_SUBST(cppad_has_rvalue, 0)

@@ -11,6 +11,7 @@ Please visit http://www.coin-or.org/CppAD/ for information on other licenses.
 
 $begin whats_new_06$$
 $spell
+	autotools
 	speedtest
 	apx
 	exp_eps
@@ -199,7 +200,7 @@ $cref|speed/cppad|speed_cppad|$$
 	$cnext CppAD drivers for the template functions  $rnext
 $cref|speed/fadbad|speed_fadbad|$$
 	$cnext Fadbad drivers for the template functions $rnext
-$cref|speed/profile|auto_tools|Profiling CppAD|$$
+$cref|speed/profile|autotools|Profiling CppAD|$$
 	$cnext profiling version of CppAD drivers
 $tend
 
@@ -270,7 +271,7 @@ This has been fixed.
 
 $head 12-05$$
 Add the unix installation
-$cref/--with-Documentation/auto_tools/--with-Documentation/$$ option
+$cref/--with-Documentation/autotools/--with-Documentation/$$ option
 and remove the
 $icode postfix_dir$$ option.
 $pre
@@ -1182,7 +1183,7 @@ file $code cppad/local/CppADError.h$$).
 
 $head 01-02$$
 Add the sed script $code Speed/gprof.sed$$ to aid in the display of the
-$cref/profiling/auto_tools/Profiling CppAD/$$ output.
+$cref/profiling/autotools/Profiling CppAD/$$ output.
 $pre
 
 $$

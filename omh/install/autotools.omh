@@ -1,4 +1,3 @@
-$Id$
 /* --------------------------------------------------------------------------
 CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-17 Bradley M. Bell
 
@@ -10,10 +9,11 @@ A copy of this license is included in the COPYING file of this distribution.
 Please visit http://www.coin-or.org/CppAD/ for information on other licenses.
 -------------------------------------------------------------------------- */
 
-$begin auto_tools$$
+$begin autotools$$
 $escape $$
 $dollar ^$$
 $spell
+	autotools
 	ctor
 	testvector
 	Eigen
@@ -75,7 +75,7 @@ $spell
 $$
 
 
-$section Auto Tools Unix Test and Installation$$
+$section Autotools Unix Test and Installation$$
 $mindex speed profile prefix std vector boost eigen sparse internal sets ctor implicit explicit compile flags OpenMP postfix Adolc Fadbad Ipopt Sacado memory usage tape$$
 
 $head Deprecated 2012-12-26$$
@@ -229,7 +229,7 @@ $$
 $head prefix_dir$$
 The default value for prefix directory is $code ^HOME$$
 i.e., by default the CppAD include files
-will $cref/install/auto_tools/make install/$$ below $code ^HOME$$.
+will $cref/install/autotools/make install/$$ below $code ^HOME$$.
 If you want to install elsewhere, you will have to use this option.
 As an example of using the $codei%--prefix=%prefix_dir%$$ option,
 if you specify
@@ -240,7 +240,7 @@ the CppAD include files will be installed in the directory
 $codei%
 	/usr/local/include/cppad
 %$$
-If $cref/--with-Documentation/auto_tools/--with-Documentation/$$
+If $cref/--with-Documentation/autotools/--with-Documentation/$$
 is specified, the CppAD documentation files will be installed in the directory
 $codei%
 	/usr/local/share/doc/cppad-20121230
@@ -252,7 +252,7 @@ the CppAD documentation HTML and XML files are copied to the directory
 $codei%
 	%prefix_dir%/share/doc/%postfix_dir%/cppad-20121230
 %$$
-(see $cref/postfix_dir/auto_tools/postfix_dir/$$).
+(see $cref/postfix_dir/autotools/postfix_dir/$$).
 The top of the CppAD HTML documentation tree
 (with mathematics displayed as LaTex command) will be located at
 $codei%
@@ -281,9 +281,9 @@ $codei%
 	Eigen::matrix<%Scalar%, Eigen::Dynamic, 1>
 %$$
 See also,
-$cref/boost_dir/auto_tools/boost_dir/$$
+$cref/boost_dir/autotools/boost_dir/$$
 and
-$cref/eigen_dir/auto_tools/eigen_dir/$$.
+$cref/eigen_dir/autotools/eigen_dir/$$.
 
 $head max_num_threads$$
 this specifies the value for the default value for the preprocessor symbol
@@ -329,11 +329,11 @@ $codep
 	./configure --prefix=/usr/local POSTFIX_DIR=coin
 $$
 the CppAD include files will be
-$cref/installed/auto_tools/make install/$$ in the directory
+$cref/installed/autotools/make install/$$ in the directory
 $codei%
 	/usr/local/include/coin/cppad
 %$$
-If $cref/--with-Documentation/auto_tools/--with-Documentation/$$
+If $cref/--with-Documentation/autotools/--with-Documentation/$$
 is specified, the CppAD documentation files will be installed in the directory
 $codei%
 	/usr/local/share/doc/coin/cppad-20121230
@@ -344,7 +344,7 @@ If you have
 $href%https://projects.coin-or.org/ADOL-C%ADOL-C%$$
 installed on your system, you can
 specify a value for $icode adolc_dir$$ in the
-$cref/configure/auto_tools/Configure/$$ command line.
+$cref/configure/autotools/Configure/$$ command line.
 The value of $icode adolc_dir$$ must be such that
 $codei%
 	%adolc_dir%/include/adolc/adouble.h
@@ -404,7 +404,7 @@ $codei%
 %$$
 are present.
 In this case, these files will be used by CppAD.
-See also, $cref/--with-boostvector/auto_tools/--with-testvector/$$
+See also, $cref/--with-boostvector/autotools/--with-testvector/$$
 
 $head eigen_dir$$
 If you have
@@ -418,7 +418,7 @@ $codei%
 is a valid include file.
 In this case CppAD will compile and test the Eigen examples; e.g.,
 $cref eigen_array.cpp$$.
-See also, $cref/--with-eigenvector/auto_tools/--with-testvector/$$
+See also, $cref/--with-eigenvector/autotools/--with-testvector/$$
 
 $head fadbad_dir$$
 If you have
@@ -536,7 +536,7 @@ $codei%
 	std::numeric_limits<%tape_id_type%>::max()
 %$$
 must be larger than the maximum number of tapes per thread
-times $cref/max_num_threads/auto_tools/max_num_threads/$$.
+times $cref/max_num_threads/autotools/max_num_threads/$$.
 
 $head make install$$
 Once you are satisfied that the tests are giving correct results,
@@ -545,7 +545,7 @@ $codep
 	make install
 $$
 This will install CppAD in the location specified by
-$cref/prefix_dir/auto_tools/prefix_dir/$$.
+$cref/prefix_dir/autotools/prefix_dir/$$.
 You must have permission to write in the $icode prefix_dir$$
 directory to execute this command.
 You may optionally specify a destination directory for the install; i.e.,
