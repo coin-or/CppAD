@@ -1,9 +1,8 @@
-// $Id$
 # ifndef CPPAD_CORE_BASE_TO_STRING_HPP
 # define CPPAD_CORE_BASE_TO_STRING_HPP
 
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-16 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-17 Bradley M. Bell
 
 CppAD is distributed under multiple licenses. This distribution is under
 the terms of the
@@ -50,9 +49,7 @@ $srccode%cpp% */
 template <> struct to_string_struct<Base>\
 {	std::string operator()(const Base& value) \
 	{	std::stringstream os;\
-		Base epsilon    = CppAD::numeric_limits<Base>::epsilon();\
-		Base log10      = CppAD::log( epsilon ) / CppAD::log(Base(10.));\
-		size_t n_digits = 1 - Integer( log10 );\
+		int n_digits = CppAD::numeric_limits<Base>::digits10; \
 		os << std::setprecision(n_digits);\
 		os << value;\
 		return os.str();\

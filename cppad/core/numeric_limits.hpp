@@ -33,7 +33,7 @@ $icode%max% = numeric_limits<%Float%>::max()
 %$$
 $icode%nan% = numeric_limits<%Float%>::quiet_NaN()
 %$$
-$codei numeric_limits<%Float%>::digits10$$
+$codei%numeric_limits<%Float%>::digits10%$$
 
 $head CppAD::numeric_limits$$
 These functions and have the prototype
