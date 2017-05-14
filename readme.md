@@ -1,25 +1,24 @@
 # CppAD: A Package for Differentiation of C++ Algorithms
 
--
-[Homepage](http://www.coin-or.org/CppAD/)
+## Links
 
--
-[News](https://www.coin-or.org/CppAD/Doc/whats_new.htm)
+- [Homepage](http://www.coin-or.org/CppAD/)
 
--
-[Versions](http://www.coin-or.org/CppAD/Doc/download.htm)
+- [News](https://www.coin-or.org/CppAD/Doc/whats_new.htm)
 
--
-[Install](https://www.coin-or.org/CppAD/Doc/install.htm)
+- [Versions](http://www.coin-or.org/CppAD/Doc/download.htm)
 
--
-[Documentation](https://www.coin-or.org/CppAD/Doc/cppad.htm)
+- [Install](https://www.coin-or.org/CppAD/Doc/install.htm)
+
+- [Web Documentation](https://www.coin-or.org/CppAD/Doc/cppad.htm)
+
+- [Coin-OR Download](https://www.coin-or.org/download/source/CppAD/)
 
 
 ## Tarballs
 CppAD is available from Coin-OR with both the EPL and GPL licenses; see
 the versions link above. There is a separate tarball on the
-[Coin-OR download page](https://www.coin-or.org/download/source/CppAD/)
+Coin-OR download page
 for each version and each license.
 
 ## Documentation
