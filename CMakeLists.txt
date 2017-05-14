@@ -55,7 +55,7 @@ INCLUDE(cmake/add_to_list.cmake)
 # command_line_arg(variable default type description)
 INCLUDE(cmake/command_line_arg.cmake)
 #
-# optional_package(prefix_variable description)
+# optional_package(package description)
 INCLUDE(cmake/optional_package.cmake)
 #
 # add_cppad_cxx_flags(target_name)
@@ -132,25 +132,25 @@ command_line_arg(cppad_profile_flag NOTFOUND STRING
 SET(system_include FALSE)
 #
 # adolc_prefix
-optional_package(adolc_prefix ${system_include} "adolc install prefix")
+optional_package(adolc ${system_include} "adolc install prefix")
 #
 # colpack_prefix
-optional_package(colpack_prefix ${system_include} "colpack install prefix")
+optional_package(colpack ${system_include} "colpack install prefix")
 #
 # ipopt_prefix
-optional_package(ipopt_prefix ${system_include} "ipopt install prefix")
+optional_package(ipopt ${system_include} "ipopt install prefix")
 #
 # sacado_prefix
-optional_package(sacado_prefix ${system_include} "sacado install prefix")
+optional_package(sacado ${system_include} "sacado install prefix")
 # -----------------------------------------------------------------------------
 # External package prefixes without  warnings
 SET(system_include TRUE)
 #
 # eigen_prefix
-optional_package(eigen_prefix ${system_include} "eigen install prefix")
+optional_package(eigen ${system_include} "eigen install prefix")
 #
 # fadbad_prefix
-optional_package(fadbad_prefix ${system_include} "fadbad install prefix")
+optional_package(fadbad ${system_include} "fadbad install prefix")
 # -----------------------------------------------------------------------------
 # cppad_has_colpack, colpack_libs, cppad_lib
 #
