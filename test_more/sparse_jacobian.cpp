@@ -570,7 +570,7 @@ bool sparse_list_bug(void)
 	typedef CppAD::vector < std::set<size_t> > sparsity;
 	//
 	size_t n = 4;
-	vector<AD<double>> ay(n), ax(n);
+	vector< AD<double> > ay(n), ax(n);
 	for(size_t i = 0; i < n; ++i)
 		ax[i] = 1.0;
 	//
@@ -587,13 +587,13 @@ bool sparse_list_bug(void)
 		CppAD::atomic_base<double>::set_sparsity_enum
 	);
 	//
-	vector <AD<double>> au(n);
+	vector < AD<double> > au(n);
 	for (size_t j = 0; j < n; j++)
 		au[j] = 1.0;
 	//
 	// version of function that uses atom_fun
 	CppAD::Independent(au);
-	vector<AD<double> > av(n);
+	vector< AD<double> > av(n);
 	atom_fun(au, ay);
 	for (size_t j = 0; j < n; j++) {
 		av[j] = ay[j] +  au[j];

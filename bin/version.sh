@@ -1,7 +1,7 @@
 #! /bin/bash -e
 # $Id$
 # -----------------------------------------------------------------------------
-# CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-16 Bradley M. Bell
+# CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-17 Bradley M. Bell
 #
 # CppAD is distributed under multiple licenses. This distribution is under
 # the terms of the
@@ -73,7 +73,7 @@ yyyy_mm_dd=`echo $version | sed \
 	-e 's|\(....\)\(..\)\(..\).*|\1-\2-\3|'`
 sed  \
 	-e "s/, [0-9]\{4\}-[0-9]\{2\}-[0-9]\{2\} *,/, $yyyy_mm_dd,/" \
-	-i.old AUTHORS
+	-i.old authors
 #
 sed  \
 	-e "s/(\[cppad\], *\[[0-9]\{8\}[.0-9]*\] *,/([cppad], [$version],/"  \
@@ -101,7 +101,7 @@ do
 done
 list="
 	$list
-	AUTHORS
+	authors
 	configure.ac
 	configure
 "

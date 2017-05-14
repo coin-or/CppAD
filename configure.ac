@@ -1,4 +1,4 @@
-dnl ---------------------------------------------------------------------------
+dnl --------------------------------------------------------------------------
 dnl CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-17 Bradley M. Bell
 dnl
 dnl CppAD is distributed under multiple licenses. This distribution is under
@@ -11,7 +11,7 @@ dnl ---------------------------------------------------------------------------
 dnl
 dnl Process this file with autoconf to produce a configure script.
 dnl   package   version              bug-report
-AC_INIT([cppad], [20170512], [cppad@list.coin-or.org])
+AC_INIT([cppad], [20170513], [cppad@list.coin-or.org])
 AM_SILENT_RULES([yes])
 
 dnl By defalut disable maintainer mode when running configure;
@@ -26,10 +26,13 @@ dnl cygwin end delete:
 dnl cygwin replace: AC_PREFIX_DEFAULT(/usr)
 
 dnl Run any macros required for proper operation of generated makefiles
-dnl nostdinc: Do not define standard include directories in generated makefiles
 dnl Note this must come before AC_PROG_CC; see
 dnl http://lists.gnu.org/archive/html/automake/2010-08/msg00113.html
-AM_INIT_AUTOMAKE([nostdinc subdir-objects -Wall])
+dnl
+dnl nostdinc: Do not define standard include directories in generated makefiles
+dnl subdir-objects: create objects in sub-directories, same structure source
+dnl foreign: not GNU standard; no NEWS, AUTHORS, ...
+AM_INIT_AUTOMAKE([nostdinc subdir-objects -Wall foreign])
 
 # check if we have ar program
 have_ar='yes'

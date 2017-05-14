@@ -1,6 +1,6 @@
 #! /bin/bash -e
 # -----------------------------------------------------------------------------
-# CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-16 Bradley M. Bell
+# CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-17 Bradley M. Bell
 #
 # CppAD is distributed under multiple licenses. This distribution is under
 # the terms of the
@@ -26,7 +26,7 @@ list=`git status | sed -n \
 				-e '/^.gitignore$/d' \
 				-e '/\/makefile.in$/d' \
 				-e '/bin\/check_svn_id.sh$/d' \
-				-e '/AUTHORS/d' \
+				-e '/authors/d' \
 				-e '/COPYING/d' |
                 sort -u`
 ok="yes"

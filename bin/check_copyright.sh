@@ -31,7 +31,8 @@ list=`git status | sed -n \
 				-e '/^.gitignore$/d' \
 				-e '/\/makefile.in$/d' \
 				-e '/\/check_copyright.sh$/d' \
-				-e '/AUTHORS/d' \
+				-e '/authors/d' \
+				-e '/readme.md/d' \
 				-e '/COPYING/d' |
                 sort -u`
 cat << EOF > check_copyright.1.$$

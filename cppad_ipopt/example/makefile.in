@@ -401,9 +401,9 @@ $(srcdir)/makefile.in: @MAINTAINER_MODE_TRUE@ $(srcdir)/makefile.am  $(am__confi
 	      exit 1;; \
 	  esac; \
 	done; \
-	echo ' cd $(top_srcdir) && $(AUTOMAKE) --gnu cppad_ipopt/example/makefile'; \
+	echo ' cd $(top_srcdir) && $(AUTOMAKE) --foreign cppad_ipopt/example/makefile'; \
 	$(am__cd) $(top_srcdir) && \
-	  $(AUTOMAKE) --gnu cppad_ipopt/example/makefile
+	  $(AUTOMAKE) --foreign cppad_ipopt/example/makefile
 makefile: $(srcdir)/makefile.in $(top_builddir)/config.status
 	@case '$?' in \
 	  *config.status*) \
