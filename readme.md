@@ -23,9 +23,9 @@ The deprecated autotools procedure can be used for this purpose,
 but it will eventually be removed.
 For any sub-directory *dir*,
 files of the form *dir*/`makefile.am` and *dir*/`makefile.in`
-are used to support this old install procedure.
+are used to support the autotools test and install procedure.
 In addition,
-the following files (in this directory) are also for this purpose:
+the following files, in this directory, are also for this purpose:
 `compile`,
 `config.guess`,
 `config.sub`,
