@@ -40,9 +40,6 @@ $section Changes and Additions to CppAD During 2017$$
 
 $head 05-14$$
 $list number$$
-Specifications were added so that $cref to_string$$ yields exact results
-for integer types and machine precision for floating point types.
-$lnext
 The file $code build.sh$$ was moved to $code bin/autotools.sh$$,
 and `auto tools' has been changed to $cref autotools$$.
 $lnext
@@ -55,6 +52,13 @@ $lnext
 The file test_more/sparse_jacobian.cpp generated a warning
 under some gcc compiler options.
 This has been fixed.
+$lnext
+Specifications were added so that $cref to_string$$ yields exact results
+for integer types and machine precision for floating point types.
+$lnext
+Some corrections and updating were done to the $cref autotools$$
+instructions. In particular, see
+$cref/configure.hpp/autotools/configure.hpp/$$.
 $lend
 
 $head 05-12$$

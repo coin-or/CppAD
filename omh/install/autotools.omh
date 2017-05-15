@@ -13,73 +13,52 @@ $begin autotools$$
 $escape $$
 $dollar ^$$
 $spell
-	autotools
-	ctor
-	testvector
-	Eigen
-	colpack
+	Autotools
+	CppAD
+	dist_dir
 	num
 	cxx
-	boostvector
-	inv
-	fopenmp
 	openmp
-	cout
-	Addr
-	sizeof
-	op_arg
-	err_retu
-	const
-	printf
-	avector.h
-	Ipopt
-	Ip
-	gzip
-	Linux
-	fi
-	exp_apx
-	tgz
-	gpl
-	Dev
-	sed
+	fadbad
+	ipopt
+	addr
+	hpp
+	adolc
+	eigen
+	sacado
+	cpp
 	cppad
 	gprof
-	config
+	sed
+	user
+	yyyymmdd
+	testvector
 	stdvector
+	boostvector
 	std
-	ublas
-	hpp
+	fopenmp
 	adouble
-	badiff
-	usr
-	cygdrive
-	htm
-	xml
-	Dir
-	xvzf
-	gz
-	workspace
-	Makefile
-	exe
+	colpack
+	Linux
 	Cygwin
-	Microsoft
-	dsw
-	CppAD
-	Adolc
-	Fadbad
-	Sacado
-	ls
-	aclocal
-	yum
-	devel
+	cygdrive
+	badiff
+	Ip
+	sizeof
+	op
+	arg
+	cpp
+	usr
+	htm
+	ublas
+	cp
 $$
 
 
 $section Autotools Unix Test and Installation$$
-$mindex speed profile prefix std vector boost eigen sparse internal sets ctor implicit explicit compile flags OpenMP postfix Adolc Fadbad Ipopt Sacado memory usage tape$$
 
 $head Deprecated 2012-12-26$$
-These install instructions have been deprecated and no improvements
+This install procedure has been deprecated and no improvements
 have been added since 2012.
 For example, this install procedure will not detect any of the
 $code c++11$$ extensions.
@@ -89,11 +68,13 @@ $head Distribution Directory$$
 You must first obtain a copy of the CppAD distribution directory
 using the $cref download$$ instructions.
 The install instructions below correspond to the
-$cref/current version/download/Current Version/$$
-which has distribution directory $code cppad-20121230$$.
+$cref/current version/download/Current Version/$$.
+We refer to the corresponding
+$cref/distribution directory/download/Distribution Directory/$$ as
+$icode dist_dir$$.
 
-$head Work Directory$$
-Create the directory $code cppad-20121230/build$$,
+$head Build Directory$$
+Create the directory $icode%dist_dir%/build%$$,
 which will be referred to as the build directory below.
 
 $head Configure$$
@@ -118,72 +99,33 @@ $codei%
 %$$
 where only the $code configure$$ line need appear; i.e.,
 the entries in all of the other lines are optional.
-The text in italic is replaced values that you choose;
-see discussion below.
+The text in italic above is replaced values that you choose
+(see discussion below).
+
+$head configure.hpp$$
+The $code configure$$ command will create the $code configure.hpp$$
+file in the wrong directory. You can move it using the following command
+in the build directory:
+$codei%
+	cp cppad/configure.hpp cp  ../cppad/configure.hpp
+%$$
 
 $head make$$
 CppAD has some object libraries that are used for its correctness tests.
 (Currently, none of these libraries get installed.)
-You can build these libraries by executing the command
+You can build these libraries by executing the following command in the
+build directory:
 $codei%
 	make
 %$$
-in the build directory.
 
 $subhead Examples and Tests$$
 Once you have executed the $code make$$ command,
 you can run the correctness and speed tests.
-$pre
-
-$$
-The following command will build all the correctness and speed tests.
-In addition, it will run all the correctness tests:
+The following command will build and run all the correctness and speed tests.
 $codep
 	make test
 $$
-$pre
-
-$$
-The following links describe how to build and run subsets of these tests:
-$table
-$cref/get_started/get_started.cpp/Running/$$
-	$cnext $title get_started.cpp$$
-$rnext
-$cref/exp_apx_main/exp_apx_main.cpp/Running Tests/$$
-	$cnext $title exp_apx_main.cpp$$
-$rnext
-$cref/example/example.cpp/Running Tests/$$
-	$cnext $title example.cpp$$
-$rnext
-$cref/print_for_cout/print_for_cout.cpp/Running/$$
-	$cnext $title print_for_cout.cpp$$
-$rnext
-$cref/speed_example/speed_example.cpp/Running Tests/$$
-	$cnext $title speed_example.cpp$$
-$rnext
-$cref/speed_double/speed_double/Running Tests/$$
-	$cnext $title speed_double$$
-$rnext
-$cref/speed_adolc/speed_adolc/Running Tests/$$
-	$cnext $title speed_adolc$$
-$rnext
-$cref/speed_cppad/speed_cppad/Running Tests/$$
-	$cnext $title speed_cppad$$
-$rnext
-$cref/speed_fadbad/speed_fadbad/Running Tests/$$
-	$cnext $title speed_fadbad$$
-$rnext
-$cref/speed_sacado/speed_sacado/Running Tests/$$
-	$cnext $title speed_sacado$$
-$tend
-In addition,
-you can run a large subset of correctness tests
-(that are not intended to be examples)
-by executing the following commands starting in the build directory:
-$codei%
-	cd test_more
-	make test
-%$$
 
 $head Profiling CppAD$$
 The CppAD derivative speed tests mentioned above can be profiled.
@@ -194,23 +136,17 @@ $codei%
 	make test
 %$$
 After executing $code make test$$, you can run a profile speed test
-by executing the command $code ./profile$$;
+by executing the command
+$codei%
+	./speed_profile %test% %seed% %option_list%
+%$$
 see $cref speed_main$$ for the meaning of the command line
-options to this program.
-$pre
-
-$$
+arguments to this program.
 After you have run a profiling speed test,
 you can then obtain the profiling results with
 $codei%
-	gprof -b profile
+	gprof -b speed_profile
 %$$
-If you are using a windows operating system with Cygwin or MinGW,
-you may have to replace $code profile$$ by $code profile.exe$$
-in the $code gprof$$ command above; i.e.,
-$codep
-	gprof -b profile.exe
-$$
 In C++, template parameters and argument types become part of a
 routines's name.
 This can make the $code gprof$$ output hard to read
@@ -218,12 +154,7 @@ This can make the $code gprof$$ output hard to read
 You can remove the template parameters and argument types from the
 routine names by executing the following command
 $codep
-	gprof -b profile | sed -f gprof.sed
-$$
-If you are using a windows operating system with Cygwin or MinGW,
-you would need to use
-$codep
-	gprof -b profile.exe | sed -f gprof.sed
+	gprof -b speed_profile | sed -f gprof.sed
 $$
 
 $head prefix_dir$$
@@ -243,25 +174,22 @@ $codei%
 If $cref/--with-Documentation/autotools/--with-Documentation/$$
 is specified, the CppAD documentation files will be installed in the directory
 $codei%
-	/usr/local/share/doc/cppad-20121230
+	/usr/local/share/doc/cppad-%yyyymmdd%
 %$$
+where $icode yyyymmdd$$ is the year, month, and day corresponding
+to the version of CppAD.
 
 $head --with-Documentation$$
 If the command line argument $code --with-Documentation$$ is specified,
 the CppAD documentation HTML and XML files are copied to the directory
 $codei%
-	%prefix_dir%/share/doc/%postfix_dir%/cppad-20121230
+	%prefix_dir%/share/doc/%postfix_dir%/cppad-%yyyymmdd%
 %$$
 (see $cref/postfix_dir/autotools/postfix_dir/$$).
 The top of the CppAD HTML documentation tree
 (with mathematics displayed as LaTex command) will be located at
 $codei%
-	%prefix_dir%/share/doc/%postfix_dir%/cppad-20121230/cppad.htm
-%$$
-and the top of the XML documentation tree
-(with mathematics displayed as MathML) will be located at
-$codei%
-	%prefix_dir%/share/doc/%postfix_dir%/cppad-20121230/cppad.xml
+	%prefix_dir%/share/doc/%postfix_dir%/cppad-%yyyymmdd%/cppad.htm
 %$$
 
 $head --with-testvector$$
@@ -336,7 +264,7 @@ $codei%
 If $cref/--with-Documentation/autotools/--with-Documentation/$$
 is specified, the CppAD documentation files will be installed in the directory
 $codei%
-	/usr/local/share/doc/coin/cppad-20121230
+	/usr/local/share/doc/coin/cppad-%yyyymmdd%
 %$$
 
 $head adolc_dir$$
