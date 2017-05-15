@@ -380,12 +380,18 @@ cppad_cppadvector = @cppad_cppadvector@
 cppad_cxx_flags = @cppad_cxx_flags@
 cppad_description = @cppad_description@
 cppad_eigenvector = @cppad_eigenvector@
+cppad_has_adolc = @cppad_has_adolc@
+cppad_has_boost = @cppad_has_boost@
 cppad_has_colpack = @cppad_has_colpack@
 cppad_has_cstdint_8_to_64 = @cppad_has_cstdint_8_to_64@
+cppad_has_eigen = @cppad_has_eigen@
+cppad_has_fadbad = @cppad_has_fadbad@
 cppad_has_gettimeofday = @cppad_has_gettimeofday@
+cppad_has_ipopt = @cppad_has_ipopt@
 cppad_has_mkstemp = @cppad_has_mkstemp@
 cppad_has_nullptr = @cppad_has_nullptr@
 cppad_has_rvalue = @cppad_has_rvalue@
+cppad_has_sacado = @cppad_has_sacado@
 cppad_has_steady_clock = @cppad_has_steady_clock@
 cppad_has_tmpnam_s = @cppad_has_tmpnam_s@
 cppad_max_num_threads = @cppad_max_num_threads@
@@ -447,7 +453,7 @@ top_srcdir = @top_srcdir@
 @CppAD_ADOLC_FALSE@ADOLC_LIB = 
 @CppAD_ADOLC_TRUE@ADOLC_LIB = -ladolc -lColPack -L$(ADOLC_DIR)/lib -L$(ADOLC_DIR)/lib64
 @CppAD_ADOLC_FALSE@ADOLC_FLAGS = 
-@CppAD_ADOLC_TRUE@ADOLC_FLAGS = -DCPPAD_ADOLC_TEST -I$(ADOLC_DIR)/include
+@CppAD_ADOLC_TRUE@ADOLC_FLAGS = -I$(ADOLC_DIR)/include
 @CppAD_IPOPT_FALSE@IPOPT_SRC_FILES = 
 # -------------------------------------------------------------------------
 @CppAD_IPOPT_TRUE@IPOPT_SRC_FILES = ipopt_solve.cpp
@@ -458,7 +464,7 @@ top_srcdir = @top_srcdir@
 @CppAD_IPOPT_TRUE@	$(CPPAD_IPOPT_LIBS) $(FCLIBS) $(PTHREAD_LIB) $(DL_LIB)
 
 @CppAD_IPOPT_FALSE@IPOPT_FLAGS = 
-@CppAD_IPOPT_TRUE@IPOPT_FLAGS = -DCPPAD_IPOPT_TEST -I$(IPOPT_DIR)/include
+@CppAD_IPOPT_TRUE@IPOPT_FLAGS = -I$(IPOPT_DIR)/include
 @CppAD_EIGEN_DIR_FALSE@EIGEN_EXTRA_FILES = cppad_eigen.cpp eigen_mat_inv.cpp
 # -------------------------------------------------------------------------
 # make a special library so can have it's own compile flags (see configure.ac)
@@ -470,7 +476,6 @@ top_srcdir = @top_srcdir@
 @CppAD_EIGEN_DIR_TRUE@libeigen_a_CXXFLAGS = \
 @CppAD_EIGEN_DIR_TRUE@	-g \
 @CppAD_EIGEN_DIR_TRUE@	$(CXX_FLAGS_EIGEN) \
-@CppAD_EIGEN_DIR_TRUE@	-DCPPAD_EIGEN_TEST \
 @CppAD_EIGEN_DIR_TRUE@	 -I$(EIGEN_DIR)/include
 
 # -------------------------------------------------------------------------

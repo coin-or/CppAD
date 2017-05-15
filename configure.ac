@@ -241,8 +241,10 @@ if test "$ADOLC_DIR" != "" ; then
 	if test "$have_ar" = "no"; then
 		AC_MSG_ERROR([ar is missing and ADOLC_DIR is present])
 	fi
+	AC_SUBST(cppad_has_adolc, 1)
 else
 	AC_MSG_RESULT([no])
+	AC_SUBST(cppad_has_adolc, 0)
 fi
 
 dnl The prefix corresponding to the installation of Eigen ---------------
@@ -254,9 +256,11 @@ AM_CONDITIONAL(CppAD_EIGEN_DIR, test "$EIGEN_DIR" != "")
 if test "$EIGEN_DIR" != "" ; then
 	AC_MSG_RESULT([$EIGEN_DIR])
 	AC_SUBST(EIGEN_INCLUDE, [-I$EIGEN_DIR/include])
+	AC_SUBST(cppad_has_eigen, 1)
 else
 	AC_MSG_RESULT([no])
 	AC_SUBST(EIGEN_INCLUDE, [])
+	AC_SUBST(cppad_has_eigen, 0)
 fi
 
 dnl The directory corresponding to the installation of FADBAD -----------
@@ -270,8 +274,10 @@ if test "$FADBAD_DIR" != "" ; then
 	if test "$have_ar" = "no"; then
 		AC_MSG_ERROR([ar is missing and FADBAD_DIR is present])
 	fi
+	AC_SUBST(cppad_has_fadbad, 1)
 else
 	AC_MSG_RESULT([no])
+	AC_SUBST(cppad_has_fadbad, 0)
 fi
 
 dnl The directory corresponding to the installation of SACADO -----------
@@ -285,8 +291,10 @@ if test "$SACADO_DIR" != "" ; then
 	if test "$have_ar" = "no"; then
 		AC_MSG_ERROR([ar is missing and SACADO_DIR is present])
 	fi
+	AC_SUBST(cppad_has_sacado, 1)
 else
 	AC_MSG_RESULT([no])
+	AC_SUBST(cppad_has_sacado, 0)
 fi
 
 dnl The directory corresponding to the installation of IPOPT -----------
@@ -300,8 +308,10 @@ if test "$IPOPT_DIR" != "" ; then
 	if test "$have_ar" = "no"; then
 		AC_MSG_ERROR([ar is missing and IPOPT_DIR is present])
 	fi
+	AC_SUBST(cppad_has_ipopt, 1)
 else
 	AC_MSG_RESULT([no])
+	AC_SUBST(cppad_has_ipopt, 0)
 fi
 
 dnl The directory corresponding to the installation of BOOST ------------
@@ -313,9 +323,11 @@ AM_CONDITIONAL(CppAD_BOOST_DIR, test "$BOOST_DIR" != "")
 if test "$BOOST_DIR" != "" ; then
 	AC_MSG_RESULT([$BOOST_DIR])
 	AC_SUBST(BOOST_INCLUDE, [-I$BOOST_DIR/include])
+	AC_SUBST(cppad_has_boost, 1)
 else
 	AC_MSG_RESULT([no])
 	AC_SUBST(BOOST_INCLUDE,[])
+	AC_SUBST(cppad_has_boost, 0)
 fi
 
 dnl The C++ compiler flags CXX_FLAGS -------------------------------------

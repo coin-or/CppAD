@@ -281,11 +281,11 @@ int main(void)
 	ok &= Run( Value,             "Value"            );
 	ok &= Run( Var2Par,           "Var2Par"          );
 	ok &= Run( vec_ad,            "vec_ad"           );
-# ifdef CPPAD_HAS_ADOLC
+# if CPPAD_HAS_ADOLC
 	ok &= Run( mul_level_adolc,      "mul_level_adolc"     );
 	ok &= Run( mul_level_adolc_ode,  "mul_level_adolc_ode" );
 # endif
-# ifdef CPPAD_HAS_EIGEN
+# if CPPAD_HAS_EIGEN
 	ok &= Run( eigen_array,       "eigen_array"      );
 	ok &= Run( eigen_det,         "eigen_det"        );
 # endif

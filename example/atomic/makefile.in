@@ -97,9 +97,17 @@ DIST_COMMON = $(srcdir)/makefile.am $(am__DIST_COMMON)
 mkinstalldirs = $(install_sh) -d
 CONFIG_CLEAN_FILES =
 CONFIG_CLEAN_VPATH_FILES =
-am_atomic_OBJECTS = atomic.$(OBJEXT) checkpoint.$(OBJEXT) \
-	eigen_cholesky.$(OBJEXT) eigen_mat_inv.$(OBJEXT) \
-	eigen_mat_mul.$(OBJEXT) extended_ode.$(OBJEXT) \
+am__atomic_SOURCES_DIST = eigen_cholesky.cpp eigen_mat_inv.cpp \
+	eigen_mat_mul.cpp atomic.cpp checkpoint.cpp extended_ode.cpp \
+	for_sparse_hes.cpp for_sparse_jac.cpp forward.cpp \
+	get_started.cpp mat_mul.cpp mul_level.cpp norm_sq.cpp ode.cpp \
+	reciprocal.cpp rev_sparse_hes.cpp rev_sparse_jac.cpp \
+	reverse.cpp set_sparsity.cpp tangent.cpp
+@CppAD_EIGEN_DIR_TRUE@am__objects_1 = eigen_cholesky.$(OBJEXT) \
+@CppAD_EIGEN_DIR_TRUE@	eigen_mat_inv.$(OBJEXT) \
+@CppAD_EIGEN_DIR_TRUE@	eigen_mat_mul.$(OBJEXT)
+am_atomic_OBJECTS = $(am__objects_1) atomic.$(OBJEXT) \
+	checkpoint.$(OBJEXT) extended_ode.$(OBJEXT) \
 	for_sparse_hes.$(OBJEXT) for_sparse_jac.$(OBJEXT) \
 	forward.$(OBJEXT) get_started.$(OBJEXT) mat_mul.$(OBJEXT) \
 	mul_level.$(OBJEXT) norm_sq.$(OBJEXT) ode.$(OBJEXT) \
@@ -138,7 +146,7 @@ am__v_CXXLD_ = $(am__v_CXXLD_@AM_DEFAULT_V@)
 am__v_CXXLD_0 = @echo "  CXXLD   " $@;
 am__v_CXXLD_1 = 
 SOURCES = $(atomic_SOURCES)
-DIST_SOURCES = $(atomic_SOURCES)
+DIST_SOURCES = $(am__atomic_SOURCES_DIST)
 am__can_run_installinfo = \
   case $$AM_UPDATE_INFO_DIR in \
     n|no|NO) false;; \
@@ -286,12 +294,18 @@ cppad_cppadvector = @cppad_cppadvector@
 cppad_cxx_flags = @cppad_cxx_flags@
 cppad_description = @cppad_description@
 cppad_eigenvector = @cppad_eigenvector@
+cppad_has_adolc = @cppad_has_adolc@
+cppad_has_boost = @cppad_has_boost@
 cppad_has_colpack = @cppad_has_colpack@
 cppad_has_cstdint_8_to_64 = @cppad_has_cstdint_8_to_64@
+cppad_has_eigen = @cppad_has_eigen@
+cppad_has_fadbad = @cppad_has_fadbad@
 cppad_has_gettimeofday = @cppad_has_gettimeofday@
+cppad_has_ipopt = @cppad_has_ipopt@
 cppad_has_mkstemp = @cppad_has_mkstemp@
 cppad_has_nullptr = @cppad_has_nullptr@
 cppad_has_rvalue = @cppad_has_rvalue@
+cppad_has_sacado = @cppad_has_sacado@
 cppad_has_steady_clock = @cppad_has_steady_clock@
 cppad_has_tmpnam_s = @cppad_has_tmpnam_s@
 cppad_max_num_threads = @cppad_max_num_threads@
@@ -341,6 +355,15 @@ target_alias = @target_alias@
 top_build_prefix = @top_build_prefix@
 top_builddir = @top_builddir@
 top_srcdir = @top_srcdir@
+@CppAD_EIGEN_DIR_FALSE@EIGEN_SRC_FILES = 
+#
+@CppAD_EIGEN_DIR_TRUE@EIGEN_SRC_FILES = eigen_cholesky.cpp eigen_mat_inv.cpp eigen_mat_mul.cpp
+@CppAD_EIGEN_DIR_TRUE@EIGEN_EXTRA_FILES = 
+@CppAD_EIGEN_DIR_FALSE@EIGEN_EXTEA_FILES = eigen_cholesky.cpp eigen_mat_inv.cpp eigen_mat_mul.cpp
+#
+EXTRA_DIST = \
+	$(EIGEN_EXTRA_FILES)
+
 #
 AM_CXXFLAGS = -g $(CXX_FLAGS)
 #
@@ -351,11 +374,9 @@ AM_CPPFLAGS = -I. \
 
 #
 atomic_SOURCES = \
+	$(EIGEN_SRC_FILES) \
 	atomic.cpp \
 	checkpoint.cpp \
-	eigen_cholesky.cpp \
-	eigen_mat_inv.cpp \
-	eigen_mat_mul.cpp \
 	extended_ode.cpp \
 	for_sparse_hes.cpp \
 	for_sparse_jac.cpp \

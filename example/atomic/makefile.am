@@ -1,6 +1,6 @@
 # $Id$
 # -----------------------------------------------------------------------------
-# CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-16 Bradley M. Bell
+# CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-17 Bradley M. Bell
 #
 # CppAD is distributed under multiple licenses. This distribution is under
 # the terms of the
@@ -14,6 +14,17 @@
 # CppAD pusts all it's preprocessor definitions in the cppad/configure.hpp
 DEFS          =
 #
+if CppAD_EIGEN_DIR
+EIGEN_SRC_FILES    =  eigen_cholesky.cpp eigen_mat_inv.cpp eigen_mat_mul.cpp
+EIGEN_EXTRA_FILES  =
+else
+EIGEN_EXTEA_FILES  =  eigen_cholesky.cpp eigen_mat_inv.cpp eigen_mat_mul.cpp
+EIGEN_SRC_FILES    =
+endif
+#
+EXTRA_DIST        =  \
+	$(EIGEN_EXTRA_FILES)
+#
 check_PROGRAMS    = atomic
 #
 AM_CXXFLAGS       = -g $(CXX_FLAGS)
@@ -24,11 +35,9 @@ AM_CPPFLAGS       = -I. \
 	$(EIGEN_INCLUDE)
 #
 atomic_SOURCES   = \
+	$(EIGEN_SRC_FILES) \
 	atomic.cpp \
 	checkpoint.cpp \
-	eigen_cholesky.cpp \
-	eigen_mat_inv.cpp \
-	eigen_mat_mul.cpp \
 	extended_ode.cpp \
 	for_sparse_hes.cpp \
 	for_sparse_jac.cpp \

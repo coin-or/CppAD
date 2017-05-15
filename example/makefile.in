@@ -377,12 +377,18 @@ cppad_cppadvector = @cppad_cppadvector@
 cppad_cxx_flags = @cppad_cxx_flags@
 cppad_description = @cppad_description@
 cppad_eigenvector = @cppad_eigenvector@
+cppad_has_adolc = @cppad_has_adolc@
+cppad_has_boost = @cppad_has_boost@
 cppad_has_colpack = @cppad_has_colpack@
 cppad_has_cstdint_8_to_64 = @cppad_has_cstdint_8_to_64@
+cppad_has_eigen = @cppad_has_eigen@
+cppad_has_fadbad = @cppad_has_fadbad@
 cppad_has_gettimeofday = @cppad_has_gettimeofday@
+cppad_has_ipopt = @cppad_has_ipopt@
 cppad_has_mkstemp = @cppad_has_mkstemp@
 cppad_has_nullptr = @cppad_has_nullptr@
 cppad_has_rvalue = @cppad_has_rvalue@
+cppad_has_sacado = @cppad_has_sacado@
 cppad_has_steady_clock = @cppad_has_steady_clock@
 cppad_has_tmpnam_s = @cppad_has_tmpnam_s@
 cppad_max_num_threads = @cppad_max_num_threads@
@@ -440,7 +446,7 @@ top_srcdir = @top_srcdir@
 @CppAD_ADOLC_FALSE@ADOLC_LIB = 
 @CppAD_ADOLC_TRUE@ADOLC_LIB = -ladolc -lColPack -L$(ADOLC_DIR)/lib -L$(ADOLC_DIR)/lib64
 @CppAD_ADOLC_FALSE@ADOLC_FLAGS = 
-@CppAD_ADOLC_TRUE@ADOLC_FLAGS = -DCPPAD_HAS_ADOLC -I$(ADOLC_DIR)/include
+@CppAD_ADOLC_TRUE@ADOLC_FLAGS = -I$(ADOLC_DIR)/include
 @CppAD_EIGEN_DIR_FALSE@@CppAD_HAVE_AR_TRUE@EIGEN_EXTRA_FILES = eigen_det.cpp eigen_array.cpp
 # -------------------------------------------------------------------------
 # make a special library so can have it's own compile flags (see configure.ac)
@@ -452,15 +458,14 @@ top_srcdir = @top_srcdir@
 @CppAD_EIGEN_DIR_TRUE@@CppAD_HAVE_AR_TRUE@EIGEN_LIB = -L. -leigen
 @CppAD_HAVE_AR_FALSE@EIGEN_LIB = 
 @CppAD_EIGEN_DIR_FALSE@@CppAD_HAVE_AR_TRUE@EIGEN_FLAGS = 
-@CppAD_EIGEN_DIR_TRUE@@CppAD_HAVE_AR_TRUE@EIGEN_FLAGS = -DCPPAD_HAS_EIGEN
+@CppAD_EIGEN_DIR_TRUE@@CppAD_HAVE_AR_TRUE@EIGEN_FLAGS = 
 @CppAD_HAVE_AR_FALSE@EIGEN_FLAGS = 
 @CppAD_EIGEN_DIR_TRUE@@CppAD_HAVE_AR_TRUE@libeigen_a_CXXFLAGS = \
 @CppAD_EIGEN_DIR_TRUE@@CppAD_HAVE_AR_TRUE@	-g $(CXX_FLAGS_EIGEN) \
-@CppAD_EIGEN_DIR_TRUE@@CppAD_HAVE_AR_TRUE@	-DCPPAD_HAS_EIGEN \
 @CppAD_EIGEN_DIR_TRUE@@CppAD_HAVE_AR_TRUE@	-I$(EIGEN_DIR)/include
 
 # -------------------------------------------------------------------------
-# auto-tools does not support use of colpack
+# autotools does not support use of colpack
 EXTRA_DIST = \
 	$(ADOLC_EXTRA_FILES) \
 	$(EIGEN_EXTRA_FILES)

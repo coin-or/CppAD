@@ -703,23 +703,29 @@ OPENMP_FLAGS
 CXX_FLAGS_EIGEN
 CXX_FLAGS_FADBAD
 CXX_FLAGS
+cppad_has_boost
 BOOST_INCLUDE
 CppAD_BOOST_DIR_FALSE
 CppAD_BOOST_DIR_TRUE
 BOOST_DIR
+cppad_has_ipopt
 CppAD_IPOPT_FALSE
 CppAD_IPOPT_TRUE
 IPOPT_DIR
+cppad_has_sacado
 CppAD_SACADO_FALSE
 CppAD_SACADO_TRUE
 SACADO_DIR
+cppad_has_fadbad
 CppAD_FADBAD_FALSE
 CppAD_FADBAD_TRUE
 FADBAD_DIR
+cppad_has_eigen
 EIGEN_INCLUDE
 CppAD_EIGEN_DIR_FALSE
 CppAD_EIGEN_DIR_TRUE
 EIGEN_DIR
+cppad_has_adolc
 CppAD_ADOLC_FALSE
 CppAD_ADOLC_TRUE
 ADOLC_DIR
@@ -4733,9 +4739,13 @@ $as_echo "$ADOLC_DIR" >&6; }
 	if test "$have_ar" = "no"; then
 		as_fn_error $? "ar is missing and ADOLC_DIR is present" "$LINENO" 5
 	fi
+	cppad_has_adolc=1
+
 else
 	{ $as_echo "$as_me:${as_lineno-$LINENO}: result: no" >&5
 $as_echo "no" >&6; }
+	cppad_has_adolc=0
+
 fi
 
 { $as_echo "$as_me:${as_lineno-$LINENO}: checking EIGEN_DIR" >&5
@@ -4754,9 +4764,13 @@ if test "$EIGEN_DIR" != "" ; then
 $as_echo "$EIGEN_DIR" >&6; }
 	EIGEN_INCLUDE=-I$EIGEN_DIR/include
 
+	cppad_has_eigen=1
+
 else
 	{ $as_echo "$as_me:${as_lineno-$LINENO}: result: no" >&5
 $as_echo "no" >&6; }
+
+	cppad_has_eigen=0
 
 fi
 
@@ -4777,9 +4791,13 @@ $as_echo "$FADBAD_DIR" >&6; }
 	if test "$have_ar" = "no"; then
 		as_fn_error $? "ar is missing and FADBAD_DIR is present" "$LINENO" 5
 	fi
+	cppad_has_fadbad=1
+
 else
 	{ $as_echo "$as_me:${as_lineno-$LINENO}: result: no" >&5
 $as_echo "no" >&6; }
+	cppad_has_fadbad=0
+
 fi
 
 { $as_echo "$as_me:${as_lineno-$LINENO}: checking SACADO_DIR" >&5
@@ -4799,9 +4817,13 @@ $as_echo "$SACADO_DIR" >&6; }
 	if test "$have_ar" = "no"; then
 		as_fn_error $? "ar is missing and SACADO_DIR is present" "$LINENO" 5
 	fi
+	cppad_has_sacado=1
+
 else
 	{ $as_echo "$as_me:${as_lineno-$LINENO}: result: no" >&5
 $as_echo "no" >&6; }
+	cppad_has_sacado=0
+
 fi
 
 { $as_echo "$as_me:${as_lineno-$LINENO}: checking IPOPT_DIR" >&5
@@ -4821,9 +4843,13 @@ $as_echo "$IPOPT_DIR" >&6; }
 	if test "$have_ar" = "no"; then
 		as_fn_error $? "ar is missing and IPOPT_DIR is present" "$LINENO" 5
 	fi
+	cppad_has_ipopt=1
+
 else
 	{ $as_echo "$as_me:${as_lineno-$LINENO}: result: no" >&5
 $as_echo "no" >&6; }
+	cppad_has_ipopt=0
+
 fi
 
 { $as_echo "$as_me:${as_lineno-$LINENO}: checking BOOST_DIR" >&5
@@ -4842,9 +4868,13 @@ if test "$BOOST_DIR" != "" ; then
 $as_echo "$BOOST_DIR" >&6; }
 	BOOST_INCLUDE=-I$BOOST_DIR/include
 
+	cppad_has_boost=1
+
 else
 	{ $as_echo "$as_me:${as_lineno-$LINENO}: result: no" >&5
 $as_echo "no" >&6; }
+
+	cppad_has_boost=0
 
 fi
 

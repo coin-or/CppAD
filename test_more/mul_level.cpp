@@ -13,7 +13,7 @@ Please visit http://www.coin-or.org/CppAD/ for information on other licenses.
 // CPPAD_HAS_* defines
 # include <cppad/configure.hpp>
 
-# ifdef CPPAD_HAS_ADOLC
+# if CPPAD_HAS_ADOLC
 # include <adolc/adouble.h>
 # include <adolc/taping.h>
 # include <adolc/interfaces.h>
@@ -156,7 +156,7 @@ bool Two(void)
 	return ok;
 }
 
-# ifdef CPPAD_HAS_ADOLC
+# if CPPAD_HAS_ADOLC
 
 bool adolc(void)
 {	bool ok = true;                   // initialize test result
@@ -324,7 +324,7 @@ bool mul_level(void)
 {	bool ok = true;
 	ok     &= One();
 	ok     &= Two();
-# ifdef CPPAD_HAS_ADOLC
+# if CPPAD_HAS_ADOLC
 	ok     &= adolc();
 # endif
 	ok     &= std_math();

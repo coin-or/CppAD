@@ -9,6 +9,9 @@ A copy of this license is included in the COPYING file of this distribution.
 Please visit http://www.coin-or.org/CppAD/ for information on other licenses.
 -------------------------------------------------------------------------- */
 
+// CPPAD_HAS_* defines
+# include <cppad/configure.hpp>
+
 // system include files used for I/O
 # include <iostream>
 

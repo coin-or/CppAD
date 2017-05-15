@@ -191,7 +191,10 @@ ENDFOREACH(middle_names includedirs libdirs datadir docdir)
 # -----------------------------------------------------------------------------
 # boost_prefix
 FIND_PACKAGE(Boost)
+SET(cppad_has_boost 0)
 IF ( Boost_FOUND )
+	SET(cppad_has_boost 1)
+	#
 	# Extract the Boost prefix from Boost_INCLUDE_DIRS
 	#
 	# convert to using unix directory separator

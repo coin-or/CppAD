@@ -15,7 +15,7 @@ Testing ipopt::solve
 // CPPAD_HAS_* defines
 # include <cppad/configure.hpp>
 
-# ifdef CPPAD_HAS_IPOPT
+# if CPPAD_HAS_IPOPT
 
 # include <cppad/ipopt/solve.hpp>
 

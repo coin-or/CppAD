@@ -257,16 +257,16 @@ int main(void)
 	ok &= Run( VecADPar,        "VecADPar"       );
 	ok &= Run( VecUnary,        "VecUnary"       );
 	ok &= Run( zdouble,         "zdouble"        );
-# ifdef CPPAD_HAS_ADOLC
+#if CPPAD_HAS_ADOLC
 	ok &= Run( base_adolc,      "base_adolc"     );
 # endif
-# ifdef CPPAD_HAS_IPOPT
+#if CPPAD_HAS_IPOPT
 	ok &= Run( ipopt_solve,     "ipopt_solve"    );
 # endif
 # ifdef CPPAD_OPENMP_TEST
 	ok &= Run( alloc_openmp,    "alloc_openmp"   );
 # endif
-# ifdef CPPAD_HAS_EIGEN
+# if CPPAD_HAS_EIGEN
 	ok &= Run( cppad_eigen,     "cppad_eigen"    );
 	ok &= Run( eigen_mat_inv,   "eigen_mat_inv"  );
 # endif

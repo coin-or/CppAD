@@ -1,6 +1,6 @@
 // $Id$
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-16 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-17 Bradley M. Bell
 
 CppAD is distributed under multiple licenses. This distribution is under
 the terms of the
@@ -18,6 +18,9 @@ Please visit http://www.coin-or.org/CppAD/ for information on other licenses.
 
 // for thread_alloc
 # include <cppad/utility/thread_alloc.hpp>
+
+// CPPAD_HAS_* defines
+# include <cppad/configure.hpp>
 
 // external complied tests
 extern bool checkpoint(void);
@@ -82,7 +85,7 @@ int main(void)
 	ok &= Run( reverse,             "reverse"        );
 	ok &= Run( set_sparsity,        "set_sparsity"   );
 	ok &= Run( tangent,             "tangent"        );
-# ifdef CPPAD_HAS_EIGEN
+# if CPPAD_HAS_EIGEN
 	ok &= Run( eigen_cholesky,      "eigen_cholesky" );
 	ok &= Run( eigen_mat_inv,       "eigen_mat_inv"  );
 	ok &= Run( eigen_mat_mul,       "eigen_mat_mul"  );
