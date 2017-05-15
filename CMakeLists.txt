@@ -61,9 +61,6 @@ INCLUDE(cmake/optional_package.cmake)
 # add_cppad_cxx_flags(target_name)
 INCLUDE(cmake/add_cppad_cxx_flags.cmake)
 #
-# sources_libs_define(prefix_name sources libs define)
-INCLUDE(cmake/sources_libs_define.cmake)
-#
 # check_source_runs(source variable)
 INCLUDE(cmake/check_source_runs.cmake)
 #
@@ -102,11 +99,11 @@ command_line_arg(cppad_prefix /usr PATH
 SET(CMAKE_INSTALL_PREFIX "${cppad_prefix}"
 	CACHE PATH "value copied from cppad_prefix" FORCE
 )
-IF( cmake_install_prefix )
+IF( cppad_has_cmake_install )
 	MESSAGE(FATAL_ERROR
 		"cmake_install_prefix has been changed to cppad_prefix"
 	)
-ENDIF( cmake_install_prefix )
+ENDIF( cppad_has_cmake_install )
 # -----------------------------------------------------------------------------
 # cppad_postfix
 command_line_arg(cppad_postfix NOTFOUND STRING
@@ -143,7 +140,7 @@ optional_package(ipopt ${system_include} "ipopt install prefix")
 # sacado_prefix
 optional_package(sacado ${system_include} "sacado install prefix")
 # -----------------------------------------------------------------------------
-# External package prefixes without  warnings
+# External package prefixes without warnings
 SET(system_include TRUE)
 #
 # eigen_prefix
@@ -154,15 +151,15 @@ optional_package(fadbad ${system_include} "fadbad install prefix")
 # -----------------------------------------------------------------------------
 # cppad_has_colpack, colpack_libs, cppad_lib
 #
-IF( colpack_prefix )
+IF( cppad_has_colpack )
 	SET(cppad_has_colpack 1)
 	SET( colpack_libs "ColPack" )
 	SET( cppad_lib "cppad_lib" )
-ELSE( colpack_prefix )
+ELSE( cppad_has_colpack )
 	SET(cppad_has_colpack 0)
 	SET( colpack_libs "" )
 	SET( cppad_lib "" )
-ENDIF( colpack_prefix )
+ENDIF( cppad_has_colpack )
 # =============================================================================
 # automated system configuration
 # =============================================================================
@@ -231,7 +228,7 @@ IF ( Boost_FOUND )
 ENDIF ( Boost_FOUND )
 # -----------------------------------------------------------------------------
 # ipopt_LIBRARIES and ipopt_LIBRARY_DIRS
-IF( ipopt_prefix )
+IF( cppad_has_ipopt )
 	FIND_PACKAGE(PkgConfig)
 	IF( NOT PKG_CONFIG_FOUND )
 		MESSAGE(FATAL_ERROR "Using ipopt_prefix but cannot find pkg-config")
@@ -258,7 +255,7 @@ where
 "
 		)
 	ENDIF( NOT ipopt_FOUND )
-ENDIF( ipopt_prefix )
+ENDIF( cppad_has_ipopt )
 # =============================================================================
 # Currently building tests as normal executables
 # =============================================================================
@@ -272,9 +269,9 @@ SET(check_depends "")
 # directories with no check depends entries
 ADD_SUBDIRECTORY(cppad)
 ADD_SUBDIRECTORY(pkgconfig)
-IF( colpack_prefix )
+IF( cppad_has_colpack )
 	ADD_SUBDIRECTORY(cppad_lib)
-ENDIF( colpack_prefix)
+ENDIF( cppad_has_colpack )
 #
 IF( NOT ( "${check_depends}" STREQUAL "" ) )
 	MESSAGE(FATAL_ERROR "Error in CMakeLists.txt scripts")
@@ -288,9 +285,9 @@ ADD_SUBDIRECTORY(print_for)
 ADD_SUBDIRECTORY(test_more)
 ADD_SUBDIRECTORY(multi_thread)
 ADD_SUBDIRECTORY(speed)
-IF ( ipopt_prefix )
+IF( cppad_has_ipopt )
 	ADD_SUBDIRECTORY(cppad_ipopt)
-ENDIF( ipopt_prefix )
+ENDIF( cppad_has_ipopt )
 #
 ADD_CUSTOM_TARGET(check DEPENDS ${check_depends})
 MESSAGE(STATUS "make check: avialable")

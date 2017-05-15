@@ -13,6 +13,10 @@
 # ${package}_prefix: (out)
 # is a PATH variable that holds the install prefix for this optional package.
 #
+# cppad_has_${package}: (out)
+# is 1 if ${package}_prefix is set by the cmake command line (or gui),
+# and 0 otherwise.
+#
 # system_include: (in)
 # If this is true, the include files for this package should be treated as
 # system files (no warnings).
@@ -33,10 +37,13 @@
 #
 MACRO(optional_package package system_include description)
 	SET(prefix_variable ${package}_prefix)
+	SET(cppad_has_${package} 0)
 	SET(${prefix_variable} NOTFOUND CACHE PATH "${description}")
 	SET(prefix ${${prefix_variable}} )
 	MESSAGE(STATUS "${prefix_variable} = ${prefix}")
 	IF ( prefix )
+		SET(cppad_has_${package} 1)
+		#
 		# List of preprocessor include file search directories
 		FOREACH(dir ${cmake_install_includedirs})
 			IF(IS_DIRECTORY ${prefix}/${dir} )

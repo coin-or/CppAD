@@ -318,9 +318,7 @@ namespace CppAD {
 	template <> struct to_string_struct<adouble>
 	{	std::string operator()(const adouble& x)
 		{	std::stringstream os;
-			double epsilon    = std::numeric_limits<double>::epsilon();
-			double log10      = std::log( epsilon ) / std::log(10.);
-			size_t n_digits   = 1 - Integer( log10 );
+			int n_digits = 1 + std::numeric_limits<double>::digits10;
 			os << std::setprecision(n_digits);
 			os << x.value();
 			return os.str();

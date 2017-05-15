@@ -10,19 +10,31 @@
 # Please visit http://www.coin-or.org/CppAD/ for information on other licenses.
 # -----------------------------------------------------------------------------
 spell_list='
-	autotools
 '
 revert_list='
 '
 move_list='
-	omh/install/auto_tools.omh
 '
 move_sed='s|auto_tools|autotools|'
 #
 cat << EOF > junk.sed
-s|auto_tools|autotools|g
-s|auto-tools|autotools|g
-s|Auto Tools|Autotools|g
+s|IF *( *\\([a-z][a-z_]*\\)_prefix *)|IF( cppad_has_\\1 )|g
+s|ELSE *( *\\([a-z][a-z_]*\\)_prefix *)|ELSE( cppad_has_\\1 )|g
+s|CPPAD_ADOLC_TEST|CPPAD_HAS_ADOLC|g
+s|CPPAD_EIGEN_TEST|CPPAD_HAS_EIGEN|g
+s|CPPAD_IPOPT_TEST|CPPAD_HAS_IPOPT|g
+#
+/^SET(sources /! b one
+N
+s|SET(sources \\(.*\))\\nsources_libs_define(\\([a-z]*\\).*|IF( cppad_has_\\2 )\\
+	SET(\\2_sources \\1) \\
+	SET(\\2_libs \\2) \\
+ELSE( cppad_has_\\2 )\\
+	SET(\\2_sources "") \\
+	SET(\\2_libs "") \\
+ENDIF( cppad_has_\\2 )|
+: one
+s|\\n\\tSET(eigen_libs [^)]*)||
 EOF
 # -----------------------------------------------------------------------------
 if [ $0 != "bin/batch_edit.sh" ]

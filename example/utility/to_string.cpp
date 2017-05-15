@@ -61,7 +61,7 @@ namespace {
 		//
 		std::string s = CppAD::to_string( pi );
 		Float check    = std::atof( s.c_str() );
-		ok           &= std::fabs( check - pi ) <= 2.0 * eps;
+		ok           &= std::fabs( check / pi - 1.0 ) <= 2.0 * eps;
 		//
 		return ok;
 	}
@@ -78,7 +78,7 @@ namespace {
 		//
 		std::string s = CppAD::to_string( CppAD::AD<Base>( pi ) );
 		Base check    = std::atof( s.c_str() );
-		ok           &= std::fabs( check - pi ) <= 2.0 * eps;
+		ok           &= std::fabs( check / pi - 1.0 ) <= 2.0 * eps;
 		//
 		return ok;
 	}

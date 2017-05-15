@@ -49,7 +49,7 @@ $srccode%cpp% */
 template <> struct to_string_struct<Base>\
 {	std::string operator()(const Base& value) \
 	{	std::stringstream os;\
-		int n_digits = CppAD::numeric_limits<Base>::digits10; \
+		int n_digits = 1 + CppAD::numeric_limits<Base>::digits10; \
 		os << std::setprecision(n_digits);\
 		os << value;\
 		return os.str();\

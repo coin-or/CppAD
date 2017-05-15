@@ -1,6 +1,5 @@
-// $Id$
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-15 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-17 Bradley M. Bell
 
 CppAD is distributed under multiple licenses. This distribution is under
 the terms of the
@@ -35,10 +34,10 @@ namespace {
 			imag += s[index++];
 		//
 		Float check   = std::atof( real.c_str() );
-		ok           &= std::fabs( check - pi ) <= 2.0 * eps;
+		ok           &= std::fabs( check / pi - 1.0 ) <= 2.0 * eps;
 		//
 		check         = std::atof( imag.c_str() );
-		ok           &= std::fabs( check - e ) <= 2.0 * eps;
+		ok           &= std::fabs( check / e - 1.0 ) <= 2.0 * eps;
 		//
 		return ok;
 	}

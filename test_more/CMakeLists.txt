@@ -19,17 +19,30 @@ SET(CMAKE_BUILD_TYPE DEBUG)
 # so no longer can set CPPAD_MAX_NUM_THREADS equal to one (its smallest value)
 # ADD_DEFINITIONS("-DCPPAD_MAX_NUM_THREADS=1")
 
-# adolc_sources, adolc_libs and CPPAD_ADOLC_TEST
-SET(sources base_adolc.cpp)
-sources_libs_define(adolc "${sources}" adolc ADOLC_TEST)
+# adolc_sources, adolc_libs and CPPAD_HAS_ADOLC
+IF( cppad_has_adolc )
+	SET(adolc_sources base_adolc.cpp)
+	SET(adolc_libs adolc)
+ELSE( cppad_has_adolc )
+	SET(adolc_sources "")
+	SET(adolc_libs "")
+ENDIF( cppad_has_adolc )
 
-# eigen_sources and CPPAD_EIGEN_TEST
-SET(sources cppad_eigen.cpp eigen_mat_inv.cpp)
-sources_libs_define(eigen "${sources}" "" EIGEN_TEST)
+# eigen_sources and CPPAD_HAS_EIGEN
+IF( cppad_has_eigen )
+	SET(eigen_sources cppad_eigen.cpp eigen_mat_inv.cpp)
+ELSE( cppad_has_eigen )
+	SET(eigen_sources "")
+ENDIF( cppad_has_eigen )
 
 # ipopt_prefix
-SET(sources ipopt_solve.cpp)
-sources_libs_define(ipopt "${sources}" "${ipopt_LIBRARIES}" IPOPT_TEST)
+IF( cppad_has_ipopt )
+	SET(ipopt_sources ipopt_solve.cpp)
+	SET(ipopt_libs "${ipopt_LIBRARIES}")
+ELSE( cppad_has_ipopt )
+	SET(ipopt_sources "")
+	SET(ipopt_libs "")
+ENDIF( cppad_has_ipopt )
 
 # )
 ADD_EXECUTABLE(test_more EXCLUDE_FROM_ALL test_more.cpp

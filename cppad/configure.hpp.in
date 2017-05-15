@@ -73,10 +73,28 @@ cppad-yyyymmdd as a C string where yyyy is year, mm is month, and dd is day.
 # define CPPAD_PACKAGE_STRING "cppad-@cppad_version@"
 
 /*!
+def CPPAD_HAS_ADOLC
+Was a adolc_prefix specified on the cmake command line.
+*/
+# define CPPAD_HAS_ADOLC @cppad_has_adolc@
+
+/*!
 def CPPAD_HAS_COLPACK
 Was a colpack_prefix specified on the cmake command line.
 */
 # define CPPAD_HAS_COLPACK @cppad_has_colpack@
+
+/*!
+def CPPAD_HAS_EIGEN
+Was a eigen_prefix specified on the cmake command line.
+*/
+# define CPPAD_HAS_EIGEN @cppad_has_eigen@
+
+/*!
+def CPPAD_HAS_IPOPT
+Was a ipopt_prefix specified on the cmake command line.
+*/
+# define CPPAD_HAS_IPOPT @cppad_has_ipopt@
 
 /*!
 \def CPPAD_DEPRECATED

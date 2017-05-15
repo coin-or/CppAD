@@ -46,6 +46,10 @@ If $code <cppad/cppad.hpp>$$ is included,
 and it has been extended to a $icode Base$$ type,
 it automatically extends to the
 $cref/AD types above Base/glossary/AD Type Above Base/$$.
+$lnext
+For integer types, conversion to a string is exact.
+For floating point types, conversion to a string yields a value
+that has relative error within machine epsilon.
 $lend
 
 $head value$$
@@ -114,8 +118,7 @@ template <> struct to_string_struct<Type>\
 template <> struct to_string_struct<Float>\
 {	std::string operator()(const Float& value) \
 	{	std::stringstream os;\
-		Float epsilon    = std::numeric_limits<Float>::epsilon();\
-		size_t n_digits = 1 - int( std::log10(epsilon) );\
+		int n_digits = 1 + std::numeric_limits<Float>::digits10;\
 		os << std::setprecision(n_digits);\
 		os << value;\
 		return os.str();\

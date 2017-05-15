@@ -24,7 +24,7 @@ if CppAD_ADOLC
 ADOLC_SRC_FILES   = base_adolc.cpp
 ADOLC_EXTRA_FILES =
 ADOLC_LIB         = -ladolc -lColPack -L$(ADOLC_DIR)/lib -L$(ADOLC_DIR)/lib64
-ADOLC_FLAGS       = -DCPPAD_ADOLC_TEST -I$(ADOLC_DIR)/include
+ADOLC_FLAGS       = -DCPPAD_HAS_ADOLC -I$(ADOLC_DIR)/include
 else
 ADOLC_EXTRA_FILES = base_adolc.cpp
 ADOLC_SRC_FILES   =
@@ -37,7 +37,7 @@ IPOPT_SRC_FILES   = ipopt_solve.cpp
 IPOPT_EXTRA_FILES =
 IPOPT_LIB         = -lipopt \
 	$(CPPAD_IPOPT_LIBS) $(FCLIBS) $(PTHREAD_LIB) $(DL_LIB)
-IPOPT_FLAGS       = -DCPPAD_IPOPT_TEST -I$(IPOPT_DIR)/include
+IPOPT_FLAGS       = -DCPPAD_HAS_IPOPT -I$(IPOPT_DIR)/include
 else
 IPOPT_EXTRA_FILES = ipopt_solve.cpp
 IPOPT_SRC_FILES   =
@@ -54,7 +54,7 @@ EIGEN_LIB           = -L. -leigen
 libeigen_a_CXXFLAGS = \
 	-g \
 	$(CXX_FLAGS_EIGEN) \
-	-DCPPAD_EIGEN_TEST \
+	-DCPPAD_HAS_EIGEN \
 	 -I$(EIGEN_DIR)/include
 else
 EIGEN_EXTRA_FILES   = cppad_eigen.cpp eigen_mat_inv.cpp

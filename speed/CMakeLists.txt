@@ -1,6 +1,5 @@
-# $Id$
 # -----------------------------------------------------------------------------
-# CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-16 Bradley M. Bell
+# CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-17 Bradley M. Bell
 #
 # CppAD is distributed under multiple licenses. This distribution is under
 # the terms of the
@@ -30,15 +29,15 @@ IF ( cppad_profile_flag )
 	ADD_SUBDIRECTORY(profile)
 ENDIF ( cppad_profile_flag )
 #
-IF ( adolc_prefix )
+IF( cppad_has_adolc )
 	ADD_SUBDIRECTORY(adolc)
-ENDIF( adolc_prefix )
-IF ( fadbad_prefix )
+ENDIF( cppad_has_adolc )
+IF( cppad_has_fadbad )
 	ADD_SUBDIRECTORY(fadbad)
-ENDIF( fadbad_prefix )
-IF ( sacado_prefix )
+ENDIF( cppad_has_fadbad )
+IF( cppad_has_sacado )
 	ADD_SUBDIRECTORY(sacado)
-ENDIF( sacado_prefix )
+ENDIF( cppad_has_sacado )
 
 # check_speed
 ADD_CUSTOM_TARGET(check_speed DEPENDS ${check_speed_depends} )

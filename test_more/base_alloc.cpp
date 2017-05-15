@@ -65,8 +65,9 @@ bool test_to_string(void)
 	my_ad       ad_pi  = my_ad(dbl_pi);
 	std::string str_pi = to_string( ad_pi );
 	//
-	// check length of string (extra character for decimal point in 3.1415...)
-	ok &= str_pi.size() == size_t( 1 + std::numeric_limits<double>::digits10 );
+	// Check the length of the string "3.1415...". One extra character
+	// for machine epsilon precision and another for the decimal point.
+	ok &= str_pi.size() == size_t( 2 + std::numeric_limits<double>::digits10 );
 	//
 	// check value
 	double eps   = std::numeric_limits<double>::epsilon();

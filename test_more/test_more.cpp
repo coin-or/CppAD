@@ -9,6 +9,9 @@ A copy of this license is included in the COPYING file of this distribution.
 Please visit http://www.coin-or.org/CppAD/ for information on other licenses.
 -------------------------------------------------------------------------- */
 
+// CPPAD_HAS_* defines
+# include <cppad/configure.hpp>
+
 // system include files used for I/O
 # include <iostream>
 
@@ -254,16 +257,16 @@ int main(void)
 	ok &= Run( VecADPar,        "VecADPar"       );
 	ok &= Run( VecUnary,        "VecUnary"       );
 	ok &= Run( zdouble,         "zdouble"        );
-# ifdef CPPAD_ADOLC_TEST
+# ifdef CPPAD_HAS_ADOLC
 	ok &= Run( base_adolc,      "base_adolc"     );
 # endif
-# ifdef CPPAD_IPOPT_TEST
+# ifdef CPPAD_HAS_IPOPT
 	ok &= Run( ipopt_solve,     "ipopt_solve"    );
 # endif
 # ifdef CPPAD_OPENMP_TEST
 	ok &= Run( alloc_openmp,    "alloc_openmp"   );
 # endif
-# ifdef CPPAD_EIGEN_TEST
+# ifdef CPPAD_HAS_EIGEN
 	ok &= Run( cppad_eigen,     "cppad_eigen"    );
 	ok &= Run( eigen_mat_inv,   "eigen_mat_inv"  );
 # endif

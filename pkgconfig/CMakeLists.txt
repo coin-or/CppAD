@@ -1,6 +1,5 @@
-# $Id:$
 # -----------------------------------------------------------------------------
-# CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-16 Bradley M. Bell
+# CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-17 Bradley M. Bell
 #
 # CppAD is distributed under multiple licenses. This distribution is under
 # the terms of the
@@ -19,14 +18,14 @@ SET(cppad_pkgconfig_requires "")
 #
 # Settings that are only included if cppad is configured with ipopt.
 # (Note that ipopt has a pkgconfig file.)
-IF( ipopt_prefix )
+IF( cppad_has_ipopt )
 	SET(cppad_pkgconfig_requires "ipopt")
 	SET(cppad_pkgconfig_libs "-L${cppad_abs_libdir} -lcppad_ipopt")
-ENDIF( ipopt_prefix )
+ENDIF( cppad_has_ipopt )
 #
 # Settings that are only included if cppad is configured with colpack
 # (Note that colpack does not have a pkgconfig file.)
-IF( colpack_prefix )
+IF( cppad_has_colpack )
 	SET(cppad_pkgconfig_libs "${cppad_pkgconfig_libs} -lColPack")
 	FOREACH(dir ${cmake_install_libdirs})
 		IF(IS_DIRECTORY ${colpack_prefix}/${dir} )
@@ -42,7 +41,7 @@ IF( colpack_prefix )
 			)
 		ENDIF(IS_DIRECTORY ${colpack_prefix}/${dir} )
 	ENDFOREACH(dir)
-ENDIF( colpack_prefix )
+ENDIF( cppad_has_colpack )
 #
 print_variable(cppad_pkgconfig_cflags)
 print_variable(cppad_pkgconfig_libs)

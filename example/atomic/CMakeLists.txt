@@ -1,6 +1,5 @@
-# $Id$
 # -----------------------------------------------------------------------------
-# CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-16 Bradley M. Bell
+# CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-17 Bradley M. Bell
 #
 # CppAD is distributed under multiple licenses. This distribution is under
 # the terms of the
@@ -14,8 +13,11 @@
 SET(CMAKE_BUILD_TYPE DEBUG)
 #
 # eigen_sources and CPPAD_HAS_EIGEN
-SET(sources eigen_mat_inv.cpp eigen_cholesky.cpp eigen_mat_mul.cpp)
-sources_libs_define(eigen "${sources}" "" HAS_EIGEN)
+IF( cppad_has_eigen )
+	SET(eigen_sources eigen_mat_inv.cpp eigen_cholesky.cpp eigen_mat_mul.cpp)
+ELSE( cppad_has_eigen )
+	SET(eigen_sources "")
+ENDIF( cppad_has_eigen )
 #
 ADD_EXECUTABLE(example_atomic EXCLUDE_FROM_ALL
 	${eigen_sources}

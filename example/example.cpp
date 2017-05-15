@@ -28,6 +28,9 @@ $end
 */
 // BEGIN C++
 
+// CPPAD_HAS_* defines
+# include <cppad/configure.hpp>
+
 // system include files used for I/O
 # include <iostream>
 

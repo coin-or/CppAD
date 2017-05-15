@@ -40,6 +40,9 @@ $section Changes and Additions to CppAD During 2017$$
 
 $head 05-14$$
 $list number$$
+Specifications were added so that $cref to_string$$ yields exact results
+for integer types and machine precision for floating point types.
+$lnext
 The file $code build.sh$$ was moved to $code bin/autotools.sh$$,
 and `auto tools' has been changed to $cref autotools$$.
 $lnext

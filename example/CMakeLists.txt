@@ -31,18 +31,26 @@ ADD_SUBDIRECTORY(sparse)
 ADD_SUBDIRECTORY(utility)
 
 # adolc_sources, adolc_libs, and CPPAD_HAS_ADOLC
-SET(sources mul_level_adolc.cpp mul_level_adolc_ode.cpp)
-sources_libs_define(adolc "${sources}" adolc HAS_ADOLC)
+IF( cppad_has_adolc )
+	SET(adolc_sources mul_level_adolc.cpp mul_level_adolc_ode.cpp)
+	SET(adolc_libs adolc)
+ELSE( cppad_has_adolc )
+	SET(adolc_sources "")
+	SET(adolc_libs "")
+ENDIF( cppad_has_adolc )
 
 # eigen_sources and CPPAD_HAS_EIGEN
-SET(sources eigen_det.cpp eigen_array.cpp)
-sources_libs_define(eigen "${sources}" "" HAS_EIGEN)
+IF( cppad_has_eigen )
+	SET(eigen_sources eigen_det.cpp eigen_array.cpp)
+ELSE( cppad_has_eigen )
+	SET(eigen_sources "")
+ENDIF( cppad_has_eigen )
 
 # ipopt_prefix
-IF( ipopt_prefix )
+IF( cppad_has_ipopt )
 	ADD_SUBDIRECTORY(ipopt_solve)
 	add_to_list(check_depends check_example_ipopt_solve)
-ENDIF( ipopt_prefix )
+ENDIF( cppad_has_ipopt )
 
 
 # add_executable(<name> [WIN32] [MACOSX_BUNDLE] [EXCLUDE_FROM_ALL]
