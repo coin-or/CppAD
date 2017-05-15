@@ -266,8 +266,6 @@ bool std_math(void)
 	return ok;
 }
 
-// supress this test until ../bug/abs.sh is fixed
-# ifdef CPPAD_NOT_DEFINED
 bool fabs(void)
 {	bool ok = true;
 	using CppAD::AD;
@@ -316,7 +314,6 @@ bool fabs(void)
 
 	return ok;
 }
-# endif
 
 } // END empty namespace
 
@@ -328,9 +325,7 @@ bool mul_level(void)
 	ok     &= adolc();
 # endif
 	ok     &= std_math();
-# ifdef CPPAD_NOT_DEFINED
 	ok     &= fabs();
-# endif
 
 	return ok;
 }
