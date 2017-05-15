@@ -168,6 +168,9 @@ then
 	exit 1
 fi
 #
+# copy configure.hpp to source directory
+log_eval cp cppad/configure.hpp $trunk_dir/cppad/configure.hpp
+#
 # compile the tests
 log_eval make check
 #
