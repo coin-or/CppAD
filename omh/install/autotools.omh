@@ -102,19 +102,11 @@ the entries in all of the other lines are optional.
 The text in italic above is replaced values that you choose
 (see discussion below).
 
-$head configure.hpp$$
-The $code configure$$ command will create the $code configure.hpp$$
-file in the wrong directory. You can move it using the following command
-in the build directory:
-$codei%
-	cp cppad/configure.hpp cp  ../cppad/configure.hpp
-%$$
-
 $head make$$
-CppAD has some object libraries that are used for its correctness tests.
-(Currently, none of these libraries get installed.)
-You can build these libraries by executing the following command in the
-build directory:
+The following command, in the build directory,
+copies the file $code configure.hpp$$ from
+the build to the source directory and then builds
+some object libraries that are used by the tests:
 $codei%
 	make
 %$$

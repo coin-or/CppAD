@@ -818,8 +818,8 @@ AC_CONFIG_FILES([
 	test_more/makefile
 ])
 dnl END AC_CONFIG_FILES
-dnl the comment line above is used by ./new_stable.sh
 
+dnl scripts that set library path before running test
 AC_CONFIG_COMMANDS(
 	[example_ipopt_solve_test.sh],
 	[chmod +x example/ipopt_solve/test.sh],

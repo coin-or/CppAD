@@ -56,9 +56,7 @@ $lnext
 Specifications were added so that $cref to_string$$ yields exact results
 for integer types and machine precision for floating point types.
 $lnext
-Some corrections and updating were done to the $cref autotools$$
-instructions. In particular, see
-$cref/configure.hpp/autotools/configure.hpp/$$.
+Some editing was done to the $cref autotools$$ instructions.
 $lend
 
 $head 05-12$$
