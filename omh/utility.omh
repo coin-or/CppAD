@@ -39,6 +39,7 @@ $children%
 	cppad/utility/near_equal.hpp%
 	cppad/utility/speed_test.hpp%
 	cppad/utility/time_test.hpp%
+	cppad/utility/test_runner.hpp%
 
 	omh/numeric_type.omh%
 	cppad/utility/check_numeric_type.hpp%
@@ -73,6 +74,7 @@ $rref NearEqual$$
 $rref time_test$$
 $rref speed_test$$
 $rref SpeedTest$$
+$rref test_runner$$
 $tend
 
 $head C++ Concepts$$

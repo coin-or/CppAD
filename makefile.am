@@ -320,6 +320,7 @@ nobase_myinclude_HEADERS =  \
 	cppad/utility/sparse_rc.hpp \
 	cppad/utility/sparse_rcv.hpp \
 	cppad/utility/speed_test.hpp \
+	cppad/utility/test_runner.hpp \
 	cppad/utility/thread_alloc.hpp \
 	cppad/utility/time_test.hpp \
 	cppad/utility/to_string.hpp \

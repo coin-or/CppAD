@@ -31,6 +31,7 @@ Please visit http://www.coin-or.org/CppAD/ for information on other licenses.
 # include <cppad/utility/romberg_one.hpp>
 # include <cppad/utility/rosen_34.hpp>
 # include <cppad/utility/runge_45.hpp>
+# include <cppad/utility/test_runner.hpp>
 # include <cppad/utility/set_union.hpp>
 # include <cppad/utility/speed_test.hpp>
 # include <cppad/utility/thread_alloc.hpp>

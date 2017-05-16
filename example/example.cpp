@@ -43,6 +43,9 @@ $end
 // memory utility
 # include <cppad/utility/thread_alloc.hpp>
 
+// test runner
+# include <cppad/utility/test_runner.hpp>
+
 // prototype external compiled tests (this line expected by bin/new_test.sh)
 extern bool abort_recording(void);
 extern bool fabs(void);
@@ -150,167 +153,128 @@ extern bool Value(void);
 extern bool Var2Par(void);
 extern bool vec_ad(void);
 
-namespace {
-	// function that runs one test
-	static size_t Run_ok_count    = 0;
-	static size_t Run_error_count = 0;
-	bool Run(bool TestOk(void), std::string name)
-	{	bool ok      = true;
-		std::streamsize width =  20;
-		std::cout.width( width );
-		std::cout.setf( std::ios_base::left );
-		std::cout << name;
-		//
-		ok &= name.size() < size_t(width);
-		ok &= TestOk();
-		if( ok )
-		{	std::cout << "OK" << std::endl;
-			Run_ok_count++;
-		}
-		else
-		{	std::cout << "Error" << std::endl;
-			Run_error_count++;
-		}
-		return ok;
-	}
-}
-
 // main program that runs all the tests
 int main(void)
-{	bool ok = true;
+{	std::string group = "example_optimize";
+	size_t      width = 20;
+	CppAD::test_runner Run(group, width);
 
 	// This line is used by test_one.sh
 
 	// run external compiled tests (this line expected by bin/new_test.sh)
-	ok &= Run( abort_recording,   "abort_recording"  );
-	ok &= Run( fabs,              "fabs"             );
-	ok &= Run( acos,              "acos"             );
-	ok &= Run( acosh,             "acosh"            );
-	ok &= Run( ad_assign,         "ad_assign"        );
-	ok &= Run( ad_ctor,           "ad_ctor"          );
-	ok &= Run( Add,               "Add"              );
-	ok &= Run( AddEq,             "AddEq"            );
-	ok &= Run( ad_fun,            "ad_fun"           );
-	ok &= Run( ad_in_c,           "ad_in_c"          );
-	ok &= Run( ad_input,          "ad_input"         );
-	ok &= Run( ad_output,         "ad_output"        );
-	ok &= Run( asin,              "asin"             );
-	ok &= Run( asinh,             "asinh"            );
-	ok &= Run( atan2,             "atan2"            );
-	ok &= Run( atan,              "atan"             );
-	ok &= Run( atanh,             "atanh"            );
-	ok &= Run( azmul,             "azmul"            );
-	ok &= Run( BenderQuad,        "BenderQuad"       );
-	ok &= Run( BoolFun,           "BoolFun"          );
-	ok &= Run( capacity_order,    "capacity_order"   );
-	ok &= Run( change_param,      "change_param"     );
-	ok &= Run( check_for_nan,     "check_for_nan"    );
-	ok &= Run( compare_change,    "compare_change"   );
-	ok &= Run( Compare,           "Compare"          );
-	ok &= Run( complex_poly,      "complex_poly"     );
-	ok &= Run( CondExp,           "CondExp"          );
-	ok &= Run( Cos,               "Cos"              );
-	ok &= Run( Cosh,              "Cosh"             );
-	ok &= Run( Div,               "Div"              );
-	ok &= Run( DivEq,             "DivEq"            );
-	ok &= Run( EqualOpSeq,        "EqualOpSeq"       );
-	ok &= Run( Erf,               "Erf"              );
-	ok &= Run( exp,               "exp"              );
-	ok &= Run( expm1,             "expm1"            );
-	ok &= Run( ForOne,            "ForOne"           );
-	ok &= Run( ForTwo,            "ForTwo"           );
-	ok &= Run( forward_dir,       "forward_dir"      );
-	ok &= Run( Forward,           "Forward"          );
-	ok &= Run( forward_order,     "forward_order"    );
-	ok &= Run( fun_assign,        "fun_assign"       );
-	ok &= Run( FunCheck,          "FunCheck"         );
-	ok &= Run( HesLagrangian,     "HesLagrangian"    );
-	ok &= Run( HesLuDet,          "HesLuDet"         );
-	ok &= Run( HesMinorDet,       "HesMinorDet"      );
-	ok &= Run( Hessian,           "Hessian"          );
-	ok &= Run( HesTimesDir,       "HesTimesDir"      );
-	ok &= Run( Independent,       "Independent"      );
-	ok &= Run( Integer,           "Integer"          );
-	ok &= Run( Interface2C,       "Interface2C"      );
-	ok &= Run( interp_onetape,    "interp_onetape"   );
-	ok &= Run( interp_retape,     "interp_retape"    );
-	ok &= Run( JacLuDet,          "JacLuDet"         );
-	ok &= Run( JacMinorDet,       "JacMinorDet"      );
-	ok &= Run( Jacobian,          "Jacobian"         );
-	ok &= Run( log10,             "log10"            );
-	ok &= Run( log1p,             "log1p"            );
-	ok &= Run( log,               "log"              );
-	ok &= Run( LuRatio,           "LuRatio"          );
-	ok &= Run( LuVecADOk,         "LuVecADOk"        );
-	ok &= Run( MulEq,             "MulEq"            );
-	ok &= Run( mul_level,         "mul_level"        );
-	ok &= Run( mul_level_ode,     "mul_level_ode"    );
-	ok &= Run( Mul,               "Mul"              );
-	ok &= Run( NearEqualExt,      "NearEqualExt"     );
-	ok &= Run( number_skip,       "number_skip"      );
-	ok &= Run( NumericType,       "NumericType"      );
-	ok &= Run( num_limits,        "num_limits"       );
-	ok &= Run( OdeStiff,          "OdeStiff"         );
-	ok &= Run( ode_taylor,        "ode_taylor"       );
-	ok &= Run( opt_val_hes,       "opt_val_hes"      );
-	ok &= Run( ParVar,            "ParVar"           );
-	ok &= Run( Poly,              "Poly"             );
-	ok &= Run( pow_int,           "pow_int"          );
-	ok &= Run( pow,               "pow"              );
-	ok &= Run( reverse_any,       "reverse_any"      );
-	ok &= Run( reverse_one,       "reverse_one"      );
-	ok &= Run( reverse_three,     "reverse_three"    );
-	ok &= Run( reverse_two,       "reverse_two"      );
-	ok &= Run( RevOne,            "RevOne"           );
-	ok &= Run( RevTwo,            "RevTwo"           );
-	ok &= Run( Rosen34,           "Rosen34"          );
-	ok &= Run( runge_45_2,        "runge_45_2"       );
-	ok &= Run( seq_property,      "seq_property"     );
-	ok &= Run( sign,              "sign"             );
-	ok &= Run( Sinh,              "Sinh"             );
-	ok &= Run( Sin,               "Sin"              );
-	ok &= Run( Sqrt,              "Sqrt"             );
-	ok &= Run( StackMachine,      "StackMachine"     );
-	ok &= Run( SubEq,             "SubEq"            );
-	ok &= Run( Sub,               "Sub"              );
-	ok &= Run( Tanh,              "Tanh"             );
-	ok &= Run( Tan,               "Tan"              );
-	ok &= Run( TapeIndex,         "TapeIndex"        );
-	ok &= Run( UnaryMinus,        "UnaryMinus"       );
-	ok &= Run( UnaryPlus,         "UnaryPlus"        );
-	ok &= Run( Value,             "Value"            );
-	ok &= Run( Var2Par,           "Var2Par"          );
-	ok &= Run( vec_ad,            "vec_ad"           );
+	Run( abort_recording,   "abort_recording"  );
+	Run( fabs,              "fabs"             );
+	Run( acos,              "acos"             );
+	Run( acosh,             "acosh"            );
+	Run( ad_assign,         "ad_assign"        );
+	Run( ad_ctor,           "ad_ctor"          );
+	Run( Add,               "Add"              );
+	Run( AddEq,             "AddEq"            );
+	Run( ad_fun,            "ad_fun"           );
+	Run( ad_in_c,           "ad_in_c"          );
+	Run( ad_input,          "ad_input"         );
+	Run( ad_output,         "ad_output"        );
+	Run( asin,              "asin"             );
+	Run( asinh,             "asinh"            );
+	Run( atan2,             "atan2"            );
+	Run( atan,              "atan"             );
+	Run( atanh,             "atanh"            );
+	Run( azmul,             "azmul"            );
+	Run( BenderQuad,        "BenderQuad"       );
+	Run( BoolFun,           "BoolFun"          );
+	Run( capacity_order,    "capacity_order"   );
+	Run( change_param,      "change_param"     );
+	Run( check_for_nan,     "check_for_nan"    );
+	Run( compare_change,    "compare_change"   );
+	Run( Compare,           "Compare"          );
+	Run( complex_poly,      "complex_poly"     );
+	Run( CondExp,           "CondExp"          );
+	Run( Cos,               "Cos"              );
+	Run( Cosh,              "Cosh"             );
+	Run( Div,               "Div"              );
+	Run( DivEq,             "DivEq"            );
+	Run( EqualOpSeq,        "EqualOpSeq"       );
+	Run( Erf,               "Erf"              );
+	Run( exp,               "exp"              );
+	Run( expm1,             "expm1"            );
+	Run( ForOne,            "ForOne"           );
+	Run( ForTwo,            "ForTwo"           );
+	Run( forward_dir,       "forward_dir"      );
+	Run( Forward,           "Forward"          );
+	Run( forward_order,     "forward_order"    );
+	Run( fun_assign,        "fun_assign"       );
+	Run( FunCheck,          "FunCheck"         );
+	Run( HesLagrangian,     "HesLagrangian"    );
+	Run( HesLuDet,          "HesLuDet"         );
+	Run( HesMinorDet,       "HesMinorDet"      );
+	Run( Hessian,           "Hessian"          );
+	Run( HesTimesDir,       "HesTimesDir"      );
+	Run( Independent,       "Independent"      );
+	Run( Integer,           "Integer"          );
+	Run( Interface2C,       "Interface2C"      );
+	Run( interp_onetape,    "interp_onetape"   );
+	Run( interp_retape,     "interp_retape"    );
+	Run( JacLuDet,          "JacLuDet"         );
+	Run( JacMinorDet,       "JacMinorDet"      );
+	Run( Jacobian,          "Jacobian"         );
+	Run( log10,             "log10"            );
+	Run( log1p,             "log1p"            );
+	Run( log,               "log"              );
+	Run( LuRatio,           "LuRatio"          );
+	Run( LuVecADOk,         "LuVecADOk"        );
+	Run( MulEq,             "MulEq"            );
+	Run( mul_level,         "mul_level"        );
+	Run( mul_level_ode,     "mul_level_ode"    );
+	Run( Mul,               "Mul"              );
+	Run( NearEqualExt,      "NearEqualExt"     );
+	Run( number_skip,       "number_skip"      );
+	Run( NumericType,       "NumericType"      );
+	Run( num_limits,        "num_limits"       );
+	Run( OdeStiff,          "OdeStiff"         );
+	Run( ode_taylor,        "ode_taylor"       );
+	Run( opt_val_hes,       "opt_val_hes"      );
+	Run( ParVar,            "ParVar"           );
+	Run( Poly,              "Poly"             );
+	Run( pow_int,           "pow_int"          );
+	Run( pow,               "pow"              );
+	Run( reverse_any,       "reverse_any"      );
+	Run( reverse_one,       "reverse_one"      );
+	Run( reverse_three,     "reverse_three"    );
+	Run( reverse_two,       "reverse_two"      );
+	Run( RevOne,            "RevOne"           );
+	Run( RevTwo,            "RevTwo"           );
+	Run( Rosen34,           "Rosen34"          );
+	Run( runge_45_2,        "runge_45_2"       );
+	Run( seq_property,      "seq_property"     );
+	Run( sign,              "sign"             );
+	Run( Sinh,              "Sinh"             );
+	Run( Sin,               "Sin"              );
+	Run( Sqrt,              "Sqrt"             );
+	Run( StackMachine,      "StackMachine"     );
+	Run( SubEq,             "SubEq"            );
+	Run( Sub,               "Sub"              );
+	Run( Tanh,              "Tanh"             );
+	Run( Tan,               "Tan"              );
+	Run( TapeIndex,         "TapeIndex"        );
+	Run( UnaryMinus,        "UnaryMinus"       );
+	Run( UnaryPlus,         "UnaryPlus"        );
+	Run( Value,             "Value"            );
+	Run( Var2Par,           "Var2Par"          );
+	Run( vec_ad,            "vec_ad"           );
 # if CPPAD_HAS_ADOLC
-	ok &= Run( mul_level_adolc,      "mul_level_adolc"     );
-	ok &= Run( mul_level_adolc_ode,  "mul_level_adolc_ode" );
+	Run( mul_level_adolc,      "mul_level_adolc"     );
+	Run( mul_level_adolc_ode,  "mul_level_adolc_ode" );
 # endif
 # if CPPAD_HAS_EIGEN
-	ok &= Run( eigen_array,       "eigen_array"      );
-	ok &= Run( eigen_det,         "eigen_det"        );
+	Run( eigen_array,       "eigen_array"      );
+	Run( eigen_det,         "eigen_det"        );
 # endif
-
-	// check for errors
-	using std::cout;
-	using std::endl;
-	assert( ok || (Run_error_count > 0) );
-	if( CppAD::thread_alloc::free_all() )
-	{	Run_ok_count++;
-		cout << "OK:    " << "No memory leak detected" << endl;
-	}
-	else
-	{	ok = false;
-		Run_error_count++;
-		cout << "Error: " << "memory leak detected" << endl;
-	}
-	// Run base_require after memory leak check because base_alloc.hpp uses
-	// thread_alloc to allocate memory for static copies of nan.
-	ok &= Run( base_require,      "base_require"     );
-	// convert int(size_t) to avoid warning on _MSC_VER systems
-	if( ok )
-		cout << "All " << int(Run_ok_count) << " tests passed." << endl;
-	else	cout << int(Run_error_count) << " tests failed." << endl;
-
+	//
+	// check for memory leak
+	bool memory_ok = CppAD::thread_alloc::free_all();
+	// print summary at end
+	bool ok = Run.summary(memory_ok);
+	//
 	return static_cast<int>( ! ok );
 }
 // END C++

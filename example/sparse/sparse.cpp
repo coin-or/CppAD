@@ -21,6 +21,9 @@ Please visit http://www.coin-or.org/CppAD/ for information on other licenses.
 // for thread_alloc
 # include <cppad/utility/thread_alloc.hpp>
 
+// test runner
+# include <cppad/utility/test_runner.hpp>
+
 // external compiled tests
 extern bool sub_sparse_hes(void);
 extern bool sparsity_sub(void);
@@ -44,74 +47,43 @@ extern bool colpack_jac(void);
 extern bool colpack_hes(void);
 extern bool rc_sparsity(void);
 
-namespace {
-	// function that runs one test
-	static size_t Run_ok_count    = 0;
-	static size_t Run_error_count = 0;
-	bool Run(bool TestOk(void), const char *name)
-	{	bool ok = true;
-		ok &= TestOk();
-		if( ok )
-		{	std::cout << "OK:    " << "sparse: " << name << std::endl;
-			Run_ok_count++;
-		}
-		else
-		{	std::cout << "Error: " << "sparse: " << name << std::endl;
-			Run_error_count++;
-		}
-		return ok;
-	}
-}
-
 // main program that runs all the tests
 int main(void)
-{	bool ok = true;
+{	std::string group = "example_sparse";
+	size_t      width = 20;
+	CppAD::test_runner Run(group, width);
 
 	// This line is used by test_one.sh
 
 	// external compiled tests
-	ok &= Run( sub_sparse_hes,            "sub_sparse_hes" );
-	ok &= Run( sparsity_sub,              "sparsity_sub" );
-	ok &= Run( sparse_sub_hes,            "sparse_sub_hes" );
-	ok &= Run( sparse_hes,                "sparse_hes" );
-	ok &= Run( sparse_jac_for,            "sparse_jac_for" );
-	ok &= Run( sparse_jac_rev,            "sparse_jac_rev" );
-	ok &= Run( sparse_jacobian,           "sparse_jacobian" );
-	ok &= Run( sparse_hessian,            "sparse_hessian" );
-	ok &= Run( rev_hes_sparsity,          "rev_hes_sparsity" );
-	ok &= Run( rev_jac_sparsity,          "rev_jac_sparsity" );
-	ok &= Run( RevSparseJac,              "RevSparseJac" );
-	ok &= Run( rev_sparse_hes,            "rev_sparse_hes" );
-	ok &= Run( for_hes_sparsity,          "for_hes_sparsity" );
-	ok &= Run( for_jac_sparsity,          "for_jac_sparsity" );
-	ok &= Run( ForSparseJac,              "ForSparseJac" );
-	ok &= Run( for_sparse_hes,            "for_sparse_hes" );
-	ok &= Run( dependency,                "dependency" );
-	ok &= Run( conj_grad,                 "conj_grad" );
-	ok &= Run( rc_sparsity,               "rc_sparsity" );
+	Run( sub_sparse_hes,            "sub_sparse_hes" );
+	Run( sparsity_sub,              "sparsity_sub" );
+	Run( sparse_sub_hes,            "sparse_sub_hes" );
+	Run( sparse_hes,                "sparse_hes" );
+	Run( sparse_jac_for,            "sparse_jac_for" );
+	Run( sparse_jac_rev,            "sparse_jac_rev" );
+	Run( sparse_jacobian,           "sparse_jacobian" );
+	Run( sparse_hessian,            "sparse_hessian" );
+	Run( rev_hes_sparsity,          "rev_hes_sparsity" );
+	Run( rev_jac_sparsity,          "rev_jac_sparsity" );
+	Run( RevSparseJac,              "RevSparseJac" );
+	Run( rev_sparse_hes,            "rev_sparse_hes" );
+	Run( for_hes_sparsity,          "for_hes_sparsity" );
+	Run( for_jac_sparsity,          "for_jac_sparsity" );
+	Run( ForSparseJac,              "ForSparseJac" );
+	Run( for_sparse_hes,            "for_sparse_hes" );
+	Run( dependency,                "dependency" );
+	Run( conj_grad,                 "conj_grad" );
+	Run( rc_sparsity,               "rc_sparsity" );
 # if CPPAD_HAS_COLPACK
-	ok &= Run( colpack_jac,               "colpack_jac" );
-	ok &= Run( colpack_hes,               "colpack_hes" );
+	Run( colpack_jac,               "colpack_jac" );
+	Run( colpack_hes,               "colpack_hes" );
 # endif
-
-
-	// check for errors
-	using std::cout;
-	using std::endl;
-	assert( ok || (Run_error_count > 0) );
-	if( CppAD::thread_alloc::free_all() )
-	{	Run_ok_count++;
-		cout << "OK:    " << "No memory leak detected" << endl;
-	}
-	else
-	{	ok = false;
-		Run_error_count++;
-		cout << "Error: " << "memory leak detected" << endl;
-	}
-	// convert int(size_t) to avoid warning on _MSC_VER systems
-	if( ok )
-		cout << "All " << int(Run_ok_count) << " tests passed." << endl;
-	else	cout << int(Run_error_count) << " tests failed." << endl;
-
+	//
+	// check for memory leak
+	bool memory_ok = CppAD::thread_alloc::free_all();
+	// print summary at end
+	bool ok = Run.summary(memory_ok);
+	//
 	return static_cast<int>( ! ok );
 }

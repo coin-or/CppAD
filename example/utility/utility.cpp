@@ -18,6 +18,9 @@ Please visit http://www.coin-or.org/CppAD/ for information on other licenses.
 // for thread_alloc
 # include <cppad/utility/thread_alloc.hpp>
 
+// test runner
+# include <cppad/utility/test_runner.hpp>
+
 // external compiled tests
 extern bool CheckNumericType(void);
 extern bool CheckSimpleVector(void);
@@ -44,75 +47,44 @@ extern bool thread_alloc(void);
 extern bool to_string(void);
 extern bool vectorBool(void);
 
-namespace {
-	// function that runs one test
-	static size_t Run_ok_count    = 0;
-	static size_t Run_error_count = 0;
-	bool Run(bool TestOk(void), const char *name)
-	{	bool ok = true;
-		ok &= TestOk();
-		if( ok )
-		{	std::cout << "OK:    " << "utility: " << name << std::endl;
-			Run_ok_count++;
-		}
-		else
-		{	std::cout << "Error: " << "utility: " << name << std::endl;
-			Run_error_count++;
-		}
-		return ok;
-	}
-}
-
 // main program that runs all the tests
 int main(void)
-{	bool ok = true;
+{	std::string group = "example_utility";
+	size_t      width = 20;
+	CppAD::test_runner Run(group, width);
 
 	// This line is used by test_one.sh
 
 	// external compiled tests
-	ok &= Run( CheckNumericType,       "CheckNumericType" );
-	ok &= Run( CheckSimpleVector,      "CheckSimpleVector" );
-	ok &= Run( CppAD_vector,           "CppAD_vector" );
-	ok &= Run( ErrorHandler,           "ErrorHandler" );
-	ok &= Run( index_sort,             "index_sort" );
-	ok &= Run( LuFactor,               "LuFactor" );
-	ok &= Run( LuInvert,               "LuInvert" );
-	ok &= Run( LuSolve,                "LuSolve" );
-	ok &= Run( nan,                    "nan" );
-	ok &= Run( Near_Equal,             "Near_Equal" );
-	ok &= Run( OdeErrControl,          "OdeErrControl" );
-	ok &= Run( OdeErrMaxabs,           "OdeErrMaxabs" );
-	ok &= Run( OdeGearControl,         "OdeGearControl" );
-	ok &= Run( OdeGear,                "OdeGear" );
-	ok &= Run( RombergMul,             "RombergMul" );
-	ok &= Run( RombergOne,             "RombergOne" );
-	ok &= Run( runge_45_1,             "runge_45_1" );
-	ok &= Run( set_union,              "set_union" );
-	ok &= Run( SimpleVector,           "SimpleVector" );
-	ok &= Run( thread_alloc,           "thread_alloc" );
-	ok &= Run( sparse_rc,              "sparse_rc" );
-	ok &= Run( sparse_rcv,             "sparse_rcv" );
-	ok &= Run( to_string,              "to_string" );
-	ok &= Run( vectorBool,             "vectorBool" );
-
-
-	// check for errors
-	using std::cout;
-	using std::endl;
-	assert( ok || (Run_error_count > 0) );
-	if( CppAD::thread_alloc::free_all() )
-	{	Run_ok_count++;
-		cout << "OK:    " << "No memory leak detected" << endl;
-	}
-	else
-	{	ok = false;
-		Run_error_count++;
-		cout << "Error: " << "memory leak detected" << endl;
-	}
-	// convert int(size_t) to avoid warning on _MSC_VER systems
-	if( ok )
-		cout << "All " << int(Run_ok_count) << " tests passed." << endl;
-	else	cout << int(Run_error_count) << " tests failed." << endl;
-
+	Run( CheckNumericType,       "CheckNumericType" );
+	Run( CheckSimpleVector,      "CheckSimpleVector" );
+	Run( CppAD_vector,           "CppAD_vector" );
+	Run( ErrorHandler,           "ErrorHandler" );
+	Run( index_sort,             "index_sort" );
+	Run( LuFactor,               "LuFactor" );
+	Run( LuInvert,               "LuInvert" );
+	Run( LuSolve,                "LuSolve" );
+	Run( nan,                    "nan" );
+	Run( Near_Equal,             "Near_Equal" );
+	Run( OdeErrControl,          "OdeErrControl" );
+	Run( OdeErrMaxabs,           "OdeErrMaxabs" );
+	Run( OdeGearControl,         "OdeGearControl" );
+	Run( OdeGear,                "OdeGear" );
+	Run( RombergMul,             "RombergMul" );
+	Run( RombergOne,             "RombergOne" );
+	Run( runge_45_1,             "runge_45_1" );
+	Run( set_union,              "set_union" );
+	Run( SimpleVector,           "SimpleVector" );
+	Run( thread_alloc,           "thread_alloc" );
+	Run( sparse_rc,              "sparse_rc" );
+	Run( sparse_rcv,             "sparse_rcv" );
+	Run( to_string,              "to_string" );
+	Run( vectorBool,             "vectorBool" );
+	//
+	// check for memory leak
+	bool memory_ok = CppAD::thread_alloc::free_all();
+	// print summary at end
+	bool ok = Run.summary(memory_ok);
+	//
 	return static_cast<int>( ! ok );
 }

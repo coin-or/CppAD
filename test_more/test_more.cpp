@@ -18,6 +18,9 @@ Please visit http://www.coin-or.org/CppAD/ for information on other licenses.
 // memory leak checker
 # include <cppad/utility/thread_alloc.hpp>
 
+// test runner
+# include <cppad/utility/test_runner.hpp>
+
 // prototype external compiled tests (this line expected by bin/new_test.sh)
 extern bool fabs(void);
 extern bool acos(void);
@@ -127,178 +130,141 @@ extern bool zdouble(void);
 // tests in local subdirectory
 extern bool vector_set(void);
 
-namespace {
-	// function that runs one test
-	static size_t Run_ok_count    = 0;
-	static size_t Run_error_count = 0;
-	bool Run(bool TestOk(void), std::string name)
-	{	bool ok               = true;
-		std::streamsize width =  20;
-		std::cout.width( width );
-		std::cout.setf( std::ios_base::left );
-		std::cout << name;
-		//
-		ok &= name.size() < size_t(width);
-		ok &= TestOk();
-		if( ok )
-		{	std::cout << "OK" << std::endl;
-			Run_ok_count++;
-		}
-		else
-		{	std::cout << "Error" << std::endl;
-			Run_error_count++;
-		}
-		return ok;
-	}
-}
-
 // main program that runs all the tests
 int main(void)
-{	bool ok = true;
-	using namespace std;
+{	std::string group = "test_more";
+	size_t      width = 20;
+	CppAD::test_runner Run(group, width);
 
 	// This line is used by test_one.sh
 
 	// run external compiled tests (this line expected by bin/new_test.sh)
-	ok &= Run( fabs,            "fabs"           );
-	ok &= Run( acos,            "acos"           );
-	ok &= Run( acosh,           "acosh"          );
-	ok &= Run( adfun_copy,      "adfun_copy"     );
-	ok &= Run( Add,             "Add"            );
-	ok &= Run( AddEq,           "AddEq"          );
-	ok &= Run( AddZero,         "AddZero"        );
-	ok &= Run( asin,            "asin"           );
-	ok &= Run( asinh,           "asinh"          );
-	ok &= Run( assign,          "assign"         );
-	ok &= Run( atan,            "atan"           );
-	ok &= Run( atanh,           "atanh"          );
-	ok &= Run( atan2,           "atan2"          );
-	ok &= Run( atomic_sparsity, "atomic_sparsity");
-	ok &= Run( azmul,           "azmul"          );
-	ok &= Run( bool_sparsity,   "bool_sparsity"  );
-	ok &= Run( check_simple_vector, "check_simple_vector" );
-	ok &= Run( checkpoint,      "checkpoint"     );
-	ok &= Run( Compare,         "Compare"        );
-	ok &= Run( compare_change,  "compare_change" );
-	ok &= Run( CondExp,         "CondExp"        );
-	ok &= Run( CondExpAD,       "CondExpAD"      );
-	ok &= Run( cond_exp_rev,    "cond_exp_rev"   );
-	ok &= Run( copy,            "copy"           );
-	ok &= Run( Cos,             "Cos"            );
-	ok &= Run( Cosh,            "Cosh"           );
-	ok &= Run( dbl_epsilon,     "dbl_epsilon"    );
-	ok &= Run( dependency,      "dependency"     );
-	ok &= Run( Div,             "Div"            );
-	ok &= Run( DivEq,           "DivEq"          );
-	ok &= Run( DivZeroOne,      "DivZeroOne"     );
-	ok &= Run( erf,             "erf"            );
-	ok &= Run( Exp,             "Exp"            );
-	ok &= Run( expm1,           "expm1"          );
-	ok &= Run( ForHess,         "ForHess"        );
-	ok &= Run( for_sparse_hes,  "for_sparse_hes" );
-	ok &= Run( for_sparse_jac,  "for_sparse_jac" );
-	ok &= Run( Forward,         "Forward"        );
-	ok &= Run( forward_dir,     "forward_dir"    );
-	ok &= Run( forward_order,   "forward_order"  );
-	ok &= Run( FromBase,        "FromBase"       );
-	ok &= Run( FunCheck,        "FunCheck"       );
-	ok &= Run( hes_sparsity,    "hes_sparsity"   );
-	ok &= Run( jacobian,        "jacobian"       );
-	ok &= Run( log,             "log"            );
-	ok &= Run( log10,           "log10"          );
-	ok &= Run( log1p,           "log1p"          );
-	ok &= Run( Mul,             "Mul"            );
-	ok &= Run( mul_level,       "mul_level"      );
-	ok &= Run( mul_cond_rev,    "mul_cond_rev"   );
-	ok &= Run( mul_cskip,       "Mul_cskip"      );
-	ok &= Run( MulEq,           "MulEq"          );
-	ok &= Run( mul_zdouble,     "mul_zdouble"    );
-	ok &= Run( MulZeroOne,      "MulZeroOne"     );
-	ok &= Run( NearEqualExt,    "NearEqualExt"   );
-	ok &= Run( Neg,             "Neg"            );
-	ok &= Run( num_limits,      "num_limits"     );
-	ok &= Run( ode_err_control, "ode_err_control");
-	ok &= Run( old_mat_mul,     "old_mat_mul"    );
-	ok &= Run( old_reciprocal,  "old_reciprocal" );
-	ok &= Run( old_tan,         "old_tan"        );
-	ok &= Run( old_usead_1,     "old_usead_1"    );
-	ok &= Run( old_usead_2,     "old_usead_2"    );
-	ok &= Run( omp_alloc,       "omp_alloc"      );
-	ok &= Run( optimize,        "optimize"       );
-	ok &= Run( parameter,       "parameter"      );
-	ok &= Run( Poly,            "Poly"           );
-	ok &= Run( Pow,             "Pow"            );
-	ok &= Run( PowInt,          "PowInt"         );
-	ok &= Run( print_for,       "print_for"      );
-	ok &= Run( reverse,         "reverse"        );
-	ok &= Run( rev_sparse_jac,  "rev_sparse_jac" );
-	ok &= Run( RevTwo,          "RevTwo"         );
-	ok &= Run( RombergOne,      "RombergOne"     );
-	ok &= Run( Rosen34,         "Rosen34"        );
-	ok &= Run( Runge45,         "Runge45"        );
-	ok &= Run( SimpleVector,    "SimpleVector"   );
-	ok &= Run( Sin,             "Sin"            );
-	ok &= Run( SinCos,          "SinCos"         );
-	ok &= Run( Sinh,            "Sinh"           );
-	ok &= Run( sparse_hessian,  "sparse_hessian" );
-	ok &= Run( sparse_jacobian, "sparse_jacobian");
-	ok &= Run( sparse_sub_hes,  "sparse_sub_hes" );
-	ok &= Run( sparse_vec_ad,   "sparse_vec_ad"  );
-	ok &= Run( Sqrt,            "Sqrt"           );
-	ok &= Run( std_math,        "std_math"       );
-	ok &= Run( Sub,             "Sub"            );
-	ok &= Run( SubEq,           "SubEq"          );
-	ok &= Run( SubZero,         "SubZero"        );
-	ok &= Run( tan,             "tan"            );
-	ok &= Run( to_string,       "to_string"      );
-	ok &= Run( track_new_del,   "track_new_del"  );
-	ok &= Run( Value,           "Value"          );
-	ok &= Run( VecAD,           "VecAD"          );
-	ok &= Run( VecADPar,        "VecADPar"       );
-	ok &= Run( VecUnary,        "VecUnary"       );
-	ok &= Run( zdouble,         "zdouble"        );
+	Run( fabs,            "fabs"           );
+	Run( acos,            "acos"           );
+	Run( acosh,           "acosh"          );
+	Run( adfun_copy,      "adfun_copy"     );
+	Run( Add,             "Add"            );
+	Run( AddEq,           "AddEq"          );
+	Run( AddZero,         "AddZero"        );
+	Run( asin,            "asin"           );
+	Run( asinh,           "asinh"          );
+	Run( assign,          "assign"         );
+	Run( atan,            "atan"           );
+	Run( atanh,           "atanh"          );
+	Run( atan2,           "atan2"          );
+	Run( atomic_sparsity, "atomic_sparsity");
+	Run( azmul,           "azmul"          );
+	Run( bool_sparsity,   "bool_sparsity"  );
+	Run( check_simple_vector, "check_simple_vector" );
+	Run( checkpoint,      "checkpoint"     );
+	Run( Compare,         "Compare"        );
+	Run( compare_change,  "compare_change" );
+	Run( CondExp,         "CondExp"        );
+	Run( CondExpAD,       "CondExpAD"      );
+	Run( cond_exp_rev,    "cond_exp_rev"   );
+	Run( copy,            "copy"           );
+	Run( Cos,             "Cos"            );
+	Run( Cosh,            "Cosh"           );
+	Run( dbl_epsilon,     "dbl_epsilon"    );
+	Run( dependency,      "dependency"     );
+	Run( Div,             "Div"            );
+	Run( DivEq,           "DivEq"          );
+	Run( DivZeroOne,      "DivZeroOne"     );
+	Run( erf,             "erf"            );
+	Run( Exp,             "Exp"            );
+	Run( expm1,           "expm1"          );
+	Run( ForHess,         "ForHess"        );
+	Run( for_sparse_hes,  "for_sparse_hes" );
+	Run( for_sparse_jac,  "for_sparse_jac" );
+	Run( Forward,         "Forward"        );
+	Run( forward_dir,     "forward_dir"    );
+	Run( forward_order,   "forward_order"  );
+	Run( FromBase,        "FromBase"       );
+	Run( FunCheck,        "FunCheck"       );
+	Run( hes_sparsity,    "hes_sparsity"   );
+	Run( jacobian,        "jacobian"       );
+	Run( log,             "log"            );
+	Run( log10,           "log10"          );
+	Run( log1p,           "log1p"          );
+	Run( Mul,             "Mul"            );
+	Run( mul_level,       "mul_level"      );
+	Run( mul_cond_rev,    "mul_cond_rev"   );
+	Run( mul_cskip,       "Mul_cskip"      );
+	Run( MulEq,           "MulEq"          );
+	Run( mul_zdouble,     "mul_zdouble"    );
+	Run( MulZeroOne,      "MulZeroOne"     );
+	Run( NearEqualExt,    "NearEqualExt"   );
+	Run( Neg,             "Neg"            );
+	Run( num_limits,      "num_limits"     );
+	Run( ode_err_control, "ode_err_control");
+	Run( old_mat_mul,     "old_mat_mul"    );
+	Run( old_reciprocal,  "old_reciprocal" );
+	Run( old_tan,         "old_tan"        );
+	Run( old_usead_1,     "old_usead_1"    );
+	Run( old_usead_2,     "old_usead_2"    );
+	Run( omp_alloc,       "omp_alloc"      );
+	Run( optimize,        "optimize"       );
+	Run( parameter,       "parameter"      );
+	Run( Poly,            "Poly"           );
+	Run( Pow,             "Pow"            );
+	Run( PowInt,          "PowInt"         );
+	Run( print_for,       "print_for"      );
+	Run( reverse,         "reverse"        );
+	Run( rev_sparse_jac,  "rev_sparse_jac" );
+	Run( RevTwo,          "RevTwo"         );
+	Run( RombergOne,      "RombergOne"     );
+	Run( Rosen34,         "Rosen34"        );
+	Run( Runge45,         "Runge45"        );
+	Run( SimpleVector,    "SimpleVector"   );
+	Run( Sin,             "Sin"            );
+	Run( SinCos,          "SinCos"         );
+	Run( Sinh,            "Sinh"           );
+	Run( sparse_hessian,  "sparse_hessian" );
+	Run( sparse_jacobian, "sparse_jacobian");
+	Run( sparse_sub_hes,  "sparse_sub_hes" );
+	Run( sparse_vec_ad,   "sparse_vec_ad"  );
+	Run( Sqrt,            "Sqrt"           );
+	Run( std_math,        "std_math"       );
+	Run( Sub,             "Sub"            );
+	Run( SubEq,           "SubEq"          );
+	Run( SubZero,         "SubZero"        );
+	Run( tan,             "tan"            );
+	Run( to_string,       "to_string"      );
+	Run( track_new_del,   "track_new_del"  );
+	Run( Value,           "Value"          );
+	Run( VecAD,           "VecAD"          );
+	Run( VecADPar,        "VecADPar"       );
+	Run( VecUnary,        "VecUnary"       );
+	Run( zdouble,         "zdouble"        );
 #if CPPAD_HAS_ADOLC
-	ok &= Run( base_adolc,      "base_adolc"     );
+	Run( base_adolc,      "base_adolc"     );
 # endif
 #if CPPAD_HAS_IPOPT
-	ok &= Run( ipopt_solve,     "ipopt_solve"    );
+	Run( ipopt_solve,     "ipopt_solve"    );
 # endif
 # ifdef CPPAD_OPENMP_TEST
-	ok &= Run( alloc_openmp,    "alloc_openmp"   );
+	Run( alloc_openmp,    "alloc_openmp"   );
 # endif
 # if CPPAD_HAS_EIGEN
-	ok &= Run( cppad_eigen,     "cppad_eigen"    );
-	ok &= Run( eigen_mat_inv,   "eigen_mat_inv"  );
+	Run( cppad_eigen,     "cppad_eigen"    );
+	Run( eigen_mat_inv,   "eigen_mat_inv"  );
 # endif
 # if ! CPPAD_EIGENVECTOR
-	ok &= Run( test_vector, "test_vector" );
+	Run( test_vector, "test_vector" );
 # endif
-
 	// local sub-directory
-	ok &= Run( test_vector,      "test_vector"   );
-
-	// check for errors
-	using std::cout;
-	using std::endl;
-	assert( ok || (Run_error_count > 0) );
-	if( CppAD::thread_alloc::free_all() )
-	{	Run_ok_count++;
-		cout << "OK:    " << "No memory leak detected" << endl;
-	}
-	else
-	{	ok = false;
-		Run_error_count++;
-		cout << "Error: " << "memory leak detected" << endl;
-	}
-	// Run base_require after memory leak check because base_alloc.hpp uses
+	Run( test_vector,      "test_vector"   );
+	//
+	// check for memory leak
+	bool memory_ok = CppAD::thread_alloc::free_all();
+	//
+	// Run base_alloc after memory leak check because base_alloc.hpp uses
 	// thread_alloc to allocate memory for static copies of nan.
-	ok &= Run( base_alloc_test, "base_alloc"     );
-	// convert int(size_t) to avoid warning on _MSC_VER systems
-	if( ok )
-		cout << "All " << int(Run_ok_count) << " tests passed." << endl;
-	else	cout << int(Run_error_count) << " tests failed." << endl;
-
+	Run( base_alloc_test,  "base_alloc"    );
+	//
+	// print summary at end
+	bool ok = Run.summary(memory_ok);
+	//
 	return static_cast<int>( ! ok );
-
 }
 // END PROGRAM
