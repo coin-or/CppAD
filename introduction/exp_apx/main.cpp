@@ -60,7 +60,7 @@ extern bool exp_eps_rev2(void);
 
 // main program that runs all the tests
 int main(void)
-{	std::string group = "introduction_exp_apx";
+{	std::string group = "introduction/exp_apx";
 	size_t      width = 20;
 	CppAD::test_boolofvoid Run(group, width);
 

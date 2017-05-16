@@ -28,7 +28,7 @@ extern bool retape(void);
 
 // main program that runs all the tests
 int main(void)
-{	std::string group = "example_ipoot_solve";
+{	std::string group = "example/ipopt_solve";
 	size_t      width = 20;
 	CppAD::test_boolofvoid Run(group, width);
 

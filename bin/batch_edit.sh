@@ -14,13 +14,19 @@ spell_list='
 revert_list='
 '
 move_list='
-	cppad/utility/test_runner.hpp
 '
 move_sed='s|test_runner.hpp|test_boolofvoid.hpp|'
 #
 cat << EOF > junk.sed
-s|test_runner|test_boolofvoid|g
-s|TEST_RUNNER|TEST_BOOLOFVOID|g
+s|group = "cppad_ipopt_example"|group = "cppad_ipopt/example"|
+s|group = "cppad_ipopt_test"|group = "cppad_ipopt/test"|
+s|group = "example_atmoic"|group = "example/atmoic"|
+s|group = "example_ipoot_solve"|group = "example/ipopt_solve"|
+s|group = "example_optimize"|group = "example/optimize"|
+s|group = "example_sparse"|group = "example/sparse"|
+s|group = "example_utility"|group = "example/utility"|
+s|group = "introduction_exp_apx"|group = "introduction/exp_apx"|
+s|group = "test_more"|group = "test_more"|
 EOF
 # -----------------------------------------------------------------------------
 if [ $0 != "bin/batch_edit.sh" ]

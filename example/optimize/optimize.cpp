@@ -31,7 +31,7 @@ extern bool reverse_active(void);
 
 // main program that runs all the tests
 int main(void)
-{	std::string group = "example_optimize";
+{	std::string group = "example/optimize";
 	size_t      width = 20;
 	CppAD::test_boolofvoid Run(group, width);
 

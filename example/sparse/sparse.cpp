@@ -49,7 +49,7 @@ extern bool rc_sparsity(void);
 
 // main program that runs all the tests
 int main(void)
-{	std::string group = "example_sparse";
+{	std::string group = "example/sparse";
 	size_t      width = 20;
 	CppAD::test_boolofvoid Run(group, width);
 

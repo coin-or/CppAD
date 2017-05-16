@@ -49,7 +49,7 @@ extern bool vectorBool(void);
 
 // main program that runs all the tests
 int main(void)
-{	std::string group = "example_utility";
+{	std::string group = "example/utility";
 	size_t      width = 20;
 	CppAD::test_boolofvoid Run(group, width);
 
