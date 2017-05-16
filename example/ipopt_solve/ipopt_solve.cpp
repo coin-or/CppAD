@@ -24,13 +24,13 @@ extern bool ode_inverse(void);
 extern bool retape(void);
 
 // test runner
-# include <cppad/utility/test_runner.hpp>
+# include <cppad/utility/test_boolofvoid.hpp>
 
 // main program that runs all the tests
 int main(void)
 {	std::string group = "example_ipoot_solve";
 	size_t      width = 20;
-	CppAD::test_runner Run(group, width);
+	CppAD::test_boolofvoid Run(group, width);
 
 	// This line is used by test_one.sh
 

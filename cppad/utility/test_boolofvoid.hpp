@@ -1,5 +1,5 @@
-# ifndef CPPAD_UTILITY_TEST_RUNNER_HPP
-# define CPPAD_UTILITY_TEST_RUNNER_HPP
+# ifndef CPPAD_UTILITY_TEST_BOOLOFVOID_HPP
+# define CPPAD_UTILITY_TEST_BOOLOFVOID_HPP
 /* --------------------------------------------------------------------------
 CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-17 Bradley M. Bell
 
@@ -11,8 +11,9 @@ A copy of this license is included in the COPYING file of this distribution.
 Please visit http://www.coin-or.org/CppAD/ for information on other licenses.
 -------------------------------------------------------------------------- */
 /*
-$begin test_runner$$
+$begin test_boolofvoid$$
 $spell
+	boolofvoid
 	const
 	std
 	bool
@@ -23,7 +24,7 @@ $$
 $section Object that Runs a Group of Tests$$
 
 $head Syntax$$
-$codei%test_runner %Run%(%group%, %width%)
+$codei%test_boolofvoid %Run%(%group%, %width%)
 %$$
 $icode%Run%(%test%, %name%)
 %$$
@@ -86,7 +87,7 @@ $end
 namespace CppAD { // BEGIN_CPPAD_NAMESPACE
 
 /// One class object is used to run a group of tests
-class test_runner {
+class test_boolofvoid {
 private:
 	/// name for the group of test this object will run
 	const std::string group_;
@@ -100,20 +101,20 @@ private:
 
 public:
 	/// ctor
-	test_runner(const std::string& group, size_t width) :
+	test_boolofvoid(const std::string& group, size_t width) :
 	group_(group) ,
 	width_(width) ,
 	n_ok_(0)      ,
 	n_error_(0)
 	{	std::cout << "Begin test group " << group_ << std::endl; }
 	/// destructor
-	~test_runner(void)
+	~test_boolofvoid(void)
 	{	std::cout << "End test group " << group_ << std::endl; }
 	/// run one test
 	bool operator()(bool test(void), const std::string& name)
 	{	CPPAD_ASSERT_KNOWN(
 			name.size() < width_ ,
-			"test_runner: name does not have less characters than width"
+			"test_boolofvoid: name does not have less characters than width"
 		);
 		std::cout.width( width_ );
 		std::cout.setf( std::ios_base::left );

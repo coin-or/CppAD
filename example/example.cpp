@@ -44,7 +44,7 @@ $end
 # include <cppad/utility/thread_alloc.hpp>
 
 // test runner
-# include <cppad/utility/test_runner.hpp>
+# include <cppad/utility/test_boolofvoid.hpp>
 
 // prototype external compiled tests (this line expected by bin/new_test.sh)
 extern bool abort_recording(void);
@@ -157,7 +157,7 @@ extern bool vec_ad(void);
 int main(void)
 {	std::string group = "example_optimize";
 	size_t      width = 20;
-	CppAD::test_runner Run(group, width);
+	CppAD::test_boolofvoid Run(group, width);
 
 	// This line is used by test_one.sh
 

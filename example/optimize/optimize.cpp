@@ -18,7 +18,7 @@ Please visit http://www.coin-or.org/CppAD/ for information on other licenses.
 # include <cppad/utility/thread_alloc.hpp>
 
 // test runner
-# include <cppad/utility/test_runner.hpp>
+# include <cppad/utility/test_boolofvoid.hpp>
 
 // external complied tests
 extern bool compare_op(void);
@@ -33,7 +33,7 @@ extern bool reverse_active(void);
 int main(void)
 {	std::string group = "example_optimize";
 	size_t      width = 20;
-	CppAD::test_runner Run(group, width);
+	CppAD::test_boolofvoid Run(group, width);
 
 	// This line is used by test_one.sh
 
