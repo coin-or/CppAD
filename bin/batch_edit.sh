@@ -12,21 +12,24 @@
 spell_list='
 '
 revert_list='
+speed/adolc/makefile.am
+speed/cppad/makefile.am
+speed/double/makefile.am
+speed/fadbad/makefile.am
+speed/profile/makefile.am
+speed/sacado/makefile.am
 '
 move_list='
+	introduction/exp_apx/main.cpp
 '
-move_sed='s|test_runner.hpp|test_boolofvoid.hpp|'
+move_sed='s|main.cpp|exp_apx.cpp|'
 #
 cat << EOF > junk.sed
-s|group = "cppad_ipopt_example"|group = "cppad_ipopt/example"|
-s|group = "cppad_ipopt_test"|group = "cppad_ipopt/test"|
-s|group = "example_atmoic"|group = "example/atmoic"|
-s|group = "example_ipoot_solve"|group = "example/ipopt_solve"|
-s|group = "example_optimize"|group = "example/optimize"|
-s|group = "example_sparse"|group = "example/sparse"|
-s|group = "example_utility"|group = "example/utility"|
-s|group = "introduction_exp_apx"|group = "introduction/exp_apx"|
-s|group = "test_more"|group = "test_more"|
+s|^\\tmain.cpp\$|\\texp_apx.cpp|
+s|^\\tmain.cpp \\\\\$|\\texp_apx.cpp \\\\|
+s|exp_apx_main.cpp|exp_apx.cpp|g
+s|head main.cpp|head Source|
+s|exp_apx/main.cpp|exp_apx/exp_apx.cpp|
 EOF
 # -----------------------------------------------------------------------------
 if [ $0 != "bin/batch_edit.sh" ]

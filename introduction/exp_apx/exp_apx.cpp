@@ -10,7 +10,7 @@ Please visit http://www.coin-or.org/CppAD/ for information on other licenses.
 -------------------------------------------------------------------------- */
 
 /*
-$begin exp_apx_main.cpp$$
+$begin exp_apx.cpp$$
 $spell
 	Cpp
 	exp_eps
@@ -24,9 +24,9 @@ $mindex exp_apx main run$$
 $head Running Tests$$
 To build this program and run its correctness tests see $cref cmake_check$$.
 
-$head main.cpp$$
+$head Source$$
 $code
-$srcfile%introduction/exp_apx/main.cpp%0%// BEGIN C++%// END C++%1%$$
+$srcfile%introduction/exp_apx/exp_apx.cpp%0%// BEGIN C++%// END C++%1%$$
 $$
 
 $end

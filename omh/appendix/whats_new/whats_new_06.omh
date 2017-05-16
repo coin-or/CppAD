@@ -102,7 +102,7 @@ Move the exponential example to the subdirectory
 $code introduction/exp_apx$$ and change the
 $code --with-Introduction$$
 unix configure option
-to build both the $cref get_started.cpp$$ and $cref exp_apx_main.cpp$$
+to build both the $cref get_started.cpp$$ and $cref exp_apx.cpp$$
 example programs.
 (The $code --with-GetStarted$$ configure command line option has been removed.)
 
@@ -695,7 +695,7 @@ it so that it is visible at the too level of the documentation.
 $head 04-26$$
 The programs in $cref Introduction$$ have been converted to automated
 test that return true or false with the driver program
-$cref/Introduction/exp_apx_main.cpp/$$.
+$cref/Introduction/exp_apx.cpp/$$.
 
 $head 04-25$$
 Add an $cref Introduction$$ section to the documentation

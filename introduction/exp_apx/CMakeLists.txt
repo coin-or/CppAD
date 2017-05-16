@@ -1,6 +1,5 @@
-# $Id$
 # -----------------------------------------------------------------------------
-# CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-16 Bradley M. Bell
+# CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-17 Bradley M. Bell
 #
 # CppAD is distributed under multiple licenses. This distribution is under
 # the terms of the
@@ -16,7 +15,7 @@
 SET(CMAKE_BUILD_TYPE DEBUG)
 #
 ADD_EXECUTABLE(introduction_exp_apx EXCLUDE_FROM_ALL
-	main.cpp
+	exp_apx.cpp
 	exp_2.cpp
 	exp_2.hpp
 	exp_2_cppad.cpp
