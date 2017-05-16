@@ -1,6 +1,6 @@
 // $Id$
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-15 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-17 Bradley M. Bell
 
 CppAD is distributed under multiple licenses. This distribution is under
 the terms of the
@@ -19,56 +19,29 @@ Please visit http://www.coin-or.org/CppAD/ for information on other licenses.
 // CppAD include file
 # include <cppad/cppad.hpp>
 
+// test runner
+# include <cppad/utility/test_boolofvoid.hpp>
+
 // external complied tests
 extern bool ipopt_get_started(void);
 extern bool ode_simple_check(void);
 extern bool ode_fast_check(void);
 
-namespace {
-	// function that runs one test
-	static size_t Run_ok_count    = 0;
-	static size_t Run_error_count = 0;
-	bool Run(bool TestOk(void), const char *name)
-	{	bool ok = true;
-		ok &= TestOk();
-		if( ok )
-		{	std::cout << "OK:    " << name << std::endl;
-			Run_ok_count++;
-		}
-		else
-		{	std::cout << "Error: " << name << std::endl;
-			Run_error_count++;
-		}
-		return ok;
-	}
-}
-
 // main program that runs all the tests
 int main(void)
-{	bool ok = true;
+{	std::string group = "example_ipoot_solve";
+	size_t      width = 20;
+	CppAD::test_boolofvoid Run(group, width);
 
 	// external compiled tests
-	ok &= Run( ipopt_get_started,   "ipopt_get_started"  );
-	ok &= Run( ode_simple_check,    "ode_simple_check"   );
-	ok &= Run( ode_fast_check,      "ode_fast_check"     );
-
-	// check for errors
-	using std::cout;
-	using std::endl;
-	assert( ok || (Run_error_count > 0) );
-	if( CppAD::thread_alloc::free_all() )
-	{	Run_ok_count++;
-		cout << "OK:    " << "No memory leak detected" << endl;
-	}
-	else
-	{	ok = false;
-		Run_error_count++;
-		cout << "Error: " << "memory leak detected" << endl;
-	}
-	// convert int(size_t) to avoid warning on _MSC_VER systems
-	if( ok )
-		cout << "All " << int(Run_ok_count) << " tests passed." << endl;
-	else	cout << int(Run_error_count) << " tests failed." << endl;
-
+	Run( ipopt_get_started,   "ipopt_get_started"  );
+	Run( ode_simple_check,    "ode_simple_check"   );
+	Run( ode_fast_check,      "ode_fast_check"     );
+	//
+	// check for memory leak
+	bool memory_ok = CppAD::thread_alloc::free_all();
+	// print summary at end
+	bool ok = Run.summary(memory_ok);
+	//
 	return static_cast<int>( ! ok );
 }
