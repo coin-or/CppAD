@@ -155,7 +155,7 @@ extern bool vec_ad(void);
 
 // main program that runs all the tests
 int main(void)
-{	std::string group = "example_optimize";
+{	std::string group = "example";
 	size_t      width = 20;
 	CppAD::test_boolofvoid Run(group, width);
 
