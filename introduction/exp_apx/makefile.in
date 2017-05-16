@@ -97,7 +97,7 @@ DIST_COMMON = $(srcdir)/makefile.am $(am__DIST_COMMON)
 mkinstalldirs = $(install_sh) -d
 CONFIG_CLEAN_FILES =
 CONFIG_CLEAN_VPATH_FILES =
-am_exp_apx_OBJECTS = main.$(OBJEXT) exp_2.$(OBJEXT) \
+am_exp_apx_OBJECTS = exp_apx.$(OBJEXT) exp_2.$(OBJEXT) \
 	exp_2_cppad.$(OBJEXT) exp_2_for1.$(OBJEXT) \
 	exp_2_for2.$(OBJEXT) exp_2_rev1.$(OBJEXT) exp_2_rev2.$(OBJEXT) \
 	exp_2_for0.$(OBJEXT) exp_eps.$(OBJEXT) exp_eps_cppad.$(OBJEXT) \
@@ -204,9 +204,8 @@ CXX_FLAGS_EIGEN = @CXX_FLAGS_EIGEN@
 CXX_FLAGS_FADBAD = @CXX_FLAGS_FADBAD@
 CYGPATH_W = @CYGPATH_W@
 
-# $Id$
 # -----------------------------------------------------------------------------
-# CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-15 Bradley M. Bell
+# CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-17 Bradley M. Bell
 #
 # CppAD is distributed under multiple licenses. This distribution is under
 # the terms of the
@@ -368,7 +367,7 @@ AM_CPPFLAGS = -I. -I$(top_srcdir) $(BOOST_INCLUDE) $(EIGEN_INCLUDE)
 AM_CXXFLAGS = -g $(CXX_FLAGS)
 #
 exp_apx_SOURCES = \
-	main.cpp \
+	exp_apx.cpp \
 	exp_2.cpp \
 	exp_2.hpp \
 	exp_2_cppad.cpp \
@@ -440,6 +439,7 @@ distclean-compile:
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/exp_2_for2.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/exp_2_rev1.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/exp_2_rev2.Po@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/exp_apx.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/exp_eps.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/exp_eps_cppad.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/exp_eps_for0.Po@am__quote@
@@ -447,7 +447,6 @@ distclean-compile:
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/exp_eps_for2.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/exp_eps_rev1.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/exp_eps_rev2.Po@am__quote@
-@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/main.Po@am__quote@
 
 .cpp.o:
 @am__fastdepCXX_TRUE@	$(AM_V_CXX)depbase=`echo $@ | sed 's|[^/]*$$|$(DEPDIR)/&|;s|\.o$$||'`;\
