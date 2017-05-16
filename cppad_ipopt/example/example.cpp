@@ -1,4 +1,3 @@
-// $Id$
 /* --------------------------------------------------------------------------
 CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-17 Bradley M. Bell
 
@@ -29,7 +28,7 @@ extern bool ode_fast_check(void);
 
 // main program that runs all the tests
 int main(void)
-{	std::string group = "example_ipoot_solve";
+{	std::string group = "cppad_ipopt_example";
 	size_t      width = 20;
 	CppAD::test_boolofvoid Run(group, width);
 

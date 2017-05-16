@@ -29,7 +29,7 @@ extern bool retape_k1_l2(void);
 
 // main program that runs all the tests
 int main(void)
-{	std::string group = "example_ipoot_solve";
+{	std::string group = "cppad_ipopt_test";
 	size_t      width = 20;
 	CppAD::test_boolofvoid Run(group, width);
 

@@ -1,6 +1,5 @@
-// $Id$
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-16 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-17 Bradley M. Bell
 
 CppAD is distributed under multiple licenses. This distribution is under
 the terms of the
@@ -37,6 +36,12 @@ $end
 // system include files used for I/O
 # include <iostream>
 
+// memory allocation routine
+# include <cppad/utility/thread_alloc.hpp>
+
+// test runner
+# include <cppad/utility/test_boolofvoid.hpp>
+
 // external complied tests
 extern bool exp_2(void);
 extern bool exp_2_cppad(void);
@@ -53,56 +58,35 @@ extern bool exp_eps_for0(void);
 extern bool exp_eps_rev1(void);
 extern bool exp_eps_rev2(void);
 
-namespace {
-	static size_t Run_ok_count    = 0;
-	static size_t Run_error_count = 0;
-	bool Run(bool TestOk(void), std::string name)
-	{	bool ok               = true;
-		std::streamsize width =  20;
-		std::cout.width( width );
-		std::cout.setf( std::ios_base::left );
-		std::cout << name.c_str();
-		//
-		ok &= name.size() < size_t(width);
-		ok &= TestOk();
-		if( ok )
-		{	std::cout << "OK" << std::endl;
-			Run_ok_count++;
-		}
-		else
-		{	std::cout << "Error" << std::endl;
-			Run_error_count++;
-		}
-		return ok;
-	}
-}
-
 // main program that runs all the tests
 int main(void)
-{	bool ok = true;
-	using namespace std;
+{	std::string group = "introduction_exp_apx";
+	size_t      width = 20;
+	CppAD::test_boolofvoid Run(group, width);
 
 	// This comment is used by OneTest
 
 	// external compiled tests
-	ok &= Run( exp_2,           "exp_2"          );
-	ok &= Run( exp_2_cppad,     "exp_2_cppad"    );
-	ok &= Run( exp_2_for0,      "exp_2_for0"     );
-	ok &= Run( exp_2_for1,      "exp_2_for1"     );
-	ok &= Run( exp_2_for2,      "exp_2_for2"     );
-	ok &= Run( exp_2_rev1,      "exp_2_rev1"     );
-	ok &= Run( exp_2_rev2,      "exp_2_rev2"     );
-	ok &= Run( exp_eps,         "exp_eps"        );
-	ok &= Run( exp_eps_cppad,   "exp_eps_cppad"  );
-	ok &= Run( exp_eps_for0,    "exp_eps_for0"   );
-	ok &= Run( exp_eps_for1,    "exp_eps_for1"   );
-	ok &= Run( exp_eps_for2,    "exp_eps_for2"   );
-	ok &= Run( exp_eps_rev1,    "exp_eps_rev1"   );
-	ok &= Run( exp_eps_rev2,    "exp_eps_rev2"   );
-	if( ok )
-		cout << "All " << int(Run_ok_count) << " tests passed." << endl;
-	else	cout << int(Run_error_count) << " tests failed." << endl;
-
+	Run( exp_2,           "exp_2"          );
+	Run( exp_2_cppad,     "exp_2_cppad"    );
+	Run( exp_2_for0,      "exp_2_for0"     );
+	Run( exp_2_for1,      "exp_2_for1"     );
+	Run( exp_2_for2,      "exp_2_for2"     );
+	Run( exp_2_rev1,      "exp_2_rev1"     );
+	Run( exp_2_rev2,      "exp_2_rev2"     );
+	Run( exp_eps,         "exp_eps"        );
+	Run( exp_eps_cppad,   "exp_eps_cppad"  );
+	Run( exp_eps_for0,    "exp_eps_for0"   );
+	Run( exp_eps_for1,    "exp_eps_for1"   );
+	Run( exp_eps_for2,    "exp_eps_for2"   );
+	Run( exp_eps_rev1,    "exp_eps_rev1"   );
+	Run( exp_eps_rev2,    "exp_eps_rev2"   );
+	//
+	// check for memory leak
+	bool memory_ok = CppAD::thread_alloc::free_all();
+	// print summary at end
+	bool ok = Run.summary(memory_ok);
+	//
 	return static_cast<int>( ! ok );
 }
 // END C++
