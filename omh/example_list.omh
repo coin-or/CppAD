@@ -27,21 +27,21 @@ example using the $cref/addition operator/ad_binary/$$.
 The examples list in this section are of a more general nature.
 
 $childtable%
-	example/ad_fun.cpp%
-	example/ad_in_c.cpp%
+	example/general/ad_fun.cpp%
+	example/general/ad_in_c.cpp%
 	example/sparse/conj_grad.cpp%
 	cppad/example/cppad_eigen.hpp %
-	example/hes_minor_det.cpp%
-	example/hes_lu_det.cpp%
-	example/interface2c.cpp%
-	example/jac_minor_det.cpp%
-	example/jac_lu_det.cpp%
+	example/general/hes_minor_det.cpp%
+	example/general/hes_lu_det.cpp%
+	example/general/interface2c.cpp%
+	example/general/jac_minor_det.cpp%
+	example/general/jac_lu_det.cpp%
 	omh/mul_level.omh%
-	example/ode_stiff.cpp%
-	example/mul_level_ode.cpp%
-	example/mul_level_adolc_ode.cpp%
-	example/ode_taylor.cpp%
-	example/stack_machine.cpp
+	example/general/ode_stiff.cpp%
+	example/general/mul_level_ode.cpp%
+	example/general/mul_level_adolc_ode.cpp%
+	example/general/ode_taylor.cpp%
+	example/general/stack_machine.cpp
 %$$
 
 $end
@@ -55,9 +55,9 @@ $$
 $section Utility Routines used by CppAD Examples$$
 
 $childtable%
-	example/example.cpp%
+	example/general/general.cpp%
 	speed/example/example.cpp%
-	example/lu_vec_ad.cpp
+	example/general/lu_vec_ad.cpp
 %$$
 
 $end
@@ -152,7 +152,7 @@ $rref elapsed_seconds.cpp$$
 $rref equal_op_seq.cpp$$
 $rref erf.cpp$$
 $rref error_handler.cpp$$
-$rref example.cpp$$
+$rref general.cpp$$
 $rref exp.cpp$$
 $rref expm1.cpp$$
 $rref expm1.cpp$$

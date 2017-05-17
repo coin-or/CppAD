@@ -128,7 +128,7 @@ without change due to rounding or overflow.
 
 $head Example$$
 $children%
-	example/num_limits.cpp
+	example/general/num_limits.cpp
 %$$
 The file
 $cref num_limits.cpp$$

@@ -1,6 +1,5 @@
-# $Id$
 # -----------------------------------------------------------------------------
-# CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-16 Bradley M. Bell
+# CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-17 Bradley M. Bell
 #
 # CppAD is distributed under multiple licenses. This distribution is under
 # the terms of the
@@ -11,9 +10,6 @@
 # -----------------------------------------------------------------------------
 # Build the example/optimize directory tests
 
-# Specifies build type for this directory. Possible values are
-# empty, Debug, Release, RelWithDebInfo and MinSizeRel
-SET(CMAKE_BUILD_TYPE DEBUG)
 #
 ADD_EXECUTABLE(example_optimize EXCLUDE_FROM_ALL
 	conditional_skip.cpp

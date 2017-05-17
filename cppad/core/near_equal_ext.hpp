@@ -1,9 +1,8 @@
-// $Id$
 # ifndef CPPAD_CORE_NEAR_EQUAL_EXT_HPP
 # define CPPAD_CORE_NEAR_EQUAL_EXT_HPP
 
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-16 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-17 Bradley M. Bell
 
 CppAD is distributed under multiple licenses. This distribution is under
 the terms of the
@@ -116,7 +115,7 @@ $cref/operation sequence/glossary/Operation/Sequence/$$.
 
 $head Example$$
 $children%
-	example/near_equal_ext.cpp
+	example/general/near_equal_ext.cpp
 %$$
 The file $cref near_equal_ext.cpp$$ contains an example
 and test of this extension of $cref NearEqual$$.

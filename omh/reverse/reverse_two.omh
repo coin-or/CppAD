@@ -1,6 +1,5 @@
-// $Id$
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-15 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-17 Bradley M. Bell
 
 CppAD is distributed under multiple licenses. This distribution is under
 the terms of the
@@ -169,8 +168,8 @@ dw[ j * 2 + 1 ] = \DD{ F_i }{ x_j }{ x_\ell } \left( x^{(0)} \right)
 
 $head Example$$
 $children%
-	example/reverse_two.cpp%
-	example/hes_times_dir.cpp
+	example/general/reverse_two.cpp%
+	example/general/hes_times_dir.cpp
 %$$
 The files
 $cref reverse_two.cpp$$

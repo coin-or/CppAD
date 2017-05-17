@@ -106,7 +106,7 @@ $tend
 
 $head Example$$
 $children%
-	example/numeric_type.cpp
+	example/general/numeric_type.cpp
 %$$
 The file
 $cref numeric_type.cpp$$

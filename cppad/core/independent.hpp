@@ -1,9 +1,8 @@
-// $Id$
 # ifndef CPPAD_CORE_INDEPENDENT_HPP
 # define CPPAD_CORE_INDEPENDENT_HPP
 
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-16 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-17 Bradley M. Bell
 
 CppAD is distributed under multiple licenses. This distribution is under
 the terms of the
@@ -112,7 +111,7 @@ $cref/thread_alloc::thread_num/ta_thread_num/$$ must be the same.
 
 $head Example$$
 $children%
-	example/independent.cpp
+	example/general/independent.cpp
 %$$
 The file
 $cref independent.cpp$$

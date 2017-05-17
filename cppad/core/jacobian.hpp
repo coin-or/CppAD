@@ -1,9 +1,8 @@
-// $Id$
 # ifndef CPPAD_CORE_JACOBIAN_HPP
 # define CPPAD_CORE_JACOBIAN_HPP
 
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-16 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-17 Bradley M. Bell
 
 CppAD is distributed under multiple licenses. This distribution is under
 the terms of the
@@ -100,7 +99,7 @@ and the other coefficients are unspecified.
 
 $head Example$$
 $children%
-	example/jacobian.cpp
+	example/general/jacobian.cpp
 %$$
 The routine
 $cref/Jacobian/jacobian.cpp/$$ is both an example and test.

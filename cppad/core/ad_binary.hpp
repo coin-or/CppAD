@@ -1,9 +1,8 @@
-// $Id$
 # ifndef CPPAD_CORE_AD_BINARY_HPP
 # define CPPAD_CORE_AD_BINARY_HPP
 
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-16 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-17 Bradley M. Bell
 
 CppAD is distributed under multiple licenses. This distribution is under
 the terms of the
@@ -93,10 +92,10 @@ AD of $icode Base$$
 $cref/operation sequence/glossary/Operation/Sequence/$$.
 
 $children%
-	example/add.cpp%
-	example/sub.cpp%
-	example/mul.cpp%
-	example/div.cpp
+	example/general/add.cpp%
+	example/general/sub.cpp%
+	example/general/mul.cpp%
+	example/general/div.cpp
 %$$
 
 $head Example$$

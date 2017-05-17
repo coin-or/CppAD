@@ -11,7 +11,7 @@ dnl ---------------------------------------------------------------------------
 dnl
 dnl Process this file with autoconf to produce a configure script.
 dnl   package   version              bug-report
-AC_INIT([cppad], [20170516], [cppad@list.coin-or.org])
+AC_INIT([cppad], [20170517], [cppad@list.coin-or.org])
 AM_SILENT_RULES([yes])
 
 dnl By defalut disable maintainer mode when running configure;
@@ -795,7 +795,7 @@ AC_CONFIG_FILES([
 	cppad_ipopt/example/makefile
 	cppad_ipopt/speed/makefile
 	cppad_ipopt/test/makefile
-	example/makefile
+	example/general/makefile
 	example/atomic/makefile
 	example/ipopt_solve/makefile
 	example/optimize/makefile

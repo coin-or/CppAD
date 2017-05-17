@@ -1,9 +1,8 @@
-// $Id$
 # ifndef CPPAD_CORE_AZMUL_HPP
 # define CPPAD_CORE_AZMUL_HPP
 
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-16 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-17 Bradley M. Bell
 
 CppAD is distributed under multiple licenses. This distribution is under
 the terms of the
@@ -77,7 +76,7 @@ $codei%
 
 $head Example$$
 $children%
-	example/azmul.cpp
+	example/general/azmul.cpp
 %$$
 The file
 $cref azmul.cpp$$

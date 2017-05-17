@@ -1,9 +1,8 @@
-// $Id$
 # ifndef CPPAD_CORE_ERF_HPP
 # define CPPAD_CORE_ERF_HPP
 
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-16 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-17 Bradley M. Bell
 
 CppAD is distributed under multiple licenses. This distribution is under
 the terms of the
@@ -61,7 +60,7 @@ p 762-3.
 
 $head Example$$
 $children%
-	example/erf.cpp
+	example/general/erf.cpp
 %$$
 The file
 $cref erf.cpp$$

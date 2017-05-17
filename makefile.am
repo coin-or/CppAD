@@ -334,8 +334,8 @@ nobase_myinclude_HEADERS =  \
 SUBDIRS =  \
 	$(IPOPT_DIRS) \
 	$(SPEED_DIRS) \
-	example \
 	example/atomic \
+	example/general \
 	example/optimize \
 	example/sparse \
 	example/utility \
@@ -363,6 +363,7 @@ EXTRA_DIST = \
 	pkgconfig/CMakeLists.txt \
 	example/CMakeLists.txt \
 	example/atomic/CMakeLists.txt \
+	example/general/CMakeLists.txt \
 	example/ipopt_solve/CMakeLists.txt \
 	example/optimize/CMakeLists.txt \
 	test_more/CMakeLists.txt \
@@ -391,7 +392,7 @@ EXTRA_DIST = \
 test_directory_list = \
 	$(IPOPT_TESTS) \
 	$(SPEED_TESTS) \
-	example \
+	example/general \
 	example/atomic \
 	example/optimize \
 	compare_c \

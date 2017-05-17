@@ -74,7 +74,7 @@ $codei%
 
 $head Example$$
 $children%
-	example/ad_ctor.cpp
+	example/general/ad_ctor.cpp
 %$$
 The files $cref ad_ctor.cpp$$ contain examples and tests of these operations.
 It test returns true if it succeeds and false otherwise.

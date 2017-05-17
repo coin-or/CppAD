@@ -1,9 +1,8 @@
-// $Id$
 # ifndef CPPAD_CORE_VALUE_HPP
 # define CPPAD_CORE_VALUE_HPP
 
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-16 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-17 Bradley M. Bell
 
 CppAD is distributed under multiple licenses. This distribution is under
 the terms of the
@@ -65,7 +64,7 @@ $cref/independent variables/glossary/Tape/Independent Variable/$$.
 
 $head Example$$
 $children%
-	example/value.cpp
+	example/general/value.cpp
 %$$
 The file
 $cref value.cpp$$

@@ -1,9 +1,8 @@
-// $Id$
 # ifndef CPPAD_CORE_FUN_CONSTRUCT_HPP
 # define CPPAD_CORE_FUN_CONSTRUCT_HPP
 
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-16 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-17 Bradley M. Bell
 
 CppAD is distributed under multiple licenses. This distribution is under
 the terms of the
@@ -207,7 +206,7 @@ contain an examples and tests using the default constructor.
 They return true if they succeed and false otherwise.
 
 $children%
-	example/fun_assign.cpp
+	example/general/fun_assign.cpp
 %$$
 $subhead Assignment Operator$$
 The file

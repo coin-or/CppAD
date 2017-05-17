@@ -1,9 +1,8 @@
-// $Id$
 # ifndef CPPAD_CORE_EXPM1_HPP
 # define CPPAD_CORE_EXPM1_HPP
 
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-16 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-17 Bradley M. Bell
 
 CppAD is distributed under multiple licenses. This distribution is under
 the terms of the
@@ -55,7 +54,7 @@ to compute this function.
 
 $head Example$$
 $children%
-	example/expm1.cpp
+	example/general/expm1.cpp
 %$$
 The file
 $cref expm1.cpp$$

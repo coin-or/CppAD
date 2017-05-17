@@ -1,6 +1,5 @@
-// $Id$
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-15 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-17 Bradley M. Bell
 
 CppAD is distributed under multiple licenses. This distribution is under
 the terms of the
@@ -232,8 +231,8 @@ corresponds to the second order
 $cref/special case/forward_two/Special Case/$$.
 
 $children%
-	example/forward.cpp%
-	example/forward_order.cpp
+	example/general/forward.cpp%
+	example/general/forward_order.cpp
 %$$
 $head Example$$
 The file

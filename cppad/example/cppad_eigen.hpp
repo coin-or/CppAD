@@ -43,8 +43,8 @@ $section Enable Use of Eigen Linear Algebra Package with CppAD$$
 $head Syntax$$
 $codei%# include <cppad/example/cppad_eigen.hpp>%$$
 $children%
-	example/eigen_array.cpp%
-	example/eigen_det.cpp
+	example/general/eigen_array.cpp%
+	example/general/eigen_det.cpp
 %$$
 
 $head Purpose$$

@@ -1,9 +1,8 @@
-// $Id$
 # ifndef CPPAD_CORE_OPT_VAL_HES_HPP
 # define CPPAD_CORE_OPT_VAL_HES_HPP
 
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-16 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-17 Bradley M. Bell
 
 CppAD is distributed under multiple licenses. This distribution is under
 the terms of the
@@ -223,7 +222,7 @@ the Hessian is not computed ($icode hes$$ is not changed).
 
 $head Example$$
 $children%
-	example/opt_val_hes.cpp
+	example/general/opt_val_hes.cpp
 %$$
 The file
 $cref opt_val_hes.cpp$$

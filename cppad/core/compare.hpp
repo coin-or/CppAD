@@ -1,9 +1,8 @@
-// $Id$
 # ifndef CPPAD_CORE_COMPARE_HPP
 # define CPPAD_CORE_COMPARE_HPP
 
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-16 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-17 Bradley M. Bell
 
 CppAD is distributed under multiple licenses. This distribution is under
 the terms of the
@@ -110,7 +109,7 @@ $icode Base$$.
 
 $head Example$$
 $children%
-	example/compare.cpp
+	example/general/compare.cpp
 %$$
 The file
 $cref compare.cpp$$

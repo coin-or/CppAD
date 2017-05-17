@@ -90,10 +90,10 @@ AD of $icode Base$$
 $cref/operation sequence/glossary/Operation/Sequence/$$.
 
 $children%
-	example/add_eq.cpp%
-	example/sub_eq.cpp%
-	example/mul_eq.cpp%
-	example/div_eq.cpp
+	example/general/add_eq.cpp%
+	example/general/sub_eq.cpp%
+	example/general/mul_eq.cpp%
+	example/general/div_eq.cpp
 %$$
 
 $head Example$$

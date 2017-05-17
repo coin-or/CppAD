@@ -1,9 +1,8 @@
-// $Id$
 # ifndef CPPAD_CORE_REV_ONE_HPP
 # define CPPAD_CORE_REV_ONE_HPP
 
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-16 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-17 Bradley M. Bell
 
 CppAD is distributed under multiple licenses. This distribution is under
 the terms of the
@@ -107,7 +106,7 @@ and the other coefficients are unspecified.
 
 $head Example$$
 $children%
-	example/rev_one.cpp
+	example/general/rev_one.cpp
 %$$
 The routine
 $cref/RevOne/rev_one.cpp/$$ is both an example and test.

@@ -1,9 +1,8 @@
-// $Id$
 # ifndef CPPAD_CORE_AD_IO_HPP
 # define CPPAD_CORE_AD_IO_HPP
 
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-16 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-17 Bradley M. Bell
 
 CppAD is distributed under multiple licenses. This distribution is under
 the terms of the
@@ -74,7 +73,7 @@ $cref/operation sequence/glossary/Operation/Sequence/$$.
 
 $head Example$$
 $children%
-	example/ad_input.cpp
+	example/general/ad_input.cpp
 %$$
 The file
 $cref ad_input.cpp$$
@@ -145,7 +144,7 @@ $cref/operation sequence/glossary/Operation/Sequence/$$.
 
 $head Example$$
 $children%
-	example/ad_output.cpp
+	example/general/ad_output.cpp
 %$$
 The file
 $cref ad_output.cpp$$

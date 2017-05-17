@@ -1,9 +1,8 @@
-// $Id$
 # ifndef CPPAD_CORE_DISCRETE_HPP
 # define CPPAD_CORE_DISCRETE_HPP
 
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-16 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-17 Bradley M. Bell
 
 CppAD is distributed under multiple licenses. This distribution is under
 the terms of the
@@ -127,9 +126,9 @@ must not be in $cref/parallel/ta_in_parallel/$$ execution mode.
 
 $head Example$$
 $children%
-	example/tape_index.cpp%
-	example/interp_onetape.cpp%
-	example/interp_retape.cpp
+	example/general/tape_index.cpp%
+	example/general/interp_onetape.cpp%
+	example/general/interp_retape.cpp
 %$$
 The file
 $cref tape_index.cpp$$

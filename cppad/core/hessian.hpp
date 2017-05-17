@@ -1,9 +1,8 @@
-// $Id$
 # ifndef CPPAD_CORE_HESSIAN_HPP
 # define CPPAD_CORE_HESSIAN_HPP
 
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-16 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-17 Bradley M. Bell
 
 CppAD is distributed under multiple licenses. This distribution is under
 the terms of the
@@ -122,8 +121,8 @@ and the other coefficients are unspecified.
 
 $head Example$$
 $children%
-	example/hessian.cpp%
-	example/hes_lagrangian.cpp
+	example/general/hessian.cpp%
+	example/general/hes_lagrangian.cpp
 %$$
 The routines
 $cref hessian.cpp$$ and

@@ -1,9 +1,8 @@
-// $Id$
 # ifndef CPPAD_CORE_PRINT_FOR_HPP
 # define CPPAD_CORE_PRINT_FOR_HPP
 
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-16 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-17 Bradley M. Bell
 
 CppAD is distributed under multiple licenses. This distribution is under
 the terms of the
@@ -115,7 +114,7 @@ code is executed.
 $head Example$$
 $children%
 	print_for/print_for.cpp%
-	example/print_for.cpp
+	example/general/print_for.cpp
 %$$
 The program
 $cref print_for_cout.cpp$$

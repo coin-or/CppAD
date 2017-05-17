@@ -1,9 +1,8 @@
-// $Id$
 # ifndef CPPAD_CORE_ABORT_RECORDING_HPP
 # define CPPAD_CORE_ABORT_RECORDING_HPP
 
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-16 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-17 Bradley M. Bell
 
 CppAD is distributed under multiple licenses. This distribution is under
 the terms of the
@@ -36,7 +35,7 @@ corresponding information.
 Otherwise, $code abort_recording$$ has no effect.
 
 $children%
-	example/abort_recording.cpp
+	example/general/abort_recording.cpp
 %$$
 $head Example$$
 The file

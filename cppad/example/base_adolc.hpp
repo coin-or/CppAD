@@ -70,7 +70,7 @@ $head Syntax$$
 $codei%# include <cppad/example/base_adolc.hpp>
 %$$
 $children%
-	example/mul_level_adolc.cpp
+	example/general/mul_level_adolc.cpp
 %$$
 
 $head Example$$

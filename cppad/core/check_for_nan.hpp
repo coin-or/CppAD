@@ -1,9 +1,8 @@
-// $Id$
 # ifndef CPPAD_CORE_CHECK_FOR_NAN_HPP
 # define CPPAD_CORE_CHECK_FOR_NAN_HPP
 
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-16 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-17 Bradley M. Bell
 
 CppAD is distributed under multiple licenses. This distribution is under
 the terms of the
@@ -122,7 +121,7 @@ in the corresponding error message.
 
 $head Example$$
 $children%
-	example/check_for_nan.cpp
+	example/general/check_for_nan.cpp
 %$$
 The file
 $cref check_for_nan.cpp$$

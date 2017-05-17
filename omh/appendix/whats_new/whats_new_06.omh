@@ -364,7 +364,7 @@ its dependence on the rest of CppAD was removed
 
 $head 11-12$$
 The
-$cref example.cpp$$ and
+$cref general.cpp$$ and
 $code test_more/test_more.cpp$$
 programs were
 changed to print out the number of tests that passed or failed instead

@@ -1,9 +1,8 @@
-// $Id$
 # ifndef CPPAD_CORE_BENDER_QUAD_HPP
 # define CPPAD_CORE_BENDER_QUAD_HPP
 
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-16 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-17 Bradley M. Bell
 
 CppAD is distributed under multiple licenses. This distribution is under
 the terms of the
@@ -285,7 +284,7 @@ $codei%
 
 $head Example$$
 $children%
-	example/bender_quad.cpp
+	example/general/bender_quad.cpp
 %$$
 The file
 $cref bender_quad.cpp$$

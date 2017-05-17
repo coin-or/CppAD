@@ -1,9 +1,8 @@
-// $Id$
 # ifndef CPPAD_CORE_STD_MATH_98_HPP
 # define CPPAD_CORE_STD_MATH_98_HPP
 
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-16 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-17 Bradley M. Bell
 
 CppAD is distributed under multiple licenses. This distribution is under
 the terms of the
@@ -40,7 +39,7 @@ $latex \[
 
 $head Example$$
 $children%
-	example/acos.cpp
+	example/general/acos.cpp
 %$$
 The file
 $cref acos.cpp$$
@@ -75,7 +74,7 @@ $latex \[
 
 $head Example$$
 $children%
-	example/asin.cpp
+	example/general/asin.cpp
 %$$
 The file
 $cref asin.cpp$$
@@ -110,7 +109,7 @@ $latex \[
 
 $head Example$$
 $children%
-	example/atan.cpp
+	example/general/atan.cpp
 %$$
 The file
 $cref atan.cpp$$
@@ -145,7 +144,7 @@ $latex \[
 
 $head Example$$
 $children%
-	example/cos.cpp
+	example/general/cos.cpp
 %$$
 The file
 $cref cos.cpp$$
@@ -180,7 +179,7 @@ $latex \[
 
 $head Example$$
 $children%
-	example/cosh.cpp
+	example/general/cosh.cpp
 %$$
 The file
 $cref cosh.cpp$$
@@ -215,7 +214,7 @@ $latex \[
 
 $head Example$$
 $children%
-	example/exp.cpp
+	example/general/exp.cpp
 %$$
 The file
 $cref exp.cpp$$
@@ -249,7 +248,7 @@ $latex \[
 
 $head Example$$
 $children%
-	example/log.cpp
+	example/general/log.cpp
 %$$
 The file
 $cref log.cpp$$
@@ -282,7 +281,7 @@ $latex \[
 
 $head Example$$
 $children%
-	example/log10.cpp
+	example/general/log10.cpp
 %$$
 The file
 $cref log10.cpp$$
@@ -317,7 +316,7 @@ $latex \[
 
 $head Example$$
 $children%
-	example/sin.cpp
+	example/general/sin.cpp
 %$$
 The file
 $cref sin.cpp$$
@@ -352,7 +351,7 @@ $latex \[
 
 $head Example$$
 $children%
-	example/sinh.cpp
+	example/general/sinh.cpp
 %$$
 The file
 $cref sinh.cpp$$
@@ -387,7 +386,7 @@ $latex \[
 
 $head Example$$
 $children%
-	example/sqrt.cpp
+	example/general/sqrt.cpp
 %$$
 The file
 $cref sqrt.cpp$$
@@ -422,7 +421,7 @@ $latex \[
 
 $head Example$$
 $children%
-	example/tan.cpp
+	example/general/tan.cpp
 %$$
 The file
 $cref tan.cpp$$
@@ -457,7 +456,7 @@ $latex \[
 
 $head Example$$
 $children%
-	example/tanh.cpp
+	example/general/tanh.cpp
 %$$
 The file
 $cref tanh.cpp$$

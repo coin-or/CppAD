@@ -8,9 +8,6 @@
 # A copy of this license is included in the COPYING file of this distribution.
 # Please visit http://www.coin-or.org/CppAD/ for information on other licenses.
 # -----------------------------------------------------------------------------
-# Specifies build type for this directory. Possible values are
-# empty, Debug, Release, RelWithDebInfo and MinSizeRel
-SET(CMAKE_BUILD_TYPE DEBUG)
 #
 # eigen_sources and CPPAD_HAS_EIGEN
 IF( cppad_has_eigen )

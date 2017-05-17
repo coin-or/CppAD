@@ -31,6 +31,12 @@ do
 		cppad_ipopt/src/CMakeLists.txt | \
 		cppad_ipopt/test/CMakeLists.txt | \
 		cppad_lib/CMakeLists.txt | \
+		example/atomic/CMakeLists.txt | \
+		example/general/CMakeLists.txt | \
+		example/ipopt_solve/CMakeLists.txt | \
+		example/optimize/CMakeLists.txt | \
+		example/sparse/CMakeLists.txt | \
+		example/utility/CMakeLists.txt | \
 		introduction/CMakeLists.txt | \
 		multi_thread/bthread/CMakeLists.txt | \
 		multi_thread/openmp/CMakeLists.txt | \
@@ -66,11 +72,6 @@ do
 
 		# debug build type cases
 		example/CMakeLists.txt | \
-		example/atomic/CMakeLists.txt | \
-		example/ipopt_solve/CMakeLists.txt | \
-		example/optimize/CMakeLists.txt | \
-		example/sparse/CMakeLists.txt | \
-		example/utility/CMakeLists.txt | \
 		introduction/exp_apx/CMakeLists.txt | \
 		introduction/get_started/CMakeLists.txt | \
 		multi_thread/CMakeLists.txt | \

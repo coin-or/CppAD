@@ -70,7 +70,7 @@ of $icode x$$ and $icode y$$.
 
 $head Example$$
 $children%
-	example/atan2.cpp
+	example/general/atan2.cpp
 %$$
 The file
 $cref atan2.cpp$$

@@ -198,7 +198,7 @@ if this is not the case.
 
 $head Example$$
 $children%
-	example/lu_ratio.cpp
+	example/general/lu_ratio.cpp
 %$$
 The file $cref lu_ratio.cpp$$
 contains an example and test of using $code LuRatio$$.

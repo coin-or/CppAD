@@ -1,9 +1,8 @@
-// $Id$
 # ifndef CPPAD_CORE_EQUAL_OP_SEQ_HPP
 # define CPPAD_CORE_EQUAL_OP_SEQ_HPP
 
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-16 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-17 Bradley M. Bell
 
 CppAD is distributed under multiple licenses. This distribution is under
 the terms of the
@@ -86,7 +85,7 @@ $lend
 
 $head Example$$
 $children%
-	example/equal_op_seq.cpp
+	example/general/equal_op_seq.cpp
 %$$
 The file
 $cref equal_op_seq.cpp$$

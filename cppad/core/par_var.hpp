@@ -1,9 +1,8 @@
-// $Id$
 # ifndef CPPAD_CORE_PAR_VAR_HPP
 # define CPPAD_CORE_PAR_VAR_HPP
 
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-16 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-17 Bradley M. Bell
 
 CppAD is distributed under multiple licenses. This distribution is under
 the terms of the
@@ -63,7 +62,7 @@ $cref/operation sequence/glossary/Operation/Sequence/$$.
 
 $head Example$$
 $children%
-	example/par_var.cpp
+	example/general/par_var.cpp
 %$$
 The file
 $cref par_var.cpp$$

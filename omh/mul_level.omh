@@ -1,6 +1,5 @@
-$Id$
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-15 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-17 Bradley M. Bell
 
 CppAD is distributed under multiple licenses. This distribution is under
 the terms of the
@@ -137,8 +136,8 @@ The AD function object $icode g$$ can then be used to calculate
 the derivatives of the outer function.
 
 $children%
-	example/mul_level.cpp%
-	example/change_param.cpp
+	example/general/mul_level.cpp%
+	example/general/change_param.cpp
 %$$
 
 $head Example$$

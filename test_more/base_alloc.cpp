@@ -8,7 +8,7 @@ the terms of the
 A copy of this license is included in the COPYING file of this distribution.
 Please visit http://www.coin-or.org/CppAD/ for information on other licenses.
 -------------------------------------------------------------------------- */
-# include "../example/base_alloc.hpp"
+# include "../example/general/base_alloc.hpp"
 # include <cppad/cppad.hpp>
 
 namespace { // BEGIN empty namespace

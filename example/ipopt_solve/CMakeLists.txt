@@ -1,6 +1,5 @@
-# $Id$
 # -----------------------------------------------------------------------------
-# CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-16 Bradley M. Bell
+# CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-17 Bradley M. Bell
 #
 # CppAD is distributed under multiple licenses. This distribution is under
 # the terms of the
@@ -10,10 +9,6 @@
 # Please visit http://www.coin-or.org/CppAD/ for information on other licenses.
 # -----------------------------------------------------------------------------
 # Build the example/ipopt_solve directory tests
-
-# Specifies build type for this directory. Possible values are
-# empty, Debug, Release, RelWithDebInfo and MinSizeRel
-SET(CMAKE_BUILD_TYPE DEBUG)
 
 # Local link directories to search, as determined by pkg-config for ipopt
 LINK_DIRECTORIES( ${ipopt_LIBRARY_DIRS} )

@@ -251,7 +251,7 @@ when $icode v$$ falls out of scope.
 
 $head Example$$
 $children%
-	example/vec_ad.cpp
+	example/general/vec_ad.cpp
 %$$
 The file
 $cref vec_ad.cpp$$

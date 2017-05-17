@@ -234,7 +234,7 @@ must not be $cref/parallel/ta_in_parallel/$$ execution mode.
 $head Example$$
 $children%
 	example/utility/runge45_1.cpp%
-	example/runge45_2.cpp
+	example/general/runge45_2.cpp
 %$$
 The file
 $cref runge45_1.cpp$$

@@ -64,7 +64,7 @@ The result for $icode%x% == 0%$$ used to be a directional derivative.
 
 $head Example$$
 $children%
-	example/fabs.cpp
+	example/general/fabs.cpp
 %$$
 The file
 $cref fabs.cpp$$

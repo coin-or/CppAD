@@ -1,9 +1,8 @@
-// $Id$
 # ifndef CPPAD_CORE_UNARY_MINUS_HPP
 # define CPPAD_CORE_UNARY_MINUS_HPP
 
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-16 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-17 Bradley M. Bell
 
 CppAD is distributed under multiple licenses. This distribution is under
 the terms of the
@@ -67,7 +66,7 @@ $latex \[
 
 $head Example$$
 $children%
-	example/unary_minus.cpp
+	example/general/unary_minus.cpp
 %$$
 The file
 $cref unary_minus.cpp$$

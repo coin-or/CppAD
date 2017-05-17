@@ -1,9 +1,8 @@
-// $Id$
 # ifndef CPPAD_CORE_VAR2PAR_HPP
 # define CPPAD_CORE_VAR2PAR_HPP
 
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-16 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-17 Bradley M. Bell
 
 CppAD is distributed under multiple licenses. This distribution is under
 the terms of the
@@ -57,7 +56,7 @@ The return value $icode y$$ will be a parameter.
 
 $head Example$$
 $children%
-	example/var2par.cpp
+	example/general/var2par.cpp
 %$$
 The file
 $cref var2par.cpp$$

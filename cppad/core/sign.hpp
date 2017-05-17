@@ -1,9 +1,8 @@
-// $Id$
 # ifndef CPPAD_CORE_SIGN_HPP
 # define CPPAD_CORE_SIGN_HPP
 
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-16 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-17 Bradley M. Bell
 
 CppAD is distributed under multiple licenses. This distribution is under
 the terms of the
@@ -54,7 +53,7 @@ where $latex \delta (x)$$ is the Dirac Delta function.
 
 $head Example$$
 $children%
-	example/sign.cpp
+	example/general/sign.cpp
 %$$
 The file
 $cref sign.cpp$$

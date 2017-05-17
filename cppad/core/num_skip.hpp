@@ -1,9 +1,8 @@
-// $Id$
 # ifndef CPPAD_CORE_NUM_SKIP_HPP
 # define CPPAD_CORE_NUM_SKIP_HPP
 
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-16 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-17 Bradley M. Bell
 
 CppAD is distributed under multiple licenses. This distribution is under
 the terms of the
@@ -53,7 +52,7 @@ $codei%
 %$$
 
 $children%
-	example/number_skip.cpp
+	example/general/number_skip.cpp
 %$$
 $head Example$$
 The file $cref number_skip.cpp$$

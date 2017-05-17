@@ -193,7 +193,7 @@ CSCOPE = cscope
 DIST_SUBDIRS = cppad_ipopt/src example/ipopt_solve cppad_ipopt/example \
 	cppad_ipopt/speed cppad_ipopt/test speed/src speed/adolc \
 	speed/cppad speed/double speed/example speed/fadbad \
-	speed/profile speed/sacado example example/atomic \
+	speed/profile speed/sacado example/atomic example/general \
 	example/optimize example/sparse example/utility compare_c \
 	introduction/get_started introduction/exp_apx print_for \
 	multi_thread multi_thread/test_multi test_more
@@ -733,8 +733,8 @@ nobase_myinclude_HEADERS = \
 SUBDIRS = \
 	$(IPOPT_DIRS) \
 	$(SPEED_DIRS) \
-	example \
 	example/atomic \
+	example/general \
 	example/optimize \
 	example/sparse \
 	example/utility \
@@ -763,6 +763,7 @@ EXTRA_DIST = \
 	pkgconfig/CMakeLists.txt \
 	example/CMakeLists.txt \
 	example/atomic/CMakeLists.txt \
+	example/general/CMakeLists.txt \
 	example/ipopt_solve/CMakeLists.txt \
 	example/optimize/CMakeLists.txt \
 	test_more/CMakeLists.txt \
@@ -791,7 +792,7 @@ EXTRA_DIST = \
 test_directory_list = \
 	$(IPOPT_TESTS) \
 	$(SPEED_TESTS) \
-	example \
+	example/general \
 	example/atomic \
 	example/optimize \
 	compare_c \

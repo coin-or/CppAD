@@ -56,7 +56,7 @@ $$
 
 $section Enable use of AD<Base> where Base is std::complex<double>$$
 
-$children%example/complex_poly.cpp
+$children%example/general/complex_poly.cpp
 %$$
 $head Example$$
 The file $cref complex_poly.cpp$$ contains an example use of
