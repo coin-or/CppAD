@@ -12,24 +12,15 @@
 spell_list='
 '
 revert_list='
-speed/adolc/makefile.am
-speed/cppad/makefile.am
-speed/double/makefile.am
-speed/fadbad/makefile.am
-speed/profile/makefile.am
-speed/sacado/makefile.am
 '
 move_list='
-	introduction/exp_apx/main.cpp
+	print_for
 '
-move_sed='s|main.cpp|exp_apx.cpp|'
+move_sed='s|print_for|example/print_for|'
 #
 cat << EOF > junk.sed
-s|^\\tmain.cpp\$|\\texp_apx.cpp|
-s|^\\tmain.cpp \\\\\$|\\texp_apx.cpp \\\\|
-s|exp_apx_main.cpp|exp_apx.cpp|g
-s|head main.cpp|head Source|
-s|exp_apx/main.cpp|exp_apx/exp_apx.cpp|
+s|print_for/|example/print_for/|
+s|^\tprint_for \\\\|\texample/print_for \\\\|
 EOF
 # -----------------------------------------------------------------------------
 if [ $0 != "bin/batch_edit.sh" ]

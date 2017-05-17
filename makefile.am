@@ -342,7 +342,7 @@ SUBDIRS =  \
 	compare_c \
 	introduction/get_started \
 	introduction/exp_apx \
-	print_for \
+	example/print_for \
 	multi_thread \
 	multi_thread/test_multi \
 	test_more
@@ -387,7 +387,7 @@ EXTRA_DIST = \
 	multi_thread/CMakeLists.txt \
 	multi_thread/openmp/CMakeLists.txt \
 	multi_thread/pthread/CMakeLists.txt \
-	print_for/CMakeLists.txt
+	example/print_for/CMakeLists.txt
 
 test_directory_list = \
 	$(IPOPT_TESTS) \
@@ -400,7 +400,7 @@ test_directory_list = \
 	introduction/exp_apx \
 	multi_thread \
 	multi_thread/test_multi \
-	print_for \
+	example/print_for \
 	test_more
 
 test: all

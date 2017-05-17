@@ -35,6 +35,7 @@ do
 		example/general/CMakeLists.txt | \
 		example/ipopt_solve/CMakeLists.txt | \
 		example/optimize/CMakeLists.txt | \
+		example/print_for/CMakeLists.txt | \
 		example/sparse/CMakeLists.txt | \
 		example/utility/CMakeLists.txt | \
 		introduction/CMakeLists.txt | \
@@ -75,7 +76,6 @@ do
 		introduction/exp_apx/CMakeLists.txt | \
 		introduction/get_started/CMakeLists.txt | \
 		multi_thread/CMakeLists.txt | \
-		print_for/CMakeLists.txt | \
 		test_more/CMakeLists.txt )
 		check="CMAKE_BUILD_TYPE DEBUG"
 		if ! grep "$check" $file > /dev/null

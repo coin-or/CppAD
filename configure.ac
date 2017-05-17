@@ -805,7 +805,7 @@ AC_CONFIG_FILES([
 	introduction/exp_apx/makefile
 	multi_thread/makefile
 	multi_thread/test_multi/makefile
-	print_for/makefile
+	example/print_for/makefile
 	speed/adolc/makefile
 	speed/cppad/makefile
 	speed/double/makefile

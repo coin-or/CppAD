@@ -26,6 +26,9 @@ ADD_SUBDIRECTORY(general)
 # optimize examples
 ADD_SUBDIRECTORY(optimize)
 
+# print_for example
+ADD_SUBDIRECTORY(print_for)
+
 # sparse examples
 ADD_SUBDIRECTORY(sparse)
 

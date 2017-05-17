@@ -113,7 +113,7 @@ code is executed.
 
 $head Example$$
 $children%
-	print_for/print_for.cpp%
+	example/print_for/print_for.cpp%
 	example/general/print_for.cpp
 %$$
 The program

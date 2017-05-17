@@ -153,13 +153,13 @@ then
 fi
 #
 # print_for test
-if [ ! -e 'print_for/print_for' ]
+if [ ! -e 'example/print_for/print_for' ]
 then
-	skip="$skip print_for/print_for"
+	skip="$skip example/print_for/print_for"
 else
-	echo_log_eval print_for/print_for
-	print_for/print_for | sed -e '/^Test passes/,$d' > junk.1.$$
-	print_for/print_for | sed -e '1,/^Test passes/d' > junk.2.$$
+	echo_log_eval example/print_for/print_for
+	example/print_for/print_for | sed -e '/^Test passes/,$d' > junk.1.$$
+	example/print_for/print_for | sed -e '1,/^Test passes/d' > junk.2.$$
 	if diff junk.1.$$ junk.2.$$
 	then
 		rm junk.1.$$ junk.2.$$
