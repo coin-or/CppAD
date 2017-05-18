@@ -1,7 +1,7 @@
 #! /bin/python
 # $Id
 # -----------------------------------------------------------------------------
-# CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-16 Bradley M. Bell
+# CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-17 Bradley M. Bell
 #
 # CppAD is distributed under multiple licenses. This distribution is under
 # the terms of the
@@ -11,16 +11,6 @@
 # Please visit http://www.coin-or.org/CppAD/ for information on other licenses.
 # -----------------------------------------------------------------------------
 from __future__ import print_function
-# -----------------------------------------------------------------------------
-# list of svn commands to execute in the svn directory before make changes
-# indicated by git directory; some example commands are included below
-svn_commands = [
-	# 'svn mkdir  cppad/utility',
-	# 'svn move cppad/*.hpp                    cppad/utility',
-	# 'svn move cppad/utility/cppad.hpp        cppad/cppad.hpp',
-	# 'svn move cppad/utility/base_require.hpp cppad/base_require.hpp',
-	# 'svn move omh/library.omh                omh/utility.omh'
-]
 # -----------------------------------------------------------------------------
 # imports
 import sys
@@ -83,10 +73,9 @@ def print_system(cmd) :
 		msg += '\nbin/push_git2svn.py exiting because command above failed'
 		sys.exit(msg)
 	return output
-
-id_pattern    = re.compile(r'^.*\$Id.*$',      re.MULTILINE)
 def ignore_data(data) :
-	data = re.sub(id_pattern,    '', data)
+	id_pattern  = re.compile(r'^.*\$Id.*$',      re.MULTILINE)
+	data        = re.sub(id_pattern,    '', data)
 	return data
 # -----------------------------------------------------------------------------
 # determine git_branch_name
@@ -113,40 +102,11 @@ if not os.path.isdir(work_directory) :
 # checkout svn version of directory
 svn_directory = work_directory + '/svn'
 if os.path.isdir(svn_directory) :
-	question    = 'Use existing svn directory:\n\t'
-	question   +=  svn_directory + '\n'
-	question   += 'or remove it and check out a new copy ? [use/new] '
-	choice_list = [ 'use' , 'new' ]
-	choice      = pause(question, choice_list)
-	if choice == 'new' :
-		cmd         = 'rm -rf ' + svn_directory
-		print_system(cmd)
-else :
-	choice      = 'new'
-if choice == 'use' :
-	cmd = 'svn revert --recursive ' + svn_directory
+	cmd         = 'rm -rf ' + svn_directory
 	print_system(cmd)
-	cmd = 'svn update ' + svn_directory
-	print_system(cmd)
-	cmd        = 'svn status ' + svn_directory
-	svn_status = system(cmd)
-	svn_status = svn_status.split('\n')
-	for entry in svn_status :
-		if entry.startswith('?       ') :
-			file_name = entry[8:]
-			cmd = 'rm ' + file_name
-			system(cmd)
-else :
-	cmd  = 'svn checkout '
-	cmd +=  svn_repository + '/' + svn_branch_path + ' ' + svn_directory
-	print_system(cmd)
-# ----------------------------------------------------------------------------
-tmp = os.getcwd()
-os.chdir( svn_directory )
-for cmd in svn_commands :
-	assert cmd.startswith('svn')
-	print_system(cmd)
-os.chdir( tmp )
+cmd  = 'svn checkout '
+cmd +=  svn_repository + '/' + svn_branch_path + ' ' + svn_directory
+print_system(cmd)
 # ----------------------------------------------------------------------------
 # git hash code corresponding to verison in svn directory
 cmd           = 'svn info ' + svn_directory
@@ -218,11 +178,13 @@ created_dir_list=[]
 for name in git_dir_list :
 	if not name in svn_dir_list :
 		created_dir_list.append(name)
+print("created_dir_list= ", created_dir_list)
 #
 deleted_dir_list=[]
 for name in svn_dir_list :
 	if not name in git_dir_list :
 		deleted_dir_list.append(name)
+print("deleted_dir_list= ", deleted_dir_list)
 # -----------------------------------------------------------------------------
 # automated svn commands
 #
@@ -231,12 +193,23 @@ for git_dir in created_dir_list :
 	print_system(cmd)
 #
 for git_file in created_file_list :
+	# the original file that was copied to the git_file
+	original_file = None
+	#
+	# extract the directory that git_file is located in
+	pattern    = re.compile(r'.*/([^/]*)')
+	local_name = re.sub(pattern, r'\1', git_file)
+	#
+	for svn_dir in deleted_dir_list :
+		svn_file = svn_dir + '/' + local_name
+		if svn_file in deleted_file_list :
+			original_file = svn_file
+	#
 	git_f     = open(git_directory + '/' + git_file, 'rb')
 	git_data  = git_f.read()
 	git_f.close()
 	git_data  = ignore_data(git_data)
 	#
-	found = False
 	for svn_file in deleted_file_list :
 		svn_f    = open(svn_directory + '/' + svn_file, 'rb')
 		svn_data = svn_f.read()
@@ -244,20 +217,26 @@ for git_file in created_file_list :
 		svn_data = ignore_data(svn_data)
 		#
 		if svn_data == git_data :
-			assert not found
-			cmd  = 'svn copy ' + svn_directory + '/' + svn_file + ' \\\n\t'
-			cmd += svn_directory + '/' + git_file
-			print_system(cmd)
-			cmd  = 'cp ' + git_directory + '/' + git_file + ' \\\n\t'
-			cmd += svn_directory + '/' + git_file
-			system(cmd)
-			found = True
-	if not found :
+			original_file = svn_file
+	if original_file == None :
 			cmd  = 'cp ' + git_directory + '/' + git_file + ' \\\n\t'
 			cmd += svn_directory + '/' + git_file
 			system(cmd)
 			cmd  = 'svn add ' + svn_directory + '/' + git_file
 			print_system(cmd)
+	else :
+			# remove original file from deleted file list
+			ind  = deleted_file_list.index( original_file )
+			del deleted_file_list[ind]
+			# copy original file to new file name
+			cmd  = 'svn move ' + svn_directory + '/' + original_file + ' \\\n\t'
+			cmd += svn_directory + '/' + git_file
+			print_system(cmd)
+			# replace by the git version for this file
+			cmd  = 'cp ' + git_directory + '/' + git_file + ' \\\n\t'
+			cmd += svn_directory + '/' + git_file
+			system(cmd)
+			found = True
 #
 for svn_file in deleted_file_list :
 	svn_file_path = svn_directory + '/' + svn_file
