@@ -14,13 +14,13 @@ spell_list='
 revert_list='
 '
 move_list='
-	print_for
+	introduction/get_started
 '
-move_sed='s|print_for|example/print_for|'
+move_sed='s|introduction/get_started|example/get_started|'
 #
 cat << EOF > junk.sed
-s|print_for/|example/print_for/|
-s|^\tprint_for \\\\|\texample/print_for \\\\|
+s|introduction/get_started|example/get_started|
+s|introduction_get_started|example_get_started|
 EOF
 # -----------------------------------------------------------------------------
 if [ $0 != "bin/batch_edit.sh" ]

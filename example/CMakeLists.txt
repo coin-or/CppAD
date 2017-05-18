@@ -23,6 +23,12 @@ ADD_SUBDIRECTORY(atomic)
 # general examples
 ADD_SUBDIRECTORY(general)
 
+# get_started
+ADD_SUBDIRECTORY(get_started)
+
+# ipopt_solve examples
+ADD_SUBDIRECTORY(ipopt_solve)
+
 # optimize examples
 ADD_SUBDIRECTORY(optimize)
 

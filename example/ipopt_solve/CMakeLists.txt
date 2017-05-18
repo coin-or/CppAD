@@ -13,7 +13,6 @@
 # Local link directories to search, as determined by pkg-config for ipopt
 LINK_DIRECTORIES( ${ipopt_LIBRARY_DIRS} )
 
-#
 ADD_EXECUTABLE(example_ipopt_solve EXCLUDE_FROM_ALL
 	get_started.cpp
 	ipopt_solve.cpp
@@ -38,3 +37,7 @@ ADD_CUSTOM_TARGET(check_example_ipopt_solve
 	DEPENDS example_ipopt_solve
 )
 MESSAGE(STATUS "make check_example_ipopt_solve: available")
+
+# Change check_example_depends in parent environment
+add_to_list(check_example_depends check_example_ipopt_solve)
+SET(check_example_depends "${check_example_depends}" PARENT_SCOPE)

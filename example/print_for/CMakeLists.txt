@@ -25,4 +25,4 @@ MESSAGE(STATUS "make check_example_print_for: available")
 
 # Change check_example_depends in parent environment
 add_to_list(check_example_depends check_example_print_for)
-SET(check_depends "${check_depends}" PARENT_SCOPE)
+SET(check_example_depends "${check_example_depends}" PARENT_SCOPE)

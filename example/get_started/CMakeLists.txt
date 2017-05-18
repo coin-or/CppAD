@@ -8,16 +8,21 @@
 # A copy of this license is included in the COPYING file of this distribution.
 # Please visit http://www.coin-or.org/CppAD/ for information on other licenses.
 # -----------------------------------------------------------------------------
-# Build the introduction/* directory tests
+# Build the example/get_started directory tests
 #
-SET(check_introduction_depends "")
-
-ADD_SUBDIRECTORY(exp_apx)
-
-# Add the check_introduction target
-ADD_CUSTOM_TARGET(check_introduction DEPENDS ${check_introduction_depends})
-MESSAGE(STATUS "make check_introduction: available")
-
+ADD_EXECUTABLE(example_get_started EXCLUDE_FROM_ALL
+	get_started.cpp
+)
+# Compiler flags for cppad source
+add_cppad_cxx_flags( example_get_started )
+#
+# Add the check for this target
+ADD_CUSTOM_TARGET(check_example_get_started
+	example_get_started
+	DEPENDS example_get_started
+)
+MESSAGE(STATUS "make check_example_get_started: available")
+#
 # Change check depends in parent environment
-add_to_list(check_depends check_introduction)
-SET(check_depends "${check_depends}" PARENT_SCOPE)
+add_to_list(check_example_depends check_example_get_started)
+SET(check_example_depends "${check_example_depends}" PARENT_SCOPE)

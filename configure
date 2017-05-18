@@ -7943,7 +7943,7 @@ eigen_prefix=${EIGEN_DIR}
 
 ipopt_prefix=${IPOPT_DIR}
 
-ac_config_files="$ac_config_files cppad/configure.hpp cppad_ipopt/example/test.sh cppad_ipopt/speed/test.sh cppad_ipopt/test/test.sh example/ipopt_solve/test.sh pkgconfig/cppad.pc pkgconfig/cppad-uninstalled.pc makefile compare_c/makefile cppad_ipopt/src/makefile cppad_ipopt/example/makefile cppad_ipopt/speed/makefile cppad_ipopt/test/makefile example/general/makefile example/atomic/makefile example/ipopt_solve/makefile example/optimize/makefile example/sparse/makefile example/utility/makefile introduction/get_started/makefile introduction/exp_apx/makefile multi_thread/makefile multi_thread/test_multi/makefile example/print_for/makefile speed/adolc/makefile speed/cppad/makefile speed/double/makefile speed/example/makefile speed/fadbad/makefile speed/profile/makefile speed/profile/gprof.sed speed/sacado/makefile speed/src/makefile test_more/makefile"
+ac_config_files="$ac_config_files cppad/configure.hpp cppad_ipopt/example/test.sh cppad_ipopt/speed/test.sh cppad_ipopt/test/test.sh example/ipopt_solve/test.sh pkgconfig/cppad.pc pkgconfig/cppad-uninstalled.pc makefile compare_c/makefile cppad_ipopt/src/makefile cppad_ipopt/example/makefile cppad_ipopt/speed/makefile cppad_ipopt/test/makefile example/general/makefile example/atomic/makefile example/ipopt_solve/makefile example/optimize/makefile example/sparse/makefile example/utility/makefile example/get_started/makefile introduction/exp_apx/makefile multi_thread/makefile multi_thread/test_multi/makefile example/print_for/makefile speed/adolc/makefile speed/cppad/makefile speed/double/makefile speed/example/makefile speed/fadbad/makefile speed/profile/makefile speed/profile/gprof.sed speed/sacado/makefile speed/src/makefile test_more/makefile"
 
 
 ac_config_commands="$ac_config_commands example_ipopt_solve_test.sh"
@@ -8792,7 +8792,7 @@ do
     "example/optimize/makefile") CONFIG_FILES="$CONFIG_FILES example/optimize/makefile" ;;
     "example/sparse/makefile") CONFIG_FILES="$CONFIG_FILES example/sparse/makefile" ;;
     "example/utility/makefile") CONFIG_FILES="$CONFIG_FILES example/utility/makefile" ;;
-    "introduction/get_started/makefile") CONFIG_FILES="$CONFIG_FILES introduction/get_started/makefile" ;;
+    "example/get_started/makefile") CONFIG_FILES="$CONFIG_FILES example/get_started/makefile" ;;
     "introduction/exp_apx/makefile") CONFIG_FILES="$CONFIG_FILES introduction/exp_apx/makefile" ;;
     "multi_thread/makefile") CONFIG_FILES="$CONFIG_FILES multi_thread/makefile" ;;
     "multi_thread/test_multi/makefile") CONFIG_FILES="$CONFIG_FILES multi_thread/test_multi/makefile" ;;

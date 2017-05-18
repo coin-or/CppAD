@@ -340,7 +340,7 @@ SUBDIRS =  \
 	example/sparse \
 	example/utility \
 	compare_c \
-	introduction/get_started \
+	example/get_started \
 	introduction/exp_apx \
 	example/print_for \
 	multi_thread \
@@ -396,7 +396,7 @@ test_directory_list = \
 	example/atomic \
 	example/optimize \
 	compare_c \
-	introduction/get_started \
+	example/get_started \
 	introduction/exp_apx \
 	multi_thread \
 	multi_thread/test_multi \

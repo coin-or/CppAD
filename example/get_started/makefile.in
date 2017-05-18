@@ -88,7 +88,7 @@ POST_UNINSTALL = :
 build_triplet = @build@
 host_triplet = @host@
 check_PROGRAMS = get_started$(EXEEXT)
-subdir = introduction/get_started
+subdir = example/get_started
 ACLOCAL_M4 = $(top_srcdir)/aclocal.m4
 am__aclocal_m4_deps = $(top_srcdir)/configure.ac
 am__configure_deps = $(am__aclocal_m4_deps) $(CONFIGURE_DEPENDENCIES) \
@@ -186,9 +186,8 @@ CXX_FLAGS_EIGEN = @CXX_FLAGS_EIGEN@
 CXX_FLAGS_FADBAD = @CXX_FLAGS_FADBAD@
 CYGPATH_W = @CYGPATH_W@
 
-# $Id$
 # -----------------------------------------------------------------------------
-# CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-15 Bradley M. Bell
+# CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-17 Bradley M. Bell
 #
 # CppAD is distributed under multiple licenses. This distribution is under
 # the terms of the
@@ -358,9 +357,9 @@ $(srcdir)/makefile.in: @MAINTAINER_MODE_TRUE@ $(srcdir)/makefile.am  $(am__confi
 	      exit 1;; \
 	  esac; \
 	done; \
-	echo ' cd $(top_srcdir) && $(AUTOMAKE) --foreign introduction/get_started/makefile'; \
+	echo ' cd $(top_srcdir) && $(AUTOMAKE) --foreign example/get_started/makefile'; \
 	$(am__cd) $(top_srcdir) && \
-	  $(AUTOMAKE) --foreign introduction/get_started/makefile
+	  $(AUTOMAKE) --foreign example/get_started/makefile
 makefile: $(srcdir)/makefile.in $(top_builddir)/config.status
 	@case '$?' in \
 	  *config.status*) \

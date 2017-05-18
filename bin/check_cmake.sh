@@ -33,6 +33,7 @@ do
 		cppad_lib/CMakeLists.txt | \
 		example/atomic/CMakeLists.txt | \
 		example/general/CMakeLists.txt | \
+		example/get_started/CMakeLists.txt | \
 		example/ipopt_solve/CMakeLists.txt | \
 		example/optimize/CMakeLists.txt | \
 		example/print_for/CMakeLists.txt | \
@@ -74,7 +75,6 @@ do
 		# debug build type cases
 		example/CMakeLists.txt | \
 		introduction/exp_apx/CMakeLists.txt | \
-		introduction/get_started/CMakeLists.txt | \
 		multi_thread/CMakeLists.txt | \
 		test_more/CMakeLists.txt )
 		check="CMAKE_BUILD_TYPE DEBUG"

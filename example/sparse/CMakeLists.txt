@@ -50,6 +50,6 @@ ADD_CUSTOM_TARGET(check_example_sparse
 )
 MESSAGE(STATUS "make check_example_sparse: available")
 
-# add to check check_example_depends in parent environment
+# add to check_example_depends in parent environment
 add_to_list(check_example_depends check_example_sparse)
 SET(check_example_depends "${check_example_depends}" PARENT_SCOPE)

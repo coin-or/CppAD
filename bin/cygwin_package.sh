@@ -1,7 +1,6 @@
 #! /bin/bash -e
-# $Id$
 # -----------------------------------------------------------------------------
-# CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-15 Bradley M. Bell
+# CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-17 Bradley M. Bell
 #
 # CppAD is distributed under multiple licenses. This distribution is under
 # the terms of the
@@ -38,7 +37,7 @@ version=`ls /cygdrive/c/Download/cppad-20*.gpl.tgz |
 if [ "$version" == 20061208 ]
 then
         echo "change: f'(3) -> y'(3)"
-	echo "change: introduction/get_started -> get_started"
+	echo "change: example/get_started -> get_started"
 	echo "change: get_started.cpp.htm -> getstarted.cpp.htm"
 	echo "change: get_started.cpp.xml -> getstarted.cpp.xml"
 fi
@@ -94,7 +93,7 @@ fi
 #
 cat > setup.hint << EOF
 # To test the source or binary distribution, copy the source distribution file
-#	cppad-$version-$release/introduction/get_started/get_started.cpp
+#	cppad-$version-$release/example/get_started/get_started.cpp
 # to a temporary directory and execute the commands
 #	g++ get_started.cpp -o get_started.exe
 #	./get_started
@@ -377,7 +376,7 @@ if ! cd ../..
 then
 	exit 1
 fi
-dir="test_src/cppad-$version-$release/introduction/get_started"
+dir="test_src/cppad-$version-$release/example/get_started"
 echo "cp $dir/get_started.cpp ."
 if ! cp $dir/get_started.cpp .
 then

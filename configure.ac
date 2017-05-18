@@ -801,7 +801,7 @@ AC_CONFIG_FILES([
 	example/optimize/makefile
 	example/sparse/makefile
 	example/utility/makefile
-	introduction/get_started/makefile
+	example/get_started/makefile
 	introduction/exp_apx/makefile
 	multi_thread/makefile
 	multi_thread/test_multi/makefile
