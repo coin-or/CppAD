@@ -336,13 +336,14 @@ SUBDIRS =  \
 	$(SPEED_DIRS) \
 	example/atomic \
 	example/general \
+	example/get_started \
+	example/ipopt_solve \
 	example/optimize \
+	example/print_for \
 	example/sparse \
 	example/utility \
 	compare_c \
-	example/get_started \
 	introduction/exp_apx \
-	example/print_for \
 	multi_thread \
 	multi_thread/test_multi \
 	test_more
@@ -364,8 +365,12 @@ EXTRA_DIST = \
 	example/CMakeLists.txt \
 	example/atomic/CMakeLists.txt \
 	example/general/CMakeLists.txt \
+	example/get_started/CMakeLists.txt \
 	example/ipopt_solve/CMakeLists.txt \
 	example/optimize/CMakeLists.txt \
+	example/print_for/CMakeLists.txt \
+	example/sparse/CMakeLists.txt \
+	example/utility/CMakeLists.txt \
 	test_more/CMakeLists.txt \
 	CMakeLists.txt \
 	cppad_ipopt/src/CMakeLists.txt \
@@ -386,8 +391,7 @@ EXTRA_DIST = \
 	multi_thread/bthread/CMakeLists.txt \
 	multi_thread/CMakeLists.txt \
 	multi_thread/openmp/CMakeLists.txt \
-	multi_thread/pthread/CMakeLists.txt \
-	example/print_for/CMakeLists.txt
+	multi_thread/pthread/CMakeLists.txt
 
 test_directory_list = \
 	$(IPOPT_TESTS) \
