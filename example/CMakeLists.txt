@@ -29,6 +29,9 @@ ADD_SUBDIRECTORY(get_started)
 # ipopt_solve examples
 ADD_SUBDIRECTORY(ipopt_solve)
 
+# multi_thread examples
+ADD_SUBDIRECTORY(multi_thread)
+
 # optimize examples
 ADD_SUBDIRECTORY(optimize)
 

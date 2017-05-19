@@ -406,7 +406,7 @@ see $cref/speed results/speed_main/Speed Results/$$.
 
 $head 10-02$$
 Fix another problem with Debian's $code /bin/sh$$ shell executing
-$code multi_thread/test.sh$$; see $cref/03-17/whats_new_12/03-17/$$
+$code example/multi_thread/test.sh$$; see $cref/03-17/whats_new_12/03-17/$$
 
 $head 09-24$$
 Improve documentation for the
@@ -826,7 +826,7 @@ different thread during parallel execution.
 $head 03-17$$
 Debian recently converted the default shell corresponding to
 $code /bin/sh$$ to  $code dash$$
-(which caused $code multi_thread/test.sh$$ to fail).
+(which caused $code example/multi_thread/test.sh$$ to fail).
 This has been fixed.
 In general, Debian's policy is that $code bin/sh$$ will be a
 $href%
@@ -870,7 +870,7 @@ The multi-threading $code team_example.cpp$$ example was changed to use
 $latex f(x) = \sqrt{ x^2 }$$ instead of the function
 $latex {\rm atan2} [ \sin(x) , \cos (x) ]$$
 (both functions should behave like the identity function $latex f(x) = x$$).
-This enabled the removal of $code multi_thread/arc_tan.cpp$$.
+This enabled the removal of $code example/multi_thread/arc_tan.cpp$$.
 $lnext
 In $cref team_example.cpp$$ check that all of the threads
 pass their individual test; i.e. $codei%work_all_[%thread_num%]%.ok%$$
@@ -967,12 +967,12 @@ $lnext
 Fix problem compiling $code cppad/speed/sparse_evaluate.hpp$$
 under gcc on Fedora 17.
 $lnext
-Run $code multi_thread/test.sh$$ from source directory
+Run $code example/multi_thread/test.sh$$ from source directory
 (no need to copy to build directory).
 $lend
 
 $head 01-16$$
-The test program $code multi_thread/test.sh$$ failed if the
+The test program $code example/multi_thread/test.sh$$ failed if the
 $cref/openmp_flags/autotools/openmp_flags/$$ not present in the
 $code configure$$ command.
 This has been fixed.

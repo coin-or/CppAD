@@ -228,12 +228,12 @@ $head 10-29$$
 The following changes were merged in from $code branches/thread$$:
 
 $list number$$
-Move $code openmp$$ to $code multi_thread/openmp$$.
-and create $code multi_thread/bthread$$, $code multi_thread/pthread$$
+Move $code openmp$$ to $code example/multi_thread/openmp$$.
+and create $code example/multi_thread/bthread$$, $code multi_thread/pthread$$
 with similar tests.
 $lnext
 Put multi-threading common code in $code multi_thread$$ directory
-and threading system specific code in $codei%multi_thread/%threading%$$
+and threading system specific code in $codei%example/multi_thread/%threading%$$
 for $icode threading$$ equal to $code openmp$$, $code bthread$$,
 and $code pthread$$.
 $lnext

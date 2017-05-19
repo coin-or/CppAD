@@ -14,13 +14,21 @@ spell_list='
 revert_list='
 '
 move_list='
-	introduction/get_started
+	multi_thread
 '
-move_sed='s|introduction/get_started|example/get_started|'
+move_sed='s|multi_thread|example/multi_thread|'
 #
 cat << EOF > junk.sed
-s|introduction/get_started|example/get_started|
-s|introduction_get_started|example_get_started|
+s|multi_thread/|example/multi_thread/|
+s|CPPAD_MULTI_THREAD_|CPPAD_EXAMPLE_MULTI_THREAD_|
+s|/example/multi_thread/|/multi_thread/|
+s|multi_thread_bthread|example_multi_thread_bthread|
+s|multi_thread_pthread|example_multi_thread_pthread|
+s|multi_thread_openmp|example_multi_thread_openmp|
+s|check_multi_thread|check_example_multi_thread|g
+s|../../speed/src/microsoft_timer.cpp|\\\${CMAKE_SOURCE_DIR}/speed/src/microsoft_timer.cpp|
+s|example_example|example|g
+s|multi_threads_depends|multi_thread_depends|
 EOF
 # -----------------------------------------------------------------------------
 if [ $0 != "bin/batch_edit.sh" ]

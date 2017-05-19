@@ -39,10 +39,11 @@ do
 		example/print_for/CMakeLists.txt | \
 		example/sparse/CMakeLists.txt | \
 		example/utility/CMakeLists.txt | \
+		example/multi_thread/CMakeLists.txt | \
+		example/multi_thread/bthread/CMakeLists.txt | \
+		example/multi_thread/openmp/CMakeLists.txt | \
+		example/multi_thread/pthread/CMakeLists.txt | \
 		introduction/CMakeLists.txt | \
-		multi_thread/bthread/CMakeLists.txt | \
-		multi_thread/openmp/CMakeLists.txt | \
-		multi_thread/pthread/CMakeLists.txt | \
 		pkgconfig/CMakeLists.txt | \
 		speed/adolc/CMakeLists.txt | \
 		speed/cppad/CMakeLists.txt | \
@@ -75,7 +76,6 @@ do
 		# debug build type cases
 		example/CMakeLists.txt | \
 		introduction/exp_apx/CMakeLists.txt | \
-		multi_thread/CMakeLists.txt | \
 		test_more/CMakeLists.txt )
 		check="CMAKE_BUILD_TYPE DEBUG"
 		if ! grep "$check" $file > /dev/null

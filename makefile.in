@@ -196,7 +196,7 @@ DIST_SUBDIRS = cppad_ipopt/src example/ipopt_solve cppad_ipopt/example \
 	speed/profile speed/sacado example/atomic example/general \
 	example/get_started example/optimize example/print_for \
 	example/sparse example/utility compare_c introduction/exp_apx \
-	multi_thread multi_thread/test_multi test_more
+	example/multi_thread example/multi_thread/test_multi test_more
 am__DIST_COMMON = $(srcdir)/makefile.in \
 	$(top_srcdir)/cppad/configure.hpp.in \
 	$(top_srcdir)/pkgconfig/cppad-uninstalled.pc.in \
@@ -743,8 +743,8 @@ SUBDIRS = \
 	example/utility \
 	compare_c \
 	introduction/exp_apx \
-	multi_thread \
-	multi_thread/test_multi \
+	example/multi_thread \
+	example/multi_thread/test_multi \
 	test_more
 
 #
@@ -788,10 +788,10 @@ EXTRA_DIST = \
 	speed/double/CMakeLists.txt \
 	speed/profile/CMakeLists.txt \
 	speed/sacado/CMakeLists.txt \
-	multi_thread/bthread/CMakeLists.txt \
-	multi_thread/CMakeLists.txt \
-	multi_thread/openmp/CMakeLists.txt \
-	multi_thread/pthread/CMakeLists.txt 
+	example/multi_thread/bthread/CMakeLists.txt \
+	example/multi_thread/CMakeLists.txt \
+	example/multi_thread/openmp/CMakeLists.txt \
+	example/multi_thread/pthread/CMakeLists.txt
 
 test_directory_list = \
 	$(IPOPT_TESTS) \
@@ -802,8 +802,8 @@ test_directory_list = \
 	compare_c \
 	example/get_started \
 	introduction/exp_apx \
-	multi_thread \
-	multi_thread/test_multi \
+	example/multi_thread \
+	example/multi_thread/test_multi \
 	example/print_for \
 	test_more
 

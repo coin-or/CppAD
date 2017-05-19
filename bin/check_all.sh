@@ -120,7 +120,7 @@ echo_eval speed/adolc/speed_adolc sparse_hessian  432 onetape colpack
 program_list=''
 for threading in bthread openmp pthread
 do
-	program="multi_thread/${threading}/multi_thread_${threading}"
+	program="example/multi_thread/${threading}/multi_thread_${threading}"
 	if [ ! -e $program ]
 	then
 		skip="$skip $program"
