@@ -18,13 +18,13 @@ EXTRA_DIST        =  \
 	exp_2.omh \
 	exp_eps.omh
 #
-check_PROGRAMS    = exp_apx
+check_PROGRAMS    = introduction
 #
 AM_CPPFLAGS       = -I. -I$(top_srcdir) $(BOOST_INCLUDE) $(EIGEN_INCLUDE)
 AM_CXXFLAGS       = -g $(CXX_FLAGS)
 #
-exp_apx_SOURCES   = \
-	exp_apx.cpp \
+introduction_SOURCES   = \
+	introduction.cpp \
 	exp_2.cpp \
 	exp_2.hpp \
 	exp_2_cppad.cpp \
@@ -43,4 +43,4 @@ exp_apx_SOURCES   = \
 	exp_eps_rev2.cpp
 
 test: check
-	./exp_apx
+	./introduction

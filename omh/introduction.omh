@@ -120,10 +120,9 @@ SIAM Frontiers in Applied Mathematics,
 2000.
 
 $childtable%
-	example/get_started/get_started.cpp%
-	introduction/exp_apx/exp_2.hpp%
-	introduction/exp_apx/exp_eps.hpp%
-	introduction/exp_apx/exp_apx.cpp
+	introduction/exp_2.hpp%
+	introduction/exp_eps.hpp%
+	introduction/introduction.cpp
 %$$
 
 $end

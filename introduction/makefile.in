@@ -87,8 +87,8 @@ PRE_UNINSTALL = :
 POST_UNINSTALL = :
 build_triplet = @build@
 host_triplet = @host@
-check_PROGRAMS = exp_apx$(EXEEXT)
-subdir = introduction/exp_apx
+check_PROGRAMS = introduction$(EXEEXT)
+subdir = introduction
 ACLOCAL_M4 = $(top_srcdir)/aclocal.m4
 am__aclocal_m4_deps = $(top_srcdir)/configure.ac
 am__configure_deps = $(am__aclocal_m4_deps) $(CONFIGURE_DEPENDENCIES) \
@@ -97,15 +97,15 @@ DIST_COMMON = $(srcdir)/makefile.am $(am__DIST_COMMON)
 mkinstalldirs = $(install_sh) -d
 CONFIG_CLEAN_FILES =
 CONFIG_CLEAN_VPATH_FILES =
-am_exp_apx_OBJECTS = exp_apx.$(OBJEXT) exp_2.$(OBJEXT) \
+am_introduction_OBJECTS = introduction.$(OBJEXT) exp_2.$(OBJEXT) \
 	exp_2_cppad.$(OBJEXT) exp_2_for1.$(OBJEXT) \
 	exp_2_for2.$(OBJEXT) exp_2_rev1.$(OBJEXT) exp_2_rev2.$(OBJEXT) \
 	exp_2_for0.$(OBJEXT) exp_eps.$(OBJEXT) exp_eps_cppad.$(OBJEXT) \
 	exp_eps_for1.$(OBJEXT) exp_eps_for2.$(OBJEXT) \
 	exp_eps_for0.$(OBJEXT) exp_eps_rev1.$(OBJEXT) \
 	exp_eps_rev2.$(OBJEXT)
-exp_apx_OBJECTS = $(am_exp_apx_OBJECTS)
-exp_apx_LDADD = $(LDADD)
+introduction_OBJECTS = $(am_introduction_OBJECTS)
+introduction_LDADD = $(LDADD)
 AM_V_P = $(am__v_P_@AM_V@)
 am__v_P_ = $(am__v_P_@AM_DEFAULT_V@)
 am__v_P_0 = false
@@ -147,8 +147,8 @@ AM_V_CCLD = $(am__v_CCLD_@AM_V@)
 am__v_CCLD_ = $(am__v_CCLD_@AM_DEFAULT_V@)
 am__v_CCLD_0 = @echo "  CCLD    " $@;
 am__v_CCLD_1 = 
-SOURCES = $(exp_apx_SOURCES)
-DIST_SOURCES = $(exp_apx_SOURCES)
+SOURCES = $(introduction_SOURCES)
+DIST_SOURCES = $(introduction_SOURCES)
 am__can_run_installinfo = \
   case $$AM_UPDATE_INFO_DIR in \
     n|no|NO) false;; \
@@ -366,8 +366,8 @@ EXTRA_DIST = \
 AM_CPPFLAGS = -I. -I$(top_srcdir) $(BOOST_INCLUDE) $(EIGEN_INCLUDE)
 AM_CXXFLAGS = -g $(CXX_FLAGS)
 #
-exp_apx_SOURCES = \
-	exp_apx.cpp \
+introduction_SOURCES = \
+	introduction.cpp \
 	exp_2.cpp \
 	exp_2.hpp \
 	exp_2_cppad.cpp \
@@ -398,9 +398,9 @@ $(srcdir)/makefile.in: @MAINTAINER_MODE_TRUE@ $(srcdir)/makefile.am  $(am__confi
 	      exit 1;; \
 	  esac; \
 	done; \
-	echo ' cd $(top_srcdir) && $(AUTOMAKE) --foreign introduction/exp_apx/makefile'; \
+	echo ' cd $(top_srcdir) && $(AUTOMAKE) --foreign introduction/makefile'; \
 	$(am__cd) $(top_srcdir) && \
-	  $(AUTOMAKE) --foreign introduction/exp_apx/makefile
+	  $(AUTOMAKE) --foreign introduction/makefile
 makefile: $(srcdir)/makefile.in $(top_builddir)/config.status
 	@case '$?' in \
 	  *config.status*) \
@@ -422,9 +422,9 @@ $(am__aclocal_m4_deps):
 clean-checkPROGRAMS:
 	-test -z "$(check_PROGRAMS)" || rm -f $(check_PROGRAMS)
 
-exp_apx$(EXEEXT): $(exp_apx_OBJECTS) $(exp_apx_DEPENDENCIES) $(EXTRA_exp_apx_DEPENDENCIES) 
-	@rm -f exp_apx$(EXEEXT)
-	$(AM_V_CXXLD)$(CXXLINK) $(exp_apx_OBJECTS) $(exp_apx_LDADD) $(LIBS)
+introduction$(EXEEXT): $(introduction_OBJECTS) $(introduction_DEPENDENCIES) $(EXTRA_introduction_DEPENDENCIES) 
+	@rm -f introduction$(EXEEXT)
+	$(AM_V_CXXLD)$(CXXLINK) $(introduction_OBJECTS) $(introduction_LDADD) $(LIBS)
 
 mostlyclean-compile:
 	-rm -f *.$(OBJEXT)
@@ -439,7 +439,6 @@ distclean-compile:
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/exp_2_for2.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/exp_2_rev1.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/exp_2_rev2.Po@am__quote@
-@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/exp_apx.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/exp_eps.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/exp_eps_cppad.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/exp_eps_for0.Po@am__quote@
@@ -447,6 +446,7 @@ distclean-compile:
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/exp_eps_for2.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/exp_eps_rev1.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/exp_eps_rev2.Po@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/introduction.Po@am__quote@
 
 .cpp.o:
 @am__fastdepCXX_TRUE@	$(AM_V_CXX)depbase=`echo $@ | sed 's|[^/]*$$|$(DEPDIR)/&|;s|\.o$$||'`;\
@@ -669,7 +669,7 @@ uninstall-am:
 
 
 test: check
-	./exp_apx
+	./introduction
 
 # Tell versions [3.59,3.63) of GNU make to not export all variables.
 # Otherwise a system limit (for SysV at least) may be exceeded.

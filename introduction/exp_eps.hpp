@@ -1,8 +1,7 @@
-// $Id$
-# ifndef CPPAD_INTRODUCTION_EXP_APX_EXP_EPS_HPP
-# define CPPAD_INTRODUCTION_EXP_APX_EXP_EPS_HPP
+# ifndef CPPAD_INTRODUCTION_EXP_EPS_HPP
+# define CPPAD_INTRODUCTION_EXP_EPS_HPP
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-16 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-17 Bradley M. Bell
 
 CppAD is distributed under multiple licenses. This distribution is under
 the terms of the
@@ -146,8 +145,8 @@ $codei%-%u%$$
 $tend
 
 $children%
-	introduction/exp_apx/exp_eps.omh%
-	introduction/exp_apx/exp_eps_cppad.cpp
+	introduction/exp_eps.omh%
+	introduction/exp_eps_cppad.cpp
 %$$
 
 $head Implementation$$

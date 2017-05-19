@@ -1,6 +1,5 @@
-$Id$
 -----------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-16 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-17 Bradley M. Bell
 
 CppAD is distributed under multiple licenses. This distribution is under
 the terms of the
@@ -18,7 +17,7 @@ $section exp_2: Implementation$$
 $mindex exp_2$$
 
 $code
-$srcfile%introduction/exp_apx/exp_2.hpp%0%// BEGIN C++%// END C++%$$
+$srcfile%introduction/exp_2.hpp%0%// BEGIN C++%// END C++%$$
 $$
 
 $end
@@ -31,7 +30,7 @@ $$
 $section exp_2: Test$$
 
 $code
-$srcfile%introduction/exp_apx/exp_2.cpp%0%// BEGIN C++%// END C++%$$
+$srcfile%introduction/exp_2.cpp%0%// BEGIN C++%// END C++%$$
 $$
 
 $end
@@ -158,7 +157,7 @@ $latex \[
 \] $$
 
 $children%
-	introduction/exp_apx/exp_2_for0.cpp
+	introduction/exp_2_for0.cpp
 %$$
 
 $head Verification$$
@@ -338,7 +337,7 @@ $latex \[
 (We have used the fact that $latex x^{(1)} = 1$$.)
 
 $children%
-	introduction/exp_apx/exp_2_for1.cpp
+	introduction/exp_2_for1.cpp
 %$$
 $head Verification$$
 The file $cref exp_2_for1.cpp$$ contains a routine
@@ -530,7 +529,7 @@ so the derivative of this is the derivative of
 the function defined by $cref exp_2.hpp$$ at $latex x = .5$$.
 
 $children%
-	introduction/exp_apx/exp_2_rev1.cpp
+	introduction/exp_2_rev1.cpp
 %$$
 $head Verification$$
 The file $cref exp_2_rev1.cpp$$ contains a routine
@@ -724,7 +723,7 @@ $latex \[
 $latex x^{(1)} = 1$$ and $latex x^{(2)} = 0$$.)
 
 $children%
-	introduction/exp_apx/exp_2_for2.cpp
+	introduction/exp_2_for2.cpp
 %$$
 $head Verification$$
 The file $cref exp_2_for2.cpp$$ contains a routine
@@ -985,7 +984,7 @@ the function defined by $cref exp_2.hpp$$ at $latex x = .5$$.
 
 
 $children%
-	introduction/exp_apx/exp_2_rev2.cpp
+	introduction/exp_2_rev2.cpp
 %$$
 $head Verification$$
 The file $cref exp_2_rev2.cpp$$ contains a routine

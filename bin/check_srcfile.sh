@@ -30,8 +30,8 @@ special_case='
 bin/check_srcfile.sh
 bin/package.sh
 cppad/core/cond_exp.hpp
-introduction/exp_apx/exp_2.omh
-introduction/exp_apx/exp_eps.omh
+introduction/exp_2.omh
+introduction/exp_eps.omh
 omh/appendix/license.omh
 bin/batch_edit.sh
 '

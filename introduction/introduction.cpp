@@ -26,7 +26,7 @@ To build this program and run its correctness tests see $cref cmake_check$$.
 
 $head Source$$
 $code
-$srcfile%introduction/exp_apx/exp_apx.cpp%0%// BEGIN C++%// END C++%1%$$
+$srcfile%introduction/introduction.cpp%0%// BEGIN C++%// END C++%1%$$
 $$
 
 $end
@@ -60,7 +60,7 @@ extern bool exp_eps_rev2(void);
 
 // main program that runs all the tests
 int main(void)
-{	std::string group = "introduction/exp_apx";
+{	std::string group = "introduction";
 	size_t      width = 20;
 	CppAD::test_boolofvoid Run(group, width);
 

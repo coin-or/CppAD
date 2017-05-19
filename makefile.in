@@ -196,7 +196,7 @@ DIST_SUBDIRS = cppad_ipopt/src example/ipopt_solve cppad_ipopt/example \
 	speed/profile speed/sacado example/atomic example/deprecated \
 	example/general example/get_started example/optimize \
 	example/print_for example/sparse example/utility compare_c \
-	introduction/exp_apx example/multi_thread \
+	introduction example/multi_thread \
 	example/multi_thread/test_multi test_more/general
 am__DIST_COMMON = $(srcdir)/makefile.in \
 	$(top_srcdir)/cppad/configure.hpp.in \
@@ -744,7 +744,7 @@ SUBDIRS = \
 	example/sparse \
 	example/utility \
 	compare_c \
-	introduction/exp_apx \
+	introduction \
 	example/multi_thread \
 	example/multi_thread/test_multi \
 	test_more/general
@@ -805,7 +805,7 @@ test_directory_list = \
 	example/optimize \
 	compare_c \
 	example/get_started \
-	introduction/exp_apx \
+	introduction \
 	example/multi_thread \
 	example/multi_thread/test_multi \
 	example/print_for \

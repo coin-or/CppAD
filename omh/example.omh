@@ -1,6 +1,5 @@
-$Id$
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-16 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-17 Bradley M. Bell
 
 CppAD is distributed under multiple licenses. This distribution is under
 the terms of the
@@ -37,6 +36,9 @@ Some of the examples are of a more general nature
 In addition, there are some utility functions that are used
 by the examples.
 
+$head get_started$$
+The $cref get_started.cpp$$ example is a good place to start using CppAD.
+
 $head Running Examples$$
 The
 $cref/installation instructions/Install/$$
@@ -51,6 +53,7 @@ the examples.
 
 
 $contents%
+	example/get_started/get_started.cpp%
 	omh/example_list.omh%
 	cppad/core/testvector.hpp
 %$$

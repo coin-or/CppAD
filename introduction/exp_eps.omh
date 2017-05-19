@@ -1,6 +1,5 @@
-$Id$
 ----------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-16 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-17 Bradley M. Bell
 
 CppAD is distributed under multiple licenses. This distribution is under
 the terms of the
@@ -18,7 +17,7 @@ $section exp_eps: Implementation$$
 $mindex exp_eps$$
 
 $code
-$srcfile%introduction/exp_apx/exp_eps.hpp%0%// BEGIN C++%// END C++%$$
+$srcfile%introduction/exp_eps.hpp%0%// BEGIN C++%// END C++%$$
 $$
 
 $end
@@ -31,7 +30,7 @@ $$
 $section exp_eps: Test of exp_eps$$
 
 $code
-$srcfile%introduction/exp_apx/exp_eps.cpp%0%// BEGIN C++%// END C++%$$
+$srcfile%introduction/exp_eps.cpp%0%// BEGIN C++%// END C++%$$
 $$
 
 $end
@@ -175,7 +174,7 @@ of $latex x = 0.5$$ for which the comparisons would have the
 same result and hence the operation sequence would be the same.
 
 $children%
-	introduction/exp_apx/exp_eps_for0.cpp
+	introduction/exp_eps_for0.cpp
 %$$
 
 $head Verification$$
@@ -359,7 +358,7 @@ v_7^{(1)} =
 $latex x^{(1)} = 1$$ and $latex \varepsilon^{(1)} = 0$$.)
 
 $children%
-	introduction/exp_apx/exp_eps_for1.cpp
+	introduction/exp_eps_for1.cpp
 %$$
 
 $head Verification$$
@@ -636,7 +635,7 @@ same result for the partial in the $icode x$$ direction.
 
 
 $children%
-	introduction/exp_apx/exp_eps_rev1.cpp
+	introduction/exp_eps_rev1.cpp
 %$$
 
 $head Verification$$
@@ -865,7 +864,7 @@ $latex x^{(1)} = 1$$, $latex x^{(2)} = 0$$,
 $latex \varepsilon^{(1)} = 1$$, and $latex \varepsilon^{(2)} = 0$$.)
 
 $children%
-	introduction/exp_apx/exp_eps_for2.cpp
+	introduction/exp_eps_for2.cpp
 %$$
 $head Verification$$
 The file $cref exp_eps_for2.cpp$$ contains a routine
@@ -1237,7 +1236,7 @@ with respect to $latex x$$.
 
 
 $children%
-	introduction/exp_apx/exp_eps_rev2.cpp
+	introduction/exp_eps_rev2.cpp
 %$$
 
 $head Verification$$

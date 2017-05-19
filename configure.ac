@@ -803,7 +803,7 @@ AC_CONFIG_FILES([
 	example/sparse/makefile
 	example/utility/makefile
 	example/get_started/makefile
-	introduction/exp_apx/makefile
+	introduction/makefile
 	example/multi_thread/makefile
 	example/multi_thread/test_multi/makefile
 	example/print_for/makefile

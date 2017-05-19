@@ -593,7 +593,7 @@ general_SOURCES = \
 	value.cpp \
 	vec_ad.cpp \
 	vec_ad_par.cpp \
-	vec_unary.cpp 
+	vec_unary.cpp
 
 all: all-am
 
