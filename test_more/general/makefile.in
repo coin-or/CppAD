@@ -126,17 +126,15 @@ am__general_SOURCES_DIST = base_adolc.cpp ipopt_solve.cpp \
 	hes_sparsity.cpp jacobian.cpp num_limits.cpp log.cpp log1p.cpp \
 	log10.cpp mul.cpp mul_cskip.cpp mul_eq.cpp mul_level.cpp \
 	mul_cond_rev.cpp mul_zdouble.cpp mul_zero_one.cpp \
-	near_equal_ext.cpp neg.cpp ode_err_control.cpp old_usead_2.cpp \
-	old_usead_1.cpp old_tan.cpp old_reciprocal.cpp old_mat_mul.cpp \
-	old_mat_mul.hpp omp_alloc.cpp optimize.cpp parameter.cpp \
-	poly.cpp pow.cpp pow_int.cpp print_for.cpp romberg_one.cpp \
-	rosen_34.cpp runge_45.cpp reverse.cpp rev_sparse_jac.cpp \
-	rev_two.cpp simple_vector.cpp sin.cpp sin_cos.cpp sinh.cpp \
-	sparse_hessian.cpp sparse_jacobian.cpp sparse_sub_hes.cpp \
-	sparse_vec_ad.cpp sqrt.cpp std_math.cpp sub.cpp sub_eq.cpp \
-	sub_zero.cpp tan.cpp test_vector.cpp to_string.cpp \
-	track_new_del.cpp value.cpp vec_ad.cpp vec_ad_par.cpp \
-	vec_unary.cpp zdouble.cpp
+	near_equal_ext.cpp neg.cpp ode_err_control.cpp optimize.cpp \
+	parameter.cpp poly.cpp pow.cpp pow_int.cpp print_for.cpp \
+	romberg_one.cpp rosen_34.cpp runge_45.cpp reverse.cpp \
+	rev_sparse_jac.cpp rev_two.cpp simple_vector.cpp sin.cpp \
+	sin_cos.cpp sinh.cpp sparse_hessian.cpp sparse_jacobian.cpp \
+	sparse_sub_hes.cpp sparse_vec_ad.cpp sqrt.cpp std_math.cpp \
+	sub.cpp sub_eq.cpp sub_zero.cpp tan.cpp test_vector.cpp \
+	to_string.cpp value.cpp vec_ad.cpp vec_ad_par.cpp \
+	vec_unary.cpp
 @CppAD_ADOLC_TRUE@am__objects_1 = base_adolc.$(OBJEXT)
 @CppAD_IPOPT_TRUE@am__objects_2 = ipopt_solve.$(OBJEXT)
 @CppAD_OPENMP_TRUE@am__objects_3 = alloc_openmp.$(OBJEXT)
@@ -163,21 +161,19 @@ am_general_OBJECTS = $(am__objects_1) $(am__objects_2) \
 	mul_eq.$(OBJEXT) mul_level.$(OBJEXT) mul_cond_rev.$(OBJEXT) \
 	mul_zdouble.$(OBJEXT) mul_zero_one.$(OBJEXT) \
 	near_equal_ext.$(OBJEXT) neg.$(OBJEXT) \
-	ode_err_control.$(OBJEXT) old_usead_2.$(OBJEXT) \
-	old_usead_1.$(OBJEXT) old_tan.$(OBJEXT) \
-	old_reciprocal.$(OBJEXT) old_mat_mul.$(OBJEXT) \
-	omp_alloc.$(OBJEXT) optimize.$(OBJEXT) parameter.$(OBJEXT) \
-	poly.$(OBJEXT) pow.$(OBJEXT) pow_int.$(OBJEXT) \
-	print_for.$(OBJEXT) romberg_one.$(OBJEXT) rosen_34.$(OBJEXT) \
-	runge_45.$(OBJEXT) reverse.$(OBJEXT) rev_sparse_jac.$(OBJEXT) \
-	rev_two.$(OBJEXT) simple_vector.$(OBJEXT) sin.$(OBJEXT) \
-	sin_cos.$(OBJEXT) sinh.$(OBJEXT) sparse_hessian.$(OBJEXT) \
+	ode_err_control.$(OBJEXT) optimize.$(OBJEXT) \
+	parameter.$(OBJEXT) poly.$(OBJEXT) pow.$(OBJEXT) \
+	pow_int.$(OBJEXT) print_for.$(OBJEXT) romberg_one.$(OBJEXT) \
+	rosen_34.$(OBJEXT) runge_45.$(OBJEXT) reverse.$(OBJEXT) \
+	rev_sparse_jac.$(OBJEXT) rev_two.$(OBJEXT) \
+	simple_vector.$(OBJEXT) sin.$(OBJEXT) sin_cos.$(OBJEXT) \
+	sinh.$(OBJEXT) sparse_hessian.$(OBJEXT) \
 	sparse_jacobian.$(OBJEXT) sparse_sub_hes.$(OBJEXT) \
 	sparse_vec_ad.$(OBJEXT) sqrt.$(OBJEXT) std_math.$(OBJEXT) \
 	sub.$(OBJEXT) sub_eq.$(OBJEXT) sub_zero.$(OBJEXT) \
 	tan.$(OBJEXT) test_vector.$(OBJEXT) to_string.$(OBJEXT) \
-	track_new_del.$(OBJEXT) value.$(OBJEXT) vec_ad.$(OBJEXT) \
-	vec_ad_par.$(OBJEXT) vec_unary.$(OBJEXT) zdouble.$(OBJEXT)
+	value.$(OBJEXT) vec_ad.$(OBJEXT) vec_ad_par.$(OBJEXT) \
+	vec_unary.$(OBJEXT)
 general_OBJECTS = $(am_general_OBJECTS)
 general_LDADD = $(LDADD)
 am__DEPENDENCIES_1 =
@@ -566,13 +562,6 @@ general_SOURCES = \
 	near_equal_ext.cpp \
 	neg.cpp \
 	ode_err_control.cpp \
-	old_usead_2.cpp \
-	old_usead_1.cpp \
-	old_tan.cpp \
-	old_reciprocal.cpp \
-	old_mat_mul.cpp \
-	old_mat_mul.hpp \
-	omp_alloc.cpp \
 	optimize.cpp \
 	parameter.cpp \
 	poly.cpp \
@@ -601,12 +590,10 @@ general_SOURCES = \
 	tan.cpp \
 	test_vector.cpp \
 	to_string.cpp \
-	track_new_del.cpp \
 	value.cpp \
 	vec_ad.cpp \
 	vec_ad_par.cpp \
-	vec_unary.cpp \
-	zdouble.cpp
+	vec_unary.cpp 
 
 all: all-am
 
@@ -729,12 +716,6 @@ distclean-compile:
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/neg.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/num_limits.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/ode_err_control.Po@am__quote@
-@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/old_mat_mul.Po@am__quote@
-@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/old_reciprocal.Po@am__quote@
-@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/old_tan.Po@am__quote@
-@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/old_usead_1.Po@am__quote@
-@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/old_usead_2.Po@am__quote@
-@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/omp_alloc.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/optimize.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/parameter.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/poly.Po@am__quote@
@@ -763,12 +744,10 @@ distclean-compile:
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/tan.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/test_vector.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/to_string.Po@am__quote@
-@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/track_new_del.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/value.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/vec_ad.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/vec_ad_par.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/vec_unary.Po@am__quote@
-@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/zdouble.Po@am__quote@
 
 .cpp.o:
 @am__fastdepCXX_TRUE@	$(AM_V_CXX)depbase=`echo $@ | sed 's|[^/]*$$|$(DEPDIR)/&|;s|\.o$$||'`;\

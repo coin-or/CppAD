@@ -86,12 +86,6 @@ extern bool NearEqualExt(void);
 extern bool Neg(void);
 extern bool num_limits(void);
 extern bool ode_err_control(void);
-extern bool old_mat_mul(void);
-extern bool old_reciprocal(void);
-extern bool old_tan(void);
-extern bool old_usead_1(void);
-extern bool old_usead_2(void);
-extern bool omp_alloc(void);
 extern bool optimize(void);
 extern bool parameter(void);
 extern bool Poly(void);
@@ -120,19 +114,17 @@ extern bool SubZero(void);
 extern bool tan(void);
 extern bool to_string(void);
 extern bool test_vector(void);
-extern bool track_new_del(void);
 extern bool Value(void);
 extern bool VecAD(void);
 extern bool VecADPar(void);
 extern bool VecUnary(void);
-extern bool zdouble(void);
 
 // tests in local subdirectory
 extern bool vector_set(void);
 
 // main program that runs all the tests
 int main(void)
-{	std::string group = "test_more";
+{	std::string group = "test_more/general";
 	size_t      width = 20;
 	CppAD::test_boolofvoid Run(group, width);
 
@@ -197,12 +189,6 @@ int main(void)
 	Run( Neg,             "Neg"            );
 	Run( num_limits,      "num_limits"     );
 	Run( ode_err_control, "ode_err_control");
-	Run( old_mat_mul,     "old_mat_mul"    );
-	Run( old_reciprocal,  "old_reciprocal" );
-	Run( old_tan,         "old_tan"        );
-	Run( old_usead_1,     "old_usead_1"    );
-	Run( old_usead_2,     "old_usead_2"    );
-	Run( omp_alloc,       "omp_alloc"      );
 	Run( optimize,        "optimize"       );
 	Run( parameter,       "parameter"      );
 	Run( Poly,            "Poly"           );
@@ -230,12 +216,10 @@ int main(void)
 	Run( SubZero,         "SubZero"        );
 	Run( tan,             "tan"            );
 	Run( to_string,       "to_string"      );
-	Run( track_new_del,   "track_new_del"  );
 	Run( Value,           "Value"          );
 	Run( VecAD,           "VecAD"          );
 	Run( VecADPar,        "VecADPar"       );
 	Run( VecUnary,        "VecUnary"       );
-	Run( zdouble,         "zdouble"        );
 #if CPPAD_HAS_ADOLC
 	Run( base_adolc,      "base_adolc"     );
 # endif

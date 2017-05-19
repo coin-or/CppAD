@@ -193,11 +193,11 @@ CSCOPE = cscope
 DIST_SUBDIRS = cppad_ipopt/src example/ipopt_solve cppad_ipopt/example \
 	cppad_ipopt/speed cppad_ipopt/test speed/src speed/adolc \
 	speed/cppad speed/double speed/example speed/fadbad \
-	speed/profile speed/sacado example/atomic example/general \
-	example/get_started example/optimize example/print_for \
-	example/sparse example/utility compare_c introduction/exp_apx \
-	example/multi_thread example/multi_thread/test_multi \
-	test_more/general
+	speed/profile speed/sacado example/atomic example/deprecated \
+	example/general example/get_started example/optimize \
+	example/print_for example/sparse example/utility compare_c \
+	introduction/exp_apx example/multi_thread \
+	example/multi_thread/test_multi test_more/general
 am__DIST_COMMON = $(srcdir)/makefile.in \
 	$(top_srcdir)/cppad/configure.hpp.in \
 	$(top_srcdir)/pkgconfig/cppad-uninstalled.pc.in \
@@ -735,6 +735,7 @@ SUBDIRS = \
 	$(IPOPT_DIRS) \
 	$(SPEED_DIRS) \
 	example/atomic \
+	example/deprecated \
 	example/general \
 	example/get_started \
 	example/ipopt_solve \
@@ -765,6 +766,7 @@ EXTRA_DIST = \
 	pkgconfig/CMakeLists.txt \
 	example/CMakeLists.txt \
 	example/atomic/CMakeLists.txt \
+	example/deprecated/CMakeLists.txt \
 	example/general/CMakeLists.txt \
 	example/get_started/CMakeLists.txt \
 	example/ipopt_solve/CMakeLists.txt \
@@ -799,6 +801,7 @@ test_directory_list = \
 	$(SPEED_TESTS) \
 	example/general \
 	example/atomic \
+	example/deprecated \
 	example/optimize \
 	compare_c \
 	example/get_started \

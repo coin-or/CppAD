@@ -67,7 +67,7 @@ $spell
 	CppAD
 $$
 
-$section List of All the CppAD Examples$$
+$section List All (Except Deprecated) CppAD Examples$$
 
 $comment
 	omit:   TestOne.cpp OneCase.cpp lu_vec_ad.cpp

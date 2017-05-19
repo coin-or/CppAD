@@ -43,7 +43,7 @@ Use $cref thread_alloc$$ instead.
 
 $childtable%
 	cppad/utility/omp_alloc.hpp%
-	test_more/general/omp_alloc.cpp
+	example/deprecated/omp_alloc.cpp
 %$$
 
 $end

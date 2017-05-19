@@ -32,7 +32,7 @@ $cref/size_var/seq_property/size_var/$$,
 and hence the required memory.
 
 $code
-$srcfile%test_more/general/old_usead_2.cpp%0%// BEGIN C++%// END C++%1%$$
+$srcfile%example/deprecated/old_usead_2.cpp%0%// BEGIN C++%// END C++%1%$$
 $$
 
 $end

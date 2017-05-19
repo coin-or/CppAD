@@ -17,7 +17,7 @@ $$
 $section zdouble: Example and Test$$
 
 $code
-$srcfile%test_more/general/zdouble.cpp%0%// BEGIN C++%// END C++%1%$$
+$srcfile%example/deprecated/zdouble.cpp%0%// BEGIN C++%// END C++%1%$$
 $$
 
 $end

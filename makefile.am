@@ -335,6 +335,7 @@ SUBDIRS =  \
 	$(IPOPT_DIRS) \
 	$(SPEED_DIRS) \
 	example/atomic \
+	example/deprecated \
 	example/general \
 	example/get_started \
 	example/ipopt_solve \
@@ -364,6 +365,7 @@ EXTRA_DIST = \
 	pkgconfig/CMakeLists.txt \
 	example/CMakeLists.txt \
 	example/atomic/CMakeLists.txt \
+	example/deprecated/CMakeLists.txt \
 	example/general/CMakeLists.txt \
 	example/get_started/CMakeLists.txt \
 	example/ipopt_solve/CMakeLists.txt \
@@ -398,6 +400,7 @@ test_directory_list = \
 	$(SPEED_TESTS) \
 	example/general \
 	example/atomic \
+	example/deprecated \
 	example/optimize \
 	compare_c \
 	example/get_started \

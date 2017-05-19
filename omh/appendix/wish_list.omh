@@ -37,18 +37,7 @@ $section The CppAD Wish List$$
 $head Deprecated$$
 $list number$$
 Move all of the examples for $cref deprecated$$ features to
-$code test_more/deprecated$$.
-This should first be done for examples in $code test_more/general$$; i.e.,
-$nospell
-track_new_del.cpp,
-omp_alloc.cpp,
-old_reciprocal.cpp,
-old_usead_1.cpp,
-old_usead_2.cpp,
-old_tan.cpp,
-old_mat_mul.cpp,
-zdouble.cpp.
-$$
+$code example/deprecated$$.
 $lnext
 Move files that only implement deprecated features into the
 $code cppad/deprecated$$ directory.

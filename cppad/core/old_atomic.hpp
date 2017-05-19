@@ -700,11 +700,11 @@ The user atomic $code clear$$ routine cannot be called
 while in $cref/parallel/ta_in_parallel/$$ execution mode.
 
 $children%
-	test_more/general/old_reciprocal.cpp%
-	test_more/general/old_usead_1.cpp%
-	test_more/general/old_usead_2.cpp%
-	test_more/general/old_tan.cpp%
-	test_more/general/old_mat_mul.cpp
+	example/deprecated/old_reciprocal.cpp%
+	example/deprecated/old_usead_1.cpp%
+	example/deprecated/old_usead_2.cpp%
+	example/deprecated/old_tan.cpp%
+	example/deprecated/old_mat_mul.cpp
 %$$
 $head Example$$
 

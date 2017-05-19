@@ -33,6 +33,7 @@ do
 		cppad_lib/CMakeLists.txt | \
 		example/atomic/CMakeLists.txt | \
 		example/general/CMakeLists.txt | \
+		example/deprecated/CMakeLists.txt | \
 		example/get_started/CMakeLists.txt | \
 		example/ipopt_solve/CMakeLists.txt | \
 		example/optimize/CMakeLists.txt | \

@@ -226,7 +226,7 @@ Use the $cref thread_alloc$$ routines instead.
 
 $head Example$$
 $children%
-	test_more/general/track_new_del.cpp
+	example/deprecated/track_new_del.cpp
 %$$
 The file $cref TrackNewDel.cpp$$
 contains an example and test of these functions.

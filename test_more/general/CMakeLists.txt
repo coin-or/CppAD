@@ -39,11 +39,6 @@ ADD_EXECUTABLE(test_more_general EXCLUDE_FROM_ALL general.cpp
 	${adolc_sources}
 	${eigen_sources}
 	${ipopt_sources}
-	old_usead_2.cpp
-	old_usead_1.cpp
-	old_tan.cpp
-	old_reciprocal.cpp
-	old_mat_mul.cpp
 	fabs.cpp
 	acos.cpp
 	acosh.cpp
@@ -104,7 +99,6 @@ ADD_EXECUTABLE(test_more_general EXCLUDE_FROM_ALL general.cpp
 	near_equal_ext.cpp
 	neg.cpp
 	ode_err_control.cpp
-	omp_alloc.cpp
 	optimize.cpp
 	parameter.cpp
 	poly.cpp
@@ -133,12 +127,10 @@ ADD_EXECUTABLE(test_more_general EXCLUDE_FROM_ALL general.cpp
 	tan.cpp
 	test_vector.cpp
 	to_string.cpp
-	track_new_del.cpp
 	value.cpp
 	vec_ad.cpp
 	vec_ad_par.cpp
 	vec_unary.cpp
-	zdouble.cpp
 
 	local/vector_set.cpp
 )

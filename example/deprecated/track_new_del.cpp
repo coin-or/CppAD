@@ -18,7 +18,7 @@ $mindex delete$$
 
 
 $code
-$srcfile%test_more/general/track_new_del.cpp%0%// BEGIN C++%// END C++%1%$$
+$srcfile%example/deprecated/track_new_del.cpp%0%// BEGIN C++%// END C++%1%$$
 $$
 
 $end

@@ -797,6 +797,7 @@ AC_CONFIG_FILES([
 	cppad_ipopt/test/makefile
 	example/general/makefile
 	example/atomic/makefile
+	example/deprecated/makefile
 	example/ipopt_solve/makefile
 	example/optimize/makefile
 	example/sparse/makefile

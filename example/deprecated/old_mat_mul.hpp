@@ -1,5 +1,5 @@
-# ifndef CPPAD_TEST_MORE_GENERAL_OLD_MAT_MUL_HPP
-# define CPPAD_TEST_MORE_GENERAL_OLD_MAT_MUL_HPP
+# ifndef CPPAD_EXAMPLE_DEPRECATED_OLD_MAT_MUL_HPP
+# define CPPAD_EXAMPLE_DEPRECATED_OLD_MAT_MUL_HPP
 
 /* --------------------------------------------------------------------------
 CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-17 Bradley M. Bell

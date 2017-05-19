@@ -27,7 +27,7 @@ to implement the tangent ($icode%id% == 0%$$) and hyperbolic tangent
 ($icode%id% == 1%$$) functions as user atomic operations.
 
 $code
-$srcfile%test_more/general/old_tan.cpp%0%// BEGIN C++%// END C++%1%$$
+$srcfile%example/deprecated/old_tan.cpp%0%// BEGIN C++%// END C++%1%$$
 $$
 
 $end

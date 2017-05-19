@@ -20,6 +20,9 @@ SET(check_example_depends "")
 # atomic examples
 ADD_SUBDIRECTORY(atomic)
 
+# deprecated examples
+ADD_SUBDIRECTORY(deprecated)
+
 # general examples
 ADD_SUBDIRECTORY(general)
 
