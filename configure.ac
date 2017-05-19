@@ -11,7 +11,7 @@ dnl ---------------------------------------------------------------------------
 dnl
 dnl Process this file with autoconf to produce a configure script.
 dnl   package   version              bug-report
-AC_INIT([cppad], [20170518], [cppad@list.coin-or.org])
+AC_INIT([cppad], [20170519], [cppad@list.coin-or.org])
 AM_SILENT_RULES([yes])
 
 dnl By defalut disable maintainer mode when running configure;
@@ -815,7 +815,7 @@ AC_CONFIG_FILES([
 	speed/profile/gprof.sed
 	speed/sacado/makefile
 	speed/src/makefile
-	test_more/makefile
+	test_more/general/makefile
 ])
 dnl END AC_CONFIG_FILES
 

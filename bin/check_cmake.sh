@@ -52,7 +52,8 @@ do
 		speed/fadbad/CMakeLists.txt | \
 		speed/profile/CMakeLists.txt | \
 		speed/sacado/CMakeLists.txt | \
-		speed/src/CMakeLists.txt )
+		speed/src/CMakeLists.txt | \
+		test_more/general/CMakeLists.txt )
 		check="CMAKE_BUILD_TYPE"
 		if grep -i "$check" $file > /dev/null
 		then

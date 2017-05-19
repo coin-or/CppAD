@@ -346,7 +346,7 @@ SUBDIRS =  \
 	introduction/exp_apx \
 	example/multi_thread \
 	example/multi_thread/test_multi \
-	test_more
+	test_more/general
 #
 # note that bin/gpl_license.sh is deleted by dist-hook
 EXTRA_DIST = \
@@ -371,7 +371,7 @@ EXTRA_DIST = \
 	example/print_for/CMakeLists.txt \
 	example/sparse/CMakeLists.txt \
 	example/utility/CMakeLists.txt \
-	test_more/CMakeLists.txt \
+	test_more/general/CMakeLists.txt \
 	CMakeLists.txt \
 	cppad_ipopt/src/CMakeLists.txt \
 	cppad_ipopt/example/CMakeLists.txt \
@@ -405,7 +405,7 @@ test_directory_list = \
 	example/multi_thread \
 	example/multi_thread/test_multi \
 	example/print_for \
-	test_more
+	test_more/general
 
 test: all
 	rm -f test.log
