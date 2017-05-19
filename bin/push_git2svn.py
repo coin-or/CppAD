@@ -198,11 +198,11 @@ for git_file in created_file_list :
 	#
 	# extract the directory that git_file is located in
 	pattern    = re.compile(r'.*/([^/]*)')
-	local_name = re.sub(pattern, r'\1', git_file)
+	git_local  = re.sub(pattern, r'\1', git_file)
 	#
-	for svn_dir in deleted_dir_list :
-		svn_file = svn_dir + '/' + local_name
-		if svn_file in deleted_file_list :
+	for svn_file in deleted_file_list :
+		svn_local = re.sub(pattern, r'\1', svn_file)
+		if svn_local == git_local :
 			original_file = svn_file
 	#
 	git_f     = open(git_directory + '/' + git_file, 'rb')
