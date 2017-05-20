@@ -34,9 +34,15 @@ $spell
 	gcc
 	readme
 	autotools
+	ipopt
 $$
 
 $section Changes and Additions to CppAD During 2017$$
+
+$head 05-19$$
+Most all the examples have been moved to $code example$$ directory
+and grouped as sub-directories; e.g., the $cref ipopt_solve$$ examples
+are in the $code example/ipopt_solve$$ directory.
 
 $head 05-14$$
 $list number$$

@@ -47,38 +47,54 @@ $cref/windows file extraction and testing
 	/Windows File Extraction and Testing
 /$$.
 
-$head Subsets$$
+$head Subsets of check$$
 It is possible to build and run the following subsets of the
 examples and tests:
 $table
 Command $cnext
 	Description
 $rnext
-$code make check_compare_c$$ $cnext
-	$tref compare_c$$
-$rnext
 $code make check_introduction$$   $cnext
-	the programs in the $cref Introduction$$
+	the $cref Introduction$$ functions
 $rnext
 $code make check_example$$   $cnext
-	most of the $cref Example$$ programs
-$rnext
-$code make check_print_for$$ $cnext
-	the $cref PrintFor$$  command
+	the normal $cref/example/listallexamples/$$ functions plus some deprecated
+	examples.
 $rnext
 $code make check_test_more$$ $cnext
 	correctness tests that are not examples
-$rnext
-$code make check_example_multi_thread$$ $cnext
-	$cref multi_thread$$ tests (run correctness only)
 $rnext
 $code make check_speed$$ $cnext
 	single threading $cref speed$$ tests (run correctness only)
 $rnext
 $code make check_cppad_ipopt$$ $cnext
-	the $cref cppad_ipopt_nlp$$ speed and correctness tests
+	the deprecated $cref cppad_ipopt_nlp$$ speed and correctness tests
 $rnext
 $tend
+
+$head Subsets of check_example$$
+It is also possible to execute
+$codei%
+	make check_example_%group%
+%$$
+where $icode group$$ is any of the following:
+$pre
+	$$
+$code atomic$$ ,
+$code deprecated$$ ,
+$code general$$ ,
+$code get_started$$ ,
+$code ipopt_solve$$ ,
+$code multi_thread$$ ,
+$code optimize$$ ,
+$code print_for$$ ,
+$code sparse$$ ,
+$code utility$$.
+For example
+$codei%
+	make check_example_get_started
+%$$
+only runs the $cref get_started.cpp$$ example.
 
 
 $end
