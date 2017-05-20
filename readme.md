@@ -4,6 +4,8 @@
 
 - [Homepage](http://www.coin-or.org/CppAD/)
 
+- [Directories](http://www.coin-or.org/CppAD/directory.htm)
+
 - [News](https://www.coin-or.org/CppAD/Doc/whats_new.htm)
 
 - [Versions](http://www.coin-or.org/CppAD/Doc/download.htm)
