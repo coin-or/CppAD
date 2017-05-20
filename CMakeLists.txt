@@ -19,7 +19,7 @@ SET(CMAKE_LEGACY_CYGWIN_WIN32 0) # remove when version below >= 2.8.4
 CMAKE_MINIMUM_REQUIRED(VERSION 2.8)
 #
 # cppad_version is used by set_version.sh to get the version number.
-SET(cppad_version      "20170519" )
+SET(cppad_version      "20170520" )
 SET(cppad_url          "http://www.coin-or.org/CppAD" )
 SET(cppad_description  "Differentiation of C++ Algorithms" )
 #
