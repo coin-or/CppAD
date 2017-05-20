@@ -24,6 +24,7 @@ do
 	case $file in
 
 		# no build type cases
+		# (note that test_more/debug_rel sets flags for each source file).
 		CMakeLists.txt | \
 		cppad/CMakeLists.txt | \
 		cppad_ipopt/example/CMakeLists.txt | \
@@ -53,7 +54,8 @@ do
 		speed/profile/CMakeLists.txt | \
 		speed/sacado/CMakeLists.txt | \
 		speed/src/CMakeLists.txt | \
-		test_more/CMakeLists.txt )
+		test_more/CMakeLists.txt | \
+		test_more/debug_rel/CMakeLists.txt )
 		check="CMAKE_BUILD_TYPE"
 		if grep -i "$check" $file > /dev/null
 		then

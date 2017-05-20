@@ -16,6 +16,9 @@ SET(check_test_more_depends "")
 # compare_c tests
 ADD_SUBDIRECTORY(compare_c)
 
+# debug_rel tests
+ADD_SUBDIRECTORY(debug_rel)
+
 # general tests
 ADD_SUBDIRECTORY(general)
 
