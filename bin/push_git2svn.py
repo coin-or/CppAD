@@ -178,13 +178,11 @@ created_dir_list=[]
 for name in git_dir_list :
 	if not name in svn_dir_list :
 		created_dir_list.append(name)
-print("created_dir_list= ", created_dir_list)
 #
 deleted_dir_list=[]
 for name in svn_dir_list :
 	if not name in git_dir_list :
 		deleted_dir_list.append(name)
-print("deleted_dir_list= ", deleted_dir_list)
 # -----------------------------------------------------------------------------
 # automated svn commands
 #
