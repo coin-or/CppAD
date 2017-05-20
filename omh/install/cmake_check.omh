@@ -17,6 +17,7 @@ $spell
 	CppAD
 	cmake
 	nmake
+	grep
 $$
 
 $section Checking the CppAD Examples and Tests$$
@@ -47,9 +48,16 @@ $cref/windows file extraction and testing
 	/Windows File Extraction and Testing
 /$$.
 
-$head Subsets of check$$
-It is possible to build and run the following subsets of the
-examples and tests:
+$head Subsets of make check$$
+In unix, you can determine which subsets of $code make check$$ are available
+by putting the output of the $cref/cmake command/cmake/CMake Command/$$
+in a file (called $icode cmake.out$$ below) and executing:
+$codei%
+	grep 'make check.*available' %cmake.out%
+%$$
+
+$head First Level$$
+The first level of subsets of $code make check$$ are described below:
 $table
 Command $cnext
 	Description
@@ -65,36 +73,14 @@ $code make check_test_more$$ $cnext
 	correctness tests that are not examples
 $rnext
 $code make check_speed$$ $cnext
-	single threading $cref speed$$ tests (run correctness only)
+	correctness for single thread $cref speed$$ tests
 $rnext
 $code make check_cppad_ipopt$$ $cnext
 	the deprecated $cref cppad_ipopt_nlp$$ speed and correctness tests
 $rnext
 $tend
-
-$head Subsets of check_example$$
-It is also possible to execute
-$codei%
-	make check_example_%group%
-%$$
-where $icode group$$ is any of the following:
-$pre
-	$$
-$code atomic$$ ,
-$code deprecated$$ ,
-$code general$$ ,
-$code get_started$$ ,
-$code ipopt_solve$$ ,
-$code multi_thread$$ ,
-$code optimize$$ ,
-$code print_for$$ ,
-$code sparse$$ ,
-$code utility$$.
-For example
-$codei%
-	make check_example_get_started
-%$$
-only runs the $cref get_started.cpp$$ example.
+Note that $code make check_example_multi_thread$$ is used for the
+$cref/multi-threading/multi_thread/$$ speed tests.
 
 
 $end

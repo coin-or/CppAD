@@ -17,6 +17,7 @@ $section Appendix$$
 
 $childtable%
 	omh/appendix/faq.omh%
+	omh/appendix/directory.omh%
 	omh/appendix/theory/theory.omh%
 	omh/appendix/glossary.omh%
 	omh/appendix/bib.omh%
