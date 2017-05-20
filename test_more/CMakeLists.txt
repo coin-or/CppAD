@@ -10,9 +10,6 @@
 # -----------------------------------------------------------------------------
 # Build the test_more directory tests
 
-# Specifies build type for all the test_more subdirectories:
-SET(CMAKE_BUILD_TYPE DEBUG)
-
 # initialize check_depends
 SET(check_test_more_depends "")
 

@@ -53,7 +53,7 @@ do
 		speed/profile/CMakeLists.txt | \
 		speed/sacado/CMakeLists.txt | \
 		speed/src/CMakeLists.txt | \
-		test_more/general/CMakeLists.txt )
+		test_more/CMakeLists.txt )
 		check="CMAKE_BUILD_TYPE"
 		if grep -i "$check" $file > /dev/null
 		then
@@ -77,7 +77,7 @@ do
 		# debug build type cases
 		example/CMakeLists.txt | \
 		introduction/CMakeLists.txt | \
-		test_more/CMakeLists.txt )
+		test_more/general/CMakeLists.txt )
 		check="CMAKE_BUILD_TYPE DEBUG"
 		if ! grep "$check" $file > /dev/null
 		then

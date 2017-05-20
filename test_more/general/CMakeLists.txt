@@ -10,6 +10,9 @@
 # -----------------------------------------------------------------------------
 # Build the test_more/general tests
 
+# Specifies build type for test_more/general
+SET(CMAKE_BUILD_TYPE DEBUG)
+
 # adolc_sources, adolc_libs
 IF( cppad_has_adolc )
 	SET(adolc_sources base_adolc.cpp)
