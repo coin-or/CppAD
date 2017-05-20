@@ -63,7 +63,7 @@ do
 		;;
 
 		# release build type cases
-		compare_c/CMakeLists.txt | \
+		test_more/compare_c/CMakeLists.txt | \
 		cppad_ipopt/CMakeLists.txt | \
 		speed/CMakeLists.txt )
 		check="CMAKE_BUILD_TYPE RELEASE"

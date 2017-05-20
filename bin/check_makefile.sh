@@ -103,7 +103,7 @@ do
 		fi
 		;;
 
-		(compare_c/makefile.am)
+		(test_more/compare_c/makefile.am)
 		if ! grep '^[^#]*-DNDEBUG' $file > /dev/null
 		then
 			echo "Optimization flag is not defined in $file"

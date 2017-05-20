@@ -282,7 +282,6 @@ ENDIF( NOT ( "${check_depends}" STREQUAL "" ) )
 #
 # directories with check depends entries
 ADD_SUBDIRECTORY(example)
-ADD_SUBDIRECTORY(compare_c)
 ADD_SUBDIRECTORY(introduction)
 ADD_SUBDIRECTORY(test_more)
 ADD_SUBDIRECTORY(speed)

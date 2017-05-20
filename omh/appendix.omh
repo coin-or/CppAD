@@ -23,7 +23,7 @@ $childtable%
 	omh/appendix/wish_list.omh%
 	omh/appendix/whats_new/whats_new.omh%
 	omh/appendix/deprecated/deprecated.omh%
-	compare_c/CMakeLists.txt%
+	test_more/compare_c/CMakeLists.txt%
 	omh/appendix/numeric_ad.omh%
 	omh/appendix/addon.omh%
 	omh/appendix/license.omh

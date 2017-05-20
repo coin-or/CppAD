@@ -13,6 +13,9 @@
 # initialize check_depends
 SET(check_test_more_depends "")
 
+# compare_c tests
+ADD_SUBDIRECTORY(compare_c)
+
 # general tests
 ADD_SUBDIRECTORY(general)
 

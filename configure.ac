@@ -790,7 +790,6 @@ AC_CONFIG_FILES([
 	pkgconfig/cppad-uninstalled.pc
 
 	makefile
-	compare_c/makefile
 	cppad_ipopt/src/makefile
 	cppad_ipopt/example/makefile
 	cppad_ipopt/speed/makefile
@@ -816,6 +815,7 @@ AC_CONFIG_FILES([
 	speed/profile/gprof.sed
 	speed/sacado/makefile
 	speed/src/makefile
+	test_more/compare_c/makefile
 	test_more/general/makefile
 ])
 dnl END AC_CONFIG_FILES

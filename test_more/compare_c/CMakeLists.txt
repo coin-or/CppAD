@@ -1,6 +1,5 @@
-# $Id$
 # -----------------------------------------------------------------------------
-# CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-16 Bradley M. Bell
+# CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-17 Bradley M. Bell
 #
 # CppAD is distributed under multiple licenses. This distribution is under
 # the terms of the
@@ -22,16 +21,16 @@
 # $index C++, compare speed with C$$
 #
 # $head Syntax$$
-# $codei%compare_c/det_by_minor_c
+# $codei%test_more/compare_c/det_by_minor_c
 # %$$
-# $codei compare_c/det_by_minor_cpp$$
+# $codei test_more/compare_c/det_by_minor_cpp$$
 #
 # $head Purpose$$
 # Compares the speed of the exact same source code compiled
 # using C versus C++.
 #
 # $childtable%
-#	compare_c/det_by_minor.c
+#	test_more/compare_c/det_by_minor.c
 # %$$
 #
 # $end
@@ -67,12 +66,12 @@ FOREACH( com c cpp )
 
 ENDFOREACH(com)
 
-# check_compare_c target
-ADD_CUSTOM_TARGET( check_compare_c
+# check_test_more_compare_c target
+ADD_CUSTOM_TARGET( check_test_more_compare_c
 	DEPENDS check_det_by_minor_c check_det_by_minor_cpp
 )
-MESSAGE(STATUS "make check_compare_c: available")
+MESSAGE(STATUS "make check_test_more_compare_c: available")
 
-# Add check_compare_c to check depends in parent environment
-add_to_list(check_depends check_compare_c)
-SET(check_depends "${check_depends}" PARENT_SCOPE)
+# Add check_test_more_compare_c to check depends in parent environment
+add_to_list(check_test_more_depends check_test_more_compare_c)
+SET(check_test_more_depends "${check_test_more_depends}" PARENT_SCOPE)

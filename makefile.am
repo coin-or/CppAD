@@ -343,10 +343,10 @@ SUBDIRS =  \
 	example/print_for \
 	example/sparse \
 	example/utility \
-	compare_c \
 	introduction \
 	example/multi_thread \
 	example/multi_thread/test_multi \
+	test_more/compare_c \
 	test_more/general
 #
 # note that bin/gpl_license.sh is deleted by dist-hook
@@ -360,7 +360,7 @@ EXTRA_DIST = \
 	omh \
 	uw_copy_040507.html \
 	\
-	compare_c/CMakeLists.txt \
+	test_more/compare_c/CMakeLists.txt \
 	cppad/CMakeLists.txt \
 	pkgconfig/CMakeLists.txt \
 	example/CMakeLists.txt \
@@ -402,12 +402,12 @@ test_directory_list = \
 	example/atomic \
 	example/deprecated \
 	example/optimize \
-	compare_c \
 	example/get_started \
 	introduction \
 	example/multi_thread \
 	example/multi_thread/test_multi \
 	example/print_for \
+	test_more/compare_c \
 	test_more/general
 
 test: all
