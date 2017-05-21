@@ -18,10 +18,8 @@ fi
 echo "Checking that all examples are in omh/example_list.omh"
 echo "-------------------------------------------------------"
 file_list=`bin/ls_files.sh | sed -n \
-	-e '/example\/deprecated\//d' \
-	-e '/cppad_ipopt/d' \
-	-e '/example\//p' \
-	-e '/multi_thread\//p'`
+	-e '/^example\/deprecated\//d' \
+	-e '/^example\//p'`
 #
 sed < omh/example_list.omh > bin/check_example.$$ \
 	-n -e '/\$begin ListAllExamples\$\$/,/\$end/p'
