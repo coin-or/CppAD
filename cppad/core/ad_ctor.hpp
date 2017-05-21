@@ -56,16 +56,6 @@ $codei%
 for any type that has an explicit constructor of the form
 $icode%Base%(%x%)%$$.
 
-$subhead Deprecated 2013-12-31$$
-It used to be the case that
-$cref/cppad_deprecated=YES/cmake/cppad_deprecated/YES/$$
-would provide an implicit constructor with prototype
-$codei%
-	const %Type%&        %x%
-%$$
-for any type that has an explicit constructor of the form
-$icode%Base%(%x%)%$$.
-
 $head y$$
 The target $icode y$$ has prototype
 $codei%

@@ -51,9 +51,12 @@ command_line_arg(cppad_tape_addr_type "unsigned int" STRING
 )
 #
 # cppad_deprecated
-command_line_arg(cppad_deprecated NO STRING
-	"implicit (instead of explicit) conversion from any type to AD<Base>"
+command_line_arg(cppad_deprecated NO BOOL
+	"this symbol must be NO and is not currently being used"
 )
+IF( cppad_deprecated )
+	MESSAGE(FATAL_ERROR "cppad_deprecated must be NO" )
+ENDIF( cppad_deprecated )
 # =============================================================================
 # cppad_boostvector, cppad_cppadvector, cppad_eigenvector, cppad_stdvector
 #

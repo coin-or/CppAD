@@ -229,7 +229,7 @@ $lend
 $head 02-10$$
 $list number$$
 The subset of deprecated features corresponding to
-$cref/cppad_deprecated=YES/cmake/cppad_deprecated/YES/$$
+$cref/cppad_deprecated=YES/cmake/cppad_deprecated/$$
 have been completely removed.
 $lnext
 Fix problems with $cref autotools$$ build

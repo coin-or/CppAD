@@ -98,7 +98,7 @@ Was a ipopt_prefix specified on the cmake command line.
 
 /*!
 \def CPPAD_DEPRECATED
-If this symbol is not currently being used.
+This symbol is not currently being used.
 */
 # define CPPAD_DEPRECATED @cppad_deprecated@
 

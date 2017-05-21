@@ -348,17 +348,8 @@ $code uint32_t$$,
 $code uint64_t$$.
 
 $head cppad_deprecated$$
-The default value for $icode cppad_deprecated$$ is $code NO$$.
-
-$subhead YES$$
-The $icode%cppad_deprecated=%YES%$$,
-used to provided the deprecated
-$cref/include files/include_deprecated/$$
-and the deprecated
-$cref/AD constructor/ad_ctor/x/Deprecated 2013-12-31/$$.
-This is no longer available and source code that requires these features
-much be changed.
-
+The default value for $icode cppad_deprecated$$ is $code NO$$
+(the value $code YES$$ is not currently being used).
 
 $children%
 	omh/install/adolc_prefix.omh%
