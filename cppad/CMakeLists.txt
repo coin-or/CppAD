@@ -20,7 +20,7 @@ MACRO(check_match match_variable match_constant output_variable)
 	ENDIF( match_flag )
 	print_variable(${output_variable})
 ENDMACRO(check_match)
-# -----------------------------------------------------------------------------
+# =============================================================================
 # command line arguments
 #
 # cppad_testvector
@@ -54,7 +54,7 @@ command_line_arg(cppad_tape_addr_type "unsigned int" STRING
 command_line_arg(cppad_deprecated NO STRING
 	"implicit (instead of explicit) conversion from any type to AD<Base>"
 )
-# -----------------------------------------------------------------------------
+# =============================================================================
 # cppad_boostvector, cppad_cppadvector, cppad_eigenvector, cppad_stdvector
 #
 check_match(cppad_testvector boost cppad_boostvector)

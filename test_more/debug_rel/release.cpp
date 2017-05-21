@@ -10,8 +10,13 @@ Please visit http://www.coin-or.org/CppAD/ for information on other licenses.
 -------------------------------------------------------------------------- */
 # include <cppad/cppad.hpp>
 
-bool release(void)
-{	bool ok = true;
-
-	return ok;
+// Returns a pointer to a double that has value 5.0
+// and must be freed using thread_alloc::return_memory.
+double *release_thread_alloc(void)
+{	size_t min_bytes = sizeof(double);
+	size_t cap_bytes;
+	void*   v_ptr = CppAD::thread_alloc::get_memory(min_bytes, cap_bytes);
+	double* d_ptr = reinterpret_cast<double*>(v_ptr);
+	*d_ptr        = 5.0;
+	return d_ptr;
 }

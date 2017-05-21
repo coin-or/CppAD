@@ -10,8 +10,12 @@ Please visit http://www.coin-or.org/CppAD/ for information on other licenses.
 -------------------------------------------------------------------------- */
 # include <cppad/cppad.hpp>
 
-bool debug(void)
+// checks that d_ptr points to a double with value 5.0 and then
+// frees the double using thread_alloc::return_memory
+bool debug_thread_alloc(double *d_ptr)
 {	bool ok = true;
-
+	ok &= ( *d_ptr == 5.0);
+	void* v_ptr = reinterpret_cast<void*>(d_ptr);
+	CppAD::thread_alloc::return_memory(v_ptr);
 	return ok;
 }

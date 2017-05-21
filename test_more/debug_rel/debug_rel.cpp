@@ -9,40 +9,56 @@ A copy of this license is included in the COPYING file of this distribution.
 Please visit http://www.coin-or.org/CppAD/ for information on other licenses.
 -------------------------------------------------------------------------- */
 
-// CPPAD_HAS_* defines
-# include <cppad/configure.hpp>
-
 // system include files used for I/O
 # include <iostream>
 
-// memory leak checker
+// for free_all
 # include <cppad/utility/thread_alloc.hpp>
 
-// test runner
-# include <cppad/utility/test_boolofvoid.hpp>
+namespace {
+	size_t n_ok    = 0;
+	size_t n_error = 0;
+	void print_test(bool ok, const char* name)
+	{
+		std::cout.width(20);
+		std::cout.setf( std::ios_base::left );
+		std::cout << name;
+		//
+		if( ok )
+		{	std::cout << "OK\n";
+			n_ok++;
+		}
+		else
+		{	std::cout << "Error\n";
+			n_error++;
+		}
+	}
+}
 
-// prototype external compiled tests (this line expected by bin/new_test.sh)
-extern bool debug(void);
-extern bool release(void);
+// thread_alloc
+double *release_thread_alloc(void);
+bool      debug_thread_alloc(double* d_ptr);
 
 // main program that runs all the tests
 int main(void)
-{	std::string group = "test_more/debug_rel";
-	size_t      width = 20;
-	CppAD::test_boolofvoid Run(group, width);
-
-	// This line is used by test_one.sh
-
-	// run external compiled tests (this line expected by bin/new_test.sh)
-	Run( debug,           "debug"          );
-	Run( release,         "release"        );
+{	using std::cout;
+	cout << "Begin test_more/debug_rel\n";
 	//
-	// check for memory leak
-	bool memory_ok = CppAD::thread_alloc::free_all();
+	// thread_alloc
+	{	double* d_ptr = release_thread_alloc();
+		bool ok       = debug_thread_alloc(d_ptr);
+		print_test(ok, "thead_alloc");
+	}
+	// memory
+	{	bool ok = CppAD::thread_alloc::free_all();
+		print_test(ok, "memory");
+	}
+	if( n_error == 0 )
+		std::cout << "All " << n_ok << " tests passed." << std::endl;
+	else
+		std::cout << n_error << " tests failed." << std::endl;
 	//
-	// print summary at end
-	bool ok = Run.summary(memory_ok);
-	//
-	return static_cast<int>( ! ok );
+	if( n_error == 0 )
+		return 0;
+	return 1;
 }
-// END PROGRAM

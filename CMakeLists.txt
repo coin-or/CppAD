@@ -70,7 +70,7 @@ INCLUDE(cmake/assert.cmake)
 # print_variable(variable)
 INCLUDE(cmake/print_variable.cmake)
 # =============================================================================
-# command line arguments
+# command line arguments (see cppad/CMakeLists for other arguments)
 # =============================================================================
 # cmake_install_datadir
 command_line_arg(cmake_install_datadir share STRING
@@ -148,7 +148,7 @@ optional_package(eigen ${system_include} "eigen install prefix")
 #
 # fadbad_prefix
 optional_package(fadbad ${system_include} "fadbad install prefix")
-# -----------------------------------------------------------------------------
+# =============================================================================
 # cppad_has_colpack, colpack_libs, cppad_lib
 #
 IF( cppad_has_colpack )
