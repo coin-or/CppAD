@@ -676,6 +676,8 @@ cppad_has_nullptr
 cppad_has_tmpnam_s
 cppad_has_mkstemp
 cppad_has_colpack
+cppad_deprecated_01
+cppad_extra_debug_01
 cppad_cxx_flags
 CppAD_HAVE_AR_FALSE
 CppAD_HAVE_AR_TRUE
@@ -1515,8 +1517,8 @@ Optional Packages:
   --with-PrintFor         is not necessary, see install instructions.
   --with-sparse_set       no longer available
   --with-sparse_list      no longer necessary
-  --with-deprecated       include deprectated features that are no longer
-                          available
+  --with-deprecated       include deprectated features that are on the
+                          chopping block
   --with-Documentation    default is no
   --with-stdvector        default is no
   --with-boostvector      default is no
@@ -4579,7 +4581,7 @@ else
 fi
 
 if test "$deprecated" = "yes" ; then
-	as_fn_error $? "--with-deprecated has been removed; see whats_new 2017-02-10
+	as_fn_error $? "autotools version does not install features on the chopping block
 	" "$LINENO" 5
 fi
 { $as_echo "$as_me:${as_lineno-$LINENO}: ******  Check command line arguments that are used ***********" >&5
@@ -6218,6 +6220,13 @@ $as_echo "$as_me: WARNING: cannot build any libraries because ar is missing; e.g
 fi
 
 cppad_cxx_flags="-g -O0"
+
+
+cppad_extra_debug_01=0
+
+
+cppad_deprecated_01=0
+
 
 
 cppad_has_colpack=0
