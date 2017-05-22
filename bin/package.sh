@@ -38,6 +38,9 @@ then
 fi
 top_srcdir=`pwd`
 # ----------------------------------------------------------------------------
+# Remove old packages and corresponding directories
+echo_eval rm -rf build/cppad-*
+# ----------------------------------------------------------------------------
 this_license=`\
 	grep '$verbatim%' omh/appendix/license.omh | sed -e 's|$verbatim%\(...\).*|\1|'`
 if [ "$this_license" == 'epl' ]
@@ -81,17 +84,6 @@ echo_log_eval bin/run_doxygen.sh
 # ----------------------------------------------------------------------------
 # Create the package directory
 package_dir="build/cppad-$version"
-if [ -e "$package_dir" ]
-then
-	echo_log_eval rm -r $package_dir
-fi
-for lic in epl gpl
-do
-	if [ -e "$package_dir.epl.tgz" ]
-	then
-		echo_log_eval rm $package_dir.$lic.tgz
-	fi
-done
 echo_log_eval mkdir -p $package_dir
 # -----------------------------------------------------------------------------
 # Source file that are coppied to the package directory
