@@ -20,44 +20,7 @@ MACRO(check_match match_variable match_constant output_variable)
 	ENDIF( match_flag )
 	print_variable(${output_variable})
 ENDMACRO(check_match)
-# =============================================================================
-# command line arguments
-#
-# cppad_testvector
-command_line_arg(cppad_testvector cppad STRING
-"Namespace of vector used for testing, one of: boost, cppad, eigen, std"
-)
-#
-# cppad_max_num_threads
-command_line_arg(cppad_max_num_threads 48 STRING
-	"maximum number of threads that CppAD can use use"
-)
-# cppad_sparse_list
-IF( cppad_sparse_list )
-	MESSAGE(FATAL_ERROR
-		"cppad_sparse_list = ${cppad_sparse_list}"
-		": this command line argument has been removed"
-	)
-ENDIF( cppad_sparse_list )
-#
-# cppad_tape_id_type
-command_line_arg(cppad_tape_id_type "unsigned int" STRING
-	"type used to identify different tapes, size must be <= sizeof(size_t)"
-)
-#
-# cppad_tape_addr_type
-command_line_arg(cppad_tape_addr_type "unsigned int" STRING
-"type used to identify variables on one tape, size must be <= sizeof(size_t)"
-)
-#
-# cppad_deprecated
-command_line_arg(cppad_deprecated NO BOOL
-	"this symbol must be NO and is not currently being used"
-)
-IF( cppad_deprecated )
-	MESSAGE(FATAL_ERROR "cppad_deprecated must be NO" )
-ENDIF( cppad_deprecated )
-# =============================================================================
+# -----------------------------------------------------------------------------
 # cppad_boostvector, cppad_cppadvector, cppad_eigenvector, cppad_stdvector
 #
 check_match(cppad_testvector boost cppad_boostvector)
@@ -92,7 +55,6 @@ IF( cppad_eigenvector )
 		)
 	ENDIF( NOT eigen_prefix )
 ENDIF( cppad_eigenvector )
-
 # =============================================================================
 # Begin C++11 features
 #

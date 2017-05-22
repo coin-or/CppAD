@@ -19,7 +19,7 @@ SET(CMAKE_LEGACY_CYGWIN_WIN32 0) # remove when version below >= 2.8.4
 CMAKE_MINIMUM_REQUIRED(VERSION 2.8)
 #
 # cppad_version is used by set_version.sh to get the version number.
-SET(cppad_version      "20170521" )
+SET(cppad_version      "20170522" )
 SET(cppad_url          "http://www.coin-or.org/CppAD" )
 SET(cppad_description  "Differentiation of C++ Algorithms" )
 #
@@ -70,7 +70,7 @@ INCLUDE(cmake/assert.cmake)
 # print_variable(variable)
 INCLUDE(cmake/print_variable.cmake)
 # =============================================================================
-# command line arguments (see cppad/CMakeLists for other arguments)
+# command line arguments
 # =============================================================================
 # cmake_install_datadir
 command_line_arg(cmake_install_datadir share STRING
@@ -148,6 +148,46 @@ optional_package(eigen ${system_include} "eigen install prefix")
 #
 # fadbad_prefix
 optional_package(fadbad ${system_include} "fadbad install prefix")
+# -----------------------------------------------------------------------------
+# cppad_testvector
+command_line_arg(cppad_testvector cppad STRING
+	"Namespace of vector used for testing, one of: boost, cppad, eigen, std"
+)
+#
+# cppad_max_num_threads
+command_line_arg(cppad_max_num_threads 48 STRING
+	"maximum number of threads that CppAD can use use"
+)
+# cppad_sparse_list
+IF( cppad_sparse_list )
+	MESSAGE(FATAL_ERROR
+		"cppad_sparse_list = ${cppad_sparse_list}"
+		": this command line argument has been removed"
+	)
+ENDIF( cppad_sparse_list )
+#
+# cppad_tape_id_type
+command_line_arg(cppad_tape_id_type "unsigned int" STRING
+	"type used to identify different tapes, size must be <= sizeof(size_t)"
+)
+#
+# cppad_tape_addr_type
+command_line_arg(cppad_tape_addr_type "unsigned int" STRING
+"type used to identify variables on one tape, size must be <= sizeof(size_t)"
+)
+#
+# cppad_deprecated
+command_line_arg(cppad_deprecated NO BOOL
+	"this symbol must be NO and is not currently being used"
+)
+IF( cppad_deprecated )
+	MESSAGE(FATAL_ERROR "cppad_deprecated must be NO" )
+ENDIF( cppad_deprecated )
+#
+# cppad_extra_debug
+command_line_arg(cppad_extra_debug NO BOOL
+	"if this is true, and NDEBUG is not defined, do extra cppad debugging"
+)
 # =============================================================================
 # cppad_has_colpack, colpack_libs, cppad_lib
 #

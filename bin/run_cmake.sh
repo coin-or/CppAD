@@ -28,6 +28,7 @@ debug_cppad_ipopt='no'
 release_example='no'
 profile_speed='no'
 clang='no'
+extra_debug='no'
 no_colpack='no'
 no_eigen='no'
 no_ipopt='no'
@@ -47,6 +48,7 @@ usage: bin/run_cmake.sh: \\
 	[--release_example] \\
 	[--profile_speed] \\
 	[--clang ] \\
+	[--extra_debug] \\
 	[--no_colpack] \\
 	[--no_eigen] \\
 	[--no_ipopt] \\
@@ -80,6 +82,9 @@ EOF
 	elif [ "$1" == '--clang' ]
 	then
 		clang='yes'
+	elif [ "$1" == '--extra_debug' ]
+	then
+		extra_debug='yes'
 	elif [ "$1" == '--no_colpack' ]
 	then
 		no_colpack='yes'
@@ -237,6 +242,7 @@ cmake_args="$cmake_args -D cppad_testvector=$testvector"
 cmake_args="$cmake_args -D cppad_tape_id_type='int32_t'"
 cmake_args="$cmake_args -D cppad_tape_addr_type=int32_t"
 cmake_args="$cmake_args -D cppad_max_num_threads=48"
+cmake_args="$cmake_args -D cppad_extra_debug=$extra_debug"
 #
 echo_eval cmake $cmake_args ..
 #

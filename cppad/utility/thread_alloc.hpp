@@ -1,9 +1,8 @@
-// $Id$
 # ifndef CPPAD_UTILITY_THREAD_ALLOC_HPP
 # define CPPAD_UTILITY_THREAD_ALLOC_HPP
 
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-16 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-17 Bradley M. Bell
 
 CppAD is distributed under multiple licenses. This distribution is under
 the terms of the
@@ -139,9 +138,12 @@ private:
 		size_t  count_available_;
 		/// root of available list for this thread and each capacity
 		block_t root_available_[CPPAD_MAX_NUM_CAPACITY];
-		/// root of inuse list for this thread and each capacity
-		/// If NDEBUG is true, this memory is not used, but it still
-		/// helps separate this structure from one for the next thread.
+		/*!
+		root of inuse list for this thread and each capacity
+		If NDEBUG is defined or CPPAD_EXTRA_DEBUG is false, this memory is not
+		used, but it still helps to separate this structure from the structure
+		for the next thread.
+		*/
 		block_t root_inuse_[CPPAD_MAX_NUM_CAPACITY];
 	};
 	// ---------------------------------------------------------------------
@@ -802,9 +804,11 @@ $end
 				first_trace = false;
 		}
 
+# if CPPAD_EXTRA_DEBUG
 		// Root nodes for both lists. Note these are different for different
 		// threads because tc_index is different for different threads.
 		block_t* inuse_root     = info->root_inuse_ + c_index;
+# endif
 # endif
 		block_t* available_root = info->root_available_ + c_index;
 
@@ -820,9 +824,11 @@ $end
 			// return value for get_memory
 			void* v_ptr = reinterpret_cast<void*>(node + 1);
 # ifndef NDEBUG
+# if CPPAD_EXTRA_DEBUG
 			// add node to inuse list
 			node->next_           = inuse_root->next_;
 			inuse_root->next_     = v_node;
+# endif
 
 			// trace allocation
 			if(	cap_bytes == CPPAD_TRACE_CAPACITY &&
@@ -847,9 +853,11 @@ $end
 		void* v_ptr     = reinterpret_cast<void*>(node + 1);
 
 # ifndef NDEBUG
+# if CPPAD_EXTRA_DEBUG
 		// add node to inuse list
 		node->next_       = inuse_root->next_;
 		inuse_root->next_ = v_node;
+# endif
 
 		// trace allocation
 		if( cap_bytes == CPPAD_TRACE_CAPACITY &&
@@ -943,6 +951,7 @@ $end
 
 		thread_alloc_info* info = thread_info(thread);
 # ifndef NDEBUG
+# if CPPAD_EXTRA_DEBUG
 		// remove node from inuse list
 		void* v_node         = reinterpret_cast<void*>(node);
 		block_t* inuse_root  = info->root_inuse_ + c_index;
@@ -969,13 +978,13 @@ $end
 			const char* msg_char_star = msg_str.c_str();
 			CPPAD_ASSERT_KNOWN(false, msg_char_star );
 		}
-
+		// remove v_ptr from inuse list
+		previous->next_  = node->next_;
+# endif
 		// trace option
 		if( capacity==CPPAD_TRACE_CAPACITY && thread==CPPAD_TRACE_THREAD )
 		{	std::cout << "return_memory: v_ptr = " << v_ptr << std::endl; }
 
-		// remove v_ptr from inuse list
-		previous->next_  = node->next_;
 # endif
 		// capacity bytes are removed from the inuse pool
 		dec_inuse(capacity, thread);

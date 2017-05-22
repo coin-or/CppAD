@@ -112,6 +112,7 @@ cmake %%                                                                     \
     -D cppad_max_num_threads=%cppad_max_num_threads%                         \
     -D cppad_tape_id_type=%cppad_tape_id_type%                               \
     -D cppad_tape_addr_type=%cppad_tape_addr_type%                           \
+    -D cppad_extra_debug=%cppad_extra_debug% \
     -D cppad_deprecated=%cppad_deprecated% \
     \
     ..
@@ -346,6 +347,17 @@ $code uint8_t$$,
 $code uint16_t$$,
 $code uint32_t$$,
 $code uint64_t$$.
+
+$head cppad_extra_debug$$
+If this is $code YES$$ and $code NDEBUG$$ is not defined,
+CppAD does extra debugging checks.
+This extra error checking makes CppAD debug and release object code
+incompatible.
+
+$subhead Under Construction$$
+This option is currently under construction.
+To be specific, the debug and release object code are not yet compatible
+even if $icode cppad_extra_debug$$ is $code NO$$.
 
 $head cppad_deprecated$$
 The default value for $icode cppad_deprecated$$ is $code NO$$

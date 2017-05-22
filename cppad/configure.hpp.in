@@ -100,7 +100,14 @@ Was a ipopt_prefix specified on the cmake command line.
 \def CPPAD_DEPRECATED
 This symbol is not currently being used.
 */
-# define CPPAD_DEPRECATED @cppad_deprecated@
+# define CPPAD_DEPRECATED @cppad_deprecated_01@
+
+/*!
+\def CPPAD_EXTRA_DEBUG
+If this is one, extra cppad debugging is done
+when NDEBUG is not defined.
+*/
+# define CPPAD_EXTRA_DEBUG @cppad_extra_debug_01@
 
 /*!
 \def CPPAD_BOOSTVECTOR
