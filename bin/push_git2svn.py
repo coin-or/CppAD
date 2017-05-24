@@ -36,7 +36,7 @@ if svn_branch_path == 'master' :
 # some settings
 svn_repository = 'https://projects.coin-or.org/svn/CppAD'
 git_repository = 'https://github.com/coin-or/CppAD'
-work_directory = 'build/work'
+work_directory = 'build'
 # -----------------------------------------------------------------------------
 # some simple functions
 def pause(question, choice_list) :

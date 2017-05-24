@@ -52,8 +52,14 @@ The user can choose, during the install procedure,
 which template class to use in the examples and tests; see below.
 This shows that any
 $cref/simple vector/SimpleVector/$$ class can be used in place of
-$codei%CPPAD_TESTVECTOR(%Type%)%$$; i.e.,
-users can choose one they prefer.
+$codei%
+	CPPAD_TESTVECTOR(%Type%)
+%$$
+When writing their own code,
+users can choose a specific simple vector they prefer; for example,
+$codei%
+	CppAD::vector<%Type%>
+%$$
 
 
 $head CppAD::vector$$
