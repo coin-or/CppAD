@@ -3,7 +3,7 @@
 # define CPPAD_EXAMPLE_EIGEN_MAT_INV_HPP
 
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-16 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-17 Bradley M. Bell
 
 CppAD is distributed under multiple licenses. This distribution is under
 the terms of the
@@ -230,7 +230,9 @@ $srccode%cpp% */
 	{	size_t n_order = q + 1;
 		size_t nr      = size_t( CppAD::Integer( tx[ 0 * n_order + 0 ] ) );
 		size_t ny      = nr * nr;
+# ifndef NDEBUG
 		size_t nx      = 1 + ny;
+# endif
 		assert( vx.size() == 0 || nx == vx.size() );
 		assert( vx.size() == 0 || ny == vy.size() );
 		assert( nx * n_order == tx.size() );
@@ -308,7 +310,9 @@ $srccode%cpp% */
 	{	size_t n_order = q + 1;
 		size_t nr      = size_t( CppAD::Integer( tx[ 0 * n_order + 0 ] ) );
 		size_t ny      = nr * nr;
+# ifndef NDEBUG
 		size_t nx      = 1 + ny;
+# endif
 		//
 		assert( nx * n_order == tx.size() );
 		assert( ny * n_order == ty.size() );

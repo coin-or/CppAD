@@ -9,10 +9,10 @@
 # Please visit http://www.coin-or.org/CppAD/ for information on other licenses.
 # -----------------------------------------------------------------------------
 # Build the test_more/general tests
-
+#
 # Specifies build type for test_more/general
 SET(CMAKE_BUILD_TYPE DEBUG)
-
+#
 # adolc_sources, adolc_libs
 IF( cppad_has_adolc )
 	SET(adolc_sources base_adolc.cpp)
@@ -21,14 +21,14 @@ ELSE( cppad_has_adolc )
 	SET(adolc_sources "")
 	SET(adolc_libs "")
 ENDIF( cppad_has_adolc )
-
+#
 # eigen_sources
 IF( cppad_has_eigen )
 	SET(eigen_sources cppad_eigen.cpp eigen_mat_inv.cpp)
 ELSE( cppad_has_eigen )
 	SET(eigen_sources "")
 ENDIF( cppad_has_eigen )
-
+#
 # ipopt_prefix
 IF( cppad_has_ipopt )
 	SET(ipopt_sources ipopt_solve.cpp)
@@ -37,11 +37,12 @@ ELSE( cppad_has_ipopt )
 	SET(ipopt_sources "")
 	SET(ipopt_libs "")
 ENDIF( cppad_has_ipopt )
-
-ADD_EXECUTABLE(test_more_general EXCLUDE_FROM_ALL general.cpp
+#
+SET(source_list EXCLUDE_FROM_ALL
 	${adolc_sources}
 	${eigen_sources}
 	${ipopt_sources}
+	general.cpp
 	fabs.cpp
 	acos.cpp
 	acosh.cpp
@@ -137,13 +138,29 @@ ADD_EXECUTABLE(test_more_general EXCLUDE_FROM_ALL general.cpp
 
 	local/vector_set.cpp
 )
-
+#
+SET(count_mod_2 0)
+FOREACH(source ${source_list})
+	MATH(EXPR count_mod_2 "(${count_mod_2} + 1) % 2")
+	IF( count_mod_2 )
+		SET(flags "${cppad_cxx_flags} ${CMAKE_CXX_FLAGS_RELEASE}" )
+	ELSE( count_mod_2 )
+		SET(flags "${cppad_cxx_flags} ${CMAKE_CXX_FLAGS_RELEASE}" )
+	ENDIF( count_mod_2 )
+	SET_SOURCE_FILES_PROPERTIES(
+		${source} PROPERITIES COMPILE_FLAGS "${flags}"
+	)
+ENDFOREACH(source ${source_list})
+#
+#
+ADD_EXECUTABLE(test_more_general EXCLUDE_FROM_ALL ${source_list})
+#
 # must first build cppad_lib
 ADD_DEPENDENCIES(test_more_general cppad_lib)
-
+#
 # Compiler flags for cppad source
 add_cppad_cxx_flags(test_more_general)
-
+#
 # List of libraries to be linked into the specified target
 TARGET_LINK_LIBRARIES(test_more_general
 	${cppad_lib}
@@ -151,7 +168,7 @@ TARGET_LINK_LIBRARIES(test_more_general
 	${ipopt_libs}
 	${colpack_libs}
 )
-
+#
 # Add the check_test_more_general target
 ADD_CUSTOM_TARGET(check_test_more_general
 	test_more_general
@@ -159,7 +176,7 @@ ADD_CUSTOM_TARGET(check_test_more_general
 	test_more_general
 )
 MESSAGE(STATUS "make check_test_more_general: available")
-
+#
 # Change check depends in parent environment
 add_to_list(check_test_more_depends check_test_more_general)
 SET(check_test_more_depends "${check_test_more_depends}" PARENT_SCOPE)
