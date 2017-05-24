@@ -3,7 +3,7 @@
 # define CPPAD_CORE_TESTVECTOR_HPP
 
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-16 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-17 Bradley M. Bell
 
 CppAD is distributed under multiple licenses. This distribution is under
 the terms of the
@@ -36,7 +36,7 @@ $head Syntax$$
 $codei%CPPAD_TESTVECTOR(%Scalar%)
 %$$
 
-$head Introduction$$
+$head Purpose$$
 Many of the CppAD $cref/examples/example/$$ and tests use
 the $code CPPAD_TESTVECTOR$$ template class to pass information to CppAD.
 This is not a true template class because it's syntax uses
@@ -46,6 +46,15 @@ $codei%
 	Eigen::Matrix<%Scalar%, Eigen::Dynamic, 1>
 %$$
 as one of the possible cases for this 'template class'.
+
+$head Choice$$
+The user can choose, during the install procedure,
+which template class to use in the examples and tests; see below.
+This shows that any
+$cref/simple vector/SimpleVector/$$ class can be used in place of
+$codei%CPPAD_TESTVECTOR(%Type%)%$$; i.e.,
+users can choose one they prefer.
+
 
 $head CppAD::vector$$
 If in the $cref/cmake command/cmake/CMake Command/$$
