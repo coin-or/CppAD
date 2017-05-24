@@ -185,6 +185,7 @@ bool ForwardOlder(void)
 	return ok;
 }
 
+# ifndef NDEBUG
 void my_error_handler(
 	bool known           ,
 	int  line            ,
@@ -230,6 +231,7 @@ bool forward_nan(void)
 
 	return ok;
 }
+# endif
 } // END empty namespace
 
 # include <vector>
