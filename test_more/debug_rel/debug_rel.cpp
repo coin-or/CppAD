@@ -39,6 +39,10 @@ namespace {
 double *release_thread_alloc(void);
 bool      debug_thread_alloc(double* d_ptr);
 
+// adfun_ctor
+void debug_adfun_ctor(void);
+void release_adfun_ctor(void);
+
 // main program that runs all the tests
 int main(void)
 {	using std::cout;
@@ -48,6 +52,13 @@ int main(void)
 	{	double* d_ptr = release_thread_alloc();
 		bool ok       = debug_thread_alloc(d_ptr);
 		print_test(ok, "thead_alloc");
+	}
+	// adfun_ctor
+	{	// this test would fail with an assert during release_adfun_ctor
+		release_adfun_ctor();
+		debug_adfun_ctor();
+		bool ok = true;
+		print_test(ok, "adfun_ctor");
 	}
 	// memory
 	{	bool ok = CppAD::thread_alloc::free_all();

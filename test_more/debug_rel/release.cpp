@@ -20,3 +20,14 @@ double *release_thread_alloc(void)
 	*d_ptr        = 5.0;
 	return d_ptr;
 }
+
+// just use ADFun<double> constructor
+void release_adfun_ctor(void)
+{
+	CppAD::vector< CppAD::AD<double> > ax(1), ay(1);
+	ax[0] = 0.;
+	CppAD::Independent(ax);
+	ay[0] = fabs(ax[0]);
+	CppAD::ADFun<double> f(ax, ay);
+	return;
+}

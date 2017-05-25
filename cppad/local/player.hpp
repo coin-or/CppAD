@@ -3,7 +3,7 @@
 # define CPPAD_LOCAL_PLAYER_HPP
 
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-16 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-17 Bradley M. Bell
 
 CppAD is distributed under multiple licenses. This distribution is under
 the terms of the
@@ -78,11 +78,10 @@ private:
 	/// index for the current user atomic function
 	size_t user_index_;
 
-# ifndef NDEBUG
 	/// Flag indicating that a special function must be called before next
+	/// This flags is not used when NDEBUG is defined, but kept in this case
+	/// so that debug and release versions of CppAD can be mixed.
 	bool      special_before_next_;
-# endif
-
 
 public:
 	// =================================================================

@@ -16,17 +16,15 @@ namespace {
 	typedef CPPAD_TESTVECTOR(AD<double>) ADVector;
 
 	bool f_algo(const ADVector& x, ADVector& y)
-	{	size_t n = x.size();
-		size_t m = y.size();
-		assert( n == m + 1);
+	{	size_t m = y.size();
+		assert( x.size() == m + 1);
 		for(size_t i = 0; i < m; i++)
 			y[i] = x[i] * x[i+1];
 		return true;
 	}
 	bool g_algo(const ADVector& y, ADVector& z)
-	{	size_t n = y.size();
-		size_t m = z.size();
-		assert( n + 1 == m );
+	{	size_t m = z.size();
+		assert( y.size() + 1 == m );
 		z[0] = 0.0;
 		for(size_t i = 1; i < m; i++)
 		{	z[0] += y[i-1];

@@ -143,9 +143,9 @@ SET(count_mod_2 0)
 FOREACH(source ${source_list})
 	MATH(EXPR count_mod_2 "(${count_mod_2} + 1) % 2")
 	IF( count_mod_2 )
-		SET(flags "${cppad_cxx_flags} ${CMAKE_CXX_FLAGS_RELEASE}" )
+		SET(flags "${cppad_cxx_flags} ${CMAKE_CXX_FLAGS_DEBUG}" )
 	ELSE( count_mod_2 )
-		SET(flags "${cppad_cxx_flags} ${CMAKE_CXX_FLAGS_RELEASE}" )
+		SET(flags "${cppad_cxx_flags} ${CMAKE_CXX_FLAGS_DEBUG}" )
 	ENDIF( count_mod_2 )
 	SET_SOURCE_FILES_PROPERTIES(
 		${source} PROPERITIES COMPILE_FLAGS "${flags}"
