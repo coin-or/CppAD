@@ -184,7 +184,6 @@ int main(void)
 	Run( BoolFun,           "BoolFun"          );
 	Run( capacity_order,    "capacity_order"   );
 	Run( change_param,      "change_param"     );
-	Run( check_for_nan,     "check_for_nan"    );
 	Run( compare_change,    "compare_change"   );
 	Run( Compare,           "Compare"          );
 	Run( complex_poly,      "complex_poly"     );
@@ -261,6 +260,9 @@ int main(void)
 	Run( Value,             "Value"            );
 	Run( Var2Par,           "Var2Par"          );
 	Run( vec_ad,            "vec_ad"           );
+# ifndef CPPAD_DEBUG_AND_RELEASE
+	Run( check_for_nan,     "check_for_nan"    );
+# endif
 # if CPPAD_HAS_ADOLC
 	Run( mul_level_adolc,      "mul_level_adolc"     );
 	Run( mul_level_adolc_ode,  "mul_level_adolc_ode" );

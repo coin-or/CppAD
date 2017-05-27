@@ -141,7 +141,6 @@ SET(source_list
 #
 random_debug_release(test_more_general "${source_list}")
 #
-#
 ADD_EXECUTABLE(test_more_general EXCLUDE_FROM_ALL ${source_list})
 #
 # must first build cppad_lib

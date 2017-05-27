@@ -11,9 +11,6 @@
 # Build the example directory tests
 # Inherit environment from ../CMakeList.txt
 
-# Specifies build type for all the example subdirectories:
-SET(CMAKE_BUILD_TYPE DEBUG)
-
 # initialize check_depends
 SET(check_example_depends "")
 

@@ -26,7 +26,8 @@ ELSE( cppad_has_eigen )
 	SET(eigen_sources "")
 ENDIF( cppad_has_eigen )
 #
-ADD_EXECUTABLE(example_general EXCLUDE_FROM_ALL general.cpp
+SET(source_list
+	general.cpp
 	${adolc_sources}
 	${eigen_sources}
 	abort_recording.cpp
@@ -134,9 +135,9 @@ ADD_EXECUTABLE(example_general EXCLUDE_FROM_ALL general.cpp
 	var2par.cpp
 	vec_ad.cpp
 )
+random_debug_release(example_general "${source_list}")
 #
-# Extra compiler flags
-add_cppad_cxx_flags(example_general)
+ADD_EXECUTABLE(example_general EXCLUDE_FROM_ALL ${source_list})
 #
 # List of libraries to be linked into the specified target
 TARGET_LINK_LIBRARIES(example_general
