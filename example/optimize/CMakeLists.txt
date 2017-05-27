@@ -9,9 +9,9 @@
 # Please visit http://www.coin-or.org/CppAD/ for information on other licenses.
 # -----------------------------------------------------------------------------
 # Build the example/optimize directory tests
-
 #
-ADD_EXECUTABLE(example_optimize EXCLUDE_FROM_ALL
+#
+SET(source_list
 	conditional_skip.cpp
 	compare_op.cpp
 	cumulative_sum.cpp
@@ -21,9 +21,11 @@ ADD_EXECUTABLE(example_optimize EXCLUDE_FROM_ALL
 	optimize.cpp
 	reverse_active.cpp
 )
-
-# Extra compiler flags
-add_cppad_cxx_flags( example_optimize )
+#
+# set compiler flags
+random_debug_release( example_optimize "${source_list}")
+#
+ADD_EXECUTABLE(example_optimize EXCLUDE_FROM_ALL ${source_list})
 
 # Add the check_example_optimize target
 ADD_CUSTOM_TARGET(check_example_optimize

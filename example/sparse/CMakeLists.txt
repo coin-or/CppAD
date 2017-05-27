@@ -9,7 +9,7 @@
 # Please visit http://www.coin-or.org/CppAD/ for information on other licenses.
 # -----------------------------------------------------------------------------
 #
-ADD_EXECUTABLE(example_sparse EXCLUDE_FROM_ALL
+SET(source_list
 	sparse.cpp
 	sub_sparse_hes.cpp
 	sparsity_sub.cpp
@@ -33,9 +33,11 @@ ADD_EXECUTABLE(example_sparse EXCLUDE_FROM_ALL
 	colpack_hes.cpp
 	rc_sparsity.cpp
 )
-
-# Extra compiler flags
-add_cppad_cxx_flags( example_sparse )
+#
+# set compiler flags
+random_debug_release( example_sparse "${source_list}")
+#
+ADD_EXECUTABLE(example_sparse EXCLUDE_FROM_ALL ${source_list})
 
 # List of libraries to be linked into the specified target
 TARGET_LINK_LIBRARIES(example_sparse

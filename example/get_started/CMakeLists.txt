@@ -10,11 +10,12 @@
 # -----------------------------------------------------------------------------
 # Build the example/get_started directory tests
 #
-ADD_EXECUTABLE(example_get_started EXCLUDE_FROM_ALL
-	get_started.cpp
-)
-# Compiler flags for cppad source
-add_cppad_cxx_flags( example_get_started )
+SET(source_list get_started.cpp)
+#
+# set compiler flags
+random_debug_release(example_get_started "${source_list}")
+#
+ADD_EXECUTABLE(example_get_started EXCLUDE_FROM_ALL ${source_list})
 #
 # Add the check for this target
 ADD_CUSTOM_TARGET(check_example_get_started

@@ -9,7 +9,7 @@
 # Please visit http://www.coin-or.org/CppAD/ for information on other licenses.
 # -----------------------------------------------------------------------------
 #
-ADD_EXECUTABLE(example_utility EXCLUDE_FROM_ALL
+SET(source_list
 	check_numeric_type.cpp
 	check_simple_vector.cpp
 	cppad_vector.cpp
@@ -36,10 +36,12 @@ ADD_EXECUTABLE(example_utility EXCLUDE_FROM_ALL
 	utility.cpp
 	vector_bool.cpp
 )
-
-# Extra compiler flags
-add_cppad_cxx_flags( example_utility )
-
+#
+# set compiler flags
+random_debug_release( example_utility "${source_list}")
+#
+ADD_EXECUTABLE(example_utility EXCLUDE_FROM_ALL ${source_list})
+#
 # Add the check_example_utility target
 ADD_CUSTOM_TARGET(check_example_utility
 	example_utility

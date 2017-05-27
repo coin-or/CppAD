@@ -135,6 +135,7 @@ SET(source_list
 	var2par.cpp
 	vec_ad.cpp
 )
+# set compiler flags
 random_debug_release(example_general "${source_list}")
 #
 ADD_EXECUTABLE(example_general EXCLUDE_FROM_ALL ${source_list})

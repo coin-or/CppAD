@@ -9,8 +9,9 @@
 # Please visit http://www.coin-or.org/CppAD/ for information on other licenses.
 # -----------------------------------------------------------------------------
 # Build the example/deprecated tests
-
-ADD_EXECUTABLE(example_deprecated EXCLUDE_FROM_ALL deprecated.cpp
+#
+SET(source_list
+	deprecated.cpp
 	old_reciprocal.cpp
 	old_usead_1.cpp
 	old_usead_2.cpp
@@ -22,8 +23,10 @@ ADD_EXECUTABLE(example_deprecated EXCLUDE_FROM_ALL deprecated.cpp
 )
 
 # Compiler flags for cppad source
-add_cppad_cxx_flags(example_deprecated)
-
+random_debug_release(example_deprecated "${source_list}")
+#
+ADD_EXECUTABLE(example_deprecated EXCLUDE_FROM_ALL ${source_list})
+#
 # Add the check_example_deprecated target
 ADD_CUSTOM_TARGET(check_example_deprecated
 	example_deprecated
@@ -31,7 +34,7 @@ ADD_CUSTOM_TARGET(check_example_deprecated
 	example_deprecated
 )
 MESSAGE(STATUS "make check_example_deprecated: available")
-
+#
 # Change check depends in parent environment
 add_to_list(check_example_depends check_example_deprecated)
 SET(check_example_depends "${check_example_depends}" PARENT_SCOPE)

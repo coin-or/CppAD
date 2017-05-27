@@ -16,7 +16,7 @@ ELSE( cppad_has_eigen )
 	SET(eigen_sources "")
 ENDIF( cppad_has_eigen )
 #
-ADD_EXECUTABLE(example_atomic EXCLUDE_FROM_ALL
+SET(source_list
 	${eigen_sources}
 	atomic.cpp
 	checkpoint.cpp
@@ -36,17 +36,19 @@ ADD_EXECUTABLE(example_atomic EXCLUDE_FROM_ALL
 	set_sparsity.cpp
 	tangent.cpp
 )
-
-# Extra compiler flags
-add_cppad_cxx_flags( example_atomic )
-
+#
+# set compiler flags
+random_debug_release(example_atomic "${source_list}")
+#
+ADD_EXECUTABLE(example_atomic EXCLUDE_FROM_ALL ${source_list})
+#
 # Add the check_example_atomic target
 ADD_CUSTOM_TARGET(check_example_atomic
 	example_atomic
 	DEPENDS example_atomic
 )
 MESSAGE(STATUS "make check_example_atomic: available")
-
+#
 # add to check check_example_depends in parent environment
 add_to_list(check_example_depends check_example_atomic)
 SET(check_example_depends "${check_example_depends}" PARENT_SCOPE)

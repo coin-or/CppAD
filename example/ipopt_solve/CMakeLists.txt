@@ -12,17 +12,18 @@
 
 # Local link directories to search, as determined by pkg-config for ipopt
 LINK_DIRECTORIES( ${ipopt_LIBRARY_DIRS} )
-
-ADD_EXECUTABLE(example_ipopt_solve EXCLUDE_FROM_ALL
+#
+SET(source_list
 	get_started.cpp
 	ipopt_solve.cpp
 	ode_inverse.cpp
 	retape.cpp
 )
-
-# Extra compiler flags
-add_cppad_cxx_flags( example_ipopt_solve )
-
+# set compiler flags
+random_debug_releAse( example_ipopt_solve "${source_list}")
+#
+ADD_EXECUTABLE(example_ipopt_solve EXCLUDE_FROM_ALL ${source_list})
+#
 # libraries to be linked into the specified target,
 # as determined by pkg-config for ipopt
 TARGET_LINK_LIBRARIES(example_ipopt_solve

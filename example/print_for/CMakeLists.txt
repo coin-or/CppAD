@@ -9,11 +9,13 @@
 # Please visit http://www.coin-or.org/CppAD/ for information on other licenses.
 # -----------------------------------------------------------------------------
 # Build the example/print_for directory tests
-
-ADD_EXECUTABLE(example_print_for EXCLUDE_FROM_ALL print_for.cpp)
-
-# Add extra compiler flags
-add_cppad_cxx_flags(example_print_for)
+#
+SET(source_list print_for.cpp)
+#
+# set compiler flags
+random_debug_release(example_print_for "${source_list}")
+#
+ADD_EXECUTABLE(example_print_for EXCLUDE_FROM_ALL ${source_list})
 
 # check_example_print_for target
 ADD_CUSTOM_TARGET(check_example_print_for

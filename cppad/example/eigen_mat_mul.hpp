@@ -151,10 +151,8 @@ $srccode%cpp% */
 		size_t  n_middle  = size_t( left.cols() );
 		size_t  nc_right  = size_t( right.cols() );
 		assert( n_middle  == size_t( right.rows() )  );
-# ifndef NDEBUG
-		size_t  nx        = 3 + (nr_left + nc_right) * n_middle;
-		size_t  ny        = nr_left * nc_right;
-# endif
+		size_t  nx      = 3 + (nr_left + nc_right) * n_middle;
+		size_t  ny      = nr_left * nc_right;
 		size_t n_left   = nr_left * n_middle;
 		size_t n_right  = n_middle * nc_right;
 		size_t n_result = nr_left * nc_right;
