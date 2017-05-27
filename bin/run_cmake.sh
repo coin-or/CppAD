@@ -113,22 +113,6 @@ EOF
 	shift
 done
 # ---------------------------------------------------------------------------
-file='test_more/general/CMakeLists.txt'
-if ! grep "^SET(count_mod_2 [01])" $file
-then
-	echo "run_cmake.sh: expected ^SET(count_mod_2 [01]) $file"
-	exit 1
-fi
-if ! random_zero_one=`expr $RANDOM % 2`
-then
-	# expr exit status is 1 when the expression result is zero
-	# supress shell exit in this case
-	:
-fi
-echo "random_zero_one = $random_zero_one"
-sed -e "s|^SET(count_mod_2 [01])|SET(count_mod_2 $random_zero_one)|" \
-	-i $file
-# ---------------------------------------------------------------------------
 if [ "$debug_speed" == 'yes' ]
 then
 	sed -e 's|^SET(CMAKE_BUILD_TYPE .*|SET(CMAKE_BUILD_TYPE DEBUG)|' \

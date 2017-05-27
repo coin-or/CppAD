@@ -69,6 +69,9 @@ INCLUDE(cmake/assert.cmake)
 #
 # print_variable(variable)
 INCLUDE(cmake/print_variable.cmake)
+#
+# random_debug_release(program_name source_list)
+INCLUDE(cmake/random_debug_release.cmake)
 # =============================================================================
 # command line arguments
 # =============================================================================
@@ -188,6 +191,10 @@ ENDIF( cppad_deprecated )
 command_line_arg(cppad_extra_debug NO BOOL
 	"if this is true, and NDEBUG is not defined, do extra cppad debugging"
 )
+# =============================================================================
+# Make a random choice from the set {0, 1, 2, 3}
+STRING(RANDOM LENGTH 1 ALPHABET 0123 random_choice_in_0123)
+print_variable(random_choice_in_0123)
 # =============================================================================
 # cppad_has_colpack, colpack_libs, cppad_lib
 #

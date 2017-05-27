@@ -38,7 +38,7 @@ ELSE( cppad_has_ipopt )
 	SET(ipopt_libs "")
 ENDIF( cppad_has_ipopt )
 #
-SET(source_list EXCLUDE_FROM_ALL
+SET(source_list
 	${adolc_sources}
 	${eigen_sources}
 	${ipopt_sources}
@@ -139,18 +139,7 @@ SET(source_list EXCLUDE_FROM_ALL
 	local/vector_set.cpp
 )
 #
-SET(count_mod_2 0)
-FOREACH(source ${source_list})
-	MATH(EXPR count_mod_2 "(${count_mod_2} + 1) % 2")
-	IF( count_mod_2 )
-		SET(flags "${cppad_cxx_flags} ${CMAKE_CXX_FLAGS_DEBUG}" )
-	ELSE( count_mod_2 )
-		SET(flags "${cppad_cxx_flags} ${CMAKE_CXX_FLAGS_DEBUG}" )
-	ENDIF( count_mod_2 )
-	SET_SOURCE_FILES_PROPERTIES(
-		${source} PROPERITIES COMPILE_FLAGS "${flags}"
-	)
-ENDFOREACH(source ${source_list})
+random_debug_release(test_more_general "${source_list}")
 #
 #
 ADD_EXECUTABLE(test_more_general EXCLUDE_FROM_ALL ${source_list})
