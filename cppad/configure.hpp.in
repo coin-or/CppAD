@@ -103,13 +103,6 @@ This symbol is not currently being used.
 # define CPPAD_DEPRECATED @cppad_deprecated_01@
 
 /*!
-\def CPPAD_EXTRA_DEBUG
-If this is one, extra cppad debugging is done
-when NDEBUG is not defined.
-*/
-# define CPPAD_EXTRA_DEBUG @cppad_extra_debug_01@
-
-/*!
 \def CPPAD_BOOSTVECTOR
 If this symbol is one, and _MSC_VER is not defined,
 we are using boost vector for CPPAD_TESTVECTOR.

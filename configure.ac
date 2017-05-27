@@ -489,12 +489,8 @@ fi
 dnl test_one.sh.in settings for cppad_cxx_flags (no longer used ?)
 AC_SUBST(cppad_cxx_flags, "-g -O0")
 
-dnl autotools version does not support extra debugging
-AC_SUBST(cppad_extra_debug_01, 0)
-
 dnl autotools version does not support installing deprecated features
 AC_SUBST(cppad_deprecated_01,  0)
-
 
 dnl autotools version does not colpack
 AC_SUBST(cppad_has_colpack, 0)

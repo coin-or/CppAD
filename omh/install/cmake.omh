@@ -112,7 +112,6 @@ cmake %%                                                                     \
     -D cppad_max_num_threads=%cppad_max_num_threads%                         \
     -D cppad_tape_id_type=%cppad_tape_id_type%                               \
     -D cppad_tape_addr_type=%cppad_tape_addr_type%                           \
-    -D cppad_extra_debug=%cppad_extra_debug% \
     -D cppad_deprecated=%cppad_deprecated% \
     \
     ..
@@ -252,8 +251,7 @@ $rref sacado_prefix$$
 $tend
 
 $head cppad_cxx_flags$$
-This specifies the addition compiler flags,
-besides the debug and release flags,
+This specifies the addition compiler flags
 that are used when compiling the CppAD examples and tests.
 The default value for these flags is the empty string $code ""$$.
 These flags must be valid for the C++ compiler
@@ -267,6 +265,18 @@ In order for the compiler to take advantage of features that are new in C++11,
 the $icode cppad_cxx_flags$$ must enable these features.
 The compiler may still be used with a flag that disables the new features
 (unless it is a Microsoft compiler; i.e., $code _MSC_VER$$ is defined).
+
+$subhead debug and release$$
+The CppAD examples and tests decide which files to compile for debugging
+and which to compile for release. Hence debug and release flags should
+not be included in $icode cppad_cxx_flags$$.
+See also the
+$cref/CPPAD_DEBUG_AND_RELEASE
+	/preprocessor
+	/Documented Here
+	/CPPAD_DEBUG_AND_RELEASE
+/$$
+compiler flag (which should not be included in $icode cppad_cxx_flags$$).
 
 $head cppad_profile_flag$$
 This specifies an addition compiler and link flag that is used

@@ -186,11 +186,6 @@ command_line_arg(cppad_deprecated NO BOOL
 IF( cppad_deprecated )
 	MESSAGE(FATAL_ERROR "cppad_deprecated must be NO" )
 ENDIF( cppad_deprecated )
-#
-# cppad_extra_debug
-command_line_arg(cppad_extra_debug NO BOOL
-	"if this is true, and NDEBUG is not defined, do extra cppad debugging"
-)
 # =============================================================================
 # Make a random choice from the set {0, 1, 2, 3}
 STRING(RANDOM LENGTH 1 ALPHABET 0123 random_choice_in_0123)

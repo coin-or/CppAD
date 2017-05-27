@@ -10,24 +10,17 @@
 # -----------------------------------------------------------------------------
 # Build the test_more/general tests
 
-# set debugging compiler flags for debug_rel.cpp and debug.cpp
-SET(debug_flags "${cppad_cxx_flags} ${CMAKE_CXX_FLAGS_DEBUG}")
+# set compiler flags for debug_rel.cpp and debug.cpp
 SET_SOURCE_FILES_PROPERTIES(
-	debug_rel.cpp debug.cpp PROPERITIES COMPILE_FLAGS "${debug_flags}"
+	debug_rel.cpp debug.cpp PROPERITIES COMPILE_FLAGS
+	"${cppad_cxx_flags} ${CMAKE_CXX_FLAGS_DEBUG} -DCPPAD_DEBUG_AND_RELEASE"
 )
 
-# If doing extra debugging, set compiler flags for release to debug_flags,
-# otherwise set them to release_flags.
-SET(release_flags "${cppad_cxx_flags} ${CMAKE_CXX_FLAGS_RELEASE}")
-IF( cppad_extra_debug )
-	SET_SOURCE_FILES_PROPERTIES(
-		release.cpp PROPERITIES COMPILE_FLAGS "${debug_flags}"
-	)
-ELSE( cppad_extra_debug )
-	SET_SOURCE_FILES_PROPERTIES(
-		release.cpp PROPERITIES COMPILE_FLAGS "${release_flags}"
-	)
-ENDIF( cppad_extra_debug )
+# et compiler flags for release,cpp
+SET_SOURCE_FILES_PROPERTIES(
+	release.cpp PROPERITIES COMPILE_FLAGS
+	"${cppad_cxx_flags} ${CMAKE_CXX_FLAGS_RELEASE} -DCPPAD_DEBUG_AND_RELEASE"
+)
 
 # now that we have the properties, add the executable
 ADD_EXECUTABLE(test_more_debug_rel EXCLUDE_FROM_ALL
