@@ -130,7 +130,6 @@ bool test_set(const char* color_method)
 		{	ok &= j+1 == i;
 			ok &= hes[ell] == 2.0 * x[i];
 		}
-		ell++;
 	}
 	return ok;
 }
@@ -206,7 +205,6 @@ bool test_bool(const char* color_method)
 		{	ok &= j+1 == i;
 			ok &= hes[ell] == 2.0 * x[i];
 		}
-		ell++;
 	}
 	return ok;
 }
