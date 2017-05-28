@@ -1,6 +1,6 @@
 // $Id$
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-16 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-17 Bradley M. Bell
 
 CppAD is distributed under multiple licenses. This distribution is under
 the terms of the
@@ -75,8 +75,15 @@ namespace {
 		before.n_var += 1; before.n_op  += 1;
 		after.n_var  += 1; after.n_op   += 1;
 
+		// Use two, three, four and six in order to avoid a compiler warning
+		// Note that addition of two and three does not take any operations.
+		// Also note that optimizer reconizes four * six == five * seven.
+		scalar nine  = eight + four * six * (two + three);
+		before.n_var += 3; before.n_op  += 3;
+		after.n_var  += 2; after.n_op   += 2;
+
 		// results for this operation sequence
-		y[0] = eight;
+		y[0] = nine;
 		before.n_var += 0; before.n_op  += 0;
 		after.n_var  += 0; after.n_op   += 0;
 	}

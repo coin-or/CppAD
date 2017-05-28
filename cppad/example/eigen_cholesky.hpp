@@ -239,8 +239,8 @@ $srccode%cpp% */
 	)
 	{	size_t n_order = q + 1;
 		size_t nr = size_t( CppAD::Integer( tx[ 0 * n_order + 0 ] ) );
-		size_t ny = ( (nr + 1 ) * nr ) / 2;
 # ifndef NDEBUG
+		size_t ny = ( (nr + 1 ) * nr ) / 2;
 		size_t nx = 1 + ny;
 # endif
 		//

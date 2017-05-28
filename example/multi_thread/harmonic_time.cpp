@@ -100,7 +100,6 @@ $$
 $end
 */
 // BEGIN C++
-# include <omp.h>
 # include <cstring>
 # include <limits>
 # include <vector>
