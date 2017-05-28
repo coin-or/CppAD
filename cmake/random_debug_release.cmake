@@ -29,7 +29,7 @@
 # Case ${random_choice_in_0123} = 2:
 # All the files have debug flags.
 #
-# Case ${random_choice_in_0123} = 4:
+# Case ${random_choice_in_0123} = 3:
 # All the the files have release flags.
 #
 FUNCTION(random_debug_release program_name source_list)
@@ -42,19 +42,15 @@ FUNCTION(random_debug_release program_name source_list)
 	# set compile flags property when not alternating.
 	IF( ${random_choice_in_0123} STREQUAL 0 )
 		SET(alternate TRUE)
-		MESSAGE(STATUS "${program_name}: even index files debug, odd release")
 	ELSEIF( ${random_choice_in_0123} STREQUAL 1 )
 		SET(alternate TRUE)
-		MESSAGE(STATUS "${program_name}: odd index files debug, even release")
 	ELSEIF( ${random_choice_in_0123} STREQUAL 2 )
 		SET(alternate FALSE)
-		MESSAGE(STATUS "${program_name}: all index files debug")
 		SET_SOURCE_FILES_PROPERTIES(
 			${source_list} PROPERTIES COMPILE_FLAGS "${debug_flags}"
 		)
 	ELSEIF( ${random_choice_in_0123} STREQUAL 3 )
 		SET(alternate FALSE)
-		MESSAGE(STATUS "${program_name}: all index files release")
 		SET_SOURCE_FILES_PROPERTIES(
 			${source_list} PROPERTIES COMPILE_FLAGS "${release_flags}"
 		)

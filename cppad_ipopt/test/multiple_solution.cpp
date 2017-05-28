@@ -1,6 +1,6 @@
 // $Id$
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-15 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-17 Bradley M. Bell
 
 CppAD is distributed under multiple licenses. This distribution is under
 the terms of the
@@ -40,27 +40,18 @@ public:
 	size_t number_functions(void)
 	{	return 1; }
 	size_t domain_size(size_t k)
-	{	size_t q;
-		switch(k)
-		{	case 0:  q = 1;  break;
-			default: assert(0);
-		}
+	{	size_t q = 1;
+		assert(k == 0);
 		return q;
 	}
 	size_t range_size(size_t k)
-	{	size_t p;
-		switch(k)
-		{	case 0:  p = 1;  break;
-			default: assert(0);
-		}
+	{	size_t p = 1;
+		assert(k == 0);
 		return p;
 	}
 	size_t number_terms(size_t k)
-	{	size_t L;
-		switch(k)
-		{	case 0:  L = 3;   break;
-			default: assert(0);
-		}
+	{	size_t L = 3;
+		assert(k == 0);
 		return L;
 	}
 	void index(size_t k, size_t ell, SizeVector&I, SizeVector& J)
