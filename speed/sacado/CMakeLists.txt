@@ -43,7 +43,14 @@ ADD_EXECUTABLE(speed_sacado EXCLUDE_FROM_ALL ../main.cpp
 add_cppad_cxx_flags( speed_sacado )
 
 # determine libraries necessary to link Sacado
-SET(cmd grep Sacado_LIBRARIES= ${sacado_prefix}/include/Makefile.export.Sacado)
+SET(config_file "${sacado_prefix}/include/Makefile.export.Sacado")
+IF(NOT EXISTS ${config_file})
+	MESSAGE(FATAL_ERROR
+"the file sacado_prefix/include/Makefile.export.Sacado does not exist
+where sacado_prefix=${sacado_prefix}"
+	)
+ENDIF(NOT EXISTS ${config_file})
+SET(cmd "grep" "Sacado_LIBRARIES=" "${config_file}")
 EXECUTE_PROCESS(
 	COMMAND         ${cmd}
 	OUTPUT_VARIABLE temp1
@@ -52,6 +59,7 @@ STRING(REGEX REPLACE "Sacado_LIBRARIES= *-l" "" temp2  ${temp1})
 STRING(STRIP ${temp2} temp3)
 STRING(REGEX REPLACE " *-l" ";" sacado_lib_list ${temp3})
 #
+# include the dl library if it is in the system path
 CHECK_LIBRARY_EXISTS( dl dlopen "${CMAKE_SYSTEM_LIBRARY_PATH}" dl_found )
 IF( dl_found )
 	TARGET_LINK_LIBRARIES(speed_sacado speed_src ${sacado_lib_list} dl)
