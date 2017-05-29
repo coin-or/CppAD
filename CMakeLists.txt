@@ -179,6 +179,10 @@ command_line_arg(cppad_tape_addr_type "unsigned int" STRING
 "type used to identify variables on one tape, size must be <= sizeof(size_t)"
 )
 #
+# cppad_debug_which
+command_line_arg(cppad_debug_which "debug_all" STRING
+	"debug_even, debug_odd, debug_all, or debug_none"
+)
 # cppad_deprecated
 command_line_arg(cppad_deprecated NO BOOL
 	"this symbol must be NO and is not currently being used"
@@ -186,19 +190,6 @@ command_line_arg(cppad_deprecated NO BOOL
 IF( cppad_deprecated )
 	MESSAGE(FATAL_ERROR "cppad_deprecated must be NO" )
 ENDIF( cppad_deprecated )
-# =============================================================================
-# Make a random choice from the set {0, 1, 2, 3}
-STRING(RANDOM LENGTH 1 ALPHABET 0123 random_choice_in_0123)
-IF( "${random_choice_in_0123}" STREQUAL "0" )
-	SET(cppad_debug_which "debug_even")
-ELSEIF( "${random_choice_in_0123}" STREQUAL "1" )
-	SET(cppad_debug_which "debug_odd")
-ELSEIF( "${random_choice_in_0123}" STREQUAL "2" )
-	SET(cppad_debug_which "debug_all")
-ELSE( "${random_choice_in_0123}" STREQUAL "3" )
-	SET(cppad_debug_which "debug_none")
-ENDIF( "${random_choice_in_0123}" STREQUAL "0" )
-print_variable(cppad_debug_which)
 # =============================================================================
 # cppad_has_colpack, colpack_libs, cppad_lib
 #

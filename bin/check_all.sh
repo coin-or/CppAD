@@ -89,9 +89,9 @@ echo_log_eval cd cppad-$version
 # -----------------------------------------------------------------------------
 if [ "$random_zero_one" == '0' ]
 then
-	echo_log_eval bin/run_cmake.sh --boost_vector
+	echo_log_eval bin/run_cmake.sh --boost_vector --debug_odd
 else
-	echo_log_eval bin/run_cmake.sh --eigen_vector
+	echo_log_eval bin/run_cmake.sh --eigen_vector --debug_even
 fi
 echo_log_eval cd build
 # -----------------------------------------------------------------------------
