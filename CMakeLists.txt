@@ -70,8 +70,8 @@ INCLUDE(cmake/assert.cmake)
 # print_variable(variable)
 INCLUDE(cmake/print_variable.cmake)
 #
-# random_debug_release(program_name source_list)
-INCLUDE(cmake/random_debug_release.cmake)
+# set_compile_flags( program_name debug_which source_list)
+INCLUDE(cmake/set_compile_flags.cmake)
 # =============================================================================
 # command line arguments
 # =============================================================================
@@ -189,7 +189,16 @@ ENDIF( cppad_deprecated )
 # =============================================================================
 # Make a random choice from the set {0, 1, 2, 3}
 STRING(RANDOM LENGTH 1 ALPHABET 0123 random_choice_in_0123)
-print_variable(random_choice_in_0123)
+IF( "${random_choice_in_0123}" STREQUAL "0" )
+	SET(cppad_debug_which "debug_even")
+ELSEIF( "${random_choice_in_0123}" STREQUAL "1" )
+	SET(cppad_debug_which "debug_odd")
+ELSEIF( "${random_choice_in_0123}" STREQUAL "2" )
+	SET(cppad_debug_which "debug_all")
+ELSE( "${random_choice_in_0123}" STREQUAL "3" )
+	SET(cppad_debug_which "debug_none")
+ENDIF( "${random_choice_in_0123}" STREQUAL "0" )
+print_variable(cppad_debug_which)
 # =============================================================================
 # cppad_has_colpack, colpack_libs, cppad_lib
 #

@@ -36,9 +36,7 @@ SET(source_list
 	set_sparsity.cpp
 	tangent.cpp
 )
-#
-# set compiler flags
-random_debug_release(example_atomic "${source_list}")
+set_compile_flags( example_atomic "${cppad_debug_which}" "${source_list}" )
 #
 ADD_EXECUTABLE(example_atomic EXCLUDE_FROM_ALL ${source_list})
 #

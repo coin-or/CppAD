@@ -12,8 +12,7 @@
 #
 SET(source_list print_for.cpp)
 #
-# set compiler flags
-random_debug_release(example_print_for "${source_list}")
+set_compile_flags( example_print_for "${cppad_debug_which}" "${source_list}" )
 #
 ADD_EXECUTABLE(example_print_for EXCLUDE_FROM_ALL ${source_list})
 

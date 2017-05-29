@@ -12,8 +12,7 @@
 #
 SET(source_list get_started.cpp)
 #
-# set compiler flags
-random_debug_release(example_get_started "${source_list}")
+set_compile_flags( example_get_started "${cppad_debug_which}" "${source_list}" )
 #
 ADD_EXECUTABLE(example_get_started EXCLUDE_FROM_ALL ${source_list})
 #

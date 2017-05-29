@@ -33,9 +33,7 @@ SET(source_list
 	colpack_hes.cpp
 	rc_sparsity.cpp
 )
-#
-# set compiler flags
-random_debug_release( example_sparse "${source_list}")
+set_compile_flags( example_sparse "${cppad_debug_which}" "${source_list}" )
 #
 ADD_EXECUTABLE(example_sparse EXCLUDE_FROM_ALL ${source_list})
 

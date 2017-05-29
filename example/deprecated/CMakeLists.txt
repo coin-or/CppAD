@@ -21,9 +21,7 @@ SET(source_list
 	track_new_del.cpp
 	zdouble.cpp
 )
-
-# Compiler flags for cppad source
-random_debug_release(example_deprecated "${source_list}")
+set_compile_flags( example_deprecated "${cppad_debug_which}" "${source_list}" )
 #
 ADD_EXECUTABLE(example_deprecated EXCLUDE_FROM_ALL ${source_list})
 #

@@ -138,8 +138,7 @@ SET(source_list
 
 	local/vector_set.cpp
 )
-#
-random_debug_release(test_more_general "${source_list}")
+set_compile_flags( test_more_general "${cppad_debug_which}" "${source_list}" )
 #
 ADD_EXECUTABLE(test_more_general EXCLUDE_FROM_ALL ${source_list})
 #

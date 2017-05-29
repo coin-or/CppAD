@@ -36,9 +36,7 @@ SET(source_list
 	utility.cpp
 	vector_bool.cpp
 )
-#
-# set compiler flags
-random_debug_release( example_utility "${source_list}")
+set_compile_flags( example_utility "${cppad_debug_which}" "${source_list}" )
 #
 ADD_EXECUTABLE(example_utility EXCLUDE_FROM_ALL ${source_list})
 #

@@ -21,9 +21,7 @@ SET(source_list
 	optimize.cpp
 	reverse_active.cpp
 )
-#
-# set compiler flags
-random_debug_release( example_optimize "${source_list}")
+set_compile_flags( example_optimize "${cppad_debug_which}" "${source_list}" )
 #
 ADD_EXECUTABLE(example_optimize EXCLUDE_FROM_ALL ${source_list})
 

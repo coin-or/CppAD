@@ -19,8 +19,7 @@ SET(source_list
 	ode_inverse.cpp
 	retape.cpp
 )
-# set compiler flags
-random_debug_releAse( example_ipopt_solve "${source_list}")
+set_compile_flags( example_ipopt_solve "${cppad_debug_which}" "${source_list}" )
 #
 ADD_EXECUTABLE(example_ipopt_solve EXCLUDE_FROM_ALL ${source_list})
 #

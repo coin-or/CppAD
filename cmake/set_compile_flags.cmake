@@ -8,31 +8,34 @@
 # A copy of this license is included in the COPYING file of this distribution.
 # Please visit http://www.coin-or.org/CppAD/ for information on other licenses.
 # -----------------------------------------------------------------------------
-# random_debug_release(program_name source_list)
+# set_compile_flags( program_name debug_which source_list)
 #
 # program_name: (in)
 # Is the name of the program that we are building. This is only used to
 # report which files have debug and which have release properties.
 #
-# source_list: (in)
-# is a list of source files that randomly get set to have debug or release
-# compile flags. The cppad_cxx_flags compile flags always get included.
+# debug_which: (in)
+# Is one of the following cases:
 #
-# Case ${random_choice_in_0123} = 0:
+# Case debug_even:
 # The files with an even (odd) index in source_list have debug (release) flags.
 # In addition the compiler flag -DCPPAD_DEBUG_AND_RELEASE is added.
 #
-# Case ${random_choice_in_0123} = 1:
+# Case debug_odd:
 # The files with an odd (even) index in source_list have debug (release) flags.
 # In addition the compiler flag -DCPPAD_DEBUG_AND_RELEASE is added.
 #
-# Case ${random_choice_in_0123} = 2:
+# Case debug_all:
 # All the files have debug flags.
 #
-# Case ${random_choice_in_0123} = 3:
+# Case debug_none:
 # All the the files have release flags.
 #
-FUNCTION(random_debug_release program_name source_list)
+# source_list: (in)
+# is a list of source files that get set to have debug or release
+# compile flags. The cppad_cxx_flags compile flags always get included.
+#
+FUNCTION(set_compile_flags program_name debug_which source_list)
 	# debug compile flags
 	SET(debug_flags "${cppad_cxx_flags} ${CMAKE_CXX_FLAGS_DEBUG}")
 	# relese compile flags
@@ -40,28 +43,29 @@ FUNCTION(random_debug_release program_name source_list)
 	#
 	# set alternate, report random number result,
 	# set compile flags property when not alternating.
-	IF( ${random_choice_in_0123} STREQUAL 0 )
+	IF( "${debug_which}" STREQUAL "debug_even" )
 		SET(alternate TRUE)
-	ELSEIF( ${random_choice_in_0123} STREQUAL 1 )
+		SET(count_mod_2 0)
+	ELSEIF( "${debug_which}" STREQUAL "debug_odd" )
 		SET(alternate TRUE)
-	ELSEIF( ${random_choice_in_0123} STREQUAL 2 )
+		SET(count_mod_2 1)
+	ELSEIF( "${debug_which}" STREQUAL "debug_all" )
 		SET(alternate FALSE)
 		SET_SOURCE_FILES_PROPERTIES(
 			${source_list} PROPERTIES COMPILE_FLAGS "${debug_flags}"
 		)
-	ELSEIF( ${random_choice_in_0123} STREQUAL 3 )
+	ELSEIF( "${debug_which}" STREQUAL "debug_none" )
 		SET(alternate FALSE)
 		SET_SOURCE_FILES_PROPERTIES(
 			${source_list} PROPERTIES COMPILE_FLAGS "${release_flags}"
 		)
-	ELSE( ${random_choice_in_0123} STREQUAL 4 )
-		MESSAGE(ERROR "random_choice_in_0123 = ${random_choice_in_0123}")
-	ENDIF( ${random_choice_in_0123} STREQUAL 0 )
+	ELSE( "${debug_which}" )
+		MESSAGE(FATAL_ERROR "cmake error: debug_which = ${debug_which}")
+	ENDIF( "${debug_which}" STREQUAL "debug_even" )
 	#
 	IF( alternate )
-		SET(debug_list "")
+		SET(debug_list   "")
 		SET(release_list "")
-		SET(count_mod_2 "${random_choice_in_0123}")
 		FOREACH(source ${source_list})
 			MATH(EXPR count_mod_2 "(${count_mod_2} + 1) % 2")
 			IF( count_mod_2 )
@@ -79,4 +83,4 @@ FUNCTION(random_debug_release program_name source_list)
 			"${release_flags} -DCPPAD_DEBUG_AND_RELEASE"
 		)
 	ENDIF( alternate )
-ENDFUNCTION(random_debug_release program_name source_list)
+ENDFUNCTION(set_compile_flags program_name debug_which source_list)
