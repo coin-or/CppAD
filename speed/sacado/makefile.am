@@ -1,6 +1,6 @@
 # $Id$
 # -----------------------------------------------------------------------------
-# CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-15 Bradley M. Bell
+# CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-17 Bradley M. Bell
 #
 # CppAD is distributed under multiple licenses. This distribution is under
 # the terms of the
@@ -36,7 +36,20 @@ AM_CXXFLAGS   = -O2 -DNDEBUG -DCPPAD_SACADO_SPEED \
 # AM_CXXFLAGS   = -g $(CXX_FLAGS) $(CXX_FLAGS) -DCPPAD_SACADO_SPEED -DRAD_AUTO_AD_Const
 # END DEBUG
 #
-LDADD            = -lspeed -lsacado -lteuchoscore
+# include Sacado_LIBRARIES in SACADO_DIR/include/Makefile.export.Sacado
+LDADD  = \
+	-lspeed \
+	-lsacado \
+	-lteuchoskokkoscomm \
+	-lteuchoskokkoscompat \
+	-lteuchosremainder \
+	-lteuchosnumerics \
+	-lteuchoscomm \
+	-lteuchosparameterlist \
+	-lteuchoscore \
+	-lkokkoscore \
+	-lsacado \
+	-lteuchoscore
 AM_LDFLAGS       = -L../src -L$(SACADO_DIR)/lib -L$(SACADO_DIR)/lib64
 #
 speed_sacado_SOURCES = \

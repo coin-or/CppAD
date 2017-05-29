@@ -1,7 +1,7 @@
 #! /bin/bash -e
 # $Id$
 # -----------------------------------------------------------------------------
-# CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-15 Bradley M. Bell
+# CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-17 Bradley M. Bell
 #
 # CppAD is distributed under multiple licenses. This distribution is under
 # the terms of the
@@ -19,9 +19,6 @@
 # $$
 #
 # $section Download and Install Sacado in Build Directory$$
-# $index sacado, download and install$$
-# $index download, install sacado$$
-# $index install, sacado$$
 #
 # $head Syntax$$
 # $code bin/get_sacado.sh$$
@@ -64,7 +61,7 @@ echo_eval() {
 }
 # -----------------------------------------------------------------------------
 echo 'Download sacado to build/external and install it to build/prefix'
-version="11.12.1"
+version="12.10.1"
 trilinos_dir="trilinos-$version-Source"
 web_page="http://trilinos.org/oldsite/download/files"
 cppad_dir=`pwd`
@@ -136,27 +133,9 @@ if [ ! -e "$trilinos_dir.tar.gz" ]
 then
 	echo_eval wget --no-check-certificate $web_page/$trilinos_dir.tar.gz
 fi
-for package in Sacado Teuchos Trilinois
-do
-	echo_eval rm -rf $prefix/include/$package*
-done
 if [ ! -e "$trilinos_dir" ]
 then
 	echo_eval tar -xzf $trilinos_dir.tar.gz
-	# ------------------------------------------------------------------------
-	# patch the cmake/tribits/modules/FindPythonInterp.cmake file
-	file="$trilinos_dir/cmake/tribits/modules/FindPythonInterp.cmake"
-	line='[HKEY_LOCAL_MACHINE\\\\SOFTWARE\\\\Python\\\\PythonCore\\\\2.8\\\\'
-	line="${line}InstallPath]"
-	if [ -e "$file" ]
-	then
-		echo "patch $file"
-		sed \
-			-e 's|NAMES \(python2.7 python2.6\)|NAMES python2.8 \1|' \
-			-e "s|^\( *\)\[HKEY_LOCAL_MACHINE.*2\.7.*|\1$line\n&|" \
-			-i $file
-	fi
-	# ------------------------------------------------------------------------
 fi
 echo_eval cd $trilinos_dir
 # -----------------------------------------------------------------------------

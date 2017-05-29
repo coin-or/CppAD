@@ -288,7 +288,6 @@ cppad_cxx_flags = @cppad_cxx_flags@
 cppad_deprecated_01 = @cppad_deprecated_01@
 cppad_description = @cppad_description@
 cppad_eigenvector = @cppad_eigenvector@
-cppad_extra_debug_01 = @cppad_extra_debug_01@
 cppad_has_adolc = @cppad_has_adolc@
 cppad_has_boost = @cppad_has_boost@
 cppad_has_colpack = @cppad_has_colpack@
