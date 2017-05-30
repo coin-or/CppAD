@@ -35,11 +35,16 @@
 #
 # $end
 # -----------------------------------------------------------------------------
-
-# Specifies build type for this directory. Possible values are
-# empty, Debug, Release, RelWithDebInfo and MinSizeRel
-SET(CMAKE_BUILD_TYPE RELEASE)
-
+#
+# use cppad_debug_which to determine build type
+IF( "${cppad_debug_which}" STREQUAL debug_all )
+	SET(CMAKE_BUILD_TYPE DEBUG)
+ELSEIF( "${cppad_debug_which}" STREQUAL debug_odd )
+	SET(CMAKE_BUILD_TYPE DEBUG)
+ELSE( "${cppad_debug_which}" STREQUAL debug_odd )
+	SET(CMAKE_BUILD_TYPE RELEASE)
+ENDIF( "${cppad_debug_which}" STREQUAL debug_all )
+#
 # Loop though the C and C++ compilers
 FOREACH( com c cpp )
 	# Copy a file to another location and modify its contents.

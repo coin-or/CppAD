@@ -122,7 +122,7 @@ EOF
 		;;
 
 		--debug_none)
-		debug_which='debug_onone'
+		debug_which='debug_none'
 		;;
 
 		*)
