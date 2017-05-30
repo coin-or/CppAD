@@ -39,6 +39,21 @@ $$
 
 $section Changes and Additions to CppAD During 2017$$
 
+$head 05-29$$
+$list number$$
+Add the capability to compile so that CppAD debug and release mode
+can be mixed; see
+$cref/CPPAD_DEBUG_AND_RELEASE
+	/preprocessor
+	/Documented Here
+	/CPPAD_DEBUG_AND_RELEASE
+/$$.
+$lnext
+Add the $cref/cppad_debug_which/cmake/cppad_debug_which/$$ flags
+that determines which files are compiled for debugging versus release
+during the CppAD testing; see $cref cmake_check$$.
+$lend
+
 $head 05-19$$
 Most all the examples have been moved to $code example$$ directory
 and grouped as sub-directories; e.g., the $cref ipopt_solve$$ examples

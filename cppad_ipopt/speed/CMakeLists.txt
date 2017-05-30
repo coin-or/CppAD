@@ -1,6 +1,5 @@
-# $Id$
 # -----------------------------------------------------------------------------
-# CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-16 Bradley M. Bell
+# CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-17 Bradley M. Bell
 #
 # CppAD is distributed under multiple licenses. This distribution is under
 # the terms of the
@@ -23,7 +22,7 @@ LINK_DIRECTORIES( ${ipopt_LIBRARY_DIRS} )
 #                 source1 source2 ... sourceN
 # )
 # Include source for cppad_ipopt library so we build it without debugging
-ADD_EXECUTABLE(cppad_ipopt_speed EXCLUDE_FROM_ALL
+SET(source_list
 	speed.cpp
 	../src/cppad_ipopt_nlp.cpp
 	../src/fun_record.hpp
@@ -33,9 +32,9 @@ ADD_EXECUTABLE(cppad_ipopt_speed EXCLUDE_FROM_ALL
 	../src/vec_fun_pattern.cpp
 	ode_speed.cpp
 )
-
-# Add extra compiler flags
-add_cppad_cxx_flags( cppad_ipopt_speed )
+set_compile_flags( cppad_ipopt_speed "debug_none" "${source_list}" )
+#
+ADD_EXECUTABLE( cppad_ipopt_speed EXCLUDE_FROM_ALL ${source_list} )
 
 # List of libraries to be linked into the specified target
 TARGET_LINK_LIBRARIES(

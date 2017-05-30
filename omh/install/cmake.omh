@@ -360,8 +360,8 @@ $code uint32_t$$,
 $code uint64_t$$.
 
 $head cppad_debug_which$$
-Many of the CppAD examples and test can optionally be tested
-in debug or release mode.
+All of the CppAD examples and test can optionally be tested
+in debug or release mode (see exception below).
 This option controls which mode is chosen for the corresponding files.
 The value $icode cppad_debug_which$$ be one of the following:
 $code debug_even$$, $code debug_odd$$, $code debug_all$$, $code debug_none$$.
@@ -372,6 +372,13 @@ If it is $code debug_all$$ ($code debug_none$$),
 all the files will be compiled in debug (release) mode.
 If $icode cppad_debug_which$$ does not appear on the command line,
 the default value $code debug_all$$ is used.
+
+$subhead Exception$$
+The test corresponding to $code make cppad_ipopt_speed$$
+always get complied in release more (to avoid the extra time
+it would take to run in debug mode).
+Note that this test corresponds a deprecated interface; see
+$cref cppad_ipopt_nlp$$.
 
 $head cppad_deprecated$$
 The default value for $icode cppad_deprecated$$ is $code NO$$

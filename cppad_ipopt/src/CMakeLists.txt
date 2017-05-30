@@ -1,6 +1,5 @@
-# $Id$
 # -----------------------------------------------------------------------------
-# CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-16 Bradley M. Bell
+# CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-17 Bradley M. Bell
 #
 # CppAD is distributed under multiple licenses. This distribution is under
 # the terms of the
@@ -15,16 +14,15 @@
 #  add_library(<name> [STATIC | SHARED | MODULE] [EXCLUDE_FROM_ALL]
 #	source1 source2 ... sourceN)
 # )
-ADD_LIBRARY(cppad_ipopt
+SET(source_list
 	cppad_ipopt_nlp.cpp
 	hes_fg_map.cpp
 	jac_g_map.cpp
 	sparse_map2vec.cpp
 	vec_fun_pattern.cpp
 )
-
-# Add extra compiler flags
-add_cppad_cxx_flags( cppad_ipopt )
+ADD_LIBRARY(cppad_ipopt ${source_list})
+set_compile_flags( cppad_ipopt "${cppad_debug_which}" "${source_list}" )
 
 # install(FILES files... DESTINATION <dir>
 #	[PERMISSIONS permissions...]

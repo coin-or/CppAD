@@ -1,6 +1,5 @@
-# $Id$
 # -----------------------------------------------------------------------------
-# CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-16 Bradley M. Bell
+# CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-17 Bradley M. Bell
 #
 # CppAD is distributed under multiple licenses. This distribution is under
 # the terms of the
@@ -21,13 +20,15 @@ LINK_DIRECTORIES( ${CMAKE_CURRENT_BINARY_DIR}/../src ${ipopt_LIBRARY_DIRS} )
 # add_executable(<name> [WIN32] [MACOSX_BUNDLE] [EXCLUDE_FROM_ALL]
 #                 source1 source2 ... sourceN
 # )
-ADD_EXECUTABLE(cppad_ipopt_test EXCLUDE_FROM_ALL test_more.cpp
+SET(source_list test_more.cpp
 	k_gt_one.cpp
 	multiple_solution.cpp
 	retape_k1_l1.cpp
 	retape_k1_l2.cpp
 )
-add_cppad_cxx_flags(cppad_ipopt_test)
+set_compile_flags( cppad_ipopt_test "${cppad_debug_which}" "${source_list}" )
+#
+ADD_EXECUTABLE( cppad_ipopt_test EXCLUDE_FROM_ALL ${source_list} )
 
 # List of libraries to be linked into the specified target
 TARGET_LINK_LIBRARIES(cppad_ipopt_test
