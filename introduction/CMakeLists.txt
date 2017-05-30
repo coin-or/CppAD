@@ -10,11 +10,7 @@
 # -----------------------------------------------------------------------------
 # Build the introduction/exp_apx directory tests
 
-# Specifies build type for this directory. Possible values are
-# empty, Debug, Release, RelWithDebInfo and MinSizeRel
-SET(CMAKE_BUILD_TYPE DEBUG)
-#
-ADD_EXECUTABLE(introduction EXCLUDE_FROM_ALL
+SET(source_list
 	introduction.cpp
 	exp_2.cpp
 	exp_2.hpp
@@ -33,8 +29,9 @@ ADD_EXECUTABLE(introduction EXCLUDE_FROM_ALL
 	exp_eps_rev1.cpp
 	exp_eps_rev2.cpp
 )
-# Compiler flags for cppad source
-add_cppad_cxx_flags( introduction )
+set_compile_flags( introduction "${cppad_debug_which}" "${source_list}" )
+#
+ADD_EXECUTABLE( introduction EXCLUDE_FROM_ALL ${source_list} )
 
 # Add this check target
 ADD_CUSTOM_TARGET(check_introduction
