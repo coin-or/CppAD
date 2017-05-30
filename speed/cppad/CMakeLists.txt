@@ -31,7 +31,11 @@ SET(source_list ../main.cpp
 	sparse_hessian.cpp
 	sparse_jacobian.cpp
 )
-set_compile_flags( speed_cppad "${cppad_debug_which}" "${source_list}" )
+# 2DO: fix problem with the test
+#	./speed_cppad sparse_hessian 123 colpack
+# when speed_cppad is compiled for debugging.
+# set_compile_flags( speed_cppad "${cppad_debug_which}" "${source_list}" )
+set_compile_flags( speed_cppad "debug_none" "${source_list}" )
 #
 ADD_EXECUTABLE( speed_cppad EXCLUDE_FROM_ALL ${source_list} )
 
