@@ -1,6 +1,5 @@
-# $Id$
 # -----------------------------------------------------------------------------
-# CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-16 Bradley M. Bell
+# CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-17 Bradley M. Bell
 #
 # CppAD is distributed under multiple licenses. This distribution is under
 # the terms of the
@@ -30,7 +29,7 @@ INCLUDE_DIRECTORIES( ${CMAKE_CURRENT_SOURCE_DIR}/../src )
 # add_executable(<name> [WIN32] [MACOSX_BUNDLE] [EXCLUDE_FROM_ALL]
 #                 source1 source2 ... sourceN
 # )
-ADD_EXECUTABLE(speed_fadbad EXCLUDE_FROM_ALL ../main.cpp
+SET(source_list ../main.cpp
 	det_lu.cpp
 	det_minor.cpp
 	mat_mul.cpp
@@ -39,9 +38,9 @@ ADD_EXECUTABLE(speed_fadbad EXCLUDE_FROM_ALL ../main.cpp
 	sparse_hessian.cpp
 	sparse_jacobian.cpp
 )
-
-# Compiler flags for cppad source
-add_cppad_cxx_flags( speed_fadbad )
+set_compile_flags( speed_fadbad "${cppad_debug_which}" "${source_list}" )
+#
+ADD_EXECUTABLE( speed_fadbad EXCLUDE_FROM_ALL ${source_list} )
 
 # fadbad is an include file only library
 TARGET_LINK_LIBRARIES(speed_fadbad speed_src )

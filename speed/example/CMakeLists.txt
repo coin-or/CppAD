@@ -1,6 +1,5 @@
-# $Id$
 # -----------------------------------------------------------------------------
-# CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-16 Bradley M. Bell
+# CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-17 Bradley M. Bell
 #
 # CppAD is distributed under multiple licenses. This distribution is under
 # the terms of the
@@ -17,7 +16,7 @@
 # )
 # We do not add ../src/speed_src library to avoid undefined externals.
 # Instead we build our own copy of ../src/microsoft_timer.cpp.
-ADD_EXECUTABLE(speed_example EXCLUDE_FROM_ALL example.cpp
+SET(source_list example.cpp
 	det_by_lu.cpp
 	det_by_minor.cpp
 	det_of_minor.cpp
@@ -30,9 +29,9 @@ ADD_EXECUTABLE(speed_example EXCLUDE_FROM_ALL example.cpp
 	time_test.cpp
 	"../src/microsoft_timer.cpp"
 )
-
-# Compiler flags for cppad source
-add_cppad_cxx_flags( speed_example )
+set_compile_flags( speed_example "${cppad_debug_which}" "${source_list}" )
+#
+ADD_EXECUTABLE( speed_example EXCLUDE_FROM_ALL ${source_list} )
 
 # Add the check_speed_example target
 ADD_CUSTOM_TARGET(check_speed_example

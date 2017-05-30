@@ -1,6 +1,5 @@
-$Id$
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-15 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-17 Bradley M. Bell
 
 CppAD is distributed under multiple licenses. This distribution is under
 the terms of the
@@ -14,13 +13,7 @@ $begin speed$$
 $spell
 	cppad
 	CppAD
-	Cygwin
-	Microsoft
-	chdir
-	Workspace
-	dsw
-	exe
-	sln
+	cmake
 $$
 
 
@@ -46,6 +39,16 @@ $href%
 	http://trilinos.sandia.gov/packages/sacado/%
 	Sacado
 %$$.
+
+$head Debug or Release$$
+Usually, one wants to compile the speed tests in release mode.
+This can be done by setting
+$cref/cppad_debug_which/cmake/cppad_debug_which/$$ to $code debug_none$$
+in the cmake command.
+Correctness tests are included for all the speed tests,
+so it is possible you will want to compile these tests for debugging; i.e.,
+set $icode cppad_debug_which$$ to $code debug_all$$.
+
 The sections below explain how you can run these tests on your computer.
 
 $childtable%

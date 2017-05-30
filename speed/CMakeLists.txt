@@ -9,12 +9,6 @@
 # Please visit http://www.coin-or.org/CppAD/ for information on other licenses.
 # -----------------------------------------------------------------------------
 
-# Specify build type for this directory and all its subdirectories
-# (subdirectories do not specify build type).
-# Possible values are DEBUG, RELEASE, RelWithDebInfo and MinSizeRel
-# CppAD developers can use DEBUG for debugging speed tests.
-SET(CMAKE_BUILD_TYPE RELEASE)
-
 # Initialize list of tests as empty
 SET(check_speed_depends "")
 

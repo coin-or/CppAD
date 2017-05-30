@@ -29,7 +29,7 @@ INCLUDE_DIRECTORIES( ${CMAKE_CURRENT_SOURCE_DIR}/../src )
 # add_executable(<name> [WIN32] [MACOSX_BUNDLE] [EXCLUDE_FROM_ALL]
 #                 source1 source2 ... sourceN
 # )
-ADD_EXECUTABLE(speed_sacado EXCLUDE_FROM_ALL ../main.cpp
+SET(source_list ../main.cpp
 	det_lu.cpp
 	det_minor.cpp
 	mat_mul.cpp
@@ -38,9 +38,9 @@ ADD_EXECUTABLE(speed_sacado EXCLUDE_FROM_ALL ../main.cpp
 	sparse_hessian.cpp
 	sparse_jacobian.cpp
 )
-
-# Compiler flags for cppad source
-add_cppad_cxx_flags( speed_sacado )
+set_compile_flags( speed_sacado "${cppad_debug_which}" "${source_list}" )
+#
+ADD_EXECUTABLE( speed_sacado EXCLUDE_FROM_ALL ${source_list} )
 
 # determine libraries necessary to link Sacado
 SET(config_file "${sacado_prefix}/include/Makefile.export.Sacado")

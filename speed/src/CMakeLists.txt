@@ -1,6 +1,5 @@
-# $Id$
 # -----------------------------------------------------------------------------
-# CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-16 Bradley M. Bell
+# CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-17 Bradley M. Bell
 #
 # CppAD is distributed under multiple licenses. This distribution is under
 # the terms of the
@@ -17,7 +16,7 @@
 # )
 # Make libspeed_src a static library because this is just for testing
 # and is not installed (do not have to worry about library search path).
-ADD_LIBRARY(speed_src STATIC EXCLUDE_FROM_ALL
+SET(source_list
 	link_det_lu.cpp
 	link_det_minor.cpp
 	link_mat_mul.cpp
@@ -27,6 +26,7 @@ ADD_LIBRARY(speed_src STATIC EXCLUDE_FROM_ALL
 	link_sparse_jacobian.cpp
 	microsoft_timer.cpp
 )
+set_compile_flags( speed_src "${cppad_debug_which}" "${source_list}" )
+#
+ADD_LIBRARY(speed_src STATIC EXCLUDE_FROM_ALL ${source_list} )
 
-# Compiler flags for cppad source
-add_cppad_cxx_flags( speed_src )
