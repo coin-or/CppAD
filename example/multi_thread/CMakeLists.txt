@@ -9,10 +9,6 @@
 # Please visit http://www.coin-or.org/CppAD/ for information on other licenses.
 # -----------------------------------------------------------------------------
 
-#
-# Specifies build type for all subdirectories
-SET(CMAKE_BUILD_TYPE DEBUG)
-
 # initialize list as empty
 SET(check_example_multi_thread_depends "")
 

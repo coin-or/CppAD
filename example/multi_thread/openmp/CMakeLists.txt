@@ -21,7 +21,7 @@ ADD_DEFINITIONS( ${OpenMP_CXX_FLAGS} )
 # add_executable(<name> [WIN32] [MACOSX_BUNDLE] [EXCLUDE_FROM_ALL]
 #                 source1 source2 ... sourceN
 # )
-ADD_EXECUTABLE(example_multi_thread_openmp EXCLUDE_FROM_ALL ../thread_test.cpp
+SET(source_list ../thread_test.cpp
 	${CMAKE_SOURCE_DIR}/speed/src/microsoft_timer.cpp
 	../multi_newton_time.cpp
 	../multi_newton.cpp
@@ -34,9 +34,9 @@ ADD_EXECUTABLE(example_multi_thread_openmp EXCLUDE_FROM_ALL ../thread_test.cpp
 	simple_ad_openmp.cpp
 	team_openmp.cpp
 )
-
-# Compiler flags for cppad source
-add_cppad_cxx_flags( example_multi_thread_openmp )
+set_compile_flags( example_multi_thread_openmp "${cppad_debug_which}" "${source_list}" )
+#
+ADD_EXECUTABLE( example_multi_thread_openmp EXCLUDE_FROM_ALL ${source_list} )
 
 # Extra flags used by linker for openmp support
 SET(CMAKE_EXE_LINKER_FLAGS ${OpenMP_CXX_FLAGS} )
