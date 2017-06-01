@@ -588,6 +588,17 @@ size_t ADFun<Base>::sparse_jac_rev(
 	// loop over colors
 	size_t k = 0;
 	for(size_t ell = 0; ell < n_color; ell++)
+	if( k  == K )
+	{	// kludge because colpack returns colors that are not used
+		// (it does not know about the subset corresponding to row, col)
+		CPPAD_ASSERT_UNKNOWN( coloring == "colpack" );
+	}
+	else if( color[ row[ order[k] ] ] != ell )
+	{	// kludge because colpack returns colors that are not used
+		// (it does not know about the subset corresponding to row, col)
+		CPPAD_ASSERT_UNKNOWN( coloring == "colpack" );
+	}
+	else
 	{	CPPAD_ASSERT_UNKNOWN( color[ row[ order[k] ] ] == ell );
 		//
 		// combine all rows with this color

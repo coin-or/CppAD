@@ -35,9 +35,32 @@ $spell
 	readme
 	autotools
 	ipopt
+	colpack
 $$
 
 $section Changes and Additions to CppAD During 2017$$
+
+$head 06-01$$
+$list number$$
+Some bugs were fixed in the use of
+$cref/colpack/colpack_prefix/$$ as the coloring algorithm for
+sparse Jacobian and Hessian calculations.
+This has improved the efficiency of Colpack colorings for computing Hessians
+(when $code colpack.symmetric$$ is used).
+$lnext
+The $code colpack.star$$ coloring method for sparse Hessians has
+been deprecated; see
+$cref/sparse_hes/sparse_hes/coloring/colpack.star Deprecated 2017-06-01/$$
+and
+$cref/sparse_hessian
+	/sparse_hessian
+	/work
+	/colpack.star Deprecated 2017-06-01
+/$$.
+Use the $code colpack.symmetric$$ method instead; see
+$cref/sparse_hes/sparse_hes/coloring/colpack.symmetric/$$ and
+$cref/sparse_hes/sparse_hes/coloring/colpack.general/$$.
+$lend
 
 $head 05-29$$
 $list number$$

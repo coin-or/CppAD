@@ -30,8 +30,7 @@ SET(source_list
 #	./speed_cppad sparse_hessian 123 colpack
 # when speed_cppad is compiled for debugging.
 #
-# set_compile_flags( speed_src "${cppad_debug_which}" "${source_list}" )
-set_compile_flags( speed_src "debug_none" "${source_list}" )
+set_compile_flags( speed_src "${cppad_debug_which}" "${source_list}" )
 #
 ADD_LIBRARY(speed_src STATIC EXCLUDE_FROM_ALL ${source_list} )
 

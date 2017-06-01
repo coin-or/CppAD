@@ -146,7 +146,7 @@ bool link_sparse_hessian(
 	std::string coloring = "cppad.symmetric";
 # if CPPAD_HAS_COLPACK
 	if( global_option["colpack"] )
-		coloring = "colpack.star";
+		coloring = "colpack.symmetric";
 # endif
 	// -----------------------------------------------------------------------
 	if( ! global_option["onetape"] ) while(repeat--)

@@ -1,6 +1,5 @@
-// $Id$
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-16 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-17 Bradley M. Bell
 
 CppAD is distributed under multiple licenses. This distribution is under
 the terms of the
@@ -86,27 +85,48 @@ CPPAD_LIB_EXPORT void cppad_colpack_general(
 	for(k = 0; k < size_t(n_seed_row); k++)
 	{	for(i = 0; i < m; i++)
 		{	if( seed_matrix[k][i] != 0.0 )
-			{	// check that no row appears twice in the coloring
+			{	// check that entries in the seed matrix are zero or one
+				CPPAD_ASSERT_UNKNOWN( seed_matrix[k][i] == 1.0 );
+				// check that no row appears twice in the coloring
 				CPPAD_ASSERT_UNKNOWN( color[i] == m );
-				color[i] = k;
+				// only need include rows with non-zero entries
+				if( adolc_pattern[i][0] != 0 )
+				{	// set color for this row
+					color[i] = k;
+				}
 			}
 		}
 	}
 # ifndef NDEBUG
-	// check that all non-zero rows appear in the coloring
+	// check non-zero versus color for each row
 	for(i = 0; i < m; i++)
-		CPPAD_ASSERT_UNKNOWN(color[i] < m || adolc_pattern[i][0] == 0);
+	{
+		// if there is a color for row i, check that it has non-zero entries
+		if(color[i] < m )
+			CPPAD_ASSERT_UNKNOWN( adolc_pattern[i][0] != 0 );
 
-	// check that no rows with the same color have overlapping entries
+		// if there is no color for row i, check that it is empty
+		if( color[i] == m )
+			CPPAD_ASSERT_UNKNOWN( adolc_pattern[i][0] == 0 );
+	}
+
+	// check that no rows with the same color have non-zero entries
+	// with the same column index
 	CppAD::vector<bool> found(n);
 	for(k = 0; k < size_t(n_seed_row); k++)
-	{	size_t j, ell;
-		for(j = 0; j < n; j++)
+	{	// k is the color index
+		// found: column already has a non-zero entries for this color
+		for(size_t j = 0; j < n; j++)
 			found[j] = false;
+		// for each row with color k
 		for(i = 0; i < m; i++) if( color[i] == k )
-		{	for(ell = 0; ell < adolc_pattern[i][0]; ell++)
-			{	j = adolc_pattern[i][1 + ell];
+		{	// for each non-zero entry in this row
+			for(size_t ell = 0; ell < adolc_pattern[i][0]; ell++)
+			{	// column index for this entry
+				size_t j = adolc_pattern[i][1 + ell];
+				// check that this is the first non-zero in this column
 				CPPAD_ASSERT_UNKNOWN( ! found[j] );
+				// found a non-zero in this column
 				found[j] = true;
 			}
 		}
@@ -167,8 +187,15 @@ CPPAD_LIB_EXPORT void cppad_colpack_symmetric(
 	for(i = 0; i < m; i++)
 	{	for(size_t k = 0; k < size_t(n_seed_col); k++)
 		{	if( seed_matrix[i][k] != 0.0 )
-			{	CPPAD_ASSERT_UNKNOWN( color[i] == m );
-				color[i] = k;
+			{	// check that entries in seed matrix are zero or one
+				CPPAD_ASSERT_UNKNOWN( seed_matrix[i][k] == 1.0 );
+				// check that now row appears twice in the coloring
+				CPPAD_ASSERT_UNKNOWN( color[i] == m );
+				// only need include rows with non-zero entries
+				if( adolc_pattern[i][0] != 0 )
+				{	// set color for this row
+					color[i] = k;
+				}
 			}
 		}
 	}
@@ -180,6 +207,7 @@ CPPAD_LIB_EXPORT void cppad_colpack_symmetric(
 	{	nz1 = size_t(adolc_pattern[i1][0]);
 		for(k1 = 1; k1 <= nz1; k1++)
 		{	j1 = adolc_pattern[i1][k1];
+			// (i1, j1) is a non-zero in the sparsity pattern
 
 			// check of a forward on color[i1] followed by a reverse
 			// can recover entry (i1, j1)

@@ -216,12 +216,23 @@ This is the same as the $code "cppad"$$ method for the
 $cref/sparse_jacobian/sparse_jacobian/work/color_method/$$ calculation.
 $codei%
 
-"colpack.star"
+"colpack.symmetric"
 %$$
 This method requires that
 $cref colpack_prefix$$ was specified on the
 $cref/cmake command/cmake/CMake Command/$$ line.
 It also takes advantage of the fact that the Hessian matrix is symmetric.
+$codei%
+
+"colpack.general"
+%$$
+This is the same as the $code "colpack"$$ method for the
+$cref/sparse_jacobian/sparse_jacobian/work/color_method/$$ calculation.
+
+$subhead colpack.star Deprecated 2017-06-01$$
+The $code colpack.star$$ method is deprecated.
+It is the same as the $code colpack.symmetric$$
+which should be used instead.
 
 $subhead p$$
 If $icode work$$ is present, and it is not the first call after
@@ -469,14 +480,30 @@ size_t ADFun<Base>::SparseHessianCompute(
 			local::color_general_cppad(sparsity, row, col, color);
 		else if( work.color_method == "cppad.symmetric" )
 			local::color_symmetric_cppad(sparsity, row, col, color);
-		else if( work.color_method == "colpack.star" )
+		else if( work.color_method == "colpack.general" )
+		{
+# if CPPAD_HAS_COLPACK
+			local::color_general_colpack(sparsity, row, col, color);
+# else
+			CPPAD_ASSERT_KNOWN(
+				false,
+				"SparseHessian: work.color_method = colpack.general "
+				"and colpack_prefix missing from cmake command line."
+			);
+# endif
+		}
+		else if(
+			work.color_method == "colpack.symmetric" ||
+			work.color_method == "colpack.star"
+		)
 		{
 # if CPPAD_HAS_COLPACK
 			local::color_symmetric_colpack(sparsity, row, col, color);
 # else
 			CPPAD_ASSERT_KNOWN(
 				false,
-				"SparseHessian: work.color_method = colpack.star "
+				"SparseHessian: work.color_method is "
+				"colpack.symmetric or colpack.star\n"
 				"and colpack_prefix missing from cmake command line."
 			);
 # endif
@@ -511,8 +538,30 @@ size_t ADFun<Base>::SparseHessianCompute(
 		hes[k] = zero;
 
 	// loop over colors
+# ifndef NDEBUG
+	const std::string& coloring = work.color_method;
+# endif
 	k = 0;
 	for(ell = 0; ell < n_color; ell++)
+	if( k == K )
+	{	// kludge because colpack returns colors that are not used
+		// (it does not know about the subset corresponding to row, col)
+		CPPAD_ASSERT_UNKNOWN(
+			coloring == "colpack.general" ||
+			coloring == "colpack.symmetic" ||
+			coloring == "colpack.star"
+		);
+	}
+	else if( color[ row[ order[k] ] ] != ell )
+	{	// kludge because colpack returns colors that are not used
+		// (it does not know about the subset corresponding to row, col)
+		CPPAD_ASSERT_UNKNOWN(
+			coloring == "colpack.general" ||
+			coloring == "colpack.symmetic" ||
+			coloring == "colpack.star"
+		);
+	}
+	else
 	{	CPPAD_ASSERT_UNKNOWN( color[ row[ order[k] ] ] == ell );
 
 		// combine all rows with this color

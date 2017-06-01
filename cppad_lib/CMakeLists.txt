@@ -1,6 +1,5 @@
-# $Id$
 # -----------------------------------------------------------------------------
-# CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-16 Bradley M. Bell
+# CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-17 Bradley M. Bell
 #
 # CppAD is distributed under multiple licenses. This distribution is under
 # the terms of the
@@ -37,9 +36,10 @@ print_variable(soversion)
 #  add_library(<name> [STATIC | SHARED | MODULE] [EXCLUDE_FROM_ALL]
 #	source1 source2 ... sourceN)
 # )
-ADD_LIBRARY( cppad_lib SHARED
-	cppad_colpack.cpp
-)
+SET(source_list cppad_colpack.cpp)
+set_compile_flags(cppad_lib "${cppad_debug_which}" "${source_list}" )
+ADD_LIBRARY( cppad_lib SHARED ${source_list} )
+#
 # set_target_properties(target1 target2 ...
 # PROPERTIES prop1 value1 prop2 value2 ...)
 SET_TARGET_PROPERTIES( cppad_lib PROPERTIES SOVERSION ${soversion} )

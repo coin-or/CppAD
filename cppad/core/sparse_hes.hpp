@@ -152,11 +152,25 @@ This is the same as the sparse Jacobian
 $cref/cppad/sparse_jac/coloring/cppad/$$ method
 which does not take advantage of symmetry.
 
-$subhead colpack.star$$
+$subhead colpack.symmetric$$
 If $cref colpack_prefix$$ was specified on the
 $cref/cmake command/cmake/CMake Command/$$ line,
-you can set $icode coloring$$ to $code colpack.star$$.
+you can set $icode coloring$$ to $code colpack.symmetric$$.
 This also takes advantage of the fact that the Hessian matrix is symmetric.
+
+$subhead colpack.general$$
+If $cref colpack_prefix$$ was specified on the
+$cref/cmake command/cmake/CMake Command/$$ line,
+you can set $icode coloring$$ to $code colpack.general$$.
+This is the same as the sparse Jacobian
+$cref/colpack/sparse_jac/coloring/colpack/$$ method
+which does not take advantage of symmetry.
+
+$subhead colpack.star Deprecated 2017-06-01$$
+The $code colpack.star$$ method is deprecated.
+It is the same as the $code colpack.symmetric$$ method
+which should be used instead.
+
 
 $head work$$
 This argument has prototype
@@ -286,7 +300,8 @@ where m is number of dependent variables in f.
 
 \param coloring
 determines which coloring algorithm is used.
-This must be cppad.symmetric, cppad.general, or colpack.star.
+This must be cppad.symmetric, cppad.general, colpack.symmetic,
+or colpack.star.
 
 \param work
 this structure must be empty, or contain the information stored
@@ -415,7 +430,7 @@ size_t ADFun<Base>::sparse_hes(
 			local::color_general_cppad(internal_pattern, col, row, color);
 		else if( coloring == "cppad.symmetric" )
 			local::color_general_cppad(internal_pattern, col, row, color);
-		else if( coloring == "colpack.star" )
+		else if( coloring == "colpack.general" )
 		{
 # if CPPAD_HAS_COLPACK
 			local::color_general_colpack(internal_pattern, col, row, color);
@@ -423,6 +438,21 @@ size_t ADFun<Base>::sparse_hes(
 			CPPAD_ASSERT_KNOWN(
 				false,
 				"sparse_hes: coloring = colpack.star "
+				"and colpack_prefix not in cmake command line."
+			);
+# endif
+		}
+		else if(
+			coloring == "colpack.symmetric" ||
+			coloring == "colpack.star"
+		)
+		{
+# if CPPAD_HAS_COLPACK
+			local::color_symmetric_colpack(internal_pattern, col, row, color);
+# else
+			CPPAD_ASSERT_KNOWN(
+				false,
+				"sparse_hes: coloring = colpack.symmetic or colpack.star "
 				"and colpack_prefix not in cmake command line."
 			);
 # endif
@@ -460,6 +490,25 @@ size_t ADFun<Base>::sparse_hes(
 	// loop over colors
 	size_t k = 0;
 	for(size_t ell = 0; ell < n_color; ell++)
+	if( k  == K )
+	{	// kludge because colpack returns colors that are not used
+		// (it does not know about the subset corresponding to row, col)
+		CPPAD_ASSERT_UNKNOWN(
+			coloring == "colpack.general" ||
+			coloring == "colpack.symmetric" ||
+			coloring == "colpack.star"
+		);
+	}
+	else if( color[ col[ order[k] ] ] != ell )
+	{	// kludge because colpack returns colors that are not used
+		// (it does not know about the subset corresponding to row, col)
+		CPPAD_ASSERT_UNKNOWN(
+			coloring == "colpack.general" ||
+			coloring == "colpack.symmetic" ||
+			coloring == "colpack.star"
+		);
+	}
+	else
 	{	CPPAD_ASSERT_UNKNOWN( color[ col[ order[k] ] ] == ell );
 		//
 		// combine all columns with this color
@@ -481,6 +530,8 @@ size_t ADFun<Base>::sparse_hes(
 			k++;
 		}
 	}
+	// check that all the required entries have been set
+	CPPAD_ASSERT_UNKNOWN( k == K );
 	return n_color;
 }
 

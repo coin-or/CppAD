@@ -16,8 +16,7 @@ $spell
 	jacobian
 $$
 
-$section Using ColPack: Example and Test$$
-$mindex colpack hessian sparse$$
+$section ColPack: Sparse Hessian Example and Test$$
 
 
 $code
@@ -118,13 +117,34 @@ bool colpack_hes(void)
 	size_t K = row.size();
 	d_vector hes(K);
 
-	// contrast and check results using both cppad and colpack
+	// default coloring method is cppad.symmetric
 	CppAD::sparse_hessian_work work;
-	for(size_t i_method = 0; i_method < 3; i_method++)
+	ok &= work.color_method == "cppad.symmetric";
+
+	// contrast and check results for both CppAD and Colpack
+	for(size_t i_method = 0; i_method < 5; i_method++)
 	{	// empty work structure
-		ok &= work.color_method == "cppad.symmetric";
-		if( i_method == 2 )
+		switch(i_method)
+		{	case 0:
+			work.color_method = "cppad.symmetric";
+			break;
+
+			case 1:
+			work.color_method = "cppad.general";
+			break;
+
+			case 2:
+			work.color_method = "colpack.symmetric";
+			break;
+
+			case 3:
+			work.color_method = "colpack.general";
+			break;
+
+			case 4:
 			work.color_method = "colpack.star";
+			break;
+		}
 
 		// compute Hessian
 		d_vector w(m);
@@ -136,7 +156,11 @@ bool colpack_hes(void)
 		{	ell = row[k] * n + col[k];
 			ok &= NearEqual(check[ell], hes[k], eps, eps);
 		}
-		if( work.color_method != "cppad.general" )
+		if(
+			work.color_method == "cppad.symmetric"
+		||	work.color_method == "colpack.symmetric"
+		||	work.color_method == "colpack.star"
+		)
 			ok &= n_sweep == 2;
 		else
 			ok &= n_sweep == 5;

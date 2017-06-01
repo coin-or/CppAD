@@ -54,9 +54,11 @@ $childtable%
 	omh/install/download.omh%
 	omh/install/cmake.omh%
 	omh/install/cmake_check.omh%
-	omh/install/pkgconfig.omh%
-	omh/install/autotools.omh
+	omh/install/pkgconfig.omh
 %$$
+
+$head Deprecated$$
+$cref autotools$$
 
 
 
