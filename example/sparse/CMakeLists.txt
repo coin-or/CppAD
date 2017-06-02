@@ -9,32 +9,32 @@
 # Please visit http://www.coin-or.org/CppAD/ for information on other licenses.
 # -----------------------------------------------------------------------------
 #
-SET(source_list
-	sparse.cpp
-	sub_sparse_hes.cpp
-	sparsity_sub.cpp
-	sparse_sub_hes.cpp
-	sparse_hes.cpp
-	sparse_jac_for.cpp
-	sparse_jac_rev.cpp
-	sparse_jacobian.cpp
-	sparse_hessian.cpp
-	rev_hes_sparsity.cpp
-	rev_jac_sparsity.cpp
-	rev_sparse_jac.cpp
-	rev_sparse_hes.cpp
-	for_hes_sparsity.cpp
-	for_jac_sparsity.cpp
-	for_sparse_jac.cpp
-	for_sparse_hes.cpp
-	dependency.cpp
-	conj_grad.cpp
-	colpack_jac.cpp
-	colpack_jacobian.cpp
+SET(source_list sparse.cpp
 	colpack_hes.cpp
 	colpack_hessian.cpp
+	colpack_jac.cpp
+	colpack_jacobian.cpp
+	conj_grad.cpp
+	dependency.cpp
+	for_hes_sparsity.cpp
+	for_jac_sparsity.cpp
+	for_sparse_hes.cpp
+	for_sparse_jac.cpp
 	rc_sparsity.cpp
+	rev_hes_sparsity.cpp
+	rev_jac_sparsity.cpp
+	rev_sparse_hes.cpp
+	rev_sparse_jac.cpp
+	sparse_hes.cpp
+	sparse_hessian.cpp
+	sparse_jac_for.cpp
+	sparse_jacobian.cpp
+	sparse_jac_rev.cpp
+	sparse_sub_hes.cpp
+	sparsity_sub.cpp
+	sub_sparse_hes.cpp
 )
+
 set_compile_flags( example_sparse "${cppad_debug_which}" "${source_list}" )
 #
 ADD_EXECUTABLE(example_sparse EXCLUDE_FROM_ALL ${source_list})

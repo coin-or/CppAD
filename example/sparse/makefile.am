@@ -19,32 +19,31 @@ AM_CXXFLAGS       = -g $(CXX_FLAGS)
 #
 AM_CPPFLAGS       = -I. -I$(top_srcdir) $(BOOST_INCLUDE) $(EIGEN_INCLUDE)
 #
-sparse_SOURCES   = \
-	sparse.cpp \
-	sub_sparse_hes.cpp \
-	sparsity_sub.cpp \
-	sparse_sub_hes.cpp \
-	sparse_hes.cpp \
-	sparse_jac_for.cpp \
-	sparse_jac_rev.cpp \
-	sparse_jacobian.cpp \
-	sparse_hessian.cpp \
-	rev_jac_sparsity.cpp \
-	rev_hes_sparsity.cpp \
-	rev_sparse_jac.cpp \
-	rev_sparse_jacobian.cpp \
-	rev_sparse_hes.cpp \
-	rev_sparse_hessian.cpp \
-	for_hes_sparsity.cpp \
-	for_jac_sparsity.cpp \
-	for_sparse_jac.cpp \
-	for_sparse_hes.cpp \
-	dependency.cpp \
-	conj_grad.cpp \
+sparse_SOURCES   = sparse.cpp \
+	colpack_hes.cpp \
+	colpack_hesssian.cpp \
 	colpack_jac.cpp \
 	colpack_jacobian.cpp \
-	colpack_hes.cpp \
-	rc_sparsity.cpp
+	conj_grad.cpp \
+	dependency.cpp \
+	for_hes_sparsity.cpp \
+	for_jac_sparsity.cpp \
+	for_sparse_hes.cpp \
+	for_sparse_jac.cpp \
+	rc_sparsity.cpp \
+	rev_hes_sparsity.cpp \
+	rev_jac_sparsity.cpp \
+	rev_sparse_hes.cpp \
+	rev_sparse_jac.cpp \
+	rev_sparse_jacobian.cpp \
+	sparse_hes.cpp \
+	sparse_hessian.cpp \
+	sparse_jac_for.cpp \
+	sparse_jacobian.cpp \
+	sparse_jac_rev.cpp \
+	sparse_sub_hes.cp \
+	sparsity_sub.cpp \
+	sub_sparse_hes.cpp
 #
 test: check
 	./sparse

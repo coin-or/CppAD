@@ -97,19 +97,18 @@ DIST_COMMON = $(srcdir)/makefile.am $(am__DIST_COMMON)
 mkinstalldirs = $(install_sh) -d
 CONFIG_CLEAN_FILES =
 CONFIG_CLEAN_VPATH_FILES =
-am_sparse_OBJECTS = sparse.$(OBJEXT) sub_sparse_hes.$(OBJEXT) \
-	sparsity_sub.$(OBJEXT) sparse_sub_hes.$(OBJEXT) \
-	sparse_hes.$(OBJEXT) sparse_jac_for.$(OBJEXT) \
-	sparse_jac_rev.$(OBJEXT) sparse_jacobian.$(OBJEXT) \
-	sparse_hessian.$(OBJEXT) rev_jac_sparsity.$(OBJEXT) \
-	rev_hes_sparsity.$(OBJEXT) rev_sparse_jac.$(OBJEXT) \
-	rev_sparse_jacobian.$(OBJEXT) rev_sparse_hes.$(OBJEXT) \
-	rev_sparse_hessian.$(OBJEXT) for_hes_sparsity.$(OBJEXT) \
-	for_jac_sparsity.$(OBJEXT) for_sparse_jac.$(OBJEXT) \
-	for_sparse_hes.$(OBJEXT) dependency.$(OBJEXT) \
-	conj_grad.$(OBJEXT) colpack_jac.$(OBJEXT) \
-	colpack_jacobian.$(OBJEXT) colpack_hes.$(OBJEXT) \
-	rc_sparsity.$(OBJEXT)
+am_sparse_OBJECTS = sparse.$(OBJEXT) colpack_hes.$(OBJEXT) \
+	colpack_hesssian.$(OBJEXT) colpack_jac.$(OBJEXT) \
+	colpack_jacobian.$(OBJEXT) conj_grad.$(OBJEXT) \
+	dependency.$(OBJEXT) for_hes_sparsity.$(OBJEXT) \
+	for_jac_sparsity.$(OBJEXT) for_sparse_hes.$(OBJEXT) \
+	for_sparse_jac.$(OBJEXT) rc_sparsity.$(OBJEXT) \
+	rev_hes_sparsity.$(OBJEXT) rev_jac_sparsity.$(OBJEXT) \
+	rev_sparse_hes.$(OBJEXT) rev_sparse_jac.$(OBJEXT) \
+	rev_sparse_jacobian.$(OBJEXT) sparse_hes.$(OBJEXT) \
+	sparse_hessian.$(OBJEXT) sparse_jac_for.$(OBJEXT) \
+	sparse_jacobian.$(OBJEXT) sparse_jac_rev.$(OBJEXT) \
+	sparsity_sub.$(OBJEXT) sub_sparse_hes.$(OBJEXT)
 sparse_OBJECTS = $(am_sparse_OBJECTS)
 sparse_LDADD = $(LDADD)
 AM_V_P = $(am__v_P_@AM_V@)
@@ -356,32 +355,31 @@ AM_CXXFLAGS = -g $(CXX_FLAGS)
 #
 AM_CPPFLAGS = -I. -I$(top_srcdir) $(BOOST_INCLUDE) $(EIGEN_INCLUDE)
 #
-sparse_SOURCES = \
-	sparse.cpp \
-	sub_sparse_hes.cpp \
-	sparsity_sub.cpp \
-	sparse_sub_hes.cpp \
-	sparse_hes.cpp \
-	sparse_jac_for.cpp \
-	sparse_jac_rev.cpp \
-	sparse_jacobian.cpp \
-	sparse_hessian.cpp \
-	rev_jac_sparsity.cpp \
-	rev_hes_sparsity.cpp \
-	rev_sparse_jac.cpp \
-	rev_sparse_jacobian.cpp \
-	rev_sparse_hes.cpp \
-	rev_sparse_hessian.cpp \
-	for_hes_sparsity.cpp \
-	for_jac_sparsity.cpp \
-	for_sparse_jac.cpp \
-	for_sparse_hes.cpp \
-	dependency.cpp \
-	conj_grad.cpp \
+sparse_SOURCES = sparse.cpp \
+	colpack_hes.cpp \
+	colpack_hesssian.cpp \
 	colpack_jac.cpp \
 	colpack_jacobian.cpp \
-	colpack_hes.cpp \
-	rc_sparsity.cpp
+	conj_grad.cpp \
+	dependency.cpp \
+	for_hes_sparsity.cpp \
+	for_jac_sparsity.cpp \
+	for_sparse_hes.cpp \
+	for_sparse_jac.cpp \
+	rc_sparsity.cpp \
+	rev_hes_sparsity.cpp \
+	rev_jac_sparsity.cpp \
+	rev_sparse_hes.cpp \
+	rev_sparse_jac.cpp \
+	rev_sparse_jacobian.cpp \
+	sparse_hes.cpp \
+	sparse_hessian.cpp \
+	sparse_jac_for.cpp \
+	sparse_jacobian.cpp \
+	sparse_jac_rev.cpp \
+	sparse_sub_hes.cp \
+	sparsity_sub.cpp \
+	sub_sparse_hes.cpp
 
 all: all-am
 
@@ -431,6 +429,7 @@ distclean-compile:
 	-rm -f *.tab.c
 
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/colpack_hes.Po@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/colpack_hesssian.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/colpack_jac.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/colpack_jacobian.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/conj_grad.Po@am__quote@
@@ -443,7 +442,6 @@ distclean-compile:
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/rev_hes_sparsity.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/rev_jac_sparsity.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/rev_sparse_hes.Po@am__quote@
-@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/rev_sparse_hessian.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/rev_sparse_jac.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/rev_sparse_jacobian.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/sparse.Po@am__quote@
@@ -452,7 +450,6 @@ distclean-compile:
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/sparse_jac_for.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/sparse_jac_rev.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/sparse_jacobian.Po@am__quote@
-@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/sparse_sub_hes.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/sparsity_sub.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/sub_sparse_hes.Po@am__quote@
 
