@@ -49,7 +49,9 @@ LDADD  = \
 	-lteuchoscore \
 	-lkokkoscore \
 	-lsacado \
-	-lteuchoscore
+	-lteuchoscore \
+	$(DL_LIB)
+#
 AM_LDFLAGS       = -L../src -L$(SACADO_DIR)/lib -L$(SACADO_DIR)/lib64
 #
 speed_sacado_SOURCES = \

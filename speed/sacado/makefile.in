@@ -103,7 +103,8 @@ am_speed_sacado_OBJECTS = main.$(OBJEXT) det_lu.$(OBJEXT) \
 	sparse_jacobian.$(OBJEXT)
 speed_sacado_OBJECTS = $(am_speed_sacado_OBJECTS)
 speed_sacado_LDADD = $(LDADD)
-speed_sacado_DEPENDENCIES =
+am__DEPENDENCIES_1 =
+speed_sacado_DEPENDENCIES = $(am__DEPENDENCIES_1)
 AM_V_P = $(am__v_P_@AM_V@)
 am__v_P_ = $(am__v_P_@AM_DEFAULT_V@)
 am__v_P_0 = false
@@ -378,8 +379,10 @@ LDADD = \
 	-lteuchoscore \
 	-lkokkoscore \
 	-lsacado \
-	-lteuchoscore
+	-lteuchoscore \
+	$(DL_LIB)
 
+#
 AM_LDFLAGS = -L../src -L$(SACADO_DIR)/lib -L$(SACADO_DIR)/lib64
 #
 speed_sacado_SOURCES = \
