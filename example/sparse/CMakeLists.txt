@@ -30,7 +30,9 @@ SET(source_list
 	dependency.cpp
 	conj_grad.cpp
 	colpack_jac.cpp
+	colpack_jacobian.cpp
 	colpack_hes.cpp
+	colpack_hessian.cpp
 	rc_sparsity.cpp
 )
 set_compile_flags( example_sparse "${cppad_debug_which}" "${source_list}" )

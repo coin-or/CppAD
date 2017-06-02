@@ -42,6 +42,12 @@ $section Changes and Additions to CppAD During 2017$$
 
 $head 06-01$$
 $list number$$
+$lnext
+There was a bug in the
+$cref sparse_hes$$ routine and it was using the general coloring algorithm when
+$cref/cppad.symmetric/sparse_hes/coloring/cppad.symmetric/$$ was specified.
+This has been fixed and improves the efficiency in this case.
+$lnext
 Some bugs were fixed in the use of
 $cref/colpack/colpack_prefix/$$ as the coloring algorithm for
 sparse Jacobian and Hessian calculations.

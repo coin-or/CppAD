@@ -32,7 +32,9 @@ sparse_SOURCES   = \
 	rev_jac_sparsity.cpp \
 	rev_hes_sparsity.cpp \
 	rev_sparse_jac.cpp \
+	rev_sparse_jacobian.cpp \
 	rev_sparse_hes.cpp \
+	rev_sparse_hessian.cpp \
 	for_hes_sparsity.cpp \
 	for_jac_sparsity.cpp \
 	for_sparse_jac.cpp \
@@ -40,6 +42,7 @@ sparse_SOURCES   = \
 	dependency.cpp \
 	conj_grad.cpp \
 	colpack_jac.cpp \
+	colpack_jacobian.cpp \
 	colpack_hes.cpp \
 	rc_sparsity.cpp
 #

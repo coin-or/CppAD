@@ -16,8 +16,7 @@ $spell
 	jacobian
 $$
 
-$section Using ColPack: Example and Test$$
-$mindex colpack jacobian sparse$$
+$section ColPack: Sparse Jacobian Example and Test$$
 
 
 $code
@@ -33,16 +32,16 @@ bool colpack_jac(void)
 {	bool ok = true;
 	using CppAD::AD;
 	using CppAD::NearEqual;
-	typedef CPPAD_TESTVECTOR(AD<double>) a_vector;
-	typedef CPPAD_TESTVECTOR(double)     d_vector;
-	typedef CppAD::vector<size_t>        i_vector;
-	size_t i, j, k, ell;
-	double eps = 10. * CppAD::numeric_limits<double>::epsilon();
+	typedef CPPAD_TESTVECTOR(AD<double>)            a_vector;
+	typedef CPPAD_TESTVECTOR(double)                d_vector;
+	typedef CppAD::vector<size_t>                   i_vector;
+	typedef CppAD::sparse_rc<i_vector>              sparsity;
+	typedef CppAD::sparse_rcv<i_vector, d_vector>   sparse_matrix;
 
 	// domain space vector
 	size_t n = 4;
 	a_vector  a_x(n);
-	for(j = 0; j < n; j++)
+	for(size_t j = 0; j < n; j++)
 		a_x[j] = AD<double> (0);
 
 	// declare independent variables and starting recording
@@ -59,7 +58,7 @@ bool colpack_jac(void)
 
 	// new value for the independent variable vector
 	d_vector x(n);
-	for(j = 0; j < n; j++)
+	for(size_t j = 0; j < n; j++)
 		x[j] = double(j);
 
 	/*
@@ -67,55 +66,64 @@ bool colpack_jac(void)
 	jac = [ 0 0 1 1  ]
 	      [ 1 1 1 x_3]
 	*/
-	d_vector check(m * n);
-	check[0] = 1.; check[1] = 1.; check[2]  = 0.; check[3]  = 0.;
-	check[4] = 0.; check[5] = 0.; check[6]  = 1.; check[7]  = 1.;
-	check[8] = 1.; check[9] = 1.; check[10] = 1.; check[11] = x[3];
-
-	// Normally one would use f.ForSparseJac or f.RevSparseJac to compute
-	// sparsity pattern, but for this example we extract it from check.
-	std::vector< std::set<size_t> >  p(m);
+	// Normally one would use CppAD to compute sparsity pattern, but for this
+	// example we set it directly
+	size_t nr  = m;
+	size_t nc  = n;
+	size_t nnz = 8;
+	sparsity pattern(nr, nc, nnz);
+	d_vector check(nnz);
+	for(size_t k = 0; k < nnz; k++)
+	{	size_t r, c;
+		if( k < 2 )
+		{	r = 0;
+			c = k;
+		}
+		else if( k < 4 )
+		{	r = 1;
+			c = k;
+		}
+		else
+		{	r = 2;
+			c = k - 4;
+		}
+		pattern.set(k, r, c);
+		if( k == nnz - 1 )
+			check[k] = x[3];
+		else
+			check[k] = 1.0;
+	}
 
 	// using row and column indices to compute non-zero in rows 1 and 2
-	i_vector row, col;
-	for(i = 0; i < m; i++)
-	{	for(j = 0; j < n; j++)
-		{	ell = i * n + j;
-			if( check[ell] != 0. )
-			{	row.push_back(i);
-				col.push_back(j);
-				p[i].insert(j);
-			}
+	sparse_matrix subset( pattern );
+
+	// check results for both CppAD and Colpack
+	for(size_t i_method = 0; i_method < 4; i_method++)
+	{	// coloring method
+		std::string coloring;
+		if( i_method % 2 == 0 )
+			coloring = "cppad";
+		else
+			coloring = "colpack";
+		//
+		CppAD::sparse_jac_work work;
+		size_t group_max = 1;
+		if( i_method / 2 == 0 )
+		{	size_t n_sweep = f.sparse_jac_for(
+				group_max, x, subset, pattern, coloring, work
+			);
+			ok &= n_sweep == 4;
 		}
+		else
+		{	size_t n_sweep = f.sparse_jac_rev(
+				x, subset, pattern, coloring, work
+			);
+			ok &= n_sweep == 2;
+		}
+		const d_vector& hes( subset.val() );
+		for(size_t k = 0; k < nnz; k++)
+			ok &= check[k] == hes[k];
 	}
-	size_t K = row.size();
-	d_vector jac(K);
-
-	// empty work structure
-	CppAD::sparse_jacobian_work work;
-	ok &= work.color_method == "cppad";
-
-	// choose to use ColPack
-	work.color_method = "colpack";
-
-	// forward mode
-	size_t n_sweep = f.SparseJacobianForward(x, p, row, col, jac, work);
-	for(k = 0; k < K; k++)
-	{	ell = row[k] * n + col[k];
-		ok &= NearEqual(check[ell], jac[k], eps, eps);
-	}
-	ok &= n_sweep == 4;
-
-	// reverse mode
-	work.clear();
-	work.color_method = "colpack";
-	n_sweep = f.SparseJacobianReverse(x, p, row, col, jac, work);
-	for(k = 0; k < K; k++)
-	{	ell = row[k] * n + col[k];
-		ok &= NearEqual(check[ell], jac[k], eps, eps);
-	}
-	ok &= n_sweep == 2;
-
 	return ok;
 }
 // END C++

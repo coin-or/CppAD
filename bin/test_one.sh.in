@@ -1,7 +1,6 @@
 #! /bin/bash -e
-# $Id$
 # -----------------------------------------------------------------------------
-# CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-16 Bradley M. Bell
+# CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-17 Bradley M. Bell
 #
 # CppAD is distributed under multiple licenses. This distribution is under
 # the terms of the
@@ -16,7 +15,7 @@ then
 cat << EOF
 usage: bin/test_one.sh dir/file [extra]
 
-dir:   example, example/atomic, example/ipopt_solve, or test_more
+dir:   directory in front of file name
 file:  name of *.cpp file, with extension, that contains the test
 extra: extra options for the g++ command
 EOF
@@ -25,15 +24,15 @@ fi
 dir=`echo $1 | sed -e 's|/[^/]*$||'`
 file=`echo $1 | sed -e 's|.*/||'`
 extra="$2"
-if [ "$dir" == 'test_more/local' ]
+if [ "$dir" == 'test_more/general/local' ]
 then
-	dir='test_more'
+	dir='test_more/general'
 	file="local/$file"
 fi
 # ---------------------------------------------------------------------------
 if [ "$dir" == '' ]
 then
-	echo "test_one.sh: cannot find dir in front of file"
+	echo "test_one.sh: cannot find dir before front of file"
 	exit 1
 fi
 if [ ! -e "$dir/$file" ]
@@ -79,8 +78,8 @@ main=`echo *$dir | sed -e 's|.*/||' -e 's|$|.cpp|'`
 #
 # create test_one.cpp
 sed < $dir/$main > test_one.cpp \
--e '/ok *\&= *Run( /d' \
--e "s/.*This line is used by test_one.sh.*/	ok \&= Run( $fun, \"$fun\");/"
+-e '/^\tRun( /d' \
+-e "s/.*This line is used by test_one.sh.*/\tRun( $fun, \"$fun\");/"
 #
 # compiler flags
 cxx_flags='@cppad_cxx_flags@'
@@ -114,23 +113,13 @@ compile_command="g++ test_one.cpp -o test_one.exe
 echo "$compile_command"
 $compile_command
 # --------------------------------------------------------------------------
-new_library_path='@PROJECT_BINARY_DIR@/cppad_lib'
-has_library_path='yes'
-if ! echo $LD_LIBRARY_PATH | grep "$new_library_path"
+library_path='@PROJECT_BINARY_DIR@/cppad_lib'
+if ! echo $LD_LIBRARY_PATH | grep "$library_path"
 then
-	has_library_path='no'
-	export LD_LIBRARY_PATH="$new_library_path:$LD_LIBRARY_PATH"
+	echo 'LD_LIBRARY_PATH=\'
+	echo "$library_path:$LD_LIBRARY_PATH"
+	export LD_LIBRARY_PATH="$library_path:$LD_LIBRARY_PATH"
 fi
 # --------------------------------------------------------------------------
-#
-echo "./test_one.exe"
-if ! ./test_one.exe
-then
-	if [ "$has_library_path" == 'no' ]
-	then
-		echo 'Must execute the following command before running in debugger'
-		echo "export LD_LIBRARY_PATH=\"$new_library_path:\$LD_LIBRARY_PATH\""
-	fi
-	exit 1
-fi
+echo_eval ./test_one.exe
 exit 0

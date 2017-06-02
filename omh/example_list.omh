@@ -130,7 +130,9 @@ $rref check_numeric_type.cpp$$
 $rref checkpoint.cpp$$
 $rref check_simple_vector.cpp$$
 $rref colpack_hes.cpp$$
+$rref colpack_hessian.cpp$$
 $rref colpack_jac.cpp$$
+$rref colpack_jacobian.cpp$$
 $rref compare_change.cpp$$
 $rref compare.cpp$$
 $rref complex_poly.cpp$$

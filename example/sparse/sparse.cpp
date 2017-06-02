@@ -44,7 +44,9 @@ extern bool for_sparse_hes(void);
 extern bool dependency(void);
 extern bool conj_grad(void);
 extern bool colpack_jac(void);
+extern bool colpack_jacobian(void);
 extern bool colpack_hes(void);
+extern bool colpack_hessian(void);
 extern bool rc_sparsity(void);
 
 // main program that runs all the tests
@@ -77,7 +79,9 @@ int main(void)
 	Run( rc_sparsity,               "rc_sparsity" );
 # if CPPAD_HAS_COLPACK
 	Run( colpack_jac,               "colpack_jac" );
+	Run( colpack_jacobian,          "colpack_jacobian" );
 	Run( colpack_hes,               "colpack_hes" );
+	Run( colpack_hessian,           "colpack_hessian" );
 # endif
 	//
 	// check for memory leak

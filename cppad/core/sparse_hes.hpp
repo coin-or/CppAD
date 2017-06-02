@@ -429,7 +429,7 @@ size_t ADFun<Base>::sparse_hes(
 		if( coloring == "cppad.general" )
 			local::color_general_cppad(internal_pattern, col, row, color);
 		else if( coloring == "cppad.symmetric" )
-			local::color_general_cppad(internal_pattern, col, row, color);
+			local::color_symmetric_cppad(internal_pattern, col, row, color);
 		else if( coloring == "colpack.general" )
 		{
 # if CPPAD_HAS_COLPACK

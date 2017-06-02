@@ -261,7 +261,7 @@ namespace {
 				ok &= subset.nnz() == 0;
 			else
 			{	ok &= check_hes(i, x, subset);
-				ok &= n_sweep == 2;
+				ok &= n_sweep == 1;
 			}
 		}
 		return ok;
@@ -317,7 +317,7 @@ namespace {
 				ok &= subset.nnz() == 0;
 			else
 			{	ok &= check_hes(i, x, subset);
-				ok &= n_sweep == 2;
+				ok &= n_sweep == 1;
 			}
 		}
 		return ok;

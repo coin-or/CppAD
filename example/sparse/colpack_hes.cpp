@@ -32,18 +32,19 @@ bool colpack_hes(void)
 {	bool ok = true;
 	using CppAD::AD;
 	using CppAD::NearEqual;
-	typedef CPPAD_TESTVECTOR(AD<double>) a_vector;
-	typedef CPPAD_TESTVECTOR(double)     d_vector;
-	typedef CppAD::vector<size_t>        i_vector;
-	size_t i, j, k, ell;
+	typedef CPPAD_TESTVECTOR(AD<double>)            a_vector;
+	typedef CPPAD_TESTVECTOR(double)                d_vector;
+	typedef CppAD::vector<size_t>                   i_vector;
+	typedef CppAD::sparse_rc<i_vector>              sparsity;
+	typedef CppAD::sparse_rcv<i_vector, d_vector>   sparse_matrix;
 	double eps = 10. * CppAD::numeric_limits<double>::epsilon();
-
+	//
 	// domain space vector
 	size_t n = 5;
 	a_vector  a_x(n);
-	for(j = 0; j < n; j++)
+	for(size_t j = 0; j < n; j++)
 		a_x[j] = AD<double> (0);
-
+	//
 	// declare independent variables and starting recording
 	CppAD::Independent(a_x);
 
@@ -52,11 +53,11 @@ bool colpack_hes(void)
 	AD<double> sum = 0.0;
 	// partial_0 partial_j = x[j]
 	// partial_j partial_j = x[0]
-	for(j = 1; j < n; j++)
+	for(size_t j = 1; j < n; j++)
 		sum += a_x[0] * a_x[j] * a_x[j] / 2.0;
 	//
 	// partial_i partial_i = 2 * x[i]
-	for(i = 0; i < n; i++)
+	for(size_t i = 0; i < n; i++)
 		sum += a_x[i] * a_x[i] * a_x[i] / 3.0;
 
 	// declare dependent variables
@@ -69,7 +70,7 @@ bool colpack_hes(void)
 
 	// new value for the independent variable vector
 	d_vector x(n);
-	for(j = 0; j < n; j++)
+	for(size_t j = 0; j < n; j++)
 		x[j] = double(j + 1);
 
 	/*
@@ -79,95 +80,93 @@ bool colpack_hes(void)
 	      [ 4  0  0  9  0 ]
 	      [ 5  0  0  0 11 ]
 	*/
-	d_vector check(n * n);
-	for(i = 0; i < n; i++)
-	{	for(j = 0; j < n; j++)
-		{	size_t index = i * n + j;
-			check[index] = 0.0;
-			if( i == 0 && 1 <= j )
-				check[index] += x[j];
-			if( 1 <= i && j == 0 )
-				check[index] += x[i];
-			if( i == j )
-			{	check[index] += 2.0 * x[i];
-				if( i != 0 )
-					check[index] += x[0];
-			}
-		}
+	// Normally one would use CppAD to compute sparsity pattern, but for this
+	// example we set it directly
+	size_t nr  = n;
+	size_t nc  = n;
+	size_t nnz = n + 2 * (n - 1);
+	sparsity pattern(nr, nc, nnz);
+	for(size_t k = 0; k < n; k++)
+	{	size_t r = k;
+		size_t c = k;
+		pattern.set(k, r, c);
 	}
-	// Normally one would use f.RevSparseHes to compute
-	// sparsity pattern, but for this example we extract it from check.
-	std::vector< std::set<size_t> >  p(n);
-	i_vector row, col;
-	for(i = 0; i < n; i++)
-	{	for(j = 0; j < n; j++)
-		{	ell = i * n + j;
-			if( check[ell] != 0. )
-			{	// insert this non-zero entry in sparsity pattern
-				p[i].insert(j);
-
-				// the Hessian is symmetric, so only upper lower triangle
-				if( j <= i )
-				{	row.push_back(i);
-					col.push_back(j);
-				}
-			}
-		}
+	for(size_t i = 1; i < n; i++)
+	{	size_t k = n + 2 * (i - 1);
+		size_t r = i;
+		size_t c = 0;
+		pattern.set(k,   r, c);
+		pattern.set(k+1, c, r);
 	}
-	size_t K = row.size();
-	d_vector hes(K);
 
-	// default coloring method is cppad.symmetric
-	CppAD::sparse_hessian_work work;
-	ok &= work.color_method == "cppad.symmetric";
+	// subset of elements to compute
+	// (only compute lower traingle)
+	nnz = n + (n - 1);
+	sparsity lower_triangle(nr, nc, nnz);
+	d_vector check(nnz);
+	for(size_t k = 0; k < n; k++)
+	{	size_t r = k;
+		size_t c = k;
+		lower_triangle.set(k, r, c);
+		check[k] = 2.0 * x[k];
+		if( k > 0 )
+			check[k] += x[0];
+	}
+	for(size_t j = 1; j < n; j++)
+	{	size_t k = n + (j - 1);
+		size_t r = 0;
+		size_t c = j;
+		lower_triangle.set(k, r, c);
+		check[k] = x[c];
+	}
+	sparse_matrix subset( lower_triangle );
 
-	// contrast and check results for both CppAD and Colpack
+	// check results for both CppAD and Colpack
 	for(size_t i_method = 0; i_method < 5; i_method++)
-	{	// empty work structure
+	{	// coloring method
+		std::string coloring;
 		switch(i_method)
 		{	case 0:
-			work.color_method = "cppad.symmetric";
+			coloring = "cppad.symmetric";
 			break;
 
 			case 1:
-			work.color_method = "cppad.general";
+			coloring = "cppad.general";
 			break;
 
 			case 2:
-			work.color_method = "colpack.symmetric";
+			coloring = "colpack.symmetric";
 			break;
 
 			case 3:
-			work.color_method = "colpack.general";
+			coloring = "colpack.general";
 			break;
 
 			case 4:
-			work.color_method = "colpack.star";
+			coloring = "colpack.star";
 			break;
 		}
-
+		//
 		// compute Hessian
+		CppAD::sparse_hes_work work;
 		d_vector w(m);
 		w[0] = 1.0;
-		size_t n_sweep = f.SparseHessian(x, w, p, row, col, hes, work);
-
+		size_t n_sweep = f.sparse_hes(
+			x, w, subset, pattern, coloring, work
+		);
+		//
 		// check result
-		for(k = 0; k < K; k++)
-		{	ell = row[k] * n + col[k];
-			ok &= NearEqual(check[ell], hes[k], eps, eps);
-		}
+		const d_vector& hes( subset.val() );
+		for(size_t k = 0; k < nnz; k++)
+			ok &= NearEqual(check[k], hes[k], eps, eps);
 		if(
-			work.color_method == "cppad.symmetric"
-		||	work.color_method == "colpack.symmetric"
-		||	work.color_method == "colpack.star"
+			coloring == "cppad.symmetric"
+		||	coloring == "colpack.symmetric"
+		||	coloring == "colpack.star"
 		)
 			ok &= n_sweep == 2;
 		else
 			ok &= n_sweep == 5;
-		//
-		// check that clear resets color_method to cppad.symmetric
-		work.clear();
-		ok &= work.color_method == "cppad.symmetric";
 	}
 
 	return ok;

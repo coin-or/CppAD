@@ -55,7 +55,9 @@ It is therefore necessary to link the object library $code cppad_lib$$
 when using ColPack.
 
 $children%example/sparse/colpack_jac.cpp
+	%example/sparse/colpack_jacobian.cpp
 	%example/sparse/colpack_hes.cpp
+	%example/sparse/colpack_hessian.cpp
 	%bin/get_colpack.sh
 %$$
 $head Example$$
