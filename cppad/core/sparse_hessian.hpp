@@ -3,7 +3,7 @@
 # define CPPAD_CORE_SPARSE_HESSIAN_HPP
 
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-16 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-17 Bradley M. Bell
 
 CppAD is distributed under multiple licenses. This distribution is under
 the terms of the
@@ -515,6 +515,17 @@ size_t ADFun<Base>::SparseHessianCompute(
 	// loop over colors
 	k = 0;
 	for(ell = 0; ell < n_color; ell++)
+	if( k == K )
+	{	// kludge because colpack returns colors that are not used
+		// (it does not know about the subset corresponding to row, col)
+		CPPAD_ASSERT_UNKNOWN( work.color_method == "colpack.star" );
+	}
+	else if( color[ row[ order[k] ] ] != ell )
+	{	// kludge because colpack returns colors that are not used
+		// (it does not know about the subset corresponding to row, col)
+		CPPAD_ASSERT_UNKNOWN( work.color_method == "colpack.star" );
+	}
+	else
 	{	CPPAD_ASSERT_UNKNOWN( color[ row[ order[k] ] ] == ell );
 
 		// combine all rows with this color
