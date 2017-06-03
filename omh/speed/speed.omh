@@ -40,7 +40,7 @@ $href%
 	Sacado
 %$$.
 
-$head Debug or Release$$
+$head debug_which$$
 Usually, one wants to compile the speed tests in release mode.
 This can be done by setting
 $cref/cppad_debug_which/cmake/cppad_debug_which/$$ to $code debug_none$$

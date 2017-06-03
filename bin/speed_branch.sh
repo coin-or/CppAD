@@ -9,7 +9,7 @@
 # A copy of this license is included in the COPYING file of this distribution.
 # Please visit http://www.coin-or.org/CppAD/ for information on other licenses.
 # -----------------------------------------------------------------------------
-if [ ! -e "bin/speed_branch.sh" ]
+if [ "$0" != "bin/speed_branch.sh" ]
 then
 	echo "bin/speed_branch.sh: must be executed from its parent directory"
 	exit 1
@@ -24,9 +24,8 @@ EOF
 	exit 1
 fi
 branch_one="$1"
-branch_two="$2"
-# ----------------------------------------------------------------------------
 shift
+branch_two="$1"
 shift
 option_list='none'
 for option in $*
@@ -60,10 +59,10 @@ do
 	else
 		echo_eval git checkout $branch
 		#
-		echo "bin/run_cmake.sh > $branch.log"
-		bin/run_cmake.sh > $branch.log
+		echo "bin/run_cmake.sh --debug_none > $branch.log"
+		bin/run_cmake.sh --debug_none > $branch.log
 		#
-		cd $dir
+		echo_eval cd $dir
 		#
 		echo "make check_speed_cppad >> $branch.log"
 		make check_speed_cppad >> ../../../$branch.log

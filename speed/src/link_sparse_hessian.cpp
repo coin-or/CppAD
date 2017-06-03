@@ -100,6 +100,11 @@ if $icode%k1% != %k2%$$ then
 $codei%
 	( %row%[%k1%] , %col%[%k1%] ) != ( %row%[%k2%] , %col%[%k2%] )
 %$$
+Furthermore, the entries are lower triangular; i.e.,
+$codei%
+	%col%[%k%] <= %row%[%k%]
+%$$.
+
 
 $head hessian$$
 The argument $icode hessian$$ has prototype
@@ -311,6 +316,10 @@ bool correct_sparse_hessian(bool is_package_double)
 	choose_row_col(n, row, col);
 	size_t K = row.size();
 	vector<double> hessian(K);
+# ifndef NDEBUG
+	for(size_t k = 0; k < K; k++)
+		CPPAD_ASSERT_UNKNOWN( col[k] <= row[k] );
+# endif
 
 	// The double package assumes hessian.size() >= 1
 	CPPAD_ASSERT_UNKNOWN( K >= 1 );
@@ -366,6 +375,10 @@ void speed_sparse_hessian(size_t size, size_t repeat)
 	}
 	size_t K = row.size();
 	vector<double> hessian(K);
+# ifndef NDEBUG
+	for(size_t k = 0; k < K; k++)
+		CPPAD_ASSERT_UNKNOWN( col[k] <= row[k] );
+# endif
 
 	// note that cppad/sparse_hessian.cpp assumes that x.size() == size
 	size_t n_sweep;

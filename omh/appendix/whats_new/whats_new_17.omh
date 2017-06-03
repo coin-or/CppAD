@@ -40,9 +40,25 @@ $$
 
 $section Changes and Additions to CppAD During 2017$$
 
+$head API Changes$$
+$list number$$
+Versions of CppAD before 20170512 were compatible with eigen-3.2.9 and earlier.
+After 20170512 they are compatible eigen-3.3.3 and later.
+See $cref/05-12/whats_new_17/05-12/$$.
+$lnext
+Speed tests no longer automatically compile in release mode; see
+$cref/debug_which/speed/debug_which/$$
+$lend
+
+$head 06-03$$
+Add the fact that the pair
+($icode row$$, $cref/col/link_sparse_hessian/col/$$)
+is lower triangular to the speed test
+$code link_sparse_hessian$$ routine.
+
+
 $head 06-01$$
 $list number$$
-$lnext
 There was a bug in the
 $cref sparse_hes$$ routine and it was using the general coloring algorithm when
 $cref/cppad.symmetric/sparse_hes/coloring/cppad.symmetric/$$ was specified.
@@ -81,6 +97,10 @@ $lnext
 Add the $cref/cppad_debug_which/cmake/cppad_debug_which/$$ flags
 that determines which files are compiled for debugging versus release
 during the CppAD testing; see $cref cmake_check$$.
+$lnext
+There was a problem linking the proper libraries for using newer versions of
+$cref/sacado/sacado_prefix/$$.
+This has been fixed.
 $lend
 
 $head 05-19$$
