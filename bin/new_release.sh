@@ -22,7 +22,7 @@ echo_eval() {
 # -----------------------------------------------------------------------------
 svn_repo="https://projects.coin-or.org/svn/CppAD"
 stable_version="20170000" # start each stable_version at yyyy0000
-release='5'               # first release for each stable version is 0
+release='6'               # first release for each stable version is 0
 # -----------------------------------------------------------------------------
 branch=`git branch | grep '^\*'`
 if [ "$branch" != '* master' ]
@@ -168,8 +168,9 @@ then
 	exit 1
 fi
 # -----------------------------------------------------------------------------
-# make sure that autotools version of makfiles is up to current version
-echo_eval "bin/autotools.sh automake"
+# Make sure that autotools version of makfiles is up to current version.
+# Starting with 2018 will need to change command to bin/autotools.sh automake.
+./build.sh automake
 list=`git status -s`
 if [ "$list" != '' ]
 then
