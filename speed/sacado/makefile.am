@@ -36,22 +36,7 @@ AM_CXXFLAGS   = -O2 -DNDEBUG -DCPPAD_SACADO_SPEED \
 # AM_CXXFLAGS   = -g $(CXX_FLAGS) $(CXX_FLAGS) -DCPPAD_SACADO_SPEED -DRAD_AUTO_AD_Const
 # END DEBUG
 #
-# include Sacado_LIBRARIES in SACADO_DIR/include/Makefile.export.Sacado
-LDADD  = \
-	-lspeed \
-	-lsacado \
-	-lteuchoskokkoscomm \
-	-lteuchoskokkoscompat \
-	-lteuchosremainder \
-	-lteuchosnumerics \
-	-lteuchoscomm \
-	-lteuchosparameterlist \
-	-lteuchoscore \
-	-lkokkoscore \
-	-lsacado \
-	-lteuchoscore \
-	$(DL_LIB)
-#
+LDADD            = -lspeed -lsacado -lteuchoscore
 AM_LDFLAGS       = -L../src -L$(SACADO_DIR)/lib -L$(SACADO_DIR)/lib64
 #
 speed_sacado_SOURCES = \

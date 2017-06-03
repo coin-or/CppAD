@@ -35,13 +35,12 @@ sparse_SOURCES   = sparse.cpp \
 	rev_jac_sparsity.cpp \
 	rev_sparse_hes.cpp \
 	rev_sparse_jac.cpp \
-	rev_sparse_jacobian.cpp \
 	sparse_hes.cpp \
 	sparse_hessian.cpp \
 	sparse_jac_for.cpp \
 	sparse_jacobian.cpp \
 	sparse_jac_rev.cpp \
-	sparse_sub_hes.cp \
+	sparse_sub_hes.cpp \
 	sparsity_sub.cpp \
 	sub_sparse_hes.cpp
 #

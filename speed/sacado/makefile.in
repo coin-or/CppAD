@@ -103,8 +103,7 @@ am_speed_sacado_OBJECTS = main.$(OBJEXT) det_lu.$(OBJEXT) \
 	sparse_jacobian.$(OBJEXT)
 speed_sacado_OBJECTS = $(am_speed_sacado_OBJECTS)
 speed_sacado_LDADD = $(LDADD)
-am__DEPENDENCIES_1 =
-speed_sacado_DEPENDENCIES = $(am__DEPENDENCIES_1)
+speed_sacado_DEPENDENCIES =
 AM_V_P = $(am__v_P_@AM_V@)
 am__v_P_ = $(am__v_P_@AM_DEFAULT_V@)
 am__v_P_0 = false
@@ -336,7 +335,7 @@ top_srcdir = @top_srcdir@
 
 # $Id$
 # -----------------------------------------------------------------------------
-# CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-17 Bradley M. Bell
+# CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-15 Bradley M. Bell
 #
 # CppAD is distributed under multiple licenses. This distribution is under
 # the terms of the
@@ -366,23 +365,7 @@ AM_CXXFLAGS = -O2 -DNDEBUG -DCPPAD_SACADO_SPEED \
 # AM_CXXFLAGS   = -g $(CXX_FLAGS) $(CXX_FLAGS) -DCPPAD_SACADO_SPEED -DRAD_AUTO_AD_Const
 # END DEBUG
 #
-# include Sacado_LIBRARIES in SACADO_DIR/include/Makefile.export.Sacado
-LDADD = \
-	-lspeed \
-	-lsacado \
-	-lteuchoskokkoscomm \
-	-lteuchoskokkoscompat \
-	-lteuchosremainder \
-	-lteuchosnumerics \
-	-lteuchoscomm \
-	-lteuchosparameterlist \
-	-lteuchoscore \
-	-lkokkoscore \
-	-lsacado \
-	-lteuchoscore \
-	$(DL_LIB)
-
-#
+LDADD = -lspeed -lsacado -lteuchoscore
 AM_LDFLAGS = -L../src -L$(SACADO_DIR)/lib -L$(SACADO_DIR)/lib64
 #
 speed_sacado_SOURCES = \

@@ -26,6 +26,7 @@ deprecated_SOURCES   = \
 	old_usead_2.cpp \
 	old_tan.cpp \
 	old_mat_mul.cpp \
+	old_mat_mul.hpp \
 	omp_alloc.cpp \
 	track_new_del.cpp \
 	zdouble.cpp
