@@ -28,8 +28,11 @@ fi
 # -----------------------------------------------------------------------------
 file_list=`git ls-files example | sed -e '/example\/deprecated\//d'`
 # -----------------------------------------------------------------------------
-# deprecated ADFun member functions
-list_of_void='
+# deprecated functions with not arugments
+list_class='
+	omp_alloc
+'
+list_no_argument='
 	Order
 	Memory
 	Size
@@ -39,23 +42,57 @@ list_of_void='
 	capacity_taylor
 	CompareChange
 '
+list_one_argument='
+	Dependent
+	omp_max_thread
+'
+list_two_argument='
+'
+list_three_argument='
+'
 for file in $file_list
 do
-	for fun in $list_of_void
+	for class in $list_class
 	do
-		if grep "\\.$fun *( *)" $file > /dev/null
+		if grep "[^a-zA-Z_]$class::" $file > /dev/null
 		then
-			echo ".$fun() is deprecated and appreas in $file"
+			echo "$class:: is deprecated and appreas in $file"
 			exit 1
 		fi
 	done
-	if grep "\\.Dependent *( *[a-zA-Z_][a-zA-Z_]* *)" $file > /dev/null
-	then
-			echo ".Dependent(y) is deprecated and appreas in $file"
+	for fun in $list_no_argument
+	do
+		if grep "[^a-zA-Z_]$fun *( *)" $file > /dev/null
+		then
+			echo "$fun() is deprecated and appreas in $file"
 			exit 1
-	fi
+		fi
+	done
+	for fun in $list_one_argument
+	do
+		if grep "[^a-zA-Z_]$fun *( *[a-zA-Z_][a-zA-Z_]* *)" $file > /dev/null
+		then
+			echo "$fun(arg1) is deprecated and appreas in $file"
+			exit 1
+		fi
+	done
+	for fun in $list_two_argument
+	do
+		if grep "[^a-zA-Z_]$fun *([^,)]*,[^,)]*)" $file > /dev/null
+		then
+			echo "$fun(arg1,arg2) is deprecated and appreas in $file"
+			exit 1
+		fi
+	done
+	for fun in $list_three_argument
+	do
+		if grep "[^a-zA-Z_]$fun *([^,)]*,[^,)]*,[^,)]*)" $file > /dev/null
+		then
+			echo "$fun(arg1,arg2,arg3) is deprecated and appreas in $file"
+			exit 1
+		fi
+	done
 done
-
 # -----------------------------------------------------------------------------
 echo 'bin/check_deprecated.sh: OK'
 exit 0

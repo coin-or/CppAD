@@ -17,7 +17,6 @@ $spell
 	av
 	num
 	inuse
-	omp_alloc
 	bool
 	makefile
 	CppAD
@@ -111,16 +110,8 @@ void print_for(void)
 	return;
 }
 int main(void)
-{	bool ok = true;
-	print_for();
+{	print_for();
 
-	size_t thread;
-	for(thread = 0; thread < 2; thread++)
-	{	ok &= CppAD::omp_alloc::inuse(thread) == 0;
-		ok &= CppAD::omp_alloc::available(thread) == 0;
-	}
-	if( ! ok )
-		return 1;
 	return 0;
 }
 /* %$$
