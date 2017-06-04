@@ -1,9 +1,8 @@
-// $Id$
 # ifndef CPPAD_UTILITY_MEMORY_LEAK_HPP
 # define CPPAD_UTILITY_MEMORY_LEAK_HPP
 
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-16 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-17 Bradley M. Bell
 
 CppAD is distributed under multiple licenses. This distribution is under
 the terms of the
@@ -35,7 +34,7 @@ $codei%# include <cppad/utility/memory_leak.hpp>
 %$$
 $icode%flag% = %memory_leak()
 %$$
-$icode%flag% = %memory_leak(%add_static%)%$$
+$icode%flag% = %memory_leak%(%add_static%)%$$
 
 $head Purpose$$
 This routine checks that the are no memory leaks

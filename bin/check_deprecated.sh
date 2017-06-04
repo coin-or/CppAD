@@ -26,11 +26,16 @@ then
 	exit 1
 fi
 # -----------------------------------------------------------------------------
-file_list=`git ls-files example | sed -e '/example\/deprecated\//d'`
+file_list=`git ls-files example speed | sed -e '/example\/deprecated\//d'`
 # -----------------------------------------------------------------------------
 # deprecated functions with not arugments
-list_class='
+list_class_or_namespace='
 	omp_alloc
+	cppad_ipopt
+'
+template_name='
+	epsilon
+	CPPAD_TESTVECTOR
 '
 list_no_argument='
 	Order
@@ -41,10 +46,12 @@ list_no_argument='
 	size_taylor
 	capacity_taylor
 	CompareChange
+	memory_leak
 '
 list_one_argument='
 	Dependent
 	omp_max_thread
+	memory_leak
 '
 list_two_argument='
 '
@@ -52,11 +59,27 @@ list_three_argument='
 '
 for file in $file_list
 do
-	for class in $list_class
+	for name in $list_class_or_namespace
 	do
-		if grep "[^a-zA-Z_]$class::" $file > /dev/null
+		if grep "[^a-zA-Z_]$name::" $file > /dev/null
 		then
-			echo "$class:: is deprecated and appreas in $file"
+			echo "$name:: is deprecated and appreas in $file"
+			exit 1
+		fi
+	done
+	for name in $list_class_or_namespace
+	do
+		if grep "using *$name[^a-zA-Z_]" $file > /dev/null
+		then
+			echo "using $name is deprecated and appreas in $file"
+			exit 1
+		fi
+	done
+	for name in $template_name
+	do
+		if grep "[^a-zA-Z_]$name *< *[a-zA-Z_][a-zA-Z_]* *>" $file > /dev/null
+		then
+			echo "$name<arg> is deprecated and appreas in $file"
 			exit 1
 		fi
 	done

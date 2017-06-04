@@ -28,7 +28,6 @@ $end
 */
 // BEGIN C++
 # include <cppad/utility/thread_alloc.hpp>
-# include <cppad/utility/memory_leak.hpp>
 # include <vector>
 # include <limits>
 
@@ -88,7 +87,7 @@ bool raw_allocate(void)
 	thread_alloc::free_available(thread);
 
 	// check that the tests have not held onto memory
-	ok &= ! CppAD::memory_leak();
+	ok &= thread_alloc::free_all();
 
 	return ok;
 }
@@ -155,7 +154,7 @@ bool type_allocate(void)
 	thread_alloc::free_available(thread);
 
 	// check that the tests have not held onto memory
-	ok &= ! CppAD::memory_leak();
+	ok &= thread_alloc::free_all();
 
 	return ok;
 }
