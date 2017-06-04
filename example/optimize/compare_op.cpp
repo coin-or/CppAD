@@ -1,6 +1,6 @@
 // $Id$
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-16 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-17 Bradley M. Bell
 
 CppAD is distributed under multiple licenses. This distribution is under
 the terms of the
@@ -120,7 +120,7 @@ bool compare_op(void)
 		x[0] = 0.75;
 		y    = f.Forward(0, x);
 		if ( options == "" )
-			ok  &= f.CompareChange() == 0;
+			ok  &= f.compare_change_number() == 0;
 		fun(options, x, check, before, after);
 		ok &= NearEqual(y[0], check[0], eps10, eps10);
 
@@ -129,7 +129,7 @@ bool compare_op(void)
 		x[0] = 2.0;
 		y    = f.Forward(0, x);
 		if ( options == "" )
-			ok  &= f.CompareChange() == 1;
+			ok  &= f.compare_change_number() == 1;
 		fun(options, x, check, before, after);
 		ok  &= std::fabs(y[0] - check[0]) > 0.5;
 	}
