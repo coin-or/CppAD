@@ -17,8 +17,7 @@ $spell
 $$
 
 $comment ! NOTE the title states that this example is used two places !$$
-$section Hessian of Lagrangian and  ADFun Default Constructor: Example and Test$$
-$mindex HesLagrangian constructor$$
+$section Hessian of Lagrangian and ADFun Default Constructor: Example and Test$$
 
 
 $code
@@ -108,37 +107,39 @@ namespace {
 	{	using CppAD::AD;
 		using CppAD::vector;
 
-		// double values corresponding to XYZ vector
+		// double values corresponding to x, y, and z vectors
 		double x0(.5), x1(1e3), x2(1), y0(2.), y1(3.), z(4.);
 
 		// domain space vector
 		size_t n = 3;
-		vector< AD<double> >  XYZ(n);
-		XYZ[0] = x0;
-		XYZ[1] = x1;
-		XYZ[2] = x2;
+		vector< AD<double> >  a_x(n);
+		a_x[0] = x0;
+		a_x[1] = x1;
+		a_x[2] = x2;
 
-		// declare X as independent variable vector and start recording
-		CppAD::Independent(XYZ);
+		// declare a_x as independent variable vector and start recording
+		CppAD::Independent(a_x);
 
-		// add the Lagragian multipliers to XYZ
-		// (note that this modifies the vector XYZ)
-		XYZ.push_back(y0);
-		XYZ.push_back(y1);
-		XYZ.push_back(z);
+		// vector including x, y, and z
+		vector< AD<double> > a_xyz(n + 2 + 1);
+		a_xyz[0] = a_x[0];
+		a_xyz[1] = a_x[1];
+		a_xyz[2] = a_x[2];
+		a_xyz[3] = y0;
+		a_xyz[4] = y1;
+		a_xyz[5] = z;
 
 		// range space vector
 		size_t m = 1;
-		vector< AD<double> >  L(m);
-		L[0] = Lagragian(XYZ);
+		vector< AD<double> >  a_L(m);
+		a_L[0] = Lagragian(a_xyz);
 
-		// create K: X -> L and stop tape recording
-		// We cannot use the ADFun sequence constructor because XYZ has
-		// changed between the call to Independent and here.
+		// create K: x -> L and stop tape recording.
+		// Use default ADFun construction for example purposes.
 		CppAD::ADFun<double> K;
-		K.Dependent(L);
+		K.Dependent(a_x, a_L);
 
-		// Operation sequence corresponding to K does depends on
+		// Operation sequence corresponding to K depends on
 		// value of y0, y1, and z. Must redo calculations above when
 		// y0, y1, or z changes.
 
@@ -165,22 +166,22 @@ namespace {
 
 		// domain space vector
 		size_t n = 3;
-		vector< AD<double> >  X(n);
-		X[0] = x0;
-		X[1] = x1;
-		X[2] = x2;
+		vector< AD<double> >  a_x(n);
+		a_x[0] = x0;
+		a_x[1] = x1;
+		a_x[2] = x2;
 
-		// declare X as independent variable vector and start recording
-		CppAD::Independent(X);
+		// declare a_x as independent variable vector and start recording
+		CppAD::Independent(a_x);
 
 		// range space vector
 		size_t m = 3;
-		vector< AD<double> >  FG(m);
-		FG = fg(X);
+		vector< AD<double> >  a_fg(m);
+		a_fg = fg(a_x);
 
-		// create K: X -> FG and stop tape recording
+		// create K: x -> fg and stop tape recording
 		CppAD::ADFun<double> K;
-		K.Dependent(FG);
+		K.Dependent(a_x, a_fg);
 
 		// Operation sequence corresponding to K does not depend on
 		// value of x0, x1, x2, y0, y1, or z.
