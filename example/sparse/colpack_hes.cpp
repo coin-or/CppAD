@@ -122,7 +122,7 @@ bool colpack_hes(void)
 	sparse_matrix subset( lower_triangle );
 
 	// check results for both CppAD and Colpack
-	for(size_t i_method = 0; i_method < 5; i_method++)
+	for(size_t i_method = 0; i_method < 4; i_method++)
 	{	// coloring method
 		std::string coloring;
 		switch(i_method)
@@ -141,10 +141,6 @@ bool colpack_hes(void)
 			case 3:
 			coloring = "colpack.general";
 			break;
-
-			case 4:
-			coloring = "colpack.star";
-			break;
 		}
 		//
 		// compute Hessian
@@ -162,7 +158,6 @@ bool colpack_hes(void)
 		if(
 			coloring == "cppad.symmetric"
 		||	coloring == "colpack.symmetric"
-		||	coloring == "colpack.star"
 		)
 			ok &= n_sweep == 2;
 		else

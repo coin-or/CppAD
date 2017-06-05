@@ -122,7 +122,7 @@ bool colpack_hessian(void)
 	ok &= work.color_method == "cppad.symmetric";
 
 	// contrast and check results for both CppAD and Colpack
-	for(size_t i_method = 0; i_method < 5; i_method++)
+	for(size_t i_method = 0; i_method < 4; i_method++)
 	{	// empty work structure
 		switch(i_method)
 		{	case 0:
@@ -140,10 +140,6 @@ bool colpack_hessian(void)
 			case 3:
 			work.color_method = "colpack.general";
 			break;
-
-			case 4:
-			work.color_method = "colpack.star";
-			break;
 		}
 
 		// compute Hessian
@@ -159,7 +155,6 @@ bool colpack_hessian(void)
 		if(
 			work.color_method == "cppad.symmetric"
 		||	work.color_method == "colpack.symmetric"
-		||	work.color_method == "colpack.star"
 		)
 			ok &= n_sweep == 2;
 		else
