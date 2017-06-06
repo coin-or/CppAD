@@ -24,7 +24,7 @@ $section Timing Test of Multi-Threaded Newton Method$$
 $mindex multi_newton_time multi_thread AD speed$$
 
 $head Syntax$$
-$icode%ok% = multi_newton_time(%time_out%, %num_threads%,
+$icode%ok% = multi_newton_time(%time_out%, %test_time%, %num_threads%,
 	%num_zero%, %num_sub%, %num_sum%, %use_ad%
 )%$$
 

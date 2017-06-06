@@ -20,7 +20,7 @@ $mindex thread$$
 
 
 $head Purpose$$
-This example demonstrates how use a team threads with CppAD.
+This example demonstrates how use a team of threads with CppAD.
 
 $head thread_team$$
 The following three implementations of the

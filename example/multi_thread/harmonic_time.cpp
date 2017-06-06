@@ -28,7 +28,9 @@ $section Timing Test of Multi-Threaded Summation of 1/i$$
 $mindex harmonic_time multi_thread speed$$
 
 $head Syntax$$
-$icode%ok% = harmonic_time(%time_out%, %num_threads%, %mega_sum%)%$$
+$icode%ok% = harmonic_time(
+	%time_out%, %test_time%, %num_threads%, %mega_sum%
+)%$$
 
 $head Purpose$$
 Runs a correctness and timing test for a multi-threaded
