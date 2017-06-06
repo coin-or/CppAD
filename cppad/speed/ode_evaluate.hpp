@@ -117,7 +117,7 @@ and contains the value of $latex y(x, 1)$$.
 
 $subhead Gradient$$
 If $icode p$$ is one, $icode fp$$ has size equal to $icode n^2$$
-and for $latex i = 0 , \ldots and n-1$$, $latex j = 0 , \ldots , n-1$$
+and for $latex i = 0 , \ldots 1$$, $latex j = 0 , \ldots , n-1$$
 $latex \[
 	\D{y[i]}{x[j]} (x, 1) = fp [ i \cdot n + j ]
 \] $$
