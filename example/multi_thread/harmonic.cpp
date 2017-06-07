@@ -44,19 +44,26 @@ $end
 namespace {
 	using CppAD::thread_alloc;
 
-	// Number of threads specified by previous call to harmonic_time
+	// Number of threads, set by previous call to harmonic_time
 	// (zero means one thread with no multi-threading setup)
 	size_t num_threads_ = 0;
+
+	// value of mega_sum, set by previous call to harmonic_time.
+	size_t mega_sum_;
 
 	// structure with information for one thread
 	typedef struct {
 		// index to start summation at (worker input)
+		// set by previous call to harmonic_setup
 		size_t start;
-		// index to end summation at   (worker input)
+		// index to end summation at (worker input)
+		// set by previous call to harmonic_setup
 		size_t stop;
-		// summation for this thread   (worker output)
+		// summation for this thread
+		// set by worker
 		double sum;
-		// false if an error occurs, true otherwise (worker output)
+		// false if an error occurs, true otherwise
+		// set by worker
 		bool   ok;
 	} work_one_t;
 
@@ -454,13 +461,9 @@ $end
 # include <cppad/utility/time_test.hpp>
 
 namespace {
-
-	// value of mega_sum in previous call to harmonic_time.
-	size_t mega_sum_;
-
 	// value of sum resulting from most recent call to test_once
 	double sum_ = 0.;
-
+	//
 	void test_once(void)
 	{	if( mega_sum_ < 1 )
 		{	std::cerr << "harmonic_time: mega_sum < 1" << std::endl;
@@ -474,7 +477,7 @@ namespace {
 		}
 		return;
 	}
-
+	//
 	void test_repeat(size_t repeat)
 	{	size_t i;
 		for(i = 0; i < repeat; i++)
@@ -501,12 +504,12 @@ bool harmonic_time(
 	time_out = CppAD::time_test(test_repeat, test_time);
 
 	// Correctness check
-	double eps   = mega_sum_ * 1e3 * std::numeric_limits<double>::epsilon();
-	size_t i     = mega_sum_ * 1000000;
+	double eps1000 = mega_sum_ * 1e3 * std::numeric_limits<double>::epsilon();
+	size_t i       = mega_sum_ * 1000000;
 	double check = 0.;
 	while(i)
 		check += 1. / double(i--);
-	ok &= std::fabs(sum_ - check) <= eps;
+	ok &= std::fabs(sum_ - check) <= eps1000;
 
 	return ok;
 }

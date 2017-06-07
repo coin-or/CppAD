@@ -50,6 +50,16 @@ Speed tests no longer automatically compile in release mode; see
 $cref/debug_which/speed/debug_which/$$
 $lend
 
+$head 06-07$$
+The multi-threading $cref harmonic.cpp$$ example has been re-organized.
+To be specific, all it source code has been moved to one file
+and the documentation for each corresponding routine has been separated.
+
+$head 06-04$$
+Most all the $cref deprecated$$ features have been removed
+from the examples with the exception of those in the
+$code example/deprecated$$ directory.
+
 $head 06-03$$
 Add the fact that the pair
 ($icode row$$, $cref/col/link_sparse_hessian/col/$$)
