@@ -1,0 +1,26 @@
+-------------------------------------------------------------------------------
+  CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-17 Bradley M. Bell
+
+  CppAD is distributed under multiple licenses. This distribution is under
+  the terms of the
+                      Eclipse Public License Version 1.0.
+
+  A copy of this license is included in the COPYING file of this distribution.
+  Please visit http://www.coin-or.org/CppAD/ for information on other licenses.
+-------------------------------------------------------------------------------
+$begin harmonic.cpp$$
+$spell
+	cpp
+$$
+
+$section Multi-Threading Harmonic Summation Example / Test$$
+
+$head Source File$$
+All of the routines below are located in the file
+$codep
+	example/multi_thread/harmonic.cpp
+$$
+
+$childtable%example/multi_thread/harmonic.cpp%$$
+
+$end

@@ -27,9 +27,7 @@ SET(source_list ../thread_test.cpp
 	../multi_newton.cpp
 	../multi_newton_work.cpp
 	../team_example.cpp
-	../harmonic_time.cpp
 	../harmonic.cpp
-	../harmonic_work.cpp
 	a11c_openmp.cpp
 	simple_ad_openmp.cpp
 	team_openmp.cpp

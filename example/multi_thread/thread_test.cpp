@@ -80,7 +80,7 @@ $children%
 	example/multi_thread/pthread/simple_ad_pthread.cpp%
 
 	example/multi_thread/team_example.cpp%
-	example/multi_thread/harmonic.cpp%
+	example/multi_thread/harmonic.omh%
 	example/multi_thread/multi_newton.cpp%
 
 	example/multi_thread/team_thread.hpp
@@ -110,7 +110,7 @@ demonstrates simple multi-threading with algorithmic differentiation
 and using a $cref/team of threads/team_thread.hpp/$$.
 
 $head harmonic$$
-The $cref harmonic_time.cpp$$ routine
+The $cref harmonic_time$$ routine
 preforms a timing test for a multi-threading
 example without algorithmic differentiation using a team of threads.
 
@@ -133,7 +133,7 @@ The value of zero corresponds to not using the multi-threading system.
 $subhead mega_sum$$
 The command line argument $icode mega_sum$$
 is an integer greater than or equal one and has the same meaning as in
-$cref/harmonic_time.cpp/harmonic_time.cpp/mega_sum/$$.
+$cref/harmonic_time/harmonic_time/mega_sum/$$.
 
 $head multi_newton$$
 The $cref multi_newton_time.cpp$$ routine
@@ -200,7 +200,7 @@ $end
 # include <ctime>
 # include "team_thread.hpp"
 # include "team_example.hpp"
-# include "harmonic_time.hpp"
+# include "harmonic.hpp"
 # include "multi_newton_time.hpp"
 
 extern bool a11c(void);

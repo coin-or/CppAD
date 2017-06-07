@@ -10,10 +10,11 @@
 # Please visit http://www.coin-or.org/CppAD/ for information on other licenses.
 # -----------------------------------------------------------------------------
 # Plan for batch edit of all files:
-# 1. Remove an svn Id commands.
-# 2. "included in the COPYING file" -> "included in the epl-v10.txt file"
-# 3. Remove all omhelp index commands.
-# 4. Do not update copyright date when do this edit
+# 1. Do not update copyright date when do this edit
+# 2. Remove an svn Id commands.
+# 3. "included in the COPYING file" -> "included in the epl-v10.txt file"
+# 4. Remove all omhelp index commands.
+# 5. Change $code $srcfile ...$$ $$ -> $srcfile ... $$
 # -----------------------------------------------------------------------------
 spell_list='
 '

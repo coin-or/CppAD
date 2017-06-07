@@ -11,6 +11,7 @@ A copy of this license is included in the COPYING file of this distribution.
 Please visit http://www.coin-or.org/CppAD/ for information on other licenses.
 -------------------------------------------------------------------------- */
 
-extern bool harmonic(double& sum, size_t num_sum, size_t num_threads);
+bool harmonic_time(
+	double& time_out, double test_time, size_t n_thread, size_t mega_sum);
 
 # endif

@@ -171,8 +171,6 @@ $rref fun_assign.cpp$$
 $rref fun_check.cpp$$
 $rref get_started.cpp$$
 $rref harmonic.cpp$$
-$rref harmonic_time.cpp$$
-$rref harmonic_work.cpp$$
 $rref hes_lagrangian.cpp$$
 $rref hes_lu_det.cpp$$
 $rref hes_minor_det.cpp$$

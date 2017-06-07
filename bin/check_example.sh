@@ -21,22 +21,35 @@ file_list=`bin/ls_files.sh | sed -n \
 	-e '/^example\/deprecated\//d' \
 	-e '/^example\//p'`
 #
-sed < omh/example_list.omh > bin/check_example.$$ \
+sed < omh/example_list.omh > check_example.$$ \
 	-n -e '/\$begin ListAllExamples\$\$/,/\$end/p'
+#
+# Make sure all example names are of the form *.cpp or *.hpp
+check=`sed -n -e '/$rref [0-9a-zA-Z_]*\.[hc]pp/d' \
+	-e '/$rref/p' check_example.$$`
+if [ "$check" != '' ]
+then
+	echo $check
+	echo 'Not all examples are for *.hpp or *.cpp files'
+	exit 1
+fi
 ok="yes"
 for file in $file_list
 do
-	name=`grep '$begin' $file | sed -e 's/.*$begin *//' -e 's/ *$$.*//'`
+	# only files in example directory with $begin *.cpp or *.hpp
+	# e.g., example/multi_thread/harmonic.omh has $begin harmonic.cpp$$ in it
+	name=`grep '$begin *[0-9a-zA-Z_]*\.[hc]pp' $file |
+		sed -e 's/.*$begin *//' -e 's/ *$$.*//'`
 	if [ "$name" != "" ]
 	then
-		if ! grep "$name" bin/check_example.$$ > /dev/null
+		if ! grep "$name" check_example.$$ > /dev/null
 		then
 			echo "$name is missing from omh/example_list.omh"
 			ok="no"
 		fi
 	fi
 done
-rm bin/check_example.$$
+rm check_example.$$
 echo "-------------------------------------------------------"
 if [ "$ok" = "yes" ]
 then
