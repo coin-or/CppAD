@@ -120,7 +120,8 @@ echo_eval speed/adolc/speed_adolc sparse_hessian  432 onetape colpack
 program_list=''
 for threading in bthread openmp pthread
 do
-	program="example/multi_thread/${threading}/multi_thread_${threading}"
+	program="example/multi_thread/${threading}"
+	program="$program/example_multi_thread_${threading}"
 	if [ ! -e $program ]
 	then
 		skip="$skip $program"
@@ -153,13 +154,14 @@ then
 fi
 #
 # print_for test
-if [ ! -e 'example/print_for/print_for' ]
+program='example/print_for/example_print_for'
+if [ ! -e "$program" ]
 then
-	skip="$skip example/print_for/print_for"
+	skip="$skip $program"
 else
-	echo_log_eval example/print_for/print_for
-	example/print_for/print_for | sed -e '/^Test passes/,$d' > junk.1.$$
-	example/print_for/print_for | sed -e '1,/^Test passes/d' > junk.2.$$
+	echo_log_eval $program
+	$program | sed -e '/^Test passes/,$d' > junk.1.$$
+	$program | sed -e '1,/^Test passes/d' > junk.2.$$
 	if diff junk.1.$$ junk.2.$$
 	then
 		rm junk.1.$$ junk.2.$$
