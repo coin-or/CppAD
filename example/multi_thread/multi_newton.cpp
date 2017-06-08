@@ -46,14 +46,14 @@ namespace {
 	// number of threads, set by multi_newton_time.
 	size_t num_threads_ = 0;
 
+	// function we are finding zeros of, set by multi_newton_time
+	void (*fun_)(double x, double& f, double& df) = 0;
+
 	// convergence criteria, set by multi_newton_setup
 	double epsilon_ = 0.;
 
 	// maximum number of iterations, set by  multi_newton_setup
 	size_t max_itr_ = 0;
-
-	// function we are finding zeros of, set by multi_newton_setup
-	void (*fun_)(double x, double& f, double& df) = 0;
 
 	// length for all sub-intervals
 	double sub_length_ = 0.;
@@ -97,7 +97,7 @@ $$
 
 $head Syntax$$
 $icode%ok% = multi_newton_setup(
-	%fun%, %num_sub%, %xlow%, %xup%, %epsilon%, %max_itr%, %num_threads%
+	%num_sub%, %xlow%, %xup%, %epsilon%, %max_itr%, %num_threads%
 )%$$
 
 $head Purpose$$
@@ -107,9 +107,6 @@ interval into separate sub-intervals, one for each thread.
 $head Thread$$
 It is assumed that this function is called by thread zero,
 and all the other threads are blocked (waiting).
-
-$head fun$$
-See $icode fun$$ in $cref/multi_newton_solve/multi_newton_solve/fun/$$.
 
 $head num_sub$$
 See $icode num_sub$$ in $cref/multi_newton_solve/multi_newton_solve/num_sub/$$.
@@ -138,8 +135,8 @@ $srcfile%example/multi_thread/multi_newton.cpp%
 $end
 */
 // BEGIN SETUP C++
+namespace {
 bool multi_newton_setup(
-	void (fun)(double x, double& f, double& df) ,
 	size_t num_sub                              ,
 	double xlow                                 ,
 	double xup                                  ,
@@ -149,11 +146,11 @@ bool multi_newton_setup(
 {
 	num_threads  = std::max(num_threads_, size_t(1));
 	bool ok      = num_threads == thread_alloc::num_threads();
+	ok          &= thread_alloc::thread_num() == 0;
 
 	// inputs that are same for all threads
 	epsilon_ = epsilon;
 	max_itr_ = max_itr;
-	fun_     = fun;
 
 	// resize the work vector to accomidate the number of threads
 	ok &= work_all_.size() == 0;
@@ -211,6 +208,7 @@ bool multi_newton_setup(
 	ok &= sum_num == num_sub;
 	return ok;
 }
+}
 // END SETUP C++
 /*
 ------------------------------------------------------------------------------
@@ -254,6 +252,7 @@ $srcfile%example/multi_thread/multi_newton.cpp%0
 $end
 */
 // BEGIN WORKER C++
+namespace {
 void multi_newton_worker(void)
 {	using CppAD::vector;
 
@@ -337,6 +336,7 @@ void multi_newton_worker(void)
 	}
 	work_all_[thread_num]->ok = ok;
 }
+}
 // END WORKER C++
 /*
 -------------------------------------------------------------------------------
@@ -370,6 +370,7 @@ $srcfile%example/multi_thread/multi_newton.cpp%0
 $end
 */
 // BEGIN TAKEDOWN C++
+namespace {
 bool multi_newton_takedown(CppAD::vector<double>& xout)
 {	// number of threads in the calculation
 	size_t num_threads  = std::max(num_threads_, size_t(1));
@@ -377,11 +378,11 @@ bool multi_newton_takedown(CppAD::vector<double>& xout)
 	// remove duplicates and points that are not solutions
 	xout.resize(0);
 	bool   ok = true;
-	size_t thread_num;
+	ok       &= thread_alloc::thread_num() == 0;
 
 	// initialize as more that sub_lenght_ / 2 from any possible solution
 	double xlast = - sub_length_;
-	for(thread_num = 0; thread_num < num_threads; thread_num++)
+	for(size_t thread_num = 0; thread_num < num_threads; thread_num++)
 	{	vector<double>& x = work_all_[thread_num]->x;
 
 		size_t i;
@@ -402,11 +403,12 @@ bool multi_newton_takedown(CppAD::vector<double>& xout)
 				}
 			}
 		}
+		// check that this thread was ok with the work it did
 		ok &= work_all_[thread_num]->ok;
 	}
 
 	// go down so free memory for other threads before memory for master
-	thread_num = num_threads;
+	size_t thread_num = num_threads;
 	while(thread_num--)
 	{
 # if USE_THREAD_ALLOC_FOR_WORK_ALL
@@ -432,6 +434,7 @@ bool multi_newton_takedown(CppAD::vector<double>& xout)
 	work_all_.clear();
 
 	return ok;
+}
 }
 // END TAKEDOWN C++
 /*
@@ -460,6 +463,10 @@ $head Purpose$$
 Multi-threaded determination of the argument values $latex x$$,
 in the interval $latex [a, b]$$ (where $latex a < b$$),
 such that $latex f(x) = 0$$.
+
+$head Thread$$
+It is assumed that this function is called by thread zero,
+and all the other threads are blocked (waiting).
 
 $head Method$$
 For $latex i = 0 , \ldots , n$$,
@@ -575,6 +582,7 @@ $end
 ---------------------------------------------------------------------------
 */
 // BEGIN SOLVE C++
+namespace {
 bool multi_newton_solve(
 	CppAD::vector<double> &xout                ,
 	void fun(double x, double& f, double& df)  ,
@@ -585,13 +593,14 @@ bool multi_newton_solve(
 	size_t max_itr                             ,
 	size_t num_threads                         )
 {
-	bool ok = true;
 	using CppAD::AD;
 	using CppAD::vector;
+	bool ok = true;
+	ok     &= thread_alloc::thread_num() == 0;
 
 	// setup the work for num_threads threads
 	ok &= multi_newton_setup(
-		fun, num_sub, xlow, xup, epsilon, max_itr, num_threads
+		num_sub, xlow, xup, epsilon, max_itr, num_threads
 	);
 
 	// now do the work for each thread
@@ -603,6 +612,7 @@ bool multi_newton_solve(
 	ok &= multi_newton_takedown(xout);
 
 	return ok;
+}
 }
 // END SOLVE C++
 /*
@@ -632,6 +642,10 @@ CppAD, or hand coded derivatives,
 can be used to calculate the derivatives used by Newton's method.
 The calculation can be done in parallel on the different sub-intervals.
 In addition, the calculation can be done without multi-threading.
+
+$head Thread$$
+It is assumed that this function is called by thread zero,
+and all the other threads are blocked (waiting).
 
 $head ok$$
 This return value has prototype
@@ -810,7 +824,7 @@ namespace { // empty namespace
 			xup * 100. * CppAD::numeric_limits<double>::epsilon();
 		size_t max_itr = 20;
 
-		// note that fun_ is set to fun_ad or fun_no by multi_newton_setup
+		// note that fun_ is set to fun_ad or fun_no by multi_newton_time
 		bool ok = multi_newton_solve(
 			xout_       ,
 			fun_        ,
@@ -837,6 +851,8 @@ namespace { // empty namespace
 	}
 } // end empty namespace
 
+
+// This is the only routine that is accessible outside of this file
 bool multi_newton_time(
 	double& time_out      ,
 	double  test_time     ,
@@ -846,17 +862,19 @@ bool multi_newton_time(
 	size_t  num_sum       ,
 	bool    use_ad
 )
-{	bool ok = true;
-	using CppAD::thread_alloc;
+{
+	bool ok = true;
+	ok     &= thread_alloc::thread_num() == 0;
 
 	// Set local namespace environment variables
 	num_threads_  = num_threads;
-	num_zero_     = num_zero;
-	num_sub_      = num_sub;
-	num_sum_      = num_sum;
 	if( use_ad )
 		fun_ = fun_ad;
 	else	fun_ = fun_no;
+	//
+	num_zero_     = num_zero;
+	num_sub_      = num_sub;
+	num_sum_      = num_sum;
 
 	// expect number of threads to already be set up
 	if( num_threads > 0 )

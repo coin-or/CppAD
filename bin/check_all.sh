@@ -140,13 +140,13 @@ then
 	next_program
 	echo_log_eval ./$program harmonic 1 4 1
 	#
-	# test_time=2,max_thread=4,num_zero=20,num_sub=30,num_sum=500,use_ad=true
+	# test_time=2,max_thread=4,num_zero=20,num_sub=30,num_sum=50,use_ad=true
 	next_program
-	echo_log_eval ./$program multi_newton 2 4 20 30 500 true
+	echo_log_eval ./$program multi_newton 2 4 20 30 50 true
 	#
-	# case that failed in the past
+	# case that failed in the past (num_sum was 700)
 	next_program
-	echo_log_eval ./$program multi_newton 1 1 100 700 1 true
+	echo_log_eval ./$program multi_newton 1 1 100 70 1 true
 	#
 	# case that failed in the past
 	next_program
