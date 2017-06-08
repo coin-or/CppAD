@@ -117,12 +117,14 @@ $srcfile%example/multi_thread/harmonic.cpp%0
 $end
 */
 // BEGIN SETUP C++
+namespace {
 bool harmonic_setup(size_t num_sum)
 {	// sum = 1/num_sum + 1/(num_sum-1) + ... + 1
 	size_t num_threads  = std::max(num_threads_, size_t(1));
 	bool ok             = num_threads == thread_alloc::num_threads();
+	ok                 &= thread_alloc::thread_num() == 0;
 	ok                 &= num_sum >= num_threads;
-
+	//
 	size_t thread_num;
 	for(thread_num = 0; thread_num < num_threads; thread_num++)
 	{	// allocate separate memory for this thread to avoid false sharing
@@ -143,6 +145,7 @@ bool harmonic_setup(size_t num_sum)
 	}
 	work_all_[num_threads-1]->stop = num_sum + 1;
 	return ok;
+}
 }
 // END SETUP C++
 /*
@@ -191,6 +194,7 @@ $srcfile%example/multi_thread/harmonic.cpp%0
 $end
 */
 // BEGIN WORKER C++
+namespace {
 void harmonic_worker(void)
 {	// sum =  1/(stop-1) + 1/(stop-2) + ... + 1/start
 	size_t thread_num  = thread_alloc::thread_num();
@@ -209,6 +213,7 @@ void harmonic_worker(void)
 
 	work_all_[thread_num]->sum = sum;
 	work_all_[thread_num]->ok  = ok;
+}
 }
 // END WORKER C++
 /*
@@ -253,9 +258,12 @@ $srcfile%example/multi_thread/harmonic.cpp%0
 $end
 */
 // BEGIN TAKEDOWN C++
+namespace {
 bool harmonic_takedown(double& sum)
 {	// sum = 1/num_sum + 1/(num_sum-1) + ... + 1
 	bool ok            = true;
+	ok                &= thread_alloc::thread_num() == 0;
+	//
 	size_t num_threads = std::max(num_threads_, size_t(1));
 	sum                = 0.;
 	//
@@ -280,6 +288,7 @@ bool harmonic_takedown(double& sum)
 		thread_alloc::free_available(thread_num);
 	}
 	return ok;
+}
 }
 // END TAKEDOWN C++
 /*
@@ -337,11 +346,11 @@ $srcfile%example/multi_thread/harmonic.cpp%0
 $end
 */
 // BEGIN SUM C++
-// general purpose multi-threading interface
-
+namespace {
 bool harmonic_sum(double& sum, size_t num_sum)
 {	// sum = 1/num_sum + 1/(num_sum-1) + ... + 1
 	bool ok = true;
+	ok     &= thread_alloc::thread_num() == 0;
 
 	// setup the work for multi-threading
 	ok &= harmonic_setup(num_sum);
@@ -355,6 +364,7 @@ bool harmonic_sum(double& sum, size_t num_sum)
 	ok &= harmonic_takedown(sum);
 
 	return ok;
+}
 }
 // END SUM C++
 /*
@@ -486,9 +496,11 @@ namespace {
 	}
 }
 
+// This is the only routine that is accessible outside of this file
 bool harmonic_time(
 	double& time_out, double test_time, size_t num_threads, size_t mega_sum)
 {	bool ok  = true;
+	ok      &= thread_alloc::thread_num() == 0;
 
 	// arguments passed to harmonic_time
 	num_threads_ = num_threads;
