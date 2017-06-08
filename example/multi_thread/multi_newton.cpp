@@ -711,8 +711,8 @@ $codei%
 	size_t %num_sub%
 %$$
 It specifies the number of sub-intervals to divide the total interval into.
-It must be greater than zero and
-should probably be greater than two times $icode num_zero$$.
+It must be greater than $icode num_zero$$
+(so that the correctness test can check we have found all the zeros).
 
 $head num_sum$$
 This argument has prototype
@@ -865,6 +865,7 @@ bool multi_newton_time(
 {
 	bool ok = true;
 	ok     &= thread_alloc::thread_num() == 0;
+	ok     &= num_sub > num_zero;
 
 	// Set local namespace environment variables
 	num_threads_  = num_threads;
@@ -890,7 +891,7 @@ bool multi_newton_time(
 	double eps     = xup * 100. * CppAD::numeric_limits<double>::epsilon();
 	ok        &= (xout_.size() == num_zero);
 	size_t i   = 0;
-	for(i = 0; i < num_zero; i++)
+	for(i = 0; i < xout_.size(); i++)
 		ok &= std::fabs( xout_[i] - pi * i) <= 2 * eps;
 
 	// xout_ is a static variable, so clear it to free its memory

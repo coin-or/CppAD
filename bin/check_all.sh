@@ -144,9 +144,9 @@ then
 	next_program
 	echo_log_eval ./$program multi_newton 2 4 20 30 50 true
 	#
-	# case that failed in the past (num_sum was 700)
+	# case that failed in the past
 	next_program
-	echo_log_eval ./$program multi_newton 1 1 100 70 1 true
+	echo_log_eval ./$program multi_newton 1 1 100 700 1 true
 	#
 	# case that failed in the past
 	next_program
