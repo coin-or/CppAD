@@ -180,7 +180,7 @@ Create another speed testing routine $cref time_test$$ which is
 like $cref speed_test$$ but it returns the time instead of rate
 and as a $code double$$ instead of a $code size_t$$.
 The use it for the timing tests in
-$code sum_i_inv_time.cpp$$ and $cref multi_newton_time.cpp$$.
+$code sum_i_inv_time.cpp$$ and $cref multi_newton_time$$.
 $lnext
 Add $icode test_time$$ as a command line argument
 to the multi-threading $code sum_i_inv$$
@@ -212,7 +212,7 @@ $head 10-30$$
 $list number$$
 Reorganize and improve the $cref multi_thread$$ section and its subsections.
 $lnext
-There was a bug in $cref multi_newton_work.cpp$$ that only showed up when
+There was a bug in $cref multi_newton.cpp$$ that only showed up when
 the number of threads was greater than or equal 4.
 This has been fixed.
 In addition,

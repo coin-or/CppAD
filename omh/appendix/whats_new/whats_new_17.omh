@@ -51,9 +51,12 @@ $cref/debug_which/speed/debug_which/$$
 $lend
 
 $head 06-07$$
-The multi-threading $cref harmonic.cpp$$ example has been re-organized.
-To be specific, all it source code has been moved to one file
-and the documentation for each corresponding routine has been separated.
+The multi-threading examples
+$cref harmonic.cpp$$ and $cref multi_newton.cpp$$ were re-organized.
+To be specific, the source code for each example was moved to one file.
+In addition, for each example,
+the documentation for each of the routines has been separated
+and placed next to its source code.
 
 $head 06-04$$
 Most all the $cref deprecated$$ features have been removed

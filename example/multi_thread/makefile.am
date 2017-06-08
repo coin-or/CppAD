@@ -61,13 +61,9 @@ SHARED_SRC = \
 	thread_test.cpp \
 	team_thread.hpp  \
 \
-	multi_newton_time.cpp   multi_newton_time.hpp \
 	multi_newton.cpp        multi_newton.hpp \
-	multi_newton_work.cpp   multi_newton_work.hpp \
 	team_example.cpp        team_example.hpp \
-	harmonic_time.cpp      harmonic_time.hpp \
-	harmonic.cpp           harmonic.hpp \
-	harmonic_work.cpp      harmonic_work.hpp
+	harmonic.cpp            harmonic.hpp
 #
 bthread_test_SOURCES = \
 	$(SHARED_SRC) \

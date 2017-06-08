@@ -11,15 +11,14 @@ A copy of this license is included in the COPYING file of this distribution.
 Please visit http://www.coin-or.org/CppAD/ for information on other licenses.
 -------------------------------------------------------------------------- */
 
-extern bool multi_newton(
-	CppAD::vector<double> &xout                ,
-	void fun(double x, double& f, double& df)  ,
-	size_t num_sub                             ,
-	double xlow                                ,
-	double xup                                 ,
-	double epsilon                             ,
-	size_t max_itr                             ,
-	size_t num_threads
+bool multi_newton_time(
+	double& time_out      ,
+	double  test_time     ,
+	size_t  num_thread    ,
+	size_t  num_zero      ,
+	size_t  num_sub       ,
+	size_t  num_sum       ,
+	bool    use_ad
 );
 
 # endif

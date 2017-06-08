@@ -19,11 +19,9 @@ INCLUDE_DIRECTORIES( ${CMAKE_CURRENT_SOURCE_DIR}/.. )
 # )
 SET(source_list ../thread_test.cpp
 	${CMAKE_SOURCE_DIR}/speed/src/microsoft_timer.cpp
-	../multi_newton_time.cpp
-	../multi_newton.cpp
-	../multi_newton_work.cpp
 	../team_example.cpp
 	../harmonic.cpp
+	../multi_newton.cpp
 	a11c_bthread.cpp
 	simple_ad_bthread.cpp
 	team_bthread.cpp

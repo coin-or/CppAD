@@ -81,7 +81,7 @@ $children%
 
 	example/multi_thread/team_example.cpp%
 	example/multi_thread/harmonic.omh%
-	example/multi_thread/multi_newton.cpp%
+	example/multi_thread/multi_newton.omh%
 
 	example/multi_thread/team_thread.hpp
 %$$
@@ -136,7 +136,7 @@ is an integer greater than or equal one and has the same meaning as in
 $cref/harmonic_time/harmonic_time/mega_sum/$$.
 
 $head multi_newton$$
-The $cref multi_newton_time.cpp$$ routine
+The $cref multi_newton_time$$ routine
 preforms a timing test for a multi-threading
 example with algorithmic differentiation using a team of threads.
 
@@ -159,22 +159,22 @@ The value of zero corresponds to not using the multi-threading system.
 $subhead num_zero$$
 The command line argument $icode num_zero$$
 is an integer greater than or equal two and has the same meaning as in
-$cref/multi_newton_time.cpp/multi_newton_time.cpp/num_zero/$$.
+$cref/multi_newton_time/multi_newton_time/num_zero/$$.
 
 $subhead num_sub$$
 The command line argument $icode num_sub$$
 is an integer greater than or equal one and has the same meaning as in
-$cref/multi_newton_time.cpp/multi_newton_time.cpp/num_sub/$$.
+$cref/multi_newton_time/multi_newton_time/num_sub/$$.
 
 $subhead num_sum$$
 The command line argument $icode num_sum$$
 is an integer greater than or equal one and has the same meaning as in
-$cref/multi_newton_time.cpp/multi_newton_time.cpp/num_sum/$$.
+$cref/multi_newton_time/multi_newton_time/num_sum/$$.
 
 $subhead use_ad$$
 The command line argument $icode use_ad$$ is either
 $code true$$ or $code false$$ and has the same meaning as in
-$cref/multi_newton_time.cpp/multi_newton_time.cpp/use_ad/$$.
+$cref/multi_newton_time/multi_newton_time/use_ad/$$.
 
 $head Team Implementations$$
 The following routines are used to implement the specific threading
@@ -201,7 +201,7 @@ $end
 # include "team_thread.hpp"
 # include "team_example.hpp"
 # include "harmonic.hpp"
-# include "multi_newton_time.hpp"
+# include "multi_newton.hpp"
 
 extern bool a11c(void);
 extern bool simple_ad(void);

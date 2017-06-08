@@ -998,15 +998,14 @@ A duplicated code block beginning with
 $codep
 if( fabs( fcur ) <= epsilon_ )
 $$
-was removed from the routine $code multi_newton_worker$$, in the file
-$cref multi_newton_work.cpp$$.
+was removed from the routine $code multi_newton_worker$$.
 
 $lnext
 The distance between solutions that are joined to one solution
 has been corrected from $latex (b - a) / (2 n )$$ to
 $latex (b - a) / n $$; see
-$cref/xout/multi_newton.cpp/xout/$$.
-The correction was in the file $cref multi_newton_work.cpp$$ where
+$cref/xout/multi_newton_solve/xout/$$.
+The correction was in the file $cref multi_newton.cpp$$ where
 $code sub_length_ / 2$$ was change to $code sub_length_$$.
 
 $lend
@@ -1025,7 +1024,7 @@ improved from  0.0302 seconds to 0.0135 seconds.
 
 $lnext
 There was a problem with the correctness test section of the
-$cref multi_newton_time.cpp$$ test.
+$cref multi_newton_time$$ test.
 The convergence criteria, and correctness criteria,
 needed to be scaled by the largest argument values.
 This was a problem with over a hundred zeros were included in the test
@@ -1033,7 +1032,7 @@ This was a problem with over a hundred zeros were included in the test
 
 $lnext
 There was a problem with the way that
-$cref/multi_newton_combine/multi_newton_work.cpp/multi_newton_combine/$$
+$cref multi_newton_takedown$$
 joined two solutions into one.
 It is possible that one of the solutions that needs to be joined is on
 the  boundary and very close to a solution in the next (or previous interval)
