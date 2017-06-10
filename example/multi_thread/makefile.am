@@ -61,6 +61,7 @@ SHARED_SRC = \
 	thread_test.cpp \
 	team_thread.hpp  \
 \
+	multi_atomic.cpp        multi_atomic.hpp \
 	multi_newton.cpp        multi_newton.hpp \
 	team_example.cpp        team_example.hpp \
 	harmonic.cpp            harmonic.hpp

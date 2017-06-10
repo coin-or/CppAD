@@ -203,6 +203,7 @@ $rref mul_level_adolc.cpp$$
 $rref mul_level_adolc_ode.cpp$$
 $rref mul_level.cpp$$
 $rref mul_level_ode.cpp$$
+$rref multi_atomic.cpp$$
 $rref multi_newton.cpp$$
 $rref nan.cpp$$
 $rref near_equal.cpp$$

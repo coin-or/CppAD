@@ -21,6 +21,7 @@ SET(source_list ../thread_test.cpp
 	${CMAKE_SOURCE_DIR}/speed/src/microsoft_timer.cpp
 	../team_example.cpp
 	../harmonic.cpp
+	../multi_atomic.cpp
 	../multi_newton.cpp
 	a11c_pthread.cpp
 	simple_ad_pthread.cpp

@@ -77,6 +77,7 @@ $children%
 
 	example/multi_thread/team_example.cpp%
 	example/multi_thread/harmonic.omh%
+	example/multi_thread/multi_atomic.omh%
 	example/multi_thread/multi_newton.omh%
 
 	example/multi_thread/team_thread.hpp
@@ -203,6 +204,7 @@ $end
 # include "team_thread.hpp"
 # include "team_example.hpp"
 # include "harmonic.hpp"
+# include "multi_atomic.hpp"
 # include "multi_newton.hpp"
 
 extern bool a11c(void);
@@ -244,7 +246,8 @@ int main(int argc, char *argv[])
 	"./<thread>_test a11c\n"
 	"./<thread>_test simple_ad\n"
 	"./<thread>_test team_example\n"
-	"./<thread>_test harmonic    test_time max_threads mega_sum\n"
+	"./<thread>_test harmonic     test_time max_threads mega_sum\n"
+	"./<thread>_test multi_atomic test_time max_threads num_itr\n"
 	"./<thread>_test multi_newton test_time max_threads \\\n"
 	"	num_zero num_sub num_sum use_ad\\\n"
 	"where <thread> is bthread, openmp, or pthread";
@@ -283,10 +286,11 @@ int main(int argc, char *argv[])
 	bool run_simple_ad    = std::strcmp(test_name, "simple_ad")    == 0;
 	bool run_team_example = std::strcmp(test_name, "team_example") == 0;
 	bool run_harmonic     = std::strcmp(test_name, "harmonic")     == 0;
+	bool run_multi_atomic = std::strcmp(test_name, "multi_atomic") == 0;
 	bool run_multi_newton = std::strcmp(test_name, "multi_newton") == 0;
 	if( run_a11c || run_simple_ad || run_team_example )
 		ok = (argc == 2);
-	else if( run_harmonic )
+	else if( run_harmonic || run_multi_atomic )
 		ok = (argc == 5);
 	else if( run_multi_newton )
 		ok = (argc == 8);
@@ -325,10 +329,17 @@ int main(int argc, char *argv[])
 	);
 
 	size_t mega_sum = 0; // assignment to avoid compiler warning
+	size_t num_itr  = 0;
 	if( run_harmonic )
 	{	// mega_sum
 		mega_sum = arg2size_t( *++argv, 1,
 			"run: mega_sum is less than one"
+		);
+	}
+	else if( run_multi_atomic )
+	{	// num_itr
+		num_itr = arg2size_t( *++argv, 1,
+			"run: num_itr is less than one"
 		);
 	}
 	else
@@ -370,6 +381,8 @@ int main(int argc, char *argv[])
 		// run the requested test
 		if( run_harmonic ) ok &=
 			harmonic_time(time_out, test_time, num_threads, mega_sum);
+		else if( run_multi_atomic ) ok &=
+			multi_atomic_time(time_out, test_time, num_threads, num_itr);
 		else
 		{	ok &= run_multi_newton;
 			ok &= multi_newton_time(

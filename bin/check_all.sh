@@ -140,17 +140,14 @@ then
 	next_program
 	echo_log_eval ./$program harmonic 1 4 1
 	#
+	# test_time=1,max_thread=4,num_itr=10
+	next_program
+	echo_log_eval ./$program multi_atomic 1 4 10
+	#
 	# test_time=2,max_thread=4,num_zero=20,num_sub=30,num_sum=50,use_ad=true
 	next_program
 	echo_log_eval ./$program multi_newton 2 4 20 30 50 true
 	#
-	# case that failed in the past
-	next_program
-	echo_log_eval ./$program multi_newton 1 1 100 700 1 true
-	#
-	# case that failed in the past
-	next_program
-	echo_log_eval ./$program multi_newton 1 2 3 12 1 true
 fi
 #
 # print_for test

@@ -391,7 +391,6 @@ $latex \[
 	1 + 1/2 + 1/3 + ... + 1/n
 \] $$
 
-
 $head Thread$$
 It is assumed that this function is called by thread zero in sequential
 mode; i.e., not $cref/in_parallel/ta_in_parallel/$$.
@@ -500,7 +499,6 @@ bool harmonic_time(
 	// arguments passed to harmonic_sum
 	num_threads_ = num_threads;
 	mega_sum_    = mega_sum;
-
 
 	// create team of threads
 	ok &= thread_alloc::in_parallel() == false;
