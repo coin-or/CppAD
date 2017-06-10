@@ -89,7 +89,7 @@ $end
 # include "team_thread.hpp"
 //
 namespace {
-using CppAD::thread_alloc; // fast multi-threadeding memory allocator
+using CppAD::thread_alloc; // fast multi-threading memory allocator
 using CppAD::vector;       // uses thread_alloc
 
 class atomic_user : public CppAD::atomic_base<double> {
@@ -185,10 +185,10 @@ namespace {
 		CppAD::ADFun<double>* fun;
 		//
 		// value we are computing square root of, set by multi_atomic_setup
-		double y_squared;
+		vector<double>* y_squared;
 		//
 		// square root, set by worker
-		double square_root;
+		vector<double>* square_root;
 		//
 		// false if an error occurs, true otherwise, set by worker
 		bool ok;
@@ -226,7 +226,7 @@ This argument has prototype
 $codei%
 	const vector<double>& %y_squared%
 %$$
-and its size is equal to the number of threads.
+and its size is equal to the number of equations to solve.
 It is the values that we are computing the square root of.
 
 $head ok$$
@@ -251,7 +251,6 @@ bool multi_atomic_setup(const vector<double>& y_squared)
 	size_t num_threads = std::max(num_threads_, size_t(1));
 	bool   ok          = num_threads == thread_alloc::num_threads();
 	ok                &= thread_alloc::thread_num() == 0;
-	ok                &= y_squared.size() == num_threads;
 	//
 	// declare independent variable variable vector
 	vector< AD<double> > ax(1);
@@ -269,6 +268,10 @@ bool multi_atomic_setup(const vector<double>& y_squared)
 	// f(u) = sqrt(u)
 	CppAD::ADFun<double> fun(ax, ay);
 	//
+	// number of square roots for each thread
+	size_t per_thread = (y_squared.size() + num_threads - 1) / num_threads;
+	size_t y_index    = 0;
+	//
 	for(size_t thread_num = 0; thread_num < num_threads; thread_num++)
 	{	// allocate separate memory for each thread to avoid false sharing
 		size_t min_bytes(sizeof(work_one_t)), cap_bytes;
@@ -278,16 +281,24 @@ bool multi_atomic_setup(const vector<double>& y_squared)
 		// Run constructor on work_all_[thread_num]->fun
 		work_all_[thread_num]->fun = new CppAD::ADFun<double>;
 		//
+		// Run constructor on work_all_[thread_num] vectors
+		work_all_[thread_num]->y_squared = new vector<double>;
+		work_all_[thread_num]->square_root = new vector<double>;
+		//
 		// Each worker gets a separate copy of fun. This is necessary because
 		// the Taylor coefficients will be set by each thread.
 		*(work_all_[thread_num]->fun) = fun;
 		//
-		// value we are computing square root of
-		work_all_[thread_num]->y_squared = y_squared[thread_num];
+		// values we are computing square root of for this thread
+		ok &=  0 == work_all_[thread_num]->y_squared->size();
+		for(size_t i = 0; i < per_thread; i++)
+		if( y_index < y_squared.size() )
+			work_all_[thread_num]->y_squared->push_back(y_squared[y_index++]);
 		//
 		// set to false in case this thread's worker does not get called
 		work_all_[thread_num]->ok = false;
 	}
+	ok &= y_index == y_squared.size();
 	//
 	return ok;
 }
@@ -319,11 +330,15 @@ void multi_atomic_worker(void)
 	bool   ok          = thread_num < num_threads;
 	//
 	vector<double> x(1), y(1);
-	x[0] = work_all_[thread_num]->y_squared;
-	y    = work_all_[thread_num]->fun->Forward(0, x);
-	//
-	work_all_[thread_num]->square_root = y[0];
-	work_all_[thread_num]->ok          = ok;
+	size_t n = work_all_[thread_num]->y_squared->size();
+	work_all_[thread_num]->square_root->resize(n);
+	for(size_t i = 0; i < n; i++)
+	{	x[0] = (* work_all_[thread_num]->y_squared )[i];
+		y    = work_all_[thread_num]->fun->Forward(0, x);
+		//
+		(* work_all_[thread_num]->square_root )[i] = y[0];
+	}
+	work_all_[thread_num]->ok             = ok;
 }
 }
 // END WORKER C++
@@ -380,15 +395,24 @@ bool multi_atomic_takedown(vector<double>& square_root)
 	ok                &= thread_alloc::thread_num() == 0;
 	size_t num_threads = std::max(num_threads_, size_t(1));
 	//
+	// extract square roots in original order
+	square_root.resize(0);
+	for(size_t thread_num = 0; thread_num < num_threads; thread_num++)
+	{	// results for this thread
+		size_t n = work_all_[thread_num]->square_root->size();
+		for(size_t i = 0; i < n; i++)
+			square_root.push_back((* work_all_[thread_num]->square_root )[i]);
+	}
+	//
 	// go down so that free memory for other threads before memory for master
 	size_t thread_num = num_threads;
-	square_root.resize(num_threads);
 	while(thread_num--)
 	{	// check that this tread was ok with the work it did
 		ok  &= work_all_[thread_num]->ok;
 		//
-		// result for this thread
-		square_root[thread_num] = work_all_[thread_num]->square_root;
+		// run destructor on vector object for this thread
+		delete work_all_[thread_num]->y_squared;
+		delete work_all_[thread_num]->square_root;
 		//
 		// run destructor on function object for this thread
 		delete work_all_[thread_num]->fun;
@@ -541,13 +565,8 @@ $codei%
 	%num_threads% = thread_alloc::num_threads()
 %$$
 
-$head num_itr$$
-This specifies the number of Newton iterations to use when solving
-for the square root. This is intended to be larger than necessary,
-to make the computational load larger.
-This should be large enough so that starting at the squared value,
-Newtons method will converge within numerical precision.
-If not the correctness test will fail $icode ok$$ will be false.
+$head num_solve$$
+This specifies the number of square roots that will be solved for.
 
 $head ok$$
 The return value has prototype
@@ -588,7 +607,8 @@ namespace {
 }
 // This is the only routine that is accessible outside of this file
 bool multi_atomic_time(
-	double& time_out, double test_time, size_t num_threads, size_t num_itr )
+	double& time_out, double test_time, size_t num_threads, size_t num_solve
+)
 {	bool ok = true;
 	//
 	size_t initial_inuse = thread_alloc::inuse(0);
@@ -597,13 +617,12 @@ bool multi_atomic_time(
 	num_threads_ = num_threads;
 
 	// number of Newton iterations
-	num_itr_ = num_itr;
+	num_itr_ = 20;
 
 	// values we are talking the square root of
-	size_t n = std::max(size_t(1), num_threads);
-	y_squared_.resize(n);
-	for(size_t thread_num = 0; thread_num < n; thread_num++)
-		y_squared_[thread_num] = double(thread_num) + 2.0;
+	y_squared_.resize(num_solve);
+	for(size_t i_solve = 0; i_solve < num_solve; i_solve++)
+		y_squared_[i_solve] = double(i_solve) + 2.0;
 
 	// must create a_square_root_ sequential mode
 	a_square_root_ = new atomic_user;
@@ -633,8 +652,9 @@ bool multi_atomic_time(
 	CppAD::atomic_base<double>::clear();
 
 	// correctness check
+	ok &= square_root_.size() == num_solve;
 	double eps99 = 99.0 * std::numeric_limits<double>::epsilon();
-	for(size_t i = 0; i < y_squared_.size(); i++)
+	for(size_t i = 0; i < num_solve; i++)
 	{	double check = std::sqrt( y_squared_[i] );
 		ok          &= std::fabs( square_root_[i] / check - 1.0 ) <= eps99;
 	}

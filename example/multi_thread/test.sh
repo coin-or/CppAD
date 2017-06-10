@@ -54,8 +54,8 @@ next_program
 ./$program harmonic 1 4 1
 next_program
 echo
-# test_time=1 max_thread=4, num_itr=20
-./$program multi_atomic 1 4 20
+# test_time=1 max_thread=4, num_solve=100
+./$program multi_atomic 1 4 100
 next_program
 echo
 # test_time= 2 max_thread=4, num_zero=20, num_sub=30, num_sum=500, use_ad=true

@@ -247,7 +247,7 @@ int main(int argc, char *argv[])
 	"./<thread>_test simple_ad\n"
 	"./<thread>_test team_example\n"
 	"./<thread>_test harmonic     test_time max_threads mega_sum\n"
-	"./<thread>_test multi_atomic test_time max_threads num_itr\n"
+	"./<thread>_test multi_atomic test_time max_threads num_solve\n"
 	"./<thread>_test multi_newton test_time max_threads \\\n"
 	"	num_zero num_sub num_sum use_ad\\\n"
 	"where <thread> is bthread, openmp, or pthread";
@@ -328,8 +328,8 @@ int main(int argc, char *argv[])
 		"run: max_threads is less than zero"
 	);
 
-	size_t mega_sum = 0; // assignment to avoid compiler warning
-	size_t num_itr  = 0;
+	size_t mega_sum  = 0; // assignment to avoid compiler warning
+	size_t num_solve = 0;
 	if( run_harmonic )
 	{	// mega_sum
 		mega_sum = arg2size_t( *++argv, 1,
@@ -337,9 +337,9 @@ int main(int argc, char *argv[])
 		);
 	}
 	else if( run_multi_atomic )
-	{	// num_itr
-		num_itr = arg2size_t( *++argv, 1,
-			"run: num_itr is less than one"
+	{	// num_solve
+		num_solve = arg2size_t( *++argv, 1,
+			"run: num_solve is less than one"
 		);
 	}
 	else
@@ -382,7 +382,7 @@ int main(int argc, char *argv[])
 		if( run_harmonic ) ok &=
 			harmonic_time(time_out, test_time, num_threads, mega_sum);
 		else if( run_multi_atomic ) ok &=
-			multi_atomic_time(time_out, test_time, num_threads, num_itr);
+			multi_atomic_time(time_out, test_time, num_threads, num_solve);
 		else
 		{	ok &= run_multi_newton;
 			ok &= multi_newton_time(
