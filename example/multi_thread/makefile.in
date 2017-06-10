@@ -102,8 +102,9 @@ CONFIG_CLEAN_VPATH_FILES =
 @CppAD_OPENMP_TRUE@am__EXEEXT_1 = openmp_test$(EXEEXT)
 @CppAD_BTHREAD_TRUE@am__EXEEXT_2 = bthread_test$(EXEEXT)
 @CppAD_PTHREAD_TRUE@am__EXEEXT_3 = pthread_test$(EXEEXT)
-am__objects_1 = thread_test.$(OBJEXT) multi_newton.$(OBJEXT) \
-	team_example.$(OBJEXT) harmonic.$(OBJEXT)
+am__objects_1 = thread_test.$(OBJEXT) team_example.$(OBJEXT) \
+	harmonic.$(OBJEXT) multi_atomic.$(OBJEXT) \
+	multi_newton.$(OBJEXT)
 am__dirstamp = $(am__leading_dot)dirstamp
 am_bthread_test_OBJECTS = $(am__objects_1) \
 	bthread/team_bthread.$(OBJEXT) bthread/a11c_bthread.$(OBJEXT) \
@@ -413,10 +414,11 @@ LDADD = $(BOOST_LIB) $(BTHREAD_LIB) $(PTHREAD_LIB)
 SHARED_SRC = \
 	thread_test.cpp \
 	team_thread.hpp  \
+	team_example.cpp  team_example.hpp \
 \
-	multi_newton.cpp        multi_newton.hpp \
-	team_example.cpp        team_example.hpp \
-	harmonic.cpp            harmonic.hpp
+	harmonic.omh     harmonic.cpp      harmonic.hpp \
+	multi_atomic.omh multi_atomic.cpp  multi_atomic.hpp \
+	multi_newton.omh multi_newton.cpp  multi_newton.hpp
 
 #
 bthread_test_SOURCES = \
@@ -536,6 +538,7 @@ distclean-compile:
 	-rm -f *.tab.c
 
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/harmonic.Po@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/multi_atomic.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/multi_newton.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/team_example.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/thread_test.Po@am__quote@

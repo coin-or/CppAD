@@ -807,7 +807,6 @@ AC_CONFIG_FILES([
 	example/get_started/makefile
 	introduction/makefile
 	example/multi_thread/makefile
-	example/multi_thread/test_multi/makefile
 	example/print_for/makefile
 	speed/adolc/makefile
 	speed/cppad/makefile

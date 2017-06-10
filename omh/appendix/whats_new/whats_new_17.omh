@@ -51,8 +51,16 @@ $cref/debug_which/speed/debug_which/$$
 $lend
 
 $head 06-10$$
+$list number$$
 Add the multi-threading user atomic function example
 $cref multi_atomic.cpp$$.
+$lnext
+The $code example/multi_thread/test_multi$$ directory used
+to have an example using the deprecated
+$cref old_atomic$$ functions in a multi-threading setting
+(that only built with the deprecated $cref autotools$$).
+This have been removed.
+$lend
 
 $head 06-07$$
 The multi-threading examples

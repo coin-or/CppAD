@@ -196,8 +196,7 @@ DIST_SUBDIRS = cppad_ipopt/src example/ipopt_solve cppad_ipopt/example \
 	speed/profile speed/sacado example/atomic example/deprecated \
 	example/general example/get_started example/optimize \
 	example/print_for example/sparse example/utility introduction \
-	example/multi_thread example/multi_thread/test_multi \
-	test_more/compare_c test_more/general
+	example/multi_thread test_more/compare_c test_more/general
 am__DIST_COMMON = $(srcdir)/makefile.in \
 	$(top_srcdir)/cppad/configure.hpp.in \
 	$(top_srcdir)/pkgconfig/cppad-uninstalled.pc.in \
@@ -746,7 +745,6 @@ SUBDIRS = \
 	example/utility \
 	introduction \
 	example/multi_thread \
-	example/multi_thread/test_multi \
 	test_more/compare_c \
 	test_more/general
 
@@ -807,7 +805,6 @@ test_directory_list = \
 	example/get_started \
 	introduction \
 	example/multi_thread \
-	example/multi_thread/test_multi \
 	example/print_for \
 	test_more/compare_c \
 	test_more/general
