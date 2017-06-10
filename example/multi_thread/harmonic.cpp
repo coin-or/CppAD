@@ -391,9 +391,10 @@ $latex \[
 	1 + 1/2 + 1/3 + ... + 1/n
 \] $$
 
+
 $head Thread$$
-It is assumed that this function is called by thread zero,
-and all the other threads are blocked (waiting).
+It is assumed that this function is called by thread zero in sequential
+mode; i.e., not $cref/in_parallel/ta_in_parallel/$$.
 
 $head ok$$
 This return value has prototype
@@ -500,14 +501,24 @@ bool harmonic_time(
 	num_threads_ = num_threads;
 	mega_sum_    = mega_sum;
 
-	// convert zero to actual number of threads
-	num_threads  = std::max(num_threads_, size_t(1));
 
-	// expect number of threads to already be set up
-	ok &= num_threads == CppAD::thread_alloc::num_threads();
+	// create team of threads
+	ok &= thread_alloc::in_parallel() == false;
+	if( num_threads > 0 )
+	{	team_create(num_threads);
+		ok &= num_threads == CppAD::thread_alloc::num_threads();
+	}
+	else
+	{	ok &= 1 == CppAD::thread_alloc::num_threads();
+	}
 
 	// run the test case and set the time return value
 	time_out = CppAD::time_test(test_repeat, test_time);
+
+	// destroy team of threads
+	if( num_threads > 0 )
+		team_destroy();
+	ok &= thread_alloc::in_parallel() == false;
 
 	// Correctness check
 	double eps1000 = mega_sum_ * 1e3 * std::numeric_limits<double>::epsilon();

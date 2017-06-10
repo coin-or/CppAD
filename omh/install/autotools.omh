@@ -237,7 +237,7 @@ $codei%
 %$$
 If you specify configure command,
 the CppAD OpenMP correctness and speed tests will be built; see
-$cref/threading/thread_test.cpp/Running Tests/threading/$$
+$cref/threading/thread_test.cpp/threading/$$
 multi-threading tests.
 
 $head postfix_dir$$

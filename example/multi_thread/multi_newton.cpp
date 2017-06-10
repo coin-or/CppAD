@@ -644,8 +644,8 @@ The calculation can be done in parallel on the different sub-intervals.
 In addition, the calculation can be done without multi-threading.
 
 $head Thread$$
-It is assumed that this function is called by thread zero,
-and all the other threads are blocked (waiting).
+It is assumed that this function is called by thread zero in sequential
+mode; i.e., not $cref/in_parallel/ta_in_parallel/$$.
 
 $head ok$$
 This return value has prototype
@@ -877,15 +877,25 @@ bool multi_newton_time(
 	num_sub_      = num_sub;
 	num_sum_      = num_sum;
 
-	// expect number of threads to already be set up
+	// create team of threads
+	ok &= thread_alloc::in_parallel() == false;
 	if( num_threads > 0 )
+	{	team_create(num_threads);
 		ok &= num_threads == CppAD::thread_alloc::num_threads();
-	else	ok &= 1           == CppAD::thread_alloc::num_threads();
+	}
+	else
+	{	ok &= 1 == CppAD::thread_alloc::num_threads();
+	}
 
 	// run the test case and set time return value
 	time_out = CppAD::time_test(test_repeat, test_time);
 
-	// Call test_once for a correctness check
+	// destroy team of threads
+	if( num_threads > 0 )
+		team_destroy();
+	ok &= thread_alloc::in_parallel() == false;
+	//
+	// correctness check
 	double pi      = 4. * std::atan(1.);
 	double xup     = (num_zero_ - 1) * pi;
 	double eps     = xup * 100. * CppAD::numeric_limits<double>::epsilon();

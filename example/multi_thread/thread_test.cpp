@@ -25,50 +25,46 @@ $$
 
 
 $section Run Multi-Threading Examples and Speed Tests$$
-$mindex thread_test multi openmp pthread bthread$$
 
-$head Syntax$$
-$codei%./multi_thread_%threading% a11c
-./multi_thread_%threading% simple_ad
-./multi_thread_%threading% team_example
-./multi_thread_%threading% harmonic %test_time% %max_threads% %mega_sum%
-./multi_thread_%threading% multi_newton %test_time% %max_threads% \
-	%num_zero% %num_sub% %num_sum% %use_ad%
+$head Purpose$$
+Runs the CppAD multi-threading examples and timing tests:
+
+$head build$$
+We use $icode build$$ for the directory where you run the $cref cmake$$
+command.
+
+$head threading$$
+If the $cref cmake$$ command output indicates that
+$code bthread$$, $code pthread$$, or $code openmp$$ is available,
+you can run the program below with $icode threading$$ equal to
+$code bthread$$, $code pthread$$, or $code openmp$$ respectively.
+
+$head program$$
+We use the notation $icode program$$ for
+$icode%
+	 example_multi_thread_%threading%
 %$$
 
 $head Running Tests$$
 You can build this program and run the default version of its test
 parameters by executing the following commands:
 $codei%
-	cd multi_thread
-	make test
+	cd %build%
+	make check_%program%
 %$$
-After this operation you can run the syntax above
-for the different valid values of $icode threading$$:
-
-$subhead threading$$
-If the $cref cmake$$ command output indicates that
-$code openmp$$ is supported by your system,
-you can execute the syntax above with
-$icode threading$$ equal to $code openmp$$.
-$pre
-
-$$
-If the $cref cmake$$ command output indicates that
-$code pthreads$$ with barriers is supported by your system,
-you can execute the syntax above with
-$icode threading$$ equal to $code pthread$$.
-$pre
-
-$$
-If the $cref cmake$$ command output indicates that
-$code boost$$ threads is supported is by your system,
-you can execute the syntax above with
-$icode threading$$ equal to $code bthread$$.
-
-
-$head Purpose$$
-Runs the CppAD multi-threading examples and timing tests:
+After this operation, in the directory
+$codei%
+	%build%/example/multi_thread/%threading%
+%$$
+you can execute the following commands:
+$codei%.
+./%program% a11c
+./%program% simple_ad
+./%program% team_example
+./%program% harmonic     %test_time% %max_threads% %mega_sum%
+./%program% multi_newton %test_time% %max_threads% \
+	%num_zero% %num_sub% %num_sum% %use_ad%
+%$$
 
 $children%
 	example/multi_thread/openmp/a11c_openmp.cpp%
@@ -109,6 +105,8 @@ The $cref team_example.cpp$$ routine
 demonstrates simple multi-threading with algorithmic differentiation
 and using a $cref/team of threads/team_thread.hpp/$$.
 
+$comment ------------------------------------------------------------------- $$
+
 $head harmonic$$
 The $cref harmonic_time$$ routine
 preforms a timing test for a multi-threading
@@ -134,6 +132,8 @@ $subhead mega_sum$$
 The command line argument $icode mega_sum$$
 is an integer greater than or equal one and has the same meaning as in
 $cref/harmonic_time/harmonic_time/mega_sum/$$.
+
+$comment ------------------------------------------------------------------- $$
 
 $head multi_newton$$
 The $cref multi_newton_time$$ routine
@@ -175,6 +175,8 @@ $subhead use_ad$$
 The command line argument $icode use_ad$$ is either
 $code true$$ or $code false$$ and has the same meaning as in
 $cref/multi_newton_time/multi_newton_time/use_ad/$$.
+
+$comment ------------------------------------------------------------------- $$
 
 $head Team Implementations$$
 The following routines are used to implement the specific threading
@@ -243,7 +245,7 @@ int main(int argc, char *argv[])
 	"./<thread>_test simple_ad\n"
 	"./<thread>_test team_example\n"
 	"./<thread>_test harmonic    test_time max_threads mega_sum\n"
-	"./<thread>_test multi_newton test_time max_threads\\\n"
+	"./<thread>_test multi_newton test_time max_threads \\\n"
 	"	num_zero num_sub num_sum use_ad\\\n"
 	"where <thread> is bthread, openmp, or pthread";
 
@@ -361,18 +363,9 @@ int main(int argc, char *argv[])
 	}
 
 	// run the test for each number of threads
-	size_t num_threads, inuse_this_thread = 0;
 	cout << "time_all  = [" << endl;
-	for(num_threads = 0; num_threads <= max_threads; num_threads++)
+	for(size_t num_threads = 0; num_threads <= max_threads; num_threads++)
 	{	double time_out;
-
-		// set the number of threads
-		if( num_threads > 0 )
-			ok &= team_create(num_threads);
-
-		// ammount of memory initialy inuse by thread zero
-		ok &= 0 == thread_alloc::thread_num();
-		inuse_this_thread = thread_alloc::inuse(0);
 
 		// run the requested test
 		if( run_harmonic ) ok &=
@@ -389,18 +382,9 @@ int main(int argc, char *argv[])
 				use_ad
 			);
 		}
-
-		// set back to one thread and fee all avaialable memory
-		if( num_threads > 0 )
-			ok &= team_destroy();
-		size_t thread;
-		for(thread = 0; thread < num_threads; thread++)
-		{	thread_alloc::free_available(thread);
-			if( thread == 0 )
-				ok &= thread_alloc::inuse(thread) == inuse_this_thread;
-			else	ok &= thread_alloc::inuse(thread) == 0;
-		}
+		// time_out
 		cout << "\t" << time_out << " % ";
+		// num_threads
 		if( num_threads == 0 )
 			cout << "no threading" << endl;
 		else	cout << num_threads << " threads" << endl;
