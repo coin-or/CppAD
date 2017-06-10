@@ -1004,7 +1004,7 @@ $lnext
 The distance between solutions that are joined to one solution
 has been corrected from $latex (b - a) / (2 n )$$ to
 $latex (b - a) / n $$; see
-$cref/xout/multi_newton_solve/xout/$$.
+$cref/xout/multi_newton_run/xout/$$.
 The correction was in the file $cref multi_newton.cpp$$ where
 $code sub_length_ / 2$$ was change to $code sub_length_$$.
 

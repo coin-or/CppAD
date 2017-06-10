@@ -50,6 +50,10 @@ Speed tests no longer automatically compile in release mode; see
 $cref/debug_which/speed/debug_which/$$
 $lend
 
+$head 06-10$$
+Add the multi-threading user atomic function example
+$cref multi_atomic.cpp$$.
+
 $head 06-07$$
 The multi-threading examples
 $cref harmonic.cpp$$ and $cref multi_newton.cpp$$ were re-organized.

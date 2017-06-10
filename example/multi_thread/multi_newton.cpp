@@ -37,11 +37,8 @@ $end
 # define USE_THREAD_ALLOC_FOR_WORK_ALL 1
 
 namespace {
-	using CppAD::thread_alloc;
-
-	// This vector template class frees all memory when resized to zero.
-	// In addition, its memory allocation works well during multi-threading.
-	using CppAD::vector;
+	using CppAD::thread_alloc; // fast multi-threadeding memory allocator
+	using CppAD::vector;       // uses thread_alloc
 
 	// number of threads, set by multi_newton_time.
 	size_t num_threads_ = 0;
@@ -109,23 +106,23 @@ It is assumed that this function is called by thread zero,
 and all the other threads are blocked (waiting).
 
 $head num_sub$$
-See $icode num_sub$$ in $cref/multi_newton_solve/multi_newton_solve/num_sub/$$.
+See $icode num_sub$$ in $cref/multi_newton_run/multi_newton_run/num_sub/$$.
 
 $head xlow$$
-See $icode xlow$$ in $cref/multi_newton_solve/multi_newton_solve/xlow/$$.
+See $icode xlow$$ in $cref/multi_newton_run/multi_newton_run/xlow/$$.
 
 $head xup$$
-See $icode xup$$ in $cref/multi_newton_solve/multi_newton_solve/xup/$$.
+See $icode xup$$ in $cref/multi_newton_run/multi_newton_run/xup/$$.
 
 $head epsilon$$
-See $icode epsilon$$ in $cref/multi_newton_solve/multi_newton_solve/epsilon/$$.
+See $icode epsilon$$ in $cref/multi_newton_run/multi_newton_run/epsilon/$$.
 
 $head max_itr$$
-See $icode max_itr$$ in $cref/multi_newton_solve/multi_newton_solve/max_itr/$$.
+See $icode max_itr$$ in $cref/multi_newton_run/multi_newton_run/max_itr/$$.
 
 $head num_threads$$
 See $icode num_threads$$ in
-$cref/multi_newton_solve/multi_newton_solve/num_threads/$$.
+$cref/multi_newton_run/multi_newton_run/num_threads/$$.
 
 $head Source$$
 $srcfile%example/multi_thread/multi_newton.cpp%
@@ -173,7 +170,7 @@ bool multi_newton_setup(
 		work_all_[thread_num] = static_cast<work_one_t*>(v_ptr);
 
 		// thread_alloc is a raw memory allocator; i.e., it does not call
-		// the constructor for the objects it creates. The CppAD::vector
+		// the constructor for the objects it creates. The vector
 		// class requires it's constructor to be called so we do it here
 		new(& (work_all_[thread_num]->x) ) vector<double>();
 # else
@@ -254,8 +251,7 @@ $end
 // BEGIN WORKER C++
 namespace {
 void multi_newton_worker(void)
-{	using CppAD::vector;
-
+{
 	// Split [xlow, xup] into num_sub intervales and
 	// look for one zero in each sub-interval.
 	size_t thread_num    = thread_alloc::thread_num();
@@ -360,7 +356,7 @@ It is assumed that this function is called by thread zero,
 and all the other threads have completed their work and are blocked (waiting).
 
 $head xout$$
-See $cref/multi_newton_solve/multi_newton_solve/xout/$$.
+See $cref/multi_newton_run/multi_newton_run/xout/$$.
 
 $head Source$$
 $srcfile%example/multi_thread/multi_newton.cpp%0
@@ -371,7 +367,7 @@ $end
 */
 // BEGIN TAKEDOWN C++
 namespace {
-bool multi_newton_takedown(CppAD::vector<double>& xout)
+bool multi_newton_takedown(vector<double>& xout)
 {	// number of threads in the calculation
 	size_t num_threads  = std::max(num_threads_, size_t(1));
 
@@ -412,7 +408,7 @@ bool multi_newton_takedown(CppAD::vector<double>& xout)
 	while(thread_num--)
 	{
 # if USE_THREAD_ALLOC_FOR_WORK_ALL
-		// call the destructor for CppAD::vector destructor
+		// call the destructor for vector destructor
 		work_all_[thread_num]->x.~vector<double>();
 		// delete the raw memory allocation
 		void* v_ptr = static_cast<void*>( work_all_[thread_num] );
@@ -439,7 +435,7 @@ bool multi_newton_takedown(CppAD::vector<double>& xout)
 // END TAKEDOWN C++
 /*
 ------------------------------------------------------------------------------
-$begin multi_newton_solve$$
+$begin multi_newton_run$$
 $spell
 	CppAD
 	xout
@@ -455,7 +451,7 @@ $$
 $section A Multi-Threaded Newton's Method$$
 
 $head Syntax$$
-$icode%ok% = %multi_newton_solve(%xout%,
+$icode%ok% = %multi_newton_run(%xout%,
 	%fun%, %num_sub%, %xlow%, %xup%, %epsilon%, %max_itr%, %num_threads%
 )%$$
 
@@ -494,7 +490,7 @@ If an error occurs, it is false, otherwise it is true.
 $head xout$$
 The argument $icode xout$$ has the prototype
 $codei%
-	CppAD::vector<double>& %xout%
+	vector<double>& %xout%
 %$$
 The input size and value of the elements of $icode xout$$ do not matter.
 Upon return from $code multi_newton$$,
@@ -583,8 +579,8 @@ $end
 */
 // BEGIN SOLVE C++
 namespace {
-bool multi_newton_solve(
-	CppAD::vector<double> &xout                ,
+bool multi_newton_run(
+	vector<double>& xout                       ,
 	void fun(double x, double& f, double& df)  ,
 	size_t num_sub                             ,
 	double xlow                                ,
@@ -593,8 +589,6 @@ bool multi_newton_solve(
 	size_t max_itr                             ,
 	size_t num_threads                         )
 {
-	using CppAD::AD;
-	using CppAD::vector;
 	bool ok = true;
 	ok     &= thread_alloc::thread_num() == 0;
 
@@ -681,12 +675,12 @@ It specifies the number of threads that
 are available for this test.
 If it is zero, the test is run without multi-threading and
 $codei%
-	1 == CppAD::thread_alloc::num_threads()
+	1 == thread_alloc::num_threads()
 %$$
 when $code multi_newton_time$$ is called.
 If it is non-zero, the test is run with multi-threading and
 $codei%
-	%num_threads% == CppAD::thread_alloc::num_threads()
+	%num_threads% == thread_alloc::num_threads()
 %$$
 when $code multi_newton_time$$ is called.
 
@@ -761,7 +755,7 @@ namespace { // empty namespace
 	size_t num_sum_;    // larger values make f(x) take longer to calculate
 
 	// value of xout corresponding to most recent call to test_once
-	CppAD::vector<double> xout_;
+	vector<double> xout_;
 
 	// A version of the sine function that can be made as slow as we like
 	template <class Float>
@@ -787,9 +781,9 @@ namespace { // empty namespace
 
 	// AD calculation of detivative
 	void fun_ad(double x, double& f, double& df)
-	{	// use CppAD::vector because it uses fast multi-threaded memory alloc
-		using CppAD::vector;
-		using CppAD::AD;
+	{	using CppAD::AD;
+
+		// use vector because it uses fast multi-threaded memory alloc
 		vector< AD<double> > X(1), Y(1);
 		X[0] = x;
 		CppAD::Independent(X);
@@ -825,7 +819,7 @@ namespace { // empty namespace
 		size_t max_itr = 20;
 
 		// note that fun_ is set to fun_ad or fun_no by multi_newton_time
-		bool ok = multi_newton_solve(
+		bool ok = multi_newton_run(
 			xout_       ,
 			fun_        ,
 			num_sub_    ,
@@ -881,10 +875,10 @@ bool multi_newton_time(
 	ok &= thread_alloc::in_parallel() == false;
 	if( num_threads > 0 )
 	{	team_create(num_threads);
-		ok &= num_threads == CppAD::thread_alloc::num_threads();
+		ok &= num_threads == thread_alloc::num_threads();
 	}
 	else
-	{	ok &= 1 == CppAD::thread_alloc::num_threads();
+	{	ok &= 1 == thread_alloc::num_threads();
 	}
 
 	// run the test case and set time return value

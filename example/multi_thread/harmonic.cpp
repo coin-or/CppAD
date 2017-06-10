@@ -42,7 +42,7 @@ $end
 # define MAX_NUMBER_THREADS 48
 
 namespace {
-	using CppAD::thread_alloc;
+	using CppAD::thread_alloc; // fast multi-threadeding memory allocator
 
 	// Number of threads, set by previous call to harmonic_time
 	// (zero means one thread with no multi-threading setup)
@@ -428,12 +428,12 @@ $codei%
 It specifies the number of threads that are available for this test.
 If it is zero, the test is run without the multi-threading environment and
 $codei%
-	1 == CppAD::thread_alloc::num_threads()
+	1 == thread_alloc::num_threads()
 %$$
 when $code harmonic_time$$ is called.
 If it is non-zero, the test is run with the multi-threading and
 $codei%
-	%num_threads% = CppAD::thread_alloc::num_threads()
+	%num_threads% = thread_alloc::num_threads()
 %$$
 when $code harmonic_time$$ is called.
 
@@ -504,10 +504,10 @@ bool harmonic_time(
 	ok &= thread_alloc::in_parallel() == false;
 	if( num_threads > 0 )
 	{	team_create(num_threads);
-		ok &= num_threads == CppAD::thread_alloc::num_threads();
+		ok &= num_threads == thread_alloc::num_threads();
 	}
 	else
-	{	ok &= 1 == CppAD::thread_alloc::num_threads();
+	{	ok &= 1 == thread_alloc::num_threads();
 	}
 
 	// run the test case and set the time return value

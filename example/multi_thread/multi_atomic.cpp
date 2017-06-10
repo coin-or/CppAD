@@ -89,7 +89,9 @@ $end
 # include "team_thread.hpp"
 //
 namespace {
-using CppAD::vector;
+using CppAD::thread_alloc; // fast multi-threadeding memory allocator
+using CppAD::vector;       // uses thread_alloc
+
 class atomic_user : public CppAD::atomic_base<double> {
 public:
 	// ctor
@@ -163,8 +165,6 @@ $end
 */
 // BEGIN COMMON C++
 namespace {
-	using CppAD::thread_alloc;
-
 	// Number of threads, set by multi_atomic_time
 	// (zero means one thread with no multi-threading setup)
 	size_t num_threads_ = 0;
@@ -224,7 +224,7 @@ and all the other threads are blocked (waiting).
 $head y_squared$$
 This argument has prototype
 $codei%
-	const CppAD::vector<double>& %y_squared%
+	const vector<double>& %y_squared%
 %$$
 and its size is equal to the number of threads.
 It is the values that we are computing the square root of.
@@ -351,7 +351,7 @@ and all the other threads are blocked (waiting).
 $head square_root$$
 This argument has prototype
 $codei%
-	CppAD::vector<double>& %square_root%
+	vector<double>& %square_root%
 %$$
 The input value of $icode square_root$$ does not matter.
 Upon return,
@@ -429,7 +429,7 @@ and all the other threads are blocked (waiting).
 $head y_squared$$
 This argument has prototype
 $codei%
-	const CppAD::vector<double>& %y_squared%
+	const vector<double>& %y_squared%
 %$$
 and its size is equal to the number of threads.
 It is the values that we are computing the square root of.
@@ -437,7 +437,7 @@ It is the values that we are computing the square root of.
 $head square_root$$
 This argument has prototype
 $codei%
-	CppAD::vector<double>& %square_root%
+	vector<double>& %square_root%
 %$$
 The input value of $icode square_root$$ does not matter.
 Upon return,
@@ -534,11 +534,11 @@ $codei%
 It specifies the number of threads that are available for this test.
 If it is zero, the test is run without the multi-threading environment and
 $codei%
-	1 == CppAD::thread_alloc::num_threads()
+	1 == thread_alloc::num_threads()
 %$$
 If it is non-zero, the test is run with the multi-threading and
 $codei%
-	%num_threads% = CppAD::thread_alloc::num_threads()
+	%num_threads% = thread_alloc::num_threads()
 %$$
 
 $head num_itr$$
@@ -612,10 +612,10 @@ bool multi_atomic_time(
 	ok &= thread_alloc::in_parallel() == false;
 	if( num_threads > 0 )
 	{	team_create(num_threads);
-		ok &= num_threads == CppAD::thread_alloc::num_threads();
+		ok &= num_threads == thread_alloc::num_threads();
 	}
 	else
-	{	ok &= 1 == CppAD::thread_alloc::num_threads();
+	{	ok &= 1 == thread_alloc::num_threads();
 	}
 
 	// run the test case and set the time return value
