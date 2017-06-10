@@ -98,11 +98,7 @@ $head Thread$$
 It is assumed that this function is called by thread zero,
 and all the other threads are blocked (waiting).
 
-$head harmonic_setup$$
-Calling this function splits up the computation of the summation
-into different parts for each thread.
-
-$subhead num_sum$$
+$head num_sum$$
 The argument $icode num_sum$$ has prototype
 $codei%
 	size_t %num_sum%
@@ -125,8 +121,7 @@ bool harmonic_setup(size_t num_sum)
 	ok                 &= thread_alloc::thread_num() == 0;
 	ok                 &= num_sum >= num_threads;
 	//
-	size_t thread_num;
-	for(thread_num = 0; thread_num < num_threads; thread_num++)
+	for(size_t thread_num = 0; thread_num < num_threads; thread_num++)
 	{	// allocate separate memory for this thread to avoid false sharing
 		size_t min_bytes(sizeof(work_one_t)), cap_bytes;
 		void* v_ptr = thread_alloc::get_memory(min_bytes, cap_bytes);
@@ -263,7 +258,6 @@ bool harmonic_takedown(double& sum)
 {	// sum = 1/num_sum + 1/(num_sum-1) + ... + 1
 	bool ok            = true;
 	ok                &= thread_alloc::thread_num() == 0;
-	//
 	size_t num_threads = std::max(num_threads_, size_t(1));
 	sum                = 0.;
 	//
@@ -360,7 +354,7 @@ bool harmonic_sum(double& sum, size_t num_sum)
 		team_work( harmonic_worker );
 	else	harmonic_worker();
 
-	// combine the result for each thread and teardown the multi-threading.
+	// combine the result for each thread and takedown the multi-threading.
 	ok &= harmonic_takedown(sum);
 
 	return ok;
@@ -502,7 +496,7 @@ bool harmonic_time(
 {	bool ok  = true;
 	ok      &= thread_alloc::thread_num() == 0;
 
-	// arguments passed to harmonic_time
+	// arguments passed to harmonic_sum
 	num_threads_ = num_threads;
 	mega_sum_    = mega_sum;
 
