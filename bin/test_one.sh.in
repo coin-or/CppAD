@@ -40,6 +40,11 @@ then
 	echo "test_one.sh: Cannot find the file $dir/$file"
 	exit 1
 fi
+if [ ! -e 'build/CMakeFiles' ]
+then
+	echo 'test_one.sh: Must first execute bin/run_cmake.sh'
+	exit 1
+fi
 if [ -e test_one.exe ]
 then
 	rm test_one.exe
@@ -49,6 +54,15 @@ then
 	rm test_one.cpp
 fi
 original_dir=`pwd`
+# ---------------------------------------------------------------------------
+# check for cppad_lib
+count=`ls build/cppad_lib/libcppad_lib.* | wc -l`
+if [ "$count" == '0' ]
+then
+	cd build
+	make cppad_lib
+	cd ..
+fi
 # ---------------------------------------------------------------------------
 # include_flags
 include_flags="-I $original_dir"
@@ -117,7 +131,7 @@ library_path='@PROJECT_BINARY_DIR@/cppad_lib'
 if ! echo $LD_LIBRARY_PATH | grep "$library_path"
 then
 	echo 'LD_LIBRARY_PATH=\'
-	echo "$library_path:$LD_LIBRARY_PATH"
+	echo "$library_path:\$LD_LIBRARY_PATH"
 	export LD_LIBRARY_PATH="$library_path:$LD_LIBRARY_PATH"
 fi
 # --------------------------------------------------------------------------

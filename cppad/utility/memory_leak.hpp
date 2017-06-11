@@ -175,7 +175,7 @@ inline bool memory_leak(size_t add_static = 0)
 	if( num_bytes != thread_zero_static_inuse )
 	{	leak = true;
 		cout << "thread zero: static inuse = " << thread_zero_static_inuse;
-		cout << "current inuse(thread)     = " << num_bytes << endl;
+		cout << ", current inuse(0)= " << num_bytes << endl;
 	}
 	// check that no memory is currently available for this thread
 	num_bytes = thread_alloc::available(thread);
