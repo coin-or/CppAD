@@ -50,6 +50,12 @@ Speed tests no longer automatically compile in release mode; see
 $cref/debug_which/speed/debug_which/$$
 $lend
 
+$head 06-11$$
+The user atomic functions base class $cref atomic_base$$
+makes more of an effort to avoid false sharing cache misses.
+This may the speed of multi-threaded applications with user atomic functions;
+e.g., see $cref multi_atomic.cpp$$.
+
 $head 06-10$$
 $list number$$
 Add the multi-threading user atomic function example

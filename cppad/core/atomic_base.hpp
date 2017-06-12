@@ -72,9 +72,10 @@ private:
 		vector< std::set<size_t> > set_s;
 		vector< std::set<size_t> > set_u;
 	};
-	// work_ uses std::vector so that its memory is not counted by thread_alloc
-	std::vector<work_struct> work_;
-	//
+	// Use pointers, to avoid false sharing between threads.
+	// Not using: vector<work_struct*> work_;
+	// so that deprecated atomic examples do not result in a memory leak.
+	work_struct* work_[CPPAD_MAX_NUM_THREADS];
 	// -----------------------------------------------------
 	// static member functions
 	//
@@ -237,8 +238,7 @@ atomic_base(
 		option_enum            sparsity = bool_sparsity_enum
 ) :
 index_   ( class_object().size()  )  ,
-sparsity_( sparsity               )  ,
-work_    (  CPPAD_MAX_NUM_THREADS )
+sparsity_( sparsity               )
 {	CPPAD_ASSERT_KNOWN(
 		! thread_alloc::in_parallel() ,
 		"atomic_base: constructor cannot be called in parallel mode."
@@ -246,6 +246,10 @@ work_    (  CPPAD_MAX_NUM_THREADS )
 	class_object().push_back(this);
 	class_name().push_back(name);
 	CPPAD_ASSERT_UNKNOWN( class_object().size() == class_name().size() );
+	//
+	// initialize work pointers as null;
+	for(size_t thread = 0; thread < CPPAD_MAX_NUM_THREADS; thread++)
+		work_[thread] = CPPAD_NULL;
 }
 /// destructor informs CppAD that this atomic function with this index
 /// has dropped out of scope by setting its pointer to null
@@ -253,6 +257,36 @@ virtual ~atomic_base(void)
 {	CPPAD_ASSERT_UNKNOWN( class_object().size() > index_ );
 	// change object pointer to null, but leave name for error reporting
 	class_object()[index_] = CPPAD_NULL;
+	//
+	// free temporary work memory
+	for(size_t thread = 0; thread < CPPAD_MAX_NUM_THREADS; thread++)
+		free_work(thread);
+}
+/// allocates work_ for a specified thread
+void allocate_work(size_t thread)
+{	if( work_[thread] == CPPAD_NULL )
+	{	// allocate the raw memory
+		size_t min_bytes = sizeof(work_struct);
+		size_t num_bytes;
+		void*  v_ptr     = thread_alloc::get_memory(min_bytes, num_bytes);
+		// save in work_
+		work_[thread]    = reinterpret_cast<work_struct*>( v_ptr );
+		// call constructor
+		new( work_[thread] ) work_struct;
+	}
+	return;
+}
+/// frees work_ for a specified thread
+void free_work(size_t thread)
+{	if( work_[thread] != CPPAD_NULL )
+	{	// call destructor
+		work_[thread]->~work_struct();
+		// return memory to avialable pool for this thread
+        thread_alloc::return_memory( reinterpret_cast<void*>(work_[thread]) );
+		// mark this thread as not allocated
+		work_[thread] = CPPAD_NULL;
+	}
+	return;
 }
 /// atomic_base function object corresponding to a certain index
 static atomic_base* class_object(size_t index)
@@ -451,10 +485,11 @@ void operator()(
 	}
 # endif
 	size_t thread = thread_alloc::thread_num();
-	vector <Base>& tx  = work_[thread].tx;
-	vector <Base>& ty  = work_[thread].ty;
-	vector <bool>& vx  = work_[thread].vx;
-	vector <bool>& vy  = work_[thread].vy;
+	allocate_work(thread);
+	vector <Base>& tx  = work_[thread]->tx;
+	vector <Base>& ty  = work_[thread]->ty;
+	vector <bool>& vx  = work_[thread]->vx;
+	vector <bool>& vy  = work_[thread]->vy;
 	//
 	if( vx.size() != n )
 	{	vx.resize(n);
@@ -1214,11 +1249,12 @@ void for_sparse_jac(
 	size_t m           = y_index.size();
 	bool   ok          = false;
 	size_t thread      = thread_alloc::thread_num();
+	allocate_work(thread);
 	//
 	std::string msg    = ": atomic_base.for_sparse_jac: returned false";
 	if( sparsity_ == pack_sparsity_enum )
-	{	vectorBool& pack_r ( work_[thread].pack_r );
-		vectorBool& pack_s ( work_[thread].pack_s );
+	{	vectorBool& pack_r ( work_[thread]->pack_r );
+		vectorBool& pack_s ( work_[thread]->pack_s );
 		local::get_internal_sparsity(
 			transpose, x_index, var_sparsity, pack_r
 		);
@@ -1236,8 +1272,8 @@ void for_sparse_jac(
 		);
 	}
 	else if( sparsity_ == bool_sparsity_enum )
-	{	vector<bool>& bool_r ( work_[thread].bool_r );
-		vector<bool>& bool_s ( work_[thread].bool_s );
+	{	vector<bool>& bool_r ( work_[thread]->bool_r );
+		vector<bool>& bool_s ( work_[thread]->bool_s );
 		local::get_internal_sparsity(
 			transpose, x_index, var_sparsity, bool_r
 		);
@@ -1255,8 +1291,8 @@ void for_sparse_jac(
 	}
 	else
 	{	CPPAD_ASSERT_UNKNOWN( sparsity_ == set_sparsity_enum );
-		vector< std::set<size_t> >& set_r ( work_[thread].set_r );
-		vector< std::set<size_t> >& set_s ( work_[thread].set_s );
+		vector< std::set<size_t> >& set_r ( work_[thread]->set_r );
+		vector< std::set<size_t> >& set_s ( work_[thread]->set_s );
 		local::get_internal_sparsity(
 			transpose, x_index, var_sparsity, set_r
 		);
@@ -1483,11 +1519,12 @@ void rev_sparse_jac(
 	size_t n           = x_index.size();
 	bool   ok          = false;
 	size_t thread      = thread_alloc::thread_num();
+	allocate_work(thread);
 	//
 	std::string msg    = ": atomic_base.rev_sparse_jac: returned false";
 	if( sparsity_ == pack_sparsity_enum )
-	{	vectorBool& pack_rt ( work_[thread].pack_r );
-		vectorBool& pack_st ( work_[thread].pack_s );
+	{	vectorBool& pack_rt ( work_[thread]->pack_r );
+		vectorBool& pack_st ( work_[thread]->pack_s );
 		local::get_internal_sparsity(
 			transpose, y_index, var_sparsity, pack_rt
 		);
@@ -1505,8 +1542,8 @@ void rev_sparse_jac(
 		);
 	}
 	else if( sparsity_ == bool_sparsity_enum )
-	{	vector<bool>& bool_rt ( work_[thread].bool_r );
-		vector<bool>& bool_st ( work_[thread].bool_s );
+	{	vector<bool>& bool_rt ( work_[thread]->bool_r );
+		vector<bool>& bool_st ( work_[thread]->bool_s );
 		local::get_internal_sparsity(
 			transpose, y_index, var_sparsity, bool_rt
 		);
@@ -1524,8 +1561,8 @@ void rev_sparse_jac(
 	}
 	else
 	{	CPPAD_ASSERT_UNKNOWN( sparsity_ == set_sparsity_enum );
-		vector< std::set<size_t> >& set_rt ( work_[thread].set_r );
-		vector< std::set<size_t> >& set_st ( work_[thread].set_s );
+		vector< std::set<size_t> >& set_rt ( work_[thread]->set_r );
+		vector< std::set<size_t> >& set_st ( work_[thread]->set_s );
 		local::get_internal_sparsity(
 			transpose, y_index, var_sparsity, set_rt
 		);
@@ -1768,6 +1805,7 @@ void for_sparse_hes(
 	size_t m      = y_index.size();
 	bool   ok     = false;
 	size_t thread = thread_alloc::thread_num();
+	allocate_work(thread);
 	//
 	// vx
 	vector<bool> vx(n);
@@ -1775,7 +1813,7 @@ void for_sparse_hes(
 		vx[j] = x_index[j] != 0;
 	//
 	// bool_r
-	vector<bool>& bool_r( work_[thread].bool_r );
+	vector<bool>& bool_r( work_[thread]->bool_r );
 	bool_r.resize(n);
 	for(size_t j = 0; j < n; j++)
 	{	// check if we must compute row and column j of h
@@ -1785,7 +1823,7 @@ void for_sparse_hes(
 	}
 	//
 	// bool s
-	vector<bool>& bool_s( work_[thread].bool_s );
+	vector<bool>& bool_s( work_[thread]->bool_s );
 	bool_s.resize(m);
 	for(size_t i = 0; i < m; i++)
 	{	// check if row i of result is included in h
@@ -1793,9 +1831,9 @@ void for_sparse_hes(
 	}
 	//
 	// h
-	vectorBool&                 pack_h( work_[thread].pack_h );
-	vector<bool>&               bool_h( work_[thread].bool_h );
-	vector< std::set<size_t> >& set_h(  work_[thread].set_h );
+	vectorBool&                 pack_h( work_[thread]->pack_h );
+	vector<bool>&               bool_h( work_[thread]->bool_h );
+	vector< std::set<size_t> >& set_h(  work_[thread]->set_h );
 	//
 	// call user's version of atomic function
 	std::string msg    = ": atomic_base.for_sparse_hes: returned false";
@@ -2198,6 +2236,7 @@ void rev_sparse_hes(
 	size_t m           = y_index.size();
 	bool   ok          = false;
 	size_t thread      = thread_alloc::thread_num();
+	allocate_work(thread);
 	bool   zero_empty  = true;
 	bool   input_empty = false;
 	bool   transpose   = false;
@@ -2208,8 +2247,8 @@ void rev_sparse_hes(
 		vx[j] = x_index[j] != 0;
 	//
 	// note that s and t are vectors so transpose does not matter for bool case
-	vector<bool> bool_s( work_[thread].bool_s );
-	vector<bool> bool_t( work_[thread].bool_t );
+	vector<bool> bool_s( work_[thread]->bool_s );
+	vector<bool> bool_t( work_[thread]->bool_t );
 	//
 	bool_s.resize(m);
 	bool_t.resize(n);
@@ -2221,9 +2260,9 @@ void rev_sparse_hes(
 	//
 	std::string msg = ": atomic_base.rev_sparse_hes: returned false";
 	if( sparsity_ == pack_sparsity_enum )
-	{	vectorBool&  pack_r( work_[thread].pack_r );
-		vectorBool&  pack_u( work_[thread].pack_u );
-		vectorBool&  pack_v( work_[thread].pack_h );
+	{	vectorBool&  pack_r( work_[thread]->pack_r );
+		vectorBool&  pack_u( work_[thread]->pack_u );
+		vectorBool&  pack_v( work_[thread]->pack_h );
 		//
 		pack_v.resize(n * q);
 		//
@@ -2246,9 +2285,9 @@ void rev_sparse_hes(
 		);
 	}
 	else if( sparsity_ == bool_sparsity_enum )
-	{	vector<bool>&  bool_r( work_[thread].bool_r );
-		vector<bool>&  bool_u( work_[thread].bool_u );
-		vector<bool>&  bool_v( work_[thread].bool_h );
+	{	vector<bool>&  bool_r( work_[thread]->bool_r );
+		vector<bool>&  bool_u( work_[thread]->bool_u );
+		vector<bool>&  bool_v( work_[thread]->bool_h );
 		//
 		bool_v.resize(n * q);
 		//
@@ -2272,9 +2311,9 @@ void rev_sparse_hes(
 	}
 	else
 	{	CPPAD_ASSERT_UNKNOWN( sparsity_ == set_sparsity_enum );
-		vector< std::set<size_t> >&  set_r( work_[thread].set_r );
-		vector< std::set<size_t> >&  set_u( work_[thread].set_u );
-		vector< std::set<size_t> >&  set_v( work_[thread].set_h );
+		vector< std::set<size_t> >&  set_r( work_[thread]->set_r );
+		vector< std::set<size_t> >&  set_u( work_[thread]->set_u );
+		vector< std::set<size_t> >&  set_v( work_[thread]->set_h );
 		//
 		set_v.resize(n);
 		//
@@ -2355,8 +2394,8 @@ static void clear(void)
 	while(i--)
 	{	atomic_base* op = class_object()[i];
 		if( op != CPPAD_NULL )
-		{	op->work_.clear();
-			op->work_.resize(CPPAD_MAX_NUM_THREADS);
+		{	for(size_t thread = 0; thread < CPPAD_MAX_NUM_THREADS; thread++)
+				op->free_work(thread);
 		}
 	}
 	return;
