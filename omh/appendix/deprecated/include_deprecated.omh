@@ -32,9 +32,13 @@ The $cref utility$$ individual include files have been deprecated; e.g.,
 $codep
 	# include <cppad/runge_45.hpp>
 $$
-You should instead use
+You must instead use
 $codep
 	# include <cppad/utility.hpp>
+$$
+or you can include individual utility files; e.g.,
+$codep
+	# include <cppad/utility/runge_45.hpp>
 $$
 
 $head Deprecated 2006-12-17$$
@@ -44,30 +48,11 @@ For example, if your program uses the deprecated preprocessor command
 $codep
 	# include <CppAD/CppAD.h>
 $$
-you should change it to the command
+you must change it to the command
 $codep
 	# include <cppad/cppad.hpp>
 $$
 
-
-$head Linking New Files to Deprecated Commands$$
-On Unix systems, references in your source code of the from
-$codei%
-	# include <CppAD/%name%.h>
-%$$
-will refer to the older versions of CppAD unless you preform the
-following steps (this only needs to be done once, not for every install):
-$codei%
-	cp %prefix_dir%/include
-	sudo mv CppAD CppAD.old
-	sudo ln -s cppad CppAD
-%$$
-where
-$cref/prefix_dir/autotools/prefix_dir/$$
-is the prefix directory corresponding to your
-$cref/Unix installation/autotools/$$.
-This will link form the deprecated commands
-to the commands that should be used:
 
 $table
 $bold Deprecated$$         $pre  $$ $cnext $bold Should Use$$
