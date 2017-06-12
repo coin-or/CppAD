@@ -35,12 +35,6 @@ $$
 $section The CppAD Wish List$$
 
 
-$head Sparsity Subsets$$
-Change the documentation for all the sparse Hessian routines to include
-$cref/pattern subset/sparse_hes/pattern/subset/$$ option.
-In addition, add documentation for a similar option to
-the sparse Jacobian routines.
-
 $head Atomic$$
 
 $subhead Element-wise Operations$$
