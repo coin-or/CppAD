@@ -35,13 +35,8 @@ $$
 $section The CppAD Wish List$$
 
 $head Deprecated$$
-$list number$$
-Move all of the examples for $cref deprecated$$ features to
-$code example/deprecated$$.
-$lnext
 Move files that only implement deprecated features into the
 $code cppad/deprecated$$ directory.
-$lend
 
 
 $head Sparsity Subsets$$
