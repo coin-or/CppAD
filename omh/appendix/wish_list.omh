@@ -34,10 +34,6 @@ $$
 
 $section The CppAD Wish List$$
 
-$head Deprecated$$
-Move files that only implement deprecated features into the
-$code cppad/deprecated$$ directory.
-
 
 $head Sparsity Subsets$$
 Change the documentation for all the sparse Hessian routines to include

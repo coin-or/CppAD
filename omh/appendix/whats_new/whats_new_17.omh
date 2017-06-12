@@ -343,8 +343,9 @@ For sparse matrices, it was completed by
 $cref sparse_rcv$$ and the sparse matrix routines that use it; e.g.,
 $cref sparse_jac$$.
 $lnext
-Add the $cref/deprecated/wish_list/Deprecated/$$ and
+Add the Deprecated and
 $cref/example/wish_list/Example/$$ items to the wish list.
+(The Deprecated item was partially completed and partially removed.)
 $lend
 
 $head 02-08$$
