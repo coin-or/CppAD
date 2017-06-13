@@ -703,5 +703,6 @@ public:
 # include <cppad/core/fun_check.hpp>
 # include <cppad/core/omp_max_thread.hpp>
 # include <cppad/core/optimize.hpp>
+# include <cppad/core/abs_normal.hpp>
 
 # endif

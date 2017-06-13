@@ -89,6 +89,7 @@ nobase_myinclude_HEADERS =  \
 	cppad/configure.hpp \
 	cppad/core/abort_recording.hpp \
 	cppad/core/abs.hpp \
+	cppad/core/abs_normal.hpp \
 	cppad/core/acosh.hpp \
 	cppad/core/ad_assign.hpp \
 	cppad/core/ad_binary.hpp \
