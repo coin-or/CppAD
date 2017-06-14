@@ -21,7 +21,6 @@ $spell
 $$
 $latex
 \newcommand{\B}[1]{ {\bf #1} }
-\newcommand{\W}[1]{ \; #1 \; }
 $$
 
 
@@ -92,13 +91,13 @@ $head Affine Approximation$$
 We define the affine approximations
 $latex \[
 \begin{array}{rcl}
-\tilde{y}( \hat{x} \W{:} x , u )
+y[ \hat{x} ]( x , u )
 & = &
 y ( \hat{x}, a( \hat{x} ) )
 	+ \partial_x y ( \hat{x}, a( \hat{x} ) ) ( x - \hat{x} )
 	+ \partial_u y ( \hat{x}, a( \hat{x} ) ) ( u - a( \hat{x} ) )
 \\
-\tilde{z}( \hat{x} \W{:} x , u )
+z[ \hat{x} ]( x , u )
 & = &
 z ( \hat{x}, a( \hat{x} ) )
 	+ \partial_x z ( \hat{x}, a( \hat{x} ) ) ( x - \hat{x} )
@@ -110,11 +109,11 @@ $latex \[
 \begin{array}{rcl}
 y( x , u )
 & = &
-\tilde{y}( \hat{x} \W{:} x , u ) + o ( x - \hat{x}, u - a( \hat{x} ) )
+y[ \hat{x} ]( x , u ) + o ( x - \hat{x}, u - a( \hat{x} ) )
 \\
 z( x , u )
 & = &
-\tilde{z}( \hat{x} \W{:} x , u ) + o ( x - \hat{x}, u - a( \hat{x} ) )
+z[ \hat{x} ]( x , u ) + o ( x - \hat{x}, u - a( \hat{x} ) )
 \end{array}
 \] $$
 
@@ -125,7 +124,7 @@ The function $latex a(x)$$ is not smooth, but it is equal to
 $latex | z(x, u) |$$ when $latex u = a(x)$$.
 Furthermore
 $latex \[
-\tilde{z}( \hat{x} \W{:} x , u )
+z[ \hat{x} ]( x , u )
 =
 z ( \hat{x}, a( \hat{x} ) )
 	+ \partial_x z ( \hat{x}, a( \hat{x} ) ) ( x - \hat{x} )
@@ -134,7 +133,7 @@ z ( \hat{x}, a( \hat{x} ) )
 Now the partial of $latex z_i$$ with respect to $latex u_j$$ is zero
 for $latex j \geq i$$. It follows that
 $latex \[
-\tilde{z}_i ( \hat{x} \W{:} x , u )
+z_i [ \hat{x} ]( x , u )
 =
 z_i ( \hat{x}, a( \hat{x} ) )
 	+ \partial_x z_i ( \hat{x}, a( \hat{x} ) ) ( x - \hat{x} )
@@ -143,9 +142,9 @@ z_i ( \hat{x}, a( \hat{x} ) )
 \] $$
 Considering the case $latex i = 0$$ we define
 $latex \[
-\tilde{a}_0 ( \hat{x} \W{:} x )
+a_0 [ \hat{x} ]( x )
 =
-| \tilde{z}_0 ( \hat{x} \W{:} x , u ) |
+| z_0 [ \hat{x} ]( x , u ) |
 =
 \left|
 	z_0 ( \hat{x}, a( \hat{x} ) )
@@ -154,29 +153,29 @@ $latex \[
 \] $$
 It follows that
 $latex \[
-	a_0 (x) = \tilde{a}_0 ( \hat{x} \W{:} x ) + o ( x - \hat{x} )
+	a_0 (x) = a_0 [ \hat{x} ]( x ) + o ( x - \hat{x} )
 \] $$
-In general, we define $latex \tilde{a}_i$$ using
-$latex \tilde{a}_j$$ for $latex j < i$$ as follows:
+In general, we define $latex a_i [ \hat{x} ]$$ using
+$latex a_j [ \hat{x} ]$$ for $latex j < i$$ as follows:
 $latex \[
-\tilde{a}_i ( \hat{x} \W{:} x )
+a_i [ \hat{x} ]( x )
 =
 \left |
 	z_i ( \hat{x}, a( \hat{x} ) )
 	+ \partial_x z_i ( \hat{x}, a( \hat{x} ) ) ( x - \hat{x} )
 	+ \sum_{j < i} \partial_{u(j)}
 		z_i ( \hat{x}, a( \hat{x} ) )
-			( \hat{a}_j ( \hat{x} \W{:} x )  - a_j ( \hat{x} ) )
+			( a_j [ \hat{x} ] ( x )  - a_j ( \hat{x} ) )
 \right|
 \] $$
 It follows that
 $latex \[
-	a (x) = \tilde{a} ( \hat{x} \W{:} x ) + o ( x - \hat{x} )
+	a (x) = a[ \hat{x} ]( x ) + o ( x - \hat{x} )
 \] $$
 Note that in the case where $latex z(x, u)$$ and $latex y(x, u)$$ are
 affine,
 $latex \[
-	\tilde{a} ( \hat{x} \W{:} x ) = a( x )
+	a[ \hat{x} ]( x ) = a( x )
 \] $$
 
 
@@ -186,7 +185,7 @@ f(x)
 =
 y ( x , a(x ) )
 =
-\tilde{y} ( \hat{x} \W{:} x , \tilde{a} ( \hat{x} \W{:}  x ) )
+y [ \hat{x} ] ( x , a[ \hat{x} ] ( x ) )
 + o( \Delta x )
 \] $$
 
@@ -199,11 +198,11 @@ $latex Y = \partial_u y(\hat{x}, \hat{u})$$,
 the approximation for $latex z$$ and $latex y$$ are
 $latex \[
 \begin{array}{rcl}
-\tilde{z} ( \hat{x} \W{:} x , u )
+z[ \hat{x} ]( x , u )
 & = &
 z ( \hat{x}, a( \hat{x} ) ) + Z ( x - \hat{x} ) + L ( u - a( \hat{x} ) )
 \\
-\tilde{y} ( \hat{x} \W{:} x , u )
+y[ \hat{x} ]( x , u )
 & = &
 y ( \hat{x}, a( \hat{x} ) ) + J ( x - \hat{x} ) + Y ( u - a( \hat{x} ) )
 \end{array}
@@ -211,11 +210,11 @@ y ( \hat{x}, a( \hat{x} ) ) + J ( x - \hat{x} ) + Y ( u - a( \hat{x} ) )
 Moving the terms with $latex \hat{x}$$ together, we have
 $latex \[
 \begin{array}{rcl}
-\tilde{z} ( \hat{x} \W{:} x , u )
+z[ \hat{x} ]( x , u )
 & = &
 z ( \hat{x}, a( \hat{x} ) ) - Z \hat{x} - L a( \hat{x} )  + Z x + L u
 \\
-\tilde{y} ( \hat{x} \W{:} x , u )
+y[ \hat{x} ]( x , u )
 & = &
 y ( \hat{x}, a( \hat{x} ) ) - J \hat{x} - Y a( \hat{x} )  + J x + Y u
 \end{array}
@@ -226,9 +225,9 @@ $latex b = y ( \hat{x}, \hat{u} ) - J \hat{x} - Y \hat{u}$$,
 we have
 $latex \[
 \begin{array}{rcl}
-\tilde{z} ( \hat{x} \W{:} x , u ) & = & c + Z x + L u
+z[ \hat{x} ]( x , u ) & = & c + Z x + L u
 \\
-\tilde{y} ( \hat{x} \W{:} x , u ) & = & b + J x + Y u
+y[ \hat{x} ]( x , u ) & = & b + J x + Y u
 \end{array}
 \] $$
 Considering the affine case, where the approximations are exact,
