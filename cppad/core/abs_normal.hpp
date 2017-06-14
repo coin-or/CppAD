@@ -153,53 +153,54 @@ This is the abs-normal approximation for $latex f$$ near $latex x$$.
 
 $head Correspondence to Literature$$
 Using the notation
-$latex Z = \partial_x z(x, u)$$,
-$latex L = \partial_u z(x, u)$$,
-$latex J = \partial_x y(x, u)$$,
-$latex Y = \partial_u y(x, u)$$,
-the abs-normal approximation for $latex z$$ and $latex y$$ near $latex x$$ is
+$latex Z = \partial_x z(\hat{x}, \hat{u})$$,
+$latex L = \partial_u z(\hat{x}, \hat{u})$$,
+$latex J = \partial_x y(\hat{x}, \hat{u})$$,
+$latex Y = \partial_u y(\hat{x}, \hat{u})$$,
+the approximation for $latex z$$ and $latex y$$ near $latex \hat{x}$$
+and $latex \hat{u}$$ is
 $latex \[
 \begin{array}{rcl}
-z(x + \Delta x, u + \Delta u )
+z(\hat{x} + \Delta x, \hat{u} + \Delta u )
 & = &
-z(x, u) - Z x - L u + Z (x + \Delta x) + L ( u + \Delta u )  + o( \Delta x)
+z(\hat{x}, \hat{u}) + Z \Delta x + L \Delta u  + o( \Delta x , \Delta u)
 \\
-y(x + \Delta x, u + \Delta u )
+y(\hat{x} + \Delta x, \hat{u} + \Delta u )
 & = &
-y(x, u) - J x - Y u + J (x + \Delta x) + Y ( u + \Delta u ) + o( \Delta x)
+y(\hat{x}, \hat{u}) + J \Delta x + Y \Delta u + o( \Delta x , \Delta u)
 \end{array}
 \] $$
 Using the notation
-$latex \hat{x} = x + \Delta x$$,
-$latex \hat{u} = u + \Delta u$$,
-$latex c = z(x,u) - Z x - L u$$,
-$latex b = y(x,u) - J x - Y u$$,
+$latex x = \hat{x} + \Delta x$$,
+$latex u = \hat{u} + \Delta u$$,
+$latex c = z(\hat{x}, \hat{u}) - Z \hat{x} - L \hat{u}$$,
+$latex b = y(\hat{x}, \hat{u}) - J \hat{x} - Y \hat{u}$$,
 we have
 $latex \[
 \begin{array}{rcl}
-z( \hat{x}, \hat{u} )
+z(x, u)
 & = &
-c + Z \hat{x} + L \hat{u}  + o( \Delta x)
+c + Z x + L u  + o( \Delta x , \Delta u)
 \\
-y( \hat{x}, \hat{u} )
+y(x, u)
 & = &
-b + J \hat{x} + Y \hat{u} + o( \Delta x)
+b + J x + Y u + o( \Delta x , \Delta u)
 \end{array}
 \] $$
-Note that
+Choosing
 $latex \[
-	\hat{u} = u + \Delta u = a( x + \Delta x ) = | z( \hat{x} , \hat{u} ) |
+	u = a(x) = |z(x, u)|
 \] $$
 Thus we obtain
 $latex \[
 \begin{array}{rcl}
-z( \hat{x}, \hat{u} )
+z(x, u)
 & = &
-c + Z \hat{x} + L | z( \hat{x} , \hat{u} ) |  + o( \Delta x)
+c + Z x + L | z(x, u) |  + o( \Delta x )
 \\
-y( \hat{x}, \hat{u} )
+y(x, u)
 & = &
-b + J \hat{x} + Y | z( \hat{x} , \hat{u} ) | + o( \Delta x)
+b + J x + Y | z(x, u) | + o( \Delta x )
 \end{array}
 \] $$
 This shows the correspondence between the notation above and
