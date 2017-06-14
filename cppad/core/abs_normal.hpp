@@ -52,13 +52,13 @@ $codei%
 %$$
 The initial function representation in $icode g$$ is lost.
 Upon return it represents the smooth function
-$latex g : \B{R}^{n + s} \rightarrow  \B{R}^{s + m}$$ is defined by
+$latex g : \B{R}^{n + s} \rightarrow  \B{R}^{m + s}$$ is defined by
 $latex \[
 g( x , u )
 =
-\left[ \begin{array}{c} z(x, u) \\ y(x, u) \end{array} \right]
+\left[ \begin{array}{c} y(x, u) \\ z(x, u) \end{array} \right]
 \] $$
-were $latex z(x, u)$$ and $latex y(x, u)$$ are defined below.
+were $latex y(x, u)$$ and $latex z(x, u)$$ are defined below.
 
 $subhead a(x)$$
 Let $latex \zeta_0 ( x )$$
@@ -96,7 +96,7 @@ z_i ( x + \Delta x, u + \Delta u )
 z_i (x, u)
 	+ \partial_x z_i (x, u) \Delta x
 	+ \partial_u z_i (x, u) \Delta u
-	+ o( \Delta x^2 )
+	+ o( \Delta x )
 \end{array}
 \] $$
 Now the partial of $latex z_i$$ with respect to $latex u_j$$ is zero
@@ -108,7 +108,7 @@ z_i ( x + \Delta x, u + \Delta u )
 z_i (x, u)
 	+ \partial_x z_i (x, u) \Delta x
 	+ \sum_{j < i} \partial_{u(j)} z_i (x, u) \Delta u_j
-	+ o( \Delta x^2 )
+	+ o( \Delta x )
 \\
 a_i ( x + \Delta x )
 & = &
@@ -116,7 +116,7 @@ a_i ( x + \Delta x )
 	+ \partial_x z_i (x, u) \Delta x
 	+ \sum_{j < i} \partial_{u(j)} z_i (x, u) \Delta u_j
 \right|
-+ o( \Delta x^2 )
++ o( \Delta x )
 \\
 \Delta u_i
 & = &
@@ -125,12 +125,12 @@ a_i ( x + \Delta x )
 	+ \sum_{j < i} \partial_{u(j)} z_i (x, u) \Delta u_j
 \right|
 - | z_i (x, u) |
-+ o( \Delta x^2 )
++ o( \Delta x )
 \end{array}
 \] $$
 Given $latex u = a(x)$$ and $latex \Delta u_j$$ for $latex j < i$$,
 we can use the formula above to solve for $latex \Delta u_i$$ to
-within $latex o( \Delta x^2)$$.
+within $latex o( \Delta x)$$.
 We call the resulting vector $latex \Delta \tilde{u}$$.
 $latex \[
 \begin{array}{rcl}
@@ -139,14 +139,14 @@ y ( x + \Delta x, u + \Delta u )
 y(x, u)
 	+ \partial_x y (x, u) \Delta x
 	+ \partial_u y (x, u) \Delta u
-	+ o( \Delta x^2 )
+	+ o( \Delta x )
 \\
 f( x + \Delta x )
 & = &
 f(x)
 	+ \partial_x y (x, u) \Delta x
 	+ \partial_u y (x, u) \Delta \tilde{u}
-	+ o( \Delta x^2 )
+	+ o( \Delta x )
 \end{array}
 \] $$
 This is the abs-normal approximation for $latex f$$ near $latex x$$.
@@ -162,11 +162,11 @@ $latex \[
 \begin{array}{rcl}
 z(x + \Delta x, u + \Delta u )
 & = &
-z(x, u) - Z x - L u + Z (x + \Delta x) + L ( u + \Delta u )  + o( \Delta x^2)
+z(x, u) - Z x - L u + Z (x + \Delta x) + L ( u + \Delta u )  + o( \Delta x)
 \\
 y(x + \Delta x, u + \Delta u )
 & = &
-y(x, u) - J x - Y u + J (x + \Delta x) + Y ( u + \Delta u ) + o( \Delta x^2)
+y(x, u) - J x - Y u + J (x + \Delta x) + Y ( u + \Delta u ) + o( \Delta x)
 \end{array}
 \] $$
 Using the notation
@@ -179,15 +179,32 @@ $latex \[
 \begin{array}{rcl}
 z( \hat{x}, \hat{u} )
 & = &
-c + Z \hat{x} + L \hat{u}  + o( \Delta x^2)
+c + Z \hat{x} + L \hat{u}  + o( \Delta x)
 \\
 y( \hat{x}, \hat{u} )
 & = &
-b + J \hat{x} + Y \hat{u} + o( \Delta x^2)
+b + J \hat{x} + Y \hat{u} + o( \Delta x)
+\end{array}
+\] $$
+Note that
+$latex \[
+	\hat{u} = u + \Delta u = a( x + \Delta x ) = | z( \hat{x} , \hat{u} ) |
+\] $$
+Thus we obtain
+$latex \[
+\begin{array}{rcl}
+z( \hat{x}, \hat{u} )
+& = &
+c + Z \hat{x} + L | z( \hat{x} , \hat{u} ) |  + o( \Delta x)
+\\
+y( \hat{x}, \hat{u} )
+& = &
+b + J \hat{x} + Y | z( \hat{x} , \hat{u} ) | + o( \Delta x)
 \end{array}
 \] $$
 This shows the correspondence between the notation above and
 Equation (2) of the reference.
+
 
 $end
 */
