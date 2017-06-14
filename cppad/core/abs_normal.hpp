@@ -72,7 +72,7 @@ For $latex i = 0 , \ldots , {s-1}$$ define
 $latex \[
 a_i (x)
 =
-| \zeta_i [ x, a_0 (x) , \ldots , a_{i-1} (x) ] |
+| \zeta_i ( x , a_0 (x) , \ldots , a_{i-1} (x ) ) |
 \] $$
 This defines $latex a : \B{R}^n \rightarrow \B{R}^s$$.
 
@@ -94,15 +94,15 @@ $latex \[
 \begin{array}{rcl}
 \tilde{y}( \hat{x} \W{:} x , u )
 & = &
-y [ \hat{x}, a( \hat{x} ) ]
-	+ \partial_x y [ \hat{x}, a( \hat{x} ) ] ( x - \hat{x} )
-	+ \partial_u y [ \hat{x}, a( \hat{x} ) ] [ u - a( \hat{x} ) ]
+y ( \hat{x}, a( \hat{x} ) )
+	+ \partial_x y ( \hat{x}, a( \hat{x} ) ) ( x - \hat{x} )
+	+ \partial_u y ( \hat{x}, a( \hat{x} ) ) ( u - a( \hat{x} ) )
 \\
 \tilde{z}( \hat{x} \W{:} x , u )
 & = &
-z [ \hat{x}, a( \hat{x} ) ]
-	+ \partial_x z [ \hat{x}, a( \hat{x} ) ] ( x - \hat{x} )
-	+ \partial_u z [ \hat{x}, a( \hat{x} ) ] [ u - a( \hat{x} ) ]
+z ( \hat{x}, a( \hat{x} ) )
+	+ \partial_x z ( \hat{x}, a( \hat{x} ) ) ( x - \hat{x} )
+	+ \partial_u z ( \hat{x}, a( \hat{x} ) ) ( u - a( \hat{x} ) )
 \end{array}
 \] $$
 It follows that
@@ -110,11 +110,11 @@ $latex \[
 \begin{array}{rcl}
 y( x , u )
 & = &
-\tilde{y}( \hat{x} \W{:} x , u ) + o [ x - \hat{x}, u - a( \hat{x} ) ]
+\tilde{y}( \hat{x} \W{:} x , u ) + o ( x - \hat{x}, u - a( \hat{x} ) )
 \\
 z( x , u )
 & = &
-\tilde{z}( \hat{x} \W{:} x , u ) + o [ x - \hat{x}, u - a( \hat{x} ) ]
+\tilde{z}( \hat{x} \W{:} x , u ) + o ( x - \hat{x}, u - a( \hat{x} ) )
 \end{array}
 \] $$
 
@@ -127,19 +127,19 @@ Furthermore
 $latex \[
 \tilde{z}( \hat{x} \W{:} x , u )
 =
-z [ \hat{x}, a( \hat{x} ) ]
-	+ \partial_x z [ \hat{x}, a( \hat{x} ) ] ( x - \hat{x} )
-	+ \partial_u z [ \hat{x}, a( \hat{x} ) ] [ u - a( \hat{x} ) ]
+z ( \hat{x}, a( \hat{x} ) )
+	+ \partial_x z ( \hat{x}, a( \hat{x} ) ) ( x - \hat{x} )
+	+ \partial_u z ( \hat{x}, a( \hat{x} ) ) ( u - a( \hat{x} ) )
 \] $$
 Now the partial of $latex z_i$$ with respect to $latex u_j$$ is zero
 for $latex j \geq i$$. It follows that
 $latex \[
 \tilde{z}_i ( \hat{x} \W{:} x , u )
 =
-z_i [ \hat{x}, a( \hat{x} ) ]
-	+ \partial_x z_i [ \hat{x}, a( \hat{x} ) ] ( x - \hat{x} )
+z_i ( \hat{x}, a( \hat{x} ) )
+	+ \partial_x z_i ( \hat{x}, a( \hat{x} ) ) ( x - \hat{x} )
 	+ \sum_{j < i} \partial_{u(j)}
-		z_i [ \hat{x}, a( \hat{x} ) ] [ u_j - a_j ( \hat{x} ) ]
+		z_i ( \hat{x}, a( \hat{x} ) ) ( u_j - a_j ( \hat{x} ) )
 \] $$
 Considering the case $latex i = 0$$ we define
 $latex \[
@@ -148,8 +148,8 @@ $latex \[
 | \tilde{z}_0 ( \hat{x} \W{:} x , u ) |
 =
 \left|
-	z_0 [ \hat{x}, a( \hat{x} ) ]
-	+ \partial_x z_0 [ \hat{x}, a( \hat{x} ) ] ( x - \hat{x} )
+	z_0 ( \hat{x}, a( \hat{x} ) )
+	+ \partial_x z_0 ( \hat{x}, a( \hat{x} ) ) ( x - \hat{x} )
 \right|
 \] $$
 It follows that
@@ -162,11 +162,11 @@ $latex \[
 \tilde{a}_i ( \hat{x} \W{:} x )
 =
 \left |
-	z_i [ \hat{x}, a( \hat{x} ) ]
-	+ \partial_x z_i [ \hat{x}, a( \hat{x} ) ] ( x - \hat{x} )
+	z_i ( \hat{x}, a( \hat{x} ) )
+	+ \partial_x z_i ( \hat{x}, a( \hat{x} ) ) ( x - \hat{x} )
 	+ \sum_{j < i} \partial_{u(j)}
-		z_i [ \hat{x}, a( \hat{x} ) ]
-			[ \tilde{a}_j ( \hat{x} \W{:} x )  - a_j ( \hat{x} ) ]
+		z_i ( \hat{x}, a( \hat{x} ) )
+			( \hat{a}_j ( \hat{x} \W{:} x )  - a_j ( \hat{x} ) )
 \right|
 \] $$
 It follows that
@@ -184,9 +184,9 @@ $subhead Approximating f(x)$$
 $latex \[
 f(x)
 =
-y [ x , a(x) ]
+y ( x , a(x ) )
 =
-\tilde{y} [ \hat{x} \W{:} x , \tilde{a} ( \hat{x} \W{:}  x ) ]
+\tilde{y} ( \hat{x} \W{:} x , \tilde{a} ( \hat{x} \W{:}  x ) )
 + o( \Delta x )
 \] $$
 
@@ -201,11 +201,11 @@ $latex \[
 \begin{array}{rcl}
 \tilde{z} ( \hat{x} \W{:} x , u )
 & = &
-z [ \hat{x}, a( \hat{x} ) ] + Z ( x - \hat{x} ) + L [ u - a( \hat{x} ) ]
+z ( \hat{x}, a( \hat{x} ) ) + Z ( x - \hat{x} ) + L ( u - a( \hat{x} ) )
 \\
 \tilde{y} ( \hat{x} \W{:} x , u )
 & = &
-y [ \hat{x}, a( \hat{x} ) ] + J ( x - \hat{x} ) + Y [ u - a( \hat{x} ) ]
+y ( \hat{x}, a( \hat{x} ) ) + J ( x - \hat{x} ) + Y ( u - a( \hat{x} ) )
 \end{array}
 \] $$
 Moving the terms with $latex \hat{x}$$ together, we have
@@ -213,16 +213,16 @@ $latex \[
 \begin{array}{rcl}
 \tilde{z} ( \hat{x} \W{:} x , u )
 & = &
-z [ \hat{x}, a( \hat{x} ) ] - Z \hat{x} - L a( \hat{x} )  + Z x + L u
+z ( \hat{x}, a( \hat{x} ) ) - Z \hat{x} - L a( \hat{x} )  + Z x + L u
 \\
 \tilde{y} ( \hat{x} \W{:} x , u )
 & = &
-y [ \hat{x}, a( \hat{x} ) ] - J \hat{x} - Y a( \hat{x} )  + J x + Y u
+y ( \hat{x}, a( \hat{x} ) ) - J \hat{x} - Y a( \hat{x} )  + J x + Y u
 \end{array}
 \] $$
 Using the notation
-$latex c = z [ \hat{x}, \hat{u} ] - Z \hat{x} - L \hat{u}$$,
-$latex b = y [ \hat{x}, \hat{u} ] - J \hat{x} - Y \hat{u}$$,
+$latex c = z ( \hat{x}, \hat{u} ) - Z \hat{x} - L \hat{u}$$,
+$latex b = y ( \hat{x}, \hat{u} ) - J \hat{x} - Y \hat{u}$$,
 we have
 $latex \[
 \begin{array}{rcl}
@@ -235,9 +235,9 @@ Considering the affine case, where the approximations are exact,
 and choosing $latex u = a(x) = |z(x, u)|$$, we obtain
 $latex \[
 \begin{array}{rcl}
-z[ x , a(x) ] & = & c + Z x + L |z[ x , a(x) ]|
+z( x , a(x ) ) & = & c + Z x + L |z( x , a(x ) )|
 \\
-y[ x , a(x) ] & = & b + J x + Y |z[ x , a(x) ]|
+y( x , a(x ) ) & = & b + J x + Y |z( x , a(x ) )|
 \end{array}
 \] $$
 This is Equation (2) of the reference.
