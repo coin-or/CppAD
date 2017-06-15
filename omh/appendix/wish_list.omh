@@ -30,10 +30,18 @@ $spell
 	isnan
 	vx
 	Jacobian
+	const
 $$
 
 $section The CppAD Wish List$$
 
+
+$head const ADFun$$
+Currently the structure that iterates through the operations sequence
+in an $cref ADFun$$ object is part of the function object.
+There should be a separate constant iterator so that
+$code ADFun$$ object could be $code const$$ when they are not affected
+by this.
 
 $head Atomic$$
 
