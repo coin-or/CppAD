@@ -308,7 +308,7 @@ void optimize_run(
 			break;
 
 			// --------------------------------------------------------------
-			// Unary operator where operand is arg[0]
+			// Unary operators, argument a variable, one result
 			case AbsOp:
 			case AcosOp:
 			case AcoshOp:
@@ -345,7 +345,8 @@ void optimize_run(
 					new_arg[0] < old2new[var2op[i_var]].new_var
 				);
 				if( op == ErfOp )
-				{	// Error function is a special case
+				{	CPPAD_ASSERT_NARG_NRES(op, 3, 5);
+					// Error function is a special case
 					// second argument is always the parameter 0
 					// third argument is always the parameter 2 / sqrt(pi)
 					CPPAD_ASSERT_UNKNOWN( NumArg(ErfOp) == 3 );
@@ -354,11 +355,16 @@ void optimize_run(
 						Base( 1.0 / std::sqrt( std::atan(1.0) ) )
 					) );
 				}
+				else
+				{	// some of these operators have an auxillary result;
+					// e.g. sine and cosine are computed together.
+					CPPAD_ASSERT_UNKNOWN( NumArg(op) == 1 );
+					CPPAD_ASSERT_UNKNOWN( NumRes(op) ==1 || NumRes(op) == 2 );
+				}
 			}
 			break;
 			// ---------------------------------------------------
-			// Binary operators where
-			// left is a variable and right is a parameter
+			// Binary operators, left variable, right parameter, one result
 			case SubvpOp:
 			// check if this is the top of a csum connection
 			if( op_info[i_op].usage == csum_usage )
@@ -407,9 +413,9 @@ void optimize_run(
 			}
 			break;
 			// ---------------------------------------------------
-			// Binary operators where
-			// left is an index and right is a variable
+			// Binary operators, left index, right variable, one result
 			case DisOp:
+			CPPAD_ASSERT_NARG_NRES(op, 2, 1);
 			previous = op_info[i_op].previous;
 			if( previous > 0 )
 			{	size_t j_op = previous;
@@ -430,8 +436,7 @@ void optimize_run(
 			break;
 
 			// ---------------------------------------------------
-			// Binary operators where
-			// left is a parameter and right is a variable
+			// Binary operators, left parameter, right variable, one result
 			case SubpvOp:
 			case AddpvOp:
 			// check if this is the top of a csum connection
@@ -482,7 +487,7 @@ void optimize_run(
 			}
 			break;
 			// ---------------------------------------------------
-			// Binary operator where both operands are variables
+			// Binary operator, left and right variables, one result
 			case AddvvOp:
 			case SubvvOp:
 			// check if this is the top of a csum connection
@@ -626,8 +631,9 @@ void optimize_run(
 			old2new[i_op].new_op  = rec->num_op_rec();
 			old2new[i_op].new_var = rec->PutOp(op);
 			break;
+
 			// ---------------------------------------------------
-			// Operations with one argument that is a parameter
+			// Unary operators, argument a parameter, one result
 			case ParOp:
 			CPPAD_ASSERT_NARG_NRES(op, 1, 1);
 			new_arg[0] = rec->PutPar( play->GetPar(arg[0] ) );
@@ -753,7 +759,6 @@ void optimize_run(
 			new_arg[1] = rec->PutPar( play->GetPar(arg[1]) );
 			new_arg[2] = old2new[ var2op[arg[2]] ].new_var;
 			CPPAD_ASSERT_UNKNOWN( size_t(new_arg[0]) < num_vecad_ind );
-			CPPAD_ASSERT_UNKNOWN( size_t(new_arg[1]) < num_var );
 			CPPAD_ASSERT_UNKNOWN( size_t(new_arg[2]) < num_var );
 			rec->PutArg(
 				new_arg[0],

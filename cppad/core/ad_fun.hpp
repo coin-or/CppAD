@@ -634,6 +634,9 @@ public:
 	// Optimize the tape
 	// (see doxygen documentation in optimize.hpp)
 	void optimize( const std::string& options = "" );
+
+	// create abs-normal representation of the function f(x)
+	void abs_normal( ADFun& f );
 	// ------------------- Deprecated -----------------------------
 
 	/// deprecated: assign a new operation sequence
