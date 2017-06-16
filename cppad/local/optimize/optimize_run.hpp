@@ -750,7 +750,9 @@ void optimize_run(
 			new_arg[1] = rec->PutPar( play->GetPar(arg[1]) );
 			new_arg[2] = old2new[ var2op[arg[2]] ].new_var;
 			CPPAD_ASSERT_UNKNOWN( size_t(new_arg[0]) < num_vecad_ind );
-			CPPAD_ASSERT_UNKNOWN( size_t(new_arg[1]) < num_var );
+			// This was a mistake in original 20170000 release
+			// ( new_arg[1] is a parameter, not a variable )
+			// CPPAD_ASSERT_UNKNOWN( size_t(new_arg[1]) < num_var );
 			CPPAD_ASSERT_UNKNOWN( size_t(new_arg[2]) < num_var );
 			rec->PutArg(
 				new_arg[0],
