@@ -270,8 +270,8 @@ is used.
 
 template <class Base>
 void ADFun<Base>::abs_normal(ADFun<Base>& f)
-{
-# if NOT_YET_COMPILING
+{	using namespace local;
+
 	// -----------------------------------------------------------------------
 	// Forward sweep to determine number of absolute value operations in f
 	// -----------------------------------------------------------------------
@@ -342,7 +342,6 @@ void ADFun<Base>::abs_normal(ADFun<Base>& f)
 			case BeginOp:
 			CPPAD_ASSERT_NARG_NRES(op, 1, 1);
 			CPPAD_ASSERT_UNKNOWN( arg[0] == 0 );
-			CPPAD_ASSERT_UNKNOWN( new_var == 0 );
 			rec.PutArg(0);
 			f2g_var[i_var] = rec.PutOp(op);
 			break;
@@ -361,10 +360,11 @@ void ADFun<Base>::abs_normal(ADFun<Base>& f)
 		if( more_operators )
 			f.play_->forward_next(op, arg, i_op, i_var);
 	}
-	CPPAD_ASSERT_UNKNOWN( f.Domain() == new_var );
+	CPPAD_ASSERT_UNKNOWN( f.Domain() == i_var );
 	//
 	// record the independent variables corresponding AbsOp results
-	for(size_t index_abs = 0; index_abs < f_abs_var.size(); index_abs++)
+	size_t index_abs;
+	for(index_abs = 0; index_abs < f_abs_res.size(); index_abs++)
 		f2g_var[ f_abs_res[index_abs] ] = rec.PutOp(InvOp);
 	//
 	// used to hold new argument vector
@@ -380,7 +380,8 @@ void ADFun<Base>::abs_normal(ADFun<Base>& f)
 	more_operators = true;
 	index_abs      = 0;
 	while( more_operators )
-	{	switch( op )
+	{	addr_t mask; // temporary used in some switch cases
+		switch( op )
 		{
 			// check setting of f_abs_arg and f_abs_res;
 			case AbsOp:
@@ -450,10 +451,10 @@ void ADFun<Base>::abs_normal(ADFun<Base>& f)
 			break;
 			// --------------------------------------------------------------
 			// Binary operators, left variable, right parameter, one result
-			case SubvpOp;
-			case DivvpOp;
-			case PowvpOp;
-			case ZmulvpOp;
+			case SubvpOp:
+			case DivvpOp:
+			case PowvpOp:
+			case ZmulvpOp:
 			CPPAD_ASSERT_NARG_NRES(op, 2, 1);
 			CPPAD_ASSERT_UNKNOWN( f2g_var[ arg[0] ] < num_var );
 			new_arg[0] = f2g_var[ arg[0] ];
@@ -473,11 +474,11 @@ void ADFun<Base>::abs_normal(ADFun<Base>& f)
 
 			// --------------------------------------------------------------
 			// Binary operators, left parameter, right variable, one result
-			case AddpvOp;
-			case SubpvOp;
-			case DivpvOp;
-			case PowpvOp;
-			case ZmulpvOp;
+			case AddpvOp:
+			case SubpvOp:
+			case DivpvOp:
+			case PowpvOp:
+			case ZmulpvOp:
 			CPPAD_ASSERT_NARG_NRES(op, 2, 1);
 			CPPAD_ASSERT_UNKNOWN( f2g_var[ arg[1] ] < num_var );
 			new_arg[0] = rec.PutPar( f_parameter[ arg[0] ] );
@@ -487,11 +488,11 @@ void ADFun<Base>::abs_normal(ADFun<Base>& f)
 			break;
 			// --------------------------------------------------------------
 			// Binary operators, left and right variables, one result
-			case AddvvOp;
-			case SubvvOp;
-			case MulvvOp;
-			case DivvvOp;
-			case ZmulvvOp;
+			case AddvvOp:
+			case SubvvOp:
+			case MulvvOp:
+			case DivvvOp:
+			case ZmulvvOp:
 			CPPAD_ASSERT_NARG_NRES(op, 2, 1);
 			CPPAD_ASSERT_UNKNOWN( f2g_var[ arg[0] ] < num_var );
 			CPPAD_ASSERT_UNKNOWN( f2g_var[ arg[1] ] < num_var );
@@ -753,13 +754,13 @@ void ADFun<Base>::abs_normal(ADFun<Base>& f)
 
 	// extend independent variable vector to include u vector
 	size_t n = ind_taddr_.size();
-	for(size_t i_abs = 0; i_abs < num_abs; i_abs++)
+	for(size_t i_abs = 0; i_abs < f_abs_res.size(); i_abs++)
 	{	// ind_taddr_[j] = j + 1
 		ind_taddr_.push_back( n + i_abs + 1 );
 	}
 
 	// extend dependent variable vector to include z vector
-	for(size_t i_abs = 0; i_abs < num_abs; i_abs++)
+	for(size_t i_abs = 0; i_abs < f_abs_res.size(); i_abs++)
 	{	CPPAD_ASSERT_UNKNOWN( f2g_var[ f_abs_arg[i_abs] ] < num_var );
 		dep_taddr_.push_back( f2g_var[ f_abs_arg[i_abs] ] );
 	}
@@ -770,10 +771,9 @@ void ADFun<Base>::abs_normal(ADFun<Base>& f)
 	for_jac_sparse_set_.resize(0, 0);
 
 	// free taylor coefficient memory
-	taylor_free();
+	taylor_.free();
 	num_order_taylor_ = 0;
 	cap_order_taylor_ = 0;
-# endif
 }
 
 } // END_CPPAD_NAMESPACE
