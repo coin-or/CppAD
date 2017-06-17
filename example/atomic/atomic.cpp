@@ -47,7 +47,7 @@ extern bool tangent(void);
 
 // main program that runs all the tests
 int main(void)
-{	std::string group = "example/atmoic";
+{	std::string group = "example/atomic";
 	size_t      width = 20;
 	CppAD::test_boolofvoid Run(group, width);
 

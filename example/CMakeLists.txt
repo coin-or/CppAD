@@ -14,6 +14,9 @@
 # initialize check_depends
 SET(check_example_depends "")
 
+# abs_normal examples
+ADD_SUBDIRECTORY(abs_normal)
+
 # atomic examples
 ADD_SUBDIRECTORY(atomic)
 

@@ -78,7 +78,7 @@ $rref a11c_bthread.cpp$$
 $rref a11c_openmp.cpp$$
 $rref a11c_pthread.cpp$$
 $rref abort_recording.cpp$$
-$rref fabs.cpp$$
+$rref abs_normal_get_started.cpp$$
 $rref acos.cpp$$
 $rref acosh.cpp$$
 $rref ad_assign.cpp$$
@@ -100,7 +100,6 @@ $rref atomic_eigen_mat_inv.cpp$$
 $rref atomic_eigen_mat_inv.hpp$$
 $rref atomic_eigen_mat_mul.cpp$$
 $rref atomic_eigen_mat_mul.hpp$$
-$rref checkpoint_extended_ode.cpp$$
 $rref atomic_for_sparse_hes.cpp$$
 $rref atomic_for_sparse_jac.cpp$$
 $rref atomic_forward.cpp$$
@@ -109,7 +108,6 @@ $rref atomic_mat_mul.cpp$$
 $rref atomic_mat_mul.hpp$$
 $rref atomic_mul_level.cpp$$
 $rref atomic_norm_sq.cpp$$
-$rref checkpoint_ode.cpp$$
 $rref atomic_reciprocal.cpp$$
 $rref atomic_reverse.cpp$$
 $rref atomic_rev_sparse_hes.cpp$$
@@ -128,6 +126,8 @@ $rref change_param.cpp$$
 $rref check_for_nan.cpp$$
 $rref check_numeric_type.cpp$$
 $rref checkpoint.cpp$$
+$rref checkpoint_extended_ode.cpp$$
+$rref checkpoint_ode.cpp$$
 $rref check_simple_vector.cpp$$
 $rref colpack_hes.cpp$$
 $rref colpack_hessian.cpp$$
@@ -154,10 +154,10 @@ $rref elapsed_seconds.cpp$$
 $rref equal_op_seq.cpp$$
 $rref erf.cpp$$
 $rref error_handler.cpp$$
-$rref general.cpp$$
 $rref exp.cpp$$
 $rref expm1.cpp$$
 $rref expm1.cpp$$
+$rref fabs.cpp$$
 $rref for_hes_sparsity.cpp$$
 $rref for_jac_sparsity.cpp$$
 $rref for_one.cpp$$
@@ -169,6 +169,7 @@ $rref forward_dir.cpp$$
 $rref forward_order.cpp$$
 $rref fun_assign.cpp$$
 $rref fun_check.cpp$$
+$rref general.cpp$$
 $rref get_started.cpp$$
 $rref harmonic.cpp$$
 $rref hes_lagrangian.cpp$$
@@ -256,13 +257,13 @@ $rref simple_ad_pthread.cpp$$
 $rref simple_vector.cpp$$
 $rref sin.cpp$$
 $rref sinh.cpp$$
+$rref sparse_hes.cpp$$
 $rref sparse_hes_fun.cpp$$
 $rref sparse_hessian.cpp$$
-$rref sparse_hes.cpp$$
-$rref sparse_jac_fun.cpp$$
 $rref sparse_jac_for.cpp$$
-$rref sparse_jac_rev.cpp$$
+$rref sparse_jac_fun.cpp$$
 $rref sparse_jacobian.cpp$$
+$rref sparse_jac_rev.cpp$$
 $rref sparse_rc.cpp$$
 $rref sparse_rcv.cpp$$
 $rref sparse_sub_hes.cpp$$

@@ -41,6 +41,7 @@ derivative values, and other values related to the corresponding function.
 $childtable%
 	omh/adfun.omh%
 	cppad/core/optimize.hpp%
+	cppad/core/abs_normal.hpp%
 	cppad/core/fun_check.hpp%
 	cppad/core/check_for_nan.hpp
 %$$

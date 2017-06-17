@@ -335,6 +335,7 @@ nobase_myinclude_HEADERS =  \
 SUBDIRS =  \
 	$(IPOPT_DIRS) \
 	$(SPEED_DIRS) \
+	example/abs_normal \
 	example/atomic \
 	example/deprecated \
 	example/general \

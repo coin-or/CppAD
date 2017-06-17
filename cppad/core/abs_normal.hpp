@@ -19,9 +19,6 @@ $spell
 	Tom Streubel
 	const
 $$
-$latex
-\newcommand{\B}[1]{ {\bf #1} }
-$$
 
 
 $section Create An Abs-normal Representation of a Function$$
@@ -244,6 +241,12 @@ y( x , a(x ) ) & = & b + J x + Y |z( x , a(x ) )|
 \] $$
 This is Equation (2) of the reference.
 
+$children%example/abs_normal/get_started.cpp
+%$$
+$head Example$$
+The file $cref abs_normal_get_started.cpp$$ contains
+and example and test using this operation.
+
 $end
 -------------------------------------------------------------------------------
 */
@@ -276,20 +279,21 @@ void ADFun<Base>::abs_normal(ADFun<Base>& f)
 	// Forward sweep to determine number of absolute value operations in f
 	// -----------------------------------------------------------------------
 	// The argument and result index in f for each absolute value operator
-	CppAD::vector<size_t> f_abs_arg, f_abs_res;
+	CppAD::vector<addr_t> f_abs_arg;
+	CppAD::vector<size_t> f_abs_res;
 	//
 	OpCode        op;                 // this operator
 	const addr_t* arg = CPPAD_NULL;   // arguments for this operator
 	size_t        i_op;               // index of this operator
 	size_t        i_var;              // variable index for this operator
-	f.play_->forward_start(op, arg, i_op, i_var);
+	f.play_.forward_start(op, arg, i_op, i_var);
 	CPPAD_ASSERT_UNKNOWN( op == BeginOp );
 	//
 	bool    more_operators = true;
 	while( more_operators )
 	{
 		// next op
-		f.play_->forward_next(op, arg, i_op, i_var);
+		f.play_.forward_next(op, arg, i_op, i_var);
 		switch( op )
 		{	// absolute value operator
 			case AbsOp:
@@ -300,12 +304,12 @@ void ADFun<Base>::abs_normal(ADFun<Base>& f)
 
 			case CSumOp:
 			// CSumOp has a variable number of arguments
-			f.play_->forward_csum(op, arg, i_op, i_var);
+			f.play_.forward_csum(op, arg, i_op, i_var);
 			break;
 
 			case CSkipOp:
 			// CSkip has a variable number of arguments
-			f.play_->forward_cskip(op, arg, i_op, i_var);
+			f.play_.forward_cskip(op, arg, i_op, i_var);
 			break;
 
 			case EndOp:
@@ -332,7 +336,7 @@ void ADFun<Base>::abs_normal(ADFun<Base>& f)
 		f2g_var[i_var] = num_var; // invalid value (should not be used)
 	//
 	// record the independent variables in f
-	f.play_->forward_start(op, arg, i_op, i_var);
+	f.play_.forward_start(op, arg, i_op, i_var);
 	CPPAD_ASSERT_UNKNOWN( op == BeginOp );
 	more_operators   = true;
 	while( more_operators )
@@ -358,9 +362,10 @@ void ADFun<Base>::abs_normal(ADFun<Base>& f)
 			break;
 		}
 		if( more_operators )
-			f.play_->forward_next(op, arg, i_op, i_var);
+			f.play_.forward_next(op, arg, i_op, i_var);
 	}
-	CPPAD_ASSERT_UNKNOWN( f.Domain() == i_var );
+	// add one for the phantom variable
+	CPPAD_ASSERT_UNKNOWN( 1 + f.Domain() == i_var );
 	//
 	// record the independent variables corresponding AbsOp results
 	size_t index_abs;
@@ -371,10 +376,7 @@ void ADFun<Base>::abs_normal(ADFun<Base>& f)
 	addr_t new_arg[6];
 	//
 	// Parameters in recording of f
-	Base* f_parameter = f.play_.GetPar();
-	//
-	// Text in recording of f
-	const char* f_text = f.play_.GetTxt();
+	const Base* f_parameter = f.play_.GetPar();
 	//
 	// now loop through the rest of the
 	more_operators = true;
@@ -408,7 +410,7 @@ void ADFun<Base>::abs_normal(ADFun<Base>& f)
 
 			// --------------------------------------------------------------
 			// Unary operators, argument a variable, one result
-			case AbsOp:
+			// (excluding the absolute value operator AbsOp)
 			case AcosOp:
 			case AcoshOp:
 			case AsinOp:
@@ -525,7 +527,7 @@ void ADFun<Base>::abs_normal(ADFun<Base>& f)
 				new_arg[4] ,
 				new_arg[5]
 			);
-			f2g_var[i_var] = rec->PutOp(op);
+			f2g_var[i_var] = rec.PutOp(op);
 			break;
 
 			// --------------------------------------------------
@@ -596,8 +598,8 @@ void ADFun<Base>::abs_normal(ADFun<Base>& f)
 			else
 			{	new_arg[3] = rec.PutPar( f_parameter[ arg[3] ] );
 			}
-			new_arg[2] = rec.PutTxt( f_text[ arg[2] ] );
-			new_arg[4] = rec.PutTxt( f_text[ arg[4] ] );
+			new_arg[2] = rec.PutTxt( f.play_.GetTxt( arg[2] ) );
+			new_arg[4] = rec.PutTxt( f.play_.GetTxt( arg[4] ) );
 			//
 			rec.PutArg(
 				new_arg[0] ,
@@ -743,6 +745,8 @@ void ADFun<Base>::abs_normal(ADFun<Base>& f)
 			default:
 			CPPAD_ASSERT_UNKNOWN(false);
 		}
+		if( more_operators )
+			f.play_.forward_next(op, arg, i_op, i_var);
 	}
 	// Check a few expected results
 	CPPAD_ASSERT_UNKNOWN( rec.num_op_rec() == f.play_.num_op_rec() );
@@ -752,17 +756,31 @@ void ADFun<Base>::abs_normal(ADFun<Base>& f)
 	// replace the recording in g (this ADFun object)
 	play_.get(rec);
 
-	// extend independent variable vector to include u vector
-	size_t n = ind_taddr_.size();
-	for(size_t i_abs = 0; i_abs < f_abs_res.size(); i_abs++)
-	{	// ind_taddr_[j] = j + 1
-		ind_taddr_.push_back( n + i_abs + 1 );
+	// independent variables in g: (x, u)
+	size_t s = f_abs_res.size();
+	size_t n = f.Domain();
+	ind_taddr_.resize(n + s);
+	// (x, u)
+	for(size_t j = 0; j < n; j++)
+	{	ind_taddr_[j] = f2g_var[ f.ind_taddr_[j] ];
+		CPPAD_ASSERT_UNKNOWN( ind_taddr_[j] == j + 1 );
+	}
+	for(size_t j = 0; j < s; j++)
+	{	ind_taddr_[n + j] = f2g_var[ f_abs_res[j] ];
+		CPPAD_ASSERT_UNKNOWN( ind_taddr_[n + j] == n + j + 1 );
 	}
 
-	// extend dependent variable vector to include z vector
-	for(size_t i_abs = 0; i_abs < f_abs_res.size(); i_abs++)
-	{	CPPAD_ASSERT_UNKNOWN( f2g_var[ f_abs_arg[i_abs] ] < num_var );
-		dep_taddr_.push_back( f2g_var[ f_abs_arg[i_abs] ] );
+	// dependent variable in g: (y, z)
+	CPPAD_ASSERT_UNKNOWN( s == f_abs_arg.size() );
+	size_t m = f.Range();
+	dep_taddr_.resize(m + s);
+	for(size_t i = 0; i < m; i++)
+	{	dep_taddr_[i] = f2g_var[ f.dep_taddr_[i] ];
+		CPPAD_ASSERT_UNKNOWN( dep_taddr_[i] < num_var );
+	}
+	for(size_t i = 0; i < s; i++)
+	{	dep_taddr_[m + i] = f2g_var[ f_abs_arg[i] ];
+		CPPAD_ASSERT_UNKNOWN( dep_taddr_[m + i] < num_var );
 	}
 
 	// free memory allocated for sparse Jacobian calculation
