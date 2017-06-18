@@ -47,22 +47,26 @@ bool get_started(void)
 	//
 	using CppAD::AD;
 	using CppAD::ADFun;
-
-	// define the function f(x)
-	size_t n = 3, m = 1;
+	//
+	size_t n = 3; // size of x
+	size_t m = 1; // size of y
+	size_t s = 2; // size of u and z
+	//
+	// record the function f(x)
 	CPPAD_TESTVECTOR( AD<double> ) ax(n), ay(m);
 	for(size_t j = 0; j < n; j++)
-		ax[j] = double(j);
+		ax[j] = double(j + 1);
 	Independent( ax );
-	ay[0] = abs( ax[0] + ax[1] ) + abs( ax[1] + ax[2] );
+	// for this example, we ensure first absolute value is | x_0 + x_1 |
+	AD<double> a0 = abs( ax[0] + ax[1] );
+	// and second absolute value is | x_1 + x_2 |
+	AD<double> a1 = abs( ax[1] + ax[2] );
+	ay[0]         = a0 + a1;
 	ADFun<double> f(ax, ay);
 
 	// create its abs_normal representation in g
 	ADFun<double> g;
-	g.abs_normal(f);
-
-	// nuber of absolute values terms in f
-	size_t s = 2;
+	f.abs_normal(g);
 
 	// check the dimension of the domain space for g
 	ok &= g.Domain() == n + s;
@@ -70,6 +74,26 @@ bool get_started(void)
 	// check the dimension of the range space for g
 	ok &= g.Range() == m + s;
 
+	// zero order forward mode
+	CPPAD_TESTVECTOR(double) xu(n+s), yz(m+s);
+	for(size_t j = 0; j < n + s; j++)
+		xu(j) = double(j + 2);
+	yz = g.Forward(0, xu);
+
+	// extract (x,u) from xu
+	double x0 = xu[0];
+	double x1 = xu[1];
+	double x2 = xu[2];
+	double u0 = xu[3];
+	double u1 = xu[4];
+
+	// check the compents of (y,z)
+	double y0 = u0 + u1;
+	ok       &= y0 == yz[0];
+	double z0 = x0 + x1;
+	ok       &= z0 == yz[1];
+	double z1 = x1 + x2;
+	ok       &= z1 == yz[2];
 
 	return ok;
 }

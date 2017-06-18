@@ -27,7 +27,7 @@ $head Under Construction$$
 This is an in-progress design, and does not yet have an implementation.
 
 $head Syntax$$
-$icode%g%.abs_normal(%f%)%$$
+$icode%f%.abs_normal(%g%)%$$
 
 $head Reference$$
 Andreas Griewank, Jens-Uwe Bernt, Manuel Radons, Tom Streubel,
@@ -265,14 +265,14 @@ i.e., f.
 
 \param f
 is the function that this object will represent in abs-normal form.
-This is effectively const except that the play back state f.play_
+This is effectively const except that the play back state play_
 is used.
 */
 
 # define NOT_YET_COMPILING 0
 
 template <class Base>
-void ADFun<Base>::abs_normal(ADFun<Base>& f)
+void ADFun<Base>::abs_normal(ADFun<Base>& g)
 {	using namespace local;
 
 	// -----------------------------------------------------------------------
@@ -286,14 +286,14 @@ void ADFun<Base>::abs_normal(ADFun<Base>& f)
 	const addr_t* arg = CPPAD_NULL;   // arguments for this operator
 	size_t        i_op;               // index of this operator
 	size_t        i_var;              // variable index for this operator
-	f.play_.forward_start(op, arg, i_op, i_var);
+	play_.forward_start(op, arg, i_op, i_var);
 	CPPAD_ASSERT_UNKNOWN( op == BeginOp );
 	//
 	bool    more_operators = true;
 	while( more_operators )
 	{
 		// next op
-		f.play_.forward_next(op, arg, i_op, i_var);
+		play_.forward_next(op, arg, i_op, i_var);
 		switch( op )
 		{	// absolute value operator
 			case AbsOp:
@@ -304,12 +304,12 @@ void ADFun<Base>::abs_normal(ADFun<Base>& f)
 
 			case CSumOp:
 			// CSumOp has a variable number of arguments
-			f.play_.forward_csum(op, arg, i_op, i_var);
+			play_.forward_csum(op, arg, i_op, i_var);
 			break;
 
 			case CSkipOp:
 			// CSkip has a variable number of arguments
-			f.play_.forward_cskip(op, arg, i_op, i_var);
+			play_.forward_cskip(op, arg, i_op, i_var);
 			break;
 
 			case EndOp:
@@ -328,7 +328,7 @@ void ADFun<Base>::abs_normal(ADFun<Base>& f)
 	//
 	// number of variables in both operation sequences
 	// (the AbsOp operators are replace by InvOp operators)
-	const size_t num_var = f.play_.num_var_rec();
+	const size_t num_var = play_.num_var_rec();
 	//
 	// mapping from old variable index to new variable index
 	CppAD::vector<size_t> f2g_var(num_var);
@@ -336,7 +336,7 @@ void ADFun<Base>::abs_normal(ADFun<Base>& f)
 		f2g_var[i_var] = num_var; // invalid value (should not be used)
 	//
 	// record the independent variables in f
-	f.play_.forward_start(op, arg, i_op, i_var);
+	play_.forward_start(op, arg, i_op, i_var);
 	CPPAD_ASSERT_UNKNOWN( op == BeginOp );
 	more_operators   = true;
 	while( more_operators )
@@ -362,10 +362,10 @@ void ADFun<Base>::abs_normal(ADFun<Base>& f)
 			break;
 		}
 		if( more_operators )
-			f.play_.forward_next(op, arg, i_op, i_var);
+			play_.forward_next(op, arg, i_op, i_var);
 	}
 	// add one for the phantom variable
-	CPPAD_ASSERT_UNKNOWN( 1 + f.Domain() == i_var );
+	CPPAD_ASSERT_UNKNOWN( 1 + Domain() == i_var );
 	//
 	// record the independent variables corresponding AbsOp results
 	size_t index_abs;
@@ -376,7 +376,7 @@ void ADFun<Base>::abs_normal(ADFun<Base>& f)
 	addr_t new_arg[6];
 	//
 	// Parameters in recording of f
-	const Base* f_parameter = f.play_.GetPar();
+	const Base* f_parameter = play_.GetPar();
 	//
 	// now loop through the rest of the
 	more_operators = true;
@@ -598,8 +598,8 @@ void ADFun<Base>::abs_normal(ADFun<Base>& f)
 			else
 			{	new_arg[3] = rec.PutPar( f_parameter[ arg[3] ] );
 			}
-			new_arg[2] = rec.PutTxt( f.play_.GetTxt( arg[2] ) );
-			new_arg[4] = rec.PutTxt( f.play_.GetTxt( arg[4] ) );
+			new_arg[2] = rec.PutTxt( play_.GetTxt( arg[2] ) );
+			new_arg[4] = rec.PutTxt( play_.GetTxt( arg[4] ) );
 			//
 			rec.PutArg(
 				new_arg[0] ,
@@ -746,52 +746,63 @@ void ADFun<Base>::abs_normal(ADFun<Base>& f)
 			CPPAD_ASSERT_UNKNOWN(false);
 		}
 		if( more_operators )
-			f.play_.forward_next(op, arg, i_op, i_var);
+			play_.forward_next(op, arg, i_op, i_var);
 	}
 	// Check a few expected results
-	CPPAD_ASSERT_UNKNOWN( rec.num_op_rec() == f.play_.num_op_rec() );
-	CPPAD_ASSERT_UNKNOWN( rec.num_var_rec() == f.play_.num_var_rec() );
-	CPPAD_ASSERT_UNKNOWN( rec.num_load_op_rec() == f.play_.num_load_op_rec() );
+	CPPAD_ASSERT_UNKNOWN( rec.num_op_rec() == play_.num_op_rec() );
+	CPPAD_ASSERT_UNKNOWN( rec.num_var_rec() == play_.num_var_rec() );
+	CPPAD_ASSERT_UNKNOWN( rec.num_load_op_rec() == play_.num_load_op_rec() );
 
-	// replace the recording in g (this ADFun object)
-	play_.get(rec);
+	// -----------------------------------------------------------------------
+	// Transfer the recording from rec into g
+
+	// number of variables in the recording
+	g.num_var_tape_ = rec.num_var_rec();
+
+	// dimension cskip_op vector to number of operators
+	g.cskip_op_.erase();
+	g.cskip_op_.extend( rec.num_op_rec() );
 
 	// independent variables in g: (x, u)
 	size_t s = f_abs_res.size();
-	size_t n = f.Domain();
-	ind_taddr_.resize(n + s);
+	size_t n = Domain();
+	g.ind_taddr_.resize(n + s);
 	// (x, u)
 	for(size_t j = 0; j < n; j++)
-	{	ind_taddr_[j] = f2g_var[ f.ind_taddr_[j] ];
-		CPPAD_ASSERT_UNKNOWN( ind_taddr_[j] == j + 1 );
+	{	g.ind_taddr_[j] = f2g_var[ ind_taddr_[j] ];
+		CPPAD_ASSERT_UNKNOWN( g.ind_taddr_[j] == j + 1 );
 	}
 	for(size_t j = 0; j < s; j++)
-	{	ind_taddr_[n + j] = f2g_var[ f_abs_res[j] ];
-		CPPAD_ASSERT_UNKNOWN( ind_taddr_[n + j] == n + j + 1 );
+	{	g.ind_taddr_[n + j] = f2g_var[ f_abs_res[j] ];
+		CPPAD_ASSERT_UNKNOWN( g.ind_taddr_[n + j] == n + j + 1 );
 	}
 
 	// dependent variable in g: (y, z)
 	CPPAD_ASSERT_UNKNOWN( s == f_abs_arg.size() );
-	size_t m = f.Range();
-	dep_taddr_.resize(m + s);
+	size_t m = Range();
+	g.dep_taddr_.resize(m + s);
 	for(size_t i = 0; i < m; i++)
-	{	dep_taddr_[i] = f2g_var[ f.dep_taddr_[i] ];
-		CPPAD_ASSERT_UNKNOWN( dep_taddr_[i] < num_var );
+	{	g.dep_taddr_[i] = f2g_var[ dep_taddr_[i] ];
+		CPPAD_ASSERT_UNKNOWN( g.dep_taddr_[i] < num_var );
 	}
 	for(size_t i = 0; i < s; i++)
-	{	dep_taddr_[m + i] = f2g_var[ f_abs_arg[i] ];
-		CPPAD_ASSERT_UNKNOWN( dep_taddr_[m + i] < num_var );
+	{	g.dep_taddr_[m + i] = f2g_var[ f_abs_arg[i] ];
+		CPPAD_ASSERT_UNKNOWN( g.dep_taddr_[m + i] < num_var );
 	}
 
 	// free memory allocated for sparse Jacobian calculation
 	// (the resutls are no longer valid)
-	for_jac_sparse_pack_.resize(0, 0);
-	for_jac_sparse_set_.resize(0, 0);
+	g.for_jac_sparse_pack_.resize(0, 0);
+	g.for_jac_sparse_set_.resize(0, 0);
 
 	// free taylor coefficient memory
-	taylor_.free();
-	num_order_taylor_ = 0;
-	cap_order_taylor_ = 0;
+	g.taylor_.free();
+	g.num_order_taylor_ = 0;
+	g.cap_order_taylor_ = 0;
+
+	// Transferring the recording swaps its vectors so do this last
+	// replace the recording in g (this ADFun object)
+	g.play_.get(rec);
 }
 
 } // END_CPPAD_NAMESPACE
