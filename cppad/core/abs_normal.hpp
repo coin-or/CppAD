@@ -101,6 +101,8 @@ $latex z : \B{R}^{n + s} \rightarrow  \B{R}^s$$ by
 $latex \[
 z_i ( x , u ) = \zeta_i ( x , u_0 , \ldots , u_{i-1} )
 \] $$
+Note that the partial of $latex z_i$$ with respect to $latex u_j$$ is zero
+for $latex j \geq i$$.
 
 $subhead y(x, u)$$
 There is a smooth function
@@ -150,7 +152,7 @@ z ( \hat{x}, a( \hat{x} ) )
 	+ \partial_x z ( \hat{x}, a( \hat{x} ) ) ( x - \hat{x} )
 	+ \partial_u z ( \hat{x}, a( \hat{x} ) ) ( u - a( \hat{x} ) )
 \] $$
-Now the partial of $latex z_i$$ with respect to $latex u_j$$ is zero
+The partial of $latex z_i$$ with respect to $latex u_j$$ is zero
 for $latex j \geq i$$. It follows that
 $latex \[
 z_i [ \hat{x} ]( x , u )
