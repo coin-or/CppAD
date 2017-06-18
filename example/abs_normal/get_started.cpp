@@ -26,12 +26,12 @@ The corresponding
 $cref/g/abs_normal/g/$$ $latex : \B{R}^5 \rightarrow \B{R}^3$$ is
 given by
 $latex \[
-\begin{array}{rcl}
-	g_0 ( x_0, x_1, u_0, u_1 ) & = & u_0 + u_1
+\begin{array}{rclrcl}
+	g_0 ( x_0, x_1, u_0, u_1 ) & = & u_0 + u_1 & = & y_0 (x, u)
 	\\
-	g_1 ( x_0, x_1, u_0, u_1 ) & = & x_0 + x_1
+	g_1 ( x_0, x_1, u_0, u_1 ) & = & x_0 + x_1 & = & z_0 (x, u)
 	\\
-	g_1 ( x_0, x_1, u_0, u_1 ) & = & x_1 + x_2
+	g_1 ( x_0, x_1, u_0, u_1 ) & = & x_1 + x_2 & = & z_1 (x, u)
 \end{array}
 \] $$
 $srcfile%example/abs_normal/get_started.cpp%0%// BEGIN C++%// END C++%1%$$
@@ -41,7 +41,20 @@ $end
 */
 // BEGIN C++
 # include <cppad/cppad.hpp>
-
+namespace {
+	CPPAD_TESTVECTOR(double) join(
+		const CPPAD_TESTVECTOR(double)& x ,
+		const CPPAD_TESTVECTOR(double)& u )
+	{	size_t n = x.size();
+		size_t s = u.size();
+		CPPAD_TESTVECTOR(double) xu(n + s);
+		for(size_t j = 0; j < n; j++)
+			xu[j] = x[j];
+		for(size_t j = 0; j < s; j++)
+			xu[n + j] = u[j];
+		return xu;
+	}
+}
 bool get_started(void)
 {	bool ok = true;
 	//
@@ -64,36 +77,57 @@ bool get_started(void)
 	ay[0]         = a0 + a1;
 	ADFun<double> f(ax, ay);
 
-	// create its abs_normal representation in g
-	ADFun<double> g;
-	f.abs_normal(g);
+	// create its abs_normal representation in g, a
+	ADFun<double> g, a;
+	f.abs_normal(g, a);
 
-	// check the dimension of the domain space for g
+	// check dimension of domain and range space for g
 	ok &= g.Domain() == n + s;
-
-	// check the dimension of the range space for g
 	ok &= g.Range() == m + s;
 
-	// zero order forward mode
-	CPPAD_TESTVECTOR(double) xu(n+s), yz(m+s);
-	for(size_t j = 0; j < n + s; j++)
-		xu(j) = double(j + 2);
+	// check dimension of domain and range space for a
+	ok &= a.Domain() == n;
+	ok &= a.Range() == s;
+
+	// --------------------------------------------------------------------
+	// a(x) has all the operations used to compute f(x), but the sum of the
+	// absolute values is not needed for a(x), so optimize it out.
+	size_t n_op = f.size_op();
+	ok         &= a.size_op() == n_op;
+	a.optimize();
+	ok         &= a.size_op() < n_op;
+
+	// --------------------------------------------------------------------
+	// zero order forward mode calculation using g(x, u)
+	CPPAD_TESTVECTOR(double) x(n), u(s), xu(n+s), yz(m+s);
+	for(size_t j = 0; j < n; j++)
+		x[j] = double(j + 2);
+	for(size_t j = 0; j < s; j++)
+		u[j] = double(j + n + 2);
+	xu = join(x, u);
 	yz = g.Forward(0, xu);
 
-	// extract (x,u) from xu
-	double x0 = xu[0];
-	double x1 = xu[1];
-	double x2 = xu[2];
-	double u0 = xu[3];
-	double u1 = xu[4];
-
-	// check the compents of (y,z)
-	double y0 = u0 + u1;
+	// check y_0(x, u)
+	double y0 = u[0] + u[1];
 	ok       &= y0 == yz[0];
-	double z0 = x0 + x1;
+
+	// check z_0 (x, u)
+	double z0 = x[0] + x[1];
 	ok       &= z0 == yz[1];
-	double z1 = x1 + x2;
+
+	// check z_1 (x, u)
+	double z1 = x[1] + x[2];
 	ok       &= z1 == yz[2];
+
+
+	// --------------------------------------------------------------------
+	// check that y(x, a(x) ) == f(x)
+	CPPAD_TESTVECTOR(double) y(m);
+	y  = f.Forward(0, x);  // y  = f(x)
+	u  = a.Forward(0, x);  // u  = a(x)
+	xu = join(x, u);       // xu = ( x, a(x) )
+	yz = g.Forward(0, xu); // yz = ( y(x, a(x)), z(x, a(x)) )
+	ok &= yz[0] == y[0];
 
 	return ok;
 }

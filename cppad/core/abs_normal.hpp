@@ -27,7 +27,7 @@ $head Under Construction$$
 This is an in-progress design, and does not yet have an implementation.
 
 $head Syntax$$
-$icode%f%.abs_normal(%g%)%$$
+$icode%f%.abs_normal(%g%, %a%)%$$
 
 $head Reference$$
 Andreas Griewank, Jens-Uwe Bernt, Manuel Radons, Tom Streubel,
@@ -48,6 +48,38 @@ It is effectively $code const$$, except that some internal state
 that is not relevant to the user; see
 $cref/const ADFun/wish_list/const ADFun/$$.
 
+$head a$$
+The object $icode a$$ has prototype
+$codei%
+	ADFun<%Base%> %a%
+%$$
+The initial function representation in $icode a$$ is lost.
+Upon return it represents the result of the absolute terms;
+see $latex a(x)$$ defined below.
+Note that $icode a$$ is constructed by copying $icode f$$
+and then changing the dependent variables. There may
+be many calculations in this representation that are not necessary
+and can be removed using
+$codei%
+	%a%.optimize()
+%$$
+This optimization is not done automatically by $code abs_normal$$
+because it may take a significant amount of time.
+
+$subhead zeta$$
+Let $latex \zeta_0 ( x )$$
+denote the argument for the first absolute value term in $latex f(x)$$,
+$latex \zeta_1 ( x , |\zeta_0 (x)| )$$ for the second term, and so on.
+
+$subhead a(x)$$
+For $latex i = 0 , \ldots , {s-1}$$ define
+$latex \[
+a_i (x)
+=
+| \zeta_i ( x , a_0 (x) , \ldots , a_{i-1} (x ) ) |
+\] $$
+This defines $latex a : \B{R}^n \rightarrow \B{R}^s$$.
+
 $head g$$
 The object $icode g$$ has prototype
 $codei%
@@ -62,18 +94,6 @@ g( x , u )
 \left[ \begin{array}{c} y(x, u) \\ z(x, u) \end{array} \right]
 \] $$
 were $latex y(x, u)$$ and $latex z(x, u)$$ are defined below.
-
-$subhead a(x)$$
-Let $latex \zeta_0 ( x )$$
-denote the argument for the first absolute value term in $latex f(x)$$,
-$latex \zeta_1 ( x , |\zeta_0 (x)| )$$ for the second term, and so on.
-For $latex i = 0 , \ldots , {s-1}$$ define
-$latex \[
-a_i (x)
-=
-| \zeta_i ( x , a_0 (x) , \ldots , a_{i-1} (x ) ) |
-\] $$
-This defines $latex a : \B{R}^n \rightarrow \B{R}^s$$.
 
 $subhead z(x, u)$$
 Define the smooth function
@@ -272,7 +292,7 @@ is used.
 # define NOT_YET_COMPILING 0
 
 template <class Base>
-void ADFun<Base>::abs_normal(ADFun<Base>& g)
+void ADFun<Base>::abs_normal(ADFun<Base>& g, ADFun<Base>& a)
 {	using namespace local;
 
 	// -----------------------------------------------------------------------
@@ -754,7 +774,8 @@ void ADFun<Base>::abs_normal(ADFun<Base>& g)
 	CPPAD_ASSERT_UNKNOWN( rec.num_load_op_rec() == play_.num_load_op_rec() );
 
 	// -----------------------------------------------------------------------
-	// Transfer the recording from rec into g
+	// Use rec to create the function g
+	// -----------------------------------------------------------------------
 
 	// number of variables in the recording
 	g.num_var_tape_ = rec.num_var_rec();
@@ -803,6 +824,31 @@ void ADFun<Base>::abs_normal(ADFun<Base>& g)
 	// Transferring the recording swaps its vectors so do this last
 	// replace the recording in g (this ADFun object)
 	g.play_.get(rec);
+
+	// ------------------------------------------------------------------------
+	// Create the function a
+	// ------------------------------------------------------------------------
+
+	// start with a copy of f
+	a = *this;
+
+	// dependent variables in a(x)
+	CPPAD_ASSERT_UNKNOWN( s == f_abs_arg.size() );
+	a.dep_taddr_.resize(s);
+	for(size_t i = 0; i < s; i++)
+	{	a.dep_taddr_[i] = f_abs_res[i];
+		CPPAD_ASSERT_UNKNOWN( a.dep_taddr_[i] < num_var );
+	}
+
+	// free memory allocated for sparse Jacobian calculation
+	// (the resutls are no longer valid)
+	a.for_jac_sparse_pack_.resize(0, 0);
+	a.for_jac_sparse_set_.resize(0, 0);
+
+	// free taylor coefficient memory
+	a.taylor_.free();
+	a.num_order_taylor_ = 0;
+	a.cap_order_taylor_ = 0;
 }
 
 } // END_CPPAD_NAMESPACE
