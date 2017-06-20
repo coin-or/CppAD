@@ -9,9 +9,12 @@ A copy of this license is included in the COPYING file of this distribution.
 Please visit http://www.coin-or.org/CppAD/ for information on other licenses.
 -------------------------------------------------------------------------- */
 /*
-$begin quad_program.cpp$$
+$begin qp_interior.cpp$$
+$spell
+	qp
+$$
 
-$section Example and Test of quad_program$$
+$section Example and Test of qp_interior$$
 
 $head Under Construction$$
 
@@ -44,11 +47,11 @@ $latex \[
 	0
 \end{array}
 \] $$
-which is in the form expected by $cref quad_program$$.
+which is in the form expected by $cref qp_interior$$.
 
 
 $head Source$$
-$srcfile%example/abs_normal/quad_program.cpp%
+$srcfile%example/abs_normal/qp_interior.cpp%
 	0%// BEGIN C++%// END C++%
 1%$$
 
@@ -57,9 +60,9 @@ $end
 // BEGIN C++
 # include <limits>
 # include <cppad/utility/vector.hpp>
-# include "quad_program.hpp"
+# include "qp_interior.hpp"
 
-bool quad_program(void)
+bool qp_interior(void)
 {	bool ok = true;
 	typedef CppAD::vector<double> vector;
 	//
@@ -89,7 +92,7 @@ bool quad_program(void)
 	double epsilon = 99.0 * std::numeric_limits<double>::epsilon();
 	size_t maxitr  = 10;
 	//
-	ok &= CppAD::quad_program(
+	ok &= CppAD::qp_interior(
 		A, b, H, g, epsilon, maxitr, xin, xout, yout, sout
 	);
 	//

@@ -13,7 +13,7 @@
 SET(source_list
 	abs_normal.cpp
 	get_started.cpp
-	quad_program.cpp
+	qp_interior.cpp
 )
 #
 set_compile_flags( example_abs_normal "${cppad_debug_which}" "${source_list}" )

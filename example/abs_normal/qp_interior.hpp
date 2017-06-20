@@ -1,5 +1,5 @@
-# ifndef CPPAD_EXAMPLE_ABS_NORMAL_QUAD_PROGRAM_HPP
-# define CPPAD_EXAMPLE_ABS_NORMAL_QUAD_PROGRAM_HPP
+# ifndef CPPAD_EXAMPLE_ABS_NORMAL_QP_INTERIOR_HPP
+# define CPPAD_EXAMPLE_ABS_NORMAL_QP_INTERIOR_HPP
 /* --------------------------------------------------------------------------
 CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-17 Bradley M. Bell
 
@@ -11,7 +11,7 @@ A copy of this license is included in the COPYING file of this distribution.
 Please visit http://www.coin-or.org/CppAD/ for information on other licenses.
 -------------------------------------------------------------------------- */
 /*
-$begin quad_program$$
+$begin qp_interior$$
 $spell
 	const
 	col
@@ -22,6 +22,7 @@ $spell
 	prog
 	maxitr
 	xin
+	qp
 $$
 
 $section Solve a Quadratic Program Using Interior Point Method$$
@@ -29,10 +30,10 @@ $section Solve a Quadratic Program Using Interior Point Method$$
 $head Under Construction$$
 
 $head Syntax$$
-$icode%ok% = quad_program(
+$icode%ok% = qp_interior(
 	%A%, %b%, %H%, %g%, %epsilon%, %maxitr%, %xin%, %xout%, %yout%, %sout%
 )%$$
-see $cref/prototype/quad_program/Prototype/$$
+see $cref/prototype/qp_interior/Prototype/$$
 
 $head Problem$$
 We are given
@@ -45,8 +46,11 @@ and $latex H + A^T A$$ is positive definite.
 This routine solves the problem
 $latex \[
 \begin{array}{rl}
-\R{minimize}      & \frac{1}{2} x^\R{T} H x + g^\R{T} x \\
-\R{subject \; to} & A x + b \leq 0
+\R{minimize} &
+\frac{1}{2} x^\R{T} H x + g^\R{T} x \; \R{w.r.t} \; x \in \B{R}^n
+\\
+\R{subject \; to} &
+A x + b \leq 0
 \end{array}
 \] $$
 
@@ -77,7 +81,7 @@ This is the vector $latex g$$ in the problem.
 
 $head epsilon$$
 This argument is the convergence criteria;
-see $cref/KKT conditions/quad_program/KKT Conditions/$$ below.
+see $cref/KKT conditions/qp_interior/KKT Conditions/$$ below.
 It must be greater than zero.
 
 $head maxitr$$
@@ -251,15 +255,15 @@ $latex \[
 \Delta y =  D(s)^{-1} r_s (x, y, s) - D(y/s) r_y(x, y, s) + D(y/s) A \Delta x
 \] $$
 
-$children%example/abs_normal/quad_program.cpp
+$children%example/abs_normal/qp_interior.cpp
 %$$
 $head Example$$
-The file $cref quad_program.cpp$$ contains an example and test of
-$code quad_program$$.
+The file $cref qp_interior.cpp$$ contains an example and test of
+$code qp_interior$$.
 It returns true if the test passes and false otherwise.
 
 $head Prototype$$
-$srcfile%example/abs_normal/quad_program.hpp%
+$srcfile%example/abs_normal/qp_interior.hpp%
 	0%// BEGIN PROTOTYPE%// END PROTOTYPE%
 1%$$
 
@@ -271,7 +275,7 @@ $end
 
 namespace {
 	template <class Vector>
-	Vector quad_program_F_0(
+	Vector qp_interior_F_0(
 		const Vector& A       ,
 		const Vector& b       ,
 		const Vector& H       ,
@@ -313,7 +317,7 @@ namespace {
 		return F_0;
 	}
 	template <class Vector>
-	double quad_program_norm_sq(const Vector& v)
+	double qp_interior_norm_sq(const Vector& v)
 	{	double norm_sq = 0.0;
 		for(size_t j = 0; j < v.size(); j++)
 			norm_sq += v[j] * v[j];
@@ -324,7 +328,7 @@ namespace CppAD { // BEGIN_CPPAD_NAMESPACE
 
 // BEGIN PROTOTYPE
 template <class Vector>
-bool quad_program(
+bool qp_interior(
 	const Vector& A       ,
 	const Vector& b       ,
 	const Vector& H       ,
@@ -340,11 +344,11 @@ bool quad_program(
 	size_t n = g.size();
 	CPPAD_ASSERT_KNOWN(
 		A.size() == m * n,
-		"quad_program: size of A is not m * n"
+		"qp_interior: size of A is not m * n"
 	);
 	CPPAD_ASSERT_KNOWN(
 		H.size() == n * n,
-		"quad_program: size of H is not n * n"
+		"qp_interior: size of H is not n * n"
 	);
 	//
 	// compute the maximum absolute element of the problem vectors and matrices
@@ -400,7 +404,7 @@ bool quad_program(
 		dF_mu[ (i + n) * n_var + (n + m + i) ] = 1.0;     // fill in I
 	// ----------------------------------------------------------------------
 	// initialie F_0(xout, yout, sout)
-	Vector F_0 = quad_program_F_0(A, b, H, g, xout, yout, sout);
+	Vector F_0 = qp_interior_F_0(A, b, H, g, xout, yout, sout);
 	for(size_t itr = 0; itr <= maxitr; itr++)
 	{	// compute F_mu(xout, yout, sout)
 		Vector F_mu  = F_0;
@@ -408,7 +412,7 @@ bool quad_program(
 			F_mu[n + m + i] -= mu;
 		//
 		// check for convergence
-		double F_norm_sq   = quad_program_norm_sq( F_0 );
+		double F_norm_sq   = qp_interior_norm_sq( F_0 );
 		if( F_norm_sq <= epsilon * epsilon )
 			return true;
 		if( itr == maxitr )
@@ -430,7 +434,7 @@ bool quad_program(
 		//
 		// The initial derivative in direction  Delta_xys is equal to
 		// the negative of the norm square of F_mu
-		F_norm_sq = quad_program_norm_sq( F_mu );
+		F_norm_sq = qp_interior_norm_sq( F_mu );
 		//
 		// line search parameter lam
 		Vector x(n), y(m), s(m);
@@ -447,10 +451,10 @@ bool quad_program(
 				lam_ok &= s[i] > 0.0 && y[i] > 0.0;
 			}
 			if( lam_ok )
-			{	Vector F_mu_tmp = quad_program_F_0(A, b, H, g, x, y, s);
+			{	Vector F_mu_tmp = qp_interior_F_0(A, b, H, g, x, y, s);
 				for(size_t i = 0; i < m; i++)
 					F_mu_tmp[n + m + i] -= mu;
-				double F_norm_sq_tmp = quad_program_norm_sq( F_mu_tmp );
+				double F_norm_sq_tmp = qp_interior_norm_sq( F_mu_tmp );
 				lam_ok &= F_norm_sq_tmp - F_norm_sq < - lam * F_norm_sq / 4.0;
 			}
 		}
@@ -463,10 +467,10 @@ bool quad_program(
 		sout = s;
 		//
 		// updage F_0
-		F_0 = quad_program_F_0(A, b, H, g, xout, yout, sout);
+		F_0 = qp_interior_F_0(A, b, H, g, xout, yout, sout);
 		//
 		// update mu
-		F_norm_sq = quad_program_norm_sq( F_0 );
+		F_norm_sq = qp_interior_norm_sq( F_0 );
 		if( F_norm_sq <= 1e1 * double(n_var) * mu * mu )
 			mu = mu / 1e3;
 	}

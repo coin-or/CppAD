@@ -264,12 +264,12 @@ y( x , a(x ) ) & = & b + J x + Y |z( x , a(x ) )|
 This is Equation (2) of the reference.
 
 $children%example/abs_normal/get_started.cpp
-	%example/abs_normal/quad_program.hpp
+	%example/abs_normal/qp_interior.hpp
 %$$
 $head Example$$
 The file $cref abs_normal_get_started.cpp$$ contains
 and example and test using this operation.
-The routine $cref quad_program$$ is solves quadratic programming problems
+The routine $cref qp_interior$$ is solves quadratic programming problems
 and is used by some of the $code abs_normal$$ examples.
 
 $end

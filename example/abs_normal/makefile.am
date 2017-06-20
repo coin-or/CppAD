@@ -35,7 +35,7 @@ AM_CXXFLAGS       = -g $(CXX_FLAGS)
 abs_normal_SOURCES = \
 	abs_normal.cpp \
 	get_started.cpp \
-	quad_program.cpp
+	qp_interior.cpp
 
 test: check
 	$(srcdir)/test.sh
