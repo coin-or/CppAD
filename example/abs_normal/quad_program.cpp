@@ -38,8 +38,10 @@ $latex \[
 	&
 	\left( \begin{array}{cc} 1 & -1 \\ -1 & -1 \end{array} \right)
 	\left( \begin{array}{c} u \\ v \end{array} \right)
+	+
+	\left( \begin{array}{c} -1 \\ 1 \end{array} \right)
 	\leq
-	\left( \begin{array}{c} 1 \\ -1 \end{array} \right)
+	0
 \end{array}
 \] $$
 which is in the form expected by $cref quad_program$$.
@@ -63,14 +65,14 @@ bool quad_program(void)
 	//
 	size_t n = 2;
 	size_t m = 2;
-	vector A(m*n), b(m), H(n*n), g(n), xout(n), yout(m), sout(m);
+	vector A(m*n), b(m), H(n*n), g(n), xin(n), xout(n), yout(m), sout(m);
 	A[ 0 * n + 0 ] =  1.0; // A(0,0)
 	A[ 0 * n + 1 ] = -1.0; // A(0,1)
 	A[ 1 * n + 0 ] = -1.0; // A(1,0)
 	A[ 1 * n + 1 ] = -1.0; // A(1,1)
 	//
-	b[0]           =  1.0;
-	b[1]           = -1.0;
+	b[0]           = -1.0;
+	b[1]           =  1.0;
 	//
 	g[0]           =  0.0;
 	g[1]           =  1.0;
@@ -79,17 +81,22 @@ bool quad_program(void)
 	for(size_t i = 0; i < n * n; i++)
 		H[i] = 0.0;
 	//
+	// If (u, v) = (0,2), A * (u, v) + b = (-2,-2)^T + (1,-1)^T < 0
+	// Hence (0, 2) is feasible.
+	xin[0] = 0.0;
+	xin[1] = 2.0;
+	//
 	double epsilon = 99.0 * std::numeric_limits<double>::epsilon();
 	size_t maxitr  = 10;
 	//
-	ok &= CppAD::quad_program(A, b, H, g, epsilon, maxitr, xout, yout, sout);
+	ok &= CppAD::quad_program(
+		A, b, H, g, epsilon, maxitr, xin, xout, yout, sout
+	);
 	//
 	// check optimal value for u
 	ok &= std::fabs( xout[0] - 1.0 ) < epsilon;
-	//
-	std::cout << "xout = " << xout << "\n";
-	std::cout << "yout = " << yout << "\n";
-	std::cout << "sout = " << sout << "\n";
+	// checkk optimal value for v
+	ok &= std::fabs( xout[1] ) < epsilon;
 	//
 	return ok;
 }

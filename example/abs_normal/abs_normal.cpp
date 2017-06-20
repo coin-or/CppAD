@@ -38,9 +38,7 @@ int main(void)
 
 	// external compiled tests
 	Run( get_started,         "get_started"    );
-
-	// not yet working
-	// Run( quad_program,        "quad_program"   );
+	Run( quad_program,        "quad_program"   );
 
 	// check for memory leak
 	bool memory_ok = CppAD::thread_alloc::free_all();

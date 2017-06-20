@@ -21,6 +21,7 @@ $spell
 	cols
 	prog
 	maxitr
+	xin
 $$
 
 $section Solve a Quadratic Program Using Interior Point Method$$
@@ -29,7 +30,7 @@ $head Under Construction$$
 
 $head Syntax$$
 $icode%ok% = quad_program(
-	%A%, %b%, %H%, %g%, %epsilon%, %maxitr%, %xout%, %yout%, %sout%
+	%A%, %b%, %H%, %g%, %epsilon%, %maxitr%, %xin%, %xout%, %yout%, %sout%
 )%$$
 see $cref/prototype/quad_program/Prototype/$$
 
@@ -83,32 +84,25 @@ $head maxitr$$
 This is the maximum number of newton iterations to try before giving up
 on convergence.
 
+$head xin$$
+This argument has size $icode n$$ and is the initial point for the algorithm.
+It must strictly satisfy the constraints; i.e.,
+$latex A x - b < 0$$  for $icode%x% = %xin%$$.
+
 $head xout$$
-This argument has prototype
-$codei%
-	vector& %xout%
-%$$
-and its size is $icode n$$.
-The input value of its elements does no matter.
+This argument has size is $icode n$$ and
+the input value of its elements does no matter.
 Upon return it is the primal variables corresponding to the problem solution.
 
 $head yout$$
-This argument has prototype
-$codei%
-	vector& %yout%
-%$$
-and its size is $icode m$$.
-The input value of its elements does no matter.
+This argument has size is $icode m$$ and
+the input value of its elements does no matter.
 Upon return it the components of $icode yout$$ are all positive
 and it is the dual variables corresponding to the program solution.
 
 $head sout$$
-This argument has prototype
-$codei%
-	vector& %sout%
-%$$
-and its size is $icode m$$.
-The input value of its elements does no matter.
+This argument has size is $icode m$$ and
+the input value of its elements does no matter.
 Upon return it the components of $icode sout$$ are all positive
 and it is the slack variables corresponding to the program solution.
 
@@ -337,6 +331,7 @@ bool quad_program(
 	const Vector& g       ,
 	double        epsilon ,
 	size_t        maxitr  ,
+	const Vector& xin     ,
 	Vector&       xout    ,
 	Vector&       yout    ,
 	Vector&       sout    )
@@ -351,15 +346,34 @@ bool quad_program(
 		H.size() == n * n,
 		"quad_program: size of H is not n * n"
 	);
-	// initialze mu
-	double mu = 1e6 * epsilon;
+	//
+	// compute the maximum absolute element of the problem vectors and matrices
+	double max_element = 0.0;
+	for(size_t i = 0; i < A.size(); i++)
+		max_element = std::max(max_element , std::fabs(A[i]) );
+	for(size_t i = 0; i < b.size(); i++)
+		max_element = std::max(max_element , std::fabs(b[i]) );
+	for(size_t i = 0; i < H.size(); i++)
+		max_element = std::max(max_element , std::fabs(H[i]) );
+	for(size_t i = 0; i < g.size(); i++)
+		max_element = std::max(max_element , std::fabs(g[i]) );
+	//
+	double mu = 1e-3 * max_element;
+	//
+	if( max_element == 0.0 )
+		return false;
 	//
 	// initialize x, y, s
-	for(size_t j = 0; j < n; j++)
-		xout[j] = 0.0;
-	for(size_t j = 0; j < m; j++)
-	{	yout[j] = std::sqrt(mu);
-		sout[j] = std::sqrt(mu);
+	xout = xin;
+	for(size_t i = 0; i < m; i++)
+	{	double sum = b[i];
+		for(size_t j = 0; j < n; j++)
+			sum += A[ i * n + j ] * xout[j];
+		if( sum > 0.0 )
+			return false;
+		//
+		sout[i] = std::sqrt(mu);
+		yout[i] = std::sqrt(mu);
 	}
 	// ----------------------------------------------------------------------
 	//          [ H  A^T   0    ]
@@ -385,11 +399,10 @@ bool quad_program(
 	for(size_t i = 0; i < m; i++)
 		dF_mu[ (i + n) * n_var + (n + m + i) ] = 1.0;     // fill in I
 	// ----------------------------------------------------------------------
+	// initialie F_0(xout, yout, sout)
+	Vector F_0 = quad_program_F_0(A, b, H, g, xout, yout, sout);
 	for(size_t itr = 0; itr <= maxitr; itr++)
-	{	// compute F_mu(x, y, s)
-		Vector F_0 = quad_program_F_0(A, b, H, g, xout, yout, sout);
-		//
-		// compute F_mu(x, y, s)
+	{	// compute F_mu(xout, yout, sout)
 		Vector F_mu  = F_0;
 		for(size_t i = 0; i < m; i++)
 			F_mu[n + m + i] -= mu;
@@ -419,35 +432,43 @@ bool quad_program(
 		// the negative of the norm square of F_mu
 		F_norm_sq = quad_program_norm_sq( F_mu );
 		//
-		// line search parameter lambda
+		// line search parameter lam
 		Vector x(n), y(m), s(m);
-		double  lambda = 2.0;
-		bool lambda_ok = false;
-		while( ! lambda_ok && lambda > 1e-3 )
-		{	lambda = lambda / 2.0;
+		double  lam = 2.0;
+		bool lam_ok = false;
+		while( ! lam_ok && lam > 1e-5 )
+		{	lam = lam / 2.0;
 			for(size_t j = 0; j < n; j++)
-				x[j] = xout[j] + lambda * delta_xys[j];
-			lambda_ok = true;
+				x[j] = xout[j] + lam * delta_xys[j];
+			lam_ok = true;
 			for(size_t i = 0; i < m; i++)
-			{	y[i] = yout[i] + lambda * delta_xys[n + i];
-				s[i] = sout[i] + lambda * delta_xys[n + m + i];
-				lambda_ok &= s[i] > 0.0 && y[i] > 0.0;
+			{	y[i] = yout[i] + lam * delta_xys[n + i];
+				s[i] = sout[i] + lam * delta_xys[n + m + i];
+				lam_ok &= s[i] > 0.0 && y[i] > 0.0;
 			}
-			Vector F_mu_tmp = quad_program_F_0(A, b, H, g, x, y, s);
-			for(size_t i = 0; i < m; i++)
-				F_mu_tmp[n + m + i] -= mu;
-			double F_norm_sq_tmp = quad_program_norm_sq( F_mu_tmp );
-			lambda_ok  &= (F_norm_sq_tmp - F_norm_sq) / lambda <= -0.5;
+			if( lam_ok )
+			{	Vector F_mu_tmp = quad_program_F_0(A, b, H, g, x, y, s);
+				for(size_t i = 0; i < m; i++)
+					F_mu_tmp[n + m + i] -= mu;
+				double F_norm_sq_tmp = quad_program_norm_sq( F_mu_tmp );
+				lam_ok &= F_norm_sq_tmp - F_norm_sq < - lam * F_norm_sq / 4.0;
+			}
 		}
-		if( ! lambda_ok )
+		if( ! lam_ok )
 			return false;
+		//
 		// update current solution
 		xout = x;
 		yout = y;
 		sout = s;
+		//
+		// updage F_0
+		F_0 = quad_program_F_0(A, b, H, g, xout, yout, sout);
+		//
 		// update mu
-		if( F_norm_sq <= double( n_var ) * mu * mu )
-			mu = mu / 10.0;
+		F_norm_sq = quad_program_norm_sq( F_0 );
+		if( F_norm_sq <= 1e1 * double(n_var) * mu * mu )
+			mu = mu / 1e3;
 	}
 	return false;
 }
