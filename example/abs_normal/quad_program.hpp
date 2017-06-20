@@ -38,13 +38,14 @@ $icode%ok% = quad_program(
 see $cref/prototype/quad_program/Prototype/$$
 
 $head Problem$$
-Given
+We are given
 $latex A \in \B{R}^{m \times n}$$,
 $latex b \in \B{R}^m$$,
 $latex H \in \B{R}^{n \times n}$$,
 $latex g \in \B{R}^n$$,
-where $latex H$$ is positive definite,
-this routine solves the problem
+where $latex H$$ is positive semi-definite
+and $latex H + A^T A$$ is positive definite.
+This routine solves the problem
 $latex \[
 \begin{array}{rl}
 \R{minimize}      & \frac{1}{2} x^\R{T} H x + g^\R{T} x \\
@@ -189,9 +190,76 @@ A       & 0    & I_{m,m} \\
 	r_s (x, y, s)
 \end{array} \right)
 \] $$
-If $latex H$$ is positive definite, this equation has a solution.
-(This can be shown using elementary row operations and noting that
-$latex D(s)$$ and $latex D(y)$$ are invertible.)
+
+$subhead Elementary Row Reduction$$
+Subtracting $latex D(y)$$ times the second row from the third row
+we obtain:
+$latex \[
+\left( \begin{array}{ccc}
+H        & A^T  & 0_{n,m} \\
+A        & 0    & I_{m,m} \\
+- D(y) A & D(s) & 0_{m,m}
+\end{array} \right)
+\left( \begin{array}{c} \Delta x \\ \Delta y \\ \Delta s \end{array} \right)
+=
+-
+\left( \begin{array}{c}
+	r_x (x, y, s) \\
+	r_y (x, y, s) \\
+	r_s (x, y, s) - D(y) r_y(x, y, s)
+\end{array} \right)
+\] $$
+Multiplying the third row by $latex D(s)^{-1}$$ we obtain:
+$latex \[
+\left( \begin{array}{ccc}
+H          & A^T     & 0_{n,m} \\
+A          & 0       & I_{m,m} \\
+- D(y/s) A & I_{m,m} & 0_{m,m}
+\end{array} \right)
+\left( \begin{array}{c} \Delta x \\ \Delta y \\ \Delta s \end{array} \right)
+=
+-
+\left( \begin{array}{c}
+	r_x (x, y, s) \\
+	r_y (x, y, s) \\
+	D(s)^{-1} r_s (x, y, s) - D(y/s) r_y(x, y, s)
+\end{array} \right)
+\] $$
+where $latex y/s$$ is the vector in $latex \B{R}^m$$ defined by
+$latex (y/s)_i = y_i / s_i$$.
+Subtracting $latex A^T$$ times the third row from the second row we obtain:
+$latex \[
+\left( \begin{array}{ccc}
+H + A^T D(y/s) A & 0_{n,m} & 0_{n,m} \\
+A                & 0       & I_{m,m} \\
+- D(y/s) A       & I_{m,m} & 0_{m,m}
+\end{array} \right)
+\left( \begin{array}{c} \Delta x \\ \Delta y \\ \Delta s \end{array} \right)
+=
+-
+\left( \begin{array}{c}
+	r_x (x, y, s)
+		- A^T D(s)^{-1} \left[ r_s (x, y, s) - D(y) r_y(x, y, s) \right] \\
+	r_y (x, y, s) \\
+	D(s)^{-1} r_s (x, y, s) - D(y/s) r_y(x, y, s)
+\end{array} \right)
+\] $$
+
+$head Solution$$
+It follows that $latex H + A^T D(y/s) A$$ is invertible and
+we can determine $latex \Delta x$$ by solving the equation
+$latex \[
+[ H + A^T D(y/s) A ] \Delta x
+=
+r_x (x, y, s) - A^T D(s)^{-1} \left[ r_s (x, y, s) - D(y) r_y(x, y, s) \right]
+\] $$
+Given $latex \Delta x$$ we have that
+$latex \[
+\Delta s = r_y (x, y, s) - A \Delta x
+\] $$
+$latex \[
+\Delta y =  D(s)^{-1} r_s (x, y, s) - D(y/s) r_y(x, y, s) + D(y/s) A \Delta x
+\] $$
 
 $head Prototype$$
 $srcfile%example/abs_normal/quad_program.hpp%
@@ -342,27 +410,32 @@ bool quad_program(
 		F_norm_sq = quad_program_norm_sq( F_mu );
 		//
 		// line search parameter lambda
-		double lambda = 2.0;
-		bool proper_descent = false;
-		while( ! proper_descent && lambda > 1e-3 )
+		Vector x(n), y(m), s(m);
+		double  lambda = 2.0;
+		bool lambda_ok = false;
+		while( ! lambda_ok && lambda > 1e-3 )
 		{	lambda = lambda / 2.0;
-			Vector x(n), y(m), s(m);
 			for(size_t j = 0; j < n; j++)
 				x[j] = xout[j] + lambda * delta_xyz[j];
+			lambda_ok = true;
 			for(size_t i = 0; i < m; i++)
 			{	y[i] = yout[i] + lambda * delta_xys[n + i];
 				s[i] = sout[i] + lambda * delta_xys[n + m + i];
+				lambda_ok &= s[i] > 0.0 && y[i] > 0.0;
 			}
 			Vector F_mu_tmp = quad_program_F(A, b, H, g, x, y, s);
 			double F_norm_sq_tmp = quad_program_norm_sq( F_mu_tmp );
-			proper_descent = (F_mu - F_mu_tmp) / lambda <= 0.5;
+			lambda_ok  &= (F_mu - F_mu_tmp) / lambda <= 0.5;
 		}
-		if( ! proper_descent )
+		if( ! lambda_ok )
 			return false;
-		//
+		// update current solution
 		xout = x;
 		yout = y;
 		sout = s;
+		// update mu
+		if( F_norm_sq <= double( n_var ) * mu * mu )
+			mu = mu / 10.0;
 	}
 	return false;
 }
