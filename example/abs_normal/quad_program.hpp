@@ -22,10 +22,6 @@ $spell
 	prog
 	maxitr
 $$
-$latex
-	\newcommand{\B}[1]{{\bf #1}}
-	\newcommand{\R}[1]{{\rm #1}}
-$$
 
 $section Solve a Quadratic Program Using Interior Point Method$$
 
@@ -261,6 +257,13 @@ $latex \[
 \Delta y =  D(s)^{-1} r_s (x, y, s) - D(y/s) r_y(x, y, s) + D(y/s) A \Delta x
 \] $$
 
+$children%example/abs_normal/quad_program.cpp
+%$$
+$head Example$$
+The file $cref quad_program.cpp$$ contains an example and test of
+$code quad_program$$.
+It returns true if the test passes and false otherwise.
+
 $head Prototype$$
 $srcfile%example/abs_normal/quad_program.hpp%
 	0%// BEGIN PROTOTYPE%// END PROTOTYPE%
@@ -269,9 +272,12 @@ $srcfile%example/abs_normal/quad_program.hpp%
 $end
 -----------------------------------------------------------------------------
 */
+# include <cmath>
+# include <cppad/utility/lu_solve.hpp>
+
 namespace {
 	template <class Vector>
-	Vector quad_program_F(
+	Vector quad_program_F_0(
 		const Vector& A       ,
 		const Vector& b       ,
 		const Vector& H       ,
@@ -279,9 +285,11 @@ namespace {
 		const Vector& x       ,
 		const Vector& y       ,
 		const Vector& s       )
-	{	// compute r_x(x, y, s) = g + H x + y^T A
+	{	size_t n = g.size();
+		size_t m = b.size();
+		// compute r_x(x, y, s) = g + H x + y^T A
 		Vector r_x(n);
-		for(size_t j = 0; j < n; i++)
+		for(size_t j = 0; j < n; j++)
 		{	r_x[j] = g[j];
 			for(size_t i = 0; i < n; i++)
 				r_x[j] += H[j * n + i] * x[i];
@@ -298,17 +306,17 @@ namespace {
 		// compute r_s(x, y, s) = D(s) * D(y) * 1_m - mu * 1_m
 		Vector r_s(m);
 		for(size_t i = 0; i < m; i++)
-			r_s[i] = s[i] * y[i] - mu;
+			r_s[i] = s[i] * y[i];
 		//
 		// combine into one vector
-		Vector F_mu(n + m + m);
+		Vector F_0(n + m + m);
 		for(size_t j = 0; j < n; j++)
-			F_mu[j] = r_x[j];
+			F_0[j] = r_x[j];
 		for(size_t i = 0; i < m; i++)
-		{	F_mu[n + i]     = r_y[i];
-			F_mu[n + m + i] = r_s[i];
+		{	F_0[n + i]     = r_y[i];
+			F_0[n + m + i] = r_s[i];
 		}
-		return F_mu;
+		return F_0;
 	}
 	template <class Vector>
 	double quad_program_norm_sq(const Vector& v)
@@ -318,6 +326,8 @@ namespace {
 		return norm_sq;
 	}
 }
+namespace CppAD { // BEGIN_CPPAD_NAMESPACE
+
 // BEGIN PROTOTYPE
 template <class Vector>
 bool quad_program(
@@ -331,8 +341,7 @@ bool quad_program(
 	Vector&       yout    ,
 	Vector&       sout    )
 // END PROTOTYPE
-{	bool ok = false;
-	size_t m = b.size();
+{	size_t m = b.size();
 	size_t n = g.size();
 	CPPAD_ASSERT_KNOWN(
 		A.size() == m * n,
@@ -343,7 +352,7 @@ bool quad_program(
 		"quad_program: size of H is not n * n"
 	);
 	// initialze mu
-	mu = 1e6 * epsilon;
+	double mu = 1e6 * epsilon;
 	//
 	// initialize x, y, s
 	for(size_t j = 0; j < n; j++)
@@ -376,14 +385,14 @@ bool quad_program(
 	for(size_t i = 0; i < m; i++)
 		dF_mu[ (i + n) * n_var + (n + m + i) ] = 1.0;     // fill in I
 	// ----------------------------------------------------------------------
-	for(itr = 0; itr <= maxitr; itr++)
+	for(size_t itr = 0; itr <= maxitr; itr++)
 	{	// compute F_mu(x, y, s)
-		Vector F_mu = quad_program_F(A, b, H, g, xout, yout, sout);
+		Vector F_0 = quad_program_F_0(A, b, H, g, xout, yout, sout);
 		//
-		// compute F_0(x, y, s)
-		Vector F_0  = F_mu;
-		for(size_t k = 0; k < m; i++)
-			F_0[n + m + i] += mu;
+		// compute F_mu(x, y, s)
+		Vector F_mu  = F_0;
+		for(size_t i = 0; i < m; i++)
+			F_mu[n + m + i] -= mu;
 		//
 		// check for convergence
 		double F_norm_sq   = quad_program_norm_sq( F_0 );
@@ -403,7 +412,8 @@ bool quad_program(
 			rhs_xys[i] = - F_mu[i];
 		// solve for Newton Step
 		double logdet;
-		LuSolve(n_var, 1, dF_mu, rhs_xys, Delta_xys, logdet)
+		Vector Delta_xys(n_var);
+		LuSolve(n_var, 1, dF_mu, rhs_xys, delta_xys, logdet);
 		//
 		// The initial derivative in direction  Delta_xys is equal to
 		// the negative of the norm square of F_mu
@@ -416,16 +426,18 @@ bool quad_program(
 		while( ! lambda_ok && lambda > 1e-3 )
 		{	lambda = lambda / 2.0;
 			for(size_t j = 0; j < n; j++)
-				x[j] = xout[j] + lambda * delta_xyz[j];
+				x[j] = xout[j] + lambda * delta_xys[j];
 			lambda_ok = true;
 			for(size_t i = 0; i < m; i++)
 			{	y[i] = yout[i] + lambda * delta_xys[n + i];
 				s[i] = sout[i] + lambda * delta_xys[n + m + i];
 				lambda_ok &= s[i] > 0.0 && y[i] > 0.0;
 			}
-			Vector F_mu_tmp = quad_program_F(A, b, H, g, x, y, s);
+			Vector F_mu_tmp = quad_program_F_0(A, b, H, g, x, y, s);
+			for(size_t i = 0; i < m; i++)
+				F_mu_tmp[n + m + i] -= mu;
 			double F_norm_sq_tmp = quad_program_norm_sq( F_mu_tmp );
-			lambda_ok  &= (F_mu - F_mu_tmp) / lambda <= 0.5;
+			lambda_ok  &= (F_norm_sq_tmp - F_norm_sq) / lambda <= -0.5;
 		}
 		if( ! lambda_ok )
 			return false;
@@ -439,5 +451,6 @@ bool quad_program(
 	}
 	return false;
 }
+} // END_CPPAD_NAMESPACE
 
 # endif

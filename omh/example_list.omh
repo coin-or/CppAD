@@ -233,6 +233,7 @@ $rref pow.cpp$$
 $rref pow_int.cpp$$
 $rref print_for_cout.cpp$$
 $rref print_for_string.cpp$$
+$rref quad_program.cpp$$
 $rref rc_sparsity.cpp$$
 $rref reverse_checkpoint.cpp$$
 $rref reverse_one.cpp$$

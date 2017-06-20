@@ -26,6 +26,7 @@ Please visit http://www.coin-or.org/CppAD/ for information on other licenses.
 
 // external complied tests
 extern bool get_started(void);
+extern bool quad_program(void);
 
 // main program that runs all the tests
 int main(void)
@@ -37,6 +38,9 @@ int main(void)
 
 	// external compiled tests
 	Run( get_started,         "get_started"    );
+
+	// not yet working
+	// Run( quad_program,        "quad_program"   );
 
 	// check for memory leak
 	bool memory_ok = CppAD::thread_alloc::free_all();
