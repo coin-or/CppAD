@@ -23,9 +23,6 @@ else
 CPPAD_INCLUDE = -I$(top_srcdir)
 endif
 #
-# Microsoft project files
-EXTRA_DIST        =  test.sh
-#
 check_PROGRAMS    = abs_normal
 #
 AM_CPPFLAGS       = -I. $(CPPAD_INCLUDE) $(BOOST_INCLUDE) $(EIGEN_INCLUDE)
@@ -35,7 +32,8 @@ AM_CXXFLAGS       = -g $(CXX_FLAGS)
 abs_normal_SOURCES = \
 	abs_normal.cpp \
 	get_started.cpp \
-	qp_interior.cpp
+	qp_interior.cpp \
+	qp_interior.hpp
 
 test: check
-	$(srcdir)/test.sh
+	./abs_normal

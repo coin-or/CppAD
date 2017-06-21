@@ -7947,7 +7947,7 @@ eigen_prefix=${EIGEN_DIR}
 
 ipopt_prefix=${IPOPT_DIR}
 
-ac_config_files="$ac_config_files cppad/configure.hpp cppad_ipopt/example/test.sh cppad_ipopt/speed/test.sh cppad_ipopt/test/test.sh example/ipopt_solve/test.sh pkgconfig/cppad.pc pkgconfig/cppad-uninstalled.pc makefile cppad_ipopt/src/makefile cppad_ipopt/example/makefile cppad_ipopt/speed/makefile cppad_ipopt/test/makefile example/general/makefile example/atomic/makefile example/deprecated/makefile example/ipopt_solve/makefile example/optimize/makefile example/sparse/makefile example/utility/makefile example/get_started/makefile introduction/makefile example/multi_thread/makefile example/print_for/makefile speed/adolc/makefile speed/cppad/makefile speed/double/makefile speed/example/makefile speed/fadbad/makefile speed/profile/makefile speed/profile/gprof.sed speed/sacado/makefile speed/src/makefile test_more/compare_c/makefile test_more/general/makefile"
+ac_config_files="$ac_config_files cppad/configure.hpp cppad_ipopt/example/test.sh cppad_ipopt/speed/test.sh cppad_ipopt/test/test.sh example/ipopt_solve/test.sh pkgconfig/cppad.pc pkgconfig/cppad-uninstalled.pc makefile cppad_ipopt/src/makefile cppad_ipopt/example/makefile cppad_ipopt/speed/makefile cppad_ipopt/test/makefile example/general/makefile example/abs_normal/makefile example/atomic/makefile example/deprecated/makefile example/ipopt_solve/makefile example/optimize/makefile example/sparse/makefile example/utility/makefile example/get_started/makefile introduction/makefile example/multi_thread/makefile example/print_for/makefile speed/adolc/makefile speed/cppad/makefile speed/double/makefile speed/example/makefile speed/fadbad/makefile speed/profile/makefile speed/profile/gprof.sed speed/sacado/makefile speed/src/makefile test_more/compare_c/makefile test_more/general/makefile"
 
 
 ac_config_commands="$ac_config_commands example_ipopt_solve_test.sh"
@@ -8790,6 +8790,7 @@ do
     "cppad_ipopt/speed/makefile") CONFIG_FILES="$CONFIG_FILES cppad_ipopt/speed/makefile" ;;
     "cppad_ipopt/test/makefile") CONFIG_FILES="$CONFIG_FILES cppad_ipopt/test/makefile" ;;
     "example/general/makefile") CONFIG_FILES="$CONFIG_FILES example/general/makefile" ;;
+    "example/abs_normal/makefile") CONFIG_FILES="$CONFIG_FILES example/abs_normal/makefile" ;;
     "example/atomic/makefile") CONFIG_FILES="$CONFIG_FILES example/atomic/makefile" ;;
     "example/deprecated/makefile") CONFIG_FILES="$CONFIG_FILES example/deprecated/makefile" ;;
     "example/ipopt_solve/makefile") CONFIG_FILES="$CONFIG_FILES example/ipopt_solve/makefile" ;;

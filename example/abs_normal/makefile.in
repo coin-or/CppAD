@@ -87,8 +87,8 @@ PRE_UNINSTALL = :
 POST_UNINSTALL = :
 build_triplet = @build@
 host_triplet = @host@
-check_PROGRAMS = print_for$(EXEEXT)
-subdir = example/print_for
+check_PROGRAMS = abs_normal$(EXEEXT)
+subdir = example/abs_normal
 ACLOCAL_M4 = $(top_srcdir)/aclocal.m4
 am__aclocal_m4_deps = $(top_srcdir)/configure.ac
 am__configure_deps = $(am__aclocal_m4_deps) $(CONFIGURE_DEPENDENCIES) \
@@ -97,9 +97,10 @@ DIST_COMMON = $(srcdir)/makefile.am $(am__DIST_COMMON)
 mkinstalldirs = $(install_sh) -d
 CONFIG_CLEAN_FILES =
 CONFIG_CLEAN_VPATH_FILES =
-am_print_for_OBJECTS = print_for.$(OBJEXT)
-print_for_OBJECTS = $(am_print_for_OBJECTS)
-print_for_LDADD = $(LDADD)
+am_abs_normal_OBJECTS = abs_normal.$(OBJEXT) get_started.$(OBJEXT) \
+	qp_interior.$(OBJEXT)
+abs_normal_OBJECTS = $(am_abs_normal_OBJECTS)
+abs_normal_LDADD = $(LDADD)
 AM_V_P = $(am__v_P_@AM_V@)
 am__v_P_ = $(am__v_P_@AM_DEFAULT_V@)
 am__v_P_0 = false
@@ -129,8 +130,20 @@ AM_V_CXXLD = $(am__v_CXXLD_@AM_V@)
 am__v_CXXLD_ = $(am__v_CXXLD_@AM_DEFAULT_V@)
 am__v_CXXLD_0 = @echo "  CXXLD   " $@;
 am__v_CXXLD_1 = 
-SOURCES = $(print_for_SOURCES)
-DIST_SOURCES = $(print_for_SOURCES)
+COMPILE = $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) \
+	$(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS)
+AM_V_CC = $(am__v_CC_@AM_V@)
+am__v_CC_ = $(am__v_CC_@AM_DEFAULT_V@)
+am__v_CC_0 = @echo "  CC      " $@;
+am__v_CC_1 = 
+CCLD = $(CC)
+LINK = $(CCLD) $(AM_CFLAGS) $(CFLAGS) $(AM_LDFLAGS) $(LDFLAGS) -o $@
+AM_V_CCLD = $(am__v_CCLD_@AM_V@)
+am__v_CCLD_ = $(am__v_CCLD_@AM_DEFAULT_V@)
+am__v_CCLD_0 = @echo "  CCLD    " $@;
+am__v_CCLD_1 = 
+SOURCES = $(abs_normal_SOURCES)
+DIST_SOURCES = $(abs_normal_SOURCES)
 am__can_run_installinfo = \
   case $$AM_UPDATE_INFO_DIR in \
     n|no|NO) false;; \
@@ -348,14 +361,16 @@ top_srcdir = @top_srcdir@
 @CppAD_PKG_CONFIG_TRUE@)`
 
 #
-# Microsoft project files
-EXTRA_DIST = test.sh
-#
 AM_CPPFLAGS = -I. $(CPPAD_INCLUDE) $(BOOST_INCLUDE) $(EIGEN_INCLUDE)
 #
 AM_CXXFLAGS = -g $(CXX_FLAGS)
 #
-print_for_SOURCES = print_for.cpp
+abs_normal_SOURCES = \
+	abs_normal.cpp \
+	get_started.cpp \
+	qp_interior.cpp \
+	qp_interior.hpp
+
 all: all-am
 
 .SUFFIXES:
@@ -369,9 +384,9 @@ $(srcdir)/makefile.in: @MAINTAINER_MODE_TRUE@ $(srcdir)/makefile.am  $(am__confi
 	      exit 1;; \
 	  esac; \
 	done; \
-	echo ' cd $(top_srcdir) && $(AUTOMAKE) --foreign example/print_for/makefile'; \
+	echo ' cd $(top_srcdir) && $(AUTOMAKE) --foreign example/abs_normal/makefile'; \
 	$(am__cd) $(top_srcdir) && \
-	  $(AUTOMAKE) --foreign example/print_for/makefile
+	  $(AUTOMAKE) --foreign example/abs_normal/makefile
 makefile: $(srcdir)/makefile.in $(top_builddir)/config.status
 	@case '$?' in \
 	  *config.status*) \
@@ -393,9 +408,9 @@ $(am__aclocal_m4_deps):
 clean-checkPROGRAMS:
 	-test -z "$(check_PROGRAMS)" || rm -f $(check_PROGRAMS)
 
-print_for$(EXEEXT): $(print_for_OBJECTS) $(print_for_DEPENDENCIES) $(EXTRA_print_for_DEPENDENCIES) 
-	@rm -f print_for$(EXEEXT)
-	$(AM_V_CXXLD)$(CXXLINK) $(print_for_OBJECTS) $(print_for_LDADD) $(LIBS)
+abs_normal$(EXEEXT): $(abs_normal_OBJECTS) $(abs_normal_DEPENDENCIES) $(EXTRA_abs_normal_DEPENDENCIES) 
+	@rm -f abs_normal$(EXEEXT)
+	$(AM_V_CXXLD)$(CXXLINK) $(abs_normal_OBJECTS) $(abs_normal_LDADD) $(LIBS)
 
 mostlyclean-compile:
 	-rm -f *.$(OBJEXT)
@@ -403,7 +418,9 @@ mostlyclean-compile:
 distclean-compile:
 	-rm -f *.tab.c
 
-@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/print_for.Po@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/abs_normal.Po@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/get_started.Po@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/qp_interior.Po@am__quote@
 
 .cpp.o:
 @am__fastdepCXX_TRUE@	$(AM_V_CXX)depbase=`echo $@ | sed 's|[^/]*$$|$(DEPDIR)/&|;s|\.o$$||'`;\
@@ -626,7 +643,7 @@ uninstall-am:
 
 
 test: check
-	$(srcdir)/test.sh
+	./abs_normal
 
 # Tell versions [3.59,3.63) of GNU make to not export all variables.
 # Otherwise a system limit (for SysV at least) may be exceeded.

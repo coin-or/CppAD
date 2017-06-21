@@ -399,14 +399,18 @@ EXTRA_DIST = \
 test_directory_list = \
 	$(IPOPT_TESTS) \
 	$(SPEED_TESTS) \
-	example/general \
+	example/abs_normal \
 	example/atomic \
 	example/deprecated \
-	example/optimize \
+	example/general \
 	example/get_started \
-	introduction \
+	example/ipopt_solve \
 	example/multi_thread \
+	example/optimize \
 	example/print_for \
+	example/sparse \
+	example/utility \
+	introduction \
 	test_more/compare_c \
 	test_more/general
 
