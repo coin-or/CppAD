@@ -93,7 +93,7 @@ bool qp_interior(void)
 	size_t maxitr  = 10;
 	//
 	ok &= CppAD::qp_interior(
-		C, c, G, g, epsilon, maxitr, xin, xout, yout, sout
+		c, C, g, G, epsilon, maxitr, xin, xout, yout, sout
 	);
 	//
 	// check optimal value for u

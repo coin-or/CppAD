@@ -31,7 +31,7 @@ $head Under Construction$$
 
 $head Syntax$$
 $icode%ok% = qp_interior(
-	%C%, %c%, %G%, %g%, %epsilon%, %maxitr%, %xin%, %xout%, %yout%, %sout%
+	%c%, %C%, %g%, %G%, %epsilon%, %maxitr%, %xin%, %xout%, %yout%, %sout%
 )%$$
 see $cref/prototype/qp_interior/Prototype/$$
 
@@ -67,17 +67,17 @@ $latex \[
 	M_{i, j} = v[ i \times m + j ]
 \] $$
 
-$head C$$
-This is the matrix $latex C$$ in the problem in row-major order.
-
 $head c$$
 This is the vector $latex c$$ in the problem.
 
-$head G$$
-This is the matrix $latex G$$ in the problem in row-major order.
+$head C$$
+This is the matrix $latex C$$ in the problem in row-major order.
 
 $head g$$
 This is the vector $latex g$$ in the problem.
+
+$head G$$
+This is the matrix $latex G$$ in the problem in row-major order.
 
 $head epsilon$$
 This argument is the convergence criteria;
@@ -320,10 +320,10 @@ namespace {
 	// ------------------------------------------------------------------------
 	template <class Vector>
 	Vector qp_interior_F_0(
-		const Vector& C       ,
 		const Vector& c       ,
-		const Vector& G       ,
+		const Vector& C       ,
 		const Vector& g       ,
+		const Vector& G       ,
 		const Vector& x       ,
 		const Vector& y       ,
 		const Vector& s       )
@@ -363,10 +363,10 @@ namespace CppAD { // BEGIN_CPPAD_NAMESPACE
 // BEGIN PROTOTYPE
 template <class Vector>
 bool qp_interior(
-	const Vector& C       ,
 	const Vector& c       ,
-	const Vector& G       ,
+	const Vector& C       ,
 	const Vector& g       ,
+	const Vector& G       ,
 	double        epsilon ,
 	size_t        maxitr  ,
 	const Vector& xin     ,
@@ -415,7 +415,7 @@ bool qp_interior(
 	}
 	// ----------------------------------------------------------------------
 	// initialie F_0(xout, yout, sout)
-	Vector F_0 = qp_interior_F_0(C, c, G, g, xout, yout, sout);
+	Vector F_0 = qp_interior_F_0(c, C, g, G, xout, yout, sout);
 	for(size_t itr = 0; itr <= maxitr; itr++)
 	{
 		//
@@ -507,7 +507,7 @@ bool qp_interior(
 				lam_ok &= s[i] > 0.0 && y[i] > 0.0;
 			}
 			if( lam_ok )
-			{	Vector F_mu_tmp = qp_interior_F_0(C, c, G, g, x, y, s);
+			{	Vector F_mu_tmp = qp_interior_F_0(c, C, g, G, x, y, s);
 				for(size_t i = 0; i < m; i++)
 					F_mu_tmp[n + m + i] -= mu;
 				double F_norm_sq_tmp = qp_interior_norm_sq( F_mu_tmp );
@@ -523,7 +523,7 @@ bool qp_interior(
 		sout = s;
 		//
 		// updage F_0
-		F_0 = qp_interior_F_0(C, c, G, g, xout, yout, sout);
+		F_0 = qp_interior_F_0(c, C, g, G, xout, yout, sout);
 		//
 		// update mu
 		F_norm_sq = qp_interior_norm_sq( F_0 );
