@@ -275,6 +275,49 @@ $end
 # include <cppad/utility/lu_solve.hpp>
 
 namespace {
+	// ------------------------------------------------------------------------
+	template <class Vector>
+	double qp_interior_norm_sq(const Vector& v)
+	{	double norm_sq = 0.0;
+		for(size_t j = 0; j < v.size(); j++)
+			norm_sq += v[j] * v[j];
+		return norm_sq;
+	}
+	// ------------------------------------------------------------------------
+	template <class Vector>
+	void qp_interior_split(
+		const Vector& v, Vector& v_x, Vector& v_y, Vector& v_s
+	)
+	{	size_t n = v_x.size();
+		size_t m = v_y.size();
+		CPPAD_ASSERT_UNKNOWN( v_s.size() == m );
+		CPPAD_ASSERT_UNKNOWN( v.size() == n + m + m );
+		for(size_t i = 0; i < n; i++)
+			v_x[i] = v[i];
+		for(size_t i = 0; i < m; i++)
+		{	v_y[i] = v[n + i];
+			v_s[i] = v[n + m + i];
+		}
+		return;
+	}
+	// ------------------------------------------------------------------------
+	template <class Vector>
+	void qp_interior_join(
+		Vector& v, const Vector& v_x, const Vector& v_y, const Vector& v_s
+	)
+	{	size_t n = v_x.size();
+		size_t m = v_y.size();
+		CPPAD_ASSERT_UNKNOWN( v_s.size() == m );
+		CPPAD_ASSERT_UNKNOWN( v.size() == n + m + m );
+		for(size_t i = 0; i < n; i++)
+			v[i] = v_x[i];
+		for(size_t i = 0; i < m; i++)
+			v[n + i] = v_y[i];
+		for(size_t i = 0; i < m; i++)
+			v[n + m + i] = v_s[i];
+		return;
+	}
+	// ------------------------------------------------------------------------
 	template <class Vector>
 	Vector qp_interior_F_0(
 		const Vector& A       ,
@@ -303,26 +346,16 @@ namespace {
 				r_y[i] += A[i * n + j] * x[j];
 		}
 		// compute r_s(x, y, s) = D(s) * D(y) * 1_m - mu * 1_m
+		// where mu = 0
 		Vector r_s(m);
 		for(size_t i = 0; i < m; i++)
 			r_s[i] = s[i] * y[i];
 		//
 		// combine into one vector
 		Vector F_0(n + m + m);
-		for(size_t j = 0; j < n; j++)
-			F_0[j] = r_x[j];
-		for(size_t i = 0; i < m; i++)
-		{	F_0[n + i]     = r_y[i];
-			F_0[n + m + i] = r_s[i];
-		}
+		qp_interior_join(F_0, r_x, r_y, r_s);
+		//
 		return F_0;
-	}
-	template <class Vector>
-	double qp_interior_norm_sq(const Vector& v)
-	{	double norm_sq = 0.0;
-		for(size_t j = 0; j < v.size(); j++)
-			norm_sq += v[j] * v[j];
-		return norm_sq;
 	}
 }
 namespace CppAD { // BEGIN_CPPAD_NAMESPACE
@@ -384,10 +417,7 @@ bool qp_interior(
 	// initialie F_0(xout, yout, sout)
 	Vector F_0 = qp_interior_F_0(A, b, H, g, xout, yout, sout);
 	for(size_t itr = 0; itr <= maxitr; itr++)
-	{	// compute F_mu(xout, yout, sout)
-		Vector F_mu  = F_0;
-		for(size_t i = 0; i < m; i++)
-			F_mu[n + m + i] -= mu;
+	{
 		//
 		// check for convergence
 		double F_norm_sq   = qp_interior_norm_sq( F_0 );
@@ -395,21 +425,28 @@ bool qp_interior(
 			return true;
 		if( itr == maxitr )
 			return false;
-		// -------------------------------------------------------------------
-		// tmp1 = D(s)^{-1} * [ r_s - D(y) r_y ]
-		Vector tmp1(m);
-		for(size_t i = 0; i < m; i++)
-		{	tmp1[i]  = F_mu[n + m + i];        // r_s
-			tmp1[i] -= yout[i] * F_mu[n + i];  // r_s - D(y) * r_y
-			tmp1[i] /= sout[i];                // D(s)^-1 [ r_s - D(y) * r_y ]
-		}
 		//
-		// rhs_x = A^T * D(s)^{-1} * [ r_s - D(y) r_y ] - r_x
-		Vector rhs_x(n);
+		// compute F_mu(xout, yout, sout)
+		Vector F_mu  = F_0;
+		for(size_t i = 0; i < m; i++)
+			F_mu[n + m + i] -= mu;
+		//
+		// r_x, r_y, r_s (xout, yout, sout)
+		Vector r_x(n), r_y(m), r_s(m);
+		qp_interior_split(F_mu, r_x, r_y, r_s);
+		//
+		// tmp_m = D(s)^{-1} * [ r_s - D(y) r_y ]
+		Vector tmp_m(m);
+		for(size_t i = 0; i < m; i++)
+			tmp_m[i]  = ( r_s[i] - yout[i] * r_y[i] ) / sout[i];
+		//
+		// right_x = A^T * D(s)^{-1} * [ r_s - D(y) r_y ] - r_x
+		Vector right_x(n);
 		for(size_t j = 0; j < n; j++)
-		{	rhs_x[j] = - F_mu[j]; // - r_x
+		{	right_x[j] = 0.0;
 			for(size_t i = 0; i < m; i++)
-				rhs_x[j] += A[ i * m + j ] * tmp1[i];
+				right_x[j] += A[ i * m + j ] * tmp_m[i];
+			right_x[j] -= r_x[j];
 		}
 		//
 		// Left_x = H + A^T * D(y / s) * A
@@ -425,35 +462,30 @@ bool qp_interior(
 		// delta_x
 		Vector delta_x(n);
 		double logdet;
-		LuSolve(n, 1, Left_x, rhs_x, delta_x, logdet);
+		LuSolve(n, 1, Left_x, right_x, delta_x, logdet);
 		//
-		// delta_y
+		// A_delta_x = A * delta_x
+		Vector A_delta_x(m);
+		for(size_t i = 0; i < m; i++)
+		{	A_delta_x[i] = 0.0;
+			for(size_t j = 0; j < n; j++)
+				A_delta_x[i] += A[ i * n + j ] * delta_x[j];
+		}
+		//
+		// delta_y = D(s)^-1 * [D(y) * r_y - r_s + D(y) * A * delta_x]
 		Vector delta_y(m);
 		for(size_t i = 0; i < m; i++)
-		{	delta_y[i] = 0.0;
-			for(size_t j = 0; j < n; j++)
-				delta_y[i] += A[i * n + j] * delta_x[j]; // A * delta_x
-			delta_y[i] += F_mu[n + i];      // r_y + A * delta_x
-			delta_y[i] *= yout[i];          // D(y) * [r_y + A * delta_x]
-			delta_y[i] -= F_mu[n + m + i];  // D(y) * [r_y + A * delta_x] - r_s
-			delta_y[i] /= sout[i]; // D(s)^-1*( D(y)*[r_y + A*delta_x] - r_s )
+		{	delta_y[i] = yout[i] * r_y[i] - r_s[i] + yout[i] * A_delta_x[i];
+			delta_y[i] /= sout[i];
 		}
-		// delta_s
+		// delta_s = - r_y - A * delta_x
 		Vector delta_s(m);
 		for(size_t i = 0; i < m; i++)
-		{	// - r_y - A * delta_x
-			delta_s[i] = - F_mu[n + i];
-			for(size_t j = 0; j < n; j++)
-				delta_s[i] -= A[i * n + j] * delta_x[j];
-		}
+			delta_s[i] = - r_y[i] - A_delta_x[i];
+		//
 		// delta_xys
 		Vector delta_xys(n + m + m);
-		for(size_t j = 0; j < n; j++)
-			delta_xys[j] = delta_x[j];
-		for(size_t i = 0; i < m; i++)
-			delta_xys[n + i] = delta_y[i];
-		for(size_t i = 0; i < m; i++)
-			delta_xys[n + m + i] = delta_s[i];
+		qp_interior_join(delta_xys, delta_x, delta_y, delta_s);
 		// -------------------------------------------------------------------
 		//
 		// The initial derivative in direction  Delta_xys is equal to
