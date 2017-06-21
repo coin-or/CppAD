@@ -36,7 +36,7 @@ This is equivalent to
 $latex \[
 \begin{array}{rlr}
 	\R{minimize}
-	& (0, 1) \cdot (u, v)^\R{T}  & \R{w.r.t} \; (u,v) \in \B{R}^2 \\
+	& (0, 1) \cdot (u, v)^T  & \R{w.r.t} \; (u,v) \in \B{R}^2 \\
 	\R{subject \; to}
 	&
 	\left( \begin{array}{cc} 1 & -1 \\ -1 & -1 \end{array} \right)
@@ -68,23 +68,23 @@ bool qp_interior(void)
 	//
 	size_t n = 2;
 	size_t m = 2;
-	vector A(m*n), b(m), H(n*n), g(n), xin(n), xout(n), yout(m), sout(m);
-	A[ 0 * n + 0 ] =  1.0; // A(0,0)
-	A[ 0 * n + 1 ] = -1.0; // A(0,1)
-	A[ 1 * n + 0 ] = -1.0; // A(1,0)
-	A[ 1 * n + 1 ] = -1.0; // A(1,1)
+	vector C(m*n), c(m), G(n*n), g(n), xin(n), xout(n), yout(m), sout(m);
+	C[ 0 * n + 0 ] =  1.0; // C(0,0)
+	C[ 0 * n + 1 ] = -1.0; // C(0,1)
+	C[ 1 * n + 0 ] = -1.0; // C(1,0)
+	C[ 1 * n + 1 ] = -1.0; // C(1,1)
 	//
-	b[0]           = -1.0;
-	b[1]           =  1.0;
+	c[0]           = -1.0;
+	c[1]           =  1.0;
 	//
 	g[0]           =  0.0;
 	g[1]           =  1.0;
 	//
-	// H = 0
+	// G = 0
 	for(size_t i = 0; i < n * n; i++)
-		H[i] = 0.0;
+		G[i] = 0.0;
 	//
-	// If (u, v) = (0,2), A * (u, v) + b = (-2,-2)^T + (1,-1)^T < 0
+	// If (u, v) = (0,2), C * (u, v) + c = (-2,-2)^T + (1,-1)^T < 0
 	// Hence (0, 2) is feasible.
 	xin[0] = 0.0;
 	xin[1] = 2.0;
@@ -93,7 +93,7 @@ bool qp_interior(void)
 	size_t maxitr  = 10;
 	//
 	ok &= CppAD::qp_interior(
-		A, b, H, g, epsilon, maxitr, xin, xout, yout, sout
+		C, c, G, g, epsilon, maxitr, xin, xout, yout, sout
 	);
 	//
 	// check optimal value for u

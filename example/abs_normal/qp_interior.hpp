@@ -31,26 +31,26 @@ $head Under Construction$$
 
 $head Syntax$$
 $icode%ok% = qp_interior(
-	%A%, %b%, %H%, %g%, %epsilon%, %maxitr%, %xin%, %xout%, %yout%, %sout%
+	%C%, %c%, %G%, %g%, %epsilon%, %maxitr%, %xin%, %xout%, %yout%, %sout%
 )%$$
 see $cref/prototype/qp_interior/Prototype/$$
 
 $head Problem$$
 We are given
-$latex A \in \B{R}^{m \times n}$$,
-$latex b \in \B{R}^m$$,
-$latex H \in \B{R}^{n \times n}$$,
+$latex C \in \B{R}^{m \times n}$$,
+$latex c \in \B{R}^m$$,
+$latex G \in \B{R}^{n \times n}$$,
 $latex g \in \B{R}^n$$,
-where $latex H$$ is positive semi-definite
-and $latex H + A^T A$$ is positive definite.
+where $latex G$$ is positive semi-definite
+and $latex G + C^T C$$ is positive definite.
 This routine solves the problem
 $latex \[
 \begin{array}{rl}
 \R{minimize} &
-\frac{1}{2} x^\R{T} H x + g^\R{T} x \; \R{w.r.t} \; x \in \B{R}^n
+\frac{1}{2} x^T G x + g^T x \; \R{w.r.t} \; x \in \B{R}^n
 \\
 \R{subject \; to} &
-A x + b \leq 0
+C x + c \leq 0
 \end{array}
 \] $$
 
@@ -64,17 +64,17 @@ in row major order, if the size of $icode v$$ is $latex m  \times n$$ and for
 $latex i = 0 , \ldots , m-1$$,
 $latex j = 0 , \ldots , n-1$$,
 $latex \[
-	A_{i, j} = v[ i \times m + j ]
+	M_{i, j} = v[ i \times m + j ]
 \] $$
 
-$head A$$
-This is the matrix $latex A$$ in the problem in row-major order.
+$head C$$
+This is the matrix $latex C$$ in the problem in row-major order.
 
-$head b$$
-This is the vector $latex b$$ in the problem.
+$head c$$
+This is the vector $latex c$$ in the problem.
 
-$head H$$
-This is the matrix $latex H$$ in the problem in row-major order.
+$head G$$
+This is the matrix $latex G$$ in the problem in row-major order.
 
 $head g$$
 This is the vector $latex g$$ in the problem.
@@ -91,7 +91,7 @@ on convergence.
 $head xin$$
 This argument has size $icode n$$ and is the initial point for the algorithm.
 It must strictly satisfy the constraints; i.e.,
-$latex A x - b < 0$$  for $icode%x% = %xin%$$.
+$latex C x - c < 0$$  for $icode%x% = %xin%$$.
 
 $head xout$$
 This argument has size is $icode n$$ and
@@ -131,9 +131,9 @@ F_\mu ( x , y , s )
 =
 \left(
 \begin{array}{c}
-g + H x + y^\R{T} A             \\
-A x + b + s                           \\
-D(s) D(y) \R{1}_m - \mu 1_m
+g + G x + y^T C             \\
+C x + c + s                           \\
+D(s) D(y) 1_m - \mu 1_m
 \end{array}
 \right)
 \] $$
@@ -147,8 +147,8 @@ The derivative of $latex F_\mu$$ is given by
 $latex \[
 F_\mu^{(1)} (x, y, s)  =
 \left( \begin{array}{ccc}
-H       & A^T  & 0_{n,m} \\
-A       & 0    & I_{m,m} \\
+G       & C^T  & 0_{n,m} \\
+C       & 0    & I_{m,m} \\
 0_{m,m} & D(s) & D(y)
 \end{array} \right)
 \] $$
@@ -163,16 +163,16 @@ F_\mu^{(1)} (x, y, s)
 To simplify notation, we define
 $latex \[
 \begin{array}{rcl}
-r_x (x, y, s) & = & g + H x + y^\R{T} A \\
-r_y (x, y, s) & = & A x + b + s          \\
-r_s (x, y, s) & = & D(s) D(y) \R{1}_m - \mu 1_m
+r_x (x, y, s) & = & g + G x + y^T C \\
+r_y (x, y, s) & = & C x + c + s          \\
+r_s (x, y, s) & = & D(s) D(y) 1_m - \mu 1_m
 \end{array}
 \] $$
 It follows that
 $latex \[
 \left( \begin{array}{ccc}
-H       & A^T  & 0_{n,m} \\
-A       & 0    & I_{m,m} \\
+G       & C^T  & 0_{n,m} \\
+C       & 0    & I_{m,m} \\
 0_{m,m} & D(s) & D(y)
 \end{array} \right)
 \left( \begin{array}{c} \Delta x \\ \Delta y \\ \Delta s \end{array} \right)
@@ -190,9 +190,9 @@ Subtracting $latex D(y)$$ times the second row from the third row
 we obtain:
 $latex \[
 \left( \begin{array}{ccc}
-H        & A^T  & 0_{n,m} \\
-A        & 0    & I_{m,m} \\
-- D(y) A & D(s) & 0_{m,m}
+G        & C^T  & 0_{n,m} \\
+C        & 0    & I_{m,m} \\
+- D(y) C & D(s) & 0_{m,m}
 \end{array} \right)
 \left( \begin{array}{c} \Delta x \\ \Delta y \\ \Delta s \end{array} \right)
 =
@@ -206,9 +206,9 @@ A        & 0    & I_{m,m} \\
 Multiplying the third row by $latex D(s)^{-1}$$ we obtain:
 $latex \[
 \left( \begin{array}{ccc}
-H          & A^T     & 0_{n,m} \\
-A          & 0       & I_{m,m} \\
-- D(y/s) A & I_{m,m} & 0_{m,m}
+G          & C^T     & 0_{n,m} \\
+C          & 0       & I_{m,m} \\
+- D(y/s) C & I_{m,m} & 0_{m,m}
 \end{array} \right)
 \left( \begin{array}{c} \Delta x \\ \Delta y \\ \Delta s \end{array} \right)
 =
@@ -221,39 +221,39 @@ A          & 0       & I_{m,m} \\
 \] $$
 where $latex y/s$$ is the vector in $latex \B{R}^m$$ defined by
 $latex (y/s)_i = y_i / s_i$$.
-Subtracting $latex A^T$$ times the third row from the first row we obtain:
+Subtracting $latex C^T$$ times the third row from the first row we obtain:
 $latex \[
 \left( \begin{array}{ccc}
-H + A^T D(y/s) A & 0_{n,m} & 0_{n,m} \\
-A                & 0       & I_{m,m} \\
-- D(y/s) A       & I_{m,m} & 0_{m,m}
+G + C^T D(y/s) C & 0_{n,m} & 0_{n,m} \\
+C                & 0       & I_{m,m} \\
+- D(y/s) C       & I_{m,m} & 0_{m,m}
 \end{array} \right)
 \left( \begin{array}{c} \Delta x \\ \Delta y \\ \Delta s \end{array} \right)
 =
 -
 \left( \begin{array}{c}
 	r_x (x, y, s)
-		- A^T D(s)^{-1} \left[ r_s (x, y, s) - D(y) r_y(x, y, s) \right] \\
+		- C^T D(s)^{-1} \left[ r_s (x, y, s) - D(y) r_y(x, y, s) \right] \\
 	r_y (x, y, s) \\
 	D(s)^{-1} r_s (x, y, s) - D(y/s) r_y(x, y, s)
 \end{array} \right)
 \] $$
 
 $head Solution$$
-It follows that $latex H + A^T D(y/s) A$$ is invertible and
+It follows that $latex G + C^T D(y/s) C$$ is invertible and
 we can determine $latex \Delta x$$ by solving the equation
 $latex \[
-[ H + A^T D(y/s) A ] \Delta x
+[ G + C^T D(y/s) C ] \Delta x
 =
-A^T D(s)^{-1} \left[ r_s (x, y, s) - D(y) r_y(x, y, s) \right] - r_x (x, y, s)
+C^T D(s)^{-1} \left[ r_s (x, y, s) - D(y) r_y(x, y, s) \right] - r_x (x, y, s)
 \] $$
 Given $latex \Delta x$$ we have that
 $latex \[
-\Delta s = - r_y (x, y, s) - A \Delta x
+\Delta s = - r_y (x, y, s) - C \Delta x
 \] $$
 $latex \[
 \Delta y =
-D(s)^{-1}[ D(y) r_y(x, y, s) - r_s (x, y, s) + D(y) A \Delta x ]
+D(s)^{-1}[ D(y) r_y(x, y, s) - r_s (x, y, s) + D(y) C \Delta x ]
 \] $$
 
 $children%example/abs_normal/qp_interior.cpp
@@ -320,30 +320,30 @@ namespace {
 	// ------------------------------------------------------------------------
 	template <class Vector>
 	Vector qp_interior_F_0(
-		const Vector& A       ,
-		const Vector& b       ,
-		const Vector& H       ,
+		const Vector& C       ,
+		const Vector& c       ,
+		const Vector& G       ,
 		const Vector& g       ,
 		const Vector& x       ,
 		const Vector& y       ,
 		const Vector& s       )
 	{	size_t n = g.size();
-		size_t m = b.size();
-		// compute r_x(x, y, s) = g + H x + y^T A
+		size_t m = c.size();
+		// compute r_x(x, y, s) = g + G x + y^T C
 		Vector r_x(n);
 		for(size_t j = 0; j < n; j++)
 		{	r_x[j] = g[j];
 			for(size_t i = 0; i < n; i++)
-				r_x[j] += H[j * n + i] * x[i];
+				r_x[j] += G[j * n + i] * x[i];
 			for(size_t i = 0; i < m; i++)
-				r_x[j] += y[i] * A[i * n + j];
+				r_x[j] += y[i] * C[i * n + j];
 		}
-		// compute r_y(x, y, s) = A x + b + s
+		// compute r_y(x, y, s) = C x + c + s
 		Vector r_y(m);
 		for(size_t i = 0; i < m; i++)
-		{	r_y[i] = b[i] + s[i];
+		{	r_y[i] = c[i] + s[i];
 			for(size_t j = 0; j < n; j++)
-				r_y[i] += A[i * n + j] * x[j];
+				r_y[i] += C[i * n + j] * x[j];
 		}
 		// compute r_s(x, y, s) = D(s) * D(y) * 1_m - mu * 1_m
 		// where mu = 0
@@ -363,9 +363,9 @@ namespace CppAD { // BEGIN_CPPAD_NAMESPACE
 // BEGIN PROTOTYPE
 template <class Vector>
 bool qp_interior(
-	const Vector& A       ,
-	const Vector& b       ,
-	const Vector& H       ,
+	const Vector& C       ,
+	const Vector& c       ,
+	const Vector& G       ,
 	const Vector& g       ,
 	double        epsilon ,
 	size_t        maxitr  ,
@@ -374,25 +374,25 @@ bool qp_interior(
 	Vector&       yout    ,
 	Vector&       sout    )
 // END PROTOTYPE
-{	size_t m = b.size();
+{	size_t m = c.size();
 	size_t n = g.size();
 	CPPAD_ASSERT_KNOWN(
-		A.size() == m * n,
-		"qp_interior: size of A is not m * n"
+		C.size() == m * n,
+		"qp_interior: size of C is not m * n"
 	);
 	CPPAD_ASSERT_KNOWN(
-		H.size() == n * n,
-		"qp_interior: size of H is not n * n"
+		G.size() == n * n,
+		"qp_interior: size of G is not n * n"
 	);
 	//
 	// compute the maximum absolute element of the problem vectors and matrices
 	double max_element = 0.0;
-	for(size_t i = 0; i < A.size(); i++)
-		max_element = std::max(max_element , std::fabs(A[i]) );
-	for(size_t i = 0; i < b.size(); i++)
-		max_element = std::max(max_element , std::fabs(b[i]) );
-	for(size_t i = 0; i < H.size(); i++)
-		max_element = std::max(max_element , std::fabs(H[i]) );
+	for(size_t i = 0; i < C.size(); i++)
+		max_element = std::max(max_element , std::fabs(C[i]) );
+	for(size_t i = 0; i < c.size(); i++)
+		max_element = std::max(max_element , std::fabs(c[i]) );
+	for(size_t i = 0; i < G.size(); i++)
+		max_element = std::max(max_element , std::fabs(G[i]) );
 	for(size_t i = 0; i < g.size(); i++)
 		max_element = std::max(max_element , std::fabs(g[i]) );
 	//
@@ -404,9 +404,9 @@ bool qp_interior(
 	// initialize x, y, s
 	xout = xin;
 	for(size_t i = 0; i < m; i++)
-	{	double sum = b[i];
+	{	double sum = c[i];
 		for(size_t j = 0; j < n; j++)
-			sum += A[ i * n + j ] * xout[j];
+			sum += C[ i * n + j ] * xout[j];
 		if( sum > 0.0 )
 			return false;
 		//
@@ -415,7 +415,7 @@ bool qp_interior(
 	}
 	// ----------------------------------------------------------------------
 	// initialie F_0(xout, yout, sout)
-	Vector F_0 = qp_interior_F_0(A, b, H, g, xout, yout, sout);
+	Vector F_0 = qp_interior_F_0(C, c, G, g, xout, yout, sout);
 	for(size_t itr = 0; itr <= maxitr; itr++)
 	{
 		//
@@ -440,22 +440,22 @@ bool qp_interior(
 		for(size_t i = 0; i < m; i++)
 			tmp_m[i]  = ( r_s[i] - yout[i] * r_y[i] ) / sout[i];
 		//
-		// right_x = A^T * D(s)^{-1} * [ r_s - D(y) r_y ] - r_x
+		// right_x = C^T * D(s)^{-1} * [ r_s - D(y) r_y ] - r_x
 		Vector right_x(n);
 		for(size_t j = 0; j < n; j++)
 		{	right_x[j] = 0.0;
 			for(size_t i = 0; i < m; i++)
-				right_x[j] += A[ i * m + j ] * tmp_m[i];
+				right_x[j] += C[ i * m + j ] * tmp_m[i];
 			right_x[j] -= r_x[j];
 		}
 		//
-		// Left_x = H + A^T * D(y / s) * A
-		Vector Left_x = H;
+		// Left_x = G + C^T * D(y / s) * C
+		Vector Left_x = G;
 		for(size_t i = 0; i < n; i++)
 		{	for(size_t j = 0; j < n; j++)
 			{	for(size_t k = 0; k < m; k++)
 				{	double y_s = yout[k] / sout[k];
-					Left_x[ i * n + j] += A[k * n + j] * y_s * A[k * n + i];
+					Left_x[ i * n + j] += C[k * n + j] * y_s * C[k * n + i];
 				}
 			}
 		}
@@ -464,24 +464,24 @@ bool qp_interior(
 		double logdet;
 		LuSolve(n, 1, Left_x, right_x, delta_x, logdet);
 		//
-		// A_delta_x = A * delta_x
-		Vector A_delta_x(m);
+		// C_delta_x = C * delta_x
+		Vector C_delta_x(m);
 		for(size_t i = 0; i < m; i++)
-		{	A_delta_x[i] = 0.0;
+		{	C_delta_x[i] = 0.0;
 			for(size_t j = 0; j < n; j++)
-				A_delta_x[i] += A[ i * n + j ] * delta_x[j];
+				C_delta_x[i] += C[ i * n + j ] * delta_x[j];
 		}
 		//
-		// delta_y = D(s)^-1 * [D(y) * r_y - r_s + D(y) * A * delta_x]
+		// delta_y = D(s)^-1 * [D(y) * r_y - r_s + D(y) * C * delta_x]
 		Vector delta_y(m);
 		for(size_t i = 0; i < m; i++)
-		{	delta_y[i] = yout[i] * r_y[i] - r_s[i] + yout[i] * A_delta_x[i];
+		{	delta_y[i] = yout[i] * r_y[i] - r_s[i] + yout[i] * C_delta_x[i];
 			delta_y[i] /= sout[i];
 		}
-		// delta_s = - r_y - A * delta_x
+		// delta_s = - r_y - C * delta_x
 		Vector delta_s(m);
 		for(size_t i = 0; i < m; i++)
-			delta_s[i] = - r_y[i] - A_delta_x[i];
+			delta_s[i] = - r_y[i] - C_delta_x[i];
 		//
 		// delta_xys
 		Vector delta_xys(n + m + m);
@@ -507,7 +507,7 @@ bool qp_interior(
 				lam_ok &= s[i] > 0.0 && y[i] > 0.0;
 			}
 			if( lam_ok )
-			{	Vector F_mu_tmp = qp_interior_F_0(A, b, H, g, x, y, s);
+			{	Vector F_mu_tmp = qp_interior_F_0(C, c, G, g, x, y, s);
 				for(size_t i = 0; i < m; i++)
 					F_mu_tmp[n + m + i] -= mu;
 				double F_norm_sq_tmp = qp_interior_norm_sq( F_mu_tmp );
@@ -523,7 +523,7 @@ bool qp_interior(
 		sout = s;
 		//
 		// updage F_0
-		F_0 = qp_interior_F_0(A, b, H, g, xout, yout, sout);
+		F_0 = qp_interior_F_0(C, c, G, g, xout, yout, sout);
 		//
 		// update mu
 		F_norm_sq = qp_interior_norm_sq( F_0 );
