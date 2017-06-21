@@ -221,7 +221,7 @@ A          & 0       & I_{m,m} \\
 \] $$
 where $latex y/s$$ is the vector in $latex \B{R}^m$$ defined by
 $latex (y/s)_i = y_i / s_i$$.
-Subtracting $latex A^T$$ times the third row from the second row we obtain:
+Subtracting $latex A^T$$ times the third row from the first row we obtain:
 $latex \[
 \left( \begin{array}{ccc}
 H + A^T D(y/s) A & 0_{n,m} & 0_{n,m} \\
@@ -245,14 +245,15 @@ we can determine $latex \Delta x$$ by solving the equation
 $latex \[
 [ H + A^T D(y/s) A ] \Delta x
 =
-r_x (x, y, s) - A^T D(s)^{-1} \left[ r_s (x, y, s) - D(y) r_y(x, y, s) \right]
+A^T D(s)^{-1} \left[ r_s (x, y, s) - D(y) r_y(x, y, s) \right] - r_x (x, y, s)
 \] $$
 Given $latex \Delta x$$ we have that
 $latex \[
-\Delta s = r_y (x, y, s) - A \Delta x
+\Delta s = - r_y (x, y, s) - A \Delta x
 \] $$
 $latex \[
-\Delta y =  D(s)^{-1} r_s (x, y, s) - D(y/s) r_y(x, y, s) + D(y/s) A \Delta x
+\Delta y =
+D(s)^{-1}[ D(y) r_y(x, y, s) - r_s (x, y, s) + D(y) A \Delta x ]
 \] $$
 
 $children%example/abs_normal/qp_interior.cpp
@@ -380,29 +381,6 @@ bool qp_interior(
 		yout[i] = std::sqrt(mu);
 	}
 	// ----------------------------------------------------------------------
-	//          [ H  A^T   0    ]
-	// dF_mu =  [ A  0     I    ]
-	//          [ 0  D(s)  D(y) ]
-	// fill in parts of dF_mu that do not change
-	size_t n_var = n + m + m;
-	Vector dF_mu(n_var * n_var);
-	for(size_t i = 0; i < n_var; i++)
-	{	for(size_t j = 0; j < n_var; j++)
-			dF_mu[ i * n_var + j] = 0.0;          // initialize as 0
-	}
-	for(size_t i = 0; i < n; i++)
-	{	for(size_t j = 0; j < n; j++)
-			dF_mu[ i * n_var + j] = H[i * n + j]; // fill in H
-	}
-	for(size_t i = 0; i < m; i++)
-	{	for(size_t j = 0; j < n; j++)
-		{	dF_mu[ (i + n) * n_var + j ] = A[ i * n + j]; //fill in  A
-			dF_mu[ j * n_var + (n + i) ] = A[ i * n + j]; //fill in  A^T
-		}
-	}
-	for(size_t i = 0; i < m; i++)
-		dF_mu[ (i + n) * n_var + (n + m + i) ] = 1.0;     // fill in I
-	// ----------------------------------------------------------------------
 	// initialie F_0(xout, yout, sout)
 	Vector F_0 = qp_interior_F_0(A, b, H, g, xout, yout, sout);
 	for(size_t itr = 0; itr <= maxitr; itr++)
@@ -417,20 +395,66 @@ bool qp_interior(
 			return true;
 		if( itr == maxitr )
 			return false;
-		//
-		// fill in parts of dF_mu that change
+		// -------------------------------------------------------------------
+		// tmp1 = D(s)^{-1} * [ r_s - D(y) r_y ]
+		Vector tmp1(m);
 		for(size_t i = 0; i < m; i++)
-		{	dF_mu[ (n + m + i) * n_var + (n + i) ]     = sout[i]; // D(s)
-			dF_mu[ (n + m + i) * n_var + (n + m + i) ] = yout[i]; // D(y)
+		{	tmp1[i]  = F_mu[n + m + i];        // r_s
+			tmp1[i] -= yout[i] * F_mu[n + i];  // r_s - D(y) * r_y
+			tmp1[i] /= sout[i];                // D(s)^-1 [ r_s - D(y) * r_y ]
 		}
-		// right hand side in linear equation
-		Vector rhs_xys(n_var), delta_xys(n_var);
-		for(size_t i = 0; i < n_var; i++)
-			rhs_xys[i] = - F_mu[i];
-		// solve for Newton Step
+		//
+		// rhs_x = A^T * D(s)^{-1} * [ r_s - D(y) r_y ] - r_x
+		Vector rhs_x(n);
+		for(size_t j = 0; j < n; j++)
+		{	rhs_x[j] = - F_mu[j]; // - r_x
+			for(size_t i = 0; i < m; i++)
+				rhs_x[j] += A[ i * m + j ] * tmp1[i];
+		}
+		//
+		// Left_x = H + A^T * D(y / s) * A
+		Vector Left_x = H;
+		for(size_t i = 0; i < n; i++)
+		{	for(size_t j = 0; j < n; j++)
+			{	for(size_t k = 0; k < m; k++)
+				{	double y_s = yout[k] / sout[k];
+					Left_x[ i * n + j] += A[k * n + j] * y_s * A[k * n + i];
+				}
+			}
+		}
+		// delta_x
+		Vector delta_x(n);
 		double logdet;
-		Vector Delta_xys(n_var);
-		LuSolve(n_var, 1, dF_mu, rhs_xys, delta_xys, logdet);
+		LuSolve(n, 1, Left_x, rhs_x, delta_x, logdet);
+		//
+		// delta_y
+		Vector delta_y(m);
+		for(size_t i = 0; i < m; i++)
+		{	delta_y[i] = 0.0;
+			for(size_t j = 0; j < n; j++)
+				delta_y[i] += A[i * n + j] * delta_x[j]; // A * delta_x
+			delta_y[i] += F_mu[n + i];      // r_y + A * delta_x
+			delta_y[i] *= yout[i];          // D(y) * [r_y + A * delta_x]
+			delta_y[i] -= F_mu[n + m + i];  // D(y) * [r_y + A * delta_x] - r_s
+			delta_y[i] /= sout[i]; // D(s)^-1*( D(y)*[r_y + A*delta_x] - r_s )
+		}
+		// delta_s
+		Vector delta_s(m);
+		for(size_t i = 0; i < m; i++)
+		{	// - r_y - A * delta_x
+			delta_s[i] = - F_mu[n + i];
+			for(size_t j = 0; j < n; j++)
+				delta_s[i] -= A[i * n + j] * delta_x[j];
+		}
+		// delta_xys
+		Vector delta_xys(n + m + m);
+		for(size_t j = 0; j < n; j++)
+			delta_xys[j] = delta_x[j];
+		for(size_t i = 0; i < m; i++)
+			delta_xys[n + i] = delta_y[i];
+		for(size_t i = 0; i < m; i++)
+			delta_xys[n + m + i] = delta_s[i];
+		// -------------------------------------------------------------------
 		//
 		// The initial derivative in direction  Delta_xys is equal to
 		// the negative of the norm square of F_mu
@@ -471,7 +495,7 @@ bool qp_interior(
 		//
 		// update mu
 		F_norm_sq = qp_interior_norm_sq( F_0 );
-		if( F_norm_sq <= 1e1 * double(n_var) * mu * mu )
+		if( F_norm_sq <= 1e1 * double(n + m + m) * mu * mu )
 			mu = mu / 1e3;
 	}
 	return false;
