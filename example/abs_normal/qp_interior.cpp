@@ -23,7 +23,6 @@ Our original problem is
 $latex \[
 	\R{minimize} \; | u - 1| \; \R{w.r.t} \; u \in \B{R}
 \] $$
-with respect to $latex u \in \B{R}$$.
 We reformulate this as the following problem
 $latex \[
 \begin{array}{rlr}
@@ -98,7 +97,7 @@ bool qp_interior(void)
 	//
 	// check optimal value for u
 	ok &= std::fabs( xout[0] - 1.0 ) < epsilon;
-	// checkk optimal value for v
+	// check optimal value for v
 	ok &= std::fabs( xout[1] ) < epsilon;
 	//
 	return ok;

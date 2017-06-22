@@ -265,12 +265,14 @@ This is Equation (2) of the reference.
 
 $children%example/abs_normal/get_started.cpp
 	%example/abs_normal/qp_interior.hpp
+	%example/abs_normal/qp_box.hpp
 %$$
 $head Example$$
 The file $cref abs_normal_get_started.cpp$$ contains
 and example and test using this operation.
-The routine $cref qp_interior$$ is solves quadratic programming problems
-and is used by some of the $code abs_normal$$ examples.
+The routines
+$cref qp_interior$$ and $cref qp_box$$
+are used by some of the $code abs_normal$$ examples.
 
 $end
 -------------------------------------------------------------------------------

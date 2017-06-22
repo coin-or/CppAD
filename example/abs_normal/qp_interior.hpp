@@ -396,7 +396,7 @@ bool qp_interior(
 	for(size_t i = 0; i < g.size(); i++)
 		max_element = std::max(max_element , std::fabs(g[i]) );
 	//
-	double mu = 1e-3 * max_element;
+	double mu = 1e-1 * max_element;
 	//
 	if( max_element == 0.0 )
 		return false;
@@ -445,7 +445,7 @@ bool qp_interior(
 		for(size_t j = 0; j < n; j++)
 		{	right_x[j] = 0.0;
 			for(size_t i = 0; i < m; i++)
-				right_x[j] += C[ i * m + j ] * tmp_m[i];
+				right_x[j] += C[ i * n + j ] * tmp_m[i];
 			right_x[j] -= r_x[j];
 		}
 		//
@@ -529,6 +529,14 @@ bool qp_interior(
 		F_norm_sq = qp_interior_norm_sq( F_0 );
 		if( F_norm_sq <= 1e1 * double(n + m + m) * mu * mu )
 			mu = mu / 1e3;
+		//
+		// std::cout
+		// << "itr = " << itr
+		// << ", mu = " << mu
+		// << ", lam = " << lam
+		// << ", F_norm_sq = " << F_norm_sq
+		// << ", xout = " << xout
+		// << "\n";
 	}
 	return false;
 }

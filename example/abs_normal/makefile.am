@@ -32,6 +32,8 @@ AM_CXXFLAGS       = -g $(CXX_FLAGS)
 abs_normal_SOURCES = \
 	abs_normal.cpp \
 	get_started.cpp \
+	qp_box.cpp \
+	qp_box.hpp \
 	qp_interior.cpp \
 	qp_interior.hpp
 
