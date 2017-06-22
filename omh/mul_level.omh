@@ -92,7 +92,7 @@ This will start recording a new tape of
 operations performed using $codei AD< AD<double> >$$ class objects.
 
 $subhead Inner Function$$
-The next step is to calculation the inner function
+The next step is to calculate the inner function
 using $codei AD< AD<double> >$$ class objects.
 We then stop the recording using
 $codei%
@@ -118,7 +118,7 @@ This will start recording a new tape of
 operations performed using $codei AD<double>$$ class objects.
 
 $subhead Outer Function$$
-The next step is to calculation the outer function
+The next step is to calculate the outer function
 using $codei AD<double>$$ class objects.
 Note that derivatives of the inner function can be included
 in the calculation of the outer function using $icode a1f$$.
