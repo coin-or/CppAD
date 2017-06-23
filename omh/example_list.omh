@@ -79,7 +79,6 @@ $rref a11c_openmp.cpp$$
 $rref a11c_pthread.cpp$$
 $rref abort_recording.cpp$$
 $rref abs_normal_get_started.cpp$$
-$rref abs_normal_tilde.cpp$$
 $rref acos.cpp$$
 $rref acosh.cpp$$
 $rref ad_assign.cpp$$
@@ -155,6 +154,7 @@ $rref elapsed_seconds.cpp$$
 $rref equal_op_seq.cpp$$
 $rref erf.cpp$$
 $rref error_handler.cpp$$
+$rref eval_tilde.cpp$$
 $rref exp.cpp$$
 $rref expm1.cpp$$
 $rref expm1.cpp$$

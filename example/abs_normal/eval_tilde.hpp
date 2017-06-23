@@ -1,5 +1,5 @@
-# ifndef CPPAD_EXAMPLE_ABS_NORMAL_ABS_TILDE_HPP
-# define CPPAD_EXAMPLE_ABS_NORMAL_ABS_TILDE_HPP
+# ifndef CPPAD_EXAMPLE_ABS_NORMAL_EVAL_TILDE_HPP
+# define CPPAD_EXAMPLE_ABS_NORMAL_EVAL_TILDE_HPP
 /* --------------------------------------------------------------------------
 CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-17 Bradley M. Bell
 
@@ -15,6 +15,7 @@ $begin eval_tilde$$
 $spell
 	jac
 	Jacobian
+	eval
 $$
 $section Abs-normal First Order Approximation$$
 
@@ -27,15 +28,16 @@ $$
 see $cref/prototype/qp_box/Prototype/$$
 
 $head Purpose$$
-Given a current point
+Given a current that abs-normal representation at a point
 $latex \hat{x} \in \B{R}^n$$,
-and a $latex \Delta x \in \B{R}^n$$.
+and a $latex \Delta x \in \B{R}^n$$,
 this routine evaluates the abs-normal
 $cref/approximation for f(x)
 	/abs_normal_fun
 	/Abs-normal Approximation
 	/Approximating f(x)
-/$$.
+/$$
+where $latex x = \hat{x} + \Delta x$$.
 
 $head f$$
 We use the notation $icode f$$ for the original function; see
@@ -70,7 +72,7 @@ $latex \Delta x = x - \hat{x}$$,
 where $latex x$$ is the point that we are approximating $latex f(x)$$.
 
 $head g_tilde$$
-This vector has size $codei%m% + %s%$$ and is a the
+This vector has size $icode%m% + %s%$$ and is a the
 first order approximation for
 $cref/g/abs_normal_fun/g/$$
 that corresponds to the point

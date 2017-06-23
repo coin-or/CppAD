@@ -1,5 +1,5 @@
-# ifndef CPPAD_CORE_ABS_NORMAL_HPP
-# define CPPAD_CORE_ABS_NORMAL_HPP
+# ifndef CPPAD_CORE_ABS_NORMAL_FUN_HPP
+# define CPPAD_CORE_ABS_NORMAL_FUN_HPP
 /* --------------------------------------------------------------------------
 CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-17 Bradley M. Bell
 
