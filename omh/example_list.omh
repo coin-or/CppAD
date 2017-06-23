@@ -79,7 +79,7 @@ $rref a11c_openmp.cpp$$
 $rref a11c_pthread.cpp$$
 $rref abort_recording.cpp$$
 $rref abs_normal_get_started.cpp$$
-$rref abs_tilde.cpp$$
+$rref abs_normal_tilde.cpp$$
 $rref acos.cpp$$
 $rref acosh.cpp$$
 $rref ad_assign.cpp$$

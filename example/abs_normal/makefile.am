@@ -23,6 +23,8 @@ else
 CPPAD_INCLUDE = -I$(top_srcdir)
 endif
 #
+EXTRA_DIST = abs_normal.omh
+#
 check_PROGRAMS    = abs_normal
 #
 AM_CPPFLAGS       = -I. $(CPPAD_INCLUDE) $(BOOST_INCLUDE) $(EIGEN_INCLUDE)
@@ -31,8 +33,8 @@ AM_CXXFLAGS       = -g $(CXX_FLAGS)
 #
 abs_normal_SOURCES = \
 	abs_normal.cpp \
-	abs_tilde.hpp \
-	abs_tilde.cpp \
+	tilde.hpp \
+	tilde.cpp \
 	get_started.cpp \
 	qp_box.cpp \
 	qp_box.hpp \

@@ -12,7 +12,7 @@
 #
 SET(source_list
 	abs_normal.cpp
-	abs_tilde.cpp
+	tilde.cpp
 	get_started.cpp
 	qp_box.cpp
 	qp_interior.cpp

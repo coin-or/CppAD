@@ -41,7 +41,7 @@ derivative values, and other values related to the corresponding function.
 $childtable%
 	omh/adfun.omh%
 	cppad/core/optimize.hpp%
-	cppad/core/abs_normal.hpp%
+	example/abs_normal/abs_normal.omh%
 	cppad/core/fun_check.hpp%
 	cppad/core/check_for_nan.hpp
 %$$
@@ -637,7 +637,7 @@ public:
 	void optimize( const std::string& options = "" );
 
 	// create abs-normal representation of the function f(x)
-	void abs_normal( ADFun& g, ADFun& a );
+	void abs_normal_fun( ADFun& g, ADFun& a );
 	// ------------------- Deprecated -----------------------------
 
 	/// deprecated: assign a new operation sequence
@@ -707,6 +707,6 @@ public:
 # include <cppad/core/fun_check.hpp>
 # include <cppad/core/omp_max_thread.hpp>
 # include <cppad/core/optimize.hpp>
-# include <cppad/core/abs_normal.hpp>
+# include <cppad/core/abs_normal_fun.hpp>
 
 # endif

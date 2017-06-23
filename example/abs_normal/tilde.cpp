@@ -10,7 +10,7 @@ Please visit http://www.coin-or.org/CppAD/ for information on other licenses.
 -------------------------------------------------------------------------- */
 
 /*
-$begin abs_tilde.cpp$$
+$begin abs_normal_tilde.cpp$$
 
 $section abs_normal Approximation: Example and Test$$
 
@@ -26,12 +26,17 @@ is affine, except for its absolute value terms.
 For this case, the abs_normal approximation should be equal
 to the function itself.
 
+$head Source$$
+$srcfile%example/abs_normal/tilde.cpp%
+	0%// BEGIN C++%// END C++%
+1%$$
+
 $end
 -------------------------------------------------------------------------------
 */
 // BEGIN C++
 # include <cppad/cppad.hpp>
-# include "abs_tilde.hpp"
+# include "tilde.hpp"
 
 namespace {
 	CPPAD_TESTVECTOR(double) join(
@@ -47,7 +52,7 @@ namespace {
 		return xu;
 	}
 }
-bool abs_tilde(void)
+bool tilde(void)
 {	bool ok = true;
 	//
 	using CppAD::AD;
@@ -76,7 +81,7 @@ bool abs_tilde(void)
 
 	// create its abs_normal representation in g, a
 	ADFun<double> g, a;
-	f.abs_normal(g, a);
+	f.abs_normal_fun(g, a);
 
 	// check dimension of domain and range space for g
 	ok &= g.Domain() == n + s;
@@ -119,7 +124,7 @@ bool abs_tilde(void)
 	d_vector y = f.Forward(0, x);
 
 	// value of g_tilde
-	d_vector g_tilde = CppAD::abs_tilde(n, m, s, g_hat, g_jac, delta_x);
+	d_vector g_tilde = CppAD::abs_normal_tilde(n, m, s, g_hat, g_jac, delta_x);
 
 	// should be equal because f is affine, except for abs terms
 	ok &= CppAD::NearEqual(y[0], g_tilde[0], eps99, eps99);

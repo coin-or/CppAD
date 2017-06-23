@@ -97,7 +97,7 @@ DIST_COMMON = $(srcdir)/makefile.am $(am__DIST_COMMON)
 mkinstalldirs = $(install_sh) -d
 CONFIG_CLEAN_FILES =
 CONFIG_CLEAN_VPATH_FILES =
-am_abs_normal_OBJECTS = abs_normal.$(OBJEXT) abs_tilde.$(OBJEXT) \
+am_abs_normal_OBJECTS = abs_normal.$(OBJEXT) tilde.$(OBJEXT) \
 	get_started.$(OBJEXT) qp_box.$(OBJEXT) qp_interior.$(OBJEXT)
 abs_normal_OBJECTS = $(am_abs_normal_OBJECTS)
 abs_normal_LDADD = $(LDADD)
@@ -361,14 +361,16 @@ top_srcdir = @top_srcdir@
 @CppAD_PKG_CONFIG_TRUE@)`
 
 #
+EXTRA_DIST = abs_normal.omh
+#
 AM_CPPFLAGS = -I. $(CPPAD_INCLUDE) $(BOOST_INCLUDE) $(EIGEN_INCLUDE)
 #
 AM_CXXFLAGS = -g $(CXX_FLAGS)
 #
 abs_normal_SOURCES = \
 	abs_normal.cpp \
-	abs_tilde.hpp \
-	abs_tilde.cpp \
+	tilde.hpp \
+	tilde.cpp \
 	get_started.cpp \
 	qp_box.cpp \
 	qp_box.hpp \
@@ -423,10 +425,10 @@ distclean-compile:
 	-rm -f *.tab.c
 
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/abs_normal.Po@am__quote@
-@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/abs_tilde.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/get_started.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/qp_box.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/qp_interior.Po@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/tilde.Po@am__quote@
 
 .cpp.o:
 @am__fastdepCXX_TRUE@	$(AM_V_CXX)depbase=`echo $@ | sed 's|[^/]*$$|$(DEPDIR)/&|;s|\.o$$||'`;\

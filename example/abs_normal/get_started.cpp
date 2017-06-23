@@ -23,7 +23,7 @@ $latex \[
 	f( x_0, x_1, x_2  ) = | x_0 + x_1 | + | x_1 + x_2 |
 \] $$
 The corresponding
-$cref/g/abs_normal/g/$$ $latex : \B{R}^5 \rightarrow \B{R}^3$$ is
+$cref/g/abs_normal_fun/g/$$ $latex : \B{R}^5 \rightarrow \B{R}^3$$ is
 given by
 $latex \[
 \begin{array}{rclrcl}
@@ -34,7 +34,11 @@ $latex \[
 	g_1 ( x_0, x_1, x_2, u_0, u_1 ) & = & x_1 + x_2 & = & z_1 (x, u)
 \end{array}
 \] $$
-$srcfile%example/abs_normal/get_started.cpp%0%// BEGIN C++%// END C++%1%$$
+
+$head Source$$
+$srcfile%example/abs_normal/get_started.cpp%
+	0%// BEGIN C++%// END C++%
+1%$$
 
 $end
 -------------------------------------------------------------------------------
@@ -79,7 +83,7 @@ bool get_started(void)
 
 	// create its abs_normal representation in g, a
 	ADFun<double> g, a;
-	f.abs_normal(g, a);
+	f.abs_normal_fun(g, a);
 
 	// check dimension of domain and range space for g
 	ok &= g.Domain() == n + s;

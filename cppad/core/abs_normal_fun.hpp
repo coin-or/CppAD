@@ -11,7 +11,7 @@ A copy of this license is included in the COPYING file of this distribution.
 Please visit http://www.coin-or.org/CppAD/ for information on other licenses.
 -------------------------------------------------------------------------- */
 /*
-$begin abs_normal$$
+$begin abs_normal_fun$$
 $spell
 	Andreas Griewank
 	Jens-Uwe Bernt
@@ -27,7 +27,7 @@ $head Under Construction$$
 This is an in-progress design, and does not yet have an implementation.
 
 $head Syntax$$
-$icode%f%.abs_normal(%g%, %a%)%$$
+$icode%f%.abs_normal_fun(%g%, %a%)%$$
 
 $head Reference$$
 Andreas Griewank, Jens-Uwe Bernt, Manuel Radons, Tom Streubel,
@@ -73,7 +73,7 @@ and can be removed using
 $codei%
 	%a%.optimize()
 %$$
-This optimization is not done automatically by $code abs_normal$$
+This optimization is not done automatically by $code abs_normal_fun$$
 because it may take a significant amount of time.
 
 $subhead zeta$$
@@ -274,22 +274,16 @@ y( x , a(x ) ) & = & b + J x + Y |z( x , a(x ) )|
 This is Equation (2) of the reference.
 
 $children%example/abs_normal/get_started.cpp
-	%example/abs_normal/abs_tilde.hpp
-	%example/abs_normal/qp_interior.hpp
-	%example/abs_normal/qp_box.hpp
 %$$
 $head Example$$
 The file $cref abs_normal_get_started.cpp$$ contains
 and example and test using this operation.
-The routines
-$cref qp_interior$$ and $cref qp_box$$
-are used by some of the $code abs_normal$$ examples.
 
 $end
 -------------------------------------------------------------------------------
 */
 /*!
-file abs_normal.hpp
+file abs_normal_fun.hpp
 Create an abs-normal representation of a function
 */
 
@@ -310,7 +304,7 @@ is used.
 # define NOT_YET_COMPILING 0
 
 template <class Base>
-void ADFun<Base>::abs_normal(ADFun<Base>& g, ADFun<Base>& a)
+void ADFun<Base>::abs_normal_fun(ADFun<Base>& g, ADFun<Base>& a)
 {	using namespace local;
 
 	// -----------------------------------------------------------------------

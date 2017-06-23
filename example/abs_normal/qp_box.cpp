@@ -26,6 +26,7 @@ $latex \[
 \R{subject \; to} & -2 \leq x_0 \leq +2 \; \R{and} \; -2 \leq x_1 \leq +2
 \end{array}
 \] $$
+
 $head Source$$
 $srcfile%example/abs_normal/qp_box.cpp%
 	0%// BEGIN C++%// END C++%

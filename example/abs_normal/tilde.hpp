@@ -11,7 +11,7 @@ A copy of this license is included in the COPYING file of this distribution.
 Please visit http://www.coin-or.org/CppAD/ for information on other licenses.
 -------------------------------------------------------------------------- */
 /*
-$begin abs_tilde$$
+$begin abs_normal_tilde$$
 $spell
 	jac
 	Jacobian
@@ -21,7 +21,7 @@ $section Abs-normal First Order Approximation$$
 $head Under Construction$$
 
 $head Syntax$$
-$icode%g_tilde% = abs_tilde(%n%, %m%, %s%, %g_hat%, %g_jac%, %delta_x%)%$$
+$icode%g_tilde% = abs_normal_tilde(%n%, %m%, %s%, %g_hat%, %g_jac%, %delta_x%)%$$
 $pre
 $$
 see $cref/prototype/qp_box/Prototype/$$
@@ -32,29 +32,29 @@ $latex \hat{x} \in \B{R}^n$$,
 and a $latex \Delta x \in \B{R}^n$$.
 this routine evaluates the abs-normal
 $cref/approximation for f(x)
-	/abs_normal
+	/abs_normal_fun
 	/Abs-normal Approximation
 	/Approximating f(x)
 /$$.
 
 $head f$$
 We use the notation $icode f$$ for the original function; see
-$cref/f/abs_normal/f/$$.
+$cref/f/abs_normal_fun/f/$$.
 
 $head n$$
 This is the dimension of the domain space for $icode f$$; see
-$cref/n/abs_normal/f/n/$$.
+$cref/n/abs_normal_fun/f/n/$$.
 
 $head m$$
 This is the dimension of the range space for $icode f$$; see
-$cref/m/abs_normal/f/m/$$.
+$cref/m/abs_normal_fun/f/m/$$.
 
 $head s$$
 This is the number of absolute value terms in $icode f$$; see
 
 $head g$$
 We use the notation $icode g$$ for the abs-normal representation of $icode f$$;
-see $cref/g/abs_normal/g/$$.
+see $cref/g/abs_normal_fun/g/$$.
 
 $head g_hat$$
 This vector has size $icode%m% + %s%$$ and is the value of
@@ -72,19 +72,19 @@ where $latex x$$ is the point that we are approximating $latex f(x)$$.
 $head g_tilde$$
 This vector has size $codei%m% + %s%$$ and is a the
 first order approximation for
-$cref/g/abs_normal/g/$$
+$cref/g/abs_normal_fun/g/$$
 that corresponds to the point
 $latex x = \hat{x} + \Delta x$$ and $latex u = a(x)$$.
 
-$children%example/abs_normal/abs_tilde.cpp
+$children%example/abs_normal/tilde.cpp
 %$$
 $head Example$$
-The file $cref abs_tilde.cpp$$ contains an example and test of
-$code abs_tilde$$.
+The file $cref abs_normal_tilde.cpp$$ contains an example and test of
+$code abs_normal_tilde$$.
 It returns true if the test passes and false otherwise.
 
 $head Prototype$$
-$srcfile%example/abs_normal/abs_tilde.hpp%
+$srcfile%example/abs_normal/tilde.hpp%
 	0%// BEGIN PROTOTYPE%// END PROTOTYPE%
 1%$$
 
@@ -96,7 +96,7 @@ namespace CppAD { // BEGIN_CPPAD_NAMESPACE
 
 // BEGIN PROTOTYPE
 template <class Vector>
-Vector abs_tilde(
+Vector abs_normal_tilde(
 	size_t        n       ,
 	size_t        m       ,
 	size_t        s       ,
@@ -108,15 +108,15 @@ Vector abs_tilde(
 	//
 	CPPAD_ASSERT_KNOWN(
 		delta_x.size() == n,
-		"abs_tilde: size of delta_x not equal to n"
+		"abs_normal_tilde: size of delta_x not equal to n"
 	);
 	CPPAD_ASSERT_KNOWN(
 		g_hat.size() == m + s,
-		"abs_tilde: size of g_hat not equal to m + s"
+		"abs_normal_tilde: size of g_hat not equal to m + s"
 	);
 	CPPAD_ASSERT_KNOWN(
 		g_jac.size() == (m + s) * (n + s),
-		"abs_tilde: size of g_jac not equal to (m + s)*(n + s)"
+		"abs_normal_tilde: size of g_jac not equal to (m + s)*(n + s)"
 	);
 # ifndef NDEBUG
 	// Check that partial_u z(x, u) is strictly lower triangular
@@ -127,7 +127,7 @@ Vector abs_tilde(
 			size_t index = (m + i) * (n + s) + (n + j);
 			CPPAD_ASSERT_KNOWN(
 				g_jac[index] == 0.0,
-				"abs_tilde: partial z_i w.r.t u_j non-zero for i <= j"
+				"abs_normal_tilde: partial z_i w.r.t u_j non-zero for i <= j"
 			);
 		}
 	}
