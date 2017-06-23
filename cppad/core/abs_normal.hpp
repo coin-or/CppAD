@@ -48,14 +48,24 @@ It is effectively $code const$$, except that some internal state
 that is not relevant to the user; see
 $cref/const ADFun/wish_list/const ADFun/$$.
 
+$subhead n$$
+We use $icode n$$ to denote the dimension of the domain space for $icode f$$.
+
+$subhead m$$
+We use $icode m$$ to denote the dimension of the range space for $icode f$$.
+
+$subhead s$$
+We use $icode s$$ to denote the number of absolute value terms in $icode f$$.
+
+
 $head a$$
 The object $icode a$$ has prototype
 $codei%
 	ADFun<%Base%> %a%
 %$$
 The initial function representation in $icode a$$ is lost.
-Upon return it represents the result of the absolute terms;
-see $latex a(x)$$ defined below.
+Upon return it represents the result of the absolute terms
+$latex a : \B{R}^n \rightarrow \B{R}^s$$; see $latex a(x)$$ defined below.
 Note that $icode a$$ is constructed by copying $icode f$$
 and then changing the dependent variables. There may
 be many calculations in this representation that are not necessary
@@ -264,6 +274,7 @@ y( x , a(x ) ) & = & b + J x + Y |z( x , a(x ) )|
 This is Equation (2) of the reference.
 
 $children%example/abs_normal/get_started.cpp
+	%example/abs_normal/abs_tilde.hpp
 	%example/abs_normal/qp_interior.hpp
 	%example/abs_normal/qp_box.hpp
 %$$
@@ -817,6 +828,13 @@ void ADFun<Base>::abs_normal(ADFun<Base>& g, ADFun<Base>& a)
 	{	g.dep_taddr_[m + i] = f2g_var[ f_abs_arg[i] ];
 		CPPAD_ASSERT_UNKNOWN( g.dep_taddr_[m + i] < num_var );
 	}
+
+	// which  dependent variables are parameters
+	g.dep_parameter_.resize(m + s);
+	for(size_t i = 0; i < m; i++)
+		g.dep_parameter_[i] = dep_parameter_[i];
+	for(size_t i = 0; i < s; i++)
+		g.dep_parameter_[m + i] = false;
 
 	// free memory allocated for sparse Jacobian calculation
 	// (the resutls are no longer valid)
