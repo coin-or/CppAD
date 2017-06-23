@@ -27,11 +27,11 @@ $cref/g/abs_normal/g/$$ $latex : \B{R}^5 \rightarrow \B{R}^3$$ is
 given by
 $latex \[
 \begin{array}{rclrcl}
-	g_0 ( x_0, x_1, u_0, u_1 ) & = & u_0 + u_1 & = & y_0 (x, u)
+	g_0 ( x_0, x_1, x_2, u_0, u_1 ) & = & u_0 + u_1 & = & y_0 (x, u)
 	\\
-	g_1 ( x_0, x_1, u_0, u_1 ) & = & x_0 + x_1 & = & z_0 (x, u)
+	g_1 ( x_0, x_1, x_2, u_0, u_1 ) & = & x_0 + x_1 & = & z_0 (x, u)
 	\\
-	g_1 ( x_0, x_1, u_0, u_1 ) & = & x_1 + x_2 & = & z_1 (x, u)
+	g_1 ( x_0, x_1, x_2, u_0, u_1 ) & = & x_1 + x_2 & = & z_1 (x, u)
 \end{array}
 \] $$
 $srcfile%example/abs_normal/get_started.cpp%0%// BEGIN C++%// END C++%1%$$
