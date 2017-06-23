@@ -11,7 +11,7 @@ A copy of this license is included in the COPYING file of this distribution.
 Please visit http://www.coin-or.org/CppAD/ for information on other licenses.
 -------------------------------------------------------------------------- */
 /*
-$begin abs_normal_tilde$$
+$begin eval_tilde$$
 $spell
 	jac
 	Jacobian
@@ -21,7 +21,7 @@ $section Abs-normal First Order Approximation$$
 $head Under Construction$$
 
 $head Syntax$$
-$icode%g_tilde% = abs_normal_tilde(%n%, %m%, %s%, %g_hat%, %g_jac%, %delta_x%)%$$
+$icode%g_tilde% = eval_tilde(%n%, %m%, %s%, %g_hat%, %g_jac%, %delta_x%)%$$
 $pre
 $$
 see $cref/prototype/qp_box/Prototype/$$
@@ -76,15 +76,15 @@ $cref/g/abs_normal_fun/g/$$
 that corresponds to the point
 $latex x = \hat{x} + \Delta x$$ and $latex u = a(x)$$.
 
-$children%example/abs_normal/tilde.cpp
+$children%example/abs_normal/eval_tilde.cpp
 %$$
 $head Example$$
-The file $cref abs_normal_tilde.cpp$$ contains an example and test of
-$code abs_normal_tilde$$.
+The file $cref eval_tilde.cpp$$ contains an example and test of
+$code eval_tilde$$.
 It returns true if the test passes and false otherwise.
 
 $head Prototype$$
-$srcfile%example/abs_normal/tilde.hpp%
+$srcfile%example/abs_normal/eval_tilde.hpp%
 	0%// BEGIN PROTOTYPE%// END PROTOTYPE%
 1%$$
 
@@ -96,7 +96,7 @@ namespace CppAD { // BEGIN_CPPAD_NAMESPACE
 
 // BEGIN PROTOTYPE
 template <class Vector>
-Vector abs_normal_tilde(
+Vector eval_tilde(
 	size_t        n       ,
 	size_t        m       ,
 	size_t        s       ,
@@ -108,15 +108,15 @@ Vector abs_normal_tilde(
 	//
 	CPPAD_ASSERT_KNOWN(
 		delta_x.size() == n,
-		"abs_normal_tilde: size of delta_x not equal to n"
+		"eval_tilde: size of delta_x not equal to n"
 	);
 	CPPAD_ASSERT_KNOWN(
 		g_hat.size() == m + s,
-		"abs_normal_tilde: size of g_hat not equal to m + s"
+		"eval_tilde: size of g_hat not equal to m + s"
 	);
 	CPPAD_ASSERT_KNOWN(
 		g_jac.size() == (m + s) * (n + s),
-		"abs_normal_tilde: size of g_jac not equal to (m + s)*(n + s)"
+		"eval_tilde: size of g_jac not equal to (m + s)*(n + s)"
 	);
 # ifndef NDEBUG
 	// Check that partial_u z(x, u) is strictly lower triangular
@@ -127,7 +127,7 @@ Vector abs_normal_tilde(
 			size_t index = (m + i) * (n + s) + (n + j);
 			CPPAD_ASSERT_KNOWN(
 				g_jac[index] == 0.0,
-				"abs_normal_tilde: partial z_i w.r.t u_j non-zero for i <= j"
+				"eval_tilde: partial z_i w.r.t u_j non-zero for i <= j"
 			);
 		}
 	}

@@ -15,7 +15,7 @@ $$
 $section Abs-normal Representation of Non-Smooth Functions$$
 
 $childtable%cppad/core/abs_normal_fun.hpp
-	%example/abs_normal/tilde.hpp
+	%example/abs_normal/eval_tilde.hpp
 	%example/abs_normal/qp_interior.hpp
 	%example/abs_normal/qp_box.hpp
 %$$
