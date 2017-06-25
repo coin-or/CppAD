@@ -90,9 +90,10 @@ bool qp_interior(void)
 	//
 	double epsilon = 99.0 * std::numeric_limits<double>::epsilon();
 	size_t maxitr  = 10;
+	size_t level   = 0;
 	//
 	ok &= CppAD::qp_interior(
-		c, C, g, G, epsilon, maxitr, xin, xout, yout, sout
+		level, c, C, g, G, epsilon, maxitr, xin, xout, yout, sout
 	);
 	//
 	// check optimal value for u

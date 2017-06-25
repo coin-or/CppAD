@@ -214,8 +214,9 @@ bool qp_box(
 		C_all[(m + n + j) * n + j] = -1.0;
 	}
 	Vector yout(m + 2 * n), sout(m + 2 * n);
+	size_t level = 0;
 	bool ok = qp_interior(
-		c_all, C_all, g, G, epsilon, maxitr, xin, xout, yout, sout
+		level, c_all, C_all, g, G, epsilon, maxitr, xin, xout, yout, sout
 	);
 	return ok;
 }

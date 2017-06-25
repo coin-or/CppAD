@@ -1,0 +1,115 @@
+# ifndef CPPAD_EXAMPLE_ABS_NORMAL_PRINT_MAT_HPP
+# define CPPAD_EXAMPLE_ABS_NORMAL_PRINT_MAT_HPP
+/* --------------------------------------------------------------------------
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-17 Bradley M. Bell
+
+CppAD is distributed under multiple licenses. This distribution is under
+the terms of the
+                    Eclipse Public License Version 1.0.
+
+A copy of this license is included in the COPYING file of this distribution.
+Please visit http://www.coin-or.org/CppAD/ for information on other licenses.
+-------------------------------------------------------------------------- */
+/*
+$begin abs_normal_print_mat$$
+$spell
+$$
+$section Print a Vector or Matrix$$
+
+$head Syntax$$
+$codei%abs_normal_print_mat(%name%, %nr%, %nc%, %mat%)%$$
+$pre
+$$
+see $cref/prototype/qp_box/Prototype/$$
+
+$head Purpose$$
+This routine is used by the $cref abs_normal$$ examples to print
+vectors and matrices.
+A new-line is printed at the end of this output.
+
+$head name$$
+This is a name that is printed before the vector or matrix.
+
+$head nr$$
+This is the number of rows in the matrix. Use $icode%nr% = 1%$$ for
+row vectors.
+
+$head nc$$
+This is the number of columns in the matrix. Use $icode%nc% = 1%$$ for
+column vectors.
+
+$head mat$$
+This is a $cref SimpleVector$$ with the elements of the matrix
+in row-major order. The syntax
+$codei%
+	std::cout << %mat%[%i%]%
+%$$
+must output the $th i$$ element of the simple vector $icode mat$$.
+
+$head Prototype$$
+$srcfile%example/abs_normal/print_mat.hpp%
+	0%// BEGIN PROTOTYPE%// END PROTOTYPE%
+1%$$
+
+$end
+-----------------------------------------------------------------------------
+*/
+# include <cppad/cppad.hpp>
+
+namespace CppAD { // BEGIN_CPPAD_NAMESPACE
+
+// BEGIN PROTOTYPE
+template <class Vector>
+void abs_normal_print_mat(
+	const std::string& name ,
+	size_t             nr   ,
+	size_t             nc   ,
+	const Vector&      mat  )
+// END PROTOTYPE
+{
+	CPPAD_ASSERT_KNOWN(
+		mat.size() == nr * nc,
+		"abs_normal_print_mat: size of mat is not nr * nc"
+	);
+	// output name
+	std::cout << name << " =";
+	//
+	// handel empty case
+	if( nr == 0 || nc == 0 )
+	{	std::cout << " " << nr << " by " << nc << " empty matrix\n";
+		return;
+	}
+	//
+	// handle vector case
+	if( nr == 1 || nc == 1 )
+	{	std::cout << " [";
+		for(size_t i = 0; i < nr * nc; i++)
+		{	if( i > 0 )
+				std::cout << ", ";
+			std::cout << mat[i];
+		}
+		std::cout << "]";
+		//
+		// column vectors are printed as row vectors with a transpose at end
+		if( nr > 1 )
+			std::cout << "^T";
+		//
+		std::cout << "\n";
+		return;
+	}
+	// non-empty matrix
+	std::cout << "\n";
+	for(size_t i = 0; i < nr; i++)
+	{	std::cout << "[";
+		for(size_t j = 0; j < nc; j++)
+		{	if( j > 0 )
+				std::cout << ", ";
+			std::cout << mat[i];
+		}
+		std::cout << "]\n";
+	}
+	return;
+}
+
+} // END_CPPAD_NAMESPACE
+# endif

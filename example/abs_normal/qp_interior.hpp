@@ -31,7 +31,7 @@ $head Under Construction$$
 
 $head Syntax$$
 $icode%ok% = qp_interior(
-	%c%, %C%, %g%, %G%, %epsilon%, %maxitr%, %xin%, %xout%, %yout%, %sout%
+%level%, %c%, %C%, %g%, %G%, %epsilon%, %maxitr%, %xin%, %xout%, %yout%, %sout%
 )%$$
 see $cref/prototype/qp_interior/Prototype/$$
 
@@ -66,6 +66,13 @@ $latex j = 0 , \ldots , n-1$$,
 $latex \[
 	M_{i, j} = v[ i \times m + j ]
 \] $$
+
+$head level$$
+This value is zero or one.
+If $icode%level% == 0%$$,
+no tracing is printed.
+If $icode%level% == 1%$$,
+a trace of the $code qp_interior$$ optimization is printed.
 
 $head c$$
 This is the vector $latex c$$ in the problem.
@@ -273,6 +280,7 @@ $end
 */
 # include <cmath>
 # include <cppad/utility/lu_solve.hpp>
+# include "print_mat.hpp"
 
 namespace {
 	// ------------------------------------------------------------------------
@@ -363,6 +371,7 @@ namespace CppAD { // BEGIN_CPPAD_NAMESPACE
 // BEGIN PROTOTYPE
 template <class Vector>
 bool qp_interior(
+	size_t        level   ,
 	const Vector& c       ,
 	const Vector& C       ,
 	const Vector& g       ,
@@ -377,6 +386,10 @@ bool qp_interior(
 {	size_t m = c.size();
 	size_t n = g.size();
 	CPPAD_ASSERT_KNOWN(
+		level <= 1,
+		"qp_interior: level is greater than one"
+	);
+	CPPAD_ASSERT_KNOWN(
 		C.size() == m * n,
 		"qp_interior: size of C is not m * n"
 	);
@@ -384,6 +397,13 @@ bool qp_interior(
 		G.size() == n * n,
 		"qp_interior: size of G is not n * n"
 	);
+	if( level > 0 )
+	{	std::cout << "start qp_interior\n";
+		CppAD::abs_normal_print_mat("c", m, 1, c);
+		CppAD::abs_normal_print_mat("C", m, n, C);
+		CppAD::abs_normal_print_mat("g", 1, n, g);
+		CppAD::abs_normal_print_mat("G", n, n, G);
+	}
 	//
 	// compute the maximum absolute element of the problem vectors and matrices
 	double max_element = 0.0;
@@ -399,7 +419,10 @@ bool qp_interior(
 	double mu = 1e-1 * max_element;
 	//
 	if( max_element == 0.0 )
+	{	if( level > 0 )
+			std::cout << "end qp_interior: ok = false\n";
 		return false;
+	}
 	//
 	// initialize x, y, s
 	xout = xin;
@@ -408,7 +431,10 @@ bool qp_interior(
 		for(size_t j = 0; j < n; j++)
 			sum += C[ i * n + j ] * xout[j];
 		if( sum > 0.0 )
+		{	if( level > 0 )
+				std::cout << "end qp_interior: ok = false\n";
 			return false;
+		}
 		//
 		sout[i] = std::sqrt(mu);
 		yout[i] = std::sqrt(mu);
@@ -422,9 +448,15 @@ bool qp_interior(
 		// check for convergence
 		double F_norm_sq   = qp_interior_norm_sq( F_0 );
 		if( F_norm_sq <= epsilon * epsilon )
+		{	if( level > 0 )
+				std::cout << "end qp_interior: ok = true\n";
 			return true;
+		}
 		if( itr == maxitr )
+		{	if( level > 0 )
+				std::cout << "end qp_interior: ok = false\n";
 			return false;
+		}
 		//
 		// compute F_mu(xout, yout, sout)
 		Vector F_mu  = F_0;
@@ -515,7 +547,10 @@ bool qp_interior(
 			}
 		}
 		if( ! lam_ok )
+		{	if( level > 0 )
+				std::cout << "end qp_interior: ok = false\n";
 			return false;
+		}
 		//
 		// update current solution
 		xout = x;
@@ -529,15 +564,16 @@ bool qp_interior(
 		F_norm_sq = qp_interior_norm_sq( F_0 );
 		if( F_norm_sq <= 1e1 * double(n + m + m) * mu * mu )
 			mu = mu / 1e3;
-		//
-		// std::cout
-		// << "itr = " << itr
-		// << ", mu = " << mu
-		// << ", lam = " << lam
-		// << ", F_norm_sq = " << F_norm_sq
-		// << ", xout = " << xout
-		// << "\n";
+		if( level > 0 )
+		{	std::cout << "itr = " << itr
+				<< ", mu = " << mu
+				<< ", lam = " << lam
+				<< ", F_norm_sq = " << F_norm_sq << "\n";
+			abs_normal_print_mat("xout", 1, n, xout);
+		}
 	}
+	if( level > 0 )
+		std::cout << "end qp_interior: ok = false\n";
 	return false;
 }
 } // END_CPPAD_NAMESPACE
