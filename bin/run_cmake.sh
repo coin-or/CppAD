@@ -23,7 +23,6 @@ echo_eval() {
 # -----------------------------------------------------------------------------
 verbose='no'
 standard='c++11'
-debug_speed='no'
 profile_speed='no'
 clang='no'
 no_colpack='no'
@@ -41,7 +40,6 @@ usage: bin/run_cmake.sh: \\
 	[--help] \\
 	[--verbose] \\
 	[--c++98] \\
-	[--debug_speed] \\
 	[--profile_speed] \\
 	[--clang ] \\
 	[--no_colpack] \\
@@ -67,14 +65,8 @@ EOF
 		standard='c++98'
 		;;
 
-		--debug_speed)
-		debug_speed='yes'
-		profile_speed='no'
-		;;
-
 		--profile_speed)
 		profile_speed='yes'
-		debug_speed='no'
 		;;
 
 		--clang)
@@ -131,15 +123,6 @@ EOF
 	esac
 	shift
 done
-# ---------------------------------------------------------------------------
-if [ "$debug_speed" == 'yes' ]
-then
-	sed -e 's|^SET(CMAKE_BUILD_TYPE .*|SET(CMAKE_BUILD_TYPE DEBUG)|' \
-		-i  speed/CMakeLists.txt
-else
-	sed -e 's|^SET(CMAKE_BUILD_TYPE .*|SET(CMAKE_BUILD_TYPE RELEASE)|' \
-		-i speed/CMakeLists.txt
-fi
 # ---------------------------------------------------------------------------
 if [ ! -e build ]
 then
