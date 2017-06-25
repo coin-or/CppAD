@@ -59,11 +59,12 @@ bool qp_box(void)
 	xin[0] = 0.0;
 	xin[1] = 0.0;
 	//
+	size_t level   = 0;
 	double epsilon = 99.0 * std::numeric_limits<double>::epsilon();
 	size_t maxitr  = 20;
 	//
 	ok &= CppAD::qp_box(
-		a, b, c, C, g, G, epsilon, maxitr, xin, xout
+		level, a, b, c, C, g, G, epsilon, maxitr, xin, xout
 	);
 	//
 	// check optimal value for x

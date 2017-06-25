@@ -30,7 +30,7 @@ $head Under Construction$$
 
 $head Syntax$$
 $icode%ok% = qp_box(
-	%a%, %b%, %c%, %C%, %g%, %G%, %epsilon%, %maxitr%, %xin%, %xout%
+	%level%, %a%, %b%, %c%, %C%, %g%, %G%, %epsilon%, %maxitr%, %xin%, %xout%
 )%$$
 see $cref/prototype/qp_box/Prototype/$$
 
@@ -65,6 +65,15 @@ $latex j = 0 , \ldots , n-1$$,
 $latex \[
 	M_{i, j} = v[ i \times m + j ]
 \] $$
+
+$head level$$
+This value is less that or equal two.
+If $icode%level% == 0%$$,
+no tracing is printed.
+If $icode%level% >= 1%$$,
+a trace of the $code qp_box$$ operations is printed.
+If $icode%level% == 2%$$,
+a trace of the $cref qp_interior$$ optimization is printed.
 
 $head a$$
 This is the vector of lower limits for $latex x$$ in the problem.
@@ -171,6 +180,7 @@ namespace CppAD { // BEGIN_CPPAD_NAMESPACE
 // BEGIN PROTOTYPE
 template <class Vector>
 bool qp_box(
+	size_t        level   ,
 	const Vector& a       ,
 	const Vector& b       ,
 	const Vector& c       ,
@@ -185,10 +195,20 @@ bool qp_box(
 {	size_t n = a.size();
 	size_t m = c.size();
 	//
+	CPPAD_ASSERT_KNOWN(level <= 2, "qp_interior: level is greater than 2");
 	CPPAD_ASSERT_KNOWN( b.size() == n, "qp_box: size of b is not n" );
 	CPPAD_ASSERT_KNOWN( C.size() == m * n, "qp_box: size of C is not m * n" );
 	CPPAD_ASSERT_KNOWN( g.size() == n, "qp_box: size of g is not n" );
 	CPPAD_ASSERT_KNOWN( G.size() == n * n, "qp_box: size of G is not n * n" );
+	if( level > 0 )
+	{	std::cout << "start qp_box\n";
+		CppAD::abs_normal_print_mat("a", n, 1, a);
+		CppAD::abs_normal_print_mat("b", n, 1, b);
+		CppAD::abs_normal_print_mat("c", m, 1, c);
+		CppAD::abs_normal_print_mat("C", m, n, C);
+		CppAD::abs_normal_print_mat("g", 1, n, g);
+		CppAD::abs_normal_print_mat("G", n, n, G);
+	}
 	//
 	// C_all and c_all define the extended constraints
 	Vector C_all((m + 2 * n) * n ), c_all(m + 2 * n);
@@ -214,10 +234,20 @@ bool qp_box(
 		C_all[(m + n + j) * n + j] = -1.0;
 	}
 	Vector yout(m + 2 * n), sout(m + 2 * n);
-	size_t level = 0;
-	bool ok = qp_interior(
-		level, c_all, C_all, g, G, epsilon, maxitr, xin, xout, yout, sout
+	size_t qp_interior_level = 0;
+	if( level == 2 )
+		qp_interior_level = 1;
+	bool ok = qp_interior( qp_interior_level,
+		c_all, C_all, g, G, epsilon, maxitr, xin, xout, yout, sout
 	);
+	if( level > 0 )
+	{	if( level < 2 )
+			CppAD::abs_normal_print_mat("xout", n, 1, xout);
+		if( ok )
+			std::cout << "end q_box: ok = true\n";
+		else
+			std::cout << "end q_box: ok = false\n";
+	}
 	return ok;
 }
 

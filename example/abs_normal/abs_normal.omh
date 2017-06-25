@@ -18,6 +18,7 @@ $childtable%cppad/core/abs_normal_fun.hpp
 	%example/abs_normal/eval_tilde.hpp
 	%example/abs_normal/qp_interior.hpp
 	%example/abs_normal/qp_box.hpp
+	%example/abs_normal/print_mat.hpp
 %$$
 
 $end

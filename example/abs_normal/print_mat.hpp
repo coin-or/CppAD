@@ -13,6 +13,9 @@ Please visit http://www.coin-or.org/CppAD/ for information on other licenses.
 /*
 $begin abs_normal_print_mat$$
 $spell
+	nr
+	nc
+	std::cout
 $$
 $section Print a Vector or Matrix$$
 
@@ -104,7 +107,7 @@ void abs_normal_print_mat(
 		for(size_t j = 0; j < nc; j++)
 		{	if( j > 0 )
 				std::cout << ", ";
-			std::cout << mat[i];
+			std::cout << mat[i * nc + j];
 		}
 		std::cout << "]\n";
 	}
