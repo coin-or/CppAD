@@ -208,37 +208,38 @@ bool qp_box(
 		CppAD::abs_normal_print_mat("C", m, n, C);
 		CppAD::abs_normal_print_mat("g", 1, n, g);
 		CppAD::abs_normal_print_mat("G", n, n, G);
+		CppAD::abs_normal_print_mat("xin", n, 1, xin);
 	}
 	//
-	// C_all and c_all define the extended constraints
-	Vector C_all((m + 2 * n) * n ), c_all(m + 2 * n);
-	for(size_t i = 0; i < C_all.size(); i++)
-		C_all[i] = 0.0;
+	// C_int and c_int define the extended constraints
+	Vector C_int((m + 2 * n) * n ), c_int(m + 2 * n);
+	for(size_t i = 0; i < C_int.size(); i++)
+		C_int[i] = 0.0;
 	//
-	// put C * x + c <= 0 in C_all, c_all
+	// put C * x + c <= 0 in C_int, c_int
 	for(size_t i = 0; i < m; i++)
-	{	c_all[i] = c[i];
+	{	c_int[i] = c[i];
 		for(size_t j = 0; j < n; j++)
-			C_all[i * n + j] = C[i * n + j];
+			C_int[i * n + j] = C[i * n + j];
 	}
 	//
-	// put I * x - b <= 0 in C_all, c_all
+	// put I * x - b <= 0 in C_int, c_int
 	for(size_t j = 0; j < n; j++)
-	{	c_all[m + j]            = - b[j];
-		C_all[(m + j) * n + j]  = 1.0;
+	{	c_int[m + j]            = - b[j];
+		C_int[(m + j) * n + j]  = 1.0;
 	}
 	//
-	// put a - I * x <= 0 in C_all, c_all
+	// put a - I * x <= 0 in C_int, c_int
 	for(size_t j = 0; j < n; j++)
-	{	c_all[m + n + j]           = a[j];
-		C_all[(m + n + j) * n + j] = -1.0;
+	{	c_int[m + n + j]           = a[j];
+		C_int[(m + n + j) * n + j] = -1.0;
 	}
 	Vector yout(m + 2 * n), sout(m + 2 * n);
-	size_t qp_interior_level = 0;
+	size_t level_int = 0;
 	if( level == 2 )
-		qp_interior_level = 1;
-	bool ok = qp_interior( qp_interior_level,
-		c_all, C_all, g, G, epsilon, maxitr, xin, xout, yout, sout
+		level_int = 1;
+	bool ok = qp_interior( level_int,
+		c_int, C_int, g, G, epsilon, maxitr, xin, xout, yout, sout
 	);
 	if( level > 0 )
 	{	if( level < 2 )

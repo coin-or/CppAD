@@ -17,7 +17,7 @@ $spell
 	Jacobian
 	eval
 $$
-$section Abs-normal First Order Approximation$$
+$section Evaluate Abs-normal First Order Approximation$$
 
 $head Under Construction$$
 
@@ -134,7 +134,7 @@ Vector eval_tilde(
 		}
 	}
 # endif
-	// initialize g_tilde as equalt to g_hat
+	// return value
 	Vector g_tilde(m + s);
 	//
 	// compute z_tilde, the last s components of g_tilde

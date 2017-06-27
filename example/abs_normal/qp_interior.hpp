@@ -401,8 +401,9 @@ bool qp_interior(
 	{	std::cout << "start qp_interior\n";
 		CppAD::abs_normal_print_mat("c", m, 1, c);
 		CppAD::abs_normal_print_mat("C", m, n, C);
-		CppAD::abs_normal_print_mat("g", 1, n, g);
+		CppAD::abs_normal_print_mat("g", n, 1, g);
 		CppAD::abs_normal_print_mat("G", n, n, G);
+		CppAD::abs_normal_print_mat("xin", n, 1, xin);
 	}
 	//
 	// compute the maximum absolute element of the problem vectors and matrices
@@ -420,7 +421,7 @@ bool qp_interior(
 	//
 	if( max_element == 0.0 )
 	{	if( level > 0 )
-			std::cout << "end qp_interior: ok = false\n";
+			std::cout << "end qp_interior: line_search failed\n";
 		return false;
 	}
 	//
@@ -431,8 +432,8 @@ bool qp_interior(
 		for(size_t j = 0; j < n; j++)
 			sum += C[ i * n + j ] * xout[j];
 		if( sum > 0.0 )
-		{	if( level > 0 )
-				std::cout << "end qp_interior: ok = false\n";
+		{	if( level > 0 ) std::cout <<
+				"end qp_interior: xin is not in interior of feasible set\n";
 			return false;
 		}
 		//
@@ -453,8 +454,8 @@ bool qp_interior(
 			return true;
 		}
 		if( itr == maxitr )
-		{	if( level > 0 )
-				std::cout << "end qp_interior: ok = false\n";
+		{	if( level > 0 ) std::cout <<
+				"end qp_interior: max # iterations without convergence\n";
 			return false;
 		}
 		//
@@ -548,7 +549,7 @@ bool qp_interior(
 		}
 		if( ! lam_ok )
 		{	if( level > 0 )
-				std::cout << "end qp_interior: ok = false\n";
+				std::cout << "end qp_interior: line search failed\n";
 			return false;
 		}
 		//
@@ -573,7 +574,7 @@ bool qp_interior(
 		}
 	}
 	if( level > 0 )
-		std::cout << "end qp_interior: ok = false\n";
+		std::cout << "end qp_interior: progam error\n";
 	return false;
 }
 } // END_CPPAD_NAMESPACE

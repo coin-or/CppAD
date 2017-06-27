@@ -98,7 +98,8 @@ mkinstalldirs = $(install_sh) -d
 CONFIG_CLEAN_FILES =
 CONFIG_CLEAN_VPATH_FILES =
 am_abs_normal_OBJECTS = abs_normal.$(OBJEXT) eval_tilde.$(OBJEXT) \
-	get_started.$(OBJEXT) qp_box.$(OBJEXT) qp_interior.$(OBJEXT)
+	get_started.$(OBJEXT) min_tilde.$(OBJEXT) qp_box.$(OBJEXT) \
+	qp_interior.$(OBJEXT)
 abs_normal_OBJECTS = $(am_abs_normal_OBJECTS)
 abs_normal_LDADD = $(LDADD)
 AM_V_P = $(am__v_P_@AM_V@)
@@ -372,10 +373,13 @@ abs_normal_SOURCES = \
 	eval_tilde.hpp \
 	eval_tilde.cpp \
 	get_started.cpp \
+	min_tilde.cpp \
+	min_tilde.hpp \
 	qp_box.cpp \
 	qp_box.hpp \
 	qp_interior.cpp \
-	qp_interior.hpp
+	qp_interior.hpp \
+	print_mat.hpp
 
 all: all-am
 
@@ -427,6 +431,7 @@ distclean-compile:
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/abs_normal.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/eval_tilde.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/get_started.Po@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/min_tilde.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/qp_box.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/qp_interior.Po@am__quote@
 

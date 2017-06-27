@@ -198,6 +198,7 @@ $rref lu_invert.cpp$$
 $rref lu_ratio.cpp$$
 $rref lu_solve.cpp$$
 $rref lu_vec_ad_ok.cpp$$
+$rref min_tilde.cpp$$
 $rref mat_sum_sq.cpp$$
 $rref mul.cpp$$
 $rref mul_eq.cpp$$

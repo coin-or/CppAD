@@ -27,6 +27,7 @@ Please visit http://www.coin-or.org/CppAD/ for information on other licenses.
 // external complied tests
 extern bool eval_tilde(void);
 extern bool get_started(void);
+extern bool min_tilde(void);
 extern bool qp_box(void);
 extern bool qp_interior(void);
 
@@ -41,6 +42,7 @@ int main(void)
 	// external compiled tests
 	Run( eval_tilde,          "eval_tilde"    );
 	Run( get_started,         "get_started"   );
+	Run( min_tilde,           "min_tilde"     );
 	Run( qp_box,              "qp_box"        );
 	Run( qp_interior,         "qp_interior"   );
 

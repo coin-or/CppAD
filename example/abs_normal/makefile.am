@@ -36,10 +36,13 @@ abs_normal_SOURCES = \
 	eval_tilde.hpp \
 	eval_tilde.cpp \
 	get_started.cpp \
+	min_tilde.cpp \
+	min_tilde.hpp \
 	qp_box.cpp \
 	qp_box.hpp \
 	qp_interior.cpp \
-	qp_interior.hpp
+	qp_interior.hpp \
+	print_mat.hpp
 
 test: check
 	./abs_normal
