@@ -146,6 +146,8 @@ bool min_tilde(void)
 		level, n, m, s, g_hat, g_jac, bound, eps99, maxitr, delta_x
 	);
 
+	ok &= CppAD::NearEqual( delta_x[0], data[0], eps99, eps99 );
+
 	return ok;
 }
 // END C++
