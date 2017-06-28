@@ -234,9 +234,9 @@ bool qp_box(
 	size_t n_limit = 0;
 	for(size_t j = 0; j < n; j++)
 	{	CPPAD_ASSERT_KNOWN(G[j * n + j] >= 0.0, "qp_box: G_{j,j} < 0.0");
-		bool ok = -inf < a[j] || b[j] < inf || G[j * n + j] > 0.0;
-		CPPAD_ASSERT_KNOWN(ok,
-			"qp_box: a_j = -infinity, b_j = +infinity, G_{j,j} = 0.0"
+		CPPAD_ASSERT_KNOWN(
+			-inf < a[j] || b[j] < inf || G[j * n + j] > 0.0,
+			"qp_box: a_j = -infinity, b_j = +infinity, and G_{j,j} = 0.0"
 		);
 		if( -inf < a[j] )
 			++n_limit;
