@@ -121,7 +121,7 @@ If the return value $icode ok$$ is true, convergence is obtained; i.e.,
 $latex \[
 	| F ( x , y_a, s_a, y_b, s_b, y_c, s_c ) |_\infty < \varepsilon
 \] $$
-where $latex |v|_\infit$$ is the infinity norm of the vector $latex v$$,
+where $latex |v|_\infty$$ is the infinity norm of the vector $latex v$$,
 $latex \varepsilon$$ is $icode epsilon$$,
 $latex x$$ is equal to $icode xout$$,
 $latex y_a, s_a \in \B{R}_+^n$$,

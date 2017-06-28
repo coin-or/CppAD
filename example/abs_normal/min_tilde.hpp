@@ -102,12 +102,19 @@ $latex \[
 for $latex j = 0 , \ldots , n-1$$,
 where $latex x$$ is the point that we are approximating $latex f(x)$$.
 
+
 $head epsilon$$
-This is the convergence criteria for the optimal solution in terms
-of the infinity norm for $latex x$$.
+This is a vector with size 2.
+The value $icode%epsilon%[0]%$$ is convergence criteria in terms
+of the infinity norm of the difference of $icode delta_x$$
+between iterations.
+The value $icode%epsilon%[1]%$$ is convergence criteria in terms
+of the infinity norm of a sub-gradient at $icode delta_x$$.
+It also the convergence criteria for the $cref qp_box$$ sub-problem
+at each iteration.
 
 $head maxitr$$
-This is a vector with size greater than or equal 2.
+This is a vector with size 2.
 The value $icode%maxitr%[0]%$$ is the maximum number of
 $code min_tilde$$ iterations to try before giving up on convergence.
 The value $icode%maxitr%[1]%$$ is the maximum number of iterations in
@@ -151,7 +158,7 @@ bool min_tilde(
 	const DblVector& g_hat   ,
 	const DblVector& g_jac   ,
 	const DblVector& bound   ,
-	double           epsilon ,
+	const DblVector& epsilon ,
 	SizeVector       maxitr  ,
 	DblVector&       delta_x )
 // END PROTOTYPE
@@ -279,7 +286,7 @@ bool min_tilde(
 		// (in convex case, this is the minimizer)
 		bool near_zero = true;
 		for(size_t j = 0; j < n; j++)
-			near_zero &= std::fabs( dy_dx[j] ) < epsilon;
+			near_zero &= std::fabs( dy_dx[j] ) < epsilon[1];
 		if( near_zero )
 		{	if( level > 0 )
 				std::cout << "end min_tilde: local derivative near zero\n";
@@ -339,7 +346,6 @@ bool min_tilde(
 		//
 		// solve the cutting plane problem
 		DblVector xout_box(n + 1);
-		double eps = 99.0 * std::numeric_limits<double>::epsilon();
 		size_t level_box = 0;
 		if( level > 0 )
 			level_box = level - 1;
@@ -351,7 +357,7 @@ bool min_tilde(
 			C_box,
 			g_box,
 			G_box,
-			eps,
+			epsilon[1],
 			maxitr[1],
 			xin_box,
 			xout_box
@@ -390,7 +396,7 @@ bool min_tilde(
 		for(size_t i = 0; i < s; i++)
 			sigma[i] = CppAD::sign( g_tilde[m + i] );
 		//
-		if( max_diff < epsilon )
+		if( max_diff < epsilon[0] )
 		{	if( level > 0 )
 				std::cout << "end min_tilde: change in delta_x near zero\n";
 			return true;

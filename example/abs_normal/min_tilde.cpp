@@ -132,7 +132,10 @@ bool min_tilde(void)
 		bound[j] = 10.0;
 
 	// convergence criteria
+	d_vector epsilon(2);
 	double eps99 = 99.0 * std::numeric_limits<double>::epsilon();
+	epsilon[0]   = eps99;
+	epsilon[1]   = eps99;
 
 	// maximum number of iterations
 	s_vector maxitr(2);
@@ -143,7 +146,7 @@ bool min_tilde(void)
 	// f is affine, except for absolute value terms
 	d_vector delta_x(n);
 	ok &= CppAD::min_tilde(
-		level, n, m, s, g_hat, g_jac, bound, eps99, maxitr, delta_x
+		level, n, m, s, g_hat, g_jac, bound, epsilon, maxitr, delta_x
 	);
 
 	// number of data points per variable is odd
