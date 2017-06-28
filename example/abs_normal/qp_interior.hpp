@@ -120,10 +120,10 @@ and it is the slack variables corresponding to the program solution.
 $head ok$$
 If the return value $icode ok$$ is true, convergence is obtained; i.e.,
 $latex \[
-	| F_0 (xout , yout, sout) | \leq epsilon
+	| F_0 (xout , yout, sout) |_\infty \leq epsilon
 \] $$
-where $latex | v |$$ is the Euclidean norm of the vector $latex v$$
-and $latex F_\mu (x, y, s)$$ is defined below.
+where $latex | v |_\infty$$ is the maximum absolute element
+for the vector $latex v$$ and $latex F_\mu (x, y, s)$$ is defined below.
 
 
 $head KKT Conditions$$
@@ -283,6 +283,14 @@ $end
 # include "print_mat.hpp"
 
 namespace {
+	// ------------------------------------------------------------------------
+	template <class Vector>
+	double qp_interior_max_abs(const Vector& v)
+	{	double max_abs = 0.0;
+		for(size_t j = 0; j < v.size(); j++)
+			max_abs = std::max( max_abs, std::fabs(v[j]) );
+		return max_abs;
+	}
 	// ------------------------------------------------------------------------
 	template <class Vector>
 	double qp_interior_norm_sq(const Vector& v)
@@ -447,8 +455,8 @@ bool qp_interior(
 	{
 		//
 		// check for convergence
-		double F_norm_sq   = qp_interior_norm_sq( F_0 );
-		if( F_norm_sq <= epsilon * epsilon )
+		double F_max_abs   = qp_interior_max_abs( F_0 );
+		if( F_max_abs <= epsilon )
 		{	if( level > 0 )
 				std::cout << "end qp_interior: ok = true\n";
 			return true;
@@ -523,7 +531,7 @@ bool qp_interior(
 		//
 		// The initial derivative in direction  Delta_xys is equal to
 		// the negative of the norm square of F_mu
-		F_norm_sq = qp_interior_norm_sq( F_mu );
+		double F_norm_sq = qp_interior_norm_sq( F_mu );
 		//
 		// line search parameter lam
 		Vector x(n), y(m), s(m);
