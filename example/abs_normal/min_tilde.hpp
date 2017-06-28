@@ -365,7 +365,7 @@ bool min_tilde(
 		if( ! ok )
 		{	if( level > 0 )
 			{	CppAD::abs_normal_print_mat("delta_x", n, 1, delta_x);
-				std::cout << "end min_tilde: ok = false\n";
+				std::cout << "end min_tilde: qp_box failed\n";
 			}
 			return false;
 		}
@@ -403,9 +403,7 @@ bool min_tilde(
 		}
 	}
 	if( level > 0 )
-	{	CppAD::abs_normal_print_mat("delta_x", n, 1, delta_x);
-		std::cout << "end min_tilde: ok = false\n";
-	}
+		std::cout << "end min_tilde: maximum number of iterations exceeded\n";
 	return false;
 }
 } // END_CPPAD_NAMESPACE

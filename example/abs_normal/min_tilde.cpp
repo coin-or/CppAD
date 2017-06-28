@@ -82,7 +82,7 @@ bool min_tilde(void)
 	// data points
 	d_vector  data(s);
 	for(size_t i = 0; i < s; i++)
-		data[i] = double( s + 5 - i );
+		data[i] = double(s - i) + 5.0 - (i % 2) / 2.0;
 	//
 	// record the function f(x)
 	ad_vector ad_x(n), ad_y(m);
@@ -139,7 +139,7 @@ bool min_tilde(void)
 
 	// maximum number of iterations
 	s_vector maxitr(2);
-	maxitr[0] = 4;  // maximum number of min_tilde iterations
+	maxitr[0] = 10; // maximum number of min_tilde iterations
 	maxitr[1] = 20; // maximum number of qp_interior iterations
 
 	// minimize the approxiamtion for f, which is equal to f because
