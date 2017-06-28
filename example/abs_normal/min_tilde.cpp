@@ -140,7 +140,7 @@ bool min_tilde(void)
 	// maximum number of iterations
 	s_vector maxitr(2);
 	maxitr[0] = 10; // maximum number of min_tilde iterations
-	maxitr[1] = 20; // maximum number of qp_interior iterations
+	maxitr[1] = 25; // maximum number of qp_interior iterations
 
 	// minimize the approxiamtion for f, which is equal to f because
 	// f is affine, except for absolute value terms

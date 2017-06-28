@@ -572,7 +572,7 @@ bool qp_interior(
 		// update mu
 		F_norm_sq = qp_interior_norm_sq( F_0 );
 		if( F_norm_sq <= 1e1 * double(n + m + m) * mu * mu )
-			mu = mu / 1e3;
+			mu = mu / 1e2;
 		if( level > 0 )
 		{	std::cout << "itr = " << itr
 				<< ", mu = " << mu

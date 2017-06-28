@@ -163,7 +163,8 @@ bool min_tilde(
 	DblVector&       delta_x )
 // END PROTOTYPE
 {	using std::fabs;
-	bool ok = true;
+	bool ok    = true;
+	double inf = std::numeric_limits<double>::infinity();
 	//
 	CPPAD_ASSERT_KNOWN(
 		level <= 3,
@@ -341,7 +342,7 @@ bool min_tilde(
 		{	a_box[j] = - bound[j];
 			b_box[j] = + bound[j];
 		}
-		a_box[n] = g_tilde[0] - n * max_element * max_bound;
+		a_box[n] = -inf;
 		b_box[n] = win + max_element;
 		//
 		// solve the cutting plane problem
