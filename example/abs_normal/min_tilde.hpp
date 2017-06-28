@@ -323,8 +323,13 @@ bool min_tilde(
 		for(size_t i = 0; i < size_t(g_box.size()); i++)
 			g_box[i] = 0.0;
 		g_box[n] = 1.0;
-		for(size_t i = 0; i < size_t(G_box.size()); i++)
-			G_box[i] = 0.0;
+		//
+		// add a proximal term to stablize the solutiong of the sub-problem
+		for(size_t i = 0; i <= n; i++)
+		{	for(size_t j = 0; j <= n; j++)
+				G_box[i * (n+1) + j] = 0.0;
+			G_box[i * (n+1) + i] = 1e-6 * max_element;
+		}
 		//
 		// xin_box
 		double win = - std::numeric_limits<double>::infinity();

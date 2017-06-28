@@ -76,7 +76,7 @@ bool min_tilde(void)
 	//
 	size_t dpx   = 3;          // number of data points per x variable
 	size_t level = 0;          // level of tracing
-	size_t n     = 1;          // size of x
+	size_t n     = 2;          // size of x
 	size_t m     = 1;          // size of y
 	size_t s     = dpx * n;    // number of data points and absolute values
 	// data points
@@ -133,14 +133,14 @@ bool min_tilde(void)
 
 	// convergence criteria
 	d_vector epsilon(2);
-	double eps99 = 99.0 * std::numeric_limits<double>::epsilon();
-	epsilon[0]   = eps99;
-	epsilon[1]   = eps99;
+	double eps5 = 1e5 * std::numeric_limits<double>::epsilon();
+	epsilon[0]   = eps5;
+	epsilon[1]   = eps5;
 
 	// maximum number of iterations
 	s_vector maxitr(2);
 	maxitr[0] = 10; // maximum number of min_tilde iterations
-	maxitr[1] = 25; // maximum number of qp_interior iterations
+	maxitr[1] = 35; // maximum number of qp_interior iterations
 
 	// minimize the approxiamtion for f, which is equal to f because
 	// f is affine, except for absolute value terms
@@ -153,7 +153,7 @@ bool min_tilde(void)
 	ok &= dpx % 2 == 1;
 
 	// check solution is median data value
-	ok &= CppAD::NearEqual( delta_x[0], data[dpx / 2], eps99, eps99 );
+	ok &= CppAD::NearEqual( delta_x[0], data[dpx / 2], eps5, eps5 );
 
 	return ok;
 }
