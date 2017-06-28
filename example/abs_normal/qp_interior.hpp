@@ -551,8 +551,15 @@ bool qp_interior(
 			{	Vector F_mu_tmp = qp_interior_F_0(c, C, g, G, x, y, s);
 				for(size_t i = 0; i < m; i++)
 					F_mu_tmp[n + m + i] -= mu;
-				double F_norm_sq_tmp = qp_interior_norm_sq( F_mu_tmp );
-				lam_ok &= F_norm_sq_tmp - F_norm_sq < - lam * F_norm_sq / 4.0;
+				// avoid cancellation roundoff in difference of norm squared
+				// |v + dv|^2         = v^T * v + 2 * v^T * dv + dv^T * dv
+				// |v + dv|^2 - |v|^2 =           2 * v^T * dv + dv^T * dv
+				double diff_norm_sq = 0.0;
+				for(size_t i = 0; i < n + m + m; i++)
+				{	double dv     = F_mu_tmp[i] - F_mu[i];
+					diff_norm_sq += 2.0 * F_mu[i] * dv + dv * dv;
+				}
+				lam_ok &= diff_norm_sq < - lam * F_norm_sq / 4.0;
 			}
 		}
 		if( ! lam_ok )
