@@ -77,9 +77,13 @@ a trace of the $cref qp_interior$$ optimization is printed.
 
 $head a$$
 This is the vector of lower limits for $latex x$$ in the problem.
+If $icode%a%[%j%]%$$ is minus infinity, there is no lower limit
+for $latex x_j$$.
 
 $head b$$
 This is the vector of upper limits for $latex x$$ in the problem.
+If $icode%a%[%j%]%$$ is plus infinity, there is no upper limit
+for $latex x_j$$.
 
 $head c$$
 This is the value of the inequality constraint function at $latex x = 0$$.
@@ -93,6 +97,11 @@ This is the gradient of the objective function.
 
 $head G$$
 This is the Hessian of the objective function.
+For $latex j = 0 , \ldots , n-1$$,
+$latex - \infty < a_j$$ or
+$latex b_j < + \infty$$ or
+$latex G_{j,j} > 0.0$$.
+
 
 $head epsilon$$
 This argument is the convergence criteria;
@@ -192,7 +201,9 @@ bool qp_box(
 	const Vector& xin     ,
 	Vector&       xout    )
 // END PROTOTYPE
-{	size_t n = a.size();
+{	double inf = std::numeric_limits<double>::infinity();
+	//
+	size_t n = a.size();
 	size_t m = c.size();
 	//
 	CPPAD_ASSERT_KNOWN(level <= 2, "qp_interior: level is greater than 2");
@@ -211,8 +222,22 @@ bool qp_box(
 		CppAD::abs_normal_print_mat("xin", n, 1, xin);
 	}
 	//
+	// count number of lower and upper limits
+	size_t n_limit = 0;
+	for(size_t j = 0; j < n; j++)
+	{	CPPAD_ASSERT_KNOWN(G[j * n + j] >= 0.0, "qp_box: G_{j,j} < 0.0");
+		bool ok = -inf < a[j] || b[j] < inf || G[j * n + j] > 0.0;
+		CPPAD_ASSERT_KNOWN(ok,
+			"qp_box: a_j = -infinity, b_j = +infinity, G_{j,j} = 0.0"
+		);
+		if( -inf < a[j] )
+			++n_limit;
+		if( b[j] < inf )
+			++n_limit;
+	}
+	//
 	// C_int and c_int define the extended constraints
-	Vector C_int((m + 2 * n) * n ), c_int(m + 2 * n);
+	Vector C_int((m + n_limit) * n ), c_int(m + n_limit);
 	for(size_t i = 0; i < C_int.size(); i++)
 		C_int[i] = 0.0;
 	//
@@ -224,17 +249,20 @@ bool qp_box(
 	}
 	//
 	// put I * x - b <= 0 in C_int, c_int
-	for(size_t j = 0; j < n; j++)
-	{	c_int[m + j]            = - b[j];
-		C_int[(m + j) * n + j]  = 1.0;
+	size_t i_limit = 0;
+	for(size_t j = 0; j < n; j++) if( b[j] < inf )
+	{	c_int[m + i_limit]            = - b[j];
+		C_int[(m + i_limit) * n + j]  = 1.0;
+		++i_limit;
 	}
 	//
 	// put a - I * x <= 0 in C_int, c_int
-	for(size_t j = 0; j < n; j++)
-	{	c_int[m + n + j]           = a[j];
-		C_int[(m + n + j) * n + j] = -1.0;
+	for(size_t j = 0; j < n; j++) if( -inf < a[j] )
+	{	c_int[m + i_limit]           = a[j];
+		C_int[(m + i_limit) * n + j] = -1.0;
+		++i_limit;
 	}
-	Vector yout(m + 2 * n), sout(m + 2 * n);
+	Vector yout(m + n_limit), sout(m + n_limit);
 	size_t level_int = 0;
 	if( level == 2 )
 		level_int = 1;
