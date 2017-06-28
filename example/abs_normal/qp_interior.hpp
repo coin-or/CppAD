@@ -293,14 +293,6 @@ namespace {
 	}
 	// ------------------------------------------------------------------------
 	template <class Vector>
-	double qp_interior_norm_sq(const Vector& v)
-	{	double norm_sq = 0.0;
-		for(size_t j = 0; j < size_t(v.size()); j++)
-			norm_sq += v[j] * v[j];
-		return norm_sq;
-	}
-	// ------------------------------------------------------------------------
-	template <class Vector>
 	void qp_interior_split(
 		const Vector& v, Vector& v_x, Vector& v_y, Vector& v_s
 	)
@@ -450,12 +442,11 @@ bool qp_interior(
 	}
 	// ----------------------------------------------------------------------
 	// initialie F_0(xout, yout, sout)
-	Vector F_0 = qp_interior_F_0(c, C, g, G, xout, yout, sout);
+	Vector F_0       = qp_interior_F_0(c, C, g, G, xout, yout, sout);
+	double F_max_abs = qp_interior_max_abs( F_0 );
 	for(size_t itr = 0; itr <= maxitr; itr++)
 	{
-		//
 		// check for convergence
-		double F_max_abs   = qp_interior_max_abs( F_0 );
 		if( F_max_abs <= epsilon )
 		{	if( level > 0 )
 				std::cout << "end qp_interior: ok = true\n";
@@ -531,7 +522,6 @@ bool qp_interior(
 		//
 		// The initial derivative in direction  Delta_xys is equal to
 		// the negative of the norm square of F_mu
-		double F_norm_sq = qp_interior_norm_sq( F_mu );
 		//
 		// line search parameter lam
 		Vector x(n), y(m), s(m);
@@ -554,9 +544,11 @@ bool qp_interior(
 				// avoid cancellation roundoff in difference of norm squared
 				// |v + dv|^2         = v^T * v + 2 * v^T * dv + dv^T * dv
 				// |v + dv|^2 - |v|^2 =           2 * v^T * dv + dv^T * dv
+				double F_norm_sq    = 0.0;
 				double diff_norm_sq = 0.0;
 				for(size_t i = 0; i < n + m + m; i++)
 				{	double dv     = F_mu_tmp[i] - F_mu[i];
+					F_norm_sq    += F_mu[i] * F_mu[i];
 					diff_norm_sq += 2.0 * F_mu[i] * dv + dv * dv;
 				}
 				lam_ok &= diff_norm_sq < - lam * F_norm_sq / 4.0;
@@ -574,17 +566,17 @@ bool qp_interior(
 		sout = s;
 		//
 		// updage F_0
-		F_0 = qp_interior_F_0(c, C, g, G, xout, yout, sout);
+		F_0       = qp_interior_F_0(c, C, g, G, xout, yout, sout);
+		F_max_abs = qp_interior_max_abs( F_0 );
 		//
 		// update mu
-		F_norm_sq = qp_interior_norm_sq( F_0 );
-		if( F_norm_sq <= 1e1 * double(n + m + m) * mu * mu )
+		if( F_max_abs <= 1e1 *  mu )
 			mu = mu / 1e2;
 		if( level > 0 )
 		{	std::cout << "itr = " << itr
 				<< ", mu = " << mu
 				<< ", lam = " << lam
-				<< ", F_norm_sq = " << F_norm_sq << "\n";
+				<< ", F_max_abs = " << F_max_abs << "\n";
 			abs_normal_print_mat("xout", 1, n, xout);
 		}
 	}
