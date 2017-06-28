@@ -207,10 +207,18 @@ bool qp_box(
 	size_t m = c.size();
 	//
 	CPPAD_ASSERT_KNOWN(level <= 2, "qp_interior: level is greater than 2");
-	CPPAD_ASSERT_KNOWN( b.size() == n, "qp_box: size of b is not n" );
-	CPPAD_ASSERT_KNOWN( C.size() == m * n, "qp_box: size of C is not m * n" );
-	CPPAD_ASSERT_KNOWN( g.size() == n, "qp_box: size of g is not n" );
-	CPPAD_ASSERT_KNOWN( G.size() == n * n, "qp_box: size of G is not n * n" );
+	CPPAD_ASSERT_KNOWN(
+		size_t(b.size()) == n, "qp_box: size of b is not n"
+	);
+	CPPAD_ASSERT_KNOWN(
+		size_t(C.size()) == m * n, "qp_box: size of C is not m * n"
+	);
+	CPPAD_ASSERT_KNOWN(
+		size_t(g.size()) == n, "qp_box: size of g is not n"
+	);
+	CPPAD_ASSERT_KNOWN(
+		size_t(G.size()) == n * n, "qp_box: size of G is not n * n"
+	);
 	if( level > 0 )
 	{	std::cout << "start qp_box\n";
 		CppAD::abs_normal_print_mat("a", n, 1, a);
@@ -238,7 +246,7 @@ bool qp_box(
 	//
 	// C_int and c_int define the extended constraints
 	Vector C_int((m + n_limit) * n ), c_int(m + n_limit);
-	for(size_t i = 0; i < C_int.size(); i++)
+	for(size_t i = 0; i < size_t(C_int.size()); i++)
 		C_int[i] = 0.0;
 	//
 	// put C * x + c <= 0 in C_int, c_int

@@ -287,7 +287,7 @@ namespace {
 	template <class Vector>
 	double qp_interior_max_abs(const Vector& v)
 	{	double max_abs = 0.0;
-		for(size_t j = 0; j < v.size(); j++)
+		for(size_t j = 0; j < size_t(v.size()); j++)
 			max_abs = std::max( max_abs, std::fabs(v[j]) );
 		return max_abs;
 	}
@@ -295,7 +295,7 @@ namespace {
 	template <class Vector>
 	double qp_interior_norm_sq(const Vector& v)
 	{	double norm_sq = 0.0;
-		for(size_t j = 0; j < v.size(); j++)
+		for(size_t j = 0; j < size_t(v.size()); j++)
 			norm_sq += v[j] * v[j];
 		return norm_sq;
 	}
@@ -306,8 +306,8 @@ namespace {
 	)
 	{	size_t n = v_x.size();
 		size_t m = v_y.size();
-		CPPAD_ASSERT_UNKNOWN( v_s.size() == m );
-		CPPAD_ASSERT_UNKNOWN( v.size() == n + m + m );
+		CPPAD_ASSERT_UNKNOWN( size_t(v_s.size()) == m );
+		CPPAD_ASSERT_UNKNOWN( size_t(v.size()) == n + m + m );
 		for(size_t i = 0; i < n; i++)
 			v_x[i] = v[i];
 		for(size_t i = 0; i < m; i++)
@@ -323,8 +323,8 @@ namespace {
 	)
 	{	size_t n = v_x.size();
 		size_t m = v_y.size();
-		CPPAD_ASSERT_UNKNOWN( v_s.size() == m );
-		CPPAD_ASSERT_UNKNOWN( v.size() == n + m + m );
+		CPPAD_ASSERT_UNKNOWN( size_t(v_s.size()) == m );
+		CPPAD_ASSERT_UNKNOWN( size_t(v.size()) == n + m + m );
 		for(size_t i = 0; i < n; i++)
 			v[i] = v_x[i];
 		for(size_t i = 0; i < m; i++)
@@ -398,11 +398,11 @@ bool qp_interior(
 		"qp_interior: level is greater than one"
 	);
 	CPPAD_ASSERT_KNOWN(
-		C.size() == m * n,
+		size_t(C.size()) == m * n,
 		"qp_interior: size of C is not m * n"
 	);
 	CPPAD_ASSERT_KNOWN(
-		G.size() == n * n,
+		size_t(G.size()) == n * n,
 		"qp_interior: size of G is not n * n"
 	);
 	if( level > 0 )
@@ -416,13 +416,13 @@ bool qp_interior(
 	//
 	// compute the maximum absolute element of the problem vectors and matrices
 	double max_element = 0.0;
-	for(size_t i = 0; i < C.size(); i++)
+	for(size_t i = 0; i < size_t(C.size()); i++)
 		max_element = std::max(max_element , std::fabs(C[i]) );
-	for(size_t i = 0; i < c.size(); i++)
+	for(size_t i = 0; i < size_t(c.size()); i++)
 		max_element = std::max(max_element , std::fabs(c[i]) );
-	for(size_t i = 0; i < G.size(); i++)
+	for(size_t i = 0; i < size_t(G.size()); i++)
 		max_element = std::max(max_element , std::fabs(G[i]) );
-	for(size_t i = 0; i < g.size(); i++)
+	for(size_t i = 0; i < size_t(g.size()); i++)
 		max_element = std::max(max_element , std::fabs(g[i]) );
 	//
 	double mu = 1e-1 * max_element;

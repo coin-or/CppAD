@@ -109,15 +109,15 @@ Vector eval_tilde(
 {	using std::fabs;
 	//
 	CPPAD_ASSERT_KNOWN(
-		delta_x.size() == n,
+		size_t(delta_x.size()) == n,
 		"eval_tilde: size of delta_x not equal to n"
 	);
 	CPPAD_ASSERT_KNOWN(
-		g_hat.size() == m + s,
+		size_t(g_hat.size()) == m + s,
 		"eval_tilde: size of g_hat not equal to m + s"
 	);
 	CPPAD_ASSERT_KNOWN(
-		g_jac.size() == (m + s) * (n + s),
+		size_t(g_jac.size()) == (m + s) * (n + s),
 		"eval_tilde: size of g_jac not equal to (m + s)*(n + s)"
 	);
 # ifndef NDEBUG

@@ -71,7 +71,7 @@ void abs_normal_print_mat(
 // END PROTOTYPE
 {
 	CPPAD_ASSERT_KNOWN(
-		mat.size() == nr * nc,
+		size_t(mat.size()) == nr * nc,
 		"abs_normal_print_mat: size of mat is not nr * nc"
 	);
 	// output name

@@ -171,7 +171,7 @@ bool min_tilde(
 		"min_tilde: level is not less that or equal 3"
 	);
 	CPPAD_ASSERT_KNOWN(
-		maxitr.size() == 2,
+		size_t(maxitr.size()) == 2,
 		"min_tilde: size of maxitr not equal to 2"
 	);
 	CPPAD_ASSERT_KNOWN(
@@ -179,23 +179,23 @@ bool min_tilde(
 		"min_tilde: m is not equal to 1"
 	);
 	CPPAD_ASSERT_KNOWN(
-		delta_x.size() == n,
+		size_t(delta_x.size()) == n,
 		"min_tilde: size of delta_x not equal to n"
 	);
 	CPPAD_ASSERT_KNOWN(
-		bound.size() == n,
+		size_t(bound.size()) == n,
 		"min_tilde: size of bound not equal to n"
 	);
 	CPPAD_ASSERT_KNOWN(
-		g_hat.size() == m + s,
+		size_t(g_hat.size()) == m + s,
 		"min_tilde: size of g_hat not equal to m + s"
 	);
 	CPPAD_ASSERT_KNOWN(
-		g_jac.size() == (m + s) * (n + s),
+		size_t(g_jac.size()) == (m + s) * (n + s),
 		"min_tilde: size of g_jac not equal to (m + s)*(n + s)"
 	);
 	CPPAD_ASSERT_KNOWN(
-		bound.size() == n,
+		size_t(bound.size()) == n,
 		"min_tilde: size of bound is not equal to n"
 	);
 	if( level > 0 )
@@ -320,10 +320,10 @@ bool min_tilde(
 		}
 		// w is the objective
 		DblVector g_box(n + 1), G_box((n+1) * (n+1));
-		for(size_t i = 0; i < g_box.size(); i++)
+		for(size_t i = 0; i < size_t(g_box.size()); i++)
 			g_box[i] = 0.0;
 		g_box[n] = 1.0;
-		for(size_t i = 0; i < G_box.size(); i++)
+		for(size_t i = 0; i < size_t(G_box.size()); i++)
 			G_box[i] = 0.0;
 		//
 		// xin_box
