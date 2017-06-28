@@ -274,6 +274,18 @@ bool min_tilde(
 			for(size_t k = 0; k < s; k++)
 				dy_dx[j] += py_pu[k] * tmp_sn[ k * n + j];
 		}
+		//
+		// check for case where derivative of hyperplane is zero
+		// (in convex case, this is the minimizer)
+		bool near_zero = true;
+		for(size_t j = 0; j < n; j++)
+			near_zero &= std::fabs( dy_dx[j] ) < epsilon;
+		if( near_zero )
+		{	if( level > 0 )
+				std::cout << "end min_tilde: local derivative near zero\n";
+			return true;
+		}
+
 		// value of hyperplane at delta_x
 		double plane_at_zero = g_tilde[0];
 		// value of hyperplane at 0
@@ -364,25 +376,23 @@ bool min_tilde(
 		for(size_t j = 0; j < n; j++)
 			delta_new[j] = xout_box[j];
 		DblVector g_new = CppAD::eval_tilde(n, m, s, g_hat, g_jac, delta_new);
-		if( g_new[0] < g_tilde[0] )
-		{	g_tilde = g_new;
-			delta_x = delta_new;
-			//
-			// value of sigma at new delta_x; i.e., sign( z(x, u) )
-			for(size_t i = 0; i < s; i++)
-				sigma[i] = CppAD::sign( g_tilde[m + i] );
-		}
 		if( level > 0 )
 		{	std::cout << "itr = " << itr << ", max_diff = " << max_diff
 				<< ", y_cur = " << g_tilde[0] << ", y_new = " << g_new[0]
 				<< "\n";
 			CppAD::abs_normal_print_mat("delta_new", n, 1, delta_new);
 		}
+		//
+		g_tilde = g_new;
+		delta_x = delta_new;
+		//
+		// value of sigma at new delta_x; i.e., sign( z(x, u) )
+		for(size_t i = 0; i < s; i++)
+			sigma[i] = CppAD::sign( g_tilde[m + i] );
+		//
 		if( max_diff < epsilon )
 		{	if( level > 0 )
-			{	CppAD::abs_normal_print_mat("delta_x", n, 1, delta_x);
-				std::cout << "end min_tilde: ok = true\n";
-			}
+				std::cout << "end min_tilde: change in delta_x near zero\n";
 			return true;
 		}
 	}

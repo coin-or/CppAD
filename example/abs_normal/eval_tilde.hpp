@@ -160,7 +160,7 @@ Vector eval_tilde(
 	}
 	//
 	// compute y_tilde, the first m components of g_tilde
-	for(size_t i = 0; i < s; i++)
+	for(size_t i = 0; i < m; i++)
 	{	// start at y_hat_i
 		g_tilde[i] = g_hat[i];
 		// contribution for change x
@@ -171,7 +171,7 @@ Vector eval_tilde(
 			g_tilde[i] += g_jac[index] * delta_x[j];
 		}
 		// contribution for change in u_j
-		for(size_t j = 0; j < m; j++)
+		for(size_t j = 0; j < s; j++)
 		{	// approximation for change in absolute value
 			double delta_a_j = fabs(g_tilde[m + j]) - fabs(g_hat[m + j]);
 			// index in g_jac of partial of y_i w.r.t u_j

@@ -74,7 +74,7 @@ bool min_tilde(void)
 	typedef CPPAD_TESTVECTOR(double)       d_vector;
 	typedef CPPAD_TESTVECTOR( AD<double> ) ad_vector;
 	//
-	size_t dpx   = 1;          // number of data points per x variable
+	size_t dpx   = 3;          // number of data points per x variable
 	size_t level = 0;          // level of tracing
 	size_t n     = 1;          // size of x
 	size_t m     = 1;          // size of y
@@ -146,7 +146,11 @@ bool min_tilde(void)
 		level, n, m, s, g_hat, g_jac, bound, eps99, maxitr, delta_x
 	);
 
-	ok &= CppAD::NearEqual( delta_x[0], data[0], eps99, eps99 );
+	// number of data points per variable is odd
+	ok &= dpx % 2 == 1;
+
+	// check solution is median data value
+	ok &= CppAD::NearEqual( delta_x[0], data[dpx / 2], eps99, eps99 );
 
 	return ok;
 }
