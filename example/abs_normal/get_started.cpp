@@ -14,8 +14,6 @@ $begin abs_normal_get_started.cpp$$
 
 $section Getting Started with Atomic Operations: Example and Test$$
 
-$head Under Construction$$
-
 $head Purpose$$
 Creates an $cref abs_normal$$ representation $latex g$$ for the function
 $latex f : \B{R}^3 \rightarrow \B{R}$$ defined by

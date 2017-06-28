@@ -13,27 +13,14 @@ Please visit http://www.coin-or.org/CppAD/ for information on other licenses.
 /*
 $begin abs_normal_fun$$
 $spell
-	Andreas Griewank
-	Jens-Uwe Bernt
-	Manuel Radons
-	Tom Streubel
 	const
 $$
 
 
 $section Create An Abs-normal Representation of a Function$$
 
-$head Under Construction$$
-This is an in-progress design, and does not yet have an implementation.
-
 $head Syntax$$
 $icode%f%.abs_normal_fun(%g%, %a%)%$$
-
-$head Reference$$
-Andreas Griewank, Jens-Uwe Bernt, Manuel Radons, Tom Streubel,
-$italic Solving piecewise linear systems in abs-normal form$$,
-Linear Algebra and its Applications,
-vol. 471 (2015), pages 500-530.
 
 $head f$$
 The object $icode f$$ has prototype
@@ -271,7 +258,8 @@ z( x , a(x ) ) & = & c + Z x + L |z( x , a(x ) )|
 y( x , a(x ) ) & = & b + J x + Y |z( x , a(x ) )|
 \end{array}
 \] $$
-This is Equation (2) of the reference.
+This is Equation (2) of the
+$cref/reference/abs_normal/Reference/$$.
 
 $children%example/abs_normal/get_started.cpp
 %$$

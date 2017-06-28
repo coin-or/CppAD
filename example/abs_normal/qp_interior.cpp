@@ -16,8 +16,6 @@ $$
 
 $section Example and Test of qp_interior$$
 
-$head Under Construction$$
-
 $head Problem$$
 Our original problem is
 $latex \[

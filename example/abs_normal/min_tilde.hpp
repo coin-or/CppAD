@@ -20,8 +20,6 @@ $spell
 $$
 $section Minimize Abs-normal First Order Approximation$$
 
-$head Under Construction$$
-
 $head Syntax$$
 $icode%ok% = min_tilde(
 	%level%, %n%, %m%, %s%,

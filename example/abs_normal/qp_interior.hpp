@@ -27,8 +27,6 @@ $$
 
 $section Solve a Quadratic Program Using Interior Point Method$$
 
-$head Under Construction$$
-
 $head Syntax$$
 $icode%ok% = qp_interior(
 %level%, %c%, %C%, %g%, %G%, %epsilon%, %maxitr%, %xin%, %xout%, %yout%, %sout%

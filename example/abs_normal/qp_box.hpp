@@ -26,8 +26,6 @@ $spell
 $$
 $section Solve a Quadratic Program With Box Constraints$$
 
-$head Under Construction$$
-
 $head Syntax$$
 $icode%ok% = qp_box(
 	%level%, %a%, %b%, %c%, %C%, %g%, %G%, %epsilon%, %maxitr%, %xin%, %xout%

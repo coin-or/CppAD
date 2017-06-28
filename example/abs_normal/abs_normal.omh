@@ -10,9 +10,19 @@
 -------------------------------------------------------------------------------
 $begin abs_normal$$
 $spell
+	Andreas Griewank
+	Jens-Uwe Bernt
+	Manuel Radons
+	Tom Streubel
 $$
 
 $section Abs-normal Representation of Non-Smooth Functions$$
+
+$head Reference$$
+Andreas Griewank, Jens-Uwe Bernt, Manuel Radons, Tom Streubel,
+$italic Solving piecewise linear systems in abs-normal form$$,
+Linear Algebra and its Applications,
+vol. 471 (2015), pages 500-530.
 
 $childtable%cppad/core/abs_normal_fun.hpp
 	%example/abs_normal/eval_tilde.hpp

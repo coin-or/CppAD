@@ -14,8 +14,6 @@ $begin eval_tilde.cpp$$
 
 $section abs_normal Approximation: Example and Test$$
 
-$head Under Construction$$
-
 $head Purpose$$
 The function
 $latex f : \B{R}^3 \rightarrow \B{R}$$ defined by

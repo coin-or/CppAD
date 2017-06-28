@@ -19,8 +19,6 @@ $spell
 $$
 $section Evaluate Abs-normal First Order Approximation$$
 
-$head Under Construction$$
-
 $head Syntax$$
 $icode%g_tilde% = eval_tilde(%n%, %m%, %s%, %g_hat%, %g_jac%, %delta_x%)%$$
 $pre
