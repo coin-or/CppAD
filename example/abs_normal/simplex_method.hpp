@@ -20,22 +20,22 @@ $$
 $section Solve a Linear Program Using Simplex Method$$
 
 $head Syntax$$
-$icode%ok% = simplex_method(%level%, %c%, %C%, %g%, %maxitr%, %xout%)
+$icode%ok% = simplex_method(%level%, %b%, %A%, %c%, %maxitr%, %xout%)
 %$$
 see $cref/prototype/simplex_method/Prototype/$$
 
 $head Problem$$
 We are given
-$latex C \in \B{R}^{m \times n}$$,
-$latex c \in \B{R}^m$$,
-$latex g \in \B{R}^n$$.
+$latex A \in \B{R}^{m \times n}$$,
+$latex b \in \B{R}^m$$,
+$latex c \in \B{R}^n$$.
 This routine solves the problem
 $latex \[
 \begin{array}{rl}
 \R{minimize} &
 g^T x \; \R{w.r.t} \; x \in \B{R}_+^n
 \\
-\R{subject \; to} & C x + c \leq 0
+\R{subject \; to} & A x + b \leq 0
 \end{array}
 \] $$
 
@@ -62,14 +62,14 @@ is printed at each iteration.
 If $icode%level% == 2%$$,
 a trace of the simplex Tableau is printed at each iteration.
 
+$head b$$
+This is the vector $latex b$$ in the problem.
+
+$head A$$
+This is the matrix $latex A$$ in the problem in row-major order.
+
 $head c$$
 This is the vector $latex c$$ in the problem.
-
-$head C$$
-This is the matrix $latex C$$ in the problem in row-major order.
-
-$head g$$
-This is the vector $latex g$$ in the problem.
 
 $head maxitr$$
 This is the maximum number of simplex iterations to try before giving up
@@ -108,24 +108,24 @@ namespace CppAD { // BEGIN_CPPAD_NAMESPACE
 template <class Vector>
 bool simplex_method(
 	size_t        level   ,
+	const Vector& b       ,
+	const Vector& A       ,
 	const Vector& c       ,
-	const Vector& C       ,
-	const Vector& g       ,
 	size_t        maxitr  ,
 	Vector&       xout    )
 // END PROTOTYPE
 {	// number of equations
-	size_t ne  = c.size();
+	size_t ne  = b.size();
 	// number of x variables
-	size_t nx = g.size();
-	CPPAD_ASSERT_UNKNOWN( C.size() == ne * nx );
+	size_t nx = c.size();
+	CPPAD_ASSERT_UNKNOWN( A.size() == ne * nx );
 	CPPAD_ASSERT_UNKNOWN( level <= 2 );
 	//
 	if( level > 0 )
 	{	std::cout << "start simplex_method\n";
-		CppAD::abs_normal_print_mat("c", ne,  1, c);
-		CppAD::abs_normal_print_mat("C", ne, nx, C);
-		CppAD::abs_normal_print_mat("g", nx, 1, g);
+		CppAD::abs_normal_print_mat("b", ne,  1, b);
+		CppAD::abs_normal_print_mat("A", ne, nx, A);
+		CppAD::abs_normal_print_mat("c", nx, 1, c);
 	}
 	//
 	// variables (columns) in the Tableau:
@@ -137,7 +137,7 @@ bool simplex_method(
 	// Determine number of auxillary variables
 	size_t na = 0;
 	for(size_t i = 0; i < ne; i++)
-	{	if( c[i] > 0.0 )
+	{	if( b[i] > 0.0 )
 			++na;
 	}
 	// size of columns in the Tableau
@@ -157,42 +157,42 @@ bool simplex_method(
 		basic[j] = false;
 
 	// For i = 0 , ... , m-1, place the Equations
-	// sum_j C_{i,j} * x_j + c_i <= 0 in Tableau
+	// sum_j A_{i,j} * x_j + b_i <= 0 in Tableau
 	na = 0; // use as index of next auxillary variable
 	for(size_t i = 0; i < ne; i++)
-	{	if( c[i] > 0.0)
-		{	// convert to - sum_j C_{i,j} x_j - c_i >= 0
+	{	if( b[i] > 0.0)
+		{	// convert to - sum_j A_{i,j} x_j - b_i >= 0
 			for(size_t j = 0; j < nx; j++)
-				T[i * nc + j] = - C[i * nx + j];
+				T[i * nc + j] = - A[i * nx + j];
 			// slack variable has negative coefficient
 			T[i * nc + (nx + i)] = -1.0;
 			// auxillary variable is basic for this constraint
 			T[i * nc + (nx + ne + na)] = 1.0;
 			basic[nx + ne + na]        = true;
 			// right hand side
-			T[i * nc + (nc - 1)] = c[i];
+			T[i * nc + (nc - 1)] = b[i];
 			//
 			++na;
 		}
 		else
-		{	// sum_j C_{i,j} x_j + c_i <= 0
+		{	// sum_j A_{i,j} x_j + b_i <= 0
 			for(size_t j = 0; j < nx; j++)
-				T[i * nc + j] = C[i * nx + j];
+				T[i * nc + j] = A[i * nx + j];
 			//  slack variable is also basic
 			T[ i * nc + (nx + i) ]  = 1.0;
 			basic[nx + i]           = true;
 			// right hand side for equations
-			T[ i * nc + (nc - 1) ] = - c[i];
+			T[ i * nc + (nc - 1) ] = - b[i];
 		}
 	}
 	// na is back to its original value
 	CPPAD_ASSERT_UNKNOWN( nc == nx + ne + na + 1 );
 	//
 	// place the equation objective equation in Tablueau
-	// row ne corresponds to the equation z - sum_j g_j x_j = 0
+	// row ne corresponds to the equation z - sum_j c_j x_j = 0
 	// column index for z is nx + ne + na
 	for(size_t j = 0; j < nx; j++)
-		T[ne * nc + j] = - g[j];
+		T[ne * nc + j] = - c[j];
 	//
 	// row ne+1 corresponds to the equation w - a_0 - ... - a_{na-1} = 0
 	// column index for w is nx + ne + na +1
