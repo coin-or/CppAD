@@ -9,12 +9,12 @@ A copy of this license is included in the COPYING file of this distribution.
 Please visit http://www.coin-or.org/CppAD/ for information on other licenses.
 -------------------------------------------------------------------------- */
 /*
-$begin simplex.cpp$$
+$begin simplex_method.cpp$$
 $spell
 	qp
 $$
 
-$section Example and Test of simplex$$
+$section Example and Test of simplex_method$$
 
 $head Problem$$
 Our original problem is
@@ -56,11 +56,11 @@ $latex \[
 	0
 \end{array}
 \] $$
-which is in the form expected by $cref simplex$$.
+which is in the form expected by $cref simplex_method$$.
 
 
 $head Source$$
-$srcfile%example/abs_normal/simplex.cpp%
+$srcfile%example/abs_normal/simplex_method.cpp%
 	0%// BEGIN C++%// END C++%
 1%$$
 

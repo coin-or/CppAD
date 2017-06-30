@@ -198,8 +198,8 @@ $rref lu_invert.cpp$$
 $rref lu_ratio.cpp$$
 $rref lu_solve.cpp$$
 $rref lu_vec_ad_ok.cpp$$
-$rref min_tilde.cpp$$
 $rref mat_sum_sq.cpp$$
+$rref min_tilde.cpp$$
 $rref mul.cpp$$
 $rref mul_eq.cpp$$
 $rref mul_level_adolc.cpp$$
@@ -259,6 +259,7 @@ $rref simple_ad_bthread.cpp$$
 $rref simple_ad_openmp.cpp$$
 $rref simple_ad_pthread.cpp$$
 $rref simple_vector.cpp$$
+$rref simplex_method.cpp$$
 $rref sin.cpp$$
 $rref sinh.cpp$$
 $rref sparse_hes.cpp$$

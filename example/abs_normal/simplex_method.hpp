@@ -13,6 +13,8 @@ Please visit http://www.coin-or.org/CppAD/ for information on other licenses.
 /*
 $begin simplex_method$$
 $spell
+	maxitr
+	xout
 $$
 
 $section Solve a Linear Program Using Simplex Method$$
@@ -79,7 +81,14 @@ the input value of its elements does no matter.
 Upon return it is the primal variables corresponding to the problem solution.
 
 $head ok$$
-If the return value $icode ok$$ is true, a soluton has been found.
+If the return value $icode ok$$ is true, a solution has been found.
+
+$children%example/abs_normal/simplex_method.cpp
+%$$
+$head Example$$
+The file $cref simplex_method.cpp$$ contains an example and test of
+$code simplex_method$$.
+It returns true if the test passes and false otherwise.
 
 $head Prototype$$
 $srcfile%example/abs_normal/simplex_method.hpp%
