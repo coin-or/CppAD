@@ -78,26 +78,26 @@ bool simplex_method(void)
 	//
 	size_t n = 3;
 	size_t m = 2;
-	vector C(m * n), c(m), g(n), xout(n);
-	C[ 0 * n + 0 ] =  1.0; // C(0,0)
-	C[ 0 * n + 1 ] = -1.0; // C(0,1)
-	C[ 0 * n + 2 ] = -1.0; // C(0,2)
+	vector A(m * n), b(m), c(n), xout(n);
+	A[ 0 * n + 0 ] =  1.0; // A(0,0)
+	A[ 0 * n + 1 ] = -1.0; // A(0,1)
+	A[ 0 * n + 2 ] = -1.0; // A(0,2)
 	//
-	C[ 1 * n + 0 ] = -1.0; // C(1,0)
-	C[ 1 * n + 1 ] = +1.0; // C(1,1)
-	C[ 1 * n + 2 ] = -1.0; // C(1,2)
+	A[ 1 * n + 0 ] = -1.0; // A(1,0)
+	A[ 1 * n + 1 ] = +1.0; // A(1,1)
+	A[ 1 * n + 2 ] = -1.0; // A(1,2)
 	//
-	c[0]           = -1.0;
-	c[1]           =  1.0;
+	b[0]           = -1.0;
+	b[1]           =  1.0;
 	//
-	g[0]           =  0.0;
-	g[1]           =  0.0;
-	g[2]           =  1.0;
+	c[0]           =  0.0;
+	c[1]           =  0.0;
+	c[2]           =  1.0;
 	//
 	size_t maxitr  = 10;
 	size_t level   = 0;
 	//
-	ok &= CppAD::simplex_method(level, c, C, g,  maxitr, xout);
+	ok &= CppAD::simplex_method(level, b, A, c,  maxitr, xout);
 	//
 	// check optimal value for u
 	ok &= std::fabs( xout[0] - 1.0 ) < eps99;
