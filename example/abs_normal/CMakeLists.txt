@@ -17,6 +17,7 @@ SET(source_list
 	min_tilde.cpp
 	qp_box.cpp
 	qp_interior.cpp
+	simplex_method.cpp
 )
 #
 set_compile_flags( example_abs_normal "${cppad_debug_which}" "${source_list}" )

@@ -30,6 +30,7 @@ extern bool get_started(void);
 extern bool min_tilde(void);
 extern bool qp_box(void);
 extern bool qp_interior(void);
+extern bool simplex_method(void);
 
 // main program that runs all the tests
 int main(void)
@@ -40,11 +41,12 @@ int main(void)
 	// This line is used by test_one.sh
 
 	// external compiled tests
-	Run( eval_tilde,          "eval_tilde"    );
-	Run( get_started,         "get_started"   );
-	Run( min_tilde,           "min_tilde"     );
-	Run( qp_box,              "qp_box"        );
-	Run( qp_interior,         "qp_interior"   );
+	Run( eval_tilde,          "eval_tilde"         );
+	Run( get_started,         "get_started"        );
+	Run( min_tilde,           "min_tilde"          );
+	Run( qp_box,              "qp_box"             );
+	Run( qp_interior,         "qp_interior"        );
+	Run( simplex_method,      "simplex_method"     );
 
 	// check for memory leak
 	bool memory_ok = CppAD::thread_alloc::free_all();
