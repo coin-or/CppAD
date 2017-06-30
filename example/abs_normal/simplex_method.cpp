@@ -97,7 +97,7 @@ bool simplex_method(void)
 	size_t maxitr  = 10;
 	size_t level   = 0;
 	//
-	ok &= CppAD::simplex_method(level, b, A, c,  maxitr, xout);
+	ok &= CppAD::simplex_method(level, A, b, c,  maxitr, xout);
 	//
 	// check optimal value for u
 	ok &= std::fabs( xout[0] - 1.0 ) < eps99;

@@ -108,8 +108,8 @@ namespace CppAD { // BEGIN_CPPAD_NAMESPACE
 template <class Vector>
 bool simplex_method(
 	size_t        level   ,
-	const Vector& b       ,
 	const Vector& A       ,
+	const Vector& b       ,
 	const Vector& c       ,
 	size_t        maxitr  ,
 	Vector&       xout    )
