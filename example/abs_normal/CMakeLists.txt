@@ -14,6 +14,7 @@ SET(source_list
 	abs_normal.cpp
 	eval_tilde.cpp
 	get_started.cpp
+	lp_box.cpp
 	min_tilde.cpp
 	qp_box.cpp
 	qp_interior.cpp

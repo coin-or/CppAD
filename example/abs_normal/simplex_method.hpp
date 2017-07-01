@@ -62,11 +62,11 @@ is printed at each iteration.
 If $icode%level% == 2%$$,
 a trace of the simplex Tableau is printed at each iteration.
 
-$head b$$
-This is the vector $latex b$$ in the problem.
-
 $head A$$
 This is the matrix $latex A$$ in the problem in row-major order.
+
+$head b$$
+This is the vector $latex b$$ in the problem.
 
 $head c$$
 This is the vector $latex c$$ in the problem.
@@ -218,6 +218,7 @@ bool simplex_method(
 		// The result in column ja is zero, avoid roundoff
 		T[(ne + 1) * nc + ja] = 0.0;
 	}
+	//
 	// index of current objective
 	size_t iobj = ne;  // original objective z
 	if( na > 0 )
@@ -241,16 +242,17 @@ bool simplex_method(
 				}
 			}
 		}
-		if( level > 0 )
-		{	if( iobj > ne )
-				std::cout << "auxillary objective w = ";
-			else
-				std::cout << "original objective z = ";
-			std::cout << T[iobj * nc + (nc - 1)] << "\n";
-			CppAD::abs_normal_print_mat("x", nx, 1, xout);
-		}
 		if( level > 1 )
 			CppAD::abs_normal_print_mat("T", nr, nc, T);
+		if( level > 0 )
+		{	CppAD::abs_normal_print_mat("x", nx, 1, xout);
+			std::cout << "itr = " << itr;
+			if( iobj > ne )
+				std::cout << ", auxillary objective w = ";
+			else
+				std::cout << ", objective z = ";
+			std::cout << T[iobj * nc + (nc - 1)] << "\n";
+		}
 		//
 		// number of variables depends on objective
 		size_t nv = nx + ne;   // (x, s)
@@ -261,14 +263,14 @@ bool simplex_method(
 				if( basic[nx + ne + k] )
 					done = false;
 			if( done )
-			{	// convert to the original objective
+			{	// switch to optimizing the original objective
 				iobj = ne;
 			}
 			else
 				nv = nx + ne + na; // (x, s, a)
 		}
 		//
-		// determine variable with minimum coefficient in objective row
+		// determine variable with maximuim coefficient in objective row
 		double cmax = 0.0;
 		size_t jmax = nv;
 		for(size_t j = 0; j < nv; j++)

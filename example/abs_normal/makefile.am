@@ -33,9 +33,11 @@ AM_CXXFLAGS       = -g $(CXX_FLAGS)
 #
 abs_normal_SOURCES = \
 	abs_normal.cpp \
-	eval_tilde.hpp \
 	eval_tilde.cpp \
+	eval_tilde.hpp \
 	get_started.cpp \
+	lp_box.cpp \
+	lp_box.hpp \
 	min_tilde.cpp \
 	min_tilde.hpp \
 	qp_box.cpp \
