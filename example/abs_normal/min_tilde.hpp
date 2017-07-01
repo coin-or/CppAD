@@ -16,7 +16,6 @@ $spell
 	jac
 	Jacobian
 	maxitr
-	qp
 $$
 $section Minimize Abs-normal First Order Approximation$$
 
@@ -27,7 +26,8 @@ $icode%ok% = min_tilde(
 )%$$
 $pre
 $$
-see $cref/prototype/qp_box/Prototype/$$
+see
+$cref/prototype/min_tilde/Prototype/$$
 
 $head Purpose$$
 Given a current that abs-normal representation at a point
@@ -56,15 +56,18 @@ We use the notation $icode f$$ for the original function; see
 $cref/f/abs_normal_fun/f/$$.
 
 $head level$$
-This value is less that or equal three.
+This value is less that or equal 4.
 If $icode%level% == 0%$$,
 no tracing of the optimization is printed.
 If $icode%level% >= 1%$$,
 a trace of each iteration of $code min_tilde$$ is printed.
 If $icode%level% >= 2%$$,
-a trace of the $cref qp_box$$ sub-problem is printed.
-If $icode%level% == 3%$$,
-a trace of the $cref qp_interior$$ sub-problem is printed.
+a trace of the $cref lp_box$$ sub-problem is printed.
+If $icode%level% >= 3%$$,
+a trace of the objective and primal variables $latex x$$ are printed
+at each $cref simplex_method$$ iteration.
+If $icode%level% == 4%$$,
+the simplex tableau is printed at each simplex iteration.
 
 $head n$$
 This is the dimension of the domain space for $icode f$$; see
@@ -102,22 +105,18 @@ where $latex x$$ is the point that we are approximating $latex f(x)$$.
 
 
 $head epsilon$$
-This is a vector with size 2.
 The value $icode%epsilon%[0]%$$ is convergence criteria in terms
 of the infinity norm of the difference of $icode delta_x$$
 between iterations.
 The value $icode%epsilon%[1]%$$ is convergence criteria in terms
-of the infinity norm of a sub-gradient at $icode delta_x$$.
-It also the convergence criteria for the $cref qp_box$$ sub-problem
-at each iteration.
+of the derivative of $latex f(x)$$.
 
 $head maxitr$$
 This is a vector with size 2.
 The value $icode%maxitr%[0]%$$ is the maximum number of
 $code min_tilde$$ iterations to try before giving up on convergence.
 The value $icode%maxitr%[1]%$$ is the maximum number of iterations in
-the $cref/qp_interior/qp_interior/maxitr/$$ sub-problems.
-
+the $cref/simplex_method/simplex_method/maxitr/$$ sub-problems.
 
 $head delta_x$$
 This vector $latex \Delta x$$ has size $icode n$$.
@@ -141,7 +140,7 @@ $end
 -----------------------------------------------------------------------------
 */
 # include <cppad/cppad.hpp>
-# include "qp_box.hpp"
+# include "lp_box.hpp"
 # include "eval_tilde.hpp"
 
 namespace CppAD { // BEGIN_CPPAD_NAMESPACE
@@ -165,7 +164,7 @@ bool min_tilde(
 	double inf = std::numeric_limits<double>::infinity();
 	//
 	CPPAD_ASSERT_KNOWN(
-		level <= 3,
+		level <= 4,
 		"min_tilde: level is not less that or equal 3"
 	);
 	CPPAD_ASSERT_KNOWN(
@@ -243,7 +242,6 @@ bool min_tilde(
 	DblVector C(maxitr[0] * n), c(maxitr[0]);
 	//
 	// maximum absolute value in C
-	double max_element = 0.0;
 	//
 	// maximum bound
 	double max_bound = 0.0;
@@ -302,74 +300,48 @@ bool min_tilde(
 		// and derivative dy_dx
 		c[n_plane] = plane_at_zero;
 		for(size_t j = 0; j < n; j++)
-		{	C[n_plane * n + j] = dy_dx[j];
-			max_element = std::max( max_element, std::fabs( dy_dx[j] ) );
-		}
+			C[n_plane * n + j] = dy_dx[j];
 		++n_plane;
 		//
 		// variables for cutting plane problem are (dx, w)
 		// c[i] + C[i,:]*dx <= w
-		DblVector c_box(n_plane), C_box(n_plane * (n + 1));
+		DblVector b_box(n_plane), A_box(n_plane * (n + 1));
 		for(size_t i = 0; i < n_plane; i++)
-		{	c_box[i] = c[i];
+		{	b_box[i] = c[i];
 			for(size_t j = 0; j < n; j++)
-				C_box[i * (n+1) + j] = C[i * n + j];
-			C_box[i *(n+1) + n] = -1.0;
+				A_box[i * (n+1) + j] = C[i * n + j];
+			A_box[i *(n+1) + n] = -1.0;
 		}
 		// w is the objective
-		DblVector g_box(n + 1), G_box((n+1) * (n+1));
-		for(size_t i = 0; i < size_t(g_box.size()); i++)
-			g_box[i] = 0.0;
-		g_box[n] = 1.0;
+		DblVector c_box(n + 1);
+		for(size_t i = 0; i < size_t(c_box.size()); i++)
+			c_box[i] = 0.0;
+		c_box[n] = 1.0;
 		//
-		// add a proximal term to stablize the solutiong of the sub-problem
-		for(size_t i = 0; i <= n; i++)
-		{	for(size_t j = 0; j <= n; j++)
-				G_box[i * (n+1) + j] = 0.0;
-			G_box[i * (n+1) + i] = 1e-6 * max_element;
-		}
-		//
-		// xin_box
-		double win = - std::numeric_limits<double>::infinity();
-		for(size_t i = 0; i < n_plane; i++)
-			win = std::max(win, c[i]);
-		win = win + max_element;
-		DblVector xin_box(n + 1);
+		// d_box
+		DblVector d_box(n+1);
 		for(size_t j = 0; j < n; j++)
-			xin_box[j] = 0.0;
-		xin_box[n] = win;
-		//
-		// a_box and b_box
-		DblVector a_box(n+1), b_box(n+1);
-		for(size_t j = 0; j < n; j++)
-		{	a_box[j] = - bound[j];
-			b_box[j] = + bound[j];
-		}
-		a_box[n] = -inf;
-		b_box[n] = win + max_element;
+			d_box[j] = bound[j];
+		d_box[n] = inf;
 		//
 		// solve the cutting plane problem
 		DblVector xout_box(n + 1);
 		size_t level_box = 0;
 		if( level > 0 )
 			level_box = level - 1;
-		ok &= CppAD::qp_box(
+		ok &= CppAD::lp_box(
 			level_box,
-			a_box,
+			A_box,
 			b_box,
 			c_box,
-			C_box,
-			g_box,
-			G_box,
-			epsilon[1],
+			d_box,
 			maxitr[1],
-			xin_box,
 			xout_box
 		);
 		if( ! ok )
 		{	if( level > 0 )
 			{	CppAD::abs_normal_print_mat("delta_x", n, 1, delta_x);
-				std::cout << "end min_tilde: qp_box failed\n";
+				std::cout << "end min_tilde: lp_box failed\n";
 			}
 			return false;
 		}

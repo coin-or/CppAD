@@ -50,6 +50,10 @@ Speed tests no longer automatically compile in release mode; see
 $cref/debug_which/speed/debug_which/$$
 $lend
 
+$head 07-01$$
+the $cref abs_normal$$ examples were converted from using
+quadratic programming problems to using linear programming problems.
+
 $head 06-28$$
 The $cref/abs-normal/abs_normal_fun/$$
 representation of non-smooth functions has been added.

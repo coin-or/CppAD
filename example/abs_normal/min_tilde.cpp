@@ -131,9 +131,9 @@ bool min_tilde(void)
 
 	// convergence criteria
 	d_vector epsilon(2);
-	double eps5 = 1e5 * std::numeric_limits<double>::epsilon();
-	epsilon[0]   = eps5;
-	epsilon[1]   = eps5;
+	double eps99 = 99.0 * std::numeric_limits<double>::epsilon();
+	epsilon[0]   = eps99;
+	epsilon[1]   = eps99;
 
 	// maximum number of iterations
 	s_vector maxitr(2);
@@ -150,8 +150,14 @@ bool min_tilde(void)
 	// number of data points per variable is odd
 	ok &= dpx % 2 == 1;
 
-	// check solution is median data value
-	ok &= CppAD::NearEqual( delta_x[0], data[dpx / 2], eps5, eps5 );
+	// check that the solution is the median of the corresponding data`
+	for(size_t j = 0; j < n; j++)
+	{	// data[j * dpx + 0] , ... , data[j * dpx + dpx - 1] corresponds to x[j]
+		// the median of this data has index j * dpx + dpx / 2
+		size_t j_median = j * dpx + (dpx / 2);
+		//
+		ok &= CppAD::NearEqual( delta_x[j], data[j_median], eps99, eps99 );
+	}
 
 	return ok;
 }

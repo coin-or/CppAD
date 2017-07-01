@@ -118,13 +118,13 @@ bool simplex_method(
 	size_t ne  = b.size();
 	// number of x variables
 	size_t nx = c.size();
-	CPPAD_ASSERT_UNKNOWN( A.size() == ne * nx );
+	CPPAD_ASSERT_UNKNOWN( size_t(A.size()) == ne * nx );
 	CPPAD_ASSERT_UNKNOWN( level <= 2 );
 	//
 	if( level > 0 )
 	{	std::cout << "start simplex_method\n";
-		CppAD::abs_normal_print_mat("b", ne,  1, b);
 		CppAD::abs_normal_print_mat("A", ne, nx, A);
+		CppAD::abs_normal_print_mat("b", ne,  1, b);
 		CppAD::abs_normal_print_mat("c", nx, 1, c);
 	}
 	//

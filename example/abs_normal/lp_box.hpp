@@ -69,8 +69,8 @@ no tracing is printed.
 If $icode%level% >= 1%$$,
 a trace of the $code lp_box$$ operations is printed.
 If $icode%level% >= 2%$$,
-the objective function and current $latex x$$ is printed
-at each simplex iteration.
+the objective and primal variables $latex x$$ are printed
+at each $cref simplex_method$$ iteration.
 If $icode%level% == 3%$$,
 the simplex tableau is printed at each simplex iteration.
 
@@ -156,7 +156,7 @@ bool lp_box(
 	size_t n_limit = 0;
 	for(size_t j = 0; j < n; j++)
 	{	if( d[j] < inf )
-			n_limit += 2;
+			n_limit += 1;
 	}
 	//
 	// A_simplex and b_simplex define the extended constraints
@@ -180,13 +180,13 @@ bool lp_box(
 	for(size_t j = 0; j < n; j++) if( d[j] < inf )
 	{
 		// x_j^+ <= d_j constraint
-		b_simplex[m + 2 * i_limit]                          = - d[j];
+		b_simplex[ m + 2 * i_limit]                         = - d[j];
 		A_simplex[(m + 2 * i_limit) * (2 * n) + 2 * j]      = 1.0;
-		++i_limit;
 		//
 		// x_j^- <= d_j constraint
-		b_simplex[m + 2 * i_limit]                          = - d[j];
-		A_simplex[(m + 2 * i_limit) * (2 * n) + 2 * j + 1]  = 1.0;
+		b_simplex[ m + 2 * i_limit + 1]                         = - d[j];
+		A_simplex[(m + 2 * i_limit + 1) * (2 * n) + 2 * j + 1]  = 1.0;
+		//
 		++i_limit;
 	}
 	//
