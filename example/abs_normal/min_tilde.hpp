@@ -117,7 +117,9 @@ the $cref/simplex_method/simplex_method/maxitr/$$ sub-problems.
 
 $head delta_x$$
 This vector $latex \Delta x$$ has size $icode n$$.
-It is the approximate minimizer
+The input value of its elements does not matter.
+Upon return,
+it is the approximate minimizer
 of the abs-normal approximation for $latex f(x)$$ over the trust region
 is $latex x = \hat{x} + \Delta x$$.
 
@@ -182,16 +184,16 @@ namespace CppAD { // BEGIN_CPPAD_NAMESPACE
 // BEGIN PROTOTYPE
 template <class DblVector, class SizeVector>
 bool min_tilde(
-	size_t           level   ,
-	size_t           n       ,
-	size_t           m       ,
-	size_t           s       ,
-	const DblVector& g_hat   ,
-	const DblVector& g_jac   ,
-	const DblVector& bound   ,
-	const DblVector& epsilon ,
-	SizeVector       maxitr  ,
-	DblVector&       delta_x )
+	size_t            level   ,
+	size_t            n       ,
+	size_t            m       ,
+	size_t            s       ,
+	const DblVector&  g_hat   ,
+	const DblVector&  g_jac   ,
+	const DblVector&  bound   ,
+	const DblVector&  epsilon ,
+	const SizeVector& maxitr  ,
+	DblVector&        delta_x )
 // END PROTOTYPE
 {	using std::fabs;
 	bool ok    = true;
@@ -199,7 +201,11 @@ bool min_tilde(
 	//
 	CPPAD_ASSERT_KNOWN(
 		level <= 4,
-		"min_tilde: level is not less that or equal 3"
+		"min_tilde: level is not less that or equal 4"
+	);
+	CPPAD_ASSERT_KNOWN(
+		size_t(epsilon.size()) == 2,
+		"min_tilde: size of epsilon not equal to 2"
 	);
 	CPPAD_ASSERT_KNOWN(
 		size_t(maxitr.size()) == 2,
@@ -275,12 +281,6 @@ bool min_tilde(
 	// current set of cutting planes
 	DblVector C(maxitr[0] * n), c(maxitr[0]);
 	//
-	// maximum absolute value in C
-	//
-	// maximum bound
-	double max_bound = 0.0;
-	for(size_t j = 0; j < n; j++)
-		max_bound = std::max(max_bound, std::fabs(bound[j]));
 	//
 	size_t n_plane = 0;
 	for(size_t itr = 0; itr < maxitr[0]; itr++)
