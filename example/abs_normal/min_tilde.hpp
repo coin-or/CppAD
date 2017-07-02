@@ -41,9 +41,6 @@ $cref/approximation for f(x)
 /$$
 over a trust region.
 
-$head Cutting Plane Method$$
-The algorithm used is a cutting plane method which is only guaranteed
-to work when the objective is convex.
 
 $head DblVector$$
 is a $cref SimpleVector$$ class with elements of type $code double$$.
@@ -123,6 +120,43 @@ This vector $latex \Delta x$$ has size $icode n$$.
 It is the approximate minimizer
 of the abs-normal approximation for $latex f(x)$$ over the trust region
 is $latex x = \hat{x} + \Delta x$$.
+
+$head Method$$
+
+$subhead sigma$$
+We use the notation
+$latex \[
+	\sigma (x) = \R{sign} ( z[ x , a(x) ] )
+\] $$
+where
+$cref/a(x)/abs_normal_fun/a/a(x)/$$ and
+$cref/z(x, u)/abs_normal_fun/g/z(x, u)/$$
+are as defined in the abs-normal representation of $latex f(x)$$.
+
+$subhead Cutting Planes$$
+At each iteration,
+we are given affine functions $latex p_k (x)$$
+such that $latex p_k ( x_k ) = f( x_k )$$  and
+$latex p_k^{(1)} ( x_k )$$ is the derivative of $latex f(x)$$ at $latex x_k$$
+corresponding to $latex \sigma ( x_k )$$.
+
+$subhead Iteration$$
+At iteration $latex k$$, we solve the problem
+$latex \[
+\begin{array}{lll}
+\R{minimize}
+	& \max \{ p_k (x) \W{:} k = 0 , \ldots , K-1 \}
+	& \R{w.r.t} \; x
+\\
+\R{subject \; to} & - b \leq x \leq + b
+\end{array}
+\] $$
+The solution is the new point $latex x_K$$
+at which the new affine approximation
+$latex p_K (x)$$ is constructed.
+This process is iterated until the difference
+$latex x_K - x_{K-1}$$ is small enough.
+
 
 $children%example/abs_normal/min_tilde.cpp
 %$$

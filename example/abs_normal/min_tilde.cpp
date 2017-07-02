@@ -31,6 +31,8 @@ f( x_0, x_1  )
 is affine, except for its absolute value terms.
 For this case, the abs_normal approximation should be equal
 to the function itself.
+In addition, the function is convex and
+$cref min_tilde$$ should find its global minimizer.
 The minimizer of this function is
 $latex x_0 = \R{median}( d_0, d_1, d_2 )$$
 and
