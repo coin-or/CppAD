@@ -12,7 +12,7 @@ Please visit http://www.coin-or.org/CppAD/ for information on other licenses.
 /*
 $begin abs_normal_get_started.cpp$$
 
-$section Getting Started with Atomic Operations: Example and Test$$
+$section abs_normal Getting Started: Example and Test$$
 
 $head Purpose$$
 Creates an $cref abs_normal$$ representation $latex g$$ for the function

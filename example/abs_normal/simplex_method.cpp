@@ -14,7 +14,7 @@ $spell
 	qp
 $$
 
-$section Example and Test of simplex_method$$
+$section abs_normal simplex_method: Example and Test$$
 
 $head Problem$$
 Our original problem is

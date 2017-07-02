@@ -12,7 +12,7 @@ Please visit http://www.coin-or.org/CppAD/ for information on other licenses.
 /*
 $begin min_tilde.cpp$$
 
-$section abs_normal Approximation: Example and Test$$
+$section abs_normal min_tilde: Example and Test$$
 
 $head Purpose$$
 The function

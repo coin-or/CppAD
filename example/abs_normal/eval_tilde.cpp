@@ -11,8 +11,11 @@ Please visit http://www.coin-or.org/CppAD/ for information on other licenses.
 
 /*
 $begin eval_tilde.cpp$$
+$spell
+	eval
+$$
 
-$section abs_normal Approximation: Example and Test$$
+$section abs_normal eval_tilde: Example and Test$$
 
 $head Purpose$$
 The function

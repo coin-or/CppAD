@@ -14,7 +14,7 @@ $spell
 	lp
 $$
 
-$section Example and Test of lp_box$$
+$section abs_normal lp_box: Example and Test$$
 
 $head Problem$$
 Our original problem is
