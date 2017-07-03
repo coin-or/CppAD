@@ -17,7 +17,7 @@ $spell
 	xout
 $$
 
-$section Solve a Linear Program Using Simplex Method$$
+$section abs_normal: Solve a Linear Program Using Simplex Method$$
 
 $head Syntax$$
 $icode%ok% = simplex_method(%level%, %b%, %A%, %c%, %maxitr%, %xout%)

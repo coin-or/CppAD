@@ -25,7 +25,7 @@ $spell
 	xin
 	qp
 $$
-$section Solve a Quadratic Program With Box Constraints$$
+$section abs_normal: Solve a Linear Program With Box Constraints$$
 
 $head Syntax$$
 $icode%ok% = lp_box(

@@ -38,6 +38,8 @@ abs_normal_SOURCES = \
 	get_started.cpp \
 	lp_box.cpp \
 	lp_box.hpp \
+	min_non_smo.cpp \
+	min_non_smo.hpp \
 	min_tilde.cpp \
 	min_tilde.hpp \
 	qp_box.cpp \

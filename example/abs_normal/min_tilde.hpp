@@ -17,7 +17,7 @@ $spell
 	Jacobian
 	maxitr
 $$
-$section Minimize Abs-normal First Order Approximation$$
+$section abs_normal: Minimize First Order Approximation$$
 
 $head Syntax$$
 $icode%ok% = min_tilde(

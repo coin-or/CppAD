@@ -28,6 +28,7 @@ Please visit http://www.coin-or.org/CppAD/ for information on other licenses.
 extern bool eval_tilde(void);
 extern bool get_started(void);
 extern bool lp_box(void);
+extern bool min_non_smo(void);
 extern bool min_tilde(void);
 extern bool qp_box(void);
 extern bool qp_interior(void);
@@ -45,6 +46,7 @@ int main(void)
 	Run( eval_tilde,          "eval_tilde"         );
 	Run( get_started,         "get_started"        );
 	Run( lp_box,              "lp_box"             );
+	Run( min_non_smo,         "min_non_smo"        );
 	Run( min_tilde,           "min_tilde"          );
 	Run( qp_box,              "qp_box"             );
 	Run( qp_interior,         "qp_interior"        );

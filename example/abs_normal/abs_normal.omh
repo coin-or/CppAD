@@ -25,13 +25,14 @@ Linear Algebra and its Applications,
 vol. 471 (2015), pages 500-530.
 
 $childtable%cppad/core/abs_normal_fun.hpp
+	%example/abs_normal/print_mat.hpp
 	%example/abs_normal/eval_tilde.hpp
+	%example/abs_normal/simplex_method.hpp
 	%example/abs_normal/lp_box.hpp
+	%example/abs_normal/min_tilde.hpp
+	%example/abs_normal/min_non_smo.hpp
 	%example/abs_normal/qp_interior.hpp
 	%example/abs_normal/qp_box.hpp
-	%example/abs_normal/min_tilde.hpp
-	%example/abs_normal/print_mat.hpp
-	%example/abs_normal/simplex_method.hpp
 %$$
 
 $end

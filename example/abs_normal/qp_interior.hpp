@@ -33,6 +33,10 @@ $icode%ok% = qp_interior(
 )%$$
 see $cref/prototype/qp_interior/Prototype/$$
 
+$head Purpose$$
+This routine could be used to create a version of $cref min_tilde$$
+that solved Quadratic programs (instead of linear programs).
+
 $head Problem$$
 We are given
 $latex C \in \B{R}^{m \times n}$$,

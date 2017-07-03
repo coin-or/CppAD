@@ -17,7 +17,7 @@ $spell
 	Jacobian
 	eval
 $$
-$section Evaluate Abs-normal First Order Approximation$$
+$section abs_normal: Evaluate First Order Approximation$$
 
 $head Syntax$$
 $icode%g_tilde% = eval_tilde(%n%, %m%, %s%, %g_hat%, %g_jac%, %delta_x%)%$$

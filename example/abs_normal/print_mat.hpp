@@ -17,7 +17,7 @@ $spell
 	nc
 	std::cout
 $$
-$section Print a Vector or Matrix$$
+$section abs_normal: Print a Vector or Matrix$$
 
 $head Syntax$$
 $codei%abs_normal_print_mat(%name%, %nr%, %nc%, %mat%)%$$

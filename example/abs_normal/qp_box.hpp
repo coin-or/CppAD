@@ -24,13 +24,17 @@ $spell
 	xin
 	qp
 $$
-$section Solve a Quadratic Program With Box Constraints$$
+$section abs_normal: Solve a Quadratic Program With Box Constraints$$
 
 $head Syntax$$
 $icode%ok% = qp_box(
 	%level%, %a%, %b%, %c%, %C%, %g%, %G%, %epsilon%, %maxitr%, %xin%, %xout%
 )%$$
 see $cref/prototype/qp_box/Prototype/$$
+
+$head Purpose$$
+This routine could be used to create a version of $cref min_tilde$$
+that solved quadratic programs (instead of linear programs).
 
 $head Problem$$
 We are given

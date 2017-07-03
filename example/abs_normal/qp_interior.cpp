@@ -14,7 +14,7 @@ $spell
 	qp
 $$
 
-$section Example and Test of qp_interior$$
+$section abs_normal qp_interior: Example and Test$$
 
 $head Problem$$
 Our original problem is

@@ -14,7 +14,7 @@ $spell
 	qp
 $$
 
-$section Example and Test of qp_box$$
+$section abs_normal qp_box: Example and Test$$
 
 $head Problem$$
 Our original problem is
