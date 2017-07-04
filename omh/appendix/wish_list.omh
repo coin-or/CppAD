@@ -10,14 +10,12 @@ Please visit http://www.coin-or.org/CppAD/ for information on other licenses.
 -------------------------------------------------------------------------- */
 $begin wish_list$$
 $spell
-	op
 	Recomputation
 	optimizer
 	checkpointing
 	grep
 	recomputed
 	iterator
-	std
 	Adolc
 	xml
 	hpp
@@ -31,9 +29,21 @@ $spell
 	vx
 	Jacobian
 	const
+	Eigen
 $$
 
 $section The CppAD Wish List$$
+
+$head Eigen$$
+Use a wrapper class for
+$cref/eigen vectors/testvector/Eigen Vectors/$$ so that the
+$code size$$ member function returns a
+$code size_t$$ instead of an $code int$$.
+This would allow $cref TESTVECTOR$$ to be a true template class; i.e.,
+to use the syntax
+$codei%
+	TESTVECTOR<%Scalar%>
+%$$
 
 
 $head const ADFun$$

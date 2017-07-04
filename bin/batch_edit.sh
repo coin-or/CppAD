@@ -14,7 +14,8 @@
 # 2. Remove an svn Id commands.
 # 3. "included in the COPYING file" -> "included in the epl-v10.txt file"
 # 4. Remove all omhelp index commands.
-# 5. Change $code $srcfile ...$$ $$ -> $srcfile ... $$
+# 5. Change: $code $srcfile ...$$ $$ -> $srcfile ... $$
+# 6. Convert tabs to spaces.
 # -----------------------------------------------------------------------------
 spell_list='
 '
