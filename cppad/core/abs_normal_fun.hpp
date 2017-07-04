@@ -498,6 +498,7 @@ void ADFun<Base>::abs_normal_fun(ADFun<Base>& g, ADFun<Base>& a)
 			// Binary operators, left parameter, right variable, one result
 			case AddpvOp:
 			case SubpvOp:
+			case MulpvOp:
 			case DivpvOp:
 			case PowpvOp:
 			case ZmulpvOp:

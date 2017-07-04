@@ -51,7 +51,12 @@ $cref/debug_which/speed/debug_which/$$
 $lend
 
 $head 07-03$$
+$list number$$
 The $cref min_non_smo$$ abs-normal example was added.
+$lnext
+Fix bug in $cref abs_normal_fun$$, to be specific, the multiplication
+of a variable on the left by a parameter was not handled.
+$lend
 
 $head 07-01$$
 the $cref abs_normal$$ examples were converted from using

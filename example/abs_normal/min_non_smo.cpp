@@ -22,9 +22,20 @@ We minimize the function
 $latex f : \B{R}^2 \rightarrow \B{R}$$ defined by
 $latex \[
 \begin{array}{rcl}
-f( x_0, x_1  ) & = & x_0^2 + | x_1 |
+f( x_0, x_1  ) & = & x_0^2 + 2 (x_0 + x_1)^2 + | x_2 |
 \end{array}
 \] $$
+
+$head Discussion$$
+This routine uses $cref min_tilde$$ which uses $cref lp_box$$,
+a linear programming algorithm.
+You can see that the convergence is linear for this algorithm by setting
+$icode%level% = 1%$$.
+A higher order of convergence would requite quadratic, instead of linear,
+sub-problems.
+The routine $cref qp_box$$,
+which uses $cref qp_interior$$,
+is a beginning prototypes for such an algorithm.
 
 
 $head Source$$
@@ -50,18 +61,20 @@ bool min_non_smo(void)
 	typedef CPPAD_TESTVECTOR( AD<double> ) ad_vector;
 	//
 	size_t level = 0;    // level of tracing
-	size_t n     = 2;    // size of x
+	size_t n     = 3;    // size of x
 	size_t m     = 1;    // size of y
 	size_t s     = 1;    // number of data points and absolute values
 	//
 	// start recording the function f(x)
-	ad_vector ad_x(n), ad_y(m);
+	ad_vector ax(n), ay(m);
 	for(size_t j = 0; j < n; j++)
-		ad_x[j] = double(j + 1);
-	Independent( ad_x );
+		ax[j] = double(j + 1);
+	Independent( ax );
 	//
-	ad_y[0]         =  ad_x[0] * ad_x[0] + abs( ad_x[1] );
-	ADFun<double> f(ad_x, ad_y);
+	ay[0]  =  ax[0] * ax[0];
+	ay[0] += 2.0 * (ax[0] + ax[1]) * (ax[0] + ax[1]);
+	ay[0] += fabs( ax[2] );
+	ADFun<double> f(ax, ay);
 	//
 	// create its abs_normal representation in g, a
 	ADFun<double> g, a;
@@ -77,25 +90,31 @@ bool min_non_smo(void)
 
 	// epsilon
 	d_vector epsilon(2);
-	double eps6 = 1e6 * std::numeric_limits<double>::epsilon();
-	epsilon[0] = eps6;
-	epsilon[1] = eps6;
+	double eps = 1e-3;
+	epsilon[0] = eps;
+	epsilon[1] = eps;
 
 	// maxitr
 	s_vector maxitr(3);
-	maxitr[0] = 20;
+	maxitr[0] = 100;
 	maxitr[1] = 20;
 	maxitr[2] = 20;
 
+	// b_in
+	double b_in = 1.0;
+
 	// call min_non_smo
-	d_vector bound_in(n), x_in(n), x_out(n);
-	x_in[0] = 1.0;
-	x_in[1] = 1.0;
-	bound_in = x_in;
+	d_vector x_in(n), x_out(n);
+	for(size_t j = 0; j < n; j++)
+		x_in[j]  = double(j + 1);
+
 	//
 	ok &= CppAD::min_non_smo(
-		level, g, a, epsilon, maxitr, bound_in, x_in, x_out
+		level, g, a, epsilon, maxitr, b_in, x_in, x_out
 	);
+	//
+	for(size_t j = 0; j < n; j++)
+		ok &= std::fabs( x_out[j] ) < eps;
 
 	return ok;
 }

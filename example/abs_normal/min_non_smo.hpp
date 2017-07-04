@@ -22,7 +22,7 @@ $section abs_normal: Non-Smooth Minimization Using Abs-normal Form$$
 
 $head Syntax$$
 $icode%ok% = min_non_smo(
-	%level%, %g%, %a%, %epsilon%, %maxitr%, %bound_in%, %x_in%, %x_out%
+	%level%, %g%, %a%, %epsilon%, %maxitr%, %b_in%, %x_in%, %x_out%
 )%$$
 $pre
 $$
@@ -89,6 +89,8 @@ of the infinity norm of the difference of $icode x_out$$
 between iterations.
 The value $icode%epsilon%[1]%$$ is convergence criteria in terms
 of the derivative of $latex f(x)$$.
+This derivative is actually the average of the directional derivative
+in the direction of the sub-problem minimizer.
 
 $head maxitr$$
 This is a vector with size 3.
@@ -99,18 +101,16 @@ $code min_tilde$$ sub-problem.
 The value $icode%maxitr%[2]%$$ is the maximum number of iterations in
 the $cref/simplex_method/simplex_method/maxitr/$$ sub-problems.
 
-$head bound_in$$
-This vector $icode x_out$$ has size $icode n$$.
-It is the limits for the initial trust region.
-If $latex \Delta x$$ is the change in $latex x$$ at each iteration,
-and $latex b$$ is the current bound,
+$head b_in$$
+This the initial bound on the trust region size.
+To be specific, if $latex b$$ is the current trust region size,
+at each iteration affine approximation is minimized with respect to
+$latex \Delta x$$ and subject to
 $latex \[
-	-b \leq \Delta x \leq b
+	-b \leq \Delta x_j \leq b
 \] $$
-It must hold that for $icode%j% = 0 , %...%, %n%-1%$$,
-$codei%
-	%epsilon%[0] < %bound_in%[%j%]
-%$$.
+for $icode%j% = 0 , %...%, %n%-1%$$.
+It must hold that $icode%b_in% > %epsilon%[0]%$$.
 
 $head x_in$$
 This vector $icode x_out$$ has size $icode n$$.
@@ -169,7 +169,7 @@ bool min_non_smo(
 	ADFun<double>&   a         ,
 	const DblVector& epsilon   ,
 	SizeVector       maxitr    ,
-	const DblVector& bound_in  ,
+	double           b_in      ,
 	const DblVector& x_in      ,
 	DblVector&       x_out     )
 // END PROTOTYPE
@@ -206,10 +206,6 @@ bool min_non_smo(
 		"min_non_smo: m is not equal to 1"
 	);
 	CPPAD_ASSERT_KNOWN(
-		size_t(bound_in.size()) == n,
-		"min_non_smo: size of bound_in not equal to n"
-	);
-	CPPAD_ASSERT_KNOWN(
 		size_t(x_in.size()) == n,
 		"min_non_smo: size of x_in not equal to n"
 	);
@@ -217,16 +213,14 @@ bool min_non_smo(
 		size_t(x_out.size()) == n,
 		"min_non_smo: size of x_out not equal to n"
 	);
-# ifndef NDEBUG
-	for(size_t j = 0; j < n; j++) CPPAD_ASSERT_KNOWN(
-		epsilon[0] < bound_in[j],
-		"min_non_smo: bound_in[j] <= epsilon[0]"
+	CPPAD_ASSERT_KNOWN(
+		epsilon[0] < b_in,
+		"min_non_smo: b_in <= epsilon[0]"
 	);
-# endif
 	if( level > 0 )
 	{	std::cout << "start min_non_smo\n";
+		std::cout << "b_in = " << b_in << "\n";
 		CppAD::abs_normal_print_mat("x_in", n, 1, x_in);
-		CppAD::abs_normal_print_mat("bound_in", n, 1, x_in);
 	}
 	// level in min_tilde sub-problem
 	size_t level_tilde = 0;
@@ -243,8 +237,8 @@ bool min_non_smo(
 	eps_tilde[0] = epsilon[0] / 10.;
 	eps_tilde[1] = epsilon[1] / 10.;
 	//
-	// multiplier that converts bound_in to min_tilde sub-problem
-	double bound_multiplier = 1.0;
+	// current bound
+	double b_cur = b_in;
 	//
 	// initilaize the current x
 	x_out = x_in;
@@ -266,7 +260,7 @@ bool min_non_smo(
 		// bound in min_tilde sub-problem
 		DblVector bound_tilde(n);
 		for(size_t j = 0; j < n; j++)
-			bound_tilde[j] = bound_multiplier * bound_in[j];
+			bound_tilde[j] = b_cur;
 		//
 		DblVector delta_x(n);
 		bool ok = min_tilde(
@@ -287,6 +281,22 @@ bool min_non_smo(
 			max_delta_x = std::max(max_delta_x, std::fabs( delta_x[j] ) );
 		}
 		//
+		if( max_delta_x < b_cur && max_delta_x < epsilon[0] )
+		{	if( level > 0 )
+				std::cout << "end min_non_smo: delta_x is near zero\n";
+			return true;
+		}
+		// value of abs-normal approximation at minimizer
+		DblVector g_tilde = CppAD::eval_tilde(n, m, s, g_cur, g_jac, delta_x);
+		//
+		double derivative = (g_tilde[0] - g_cur[0]) / max_delta_x;
+		CPPAD_ASSERT_UNKNOWN( derivative <= 0.0 )
+		if( - epsilon[1] < derivative )
+		{	if( level > 0 )
+				std::cout << "end min_non_smo: derivative near zero\n";
+			return true;
+		}
+		//
 		// value of a(x) at new x
 		DblVector a_new = a.Forward(0, x_new);
 		//
@@ -296,21 +306,17 @@ bool min_non_smo(
 		// value of g[ x_new, a_new ]
 		DblVector g_new = g.Forward(0, xu_new);
 		//
+		//
 		// check for descent of objective
-		if( g_new[0] > g_cur[0] - epsilon[1] * max_delta_x )
+		double rate_new = (g_new[0] - g_cur[0]) / max_delta_x;
+		if( - epsilon[1] < rate_new )
 		{	// did not get sufficient descent
-			bound_multiplier /= 2.0;
+			b_cur /= 2.0;
 			if( level > 0 )
-				std::cout << "bound_multiplier = " << bound_multiplier << "\n";
+				std::cout << "itr = " << itr
+				<< ", rate_new = " << rate_new
+				<< ", b_cur = " << b_cur << "\n";
 			//
-			bool abort = false;
-			for(size_t j = 0; j < n; j++)
-				abort |= bound_in[j] * bound_multiplier <= epsilon[0];
-			if( abort )
-			{	if( level > 0 ) std::cout
-					<< "end min_non_smo: require trust region is to small\n";
-				return false;
-			}
 		}
 		else
 		{	// got sufficient descent so accept candidate for x
@@ -321,14 +327,10 @@ bool min_non_smo(
 			//
 			if( level >  0 )
 			{	std::cout << "itr = " << itr
+				<< ", derivative = "<< derivative
 				<< ", max_delta_x = "<< max_delta_x
 				<< ", objective = " << g_cur[0] << "\n";
 				abs_normal_print_mat("x_out", n, 1, x_out);
-			}
-			if( max_delta_x < epsilon[0] )
-			{	if( level > 0 )
-					std::cout << "end min_non_smo: max_delta_x near zero\n";
-				return true;
 			}
 		}
 	}
