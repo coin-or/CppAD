@@ -19,10 +19,10 @@ $section abs_normal min_non_smo: Example and Test$$
 
 $head Purpose$$
 We minimize the function
-$latex f : \B{R}^2 \rightarrow \B{R}$$ defined by
+$latex f : \B{R}^3 \rightarrow \B{R}$$ defined by
 $latex \[
 \begin{array}{rcl}
-f( x_0, x_1  ) & = & x_0^2 + 2 (x_0 + x_1)^2 + | x_2 |
+f( x_0, x_1, x_2  ) & = & x_0^2 + 2 (x_0 + x_1)^2 + | x_2 |
 \end{array}
 \] $$
 

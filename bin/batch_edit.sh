@@ -16,6 +16,7 @@
 # 4. Remove all omhelp index commands.
 # 5. Change: $code $srcfile ...$$ $$ -> $srcfile ... $$
 # 6. Convert tabs to spaces.
+# 7. Change CPPAD_TESTVECTOR to a template type (see Eigen entry in wishlist).
 # -----------------------------------------------------------------------------
 spell_list='
 '
