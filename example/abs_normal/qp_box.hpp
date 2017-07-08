@@ -59,15 +59,6 @@ $head Vector$$
 The type $icode Vector$$ is a
 simple vector with elements of type $code double$$.
 
-$head Row-major$$
-A vector $icode v$$ is a matrix $latex M \in \B{R}^{m \times n}$$
-in row major order, if the size of $icode v$$ is $latex m  \times n$$ and for
-$latex i = 0 , \ldots , m-1$$,
-$latex j = 0 , \ldots , n-1$$,
-$latex \[
-	M_{i, j} = v[ i \times m + j ]
-\] $$
-
 $head level$$
 This value is less that or equal two.
 If $icode%level% == 0%$$,
@@ -91,14 +82,14 @@ $head c$$
 This is the value of the inequality constraint function at $latex x = 0$$.
 
 $head C$$
-This is the matrix in the inequality constraint function
-in row-major order.
+This is a $cref/row-major/glossary/Row-major Representation/$$ representation
+of thee the inequality constraint matrix $latex C$$.
 
 $head g$$
 This is the gradient of the objective function.
 
 $head G$$
-This is the Hessian of the objective function.
+This is a row-major representation of the Hessian of the objective function.
 For $latex j = 0 , \ldots , n-1$$,
 $latex - \infty < a_j$$ or
 $latex b_j < + \infty$$ or

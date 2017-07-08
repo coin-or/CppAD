@@ -60,15 +60,6 @@ $head Vector$$
 The type $icode Vector$$ is a
 simple vector with elements of type $code double$$.
 
-$head Row-major$$
-A vector $icode v$$ is a matrix $latex M \in \B{R}^{m \times n}$$
-in row major order, if the size of $icode v$$ is $latex m  \times n$$ and for
-$latex i = 0 , \ldots , m-1$$,
-$latex j = 0 , \ldots , n-1$$,
-$latex \[
-	M_{i, j} = v[ i \times m + j ]
-\] $$
-
 $head level$$
 This value is zero or one.
 If $icode%level% == 0%$$,
@@ -80,13 +71,15 @@ $head c$$
 This is the vector $latex c$$ in the problem.
 
 $head C$$
-This is the matrix $latex C$$ in the problem in row-major order.
+This is a $cref/row-major/glossary/Row-major Representation/$$
+of the matrix $latex C$$ in the problem.
 
 $head g$$
 This is the vector $latex g$$ in the problem.
 
 $head G$$
-This is the matrix $latex G$$ in the problem in row-major order.
+This is a $cref/row-major/glossary/Row-major Representation/$$
+of the matrix $latex G$$ in the problem.
 
 $head epsilon$$
 This argument is the convergence criteria;

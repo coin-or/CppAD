@@ -53,15 +53,6 @@ $head Vector$$
 The type $icode Vector$$ is a
 simple vector with elements of type $code double$$.
 
-$head Row-major$$
-A vector $icode v$$ is a matrix $latex M \in \B{R}^{m \times n}$$
-in row major order, if the size of $icode v$$ is $latex m  \times n$$ and for
-$latex i = 0 , \ldots , m-1$$,
-$latex j = 0 , \ldots , n-1$$,
-$latex \[
-	M_{i, j} = v[ i \times m + j ]
-\] $$
-
 $head level$$
 This value is less that or equal two.
 If $icode%level% == 0%$$,
@@ -75,7 +66,8 @@ If $icode%level% == 3%$$,
 the simplex tableau is printed at each simplex iteration.
 
 $head A$$
-This is the matrix $latex A$$ in the problem in row-major order.
+This is a $cref/row-major/glossary/Row-major Representation/$$ representation
+of the matrix $latex A$$ in the problem.
 
 $head b$$
 This is the vector $latex b$$ in the problem.

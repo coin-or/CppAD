@@ -42,8 +42,9 @@ This is the number of columns in the matrix. Use $icode%nc% = 1%$$ for
 column vectors.
 
 $head mat$$
-This is a $cref SimpleVector$$ with the elements of the matrix
-in row-major order. The syntax
+This is a $cref SimpleVector$$
+$cref/row-major/glossary/Row-major Representation/$$ of the matrix.
+The syntax
 $codei%
 	std::cout << %mat%[%i%]%
 %$$

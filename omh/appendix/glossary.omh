@@ -137,6 +137,14 @@ If $icode u$$ is a parameter, the function
 $cref/Parameter(u)/ParVar/$$ returns true
 and $cref/Variable(u)/ParVar/$$ returns false.
 
+$head Row-major Representation$$
+A $cref SimpleVector$$ $icode v$$ is a row-major representation of a matrix
+$latex M \in \B{R}^{m \times n}$$ if $icode%v%.size() == %m% * %n%$$ and
+for $latex i = 0 , \ldots , m-1$$, $latex j = 0 , \ldots , n-1$$
+$latex \[
+	M_{i,j} = v[ i \times n + j ]
+\] $$
+
 $head Sparsity Pattern$$
 Suppose that $latex A \in B^{m \times n}$$ is a sparse matrix.
 CppAD has several ways to specify the elements of $latex A$$
